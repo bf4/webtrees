@@ -5,10 +5,15 @@
 	This and other information can be found online at
 	http://www.phpgedview.net
 
-	# $Id: changelog.txt,v 1.522.2.539 2006/05/19 11:37:41 canajun2eh Exp $
+	# $Id: changelog.txt,v 1.522.2.543 2006/05/22 10:32:05 opus27 Exp $
 =====================================================================
 
 Version 4.0
+ - Fixed [ 1490893 ] 4.0 B8 Marriage Type Drop Down List is missing (opus27)
+ - Fixed [ 1492061 ] 4.0b8 ... styling on index page (canajun2eh)
+ - Fixed [ 1491296 ] Date calc - BIRT forced first (coloredpixels)
+ - Fixed [ 1405943 ] Date calc - DEAT sinks to bottom followed by CREM/BURI (coloredpixels)
+ - Fixed [ 1492063 ] 4.0b8 ... searching for cee gives errors (canajun2eh)
  - Added Support for Romanized names on Quick Update form (canajun2eh)
  - Fixed [ 1490052 ] Manage Media - Printout of all the media titles (canajun2eh)
  - Added [ 1399983 ] Tab shouldn't always display default (yalnifj)
