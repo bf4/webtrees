@@ -23,11 +23,14 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: individual.php,v 1.252.2.165 2006/05/15 21:20:14 yalnifj Exp $
+ * @version $Id: individual.php,v 1.252.2.167 2006/05/22 12:04:38 opus27 Exp $
  */
 
 require_once("includes/controllers/individual_ctrl.php");
 require_once("includes/serviceclient_class.php");
+
+if (file_exists("modules/googlemap/".$pgv_language["english"])) require("modules/googlemap/".$pgv_language["english"]);
+if (file_exists("modules/googlemap/".$pgv_language[$LANGUAGE])) require("modules/googlemap/".$pgv_language[$LANGUAGE]);
 
 global $USE_THUMBS_MAIN;
 global $linkToID;
@@ -240,6 +243,9 @@ function togglerow(label) {
 }
 function tabswitch(n) {
 	var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog');
+	<?php if (file_exists("modules/googlemap/config.php")) {?>
+	var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog','googlemap');
+	<?php }?>
 	if (!tabid[n]) n = 1;
 	// show all tabs ?
 	var disp='none';
@@ -306,7 +312,10 @@ if (!$controller->isPrintPreview()) {
 <dd id="door4"><a href="javascript:;" onclick="tabswitch(4)" ><?php print $pgv_lang["media"]?></a></dd>
 <dd id="door5"><a href="javascript:;" onclick="tabswitch(5)" ><?php print $pgv_lang["relatives"]?></a></dd>
 <dd id="door6"><a href="javascript:;" onclick="tabswitch(6)" ><?php print $pgv_lang["research_assistant"]?></a></dd>
-<dd id="door0"><a href="javascript:;" onclick="tabswitch(0)" ><?php print $pgv_lang["all"]?></a></dd>
+<?php if (file_exists("modules/googlemap/config.php")) {?>
+<dd id="door7"><a href="javascript:;" onclick="tabswitch(7);ResizeMap();ResizeMap()" ><?php print $pgv_lang["googlemap"]?></a></dd>
+<?php }?>
+<dd id="door0"><a href="javascript:;" onclick="tabswitch(0);ResizeMap();ResizeMap()" ><?php print $pgv_lang["all"]?></a></dd>
 </dl>
 </div>
 <br />
@@ -596,7 +605,8 @@ foreach($families as $famid=>$family) {
 			}
 		}
 		$styleadd = "blue";
-		foreach($people["newchildren"] as $key=>$child) {
+		if (isset($people["newchildren"])) {
+			foreach($people["newchildren"] as $key=>$child) {
 			?>
 			<tr>
 				<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
@@ -605,9 +615,11 @@ foreach($families as $famid=>$family) {
 				</td>
 			</tr>
 			<?php
+			}
 		}
 		$styleadd = "";
-		foreach($people["children"] as $key=>$child) {
+		if (isset($people["children"])) {
+			foreach($people["children"] as $key=>$child) {
 			?>
 			<tr>
 				<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
@@ -616,9 +628,11 @@ foreach($families as $famid=>$family) {
 				</td>
 			</tr>
 			<?php
+			}
 		}
 		$styleadd = "red";
-		foreach($people["delchildren"] as $key=>$child) {
+		if (isset($people["delchildren"])) {
+			foreach($people["delchildren"] as $key=>$child) {
 			?>
 			<tr>
 				<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
@@ -627,8 +641,9 @@ foreach($families as $famid=>$family) {
 				</td>
 			</tr>
 			<?php
+			}
 		}
-		if ((!$controller->isPrintPreview()) && (userCanEdit(getUserName()))&&($controller->indi->canDisplayDetails())) {
+		if (isset($family) && (!$controller->isPrintPreview()) && (userCanEdit(getUserName()))&&($controller->indi->canDisplayDetails())) {
 			?>
 			<tr>
 				<td class="facts_label"><?php echo $pgv_lang["add_child_to_family"]; ?></td>
@@ -706,7 +721,8 @@ foreach($stepfams as $famid=>$family) {
 			<?php
 		}
 		$styleadd = "blue";
-		foreach($people["newchildren"] as $key=>$child) {
+		if (isset($people["newchildren"])) {
+			foreach($people["newchildren"] as $key=>$child) {
 			?>
 			<tr>
 				<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
@@ -715,9 +731,11 @@ foreach($stepfams as $famid=>$family) {
 				</td>
 			</tr>
 			<?php
+			}
 		}
 		$styleadd = "";
-		foreach($people["children"] as $key=>$child) {
+		if (isset($people["children"])) {
+			foreach($people["children"] as $key=>$child) {
 			?>
 			<tr>
 				<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
@@ -726,9 +744,11 @@ foreach($stepfams as $famid=>$family) {
 				</td>
 			</tr>
 			<?php
+			}
 		}
 		$styleadd = "red";
-		foreach($people["delchildren"] as $key=>$child) {
+		if (isset($people["delchildren"])) {
+			foreach($people["delchildren"] as $key=>$child) {
 			?>
 			<tr>
 				<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
@@ -737,8 +757,9 @@ foreach($stepfams as $famid=>$family) {
 				</td>
 			</tr>
 			<?php
+			}
 		}
-		if (($controller->isPrintPreview()) && (userCanEdit(getUserName()))&&($controller->indi->canDisplayDetails())) {
+		if (isset($family) && ($controller->isPrintPreview()) && (userCanEdit(getUserName()))&&($controller->indi->canDisplayDetails())) {
 			?>
 			<tr>
 				<td class="facts_label"><?php echo $pgv_lang["add_child_to_family"]; ?></td>
@@ -840,7 +861,8 @@ foreach($families as $famid=>$family) {
 			}
 		}
 		$styleadd = "blue";
-		foreach($people["newchildren"] as $key=>$child) {
+		if (isset($people["newchildren"])) {
+			foreach($people["newchildren"] as $key=>$child) {
 			?>
 			<tr>
 				<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
@@ -849,9 +871,11 @@ foreach($families as $famid=>$family) {
 				</td>
 			</tr>
 			<?php
+			}
 		}
 		$styleadd = "";
-		foreach($people["children"] as $key=>$child) {
+		if (isset($people["children"])) {
+			foreach($people["children"] as $key=>$child) {
 			?>
 			<tr>
 				<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
@@ -860,9 +884,11 @@ foreach($families as $famid=>$family) {
 				</td>
 			</tr>
 			<?php
+			}
 		}
 		$styleadd = "red";
-		foreach($people["delchildren"] as $key=>$child) {
+		if (isset($people["delchildren"])) {
+			foreach($people["delchildren"] as $key=>$child) {
 			?>
 			<tr>
 				<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
@@ -871,8 +897,9 @@ foreach($families as $famid=>$family) {
 				</td>
 			</tr>
 			<?php
+			}
 		}
-		if ((!$controller->isPrintPreview()) && (userCanEdit(getUserName()))&&($controller->indi->canDisplayDetails())) {
+		if (isset($family) && (!$controller->isPrintPreview()) && (userCanEdit(getUserName()))&&($controller->indi->canDisplayDetails())) {
 			?>
 			<tr>
 				<td class="facts_label"><?php echo $pgv_lang["add_child_to_family"]; ?></td>
@@ -983,6 +1010,43 @@ if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_R
 else print "<table class=\"facts_table\"><tr><td id=\"no_tab6\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab6"]."</td></tr></table>\n";
 ?>
 </div>
+
+<?php
+//--------------------------------Start 7th tab individual page
+//--- Google map
+if (file_exists("modules/googlemap/config.php")) {
+	print "\n\t<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\">";
+	    print "<span class=\"subheaders\">".$pgv_lang["googlemap"]."</span>";
+        if (!$controller->indi->canDisplayName()) {
+            print "\n\t<table class=\"facts_table\">";
+            print "<tr><td class=\"facts_value\">";
+            print_privacy_error($CONTACT_EMAIL);
+            print "</td></tr>";
+            print "\n\t</table>\n<br />";
+            print "<script type=\"text/javascript\">\n";
+            print "function ResizeMap ()\n{\n}\n</script>\n";
+        }
+        else {
+            if(empty($SEARCH_SPIDER)) {
+	            include_once('modules/googlemap/googlemap.php');
+                $famids = array();
+                $families = $controller->indi->getSpouseFamilies();
+                foreach($families as $famid=>$family) {
+                    $famids[] = $family->getXref();
+                }
+                if (build_indiv_map($indifacts, $famids) == 0) {
+                    print "<tr><td id=\"no_tab7\" colspan=\"2\" class=\"facts_value\"></td></tr>\n";
+                }
+            }
+        }
+	// start
+	print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" id=\"marker6\" width=\"1\" height=\"1\" alt=\"\" />";
+	// end
+
+	print "</div>\n";
+}
+?>
+
 <script language="JavaScript" type="text/javascript">
 <!--
 	var catch_and_ignore;
@@ -995,7 +1059,7 @@ else print "tabswitch(". ($controller->default_tab+1) .")";
 //-->
 </script>
 <?php
-if(empty($SEARCH_SPIDER)) 
+if(empty($SEARCH_SPIDER))
 	print_footer();
 else {
 	print $pgv_lang["label_search_engine_detected"].": ".$SEARCH_SPIDER;
