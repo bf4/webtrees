@@ -1,0 +1,26 @@
+<!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
+<!-- $Id: SWE.txt,v 1.1.2.1 2006/01/06 22:01:12 canajun2eh Exp $ -->
+Bohuslän
+Dalarna
+Dalsland
+Gotland
+Gästrikland
+Halland
+Hälsingland
+Härjedalen
+Jämtland
+Lappland
+Medelpad
+Norrbotten
+Närke
+Skåne
+Småland
+Södermanland
+Uppland
+Värmland
+Västerbotten
+Västergötland
+Västmanland
+Ångermanland
+Öland
+Östergötland

@@ -1,0 +1,15 @@
+<!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
+<!-- @version $Id: SVK_Banskobystricky.txt,v 1.1.2.1 2005/11/27 17:33:50 opus27 Exp $ -->
+Banská Bystrica (BB)
+Banská Štiavnica (BS)
+Brezno (BR)
+Detva (DT)
+Krupina (KA)
+Lucenec (LC)
+Poltár (PT)
+Revúca (RA)
+Rimavská Sobota (RS)
+Vel(ký Krtíš (VK)
+Žarnovica (ZC)
+Žiar nad Hronom (ZH)
+Zvolen (ZV)

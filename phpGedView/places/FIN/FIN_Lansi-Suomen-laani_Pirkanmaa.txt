@@ -1,0 +1,35 @@
+<!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
+<!-- $Id: FIN_Lansi-Suomen-laani_Pirkanmaa.txt,v 1.1.2.1 2005/03/17 20:04:25 meliza Exp $ -->
+Ikaalinen
+Mänttä
+Nokia
+Orivesi
+Parkano
+Tampere
+Toijala
+Valkeakoski
+Vammala
+Virrat
+Ylöjärvi
+Hämeenkyrö
+Juupajoki
+Kangasala
+Kihniö
+Kuhmalahti
+Kuru
+Kylmäkoski
+Lempäälä
+Luopioinen
+Längelmäki
+Mouhijärvi
+Pirkkala
+Punkalaidun
+Pälkäne
+Ruovesi
+Suodenniemi
+Urjala
+Vesilahti
+Viiala
+Viljakkala
+Vilppula
+Äetsä

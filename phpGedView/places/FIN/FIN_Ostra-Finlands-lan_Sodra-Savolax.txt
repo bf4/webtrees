@@ -1,0 +1,22 @@
+<!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
+<!-- $Id: FIN_Ostra-Finlands-lan_Sodra-Savolax.txt,v 1.1.2.1 2005/03/17 20:04:25 meliza Exp $ -->
+Nyslott
+S:t Michel
+Enonkoski
+Haukivuori
+Heinävesi
+Hirvensalmi
+Jorois
+Juva
+Kangasniemi
+Kerimäki
+Mäntyharju
+Pertunmaa
+Pieksämäki
+Pieksänmaa
+Punkaharju
+Puumala
+Rantasalmi
+Ristiina
+Savonranta
+Sulkava

@@ -1,0 +1,25 @@
+<!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
+<!-- $Id: FRA.txt,v 1.1.2.1 2005/02/18 16:15:24 opus27 Exp $ -->
+<!-- source http://www.insee.fr/fr/nom_def_met/nomenclatures/cog/cog.htm -->
+Alsace
+Aquitaine
+Auvergne
+Basse-Normandie
+Bourgogne
+Bretagne
+Centre
+Champagne-Ardenne
+Corse
+Franche-Comté
+Haute-Normandie
+Île-de-France
+Languedoc-Roussillon
+Limousin
+Lorraine
+Midi-Pyrénées
+Nord-Pas-de-Calais
+Pays de la Loire
+Picardie
+Poitou-Charentes
+Provence-Alpes-Côte d'Azur
+Rhône-Alpes

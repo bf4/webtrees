@@ -1,0 +1,25 @@
+<!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
+<!-- $Id: FIN_Ita-Suomen-laani_Pohjois-Savo.txt,v 1.1.2.1 2005/03/17 20:04:24 meliza Exp $ -->
+Iisalmi
+Kiuruvesi
+Kuopio
+Nilsiä
+Siilinjärvi
+Suonenjoki
+Varkaus
+Juankoski
+Kaavi
+Karttula
+Keitele
+Lapinlahti
+Leppävirta
+Maaninka
+Pielavesi
+Rautalampi
+Rautavaara
+Sonkajärvi
+Tervo
+Tuusniemi
+Varpaisjärvi
+Vesanto
+Vieremä

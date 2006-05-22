@@ -1,0 +1,14 @@
+<!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
+<!-- $Id: FIN_Southern-Finland_Kymenlaakso.txt,v 1.1.2.1 2005/03/17 20:04:26 meliza Exp $ -->
+Anjalankoski
+Hamina
+Kotka
+Kouvola
+Kuusankoski
+Elimäki
+Iitti
+Jaala
+Miehikkälä
+Pyhtää
+Valkeala
+Virolahti

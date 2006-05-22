@@ -1,0 +1,25 @@
+<!-- $Id: NOR_Nord-Trondelag.txt,v 1.1.2.1 2005/07/20 10:31:22 eikland Exp $ -->
+Flatanger
+Fosnes
+Frosta
+Grong
+Høylandet
+Inderøy
+Leka
+Leksvik
+Levanger
+Lierne
+Meråker
+Mosvik
+Namdalseid
+Namsos
+Namsskogan
+Nærøy
+Overhalla
+Røyrvik
+Snåsa
+Steinkjer
+Stjørdal
+Verdal
+Verran
+Vikna

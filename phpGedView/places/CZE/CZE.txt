@@ -1,0 +1,16 @@
+<!-- @version $Id: CZE.txt,v 1.1.2.1 2005/11/25 20:36:30 opus27 Exp $ -->
+<!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
+Hradec Králové
+Jihoèeský kraj 
+Jihomoravský kraj 
+Karlovarský kraj 
+Liberecký kraj 
+Moravskoslezský kraj 
+Olomoucký kraj 
+Pardubický kraj 
+Plzeòský kraj 
+Praha
+Støedoèeský kraj 
+Ústecký kraj 
+Vysocina
+Zlínský kraj 
