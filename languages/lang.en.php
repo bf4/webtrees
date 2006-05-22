@@ -606,6 +606,7 @@ $pgv_lang["show_place_list"]		= "Show All Places in a List";
 $pgv_lang["total_unic_places"]		= "Total Unique Places";
 
 //-- MEDIALIST FILE MESSAGES
+$pgv_lang["external_objects"]		= "External objects";
 $pgv_lang["multi_title"]			= "MultiMedia Object List";
 $pgv_lang["media_found"]			= "Media Objects found";
 $pgv_lang["view_person"]			= "View Person";

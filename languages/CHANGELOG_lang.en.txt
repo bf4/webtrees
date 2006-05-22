@@ -49,6 +49,7 @@ $pgv_lang["stpljpgraphno"]							12 May 2006				f		fixed html
 +$pgv_lang["replace_with"]							9 May 2006				A
 +$pgv_lang["search_record"]							9 May 2006				A
 +$pgv_lang["descendancy_header"]						18 May 2006				A
++$pgv_lang["external_objects"]						22 May 2006				A
 +$pgv_lang["roman_surn"]							19 May 2006				A
 +$pgv_lang["roman_givn"]							19 May 2006				A
 *$pgv_lang["hebrew_givn"]							19 May 2006				w
