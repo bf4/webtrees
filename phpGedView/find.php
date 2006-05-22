@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: find.php,v 1.1.2.54 2006/04/19 01:20:14 canajun2eh Exp $
+ * @version $Id: find.php,v 1.1.2.55 2006/05/22 17:33:06 canajun2eh Exp $
  */
 
 require("config.php");
@@ -503,7 +503,7 @@ if ($action=="filter") {
 			$levels = explode("/", $thumbdir);
 			$pthumb = "";
 			for($i=0; $i<count($levels)-2; $i++) $pthumb.=$levels[$i]."/";
-			$uplink = "<a href=\"find.php?directory=".rawurlencode($pdir)."&amp;thumbdir=".rawurlencode($pthumb)."&amp;level=".($level-1).$thumbget."&type=media&amp;choose=".$choose."\">&nbsp;&nbsp;&nbsp;&lt;-- $pdir&nbsp;&nbsp;&nbsp;</a><br />\n";
+			$uplink = "<a href=\"find.php?directory=".rawurlencode($pdir)."&amp;thumbdir=".rawurlencode($pthumb)."&amp;level=".($level-1).$thumbget."&type=media&amp;choose=".$choose."\">&nbsp;&nbsp;&nbsp;&lt;-- <span dir=\"ltr\">".$pdir."</span>&nbsp;&nbsp;&nbsp;</a><br />\n";
 		}
 
 		// Start of media directory table
@@ -526,11 +526,11 @@ if ($action=="filter") {
 				print $uplink."</td></tr>";
 			}
 			print "<tr><td class=\"descriptionbox $TEXT_DIRECTION\" colspan=\"2\">";
-			print "<a href=\"find.php?directory=".rawurlencode($directory)."&amp;thumbdir=".rawurlencode(str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $directory))."&amp;level=".$level.$thumbget."&amp;external_links=http&amp;type=media&amp;choose=".$choose."\">External media</a>";
+			print "<a href=\"find.php?directory=".rawurlencode($directory)."&amp;thumbdir=".rawurlencode(str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $directory))."&amp;level=".$level.$thumbget."&amp;external_links=http&amp;type=media&amp;choose=".$choose."\">".$pgv_lang["external_objects"]."</a>";
 			print "</td></tr>";
 			foreach ($dirs as $indexval => $dir) {
 				print "<tr><td class=\"list_value $TEXT_DIRECTION\" colspan=\"2\">";
-				print "<a href=\"find.php?directory=".rawurlencode($directory.$dir."/")."&thumbdir=".rawurlencode($directory.$dir."/")."&level=".($level+1).$thumbget."&amp;type=media&amp;choose=".$choose."\">$dir</a>";
+				print "<a href=\"find.php?directory=".rawurlencode($directory.$dir."/")."&thumbdir=".rawurlencode($directory.$dir."/")."&level=".($level+1).$thumbget."&amp;type=media&amp;choose=".$choose."\"><span dir=\"ltr\">".$dir."</span></a>";
 				print "</td></tr>";
 			}
 		}
@@ -566,7 +566,7 @@ if ($action=="filter") {
 						if ($chooseType!="file" && empty($media["XREF"])) $isvalid = false;
 					}
 					if ($isvalid) {
-						if ($media["EXISTS"] && filesize(filename_decode($media["FILE"])) != 0){
+						if ($media["EXISTS"] && @filesize(filename_decode($media["FILE"])) != 0){
 							$imgsize = findImageSize($media["FILE"]);
 							$imgwidth = $imgsize[0]+40;
 							$imgheight = $imgsize[1]+150;
@@ -595,9 +595,9 @@ if ($action=="filter") {
 							print "<br />";
 						}
 						if (!$embed){
-							print "<a href=\"javascript:;\" onclick=\"pasteid('".addslashes($media["FILE"])."');\">".$media["FILE"]."</a> -- ";
+							print "<a href=\"javascript:;\" onclick=\"pasteid('".addslashes($media["FILE"])."');\"><span dir=\"ltr\">".$media["FILE"]."</span></a> -- ";
 						}
-						else print "<a href=\"javascript:;\" onclick=\"pasteid('".$media["XREF"]."');\">".$media["FILE"]."</a> -- ";
+						else print "<a href=\"javascript:;\" onclick=\"pasteid('".$media["XREF"]."');\"><span dir=\"ltr\">".$media["FILE"]."</span></a> -- ";
 						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">".$pgv_lang["view"]."</a><br />";
 						if (!file_exists($media["FILE"]) && !stristr($media["FILE"], "://")) print $media["FILE"]."<br /><span class=\"error\">".$pgv_lang["file_not_exists"]."</span><br />";
 						else if (!stristr($media["FILE"], "://") && !empty($imgsize[0])) {

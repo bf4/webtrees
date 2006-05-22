@@ -438,6 +438,7 @@ $pgv_lang["show_place_list"]			= "Alle Orte in einer Liste anzeigen";
 $pgv_lang["total_unic_places"]		= "Anzahl Orte";
 
 //-- MEDIALIST FILE MESSAGES
+$pgv_lang["external_objects"]			= "Externe Objekte";
 $pgv_lang["multi_title"]                = "Liste der Multimedia Objekte";
 $pgv_lang["media_found"]                = "Multimedia Objekte gefunden";
 $pgv_lang["view_person"]                = "Person zeigen";

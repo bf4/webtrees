@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.0
+ - Fixed [ 1444327 ] Media Directories - LtR texts - RtL pages (canajun2eh)
  - Fixed [ 1490893 ] 4.0 B8 Marriage Type Drop Down List is missing (opus27)
  - Fixed [ 1492061 ] 4.0b8 ... styling on index page (canajun2eh)
  - Fixed [ 1491296 ] Date calc - BIRT forced first (coloredpixels)
