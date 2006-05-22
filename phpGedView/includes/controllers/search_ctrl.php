@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: search_ctrl.php,v 1.1.2.9 2006/04/15 12:08:59 canajun2eh Exp $
+ * @version $Id: search_ctrl.php,v 1.1.2.10 2006/05/20 20:00:30 canajun2eh Exp $
  */
 
 require_once ("config.php");
@@ -491,10 +491,10 @@ class SearchControllerRoot extends BaseController {
 					}
 				}
 				if ((count($this->myindilist) == 0) && (count($this->myfamlist) == 1) && (count($this->mysourcelist) == 0)) {
-					foreach ($this->myfamlist as $key => $fam) {
+					foreach ($this->myfamlist as $famid => $fam) {
 						if (count($this->sgeds) > 1) {
-							$ged = splitkey($key, "ged");
-							$famid = splitkey($key, "id");
+							$ged = splitkey($famid, "ged");
+							$famid = splitkey($famid, "id");
 							if ($GEDCOM != $ged) {
 								$oldged = $GEDCOM;
 								$GEDCOM = $ged;
