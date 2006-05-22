@@ -1,0 +1,7 @@
+<!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
+<!-- @version $Id: ISR_Northern.txt,v 1.1.2.2 2005/03/09 22:09:40 meliza Exp $ -->
+Akko
+Golan
+Kinneret
+Yizre'el
+Zefat

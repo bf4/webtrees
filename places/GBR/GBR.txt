@@ -1,0 +1,7 @@
+<!-- @version $Id: GBR.txt,v 1.1.2.1 2005/11/25 13:34:55 opus27 Exp $ -->
+<!-- @see http://www.wirksworth.org.uk/A26-CHAP.htm#Scotland -->
+Channel Islands (CHI)
+England (ENG)
+Northern Ireland (NIR)
+Scotland (SCT)
+Wales (WLS)

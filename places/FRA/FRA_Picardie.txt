@@ -1,0 +1,5 @@
+<!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
+<!-- $Id: FRA_Picardie.txt,v 1.1.2.1 2005/02/22 19:52:17 opus27 Exp $ -->
+Aisne
+Oise
+Somme

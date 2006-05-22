@@ -1,0 +1,6 @@
+<!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
+<!-- $Id: FRA_Bretagne.txt,v 1.1.2.1 2005/02/22 19:28:10 opus27 Exp $ -->
+Côtes-d'Armor
+Finistère
+Ille-et-Vilaine
+Morbihan

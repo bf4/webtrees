@@ -1,0 +1,22 @@
+<!-- $Id: NOR_Hedmark.txt,v 1.1.2.2 2005/05/27 17:45:40 canajun2eh Exp $ -->
+Alvdal
+Eidskog
+Elverum
+Engerdal
+Folldal
+Grue
+Hamar
+Kongsvinger
+Løten
+Nord-Odal
+Os
+Rendalen
+Ringsaker
+Stange
+Stor-Elvdal
+Sør-Odal
+Tolga
+Trysil
+Tynset
+Åmot
+Åsnes

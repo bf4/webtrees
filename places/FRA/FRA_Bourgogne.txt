@@ -1,0 +1,6 @@
+<!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
+<!-- $Id: FRA_Bourgogne.txt,v 1.1.2.1 2005/02/22 19:27:58 opus27 Exp $ -->
+Côte-d'Or
+Nièvre
+Saône-et-Loire
+Yonne

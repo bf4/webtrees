@@ -1,0 +1,21 @@
+<!-- $Id: NOR_Finnmark.txt,v 1.1.2.2 2005/05/27 17:45:40 canajun2eh Exp $ -->
+Alta
+Berlevåg
+Båtsfjord
+Gamvik
+Hammerfest
+Hasvik
+Karasjok
+Kautokeino
+Kvalsund
+Lebesby
+Loppa
+Måsvik
+Måsøy
+Nesseby
+Nordkapp
+Porsanger
+Sør-Varanger
+Tana
+Vadsø
+Vardø

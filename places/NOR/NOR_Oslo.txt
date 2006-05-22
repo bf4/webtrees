@@ -1,0 +1,21 @@
+<!-- $Id: NOR_Oslo.txt,v 1.1.2.3 2005/07/24 11:38:44 eikland Exp $ -->
+<!-- Oslo er b�de fylke og kommune - Listen under er bydeler i Oslo -->
+<!-- De to siste er ikke definert som egne bydeler -->
+Alna
+Bjerke
+Frogner
+Gamle Oslo
+Grorud
+Grünerløkka
+Nordre Aker
+Nordstrand
+Sagene
+Sentrum
+St. Hanshaugen
+Stovner
+Søndre Nordstrand
+Ullern
+Vestre Aker
+Østensjø
+Nordmarka
+Østmarka

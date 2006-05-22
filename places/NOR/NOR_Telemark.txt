@@ -1,0 +1,19 @@
+<!-- $Id: NOR_Telemark.txt,v 1.2.2.2 2005/05/27 17:45:42 canajun2eh Exp $ -->
+Bamble
+Bø
+Drangedal
+Fyresdal
+Hjartdal
+Kragerø
+Kviteseid
+Nissedal
+Nome
+Notodden
+Porsgrunn
+Sauherad
+Seljord
+Siljan
+Skien
+Tinn
+Tokke
+Vinje
