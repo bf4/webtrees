@@ -1,0 +1,103 @@
+<?php
+/**
+ * phpGedView Research Assistant Tool - ra_CompleteTask
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2005  John Finlay and Others
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * @package PhpGedView
+ * @subpackage Research_Assistant
+ * @version $Id: ra_CompleteTask.php,v 1.3 2006/04/06 20:12:35 yalnifj Exp $
+ * @author Jason Porter
+ * @author Wade Lasson
+ * @author Brandon Gagnon
+ * @author Brian Kramer
+ * @author Julian Gautier
+ */
+//-- security check, only allow access from module.php
+if (strstr($_SERVER["SCRIPT_NAME"],"module.php")===false) {
+	print "Now, why would you want to do that.  You're not hacking are you?";
+	exit;
+}
+// Require our base
+require_once 'ra_form.php';
+
+ /**
+  * Complete a Task Form
+  * 
+  * @uses ra_form
+  */
+ class ra_CompleteTask extends ra_form
+ {
+    /**
+     * Form contents
+     * 
+     * @return mixed
+     */
+ 	function contents()
+    {
+        $temp = ra_functions::print_form_list();
+        $filenames = explode("\n",$temp);
+        $out = '<form name="frmSelect" method="post"><input type="hidden" name="mod" value="research_assistant" />'
+            . '<input type="hidden" name="action" value="completeTask" />'
+            . '<input type="hidden" name="taskid" value="' . $_REQUEST['taskid'] . '" />'
+            . '<table align="center">'
+            . '<tr><th class="descriptionbox" colspan="2"><h1>Complete the Task</h1></th></tr>'
+            . '<tr><td class="optionbox">Choose the common research source:</td><td>';
+        
+        $out .=	'<select name="commonFrm" onchange="document.forms[\'frmSelect\'].submit();">';
+
+        // Show all of the form options
+        $out .= "<option>Select Form</option>";
+        for($i=0; $i<count($filenames); $i++)
+        {
+            if (!empty($filenames[$i])  )
+            {
+                $optVal=$filenames[$i];
+                if(!empty($_POST['commonFrm']) && $filenames[$i]==preg_replace('/_/', ' ', $_POST['commonFrm']))
+                {
+                $out .= '<option value="'. preg_replace('/\s+/', '_',$optVal).'" selected="selected">'.$filenames[$i].'</option>';
+                
+                }
+            else
+            {
+                $out .= '<option value="'. preg_replace('/\s+/', '_', $optVal).'">'.$filenames[$i].'</option>';
+            }
+                
+            }
+        }
+
+        $out .=	'</select></table></form>';
+
+        if(!empty($_POST['commonFrm']) && $_POST['commonFrm']!="Select Form")
+            $out .= ra_functions::print_form($_POST['commonFrm']);
+
+        return $out;
+ 	}
+
+    /**
+     * display_form 
+     * 
+     * @access public
+     * @return void
+     */
+ 	function display_form()
+ 	{
+ 		return $this->contents();
+ 	}
+ }
+?>

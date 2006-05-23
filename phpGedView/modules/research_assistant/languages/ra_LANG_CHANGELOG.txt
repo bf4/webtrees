@@ -1,0 +1,51 @@
+PHPGEDVIEW RESEARCH-LOG LANGUAGE FILE CHANGELOG
+
+# $Id: ra_LANG_CHANGELOG.txt,v 1.2 2006/02/08 16:15:15 yalnifj Exp $
+
+Use this file to follow the changes made to the language files
+between different versions of phpGedView.  Use the rs_lang.en.php
+file to view the english text for these changes.
+
++ $pgv_lang["text"] / means added
+- $pgv_lang["text"] / deleted
+* $pgv_lang["text"] / text was changed
+
+--------------------------------------------------------------
+
++ $pgv_lang["page"]                         // December 13, 2005 
++ $pgv_lang["city"]                         // December 13, 2005 
++ $pgv_lang["county"]                       // December 13, 2005 
++ $pgv_lang["enumDate"]                     // December 13, 2005 
++ $pgv_lang["call/url"]                     // December 13, 2005 
++ $pgv_lang["state"]                        // December 13, 2005 
++ $pgv_lang["okay"]                         // December 13, 2005 
++ $pgv_lang["rows"]                         // December 13, 2005
+* $pgv_lang["task_entry"]					// December 13, 2005
++ $pgv_lang["Edit_Task"]                	// November 29, 2005
++ $pgv_lang["End_Date"]                 	// November 29, 2005
++ $pgv_lang["Start_Name"]               	// November 29, 2005
++ $pgv_lang["Task_Name"]                	// November 29, 2005 
++ $pgv_lang["Folder_Name"]              	// November 29, 2005
++ $pgv_lang["Folder_View"]        			// November 29, 2005
++ $pgv_lang["Task_View"]        	   		// November 29, 2005
++ $pgv_lang["up_folder"]					// November 09, 2005		
++ $pgv_lang["edit_folder"]					// November 09, 2005
++ $pgv_lang["view_folders"]					// November 09, 2005
++ $pgv_lang["add_folder"]			 		// November 09, 2005
++ $pgv_lang["add_task"]						// November 09, 2005
++ $pgv_lang["Results"]                  	// October 28, 2005
++ $pgv_lang["Details"]						// October 28, 2005
+* $pgv_lang["help_rs_folders.php"]			// October 27, 2005
+* $pgv_lang["help_rs_editfolder.php"]		// October 27, 2005
+* $pgv_lang["help_rs_editlog.php"]			// October 27, 2005
+* $pgv_lang["page_header"]					// October 27, 2005
++ $pgv_lang["no_folder_name"]           	// November 3, 2005  
++ $pgv_lang["add_folder"]               	// November 3, 2005  
++ $pgv_lang["edit_folder"]              	// November 3, 2005  
++ $pgv_lang["folder_name"]              	// November 3, 2005 
++ $pgv_lang["Parent_Folder:"]           	// November 3, 2005  
++ $pgv_lang["No_Parent"]                	// November 3, 2005  
++ $pgv_lang["Folder_Description:"]      	// November 3, 2005  
++ $pgv_lang["Folder_names_must_be_unique"]	// November 3, 2005
++ $pgv_lang["folder_submitted"]         	// November 3, 2005  
++ $pgv_lang["folder_problem"]           	// November 3, 2005  

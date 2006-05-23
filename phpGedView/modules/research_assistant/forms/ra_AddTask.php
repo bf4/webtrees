@@ -1,0 +1,225 @@
+<?php
+/**
+ * phpGedView Research Assistant Tool - ra_AddTask
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2005  John Finlay and Others
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * @package PhpGedView
+ * @subpackage Research_Assistant
+ * @version $Id: ra_AddTask.php,v 1.5 2006/05/22 20:18:21 yalnifj Exp $:
+ * @author Jason Porter
+ * @author Wade Lasson
+ * @author Brandon Gagnon
+ * @author Brian Kramer
+ * @author Julian Gautier
+ */
+ //-- security check, only allow access from module.php
+if (strstr($_SERVER["SCRIPT_NAME"],"ra_AddTask.php")) {
+	print "Now, why would you want to do that.  You're not hacking are you?";
+	exit;
+}
+
+ require_once("includes/functions_db.php");
+
+    // Grab the global vars we need
+ 	global $pgv_lang, $TBLPREFIX;
+ 
+	/**
+	 * GETS all available FOLDERS and creates a combo box with the folders listed.
+	 * 
+	 * @return all available folders
+	 */
+    function getFolders() {
+        global $TBLPREFIX;
+
+        $out = "";
+		$sql = "select fr_name, fr_id from " . $TBLPREFIX . "folders";
+        $res = dbquery($sql);
+
+		while($foldername =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
+		    $out .= '<option value="'.$foldername['fr_id'].'"';
+		    if ($_REQUEST['folderid']==$foldername['fr_id']) $out .= '" selected="selected"';
+			$out .= '>'.$foldername['fr_name'] . '</option>';
+        }
+        
+		return $out;
+	}
+	
+	function truncate($trunstring, $max = 30, $rep = '...') 
+	{
+       if(strlen($trunstring) < 1)
+       {
+           $string = $rep;
+       }
+       else
+       {
+           $string = $trunstring;
+       }
+       $count = $max - strlen($rep);
+      
+       if(strlen($string) > $max)
+       {
+           return substr_replace($string, $rep, $count);
+       }
+       else
+       {
+           return $string;
+       }
+      
+   }
+	
+?>
+
+<!--JAVASCRIPT-->
+
+  
+
+<!--BEGIN ADD NEW TASK FORM-->
+
+<form action="module.php" method="post">
+    <input type="hidden" name="mod" value="research_assistant" />
+    <input type="hidden" name="action" value="submittask" />
+	<table class="list_table" align="center">
+        <tbody>
+            <tr>
+    <!--HEADING-->
+                <td colspan="4" align="right" class="topbottombar"> 
+                    <h2><?php print $pgv_lang["add_new_task"]; print_help_link("ra_add_task_help", "qm", '', false, false); ?></h2>
+                </td>
+            </tr>
+            <tr>
+    <!--TITLE-->
+                <td class="descriptionbox">
+                    <?php print $pgv_lang["title"]; ?>
+                </td>
+                <td class="optionbox"><input type="text" name="title" value="" size="35"/></td>
+    <!--FOLDER--> 
+                <td class="descriptionbox">
+                    <?php print $pgv_lang["folder"]; ?>
+                </td>
+                <td class="optionbox">
+                    <select name="folder">
+                        <?php 
+                            // Gets a list of all available folders in the format { <option value="folderid">foldername }
+                            print getFolders();
+                        ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+    <!-- ASSIGN TASK -->
+    		<tr>
+    			<td class="descriptionbox">
+    				<?php print "Assign Task"; ?>
+    			</td>
+    			<td class="optionbox" colspan=3> 
+    			<select name="Users"> <option value=""></option>
+    			<?php $users = getusers(); 
+    				foreach($users as $username => $user)
+    				{
+    					print "<option value=\"$username\">".$user['firstname']." ".$user['lastname']."</option>";
+    				}
+    				?>  		
+    			</select>
+    				
+    			</td>
+    			<tr>
+    		</tr>	
+    <!--DESCRIPTION-->
+                <td class="descriptionbox">
+                    <?php print $pgv_lang["description"]; ?>
+                </td>
+                <td class="optionbox" colspan="3"><textarea name="desc" rows="3" cols="55"></textarea></td>
+            </tr>    
+            <tr>	
+    
+    <!--SOURCES-->
+                <td class="descriptionbox" >
+                    <?php  print $pgv_lang["source"]; ?>
+                </td>
+                <td class="optionbox" colspan="3">
+                <script language="JavaScript" type="text/javascript">
+	<!--
+	var pastefield;
+	var nameElement;
+	var lastId;
+	function paste_id(value) {
+		pastefield.value = pastefield.value + ";" + value;
+		lastId = value;
+	}
+	function pastename(name) {
+		nameElement.innerHTML = nameElement.innerHTML + '<a id="link_'+lastId+'" href="source.php?sid='+pastefield.value+'">'+name+'</a> <a id="rem_'+lastId+'" href="#" onclick="clearname(\''+pastefield.id+'\', \'link_'+lastId+'\', \''+lastId+'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>\n';
+	}
+	function clearname(hiddenName, name, id) {
+		pastefield = document.getElementById(hiddenName);
+		if (pastefield) {
+//			pastefield.value = pastefield.value.replace(new RegExp("\:"+id), '');
+			pos1 = pastefield.value.indexOf(";"+id);
+			if (pos1>-1) {
+				pos2 = pastefield.value.indexOf(";", pos1+1);
+				if (pos2==-1) pos2 = pastefield.value.length;
+				pastefield.value = pastefield.value.substring(0, pos1)+pastefield.value.substring(pos2);
+			}
+		}
+		nameElement = document.getElementById(name);
+		if (nameElement) {
+			nameElement.innerHTML = '';
+		}
+		nameElement = document.getElementById('rem_'+id);
+		if (nameElement) {
+			nameElement.innerHTML = '';
+		}
+	}
+	//-->
+	</script>
+                   <input type="hidden" id="sourceid" name="sourceid" size="3" value="" />
+                   <div id="sourcelink"></div>
+                     <?php print_findsource_link("sourceid", "sourcelink"); ?>
+                    <br />
+                </td>
+            </tr>
+            <tr>
+    <!--PEOPLE-->
+                <td class="descriptionbox">
+                    <?php print $pgv_lang["people"];
+                    if (!empty($_REQUEST['pid'])) $pid = $_REQUEST['pid'];
+					else $pid = ""; 
+                    ?>
+                </td>
+                <td id="peoplecell" class="optionbox" colspan="3">
+                   <input type="hidden" id="personid" name="personid" value="<?php print $pid; ?>" />
+                   <div id="peoplelink">
+                   <?php if (!empty($pid)) {
+                   		print '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.get_person_name($pid).'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\''.$pid.'\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+                   } ?>
+                   </div>
+                     <?php print_findindi_link("personid", "peoplelink", false, true); ?>
+                    <br />
+                </td>
+            </tr>
+            <tr>
+    <!--SUBMIT-->
+                <th colspan="4" align="right" class="topbottombar">
+                    <input type="submit" value="<?php print $pgv_lang["submit"]; ?>" onclick="javascript:selectList(); selectPeopleList();" />
+                </th>
+            </tr>
+        </tbody>
+	</table>
+</form>
+
+<!--END ADD NEW TASK FORM-->
