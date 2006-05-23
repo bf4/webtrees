@@ -93,8 +93,8 @@ function build_indiv_map($indifacts, $famids) {
                         $marker["name"][$i] = "Marker".$i;
                         $marker["placed"][$i] = "no";
                         $mapdata["placerec"][$i] = $placerec;
-                        $mapdata["lati"][$i] = $match1[1];
-                        $mapdata["lng"][$i] = $match2[1];
+                        $mapdata["lati"][$i] = str_replace(array('N', 'S'), array('', '-') , $match1[1]); 
+                        $mapdata["lng"][$i] = str_replace(array('E', 'W'), array('', '-') , $match2[1]); 
                         $ctd = preg_match("/2 DATE (.+)/", $value[1], $match);
                         if ($ctd>0) {
                             $mapdata["date"][$i] = $match[1];
@@ -134,30 +134,27 @@ function build_indiv_map($indifacts, $famids) {
                             $ctla = preg_match("/\d LATI (.*)/", $srec, $match1);
                             $ctlo = preg_match("/\d LONG (.*)/", $srec, $match2);
                             if (($ctla>0) && ($ctlo>0)) {
-                                $i = $i + 1;
                                 if (displayDetailsByID($smatch[$j][1])) {
+                                    $i = $i + 1;
                                     $mapdata["show"][$i]     = "yes";
+                                    $mapdata["fact"][$i]     = $factarray["CHIL"];
+                                    $mapdata["sex"][$i]      = "NN";
+                                    if (preg_match("/1 SEX F/", $srec)>0) {
+                                        $mapdata["fact"][$i] = $pgv_lang["daughter"];
+                                        $mapdata["sex"][$i]  = "F";
+                                    }
+                                    if (preg_match("/1 SEX M/", $srec)>0) {
+                                        $mapdata["fact"][$i] = $pgv_lang["son"];
+                                        $mapdata["sex"][$i]  = "M";
+                                    }
+                                    $marker["name"][$i]      = "Marker".$i;
+                                    $marker["placed"][$i]    = "no";
+                                    $mapdata["placerec"][$i] = $placerec;
+                                    $mapdata["lati"][$i]     = str_replace(array('N', 'S'), array('', '-') , $match1[1]); 
+                                    $mapdata["lng"][$i]      = str_replace(array('E', 'W'), array('', '-') , $match2[1]); 
+                                    $mapdata["date"][$i]     = $matchd[1];
+                                    $mapdata["name"][$i]     = $smatch[$j][1];
                                 }
-                                else {
-                                    $mapdata["show"][$i]     = "no";
-                                }
-                                $mapdata["fact"][$i]     = $factarray["CHIL"];
-                                $mapdata["sex"][$i]      = "NN";
-                                if (preg_match("/1 SEX F/", $srec)>0) {
-                                    $mapdata["fact"][$i] = $pgv_lang["daughter"];
-                                    $mapdata["sex"][$i]  = "F";
-                                }
-                                if (preg_match("/1 SEX M/", $srec)>0) {
-                                    $mapdata["fact"][$i] = $pgv_lang["son"];
-                                    $mapdata["sex"][$i]  = "M";
-                                }
-                                $marker["name"][$i]      = "Marker".$i;
-                                $marker["placed"][$i]    = "no";
-                                $mapdata["placerec"][$i] = $placerec;
-                                $mapdata["lati"][$i]     = $match1[1];
-                                $mapdata["lng"][$i]      = $match2[1];
-                                $mapdata["date"][$i]     = $matchd[1];
-                                $mapdata["name"][$i]     = $smatch[$j][1];
                             }
                         }
                     }
@@ -194,7 +191,9 @@ function build_indiv_map($indifacts, $famids) {
         print "    var bounds = new GLatLngBounds();\n";
 
         for($j=1; $j<=$i; $j++) {
-            print "    bounds.extend(new GLatLng(".$mapdata["lati"][$j].", ".$mapdata["lng"][$j]."));\n";
+            if ($mapdata["show"][$j] == "yes") {
+                print "    bounds.extend(new GLatLng(".$mapdata["lati"][$j].", ".$mapdata["lng"][$j]."));\n";
+            }
         }
         print "    SetBoundaries(bounds);\n";
 
@@ -237,9 +236,9 @@ function build_indiv_map($indifacts, $famids) {
                     $tabcounter = 0;
                     $markerindex = 0;
                     $marker["placed"][$j] = "yes";
-                    print "    var ".$marker["name"][$j]."_".$markerindex." = new GMarker(new GLatLng(".$mapdata["lati"][$j].", ".$mapdata["lng"][$j]."));\n";
-                    print "    var ".$marker["name"][$j]."_".$markerindex."Info = [\n";
                     if ($mapdata["show"][$j] == "yes") {
+                        print "    var ".$marker["name"][$j]."_".$markerindex." = new GMarker(new GLatLng(".$mapdata["lati"][$j].", ".$mapdata["lng"][$j]."));\n";
+                        print "    var ".$marker["name"][$j]."_".$markerindex."Info = [\n";
                         $marker["index"][$j] = $indexcounter;
                         $marker["tabindex"][$j] = $tabcounter;
                         $tabcounter = $tabcounter + 1;
@@ -309,7 +308,13 @@ function build_indiv_map($indifacts, $famids) {
         print "<table width=\"95%\">\n";
         print "<tr><td valign=\"top\" width=\"".$GOOGLEMAP_XSIZE."px\">\n";
         print "<div id=\"map_pane\" style=\"width: ".$GOOGLEMAP_XSIZE."px; height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
-        print "<br><a href=\"javascript:ResizeMap()\">Redraw map</a></td>\n";
+        print "<table width=100%><tr>\n";
+        print "<td align=\"left\"><a href=\"javascript:ResizeMap()\">".$pgv_lang["gm_redraw_map"]."</a></td>\n";
+        print "<td align=\"right\">\n";
+        print "<a href=\"javascript:map.setMapType(G_NORMAL_MAP)\">".$pgv_lang["gm_map"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
+        print "<a href=\"javascript:map.setMapType(G_SATELLITE_MAP)\">".$pgv_lang["gm_satellite"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
+        print "<a href=\"javascript:map.setMapType(G_HYBRID_MAP)\">".$pgv_lang["gm_hybrid"]."</a>\n";
+        print "</td></tr></table>\n";
         print "<td valign=\"top\">\n";
         print "\t<table class=\"facts_table\">";
     }
