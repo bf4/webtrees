@@ -29,8 +29,8 @@ $GOOGLEMAP_API_KEY  = "<Fill in your own key>";
 
 $GOOGLEMAP_MAP_TYPE = "G_HYBRID_MAP";   // possible values: G_NORMAL_MAP, G_SATELLITE_MAP or G_HYBRID_MAP.
 
-$GOOGLEMAP_MIN_ZOON = "2";              // min zoom level
-$GOOGLEMAP_MAX_ZOON = "14";             // max zoom level
+$GOOGLEMAP_MIN_ZOOM = "2";              // min zoom level
+$GOOGLEMAP_MAX_ZOOM = "14";             // max zoom level
 
 $GOOGLEMAP_XSIZE    = "600";            // X-size of Google map
 $GOOGLEMAP_YSIZE    = "400";            // Y-size of Google map
