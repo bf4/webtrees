@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Admin
- * @version $Id: message.php,v 1.34.2.14 2006/02/03 04:20:09 kosherjava Exp $
+ * @version $Id$
  */
 require("config.php");
 require $confighelpfile["english"];

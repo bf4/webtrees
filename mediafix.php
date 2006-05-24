@@ -20,7 +20,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: individual.php,v 1.252.2.98 2005/08/16 04:04:25 kosherjava Exp $
+ * @version $Id$
  */
 
 require("config.php");

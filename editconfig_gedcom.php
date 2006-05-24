@@ -24,7 +24,7 @@
  * @author PGV Development Team
  * @package PhpGedView
  * @subpackage Admin
- * @version $Id: editconfig_gedcom.php,v 1.151.2.108 2006/05/14 01:52:18 canajun2eh Exp $
+ * @version $Id$
  */
 
 require "config.php";

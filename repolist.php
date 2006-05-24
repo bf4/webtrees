@@ -18,7 +18,7 @@
  *
  * @package PhpGedView
  * @subpackage Lists
- * @version $Id: repolist.php,v 1.1.2.14 2006/05/04 10:22:14 canajun2eh Exp $
+ * @version $Id$
  */
 
 require("config.php");

@@ -19,7 +19,7 @@
  *
  * This Page Is Valid XHTML 1.0 Transitional! > 24 August 2005
  *
- * @version $Id: famlist.php,v 1.142.2.32 2006/05/03 10:26:06 canajun2eh Exp $
+ * @version $Id$
  * @package PhpGedView
  * @subpackage Lists
  */

@@ -5,7 +5,7 @@
 	This and other information can be found online at
 	http://www.phpgedview.net
 
-	# $Id: changelog.txt,v 1.522.2.546 2006/05/24 04:57:50 yalnifj Exp $
+	# $Id$
 =====================================================================
 
 Version 4.0

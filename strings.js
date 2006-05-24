@@ -20,7 +20,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: strings.js,v 1.1.2.3 2005/11/25 22:18:03 opus27 Exp $
+ * @version $Id$
  */
 	function trim(str) {
 		return str.replace(/(^\s*)|(\s*$)/g,'');

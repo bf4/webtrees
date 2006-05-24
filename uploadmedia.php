@@ -19,7 +19,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: uploadmedia.php,v 1.15.2.26 2006/04/08 13:54:46 canajun2eh Exp $
+ * @version $Id$
  * @package PhpGedView
  * @subpackage Media
  */

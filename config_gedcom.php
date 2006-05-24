@@ -27,7 +27,7 @@
  * @package PhpGedView
  * @subpackage Admin
  * @see editconfig_gedcom.php
- * @version $Id: config_gedcom.php,v 1.47.2.35 2006/03/24 21:46:24 kosherjava Exp $
+ * @version $Id$
  */
 
 if (preg_match("/\Wconfig_gedcom\.php/", $_SERVER["SCRIPT_NAME"])>0) {

@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Edit
- * @version $Id: edit_interface.php,v 1.1.2.114 2006/05/17 15:16:05 yalnifj Exp $
+ * @version $Id$
  */
 
 require("config.php");

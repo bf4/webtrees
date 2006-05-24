@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: descendancy.php,v 1.103.2.25 2006/04/06 18:19:07 yalnifj Exp $
+ * @version $Id$
  */
 
 // -- include config file

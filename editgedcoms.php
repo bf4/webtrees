@@ -25,7 +25,7 @@
  * @package PhpGedView
  * @subpackage Admin
  * @see index/gedcoms.php
- * @version $Id: editgedcoms.php,v 1.41.2.48 2006/04/30 09:55:42 canajun2eh Exp $
+ * @version $Id$
  */
 
 require "config.php";

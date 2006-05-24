@@ -32,7 +32,7 @@
  *
  * This Page Is Valid XHTML 1.0 Transitional! > 24 August 2005
  *
- * @version $Id: patriarchlist.php,v 1.2.2.18 2005/12/14 18:51:59 yalnifj Exp $
+ * @version $Id$
  * @package PhpGedView
  * @subpackage Lists
  */

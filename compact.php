@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: compact.php,v 1.1.2.6 2006/04/25 15:41:33 opus27 Exp $
+ * @version $Id$
  */
 require("config.php");
 require("includes/functions_charts.php");

@@ -26,7 +26,7 @@
  * This Page Is Valid XHTML 1.0 Transitional! > 21 August 2005
  *
  * @package PhpGedView
- * @version $Id: search_engine.php,v 1.1.2.2 2006/05/01 03:24:51 coloredpixels Exp $
+ * @version $Id$
  */
 global $SEARCH_SPIDER, $CHARACTER_SET;
 global $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $DEFAULT_GEDCOM;

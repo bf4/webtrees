@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Lists
- * @version $Id: placelist.php,v 1.88.2.35 2006/05/03 10:26:07 canajun2eh Exp $
+ * @version $Id$
  */
 
 require("config.php");

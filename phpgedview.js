@@ -20,7 +20,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: phpgedview.js,v 1.57.2.65 2006/05/14 01:52:18 canajun2eh Exp $
+ * @version $Id$
  */
 if (!document.getElementById)	// Check if browser supports the getElementByID function
 {

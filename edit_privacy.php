@@ -24,7 +24,7 @@ thi<?php
  * @author PGV Development Team
  * @package PhpGedView
  * @subpackage Privacy
- * @version $Id: edit_privacy.php,v 1.59.2.37 2006/05/04 02:39:21 canajun2eh Exp $
+ * @version $Id$
  */
 
 require "config.php";

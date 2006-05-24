@@ -24,7 +24,7 @@
  * @package PhpGedView
  * @subpackage Admin
  * @see config.php
- * @version $Id: editconfig.php,v 1.81.2.61 2006/05/18 03:35:33 yalnifj Exp $
+ * @version $Id$
  */
 
 require "config.php";

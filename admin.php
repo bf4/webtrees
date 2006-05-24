@@ -25,7 +25,7 @@
  *
  * @package PhpGedView
  * @subpackage Admin
- * @version $Id: admin.php,v 1.68.2.52 2006/04/13 12:06:35 canajun2eh Exp $
+ * @version $Id$
  */
 
 /**

@@ -22,7 +22,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: source.php,v 1.68.2.40 2006/05/15 10:26:15 canajun2eh Exp $
+ * @version $Id$
  */
 
 require("config.php");

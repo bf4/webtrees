@@ -24,7 +24,7 @@
  *
  * This Page Is Valid XHTML 1.0 Transitional! > 22 August 2005
  *
- * $Id: pedigree.php,v 1.50.2.29 2006/04/26 22:38:34 yalnifj Exp $
+ * $Id$
  * @package PhpGedView
  * @subpackage Charts
  */

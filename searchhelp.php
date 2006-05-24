@@ -22,7 +22,7 @@
  * This Page Is Valid XHTML 1.0 Transitional! > 3 September 2005
  *
  * @package PhpGedView
- * @version $Id: searchhelp.php,v 1.1.2.10 2006/01/19 17:49:10 canajun2eh Exp $
+ * @version $Id$
  */
 
 require "config.php";

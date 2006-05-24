@@ -22,7 +22,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: index.php,v 1.145.2.33 2006/04/13 12:06:36 canajun2eh Exp $
+ * @version $Id$
  */
 
 if (isset ($_REQUEST['mod']))

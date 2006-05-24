@@ -19,7 +19,7 @@
  *
  * @package PhpGedView
  * @subpackage Lists
- * @version $Id: aliveinyear.php,v 1.1.2.28 2005/12/14 18:51:59 yalnifj Exp $
+ * @version $Id$
  */
 
 require("config.php");

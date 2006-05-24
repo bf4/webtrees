@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: family.php,v 1.92.2.46 2006/05/15 10:26:15 canajun2eh Exp $
+ * @version $Id$
  */
 
 require_once 'includes/controllers/family_ctrl.php';

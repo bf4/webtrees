@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: find.php,v 1.1.2.55 2006/05/22 17:33:06 canajun2eh Exp $
+ * @version $Id$
  */
 
 require("config.php");

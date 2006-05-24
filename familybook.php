@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: familybook.php,v 1.1.2.14 2006/04/14 14:13:19 canajun2eh Exp $
+ * @version $Id$
  */
 
 require("config.php");

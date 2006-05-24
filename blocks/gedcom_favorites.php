@@ -21,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id: gedcom_favorites.php,v 1.1.2.23 2006/05/16 16:28:33 yalnifj Exp $
+ * $Id$
  * @package PhpGedView
  * @subpackage Blocks
  */

@@ -24,7 +24,7 @@
  * @author PGV Development Team
  * @package PhpGedView
  * @subpackage Admin
- * @version $Id: help_text.php,v 1.15.2.12 2006/01/13 23:00:18 yalnifj Exp $
+ * @version $Id$
  */
 
 require "config.php";

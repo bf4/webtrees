@@ -21,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id: user_favorites.php,v 1.1.2.21 2006/04/18 15:23:17 canajun2eh Exp $
+ * $Id$
  * @package PhpGedView
  * @subpackage Blocks
  */

@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Edit
- * @version $Id: edit_quickupdate.php,v 1.1.2.80 2006/05/23 18:09:34 yalnifj Exp $
+ * @version $Id$
  */
 
 require("config.php");

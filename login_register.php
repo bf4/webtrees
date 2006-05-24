@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Admin
- * @version $Id: login_register.php,v 1.71.2.41 2006/04/16 18:04:19 canajun2eh Exp $
+ * @version $Id$
  */
 
 require "config.php";
