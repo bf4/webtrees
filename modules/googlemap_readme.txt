@@ -13,6 +13,11 @@ INSTALLATION
    is needed to protect the original config.php for people who already installed
    this module)
 
+Configuration of the Googlemap module can be done through the Googlemap
+configuration page. When logged into PGV as administrator you will see a
+"Manage"-link just below the map. Click on this link and the Configuration page
+will be shown. Here you can enter your API-key and do some more settings.
+
 The map will only be shown if at least one fact has a PLAC with coordinates
 attached to it. The coordinates cannot yet be entered through the normal
 windows. You have to add it directly into the GEDCOM record. The correct
@@ -27,6 +32,12 @@ The MAP, LONG and LATI lines should be added directly after the PLAC line.
 
 Changelog
 =========
+
+Version 0.4:
+- Improved privacy handling
+- German language file
+- Configuration using Googlemap configuration page
+- Accept LATI/LONG in both N/S/E/W and +/- notation
 
 Version 0.3:
 - If more than 4 events at one place, then create new marker
