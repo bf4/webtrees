@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @author Jan Hapala
- * @version $Id: facts.cz.php,v 1.8.2.8 2006/01/18 03:56:35 canajun2eh Exp $
+ * @version $Id$
  */
 if (preg_match("/facts\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "Nemáte přímý přístup k souboru s češtinou.";

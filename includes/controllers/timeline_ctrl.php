@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: timeline_ctrl.php,v 1.1.2.6 2006/04/06 17:41:01 yalnifj Exp $
+ * @version $Id$
  */
 require("config.php");
 require("includes/functions_charts.php");

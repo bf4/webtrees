@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Webservice
- * @version $Id: PGVServiceLogic.class.php,v 1.1.2.27 2006/05/15 18:13:35 yalnifj Exp $
+ * @version $Id$
  */
  
 require_once('genealogyService.php');

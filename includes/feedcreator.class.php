@@ -26,7 +26,7 @@
  * @author www.bitfolge.de
  * @package PhpGedView
  * @subpackage RSS
- * @version $Id: feedcreator.class.php,v 1.1.2.5 2005/12/08 05:19:55 kosherjava Exp $
+ * @version $Id$
  *
  * Changelog:
  *

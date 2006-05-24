@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: media_class.php,v 1.1.2.4 2006/04/11 04:27:55 yalnifj Exp $
+ * @version $Id$
  */
 
 require_once('includes/gedcomrecord.php');

@@ -24,7 +24,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: functions_print_lists.php,v 1.1.2.14 2006/05/04 10:22:14 canajun2eh Exp $
+ * @version $Id$
  */
 if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
 	 print "Now, why would you want to do that. You're not hacking are you?";

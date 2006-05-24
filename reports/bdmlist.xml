@@ -2,7 +2,7 @@
 	<!--
 	@package PhpGedView
 	@subpackage Reports
-	@version $Id: bdmlist.xml,v 1.1.2.1 2006/02/28 18:38:09 opus27 Exp $ $Id: bdmlist.xml,v 1.1.2.1 2006/02/28 18:38:09 opus27 Exp $
+	@version $Id$ $Id$
 	-->
 	<PGVRTitle>
 		<PGVRvar var="pgv_lang[bdm]" />

@@ -36,7 +36,7 @@
  * @author Meliza
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: countries.he.php,v 1.1.2.5 2005/08/09 04:34:43 kosherjava Exp $
+ * @version $Id$
  */
 
 if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {

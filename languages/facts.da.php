@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @author Jørgen Hansen
- * @version $Id: facts.da.php,v 1.17.2.11 2006/02/16 18:16:14 canajun2eh Exp $
+ * @version $Id$
  */
 
 if (preg_match("/facts\...\.php$/", $_SERVER["PHP_SELF"])>0) {

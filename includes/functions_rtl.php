@@ -23,7 +23,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @version $Id: functions_rtl.php,v 1.1.2.16 2006/05/14 10:54:23 canajun2eh Exp $
+ * @version $Id$
  */
 
 /**

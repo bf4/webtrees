@@ -1,5 +1,5 @@
 <?php
-# $Id: templecodes.php,v 1.1.2.3 2005/02/23 01:45:41 canajun2eh Exp $
+# $Id$
 $TEMPLE_CODES = array();
 $TEMPLE_CODES["ABA"]=	"Aba, Nigeria";
 $TEMPLE_CODES["ACCRA"]=	"Accra, Ghana";

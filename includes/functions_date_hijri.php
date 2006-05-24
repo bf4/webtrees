@@ -23,7 +23,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @version $Id: functions_date_hijri.php,v 1.1.2.4 2005/05/21 23:53:46 sfezz Exp $
+ * @version $Id$
  */
 
 /**

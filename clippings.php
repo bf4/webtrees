@@ -237,7 +237,7 @@ else {
 				}
 				if ($tag=='FAM') {
 					$dName = get_family_descriptor($clipping['id']);
-				    
+				    $names = preg_split("/,/", $dName);
 					$dName = check_NN($names);
 				    print "<a href=\"family.php?famid=".$clipping['id']."\">".PrintReady($dName)."</a>";
 				}

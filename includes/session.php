@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Reports
- * @version $Id: session.php,v 1.1.2.107 2006/05/20 05:32:04 yalnifj Exp $
+ * @version $Id$
  */
 if (strstr($_SERVER["SCRIPT_NAME"],"session")) {
 	print "Now, why would you want to do that.  You're not hacking are you?";
@@ -106,7 +106,8 @@ $real_browsers = array(
 	'Lynx',
 	'Java/',
 	'PEAR',
-	'MSFrontPage'
+	'MSFrontPage',
+	'RssReader'
 	);
 
 // We overlay the following name with carefully selected characters.
@@ -947,5 +948,3 @@ if ($Languages_Default) {					// If Languages not yet configured
 	$language_settings["english"]["pgv_lang_use"] = false;
 	$language_settings["$LANGUAGE"]["pgv_lang_use"] = true;
 }
-
-?>

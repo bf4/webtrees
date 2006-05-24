@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @author Anton Luu
- * @version $Id: lang.vi.php,v 1.1.2.11 2006/01/18 03:57:16 canajun2eh Exp $
+ * @version $Id$
  */
 if (preg_match("/lang\...\.php$/", $_SERVER["PHP_SELF"])>0) {
 	print "You cannot access a language file directly.";

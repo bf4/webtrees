@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @version $Id: menu.php,v 1.1.2.34 2006/05/02 02:49:29 canajun2eh Exp $
+ * @version $Id$
  */
 
 class Menu

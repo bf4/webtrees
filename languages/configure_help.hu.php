@@ -24,7 +24,7 @@
  * @author Gábor Hrotkó
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: configure_help.hu.php,v 1.14.2.6 2006/05/03 02:29:24 canajun2eh Exp $
+ * @version $Id$
  */
 if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "A nyelvi fájl közvetlenül nem érhető el.";

@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @version $Id: functions_name.php,v 1.1.2.71 2006/04/29 22:03:12 meliza Exp $
+ * @version $Id$
  */
 
 /**

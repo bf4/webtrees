@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @version $Id: configure_help.en.php,v 1.168.2.170 2006/05/17 20:41:06 yalnifj Exp $
+ * @version $Id$
  */
 if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "You cannot access a language file directly.";

@@ -20,7 +20,7 @@
  *
  * @package PhpGedView
  * @subpackage DataModel
- * @version $Id: localclient_class.php,v 1.1.2.9 2006/04/08 19:41:47 yalnifj Exp $
+ * @version $Id$
  */
 
 require_once 'includes/serviceclient_class.php';

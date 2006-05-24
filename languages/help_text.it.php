@@ -23,7 +23,7 @@
  * @author Fabio Parri, Lorenzo
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: help_text.it.php,v 1.3.2.2 2005/12/07 19:01:59 yalnifj Exp $
+ * @version $Id$
  */
 
 ?>

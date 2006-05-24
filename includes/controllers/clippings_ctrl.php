@@ -25,7 +25,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: ancestry_ctrl.php,v 1.1.2.4 2006/04/08 21:01:44 yalnifj Exp $
+ * @version $Id$
  */
 /**
 * Main controller class for the Clippings page.
@@ -51,8 +51,10 @@ function same_group($a, $b) {
 	}
 	
 function id_in_cart($id) {
-	global $cart, $GEDCOM;
+	global $cart, $GEDCOM,$whole_gramps;
 	$ct = count($cart);
+	if(isset($whole_grams))
+		return true;
 	for ($i = 0; $i < $ct; $i++) {
 		$temp = $cart[$i];
 		if ($temp['id'] == $id && $temp['gedcom'] == $GEDCOM) {
@@ -221,11 +223,6 @@ class ClippingsControllerRoot extends BaseController {
 								$filetext = preg_replace("/UTF-8/", "ANSI", $filetext);
 								$filetext = utf8_decode($filetext);
 							}
-							if ($IncludeMedia == "yes")
-							{
-								//Here is where we will add the zipping logic
-								
-							}
 							
 							for ($i = 0; $i < $ct; $i++) {
 								$clipping = $cart[$i];
@@ -343,8 +340,8 @@ class ClippingsControllerRoot extends BaseController {
 							if ($filetype == "gramps") {
 								// Sort the clippings cart because the export works better when the cart is sorted
 								usort($cart, "same_group");
-								
-								$gramps_Exp = new GrampsExport();
+								require_once("includes/GEClippings.php");
+								$gramps_Exp = new GEClippings();
 								$gramps_Exp->begin_xml();
 								$ct = count($cart);
 								usort($cart, "same_group");
@@ -360,13 +357,28 @@ class ClippingsControllerRoot extends BaseController {
 										$famrec = find_family_record($clipping["id"]);
 										$gramps_Exp->create_family($famrec, $clipping["id"]);
 									}
+//									if ($clipping["type"] == "obje") {
+//										$famrec = find_family_record($clipping["id"]);
+//										$gramps_Exp->create_family($famrec, $clipping["id"]);
+//									}
+//									if ($clipping["type"] == "sour") {
+//										$famrec = find_family_record($clipping["id"]);
+//										$gramps_Exp->create_family($famrec, $clipping["id"]);
+//									}
 								}
 								$this->download_data = $gramps_Exp->dom->saveXML();
+								if($convert)
+								{
+									$this->download_data = utf8_decode($this->download_data);	
+								}
 								$this->media_list = $gramps_Exp->get_all_media();
 								$this->download_clipping();
 		}
 	}
-}	
+}
+/**
+ * Loads everything in the clippings cart into a zip file.
+ */	
 function zip_cart()
 {
 	global $filetype,$INDEX_DIRECTORY,$pgv_lang,$VERSION,$VERSION_RELEASE,$IncludeMedia;
@@ -413,7 +425,10 @@ function zip_cart()
 		print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."$tempFileName ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
 	}
 }
-
+/**
+ * Brings up the download dialog box and allows the user to download the file
+ * based on the options he or she selected
+ */
 function download_clipping(){
 	global $filetype, $Zip, $IncludeMedia;
 		
@@ -449,7 +464,11 @@ function download_clipping(){
 	print_r ($this->download_data);	
 	exit;
 }
-
+/**
+ * Inserts a clipping into the clipping cart
+ * 
+ * @param 
+ */
 	function add_clipping($clipping) {
 		global $cart, $pgv_lang, $SHOW_SOURCES, $MULTI_MEDIA, $GEDCOM;
 		if (($clipping['id'] == false) || ($clipping['id'] == ""))

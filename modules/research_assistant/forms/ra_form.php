@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: ra_form.php 916 2006-05-23 20:14:02Z jfinlay $
+ * @version $Id: ra_form.php 932 2006-05-24 22:09:39Z jfinlay $
  * @author Jason Porter
  */
 //-- security check, only allow access from module.php
@@ -29,6 +29,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"module.php")===false) {
 	print "Now, why would you want to do that.  You're not hacking are you?";
 	exit;
 }
+require_once "includes/person_class.php";
 /**
  * Base class for Research Assistant forms
  * 
@@ -198,7 +199,7 @@ class ra_form {
     /**
      * displays the form for editing the source citation information
      */
-    function sourceCitationForm() {
+    function sourceCitationForm($colspan=3) {
     	global $pgv_lang, $factarray;
 	
 		$citation = $this->getSourceCitationData();
@@ -206,12 +207,12 @@ class ra_form {
 
 		$out = '<tr>
 			<td class="descriptionbox">'.$pgv_lang['title'].'</td>
-			<td class="optionbox">'.$task['t_title'].'</td>
+			<td class="optionbox" colspan="'.$colspan.'">'.$task['t_title'].'</td>
 		</tr>';
 		
 		$out .= '<!--SOURCES-->
 			<td class="descriptionbox">'.print_help_link("edit_SOUR_help", "qm",'',false,true).$pgv_lang["source"].'</td>
-                <td class="optionbox" colspan="3">
+                <td class="optionbox" colspan="'.$colspan.'">
                 <script language="JavaScript" type="text/javascript">
 	<!--
 	var pastefield;
@@ -262,7 +263,7 @@ class ra_form {
 		$out .= $this->simpleCitationForm($citation);
 		$out .= '<tr>
 			<td class="descriptionbox">'.$pgv_lang["people"].'</td>
-            <td id="peoplecell" class="optionbox" colspan="3">
+            <td id="peoplecell" class="optionbox" colspan="'.$colspan.'">
                    <div id="peoplelink">';
                    			$people = $this->getPeople();
                    			$pval = '';
@@ -276,7 +277,7 @@ class ra_form {
                    $out .= '<br />
             </td>
         </tr>';
-        $out .= '<tr><td class="descriptionbox" align="center" colspan="2"><input type="submit" value="Next &gt;&gt;"></td></tr>';
+        $out .= '<tr><td class="descriptionbox" align="center" colspan="'.($colspan+1).'"><input type="submit" value="Next &gt;&gt;"></td></tr>';
 		return $out;
     }
     

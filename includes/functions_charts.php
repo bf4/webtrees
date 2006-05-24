@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: functions_charts.php,v 1.1.2.53 2006/04/30 15:40:23 opus27 Exp $
+ * @version $Id$
  */
 require_once("includes/person_class.php");
 if (strstr($_SERVER["SCRIPT_NAME"], "functions")) {

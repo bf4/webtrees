@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @author Maurício Menegazzo Rosa
  * @author Anderson Wilson
- * @version $Id: facts.pt-br.php,v 1.4.2.9 2006/05/20 23:37:05 canajun2eh Exp $
+ * @version $Id$
  */
 if (preg_match("/facts\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "You cannot access a language file directly.";

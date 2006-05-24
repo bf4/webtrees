@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @subpackage Languages
  * @author Ricardo Lago
- * @version $Id: configure_help.es.php,v 1.19.2.4 2005/12/07 19:01:47 yalnifj Exp $
+ * @version $Id$
  */
 
 if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {

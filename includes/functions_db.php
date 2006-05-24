@@ -24,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: functions_db.php,v 1.1.2.208 2006/05/24 05:09:06 yalnifj Exp $
+ * @version $Id$
  * @package PhpGedView
  * @subpackage DB
  */
@@ -70,7 +70,7 @@ function &dbquery($sql, $show_error=true, $count=0) {
 		$res =& $DBCONN->query($sql);
 	else
 		$res =& $DBCONN->limitQuery($sql, 0, $count);
-		
+
 	$LAST_QUERY = $sql;
 	$TOTAL_QUERIES++;
 	if (!empty($SQL_LOG)) {
@@ -526,16 +526,16 @@ function get_repo_list() {
 		$repo = array();
 		$tt = preg_match("/1 NAME (.*)/", $row["o_gedcom"], $match);
 		if ($tt == "0") $name = $row["o_id"]; else $name = $match[1];
+		$repo["name"] = $name;
 		$repo["id"] = $row["o_id"];
 		$repo["gedfile"] = $row["o_file"];
 		$repo["type"] = $row["o_type"];
-		$repo["name"] = $name;
 		$repo["gedcom"] = $row["o_gedcom"];
 		$row = db_cleanup($row);
 		$repolist[$row["o_id"]]= $repo;
 	}
 	$res->free();
-	ksort($repolist);
+	asort($repolist); // sort by repo name
 	return $repolist;
 }
 
@@ -981,7 +981,7 @@ function search_indis_names($query, $allgeds=false) {
 		}
 	}
 	$res->free();
-	
+
 	//-- search the names table too
 	if (!is_array($query)) $sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND n_name $term '".$DBCONN->escapeSimple($query)."'";
 	else {
@@ -1813,11 +1813,11 @@ function get_indi_alpha() {
 	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $UCDiacritOrder, $LCDiacritWhole, $LCDiacritStrip, $LCDiacritOrder;
 
 	$indialpha = array();
-	
+
 	$danishex = array("OE", "AE", "AA");
 	$danishFrom = array("AA", "AE", "OE");
 	$danishTo = array("Å", "Æ", "Ø");
-	
+
 	$sql = "SELECT DISTINCT i_letter AS alpha FROM ".$TBLPREFIX."individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."' ORDER BY alpha";
 	$res = dbquery($sql);
 
@@ -1888,7 +1888,7 @@ function get_fam_alpha() {
 	$danishex = array("OE", "AE", "AA");
 	$danishFrom = array("AA", "AE", "OE");
 	$danishTo = array("Å", "Æ", "Ø");
-	
+
 	$sql = "SELECT DISTINCT i_letter AS alpha FROM ".$TBLPREFIX."individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."' AND i_gedcom LIKE '%1 FAMS%' ORDER BY alpha";
 	$res = dbquery($sql);
 
@@ -1972,7 +1972,7 @@ function get_alpha_indis($letter) {
 	$danishex = array("OE", "AE", "AA");
 	$danishFrom = array("AA", "AE", "OE");
 	$danishTo = array("Å", "Æ", "Ø");
-	
+
 	$checkDictSort = true;
 
 	$sql = "SELECT * FROM ".$TBLPREFIX."individuals WHERE ";
@@ -2017,7 +2017,7 @@ function get_alpha_indis($letter) {
 					else $sql .= "(i_letter = '".$DBCONN->escapeSimple($letter)."'".$text.") ";
 				}
 			}
-		} 
+		}
 		if ($text=="") {
 			if ($MULTI_LETTER_ALPHABET[$LANGUAGE]=="") $sql .= "i_letter LIKE '".$DBCONN->escapeSimple($letter)."%'";
 			else $sql .= "i_letter = '".$DBCONN->escapeSimple($letter)."'";
@@ -2043,7 +2043,7 @@ function get_alpha_indis($letter) {
 		//}
 	}
 	$res->free();
-	
+
 	$checkDictSort = true;
 
 	$sql = "SELECT i_id, i_name, i_file, i_isdead, i_gedcom, i_letter, i_surname, n_letter, n_name, n_surname, n_letter, n_type FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND ";
@@ -2088,7 +2088,7 @@ function get_alpha_indis($letter) {
 					else $sql .= "(n_letter = '".$DBCONN->escapeSimple($letter)."'".$text.")";
 				}
 			}
-		} 
+		}
 		if ($text=="") {
 			if ($MULTI_LETTER_ALPHABET[$LANGUAGE]=="") $sql .= "n_letter LIKE '".$DBCONN->escapeSimple($letter)."%'";
 			else $sql .= "n_letter = '".$DBCONN->escapeSimple($letter)."'";
@@ -2194,7 +2194,7 @@ function get_alpha_fams($letter) {
 	$danishex = array("OE", "AE", "AA");
 	$danishFrom = array("AA", "AE", "OE");
 	$danishTo = array("Å", "Æ", "Ø");
-	
+
 	$tfamlist = array();
 	$temp = $SHOW_MARRIED_NAMES;
 	$SHOW_MARRIED_NAMES = false;
@@ -2814,7 +2814,7 @@ function get_event_list() {
 			fwrite($fp, serialize($found_facts));
 			fclose($fp);
 			$logline = AddToLog($GEDCOM."_upcoming.php updated by >".getUserName()."<");
- 			if (!empty($COMMIT_COMMAND)) check_in($logline, $GEDCOM."_upcoming.php", $INDEX_DIRECTORY);	
+ 			if (!empty($COMMIT_COMMAND)) check_in($logline, $GEDCOM."_upcoming.php", $INDEX_DIRECTORY);
 		}
 	}
 
@@ -2828,6 +2828,3 @@ function compare_foundFacts_datestamp($a, $b) {
 	if ($a[3] == $b[3]) return 0;
 	return ($a[3] < $b[3]) ? -1 : 1;
 }
-
-
-?>

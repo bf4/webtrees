@@ -24,7 +24,7 @@
  * @author Gábor Hrotkó
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: configure_help.he.php,v 1.45.2.32 2005/09/02 21:30:02 meliza Exp $
+ * @version $Id$
  */
 
 if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {

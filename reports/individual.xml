@@ -1,5 +1,5 @@
 <PGVReport access="PGV_PUBLIC" icon="indis">
-	<!-- $Id: individual.xml,v 1.12.2.6 2006/01/21 13:11:54 canajun2eh Exp $ -->
+	<!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[individual_report]" /></PGVRTitle>
 	<PGVRDescription>Prints an individual record report</PGVRDescription>
 	<PGVRInput name="pid" lookup="INDI" type="text" default=""><PGVRvar var="pgv_lang[enter_pid]" />:</PGVRInput>

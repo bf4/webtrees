@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @version $Id: sort_tables_utf8.php,v 1.1.2.2 2006/05/18 10:09:46 canajun2eh Exp $
+ * @version $Id$
  */
 
 /**

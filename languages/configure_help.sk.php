@@ -9,7 +9,7 @@
    Change Log:	5/1/03 - File Created
    2005.02.19 "PhpGedView" and "GEDCOM" made consistent across all language files  G.Kroll (canajun2eh)
 ===================================================*/
-# $Id: configure_help.sk.php,v 1.1.2.3 2006/03/14 12:43:15 canajun2eh Exp $
+# $Id$
 if (preg_match("/configure_help\...\.php$/", $_SERVER["PHP_SELF"])>0) {
 	print "Nemáte priamy prístup k súboru so slovenčinou.";
 	exit;

@@ -23,7 +23,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @version $Id: functions_date_hebrew.php,v 1.1.2.10 2005/12/16 17:39:53 yalnifj Exp $
+ * @version $Id$
  */
 
 /**

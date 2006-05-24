@@ -1,6 +1,6 @@
 PHPGEDVIEW LANGUAGE FILE CHANGELOG
 
-# $Id: CHANGELOG_facts.en.txt,v 1.1.2.3 2006/03/15 14:35:02 canajun2eh Exp $
+# $Id$
 
 For changes prior to 2005.03.15, please refer to LANG_CHANGELOG_bef.20050315.txt
 For changes between 2005.03.15 and 2005.12.08, refer to LANG_CHANGELOG_bef.2005.12.08.txt

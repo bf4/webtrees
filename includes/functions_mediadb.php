@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage MediaDB
- * @version $Id: functions_mediadb.php,v 1.1.2.103 2006/05/04 15:20:03 yalnifj Exp $
+ * @version $Id$
  */
 
 if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {

@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Reports
- * @version $Id: reportpdf.php,v 1.1.2.60 2006/05/22 22:33:30 yalnifj Exp $
+ * @version $Id$
  */
 
 //-- do not allow direct access to this file

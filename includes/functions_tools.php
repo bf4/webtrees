@@ -2,7 +2,7 @@
 /**
  * Functions used Tools to cleanup and manipulate Gedcoms before they are imported
  *
- * $Id: functions_tools.php,v 1.1.2.14 2006/04/14 23:39:00 canajun2eh Exp $
+ * $Id$
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2003  John Finlay and Others

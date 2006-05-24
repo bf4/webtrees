@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: individual_ctrl.php,v 1.1.2.52 2006/05/16 10:39:01 canajun2eh Exp $
+ * @version $Id$
  */
 require_once("config.php");
 require_once 'includes/functions_print_facts.php';

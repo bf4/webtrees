@@ -35,7 +35,6 @@ if (strstr($_SERVER["SCRIPT_NAME"],"Generic_Form.php")) {
 // Require the base class and any functions we need.
 require_once "ra_form.php";
 require_once "includes/functions_edit.php";
-require_once "includes/person_class.php";
 global $factsfile, $LANGUAGE, $factarray;
 require_once($factsfile["english"]);
 if (file_exists($factsfile[$LANGUAGE])) require_once($factsfile[$LANGUAGE]);

@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @subpackage Languages
  * @author Eduardo Cociña
- * @version $Id: lang.es-ar.php,v 1.8.2.5 2006/05/20 10:36:16 canajun2eh Exp $
+ * @version $Id$
  */
 //-- Spanish Date Format
 $DATE_FORMAT = "D M Y";

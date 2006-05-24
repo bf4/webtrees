@@ -7,7 +7,7 @@
  *
  * @package PhpGedView
  * @subpackage Reports
- * @version $Id: reportheader.php,v 1.1.2.3 2005/05/17 20:24:18 roland-d Exp $
+ * @version $Id$
  */
 
 //-- do not allow direct access to this file

@@ -190,6 +190,7 @@ $pgv_lang["edit_task"]					= "Edit Task";
 $pgv_lang["configure_privacy"]		    = "Configure Privacy";
 $pgv_lang["show_my_tasks"]              = "Show My Tasks";
 $pgv_lang["show_add_task"]		        = "Show Add Task";
+$pgv_lang["show_auto_gen_task"]         = "Show Auto Generate Task";
 $pgv_lang["show_view_folders"]		    = "Show View Folders";
 $pgv_lang["show_add_folder"]		    = "Show Add Folder";
 $pgv_lang["show_add_unlinked_source"]   = "Show Add Unlinked Source";

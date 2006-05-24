@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @author Anton Luu
  * @author Lan Nguyen
- * @version $Id: facts.vi.php,v 1.3.2.8 2006/01/18 03:56:36 canajun2eh Exp $
+ * @version $Id$
  */
 if (preg_match("/facts\...\.php$/", $_SERVER["PHP_SELF"])>0) {
 	print "Bạn không thể vào thẳng nhu-liệu ngôn ngữ được.";

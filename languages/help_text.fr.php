@@ -23,7 +23,7 @@
  * @subpackage Languages
  * @author Christophe Bx
  * @author Julien Damon
- * @version $Id: help_text.fr.php,v 1.17.2.17 2006/03/17 20:58:00 opus27 Exp $
+ * @version $Id$
  */
 if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
   print "You cannot access a language file directly.";

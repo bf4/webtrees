@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * @author Jørgen Hansen
  * @package PhpGedView
- * @version $Id: help_text.da.php,v 1.13.2.9 2006/02/16 18:16:14 canajun2eh Exp $
+ * @version $Id$
  */
 if (preg_match("/help_text\...\.php$/", $_SERVER["PHP_SELF"])>0) {
 print "Du har ikke direkte adgang til sprogfilen.";

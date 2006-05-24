@@ -21,7 +21,7 @@
  * along with this program; if not;write to the Free Software
  * Foundation;Inc.;59 Temple Place;Suite 330;Boston;MA  02111-1307  USA
  *
- * $Id: lang_settings_std.php,v 1.1.2.27 2006/05/06 09:47:02 canajun2eh Exp $
+ * $Id$
  *
  * @package PhpGedView
  * @subpackage Languages

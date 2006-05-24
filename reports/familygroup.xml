@@ -1,5 +1,5 @@
 <PGVReport access="PGV_PUBLIC" icon="sfamily">
-	<!-- $Id: familygroup.xml,v 1.22.2.5 2006/01/21 13:11:54 canajun2eh Exp $ -->
+	<!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[family_group_report]" /></PGVRTitle>
 	<PGVRDescription>Prints a PAF style family group record</PGVRDescription>
 	<!-- inputs for the report -->

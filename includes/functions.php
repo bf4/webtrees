@@ -23,7 +23,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @version $Id: functions.php,v 1.1.2.241 2006/05/22 04:19:59 coloredpixels Exp $
+ * @version $Id$
  */
 
 /**

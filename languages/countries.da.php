@@ -37,7 +37,7 @@
  *											
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: countries.da.php,v 1.1.2.4 2006/02/16 18:16:14 canajun2eh Exp $
+ * @version $Id$
  */
 if (preg_match("/lang\...\.php$/", $_SERVER["PHP_SELF"])>0) {
 		print "Du kan ikke få adgang til en sprog fil direkte.";

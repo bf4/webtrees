@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @author Tymoteusz Motylewski www.motylewscy.com
- * @version $Id: configure_help.pl.php,v 1.9.2.5 2005/12/07 19:01:57 yalnifj Exp $
+ * @version $Id$
  */
 if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "You cannot access a language file directly.";

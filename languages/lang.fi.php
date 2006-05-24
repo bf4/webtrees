@@ -23,7 +23,7 @@
  * @subpackage Languages
  * @author Matti Valve
  * @author Jaakko Sarell
- * @version $Id: lang.fi.php,v 1.18.2.61 2006/05/22 21:08:11 meliza Exp $
+ * @version $Id$
  */
 if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "You cannot access a language file directly.";

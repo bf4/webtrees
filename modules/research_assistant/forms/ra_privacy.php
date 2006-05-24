@@ -15,6 +15,8 @@
  
  $SHOW_ADD_TASK              = $PRIV_NONE;
  
+ $SHOW_AUTO_GEN_TASK         = $PRIV_NONE;
+ 
  $SHOW_VIEW_FOLDERS          = $PRIV_NONE;
  
  $SHOW_ADD_FOLDER            = $PRIV_NONE;

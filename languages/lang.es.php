@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @subpackage Languages
  * @author Ricardo Lago
- * @version $Id: lang.es.php,v 1.16.2.7 2006/05/20 10:36:16 canajun2eh Exp $
+ * @version $Id$
  */
 if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "Usted no puede acceder a este archivo de idioma directamente.";

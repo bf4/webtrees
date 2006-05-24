@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @author Kurt Norgaz
- * @version $Id: help_text.tr.php,v 1.9.2.4 2005/12/07 19:02:02 yalnifj Exp $
+ * @version $Id$
  */
 if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 print "You cannot access a language file directly.";

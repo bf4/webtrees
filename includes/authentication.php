@@ -9,7 +9,7 @@
  * You can extend PhpGedView to work with other systems by implementing the functions in this file.
  * Other possible options are to use LDAP for authentication.
  *
- * $Id: authentication.php,v 1.1.2.23 2006/05/04 15:19:04 yalnifj Exp $
+ * $Id$
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2003	John Finlay and Others

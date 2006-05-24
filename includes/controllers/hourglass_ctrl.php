@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: hourglass_ctrl.php,v 1.1.2.9 2006/01/28 16:26:28 canajun2eh Exp $
+ * @version $Id$
  */
 require_once("config.php");
 require_once 'includes/controllers/basecontrol.php';
