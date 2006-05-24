@@ -24,7 +24,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: index_edit.php,v 1.16.2.38 2006/02/16 23:02:22 yalnifj Exp $
+ * @version $Id$
  */
 
 require("config.php");

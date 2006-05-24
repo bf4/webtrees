@@ -26,7 +26,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: clippings.php,v 1.62.2.31 2006/04/10 12:42:50 canajun2eh Exp $
+ * @version $Id$
  */
 // -- include config file
 require("config.php");

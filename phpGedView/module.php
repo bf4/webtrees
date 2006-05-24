@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: module.php,v 1.1.2.3 2005/12/12 05:00:42 pkellum Exp $
+ * @version $Id$
  * @author Patrick Kellum
  */
 

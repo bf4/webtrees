@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @version $Id: printlog.php,v 1.1.2.8 2006/05/01 15:11:19 canajun2eh Exp $
+ * @version $Id$
  */
 
 require "config.php";

@@ -21,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: top10_surnames.php,v 1.1.2.26 2006/05/01 03:21:49 coloredpixels Exp $
+ * @version $Id$
  * @package PhpGedView
  * @subpackage Blocks
  */

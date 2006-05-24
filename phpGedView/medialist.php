@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Lists
- * @version $Id: medialist.php,v 1.80.2.51 2006/05/17 02:17:17 kosherjava Exp $
+ * @version $Id$
  */
 require("config.php");
 require_once 'includes/functions_print_facts.php';

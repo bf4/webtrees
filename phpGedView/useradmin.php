@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Admin
- * @version $Id: useradmin.php,v 1.127.2.80 2006/05/14 01:52:18 canajun2eh Exp $
+ * @version $Id$
  */
 
 /**

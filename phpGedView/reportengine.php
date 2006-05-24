@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Reports
- * @version $Id: reportengine.php,v 1.20.2.34 2006/05/04 15:14:32 yalnifj Exp $
+ * @version $Id$
  */
 
 require("config.php");

@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: relationship.php,v 1.73.2.24 2006/05/15 07:16:24 opus27 Exp $
+ * @version $Id$
  */
 
 // -- include config file

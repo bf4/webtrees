@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Lists
- * @version $Id: slklist.php,v 1.2.2.5 2005/08/08 19:01:22 yalnifj Exp $
+ * @version $Id$
  */
 
 /*=================================================

@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: findmedia.php,v 1.12.2.27 2006/04/13 12:06:36 canajun2eh Exp $
+ * @version $Id$
  */
 require("config.php");
 require("includes/functions_edit.php");

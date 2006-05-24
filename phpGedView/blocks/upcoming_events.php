@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Blocks
- * @version $Id: upcoming_events.php,v 1.1.2.54 2006/04/19 01:20:14 canajun2eh Exp $
+ * @version $Id$
  */
 
 $PGV_BLOCKS["print_upcoming_events"]["name"]        = $pgv_lang["upcoming_events_block"];

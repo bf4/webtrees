@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Edit
- * @version $Id: edit_merge.php,v 1.1.2.16 2006/04/26 20:27:44 yalnifj Exp $
+ * @version $Id$
  */
 
 require("config.php");

@@ -17,7 +17,7 @@
  * Beneath the details list is the option to skip the surname list or show it.
  * Depending on the current status of the list.
  *
- * $Id: indilist.php,v 1.150.2.42 2006/05/13 06:26:08 coloredpixels Exp $
+ * $Id$
  * @package PhpGedView
  * @subpackage Lists
  */

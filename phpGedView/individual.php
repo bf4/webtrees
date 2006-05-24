@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: individual.php,v 1.252.2.167 2006/05/22 12:04:38 opus27 Exp $
+ * @version $Id$
  */
 
 require_once("includes/controllers/individual_ctrl.php");

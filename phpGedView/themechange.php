@@ -22,7 +22,7 @@
  * @author John Finlay
  * @package PhpGedView
  * @subpackage Themes
- * @version $Id: themechange.php,v 1.4.2.4 2005/11/14 20:53:25 yalnifj Exp $
+ * @version $Id$
  */
 
 require("config.php");

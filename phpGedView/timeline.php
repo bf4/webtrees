@@ -25,7 +25,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: timeline.php,v 1.114.2.26 2006/04/26 22:49:19 yalnifj Exp $
+ * @version $Id$
  */
 
 require_once("includes/controllers/timeline_ctrl.php");

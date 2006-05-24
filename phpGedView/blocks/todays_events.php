@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Blocks
- * @version $Id: todays_events.php,v 1.1.2.49 2006/05/16 15:02:35 canajun2eh Exp $
+ * @version $Id$
  */
 
 $PGV_BLOCKS["print_todays_events"]["name"]        = $pgv_lang["todays_events_block"];

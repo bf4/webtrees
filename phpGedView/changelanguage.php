@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: changelanguage.php,v 1.1.2.23 2006/04/13 12:06:35 canajun2eh Exp $
+ * @version $Id$
  */
  
 require "config.php";

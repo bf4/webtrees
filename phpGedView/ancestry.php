@@ -26,7 +26,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: ancestry.php,v 1.6.2.20 2006/04/08 21:02:26 yalnifj Exp $
+ * @version $Id$
  */
 
 require_once("includes/controllers/ancestry_ctrl.php");

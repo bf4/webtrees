@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: editlang.php,v 1.73.2.46 2006/05/15 19:02:09 yalnifj Exp $
+ * @version $Id$
  */
 
 require "config.php";

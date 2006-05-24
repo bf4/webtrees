@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Admin
- * @version $Id: manageservers.php,v 1.1.2.17 2006/05/04 15:04:19 yalnifj Exp $
+ * @version $Id$
  * @author rbennett
  */
 

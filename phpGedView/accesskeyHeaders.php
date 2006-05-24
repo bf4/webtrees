@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: accesskeyHeaders.php,v 1.1.2.3 2006/05/01 05:09:26 coloredpixels Exp $
+ * @version $Id$
  */
  ?>
 <?php

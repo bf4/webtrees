@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: addremotelink.php,v 1.1.2.19 2006/05/19 22:57:27 yalnifj Exp $
+ * @version $Id$
  */
 
 require("config.php");

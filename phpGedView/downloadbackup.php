@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Admin
- * @version $Id: downloadbackup.php,v 1.1.2.4 2006/03/03 16:08:07 yalnifj Exp $
+ * @version $Id$
  */
 
 require "config.php";

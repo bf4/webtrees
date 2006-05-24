@@ -23,7 +23,7 @@
  * @author Boudewijn Sjouke	sjouke@users.sourceforge.net
  * @package PhpGedView
  * @subpackage Admin
- * @version $Id: usermigrate.php,v 1.8.2.34 2006/03/03 16:08:27 yalnifj Exp $
+ * @version $Id$
  */
 require "config.php";
 require $confighelpfile["english"];

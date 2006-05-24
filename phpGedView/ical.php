@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Export
- * @version $Id: ical.php,v 1.1.2.10 2006/03/20 02:47:14 kosherjava Exp $
+ * @version $Id$
  * @TODO This currently generates the file with only descendants of  the root person. We have to retrieve ancestors descendants, aunts, uncles and cousins, nieces nephews and great-aunts/uncles etc.
  * @TODO Add a menu item in the "Other" menu in the individual page to "Export Birthday and Anniversary Events". This should bring the user to a page with options to select events of what relationship to user should be included. Options should be ancestors, descendants, siblings, aunts & uncles, in-laws, cousins etc
  * @TODO Add support to export all events in a calendar (day month or year) in the iCal format. Option to be recurring or one time should be available.

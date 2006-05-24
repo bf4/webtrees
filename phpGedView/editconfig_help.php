@@ -19,7 +19,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: editconfig_help.php,v 1.10.2.8 2006/01/13 23:00:17 yalnifj Exp $
+ * @version $Id$
  * @package PhpGedView
  * @subpackage Admin
  */

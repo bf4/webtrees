@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage MediaDB
- * @version $Id: inverselink.php,v 1.1.2.25 2006/04/19 01:20:14 canajun2eh Exp $
+ * @version $Id$
  */
 require("config.php");
 require("includes/functions_edit.php");

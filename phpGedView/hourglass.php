@@ -25,7 +25,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: hourglass.php,v 1.5.2.25 2005/12/09 23:38:13 yalnifj Exp $
+ * @version $Id$
  */
 require_once("includes/controllers/hourglass_ctrl.php");
 

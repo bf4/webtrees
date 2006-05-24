@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Admin
- * @version $Id: edituser.php,v 1.36.2.27 2006/04/05 15:37:51 yalnifj Exp $
+ * @version $Id$
  */
 
 require "config.php";

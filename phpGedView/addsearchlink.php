@@ -22,7 +22,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: addsearchlink.php,v 1.1.2.1 2005/12/03 16:14:02 yalnifj Exp $
+ * @version $Id$
  */
 
 require ("config.php");

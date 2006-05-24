@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: fanchart.php,v 1.10.2.24 2006/02/11 14:44:45 opus27 Exp $
+ * @version $Id$
  */
 require("config.php");
 require("includes/functions_charts.php");

@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Edit
- * @version $Id: edit_changes.php,v 1.1.2.24 2006/05/15 10:26:15 canajun2eh Exp $
+ * @version $Id$
  */
 
 require "config.php";

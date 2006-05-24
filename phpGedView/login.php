@@ -25,7 +25,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: login.php,v 1.74.2.26 2006/04/12 12:55:25 canajun2eh Exp $
+ * @version $Id$
  */ 
 
 require "config.php";

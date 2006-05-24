@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Themes
- * @version $Id: theme_edit.php,v 1.5.2.5 2006/01/13 23:00:18 yalnifj Exp $
+ * @version $Id$
  */
 
 // -- include config file

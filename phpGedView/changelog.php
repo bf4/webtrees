@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Admin
- * @version $Id: changelog.php,v 1.2.2.3 2006/05/22 12:02:50 opus27 Exp $
+ * @version $Id$
  */
 
 $search = @$HTTP_GET_VARS["search"];

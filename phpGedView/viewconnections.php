@@ -25,7 +25,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: viewconnections.php,v 1.1.2.8 2006/01/13 23:00:18 yalnifj Exp $
+ * @version $Id$
  */
 require('config.php');
 require_once("includes/functions_print_lists.php");

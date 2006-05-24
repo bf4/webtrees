@@ -21,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @ersion $Id: review_changes.php,v 1.1.2.29 2006/04/18 15:23:17 canajun2eh Exp $
+ * @ersion $Id$
  * @package PhpGedView
  * @subpackage Blocks
  * @todo add a time configuration option

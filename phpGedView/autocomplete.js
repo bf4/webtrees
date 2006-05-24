@@ -20,7 +20,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: autocomplete.js,v 1.1.2.1 2005/01/19 13:25:46 opus27 Exp $
+ * @version $Id$
  * @author http://wact.sourceforge.net/examples/tags/form/inputautocomplete.php
  */
 <!--

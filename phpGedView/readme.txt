@@ -7,7 +7,7 @@
     This and other information can be found online at
     http://www.PhpGedView.net
 
-    # $Id: readme.txt,v 1.109.2.25 2006/02/05 04:08:05 sridharb Exp $
+    # $Id$
 =======================================================
 
 CONTENTS

@@ -21,7 +21,7 @@
  *
  * @package    PhpGedView
  * @subpackage	DB
- * @version    $Id: upgrade33-40.php,v 1.1.2.14 2006/02/09 19:34:47 yalnifj Exp $
+ * @version    $Id$
  */
 
 require "config.php";
