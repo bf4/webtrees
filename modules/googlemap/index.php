@@ -25,6 +25,7 @@
  * @author Johan Borkhuis
  */
 
-include_once('googlemap.php');
+header("Location: ../../index.php");
+exit;
 
 ?>

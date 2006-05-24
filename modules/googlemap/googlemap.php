@@ -54,8 +54,9 @@ function print_fact_place_map($factrec) {
 }
 
 function build_indiv_map($indifacts, $famids) {
-    global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOON, $GOOGLEMAP_MAX_ZOON, $GEDCOM;
+    global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOON, $GOOGLEMAP_MAX_ZOON, $GEDCOM, $SERVER_URL;
     global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
+    global $GOOGLEMAP_MAX_ZOOM, $GOOGLEMAP_MIN_ZOOM;
 
     $mapdata             = array();
     $mapdata["show"]     = array();         // Show this location on the map
@@ -187,6 +188,8 @@ function build_indiv_map($indifacts, $famids) {
         print "            GUnload(); // Firefox and standard browsers\n";
         print "        }, false);\n";
         print "    }\n\n";
+        print "var minZoomLevel = ".$GOOGLEMAP_MIN_ZOOM.";\n";
+        print "var maxZoomLevel = ".$GOOGLEMAP_MAX_ZOOM.";\n";
         print "function SetMarkersAndBounds ()\n{\n";
         print "    var bounds = new GLatLngBounds();\n";
 
@@ -314,7 +317,13 @@ function build_indiv_map($indifacts, $famids) {
         print "<a href=\"javascript:map.setMapType(G_NORMAL_MAP)\">".$pgv_lang["gm_map"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
         print "<a href=\"javascript:map.setMapType(G_SATELLITE_MAP)\">".$pgv_lang["gm_satellite"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
         print "<a href=\"javascript:map.setMapType(G_HYBRID_MAP)\">".$pgv_lang["gm_hybrid"]."</a>\n";
-        print "</td></tr></table>\n";
+        print "</td></tr>\n";
+        if (userIsAdmin(getUserName())) {
+            print "<tr><td align=\"center\" colspan=\"2\">\n";
+            print "<a href=\"".$SERVER_URL."/module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+            print "</td></tr>\n";
+        }
+        print "</table>\n";
         print "<td valign=\"top\">\n";
         print "\t<table class=\"facts_table\">";
     }

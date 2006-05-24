@@ -52,11 +52,11 @@
                 zoomlevel = map.getBoundsZoomLevel(Boundaries);
             }
             map.setCenter(new GLatLng(clat, clng));
-            if (zoomlevel == 1) {
-                zoomlevel = 5;
+            if (zoomlevel < minZoomLevel) {
+                zoomlevel = minZoomLevel;
             }
-            if (zoomlevel > 14) {
-                zoomlevel = 14;
+            if (zoomlevel > maxZoomLevel) {
+                zoomlevel = maxZoomLevel;
             }
             map.checkResize();
             map.setCenter(new GLatLng(clat, clng), zoomlevel-1);
