@@ -13,6 +13,10 @@ INSTALLATION
    is needed to protect the original config.php for people who already installed
    this module)
 
+NOTE:
+CHECK YOUR GOOGLEMAP CONFIG.PHP! There was a typo in the original config.php.
+Instead of _ZOOM it said _ZOON. Correct this to get your map working!
+
 Configuration of the Googlemap module can be done through the Googlemap
 configuration page. When logged into PGV as administrator you will see a
 "Manage"-link just below the map. Click on this link and the Configuration page
