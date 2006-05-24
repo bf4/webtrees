@@ -66,7 +66,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 			if (empty($gedrec)) $gedrec = find_record_in_file($change['d_gid']);
 
 			if (empty($gedrec)) {
-				print "Record ".$change['d_gid']." not found ";
+				if ($DEBUG) print "Record ".$change['d_gid']." not found ";
 			} else {
 				$type = "INDI";
 				$match = array();
