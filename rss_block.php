@@ -21,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id: rss_block.php,v 1.1.2.17 2006/03/29 05:46:56 kosherjava Exp $
+ * $Id$
  * @package PhpGedView
  * @subpackage Blocks
  */

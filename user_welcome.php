@@ -21,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: user_welcome.php,v 1.1.2.11 2006/04/13 12:06:37 canajun2eh Exp $
+ * @version $Id$
  * @package PhpGedView
  * @subpackage Blocks
  */

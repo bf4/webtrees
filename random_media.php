@@ -21,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: random_media.php,v 1.1.2.44 2006/05/21 12:15:52 canajun2eh Exp $
+ * @version $Id$
  * @package PhpGedView
  * @subpackage Blocks
  */

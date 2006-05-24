@@ -21,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: theme_select.php,v 1.1.2.9 2005/08/06 11:26:07 canajun2eh Exp $
+ * @version $Id$
  * @package PhpGedView
  * @subpackage Blocks
  */
