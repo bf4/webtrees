@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @author Patrik Hansson
- * @version $Id: lang.sv.php,v 1.109.2.65 2006/05/06 20:11:17 pathan Exp $
+ * @version $Id: lang.sv.php,v 1.109.2.66 2006/05/22 20:18:49 pathan Exp $
  */
 if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "You cannot access a language file directly.";
@@ -264,6 +264,7 @@ $pgv_lang["place_list2"] 		= "Ortslista";
 $pgv_lang["show_place_hierarchy"]	= "Visa orter i hierarkin";
 $pgv_lang["show_place_list"]	= "Visa alla orter i en lista";
 $pgv_lang["total_unic_places"]	= "Totalt antal unika platser";
+$pgv_lang["external_objects"]		= "Externa objekt";
 
 //-- MEDIALIST FILE MESSAGES
 $pgv_lang["multi_title"]		= "Lista över Multimediaobjekt";
@@ -1248,6 +1249,8 @@ $pgv_lang["no_feed"]			= "Det finns ingen RSS-matning tillgänglig för denna Ph
 $pgv_lang["feed_login"]			= "Om du haer ett konto på denna PhpGedViewsajt då kan du <a href=\"#AUTH_URL#\">logga in</a> på servern med normal HTTP autenticiering för att se personlig inforamtion.";
 $pgv_lang["attendant"] 			= "Deltagare";
 $pgv_lang["attending"] 			= "Närvara";
+$pgv_lang["best_man"] = "Best man";
+$pgv_lang["bridesmaid"] = "Brudtärna";
 $pgv_lang["buyer"] 				= "Köpare";
 $pgv_lang["circumciser"] 		= "Omskärare";
 $pgv_lang["civil_registrar"] 	= "Borglig vigselförättare";
@@ -1312,6 +1315,7 @@ $pgv_lang["statar_xga"]			= "axelvärden för antal (x-axeln):";
 $pgv_lang["statar_zgp"]			= "axelvärden för perioder (z-axeln):";
 $pgv_lang["statreset"]			= "Återställ";
 $pgv_lang["statsubmit"]			= "Visa tavla";
+$pgv_lang["statistiek_list"]	= "Statistikdiagram";
 $pgv_lang["stpl"]			 	= "...";
 $pgv_lang["stplGDno"]			= "Grafikvisningsbiblioteket är inte tillgängligt i PHP 4. Fråga din systemadministratör";
 $pgv_lang["stpljpgraphno"]		= "JPGraph moduler är inte tillgängliga i phpgedview/jpgraph/. Var vänlig hämta dem från http://www.aditus.nu/jpgraph/jpdownload.php<br /><h3>Installera först JPGraph i katalogen phpgedview/jpgraph/</h3><br />";
@@ -1603,6 +1607,18 @@ $pgv_lang["wednesday_1st"]			= "O";
 $pgv_lang["thursday_1st"]			= "To";
 $pgv_lang["friday_1st"]				= "F";
 $pgv_lang["saturday_1st"]			= "L";
+$pgv_lang["january_1st"]			= "Jan";
+$pgv_lang["february_1st"]			= "Feb";
+$pgv_lang["march_1st"]				= "Mars";
+$pgv_lang["april_1st"]				= "April";
+$pgv_lang["may_1st"]				= "Maj";
+$pgv_lang["june_1st"]				= "Juni";
+$pgv_lang["july_1st"]				= "Juli";
+$pgv_lang["august_1st"]				= "Aug";
+$pgv_lang["september_1st"]			= "Sep";
+$pgv_lang["october_1st"]			= "Okt";
+$pgv_lang["november_1st"]			= "Nov";
+$pgv_lang["december_1st"]			= "Dec";
 $pgv_lang["edit_source"]			= "Redigera källa";
 $pgv_lang["source_menu"]			= "Val för källor";
 $pgv_lang["familybook_chart"]		= "Familjebok";
@@ -1710,6 +1726,7 @@ $pgv_lang["link_to_existing_media"]		= "Länka till en existerande mediaartikel"
 $pgv_lang["page_size"]					= "Sidstorlek";
 $pgv_lang["add_media_file"]				= "Existerande mediafil på servern";
 $pgv_lang["descend_report"]				= "Ättlingsrapport";
+$pgv_lang["descendancy_header"]		= "Ättlingsrapport för ";
 $pgv_lang["add_media_other_folder"]		= "Annan mapp.. Skriv in mappnamn";
 $pgv_lang["main_media_ok1"]				= "Huvudmediafilen <b>#GLOBALS[oldMediaName]#</b> fick det nya namnet <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_ok2"]				= "Huvudmediafilen <b>#GLOBALS[oldMediaName]#</b> blev flyttad ifrån <b>#GLOBALS[oldMediaFolder]#</b> till <b>#GLOBALS[newMediaFolder]#</b>.";
@@ -1739,5 +1756,9 @@ $pgv_lang["use_browse_advice"]			= "Använd  &laquo;Browse&raquo;-knappen för a
 if (file_exists("languages/lang.sv.extra.php")) require "languages/lang.sv.extra.php";
 $pgv_lang["page_x_of_y"]				= "Sida #GLOBALS[currentPage]# av #GLOBALS[lastPage]#<br />";
 $pgv_lang["include"]				= "Inkludera:";
+$pgv_lang["roman_surn"]				= "Romaniserat efternamn";
+$pgv_lang["roman_givn"]				= "Romaniserat förnamn";
+$pgv_lang["hebrew_surn"]			= "Hebreiskt efternamn";
+$pgv_lang["hebrew_givn"]			= "Hebreiskt förnamn";
 
 ?>

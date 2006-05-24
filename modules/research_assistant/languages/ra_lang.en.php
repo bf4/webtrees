@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: ra_lang.en.php,v 1.6 2006/05/22 20:18:21 yalnifj Exp $
+ * @version $Id: research_assistant.php 47 2005-10-25 19:32:25Z wlasson $
  * @author Jason Porter
  * @author Wade Lasson
  * @author Brandon Gagnon
@@ -52,10 +52,11 @@ $pgv_lang["help_comments"] = $temp_out_comments;
 $pgv_lang["my_tasks"]							= "My Tasks";
 $pgv_lang["add_task"]							= "Add Task";
 $pgv_lang["view_folders"]						= "View Folders";
+$pgv_lang["view_probabilities"]					= "View Probabilities";
 $pgv_lang["up_folder"]							= "Up Folder";
 $pgv_lang["edit_folder"]						= "Add/Edit Folder";
 $pgv_lang["gen_tasks"]							= "Auto Generate Tasks";
-$pgv_lang["view_inferences"]					= "View Probabilities";
+
 
 // -- RA GENERAL MESSAGES
 $pgv_lang["delete"]								= "Delete";
@@ -185,16 +186,15 @@ $pgv_lang["remove"]						= "remove";
 //-- RA_EDITTASK MESSAGES
 $pgv_lang["edit_task"]					= "Edit Task";
 
-
-//////////////////////////////////////////////////////////////////////////////////////////////////
-//-- RA_CONFIGURE MESSAGES
+//-- RA_CONFIGURE PRIVACY MESSAGES
 $pgv_lang["configure_privacy"]		    = "Configure Privacy";
+$pgv_lang["show_my_tasks"]              = "Show My Tasks";
 $pgv_lang["show_add_task"]		        = "Show Add Task";
-$pgv_lang["show_view_inferences"]		= "Show View Inferences";
-$pgv_lang["show_add_folder"]		    = "Show Add Folder";
 $pgv_lang["show_view_folders"]		    = "Show View Folders";
+$pgv_lang["show_add_folder"]		    = "Show Add Folder";
+$pgv_lang["show_add_unlinked_source"]   = "Show Add Unlinked Source";
+$pgv_lang["show_view_probabilities"]	= "Show View Probabilities";
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 

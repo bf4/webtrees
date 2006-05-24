@@ -235,9 +235,11 @@ print_header($pgv_lang["search"]);
 /**************************************************** Search and Replace Search Form ****************************************************/
 if($controller->action == "replace")
 {
+	if(userCanEdit(getUserName()))
+	{
 ?>							
 				<td colspan="3" class="facts_label03" style="text-align: center;">
-					<?php print $pgv_lang["search_replace"]; print_help_link('search_enter_terms_help', 'qm'); ?> 
+					<?php print $pgv_lang["search_replace"]; print_help_link('search_replace_help', 'qm'); ?> 
 				</td>
 	</tr>
 	<!-- // search terms -->
@@ -273,6 +275,7 @@ if($controller->action == "replace")
 		</td>
 	</tr>
 <?php
+}
 }
 
 /**************************************************** Soundex Search Form *************************************************************/

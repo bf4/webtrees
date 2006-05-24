@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Edit
- * @version $Id: edit_quickupdate.php,v 1.1.2.78 2006/05/19 11:37:41 canajun2eh Exp $
+ * @version $Id: edit_quickupdate.php,v 1.1.2.80 2006/05/23 18:09:34 yalnifj Exp $
  */
 
 require("config.php");
@@ -255,11 +255,13 @@ if ($action=="update") {
 		if (!empty($namerec)) {
 			if (!empty($GIVN)) {
 				$namerec = preg_replace("/1 NAME.+\/(.*)\//", "1 NAME $GIVN /$1/", $namerec);
-				$namerec = preg_replace("/2 GIVN.+\n/", "2 GIVN $GIVN\r\n", $namerec);
+				if (preg_match("/2 GIVN/", $namerec)>0) $namerec = preg_replace("/2 GIVN.+/", "2 GIVN $GIVN\r\n", $namerec);
+				else $namerec.="\r\n2 GIVN $GIVN";
 			}
 			if (!empty($SURN)) {
 				$namerec = preg_replace("/1 NAME(.+)\/.*\//", "1 NAME$1/$SURN/", $namerec);
-				$namerec = preg_replace("/2 SURN.+\n/", "2 SURN $SURN\r\n", $namerec);
+				if (preg_match("/2 SURN/", $namerec)>0) $namerec = preg_replace("/2 SURN.+/", "2 SURN $SURN\r\n", $namerec);
+				else $namerec.="\r\n2 SURN $SURN";
 			}
 			$pos1 = strpos($gedrec, "1 NAME");
 			if ($pos1!==false) {

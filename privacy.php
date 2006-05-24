@@ -35,7 +35,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id: privacy.php,v 1.57.2.7 2005/12/03 00:48:18 yalnifj Exp $
+ * $Id: privacy.php,v 1.57.2.8 2006/05/23 15:04:01 yalnifj Exp $
  * @package PhpGedView
  * @subpackage Privacy
  */
@@ -222,6 +222,12 @@ $PRIVACY_BY_YEAR = false;
  * @global boolean $PRIVACY_BY_RESN
  */
 $PRIVACY_BY_RESN = false;
+
+/**
+ * When privatizing a gedom record should the relationship links be left in or stripped out
+ * @global boolean $SHOW_PRIVATE_RELATIONSHIPS
+ */
+$SHOW_PRIVATE_RELATIONSHIPS = false;
 
 /**
  * Person Privacy array

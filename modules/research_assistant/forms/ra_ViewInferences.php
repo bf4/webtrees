@@ -108,7 +108,7 @@ class ra_ViewInferences extends ra_form {
  					$out .= "<td class='optionbox'>". sprintf("%.2f%%",$row['pr_per'])."</td></tr>"; 
  				}
  		}
- 		$out .= "<tr><td class='topbottombar' colspan='4'><form method=\"get\" action=\"\"><input type=\"button\" value=\"Recalculate\" onclick=\"window.location='http://localhost/fresh/module.php?mod=research_assistant&action=viewInferences&amp;recount=1';\" /></form></td></tr>";
+ 		$out .= "<tr><td class='topbottombar' colspan='4'><form method=\"get\" action=\"\"><input type=\"button\" value=\"Recalculate\" onclick=\"window.location='http://localhost/fresh/module.php?mod=research_assistant&action=viewProbabilities&amp;recount=1';\" /></form></td></tr>";
  		//Returns the table to display
  		return $out;
  	}

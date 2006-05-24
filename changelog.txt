@@ -5,10 +5,13 @@
 	This and other information can be found online at
 	http://www.phpgedview.net
 
-	# $Id: changelog.txt,v 1.522.2.543 2006/05/22 10:32:05 opus27 Exp $
+	# $Id: changelog.txt,v 1.522.2.546 2006/05/24 04:57:50 yalnifj Exp $
 =====================================================================
 
 Version 4.0
+ - Fixed [ 1493898 ] Privacy Bug - Death (yalnifj)
+ - Fixed [ 1492823 ] 4.0b8 Quick Update INDI - NAME:GIVNSURN
+ - Fixed [ 1490075 ] Manage Media - Shown Folder after Editing (canajun2eh)
  - Fixed [ 1444327 ] Media Directories - LtR texts - RtL pages (canajun2eh)
  - Fixed [ 1490893 ] 4.0 B8 Marriage Type Drop Down List is missing (opus27)
  - Fixed [ 1492061 ] 4.0b8 ... styling on index page (canajun2eh)
