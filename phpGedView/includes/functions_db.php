@@ -24,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: functions_db.php,v 1.1.2.207 2006/05/15 18:28:07 yalnifj Exp $
+ * @version $Id: functions_db.php,v 1.1.2.208 2006/05/24 05:09:06 yalnifj Exp $
  * @package PhpGedView
  * @subpackage DB
  */
@@ -1041,7 +1041,9 @@ function get_recent_changes($day="", $mon="", $year="", $allgeds=false) {
 
 	if (!DB::isError($res)) {
 		while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-			$changes[] = $row;
+			if (preg_match("/\w+:\w+/", $row['d_gid'])==0) {
+				$changes[] = $row;
+			}
 		}
 	}
 	return $changes;

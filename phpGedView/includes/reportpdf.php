@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Reports
- * @version $Id: reportpdf.php,v 1.1.2.59 2006/04/13 17:01:08 canajun2eh Exp $
+ * @version $Id: reportpdf.php,v 1.1.2.60 2006/05/22 22:33:30 yalnifj Exp $
  */
 
 //-- do not allow direct access to this file
@@ -2038,6 +2038,7 @@ function PGVRImageSHandler($attrs) {
 		}
 	}
 	else {
+		$filename = $file;
 		if (preg_match("/(jpg)|(jpeg)|(png)$/i", $filename)>0) {
 			if (file_exists($filename)) {
 				$size = findImageSize($filename);
@@ -2375,7 +2376,7 @@ function PGVRRelativesSHandler($attrs) {
 	if (isset($attrs["showempty"])) $showempty = $attrs["showempty"];
 	if (preg_match("/\\$(\w+)/", $showempty, $vmatch)>0) {
 		$showempty = $vars[$vmatch[1]]["id"];
-		$showempty = trim($sortempty);
+		$showempty = trim($showempty);
 	}
 	
 

@@ -23,7 +23,7 @@
  * @subpackage Languages
  * @author Matti Valve
  * @author Jaakko Sarell
- * @version $Id: lang.fi.php,v 1.18.2.60 2006/05/19 08:26:20 meliza Exp $
+ * @version $Id: lang.fi.php,v 1.18.2.61 2006/05/22 21:08:11 meliza Exp $
  */
 if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "You cannot access a language file directly.";
@@ -983,6 +983,7 @@ $pgv_lang["site_default"]		= "Sivuston oletusarvo";
 $pgv_lang["mygedview_desc"]		= "OmaGedView-sivusi antaa mahdollisuuden pitää luetteloa suosikkihenkilöistäsi, tarkastella tulevia merkkipäiviä ja olla yhteistyössä muiden PhpGedView-käyttäjien kanssa.";
 $pgv_lang["no_messages"]		= "Ei viestejä odottamassa. ";
 $pgv_lang["clicking_ok"]		= "Klikkaa OK ja uusi ikkuna avautuu, josta voit ottaa yhteyttä henkilöön #user[fullname]#";
+$pgv_lang["favorites"]				= "Suosikit";
 $pgv_lang["no_favorites"]		= "Et ole valinnus suosikkeja. Lisää henkilö suosikkeihisi etsimällä hänen tietonsa ja klikkaamalla \"Lisää suosikkeihini\" linkkiä tai käytä alla olevaa ID laatikkoa ja lisää henkilö hänen ID numeronsa avulla.";
 $pgv_lang["my_favorites"]		= "Suosikkini";
 $pgv_lang["add_to_my_favorites"]	= "Lisää suosikkeihini";
@@ -1012,6 +1013,8 @@ $pgv_lang["stat_sources"]		= "lähdettä";
 $pgv_lang["stat_other"]		= "muita tietueita";
 $pgv_lang["stat_earliest_birth"] 	= "Aikaisin syntymävuosi";
 $pgv_lang["stat_latest_birth"] 		= "Myöhäisin syntymävuosi";
+$pgv_lang["stat_earliest_death"] 	= "Aikaisin kuolinvuosi";
+$pgv_lang["stat_latest_death"] 	= "Myöhäisin kuolinvuosi";
 $pgv_lang["customize_page"]		= "Muokkaa oma portaalisi";
 $pgv_lang["customize_gedcom_page"]	= "Muokkaa GEDCOM portaalia";
 $pgv_lang["upcoming_events_block"]	= "Tulevien tapahtumien alue";
@@ -1319,6 +1322,8 @@ $pgv_lang["feed_login"]		= "Mikäli sinulla on käyttäjätili tälle PhpGedView
 // After any change in the following list, please check $assokeys in edit_interface.php
 $pgv_lang["attendant"] 		= "Avustaja";
 $pgv_lang["attending"] 		= "Avustamassa";
+$pgv_lang["best_man"] = "Best man";
+$pgv_lang["bridesmaid"] = "Kaaso";
 $pgv_lang["buyer"] 			= "Ostaja";
 $pgv_lang["circumciser"] 		= "Ympärileikkaaja";
 $pgv_lang["civil_registrar"] 		= "Siviilirekisteriviranomainen";
@@ -1379,6 +1384,7 @@ $pgv_lang["statar_zgp"]		= "Väliarvot aikajaksoille (z-akseli):";
 $pgv_lang["statar_zgp"]		= "Väliarvot aikajaksoille (z-alseli):";
 $pgv_lang["statreset"]		= "palauta alkuperäiset arvot";
 $pgv_lang["statsubmit"]		= "näytä kuvaaja";
+$pgv_lang["statistiek_list"]	= "Tilastokuvaaja";
 
 //-- statisticsplot utility
 $pgv_lang["stpl"]			 = "...";
@@ -1395,7 +1401,7 @@ $pgv_lang["stplnumbers"]		= "lukumäärät";
 $pgv_lang["stplage"]		= "ikä";
 $pgv_lang["stplperc"]		= "prosenttiosuus";
 $pgv_lang["stplnumof"]		= "yhteensä ";   //"Counts ";
-$pgv_lang["stplmarrbirth"]		= "kuukausia vihkimisestä ensimmäisen lapsen syntymään"; //@@<--
+$pgv_lang["stplmarrbirth"]		= "kuukausia vihkimisestä ensimmäisen lapsen syntymään";
 
 //-- alive in year
 $pgv_lang["alive_in_year"]		= "Elossa vuonna";
@@ -1633,6 +1639,18 @@ $pgv_lang["wednesday_1st"]		= "ke";
 $pgv_lang["thursday_1st"]		= "to";
 $pgv_lang["friday_1st"]		= "pe";
 $pgv_lang["saturday_1st"]		= "la";
+$pgv_lang["february_1st"]			= "helmi";
+$pgv_lang["march_1st"]				= "maalis";
+$pgv_lang["april_1st"]				= "huhti";
+$pgv_lang["may_1st"]				= "touko";
+$pgv_lang["june_1st"]				= "kesä";
+$pgv_lang["july_1st"]				= "heinä";
+$pgv_lang["august_1st"]				= "elo";
+$pgv_lang["september_1st"]			= "syys";
+$pgv_lang["october_1st"]			= "loka";
+$pgv_lang["november_1st"]			= "marras";
+$pgv_lang["december_1st"]			= "joulu";
+$pgv_lang["january_1st"]			= "tammi";
 
 $pgv_lang["record_not_found"]	= "Pyydettyä GEDCOM-tietuetta ei löytynyt. Se voi johtua joko linkistä virheellisen henkilöön tai vikaantuneesta GEDCOM-tiedostosta.";
 $pgv_lang["record_marked_deleted"]	= "Tämä tietue on merkitty ylläpitäjän hyväksymisen jälkeen poistettavaksi.";
@@ -1670,6 +1688,7 @@ $pgv_lang["link_to_existing_media"]	= "Linkitä olemassaolevaan mediaan";
 $pgv_lang["add_media_other_folder"]	= "Toinen hakemisto ... ole hyvä ja kirjoita";
 $pgv_lang["add_media_file"]		= "Palvelimella oleva mediatiedosto";
 $pgv_lang["descend_report"]		= "Jälkipolviraportti";
+$pgv_lang["descendancy_header"]		= "Jälkipolviraportti henkilölle ";
 $pgv_lang["main_media_ok1"]		= "Mediatiedoston <b>#GLOBALS[oldMediaName]#</b> nimi muutettu nimeksi <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_ok2"]		= "Mediatiedosto <b>#GLOBALS[oldMediaName]#</b> siirretty hakemistosta <b>#GLOBALS[oldMediaFolder]#</b> hakemistoon <b>#GLOBALS[newMediaFolder]#</b>.";
 $pgv_lang["main_media_ok3"]		= "Mediatiedosto siirretty ja nimetty uudestaan seuraavasti:</ br>Vanha: <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b></ br>Uusi: <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";
@@ -1693,5 +1712,10 @@ $pgv_lang["server_folder_advice2"]	= "Tämä jätetään huomiotta,mikäli olet 
 $pgv_lang["add_linkid_advice"]	= "Lisää tai etsi sen henkilön, perheen tai lähteen ID-tunnus, johon tämä media linkitetään.";
 $pgv_lang["use_browse_advice"]	= "Käytä &laquo;Selaa&raquo;-painiketta hakeaksesi tiedostoa omalta tietokoneeltasi.";
 $pgv_lang["page_x_of_y"]		= "Sivu #GLOBALS[currentPage]# of #GLOBALS[lastPage]#";
+$pgv_lang["roman_surn"]				= "Romanisoitu sukunimi";
+$pgv_lang["roman_givn"]				= "Romanisoidut etunimet";
+$pgv_lang["hebrew_surn"]			= "Heprealainen sukunimi";
+$pgv_lang["hebrew_givn"]			= "Heprealaiset etunimet";
+$pgv_lang["include"]				= "Sisällytä:";
 if (file_exists( "languages/lang.fi.extra.php")) require  "languages/lang.fi.extra.php";
 ?>

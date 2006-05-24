@@ -21,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: functions_privacy.php,v 1.1.2.41 2006/05/03 16:53:52 yalnifj Exp $
+ * @version $Id: functions_privacy.php,v 1.1.2.43 2006/05/24 04:56:26 yalnifj Exp $
  * @package PhpGedView
  * @subpackage Privacy
  */
@@ -88,9 +88,12 @@ function is_dead($indirec, $cyear="") {
 	$deathrec = get_sub_record(1, "1 DEAT", $indirec);
 	if (!empty($deathrec)) {
 		if ($cyear==date("Y")) {
-			$lines = preg_split("/\n/", $deathrec);
-			if (count($lines)>1) return true;
-			if (preg_match("/1 DEAT Y/", $deathrec)>0) return true;
+			$resn = get_gedcom_value("RESN", 2, $deathrec);
+			if (empty($resn) || ($resn!='confidential' && $resn!='privacy')) {
+				$lines = preg_split("/\n/", $deathrec);
+				if (count($lines)>1) return true;
+				if (preg_match("/1 DEAT Y/", $deathrec)>0) return true;
+			}
 		}
 		else {
 			$ct = preg_match("/\d DATE.*\s(\d{3,4})\s/", $deathrec, $match);
@@ -711,7 +714,7 @@ function showFactDetails($fact, $pid) {
  * @return string the privatized gedcom record
  */
 function privatize_gedcom($gedrec) {
-	global $pgv_lang, $GEDCOM;
+	global $pgv_lang, $GEDCOM, $SHOW_PRIVATE_RELATIONSHIPS;
 	$gt = preg_match("/0 @(.+)@ (.+)/", $gedrec, $gmatch);
 	if ($gt > 0) {
 		$gid = trim($gmatch[1]);
@@ -726,6 +729,16 @@ function privatize_gedcom($gedrec) {
 				$newrec .= "1 NAME " . $pgv_lang["private"] . " /" . $pgv_lang["private"] . "/" . "\r\n";
 				$newrec .= "2 SURN " . $pgv_lang["private"] . "\r\n";
 				$newrec .= "2 GIVN " . $pgv_lang["private"] . "\r\n";
+				if ($SHOW_PRIVATE_RELATIONSHIPS) {
+					$fams = find_families_in_record($gedrec, "FAMS");
+					foreach($fams as $f=>$famid) {
+						$newrec .= "1 FAMS @$famid@\r\n";
+					}
+					$fams = find_families_in_record($gedrec, "FAMC");
+					foreach($fams as $f=>$famid) {
+						$newrec .= "1 FAMC @$famid@\r\n";
+					}
+				}
 			}
 			else if ($type=="SOUR") {
 				$newrec = "0 @".$gid."@ SOUR\r\n";

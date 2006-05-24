@@ -22,7 +22,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: ra_functions.php,v 1.6 2006/05/22 20:18:20 yalnifj Exp $
+ * @version $Id: ra_functions.php 917 2006-05-23 20:20:26Z jfinlay $
  * @author Jason Porter
  * @author Wade Lasson
  * @author Brandon Gagnon
@@ -39,10 +39,11 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_functions.php")) {
 	print "Now, why would you want to do that.  You're not hacking are you?";
 	exit;
 }
+
 // Set up our default language file.
 require_once 'languages/ra_lang.en.php';
-require_once 'includes/functions_date.php'; //Need to fix this the file is not found
-
+include_once("modules/research_assistant/forms/ra_privacy.php");
+if (file_exists($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php")) include_once($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php");
 define("BASEPATH", 'modules/research_assistant/');
 $emptyfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","BAPL","CONL","ENDL","SLGC","EVEN","MARR","SLGS","MARL","ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARS","CHAN","_SEPR","RESI", "DATA", "MAP");
 $templefacts = array("SLGC","SLGS","BAPL","ENDL","CONL");
@@ -140,7 +141,7 @@ class ra_functions {
 		$res = dbquery($sql);
 		$row = $res->fetchRow(DB_FETCHMODE_ASSOC);
 		$res->free();
-		return $row;
+		return db_cleanup($row);
 	}
 
 	/**
@@ -176,20 +177,31 @@ class ra_functions {
 			$percent = " width='22%' ";
 
 		// Display for the menu
+		global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_VIEW_FOLDERS, $SHOW_ADD_FOLDER, $SHOW_ADD_UNLINKED_SOURCE, $SHOW_VIEW_PROBABILITIES;//show
+		
 		$out = '<table class="list_table" width="100%" cellpadding="2">';
 		$out .= '<tr>';
 		$out .= '<td align="left"'.$percent.'class="optionbox wrap">'.ra_functions :: print_top_folder($folderid).'</td>';
-		if(getUserName()!= "")
+		//button 'My Tasks'
+		if (getUserAccessLevel(getUserName())<=$SHOW_MY_TASKS)
 			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant&amp;action=mytasks"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["my_tasks"].'" border="0"></img><br />'.$pgv_lang["my_tasks"].'</a></td>';
-		$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant&amp;action=addtask&amp;folderid='.$folderid.'">'.'<img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["add_task"].'" border="0"></img><br />'.$pgv_lang["add_task"].'</a></td>';
-		$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant">'.'<img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["view_folders"].'" border="0"></img><br />'.$pgv_lang["view_folders"].'</a></td>';
-		$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant&amp;action=addfolder">'.'<img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["add_folder"].'" border="0"></img><br />'.$pgv_lang["add_folder"].'</a></td>';
-		$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="javascript: '.$pgv_lang["add_unlinked_source"].'" onclick="addnewsource(\'\'); return false;"><img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["add_unlinked_source"].'"border=0"></img><br />'.$pgv_lang["add_unlinked_source"].'</a></td>';
-		$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant&amp;action=viewInferences">'.'<img src="modules/research_assistant/images/view_inferences.gif" alt="'.$pgv_lang["view_inferences"].'" border="0"></img><br />'.$pgv_lang["view_inferences"].'</a></td>';
-		/////////////////////////////
-		//Configure Privacy Button //
-		/////////////////////////////
-		if(userIsAdmin(getUserName()))
+		//button 'Add Task''
+		if (getUserAccessLevel(getUserName())<=$SHOW_ADD_TASK)
+			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant&amp;action=addtask&amp;folderid='.$folderid.'">'.'<img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["add_task"].'" border="0"></img><br />'.$pgv_lang["add_task"].'</a></td>';
+		//button 'View Folders'
+		if (getUserAccessLevel(getUserName())<=$SHOW_VIEW_FOLDERS)
+			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant">'.'<img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["view_folders"].'" border="0"></img><br />'.$pgv_lang["view_folders"].'</a></td>';
+		//button 'Add Folder'
+		if (getUserAccessLevel(getUserName())<=$SHOW_ADD_FOLDER && empty ($folderid))
+			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant&amp;action=addfolder">'.'<img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["add_folder"].'" border="0"></img><br />'.$pgv_lang["add_folder"].'</a></td>';
+		//button 'Add Unlinked Source'
+		if (getUserAccessLevel(getUserName())<=$SHOW_ADD_UNLINKED_SOURCE && empty ($folderid))
+			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="javascript: '.$pgv_lang["add_unlinked_source"].'" onclick="addnewsource(\'\'); return false;"><img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["add_unlinked_source"].'"border=0"></img><br />'.$pgv_lang["add_unlinked_source"].'</a></td>';
+		//button 'View Probabilities'
+		if (getUserAccessLevel(getUserName())<=$SHOW_VIEW_PROBABILITIES && empty ($folderid))
+			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant&amp;action=viewProbabilities">'.'<img src="modules/research_assistant/images/view_inferences.gif" alt="'.$pgv_lang["view_probabilities"].'" border="0"></img><br />'.$pgv_lang["view_probabilities"].'</a></td>';
+		//button 'Configure Privacy' for ADMIN ONLY
+		if(userIsAdmin(getUserName()) && empty ($folderid))
 			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant&amp;action=configurePrivacy">'.'<img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["configure_privacy"].'" border="0"></img><br />'.$pgv_lang["configure_privacy"].'</a></td>';
 		// Below here is "in folder" relevant information. These are only shown when the user is inside a folder.
 		if (!empty ($folderid)) {
@@ -370,7 +382,7 @@ class ra_functions {
 	 */
 	 function print_user_tasks($userName)
 	 {
-	 	global $res;
+	 	global $res, $pgv_lang;
 		global $TBLPREFIX;
 		$sql = 	"Select * From " .$TBLPREFIX. "tasks where t_username ='".$userName."'";
 		
@@ -1027,6 +1039,40 @@ class ra_functions {
 			$out .= "<option value=".$row['fr_id']." selected=Selected>".$row['fr_name']."</option>";
 		}
 		return $out;
+	}
+
+	/**
+	 * tab is the function that builds the display for the different screens.
+	 * These screens are identified by a tab
+	 */
+
+	//Get Tasks for Source
+	function getSourceTasks(& $sId) {
+		global $pgv_lang, $TBLPREFIX;
+		global $indilist, $controller;
+		global $factarray;
+        	
+		$sql = "SELECT * FROM ".$TBLPREFIX."tasks join ".$TBLPREFIX."tasksource on t_id = ts_t_id join ".$TBLPREFIX."sources on s_id = ts_s_id where s_id ='".$sId."'";
+		
+		$res = dbquery($sql);
+	
+		$out = "\n\t<table class=\"list_table\">";
+		$out .= "<tr><td class ='topbottombar' colspan='4' align='center'>".print_help_link("task_list_text", "qm", '', false, true)."<b>".$pgv_lang['task_list']."</b></td></tr>";
+		if ($res->numRows()==0) $out .= "<tr><td class ='topbottombar' colspan='4' align='center'>".$pgv_lang['no_indi_tasks']."</td></tr>";
+		else { 
+			$out .= "\n\t\t<tr><td class=\"list_label\"><strong>".$pgv_lang["details"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["title"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["completed"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["created"]."</strong></td></tr>";
+			// Loop through all the task ID's and pull the info we need on them,
+			// then format them nicely to show the user.
+			while ($taskid = $res->fetchrow(DB_FETCHMODE_ASSOC)) {
+				$sql = "SELECT * FROM ".$TBLPREFIX."tasks WHERE t_id = '".$taskid['ts_t_id']."'";
+				$result = dbquery($sql);
+				$task = $result->fetchrow(DB_FETCHMODE_ASSOC);
+     			$task = db_cleanup($task);
+				$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'" class="link">'.$pgv_lang['details'].'</a></td><td class="list_label">'.$task['t_title'].'</td><td class="list_label">'.$this->checkComplete($task).'</td><td class="list_label">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td></tr>';
+			}
+		}
+		return $out;
+	
 	}
 
 	/**

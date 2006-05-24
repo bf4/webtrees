@@ -878,11 +878,14 @@ class MenuBar
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
 		//-- search_replace sub menu
+		if(userCanEdit(getUserName()))
+		{
 		$submenu = new Menu($pgv_lang["search_replace"], "search.php?action=replace");
 		if (!empty($PGV_IMAGES["search"]["small"]))
 			$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["search"]["small"]);
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
+		}
 
 		//-- search_multisite sub menu
 		if ($SHOW_MULTISITE_SEARCH >= getUserAccessLevel()) {

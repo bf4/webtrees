@@ -1,4 +1,4 @@
-W<?php
+<?php
 /**
  * phpGedView Research Assistant Tool - ra_ViewTasks
  *
@@ -21,7 +21,7 @@ W<?php
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: ra_ViewTask.php,v 1.5 2006/05/22 20:18:21 yalnifj Exp $:
+ * @version $Id: ra_ViewTasks.php 521 2006-02-03 22:00:44Z bcall $:
  * @author Jason Porter
  * @author Wade Lasson
  * @author Brandon Gagnon

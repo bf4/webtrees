@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: research_assistant.php,v 1.5 2006/05/22 20:18:20 yalnifj Exp $
+ * @version $Id: research_assistant.php 912 2006-05-20 01:56:20Z hpena $
  * @author Jason Porter
  * @author Wade Lasson
  * @author Brandon Gagnon
@@ -372,7 +372,7 @@ class research_assistant extends ra_functions {
                 $out .= $this->print_form('ra_CompleteTask');
 			}
 		else
-			if ($_REQUEST['action'] == "viewInferences")
+			if ($_REQUEST['action'] == "viewProbabilities")
 			{
 				$out .= $this->print_menu();
 				$out .= $this->print_form('ra_ViewInferences');
@@ -381,7 +381,7 @@ class research_assistant extends ra_functions {
 			if ($_REQUEST['action'] == "editfact" && !empty($_REQUEST['taskid'])) {
 				$out .= $this->print_menu();
 				$task = $this->getTask($_REQUEST['taskid']);
-				if (!empty($task['t_form'])) $_POST['commonFrm'] = $task['t_form'];
+				if (!empty($task['t_form'])&&!isset($_POST['commonFrm'])) $_POST['commonFrm'] = $task['t_form'];
 				$out .= $this->print_form('ra_CompleteTask');
 			}
 		//Configure Privacy

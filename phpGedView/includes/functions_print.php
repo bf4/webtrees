@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: functions_print.php,v 1.1.2.371 2006/05/17 22:08:58 yalnifj Exp $
+ * @version $Id: functions_print.php,v 1.1.2.372 2006/05/22 22:26:46 yalnifj Exp $
  */
 if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
 	 print "Now, why would you want to do that. You're not hacking are you?";
@@ -403,7 +403,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				}
 			if (($fact!="EVEN")&&($fact!="FACT")) {
 				print "<span class=\"details_label\">";
-				if (isset($factarray[$fact])) $factarray[$fact];
+				if (isset($factarray[$fact])) print $factarray[$fact];
 				else print $fact;
 				print "</span> ";
 			}

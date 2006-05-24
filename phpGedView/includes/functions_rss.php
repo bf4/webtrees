@@ -19,7 +19,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: functions_rss.php,v 1.1.2.38 2006/04/19 01:20:15 canajun2eh Exp $
+ * @version $Id: functions_rss.php,v 1.1.2.39 2006/05/22 22:27:14 yalnifj Exp $
  * @package PhpGedView
  * @subpackage RSS
  */
@@ -580,7 +580,7 @@ function getGedcomNews() {
  * @TODO Possibly turn list into a <ul> list
  */
 function getTop10Surnames() {
-	global $pgv_lang, $GEDCOM,$SERVER_URL;
+	global $pgv_lang, $GEDCOM,$SERVER_URL, $TEXT_DIRECTION;
 	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $command, $PGV_IMAGES, $PGV_IMAGE_DIR;
 
 	$data = "";
@@ -641,7 +641,7 @@ function getTop10Surnames() {
 		foreach($surnames as $indexval => $surname) {
 			if (stristr($surname["name"], "@N.N")===false) {
 				$data .= "<a href=\"" . $SERVER_URL ."indilist.php?surname=".rawurlencode($surname["name"])."\">".PrintReady($surname["name"])."</a> ";
-				if ($PRINT_DIRECTION=="rtl") $data .= "&rlm;[&rlm;".$surname["match"]."&rlm;]&rlm;<br />";
+				if ($TEXT_DIRECTION=="rtl") $data .= "&rlm;[&rlm;".$surname["match"]."&rlm;]&rlm;<br />";
 				else $data .= "[".$surname["match"]."]<br />";
 				$i++;
 				if ($i>=$numName) break;

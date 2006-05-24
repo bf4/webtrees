@@ -41,7 +41,6 @@ if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
  * @uses ra_form
  */
  
- 
  global $PRIV_HIDE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE;
 $PRIVACY_CONSTANTS = array();
 $PRIVACY_CONSTANTS[$PRIV_HIDE] = "\$PRIV_HIDE";
@@ -49,12 +48,10 @@ $PRIVACY_CONSTANTS[$PRIV_PUBLIC] = "\$PRIV_PUBLIC";
 $PRIVACY_CONSTANTS[$PRIV_USER] = "\$PRIV_USER";
 $PRIVACY_CONSTANTS[$PRIV_NONE] = "\$PRIV_NONE";
 
-global $SHOW_ADD_TASK, $SHOW_VIEW_FOLDERS, $SHOW_ADD_FOLDER, $SHOW_VIEW_INFERENCES;
-global $INDEX_DIRECTORY, $GEDCOM;
+global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_VIEW_FOLDERS, $SHOW_ADD_FOLDER, $SHOW_ADD_UNLINKED_SOURCE, $SHOW_VIEW_PROBABILITIES;
+global $INDEX_DIRECTORY, $GEDCOM, $person_privacy;
 include_once("modules/research_assistant/forms/ra_privacy.php");
 if (file_exists($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php")) include_once($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php");
-
-//if (getUserAccessLevel(getUserName())<=$SHOW_VIEW_FOLDERS)
 
 /**
  * print write_access option
@@ -86,37 +83,17 @@ function write_access_option($checkVar) {
   print ">".$pgv_lang["PRIV_HIDE"]."</option>\n";
 }
 
-
-global $GEDCOM, $INDEX_DIRECTORY, $person_privacy;
-
-
 if (isset($_REQUEST['subaction']) && $_REQUEST['subaction']=="submitconfig") {
 
 	$fRAprivacy = "modules/research_assistant/forms/ra_privacy.php";
+	
 	$configtext = implode('', file($fRAprivacy));
-
-	$configtext = preg_replace('/\$SHOW_ADD_TASK\s*=\s*.*;/', "\$SHOW_ADD_TASK = ".$_POST["v_SHOW_ADD_TASK"].";", $configtext);
-	$configtext = preg_replace('/\$SHOW_VIEW_FOLDERS\s*=\s*.*;/', "\$SHOW_VIEW_FOLDERS = ".$_POST["v_SHOW_VIEW_FOLDERS"].";", $configtext);
-	$configtext = preg_replace('/\$SHOW_ADD_FOLDER\s*=\s*.*;/', "\$SHOW_ADD_FOLDER = ".$_POST["v_SHOW_ADD_FOLDER"].";", $configtext);
-	$configtext = preg_replace('/\$SHOW_VIEW_INFERENCES\s*=\s*".*";/', "\$SHOW_VIEW_INFERENCES = \"".$_POST["v_SHOW_VIEW_INFERENCES"]."\";", $configtext);
-	
-	$configtext_beg = substr($configtext, 0, strpos($configtext, "//-- start person privacy --//"));
-	$configtext_end = substr($configtext, strpos($configtext, "//-- end person privacy --//"));
-	$person_privacy_text = "//-- start person privacy --//\n\$person_privacy = array();\n";
-	if (!isset($v_person_privacy_del)) $v_person_privacy_del = array();
-	if (!is_array($v_person_privacy_del)) $v_person_privacy_del = array();
-	if (!isset($v_person_privacy)) $v_person_privacy = array();
-	if (!is_array($v_person_privacy)) $v_person_privacy = array();
-	foreach($person_privacy as $key=>$value) {
-		if (!isset($v_person_privacy_del[$key])) {
-			if (isset($v_person_privacy[$key])) $person_privacy_text .= "\$person_privacy['$key'] = ".$v_person_privacy[$key].";\n";
-			else $person_privacy_text .= "\$person_privacy['$key'] = ".$PRIVACY_CONSTANTS[$value].";\n";
-		}
-	}
-	
-	//-- TODO save the file to the $INDEX_DIRECTORY
-	//-- whenever the file is included, make sure to check if it is in the index directory first
-	//-- before loading the default file. if (file_exists(filepath)) require_once
+	$configtext = preg_replace('/\$SHOW_MY_TASKS\s*=\s*.*;/',                       "\$SHOW_MY_TASKS = ".$_POST["v_SHOW_MY_TASKS"].";",            $configtext);
+	$configtext = preg_replace('/\$SHOW_ADD_TASK\s*=\s*.*;/',                       "\$SHOW_ADD_TASK = ".$_POST["v_SHOW_ADD_TASK"].";",            $configtext);
+	$configtext = preg_replace('/\$SHOW_VIEW_FOLDERS\s*=\s*.*;/',               "\$SHOW_VIEW_FOLDERS = ".$_POST["v_SHOW_VIEW_FOLDERS"].";",        $configtext);
+	$configtext = preg_replace('/\$SHOW_ADD_FOLDER\s*=\s*.*;/',                   "\$SHOW_ADD_FOLDER = ".$_POST["v_SHOW_ADD_FOLDER"].";",          $configtext);
+	$configtext = preg_replace('/\$SHOW_ADD_UNLINKED_SOURCE\s*=\s*.*;/', "\$SHOW_ADD_UNLINKED_SOURCE = ".$_POST["v_SHOW_ADD_UNLINKED_SOURCE"].";", $configtext);
+	$configtext = preg_replace('/\$SHOW_VIEW_PROBABILITIES\s*=\s*.*;/',   "\$SHOW_VIEW_PROBABILITIES = ".$_POST["v_SHOW_VIEW_PROBABILITIES"].";",  $configtext);
 	
 	$PRIVACY_MODULE = $INDEX_DIRECTORY.$GEDCOM."_ra_priv.php";
 	$fp = fopen($PRIVACY_MODULE, "wb");
@@ -142,8 +119,6 @@ if (isset($_REQUEST['subaction']) && $_REQUEST['subaction']=="submitconfig") {
 <form action="module.php" method="post">
     <input type="hidden" name="mod" value="research_assistant" />
     <input type="hidden" name="action" value="configurePrivacy" />
-    
-    <!-- TODO add a hidden subaction -->
      <input type="hidden" name="subaction" value="submitconfig" />
      
      
@@ -155,6 +130,17 @@ if (isset($_REQUEST['subaction']) && $_REQUEST['subaction']=="submitconfig") {
                     <h2><?php print $pgv_lang["configure_privacy"]; print_help_link("ra_configure_privacy_help", "qm", '', false, false);?></h2>
                 </td>
             </tr>
+   <!--MY TASKS-->
+    		<tr>
+                <td class="descriptionbox">
+                    <?php print $pgv_lang["show_my_tasks"]; ?>
+                </td>
+                <td class="optionbox">
+                    <select size="1" name="v_SHOW_MY_TASKS">
+                        <?php write_access_option($SHOW_MY_TASKS); ?>
+                      </select>   
+                </td>
+            </tr>	       
             
     <!--ADD TASK-->
     		<tr>
@@ -192,16 +178,27 @@ if (isset($_REQUEST['subaction']) && $_REQUEST['subaction']=="submitconfig") {
                	</td>
             </tr>
             
-   <!--VIEW INFERENCES-->
+   <!--ADD UNLINKED SOURCE-->
     		<tr>
                 <td class="descriptionbox">
-                    <?php print $pgv_lang["show_view_inferences"]; ?>
+                    <?php print $pgv_lang["show_add_unlinked_source"]; ?>
                 </td>
                 <td class="optionbox">
-                    <select size="1" name="v_SHOW_VIEW_INFERENCES">
-                        <?php write_access_option($SHOW_VIEW_INFERENCES); ?>
-                      </select>      
-                   </select>
+                    <select size="1" name="v_SHOW_ADD_UNLINKED_SOURCE">
+                        <?php write_access_option($SHOW_ADD_UNLINKED_SOURCE); ?>
+                      </select>  
+                </td>
+            </tr>	
+                            
+   <!--VIEW PROBABILITIES-->
+    		<tr>
+                <td class="descriptionbox">
+                    <?php print $pgv_lang["show_view_probabilities"]; ?>
+                </td>
+                <td class="optionbox">
+                    <select size="1" name="v_SHOW_VIEW_PROBABILITIES">
+                        <?php write_access_option($SHOW_VIEW_PROBABILITIES); ?>
+                      </select> 
                 </td>
             </tr>	
                    
@@ -216,4 +213,4 @@ if (isset($_REQUEST['subaction']) && $_REQUEST['subaction']=="submitconfig") {
         </tbody>
 	</table>
 </form>
-<!--END CONFIGURE FORM-->
+<!--END CONFIGURE -->

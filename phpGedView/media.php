@@ -22,7 +22,7 @@
  * @author PGV Development Team
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: media.php,v 1.1.2.66 2006/05/18 19:39:01 canajun2eh Exp $
+ * @version $Id: media.php,v 1.1.2.67 2006/05/24 01:13:01 canajun2eh Exp $
  */
 
  /* TODO:
@@ -171,7 +171,7 @@ print_header($pgv_lang["manage_media"]);
 	}
 
 	function showchanges() {
-		window.location = '<?php print $SCRIPT_NAME."?show_changes=yes"; ?>';
+		window.location = '<?php print $SCRIPT_NAME."?show_changes=yes&directory=".$directory; ?>';
 	}
 
 //-->
