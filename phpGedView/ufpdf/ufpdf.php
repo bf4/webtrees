@@ -11,7 +11,7 @@
  * @package UFPDF
  * @see fpdf.php
  * @see reportpdf.php
- * @version $Id: ufpdf.php,v 1.10.2.1 2005/02/24 20:41:37 opus27 Exp $
+ * @version $Id$
  */
 
 if(!class_exists('UFPDF'))

@@ -184,7 +184,7 @@ if (($ci>0)||($cf>0)) {
 				<ul>
 				<?php
 				foreach ($myfamlist as $key => $value) {
-					print_list_family($key, array(get_family_descriptor($key), get_gedcom_from_id($value["gedfile"])));
+					print_list_family($key, array(get_sortable_family_descriptor($key), get_gedcom_from_id($value["gedfile"])));
 				}
 				if (count($fam_hide)>0) {
 					print "<li>".$pgv_lang["hidden"]." (".count($fam_hide).")";

@@ -39,6 +39,8 @@ if (!isset($privatize_export)) $privatize_export = "";
 if ($action=="download" && $zip == "yes") {
 	require "includes/pclzip.lib.php";
 	require "includes/adodb-time.inc.php";
+	
+
 	$temppath = $INDEX_DIRECTORY."tmp/";
 	$zipname = "dl".adodb_date("YmdHis").$ged.".zip";
 	$zipfile = $INDEX_DIRECTORY.$zipname;
@@ -72,8 +74,15 @@ if ($action=="download" && $zip == "yes") {
 if ($action=="download") {
 
 	header("Content-Type: text/plain; charset=$CHARACTER_SET");
+	if($filetype == "gedcom")
+	{
 	header("Content-Disposition: attachment; filename=$ged; size=".filesize($GEDCOMS[$GEDCOM]["path"]));
 	print_gedcom();
+	}
+	else if($filetype == "gramps")
+	{
+		print_gramps();
+	}
 }
 else {
 	print_header($pgv_lang["download_gedcom"]);
@@ -267,4 +276,76 @@ function print_gedcom() {
 		deleteuser("export");
 	}
 }
+function print_gramps()
+{
+	global $GEDCOMS, $GEDCOM, $ged, $convert, $remove, $zip, $VERSION, $VERSION_RELEASE, $pgv_lang, $gedout;
+	global $privatize_export, $privatize_export_level, $whole_gramps;
+	global $TBLPREFIX;
+	
+	//In C#, we would have declared that $sql variable before we used it.
+	
+	$sql = "SELECT i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY i_id";
+	$res = dbquery($sql); 
+	while($row = $res->fetchRow()) {
+		$rec = trim($row[0])."\r\n";
+		$rec = remove_custom_tags($rec, $remove);
+		if ($zip == "yes") fwrite($gedout, $rec);
+		else print $rec;
+	}
+	$res->free();
+	
+	$sql = "SELECT f_gedcom FROM ".$TBLPREFIX."families WHERE f_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY f_id";
+	$res = dbquery($sql); 
+	while($row = $res->fetchRow()) {
+		$rec = trim($row[0])."\r\n";
+		$rec = remove_custom_tags($rec, $remove);
+		if ($zip == "yes") fwrite($gedout, $rec);
+		else print $rec;
+	}
+	$res->free();
+	
+	$sql = "SELECT s_gedcom FROM ".$TBLPREFIX."sources WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY s_id";
+	$res = dbquery($sql); 
+	while($row = $res->fetchRow()) {
+		$rec = trim($row[0])."\r\n";
+		$rec = remove_custom_tags($rec, $remove);
+		if ($zip == "yes") fwrite($gedout, $rec);
+		else print $rec;
+	}
+	$res->free();
+	
+	$sql = "SELECT o_gedcom, o_type FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY o_id";
+	$res = dbquery($sql); 
+	while($row = $res->fetchRow()) {
+		$rec = trim($row[0])."\r\n";
+		$key = $row[1];
+		if (($key!="HEAD")&&($key!="TRLR")) {
+			$rec = remove_custom_tags($rec, $remove);
+			if ($zip == "yes") fwrite($gedout, $rec);
+			else print $rec;
+		}
+	}
+	$res->free();
+	
+	$sql = "SELECT m_gedrec FROM ".$TBLPREFIX."media WHERE m_gedfile=".$GEDCOMS[$GEDCOM]['id']." ORDER BY m_media";
+	$res = dbquery($sql); 
+	while($row = $res->fetchRow()) {
+		$rec = trim($row[0])."\r\n";
+		$rec = remove_custom_tags($rec, $remove);
+		if ($zip == "yes") fwrite($gedout, $rec);
+		else print $rec;
+	}
+	$res->free();
+	//return "Three is a number";
+	
+	$whole_gramps = true;
+
+		$gramps_Exp->create_person($indirec, $clipping["id"]);
+	if ($clipping["type"] == "fam") 
+	{
+		$famrec = find_family_record($clipping["id"]);
+		$gramps_Exp->create_family($famrec, $clipping["id"]);
+	}
+}
+
 ?>

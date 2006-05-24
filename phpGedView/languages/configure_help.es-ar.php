@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @subpackage Languages
  * @author Eduardo Cociña
- * @version $Id: configure_help.es-ar.php,v 1.9.2.2 2005/12/07 19:01:44 yalnifj Exp $
+ * @version $Id$
  */
 //-- CONFIGURE FILE MESSAGES
 $pgv_lang["configure"]	= "Configurar PhpGedView";

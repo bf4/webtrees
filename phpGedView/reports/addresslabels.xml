@@ -1,5 +1,5 @@
 <PGVReport access="PGV_USER" icon="place">
-	<!-- $Id: addresslabels.xml,v 1.1.2.11 2006/03/23 21:45:40 yalnifj Exp $ -->
+	<!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[address_labels]" /></PGVRTitle>
 	<PGVRDescription>Prints address labels</PGVRDescription>
 	<PGVRStyle name="header" font="LucidaSansUnicode" size="16" style="b" />

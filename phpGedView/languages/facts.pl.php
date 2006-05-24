@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @author Michael Paluchowski, http://genealogy.nethut.pl
  * @author Tymoteusz Motylewski www.motylewscy.com
- * @version $Id: facts.pl.php,v 1.11.2.7 2006/01/13 23:00:21 yalnifj Exp $
+ * @version $Id$
  */
 if (preg_match("/facts\...\.php$/", $_SERVER["PHP_SELF"])>0) {
 	print "You cannot access a language file directly.";

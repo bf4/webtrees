@@ -1,6 +1,6 @@
 PHPGEDVIEW LANGUAGE FILE CHANGELOG
 
-# $Id: LANG_CHANGELOG_bef.20050315.txt,v 1.1.2.1 2005/03/16 01:09:14 canajun2eh Exp $
+# $Id$
 
 Use this file to follow the changes made to the language files
 between different versions of phpGedView.  Use the lang.en.php

@@ -9,8 +9,9 @@
 =====================================================================
 
 Version 4.0
+ - Fixed [ 1494528 ] 4.0b8: Output already started error when uploading ZIP file (canajun2eh)
  - Fixed [ 1493898 ] Privacy Bug - Death (yalnifj)
- - Fixed [ 1492823 ] 4.0b8 Quick Update INDI - NAME:GIVNSURN
+ - Fixed [ 1492823 ] 4.0b8 Quick Update INDI - NAME:GIVNSURN (yalnifj)
  - Fixed [ 1490075 ] Manage Media - Shown Folder after Editing (canajun2eh)
  - Fixed [ 1444327 ] Media Directories - LtR texts - RtL pages (canajun2eh)
  - Fixed [ 1490893 ] 4.0 B8 Marriage Type Drop Down List is missing (opus27)

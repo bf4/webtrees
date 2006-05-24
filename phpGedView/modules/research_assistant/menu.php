@@ -20,7 +20,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: menu.php,v 1.2 2006/05/22 20:18:20 yalnifj Exp $
+ * @version $Id: individual.php,v 1.252.2.98 2005/08/16 04:04:25 kosherjava Exp $
  */
 //-- security check, only allow access from module.php
 if (strstr($_SERVER["SCRIPT_NAME"],"menu.php")) {
@@ -37,6 +37,7 @@ class research_assistant_ModuleMenu {
 	function &getMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $SHOW_RESEARCH_ASSISTANT, $PRIV_USER, $PRIV_PUBLIC;
+		global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_VIEW_FOLDERS;
 		if (!file_exists("modules/research_assistant.php")) return null;
 		if ($SHOW_RESEARCH_ASSISTANT<getUserAccessLevel()) return null;
 
@@ -50,8 +51,9 @@ class research_assistant_ModuleMenu {
 		if (!empty($PGV_IMAGES["gedcom"]["large"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["large"]);
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
-
-		if(GetUserName() != "")
+		
+		//'My Tasks' ddl menu item
+		if (getUserAccessLevel(getUserName())<= $SHOW_MY_TASKS)
 		{
 			$submenu= new Menu($pgv_lang["my_tasks"], "module.php?mod=research_assistant&amp;action=mytasks");
 			$submenu->addIcon('modules/research_assistant/images/folder_blue_icon.gif');
@@ -59,26 +61,24 @@ class research_assistant_ModuleMenu {
 			$menu->addSubmenu($submenu);
 		}
 		
-		$submenu = new Menu($pgv_lang["view_folders"], "module.php?mod=research_assistant");
-		$submenu->addIcon('modules/research_assistant/images/folder_blue_icon.gif');
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-		$menu->addSubmenu($submenu);
-
+		//'Add Task' ddl menu item
+		if (getUserAccessLevel(getUserName())<= $SHOW_ADD_TASK)
+		{
 		$submenu = new Menu($pgv_lang["add_task"], "module.php?mod=research_assistant&amp;action=addtask");
 		$submenu->addIcon('modules/research_assistant/images/add_task.gif');
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
-
-		$submenu = new Menu($pgv_lang["add_folder"], "module.php?mod=research_assistant&amp;action=addfolder");
+		}
+		
+		//'View Folders' ddl menu item
+		if (getUserAccessLevel(getUserName())<= $SHOW_VIEW_FOLDERS)
+		{
+		$submenu = new Menu($pgv_lang["view_folders"], "module.php?mod=research_assistant");
 		$submenu->addIcon('modules/research_assistant/images/folder_blue_icon.gif');
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
+		}
 		
-		$submenu = new Menu($pgv_lang["gen_tasks"], "module.php?mod=research_assistant&amp;action=genTasks");
-		$submenu->addIcon('modules/research_assistant/images/add_task.gif');
-		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-		$menu->addSubmenu($submenu);
-
 		return $menu;
 	}
 }

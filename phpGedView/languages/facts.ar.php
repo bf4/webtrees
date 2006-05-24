@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @author Ezz (sfezz)
- * @version $Id: facts.ar.php,v 1.1.2.9 2006/01/18 03:56:35 canajun2eh Exp $
+ * @version $Id$
  */
  
 if (preg_match("/facts\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {

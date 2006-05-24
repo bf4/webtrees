@@ -23,7 +23,7 @@
  * @subpackage Languages
  * @author Christophe Bx
  * @author Julien Damon
- * @version $Id: configure_help.fr.php,v 1.26.2.20 2006/05/17 20:41:06 yalnifj Exp $
+ * @version $Id$
  */
 if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "You cannot access a language file directly.";

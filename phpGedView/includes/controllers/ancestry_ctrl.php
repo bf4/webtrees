@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: ancestry_ctrl.php,v 1.1.2.4 2006/04/08 21:01:44 yalnifj Exp $
+ * @version $Id$
  */
 require_once("config.php");
 require("includes/functions_charts.php");

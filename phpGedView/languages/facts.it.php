@@ -23,7 +23,7 @@
  * @author Fabio Parri
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: facts.it.php,v 1.9.2.5 2006/01/13 23:00:21 yalnifj Exp $
+ * @version $Id$
  */
 if (preg_match("/facts\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "You cannot access a language file directly.";

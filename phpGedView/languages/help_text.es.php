@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @subpackage Languages
  * @author Ricardo Lago
- * @version $Id: help_text.es.php,v 1.8.2.4 2005/12/07 19:01:59 yalnifj Exp $
+ * @version $Id$
  */
 if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 print "Usted no puede acceder a este archivo de idioma directamente.";

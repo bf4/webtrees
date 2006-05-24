@@ -10,7 +10,7 @@
    For other changes read languages/LANG_CHANGELOG.txt
    2005.02.19 "PhpGedView" and "GEDCOM" made consistent across all language files  G.Kroll (canajun2eh)
 ===================================================*/
-# $Id: help_text.sk.php,v 1.1.2.2 2006/03/14 12:33:07 canajun2eh Exp $
+# $Id$
 
 if (preg_match("/help_text\...\.php$/", $_SERVER["PHP_SELF"])>0) {
 print "Nemáte priamy prístup k súboru so slovenčinou.";

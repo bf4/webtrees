@@ -24,7 +24,7 @@
  * @author Gerd Kroll 
  * @author Kurt Norgaz 
  * @author Peter Pluntke
- * @version $Id: facts.de.php,v 1.15.2.13 2006/03/15 14:35:02 canajun2eh Exp $
+ * @version $Id$
  */
 if (preg_match("/facts\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
         print "You cannot access a language file directly.";

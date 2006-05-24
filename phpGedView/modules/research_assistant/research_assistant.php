@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: research_assistant.php 912 2006-05-20 01:56:20Z hpena $
+ * @version $Id: research_assistant.php 932 2006-05-24 22:09:39Z jfinlay $
  * @author Jason Porter
  * @author Wade Lasson
  * @author Brandon Gagnon
@@ -368,7 +368,7 @@ class research_assistant extends ra_functions {
 			if ($_REQUEST['action'] == "completeTask" && !empty($_REQUEST['taskid'])) {
                 $out .= $this->print_menu();
                 $task = $this->getTask($_REQUEST['taskid']);
-				if (!empty($task['t_form'])) $_POST['commonFrm'] = $task['t_form'];
+				if (!empty($task['t_form'])&&!isset($_POST['commonFrm'])) $_POST['commonFrm'] = $task['t_form'];
                 $out .= $this->print_form('ra_CompleteTask');
 			}
 		else

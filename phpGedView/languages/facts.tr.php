@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @author Kurt Norgaz
- * @version $Id: facts.tr.php,v 1.16.2.7 2006/01/13 23:00:21 yalnifj Exp $
+ * @version $Id$
  */
 if (preg_match("/facts\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "You cannot access a language file directly.";

@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @author Jørgen Hansen
- * @version $Id: configure_help.da.php,v 1.38.2.10 2006/05/17 20:41:05 yalnifj Exp $
+ * @version $Id$
  */
 if (preg_match("/configure_help\...\.php$/", $_SERVER["PHP_SELF"])>0) {
 	print "Du har ikke direkte adgang til en sprogfil.";

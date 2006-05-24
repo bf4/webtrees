@@ -1,5 +1,5 @@
 <PGVReport access="PGV_PUBLIC" icon="sfamily">
-	<!-- $Id: marrlist.xml,v 1.1.2.1 2006/02/22 17:28:59 opus27 Exp $ -->
+	<!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[marr_report]" /></PGVRTitle>
 	<PGVRDescription>Prints a list of familys matching specific marr criteria</PGVRDescription>
 	<PGVRInput name="marrplace" lookup="PLAC" type="text"><PGVRvar var="pgv_lang[marrplace]" /> </PGVRInput>

@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: descendancy_ctrl.php,v 1.1.2.10 2006/04/06 18:19:30 yalnifj Exp $
+ * @version $Id$
  */
 require_once("config.php");
 require_once 'includes/controllers/basecontrol.php';

@@ -24,7 +24,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @version $Id: functions.fi.php,v 1.1.2.1 2006/01/19 17:49:11 canajun2eh Exp $
+ * @version $Id$
  */
 
 /**

@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage DataModel
- * @version $Id: gedcomrecord.php,v 1.1.2.14 2006/02/17 04:32:29 kosherjava Exp $
+ * @version $Id$
  */
 
 class GedcomRecord {

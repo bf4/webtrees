@@ -4,7 +4,7 @@
  * @see http://www.foseid.priv.no/gustav/iso3166/iso3166-nb.txt
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: countries.no.php,v 1.1.2.4 2005/12/31 19:34:20 canajun2eh Exp $
+ * @version $Id$
  */
 if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 		print "You cannot access a language file directly.";

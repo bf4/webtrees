@@ -79,12 +79,12 @@ class Census1800 extends ra_form {
 //        Start of Table
         $out = '<tr><td class="descriptionbox">'.$pgv_lang["state"].'</td><td class="optionbox"><input name="state" type="text" size="27"></td>';
         $out .= '<td class="descriptionbox">'.$pgv_lang["call/url"].'</td><td class="optionbox"><input name="CallNumberURL" type="text" size="27"></td>';
-        $out .= '<td class="descriptionbox">'.$pgv_lang["enumDate"].'</td><td class="optionbox"><input name="EnumerationDate" type="text" size="27"></td>';
-        $out .= '<td class="descriptionbox">'.$pgv_lang["county"].'</td><td class="optionbox"><input name="county" type="text" size="27"></td>';
+        $out .= '<td class="descriptionbox">'.$pgv_lang["enumDate"].'</td><td class="optionbox"><input name="EnumerationDate" type="text" size="27"></td></tr>';
+        $out .= '<tr><td class="descriptionbox">'.$pgv_lang["county"].'</td><td class="optionbox"><input name="county" type="text" size="27"></td>';
         $out .= '<td class="descriptionbox">'.$pgv_lang["city"].'</td><td class="optionbox"><input name="city" type="text" size="10"></td>';
         $out .=	'<td class="descriptionbox">'.$pgv_lang["page"].'</td><td class="optionbox"><input name="page" type="text" size="1"></td></tr>';
 //        Next Table
-        $out .= '<tr><table align="center" id="inputTable">';
+        $out .= '<tr><td colspan="6"><table align="center" id="inputTable">';
         $out .= '<td class="descriptionbox" align="center" rowspan="2">Names of heads of families</td>';
         $out .= '<td colspan="5" class="descriptionbox" align="center">Free White Males</td>';
         $out .= '<td colspan="5" class="descriptionbox" align="center">Free White Females</td>';
@@ -115,6 +115,7 @@ class Census1800 extends ra_form {
 	        $out .= '<td class="optionbox"><input name="otherPersons'.$i.'" type="text" size="5"></td>';
 	        $out .= '<td class="optionbox"><input name="slaves'.$i.'" type="text" size="4"></td></tr>';
         }
+        $out .= '</table></td></tr>';
         return $out;
     }
 
@@ -124,7 +125,7 @@ class Census1800 extends ra_form {
 
     function display_form() {
         $out = $this->header("module.php?mod=research_assistant&form=Census1800&action=func&func=step2&taskid=$_REQUEST[taskid]", "center", "1800 United States Federal Census");
-        $out .= $this->sourceCitationForm();
+        $out .= $this->sourceCitationForm(5);
         //$out .= $this->content();
         $out .= $this->footer();
         return $out;

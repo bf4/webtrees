@@ -23,7 +23,7 @@
  * @subpackage Languages
  * @author Jaakko Sarell
  * @author Matti
- * @version $Id: facts.fi.php,v 1.8.2.17 2006/02/03 13:28:29 meliza Exp $
+ * @version $Id$
  */
 if (preg_match("/facts\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "You cannot access a language file directly.";

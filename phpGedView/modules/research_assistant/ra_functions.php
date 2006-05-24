@@ -22,7 +22,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: ra_functions.php 917 2006-05-23 20:20:26Z jfinlay $
+ * @version $Id: ra_functions.php 932 2006-05-24 22:09:39Z jfinlay $
  * @author Jason Porter
  * @author Wade Lasson
  * @author Brandon Gagnon
@@ -177,7 +177,7 @@ class ra_functions {
 			$percent = " width='22%' ";
 
 		// Display for the menu
-		global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_VIEW_FOLDERS, $SHOW_ADD_FOLDER, $SHOW_ADD_UNLINKED_SOURCE, $SHOW_VIEW_PROBABILITIES;//show
+		global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, $SHOW_ADD_FOLDER, $SHOW_ADD_UNLINKED_SOURCE, $SHOW_VIEW_PROBABILITIES;//show
 		
 		$out = '<table class="list_table" width="100%" cellpadding="2">';
 		$out .= '<tr>';
@@ -188,6 +188,9 @@ class ra_functions {
 		//button 'Add Task''
 		if (getUserAccessLevel(getUserName())<=$SHOW_ADD_TASK)
 			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant&amp;action=addtask&amp;folderid='.$folderid.'">'.'<img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["add_task"].'" border="0"></img><br />'.$pgv_lang["add_task"].'</a></td>';
+		//button 'Auto Generate Tasks'
+		if (getUserAccessLevel(getUserName())<=$SHOW_AUTO_GEN_TASK)
+			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant&amp;action=genTasks">'.'<img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["gen_tasks"].'" border="0"></img><br />'.$pgv_lang["gen_tasks"].'</a></td>';
 		//button 'View Folders'
 		if (getUserAccessLevel(getUserName())<=$SHOW_VIEW_FOLDERS)
 			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant">'.'<img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["view_folders"].'" border="0"></img><br />'.$pgv_lang["view_folders"].'</a></td>';

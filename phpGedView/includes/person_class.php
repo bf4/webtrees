@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage DataModel
- * @version $Id: person_class.php,v 1.1.2.57 2006/05/04 15:21:18 yalnifj Exp $
+ * @version $Id$
  */
 require_once 'includes/gedcomrecord.php';
 require_once 'includes/family_class.php';

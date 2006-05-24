@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Controllers
- * @version $Id: family_ctrl.php,v 1.1.2.20 2006/05/04 15:22:12 yalnifj Exp $
+ * @version $Id$
  */
 
 require_once 'config.php';

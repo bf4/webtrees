@@ -20,7 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: functions_import.php,v 1.1.2.18 2006/04/21 21:45:25 canajun2eh Exp $
+ * @version $Id$
  * @package PhpGedView
  * @subpackage DB
  */

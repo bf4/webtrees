@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @author Norgaz Kurt
  * @author Peter Pluntke
- * @version $Id: help_text.de.php,v 1.65.2.7 2005/12/24 17:30:35 canajun2eh Exp $
+ * @version $Id$
  */
 
 if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {

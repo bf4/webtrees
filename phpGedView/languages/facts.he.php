@@ -23,7 +23,7 @@
  * @author Meliza
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: facts.he.php,v 1.36.2.15 2005/09/02 21:30:02 meliza Exp $
+ * @version $Id$
  */
 
 if (preg_match("/facts\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {

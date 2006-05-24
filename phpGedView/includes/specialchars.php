@@ -39,7 +39,7 @@
  *
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id:  $
+ * @version $Id$
  */
 require $confighelpfile["english"];
 if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];

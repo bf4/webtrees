@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @author Michael Paluchowski, http://genealogy.nethut.pl
  * @author Tymoteusz Motylewski www.motylewscy.com
- * @version $Id: help_text.pl.php,v 1.3.2.3 2005/12/07 19:02:02 yalnifj Exp $
+ * @version $Id$
  */
 //-- GENERAL 
 $pgv_lang["help_header"]			= "Informacje o:";

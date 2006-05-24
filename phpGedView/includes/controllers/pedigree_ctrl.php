@@ -20,7 +20,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: pedigree_ctrl.php,v 1.1.2.7 2006/04/26 22:38:45 yalnifj Exp $
+ * @version $Id$
  */
 require_once("config.php");
 require("includes/functions_charts.php");

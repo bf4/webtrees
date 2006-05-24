@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Admin
- * @version $Id: functions_editlang.php,v 1.1.2.16 2006/01/13 23:00:19 yalnifj Exp $
+ * @version $Id$
  */
 
 if (strstr($_SERVER["SCRIPT_NAME"],"functions_editlang.php")) {

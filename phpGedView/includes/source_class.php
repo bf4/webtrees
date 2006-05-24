@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage DataModel
- * @version $Id: source_class.php,v 1.1.2.3 2006/04/05 11:54:40 canajun2eh Exp $
+ * @version $Id$
  */
 
 require_once('includes/gedcomrecord.php');

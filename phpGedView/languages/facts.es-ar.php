@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @subpackage Languages
  * @author Eduardo Cociña
- * @version $Id: facts.es-ar.php,v 1.7.2.4 2006/01/18 03:56:35 canajun2eh Exp $
+ * @version $Id$
  */
 // -- Define a fact array to map GEDCOM tags with their Spanish values
 $factarray["ABBR"] = "Abreviatura";

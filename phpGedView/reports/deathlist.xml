@@ -1,5 +1,5 @@
 <PGVReport access="PGV_PUBLIC" icon="place">
-	<!-- $Id: deathlist.xml,v 1.1.2.3 2006/01/21 13:11:54 canajun2eh Exp $ -->
+	<!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[death_report]" /></PGVRTitle>
 	<PGVRDescription>Prints a list of individuals matching specific death criteria</PGVRDescription>
 	<PGVRInput name="deathplace" lookup="PLAC" type="text"><PGVRvar var="pgv_lang[deathplace]" /> </PGVRInput>

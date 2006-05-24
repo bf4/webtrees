@@ -44,7 +44,7 @@
  *
  * @package PhpGedView
  * @subpackage Webservice
- * @version $Id: genealogyService.php,v 1.1.2.16 2006/05/15 18:13:35 yalnifj Exp $
+ * @version $Id$
  */
 
 require_once 'includes/SOAP/Server.php';

@@ -5,7 +5,7 @@
  * @see http://susning.nu/Landskod  (list #7) for another list, taken from ISO standards
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: countries.de.php,v 1.1.2.5 2005/12/31 19:34:20 canajun2eh Exp $
+ * @version $Id$
  */
 if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 		print "You cannot access a language file directly.";

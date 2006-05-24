@@ -23,7 +23,7 @@
  * @author Meliza
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: lang.he.php,v 1.74.2.42 2005/09/02 21:30:03 meliza Exp $
+ * @version $Id$
 
  */
 if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
@@ -31,6 +31,8 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["roman_surn"]			= "שם משפחה לועזי";
+$pgv_lang["roman_givn"]			= "שמות פרטיים לועזיים";
 $pgv_lang["hebrew_surn"]			= "שם משפחה עברי";
 $pgv_lang["hebrew_givn"]			= "שמות פרטיים עבריים";
 $pgv_lang["include"]				= "סמן לצורך שדרוג:";
@@ -55,7 +57,7 @@ $pgv_lang["thumb_media_fail2"]		= "לא ניתן להעביר את קובץ המ
 $pgv_lang["thumb_media_fail3"]		= "לא ניתן לשנות את שמו של קובץ המדיה המזערי מ-<b><span dir=\"ltr\">#GLOBALS[oldThumbFolder]#</span>#GLOBALS[oldMediaName]#</b> ל-<b><span dir=\"ltr\">#GLOBALS[newThumbFolder]#</span>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["server_file"]			= "שם הקובץ בשרת";
 $pgv_lang["server_file_advice"]		= "אין לשנות אם ברצונך לשמור על שם הקובץ המקורי.";
-$pgv_lang["server_file_advice2"]		= "ניתן להכניס URL שמתחיל ב-&laquo;http://&raquo;.";
+$pgv_lang["server_file_advice2"]		= "ניתן להכניס URL שמתחיל ב-<span dir=\"ltr\">&laquo;http://&raquo;</span>.";
 $pgv_lang["server_folder"]			= "שם התיקייה בשרת";
 $pgv_lang["server_folder_advice"]		= "ניתן להכניס עד ל-#GLOBALS[MEDIA_DIRECTORY_LEVELS]# שמות של תיקיות לאחר ברירת המחדל &laquo;#GLOBALS[MEDIA_DIRECTORY]#&raquo;.<br />אין להכניס את החלק &laquo;<span dir=\"ltr\">#GLOBALS[MEDIA_DIRECTORY]#</span>&raquo; של שם התיקיה בשרת.";
 $pgv_lang["server_folder_advice2"]		= "מתעלמים מכניסה זו אם הוכנס URL בשדה שם הקובץ.";

@@ -23,7 +23,7 @@
  * @author Jørgen Hansen
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: lang.da.php,v 1.41.2.13 2006/02/16 18:16:14 canajun2eh Exp $
+ * @version $Id$
  */
 
 if (preg_match("/lang\...\.php$/", $_SERVER["PHP_SELF"])>0) {

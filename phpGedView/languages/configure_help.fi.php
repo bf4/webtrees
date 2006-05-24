@@ -23,7 +23,7 @@
  * @subpackage Languages
  * @author Jaakko Sarell
  * @author Matti Valve
- * @version $Id: configure_help.fi.php,v 1.6.2.12 2006/02/25 21:20:31 meliza Exp $
+ * @version $Id$
  */
 if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "You cannot access a language file directly.";

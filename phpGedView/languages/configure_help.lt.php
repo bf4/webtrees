@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @author Arturas Sleinius
- * @version $Id: configure_help.lt.php,v 1.1.2.3 2005/12/07 19:01:54 yalnifj Exp $
+ * @version $Id$
  */
 if (preg_match("/configure_help\...\.php$/", $_SERVER["PHP_SELF"])>0) {
 	print "You cannot access a language file directly.";

@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Edit
- * @version $Id: functions_places.php,v 1.1.2.23 2005/12/27 12:33:37 canajun2eh Exp $
+ * @version $Id$
  */
 if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
 	print "Now, why would you want to do that.  You're not hacking are you?";

@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @author Jan Hapala
- * @version $Id: configure_help.cz.php,v 1.12.2.5 2005/12/07 19:01:43 yalnifj Exp $
+ * @version $Id$
  */
 if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "Nemáte přímý přístup k souboru s češtinou.";

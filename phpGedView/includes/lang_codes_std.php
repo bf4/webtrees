@@ -3,7 +3,7 @@
  *
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: lang_codes_std.php,v 1.1.2.5 2005/06/14 10:01:57 canajun2eh Exp $
+ * @version $Id$
  *
  * RFC1766 (HTML language codes) refers to ISO standard 639, and specifies that the 
  * 2-character language code of the ISO standard should be used, and that an ISO 

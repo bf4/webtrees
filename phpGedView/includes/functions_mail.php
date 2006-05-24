@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @version $Id: functions_mail.php,v 1.1.2.1 2005/12/13 00:04:22 yalnifj Exp $
+ * @version $Id$
  */
  
 //-- this function is a wrapper to the php mail() function so that we can change settings globally

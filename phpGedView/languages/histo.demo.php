@@ -6,7 +6,7 @@
  * File to be renamed : histo.xx.php where xx is language code
  * File included in : person_class.php
  *
- * $Id: histo.demo.php,v 1.1.2.1 2005/08/30 09:01:57 opus27 Exp $
+ * $Id$
  */
 
 $histo[] = "1 EVEN\n2 TYPE History\n2 DATE 11 NOV 1918\n2 NOTE WW1 Armistice";

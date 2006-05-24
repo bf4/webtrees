@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Controllers
- * @version $Id: basecontrol.php,v 1.1.2.4 2005/08/19 09:26:11 roland-d Exp $
+ * @version $Id$
  */
 class BaseController {
 	var $view = "";

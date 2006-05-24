@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @subpackage Edit
  * @see functions_places.php
- * @version $Id: functions_edit.php,v 1.1.2.146 2006/05/22 10:17:22 opus27 Exp $
+ * @version $Id$
  */
 
 if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {

@@ -48,14 +48,15 @@ $PRIVACY_CONSTANTS[$PRIV_PUBLIC] = "\$PRIV_PUBLIC";
 $PRIVACY_CONSTANTS[$PRIV_USER] = "\$PRIV_USER";
 $PRIVACY_CONSTANTS[$PRIV_NONE] = "\$PRIV_NONE";
 
-global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_VIEW_FOLDERS, $SHOW_ADD_FOLDER, $SHOW_ADD_UNLINKED_SOURCE, $SHOW_VIEW_PROBABILITIES;
+global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, $SHOW_ADD_FOLDER, $SHOW_ADD_UNLINKED_SOURCE, $SHOW_VIEW_PROBABILITIES;
 global $INDEX_DIRECTORY, $GEDCOM, $person_privacy;
 include_once("modules/research_assistant/forms/ra_privacy.php");
 if (file_exists($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php")) include_once($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php");
 
 /**
  * print write_access option
- *
+ * prints all the available privacy options defined in privacy.php
+ * 
  * @param string $checkVar
  */
 function write_access_option($checkVar) {
@@ -90,6 +91,7 @@ if (isset($_REQUEST['subaction']) && $_REQUEST['subaction']=="submitconfig") {
 	$configtext = implode('', file($fRAprivacy));
 	$configtext = preg_replace('/\$SHOW_MY_TASKS\s*=\s*.*;/',                       "\$SHOW_MY_TASKS = ".$_POST["v_SHOW_MY_TASKS"].";",            $configtext);
 	$configtext = preg_replace('/\$SHOW_ADD_TASK\s*=\s*.*;/',                       "\$SHOW_ADD_TASK = ".$_POST["v_SHOW_ADD_TASK"].";",            $configtext);
+	$configtext = preg_replace('/\$SHOW_AUTO_GEN_TASK\s*=\s*.*;/',             "\$SHOW_AUTO_GEN_TASK = ".$_POST["v_SHOW_AUTO_GEN_TASK"].";",       $configtext);
 	$configtext = preg_replace('/\$SHOW_VIEW_FOLDERS\s*=\s*.*;/',               "\$SHOW_VIEW_FOLDERS = ".$_POST["v_SHOW_VIEW_FOLDERS"].";",        $configtext);
 	$configtext = preg_replace('/\$SHOW_ADD_FOLDER\s*=\s*.*;/',                   "\$SHOW_ADD_FOLDER = ".$_POST["v_SHOW_ADD_FOLDER"].";",          $configtext);
 	$configtext = preg_replace('/\$SHOW_ADD_UNLINKED_SOURCE\s*=\s*.*;/', "\$SHOW_ADD_UNLINKED_SOURCE = ".$_POST["v_SHOW_ADD_UNLINKED_SOURCE"].";", $configtext);
@@ -150,6 +152,18 @@ if (isset($_REQUEST['subaction']) && $_REQUEST['subaction']=="submitconfig") {
                 <td class="optionbox">
                       <select size="1" name="v_SHOW_ADD_TASK">
                       	<?php write_access_option($SHOW_ADD_TASK); ?>
+                      </select>
+                </td>
+            </tr>
+            
+    <!--AUTO GENERATE TASK-->
+    		<tr>
+                <td class="descriptionbox">
+                    <?php print $pgv_lang["show_auto_gen_task"]; ?>
+                </td>
+                <td class="optionbox">
+                      <select size="1" name="v_SHOW_AUTO_GEN_TASK">
+                      	<?php write_access_option($SHOW_AUTO_GEN_TASK); ?>
                       </select>
                 </td>
             </tr>

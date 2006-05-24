@@ -1,5 +1,5 @@
 <PGVReport access="PGV_PUBLIC" icon="pedigree">
-<!-- $Id: pedigree.xml,v 1.9.2.6 2006/01/21 13:11:54 canajun2eh Exp $ -->
+<!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[pedigree_chart]" /> (<PGVRvar var="pgv_lang[portrait]" />)</PGVRTitle>
 	<PGVRDescription>Prints a pedigree chart in portrait mode</PGVRDescription>
 	<PGVRStyle name="header" font="LucidaSansUnicode" size="18" style="" />

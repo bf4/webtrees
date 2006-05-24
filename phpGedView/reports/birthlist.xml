@@ -1,5 +1,5 @@
 <PGVReport access="PGV_PUBLIC" icon="place">
-	<!-- $Id: birthlist.xml,v 1.8.2.4 2006/01/21 13:11:54 canajun2eh Exp $ -->
+	<!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[birth_report]" /></PGVRTitle>
 	<PGVRDescription>Prints a list of individuals matching specific birth criteria</PGVRDescription>
 	<PGVRInput name="birthplace" lookup="PLAC" type="text"><PGVRvar var="pgv_lang[birthplace]" /> </PGVRInput>

@@ -1,5 +1,5 @@
 <PGVReport access="PGV_USER" icon="place">
-	<!-- $Id: addresslist.xml,v 1.1.2.14 2006/01/21 13:11:54 canajun2eh Exp $ -->
+	<!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[address_list]" /></PGVRTitle>
 	<PGVRDescription>Prints a list of addresses</PGVRDescription>
 	<PGVRStyle name="header" font="LucidaSansUnicode" size="16" style="b" />

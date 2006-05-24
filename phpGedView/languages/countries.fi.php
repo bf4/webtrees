@@ -36,7 +36,7 @@
  *
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: countries.fi.php,v 1.1.2.6 2005/09/12 06:24:18 meliza Exp $
+ * @version $Id$
 */
 
 if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {

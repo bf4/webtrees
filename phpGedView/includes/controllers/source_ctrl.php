@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: source_ctrl.php,v 1.1.2.5 2006/01/13 23:00:20 yalnifj Exp $
+ * @version $Id$
  */
 
 require_once("config.php");

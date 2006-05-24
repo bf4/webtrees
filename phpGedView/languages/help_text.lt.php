@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @author Arturas Sleinius
- * @version $Id: help_text.lt.php,v 1.1.2.3 2005/12/07 19:01:59 yalnifj Exp $
+ * @version $Id$
  */
 
 //-- GENERAL HELP HEADER

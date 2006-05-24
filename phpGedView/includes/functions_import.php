@@ -20,7 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: functions_import.php,v 1.1.2.18 2006/04/21 21:45:25 canajun2eh Exp $
+ * @version $Id$
  * @package PhpGedView
  * @subpackage DB
  */
@@ -895,6 +895,7 @@ function setup_database() {
 			exit;
 		}
 
+
 		$sql = "CREATE TABLE ".$TBLPREFIX."places (p_id INT NOT NULL, p_place VARCHAR(150), p_level INT, p_parent_id INT, p_file INT, p_std_soundex VARCHAR(255), p_dm_soundex VARCHAR(255), PRIMARY KEY(p_id))"; 
 		$res = dbquery($sql);
 
@@ -965,7 +966,7 @@ function setup_database() {
 
 	}
 	else if (!$has_places) {
-		$sql = "CREATE TABLE ".$TBLPREFIX."places (p_id INT NOT NULL, p_place VARCHAR(150), p_level INT, p_parent_id INT, p_file INT, PRIMARY KEY(p_id))";
+		$sql = "CREATE TABLE ".$TBLPREFIX."places (p_id INT NOT NULL, p_place VARCHAR(150), p_level INT, p_parent_id INT, p_file INT, p_std_soundex VARCHAR(255), p_dm_soundex VARCHAR(255), PRIMARY KEY(p_id))";
 		$res = dbquery($sql);
 
 		if(!DB::isError($res)) {
@@ -1488,5 +1489,3 @@ function cleanup_tags_y(&$irec) {
 	$irec=substr($irec,0,-3);
 //	return $irec;
 }
-
-?>

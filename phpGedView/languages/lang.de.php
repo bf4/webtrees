@@ -24,7 +24,7 @@
  * @author Gerd Kroll
  * @author Kurt Norgaz 
  * @author Peter Pluntke
- * @version $Id: lang.de.php,v 1.71.2.59 2006/05/20 10:36:16 canajun2eh Exp $
+ * @version $Id$
  */
 if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
         print "You cannot access a language file directly.";
