@@ -24,7 +24,7 @@
  * @subpackage Charts
  */
 require("config.php");
-require_once("includes/person_class.php");
+require_once("includes/gedcomrecord.php");
 header("Content-Type: text/html; charset=$CHARACTER_SET");
 ?>
 <html>
@@ -47,14 +47,14 @@ if ((!$SHOW_GEDCOM_RECORD) && (!UserCanAccept($username))) {
 	exit;
 }
 
-$person = Person::getInstance($pid);
+$obj = GedcomRecord::getInstance($pid);
 
-if (is_null($person) || !$person->canDisplayDetails()) {
+if (is_null($obj) || !$obj->canDisplayDetails()) {
 	print_privacy_error($CONTACT_EMAIL);
 	print "</body></html>";
 	exit;
 }
-if (!isset($fromfile)) $indirec = $person->getGedcomRecord();
+if (!isset($fromfile)) $indirec = $obj->getGedcomRecord();
 else  {
 	$indirec = find_record_in_file($pid);
 	$indirec = privatize_gedcom($indirec);
