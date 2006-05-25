@@ -151,6 +151,13 @@ class Family extends GedcomRecord {
 	function getNumberOfChildren() {
 		return count($this->children);
 	}
+	/**
+	 * Check if privacy options allow this record to be displayed
+	 * @return boolean
+	 */
+	function canDisplayDetails() {
+		return $this->disp;
+	}
 
 	/**
 	 * get updated Family

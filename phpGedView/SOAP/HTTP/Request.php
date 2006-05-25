@@ -32,7 +32,7 @@
 // | Author: Richard Heyes <richard@phpguru.org>                           |
 // +-----------------------------------------------------------------------+
 //
-// $Id: Request.php,v 1.1.2.4 2006/05/02 15:19:58 yalnifj Exp $
+// $Id: Request.php,v 1.1.2.2 2006/05/25 15:57:05 yalnifj Exp $
 //
 // HTTP_Request Class
 //
@@ -611,8 +611,8 @@ class HTTP_Request {
         }
 
         // magic quotes may fuck up file uploads and chunked response processing
-        $magicQuotes = ini_get('magic_quotes_runtime');
-        ini_set('magic_quotes_runtime', false);
+        $magicQuotes = @ini_get('magic_quotes_runtime');
+        @ini_set('magic_quotes_runtime', false);
 
         // If this is a second request, we may get away without
         // re-connecting if they're on the same server
@@ -631,7 +631,7 @@ class HTTP_Request {
             $err = $this->_response->process($this->_saveBody && $saveBody);
         }
 
-        ini_set('magic_quotes_runtime', $magicQuotes);
+        @ini_set('magic_quotes_runtime', $magicQuotes);
 
         if (PEAR::isError($err)) {
             return $err;
@@ -749,9 +749,9 @@ class HTTP_Request {
     function _buildRequest()
     {
         $separator = ini_get('arg_separator.output');
-        ini_set('arg_separator.output', '&');
+        @ini_set('arg_separator.output', '&');
         $querystring = ($querystring = $this->_url->getQueryString()) ? '?' . $querystring : '';
-        ini_set('arg_separator.output', $separator);
+        @ini_set('arg_separator.output', $separator);
 
         $host = isset($this->_proxy_host) ? $this->_url->protocol . '://' . $this->_url->host : '';
         $port = (isset($this->_proxy_host) AND $this->_url->port != 80) ? ':' . $this->_url->port : '';

@@ -529,9 +529,9 @@ class DB
 
         if (isset($options['debug']) && $options['debug'] >= 2) {
             // expose php errors with sufficient debug level
-            include_once "includes/DB/${type}.php";
+            include_once "DB/${type}.php";
         } else {
-            @include_once "includes/DB/${type}.php";
+            @include_once "DB/${type}.php";
         }
 
         $classname = "DB_${type}";

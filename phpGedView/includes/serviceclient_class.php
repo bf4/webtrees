@@ -109,7 +109,7 @@ class ServiceClient extends GedcomRecord {
 			$this->__change_encoding($wsdl);
 			$this->soapClient = $wsdl->getProxy();
 		}
-		if (!PEAR::isError($this->soapClient)) {
+		if (!$this->isError($this->soapClient)) {
 			$res = $this->soapClient->Authenticate($this->username, $this->password, $this->gedfile, "",$this->data_type);
 			if (!is_object($res))
 			{
@@ -123,7 +123,7 @@ class ServiceClient extends GedcomRecord {
 			return $this->SID;
 		}
 		else {
-			addToLog("Unable to generate web service proxy from WSDL. ".$res->getMessage());
+			addToLog("Unable to generate web service proxy from WSDL. ".print_r($this->soapClient, true));
 			return false;
 		}
 	}
@@ -135,6 +135,7 @@ class ServiceClient extends GedcomRecord {
 	function getRemoteRecord($remoteid) {
 if ($this->DEBUG) print "In getRemoteRecord($remoteid)<br />";
 		if (!is_object($this->soapClient)) $this->authenticate();
+		if (!is_object($this->soapClient)||$this->isError($this->soapClient)) return false;
 		$rec = $this->soapClient->getGedcomRecord($this->SID, $remoteid);
 		$rec = preg_replace("/@(.*)@/", "@".$this->xref.":$1@", $rec);
 		return $rec;
@@ -795,6 +796,7 @@ if ($this->DEBUG) print "In mergeGedcomRecord($xref)<br />";
 		if (empty($change_date)) {
 			//print $xref." no change<br />";
 			$this->authenticate();
+			if (!is_object($this->soapClient) || $this->isError($this->soapClient)) return false;
 			$result = $this->soapClient->getGedcomRecord($this->SID, $xref);
 			//print_r($result);
 			if (PEAR::isError($result) || isset($result->faultcode) || get_class($result)=='SOAP_Fault' || is_object($result)) {

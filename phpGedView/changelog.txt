@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.0
+ - Fixed [ 1494789 ] 4.0b8 Family : View GEDCOM record (opus27)
  - Fixed [ 1494528 ] 4.0b8: Output already started error when uploading ZIP file (canajun2eh)
  - Fixed [ 1493898 ] Privacy Bug - Death (yalnifj)
  - Fixed [ 1492823 ] 4.0b8 Quick Update INDI - NAME:GIVNSURN (yalnifj)

@@ -93,7 +93,7 @@ foreach ($worms as $worm) {
 
 // The search list has been reversed.  Whitelist all browsers, and 
 // mark everything else as a spider/bot.
-// Java/ and PEAR required for GDBI and our own cross site communication.
+// Java/ Axis/ and PEAR required for GDBI and our own cross site communication.
 $real_browsers = array(
 	'MSIE ',
 	'Opera', 
@@ -106,6 +106,7 @@ $real_browsers = array(
 	'Lynx',
 	'Java/',
 	'PEAR',
+	'Axis/',
 	'MSFrontPage',
 	'RssReader'
 	);

@@ -25,7 +25,10 @@
  * @subpackage DataModel
  * @version $Id$
  */
-
+ 
+require_once('includes/person_class.php');
+require_once('includes/family_class.php');
+require_once('includes/source_class.php');
 class GedcomRecord {
 	var $gedrec = "";
 	var $xref = "";
@@ -66,6 +69,81 @@ class GedcomRecord {
 			$this->type = trim($match[2]);
 		}
 	}
+	
+	/**
+	 * Static function used to get an instance of an object
+	 * @param string $pid	the ID of the object to retrieve
+	 */
+	function &getInstance($pid, $simple=true) {
+		global $indilist, $famlist, $sourcelist, $otherlist, $GEDCOM, $GEDCOMS, $pgv_changes;
+
+		//-- first check for the object in the cache
+		if (isset($indilist[$pid]) && $indilist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
+			if (isset($indilist[$pid]['object'])) return $indilist[$pid]['object'];
+		}
+		if (isset($famlist[$pid]) && $famlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
+			if (isset($famlist[$pid]['object'])) return $famlist[$pid]['object'];
+		}
+		if (isset($sourcelist[$pid]) && $sourcelist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
+			if (isset($sourcelist[$pid]['object'])) return $sourcelist[$pid]['object'];
+		}
+		if (isset($otherlist[$pid]) && $otherlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
+			if (isset($otherlist[$pid]['object'])) return $otherlist[$pid]['object'];
+		}
+
+		//-- look for the gedcom record
+		$indirec = find_gedcom_record($pid);
+		if (empty($indirec)) {
+			$ct = preg_match("/(\w+):(.+)/", $pid, $match);
+			//-- check if it is a remote object
+			if ($ct>0) {
+				$servid = trim($match[1]);
+				$remoteid = trim($match[2]);
+				$service = ServiceClient::getInstance($servid);
+				$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$pid."@ INDI\r\n1 RFN ".$pid, false);
+				$indirec = $newrec;
+			}
+		}
+		//-- check if it is a new object not yet in the database
+		if (empty($indirec)) {
+			if (userCanEdit(getUserName()) && isset($pgv_changes[$pid."_".$GEDCOM])) {
+				$indirec = find_record_in_file($pid);
+				$fromfile = true;
+			}
+		}
+		if (empty($indirec)) return null;
+		
+		$ct = preg_match("/0 @.*@ (\w*)/", $indirec, $match);
+		if ($ct>0) {
+			$type = trim($match[1]);
+			if ($type=="INDI") {
+				$person = new Person($indirec, $simple);
+				if (!empty($fromfile)) $person->setChanged(true);
+				$indilist[$pid]['object'] = &$person;
+				return $person;
+			}
+			else if ($type=="FAM") {
+				$person = new Family($indirec, $simple);
+				if (!empty($fromfile)) $person->setChanged(true);
+				$famlist[$pid]['object'] = &$person;
+				return $person;
+			}
+			else if ($type=="SOUR") {
+				$person = new Source($indirec, $simple);
+				if (!empty($fromfile)) $person->setChanged(true);
+				$sourcelist[$pid]['object'] = &$person;
+				return $person;
+			}
+			else {
+				$person = new GedcomRecord($indirec, $simple);
+				if (!empty($fromfile)) $person->setChanged(true);
+				$otherlist[$pid]['object'] = &$person;
+				return $person;
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * get the xref
 	 */
@@ -192,5 +270,13 @@ class GedcomRecord {
 
 		return false;
 	}
+	
+	/**
+	 * can the details of this record be shown
+	 * This method should be overridden in sub classes
+	 * @return boolean 
+	 */
+	function canDisplayDetails() {
+		return displayDetails($this->gedrec, $this->type);
+	}
 }
-?>
