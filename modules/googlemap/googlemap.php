@@ -86,8 +86,20 @@ function build_indiv_map($indifacts, $famids) {
                 if (!empty($placerec)) {
                     $ctla = preg_match("/\d LATI (.*)/", $placerec, $match1);
                     $ctlo = preg_match("/\d LONG (.*)/", $placerec, $match2);
-
-                    if (($ctla>0) && ($ctlo>0)) {
+                    $spouserec = get_sub_record(1, "1 _PGVS", $value[1]);
+                    $ctlp = preg_match("/\d _PGVS @(.*)@/", $spouserec, $spouseid);
+                    if ($ctlp>0) {
+                        if (displayDetailsByID($spouseid[1])) {
+                            $useThisItem = true;
+                        }
+                        else {
+                            $useThisItem = false;
+                        }
+                    }
+                    else {
+                        $useThisItem = true;
+                    }
+                    if (($ctla>0) && ($ctlo>0) && ($useThisItem==true)) {
                         $i = $i + 1;
                         $mapdata["fact"][$i] = $factarray[$fact];
                         $mapdata["show"][$i] = "yes";
