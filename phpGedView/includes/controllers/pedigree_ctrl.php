@@ -23,7 +23,7 @@
  * @version $Id$
  */
 require_once("config.php");
-require("includes/functions_charts.php");
+require_once("includes/functions_charts.php");
 require_once 'includes/controllers/basecontrol.php';
 require_once('includes/person_class.php');
 require( $factsfile["english"]);
