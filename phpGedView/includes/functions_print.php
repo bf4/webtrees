@@ -382,7 +382,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
     }// SEARCH_SPIDER
 
 	 //-- find all level 1 sub records
-	  $skipfacts = array("SEX","FAMS","FAMC","NAME","TITL","NOTE","SOUR","SSN","OBJE","HUSB","WIFE","CHIL","ALIA","ADDR","PHON","SUBM","_EMAIL","CHAN","URL","EMAIL","WWW","RESI");
+	  $skipfacts = array("SEX","FAMS","FAMC","NAME","TITL","NOTE","SOUR","SSN","OBJE","HUSB","WIFE","CHIL","ALIA","ADDR","PHON","SUBM","_EMAIL","CHAN","URL","EMAIL","WWW","RESI","_UID","_TODO");
 	  $subfacts = get_all_subrecords($indirec, implode(",", $skipfacts));
 	  // NOTE: Open div inout-$pid.$personcount.$count
 

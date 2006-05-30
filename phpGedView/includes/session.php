@@ -470,7 +470,11 @@ $BADMEDIA = array(".","..","CVS","thumbs","index.php","MediaInfo.txt", ".cvsigno
 //-- start the php session
 $time = time()+$PGV_SESSION_TIME;
 $date = date("D M j H:i:s T Y", $time);
-session_set_cookie_params($date, "/");
+//-- set the path to the pgv site so that users cannot login on one site 
+//-- and then automatically be logged in at another site on the same server
+$pgv_path = "/";
+if (!empty($_SERVER['SCRIPT_NAME'])) $pgv_path = dirname($_SERVER['SCRIPT_NAME']);
+session_set_cookie_params($date, $pgv_path);
 if (($PGV_SESSION_TIME>0)&&(function_exists('session_cache_expire'))) session_cache_expire($PGV_SESSION_TIME/60);
 if (!empty($PGV_SESSION_SAVE_PATH)) session_save_path($PGV_SESSION_SAVE_PATH);
 if (isset($MANUAL_SESSION_START) && !empty($SID)) session_id($SID);

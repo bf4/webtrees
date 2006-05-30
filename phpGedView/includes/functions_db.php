@@ -37,7 +37,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
 require_once 'DB.php';
 
 //-- set the REGEXP status of databases
-$REGEXP_DB = (stristr($DBTYPE,'mysql') || $DBTYPE=='pgsql');
+$REGEXP_DB = (stristr($DBTYPE,'mysql') !== false || $DBTYPE=='pgsql');
 
 //-- uncomment the following line to turn on sql query logging
 //$SQL_LOG = true;

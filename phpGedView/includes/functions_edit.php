@@ -545,23 +545,44 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		// 1 BIRT
 		// 2 DATE
 		// 2 PLAC
+		// 3 MAP
+		// 4 LATI
+		// 4 LONG
 		add_simple_tag("0 BIRT");
 		add_simple_tag("0 DATE", "BIRT");
 		add_simple_tag("0 PLAC", "BIRT");
+		add_simple_tag("0 MAP", "BIRT");
+		add_simple_tag("0 LATI", "BIRT");
+		add_simple_tag("0 LONG", "BIRT");
 		// 1 DEAT
 		// 2 DATE
 		// 2 PLAC
+		// 3 MAP
+		// 4 LATI
+		// 4 LONG
 		add_simple_tag("0 DEAT");
 		add_simple_tag("0 DATE", "DEAT");
 		add_simple_tag("0 PLAC", "DEAT");
+		add_simple_tag("0 MAP", "DEAT");
+		add_simple_tag("0 LATI", "DEAT");
+		add_simple_tag("0 LONG", "DEAT");
 		print "</table>\n";
 		//-- if adding a spouse add the option to add a marriage fact to the new family
 		if ($nextaction=='addspouseaction' || ($nextaction=='addnewparentaction' && $famid!='new')) {
 			print "<br />\n";
 			print "<table class=\"facts_table\">";
+			// 1 MARR
+			// 2 DATE
+			// 2 PLAC
+			// 3 MAP
+			// 4 LATI
+			// 4 LONG
 			add_simple_tag("0 MARR");
 			add_simple_tag("0 DATE", "MARR");
 			add_simple_tag("0 PLAC", "MARR");
+			add_simple_tag("0 MAP", "MARR");
+			add_simple_tag("0 LATI", "MARR");
+			add_simple_tag("0 LONG", "MARR");
 			print "</table>\n";
 		}
 		print_add_layer("SOUR", 1);
@@ -812,7 +833,35 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	global $assorela, $tags, $emptyfacts, $TEXT_DIRECTION, $confighelpfile;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
 	global $tabkey, $STATUS_CODES, $REPO_ID_PREFIX, $SPLIT_PLACES, $pid, $linkToID;
-
+	?>
+	<script type="text/javascript">
+	<!--
+	function valid_lati_long(field, pos, neg) {
+		// valid LATI or LONG according to Gedcom standard
+		// pos (+) : N or E
+		// neg (-) : S or W
+		txt=field.value.toUpperCase();
+		txt=txt.replace(/(^\s*)|(\s*$)/g,''); // trim
+		txt=txt.replace(/ /g,':'); // N12 34 ==> N12:34
+		txt=txt.replace(/\+/g,''); // +17.1234 ==> 17.1234
+		txt=txt.replace(/-/g,neg);	// -0.5698 ==> W0.5698
+		txt=txt.replace(/,/g,'.');	// 0,5698 ==> 0.5698
+		// 0°34'11 ==> 0:34:11
+		txt=txt.replace(/\uB0/g,':'); // °
+		txt=txt.replace(/\u27/g,':'); // '
+		// 0:34:11.2W ==> W0.5698
+		txt=txt.replace(/^([0-9]+):([0-9]+):([0-9.]+)(.*)/g, function($0, $1, $2, $3, $4) { var n=parseFloat($1); n+=($2/60); n+=($3/3600); n=Math.round(n*1E4)/1E4; return $4+n; });
+		// 0:34W ==> W0.5667
+		txt=txt.replace(/^([0-9]+):([0-9]+)(.*)/g, function($0, $1, $2, $3) { var n=parseFloat($1); n+=($2/60); n=Math.round(n*1E4)/1E4; return $3+n; });
+		// 0.5698W ==> W0.5698
+		txt=txt.replace(/(.*)([N|S|E|W]+)$/g,'$2$1');
+		// 17.1234 ==> N17.1234
+		if (txt!='' && txt.charAt(0)!=neg && txt.charAt(0)!=pos) txt=pos+txt;
+		field.value = txt;
+	}
+	//-->
+	</script>
+	<?php
 	if (!isset($noClose) && isset($readOnly) && $readOnly=="NOCLOSE") {
 		$noClose = "NOCLOSE";
 		$readOnly = "";
@@ -868,6 +917,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	$style="";
 	print "<tr id=\"".$element_id."_tr\" ";
 	if (in_array($fact, $subnamefacts)) print " style=\"display:none;\""; // hide subname facts
+	if ($fact=="MAP") print " style=\"display:none;\""; // MAP is preceding LATI and LONG
 	print " >\n";
 	print "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
 	// help link
@@ -1032,6 +1082,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			if ($fact=="NPFX") print " onkeyup=\"wactjavascript_autoComplete(npfx_accept,this,event)\" autocomplete=\"off\" ";
 			if (in_array($fact, $subnamefacts)) print " onchange=\"updatewholename();\"";
 			if ($fact=="DATE") print " onblur=\"valid_date(this);\"";
+			if ($fact=="LATI") print " onblur=\"valid_lati_long(this, 'N', 'S');\"";
+			if ($fact=="LONG") print " onblur=\"valid_lati_long(this, 'E', 'W');\"";
 			//if ($fact=="FILE") print " onchange=\"if (updateFormat) updateFormat(this.value);\"";
 			print " ".$readOnly." />\n";
 		}
@@ -1495,7 +1547,15 @@ function create_add_form($fact) {
 		// 3 TIME
 		add_simple_tag("3 TIME");
 		// 2 PLAC
-		if (!in_array($fact, $nonplacfacts)) add_simple_tag("2 PLAC");
+		// 3 MAP
+		// 4 LATI
+		// 4 LONG
+		if (!in_array($fact, $nonplacfacts)) {
+			add_simple_tag("2 PLAC");
+			add_simple_tag("3 MAP");
+			add_simple_tag("4 LATI");
+			add_simple_tag("4 LONG");
+		}
 	}
 	if ($fact=="BURI") {
 		// 1 BURI
@@ -1583,6 +1643,11 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 		}
 		if (!$inSource && $type=="DATE" && !strpos(@$gedlines[$i+1], " TIME")) add_simple_tag(($level+1)." TIME");
 		if ($type=="MARR" && !strpos(@$gedlines[$i+1], " TYPE")) add_simple_tag(($level+1)." TYPE");
+		if ($type=="PLAC" && !strpos(@$gedlines[$i+1], " MAP")) {
+			add_simple_tag(($level+1)." MAP");
+			add_simple_tag(($level+2)." LATI");
+			add_simple_tag(($level+2)." LONG");
+		}
 
 		if ($type=="SOUR") {
 			$inSource = true;
@@ -1670,8 +1735,8 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	}
 	// "SOUR" is handled earlier; this tag can occur at levels other than 1.
 	if ($level1type=="REPO") {
-		//1 REPO
-		//2 CALN
+		// 1 REPO
+		// 2 CALN
 		if (!in_array("CALN", $tags)) add_simple_tag("2 CALN");
 	}
 	if (!in_array($level1type, $nondatefacts)) {
@@ -1682,7 +1747,15 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 			add_simple_tag("3 TIME");
 		}
 		// 2 PLAC
-		if (!in_array("PLAC", $tags) && !in_array($level1type, $nonplacfacts) && !in_array("TEMP", $tags)) add_simple_tag("2 PLAC");
+		// 3 MAP
+		// 4 LATI
+		// 4 LONG
+		if (!in_array("PLAC", $tags) && !in_array($level1type, $nonplacfacts) && !in_array("TEMP", $tags)) {
+			add_simple_tag("2 PLAC");
+			add_simple_tag("3 MAP");
+			add_simple_tag("4 LATI");
+			add_simple_tag("4 LONG");
+		}
 	}
 	if ($level1type=="BURI") {
 		// 1 BURI

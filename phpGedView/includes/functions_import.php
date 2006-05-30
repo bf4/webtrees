@@ -60,9 +60,19 @@ function import_record($indirec, $update=false) {
 			$type = trim($match[1]);
 		}
 		else {
-			print $pgv_lang["invalid_gedformat"]; print "<br /><pre>$indirec</pre>\n";
+			print $pgv_lang["invalid_gedformat"]."<br /><pre>$indirec</pre>\n";
 		}
 	}
+	
+	//-- check for a _UID, if the record doesn't have one, add one
+	if ($type!="HEAD" && $type!="TRLR" && preg_match("/1 _UID /", $indirec)==0) {
+		$indirec = trim($indirec)."\r\n1 _UID ".uuid();
+	}
+//-- uncomment to replace existing _UID, normally we want them to stay the same
+//	else {
+//		$indirec = preg_replace("/1 _UID (.*)/", "1 _UID ".uuid(), $indirec);
+//	}
+	
 	//-- keep track of the max id for each type as they are imported
 	if (!isset($MAX_IDS)) $MAX_IDS = array();
 	$idnum = 0;
@@ -708,533 +718,576 @@ function setup_database() {
 	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
 
 	//---------- Check if tables exist
-	$tables_exist=false;
-	$has_rin = false;
+	$has_individuals = false;
+	$has_individuals_rin = false;
+	$has_individuals_letter = false;
+	$has_individuals_surname = false;
+	$has_families = false;
+	$has_families_name = false;
+	$has_families_numchil = false;
 	$has_places = false;
-	$has_place_gid = false;
-	$has_first_letter = false;
-	$has_surname = false;
+	$has_places_gid = false;
+	$has_places_std_soundex = false;
+	$has_places_dm_soundex = false;
 	$has_names = false;
+	$has_names_surname = false;
+	$has_names_type = false;
 	$has_placelinks = false;
 	$has_research = false;
 	$has_dates = false;
-	$has_numchil = false;
+	$has_dates_mon = false;
+	$has_dates_datestamp = false;
 	$has_media = false;
 	$has_media_mapping = false;
 	$has_nextid = false;
-	$has_d_mon = false;
 	$has_remotelinks = false;
+	$has_other = false;
+	$has_sources = false;
 	$has_soundex = false;
+	
+	$sqlite = ($DBTYPE == "sqlite");
 
 	$data = $DBCONN->getListOf('tables');
 	foreach($data as $indexval => $table) {
-		if ($table==$TBLPREFIX."individuals") {
-			$tables_exist=true;
-			if ($DBTYPE!="sqlite") {
+		switch(substr($table, strlen($TBLPREFIX))) {
+			case "individuals":
+				$has_individuals = true;
 				$info = $DBCONN->tableInfo($TBLPREFIX."individuals");
 				foreach($info as $indexval => $field) {
-					if ($field["name"]=="i_rin") $has_rin = true;
-					if ($field["name"]=="i_letter") $has_first_letter = true;
-					if ($field["name"]=="i_surname") $has_surname = true;
+					switch($field["name"]) {
+						case "i_rin":
+							$has_individuals_rin = true;
+							break;
+						case "i_letter":
+							$has_individuals_letter = true;
+							break;
+						case "i_surname":
+							$has_individuals_surname = true;
+							break;
+					}
 				}
-			}
-			else {
-				$has_rin = true;
-				$has_first_letter = true;
-				$has_surname = true;
-			}
-		}
-		if ($table==$TBLPREFIX."places") {
-			$has_places = true;
-			if ($DBTYPE!="sqlite") {
+				break;
+			case "places":
+				$has_places = true;
 				$info = $DBCONN->tableInfo($TBLPREFIX."places");
 				foreach($info as $indexval => $field) {
-					if ($field["name"]=="p_gid") $has_place_gid = true;
+					switch($field["name"]) {
+						case "p_gid":
+							$has_places_gid = true;
+							$has_places = !$sqlite;
+							break;
+						case "p_std_soundex":
+							$has_places_std_soundex = true;
+							break;
+						case "p_dm_soundex":
+							$has_places_dm_soundex = true;
+							break;
+					}
 				}
-			}
-		}
-		if ($table==$TBLPREFIX."families") {
-			if ($DBTYPE!="sqlite") {
+				break;
+			case "families":
+				$has_families = true;
 				$info = $DBCONN->tableInfo($TBLPREFIX."families");
 				foreach($info as $indexval => $field) {
-					if ($field["name"]=="f_name") {
-						$fsql = "ALTER TABLE ".$TBLPREFIX."families DROP COLUMN f_name";
-						$fres =& dbquery($fsql);
-					}
-					if ($field["name"]=="f_numchil") {
-						$has_numchil = true;
+					switch($field["name"]) {
+						case "f_name":
+							$has_families_name = true;
+							break;
+						case "f_numchil":
+							$has_families_numchil = true;
+							break;
 					}
 				}
-			}
-		}
-		if ($table==$TBLPREFIX."names") {
-			$has_names = true;
-		}
-		if ($table==$TBLPREFIX."placelinks") {
-			$has_placelinks = true;
-		}
-		if ($table==$TBLPREFIX."researchlog") {
-			$has_research = true;
-		}
-		if ($table==$TBLPREFIX."dates") {
-			$has_dates = true;
-			if ($DBTYPE!="sqlite") {
+				break;
+			case "names":
+				$has_names = true;
+				$info = $DBCONN->tableInfo($TBLPREFIX."names");
+				foreach($info as $indexval => $field) {
+					switch($field["name"]) {
+						case "n_surname":
+							$has_names_surname = true;
+							break;
+						case "n_type":
+							$has_names_type = true;
+							break;
+					}
+				}
+				break;
+			case "placelinks":
+				$has_placelinks = true;
+				break;
+			case "researchlog":
+				$has_research = true;
+				break;
+			case "dates":
+				$has_dates = true;
 				$info = $DBCONN->tableInfo($TBLPREFIX."dates");
 				foreach($info as $indexval => $field) {
-					if ($field["name"]=="d_mon") $has_d_mon = true;
+					switch ($field["name"]) {
+						case "d_mon":
+							$has_dates_mon = true;
+							break;
+						case "d_datestamp":
+							$has_dates_datestamp = true;
+							break;
+					}
 				}
-			}
-			else {
-				$has_d_mon = true;
-			}
-		}
-		if ($table==$TBLPREFIX."media") {
-			$has_media = true;
-		}
-		if ($table==$TBLPREFIX."media_mapping") {
-			$has_media_mapping = true;
-		}
-		if ($table==$TBLPREFIX."nextid") {
-			$has_nextid = true;
-		}
-		if ($table==$TBLPREFIX."remotelinks") {
-			$has_remotelinks = true;
-		}
-		if ($table==$TBLPREFIX."soundex")
-		{
-			$has_soundex = true;
+				break;
+			case "media":
+				$has_media = true;
+				break;
+			case "media_mapping":
+				$has_media_mapping = true;
+				break;
+			case "nextid":
+				$has_nextid = true;
+				break;
+			case "remotelinks":
+				$has_remotelinks = true;
+				break;
+			case "other":
+				$has_other = true;
+				break;
+			case "sources":
+				$has_sources = true;
+				break;
+			case "soundex":
+				$has_soundex = true;
+				break;
 		}
 	}
 
-	if (($tables_exist)&&(!$has_rin || !$has_first_letter)) {
-		$sql = "DROP TABLE IF EXISTS ".$TBLPREFIX."individuals, ".$TBLPREFIX."families, ".$TBLPREFIX."sources, ".$TBLPREFIX."other, ".$TBLPREFIX."places, ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping, ".$TBLPREFIX."remotelinks";
-		$res = dbquery($sql);
+	//---------- Upgrade the database
+	if (!$has_individuals || $sqlite && (!$has_individuals_rin || !$has_individuals_letter || !$has_individuals_surname)) {
+		create_individuals_table();
+	} else { // check columns in the table
+		if (!$has_individuals_rin) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."individuals ADD i_rin VARCHAR(255)";
+			$res = dbquery($sql);//print "i_rin added<br/>\n";
+		}
+		if (!$has_individuals_letter) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."individuals ADD i_letter VARCHAR(5)";
+			$res = dbquery($sql);//print "i_letter added<br/>\n";
 
-		$tables_exist = false;
-	}
-
-	if (!$tables_exist) {
-		$sql = "CREATE TABLE ".$TBLPREFIX."individuals (i_id VARCHAR(255), i_file INT, i_rin VARCHAR(255), i_name VARCHAR(255), i_isdead INT DEFAULT 1, i_gedcom TEXT, i_letter VARCHAR(5), i_surname VARCHAR(100))";
-		$res = dbquery($sql);
-
-		if(!DB::isError($res)) {
-			$sql = "CREATE INDEX indi_id ON ".$TBLPREFIX."individuals (i_id)";
-			$res = dbquery($sql);
-
-			$sql = "CREATE INDEX indi_name ON ".$TBLPREFIX."individuals (i_name)";
-			$res = dbquery($sql);
-
+			if (DB::isError($res)) {
+				print $pgv_lang["created_indis_fail"]."<br />\n";
+				exit;
+			}
 			$sql = "CREATE INDEX indi_letter ON ".$TBLPREFIX."individuals (i_letter)";
 			$res = dbquery($sql);
+		}
+		if (!$has_individuals_surname) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."individuals ADD i_surname VARCHAR(100)";
+			$res = dbquery($sql);//print "i_surname added<br/>\n";
 
-			$sql = "CREATE INDEX indi_file ON ".$TBLPREFIX."individuals (i_file)";
-			$res = dbquery($sql);
-
+			if (DB::isError($res)) {
+				print $pgv_lang["created_indis_fail"]."<br />\n";
+				exit;
+			}
 			$sql = "CREATE INDEX indi_surn ON ".$TBLPREFIX."individuals (i_surname)";
 			$res = dbquery($sql);
-
-			print $pgv_lang["created_indis"]."<br />\n";
-			$has_surname=true;
-		}
-		else {
-			print $pgv_lang["created_indis_fail"]."<br />\n";
-			exit;
-		}
-
-		$sql = "CREATE TABLE ".$TBLPREFIX."families (f_id VARCHAR(255), f_file INT, f_husb VARCHAR(255), f_wife VARCHAR(255), f_chil TEXT, f_gedcom TEXT, f_numchil INT)";
-		$res = dbquery($sql);
-		$has_numchil = true;
-
-		if(!DB::isError($res)) {
-			$sql = "CREATE INDEX fam_id ON ".$TBLPREFIX."families (f_id)";
-			$res = dbquery($sql);
-
-			$sql = "CREATE INDEX fam_file ON ".$TBLPREFIX."families (f_file)";
-			$res = dbquery($sql);
-
-			print $pgv_lang["created_fams"]."<br />\n";
-		}
-		else {
-			print $pgv_lang["created_fams_fail"]."<br />\n";
-			exit;
-		}
-		$sql = "CREATE TABLE ".$TBLPREFIX."sources (s_id VARCHAR(255), s_file INT, s_name VARCHAR(255), s_gedcom TEXT)";
-		$res = dbquery($sql);
-
-		if(!DB::isError($res)) {
-			$sql = "CREATE INDEX sour_id ON ".$TBLPREFIX."sources (s_id)";
-			$res = dbquery($sql);
-
-			$sql = "CREATE INDEX sour_name ON ".$TBLPREFIX."sources (s_name)";
-			$res = dbquery($sql);
-
-			$sql = "CREATE INDEX sour_file ON ".$TBLPREFIX."sources (s_file)";
-			$res = dbquery($sql);
-
-			print $pgv_lang["created_sources"]."<br />\n";
-		}
-		else {
-			print $pgv_lang["created_sources_fail"]."<br />\n";
-			exit;
-		}
-
-		$sql = "CREATE TABLE ".$TBLPREFIX."other (o_id VARCHAR(255), o_file INT, o_type VARCHAR(20), o_gedcom TEXT)";
-		$res = dbquery($sql);
-
-		if(!DB::isError($res)) {
-			$sql = "CREATE INDEX other_id ON ".$TBLPREFIX."other (o_id)";
-			$res = dbquery($sql);
-
-			$sql = "CREATE INDEX other_file ON ".$TBLPREFIX."other (o_file)";
-			$res = dbquery($sql);
-
-			print $pgv_lang["created_other"]."<br />\n";
-		}
-		else {
-			print $pgv_lang["created_other_fail"]."<br />\n";
-			exit;
-		}
-
-
-		$sql = "CREATE TABLE ".$TBLPREFIX."places (p_id INT NOT NULL, p_place VARCHAR(150), p_level INT, p_parent_id INT, p_file INT, p_std_soundex VARCHAR(255), p_dm_soundex VARCHAR(255), PRIMARY KEY(p_id))"; 
-		$res = dbquery($sql);
-
-		if(!DB::isError($res)) {
-			$sql = "CREATE INDEX place_place ON ".$TBLPREFIX."places (p_place)";
-			$res = dbquery($sql);
-
-			$sql = "CREATE INDEX place_level ON ".$TBLPREFIX."places (p_level)";
-			$res = dbquery($sql);
-
-			$sql = "CREATE INDEX place_parent ON ".$TBLPREFIX."places (p_parent_id)";
-			$res = dbquery($sql);
-
-			$sql = "CREATE INDEX place_file ON ".$TBLPREFIX."places (p_file)";
-			$res = dbquery($sql);
-
-			print $pgv_lang["created_places"]."<br />\n";
-		}
-		else {
-			print $pgv_lang["created_places_fail"]."<br />\n";
-			exit;
-		}
-		$sql = "CREATE TABLE ".$TBLPREFIX."placelinks (pl_p_id INT, pl_gid VARCHAR(255), pl_file INT)";
-		$res = dbquery($sql);
-
-		if(!DB::isError($res)) {
-			$sql = "CREATE INDEX plindex_place ON ".$TBLPREFIX."placelinks (pl_p_id)";
-			$res = dbquery($sql);
-
-			$sql = "CREATE INDEX plindex_gid ON ".$TBLPREFIX."placelinks (pl_gid)";
-			$res = dbquery($sql);
-
-			$sql = "CREATE INDEX plindex_file ON ".$TBLPREFIX."placelinks (pl_file)";
-			$res = dbquery($sql);
-
-			print $pgv_lang["created_placelinks"]."<br />\n";
-		}
-		else {
-			print $pgv_lang["created_placelinks_fail"]."<br />\n";
-			exit;
-		}
-		$sql = "CREATE TABLE ".$TBLPREFIX."media (m_id INT NOT NULL, m_media VARCHAR(15), m_ext VARCHAR(6), m_titl VARCHAR(255), m_file VARCHAR(255), m_gedfile INT, m_gedrec TEXT, PRIMARY KEY (m_id))";
-		$res = dbquery($sql);
-
-		if(!DB::isError($res)) {
-			$sql = "CREATE INDEX m_media ON ".$TBLPREFIX."media (m_media)";
-			$res = dbquery($sql);
-
-			$has_media = true;
-		}
-		else {
-			print $pgv_lang["created_media_fail"]."<br />\n";
-			exit;
-		}
-		$sql = "CREATE TABLE ".$TBLPREFIX."media_mapping (mm_id INT NOT NULL, mm_media VARCHAR(15) NOT NULL DEFAULT '', mm_gid VARCHAR(15) NOT NULL DEFAULT '', mm_order INT NOT NULL DEFAULT '0', mm_gedfile INT DEFAULT NULL, mm_gedrec TEXT, PRIMARY KEY (mm_id))";
-		$res = dbquery($sql);
-
-		if(!DB::isError($res)) {
-			$sql = "CREATE INDEX mm_mediamapping ON ".$TBLPREFIX."media_mapping (mm_media)";
-			$res = dbquery($sql);
-
-			$has_media_mapping = true;
-		}
-		else {
-			print $pgv_lang["created_media_mapping_fail"]."<br />\n";
-			exit;
-		}
-
-	}
-	else if (!$has_places) {
-		$sql = "CREATE TABLE ".$TBLPREFIX."places (p_id INT NOT NULL, p_place VARCHAR(150), p_level INT, p_parent_id INT, p_file INT, p_std_soundex VARCHAR(255), p_dm_soundex VARCHAR(255), PRIMARY KEY(p_id))";
-		$res = dbquery($sql);
-
-		if(!DB::isError($res)) {
-			$sql = "CREATE INDEX place_place ON ".$TBLPREFIX."places (p_place)";
-			$res = dbquery($sql);
-
-			$sql = "CREATE INDEX place_level ON ".$TBLPREFIX."places (p_level)";
-			$res = dbquery($sql);
-
-			$sql = "CREATE INDEX place_parent ON ".$TBLPREFIX."places (p_parent_id)";
-			$res = dbquery($sql);
-
-			$sql = "CREATE INDEX place_file ON ".$TBLPREFIX."places (p_file)";
-			$res = dbquery($sql);
-
-			print $pgv_lang["created_places"]; print "<br />\n";
-		}
-		else {
-			print $pgv_lang["created_places_fail"]; print "<br />\n";
-			exit;
 		}
 	}
-	else if ($has_place_gid) {
-		$sql = "ALTER TABLE ".$TBLPREFIX."places DROP COLUMN p_gid";
-		$res = dbquery($sql);
-
-	}
-	else if (!$has_placelinks) {
-		$sql = "CREATE TABLE ".$TBLPREFIX."placelinks (pl_p_id INT, pl_gid VARCHAR(255), pl_file INT)";
-		$res = dbquery($sql);
-
-		if(!DB::isError($res)) {
-			$sql = "CREATE INDEX plindex_place ON ".$TBLPREFIX."placelinks (pl_p_id)";
-			$res = dbquery($sql);
-
-			$sql = "CREATE INDEX plindex_gid ON ".$TBLPREFIX."placelinks (pl_gid)";
-			$res = dbquery($sql);
-
-			$sql = "CREATE INDEX plindex_file ON ".$TBLPREFIX."placelinks (pl_file)";
-			$res = dbquery($sql);
-
-			print $pgv_lang["created_places"]; print "<br />\n";
+	if (!$has_families || $sqlite && ($has_families_name || !$has_families_numchil)) {
+		create_families_table();	
+	} else { // check columns in the table
+		if ($has_families_name) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."families DROP column f_name";
+			$res = dbquery($sql);print "f_name dropped<br/>\n";
 		}
-		else {
-			print $pgv_lang["created_places_fail"]; print "<br />\n";
-			exit;
+		if (!$has_families_numchil) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."families ADD f_numchil INT";
+			$res = dbquery($sql);print "f_numchil added<br/>\n";
 		}
 	}
-	if (!$has_names) {
-		$sql = "CREATE TABLE ".$TBLPREFIX."names (n_gid VARCHAR(255), n_file INT, n_name VARCHAR(255), n_letter VARCHAR(5), n_surname VARCHAR(100), n_type VARCHAR(10))";
-		$res = dbquery($sql);
+	if (!$has_places || $sqlite && ($has_places_gid || !$has_places_std_soundex || !$has_places_dm_soundex)) {
+		create_places_table();
+	} else { // check columns in the table
+		if ($has_places_gid) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."places DROP column p_gid";
+			$res = dbquery($sql);print "p_gid dropped<br/>\n";
+		}
+ 		if (!$has_places_std_soundex) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."places ADD p_std_soundex VARCHAR(255)";	
+			$res = dbquery($sql);print "p_std_soundex added<br/>\n";
+		}
+ 		if (!$has_places_dm_soundex) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."places ADD p_dm_soundex VARCHAR(255)";	
+			$res = dbquery($sql);print "p_dm_soundex added<br/>\n";
+		}
+	}
+	if (!$has_placelinks) {
+		create_placelinks_table();
+	}
+	if (!$has_names || $sqlite && (!$has_names_surname || !$has_names_type)) {
+		create_names_table();
+	} else { // check columns in the table
+		if (!$has_names_surname) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."names ADD n_surname VARCHAR(100)";
+			$res = dbquery($sql);print "n_surname added<br/>\n";
 
-		if(!DB::isError($res)) {
-			$sql = "CREATE INDEX name_gid ON ".$TBLPREFIX."names (n_gid)";
-			$res = dbquery($sql);
-
-			$sql = "CREATE INDEX name_name ON ".$TBLPREFIX."names (n_name)";
-			$res = dbquery($sql);
-
-			$sql = "CREATE INDEX name_letter ON ".$TBLPREFIX."names (n_letter)";
-			$res = dbquery($sql);
-
-			$sql = "CREATE INDEX name_type ON ".$TBLPREFIX."names (n_type)";
-			$res = dbquery($sql);
-
+			if (DB::isError($res)) {
+				exit;
+			}
 			$sql = "CREATE INDEX name_surn ON ".$TBLPREFIX."names (n_surname)";
 			$res = dbquery($sql);
-
 		}
-		if (!$has_surname) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."individuals ADD COLUMN i_surname VARCHAR(100)";
-			$res = dbquery($sql);
-
+		if (!$has_names_type) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."names ADD n_type VARCHAR(10)";
+			$res = dbquery($sql);print "n_type added<br/>\n";
 		}
 	}
-	else if (!$has_surname) {
-		$sql = "ALTER TABLE ".$TBLPREFIX."individuals ADD COLUMN i_surname VARCHAR(100)";
-		$res = dbquery($sql);
-
-		$sql = "CREATE INDEX indi_surn ON ".$TBLPREFIX."individuals (i_surname)";
-		$res = dbquery($sql);
-
-		if ($has_names) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."names ADD COLUMN n_surname VARCHAR(100), n_type VARCHAR(10)";
-			$res = dbquery($sql);
-
-			$sql = "CREATE INDEX name_surn ON ".$TBLPREFIX."names (n_surname)";
-			$res = dbquery($sql);
-
+	if (!$has_dates || stristr($DBTYPE, "mysql") === false && // AFTER keyword only in mysql
+		(!$has_dates_mon || !$has_dates_datestamp)) {
+		create_dates_table();
+	} else { // check columns in the table
+		if (!$has_dates_mon) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."dates ADD d_mon INT AFTER d_month";
+			$res = dbquery($sql);print "d_mon added<br/>\n";
 		}
-	}
-	if (!$has_dates) {
-                create_dates_table();
-	}
-	else if (!$has_d_mon) {
-		$fsql = "ALTER TABLE ".$TBLPREFIX."dates ADD d_mon INT AFTER d_month";
-		$fres = dbquery($fsql);
-		$fsql = "ALTER TABLE ".$TBLPREFIX."dates ADD d_datestamp INT AFTER d_year";
-		$fres = dbquery($fsql);
-	}
-	if (!$has_numchil && $DBTYPE!="sqlite") { // not sure why $has_numchil is not set in sqlite 
-		$fsql = "ALTER TABLE ".$TBLPREFIX."families ADD f_numchil INT";
-		$fres = dbquery($fsql);
+		if (!$has_dates_datestamp) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."dates ADD d_datestamp INT AFTER d_year";
+			$res = dbquery($sql);print "d_datestamp added<br/>\n";
+		}
 	}
 	if (!$has_media) {
-                create_media_table();
+		create_media_table();
 	}
-	
-	if(!$has_soundex)
-	{
-		create_soundex_table();
-	}
-	
 	if (!$has_remotelinks) {
-		$sql = "CREATE TABLE ".$TBLPREFIX."remotelinks (r_gid VARCHAR(255), r_linkid VARCHAR(255), r_file INT)";
-		$res = dbquery($sql);
-
-		if(!DB::isError($res)) {
-			$sql = "CREATE INDEX r_gid ON ".$TBLPREFIX."remotelinks (r_gid)";
-			$res = dbquery($sql);
-
-			$sql = "CREATE INDEX r_linkid ON ".$TBLPREFIX."remotelinks (r_linkis)";
-
-			print $pgv_lang["created_remotelinks"]."<br />\n";
-		}
-		else {
-			print $pgv_lang["created_remotelinks_fail"]."<br />\n";
-		}
+		create_remotelinks_table();
 	}
 	if (!$has_media_mapping) {
-                create_media_mapping_table();
+		create_media_mapping_table();
 	}
 	//-- table for keeping the next ID to store
 	if (!$has_nextid) {
-		$sql = "CREATE TABLE ".$TBLPREFIX."nextid (ni_id INT, ni_type VARCHAR(30), ni_gedfile INT)";
-		$res = dbquery($sql);
+		create_nextid_table();
 	}
-
+	if (!$has_other) {
+		create_other_table();
+	}
+	if (!$has_sources) {
+		create_other_table();
+	}
+	if(!$has_soundex) {
+		create_soundex_table();
+	}
 	/*-- commenting out as it seems to cause more problems than it helps
 	$sql = "LOCK TABLE ".$TBLPREFIX."individuals WRITE, ".$TBLPREFIX."families WRITE, ".$TBLPREFIX."sources WRITE, ".$TBLPREFIX."other WRITE, ".$TBLPREFIX."places WRITE, ".$TBLPREFIX."users WRITE";
-	$res = dbquery($sql);
-
-	*/
+	$res = dbquery($sql); */
 	if (preg_match("/mysql|pgsql/", $DBTYPE)>0) $DBCONN->autoCommit(false);
 	//-- start a transaction
-	$sql = "BEGIN";
 	if ($DBTYPE=='mssql') $sql = "BEGIN TRANSACTION";
+	else $sql = "BEGIN"; 
+	$res = dbquery($sql);
+}
+/**
+ * Create the individuals table
+ */
+function create_individuals_table() {
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+
+	$sql = "DROP TABLE ".$TBLPREFIX."individuals";
+	$res = dbquery($sql, false);
+	$sql = "CREATE TABLE ".$TBLPREFIX."individuals (i_id VARCHAR(255), i_file INT, i_rin VARCHAR(255), i_name VARCHAR(255), i_isdead INT DEFAULT 1, i_gedcom TEXT, i_letter VARCHAR(5), i_surname VARCHAR(100))";
 	$res = dbquery($sql);
 
-}
+	if (DB::isError($res)) {
+		print $pgv_lang["created_indis_fail"]."<br />\n";
+		exit;
+	}
+	$sql = "CREATE INDEX indi_id ON ".$TBLPREFIX."individuals (i_id)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX indi_name ON ".$TBLPREFIX."individuals (i_name)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX indi_letter ON ".$TBLPREFIX."individuals (i_letter)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX indi_file ON ".$TBLPREFIX."individuals (i_file)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX indi_surn ON ".$TBLPREFIX."individuals (i_surname)";
+	$res = dbquery($sql);
 
+	print $pgv_lang["created_indis"]."<br />\n";
+}
+/**
+ * Create the families table
+ */
+function create_families_table() {
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+
+	$sql = "DROP TABLE ".$TBLPREFIX."families";
+	$res = dbquery($sql, false);
+	$sql = "CREATE TABLE ".$TBLPREFIX."families (f_id VARCHAR(255), f_file INT, f_husb VARCHAR(255), f_wife VARCHAR(255), f_chil TEXT, f_gedcom TEXT, f_numchil INT)";
+	$res = dbquery($sql);
+
+	if (DB::isError($res)) {
+		print $pgv_lang["created_fams_fail"]."<br />\n";
+		exit;
+	}
+	$sql = "CREATE INDEX fam_id ON ".$TBLPREFIX."families (f_id)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX fam_file ON ".$TBLPREFIX."families (f_file)";
+	$res = dbquery($sql);
+
+	print $pgv_lang["created_fams"]."<br />\n";
+}
+/**
+ * Create the sources table
+ */
+function create_sources_table() {
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+
+	$sql = "DROP TABLE ".$TBLPREFIX."sources";
+	$res = dbquery($sql, false);
+	$sql = "CREATE TABLE ".$TBLPREFIX."sources (s_id VARCHAR(255), s_file INT, s_name VARCHAR(255), s_gedcom TEXT)";
+	$res = dbquery($sql);
+
+	if (DB::isError($res)) {
+		print $pgv_lang["created_sources_fail"]."<br />\n";
+		exit;
+	}
+	$sql = "CREATE INDEX sour_id ON ".$TBLPREFIX."sources (s_id)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX sour_name ON ".$TBLPREFIX."sources (s_name)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX sour_file ON ".$TBLPREFIX."sources (s_file)";
+	$res = dbquery($sql);
+
+	print $pgv_lang["created_sources"]."<br />\n";
+}
+/**
+ * Create the other table
+ */
+function create_other_table() {
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+
+	$sql = "DROP TABLE ".$TBLPREFIX."other";
+	$res = dbquery($sql, false);
+	$sql = "CREATE TABLE ".$TBLPREFIX."other (o_id VARCHAR(255), o_file INT, o_type VARCHAR(20), o_gedcom TEXT)";
+	$res = dbquery($sql);
+
+	if (DB::isError($res)) {
+		print $pgv_lang["created_other_fail"]."<br />\n";
+		exit;
+	}
+	$sql = "CREATE INDEX other_id ON ".$TBLPREFIX."other (o_id)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX other_file ON ".$TBLPREFIX."other (o_file)";
+	$res = dbquery($sql);
+
+	print $pgv_lang["created_other"]."<br />\n";
+}
+/**
+ * Create the placelinks table
+ */
+function create_placelinks_table() {
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+
+	$sql = "DROP TABLE ".$TBLPREFIX."placelinks";
+	$res = dbquery($sql, false);
+	$sql = "CREATE TABLE ".$TBLPREFIX."placelinks (pl_p_id INT, pl_gid VARCHAR(255), pl_file INT)";
+	$res = dbquery($sql);
+
+	if (DB::isError($res)) {
+		print $pgv_lang["created_places_fail"]."<br />\n";
+		exit;
+	}
+	$sql = "CREATE INDEX plindex_place ON ".$TBLPREFIX."placelinks (pl_p_id)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX plindex_gid ON ".$TBLPREFIX."placelinks (pl_gid)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX plindex_file ON ".$TBLPREFIX."placelinks (pl_file)";
+	$res = dbquery($sql);
+
+	print $pgv_lang["created_places"]."<br />\n";
+}
+/**
+ * Create the places table
+ */
+function create_places_table() {
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+
+	$sql = "DROP TABLE ".$TBLPREFIX."places";
+	$res = dbquery($sql, false);
+	$sql = "CREATE TABLE ".$TBLPREFIX."places (p_id INT NOT NULL, p_place VARCHAR(150), p_level INT, p_parent_id INT, p_file INT, p_std_soundex VARCHAR(255), p_dm_soundex VARCHAR(255), PRIMARY KEY(p_id))";
+	$res = dbquery($sql);
+
+	if (DB::isError($res)) {
+		print $pgv_lang["created_places_fail"]."<br />\n";
+		exit;
+	}
+	$sql = "CREATE INDEX place_place ON ".$TBLPREFIX."places (p_place)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX place_level ON ".$TBLPREFIX."places (p_level)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX place_parent ON ".$TBLPREFIX."places (p_parent_id)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX place_file ON ".$TBLPREFIX."places (p_file)";
+	$res = dbquery($sql);
+
+	print $pgv_lang["created_places"]."<br />\n";
+}
+/**
+ * Create the names table
+ */
+function create_names_table() {
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+
+	$sql = "DROP TABLE ".$TBLPREFIX."names";
+	$res = dbquery($sql, false);
+	$sql = "CREATE TABLE ".$TBLPREFIX."names (n_gid VARCHAR(255), n_file INT, n_name VARCHAR(255), n_letter VARCHAR(5), n_surname VARCHAR(100), n_type VARCHAR(10))";
+	$res = dbquery($sql);
+
+	if (DB::isError($res)) {
+		exit;
+	}
+	$sql = "CREATE INDEX name_gid ON ".$TBLPREFIX."names (n_gid)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX name_name ON ".$TBLPREFIX."names (n_name)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX name_letter ON ".$TBLPREFIX."names (n_letter)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX name_type ON ".$TBLPREFIX."names (n_type)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX name_surn ON ".$TBLPREFIX."names (n_surname)";
+	$res = dbquery($sql);
+}
+/**
+ * Create the remotelinks table
+ */
+function create_remotelinks_table() {
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+
+	$sql = "DROP TABLE ".$TBLPREFIX."remotelinks";
+	$res = dbquery($sql, false);
+	$sql = "CREATE TABLE ".$TBLPREFIX."remotelinks (r_gid VARCHAR(255), r_linkid VARCHAR(255), r_file INT)";
+	$res = dbquery($sql);
+
+	if (DB::isError($res)) {
+		print $pgv_lang["created_remotelinks_fail"]."<br />\n";
+		exit;
+	}
+	$sql = "CREATE INDEX r_gid ON ".$TBLPREFIX."remotelinks (r_gid)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX r_link_id ON ".$TBLPREFIX."remotelinks (r_linkid)";
+	$res = dbquery($sql);
+
+	print $pgv_lang["created_remotelinks"]."<br />\n";
+}
 /**
  * Create the soundex table
- * 
- * 
- * 
  */
 function create_soundex_table()
 {
 	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
 	
-	//$sql = "CREATE TABLE ".$TBLPREFIX."soundex (sx_i_id varchar(255) NOT NULL, sx_n_id varchar(255) NOT NULL, sx_file INT NOT NULL, sx_code varchar(255) NOT NULL)";
+	$sql = "DROP TABLE ".$TBLPREFIX."soundex";
+	$res = dbquery($sql, false);
 	$sql = "CREATE TABLE ".$TBLPREFIX."soundex (sx_i_id varchar(255) NOT NULL, sx_n_id varchar(255) NOT NULL, sx_file int NOT NULL, sx_fn_std_code varchar(255) NULL, sx_fn_dm_code varchar(255) NULL, sx_ln_std_code varchar(255) NULL, sx_ln_dm_code varchar(255) NULL)";
 	$res = dbquery($sql);
 	
+	if (DB::isError($res)) {
+		exit;
+	}
 	$sql = "CREATE INDEX sx_i_id_ix ON ".$TBLPREFIX."soundex (sx_i_id)";
 	$res = dbquery($sql);
-	
 	$sql = "CREATE INDEX sx_fn_std_code_ix ON ".$TBLPREFIX."soundex (sx_fn_std_code)";
 	$res = dbquery($sql);
-	
 	$sql = "CREATE INDEX sx_ln_std_code_ix ON ".$TBLPREFIX."soundex (sx_ln_std_code)";
 	$res = dbquery($sql);
-	
 	$sql = "CREATE INDEX sx_fn_dm_code_ix ON ".$TBLPREFIX."soundex (sx_fn_dm_code)";
 	$res = dbquery($sql);
-	
 	$sql = "CREATE INDEX sx_ln_dmcode_ix ON ".$TBLPREFIX."soundex (sx_ln_dm_code)";
 	$res = dbquery($sql);
 }
-
 /**
  * Create the media table
- *
- *
- *
  */
 function create_media_table() {
 	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
-	$sql = "CREATE TABLE ".$TBLPREFIX."media (m_id INT NOT NULL, m_media VARCHAR(15) NOT NULL DEFAULT '', m_ext VARCHAR(6) NOT NULL DEFAULT '', m_titl VARCHAR(255) DEFAULT NULL, m_file VARCHAR(255) NOT NULL DEFAULT '', m_gedfile INT DEFAULT NULL, m_gedrec TEXT, PRIMARY KEY (m_id))";
+
+	$sql = "DROP TABLE ".$TBLPREFIX."media";
+	$res = dbquery($sql, false);
+	$sql = "CREATE TABLE ".$TBLPREFIX."media (m_id INT NOT NULL, m_media VARCHAR(15), m_ext VARCHAR(6), m_titl VARCHAR(255), m_file VARCHAR(255), m_gedfile INT, m_gedrec TEXT, PRIMARY KEY (m_id))";
+//	$sql = "CREATE TABLE ".$TBLPREFIX."media (m_id INT NOT NULL, m_media VARCHAR(15) NOT NULL DEFAULT '', m_ext VARCHAR(6) NOT NULL DEFAULT '', m_titl VARCHAR(255) DEFAULT NULL, m_file VARCHAR(255) NOT NULL DEFAULT '', m_gedfile INT DEFAULT NULL, m_gedrec TEXT, PRIMARY KEY (m_id))";
 	$res = dbquery($sql);
 
-	$sql = "CREATE INDEX m_media ON ".$TBLPREFIX."media (m_media)";
-	$res = dbquery($sql);
-
-	if(!DB::isError($res)) {
-		$sql = "CREATE INDEX m_media_id ON ".$TBLPREFIX."media (m_media)";
-		$res = dbquery($sql);
-
-	}
-	else {
+	if (DB::isError($res)) {
 		print $pgv_lang["created_media_fail"]."<br />\n";
 		exit;
 	}
+	$sql = "CREATE INDEX m_media ON ".$TBLPREFIX."media (m_media)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX m_media_id ON ".$TBLPREFIX."media (m_media)";
+	$res = dbquery($sql);
 }
-
 /**
  * Create the dates table
- *
- *
- *
  */
 function create_dates_table() {
 	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+
+	$sql = "DROP TABLE ".$TBLPREFIX."dates";
+	$res = dbquery($sql, false);
 	$sql = "CREATE TABLE ".$TBLPREFIX."dates (d_day INT, d_month VARCHAR(5), d_mon INT, d_year INT, d_datestamp INT, d_fact VARCHAR(10), d_gid VARCHAR(255), d_file INT, d_type VARCHAR(13) NULL)";
 	$res = dbquery($sql);
 
+	if (DB::isError($res)) {
+			exit;
+	}
 	$sql = "CREATE INDEX date_day ON ".$TBLPREFIX."dates (d_day)";
 	$res = dbquery($sql);
-
 	$sql = "CREATE INDEX date_month ON ".$TBLPREFIX."dates (d_month)";
 	$res = dbquery($sql);
-
 	$sql = "CREATE INDEX date_mon ON ".$TBLPREFIX."dates (d_mon)";
 	$res = dbquery($sql);
-
 	$sql = "CREATE INDEX date_year ON ".$TBLPREFIX."dates (d_year)";
 	$res = dbquery($sql);
-
 	$sql = "CREATE INDEX date_datestamp ON ".$TBLPREFIX."dates (d_datestamp)";
 	$res = dbquery($sql);
-
 	$sql = "CREATE INDEX date_fact ON ".$TBLPREFIX."dates (d_fact)";
 	$res = dbquery($sql);
-
 	$sql = "CREATE INDEX date_gid ON ".$TBLPREFIX."dates (d_gid)";
 	$res = dbquery($sql);
-
 	$sql = "CREATE INDEX date_file ON ".$TBLPREFIX."dates (d_file)";
 	$res = dbquery($sql);
-
 	$sql = "CREATE INDEX date_type ON ".$TBLPREFIX."dates (d_type)";
 	$res = dbquery($sql);
-
 }
 
 /**
  * Create the media_mapping table
- *
- *
- *
  */
 function create_media_mapping_table() {
 	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+
+	$sql = "DROP TABLE ".$TBLPREFIX."media_mapping";
+	$res = dbquery($sql, false);
 	$sql = "CREATE TABLE ".$TBLPREFIX."media_mapping (mm_id INT NOT NULL, mm_media VARCHAR(15) NOT NULL DEFAULT '', mm_gid VARCHAR(15) NOT NULL DEFAULT '', mm_order INT NOT NULL DEFAULT '0', mm_gedfile INT DEFAULT NULL, mm_gedrec TEXT, PRIMARY KEY (mm_id))";
 	$res = dbquery($sql);
 
-	if(!DB::isError($res)) {
-		$sql = "CREATE INDEX mm_media_id ON ".$TBLPREFIX."media_mapping (mm_media)";
-		$res = dbquery($sql);
-
-	}
-	else {
+	if (DB::isError($res)) {
 		print $pgv_lang["created_media_mapping_fail"]."<br />\n";
 		exit;
 	}
+	$sql = "CREATE INDEX mm_media_id ON ".$TBLPREFIX."media_mapping (mm_media)";
+	$res = dbquery($sql);
 }
+/**
+ * Create the nextid table
+ */
+function create_nextid_table() {
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
 
+	$sql = "DROP TABLE ".$TBLPREFIX."nextid ";
+	$res = dbquery($sql, false);
+	$sql = "CREATE TABLE ".$TBLPREFIX."nextid (ni_id INT, ni_type VARCHAR(30), ni_gedfile INT)";
+	$res = dbquery($sql);
+
+	if (DB::isError($res)) {
+		exit;
+	}
+}
 /**
  * delete a gedcom from the database
  *
@@ -1280,7 +1333,6 @@ function empty_database($FILE) {
 	
 	$sql = "DELETE FROM ".$TBLPREFIX."soundex WHERE sx_file='$FILE'";
 	$res = dbquery($sql);
-
 }
 
 /**
@@ -1294,9 +1346,7 @@ function cleanup_database() {
 	global $DBTYPE, $DBCONN, $TBLPREFIX, $MAX_IDS, $GEDCOMS, $FILE;
 	/*-- commenting out as it seems to cause more problems than it helps
 	$sql = "UNLOCK TABLES";
-	$res = dbquery($sql);
-
-	*/
+	$res = dbquery($sql); */
 	//-- end the transaction
 	if (isset($MAX_IDS)) {
 		$sql = "DELETE FROM ".$TBLPREFIX."nextid WHERE ni_gedfile='".$DBCONN->escapeSimple($GEDCOMS[$FILE]['id'])."'";
@@ -1306,8 +1356,8 @@ function cleanup_database() {
 			$res = dbquery($sql);
 		}
 	}
-	$sql = "COMMIT";
 	if ($DBTYPE=='mssql') $sql = "COMMIT TRANSACTION";
+	else $sql = "COMMIT"; 
 	$res = dbquery($sql);
 
 	//if (preg_match("/mysql|pgsql/", $DBTYPE)>0) $DBCONN->autoCommit(false);
@@ -1488,4 +1538,48 @@ function cleanup_tags_y(&$irec) {
 	}
 	$irec=substr($irec,0,-3);
 //	return $irec;
+}
+
+/**
+ * Generates a Universally Unique IDentifier, version 4.
+ *
+ * RFC 4122 (http://www.ietf.org/rfc/rfc4122.txt) defines a special type of Globally
+ * Unique IDentifiers (GUID), as well as several methods for producing them. One
+ * such method, described in section 4.4, is based on truly random or pseudo-random
+ * number generators, and is therefore implementable in a language like PHP.
+ *
+ * We choose to produce pseudo-random numbers with the Mersenne Twister, and to always
+ * limit single generated numbers to 16 bits (ie. the decimal value 65535). That is
+ * because, even on 32-bit systems, PHP's RAND_MAX will often be the maximum *signed*
+ * value, with only the equivalent of 31 significant bits. Producing two 16-bit random
+ * numbers to make up a 32-bit one is less efficient, but guarantees that all 32 bits
+ * are random.
+ *
+ * The algorithm for version 4 UUIDs (ie. those based on random number generators)
+ * states that all 128 bits separated into the various fields (32 bits, 16 bits, 16 bits,
+ * 8 bits and 8 bits, 48 bits) should be random, except : (a) the version number should
+ * be the last 4 bits in the 3rd field, and (b) bits 6 and 7 of the 4th field should
+ * be 01. We try to conform to that definition as efficiently as possible, generating
+ * smaller values where possible, and minimizing the number of base conversions.
+ *
+ * @copyright  Copyright (c) CFD Labs, 2006. This function may be used freely for
+ *              any purpose ; it is distributed without any form of warranty whatsoever.
+ * @author      David Holmes <dholmes@cfdsoftware.net>
+ *
+ * @return  string  A UUID, made up of 36 hex digits
+ */
+function uuid() {
+  
+   // The field names refer to RFC 4122 section 4.1.2
+
+   return strtoupper(sprintf('%04x%04x%04x%03x4%04x%04x%04x%04x%04x',
+       mt_rand(0, 65535), mt_rand(0, 65535), // 32 bits for "time_low"
+       mt_rand(0, 65535), // 16 bits for "time_mid"
+       mt_rand(0, 4095),  // 12 bits before the 0100 of (version) 4 for "time_hi_and_version"
+       bindec(substr_replace(sprintf('%016b', mt_rand(0, 65535)), '01', 6, 2)),
+           // 8 bits, the last two of which (positions 6 and 7) are 01, for "clk_seq_hi_res"
+           // (hence, the 2nd hex digit after the 3rd hyphen can only be 1, 5, 9 or d)
+           // 8 bits for "clk_seq_low"
+       mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535) // 48 bits for "node" 
+   )); 
 }

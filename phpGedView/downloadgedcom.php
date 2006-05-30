@@ -340,6 +340,7 @@ function print_gramps()
 	
 	$whole_gramps = true;
 
+	global $indirec, $clipping;
 		$gramps_Exp->create_person($indirec, $clipping["id"]);
 	if ($clipping["type"] == "fam") 
 	{

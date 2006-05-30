@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: No_Form.php,v 1.2 2006/04/06 20:12:35 yalnifj Exp $
+ * @version $Id: Birth_Information.php 200 2005-11-09 20:37:48Z jporter $
  * @author Brandon Gagnon
  * @author Wade Lasson
  */
@@ -58,6 +58,7 @@ class No_Form extends ra_form {
     function header($action, $tableAlign = "center", $heading) {
         // Split action and use it for hidden inputs
         $action = parse_url($action);
+        global $params;
         parse_str(html_entity_decode($action["query"]), $params);
         
         // Setup for our form to go through the module system

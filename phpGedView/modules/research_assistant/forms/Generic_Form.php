@@ -35,9 +35,6 @@ if (strstr($_SERVER["SCRIPT_NAME"],"Generic_Form.php")) {
 // Require the base class and any functions we need.
 require_once "ra_form.php";
 require_once "includes/functions_edit.php";
-global $factsfile, $LANGUAGE, $factarray;
-require_once($factsfile["english"]);
-if (file_exists($factsfile[$LANGUAGE])) require_once($factsfile[$LANGUAGE]);
 
 /**
  * Generic_Form 
@@ -60,6 +57,7 @@ class Generic_Form extends ra_form {
     function header($action, $tableAlign = "center", $heading) {
         // Split action and use it for hidden inputs
         $action = parse_url($action);
+        global $params;
         parse_str(html_entity_decode($action["query"]), $params);
         
         // Setup for our form to go through the module system

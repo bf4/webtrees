@@ -869,8 +869,8 @@ $manual_save = true;
 					$namearray = get_indi_names($row[1]);
 					$save = true;
 								if ((!empty ($this->place)) || (!empty ($this->year))) {
-									$indirec = find_person_record($key);
-									if ((!empty ($this->place)) && ($savel == true || empty ($this->lastname)) && ($savef == true || empty ($this->firstname))) {
+									$indirec = find_person_record($row[0]);
+									if ((!empty ($this->place)) &&  empty ($this->lastname) && empty ($this->firstname)) {
 										$savep = false;
 										$pt = preg_match_all("/\d PLAC (.*)/i", $indirec, $match, PREG_PATTERN_ORDER);
 										if ($pt > 0) {
@@ -906,7 +906,7 @@ $manual_save = true;
 												$p ++;
 											}
 										}
-										if (($savel == true || empty ($this->lastname)) && ($savef == true || empty ($this->firstname)) && $savep == true)
+										if (empty ($this->lastname) && empty ($this->firstname) && $savep == true)
 											$save = true;
 										else
 											$save = false;

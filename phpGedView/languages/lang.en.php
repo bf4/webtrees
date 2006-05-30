@@ -691,7 +691,7 @@ $pgv_lang["record_not_added"]		= "Record #xref# could not be added to GEDCOM.";
 //-- SEARCH FILE MESSAGES
 $pgv_lang["search_gedcom"]			= "Search GEDCOM files";
 $pgv_lang["enter_terms"]			= "Enter Search terms";
-$pgv_lang["soundex_search"] 		= "Search the way you think the name is written (Soundex):";
+$pgv_lang["soundex_search"] 		= "Search the way you think the name is written (Soundex)";
 $pgv_lang["sources"]				= "Sources";
 $pgv_lang["firstname_search"]		= "Given name";
 $pgv_lang["lastname_search"]		= "Last name";
@@ -711,7 +711,7 @@ $pgv_lang["search_indis"]			= "Individuals";
 $pgv_lang["search_sources"]			= "Sources";
 $pgv_lang["search_more_chars"]      = "Please enter more than one character";
 $pgv_lang["search_soundextype"]		= "Soundex type:";
-$pgv_lang["search_russell"]			= "Russell";
+$pgv_lang["search_russell"]			= "Original";
 $pgv_lang["search_DM"]				= "Daitch-Mokotoff";
 $pgv_lang["search_prtnames"]		= "Individuals'<br />names to print:";
 $pgv_lang["search_prthit"]			= "Names with hit";

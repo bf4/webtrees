@@ -428,9 +428,10 @@ function checkTableExists() {
 	global $TBLPREFIX, $DBCONN, $DBTYPE, $CHECKED_TABLES;
 
 	//-- make sure we only run this function once
-	if (!empty($CHECKED_TABLES) && $CHECKED_TABLES==true) return true;
+	if (!empty($CHECKED_TABLES) && $CHECKED_TABLES) return true;
 	$CHECKED_TABLES = true;
 
+	$has_users = false;
 	$has_gedcomid = false;
 	$has_email = false;
 	$has_messages = false;
@@ -450,143 +451,96 @@ function checkTableExists() {
 	$has_relation_privacy = false;
 	$has_fav_note = false;
 	$has_auto_accept = false;
+	
+	$sqlite = ($DBTYPE == 'sqlite');
 
 	if (DB::isError($DBCONN)) return false;
 	$data = $DBCONN->getListOf('tables');
 	if (count($data)>0) {
 		foreach($data as $indexval => $table) {
-			if ($table==$TBLPREFIX."users") {
-				if ($DBTYPE!="sqlite") {
+			switch(substr($table, strlen($TBLPREFIX))) {
+				case "users":
+					$has_users = true;
 					$info = $DBCONN->tableInfo($TBLPREFIX."users");
-					if (DB::isError($info)) {
-						print "<span class=\"error\"><b>ERROR:".$info->getCode()." ".$info->getMessage()." <br />SQL:</b>".$info->getUserInfo()."</span><br /><br />\n";
-						exit;
-					}
 					foreach($info as $indexval => $field) {
-						if ($field["name"]=="u_gedcomid") $has_gedcomid = true;
-						if ($field["name"]=="u_email") $has_email = true;
-						if ($field["name"]=="u_sessiontime") $has_sessiontime = true;
-						if ($field["name"]=="u_contactmethod") $has_contactmethod = true;
-						if ($field["name"]=="u_visibleonline") $has_visible = true;
-						if ($field["name"]=="u_editaccount") $has_account = true;
-						if ($field["name"]=="u_defaulttab") $has_defaulttab = true;
-						if ($field["name"]=="u_comment") $has_comment = true;
-						if ($field["name"]=="u_comment_exp") $has_comment_exp = true;
-						if ($field["name"]=="u_sync_gedcom") $has_sync_gedcom = true;
-						if ($field["name"]=="u_firstname") $has_first_name = true;
-						if ($field["name"]=="u_relationship_privacy") $has_relation_privacy = true;
-						if ($field["name"]=="u_auto_accept") $has_auto_accept = true;
+						switch ($field["name"]) {
+							case "u_gedcomid":
+								$has_gedcomid = true;
+								break;
+							case "u_email":
+								$has_email = true;
+								break;
+							case "u_sessiontime":
+								$has_sessiontime = true;
+								break;
+							case "u_contactmethod":
+								$has_contactmethod = true;
+								break;
+							case "u_visibleonline":
+								$has_visible = true;
+								break;
+							case "u_editaccount":
+								$has_account = true;
+								break;
+							case "u_defaulttab":
+								$has_defaulttab = true;
+								break;
+							case "u_comment":
+								$has_comment = true;
+								break;
+							case "u_comment_exp":
+								$has_comment_exp = true;
+								break;
+							case "u_sync_gedcom":
+								$has_sync_gedcom = true;
+								break;
+							case "u_firstname":
+								$has_first_name = true;
+								break;
+							case "u_relationship_privacy":
+								$has_relation_privacy = true;
+								break;
+							case "u_auto_accept":
+								$has_auto_accept = true;
+								break;
+						}	
 					}
-					if (!$has_gedcomid) {
-						$asql = "DROP TABLE ".$TBLPREFIX."users";
-						$ares =& dbquery($asql);
-						if (!$ares) {
-							print "<span class=\"error\">Unable to update <i>Users</i> table.</span><br />\n";
-							return false;
+					break;
+				case "messages":
+					$has_messages = true;
+					break;
+				case "favorites":
+					$has_favorites = true;
+					$info = $DBCONN->tableInfo($TBLPREFIX."favorites");
+					foreach($info as $indexval => $field) {
+						switch ($field["name"]) {
+							case "fv_note":
+								$has_fav_note = true;
+								break;
 						}
 					}
-					else if (!$has_email) {
-						$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_email TEXT, u_verified VARCHAR(20), u_verified_by_admin VARCHAR(20), u_language VARCHAR(50), u_pwrequested VARCHAR(20), u_reg_timestamp VARCHAR(50), u_reg_hashcode VARCHAR(255), u_theme VARCHAR(50), u_loggedin VARCHAR(1), u_sessiontime INT)";
-						$pres =& dbquery($sql);
-					}
-					else if (!$has_sessiontime) {
-						$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_sessiontime INT)";
-						$pres =& dbquery($sql);
-					}
-					else if (!$has_contactmethod) {
-						$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_contactmethod VARCHAR(20))";
-						$pres =& dbquery($sql);
-					}
-					if (!$has_visible) {
-						$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_visibleonline VARCHAR(2))";
-						$pres =& dbquery($sql);
-					}
-					if (!$has_account) {
-						$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_editaccount VARCHAR(2))";
-						$pres =& dbquery($sql);
-					}
-					if (!$has_defaulttab) {
-						$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_defaulttab INT)";
-						$pres =& dbquery($sql);
-					}
-					if (!$has_comment) {
-						$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_comment VARCHAR(255))";
-						$pres =& dbquery($sql);
-						$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_comment_exp VARCHAR(20))";
-						$pres =& dbquery($sql);
-					}
-					if (!$has_sync_gedcom) {
-						$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_sync_gedcom VARCHAR(2))";
-						$pres =& dbquery($sql);
-					}
-					if (!$has_first_name) {
-						//-- add new first and last name fields
-						$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN u_firstname VARCHAR(255) AFTER u_fullname";
-						$pres =& dbquery($sql);
-						$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN u_lastname VARCHAR(255) AFTER u_firstname";
-						$pres =& dbquery($sql);
-						//-- convert the old fullname to first and last names
-						$sql = "UPDATE ".$TBLPREFIX."users SET u_lastname=SUBSTRING_INDEX(u_fullname, ' ', -1), u_firstname=SUBSTRING_INDEX(u_fullname, ' ', 1)";
-						$pres =& dbquery($sql);
-						//-- drop the old fullname field
-						$sql = "ALTER TABLE ".$TBLPREFIX."users DROP u_fullname";
-						$pres =& dbquery($sql);
-					}
-					if (!$has_relation_privacy) {
-						$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_relationship_privacy VARCHAR(2), u_max_relation_path INT)";
-						$pres =& dbquery($sql);
-					}
-					if (!$has_auto_accept) {
-						$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN u_auto_accept VARCHAR(2)";
-						$pres =& dbquery($sql);
-					}
-				}
-				else {
-					$has_gedcomid=true;
-				}
-			}
-			if ($table==$TBLPREFIX."messages") $has_messages = true;
-			if ($table==$TBLPREFIX."favorites") {
-				$has_favorites = true;
-				if ($DBTYPE!="sqlite") {
-					$info = $DBCONN->tableInfo($TBLPREFIX."favorites");
-					if (DB::isError($info)) {
-						print "<span class=\"error\"><b>ERROR:".$info->getCode()." ".$info->getMessage()." <br />SQL:</b>".$info->getUserInfo()."</span><br /><br />\n";
-						exit;
-					}
-					foreach($info as $indexval => $field) {
-						if ($field["name"]=="fv_note") $has_fav_note = true;
-					}
-					if (!$has_fav_note) {
-						$sql = "ALTER TABLE ".$TBLPREFIX."favorites ADD COLUMN (fv_url VARCHAR(255), fv_title VARCHAR(255), fv_note TEXT)";
-						$pres =& dbquery($sql);
-					}
-				}
-			}
-			if ($table==$TBLPREFIX."blocks") {
-				$has_blocks = true;
-				if ($DBTYPE!="sqlite") {
+					break;
+				case "blocks":
+					$has_blocks = true;
 					$info = $DBCONN->tableInfo($TBLPREFIX."blocks");
-					if (DB::isError($info)) {
-						print "<span class=\"error\"><b>ERROR:".$info->getCode()." ".$info->getMessage()." <br />SQL:</b>".$info->getUserInfo()."</span><br /><br />\n";
-						exit;
-					}
 					foreach($info as $indexval => $field) {
-						if ($field["name"]=="b_config") $has_blockconfig = true;
+						switch ($field["name"]) {
+							case "b_config":
+								$has_blockconfig = true;
+								break;
+						}
 					}
-				}
-				else $has_blockconfig = true;
-
-				if (!$has_blockconfig) {
-					$sql = "ALTER TABLE ".$TBLPREFIX."blocks ADD COLUMN (b_config TEXT)";
-					$res = dbquery($sql);
-
-				}
+					break;
+				case "news":
+					$has_news = true;
+					break;
 			}
-			if ($table==$TBLPREFIX."news") $has_news = true;
 		}
 	}
-	if (!$has_gedcomid) {
+	if (!$has_users || !$has_gedcomid || $sqlite && (!$has_email || !$has_sessiontime || !$has_contactmethod || !$has_visible || !$has_account || !$has_defaulttab || !$has_comment || !$has_sync_gedcom || !$has_first_name || !$has_relation_privacy || !$has_auto_accept)) {
+		$sql = "DROP TABLE ".$TBLPREFIX."users";
+		$res = dbquery($sql, false);
+
 		$sql = "CREATE TABLE ".$TBLPREFIX."users (u_username VARCHAR(30) NOT NULL, u_password VARCHAR(255), " .
 				"u_firstname VARCHAR(255), u_lastname VARCHAR(255), u_gedcomid TEXT, u_rootid TEXT, " .
 				"u_canadmin VARCHAR(2), u_canedit TEXT, u_email TEXT, u_verified VARCHAR(20), " .
@@ -596,27 +550,96 @@ function checkTableExists() {
 				"u_defaulttab INT, u_comment VARCHAR(255), u_comment_exp VARCHAR(20), u_sync_gedcom VARCHAR(2), " .
 				"u_relationship_privacy VARCHAR(2), u_max_relation_path INT, u_auto_accept VARCHAR(2), PRIMARY KEY(u_username))";
 		$res = dbquery($sql);
-
+	} else {
+		if (!$has_email) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_email TEXT, u_verified VARCHAR(20), u_verified_by_admin VARCHAR(20), u_language VARCHAR(50), u_pwrequested VARCHAR(20), u_reg_timestamp VARCHAR(50), u_reg_hashcode VARCHAR(255), u_theme VARCHAR(50), u_loggedin VARCHAR(1))";
+			$pres = dbquery($sql);
+		}
+		if (!$has_sessiontime) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_sessiontime INT)";
+			$pres = dbquery($sql);
+		}
+		if (!$has_contactmethod) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_contactmethod VARCHAR(20))";
+			$pres = dbquery($sql);
+		}
+		if (!$has_visible) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_visibleonline VARCHAR(2))";
+			$pres = dbquery($sql);
+		}
+		if (!$has_account) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_editaccount VARCHAR(2))";
+			$pres = dbquery($sql);
+		}
+		if (!$has_defaulttab) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_defaulttab INT)";
+			$pres = dbquery($sql);
+		}
+		if (!$has_comment) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_comment VARCHAR(255))";
+			$pres = dbquery($sql);
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_comment_exp VARCHAR(20))";
+			$pres = dbquery($sql);
+		}
+		if (!$has_sync_gedcom) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_sync_gedcom VARCHAR(2))";
+			$pres = dbquery($sql);
+		}
+		if (!$has_first_name) {
+			//-- add new first and last name fields
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN u_firstname VARCHAR(255) AFTER u_fullname";
+			$pres = dbquery($sql);
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN u_lastname VARCHAR(255) AFTER u_firstname";
+			$pres = dbquery($sql);
+			//-- convert the old fullname to first and last names
+			$sql = "UPDATE ".$TBLPREFIX."users SET u_lastname=SUBSTRING_INDEX(u_fullname, ' ', -1), u_firstname=SUBSTRING_INDEX(u_fullname, ' ', 1)";
+			$pres = dbquery($sql);
+			//-- drop the old fullname field
+			$sql = "ALTER TABLE ".$TBLPREFIX."users DROP u_fullname";
+			$pres = dbquery($sql);
+		}
+		if (!$has_relation_privacy) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_relationship_privacy VARCHAR(2), u_max_relation_path INT)";
+			$pres = dbquery($sql);
+		}
+		if (!$has_auto_accept) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN u_auto_accept VARCHAR(2)";
+			$pres = dbquery($sql);
+		}
 	}
 	if (!$has_messages) {
+		$sql = "DROP TABLE ".$TBLPREFIX."messages";
+		$res = dbq($sql, false);
 		$sql = "CREATE TABLE ".$TBLPREFIX."messages (m_id INT NOT NULL, m_from VARCHAR(255), m_to VARCHAR(30), m_subject VARCHAR(255), m_body TEXT, m_created VARCHAR(255), PRIMARY KEY(m_id))";
 		$res = dbquery($sql);
-
 	}
-	if (!$has_favorites) {
+	if (!$has_favorites || $sqlite && (!$has_fav_note)) {
+		$sql = "DROP TABLE ".$TBLPREFIX."favorites";
+		$res = dbq($sql, false);
 		$sql = "CREATE TABLE ".$TBLPREFIX."favorites (fv_id INT NOT NULL, fv_username VARCHAR(30), fv_gid VARCHAR(10), fv_type VARCHAR(10), fv_file VARCHAR(100), fv_url VARCHAR(255), fv_title VARCHAR(255), fv_note TEXT, PRIMARY KEY(fv_id))";
 		$res = dbquery($sql);
-
+	} else {
+		if (!$has_fav_note) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."favorites ADD COLUMN (fv_url VARCHAR(255), fv_title VARCHAR(255), fv_note TEXT)";
+			$pres = dbquery($sql);
+		}
 	}
-	if (!$has_blocks) {
+	if (!$has_blocks || $sqlite && (!$has_blockconfig)) {
+		$sql = "DROP TABLE ".$TBLPREFIX."blocks";
+		$res = dbq($sql, false);
 		$sql = "CREATE TABLE ".$TBLPREFIX."blocks (b_id INT NOT NULL, b_username VARCHAR(100), b_location VARCHAR(30), b_order INT, b_name VARCHAR(255), b_config TEXT, PRIMARY KEY(b_id))";
 		$res = dbquery($sql);
-
+	} else {
+		if (!$has_blockconfig) {
+			$sql = "ALTER TABLE ".$TBLPREFIX."blocks ADD COLUMN (b_config TEXT)";
+			$res = dbquery($sql);
+		}
 	}
 	if (!$has_news) {
+		$sql = "DROP TABLE ".$TBLPREFIX."news";
+		$res = dbq($sql, false);
 		$sql = "CREATE TABLE ".$TBLPREFIX."news (n_id INT NOT NULL, n_username VARCHAR(100), n_date INT, n_title VARCHAR(255), n_text TEXT, PRIMARY KEY(n_id))";
 		$res = dbquery($sql);
-
 	}
 	return true;
 }
