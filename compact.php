@@ -24,7 +24,7 @@
  * @version $Id$
  */
 require("config.php");
-require("includes/functions_charts.php");
+require_once("includes/functions_charts.php");
 require($confighelpfile["english"]);
 if (file_exists($confighelpfile[$LANGUAGE])) require($confighelpfile[$LANGUAGE]);
 
