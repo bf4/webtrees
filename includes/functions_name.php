@@ -646,7 +646,6 @@ function surname_count($nsurname) {
 	$lname = strip_prefix($nsurname);
 	if (empty($lname)) $lname = $nsurname;
 	$sort_letter=get_first_letter($lname);
-	//if (($show_all=="yes") || empty($alpha) || ($alpha==$sort_letter)) {
 		$tsurname = preg_replace(array("/ [jJsS][rR]\.?/", "/ I+/"), array("",""), $nsurname);
 		$tsurname = str2upper($tsurname);
 		if (empty($surname) || (str2upper($surname)==$tsurname)) {
@@ -664,8 +663,6 @@ function surname_count($nsurname) {
 			if ($i==0) $testname = $tsurname;
 		}
 		return $nsurname;
-	//}
-	return false;
 }
 
 /**

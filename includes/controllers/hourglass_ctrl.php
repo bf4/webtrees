@@ -207,6 +207,7 @@ function print_person_pedigree($pid, $count) {
 		print "</tr>\n";
 		if ($count<$this->generations-1) print "<tr>\n<td height=\"50%\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n";
 		print "</table>\n";
+		break;
 	}
 }
 

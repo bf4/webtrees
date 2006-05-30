@@ -26,7 +26,6 @@
 
 require_once('includes/gedcomrecord.php');
 include_once('SOAP/Client.php');
-include_once('PEAR.php');
 include_once('includes/family_class.php');
 
 class ServiceClient extends GedcomRecord {
@@ -204,9 +203,16 @@ if ($this->DEBUG) print "In _merge()<br />";
 				$newrecs[] = $orig_subrec;
 			}
 		}
+		
+		//-- start with the first line from the local record
 		$pos1 = strpos($record1, "\n1");
 		if ($pos1!==false) $localrec = substr($record1, 0, $pos1+1);
 		else $localrec = $record1;
+		
+		//-- update the type of the remote record
+		$ct = preg_match("/0 @(.*)@ (\w*)/", $record2, $match);
+		if ($ct>0) $localrec = preg_replace("/0 @(.*)@ (\w*)/", "0 @$1@ ".trim($match[2]), $localrec);
+		//-- add all of the new records
 		foreach($newrecs as $ind=>$subrec) {
 			$localrec .= trim($subrec)."\r\n";
 		}

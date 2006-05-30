@@ -29,7 +29,11 @@ if (strstr($_SERVER["SCRIPT_NAME"],"module.php")===false) {
 	print "Now, why would you want to do that.  You're not hacking are you?";
 	exit;
 }
+global $factsfile, $LANGUAGE, $factarray;
+require_once($factsfile["english"]);
+if (file_exists($factsfile[$LANGUAGE])) require_once($factsfile[$LANGUAGE]);
 require_once "includes/person_class.php";
+
 /**
  * Base class for Research Assistant forms
  * 
@@ -571,7 +575,7 @@ END_OUT;
 					"'".$DBCONN->escapeSimple($factrec)."'," .
 					"'".$DBCONN->escapeSimple($peopleTxt)."')";
 				$res = dbquery($sql);
-				foreach($people as $i=>$pid) {
+				foreach($people as $in=>$pid) {
 					if (!empty($pid) && isset($newpeoplerecs[$pid])) {
 						$indirec = $newpeoplerecs[$pid];
 						if (!empty($indirec)) {

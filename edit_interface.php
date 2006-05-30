@@ -811,7 +811,14 @@ else if ($action=="addchildaction") {
 			$BIRT_DATE = check_input_date($BIRT_DATE);
 			$gedrec .= "2 DATE $BIRT_DATE\r\n";
 		}
-		if (!empty($BIRT_PLAC)) $gedrec .= "2 PLAC $BIRT_PLAC\r\n";
+		if (!empty($BIRT_PLAC)) {
+			$gedrec .= "2 PLAC $BIRT_PLAC\r\n";
+			if ((!empty($BIRT_LATI))||(!empty($BIRT_LONG))) {
+				$gedrec .= "3 MAP\r\n";
+				$gedrec .= "4 LATI $BIRT_LATI\r\n";
+				$gedrec .= "4 LONG $BIRT_LONG\r\n";
+			}
+		}
 	}
 	if ((!empty($DEAT_DATE))||(!empty($DEAT_PLAC))) {
 		$gedrec .= "1 DEAT\r\n";
@@ -819,7 +826,14 @@ else if ($action=="addchildaction") {
 			$DEAT_DATE = check_input_date($DEAT_DATE);
 			$gedrec .= "2 DATE $DEAT_DATE\r\n";
 		}
-		if (!empty($DEAT_PLAC)) $gedrec .= "2 PLAC $DEAT_PLAC\r\n";
+		if (!empty($DEAT_PLAC)) {
+			$gedrec .= "2 PLAC $DEAT_PLAC\r\n";
+			if ((!empty($DEAT_LATI))||(!empty($DEAT_LONG))) {
+				$gedrec .= "3 MAP\r\n";
+				$gedrec .= "4 LATI $DEAT_LATI\r\n";
+				$gedrec .= "4 LONG $DEAT_LONG\r\n";
+			}
+		}
 	}
 	if (!empty($famid)) $gedrec .= "1 FAMC @$famid@\r\n";
 
@@ -862,7 +876,14 @@ else if ($action=="addspouseaction") {
 			$BIRT_DATE = check_input_date($BIRT_DATE);
 			$gedrec .= "2 DATE $BIRT_DATE\r\n";
 		}
-		if (!empty($BIRT_PLAC)) $gedrec .= "2 PLAC $BIRT_PLAC\r\n";
+		if (!empty($BIRT_PLAC)) {
+			$gedrec .= "2 PLAC $BIRT_PLAC\r\n";
+			if ((!empty($BIRT_LATI))||(!empty($BIRT_LONG))) {
+				$gedrec .= "3 MAP\r\n";
+				$gedrec .= "4 LATI $BIRT_LATI\r\n";
+				$gedrec .= "4 LONG $BIRT_LONG\r\n";
+			}
+		}
 	}
 	if ((!empty($DEAT_DATE))||(!empty($DEAT_PLAC))) {
 		$gedrec .= "1 DEAT\r\n";
@@ -870,7 +891,14 @@ else if ($action=="addspouseaction") {
 			$DEAT_DATE = check_input_date($DEAT_DATE);
 			$gedrec .= "2 DATE $DEAT_DATE\r\n";
 		}
-		if (!empty($DEAT_PLAC)) $gedrec .= "2 PLAC $DEAT_PLAC\r\n";
+		if (!empty($DEAT_PLAC)) {
+			$gedrec .= "2 PLAC $DEAT_PLAC\r\n";
+			if ((!empty($DEAT_LATI))||(!empty($DEAT_LONG))) {
+				$gedrec .= "3 MAP\r\n";
+				$gedrec .= "4 LATI $DEAT_LATI\r\n";
+				$gedrec .= "4 LONG $DEAT_LONG\r\n";
+			}
+		}
 	}
 	$gedrec = handle_updates($gedrec);
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
@@ -896,7 +924,14 @@ else if ($action=="addspouseaction") {
 				$MARR_DATE = check_input_date($MARR_DATE);
 				$famrec .= "2 DATE $MARR_DATE\r\n";
 			}
-			if (!empty($MARR_PLAC)) $famrec .= "2 PLAC $MARR_PLAC\r\n";
+			if (!empty($MARR_PLAC)) {
+				$famrec .= "2 PLAC $MARR_PLAC\r\n";
+				if ((!empty($MARR_LATI))||(!empty($MARR_LONG))) {
+					$famrec .= "3 MAP\r\n";
+					$famrec .= "4 LATI $MARR_LATI\r\n";
+					$famrec .= "4 LONG $MARR_LONG\r\n";
+				}
+			}
 		}
 		if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
 		$famid = append_gedrec($famrec);
@@ -913,7 +948,14 @@ else if ($action=="addspouseaction") {
 					$MARR_DATE = check_input_date($MARR_DATE);
 					$famrec .= "2 DATE $MARR_DATE\r\n";
 				}
-				if (!empty($MARR_PLAC)) $famrec .= "2 PLAC $MARR_PLAC\r\n";
+				if (!empty($MARR_PLAC)) {
+					$famrec .= "2 PLAC $MARR_PLAC\r\n";
+					if ((!empty($MARR_LATI))||(!empty($MARR_LONG))) {
+						$famrec .= "3 MAP\r\n";
+						$famrec .= "4 LATI $MARR_LATI\r\n";
+						$famrec .= "4 LONG $MARR_LONG\r\n";
+					}
+				}
 			}
 			if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
 			replace_gedrec($famid, $famrec);
@@ -964,7 +1006,14 @@ else if ($action=="linkspouseaction") {
 						$MARR_DATE = check_input_date($MARR_DATE);
 						$famrec .= "2 DATE $MARR_DATE\r\n";
 					}
-					if (!empty($MARR_PLAC)) $famrec .= "2 PLAC $MARR_PLAC\r\n";
+					if (!empty($MARR_PLAC)) {
+						$famrec .= "2 PLAC $MARR_PLAC\r\n";
+						if ((!empty($MARR_LATI))||(!empty($MARR_LONG))) {
+							$famrec .= "3 MAP\r\n";
+							$famrec .= "4 LATI $MARR_LATI\r\n";
+							$famrec .= "4 LONG $MARR_LONG\r\n";
+						}
+					}
 				}
 				if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
 				$famid = append_gedrec($famrec);
@@ -1007,7 +1056,14 @@ else if ($action=="addnewparentaction") {
 			$BIRT_DATE = check_input_date($BIRT_DATE);
 			$gedrec .= "2 DATE $BIRT_DATE\r\n";
 		}
-		if (!empty($BIRT_PLAC)) $gedrec .= "2 PLAC $BIRT_PLAC\r\n";
+		if (!empty($BIRT_PLAC)) {
+			$gedrec .= "2 PLAC $BIRT_PLAC\r\n";
+			if ((!empty($BIRT_LATI))||(!empty($BIRT_LONG))) {
+				$gedrec .= "3 MAP\r\n";
+				$gedrec .= "4 LATI $BIRT_LATI\r\n";
+				$gedrec .= "4 LONG $BIRT_LONG\r\n";
+			}
+		}
 	}
 	if ((!empty($DEAT_DATE))||(!empty($DEAT_PLAC))) {
 		$gedrec .= "1 DEAT\r\n";
@@ -1015,7 +1071,14 @@ else if ($action=="addnewparentaction") {
 			$DEAT_DATE = check_input_date($DEAT_DATE);
 			$gedrec .= "2 DATE $DEAT_DATE\r\n";
 		}
-		if (!empty($DEAT_PLAC)) $gedrec .= "2 PLAC $DEAT_PLAC\r\n";
+		if (!empty($DEAT_PLAC)) {
+			$gedrec .= "2 PLAC $DEAT_PLAC\r\n";
+			if ((!empty($DEAT_LATI))||(!empty($DEAT_LONG))) {
+				$gedrec .= "3 MAP\r\n";
+				$gedrec .= "4 LATI $DEAT_LATI\r\n";
+				$gedrec .= "4 LONG $DEAT_LONG\r\n";
+			}
+		}
 	}
 	$gedrec = handle_updates($gedrec);
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
@@ -1039,7 +1102,14 @@ else if ($action=="addnewparentaction") {
 				$MARR_DATE = check_input_date($MARR_DATE);
 				$famrec .= "2 DATE $MARR_DATE\r\n";
 			}
-			if (!empty($MARR_PLAC)) $famrec .= "2 PLAC $MARR_PLAC\r\n";
+			if (!empty($MARR_PLAC)) {
+				$famrec .= "2 PLAC $MARR_PLAC\r\n";
+				if ((!empty($MARR_LATI))||(!empty($MARR_LONG))) {
+					$famrec .= "3 MAP\r\n";
+					$famrec .= "4 LATI $MARR_LATI\r\n";
+					$famrec .= "4 LONG $MARR_LONG\r\n";
+				}
+			}
 		}
 
 		if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
@@ -1057,7 +1127,14 @@ else if ($action=="addnewparentaction") {
 					$MARR_DATE = check_input_date($MARR_DATE);
 					$famrec .= "2 DATE $MARR_DATE\r\n";
 				}
-				if (!empty($MARR_PLAC)) $famrec .= "2 PLAC $MARR_PLAC\r\n";
+				if (!empty($MARR_PLAC)) {
+					$famrec .= "2 PLAC $MARR_PLAC\r\n";
+					if ((!empty($MARR_LATI))||(!empty($MARR_LONG))) {
+						$famrec .= "3 MAP\r\n";
+						$famrec .= "4 LATI $MARR_LATI\r\n";
+						$famrec .= "4 LONG $MARR_LONG\r\n";
+					}
+				}
 			}
 			if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
 			replace_gedrec($famid, $famrec);

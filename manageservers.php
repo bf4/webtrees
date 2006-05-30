@@ -74,7 +74,7 @@ function add_banned_ip($ip) {
  * @param varchar(30) $ip	The ip to be saved
  */
 function add_search_engine_ip($ip) {
-	global $search_engines, $INDEX_DIRECTORY;
+	global $search_engines, $INDEX_DIRECTORY, $pgv_lang;
 	if (file_exists($INDEX_DIRECTORY."search_engines.php"))
 	{
 	include_once($INDEX_DIRECTORY."search_engines.php");
@@ -145,7 +145,7 @@ function delete_banned_ip($ip) {
  * @param varchar(30) $ip	IP address to remove
  */
 function delete_search_engine_ip($ip) {
-	global $search_engines, $INDEX_DIRECTORY;
+	global $search_engines, $INDEX_DIRECTORY, $pgv_lang;
 	if (file_exists($INDEX_DIRECTORY."search_engines.php"))
 	{
 	include_once($INDEX_DIRECTORY."search_engines.php");

@@ -22,7 +22,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: ra_functions.php 932 2006-05-24 22:09:39Z jfinlay $
+ * @version $Id: ra_functions.php 936 2006-05-25 19:37:44Z gqueen $
  * @author Jason Porter
  * @author Wade Lasson
  * @author Brandon Gagnon
@@ -385,7 +385,7 @@ class ra_functions {
 	 */
 	 function print_user_tasks($userName)
 	 {
-	 	global $res, $pgv_lang;
+	 	global $res, $pgv_lang, $folderId;
 		global $TBLPREFIX;
 		$sql = 	"Select * From " .$TBLPREFIX. "tasks where t_username ='".$userName."'";
 		

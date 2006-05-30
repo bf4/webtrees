@@ -3099,7 +3099,7 @@ if (!empty($COMMIT_COMMAND)) {
  * @return boolean			whether the file was checked in
  */
 function check_in($logline, $filename, $dirname, $bInsert = false) {
-	global $COMMIT_COMMAND;
+	global $COMMIT_COMMAND, $output, $retval;
 	$bRetSts = false;
         if(! empty($COMMIT_COMMAND))
         {

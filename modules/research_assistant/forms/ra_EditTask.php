@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: ra_EditTask.php,v 1.4 2006/04/06 20:12:35 yalnifj Exp $:
+ * @version $Id: ra_EditTask.php 780 2006-04-04 21:56:59Z jfinlay $:
  * @author Jason Porter
  * @author Wade Lasson
  * @author Brandon Gagnon
@@ -365,7 +365,7 @@ function getTitle(){
     ?>
 	<tr class="topbottombar">
     		<td colspan="4">
-    		<input type="submit" value="<?php print $pgv_lang["save"]; ?>" onclick="javascript:selectList(); selectPeopleList();" />
+    		<input type="submit" value="<?php print $pgv_lang["save"]; ?>" />
     		<input type="button" value="Complete" name="complete" onclick="window.location='module.php?mod=research_assistant&amp;action=completeTask&amp;taskid=<?php print $_REQUEST['taskid'] ?>'" />
     		</td>
    	</tr>
