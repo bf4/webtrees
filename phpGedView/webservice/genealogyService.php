@@ -47,7 +47,7 @@
  * @version $Id$
  */
 
-require_once 'includes/SOAP/Server.php';
+require_once 'SOAP/Server.php';
 
 // Genealogy class
 class GenealogyService 
@@ -980,7 +980,7 @@ class GenealogyService
 		else
 		{
 			// Deal with WSDL / Disco here
-			require_once 'includes/SOAP/Disco.php';
+			require_once 'SOAP/Disco.php';
 
 			// Create the Disco server
 			$disco = new SOAP_DISCO_Server($server,$this->__namespace);
