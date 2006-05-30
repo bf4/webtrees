@@ -23,8 +23,8 @@
  * @subpackage Charts
  * @version $Id$
  */
-require("config.php");
-require("includes/functions_charts.php");
+require_once("config.php");
+require_once("includes/functions_charts.php");
 require($factsfile["english"]);
 if (file_exists( $factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
 require_once 'includes/controllers/basecontrol.php';
