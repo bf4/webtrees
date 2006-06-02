@@ -56,8 +56,5 @@ print "\n</div>\n<br /><br /><br />";
 print "<a href=\"#top\" title=\"".$pgv_lang["move_up"]."\">$UpArrow</a><br />";
 print "<a href=\"help_text.php?help=help_contents_help\"><b>".$pgv_lang["help_contents"]."</b></a><br />";
 print "<a href=\"javascript:;\" onclick=\"window.close();\"><b>".$pgv_lang["close_window"]."</b></a>";
-$output = "\n\n<script type=\"text/javascript\"> ";
-$output .= " <!-- Begin\nfunction fullScreen(theURL) { window.open(theURL, '', 'fullscreen=yes, scrollbars=auto');}//  End --></script>\n\n";
-print $output;
 print_simple_footer();
 ?>

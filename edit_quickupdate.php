@@ -352,6 +352,8 @@ if ($action=="update") {
 		if (!empty($PLAC)) $factrec .= "2 PLAC $PLAC\r\n";
 		if (!empty($TEMP)) $factrec .= "2 TEMP $TEMP\r\n";
 		if (!empty($RESN)) $factrec .= "2 RESN $RESN\r\n";
+		//-- make sure that there is at least a Y
+		if (preg_match("/\n2 \w*/", $factrec)==0) $factrec = "1 $newfact Y\r\n";
 		$gedrec .= "\r\n".$factrec;
 		$updated = true;
 	}
@@ -562,6 +564,8 @@ if ($action=="update") {
 			if (!empty($$var)) $FRESN = $$var;
 			else $FRESN = "";
 			if (!empty($FRESN)) $factrec .= "2 RESN $FRESN\r\n";
+			//-- make sure that there is at least a Y
+			if (preg_match("/\n2 \w*/", $factrec)==0) $factrec = "1 $newfact Y\r\n";
 			$famrec .= "\r\n".$factrec;
 			$famupdate = true;
 //			print "sfamupdate4";
@@ -956,6 +960,8 @@ if ($action=="update") {
 			if (!empty($$var)) $FRESN = $$var;
 			else $FRESN;
 			if (!empty($FRESN)) $factrec .= "2 RESN $FRESN\r\n";
+			//-- make sure that there is at least a Y
+			if (preg_match("/\n2 \w*/", $factrec)==0) $factrec = "1 $newfact Y\r\n";
 			$famrec .= "\r\n".$factrec;
 			$famupdate = true;
 //			print "famupdate5";
@@ -1294,6 +1300,7 @@ function checkform(frm) {
 <form method="post" action="edit_quickupdate.php?pid=<?php print $pid;?>" name="quickupdate" enctype="multipart/form-data" onsubmit="return checkform(this);">
 <input type="hidden" name="action" value="update" />
 <input type="hidden" name="closewin" value="1" />
+<br /><input type="submit" value="<?php print $pgv_lang["save"]; ?>" /><br /><br />
 <table class="tabs_table">
    <tr>
 		<td id="pagetab0" class="tab_cell_active"><a href="javascript: <?php print $pgv_lang["personal_facts"];?>" onclick="switch_tab(0); return false;"><?php print $pgv_lang["personal_facts"]?></a></td>

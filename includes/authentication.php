@@ -50,6 +50,8 @@ function authenticateUser($username, $password, $basic=false) {
 	global $TBLPREFIX, $GEDCOM, $pgv_lang;
 	checkTableExists();
 	$user = getUser($username);
+	//-- make sure that we have the actual username as it was stored in the DB
+	$username = $user['username'];
 	if ($user!==false) {
 		if (crypt($password, $user["password"])==$user["password"]) {
 	        if (!isset($user["verified"])) $user["verified"] = "";
@@ -456,8 +458,8 @@ function checkTableExists() {
 
 	if (DB::isError($DBCONN)) return false;
 	$data = $DBCONN->getListOf('tables');
-	if (count($data)>0) {
-		foreach($data as $indexval => $table) {
+	foreach($data as $indexval => $table) {
+		if (strpos($table, $TBLPREFIX) == 0) {
 			switch(substr($table, strlen($TBLPREFIX))) {
 				case "users":
 					$has_users = true;
@@ -552,44 +554,44 @@ function checkTableExists() {
 		$res = dbquery($sql);
 	} else {
 		if (!$has_email) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_email TEXT, u_verified VARCHAR(20), u_verified_by_admin VARCHAR(20), u_language VARCHAR(50), u_pwrequested VARCHAR(20), u_reg_timestamp VARCHAR(50), u_reg_hashcode VARCHAR(255), u_theme VARCHAR(50), u_loggedin VARCHAR(1))";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD (u_email TEXT, u_verified VARCHAR(20), u_verified_by_admin VARCHAR(20), u_language VARCHAR(50), u_pwrequested VARCHAR(20), u_reg_timestamp VARCHAR(50), u_reg_hashcode VARCHAR(255), u_theme VARCHAR(50), u_loggedin VARCHAR(1))";
 			$pres = dbquery($sql);
 		}
 		if (!$has_sessiontime) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_sessiontime INT)";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD (u_sessiontime INT)";
 			$pres = dbquery($sql);
 		}
 		if (!$has_contactmethod) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_contactmethod VARCHAR(20))";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD (u_contactmethod VARCHAR(20))";
 			$pres = dbquery($sql);
 		}
 		if (!$has_visible) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_visibleonline VARCHAR(2))";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD (u_visibleonline VARCHAR(2))";
 			$pres = dbquery($sql);
 		}
 		if (!$has_account) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_editaccount VARCHAR(2))";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD (u_editaccount VARCHAR(2))";
 			$pres = dbquery($sql);
 		}
 		if (!$has_defaulttab) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_defaulttab INT)";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD (u_defaulttab INT)";
 			$pres = dbquery($sql);
 		}
 		if (!$has_comment) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_comment VARCHAR(255))";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD (u_comment VARCHAR(255))";
 			$pres = dbquery($sql);
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_comment_exp VARCHAR(20))";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD (u_comment_exp VARCHAR(20))";
 			$pres = dbquery($sql);
 		}
 		if (!$has_sync_gedcom) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_sync_gedcom VARCHAR(2))";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD (u_sync_gedcom VARCHAR(2))";
 			$pres = dbquery($sql);
 		}
 		if (!$has_first_name) {
 			//-- add new first and last name fields
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN u_firstname VARCHAR(255) AFTER u_fullname";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_firstname VARCHAR(255) AFTER u_fullname";
 			$pres = dbquery($sql);
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN u_lastname VARCHAR(255) AFTER u_firstname";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_lastname VARCHAR(255) AFTER u_firstname";
 			$pres = dbquery($sql);
 			//-- convert the old fullname to first and last names
 			$sql = "UPDATE ".$TBLPREFIX."users SET u_lastname=SUBSTRING_INDEX(u_fullname, ' ', -1), u_firstname=SUBSTRING_INDEX(u_fullname, ' ', 1)";
@@ -599,45 +601,49 @@ function checkTableExists() {
 			$pres = dbquery($sql);
 		}
 		if (!$has_relation_privacy) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN (u_relationship_privacy VARCHAR(2), u_max_relation_path INT)";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD (u_relationship_privacy VARCHAR(2), u_max_relation_path INT)";
 			$pres = dbquery($sql);
 		}
 		if (!$has_auto_accept) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD COLUMN u_auto_accept VARCHAR(2)";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_auto_accept VARCHAR(2)";
 			$pres = dbquery($sql);
 		}
 	}
 	if (!$has_messages) {
 		$sql = "DROP TABLE ".$TBLPREFIX."messages";
-		$res = dbq($sql, false);
+		$res = dbquery($sql, false);
 		$sql = "CREATE TABLE ".$TBLPREFIX."messages (m_id INT NOT NULL, m_from VARCHAR(255), m_to VARCHAR(30), m_subject VARCHAR(255), m_body TEXT, m_created VARCHAR(255), PRIMARY KEY(m_id))";
 		$res = dbquery($sql);
 	}
 	if (!$has_favorites || $sqlite && (!$has_fav_note)) {
 		$sql = "DROP TABLE ".$TBLPREFIX."favorites";
-		$res = dbq($sql, false);
+		$res = dbquery($sql, false);
 		$sql = "CREATE TABLE ".$TBLPREFIX."favorites (fv_id INT NOT NULL, fv_username VARCHAR(30), fv_gid VARCHAR(10), fv_type VARCHAR(10), fv_file VARCHAR(100), fv_url VARCHAR(255), fv_title VARCHAR(255), fv_note TEXT, PRIMARY KEY(fv_id))";
 		$res = dbquery($sql);
 	} else {
 		if (!$has_fav_note) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."favorites ADD COLUMN (fv_url VARCHAR(255), fv_title VARCHAR(255), fv_note TEXT)";
+			$sql = "ALTER TABLE ".$TBLPREFIX."favorites ADD fv_url VARCHAR(255)";
+			$pres = dbquery($sql);
+			$sql = "ALTER TABLE ".$TBLPREFIX."favorites ADD fv_title VARCHAR(255)";
+			$pres = dbquery($sql);
+			$sql = "ALTER TABLE ".$TBLPREFIX."favorites ADD fv_note TEXT";
 			$pres = dbquery($sql);
 		}
 	}
 	if (!$has_blocks || $sqlite && (!$has_blockconfig)) {
 		$sql = "DROP TABLE ".$TBLPREFIX."blocks";
-		$res = dbq($sql, false);
+		$res = dbquery($sql, false);
 		$sql = "CREATE TABLE ".$TBLPREFIX."blocks (b_id INT NOT NULL, b_username VARCHAR(100), b_location VARCHAR(30), b_order INT, b_name VARCHAR(255), b_config TEXT, PRIMARY KEY(b_id))";
 		$res = dbquery($sql);
 	} else {
 		if (!$has_blockconfig) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."blocks ADD COLUMN (b_config TEXT)";
+			$sql = "ALTER TABLE ".$TBLPREFIX."blocks ADD b_config TEXT";
 			$res = dbquery($sql);
 		}
 	}
 	if (!$has_news) {
 		$sql = "DROP TABLE ".$TBLPREFIX."news";
-		$res = dbq($sql, false);
+		$res = dbquery($sql, false);
 		$sql = "CREATE TABLE ".$TBLPREFIX."news (n_id INT NOT NULL, n_username VARCHAR(100), n_date INT, n_title VARCHAR(255), n_text TEXT, PRIMARY KEY(n_id))";
 		$res = dbquery($sql);
 	}
@@ -805,18 +811,18 @@ function create_export_user($export_accesslevel) {
 	if (getUser("export")) deleteUser("export");
 
 	$newuser = array();
+	$newuser["username"] = "export";
 	$newuser["firstname"] = "Export";
 	$newuser["lastname"] = "useraccount";
-	$newuser["username"] = "export";
-	$allow = "abcdefghijkmnpqrstuvwxyz23456789";
+	$newuser["gedcomid"] = "";
+	$newuser["rootid"] = "";
 	srand((double)microtime()*1000000);
+	$allow = "abcdefghijkmnpqrstuvwxyz123456789";
 	$password = "";
 	for($i=0; $i<8; $i++) {
 		$password .= $allow[rand()%strlen($allow)];
 	}
 	$newuser["password"] = $password;
-	$newuser["gedcomid"] = "";
-	$newuser["rootid"] = "";
 	if ($export_accesslevel == "admin") $newuser["canadmin"] = true;
 	else $newuser["canadmin"] = false;
 	if ($export_accesslevel == "gedadmin") $newuser["canedit"][$GEDCOM] = "admin";
@@ -831,13 +837,13 @@ function create_export_user($export_accesslevel) {
 	$newuser["reg_hashcode"] = "";
 	$newuser["theme"] = "";
 	$newuser["loggedin"] = "";
-	$newuser["sessiontime"] = "";
+	$newuser["sessiontime"] = time();
 	$newuser["contactmethod"] = "none";
 	$newuser["visibleonline"] = false;
 	$newuser["editaccount"] = false;
 	$newuser["default_tab"] = 0;
-	$newuser["comment"] = "";
-	$newuser["comment_exp"] = "Dummy user for export purposes";
+	$newuser["comment"] = "Dummy tester for export purposes";
+	$newuser["comment_exp"] = 0;
 	$newuser["sync_gedcom"] = "N";
 	$newuser["relationship_privacy"] = "N";
 	$newuser["max_relation_path"] = 0;

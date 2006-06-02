@@ -409,7 +409,10 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
 	$pos1=0;
 	$subrec = "";
 	$tag = trim($tag);
-	$searchTarget = "/".preg_replace("~/~","\\/",$tag)."[\s\r\n]/";
+	//-- commented out this line due to bug [ 1492470 ] 4.0b8 get_all_subrecords()
+	//--- it will not match the last record of a file
+	//$searchTarget = "/".preg_replace("~/~","\\/",$tag)."[\s\r\n]/";
+	$searchTarget = "/".preg_replace("~/~","\\/",$tag)."/";
 	if (empty($gedrec)) return "";
 	while(($num>0)&&($pos1<strlen($gedrec))) {
 		$ct = preg_match($searchTarget, $gedrec, $match, PREG_OFFSET_CAPTURE, $pos1);
@@ -506,8 +509,8 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $Ap
 						if (isset($prev_tags[$fact])) $prev_tags[$fact]++;
 						else $prev_tags[$fact] = 1;
 						$subrec = get_sub_record(1, "1 $fact", $famrec, $prev_tags[$fact]);
-						$subrec .= "\r\n1 _PGVS @$spid@\r\n";
-						$subrec .= "1 _PGVFS @$famid@\r\n";
+						$subrec .= "\r\n2 _PGVS @$spid@\r\n";
+						$subrec .= "2 _PGVFS @$famid@\r\n";
 						if ($fact=="EVEN") {
 							$ct = preg_match("/2 TYPE (.*)/", $subrec, $tmatch);
 							if ($ct>0) {
@@ -3099,7 +3102,7 @@ if (!empty($COMMIT_COMMAND)) {
  * @return boolean			whether the file was checked in
  */
 function check_in($logline, $filename, $dirname, $bInsert = false) {
-	global $COMMIT_COMMAND, $output, $retval;
+	global $COMMIT_COMMAND;
 	$bRetSts = false;
         if(! empty($COMMIT_COMMAND))
         {
@@ -3107,6 +3110,8 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
 			if(! empty($dirname))
 				chdir($dirname);
         	$cmdline = $COMMIT_COMMAND." commit -m \"".$logline."\" ".$filename;
+        	$output = "";
+        	$retval = "";
 	        exec($cmdline, $output, $retval);
         	if(! empty($output))
 	        {

@@ -31,17 +31,12 @@
  * @package PhpGedView
  * 
  */
+global $LANGUAGE;
+//require_once ("includes/person_class.php");
+//if (file_exists($factsfile[$LANGUAGE]))
+//	require_once ($factsfile[$LANGUAGE]);
 
-require_once ("person_class.php");
-if (file_exists($factsfile[$LANGUAGE]))
-	require_once ($factsfile[$LANGUAGE]);
 
-if (!function_exists('id_in_cart')) {
-	function id_in_cart($id)
-	{
-		return false;
-	}
-}
 /**
  * Creates the root elements for the GRAMPS XML file.
  * 
@@ -49,6 +44,9 @@ if (!function_exists('id_in_cart')) {
  * for a valid GRAMPS XML document. Right now, it adds all the 
  * root elements and appends them to the DOMDocument.
  */
+ 
+ //This is an abstract class and should only be used through its subclasses, all
+ //of which are prefixed by GE.
 class GrampsExport {
 
 	var $mediaFiles = array();
@@ -256,7 +254,7 @@ class GrampsExport {
 			}
 
 			if (($place = get_gedcom_value($event . ":PLAC", 1, $indirec)) != null) {
-				$hlink = $this->query_dom("./places/placeobj[@title=\"$place\"]/@handle");
+				$hlink = $this->query_dom("./places/placeobj[@title=\"".preg_replace("~\"~", '&quot;', $place)."\"]/@handle");
 				if ($hlink == null) {
 					$hlink = $this->generateHandle();
 					$this->create_placeobj($place, $hlink);
@@ -293,12 +291,13 @@ class GrampsExport {
 			while (($nameSource = get_sub_record(1, "1 OBJE", $eventRec, $num)) != null) {
 
 				$this->create_mediaref($eEvent, $nameSource, 1);
-				
+
 				$num++;
 			}
 			$eEvent = $eParent->appendChild($eEvent);
 		}
 	}
+
 
 	/**
 	 * This function creates a family relation for a person and appends the relation
@@ -312,35 +311,9 @@ class GrampsExport {
 	 * @param personRec - the full INDI GEDCOM record of the person that the relation is being created
 	 * @param $tag -  the name of the GEDCOM tag (FAMC, FAMS). This is used to allow the same function to work with childin and parent_in_family relations
 	 */
-	function create_fam_relation($eParent, $personRec, $tag) {
-		global $pgv_lang;
-		$famid = get_gedcom_value($tag, 1, $personRec);
-		$handle = $this->query_dom("./families/family[@id=\"$famid\"]/@handle");
-		$created = false;
-		if ($handle == null && id_in_cart($famid)) {
-			$frec = find_family_record($famid);
-			/* 
-			* If the family does not exist and their ID is in the clippings cart,
-			* you must create the family before you can query them in the dom to get
-			* their hlink. The hlink is generated when the person element is created.
-			* This causes overhead creating objects that are never added to the XML file
-			* perhaps there is some other way this can be done reducing the overhead?
-			* 
-			*/
-			$this->create_family($frec, $famid);
-			$handle = $this->query_dom("./families/family[@id=\"$famid\"]/@handle");
-		}
-		if ($handle != null && id_in_cart($famid)) {
-			$elementName = "";
-			if ($tag == "FAMC")
-				$elementName = "childof";
-			else
-				$elementName = "parentin";
-
-			$eChildof = $this->dom->createElement($elementName);
-			$eChildof->setAttribute("hlink", $handle);
-			$eChildof = $eParent->appendChild($eChildof);
-		}
+	function create_fam_relation($eParent, $personRec, $tag)
+	{
+		throw new exception("create fam rel - this function is not implemented");
 	}
 
 	/**
@@ -352,91 +325,9 @@ class GrampsExport {
 	 * @param string $frec - the full FAM GEDCOM record of the family to be created
 	 * @param string $fid = the ID (F1, F2, F3) of the family that is being created
 	 */
-	function create_family($frec, $fid, $type=0) {
-		$check = $this->query_dom("./families/family[@id=\"$fid\"]/@id");
-		if (($check == null || $check != $fid) && (id_in_cart($fid)||$type==1)) {
-			$famrec = $frec;
-			$eFamily = $this->dom->createElement("family");
-			$eFamily->setAttribute("id", $fid);
-			$eFamily->setAttribute("handle", $this->generateHandle());
-			$eFamily->setAttribute("change", time());
-			$eFamily = $this->eFams->appendChild($eFamily);
-
-			// Add the <father> element
-			$id = get_gedcom_value("HUSB", 1, $famrec);
-			$pers = $this->query_dom("./people/person[@id=\"$id\"]/@handle");
-			if (!isset ($pers) && (id_in_cart($id)||$type==1)) {
-				/*
-				 * 
-				 * If the person does not exist and their ID is in the clippings cart,
-				 * you must create the person before you can query them in the dom to get
-				 * their hlink. The hlink is generated when the person element is created.
-				 * This causes overhead creating objects that are never added to the XML file
-				 * perhaps there is some other way this can be done reducing the overhead?
-				 * 
-				 */
-				$this->create_person(find_person_record($id), $id);
-				$pers = $this->query_dom("./people/person[@id=\"$id\"]/@handle");
-			}
-			if (isset ($id) && trim($id) && (id_in_cart($id)||$type==1)) {
-				$eFather = $this->dom->createElement("father");
-				$eFather->setAttribute("hlink", $pers);
-				$eFather = $eFamily->appendChild($eFather);
-			}
-
-			// Add the <mother> element
-			$id = get_gedcom_value("WIFE", 1, $famrec);
-			$pers = $this->query_dom("./people/person[@id=\"$id\"]/@handle");
-			if (!isset ($pers) && (id_in_cart($id)||$type==1)) {
-				/*
-				 * 
-				 * If the person does not exist and their ID is in the clippings cart,
-				 * you must create the person before you can query them in the dom to get
-				 * their hlink. The hlink is generated when the person element is created.
-				 * This causes overhead creating objects that are never added to the XML file
-				 * perhaps there is some other way this can be done reducing the overhead?
-				 * 
-				 */
-				$this->create_person(find_person_record($id), $id);
-				$pers = $this->query_dom("./people/person[@id=\"$id\"]/@handle");
-			}
-			if (isset ($id) && trim($id) != "" && $id != null && (id_in_cart($id)||$type==1)) {
-				$eMother = $this->dom->createElement("mother");
-				$eMother->setAttribute("hlink", $pers);
-				$eMother = $eFamily->appendChild($eMother);
-			}
-
-			foreach ($this->familyevents as $event) {
-				$this->create_event($eFamily, $frec, $event);
-			}
-
-			// Add the <child> element
-			$id = get_gedcom_value("CHIL", 1, $famrec);
-			$pers = $this->query_dom("./people/person[@id=\"$id\"]/@handle");
-
-			if (isset ($id) && isset ($pers) && (id_in_cart($id)||$type==1)) {
-				$eChild = $this->dom->createElement("child");
-				$eChild->setAttribute("hlink", $pers);
-				$eChild = $eFamily->appendChild($eChild);
-			}
-			if (($note = get_sub_record(1, "1 NOTE", $frec)) != null) {
-				$this->create_note($eFamily, $note, 1);
-			}
-
-			$num = 1;
-			while (($sourcerefRec = get_sub_record(1, "1 SOUR", $frec, $num)) != null) {
-				$this->create_sourceref($eFamily, $sourcerefRec, 1);
-				$num++;
-			}
-			$num = 1;
-			while (($nameSource = get_sub_record(1, "1 OBJE", $frec, $num)) != null) {
-
-				$this->create_mediaref($eFamily, $nameSource, 1);
-				$num++;
-			}
-	
-		}
-		if ($type != 0) return $eFamily;
+	function create_family($frec, $fid)
+	{
+		throw new exception("create_family - this function is not implemented");
 	}
 
 	/**
@@ -451,89 +342,9 @@ class GrampsExport {
 	* @param $eventABV - the event abbreviation in the GEDCOM (ie. SLGC, BAPL, ENDL)
 	* @param $eParent - The parent element the lds event is attached to
 	*/
-	function create_lds_event($indirec, $eventName, $eventABV, $eParent) {
-		global  $ePerson, $TEMPLE_CODES, $clipping;
-
-		if (($hasldsevent = get_sub_record(1, "1 " . $eventABV, $indirec)) != null) {
-
-			// Create <lds_ord> and attaches the type attribute
-			$eLdsEvent = $this->dom->createElement("lds_ord");
-			$eLdsEvent->setAttribute("type", $eventName);
-
-			if (($dateRec = get_sub_record(1, "2 DATE", $hasldsevent)) != null)
-				$this->create_date($eLdsEvent, $dateRec, 2);
-
-			// Create <temple>, this element is common with all lds ords
-			if (($temple = get_gedcom_value($eventABV . ":TEMP", 1, $indirec)) != null) {
-				$eTemple = $this->dom->createElement("temple");
-				$eTemple->setAttribute("val", $temple);
-				$eTemple = $eLdsEvent->appendChild($eTemple);
-			}
-
-			if (($place = get_gedcom_value($eventABV . ":PLAC", 1, $indirec)) != null) {
-				$hlink = $this->query_dom("./places/placeobj[@title=\"$place\"]/@handle");
-				if ($hlink == null) {
-					$hlink = $this->generateHandle();
-					$this->create_placeobj($place, $hlink);
-					$this->create_place($eLdsEvent, $hlink);
-				} else {
-					$this->create_place($eLdsEvent, $hlink);
-				}
-			}
-
-			// Check to see if the STAT of the ordinance is set and add it to the 
-			// <lds_ord> element
-			if (($stat = get_gedcom_value($eventABV . ":STAT", 1, $indirec)) != null) {
-				$eStatus = $this->dom->createElement("status");
-				$stat = get_gedcom_value($eventABV . ":STAT", 1, $indirec);
-				$eStatus->setAttribute("val", isset ($stat));
-				$eStatus = $eLdsEvent->appendChild($eStatus);
-			}
-			// If the event is a sealing
-			if ($eventABV == "SLGC") {
-				// Create an instance of person and look for their family record
-				$person = Person :: getInstance($clipping["id"]);
-				if($person != null)
-				{
-				$famId = $person->getChildFamilyIds();
-				$famrec = find_family_record($famId[0]);
-				$fid = $famId[0];
-				$handle = $this->query_dom("./families/family[@id=\"$fid\"]/@handle");
-				if ($handle == null && id_in_cart($fid)) {
-					/* 
-					 * If the family does not exist and their ID is in the clippings cart,
-					 * you must create the family before you can query them in the dom to get
-					 * their hlink. The hlink is generated when the person element is created.
-					 * This causes overhead creating objects that are never added to the XML file
-					 * perhaps there is some other way this can be done reducing the overhead?
-					 * 
-					 */
-					$this->create_family($famrec, $famId[0]);
-					$handle = $this->query_dom("./families/family[@id=\"$fid\"]/@handle");
-					$eFam = $this->dom->createElement("sealed_to");
-					$eFam->setAttribute("hlink", $handle);
-					$eFam = $eLdsEvent->appendChild($eFam);
-					$person = null;
-				} else
-					if ($handle != null && id_in_cart($fid)) {
-						$eFam = $this->dom->createElement("sealed_to");
-						$eFam->setAttribute("hlink", $handle);
-						$eFam = $eLdsEvent->appendChild($eFam);
-						$person = null;
-					}
-				}
-			}
-
-			if (($note = get_sub_record(1, "2 NOTE", $hasldsevent)) != null)
-				$this->create_note($eLdsEvent, $note, 2);
-
-			$num = 1;
-			while (($sourcerefRec = get_sub_record(2, "2 SOUR", $hasldsevent, $num)) != null) {
-				$this->create_sourceref($eLdsEvent, $sourcerefRec, 2);
-				$num++;
-			}
-			$eLdsEvent = $eParent->appendChild($eLdsEvent);
-		}
+	function create_lds_event($indirec, $eventName, $eventABV, $eParent)
+	{
+		throw new exception("create_lds_event - this function is not implemented");
 	}
 
 	/**
@@ -566,120 +377,10 @@ class GrampsExport {
 	  * @param string $personRec - the full INDI GEDCOM record of the person to be created
 	  * @param string $personID - the ID (I1, I2, I3) of the person the is being created 
 	  */
-	function create_person($personRec = "", $personID = "") {
-		global $pgv_lang;
-		$check = $this->query_dom("./people/person[@id=\"$personID\"]");
-		if ($check == null && id_in_cart($personID)) {
-			$ePerson = $this->dom->createElement("person");
-			$ePerson = $this->ePeople->appendChild($ePerson);
-			//$ePerson = $this->ePeople->appendChild($ePerson);
-
-			//set attributes for <person>
-			$ePerson->setAttribute("id", $personID);
-			$ePerson->setAttribute("handle", $this->generateHandle());
-			$ePerson->setAttribute("change", time());
-
-			$eGender = $this->dom->createElement("gender");
-			$eGender = $ePerson->appendChild($eGender);
-			if (($gender = get_gedcom_value("SEX", 1, $personRec)) != null)
-				$etGender = $this->dom->createTextNode($gender);
-			else
-				$etGender = $this->dom->createTextNode("U");
-
-			$num = 1;
-			$etGender = $eGender->appendChild($etGender);
-			while (($nameSource = get_sub_record(1, "1 OBJE", $personRec, $num)) != null) {
-
-				$this->create_mediaref($ePerson, $nameSource, 1);
-				$num++;
-			}
-			if (($nameRec = get_sub_record(1, "1 NAME", $personRec)) != null) {
-				//creates name
-				$eName = $this->dom->createElement("name");
-				$eName->setAttribute("type", "Birth Name");
-
-				$givn = get_gedcom_value("GIVN", 2, $nameRec);
-				$eFirstName = $this->dom->createElement("first");
-				if (!isset ($givn))
-					$givn = $pgv_lang["unknown"];
-				$etFirstName = $this->dom->createTextNode($givn);
-				$etFirstName = $eFirstName->appendChild($etFirstName);
-				$eFirstName = $eName->appendChild($eFirstName);
-
-				$surn = get_gedcom_value("SURN", 2, $nameRec);
-				$eLastName = $this->dom->createElement("last");
-				if (!isset ($surn))
-					$surn = $pgv_lang["unknown"];
-				$etLastName = $this->dom->createTextNode($surn);
-				$etLastName = $eLastName->appendChild($etLastName);
-				$eLastName = $eName->appendChild($eLastName);
-				$eName = $ePerson->appendChild($eName);
-
-				if (($nsfx = get_gedcom_value("NSFX", 2, $nameRec)) != null) {
-					$eSuffix = $this->dom->createElement("suffix");
-					$etSuffix = $this->dom->createTextNode($nsfx);
-					$etSuffix = $eSuffix->appendChild($etSuffix);
-					$eSuffix = $eName->appendChild($eSuffix);
-				}
-
-				//retrieves name prefix 
-				if (($npfx = get_gedcom_value("NPFX", 2, $nameRec)) != null) {
-					$eTitle = $this->dom->createElement("title");
-					$etTitle = $this->dom->createTextNode($npfx);
-					$etTitle = $eTitle->appendChild($etTitle);
-					$eTitle = $eName->appendChild($eTitle);
-				}
-
-				//retrieves the nickname
-				if (($nick = get_gedcom_value("NICK", 2, $nameRec)) != null) {
-					$eNick = $this->dom->createElement("nick");
-					$etNick = $this->dom->createTextNode($nick);
-					$etNick = $eNick->appendChild($etNick);
-					$eNick = $ePerson->appendChild($eNick);
-				}
-
-				//creates note
-				if (($nameNote = get_sub_record(2, "2 NOTE", $nameRec)) != null) {
-					$this->create_note($eName, $nameNote, 2);
-				}
-
-				//creates SourceRef
-				$num = 1;
-				while (($nameSource = get_sub_record(2, "2 SOUR", $nameRec, $num)) != null) {
-					$this->create_sourceref($eName, $nameSource, 2);
-					$num++;
-				}
-
-			}
-
-			foreach ($this->eventsArray as $event) {
-				$this->create_event($ePerson, $personRec, $event);
-			}
-
-			$this->create_lds_event($personRec, "baptism", "BAPL", $ePerson);
-			$this->create_lds_event($personRec, "endowment", "ENDL", $ePerson);
-			$this->create_lds_event($personRec, "sealed_to_parents", "SLGC", $ePerson);
-
-			/* This creates the family relation for a person, to link them to
-			 * the family they are a child in and to link them to the family
-			 * where they are a spouse. These relations will only be included
-			 * if the family is also in the clippings cart. Otherwise, the relations
-			 * are simply left out of the XML file.
-			 * 
-			 *
-			*create_fam_relation($ePerson,$personRec,"FAMC");
-			*create_fam_relation($ePerson,$personRec,"FAMS");		
-			*/
-			if (($note = get_sub_record(1, "1 NOTE", $personRec)) != null) {
-				$this->create_note($ePerson, $note, 1);
-			}
-			$num = 1;
-			while (($sourcerefRec = get_sub_record(1, "1 SOUR", $personRec, $num)) != null) {
-				$this->create_sourceref($ePerson, $sourcerefRec, 1);
-				$num++;
-			}
-		}
-
+	function create_person($personRec = "", $personID = "")
+	{
+		throw new exception("create_person - this function is not implemented");
+	
 	}
 	/**
 	  * Creates the Place Element and appends it to the Parent element given   
@@ -729,59 +430,57 @@ class GrampsExport {
 	 * 
 	 */
 	function create_media($mediaID, $mediaRec, $level = 1) {
-		global $file, $IncludeMedia;
-		//This if checks to see if both the include media is checked, and the media record is in the clippings cart.
-		if (id_in_cart($mediaID)) {
-			$object = $this->dom->createElement("object");
-			/*primary object elements and attributes*/
-			$object->setAttribute("id", $mediaID);
-			$object->setAttribute("handle", $this->generateHandle());
-			$object->setAttribute("change", time());
-			/*elements and attributes of the object element*/
-			/*File elements*/
-			$file_ = get_gedcom_value("FILE", 1, $mediaRec);
-			if (isset($IncludeMedia) && $IncludeMedia == "yes" && file_exists($file_))
-				$this->mediaFiles[] = $file_;
-			$fileNode = $object; /*for the new rng change $object with $this->dom->createElement("file");*/
-	
-			/*Source*/
-			$src = $this->dom->createAttribute("src");
-			$srcData = $this->dom->createTextNode($file_); //'.'.$file_
-			$srcData = $src->appendChild($srcData);
-			$src = $fileNode->appendChild($src);
-			/*MIME*/
-			$mime_ = get_gedcom_value("FORM", 1, $mediaRec);
-			$mime = $this->dom->createAttribute("mime");
-			if (empty ($mime_)) {
-				$path = pathinfo($file_);
+		global $file;
+		$object = $this->dom->createElement("object");
+		/*primary object elements and attributes*/
+		$object->setAttribute("id", $mediaID);
+		$object->setAttribute("handle", $this->generateHandle());
+		$object->setAttribute("change", time());
+		/*elements and attributes of the object element*/
+		/*File elements*/
+		$file_ = get_gedcom_value("FILE", 1, $mediaRec);
+		$this->mediaFiles[] = $file_;
+		$fileNode = $this->dom->createElement("file");
+
+		/*Source*/
+		$src = $this->dom->createAttribute("src");
+		$srcData = $this->dom->createTextNode($file_);
+		$srcData = $src->appendChild($srcData);
+		$src = $fileNode->appendChild($src);
+		/*MIME*/
+		$mime_ = get_gedcom_value("FORM", 1, $mediaRec);
+		$mime = $this->dom->createAttribute("mime");
+		if (empty ($mime_)) {
+			$path = pathinfo($file_);
+			if(!isset($path["extension"]))
+				$mime_ = "unknown_file_extension";
+			else
 				$mime_ = $path["extension"];
-			}
-			$mimeData = $this->dom->createTextNode($mime_);
-			$mimeData = $mime->appendChild($mimeData);
-			$mime = $fileNode->appendChild($mime);
-			/*DESCRIPTION*/
-			$description_ = get_gedcom_value("TITL", 1, $mediaRec);
-			$description = $this->dom->createAttribute("description");
-			$descriptionData = $this->dom->createTextNode($description_);
-			$descriptionData = $description->appendChild($descriptionData);
-			$description = $fileNode->appendChild($description);
-			/*fileNode elements*/
-			/*For the new rng just uncomment
-			$fileNode = $object->appendChild($fileNode);
-	
-			$fileNode = $this->dom->createElement("file");
-			*/
-			if (($note = get_sub_record(1, "1 NOTE", $mediaRec)) != null) {
-				$this->create_note($object, $note, 1);
-			}
-			$num = 1;
-			while (($nameSource = get_sub_record($level, $level . " SOUR", $mediaRec, $num)) != null) {
-				$this->create_sourceref($object, $nameSource, 1);
-				$num++;
-			}
-			$object = $this->eObject->appendChild($object);
-			//find_highlighted_media();//find the primary picture for the gedcom record
 		}
+		$mimeData = $this->dom->createTextNode($mime_);
+		$mimeData = $mime->appendChild($mimeData);
+		$mime = $fileNode->appendChild($mime);
+		/*DESCRIPTION*/
+		$description_ = get_gedcom_value("TITL", 1, $mediaRec);
+		$description = $this->dom->createAttribute("description");
+		$descriptionData = $this->dom->createTextNode($description_);
+		$descriptionData = $description->appendChild($descriptionData);
+		$description = $fileNode->appendChild($description);
+		/*fileNode elements*/
+		$fileNode = $object->appendChild($fileNode);
+
+		$fileNode = $this->dom->createElement("file");
+		if (($note = get_sub_record(1, "1 NOTE", $mediaRec)) != null) {
+			$this->create_note($object, $note, 1);
+		}
+		$num = 1;
+		while (($nameSource = get_sub_record($level, $level . " SOUR", $mediaRec, $num)) != null) {
+			$this->create_sourceref($object, $nameSource, 1);
+			$num++;
+		}
+		$object = $this->eObject->appendChild($object);
+		//find_highlighted_media();//find the primary picture for the gedcom record
+
 	}
 	/**
 	  * Creates the SourceRef element and appends it to the Parent Element.  If the actual Source has not
@@ -791,47 +490,9 @@ class GrampsExport {
 	  * @param string $sourcerefRec - the record containing the reference to a Source
 	  * @param int $level - The GEDCOM line level where the SOUR tag may be found
 	  */
-	function create_sourceref($eParent, $sourcerefRec, $level) {
-		if (($sourceID = get_gedcom_value("SOUR", $level, $sourcerefRec)) != null) {
-			if (id_in_cart($sourceID)) {
-				$eSourceRef = $this->dom->createElement("sourceref");
-				$eSourceRef = $eParent->appendChild($eSourceRef);
-				if (($sourceHlink = $this->query_dom("./sources/source[@id = \"$sourceID\"]/@handle")) == null)
-					$this->create_source($sourceID, find_record_in_file($sourceID));
-
-				$eSourceRef->setAttribute("hlink", $this->query_dom("./sources/source[@id = \"$sourceID\"]/@handle"));
-
-				if (($page = get_gedcom_value("SOUR:PAGE", $level, $sourcerefRec)) != null) {
-					$eSPage = $this->dom->createElement("spage");
-					$etSPage = $this->dom->createTextNode($page);
-					$etSPage = $eSPage->appendChild($etSPage);
-					$eSPage = $eSourceRef->appendChild($eSPage);
-				}
-
-				if (($comments = get_gedcom_value("SOUR:NOTE", $level, $sourcerefRec)) != null) {
-					$eSComments = $this->dom->createElement("scomments");
-					$etSComments = $this->dom->createTextNode($comments);
-					$etSComments = $eSComments->appendChild($etSComments);
-					$eSComments = $eSourceRef->appendChild($eSComments);
-				}
-
-				if (($text = get_gedcom_value("SOUR:TEXT", $level, $sourcerefRec)) != null) {
-					$num = 1;
-					while (($cont = get_gedcom_value("SOUR:TEXT:CONT", $level, $sourcerefRec, $num)) != null) {
-						$text .= $cont;
-						$num++;
-					}
-					$eSText = $this->dom->createElement("stext");
-					$etSText = $this->dom->createTextNode($text);
-					$etSText = $eSText->appendChild($etSText);
-					$eSText = $eSourceRef->appendChild($eSText);
-				}
-
-				if (($dateRec = get_sub_record(1, ($level +1) . " DATE", $sourcerefRec)) != null) {
-					$this->create_date($eSourceRef, $dateRec, $level +1);
-				}
-			}
-		}
+	function create_sourceref($eParent, $sourcerefRec, $level)
+	{
+		throw new exception("create_sourceref - this function is not implemented");
 	}
 
 	/**
@@ -840,7 +501,7 @@ class GrampsExport {
 	  * @param string $sourceID - the ID of the source to be created
 	  * @param string $sourceRec - the entire GEDCOM record containing the Source
 	  */
-	function create_source($sourceID, $sourceRec, $level = 1) {
+function create_source($sourceID, $sourceRec, $level = 1) {
 		$eSource = $this->dom->createElement("source");
 		$eSource->setAttribute("id", $sourceID);
 		$eSource->setAttribute("handle", $this->generateHandle());
@@ -935,17 +596,6 @@ class GrampsExport {
 			print "Validation: <em style=\"color:red;\"><h1> FAILED against the .RNG</h1></em>";
 	}
 
-	function items_in_cart($elementName) {
-		$passed = true;
-		$people = $this->dom->getElementsByTagName($elementName);
-		foreach ($people as $person) {
-			$id = $person->attributes->item(0)->nodeValue;
-			if (!id_in_cart($id)) {
-				$passed = false;
-			}
-		}
-		return $passed;
-	}
 //
 //	/**
 //	 * This function is not implemented yet. GRAMPS can import the XML file gzipped 

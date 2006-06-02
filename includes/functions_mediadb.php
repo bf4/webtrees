@@ -1325,6 +1325,7 @@ function show_media_form($pid, $action="newentry", $filename="", $linktoid="", $
 	if ($action=="newentry") print $pgv_lang["add_media"];
 	else print $pgv_lang["edit_media"];
 	print "</td></tr>";
+	print "<tr><td><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /></td></tr>";
 	if ($linktoid=="new" || ($linktoid=="" && $action!="update")) {
 		print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
 		print_help_link("add_media_linkid", "qm");
