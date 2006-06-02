@@ -403,6 +403,10 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 					$fact = trim($ffmatch[1]);
 					$details = trim($ffmatch[2]);
 				}
+			else {
+				$fact="";
+				$details="";
+			}
 			if (($fact!="EVEN")&&($fact!="FACT")) {
 				print "<span class=\"details_label\">";
 				if (isset($factarray[$fact])) print $factarray[$fact];
@@ -2418,7 +2422,7 @@ function print_fact_place($factrec, $anchor=false, $sub=false, $lds=false) {
 				$map_lati=trim(strtr($map_lati,"NSEW,°"," - -. ")); // S5,6789 ==> -5.6789
 				$map_long=trim(strtr($map_long,"NSEW,°"," - -. ")); // E3.456° ==> 3.456
 				print " <a target=\"_BLANK\" href=\"http://www.mapquest.com/maps/map.adp?searchtype=address&formtype=latlong&latlongtype=decimal&latitude=".$map_lati."&longitude=".$map_long."\"><img src=\"images/mapq.gif\" border=\"0\" alt=\"Mapquest &copy;\" title=\"Mapquest &copy;\" /></a>";
-				print " <a target=\"_BLANK\" href=\"http://maps.google.com/maps?spn=.2,.2&ll=".$map_lati.",".$map_long."\"><img src=\"images/bubble.gif\" border=\"0\" alt=\"Google Maps &copy;\" title=\"Google Maps &copy;\" /></a>";
+				print " <a target=\"_BLANK\" href=\"http://maps.google.com/maps?q=".$map_lati.",".$map_long."\"><img src=\"images/bubble.gif\" border=\"0\" alt=\"Google Maps &copy;\" title=\"Google Maps &copy;\" /></a>";
 				print " <a target=\"_BLANK\" href=\"http://www.multimap.com/map/browse.cgi?lat=".$map_lati."&lon=".$map_long."&scale=&icon=x\"><img src=\"images/multim.gif\" border=\"0\" alt=\"Multimap &copy;\" title=\"Multimap &copy;\" /></a>";
 				print " <a target=\"_BLANK\" href=\"http://www.terraserver.com/imagery/image_gx.asp?cpx=".$map_long."&cpy=".$map_lati."&res=30&provider_id=340\"><img src=\"images/terrasrv.gif\" border=\"0\" alt=\"TerraServer &copy;\" title=\"TerraServer &copy;\" /></a>";
 			}

@@ -44,7 +44,7 @@ $NPFX_accept = array("Adm", "Amb", "Brig", "Can", "Capt", "Chan", "Chapln", "Cmd
 $SPFX_accept = array("al", "da", "de", "den", "dem", "der", "di", "du", "el", "la", "van", "von");
 $NSFX_accept = array("Jr", "Sr", "I", "II", "III", "IV", "MD", "PhD");
 $FILE_FORM_accept = array("avi", "bmp", "gif", "jpeg", "mp3", "ole", "pcx", "png", "tiff", "wav");
-$emptyfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","BAPL","CONL","ENDL","SLGC","EVEN","MARR","SLGS","MARL","ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARS","CHAN","_SEPR","RESI", "DATA", "MAP");
+$emptyfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","BAPL","CONL","ENDL","SLGC","EVEN","MARR","SLGS","MARL","ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARS","CHAN","_SEPR","RESI", "DATA", "MAP", "_HOL", "_NMR");
 $templefacts = array("SLGC","SLGS","BAPL","ENDL","CONL");
 $nonplacfacts = array("ENDL","NCHI","SLGC","SLGS");
 $nondatefacts = array("ABBR","ADDR","AFN","AUTH","EMAIL","FAX","NAME","NCHI","NOTE","OBJE","PHON","PUBL","REFN","REPO","SEX","SOUR","SSN","TEXT","TITL","WWW","_EMAIL");
@@ -311,7 +311,10 @@ function check_gedcom($gedrec, $chan=true) {
 	if ($ct==0) {
 		print "ERROR 20: Invalid GEDCOM 5.5 format.\n";
 		AddToChangeLog("ERROR 20: Invalid GEDCOM 5.5 format.->" . getUserName() ."<-");
-		if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>\n";
+		if ($GLOBALS["DEBUG"]) {
+			print "<pre>$gedrec</pre>\n";
+			print debug_print_backtrace();
+		}
 		return false;
 	}
 	$gedrec = trim($gedrec);
@@ -1181,7 +1184,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
  *
  * @param string $tag		Gedcom tag name
  */
-function print_add_layer($tag, $level=2) {
+function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $MEDIA_DIRECTORY, $TEXT_DIRECTION;
 	global $gedrec;
@@ -1191,6 +1194,7 @@ function print_add_layer($tag, $level=2) {
 		print_help_link("edit_add_SOUR_help", "qm");
 		print "<br />";
 		print "<div id=\"newsource\" style=\"display: none;\">\n";
+		if ($printSaveButton) print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
 		print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 		// 2 SOUR
 //		$source = get_first_tag($level, "SOUR", $gedrec);
@@ -1219,6 +1223,7 @@ function print_add_layer($tag, $level=2) {
 		print_help_link("edit_add_ASSO_help", "qm");
 		print "<br />";
 		print "<div id=\"newasso\" style=\"display: none;\">\n";
+		if ($printSaveButton) print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
 		print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 		// 2 ASSO
 		add_simple_tag(($level)." ASSO @");
@@ -1235,6 +1240,7 @@ function print_add_layer($tag, $level=2) {
 		print_help_link("edit_add_NOTE_help", "qm");
 		print "<br />\n";
 		print "<div id=\"newnote\" style=\"display: none;\">\n";
+		if ($printSaveButton) print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
 		print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 		// 2 NOTE
 		add_simple_tag(($level)." NOTE ".$text);
@@ -1246,6 +1252,7 @@ function print_add_layer($tag, $level=2) {
 		print_help_link("add_media_help", "qm");
 		print "<br />";
 		print "<div id=\"newobje\" style=\"display: none;\">\n";
+		if ($printSaveButton) print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
 		print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 		add_simple_tag($level." OBJE @@");
 		print "</table></div>";

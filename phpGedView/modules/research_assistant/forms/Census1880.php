@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: Census1880.php,v 1.1 2006/04/06 20:12:35 yalnifj Exp $
+ * @version $Id: Birth_Information.php 200 2005-11-09 20:37:48Z jporter $
  * @author Joey DiAna
  */
  //-- security check, only allow access from module.php
@@ -32,29 +32,6 @@ if (strstr($_SERVER["SCRIPT_NAME"],"Census1880.php")) {
 require_once "ra_form.php";
 require_once "includes/functions_edit.php";
 
-function getSources(){
-	global $TBLPREFIX;
-		$sql = 	"SELECT s_name, s_id FROM ".$TBLPREFIX."sources WHERE s_id IN " .
-				"(SELECT ts_s_id FROM ".$TBLPREFIX."tasksource WHERE ts_t_id='$_REQUEST[taskid]')";
-		$res = dbquery($sql);
-		$out = "";
-		while($sources =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-			$out .= '<option value="'.$sources["s_id"].'">'.$sources["s_name"];
-		}
-		return $out;
-	}
-	function getPeople(){
-		global $TBLPREFIX;
-		$sql = 	"SELECT i_name, i_id, i_file FROM ".$TBLPREFIX."individuals WHERE i_id IN " .
-				"(SELECT it_i_id FROM ".$TBLPREFIX."individualtask WHERE it_t_id='$_REQUEST[taskid]')";
-		$res = dbquery($sql);
-		$out = "";
-		while($people =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-			$out .= '<option value="'.$people["i_id"]."#".$people["i_file"].'">'.$people["i_name"];
-		}
-		return $out;
-	}
-	
 class Census1880 extends ra_form {
 
     function header($action, $tableAlign, $heading) {

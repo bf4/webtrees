@@ -1,4 +1,4 @@
-thi<?php
+<?php
 /**
  * Edit Privacy Settings
  *
@@ -279,7 +279,7 @@ if ($action=="update") {
 		if (!empty($v_new_person_facts_access_ID)) $person_privacy_text .= "\$person_facts['$v_new_person_facts_access_ID']['$v_new_person_facts_abbr']['$v_new_person_facts_choice'] = ".$v_new_person_facts_acess_option.";\n";
 	}
 	$configtext = $configtext_beg . $person_privacy_text . $configtext_end;
-	//
+	
 	$PRIVACY_MODULE = $INDEX_DIRECTORY.$GEDCOM."_priv.php";
 	$fp = fopen($PRIVACY_MODULE, "wb");
 	if (!$fp) {

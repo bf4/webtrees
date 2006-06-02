@@ -562,7 +562,8 @@ Following is a more detailed description of each table:
 
   pgv_blocks:
     b_id INT(11)           # Record ID
-    b_username VARCHAR(100) # User name whom block belongs to
+    b_username 			   # User name whom block belongs to
+    		   VARCHAR(100)#
     b_location VARCHAR(30) # Location of the block.  
                            #   Main column or right column
     b_order INT(11)        # Position of the block within the column
@@ -571,7 +572,8 @@ Following is a more detailed description of each table:
 
   pgv_favorites:
     fv_id INT(11)          # Record ID
-    fv_username VARCHAR(30) # User name whom the favorite belongs to
+    fv_username  		   # User name whom the favorite belongs to
+    		   VARCHAR(30) #
     fv_gid VARCHAR(10)     # ID of the favorite
     fv_type VARCHAR(10)    # Type of favorite (currently only INDI)
     fv_file VARCHAR(100)   # File that this favorite belongs to
@@ -590,7 +592,7 @@ Following is a more detailed description of each table:
             
   pgv_news:
     n_id INT(11)           # Unique identifier
-    n_username VARCHAR(100) # User name or GEDCOM the News item belongs to
+    n_username VARCHAR(100)# User name or GEDCOM the News item belongs to
     n_date INT(11)         # Time stamp of last update
     n_title VARCHAR(255)   # Title of the article
     n_text TEXT            # Body text of the article
@@ -606,11 +608,30 @@ Following is a more detailed description of each table:
                            #   a state or province, and a state or province
                            #   would have a country as parent.
     p_file INT             # ID number of the GEDCOM file the record is from
+    p_std_soundex 	       # Standard soundex code for searching by place.
+    		VARCHAR(255)   #
+    p_dm_soundex       	   # Daitch-Mokotoff soundex code for searching by
+    		VARCHAR(255)   #   place.
 
   pgv_placelinks:
     pl_p_id INT(11)        # Unique identifier
     pl_gid VARCHAR(30)     # Family or individual ID referencing this place
     pl_file INT            # ID number of the GEDCOM file the record is from
+    
+  pgv_soundex:
+  	sx_i_id	VARCHAR(255)   # Unique identifier (Individuals table)
+  	sx_n_id	VARCHAR(255)   # Unique identifier (Names table)
+  	sx_file	INT			   # Unique identifier (GEDCOM file)
+    sx_fn_std_soundex      # Standard first name soundex code. Used for
+            VARCHAR(255)   #   soundex searching.
+   	sx_fn_dm_soundex       # Soundex code for international first names.
+   			VARCHAR(255)   #   This uses the Daitch-Mokotoff soundex method,
+   						   #   which is better suited for them.
+    sx_ln_std_soundex 	   # Standard last name soundex code. Used for
+    		VARCHAR(255)   #   soundex searching.
+    sx_ln_dm_soundex 	   # Soundex code for international last names. This
+    		VARCHAR(255)   #   uses the Daitch-Mokotoff soundex method, which 
+    					   #   is better suited for them.
 
   pgv_users:
     u_username VARCHAR(30) # User name

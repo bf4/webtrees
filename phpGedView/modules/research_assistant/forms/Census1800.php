@@ -34,10 +34,10 @@ require_once "includes/functions_edit.php";
 
 class Census1800 extends ra_form {
 
-    function header($action, $tableAlign, $heading) {
+    function header($action, $tableAlign, $heading, $showchoose = false) {
     	global $pgv_lang;
     	$out = "";
-    	if (!isset($_REQUEST['func'])) {
+    	if ($showchoose) {
 	    	//Row Form
 	    	$out = '<form action="module.php" method="post">';
 	    	$out .= '<input type="hidden" name="mod" value="research_assistant" />' .
@@ -118,7 +118,7 @@ class Census1800 extends ra_form {
         $out .= '<td class="descriptionbox">'.$pgv_lang["call/url"].'</td><td class="optionbox"><input name="CallNumberURL" type="text" size="27" value="'.htmlentities($callno).'"></td>';
         $out .= '<td class="descriptionbox">'.$pgv_lang["enumDate"].'</td><td class="optionbox"><input name="EnumerationDate" type="text" size="27" value="'.htmlentities($date).'"></td></tr>';
         $out .= '<tr><td class="descriptionbox">'.$pgv_lang["county"].'</td><td class="optionbox"><input name="county" type="text" size="27" value="'.htmlentities($county).'"></td>';
-        $out .= '<td class="descriptionbox">'.$pgv_lang["city"].'</td><td class="optionbox"><input name="city" type="text" size="10" value="'.htmlentities($city).'"></td>';
+        $out .= '<td class="descriptionbox">'.$pgv_lang["city"].'</td><td class="optionbox"><input name="city" type="text" size="27" value="'.htmlentities($city).'"></td>';
         $out .=	'<td class="descriptionbox">'.$pgv_lang["page"].'</td><td class="optionbox"><input name="page" type="text" size="5" value="'.htmlentities($page).'"></td></tr>';
 //        Next Table
         $out .= '<tr><td colspan="6"><table align="center" id="inputTable">';
@@ -187,7 +187,7 @@ class Census1800 extends ra_form {
     }
 
     function display_form() {
-        $out = $this->header("module.php?mod=research_assistant&form=Census1800&action=func&func=step2&taskid=$_REQUEST[taskid]", "center", "1800 United States Federal Census");
+        $out = $this->header("module.php?mod=research_assistant&form=Census1800&action=func&func=step2&taskid=$_REQUEST[taskid]", "center", "1800 United States Federal Census", true);
         $out .= $this->sourceCitationForm(5);
         //$out .= $this->content();
         $out .= $this->footer();

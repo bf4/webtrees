@@ -495,7 +495,7 @@ function get_family_add_descriptor($fid) {
 	$parents = find_parents($fid);
 	if ($parents["HUSB"]) {
 		if (displayDetailsById($parents["HUSB"]) || showLivingNameById($parents["HUSB"]))
-//			$hname = get_sortable_add_name($parents["HUSB"]);
+//			$hname = get_sortable_add_name($parents["HUSB"]); //----- MA @@@@@
 			$hname = get_add_person_name($parents["HUSB"]);
 		else $hname = $pgv_lang["private"];
 	}
@@ -1018,6 +1018,7 @@ function DMSoundex($name, $option = "") {
 	}
 	
 	// Load the previously saved cachefile and return. Keep the cache global!
+	
 	if ($option == "opencache") {
 		$cachename = $INDEX_DIRECTORY."DM".date("mdHis", filemtime($fname)).".dat";
 		if (file_exists($cachename)) {
@@ -1030,6 +1031,7 @@ function DMSoundex($name, $option = "") {
 			return;
 		}
 		else {
+ 			
 			$dmsoundexlist = array();
 			// clean up old cache
 			$handle = opendir($INDEX_DIRECTORY);
@@ -1151,8 +1153,12 @@ function DMSoundex($name, $option = "") {
 		// and check every code in the result.
 		// codes are stored separately in array elements, to keep
 		// distinction between 6 and 66.
+		
 		while($j<count($result[$i])) {
-			if (($result[$i][$j-1] != $result[$i][$j]) && ($result[$i][$j] != -1)) {
+	
+//  Zeroes to remain in the Soundex result
+			if ((($result[$i][$j-1] != $result[$i][$j]) && ($result[$i][$j] != -1)) || $result[$i][$j] == 0) {
+		
 				$res .= $result[$i][$j];
 			}
 			$j++;

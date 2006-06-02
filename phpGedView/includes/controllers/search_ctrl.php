@@ -652,6 +652,11 @@ $manual_save = true;
 		write_file();
 	}
 	
+	/**
+	 * Retrieves a list of places and performs a soundex search on them.
+	 * 
+	 * Assigns the results to the global printname[]
+	 */
 	function Place_Search()
 	{
 		global $TBLPREFIX, $GEDCOM, $GEDCOMS, $DBQUERY;
@@ -660,6 +665,7 @@ $manual_save = true;
 					
 					$placearr = explode(",", $this->place);
 					
+					//Determines type of soundex and performs it
 					foreach($placearr as $place)
 					{
 						if($this->soundex == "DaitchM")
@@ -678,12 +684,12 @@ $manual_save = true;
 					}
 					
 					// Strip the extra 'OR' at the end of the sql query
-					
 					$sql = substr($sql, 0, strlen($sql) - 3);
 					$sql .= ")";
 					echo $sql;
 					$res = dbquery($sql);
 					
+					//Stores results in printname[]
 					$this->printname = array();
 					while($row = $res->fetchRow())
 					{	
@@ -770,12 +776,10 @@ $manual_save = true;
 				if ((!empty ($this->lastname)) && ($this->soundex == "DaitchM"))
 				{
 					$arr2 = DMsoundex($this->lastname);
-					$lastName = $arr2[0];
 				}
 				if ((!empty ($this->lastname)) && ($this->soundex == "Russell"))
 				{
 					$arr2 = soundex($this->lastname);
-					$lastName = $arr2;
 				}
 				$farr = array ();
 				if (!empty ($this->firstname)) {
@@ -798,6 +802,8 @@ $manual_save = true;
 				$this->printfamname = array ();
 				
 				global $TBLPREFIX;
+				$firstName = "";
+				$lastName = "";
 				
 				if(!empty($this->place) && empty($this->firstname) && empty($this->lastname))
 				{
@@ -811,6 +817,17 @@ $manual_save = true;
 				{
 					$firstName .= "%" . $name;
 				}
+				
+				if (!empty($arr2))
+				{
+				foreach($arr2 as $name);
+				{
+					$lastName .= "%" . $name;
+				}
+				}
+				
+				$firstName .= "%";
+				$lastName .= "%";
 				
 				$sql = "SELECT i_id, i_gedcom, sx_n_id, i_file FROM ".$TBLPREFIX."soundex, ".$TBLPREFIX."individuals WHERE sx_i_id = i_id AND ";
 				

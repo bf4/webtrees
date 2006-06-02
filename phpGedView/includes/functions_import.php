@@ -43,7 +43,7 @@ function import_record($indirec, $update=false) {
 	global $DBCONN, $gid, $type, $indilist,$famlist,$sourcelist,$otherlist, $TOTAL_QUERIES, $prepared_statement;
 	global $TBLPREFIX, $GEDCOM_FILE, $FILE, $pgv_lang, $USE_RIN, $CREATE_GENDEX, $gdfp, $placecache;
 	global $ALPHABET_upper, $ALPHABET_lower, $place_id, $WORD_WRAPPED_NOTES, $GEDCOMS, $media_count;
-	global $MAX_IDS, $fpnewged, $GEDCOM, $USE_RTL_FUNCTIONS;
+	global $MAX_IDS, $fpnewged, $GEDCOM, $USE_RTL_FUNCTIONS, $GENERATE_UIDS;
 
 	$FILE = $GEDCOM;
 
@@ -65,7 +65,7 @@ function import_record($indirec, $update=false) {
 	}
 	
 	//-- check for a _UID, if the record doesn't have one, add one
-	if ($type!="HEAD" && $type!="TRLR" && preg_match("/1 _UID /", $indirec)==0) {
+	if ($GENERATE_UIDS && $type!="HEAD" && $type!="TRLR" && preg_match("/1 _UID /", $indirec)==0) {
 		$indirec = trim($indirec)."\r\n1 _UID ".uuid();
 	}
 //-- uncomment to replace existing _UID, normally we want them to stay the same
@@ -175,14 +175,13 @@ function import_record($indirec, $update=false) {
 						Character_Substitute($fn);
 					
 						$firstName_std_soundex .= ":" . soundex($fn);
-						$firstName_dm_soundex .= ":" . DMSoundex($fn);
+						$firstName_dm_soundex .= ":" . implode(":", DMSoundex($fn));
 					}
 				}
 				
 				
-				$sql .= "'".$DBCONN->escapeSimple(substr($firstName_std_soundex, 1))."'," .
-						// DMSoundex returns an array with one index for some reason
-						"'".$DBCONN->escapeSimple(substr($firstName_dm_soundex[0], 1))."',";
+				$sql .= "'".$DBCONN->escapeSimple(substr($firstName_std_soundex,1))."'," .
+						"'".$DBCONN->escapeSimple(substr($firstName_dm_soundex,1))."',";
 			}
 			else
 			{
@@ -192,14 +191,18 @@ function import_record($indirec, $update=false) {
 			
 			if(trim($lastName) != "@N.N.")
 			{
+				$lnames = explode(" ", $lastName);
+				$lastName_std_soundex = "";
+				$lastName_dm_soundex = "";
+				
+				foreach($lnames as $ln)
 				Character_Substitute($lastName);
 
-				$lastName_std_soundex = soundex($lastName);
-				$lastName_dm_soundex = DMSoundex($lastName);
+				$lastName_std_soundex .= ":" . soundex($ln);
+				$lastName_dm_soundex .= ":" . implode(":", DMSoundex($ln));
 				
-				$sql .= "'".$DBCONN->escapeSimple($lastName_std_soundex)."'," .
-						// DMSoundex returns an array with one index for some reason
-						"'".$DBCONN->escapeSimple($lastName_dm_soundex[0])."'"; 
+				$sql .= "'".$DBCONN->escapeSimple(substr($lastName_std_soundex,1))."'," .
+						"'".$DBCONN->escapeSimple(substr($lastName_dm_soundex,1))."'"; 
 			}
 			else
 			{
@@ -345,8 +348,6 @@ function update_places($gid, $indirec, $update=false) {
 		$secalp = array_reverse($places);
 		$parent_id = 0;
 		$level = 0;
-		
-		
 		
 		foreach($secalp as $indexval => $place) {
 			$place = trim($place);
@@ -749,6 +750,7 @@ function setup_database() {
 
 	$data = $DBCONN->getListOf('tables');
 	foreach($data as $indexval => $table) {
+		if (strpos($table, $TBLPREFIX) == 0) {
 		switch(substr($table, strlen($TBLPREFIX))) {
 			case "individuals":
 				$has_individuals = true;
@@ -856,6 +858,7 @@ function setup_database() {
 				break;
 		}
 	}
+	}
 
 	//---------- Upgrade the database
 	if (!$has_individuals || $sqlite && (!$has_individuals_rin || !$has_individuals_letter || !$has_individuals_surname)) {
@@ -893,11 +896,11 @@ function setup_database() {
 	} else { // check columns in the table
 		if ($has_families_name) {
 			$sql = "ALTER TABLE ".$TBLPREFIX."families DROP column f_name";
-			$res = dbquery($sql);print "f_name dropped<br/>\n";
+			$res = dbquery($sql);//print "f_name dropped<br/>\n";
 		}
 		if (!$has_families_numchil) {
 			$sql = "ALTER TABLE ".$TBLPREFIX."families ADD f_numchil INT";
-			$res = dbquery($sql);print "f_numchil added<br/>\n";
+			$res = dbquery($sql);//print "f_numchil added<br/>\n";
 		}
 	}
 	if (!$has_places || $sqlite && ($has_places_gid || !$has_places_std_soundex || !$has_places_dm_soundex)) {
@@ -905,15 +908,15 @@ function setup_database() {
 	} else { // check columns in the table
 		if ($has_places_gid) {
 			$sql = "ALTER TABLE ".$TBLPREFIX."places DROP column p_gid";
-			$res = dbquery($sql);print "p_gid dropped<br/>\n";
+			$res = dbquery($sql);//print "p_gid dropped<br/>\n";
 		}
  		if (!$has_places_std_soundex) {
 			$sql = "ALTER TABLE ".$TBLPREFIX."places ADD p_std_soundex VARCHAR(255)";	
-			$res = dbquery($sql);print "p_std_soundex added<br/>\n";
+			$res = dbquery($sql);//print "p_std_soundex added<br/>\n";
 		}
  		if (!$has_places_dm_soundex) {
 			$sql = "ALTER TABLE ".$TBLPREFIX."places ADD p_dm_soundex VARCHAR(255)";	
-			$res = dbquery($sql);print "p_dm_soundex added<br/>\n";
+			$res = dbquery($sql);//print "p_dm_soundex added<br/>\n";
 		}
 	}
 	if (!$has_placelinks) {
@@ -924,7 +927,7 @@ function setup_database() {
 	} else { // check columns in the table
 		if (!$has_names_surname) {
 			$sql = "ALTER TABLE ".$TBLPREFIX."names ADD n_surname VARCHAR(100)";
-			$res = dbquery($sql);print "n_surname added<br/>\n";
+			$res = dbquery($sql);//print "n_surname added<br/>\n";
 
 			if (DB::isError($res)) {
 				exit;
@@ -934,7 +937,7 @@ function setup_database() {
 		}
 		if (!$has_names_type) {
 			$sql = "ALTER TABLE ".$TBLPREFIX."names ADD n_type VARCHAR(10)";
-			$res = dbquery($sql);print "n_type added<br/>\n";
+			$res = dbquery($sql);//print "n_type added<br/>\n";
 		}
 	}
 	if (!$has_dates || stristr($DBTYPE, "mysql") === false && // AFTER keyword only in mysql
@@ -943,11 +946,11 @@ function setup_database() {
 	} else { // check columns in the table
 		if (!$has_dates_mon) {
 			$sql = "ALTER TABLE ".$TBLPREFIX."dates ADD d_mon INT AFTER d_month";
-			$res = dbquery($sql);print "d_mon added<br/>\n";
+			$res = dbquery($sql);//print "d_mon added<br/>\n";
 		}
 		if (!$has_dates_datestamp) {
 			$sql = "ALTER TABLE ".$TBLPREFIX."dates ADD d_datestamp INT AFTER d_year";
-			$res = dbquery($sql);print "d_datestamp added<br/>\n";
+			$res = dbquery($sql);//print "d_datestamp added<br/>\n";
 		}
 	}
 	if (!$has_media) {
@@ -967,7 +970,7 @@ function setup_database() {
 		create_other_table();
 	}
 	if (!$has_sources) {
-		create_other_table();
+		create_sources_table();
 	}
 	if(!$has_soundex) {
 		create_soundex_table();

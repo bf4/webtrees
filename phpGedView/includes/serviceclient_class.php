@@ -376,7 +376,7 @@ if ($this->DEBUG) print "In UpdateFamily()<br />";
 	 * This mergest the the two familys together
 	 */
 	 function MergeForUpdateFamily($Family1,$Family2,$Familylist,&$FamilyListReturn){
-		global $indilist, $famlist;
+		global $indilist, $famlist, $pgv_changes, $GEDCOM;
 if ($this->DEBUG) print "In MergeForUpdateFamily()<br />";
 		include_once('includes/functions_edit.php');
 
@@ -384,7 +384,8 @@ if ($this->DEBUG) print "In MergeForUpdateFamily()<br />";
 		//print_r($Familylist);
 		$FamilyListReturn=$Familylist;
 
-		$famrec1 = find_family_record($Family1);
+		if (isset($pgv_changes[$Family1."_".$GEDCOM])) $famrec1 = find_record_in_file($Family1);
+		else $famrec1 = find_family_record($Family1);
 
 		$ct = preg_match("/(\w+):(.+)/", $Family2, $match);
 		if ($ct>0) {
@@ -393,7 +394,7 @@ if ($this->DEBUG) print "In MergeForUpdateFamily()<br />";
 			$famrec2 = $this->getRemoteRecord($remoteid);
 		}
 		else return $famrec1;
-
+		
 		// Creating the familys from the xref
 		$family1 = Family::getInstance($Family1);
 		$family2 = new Family($famrec2);
@@ -476,7 +477,7 @@ if ($this->DEBUG) print "In MergeForUpdateFamily()<br />";
 		if(empty($father1)){
 			if(!empty($father2)){
 				$father1=$father2;
-				$famrec1 .="\r\n1 HUSB @".$father1-getXref()."@";
+				$famrec1 .="\r\n1 HUSB @".$father1->getXref()."@";
 				//print "<br/> adding for fahter ".$father1->getXref();
 				$famlist[$family1->getXref()]['gedcom']=$famrec1;
 				replace_gedrec($family1->getXref(), $famrec1);
@@ -498,7 +499,7 @@ if ($this->DEBUG) print "In MergeForUpdateFamily()<br />";
 		if(empty($mother1)){
 			if(!empty($mother2)){
 				$mother1=$mother2;
-				$famrec1 .="\r\n1 WIFE @".$mother1-getXref()."@";
+				$famrec1 .="\r\n1 WIFE @".$mother1->getXref()."@";
 				//print "<br/> adding for mother ".$mother1->getXref();
 				$famlist[$family1->getXref()]['gedcom']=$famrec1;
 				replace_gedrec($family1->getXref(), $famrec1);
