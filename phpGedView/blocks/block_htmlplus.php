@@ -34,7 +34,8 @@ $PGV_BLOCKS['print_htmlplus_block']['descr']		= 'htmlplus_block_descr';
 $PGV_BLOCKS['print_htmlplus_block']['canconfig']	= true;
 $PGV_BLOCKS['print_htmlplus_block']['config']		= array(
 	'title'=>'',
-	'html'=>"{$pgv_lang['html_block_sample_part1']} <img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" alt=\"{$pgv_lang['config_block']}\" /> {$pgv_lang['html_block_sample_part2']}"
+	'html'=>"{$pgv_lang['html_block_sample_part1']} <img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" alt=\"{$pgv_lang['config_block']}\" /> {$pgv_lang['html_block_sample_part2']}",
+	'gedcom'=>'__current__'
 );
 
 function print_htmlplus_block($block=true, $config='', $side, $index)
@@ -53,23 +54,24 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 		$PGV_IMAGES,
 		$pgv_lang,
 		$TBLPREFIX,
-		$TEXT_DIRECTION
+		$TEXT_DIRECTION,
+		$DEFAULT_GEDCOM
 	;
 	if(empty($config))
 	{
 		$config = $PGV_BLOCKS['print_htmlplus_block']['config'];
 	}
 	// config sanity check
-	//else
-	//{
-	//	foreach($PGV_BLOCKS['print_htmlplus_block']['config'] as $k=>$v)
-	//	{
-	//		if(!isset($config[$k]))
-	//		{
-	//			$config[$k] = $v;
-	//		}
-	//	}
-	//}
+	else
+	{
+		foreach($PGV_BLOCKS['print_htmlplus_block']['config'] as $k=>$v)
+		{
+			if(!isset($config[$k]))
+			{
+				$config[$k] = $v;
+			}
+		}
+	}
 	if(!isset($HTML_BLOCK_COUNT))
 	{
 		$HTML_BLOCK_COUNT = 0;
@@ -105,6 +107,35 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 			$months .= ", '{$month}'";
 		}
 		$months = strtoupper($months);
+	}
+	/*
+	 * Select GEDCOM
+	 */
+	$CURRENT_GEDCOM = $GEDCOM;
+	switch($config['gedcom'])
+	{
+		case '__current__':{break;}
+		case '__default__':
+		{
+			if($DEFAULT_GEDCOM == '')
+			{
+				foreach($GEDCOMS as $gedid=>$ged)
+				{
+					$GEDCOM = $gedid;
+					break;
+				}
+			}
+			else
+			{
+				$GEDCOM = $DEFAULT_GEDCOM;
+			}
+			break;
+		}
+		default:
+		{
+			if(check_for_import($config['gedcom'])){$GEDCOM = $config['gedcom'];}
+			break;
+		}
 	}
 	/*
 	 * GEDCOM File tags
@@ -210,7 +241,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 		isset($tags['GEDCOM_UPDATED'])
 	)
 	{
-		$sql = "SELECT d_gid, d_year, d_mon, d_day, d_fact FROM {$TBLPREFIX}dates WHERE d_file = '{$GEDCOMS[$GEDCOM]['id']}' AND d_fact = 'CHAN' AND d_year != '0' AND d_type IS NULL ORDER BY d_year DESC, d_mon DESC, d_day DESC";
+		$sql = "SELECT d_year, d_month, d_day FROM {$TBLPREFIX}dates WHERE d_file = '{$GEDCOMS[$GEDCOM]['id']}' AND d_fact = 'CHAN' AND d_year != '0' AND d_type IS NULL ORDER BY d_year DESC, d_mon DESC, d_day DESC";
 		$rows = print_htmlplus_block_sql($sql, 1);
 		// if never changed, use created date
 		if(!isset($rows[0]))
@@ -956,6 +987,11 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 	}
 
 	/*
+	 * Restore Current GEDCOM
+	 */
+	$GEDCOM = $CURRENT_GEDCOM;
+
+	/*
 	 * Start Of Output
 	 */
 	$out = "<div id=\"html_block{$HTML_BLOCK_COUNT}\" class=\"block\">\n";
@@ -1093,6 +1129,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 		."</div>\n" // block
 	;
 	print $out;
+	return true;
 }
 
 function print_htmlplus_block_config($config)
@@ -1102,7 +1139,10 @@ function print_htmlplus_block_config($config)
 		$PGV_BLOCKS,
 		$TEXT_DIRECTION,
 		$LANGUAGE,
-		$language_settings
+		$language_settings,
+		$GEDCOM,
+		$GEDCOMS,
+		$DEFAULT_GEDCOM
 	;
 	$templates = array();
 	$d = dir('blocks/');
@@ -1142,11 +1182,31 @@ function print_htmlplus_block_config($config)
 	print "{$pgv_lang['htmlplus_block_templates']}</td>\n"
 		."<td class=\"optionbox\">"
 		."<select name=\"template\" onChange=\"document.block.html.value=document.block.template.options[document.block.template.selectedIndex].value;\">\n"
-		."<option value=\"\">Custom</option>\n"
+		."<option value=\"\">{$pgv_lang['htmlplus_block_custom']}</option>\n"
 	;
 	foreach($templates as $tpl)
 	{
 		print "<option value=\"{$tpl['template']}\">{$tpl['title']}</option>\n";
+	}
+	print "</select>\n"
+		."</td></tr>\n"
+	;
+	// gedcom
+	print "<tr><td class=\"descriptionbox width20\">";
+	print_help_link('index_htmlplus_gedcom_help', 'qm_ah');
+	if($config['gedcom'] == '__default__'){$sel = ' selected="selected"';}else{$sel = '';}
+	print "{$pgv_lang['htmlplus_block_gedcom']}</td>\n"
+		."<td class=\"optionbox\">"
+		."<select name=\"gedcom\">\n"
+	;
+	if($config['gedcom'] == '__current__'){$sel = ' selected="selected"';}else{$sel = '';}
+	print "<option value=\"__current__\">{$pgv_lang['htmlplus_block_current']}</option>\n";
+	if($config['gedcom'] == '__default__'){$sel = ' selected="selected"';}else{$sel = '';}
+	print "<option value=\"__default__\">{$pgv_lang['htmlplus_block_default']}</option>\n";
+	foreach($GEDCOMS as $ged)
+	{
+		if($ged['gedcom'] == $config['gedcom']){$sel = ' selected="selected"';}else{$sel = '';}
+		print "<option value=\"{$ged['gedcom']}\"{$sel}>{$ged['title']}</option>\n";
 	}
 	print "</select>\n"
 		."</td></tr>\n"
