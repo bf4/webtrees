@@ -44,6 +44,8 @@
 // NOTE: $import_existing = See if we are just importing an existing GEDCOM
 // NOTE: $replace_gedcom = When uploading a GEDCOM, user will be asked to replace an existing one. If yes, overwrite
 // NOTE: $bakfile = Name and path of the backupfile, this file is created if a file with the same name exists
+
+ini_set('register_globals', 'Off');
 require "config.php";
 require_once "includes/functions_import.php";
 require $confighelpfile["english"];
@@ -97,6 +99,7 @@ if (!isset ($import_existing))
 	$import_existing = false;
 if (!isset ($skip_cleanup))
 	$skip_cleanup = false;
+if (!isset($utf8convert)) $utf8convert = "no";
 
 // NOTE: GEDCOM was uploaded
 if ($check == "upload") {
@@ -928,18 +931,11 @@ if ($startimport == "true") {
 		//-- copied over the old file.
 		//-- The records are written during the import_record() method and the
 		//-- update_media() method
-
 		//-- open handle to read file
 		$fpged = fopen($GEDCOM_FILE, "rb");
 		//-- open handle to write changed file
 		$fpnewged = fopen($INDEX_DIRECTORY.basename($GEDCOM_FILE).".new", "ab");
-		$BLOCK_SIZE = 1024 * 4; //-- 4k bytes per read
-		$fcontents = "";
-		$TOTAL_BYTES = 0;
-		$place_count = 0;
-		$date_count = 0;
-		$media_count = 0;
-		$listtype = array ();
+		$BLOCK_SIZE = 1024 * 2; //-- 4k bytes per read
 		//-- resume a halted import from the session
 		if (!empty ($_SESSION["resumed"])) {
 			$place_count = $_SESSION["place_count"];
@@ -951,8 +947,15 @@ if ($startimport == "true") {
 			$MAX_IDS = $_SESSION["MAX_IDS"];
 			$i = $_SESSION["i"];
 			fseek($fpged, $TOTAL_BYTES);
-		} else
-			$_SESSION["resumed"] = 0;
+		} else {
+			$fcontents = "";
+			$TOTAL_BYTES = 0;
+			$place_count = 0;
+			$date_count = 0;
+			$media_count = 0;
+			$listtype = array ();
+			$_SESSION["resumed"] = 1;
+		}
 		while (!feof($fpged)) {
 			$fcontents .= fread($fpged, $BLOCK_SIZE);
 			$TOTAL_BYTES += $BLOCK_SIZE;
@@ -1068,6 +1071,7 @@ if ($startimport == "true") {
 
 						cleanup_database();
 						print_footer();
+						session_write_close();
 						exit;
 					}
 				}
