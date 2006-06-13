@@ -393,8 +393,8 @@ if ($action=="ImportFile") {
 
 if ($action=="ImportFile2") {
     if (isset($_POST["cleardatabase"])) {
-//      $sql = "DELETE FROM ".$TBLPREFIX."placelocation WHERE 1";
-//      $res = dbquery($sql);
+        $sql = "DELETE FROM ".$TBLPREFIX."placelocation WHERE 1";
+        $res = dbquery($sql);
     }
     $lines = file($_FILES["placesfile"]["tmp_name"]);
     $highestIndex = getHighestIndex();
