@@ -22,6 +22,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @version $Id$
+ * -- Slightly modified (rtl in table values) 2006/06/09 18:00:00 pfblair
  * @package PhpGedView
  * @subpackage Blocks
  */
@@ -57,6 +58,8 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 
 		if (empty($config)) $config = $PGV_BLOCKS["print_gedcom_stats"]["config"];
 		if (!isset($config['stat_indi'])) $config = $PGV_BLOCKS["print_gedcom_stats"]["config"];
+		if (!isset($config['stat_first_death'])) $config['stat_first_death'] = $PGV_BLOCKS["print_gedcom_stats"]["config"]['stat_first_death'];
+		if (!isset($config['stat_last_death'])) $config['stat_last_death'] = $PGV_BLOCKS["print_gedcom_stats"]["config"]['stat_last_death'];
 
 		print "<div id=\"gedcom_stats\" class=\"block\">\n";
 		print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
@@ -111,9 +114,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				<td class="facts_label">
 					<?php echo $pgv_lang["stat_individuals"]?>
 				</td>
-				<td class="facts_value">
+				<td class="facts_value"><div dir="rtl">
 					<a href="indilist.php?surname_sublist=no&amp;ged=<?php echo $GEDCOM?>"><?php echo get_list_size("indilist")?></a>
-				</td>
+				</div></td>
 			</tr>
 			<?php
 		}
@@ -129,7 +132,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				<td class="facts_label">
 					<?php echo $pgv_lang["stat_surnames"]?>
 				</td>
-				<td class="facts_value">
+				<td class="facts_value"><div dir="rtl">
 					<a href="indilist.php?surname_sublist=yes&amp;ged=<?php echo $GEDCOM?>"><?php echo $surname_count?></a>
 				</td>
 			</tr>
@@ -141,9 +144,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				<td class="facts_label">
 					<?php echo $pgv_lang["stat_families"]?>
 				</td>
-				<td class="facts_value">
+				<td class="facts_value"><div dir="rtl">
 					<a href="famlist.php"><?php echo get_list_size("famlist")?></a>
-				</td>
+				</div></td>
 			</tr>
 			<?php
 		}
@@ -153,9 +156,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				<td class="facts_label">
 					<?php echo $pgv_lang["stat_sources"]?>
 				</td>
-				<td class="facts_value">
+				<td class="facts_value"><div dir="rtl">
 					<a href="sourcelist.php"><?php echo get_list_size("sourcelist")?></a>
-				</td>
+				</div></td>
 			</tr>
 			<?php
 		}
@@ -165,9 +168,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				<td class="facts_label">
 					<?php echo $pgv_lang["stat_other"]?>
 				</td>
-				<td class="facts_value">
+				<td class="facts_value"><div dir="rtl">
 					<?php echo get_list_size("otherlist")?>
-				</td>
+				</div></td>
 			</tr>
 			<?php
 		}
@@ -184,9 +187,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				<td class="facts_label">
 					<?php echo $pgv_lang["stat_events"]?>
 				</td>
-				<td class="facts_value">
+				<td class="facts_value"><div dir="rtl">
 					<?php echo $event_count?>
-				</td>
+				</div></td>
 			</tr>
 			<?php
 		}
@@ -196,9 +199,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				<td class="facts_label">
 					<?php echo $pgv_lang["stat_users"]?>
 				</td>
-				<td class="facts_value">
+				<td class="facts_value"><div dir="rtl">
 					<?php echo count(getUsers())?>
-				</td>
+				</div></td>
 			</tr>
 			<?php
 		}
@@ -220,9 +223,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				<td class="facts_label">
 					<?php echo $pgv_lang["stat_earliest_birth"]?>
 				</td>
-				<td class="facts_value">
+				<td class="facts_value"><div dir="rtl">
 					<a href="calendar.php?action=year&amp;year=<?php echo $row["year"]?>"><?php echo $row["year"]?></a>
-				</td>
+				</div></td>
 				<td  class="facts_value">
 					<?php	if (!$block && displayDetailsById($row["d_gid"])) print_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", false)?>
 				</td>
@@ -242,9 +245,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				<td class="facts_label">
 					<?php echo $pgv_lang["stat_latest_birth"]?>
 				</td>
-				<td class="facts_value">
+				<td class="facts_value"><div dir="rtl">
 					<a href="calendar.php?action=year&amp;year=<?php echo $row["year"]?>"><?php echo $row["year"]?></a>
-				</td>
+				</div></td>
 				<td  class="facts_value">
 					<?php if (!$block && displayDetailsById($row["d_gid"])) print_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", false)?>
 				</td>
@@ -264,9 +267,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				<td class="facts_label">
 					<?php echo $pgv_lang["stat_earliest_death"]?>
 				</td>
-				<td class="facts_value">
+				<td class="facts_value"><div dir="rtl">
 					<a href="calendar.php?action=year&amp;year=<?php echo $row["year"]?>"><?php echo $row["year"]?></a>
-				</td>
+				</div></td>
 				<td  class="facts_value">
 					<?php if (!$block && displayDetailsById($row["d_gid"])) print_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", false)?>
 				</td>
@@ -286,9 +289,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				<td class="facts_label">
 					<?php echo $pgv_lang["stat_latest_death"]?>
 				</td>
-				<td class="facts_value">
+				<td class="facts_value"><div dir="rtl">
 					<a href="calendar.php?action=year&amp;year=<?php echo $row["year"]?>"><?php echo $row["year"]?></a>
-				</td>
+				</div></td>
 				<td  class="facts_value">
 					<?php if (!$block && displayDetailsById($row["d_gid"])) print_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", false)?>
 				</td>
@@ -307,9 +310,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				<td class="facts_label">
 					<?php echo $pgv_lang["stat_longest_life"]?>
 				</td>
-				<td class="facts_value">
+				<td class="facts_value"><div dir="rtl">
 					<?php echo $row[0]?>
-				</td>
+				</div></td>
 				<td  class="facts_value">
 					<?php if (!$block && displayDetailsById($row[1])) print_list_person($row[1], array(get_person_name($row[1]), $GEDCOM), false, "", false)?>
 				</td>
@@ -328,9 +331,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 					<td class="facts_label">
 						<?php echo $pgv_lang["stat_avg_age_at_death"]?>
 					</td>
-					<td class="facts_value">
+					<td class="facts_value"><div dir="rtl">
 						<?php	printf("%d", $row["0"])?>
-					</td>
+					</div></td>
 					<td  class="facts_value">
 						&nbsp;
 					</td>
@@ -353,9 +356,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 					<td class="facts_label">
 						<?php echo $pgv_lang["stat_most_children"]?>
 					</td>
-					<td class="facts_value">
+					<td class="facts_value"><div dir="rtl">
 						<?php	echo $row["0"]?>
-					</td>
+					</div></td>
 					<td  class="facts_value">
 						<?php if (displayDetailsById($row[1], "FAM")) print_list_family($row[1], array(get_family_descriptor($row[1]), $GEDCOM), false, "", false)?>
 					</td>
@@ -375,9 +378,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 					<td class="facts_label">
 						<?php echo $pgv_lang["stat_average_children"]?>
 					</td>
-					<td class="facts_value">
+					<td class="facts_value"><div dir="rtl">
 						<?php	printf("%.2f", $row["0"])?>
-					</td>
+					</div></td>
 					<td  class="facts_value">
 						&nbsp;
 					</td>

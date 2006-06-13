@@ -61,17 +61,16 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 			if ($block) $style = 1;
 			else $style = 2;
 			foreach($userfavs as $key=>$favorite) {
-				print "<tr><td>";
 				if (isset($favorite["id"])) $key=$favorite["id"];
+				$removeFavourite = "<a class=\"font9\" href=\"index.php?command=$command&amp;action=deletefav&amp;fv_id=".$key."\" onclick=\"return confirm('".$pgv_lang["confirm_fav_remove"]."');\">".$pgv_lang["remove"]."</a><br />\n";
+				print "<tr><td>";
 				if ($favorite["type"]=="URL") {
-					print "<div id=\"boxurl".$key.".0\" class=\"person_box";
-					print "\"><ul>\n";
-					print "<li><a href=\"".$favorite["url"]."\">".PrintReady($favorite["title"])."</a></li>";
-					print "</ul>";
-					print PrintReady($favorite["note"]);
+					print "<div id=\"boxurl".$key.".0\" class=\"person_box\">\n";
+					if ($command=="user" || userGedcomAdmin(getUserName())) print $removeFavourite;
+					print "<a href=\"".$favorite["url"]."\"><b>".PrintReady($favorite["title"])."</b></a>";
+					print "<br />".PrintReady($favorite["note"]);
 					print "</div>\n";
-				}
-				else {
+				} else {
 					if (displayDetailsbyId($favorite["gid"], $favorite["type"])) {
 						if ($favorite["type"]=="INDI") {
 							$indirec = find_person_record($favorite["gid"]);
@@ -80,29 +79,27 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 							else if (preg_match("/1 SEX M/", $indirec)>0) print "";
 							else print "NN";
 							print "\">\n";
+							if ($command=="user" || userGedcomAdmin(getUserName())) print $removeFavourite;
 							print_pedigree_person($favorite["gid"], $style, 1, $key);
 							print PrintReady($favorite["note"]);
 							print "</div>\n";
 						}
 						if ($favorite["type"]=="FAM") {
-							print "<div id=\"box".$favorite["gid"].".0\" class=\"person_box";
-							print "\"><ul>\n";
-							print_list_family($favorite["gid"], array(get_family_descriptor($favorite["gid"]), $favorite["file"]));
-							print "</ul>";
+							print "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">\n";
+							if ($command=="user" || userGedcomAdmin(getUserName())) print $removeFavourite;
+							print_list_family($favorite["gid"], array(get_family_descriptor($favorite["gid"]), $favorite["file"]), false, "", false);
 							print PrintReady($favorite["note"]);
 							print "</div>\n";
 						}
 						if ($favorite["type"]=="SOUR") {
-							print "<div id=\"box".$favorite["gid"].".0\" class=\"person_box";
-							print "\"><ul>\n";
-							print_list_source($favorite["gid"], $sourcelist[$favorite["gid"]]);
-							print "</ul>";
+							print "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">\n";
+							if ($command=="user" || userGedcomAdmin(getUserName())) print $removeFavourite;
+							print_list_source($favorite["gid"], $sourcelist[$favorite["gid"]], false);
 							print PrintReady($favorite["note"]);
 							print "</div>\n";
 						}
 					}
 				}
-				if ($command=="user" || userGedcomAdmin(getUserName())) print "<a class=\"font9\" href=\"index.php?command=$command&amp;action=deletefav&amp;fv_id=".$key."\" onclick=\"return confirm('".$pgv_lang["confirm_fav_remove"]."');\">".$pgv_lang["remove"]."</a><br />\n";
 				print "</td></tr>\n";
 			}
 			print "</table>\n";
