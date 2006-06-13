@@ -472,33 +472,4 @@ function hasLTRText($text) {
 	}
 }
 
-/**
- * Use Hebrew/Arabic undefined for names with Hebrew/Arabic characters on any PGV pages
- *  
- * @param string $text to verify
- */
-function RTLUndefined($text) {   
-	global $HNN, $ANN;
-	   
-	if (strpos($text, 215) !== false) $NN = $HNN;
-	//-- else Arabic - letter ord is 216,217,218,219
-	else $NN = $ANN;
-	
-	return ($NN);
-}  
-
-///**
-// * Verify if text is RtL
-// *
-// * This will verify if text is RtL or not
-// * @param string $text to verify
-// */
-//function isRTLText($text) { 
-//return (substr(trim($text),0,5)=="&rlm;"  || substr(trim($text),strlen(trim($text))-5,5)=="&rlm;"
-// || ord(substr(trim($text),0,2))==215 || ord(substr(trim($text),strlen(trim($text))-2,2))==215
-// || ord(substr(trim($text),1,2))==215 || ord(substr(trim($text),strlen(trim($text))-3,2))==215
-// || ord(substr(trim($text),5,2))==215 || ord(substr(trim($text),strlen(trim($text))-8,2))==215
-// || ord(substr(trim($text),6,2))==215 || ord(substr(trim($text),strlen(trim($text))-9,2))==215); 
-//} 
-
 ?>

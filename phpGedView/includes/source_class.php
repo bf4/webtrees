@@ -69,7 +69,7 @@ class Source extends GedcomRecord {
 		}
 		if (empty($sourcerec)) {
 			if (userCanEdit(getUserName()) && isset($pgv_changes[$pid."_".$GEDCOM])) {
-				$sourcerec = find_record_in_file($pid);
+				$sourcerec = find_updated_record($pid);
 				$fromfile = true;
 			}
 		}

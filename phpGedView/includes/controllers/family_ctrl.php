@@ -128,7 +128,7 @@ class FamilyRoot extends BaseController
 		$this->uname = getUserName();
 		//-- if the user can edit and there are changes then get the new changes
 		if ($this->show_changes=="yes" && userCanEdit($this->uname) && isset($pgv_changes[$this->famid."_".$GEDCOM])) {
-			$newrec = find_record_in_file($this->famid);
+			$newrec = find_updated_record($this->famid);
 			$this->difffam = new Family($newrec);
 			$this->difffam->setChanged(true);
 			$this->famrec = $newrec;

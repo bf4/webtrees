@@ -2108,7 +2108,8 @@ class SOAP_WSDL_ObjectParser extends SOAP_Base
             foreach (array('input', 'output') as $messageType)
                 if (isset($operationData[$messageType])) {
                     $thisBinding['operations'][$operationName][$messageType] = array(
-                            'use' => 'encoded',
+                            //'use' => 'encoded',
+			    'use' => 'literal',
                             'namespace' => $schemaNamespace,
                             'encodingStyle' => SOAP_SCHEMA_ENCODING);
                 }

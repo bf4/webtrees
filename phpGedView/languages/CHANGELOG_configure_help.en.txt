@@ -42,17 +42,21 @@ VERSION 4.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
-*$pgv_lang["message_empty_warning"]					12 May 2006				f		fixed html
-*$pgv_lang["return_editconfig_gedcom"]				12 May 2006				f		fixed html
-*$pgv_lang["phpinfo_help"]							11 May 2006				f		fixed html
-*$pgv_lang["SPLIT_PLACES_help"]						11 May 2006				f		fixed html
-*$pgv_lang["DISPLAY_JEWISH_GERESHAYIM_help"]		11 May 2006				f		fixed html
-*$pgv_lang["CONTACT_METHOD_help"]					11 May 2006				f		fixed html
-*$pgv_lang["SUPPORT_METHOD_help"]					11 May 2006				f		fixed html
-*$pgv_lang["file_to_edit_help"]						11 May 2006				f		fixed html
-*$pgv_lang["lang_filenames_help"]                   11 May 2006				f		fixed html
-*$pgv_lang["date_format_help"]                      11 May 2006				f		fixed html
-*$pgv_lang["translation_forum_desc"]                11 May 2006				f		fixed html
++$pgv_lang["SYNC_GEDCOM_FILE_help"]					13 Jun 2006				A
++$pgv_lang["SYNC_GEDCOM_FILE"]						13 Jun 2006				A
++$pgv_lang["GENERATE_GUID"]							11 June 2006			A
++$pgv_lang["GENERATE_GUID_help"]					11 June 2006			A
+*$pgv_lang["message_empty_warning"]					09 Jun 2006				f		fixed html
+*$pgv_lang["return_editconfig_gedcom"]				09 Jun 2006				f		fixed html
+*$pgv_lang["phpinfo_help"]							09 Jun 2006				f		fixed html
+*$pgv_lang["SPLIT_PLACES_help"]						09 Jun 2006				f		fixed html
+*$pgv_lang["DISPLAY_JEWISH_GERESHAYIM_help"]		09 Jun 2006				f		fixed html
+*$pgv_lang["CONTACT_METHOD_help"]					09 Jun 2006				f		fixed html
+*$pgv_lang["SUPPORT_METHOD_help"]					09 Jun 2006				f		fixed html
+*$pgv_lang["file_to_edit_help"]						09 Jun 2006				f		fixed html
+*$pgv_lang["lang_filenames_help"]                   09 Jun 2006				f		fixed html
+*$pgv_lang["date_format_help"]                      09 Jun 2006				f		fixed html
+*$pgv_lang["translation_forum_desc"]               	09 Jun 2006				f		fixed html
 *$pgv_lang["add_new_pp_setting"]					02 May 2006				W
 *$pgv_lang["add_new_pf_setting"]					02 May 2006				W
 -$pgv_lang["add_new_pf_setting_indi"]				02 May 2006				D

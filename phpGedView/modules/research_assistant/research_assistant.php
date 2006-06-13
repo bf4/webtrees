@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: research_assistant.php 932 2006-05-24 22:09:39Z jfinlay $
+ * @version $Id: research_assistant.php 979 2006-06-07 22:39:41Z jleung $
  * @author Jason Porter
  * @author Wade Lasson
  * @author Brandon Gagnon
@@ -196,8 +196,11 @@ class research_assistant extends ra_functions {
 			if ($_REQUEST['action'] == "deletetask" && !empty ($_REQUEST['taskid'])) {
 				$this->deleteTask($_REQUEST['taskid']);
 				$out .= $this->print_menu("", $_REQUEST['taskid']);
-				$out .= $this->print_folder_view($_REQUEST['folder']);
-				$out .= $this->print_list($_REQUEST['folder']);
+				//if($_REQUEST['userName'] == "")
+				//{
+					$out .= $this->print_folder_view();
+//					$out .= $this->print_list();
+				//}
 			}
 
 		// View a task
@@ -207,7 +210,6 @@ class research_assistant extends ra_functions {
 				$out .= $this->print_simple_form("ra_ViewTask");
 			}
 			
-		//TODO: Finish this
 		//View assigned Tasks
 		else
 			if ($_REQUEST['action'] == "mytasks") 

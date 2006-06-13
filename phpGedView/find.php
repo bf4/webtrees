@@ -606,7 +606,8 @@ if ($action=="filter") {
 						if ($media["LINKED"]) {
 							print $pgv_lang["media_linked"]."<br />";
 							foreach ($media["LINKS"] as $indi => $type_record) {
-								$indirec = find_record_in_file($indi);
+								if (isset($pgv_changes[$indi."_".$GEDCOM])) $indirec = find_updated_record($indi);
+								else $indirec = find_gedcom_record($indi);
 								if ($type_record=="INDI") {
 						            print " <br /><a href=\"individual.php?pid=".$indi."\"> ".$pgv_lang["view_person"]." - ".PrintReady(get_person_name($indi))."</a>";
 								}

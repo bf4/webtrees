@@ -115,7 +115,7 @@ if ($view != "preview") {
 print "</td></tr></table>";
 
 // process the tree
-$treeid = ancestry_array($rootid);
+$treeid = ancestry_array($rootid,4);
 print "<br />";
 print "<table width='100%' border='0' cellpadding='0' cellspacing='0'>";
 
@@ -304,7 +304,7 @@ function print_td_person($n) {
 	$pid = $treeid[$n];
 	if ($pid) {
 		$indirec=find_person_record($pid);
-		if (!$indirec) $indirec = find_record_in_file($pid);
+		if (!$indirec) $indirec = find_updated_record($pid);
 
 		if ((!displayDetailsByID($pid))&&(!showLivingNameByID($pid))) {
 			$name = $pgv_lang["private"];

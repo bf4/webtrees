@@ -555,16 +555,18 @@ class SearchControllerRoot extends BaseController {
 	function SearchAndReplace()
 	{
 		global $GEDCOM, $pgv_changes, $manual_save;
-		// Include edit functions.
-		include_once("includes/functions_edit.php");
 	
 		$this->sgeds = array($GEDCOM);
 		$this->srindi = "yes";
 		$oldquery = $this->query;
 		$this->GeneralSearch();
 		
-$manual_save = true;
+		//-- don't try to make any changes if nothing was found
+		if (count($this->myindilist)==0 && count($this->myfamlist)==0 && count($this->mysourcelist)==0) return; 
 
+		$manual_save = true;
+		// Include edit functions.
+		include_once("includes/functions_edit.php");
 		
 		// These contain the search query and the replace string
 		// $this->replace;
@@ -576,7 +578,7 @@ $manual_save = true;
 		foreach($this->myindilist as $id => $individual)
 		{
 			if (isset($pgv_changes[$id."_".$GEDCOM])) 
-				$individual["gedcom"] = find_record_in_file($id);
+				$individual["gedcom"] = find_updated_record($id);
 
 			$currentRecord = $individual["gedcom"];
 			$newRecord = $individual["gedcom"];
@@ -618,7 +620,7 @@ $manual_save = true;
 		foreach($this->myfamlist as $id => $family)
 		{
 			if (isset($pgv_changes[$id."_".$GEDCOM])) 
-				$family["gedcom"] = find_record_in_file($id);
+				$family["gedcom"] = find_updated_record($id);
 
 			$oldrecord = $family["gedcom"];
 			$newrecord = $family["gedcom"];
@@ -635,7 +637,7 @@ $manual_save = true;
 		foreach($this->mysourcelist as $id => $source)
 		{
 			if (isset($pgv_changes[$id."_".$GEDCOM])) 
-				$source["gedcom"] = find_record_in_file($id);
+				$source["gedcom"] = find_updated_record($id);
 
 			$oldrecord = $source["gedcom"];
 			$newrecord = $source["gedcom"];
@@ -649,7 +651,15 @@ $manual_save = true;
 				replace_gedrec($id, $newrecord);
 		}
 		
-		write_file();
+		write_changes();
+		
+//		//Stores results in printname[]
+//					$this->printname = array();
+//					//while($row = $res->fetchRow())
+//					foreach($this->myindilist as $pid=>$row)
+//					{	
+//						$this->printname[] = array (sortable_name_from_name($row['names'][0][0]), $pid, $GEDCOM, "");
+//					}
 	}
 	
 	/**
@@ -779,7 +789,7 @@ $manual_save = true;
 				}
 				if ((!empty ($this->lastname)) && ($this->soundex == "Russell"))
 				{
-					$arr2 = soundex($this->lastname);
+					$arr2 = array(soundex($this->lastname));
 				}
 				$farr = array ();
 				if (!empty ($this->firstname)) {
@@ -1117,7 +1127,7 @@ $manual_save = true;
 		include_once ("includes/functions_print_lists.php");
 		global $GEDCOM, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $global_facts, $REGEXP_DB;
 		// ---- section to search and display results on a general keyword search
-		if ($this->action == "general") {
+		if ($this->action == "general" || $this->action=="replace") {
 			if ((isset ($this->query)) && ($this->query != "")) {
 				//--- Results in these tags will be ignored when the tagfilter is on
 

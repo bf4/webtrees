@@ -37,7 +37,7 @@ foreach($indis as $pid=>$indi) {
 	print "Checking record ".$pid."... ";
 	$newrec = "";
 	$oldrecord = $indi['gedcom'];
-	if (isset($pgv_changes[$pid."_".$GEDCOM])) $oldrecord = find_record_in_file($pid);
+	if (isset($pgv_changes[$pid."_".$GEDCOM])) $oldrecord = find_updated_record($pid);
 	$lines = preg_split("/[\r\n]+/", $oldrecord);
 	for($i=0; $i<count($lines); $i++) {
 		$line = $lines[$i];
@@ -76,7 +76,7 @@ foreach($indis as $pid=>$indi) {
 	print "Checking record ".$pid."... ";
 	$newrec = "";
 	$oldrecord = $indi['gedcom'];
-	if (isset($pgv_changes[$pid."_".$GEDCOM])) $oldrecord = find_record_in_file($pid);
+	if (isset($pgv_changes[$pid."_".$GEDCOM])) $oldrecord = find_updated_record($pid);
 	$lines = preg_split("/[\r\n]+/", $oldrecord);
 	for($i=0; $i<count($lines); $i++) {
 		$line = $lines[$i];
@@ -108,7 +108,7 @@ foreach($indis as $pid=>$indi) {
 }
 
 print "<br />Saving GEDCOM file ".$GEDCOM."<br />\n";
-write_file();
+write_changes();
 
 print "<br /><b>Updates completed</b><br />";
 print_footer();

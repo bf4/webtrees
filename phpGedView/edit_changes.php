@@ -76,7 +76,7 @@ if ($action=="undoall") {
 		$change = $changes[0];
 		if ($change["gedcom"]==$ged) undo_change($cid, 0);
 	}
-	write_file();
+	write_changes();
 	$manual_save = false;
 	print "<br /><br /><b>";
 	print $pgv_lang["undo_successful"];
@@ -92,12 +92,16 @@ if ($action=="accept") {
 }
 if ($action=="acceptall") {
 	$temp_changes = $pgv_changes;
+	$manual_save = true;
 	foreach($temp_changes as $cid=>$changes) {
 		for($i=0; $i<count($changes); $i++) {
 			$change = $changes[$i];
 			if ($change["gedcom"]==$ged) accept_changes($cid);
 		}
 	}
+	if ($SYNC_GEDCOM_FILE) write_file();
+	write_changes();
+	$manual_save = false;
 	print "<br /><br /><b>";
 	print $pgv_lang["accept_successful"];
 	print "</b><br /><br />";
@@ -123,8 +127,7 @@ else {
 				if ($GEDCOM != $change["gedcom"]) {
 					$GEDCOM = $change["gedcom"];
 				}
-				$gedrec = find_record_in_file($change["gid"]);
-				if (empty($gedrec)) $gedrec = $change["undo"];
+				$gedrec = $change["undo"];
 				$ct = preg_match("/0 @(.*)@(.*)/", $gedrec, $match);
 				if ($ct>0) $type = trim($match[2]);
 				else $type = "INDI";

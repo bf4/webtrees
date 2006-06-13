@@ -326,7 +326,7 @@ function find_source_record($sid, $gedfile="") {
 	}
 	else {
 		return false;
-		//return find_record_in_file($sid);
+
 	}
 }
 

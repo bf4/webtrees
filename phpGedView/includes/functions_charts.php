@@ -102,7 +102,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 
 	// -- get the new record and parents if in editing show changes mode
 	if ((userCanEdit(getUserName())) && (isset($pgv_changes[$famid . "_" . $GEDCOM]))) {
-		$newrec = find_record_in_file($famid);
+		$newrec = find_updated_record($famid);
 		$newparents = find_parents_in_record($newrec);
 	}
 
@@ -266,7 +266,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 	$oldchildren = array();
 	if (userCanEdit(getUserName())) {
 		if ((isset($_REQUEST['show_changes'])&&$_REQUEST['show_changes']=='yes') && (isset($pgv_changes[$famid . "_" . $GEDCOM]))) {
-			$newrec = find_record_in_file($famid);
+			$newrec = find_updated_record($famid);
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $newrec, $match, PREG_SET_ORDER);
 			if ($ct > 0) {
 				$oldchil = array();
@@ -382,15 +382,10 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
    else if ($sosa<1) {
 		print "<tr><td></td><td valign=\"top\" >";
 
-		$nchi = "";
-		$newrec = find_record_in_file($famid);
-		$ct = preg_match("/1 NCHI (\w+)/", $newrec, $match);
-		if ($ct>0) $nchi = $match[1];
-		else {
-			$famrec = find_family_record($famid);
+		if (isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_updated_record($famid);
+		else $famrec = find_family_record($famid);
 			$ct = preg_match("/1 NCHI (\w+)/", $famrec, $match);
 			if ($ct>0) $nchi = $match[1];
-		}
 		if ($nchi=="0") print "<img src=\"images/small/childless.gif\" alt=\"".$pgv_lang["childless_family"]."\" title=\"".$pgv_lang["childless_family"]."\" /> ".$pgv_lang["childless_family"];
 		else print $pgv_lang["no_children"];
 		print "</td></tr>";
@@ -474,7 +469,7 @@ function print_family_facts($famid, $sosa = 0) {
 		}
 		if (($sosa == 0) && userCanEdit(getUserName())) {
 			if ((isset($_REQUEST['show_changes'])&&($_REQUEST['show_changes']=='yes')) && (isset($pgv_changes[$famid . "_" . $GEDCOM]))) {
-				if (empty($newrec)) $newrec = find_record_in_file($famid);
+				if (empty($newrec)) $newrec = find_updated_record($famid);
 				$indilines = split("\n", $newrec); // -- find the number of lines in the individuals record
 				$lct = count($indilines);
 				$factrec = ""; // -- complete fact record
@@ -715,10 +710,11 @@ function check_rootid($rootid) {
  * @param string $rootid
  * @return array $treeid
  */
-function ancestry_array($rootid) {
+function ancestry_array($rootid, $maxgen=0) {
 	global $PEDIGREE_GENERATIONS, $SHOW_EMPTY_BOXES;
 	// -- maximum size of the id array
-	$treesize = pow(2, ($PEDIGREE_GENERATIONS+1));
+	if ($maxgen==0) $maxgen = $PEDIGREE_GENERATIONS;
+	$treesize = pow(2, ($maxgen+1));
 
 	$treeid = array();
 	$treeid[0] = "";

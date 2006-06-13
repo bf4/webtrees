@@ -48,6 +48,7 @@ if (isset($DEBUG)) $ERROR_LEVEL = 2;
  * initialize and check the database
  *
  * this function will create a database connection and return false if any errors occurred
+ * @param boolean $ignore_previous	whether or not to ignore a previous connection , this parameter is used mainly for the editconfig.php page when setting everything up
  * @return boolean true if database successfully connected, false if there was an error
  */
 function check_db($ignore_previous=false) {
@@ -77,7 +78,7 @@ function check_db($ignore_previous=false) {
 		'persistent'  => $DBPERSIST
 	);
 
-	$DBCONN = DB::connect($dsn, $options);
+	$DBCONN =& DB::connect($dsn, $options);
 	if (DB::isError($DBCONN)) {
 		//die($DBCONN->getMessage());
 		return false;
@@ -382,7 +383,6 @@ function get_first_tag($level, $tag, $gedrec, $num=1) {
 	return substr($temp, 0, $length);
 }
 
-
 /**
  * get a gedcom subrecord
  *
@@ -414,23 +414,25 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
 	//$searchTarget = "/".preg_replace("~/~","\\/",$tag)."[\s\r\n]/";
 	$searchTarget = "/".preg_replace("~/~","\\/",$tag)."/";
 	if (empty($gedrec)) return "";
-	while(($num>0)&&($pos1<strlen($gedrec))) {
-		$ct = preg_match($searchTarget, $gedrec, $match, PREG_OFFSET_CAPTURE, $pos1);
+
+		$ct = preg_match_all($searchTarget, $gedrec, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
 		if ($ct==0) {
 			$tag = preg_replace("/(\w+)/", "_$1", $tag);
-			$ct = preg_match($searchTarget, $gedrec, $match, PREG_OFFSET_CAPTURE, $pos1);
+			$ct = preg_match_all($searchTarget, $gedrec, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
 			if ($ct==0) return "";
 		}
-		$pos1 = $match[0][1];
-		$pos2 = strpos($gedrec, "\n$level", $pos1+1);
-		if (!$pos2) $pos2 = strpos($gedrec, "\n1", $pos1+1);
-		if (!$pos2) $pos2 = strpos($gedrec, "\nPGV_", $pos1+1); // PGV_SPOUSE, PGV_FAMILY_ID ...
+		//print_r($match);
+		if (count($match)<$num) return "";
+		$pos1 = $match[$num-1][0][1];
+		$pos2 = strpos($gedrec, "\n$level", $pos1+5);
+		if (!$pos2) $pos2 = strpos($gedrec, "\n1", $pos1+5);
+		if (!$pos2) $pos2 = strpos($gedrec, "\nPGV_", $pos1+5); // PGV_SPOUSE, PGV_FAMILY_ID ...
 		if (!$pos2) {
-			if ($num==1) return substr($gedrec, $pos1);
-			else return "";
+			return substr($gedrec, $pos1);
 		}
+		$subrec = substr($gedrec, $pos1, $pos2-$pos1);
+		//-- does anybody know what this is for?
 		if ($num==1) {
-			$subrec = substr($gedrec, $pos1, $pos2-$pos1);
 			$lowtag = "\n".($level-1).(substr($tag, 1));
 			if (phpversion() < 5) {
 				if ($newpos = strrpos4($subrec, $lowtag)) {
@@ -443,9 +445,7 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
 				$subrec = substr($gedrec, $pos1, $pos2-$pos1);
 			}
 		}
-		$num--;
-		$pos1 = $pos2;
-	}
+
 	return $subrec;
 }
 
@@ -676,12 +676,14 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
  * @param string $nrec the gedcom subrecord to search in
  * @return string a string with all CONT or CONC lines merged
  */
-function get_cont($nlevel, $nrec) {
+function get_cont($nlevel, $nrec, $tobr=true) {
 	global $WORD_WRAPPED_NOTES;
 	$text = "";
+	if ($tobr) $newline = "<br />\n";
+	else $newline = "\r\n";
 	$tt = preg_match_all("/$nlevel CON[CT](.*)/", $nrec, $cmatch, PREG_SET_ORDER);
 	for($i=0; $i<$tt; $i++) {
-		if (strstr($cmatch[$i][0], "CONT")) $text.="<br />\n";
+		if (strstr($cmatch[$i][0], "CONT")) $text.=$newline;
 		else if ($WORD_WRAPPED_NOTES) $text.=" ";
 		$conctxt = $cmatch[$i][1];
 		if (!empty($conctxt)) {
@@ -690,7 +692,7 @@ function get_cont($nlevel, $nrec) {
 			$text.=$conctxt;
 		}
 	}
-	$text = preg_replace("/~~/", "<br />", $text);
+	$text = preg_replace("/~~/", $newline, $text);
 	return $text;
 }
 
@@ -708,7 +710,7 @@ function find_parents($famid) {
 	$famrec = find_family_record($famid);
 	if (empty($famrec)) {
 		if (userCanEdit(getUserName())) {
-			$famrec = find_record_in_file($famid);
+			$famrec = find_updated_record($famid);
 			if (empty($famrec)) return false;
 		}
 		else return false;
@@ -754,7 +756,7 @@ function find_children($famid, $me='') {
 	$famrec = find_family_record($famid);
 	if (empty($famrec)) {
 		if (userCanEdit(getUserName())) {
-			$famrec = find_record_in_file($famid);
+			$famrec = find_updated_record($famid);
 			if (empty($famrec)) return false;
 		}
 		else return false;
@@ -888,6 +890,23 @@ function find_record_in_file($gid) {
 	}
 	fclose($fpged);
 	return false;
+}
+
+/**
+ * find and return an updated gedcom record
+ * @param string $gid	the id of the record to find
+ * @param string $gedfile	the gedcom file to get the record from.. defaults to currently active gedcom
+ */
+function find_updated_record($gid, $gedfile="") {
+	global $GEDCOMS, $GEDCOM, $pgv_changes;
+	
+	if (empty($gedfile)) $gedfile = $GEDCOM;
+	
+	if (isset($pgv_changes[$gid."_".$gedfile])) {
+		$change = end($pgv_changes[$gid."_".$gedfile]);
+		return $change['undo'];
+	}
+	return "";
 }
 
 // ************************************************* START OF MULTIMEDIA FUNCTIONS ********************************* //
@@ -1831,7 +1850,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 
 	$pid1 = strtoupper($pid1);
 	$pid2 = strtoupper($pid2);
-	if (isset($pgv_changes[$pid2."_".$GEDCOM]) && userCanEdit(getUserName())) $indirec = find_record_in_file($pid2);
+	if (isset($pgv_changes[$pid2."_".$GEDCOM]) && userCanEdit(getUserName())) $indirec = find_updated_record($pid2);
 	else $indirec = find_person_record($pid2);
 	//-- check the cache
 	if ($USE_RELATIONSHIP_PRIVACY && !$ignore_cache) {
@@ -1889,14 +1908,14 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 		$numfams = preg_match_all("/1\s*FAMS\s*@(.*)@/", $indirec, $fmatch, PREG_SET_ORDER);
 		for($j=0; $j<$numfams; $j++) {
 			// Get the family record
-			if (isset($pgv_changes[$fmatch[$j][1]."_".$GEDCOM]) && userCanEdit(getUserName())) $famrec = find_record_in_file($fmatch[$j][1]);
+			if (isset($pgv_changes[$fmatch[$j][1]."_".$GEDCOM]) && userCanEdit(getUserName())) $famrec = find_updated_record($fmatch[$j][1]);
 			else $famrec = find_family_record($fmatch[$j][1]);
 
 			// Get the set of children
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $cmatch, PREG_SET_ORDER);
 			for($i=0; $i<$ct; $i++) {
 				// Get each child's record
-				if (isset($pgv_changes[$cmatch[$i][1]."_".$GEDCOM]) && userCanEdit(getUserName())) $famrec = find_record_in_file($cmatch[$i][1]);
+				if (isset($pgv_changes[$cmatch[$i][1]."_".$GEDCOM]) && userCanEdit(getUserName())) $famrec = find_updated_record($cmatch[$i][1]);
 				else $childrec = find_person_record($cmatch[$i][1]);
 				$birthrec = get_sub_record(1, "1 BIRT", $childrec);
 				if ($birthrec!==false) {
@@ -1978,7 +1997,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				$childh = 3;
 
 				//-- generate heuristic values based of the birthdates of the current node and p2
-				if (isset($pgv_changes[$node["pid"]."_".$GEDCOM]) && userCanEdit(getUserName())) $indirec = find_record_in_file($node["pid"]);
+				if (isset($pgv_changes[$node["pid"]."_".$GEDCOM]) && userCanEdit(getUserName())) $indirec = find_updated_record($node["pid"]);
 				else $indirec = find_person_record($node["pid"]);
 				$byear1 = -1;
 				$birthrec = get_sub_record(1, "1 BIRT", $indirec);
@@ -2053,7 +2072,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				}
 				foreach($famids as $indexval => $fam) {
 					$visited[$fam] = true;
-					if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit(getUserName())) $famrec = find_record_in_file($fam);
+					if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit(getUserName())) $famrec = find_updated_record($fam);
 					else $famrec = find_family_record($fam);
 					$parents = find_parents_in_record($famrec);
 					if ((!empty($parents["HUSB"]))&&(!isset($visited[$parents["HUSB"]]))) {
@@ -2127,7 +2146,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 				}
 				foreach($famids as $indexval => $fam) {
 					$visited[$fam] = true;
-					if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit(getUserName())) $famrec = find_record_in_file($fam);
+					if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit(getUserName())) $famrec = find_updated_record($fam);
 					else $famrec = find_family_record($fam);
 					if ($followspouse) {
 						$parents = find_parents_in_record($famrec);
@@ -2239,7 +2258,6 @@ function write_changes() {
 			}
 		}
 	}
-	$changestext .= "\n?".">\n";
 	$fp = fopen($INDEX_DIRECTORY."pgv_changes.php", "wb");
 	if ($fp===false) {
 		print "ERROR 6: Unable to open changes file resource.  Unable to complete request.\n";
@@ -2252,9 +2270,50 @@ function write_changes() {
 		return false;
 	}
 	fclose($fp);
-	$logline = AddToLog("pgv_changes.php updated by >".getUserName()."<");
- 	if (!empty($COMMIT_COMMAND)) check_in($logline, "pgv_changes.php", $INDEX_DIRECTORY);
+ 	if (!empty($COMMIT_COMMAND)) {
+		$logline = AddToLog("pgv_changes.php updated by >".getUserName()."<");
+ 		check_in($logline, "pgv_changes.php", $INDEX_DIRECTORY);
+ 	}
 	return true;
+}
+
+/**
+ * obtain a lock on the current GEDCOM file
+ */
+function lock_file() {
+	global $GEDCOMS, $GEDCOM, $INDEX_DIRECTORY;
+	
+	file_locked_wait();
+	$fp = fopen($INDEX_DIRECTORY.$GEDCOM.".lock", "wb");
+	fclose($fp);
+}
+
+/**
+ * block until the file lock is released
+ */
+function file_locked_wait() {
+	global $GEDCOMS, $GEDCOM, $INDEX_DIRECTORY;
+	
+	$sleep_count = 0;
+	while(file_exists($INDEX_DIRECTORY.$GEDCOM.".lock") && $sleep_count<100) {
+		usleep(100000);
+		$sleep_count++;
+	}
+	if ($sleep_count>100) {
+		print "ERROR 30: Unable to obtain lock on file after 10 seconds.";
+		debug_print_backtrace();
+		AddToChangeLog("ERROR 30: Unable to obtain lock on file after 10 seconds. ->" . getUserName() ."<-");
+		exit;
+	}
+}
+
+/**
+ * unlock the GEDCOM file
+ */
+function unlock_file() {
+	global $GEDCOMS, $GEDCOM, $INDEX_DIRECTORY;
+	
+	@unlink($INDEX_DIRECTORY.$GEDCOM.".lock");
 }
 
 /**

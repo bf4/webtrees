@@ -37,14 +37,16 @@ print_header("UPGRADE 3.3 to 4.0");
 print "<h2>Upgrading database.</h2>\n";
 
 //-- make sure the gedcoms have an ID associated
-$i = 1;
-foreach($GEDCOMS as $ged=>$gedarray) {
+if (empty($GEDCOMS[$GEDCOM]['id'])) { 
+	$i = 1;
+	foreach($GEDCOMS as $ged=>$gedarray) {
 	$GEDCOMS[$ged]["id"] = $i;
 	$i++;
+	}
+	store_gedcoms();
+	
+	print "New GEDCOM IDs stored<br />\n";
 }
-store_gedcoms();
-
-print "New GEDCOM IDs stored<br />\n";
 
 //-- get a list of the current tables from the database
 $tables = $DBCONN->getListOf('tables');

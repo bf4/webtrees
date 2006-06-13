@@ -157,7 +157,7 @@ function convert_date($dstr_beg, $dstr_end, $day, $month, $year) {
 		$gdate = preg_replace("/M/", $month, $gdate);
 		$gdate = preg_replace("/Y/", $year, $gdate);
 		$gdate = trim($gdate);
-		$datestr = $dstr_beg . $newdate . " ($gdate)" . $dstr_end;
+		$datestr = $dstr_beg . $gdate . " ($newdate)" . $dstr_end;
 	}
 	else if (($CALENDAR_FORMAT=="hebrew" || ($CALENDAR_FORMAT=="jewish" && $LANGUAGE == "hebrew")) && !empty($year) && ! (preg_match("/^\d+$/", $year)==0)) {
 

@@ -219,7 +219,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 			$pid=$treeid[$sosa];
 			if (!empty($pid)) {
 				$indirec=find_person_record($pid);
-				if (!$indirec) $indirec = find_record_in_file($pid);
+				if (!$indirec) $indirec = find_updated_record($pid);
 
 				if ($sosa%2) $bg=$bgcolorF;
 				else $bg=$bgcolorM;
@@ -435,8 +435,9 @@ if ($PEDIGREE_GENERATIONS > $MAX_PEDIGREE_GENERATIONS) {
 	$max_generation = true;
 }
 
-if ($PEDIGREE_GENERATIONS < 3) {
-	$PEDIGREE_GENERATIONS = 3;
+$MIN_FANCHART_GENERATIONS = 3;
+if ($PEDIGREE_GENERATIONS < $MIN_FANCHART_GENERATIONS) {
+	$PEDIGREE_GENERATIONS = $MIN_FANCHART_GENERATIONS;
 	$min_generation = true;
 }
 $OLD_PGENS = $PEDIGREE_GENERATIONS;
@@ -522,7 +523,7 @@ if ($view != "preview") {
 	print "<td class=\"optionbox\">";
 //	print "<input type=\"text\" name=\"PEDIGREE_GENERATIONS\" size=\"3\" value=\"$OLD_PGENS\" /> ";
 	print "<select name=\"PEDIGREE_GENERATIONS\">";
-	for ($i=2; $i<=$MAX_PEDIGREE_GENERATIONS; $i++) {
+	for ($i=$MIN_FANCHART_GENERATIONS; $i<=$MAX_PEDIGREE_GENERATIONS; $i++) {
 	print "<option value=\"".$i."\"" ;
 	if ($i == $OLD_PGENS) print "selected=\"selected\" ";
 		print ">".$i."</option>";

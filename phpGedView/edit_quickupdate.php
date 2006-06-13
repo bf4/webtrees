@@ -78,7 +78,7 @@ if (!empty($user["gedcomid"][$GEDCOM])) {
 		$famids = pgv_array_merge(find_sfamily_ids($user["gedcomid"][$GEDCOM]), find_family_ids($user["gedcomid"][$GEDCOM]));
 		foreach($famids as $indexval => $famid) {
 			if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
-			else $famrec = find_record_in_file($famid);
+			else $famrec = find_updated_record($famid);
 			if (preg_match("/1 HUSB @$pid@/", $famrec)>0) $pass=true;
 			if (preg_match("/1 WIFE @$pid@/", $famrec)>0) $pass=true;
 			if (preg_match("/1 CHIL @$pid@/", $famrec)>0) $pass=true;
@@ -94,7 +94,7 @@ if ((!userCanEdit($uname))&&(!$pass)) {
 
 //-- find the latest gedrec for the individual
 if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
-else $gedrec = find_record_in_file($pid);
+else $gedrec = find_updated_record($pid);
 
 //-- only allow edit of individual records
 $disp = true;
@@ -469,7 +469,7 @@ if ($action=="update") {
 		$famupdate = false;
 		$famid = $sfams[$i-1];
 		if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
-		else $famrec = find_record_in_file($famid);
+		else $famrec = find_updated_record($famid);
 		$oldfamrec = $famrec;
 		$parents = find_parents($famid);
 		//-- update the spouse
@@ -575,7 +575,8 @@ if ($action=="update") {
 			$famupdate = true;
 //			print "sfamupdate5";
 			$famrec .= "\r\n1 CHIL @".$CHIL[$i]."@";
-			$childrec = find_record_in_file($CHIL[$i]);
+			if (!isset($pgv_changes[$CHIL[$i]."_".$GEDCOM])) $childrec = find_person_record($CHIL[$i]);
+			else $childrec = find_updated_record($CHIL[$i]);
 			if (preg_match("/1 FAMC @$famid@/", $childrec)==0) {
 				$childrec = "\r\n1 FAMC @$famid@";
 				replace_gedrec($CHIL[$i], $childrec);
@@ -669,7 +670,7 @@ if ($action=="update") {
 		$newfamid = append_gedrec($famrec);
 
 		//-- add the new family id to the new spouse record
-		$spouserec = find_record_in_file($xref);
+		$spouserec = find_updated_record($xref);
 		$spouserec .= "\r\n1 FAMS @$newfamid@\r\n";
 		replace_gedrec($xref, $spouserec);
 		
@@ -724,7 +725,7 @@ if ($action=="update") {
 			$newfamid = append_gedrec($famrec);
 			
 			//-- add the new family to the new child
-			$childrec = find_record_in_file($cxref);
+			$childrec = find_updated_record($cxref);
 			$childrec .= "\r\n1 FAMC @$newfamid@\r\n";
 			replace_gedrec($cxref, $childrec);
 			
@@ -736,7 +737,7 @@ if ($action=="update") {
 			$famrec .= "\r\n1 CHIL @$cxref@\r\n";
 			
 			//-- add the family to the new child
-			$childrec = find_record_in_file($cxref);
+			$childrec = find_updated_record($cxref);
 			$childrec .= "\r\n1 FAMC @$newfamid@\r\n";
 			replace_gedrec($cxref, $childrec);
 		}
@@ -757,7 +758,7 @@ if ($action=="update") {
 		$famupdate = false;
 		if (!empty($famid)) {
 			if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
-			else $famrec = find_record_in_file($famid);
+			else $famrec = find_updated_record($famid);
 			$oldfamrec = $famrec;
 		}
 		else {
@@ -831,7 +832,7 @@ if ($action=="update") {
 				$updated = true;
 			}
 			if (empty($oldfamrec)) {
-				$spouserec = find_record_in_file($FATHER[$i]);
+				$spouserec = find_updated_record($FATHER[$i]);
 				$spouserec .= "\r\n1 FAMS @$famid@";
 				replace_gedrec($FATHER[$i], $spouserec);
 			}
@@ -910,7 +911,7 @@ if ($action=="update") {
 				$updated = true;
 			}
 			if (empty($oldfamrec)) {
-				$spouserec = find_record_in_file($MOTHER[$i]);
+				$spouserec = find_updated_record($MOTHER[$i]);
 				$spouserec .= "\r\n1 FAMS @$famid@";
 				replace_gedrec($MOTHER[$i], $spouserec);
 			}
@@ -975,7 +976,8 @@ if ($action=="update") {
 				$updated = true;
 			}
 			$famrec .= "\r\n1 CHIL @".$CHIL[$i]."@";
-			$childrec = find_record_in_file($CHIL[$i]);
+			if (!isset($pgv_changes[$CHIL[$i]."_".$GEDCOM])) $childrec = find_person_record($CHIL[$i]);
+			else $childrec = find_updated_record($CHIL[$i]);
 			if (preg_match("/1 FAMC @$famid@/", $childrec)==0) {
 				$childrec = "\r\n1 FAMC @$famid@";
 				replace_gedrec($CHIL[$i], $childrec);
@@ -1223,7 +1225,7 @@ if ($action=="choosepid") {
 	}
 	
 	$indifacts = array();
-	$subrecords = get_all_subrecords($gedrec, "ADDR,PHON,FAX,EMAIL,_EMAIL,NAME,FAMS,FAMC", false, false, false);
+	$subrecords = get_all_subrecords($gedrec, "ADDR,PHON,FAX,EMAIL,_EMAIL,NAME,FAMS,FAMC,_UID", false, false, false);
 	$repeat_tags = array();
 	foreach($subrecords as $ind=>$subrec) {
 		$ft = preg_match("/1 (\w+)(.*)/", $subrec, $match);
@@ -1308,7 +1310,7 @@ function checkform(frm) {
 		for($i=1; $i<=count($sfams); $i++) {
 			$famid = $sfams[$i-1];
 			if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
-			else $famrec = find_record_in_file($famid);
+			else $famrec = find_updated_record($famid);
 			$parents = find_parents_in_record($famrec);
 			$spid = "";
 			if($parents) {
@@ -1635,7 +1637,7 @@ for($i=1; $i<=count($sfams); $i++) {
 	$famreqdfacts = preg_split("/[,; ]/", $QUICK_REQUIRED_FAMFACTS);
 	$famid = $sfams[$i-1];
 	if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
-	else $famrec = find_record_in_file($famid);
+	else $famrec = find_updated_record($famid);
 	print $pgv_lang["family_with"]." ";
 	$parents = find_parents_in_record($famrec);
 	$spid = "";
@@ -2134,7 +2136,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	$parents = find_parents($cfams[$j-1]);
 	$famid = $cfams[$j-1];
 	if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_family_record($famid);
-	else $famrec = find_record_in_file($famid);
+	else $famrec = find_updated_record($famid);
 	
 	$subrecords = get_all_subrecords($famrec, "HUSB,WIFE,CHIL", false, false, false);
 	$famfacts = array();

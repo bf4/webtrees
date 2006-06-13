@@ -838,7 +838,7 @@ function print_main_sources($factrec, $level, $pid, $linenum) {
 				print "</div>";
 			}
 		  print "</td>";
-		  print "\n\t\t\t<td class=\"optionbox $styleadd\">";
+		  print "\n\t\t\t<td class=\"optionbox $styleadd wrap\">";
 		  //print "\n\t\t\t<td class=\"facts_value$styleadd\">";
 		  if (showFactDetails("SOUR", $pid)) {
 			   $source = find_source_record($match[$j][1]);
@@ -889,8 +889,10 @@ function print_main_sources($factrec, $level, $pid, $linenum) {
 						 if ($cs>0) print "\n\t\t\t<br />&nbsp;&nbsp;<span class=\"label\">".$pgv_lang["date"].":  </span><span class=\"field\">$cmatch[1]</span>";
 						 $tt = preg_match_all("/".($nlevel+1)." TEXT (.*)/", $srec, $tmatch, PREG_SET_ORDER);
 						 for($k=0; $k<$tt; $k++) {
-							  print "<br />&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"label\">".$pgv_lang["text"]." </span><span class=\"field\">".$tmatch[$k][1]."</span>";
+							  print "<br />&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"label\">".$pgv_lang["text"]." </span>\n";
+							  print "<span class=\"field\">".$tmatch[$k][1];
 							  print get_cont($nlevel+2, $srec);
+							  print "</span>";
 						 }
 					}
 					$cs = preg_match("/$nlevel QUAY (.*)/", $srec, $cmatch);
@@ -1033,7 +1035,7 @@ function print_main_media($pid, $level=1, $related=false) {
 
 	if (!showFact("OBJE", $pid)) return false;
 	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
-	else $gedrec = find_record_in_file($pid);
+	else $gedrec = find_updated_record($pid);
 	$ids = array($pid);
 	//-- find all of the related ids
 	if ($related) {
@@ -1091,7 +1093,7 @@ function print_main_media($pid, $level=1, $related=false) {
 		//-- if there is a change to this media item then get the
 		//-- updated media item and show it
 		if (isset($pgv_changes[$rowm["m_media"]."_".$GEDCOM])) {
-			$newrec = find_record_in_file($rowm["m_media"]);
+			$newrec = find_updated_record($rowm["m_media"]);
 			$row = array();
 			$row['m_media'] = $rowm["m_media"];
 			$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
@@ -1147,7 +1149,7 @@ function print_main_media($pid, $level=1, $related=false) {
 		}
 		else {
 			$row = array();
-			$newrec = find_record_in_file($media_id);
+			$newrec = find_updated_record($media_id);
 			$row['m_media'] = $media_id;
 			$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
 			$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);

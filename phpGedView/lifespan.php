@@ -28,7 +28,7 @@
  * @version $Id$
  */
 
-require_once("includes/controllers/timeline2_ctrl.php");
+require_once("includes/controllers/lifespan_ctrl.php");
 
 //if peeps !null then pass new array for zooming
 
@@ -85,7 +85,7 @@ span:first-letter {
 -->
 </style>
 
-<form name="people" action="timeline2.php">
+<form name="people" action="lifespan.php">
 <table>
 <?php
 //This is the box that adds one person at a time.  Not sure if we want to keep this functionality.
@@ -206,7 +206,7 @@ var oldMx = 0;
 	document.onmouseup = releaseimage;
 //-->
 </script>
-<form name="buttons" action="timeline2.php" method="get">
+<form name="buttons" action="lifespan.php" method="get">
 
   <table>
    <tr>

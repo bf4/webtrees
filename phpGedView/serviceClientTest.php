@@ -1,26 +1,8 @@
 <pre>
 <?php
-/***
- * Hack to change encoding style to literal
- * used when calling a java service
- *
- * @param object $wsdl SOAP_WSDL object
- * @returns object modified wsdl object
- */
-function literalWSDL(&$wsdl)
-{
-	$namespace = array_keys($wsdl->bindings);
-	$operations = array_keys($wsdl->bindings[$namespace[0]]['operations']);
-
-	for($i = 0; $i<count($operations); $i++)
-	{
-		$wsdl->bindings[$namespace[0]]['operations'][$operations[$i]]['input']['use'] = 'literal';
-		$wsdl->bindings[$namespace[0]]['operations'][$operations[$i]]['output']['use'] = 'literal';
-	}
-}
 require_once('config.php');
 ob_start();
-require_once('includes/SOAP/Client.php');
+require_once('SOAP/Client.php');
 
 //-- put your URL here
 $url = 'http://localhost/pgv/genservice.php?wsdl';
@@ -29,7 +11,6 @@ $wsdl = new SOAP_WSDL($url);
 
 //print_r(array_keys($wsdl->bindings));
 
-literalWSDL(&$wsdl);
 $soap = $wsdl->getProxy();
 
 $s = $soap->ServiceInfo();

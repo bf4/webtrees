@@ -50,26 +50,6 @@ $nonplacfacts = array("ENDL","NCHI","SLGC","SLGS");
 $nondatefacts = array("ABBR","ADDR","AFN","AUTH","EMAIL","FAX","NAME","NCHI","NOTE","OBJE","PHON","PUBL","REFN","REPO","SEX","SOUR","SSN","TEXT","TITL","WWW","_EMAIL");
 $typefacts = array();	//-- special facts that go on 2 TYPE lines
 
-/**
- * read the contents of a gedcom file
- *
- * opens a gedcom file and reads the contents into the <var>$fcontents</var> global string
- */
-function read_gedcom_file() {
-	global $fcontents;
-	global $GEDCOM, $GEDCOMS;
-	global $pgv_lang;
-	$fcontents = "";
-	if (isset($GEDCOMS[$GEDCOM])) {
-		$fp = fopen($GEDCOMS[$GEDCOM]["path"], "r");
-		$fcontents = fread($fp, filesize($GEDCOMS[$GEDCOM]["path"]));
-		fclose($fp);
-	}
-}
-
-//-- read the file onto the stack
-read_gedcom_file();
-
 //-------------------------------------------- newConnection
 //-- this function creates a new unique connection
 //-- and adds it to the connections file
@@ -144,13 +124,6 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 	global $fcontents, $GEDCOM, $pgv_changes, $manual_save;
 
 	$gid = strtoupper($gid);
-	$pos1 = strpos($fcontents, "0 @".$gid."@");
-	if ($pos1===false) {
-		print "ERROR 4: Could not find gedcom record with xref:$gid Line ".__LINE__."\n";
-		AddToChangeLog("ERROR 4: Could not find gedcom record with xref:$gid Line ".__LINE__."->" . getUserName() ."<-");
-		if (function_exists('debug_print_backtrace')) debug_print_backtrace();
-		return false;
-	}
 	if (($gedrec = check_gedcom($gedrec, $chan))!==false) {
 		//-- the following block of code checks if the XREF was changed in this record.
 		//-- if it was changed we add a warning to the change log
@@ -169,16 +142,6 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 				}
 			}
 		}
-		$pos2 = strpos($fcontents, "\n0", $pos1+1);
-		if ($pos2===false) {
-			$undo = substr($fcontents, $pos1);
-			$fcontents = substr($fcontents, 0,$pos1)."\r\n".trim($gedrec)."\r\n0 TRLR\r\n";
-		}
-		else {
-			$pos2++;
-			$undo = substr($fcontents, $pos1, $pos2-$pos1);
-			$fcontents = substr($fcontents, 0,$pos1).trim($gedrec)."\r\n".substr($fcontents, $pos2);
-		}
 		if (userAutoAccept()) {
 			require_once("includes/functions_import.php");
 			update_record($gedrec);
@@ -192,15 +155,13 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 			$change["user"] = getUserName();
 			$change["time"] = time();
 			if (!empty($linkpid)) $change["linkpid"] = $linkpid;
-			$change["undo"] = $undo;
+			$change["undo"] = $gedrec;
 			if (!isset($pgv_changes[$gid."_".$GEDCOM])) $pgv_changes[$gid."_".$GEDCOM] = array();
 			$pgv_changes[$gid."_".$GEDCOM][] = $change;
+			write_changes();
 		}
-		if (!isset($manual_save) || ($manual_save==false)) {
 			AddToChangeLog("Replacing gedcom record $gid ->" . getUserName() ."<-");
-			return write_file();
-		}
-		else return true;
+		return true;
 	}
 	return false;
 }
@@ -219,8 +180,6 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 		if (preg_match("/\d+/", $gid)==0) $xref = get_new_xref($type);
 		else $xref = $gid;
 		$gedrec = preg_replace("/0 @(.*)@/", "0 @$xref@", $gedrec);
-		$pos1 = strrpos($fcontents, "0");
-		$fcontents = substr($fcontents, 0, $pos1).trim($gedrec)."\r\n".substr($fcontents, $pos1);
 		if (userAutoAccept()) {
 			require_once("includes/functions_import.php");
 			update_record($gedrec);
@@ -234,16 +193,13 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 			$change["user"] = getUserName();
 			$change["time"] = time();
 			if (!empty($linkpid)) $change["linkpid"] = $linkpid;
-			$change["undo"] = "";
+			$change["undo"] = $gedrec;
 			if (!isset($pgv_changes[$xref."_".$GEDCOM])) $pgv_changes[$xref."_".$GEDCOM] = array();
 			$pgv_changes[$xref."_".$GEDCOM][] = $change;
+			write_changes();
 		}
 		AddToChangeLog("Appending new $type record $xref ->" . getUserName() ."<-");
-		if (!isset($manual_save) || ($manual_save==false)) {
-			if (write_file()) return $xref;
-			else return false;
-		}
-		else return $xref;
+		return $xref;
 	}
 	return false;
 }
@@ -253,22 +209,15 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 //-- the given $gid
 function delete_gedrec($gid, $linkpid='') {
 	global $fcontents, $GEDCOM, $pgv_changes, $manual_save;
-	$pos1 = strpos($fcontents, "0 @$gid@");
-	if ($pos1===false) {
+	
 		//-- first check if the record is not already deleted
 		if (isset($pgv_changes[$gid."_".$GEDCOM])) {
 			$change = end($pgv_changes[$gid."_".$GEDCOM]);
 			if ($change["type"]=="delete") return true;
 		}
-		print "ERROR 4: Could not find gedcom record with xref:$gid Line ".__LINE__."\n";
-		AddToChangeLog("ERROR 4: Could not find gedcom record with xref:$gid Line ".__LINE__."->" . getUserName() ."<-");
-		return false;
-	}
-	$pos2 = strpos($fcontents, "\n0", $pos1+1);
-	if ($pos2===false) $pos2=strpos($fcontents, "0 TRLR", $pos1+1);
-	else $pos2++;
-	$undo = substr($fcontents, $pos1, $pos2-$pos1);
-	$fcontents = substr($fcontents, 0,$pos1).substr($fcontents, $pos2);
+	
+	$undo = find_gedcom_record($gid);
+	if (empty($undo)) return false;
 	if (userAutoAccept()) {
 		require_once("includes/functions_import.php");
 		update_record($undo, true);
@@ -282,13 +231,13 @@ function delete_gedrec($gid, $linkpid='') {
 		$change["user"] = getUserName();
 		$change["time"] = time();
 		if (!empty($linkpid)) $change["linkpid"] = $linkpid;
-		$change["undo"] = $undo;
+		$change["undo"] = "";
 		if (!isset($pgv_changes[$gid."_".$GEDCOM])) $pgv_changes[$gid."_".$GEDCOM] = array();
 		$pgv_changes[$gid."_".$GEDCOM][] = $change;
+		write_changes();
 	}
 	AddToChangeLog("Deleting gedcom record $gid ->" . getUserName() ."<-");
-	if (!isset($manual_save)) return write_file();
-	else return true;
+	return true;
 }
 
 //-------------------------------------------- check_gedcom
@@ -364,11 +313,10 @@ function undo_change($cid, $index) {
 	if (isset($pgv_changes[$cid])) {
 		$changes = $pgv_changes[$cid];
 		$change = $changes[$index];
-		$change["undo"] = $change["undo"];
 		if ($GEDCOM != $change["gedcom"]) {
 			$GEDCOM = $change["gedcom"];
-			read_gedcom_file();
 		}
+		/*
 		if ($change["type"]=="delete") {
 			$pos1 = strrpos($fcontents, "0");
 			$fcontents = substr($fcontents, 0, $pos1).trim($change["undo"])."\r\n".substr($fcontents, $pos1);
@@ -408,6 +356,7 @@ function undo_change($cid, $index) {
 				$fcontents = substr($fcontents, 0,$pos1).trim($change["undo"])."\r\n".substr($fcontents, $pos2);
 			}
 		}
+		*/
 		if ($index==0) unset($pgv_changes[$cid]);
 		else {
 			for($i=$index; $i<count($pgv_changes[$cid]); $i++) {
@@ -416,45 +365,10 @@ function undo_change($cid, $index) {
 			if (count($pgv_changes[$cid])==0) unset($pgv_changes[$cid]);
 		}
 		AddToChangeLog("Undoing change $cid - $index ".$change["type"]." ->" . getUserName() ."<-");
-		if (!isset($manual_save) || ($manual_save==false)) {
-			return write_file();
-		}
-		else return true;
+		if (!isset($manual_save) || $manual_save==false) write_changes();
+		return true;
 	}
 	return false;
-}
-
-//-------------------------------------------- write_file
-//-- this function writes the $fcontents back to the
-//-- gedcom file
-function write_file() {
-	global $fcontents, $GEDCOMS, $GEDCOM, $pgv_changes, $INDEX_DIRECTORY;
-
-	if (preg_match("/0 TRLR/", $fcontents)==0) $fcontents.="0 TRLR\n";
-	//-- write the gedcom file
-	if (!is_writable($GEDCOMS[$GEDCOM]["path"])) {
-		print "ERROR 5: GEDCOM file is not writable.  Unable to complete request.\n";
-		AddToChangeLog("ERROR 5: GEDCOM file is not writable.  Unable to complete request. ->" . getUserName() ."<-");
-		return false;
-	}
-	$fp = fopen($GEDCOMS[$GEDCOM]["path"], "wb");
-	if ($fp===false) {
-		print "ERROR 6: Unable to open GEDCOM file resource.  Unable to complete request.\n";
-		AddToChangeLog("ERROR 6: Unable to open GEDCOM file resource.  Unable to complete request. ->" . getUserName() ."<-");
-		return false;
-	}
-	$fw = fwrite($fp, $fcontents);
-	if ($fw===false) {
-		print "ERROR 7: Unable to write to GEDCOM file.\n";
-		AddToChangeLog("ERROR 7: Unable to write to GEDCOM file. ->" . getUserName() ."<-");
-		fclose($fp);
-		return false;
-	}
-	fclose($fp);
-	$logline = AddToLog($GEDCOMS[$GEDCOM]["path"]." updated by >".getUserName()."<");
- 	if (!empty($COMMIT_COMMAND)) check_in($logline, basename($GEDCOMS[$GEDCOM]["path"]), dirname($GEDCOMS[$GEDCOM]["path"]));
-
-	return write_changes();
 }
 
 /**
@@ -467,7 +381,7 @@ function write_file() {
  */
 function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag="CHIL", $sextag="") {
 	global $pgv_lang, $factarray, $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $monthtonum, $WORD_WRAPPED_NOTES;
-	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $USE_RTL_FUNCTIONS;
+	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $USE_RTL_FUNCTIONS, $GEDCOM;
 
 	init_calendar_popup();
 	print "<form method=\"post\" name=\"addchildform\" onsubmit=\"return checkform();\">\n";
@@ -486,7 +400,8 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	if (empty($namerec)) {
 		$indirec = "";
 		if ($famtag=="CHIL" and $nextaction=="addchildaction") {
-			$famrec = find_family_record($famid);
+			if (isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_updated_record($famid); 
+			else $famrec = find_family_record($famid);
 			if (empty($famrec)) $famrec = find_record_in_file($famid);
 			$parents = find_parents_in_record($famrec);
 			$indirec = find_person_record($parents["HUSB"]);
@@ -1197,19 +1112,13 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		if ($printSaveButton) print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
 		print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 		// 2 SOUR
-//		$source = get_first_tag($level, "SOUR", $gedrec);
-//		if (empty($source)) $source = "SOUR @";
 		$source = "SOUR @";
 		add_simple_tag("$level $source");
 		// 3 PAGE
-//		$page = get_first_tag($level+1, "PAGE", $gedrec);
-//		if (empty($page)) $page = "PAGE";
 		$page = "PAGE";
 		add_simple_tag(($level+1)." $page");
 		// 3 DATA
 		// 4 TEXT
-//		$text = get_first_tag($level+2, "TEXT", $gedrec);
-//		if (empty($text)) $text = "TEXT";
 		$text = "TEXT";
 		add_simple_tag(($level+2)." $text");
 		add_simple_tag(($level+2)." DATE", "", $pgv_lang["date_of_entry"]);
@@ -1485,7 +1394,7 @@ function linkMedia($mediaid, $linktoid, $level=1) {
 	if ($level!=1) return false;		// Level 2 items get linked elsewhere
 	// find Indi, Family, or Source record to link to
 	if (isset($pgv_changes[$linktoid."_".$GEDCOM])) {
-		$gedrec = find_record_in_file($linktoid);
+		$gedrec = find_updated_record($linktoid);
 	} else {
 		$gedrec = find_gedcom_record($linktoid);
 	}

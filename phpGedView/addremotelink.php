@@ -48,7 +48,7 @@ else{
   $pid = clean_input($pid);
   $name = get_person_name($pid);
   if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_person_record($pid);
-  else $gedrec = find_record_in_file($pid);
+  else $gedrec = find_updated_record($pid);
   if (empty($gedrec)) $gedrec =  find_record_in_file($pid);
   $disp = displayDetailsById($pid);
   $server_list = get_server_list();
@@ -130,7 +130,7 @@ if ($action=="addlink") {
 	}
 
 	if (!empty($serverID)&&!empty($link_pid)) {
-       if (isset($pgv_changes[$pid."_".$GEDCOM])) $indirec = find_record_in_file($pid);
+       if (isset($pgv_changes[$pid."_".$GEDCOM])) $indirec = find_updated_record($pid);
        else $indirec = find_person_record($pid);
 
        if($relation_type=="father"){
@@ -139,7 +139,7 @@ if ($action=="addlink") {
        	   $indistub .= "2 PAGE ".$link_pid."\r\n";
        	   $indistub .= "1 RFN ".$serverID.":".$link_pid."\r\n";
        	   $stub_id = append_gedrec($indistub, false);
-       	   $indistub = find_record_in_file($stub_id);
+       	   $indistub = find_updated_record($stub_id);
        	   
            $gedcom_fam = "0 @new@ FAM\r\n";
            $gedcom_fam.= "1 HUSB @".$stub_id."@\r\n";
@@ -160,7 +160,7 @@ if ($action=="addlink") {
        	   $indistub .= "2 PAGE ".$link_pid."\r\n";
        	   $indistub .= "1 RFN ".$serverID.":".$link_pid."\r\n";
        	   $stub_id = append_gedrec($indistub, false);
-       	   $indistub = find_record_in_file($stub_id);
+       	   $indistub = find_updated_record($stub_id);
        	   
            $gedcom_fam = "0 @NEW@ FAM\r\n";
            $gedcom_fam.= "1 WIFE @".$stub_id."@\r\n";
@@ -181,7 +181,7 @@ if ($action=="addlink") {
        	   $indistub .= "2 PAGE ".$link_pid."\r\n";
        	   $indistub .= "1 RFN ".$serverID.":".$link_pid."\r\n";
        	   $stub_id = append_gedrec($indistub, false);
-       	   $indistub = find_record_in_file($stub_id);
+       	   $indistub = find_updated_record($stub_id);
        	   
             $gedcom_fam = "0 @NEW@ FAM\r\n";
             $gedcom_fam.= "1 WIFE @".$pid."@\r\n";
@@ -202,7 +202,7 @@ if ($action=="addlink") {
        	   $indistub .= "2 PAGE ".$link_pid."\r\n";
        	   $indistub .= "1 RFN ".$serverID.":".$link_pid."\r\n";
        	   $stub_id = append_gedrec($indistub, false);
-       	   $indistub = find_record_in_file($stub_id);
+       	   $indistub = find_updated_record($stub_id);
        	   
             $gedcom_fam = "0 @NEW@ FAM\r\n";
             $gedcom_fam.= "1 WIFE @".$stub_id."@\r\n";
@@ -223,7 +223,7 @@ if ($action=="addlink") {
        	   $indistub .= "2 PAGE ".$link_pid."\r\n";
        	   $indistub .= "1 RFN ".$serverID.":".$link_pid."\r\n";
        	   $stub_id = append_gedrec($indistub, false);
-       	   $indistub = find_record_in_file($stub_id);
+       	   $indistub = find_updated_record($stub_id);
        	   
             $sex = get_gedcom_value("SEX", 1, $indirec, '', false);
             if($sex=="M"){

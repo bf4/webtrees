@@ -93,7 +93,7 @@ class Family extends GedcomRecord {
 		}
 		if (empty($indirec)) {
 			if (userCanEdit(getUserName()) && isset($pgv_changes[$pid."_".$GEDCOM])) {
-				$indirec = find_record_in_file($pid);
+				$indirec = find_updated_record($pid);
 				$fromfile = true;
 			}
 		}
@@ -169,7 +169,7 @@ class Family extends GedcomRecord {
 		if ($this->changed) return $this;
 		if (userCanEdit(getUserName())&&($this->disp)) {
 			if (isset($pgv_changes[$this->xref."_".$GEDCOM])) {
-				$newrec = find_record_in_file($this->xref);
+				$newrec = find_updated_record($this->xref);
 				if (!empty($newrec)) {
 					$newfamily = new Family($newrec);
 					$newfamily->setChanged(true);
@@ -330,7 +330,7 @@ class Family extends GedcomRecord {
 				$aliaid = $parts[1];
 				if (!empty($servid)&&!empty($aliaid)) {
 					$servrec = find_gedcom_record($servid);
-					if (empty($servrec)) $servrec = find_record_in_file($servid);
+					if (empty($servrec)) $servrec = find_updated_record($servid);
 					if (!empty($servrec)) {
 						$surl = get_gedcom_value("URL", 1, $servrec);
 						$url = "family.php?famid=".$aliaid;

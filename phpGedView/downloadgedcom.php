@@ -93,7 +93,7 @@ if ($action == "download") {
 	} else
 		if ($filetype == "gramps") {
 			$fileName = $ged . ".gramps";
-			header("Content-Disposition: attachment; filename=" . $fileName);
+		header("Content-Disposition: attachment; filename=" . $fileName);
 			print_gramps();
 			
 		}
@@ -326,7 +326,6 @@ if ($action == "download") {
 		global $privatize_export, $privatize_export_level;
 		global $TBLPREFIX;
 
-		//In C#, we would have declared that $sql variable before we used it.
 		require_once ("includes/GEDownloadGedcom.php");
 		$geDownloadGedcom = new GEDownloadGedcom();
 		$geDownloadGedcom->begin_xml();
@@ -354,7 +353,7 @@ if ($action == "download") {
 		while ($row = $res->fetchRow()) {
 			$rec = trim($row[0]) . "\r\n";
 			$rec = remove_custom_tags($rec, $remove);
-			$geDownloadGedcom->create_source($rec, $row[1]);
+			$geDownloadGedcom->create_source($row[1], $rec);
 		}
 		$res->free();
 
@@ -377,10 +376,12 @@ if ($action == "download") {
 
 		$sql = "SELECT m_gedrec, m_media FROM " . $TBLPREFIX . "media WHERE m_gedfile=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY m_media";
 		$res = dbquery($sql);
+		
 		while ($row = $res->fetchRow()) {
 			$rec = trim($row[0]) . "\r\n";
 			$rec = remove_custom_tags($rec, $remove);
-			$geDownloadGedcom->create_media($rec, $row[1]);
+			$mediaID = get_id_from_record($rec);
+			$geDownloadGedcom->create_media($mediaID,$rec, $row[1]);
 		}
 		$res->free();
 		if($zip !== "no")
@@ -389,5 +390,12 @@ if ($action == "download") {
 		}
 		else
 			print $geDownloadGedcom->dom->saveXML();
+			//$geDownloadGedcom->validate($geDownloadGedcom->dom);
+	}
+	function get_id_from_record($record)
+	{
+		
+		preg_match('~0 @(.*)@ (.*)~',$record, $varMatch);
+		return $varMatch[1];
 	}
 ?>

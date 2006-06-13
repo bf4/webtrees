@@ -105,7 +105,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 			foreach($pgv_changes as $cid=>$changes) {
 				$change = $changes[count($changes)-1];
 				if ($change["gedcom"]==$GEDCOM) {
-					$gedrec = find_record_in_file($change["gid"]);
+					$gedrec = find_updated_record($change["gid"]);
 					if (empty($gedrec)) $gedrec = $change["undo"];
 					$ct = preg_match("/0 @(.*)@(.*)/", $gedrec, $match);
 					if ($ct>0) $type = trim($match[2]);

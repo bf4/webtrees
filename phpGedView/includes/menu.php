@@ -547,8 +547,8 @@ class MenuBar
 			$menu->addSubmenu($submenu);
 		}
 		//-- timeline chart submenu
-		if (file_exists("timeline2.php")) {
-			$link = "timeline2.php";
+		if (file_exists("lifespan.php")) {
+			$link = "lifespan.php";
 			if ($rootid) $link .= "?pids[]=".$rootid;
 			$submenu = new Menu($pgv_lang["lifespan_chart"], $link);
 			if (!empty($PGV_IMAGES["timeline"]["small"]))

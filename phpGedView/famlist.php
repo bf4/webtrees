@@ -56,7 +56,7 @@ if (empty($DEBUG)) $DEBUG = false;
  * This variable is used for checking if the @ symbol is present in the alphabet list.
  * @global boolean $pass
  */
-$pass = FALSE;
+$pass = false;
 
 /**
  * Total famlist array
@@ -100,13 +100,13 @@ if (count($famalpha) > 0) {
 			else print $letter;
 			print "</a> | \n";
 		}
-		if ($letter === "@") $pass = TRUE;
+		if ($letter === "@") $pass = true;
 	}
-	if ($pass == TRUE) {
+	if ($pass == true) {
 		if (isset($alpha) && $alpha == "@") print "<a href=\"?alpha=@&amp;surname_sublist=yes&amp;surname=@N.N.\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
 		else print "<a href=\"?alpha=@&amp;surname_sublist=yes&amp;surname=@N.N.\">".PrintReady($pgv_lang["NN"])."</a>";
 		print " | \n";
-		$pass = FALSE;
+		$pass = false;
 	}
 	if ($show_all=="yes") print "<a href=\"?show_all=yes&amp;surname_sublist=".$surname_sublist."\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";
 	else print "<a href=\"?show_all=yes&amp;surname_sublist=".$surname_sublist."\">".$pgv_lang["all"]."</a>\n";
@@ -314,7 +314,7 @@ else {
 			print "<td style=\"text-align:center;\" colspan=\"2\">";
 			print $pgv_lang["first_letter_fname"]."<br />\n";
 			foreach($firstalpha as $letter=>$list) {
-				$PASS = false;
+				$pass = false;
 				if ($letter != "@") {
 					if (!isset($fstartalpha) && !isset($falpha)) {
 						$fstartalpha = $letter;
@@ -325,13 +325,13 @@ else {
 					else print $letter;
 					print "</a> | \n";
 				}
-				if ($letter === "@") $pass = TRUE;
+				if ($letter === "@") $pass = true;
 			}
-			if ($pass == TRUE) {
+			if ($pass == true) {
 				if (isset($falpha) && $falpha == "@") print "<a href=\"?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;falpha=@&amp;surname_sublist=yes\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
 				else print "<a href=\"?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;falpha=@&amp;surname_sublist=yes\">".PrintReady($pgv_lang["NN"])."</a>";
 				print " | \n";
-				$pass = FALSE;
+				$pass = false;
 			}
 			print_help_link("firstname_alpha_help", "qm", "firstname_alpha_index");
 			if ($show_all_firstnames=="yes") print "<a href=\"?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;show_all_firstnames=no\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";

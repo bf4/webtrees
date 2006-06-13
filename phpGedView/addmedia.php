@@ -51,7 +51,7 @@ $disp = true;
 if (!empty($pid)) {
 	$pid = clean_input($pid);
 	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_media_record($pid);
-	else $gedrec = find_record_in_file($pid);
+	else $gedrec = find_updated_record($pid);
 	if (empty($gedrec)) $gedrec =  find_record_in_file($pid);
 	$disp = displayDetails($pid, "OBJE");
 }
@@ -569,53 +569,6 @@ if ($action=="editmedia") {
 	show_media_form($pid, "update", $filename, $linktoid, $level);
 }
 
-if ($action=="injectmedia") {
-	// NOTE: Inject media is used to put multimedia records into indi/fam/source records.
-	$medialist = get_db_media_list();
-	
-	// check for already imported media
-	$test = find_record_in_file($medialist[0]["XREF"]);
-	if ($test) {
-		print "<div align=\"center\" class=\"largeError\" >This gedcom has already had the media information inserted into it, operation aborted</div>";
-	} else {
-
-		$ct = 0;
-		$nct = 0;
-		foreach($medialist as $indexval => $media) {
-			$mediarec = "\r\n0 @".$media["XREF"]."@ OBJE";
-			$mediarec .= "\r\n1 FILE ".$media["FILE"];
-			$mediarec .= "\r\n1 TITL ".$media["TITL"];
-			$mediarec .= "\r\n1 FORM ".$media["FORM"];
-			if (strlen($media["NOTE"])>0) {$mediarec .= "\r\n".$media["NOTE"]; $nct++;};
-			$pos1 = strrpos($fcontents, "0");
-			$fcontents = substr($fcontents, 0, $pos1).trim($mediarec)."\r\n".substr($fcontents, $pos1);
-			write_file();
-			$ct++;
-		}
-		print "<center>$ct media items added, $nct with notes</center>";
-
-		$ct = 0;
-		$nct = 0;
-		$mappinglist = get_db_mapping_list();
-		$oldindi = "";
-		for ($i=0; $i < count($mappinglist); $i++) {
-			$media = $mappinglist[$i];
-			$indi = $media["INDI"];
-			if ($indi != $oldindi) {
-				if ($i > 0) { db_replace_gedrec($oldindi, $indirec);};
-				$oldindi = $indi;
-				$indirec = find_record_in_file($indi);
-			}
-		    if (strlen($media["NOTE"])>0) {$indirec .= "\r\n".trim($media["NOTE"]); $nct++;};
-
-		}
-		db_replace_gedrec($indi, $indirec);
-
-		print "<center>$ct link items added, $nct with notes</center>";
-		print "<p><center>".$pgv_lang["adds_completed"]."<center></p><br /><br />\n";
-	}
-	print "<p><center><a href=\"#\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a></center></p><br /><br />\n";
-} 
 print "<br />";
 print "<div class=\"center\"><a href=\"#\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a></div>\n";
 print "<br />";

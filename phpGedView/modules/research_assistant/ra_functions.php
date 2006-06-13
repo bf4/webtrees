@@ -22,7 +22,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: ra_functions.php 936 2006-05-25 19:37:44Z gqueen $
+ * @version $Id: ra_functions.php 990 2006-06-12 20:20:27Z jchristensen $
  * @author Jason Porter
  * @author Wade Lasson
  * @author Brandon Gagnon
@@ -32,14 +32,12 @@
  * @author Mike Austin
  * @author Gavin Winkler
  * @author David Molton
- * @author Jordan "Cajun Asian" Leung
  */
 //-- security check, only allow access from module.php
 if (strstr($_SERVER["SCRIPT_NAME"],"ra_functions.php")) {
 	print "Now, why would you want to do that.  You're not hacking are you?";
 	exit;
 }
-
 // Set up our default language file.
 require_once 'languages/ra_lang.en.php';
 include_once("modules/research_assistant/forms/ra_privacy.php");
@@ -77,7 +75,7 @@ class ra_functions {
 
 		// Create all of the tables needed for this module
 		if (!in_array($TBLPREFIX.'tasks', $data)) {
-			$sql = 'create table '.$TBLPREFIX.'tasks (t_id INT not null,t_fr_id INT not null,t_title VARCHAR(255) not null,t_description text not null, t_startdate INT not null, t_enddate INT null, t_results text null, t_form varchar(255) null, t_username VARCHAR(45) null, constraint '.$TBLPREFIX.'tasks_PK primary key (t_id) );';
+			$sql = 'create table '.$TBLPREFIX.'tasks (t_id INTEGER not null,t_fr_id INTEGER not null,t_title VARCHAR(255) not null,t_description text not null, t_startdate INT not null, t_enddate INT null, t_results text null, t_form varchar(255) null, constraint '.$TBLPREFIX.'tasks_PK primary key (t_id) );';
 			$res = dbquery($sql);
 		}
 		else {
@@ -92,19 +90,19 @@ class ra_functions {
 			}
 		}
 		if (!in_array($TBLPREFIX.'comments', $data)) {
-			$sql = 'create table '.$TBLPREFIX.'comments (c_id INT not null,'.'c_t_id INT not null,'.'c_u_username VARCHAR(30) not null,'.'c_body text not null,'.'c_datetime INT not null,'.' constraint '.$TBLPREFIX.'comments_PK primary key (c_id) );';
+			$sql = 'create table '.$TBLPREFIX.'comments (c_id INTEGER not null,'.'c_t_id INTEGER not null,'.'c_u_username VARCHAR(30) not null,'.'c_body text not null,'.'c_datetime INT not null,'.' constraint '.$TBLPREFIX.'comments_PK primary key (c_id) );';
 			$res = dbquery($sql);
 		}
 		if (!in_array($TBLPREFIX.'tasksource', $data)) {
-			$sql = 'create table '.$TBLPREFIX.'tasksource (ts_t_id INT not null,ts_s_id VARCHAR(255) not null, ts_page VARCHAR(255), ts_date VARCHAR(50), ts_text TEXT, ts_quay VARCHAR(50), ts_obje VARCHAR(20), constraint '.$TBLPREFIX.'tasksource_PK primary key (ts_s_id, ts_t_id) );';
+			$sql = 'create table '.$TBLPREFIX.'tasksource (ts_t_id INTEGER not null,ts_s_id VARCHAR(255) not null, ts_page VARCHAR(255), ts_date VARCHAR(50), ts_text TEXT, ts_quay VARCHAR(50), ts_obje VARCHAR(20), constraint '.$TBLPREFIX.'tasksource_PK primary key (ts_s_id, ts_t_id) );';
 			$res = dbquery($sql);
 		}
 		if (!in_array($TBLPREFIX.'folders', $data)) {
-			$sql = 'create table '.$TBLPREFIX.'folders (fr_id INT not null,'.'fr_name VARCHAR(255),'.'fr_description text null,'.'fr_parentid INT null,'.' constraint '.$TBLPREFIX.'folders_PK primary key (fr_id) );';
+			$sql = 'create table '.$TBLPREFIX.'folders (fr_id INTEGER not null,'.'fr_name VARCHAR(255),'.'fr_description text null,'.'fr_parentid INTEGER null,'.' constraint '.$TBLPREFIX.'folders_PK primary key (fr_id) );';
 			$res = dbquery($sql);
 		}
 		if (!in_array($TBLPREFIX.'individualtask', $data)) {
-			$sql = 'create table '.$TBLPREFIX.'individualtask (it_t_id INT not null,'.'it_i_id VARCHAR(255) not null,'.'it_i_file integer not null,'.' constraint '.$TBLPREFIX.'individualtask_PK primary key (it_t_id, it_i_id,it_i_file) );';
+			$sql = 'create table '.$TBLPREFIX.'individualtask (it_t_id integer not null,'.'it_i_id VARCHAR(255) not null,'.'it_i_file integer not null,'.' constraint '.$TBLPREFIX.'individualtask_PK primary key (it_t_id, it_i_id,it_i_file) );';
 			$res = dbquery($sql);
 		}
 		if (!in_array($TBLPREFIX.'taskfacts', $data)) {
@@ -112,7 +110,8 @@ class ra_functions {
 			$res = dbquery($sql);
 		}
 		if(!in_array($TBLPREFIX.'user_comments', $data)){
-			$sql = 'create table '.$TBLPREFIX.'user_comments (uc_id INT not null,'.'uc_username VARCHAR(45) not null,'.'uc_datetime INT not null,'.'uc_comment VARCHAR(500) not null,'.' constraint '.$TBLPREFIX.'user_comments_PK primary key (uc_id));';
+			//$sql = 'create table'.$TBLPREFIX.'user_comments (uc_id INTEGER not null,'.'uc_username VARCHAR(45) not null,'.'uc_datetime INTEGER not null,'.'uc_comment VARCHAR(500) not null,'.'uc_p_id VARCHAR(255) not null,'.'uc_f_id INTEGER not null,'.' constraint '.$TBLPREFIX.'user_comments_PK primary key (uc_id));';
+			$sql = 'create table '.$TBLPREFIX.'user_comments (uc_id INT not null,'.'uc_username VARCHAR(45) not null,'.'uc_datetime INT not null,'.'uc_comment VARCHAR(500) not null,'.'uc_p_id VARCHAR(255) not null,'.'uc_f_id INT not null,'.' constraint '.$TBLPREFIX.'user_comments_PK primary key (uc_id));';
 			$res = dbquery($sql);
 		}
 		
@@ -141,7 +140,7 @@ class ra_functions {
 		$res = dbquery($sql);
 		$row = $res->fetchRow(DB_FETCHMODE_ASSOC);
 		$res->free();
-		return db_cleanup($row);
+		return $row;
 	}
 
 	/**
@@ -177,8 +176,7 @@ class ra_functions {
 			$percent = " width='22%' ";
 
 		// Display for the menu
-		global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, $SHOW_ADD_FOLDER, $SHOW_ADD_UNLINKED_SOURCE, $SHOW_VIEW_PROBABILITIES;//show
-		
+global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, $SHOW_ADD_FOLDER, $SHOW_ADD_UNLINKED_SOURCE, $SHOW_VIEW_PROBABILITIES;//show
 		$out = '<table class="list_table" width="100%" cellpadding="2">';
 		$out .= '<tr>';
 		$out .= '<td align="left"'.$percent.'class="optionbox wrap">'.ra_functions :: print_top_folder($folderid).'</td>';
@@ -377,7 +375,7 @@ class ra_functions {
 
 		return $res;
 	}
-	
+
 	/**
 	 * Displays a list of assigned users tasks
 	 * 
@@ -396,8 +394,6 @@ class ra_functions {
 		$out .= '</table>';
 		
 	 }
-
-	 
 
 	/**
 	 * Displays a list of folders and their tasks
@@ -421,7 +417,7 @@ class ra_functions {
 
 		return $out;
 	}
-
+	
 	/*
 	 * Dipsplay tasks that a user has assigned to them.
 	 */
@@ -611,14 +607,16 @@ class ra_functions {
 
 		return $out;
 	}
-	
-
 	/*
 	 * Deletes a task
 	 */
 	function deleteTask($taskid) {
 		global $TBLPREFIX;
-		$sql = "DELETE from ".$TBLPREFIX."tasks WHERE t_id='".$taskid."'";
+		$sql = "DELETE from ".$TBLPREFIX."tasks  WHERE t_id='".$taskid."'";
+		dbquery($sql);
+		$sql = "DELETE from ".$TBLPREFIX."comments  WHERE c_t_id='".$taskid."'";
+		dbquery($sql);
+		$sql = "DELETE from ".$TBLPREFIX."tasksource  WHERE ts_t_id='".$taskid."'";
 		dbquery($sql);
 	}
 	/**
@@ -1226,7 +1224,7 @@ class ra_functions {
 									if(!empty($_POST['comments'])){
 										$commentid = get_next_id("user_comments", "uc_id");
 										$username = getUserName();
-										$sql = "INSERT INTO ".$TBLPREFIX."user_comments (uc_id, uc_username, uc_datetime, uc_comment) "."VALUES ('".$DBCONN->escapeSimple($commentid)."', '".$DBCONN->escapeSimple($username)."', '".time()."', '".$DBCONN->escapeSimple($_POST["comments"])."')";
+										$sql = "INSERT INTO ".$TBLPREFIX."user_comments (uc_id, uc_username, uc_datetime, uc_comment, uc_p_id, uc_f_id) "."VALUES ('".$DBCONN->escapeSimple($commentid)."', '".$DBCONN->escapeSimple($username)."', '".time()."', '".$DBCONN->escapeSimple($_POST["comments"])."', '".$DBCONN->escapeSimple($person->getXref())."', '".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id'])."')";
 									    
 										$res = dbquery($sql);
 									}
@@ -1239,10 +1237,12 @@ class ra_functions {
 
 		// Display comments
 		global $pgv_lang, $TBLPREFIX;
-		$sql = 	"SELECT  uc_id, uc_username, uc_datetime, uc_comment " .
-				"FROM " . $TBLPREFIX . "user_comments " .
-				//"WHERE uc_id='" . $_REQUEST["taskid"] . "' " .
-				"ORDER BY uc_datetime DESC";
+//		$sql = 	"SELECT  uc_id, uc_username, uc_datetime, uc_comment " .
+//				"FROM " . $TBLPREFIX . "user_comments " .
+//				//"WHERE uc_id='" . $_REQUEST["taskid"] . "' " .
+//				"Where i_id = " .$person .
+//				"ORDER BY uc_datetime DESC";
+		$sql = "select uc_id, uc_username, uc_datetime, uc_comment from ".$TBLPREFIX . "user_comments WHERE uc_f_id='".$GEDCOMS[$GEDCOM]['id']."' AND uc_p_id='" . $person->getXref() . "' ORDER BY uc_datetime DESC";
 		$res = dbquery($sql);
 		$out .= "";
 

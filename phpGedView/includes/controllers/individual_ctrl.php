@@ -166,7 +166,7 @@ class IndividualControllerRoot extends BaseController {
 		if ($this->show_changes=="yes" && userCanEdit($this->uname)) {
 			if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
 				 //-- get the changed record from the file
-				$newrec = find_record_in_file($this->pid);
+				$newrec = find_updated_record($this->pid);
 				//print("jkdsakjhdkjsadkjsakjdhsakd".$newrec);
 				$remoterfn = get_gedcom_value("RFN", 1, $newrec);
 			 }
@@ -217,7 +217,7 @@ class IndividualControllerRoot extends BaseController {
 						$famids = array_merge(find_sfamily_ids($this->user["gedcomid"][$GEDCOM]), find_family_ids($this->user["gedcomid"][$GEDCOM]));
 						foreach($famids as $indexval => $famid) {
 							if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_gedcom_record($famid);
-							else $famrec = find_record_in_file($famid);
+							else $famrec = find_updated_record($famid);
 							if (preg_match("/1 HUSB @$this->pid@/", $famrec)>0) $this->canedit=true;
 							if (preg_match("/1 WIFE @$this->pid@/", $famrec)>0) $this->canedit=true;
 							if (preg_match("/1 CHIL @$this->pid@/", $famrec)>0) $this->canedit=true;
@@ -255,13 +255,15 @@ class IndividualControllerRoot extends BaseController {
 	 * Also update the indirec we will use to generate the page
 	 */
 	function acceptChanges() {
-		global $GEDCOM;
+		global $GEDCOM, $indilist;
 		if (!userCanAccept($this->uname)) return;
 		require_once("includes/functions_import.php");
 		if (accept_changes($this->pid."_".$GEDCOM)) {
 			$this->show_changes="no";
 			$this->accept_success=true;
-			$indirec = find_record_in_file($this->pid);
+			//-- delete the record from the cache and refresh it
+			if (isset($indilist[$this->pid])) unset($indilist[$this->pid]);
+			$indirec = find_person_record($this->pid);
 			$this->indi = new Person($indirec);
 		}
 	}

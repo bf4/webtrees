@@ -143,6 +143,8 @@ class PGVReport {
 			$element->setUrl("http://www.phpgedview.net/");
 			$this->pdf->addFooter($element);
 		}
+		$this->pdf->SetAutoPageBreak(false);
+		$this->pdf->SetAutoLineWrap(false);
 	}
 
 	function setProcessing($p) {
@@ -732,7 +734,7 @@ class PGVRText extends PGVRElement {
 		if (count($lines)>0) {
 			foreach($lines as $indexval => $line) {
 				$pdf->SetXY($x, $cury);
-				//print "[$x $cury $line]";
+//				print "[$x $cury $line]";
 				$pdf->Write($styleh,$line);
 				$cury+=$styleh+1;
 				if ($cury>$pdf->getPageHeight()) $cury = $pdf->getY()+$styleh+1;
@@ -1109,7 +1111,6 @@ function startElement($parser, $name, $attrs) {
 	$newattrs = array();
 	$temp = "";
 	foreach($attrs as $key=>$value) {
-//		$ct = preg_match("/^\\$([a-zA-Z0-9\-_]+)$/", $value, $match);
 		$ct = preg_match("/^\\$(\w+)$/", $value, $match);
 		if ($ct>0) {
 			if ((isset($vars[$match[1]]["id"]))&&(!isset($vars[$match[1]]["gedcom"]))) $value = $vars[$match[1]]["id"];
@@ -1825,7 +1826,7 @@ function PGVRSetVarSHandler($attrs) {
 	for($i=0; $i<$ct; $i++) {
 		// print $match[$i][1]."<br />";
 		$t = $vars[$match[$i][1]]["id"];
-		$value = preg_replace("/\\$".$match[$i][1]."/", $t, $value);
+		$value = preg_replace("/\\$".$match[$i][1]."/", $t, $value, 1);
 	}
 
 	$ct = preg_match("/(\d+)\s*([\-\+\*\/])\s*(\d+)/", $value, $match);
@@ -1849,7 +1850,7 @@ function PGVRSetVarSHandler($attrs) {
 				break;
 		}
 	}
-	//print "[$value]";
+//	print "$name=[$value] ";
 	if (strstr($value, "@")!==false) $value="";
 	$vars[$name]["id"]=$value;
 }

@@ -693,7 +693,7 @@ function getRecentChanges() {
 		foreach($changes as $id=>$change) {
 			$gid = $change['d_gid'];
 			$gedrec = find_gedcom_record($change['d_gid']);
-			if (empty($gedrec)) $gedrec = find_record_in_file($change['d_gid']);
+			if (empty($gedrec)) $gedrec = find_updated_record($change['d_gid']);
 
 			if (!empty($gedrec)) {
 				$type = "INDI";

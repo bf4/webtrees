@@ -453,7 +453,7 @@ if (check_media_structure()) {
 				if (!empty($_REQUEST["xref"])) {
 					//-- we don't need to update the database, the database will be
 					//-- updated automatically when the changes are accepted
-					if (isset($pgv_changes[$_REQUEST['xref']."_".$GEDCOM])) $objerec = find_record_in_file($_REQUEST['xref']);
+					if (isset($pgv_changes[$_REQUEST['xref']."_".$GEDCOM])) $objerec = find_updated_record($_REQUEST['xref']);
 					else $objerec = find_media_record($_REQUEST['xref']);
 					if (!empty($objerec)) {
 						$objerec = preg_replace("/ FILE ([^\r\n]*)/", " FILE ".$moveFileTo, $objerec);
@@ -831,7 +831,7 @@ if (check_media_structure()) {
 				// Now update the record
 				foreach ($foundindis as $pid => $person) {
 					// Check if changes to the record exist
-					if (isset($pgv_changes[$pid."_".$person["gedfile"]])) $person["gedcom"] = find_record_in_file($pid);
+					if (isset($pgv_changes[$pid."_".$person["gedfile"]])) $person["gedcom"] = find_updated_record($pid);
 					$subrecs = get_all_subrecords($person["gedcom"], "", false, false, false);
 					$newrec = "0 @$pid@ INDI\r\n";
 					foreach($subrecs as $ind=>$subrec) {
@@ -876,7 +876,7 @@ if (check_media_structure()) {
 
 				// Now update the record
 				foreach ($foundfams as $pid => $family) {
-					if (isset($pgv_changes[$pid."_".$family["gedfile"]])) $family["gedcom"] = find_record_in_file($pid);
+					if (isset($pgv_changes[$pid."_".$family["gedfile"]])) $family["gedcom"] = find_updated_record($pid);
 					$subrecs = get_all_subrecords($family["gedcom"], "", false, false, false);
 					$newrec = "0 @$pid@ FAM\r\n";
 					foreach($subrecs as $fam=>$subrec) {
@@ -921,7 +921,7 @@ if (check_media_structure()) {
 
 				// Now update the record
 				foreach ($foundsources as $pid => $source) {
-					if (isset($pgv_changes[$pid."_".$source["gedfile"]])) $source["gedcom"] = find_record_in_file($pid);
+					if (isset($pgv_changes[$pid."_".$source["gedfile"]])) $source["gedcom"] = find_updated_record($pid);
 					$subrecs = get_all_subrecords($source["gedcom"], "", false, false, false);
 					$newrec = "0 @$pid@ SOUR\r\n";
 					foreach($subrecs as $src=>$subrec) {
@@ -966,7 +966,7 @@ if (check_media_structure()) {
 
 				// Now update the record
 				foreach ($foundsources as $pid => $source) {
-					if (isset($pgv_changes[$pid."_".$source["gedfile"]])) $source["gedcom"] = find_record_in_file($pid);
+					if (isset($pgv_changes[$pid."_".$source["gedfile"]])) $source["gedcom"] = find_updated_record($pid);
 					$subrecs = get_all_subrecords($source["gedcom"], "", false, false, false);
 					$newrec = "0 @$pid@ SOUR\r\n";		//-- Not sure WHY this is "SOUR"
 					foreach($subrecs as $src=>$subrec) {
@@ -1010,7 +1010,7 @@ if (check_media_structure()) {
 				if ($xref!="") {
 					include_once('includes/functions_import.php');
 					accept_changes($xref."_".$GEDCOM);
-					$objerec = find_record_in_file($xref);
+					$objerec = find_gedcom_record($xref);
 
 					// Remove media object from gedcom
 					if (delete_gedrec($xref)) {

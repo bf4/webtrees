@@ -193,53 +193,6 @@ function add_db_link($media, $indi, $gedrec, $ged, $order=-1) {
 
 }
 
-
-
-/**
- * Update the media file location.
- *
- * When the user moves a file that is already imported into the db ensure the links are consistent.
- * This is the handler for media db injected items.
- *
- * @param string $oldfile The name of the file before the move.
- * @param string $newfile The new name for the file.
- * @param string $ged The gedcom file this action is to apply to.
- * @return boolean True if handled and record found in DB. False if not in DB so we can drop back to
- *                 media item handling for items not controlled by MEDIA_DB settings.
- */
-function move_db_media($oldfile, $newfile, $ged) {
-	global $TBLPREFIX, $GEDCOMS;
-	// TODO: Update function
-	$sql = "SELECT * FROM ".$TBLPREFIX."media WHERE m_gedfile='".$GEDCOMS[$ged]["id"]."' AND m_file='".addslashes($oldfile)."'";
-	$tempsql = dbquery($sql);
-	$res =& $tempsql;
-	if ($res->numRows()) {
-		$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
-		$m_id = $row["m_media"];
-		$sql = "UPDATE ".$TBLPREFIX."media SET m_file = '".addslashes($newfile)."' WHERE (m_gedfile='".$GEDCOMS[$ged]["id"]."' AND m_file='".addslashes($oldfile)."')";
-		$tempsql = dbquery($sql);
-		$res =& $tempsql;
-		// if we in sql mode then update the PGV other table with this info
-		$sql = "SELECT * FROM ".$TBLPREFIX."other WHERE o_file='".$GEDCOMS[$ged]["id"]."' AND o_id='".$m_id."'";
-		$res1 =& dbquery($sql);
-		$srch = "/".addcslashes($oldfile,'/.')."/";
-		$repl = addcslashes($newfile,'/.');
-		if ($res1->numRows()) {
-			$row1 =& $res1->fetchRow(DB_FETCHMODE_ASSOC);
-			$gedrec = $row1["o_gedcom"];
-			$newrec = stripcslashes(preg_replace($srch, $repl, $gedrec));
-			$sql = "UPDATE ".$TBLPREFIX."other SET o_gedcom = '".addslashes($newrec)."' WHERE o_file='".addslashes($ged)."' AND o_id='".$m_id."'";
-			$tempsql = dbquery($sql);
-			$res =& $tempsql;
-		}
-		// alter the base gedcom file so that all is kept consistent
-		$gedrec = find_record_in_file($m_id);
-		$newrec = stripcslashes(preg_replace($srch, $repl, $gedrec));
-		db_replace_gedrec($m_id,$newrec);
-		return true;
-	} else { return false; }
-}
-
 /*
  ****************************
  * general functions
@@ -364,38 +317,6 @@ function get_db_indi_mapping_list($indi) {
 		$mappinglist[$row["mm_media"]] = $mapping;
 	}
 	return $mappinglist;
-}
-
-/**
- * No change logging version of replace_gedrec.
- *
- * This function is and should only be used during the inject media phase
- * as it breaks all undo functionality.
- *
- * @param string $indi Gid of the individuals record to replace.
- * @param gedrec $indirec New gedcom record.
- */
-function db_replace_gedrec($indi, $gedrec) {
-	global $fcontents, $INDEX_DIRECTORY, $GEDCOM;
-
-	if (!isset($fcontents)) {
-		$fp = fopen($INDEX_DIRECTORY.$GEDCOM, "r");
-		$fcontents = fread($fp, filesize($INDEX_DIRECTORY.$GEDCOM));
-		fclose($fp);
-	}
-	
-	$pos1 = strpos($fcontents, "0 @$indi@");
-	if ($pos1===false) {
-		print "ERROR 4: Could not find gedcom record with xref:$indi\n";
-		return false;
-	}
-	if (($gedrec = check_gedcom($gedrec, false))!==false) {
-		$pos2 = strpos($fcontents, "0 @", $pos1+1);
-		if ($pos2===false) $pos2=strlen($fcontents);
-		$fcontents = substr($fcontents, 0,$pos1).trim($gedrec)."\r\n".substr($fcontents, $pos2);
-		return write_file();
-	}
-	return false;
 }
 
 /**
@@ -670,8 +591,7 @@ function get_medialist($currentdir=false, $directory="", $linkonly=false) {
 			while (true) {
 				if ($change["gedcom"]!=$GEDCOM || $change["status"]!="submitted") break;
 
-				$gedrec = find_gedcom_record($change["gid"]);
-				if (empty($gedrec)) $gedrec = find_record_in_file($change["gid"]);
+				$gedrec = $change['undo'];
 				if (empty($gedrec)) break;
 
 				$ct = preg_match("/0 @.*@ (\w*)/", $gedrec, $match);
@@ -803,7 +723,7 @@ function get_medialist($currentdir=false, $directory="", $linkonly=false) {
 	$mediaObjects = array_unique($mediaObjects);
 	$changedRecords = array_unique($changedRecords);
 	foreach($changedRecords as $pid) {
-		$gedrec = find_record_in_file($pid);
+		$gedrec = find_updated_record($pid);
 		if ($gedrec) {
 			foreach($mediaObjects as $mediaId) {
 				if (strpos($gedrec, "@".$mediaId."@")) {
@@ -1336,7 +1256,7 @@ function show_media_form($pid, $action="newentry", $filename="", $linktoid="", $
 		print_findsource_link("gid");
 		print "<br /><sub>".$pgv_lang["add_linkid_advice"]."</sub></td></tr>";
 	}
-	if (isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_record_in_file($pid);
+	if (isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_updated_record($pid);
 	else if (id_type($pid) == "OBJE") $gedrec = find_media_record($pid);
 	else $gedrec = "";
 	

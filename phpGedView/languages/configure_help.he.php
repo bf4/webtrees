@@ -446,7 +446,7 @@ $pgv_lang["welcome_new2"]				= "<br /><br />מכיוון שאתה רואה דף 
 $pgv_lang["welcome_new_help"]			= "~#pgv_lang[welcome_new]#~#pgv_lang[welcome_new2]#This Help page will guide you through the configuration process.  As you enter different fields, this window will provide you with help information about the field you are in.  You may close this window; to open it again click on one of the \"?\" question marks next to the field label.<br />";
 $pgv_lang["review_readme"]				= "עיין תחילה בקובץ <a href=\"readme.txt\" target=\"_blank\">readme.txt</a> לפני שאתה ממשיך להגדיר את PhpGedView.<br /><br />";
 $pgv_lang["return_editconfig"]				= "תוכל לחזור להגדרה זו מתי שתרצה ע\"י הצבעה של תוכנת הגלישה שלך על הקובץ <i>edit_config.php</i>, או ע\"י לחיצה על הקישור <b>תצורה</b> הנימצא בדף <b>ניהול של PhpGedView </b>.<br />";
-$pgv_lang["return_editconfig_gedcom"]			= "תוכל לחזור להגדרה זו מתי שתרצה ע\"י לחיצה על קישור: <b>ערוך</b> הנימצאת בטבלת <b>#pgv_lang[current_gedcoms]#</b> על הדף <b>#pgv_lang[gedcom_adm_head]#</b> או ע\"י הפניית הדפדפן שלך לקובץ ה-</i>editconfig_gedcom.php</i>.<br />";
+$pgv_lang["return_editconfig_gedcom"]			= "תוכל לחזור להגדרה זו מתי שתרצה ע\"י לחיצה על קישור: <b>ערוך</b> הנימצאת בטבלת <b>#pgv_lang[current_gedcoms]#</b> על הדף <b>#pgv_lang[gedcom_adm_head]#</b> או ע\"י הפניית הדפדפן שלך לקובץ ה-<i>editconfig_gedcom.php</i>.<br />";
 $pgv_lang["save_config"] 				= "שמור תצורה";
 $pgv_lang["download_here"]				= "לחץ כאן כדי להוריד את הקובץ.";
 $pgv_lang["download_gedconf"]			= "הורד את תצורת GEDCOM.";
@@ -562,7 +562,7 @@ $pgv_lang["savelang_help"]			= "~#pgv_lang[savelang]#~<br /><br />שמור הו�
 $pgv_lang["original_message"]		= "הודעה מקורית";
 $pgv_lang["message_to_edit"]			= "הודעה שרוצים לערוך";
 $pgv_lang["changed_message"]		= "שנה תוכן";
-$pgv_lang["message_empty_warning"]		= "-> Warning!!! This message is empty in #LANGUAGE_FILE# <-";
+$pgv_lang["message_empty_warning"]      = "-> Warning!!! This message is empty in #LANGUAGE_FILE# &lt;-";
 $pgv_lang["language_to_export"]		= "שפה שאותו רוצים לייצא";
 $pgv_lang["language_to_export_help"]		= "~#pgv_lang[language_to_export]#~<br /><br />From this list box you can select the language whose messages you want to export.<br /><br />The routine currently only exports the contents of the <i>configure_help_text.php</i> file.  The output is an HTML file that you can print from your browser.<br />";
 $pgv_lang["export_lang_utility"]		= "תוכנת עזר ליצוא קובץ שפות";
@@ -763,28 +763,8 @@ $pgv_lang["add_faq_order_help"] 		= "~מיקום FAQ~<br />This field controls t
 $pgv_lang["time_limit_help"]			= "~#pgv_lang[time_limit]#~<br /><br />The maximum time the import is allowed to run for processing the GEDCOM file.";
 
 // Media items
-$pgv_lang["media_import_help"] 		= "~#pgv_lang[media_import]#~<br />This import will convert the multimedia links in your GEDCOM file to multimedia records. For example, the following media entry will be changed from:<blockquote><code>
-1 OBJE<br />
-2 FORM jpg<br />
-2 FILE media/grandma.jpg<br />
-2 TITL Picture of grandma
-</code></blockquote>to:<blockquote><code>
-0 @M1@ OBJE<br />
-1 FORM jpg<br />
-1 FILE media/grandma.jpg<br />
-1 TITL Picture of grandma
-</code></blockquote>The new multimedia record will be stored separately in the database. Links to external multimedia files will be changed to references to the new multimedia record, which will in turn contain a reference to the external file. For example, the following GEDCOM record will be changed from:<blockquote><code>
-0 @I1@ INDI<br />
-1 NAME Your/Name/<br />
-1 OBJE<br />
-2 FORM jpg<br />
-2 FILE media/grandma.jpg<br />
-2 TITL Picture of grandma
-</code></blockquote>to:<blockquote><code>
-0 @I1@ INDI<br />
-1 NAME Your/Name/<br />
-1 OBJE @M1@<br />
-</code></blockquote>The advantage of using multimedia records is that you can easily administer your media. When you change the title of a multimedia record, it is changed for all GEDCOM records that link to this multimedia record. Several people,families, or sources can be linked to the same multimedia record.";
+$pgv_lang["media_import_help"] = "~#pgv_lang[media_import]#~<br />This import will convert the multimedia links in your GEDCOM file to multimedia records. For example, the following media entry will be changed from:<blockquote><code>1 OBJE<br />2 FORM jpg<br />2 FILE media/grandma.jpg<br />2 TITL Picture of grandma</code></blockquote>to:<blockquote><code>0 @M1@ OBJE<br />1 FORM jpg<br />1 FILE media/grandma.jpg<br />1 TITL Picture of grandma</code></blockquote>The new multimedia record will be stored separately in the database. Links to external multimedia files will be changed to references to the new multimedia record, which will in turn contain a reference to the external file. For example, the following GEDCOM record will be changed from:<blockquote><code>0 @I1@ INDI<br />1 NAME Your/Name/<br />1 OBJE<br />2 FORM jpg<br />2 FILE media/grandma.jpg<br />2 TITL Picture of grandma</code></blockquote>to:<blockquote><code>0 @I1@ INDI<br />1 NAME Your/Name/<br />1 OBJE @M1@<br /></code></blockquote>The advantage of using multimedia records is that you can easily administer your media. When you change the title of a multimedia record, it is changed for all GEDCOM records that link to this multimedia record. Several people,families, or sources can be linked to the same multimedia record.";
+
 //$pgv_lang["type_audio"] 			= "אודיו";
 //$pgv_lang["type_book"] 			= "ספר";
 //$pgv_lang["type_card"] 			= "כרטיס";
