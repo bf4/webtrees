@@ -150,7 +150,12 @@ $i = 0;
         </td>
     </tr>
     <tr>
-        <td class="topbottombar" colspan="2">
+        <td class="descriptionbox" colspan="2" align="center">
+            <a href="module.php?mod=googlemap&pgvaction=places"><?php print $pgv_lang["edit_place_locations"];?></a>
+        </td>
+
+    <tr>
+        <td class="descriptionbox" colspan="2" align="center">
             <input type="submit" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["save_config"];?>" onclick="closeHelp();" />
             &nbsp;&nbsp;
             <input type="reset" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["reset"];?>" />
