@@ -196,12 +196,12 @@ function build_indiv_map($indifacts, $famids) {
         for($f=0; $f<count($famids); $f++) {
             if (!empty($famids[$f])) {
                 $famrec = find_family_record($famids[$f]);
-                if (empty($famrec)) $famrec = find_record_in_file($famids[$f]);
+                if (empty($famrec)) $famrec = find_updated_record($famids[$f]);
                 if ($famrec) {
                     $num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
                     for($j=0; $j<$num; $j++) {
                         $srec = find_person_record($smatch[$j][1]);
-                        if (empty($srec)) $srec = find_record_in_file($smatch[$j][1]);
+                        if (empty($srec)) $srec = find_updated_record($smatch[$j][1]);
                         $birthrec = get_sub_record(1, "1 BIRT", $srec);
                         $placerec = get_sub_record(2, "2 PLAC", $birthrec);
                         if (!empty($placerec)) {
