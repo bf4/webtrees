@@ -38,7 +38,6 @@ if (file_exists( $factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
 
 print_simple_header($pgv_lang["edit_place_locations"]);
 
-/**
 if (!userIsAdmin(getUserName())) {
     print "<table class=\"facts_table\">\n";
     print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_admin_error"];
@@ -47,7 +46,6 @@ if (!userIsAdmin(getUserName())) {
     print_simple_footer();
     exit;
 }
-*/
 ?>
 
 <script type="text/javascript">
