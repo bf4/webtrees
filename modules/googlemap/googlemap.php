@@ -53,10 +53,38 @@ function print_fact_place_map($factrec) {
     }
 }
 
+function get_lati_long_placelocation ($place) {
+    global $DBCONN, $TBLPREFIX;
+    $parent = preg_split ("/,/", $place);
+    $parent = array_reverse($parent);
+    $place_id = 0;
+    for($i=0; $i<count($parent); $i++) {
+        $parent[$i] = rtrim(ltrim($parent[$i]));
+        $escparent=preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($parent[$i]));
+        $psql = "SELECT pl_id FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$place_id AND pl_place LIKE '".$escparent."' ORDER BY pl_place";
+        $res = dbquery($psql);
+        $row =& $res->fetchRow();
+        $res->free();
+        $place_id = $row[0];
+        if (empty($row[0])) break;
+    }
+
+    $retval = array();
+    if ($place_id > 0) {
+        $psql = "SELECT pl_lati,pl_long FROM ".$TBLPREFIX."placelocation WHERE pl_id=$place_id ORDER BY pl_place";
+        $res = dbquery($psql);
+        $row =& $res->fetchRow();
+        $res->free();
+        $retval["lati"] = rtrim(ltrim($row[0]));
+        $retval["long"] = rtrim(ltrim($row[1]));
+    }
+    return $retval;
+}
+
 function build_indiv_map($indifacts, $famids) {
     global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOON, $GOOGLEMAP_MAX_ZOON, $GEDCOM, $SERVER_URL;
     global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
-    global $GOOGLEMAP_MAX_ZOOM, $GOOGLEMAP_MIN_ZOOM;
+    global $GOOGLEMAP_MAX_ZOOM, $GOOGLEMAP_MIN_ZOOM, $TBLPREFIX, $DBCONN;
 
     $mapdata             = array();
     $mapdata["show"]     = array();         // Show this location on the map
@@ -72,6 +100,10 @@ function build_indiv_map($indifacts, $famids) {
     $marker["index"]     = array();
     $marker["tabindex"]  = array();
     $marker["placed"]    = array();
+
+    $tables = $DBCONN->getListOf('tables');
+    if (in_array($TBLPREFIX."placelocation", $tables)) $placelocation = true;
+    else $placelocation = false;
 
     //-- sort the facts
     usort($indifacts, "compare_facts");
@@ -106,6 +138,8 @@ function build_indiv_map($indifacts, $famids) {
                         $marker["name"][$i] = "Marker".$i;
                         $marker["placed"][$i] = "no";
                         $mapdata["placerec"][$i] = $placerec;
+                        $match1[1] = ltrim(rtrim($match1[1]));
+                        $match2[1] = ltrim(rtrim($match2[1]));
                         $mapdata["lati"][$i] = str_replace(array('N', 'S'), array('', '-') , $match1[1]); 
                         $mapdata["lng"][$i] = str_replace(array('E', 'W'), array('', '-') , $match2[1]); 
                         $ctd = preg_match("/2 DATE (.+)/", $value[1], $match);
@@ -122,6 +156,35 @@ function build_indiv_map($indifacts, $famids) {
                         }
                         $mapdata["sex"][$i]  = "-";
                     }
+                    else {
+                        if (($placelocation == true) && ($useThisItem==true)) {
+                            $ctpl = preg_match("/\d PLAC (.*)/", $placerec, $match1);
+                            $latlongval = get_lati_long_placelocation($match1[1]);
+                            if ((count($latlongval) != 0) && ($latlongval["lati"] != NULL) && ($latlongval["long"] != NULL)) {
+                                $i = $i + 1;
+                                $mapdata["fact"][$i] = $factarray[$fact];
+                                $mapdata["show"][$i] = "yes";
+                                $marker["name"][$i] = "Marker".$i;
+                                $marker["placed"][$i] = "no";
+                                $mapdata["placerec"][$i] = $placerec;
+                                $mapdata["lati"][$i] = str_replace(array('N', 'S'), array('', '-') , $latlongval["lati"]); 
+                                $mapdata["lng"][$i] = str_replace(array('E', 'W'), array('', '-') , $latlongval["long"]); 
+                                $ctd = preg_match("/2 DATE (.+)/", $value[1], $match);
+                                if ($ctd>0) {
+                                    $mapdata["date"][$i] = $match[1];
+                                }
+                                else {
+                                    $mapdata["date"][$i] = "";
+                                }
+                                $mapdata["name"][$i]="";
+                                $ct = preg_match("/PGV_SPOUSE: (.*)/", $value[1], $match);
+                                if ($ct>0) {
+                                    $mapdata["name"][$i]=$match[1];
+                                }
+                                $mapdata["sex"][$i]  = "-";
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -133,19 +196,19 @@ function build_indiv_map($indifacts, $famids) {
         for($f=0; $f<count($famids); $f++) {
             if (!empty($famids[$f])) {
                 $famrec = find_family_record($famids[$f]);
-                if (empty($famrec)) $famrec = find_updated_record($famids[$f]);
+                if (empty($famrec)) $famrec = find_record_in_file($famids[$f]);
                 if ($famrec) {
                     $num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
                     for($j=0; $j<$num; $j++) {
                         $srec = find_person_record($smatch[$j][1]);
-                        if (empty($srec)) $srec = find_updated_record($smatch[$j][1]);
-                        $birthrec = get_sub_record(1, "2 BIRT", $srec);
-                        $placerec = get_sub_record(2, "2 PLAC", $srec);
+                        if (empty($srec)) $srec = find_record_in_file($smatch[$j][1]);
+                        $birthrec = get_sub_record(1, "1 BIRT", $srec);
+                        $placerec = get_sub_record(2, "2 PLAC", $birthrec);
                         if (!empty($placerec)) {
-                            $ctd = preg_match("/\d DATE (.*)/", $srec, $matchd);
+                            $ctd = preg_match("/\d DATE (.*)/", $birthrec, $matchd);
                             $ctp = preg_match("/\d PLAC (.*)/", $birthrec, $matchp);
-                            $ctla = preg_match("/\d LATI (.*)/", $srec, $match1);
-                            $ctlo = preg_match("/\d LONG (.*)/", $srec, $match2);
+                            $ctla = preg_match("/\d LATI (.*)/", $placerec, $match1);
+                            $ctlo = preg_match("/\d LONG (.*)/", $placerec, $match2);
                             if (($ctla>0) && ($ctlo>0)) {
                                 if (displayDetailsByID($smatch[$j][1])) {
                                     $i = $i + 1;
@@ -163,10 +226,41 @@ function build_indiv_map($indifacts, $famids) {
                                     $marker["name"][$i]      = "Marker".$i;
                                     $marker["placed"][$i]    = "no";
                                     $mapdata["placerec"][$i] = $placerec;
+                                    $match1[1] = ltrim(rtrim($match1[1]));
+                                    $match2[1] = ltrim(rtrim($match2[1]));
                                     $mapdata["lati"][$i]     = str_replace(array('N', 'S'), array('', '-') , $match1[1]); 
                                     $mapdata["lng"][$i]      = str_replace(array('E', 'W'), array('', '-') , $match2[1]); 
                                     $mapdata["date"][$i]     = $matchd[1];
                                     $mapdata["name"][$i]     = $smatch[$j][1];
+                                }
+                            }
+                            else {
+                                if (($placelocation == true) && ($useThisItem==true)) {
+                                    $ctpl = preg_match("/\d PLAC (.*)/", $placerec, $match1);
+                                    $latlongval = get_lati_long_placelocation($match1[1]);
+                                    if ((count($latlongval) != 0) && ($latlongval["lati"] != NULL) && ($latlongval["long"] != NULL)) {
+                                        if (displayDetailsByID($smatch[$j][1])) {
+                                            $i = $i + 1;
+                                            $mapdata["show"][$i]     = "yes";
+                                            $mapdata["fact"][$i]     = $factarray["CHIL"];
+                                            $mapdata["sex"][$i]      = "NN";
+                                            if (preg_match("/1 SEX F/", $srec)>0) {
+                                                $mapdata["fact"][$i] = $pgv_lang["daughter"];
+                                                $mapdata["sex"][$i]  = "F";
+                                            }
+                                            if (preg_match("/1 SEX M/", $srec)>0) {
+                                                $mapdata["fact"][$i] = $pgv_lang["son"];
+                                                $mapdata["sex"][$i]  = "M";
+                                            }
+                                            $marker["name"][$i]      = "Marker".$i;
+                                            $marker["placed"][$i]    = "no";
+                                            $mapdata["placerec"][$i] = $placerec;
+                                            $mapdata["lati"][$i]     = str_replace(array('N', 'S'), array('', '-') , $latlongval["lati"]); 
+                                            $mapdata["lng"][$i]      = str_replace(array('E', 'W'), array('', '-') , $latlongval["long"]); 
+                                            $mapdata["date"][$i]     = $matchd[1];
+                                            $mapdata["name"][$i]     = $smatch[$j][1];
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -183,28 +277,29 @@ function build_indiv_map($indifacts, $famids) {
     }
     else {
         print "<script src=\"http://maps.google.com/maps?file=api&amp;v=2&amp;key=".$GOOGLEMAP_API_KEY."\" type=\"text/javascript\"></script>\n";
-        print "<script src=\"modules/googlemap/pgvGoogleMap.js\"type=\"text/javascript\"></script>\n";
-        print "<script type=\"text/javascript\">\n";
-        print "    if (window.attachEvent) {\n";
-        print "        window.attachEvent(\"onload\", function() {\n";
-        print "            loadMap(".$GOOGLEMAP_MAP_TYPE.");      // Internet Explorer\n";
-        print "        });\n";
-        print "        window.attachEvent(\"onunload\", function() {\n";
-        print "            GUnload();      // Internet Explorer\n";
-        print "        });\n";
-        print "    } else {\n";
-        print "        window.addEventListener(\"load\", function() {\n";
-        print "            loadMap(".$GOOGLEMAP_MAP_TYPE."); // Firefox and standard browsers\n";
-        print "        }, false);\n";
-        print "        window.addEventListener(\"unload\", function() {\n";
-        print "            GUnload(); // Firefox and standard browsers\n";
-        print "        }, false);\n";
-        print "    }\n\n";
-        print "var minZoomLevel = ".$GOOGLEMAP_MIN_ZOOM.";\n";
-        print "var maxZoomLevel = ".$GOOGLEMAP_MAX_ZOOM.";\n";
-        print "function SetMarkersAndBounds ()\n{\n";
-        print "    var bounds = new GLatLngBounds();\n";
-
+        ?>
+        <script src="modules/googlemap/pgvGoogleMap.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            if (window.attachEvent) {
+                window.attachEvent("onload", function() {
+                    loadMap(<?php print $GOOGLEMAP_MAP_TYPE;?>);      // Internet Explorer
+                });
+                window.attachEvent("onunload", function() {
+                    GUnload();      // Internet Explorer
+                });
+            } else {
+                window.addEventListener("load", function() {
+                    loadMap(<?php print $GOOGLEMAP_MAP_TYPE;?>);      // Firefox and standard browsers
+                }, false);
+                window.addEventListener("unload", function() {
+                    GUnload(); // Firefox and standard browsers
+                }, false);
+            }
+        var minZoomLevel = <?php print $GOOGLEMAP_MIN_ZOOM;?>;
+        var maxZoomLevel = <?php print $GOOGLEMAP_MAX_ZOOM;?>;
+        function SetMarkersAndBounds (){
+            var bounds = new GLatLngBounds();
+        <?php
         for($j=1; $j<=$i; $j++) {
             if ($mapdata["show"][$j] == "yes") {
                 print "    bounds.extend(new GLatLng(".$mapdata["lati"][$j].", ".$mapdata["lng"][$j]."));\n";
