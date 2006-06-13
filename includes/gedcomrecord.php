@@ -108,7 +108,7 @@ class GedcomRecord {
 		//-- check if it is a new object not yet in the database
 		if (empty($indirec)) {
 			if (userCanEdit(getUserName()) && isset($pgv_changes[$pid."_".$GEDCOM])) {
-				$indirec = find_record_in_file($pid);
+				$indirec = find_updated_record($pid);
 				$fromfile = true;
 			}
 		}
@@ -222,7 +222,7 @@ class GedcomRecord {
 			$servid = $parts[0];
 			$aliaid = $parts[1];
 			$servrec = find_gedcom_record($servid);
-			if (empty($servrec)) $servrec = find_record_in_file($servid);
+			if (empty($servrec)) $servrec = find_updated_record($servid);
 			if (!empty($servrec)) {
 				$surl = get_gedcom_value("URL", 1, $servrec);
 				$url = dirname($surl);

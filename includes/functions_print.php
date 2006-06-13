@@ -64,7 +64,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 $lbwidth = $bwidth*.75;
 	 if ($lbwidth < 150) $lbwidth = 150;
 	 $indirec=find_person_record($pid);
-	 if (!$indirec) $indirec = find_record_in_file($pid);
+	 if (!$indirec) $indirec = find_updated_record($pid);
 	 $isF = "NN";
 	 if (preg_match("/1 SEX F/", $indirec)>0) $isF="F";
 	 else if (preg_match("/1 SEX M/", $indirec)>0) $isF="";
@@ -1167,7 +1167,8 @@ function print_favorite_selector($option=0) {
 				$GEDCOM = $favorite["file"];
 				$submenu = array();
 				if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-					$submenu["link"] = $favorite["url"]."&amp;ged=$GEDCOM";
+//					$submenu["link"] = $favorite["url"]."&amp;ged=$GEDCOM";
+					$submenu["link"] = $favorite["url"];
 					$submenu["label"] = PrintReady($favorite["title"]);
 					$submenu["labelpos"] = "right";
 					$submenu["class"] = "favsubmenuitem";
@@ -1238,7 +1239,8 @@ function print_favorite_selector($option=0) {
 					$pid = $favorite["gid"];
 					$submenu = array();
 					if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-						$submenu["link"] = $favorite["url"]."&amp;ged=$GEDCOM";
+//						$submenu["link"] = $favorite["url"]."&amp;ged=$GEDCOM";
+						$submenu["link"] = $favorite["url"];
 						$submenu["label"] = PrintReady($favorite["title"]);
 						$submenu["labelpos"] = "right";
 						$submenu["class"] = "favsubmenuitem";
@@ -1302,7 +1304,8 @@ function print_favorite_selector($option=0) {
 						$GEDCOM = $favorite["file"];
 						$pid = $favorite["gid"];
 						if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-						print "\n\t\t\t\t<option value=\"".$favorite["url"]."&amp;ged=".$GEDCOM."\">".PrintReady($favorite["title"]);
+//							print "\n\t\t\t\t<option value=\"".$favorite["url"]."&amp;ged=".$GEDCOM."\">".PrintReady($favorite["title"]);
+							print "\n\t\t\t\t<option value=\"".$favorite["url"]."\">".PrintReady($favorite["title"]);
 							print "</option>";
 						}
 						else {
@@ -1356,7 +1359,8 @@ function print_favorite_selector($option=0) {
 						$GEDCOM = $favorite["file"];
 						$pid = $favorite["gid"];
 						if ($favorite["type"]=="URL" && !empty($favorite["url"])) {
-						print "\n\t\t\t\t<option value=\"".$favorite["url"]."&amp;ged=".$GEDCOM."\">".PrintReady($favorite["title"]);
+//							print "\n\t\t\t\t<option value=\"".$favorite["url"]."&amp;ged=".$GEDCOM."\">".PrintReady($favorite["title"]);
+							print "\n\t\t\t\t<option value=\"".$favorite["url"]."\">".PrintReady($favorite["title"]);
 							print "</option>";
 						}
 						else {
@@ -1874,36 +1878,23 @@ function print_theme_dropdown($style=0) {
  *
  * @param string $text to be printed
  */
-function PrintReady($text, $InHeaders=false, $direction="") {
-	global $TEXT_DIRECTION;
-	if ($direction=="") $direction = $TEXT_DIRECTION;
-	// Here we can pre-process input to function PrintReady() if necessary
-	$newText = oldPrintReady($text, $InHeaders);
-	// Here we can post-process output of function oldPrintReady() to correct some
-	// errors.  This code can be removed once the bugs in function oldPrintReady()
-	// have been fixed.
-	return $newText;
-}
-function oldPrintReady($text, $InHeaders=false) {
-	global $TEXT_DIRECTION, $SpecialChar, $SpecialPar, $query, $action, $firstname, $lastname, $place, $year, $DEBUG;
+function PrintReady($text, $InHeaders=false) {
+	global $query, $action, $firstname, $lastname, $place, $year, $DEBUG;
+	global $TEXT_DIRECTION_array;
 	// Check whether Search page highlighting should be done or not
 	$HighlightOK = false;
 	if (strstr($_SERVER["SCRIPT_NAME"], "search.php")) {	// If we're on the Search page
 		if (!$InHeaders) {								//   and also in page body
-//			if ((isset($query) and ($query != "")) || (isset($action) && ($action === "soundex"))) {		//   and the query isn't blank
 			if ((isset($query) and ($query != "")) ) {		//   and the query isn't blank
 				$HighlightOK = true;					// It's OK to mark search result
 			}
 		}
 	}
-	$SpecialOpen = '(';
-	$SpecialClose = array('(');
 	//-- convert all & to &amp;
-//	$text = preg_replace(array("/&/", "/</", "/>/"), array("&amp;", "&lt;", "&gt;"), $text);
 	$text = preg_replace("/&/", "&amp;", $text);
 	//-- make sure we didn't double convert &amp; to &amp;amp;
 	$text = preg_replace("/&amp;(\w+);/", "&$1;", $text);
-    $text=trim($text);
+    $text = trim($text);
     //-- if we are on the search page body, then highlight any search hits
     //		In this routine, we will assume that the input string doesn't contain any
     //		\x01 or \x02 characters.  We'll represent the <span class="search_hit"> by \x01
@@ -1915,7 +1906,6 @@ function oldPrintReady($text, $InHeaders=false) {
     //		<span> or </span> strings.
     if ($HighlightOK) {
 	    if (isset($query)) {
-//	    	$queries = preg_split("/\.\*/", $query);
 			$queries = explode(" ", $query);
 	    	$newtext = $text;
 	    	$hasallhits = true;
@@ -1935,7 +1925,6 @@ function oldPrintReady($text, $InHeaders=false) {
     	}
     	if (isset($action) && ($action === "soundex")) {
 	    	if (isset($firstname)) {
-//	    		$queries = preg_split("/\.\*/", $firstname);
 	    		$queries = explode(" ", $firstname);
 	    		$newtext = $text;
 	    		$hasallhits = true;
@@ -1954,7 +1943,6 @@ function oldPrintReady($text, $InHeaders=false) {
 	    		if ($hasallhits) $text = $newtext;
     		}
     		if (isset($lastname)) {
-//	    		$queries = preg_split("/\.\*/", $lastname);
 	    		$queries = explode(" ", $lastname);
 	    		$newtext = $text;
 	    		$hasallhits = true;
@@ -1973,7 +1961,6 @@ function oldPrintReady($text, $InHeaders=false) {
 	    		if ($hasallhits) $text = $newtext;
     		}
     		if (isset($place)) {
-//	    		$queries = preg_split("/\.\*/", $place);
 	    		$queries = explode(" ", $place);
 	    		$newtext = $text;
 	    		$hasallhits = true;
@@ -1992,7 +1979,6 @@ function oldPrintReady($text, $InHeaders=false) {
 	    		if ($hasallhits) $text = $newtext;
     		}
     		if (isset($year)) {
-//	    		$queries = preg_split("/\.\*/", $year);
 	    		$queries = explode(" ", $year);
 	    		$newtext = $text;
 	    		$hasallhits = true;
@@ -2006,127 +1992,51 @@ function oldPrintReady($text, $InHeaders=false) {
     		}
     	}
     	// All the "Highlight start" and "Highlight end" flags are set:
-    	//		Do the final clean-up and insert proper <span> and </span>
-    	$text = str_replace(array("\x02\x01", "\x02 \x01", "\x01", "\x02"), array("", " ", "<span class=\"search_hit\">", "</span>"), $text);
+    	//		Delay the final clean-up and insertion of proper <span> and </span>
+    	//		until parentheses, braces, and brackets have been processed
     }
-    if ($TEXT_DIRECTION=="ltr" && hasRTLText($text)) {
-   		if (hasLTRText($text)) {
-	   		// Text contains both RtL and LtR characters
-	   		// return the parenthesis with surrounding &rlm; and the rest as is
-	   		$printvalue = "";
-	   		$first = 1;
-	   		$linestart = 0;
-	   		for ($i=0; $i<strlen($text); $i++) {
-	   			$ltrflag=1;
-                $byte = substr($text,$i,1);
-				if (substr($text,$i,6) == "<br />") $linestart = $i+6;
-				if (in_array($byte,$SpecialPar)	||
-                   (($i==strlen($text)-1 || substr($text,$i+1,6)=="<br />") && in_array($byte,$SpecialChar))) {
-			   		if ($first==1) {
-				   		if ($byte==")" && !in_array(substr($text,$i+1),$SpecialClose)) {
- 			   		    	 $printvalue .= "&lrm;".$byte."&lrm;";
- 			   			$linestart = $i+1;
+	
+	// Look for strings enclosed in parentheses, braces, or brackets.  
+	//
+	// Parentheses, braces, and brackets have weak directionality and aren't handled properly 
+	// when they enclose text whose directionality differs from that of the page. 
+	//
+	// To correct the problem, we need to enclose the parentheses, braces, or brackets with
+	// zero-width characters (&lrm; or &rlm;) having a directionality that matches the
+	// directionality of the text that is enclosed by the parentheses, etc.
+	
+	$charPos = 0;
+	$lastChar = strlen($text);
+	$newText = "";
+	while (true) {
+		if ($charPos > $lastChar) break;
+		$thisChar = substr($text, $charPos, 1);
+		$charPos ++;
+		if ($thisChar=="(" || $thisChar=="{" || $thisChar=="[") {
+			$tempText = "";
+			while (true) {
+				$tempChar = "";
+				if ($charPos > $lastChar) break;
+				$tempChar = substr($text, $charPos, 1);
+				$charPos ++;
+				if ($tempChar==")" || $tempChar=="}" || $tempChar=="]") break;
+				$tempText .= $tempChar;
+			}
+			$thisLang = whatLanguage($tempText);
+			if (!isset($TEXT_DIRECTION_array[$thisLang]) || $TEXT_DIRECTION_array[$thisLang]=="ltr") {
+				$newText .= "&lrm;" . $thisChar . $tempText. $tempChar . "&lrm;";
+			} else {
+				$newText .= "&rlm;" . $thisChar . $tempText. $tempChar . "&rlm;";
  			   			}
- 				   		else
-				   		if (in_array($byte,$SpecialChar)) {                          //-- all special chars
-				   		    if (hasRTLText(substr($text,$linestart,4)))
-				   		    	 $printvalue .= "&rlm;".$byte."&rlm;";
-				   			else $printvalue .= "&lrm;".$byte."&lrm;";
+		} else {
+			$newText .= $thisChar;
 			   			}
-				   		else {
-				   		$first = 0;
-				   			if (hasRTLText(substr($text,$i+1,4))) {
-				   		     $printvalue .= "&rlm;";
-				   			    $ltrflag = 0;
 			   			     }
-				   			else {
-					   			$printvalue .= "&lrm;";
-				   			    $ltrflag = 1;
-				   			}
-				   		$printvalue .= substr($text,$i,1);
-			   		}
-			   		}
-			   		else {
-				   		$first = 1;
-				   		$printvalue .= substr($text,$i,1);
-				   		if ($ltrflag)
-				   		     $printvalue .= "&lrm;";
-				   		else $printvalue .= "&rlm;";
-			   		}
-		   		}
-		   			 else if (oneRTLText(substr($text,$i,2))) {
-			   		    	$printvalue .= substr($text,$i,2);
-			   		    	$i++;
-		   		    	}
-		   		    	else $printvalue .= substr($text,$i,1);
-	   		}
-			if (!$first)
-				if ($ltrflag)
-					 $printvalue .= "&lrm;";
-				else $printvalue .= "&rlm;";
- 			return $printvalue;
-   		}
-   		else return "&rlm;".$text."&rlm;";
-	}
-	else if ($TEXT_DIRECTION=="rtl" && hasLTRText($text)) {
-//echo "<br />RL1 "; //----- MA @@@@
-   		$printvalue = "";
-   		$linestart = 0;
-   		$first = 1;
-   		for ($i=0; $i<strlen($text); $i++) {
-            $byte = substr($text,$i,1);
-            if (substr($text,$i,6) == "<br />") $linestart = $i+6;
-			if (in_array($byte,$SpecialPar)	|| (($i==strlen($text)-1 || substr($text,$i+1,6)=="<br />") && in_array($byte,$SpecialChar))) {
-				$ltrflag = 1;
-		   		if ($first==1) {
-			   		if ($byte==")" && !in_array(substr($text,$i+1),$SpecialClose)) {
-		   		    	$printvalue .= "&rlm;".$byte."&rlm;";
-		   				$linestart = $i+1;
-		   			}
-			   		else
-			   		if (in_array($byte,$SpecialChar) && ($i==strlen($text)-1 || substr($text,$i+1,6)=="<br />")) {
-			   		    if (hasRTLText(substr($text,$linestart,4)))
-			   		    	 $printvalue .= "&rlm;".$byte."&rlm;";
-			   			else $printvalue .= "&lrm;".$byte."&lrm;";
-//echo "<br />RL2 "; //----- MA @@@@
-		   			}
-		   			else {
-			   			$first = 0;
-				   		if (hasRTLText(substr($text,$i+1,4))) {
-			   		    	$printvalue .= "&rlm;";
-			   			    $ltrflag = 0;
-			   		     }
-				   		else {
-					   		$printvalue .= "&lrm;";
-			   			    $ltrflag = 1;
-//echo "<br />RL3 "; //----- MA @@@@
-				   		}
-			   			$printvalue .= substr($text,$i,1);
-		   			}
-		   		}
-		   		else {
-//echo "<br />RL4 "; //----- MA @@@@
-			   		$first = 1;
-			   		$printvalue .= substr($text,$i,1);
-			   		if ($ltrflag)
-			   		     $printvalue .= "&lrm;";
-			   		else $printvalue .= "&rlm;";
-		   		}
-	   		}
-	   		else {
-		   		if (oneRTLText(substr($text,$i,2))) {
-		   		    $printvalue .= substr($text,$i,2);
-		   		    $i++;
-	   		    }
-	   		    else $printvalue .= substr($text,$i,1);
-   		    }
-   		}
-	 	if (!$first) if ($ltrflag) $printvalue .= "&lrm;";
-		             else $printvalue .= "&rlm;";
-//echo "<br />RL5 "; //----- MA @@@@
-		return $printvalue;
-     }
-	 else return $text;
+		
+    // Parentheses, braces, and brackets have been processed:
+    //		Finish processing of "Highlight Start and "Highlight end"
+	$newText = str_replace(array("\x02\x01", "\x02 \x01", "\x01", "\x02"), array("", " ", "<span class=\"search_hit\">", "</span>"), $newText);
+    return $newText;
 }
 /**
  * print ASSO RELA information
@@ -2160,15 +2070,8 @@ function print_asso_rela_record($pid, $factrec, $linebr=false) {
 			if ($rct>0) {
 				// RELAtionship name in user language
 				$key = strtolower(trim($rmatch[1]));
-	            $cr = preg_match_all("/sosa_(.*)/", $key, $relamatch, PREG_SET_ORDER);
-                if ($cr > 0) {
-                    $rela = get_sosa_name($relamatch[0][1]);
-                }
-                else
-                {
 				    if (isset($pgv_lang["$key"])) $rela = $pgv_lang[$key];
 				    else $rela = $rmatch[1];
-                }
 				$p = strpos($rela, "(=");
 				if ($p>0) $rela = trim(substr($rela, 0, $p));
 				if ($pid2==$pid) print "<span class=\"details_label\">";
@@ -2489,7 +2392,7 @@ function print_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM",
  * Check for facts that may exist only once for a certain record type.
  * If the fact already exists in the second array, delete it from the first one.
  */
- function CheckFactUnique($uniquefacts, $recfacts, $type) {
+function CheckFactUnique($uniquefacts, $recfacts, $type) {
 
 	 foreach($recfacts as $indexval => $fact) {
 		if (($type == "SOUR") || ($type == "REPO")) $factrec = $fact[0];
@@ -2502,7 +2405,7 @@ function print_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM",
 		}
 	 }
 	 return $uniquefacts;
- }
+}
 
 /**
  * Print a new fact box on details pages

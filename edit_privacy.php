@@ -106,7 +106,7 @@ function search_ID_details($checkVar, $outputVar) {
 	global $pgv_lang;
 
 	$indirec = find_gedcom_record($checkVar);
-	if (empty($indirec)) $indirec = find_record_in_file($checkVar);
+	if (empty($indirec)) $indirec = find_updated_record($checkVar);
     
 	if (!empty($indirec)) {
 		$ct = preg_match("/0 @(.*)@ (.*)/", $indirec, $match);

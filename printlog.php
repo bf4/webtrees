@@ -72,9 +72,15 @@ if ($auth) {
 		for ($i = 0; $i < $num ; $i++)	{
 			print "<tr>";
 			$result = preg_split("/ - /", $lines[$i], 3);
-			$result[2] = PrintReady($result[2]);
-			for ($j = 0; $j < 3; $j++) {
-				print "<td class=\"optionbox\" dir=\"ltr\">".$result[$j]."</td>";
+			//-- properly handle lines that may not have the correct format
+			if (count($result)<3) {
+				print "<td class=\"optionbox\" colspan=\"3\" dir=\"ltr\">".PrintReady($lines[$i])."</td>";
+			}
+			else {
+				$result[2] = PrintReady($result[2]);
+				for ($j = 0; $j < 3; $j++) {
+					print "<td class=\"optionbox\" dir=\"ltr\">".$result[$j]."</td>";
+				}
 			}
 			print "</tr>";
 		}

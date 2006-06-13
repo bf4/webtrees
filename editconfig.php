@@ -38,7 +38,7 @@ if (empty($action)) $action="";
 if (!isset($LOGIN_URL)) $LOGIN_URL = "";
 if (!isset($COMMIT_COMMAND)) $COMMIT_COMMAND="";
 if ($CONFIGURED) {
-if (check_db()) {
+if (check_db(true)) {
 	//-- check if no users have been defined and create the main admin user
 	if (!adminUserExists()) {
 		print_header($pgv_lang["configure_head"]);

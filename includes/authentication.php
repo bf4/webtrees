@@ -539,7 +539,8 @@ function checkTableExists() {
 			}
 		}
 	}
-	if (!$has_users || !$has_gedcomid || $sqlite && (!$has_email || !$has_sessiontime || !$has_contactmethod || !$has_visible || !$has_account || !$has_defaulttab || !$has_comment || !$has_sync_gedcom || !$has_first_name || !$has_relation_privacy || !$has_auto_accept)) {
+	if (!$has_users || !$has_gedcomid ||$DBTYPE == "mssql" && !$has_first_name ||
+			$sqlite && (!$has_email || !$has_sessiontime || !$has_contactmethod || !$has_visible || !$has_account || !$has_defaulttab || !$has_comment || !$has_sync_gedcom || !$has_first_name || !$has_relation_privacy || !$has_auto_accept)) {
 		$sql = "DROP TABLE ".$TBLPREFIX."users";
 		$res = dbquery($sql, false);
 
@@ -552,39 +553,57 @@ function checkTableExists() {
 				"u_defaulttab INT, u_comment VARCHAR(255), u_comment_exp VARCHAR(20), u_sync_gedcom VARCHAR(2), " .
 				"u_relationship_privacy VARCHAR(2), u_max_relation_path INT, u_auto_accept VARCHAR(2), PRIMARY KEY(u_username))";
 		$res = dbquery($sql);
+		$sql = "CREATE INDEX users_username ON ".$TBLPREFIX."users (u_username)";
+		$res = dbquery($sql);
 	} else {
 		if (!$has_email) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD (u_email TEXT, u_verified VARCHAR(20), u_verified_by_admin VARCHAR(20), u_language VARCHAR(50), u_pwrequested VARCHAR(20), u_reg_timestamp VARCHAR(50), u_reg_hashcode VARCHAR(255), u_theme VARCHAR(50), u_loggedin VARCHAR(1))";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_email TEXT";
+			$pres = dbquery($sql);
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_verified VARCHAR(20)";
+			$pres = dbquery($sql);
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_verified_by_admin VARCHAR(20)";
+			$pres = dbquery($sql);
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_language VARCHAR(50)";
+			$pres = dbquery($sql);
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_pwrequested VARCHAR(20)";
+			$pres = dbquery($sql);
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_reg_timestamp VARCHAR(50)";
+			$pres = dbquery($sql);
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_reg_hashcode VARCHAR(255)";
+			$pres = dbquery($sql);
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_theme VARCHAR(50)";
+			$pres = dbquery($sql);
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_loggedin VARCHAR(1)";
 			$pres = dbquery($sql);
 		}
 		if (!$has_sessiontime) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD (u_sessiontime INT)";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_sessiontime INT";
 			$pres = dbquery($sql);
 		}
 		if (!$has_contactmethod) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD (u_contactmethod VARCHAR(20))";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_contactmethod VARCHAR(20)";
 			$pres = dbquery($sql);
 		}
 		if (!$has_visible) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD (u_visibleonline VARCHAR(2))";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_visibleonline VARCHAR(2)";
 			$pres = dbquery($sql);
 		}
 		if (!$has_account) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD (u_editaccount VARCHAR(2))";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_editaccount VARCHAR(2)";
 			$pres = dbquery($sql);
 		}
 		if (!$has_defaulttab) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD (u_defaulttab INT)";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_defaulttab INT";
 			$pres = dbquery($sql);
 		}
 		if (!$has_comment) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD (u_comment VARCHAR(255))";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_comment VARCHAR(255)";
 			$pres = dbquery($sql);
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD (u_comment_exp VARCHAR(20))";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_comment_exp VARCHAR(20)";
 			$pres = dbquery($sql);
 		}
 		if (!$has_sync_gedcom) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD (u_sync_gedcom VARCHAR(2))";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_sync_gedcom VARCHAR(2)";
 			$pres = dbquery($sql);
 		}
 		if (!$has_first_name) {
@@ -597,11 +616,13 @@ function checkTableExists() {
 			$sql = "UPDATE ".$TBLPREFIX."users SET u_lastname=SUBSTRING_INDEX(u_fullname, ' ', -1), u_firstname=SUBSTRING_INDEX(u_fullname, ' ', 1)";
 			$pres = dbquery($sql);
 			//-- drop the old fullname field
-			$sql = "ALTER TABLE ".$TBLPREFIX."users DROP u_fullname";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users DROP COLUMN u_fullname";
 			$pres = dbquery($sql);
 		}
 		if (!$has_relation_privacy) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD (u_relationship_privacy VARCHAR(2), u_max_relation_path INT)";
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_relationship_privacy VARCHAR(2)";
+			$pres = dbquery($sql);
+			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_max_relation_path INT";
 			$pres = dbquery($sql);
 		}
 		if (!$has_auto_accept) {
@@ -614,11 +635,15 @@ function checkTableExists() {
 		$res = dbquery($sql, false);
 		$sql = "CREATE TABLE ".$TBLPREFIX."messages (m_id INT NOT NULL, m_from VARCHAR(255), m_to VARCHAR(30), m_subject VARCHAR(255), m_body TEXT, m_created VARCHAR(255), PRIMARY KEY(m_id))";
 		$res = dbquery($sql);
+		$sql = "CREATE INDEX messages_to ON ".$TBLPREFIX."messages (m_to)";
+		$res = dbquery($sql);
 	}
 	if (!$has_favorites || $sqlite && (!$has_fav_note)) {
 		$sql = "DROP TABLE ".$TBLPREFIX."favorites";
 		$res = dbquery($sql, false);
 		$sql = "CREATE TABLE ".$TBLPREFIX."favorites (fv_id INT NOT NULL, fv_username VARCHAR(30), fv_gid VARCHAR(10), fv_type VARCHAR(10), fv_file VARCHAR(100), fv_url VARCHAR(255), fv_title VARCHAR(255), fv_note TEXT, PRIMARY KEY(fv_id))";
+		$res = dbquery($sql);
+		$sql = "CREATE INDEX favorites_username ON ".$TBLPREFIX."favorites (fv_username)";
 		$res = dbquery($sql);
 	} else {
 		if (!$has_fav_note) {
@@ -635,6 +660,8 @@ function checkTableExists() {
 		$res = dbquery($sql, false);
 		$sql = "CREATE TABLE ".$TBLPREFIX."blocks (b_id INT NOT NULL, b_username VARCHAR(100), b_location VARCHAR(30), b_order INT, b_name VARCHAR(255), b_config TEXT, PRIMARY KEY(b_id))";
 		$res = dbquery($sql);
+		$sql = "CREATE INDEX blocks_username ON ".$TBLPREFIX."blocks (b_username)";
+		$res = dbquery($sql);
 	} else {
 		if (!$has_blockconfig) {
 			$sql = "ALTER TABLE ".$TBLPREFIX."blocks ADD b_config TEXT";
@@ -645,6 +672,8 @@ function checkTableExists() {
 		$sql = "DROP TABLE ".$TBLPREFIX."news";
 		$res = dbquery($sql, false);
 		$sql = "CREATE TABLE ".$TBLPREFIX."news (n_id INT NOT NULL, n_username VARCHAR(100), n_date INT, n_title VARCHAR(255), n_text TEXT, PRIMARY KEY(n_id))";
+		$res = dbquery($sql);
+		$sql = "CREATE INDEX news_username ON ".$TBLPREFIX."news (n_username)";
 		$res = dbquery($sql);
 	}
 	return true;

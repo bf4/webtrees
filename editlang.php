@@ -354,7 +354,7 @@ switch ($action) {
 
 		    fwrite($fp, "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r\n");
 		    fwrite($fp, "<html xmlns=\"http://www.w3.org/1999/xhtml\">\r\n");
-		    fwrite($fp, "<head><title/>\r\n");
+		    fwrite($fp, "<head><title>PGV ".$language2."</title>\r\n");
 		    fwrite($fp, "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\r\n");
 			fwrite($fp, "<style type=\"text/css\">\r\n");
 			fwrite($fp, ".helpstart {\r\n\tfont-family: Arial, sans-serif;\r\n\tcolor: Blue;\r\n\tfont-size: 14px;\r\n\tfont-weight : bold;\r\n\ttext-decoration : none;\r\n}\r\n");

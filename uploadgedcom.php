@@ -1,7 +1,7 @@
 <?php
 /**
  * Allow admin users to upload a new gedcom using a web interface.
- * 
+ *
  * When importing a gedcom file, some of the gedcom structure is changed
  * so a new file is written during the import and then copied over the old
  * file.
@@ -24,7 +24,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * This Page Is Valid XHTML 1.0 Transitional! > 12 September 2005
- * 
+ *
  * @author PGV Development Team
  * @package PhpGedView
  * @subpackage Admin
@@ -345,7 +345,7 @@ if ($action == "add_form") {
 				<td class="descriptionbox width20 wrap">
 				<?php print_help_link("gedcom_path_help", "qm","gedcom_path");?>
 				<?php print $pgv_lang["gedcom_file"]; ?></td>
-				<td class="optionbox"><input type="text" name="GEDFILENAME" value="<?php if (isset($GEDFILENAME) && strlen($GEDFILENAME) > 4) print $GEDCOMS[$GEDFILENAME]["path"]; ?>" 
+				<td class="optionbox"><input type="text" name="GEDFILENAME" value="<?php if (isset($GEDFILENAME) && strlen($GEDFILENAME) > 4) print $GEDCOMS[$GEDFILENAME]["path"]; ?>"
 				size="60" dir ="ltr" tabindex="<?php $i++; print $i?>"	<?php if ((!$no_upload && isset($GEDFILENAME)) && (empty($error))) print "disabled "; ?> />
 				</td>
 			</tr>
@@ -489,7 +489,7 @@ if ($verify == "verify_gedcom") {
 		<input type="hidden" name="GEDFILENAME" value="<?php if (isset($GEDFILENAME)) print $GEDFILENAME; ?>" />
 		<input type="hidden" name="bakfile" value="<?php if (isset($bakfile)) print $bakfile; ?>" />
 		<input type="hidden" name="path" value="<?php if (isset($path)) print $path; ?>" />
-		
+
 		<?php
 
 		if ($imported)
@@ -804,7 +804,7 @@ if ($startimport == "true") {
 		progress = document.getElementById("progress_header");
 		if (progress) progress.innerHTML = '<?php print $pgv_lang["please_be_patient"]; ?>';
 	}
-	
+
 	var FILE_SIZE = <?php print $FILE_SIZE; ?>;
 	var TIME_LIMIT = <?php print $timelimit; ?>;
 	function update_progress(bytes, time) {
@@ -906,12 +906,12 @@ if ($startimport == "true") {
 		print $pgv_lang["reading_file"]." ".$GEDCOM_FILE;
 		print "</td></tr>";
 		print "</table>";
-		
+
 		//print "<tr><td class=\"optionbox\">";
 		setup_progress_bar($FILE_SIZE);
 		//print "</td></tr>";
 		flush();
-		
+
 		// ------------------------------------------------------ Begin importing data
 		// -- array of names
 		if (!isset ($indilist))
@@ -923,13 +923,13 @@ if ($startimport == "true") {
 		$i = 0;
 
 		//-- as we are importing the file, a new file is being written to store any
-		//-- changes that might have occurred to the gedcom file (eg. conversion of 
+		//-- changes that might have occurred to the gedcom file (eg. conversion of
 		//-- media objects).  After the import is complete the new file is
 		//-- copied over the old file.
 		//-- The records are written during the import_record() method and the
 		//-- update_media() method
 
-		//-- open handle to read file 
+		//-- open handle to read file
 		$fpged = fopen($GEDCOM_FILE, "rb");
 		//-- open handle to write changed file
 		$fpnewged = fopen($INDEX_DIRECTORY.basename($GEDCOM_FILE).".new", "ab");
@@ -1077,7 +1077,7 @@ if ($startimport == "true") {
 		fclose($fpged);
 		fclose($fpnewged);
 		//-- as we are importing the file, a new file is being written to store any
-		//-- changes that might have occurred to the gedcom file (eg. conversion of 
+		//-- changes that might have occurred to the gedcom file (eg. conversion of
 		//-- media objects).  After the import is complete the new file is
 		//-- copied over the old file.
 		//-- The records are written during the import_record() method and the
@@ -1107,9 +1107,11 @@ if ($startimport == "true") {
 		flush();
 
 		if ($marr_names == "yes") {
+			include_once ("includes/functions_edit.php");
 			$GEDCOM = $FILE;
 			get_indi_list();
 			get_fam_list();
+			read_gedcom_file();
 			
 			print "\n<table class=\"facts_table\">";
 			print "<tr><td class=\"topbottombar $TEXT_DIRECTION\" colspan=\"2\">";
@@ -1125,7 +1127,6 @@ if ($startimport == "true") {
 			$exectime = $newtime - $oldtime;
 			$exectime_start = $exectime;
 			$names_added = 0;
-			include_once ("includes/functions_edit.php");
 			$manual_save = true;
 			foreach ($indilist as $gid => $indi) {
 				if (preg_match("/1 SEX F/", $indi["gedcom"]) > 0) {
@@ -1195,7 +1196,7 @@ if ($startimport == "true") {
 						$_SESSION["i"] = $i;
 
 						//-- close the file connection
-						fclose($fpged);
+						write_file();
 						$_SESSION["resumed"]++;
 						print "\n<table class=\"facts_table\">";
 ?>

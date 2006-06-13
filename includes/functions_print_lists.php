@@ -151,8 +151,8 @@ function print_list_family($key, $value, $findid=false, $asso="", $useli=true) {
 	if ($showLivingWife && $showLivingHusb) {
 		if (begRTLText($value[0])) $listDir = "rtl";
 		else $listDir = "ltr";
-		$tag = "span";
 		if ($useli) $tag = "li";
+		else $tag = "span";
 		print "<".$tag." class=\"".$listDir."\" dir=\"".$listDir."\">";
 		if ($findid == true) print "<a href=\"javascript:;\" onclick=\"pasteid('".$key."'); return false;\" class=\"list_item\"><b>".PrintReady($value[0])."</b>";
 		else print "<a href=\"family.php?famid=$key&amp;ged=$value[1]\" class=\"list_item\"><b>".PrintReady($value[0])."</b>";
@@ -170,23 +170,6 @@ function print_list_family($key, $value, $findid=false, $asso="", $useli=true) {
 		else {
 			print_first_major_fact($key, array("MARR"));
 			print_first_major_fact($key, array("DIV"));
-			/**
-			$bpos1 = strpos($famrec, "1 MARR");
-			if ($bpos1) {
-				$birthrec = get_sub_record(1, "1 MARR", $famrec);
-				if (!FactViewRestricted($key, $birthrec)) {
-					print " -- <i>".$pgv_lang["marriage"]." ";
-					$bt = preg_match("/1 \w+/", $birthrec, $match);
-					if ($bt>0) {
-						 $bpos2 = strpos($birthrec, $match[0]);
-						 if ($bpos2) $birthrec = substr($birthrec, 0, $bpos2);
-					}
-					print_fact_date($birthrec);
-					print_fact_place($birthrec);
-				}
-				print "</i>";
-			}
-			**/
 		}
 		print "</a>";
 		if ($asso != "") {
@@ -203,7 +186,6 @@ function print_list_family($key, $value, $findid=false, $asso="", $useli=true) {
 			if ($TEXT_DIRECTION=="ltr") print "(".$pgv_lang["associate"]."&nbsp;&nbsp;".$indikey.")</a>";
   			else print "&rlm;(&rlm;".$pgv_lang["associate"]." &nbsp;&nbsp;".$indikey."&rlm;)&rlm;</span></a>";
 		}
-//		if ($useli) print "</li>\n";
 		print "</".$tag.">";
 	}															//begin re-added by pluntke
 	if (!$showLivingWife || !$showLivingHusb) {				   	//fixed THIS line (changed && to ||)
@@ -221,7 +203,7 @@ function print_list_family($key, $value, $findid=false, $asso="", $useli=true) {
  * @param string $key the GEDCOM xref id of the person to print
  * @param array $value is an array of the form array($name, $GEDCOM)
  */
-function print_list_source($key, $value) {
+function print_list_source($key, $value, $useli=true) {
 	global $source_total, $source_hide, $SHOW_SOURCES, $SHOW_ID_NUMBERS, $GEDCOM, $TEXT_DIRECTION;
 
 	$GEDCOM = get_gedcom_from_id($value["gedfile"]);
@@ -230,16 +212,17 @@ function print_list_source($key, $value) {
 	if (displayDetailsByID($key, "SOUR")) {
 		if (begRTLText($value["name"])) $listDir = "rtl";
 		else $listDir = "ltr";
-		print "\n\t\t\t<li class=\"".$listDir."\" dir=\"".$listDir."\">";
-		print "\n\t\t\t<a href=\"source.php?sid=$key&amp;ged=".get_gedcom_from_id($value["gedfile"])."\" class=\"list_item\">".PrintReady($value["name"]);
+		if ($useli) $tag = "li";
+		else $tag = "span";
+		print "\n\t\t\t<".$tag." class=\"".$listDir."\" dir=\"".$listDir."\">";
+		print "\n\t\t\t<a href=\"source.php?sid=$key&amp;ged=".get_gedcom_from_id($value["gedfile"])."\" class=\"list_item\"><b>".PrintReady($value["name"])."</b>";
 		if ($SHOW_ID_NUMBERS) {
 			print "&nbsp;&nbsp;";
-			if ($listDir=="rtl") print "&rlm;";
-			print "(".$key.")";
-			if ($listDir=="rtl") print "&rlm;";
+			if ($listDir=="rtl") print "&rlm;(".$key.")&rlm;";
+			else print "&lrm;(".$key.")&lrm;";
 		}
 		print "</a>\n";
-		print "</li>\n";
+		print "</".$tag.">\n";
 	}
 	else $source_hide[$key."[".$GEDCOM."]"] = 1;
 }
@@ -252,7 +235,7 @@ function print_list_source($key, $value) {
  * @param string $key the GEDCOM xref id of the person to print
  * @param array $value is an array of the form array($name, $GEDCOM)
  */
-function print_list_repository($key, $value) {
+function print_list_repository($key, $value, $useli=true) {
 	global $repo_total, $repo_hide, $SHOW_ID_NUMBERS, $GEDCOM, $TEXT_DIRECTION;
 
 	$GEDCOM = get_gedcom_from_id($value["gedfile"]);
@@ -261,17 +244,18 @@ function print_list_repository($key, $value) {
 	if (displayDetailsByID($key, "REPO")) {
 		if (begRTLText($value["name"])) $listDir = "rtl";
 		else $listDir = "ltr";
-		print "\n\t\t\t<li class=\"".$listDir."\" dir=\"".$listDir."\">";
+		if ($useli) $tag = "li";
+		else $tag = "span";
+		print "\n\t\t\t<".$tag." class=\"".$listDir."\" dir=\"".$listDir."\">";
 		$id = $value["id"];
 		print "<a href=\"repo.php?rid=$id\" class=\"list_item\">";
 		print PrintReady($value["name"]);
 		if ($SHOW_ID_NUMBERS) {
 			print "&nbsp;&nbsp;";
-			if ($listDir=="rtl") print "&rlm;";
-			print "(".$id.")";
-			if ($listDir=="rtl") print "&rlm;";
+			if ($listDir=="rtl") print "&rlm;(".$id.")&rlm;";
+			else print "&lrm;(".$id.")&lrm;";
 		}
-		print "</a></li>\n";
+		print "</a></".$tag.">\n";
 	}
 	else $repo_hide[$key."[".$GEDCOM."]"] = 1;
 }

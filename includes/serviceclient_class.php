@@ -384,7 +384,7 @@ if ($this->DEBUG) print "In MergeForUpdateFamily()<br />";
 		//print_r($Familylist);
 		$FamilyListReturn=$Familylist;
 
-		if (isset($pgv_changes[$Family1."_".$GEDCOM])) $famrec1 = find_record_in_file($Family1);
+		if (isset($pgv_changes[$Family1."_".$GEDCOM])) $famrec1 = find_updated_record($Family1);
 		else $famrec1 = find_family_record($Family1);
 
 		$ct = preg_match("/(\w+):(.+)/", $Family2, $match);
@@ -881,13 +881,11 @@ if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
 					$gedrec = $person->gedcom;
 					$gedrec = preg_replace("/@(.*)@/", "@".$this->xref.":$1@", $gedrec);
 					$gedrec = $this->checkIds($gedrec);
-					//$localrec = find_record_in_file($xref);
-					//$localrec = $this->_merge($localrec, $gedrec);
 					$ct=preg_match("/0 @(.*)@/", $localrec, $match);
 					if ($ct>0)
 					{
 						$pid = trim($match[1]);
-						if (isset($pgv_changes[$pid."_".$GEDCOM])) $localrec = find_record_in_file($pid);
+						if (isset($pgv_changes[$pid."_".$GEDCOM])) $localrec = find_updated_record($pid);
 						$localrec = $this->_merge($localrec, $gedrec);
 						if ($isStub) {
 							include_once("includes/functions_edit.php");
@@ -952,7 +950,7 @@ if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
 
 		if (isset($PGV_SERVERS[$id])) return $PGV_SERVERS[$id];
 		$gedrec = find_gedcom_record($id);
-		if (empty($gedrec)) $gedrec = find_record_in_file($id);
+		if (empty($gedrec)) $gedrec = find_updated_record($id);
 		if (!empty($gedrec)) {
 			$url = get_gedcom_value("URL",1,$gedrec);
 			$gedfile = get_gedcom_value("_GEDF", 1, $gedrec);

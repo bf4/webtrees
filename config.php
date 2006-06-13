@@ -54,7 +54,7 @@ $LOG_LANG_ERROR = false;						//-- Set if non-existing language variables should
 $PGV_SESSION_SAVE_PATH = "";					//-- Path to save PHP session Files -- DO NOT MODIFY unless you know what you are doing
 												//-- leaving it blank will use the default path for your php configuration as found in php.ini
 $PGV_SESSION_TIME = "7200";						//-- number of seconds to wait before an inactive session times out
-$SERVER_URL = "http://localhost/pgv/";								//-- the URL used to access this server
+$SERVER_URL = "";								//-- the URL used to access this server
 $LOGIN_URL = "";								//-- the URL to use to go to the login page, use this value if you want to redirect to a different site when users login, useful for switching from http to https
 $MAX_VIEWS = "100";								//-- the maximum number of page views per xx seconds per session
 $MAX_VIEW_TIME = "0";							//-- the number of seconds in which the maximum number of views must not be reached
@@ -67,4 +67,3 @@ $COMMIT_COMMAND = "";						//-- Choices are empty string, cvs or svn
 
 $CONFIGURED = true;
 require_once("includes/session.php");
-?>

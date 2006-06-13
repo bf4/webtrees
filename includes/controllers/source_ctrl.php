@@ -91,7 +91,7 @@ class SourceControllerRoot extends BaseController {
 		//-- check for the user
 		//-- if the user can edit and there are changes then get the new changes
 		if ($this->show_changes=="yes" && userCanEdit($this->uname) && isset($pgv_changes[$this->sid."_".$GEDCOM])) {
-			$newrec = find_record_in_file($this->sid);
+			$newrec = find_updated_record($this->sid);
 			$this->diffsource = new Source($newrec);
 			$this->diffsource->setChanged(true);
 			$sourcerec = $newrec;
@@ -140,7 +140,7 @@ class SourceControllerRoot extends BaseController {
 		if (accept_changes($this->sid."_".$GEDCOM)) {
 			$this->show_changes="no";
 			$this->accept_success=true;
-			$indirec = find_record_in_file($this->sid);
+			$indirec = find_updated_record($this->sid);
 			$this->source = new Source($indirec);
 		}
 	}

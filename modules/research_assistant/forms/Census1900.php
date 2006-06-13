@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: Census1900.php,v 1.1 2006/04/06 20:12:35 yalnifj Exp $
+ * @version $Id: Birth_Information.php 200 2005-11-09 20:37:48Z jporter $
  * @author Joey DiAna
  */
  //-- security check, only allow access from module.php
@@ -409,7 +409,7 @@ $out = '<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
 				$pos = strrpos($_POST['people'][$k], "#");
 				$personID = substr($_POST['people'][$k], 0, $pos);
 				if (isset ($pgv_changes['"'.$personID.'"'.$GEDCOM])) {
-					$indirec = find_record_in_file($personID);
+					$indirec = find_updated_record($personID);
 				} else {
 					$indirec = find_person_record($personID);
 				}

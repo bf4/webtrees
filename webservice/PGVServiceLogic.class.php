@@ -26,7 +26,7 @@
  
 require_once('genealogyService.php');
 require_once("includes/functions_edit.php");
-require_once('includes/GrampsExport.php');
+require_once('includes/GEWebService.php');
 
 $DEBUG = 1;
 
@@ -144,7 +144,7 @@ class PGVServiceLogic extends GenealogyService
 			$return['message'] = 'Logged in as guest';
 			$return['compressionMethod'] = $compress_method;
 			$return['gedcom_id'] = $GEDCOM;
-			$return = new SOAP_Value('result', '{url:'.$this->__namespace.'}authResult', $return);
+			$return = new SOAP_Value('result', '{urn:'.$this->__namespace.'}authResult', $return);
 			return $return;
 		}
 
@@ -161,7 +161,7 @@ class PGVServiceLogic extends GenealogyService
 			$return['message'] = $username . " Logged in sucessfully";
 			$return['compressionMethod'] = $compress_method;
 			$return['gedcom_id'] = $GEDCOM;
-			$return = new SOAP_Value('result', '{url:'.$this->__namespace.'}authResult', $return);
+			$return = new SOAP_Value('result', '{urn:'.$this->__namespace.'}authResult', $return);
 			return $return;
 
 		}
@@ -203,7 +203,7 @@ class PGVServiceLogic extends GenealogyService
 		}
 		//$return[0]['gedcoms'] = $gedcomlist;
 		$return['gedcoms'] = new SOAP_Value('gedcoms', '{urn:'.$this->__namespace.'}ArrayOfGedcomList', $gedcomlist);
-		$return = new SOAP_Value('result', '{url:'.$this->__namespace.'}serviceInfoResult', $return);	
+		$return = new SOAP_Value('result', '{urn:'.$this->__namespace.'}serviceInfoResult', $return);	
 		return $return;
 	}
 	
@@ -352,12 +352,19 @@ class PGVServiceLogic extends GenealogyService
 		$person['deathDate'] = get_gedcom_value("DEAT:DATE", 1, $gedrec, '', false);
 		$person['deathPlace'] = get_gedcom_value("DEAT:PLAC", 1, $gedrec, '', false);
 		$person['gender'] = get_gedcom_value("SEX", 1, $gedrec, '', false);
-		if ($includeGedcom )$person['gedcom'] = $gedrec;
+		if ($includeGedcom ) {
+			if ($_SESSION['data_type']=='GEDCOM') $person['gedcom'] = $gedrec;
+			else {
+				//-- get XML data here
+				$ge = new GEWebService();
+				$person['gedcom'] = $ge->create_person($gedrec, $PID);
+			}
+		}
 		else $person['gedcom'] = "";
 		$fams = find_families_in_record($gedrec, "FAMS");
 		$familyS = array();
 		foreach($fams as $f=>$famid) {
-			$famrec = find_family_record($famid);
+//			$famrec = find_family_record($famid);
 	//		$family = $this->createFamily($famid, $famrec, "item");
 			$familyS[] = $famid;
 		}
@@ -370,7 +377,7 @@ class PGVServiceLogic extends GenealogyService
 			$familyC[] = $famid;
 		}
 		$person['childFamilies'] = new SOAP_Value('childFamilies', '{urn:'.$this->__namespace.'}ArrayOfIds', $familyC);
-		$result = new SOAP_Value($soapval, '{url:'.$this->__namespace.'}Person', $person);
+		$result = new SOAP_Value($soapval, '{urn:'.$this->__namespace.'}Person', $person);
 		return $result;
 	}
 
@@ -399,7 +406,7 @@ class PGVServiceLogic extends GenealogyService
 				if (!empty($xref1)) 
 				{
 					if (isset($pgv_changes[$xref1."_".$GEDCOM])) 
-						$gedrec = find_record_in_file($xref1);
+						$gedrec = find_updated_record($xref1);
 					
 					if (empty($gedrec)) 
 						$gedrec = find_person_record($xref1);
@@ -430,7 +437,6 @@ class PGVServiceLogic extends GenealogyService
 	 * create a Family complex type
 	 */
 	function createFamily($FID, $gedrec, $soapval) {
-addToLog("In createFamily ".$FID);
 		$gedrec = privatize_gedcom($gedrec);
 		$family = array();
 		$family['FID'] = $FID;
@@ -450,12 +456,11 @@ addToLog("In createFamily ".$FID);
 		 }
 		 else
 		 {
-		  $ge= new GrampsExport();
-		  $ge->begin_xml();
-		  $node = $ge->create_family($gedrec, $FID, 1);
-		  $family['gedcom'] = $node->saveXML();
+		  $ge= new GEWebService();
+		  $family['gedcom'] = $ge->create_family($gedrec, $FID);
+		  addToLog($family['gedcom']);
 		 }
-		$result = new SOAP_Value($soapval, '{url:'.$this->__namespace.'}Family', $family);
+		$result = new SOAP_Value($soapval, '{urn:'.$this->__namespace.'}Family', $family);
 		return $result;
 	}
 	
@@ -468,8 +473,7 @@ addToLog("In createFamily ".$FID);
 	{
 		global $pgv_changes, $GEDCOM, $SERVER_URL, $MEDIA_DIRECTORY;
 	  if ($data_type="GEDCOM") $returnType = 'gedcom';
-	  	else $returnType = 'gramps';
-																																												
+	  	else $returnType = 'gramps';																																								
 		if (!empty($FID))
 		{
 			$xrefs = preg_split("/;/", $FID);
@@ -482,9 +486,8 @@ addToLog("In createFamily ".$FID);
 				$xref1 = clean_input($xref1);
 				if (!empty($xref1)) 
 				{
-addToLog("In postGetFamily ".$xref1);
 					if (isset($pgv_changes[$xref1."_".$GEDCOM])) 
-						$gedrec = find_record_in_file($xref1);
+						$gedrec = find_updated_record($xref1);
 					
 					if (empty($gedrec)) 
 						$gedrec = find_family_record($xref1);
@@ -494,7 +497,6 @@ addToLog("In postGetFamily ".$xref1);
 						$gedrec = trim($gedrec);
 						preg_match("/0 @(.*)@ (.*)/", $gedrec, $match);
 						$type = trim($match[2]);
-						
 						$result = $this->createFamily($FID, $gedrec, "result");
 						return $result;
 					}
@@ -511,7 +513,7 @@ addToLog("In postGetFamily ".$xref1);
 		}
      }
 	
-	/**\
+	/**
 	 * create a Source complex type
 	 */
 	function createSource($SCID, $gedrec) {
@@ -522,9 +524,13 @@ addToLog("In postGetFamily ".$xref1);
 		$source['title'] = get_gedcom_value("TITL", 1, $gedrec, '', false);
 		$source['published'] = get_gedcom_value("PUBL", 1, $gedrec, '', false);
 		$source['author'] = get_gedcom_value("AUTH", 1, $gedrec, '', false);
-		$source['gedcom'] = $gedrec;
-
-		$result = new SOAP_Value('result', '{url:'.$this->__namespace.'}Source', $source);
+		if ($_SESSION['data_type']=='GEDCOM') $source['gedcom'] = $gedrec;
+			else {
+				//-- get XML data here
+				$ge = new GEWebService();
+				$source['gedcom'] = $ge->create_source($gedrec, $SCID);
+			}
+		$result = new SOAP_Value('result', '{urn:'.$this->__namespace.'}Source', $source);
 		return $result;
 	}
 	
@@ -552,7 +558,7 @@ addToLog("In postGetFamily ".$xref1);
 				if (!empty($xref1)) 
 				{
 					if (isset($pgv_changes[$xref1."_".$GEDCOM])) 
-						$gedrec = find_record_in_file($xref1);
+						$gedrec = find_updated_record($xref1);
 					
 					if (empty($gedrec)) 
 						$gedrec = find_source_record($xref1);
@@ -602,7 +608,7 @@ addToLog("In postGetFamily ".$xref1);
 				if (!empty($xref1)) 
 				{
 					if (isset($pgv_changes[$xref1."_".$GEDCOM])) 
-						$gedrec = find_record_in_file($xref1);
+						$gedrec = find_updated_record($xref1);
 					
 					if (empty($gedrec)) 
 						$gedrec = find_gedcom_record($xref1);
@@ -624,6 +630,9 @@ addToLog("In postGetFamily ".$xref1);
 			} //-- end for loop
 			if ($success) 
 			{
+			if ($_SESSION['data_type'] == 'GEDCOM')
+		 	{
+
 				if (empty($_REQUEST['keepfile'])) 
 				{
 					$ct = preg_match_all("/ FILE (.*)/", $gedrecords, $match, PREG_SET_ORDER);
@@ -637,7 +646,13 @@ addToLog("In postGetFamily ".$xref1);
 				$return = trim($gedrecords);
 				return $return;
 			}
-		}
+		    else
+		    {
+		     $ge= new GEWebService();
+		     return $ge->create_record($PID);
+		    }
+			}
+		 }
 		else 
 		{
 			return new SOAP_Fault("No gedcom id specified.  Please specify a PID",'Client','',null);
@@ -965,8 +980,9 @@ addToLog("In postGetFamily ".$xref1);
 	function getKnownServers($SID,$limit)
 	{
 	//	AddToLog('inside get known servers');
-		// get_server_list(); returns array or false;		
-		if(($servers = get_server_list()))
+		// get_server_list(); returns array or false;
+		$servers = get_server_list();
+		if(count($servers)>0)
 		{
 	//		addtolog('servers = true');
 			// the array to return
@@ -994,7 +1010,7 @@ addToLog("In postGetFamily ".$xref1);
 		}
 		else
 		{
-			return new SOAP_Fault("Unable to retrieve server list",'Server','',null);
+			return new SOAP_Fault("No known servers to report",'Server','',null);
 		}		
 	}
 	

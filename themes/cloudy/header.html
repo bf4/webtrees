@@ -23,7 +23,7 @@
  * @author w.a. bastein http://genealogy.bastein.biz
  * @package PhpGedView
  * @subpackage Themes
- * @version $Id: header.html,v 1.21.2.42 2006/05/14 13:10:08 canajun2eh Exp $
+ * @version $Id: header.html,v 1.21.2.43 2006/06/06 22:34:56 yalnifj Exp $
  */
 global $SEARCH_SPIDER;
 $menubar = new MenuBar();
@@ -134,7 +134,7 @@ $menubar = new MenuBar();
 										print "\t</td>\n";
 									}
 									$menu = $menubar->getClippingsMenu();
-									if($menu->link != "") {
+									if(!is_null($menu) && $menu->link != "") {
 										if (!is_null($menu)) {
 											print "\t<td width=\"1\">\n";
 											$menu->addLabel("", "none");

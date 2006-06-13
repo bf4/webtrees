@@ -2,8 +2,8 @@
 
 /**
  * Gramps Export
- * Exports the clippings cart into the GRAMPS XML format
- * 
+ * An abstract class that has the basic methods for exporting GRAMPS XML implemented. 
+ * The class is not tied to any particlular web page(or GUI) and needs to be inherited for proper use
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2005  John Finlay and Others
@@ -13,7 +13,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,b-
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -22,10 +22,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
- * TODO: This page could easily be used to write XML files for a web service that
- * GRAMPS could subscribe to. Currently, this file only writes a complete XML file
- * and is tied to the clippings cart. With some modifications, it could take a request
- * for data and spit out the proper XML for the requested data.
  * 
  *
  * @package PhpGedView
@@ -37,20 +33,16 @@ global $LANGUAGE;
 //	require_once ($factsfile[$LANGUAGE]);
 
 
-/**
- * Creates the root elements for the GRAMPS XML file.
- * 
- * This file could be modified to only add the nessecary elements
- * for a valid GRAMPS XML document. Right now, it adds all the 
- * root elements and appends them to the DOMDocument.
- */
  
- //This is an abstract class and should only be used through its subclasses, all
- //of which are prefixed by GE.
+ /*
+  * This is an abstract class and should only be used through its subclasses, all
+  * of which are prefixed by GE.
+  */
+ 
 class GrampsExport {
 
-	var $mediaFiles = array();
-	var $dom, $ePeople, $eFams, $eSources, $ePlaces, $eObject;
+	var $mediaFiles = array(),$i;
+	var $dom, $ePeople, $eFams, $eSources, $ePlaces, $eObject, $eEvents;
 	var $familyevents = array (
 	"ANUL",
 	"CENS",
@@ -88,6 +80,11 @@ class GrampsExport {
 	"WILL",
 	"EVEN"
 );
+/**
+ * Creates the root elements for the GRAMPS XML file.
+ * 
+ * The methods adds all the root elements and appends them to a DOMDocument.
+ */
 	function begin_xml() {
 		global $pgv_lang, $factarray;//, $eventsArray, $dom, $ePeople, $this->eFams, $eSources, $ePlaces, $eObject;
 		$user = getUserName();
@@ -118,6 +115,9 @@ class GrampsExport {
 		$eResemail = $eResearcher->appendChild($eResemail);
 		$eResearcher = $eHeader->appendChild($eResearcher);
 
+		$this->eEvents = $this->dom->createElement("events");
+		$this->eEvents = $eRoot->appendChild($this->eEvents);
+
 		$this->ePeople = $this->dom->createElement("people");
 		$this->ePeople = $eRoot->appendChild($this->ePeople);
 
@@ -142,6 +142,7 @@ class GrampsExport {
 	 * @param DOMObject $eParent - The parent element the date should be attached to
 	 * @param string $dateRec - the entire GEDCOM date record to be parsed
 	 * @param int $level - the level the date record was found on in the GEDCOM 
+	 * @param int $done - whether the method is called from the GrampsExport($done=1) or a sub-class
 	 */
 	function create_date($eParent, $dateRec, $level) {
 		$date = get_gedcom_value("DATE", $level, $dateRec);
@@ -191,7 +192,7 @@ class GrampsExport {
 	}
 
 	/**
-	 * Returns 
+	 * Returns all the path to all media files that were used in the family, people, source in the created GRAMPS XML  
 	 */
 	function get_all_media() {
 		return $this->mediaFiles;
@@ -200,6 +201,9 @@ class GrampsExport {
 	/**
 	 * checks if each date value isset and then returns the correct string to match
 	 * the GRAMPS date format
+	 * @param int $year - the year in the date
+	 * @param int $month - the month in the date
+	 * @param int $day - the day in the date
 	 */
 	function create_date_value($year, $month, $day) {
 		if ($month == null && $day == null)
@@ -229,6 +233,24 @@ class GrampsExport {
 					return $dateVal;
 				}
 	}
+	
+	/**
+	 * Creates a reference(handle) for xml element to element in the events element of the root element
+	 * If such an element does not exists it is created using create_event method. 
+	 * @param DOMElement $eParent - the parent you want to apend the elemnt to
+	 * @param GEDCOM record $personrec - the record use to get more information about the event(used when the event is being created)
+	 * @param int $event - the $event record
+	 */
+	function create_event_ref($eParent, $personrec, $event)
+	{		
+		if (($eventRec = get_sub_record(1, "1 " . $event, $personrec)) != null) {
+		$eEventRef = $this->dom->createElement("eventref");
+		$eEventRef = $eParent->appendChild($eEventRef);
+		$eventID = $this->create_event($personrec,$event,$eventRec);
+		$eEventRef->setAttribute("hlink", $this->query_dom("./events/event[@id = \"$eventID\"]/@handle"));
+		$eParent->appendChild($eEventRef);
+		}
+	}
 
 	/**
 	  * Creates the Event Element given the record passed and the event abbreviation which is then
@@ -238,22 +260,30 @@ class GrampsExport {
 	  * 	place and then links them together accordingly, otherwise the method just searches for
 	  * 	the place and creates the link.
 	  * 
-	  * @param string $indirec - the entire Family, Individual, etc. record in which the event may be found
+	  * @param DOMElement $personrec - the person(or top element) that contains the event
 	  * @param string $event - the abbreviation of the event to be created; BIRT, DEAT, ADOP.....
-	  * @param DOMElement $eParent - the parent DOMElement to which the created Event Element is appended 
+	  * @param DOMElement $eventRec - the parent DOMElement to which the created Event Element is appended 
+	  * @param int $done - whether the method is called from the GrampsExport($done=1) or a sub-class
 	  */
-	function create_event($eParent, $indirec, $event) {
+		function create_event($personrec, $event, $eventRec,$done=1) {
 		global $factarray;
-		if (($eventRec = get_sub_record(1, "1 " . $event, $indirec)) != null) {
-
+			$eventID = $this->generateHandle();
+			$eventHandle = $eventID;
 			$eEvent = $this->dom->createElement("event");
-			$eEvent->setAttribute("type", $factarray[$event]);
+			$eType = $this->dom->createElement("type");
+			$eTypeText = $this->dom->createTextNode($event);
+			$eTypeText = $eType->appendChild($eTypeText);
+			$eEvent->appendChild($eType);//$factarray[$event])
+		//	$eEvent->setAttribute("type", $factarray[$event]);
+		$eEvent->setAttribute("id", $eventID);
+		$eEvent->setAttribute("handle", $eventHandle);
+		$eEvent->setAttribute("change", time());
 
 			if (($dateRec = get_sub_record(1, "2 DATE", $eventRec)) != null) {
 				$this->create_date($eEvent, $dateRec, 2);
 			}
 
-			if (($place = get_gedcom_value($event . ":PLAC", 1, $indirec)) != null) {
+			if (($place = get_gedcom_value($event . ":PLAC", 1, $personrec)) != null) {
 				$hlink = $this->query_dom("./places/placeobj[@title=\"".preg_replace("~\"~", '&quot;', $place)."\"]/@handle");
 				if ($hlink == null) {
 					$hlink = $this->generateHandle();
@@ -264,14 +294,14 @@ class GrampsExport {
 				}
 			}
 
-			if (($cause = get_gedcom_value($event . ":CAUS", 1, $indirec)) != null) {
+			if (($cause = get_gedcom_value($event . ":CAUS", 1, $personrec)) != null) {
 				$eCause = $this->dom->createElement("cause");
 				$etCause = $this->dom->createTextNode($cause);
 				$etCause = $eCause->appendChild($etCause);
 				$eCause = $eEvent->appendChild($eCause);
 			}
 
-			if (($description = get_gedcom_value($event . ":TYPE", 1, $indirec)) != null) {
+			if (($description = get_gedcom_value($event . ":TYPE", 1, $personrec)) != null) {
 				$eDescription = $this->dom->createElement("description");
 				$etDescription = $this->dom->createTextNode($description);
 				$etDescription = $eDescription->appendChild($etDescription);
@@ -283,19 +313,20 @@ class GrampsExport {
 			}
 
 			$num = 1;
-			while (($sourcerefRec = get_sub_record(2, "2 SOUR", $eventRec, $num)) != null) {
+			while (($sourcerefRec = get_sub_record(2, "2 SOUR", $personrec, $num)) != null) {
 				$this->create_sourceref($eEvent, $sourcerefRec, 2);
 				$num++;
 			}
 			$num = 1;
-			while (($nameSource = get_sub_record(1, "1 OBJE", $eventRec, $num)) != null) {
+			while (($nameSource = get_sub_record(1, "1 OBJE", $personrec, $num)) != null) {
 
-				$this->create_mediaref($eEvent, $nameSource, 1);
+				$this->create_mediaref($eEvent, $nameSource, 1,$done);
 
 				$num++;
 			}
-			$eEvent = $eParent->appendChild($eEvent);
-		}
+			$eEvent = $this->eEvents->appendChild($eEvent);
+			return $eventID;
+		
 	}
 
 
@@ -307,9 +338,9 @@ class GrampsExport {
 	 * if they are not, the person is created and then the DOMDocument is queried
 	 * and the persons HLINK is retrieved.
 	 * 
-	 * @param $eParent - the parent XML element the date element should be appended to
-	 * @param personRec - the full INDI GEDCOM record of the person that the relation is being created
-	 * @param $tag -  the name of the GEDCOM tag (FAMC, FAMS). This is used to allow the same function to work with childin and parent_in_family relations
+	 * @param DOMElement $eParent - the parent XML element the date element should be appended to
+	 * @param GEDCOM record $personRec - the full INDI GEDCOM record of the person that the relation is being created
+	 * @param int $tag -  the name of the GEDCOM tag (FAMC, FAMS). This is used to allow the same function to work with childin and parent_in_family relations
 	 */
 	function create_fam_relation($eParent, $personRec, $tag)
 	{
@@ -356,13 +387,14 @@ class GrampsExport {
 	  */
 	function create_note($eParent, $noteRec, $level) {
 		$note = get_gedcom_value("NOTE", $level, $noteRec);
-		$num = 1;
-		while (($cont = get_gedcom_value("NOTE:CONT", $level, $noteRec, $num)) != null) {
-			$note .= $cont;
-			$num++;
-		}
+		$note .= get_cont($level+1, $noteRec, false);
+//		$num = 1;
+//		while (($cont = get_gedcom_value("NOTE:CONT", $level, $noteRec, $num)) != null) {
+//			$note .= $cont;
+//			$num++;
+//		}
 		$eNote = $this->dom->createElement("note");
-		$etNote = $this->dom->createTextNode($note);
+		$etNote = $this->dom->createTextNode(htmlentities($note));
 		$etNote = $eNote->appendChild($etNote);
 		$eNote = $eParent->appendChild($eNote);
 	}
@@ -398,36 +430,51 @@ class GrampsExport {
 	  * Creates the PlaceObj element and appends it to the Places element  
 	  * 
 	  * @param string $place - the string containing the value for the placeobj to be created
-	  * @param string $hlink - the value to which the 'hlink' attribute is set 
+	  * @param string $hlink - the value to which the 'hlink' attribute is set \
+	  * @param int $done - whether the method is called from the GrampsExport($done=1) or a sub-class
 	  */
-	function create_placeobj($place, $hlink) {
+	function create_placeobj($place, $hlink,$done=1) {
 		$ePlaceObj = $this->dom->createElement("placeobj");
 		$ePlaceObj->setAttribute("handle", $hlink);
 		$ePlaceObj->setAttribute("id", $hlink);
 		$ePlaceObj->setAttribute("change", time());
-		$ePlaceObj->setAttribute("title", $place);
+		
+		$ePTitle = $this->dom->createElement("ptitle");
+		$ePTitle = $ePlaceObj->appendChild($ePTitle);
 		$ePlaceObj = $this->ePlaces->appendChild($ePlaceObj);
+		$ePlaceText = $this->dom->createTextNode($place);
+		$ePTitle->appendChild($ePlaceText);
 		$num = 1;
 		while (($nameSource = get_sub_record(1, "1 OBJE", $place, $num)) != null) {
-			$this->create_mediaref($this->ePlaces, $nameSource, 1);
+			$this->create_mediaref($this->ePlaces, $nameSource, 1,$done);
 			$num++;
 		}
 	}
-
-	function create_mediaref($eParent, $sourcerefRec, $level) {
+ /**
+  * Creates a reference(handle) for xml element to element in the objects element of the root element
+  * If such an element does not exists it is created using create_media method.
+  * @param DOMElement $eParent - the parent you want to apend the elemnt to
+  * @param GEDCOM record $sourcerefRec - the record use to get more information about the event(used when the event is being created)
+  * @param int $level - the level the media could be found
+  */
+	function create_mediaref($eParent, $sourcerefRec, $level,$done=1) {
 		$mediaId = get_gedcom_value("OBJE", $level, $sourcerefRec);
 		$eMediaRef = $this->dom->createElement("objref");
 		$eMediaRef = $eParent->appendChild($eMediaRef);
+
 		if (($sourceHlink = $this->query_dom("./objects/object[@id = \"$mediaId\"]/@handle")) == null)
-			$this->create_media($mediaId, find_record_in_file($mediaId));
+			$this->create_media($mediaId, find_media_record($mediaId));
 		$eMediaRef->setAttribute("hlink", $this->query_dom("./objects/object[@id = \"$mediaId\"]/@handle"));
+
 		$eParent->appendChild($eMediaRef);
 		//		 $mediaRecord = find_gedcom_record($mediaId);
 		//               $this->create_media($mediaId,$mediaRecord);
 	}
 	/**
-	 * $indirec gedcom - the gedcom we are searching with regular expresion
-	 * 
+	 * Creates an object element(for the media) and puts it unde the objects element of the root
+	 * @param string $mediaID - the id of the media you want to create
+	 * @param string $mediaRec - the GEDCOM record that contains the media
+	 * @param int $level - the level the media is in the GEDCOM method
 	 */
 	function create_media($mediaID, $mediaRec, $level = 1) {
 		global $file;
@@ -500,8 +547,10 @@ class GrampsExport {
 	  * 
 	  * @param string $sourceID - the ID of the source to be created
 	  * @param string $sourceRec - the entire GEDCOM record containing the Source
+	  * @param int $level - the level the source is on in the GEDCOM record
+	  * @param int $done - whether the method is called from the GrampsExport($done=1) or a sub-class
 	  */
-function create_source($sourceID, $sourceRec, $level = 1) {
+function create_source($sourceID, $sourceRec, $level = 1, $done=1) {
 		$eSource = $this->dom->createElement("source");
 		$eSource->setAttribute("id", $sourceID);
 		$eSource->setAttribute("handle", $this->generateHandle());
@@ -535,7 +584,7 @@ function create_source($sourceID, $sourceRec, $level = 1) {
 		}
 		$num = 1;
 		while (($nameSource = get_sub_record(1, "1 OBJE", $sourceRec, $num)) != null) {
-			$this->create_mediaref($this->eSources, $nameSource, 1);
+			$this->create_mediaref($this->eSources, $nameSource, 1,$done);
 			$num++;
 		}
 		$eSource = $this->eSources->appendChild($eSource);
@@ -550,6 +599,7 @@ function create_source($sourceID, $sourceRec, $level = 1) {
 	function generateHandle() {
 		return strtoupper("_" . dechex(rand() * (time() * 877)) . dechex(time() * rand(1, 4)));
 	}
+
 
 	/**
 	* Reads in an xpath expression and returns the value searched for by the expression
@@ -595,16 +645,5 @@ function create_source($sourceID, $sourceRec, $level = 1) {
 		else
 			print "Validation: <em style=\"color:red;\"><h1> FAILED against the .RNG</h1></em>";
 	}
-
-//
-//	/**
-//	 * This function is not implemented yet. GRAMPS can import the XML file gzipped 
-//	 * without any issue. This would be much better for users to download because
-//	 * the file size would be considerably smaller.
-//	 */
-//	function zipGramps() {
-//		global $dom;
-//		// TODO: Output the XML file gzipped for download by the user
-//	}
 }
 ?>

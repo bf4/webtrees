@@ -68,6 +68,7 @@ var $TextColor;          //commands for text color
 var $ColorFlag;          //indicates whether fill and text colors are different
 var $ws;                 //word spacing
 var $AutoPageBreak;      //automatic page breaking
+var $autoLineWrap;		 //automatic line wrapping 
 var $PageBreakTrigger;   //threshold used to trigger page breaks
 var $InFooter;           //flag set when processing footer
 var $ZoomMode;           //zoom display mode
@@ -112,6 +113,7 @@ function FPDF($orientation='P',$unit='mm',$format='A4')
 	$this->TextColor='0 g';
 	$this->ColorFlag=false;
 	$this->ws=0;
+	$this->autoLineWrap = true;
 	//Standard fonts
 	$this->CoreFonts=array('courier'=>'Courier','courierB'=>'Courier-Bold','courierI'=>'Courier-Oblique','courierBI'=>'Courier-BoldOblique',
 		'helvetica'=>'Helvetica','helveticaB'=>'Helvetica-Bold','helveticaI'=>'Helvetica-Oblique','helveticaBI'=>'Helvetica-BoldOblique',
@@ -226,6 +228,10 @@ function SetAutoPageBreak($auto,$margin=0)
 	$this->AutoPageBreak=$auto;
 	$this->bMargin=$margin;
 	$this->PageBreakTrigger=$this->h-$margin;
+}
+
+function SetAutoLineWrap($auto) {
+	$this->autoLineWrap = $auto;
 }
 
 function SetDisplayMode($zoom,$layout='continuous')
@@ -868,7 +874,7 @@ function Write($h,$txt,$link='')
 			$sep=$i;
 		if (isset($cw[$c])) $l+=$cw[$c];
 		else if (isset($cw[ord($c)])) $l+=$cw[ord($c)];
-		if($l>$wmax)
+		if($l>$wmax  && $this->autoLineWrap)
 		{
 			//Automatic line break
 			if($sep==-1)

@@ -91,7 +91,7 @@ class Person extends GedcomRecord {
 		}
 		if (empty($indirec)) {
 			if (userCanEdit(getUserName()) && isset($pgv_changes[$pid."_".$GEDCOM])) {
-				$indirec = find_record_in_file($pid);
+				$indirec = find_updated_record($pid);
 				$fromfile = true;
 			}
 		}
@@ -520,7 +520,7 @@ class Person extends GedcomRecord {
 		if ($this->changed) return null;
 		if (userCanEdit(getUserName())&&($this->disp)) {
 			if (isset($pgv_changes[$this->xref."_".$GEDCOM])) {
-				$newrec = find_record_in_file($this->xref);
+				$newrec = find_updated_record($this->xref);
 				if (!empty($newrec)) {
 					$new = new Person($newrec);
 					$new->setChanged(true);
@@ -610,7 +610,8 @@ class Person extends GedcomRecord {
 		$ct = preg_match_all("/1\s+FAMS\s+@(.*)@/", $this->gedrec, $fmatch, PREG_SET_ORDER);
 		for($j=0; $j<$ct; $j++) {
 			$famid = $fmatch[$j][1];
-			$famrec = find_family_record($famid);
+			$family = Family::getInstance($famid);
+			$famrec = $family->getGedcomRecord();
 			$parents=find_parents_in_record($famrec);
 			if ($parents['HUSB']==$this->xref) $spouse=$parents['WIFE'];
 			else $spouse=$parents['HUSB'];

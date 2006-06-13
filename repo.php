@@ -107,7 +107,7 @@ if (userCanEdit(getUserName())) {
 		print "<br />\n";
 	}
 	if (isset($show_changes)) {
-		$newrepo = trim(find_record_in_file($rid));
+		$newrepo = trim(find_updated_record($rid));
 	}
 }
 print "<br />";

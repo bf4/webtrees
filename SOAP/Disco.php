@@ -271,18 +271,20 @@ class SOAP_DISCO_Server extends SOAP_Base_Object {
             // BINDING
             $binding =& $this->_wsdl['definitions']['binding']['operation'][];
             $binding['attr']['name'] = $method_name;
-            $action = $method_namespace . '#' . ($classname ? $classname . '#' : '') . $method_name;
+            $action = $method_namespace . ':' . ($classname ? $classname . ':' : '') . $method_name;
             $binding['soap:operation']['attr']['soapAction'] = $action;
 
             // INPUT
             $binding['input']['attr'] = '';
             $binding['input']['soap:body']['attr']['use'] = 'encoded';
+	    //$binding['input']['soap:body']['attr']['use'] = 'literal';
             $binding['input']['soap:body']['attr']['namespace'] = $method_namespace;
             $binding['input']['soap:body']['attr']['encodingStyle'] = SOAP_SCHEMA_ENCODING;
 
             // OUTPUT
             $binding['output']['attr'] = '';
             $binding['output']['soap:body']['attr']['use'] = 'encoded';
+	    //$binding['input']['soap:body']['attr']['use'] = 'literal';
             $binding['output']['soap:body']['attr']['namespace'] = $method_namespace;
             $binding['output']['soap:body']['attr']['encodingStyle'] = SOAP_SCHEMA_ENCODING;
         }

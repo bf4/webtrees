@@ -156,7 +156,8 @@ if (isset($GEDCOMPATH)) {
 		// NOTE: Check if it is a zipfile
 		if (strstr(strtolower(trim($GEDFILENAME)), ".zip")==".zip") $GEDFILENAME = GetGEDFromZIP($path.$GEDFILENAME);
 		// NOTE: Check if there is an extension
-		if (strtolower(substr(trim($GEDFILENAME), -4)) != ".ged") $GEDFILENAME .= ".ged";
+		//-- don't force the .ged extension
+		//-- if (strtolower(substr(trim($GEDFILENAME), -4)) != ".ged") $GEDFILENAME .= ".ged";
 
 		$ged = $GEDFILENAME;
 	}
@@ -358,10 +359,12 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$SOURCE_ID_PREFIX\s*=\s*".*";/', "\$SOURCE_ID_PREFIX = \"".$_POST["NEW_SOURCE_ID_PREFIX"]."\";", $configtext);
 	$configtext = preg_replace('/\$SPLIT_PLACES\s*=\s*.*;/', "\$SPLIT_PLACES = ".$boolarray[$_POST["NEW_SPLIT_PLACES"]].";", $configtext);
 	$configtext = preg_replace('/\$SUPPORT_METHOD\s*=\s*".*";/', "\$SUPPORT_METHOD = \"".$_POST["NEW_SUPPORT_METHOD"]."\";", $configtext);
+	$configtext = preg_replace('/\$SYNC_GEDCOM_FILE\s*=\s*.*;/', "\$SYNC_GEDCOM_FILE = ".$boolarray[$_POST["NEW_SYNC_GEDCOM_FILE"]].";", $configtext);
 	$configtext = preg_replace('/\$THUMBNAIL_WIDTH\s*=\s*".*";/', "\$THUMBNAIL_WIDTH = \"".$_POST["NEW_THUMBNAIL_WIDTH"]."\";", $configtext);
 	$configtext = preg_replace('/\$UNDERLINE_NAME_QUOTES\s*=\s*.*;/', "\$UNDERLINE_NAME_QUOTES = ".$boolarray[$_POST["NEW_UNDERLINE_NAME_QUOTES"]].";", $configtext);
 	$configtext = preg_replace('/\$USE_QUICK_UPDATE\s*=\s*.*;/', "\$USE_QUICK_UPDATE = ".$boolarray[$_POST["NEW_USE_QUICK_UPDATE"]].";", $configtext);
 	$configtext = preg_replace('/\$USE_RIN\s*=\s*.*;/', "\$USE_RIN = ".$boolarray[$_POST["NEW_USE_RIN"]].";", $configtext);
+	$configtext = preg_replace('/\$GENERATE_UIDS\s*=\s*.*;/', "\$GENERATE_UIDS = ".$boolarray[$_POST["NEW_GENERATE_UIDS"]].";", $configtext);
 	$configtext = preg_replace('/\$USE_RTL_FUNCTIONS\s*=\s*.*;/', "\$USE_RTL_FUNCTIONS = ".$boolarray[$_POST["NEW_USE_RTL_FUNCTIONS"]].";", $configtext);
 	$configtext = preg_replace('/\$USE_THUMBS_MAIN\s*=\s*.*;/', "\$USE_THUMBS_MAIN = ".$boolarray[$_POST["NEW_USE_THUMBS_MAIN"]].";", $configtext);
 	$configtext = preg_replace('/\$WEBMASTER_EMAIL\s*=\s*".*";/', "\$WEBMASTER_EMAIL = \"".$_POST["NEW_WEBMASTER_EMAIL"]."\";", $configtext);
@@ -433,6 +436,7 @@ if ($action=="update") {
 }
 
 //-- output starts here
+if (!isset($GENERATE_UIDS)) $GENERATE_UIDS = false;
 $temp2 = $THEME_DIR;
 $THEME_DIR = $temp;
 print_header($pgv_lang["gedconf_head"]);
@@ -484,9 +488,8 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
     <td colspan="2" class="facts_label"><?php
     		print "<h2>".$pgv_lang["gedconf_head"]." - ";
 		if (isset($ged)) {
-			if ($TEXT_DIRECTION=="rtl") print "&rlm;";
-			print "(".$GEDCOMS[$ged]["id"].")&nbsp;";
-			if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+			if ($TEXT_DIRECTION=="rtl") print "&rlm;(".$GEDCOMS[$ged]["id"].")&nbsp;&rlm;";
+			else print "&nbsp;&lrm;(".$GEDCOMS[$ged]["id"].")&lrm;";
 			print $GEDCOMS[$ged]["title"];
 		}
 		else if ($source == "add_form") print $pgv_lang["add_gedcom"];
@@ -543,6 +546,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 		}
 			if ($GEDCOMPATH != "" || $GEDFILENAME != "") {
 				if (!file_exists($path.$GEDFILENAME) && !empty($GEDCOMPATH)) {
+					//-- gedcom not found so try looking for it with a .ged extension
 					if (strtolower(substr(trim($path.$GEDFILENAME), -4)) != ".ged") $GEDFILENAME .= ".ged";
 				}
 				if ((!strstr($GEDCOMPATH, "://")) &&(!file_exists($path.$GEDFILENAME))) {
@@ -726,6 +730,15 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 		<td class="optionbox"><select name="NEW_USE_RIN" tabindex="<?php $i++; print $i?>" onfocus="getHelp('USE_RIN_help');">
 				<option value="yes" <?php if ($USE_RIN) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 				<option value="no" <?php if (!$USE_RIN) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap">
+		<?php print_help_link("GENERATE_GUID_help", "qm", "GENERATE_GUID"); print $pgv_lang["GENERATE_GUID"];?></td>
+		<td class="optionbox"><select name="NEW_GENERATE_UIDS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('GENERATE_GUID_help');">
+				<option value="yes" <?php if ($GENERATE_UIDS) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$GENERATE_UIDS) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 			</select>
 		</td>
 	</tr>
@@ -1288,6 +1301,14 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["editopt_conf"]."\" onclick=\"exp
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("ALLOW_EDIT_GEDCOM_help", "qm", "ALLOW_EDIT_GEDCOM"); print $pgv_lang["ALLOW_EDIT_GEDCOM"];?></td>
 		<td class="optionbox"><select name="NEW_ALLOW_EDIT_GEDCOM" tabindex="<?php $i++; print $i?>" onfocus="getHelp('ALLOW_EDIT_GEDCOM_help');">
+				<option value="yes" <?php if ($ALLOW_EDIT_GEDCOM) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$ALLOW_EDIT_GEDCOM) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap width20"><?php print_help_link("SYNC_GEDCOM_FILE_help", "qm", "SYNC_GEDCOM_FILE"); print $pgv_lang["SYNC_GEDCOM_FILE"];?></td>
+		<td class="optionbox"><select name="NEW_SYNC_GEDCOM_FILE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SYNC_GEDCOM_FILE_help');">
 				<option value="yes" <?php if ($ALLOW_EDIT_GEDCOM) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 				<option value="no" <?php if (!$ALLOW_EDIT_GEDCOM) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 			</select>

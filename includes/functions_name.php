@@ -179,7 +179,7 @@ function get_name_in_record($indirec) {
 /**
  * get the person's name as surname, given names
  *
- * This function will return the given person's name is a format that is good for sorting
+ * This function will return the given person's name in a format that is good for sorting
  * Surname, given names
  * @param string $pid the gedcom xref id for the person
  * @param string $alpha	only get the name that starts with a certain letter
@@ -209,7 +209,7 @@ function get_sortable_name($pid, $alpha="", $surname="", $allnames=false) {
 		//-- cache missed, so load the person into the cache with the find_person_record function
 		//-- and get the name from the cache again
 		$gedrec = find_person_record($pid);
-		if (empty($gedrec)) $gedrec = find_record_in_file($pid);
+		if (empty($gedrec)) $gedrec = find_updated_record($pid);
 		if (!empty($gedrec)) {
 			$names = $indilist[$pid]["names"];
 		}
@@ -269,9 +269,10 @@ function sortable_name_from_name($name) {
  * If the <var>$NAME_FROM_GEDCOM</var> variable is true then the name is retrieved from the
  * gedcom record not from the database index.
  * @param string $pid the xref gedcom id of the person
+ * @param bool $checkUnknown whether to check for (unknown) before returning
  * @return string the person's name (Given Name Surname)
  */
-function get_person_name($pid) {
+function get_person_name($pid, $checkUnknown=true) {
 	global $NAME_REVERSE;
 	global $NAME_FROM_GEDCOM;
 	global $indilist;
@@ -282,7 +283,7 @@ function get_person_name($pid) {
 	//-- get the name from the gedcom record
 	if ($NAME_FROM_GEDCOM) {
 		$indirec = find_person_record($pid);
-		if (!$indirec) $indirec = find_record_in_file($pid);
+		if (!$indirec) $indirec = find_updated_record($pid);
 		$name = get_name_in_record($indirec);
 	}
 	else {
@@ -294,7 +295,7 @@ function get_person_name($pid) {
 			//-- cache missed, so load the person into the cache with the find_person_record function
 			//-- and get the name from the cache again
 			$gedrec = find_person_record($pid);
-			if (empty($gedrec)) $gedrec = find_record_in_file($pid);
+			if (empty($gedrec)) $gedrec = find_updated_record($pid);
 			if (!empty($gedrec)) {
 				if (isset($indilist[$pid]["names"])) $name = $indilist[$pid]["names"][0][0];
 				else {
@@ -307,7 +308,7 @@ function get_person_name($pid) {
 
 	if ($NAME_REVERSE) $name = reverse_name($name);
 	
-	$name = check_NN($name);
+	if ($checkUnknown) $name = check_NN($name);
 	return $name;
 }
 
@@ -464,30 +465,29 @@ function get_sortable_family_descriptor($fid) {
 }
 
 function get_family_descriptor($fid) {
-	global $pgv_lang;
+	global $pgv_lang, $NAME_REVERSE;
 	$parents = find_parents($fid);
 	if ($parents["HUSB"]) {
 		if (displayDetailsById($parents["HUSB"]) || showLivingNameById($parents["HUSB"]))
-//			$hname = get_sortable_name($parents["HUSB"]);
-			$hname = get_person_name($parents["HUSB"]);
+			$hname = get_person_name($parents["HUSB"], false);
 		else $hname = $pgv_lang["private"];
+	} else {
+		if ($NAME_REVERSE) $hname = "@N.N. @P.N.";
+		else $hname = "@P.N. @N.N.";
 	}
-//	else $hname = "@N.N., @P.N.";
-	else $hname = check_NN("@N.N., @P.N.");
 	if ($parents["WIFE"]) {
 		if (displayDetailsById($parents["WIFE"]) || showLivingNameById($parents["WIFE"]))
-//			$wname = get_sortable_name($parents["WIFE"]);
-			$wname = get_person_name($parents["WIFE"]);
+			$wname = get_person_name($parents["WIFE"], false);
 		else $wname = $pgv_lang["private"];
+	} else {
+		if ($NAME_REVERSE) $wname = "@N.N. @P.N.";
+		else $wname = "@P.N. @N.N.";
 	}
-//	else $wname = "@N.N., @P.N.";
-	else $wname = check_NN("@N.N., @P.N.");
-//	if (!empty($hname) && !empty($wname)) return check_NN($hname)." + ".check_NN($wname);
-//	else if (!empty($hname) && empty($wname)) return check_NN($hname);
-//	else if (empty($hname) && !empty($wname)) return check_NN($wname);
-	if (!empty($hname) && !empty($wname)) return $hname." + ".$wname;
-	else if (!empty($hname) && empty($wname)) return $hname;
-	else if (empty($hname) && !empty($wname)) return $wname;
+	if (!empty($hname) && !empty($wname)) $result = check_NN($hname) . " + " . check_nn($wname);
+	else if (!empty($hname) && empty($wname)) $result = check_NN($hname);
+	else if (empty($hname) && !empty($wname)) $result = check_NN($wname);
+	
+	return $result;
 }
 
 function get_family_add_descriptor($fid) {
@@ -495,27 +495,26 @@ function get_family_add_descriptor($fid) {
 	$parents = find_parents($fid);
 	if ($parents["HUSB"]) {
 		if (displayDetailsById($parents["HUSB"]) || showLivingNameById($parents["HUSB"]))
-//			$hname = get_sortable_add_name($parents["HUSB"]); //----- MA @@@@@
 			$hname = get_add_person_name($parents["HUSB"]);
 		else $hname = $pgv_lang["private"];
 	}
-//	else $hname = "@N.N., @P.N.";
 	else $hname = "";
 	// handle the additional name of a non existing spouse the same way as of 
 	// a spouse who does not have an additional name 
 	
 	if ($parents["WIFE"]) {
 		if (displayDetailsById($parents["WIFE"]) || showLivingNameById($parents["WIFE"]))
-//			$wname = get_sortable_add_name($parents["WIFE"]);
 			$wname = get_add_person_name($parents["WIFE"]);
 		else $wname = $pgv_lang["private"];
 	}
-//	else $wname = "@N.N., @P.N.";
 	else $wname = "";
 		
-	if (!empty($hname) && !empty($wname)) return check_NN($hname)." + ".check_NN($wname);
-	else if (!empty($hname) && empty($wname)) return check_NN($hname);
-	else if (empty($hname) && !empty($wname)) return check_NN($wname);
+	if (!empty($hname) && !empty($wname)) $result = check_NN($hname) . " + " . check_NN($wname);
+	else if (!empty($hname) && empty($wname)) $result = check_NN($hname);
+	else if (empty($hname) && !empty($wname)) $result = check_NN($wname);
+	else $result = "";
+	
+	return $result;
 }
 
 // -- find and return a given individual's second name in format: firstname lastname
@@ -733,20 +732,17 @@ function get_first_letter($text, $import=false) {
  * @return string
  */
 function check_NN($names) {
-	global $pgv_lang, $HNN, $ANN, $UNDERLINE_NAME_QUOTES;
+	global $pgv_lang, $UNDERLINE_NAME_QUOTES;
+	global $unknownNN, $unknownPN;
 
 	$fullname = "";
-	$NN = $pgv_lang["NN"];
- 	$PN = $pgv_lang["PN"];
 
 	if (!is_array($names)){
-		if (hasRTLText($names)) {  
-			$NN = RTLUndefined($names);
-			$PN = $NN;
-		}
+		$lang = whatLanguage($names);
+		$NN = $unknownNN[$lang];
 		$names = stripslashes($names);
 		$names = preg_replace(array("~ /~","~/,~","~/~"), array(" ", ",", " "), $names);
-		$names = preg_replace(array("/@N.N.?/","/@P.N.?/"), array($NN,$PN), trim($names));
+		$names = preg_replace(array("/@N.N.?/","/@P.N.?/"), array($unknownNN[$lang],$unknownPN[$lang]), trim($names));
 		//-- underline names with a * at the end
 		//-- see this forum thread http://sourceforge.net/forum/forum.php?thread_id=1223099&forum_id=185165
 		if ($UNDERLINE_NAME_QUOTES) {
@@ -760,29 +756,26 @@ function check_NN($names) {
 	}
 	else {
 		for($i=0; $i<count($names); $i++) {
-			if (hasRTLText($names[$i])) { 
-				$NN = RTLUndefined($names[$i]);
-				$PN = $NN;
+			$lang = whatLanguage($names[$i]);
+			$unknown = false;
+			if (stristr($names[$i], "@N.N")) {
+				$unknown = true;
+				$names[$i] = preg_replace("/@N.N.?/", $unknownNN[$lang], trim($names[$i]));
 			}
-
-			for($i=0; $i<count($names); $i++) {
-				if (stristr($names[$i], "@N.N")) $names[$i] = preg_replace("/@N.N.?/", $NN, trim($names[$i]));
-                if (stristr($names[$i], "@P.N")) $names[$i] = $PN;
-				if (substr(trim($names[$i]), 0, 5) == "@P.N." && strlen(trim($names[$i])) > 5) {
-					$names[$i] = substr(trim($names[$i]), 5, (strlen($names[$i])-5));
-				}
- 				if ($i==1 && (stristr($names[0], $pgv_lang["NN"]) || stristr($names[0],$HNN) || stristr($names[0],$ANN)) && count($names) == 3) $fullname .= ", ";
- 				else if ($i==2 && (stristr($names[2], $pgv_lang["NN"])||stristr($names[2],$HNN)||stristr($names[2],$ANN)) && count($names) == 3) $fullname .= " + ";
+            if (stristr($names[$i], "@P.N")) $names[$i] = $unknownPN[$lang];
+ 			if ($i==1 && $unknown && count($names)==3) $fullname .= ", ";
+ 			else if ($i==2 && $unknown && count($names)==3) $fullname .= " + ";
 				else if ($i==2 && stristr($names[2], "Individual ") && count($names) == 3) $fullname .= " + ";
-				else if ($i==2 && count($names) > 3) $fullname .= " + ";
+			else if ($i==2 && count($names)>3) $fullname .= " + ";
 				else $fullname .= ", ";
 				$fullname .= trim($names[$i]);
 			}
 		}
-	}
+	$fullname = trim($fullname);
+	if (substr($fullname,-1)==",") $fullname = substr($fullname,0,strlen($fullname)-1);
+	if (substr($fullname,0,2)==", ") $fullname = substr($fullname,2);
+	$fullname = trim($fullname);
 	if (empty($fullname)) return $pgv_lang["NN"];
-	if (substr(trim($fullname),-1) === ",") $fullname = substr($fullname,0,strlen(trim($fullname))-1);
-	if (substr(trim($fullname),0,2) === ", ") $fullname = substr($fullname,2,strlen(trim($fullname)));
 
 	return $fullname;
 }

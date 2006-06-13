@@ -55,10 +55,10 @@ if ($action!="choose") {
 	}
 	else {
 		if (!isset($pgv_changes[$gid1."_".$GEDCOM])) $gedrec1 = find_gedcom_record($gid1);
-		else $gedrec1 = find_record_in_file($gid1);
+		else $gedrec1 = find_updated_record($gid1);
 		if ($GEDCOM!=$ged2) $GEDCOM=$ged2;
 		if (!isset($pgv_changes[$gid2."_".$ged2])) $gedrec2 = find_gedcom_record($gid2);
-		else $gedrec2 = find_record_in_file($gid2);
+		else $gedrec2 = find_updated_record($gid2);
 		$GEDCOM=$ged;
 
 		if (empty($gedrec1) || empty($gedrec2)) {
@@ -200,7 +200,7 @@ if ($action!="choose") {
 						}
 					}
 					replace_gedrec($gid1, $newgedrec);
-					write_file();
+					write_changes();
 					print "<br /><a href=\"edit_merge.php?action=choose\">".$pgv_lang["merge_more"]."</a><br />\n";
 					print "<br /><br /><br />\n";
 				}
