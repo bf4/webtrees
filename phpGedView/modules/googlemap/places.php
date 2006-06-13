@@ -68,7 +68,6 @@ if (($action=="ExportFile") && (userIsAdmin(getUserName()))) {
 print_header($pgv_lang["edit_place_locations"]);
 
 print "<span class=\"subheaders\">".$pgv_lang["edit_place_locations"]."</span><br><br>";
-/**
 if (!userIsAdmin(getUserName())) {
     print "<table class=\"facts_table\">\n";
     print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_admin_error"];
@@ -77,7 +76,6 @@ if (!userIsAdmin(getUserName())) {
     print_footer();
     exit;
 }
-*/
 
 /**
  * get place parent ID
