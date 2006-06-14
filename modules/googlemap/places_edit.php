@@ -25,6 +25,7 @@
  */
 
 require "config.php";
+require "modules/googlemap/config.php";
 require "includes/functions_edit.php";
 require "includes/functions_import.php";
 require $INDEX_DIRECTORY."pgv_changes.php";
@@ -194,7 +195,7 @@ if ($action=="add") {
 
 ?>
 
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAuoJDxk-bXegvgyoxHyA6kxTIov89Ze_GEizuvnvOWTKQGM7qlBSoXruhOfebtgBxlpnpAJQcHHEQbQ" type="text/javascript"></script>
+<script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=<?php print $GOOGLEMAP_API_KEY?>" type="text/javascript"></script>
 
 <script type="text/javascript">
 <!--
@@ -244,7 +245,6 @@ if ($action=="add") {
     }
     
     function loadMap() {
-        var pointArray = [];
         var zoom;
         if (GBrowserIsCompatible()) {
             map = new GMap2(document.getElementById("map_pane"));
@@ -256,22 +256,43 @@ if ($action=="add") {
                                 //map.removeOverlay(overlay);
                 } else if (point) {
                     map.clearOverlays();
-                    map.addOverlay(new GMarker(point));
+                    // Create our "tiny" yellow marker icon where the user clicked, 
+                    // The full size red marker is at the stored coordinates.
+                    var smicon = new GIcon();
+                    smicon.image = "http://labs.google.com/ridefinder/images/mm_20_yellow.png";
+                    smicon.shadow = "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
+                    smicon.iconSize = new GSize(12, 20);
+                    smicon.shadowSize = new GSize(22, 20);
+                    smicon.iconAnchor = new GPoint(6, 20);
+                    smicon.infoWindowAnchor = new GPoint(5, 1);
+
                     map.panTo(point); 
+                    prec = 20;
+                    for (i=0;i<document.editplaces.NEW_PRECISION.length;i++) {
+                        if (document.editplaces.NEW_PRECISION[i].checked) {
+                            prec = document.editplaces.NEW_PRECISION[i].value;
+                        }
+                    }
+
                     if (point.y < 0.0) {
-                        document.editplaces.NEW_PLACE_LATI.value = (point.y * -1);
+                        document.editplaces.NEW_PLACE_LATI.value = (point.y.toFixed(prec) * -1);
                         document.editplaces.LATI_CONTROL.value = "PL_S";
                     } else {
-                        document.editplaces.NEW_PLACE_LATI.value = point.y;
+                        document.editplaces.NEW_PLACE_LATI.value = point.y.toFixed(prec);
                         document.editplaces.LATI_CONTROL.value = "PL_N";
                     }
                     if (point.x < 0.0) {
-                        document.editplaces.NEW_PLACE_LONG.value = (point.x * -1);
+                        document.editplaces.NEW_PLACE_LONG.value = (point.x.toFixed(prec) * -1);
                         document.editplaces.LONG_CONTROL.value = "PL_W";
                     } else {
-                        document.editplaces.NEW_PLACE_LONG.value = point.x;
+                        document.editplaces.NEW_PLACE_LONG.value = point.x.toFixed(prec);
                         document.editplaces.LONG_CONTROL.value = "PL_E";
                     }
+                    newval = new GLatLng (point.y.toFixed(prec), point.x.toFixed(prec));
+                    map.addOverlay(new GMarker(newval));
+                    // Trying to get the smaller yellow icon drawn in front.
+                    map.addOverlay(new GMarker(point, smicon));
+
             }});
             GEvent.addListener(map, "moveend",function() {
                 document.editplaces.NEW_ZOOM_FACTOR.value = map.getZoom();
@@ -307,6 +328,19 @@ if ($action=="add") {
     <tr>
         <td class="descriptionbox"><?php print $factarray["PLAC"];?></td>
         <td class="optionbox"><input type="text" dir="ltr" name="NEW_PLACE_NAME" value="<?php print $place_name;?>" size="20" tabindex="<?php $i++; print $i?>" /></td>
+    </tr>
+    <tr>
+        <td class="descriptionbox"><?php print $pgv_lang["pl_precision"];?></td>
+        <td class="optionbox">
+            <!-- This would be better if it was stored in the database -->
+            <!-- Each of the values need to be localized as well.      -->
+            <input type="radio" dir="ltr" name="NEW_PRECISION" <?php if($level==0) print "checked "?>value="0"><?php print $pgv_lang["pl_country"];?></input>
+            <input type="radio" dir="ltr" name="NEW_PRECISION" <?php if($level==1) print "checked "?>value="1"><?php print $pgv_lang["pl_state"];?></input>
+            <input type="radio" dir="ltr" name="NEW_PRECISION" <?php if(($level==2)||($level==3)) print "checked "?>value="2"><?php print $pgv_lang["pl_city"];?></input>
+            <input type="radio" dir="ltr" name="NEW_PRECISION" <?php if($level==4) print "checked "?>value="3"><?php print $pgv_lang["pl_neighborhood"];?></input>
+            <input type="radio" dir="ltr" name="NEW_PRECISION" <?php if($level==5) print "checked "?>value="4"><?php print $pgv_lang["pl_house"];?></input>
+            <input type="radio" dir="ltr" name="NEW_PRECISION" value="20"><?php print $pgv_lang["pl_max"];?></input>
+        </td>
     </tr>
     <tr>
         <td class="descriptionbox"><?php print $factarray["LATI"];?></td>
