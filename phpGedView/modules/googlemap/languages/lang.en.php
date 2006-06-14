@@ -49,5 +49,12 @@ $pgv_lang["pl_east_short"]          = "E";
 $pgv_lang["pl_west_short"]          = "W";
 $pgv_lang["pl_places_filename"]     = "File containing places (CSV)";
 $pgv_lang["pl_clean_db"]            = "Clear all place-locations before import?";
+$pgv_lang["pl_precision"]           = "Precision";
+$pgv_lang["pl_country"]             = "County";
+$pgv_lang["pl_state"]               = "State";
+$pgv_lang["pl_city"]                = "City";
+$pgv_lang["pl_neighborhood"]        = "Neigborhood";
+$pgv_lang["pl_house"]               = "House";
+$pgv_lang["pl_max"]                 = "Max";
 
 ?>
