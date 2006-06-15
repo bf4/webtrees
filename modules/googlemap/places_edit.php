@@ -215,12 +215,14 @@ if ($action=="add") {
             GUnload(); // Firefox and standard browsers
         }, false);
     }
+<?php if ($level < 3) print "    var childplaces = [];\n";?>
 
     function updateMap() {
         var point;
         var zoom;
         var lati;
         var long;
+        var i;
 
         zoom = parseInt(document.editplaces.NEW_ZOOM_FACTOR.value);
         lati = document.editplaces.NEW_PLACE_LATI.value;
@@ -243,6 +245,20 @@ if ($action=="add") {
         map.clearOverlays();
         map.addOverlay(new GMarker(point));
         map.setCenter(point, zoom);
+        document.getElementById('resultDiv').innerHTML = "";
+
+<?php   if ($level < 3) { ?>
+        var childicon = new GIcon();
+        childicon.image = "http://labs.google.com/ridefinder/images/mm_20_green.png";
+        childicon.shadow = "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
+        childicon.iconSize = new GSize(12, 20);
+        childicon.shadowSize = new GSize(22, 20);
+        childicon.iconAnchor = new GPoint(6, 20);
+        childicon.infoWindowAnchor = new GPoint(5, 1);
+        for (i=0; i < childplaces.length; i++) {
+            map.addOverlay(childplaces[i]);
+        }
+<?php   } ?>
     }
     
     function loadMap() {
@@ -293,13 +309,47 @@ if ($action=="add") {
                     map.addOverlay(new GMarker(newval));
                     // Trying to get the smaller yellow icon drawn in front.
                     map.addOverlay(new GMarker(point, smicon));
-
+                    document.getElementById('resultDiv').innerHTML = "";
+<?php   if ($level < 3) { ?>
+                    var childicon = new GIcon();
+                    childicon.image = "http://labs.google.com/ridefinder/images/mm_20_green.png";
+                    childicon.shadow = "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
+                    childicon.iconSize = new GSize(12, 20);
+                    childicon.shadowSize = new GSize(22, 20);
+                    childicon.iconAnchor = new GPoint(6, 20);
+                    childicon.infoWindowAnchor = new GPoint(5, 1);
+                    for (i=0; i < childplaces.length; i++) {
+                        map.addOverlay(childplaces[i]);
+                    }
+<?php   } ?>
             }});
             GEvent.addListener(map, "moveend",function() {
                 document.editplaces.NEW_ZOOM_FACTOR.value = map.getZoom();
             }); 
-
             map.setCenter(new GLatLng( <?php print $place_lati.", ".$place_long."), ".$zoomfactor;?>, G_NORMAL_MAP );
+
+<?php   if ($level < 3) { ?>
+            var childicon = new GIcon();
+            childicon.image = "http://labs.google.com/ridefinder/images/mm_20_green.png";
+            childicon.shadow = "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
+            childicon.iconSize = new GSize(12, 20);
+            childicon.shadowSize = new GSize(22, 20);
+            childicon.iconAnchor = new GPoint(6, 20);
+            childicon.infoWindowAnchor = new GPoint(5, 1);
+<?php
+            $sql = "SELECT pl_place,pl_lati,pl_long FROM ".$TBLPREFIX."placelocation WHERE pl_parent_id=".$placeid;
+            $res = dbquery($sql);
+            $i = 0;
+            while ($row =& $res->fetchRow()) {
+                if (($row[1] != null) && ($row[2] != null)) {
+                    print "childplaces.push(new GMarker(new GLatLng(".str_replace(array('N', 'S'), array('', '-') , $row[1]).", ".str_replace(array('E', 'W'), array('', '-') ,$row[2])."), childicon));\n";
+                    print "map.addOverlay(childplaces[".$i."]);\n";
+                    $i = $i + 1;
+                }
+            }
+            $res->free();
+        }
+?> 
 <?php       if ($show_marker == true) { ?>
             map.addOverlay(new GMarker(new GLatLng(<?php print $place_lati.", ".$place_long;?>)));
 <?php       } ?>
@@ -336,7 +386,6 @@ if ($action=="add") {
             document.editplaces.LONG_CONTROL.value = "PL_E";
         }
         newval = new GLatLng (lat.toFixed(prec), lng.toFixed(prec));
-        document.getElementById('resultDiv').innerHTML = "";
         updateMap();
     }
 
