@@ -51,10 +51,10 @@ if (!userIsAdmin(getUserName())) {
 
 <script type="text/javascript">
 <!--
-	function edit_close() {
-		if (window.opener.showchanges) window.opener.showchanges();
-		window.close();
-	}
+    function edit_close() {
+        if (window.opener.showchanges) window.opener.showchanges();
+        window.close();
+    }
 
     //-->
 </script>
@@ -100,11 +100,11 @@ if ($action=="updaterecord") {
 
 if (!isset($parent)) $parent=array();
 else {
-	if (!is_array($parent)) $parent = array();
-	else $parent = array_values($parent);
+    if (!is_array($parent)) $parent = array();
+    else $parent = array_values($parent);
 }
 if (!isset($level)) {
-	$level=0;
+    $level=0;
 }
 if ($level>count($parent)) $level = count($parent);
 if ($level<count($parent)) $level = 0;
@@ -195,6 +195,7 @@ if ($action=="add") {
 
 ?>
 
+<script type="text/javascript" src="http://ws.geonames.org/export/jsr_class.js"></script>
 <script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=<?php print $GOOGLEMAP_API_KEY?>" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -306,13 +307,112 @@ if ($action=="add") {
       }
     }
 
-	function edit_close() {
-		if (window.opener.showchanges) window.opener.showchanges();
-		window.close();
-	}
+    function edit_close() {
+        if (window.opener.showchanges) window.opener.showchanges();
+        window.close();
+    }
+
+<?php   if ($level == 3) { ?>
+    function setLoc(lat, lng) {
+        prec = 20;
+        for (i=0;i<document.editplaces.NEW_PRECISION.length;i++) {
+            if (document.editplaces.NEW_PRECISION[i].checked) {
+                prec = document.editplaces.NEW_PRECISION[i].value;
+            }
+        }
+
+        if (lat < 0.0) {
+            document.editplaces.NEW_PLACE_LATI.value = (lat.toFixed(prec) * -1);
+            document.editplaces.LATI_CONTROL.value = "PL_S";
+        } else {
+            document.editplaces.NEW_PLACE_LATI.value = lat.toFixed(prec);
+            document.editplaces.LATI_CONTROL.value = "PL_N";
+        }
+        if (lng < 0.0) {
+            document.editplaces.NEW_PLACE_LONG.value = (lng.toFixed(prec) * -1);
+            document.editplaces.LONG_CONTROL.value = "PL_W";
+        } else {
+            document.editplaces.NEW_PLACE_LONG.value = lng.toFixed(prec);
+            document.editplaces.LONG_CONTROL.value = "PL_E";
+        }
+        newval = new GLatLng (lat.toFixed(prec), lng.toFixed(prec));
+        document.getElementById('resultDiv').innerHTML = "";
+        updateMap();
+    }
+
+    function createMarker(point, name) {
+        var icon = new GIcon();
+        icon.image = "modules/googlemap/marker_yellow.png";
+        icon.shadow = "modules/googlemap/shadow50.png";
+        icon.iconSize = new GSize(20, 34);
+        icon.shadowSize = new GSize(37, 34);
+        icon.iconAnchor = new GPoint(6, 20);
+        icon.infoWindowAnchor = new GPoint(5, 1);
+
+        var marker = new GMarker(point, icon);
+        GEvent.addListener(marker, "click", function() {
+            marker.openInfoWindowHtml(name.name + "<br><a href=\"javascript:setLoc(" + name.lat + ", " + name.lng + ");\">Use this value</a>");
+        });
+        return marker;
+    }
+
+    function getLocation(jData) {
+        if (jData == null) {
+            // There was a problem parsing search results
+
+            return;
+        }
+
+        var html = '';
+        var markers = [];
+        var geonames = jData.geonames;
+        var bounds = new GLatLngBounds();
+        var count = 0;
+        if (geonames.length == 0) {
+            alert("<?php print $pgv_lang["pl_no_places_found"];?>");
+            return;
+        }
+        map.clearOverlays();
+
+        for (i=0;i< geonames.length;i++) {
+            var name = geonames[i];
+            if (name.adminName1 == "<?php print $parent[1];?>") {
+                bounds.extend(new GLatLng(name.lat, name.lng));
+                var point = new GLatLng(name.lat, name.lng);
+                map.addOverlay(createMarker(point, name));
+                count++;
+                html = html + name.name + ": <a href=\"javascript:setLoc(" + name.lat + ", " + name.lng + ");\">Use this value</a><br>";
+
+            }
+        }
+        if (count > 0) {
+            clat = (bounds.getNorthEast().lat() + bounds.getSouthWest().lat())/2;
+            clng = (bounds.getNorthEast().lng() + bounds.getSouthWest().lng())/2;
+            zoomlevel = map.getBoundsZoomLevel(bounds);
+            for(i = 0; ((i < 10) && (zoomlevel == 1)); i++) {
+                zoomlevel = map.getBoundsZoomLevel(bounds);
+            }
+            if (zoomlevel < <?php print $GOOGLEMAP_MIN_ZOOM;?>) zoomlevel = <?php print $GOOGLEMAP_MIN_ZOOM;?>;
+            if (zoomlevel > <?php print $GOOGLEMAP_MAX_ZOOM;?>) zoomlevel = <?php print $GOOGLEMAP_MAX_ZOOM;?>;
+            map.setCenter(new GLatLng(clat, clng), zoomlevel-1);
+            document.getElementById('resultDiv').innerHTML = html;
+        }
+    }
+
+    function search_loc() {
+        request = 'http://ws.geonames.org/searchJSON?name=' +  encodeURIComponent(document.editplaces.NEW_PLACE_NAME.value)  + '&country=<?php print $parent[0];?>&fclass=P&style=FULL&callback=getLocation';
+        // Create a new script object
+        aObj = new JSONscriptRequest(request);
+        // Build the script tag
+        aObj.buildScriptTag();
+        // Execute (add) the script tag
+        aObj.addScriptTag();
+    }
+<?php   } ?>
 
     //-->
 </script>
+
 
 <form method="post" id="editplaces" name="editplaces" action="module.php?mod=googlemap&pgvaction=places_edit">
     <input type="hidden" name="action" value="<?php print $action;?>record" />
@@ -326,8 +426,17 @@ if ($action=="add") {
         <center><div id="map_pane" style="width: 550px; height: 300px"></div></center>
     </tr>
     <tr>
+        <td class="optionbox" colspan="2">
+        <div id="resultDiv"></div>
+        </td>
+    </tr>
+    <tr>
         <td class="descriptionbox"><?php print $factarray["PLAC"];?></td>
-        <td class="optionbox"><input type="text" dir="ltr" name="NEW_PLACE_NAME" value="<?php print $place_name;?>" size="20" tabindex="<?php $i++; print $i?>" /></td>
+        <td class="optionbox"><input type="text" dir="ltr" name="NEW_PLACE_NAME" value="<?php print $place_name;?>" size="20" tabindex="<?php $i++; print $i?>" />
+<?php   if ($level == 3) {
+            print "<a href=\"javascript:;\" onclick=\"search_loc();\">".$pgv_lang["search"]."</a>";
+        } ?>
+        </td>
     </tr>
     <tr>
         <td class="descriptionbox"><?php print $pgv_lang["pl_precision"];?></td>
