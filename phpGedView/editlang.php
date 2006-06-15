@@ -65,7 +65,7 @@ print "<script language=\"JavaScript\" type=\"text/javascript\">\n";
 print "<!--\n";
 print "var helpWin;\n";
 print "function helpPopup00(which) {\n";
-print "if ((!helpWin)||(helpWin.closed)){helpWin = window.open('editlang_edit.php?' + which, '_blank' , 'left=50, top=30, width=500, height=320, resizable=1, scrollbars=1'); helpWin.focus();}\n";
+print "if ((!helpWin)||(helpWin.closed)){helpWin = window.open('editlang_edit.php?' + which, '_blank' , 'left=50, top=30, width=600, height=500, resizable=1, scrollbars=1'); helpWin.focus();}\n";
 print "else helpWin.location = 'editlang_edit.php?' + which;\n";
 print "return false;\n";
 print "}\n";

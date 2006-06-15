@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Added [ phpgedview-Feature Requests-1506913 ] Expand View GEDCOM Record with Linked Records (yalnifj)
  - Added GEDCOM config option to synchronize GEDCOM file with DB when accepting changes (yalnifj)
  - Changed editing architecture to write changed records to the pgv_changes.php file instead of the gedcom file (yalnifj)
  - Added Lifespan Chart (Neumont)

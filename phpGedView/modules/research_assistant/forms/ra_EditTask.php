@@ -21,14 +21,13 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: ra_EditTask.php 780 2006-04-04 21:56:59Z jfinlay $:
+ * @version $Id: ra_EditTask.php 999 2006-06-13 22:35:43Z jfinlay $:
  * @author Jason Porter
  * @author Wade Lasson
  * @author Brandon Gagnon
  * @author Brian Kramer
  * @author Julian Gautier
  */
-//-- security check, only allow access from module.php
 //-- security check, only allow access from module.php
 if (strstr($_SERVER["SCRIPT_NAME"],"ra_EditTask.php")) {
 	print "Now, why would you want to do that.  You're not hacking are you?";
@@ -151,7 +150,7 @@ function getTitle(){
         global $TBLPREFIX, $DBCONN;
 
 		$sql = 	"SELECT s_name, s_id FROM " . $TBLPREFIX . "sources WHERE s_id IN " .
-				"(SELECT ts_s_id FROM pgv_tasksource WHERE ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "')";
+				"(SELECT ts_s_id FROM " . $TBLPREFIX . "tasksource WHERE ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "')";
 		$res = dbquery($sql);
 
 		$sources = array();

@@ -1246,14 +1246,6 @@ function create_soundex_table()
 	}
 	$sql = "CREATE INDEX sx_i_id_ix ON ".$TBLPREFIX."soundex (sx_i_id)";
 	$res = dbquery($sql);
-	$sql = "CREATE INDEX sx_fn_std_code_ix ON ".$TBLPREFIX."soundex (sx_fn_std_code)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX sx_ln_std_code_ix ON ".$TBLPREFIX."soundex (sx_ln_std_code)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX sx_fn_dm_code_ix ON ".$TBLPREFIX."soundex (sx_fn_dm_code)";
-	$res = dbquery($sql);
-	$sql = "CREATE INDEX sx_ln_dmcode_ix ON ".$TBLPREFIX."soundex (sx_ln_dm_code)";
-	$res = dbquery($sql);
 }
 /**
  * Create the media table

@@ -78,7 +78,7 @@ function check_db($ignore_previous=false) {
 		'persistent'  => $DBPERSIST
 	);
 
-	$DBCONN =& DB::connect($dsn, $options);
+	$DBCONN = DB::connect($dsn, $options);
 	if (DB::isError($DBCONN)) {
 		//die($DBCONN->getMessage());
 		return false;
