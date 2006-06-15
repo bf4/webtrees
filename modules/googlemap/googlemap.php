@@ -416,8 +416,10 @@ function build_indiv_map($indifacts, $famids) {
         print "}\n";
         print "</script>\n";
         print "<table width=\"95%\">\n";
-        print "<tr><td valign=\"top\" width=\"".$GOOGLEMAP_XSIZE."px\">\n";
-        print "<div id=\"map_pane\" style=\"width: ".$GOOGLEMAP_XSIZE."px; height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
+        print "<tr><td valign=\"top\">\n";
+        print "<img src=\"images/hline.gif\" width=\"".$GOOGLEMAP_XSIZE."\" height=\"0\" alt=\"\" /><br>";
+        // print "<div id=\"map_pane\" style=\"width: ".$GOOGLEMAP_XSIZE."px; height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
+        print "<div id=\"map_pane\" style=\"height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
         print "<table width=100%><tr>\n";
         print "<td align=\"left\"><a href=\"javascript:ResizeMap()\">".$pgv_lang["gm_redraw_map"]."</a></td>\n";
         print "<td align=\"right\">\n";
@@ -431,7 +433,7 @@ function build_indiv_map($indifacts, $famids) {
             print "</td></tr>\n";
         }
         print "</table>\n";
-        print "<td valign=\"top\">\n";
+        print "<td valign=\"top\" width=\"33%\">\n";
         print "\t<table class=\"facts_table\">";
     }
     if ($i>0) {

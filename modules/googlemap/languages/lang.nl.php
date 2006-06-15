@@ -48,6 +48,7 @@ $pgv_lang["pl_east_short"]          = "O";
 $pgv_lang["pl_west_short"]          = "W";
 $pgv_lang["pl_places_filename"]     = "Bestand met locatiegegevens (CSV)";
 $pgv_lang["pl_clean_db"]            = "Alle loactiegegevens verwijderen voor importeren?";
+$pgv_lang["pl_no_places_found"]     = "Geen plaatsen gevonden";
 $pgv_lang["pl_precision"]           = "Precisie";
 $pgv_lang["pl_country"]             = "Land";
 $pgv_lang["pl_state"]               = "Provincie/Staat";

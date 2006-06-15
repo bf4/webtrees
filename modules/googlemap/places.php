@@ -593,7 +593,7 @@ if (count($placelist) <> 0) {
             <td class="descriptionbox"><?php print $factarray["LONG"];?></td>
             <td class="descriptionbox"><?php print $pgv_lang["pl_zoom_factor"];?></td>
             <td class="descriptionbox"><?php print $pgv_lang["pl_place_icon"];?></td>
-            <td class="descriptionbox"><?php print $pgv_lang["pl_edit"];?></td>
+            <td class="descriptionbox" colspan="2"><?php print $pgv_lang["pl_edit"];?></td>
         </tr>
     <?php
     for($i = 0; $i < count($placelist); $i++)
@@ -616,6 +616,7 @@ if (count($placelist) <> 0) {
             <td class="optionbox"><?php print $placelist[$i]["zoom"];?></td>
             <td class="optionbox"><?php print "TBD".$placelist[$i]["icon"];?></td>
             <td class="optionbox"><a href="javascript:;" onclick="edit_place_location(<?php print $placelist[$i]["place_id"].")\">".$pgv_lang["edit"];?></a></td>
+            <td class="optionbox"><img src="images/remove.gif" alt="<?php print $pgv_lang["remove"];?>" /> </td>
         </tr>
         <?php
     }
