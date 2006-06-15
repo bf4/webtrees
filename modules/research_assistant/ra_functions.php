@@ -75,7 +75,7 @@ class ra_functions {
 
 		// Create all of the tables needed for this module
 		if (!in_array($TBLPREFIX.'tasks', $data)) {
-			$sql = 'create table '.$TBLPREFIX.'tasks (t_id INTEGER not null,t_fr_id INTEGER not null,t_title VARCHAR(255) not null,t_description text not null, t_startdate INT not null, t_enddate INT null, t_results text null, t_form varchar(255) null, constraint '.$TBLPREFIX.'tasks_PK primary key (t_id) );';
+			$sql = 'create table '.$TBLPREFIX.'tasks (t_id INTEGER not null,t_fr_id INTEGER not null,t_title VARCHAR(255) not null,t_description text not null, t_startdate INT not null, t_enddate INT null, t_results text null, t_form varchar(255) null, t_username varchar(45) null, constraint '.$TBLPREFIX.'tasks_PK primary key (t_id) );';
 			$res = dbquery($sql);
 		}
 		else {
@@ -94,7 +94,7 @@ class ra_functions {
 			$res = dbquery($sql);
 		}
 		if (!in_array($TBLPREFIX.'tasksource', $data)) {
-			$sql = 'create table '.$TBLPREFIX.'tasksource (ts_t_id INTEGER not null,ts_s_id VARCHAR(255) not null, ts_page VARCHAR(255), ts_date VARCHAR(50), ts_text TEXT, ts_quay VARCHAR(50), ts_obje VARCHAR(20), constraint '.$TBLPREFIX.'tasksource_PK primary key (ts_s_id, ts_t_id) );';
+			$sql = 'create table '.$TBLPREFIX.'tasksource (ts_t_id INTEGER not null,ts_s_id VARCHAR(255) not null, ts_page VARCHAR(255), ts_date VARCHAR(50), ts_text TEXT, ts_quay VARCHAR(50), ts_obje VARCHAR(20), ts_array TEXT, constraint '.$TBLPREFIX.'tasksource_PK primary key (ts_s_id, ts_t_id) );';
 			$res = dbquery($sql);
 		}
 		if (!in_array($TBLPREFIX.'folders', $data)) {
@@ -618,6 +618,10 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		dbquery($sql);
 		$sql = "DELETE from ".$TBLPREFIX."tasksource  WHERE ts_t_id='".$taskid."'";
 		dbquery($sql);
+		$sql = "DELETE from ".$TBLPREFIX."taskfacts WHERE tf_t_id='".$taskid."'";
+		dbquery($sql);
+		$sql = "DELETE from ".$TBLPREFIX."individualtasks WHERE it_t_id='".$taskid."'";
+		dbquery($sql);
 	}
 	/**
 	 * Scans the form dir and prints out all of the forms that we have to add information with
@@ -739,7 +743,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$MissingReturn[] = "Surname";
 		}
 
-		$indifacts = get_all_subrecords($person->gedrec, "FAMS,FAMC,NOTE,OBJE,SEX,NAME,SOUR,REFN,CHAN,AFN", false);
+		$indifacts = get_all_subrecords($person->gedrec, "FAMS,FAMC,NOTE,OBJE,SEX,NAME,SOUR,REFN,CHAN,AFN,_UID,_COMM", false);
 
 		foreach ($indifacts as $key => $far) {
 			$match = array();

@@ -45,7 +45,7 @@ global $pgv_lang;
 function getTitle(){
     global $TBLPREFIX;
 
-    $sql = "SELECT t_title FROM " . $TBLPREFIX . "tasks WHERE t_id='$_REQUEST[taskid])'";
+    $sql = "SELECT t_title FROM " . $TBLPREFIX . "tasks WHERE t_id='$_REQUEST[taskid]'";
     $res = dbquery($sql);
     $out = "";
 
@@ -112,7 +112,7 @@ function getTitle(){
 	function getPeople(){
         global $TBLPREFIX, $DBCONN;
 
-		$sql = 	"SELECT it_i_id FROM pgv_individualtask WHERE it_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"])."'";
+		$sql = 	"SELECT it_i_id FROM ".$TBLPREFIX."individualtask WHERE it_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"])."'";
 		$res = dbquery($sql);
 
 		$out = "";
@@ -170,7 +170,7 @@ function getTitle(){
         global $TBLPREFIX, $DBCONN;
 
 		$sql = 	"SELECT s_name, s_id FROM " . $TBLPREFIX . "sources WHERE s_id IN " .
-				"(SELECT ts_s_id FROM pgv_tasksource WHERE ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "')";
+				"(SELECT ts_s_id FROM ".$TBLPREFIX."tasksource WHERE ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "')";
 		$res = dbquery($sql);
 
 		$sources = array();

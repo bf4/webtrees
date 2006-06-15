@@ -72,15 +72,6 @@ class Census1800 extends ra_form {
         $out .= '</tr>';
         return $out;
     }
-    
-    function getFieldValue($j, $lines) {
-    	$value = "";
-    	if (empty($lines[$j])) return $value;
-    	$line = $lines[$j];
-    	$ct = preg_match("/: (.*)/", $line, $match);
-    	if ($ct>0) $value = trim($match[1]);
-    	return $value;
-    }
 	
 	/**
 	 * override method from ra_form.php
@@ -102,16 +93,9 @@ class Census1800 extends ra_form {
     		$callno = trim($match[2]);
     	}
     	
-    	$lines = preg_split("/\r?\n/", $citation['ts_text']);
-    	$ct = preg_match("/([\w\s]*), ([\w\s]*), ([\w\s]*),/", $lines[0], $match);
-    	$city = "";
-    	$county = "";
-    	$state = "";
-    	if ($ct>0) {
-    		$city = trim($match[1]);
-    		$county = trim($match[2]);
-    		$state = trim($match[3]);
-    	}
+    	$city = $citation['array']['city'];
+    	$county = $citation['array']['county'];
+    	$state = $citation['array']['state'];
     	
 //        Start of Table
         $out = '<tr><td class="descriptionbox">'.$pgv_lang["state"].'</td><td class="optionbox"><input name="state" type="text" size="27"  value="'.htmlentities($state).'"></td>';
@@ -134,48 +118,36 @@ class Census1800 extends ra_form {
         $out .= '<td class="descriptionbox">16 thru 25</td><td class="descriptionbox">26 thru 44</td><td class="descriptionbox">45 and over</td></tr>';
 //		  Country, City, Page, Head of Family input boxes
 		if(!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = 1;
-		$j=1;
         for($i = 0; $i < $_REQUEST['numOfRows']; $i++){
-       		$value = $this->getFieldValue($j, $lines);
+        	$row = $citation['array']['rows'][$i];
+        	$value = $row['headName'];
 	        $out .= '<tr><td class="optionbox"><input name="headName'.$i.'" type="text" size="19" value="'.htmlentities($value).'"></td>';
 	//        Free white males input boxes
-			$j++;
-        	$value = $this->getFieldValue($j, $lines);
+			$value = $row['underTenM'];
 	        $out .= '<td class="optionbox"><input name="underTenM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $j++;
-        	$value = $this->getFieldValue($j, $lines);
+	        $value = $row['tenThruFifteenM'];
 	        $out .= '<td class="optionbox"><input name="tenThruFifteenM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $j++;
-        	$value = $this->getFieldValue($j, $lines);
+	       	$value = $row['sixteenThruTwentyfiveM'];
 	        $out .= '<td class="optionbox"><input name="sixteenThruTwentyfiveM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $j++;
-        	$value = $this->getFieldValue($j, $lines);
+	        $value = $row['twentysixThruFortyfourM'];
 	        $out .= '<td class="optionbox"><input name="twentysixThruFortyfourM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $j++;
-        	$value = $this->getFieldValue($j, $lines);
+	        $value = $row['fortyfiveAndOverM'];
 	        $out .= '<td class="optionbox"><input name="fortyfiveAndOverM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 	//		  Free white females input boxes 
-			$j++;
-        	$value = $this->getFieldValue($j, $lines);
+			$value = $row['underTenF'];
 	        $out .= '<td class="optionbox"><input name="underTenF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $j++;
-        	$value = $this->getFieldValue($j, $lines);
+	        $value = $row['tenThruFifteenF'];
 	        $out .= '<td class="optionbox"><input name="tenThruFifteenF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $j++;
-        	$value = $this->getFieldValue($j, $lines);
+	        $value = $row['sixteenThruTwentyfiveF'];
 	        $out .= '<td class="optionbox"><input name="sixteenThruTwentyfiveF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $j++;
-        	$value = $this->getFieldValue($j, $lines);
+	        $value = $row['twentysixThruFortyfourF'];
 	        $out .= '<td class="optionbox"><input name="twentysixThruFortyfourF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $j++;
-        	$value = $this->getFieldValue($j, $lines);
+	        $value = $row['fortyfiveAndOverF'];
 	        $out .= '<td class="optionbox"><input name="fortyfiveAndOverF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 	//  	  Other Persons and Slaves input boxes
-			$j++;
-        	$value = $this->getFieldValue($j, $lines);
+			$value = $row['otherPersons'];
 	        $out .= '<td class="optionbox"><input name="otherPersons'.$i.'" type="text" size="5" value="'.htmlentities($value).'"></td>';
-	        $j++;
-        	$value = $this->getFieldValue($j, $lines);
+	        $value = $row['slaves'];
 	        $out .= '<td class="optionbox"><input name="slaves'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td></tr>';
         }
         $out .= '</table></td></tr>';
@@ -244,9 +216,25 @@ class Census1800 extends ra_form {
 			"'')";
 		$res = dbquery($sql);
 		
+		$rows = array();
 		$text = $_POST['city'].", ".$_POST['county'].", ".$_POST['state'].", 1800 US Census";
 		for($number = 0; $number < $_REQUEST['numOfRows']; $number++)
 		{
+			$rows[$number] = array(
+			'headName'=>$_POST["headName".$number],
+			'underTenM'=>$_POST["underTenM".$number],
+			'tenThruFifteenM'=>$_POST["tenThruFifteenM".$number],
+			"sixteenThruTwentyfiveM"=>$_POST["sixteenThruTwentyfiveM".$number],
+			"twentysixThruFortyfourM"=>$_POST["twentysixThruFortyfourM".$number],
+			"fortyfiveAndOverM"=>$_POST["fortyfiveAndOverM".$number],
+			"underTenF"=>$_POST["underTenF".$number],
+			"tenThruFifteenF"=>$_POST["tenThruFifteenF".$number],
+			"sixteenThruTwentyfiveF"=>$_POST["sixteenThruTwentyfiveF".$number],
+			"twentysixThruFortyfourF"=>$_POST["twentysixThruFortyfourF".$number],
+			"fortyfiveAndOverF"=>$_POST["fortyfiveAndOverF".$number],
+			"otherPersons"=>$_POST["otherPersons".$number],
+			"slaves"=>$_POST["slaves".$number]
+			);
 			$text .=$number==0?"" :"\r\n";
 			$text .= "\r\nHead of Family: ".$_POST["headName".$number];
 			$text .= "\r\nMales under 10: ".$_POST["underTenM".$number];
@@ -268,8 +256,13 @@ class Census1800 extends ra_form {
 			"QUAY"=>'', 
     		"DATE"=>!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1800", 
 			"TEXT"=>$text, 
-			"OBJE"=>'');
-		
+			"OBJE"=>'',
+			"array"=>array(
+			'city'=>$_POST['city'],
+			'county'=>$_POST['county'],
+			'state'=>$_POST['state'],
+			'rows'=>$rows));
+					
 		return $citation;
     }
     

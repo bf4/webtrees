@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: ra_form.php 932 2006-05-24 22:09:39Z jfinlay $
+ * @version $Id: ra_form.php 948 2006-05-30 20:40:29Z jfinlay $
  * @author Jason Porter
  */
 //-- security check, only allow access from module.php
@@ -84,10 +84,14 @@ class ra_form {
 		$sql = 	"SELECT * FROM " . $TBLPREFIX . "tasksource WHERE ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
 		$res = dbquery($sql);
 
-		if ($res->numRows()>0) $row = $res->fetchRow(DB_FETCHMODE_ASSOC);
-		else $row = array('ts_page'=>'','ts_quay'=>'','ts_text'=>'','ts_date'=>'','ts_obje'=>'');
+		if ($res->numRows()>0) {
+			$row = $res->fetchRow(DB_FETCHMODE_ASSOC);
+			$row = db_cleanup($row);
+			$row['array'] = unserialize($row['array']);
+		}
+		else $row = array('ts_page'=>'','ts_quay'=>'','ts_text'=>'','ts_date'=>'','ts_obje'=>'','ts_array'=>array());
 		$res->free();
-		return db_cleanup($row);
+		return $row;
 	}
 	
 	function getFactData() {
@@ -345,7 +349,8 @@ class ra_form {
 							",'".$DBCONN->escapeSimple($citation['QUAY'])."'" .
 							",'".$DBCONN->escapeSimple($citation['DATE'])."'" .
 							",'".$DBCONN->escapeSimple($citation['TEXT'])."'" .
-							",'".$DBCONN->escapeSimple($citation['OBJE'])."')";
+							",'".$DBCONN->escapeSimple($citation['OBJE'])."'" .
+							",'".$DBCONN->escapeSimple(serialize($citation['array']))."')";
 					$res = dbquery($sql);
 				}
 			}
@@ -354,7 +359,7 @@ class ra_form {
     
     function processSimpleCitation() {
     	$citation = array("PAGE"=>$_REQUEST['PAGE'], "QUAY"=>$_REQUEST['QUAY'], 
-    		"DATE"=>$_REQUEST['DATE'], "TEXT"=>$_REQUEST['TEXT'], "OBJE"=>$_REQUEST['OBJE']);
+    		"DATE"=>$_REQUEST['DATE'], "TEXT"=>$_REQUEST['TEXT'], "OBJE"=>$_REQUEST['OBJE'], "array"=>array());
     	return $citation;
     }
     
