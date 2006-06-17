@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @author Maurício Menegazzo Rosa
- * @author Anderson Wilson
+ * @author Anderson Wilson and Clovis Bombardelli
  * @version $Id$
  */
 if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
@@ -37,6 +37,7 @@ $pgv_lang["page_x_of_y"]="Página #GLOBALS[currentPage]# de #GLOBALS[lastPage]#"
 $pgv_lang["options"]="Opções:";
 $pgv_lang["inc_languages"]="Idiomas";
 $pgv_lang["config_update_ok"]="Arquivo de configuração atualizado com sucesso.";
+$pgv_lang["date_of_entry"]				= "Data do registro na fonte original";
 $pgv_lang["main_media_ok1"]="Arquivo principal de mídia <b>#GLOBALS[oldMediaName]#</b> foi renomeado com sucesso para <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_ok2"]="Arquivo principal de mídia <b>#GLOBALS[oldMediaName]#</b> foi movido com sucesso de <b>#GLOBALS[oldMediaFolder]#</b> para <b>#GLOBALS[newMediaFolder]#</b>.";
 $pgv_lang["main_media_ok3"]="Pasta principal de mídia foi movida e renomeada de  <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> para <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.|";
@@ -62,6 +63,7 @@ $pgv_lang["use_browse_advice"]="Use o botão de &laquo;Procurar&raquo; e selecio
 $pgv_lang["add_media_other_folder"]="Outra pasta...por favor informe";
 $pgv_lang["add_media_file"]="Arquivo de mídia existe no servidor";
 $pgv_lang["descend_report"]="Relatório de Descendentes";
+$pgv_lang["descendancy_header"]		= "Relatório de Descendentes";
 $pgv_lang["link_to_existing_media"]="Ligar a uma mídia existente";
 $pgv_lang["page_size"]="Tamanho da Página";
 $pgv_lang["record_not_found"]="O registro GEDCOM solicitado não foi encontrado. a causa provável é de uma ligação com uma pessoa inexistente ou por um arquivo  GEDCOM corrompido.";
@@ -197,7 +199,7 @@ $pgv_lang["cancel"]="Cancelar";
 $pgv_lang["cookie_help"]="Este site faz uso de cookies para seu correto funcionamento.<br /><br />Aparentemente o uso de Cookies está desabilitado em seu Navegador. Consulte a Ajuda de seu Navegador e habilite o uso de cookies.";
 $pgv_lang["title_search_link"]="Adicionar Ligação Local";
 $pgv_lang["label_site_url2"]="Endereço do Site";
-$pgv_lang["error_server_exists"]="O site adicionado já existe; selecione o site da lista «Usar um site que já exista».";
+$pgv_lang["error_server_exists"]="O site adicionado já existe; selecione o site da lista �&laquo;Usar um site que já exista�&raquo;.";
 $pgv_lang["link_success"]="Ligação incluída com sucesso";
 $pgv_lang["change"]="Alterar";
 $pgv_lang["change_family_instr"]="Use está pagina para excluir ou alterar os membros desta família.<br /><br />Quando terminar de alterar e excluir, clique no botão Salvar, confirmando suas modificações.<br />";
@@ -970,10 +972,10 @@ $pgv_lang["edit_name"]="Alterar Nome";
 $pgv_lang["delete_name"]="Excluir Nome";
 $pgv_lang["no_temple"]="No Temple - Living Ordinance";
 $pgv_lang["replace"]="Substituir Registro";
-$pgv_lang["append"]="Adiconar Registro";
-$pgv_lang["add_father"]="Adiconar pai";
-$pgv_lang["add_mother"]="Adiconar mãe";
-$pgv_lang["add_obje"]="Adiconar Mídia";
+$pgv_lang["append"]="Adicionar Registro";
+$pgv_lang["add_father"]="Adicionar pai";
+$pgv_lang["add_mother"]="Adicionar mãe";
+$pgv_lang["add_obje"]="Adicionar Mídia";
 $pgv_lang["no_changes"]="Não há mudança necessária a ser revisada.";
 $pgv_lang["accept"]="Aceitar";
 $pgv_lang["accept_all"]="Aceitar todas as alterações";
@@ -991,7 +993,7 @@ $pgv_lang["privacy_prevented_editing"]="As configurações de privacidade impede
 $pgv_lang["add_asso"]="Nova Testemunha";
 $pgv_lang["edit_sex"]="Alterar Sexo";
 $pgv_lang["ged_noshow"]="Esta página foi desabiltada pelo administrador.";
-$pgv_lang["bdm"]="Nasc., Falec. e Casamentos";
+$pgv_lang["bdm"]="Nascimentos, Falecimentos e Casamentos";
 $pgv_lang["on_this_day"]="Este Dia em nossa História ...";
 $pgv_lang["in_this_month"]="Este Mês em nossa História ...";
 $pgv_lang["in_this_year"]="Este Ano em nossa História ...";
@@ -1431,12 +1433,14 @@ $pgv_lang["fontfile_error"]="Arquivo de Fonte não encontrada no servidor PHP";
 $pgv_lang["fanchart_IE"]="A imagem do gráfico em Leque não pode ser impressa por seu navegador. Clique com o botão direito do mouse para salva-lo em seu computador e em seguida imprima-o.";
 $pgv_lang["rss_descr"]="Notícias e links do site #GEDCOM_TITLE#";
 $pgv_lang["rss_logo_descr"]="Feed criado por PhpGedView";
+$pgv_lang["no_feed"]				= "Não há RSS disponível para este site PhpGedView";
+$pgv_lang["no_feed_title"]			= "Alimentador indisponível";
 $pgv_lang["rss_feeds"]="Alimentação da RSS";
 $pgv_lang["feed_login"]="Caso tenha uma conta para este site <a href=\"#AUTH_URL#\">identifique-se</a> usando a Autenticação Básica do HTTP e acesse as informações restritas.";
 $pgv_lang["attendant"]="Atendente";
 $pgv_lang["attending"]="Atendendo";
 $pgv_lang["best_man"]="Padrinho";
-$pgv_lang["bridesmaid"]="Madrinha";
+$pgv_lang["bridesmaid"]="Dama de Honra";
 $pgv_lang["buyer"]="Comprador";
 $pgv_lang["circumciser"]="Circuncisador";
 $pgv_lang["civil_registrar"]="Registro Civil";
