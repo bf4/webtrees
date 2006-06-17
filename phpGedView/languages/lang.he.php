@@ -1253,6 +1253,7 @@ $pgv_lang["gedcom_stats"]		= "סטטיסטיקות GEDCOM";
 $pgv_lang["stat_individuals"]		= "אנשים";
 $pgv_lang["stat_families"]		= "משפחות";
 $pgv_lang["stat_sources"]		= "מקורות";
+$pgv_lang["stat_media"]		= "מדיה";
 $pgv_lang["stat_other"]		= "רשומות אחרות";
 $pgv_lang["stat_earliest_birth"] 	= "שנת הלידה המוקדמת ביותר";
 $pgv_lang["stat_latest_birth"] 		= "שנת הלידה המאוחרת ביותר";

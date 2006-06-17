@@ -23,7 +23,7 @@
  * @author Meliza
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id
+ * @version $Id$
  */
 if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "אין לך גישה לתיקית קבצי השפות.";
