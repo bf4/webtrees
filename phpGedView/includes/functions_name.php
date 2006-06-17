@@ -452,16 +452,19 @@ function get_sortable_family_descriptor($fid) {
 			$hname = get_sortable_name($parents["HUSB"]);
 		else $hname = $pgv_lang["private"];
 	}
-	else $hname = check_NN("@N.N., @P.N.");
+	else $hname = "@N.N., @P.N.";
 	if ($parents["WIFE"]) {
 		if (displayDetailsById($parents["WIFE"]) || showLivingNameById($parents["WIFE"]))
 			$wname = get_sortable_name($parents["WIFE"]);
 		else $wname = $pgv_lang["private"];
 	}
-	else $wname = check_NN("@N.N., @P.N.");
-	if (!empty($hname) && !empty($wname)) return $hname." + ".$wname;
-	else if (!empty($hname) && empty($wname)) return $hname;
-	else if (empty($hname) && !empty($wname)) return $wname;
+	else $wname = "@N.N., @P.N.";
+
+	if (!empty($hname) && !empty($wname)) $result = check_NN($hname)." + ".check_NN($wname);
+	else if (!empty($hname) && empty($wname)) $result = check_NN($hname);
+	else if (empty($hname) && !empty($wname)) $result = check_NN($wname);
+	
+	return $result;
 }
 
 function get_family_descriptor($fid) {
@@ -483,10 +486,10 @@ function get_family_descriptor($fid) {
 		if ($NAME_REVERSE) $wname = "@N.N. @P.N.";
 		else $wname = "@P.N. @N.N.";
 	}
-	if (!empty($hname) && !empty($wname)) $result = check_NN($hname) . " + " . check_nn($wname);
+	if (!empty($hname) && !empty($wname)) $result = check_NN($hname)." + ".check_NN($wname);
 	else if (!empty($hname) && empty($wname)) $result = check_NN($hname);
 	else if (empty($hname) && !empty($wname)) $result = check_NN($wname);
-	
+
 	return $result;
 }
 
