@@ -1449,7 +1449,7 @@ function show_media_form($pid, $action="newentry", $filename="", $linktoid="", $
 						}
 						$haveTEXT = true;
 					}
-					if ($fact=="DATE" || $fact=="QUAY") {
+					if ($fact=="DATE") {
 						if (!$havePAGE) {
 							add_simple_tag(($sourceLevel+1)." PAGE");
 							$havePAGE = true;
@@ -1475,7 +1475,7 @@ function show_media_form($pid, $action="newentry", $filename="", $linktoid="", $
 				if (!$havePAGE) add_simple_tag(($sourceLevel+1)." PAGE");
 				if (!$haveTEXT) add_simple_tag(($sourceLevel+2)." TEXT");
 				if (!$haveDATE) add_simple_tag(($sourceLevel+2)." DATE", "", $pgv_lang["date_of_entry"]);
-				if (!$haveQUAY) add_simple_tag(($sourceLevel+2)." QUAY");
+				if (!$haveQUAY) add_simple_tag(($sourceLevel+1)." QUAY");
 			}
 		}
 	}

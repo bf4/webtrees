@@ -1122,7 +1122,9 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		$text = "TEXT";
 		add_simple_tag(($level+2)." $text");
 		add_simple_tag(($level+2)." DATE", "", $pgv_lang["date_of_entry"]);
+		// 3 QUAY
 		add_simple_tag(($level+1)." QUAY");
+		// 3 OBJE
 		add_simple_tag(($level+1)." OBJE @@");
 		print "</table></div>";
 	}
@@ -1595,7 +1597,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 					}
 					$haveSourceText = true;
 				}
-				if ($type=="DATE" || $type=="QUAY") {
+				if ($type=="DATE") {
 					if (!$haveSourceText) {
 						if (!$haveSourcePage) {
 							add_simple_tag(($levelSource+1)." PAGE");
@@ -1611,7 +1613,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 				if (!$haveSourcePage) add_simple_tag(($levelSource+1)." PAGE");
 				if (!$haveSourceText) add_simple_tag(($levelSource+2)." TEXT");
 				if (!$haveSourceDate) add_simple_tag(($levelSource+2)." DATE", "", $pgv_lang["date_of_entry"]);
-				if (!$haveSourceQuay) add_simple_tag(($levelSource+2)." QUAY");
+				if (!$haveSourceQuay) add_simple_tag(($levelSource+1)." QUAY");
 				$inSource = false;
 			}
 		}
