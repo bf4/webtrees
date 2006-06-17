@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1507590 ] 4.0rel ... source.php keeps the @N.N rather than "unknown" (canajun2eh)
  - Fixed [ 1507194 ] 4.0release: QUAY tag at wrong level within source citation (canajun2eh)
  - Fixed [ 1506547 ] Media List - RtL File Name (canajun2eh)
  - Added [ phpgedview-Feature Requests-1506913 ] Expand View GEDCOM Record with Linked Records (yalnifj)
