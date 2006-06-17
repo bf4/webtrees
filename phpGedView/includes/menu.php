@@ -37,6 +37,7 @@ class Menu
 	var $hoverclass = '';
 	var $submenuclass = '';
 	var $accesskey = null;
+	var $target = null;
 	var $parentmenu = null;
 	var $submenus;
 
@@ -99,6 +100,11 @@ class Menu
 	function addAccesskey($accesskey)
 	{
 		$this->accesskey = $accesskey;
+	}
+
+	function addTarget($target)
+	{
+		$this->target = $target;
 	}
 
 	function addSubMenu($obj)
@@ -179,6 +185,10 @@ class Menu
 		if ($this->accesskey !== null)
 		{
 			$link .= '" accesskey="'.$this->accesskey;
+		}
+		if ($this->target !== null)
+		{
+			$link .= '" target="'.$this->target;
 		}
 		$link .= "\">";
 		if ($this->icon !== null)
