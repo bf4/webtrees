@@ -286,14 +286,14 @@ if ($ct>0){
 		}
 		if ($showFile) {
 			if ($isExternal) print "<br /><sub>URL</sub>";
-			else print "<br /><sub>".PrintReady($media["FILE"])."</sub>";
+			else print "<br /><sub><span dir=\"ltr\">".PrintReady($media["FILE"])."</span></sub>";
 		}
 		print "</a><br />";
 
 		PrintMediaLinks($media["LINKS"], "small");
 
 	    if (!$isExternal && !file_exists(filename_decode($media["FILE"]))) {
-		    print "<br /><span class=\"error\">".$pgv_lang["file_not_found"]." ".$media["FILE"]."</span>";
+		    print "<br /><span class=\"error\">".$pgv_lang["file_not_found"]." <span dir=\"ltr\">".PrintReady($media["FILE"])."</span></span>";
 	    }
 	    print "<br /><div class=\"indent\" style=\"white-space: normal; width: 95%;\">";
 	    print_fact_notes($media["GEDCOM"], $media["LEVEL"]+1);

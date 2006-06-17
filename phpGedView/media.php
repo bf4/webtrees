@@ -1400,11 +1400,11 @@ if (check_media_structure()) {
 								print "<br />";
 							}
 						}
-						if (!$isExternal && !file_exists(filename_decode($media["FILE"]))) print $media["FILE"]."<br /><span class=\"error\">".$pgv_lang["file_not_exists"]."</span><br />";
+						if (!$isExternal && !file_exists(filename_decode($media["FILE"]))) print "<span dir=\"ltr\">".PrintReady($media["FILE"])."</span><br /><span class=\"error\">".$pgv_lang["file_not_exists"]."</span><br />";
 						else if ($isExternal) {
 							print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\"><b>URL</b></a><br />";
 						} else {
-							print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">".$media["FILE"]."</a><br />";
+							print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\"><span dir=\"ltr\">".PrintReady($media["FILE"])."</span></a><br />";
 							if (!empty($imgsize[0])) {
 								print "<sub>&nbsp;&nbsp;".$pgv_lang["image_size"]." -- ".$imgsize[0]."x".$imgsize[1]."</sub><br />";
 							}
