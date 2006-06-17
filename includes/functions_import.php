@@ -1145,7 +1145,7 @@ function create_placelinks_table() {
 	$sql = "CREATE TABLE " . $TBLPREFIX . "placelinks (pl_p_id INT, pl_gid VARCHAR(255), pl_file INT)";
 	$res = dbquery($sql);
 	if (DB::isError($res)) {
-		print $pgv_lang["created_places_fail"]."<br />\n";
+		print $pgv_lang["created_placelinks_fail"]."<br />\n";
 		exit;
 	}
 	$sql = "CREATE INDEX plindex_place ON ".$TBLPREFIX."placelinks (pl_p_id)";
@@ -1155,7 +1155,7 @@ function create_placelinks_table() {
 	$sql = "CREATE INDEX plindex_file ON ".$TBLPREFIX."placelinks (pl_file)";
 	$res = dbquery($sql);
 
-	print $pgv_lang["created_places"] . "<br />\n";
+	print $pgv_lang["created_placelinks"] . "<br />\n";
 }
 /**
  * Create the places table
