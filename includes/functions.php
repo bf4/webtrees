@@ -928,7 +928,7 @@ function find_highlighted_object($pid, $indirec) {
 	if (!showFactDetails("OBJE", $pid)) return false;
 	$object = array();
 	$media = array();
-	
+
 	//-- handle finding the media of remote objects
 	$ct = preg_match("/(.*):(.*)/", $pid, $match);
 	if ($ct>0) {
@@ -947,7 +947,7 @@ function find_highlighted_object($pid, $indirec) {
 						}
 					}
 				}
-			} 
+			}
 		}
 	}
 
@@ -959,7 +959,7 @@ function find_highlighted_object($pid, $indirec) {
 	}
 	$res->free();
 
-	//-- for the given media choose the 
+	//-- for the given media choose the
 	foreach($media as $i=>$row) {
 		if (displayDetailsById($row[0], 'OBJE') && !FactViewRestricted($row[0], $row[2])) {
 			$thum = get_gedcom_value('_THUM', 1, $row[2]);
@@ -991,7 +991,7 @@ function find_highlighted_object($pid, $indirec) {
 			}
 		}
 	}
-	
+
 	return $object;
 }
 
@@ -1177,12 +1177,12 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 		$danishFrom = array("AA", "Aa", "AE", "Ae", "OE", "Oe", "aa", "ae", "oe");
 		$danishTo 	= array("Å", "Å", "Æ", "Æ", "Ø", "Ø", "å", "æ", "ø");
 	}
-		
+
 	if ($LANGUAGE == "german") {
 		$germanFrom = array("AA", "Aa", "Æ", "AE", "Ae", "Ø", "OE", "Oe", "SS", "Ss", "UE", "Ue", "aa", "æ", "ae", "ø", "oe", "ss", "ue");
 		$germanTo 	= array("Å", "Å", "Ä", "Ä", "Ä", "Ö", "Ö", "Ö", "ß", "ß", "Ü", "Ü", "å", "ä", "ä", "ö", "ö", "ß", "ü");
 	}
-	
+
 	//-- split strings into strings and numbers
 	$aParts = preg_split("/(\d+)/", $aName, -1, PREG_SPLIT_DELIM_CAPTURE);
 	$bParts = preg_split("/(\d+)/", $bName, -1, PREG_SPLIT_DELIM_CAPTURE);
@@ -1384,7 +1384,7 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 		//-- if we made it through the loop then check if one name is longer than the
 		//-- other, the shorter one should be first
 		if ($alen!=$blen) return ($alen-$blen);
-		
+
 		//-- They're identical: let diacritics (if any) decide
 		if ($aDiacriticValue < $bDiacriticValue) return -1;
 		if ($aDiacriticValue > $bDiacriticValue) return 1;
@@ -1631,32 +1631,32 @@ function compare_facts($a, $b) {
 	}
 
 	// Sink Death, burial and cremation to the bottom of the list.
-	if ((preg_match("/1 DEAT/", $arec)>0) && ((stristr($arec, "UNKNOWN")) || 
+	if ((preg_match("/1 DEAT/", $arec)>0) && ((stristr($arec, "UNKNOWN")) ||
 	    (stristr($arec, "DATE Y")) || (!stristr($arec, "DATE")))) {
 		if ($DEBUG) print "deat aft";
 		return $aft;
 	}
-	if ((preg_match("/1 DEAT/", $brec)>0) && ((stristr($brec, "UNKNOWN")) || 
+	if ((preg_match("/1 DEAT/", $brec)>0) && ((stristr($brec, "UNKNOWN")) ||
 	    (stristr($brec, "DATE Y")) || (!stristr($brec, "DATE")))) {
 		if ($DEBUG) print "deat bef";
 		return $bef;
 	}
-	if ((preg_match("/1 BURI/", $arec)>0) && ((stristr($arec, "UNKNOWN")) || 
+	if ((preg_match("/1 BURI/", $arec)>0) && ((stristr($arec, "UNKNOWN")) ||
             (stristr($arec, "DATE Y")) || (!stristr($arec, "DATE")))) {
 		if ($DEBUG) print "buri aft";
 		return $aft;
 	}
-	if ((preg_match("/1 BURI/", $brec)>0) && ((stristr($brec, "UNKNOWN")) || 
+	if ((preg_match("/1 BURI/", $brec)>0) && ((stristr($brec, "UNKNOWN")) ||
             (stristr($brec, "DATE Y")) || (!stristr($brec, "DATE")))) {
 		if ($DEBUG) print "buri bef";
 		return $bef;
 	}
-	if ((preg_match("/1 CREM/", $arec)>0) && ((stristr($arec, "UNKNOWN")) || 
+	if ((preg_match("/1 CREM/", $arec)>0) && ((stristr($arec, "UNKNOWN")) ||
 	    (stristr($arec, "DATE Y")) || (!stristr($arec, "DATE")))) {
 		if ($DEBUG) print "crem aft";
 		return $aft;
 	}
-	if ((preg_match("/1 CREM/", $brec)>0) && ((stristr($brec, "UNKNOWN")) || 
+	if ((preg_match("/1 CREM/", $brec)>0) && ((stristr($brec, "UNKNOWN")) ||
             (stristr($brec, "DATE Y")) || (!stristr($brec, "DATE")))) {
 		if ($DEBUG) print "crem bef";
 		return $bef;
@@ -2724,57 +2724,54 @@ function remove_custom_tags($gedrec, $remove="no") {
 }
 
 /**
- * look for and run any hook files found
+ * Locate and run any hook files found.
  *
- * @param string $type		the type of hook requested (login|logout|adduser|updateuser|deleteuser)
+ * @param string $type		the type of hook requested (login|logout|adduser|updateuser|deleteuser|getuser)
  * @param array  $params	array of parameters
- * @return bool				returns true
+ * @return array			array containing any results from the hooks (not currently used)
+ * @author					Patrick Kellum
+ * @todo					add aditional types, including search.
  */
-function runHooks($type, $params=array ())
+function runHooks($type, $params=array())
 {
-	// look for core hooks
-	if (file_exists("hooks/{$type}/"))
+	global $THEME_DIR;
+	static $cache = array();
+	// check for cache
+	if(isset($cache[$type]))
 	{
-		$dirs = array ("hooks/{$type}/");
+		$hooks = $cache[$type];
 	}
 	else
 	{
-		$dirs = array ();
-	}
-	// look for module hooks
-	$d = dir('modules/');
-	while (false !== ($f = $d->read()))
-	{
-		if ($f === '.' || $f === '..')
+		// look for core hooks, shouldn't be needed, but may be useful for quick site customizing
+		if(file_exists("hooks/{$type}.php")){$hooks = array('core'=>"hooks/{$type}.php");}else{$hooks = array();}
+		// look for module hooks
+		$d = dir('modules/');
+		while(false !== ($f = $d->read()))
 		{
-			continue;
-		}
-		if (file_exists("modules/{$f}/hooks/{$type}"))
-		{
-			$dirs[] = "modules/{$f}/hooks/{$type}/";
-		}
-	}
-	$d->close();
-	// run all found hooks
-	foreach ($dirs as $directory)
-	{
-		$d = @dir($directory);
-		if (is_object($d))
-		{
-			while (false !== ($f = $d->read()))
+			if($f === '.' || $f === '..'){continue;}
+			if(file_exists("modules/{$f}/pgvhooks/{$type}.php"))
 			{
-				if (stristr($f, '.php'))
-				{
-					include_once "{$directory}/{$f}";
-					$cl = substr($f, 0, -4);
-					$obj = new $cl();
-					$obj->hook($params);
-				}
+				$hooks[$f] = "modules/{$f}/pgvhooks/{$type}.php";
 			}
-			$d->close();
 		}
+		$d->close();
+		// look for theme hooks
+		if(file_exists("{$THEME_DIR}hooks/{$type}.php")){$hooks['theme'] = "{$THEME_DIR}hooks/{$type}.php";}
+		// cache the results for speed
+		$cache[$type] = $hooks;
 	}
-	return true;
+	// run all found hooks
+	$results = array();
+	foreach($hooks as $module=>$hook)
+	{
+		include_once $hook;
+		$cl = "mod_{$module}_{$type}";
+		$obj = new $cl();
+		$res = $obj->hook($params);
+		if($res !== null){$results = array_merge($results, $res);}
+	}
+	return $results;
 }
 
 function getfilesize($bytes) {
@@ -3245,7 +3242,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	}
 
 /**
- *		Build the tables of multi-character sequences that must be considered as a 
+ *		Build the tables of multi-character sequences that must be considered as a
  *		single character when sorting lists of names and titles.
  *			Reference http://en.wikipedia.org/wiki/Hungarian_alphabet
  *			Reference http://en.wikipedia.org/wiki/Alphabets_derived_from_the_Latin
@@ -3272,7 +3269,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		}
 		$MULTI_LETTER_ALPHABET[$LANGUAGE] = " ".$myList." ";
 	}
-	
+
 	$digraphAll = array();
 	$trigraphAll = array();
 	$quadgraphAll = array();
@@ -3295,7 +3292,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		if (strlen($letter)==4) $quadgraphAll[$letter] = $sortValue[$first];
 	}
 	$MULTI_LETTER_ALPHABET["all"] = " ".trim($MULTI_LETTER_ALPHABET["all"])." ";
-	
+
 
 /**
  *		Build the tables required for the Dictionary sort
@@ -3305,16 +3302,16 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
  *		only when the two strings (without marks) are identical.
  *
  *		There are two sets of tables, one for the Upper Case version of a UTF8 character
- *		and the other for the lower-case version.  The two tables are not necessarily 
+ *		and the other for the lower-case version.  The two tables are not necessarily
  *		identical.  For example, the Turkish dotless i doesn't exist in the Upper case
  *		table.
  *
  *		Within each set, there are three lists which MUST have a one-to-one relationship.
- *		The "DiacritStrip" list gives the base letter of the corresponding "DiacritWhole" 
- *		character.  
- *		The "DiacritOrder" list assigns a sort value to the diacritic mark of the 
- *		"DiacritWhole" character.  All letters that don't appear in these lists, including 
- *		the base letter from which the one bearing diacritic marks is formed, are assigned 
+ *		The "DiacritStrip" list gives the base letter of the corresponding "DiacritWhole"
+ *		character.
+ *		The "DiacritOrder" list assigns a sort value to the diacritic mark of the
+ *		"DiacritWhole" character.  All letters that don't appear in these lists, including
+ *		the base letter from which the one bearing diacritic marks is formed, are assigned
  *		a sort value of " ".  By using a single letter from the ASCII code chart, we can
  *		have 52 different UTF8 characters all mapping to the same base character.  This will
  *		handle Vietnamese, which is by far the richest language in terms of diacritic marks.
