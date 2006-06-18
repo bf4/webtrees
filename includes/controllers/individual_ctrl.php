@@ -124,17 +124,19 @@ class IndividualControllerRoot extends BaseController {
 			$this->user = getUser($this->uname);
 			if ($this->user["default_tab"] != $this->default_tab) $this->default_tab = $this->user["default_tab"];
 		}
-		
+
 		//-- check for a cookie telling what the last tab was when they were last
 		//-- visiting this individual
-		if (isset($_COOKIE['lasttabs'])) {
-			$ct = preg_match("/".$this->pid."=(\d+)/", $_COOKIE['lasttabs'], $match);
-			if ($ct>0) {
-				$this->default_tab = $match[1]-1;
-//				print "{".$this->default_tab."}";
-			} 
+		if($this->default_tab == -2)
+		{
+			if (isset($_COOKIE['lasttabs'])) {
+				$ct = preg_match("/".$this->pid."=(\d+)/", $_COOKIE['lasttabs'], $match);
+				if ($ct>0) {
+					$this->default_tab = $match[1]-1;
+				}
+			}
 		}
-		
+
 		$this->indi = new Person($indirec, false);
 
 		//-- if the person is from another gedcom then forward to the correct site
@@ -277,7 +279,7 @@ class IndividualControllerRoot extends BaseController {
 		$name = $this->indi->getName();
 		return $name." - ".$this->indi->getXref()." - ".$pgv_lang["indi_info"];
 	}
-	
+
 	/**
 	 * gets a string used for setting the value of a cookie using javascript
 	 */
@@ -747,7 +749,7 @@ class IndividualControllerRoot extends BaseController {
 			$labels["sister"] = $pgv_lang["daughter"];
 			$labels["brother"] = $pgv_lang["son"];
 		}
-		
+
 		$newhusb = null;
 		$newwife = null;
 		$newchildren = array();
