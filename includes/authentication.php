@@ -79,6 +79,8 @@ function authenticateUser($username, $password, $basic=false) {
 						}
 					}
 				}
+				// pass entire user data insted of just username since we have it already.
+				runHooks('login', array('user'=>$user));
 				return true;
 			}
 		}
@@ -143,6 +145,7 @@ function userLogout($username = "") {
 			if($tmphits>=0) $_SESSION["pgv_counter"]=$tmphits; //set since it was set before so don't get double hits
 		}
 	}
+	runHooks('logout', array('username'=>$username));
 }
 
 /**
@@ -153,10 +156,10 @@ function userLogout($username = "") {
  */
 function userUpdateLogin($username) {
 	global $TBLPREFIX;
-	
+
 	if (empty($username)) $username = getUserName();
 	if (empty($username)) return;
-	
+
 	$sql = "UPDATE ".$TBLPREFIX."users SET u_sessiontime='".time()."' WHERE u_username='$username'";
 	$res = dbquery($sql);
 }
@@ -218,6 +221,11 @@ function getUsers($field = "username", $order = "asc", $sort2 = "firstname") {
 //			else $user["auto_accept"] = true;
 			if ($user_row["u_auto_accept"]!="N") $user["auto_accept"] = true;
 			else $user["auto_accept"] = false;
+			$ext = runHooks('getuser', $user);
+			if(count($ext) > 0)
+			{
+				$user = array_merge($user, $ext);
+			}
 			$users[$user_row["u_username"]] = $user;
 		}
 	}
@@ -409,17 +417,6 @@ function adminUserExists() {
 }
 
 /**
- * store users array
- *
- * store the array of users to a file
- * this funciton is not implemented in DB mode
- * @see authentication.php
- */
-function storeUsers() {
-	return true;
-}
-
-/**
  * check if the user database tables exist
  *
  * If the tables don't exist then create them
@@ -453,7 +450,7 @@ function checkTableExists() {
 	$has_relation_privacy = false;
 	$has_fav_note = false;
 	$has_auto_accept = false;
-	
+
 	$sqlite = ($DBTYPE == 'sqlite');
 
 	if (DB::isError($DBCONN)) return false;
@@ -505,7 +502,7 @@ function checkTableExists() {
 							case "u_auto_accept":
 								$has_auto_accept = true;
 								break;
-						}	
+						}
 					}
 					break;
 				case "messages":
@@ -735,7 +732,11 @@ function addUser($newuser, $msg = "added") {
 		$activeuser = getUserName();
 		if ($activeuser == "") $activeuser = "Anonymous user";
 		AddToLog($activeuser." ".$msg." user -> ".$newuser["username"]." <-");
-		if ($res) return true;
+		if ($res)
+		{
+			runHooks('adduser', $newuser);
+			return true;
+		}
 	}
 	return false;
 }
@@ -806,7 +807,11 @@ function updateUser($username, $newuser, $msg = "updated") {
 			$sql = "UPDATE ".$TBLPREFIX."news SET n_username='".$DBCONN->escapeSimple($newuser["username"])."' WHERE n_username='".$DBCONN->escapeSimple($username)."'";
 			$res = dbquery($sql);
 		}
-		if ($res) return true;
+		if($res)
+		{
+			runHooks('updateuser', $newuser);
+			return true;
+		}
 	}
 	return false;
 }
@@ -826,8 +831,12 @@ function deleteUser($username, $msg = "deleted") {
 	$activeuser = getUserName();
 	if ($activeuser == "") $activeuser = "Anonymous user";
 	if (($msg != "changed") && ($msg != "reqested password for") && ($msg != "verified")) AddToLog($activeuser." ".$msg." user -> ".$username." <-");
-	if ($res) return true;
-	else return false;
+	if($res)
+	{
+		runHooks('deleteuser', array('username'=>$username));
+		return true;
+	}
+	else{return false;}
 }
 
 /**
@@ -948,6 +957,11 @@ function getUser($username) {
 //				else $user["auto_accept"]=true;
 				if ($user_row["u_auto_accept"]!='N') $user["auto_accept"]=true;
 				else $user["auto_accept"]=false;
+				$ext = runHooks('getuser', $user);
+				if(count($ext) > 0)
+				{
+					$user = array_merge($user, $ext);
+				}
 				$users[$user_row["u_username"]] = $user;
 			}
 		}
@@ -1023,6 +1037,11 @@ function getUserByGedcomId($id, $gedcom) {
 //					else $user["auto_accept"]=true;
 					if ($user_row["u_auto_accept"]!='N') $user["auto_accept"]=true;
 					else $user["auto_accept"]=false;
+					$ext = runHooks('getuser', $user);
+					if(count($ext) > 0)
+					{
+						$user = array_merge($user, $ext);
+					}
 					$users[$user_row["u_username"]] = $user;
 				}
 			}
@@ -1149,7 +1168,7 @@ function addMessage($message) {
 
 	//-- do not allow users to send a message to themselves
 	if ($message["from"]==$message["to"]) return false;
-	
+
 	require_once('includes/functions_mail.php');
 
 	//-- setup the message body for the from user
