@@ -104,10 +104,10 @@ if (isset($GEDCOMPATH)) {
 		if ($path=="") $upload_path = $INDEX_DIRECTORY;
 		else $upload_path = $path;
 		if (empty($GEDFILENAME)) $GEDFILENAME = $_FILES['GEDCOMPATH']['name'];
-		
+
 		//-- remove any funny characters from uploaded files
 		$GEDFILENAME = preg_replace('/[\+\&\%\$@]/', "_", $GEDFILENAME);
-		
+
 		// NOTE: When uploading a file check if it doesn't exist yet
 		if (!isset($GEDCOMS[$GEDFILENAME]) && !file_exists($upload_path.$GEDFILENAME)) {
 			if (move_uploaded_file($_FILES['GEDCOMPATH']['tmp_name'], $upload_path.$GEDFILENAME)) {
@@ -255,7 +255,7 @@ if ($action=="update") {
 	$boolarray[false]="false";
 	$boolarray[true]="true";
 	$configtext = implode('', file("config_gedcom.php"));
-	
+
 	$_POST["NEW_MEDIA_DIRECTORY"] = preg_replace('/\\\/','/',$_POST["NEW_MEDIA_DIRECTORY"]);
 	$ct = preg_match("'/$'", $_POST["NEW_MEDIA_DIRECTORY"]);
 	if ($ct==0) $_POST["NEW_MEDIA_DIRECTORY"] .= "/";
@@ -1137,6 +1137,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["displ_layout_conf"]."\" onclick=
 				<option value="3" <?php if ($GEDCOM_DEFAULT_TAB==3) print "selected=\"selected\""; ?>><?php print $pgv_lang["media"];?></option>
 				<option value="4" <?php if ($GEDCOM_DEFAULT_TAB==4) print "selected=\"selected\""; ?>><?php print $pgv_lang["relatives"];?></option>
 				<option value="-1" <?php if ($GEDCOM_DEFAULT_TAB==-1) print "selected=\"selected\""; ?>><?php print $pgv_lang["all"];?></option>
+				<option value="-2" <?php if ($GEDCOM_DEFAULT_TAB==-2) print "selected=\"selected\""; ?>><?php print $pgv_lang["lasttab"];?></option>
 			</select>
 		</td>
 	</tr>

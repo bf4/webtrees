@@ -95,7 +95,7 @@ if ($action=="edituser2") {
 			//-- if the username changed update the user's session
 			if ($oldusername == getUserName()) $_SESSION['pgv_user'] = $newuser["username"];
 			$user = $newuser;
-			
+
 			//-- update Gedcom record with new email address
 			if ($user["sync_gedcom"]=="Y" && $sync_data_changed) {
 				$oldged = $GEDCOM;
@@ -240,6 +240,7 @@ if ($action=="edituser2") {
 				<option value="3" <?php if ($user['default_tab']==3) print "selected=\"selected\""; ?>><?php print $pgv_lang["media"];?></option>
 				<option value="4" <?php if ($user['default_tab']==4) print "selected=\"selected\""; ?>><?php print $pgv_lang["relatives"];?></option>
 				<option value="-1" <?php if ($user['default_tab']==-1) print "selected=\"selected\""; ?>><?php print $pgv_lang["all"];?></option>
+				<option value="-2" <?php if ($user['default_tab']==-2) print "selected=\"selected\""; ?>><?php print $pgv_lang["lasttab"];?></option>
 			</select>
 		</td>
 	</tr>
