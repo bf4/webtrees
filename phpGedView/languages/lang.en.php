@@ -510,6 +510,7 @@ $pgv_lang["suffix"] 				= "Suffix:";
 $pgv_lang["object_note"]			= "Object Note:";
 $pgv_lang["sex"]					= "Gender";
 $pgv_lang["personal_facts"] 		= "Personal Facts and Details";
+$pgv_lang['lasttab']				= 'Last Visited Tab For Individual';
 $pgv_lang["type"]					= "Type";
 $pgv_lang["date"]					= "Date";
 $pgv_lang["place_description"]		= "Place / Description";
