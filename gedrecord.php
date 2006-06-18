@@ -27,14 +27,13 @@ require("config.php");
 require_once("includes/gedcomrecord.php");
 header("Content-Type: text/html; charset=$CHARACTER_SET");
 ?>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title><?php print "$pid Record"; ?></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php print $CHARACTER_SET; ?>" />
+		<title><?php print "$pid Record"; ?></title>
 	</head>
-	<body>
-
-<?php
+	<body><?php
 
 if (!isset($pid)) $pid = "";
 $pid = clean_input($pid);
