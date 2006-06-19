@@ -175,6 +175,7 @@ $pgv_lang["stat_longest_life"]		= "Person who lived the longest";
 $pgv_lang["stat_most_children"]		= "Family with the most children";
 $pgv_lang["stat_average_children"]	= "Average number of children per family";
 $pgv_lang["stat_events"]			= "Total events";
+$pgv_lang["stat_media"]				= "Media objects";
 $pgv_lang["stat_surnames"]			= "Total surnames";
 $pgv_lang["stat_users"]				= "Total users";
 $pgv_lang["no_family_facts"]		= "No facts for this family.";
@@ -510,7 +511,7 @@ $pgv_lang["suffix"] 				= "Suffix:";
 $pgv_lang["object_note"]			= "Object Note:";
 $pgv_lang["sex"]					= "Gender";
 $pgv_lang["personal_facts"] 		= "Personal Facts and Details";
-$pgv_lang['lasttab']				= 'Last Visited Tab For Individual';
+$pgv_lang["lasttab"]				= "Last Visited Tab For Individual";
 $pgv_lang["type"]					= "Type";
 $pgv_lang["date"]					= "Date";
 $pgv_lang["place_description"]		= "Place / Description";
@@ -1847,8 +1848,8 @@ $pgv_lang["TYPE__tombstone"] = "Tombstone";
 $pgv_lang["TYPE__video"] = "Video";
 
 //-- Modules
-$pgv_lang['module_error_unknown_action_v2'] = 'Unknown action: [action].';
-$pgv_lang['module_error_unknown_type'] = 'Unknown module type.';
+$pgv_lang["module_error_unknown_action_v2"] = "Unknown action: [action].";
+$pgv_lang["module_error_unknown_type"] = "Unknown module type.";
 
 if (file_exists( "languages/lang.en.extra.php")) require  "languages/lang.en.extra.php";
 ?>
