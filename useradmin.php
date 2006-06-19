@@ -665,7 +665,10 @@ if (($action == "listusers") || ($action == "edituser2") || ($action == "deleteu
 	?>
 	</td></tr>
     <tr>
-	  <td colspan="<?php if ($view == "preview") print "8"; else print "11"; ?>" class="topbottombar rtl"><a href="useradmin.php"><?php if ($view != "preview") print $pgv_lang["back_useradmin"]; else print "&nbsp;";?></a></td>
+      <?php if ($view!="preview") { ?>
+      		<td colspan="6" class="topbottombar trl"><a href="useradmin.php?action=createform"><?php print $pgv_lang["add_user"];?></a></td>
+      <?php } ?>
+	  <td colspan="<?php if ($view == "preview") print "8"; else print "5"; ?>" class="topbottombar rtl"><a href="useradmin.php"><?php if ($view != "preview") print $pgv_lang["back_useradmin"]; else print "&nbsp;";?></a></td>
     </tr>
 	<tr>
 		<?php if ($view != "preview") {
@@ -781,8 +784,14 @@ if (($action == "listusers") || ($action == "edituser2") || ($action == "deleteu
 		print "</tr>\n";
 	}
 	?>
-	<tr><td colspan="<?php if ($view == "preview") print "8"; else print "11"; ?>" class="topbottombar rtl"><a href="useradmin.php"><?php  if ($view != "preview") print $pgv_lang["back_useradmin"]; else print "&nbsp;"; ?></a></td></tr><?php
-	print "</table>";
+	<tr>
+		<?php if ($view!="preview") { ?>
+      		<td colspan="6" class="topbottombar trl"><a href="useradmin.php?action=createform"><?php print $pgv_lang["add_user"];?></a></td>
+      	<?php } ?>
+		<td colspan="<?php if ($view == "preview") print "8"; else print "5"; ?>" class="topbottombar rtl"><a href="useradmin.php"><?php  if ($view != "preview") print $pgv_lang["back_useradmin"]; else print "&nbsp;"; ?></a></td>
+	</tr>
+	</table>
+	<?php
 	print_footer();
 	exit;
 }
