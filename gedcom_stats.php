@@ -37,6 +37,7 @@ $PGV_BLOCKS["print_gedcom_stats"]["config"] = array("show_common_surnames"=>"yes
 	,"stat_fam"=>"yes"
 	,"stat_sour"=>"yes"
 	,"stat_other"=>"yes"
+	,"stat_media"=>"yes"
 	,"stat_surname"=>"yes"
 	,"stat_events"=>"yes"
 	,"stat_users"=>"yes"
@@ -53,13 +54,14 @@ $PGV_BLOCKS["print_gedcom_stats"]["config"] = array("show_common_surnames"=>"yes
 //-- function to print the gedcom statistics block
 
 function print_gedcom_stats($block = true, $config="", $side, $index) {
-		global $PGV_BLOCKS, $pgv_lang, $GEDCOM, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $command, $COMMON_NAMES_THRESHOLD, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $PGV_BLOCKS, $pgv_lang, $GEDCOM, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $command, $COMMON_NAMES_THRESHOLD, $PGV_IMAGE_DIR, $PGV_IMAGES, $MULTI_MEDIA;
 		global $top10_block_present, $TBLPREFIX, $monthtonum;		// Set in index.php
 
 		if (empty($config)) $config = $PGV_BLOCKS["print_gedcom_stats"]["config"];
 		if (!isset($config['stat_indi'])) $config = $PGV_BLOCKS["print_gedcom_stats"]["config"];
 		if (!isset($config['stat_first_death'])) $config['stat_first_death'] = $PGV_BLOCKS["print_gedcom_stats"]["config"]['stat_first_death'];
 		if (!isset($config['stat_last_death'])) $config['stat_last_death'] = $PGV_BLOCKS["print_gedcom_stats"]["config"]['stat_last_death'];
+		if (!isset($config['stat_media'])) $config['stat_media'] = $PGV_BLOCKS["print_gedcom_stats"]["config"]['stat_media'];
 
 		print "<div id=\"gedcom_stats\" class=\"block\">\n";
 		print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
@@ -161,6 +163,26 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				</div></td>
 			</tr>
 			<?php
+		}
+		if ($config["stat_media"]=="yes") { 
+			if ($MULTI_MEDIA==true) {
+				$sql = "SELECT COUNT(m_id) FROM ".$TBLPREFIX."media WHERE m_gedfile='".$GEDCOMS[$GEDCOM]["id"]."'";
+				$tempsql = dbquery($sql);
+				$res =& $tempsql;
+				$row =& $res->fetchRow();
+				$media_count = $row[0];
+				$res->free();
+				?>
+				<tr>
+					<td class="facts_label">
+			  			<?php echo $pgv_lang["stat_media"]?>
+					</td>
+					<td class="facts_value"><div dir="rtl">
+						<a href="medialist.php"><?php echo $media_count?>
+					</div></td>
+				</tr>
+				<?php
+			}
 		}
 		if ($config["stat_other"]=="yes") {
 			?>
@@ -447,20 +469,20 @@ function print_gedcom_stats_config($config) {
 					<td><input type="checkbox" value="yes" name="stat_last_death" <?php if ($config['stat_last_death']=="yes") print "checked=\"checked\""; ?> /> <?php print $pgv_lang["stat_latest_death"]; ?></td>
 				</tr>
 				<tr>
+					<td><input type="checkbox" value="yes" name="stat_media" <?php if ($config['stat_media']=="yes") print "checked=\"checked\""; ?> /> <?php print $pgv_lang["stat_media"]; ?></td>
 					<td><input type="checkbox" value="yes" name="stat_long_life" <?php if ($config['stat_long_life']=="yes") print "checked=\"checked\""; ?> /> <?php print $pgv_lang["stat_longest_life"]; ?></td>
-					<td><input type="checkbox" value="yes" name="stat_avg_life" <?php if ($config['stat_avg_life']=="yes") print "checked=\"checked\""; ?> /> <?php print $pgv_lang["stat_avg_age_at_death"]; ?></td>
 				</tr>
 				<tr>
 					<td><input type="checkbox" value="yes" name="stat_other" <?php if ($config['stat_other']=="yes") print "checked=\"checked\""; ?> /> <?php print $pgv_lang["stat_other"]; ?></td>
-					<td><input type="checkbox" value="yes" name="stat_most_chil" <?php if ($config['stat_most_chil']=="yes") print "checked=\"checked\""; ?> /> <?php print $pgv_lang["stat_most_children"]; ?></td>
+					<td><input type="checkbox" value="yes" name="stat_avg_life" <?php if ($config['stat_avg_life']=="yes") print "checked=\"checked\""; ?> /> <?php print $pgv_lang["stat_avg_age_at_death"]; ?></td>
 				</tr>
 				<tr>
 					<td><input type="checkbox" value="yes" name="stat_events" <?php if ($config['stat_events']=="yes") print "checked=\"checked\""; ?> /> <?php print $pgv_lang["stat_events"]; ?></td>
-					<td><input type="checkbox" value="yes" name="stat_avg_chil" <?php if ($config['stat_avg_chil']=="yes") print "checked=\"checked\""; ?> /> <?php print $pgv_lang["stat_average_children"]; ?></td>
+					<td><input type="checkbox" value="yes" name="stat_most_chil" <?php if ($config['stat_most_chil']=="yes") print "checked=\"checked\""; ?> /> <?php print $pgv_lang["stat_most_children"]; ?></td>
 				</tr>
 				<tr>
 					<td><input type="checkbox" value="yes" name="stat_users" <?php if ($config['stat_users']=="yes") print "checked=\"checked\""; ?> /> <?php print $pgv_lang["stat_users"]; ?></td>
-					<td><br /></td>
+					<td><input type="checkbox" value="yes" name="stat_avg_chil" <?php if ($config['stat_avg_chil']=="yes") print "checked=\"checked\""; ?> /> <?php print $pgv_lang["stat_average_children"]; ?></td>
 				</tr>
 			</table>
 		</td>
