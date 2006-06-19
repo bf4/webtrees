@@ -38,6 +38,16 @@ For massive changes, the variable names should be listed in the order in which t
 occur in the respective language files.
 
 
+VERSION 4.1
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+----------------------------------------------------------------------------------------
++$pgv_lang["stat_media"]							19 Jun 2006				A
++$pgv_lang["lasttab"]								19 Jun 2006				A
++$pgv_lang["module_error_unknown_action_v2"]		19 Jun 2006				A
++$pgv_lang["module_error_unknown_type"]				19 Jun 2006				A
+
+
 VERSION 4.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
