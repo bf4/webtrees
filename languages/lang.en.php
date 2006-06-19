@@ -1846,5 +1846,9 @@ $pgv_lang["TYPE__photo"] = "Photo";
 $pgv_lang["TYPE__tombstone"] = "Tombstone";
 $pgv_lang["TYPE__video"] = "Video";
 
+//-- Modules
+$pgv_lang['module_error_unknown_action_v2'] = 'Unknown action: [action].';
+$pgv_lang['module_error_unknown_type'] = 'Unknown module type.';
+
 if (file_exists( "languages/lang.en.extra.php")) require  "languages/lang.en.extra.php";
 ?>
