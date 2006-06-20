@@ -62,7 +62,7 @@ if (isset($surname)) {
  * This variable is used for checking if the @ symbol is present in the alphabet list.
  * @global boolean $pass
  */
-$pass = FALSE;
+$pass = false;
 
 /**
  * Total indilist array
@@ -108,21 +108,21 @@ if (count($indialpha) > 0) {
 			else print $letter;
 			print "</a> | \n";
 		}
-		if ($letter === "@") $pass = TRUE;
+		if ($letter === "@") $pass = true;
 	}
-	if ($pass == TRUE) {
+	if ($pass == true) {
 		if(!empty($SEARCH_SPIDER)) { // we want only 26+ letters and full list for spiders.
 
 			if (isset($alpha) && $alpha == "@") print "<a href=\"?alpha=@&amp;ged=".$GEDCOM."&amp;surname_sublist=no&amp;surname=@N.N.\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
 			else print "<a href=\"?alpha=@&amp;ged=".$GEDCOM."&amp;surname_sublist=no&amp;surname=@N.N.\">".PrintReady($pgv_lang["NN"])."</a>";
 			print " | \n";
-			$pass = FALSE;
+			$pass = false;
 		}
 		else {
 			if (isset($alpha) && $alpha == "@") print "<a href=\"?alpha=@&amp;surname_sublist=yes&amp;surname=@N.N.\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
 			else print "<a href=\"?alpha=@&amp;surname_sublist=yes&amp;surname=@N.N.\">".PrintReady($pgv_lang["NN"])."</a>";
 			print " | \n";
-			$pass = FALSE;
+			$pass = false;
 
 		}
 	}
@@ -402,13 +402,13 @@ else {
 					else print $letter;
 					print "</a> | \n";
 				}
-				if ($letter === "@") $pass = TRUE;
+				if ($letter === "@") $pass = true;
 			}
-			if ($pass == TRUE) {
+			if ($pass == true) {
 				if (isset($falpha) && $falpha == "@") print "<a href=\"?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;falpha=@&amp;surname_sublist=".$surname_sublist."\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
 				else print "<a href=\"?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;falpha=@&amp;surname_sublist=".$surname_sublist."\">".PrintReady($pgv_lang["NN"])."</a>";
 				print " | \n";
-				$pass = FALSE;
+				$pass = false;
 			}
 			if ($show_all_firstnames=="yes") print "<a href=\"?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;show_all_firstnames=no\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";
 			else print "<a href=\"?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;show_all_firstnames=yes\">".$pgv_lang["all"]."</a>\n";
@@ -438,24 +438,28 @@ else {
 			foreach($indi["names"] as $name) {
             	// Make sure we only display true "hits"
 				$trueHit = false;
-				$firstLetter = get_first_letter(strip_prefix($name[2]));
-				if ($alpha==$firstLetter) $trueHit = true;
-				
-				if (!$trueHit && $DICTIONARY_SORT[$LANGUAGE]) {
-					if (strlen($firstLetter)==2) {
-						//-- strip diacritics before checking equality
-						$aPos = strpos($UCDiacritWhole, $firstLetter);
-						if ($aPos!==false) {
-							$aPos = $aPos >> 1;
-							$firstLetter = substr($UCDiacritStrip, $aPos, 1);
-						} else {
-							$aPos = strpos($LCDiacritWhole, $firstLetter);
+				if (!empty($surname)) {
+					if ($surname==strip_prefix($name[2])) $trueHit = true;
+				} else {
+					$firstLetter = get_first_letter(strip_prefix($name[2]));
+					if ($alpha==$firstLetter) $trueHit = true;
+					
+					if (!$trueHit && $DICTIONARY_SORT[$LANGUAGE]) {
+						if (strlen($firstLetter)==2) {
+							//-- strip diacritics before checking equality
+							$aPos = strpos($UCDiacritWhole, $firstLetter);
 							if ($aPos!==false) {
 								$aPos = $aPos >> 1;
-								$firstLetter = substr($LCDiacritStrip, $aPos, 1);
+								$firstLetter = substr($UCDiacritStrip, $aPos, 1);
+							} else {
+								$aPos = strpos($LCDiacritWhole, $firstLetter);
+								if ($aPos!==false) {
+									$aPos = $aPos >> 1;
+									$firstLetter = substr($LCDiacritStrip, $aPos, 1);
+								}
 							}
+							if ($alpha==$firstLetter) $trueHit = true;
 						}
-						if ($alpha==$firstLetter) $trueHit = true;
 					}
 				}
 				if ($trueHit && $firstname_alpha) {

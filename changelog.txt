@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1508480 ] Individual List of a surname (canajun2eh)
  - Added Media Object count to GEDCOM statistics block (pfblair)
  - Fixed [ 1507580 ] 4.0release ... places table created twice? (canajun2eh)
  - Fixed [ 1507590 ] 4.0rel ... source.php keeps the @N.N rather than "unknown" (canajun2eh)
