@@ -1,10 +1,11 @@
 <?php
-require_once 'modules/gallery2/embed.php';
+if(file_exists('modules/gallery2/embed.php')){require_once 'modules/gallery2/embed.php';}
 
 class mod_gallery2_deleteuser
 {
 	function hook($params)
 	{
+		if(!file_exists('modules/gallery2/embed.php')){return null;}
 		global $language_settings, $SERVER_URL;
 
 		$ret = GalleryEmbed::init(array(
