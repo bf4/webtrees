@@ -1,5 +1,6 @@
 <?php
 // $Id: $
+if(!file_exists(dirname(__FILE__).'/embed.php')){header('Location: index.php');print ' ';exit;}
 include_once dirname(__FILE__).'/embed.php';
 include_once dirname(__FILE__).'/pgv.php';
 
