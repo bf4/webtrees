@@ -215,7 +215,7 @@ if ($action=="add") {
             GUnload(); // Firefox and standard browsers
         }, false);
     }
-<?php if ($level < 3) print "    var childplaces = [];\n";?>
+    var childplaces = [];
 
     function updateMap() {
         var point;
@@ -224,6 +224,8 @@ if ($action=="add") {
         var long;
         var i;
 
+        document.editplaces.save1.disabled = "";
+        document.editplaces.save2.disabled = "";
         zoom = parseInt(document.editplaces.NEW_ZOOM_FACTOR.value);
         lati = document.editplaces.NEW_PLACE_LATI.value;
         long = document.editplaces.NEW_PLACE_LONG.value;
@@ -247,7 +249,6 @@ if ($action=="add") {
         map.setCenter(point, zoom);
         document.getElementById('resultDiv').innerHTML = "";
 
-<?php   if ($level < 3) { ?>
         var childicon = new GIcon();
         childicon.image = "http://labs.google.com/ridefinder/images/mm_20_green.png";
         childicon.shadow = "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
@@ -258,7 +259,6 @@ if ($action=="add") {
         for (i=0; i < childplaces.length; i++) {
             map.addOverlay(childplaces[i]);
         }
-<?php   } ?>
     }
     
     function loadMap() {
@@ -310,7 +310,8 @@ if ($action=="add") {
                     // Trying to get the smaller yellow icon drawn in front.
                     map.addOverlay(new GMarker(point, smicon));
                     document.getElementById('resultDiv').innerHTML = "";
-<?php   if ($level < 3) { ?>
+                    document.editplaces.save1.disabled = "";
+                    document.editplaces.save2.disabled = "";
                     var childicon = new GIcon();
                     childicon.image = "http://labs.google.com/ridefinder/images/mm_20_green.png";
                     childicon.shadow = "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
@@ -321,7 +322,6 @@ if ($action=="add") {
                     for (i=0; i < childplaces.length; i++) {
                         map.addOverlay(childplaces[i]);
                     }
-<?php   } ?>
             }});
             GEvent.addListener(map, "moveend",function() {
                 document.editplaces.NEW_ZOOM_FACTOR.value = map.getZoom();
@@ -359,10 +359,10 @@ if ($action=="add") {
 
     function edit_close() {
         if (window.opener.showchanges) window.opener.showchanges();
+        GUnload();
         window.close();
     }
 
-<?php   if ($level == 3) { ?>
     function setLoc(lat, lng) {
         prec = 20;
         for (i=0;i<document.editplaces.NEW_PRECISION.length;i++) {
@@ -400,7 +400,7 @@ if ($action=="add") {
 
         var marker = new GMarker(point, icon);
         GEvent.addListener(marker, "click", function() {
-            marker.openInfoWindowHtml(name.name + "<br><a href=\"javascript:setLoc(" + name.lat + ", " + name.lng + ");\">Use this value</a>");
+        marker.openInfoWindowHtml(name.name + "(" + name.countryCode + ")<br><a href=\"javascript:setLoc(" + name.lat + ", " + name.lng + ");\"><?php print $pgv_lang["pl_use_this_value"]?></a>");
         });
         return marker;
     }
@@ -408,7 +408,6 @@ if ($action=="add") {
     function getLocation(jData) {
         if (jData == null) {
             // There was a problem parsing search results
-
             return;
         }
 
@@ -417,24 +416,38 @@ if ($action=="add") {
         var geonames = jData.geonames;
         var bounds = new GLatLngBounds();
         var count = 0;
-        if (geonames.length == 0) {
-            alert("<?php print $pgv_lang["pl_no_places_found"];?>");
-            return;
-        }
         map.clearOverlays();
+
+        var childicon = new GIcon();
+        childicon.image = "http://labs.google.com/ridefinder/images/mm_20_green.png";
+        childicon.shadow = "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
+        childicon.iconSize = new GSize(12, 20);
+        childicon.shadowSize = new GSize(22, 20);
+        childicon.iconAnchor = new GPoint(6, 20);
+        childicon.infoWindowAnchor = new GPoint(5, 1);
+        for (i=0; i < childplaces.length; i++) {
+            map.addOverlay(childplaces[i]);
+        }
 
         for (i=0;i< geonames.length;i++) {
             var name = geonames[i];
+<?php if ($level == 3) { ?>
             if (name.adminName1 == "<?php print $parent[1];?>") {
+<?php } ?>
                 bounds.extend(new GLatLng(name.lat, name.lng));
                 var point = new GLatLng(name.lat, name.lng);
                 map.addOverlay(createMarker(point, name));
                 count++;
-                html = html + name.name + ": <a href=\"javascript:setLoc(" + name.lat + ", " + name.lng + ");\">Use this value</a><br>";
-
+                html = html + name.name + "(" + name.countryCode + "): <a href=\"javascript:setLoc(" + name.lat + ", " + name.lng + ");\"><?php print $pgv_lang["pl_use_this_value"]?></a><br>";
+<?php if ($level == 3) { ?>
             }
+<?php } ?>
         }
-        if (count > 0) {
+        if (count == 0) {
+            alert("<?php print $pgv_lang["pl_no_places_found"];?>");
+            return;
+        }
+        else {
             clat = (bounds.getNorthEast().lat() + bounds.getSouthWest().lat())/2;
             clng = (bounds.getNorthEast().lng() + bounds.getSouthWest().lng())/2;
             zoomlevel = map.getBoundsZoomLevel(bounds);
@@ -445,11 +458,24 @@ if ($action=="add") {
             if (zoomlevel > <?php print $GOOGLEMAP_MAX_ZOOM;?>) zoomlevel = <?php print $GOOGLEMAP_MAX_ZOOM;?>;
             map.setCenter(new GLatLng(clat, clng), zoomlevel-1);
             document.getElementById('resultDiv').innerHTML = html;
+            document.editplaces.save1.disabled = "true";
+            document.editplaces.save2.disabled = "true";
         }
     }
 
     function search_loc() {
+<?php if ($level == 0) { ?>
+        request = 'http://ws.geonames.org/searchJSON?name=' +  encodeURIComponent(document.editplaces.NEW_PLACE_NAME.value)  + '&fclass=A&style=FULL&callback=getLocation';
+<?php } ?>
+<?php if ($level == 1) { ?>
+        request = 'http://ws.geonames.org/searchJSON?name=' +  encodeURIComponent(document.editplaces.NEW_PLACE_NAME.value)  + '&country=<?php print $parent[0];?>&fclass=P&fclass=A&style=FULL&callback=getLocation';
+<?php } ?>
+<?php if ($level == 2) { ?>
+        request = 'http://ws.geonames.org/searchJSON?name=' +  encodeURIComponent(document.editplaces.NEW_PLACE_NAME.value)  + '&country=<?php print $parent[0];?>&fclass=P&fclass=A&style=FULL&callback=getLocation';
+<?php } ?>
+<?php if ($level == 3) { ?>
         request = 'http://ws.geonames.org/searchJSON?name=' +  encodeURIComponent(document.editplaces.NEW_PLACE_NAME.value)  + '&country=<?php print $parent[0];?>&fclass=P&style=FULL&callback=getLocation';
+<?php } ?>
         // Create a new script object
         aObj = new JSONscriptRequest(request);
         // Build the script tag
@@ -457,7 +483,6 @@ if ($action=="add") {
         // Execute (add) the script tag
         aObj.addScriptTag();
     }
-<?php   } ?>
 
     //-->
 </script>
@@ -467,7 +492,7 @@ if ($action=="add") {
     <input type="hidden" name="action" value="<?php print $action;?>record" />
     <input type="hidden" name="placeid" value="<?php print $placeid;?>" />
     <input type="hidden" name="level" value="<?php print $level;?>" />
-    <input id="savebutton" type="submit" value="<?php print $pgv_lang["save"];?>" /><br />
+    <input id="savebutton" name="save1" type="submit" value="<?php print $pgv_lang["save"];?>" /><br />
 
     <table class="facts_table">
     <tr>
@@ -482,9 +507,7 @@ if ($action=="add") {
     <tr>
         <td class="descriptionbox"><?php print $factarray["PLAC"];?></td>
         <td class="optionbox"><input type="text" dir="ltr" name="NEW_PLACE_NAME" value="<?php print $place_name;?>" size="20" tabindex="<?php $i++; print $i?>" />
-<?php   if ($level == 3) {
-            print "<a href=\"javascript:;\" onclick=\"search_loc();\">".$pgv_lang["search"]."</a>";
-        } ?>
+        <a href="javascript:;" onclick="search_loc();return false;"><?php print $pgv_lang["search"]?></a>
         </td>
     </tr>
     <tr>
@@ -524,7 +547,7 @@ if ($action=="add") {
             <input type="text" dir="ltr" name="NEW_ZOOM_FACTOR" value="<?php print $zoomfactor;?>" size="20" tabindex="<?php $i++; print $i?>" onchange="updateMap();" /></td>
     </tr>
     </table>
-    <input id="savebutton" type="submit" value="<?php print $pgv_lang["save"];?>" /><br />
+    <input id="savebutton" name="save2" type="submit" value="<?php print $pgv_lang["save"];?>" /><br />
 </form>
 <?php
 print "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();\">".$pgv_lang["close_window"]."</a></div><br />\n";

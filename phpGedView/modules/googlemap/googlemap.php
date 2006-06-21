@@ -274,6 +274,11 @@ function build_indiv_map($indifacts, $famids) {
         print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_gmtab"]."<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script></td></tr>\n";
         print "<script type=\"text/javascript\">\n";
         print "function ResizeMap ()\n{\n}\n</script>\n";
+        if (userIsAdmin(getUserName())) {
+            print "<tr><td align=\"center\" colspan=\"2\">\n";
+            print "<a href=\"".$SERVER_URL."/module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+            print "</td></tr>\n";
+        }
     }
     else {
         print "<script src=\"http://maps.google.com/maps?file=api&amp;v=2&amp;key=".$GOOGLEMAP_API_KEY."\" type=\"text/javascript\"></script>\n";
