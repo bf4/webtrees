@@ -189,6 +189,15 @@ class Person extends GedcomRecord {
 		$this->drec = trim(get_sub_record(1, "1 DEAT", $this->gedrec));
 		$this->bdate = get_gedcom_value("DATE", 2, $this->brec, '', false);
 		$this->ddate = get_gedcom_value("DATE", 2, $this->drec, '', false);
+		//-- if no birthdate look for christening
+		if (empty($this->bdate)) {
+			$this->bdate = get_gedcom_value("CHR:DATE", 1, $this->gedrec, '', false);
+		}
+		//-- if no death look for burial
+		if (empty($this->ddate)) {
+			$this->ddate = get_gedcom_value("BURI:DATE", 1, $this->gedrec, '', false);
+		}
+		//-- if no death estimate from birth
 		if (empty($this->ddate) && !empty($this->bdate)) {
 			$pdate=parse_date($this->bdate);
 			if ($pdate[0]["year"]>0) {
@@ -198,6 +207,7 @@ class Person extends GedcomRecord {
 				$this->ddate = get_gedcom_value("DATE", 2, $this->drec, '', false);
 			}
 		}
+		//-- if no birth estimate from death
 		if (empty($this->bdate) && !empty($this->ddate)) {
 			$pdate=parse_date($this->ddate);
 			if ($pdate[0]["year"]>0) {
@@ -829,7 +839,9 @@ class Person extends GedcomRecord {
 					$srec = get_sub_record(1, "1 BIRT", $childrec);
 					if (!$srec) $srec = get_sub_record(1, "1 CHR", $childrec);
 					$sdate = get_sub_record(2, "2 DATE", $srec);
-					if (compare_facts($this->getGedcomBirthDate(), $sdate)<0 and compare_facts($sdate, $this->getGedcomDeathDate())<0) {
+					if ($fact=="_BIRT_CHIL" or // always print child's birth event
+						(compare_facts($this->getGedcomBirthDate(), $sdate)<0 and compare_facts($sdate, $this->getGedcomDeathDate())<0)
+						) {
 						$factrec = "1 ".$fact;
 						if (strstr($srec, "1 CHR")) $factrec .= " ".$factarray["CHR"];
 						$factrec .= "\n".trim($sdate);

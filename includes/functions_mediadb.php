@@ -1454,10 +1454,6 @@ function show_media_form($pid, $action="newentry", $filename="", $linktoid="", $
 							add_simple_tag(($sourceLevel+1)." PAGE");
 							$havePAGE = true;
 						}
-						if (!$haveTEXT) {
-							add_simple_tag(($sourceLevel+2)." TEXT");
-							$haveTEXT = true;
-						}
 					}
 					if ($fact=="DATE") $haveDATE = true;
 					if ($fact=="QUAY") $haveQUAY = true;

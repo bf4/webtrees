@@ -48,6 +48,24 @@ $templefacts = array("SLGC","SLGS","BAPL","ENDL","CONL");
 $nonplacfacts = array("ENDL","NCHI","SLGC","SLGS","SSN");
 $nondatefacts = array("ABBR","ADDR","AFN","AUTH","EMAIL","FAX","NAME","NCHI","NOTE","OBJE","PHON","PUBL","REFN","REPO","SEX","SOUR","SSN","TEXT","TITL","WWW","_EMAIL");
 
+if (!function_exists("find_updated_record")) {
+	/**
+	 * find and return an updated gedcom record
+	 * @param string $gid	the id of the record to find
+	 * @param string $gedfile	the gedcom file to get the record from.. defaults to currently active gedcom
+	 */
+	function find_updated_record($gid, $gedfile="") {
+		global $GEDCOMS, $GEDCOM, $pgv_changes;
+		
+		if (empty($gedfile)) $gedfile = $GEDCOM;
+		
+		if (isset($pgv_changes[$gid."_".$gedfile])) {
+			$change = end($pgv_changes[$gid."_".$gedfile]);
+			return $change['undo'];
+		}
+		return "";
+	}
+}
 
 /**
  * Base class for the Research Assistant, contains all basic functionality

@@ -24,11 +24,11 @@
  * @subpackage Charts
  * @version $Id$
  */
-require ("config.php");
-require ("includes/functions_charts.php");
-require ($factsfile["english"]);
+require_once ("config.php");
+require_once ("includes/functions_charts.php");
+require_once ($factsfile["english"]);
 if (file_exists($factsfile[$LANGUAGE]))
-	require $factsfile[$LANGUAGE];
+	require_once $factsfile[$LANGUAGE];
 require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/person_class.php';
 
@@ -39,7 +39,7 @@ function compare_people($a, $b) {
 /**
  * Main controller class for the timeline page.
  */
-class TimelineControllerRoot extends BaseController {
+class LifespanControllerRoot extends BaseController {
 	var $pids = array ();
 	var $people = array();
 	var $scale = 2;
@@ -47,7 +47,7 @@ class TimelineControllerRoot extends BaseController {
 	var $minYear = 0;
 	// GEDCOM elements that will be found but should not be displayed
 	var $nonfacts = "FAMS,FAMC,MAY,BLOB,OBJE,SEX,NAME,SOUR,NOTE,BAPL,ENDL,SLGC,SLGS,_TODO,CHAN,HUSB,WIFE,CHIL";
-	var $colors = array ('Aliceblue', ' Antiquewhite', 'Aqua', ' Aquamarine', '	Azure', '	Beige', ' Bisque', ' Blanchedalmond', ' Blue', ' Blueviolet', ' Brown', ' Burlywood', ' Cadetblue', ' Chartreuse', ' Chocolate', ' Coral', ' Cornflowerblue', ' Cornsilk', ' Crimson', ' Cyan', ' Darkcyan', ' Darkgoldenrod', ' Darkgray', ' Darkgreen', ' Darkkhaki', ' Darkmagenta', ' Darkolivegreen', ' Darkorange', ' Darkorchid', ' Darkred', ' Darksalmon', ' Darkseagreen', ' Darkslateblue', ' Darkturquoise', ' Darkviolet', ' deeppink', ' Deepskyblue', ' 	Dimgray', ' Dodgerblue', ' Firebrick', ' Floralwhite', ' Forestgreen', ' Fuchsia', ' Gainsboro', ' Ghostwhite', ' Gold', ' Goldenrod', ' Gray', ' Green', ' Greenyellow', ' Honeydew', ' Hotpink', ' Indianred', ' Ivory', ' Khaki', ' Lavender', ' Lavenderblush', ' Lawngreen', ' Lemonchiffon', ' Lightblue', ' Lightcoral', ' Lightcyan', ' Lightgoldenrodyellow', ' Lightgreen', ' Lightgrey', ' Lightpink', ' Lightsalmon', ' Lightseagreen', ' Lightskyblue', ' Lightslategray', ' Lightsteelblue', ' Lightyellow', ' 	Lime', ' Limegreen', ' Linen', ' Magenta', ' Maroon', ' Mediumauqamarine’', '’ Mediumblue’', '’ Mediumorchid’', '’ Mediumpurple’', '’ Mediumseagreen', ' Mediumslateblue', ' Mediumspringgreen', ' Mediumturquoise', ' Mediumvioletred', 'Mintcream', ' Mistyrose', ' Moccasin', ' Navajowhite', ' Oldlace', ' Olive', ' Olivedrab', ' Orange', ' Orangered', ' Orchid', ' Palegoldenrod', ' Palegreen', ' Paleturquoise', ' Palevioletred', ' Papayawhip', ' Peachpuff', ' Peru', ' Pink', ' Plum', ' Powderblue', ' Purple', ' Red', ' Rosybrown', ' Royalblue', ' Saddlebrown', ' Salmon', ' Sandybrown', ' Seagreen', ' Seashell', ' Sienna', ' Silver', ' Skyblue', ' Slateblue', ' Slategray', ' Snow', ' Springgreen', ' Steelblue', ' Tan', ' Teal', ' Thistle', ' Tomato', ' Turquoise', ' Violet', ' Wheat', ' White', ' Whitesmoke', ' Yellow', ' YellowGreen');
+	var $colors = array ('Aliceblue', ' Antiquewhite', 'Aqua', ' Aquamarine', '	Azure', '	Beige', ' Bisque', ' Blanchedalmond', ' Blue', ' Blueviolet', ' Brown', ' Burlywood', ' Cadetblue', ' Chartreuse', ' Chocolate', ' Coral', ' Cornflowerblue', ' Cornsilk', ' Crimson', ' Cyan', ' Darkcyan', ' Darkgoldenrod', ' Darkgray', ' Darkgreen', ' Darkkhaki', ' Darkmagenta', ' Darkolivegreen', ' Darkorange', ' Darkorchid', ' Darkred', ' Darksalmon', ' Darkseagreen', ' Darkslateblue', ' Darkturquoise', ' Darkviolet', ' deeppink', ' Deepskyblue', ' 	Dimgray', ' Dodgerblue', ' Firebrick', ' Floralwhite', ' Forestgreen', ' Fuchsia', ' Gainsboro', ' Ghostwhite', ' Gold', ' Goldenrod', ' Gray', ' Green', ' Greenyellow', ' Honeydew', ' Hotpink', ' Indianred', ' Ivory', ' Khaki', ' Lavender', ' Lavenderblush', ' Lawngreen', ' Lemonchiffon', ' Lightblue', ' Lightcoral', ' Lightcyan', ' Lightgoldenrodyellow', ' Lightgreen', ' Lightgrey', ' Lightpink', ' Lightsalmon', ' Lightseagreen', ' Lightskyblue', ' Lightslategray', ' Lightsteelblue', ' Lightyellow', ' 	Lime', ' Limegreen', ' Linen', ' Magenta', ' Maroon', ' Mediumauqamarineï¿½', 'ï¿½ Mediumblueï¿½', 'ï¿½ Mediumorchidï¿½', 'ï¿½ Mediumpurpleï¿½', 'ï¿½ Mediumseagreen', ' Mediumslateblue', ' Mediumspringgreen', ' Mediumturquoise', ' Mediumvioletred', 'Mintcream', ' Mistyrose', ' Moccasin', ' Navajowhite', ' Oldlace', ' Olive', ' Olivedrab', ' Orange', ' Orangered', ' Orchid', ' Palegoldenrod', ' Palegreen', ' Paleturquoise', ' Palevioletred', ' Papayawhip', ' Peachpuff', ' Peru', ' Pink', ' Plum', ' Powderblue', ' Purple', ' Red', ' Rosybrown', ' Royalblue', ' Saddlebrown', ' Salmon', ' Sandybrown', ' Seagreen', ' Seashell', ' Sienna', ' Silver', ' Skyblue', ' Slateblue', ' Slategray', ' Snow', ' Springgreen', ' Steelblue', ' Tan', ' Teal', ' Thistle', ' Tomato', ' Turquoise', ' Violet', ' Wheat', ' White', ' Whitesmoke', ' Yellow', ' YellowGreen');
 	var $color;
 	var $colorindex;
 	var $zoomfactor;
@@ -157,18 +157,19 @@ class TimelineControllerRoot extends BaseController {
 			//Takes the begining year and end year passed by the postback and modifies them and uses them to populate
 			//the time line
 
-			$byear = $this->ModifyYear($_REQUEST["beginYear"],1);
-			$dyear = $this->ModifyYear($_REQUEST["endYear"],2);
+			//$byear = $this->ModifyYear($_REQUEST["beginYear"],1);
+			//$dyear = $this->ModifyYear($_REQUEST["endYear"],2);
+			$byear = $_REQUEST["beginYear"];
+			$dyear = $_REQUEST["endYear"];
 			//Variables to restrict the person boxes to the year searched.
 			//--Searches for individuals who had an even between the year begin and end years
 			$indis = search_indis_year_range($byear, $dyear);
 			//--Populates an array of people that had an event within those years
 			foreach ($indis as $pid => $indi) {
-				$person = Person :: getInstance($pid);
+				$person = Person::getInstance($pid);
 				if (!is_null($person)) {
 					$byear = $person->getBirthYear();
 					$dyear = $person->getDeathYear();
-						
 					//--Checks to see if the details of that person can be viewed
 					if (!empty ($byear) && !empty ($dyear) && $person->canDisplayDetails()) {
 						$this->people[] = $person;
@@ -179,7 +180,6 @@ class TimelineControllerRoot extends BaseController {
 		
 		//--Sort the arrar in order of being year
 		uasort($this->people, "compare_people");
-		
 		//If there is people in the array posted back this if occurs
 		if (isset ($this->people[0])) {
 			//Find the maximum Death year and mimimum Birth year for each individual returned in the array.
@@ -416,9 +416,9 @@ class TimelineControllerRoot extends BaseController {
 if (file_exists('includes/controllers/timeline_ctrl_user.php')) {
 	include_once 'includes/controllers/timeline_ctrl_user.php';
 } else {
-	class TimelineController extends TimelineControllerRoot {
+	class LifespanController extends LifespanControllerRoot {
 	}
 }
-$controller = new TimelineController();
+$controller = new LifespanController();
 $controller->init();
 ?>

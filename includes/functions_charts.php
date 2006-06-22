@@ -382,10 +382,16 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
    else if ($sosa<1) {
 		print "<tr><td></td><td valign=\"top\" >";
 
+		$nchi = "";		
 		if (isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_updated_record($famid);
 		else $famrec = find_family_record($famid);
+		$ct = preg_match("/1 NCHI (\w+)/", $newrec, $match);
+		if ($ct>0) $nchi = $match[1];
+		else {
+			$famrec = find_family_record($famid);
 			$ct = preg_match("/1 NCHI (\w+)/", $famrec, $match);
 			if ($ct>0) $nchi = $match[1];
+		}
 		if ($nchi=="0") print "<img src=\"images/small/childless.gif\" alt=\"".$pgv_lang["childless_family"]."\" title=\"".$pgv_lang["childless_family"]."\" /> ".$pgv_lang["childless_family"];
 		else print $pgv_lang["no_children"];
 		print "</td></tr>";

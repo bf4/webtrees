@@ -790,7 +790,6 @@ function setup_database() {
 	$has_names_surname = false;
 	$has_names_type = false;
 	$has_placelinks = false;
-	$has_research = false;
 	$has_dates = false;
 	$has_dates_mon = false;
 	$has_dates_datestamp = false;
@@ -1171,13 +1170,13 @@ function create_places_table() {
 		print $pgv_lang["created_places_fail"]."<br />\n";
 		exit;
 	}
-	$sql = "CREATE INDEX place_place ON ".$TBLPREFIX."places (p_place)";
+	$sql = "CREATE INDEX place_place ON " . $TBLPREFIX . "places (p_place)";
 	$res = dbquery($sql);
-	$sql = "CREATE INDEX place_level ON ".$TBLPREFIX."places (p_level)";
+	$sql = "CREATE INDEX place_level ON " . $TBLPREFIX . "places (p_level)";
 	$res = dbquery($sql);
-	$sql = "CREATE INDEX place_parent ON ".$TBLPREFIX."places (p_parent_id)";
+	$sql = "CREATE INDEX place_parent ON " . $TBLPREFIX . "places (p_parent_id)";
 	$res = dbquery($sql);
-	$sql = "CREATE INDEX place_file ON ".$TBLPREFIX."places (p_file)";
+	$sql = "CREATE INDEX place_file ON " . $TBLPREFIX . "places (p_file)";
 	$res = dbquery($sql);
 
 	print $pgv_lang["created_places"] . "<br />\n";

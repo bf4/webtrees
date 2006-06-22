@@ -350,7 +350,7 @@ $out = '<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
 				$pos = strrpos($_POST['people'][$k], "#");
 				$personID = substr($_POST['people'][$k], 0, $pos);
 				if (isset ($pgv_changes['"'.$personID.'"'.$GEDCOM])) {
-					$indirec = find_record_in_file($personID);
+					$indirec = find_updated_record($personID);
 				} else {
 					$indirec = find_person_record($personID);
 				}

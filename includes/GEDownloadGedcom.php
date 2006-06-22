@@ -12,7 +12,7 @@ class GEDownloadGedcom extends GrampsExport
 	  * @param string $personRec - the full INDI GEDCOM record of the person to be created
 	  * @param string $personID - the ID (I1, I2, I3) of the person the is being created 
 	  */
-function create_person($personRec = "", $personID = "") {
+	function create_person($personRec = "", $personID = "") {
 		global $pgv_lang;
 		$check = $this->query_dom("./people/person[@id=\"$personID\"]");
 		if ($check == null) 
@@ -216,7 +216,7 @@ function create_person($personRec = "", $personID = "") {
 		$eChildof = $eParent->appendChild($eChildof);
 		
 	}
-/**
+	/**
 	 * Creates the Family element and all of it's child elements, and appends it to the
 	 * Families element.  This function will search through the DOMDocument looking 
 	 * for people in the family. If they are not created yet and they are in the clippings

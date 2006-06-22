@@ -417,8 +417,19 @@ function addnewsource(field) {
 }
 
 function valid_date(datefield) {
-	date = new Date(datefield.value);
 	months = new Array("JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC");
+	// quarter format [ 1509083 ]
+	// e.g. Q1 1900
+	var qsearch = /^Q(\d) (\d\d\d\d)$/i;
+ 	var found = qsearch.exec(datefield.value);
+ 	if (found) {
+	 	q = RegExp.$1;
+	 	y = RegExp.$2;
+	 	m = (q-1)*3;
+		if (0<q && q<5) datefield.value = "BET "+months[m]+" "+y+" AND "+months[(m+2)]+" "+y;
+	}
+	// other format
+	date = new Date(datefield.value);
 	if (date && date.toString()!="NaN" && date.getDate().toString()!="NaN") {
 		day = date.getDate();
 		if (day<10) day = "0"+day;

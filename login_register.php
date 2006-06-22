@@ -77,11 +77,14 @@ switch ($action) {
   			break;
   case "requestpw" :
   			$QUERY_STRING = "";
-  			if (!isset($user_name)) $user_name = "";
+  			$user_name="";
+			if (!empty($_POST['user_name'])) $user_name = $_POST['user_name'];
   			print_header("PhpGedView - " . $pgv_lang["lost_pw_reset"]);
   			print "<div class=\"center\">";
   			$newuser = getUser($user_name);
   			if ($newuser==false || empty($newuser["email"])) {
+				if ($newuser==false) AddToLog("New password requests for user ".$user_name." that does not exist");
+				else AddToLog("Unable to send password to user ".$user_name." because they do not have an email address");
   				print "<span class=\"warning\">";
   				print_text("user_not_found");
   				print "</span><br />";

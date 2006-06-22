@@ -30,7 +30,9 @@ if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
 	 exit;
 }
 
-require_once 'includes/functions_charts.php';
+//-- only inlude functions that are needed for the page
+//-- otherwise memory requirements go way up
+//require_once 'includes/functions_charts.php';
 
 /**
  * print the information for an individual chart box
