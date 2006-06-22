@@ -23,7 +23,18 @@ Version 4.1
  - Added Database table for storing soundex calculations (Neumont)
  - Added Search and Replace feature (Neumont)
 
-Version 4.0
+Version 4.0.1
+ - Added [ 1509083 ] Date entry - quarters (opus27)
+ - Fixed [ 1506971 ] Missing "Events of close relatives" for Some Individuals (opus27)
+ - Added [ 1504541 ] Descendancy Chart - Marriage link (opus27)
+ - Fixed [ 1507176 ] 4.0 DIVF and DIV (opus27)
+ - Fixed [ 1506672 ] 4.0 - strpos() error in functions.php/individual.php (opus27)
+ - Fixed [ 1507580 ] 4.0release ... places table created twice? (canajun2eh)
+ - Fixed [ 1507590 ] 4.0rel ... source.php keeps the @N.N rather than "unknown" (canajun2eh)
+ - Fixed [ 1506547 ] Media List - RtL File Name (canajun2eh)
+ - Fixed [ 1507194 ] 4.0release: QUAY tag at wrong level within source citation (canajun2eh)
+
+Version 4.0 2006-06-13
  - Added GEDCOM config option for auto-generation of GUIDs (canajun2eh)
  - Fixed [ 1503342 ] 4.0b9: URL Favorite does not work (canajun2eh)
  - Fixed [ 1500166 ] Attach media - level 2 error (canajun2eh)

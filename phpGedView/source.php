@@ -29,7 +29,6 @@ require("config.php");
 require_once("includes/functions_print_lists.php");
 require_once("includes/controllers/source_ctrl.php");
 
-
 global $linkToID;
 
 print_header($controller->getPageTitle());
@@ -221,5 +220,5 @@ else print "&nbsp;&nbsp;&nbsp;<span class=\"warning\"><i>".$pgv_lang["no_results
 	</td>
 </tr>
 </table>
-<br><br>
+<br /><br />
 <?php print_footer(); ?>

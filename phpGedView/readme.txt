@@ -1,7 +1,7 @@
 =======================================================
     PhpGedView
 
-    Version 4.0
+    Version 4.1
     Copyright 2005 John Finlay and others
 
     This and other information can be found online at

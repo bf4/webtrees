@@ -312,7 +312,10 @@ function print_family_descendancy(&$person, &$family, $depth) {
 		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"2\" width=\"$Dindent\" border=\"0\" alt=\"\" />";
 		print "<span class=\"details1\" style=\"white-space: nowrap; \" >";
 		print "<a href=\"#\" onclick=\"expand_layer('".$famid.$personcount."'); return false;\" class=\"top\"><img id=\"".$famid.$personcount."_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" align=\"middle\" hspace=\"0\" vspace=\"3\" border=\"0\" alt=\"".$pgv_lang["view_family"]."\" /></a> ";
-		if (showFact("MARR", $famid)) print_simple_fact($famrec, "MARR", $id); else print $pgv_lang["private"];
+		echo "<a href=\"family.php?famid=$famid&amp;ged=$GEDCOM\" class=\"details1\">";
+		if (showFact("MARR", $famid)) print_simple_fact($famrec, "MARR", $id);
+		else print $pgv_lang["private"];
+		echo "</a>";
 		print "</span>";
 
 		// print spouse

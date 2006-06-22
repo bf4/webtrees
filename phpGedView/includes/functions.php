@@ -409,10 +409,7 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
 	$pos1=0;
 	$subrec = "";
 	$tag = trim($tag);
-	//-- commented out this line due to bug [ 1492470 ] 4.0b8 get_all_subrecords()
-	//--- it will not match the last record of a file
-	//$searchTarget = "/".preg_replace("~/~","\\/",$tag)."[\s\r\n]/";
-	$searchTarget = "/".preg_replace("~/~","\\/",$tag)."/";
+	$searchTarget = "/".preg_replace("~/~","\\/",$tag)."[\W]/"; // see [ 1492470 ] and [ 1507176 ]
 	if (empty($gedrec)) return "";
 
 		$ct = preg_match_all($searchTarget, $gedrec, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
@@ -424,6 +421,7 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
 		//print_r($match);
 		if (count($match)<$num) return "";
 		$pos1 = $match[$num-1][0][1];
+		if ($pos1===false) return "";
 		$pos2 = strpos($gedrec, "\n$level", $pos1+5);
 		if (!$pos2) $pos2 = strpos($gedrec, "\n1", $pos1+5);
 		if (!$pos2) $pos2 = strpos($gedrec, "\nPGV_", $pos1+5); // PGV_SPOUSE, PGV_FAMILY_ID ...
