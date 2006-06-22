@@ -72,15 +72,20 @@ function getHighestIndex() {
     $res->free();
     return $i;
 }
-        
+ 
+if (!isset($level)) {
+    $level=0;
+}
+
 if ($action=="addrecord") {
     if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
     getHighestIndex();
-    $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", $placeid, ".($level+1).", \"".$_POST["NEW_PLACE_NAME"]."\", \"".$_POST["LONG_CONTROL"][3].$_POST["NEW_PLACE_LONG"]."\" , \"".$_POST["LATI_CONTROL"][3].$_POST["NEW_PLACE_LATI"]."\", ".$_POST["NEW_ZOOM_FACTOR"].", NULL);";
+    $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", $placeid, ".$level.", \"".$_POST["NEW_PLACE_NAME"]."\", \"".$_POST["LONG_CONTROL"][3].$_POST["NEW_PLACE_LONG"]."\" , \"".$_POST["LATI_CONTROL"][3].$_POST["NEW_PLACE_LATI"]."\", ".$_POST["NEW_ZOOM_FACTOR"].", NULL);";
     if (userIsAdmin(getUserName())) {
+print $sql;
         $res = dbquery($sql);
     }
-    if ($EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
+    // if ($EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
     print "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();\">".$pgv_lang["close_window"]."</a></div><br />\n";
     print_simple_footer();
     exit;
@@ -90,6 +95,7 @@ if ($action=="updaterecord") {
     if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
     $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_place=\"".$_POST["NEW_PLACE_NAME"]."\",pl_lati=\"".$_POST["LATI_CONTROL"][3].$_POST["NEW_PLACE_LATI"]."\",pl_long=\"".$_POST["LONG_CONTROL"][3].$_POST["NEW_PLACE_LONG"]."\",pl_zoom=\"".$_POST["NEW_ZOOM_FACTOR"]."\" where pl_id=$placeid LIMIT 1";
     if (userIsAdmin(getUserName())) {
+print $sql;
         $res = dbquery($sql);
     }
     if ($EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
@@ -98,13 +104,11 @@ if ($action=="updaterecord") {
     exit;
 }
 
+
 if (!isset($parent)) $parent=array();
 else {
     if (!is_array($parent)) $parent = array();
     else $parent = array_values($parent);
-}
-if (!isset($level)) {
-    $level=0;
 }
 if ($level>count($parent)) $level = count($parent);
 if ($level<count($parent)) $level = 0;
@@ -164,12 +168,24 @@ if ($action=="add") {
 
         $row =& $res->fetchRow();
         $place_name = "";
-        $place_lati = str_replace(array('N', 'S'), array('', '-') , $row[1]);
-        $place_long = str_replace(array('E', 'W'), array('', '-') , $row[2]);
+        $zoomfactor = $row[6];
+        if ($row[1] != null) {
+            $place_lati = str_replace(array('N', 'S'), array('', '-') , $row[1]);
+        }
+        else {
+            $place_lati = "0.0";
+            $zoomfactor = 1;
+        }
+        if ($row[2] != null) {
+            $place_long = str_replace(array('E', 'W'), array('', '-') , $row[2]);
+        }
+        else {
+            $place_long = "0.0";
+            $zoomfactor = 1;
+        }
         $place_icon = $row[3];
         $parent_id  = $row[4];
-        $level      = $row[5];
-        $zoomfactor = $row[6];
+        $level      = $row[5]+1;
         $res->free();
     }
     else {

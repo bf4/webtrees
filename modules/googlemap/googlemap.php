@@ -276,7 +276,7 @@ function build_indiv_map($indifacts, $famids) {
         print "function ResizeMap ()\n{\n}\n</script>\n";
         if (userIsAdmin(getUserName())) {
             print "<tr><td align=\"center\" colspan=\"2\">\n";
-            print "<a href=\"".$SERVER_URL."/module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+            print "<a href=\"".$SERVER_URL."module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
             print "</td></tr>\n";
         }
     }
@@ -434,7 +434,7 @@ function build_indiv_map($indifacts, $famids) {
         print "</td></tr>\n";
         if (userIsAdmin(getUserName())) {
             print "<tr><td align=\"center\" colspan=\"2\">\n";
-            print "<a href=\"".$SERVER_URL."/module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+            print "<a href=\"".$SERVER_URL."module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
             print "</td></tr>\n";
         }
         print "</table>\n";
