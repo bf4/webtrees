@@ -48,6 +48,7 @@ $pgv_lang["pl_west_short"]          = "V";
 $pgv_lang["pl_places_filename"]     = "Fil som inneholder steder (CSV)";
 $pgv_lang["pl_clean_db"]            = "Fjerne alle lagrede kartreferanser til steder før import?";
 $pgv_lang["pl_no_places_found"]     = "Fant ingen steder";
+$pgv_lang["pl_use_this_value"]      = "Bruk denne verdien";
 $pgv_lang["pl_precision"]           = "Nøyaktighet";
 $pgv_lang["pl_country"]             = "Land";
 $pgv_lang["pl_state"]               = "Fylke";
