@@ -470,18 +470,18 @@ $pgv_lang["delete_dir_success"]		= "Medien und Miniaturansicht Verzeichnisse erf
 $pgv_lang["current_dir"]			= "Aktuelles Verzeichnis";
 
 //-- SEARCH FILE MESSAGES
-$pgv_lang["search_gedcom"]                = "GEDCOM Dateien durchsuchen";
-$pgv_lang["enter_terms"]                = "Suchbegriffe eingeben";
-$pgv_lang["soundex_search"]                = "Den Namen nach Aussprache suchen (Soundex-Methode)";
-$pgv_lang["sources"]                        = "Quellen";
-$pgv_lang["firstname_search"]                = "Vorname";
-$pgv_lang["lastname_search"]                = "Nachname";
-$pgv_lang["search_place"]                = "Ort";
-$pgv_lang["search_year"]                = "Jahr";
-$pgv_lang["no_results"]                        = "Keine Ergebnisse gefunden.";
+$pgv_lang["search_gedcom"]			= "Dateien durchsuchen";
+$pgv_lang["enter_terms"]			= "Suchbegriffe eingeben";
+$pgv_lang["soundex_search"]			= "Den Namen nach Aussprache suchen (Soundex-Methode)";
+$pgv_lang["sources"]				= "Quellen";
+$pgv_lang["firstname_search"]		= "Vorname";
+$pgv_lang["lastname_search"]		= "Nachname";
+$pgv_lang["search_place"]			= "Ort";
+$pgv_lang["search_year"]			= "Jahr";
+$pgv_lang["no_results"]				= "Keine Ergebnisse gefunden.";
 $pgv_lang["invalid_search_input"] 	= "Bitte geben Sie einen Namen oder einen Ort zusätzlich zur Jahresangabe an";
 $pgv_lang["search_options"]			= "Such Optionen";
-$pgv_lang["search_geds"]			= "GEDCOMS in denen gesucht wird";
+$pgv_lang["search_geds"]			= "Dateien in denen gesucht wird";
 $pgv_lang["search_type"]			= "Such Methode";
 $pgv_lang["search_general"]			= "Normale Suche";
 $pgv_lang["search_soundex"]			= "Soundex Suche";
@@ -502,6 +502,7 @@ $pgv_lang["search_tagfoff"]			= "Ausgeschaltet";
 $pgv_lang["associate"]				= "Beziehung";
 $pgv_lang["search_asso_label"]		= "Beziehungen";
 $pgv_lang["search_asso_text"]		= "Bezogene Personen/Familien zeigen";
+$pgv_lang["results_per_page"]		= "Ergebnisse pro Seite";
 
 
 //-- SOURCELIST FILE MESSAGES

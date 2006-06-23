@@ -42,6 +42,9 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["search_gedcom"]							23 Jun 2006				W
+*$pgv_lang["search_geds"]							23 Jun 2006				W
++$pgv_lang["results_per_page"]						23 Jun 2006				A
 +$pgv_lang["stat_media"]							19 Jun 2006				A
 +$pgv_lang["lasttab"]								19 Jun 2006				A
 +$pgv_lang["module_error_unknown_action_v2"]		19 Jun 2006				A
