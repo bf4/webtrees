@@ -691,7 +691,7 @@ $pgv_lang["record_added"]			= "Record #xref# successfully added to GEDCOM.";
 $pgv_lang["record_not_added"]		= "Record #xref# could not be added to GEDCOM.";
 
 //-- SEARCH FILE MESSAGES
-$pgv_lang["search_gedcom"]			= "Search GEDCOM files";
+$pgv_lang["search_gedcom"]			= "Search databases";
 $pgv_lang["enter_terms"]			= "Enter Search terms";
 $pgv_lang["soundex_search"] 		= "Search the way you think the name is written (Soundex)";
 $pgv_lang["sources"]				= "Sources";
@@ -702,7 +702,7 @@ $pgv_lang["search_year"]			= "Year";
 $pgv_lang["no_results"] 			= "No results found.";
 $pgv_lang["invalid_search_input"] 	= "Please enter a Given name, Last name, or Place in addition to Year";
 $pgv_lang["search_options"]			= "Search options";
-$pgv_lang["search_geds"]			= "GEDCOMS to search in";
+$pgv_lang["search_geds"]			= "Databases to search in";
 $pgv_lang["search_type"]			= "Search type";
 $pgv_lang["search_general"]			= "General search";
 $pgv_lang["search_soundex"]			= "Soundex search";
@@ -724,6 +724,7 @@ $pgv_lang["search_tagfoff"]			= "Off";
 $pgv_lang["associate"]				= "associate";
 $pgv_lang["search_asso_label"]		= "Associates";
 $pgv_lang["search_asso_text"]		= "Show related persons/families";
+$pgv_lang["results_per_page"]		= "Results per page";
 $pgv_lang["search_record"]			= "Entire record";
 $pgv_lang["replace_with"]			= "Replace with";
 

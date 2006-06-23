@@ -156,15 +156,7 @@ print_header($pgv_lang["search"]);
 			<input tabindex="1" type="text" name="query" value="<?php if (isset($controller->myquery)) print $controller->myquery; ?>" />
 		</td>
 		<td class="list_value" style="vertical-align: middle; text-align: center; padding: 5px;"  rowspan="4">
-			<input tabindex="2" type="submit" value="<?php print $pgv_lang["search"] ?>" /><br/>
-			<br/>
-			<select name="resultsPerPage">
-				<option value="10" <?php if ($controller->resultsPerPage == 10) print " selected=\"selected\""; ?> >10 results</option>
-				<option value="20" <?php if ($controller->resultsPerPage == 20) print " selected=\"selected\""; ?> >20 results</option>
-				<option value="30" <?php if ($controller->resultsPerPage == 30) print " selected=\"selected\""; ?> >30 results</option>
-				<option value="50" <?php if ($controller->resultsPerPage == 50) print " selected=\"selected\""; ?> >50 results</option>
-				<option value="100"<?php if ($controller->resultsPerPage == 100)print " selected=\"selected\""; ?>>100 results</option>
-			</select>
+			<input tabindex="2" type="submit" value="<?php print $pgv_lang["search"] ?>" />
 		</td>
 	</tr>
 	<!-- // Choice where to search -->
@@ -247,15 +239,7 @@ if($controller->action == "replace")
 		<td class="list_label" style="padding: 5px;"><?php print $pgv_lang["enter_terms"]; ?></td>
 		<td class="list_value" style="padding: 5px;"><input tabindex="1" name="query" value="" type="text"/></td>
 			<td class="list_value" style="vertical-align: middle; text-align: center; padding: 5px;"  rowspan="3">
-			<input tabindex="2" type="submit" value="<?php print $pgv_lang["search"]; ?>" /><br/>
-			<br/>
-			<select name="resultsPerPage">
-				<option value="10" <?php if ($controller->resultsPerPage == 10) print " selected=\"selected\""; ?> >10 results</option>
-				<option value="20" <?php if ($controller->resultsPerPage == 20) print " selected=\"selected\""; ?> >20 results</option>
-				<option value="30" <?php if ($controller->resultsPerPage == 30) print " selected=\"selected\""; ?> >30 results</option>
-				<option value="50" <?php if ($controller->resultsPerPage == 50) print " selected=\"selected\""; ?> >50 results</option>
-				<option value="100"<?php if ($controller->resultsPerPage == 100)print " selected=\"selected\""; ?>>100 results</option>
-			</select>
+			<input tabindex="2" type="submit" value="<?php print $pgv_lang["search"]; ?>" />
 		</td>	
 	</tr>
 	<tr>
@@ -294,15 +278,7 @@ if ($controller->action == "soundex") {
 			<input tabindex="3" type="text" name="firstname" value="<?php print $controller->myfirstname; ?>" />
 		</td>
 		<td class="list_value" style="vertical-align: middle; text-align: center; padding: 5px;"  rowspan="7">
-			<input tabindex="7" type="submit" value="<?php print $pgv_lang["search"]; ?>" /><br/>
-			<br/>
-			<select name="resultsPerPage">
-				<option value="10" <?php if ($controller->resultsPerPage == 10) print " selected=\"selected\""; ?> >10 results</option>
-				<option value="20" <?php if ($controller->resultsPerPage == 20) print " selected=\"selected\""; ?> >20 results</option>
-				<option value="30" <?php if ($controller->resultsPerPage == 30) print " selected=\"selected\""; ?> >30 results</option>
-				<option value="50" <?php if ($controller->resultsPerPage == 50) print " selected=\"selected\""; ?> >50 results</option>
-				<option value="100"<?php if ($controller->resultsPerPage == 100)print " selected=\"selected\""; ?>>100 results</option>
-			</select>
+			<input tabindex="7" type="submit" value="<?php print $pgv_lang["search"]; ?>" />
 		</td>
 	</tr>
 	<tr>
@@ -445,15 +421,7 @@ if ($controller->action == "multisite") {
 		</td>
 		<td class="list_value" style="vertical-align: middle; text-align: center; padding: 5px;"  rowspan="6">
 			<input tabindex="<?php print ($i+9); ?>" type="submit" value="<?php print $pgv_lang["search"]; ?>"
-				onclick="document.searchform.subaction.value='advanced';"/><br/>
-			<br/>
-			<select name="resultsPerPage">
-				<option value="10" <?php if ($controller->resultsPerPage == 10) print " selected"; ?> >10 results</option>
-				<option value="20" <?php if ($controller->resultsPerPage == 20) print " selected"; ?> >20 results</option>
-				<option value="30" <?php if ($controller->resultsPerPage == 30) print " selected"; ?> >30 results</option>
-				<option value="50" <?php if ($controller->resultsPerPage == 50) print " selected"; ?> >50 results</option>
-				<option value="100"<?php if ($controller->resultsPerPage == 100)print " selected"; ?>>100 results</option>
-			</select>
+				onclick="document.searchform.subaction.value='advanced';"/>
 		</td>
 	</tr>
 	<tr>
@@ -529,6 +497,20 @@ if ($controller->action == "general" || $controller->action == "soundex") {
 	}
 }
 ?>
+	<tr>
+		<td class="list_label" style="padding: 5px;" >
+			<?php print $pgv_lang["results_per_page"]; ?>
+		</td>
+		<td class="list_value" style="padding: 5px;" colspan="2">
+			<select name="resultsPerPage">
+				<option value="10" <?php if ($controller->resultsPerPage == 10) print " selected"; ?> >10</option>
+				<option value="20" <?php if ($controller->resultsPerPage == 20) print " selected"; ?> >20</option>
+				<option value="30" <?php if ($controller->resultsPerPage == 30) print " selected"; ?> >30</option>
+				<option value="50" <?php if ($controller->resultsPerPage == 50) print " selected"; ?> >50</option>
+				<option value="100"<?php if ($controller->resultsPerPage == 100)print " selected"; ?>>100</option>
+			</select>
+		</td>
+	</tr>
 	<tr>
 		<td class="list_label" style="padding: 5px;" >
 			<?php print $pgv_lang["other_searches"]; ?>
