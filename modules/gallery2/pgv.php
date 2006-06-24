@@ -3,15 +3,42 @@
 /*
  * Seperated out of G2 embeding for use elseware.
  */
+
+global $SERVER_URL, $language_settings, $LANGUAGE, $modinfo;
+
+// For block support
+if(!defined('PGV_MOD_SIMPLE')){$modinfo = parse_ini_file('modules/gallery2.php', true);}
+
+// Gallery path sanity check
+if(!file_exists($modinfo['Gallery2']['path'])){$modinfo['Gallery2']['path'] = 'modules/gallery2';}
+
+// Check if gallery installed, if not then return false
+if(!file_exists("{$modinfo['Gallery2']['path']}/embed.php"))
+{
+	define('PGV_GALLERY2_INIT', false);
+	return;
+}
+define('PGV_GALLERY2_INIT', true);
+
+// Load the embeding API
+include_once "{$modinfo['Gallery2']['path']}/embed.php";
+
+// Load PGV embeding language file
 require_once 'modules/gallery2/language/mod_en.php';
-if(file_exists("modules/gallery2/language/mod_{$language_settings[$LANGUAGE]['lang_short_cut']}.php")){require_once "modules/gallery2/language/mod_{$language_settings[$LANGUAGE]['lang_short_cut']}.php";}
+
+// Load other language file if needed
+if($language_settings[$LANGUAGE]['lang_short_cut'] != 'en' && file_exists("modules/gallery2/language/mod_{$language_settings[$LANGUAGE]['lang_short_cut']}.php")){require_once "modules/gallery2/language/mod_{$language_settings[$LANGUAGE]['lang_short_cut']}.php";}
+
+// Load some tools for embeding ease of use
+require_once 'modules/gallery2/G2EmbedDiscoveryUtilities.class';
 
 function mod_gallery2_load($uid)
 {
-	global $SERVER_URL, $language_settings, $LANGUAGE;
+	global $SERVER_URL, $language_settings, $LANGUAGE, $modinfo;
+
 	$ret = GalleryEmbed::init(array(
-		'embedUri'		=> 'index.php?mod=gallery2',
-		'g2Uri'			=> "{$SERVER_URL}modules/gallery2/",
+		'embedUri'			=> 'index.php?mod=gallery2',
+		'g2Uri'				=> G2EmbedDiscoveryUtilities::normalizeG2Uri($modinfo['Gallery2']['path']),
 		'loginRedirect'		=> "{$SERVER_URL}login.php",
 		'activeUserId'		=> $uid,
 		'activeLanguage'	=> $language_settings[$LANGUAGE]['lang_short_cut'],
@@ -27,10 +54,10 @@ function mod_gallery2_load($uid)
 		{
 			/* The user does not exist in G2 yet. Create in now on-the-fly */
 			$ret = GalleryEmbed::createUser($uid, array(
-				'username'		=> $user['username'],
-				'email'			=> $user['email'],
-				'fullname'		=> "{$user['firstname']} {$user['lastname']}",
-				'language'		=> $language_settings[$user['language']]['lang_short_cut'],
+				'username'			=> $user['username'],
+				'email'				=> $user['email'],
+				'fullname'			=> "{$user['firstname']} {$user['lastname']}",
+				'language'			=> $language_settings[$user['language']]['lang_short_cut'],
 				'hashedpassword'	=> $user['password'],
 				'hashmethod'		=> 'crypt',
 				'creationtimestamp'	=> $user['reg_timestamp']
@@ -55,6 +82,7 @@ function mod_gallery2_load($uid)
 			exit;
 		}
 	}
+	//GalleryCapabilities::set('showSidebarBlocks', false);
 
 	// if admin, we need to add them to the admin group if not already added
 	if(userIsAdmin($uid) == 'Y')

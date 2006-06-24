@@ -1,22 +1,29 @@
 <?php
-if(file_exists('modules/gallery2/embed.php')){require_once 'modules/gallery2/embed.php';}
+$modinfo = parse_ini_file('modules/gallery2.php', true);
+if(!isset($modinfo['Gallery2']['path'])){$modinfo['Gallery2']['path'] = 'modules/gallery2';}
+if(file_exists("{$modinfo['Gallery2']['path']}/embed.php"))
+{
+	include_once "{$modinfo['Gallery2']['path']}/embed.php";
+	require_once 'modules/gallery2/G2EmbedDiscoveryUtilities.class';
+	require_once("{$modinfo['Gallery2']['path']}/modules/core/classes/GalleryCoreApi.class");
+	require_once("{$modinfo['Gallery2']['path']}/modules/core/classes/GallerySession.class");
+}
 
 class mod_gallery2_deleteuser
 {
 	function hook($params)
 	{
-		if(!file_exists('modules/gallery2/embed.php')){return null;}
-		global $language_settings, $SERVER_URL;
+		global $language_settings, $SERVER_URL, $modinfo;
+
+		if(!class_exists('GalleryEmbed')){return null;}
 
 		$ret = GalleryEmbed::init(array(
-			'embedUri'		=> 'index.php?mod=gallery2',
-			'g2Uri'			=> "{$SERVER_URL}modules/gallery2/",
+			'embedUri'			=> 'index.php?mod=gallery2',
+			'g2Uri'				=> G2EmbedDiscoveryUtilities::normalizeG2Uri($modinfo['Gallery2']['path']),
 			'loginRedirect'		=> "{$SERVER_URL}login.php",
 			'apiVersion'		=> array(1, 1)
 		));
 
-		require_once('modules/gallery2/modules/core/classes/GalleryCoreApi.class');
-		require_once('modules/gallery2/modules/core/classes/GallerySession.class');
 		$ret = GalleryEmbed::deleteUser($params['username']);
 		return null;
 	}
