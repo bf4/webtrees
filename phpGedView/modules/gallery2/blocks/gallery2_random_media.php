@@ -26,12 +26,16 @@
  * @subpackage Blocks
  */
 
+if(!defined('PGV_GALLERY2_INIT'))
+{
+	include_once('modules/gallery2/pgv.php');
+	if(PGV_GALLERY2_INIT === false){return;}
+}
+
 $PGV_BLOCKS['print_g2_random_media']['name']		= 'Random Media 2';
 $PGV_BLOCKS['print_g2_random_media']['descr']		= 'random_media_descr';
 $PGV_BLOCKS['print_g2_random_media']['canconfig']	= false;
 
-require_once 'modules/gallery2/embed.php';
-require_once 'modules/gallery2/pgv.php';
 
 //-- function to display a random picture from the gedcom
 function print_g2_random_media($block = true, $config='', $side, $index)
