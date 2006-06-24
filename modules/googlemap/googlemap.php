@@ -71,12 +71,13 @@ function get_lati_long_placelocation ($place) {
 
     $retval = array();
     if ($place_id > 0) {
-        $psql = "SELECT pl_lati,pl_long FROM ".$TBLPREFIX."placelocation WHERE pl_id=$place_id ORDER BY pl_place";
+        $psql = "SELECT pl_lati,pl_long,pl_zoom FROM ".$TBLPREFIX."placelocation WHERE pl_id=$place_id ORDER BY pl_place";
         $res = dbquery($psql);
         $row =& $res->fetchRow();
         $res->free();
         $retval["lati"] = rtrim(ltrim($row[0]));
         $retval["long"] = rtrim(ltrim($row[1]));
+        $retval["zoom"] = rtrim(ltrim($row[2]));
     }
     return $retval;
 }
@@ -101,6 +102,7 @@ function build_indiv_map($indifacts, $famids) {
     $marker["tabindex"]  = array();
     $marker["placed"]    = array();
 
+    $zoomLevel = $GOOGLEMAP_MAX_ZOOM;
     $tables = $DBCONN->getListOf('tables');
     if (in_array($TBLPREFIX."placelocation", $tables)) $placelocation = true;
     else $placelocation = false;
@@ -167,6 +169,7 @@ function build_indiv_map($indifacts, $famids) {
                                 $marker["name"][$i] = "Marker".$i;
                                 $marker["placed"][$i] = "no";
                                 $mapdata["placerec"][$i] = $placerec;
+                                if ($zoomLevel > $latlongval["zoom"]) $zoomLevel = $latlongval["zoom"];
                                 $mapdata["lati"][$i] = str_replace(array('N', 'S'), array('', '-') , $latlongval["lati"]); 
                                 $mapdata["lng"][$i] = str_replace(array('E', 'W'), array('', '-') , $latlongval["long"]); 
                                 $ctd = preg_match("/2 DATE (.+)/", $value[1], $match);
@@ -255,6 +258,7 @@ function build_indiv_map($indifacts, $famids) {
                                             $marker["name"][$i]      = "Marker".$i;
                                             $marker["placed"][$i]    = "no";
                                             $mapdata["placerec"][$i] = $placerec;
+                                            if ($zoomLevel > $latlongval["zoom"]) $zoomLevel = $latlongval["zoom"];
                                             $mapdata["lati"][$i]     = str_replace(array('N', 'S'), array('', '-') , $latlongval["lati"]); 
                                             $mapdata["lng"][$i]      = str_replace(array('E', 'W'), array('', '-') , $latlongval["long"]); 
                                             $mapdata["date"][$i]     = $matchd[1];
@@ -302,6 +306,8 @@ function build_indiv_map($indifacts, $famids) {
             }
         var minZoomLevel = <?php print $GOOGLEMAP_MIN_ZOOM;?>;
         var maxZoomLevel = <?php print $GOOGLEMAP_MAX_ZOOM;?>;
+        var startZoomLevel = <?php print $zoomLevel;?>;
+
         function SetMarkersAndBounds (){
             var bounds = new GLatLngBounds();
         <?php

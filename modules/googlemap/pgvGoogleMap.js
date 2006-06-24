@@ -51,15 +51,16 @@
             for(i = 0; ((i < 10) && (zoomlevel == 1)); i++) {
                 zoomlevel = map.getBoundsZoomLevel(Boundaries);
             }
+            zoomlevel = zoomlevel-1;
             map.setCenter(new GLatLng(clat, clng));
             if (zoomlevel < minZoomLevel) {
                 zoomlevel = minZoomLevel;
             }
-            if (zoomlevel > maxZoomLevel) {
-                zoomlevel = maxZoomLevel;
+            if (zoomlevel > startZoomLevel) {
+                zoomlevel = startZoomLevel;
             }
             map.checkResize();
-            map.setCenter(new GLatLng(clat, clng), zoomlevel-1);
+            map.setCenter(new GLatLng(clat, clng), zoomlevel);
             map.savePosition();
         }
     }
