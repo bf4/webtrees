@@ -1,0 +1,169 @@
+<?php
+/**
+ * Interface to edit place locations
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2003  John Finlay and Others
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * @package PhpGedView
+ * @subpackage Edit
+ * @version $Id$
+ */
+
+require "config.php";
+require "modules/googlemap/config.php";
+require "includes/functions_edit.php";
+require "includes/functions_import.php";
+require $INDEX_DIRECTORY."pgv_changes.php";
+require($factsfile["english"]);
+require( "modules/googlemap/".$pgv_language["english"]);
+if (file_exists( "modules/googlemap/".$pgv_language[$LANGUAGE])) require  "modules/googlemap/".$pgv_language[$LANGUAGE];
+require( "modules/googlemap/".$helptextfile["english"]);
+if (file_exists("modules/googlemap/".$helptextfile[$LANGUAGE])) require "modules/googlemap/".$helptextfile[$LANGUAGE];
+
+if (file_exists( $factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
+
+require("languages/countries.en.php");
+if (file_exists("languages/countries.".$lang_short_cut[$deflang].".php")) require("languages/countries.".$lang_short_cut[$deflang].".php");
+
+if(!isset($countrySelected)) $countrySelected="Countries";
+if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
+
+print_simple_header($pgv_lang["flags_edit"]);
+
+$country = array();
+$rep = opendir('./places/flags/');
+while ($file = readdir($rep)) {
+    if (stristr($file, ".gif")) {
+        $country[] = substr($file, 0, strlen($file)-4);
+    }
+}
+closedir($rep);
+sort($country);
+
+if($countrySelected == "Countries") {
+    $flags = $country;
+}
+else {
+    $flags = array();
+    $rep = opendir('./places/'.$countrySelected.'/flags/');
+    while ($file = readdir($rep)) {
+        if (stristr($file, ".gif")) {
+            $flags[] = substr($file, 0, strlen($file)-4);
+        }
+    }
+    closedir($rep);
+    sort($flags);
+}
+
+if ($action == "ChangeFlag") {
+?>
+    <script type="text/javascript">
+    <!--
+        function edit_close() {
+<?php if($_POST["selcountry"] == "Countries") { ?>
+            window.opener.document.editplaces.icon.value = "places/flags/<?php print $flags[$_POST["FLAGS"]];?>.gif";
+            window.opener.document.getElementById('flagsDiv').innerHTML = "<img src=\"places/flags/<?php print $country[$_POST["FLAGS"]];?>.gif\">&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"change_icon();return false;\"><?php print $pgv_lang["pl_change_flag"]?></a>&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"remove_icon();return false;\"><?php print $pgv_lang["pl_remove_flag"]?></a>";
+<?php } else { ?>
+            window.opener.document.editplaces.icon.value = "places/<?php print $countrySelected."/flags/".$flags[$_POST["FLAGS"]];?>.gif";
+            window.opener.document.getElementById('flagsDiv').innerHTML = "<img src=\"places/<?php print $countrySelected."/flags/".$flags[$_POST["FLAGS"]];?>.gif\">&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"change_icon();return false;\"><?php print $pgv_lang["pl_change_flag"]?></a>&nbsp;&nbsp;<a href=\"javascript:;\" onclick=\"remove_icon();return false;\"><?php print $pgv_lang["pl_remove_flag"]?></a>";
+<?php } ?>
+            if (window.opener.showchanges) window.opener.showchanges();
+            window.close();
+        }
+    //-->
+    </script>
+<?php
+    if ($EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
+    print "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();\">".$pgv_lang["close_window"]."</a></div><br />\n";
+    print_simple_footer();
+    exit;
+}
+else {
+?>
+<script type="text/javascript">
+<!--
+    function enableButtons() {
+        document.flags.save1.disabled = "";
+        document.flags.save2.disabled = "";
+    }
+
+    function selectCountry() {
+        if (document.flags.COUNTRYSELECT.value == "Countries") {
+            window.location="module.php?mod=googlemap&pgvaction=flags";
+        }
+        else {
+            window.location="module.php?mod=googlemap&pgvaction=flags&countrySelected=" + document.flags.COUNTRYSELECT.value;
+        }
+    }
+
+    function edit_close() {
+        if (window.opener.showchanges) window.opener.showchanges();
+        window.close();
+    }
+//-->
+</script>
+<?php
+
+}
+?>
+
+
+<form method="post" id="flags" name="flags" action="module.php?mod=googlemap&pgvaction=flags&countrySelected=<?php print $countrySelected;?>">
+    <input type="hidden" name="action" value="ChangeFlag" />
+    <input type="hidden" name="selcountry" value="<?php print $countrySelected;?>" />
+    <input id="savebutton" name="save1" type="submit" disabled="true" value="<?php print $pgv_lang["save"];?>" /><br />
+    <table class="facts_table">
+        <tr>
+            <td class="optionbox" colspan="4">
+                <select name="COUNTRYSELECT" dir="ltr" tabindex="0" onchange="selectCountry()">
+                    <option value="Countries">Countries</option>
+<?php               for ($i = 0; $i < count($country); $i++) {
+                        print "                    <option value=\"".$country[$i]."\"";
+                        if ($countrySelected == $country[$i]) print " selected=\"selected\" ";
+                        print ">".$countries[$country[$i]]."</option>\n";
+                    } ?>
+                    
+                </select>
+            </td>
+        </tr>
+        <tr>
+<?php
+    $j = 1;
+    for ($i = 0; $i < count($flags); $i++) {
+        if ($countrySelected == "Countries") {
+            print "            <td><input type=\"radio\" dir=\"ltr\" tabindex=\"".($i+1)."\" name=\"FLAGS\" value=\"".$i."\" onchange=\"enableButtons();\"><img src=\"places/flags/".$flags[$i].".gif\" alt=\"".$countries[$country[$i]]."\">&nbsp;&nbsp;".$flags[$i]."</input></td>\n";
+        }
+        else {
+            print "            <td><input type=\"radio\" dir=\"ltr\" tabindex=\"".($i+1)."\" name=\"FLAGS\" value=\"".$i."\" onchange=\"enableButtons();\"><img src=\"places/".$countrySelected."/flags/".$flags[$i].".gif\">&nbsp;&nbsp;".$flags[$i]."</input></td>\n";
+        }
+        if ($j == 4) {
+            print "        </tr><tr>\n";
+            $j = 0;
+        }
+        $j = $j + 1;
+    }
+?>
+        </tr>
+    </table>
+    <input id="savebutton" name="save2" type="submit" disabled="true" value="<?php print $pgv_lang["save"];?>" /><br />
+</form>
+<?php
+print "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();\">".$pgv_lang["close_window"]."</a></div><br />\n";
+        
+print_simple_footer();
+?>

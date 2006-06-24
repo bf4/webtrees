@@ -59,4 +59,11 @@ $pgv_lang["pl_neighborhood"]        = "Neigborhood";
 $pgv_lang["pl_house"]               = "House";
 $pgv_lang["pl_max"]                 = "Max";
 
+$pgv_lang["pl_flag"]                = "Flag";
+$pgv_lang["flags_edit"]             = "Select flag";
+$pgv_lang["pl_change_flag"]         = "Change flag";
+$pgv_lang["pl_remove_flag"]         = "Remove flag";
+
+$pgv_lang["pl_remove_location"]     = "Remove this location?";
+$pgv_lang["pl_delete_error"]        = "Location not removed: this location contains sub-locations";
 ?>
