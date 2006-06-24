@@ -58,4 +58,11 @@ $pgv_lang["pl_neighborhood"]        = "Buurt";
 $pgv_lang["pl_house"]               = "Huis";
 $pgv_lang["pl_max"]                 = "Max";
 
+$pgv_lang["pl_flag"]                = "Vlag";
+$pgv_lang["flags_edit"]             = "Selecteer vlag";
+$pgv_lang["pl_change_flag"]         = "Wijzig vlag";
+$pgv_lang["pl_remove_flag"]         = "Verwijder vlag";
+
+$pgv_lang["pl_remove_location"]     = "Deze locatie verwijderen?";
+$pgv_lang["pl_delete_error"]        = "Locatie niet verwijderd: deze locatie bevat sub-locaties";
 ?>

@@ -56,6 +56,9 @@ if (!userIsAdmin(getUserName())) {
         window.close();
     }
 
+function showchanges() {
+    updateMap();
+}
     //-->
 </script>
 
@@ -80,9 +83,8 @@ if (!isset($level)) {
 if ($action=="addrecord") {
     if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
     getHighestIndex();
-    $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", $placeid, ".$level.", \"".$_POST["NEW_PLACE_NAME"]."\", \"".$_POST["LONG_CONTROL"][3].$_POST["NEW_PLACE_LONG"]."\" , \"".$_POST["LATI_CONTROL"][3].$_POST["NEW_PLACE_LATI"]."\", ".$_POST["NEW_ZOOM_FACTOR"].", NULL);";
+    $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", $placeid, ".$level.", \"".$_POST["NEW_PLACE_NAME"]."\", \"".$_POST["LONG_CONTROL"][3].$_POST["NEW_PLACE_LONG"]."\" , \"".$_POST["LATI_CONTROL"][3].$_POST["NEW_PLACE_LATI"]."\", ".$_POST["NEW_ZOOM_FACTOR"].", \"".$_POST["icon"]."\");";
     if (userIsAdmin(getUserName())) {
-print $sql;
         $res = dbquery($sql);
     }
     // if ($EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
@@ -93,12 +95,11 @@ print $sql;
 
 if ($action=="updaterecord") {
     if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
-    $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_place=\"".$_POST["NEW_PLACE_NAME"]."\",pl_lati=\"".$_POST["LATI_CONTROL"][3].$_POST["NEW_PLACE_LATI"]."\",pl_long=\"".$_POST["LONG_CONTROL"][3].$_POST["NEW_PLACE_LONG"]."\",pl_zoom=\"".$_POST["NEW_ZOOM_FACTOR"]."\" where pl_id=$placeid LIMIT 1";
+    $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_place=\"".$_POST["NEW_PLACE_NAME"]."\",pl_lati=\"".$_POST["LATI_CONTROL"][3].$_POST["NEW_PLACE_LATI"]."\",pl_long=\"".$_POST["LONG_CONTROL"][3].$_POST["NEW_PLACE_LONG"]."\",pl_zoom=\"".$_POST["NEW_ZOOM_FACTOR"]."\",pl_icon=\"".$_POST["icon"]."\" where pl_id=$placeid LIMIT 1";
     if (userIsAdmin(getUserName())) {
-print $sql;
         $res = dbquery($sql);
     }
-    if ($EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
+    // if ($EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
     print "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();\">".$pgv_lang["close_window"]."</a></div><br />\n";
     print_simple_footer();
     exit;
@@ -322,7 +323,19 @@ if ($action=="add") {
                         document.editplaces.LONG_CONTROL.value = "PL_E";
                     }
                     newval = new GLatLng (point.y.toFixed(prec), point.x.toFixed(prec));
-                    map.addOverlay(new GMarker(newval));
+                    if (document.editplaces.icon.value == "") {
+                        map.addOverlay(new GMarker(newval));
+                    }
+                    else {
+                        var flagicon = new GIcon();
+                        flagicon.image = document.editplaces.icon.value;
+                        flagicon.shadow = "modules/googlemap/flag_shadow.png";
+                        flagicon.iconSize = new GSize(25, 15);
+                        flagicon.shadowSize = new GSize(30, 20);
+                        flagicon.iconAnchor = new GPoint(12, 7);
+                        flagicon.infoWindowAnchor = new GPoint(5, 1);
+                        map.addOverlay(new GMarker(newval, flagicon));
+                } 
                     // Trying to get the smaller yellow icon drawn in front.
                     map.addOverlay(new GMarker(point, smicon));
                     document.getElementById('resultDiv').innerHTML = "";
@@ -353,22 +366,46 @@ if ($action=="add") {
             childicon.iconAnchor = new GPoint(6, 20);
             childicon.infoWindowAnchor = new GPoint(5, 1);
 <?php
-            $sql = "SELECT pl_place,pl_lati,pl_long FROM ".$TBLPREFIX."placelocation WHERE pl_parent_id=".$placeid;
+            $sql = "SELECT pl_place,pl_lati,pl_long,pl_icon FROM ".$TBLPREFIX."placelocation WHERE pl_parent_id=".$placeid;
             $res = dbquery($sql);
             $i = 0;
             while ($row =& $res->fetchRow()) {
                 if (($row[1] != null) && ($row[2] != null)) {
-                    print "childplaces.push(new GMarker(new GLatLng(".str_replace(array('N', 'S'), array('', '-') , $row[1]).", ".str_replace(array('E', 'W'), array('', '-') ,$row[2])."), childicon));\n";
-                    print "map.addOverlay(childplaces[".$i."]);\n";
+                    if (($row[3] == null) || ($row[3] == "")) {
+                        print "            childplaces.push(new GMarker(new GLatLng(".str_replace(array('N', 'S'), array('', '-') , $row[1]).", ".str_replace(array('E', 'W'), array('', '-') ,$row[2])."), childicon));\n";
+                    }
+                    else {
+                        print "            var flagicon = new GIcon();\n";
+                        print "            flagicon.image = \"".$row[3]."\";\n";
+                        print "            flagicon.shadow = \"modules/googlemap/flag_shadow.png\";\n";
+                        print "            flagicon.iconSize = new GSize(25, 15);\n";
+                        print "            flagicon.shadowSize = new GSize(30, 20);\n";
+                        print "            flagicon.iconAnchor = new GPoint(12, 7);\n";
+                        print "            flagicon.infoWindowAnchor = new GPoint(5, 1);\n";
+                        print "            childplaces.push(new GMarker(new GLatLng(".str_replace(array('N', 'S'), array('', '-') , $row[1]).", ".str_replace(array('E', 'W'), array('', '-') ,$row[2])."), flagicon));\n";
+                    }
+                    print "            map.addOverlay(childplaces[".$i."]);\n";
                     $i = $i + 1;
                 }
             }
             $res->free();
         }
 ?> 
-<?php       if ($show_marker == true) { ?>
+<?php   if ($show_marker == true) {
+            if (($place_icon == NULL) || ($place_icon == "")) { ?>
             map.addOverlay(new GMarker(new GLatLng(<?php print $place_lati.", ".$place_long;?>)));
-<?php       } ?>
+<?php       }
+            else { ?>
+            var flagicon = new GIcon();
+            flagicon.image = "<?php print $place_icon;?>";
+            flagicon.shadow = "modules/googlemap/flag_shadow.png";
+            flagicon.iconSize = new GSize(25, 15);
+            flagicon.shadowSize = new GSize(30, 20);
+            flagicon.iconAnchor = new GPoint(12, 7);
+            flagicon.infoWindowAnchor = new GPoint(5, 1);
+            map.addOverlay(new GMarker(new GLatLng(<?php print $place_lati.", ".$place_long;?>), flagicon));
+<?php       }
+        } ?>
             // Our info window content
       }
     }
@@ -500,6 +537,16 @@ if ($action=="add") {
         aObj.addScriptTag();
     }
 
+function change_icon() {
+    window.open('module.php?mod=googlemap&pgvaction=flags', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+    return false;
+}
+
+function remove_icon() {
+    document.editplaces.icon.value = "";
+    document.getElementById('flagsDiv').innerHTML = "<a href=\"javascript:;\" onclick=\"change_icon();return false;\"><?php print $pgv_lang["pl_change_flag"]?></a>";
+}
+
     //-->
 </script>
 
@@ -508,6 +555,7 @@ if ($action=="add") {
     <input type="hidden" name="action" value="<?php print $action;?>record" />
     <input type="hidden" name="placeid" value="<?php print $placeid;?>" />
     <input type="hidden" name="level" value="<?php print $level;?>" />
+    <input type="hidden" name="icon" value="<?php print $place_icon;?>" />
     <input id="savebutton" name="save1" type="submit" value="<?php print $pgv_lang["save"];?>" /><br />
 
     <table class="facts_table">
@@ -561,6 +609,21 @@ if ($action=="add") {
         <td class="descriptionbox"><?php print $pgv_lang["pl_zoom_factor"];?></td>
         <td class="optionbox">
             <input type="text" dir="ltr" name="NEW_ZOOM_FACTOR" value="<?php print $zoomfactor;?>" size="20" tabindex="<?php $i++; print $i?>" onchange="updateMap();" /></td>
+    </tr>
+    <tr>
+        <td class="descriptionbox"><?php print $pgv_lang["pl_flag"];?></td>
+        <td class="optionbox">
+            <div id="flagsDiv">
+<?php
+        if (($place_icon == NULL) || ($place_icon == "")) { ?>
+                <a href="javascript:;" onclick="change_icon();return false;"><?php print $pgv_lang["pl_change_flag"]?></a>
+<?php   }
+        else { ?>
+                <img src="<?php print $place_icon;?>">&nbsp;&nbsp;
+                <a href="javascript:;" onclick="change_icon();return false;"><?php print $pgv_lang["pl_change_flag"]?></a>&nbsp;&nbsp;
+                <a href="javascript:;" onclick="remove_icon();return false;"><?php print $pgv_lang["pl_remove_flag"]?></a>
+<?php   } ?>
+            </div>
     </tr>
     </table>
     <input id="savebutton" name="save2" type="submit" value="<?php print $pgv_lang["save"];?>" /><br />

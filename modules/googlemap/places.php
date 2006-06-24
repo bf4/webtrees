@@ -174,7 +174,6 @@ if (!in_array($TBLPREFIX."placelocation", $tables)) {
 
     $sql = "CREATE TABLE ".$TBLPREFIX."placelocation (pl_id int(11) NOT NULL, pl_parent_id int(11) default NULL, pl_level int(11) default NULL, pl_place varchar(255) default NULL, pl_long varchar(30) default NULL, pl_lati varchar(30) default NULL, pl_zoom int(4) unsigned default NULL, pl_icon varchar(255) default NULL, PRIMARY KEY  (pl_id), KEY pl_level (pl_level), KEY pl_long (pl_long), KEY pl_lati (pl_lati), KEY pl_name (pl_place), KEY pl_parent_id (pl_parent_id));";
     $res = dbquery($sql);
-    $res->free();
     $tables = $DBCONN->getListOf('tables');
     if (!in_array($TBLPREFIX."placelocation", $tables)) {
         print "<table class=\"facts_table\">\n";
@@ -504,6 +503,23 @@ if ($action=="ImportFile2") {
 
 }
 
+if ($action=="DeleteRecord") {
+    $sql = "SELECT pl_id, pl_place FROM ".$TBLPREFIX."placelocation WHERE pl_parent_id=".$deleteRecord." ORDER BY pl_place";
+    $res = dbquery($sql);
+    if ($res->numRows() == 0) {
+        $res->free();
+        $sql = "DELETE FROM ".$TBLPREFIX."placelocation WHERE pl_id=".$deleteRecord." LIMIT 1";
+        $res = dbquery($sql);
+    }
+    else { ?>
+    <table class="facts_table">
+        <tr>
+            <td class="optionbox" ><?php print $pgv_lang["pl_delete_error"];?></a></td>
+        </tr>
+    </table>
+<?php }
+}
+
 if (!isset($parent)) $parent=array();
 else {
     if (!is_array($parent)) $parent = array();
@@ -555,7 +571,7 @@ if (count($placelist) == 0) {
 <!--
 function edit_place_location(placeid) {
     var placelink = "<?php
-        $placelink = "&level=".($level+1);
+        $placelink = "&level=".$level;
         for($j = 0; $j < count($parent); $j++) {
             $placelink .= "&parent[$j]=".$parent[$j];
         }
@@ -567,7 +583,7 @@ function edit_place_location(placeid) {
 
 function add_place_location(placeid) {
     var placelink = "<?php
-        $placelink = "&level=".($level+1);
+        $placelink = "&level=".$level;
         for($j = 0; $j < count($parent); $j++) {
             $placelink .= "&parent[$j]=".$parent[$j];
         }
@@ -575,6 +591,14 @@ function add_place_location(placeid) {
     ?>";
     window.open('module.php?mod=googlemap&pgvaction=places_edit&action=add&placeid='+placeid+"&"+sessionname+"="+sessionid+placelink, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
     return false;
+}
+
+function delete_place(placeid) {
+    var answer=confirm("<?php print $pgv_lang["pl_remove_location"];?>");
+    if (answer) {
+        window.location = "<?php print $_SERVER["REQUEST_URI"]; ?>&action=DeleteRecord&deleteRecord=" + placeid;
+
+    }
 }
 
 function showchanges() {
@@ -614,9 +638,26 @@ if (count($placelist) <> 0) {
             <td class="optionbox"><?php print $placelist[$i]["lati"];?></td>
             <td class="optionbox"><?php print $placelist[$i]["long"];?></td>
             <td class="optionbox"><?php print $placelist[$i]["zoom"];?></td>
-            <td class="optionbox"><?php print "TBD".$placelist[$i]["icon"];?></td>
+            <td class="optionbox">
+<?php       if (($placelist[$i]["icon"] == NULL) || ($placelist[$i]["icon"] == "")) {
+                print "&nbsp;";
+                print "<img src=\"http://labs.google.com/ridefinder/images/mm_20_red.png\">";
+            }
+            else { 
+                print "<img src=\"".$placelist[$i]["icon"]."\">";
+            } ?>
+            </td>
             <td class="optionbox"><a href="javascript:;" onclick="edit_place_location(<?php print $placelist[$i]["place_id"].")\">".$pgv_lang["edit"];?></a></td>
-            <td class="optionbox"><img src="images/remove.gif" alt="<?php print $pgv_lang["remove"];?>" /> </td>
+<?php
+            $psql = "SELECT pl_id FROM ".$TBLPREFIX."placelocation WHERE pl_parent_id=".$placelist[$i]["place_id"];
+            $res = dbquery($psql);
+            $noRows =& $res->numRows();
+            $res->free();
+            if ($noRows == 0) { ?>
+            <td class="optionbox"><a href="javascript:;" onclick="delete_place(<?php print $placelist[$i]["place_id"].")\">";?><img src="images/remove.gif" border="0" alt="<?php print $pgv_lang["remove"];?>" /></a></td>
+<?php       } else { ?>
+            <td class="optionbox"><img src="images/remove-dis.png" border="0" alt="<?php print $pgv_lang["remove"];?>" /> </td>
+<?php       } ?>
         </tr>
         <?php
     }
