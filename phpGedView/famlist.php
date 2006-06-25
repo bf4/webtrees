@@ -265,7 +265,9 @@ else {
 		//print "<td class=\"list_value_wrap $TEXT_DIRECTION\"><ul>\n";
 		print "<td class=\"list_value wrap width50 $TEXT_DIRECTION\"><ul>\n";
 		foreach($tfamlist as $gid => $fam) {
-			$fam["name"] = check_NN($fam["name"]);
+			$partners = explode("+", $fam["name"]);
+			$fam["name"] = check_NN(trim($partners[0]));
+			if (isset($partners[1])) $fam["name"] .= " + ".check_NN(trim($partners[1]));
 			print_list_family($gid, array($fam["name"], get_gedcom_from_id($fam["gedfile"])));
 			$i++;
 			if ($i==ceil($count/2) && $count>$minNamesPerColumn) {
@@ -359,7 +361,9 @@ else {
 		}
 		print "<td class=\"list_value wrap width50 $TEXT_DIRECTION\"><ul>\n";
 		foreach($tfamlist as $gid => $fam) {
-			$fam["name"] = check_NN($fam["name"]);
+			$partners = explode("+", $fam["name"]);
+			$fam["name"] = check_NN(trim($partners[0]));
+			if (isset($partners[1])) $fam["name"] .= " + ".check_NN(trim($partners[1]));
 			print_list_family($gid, array($fam["name"], get_gedcom_from_id($fam["gedfile"])));
 			$i++;
 			if ($i==ceil($count/2) && $count>$minNamesPerColumn) {
