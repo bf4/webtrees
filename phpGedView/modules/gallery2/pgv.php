@@ -36,10 +36,12 @@ function mod_gallery2_load($uid)
 {
 	global $SERVER_URL, $language_settings, $LANGUAGE, $modinfo;
 
+	if($SERVER_URL[strlen($SERVER_URL) - 1] == '/'){$sep = '';}else{$sep = '/';}
+
 	$ret = GalleryEmbed::init(array(
 		'embedUri'			=> 'index.php?mod=gallery2',
 		'g2Uri'				=> G2EmbedDiscoveryUtilities::normalizeG2Uri($modinfo['Gallery2']['path']),
-		'loginRedirect'		=> "{$SERVER_URL}login.php",
+		'loginRedirect'		=> "{$SERVER_URL}{$sep}login.php",
 		'activeUserId'		=> $uid,
 		'activeLanguage'	=> $language_settings[$LANGUAGE]['lang_short_cut'],
 		'apiVersion'		=> array(1, 1)
