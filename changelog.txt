@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1512101 ] 4.0 stable: Incorrect language for (unknown) in Family list (canajun2eh)
  - Fixed [ 1511278 ] 4.0: Search page contains untranslated text (canajun2eh)
  - Fixed [ 1508480 ] Individual List of a surname (canajun2eh)
  - Added Media Object count to GEDCOM statistics block (pfblair)
