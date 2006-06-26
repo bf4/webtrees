@@ -1,9 +1,0 @@
-<!-- $Id: PAK.txt,v 1.1.2.1 2006/01/06 22:01:12 canajun2eh Exp $ -->
-Azad Kashmir
-Balochistan
-Federally Administered Tribal Areas
-Islamabad Capital Territory
-North West Frontier
-Northern Areas
-Punjab
-Sindh
