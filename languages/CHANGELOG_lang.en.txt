@@ -42,6 +42,26 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["utf8_to_ansi"]							23 Jun 2006				f
++$pgv_lang["timeline_beginYear"] 					23 Jun 2006				A
++$pgv_lang["timeline_endYear"] 						23 Jun 2006				A
++$pgv_lang["timeline_scrollSpeed"] 					23 Jun 2006				A
++$pgv_lang["timeline_zoom"] 						23 Jun 2006				A
++$pgv_lang["timeline_controls"] 					23 Jun 2006				A
++$pgv_lang["zoom_default"] 							23 Jun 2006				A
++$pgv_lang["zoom_2"]								23 Jun 2006				A
++$pgv_lang["zoom_3"]								23 Jun 2006				A
++$pgv_lang["include_family"]						23 Jun 2006				A
++$pgv_lang["lifespan_chart"]						23 Jun 2006				A
++$pgv_lang["search_record"]							23 Jun 2006				A
++$pgv_lang["replace_with"]							23 Jun 2006				A
++$pgv_lang["search_replace"]						23 Jun 2006				A
++$pgv_lang["file_information"]						23 Jun 2006				A
++$pgv_lang["choose_file_type"]						23 Jun 2006				A
++$pgv_lang["add_individual_by_id"]					23 Jun 2006				A
++$pgv_lang["advanced_options"]						23 Jun 2006				A
++$pgv_lang["zip_files"]								23 Jun 2006				A
++$pgv_lang["include_media"]							23 Jun 2006				A
 *$pgv_lang["search_gedcom"]							23 Jun 2006				W
 *$pgv_lang["search_geds"]							23 Jun 2006				W
 +$pgv_lang["results_per_page"]						23 Jun 2006				A
