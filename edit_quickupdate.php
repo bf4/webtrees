@@ -130,6 +130,7 @@ if ($action=="update") {
 	function check_updated_facts($i, &$famrec, $TAGS, $prefix){
 		global $typefacts, $pid, $pgv_lang, $factarray;
 		
+		$famrec = trim($famrec);
 		$famupdate = false;
 		$repeat_tags = array();
 		$var = $prefix.$i."DATES";
@@ -189,8 +190,8 @@ if ($action=="update") {
 				$noupdfact = false;
 				if ($pos1!==false) {
 					$pos2 = strpos($famrec, "\n1 ", $pos1+5);
-					if ($pos2===false) $pos2 = strlen($famrec)-1;
-					$oldfac = substr($famrec, $pos1, $pos2-$pos1);
+					if ($pos2===false) $pos2 = strlen($famrec);
+					$oldfac = trim(substr($famrec, $pos1, $pos2-$pos1));
 					$noupdfact = FactEditRestricted($pid, $oldfac);
 					if ($noupdfact) {
 						print "<br />".$pgv_lang["update_fact_restricted"]." ".$factarray[$fact]."<br /><br />";
@@ -223,9 +224,10 @@ if ($action=="update") {
 						
 							$factrec = preg_replace("/[\r\n]+/", "\r\n", $factrec);
 							$oldfac = preg_replace("/[\r\n]+/", "\r\n", $oldfac);
+//			print "<table><tr><th>new</th><th>old</th></tr><tr><td><pre>$factrec</pre></td><td><pre>$oldfac</pre></td></tr></table>";
 							if (trim($factrec) != trim($oldfac)) {
 								$famupdate = true;
-								$famrec = substr($famrec, 0, $pos1) . "\r\n".trim($factrec)."\r\n" . substr($famrec, $pos2);
+								$famrec = substr($famrec, 0, $pos1) . trim($factrec)."\r\n" . substr($famrec, $pos2);
 //								print "sfamupdate3 [".$factrec."]{".$oldfac."}";
 							}
 						}
@@ -251,7 +253,7 @@ if ($action=="update") {
 	$oldgedrec = $gedrec;
 	//-- check for name update
 	if (!empty($GIVN) || !empty($SURN)) {
-		$namerec = get_sub_record(1, "1 NAME", $gedrec);
+		$namerec = trim(get_sub_record(1, "1 NAME", $gedrec));
 		if (!empty($namerec)) {
 			if (!empty($GIVN)) {
 				$namerec = preg_replace("/1 NAME.+\/(.*)\//", "1 NAME $GIVN /$1/", $namerec);
@@ -276,7 +278,7 @@ if ($action=="update") {
 		}
 		else $gedrec .= "\r\n1 NAME $GIVN /$SURN/\r\n2 GIVN $GIVN\r\n2 SURN $SURN";
 		$updated = true;
-		//print "<pre>NAME\n".$gedrec."</pre>\n";
+//		print "<pre>NAME\n".$gedrec."</pre>\n";
 	}
 	
 	//-- update the person's gender
@@ -339,6 +341,7 @@ if ($action=="update") {
 	//-- check for updated facts
 	if (count($TAGS)>0) {
 		$updated |= check_updated_facts("", $gedrec, $TAGS, "");
+//		print "FACTS <pre>$gedrec</pre>";
 	}
 
 	//-- check for new fact
