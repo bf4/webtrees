@@ -787,8 +787,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		txt=txt.replace(/\+/g,''); // +17.1234 ==> 17.1234
 		txt=txt.replace(/-/g,neg);	// -0.5698 ==> W0.5698
 		txt=txt.replace(/,/g,'.');	// 0,5698 ==> 0.5698
-		// 0ï¿½34'11 ==> 0:34:11
-		txt=txt.replace(/\uB0/g,':'); // ï¿½
+		// 0°34'11 ==> 0:34:11
+		txt=txt.replace(/\uB0/g,':'); // °
 		txt=txt.replace(/\u27/g,':'); // '
 		// 0:34:11.2W ==> W0.5698
 		txt=txt.replace(/^([0-9]+):([0-9]+):([0-9.]+)(.*)/g, function($0, $1, $2, $3, $4) { var n=parseFloat($1); n+=($2/60); n+=($3/3600); n=Math.round(n*1E4)/1E4; return $4+n; });
@@ -831,6 +831,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	if ($fact=="DATE" or $fact=="TIME" or $fact=="TYPE") $cols=20;
 	if ($fact=="LATI" or $fact=="LONG") $cols=12;
 	if (in_array($fact, $subnamefacts)) $cols=25;
+	if ($fact=="GIVN" or $fact=="SURN") $cols=25;
+	if ($fact=="NPFX" or $fact=="SPFX" or $fact=="NSFX") $cols=12;
 	if (in_array($fact, $largetextfacts)) { $rows=10; $cols=70; }
 	if ($fact=="ADDR") $rows=5;
 	if ($fact=="REPO") $cols = strlen($REPO_ID_PREFIX) + 4;
@@ -841,7 +843,10 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	if (in_array($fact, $subnamefacts)) print " style=\"display:none;\""; // hide subname facts
 	if ($fact=="MAP") print " style=\"display:none;\""; // MAP is preceding LATI and LONG
 	print " >\n";
-	print "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
+	if (in_array($fact, $subnamefacts) || $fact=="LATI" || $fact=="LONG")
+			print "<td class=\"optionbox $TEXT_DIRECTION wrap width25\">";
+	else	print "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
+
 	// help link
 	if (!in_array($fact, $emptyfacts)) {
 		if ($fact=="DATE") print_help_link("def_gedcom_date_help", "qm", "date");

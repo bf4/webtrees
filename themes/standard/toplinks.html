@@ -23,7 +23,19 @@
  * @subpackage Themes
  * @version $Id: toplinks.html,v 1.44.2.30 2006/05/13 09:03:29 coloredpixels Exp $
  */
-$menubar = new MenuBar();
+class MyMenuBar extends MenuBar { 
+	function &getMygedviewMenu() { 
+		global $TEXT_DIRECTION;
+		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
+		$menu = parent::getMygedviewMenu(); 
+		$submenu = new Menu("label", "url.php"); 
+		$submenu->addIcon("path/to/icon.gif"); 
+		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff"); 
+		$menu->addSubmenu($submenu); 
+		return $menu; 
+	} 
+} 
+$menubar = new MyMenuBar();
 ?>
 <div style="position: relative; z-index: 100; width: 98%">
 	<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]; ?>" width="99%" height="3" alt="" />

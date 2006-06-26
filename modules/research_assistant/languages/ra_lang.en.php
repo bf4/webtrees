@@ -173,6 +173,9 @@ $pgv_lang["add_new_comment"]				= "Add New Comment";
 $pgv_lang["no_sources"]						= "There are no sources associated with this task.";
 $pgv_lang["no_people"]						= "There are no people associated with this task.";
 $pgv_lang["no_indi_tasks"]					= "No tasks associated with this individual.";
+$pgv_lang["edit_comment"]					= "Edit Comment";
+$pgv_lang["comment_success"]				= "Your comment was successfully added.";
+$pgv_lang['comment_body']					= 'Comment';
 
 //-- RA_COMMENT MESSAGES
 $pgv_lang["comment_delete_check"]		= "Are you sure you want to delete this comment?";

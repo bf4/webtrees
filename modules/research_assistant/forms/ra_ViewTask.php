@@ -195,20 +195,21 @@ function getTitle(){
 		$res = dbquery($sql);
 		$out = "";
 
-		while($comment =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
+		while($comment = $res->fetchRow(DB_FETCHMODE_ASSOC)){
+			$comment = db_cleanup($comment);
 			$out .= '<div class="blockcontent"><div class="person_box" id="comment1"><span class="news_title">' .
-					''.$comment["c_u_username"].'' . 	// INSERT username
+					$comment["c_u_username"] . 	// INSERT username
 					'</span><br /><span class="news_date">' .
-					''.get_changed_date(date("d M Y", (int)$comment["c_datetime"])).' - '. date("g:i:s A",(int)$comment["c_datetime"]).		// INSERT datetime
+					get_changed_date(date("d M Y", (int)$comment["c_datetime"])).' - '. date("g:i:s A",(int)$comment["c_datetime"]).		// INSERT datetime
 					'</span><br /><br />' .
-					''.$comment["c_body"].'' .			// INSERT body
+					nl2br($comment["c_body"]) .			// INSERT body
 					'<hr size="1" />';
 					
 			if((userIsAdmin(getUserName())) || (getUserName() == $comment["c_u_username"])){
 				$out .= '<a href="javascript:;" onclick="editcomment(' .
-							''.$comment["c_id"].'' .	// INSERT commentid
+							$comment["c_id"] .	// INSERT commentid
 							')">'.$pgv_lang["edit"].'</a> | <a href="" onclick="confirm_prompt(\''.$pgv_lang["comment_delete_check"].'\', ' .
-							''.$comment["c_id"].'' .	// INSERT commentid
+							$comment["c_id"] .	// INSERT commentid
 							'); return false;">'.$pgv_lang["delete"].'</a>';
 			}
 			$out .= '<br /></div></div><br/>';
@@ -226,7 +227,7 @@ function getTitle(){
 
 <!--JAVASCRIPT-->
 <script language="JavaScript" type="text/javascript"><!--
-	function refreshpage() {
+	function showchanges() {
 		window.location = 'module.php?mod=research_assistant&action=edittask&taskid=<?php print $_REQUEST['taskid']; ?>';
 	}
   	function editcomment(commentid) {
