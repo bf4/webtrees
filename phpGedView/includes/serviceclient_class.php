@@ -173,7 +173,13 @@ if ($this->DEBUG) print "In _merge()<br />";
 		$remoterecs = get_all_subrecords($record2, "", false, false, false);
 		$localrecs = get_all_subrecords($record1, "", false, false, false);
 
-		$newrecs = $remoterecs;
+		$newrecs = array();
+		//-- make sure we don't get circular links
+		foreach($remoterecs as $ind2=>$subrec2) {
+			if (preg_match("/1 RFN/", $subrec2)==0) {
+				$newrecs[] = $subrec2;
+			}
+		}
 
 		foreach($localrecs as $ind=>$subrec) {
 			$found = false;
@@ -216,7 +222,8 @@ if ($this->DEBUG) print "In _merge()<br />";
 		foreach($newrecs as $ind=>$subrec) {
 			$localrec .= trim($subrec)."\r\n";
 		}
-
+		$localrec = trim($localrec);
+//print "[<pre>$localrec</pre>]";
 		// Update the last change time
 		$pos1 = strpos($localrec, "1 CHAN");
 		if ($pos1!==false) {
@@ -226,7 +233,7 @@ if ($this->DEBUG) print "In _merge()<br />";
 			$newgedrec .= "1 CHAN\r\n2 DATE ".date("d M Y")."\r\n";
 			$newgedrec .= "3 TIME ".date("H:i:s")."\r\n";
 			$newgedrec .= "2 _PGVU @".$this->xref."@\r\n";
-			$newgedrec .= substr($localrec, $pos2);
+			$newgedrec .= trim(substr($localrec, $pos2+1));
 			$localrec = $newgedrec;
 		}
 		else {
