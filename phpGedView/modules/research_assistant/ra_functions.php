@@ -108,7 +108,7 @@ class ra_functions {
 			}
 		}
 		if (!in_array($TBLPREFIX.'comments', $data)) {
-			$sql = 'create table '.$TBLPREFIX.'comments (c_id INTEGER not null,'.'c_t_id INTEGER not null,'.'c_u_username VARCHAR(30) not null,'.'c_body text not null,'.'c_datetime INT not null,'.' constraint '.$TBLPREFIX.'comments_PK primary key (c_id) );';
+			$sql = 'create table '.$TBLPREFIX.'comments (c_id INTEGER not null,c_t_id INTEGER not null,c_u_username VARCHAR(30) not null,c_body text not null,c_datetime INT not null, constraint '.$TBLPREFIX.'comments_PK primary key (c_id) );';
 			$res = dbquery($sql);
 		}
 		if (!in_array($TBLPREFIX.'tasksource', $data)) {
@@ -116,11 +116,11 @@ class ra_functions {
 			$res = dbquery($sql);
 		}
 		if (!in_array($TBLPREFIX.'folders', $data)) {
-			$sql = 'create table '.$TBLPREFIX.'folders (fr_id INTEGER not null,'.'fr_name VARCHAR(255),'.'fr_description text null,'.'fr_parentid INTEGER null,'.' constraint '.$TBLPREFIX.'folders_PK primary key (fr_id) );';
+			$sql = 'create table '.$TBLPREFIX.'folders (fr_id INTEGER not null,fr_name VARCHAR(255),fr_description text null,fr_parentid INTEGER null, constraint '.$TBLPREFIX.'folders_PK primary key (fr_id) );';
 			$res = dbquery($sql);
 		}
 		if (!in_array($TBLPREFIX.'individualtask', $data)) {
-			$sql = 'create table '.$TBLPREFIX.'individualtask (it_t_id integer not null,'.'it_i_id VARCHAR(255) not null,'.'it_i_file integer not null,'.' constraint '.$TBLPREFIX.'individualtask_PK primary key (it_t_id, it_i_id,it_i_file) );';
+			$sql = 'create table '.$TBLPREFIX.'individualtask (it_t_id integer not null,it_i_id VARCHAR(255) not null,it_i_file integer not null, constraint '.$TBLPREFIX.'individualtask_PK primary key (it_t_id, it_i_id,it_i_file) );';
 			$res = dbquery($sql);
 		}
 		if (!in_array($TBLPREFIX.'taskfacts', $data)) {
@@ -128,8 +128,8 @@ class ra_functions {
 			$res = dbquery($sql);
 		}
 		if(!in_array($TBLPREFIX.'user_comments', $data)){
-			//$sql = 'create table'.$TBLPREFIX.'user_comments (uc_id INTEGER not null,'.'uc_username VARCHAR(45) not null,'.'uc_datetime INTEGER not null,'.'uc_comment VARCHAR(500) not null,'.'uc_p_id VARCHAR(255) not null,'.'uc_f_id INTEGER not null,'.' constraint '.$TBLPREFIX.'user_comments_PK primary key (uc_id));';
-			$sql = 'create table '.$TBLPREFIX.'user_comments (uc_id INT not null,'.'uc_username VARCHAR(45) not null,'.'uc_datetime INT not null,'.'uc_comment VARCHAR(500) not null,'.'uc_p_id VARCHAR(255) not null,'.'uc_f_id INT not null,'.' constraint '.$TBLPREFIX.'user_comments_PK primary key (uc_id));';
+			//$sql = 'create table'.$TBLPREFIX.'user_comments (uc_id INTEGER not null,uc_username VARCHAR(45) not null,uc_datetime INTEGER not null,uc_comment VARCHAR(500) not null,uc_p_id VARCHAR(255) not null,uc_f_id INTEGER not null, constraint '.$TBLPREFIX.'user_comments_PK primary key (uc_id));';
+			$sql = 'create table '.$TBLPREFIX.'user_comments (uc_id INT not null,uc_username VARCHAR(45) not null,uc_datetime INT not null,uc_comment text,uc_p_id VARCHAR(255) not null,uc_f_id INT not null, constraint '.$TBLPREFIX.'user_comments_PK primary key (uc_id));';
 			$res = dbquery($sql);
 		}
 		
@@ -200,28 +200,28 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$out .= '<td align="left"'.$percent.'class="optionbox wrap">'.ra_functions :: print_top_folder($folderid).'</td>';
 		//button 'My Tasks'
 		if (getUserAccessLevel(getUserName())<=$SHOW_MY_TASKS)
-			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant&amp;action=mytasks"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["my_tasks"].'" border="0"></img><br />'.$pgv_lang["my_tasks"].'</a></td>';
+			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=mytasks"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["my_tasks"].'" border="0"></img><br />'.$pgv_lang["my_tasks"].'</a></td>';
 		//button 'Add Task''
 		if (getUserAccessLevel(getUserName())<=$SHOW_ADD_TASK)
-			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant&amp;action=addtask&amp;folderid='.$folderid.'">'.'<img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["add_task"].'" border="0"></img><br />'.$pgv_lang["add_task"].'</a></td>';
+			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=addtask&amp;folderid='.$folderid.'"><img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["add_task"].'" border="0"></img><br />'.$pgv_lang["add_task"].'</a></td>';
 		//button 'Auto Generate Tasks'
 		if (getUserAccessLevel(getUserName())<=$SHOW_AUTO_GEN_TASK)
-			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant&amp;action=genTasks">'.'<img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["gen_tasks"].'" border="0"></img><br />'.$pgv_lang["gen_tasks"].'</a></td>';
+			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=genTasks"><img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["gen_tasks"].'" border="0"></img><br />'.$pgv_lang["gen_tasks"].'</a></td>';
 		//button 'View Folders'
 		if (getUserAccessLevel(getUserName())<=$SHOW_VIEW_FOLDERS)
-			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant">'.'<img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["view_folders"].'" border="0"></img><br />'.$pgv_lang["view_folders"].'</a></td>';
+			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["view_folders"].'" border="0"></img><br />'.$pgv_lang["view_folders"].'</a></td>';
 		//button 'Add Folder'
 		if (getUserAccessLevel(getUserName())<=$SHOW_ADD_FOLDER && empty ($folderid))
-			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant&amp;action=addfolder">'.'<img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["add_folder"].'" border="0"></img><br />'.$pgv_lang["add_folder"].'</a></td>';
+			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=addfolder"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["add_folder"].'" border="0"></img><br />'.$pgv_lang["add_folder"].'</a></td>';
 		//button 'Add Unlinked Source'
 		if (getUserAccessLevel(getUserName())<=$SHOW_ADD_UNLINKED_SOURCE && empty ($folderid))
-			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="javascript: '.$pgv_lang["add_unlinked_source"].'" onclick="addnewsource(\'\'); return false;"><img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["add_unlinked_source"].'"border=0"></img><br />'.$pgv_lang["add_unlinked_source"].'</a></td>';
+			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="javascript: '.$pgv_lang["add_unlinked_source"].'" onclick="addnewsource(\'\'); return false;"><img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["add_unlinked_source"].'"border=0"></img><br />'.$pgv_lang["add_unlinked_source"].'</a></td>';
 		//button 'View Probabilities'
 		if (getUserAccessLevel(getUserName())<=$SHOW_VIEW_PROBABILITIES && empty ($folderid))
-			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant&amp;action=viewProbabilities">'.'<img src="modules/research_assistant/images/view_inferences.gif" alt="'.$pgv_lang["view_probabilities"].'" border="0"></img><br />'.$pgv_lang["view_probabilities"].'</a></td>';
+			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=viewProbabilities"><img src="modules/research_assistant/images/view_inferences.gif" alt="'.$pgv_lang["view_probabilities"].'" border="0"></img><br />'.$pgv_lang["view_probabilities"].'</a></td>';
 		//button 'Configure Privacy' for ADMIN ONLY
 		if(userIsAdmin(getUserName()) && empty ($folderid))
-			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant&amp;action=configurePrivacy">'.'<img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["configure_privacy"].'" border="0"></img><br />'.$pgv_lang["configure_privacy"].'</a></td>';
+			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=configurePrivacy"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["configure_privacy"].'" border="0"></img><br />'.$pgv_lang["configure_privacy"].'</a></td>';
 		// Below here is "in folder" relevant information. These are only shown when the user is inside a folder.
 		if (!empty ($folderid)) {
 			// Lets check to see if we can go up a folder.
@@ -237,7 +237,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 
 			// Finish up the links    
 			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.$url.'<img src="modules/research_assistant/images/folder_blue_icon.gif" alt="Up Folder" border="0"></img><br />Up Folder</a></td>';
-			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.'<a href="module.php?mod=research_assistant&amp;action=editfolder&amp;folderid='.$folderid.'"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="Edit Folder" border="0" /><br />'.$pgv_lang["edit_folder"].'</a></td>';
+			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=editfolder&amp;folderid='.$folderid.'"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="Edit Folder" border="0" /><br />'.$pgv_lang["edit_folder"].'</a></td>';
 		}
 
 		// Close up
@@ -407,7 +407,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		
 		while ($task = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$task = db_cleanup($task);
-			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.$task["t_title"].'</a></td><td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a></td>'.'<td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'&amp;folder='.$folderId.'" class="link">'.$pgv_lang["delete"].'</a></td></tr>';
+			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.$task["t_title"].'</a></td><td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a></td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'&amp;folder='.$folderId.'" class="link">'.$pgv_lang["delete"].'</a></td></tr>';
 		}
 		$out .= '</table>';
 		
@@ -453,7 +453,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		
 		while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$task = db_cleanup($task);
-			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.$task["t_title"].'</a></td><td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a></td>'.'<td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["delete"].'</a></td></tr>';
+			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.$task["t_title"].'</a></td><td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a></td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["delete"].'</a></td></tr>';
 		}
 		$out .= '</table>';
 		return $out;
@@ -619,7 +619,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		// Loop through the database results and print each task
 		while ($task = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$task = db_cleanup($task);
-			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.$task["t_title"].'</a></td><td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a></td>'.'<td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'&amp;folder='.$folderId.'" class="link">'.$pgv_lang["delete"].'</a></td></tr>';
+			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.$task["t_title"].'</a></td><td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a></td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'&amp;folder='.$folderId.'" class="link">'.$pgv_lang["delete"].'</a></td></tr>';
 		}
 		$out .= '</table>';
 
@@ -769,6 +769,9 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			if ($ft > 0) {
 				$fact = trim($match[1]);
 				$event = trim($match[2]);
+			}
+			if ($fact=="EVEN" || $fact=="FACT") {
+				$fact = get_gedcom_value("TYPE", 2, $far);
 			}
 			$date = get_gedcom_value("DATE", 2, $far);
 			if (empty ($date)) {
@@ -1165,7 +1168,11 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 										{
 											$tasktitle = "";
 											if (isset($factarray[$val[0]])) $tasktitle .= $factarray[$val[0]]." ";
+											else if (isset($pgv_lang[$val[0]])) $tasktitle .= $pgv_lang[$val[0]]." ";
+											else $tasktitle .= $val[0]." ";
 											if (isset($factarray[$val[1]])) $tasktitle .= $factarray[$val[1]];
+											else if (isset($pgv_lang[$val[1]])) $tasktitle .= $pgv_lang[$val[1]];
+											else $tasktitle .= $val[1];
 											$taskid = $this->task_check($tasktitle, $person->getXref());
 											if (!$taskid) // if the task_check passes, create a check box
 												{
@@ -1220,61 +1227,25 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			</table>";
 
 		//Beginning of the comments feature
-		$out .= "<form name='commentsSubmit' action='individual.php' method='post'>" .
-				"<input type=\"hidden\" name=\"pid\" value=\"".$person->getXref()."\" />" .
-				"<input type=\"hidden\" name=\"ged\" value=\"".$GEDCOM."\" />
-				<center>
-					
-					<br/>
-					<table >
-						<tr>
-							<td class='topbottombar' hight='50%'>
-								<a class='help' tabindex='0' href='javascript:// help_comments' onclick='helpPopup('help_comments'); return false;'>
-								<img src='images/small/help.gif' class='icon' width='15' height='15' alt='' />
-								</a> Comments
-							</td>
-						</tr>
-						<tr>
-							<td class='optionbox'>
-								<textarea rows='3'cols='55' name='comments'></textarea>
-							</td>
-						</tr>
-							<tr>
-								<td class='topbottombar'>
-									<input type='submit' value='Submit' />";
-									
-									if(!empty($_POST['comments'])){
-										$commentid = get_next_id("user_comments", "uc_id");
-										$username = getUserName();
-										$sql = "INSERT INTO ".$TBLPREFIX."user_comments (uc_id, uc_username, uc_datetime, uc_comment, uc_p_id, uc_f_id) "."VALUES ('".$DBCONN->escapeSimple($commentid)."', '".$DBCONN->escapeSimple($username)."', '".time()."', '".$DBCONN->escapeSimple($_POST["comments"])."', '".$DBCONN->escapeSimple($person->getXref())."', '".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id'])."')";
-									    
-										$res = dbquery($sql);
-									}
-						$out .= "</td>
-							</tr>
-					</table>
-					
-				</center>
-				</form>";
-
+		if (!empty($_REQUEST['action']) && $_REQUEST['action']=='delete_comment' && !empty($_REQUEST['uc_id'])) {
+			$sql = "DELETE FROM ".$TBLPREFIX."user_comments WHERE uc_id=".$_REQUEST['uc_id'];
+			$res = dbquery($sql);
+		}
+		$out .= '<br /><br /><table width="50%" align="center"><tr><td class="topbottombar">'.$pgv_lang['comments'].'</td></tr>';
+		$out .= '<tr><td class="optionbox">';
 		// Display comments
-		global $pgv_lang, $TBLPREFIX;
-//		$sql = 	"SELECT  uc_id, uc_username, uc_datetime, uc_comment " .
-//				"FROM " . $TBLPREFIX . "user_comments " .
-//				//"WHERE uc_id='" . $_REQUEST["taskid"] . "' " .
-//				"Where i_id = " .$person .
-//				"ORDER BY uc_datetime DESC";
 		$sql = "select uc_id, uc_username, uc_datetime, uc_comment from ".$TBLPREFIX . "user_comments WHERE uc_f_id='".$GEDCOMS[$GEDCOM]['id']."' AND uc_p_id='" . $person->getXref() . "' ORDER BY uc_datetime DESC";
 		$res = dbquery($sql);
 		$out .= "";
 
-		while($comment =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
+		while($comment = $res->fetchRow(DB_FETCHMODE_ASSOC)){
+			$comment = db_cleanup($comment);
 			$out .= '<div class="blockcontent"><div class="person_box" id="comment1"><span class="news_title">' .
-					''.$comment["uc_username"].'' . 	// INSERT username
+					$comment["uc_username"].'' . 	// INSERT username
 					'</span><br /><span class="news_date">' .
-					''.get_changed_date(date("d M Y", (int)$comment["uc_datetime"])).' - '. date("g:i:s A",(int)$comment["uc_datetime"]).		// INSERT datetime
+					get_changed_date(date("d M Y", (int)$comment["uc_datetime"])).' - '. date("g:i:s A",(int)$comment["uc_datetime"]).		// INSERT datetime
 					'</span><br /><br />' .
-					''.$comment["uc_comment"].'' .			// INSERT body
+					nl2br($comment["uc_comment"]).
 					'<hr size="1" />';
 					
 			if((userIsAdmin(getUserName())) || (getUserName() == $comment["uc_username"])){
@@ -1284,8 +1255,11 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 							''.$comment["uc_id"].'' .	// INSERT commentid
 							'); return false;">'.$pgv_lang["delete"].'</a>';
 			}
-			$out .= '<br /></div></div><br/>';
+			$out .= '<br /></div></div><br />';
 		}
+		$out .= '</td></tr><tr><td class="topbottombar">';
+		$out .= '<form action="" onsubmit="return false;"><input type="button" value="'.$pgv_lang["add_new_comment"].'" onclick="window.open(\'editcomment.php?pid='.$person->getXref().'\', \'\',\'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1\');"></form>';
+		$out .= '</td></tr></table>';
 		
 		
 //		if(isset($_REQUEST['delete']) && !empty($_REQUEST['delete'])){
@@ -1340,12 +1314,18 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 				// if (document.all) ifrm.location = url;
 				// else ifrm.src = url;
 				window.open(url, '');			
-		}			 		 	
- 	} 		
+		}	 	
+ 	} 	
+	function editcomment(commentid) {
+  		window.open('editcomment.php?pid=".$person->getXref()."&ucommentid='+commentid, '', 'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');
+  	}
+	function confirm_prompt(text, commentid) {
+    	if (confirm(text)) {
+      		window.location = 'individual.php?pid=".$person->getXref()."&action=delete_comment&uc_id='+commentid;
+    	}
+    }
  	//-->
- </script>
- 	<!-- <iframe name='ifrm' id='ifrm' src='' width='100%' height='50%' frameborder='0'>
-	 </iframe> -->";
+ </script>";
 		$out .= "\n\t<br /><br />";
 		// Return the goods.		 	
 		return $out;
@@ -1431,4 +1411,3 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		return $indirec;
 	}
 }
-?>

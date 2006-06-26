@@ -695,7 +695,7 @@ $pgv_lang["record_not_removed"]	= "לא ניתן להסיר את רשומת #xre
 $pgv_lang["record_added"]		= "רשומת ה-#xref# הוספה בהצלחה לקובץ ה-GEDCOM."; 
 $pgv_lang["record_not_added"]	= "לא ניתן להוסיף את רשומת ה-#xref# לקובץ ה-GEDCOM."; 
 //-- SEARCH FILE MESSAGES
-$pgv_lang["search_gedcom"]		= "חפש קובצי GEDCOM";
+$pgv_lang["search_gedcom"]		= "חפש מאגרי נתונים";
 $pgv_lang["enter_terms"]		= "הכנס תנאי חיפוש";
 $pgv_lang["soundex_search"] 		= "- חפש לפי האיות שאתה משער (סאונדקס)";
 $pgv_lang["sources"]		= "מקורות";
@@ -706,8 +706,7 @@ $pgv_lang["search_year"]		= "שנה";
 $pgv_lang["no_results"]		= "לא נמצאו תוצאות";
 $pgv_lang["invalid_search_input"] 	= "הכנס בבקשה שם פרטי, שם משפחה או מקום בנוסף לשנה";
 $pgv_lang["search_options"]		= "אפשרויות חיפוש";
-
-$pgv_lang["search_geds"]		= "חפש ב-GEDCOM-ים";
+$pgv_lang["search_geds"]		= "מאגרי נתונים בהם יש לחפש"; 
 $pgv_lang["search_type"]		= "סוג חיפוש";
 $pgv_lang["search_general"]		= "חיפוש כללי";
 $pgv_lang["search_soundex"]		= "חיפוש סאונדקס";
@@ -729,7 +728,7 @@ $pgv_lang["search_tagfoff"]		= "ללא פילטר";
 $pgv_lang["associate"]		= "שותף";
 $pgv_lang["search_asso_label"]	= "שותפים";
 $pgv_lang["search_asso_text"]	= "הראה אנשים/משפחות קשורים";
-
+$pgv_lang["results_per_page"]		= "תוצאות לדף"; 
 //-- SOURCELIST FILE MESSAGES
 $pgv_lang["sources_found"]		= "מקורות נמצאו";
 $pgv_lang["titles_found"]		= "כותרות";
@@ -1253,7 +1252,7 @@ $pgv_lang["gedcom_stats"]		= "סטטיסטיקות GEDCOM";
 $pgv_lang["stat_individuals"]		= "אנשים";
 $pgv_lang["stat_families"]		= "משפחות";
 $pgv_lang["stat_sources"]		= "מקורות";
-$pgv_lang["stat_media"]		= "מדיה";
+$pgv_lang["stat_media"]		= "מדיה"; 
 $pgv_lang["stat_other"]		= "רשומות אחרות";
 $pgv_lang["stat_earliest_birth"] 	= "שנת הלידה המוקדמת ביותר";
 $pgv_lang["stat_latest_birth"] 		= "שנת הלידה המאוחרת ביותר";

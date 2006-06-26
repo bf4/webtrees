@@ -503,11 +503,11 @@ if ($controller->action == "general" || $controller->action == "soundex") {
 		</td>
 		<td class="list_value" style="padding: 5px;" colspan="2">
 			<select name="resultsPerPage">
-				<option value="10" <?php if ($controller->resultsPerPage == 10) print " selected"; ?> >10</option>
-				<option value="20" <?php if ($controller->resultsPerPage == 20) print " selected"; ?> >20</option>
-				<option value="30" <?php if ($controller->resultsPerPage == 30) print " selected"; ?> >30</option>
-				<option value="50" <?php if ($controller->resultsPerPage == 50) print " selected"; ?> >50</option>
-				<option value="100"<?php if ($controller->resultsPerPage == 100)print " selected"; ?>>100</option>
+				<option value="10" <?php if ($controller->resultsPerPage == 10) print " selected=\"selected\""; ?> >10</option>
+				<option value="20" <?php if ($controller->resultsPerPage == 20) print " selected=\"selected\""; ?> >20</option>
+				<option value="30" <?php if ($controller->resultsPerPage == 30) print " selected=\"selected\""; ?> >30</option>
+				<option value="50" <?php if ($controller->resultsPerPage == 50) print " selected=\"selected\""; ?> >50</option>
+				<option value="100"<?php if ($controller->resultsPerPage == 100)print " selected=\"selected\""; ?>>100</option>
 			</select>
 		</td>
 	</tr>
