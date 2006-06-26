@@ -638,7 +638,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		dbquery($sql);
 		$sql = "DELETE from ".$TBLPREFIX."taskfacts WHERE tf_t_id='".$taskid."'";
 		dbquery($sql);
-		$sql = "DELETE from ".$TBLPREFIX."individualtasks WHERE it_t_id='".$taskid."'";
+		$sql = "DELETE from ".$TBLPREFIX."individualtask WHERE it_t_id='".$taskid."'";
 		dbquery($sql);
 	}
 	/**
