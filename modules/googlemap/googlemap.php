@@ -84,7 +84,7 @@ function get_lati_long_placelocation ($place) {
 }
 
 function build_indiv_map($indifacts, $famids) {
-    global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOON, $GOOGLEMAP_MAX_ZOON, $GEDCOM, $SERVER_URL;
+    global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOON, $GOOGLEMAP_MAX_ZOON, $GEDCOM;
     global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
     global $GOOGLEMAP_MAX_ZOOM, $GOOGLEMAP_MIN_ZOOM, $TBLPREFIX, $DBCONN;
 
@@ -285,7 +285,7 @@ function build_indiv_map($indifacts, $famids) {
         print "function ResizeMap ()\n{\n}\n</script>\n";
         if (userIsAdmin(getUserName())) {
             print "<tr><td align=\"center\" colspan=\"2\">\n";
-            print "<a href=\"".$SERVER_URL."module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+            print "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
             print "</td></tr>\n";
         }
     }
@@ -469,7 +469,7 @@ function build_indiv_map($indifacts, $famids) {
         print "</td></tr>\n";
         if (userIsAdmin(getUserName())) {
             print "<tr><td align=\"center\" colspan=\"2\">\n";
-            print "<a href=\"".$SERVER_URL."module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+            print "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
             print "</td></tr>\n";
         }
         print "</table>\n";
