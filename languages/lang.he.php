@@ -31,6 +31,12 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["file_information"]			= "מידע על קובץ";
+$pgv_lang["choose_file_type"]			= "בחר סוג קובץ";
+$pgv_lang["add_individual_by_id"]		= "הוסף אדם לפי קוד זיהוי";
+$pgv_lang["advanced_options"]		= "אופציות מתקדמות";
+$pgv_lang["zip_files"]			= "קובץ/קובצי זיפ";
+$pgv_lang["include_media"]			= "כלול מדיה (יוצר קובצי זיפ אוטומטית)";
 $pgv_lang["roman_surn"]			= "שם משפחה לועזי";
 $pgv_lang["roman_givn"]			= "שמות פרטיים לועזיים";
 $pgv_lang["hebrew_surn"]			= "שם משפחה עברי";
@@ -174,6 +180,7 @@ $pgv_lang["stat_most_children"]	= "משפחה עם הכי הרבה ילדים";
 $pgv_lang["stat_average_children"]	= "מספר ממוצע של ילדים למשפחה";
 $pgv_lang["stat_events"]		= "סה\"כ עובדות";
 $pgv_lang["stat_surnames"]		= "סה\"כ שמות משפחה";
+$pgv_lang["stat_media"]		= "ישויות מדיה";
 $pgv_lang["stat_users"]		= "סה\"כ משתמשים";
 $pgv_lang["no_family_facts"]		= "אין עובדות למשפחה זו.";
 
@@ -515,6 +522,7 @@ $pgv_lang["suffix"]			= "סיומת:";
 $pgv_lang["object_note"]		= "הערות הישות:";
 $pgv_lang["sex"]			= "מין";
 $pgv_lang["personal_facts"]		= "עובדות אישיות בפרוט";
+$pgv_lang["lasttab"]			= "החוצץ האחרון של האדם שהייה בשימוש";
 $pgv_lang["type"]			= "סוג";
 $pgv_lang["date"]			= "תאריך";
 $pgv_lang["place_description"]		= "מקום / תיאור";
@@ -694,6 +702,7 @@ $pgv_lang["record_removed"]		= "רשומת #xref# נמחקה בהצלחה מה-G
 $pgv_lang["record_not_removed"]	= "לא ניתן להסיר את רשומת #xref# מה-GEDCOM.";
 $pgv_lang["record_added"]		= "רשומת ה-#xref# הוספה בהצלחה לקובץ ה-GEDCOM."; 
 $pgv_lang["record_not_added"]	= "לא ניתן להוסיף את רשומת ה-#xref# לקובץ ה-GEDCOM."; 
+
 //-- SEARCH FILE MESSAGES
 $pgv_lang["search_gedcom"]		= "חפש מאגרי נתונים";
 $pgv_lang["enter_terms"]		= "הכנס תנאי חיפוש";
@@ -710,6 +719,7 @@ $pgv_lang["search_geds"]		= "מאגרי נתונים בהם יש לחפש";
 $pgv_lang["search_type"]		= "סוג חיפוש";
 $pgv_lang["search_general"]		= "חיפוש כללי";
 $pgv_lang["search_soundex"]		= "חיפוש סאונדקס";
+$pgv_lang["search_replace"]		= "חפש והחלף";
 $pgv_lang["search_inrecs"]		= "חפש";
 $pgv_lang["search_fams"]		= "משפחות";
 $pgv_lang["search_indis"]		= "אנשים";
@@ -729,6 +739,9 @@ $pgv_lang["associate"]		= "שותף";
 $pgv_lang["search_asso_label"]	= "שותפים";
 $pgv_lang["search_asso_text"]	= "הראה אנשים/משפחות קשורים";
 $pgv_lang["results_per_page"]		= "תוצאות לדף"; 
+$pgv_lang["search_record"]		= "רשומה שלמה";
+$pgv_lang["replace_with"]		= "החלף ב-";
+
 //-- SOURCELIST FILE MESSAGES
 $pgv_lang["sources_found"]		= "מקורות נמצאו";
 $pgv_lang["titles_found"]		= "כותרות";
@@ -856,6 +869,16 @@ $pgv_lang["year"]			= "שנה:";
 $pgv_lang["timeline_instructions"]	= "ברוב תוכנות הגלישה החדשות ניתן להקיש ולגרור קופסאות על התרשים.";
 $pgv_lang["zoom_in"]		= "קרב";
 $pgv_lang["zoom_out"]		= "הרחק";
+$pgv_lang["timeline_beginYear"] 	= "שנת התחלה";
+$pgv_lang["timeline_endYear"] 	= "שנת סיום";
+$pgv_lang["timeline_scrollSpeed"] 	= "מהירות";
+$pgv_lang["timeline_zoom"] 		= "זום";
+$pgv_lang["timeline_controls"] 		= "הגדרות קו הזמן";
+$pgv_lang["zoom_default"] 		= "ברירת מחדל";
+$pgv_lang["zoom_2"]		= "זום 2";
+$pgv_lang["zoom_3"]		= "זום 3";
+$pgv_lang["include_family"] 		= "כלול משפחה קרובה";
+$pgv_lang["lifespan_chart"] 		= "תרשים תוהלת חיים";
 
 //-- MONTH NAMES
 $pgv_lang["jan"]			= "ינואר";
@@ -978,6 +1001,7 @@ $pgv_lang["admin_geds"]		= "ניהול מידע ו-GEDCOM-ים";
 $pgv_lang["admin_site"]		= "ניהול האתר";
 
 //-- Relationship chart messages
+$pgv_lang["relationship_great"]	= "Great"; //@@ ??
 $pgv_lang["relationship_chart"]	= "קירבה משפחתית";
 $pgv_lang["person1"]		= "אדם א'";
 $pgv_lang["person2"]		= "אדם ב'";
@@ -1009,6 +1033,78 @@ $pgv_lang["next_path"]		= "מצא הנתיב הבא";
 $pgv_lang["show_path"]		= "הראה את הנתיב";
 $pgv_lang["line_up_generations"]	= "סדר בשורה לפי דורות";
 $pgv_lang["oldest_top"]             	= "הראה את הישן למעלה";
+
+
+// 1st generation
+//* @@ ??
+$pgv_lang["bosa_2"] 				= "Son";
+$pgv_lang["bosa_3"] 				= "Daughter";
+// 2nd generation
+$pgv_lang["bosa_4"] 				= "Grandson";
+$pgv_lang["bosa_5"] 				= "Granddaughter";
+$pgv_lang["bosa_6"] 				= "Grandson";
+$pgv_lang["bosa_7"] 				= "Granddaughter";
+// 3rd generation
+$pgv_lang["bosa_8"] 				= "Great-grandson";
+$pgv_lang["bosa_9"] 				= "Great-granddaughter";
+$pgv_lang["bosa_10"]				= "Great-grandson";
+$pgv_lang["bosa_11"]				= "Great-granddaughter";
+$pgv_lang["bosa_12"]				= "Great-grandson";
+$pgv_lang["bosa_13"]				= "Great-granddaughter";
+$pgv_lang["bosa_14"]				= "Great-grandson";
+$pgv_lang["bosa_15"]				= "Great-granddaughter";
+// 4th generation
+$pgv_lang["bosa_16"]				= "Great-great-grandson";
+$pgv_lang["bosa_17"]				= "Great-great-granddaughter";
+$pgv_lang["bosa_18"]				= "Great-great-grandson";
+$pgv_lang["bosa_19"]				= "Great-great-granddaughter";
+$pgv_lang["bosa_20"]				= "Great-great-grandson";
+$pgv_lang["bosa_21"]				= "Great-great-granddaughter";
+$pgv_lang["bosa_22"]				= "Great-great-grandson";
+$pgv_lang["bosa_23"]				= "Great-great-granddaughter";
+$pgv_lang["bosa_24"]				= "Great-great-grandson";
+$pgv_lang["bosa_25"]				= "Great-great-granddaughter";
+$pgv_lang["bosa_26"]				= "Great-great-grandson";
+$pgv_lang["bosa_27"]				= "Great-great-granddaughter";
+$pgv_lang["bosa_28"]				= "Great-great-grandson";
+$pgv_lang["bosa_29"]				= "Great-great-granddaughter";
+$pgv_lang["bosa_30"]				= "Great-great-grandson";
+$pgv_lang["bosa_31"]				= "Great-great-granddaughter";
+// 5th generation
+$pgv_lang["bosa_32"]			   = "Great-great-great-grandson";
+$pgv_lang["bosa_33"]			   = "Great-great-great-granddaughter";
+$pgv_lang["bosa_34"]			   = "Great-great-great-grandson";
+$pgv_lang["bosa_35"]			   = "Great-great-great-granddaughter";
+$pgv_lang["bosa_36"]			   = "Great-great-great-grandson";
+$pgv_lang["bosa_37"]			   = "Great-great-great-granddaughter";
+$pgv_lang["bosa_38"]			   = "Great-great-great-grandson";
+$pgv_lang["bosa_39"]			   = "Great-great-great-granddaughter";
+$pgv_lang["bosa_40"]			   = "Great-great-great-grandson";
+$pgv_lang["bosa_41"]			   = "Great-great-great-granddaughter";
+$pgv_lang["bosa_42"]			   = "Great-great-great-grandson";
+$pgv_lang["bosa_43"]			   = "Great-great-great-granddaughter";
+$pgv_lang["bosa_44"]			   = "Great-great-great-grandson";
+$pgv_lang["bosa_45"]			   = "Great-great-great-granddaughter";
+$pgv_lang["bosa_46"]			   = "Great-great-great-grandson";
+$pgv_lang["bosa_47"]			   = "Great-great-great-granddaughter";
+$pgv_lang["bosa_48"]			   = "Great-great-great-grandson";
+$pgv_lang["bosa_49"]			   = "Great-great-great-granddaughter";
+$pgv_lang["bosa_50"]			   = "Great-great-great-grandson";
+$pgv_lang["bosa_51"]			   = "Great-great-great-granddaughter";
+$pgv_lang["bosa_52"]			   = "Great-great-great-grandson";
+$pgv_lang["bosa_53"]			   = "Great-great-great-granddaughter";
+$pgv_lang["bosa_54"]			   = "Great-great-great-grandson";
+$pgv_lang["bosa_55"]			   = "Great-great-great-granddaughter";
+$pgv_lang["bosa_56"]			   = "Great-great-great-grandson";
+$pgv_lang["bosa_57"]			   = "Great-great-great-granddaughter";
+$pgv_lang["bosa_58"]			   = "Great-great-great-grandson";
+$pgv_lang["bosa_59"]			   = "Great-great-great-granddaughter";
+$pgv_lang["bosa_60"]			   = "Great-great-great-grandson";
+$pgv_lang["bosa_61"]			   = "Great-great-great-granddaughter";
+$pgv_lang["bosa_62"]			   = "Great-great-great-grandson";
+$pgv_lang["bosa_63"]			   = "Great-great-great-granddaughter";
+// @@
+
 //-- GEDCOM edit utility
 $pgv_lang["check_delete"]		= "?זו GEDCOM האם הנך בטוח שברצונך למחוק עובדת";
 $pgv_lang["access_denied"]		= "<b>גישה נאסרה</b><br />אין לך גישה למשאב זה.";
@@ -1232,7 +1328,7 @@ $pgv_lang["add_to_my_favorites"]	= "הוסף למועדפים שלי";
 $pgv_lang["gedcom_favorites"]	= "המועדפים של הקובץ הזה";
 $pgv_lang["no_gedcom_favorites"]	= "כרגע אין מועדפים שנבחרו. המנהלן יכול להוסיף מועדפים שיוצגו בזמן אתחול.";
 $pgv_lang["confirm_fav_remove"]	= "?האם באמת למחוק אדם זה מרשימת המועדפים שלך";
-$pgv_lang["invalid_email"]		= "דואר אלקטרוני בר תוקף.הכנס כתובת ";
+$pgv_lang["invalid_email"]		= ".הכנס כתובת דואר אלקטרוני בר תוקף";
 $pgv_lang["enter_subject"]		= "הכנס נושא להודעתך";
 $pgv_lang["enter_body"]		= ".מלא טכסט לפני שאתה שולח את ההודעה";
 $pgv_lang["confirm_message_delete"]	= ".האם באמת למחוק הודעה זו? לא ניתן להחזיר אותה לאחר המחיקה";
@@ -1252,7 +1348,6 @@ $pgv_lang["gedcom_stats"]		= "סטטיסטיקות GEDCOM";
 $pgv_lang["stat_individuals"]		= "אנשים";
 $pgv_lang["stat_families"]		= "משפחות";
 $pgv_lang["stat_sources"]		= "מקורות";
-$pgv_lang["stat_media"]		= "מדיה"; 
 $pgv_lang["stat_other"]		= "רשומות אחרות";
 $pgv_lang["stat_earliest_birth"] 	= "שנת הלידה המוקדמת ביותר";
 $pgv_lang["stat_latest_birth"] 		= "שנת הלידה המאוחרת ביותר";
@@ -1839,6 +1934,9 @@ $pgv_lang["TYPE__photo"] 			= "צילום";
 $pgv_lang["TYPE__tombstone"] 		= "מצבה";
 $pgv_lang["TYPE__video"] 			= "וידאו";
 
+//-- Modules
+$pgv_lang["module_error_unknown_action_v2"] 	= "פעולה בלתי ידועה: [פעולה].";
+$pgv_lang["module_error_unknown_type"] 	= "סוג מודול בלתי ידוע.";
 
 //if (file_exists($PGV_BASE_DIRECTORY . "languages/lang.he.extra.php")) require $PGV_BASE_DIRECTORY . "languages/lang.he.extra.php";
 if (file_exists( "languages/lang.he.extra.php")) require  "languages/lang.he.extra.php";
