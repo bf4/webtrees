@@ -120,10 +120,11 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 		print_help_link("index_add_favorites_help", "qm");
 		print "<b><a href=\"javascript: ".$pgv_lang["add_favorite"]." \" onclick=\"expand_layer('add_user_fav'); return false;\"><img id=\"add_user_fav_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" />&nbsp;".$pgv_lang["add_favorite"]."</a></b>";
 		print "<br /><div id=\"add_user_fav\" style=\"display: none;\">\n";
-		print "<form name=\"addufavform\" method=\"get\" action=\"index.php\">\n";
+		print "<form name=\"addufavform\" method=\"post\" action=\"index.php\">\n";
 		print "<input type=\"hidden\" name=\"action\" value=\"addfav\" />\n";
 		print "<input type=\"hidden\" name=\"command\" value=\"$command\" />\n";
 		print "<input type=\"hidden\" name=\"favtype\" value=\"user\" />\n";
+		print "<input type=\"hidden\" name=\"ged\" value=\"$GEDCOM\" />\n";
 		print "<table border=\"0\" cellspacing=\"0\" width=\"100%\"><tr><td>".$pgv_lang["add_fav_enter_id"]." <br />";
 		print "<input class=\"pedigree_form\" type=\"text\" name=\"gid\" id=\"gid\" size=\"3\" value=\"\" />";
 		print_findindi_link("gid","");

@@ -27,6 +27,7 @@ Version 4.1
  - Added Search and Replace feature (Neumont)
 
 Version 4.0.1
+ - Fixed [ 1506564 ] CVS4.0 - Error 406 when try to define URL Favorite (yalnifj)
  - Added [ 1509083 ] Date entry - quarters (opus27)
  - Fixed [ 1506971 ] Missing "Events of close relatives" for Some Individuals (opus27)
  - Added [ 1504541 ] Descendancy Chart - Marriage link (opus27)
