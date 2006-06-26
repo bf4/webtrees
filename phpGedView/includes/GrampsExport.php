@@ -344,7 +344,7 @@ class GrampsExport {
 	 */
 	function create_fam_relation($eParent, $personRec, $tag)
 	{
-		throw new exception("create fam rel - this function is not implemented");
+		//throw new exception("create fam rel - this function is not implemented");
 	}
 
 	/**
@@ -358,7 +358,7 @@ class GrampsExport {
 	 */
 	function create_family($frec, $fid)
 	{
-		throw new exception("create_family - this function is not implemented");
+		//throw new exception("create_family - this function is not implemented");
 	}
 
 	/**
@@ -375,7 +375,7 @@ class GrampsExport {
 	*/
 	function create_lds_event($indirec, $eventName, $eventABV, $eParent)
 	{
-		throw new exception("create_lds_event - this function is not implemented");
+		//throw new exception("create_lds_event - this function is not implemented");
 	}
 
 	/**
@@ -411,7 +411,7 @@ class GrampsExport {
 	  */
 	function create_person($personRec = "", $personID = "")
 	{
-		throw new exception("create_person - this function is not implemented");
+		//throw new exception("create_person - this function is not implemented");
 	
 	}
 	/**
@@ -539,7 +539,7 @@ class GrampsExport {
 	  */
 	function create_sourceref($eParent, $sourcerefRec, $level)
 	{
-		throw new exception("create_sourceref - this function is not implemented");
+		// throw new exception("create_sourceref - this function is not implemented");
 	}
 
 	/**
