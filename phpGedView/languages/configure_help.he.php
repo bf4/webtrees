@@ -30,6 +30,8 @@ if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["SYNC_GEDCOM_FILE_help"] 			= "~#pgv_lang[SYNC_GEDCOM_FILE]#~<br /><br />In past versions of PGV the pending edits were stored in the GEDCOM file and the changed records were then \"accepted\" into the database.  Starting with v4.1 pending changes are no longer stored in the GEDCOM file but in the changes file.  <br /><br />Setting this value to true will update the GEDCOM file when changes are accepted into the database.  This will keep the GEDCOM file synchronized with the database.  For greater compatibility with previous versions the default value of this field is on.<br /><br />You may want to turn it off to conserver memory when accepting changes.<br />";
+$pgv_lang["SYNC_GEDCOM_FILE"]			= "סנכרן שינויים לתוך קובץ GEDCOM";
 $pgv_lang["COMMIT_COMMAND_help"] 			= "~#pgv_lang[COMMIT_COMMAND]#~<br /><br />If you wish to use a version control system such as CVS to archive changes to your GEDCOM file and your configuration or privacy settings, enter the command here.  Leave the box blank if you do not wish to use a version control system.  Valid options are <b>cvs</b> and <b>svn</b>.<br />";
 $pgv_lang["COMMIT_COMMAND"] 			= "פקודת Commit של ניהול מהדורות";
 $pgv_lang["SHOW_MULTISITE_SEARCH_help"]	= "~#pgv_lang[SHOW_MULTISITE_SEARCH]#~<br /><br />Multi-site search allows users to search across multiple PhpGedView websites which you have setup in the Manage Sites administration area or remotely linked to.  This option controls whether the Multi-site Search feature is available to everyone or only to authenticated users.<br />";
