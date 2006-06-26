@@ -42,6 +42,16 @@ VERSION 4.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["search_enter_terms_help"]				26 Jun 2006				w		added search and replace help text
++$pgv_lang["search_replace_help"]					26 Jun 2006				A
++$pgv_lang["add_by_id_help"]						26 Jun 2006				A
++$pgv_lang["zip_help"]								26 Jun 2006				A
++$pgv_lang["include_media_help"]					26 Jun 2006				A
++$pgv_lang["clip_cart_help"]						26 Jun 2006				A
++$pgv_lang["timeline_control_help"]					26 Jun 2006				A
++$pgv_lang["help_lifespan.php"]						26 Jun 2006				A
++$pgv_lang["lifespan_add_person_help"]				26 Jun 2006				A
++$pgv_lang["def_gramps_help"]						26 Jun 2006				A
 *$pgv_lang["help_clippings.php"]       				12 Jun 2006				f		minor html fix
 *$pgv_lang["RESN_help"]								12 Jun 2006				f		minor html fix
 *$pgv_lang["soundex_search_help"]					12 Jun 2006				w		Changed references to Russell soundex to Basic soundex
