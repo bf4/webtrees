@@ -32,8 +32,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"menu.php")) {
     print "Now, why would you want to do that.  You're not hacking are you?";
     exit;
 }
-
-require('modules/googlemap/config.php');
+require( "modules/googlemap/config.php" );
 
 require( $pgv_language["english"]);
 if (file_exists( $pgv_language[$LANGUAGE])) require  $pgv_language[$LANGUAGE];
@@ -396,6 +395,7 @@ if ($action=="ImportFile2") {
         $res = dbquery($sql);
     }
     $lines = file($_FILES["placesfile"]["tmp_name"]);
+    asort($lines);
     $highestIndex = getHighestIndex();
     $placelist = array();
     $j = 0;
@@ -408,13 +408,13 @@ if ($action=="ImportFile2") {
             if ($fieldrec[0] > 1) $placelist[$j]["place"] .= $fieldrec[3].", ";
             if ($fieldrec[0] > 0) $placelist[$j]["place"] .= $fieldrec[2].", ";
             $placelist[$j]["place"] .= $fieldrec[1];
-            $placelist[$j]["lati"] = $fieldrec[5];
-            $placelist[$j]["long"] = $fieldrec[6];
+            $placelist[$j]["long"] = $fieldrec[5];
+            $placelist[$j]["lati"] = $fieldrec[6];
             $placelist[$j]["zoom"] = $fieldrec[7];
+            $placelist[$j]["icon"] = ltrim(rtrim($fieldrec[8]));
             $j = $j + 1;
         }
     }
-    asort($placelist);
 
     $prevPlace = "";
     $prevLati = "";
@@ -428,14 +428,16 @@ if ($action=="ImportFile2") {
             $placelistUniq[$j]["lati"] = $place["lati"];
             $placelistUniq[$j]["long"] = $place["long"];
             $placelistUniq[$j]["zoom"] = $place["zoom"];
+            $placelistUniq[$j]["icon"] = $place["icon"];
             $j = $j + 1;
         } else if (($place["place"] == $prevPlace) && (($place["lati"] != $prevLati) || ($place["long"] != $prevLong))) {
             if (($placelistUniq[$j-1]["lati"] == 0) || ($placelistUniq[$j-1]["long"] == 0)) {
                 $placelistUniq[$j-1]["lati"] = $place["lati"];
                 $placelistUniq[$j-1]["long"] = $place["long"];
                 $placelistUniq[$j-1]["zoom"] = $place["zoom"];
+                $placelistUniq[$j-1]["icon"] = $place["icon"];
             } else if (($place["lati"] != "0") || ($place["long"] != "0")) {
-                print "Verscil: vorige waarde = $prevPlace, $prevLati, $prevLong, huidige = ".$place["place"].", ".$place["lati"].", ".$place["long"]."<br>";
+                print "Differenc: last value = $prevPlace, $prevLati, $prevLong, current = ".$place["place"].", ".$place["lati"].", ".$place["long"]."<br>";
             }
         }
         $prevPlace = $place["place"];
@@ -472,10 +474,10 @@ if ($action=="ImportFile2") {
                     $zoomlevel = $default_zoom_level[$i];
                 }
                 if (($place["lati"] == "0") || ($place["long"] == "0") || (($i+1) < count($parent))) {
-                    $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", \"".$escparent."\", NULL, NULL, ".$default_zoom_level[$i].", NULL);";
+                    $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", \"".$escparent."\", NULL, NULL, ".$default_zoom_level[$i].",\"".$place["icon"]."\");";
                 }
                 else {
-                    $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", \"".$escparent."\", \"".$place["long"]."\" , \"".$place["lati"]."\", ".$default_zoom_level[$i].", NULL);";
+                    $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", \"".$escparent."\", \"".$place["long"]."\" , \"".$place["lati"]."\", ".$default_zoom_level[$i].",\"".$place["icon"]."\");";
                 }
                 $parent_id = $highestIndex;
                 if (userIsAdmin(getUserName())) {
@@ -484,9 +486,8 @@ if ($action=="ImportFile2") {
             }
             else {
                 $parent_id = $row[0];
-                if (($row[1] == "0") && ($row[2] == "0")) {
+                if ((($row[1] == "0") || ($row[1] == null)) && (($row[2] == "0") || ($row[2] == null))) {
                     $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati=\"".$place["lati"]."\",pl_long=\"".$place["long"]."\" where pl_id=$parent_id LIMIT 1";
-                    print $sql."<br>";
                     if (userIsAdmin(getUserName())) {
                         $res = dbquery($sql);
                     }
