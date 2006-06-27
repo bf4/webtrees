@@ -38,7 +38,7 @@ For massive changes, the variable names should be listed in the order in which t
 occur in the respective language files.
 
 
-VERSION 4.0
+VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
@@ -52,6 +52,12 @@ VERSION 4.0
 +$pgv_lang["help_lifespan.php"]						26 Jun 2006				A
 +$pgv_lang["lifespan_add_person_help"]				26 Jun 2006				A
 +$pgv_lang["def_gramps_help"]						26 Jun 2006				A
+
+
+VERSION 4.0
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+-------------------------------------------------------------------------------------------
 *$pgv_lang["help_clippings.php"]       				12 Jun 2006				f		minor html fix
 *$pgv_lang["RESN_help"]								12 Jun 2006				f		minor html fix
 *$pgv_lang["soundex_search_help"]					12 Jun 2006				w		Changed references to Russell soundex to Basic soundex
