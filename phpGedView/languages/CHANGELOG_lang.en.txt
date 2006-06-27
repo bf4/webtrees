@@ -42,6 +42,7 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["clear_chart"]							27 Jun 2006				A
 *$pgv_lang["utf8_to_ansi"]							23 Jun 2006				f
 +$pgv_lang["timeline_beginYear"] 					23 Jun 2006				A
 +$pgv_lang["timeline_endYear"] 						23 Jun 2006				A

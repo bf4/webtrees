@@ -42,6 +42,8 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["help_lifespan.php"]						27 Jun 2006				W
+*$pgv_lang["help_timeline.php"]						27 Jun 2006				w
 *$pgv_lang["search_enter_terms_help"]				26 Jun 2006				w		added search and replace help text
 +$pgv_lang["search_replace_help"]					26 Jun 2006				A
 +$pgv_lang["add_by_id_help"]						26 Jun 2006				A

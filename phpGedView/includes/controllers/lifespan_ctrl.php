@@ -68,6 +68,53 @@ class LifespanControllerRoot extends BaseController {
 	}
 	
 	/**
+	 * Search for individuals who had dates within the given year ranges
+	 * @param int $startyear	the starting year
+	 * @param int $endyear		The ending year
+	 * @return array
+	 */
+	function search_indis_year_range($startyear, $endyear) {
+		global $TBLPREFIX, $GEDCOM, $indilist, $DBCONN, $REGEXP_DB, $DBTYPE, $GEDCOMS;
+	
+		if (stristr($DBTYPE, "mysql")!==false) $term = "REGEXP";
+		else if (stristr($DBTYPE, "pgsql")!==false) $term = "~*";
+		else $term='LIKE';
+	
+		$myindilist = array();
+//select dategroups.d_gid, i_name, dategroups.birth, dategroups.death FROM pgv_individuals,
+//(select d_gid, d_file, MIN(d_datestamp) as birth, MAX(d_datestamp) as death from pgv_dates WHERE d_fact NOT IN ('CHAN','ENDL','SLGC','SLGS','BAPL') GROUP BY d_gid) as dategroups
+//WHERE dategroups.death>=18790000 and dategroups.birth<=18810000 AND i_file=dategroups.d_file AND i_id=dategroups.d_gid
+
+		$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals, ";
+		$sql .= "(select d_gid, d_file, MIN(d_datestamp) as birth, MAX(d_datestamp) as death from ".$TBLPREFIX."dates WHERE d_fact NOT IN ('CHAN','ENDL','SLGC','SLGS','BAPL') AND d_file='".$GEDCOMS[$GEDCOM]['id']."' GROUP BY d_gid) as dategroups ";
+		$sql .= "WHERE dategroups.death >= ".$startyear."0000 AND dategroups.birth<=".$endyear."0000 AND i_file=dategroups.d_file AND i_id=dategroups.d_gid";
+		/*
+		$i=$startyear;
+		while($i <= $endyear) {
+			if ($i > $startyear) $sql .= " OR ";
+			if ($REGEXP_DB) $sql .= "i_gedcom $term '".$DBCONN->escapeSimple("2 DATE[^\n]* ".$i)."'";
+			else $sql .= "i_gedcom LIKE '".$DBCONN->escapeSimple("%2 DATE%".$i)."%'";
+			$i++;
+		}
+		$sql .= ")";
+		*/
+		$sql .= " AND i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+//		print $sql;
+		$res = dbquery($sql);
+	
+		while($row =& $res->fetchRow()){
+			$row = db_cleanup($row);
+			$myindilist[$row[0]]["names"] = get_indi_names($row[3]);
+			$myindilist[$row[0]]["gedfile"] = $row[2];
+			$myindilist[$row[0]]["gedcom"] = $row[3];
+			$myindilist[$row[0]]["isdead"] = $row[4];
+			$indilist[$row[0]] = $myindilist[$row[0]];
+		}
+		$res->free();
+		return $myindilist;
+	}
+	
+	/**
 	 * Initialization function
 	 */
 	function init() {
@@ -97,6 +144,7 @@ class LifespanControllerRoot extends BaseController {
 		}
 		
 		if (isset($_REQUEST['clear'])) unset($_SESSION['timeline_pids']);
+		else {
 		if (isset($_SESSION['timeline_pids'])) $this->pids = $_SESSION['timeline_pids'];
 		
 		//-- pids array
@@ -131,27 +179,30 @@ class LifespanControllerRoot extends BaseController {
 		//-- store the people in the session	
 		$_SESSION['timeline_pids'] = $this->pids;
 		
+		if (empty ($_REQUEST['beginYear']) || empty ($_REQUEST['endYear'])) {
 		//-- cleanup user input
 		$this->pids = array_unique($this->pids);  //removes duplicates
-		foreach ($this->pids as $key => $value) {
-			if ($value != $remove) {
-				$value = clean_input($value);
-				$this->pids[$key] = $value;
-				$person = Person::getInstance($value);
-				if (!is_null($person)) {
-					$byear = $person->getBirthYear();
-					$dyear = $person->getDeathYear();
-						
-					//--Checks to see if the details of that person can be viewed
-					if (!empty ($byear) && !empty ($dyear) && $person->canDisplayDetails()) {
-						$this->people[] = $person;
+			foreach ($this->pids as $key => $value) {
+				if ($value != $remove) {
+					$value = clean_input($value);
+					$this->pids[$key] = $value;
+					$person = Person::getInstance($value);
+					if (!is_null($person)) {
+						$byear = $person->getBirthYear();
+						$dyear = $person->getDeathYear();
+							
+						//--Checks to see if the details of that person can be viewed
+						if (!empty ($byear) && !empty ($dyear) && $person->canDisplayDetails()) {
+							$this->people[] = $person;
+						}
 					}
 				}
 			}
 		}
+		
 
-		//--Finds if the begin year and end year textboxes are empty
-		if (!empty ($_REQUEST['beginYear']) && !empty ($_REQUEST['endYear'])) {
+		//--Finds if the begin year and end year textboxes are not empty
+		else {
 			//-- reset the people array when doing a year range search
 			$this->people = array();
 			//Takes the begining year and end year passed by the postback and modifies them and uses them to populate
@@ -163,23 +214,32 @@ class LifespanControllerRoot extends BaseController {
 			$dyear = $_REQUEST["endYear"];
 			//Variables to restrict the person boxes to the year searched.
 			//--Searches for individuals who had an even between the year begin and end years
-			$indis = search_indis_year_range($byear, $dyear);
+			$indis = $this->search_indis_year_range($byear, $dyear);
+//			print "after query";
+//			print_execution_stats();
 			//--Populates an array of people that had an event within those years
 			foreach ($indis as $pid => $indi) {
-				$person = Person::getInstance($pid);
-				if (!is_null($person)) {
-					$byear = $person->getBirthYear();
-					$dyear = $person->getDeathYear();
-					//--Checks to see if the details of that person can be viewed
-					if (!empty ($byear) && !empty ($dyear) && $person->canDisplayDetails()) {
-						$this->people[] = $person;
+				if (empty($_REQUEST['place']) || in_array($pid, $this->pids)) {
+					$person = Person::getInstance($pid);
+					if (!is_null($person)) {
+						$byear = $person->getBirthYear();
+						$dyear = $person->getDeathYear();
+						//--Checks to see if the details of that person can be viewed
+						if (!empty ($byear) && !empty ($dyear) && $person->canDisplayDetails()) {
+							$this->people[] = $person;
+						}
 					}
 				}
 			}
+			unset($_SESSION['timeline_pids']);
+//			print "after objects";
+//			print_execution_stats();
 		}
 		
 		//--Sort the arrar in order of being year
 		uasort($this->people, "compare_people");
+//		print "after sort";
+//		print_execution_stats();
 		//If there is people in the array posted back this if occurs
 		if (isset ($this->people[0])) {
 			//Find the maximum Death year and mimimum Birth year for each individual returned in the array.
@@ -201,6 +261,7 @@ class LifespanControllerRoot extends BaseController {
 			// Sets the default timeline length
 			$this->timelineMinYear = date("Y") - 101;
 			$this->timelineMaxYear = date("Y");
+		}
 		}
 	}
 	

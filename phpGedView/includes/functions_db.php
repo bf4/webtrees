@@ -384,11 +384,14 @@ function find_media_record($rid, $gedfile='') {
 	$res = dbquery($sql);
 
 	if ($res->numRows()!=0) {
-		$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
-		$objectlist[$rid]["ext"] = stripslashes($row["m_ext"]);
-		$objectlist[$rid]["title"] = stripslashes($row["m_titl"]);
-		$objectlist[$rid]["file"] = stripslashes($row["m_file"]);
-		$objectlist[$rid]["gedcom"] = stripslashes($row["m_gedrec"]);
+		$row = $res->fetchRow(DB_FETCHMODE_ASSOC);
+		$row = db_cleanup($row);
+		$objectlist[$rid]["ext"] = $row["m_ext"];
+		$row["m_titl"] = trim($row["m_titl"]);
+		if (empty($row["m_titl"])) $row["m_titl"] = $row["m_file"];
+		$objectlist[$rid]["title"] = $row["m_titl"];
+		$objectlist[$rid]["file"] = $row["m_file"];
+		$objectlist[$rid]["gedcom"] = $row["m_gedrec"];
 		$objectlist[$rid]["gedfile"] = $row["m_gedfile"];
 		$res->free();
 		return $row["m_gedrec"];

@@ -30,6 +30,7 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["clear_chart"]			= "Clear Chart";
 $pgv_lang["file_information"]		= "File Information";
 $pgv_lang["choose_file_type"]		= "Choose File Type";
 $pgv_lang["add_individual_by_id"]		= "Add Individual By ID";

@@ -122,16 +122,15 @@ else {
 	if ($action != 'download' && $action != 'add') { ?>
 		<form method="post" action="clippings.php">
 		<input type="hidden" name="action" value="download" />
-		<div  style="float:left">
+		<table><tr><td valign="top">
 		<table>
-		<tr><td colspan=2 class="topbottombar"><h2><?php print $pgv_lang["file_information"] ?></h2></td></tr>
+		<tr><td colspan="2" class="topbottombar"><h2><?php print $pgv_lang["file_information"] ?></h2></td></tr>
 		<tr>
 		<td class="descriptionbox wrap"><?php print $pgv_lang["choose_file_type"] ?></td>
-		<td class="optionbox"><input type="radio" name="filetype" checked="checked"  value="gedcom" />GEDCOM 
-		<?php print_help_link("def_gedcom_help", "qm"); ?>
+		<td class="optionbox">
+		&lrm;<input type="radio" name="filetype" checked="checked"  value="gedcom" /> GEDCOM <?php print_help_link("def_gedcom_help", "qm"); ?>&lrm;
 		<br/>
-		<input type="radio" name="filetype" value="gramps" />Gramps XML 
-		<?php print_help_link("def_gramps_help", "qm"); ?>
+		&lrm;<input type="radio" name="filetype" value="gramps" /> Gramps XML <?php print_help_link("def_gramps_help", "qm"); ?>&lrm;
 		</td></tr>
 		</td></tr>
 
@@ -142,7 +141,7 @@ else {
 
 		<tr><td class="optionbox" colspan="2">
 		<br/>
-		<a href="javascript:;" onclick="return expand_layer('advanced');"><img id="advanced_img" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]; ?>" border="0" width="11" height="11" alt="" title="" /><?php print $pgv_lang["advanced_options"]; ?></a>
+		<a href="javascript:;" onclick="return expand_layer('advanced');"><img id="advanced_img" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]; ?>" border="0" width="11" height="11" alt="" title="" /> <?php print $pgv_lang["advanced_options"]; ?></a>
 		<div id="advanced" style="display: none;">
 		<table>
 		<tr><td><input type="checkbox" name="convert" value="yes" /></td><td><?php print $pgv_lang["utf8_to_ansi"]; print_help_link("utf8_ansi_help", "qm"); ?></td></tr>
@@ -196,8 +195,7 @@ else {
 	<?php } ?>
 	<br /><a href="clippings.php?action=empty"><?php print $pgv_lang["empty_cart"]."  "; ?></a>
 	<?php print_help_link("empty_cart_help", "qm"); ?>
-	</div>
-	
+	</td><td valign="top">
 	<table class="list_table">
 		<tr>
 			<td class="list_label"><?php echo $pgv_lang["type"]?></td>
@@ -221,7 +219,7 @@ else {
 			if ($tag=='OBJE') $icon = "media";
 			?>
 			<tr><td clas="list_value"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES[$icon]["small"];?>" border="0" alt="<?php echo $tag;?>" title="<?php echo $tag;?>" /></td>
-			<td class="list_value"><?php echo $clipping['id']?></td>
+			<td class="list_value ltr"><?php echo $clipping['id']?></td>
 			<td class="list_value">
 			<?php
 			$id_ok = true;
@@ -256,8 +254,10 @@ else {
 		<?php
 		}
 	}
-	print "\r\n\t</table>";
-
+?>
+	</table>
+	</td></tr></table>
+<?php
 }
 if (isset($_SESSION["cart"])) $_SESSION["cart"]=$cart;
 print_footer();
