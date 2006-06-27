@@ -39,25 +39,36 @@ require_once 'includes/family_class.php';
 //Basic http auth needed for non browser authentication. If the user is not logged in and fails basic auth, nothing will be returned
 basicHTTPAuthenticateUser();
 
-$icalEvents = array();
+$icalEvents = array(); //array of all ical events
 
+$iCalCalendarType = "lr"; // default to living relatives
 
-$pid = strtoupper($_REQUEST["pid"]);
-//get indi
-$indi = Person::getInstance($pid);
-//FIXME
+if (!empty($_REQUEST["ict"])) $iCalCalendarType = $_REQUEST["ict"]; //iCalCalendarType
 
+if($iCalCalendarType == "lr") { //living relatives
+	$pid = strtoupper($_REQUEST["pid"]);
+	$indi = Person::getInstance($pid); //get indi
+	generateLivingRelativesIcal($indi);
+}
 
-//move up from indi to grandparents
-//and generate events for 2 level (all root's siblings, aunts, uncles and cousins in that branch
-generateChildDescendancyIcal($indi, 2);
-//get root's father and
-//$indi = Person::getInstance('I11');
-//get all descendants (nieces nephews and great-aunts/uncles etc
-//generateChildDescendancyIcal($indi, 4);
+//output the iCal
+outputIcal();
 
-generateIcal();
-
+/**
+ * Generate iCal events for all living relatives of an individual.
+ * This should include the root's siblings, aunts, uncles, cousins in-laws etc.
+ *
+ * @param string $person the root person
+ * @TODO currently only generates descendants
+ */
+function generateLivingRelativesIcal(&$person) {
+	//move up from indi to grandparents
+	//and generate events for 2 level (all root's siblings, aunts, uncles and cousins in that branch
+	generateChildDescendancyIcal($person, 2);
+	//get root's father and
+	//get all descendants (nieces nephews and great-aunts/uncles etc
+	//generateChildDescendancyIcal($person, 4);
+}
 
 /**
  * Generate iCal events for a child descendancy
@@ -117,7 +128,7 @@ function generateFamilyDescendancyIcal(&$person, &$family, $depth) {
 /**
  * Outputs the iCalendar
  */
-function generateIcal(){
+function outputIcal(){
 	global $icalEvents;
 
   	echo getIcalHeader();
