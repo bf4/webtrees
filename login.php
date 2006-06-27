@@ -89,7 +89,8 @@ else {
 			if (isset($url)) {
 				if (stristr($url,$SERVER_URL)!==false) $url = $SERVER_URL;
 			}
-			else $url = $SERVER_URL;
+			//else $url = $SERVER_URL;
+			else $url = "index.php?command=user";
 		}
 	}
 	else if (stristr($url, "index.php")&&!stristr($url, "command=")) {
