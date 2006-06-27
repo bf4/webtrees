@@ -61,7 +61,6 @@ $pgv_lang["gen_tasks"]							= "Auto Generate Tasks";
 // -- RA GENERAL MESSAGES
 $pgv_lang["delete"]								= "Delete";
 $pgv_lang["edit_task"]							= "Edit Task";
-$pgv_lang["id"]									= "ID";
 $pgv_lang["view"]								= "View";
 $pgv_lang["name"]								= "Name";
 $pgv_lang["folder"]								= "Folder";
@@ -184,7 +183,6 @@ $pgv_lang["comment_delete_check"]		= "Are you sure you want to delete this comme
 $pgv_lang["add_new_task"]				= "Add New Task";
 $pgv_lang["title"]						= "Title";
 $pgv_lang["submit"]						= "Submit";
-$pgv_lang["remove"]						= "remove";
 
 //-- RA_EDITTASK MESSAGES
 $pgv_lang["edit_task"]					= "Edit Task";

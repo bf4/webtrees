@@ -32,9 +32,9 @@ require_once("includes/controllers/lifespan_ctrl.php");
 
 //if peeps !null then pass new array for zooming
 
-print_header($pgv_lang["timeline_title"]);
+print_header($pgv_lang["lifespan_chart"]);
 ?>
-<h2><?php print $pgv_lang["timeline_chart"]; ?></h2>
+<h2><?php print $pgv_lang["lifespan_chart"]; ?></h2>
 <style type="text/css">
 <!--
 a.showit {
@@ -84,7 +84,7 @@ span:first-letter {
 }
 -->
 </style>
-
+<table><tr><td>
 <form name="people" action="lifespan.php">
 <table>
 <?php
@@ -206,6 +206,7 @@ var oldMx = 0;
 	document.onmouseup = releaseimage;
 //-->
 </script>
+</td><td>
 <form name="buttons" action="lifespan.php" method="get">
 
   <table>
@@ -240,13 +241,14 @@ var oldMx = 0;
   		<td><input type="text" name="endYear" size="5" value="<?php if (isset($endYear)) print $endYear; ?>" /></td>
   		<td><input type="text" name="place" size="15" value="<?php if (isset($place)) print $place; ?>" /></td>
   		<td><input type="submit" name="search" value="<?php print $pgv_lang["search"]; ?>" /></td>
-
+		<td><input type="button" value="<?php print $pgv_lang['clear_chart']; ?>" onclick="window.location = 'lifespan.php?clear=1';" /></td>
     </tr>  
   </table> 
-  <?php if(count($controller->people) > 0){ foreach($controller->people as $ind=>$person) {
-  ?> <input type="hidden" name="pids[]" value="<?php print $person->getXref(); ?>" />
-  <?php }} ?>
+  <?php if(count($controller->people) > 0){ 
+  	print "<br /><b>".count($controller->people)." ".$pgv_lang['individuals']."</b>";
+  } ?>
 </form>
+</td></tr></table>
 <div id="outerDiv" style="position: relative; width: 99.5%; height: 600px; overflow: hidden; border: solid blue 1px;">
 	<div id="topInner" style="position: absolute; width: 100%; left: -10px; top:-65px; z-index:2; background-color: white" onmousedown="pandiv(); return false;">		
 	<?php $controller->PrintTimeline($controller->timelineMinYear,$controller->timelineMaxYear); ?>
@@ -265,3 +267,4 @@ var maxX = <?php if(!isset($maxX)) $maxX = 0; print $maxX; ?>;  // Sets the boun
 //-->
 </script>
 
+<?php print_footer(); ?>

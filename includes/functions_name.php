@@ -350,10 +350,14 @@ function get_media_descriptor($id) {
 	if ($id=="") return false;
 
 	if (isset($objectlist[$id]["title"])) {
-		return $objectlist[$id]["title"];
+		if (!empty($objectlist[$id]["title"])) return $objectlist[$id]["title"];
+		else return $objectlist[$id]["file"];
 	} else {
 		$gedrec = find_media_record($id);
-		if (!empty($gedrec)) return $objectlist[$id]["title"];
+		if (!empty($gedrec)) {
+			if (!empty($objectlist[$id]["title"])) return $objectlist[$id]["title"];
+			else return $objectlist[$id]["file"];
+		}
 	}
 	return false;
 }
