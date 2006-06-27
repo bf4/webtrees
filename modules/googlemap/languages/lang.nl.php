@@ -27,6 +27,7 @@ $pgv_lang["gm_map_size"]            = "Afmeting van de kaart (in pixels)";
 $pgv_lang["gm_map_size_x"]          = "Breedte";
 $pgv_lang["gm_map_size_y"]          = "Hoogte";
 $pgv_lang["gm_map_zoom"]            = "Zoom factor van de kaart";
+$pgv_lang["gm_digits"]              = "cijfers";
 
 $pgv_lang["GOOGLEMAP_API_KEY_help"]	= "~#pgv_lang[googlemapkey]#~<br /><br />Insert your Google Map API key here.";
 
@@ -47,7 +48,7 @@ $pgv_lang["pl_south_short"]         = "Z";
 $pgv_lang["pl_east_short"]          = "O";
 $pgv_lang["pl_west_short"]          = "W";
 $pgv_lang["pl_places_filename"]     = "Bestand met locatiegegevens (CSV)";
-$pgv_lang["pl_clean_db"]            = "Alle loactiegegevens verwijderen voor importeren?";
+$pgv_lang["pl_clean_db"]            = "Alle locatiegegevens verwijderen voor importeren?";
 $pgv_lang["pl_no_places_found"]     = "Geen plaatsen gevonden";
 $pgv_lang["pl_use_this_value"]      = "Deze waarde gebruiken";
 $pgv_lang["pl_precision"]           = "Precisie";

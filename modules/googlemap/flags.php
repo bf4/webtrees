@@ -25,6 +25,7 @@
  */
 
 require "config.php";
+require "modules/googlemap/defaultconfig.php";
 require "modules/googlemap/config.php";
 require "includes/functions_edit.php";
 require "includes/functions_import.php";
@@ -115,6 +116,18 @@ else {
         if (window.opener.showchanges) window.opener.showchanges();
         window.close();
     }
+
+var helpWin;
+function helpPopup(which) {
+    if ((!helpWin)||(helpWin.closed)) helpWin = window.open('module.php?mod=googlemap&pgvaction=editconfig_help&help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
+    else helpWin.location = 'modules/googlemap/editconfig_help.php?help='+which;
+    return false;
+}
+
+function getHelp(which) {
+    if ((helpWin)&&(!helpWin.closed)) helpWin.location='module.php?mod=googlemap&pgvaction=editconfig_help&help='+which;
+}
+
 //-->
 </script>
 <?php
@@ -130,6 +143,7 @@ else {
     <table class="facts_table">
         <tr>
             <td class="optionbox" colspan="4">
+                <?php print_help_link("PLE_FLAGS_help", "qm", "PLE_FLAGS");?>
                 <select name="COUNTRYSELECT" dir="ltr" tabindex="0" onchange="selectCountry()">
                     <option value="Countries">Countries</option>
 <?php               for ($i = 0; $i < count($country); $i++) {

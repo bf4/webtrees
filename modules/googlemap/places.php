@@ -32,6 +32,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"menu.php")) {
     print "Now, why would you want to do that.  You're not hacking are you?";
     exit;
 }
+require( "modules/googlemap/defaultconfig.php" );
 require( "modules/googlemap/config.php" );
 
 require( $pgv_language["english"]);
@@ -602,6 +603,17 @@ function delete_place(placeid) {
     }
 }
 
+var helpWin;
+function helpPopup(which) {
+    if ((!helpWin)||(helpWin.closed)) helpWin = window.open('module.php?mod=googlemap&pgvaction=editconfig_help&help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
+    else helpWin.location = 'modules/googlemap/editconfig_help.php?help='+which;
+    return false;
+}
+
+function getHelp(which) {
+    if ((helpWin)&&(!helpWin.closed)) helpWin.location='module.php?mod=googlemap&pgvaction=editconfig_help&help='+which;
+}
+
 function showchanges() {
     window.location = '<?php print $_SERVER["REQUEST_URI"]; ?>&show_changes=yes';
 }
@@ -618,7 +630,7 @@ if (count($placelist) <> 0) {
             <td class="descriptionbox"><?php print $factarray["LONG"];?></td>
             <td class="descriptionbox"><?php print $pgv_lang["pl_zoom_factor"];?></td>
             <td class="descriptionbox"><?php print $pgv_lang["pl_place_icon"];?></td>
-            <td class="descriptionbox" colspan="2"><?php print $pgv_lang["pl_edit"];?></td>
+            <td class="descriptionbox" colspan="2"><?php print_help_link("PL_EDIT_LOCATION_help", "qm", "PL_EDIT_LOCATION");?><?php print $pgv_lang["pl_edit"];?></td>
         </tr>
     <?php
     for($i = 0; $i < count($placelist); $i++)
@@ -673,18 +685,18 @@ if (count($placelist) <> 0) {
 ?>
     <table class="facts_table">
         <tr>
-        <td class="optionbox" colspan="2"><a href="javascript:;" onclick="add_place_location(<?php print get_place_parent_id_loc($parent, $level);?>);"><?php print $pgv_lang["pl_add_place"];?></a></td>
+            <td class="optionbox" colspan="2"><?php print_help_link("PL_ADD_LOCATION_help", "qm", "PL_ADD_LOCATION");?><a href="javascript:;" onclick="add_place_location(<?php print get_place_parent_id_loc($parent, $level);?>);"><?php print $pgv_lang["pl_add_place"];?></a></td>
         </tr>
         <tr>
-            <td class="optionbox"><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=curr&level=<?php print $level.$placelink;?>"><?php print $pgv_lang["pl_import_gedcom"];?></a></td>
-            <td class="optionbox"><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=all&level=<?php print $level.$placelink;?>"><?php print $pgv_lang["pl_import_all_gedcom"];?></a></td>
+            <td class="optionbox"><?php print_help_link("PL_IMPORT_GEDCOM_help", "qm", "PL_IMPORT_GEDCOM");?><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=curr&level=<?php print $level.$placelink;?>"><?php print $pgv_lang["pl_import_gedcom"];?></a></td>
+            <td class="optionbox"><?php print_help_link("PL_IMPORT_ALL_GEDCOM_help", "qm", "PL_IMPORT_ALL_GEDCOM");?><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=all&level=<?php print $level.$placelink;?>"><?php print $pgv_lang["pl_import_all_gedcom"];?></a></td>
         </tr>
         <tr>
-            <td class="optionbox" colspan="2"><a href="module.php?mod=googlemap&pgvaction=places&action=ImportFile&mode=add"><?php print $pgv_lang["pl_import_file"];?></a></td>
+            <td class="optionbox" colspan="2"><?php print_help_link("PL_IMPORT_FILE_help", "qm", "PL_IMPORT_FILE");?><a href="module.php?mod=googlemap&pgvaction=places&action=ImportFile&mode=add"><?php print $pgv_lang["pl_import_file"];?></a></td>
         </tr>
         <tr>
-            <td class="optionbox"><a href="module.php?mod=googlemap&pgvaction=places&action=ExportFile&level=<?php print $level.$placelink;?>"><?php print $pgv_lang["pl_export_file"];?></a></td>
-            <td class="optionbox"><a href="module.php?mod=googlemap&pgvaction=places&action=ExportFile&level=0"><?php print $pgv_lang["pl_export_all_file"];?></a></td>
+            <td class="optionbox"><?php print_help_link("PL_EXPORT_FILE_help", "qm", "PL_EXPORT_FILE");?><a href="module.php?mod=googlemap&pgvaction=places&action=ExportFile&level=<?php print $level.$placelink;?>"><?php print $pgv_lang["pl_export_file"];?></a></td>
+            <td class="optionbox"><?php print_help_link("PL_EXPORT_ALL_FILE_help", "qm", "PL_EXPORT_ALL_FILE");?><a href="module.php?mod=googlemap&pgvaction=places&action=ExportFile&level=0"><?php print $pgv_lang["pl_export_all_file"];?></a></td>
         </tr>
     </table><br>
 
