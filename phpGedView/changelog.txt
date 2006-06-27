@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1511527 ] LOGIN failure (canajun2eh)
  - Fixed [ 1511803 ] Missing variable "newrec" on Family view (yalnifj)
  - Fixed [ 1512101 ] 4.0 stable: Incorrect language for (unknown) in Family list (canajun2eh)
  - Fixed [ 1511278 ] 4.0: Search page contains untranslated text (canajun2eh)
