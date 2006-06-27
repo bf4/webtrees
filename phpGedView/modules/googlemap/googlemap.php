@@ -25,6 +25,7 @@
  * @author Johan Borkhuis
  */
 
+require('modules/googlemap/defaultconfig.php');
 require('modules/googlemap/config.php');
 
 require( "modules/googlemap/".$pgv_language["english"]);

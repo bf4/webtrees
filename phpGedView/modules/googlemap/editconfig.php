@@ -33,7 +33,8 @@ if (strstr($_SERVER["SCRIPT_NAME"],"menu.php")) {
     exit;
 }
 
-require('modules/googlemap/config.php');
+require('modules/googlemap/defaultconfig.php');
+if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
 
 require( $pgv_language["english"]);
 if (file_exists( $pgv_language[$LANGUAGE])) require  $pgv_language[$LANGUAGE];
@@ -62,13 +63,19 @@ if (!userIsAdmin(getUserName())) {
 
 if ($action=="update" && !isset($security_user)) {
     if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
-    $configtext = implode('', file("modules/googlemap/config.php"));
+    $configtext = implode('', file("modules/googlemap/defaultconfig.php"));
     $configtext = preg_replace('/\$GOOGLEMAP_API_KEY\s*=\s*".*";/', "\$GOOGLEMAP_API_KEY = \"".$_POST["NEW_GOOGLEMAP_API_KEY"]."\";", $configtext);
     $configtext = preg_replace('/\$GOOGLEMAP_MAP_TYPE\s*=\s*".*";/', "\$GOOGLEMAP_MAP_TYPE = \"".$_POST["NEW_GOOGLEMAP_MAP_TYPE"]."\";", $configtext);
     $configtext = preg_replace('/\$GOOGLEMAP_MIN_ZOOM\s*=\s*".*";/', "\$GOOGLEMAP_MIN_ZOOM = \"".$_POST["NEW_GOOGLEMAP_MIN_ZOOM"]."\";", $configtext);
     $configtext = preg_replace('/\$GOOGLEMAP_MAX_ZOOM\s*=\s*".*";/', "\$GOOGLEMAP_MAX_ZOOM = \"".$_POST["NEW_GOOGLEMAP_MAX_ZOOM"]."\";", $configtext);
     $configtext = preg_replace('/\$GOOGLEMAP_XSIZE\s*=\s*".*";/', "\$GOOGLEMAP_XSIZE = \"".$_POST["NEW_GOOGLEMAP_XSIZE"]."\";", $configtext);
     $configtext = preg_replace('/\$GOOGLEMAP_YSIZE\s*=\s*".*";/', "\$GOOGLEMAP_YSIZE = \"".$_POST["NEW_GOOGLEMAP_YSIZE"]."\";", $configtext);
+    $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_0\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_0 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_0"]."\";", $configtext, -1, $count);
+    $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_1\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_1 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_1"]."\";", $configtext, -1, $count);
+    $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_2\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_2 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_2"]."\";", $configtext, -1, $count);
+    $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_3\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_3 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_3"]."\";", $configtext, -1, $count);
+    $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_4\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_4 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_4"]."\";", $configtext, -1, $count);
+    $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_5\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_5 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_5"]."\";", $configtext, -1, $count);
 
     $res = @eval($configtext);
     if ($res===false) {
@@ -102,6 +109,7 @@ $i = 0;
 	function getHelp(which) {
 		if ((helpWin)&&(!helpWin.closed)) helpWin.location='module.php?mod=googlemap&pgvaction=editconfig_help&help='+which;
 	}
+
 	function closeHelp() {
 		if (helpWin) helpWin.close();
 	}
@@ -149,6 +157,51 @@ $i = 0;
             </select>
         </td>
     </tr>
+    <tr>
+        <td class="descriptionbox"><?php print_help_link("GOOGLEMAP_PRECISION_help", "qm", "GOOGLEMAP_PRECISION"); print $pgv_lang["pl_precision"];?></td>
+        <td class="optionbox">
+            <table><tr>
+            <td><?php print $pgv_lang["pl_country"];?>&nbsp;&nbsp;</td>
+            <td><select name="NEW_GOOGLEMAP_PRECISION_0" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
+                <?php for ($j=0; $j < 10; $j++) { ?>
+                <option value="<?php print $j;?>"<?php if ($GOOGLEMAP_PRECISION_0==$j) print " selected=\"selected\""; print ">".$j;?></option>
+                <?php } ?>
+            </select>&nbsp;&nbsp;<?php print $pgv_lang["gm_digits"];?></td></tr>
+            <tr><td><?php print $pgv_lang["pl_state"];?>&nbsp;&nbsp;</td>
+            <td><select name="NEW_GOOGLEMAP_PRECISION_1" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
+                <?php for ($j=0; $j < 10; $j++) { ?>
+                <option value="<?php print $j;?>"<?php if ($GOOGLEMAP_PRECISION_1==$j) print " selected=\"selected\""; print ">".$j;?></option>
+                <?php } ?>
+            </select>&nbsp;&nbsp;<?php print $pgv_lang["gm_digits"];?></td></tr>
+            <tr><td><?php print $pgv_lang["pl_city"];?>&nbsp;&nbsp;</td>
+            <td><select name="NEW_GOOGLEMAP_PRECISION_2" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
+                <?php for ($j=0; $j < 10; $j++) { ?>
+                <option value="<?php print $j;?>"<?php if ($GOOGLEMAP_PRECISION_2==$j) print " selected=\"selected\""; print ">".$j;?></option>
+                <?php } ?>
+            </select>&nbsp;&nbsp;<?php print $pgv_lang["gm_digits"];?></td></tr>
+            <tr><td><?php print $pgv_lang["pl_neighborhood"];?>&nbsp;&nbsp;</td>
+            <td><select name="NEW_GOOGLEMAP_PRECISION_3" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
+                <?php for ($j=0; $j < 10; $j++) { ?>
+                <option value="<?php print $j;?>"<?php if ($GOOGLEMAP_PRECISION_3==$j) print " selected=\"selected\""; print ">".$j;?></option>
+                <?php } ?>
+            </select>&nbsp;&nbsp;<?php print $pgv_lang["gm_digits"];?></td></tr>
+            <tr><td><?php print $pgv_lang["pl_house"];?>&nbsp;&nbsp;</td>
+            <td><select name="NEW_GOOGLEMAP_PRECISION_4" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
+                <?php for ($j=0; $j < 10; $j++) { ?>
+                <option value="<?php print $j;?>"<?php if ($GOOGLEMAP_PRECISION_4==$j) print " selected=\"selected\""; print ">".$j;?></option>
+                <?php } ?>
+            </select>&nbsp;&nbsp;<?php print $pgv_lang["gm_digits"];?></td></tr>
+            <tr><td><?php print $pgv_lang["pl_max"];?>&nbsp;&nbsp;</td>
+            <td><select name="NEW_GOOGLEMAP_PRECISION_5" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('GOOGLEMAP_PRECISION_help');">
+                <?php for ($j=0; $j < 10; $j++) { ?>
+                <option value="<?php print $j;?>"<?php if ($GOOGLEMAP_PRECISION_5==$j) print " selected=\"selected\""; print ">".$j;?></option>
+                <?php } ?>
+            </select>&nbsp;&nbsp;<?php print $pgv_lang["gm_digits"];?></td></tr>
+            </tr></table>
+        </td>
+    </tr>
+    </table>
+    <table class="facts_table">
     <tr>
         <td class="descriptionbox" colspan="2" align="center">
             <a href="module.php?mod=googlemap&pgvaction=places"><?php print $pgv_lang["edit_place_locations"];?></a>

@@ -28,6 +28,7 @@ $pgv_lang["gm_map_size"]            = "Size of map (in pixels)";
 $pgv_lang["gm_map_size_x"]          = "Width";
 $pgv_lang["gm_map_size_y"]          = "Height";
 $pgv_lang["gm_map_zoom"]            = "Zoom factor of map";
+$pgv_lang["gm_digits"]              = "digits";
 
 $pgv_lang["GOOGLEMAP_API_KEY_help"]	= "~#pgv_lang[googlemapkey]#~<br /><br />Insert your Google Map API key here.";
 
