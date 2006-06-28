@@ -42,6 +42,7 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["index_htmlplus_content_help"]			27 Jun 2006				w
 *$pgv_lang["help_lifespan.php"]						27 Jun 2006				W
 *$pgv_lang["help_timeline.php"]						27 Jun 2006				w
 *$pgv_lang["search_enter_terms_help"]				26 Jun 2006				w		added search and replace help text
@@ -141,7 +142,7 @@ VERSION 4.0
 +$pgv_lang["upload_media_file_help"]				11 February 2006		A
 +$pgv_lang["upload_thumbnail_file_help"]			11 February 2006		A
 *$pgv_lang["edit_TYPE_help"]						24 January, 2006		W
-*$pgv_lang["edit__THUM_help"]						18 January, 2006		W	Major re-write 
+*$pgv_lang["edit__THUM_help"]						18 January, 2006		W	Major re-write
 *$pgv_lang["link_remote_help"]						12 January, 2006		S	Changed wiki link URLS
 +$pgv_lang["random_media_persons_or_all_help"]		24 December, 2005		A
 +$pgv_lang["help_familybook.php"]					14 December, 2005		A
