@@ -346,8 +346,8 @@ function build_indiv_map($indifacts, $famids) {
                             print "    ".$marker["name"][$j]."_flag.image = \"".$marker["icon"][$j]."\";\n";
                             print "    ".$marker["name"][$j]."_flag.shadow = \"modules/googlemap/flag_shadow.png\";\n";
                             print "    ".$marker["name"][$j]."_flag.iconSize = new GSize(25, 15);\n";
-                            print "    ".$marker["name"][$j]."_flag.shadowSize = new GSize(30, 20);\n";
-                            print "    ".$marker["name"][$j]."_flag.iconAnchor = new GPoint(12, 7);\n";
+                            print "    ".$marker["name"][$j]."_flag.shadowSize = new GSize(35, 45);\n";
+                            print "    ".$marker["name"][$j]."_flag.iconAnchor = new GPoint(1, 45);\n";
                             print "    ".$marker["name"][$j]."_flag.infoWindowAnchor = new GPoint(5, 1);\n";
                             print "    var ".$marker["name"][$j]." = new GMarker(new GLatLng(".$mapdata["lati"][$j].", ".$mapdata["lng"][$j]."), ".$marker["name"][$j]."_flag);\n";
                         }
@@ -384,8 +384,8 @@ function build_indiv_map($indifacts, $famids) {
                             print "    ".$marker["name"][$j]."_".$markerindex."_flag.image = \"".$marker["icon"][$j]."\";\n";
                             print "    ".$marker["name"][$j]."_".$markerindex."_flag.shadow = \"modules/googlemap/flag_shadow.png\";\n";
                             print "    ".$marker["name"][$j]."_".$markerindex."_flag.iconSize = new GSize(25, 15);\n";
-                            print "    ".$marker["name"][$j]."_".$markerindex."_flag.shadowSize = new GSize(30, 20);\n";
-                            print "    ".$marker["name"][$j]."_".$markerindex."_flag.iconAnchor = new GPoint(12, 7);\n";
+                            print "    ".$marker["name"][$j]."_".$markerindex."_flag.shadowSize = new GSize(35, 45);\n";
+                            print "    ".$marker["name"][$j]."_".$markerindex."_flag.iconAnchor = new GPoint(1, 45);\n";
                             print "    ".$marker["name"][$j]."_".$markerindex."_flag.infoWindowAnchor = new GPoint(5, 1);\n";
                             print "    var ".$marker["name"][$j]."_".$markerindex." = new GMarker(new GLatLng(".$mapdata["lati"][$j].", ".$mapdata["lng"][$j]."), ".$marker["name"][$j]."_".$markerindex."_flag);\n";
                         }

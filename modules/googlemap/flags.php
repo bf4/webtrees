@@ -133,6 +133,24 @@ function getHelp(which) {
 <?php
 
 }
+    if (!isset($_SESSION['flags_countrylist'])) {
+        $countryList = array();
+        $placesDir = scandir('./places/');
+        for ($i = 0; $i < count($country); $i++) {
+            if (count(preg_grep('/'.$country[$i].'/', $placesDir)) != 0) {
+                $rep = opendir('./places/'.$country[$i].'/');
+                while ($file = readdir($rep)) {
+                    if (stristr($file, "flags")) {
+                        $countryList[] = $country[$i];
+                    }
+                }
+                closedir($rep);
+            }
+        }
+        $_SESSION['flags_countrylist'] = serialize($countryList);
+    } else {
+        $countryList = unserialize($_SESSION['flags_countrylist']);
+    }
 ?>
 
 
@@ -146,10 +164,10 @@ function getHelp(which) {
                 <?php print_help_link("PLE_FLAGS_help", "qm", "PLE_FLAGS");?>
                 <select name="COUNTRYSELECT" dir="ltr" tabindex="0" onchange="selectCountry()">
                     <option value="Countries">Countries</option>
-<?php               for ($i = 0; $i < count($country); $i++) {
-                        print "                    <option value=\"".$country[$i]."\"";
-                        if ($countrySelected == $country[$i]) print " selected=\"selected\" ";
-                        print ">".$countries[$country[$i]]."</option>\n";
+<?php               for ($i = 0; $i < count($countryList); $i++) {
+                        print "                    <option value=\"".$countryList[$i]."\"";
+                        if ($countrySelected == $countryList[$i]) print " selected=\"selected\" ";
+                        print ">".$countries[$countryList[$i]]."</option>\n";
                     } ?>
                     
                 </select>

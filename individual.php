@@ -243,7 +243,7 @@ function togglerow(label) {
 }
 function tabswitch(n) {
 	var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog');
-	<?php if (file_exists("modules/googlemap/config.php")) {?>
+	<?php if (file_exists("modules/googlemap/defaultconfig.php")) {?>
 	var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog','googlemap');
 	<?php }?>
 	if (!tabid[n]) n = 1;
@@ -312,7 +312,7 @@ if (!$controller->isPrintPreview()) {
 <dd id="door4"><a href="javascript:;" onclick="tabswitch(4)" ><?php print $pgv_lang["media"]?></a></dd>
 <dd id="door5"><a href="javascript:;" onclick="tabswitch(5)" ><?php print $pgv_lang["relatives"]?></a></dd>
 <dd id="door6"><a href="javascript:;" onclick="tabswitch(6)" ><?php print $pgv_lang["research_assistant"]?></a></dd>
-<?php if (file_exists("modules/googlemap/config.php")) {?>
+<?php if (file_exists("modules/googlemap/defaultconfig.php")) {?>
 <dd id="door7"><a href="javascript:;" onclick="tabswitch(7);ResizeMap();ResizeMap()" ><?php print $pgv_lang["googlemap"]?></a></dd>
 <?php }?>
 <dd id="door0"><a href="javascript:;" onclick="tabswitch(0);ResizeMap();ResizeMap()" ><?php print $pgv_lang["all"]?></a></dd>
@@ -1014,7 +1014,7 @@ else print "<table class=\"facts_table\"><tr><td id=\"no_tab6\" colspan=\"2\" cl
 <?php
 //--------------------------------Start 7th tab individual page
 //--- Google map
-if (file_exists("modules/googlemap/config.php")) {
+if (file_exists("modules/googlemap/defaultconfig.php")) {
 	print "\n\t<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\">";
 	    print "<span class=\"subheaders\">".$pgv_lang["googlemap"]."</span>";
         if (!$controller->indi->canDisplayName()) {

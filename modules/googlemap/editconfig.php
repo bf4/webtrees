@@ -70,12 +70,12 @@ if ($action=="update" && !isset($security_user)) {
     $configtext = preg_replace('/\$GOOGLEMAP_MAX_ZOOM\s*=\s*".*";/', "\$GOOGLEMAP_MAX_ZOOM = \"".$_POST["NEW_GOOGLEMAP_MAX_ZOOM"]."\";", $configtext);
     $configtext = preg_replace('/\$GOOGLEMAP_XSIZE\s*=\s*".*";/', "\$GOOGLEMAP_XSIZE = \"".$_POST["NEW_GOOGLEMAP_XSIZE"]."\";", $configtext);
     $configtext = preg_replace('/\$GOOGLEMAP_YSIZE\s*=\s*".*";/', "\$GOOGLEMAP_YSIZE = \"".$_POST["NEW_GOOGLEMAP_YSIZE"]."\";", $configtext);
-    $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_0\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_0 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_0"]."\";", $configtext, -1, $count);
-    $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_1\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_1 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_1"]."\";", $configtext, -1, $count);
-    $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_2\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_2 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_2"]."\";", $configtext, -1, $count);
-    $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_3\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_3 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_3"]."\";", $configtext, -1, $count);
-    $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_4\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_4 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_4"]."\";", $configtext, -1, $count);
-    $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_5\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_5 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_5"]."\";", $configtext, -1, $count);
+    $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_0\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_0 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_0"]."\";", $configtext);
+    $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_1\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_1 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_1"]."\";", $configtext);
+    $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_2\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_2 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_2"]."\";", $configtext);
+    $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_3\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_3 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_3"]."\";", $configtext);
+    $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_4\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_4 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_4"]."\";", $configtext);
+    $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_5\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_5 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_5"]."\";", $configtext);
 
     $res = @eval($configtext);
     if ($res===false) {

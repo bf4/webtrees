@@ -88,7 +88,7 @@ if ($action=="addrecord") {
     if (userIsAdmin(getUserName())) {
         $res = dbquery($sql);
     }
-    // if ($EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
+    if ($EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
     print "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();\">".$pgv_lang["close_window"]."</a></div><br />\n";
     print_simple_footer();
     exit;
@@ -100,7 +100,7 @@ if ($action=="updaterecord") {
     if (userIsAdmin(getUserName())) {
         $res = dbquery($sql);
     }
-    // if ($EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
+    if ($EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
     print "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();\">".$pgv_lang["close_window"]."</a></div><br />\n";
     print_simple_footer();
     exit;
@@ -284,8 +284,8 @@ if ($action=="add") {
             flagicon.image = document.editplaces.icon.value;
             flagicon.shadow = "modules/googlemap/flag_shadow.png";
             flagicon.iconSize = new GSize(25, 15);
-            flagicon.shadowSize = new GSize(30, 20);
-            flagicon.iconAnchor = new GPoint(12, 7);
+            flagicon.shadowSize = new GSize(35, 45);
+            flagicon.iconAnchor = new GPoint(1, 45);
             flagicon.infoWindowAnchor = new GPoint(5, 1);
             map.addOverlay(new GMarker(point, flagicon));
         } 
@@ -357,8 +357,8 @@ if ($action=="add") {
                         flagicon.image = document.editplaces.icon.value;
                         flagicon.shadow = "modules/googlemap/flag_shadow.png";
                         flagicon.iconSize = new GSize(25, 15);
-                        flagicon.shadowSize = new GSize(30, 20);
-                        flagicon.iconAnchor = new GPoint(12, 7);
+                        flagicon.shadowSize = new GSize(35, 45);
+                        flagicon.iconAnchor = new GPoint(1, 45);
                         flagicon.infoWindowAnchor = new GPoint(5, 1);
                         map.addOverlay(new GMarker(newval, flagicon));
                     } 
@@ -405,8 +405,8 @@ if ($action=="add") {
                         print "            flagicon.image = \"".$row[3]."\";\n";
                         print "            flagicon.shadow = \"modules/googlemap/flag_shadow.png\";\n";
                         print "            flagicon.iconSize = new GSize(25, 15);\n";
-                        print "            flagicon.shadowSize = new GSize(30, 20);\n";
-                        print "            flagicon.iconAnchor = new GPoint(12, 7);\n";
+                        print "            flagicon.shadowSize = new GSize(35, 45);\n";
+                        print "            flagicon.iconAnchor = new GPoint(1, 45);\n";
                         print "            flagicon.infoWindowAnchor = new GPoint(5, 1);\n";
                         print "            childplaces.push(new GMarker(new GLatLng(".str_replace(array('N', 'S'), array('', '-') , $row[1]).", ".str_replace(array('E', 'W'), array('', '-') ,$row[2])."), flagicon));\n";
                     }
@@ -426,7 +426,7 @@ if ($action=="add") {
             flagicon.image = "<?php print $place_icon;?>";
             flagicon.shadow = "modules/googlemap/flag_shadow.png";
             flagicon.iconSize = new GSize(25, 15);
-            flagicon.shadowSize = new GSize(30, 20);
+            flagicon.shadowSize = new GSize(35, 45);
             flagicon.iconAnchor = new GPoint(12, 7);
             flagicon.infoWindowAnchor = new GPoint(5, 1);
             map.addOverlay(new GMarker(new GLatLng(<?php print $place_lati.", ".$place_long;?>), flagicon));
