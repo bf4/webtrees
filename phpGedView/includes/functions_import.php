@@ -191,6 +191,9 @@ function import_record($indirec, $update = false) {
 				$firstName_std_soundex .= ":" . soundex($fn_nospaces);
 				$firstName_dm_soundex .= ":" . implode(":", array_unique($dm_array));
 				
+				$std_array = explode(":", $firstName_std_soundex);
+				$std_array = array_unique($std_array);
+				$firstName_std_soundex = implode(":", $std_array);
 				$sql .= "'".$DBCONN->escapeSimple(substr($firstName_std_soundex,1))."'," .
 						"'".$DBCONN->escapeSimple(substr($firstName_dm_soundex,1))."',";
 			}
