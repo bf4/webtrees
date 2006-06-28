@@ -55,7 +55,10 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 		$pgv_lang,
 		$TBLPREFIX,
 		$TEXT_DIRECTION,
-		$DEFAULT_GEDCOM
+		$DEFAULT_GEDCOM,
+		$MULTI_MEDIA,
+		$SHOW_ID_NUMBERS,
+		$listDir
 	;
 	if(empty($config))
 	{
@@ -265,7 +268,9 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 	 * Media Tags
 	 */
 	if(
-		isset($tags['HIGHLIGHT'])
+		isset($tags['HIGHLIGHT']) ||
+		isset($tags['HIGHLIGHT_LEFT']) ||
+		isset($tags['HIGHLIGHT_RIGHT'])
 	)
 	{
 		$highlight = false;
@@ -282,13 +287,23 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 			$imgsize = findImageSize($highlight);
 			$keywords[] = '#HIGHLIGHT#';
 			$dynamic[] = "<a href=\"index.php?command=gedcom&amp;ged={$GEDCOM}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" /></a>";
+			$keywords[] = '#HIGHLIGHT_LEFT#';
+			$dynamic[] = "<a href=\"index.php?command=gedcom&amp;ged={$GEDCOM}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"left\" /></a>";
+			$keywords[] = '#HIGHLIGHT_RIGHT#';
+			$dynamic[] = "<a href=\"index.php?command=gedcom&amp;ged={$GEDCOM}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"right\" /></a>";
 		}
 		else
 		{
 			$keywords[] = '#HIGHLIGHT#';
 			$dynamic[] = '';
+			$keywords[] = '#HIGHLIGHT_LEFT#';
+			$dynamic[] = '';
+			$keywords[] = '#HIGHLIGHT_RIGHT#';
+			$dynamic[] = '';
 		}
 		unset($tags['HIGHLIGHT']);
+		unset($tags['HIGHLIGHT_LEFT']);
+		unset($tags['HIGHLIGHT_RIGHT']);
 	}
 	/*
 	 *
@@ -445,13 +460,32 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 		$dynamic[] = count(getUsers());
 		unset($tags['TOTAL_USERS']);
 	}
+	if(
+		isset($tags['TOTAL_MEDIA'])
+	)
+	{
+		if($MULTI_MEDIA == true)
+		{
+			$sql = "SELECT COUNT(m_id) AS total_media FROM {$TBLPREFIX}media WHERE m_gedfile='{$GEDCOMS[$GEDCOM]['id']}'";
+			$rows = print_htmlplus_block_sql($sql);
+			$keywords[] = '#TOTAL_MEDIA#';
+			$dynamic[] = $rows[0]['total_media'];
+		}
+		else
+		{
+			$keywords[] = '#TOTAL_MEDIA#';
+			$dynamic[] = '';
+		}
+		unset($tags['TOTAL_MEDIA']);
+	}
 	/*
 	 * First Birth Tags
 	 */
 	if(
 		isset($tags['FIRST_BIRTH']) ||
 		isset($tags['FIRST_BIRTH_YEAR']) ||
-		isset($tags['FIRST_BIRTH_NAME'])
+		isset($tags['FIRST_BIRTH_NAME']) ||
+		isset($tags['FIRST_BIRTH_PLACE'])
 	)
 	{
 		// NOTE: Get earliest birth year
@@ -467,7 +501,6 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 				$keywords[] = '#FIRST_BIRTH#';
 				$dynamic[] = ob_get_contents();
 				ob_end_clean();
-
 			}
 			else
 			{
@@ -484,9 +517,19 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 		}
 		if(isset($tags['FIRST_BIRTH_NAME']))
 		{
+			if($SHOW_ID_NUMBERS){$id = '&nbsp;&nbsp;';if($listDir == 'rtl'){$id .= '&rlm;';}$id .= "({$row['d_gid']})";if($listDir == 'rtl'){$id .= '&rlm;';}}else{$id = '';}
 			$keywords[] = '#FIRST_BIRTH_NAME#';
-			$dynamic[] = "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$GEDCOM}\">".get_person_name($row['d_gid']).'</a>';
+			$dynamic[] = "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$GEDCOM}\">".get_person_name($row['d_gid'])."{$id}</a>";
 			unset($tags['FIRST_BIRTH_NAME']);
+		}
+		if(isset($tags['FIRST_BIRTH_PLACE']))
+		{
+			ob_start();
+			print_fact_place(get_sub_record(1, '1 BIRT', find_person_record($row['d_gid'])), true, true, true);
+			$keywords[] = '#FIRST_BIRTH_PLACE#';
+			$dynamic[] = ob_get_contents();
+			ob_end_clean();
+			unset($tags['FIRST_BIRTH_PLACE']);
 		}
 	}
 	/*
@@ -495,7 +538,8 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 	if(
 		isset($tags['LAST_BIRTH']) ||
 		isset($tags['LAST_BIRTH_YEAR']) ||
-		isset($tags['LAST_BIRTH_NAME'])
+		isset($tags['LAST_BIRTH_NAME']) ||
+		isset($tags['LAST_BIRTH_PLACE'])
 	)
 	{
 		// NOTE: Get the latest birth year
@@ -511,7 +555,6 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 				$keywords[] = '#LAST_BIRTH#';
 				$dynamic[] = ob_get_contents();
 				ob_end_clean();
-
 			}
 			else
 			{
@@ -528,9 +571,127 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 		}
 		if(isset($tags['LAST_BIRTH_NAME']))
 		{
+			if($SHOW_ID_NUMBERS){$id = '&nbsp;&nbsp;';if($listDir == 'rtl'){$id .= '&rlm;';}$id .= "({$row['d_gid']})";if($listDir == 'rtl'){$id .= '&rlm;';}}else{$id = '';}
 			$keywords[] = '#LAST_BIRTH_NAME#';
-			$dynamic[] = "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$GEDCOM}\">".get_person_name($row['d_gid']).'</a>';
+			$dynamic[] = "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$GEDCOM}\">".get_person_name($row['d_gid'])."{$id}</a>";
 			unset($tags['LAST_BIRTH_NAME']);
+		}
+		if(isset($tags['LAST_BIRTH_PLACE']))
+		{
+			ob_start();
+			print_fact_place(get_sub_record(1, '1 BIRT', find_person_record($row['d_gid'])), true, true, true);
+			$keywords[] = '#LAST_BIRTH_PLACE#';
+			$dynamic[] = ob_get_contents();
+			ob_end_clean();
+			unset($tags['LAST_BIRTH_PLACE']);
+		}
+	}
+	/*
+	 * First Death Tags
+	 */
+	if(
+		isset($tags['FIRST_DEATH']) ||
+		isset($tags['FIRST_DEATH_YEAR']) ||
+		isset($tags['FIRST_DEATH_NAME']) ||
+		isset($tags['FIRST_DEATH_PLACE'])
+	)
+	{
+		// NOTE: Get earliest death year
+		$sql = "SELECT d_gid, d_year, d_mon, d_day FROM {$TBLPREFIX}dates WHERE d_file = '{$GEDCOMS[$GEDCOM]['id']}' AND d_fact = 'DEAT' AND d_year != '0' AND d_type IS NULL ORDER BY d_year ASC, d_mon ASC, d_day ASC";
+		$rows = print_htmlplus_block_sql($sql, 1);
+		$row = $rows[0];
+		if(isset($tags['FIRST_DEATH']))
+		{
+			if(displayDetailsById($row['d_gid']))
+			{
+				ob_start();
+				print_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $GEDCOM), false, '', false);
+				$keywords[] = '#FIRST_DEATH#';
+				$dynamic[] = ob_get_contents();
+				ob_end_clean();
+			}
+			else
+			{
+				$keywords[] = '#FIRST_DEATH#';
+				$dynamic[] = $pgv_lang['privacy_error'];
+			}
+			unset($tags['FIRST_DEATH']);
+		}
+		if(isset($tags['FIRST_DEATH_YEAR']))
+		{
+			$keywords[] = '#FIRST_DEATH_YEAR#';
+			$dynamic[] = "<a href=\"calendar.php?action=year&amp;year={$row['d_year']}&amp;ged={$GEDCOM}\">{$row['d_year']}</a>";
+			unset($tags['FIRST_DEATH_YEAR']);
+		}
+		if(isset($tags['FIRST_DEATH_NAME']))
+		{
+			if($SHOW_ID_NUMBERS){$id = '&nbsp;&nbsp;';if($listDir == 'rtl'){$id .= '&rlm;';}$id .= "({$row['d_gid']})";if($listDir == 'rtl'){$id .= '&rlm;';}}else{$id = '';}
+			$keywords[] = '#FIRST_DEATH_NAME#';
+			$dynamic[] = "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$GEDCOM}\">".get_person_name($row['d_gid'])."{$id}</a>";
+			unset($tags['FIRST_DEATH_NAME']);
+		}
+		if(isset($tags['FIRST_DEATH_PLACE']))
+		{
+			ob_start();
+			print_fact_place(get_sub_record(1, '1 DEAT', find_person_record($row['d_gid'])), true, true, true);
+			$keywords[] = '#FIRST_DEATH_PLACE#';
+			$dynamic[] = ob_get_contents();
+			ob_end_clean();
+			unset($tags['FIRST_DEATH_PLACE']);
+		}
+	}
+	/*
+	 * Last Death Tags
+	 */
+	if(
+		isset($tags['LAST_DEATH']) ||
+		isset($tags['LAST_DEATH_YEAR']) ||
+		isset($tags['LAST_DEATH_NAME'])||
+		isset($tags['LAST_DEATH_PLACE'])
+	)
+	{
+		// NOTE: Get the latest death year
+		$sql = "SELECT d_gid, d_year, d_mon, d_day FROM {$TBLPREFIX}dates WHERE d_file = '{$GEDCOMS[$GEDCOM]['id']}' AND d_fact = 'DEAT' AND d_year != '0' AND d_type IS NULL ORDER BY d_year DESC, d_mon DESC, d_day DESC";
+		$rows = print_htmlplus_block_sql($sql, 1);
+		$row = $rows[0];
+		if(isset($tags['LAST_DEATH']))
+		{
+			if(displayDetailsById($row['d_gid']))
+			{
+				ob_start();
+				print_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $GEDCOM), false, '', false);
+				$keywords[] = '#LAST_DEATH#';
+				$dynamic[] = ob_get_contents();
+				ob_end_clean();
+			}
+			else
+			{
+				$keywords[] = '#LAST_DEATH#';
+				$dynamic[] = $pgv_lang['privacy_error'];
+			}
+			unset($tags['LAST_DEATH']);
+		}
+		if(isset($tags['LAST_DEATH_YEAR']))
+		{
+			$keywords[] = '#LAST_DEATH_YEAR#';
+			$dynamic[] = "<a href=\"calendar.php?action=year&amp;year={$row['d_year']}&amp;ged={$GEDCOM}\">{$row['d_year']}</a>";
+			unset($tags['LAST_DEATH_YEAR']);
+		}
+		if(isset($tags['LAST_DEATH_NAME']))
+		{
+			if($SHOW_ID_NUMBERS){$id = '&nbsp;&nbsp;';if($listDir == 'rtl'){$id .= '&rlm;';}$id .= "({$row['d_gid']})";if($listDir == 'rtl'){$id .= '&rlm;';}}else{$id = '';}
+			$keywords[] = '#LAST_DEATH_NAME#';
+			$dynamic[] = "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$GEDCOM}\">".get_person_name($row['d_gid'])."{$id}</a>";
+			unset($tags['LAST_DEATH_NAME']);
+		}
+		if(isset($tags['LAST_DEATH_PLACE']))
+		{
+			ob_start();
+			print_fact_place(get_sub_record(1, '1 DEAT', find_person_record($row['d_gid'])), true, true, true);
+			$keywords[] = '#LAST_DEATH_PLACE#';
+			$dynamic[] = ob_get_contents();
+			ob_end_clean();
+			unset($tags['LAST_DEATH_PLACE']);
 		}
 	}
 	/*
@@ -573,8 +734,9 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 		}
 		if(isset($tags['LONG_LIFE_NAME']))
 		{
+			if($SHOW_ID_NUMBERS){$id = '&nbsp;&nbsp;';if($listDir == 'rtl'){$id .= '&rlm;';}$id .= "({$row['d_gid']})";if($listDir == 'rtl'){$id .= '&rlm;';}}else{$id = '';}
 			$keywords[] = '#LONG_LIFE_NAME#';
-			$dynamic[] = "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$GEDCOM}\">".get_person_name($row['d_gid']).'</a>';
+			$dynamic[] = "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$GEDCOM}\">".get_person_name($row['d_gid'])."{$id}</a>";
 			unset($tags['LONG_LIFE_NAME']);
 		}
 		if(isset($tags['TOP10_OLDEST']))
@@ -624,7 +786,8 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 		isset($tags['FIRST_EVENT']) ||
 		isset($tags['FIRST_EVENT_YEAR']) ||
 		isset($tags['FIRST_EVENT_TYPE']) ||
-		isset($tags['FIRST_EVENT_NAME'])
+		isset($tags['FIRST_EVENT_NAME']) ||
+		isset($tags['FIRST_EVENT_PLACE'])
 	)
 	{
 		$sql = "SELECT d_gid, d_year, d_month, d_mon, d_day, d_fact FROM {$TBLPREFIX}dates WHERE d_file = '{$GEDCOMS[$GEDCOM]['id']}' AND d_gid != 'HEAD' AND (d_fact = 'BIRT' OR d_fact = 'DEAT' OR d_fact = 'MARR' OR d_fact = 'ADOP' OR d_fact = 'BURI') AND d_year != '0' AND d_type IS NULL ORDER BY d_year ASC, d_mon ASC, d_day ASC";
@@ -657,12 +820,12 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 		if(isset($tags['FIRST_EVENT_TYPE']))
 		{
 			$eventTypes = array(
-				'BIRT'=>'birth',
-				'DEAT'=>'death',
-				'MARR'=>'marrage',
-				'ADOP'=>'adoption',
-				'BURI'=>'burial',
-				'CENS'=>'census added'
+				'BIRT'=>$pgv_lang['htmlplus_block_birth'],
+				'DEAT'=>$pgv_lang['htmlplus_block_death'],
+				'MARR'=>$pgv_lang['htmlplus_block_marrage'],
+				'ADOP'=>$pgv_lang['htmlplus_block_adoption'],
+				'BURI'=>$pgv_lang['htmlplus_block_burial'],
+				'CENS'=>$pgv_lang['htmlplus_block_census']
 			);
 			$keywords[] = '#FIRST_EVENT_TYPE#';
 			$dynamic[] = $eventTypes[$row['d_fact']];
@@ -670,9 +833,19 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 		}
 		if(isset($tags['FIRST_EVENT_NAME']))
 		{
+			if($SHOW_ID_NUMBERS){$id = '&nbsp;&nbsp;';if($listDir == 'rtl'){$id .= '&rlm;';}$id .= "({$row['d_gid']})";if($listDir == 'rtl'){$id .= '&rlm;';}}else{$id = '';}
 			$keywords[] = '#FIRST_EVENT_NAME#';
-			$dynamic[] = "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$GEDCOM}\">".get_person_name($row['d_gid']).'</a>';
+			$dynamic[] = "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$GEDCOM}\">".get_person_name($row['d_gid'])."{$id}</a>";
 			unset($tags['FIRST_EVENT_NAME']);
+		}
+		if(isset($tags['FIRST_EVENT_PLACE']))
+		{
+			ob_start();
+			print_fact_place(get_sub_record(1, "1 {$row['d_fact']}", find_gedcom_record($row['d_gid'])), true, true, true);
+			$keywords[] = '#FIRST_EVENT_PLACE#';
+			$dynamic[] = ob_get_contents();
+			ob_end_clean();
+			unset($tags['FIRST_EVENT_PLACE']);
 		}
 	}
 	/*
@@ -682,7 +855,8 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 		isset($tags['LAST_EVENT']) ||
 		isset($tags['LAST_EVENT_YEAR']) ||
 		isset($tags['LAST_EVENT_TYPE']) ||
-		isset($tags['LAST_EVENT_NAME'])
+		isset($tags['LAST_EVENT_NAME']) ||
+		isset($tags['LAST_EVENT_PLACE'])
 	)
 	{
 		$sql = "SELECT d_gid, d_year, d_month, d_mon, d_day, d_fact FROM {$TBLPREFIX}dates WHERE d_file = '{$GEDCOMS[$GEDCOM]['id']}' AND d_gid != 'HEAD' AND (d_fact = 'BIRT' OR d_fact = 'DEAT' OR d_fact = 'MARR' OR d_fact = 'ADOP' OR d_fact = 'BURI') AND d_year != '0' AND d_type IS NULL ORDER BY d_year DESC, d_mon DESC, d_day DESC";
@@ -728,9 +902,19 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 		}
 		if(isset($tags['LAST_EVENT_NAME']))
 		{
+			if($SHOW_ID_NUMBERS){$id = '&nbsp;&nbsp;';if($listDir == 'rtl'){$id .= '&rlm;';}$id .= "({$row['d_gid']})";if($listDir == 'rtl'){$id .= '&rlm;';}}else{$id = '';}
 			$keywords[] = '#LAST_EVENT_NAME#';
-			$dynamic[] = "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$GEDCOM}\">".get_person_name($row['d_gid']).'</a>';
+			$dynamic[] = "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$GEDCOM}\">".get_person_name($row['d_gid'])."{$id}</a>";
 			unset($tags['LAST_EVENT_NAME']);
+		}
+		if(isset($tags['LAST_EVENT_PLACE']))
+		{
+			ob_start();
+			print_fact_place(get_sub_record(1, "1 {$row['d_fact']}", find_gedcom_record($row['d_gid'])), true, true, true);
+			$keywords[] = '#LAST_EVENT_PLACE#';
+			$dynamic[] = ob_get_contents();
+			ob_end_clean();
+			unset($tags['LAST_EVENT_PLACE']);
 		}
 	}
 	/*
@@ -784,7 +968,8 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 			}
 			$keywords[] = '#TOP10_BIGFAM#';
 			$tempText = join("; ", $top10);
-			if ($TEXT_DIRECTION=='rtl') {
+			if($TEXT_DIRECTION=='rtl')
+			{
 				$tempText = str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $tempText);
 			}
 			$dynamic[] = $tempText;
@@ -1171,6 +1356,7 @@ function print_htmlplus_block_config($config)
 		$config = $PGV_BLOCKS['print_htmlplus_block']['config'];
 	}
 	// title
+	$config['title'] = htmlentities($config['title'], ENT_COMPAT, 'UTF-8');
 	print "<tr><td class=\"descriptionbox width20\">";
 	print_help_link('index_htmlplus_title_help', 'qm_ah');
 	print "{$pgv_lang['title']}</td>\n"
@@ -1218,7 +1404,7 @@ function print_htmlplus_block_config($config)
 		."<td class=\"optionbox\">"
 	;
 	$useFCK = file_exists('./modules/FCKeditor/fckeditor.php');
-	if($useFCK) // use FCKeditor module
+	if(false && $useFCK) // use FCKeditor module
 	{
 		include_once('./modules/FCKeditor/fckeditor.php');
 		$oFCKeditor = new FCKeditor('html') ;
