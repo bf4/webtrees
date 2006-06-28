@@ -42,10 +42,11 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
++$factarray["_URL"]									28 Jun 2006				A
 
 
 VERSION 4.0
 
 ?$factarray["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-*$factarray["_PGVU"]								15 March 2006			C
+*$factarray["_PGVU"]								15 Mar 2006				C

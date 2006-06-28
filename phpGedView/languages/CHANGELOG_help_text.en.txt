@@ -42,7 +42,7 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-*$pgv_lang["index_htmlplus_content_help"]			27 Jun 2006				w
+*$pgv_lang["index_htmlplus_content_help"]			27 Jun 2006				W
 *$pgv_lang["help_lifespan.php"]						27 Jun 2006				W
 *$pgv_lang["help_timeline.php"]						27 Jun 2006				w
 *$pgv_lang["search_enter_terms_help"]				26 Jun 2006				w		added search and replace help text
