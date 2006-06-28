@@ -168,27 +168,28 @@ function import_record($indirec, $update = false) {
 			
 			if(trim($firstName) != "@P.N.")
 			{
+				Character_Substitute($firstName);
 				// Split the first name array
 				$fnames = explode(" ", $firstName);
 				
 				$firstName_std_soundex = "";
 				$firstName_dm_soundex = "";
+				$dm_array = array();
 				
 				$combined = "";
 				foreach($fnames as $fn)
 				{
 					if(!empty($fn))
 					{
-						Character_Substitute($fn);
-					
 						$firstName_std_soundex .= ":" . soundex($fn);
-						$firstName_dm_soundex .= ":" . implode(":", DMSoundex($fn));
+						$dm_array = array_merge($dm_array, DMSoundex($fn));
 					}
 				}
 				$fn_nospaces = strtr($firstName, " ", "");
+				$dm_array = array_merge($dm_array, DMSoundex($fn_nospaces));
 				
 				$firstName_std_soundex .= ":" . soundex($fn_nospaces);
-				$firstName_dm_soundex .= ":" . implode(":", DMSoundex($fn_nospaces));
+				$firstName_dm_soundex .= ":" . implode(":", array_unique($dm_array));
 				
 				$sql .= "'".$DBCONN->escapeSimple(substr($firstName_std_soundex,1))."'," .
 						"'".$DBCONN->escapeSimple(substr($firstName_dm_soundex,1))."',";
@@ -205,17 +206,19 @@ function import_record($indirec, $update = false) {
 				$lnames = explode(" ", $lastName);
 				$lastName_std_soundex = "";
 				$lastName_dm_soundex = "";
+				$dm_array = array();
 				
 				foreach($lnames as $ln)
 				{
 					$lastName_std_soundex .= ":" . soundex($ln);
-					$lastName_dm_soundex .= ":" . implode(":", DMSoundex($ln));
+					$dm_array = array_merge($dm_array, DMSoundex($ln));
 				}
 				
 				$ln_nospaces = strtr($lastName, " ", "");
 				
 				$lastName_std_soundex .= ":" . soundex($ln_nospaces);
-				$lastName_dm_soundex .= ":" . implode(":", DMSoundex($ln_nospaces));
+				$dm_array = array_merge($dm_array, DMSoundex($ln));
+				$lastName_dm_soundex .= ":" . implode(":", array_unique($dm_array));
 				
 				$sql .= "'".$DBCONN->escapeSimple(substr($lastName_std_soundex,1))."'," .
 							"'".$DBCONN->escapeSimple(substr($lastName_dm_soundex,1))."'"; 
