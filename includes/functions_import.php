@@ -172,6 +172,7 @@ function import_record($indirec, $update = false) {
 				// Split the first name array
 				$fnames = explode(" ", $firstName);
 				
+				$std_array = array();
 				$firstName_std_soundex = "";
 				$firstName_dm_soundex = "";
 				$dm_array = array();
@@ -181,17 +182,16 @@ function import_record($indirec, $update = false) {
 				{
 					if(!empty($fn))
 					{
-						$firstName_std_soundex .= ":" . soundex($fn);
+						$std_array[] = soundex($fn);
 						$dm_array = array_merge($dm_array, DMSoundex($fn));
 					}
 				}
 				$fn_nospaces = strtr($firstName, " ", "");
 				$dm_array = array_merge($dm_array, DMSoundex($fn_nospaces));
 				
-				$firstName_std_soundex .= ":" . soundex($fn_nospaces);
+				$std_array[] = soundex($fn_nospaces);
 				$firstName_dm_soundex .= ":" . implode(":", array_unique($dm_array));
 				
-				$std_array = explode(":", $firstName_std_soundex);
 				$std_array = array_unique($std_array);
 				$firstName_std_soundex = implode(":", $std_array);
 				$sql .= "'".$DBCONN->escapeSimple(substr($firstName_std_soundex,1))."'," .
@@ -210,17 +210,19 @@ function import_record($indirec, $update = false) {
 				$lastName_std_soundex = "";
 				$lastName_dm_soundex = "";
 				$dm_array = array();
+				$std_array = array();
 				
 				foreach($lnames as $ln)
 				{
-					$lastName_std_soundex .= ":" . soundex($ln);
+					$std_array[] = soundex($ln);
 					$dm_array = array_merge($dm_array, DMSoundex($ln));
 				}
 				
 				$ln_nospaces = strtr($lastName, " ", "");
 				
-				$lastName_std_soundex .= ":" . soundex($ln_nospaces);
-				$dm_array = array_merge($dm_array, DMSoundex($ln));
+				$std_array[] =  soundex($ln_nospaces);
+				$dm_array = array_merge($dm_array, DMSoundex($ln_nospaces));
+				$lastName_std_soundex .= ":" . implode(":", array_unique($std_array));
 				$lastName_dm_soundex .= ":" . implode(":", array_unique($dm_array));
 				
 				$sql .= "'".$DBCONN->escapeSimple(substr($lastName_std_soundex,1))."'," .
