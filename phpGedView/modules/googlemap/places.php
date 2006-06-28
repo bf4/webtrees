@@ -478,7 +478,7 @@ if ($action=="ImportFile2") {
                     $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", \"".$escparent."\", NULL, NULL, ".$default_zoom_level[$i].",\"".$place["icon"]."\");";
                 }
                 else {
-                    $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", \"".$escparent."\", \"".$place["long"]."\" , \"".$place["lati"]."\", ".$default_zoom_level[$i].",\"".$place["icon"]."\");";
+                    $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", \"".$escparent."\", \"".$place["long"]."\" , \"".$place["lati"]."\", ".$zoomlevel.",\"".$place["icon"]."\");";
                 }
                 $parent_id = $highestIndex;
                 if (userIsAdmin(getUserName())) {
