@@ -45,6 +45,7 @@ class Census1880 extends ra_form {
 	    			'<input type="hidden" name="formname" value="Census1880" />' .
 	    			'<input type="hidden" name="taskid" value="'.$_REQUEST['taskid'].'" />';
 	    	if (!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = count($this->getPeople());
+	    	if ($_REQUEST['numOfRows']<1) $_REQUEST['numOfRows']=1;
 	    	$out .= '<table align="center"><tr><td class="descriptionbox">'.$pgv_lang["rows"].'</td><td class="optionbox"><select name="numOfRows">';
 	    	for($i = 1; $i <= 20; $i++){
 	    		$out .= '<option value="'.$i;
@@ -232,7 +233,7 @@ class Census1880 extends ra_form {
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['Trade'])) $value = $citation['ts_array']['rows'][$i]['Trade'];
-  		$out .= '<td class="optionbox"><INPUT TYPE="TEXT" SIZE="22" name = "Trade'.$i.'" /></td>';
+  		$out .= '<td class="optionbox"><INPUT TYPE="TEXT" SIZE="22" name = "Trade'.$i.'" value="'.htmlentities($value).'" /></td>';
 		}
  		$out .='</tr>
  <tr>
