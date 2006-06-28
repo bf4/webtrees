@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixing some places missing from places table (yalnifj)
  - Fixed [ 1511527 ] LOGIN failure (canajun2eh)
  - Fixed [ 1511803 ] Missing variable "newrec" on Family view (yalnifj)
  - Fixed [ 1512101 ] 4.0 stable: Incorrect language for (unknown) in Family list (canajun2eh)
@@ -260,7 +261,7 @@ Version 4.0 2006-06-13
  - Fixed [ 1280222 ] Missing language variable [edit_ROMN_help] (yalnifj)
  - Added [ 1279188 ] auto-accept all changes (yalnifj)
  - Fixed [ 1267621 ] Site & User language settings ignored (yalnifj)
- - Fixed [ 1257510 ] MultiMedia List want show all JPEG´ó (roland-d)
+ - Fixed [ 1257510 ] MultiMedia List want show all JPEGï¿½ï¿½ (roland-d)
  - Fixed [ 1267800 ] Gedcom - Automatic Change (yalnifj)
  - Fixed user language does not switch when user logs in part of [ 1267621 ] (yalnifj)
  - Added cookie warning to login page (yalnifj)

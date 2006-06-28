@@ -38,7 +38,6 @@ if (preg_match("/ra_lang\...\.php$/", $_SERVER["PHP_SELF"])>0) {
 $pgv_lang["missing_info"] 		= "Missing Information";
 $temp_out_autosearch = 	"This feature will automatically search Ancestry and FamilySearch, ";
 $temp_out_autosearch .= "you may choose to search by name, and birth/death date <br />";
-$temp_out_autosearch .= " <a href=\"javascript:void(0);\" onClick=\"fullScreen('helpvids/AutoSearchAncestry.htm');\">Click here to Open User Tutorial in Full Screen Window</a>";
 $pgv_lang["auto_search"]		= $temp_out_autosearch;
 $pgv_lang["auto_search_text"]	= "Auto Search";
 $pgv_lang["task_list"]			= "Tasks";

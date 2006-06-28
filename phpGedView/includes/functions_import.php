@@ -356,10 +356,10 @@ function import_record($indirec, $update = false) {
 function add_new_name($gid, $newname, $letter, $surname, $indirec) {
 	global $TBLPREFIX, $USE_RIN, $indilist, $FILE, $DBCONN, $GEDCOMS;
 
-	$sql = "INSERT INTO " . $TBLPREFIX . "names VALUES('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($newname) . "','" . $DBCONN->escapeSimple($letter) . "','" . $DBCONN->escapeSimple($surname) . "','C')";
+	$sql = 'INSERT INTO ' . $TBLPREFIX . 'names VALUES(\'' . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($newname) . "','" . $DBCONN->escapeSimple($letter) . "','" . $DBCONN->escapeSimple($surname) . "','C')";
 	$res = dbquery($sql);
 
-	$sql = "UPDATE " . $TBLPREFIX . "individuals SET i_gedcom='" . $DBCONN->escapeSimple($indirec) . "' WHERE i_id='" . $DBCONN->escapeSimple($gid) . "' AND i_file='" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "'";
+	$sql = 'UPDATE ' . $TBLPREFIX . 'individuals SET i_gedcom=\'' . $DBCONN->escapeSimple($indirec) . "' WHERE i_id='" . $DBCONN->escapeSimple($gid) . "' AND i_file='" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "'";
 	$res = dbquery($sql);
 
 	$indilist[$gid]["names"][] = array (
@@ -379,74 +379,67 @@ function add_new_name($gid, $newname, $letter, $surname, $indirec) {
 function update_places($gid, $indirec, $update = false) {
 	global $FILE, $placecache, $TBLPREFIX, $DBCONN, $GEDCOMS;
 
-	if (!isset ($placecache))
-		$placecache = array ();
+	if (!isset($placecache)) $placecache = array();
+	$personplace = array();
 	//-- import all place locations
 	$pt = preg_match_all("/\d PLAC (.*)/", $indirec, $match, PREG_SET_ORDER);
 	for ($i = 0; $i < $pt; $i++) {
 		$place = trim($match[$i][1]);
+		//-- if we have already visited this place for this person then we don't need to again
+		if (isset($personplace[str2lower($place)])) continue;
+		$personplace[str2lower($place)] = 1;
 		$places = preg_split("/,/", $place);
+		//-- reverse the array to start at the highest level
 		$secalp = array_reverse($places);
 		$parent_id = 0;
 		$level = 0;
+		$search = true;
 
 		foreach ($secalp as $indexval => $place) {
 			$place = trim($place);
 			$place=preg_replace('/\\\"/', "", $place);
 			$place=preg_replace("/[\><]/", "", $place);
-			
-			$std_soundex = soundex($place);
-			$dm_soundex = DMSoundex($place);
-			
-			if (empty($parent_id)) $parent_id=0;
 			$key = strtolower($place."_".$level."_".$parent_id);
-			$addgid = true;
-			if (isset ($placecache[$key])) {
-				$parent_id = $placecache[$key][0];
-				if (strpos($placecache[$key][1], $gid . ",") === false) {
-					$placecache[$key][1] = "$gid," . $placecache[$key][1];
-					$sql = "INSERT INTO " . $TBLPREFIX . "placelinks VALUES($parent_id, '" . $DBCONN->escapeSimple($gid) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "')";
-					$res = dbquery($sql);
-
+			//-- if this place has already been added then we don't need to add it again
+			if (isset($placecache[$key])) {
+				$parent_id = $placecache[$key];
+				if (!isset($personplace[$key])) {
+					$personplace[$key]=1;
+					$sql = 'INSERT INTO ' . $TBLPREFIX . 'placelinks VALUES('.$parent_id.', \'' . $DBCONN->escapeSimple($gid) . '\', ' . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . ')';
+					$res2 = dbquery($sql);
 				}
-			} else {
-				$skip = false;
-				if ($update) {
-					$sql = "SELECT p_id FROM " . $TBLPREFIX . "places WHERE p_place LIKE '" . $DBCONN->escapeSimple($place) . "' AND p_level=$level AND p_parent_id='$parent_id' AND p_file='" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "'";
-					$res = dbquery($sql);
-
-					if ($res->numRows() > 0) {
-						$row = $res->fetchRow(DB_FETCHMODE_ASSOC);
-						$res->free();
-						$parent_id = $row["p_id"];
-						$skip = true;
-						$placecache[$key] = array (
-							$parent_id,
-							$gid . ","
-						);
-						$sql = "INSERT INTO " . $TBLPREFIX . "placelinks VALUES($parent_id, '" . $DBCONN->escapeSimple($gid) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "')";
-						$res = dbquery($sql);
-
-					}
-				}
-				if (!$skip) {
-					//if (!isset($place_id)) {
-					$place_id = get_next_id("places", "p_id");
-					//}
-					//else $place_id++;
-					$sql = "INSERT INTO ".$TBLPREFIX."places VALUES($place_id, '".$DBCONN->escapeSimple($place)."', $level, '$parent_id', '".$DBCONN->escapeSimple($GEDCOMS[$FILE]["id"])."', '".$DBCONN->escapeSimple($std_soundex)."', '".$DBCONN->escapeSimple($dm_soundex[0])."')";
-					$res = dbquery($sql);
-
-					$parent_id = $place_id;
-					$placecache[$key] = array (
-						$parent_id,
-						$gid . ","
-					);
-					$sql = "INSERT INTO " . $TBLPREFIX . "placelinks VALUES($place_id, '" . $DBCONN->escapeSimple($gid) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "')";
-					$res = dbquery($sql);
-
-				}
+				$level++;
+				continue;
 			}
+			
+			//-- only search the database while we are finding places in it
+			if ($search) {
+				//-- check if this place and level has already been added
+				$sql = 'SELECT p_id FROM '.$TBLPREFIX.'places WHERE p_level='.$level.' AND p_file='.$GEDCOMS[$FILE]['id'].' AND p_parent_id='.$parent_id.' AND p_place LIKE \''.$DBCONN->escapeSimple($place).'\'';
+				$res = dbquery($sql);
+				if ($res->numRows()>0) {
+					$row = $res->fetchRow();
+					$p_id = $row[0];
+				}
+				else $search = false;
+				$res->free();
+			}
+			
+			//-- if we are not searching then we have to insert the place into the db
+			if (!$search) {
+				$std_soundex = soundex($place);
+				$dm_soundex = DMSoundex($place);
+				$p_id = get_next_id("places", "p_id");
+				$sql = 'INSERT INTO '.$TBLPREFIX.'places VALUES('.$p_id.', "'.$DBCONN->escapeSimple($place).'", '.$level.', '.$parent_id.', '.$DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]).', "'.$DBCONN->escapeSimple($std_soundex).'", "'.$DBCONN->escapeSimple(implode(":",$dm_soundex)).'")';
+				$res2 = dbquery($sql);
+			}
+			
+			$sql = 'INSERT INTO ' . $TBLPREFIX . 'placelinks VALUES('.$p_id.', \'' . $DBCONN->escapeSimple($gid) . '\', ' . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . ')';
+			$res2 = dbquery($sql);
+			//-- increment the level and assign the parent id for the next place level
+			$parent_id = $p_id;
+			$placecache[$key] = $p_id;
+			$personplace[$key]=1;
 			$level++;
 		}
 	}
@@ -490,7 +483,7 @@ function update_dates($gid, $indirec) {
 			if ($date[0]['day'] < 10)
 				$datestamp .= '0';
 			$datestamp .= (int) $date[0]['day'];
-			$sql = "INSERT INTO " . $TBLPREFIX . "dates VALUES('" . $DBCONN->escapeSimple($date[0]["day"]) . "','" . $DBCONN->escapeSimple(str2upper($date[0]["month"])) . "','" . $DBCONN->escapeSimple($date[0]["mon"]) . "','" . $DBCONN->escapeSimple($date[0]["year"]) . "','" . $DBCONN->escapeSimple($datestamp) . "','" . $DBCONN->escapeSimple($fact) . "','" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "',";
+			$sql = 'INSERT INTO ' . $TBLPREFIX . 'dates VALUES(\'' . $DBCONN->escapeSimple($date[0]["day"]) . '\',\'' . $DBCONN->escapeSimple(str2upper($date[0]["month"])) . "','" . $DBCONN->escapeSimple($date[0]["mon"]) . "','" . $DBCONN->escapeSimple($date[0]["year"]) . "','" . $DBCONN->escapeSimple($datestamp) . "','" . $DBCONN->escapeSimple($fact) . "','" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "',";
 			if (isset ($date[0]["ext"])) {
 				preg_match("/@#D(.*)@/", $date[0]["ext"], $extract_type);
 				$date_types = array (
