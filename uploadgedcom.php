@@ -910,6 +910,7 @@ if ($startimport == "true") {
 		print "</td></tr>";
 		print "</table>";
 
+		print "The status bars below will let you know how the import is progressing.  If the time limit runs out the import will be stopped and you will be asked to press a continue button.  If you don't see a continue button, please go back and enter a smaller time limit value.";
 		//print "<tr><td class=\"optionbox\">";
 		setup_progress_bar($FILE_SIZE);
 		//print "</td></tr>";
@@ -977,6 +978,7 @@ if ($startimport == "true") {
 
 				//-- remove any extra slashes
 				$indirec = preg_replace("/\\\/", "/", $indirec);
+				print "\n";
 
 				//-- import anything that is not a blob
 				if (preg_match("/\n1 BLOB/", $indirec) == 0) {
@@ -1017,8 +1019,8 @@ if ($startimport == "true") {
 					$exectime_start = $exectime;
 					$type_BYTES = $TOTAL_BYTES;
 				}
-				//-- update the progress bars at every 10 records
-				if ($i % 10 == 0) {
+				//-- update the progress bars at every 50 records
+				if ($i % 50 == 0) {
 					$newtime = time();
 					$exectime = $newtime - $oldtime;
 					print "\n<script type=\"text/javascript\">update_progress($TOTAL_BYTES, $exectime);</script>\n";
@@ -1029,6 +1031,8 @@ if ($startimport == "true") {
 
 				//-- check if we are getting close to timing out
 				if ($i % 10 == 0) {
+					//-- keep the browser informed by sending more data
+					print "\n";
 					$newtime = time();
 					$exectime = $newtime - $oldtime;
 					if (($timelimit != 0) && ($timelimit - $exectime) < 2) {
