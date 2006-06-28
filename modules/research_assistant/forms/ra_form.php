@@ -42,7 +42,7 @@ class ra_form {
 	/**
 	 * GETS all PEOPLE associated with the task given taskid
 	 * 
-	 * @return mixed people associated with the task
+	 * @return array people associated with the task
 	 */
 	function getPeople(){
         global $TBLPREFIX, $DBCONN;
@@ -87,7 +87,7 @@ class ra_form {
 		if ($res->numRows()>0) {
 			$row = $res->fetchRow(DB_FETCHMODE_ASSOC);
 			$row = db_cleanup($row);
-			$row['array'] = unserialize($row['array']);
+			$row['ts_array'] = unserialize($row['ts_array']);
 		}
 		else $row = array('ts_page'=>'','ts_quay'=>'','ts_text'=>'','ts_date'=>'','ts_obje'=>'','ts_array'=>array());
 		$res->free();
@@ -344,7 +344,7 @@ class ra_form {
 			foreach($sources as $i=>$sid) {
 				if (!empty($sid)) {
 					$citation = $this->processSimpleCitation();
-					$sql = 'INSERT INTO '.$TBLPREFIX.'tasksource (ts_t_id, ts_s_id, ts_page, ts_quay, ts_date, ts_text, ts_obje) '."VALUES ('" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "', '".$DBCONN->escapeSimple($sid)."'" .
+					$sql = 'INSERT INTO '.$TBLPREFIX.'tasksource (ts_t_id, ts_s_id, ts_page, ts_quay, ts_date, ts_text, ts_obje, ts_array) '."VALUES ('" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "', '".$DBCONN->escapeSimple($sid)."'" .
 							",'".$DBCONN->escapeSimple($citation['PAGE'])."'" .
 							",'".$DBCONN->escapeSimple($citation['QUAY'])."'" .
 							",'".$DBCONN->escapeSimple($citation['DATE'])."'" .

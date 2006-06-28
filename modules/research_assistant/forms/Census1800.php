@@ -77,7 +77,7 @@ class Census1800 extends ra_form {
 	 * override method from ra_form.php
 	 */
     function simpleCitationForm($citation) {
-    	global $pgv_lang;
+    	global $pgv_lang, $factarray;
     	if (empty($_POST['data']))
     		$data = array();
     	if (empty($_REQUEST['row']))
@@ -93,12 +93,21 @@ class Census1800 extends ra_form {
     		$callno = trim($match[2]);
     	}
     	
-    	$city = $citation['array']['city'];
-    	$county = $citation['array']['county'];
-    	$state = $citation['array']['state'];
+    	$city = "";
+    	$county = "";
+    	$state = "";
+    	if (!empty($citation['ts_array']['city'])) $city = $citation['ts_array']['city'];
+    	if (!empty($citation['ts_array']['county'])) $county = $citation['ts_array']['county'];
+    	if (!empty($citation['ts_array']['state'])) $state = $citation['ts_array']['state'];
     	
 //        Start of Table
-        $out = '<tr><td class="descriptionbox">'.$pgv_lang["state"].'</td><td class="optionbox"><input name="state" type="text" size="27"  value="'.htmlentities($state).'"></td>';
+		$out = '<tr>
+			<td class="descriptionbox">'.print_help_link("edit_media_help", "qm",'',false,true).$factarray['OBJE'].'</td>
+			<td class="optionbox" colspan="5"><input type="text" name="OBJE" id="OBJE" size="5" value="'.$citation['ts_obje'].'"/>';
+		$out .= print_findmedia_link("OBJE", true, '', true);
+		$out .= '<br /><a href="javascript:;" onclick="pastefield=document.getElementById(\'OBJE\'); window.open(\'addmedia.php?action=showmediaform\', \'\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["add_media"].'</a>';
+		$out .= '</td></tr>';
+        $out .= '<tr><td class="descriptionbox">'.$pgv_lang["state"].'</td><td class="optionbox"><input name="state" type="text" size="27"  value="'.htmlentities($state).'"></td>';
         $out .= '<td class="descriptionbox">'.$pgv_lang["call/url"].'</td><td class="optionbox"><input name="CallNumberURL" type="text" size="27" value="'.htmlentities($callno).'"></td>';
         $out .= '<td class="descriptionbox">'.$pgv_lang["enumDate"].'</td><td class="optionbox"><input name="EnumerationDate" type="text" size="27" value="'.htmlentities($date).'"></td></tr>';
         $out .= '<tr><td class="descriptionbox">'.$pgv_lang["county"].'</td><td class="optionbox"><input name="county" type="text" size="27" value="'.htmlentities($county).'"></td>';
@@ -119,7 +128,7 @@ class Census1800 extends ra_form {
 //		  Country, City, Page, Head of Family input boxes
 		if(!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = 1;
         for($i = 0; $i < $_REQUEST['numOfRows']; $i++){
-        	$row = $citation['array']['rows'][$i];
+        	$row = $citation['ts_array']['rows'][$i];
         	$value = $row['headName'];
 	        $out .= '<tr><td class="optionbox"><input name="headName'.$i.'" type="text" size="19" value="'.htmlentities($value).'"></td>';
 	//        Free white males input boxes
@@ -209,11 +218,13 @@ class Census1800 extends ra_form {
 		$factrec .=!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1800";
 		$factrec .= "\r\n2 PLAC ".$_POST['city'].", ".$_POST['county'].", ".$_POST['state'].", USA";
 		
+		$people = $this->getPeople();
+		$pids = array_keys($people);
 		//-- store the fact associations in the database
 		$sql = "INSERT INTO ".$TBLPREFIX."taskfacts VALUES('".get_next_id("taskfacts", "tf_id")."'," .
 			"'".$DBCONN->escapeSimple($_REQUEST['taskid'])."'," .
 			"'".$DBCONN->escapeSimple($factrec)."'," .
-			"'')";
+			"'".$DBCONN->escapeSimple(implode(";", $pids))."')";
 		$res = dbquery($sql);
 		
 		$rows = array();

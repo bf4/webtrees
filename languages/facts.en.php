@@ -193,6 +193,7 @@ $factarray["ROMN"] = "Romanized";
 // PAF related facts
 $factarray["_NAME"] = "Mailing Name";
 $factarray["URL"] = "Web URL";
+$factarray["_URL"] = $factarray["URL"];
 $factarray["_HEB"] = "Hebrew";
 $factarray["_SCBK"] = "Scrapbook";
 $factarray["_TYPE"] = "Media Type";
