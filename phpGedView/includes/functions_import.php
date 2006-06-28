@@ -194,8 +194,8 @@ function import_record($indirec, $update = false) {
 				
 				$std_array = array_unique($std_array);
 				$firstName_std_soundex = implode(":", $std_array);
-				$sql .= "'".$DBCONN->escapeSimple($firstName_std_soundex)."'," .
-						"'".$DBCONN->escapeSimple($firstName_dm_soundex)."',";
+				$sql .= "'".$DBCONN->escapeSimple(trim($firstName_std_soundex, ":"))."'," .
+						"'".$DBCONN->escapeSimple(trim($firstName_dm_soundex,":"))."',";
 			}
 			else
 			{
@@ -225,8 +225,8 @@ function import_record($indirec, $update = false) {
 				$lastName_std_soundex .= ":" . implode(":", array_unique($std_array));
 				$lastName_dm_soundex .= ":" . implode(":", array_unique($dm_array));
 				
-				$sql .= "'".$DBCONN->escapeSimple($lastName_std_soundex)."'," .
-							"'".$DBCONN->escapeSimple($lastName_dm_soundex)."'"; 
+				$sql .= "'".$DBCONN->escapeSimple(trim($lastName_std_soundex,":"))."'," .
+							"'".$DBCONN->escapeSimple(trim($lastName_dm_soundex,":"))."'"; 
 			}
 			else
 			{
