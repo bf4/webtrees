@@ -26,7 +26,8 @@
  */
 
 require('modules/googlemap/defaultconfig.php');
-require('modules/googlemap/config.php');
+if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
+else require('modules/googlemap/defaultconfig.php');
 
 require( "modules/googlemap/".$pgv_language["english"]);
 if (file_exists( "modules/googlemap/".$pgv_language[$LANGUAGE])) require  "modules/googlemap/".$pgv_language[$LANGUAGE];
