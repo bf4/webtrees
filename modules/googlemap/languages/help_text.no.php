@@ -44,7 +44,7 @@ $pgv_lang["GOOGLEMAP_PRECISION"]        = "Nøyaktighet for lengde- og breddegra
 $pgv_lang["GOOGLEMAP_PRECISION_help"]   = "~#pgv_lang[GOOGLEMAP_PRECISION]#~<br /><br />Dette angir hvor nøyaktig de forskjellige nivåene skal benevnes når en registerer nye steder. For eksempel vil et land bli angitt med nøyaktighet 0 (dvs. 0 siffer etter desimaltegnet), mens en by trenger 3 eller 4 siffer.";
 
 $pgv_lang["PL_EDIT_LOCATION"]           = "Redigere eller slette et sted";
-$pgv_lang["PL_EDIT_LOCATION_help"]      = "Her kan du enten:<br><dl><dt>Redigere</dt><dd>Du vil få opp et nytt vindu der du kan endre verdiene til stedet.</dd><dt>Slette</dt><dd>Stedet vil bli slettet.<br>NB! Dette kan bare gjøres dersom det ikke er registrert andre steder \"under\" dette stedet (f.eks. kommuner i et fylke). Velget vil være deaktivert hvis dette er tilfelle.";
+$pgv_lang["PL_EDIT_LOCATION_help"]      = "Her kan du enten:<br><dl><dt>Redigere</dt><dd>Du vil få opp et nytt vindu der du kan endre verdiene til stedet.</dd><dt>Slette</dt><dd>Stedet vil bli slettet.<br>NB! Dette kan bare gjøres dersom det ikke er registrert andre steder \"under\" dette stedet (f.eks. kommuner i et fylke). Velget vil være deaktivert hvis dette er tilfelle.</dd></dl>";
 
 $pgv_lang["PL_ADD_LOCATION"]            = "Legg til sted";
 $pgv_lang["PL_ADD_LOCATION_help"]       = "Bruk dette valget for å legge til et nytt sted. Stedet vil bli lagt til på dette nivået.";
