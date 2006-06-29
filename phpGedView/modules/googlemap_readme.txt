@@ -1,32 +1,49 @@
 README file for the Googlemap module for phpGedView
 
-Versions supported: V4.0 and V3.3.8.
+Versions supported: V4.0 (preferred) and V3.3.8.
 
-1. Get your personal Google Map API key from http://www.google.com/apis/maps/signup.html
-2. Put this key in the config.php file in modules/googlemap.
+1. Get your personal Google Map API key from
+   http://www.google.com/apis/maps/signup.html
+2. Go to the Googlemap confiuration page
+3. Enter the key in the input field, and click save.
 
 If you are using version 3.3.8 of phpGedview you also need to do the
 following:
-3. Backup your individual.php in the PGV root
-4. Copy individual.php from the modules directory to PGV root.
+4. Backup your individual.php in the PGV root
+5. Copy individual-3.3.8.php from the googlemap directory to PGV root.
 
 The map will only be shown if at least one fact has a place with coordinates
 attached to it. Attaching a coordinate can be done through the generic
 place-location interface (located at the Googlamp configuration page) or by
 specifying a MAP record with an event.
-NOTE: The place-location interface only works with version 4.0 of phpGedView!
 
-The coordinates for an event cannot yet be entered through the normal
+The coordinates for an event cannot be entered through the normal
 windows. You have to add it directly into the GEDCOM record. The correct
-way to do this is:
+way to do this is for a PLAC record:
 2 PLAC <Placename>
 3 MAP
 4 LONG <Longitude>
 4 LATI <Latitude>
-(Make sure you use the "3 MAP" record after a PLAC record. Only MAP records in
-a PLAC record are recognised and used).
-
+(Make sure you use the "3 MAP" record after a PLAC record.)
 The MAP, LONG and LATI lines should be added directly after the PLAC line.
+
+It is also possible to define a MAP record within a ADDR record, even though
+this is not according to the standard (these records are created by Legacy).
+
+Some special remarks for version 3.3.8:
+1. The Place-laction pages look a bit empty. This is because the styles used to 
+   format the table are not defined in version 3.3.8. You can create these by
+   doing the following:
+   - In your themes/<selected theme> open style.css
+   - Search for ".facts_label"
+   - Copy the lines until the first "}"
+   - Insert these lines after the "}" and change ".facts_label" to 
+     ".descriptionbox"
+   - Change the font-size to 12.
+   - Repeat this for ".facts_value" (change ".factsvalue" to ".optionbox")
+2. To make the flags work, copy the flags directory from images to places, or
+   download the flags from version 4.0.
+
 
 Contributers:
 - Norwegian translation: Geir Eikland (eikland)
@@ -39,7 +56,7 @@ Version 0.5:
   and remove items from this table
 - Norwegian language files
 - Possibility to add flags to locations
-
+- Process ADDR records
 
 Version 0.4:
 - Improved privacy handling
