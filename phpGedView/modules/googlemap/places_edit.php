@@ -127,8 +127,8 @@ if ($action=="update") {
     $level      = $row[5];
     $zoomfactor = $row[6];
     if(($row[1] != NULL) && ($row[2] != NULL)) {
-        $place_lati = str_replace(array('N', 'S'), array('', '-') , $row[1]);
-        $place_long = str_replace(array('E', 'W'), array('', '-') , $row[2]);
+        $place_lati = str_replace(array('N', 'S', ','), array('', '-', '.') , $row[1]);
+        $place_long = str_replace(array('E', 'W', ','), array('', '-', '.') , $row[2]);
         $show_marker = true;
         $res->free();
     }
@@ -143,8 +143,8 @@ if ($action=="update") {
             $res = dbquery($sql);
             $row =& $res->fetchRow();
             if(($row[0] != NULL) && ($row[1] != NULL)) {
-                $place_lati = str_replace(array('N', 'S'), array('', '-') , $row[0]);
-                $place_long = str_replace(array('E', 'W'), array('', '-') , $row[1]);
+                $place_lati = str_replace(array('N', 'S', ','), array('', '-', '.') , $row[0]);
+                $place_long = str_replace(array('E', 'W', ','), array('', '-', '.') , $row[1]);
                 $zoomfactor = $row[3];
             }
             $parent_id = $row[2];
@@ -172,14 +172,14 @@ if ($action=="add") {
         $place_name = "";
         $zoomfactor = $row[6];
         if ($row[1] != null) {
-            $place_lati = str_replace(array('N', 'S'), array('', '-') , $row[1]);
+            $place_lati = str_replace(array('N', 'S', ','), array('', '-', '.') , $row[1]);
         }
         else {
             $place_lati = "0.0";
             $zoomfactor = 1;
         }
         if ($row[2] != null) {
-            $place_long = str_replace(array('E', 'W'), array('', '-') , $row[2]);
+            $place_long = str_replace(array('E', 'W', ','), array('', '-', '.') , $row[2]);
         }
         else {
             $place_long = "0.0";
@@ -398,7 +398,7 @@ if ($action=="add") {
             while ($row =& $res->fetchRow()) {
                 if (($row[1] != null) && ($row[2] != null)) {
                     if (($row[3] == null) || ($row[3] == "")) {
-                        print "            childplaces.push(new GMarker(new GLatLng(".str_replace(array('N', 'S'), array('', '-') , $row[1]).", ".str_replace(array('E', 'W'), array('', '-') ,$row[2])."), childicon));\n";
+                        print "            childplaces.push(new GMarker(new GLatLng(".str_replace(array('N', 'S', ','), array('', '-', '.') , $row[1]).", ".str_replace(array('E', 'W', ','), array('', '-', '.') ,$row[2])."), childicon));\n";
                     }
                     else {
                         print "            var flagicon = new GIcon();\n";
@@ -408,7 +408,7 @@ if ($action=="add") {
                         print "            flagicon.shadowSize = new GSize(35, 45);\n";
                         print "            flagicon.iconAnchor = new GPoint(1, 45);\n";
                         print "            flagicon.infoWindowAnchor = new GPoint(5, 1);\n";
-                        print "            childplaces.push(new GMarker(new GLatLng(".str_replace(array('N', 'S'), array('', '-') , $row[1]).", ".str_replace(array('E', 'W'), array('', '-') ,$row[2])."), flagicon));\n";
+                        print "            childplaces.push(new GMarker(new GLatLng(".str_replace(array('N', 'S', ','), array('', '-') , $row[1]).", ".str_replace(array('E', 'W', ','), array('', '-', '.') ,$row[2])."), flagicon));\n";
                     }
                     print "            map.addOverlay(childplaces[".$i."]);\n";
                     $i = $i + 1;

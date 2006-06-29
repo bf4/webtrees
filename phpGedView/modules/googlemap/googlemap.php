@@ -31,7 +31,7 @@ require('modules/googlemap/config.php');
 require( "modules/googlemap/".$pgv_language["english"]);
 if (file_exists( "modules/googlemap/".$pgv_language[$LANGUAGE])) require  "modules/googlemap/".$pgv_language[$LANGUAGE];
 
-// function copied from print_fact_place
+// functions copied from print_fact_place
 function print_fact_place_map($factrec) {
     global $SHOW_PEDIGREE_PLACES, $TEMPLE_CODES, $pgv_lang, $factarray;
 
@@ -53,6 +53,129 @@ function print_fact_place_map($factrec) {
         print "\\\"> ".PrintReady($place)."</a>";
     }
 }
+
+
+function print_address_structure_map($factrec, $level) {
+     global $pgv_lang;
+     global $factarray;
+     global $WORD_WRAPPED_NOTES;
+     global $POSTAL_CODE;
+
+     //  $POSTAL_CODE = 'false' - before city, 'true' - after city and/or state
+     //-- define per gedcom till can do per address countries in address languages
+     //-- then this will be the default when country not recognized or does not exist
+     //-- both Finland and Suomi are valid for Finland etc.
+     //-- see http://www.bitboost.com/ref/international-address-formats.html
+
+     $nlevel = $level+1;
+     $ct = preg_match_all("/$level ADDR(.*)/", $factrec, $omatch, PREG_SET_ORDER);
+     for($i=0; $i<$ct; $i++) {
+          $arec = get_sub_record($level, "$level ADDR", $factrec, $i+1);
+          $resultText = "";
+          $cn = preg_match("/$nlevel _NAME (.*)/", $arec, $cmatch);
+          if ($cn>0) $resultText .= str_replace("/", "", $cmatch[1])."<br />";
+          $resultText .= PrintReady(trim($omatch[$i][1]));
+          $cont = get_cont($nlevel, $arec);
+          if (!empty($cont)) $resultText .= str_replace(array(" ", "<br&nbsp;"), array("&nbsp;", "<br "), PrintReady($cont));
+          else {
+              if (strlen(trim($omatch[$i][1])) > 0) print "<br />";
+              $cs = preg_match("/$nlevel ADR1 (.*)/", $arec, $cmatch);
+              if ($cs>0) {
+                  if ($cn==0) {
+                      $resultText .= "<br />";
+                      $cn=0;
+                  }
+                  $resultText .= PrintReady($cmatch[1]);
+              }
+              $cs = preg_match("/$nlevel ADR2 (.*)/", $arec, $cmatch);
+              if ($cs>0) {
+                  if ($cn==0) {
+                      $resultText .= "<br />";
+                      $cn=0;
+                  }
+                  $resultText .= PrintReady($cmatch[1]);
+              }
+
+              if (!$POSTAL_CODE) {
+                  $cs = preg_match("/$nlevel POST (.*)/", $arec, $cmatch);
+                  if ($cs>0) {
+                      $resultText .= "<br />".PrintReady($cmatch[1]);
+                  }
+                  $cs = preg_match("/$nlevel CITY (.*)/", $arec, $cmatch);
+                  if ($cs>0) {
+                      $resultText .= " ".PrintReady($cmatch[1]);
+                  }
+                  $cs = preg_match("/$nlevel STAE (.*)/", $arec, $cmatch);
+                  if ($cs>0) {
+                      $resultText .= ", ".PrintReady($cmatch[1]);
+                  }
+              }
+              else {
+                  $cs = preg_match("/$nlevel CITY (.*)/", $arec, $cmatch);
+                  if ($cs>0) {
+                      $resultText .= "<br />".PrintReady($cmatch[1]);
+                  }
+                  $cs = preg_match("/$nlevel STAE (.*)/", $arec, $cmatch);
+                  if ($cs>0) {
+                      $resultText .= ", ".PrintReady($cmatch[1]);
+                  }
+                  $cs = preg_match("/$nlevel POST (.*)/", $arec, $cmatch);
+                  if ($cs>0) {
+                      $resultText .= " ".PrintReady($cmatch[1]);
+                  }
+             }
+
+             $cs = preg_match("/$nlevel CTRY (.*)/", $arec, $cmatch);
+              if ($cs>0) {
+                  $resultText .= "<br />".PrintReady($cmatch[1]);
+              }
+          }
+          $resultText .= "<br />";
+          // Here we can examine the resultant text and remove empty tags
+          print str_replace(chr(10), ' ' , $resultText);
+     }
+     $resultText = "";
+     $resultText .= "<table>";
+     $ct = preg_match_all("/$level PHON (.*)/", $factrec, $omatch, PREG_SET_ORDER);
+     if ($ct>0) {
+          for($i=0; $i<$ct; $i++) {
+               $resultText .= "<tr>";
+               $resultText .= "\t\t<td><span class=\"label\"><b>".$factarray["PHON"].": </b></span></td><td><span class=\"field\">";
+               $resultText .= "&lrm;".$omatch[$i][1]."&lrm;";
+               $resultText .= "</span></td></tr>";
+          }
+     }
+     $ct = preg_match_all("/$level FAX (.*)/", $factrec, $omatch, PREG_SET_ORDER);
+     if ($ct>0) {
+          for($i=0; $i<$ct; $i++) {
+               $resultText .= "<tr>";
+               $resultText .= "\t\t<td><span class=\"label\"><b>".$factarray["FAX"].": </b></span></td><td><span class=\"field\">";
+               $resultText .= "&lrm;".$omatch[$i][1]."&lrm;";
+               $resultText .= "</span></td></tr>";
+          }
+     }
+     $ct = preg_match_all("/$level EMAIL (.*)/", $factrec, $omatch, PREG_SET_ORDER);
+     if ($ct>0) {
+          for($i=0; $i<$ct; $i++) {
+               $resultText .= "<tr>";
+               $resultText .= "\t\t<td><span class=\"label\"><b>".$factarray["EMAIL"].": </b></span></td><td><span class=\"field\">";
+               $resultText .= "<a href=\"mailto:".$omatch[$i][1]."\">".$omatch[$i][1]."</a>";
+               $resultText .= "</span></td></tr>";
+          }
+     }
+     $ct = preg_match_all("/$level (WWW|URL) (.*)/", $factrec, $omatch, PREG_SET_ORDER);
+     if ($ct>0) {
+          for($i=0; $i<$ct; $i++) {
+               $resultText .= "<tr>";
+               $resultText .= "\t\t<td><span class=\"label\"><b>".$factarray["URL"].": </b></span></td><td><span class=\"field\">";
+               $resultText .= "<a href=\"".$omatch[$i][2]."\" target=\"_blank\">".$omatch[$i][2]."</a>";
+               $resultText .= "</span></td></tr>";
+          }
+     }
+     $resultText .= "</table>";
+     if ($resultText!="<table></table>") print str_replace(chr(10), ' ' , $resultText);
+}
+
 
 function get_lati_long_placelocation ($place) {
     global $DBCONN, $TBLPREFIX;
@@ -116,80 +239,87 @@ function build_indiv_map($indifacts, $famids) {
         $ft = preg_match("/1 (\w+)(.*)/", $value[1], $match);
         if ($ft>0) {
             $fact = trim($match[1]);
+            $placerec = null;
             $ct = preg_match("/2 PLAC (.*)/", $value[1], $match);
             if ($ct>0) {
                 $placerec = get_sub_record(2, "2 PLAC", $value[1]);
-                if (!empty($placerec)) {
-                    $ctla = preg_match("/\d LATI (.*)/", $placerec, $match1);
-                    $ctlo = preg_match("/\d LONG (.*)/", $placerec, $match2);
-                    $spouserec = get_sub_record(1, "1 _PGVS", $value[1]);
-                    $ctlp = preg_match("/\d _PGVS @(.*)@/", $spouserec, $spouseid);
-                    if ($ctlp>0) {
-                        if (displayDetailsByID($spouseid[1])) {
-                            $useThisItem = true;
-                        }
-                        else {
-                            $useThisItem = false;
-                        }
-                    }
-                    else {
+                $addrFound = false;
+            }
+            $ct = preg_match("/1 ADDR (.*)/", $value[1], $match);
+            if ($ct>0) {
+                $placerec = get_sub_record(1, "1 ADDR", $value[1]);
+                $addrFound = true;
+            }
+            if (!empty($placerec)) {
+                $ctla = preg_match("/\d LATI (.*)/", $placerec, $match1);
+                $ctlo = preg_match("/\d LONG (.*)/", $placerec, $match2);
+                $spouserec = get_sub_record(1, "1 _PGVS", $value[1]);
+                $ctlp = preg_match("/\d _PGVS @(.*)@/", $spouserec, $spouseid);
+                if ($ctlp>0) {
+                    if (displayDetailsByID($spouseid[1])) {
                         $useThisItem = true;
                     }
-                    if (($ctla>0) && ($ctlo>0) && ($useThisItem==true)) {
-                        $i = $i + 1;
-                        $mapdata["fact"][$i] = $factarray[$fact];
-                        $mapdata["show"][$i] = "yes";
-                        $marker["name"][$i] = "Marker".$i;
-                        $marker["placed"][$i] = "no";
-                        $marker["icon"][$i]      = "";
-                        $mapdata["placerec"][$i] = $placerec;
-                        $match1[1] = ltrim(rtrim($match1[1]));
-                        $match2[1] = ltrim(rtrim($match2[1]));
-                        $mapdata["lati"][$i] = str_replace(array('N', 'S'), array('', '-') , $match1[1]); 
-                        $mapdata["lng"][$i] = str_replace(array('E', 'W'), array('', '-') , $match2[1]); 
-                        $ctd = preg_match("/2 DATE (.+)/", $value[1], $match);
-                        if ($ctd>0) {
-                            $mapdata["date"][$i] = $match[1];
-                        }
-                        else {
-                            $mapdata["date"][$i] = "";
-                        }
-                        $mapdata["name"][$i]="";
-                        $ct = preg_match("/PGV_SPOUSE: (.*)/", $value[1], $match);
-                        if ($ct>0) {
-                            $mapdata["name"][$i]=$match[1];
-                        }
-                        $mapdata["sex"][$i]  = "-";
+                    else {
+                        $useThisItem = false;
+                    }
+                }
+                else {
+                    $useThisItem = true;
+                }
+                if (($ctla>0) && ($ctlo>0) && ($useThisItem==true)) {
+                    $i = $i + 1;
+                    $mapdata["fact"][$i] = $factarray[$fact];
+                    $mapdata["show"][$i] = "yes";
+                    $marker["name"][$i] = "Marker".$i;
+                    $marker["placed"][$i] = "no";
+                    $marker["icon"][$i]      = "";
+                    $mapdata["placerec"][$i] = $placerec;
+                    $match1[1] = ltrim(rtrim($match1[1]));
+                    $match2[1] = ltrim(rtrim($match2[1]));
+                    $mapdata["lati"][$i] = str_replace(array('N', 'S', ','), array('', '-', '.') , $match1[1]); 
+                    $mapdata["lng"][$i] = str_replace(array('E', 'W', ','), array('', '-', '.') , $match2[1]); 
+                    $ctd = preg_match("/2 DATE (.+)/", $value[1], $match);
+                    if ($ctd>0) {
+                        $mapdata["date"][$i] = $match[1];
                     }
                     else {
-                        if (($placelocation == true) && ($useThisItem==true)) {
-                            $ctpl = preg_match("/\d PLAC (.*)/", $placerec, $match1);
-                            $latlongval = get_lati_long_placelocation($match1[1]);
-                            if ((count($latlongval) != 0) && ($latlongval["lati"] != NULL) && ($latlongval["long"] != NULL)) {
-                                $i = $i + 1;
-                                $mapdata["fact"][$i] = $factarray[$fact];
-                                $mapdata["show"][$i] = "yes";
-                                $marker["name"][$i] = "Marker".$i;
-                                $marker["placed"][$i] = "no";
-                                $marker["icon"][$i] = $latlongval["icon"];
-                                $mapdata["placerec"][$i] = $placerec;
-                                if ($zoomLevel > $latlongval["zoom"]) $zoomLevel = $latlongval["zoom"];
-                                $mapdata["lati"][$i] = str_replace(array('N', 'S'), array('', '-') , $latlongval["lati"]); 
-                                $mapdata["lng"][$i] = str_replace(array('E', 'W'), array('', '-') , $latlongval["long"]); 
-                                $ctd = preg_match("/2 DATE (.+)/", $value[1], $match);
-                                if ($ctd>0) {
-                                    $mapdata["date"][$i] = $match[1];
-                                }
-                                else {
-                                    $mapdata["date"][$i] = "";
-                                }
-                                $mapdata["name"][$i]="";
-                                $ct = preg_match("/PGV_SPOUSE: (.*)/", $value[1], $match);
-                                if ($ct>0) {
-                                    $mapdata["name"][$i]=$match[1];
-                                }
-                                $mapdata["sex"][$i]  = "-";
+                        $mapdata["date"][$i] = "";
+                    }
+                    $mapdata["name"][$i]="";
+                    $ct = preg_match("/PGV_SPOUSE: (.*)/", $value[1], $match);
+                    if ($ct>0) {
+                        $mapdata["name"][$i]=$match[1];
+                    }
+                    $mapdata["sex"][$i]  = "-";
+                }
+                else {
+                    if (($placelocation == true) && ($useThisItem==true) && ($addrFound==false)) {
+                        $ctpl = preg_match("/\d PLAC (.*)/", $placerec, $match1);
+                        $latlongval = get_lati_long_placelocation($match1[1]);
+                        if ((count($latlongval) != 0) && ($latlongval["lati"] != NULL) && ($latlongval["long"] != NULL)) {
+                            $i = $i + 1;
+                            $mapdata["fact"][$i] = $factarray[$fact];
+                            $mapdata["show"][$i] = "yes";
+                            $marker["name"][$i] = "Marker".$i;
+                            $marker["placed"][$i] = "no";
+                            $marker["icon"][$i] = $latlongval["icon"];
+                            $mapdata["placerec"][$i] = $placerec;
+                            if ($zoomLevel > $latlongval["zoom"]) $zoomLevel = $latlongval["zoom"];
+                            $mapdata["lati"][$i] = str_replace(array('N', 'S', ','), array('', '-', '.') , $latlongval["lati"]); 
+                            $mapdata["lng"][$i] = str_replace(array('E', 'W', ','), array('', '-', '.') , $latlongval["long"]); 
+                            $ctd = preg_match("/2 DATE (.+)/", $value[1], $match);
+                            if ($ctd>0) {
+                                $mapdata["date"][$i] = $match[1];
                             }
+                            else {
+                                $mapdata["date"][$i] = "";
+                            }
+                            $mapdata["name"][$i]="";
+                            $ct = preg_match("/PGV_SPOUSE: (.*)/", $value[1], $match);
+                            if ($ct>0) {
+                                $mapdata["name"][$i]=$match[1];
+                            }
+                            $mapdata["sex"][$i]  = "-";
                         }
                     }
                 }
@@ -236,8 +366,8 @@ function build_indiv_map($indifacts, $famids) {
                                     $mapdata["placerec"][$i] = $placerec;
                                     $match1[1] = ltrim(rtrim($match1[1]));
                                     $match2[1] = ltrim(rtrim($match2[1]));
-                                    $mapdata["lati"][$i]     = str_replace(array('N', 'S'), array('', '-') , $match1[1]); 
-                                    $mapdata["lng"][$i]      = str_replace(array('E', 'W'), array('', '-') , $match2[1]); 
+                                    $mapdata["lati"][$i]     = str_replace(array('N', 'S', ','), array('', '-', '.'), $match1[1]); 
+                                    $mapdata["lng"][$i]      = str_replace(array('E', 'W', ','), array('', '-', '.'), $match2[1]); 
                                     $mapdata["date"][$i]     = $matchd[1];
                                     $mapdata["name"][$i]     = $smatch[$j][1];
                                 }
@@ -265,8 +395,8 @@ function build_indiv_map($indifacts, $famids) {
                                             $marker["icon"][$i] = $latlongval["icon"];
                                             $mapdata["placerec"][$i] = $placerec;
                                             if ($zoomLevel > $latlongval["zoom"]) $zoomLevel = $latlongval["zoom"];
-                                            $mapdata["lati"][$i]     = str_replace(array('N', 'S'), array('', '-') , $latlongval["lati"]); 
-                                            $mapdata["lng"][$i]      = str_replace(array('E', 'W'), array('', '-') , $latlongval["long"]); 
+                                            $mapdata["lati"][$i]     = str_replace(array('N', 'S', ','), array('', '-', '.'), $latlongval["lati"]); 
+                                            $mapdata["lng"][$i]      = str_replace(array('E', 'W', ','), array('', '-', '.'), $latlongval["long"]); 
                                             $mapdata["date"][$i]     = $matchd[1];
                                             $mapdata["name"][$i]     = $smatch[$j][1];
                                         }
@@ -360,8 +490,15 @@ function build_indiv_map($indifacts, $famids) {
                             else print $pgv_lang["private"];
                             print "</a><br>";
                         }
-                        print_fact_place_map($mapdata["placerec"][$j]);
-                        print "<br>".get_changed_date($mapdata["date"][$j]);
+                        if(preg_match("/2 PLAC (.*)/", $mapdata["placerec"][$j]) == 0) {
+                            print_address_structure_map($mapdata["placerec"][$j], 1);
+                        } else {
+                            print_fact_place_map($mapdata["placerec"][$j]);
+                            print "<br>";
+                        }
+                        if ($mapdata["date"][$j] != "") {
+                            print get_changed_date($mapdata["date"][$j]);
+                        }
                         print "\");\n";
                         print "    });\n";
                         print "    markers.push(".$marker["name"][$j].");\n";
@@ -400,8 +537,15 @@ function build_indiv_map($indifacts, $famids) {
                             else print $pgv_lang["private"];
                             print "</a><br>";
                         }
-                        print_fact_place_map($mapdata["placerec"][$j]);
-                        print "<br>".get_changed_date($mapdata["date"][$j]);
+                        if(preg_match("/2 PLAC (.*)/", $mapdata["placerec"][$j]) == 0) {
+                            print_address_structure_map($mapdata["placerec"][$j], 1);
+                        } else {
+                            print_fact_place_map($mapdata["placerec"][$j]);
+                            print "<br>";
+                        }
+                        if ($mapdata["date"][$j] != "") {
+                            print get_changed_date($mapdata["date"][$j]);
+                        }
                         print "\")";
                     }
                     for($k=$j+1; $k<=$i; $k++) {
@@ -437,8 +581,15 @@ function build_indiv_map($indifacts, $famids) {
                                     else print $pgv_lang["private"];
                                     print "</a><br>";
                                 }
-                                print_fact_place_map($mapdata["placerec"][$k]);
-                                print "<br>".get_changed_date($mapdata["date"][$k]);
+                                if(preg_match("/2 PLAC (.*)/", $mapdata["placerec"][$k]) == 0) {
+                                    print_address_structure_map($mapdata["placerec"][$k], 1);
+                                } else {
+                                    print_fact_place_map($mapdata["placerec"][$k]);
+                                    print "<br>";
+                                }
+                                if ($mapdata["date"][$j] != "") {
+                                    print get_changed_date($mapdata["date"][$k]);
+                                }
                                 print "\")";
                             }
                         }
@@ -496,9 +647,15 @@ function build_indiv_map($indifacts, $famids) {
                     else print $pgv_lang["private"];
                     print "</a><br>\n";
                 }
-                print_fact_place($mapdata["placerec"][$j], true, false, true);
-                print "<br>\n";
-                print get_date_url($mapdata["date"][$j])."<br>\n";
+                if(preg_match("/2 PLAC (.*)/", $mapdata["placerec"][$j]) == 0) {
+                    print_address_structure_map($mapdata["placerec"][$j], 1);
+                } else {
+                    print_fact_place_map($mapdata["placerec"][$j]);
+                    print "<br>";
+                }
+                if ($mapdata["date"][$j] != "") {
+                    print get_date_url($mapdata["date"][$j])."<br>\n";
+                }
                 print "</td></tr>\n";
             }
         }
