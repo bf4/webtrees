@@ -28,7 +28,6 @@ require "config.php";
 require "modules/googlemap/defaultconfig.php";
 require "modules/googlemap/config.php";
 require "includes/functions_edit.php";
-require "includes/functions_import.php";
 require $INDEX_DIRECTORY."pgv_changes.php";
 require($factsfile["english"]);
 require( "modules/googlemap/".$pgv_language["english"]);

@@ -196,7 +196,13 @@ if ($action=="ImportGedcom") {
         $sql = "SELECT i_gedcom FROM ".$TBLPREFIX."individuals WHERE 1";
     }
     else {
-        $sql = "SELECT i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+        if (isset($GEDCOMS[$GEDCOM]["id"])) {
+            // Needed for PGV 4.0
+            $sql = "SELECT i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+        } else {
+            // Needed for PGV 3.3.8
+            $sql = "SELECT i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["gedcom"])."'";
+        }
     }
     $res = dbquery($sql);
     while ($row =& $res->fetchRow()) {
@@ -243,7 +249,13 @@ if ($action=="ImportGedcom") {
         $sql = "SELECT f_gedcom FROM ".$TBLPREFIX."families WHERE 1";
     }
     else {
-        $sql = "SELECT f_gedcom FROM ".$TBLPREFIX."families WHERE f_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+        if (isset($GEDCOMS[$GEDCOM]["id"])) {
+            // Needed for PGV 4.0
+            $sql = "SELECT f_gedcom FROM ".$TBLPREFIX."families WHERE f_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+        } else {
+            // Needed for PGV 3.3.8
+            $sql = "SELECT f_gedcom FROM ".$TBLPREFIX."families WHERE f_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["gedcom"])."'";
+        }
     }
     $res = dbquery($sql);
     while ($row =& $res->fetchRow()) {
@@ -657,7 +669,7 @@ if (count($placelist) <> 0) {
                 print "<img src=\"http://labs.google.com/ridefinder/images/mm_20_red.png\">";
             }
             else { 
-                print "<img src=\"".$placelist[$i]["icon"]."\">";
+                print "<img src=\"".$placelist[$i]["icon"]." \"width=\"25\" height=\"15\">";
             } ?>
             </td>
             <td class="optionbox"><a href="javascript:;" onclick="edit_place_location(<?php print $placelist[$i]["place_id"].")\">".$pgv_lang["edit"];?></a></td>
@@ -669,7 +681,7 @@ if (count($placelist) <> 0) {
             if ($noRows == 0) { ?>
             <td class="optionbox"><a href="javascript:;" onclick="delete_place(<?php print $placelist[$i]["place_id"].")\">";?><img src="images/remove.gif" border="0" alt="<?php print $pgv_lang["remove"];?>" /></a></td>
 <?php       } else { ?>
-            <td class="optionbox"><img src="images/remove-dis.png" border="0" alt="<?php print $pgv_lang["remove"];?>" /> </td>
+            <td class="optionbox"><img src="images/remove-dis.png" border="0" alt="" /> </td>
 <?php       } ?>
         </tr>
         <?php
