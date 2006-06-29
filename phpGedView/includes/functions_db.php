@@ -2398,9 +2398,15 @@ function find_rin_id($rin) {
 	return $rin;
 }
 
+/**
+ * Delete a gedcom from the database and the system
+ * Does not delete the file from the file system
+ * @param string $ged 	the filename of the gedcom to delete
+ */
 function delete_gedcom($ged) {
 	global $INDEX_DIRECTORY, $TBLPREFIX, $pgv_changes, $DBCONN, $GEDCOMS;
 
+	if (!isset($GEDCOMS[$ged])) return;
 	$dbged = $GEDCOMS[$ged]["id"];
 
 	$sql = "DELETE FROM ".$TBLPREFIX."blocks WHERE b_username='".$DBCONN->escapeSimple($ged)."'";

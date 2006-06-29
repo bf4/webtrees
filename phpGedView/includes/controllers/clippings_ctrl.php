@@ -105,7 +105,17 @@ class ClippingsControllerRoot extends BaseController {
 		$id = clean_input($id);
 
 		if ($action == 'add') {
-			if ($type != 'fam' && $type != 'indi')
+			if (!isset($type) && !empty($id)) {
+				$type="";
+				$obj = GedcomRecord::getInstance($id);
+				if (is_null($obj)) {
+					$id="";
+					$action="";
+				}
+				else $type = strtolower($obj->getType());
+			}
+			else $action="";
+			if (!empty($id) && $type != 'fam' && $type != 'indi')
 				$action = 'add1';
 		}
 

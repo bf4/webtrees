@@ -105,8 +105,9 @@ if($ct==0) {
 				<input type="text" name="id" id="pid" size="5"/>
 			</td>
 			<td class="optionbox">
-				<input type="hidden" name="type" value="indi"/>
 				<?php print_findindi_link('pid',''); ?>
+				<?php print_findfamily_link('pid',''); ?>
+				<?php print_findsource_link('pid',''); ?>
 				<input type="submit" value="<?php print $pgv_lang["add"];?>"/>
 				
 			</td>
@@ -182,8 +183,9 @@ else {
 				<input type="text" name="id" id="pid" size="5"/>
 			</td>
 			<td class="optionbox">
-				<input type="hidden" name="type" value="indi"/>
 				<?php print_findindi_link('pid',''); ?>
+				<?php print_findfamily_link('pid',''); ?>
+				<?php print_findsource_link('pid',''); ?>
 				<input type="submit" value="<?php print $pgv_lang["add"];?>"/>
 				
 			</td>

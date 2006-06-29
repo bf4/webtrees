@@ -9,6 +9,10 @@
 =====================================================================
 
 Version 4.1
+ - Fixed various bugs [ 1513150 ], [ 1513147 ], [ 1509571 ] (yalnifj)
+ - Fixed [ 1508850 ] User Admin Page Changes GEDCOMs (yalnifj)
+ - Fixed [ 1510437 ] slklist.php - EXCEL (SLK) - Errors, removed the file (yalnifj)
+ - Fixed [ 1509731 ] Delete Gedcom (yalnifj)
  - Fixing some places missing from places table (yalnifj)
  - Fixed [ 1511527 ] LOGIN failure (canajun2eh)
  - Fixed [ 1511803 ] Missing variable "newrec" on Family view (yalnifj)
