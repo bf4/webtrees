@@ -57,4 +57,12 @@ $pgv_lang["pl_neighborhood"]        = "Nærområde";
 $pgv_lang["pl_house"]               = "Hus";
 $pgv_lang["pl_max"]                 = "Maks";
 
+$pgv_lang["pl_flag"]                = "Flagg";
+$pgv_lang["flags_edit"]             = "Velg flagg";
+$pgv_lang["pl_change_flag"]         = "Bytt flagg";
+$pgv_lang["pl_remove_flag"]         = "Fjern flagg";
+
+$pgv_lang["pl_remove_location"]     = "Fjern dette stedet?";
+$pgv_lang["pl_delete_error"]        = "Klarte ikke å fjerne stedet: Det er registrert tilhørende lokale steder";
+
 ?>
