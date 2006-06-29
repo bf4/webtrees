@@ -272,8 +272,9 @@ class LifespanControllerRoot extends BaseController {
 	 */
 	function addFamily($newpid, $gen=0) {
 		if (!empty ($newpid)) {
-			$this->pids[] = $newpid;
 			$person = Person::getInstance($newpid);
+			if (is_null($person)) return;
+			$this->pids[] = $newpid; 
 			$families = $person->getSpouseFamilies();
 			//-- foreach gets the spouse and children of the individual.
 			foreach($families as $famID => $family){ 
