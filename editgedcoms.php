@@ -160,7 +160,7 @@ $GedCount = 0;
 			// Row 1: Heading
 			print "<tr>";
 			print "<td colspan=\"1\" class=\"list_label\">".$pgv_lang["ged_title"]."</td>";
-			print "<td colspan=\"5\" class=\"list_value_wrap\">";
+			print "<td colspan=\"4\" class=\"list_value_wrap\">";
 			if ($DEFAULT_GEDCOM==$gedc) print "<span class=\"label\">";
 			print PrintReady($gedarray["title"])."&nbsp;&nbsp;";
 			if ($TEXT_DIRECTION=="rtl") print "&rlm;(".$gedarray["id"].")&rlm;";
@@ -212,13 +212,6 @@ $GedCount = 0;
 			print "&nbsp;&nbsp;";
 			print "</td>";
 
-			print "<td valign=\"top\">";		// Column 6  (Create .SLK spreadsheet)
-			if (file_exists("slklist.php")) {
-				print "<a href=\"slklist.php?ged=$gedc\">".$pgv_lang["make_slklist"]."</a>";
-			} else {
-				print "&nbsp;";
-			}
-			print "</td>";
 			print "</tr>";
 
 
@@ -236,7 +229,7 @@ $GedCount = 0;
 			print "<a href=\"editconfig_gedcom.php?ged=".urlencode($gedc)."\">".$pgv_lang["edit"]."</a>";
 			print "</td>";
 
-			print "<td colspan=\"3\" valign=\"top\">";		// Columns 4-6  (blank)
+			print "<td colspan=\"2\" valign=\"top\">";		// Columns 4-6  (blank)
 			print "&nbsp;";
 			print "</td>";
 			print "</tr>";
@@ -255,7 +248,7 @@ $GedCount = 0;
 			print "<a href=\"edit_privacy.php?action=edit&amp;ged=".urlencode($gedc)."\">".$pgv_lang["edit"]."</a>";
 			print "</td>";
 
-			print "<td colspan=\"3\" valign=\"top\">";		// Columns 4-6  (blank)
+			print "<td colspan=\"2\" valign=\"top\">";		// Columns 4-6  (blank)
 			print "&nbsp;";
 			print "</td>";
 			print "</tr>";
@@ -277,7 +270,7 @@ $GedCount = 0;
 			}
 			print "</td>";
 
-			print "<td colspan=\"4\" valign=\"top\">";		// Columns 3-6  (file name selector)
+			print "<td colspan=\"3\" valign=\"top\">";		// Columns 3-6  (file name selector)
 			// Get the logfiles
 			if (!isset($logfilename)) $logfilename = "";
 			$file_nr = 0;
@@ -329,7 +322,7 @@ $GedCount = 0;
 			}
 			print "</td>";
 
-			print "<td colspan=\"4\" valign=\"top\">";		// Columns 3-6  (file name selector)
+			print "<td colspan=\"3\" valign=\"top\">";		// Columns 3-6  (file name selector)
 			// Get the logfiles
 			if (!isset($logfilename)) $logfilename = "";
 			$file_nr = 0;

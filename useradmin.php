@@ -187,6 +187,7 @@ if ($action=="createuser") {
 							}
 						}
 					}
+					$GEDCOM = $oldged;
 				}
 			}
 			else {
@@ -311,6 +312,7 @@ if ($action=="edituser2") {
 						}
 					}
 				}
+				$GEDCOM = $oldged;
 			}
 
 			//-- if the user was just verified by the admin, then send the user a message
