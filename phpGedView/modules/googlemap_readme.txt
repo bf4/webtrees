@@ -2,6 +2,10 @@ README file for the Googlemap module for phpGedView
 
 Versions supported: V4.0 (preferred) and V3.3.8.
 
+The files in this archive should be extracted into you modules directory.
+
+These are the instruction on getting your Googlemap interface to work:
+
 1. Get your personal Google Map API key from
    http://www.google.com/apis/maps/signup.html
 2. Go to the Googlemap confiuration page
