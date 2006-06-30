@@ -237,8 +237,8 @@ if ($action=="add") {
     function updateMap() {
         var point;
         var zoom;
-        var lati;
-        var long;
+        var latitude;
+        var longitude;
         var i;
 
         document.editplaces.save1.disabled = "";
@@ -251,27 +251,27 @@ if ($action=="add") {
                 prec = document.editplaces.NEW_PRECISION[i].value;
             }
         }
-        lati = parseFloat(document.editplaces.NEW_PLACE_LATI.value).toFixed(prec);
-        long = parseFloat(document.editplaces.NEW_PLACE_LONG.value).toFixed(prec);
-        document.editplaces.NEW_PLACE_LATI.value = lati;
-        document.editplaces.NEW_PLACE_LONG.value = long;
+        latitude = parseFloat(document.editplaces.NEW_PLACE_LATI.value).toFixed(prec);
+        longitude = parseFloat(document.editplaces.NEW_PLACE_LONG.value).toFixed(prec);
+        document.editplaces.NEW_PLACE_LATI.value = latitude;
+        document.editplaces.NEW_PLACE_LONG.value = longitude;
 
-        if (lati < 0.0) {
-            lati = lati * -1;
-            document.editplaces.NEW_PLACE_LATI.value = lati;
+        if (latitude < 0.0) {
+            latitude = latitude * -1;
+            document.editplaces.NEW_PLACE_LATI.value = latitude;
         }
-        if (long < 0.0) {
-            long = long * -1;
-            document.editplaces.NEW_PLACE_LONG.value = long;
+        if (longitude < 0.0) {
+            longitude = longitude * -1;
+            document.editplaces.NEW_PLACE_LONG.value = longitude;
         }
         if(document.editplaces.LATI_CONTROL.value == "PL_S") {
-            lati = lati * -1;
+            latitude = latitude * -1;
         }
         if(document.editplaces.LONG_CONTROL.value == "PL_W") {
-            long = long * -1;
+            longitude = longitude * -1;
         }
 
-        point = new GLatLng (lati, long);
+        point = new GLatLng (latitude, longitude);
 
         map.clearOverlays();
 

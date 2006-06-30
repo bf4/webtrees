@@ -4,14 +4,14 @@
    Project:         phpGedView
    File:            lang.de.php
    Author:			Christian Helms
-   Comments:        German Language file for Google map module / 2006-06-21 19:22
+   Comments:        German Language file for Google map module / 2006-06-30 11:12
 ===================================================*/
 
 
 $pgv_lang["googlemap"]              = "Karte";
 $pgv_lang["no_gmtab"]               = "Keine Karteninformation für diese Person";
-$pgv_lang["gm_redraw_map"]          = "Karte neu zeichnen";
 
+$pgv_lang["gm_redraw_map"]          = "Karte neu zeichnen";
 $pgv_lang["gm_map"]                 = "Karte";
 $pgv_lang["gm_satellite"]           = "Satellit";
 $pgv_lang["gm_hybrid"]              = "Kombination";
@@ -19,17 +19,18 @@ $pgv_lang["gm_hybrid"]              = "Kombination";
 // Configuration texts
 $pgv_lang["gm_manage"]              = "Googlemap Darstellung anpassen";
 $pgv_lang["configure_googlemap"]    = "Googlemap Konfiguration";
-$pgv_lang["gm_admin_error"]         = "Nur f�r Verwalter";
+$pgv_lang["gm_admin_error"]         = "Nur für Verwalter";
 $pgv_lang["gm_db_error"]            = "Tabelle 'placelocation' in Datenbank nicht vorhanden";
 $pgv_lang["gm_table_created"]       = "Tabelle 'placelocation' neu angelegt";
-$pgv_lang["googlemapkey"]           = "Googlemap API Schlüssel";
+$pgv_lang["googlemapkey"]           = "Googlemap API SchlÃ¼ssel";
 $pgv_lang["gm_map_type"]            = "Standard Kartentyp";
 $pgv_lang["gm_map_size"]            = "Größe der Karte (in Pixel)";
 $pgv_lang["gm_map_size_x"]          = "Breite";
 $pgv_lang["gm_map_size_y"]          = "Höhe";
 $pgv_lang["gm_map_zoom"]            = "Zoomfaktor der Karte";
+$pgv_lang["gm_digits"]              = "Stellen";
 
-$pgv_lang["GOOGLEMAP_API_KEY_help"]	= "~#pgv_lang[googlemapkey]#~<br /><br />Kopieren Sie Ihren Googlemap API Schlüssel hier hin.";
+$pgv_lang["GOOGLEMAP_API_KEY_help"]	= "~#pgv_lang[googlemapkey]#~<br /><br />Kopieren Sie Ihren Googlemap API SchlÃ¼ssel hier hin.";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Ortskoordinaten bearbeiten";
@@ -37,7 +38,7 @@ $pgv_lang["pl_no_places_found"]     = "Keine Orte gefunden";
 $pgv_lang["pl_zoom_factor"]         = "Zoomfaktor";
 $pgv_lang["pl_place_icon"]          = "Icon";
 $pgv_lang["pl_edit"]                = "Ortsdaten bearbeiten";
-$pgv_lang["pl_add_place"]           = "Ort hinzufügen";
+$pgv_lang["pl_add_place"]           = "Ort hinzufÃ¼gen";
 $pgv_lang["pl_import_gedcom"]       = "Aus aktueller GEDCOM-Datei importieren";
 $pgv_lang["pl_import_all_gedcom"]   = "Aus allen GEDCOM-Dateien importieren";
 $pgv_lang["pl_import_file"]         = "Aus Datei importieren";
@@ -48,7 +49,7 @@ $pgv_lang["pl_south_short"]         = "S";
 $pgv_lang["pl_east_short"]          = "O";
 $pgv_lang["pl_west_short"]          = "W";
 $pgv_lang["pl_places_filename"]     = "Datei mit Orten (CSV)";
-$pgv_lang["pl_clean_db"]            = "Alle Ortsdaten vor dem Import löschen?";
+$pgv_lang["pl_clean_db"]            = "Alle Ortsdaten vor dem Import lÃ¶schen?";
 $pgv_lang["pl_no_places_found"]     = "Keine Orte gefunden";
 $pgv_lang["pl_precision"]           = "Genauigkeit";
 $pgv_lang["pl_country"]             = "Staat";
@@ -58,4 +59,11 @@ $pgv_lang["pl_neighborhood"]        = "Stadt / Ortsteil";
 $pgv_lang["pl_house"]               = "Haus";
 $pgv_lang["pl_max"]                 = "Max";
 
+$pgv_lang["pl_flag"]                = "Flagge";
+$pgv_lang["flags_edit"]             = "Flagge auswählen";
+$pgv_lang["pl_change_flag"]         = "Flagge ändern";
+$pgv_lang["pl_remove_flag"]         = "Flagge entfernen";
+
+$pgv_lang["pl_remove_location"]     = "Diese Ortsdaten entfernen?";
+$pgv_lang["pl_delete_error"]        = "Ortsdaten wurden nicht entfernt! Es sind noch weitere, abhängige Ortsdaten vorhanden.";
 ?>
