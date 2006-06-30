@@ -31,6 +31,7 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["clear_chart"]			= "נקה תרשים";
 $pgv_lang["file_information"]			= "מידע על קובץ";
 $pgv_lang["choose_file_type"]			= "בחר סוג קובץ";
 $pgv_lang["add_individual_by_id"]		= "הוסף אדם לפי קוד זיהוי";
@@ -283,8 +284,18 @@ $pgv_lang["htmlplus_block_name"]	= "HTML מתקדם";
 $pgv_lang["htmlplus_block_descr"]	= "זהו אזור HTML שתוכל לשים בדף שלך כדי להוסיף הודעה כלשהיא. ניתן להניס הפניות קישור למידע מקובץ ה-GEDCOM שלך לתוך טכסט ה-HTML.";
 $pgv_lang["htmlplus_block_templates"] 	= "תבניות";
 $pgv_lang["htmlplus_block_content"] 	= "תוכן";
-$pgv_lang["htmlplus_block_narrative"] 	= "סגנון תיאורי";
-//$pgv_lang["htmlplus_block_narrative"] 	= "סגנון סיפורי (רק באנגלית)";
+$pgv_lang["htmlplus_block_narrative"] 	= "סגנון סיפורי (רק באנגלית)";
+$pgv_lang["htmlplus_block_custom"]	= "מותאם";
+$pgv_lang["htmlplus_block_keyword"]	= "דוגמאות של מילות מפתח (רק באנגלית)";
+$pgv_lang["htmlplus_block_current"]	= "נוכחי";
+$pgv_lang["htmlplus_block_default"]	= "ברירת מחדל";
+$pgv_lang["htmlplus_block_gedcom"]	= "אילן יוחסין";
+$pgv_lang["htmlplus_block_birth"]	= "לידה";
+$pgv_lang["htmlplus_block_death"]	= "מות";
+$pgv_lang["htmlplus_block_marrage"]	= "נישואין";
+$pgv_lang["htmlplus_block_adoption"]	= "אימוץ";
+$pgv_lang["htmlplus_block_burial"]	= "קבורה";
+$pgv_lang["htmlplus_block_census"]	= "הוסף מרשם אוכלוסין";
 $pgv_lang["num_to_show"]		= "מספר פריטים להצגה";
 $pgv_lang["days_to_show"]		= "מספר הימים שיש להציג";
 $pgv_lang["before_or_after"]		= "שים מונים לפני או אחרי השם?";
@@ -968,7 +979,7 @@ $pgv_lang["research_assistant"]	= "עוזר מחקר";
 //$pgv_lang["research_log"]		= "יומן מחקר";
 $pgv_lang["administration"]		= "ניהול";
 $pgv_lang["ansi_to_utf8"]		= "הסב קובץ GEDCOM זה מ-ANSI ל-UTF-8?";
-$pgv_lang["utf8_to_ansi"]		= "האם ברצונך להסב GEDCOM זה מ-UTF-8 ל-(ANSI (ISO-8859-1?";
+$pgv_lang["utf8_to_ansi"]		= "הסב מ-UTF-8 ל-(ANSI (ISO-8859-1?";
 $pgv_lang["visitor"]			= "אורח";
 $pgv_lang["user"]			= "משתמש מאושר";
 $pgv_lang["gedadmin"]		= "מנהלן GEDCOM";
@@ -1001,7 +1012,7 @@ $pgv_lang["admin_geds"]		= "ניהול מידע ו-GEDCOM-ים";
 $pgv_lang["admin_site"]		= "ניהול האתר";
 
 //-- Relationship chart messages
-$pgv_lang["relationship_great"]	= "Great"; //@@ ??
+$pgv_lang["relationship_great"]	= "Great"; //--@@ ??
 $pgv_lang["relationship_chart"]	= "קירבה משפחתית";
 $pgv_lang["person1"]		= "אדם א'";
 $pgv_lang["person2"]		= "אדם ב'";
@@ -1889,7 +1900,7 @@ $pgv_lang["add_faq_header"] 	= "כותרת ה-FAQ";
 $pgv_lang["add_faq_body"] 	= "גוף ה-FAQ";
 $pgv_lang["add_faq_order"] 	= "מיקום ה-FAQ";
 $pgv_lang["no_faq_items"] 	= "רשימת ה-FAQ-ים ריקה.";
-$pgv_lang["position_item"] 	= "מיקום עצם";
+$pgv_lang["position_item"] 	= "מיקום ישות";
 $pgv_lang["faq_list"] 	= "רשימת שאלות נפוצות (FAQ)";
 $pgv_lang["confirm_faq_delete"] = "האם הנך בטוח שברצונך למחוק כניסת ה-FAQ הזה";
 $pgv_lang["preview"] 	=  "הצגה מוקדמת";

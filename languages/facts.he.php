@@ -199,6 +199,7 @@ $factarray["ROMN"]	= "לטיני";
 // PAF related facts
 $factarray["_NAME"] 	= "שם למשלוח דואר";
 $factarray["URL"] 	= "URL";
+$factarray["_URL"] 	= "URL";
 $factarray["_HEB"] 	= "עברי";
 $factarray["_SCBK"] 	= "אלבום הדבקות";
 $factarray["_TYPE"] 	= "סוג מדיה";
