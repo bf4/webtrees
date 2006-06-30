@@ -280,6 +280,7 @@ $pgv_lang["htmlplus_block_templates"] = "Templates";
 $pgv_lang["htmlplus_block_content"] = "Content";
 $pgv_lang["htmlplus_block_narrative"] = "Narrative style (English only)";
 $pgv_lang["htmlplus_block_custom"]	= "Custom";
+$pgv_lang["htmlplus_block_keyword"]	= "Keyword Examples (English only)";
 $pgv_lang["htmlplus_block_current"]	= "Current";
 $pgv_lang["htmlplus_block_default"]	= "Default";
 $pgv_lang["htmlplus_block_gedcom"]	= "Family Tree";
