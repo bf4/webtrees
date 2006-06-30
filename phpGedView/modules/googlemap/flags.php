@@ -40,6 +40,24 @@ if (file_exists( $factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
 require("languages/countries.en.php");
 if (file_exists("languages/countries.".$lang_short_cut[$deflang].".php")) require("languages/countries.".$lang_short_cut[$deflang].".php");
 
+if(!function_exists('scandir')) {
+   function scandir($dir, $sortorder = 0) {
+       if(is_dir($dir))        {
+           $dirlist = opendir($dir);
+           while( ($file = readdir($dirlist)) !== false) {
+               if(!is_dir($file)) {
+                   $files[] = $file;
+               }
+           }
+           ($sortorder == 0) ? asort($files) : rsort($files); // arsort was replaced with rsort
+           return $files;
+       } else {
+       return FALSE;
+       break;
+       }
+   }
+}
+
 if(!isset($countrySelected)) $countrySelected="Countries";
 if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
 
