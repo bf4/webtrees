@@ -52,7 +52,10 @@ Some special remarks for version 3.3.8:
 Contributers:
 - Norwegian translation: Geir Eikland (eikland)
 - German translation: Christian Helms (nolensvolens)
+- French translation: Thierry Durand (tdurand)
 - Countries and US-states CSV file: Glen Carreras (carrerasg)
+- Testing and additional comments: Mike Elliott (Colored Pixels) and Nigel
+  Osborn (nigelo)
 
 Changelog:
 Version 0.5:
