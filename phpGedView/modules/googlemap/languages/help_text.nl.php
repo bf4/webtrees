@@ -85,7 +85,7 @@ $pgv_lang["PLE_FLAGS"]                  = "Selecteer vlag";
 $pgv_lang["PLE_FLAGS_help"]             = "Via het pulldown menu kan een land worden geselcteerd, waarvan daarna een vlag kan worden geselecteerd. Indien geen vlaggen worden getoond, zijn er voor dit land geen vlaggen gedefinieerd.";
 
 $pgv_lang["PLIF_FILENAME"]              = "Voer bestandsnaam in";
-$pgv_lang["PLIF_FILENAME_help"]         = "Voer de naam van het bestand in waar de gegevens van de plaatsen in staan. Dit bestand moet in het CSV-formaat zijn."
+$pgv_lang["PLIF_FILENAME_help"]         = "Voer de naam van het bestand in waar de gegevens van de plaatsen in staan. Dit bestand moet in het CSV-formaat zijn.";
 
 $pgv_lang["PLIF_CLEAN"]                 = "Plaats-database leegmaken";
 $pgv_lang["PLIF_CLEAN_help"]            = "Als deze optie is geselecteerd zal de database met plaats-gegevens worden leeggemaakt. Deze bevat alleen de gegevens van de plaatsen. Er zullen geen wijzigingen in de GEDCOM gegevens worden aangebracht.";
