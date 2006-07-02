@@ -28,6 +28,9 @@ if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
   exit;
 }
 
+$pgv_lang["GOOGLEMAP_ENABLE"]           = "Google-map aanzetten";
+$pgv_lang["GOOGLEMAP_ENABLE_help"]      = "~#pgv_lang[GOOGLEMAP_ENABLE]#~<br /><br />Via deze optie is het mogelijk om de Googlemap module aan of uit te zetten.<br>Indien de module uitgezet is zal de kaart-tab wel zichtbaar zijn, maar deze blijft leeg. De link naar de configuratie pagina zal wel beschikbaar blijven, maar alleen voor beheerders";
+
 $pgv_lang["GOOGLEMAP_API_KEY"]      = "Google-map API code";
 $pgv_lang["GOOGLEMAP_API_KEY_help"] = "~#pgv_lang[GOOGLEMAP_API_KEY]#~<br /><br />Voer hier uw Google Map API code in. U kunt een code aanvragen op <a target=\"_blank\" href=\"http://www.google.com/apis/maps/\">http://www.google.com/apis/maps/</a>";
 
@@ -80,5 +83,12 @@ $pgv_lang["PLE_ICON_help"]              = "Hier kan een vlag worden geselcteerd.
 
 $pgv_lang["PLE_FLAGS"]                  = "Selecteer vlag";
 $pgv_lang["PLE_FLAGS_help"]             = "Via het pulldown menu kan een land worden geselcteerd, waarvan daarna een vlag kan worden geselecteerd. Indien geen vlaggen worden getoond, zijn er voor dit land geen vlaggen gedefinieerd.";
+
+$pgv_lang["PLIF_FILENAME"]              = "Voer bestandsnaam in";
+$pgv_lang["PLIF_FILENAME_help"]         = "Voer de naam van het bestand in waar de gegevens van de plaatsen in staan. Dit bestand moet in het CSV-formaat zijn."
+
+$pgv_lang["PLIF_CLEAN"]                 = "Plaats-database leegmaken";
+$pgv_lang["PLIF_CLEAN_help"]            = "Als deze optie is geselecteerd zal de database met plaats-gegevens worden leeggemaakt. Deze bevat alleen de gegevens van de plaatsen. Er zullen geen wijzigingen in de GEDCOM gegevens worden aangebracht.";
+
 
 ?>

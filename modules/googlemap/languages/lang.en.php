@@ -9,7 +9,8 @@
 
 
 $pgv_lang["googlemap"]              = "Map";
-$pgv_lang["no_gmtab"]               = "No mapdata for this person";
+$pgv_lang["no_gmtab"]               = "No map data for this person";
+$pgv_lang["gm_disabled"]            = "Googlemap module disabled";
 
 $pgv_lang['gm_redraw_map']          = "Redraw map";
 $pgv_lang["gm_map"]                 = "Map";
@@ -22,6 +23,7 @@ $pgv_lang["configure_googlemap"]    = "Googlemap Configuration";
 $pgv_lang["gm_admin_error"]         = "Page only for Administrators";
 $pgv_lang["gm_db_error"]            = "placelocation table not found in database";
 $pgv_lang["gm_table_created"]       = "placelocation table created";
+$pgv_lang["googlemap_enable"]       = "Enable Googlemap";
 $pgv_lang["googlemapkey"]           = "Google Map API key";
 $pgv_lang["gm_map_type"]            = "Default map type";
 $pgv_lang["gm_map_size"]            = "Size of map (in pixels)";
@@ -29,8 +31,8 @@ $pgv_lang["gm_map_size_x"]          = "Width";
 $pgv_lang["gm_map_size_y"]          = "Height";
 $pgv_lang["gm_map_zoom"]            = "Zoom factor of map";
 $pgv_lang["gm_digits"]              = "digits";
-
-$pgv_lang["GOOGLEMAP_API_KEY_help"]	= "~#pgv_lang[googlemapkey]#~<br /><br />Insert your Google Map API key here.";
+$pgv_lang["gm_min"]                 = "Min.";
+$pgv_lang["gm_max"]                 = "Max.";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Edit place locations";
@@ -56,7 +58,7 @@ $pgv_lang["pl_precision"]           = "Precision";
 $pgv_lang["pl_country"]             = "Country";
 $pgv_lang["pl_state"]               = "State";
 $pgv_lang["pl_city"]                = "City";
-$pgv_lang["pl_neighborhood"]        = "Neigborhood";
+$pgv_lang["pl_neighborhood"]        = "Neighborhood";
 $pgv_lang["pl_house"]               = "House";
 $pgv_lang["pl_max"]                 = "Max";
 

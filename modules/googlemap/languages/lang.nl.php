@@ -10,6 +10,7 @@
 
 $pgv_lang["googlemap"]              = "Landkaart";
 $pgv_lang["no_gmtab"]               = "Geen gegevens voor deze persoon";
+$pgv_lang["gm_disabled"]            = "Googlemap module uitgeschakeld";
 
 $pgv_lang["gm_redraw_map"]          = "Ververs kaart";
 $pgv_lang["gm_map"]                 = "Kaart";
@@ -21,6 +22,7 @@ $pgv_lang["gm_hybrid"]              = "Combinatie";
 $pgv_lang["gm_manage"]              = "Beheer Googlemap configuratie";
 $pgv_lang["configure_googlemap"]    = "Googlemap Configuratie";
 $pgv_lang["gm_admin_error"]         = "Alleen voor Administrator";
+$pgv_lang["googlemap_enable"]       = "Googlemap aanzetten";
 $pgv_lang["googlemapkey"]           = "Google Map API key";
 $pgv_lang["gm_map_type"]            = "Standaard kaart soort";
 $pgv_lang["gm_map_size"]            = "Afmeting van de kaart (in pixels)";
@@ -28,8 +30,8 @@ $pgv_lang["gm_map_size_x"]          = "Breedte";
 $pgv_lang["gm_map_size_y"]          = "Hoogte";
 $pgv_lang["gm_map_zoom"]            = "Zoom factor van de kaart";
 $pgv_lang["gm_digits"]              = "cijfers";
-
-$pgv_lang["GOOGLEMAP_API_KEY_help"]	= "~#pgv_lang[googlemapkey]#~<br /><br />Insert your Google Map API key here.";
+$pgv_lang["gm_min"]                 = "Min.";
+$pgv_lang["gm_max"]                 = "Max.";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Wijzigen locatie gegevens";

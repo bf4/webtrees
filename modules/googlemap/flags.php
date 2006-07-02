@@ -26,7 +26,7 @@
 
 require "config.php";
 require "modules/googlemap/defaultconfig.php";
-require "modules/googlemap/config.php";
+if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
 require "includes/functions_edit.php";
 require $INDEX_DIRECTORY."pgv_changes.php";
 require($factsfile["english"]);
