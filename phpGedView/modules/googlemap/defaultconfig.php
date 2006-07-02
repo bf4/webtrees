@@ -20,9 +20,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @subpackage Admin
- * @version $Id: config.php$
+ * @subpackage Googlemap
+ * @version $Id: defaultconfig.php$
  */
+
+$GOOGLEMAP_ENABLED = "false";          // Enable or disable Googlemap
 
 $GOOGLEMAP_API_KEY = "Fill in your key here. Request key from http://www.google.com/apis/maps/";
 

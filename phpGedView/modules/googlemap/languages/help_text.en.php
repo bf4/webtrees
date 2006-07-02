@@ -28,6 +28,9 @@ if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
   exit;
 }
 
+$pgv_lang["GOOGLEMAP_ENABLE"]           = "Enable Google-map";
+$pgv_lang["GOOGLEMAP_ENABLE_help"]      = "~#pgv_lang[GOOGLEMAP_ENABLE]#~<br /><br />Using this option the functionality of the Googlemap can be enabled or disabled.<br>When disabled the Map-tab on the individual page is still shown, but will be left empty. The configuration link for administrators is still available.";
+
 $pgv_lang["GOOGLEMAP_API_KEY"]          = "Google-map API key";
 $pgv_lang["GOOGLEMAP_API_KEY_help"]     = "~#pgv_lang[GOOGLEMAP_API_KEY]#~<br /><br />Insert your Google Map API key here.  You can request a key here: <a target=\"_blank\" href=\"http://www.google.com/apis/maps/\">http://www.google.com/apis/maps/</a>";
 
@@ -38,7 +41,7 @@ $pgv_lang["GOOGLEMAP_MAP_SIZE"]         = "Google-map size";
 $pgv_lang["GOOGLEMAP_MAP_SIZE_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_SIZE]#~<br /><br />The size of the map (in pixels) as shown on the Individual page.";
 
 $pgv_lang["GOOGLEMAP_MAP_ZOOM"]         = "Google-map zoom factor";
-$pgv_lang["GOOGLEMAP_MAP_ZOOM_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_ZOOM]#~<br /><br />Minimum en maximum zoom factor for the Google map. 1 is the full map, 15 is single house. Note that 15 is only availble at certain locations.";
+$pgv_lang["GOOGLEMAP_MAP_ZOOM_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_ZOOM]#~<br /><br />Minimum and maximum zoom factor for the Google map. 1 is the full map, 15 is single house. Note that 15 is only available at certain locations.";
 
 $pgv_lang["GOOGLEMAP_PRECISION"]        = "Precision of the latitude and longitude";
 $pgv_lang["GOOGLEMAP_PRECISION_help"]   = "~#pgv_lang[GOOGLEMAP_PRECISION]#~<br /><br />This specifies the precision of the different levels when entering new locations. For example a country will be specified with precision 0 (=0 digits after the decimal point), while a town needs 3 or 4 digits.";
@@ -56,7 +59,7 @@ $pgv_lang["PL_IMPORT_ALL_GEDCOM"]       = "Import locations from all GEDCOMs";
 $pgv_lang["PL_IMPORT_ALL_GEDCOM_help"]  = "Import location-data from all GEDCOMs. All GEDCOMs will be scanned and all locations will be added to the table. If latitude and longitude are available these will also be imported.";
 
 $pgv_lang["PL_IMPORT_FILE"]             = "Import locations from file";
-$pgv_lang["PL_IMPORT_FILE_help"]        = "Import location data from a file. The file should be formatted as CSV file on the local computer. The record seperator used within the lines is ';'.";
+$pgv_lang["PL_IMPORT_FILE_help"]        = "Import location data from a file. The file should be formatted as CSV file on the local computer. The record separator used within the lines is ';'.";
 
 $pgv_lang["PL_EXPORT_FILE"]             = "Export locations to file";
 $pgv_lang["PL_EXPORT_FILE_help"]        = "Export location data to a file. This option will save the data from the current view and all dependant data to a file. This means that if a country is selected and the states are shown, this option will save the data of the states, all the counties that are defined in those states and all places within those counties.";
@@ -66,22 +69,28 @@ $pgv_lang["PL_EXPORT_ALL_FILE_help"]    = "Export all location data to a file. T
 
 // Help texts for places_edit.php
 
-$pgv_lang["PLE_PLACES"]                 = "Enter placename";
+$pgv_lang["PLE_PLACES"]                 = "Enter place name";
 $pgv_lang["PLE_PLACES_help"]            = "Here you can enter or change the name of the place.";
 
 $pgv_lang["PLE_PRECISION"]              = "Enter precision";
-$pgv_lang["PLE_PRECISION_help"]         = "Here you can enter the prcision. Based on this setting the number of digits that will be used in the latitude and longitude is determined.";
+$pgv_lang["PLE_PRECISION_help"]         = "Here you can enter the precision. Based on this setting the number of digits that will be used in the latitude and longitude is determined.";
 
 $pgv_lang["PLE_LATLON_CTRL"]            = "Enter latitude or Longitude";
-$pgv_lang["PLE_LATLON_CTRL_help"]       = "Here the latitude and longitude can be entered. First select the area you want to set (E/W or N/S). Next enter the value for latitude or longitude. This should be a decimal value.<br>The decimal value can be determined by converting the minutes and seconds uding the following formula:<br>degrees_decimal = ((seconds / 60) + minutes) / 60 + degrees.";
+$pgv_lang["PLE_LATLON_CTRL_help"]       = "Here the latitude and longitude can be entered. First select the area you want to set (E/W or N/S). Next enter the value for latitude or longitude. This should be a decimal value.<br>The decimal value can be determined by converting the minutes and seconds using the following formula:<br>degrees_decimal = ((seconds / 60) + minutes) / 60 + degrees.";
 
 $pgv_lang["PLE_ZOOM"]                   = "Enter zoom level";
-$pgv_lang["PLE_ZOOM_help"]              = "Here the zoomlevel can be entered. This value will be used as the minimal value when displaying this location on a map.";
+$pgv_lang["PLE_ZOOM_help"]              = "Here the zoom level can be entered. This value will be used as the minimal value when displaying this location on a map.";
 
 $pgv_lang["PLE_ICON"]                   = "Select an icon";
 $pgv_lang["PLE_ICON_help"]              = "Here an icon can be set or removed. Using this link a flag can be selected. When this location is shown, this flag will be displayed.";
 
 $pgv_lang["PLE_FLAGS"]                  = "Select flag";
-$pgv_lang["PLE_FLAGS_help"]             = "Using the pulldown menu it is possible to select a country, of which a flag can be selected. If no flags are shown, then there are no flags defined for this country.";
+$pgv_lang["PLE_FLAGS_help"]             = "Using the pull down menu it is possible to select a country, of which a flag can be selected. If no flags are shown, then there are no flags defined for this country.";
+
+$pgv_lang["PLIF_FILENAME"]              = "Enter filename";
+$pgv_lang["PLIF_FILENAME_help"]         = "Enter the name of the file containing the place locations in CSV format.";
+
+$pgv_lang["PLIF_CLEAN"]                 = "Clean placelocation database";
+$pgv_lang["PLIF_CLEAN_help"]            = "When this option is selected the placelocation database will be cleared. This means that only the location stored in this table will be deleted. This will not change anything in the GEDCOM.";
 
 ?>

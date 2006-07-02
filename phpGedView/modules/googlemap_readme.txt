@@ -54,8 +54,8 @@ Contributers:
 - German translation: Christian Helms (nolensvolens)
 - French translation: Thierry Durand (tdurand)
 - Countries and US-states CSV file: Glen Carreras (carrerasg)
-- Testing and additional comments: Mike Elliott (Colored Pixels) and Nigel
-  Osborn (nigelo)
+- Testing and additional comments: Mike Elliott (Colored Pixels), Nigel
+  Osborn (nigelo) and Meliza Amity (meliza)
 
 Changelog:
 Version 0.5:
