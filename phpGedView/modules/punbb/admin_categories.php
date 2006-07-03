@@ -26,7 +26,7 @@
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
 
-define('PUN_ROOT', 'modules/punbb/');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -46,7 +46,7 @@ if (isset($_POST['add_cat']))
 
 	$db->query('INSERT INTO '.$db->prefix.'categories (cat_name) VALUES(\''.$db->escape($new_cat_name).'\')') or error('Unable to create category', __FILE__, __LINE__, $db->error());
 
-	redirect('module.php?mod=punbb&amp;pgvaction=admin_categories', 'Category added. Redirecting &hellip;');
+	redirect('admin_categories.php', 'Category added. Redirecting &hellip;');
 }
 
 
@@ -96,7 +96,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 		require_once PUN_ROOT.'include/cache.php';
 		generate_quickjump_cache();
 
-		redirect('module.php?mod=punbb&amp;pgvaction=admin_categories', 'Category deleted. Redirecting &hellip;');
+		redirect('admin_categories.php', 'Category deleted. Redirecting &hellip;');
 	}
 	else	// If the user hasn't comfirmed the delete
 	{
@@ -112,7 +112,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 	<div class="blockform">
 		<h2><span>Category delete</span></h2>
 		<div class="box">
-			<form method="post" action="module.php?mod=punbb&amp;pgvaction=admin_categories">
+			<form method="post" action="<?php genurl('admin_categories.php', true, true)?>">
 				<div class="inform">
 				<input type="hidden" name="cat_to_delete" value="<?php echo $cat_to_delete ?>" />
 					<fieldset>
@@ -123,7 +123,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 						</div>
 					</fieldset>
 				</div>
-				<p><input type="submit" name="del_cat_comply" value="Delete" />&nbsp;&nbsp;&nbsp;<a href="javascript:history.go(-1)" />Go back</a></p>
+				<p><input type="submit" name="del_cat_comply" value="Delete" /><a href="javascript:history.go(-1)">Go back</a></p>
 			</form>
 		</div>
 	</div>
@@ -163,7 +163,7 @@ else if (isset($_POST['update']))	// Change position and name of the categories
 	require_once PUN_ROOT.'include/cache.php';
 	generate_quickjump_cache();
 
-	redirect('module.php?mod=punbb&amp;pgvaction=admin_categories', 'Categories updated. Redirecting &hellip;');
+	redirect('admin_categories.php', 'Categories updated. Redirecting &hellip;');
 }
 
 
@@ -184,7 +184,7 @@ generate_admin_menu('categories');
 	<div class="blockform">
 		<h2><span>Add/remove/edit categories</span></h2>
 		<div class="box">
-		<form method="post" action="module.php?mod=punbb&amp;pgvaction=admin_categories&amp;action=foo">
+		<form method="post" action="<?php genurl('admin_categories.php?action=foo', true, true)?>">
 			<div class="inform">
 				<fieldset>
 					<legend>Add/delete categories</legend>
@@ -194,7 +194,7 @@ generate_admin_menu('categories');
 								<th scope="row">Add a new category<div><input type="submit" name="add_cat" value="Add New" tabindex="2" /></div></th>
 								<td>
 									<input type="text" name="new_cat_name" size="35" maxlength="80" tabindex="1" />
-									<span>The name of the new category you want to add. You can edit the name of the category later (see below).Go to <a href="module.php?mod=punbb&amp;pgvaction=admin_forums">Forums</a> to add forums to your new category.</span>
+									<span>The name of the new category you want to add. You can edit the name of the category later (see below).Go to <a href="admin_forums.php">Forums</a> to add forums to your new category.</span>
 								</td>
 							</tr>
 <?php if ($num_cats): ?>							<tr>

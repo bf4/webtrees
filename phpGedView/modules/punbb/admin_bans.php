@@ -26,7 +26,7 @@
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
 
-define('PUN_ROOT', 'modules/punbb/');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -44,7 +44,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 		if (isset($_GET['add_ban']))
 		{
 			$add_ban = intval($_GET['add_ban']);
-			if ($add_ban < 1)
+			if ($add_ban < 2)
 				message($lang_common['Bad request']);
 
 			$user_id = $add_ban;
@@ -61,7 +61,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 
 			if ($ban_user != '')
 			{
-				$result = $db->query('SELECT id, group_id, username, email FROM '.$db->prefix.'users WHERE username=\''.$db->escape($ban_user).'\'') or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
+				$result = $db->query('SELECT id, group_id, username, email FROM '.$db->prefix.'users WHERE username=\''.$db->escape($ban_user).'\' AND id>1') or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 				if ($db->num_rows($result))
 					list($user_id, $group_id, $ban_user, $ban_email) = $db->fetch_row($result);
 				else
@@ -110,7 +110,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 	<div class="blockform">
 		<h2><span>Ban advanced settings</span></h2>
 		<div class="box">
-			<form id="bans2" method="post" action="module.php?mod=punbb&amp;pgvaction=admin_bans.php">
+			<form id="bans2" method="post" action="<?php genurl('admin_bans.php', true, true)?>">
 				<div class="inform">
 				<input type="hidden" name="mode" value="<?php echo $mode ?>" />
 <?php if ($mode == 'edit'): ?>				<input type="hidden" name="ban_id" value="<?php echo $ban_id ?>" />
@@ -129,7 +129,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 									<th scope="row">IP-adresses</th>
 									<td>
 										<input type="text" name="ban_ip" size="45" maxlength="255" value="<?php if (isset($ban_ip)) echo $ban_ip; ?>" tabindex="2" />
-										<span>The IP or IP-ranges you wish to ban (e.g. 150.11.110.1 or 150.11.110). Separate addresses with spaces. If an IP is entered already it is the last known IP of this user in the database.<?php if ($ban_user != '' && isset($user_id)) echo ' Click <a href="module.php?mod=punbb&amp;pgvaction=admin_users&amp;ip_stats='.$user_id.'">here</a> to see IP statistics for this user.' ?></span>
+										<span>The IP or IP-ranges you wish to ban (e.g. 150.11.110.1 or 150.11.110). Separate addresses with spaces. If an IP is entered already it is the last known IP of this user in the database.<?php if ($ban_user != '' && isset($user_id)) echo ' Click <a href="admin_users.php?ip_stats='.$user_id.'">here</a> to see IP statistics for this user.' ?></span>
 									</td>
 								</tr>
 								<tr>
@@ -244,13 +244,13 @@ else if (isset($_POST['add_edit_ban']))
 	if ($_POST['mode'] == 'add')
 		$db->query('INSERT INTO '.$db->prefix.'bans (username, ip, email, message, expire) VALUES('.$ban_user.', '.$ban_ip.', '.$ban_email.', '.$ban_message.', '.$ban_expire.')') or error('Unable to add ban', __FILE__, __LINE__, $db->error());
 	else
-		$db->query('UPDATE '.$db->prefix.'bans SET username='.$ban_user.', ip='.$ban_ip.', email='.$ban_email.', message='.$ban_message.', expire='.$ban_expire.' WHERE id='.$_POST['ban_id']) or error('Unable to update ban', __FILE__, __LINE__, $db->error());
+		$db->query('UPDATE '.$db->prefix.'bans SET username='.$ban_user.', ip='.$ban_ip.', email='.$ban_email.', message='.$ban_message.', expire='.$ban_expire.' WHERE id='.intval($_POST['ban_id'])) or error('Unable to update ban', __FILE__, __LINE__, $db->error());
 
 	// Regenerate the bans cache
 	require_once PUN_ROOT.'include/cache.php';
 	generate_bans_cache();
 
-	redirect('module.php?mod=punbb&amp;pgvaction=admin_bans', 'Ban '.(($_POST['mode'] == 'edit') ? 'edited' : 'added').'. Redirecting &hellip;');
+	redirect('admin_bans.php', 'Ban '.(($_POST['mode'] == 'edit') ? 'edited' : 'added').'. Redirecting &hellip;');
 }
 
 
@@ -269,7 +269,7 @@ else if (isset($_GET['del_ban']))
 	require_once PUN_ROOT.'include/cache.php';
 	generate_bans_cache();
 
-	redirect('module.php?mod=punbb&amp;pgvaction=admin_bans', 'Ban removed. Redirecting &hellip;');
+	redirect('admin_bans.php', 'Ban removed. Redirecting &hellip;');
 }
 
 
@@ -283,7 +283,7 @@ generate_admin_menu('bans');
 	<div class="blockform">
 		<h2><span>New ban</span></h2>
 		<div class="box">
-			<form id="bans" method="post" action="module.php?mod=punbb&amp;pgvaction=admin_bans&amp;action=more">
+			<form id="bans" method="post" action="<?php genurl('admin_bans.php?action=more', true, true)?>">
 				<div class="inform">
 					<fieldset>
 						<legend>Add ban</legend>
@@ -338,7 +338,7 @@ if ($db->num_rows($result))
 									<td><?php echo pun_htmlspecialchars($cur_ban['message']) ?></td>
 								</tr>
 <?php endif; ?>							</table>
-							<p class="linkactions"><a href="module.php?mod=punbb&amp;pgvaction=admin_bans&amp;edit_ban=<?php echo $cur_ban['id'] ?>">Edit</a> - <a href="module.php?mod=punbb&amp;pgvaction=admin_bans&amp;del_ban=<?php echo $cur_ban['id'] ?>">Remove</a></p>
+							<p class="linkactions"><a href="<?php genurl("admin_bans.php?edit_ban={$cur_ban['id']}", false, true)?>">Edit</a> - <a href="<?php genurl("admin_bans.php?del_ban={$cur_ban['id']}", false, true)?>">Remove</a></p>
 						</div>
 					</fieldset>
 				</div>

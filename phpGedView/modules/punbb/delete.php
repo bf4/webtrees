@@ -23,7 +23,7 @@
 ************************************************************************/
 
 
-define('PUN_ROOT', 'modules/punbb/');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 
 
@@ -77,7 +77,7 @@ if (isset($_POST['delete']))
 		delete_topic($cur_post['tid']);
 		update_forum($cur_post['fid']);
 
-		redirect('module.php?mod=punbb&amp;pgvaction=viewforum&amp;id='.$cur_post['fid'], $lang_delete['Topic del redirect']);
+		redirect('viewforum.php?id='.$cur_post['fid'], $lang_delete['Topic del redirect']);
 	}
 	else
 	{
@@ -85,7 +85,7 @@ if (isset($_POST['delete']))
 		delete_post($id, $cur_post['tid']);
 		update_forum($cur_post['fid']);
 
-		redirect('module.php?mod=punbb&amp;pgvaction=viewtopic&amp;id='.$cur_post['tid'], $lang_delete['Post del redirect']);
+		redirect('viewtopic.php?id='.$cur_post['tid'], $lang_delete['Post del redirect']);
 	}
 }
 
@@ -99,14 +99,14 @@ $cur_post['message'] = parse_message($cur_post['message'], $cur_post['hide_smili
 ?>
 <div class="linkst">
 	<div class="inbox">
-		<ul><li><a href="module.php?mod=punbb&amp;pgvaction=index"><?php echo $lang_common['Index'] ?></a></li><li>&nbsp;&raquo;&nbsp;<a href="module.php?mod=punbb&amp;pgvaction=viewforum&amp;id=<?php echo $cur_post['fid'] ?>"><?php echo pun_htmlspecialchars($cur_post['forum_name']) ?></a></li><li>&nbsp;&raquo;&nbsp;<?php echo pun_htmlspecialchars($cur_post['subject']) ?></li></ul>
+		<ul><li><a href="<?php genurl('index.php', false, true)?>"><?php echo $lang_common['Index'] ?></a></li><li>&nbsp;&raquo;&nbsp;<a href="<?php genurl("viewforum.php?id={$cur_post['fid']}", false, true)?>"><?php echo pun_htmlspecialchars($cur_post['forum_name']) ?></a></li><li>&nbsp;&raquo;&nbsp;<?php echo pun_htmlspecialchars($cur_post['subject']) ?></li></ul>
 	</div>
 </div>
 
 <div class="blockform">
 	<h2><span><?php echo $lang_delete['Delete post'] ?></span></h2>
 	<div class="box">
-		<form method="post" action="module.php?mod=punbb&amp;pgvaction=delete&amp;id=<?php echo $id ?>">
+		<form method="post" action="<?php genurl("delete.php?id={$id}", true, true)?>">
 			<div class="inform">
 				<fieldset>
 					<legend class="warntext"><?php echo $lang_delete['Warning'] ?></legend>

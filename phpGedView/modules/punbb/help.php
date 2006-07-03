@@ -26,7 +26,7 @@
 // Tell header.php to use the help template
 define('PUN_HELP', 1);
 
-define('PUN_ROOT', 'modules/punbb/');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 
 
@@ -145,8 +145,7 @@ for ($i = 0; $i < $num_smilies; ++$i)
 		}
 	}
 
-	//echo ' '.$lang_help['produces'].' <img src="img/smilies/'.$cur_img.'" width="15" height="15" alt="'.$cur_text.'" /><br />'."\n";
-	echo ' '.$lang_help['produces'].' <img src="modules/punbb/img/smilies/'.$cur_img.'" alt="'.$cur_text.'" /><br />'."\n";
+	echo ' '.$lang_help['produces'].' <img src="'.PUN_ROOT.'img/smilies/'.$cur_img.'" width="15" height="15" alt="'.$cur_text.'" /><br />'."\n";
 }
 
 ?>

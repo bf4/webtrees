@@ -129,7 +129,7 @@ function generate_ranks_cache()
 	global $db;
 
 	// Get the rank list from the DB
-	$result = $db->query('SELECT * FROM '.$db->prefix.'ranks', true) or error('Unable to fetch rank list', __FILE__, __LINE__, $db->error());
+	$result = $db->query('SELECT * FROM '.$db->prefix.'ranks ORDER BY min_posts', true) or error('Unable to fetch rank list', __FILE__, __LINE__, $db->error());
 
 	$output = array();
 	while ($cur_rank = $db->fetch_assoc($result))
@@ -174,8 +174,8 @@ function generate_quickjump_cache($group_id = false)
 		if (!$fh)
 			error('Unable to write quickjump cache file to cache directory. Please make sure PHP has write access to the directory \'cache\'', __FILE__, __LINE__);
 
-		$output = '<?php'."\n\n".'define(\'PUN_QJ_LOADED\', 1);'."\n\n".'?>';
-		$output .= "\t\t\t\t".'<form id="qjump" method="get" action="module.php?mod=punbb&amp;pgvaction=viewforum">'."\n\t\t\t\t\t".'<div><label><?php echo $lang_common[\'Jump to\'] ?>'."\n\n\t\t\t\t\t".'<br /><select name="id" onchange="window.location=(\'viewforum.php?id=\'+this.options[this.selectedIndex].value)">'."\n";
+		$output = '<?php'."\n\n".'if (!defined(\'PUN\')) exit;'."\n".'define(\'PUN_QJ_LOADED\', 1);'."\n\n".'?>';
+		$output .= "\t\t\t\t".'<form id="qjump" method="get" action="viewforum.php">'."\n\t\t\t\t\t".'<div><label><?php echo $lang_common[\'Jump to\'] ?>'."\n\n\t\t\t\t\t".'<br /><select name="id" onchange="window.location=(\'viewforum.php?id=\'+this.options[this.selectedIndex].value)">'."\n";
 
 
 		$result = $db->query('SELECT c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.redirect_url FROM '.$db->prefix.'categories AS c INNER JOIN '.$db->prefix.'forums AS f ON c.id=f.cat_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id='.$group_id.') WHERE fp.read_forum IS NULL OR fp.read_forum=1 ORDER BY c.disp_position, c.id, f.disp_position', true) or error('Unable to fetch category/forum list', __FILE__, __LINE__, $db->error());

@@ -109,6 +109,7 @@ $max_subject_length = 30;
 
 
 define('PUN_ROOT', './');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));
 @include PUN_ROOT.'config.php';
 
 // If PUN isn't defined, config.php is missing or corrupt
@@ -116,8 +117,10 @@ if (!defined('PUN'))
 	exit('The file \'config.php\' doesn\'t exist or is corrupt. Please run install.php to install PunBB first.');
 
 
-// Disable error reporting for uninitialized variables
-error_reporting(E_ALL);
+include_once PUN_ROOT.'include/pgv.php';
+
+// Make sure PHP reports all errors except E_NOTICE
+error_reporting(E_ALL ^ E_NOTICE);
 
 // Turn off magic_quotes_runtime
 set_magic_quotes_runtime(0);
@@ -129,10 +132,14 @@ require PUN_ROOT.'include/functions.php';
 // Load DB abstraction layer and try to connect
 require PUN_ROOT.'include/dblayer/common_db.php';
 
-// Get the forum config
-$result = $db->query('SELECT * FROM '.$db->prefix.'config') or error('Unable to fetch forum config', __FILE__, __LINE__, $db->error());
-while ($cur_config_item = $db->fetch_row($result))
-	$pun_config[$cur_config_item[0]] = $cur_config_item[1];
+// Load cached config
+@include PUN_ROOT.'cache/cache_config.php';
+if (!defined('PUN_CONFIG_LOADED'))
+{
+    require PUN_ROOT.'include/cache.php';
+    generate_config_cache();
+    require PUN_ROOT.'cache/cache_config.php';
+}
 
 // Make sure we (guests) have permission to read the forums
 $result = $db->query('SELECT g_read_board FROM '.$db->prefix.'groups WHERE g_id=3') or error('Unable to fetch group info', __FILE__, __LINE__, $db->error());
@@ -218,8 +225,8 @@ if ($_GET['action'] == 'active' || $_GET['action'] == 'new')
 
 			echo "\t".'<item>'."\r\n";
 			echo "\t\t".'<title>'.pun_htmlspecialchars($cur_topic['subject']).'</title>'."\r\n";
-			echo "\t\t".'<link>'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].$url_action.'</link>'."\r\n";
-			echo "\t\t".'<description><![CDATA['.escape_cdata($lang_common['Forum'].': <a href="'.$pun_config['o_base_url'].'/viewforum.php?id='.$cur_topic['fid'].'">'.$cur_topic['forum_name'].'</a><br />'."\r\n".$lang_common['Author'].': '.$cur_topic['poster'].'<br />'."\r\n".$lang_common['Posted'].': '.date('r', $cur_topic['posted']).'<br />'."\r\n".$lang_common['Last post'].': '.date('r', $cur_topic['last_post'])).']]></description>'."\r\n";
+			echo "\t\t".'<link>'.$pun_config['o_base_url'].'/'.genurl('viewtopic.php?id='.$cur_topic['id'].$url_action).'</link>'."\r\n";
+			echo "\t\t".'<description><![CDATA['.escape_cdata($lang_common['Forum'].': <a href="'.$pun_config['o_base_url'].'/'.genurl('viewforum.php?id='.$cur_topic['fid']).'">'.$cur_topic['forum_name'].'</a><br />'."\r\n".$lang_common['Author'].': '.$cur_topic['poster'].'<br />'."\r\n".$lang_common['Posted'].': '.date('r', $cur_topic['posted']).'<br />'."\r\n".$lang_common['Last post'].': '.date('r', $cur_topic['last_post'])).']]></description>'."\r\n";
 			echo "\t".'</item>'."\r\n";
 		}
 
@@ -248,7 +255,7 @@ if ($_GET['action'] == 'active' || $_GET['action'] == 'new')
 			else
 				$subject_truncated = pun_htmlspecialchars($cur_topic['subject']);
 
-			echo '<li><a href="'.$pun_config['o_base_url'].'/viewtopic.php?id='.$cur_topic['id'].'&amp;action=new" title="'.pun_htmlspecialchars($cur_topic['subject']).'">'.$subject_truncated.'</a></li>'."\n";
+			echo '<li><a href="'.$pun_config['o_base_url'].'/'.genurl('viewtopic.php?id='.$cur_topic['id'].'&amp;action=new').'" title="'.pun_htmlspecialchars($cur_topic['subject']).'">'.$subject_truncated.'</a></li>'."\n";
 		}
 	}
 
@@ -273,7 +280,7 @@ else if ($_GET['action'] == 'online' || $_GET['action'] == 'online_full')
 	{
 		if ($pun_user_online['user_id'] > 1)
 		{
-			$users[] = '<a href="'.$pun_config['o_base_url'].'/profile.php?id='.$pun_user_online['user_id'].'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a>';
+			$users[] = '<a href="'.$pun_config['o_base_url'].'/'.genurl('profile.php?id='.$pun_user_online['user_id']).'">'.pun_htmlspecialchars($pun_user_online['ident']).'</a>';
 			++$num_users;
 		}
 		else
@@ -310,7 +317,7 @@ else if ($_GET['action'] == 'stats')
 	list($stats['total_topics'], $stats['total_posts']) = $db->fetch_row($result);
 
 	echo $lang_index['No of users'].': '.$stats['total_users'].'<br />';
-	echo $lang_index['Newest user'].': <a href="'.$pun_config['o_base_url'].'/profile.php?id='.$stats['last_user']['id'].'">'.pun_htmlspecialchars($stats['last_user']['username']).'</a><br />';
+	echo $lang_index['Newest user'].': <a href="'.$pun_config['o_base_url'].'/'.genurl('profile.php?id='.$stats['last_user']['id']).'">'.pun_htmlspecialchars($stats['last_user']['username']).'</a><br />';
 	echo $lang_index['No of topics'].': '.$stats['total_topics'].'<br />';
 	echo $lang_index['No of posts'].': '.$stats['total_posts'];
 

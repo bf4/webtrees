@@ -50,20 +50,20 @@ if ($footer_style == 'index' || $footer_style == 'search')
 {
 	if (!$pun_user['is_guest'])
 	{
-		echo "\n\t\t\t".'<dl id="searchlinks" class="conl">'."\n\t\t\t\t".'<dt><strong>'.$lang_common['Search links'].'</strong></dt>'."\n\t\t\t\t".'<dd><a href="module.php?mod=punbb&amp;pgvaction=search&amp;action=show_24h">'.$lang_common['Show recent posts'].'</a></dd>'."\n";
-		echo "\t\t\t\t".'<dd><a href="module.php?mod=punbb&amp;pgvaction=search&amp;action=show_unanswered">'.$lang_common['Show unanswered posts'].'</a></dd>'."\n";
+		echo "\n\t\t\t".'<dl id="searchlinks" class="conl">'."\n\t\t\t\t".'<dt><strong>'.$lang_common['Search links'].'</strong></dt>'."\n\t\t\t\t".'<dd><a href="'.genurl('search.php?action=show_24h').'">'.$lang_common['Show recent posts'].'</a></dd>'."\n";
+		echo "\t\t\t\t".'<dd><a href="'.genurl('search.php?action=show_unanswered').'">'.$lang_common['Show unanswered posts'].'</a></dd>'."\n";
 
 		if ($pun_config['o_subscriptions'] == '1')
-			echo "\t\t\t\t".'<dd><a href="module.php?mod=punbb&amp;pgvaction=search&amp;action=show_subscriptions">'.$lang_common['Show subscriptions'].'</a></dd>'."\n";
+			echo "\t\t\t\t".'<dd><a href="'.genurl('search.php?action=show_subscriptions').'">'.$lang_common['Show subscriptions'].'</a></dd>'."\n";
 
-		echo "\t\t\t\t".'<dd><a href="module.php?mod=punbb&amp;pgvaction=search&amp;action=show_user&amp;user_id='.$pun_user['id'].'">'.$lang_common['Show your posts'].'</a></dd>'."\n\t\t\t".'</dl>'."\n";
+		echo "\t\t\t\t".'<dd><a href="'.genurl('search.php?action=show_user&amp;user_id='.$pun_user['id']).'">'.$lang_common['Show your posts'].'</a></dd>'."\n\t\t\t".'</dl>'."\n";
 	}
 	else
 	{
 		if ($pun_user['g_search'] == '1')
 		{
-			echo "\n\t\t\t".'<dl id="searchlinks" class="conl">'."\n\t\t\t\t".'<dt><strong>'.$lang_common['Search links'].'</strong></dt><dd><a href="module.php?mod=punbb&amp;pgvaction=search&amp;action=show_24h">'.$lang_common['Show recent posts'].'</a></dd>'."\n";
-			echo "\t\t\t\t".'<dd><a href="module.php?mod=punbb&amp;pgvaction=search&amp;action=show_unanswered">'.$lang_common['Show unanswered posts'].'</a></dd>'."\n\t\t\t".'</dl>'."\n";
+			echo "\n\t\t\t".'<dl id="searchlinks" class="conl">'."\n\t\t\t\t".'<dt><strong>'.$lang_common['Search links'].'</strong></dt><dd><a href="'.genurl('search.php?action=show_24h').'">'.$lang_common['Show recent posts'].'</a></dd>'."\n";
+			echo "\t\t\t\t".'<dd><a href="'.genurl('search.php?action=show_unanswered').'">'.$lang_common['Show unanswered posts'].'</a></dd>'."\n\t\t\t".'</dl>'."\n";
 		}
 	}
 }
@@ -85,28 +85,28 @@ else if ($footer_style == 'viewforum' || $footer_style == 'viewtopic')
 	}
 
 	if ($footer_style == 'viewforum' && $is_admmod)
-		echo "\t\t\t".'<p id="modcontrols"><a href="module.php?mod=punbb&amp;pgvaction=moderate&amp;fid='.$forum_id.'&amp;p='.$p.'">'.$lang_common['Moderate forum'].'</a></p>'."\n";
+		echo "\t\t\t".'<p id="modcontrols"><a href="'.genurl('moderate.php?fid='.$forum_id.'&amp;p='.$p).'">'.$lang_common['Moderate forum'].'</a></p>'."\n";
 	else if ($footer_style == 'viewtopic' && $is_admmod)
 	{
-		echo "\t\t\t".'<dl id="modcontrols"><dt><strong>'.$lang_topic['Mod controls'].'</strong></dt><dd><a href="module.php?mod=punbb&amp;pgvaction=moderate&amp;fid='.$forum_id.'&amp;tid='.$id.'&amp;p='.$p.'">'.$lang_common['Delete posts'].'</a></dd>'."\n";
-		echo "\t\t\t".'<dd><a href="module.php?mod=punbb&amp;pgvaction=moderate&amp;fid='.$forum_id.'&amp;move_topics='.$id.'">'.$lang_common['Move topic'].'</a></dd>'."\n";
+		echo "\t\t\t".'<dl id="modcontrols"><dt><strong>'.$lang_topic['Mod controls'].'</strong></dt><dd><a href="'.genurl('moderate.php?fid='.$forum_id.'&amp;tid='.$id.'&amp;p='.$p).'">'.$lang_common['Delete posts'].'</a></dd>'."\n";
+		echo "\t\t\t".'<dd><a href="'.genurl('moderate.php?fid='.$forum_id.'&amp;move_topics='.$id).'">'.$lang_common['Move topic'].'</a></dd>'."\n";
 
 		if ($cur_topic['closed'] == '1')
-			echo "\t\t\t".'<dd><a href="module.php?mod=punbb&amp;pgvaction=moderate&amp;fid='.$forum_id.'&amp;open='.$id.'">'.$lang_common['Open topic'].'</a></dd>'."\n";
+			echo "\t\t\t".'<dd><a href="'.genurl('moderate.php?fid='.$forum_id.'&amp;open='.$id).'">'.$lang_common['Open topic'].'</a></dd>'."\n";
 		else
-			echo "\t\t\t".'<dd><a href="module.php?mod=punbb&amp;pgvaction=moderate&amp;fid='.$forum_id.'&amp;close='.$id.'">'.$lang_common['Close topic'].'</a></dd>'."\n";
+			echo "\t\t\t".'<dd><a href="'.genurl('moderate.php?fid='.$forum_id.'&amp;close='.$id).'">'.$lang_common['Close topic'].'</a></dd>'."\n";
 
 		if ($cur_topic['sticky'] == '1')
-			echo "\t\t\t".'<dd><a href="module.php?mod=punbb&amp;pgvaction=moderate&amp;fid='.$forum_id.'&amp;unstick='.$id.'">'.$lang_common['Unstick topic'].'</a></dd></dl>'."\n";
+			echo "\t\t\t".'<dd><a href="'.genurl('moderate.php?fid='.$forum_id.'&amp;unstick='.$id).'">'.$lang_common['Unstick topic'].'</a></dd></dl>'."\n";
 		else
-			echo "\t\t\t".'<dd><a href="module.php?mod=punbb&amp;pgvaction=moderate&amp;fid='.$forum_id.'&amp;stick='.$id.'">'.$lang_common['Stick topic'].'</a></dd></dl>'."\n";
+			echo "\t\t\t".'<dd><a href="'.genurl('moderate.php?fid='.$forum_id.'&amp;stick='.$id).'">'.$lang_common['Stick topic'].'</a></dd></dl>'."\n";
 	}
 
 	echo "\t\t\t".'</div>'."\n";
 }
 
 ?>
-			<p class="conr">Powered by <a href="http://www.punbb.org/" target="_new">PunBB</a><?php if ($pun_config['o_show_version'] == '1') echo ' '.$pun_config['o_cur_version']; ?><br />&copy; Copyright 2002&#8211;2005 Rickard Andersson</p>
+			<p class="conr">Powered by <a href="http://www.punbb.org/">PunBB</a><?php if ($pun_config['o_show_version'] == '1') echo ' '.$pun_config['o_cur_version']; ?><br />&copy; Copyright 2002&#8211;2005 Rickard Andersson</p>
 <?php
 
 // Display debug info (if enabled/defined)
@@ -140,10 +140,13 @@ ob_end_clean();
 
 
 // START SUBST - <pun_include "*">
-while (preg_match('/<pun_include "(.*?)">/', $tpl_main, $cur_include))
+while (preg_match('#<pun_include "([^/\\\\]*?)">#', $tpl_main, $cur_include))
 {
+	if (!file_exists(PUN_ROOT.'include/user/'.$cur_include[1]))
+		error('Unable to process user include &lt;pun_include "'.htmlspecialchars($cur_include[1]).'"&gt; from template main.tpl. There is no such file in folder /include/user/');
+
 	ob_start();
-	include PUN_ROOT.$cur_include[1];
+	include PUN_ROOT.'include/user/'.$cur_include[1];
 	$tpl_temp = ob_get_contents();
 	$tpl_main = str_replace($cur_include[0], $tpl_temp, $tpl_main);
     ob_end_clean();
@@ -152,11 +155,9 @@ while (preg_match('/<pun_include "(.*?)">/', $tpl_main, $cur_include))
 
 
 // Close the db connection (and free up any result data)
-$db->close();
+//$db->close();
 
 // Spit out the page
 //exit($tpl_main);
-
 print $tpl_main;
 print_footer();
-?>

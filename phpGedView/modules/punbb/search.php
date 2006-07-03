@@ -27,7 +27,7 @@
 // from the phpBB Group forum software phpBB2 (http://www.phpbb.com).
 
 
-define('PUN_ROOT', 'modules/punbb/');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 
 
@@ -51,6 +51,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 	$action = (isset($_GET['action'])) ? $_GET['action'] : null;
 	$forum = (isset($_GET['forum'])) ? intval($_GET['forum']) : -1;
 	$sort_dir = (isset($_GET['sort_dir'])) ? (($_GET['sort_dir'] == 'DESC') ? 'DESC' : 'ASC') : 'DESC';
+	if (isset($search_id)) unset($search_id);
 
 	// If a search_id was supplied
 	if (isset($_GET['search_id']))
@@ -64,6 +65,12 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 	{
 		$keywords = (isset($_GET['keywords'])) ? strtolower(trim($_GET['keywords'])) : null;
 		$author = (isset($_GET['author'])) ? strtolower(trim($_GET['author'])) : null;
+
+		if (preg_match('#^[\*%]+$#', $keywords) || strlen(str_replace(array('*', '%'), '', $keywords)) < 3)
+			$keywords = '';
+
+		if (preg_match('#^[\*%]+$#', $author) || strlen(str_replace(array('*', '%'), '', $author)) < 3)
+			$author = '';
 
 		if (!$keywords && !$author)
 			message($lang_search['No terms']);
@@ -380,6 +387,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 
 
 		// Prune "old" search results
+		$old_searches = array();
 		$result = $db->query('SELECT ident FROM '.$db->prefix.'online') or error('Unable to fetch online list', __FILE__, __LINE__, $db->error());
 
 		if ($db->num_rows($result))
@@ -412,7 +420,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 			$db->close();
 
 			// Redirect the user to the cached result page
-			header('Location: module.php?mod=punbb&pgvaction=search&search_id='.$search_id);
+			header('Location: '.genurl("search.php?search_id={$search_id}", true));
 			exit;
 		}
 	}
@@ -484,6 +492,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 		$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_search['Search results'];
 		require PUN_ROOT.'header.php';
 
+
 ?>
 <div class="linkst">
 	<div class="inbox">
@@ -532,7 +541,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 			while (list(, $temp) = @each($forum_list))
 			{
 				if ($temp[0] == $search_set[$i]['forum_id'])
-					$forum = '<a href="module.php?mod=punbb&amp;pgvaction=viewforum&amp;id='.$temp[0].'">'.pun_htmlspecialchars($temp[1]).'</a>';
+					$forum = '<a href="'.genurl('viewforum.php?id='.$temp[0]).'">'.pun_htmlspecialchars($temp[1]).'</a>';
 			}
 
 			if ($pun_config['o_censoring'] == '1')
@@ -542,7 +551,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 			if ($show_as == 'posts')
 			{
 				$icon = '<div class="icon"><div class="nosize">'.$lang_common['Normal icon'].'</div></div>'."\n";
-				$subject = '<a href="module.php?mod=punbb&amp;pgvaction=viewtopic&amp;id='.$search_set[$i]['tid'].'">'.pun_htmlspecialchars($search_set[$i]['subject']).'</a>';
+				$subject = '<a href="'.genurl('viewtopic.php?id='.$search_set[$i]['tid']).'">'.pun_htmlspecialchars($search_set[$i]['subject']).'</a>';
 
 				if (!$pun_user['is_guest'] && $search_set[$i]['last_post'] > $pun_user['last_visit'])
 					$icon = '<div class="icon inew"><div class="nosize">'.$lang_common['New icon'].'</div></div>'."\n";
@@ -555,7 +564,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				$pposter = pun_htmlspecialchars($search_set[$i]['pposter']);
 
 				if ($search_set[$i]['poster_id'] > 1)
-					$pposter = '<strong><a href="module.php?mod=punbb&amp;pgvaction=profile&amp;id='.$search_set[$i]['poster_id'].'">'.$pposter.'</a></strong>';
+					$pposter = '<strong><a href="'.genurl('profile.php?id='.$search_set[$i]['poster_id']).'">'.$pposter.'</a></strong>';
 
 				if (pun_strlen($message) >= 1000)
 					$message .= ' &hellip;';
@@ -569,7 +578,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 
 ?>
 <div class="blockpost searchposts<?php echo $vtbg ?>">
-	<h2><?php echo $forum ?>&nbsp;&raquo;&nbsp;<?php echo $subject ?>&nbsp;&raquo;&nbsp;<a href="module.php?mod=punbb&amp;pgvaction=viewtopic&amp;pid=<?php echo $search_set[$i]['pid'].'#p'.$search_set[$i]['pid'] ?>"><?php echo format_time($search_set[$i]['pposted']) ?></a></h2>
+	<h2><?php echo $forum ?>&nbsp;&raquo;&nbsp;<?php echo $subject ?>&nbsp;&raquo;&nbsp;<a href="<?php genurl("viewtopic.php?pid={$search_set[$i]['pid']}#p{$search_set[$i]['pid']}", false, true)?>"><?php echo format_time($search_set[$i]['pposted']) ?></a></h2>
 	<div class="box">
 		<div class="inbox">
 			<div class="postleft">
@@ -577,7 +586,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 					<dt><?php echo $pposter ?></dt>
 					<dd>Replies: <?php echo $search_set[$i]['num_replies'] ?></dd>
 					<dd><?php echo $icon; ?></dd>
-					<dd><p class="clearb"><a href="module.php?mod=punbb&amp;pgvaction=viewtopic&amp;pid=<?php echo $search_set[$i]['pid'].'#p'.$search_set[$i]['pid'] ?>"><?php echo $lang_search['Go to post'] ?></a></p></dd>
+					<dd><p class="clearb"><a href="<?php genurl("viewtopic.php?pid={$search_set[$i]['pid']}#p{$search_set[$i]['pid']}", false, true)?>"><?php echo $lang_search['Go to post'] ?></a></p></dd>
 				</dl>
 			</div>
 			<div class="postright">
@@ -601,7 +610,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				$icon_type = 'icon';
 
 
-				$subject = '<a href="module.php?mod=punbb&amp;pgvaction=viewtopic&amp;id='.$search_set[$i]['tid'].'">'.pun_htmlspecialchars($search_set[$i]['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['poster']).'</span>';
+				$subject = '<a href="'.genurl('viewtopic.php?id='.$search_set[$i]['tid']).'">'.pun_htmlspecialchars($search_set[$i]['subject']).'</a> <span class="byuser">'.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['poster']).'</span>';
 
 				if ($search_set[$i]['closed'] != '0')
 				{
@@ -615,7 +624,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 					$item_status .= ' inew';
 					$icon_type = 'icon inew';
 					$subject = '<strong>'.$subject.'</strong>';
-					$subject_new_posts = '<span class="newtext">[&nbsp;<a href="module.php?mod=punbb&amp;pgvaction=viewtopic&amp;id='.$search_set[$i]['tid'].'&amp;action=new" title="'.$lang_common['New posts info'].'">'.$lang_common['New posts'].'</a>&nbsp;]</span>';
+					$subject_new_posts = '<span class="newtext">[&nbsp;<a href="'.genurl('viewtopic.php?id='.$search_set[$i]['tid'].'&amp;action=new').'" title="'.$lang_common['New posts info'].'">'.$lang_common['New posts'].'</a>&nbsp;]</span>';
 				}
 				else
 					$subject_new_posts = null;
@@ -623,7 +632,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 				$num_pages_topic = ceil(($search_set[$i]['num_replies'] + 1) / $pun_user['disp_posts']);
 
 				if ($num_pages_topic > 1)
-					$subject_multipage = '[ '.paginate($num_pages_topic, -1, 'viewtopic.php?id='.$search_set[$i]['tid']).' ]';
+					$subject_multipage = '[ '.paginate($num_pages_topic, -1, genurl('viewtopic.php?id='.$search_set[$i]['tid'])).' ]';
 				else
 					$subject_multipage = null;
 
@@ -646,7 +655,7 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 					</td>
 					<td class="tc2"><?php echo $forum ?></td>
 					<td class="tc3"><?php echo $search_set[$i]['num_replies'] ?></td>
-					<td class="tcr"><?php echo '<a href="module.php?mod=punbb&amp;pgvaction=viewtopic&amp;pid='.$search_set[$i]['last_post_id'].'#p'.$search_set[$i]['last_post_id'].'">'.format_time($search_set[$i]['last_post']).'</a> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['last_poster']) ?></td>
+					<td class="tcr"><?php echo '<a href="'.genurl('viewtopic.php?pid='.$search_set[$i]['last_post_id'].'#p'.$search_set[$i]['last_post_id']).'">'.format_time($search_set[$i]['last_post']).'</a> '.$lang_common['by'].'&nbsp;'.pun_htmlspecialchars($search_set[$i]['last_poster']) ?></td>
 				</tr>
 <?php
 
@@ -672,9 +681,6 @@ if (isset($_GET['action']) || isset($_GET['search_id']))
 }
 
 
-if (!(isset($_GET['action']) || isset($_GET['search_id'])))
-{
-
 $page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_search['Search'];
 $focus_element = array('search', 'keywords');
 require PUN_ROOT.'header.php';
@@ -683,7 +689,7 @@ require PUN_ROOT.'header.php';
 <div id="searchform" class="blockform">
 	<h2><span><?php echo $lang_search['Search'] ?></span></h2>
 	<div class="box">
-		<form id="search" method="get" action="module.php?mod=punbb&amp;pgvaction=search">
+		<form id="search" method="get" action="<?php genurl('search.php', true, true)?>">
 			<div class="inform">
 				<fieldset>
 					<legend><?php echo $lang_search['Search criteria legend'] ?></legend>
@@ -706,7 +712,7 @@ require PUN_ROOT.'header.php';
 if ($pun_config['o_search_all_forums'] == '1' || $pun_user['g_id'] < PUN_GUEST)
 	echo "\t\t\t\t\t\t\t".'<option value="-1">'.$lang_search['All forums'].'</option>'."\n";
 
-$result = $db->query('SELECT c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.redirect_url FROM '.$db->prefix.'categories AS c INNER JOIN '.$db->prefix.'forums AS f ON c.id=f.cat_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id='.$pun_user['group_id'].') WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND f.redirect_url IS NULL ORDER BY c.disp_position, c.id, f.disp_position', true) or error('Unable to fetch category/forum list', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.redirect_url FROM '.$db->prefix.'categories AS c INNER JOIN '.$db->prefix.'forums AS f ON c.id=f.cat_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id='.$pun_user['g_id'].') WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND f.redirect_url IS NULL ORDER BY c.disp_position, c.id, f.disp_position', true) or error('Unable to fetch category/forum list', __FILE__, __LINE__, $db->error());
 
 $cur_category = 0;
 while ($cur_forum = $db->fetch_assoc($result))
@@ -766,8 +772,6 @@ while ($cur_forum = $db->fetch_assoc($result))
 					</div>
 				</fieldset>
 			</div>
-			<input type="hidden" name="mod" value="punbb">
-			<input type="hidden" name="pgvaction" value="search">
 			<p><input type="submit" name="search" value="<?php echo $lang_common['Submit'] ?>" accesskey="s" /></p>
 		</form>
 	</div>
@@ -775,6 +779,3 @@ while ($cur_forum = $db->fetch_assoc($result))
 <?php
 
 require PUN_ROOT.'footer.php';
-
-}
-?>

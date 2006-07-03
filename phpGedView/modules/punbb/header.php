@@ -44,12 +44,12 @@ else
 
 
 // START SUBST - <pun_content_direction>
-$tpl_main = str_replace('<pun_content_direction>', $lang_common['lang_direction'], $tpl_main);
+//$tpl_main = str_replace('<pun_content_direction>', $lang_common['lang_direction'], $tpl_main);
 // END SUBST - <pun_content_direction>
 
 
 // START SUBST - <pun_char_encoding>
-$tpl_main = str_replace('<pun_char_encoding>', $lang_common['lang_encoding'], $tpl_main);
+//$tpl_main = str_replace('<pun_char_encoding>', $lang_common['lang_encoding'], $tpl_main);
 // END SUBST - <pun_char_encoding>
 
 
@@ -59,17 +59,15 @@ ob_start();
 // Is this a page that we want search index spiders to index?
 //if (!defined('PUN_ALLOW_INDEX'))
 //	echo '<meta name="ROBOTS" content="NOINDEX, FOLLOW" />'."\n";
+
 ?>
-<link rel="stylesheet" type="text/css" href="<?php print PUN_ROOT;?>style/<?php echo $pun_user['style'].'.css' ?>" />
+<link rel="stylesheet" type="text/css" href="<?php print PUN_ROOT?>style/<?php echo $pun_user['style'].'.css' ?>" />
 <?php
 
 if (defined('PUN_ADMIN_CONSOLE'))
-	echo '<link rel="stylesheet" type="text/css" href="'.PUN_ROOT.'style/imports/base_admin.css" />'."\n";
+	echo '<link rel="stylesheet" type="text/css" href="<?php print PUN_ROOT?>style/imports/base_admin.css" />'."\n";
 
-if (isset($destination_url))
-	echo '<meta http-equiv="refresh" content="'.$delay.';URL='.$destination.'" />'."\n";
-
-else if (isset($required_fields))
+if (isset($required_fields))
 {
 	// Output JavaScript to validate form (make sure required fields are filled out)
 
@@ -114,7 +112,7 @@ function process_form(the_form)
 
 $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : '';
 if (strpos($user_agent, 'msie') !== false && strpos($user_agent, 'windows') !== false && strpos($user_agent, 'opera') === false)
-	echo '<script type="text/javascript" src="style/imports/minmax.js"></script>';
+	echo '<script type="text/javascript" src="'.PUN_ROOT.'style/imports/minmax.js"></script>';
 
 $tpl_temp = trim(ob_get_contents());
 //$tpl_main = str_replace('<pun_head>', $tpl_temp, $tpl_main);
@@ -122,7 +120,6 @@ ob_end_clean();
 // END SUBST - <pun_head>
 
 print_header($page_title, $tpl_temp);
-
 
 // START SUBST - <body>
 //if (isset($focus_element))
@@ -134,7 +131,7 @@ print_header($page_title, $tpl_temp);
 
 
 // START SUBST - <pun_page>
-$tpl_main = str_replace('<pun_page>', basename($_SERVER['PHP_SELF'], '.php'), $tpl_main);
+$tpl_main = str_replace('<pun_page>', htmlspecialchars(basename($_SERVER['PHP_SELF'], '.php')), $tpl_main);
 // END SUBST - <pun_title>
 
 
@@ -165,14 +162,14 @@ else
 		$result_header = $db->query('SELECT COUNT(id) FROM '.$db->prefix.'reports WHERE zapped IS NULL') or error('Unable to fetch reports info', __FILE__, __LINE__, $db->error());
 
 		if ($db->result($result_header))
-			$tpl_temp .= "\n\t\t\t\t".'<li class="reportlink"><strong><a href="module.php?mod=punbb&amp;pgvaction=admin_reports">There are new reports</a></strong></li>';
+			$tpl_temp .= "\n\t\t\t\t".'<li class="reportlink"><strong><a href="'.genurl('admin_reports.php').'">There are new reports</a></strong></li>';
 
 		if ($pun_config['o_maintenance'] == '1')
-			$tpl_temp .= "\n\t\t\t\t".'<li class="maintenancelink"><strong><a href="module.php?mod=punbb&amp;pgvaction=admin_options#maintenance">Maintenance mode is enabled!</a></strong></li>';
+			$tpl_temp .= "\n\t\t\t\t".'<li class="maintenancelink"><strong><a href="'.genurl('admin_options.php#maintenance').'">Maintenance mode is enabled!</a></strong></li>';
 	}
 
 	if (in_array(basename($_SERVER['PHP_SELF']), array('index.php', 'search.php')))
-		$tpl_temp .= "\n\t\t\t".'</ul>'."\n\t\t\t".'<ul class="conr">'."\n\t\t\t\t".'<li><a href="module.php?mod=punbb&amp;pgvaction=search&amp;action=show_new">'.$lang_common['Show new posts'].'</a></li>'."\n\t\t\t\t".'<li><a href="module.php?mod=punbb&amp;pgvaction=misc&amp;action=markread">'.$lang_common['Mark all as read'].'</a></li>'."\n\t\t\t".'</ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
+		$tpl_temp .= "\n\t\t\t".'</ul>'."\n\t\t\t".'<ul class="conr">'."\n\t\t\t\t".'<li><a href="'.genurl('search.php?action=show_new').'">'.$lang_common['Show new posts'].'</a></li>'."\n\t\t\t\t".'<li><a href="'.genurl('misc.php?action=markread').'">'.$lang_common['Mark all as read'].'</a></li>'."\n\t\t\t".'</ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
 	else
 		$tpl_temp .= "\n\t\t\t".'</ul>'."\n\t\t\t".'<div class="clearer"></div>'."\n\t\t".'</div>';
 }
@@ -211,4 +208,3 @@ ob_start();
 
 
 define('PUN_HEADER', 1);
-?>

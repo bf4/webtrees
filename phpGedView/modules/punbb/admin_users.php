@@ -26,7 +26,7 @@
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
 
-define('PUN_ROOT', 'modules/punbb/');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -49,7 +49,7 @@ if (isset($_GET['ip_stats']))
 ?>
 <div class="linkst">
 	<div class="inbox">
-		<div><a href="javascript:history.go(-1)" />Go back</a></div>
+		<div><a href="javascript:history.go(-1)">Go back</a></div>
 	</div>
 </div>
 
@@ -77,10 +77,10 @@ if (isset($_GET['ip_stats']))
 
 ?>
 				<tr>
-					<td class="tcl"><a href="module.php?mod=punbb&amp;pgvaction=moderate&amp;get_host=<?php echo $cur_ip['poster_ip'] ?>"><?php echo $cur_ip['poster_ip'] ?></a></td>
+					<td class="tcl"><a href="<?php genurl("moderate.php?get_host={$cur_ip['poster_ip']}", false, true)?>"><?php echo $cur_ip['poster_ip'] ?></a></td>
 					<td class="tc2"><?php echo format_time($cur_ip['last_used']) ?></td>
 					<td class="tc3"><?php echo $cur_ip['used_times'] ?></td>
-					<td class="tcr"><a href="module.php?mod=punbb&amp;pgvaction=admin_users&amp;show_users=<?php echo $cur_ip['poster_ip'] ?>">Find more users for this ip</a></td>
+					<td class="tcr"><a href="<?php genurl("admin_users.php?show_users={$cur_ip['poster_ip']}", false, true)?>">Find more users for this ip</a></td>
 				</tr>
 <?php
 
@@ -98,7 +98,7 @@ if (isset($_GET['ip_stats']))
 
 <div class="linksb">
 	<div class="inbox">
-		<div><a href="javascript:history.go(-1)" />Go back</a></div>
+		<div><a href="javascript:history.go(-1)">Go back</a></div>
 	</div>
 </div>
 <?php
@@ -121,7 +121,7 @@ if (isset($_GET['show_users']))
 ?>
 <div class="linkst">
 	<div class="inbox">
-		<div><a href="javascript:history.go(-1)" />Go back</a></div>
+		<div><a href="javascript:history.go(-1)">Go back</a></div>
 	</div>
 </div>
 
@@ -159,11 +159,11 @@ if (isset($_GET['show_users']))
 			{
 				$user_title = get_title($user_data);
 
-				$actions = '<a href="module.php?mod=punbb&amp;pgvaction=admin_users&amp;ip_stats='.$user_data['id'].'">View IP stats</a> - <a href="module.php?mod=punbb&amp;pgvaction=search&amp;action=show_user&amp;user_id='.$user_data['id'].'">Show posts</a>';
+				$actions = '<a href="'.genurl('admin_users.php?ip_stats='.$user_data['id']).'">View IP stats</a> - <a href="'.genurl('search.php?action=show_user&amp;user_id='.$user_data['id']).'">Show posts</a>';
 
 ?>
 				<tr>
-					<td class="tcl"><?php echo '<a href="module.php?mod=punbb&amp;pgvaction=profile&amp;id='.$user_data['id'].'">'.pun_htmlspecialchars($user_data['username']).'</a>' ?></td>
+					<td class="tcl"><?php echo '<a href="'.genurl('profile.php?id='.$user_data['id']).'">'.pun_htmlspecialchars($user_data['username']).'</a>' ?></td>
 					<td class="tc2"><a href="mailto:<?php echo $user_data['email'] ?>"><?php echo $user_data['email'] ?></a></td>
 					<td class="tc3"><?php echo $user_title ?></td>
 					<td class="tc4"><?php echo $user_data['num_posts'] ?></td>
@@ -202,7 +202,7 @@ if (isset($_GET['show_users']))
 
 <div class="linksb">
 	<div class="inbox">
-		<div><a href="javascript:history.go(-1)" />Go back</a></div>
+		<div><a href="javascript:history.go(-1)">Go back</a></div>
 	</div>
 </div>
 <?php
@@ -217,6 +217,7 @@ else if (isset($_POST['find_user']))
 
 	// trim() all elements in $form
 	$form = array_map('trim', $form);
+	$conditions = array();
 
 	$posts_greater = trim($_POST['posts_greater']);
 	$posts_less = trim($_POST['posts_less']);
@@ -257,7 +258,7 @@ else if (isset($_POST['find_user']))
 	while (list($key, $input) = @each($form))
 	{
 		if ($input != '')
-			$conditions[] = 'u.'.$key.' '.$like_command.' \''.str_replace('*', '%', $input).'\'';
+			$conditions[] = 'u.'.$db->escape($key).' '.$like_command.' \''.$db->escape(str_replace('*', '%', $input)).'\'';
 	}
 
 	if ($posts_greater != '')
@@ -268,7 +269,7 @@ else if (isset($_POST['find_user']))
 	if ($user_group != 'all')
 		$conditions[] = 'u.group_id='.$db->escape($user_group);
 
-	if (!isset($conditions))
+	if (empty($conditions))
 		message('You didn\'t enter any search terms.');
 
 
@@ -278,7 +279,7 @@ else if (isset($_POST['find_user']))
 ?>
 <div class="linkst">
 	<div class="inbox">
-		<div><a href="javascript:history.go(-1)" />Go back</a></div>
+		<div><a href="javascript:history.go(-1)">Go back</a></div>
 	</div>
 </div>
 
@@ -311,11 +312,11 @@ else if (isset($_POST['find_user']))
 			if (($user_data['g_id'] == '' || $user_data['g_id'] == PUN_UNVERIFIED) && $user_title != $lang_common['Banned'])
 				$user_title = '<span class="warntext">Not verified</span>';
 
-			$actions = '<a href="module.php?mod=punbb&amp;pgvaction=admin_users&amp;ip_stats='.$user_data['id'].'">View IP stats</a> - <a href="module.php?mod=punbb&amp;pgvaction=search&amp;action=show_user&amp;user_id='.$user_data['id'].'">Show posts</a>';
+			$actions = '<a href="'.genurl('admin_users.php?ip_stats='.$user_data['id']).'">View IP stats</a> - <a href="'.genurl('search.php?action=show_user&amp;user_id='.$user_data['id']).'">Show posts</a>';
 
 ?>
 				<tr>
-					<td class="tcl"><?php echo '<a href="module.php?mod=punbb&amp;pgvaction=profile&amp;id='.$user_data['id'].'">'.pun_htmlspecialchars($user_data['username']).'</a>' ?></td>
+					<td class="tcl"><?php echo '<a href="'.genurl('profile.php?id='.$user_data['id']).'">'.pun_htmlspecialchars($user_data['username']).'</a>' ?></td>
 					<td class="tc2"><a href="mailto:<?php echo $user_data['email'] ?>"><?php echo $user_data['email'] ?></a></td>
 					<td class="tc3"><?php echo $user_title ?></td>
 					<td class="tc4"><?php echo $user_data['num_posts'] ?></td>
@@ -338,7 +339,7 @@ else if (isset($_POST['find_user']))
 
 <div class="linksb">
 	<div class="inbox">
-		<div><a href="javascript:history.go(-1)" />Go back</a></div>
+		<div><a href="javascript:history.go(-1)">Go back</a></div>
 	</div>
 </div>
 <?php
@@ -359,7 +360,7 @@ else
 	<div class="blockform">
 		<h2><span>User search</span></h2>
 		<div class="box">
-			<form id="find_user" method="post" action="module.php?mod=punbb&amp;pgvaction=admin_users&amp;action=find_user">
+			<form id="find_user" method="post" action="<?php genurl('admin_users.php?action=find_user', true, true)?>">
 				<p class="submittop"><input type="submit" name="find_user" value="Submit search" tabindex="1" /></p>
 				<div class="inform">
 					<fieldset>
@@ -484,7 +485,7 @@ else
 
 		<h2 class="block2"><span>IP search</span></h2>
 		<div class="box">
-			<form method="get" action="module.php?mod=punbb&amp;pgvaction=admin_users">
+			<form method="get" action="admin_users.php">
 				<div class="inform">
 					<fieldset>
 						<legend>Enter IP to search for</legend>

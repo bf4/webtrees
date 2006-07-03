@@ -26,7 +26,7 @@
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
 
-define('PUN_ROOT', 'modules/punbb/');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -39,30 +39,20 @@ if (isset($_POST['form_sent']))
 {
 	confirm_referrer('admin_permissions.php');
 
-	$form = array_map('trim', $_POST['form']);
-
-	$form['sig_length'] = intval($form['sig_length']);
-	$form['sig_lines'] = intval($form['sig_lines']);
+	$form = array_map('intval', $_POST['form']);
 
 	while (list($key, $input) = @each($form))
 	{
 		// Only update values that have changed
-		if ($pun_config['p_'.$key] != $input)
-		{
-			if ($input != '' || is_int($input))
-				$value = '\''.$db->escape($input).'\'';
-			else
-				$value = 'NULL';
-
-			$db->query('UPDATE '.$db->prefix.'config SET conf_value='.$value.' WHERE conf_name=\'p_'.$key.'\'') or error('Unable to update board config', __FILE__, __LINE__, $db->error());
-		}
+		if (array_key_exists('p_'.$key, $pun_config) && $pun_config['p_'.$key] != $input)
+			$db->query('UPDATE '.$db->prefix.'config SET conf_value='.$input.' WHERE conf_name=\'p_'.$db->escape($key).'\'') or error('Unable to update board config', __FILE__, __LINE__, $db->error());
 	}
 
 	// Regenerate the config cache
 	require_once PUN_ROOT.'include/cache.php';
 	generate_config_cache();
 
-	redirect('module.php?mod=punbb&amp;pgvaction=admin_permissions', 'Permissions updated. Redirecting &hellip;');
+	redirect('admin_permissions.php', 'Permissions updated. Redirecting &hellip;');
 }
 
 
@@ -74,7 +64,7 @@ generate_admin_menu('permissions');
 	<div class="blockform">
 		<h2><span>Permissions</span></h2>
 		<div class="box">
-			<form method="post" action="module.php?mod=punbb&amp;pgvaction=admin_permissions">
+			<form method="post" action="<?php genurl('admin_permissions.php', true, true)?>">
 				<p class="submittop"><input type="submit" name="save" value="Save changes" /></p>
 				<div class="inform">
 				<input type="hidden" name="form_sent" value="1" />

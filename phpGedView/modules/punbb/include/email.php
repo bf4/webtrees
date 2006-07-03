@@ -33,7 +33,10 @@ if (!defined('PUN'))
 //
 function is_valid_email($email)
 {
-	return preg_match('/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $email);
+	if (strlen($email) > 50)
+		return false;
+
+	return preg_match('/^(([^<>()[\]\\.,;:\s@"\']+(\.[^<>()[\]\\.,;:\s@"\']+)*)|("[^"\']+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])|(([a-zA-Z\d\-]+\.)+[a-zA-Z]{2,}))$/', $email);
 }
 
 
@@ -65,22 +68,14 @@ function pun_mail($to, $subject, $message, $from = '')
 
 	// Default sender/return address
 	if (!$from)
-		$from = '"'.$pun_config['o_board_title'].' '.$lang_common['Mailer'].'" <'.$pun_config['o_webmaster_email'].'>';
+		$from = '"'.str_replace('"', '', $pun_config['o_board_title'].' '.$lang_common['Mailer']).'" <'.$pun_config['o_webmaster_email'].'>';
 
 	// Do a little spring cleaning
 	$to = trim(preg_replace('#[\n\r]+#s', '', $to));
 	$subject = trim(preg_replace('#[\n\r]+#s', '', $subject));
 	$from = trim(preg_replace('#[\n\r:]+#s', '', $from));
 
-	// Detect what linebreak we should use for the headers
-	if (strtoupper(substr(PHP_OS, 0, 3) == 'WIN'))
-		$eol = "\r\n";
-	else if (strtoupper(substr(PHP_OS, 0, 3) == 'MAC'))
-		$eol = "\r";
-	else
-		$eol = "\n";
-
-	$headers = 'From: '.$from.$eol.'Date: '.date('r').$eol.'MIME-Version: 1.0'.$eol.'Content-transfer-encoding: 8bit'.$eol.'Content-type: text/plain; charset='.$lang_common['lang_encoding'].$eol.'X-Mailer: PunBB Mailer';
+	$headers = 'From: '.$from."\r\n".'Date: '.date('r')."\r\n".'MIME-Version: 1.0'."\r\n".'Content-transfer-encoding: 8bit'."\r\n".'Content-type: text/plain; charset='.$lang_common['lang_encoding']."\r\n".'X-Mailer: PunBB Mailer';
 
 	// Make sure all linebreaks are CRLF in message
 	$message = str_replace("\n", "\r\n", pun_linebreaks($message));
@@ -88,7 +83,15 @@ function pun_mail($to, $subject, $message, $from = '')
 	if ($pun_config['o_smtp_host'] != '')
 		smtp_mail($to, $subject, $message, $headers);
 	else
+	{
+		// Change the linebreaks used in the headers according to OS
+		if (strtoupper(substr(PHP_OS, 0, 3)) == 'MAC')
+			$headers = str_replace("\r\n", "\r", $headers);
+		else if (strtoupper(substr(PHP_OS, 0, 3)) != 'WIN')
+			$headers = str_replace("\r\n", "\n", $headers);
+
 		mail($to, $subject, $message, $headers);
+	}
 }
 
 

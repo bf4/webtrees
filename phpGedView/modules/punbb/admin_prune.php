@@ -26,7 +26,7 @@
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
 
-define('PUN_ROOT', 'modules/punbb/');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -62,6 +62,7 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 		}
 		else
 		{
+			$prune_from = intval($prune_from);
 			prune($prune_from, $_POST['prune_sticky'], $prune_date);
 			update_forum($prune_from);
 		}
@@ -78,7 +79,7 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 			$db->query('DELETE FROM '.$db->prefix.'topics WHERE id IN('.implode(',', $orphans).')') or error('Unable to delete redirect topics', __FILE__, __LINE__, $db->error());
 		}
 
-		redirect('module.php?mod=punbb&amp;pgvaction=admin_prune', 'Posts pruned. Redirecting &hellip;');
+		redirect('admin_prune.php', 'Posts pruned. Redirecting &hellip;');
 	}
 
 
@@ -97,6 +98,7 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 
 	if ($prune_from != 'all')
 	{
+		$prune_from = intval($prune_from);
 		$sql .= ' AND forum_id='.$prune_from;
 
 		// Fetch the forum name (just for cosmetic reasons)
@@ -122,7 +124,7 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 	<div class="blockform">
 		<h2><span>Prune</span></h2>
 		<div class="box">
-			<form method="post" action="module.php?mod=punbb&amp;pgvaction=admin_prune&amp;action=foo">
+			<form method="post" action="<?php genurl('admin_prune.php?action=foo', true, true)?>">
 				<div class="inform">
 					<input type="hidden" name="prune_days" value="<?php echo $prune_days ?>" />
 					<input type="hidden" name="prune_sticky" value="<?php echo $_POST['prune_sticky'] ?>" />
@@ -135,7 +137,7 @@ if (isset($_GET['action']) || isset($_POST['prune']) || isset($_POST['prune_comp
 						</div>
 					</fieldset>
 				</div>
-				<p><input type="submit" name="prune_comply" value="Prune" />&nbsp;&nbsp;&nbsp;<a href="javascript:history.go(-1)" />Go back</a></p>
+				<p><input type="submit" name="prune_comply" value="Prune" /><a href="javascript:history.go(-1)">Go back</a></p>
 			</form>
 		</div>
 	</div>
@@ -160,7 +162,7 @@ else
 	<div class="blockform">
 		<h2><span>Prune</span></h2>
 		<div class="box">
-			<form id="prune" method="post" action="module.php?mod=punbb&amp;pgvaction=admin_prune&amp;action=foo" onsubmit="return process_form(this)">
+			<form id="prune" method="post" action="<?php genurl('admin_prune.php?action=foo', true, true)?>" onsubmit="return process_form(this)">
 				<div class="inform">
 				<input type="hidden" name="form_sent" value="1" />
 					<fieldset>

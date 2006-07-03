@@ -23,7 +23,7 @@
 ************************************************************************/
 
 
-define('PUN_ROOT', 'modules/punbb/');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 
 
@@ -33,7 +33,7 @@ if ($pun_user['g_read_board'] == '0')
 
 $tid = isset($_GET['tid']) ? intval($_GET['tid']) : 0;
 $fid = isset($_GET['fid']) ? intval($_GET['fid']) : 0;
-if ($tid < 1 && $fid < 1)
+if ($tid < 1 && $fid < 1 || $tid > 0 && $fid > 0)
 	message($lang_common['Bad request']);
 
 // Fetch some info about the topic and/or the forum
@@ -210,74 +210,73 @@ if (isset($_POST['form_sent']))
 			// Should we send out notifications?
 			if ($pun_config['o_subscriptions'] == '1')
 			{
+				// Get the post time for the previous post in this topic
+				$result = $db->query('SELECT posted FROM '.$db->prefix.'posts WHERE topic_id='.$tid.' ORDER BY id DESC LIMIT 1, 1') or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
+				$previous_post_time = $db->result($result);
 
-			// Get the post time for the previous post in this topic
-			$result = $db->query('SELECT posted FROM '.$db->prefix.'posts WHERE topic_id='.$tid.' ORDER BY id DESC LIMIT 1, 1') or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
-			$previous_post_time = $db->result($result);
-
-			// Get any subscribed users that should be notified (banned users are excluded)
-			$result = $db->query('SELECT u.id, u.email, u.notify_with_post, u.language FROM '.$db->prefix.'users AS u INNER JOIN '.$db->prefix.'subscriptions AS s ON u.id=s.user_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id='.$cur_posting['id'].' AND fp.group_id=u.group_id) LEFT JOIN '.$db->prefix.'online AS o ON u.id=o.user_id LEFT JOIN '.$db->prefix.'bans AS b ON u.username=b.username WHERE b.username IS NULL AND COALESCE(o.logged, u.last_visit)>'.$previous_post_time.' AND (fp.read_forum IS NULL OR fp.read_forum=1) AND s.topic_id='.$tid.' AND u.id!='.intval($pun_user['id'])) or error('Unable to fetch subscription info', __FILE__, __LINE__, $db->error());
-			if ($db->num_rows($result))
-			{
-				require_once PUN_ROOT.'include/email.php';
-
-				$notification_emails = array();
-
-				// Loop through subscribed users and send e-mails
-				while ($cur_subscriber = $db->fetch_assoc($result))
+				// Get any subscribed users that should be notified (banned users are excluded)
+				$result = $db->query('SELECT u.id, u.email, u.notify_with_post, u.language FROM '.$db->prefix.'users AS u INNER JOIN '.$db->prefix.'subscriptions AS s ON u.id=s.user_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id='.$cur_posting['id'].' AND fp.group_id=u.group_id) LEFT JOIN '.$db->prefix.'online AS o ON u.id=o.user_id LEFT JOIN '.$db->prefix.'bans AS b ON u.username=b.username WHERE b.username IS NULL AND COALESCE(o.logged, u.last_visit)>'.$previous_post_time.' AND (fp.read_forum IS NULL OR fp.read_forum=1) AND s.topic_id='.$tid.' AND u.id!='.intval($pun_user['id'])) or error('Unable to fetch subscription info', __FILE__, __LINE__, $db->error());
+				if ($db->num_rows($result))
 				{
-					// Is the subscription e-mail for $cur_subscriber['language'] cached or not?
-					if (!isset($notification_emails[$cur_subscriber['language']]))
+					require_once PUN_ROOT.'include/email.php';
+
+					$notification_emails = array();
+
+					// Loop through subscribed users and send e-mails
+					while ($cur_subscriber = $db->fetch_assoc($result))
 					{
-						if (file_exists(PUN_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply.tpl'))
+						// Is the subscription e-mail for $cur_subscriber['language'] cached or not?
+						if (!isset($notification_emails[$cur_subscriber['language']]))
 						{
-							// Load the "new reply" template
-							$mail_tpl = trim(file_get_contents(PUN_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply.tpl'));
+							if (file_exists(PUN_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply.tpl'))
+							{
+								// Load the "new reply" template
+								$mail_tpl = trim(file_get_contents(PUN_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply.tpl'));
 
-							// Load the "new reply full" template (with post included)
-							$mail_tpl_full = trim(file_get_contents(PUN_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply_full.tpl'));
+								// Load the "new reply full" template (with post included)
+								$mail_tpl_full = trim(file_get_contents(PUN_ROOT.'lang/'.$cur_subscriber['language'].'/mail_templates/new_reply_full.tpl'));
 
-							// The first row contains the subject (it also starts with "Subject:")
-							$first_crlf = strpos($mail_tpl, "\n");
-							$mail_subject = trim(substr($mail_tpl, 8, $first_crlf-8));
-							$mail_message = trim(substr($mail_tpl, $first_crlf));
+								// The first row contains the subject (it also starts with "Subject:")
+								$first_crlf = strpos($mail_tpl, "\n");
+								$mail_subject = trim(substr($mail_tpl, 8, $first_crlf-8));
+								$mail_message = trim(substr($mail_tpl, $first_crlf));
 
-							$first_crlf = strpos($mail_tpl_full, "\n");
-							$mail_subject_full = trim(substr($mail_tpl_full, 8, $first_crlf-8));
-							$mail_message_full = trim(substr($mail_tpl_full, $first_crlf));
+								$first_crlf = strpos($mail_tpl_full, "\n");
+								$mail_subject_full = trim(substr($mail_tpl_full, 8, $first_crlf-8));
+								$mail_message_full = trim(substr($mail_tpl_full, $first_crlf));
 
-							$mail_subject = str_replace('<topic_subject>', '\''.$cur_posting['subject'].'\'', $mail_subject);
-							$mail_message = str_replace('<topic_subject>', '\''.$cur_posting['subject'].'\'', $mail_message);
-							$mail_message = str_replace('<replier>', $username, $mail_message);
-							$mail_message = str_replace('<post_url>', $pun_config['o_base_url'].'/viewtopic.php?pid='.$new_pid.'#p'.$new_pid, $mail_message);
-							$mail_message = str_replace('<unsubscribe_url>', $pun_config['o_base_url'].'/misc.php?unsubscribe='.$tid, $mail_message);
-							$mail_message = str_replace('<board_mailer>', $pun_config['o_board_title'].' '.$lang_common['Mailer'], $mail_message);
+								$mail_subject = str_replace('<topic_subject>', '\''.$cur_posting['subject'].'\'', $mail_subject);
+								$mail_message = str_replace('<topic_subject>', '\''.$cur_posting['subject'].'\'', $mail_message);
+								$mail_message = str_replace('<replier>', $username, $mail_message);
+								$mail_message = str_replace('<post_url>', $pun_config['o_base_url'].'/viewtopic.php?pid='.$new_pid.'#p'.$new_pid, $mail_message);
+								$mail_message = str_replace('<unsubscribe_url>', $pun_config['o_base_url'].'/misc.php?unsubscribe='.$tid, $mail_message);
+								$mail_message = str_replace('<board_mailer>', $pun_config['o_board_title'].' '.$lang_common['Mailer'], $mail_message);
 
-							$mail_subject_full = str_replace('<topic_subject>', '\''.$cur_posting['subject'].'\'', $mail_subject_full);
-							$mail_message_full = str_replace('<topic_subject>', '\''.$cur_posting['subject'].'\'', $mail_message_full);
-							$mail_message_full = str_replace('<replier>', $username, $mail_message_full);
-							$mail_message_full = str_replace('<message>', $message, $mail_message_full);
-							$mail_message_full = str_replace('<post_url>', $pun_config['o_base_url'].'/viewtopic.php?pid='.$new_pid.'#p'.$new_pid, $mail_message_full);
-							$mail_message_full = str_replace('<unsubscribe_url>', $pun_config['o_base_url'].'/misc.php?unsubscribe='.$tid, $mail_message_full);
-							$mail_message_full = str_replace('<board_mailer>', $pun_config['o_board_title'].' '.$lang_common['Mailer'], $mail_message_full);
+								$mail_subject_full = str_replace('<topic_subject>', '\''.$cur_posting['subject'].'\'', $mail_subject_full);
+								$mail_message_full = str_replace('<topic_subject>', '\''.$cur_posting['subject'].'\'', $mail_message_full);
+								$mail_message_full = str_replace('<replier>', $username, $mail_message_full);
+								$mail_message_full = str_replace('<message>', $message, $mail_message_full);
+								$mail_message_full = str_replace('<post_url>', $pun_config['o_base_url'].'/viewtopic.php?pid='.$new_pid.'#p'.$new_pid, $mail_message_full);
+								$mail_message_full = str_replace('<unsubscribe_url>', $pun_config['o_base_url'].'/misc.php?unsubscribe='.$tid, $mail_message_full);
+								$mail_message_full = str_replace('<board_mailer>', $pun_config['o_board_title'].' '.$lang_common['Mailer'], $mail_message_full);
 
-							$notification_emails[$cur_subscriber['language']][0] = $mail_subject;
-							$notification_emails[$cur_subscriber['language']][1] = $mail_message;
-							$notification_emails[$cur_subscriber['language']][2] = $mail_subject_full;
-							$notification_emails[$cur_subscriber['language']][3] = $mail_message_full;
+								$notification_emails[$cur_subscriber['language']][0] = $mail_subject;
+								$notification_emails[$cur_subscriber['language']][1] = $mail_message;
+								$notification_emails[$cur_subscriber['language']][2] = $mail_subject_full;
+								$notification_emails[$cur_subscriber['language']][3] = $mail_message_full;
 
-							$mail_subject = $mail_message = $mail_subject_full = $mail_message_full = null;
+								$mail_subject = $mail_message = $mail_subject_full = $mail_message_full = null;
+							}
 						}
-					}
 
-					// We have to double check here because the templates could be missing
-					if (isset($notification_emails[$cur_subscriber['language']]))
-					{
-						if ($cur_subscriber['notify_with_post'] == '0')
-							pun_mail($cur_subscriber['email'], $notification_emails[$cur_subscriber['language']][0], $notification_emails[$cur_subscriber['language']][1]);
-						else
-							pun_mail($cur_subscriber['email'], $notification_emails[$cur_subscriber['language']][2], $notification_emails[$cur_subscriber['language']][3]);
-					}
+						// We have to double check here because the templates could be missing
+						if (isset($notification_emails[$cur_subscriber['language']]))
+						{
+							if ($cur_subscriber['notify_with_post'] == '0')
+								pun_mail($cur_subscriber['email'], $notification_emails[$cur_subscriber['language']][0], $notification_emails[$cur_subscriber['language']][1]);
+							else
+								pun_mail($cur_subscriber['email'], $notification_emails[$cur_subscriber['language']][2], $notification_emails[$cur_subscriber['language']][3]);
+						}
 					}
 				}
 			}
@@ -321,7 +320,7 @@ if (isset($_POST['form_sent']))
 			$db->query('UPDATE '.$low_prio.$db->prefix.'users SET num_posts=num_posts+1, last_post='.$now.' WHERE id='.$pun_user['id']) or error('Unable to update user', __FILE__, __LINE__, $db->error());
 		}
 
-		redirect('module.php?mod=punbb&amp;pgvaction=viewtopic&amp;pid='.$new_pid.'#p'.$new_pid, $lang_post['Post redirect']);
+		redirect('viewtopic.php?pid='.$new_pid.'#p'.$new_pid, $lang_post['Post redirect']);
 	}
 }
 
@@ -330,7 +329,8 @@ if (isset($_POST['form_sent']))
 if ($tid)
 {
 	$action = $lang_post['Post a reply'];
-	$form = '<form id="post" method="post" action="module.php?mod=punbb&amp;pgvaction=post&amp;action=post&amp;tid='.$tid.'" onsubmit="this.submit.disabled=true;if(process_form(this)){return true;}else{this.submit.disabled=false;return false;}">';
+	$form = '<form id="post" method="post" action="'.genurl('post.php?action=post&amp;tid='.$tid, true).'" onsubmit="this.submit.disabled=true;if(process_form(this)){return true;}else{this.submit.disabled=false;return false;}">';
+
 
 	// If a quote-id was specified in the url.
 	if (isset($_GET['qid']))
@@ -339,7 +339,7 @@ if ($tid)
 		if ($qid < 1)
 			message($lang_common['Bad request']);
 
-		$result = $db->query('SELECT poster, message FROM '.$db->prefix.'posts WHERE id='.$qid) or error('Unable to fetch quote info', __FILE__, __LINE__, $db->error());
+		$result = $db->query('SELECT poster, message FROM '.$db->prefix.'posts WHERE id='.$qid.' AND topic_id='.$tid) or error('Unable to fetch quote info', __FILE__, __LINE__, $db->error());
 		if (!$db->num_rows($result))
 			message($lang_common['Bad request']);
 
@@ -377,13 +377,13 @@ if ($tid)
 			$quote = '> '.$q_poster.' '.$lang_common['wrote'].':'."\n\n".'> '.$q_message."\n";
 	}
 
-	$forum_name = '<a href="module.php?mod=punbb&amp;pgvaction=viewforum&amp;id='.$cur_posting['id'].'">'.pun_htmlspecialchars($cur_posting['forum_name']).'</a>';
+	$forum_name = '<a href="'.genurl('viewforum.php?id='.$cur_posting['id']).'">'.pun_htmlspecialchars($cur_posting['forum_name']).'</a>';
 }
 // If a forum_id was specified in the url (new topic).
 else if ($fid)
 {
 	$action = $lang_post['Post new topic'];
-	$form = '<form id="post" method="post" action="module.php?mod=punbb&amp;pgvaction=post&amp;action=post&amp;fid='.$fid.'" onsubmit="return process_form(this)">';
+	$form = '<form id="post" method="post" action="'.genurl('post.php?action=post&amp;fid='.$fid, true).'" onsubmit="return process_form(this)">';
 
 	$forum_name = pun_htmlspecialchars($cur_posting['forum_name']);
 }
@@ -408,7 +408,7 @@ require PUN_ROOT.'header.php';
 ?>
 <div class="linkst">
 	<div class="inbox">
-		<ul><li><a href="module.php?mod=punbb&amp;pgvaction=index"><?php echo $lang_common['Index'] ?></a></li><li>&nbsp;&raquo;&nbsp;<?php echo $forum_name ?><?php if (isset($cur_posting['subject'])) echo '</li><li>&nbsp;&raquo;&nbsp;'.pun_htmlspecialchars($cur_posting['subject']) ?></li></ul>
+		<ul><li><a href="<?php genurl('index.php', false, true)?>"><?php echo $lang_common['Index'] ?></a></li><li>&nbsp;&raquo;&nbsp;<?php echo $forum_name ?><?php if (isset($cur_posting['subject'])) echo '</li><li>&nbsp;&raquo;&nbsp;'.pun_htmlspecialchars($cur_posting['subject']) ?></li></ul>
 	</div>
 </div>
 
@@ -441,7 +441,7 @@ if (!empty($errors))
 else if (isset($_POST['preview']))
 {
 	require_once PUN_ROOT.'include/parser.php';
-	$message = parse_message($message, $hide_smilies);
+	$preview_message = parse_message($message, $hide_smilies);
 
 ?>
 <div id="postpreview" class="blockpost">
@@ -450,7 +450,7 @@ else if (isset($_POST['preview']))
 		<div class="inbox">
 			<div class="postright">
 				<div class="postmsg">
-					<?php echo $message."\n" ?>
+					<?php echo $preview_message."\n" ?>
 				</div>
 			</div>
 		</div>
@@ -472,6 +472,30 @@ $cur_index = 1;
 			<div class="inform">
 				<fieldset>
 					<legend><?php echo $lang_common['Write message legend'] ?></legend>
+					<!-- Start of smilies list -->
+					<fieldset style="margin-left:4px; line-height:1.5em; width:22%; float:right; margin-top:16px; text-align:left; text-decoration:none;border-style: solid;border-width: 1px;padding: 0 0 0 10px;">
+					<legend>Smilies</legend><div style="overflow:auto; height:300px; padding: 2px;">
+					<?php
+					require_once PUN_ROOT.'include/parser.php';
+					$smilies = "";
+					$images = array();
+					foreach($smiley_text as $key => $value)
+						{
+						$smiley_text[$key] = str_replace("</p>"," ",$smiley_text[$key]);
+						$smiley_text[$key] = str_replace("<p>"," ",$smiley_text[$key]);
+
+						if(in_array($smiley_img[$key],$images))
+								{
+								continue;
+								}
+						$images[] = $smiley_img[$key];
+						$smilies .= "<tt style=\"cursor:pointer;\" OnClick=\"javascript:insert_text(' ".$smiley_text[$key]." ', '')\"><span title=\"{$smiley_text[$key]}\">" . parse_message($smiley_text[$key],0) . "</span></tt>";
+						}
+					$smilies = str_replace(array("<p>","</p>")," ",$smilies);
+					echo $smilies;
+					?>
+					</div></fieldset>
+					<!-- End of smilies list -->
 					<div class="infldset txtarea">
 						<input type="hidden" name="form_sent" value="1" />
 						<input type="hidden" name="form_user" value="<?php echo (!$pun_user['is_guest']) ? pun_htmlspecialchars($pun_user['username']) : 'Guest'; ?>" />
@@ -491,12 +515,12 @@ if ($pun_user['is_guest'])
 
 if ($fid): ?>
 						<label><strong><?php echo $lang_common['Subject'] ?></strong><br /><input class="longinput" type="text" name="req_subject" value="<?php if (isset($_POST['req_subject'])) echo pun_htmlspecialchars($subject); ?>" size="80" maxlength="70" tabindex="<?php echo $cur_index++ ?>" /><br /></label>
-<?php endif; ?>						<label><strong><?php echo $lang_common['Message'] ?></strong><br />
-						<textarea name="req_message" rows="20" cols="95" tabindex="<?php echo $cur_index++ ?>"><?php echo isset($_POST['req_message']) ? pun_htmlspecialchars(trim($_POST['req_message'])) : (isset($quote) ? $quote : ''); ?></textarea><br /></label>
+<?php endif; require PUN_ROOT.'mod_easy_bbcode.php'; ?>						<label><strong><?php echo $lang_common['Message'] ?></strong><br />
+						<textarea id="msg" name="req_message" rows="20" cols="95" tabindex="<?php echo $cur_index++ ?>"><?php echo isset($_POST['req_message']) ? pun_htmlspecialchars($message) : (isset($quote) ? $quote : ''); ?></textarea><br /></label>
 						<ul class="bblinks">
-							<li><a href="module.php?mod=punbb&amp;pgvaction=help#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
-							<li><a href="module.php?mod=punbb&amp;pgvaction=help#img" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo ($pun_config['p_message_img_tag'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
-							<li><a href="module.php?mod=punbb&amp;pgvaction=help#smilies" onclick="window.open(this.href); return false;"><?php echo $lang_common['Smilies'] ?></a>: <?php echo ($pun_config['o_smilies'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="<?php genurl('help.php#bbcode', false, true)?>" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="<?php genurl('help.php#img', false, true)?>" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo ($pun_config['p_message_img_tag'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="<?php genurl('help.php#smilies', false, true)?>" onclick="window.open(this.href); return false;"><?php echo $lang_common['Smilies'] ?></a>: <?php echo ($pun_config['o_smilies'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
 						</ul>
 					</div>
 				</fieldset>

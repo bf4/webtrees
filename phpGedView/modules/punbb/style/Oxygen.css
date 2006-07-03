@@ -98,9 +98,8 @@ DIV>FIELDSET {
 /****************************************************************/
 
 /* 5.1 Page margins */
-/*
+
 HTML, BODY {MARGIN: 0; PADDING: 0}
-*/
 #punwrap {margin:12px 20px}
 
 /* 5.2 Creates vertical space between main board elements (Margins) */
@@ -227,7 +226,7 @@ DIV.blockform P INPUT {MARGIN-LEFT: 12px}
 /* 10. POST STATUS INDICATORS */
 /****************************************************************/
 
-/* 10.1 These are the post status indicators which appear at the left of some tables.
+/* 10.1 These are the post status indicators which appear at the left of some tables. 
 .inew = new posts, .iredirect = redirect forums, .iclosed = closed topics and
 .isticky = sticky topics. By default only .inew is different from the default.*/
 

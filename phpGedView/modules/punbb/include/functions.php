@@ -50,7 +50,14 @@ function check_cookie(&$pun_user)
 		if (!isset ($pun_user['id']))
 		{
 			// Insert the new user into the database. We do this now to get the last inserted id for later use.
-			$intial_group_id = $pun_config['o_default_user_group'];
+			if(userIsAdmin(getUserName()))
+			{
+				$intial_group_id = PUN_ADMIN;
+			}
+			else
+			{
+				$intial_group_id = $pun_config['o_default_user_group'];
+			}
 
 			// Add the user
 			$db->query('INSERT INTO '.$db->prefix.'users (username, group_id, password, email, email_setting, save_pass, timezone, language, style, registered, registration_ip, last_visit) VALUES(\''.$db->escape($user['username']).'\', '.$intial_group_id.', \''.$user['password'].'\', \''.$user['email'].'\', 1, 1, 0 , \'English\', \''.$pun_config['o_default_style'].'\', '.$now.', \''.get_remote_address().'\', '.$now.')') or error('Unable to create user', __FILE__, __LINE__, $db->error());
@@ -168,7 +175,6 @@ function check_cookie(&$pun_user)
 		set_default_user();
 }
 
-
 //
 // Fill $pun_user with default values (for guests)
 //
@@ -240,7 +246,10 @@ function check_bans()
 		}
 
 		if ($cur_ban['username'] != '' && !strcasecmp($pun_user['username'], $cur_ban['username']))
+		{
+			$db->query('DELETE FROM '.$db->prefix.'online WHERE ident=\''.$db->escape($pun_user['username']).'\'') or error('Unable to delete from online list', __FILE__, __LINE__, $db->error());
 			message($lang_common['Ban message'].' '.(($cur_ban['expire'] != '') ? $lang_common['Ban message 2'].' '.strtolower(format_time($cur_ban['expire'], true)).'. ' : '').(($cur_ban['message'] != '') ? $lang_common['Ban message 3'].'<br /><br /><strong>'.pun_htmlspecialchars($cur_ban['message']).'</strong><br /><br />' : '<br /><br />').$lang_common['Ban message 4'].' <a href="mailto:'.$pun_config['o_admin_email'].'">'.$pun_config['o_admin_email'].'</a>.', true);
+		}
 
 		if ($cur_ban['ip'] != '')
 		{
@@ -251,7 +260,10 @@ function check_bans()
 				$cur_ban_ips[$i] = $cur_ban_ips[$i].'.';
 
 				if (substr($user_ip, 0, strlen($cur_ban_ips[$i])) == $cur_ban_ips[$i])
+				{
+					$db->query('DELETE FROM '.$db->prefix.'online WHERE ident=\''.$db->escape($pun_user['username']).'\'') or error('Unable to delete from online list', __FILE__, __LINE__, $db->error());
 					message($lang_common['Ban message'].' '.(($cur_ban['expire'] != '') ? $lang_common['Ban message 2'].' '.strtolower(format_time($cur_ban['expire'], true)).'. ' : '').(($cur_ban['message'] != '') ? $lang_common['Ban message 3'].'<br /><br /><strong>'.pun_htmlspecialchars($cur_ban['message']).'</strong><br /><br />' : '<br /><br />').$lang_common['Ban message 4'].' <a href="mailto:'.$pun_config['o_admin_email'].'">'.$pun_config['o_admin_email'].'</a>.', true);
+				}
 			}
 		}
 	}
@@ -275,7 +287,7 @@ function update_users_online()
 	$now = time();
 
 	// Fetch all online list entries that are older than "o_timeout_online"
-	$result = $db->query('SELECT * FROM '.$db->prefix.'online WHERE logged<'.($now-$pun_config['o_timeout_online'])) or error('Unable to delete from online list', __FILE__, __LINE__, $db->error());
+	$result = $db->query('SELECT * FROM '.$db->prefix.'online WHERE logged<'.($now-$pun_config['o_timeout_online'])) or error('Unable to fetch old entries from online list', __FILE__, __LINE__, $db->error());
 	while ($cur_user = $db->fetch_assoc($result))
 	{
 		// If the entry is a guest, delete it
@@ -304,19 +316,19 @@ function generate_navlinks()
 	global $pun_config, $lang_common, $pun_user;
 
 	// Index and Userlist should always be displayed
-	$links[] = '<li id="navindex"><a href="module.php?mod=punbb&amp;pgvaction=index">'.$lang_common['Index'].'</a>';
-	$links[] = '<li id="navuserlist"><a href="module.php?mod=punbb&amp;pgvaction=userlist">'.$lang_common['User list'].'</a>';
+	$links[] = '<li id="navindex"><a href="'.genurl('index.php').'">'.$lang_common['Index'].'</a>';
+	$links[] = '<li id="navuserlist"><a href="'.genurl('userlist.php').'">'.$lang_common['User list'].'</a>';
 
 	if ($pun_config['o_rules'] == '1')
-		$links[] = '<li id="navrules"><a href="module.php?mod=punbb&amp;pgvaction=misc&amp;action=rules">'.$lang_common['Rules'].'</a>';
+		$links[] = '<li id="navrules"><a href="'.genurl('misc.php?action=rules').'">'.$lang_common['Rules'].'</a>';
 
 	if ($pun_user['is_guest'])
 	{
 		if ($pun_user['g_search'] == '1')
-			$links[] = '<li id="navsearch"><a href="module.php?mod=punbb&amp;pgvaction=search">'.$lang_common['Search'].'</a>';
+			$links[] = '<li id="navsearch"><a href="'.genurl('search.php').'">'.$lang_common['Search'].'</a>';
 
-//		$links[] = '<li id="navregister"><a href="module.php?mod=punbb&amp;pgvaction=register">'.$lang_common['Register'].'</a>';
-//		$links[] = '<li id="navlogin"><a href="module.php?mod=punbb&amp;pgvaction=login">'.$lang_common['Login'].'</a>';
+//		$links[] = '<li id="navregister"><a href="register.php">'.$lang_common['Register'].'</a>';
+//		$links[] = '<li id="navlogin"><a href="login.php">'.$lang_common['Login'].'</a>';
 
 		$info = $lang_common['Not logged in'];
 	}
@@ -325,17 +337,17 @@ function generate_navlinks()
 		if ($pun_user['g_id'] > PUN_MOD)
 		{
 			if ($pun_user['g_search'] == '1')
-				$links[] = '<li id="navsearch"><a href="module.php?mod=punbb&amp;pgvaction=search">'.$lang_common['Search'].'</a>';
+				$links[] = '<li id="navsearch"><a href="'.genurl('search.php').'">'.$lang_common['Search'].'</a>';
 
-			$links[] = '<li id="navprofile"><a href="module.php?mod=punbb&amp;pgvaction=profile&amp;id='.$pun_user['id'].'">'.$lang_common['Profile'].'</a>';
-//			$links[] = '<li id="navlogout"><a href="module.php?mod=punbb&amp;pgvaction=login&amp;action=out&amp;id='.$pun_user['id'].'">'.$lang_common['Logout'].'</a>';
+			$links[] = '<li id="navprofile"><a href="'.genurl('profile.php?id='.$pun_user['id']).'">'.$lang_common['Profile'].'</a>';
+//			$links[] = '<li id="navlogout"><a href="login.php?action=out&amp;id='.$pun_user['id'].'">'.$lang_common['Logout'].'</a>';
 		}
 		else
 		{
-			$links[] = '<li id="navsearch"><a href="module.php?mod=punbb&amp;pgvaction=search">'.$lang_common['Search'].'</a>';
-			$links[] = '<li id="navprofile"><a href="module.php?mod=punbb&amp;pgvaction=profile&amp;id='.$pun_user['id'].'">'.$lang_common['Profile'].'</a>';
-			$links[] = '<li id="navadmin"><a href="module.php?mod=punbb&amp;pgvaction=admin_index">'.$lang_common['Admin'].'</a>';
-//			$links[] = '<li id="navlogout"><a href="module.php?mod=punbb&amp;pgvaction=login&amp;action=out&amp;id='.$pun_user['id'].'">'.$lang_common['Logout'].'</a>';
+			$links[] = '<li id="navsearch"><a href="'.genurl('search.php').'">'.$lang_common['Search'].'</a>';
+			$links[] = '<li id="navprofile"><a href="'.genurl('profile.php?id='.$pun_user['id']).'">'.$lang_common['Profile'].'</a>';
+			$links[] = '<li id="navadmin"><a href="'.genurl('admin_index.php').'">'.$lang_common['Admin'].'</a>';
+//			$links[] = '<li id="navlogout"><a href="login.php?action=out&amp;id='.$pun_user['id'].'">'.$lang_common['Logout'].'</a>';
 		}
 	}
 
@@ -368,13 +380,13 @@ function generate_profile_menu($page = '')
 		<div class="box">
 			<div class="inbox">
 				<ul>
-					<li<?php if ($page == 'essentials') echo ' class="isactive"'; ?>><a href="module.php?mod=punbb&amp;pgvaction=profile&amp;section=essentials&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section essentials'] ?></a></li>
-					<li<?php if ($page == 'personal') echo ' class="isactive"'; ?>><a href="module.php?mod=punbb&amp;pgvaction=profile&amp;section=personal&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section personal'] ?></a></li>
-					<li<?php if ($page == 'messaging') echo ' class="isactive"'; ?>><a href="module.php?mod=punbb&amp;pgvaction=profile&amp;section=messaging&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section messaging'] ?></a></li>
-					<li<?php if ($page == 'personality') echo ' class="isactive"'; ?>><a href="module.php?mod=punbb&amp;pgvaction=profile&amp;section=personality&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section personality'] ?></a></li>
-					<li<?php if ($page == 'display') echo ' class="isactive"'; ?>><a href="module.php?mod=punbb&amp;pgvaction=profile&amp;section=display&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section display'] ?></a></li>
-					<li<?php if ($page == 'privacy') echo ' class="isactive"'; ?>><a href="module.php?mod=punbb&amp;pgvaction=profile&amp;section=privacy&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section privacy'] ?></a></li>
-<?php if ($pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD && $pun_config['p_mod_ban_users'] == '1')): ?>					<li<?php if ($page == 'admin') echo ' class="isactive"'; ?>><a href="module.php?mod=punbb&amp;pgvaction=profile&amp;section=admin&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section admin'] ?></a></li>
+					<li<?php if ($page == 'essentials') echo ' class="isactive"'; ?>><a href="<?php genurl("profile.php?section=essentials&amp;id={$id}", false, true)?>"><?php echo $lang_profile['Section essentials'] ?></a></li>
+					<li<?php if ($page == 'personal') echo ' class="isactive"'; ?>><a href="<?php genurl("profile.php?section=personal&amp;id={$id}", false, true)?>"><?php echo $lang_profile['Section personal'] ?></a></li>
+					<li<?php if ($page == 'messaging') echo ' class="isactive"'; ?>><a href="<?php genurl("profile.php?section=messaging&amp;id={$id}", false, true)?>"><?php echo $lang_profile['Section messaging'] ?></a></li>
+					<li<?php if ($page == 'personality') echo ' class="isactive"'; ?>><a href="<?php genurl("profile.php?section=personality&amp;id={$id}", false, true)?>"><?php echo $lang_profile['Section personality'] ?></a></li>
+					<li<?php if ($page == 'display') echo ' class="isactive"'; ?>><a href="<?php genurl("profile.php?section=display&amp;id={$id}", false, true)?>"><?php echo $lang_profile['Section display'] ?></a></li>
+					<li<?php if ($page == 'privacy') echo ' class="isactive"'; ?>><a href="<?php genurl("profile.php?section=privacy&amp;id={$id}", false, true)?>"><?php echo $lang_profile['Section privacy'] ?></a></li>
+<?php if ($pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD && $pun_config['p_mod_ban_users'] == '1')): ?>					<li<?php if ($page == 'admin') echo ' class="isactive"'; ?>><a href="<?php genurl("profile.php?section=admin&amp;id={$id}", false, true)?>"><?php echo $lang_profile['Section admin'] ?></a></li>
 <?php endif; ?>				</ul>
 			</div>
 		</div>
@@ -747,28 +759,7 @@ function pun_hash($str)
 //
 function get_remote_address()
 {
-	$remote_address = $_SERVER['REMOTE_ADDR'];
-
-	// If HTTP_X_FORWARDED_FOR is set, we try to grab the first non-LAN IP
-	if (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
-	{
-		if (preg_match_all('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $_SERVER['HTTP_X_FORWARDED_FOR'], $address_list))
-		{
-			$lan_ips = array('/^0\./', '/^127\.0\.0\.1/', '/^192\.168\..*/', '/^172\.((1[6-9])|(2[0-9])|(3[0-1]))\..*/', '/^10\..*/', '/^224\..*/', '/^240\..*/');
-			$address_list = preg_replace($lan_ips, null, $address_list[0]);
-
-			while (list(, $cur_address) = each($address_list))
-			{
-				if ($cur_address)
-				{
-					$remote_address = $cur_address;
-					break;
-				}
-			}
-		}
-	}
-
-	return $remote_address;
+	return $_SERVER['REMOTE_ADDR'];
 }
 
 
@@ -851,7 +842,7 @@ function maintenance_message()
 
 ?>
 <title><?php echo pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_common['Maintenance'] ?></title>
-<link rel="stylesheet" type="text/css" href="<?php print PUN_ROOT;?>style/<?php echo $pun_user['style'].'.css' ?>" />
+<link rel="stylesheet" type="text/css" href="style/<?php echo $pun_user['style'].'.css' ?>" />
 <?php
 
 	$tpl_temp = trim(ob_get_contents());
@@ -875,12 +866,15 @@ function maintenance_message()
 
 
 	// START SUBST - <pun_include "*">
-	while (preg_match('<pun_include "(.*?)">', $tpl_maint, $cur_include))
+	while (preg_match('#<pun_include "([^/\\\\]*?)">#', $tpl_maint, $cur_include))
 	{
+		if (!file_exists(PUN_ROOT.'include/user/'.$cur_include[1]))
+			error('Unable to process user include &lt;pun_include "'.htmlspecialchars($cur_include[1]).'"&gt; from template maintenance.tpl. There is no such file in folder /include/user/');
+
 		ob_start();
-		include PUN_ROOT.$cur_include[1];
+		include PUN_ROOT.'include/user/'.$cur_include[1];
 		$tpl_temp = ob_get_contents();
-		$tpl_maint = str_replace('<'.$cur_include[0].'>', $tpl_temp, $tpl_maint);
+		$tpl_maint = str_replace($cur_include[0], $tpl_temp, $tpl_maint);
 	    ob_end_clean();
 	}
 	// END SUBST - <pun_include "*">
@@ -902,6 +896,8 @@ function redirect($destination_url, $message)
 
 	if ($destination_url == '')
 		$destination_url = 'index.php';
+
+	$destination_url = genurl($destination_url, true);
 
 	// If the delay is 0 seconds, we might as well skip the redirect all together
 	if ($pun_config['o_redirect_delay'] == '0')
@@ -926,9 +922,9 @@ function redirect($destination_url, $message)
 	ob_start();
 
 ?>
-<meta http-equiv="refresh" content="<?php echo $pun_config['o_redirect_delay'] ?>;URL=<?php echo $destination_url ?>" />
+<meta http-equiv="refresh" content="<?php echo $pun_config['o_redirect_delay'] ?>;URL=<?php echo str_replace(array('<', '>', '"'), array('&lt;', '&gt;', '&quot;'), $destination_url) ?>" />
 <title><?php echo pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_common['Redirecting'] ?></title>
-<link rel="stylesheet" type="text/css" href="<?php print PUN_ROOT;?>style/<?php echo $pun_user['style'].'.css' ?>" />
+<link rel="stylesheet" type="text/css" href="style/<?php echo $pun_user['style'].'.css' ?>" />
 <?php
 
 	$tpl_temp = trim(ob_get_contents());
@@ -943,7 +939,7 @@ function redirect($destination_url, $message)
 
 
 	// START SUBST - <pun_redir_text>
-	$tpl_temp = $message.'<br /><br />'.'<a href="module.php?mod=punbb&amp;pgvaction='.$destination_url.'">'.$lang_common['Click redirect'].'</a>';
+	$tpl_temp = $message.'<br /><br />'.'<a href="'.$destination_url.'">'.$lang_common['Click redirect'].'</a>';
 	$tpl_redir = str_replace('<pun_redir_text>', $tpl_temp, $tpl_redir);
 	// END SUBST - <pun_redir_text>
 
@@ -965,12 +961,15 @@ function redirect($destination_url, $message)
 
 
 	// START SUBST - <pun_include "*">
-	while (preg_match('<pun_include "(.*?)">', $tpl_redir, $cur_include))
+	while (preg_match('#<pun_include "([^/\\\\]*?)">#', $tpl_redir, $cur_include))
 	{
+		if (!file_exists(PUN_ROOT.'include/user/'.$cur_include[1]))
+			error('Unable to process user include &lt;pun_include "'.htmlspecialchars($cur_include[1]).'"&gt; from template redirect.tpl. There is no such file in folder /include/user/');
+
 		ob_start();
-		include PUN_ROOT.$cur_include[1];
+		include PUN_ROOT.'include/user/'.$cur_include[1];
 		$tpl_temp = ob_get_contents();
-		$tpl_redir = str_replace('<'.$cur_include[0].'>', $tpl_temp, $tpl_redir);
+		$tpl_redir = str_replace($cur_include[0], $tpl_temp, $tpl_redir);
 	    ob_end_clean();
 	}
 	// END SUBST - <pun_include "*">
@@ -1002,22 +1001,6 @@ function error($message, $file, $line, $db_error = false)
 		ob_start('ob_gzhandler');
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html dir="ltr">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title><?php echo pun_htmlspecialchars($pun_config['o_board_title']) ?> / Error</title>
-<style type="text/css">
-<!--
-BODY {MARGIN: 10% 20% auto 20%; font: 10px Verdana, Arial, Helvetica, sans-serif}
-#errorbox {BORDER: 1px solid #B84623}
-H2 {MARGIN: 0; COLOR: #FFFFFF; BACKGROUND-COLOR: #B84623; FONT-SIZE: 1.1em; PADDING: 5px 4px}
-#errorbox DIV {PADDING: 6px 5px; BACKGROUND-COLOR: #F1F1F1}
--->
-</style>
-</head>
-<body>
-
 <div id="errorbox">
 	<h2>An error was encountered</h2>
 	<div>
@@ -1041,9 +1024,6 @@ H2 {MARGIN: 0; COLOR: #FFFFFF; BACKGROUND-COLOR: #B84623; FONT-SIZE: 1.1em; PADD
 ?>
 	</div>
 </div>
-
-</body>
-</html>
 <?php
 
 	// If a database connection was established (before this error) we close it
@@ -1106,6 +1086,28 @@ function display_saved_queries()
 </div>
 <?php
 
+}
+
+
+//
+// Unset any variables instantiated as a result of register_globals being enabled
+//
+function unregister_globals()
+{
+	// Prevent script.php?GLOBALS[foo]=bar
+	if (isset($_REQUEST['GLOBALS']) || isset($_FILES['GLOBALS']))
+		exit('I\'ll have a steak sandwich and... a steak sandwich.');
+
+	// Variables that shouldn't be unset
+	$no_unset = array('GLOBALS', '_GET', '_POST', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES');
+
+	// Remove elements in $GLOBALS that are present in any of the superglobals
+	$input = array_merge($_GET, $_POST, $_COOKIE, $_SERVER, $_ENV, $_FILES, isset($_SESSION) && is_array($_SESSION) ? $_SESSION : array());
+	foreach ($input as $k => $v)
+	{
+		if (!in_array($k, $no_unset) && isset($GLOBALS[$k]))
+			unset($GLOBALS[$k]);
+	}
 }
 
 

@@ -26,7 +26,7 @@
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
 
-define('PUN_ROOT', 'modules/punbb/');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -86,14 +86,14 @@ if (@file_exists('/proc/loadavg') && is_readable('/proc/loadavg'))
 	$load_averages = @explode(' ', $load_averages);
 	$server_load = isset($load_averages[2]) ? $load_averages[0].' '.$load_averages[1].' '.$load_averages[2] : 'Not available';
 }
-else if (preg_match('/averages?: ([0-9\.]+),[\s]+([0-9\.]+),[\s]+([0-9\.]+)/i', @exec('uptime'), $load_averages))
+else if (!in_array(PHP_OS, array('WINNT', 'WIN32')) && preg_match('/averages?: ([0-9\.]+),[\s]+([0-9\.]+),[\s]+([0-9\.]+)/i', @exec('uptime'), $load_averages))
 	$server_load = $load_averages[1].' '.$load_averages[2].' '.$load_averages[3];
 else
 	$server_load = 'Not available';
 
 
 // Get number of current visitors
-$result = $db->query('SELECT COUNT(user_id) FROM '.$db->prefix.'online') or error('Unable to fetch online count', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT COUNT(user_id) FROM '.$db->prefix.'online WHERE idle=0') or error('Unable to fetch online count', __FILE__, __LINE__, $db->error());
 $num_online = $db->result($result);
 
 
@@ -175,7 +175,7 @@ generate_admin_menu('index');
 				<dl>
 					<dt>PunBB version</dt>
 					<dd>
-						PunBB <?php echo $pun_config['o_cur_version'] ?> - <a href="module.php?mod=punbb&amp;pgvaction=admin_index&amp;action=check_upgrade">Check for upgrade</a><br />
+						PunBB <?php echo $pun_config['o_cur_version'] ?> - <a href="<?php genurl('admin_index.php?action=check_upgrade', false, true)?>">Check for upgrade</a><br />
 						&copy; Copyright 2002, 2003, 2004, 2005 Rickard Andersson
 					</dd>
 					<dt>Server load</dt>
@@ -185,7 +185,7 @@ generate_admin_menu('index');
 <?php if ($pun_user['g_id'] == PUN_ADMIN): ?>					<dt>Environment</dt>
 					<dd>
 						Operating system: <?php echo PHP_OS ?><br />
-						PHP: <?php echo phpversion() ?> - <a href="module.php?mod=punbb&amp;pgvaction=admin_index&amp;action=phpinfo">Show info</a><br />
+						PHP: <?php echo phpversion() ?> - <a href="<?php genurl('admin_index.php?action=phpinfo', false, true)?>">Show info</a><br />
 						Accelerator: <?php echo $php_accelerator."\n" ?>
 					</dd>
 					<dt>Database</dt>

@@ -23,7 +23,7 @@
 ************************************************************************/
 
 
-define('PUN_ROOT', 'modules/punbb/');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 
 
@@ -72,9 +72,9 @@ else if ($action == 'new' && !$pun_user['is_guest'])
 	$first_new_post_id = $db->result($result);
 
 	if ($first_new_post_id)
-		header('Location: module.php?mod=punbb&pgvaction=viewtopic&pid='.$first_new_post_id.'#p'.$first_new_post_id);
+		header('Location: '.genurl('viewtopic.php?pid='.$first_new_post_id.'#p'.$first_new_post_id, true));
 	else	// If there is no new post, we go to the last post
-		header('Location: module.php?mod=punbb&pgvaction=viewtopic&id='.$id.'&action=last');
+		header('Location: '.genurl('viewtopic.php?id='.$id.'&action=last', true));
 
 	exit;
 }
@@ -87,7 +87,7 @@ else if ($action == 'last')
 
 	if ($last_post_id)
 	{
-		header('Location: module.php?mod=punbb&pgvaction=viewtopic&pid='.$last_post_id.'#p'.$last_post_id);
+		header('Location: '.genurl('viewtopic.php?pid='.$last_post_id.'#p'.$last_post_id, true));
 		exit;
 	}
 }
@@ -112,7 +112,7 @@ $is_admmod = ($pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_id'] == PUN_MOD &&
 if ($cur_topic['closed'] == '0')
 {
 	if (($cur_topic['post_replies'] == '' && $pun_user['g_post_replies'] == '1') || $cur_topic['post_replies'] == '1' || $is_admmod)
-		$post_link = '<a href="module.php?mod=punbb&amp;pgvaction=post&amp;tid='.$id.'">'.$lang_topic['Post reply'].'</a>';
+		$post_link = '<a href="'.genurl('post.php?tid='.$id).'">'.$lang_topic['Post reply'].'</a>';
 	else
 		$post_link = '&nbsp;';
 }
@@ -121,7 +121,7 @@ else
 	$post_link = $lang_topic['Topic closed'];
 
 	if ($is_admmod)
-		$post_link .= ' / <a href="module.php?mod=punbb&amp;pgvaction=post&amp;tid='.$id.'">'.$lang_topic['Post reply'].'</a>';
+		$post_link .= ' / <a href="'.genurl('post.php?tid='.$id).'">'.$lang_topic['Post reply'].'</a>';
 }
 
 
@@ -132,7 +132,7 @@ $p = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : $_
 $start_from = $pun_user['disp_posts'] * ($p - 1);
 
 // Generate paging links
-$paging_links = $lang_common['Pages'].': '.paginate($num_pages, $p, 'viewtopic.php?id='.$id);
+$paging_links = $lang_common['Pages'].': '.paginate($num_pages, $p, genurl('viewtopic.php?id='.$id));
 
 
 if ($pun_config['o_censoring'] == '1')
@@ -153,9 +153,9 @@ if (!$pun_user['is_guest'] && $pun_config['o_subscriptions'] == '1')
 {
 	if ($cur_topic['is_subscribed'])
 		// I apologize for the variable naming here. It's a mix of subscription and action I guess :-)
-		$subscraction = '<p class="subscribelink clearb">'.$lang_topic['Is subscribed'].' - <a href="module.php?mod=punbb&amp;pgvaction=misc&amp;unsubscribe='.$id.'">'.$lang_topic['Unsubscribe'].'</a></p>'."\n";
+		$subscraction = '<p class="subscribelink clearb">'.$lang_topic['Is subscribed'].' - <a href="'.genurl('misc.php?unsubscribe='.$id).'">'.$lang_topic['Unsubscribe'].'</a></p>'."\n";
 	else
-		$subscraction = '<p class="subscribelink clearb"><a href="module.php?mod=punbb&amp;pgvaction=misc&amp;subscribe='.$id.'">'.$lang_topic['Subscribe'].'</a></p>'."\n";
+		$subscraction = '<p class="subscribelink clearb"><a href="'.genurl('misc.php?subscribe='.$id).'">'.$lang_topic['Subscribe'].'</a></p>'."\n";
 }
 else
 	$subscraction = '<div class="clearer"></div>'."\n";
@@ -169,7 +169,7 @@ require PUN_ROOT.'header.php';
 	<div class="inbox">
 		<p class="pagelink conl"><?php echo $paging_links ?></p>
 		<p class="postlink conr"><?php echo $post_link ?></p>
-		<ul><li><a href="module.php?mod=punbb&amp;pgvaction=index"><?php echo $lang_common['Index'] ?></a></li><li>&nbsp;&raquo;&nbsp;<a href="module.php?mod=punbb&amp;pgvaction=viewforum&amp;id=<?php echo $cur_topic['forum_id'] ?>"><?php echo pun_htmlspecialchars($cur_topic['forum_name']) ?></a></li><li>&nbsp;&raquo;&nbsp;<?php echo pun_htmlspecialchars($cur_topic['subject']) ?></li></ul>
+		<ul><li><a href="<?php genurl('index.php', false, true)?>"><?php echo $lang_common['Index'] ?></a></li><li>&nbsp;&raquo;&nbsp;<a href="<?php genurl("viewforum.php?id={$cur_topic['forum_id']}", false, true)?>"><?php echo pun_htmlspecialchars($cur_topic['forum_name']) ?></a></li><li>&nbsp;&raquo;&nbsp;<?php echo pun_htmlspecialchars($cur_topic['subject']) ?></li></ul>
 		<div class="clearer"></div>
 	</div>
 </div>
@@ -183,7 +183,7 @@ $bg_switch = true;	// Used for switching background color in posts
 $post_count = 0;	// Keep track of post numbers
 
 // Retrieve the posts (and their respective poster/online status)
-$result = $db->query('SELECT DISTINCT u.email, u.title, u.url, u.location, u.use_avatar, u.signature, u.email_setting, u.num_posts, u.registered, u.admin_note, p.id, p.poster AS username, p.poster_id, p.poster_ip, p.poster_email, p.message, p.hide_smilies, p.posted, p.edited, p.edited_by, g.g_id, g.g_user_title, o.user_id AS is_online FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'users AS u ON u.id=p.poster_id INNER JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id LEFT JOIN '.$db->prefix.'online AS o ON (o.user_id=u.id AND o.idle=0) WHERE p.topic_id='.$id.' ORDER BY p.id LIMIT '.$start_from.','.$pun_user['disp_posts'], true) or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT u.email, u.title, u.url, u.location, u.use_avatar, u.signature, u.email_setting, u.num_posts, u.registered, u.admin_note, p.id, p.poster AS username, p.poster_id, p.poster_ip, p.poster_email, p.message, p.hide_smilies, p.posted, p.edited, p.edited_by, g.g_id, g.g_user_title, o.user_id AS is_online FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'users AS u ON u.id=p.poster_id INNER JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id LEFT JOIN '.$db->prefix.'online AS o ON (o.user_id=u.id AND o.user_id!=1 AND o.idle=0) WHERE p.topic_id='.$id.' ORDER BY p.id LIMIT '.$start_from.','.$pun_user['disp_posts'], true) or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
 while ($cur_post = $db->fetch_assoc($result))
 {
 	$post_count++;
@@ -197,7 +197,7 @@ while ($cur_post = $db->fetch_assoc($result))
 	// If the poster is a registered user.
 	if ($cur_post['poster_id'] > 1)
 	{
-		$username = '<a href="module.php?mod=punbb&amp;pgvaction=profile&amp;id='.$cur_post['poster_id'].'">'.pun_htmlspecialchars($cur_post['username']).'</a>';
+		$username = '<a href="'.genurl('profile.php?id='.$cur_post['poster_id']).'">'.pun_htmlspecialchars($cur_post['username']).'</a>';
 		$user_title = get_title($cur_post);
 
 		if ($pun_config['o_censoring'] == '1')
@@ -238,7 +238,7 @@ while ($cur_post = $db->fetch_assoc($result))
 			if (($cur_post['email_setting'] == '0' && !$pun_user['is_guest']) || $pun_user['g_id'] < PUN_GUEST)
 				$user_contacts[] = '<a href="mailto:'.$cur_post['email'].'">'.$lang_common['E-mail'].'</a>';
 			else if ($cur_post['email_setting'] == '1' && !$pun_user['is_guest'])
-				$user_contacts[] = '<a href="module.php?mod=punbb&amp;pgvaction=misc&amp;email='.$cur_post['poster_id'].'">'.$lang_common['E-mail'].'</a>';
+				$user_contacts[] = '<a href="'.genurl('misc.php?email='.$cur_post['poster_id']).'">'.$lang_common['E-mail'].'</a>';
 
 			if ($cur_post['url'] != '')
 				$user_contacts[] = '<a href="'.pun_htmlspecialchars($cur_post['url']).'">'.$lang_topic['Website'].'</a>';
@@ -246,7 +246,7 @@ while ($cur_post = $db->fetch_assoc($result))
 
 		if ($pun_user['g_id'] < PUN_GUEST)
 		{
-			$user_info[] = '<dd>IP: <a href="module.php?mod=punbb&amp;pgvaction=moderate&amp;get_host='.$cur_post['id'].'">'.$cur_post['poster_ip'].'</a>';
+			$user_info[] = '<dd>IP: <a href="'.genurl('moderate.php?get_host='.$cur_post['id']).'">'.$cur_post['poster_ip'].'</a>';
 
 			if ($cur_post['admin_note'] != '')
 				$user_info[] = '<dd>'.$lang_topic['Note'].': <strong>'.pun_htmlspecialchars($cur_post['admin_note']).'</strong>';
@@ -259,7 +259,7 @@ while ($cur_post = $db->fetch_assoc($result))
 		$user_title = get_title($cur_post);
 
 		if ($pun_user['g_id'] < PUN_GUEST)
-			$user_info[] = '<dd>IP: <a href="module.php?mod=punbb&amp;pgvaction=moderate&amp;get_host='.$cur_post['id'].'">'.$cur_post['poster_ip'].'</a>';
+			$user_info[] = '<dd>IP: <a href="'.genurl('moderate.php?get_host='.$cur_post['id']).'">'.$cur_post['poster_ip'].'</a>';
 
 		if ($pun_config['o_show_user_info'] == '1' && $cur_post['poster_email'] != '' && !$pun_user['is_guest'])
 			$user_contacts[] = '<a href="mailto:'.$cur_post['poster_email'].'">'.$lang_common['E-mail'].'</a>';
@@ -269,24 +269,24 @@ while ($cur_post = $db->fetch_assoc($result))
 	if (!$is_admmod)
 	{
 		if (!$pun_user['is_guest'])
-			$post_actions[] = '<li class="postreport"><a href="module.php?mod=punbb&amp;pgvaction=misc&amp;report='.$cur_post['id'].'">'.$lang_topic['Report'].'</a>';
+			$post_actions[] = '<li class="postreport"><a href="'.genurl('misc.php?report='.$cur_post['id']).'">'.$lang_topic['Report'].'</a>';
 
 		if ($cur_topic['closed'] == '0')
 		{
 			if ($cur_post['poster_id'] == $pun_user['id'])
 			{
 				if ((($start_from + $post_count) == 1 && $pun_user['g_delete_topics'] == '1') || (($start_from + $post_count) > 1 && $pun_user['g_delete_posts'] == '1'))
-					$post_actions[] = '<li class="postdelete"><a href="module.php?mod=punbb&amp;pgvaction=delete&amp;id='.$cur_post['id'].'">'.$lang_topic['Delete'].'</a>';
+					$post_actions[] = '<li class="postdelete"><a href="'.genurl('delete.php?id='.$cur_post['id']).'">'.$lang_topic['Delete'].'</a>';
 				if ($pun_user['g_edit_posts'] == '1')
-					$post_actions[] = '<li class="postedit"><a href="module.php?mod=punbb&amp;pgvaction=edit&amp;id='.$cur_post['id'].'">'.$lang_topic['Edit'].'</a>';
+					$post_actions[] = '<li class="postedit"><a href="'.genurl('edit.php?id='.$cur_post['id']).'">'.$lang_topic['Edit'].'</a>';
 			}
 
 			if (($cur_topic['post_replies'] == '' && $pun_user['g_post_replies'] == '1') || $cur_topic['post_replies'] == '1')
-				$post_actions[] = '<li class="postquote"><a href="module.php?mod=punbb&amp;pgvaction=post&amp;tid='.$id.'&amp;qid='.$cur_post['id'].'">'.$lang_topic['Quote'].'</a>';
+				$post_actions[] = '<li class="postquote"><a href="'.genurl('post.php?tid='.$id.'&amp;qid='.$cur_post['id']).'">'.$lang_topic['Quote'].'</a>';
 		}
 	}
 	else
-		$post_actions[] = '<li class="postreport"><a href="module.php?mod=punbb&amp;pgvaction=misc&amp;report='.$cur_post['id'].'">'.$lang_topic['Report'].'</a>'.$lang_topic['Link separator'].'</li><li class="postdelete"><a href="module.php?mod=punbb&amp;pgvaction=delete&amp;id='.$cur_post['id'].'">'.$lang_topic['Delete'].'</a>'.$lang_topic['Link separator'].'</li><li class="postedit"><a href="module.php?mod=punbb&amp;pgvaction=edit&amp;id='.$cur_post['id'].'">'.$lang_topic['Edit'].'</a>'.$lang_topic['Link separator'].'</li><li class="postquote"><a href="module.php?mod=punbb&amp;pgvaction=post&amp;tid='.$id.'&amp;qid='.$cur_post['id'].'">'.$lang_topic['Quote'].'</a>';
+		$post_actions[] = '<li class="postreport"><a href="'.genurl('misc.php?report='.$cur_post['id']).'">'.$lang_topic['Report'].'</a>'.$lang_topic['Link separator'].'</li><li class="postdelete"><a href="'.genurl('delete.php?id='.$cur_post['id']).'">'.$lang_topic['Delete'].'</a>'.$lang_topic['Link separator'].'</li><li class="postedit"><a href="'.genurl('edit.php?id='.$cur_post['id']).'">'.$lang_topic['Edit'].'</a>'.$lang_topic['Link separator'].'</li><li class="postquote"><a href="'.genurl('post.php?tid='.$id.'&amp;qid='.$cur_post['id']).'">'.$lang_topic['Quote'].'</a>';
 
 
 	// Switch the background color for every message.
@@ -311,7 +311,7 @@ while ($cur_post = $db->fetch_assoc($result))
 
 ?>
 <div id="p<?php echo $cur_post['id'] ?>" class="blockpost<?php echo $vtbg ?><?php if (($post_count + $start_from) == 1) echo ' firstpost'; ?>">
-	<h2><span><span class="conr">#<?php echo ($start_from + $post_count) ?>&nbsp;</span><a href="module.php?mod=punbb&amp;pgvaction=viewtopic&amp;pid=<?php echo $cur_post['id'].'#p'.$cur_post['id'] ?>"><?php echo format_time($cur_post['posted']) ?></a></span></h2>
+	<h2><span><span class="conr">#<?php echo ($start_from + $post_count) ?>&nbsp;</span><a href="<?php genurl("viewtopic.php?pid={$cur_post['id']}#p{$cur_post['id']}", false, true)?>"><?php echo format_time($cur_post['posted']) ?></a></span></h2>
 	<div class="box">
 		<div class="inbox">
 			<div class="postleft">
@@ -347,7 +347,7 @@ while ($cur_post = $db->fetch_assoc($result))
 	<div class="inbox">
 		<p class="postlink conr"><?php echo $post_link ?></p>
 		<p class="pagelink conl"><?php echo $paging_links ?></p>
-		<ul><li><a href="module.php?mod=punbb&amp;pgvaction=index"><?php echo $lang_common['Index'] ?></a></li><li>&nbsp;&raquo;&nbsp;<a href="module.php?mod=punbb&amp;pgvaction=viewforum&amp;id=<?php echo $cur_topic['forum_id'] ?>"><?php echo pun_htmlspecialchars($cur_topic['forum_name']) ?></a></li><li>&nbsp;&raquo;&nbsp;<?php echo pun_htmlspecialchars($cur_topic['subject']) ?></li></ul>
+		<ul><li><a href="index.php"><?php echo $lang_common['Index'] ?></a></li><li>&nbsp;&raquo;&nbsp;<a href="<?php genurl("viewforum.php?id={$cur_topic['forum_id']}", false, true)?>"><?php echo pun_htmlspecialchars($cur_topic['forum_name']) ?></a></li><li>&nbsp;&raquo;&nbsp;<?php echo pun_htmlspecialchars($cur_topic['subject']) ?></li></ul>
 		<?php echo $subscraction ?>
 	</div>
 </div>
@@ -362,7 +362,7 @@ if ($quickpost)
 <div class="blockform">
 	<h2><span><?php echo $lang_topic['Quick post'] ?></span></h2>
 	<div class="box">
-		<form method="post" action="module.php?mod=punbb&amp;pgvaction=post&amp;tid=<?php echo $id ?>" onsubmit="this.submit.disabled=true;if(process_form(this)){return true;}else{this.submit.disabled=false;return false;}">
+		<form method="post" action="<?php genurl("post.php?tid={$id}", true, true)?>" onsubmit="this.submit.disabled=true;if(process_form(this)){return true;}else{this.submit.disabled=false;return false;}">
 			<div class="inform">
 				<fieldset>
 					<legend><?php echo $lang_common['Write message legend'] ?></legend>
@@ -371,9 +371,9 @@ if ($quickpost)
 						<input type="hidden" name="form_user" value="<?php echo (!$pun_user['is_guest']) ? pun_htmlspecialchars($pun_user['username']) : 'Guest'; ?>" />
 						<label><textarea name="req_message" rows="7" cols="75" tabindex="1"></textarea></label>
 						<ul class="bblinks">
-							<li><a href="module.php?mod=punbb&amp;pgvaction=help#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
-							<li><a href="module.php?mod=punbb&amp;pgvaction=help#img" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo ($pun_config['p_message_img_tag'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
-							<li><a href="module.php?mod=punbb&amp;pgvaction=help#smilies" onclick="window.open(this.href); return false;"><?php echo $lang_common['Smilies'] ?></a>: <?php echo ($pun_config['o_smilies'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="help.php#img" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo ($pun_config['p_message_img_tag'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="help.php#smilies" onclick="window.open(this.href); return false;"><?php echo $lang_common['Smilies'] ?></a>: <?php echo ($pun_config['o_smilies'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
 						</ul>
 					</div>
 				</fieldset>
