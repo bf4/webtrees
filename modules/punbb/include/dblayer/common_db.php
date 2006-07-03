@@ -22,11 +22,11 @@
 
 ************************************************************************/
 
+
 // Make sure no one attempts to run this script "directly"
 if (!defined('PUN'))
-{
 	exit;
-}
+
 
 //
 // Return current timestamp (with microseconds) as a float (used in dblayer)

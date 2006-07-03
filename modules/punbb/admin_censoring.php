@@ -26,7 +26,7 @@
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
 
-define('PUN_ROOT', 'modules/punbb/');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -48,7 +48,7 @@ if (isset($_POST['add_word']))
 
 	$db->query('INSERT INTO '.$db->prefix.'censoring (search_for, replace_with) VALUES (\''.$db->escape($search_for).'\', \''.$db->escape($replace_with).'\')') or error('Unable to add censor word', __FILE__, __LINE__, $db->error());
 
-	redirect('module.php?mod=punbb&amp;pgvaction=admin_censoring', 'Censor word added. Redirecting &hellip;');
+	redirect('admin_censoring.php', 'Censor word added. Redirecting &hellip;');
 }
 
 
@@ -57,7 +57,7 @@ else if (isset($_POST['update']))
 {
 	confirm_referrer('admin_censoring.php');
 
-	$id = key($_POST['update']);
+	$id = intval(key($_POST['update']));
 
 	$search_for = trim($_POST['search_for'][$id]);
 	$replace_with = trim($_POST['replace_with'][$id]);
@@ -67,7 +67,7 @@ else if (isset($_POST['update']))
 
 	$db->query('UPDATE '.$db->prefix.'censoring SET search_for=\''.$db->escape($search_for).'\', replace_with=\''.$db->escape($replace_with).'\' WHERE id='.$id) or error('Unable to update censor word', __FILE__, __LINE__, $db->error());
 
-	redirect('module.php?mod=punbb&amp;pgvaction=admin_censoring', 'Censor word updated. Redirecting &hellip;');
+	redirect('admin_censoring.php', 'Censor word updated. Redirecting &hellip;');
 }
 
 
@@ -80,7 +80,7 @@ else if (isset($_POST['remove']))
 
 	$db->query('DELETE FROM '.$db->prefix.'censoring WHERE id='.$id) or error('Unable to delete censor word', __FILE__, __LINE__, $db->error());
 
-	redirect('module.php?mod=punbb&amp;pgvaction=admin_censoring', 'Censor word removed. Redirecting &hellip;');
+	redirect('admin_censoring.php', 'Censor word removed. Redirecting &hellip;');
 }
 
 
@@ -94,12 +94,12 @@ generate_admin_menu('censoring');
 	<div class="blockform">
 		<h2><span>Censoring</span></h2>
 		<div class="box">
-			<form id="censoring" method="post" action="module.php?mod=punbb&amp;pgvaction=admin_censoring&amp;action=foo">
+			<form id="censoring" method="post" action="<?php genurl('admin_censoring.php?action=foo', true, true)?>">
 				<div class="inform">
 					<fieldset>
 						<legend>Add word</legend>
 						<div class="infldset">
-							<p>Enter a word that you want to censor and the replacement text for this word. Wildcards are accepted (i.e. *some* would match somewhere and lonesome). Censor words also affect usernames. New users will not be able to register with usernames containing any censored words. The search is case insensitive. <strong>Censor words must be enabled in <a href="module.php?mod=punbb&amp;pgvaction=admin_options#censoring">Options</a> for this to have any effect.</strong></p>
+							<p>Enter a word that you want to censor and the replacement text for this word. Wildcards are accepted (i.e. *some* would match somewhere and lonesome). Censor words also affect usernames. New users will not be able to register with usernames containing any censored words. The search is case insensitive. <strong>Censor words must be enabled in <a href="admin_options.php#censoring">Options</a> for this to have any effect.</strong></p>
 							<table  cellspacing="0">
 							<thead>
 								<tr>

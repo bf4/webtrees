@@ -43,19 +43,19 @@ function generate_admin_menu($page = '')
 		<div class="box">
 			<div class="inbox">
 				<ul>
-					<li<?php if ($page == 'index') echo ' class="isactive"'; ?>><a href="module.php?mod=punbb&amp;pgvaction=admin_index">Index</a></li>
-<?php if ($is_admin): ?>					<li<?php if ($page == 'categories') echo ' class="isactive"'; ?>><a href="module.php?mod=punbb&amp;pgvaction=admin_categories">Categories</a></li>
-<?php endif; ?><?php if ($is_admin): ?>					<li<?php if ($page == 'forums') echo ' class="isactive"'; ?>><a href="module.php?mod=punbb&amp;pgvaction=admin_forums">Forums</a></li>
-<?php endif; ?>					<li<?php if ($page == 'users') echo ' class="isactive"'; ?>><a href="module.php?mod=punbb&amp;pgvaction=admin_users">Users</a></li>
-<?php if ($is_admin): ?>					<li<?php if ($page == 'groups') echo ' class="isactive"'; ?>><a href="module.php?mod=punbb&amp;pgvaction=admin_groups">User groups</a></li>
-<?php endif; ?><?php if ($is_admin): ?>					<li<?php if ($page == 'options') echo ' class="isactive"'; ?>><a href="module.php?mod=punbb&amp;pgvaction=admin_options">Options</a></li>
-<?php endif; ?><?php if ($is_admin): ?>					<li<?php if ($page == 'permissions') echo ' class="isactive"'; ?>><a href="module.php?mod=punbb&amp;pgvaction=admin_permissions">Permissions</a></li>
-<?php endif; ?>					<li<?php if ($page == 'censoring') echo ' class="isactive"'; ?>><a href="module.php?mod=punbb&amp;pgvaction=admin_censoring">Censoring</a></li>
-<?php if ($is_admin): ?>					<li<?php if ($page == 'ranks') echo ' class="isactive"'; ?>><a href="module.php?mod=punbb&amp;pgvaction=admin_ranks">Ranks</a></li>
-<?php endif; ?><?php if ($is_admin || $pun_config['p_mod_ban_users'] == '1'): ?>					<li<?php if ($page == 'bans') echo ' class="isactive"'; ?>><a href="module.php?mod=punbb&amp;pgvaction=admin_bans">Bans</a></li>
-<?php endif; ?><?php if ($is_admin): ?>					<li<?php if ($page == 'prune') echo ' class="isactive"'; ?>><a href="module.php?mod=punbb&amp;pgvaction=admin_prune">Prune</a></li>
-<?php endif; ?><?php if ($is_admin): ?>					<li<?php if ($page == 'maintenance') echo ' class="isactive"'; ?>><a href="module.php?mod=punbb&amp;pgvaction=admin_maintenance">Maintenance</a></li>
-<?php endif; ?>					<li<?php if ($page == 'reports') echo ' class="isactive"'; ?>><a href="module.php?mod=punbb&amp;pgvaction=admin_reports">Reports</a></li>
+					<li<?php if ($page == 'index') echo ' class="isactive"'; ?>><a href="<?php genurl('admin_index.php', false, true)?>">Index</a></li>
+<?php if ($is_admin): ?>					<li<?php if ($page == 'categories') echo ' class="isactive"'; ?>><a href="<?php genurl('admin_categories.php', false, true)?>">Categories</a></li>
+<?php endif; ?><?php if ($is_admin): ?>					<li<?php if ($page == 'forums') echo ' class="isactive"'; ?>><a href="<?php genurl('admin_forums.php', false, true)?>">Forums</a></li>
+<?php endif; ?>					<li<?php if ($page == 'users') echo ' class="isactive"'; ?>><a href="<?php genurl('admin_users.php', false, true)?>">Users</a></li>
+<?php if ($is_admin): ?>					<li<?php if ($page == 'groups') echo ' class="isactive"'; ?>><a href="<?php genurl('admin_groups.php', false, true)?>">User groups</a></li>
+<?php endif; ?><?php if ($is_admin): ?>					<li<?php if ($page == 'options') echo ' class="isactive"'; ?>><a href="<?php genurl('admin_options.php', false, true)?>">Options</a></li>
+<?php endif; ?><?php if ($is_admin): ?>					<li<?php if ($page == 'permissions') echo ' class="isactive"'; ?>><a href="<?php genurl('admin_permissions.php', false, true)?>">Permissions</a></li>
+<?php endif; ?>					<li<?php if ($page == 'censoring') echo ' class="isactive"'; ?>><a href="<?php genurl('admin_censoring.php', false, true)?>">Censoring</a></li>
+<?php if ($is_admin): ?>					<li<?php if ($page == 'ranks') echo ' class="isactive"'; ?>><a href="<?php genurl('admin_ranks.php', false, true)?>">Ranks</a></li>
+<?php endif; ?><?php if ($is_admin || $pun_config['p_mod_ban_users'] == '1'): ?>					<li<?php if ($page == 'bans') echo ' class="isactive"'; ?>><a href="<?php genurl('admin_bans.php', false, true)?>">Bans</a></li>
+<?php endif; ?><?php if ($is_admin): ?>					<li<?php if ($page == 'prune') echo ' class="isactive"'; ?>><a href="<?php genurl('admin_prune.php', false, true)?>">Prune</a></li>
+<?php endif; ?><?php if ($is_admin): ?>					<li<?php if ($page == 'maintenance') echo ' class="isactive"'; ?>><a href="<?php genurl('admin_maintenance.php', false, true)?>">Maintenance</a></li>
+<?php endif; ?>					<li<?php if ($page == 'reports') echo ' class="isactive"'; ?>><a href="<?php genurl('admin_reports.php', false, true)?>">Reports</a></li>
 				</ul>
 			</div>
 		</div>
@@ -86,7 +86,7 @@ function generate_admin_menu($page = '')
 <?php
 
 		while (list(, $cur_plugin) = @each($plugins))
-			echo "\t\t\t\t\t".'<li'.(($page == $cur_plugin[1]) ? ' class="isactive"' : '').'><a href="module.php?mod=punbb&amp;pgvaction=admin_loader&amp;plugin='.$cur_plugin[1].'">'.str_replace('_', ' ', $cur_plugin[0]).'</a></li>'."\n";
+			echo "\t\t\t\t\t".'<li'.(($page == $cur_plugin[1]) ? ' class="isactive"' : '').'><a href="'.genurl('admin_loader.php?plugin='.$cur_plugin[1]).'">'.str_replace('_', ' ', $cur_plugin[0]).'</a></li>'."\n";
 
 ?>
 				</ul>

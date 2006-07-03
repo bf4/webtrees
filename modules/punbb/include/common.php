@@ -32,19 +32,30 @@
 if (!defined('PUN_ROOT'))
 	exit('The constant PUN_ROOT must be defined and point to a valid PunBB installation root directory.');
 
+require_once PUN_ROOT.'include/pgv.php';
+
+// Load the functions script
+require PUN_ROOT.'include/functions.php';
+
+// Reverse the effect of register_globals
+if (@ini_get('register_globals'))
+	unregister_globals();
+
+
 @include PUN_ROOT.'config.php';
 
 // If PUN isn't defined, config.php is missing or corrupt
 if (!defined('PUN'))
-	exit('The file \'config.php\' doesn\'t exist or is corrupt. Please run <a href="module.php?mod=punbb&amp;pgvaction=install">install.php</a> to install PunBB first.');
+	exit('The file \'config.php\' doesn\'t exist or is corrupt. Please run <a href="'.genurl('install.php').'">install.php</a> to install PunBB first.');
 
+if($db_name != $DBNAME){$db_prefix = "{$db_name}.{$db_prefix}";}
 
 // Record the start time (will be used to calculate the generation time for the page)
 list($usec, $sec) = explode(' ', microtime());
 $pun_start = ((float)$usec + (float)$sec);
 
-// Enable full error, warning and notice reporting
-error_reporting(E_ALL);
+// Make sure PHP reports all errors except E_NOTICE. PunBB supports E_ALL, but a lot of scripts it may interact with, do not.
+//error_reporting(E_ALL ^ E_NOTICE);
 
 // Turn off magic_quotes_runtime
 set_magic_quotes_runtime(0);
@@ -76,9 +87,6 @@ define('PUN_MOD', 2);
 define('PUN_GUEST', 3);
 define('PUN_MEMBER', 4);
 
-
-// Load the functions script
-require PUN_ROOT.'include/functions.php';
 
 // Load DB abstraction layer and connect
 require PUN_ROOT.'include/dblayer/common_db.php';
@@ -117,7 +125,7 @@ check_cookie($pun_user);
 // Attempt to load the common language file
 @include PUN_ROOT.'lang/'.$pun_user['language'].'/common.php';
 if (!isset($lang_common))
-	exit('There is no valid language pack \''.$pun_user['language'].'\' installed. Please reinstall a language of that name.');
+	exit('There is no valid language pack \''.pun_htmlspecialchars($pun_user['language']).'\' installed. Please reinstall a language of that name.');
 
 // Check if we are to display a maintenance message
 if ($pun_config['o_maintenance'] && $pun_user['g_id'] > PUN_ADMIN && !defined('PUN_TURN_OFF_MAINT'))
@@ -139,4 +147,3 @@ check_bans();
 
 // Update online list
 update_users_online();
-

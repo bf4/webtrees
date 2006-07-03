@@ -26,7 +26,7 @@
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
 
-define('PUN_ROOT', 'modules/punbb/');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -74,7 +74,7 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 	<div class="blockform">
 		<h2><span>Group settings</span></h2>
 		<div class="box">
-			<form id="groups2" method="post" action="module.php?mod=punbb&amp;pgvaction=admin_groups" onsubmit="return process_form(this)">
+			<form id="groups2" method="post" action="<?php genurl('admin_groups.php', true, true)?>" onsubmit="return process_form(this)">
 				<p class="submittop"><input type="submit" name="add_edit_group" value=" Save " /></p>
 				<div class="inform">
 					<input type="hidden" name="mode" value="<?php echo $mode ?>" />
@@ -209,15 +209,15 @@ else if (isset($_POST['add_edit_group']))
 
 	$title = trim($_POST['req_title']);
 	$user_title = trim($_POST['user_title']);
-	$read_board = isset($_POST['read_board']) ? $_POST['read_board'] : '1';
-	$post_replies = isset($_POST['post_replies']) ? $_POST['post_replies'] : '1';
-	$post_topics = isset($_POST['post_topics']) ? $_POST['post_topics'] : '1';
-	$edit_posts = isset($_POST['edit_posts']) ? $_POST['edit_posts'] : ($is_admin_group) ? '1' : '0';
-	$delete_posts = isset($_POST['delete_posts']) ? $_POST['delete_posts'] : ($is_admin_group) ? '1' : '0';
-	$delete_topics = isset($_POST['delete_topics']) ? $_POST['delete_topics'] : ($is_admin_group) ? '1' : '0';
-	$set_title = isset($_POST['set_title']) ? $_POST['set_title'] : ($is_admin_group) ? '1' : '0';
-	$search = isset($_POST['search']) ? $_POST['search'] : '1';
-	$search_users = isset($_POST['search_users']) ? $_POST['search_users'] : '1';
+	$read_board = isset($_POST['read_board']) ? intval($_POST['read_board']) : '1';
+	$post_replies = isset($_POST['post_replies']) ? intval($_POST['post_replies']) : '1';
+	$post_topics = isset($_POST['post_topics']) ? intval($_POST['post_topics']) : '1';
+	$edit_posts = isset($_POST['edit_posts']) ? intval($_POST['edit_posts']) : ($is_admin_group) ? '1' : '0';
+	$delete_posts = isset($_POST['delete_posts']) ? intval($_POST['delete_posts']) : ($is_admin_group) ? '1' : '0';
+	$delete_topics = isset($_POST['delete_topics']) ? intval($_POST['delete_topics']) : ($is_admin_group) ? '1' : '0';
+	$set_title = isset($_POST['set_title']) ? intval($_POST['set_title']) : ($is_admin_group) ? '1' : '0';
+	$search = isset($_POST['search']) ? intval($_POST['search']) : '1';
+	$search_users = isset($_POST['search_users']) ? intval($_POST['search_users']) : '1';
 	$edit_subjects_interval = isset($_POST['edit_subjects_interval']) ? intval($_POST['edit_subjects_interval']) : '0';
 	$post_flood = isset($_POST['post_flood']) ? intval($_POST['post_flood']) : '0';
 	$search_flood = isset($_POST['search_flood']) ? intval($_POST['search_flood']) : '0';
@@ -243,18 +243,18 @@ else if (isset($_POST['add_edit_group']))
 	}
 	else
 	{
-		$result = $db->query('SELECT 1 FROM '.$db->prefix.'groups WHERE g_title=\''.$db->escape($title).'\' && g_id!='.$_POST['group_id']) or error('Unable to check group title collision', __FILE__, __LINE__, $db->error());
+		$result = $db->query('SELECT 1 FROM '.$db->prefix.'groups WHERE g_title=\''.$db->escape($title).'\' AND g_id!='.intval($_POST['group_id'])) or error('Unable to check group title collision', __FILE__, __LINE__, $db->error());
 		if ($db->num_rows($result))
 			message('There is already a group with the title \''.pun_htmlspecialchars($title).'\'.');
 
-		$db->query('UPDATE '.$db->prefix.'groups SET g_title=\''.$db->escape($title).'\', g_user_title='.$user_title.', g_read_board='.$read_board.', g_post_replies='.$post_replies.', g_post_topics='.$post_topics.', g_edit_posts='.$edit_posts.', g_delete_posts='.$delete_posts.', g_delete_topics='.$delete_topics.', g_set_title='.$set_title.', g_search='.$search.', g_search_users='.$search_users.', g_edit_subjects_interval='.$edit_subjects_interval.', g_post_flood='.$post_flood.', g_search_flood='.$search_flood.' WHERE g_id='.$_POST['group_id']) or error('Unable to update group', __FILE__, __LINE__, $db->error());
+		$db->query('UPDATE '.$db->prefix.'groups SET g_title=\''.$db->escape($title).'\', g_user_title='.$user_title.', g_read_board='.$read_board.', g_post_replies='.$post_replies.', g_post_topics='.$post_topics.', g_edit_posts='.$edit_posts.', g_delete_posts='.$delete_posts.', g_delete_topics='.$delete_topics.', g_set_title='.$set_title.', g_search='.$search.', g_search_users='.$search_users.', g_edit_subjects_interval='.$edit_subjects_interval.', g_post_flood='.$post_flood.', g_search_flood='.$search_flood.' WHERE g_id='.intval($_POST['group_id'])) or error('Unable to update group', __FILE__, __LINE__, $db->error());
 	}
 
 	// Regenerate the quickjump cache
 	require_once PUN_ROOT.'include/cache.php';
 	generate_quickjump_cache();
 
-	redirect('module.php?mod=punbb&amp;pgvaction=admin_groups', 'Group '.(($_POST['mode'] == 'edit') ? 'edited' : 'added').'. Redirecting &hellip;');
+	redirect('admin_groups.php', 'Group '.(($_POST['mode'] == 'edit') ? 'edited' : 'added').'. Redirecting &hellip;');
 }
 
 
@@ -273,7 +273,7 @@ else if (isset($_POST['set_default_group']))
 	require_once PUN_ROOT.'include/cache.php';
 	generate_config_cache();
 
-	redirect('module.php?mod=punbb&amp;pgvaction=admin_groups', 'Default group set. Redirecting &hellip;');
+	redirect('admin_groups.php', 'Default group set. Redirecting &hellip;');
 }
 
 
@@ -311,7 +311,7 @@ else if (isset($_GET['del_group']))
 		require_once PUN_ROOT.'include/cache.php';
 		generate_quickjump_cache();
 
-		redirect('module.php?mod=punbb&amp;pgvaction=admin_groups', 'Group removed. Redirecting &hellip;');
+		redirect('admin_groups.php', 'Group removed. Redirecting &hellip;');
 	}
 
 
@@ -326,7 +326,7 @@ else if (isset($_GET['del_group']))
 	<div class="blockform">
 		<h2><span>Remove group</span></h2>
 		<div class="box">
-			<form id="groups" method="post" action="module.php?mod=punbb&amp;pgvaction=admin_groups&amp;del_group=<?php echo $group_id ?>">
+			<form id="groups" method="post" action="<?php genurl("admin_groups.php?del_group={$group_id}", true, true)?>">
 				<div class="inform">
 					<fieldset>
 						<legend>Move users currently in group</legend>
@@ -373,7 +373,7 @@ generate_admin_menu('groups');
 	<div class="blockform">
 		<h2><span>Add/setup groups</span></h2>
 		<div class="box">
-			<form id="groups" method="post" action="module.php?mod=punbb&amp;pgvaction=admin_groups&amp;action=foo">
+			<form id="groups" method="post" action="<?php genurl('admin_groups.php?action=foo', true, true)?>">
 				<div class="inform">
 					<fieldset>
 						<legend>Add new group</legend>
@@ -451,7 +451,7 @@ while ($cur_group = $db->fetch_assoc($result))
 $result = $db->query('SELECT g_id, g_title FROM '.$db->prefix.'groups ORDER BY g_id') or error('Unable to fetch user group list', __FILE__, __LINE__, $db->error());
 
 while ($cur_group = $db->fetch_assoc($result))
-	echo "\t\t\t\t\t\t\t\t".'<tr><th scope="row"><a href="module.php?mod=punbb&amp;pgvaction=admin_groups&amp;edit_group='.$cur_group['g_id'].'">Edit</a>'.(($cur_group['g_id'] > PUN_MEMBER) ? ' - <a href="module.php?mod=punbb&amp;pgvaction=admin_groups&amp;del_group='.$cur_group['g_id'].'">Remove</a>' : '').'</th><td>'.pun_htmlspecialchars($cur_group['g_title']).'</td></tr>'."\n";
+	echo "\t\t\t\t\t\t\t\t".'<tr><th scope="row"><a href="'.genurl("admin_groups.php?edit_group={$cur_group['g_id']}").'">Edit</a>'.(($cur_group['g_id'] > PUN_MEMBER) ? ' - <a href="'.genurl("admin_groups.php?del_group={$cur_group['g_id']}").'">Remove</a>' : '').'</th><td>'.pun_htmlspecialchars($cur_group['g_title']).'</td></tr>'."\n";
 
 ?>
 							</table>

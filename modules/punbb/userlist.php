@@ -23,7 +23,7 @@
 ************************************************************************/
 
 
-define('PUN_ROOT', 'modules/punbb/');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 
 
@@ -58,7 +58,7 @@ require PUN_ROOT.'header.php';
 <div class="blockform">
 	<h2><span><?php echo $lang_search['User search'] ?></span></h2>
 	<div class="box">
-	<form id="userlist" method="get" action="module.php?mod=punbb&pgvaction=userlist">
+	<form id="userlist" method="get" action="<?php genurl('userlist.php', true, true)?>">
 		<div class="inform">
 			<fieldset>
 				<legend><?php echo $lang_ul['User find legend'] ?></legend>
@@ -116,7 +116,7 @@ if ($show_group > -1)
 	$where_sql[] = 'u.group_id='.$show_group;
 
 // Fetch user count
-$result = $db->query('SELECT COUNT(id) FROM '.$db->prefix.'users AS u'.(!empty($where_sql) ? ' WHERE u.id>1 AND '.implode(' AND ', $where_sql) : '')) or error('Unable to fetch user list count', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT COUNT(id) FROM '.$db->prefix.'users AS u WHERE u.id>1'.(!empty($where_sql) ? ' AND '.implode(' AND ', $where_sql) : '')) or error('Unable to fetch user list count', __FILE__, __LINE__, $db->error());
 $num_users = $db->result($result);
 
 
@@ -127,7 +127,7 @@ $p = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : $_
 $start_from = 50 * ($p - 1);
 
 // Generate paging links
-$paging_links = $lang_common['Pages'].': '.paginate($num_pages, $p, 'userlist.php?username='.urlencode($username).'&amp;show_group='.$show_group.'&amp;sort_by='.$sort_by.'&amp;sort_dir='.strtoupper($sort_dir));
+$paging_links = $lang_common['Pages'].': '.paginate($num_pages, $p, genurl('userlist.php?username='.urlencode($username).'&amp;show_group='.$show_group.'&amp;sort_by='.$sort_by.'&amp;sort_dir='.strtoupper($sort_dir)));
 
 
 ?>
@@ -163,7 +163,7 @@ if ($db->num_rows($result))
 
 ?>
 				<tr>
-					<td class="tcl"><?php echo '<a href="module.php?mod=punbb&amp;pgvaction=profile&amp;id='.$user_data['id'].'">'.pun_htmlspecialchars($user_data['username']).'</a>' ?></td>
+					<td class="tcl"><?php echo '<a href="'.genurl('profile.php?id='.$user_data['id']).'">'.pun_htmlspecialchars($user_data['username']).'</a>' ?></td>
 					<td class="tc2"><?php echo $user_title_field ?></td>
 <?php if ($show_post_count): ?>					<td class="tc3"><?php echo $user_data['num_posts'] ?></td>
 <?php endif; ?>

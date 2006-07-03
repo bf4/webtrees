@@ -43,9 +43,9 @@ class DBLayer
 		$this->prefix = $db_prefix;
 
 		if ($p_connect)
-			$this->link_id = mysql_pconnect($db_host, $db_username, $db_password);
+			$this->link_id = @mysql_pconnect($db_host, $db_username, $db_password);
 		else
-			$this->link_id = mysql_connect($db_host, $db_username, $db_password);
+			$this->link_id = @mysql_connect($db_host, $db_username, $db_password);
 
 		if ($this->link_id)
 		{
@@ -177,10 +177,10 @@ class DBLayer
 	{
 		if ($this->link_id)
 		{
-//			if ($this->query_result)
-//				@mysql_free_result($this->query_result);
+			if ($this->query_result)
+				@mysql_free_result($this->query_result);
 
-//			return @mysql_close($this->link_id);
+			return @mysql_close($this->link_id);
 		}
 		else
 			return false;

@@ -26,7 +26,7 @@
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
 
-define('PUN_ROOT', 'modules/punbb/');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -50,7 +50,7 @@ if (isset($_POST['add_forum']))
 	require_once PUN_ROOT.'include/cache.php';
 	generate_quickjump_cache();
 
-	redirect('module.php?mod=punbb&amp;pgvaction=admin_forums', 'Forum added. Redirecting &hellip;');
+	redirect('admin_forums.php', 'Forum added. Redirecting &hellip;');
 }
 
 
@@ -90,7 +90,7 @@ else if (isset($_GET['del_forum']))
 		require_once PUN_ROOT.'include/cache.php';
 		generate_quickjump_cache();
 
-		redirect('module.php?mod=punbb&amp;pgvaction=admin_forums', 'Forum deleted. Redirecting &hellip;');
+		redirect('admin_forums.php', 'Forum deleted. Redirecting &hellip;');
 	}
 	else	// If the user hasn't confirmed the delete
 	{
@@ -107,7 +107,7 @@ else if (isset($_GET['del_forum']))
 	<div class="blockform">
 		<h2><span>Confirm delete forum</span></h2>
 		<div class="box">
-			<form method="post" action="module.php?mod=punbb&amp;pgvaction=admin_forums&amp;del_forum=<?php echo $forum_id ?>">
+			<form method="post" action="<?php genurl("admin_forums.php?del_forum={$forum_id}", true, true)?>">
 				<div class="inform">
 					<fieldset>
 						<legend>Important! Read before deleting</legend>
@@ -117,7 +117,7 @@ else if (isset($_GET['del_forum']))
 						</div>
 					</fieldset>
 				</div>
-				<p><input type="submit" name="del_forum_comply" value="Delete" />&nbsp;&nbsp;&nbsp;<a href="javascript:history.go(-1)" />Go back</a></p>
+				<p><input type="submit" name="del_forum_comply" value="Delete" /><a href="javascript:history.go(-1)">Go back</a></p>
 			</form>
 		</div>
 	</div>
@@ -147,7 +147,7 @@ else if (isset($_POST['update_positions']))
 	require_once PUN_ROOT.'include/cache.php';
 	generate_quickjump_cache();
 
-	redirect('module.php?mod=punbb&amp;pgvaction=admin_forums', 'Forums updated. Redirecting &hellip;');
+	redirect('admin_forums.php', 'Forums updated. Redirecting &hellip;');
 }
 
 
@@ -211,7 +211,7 @@ else if (isset($_GET['edit_forum']))
 		require_once PUN_ROOT.'include/cache.php';
 		generate_quickjump_cache();
 
-		redirect('module.php?mod=punbb&amp;pgvaction=admin_forums', 'Forum updated. Redirecting &hellip;');
+		redirect('admin_forums.php', 'Forum updated. Redirecting &hellip;');
 	}
 	else if (isset($_POST['revert_perms']))
 	{
@@ -223,7 +223,7 @@ else if (isset($_GET['edit_forum']))
 		require_once PUN_ROOT.'include/cache.php';
 		generate_quickjump_cache();
 
-		redirect('module.php?mod=punbb&amp;pgvaction=admin_forums&amp;edit_forum='.$forum_id, 'Permissions reverted to defaults. Redirecting &hellip;');
+		redirect('admin_forums.php?edit_forum='.$forum_id, 'Permissions reverted to defaults. Redirecting &hellip;');
 	}
 
 
@@ -244,7 +244,7 @@ else if (isset($_GET['edit_forum']))
 	<div class="blockform">
 		<h2><span>Edit forum</span></h2>
 		<div class="box">
-			<form id="edit_forum" method="post" action="module.php?mod=punbb&amp;pgvaction=admin_forums&amp;edit_forum=<?php echo $forum_id ?>">
+			<form id="edit_forum" method="post" action="<?php genurl("admin_forums.php?edit_forum={$forum_id}", true, true)?>">
 				<p class="submittop"><input type="submit" name="save" value="Save changes" tabindex="6" /></p>
 				<div class="inform">
 					<fieldset>
@@ -297,7 +297,7 @@ else if (isset($_GET['edit_forum']))
 					<fieldset>
 						<legend>Edit group permissions for this forum</legend>
 						<div class="infldset">
-							<p>In this form, you can set the forum specific permissions for the different user groups. If you haven't made any changes to this forums group permissions, what you see below is the default based on settings in <a href="module.php?mod=punbb&amp;pgvaction=admin_groups">User groups</a>. Administrators always have full permissions and are thus excluded. Permission settings that differ from the default permissions for the user group are marked red. The "Read forum" permission checkbox will be disabled if the group in question lacks the "Read board" permission. For redirect forums, only the "Read forum" permission is editable.</p>
+							<p>In this form, you can set the forum specific permissions for the different user groups. If you haven't made any changes to this forums group permissions, what you see below is the default based on settings in <a href="admin_groups.php">User groups</a>. Administrators always have full permissions and are thus excluded. Permission settings that differ from the default permissions for the user group are marked red. The "Read forum" permission checkbox will be disabled if the group in question lacks the "Read board" permission. For redirect forums, only the "Read forum" permission is editable.</p>
 							<table id="forumperms" cellspacing="0">
 							<thead>
 								<tr>
@@ -372,7 +372,7 @@ generate_admin_menu('forums');
 	<div class="blockform">
 		<h2><span>Add forum</span></h2>
 		<div class="box">
-			<form method="post" action="module.php?mod=punbb&amp;pgvaction=admin_forums&amp;action=adddel">
+			<form method="post" action="<?php genurl('admin_forums.php?action=adddel', true, true)?>">
 				<div class="inform">
 					<fieldset>
 						<legend>Create a new forum</legend>
@@ -402,7 +402,7 @@ generate_admin_menu('forums');
 
 		<h2 class="block2"><span>Edit forums</span></h2>
 		<div class="box">
-			<form id="edforum" method="post" action="module.php?mod=punbb&amp;pgvaction=admin_forums&amp;action=edit">
+			<form id="edforum" method="post" action="admin_forums.php?action=edit">
 				<p class="submittop"><input type="submit" name="update_positions" value="Update positions" tabindex="3" /></p>
 <?php
 
@@ -432,7 +432,7 @@ while ($cur_forum = $db->fetch_assoc($result))
 
 ?>
 								<tr>
-									<th><a href="module.php?mod=punbb&amp;pgvaction=admin_forums&amp;edit_forum=<?php echo $cur_forum['fid'] ?>">Edit</a> - <a href="module.php?mod=punbb&amp;pgvaction=admin_forums&amp;del_forum=<?php echo $cur_forum['fid'] ?>">Delete</a></th>
+									<th><a href="<?php genurl("admin_forums.php?edit_forum={$cur_forum['fid']}", false, true)?>">Edit</a> - <a href="<?php genurl("admin_forums.php?del_forum={$cur_forum['fid']}", false, true)?>">Delete</a></th>
 									<td>Position&nbsp;&nbsp;<input type="text" name="position[<?php echo $cur_forum['fid'] ?>]" size="3" maxlength="3" value="<?php echo $cur_forum['disp_position'] ?>" tabindex="<?php echo $tabindex_count ?>" />
 									&nbsp;&nbsp;<strong><?php echo pun_htmlspecialchars($cur_forum['forum_name']) ?></strong></td>
 								</tr>

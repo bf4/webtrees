@@ -28,7 +28,7 @@ define('PUN_ADMIN_CONSOLE', 1);
 // Tell common.php that we don't want output buffering
 define('PUN_DISABLE_BUFFERING', 1);
 
-define('PUN_ROOT', 'modules/punbb/');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -125,7 +125,7 @@ Rebuilding index &hellip; This might be a good time to put on some coffee :-)<br
 	$db->end_transaction();
 	$db->close();
 
-	exit('<script type="text/javascript">window.location="admin_maintenance.php'.$query_str.'"</script><br />JavaScript redirect unsuccessful. Click <a href="module.php?mod=punbb&amp;pgvaction=admin_maintenance'.$query_str.'">here</a> to continue.');
+	exit('<script type="text/javascript">window.location="admin_maintenance.php'.$query_str.'"</script><br />JavaScript redirect unsuccessful. Click <a href="admin_maintenance.php'.$query_str.'">here</a> to continue.');
 }
 
 
@@ -143,7 +143,7 @@ generate_admin_menu('maintenance');
 	<div class="blockform">
 		<h2><span>Forum Maintenance</span></h2>
 		<div class="box">
-			<form method="get" action="module.php?mod=punbb&amp;pgvaction=admin_maintenance">
+			<form method="get" action="admin_maintenance.php">
 				<div class="inform">
 					<fieldset>
 						<legend>Rebuild search index</legend>

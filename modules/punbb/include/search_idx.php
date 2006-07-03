@@ -43,8 +43,8 @@ function split_words($text)
 
 	if (empty($noise_match))
 	{
-		$noise_match = 		array('quote', 'code', 'url', 'img', 'email', 'color', 'colour', '^', '$', '&', '(', ')', '<', '>', '`', '\'', '"', '|', ',', '@', '_', '?', '%', '~', '+', '[', ']', '{', '}', ':', '\\', '/', '=', '#', ';', '!', '*');
-		$noise_replace =	array('',      '',     '',    '',    '',      '',      '',       ' ', ' ', ' ', ' ', ' ', ' ', ' ', '',  '',   ' ', ' ', ' ', ' ', '',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '' ,  ' ', ' ', ' ', ' ', ' ', ' ');
+		$noise_match = 		array('[quote', '[code', '[url', '[img', '[email', '[color', '[colour', 'quote]', 'code]', 'url]', 'img]', 'email]', 'color]', 'colour]', '^', '$', '&', '(', ')', '<', '>', '`', '\'', '"', '|', ',', '@', '_', '?', '%', '~', '+', '[', ']', '{', '}', ':', '\\', '/', '=', '#', ';', '!', '*');
+		$noise_replace =	array('',       '',      '',     '',     '',       '',       '',        '',       '',      '',     '',     '',       '',       '',        ' ', ' ', ' ', ' ', ' ', ' ', ' ', '',  '',   ' ', ' ', ' ', ' ', '',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '' ,  ' ', ' ', ' ', ' ', ' ', ' ');
 
 		$stopwords = (array)@file(PUN_ROOT.'lang/'.$pun_user['language'].'/stopwords.txt');
 		$stopwords = array_map('trim', $stopwords);
@@ -69,10 +69,8 @@ function split_words($text)
 	{
 		while (list($i, $word) = @each($words))
 		{
+			$words[$i] = trim($word, '.');
 			$num_chars = pun_strlen($word);
-
-			if (strrpos($word, '.') == ($num_chars-1))
-				$words[$i] = substr($word, 0, -1);
 
 			if ($num_chars < 3 || $num_chars > 20 || in_array($word, $stopwords))
 				unset($words[$i]);

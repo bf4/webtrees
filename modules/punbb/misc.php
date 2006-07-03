@@ -26,7 +26,7 @@
 if (isset($_GET['action']))
 	define('PUN_QUIET_VISIT', 1);
 
-define('PUN_ROOT', 'modules/punbb/');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 
 
@@ -66,7 +66,7 @@ else if ($action == 'markread')
 
 	$db->query('UPDATE '.$db->prefix.'users SET last_visit='.$pun_user['logged'].' WHERE id='.$pun_user['id']) or error('Unable to update user last visit data', __FILE__, __LINE__, $db->error());
 
-	redirect('module.php?mod=punbb&amp;pgvaction=index', $lang_misc['Mark read redirect']);
+	redirect('index.php', $lang_misc['Mark read redirect']);
 }
 
 
@@ -76,7 +76,7 @@ else if (isset($_GET['email']))
 		message($lang_common['No permission']);
 
 	$recipient_id = intval($_GET['email']);
-	if ($recipient_id < 1)
+	if ($recipient_id < 2)
 		message($lang_common['Bad request']);
 
 	$result = $db->query('SELECT username, email, email_setting FROM '.$db->prefix.'users WHERE id='.$recipient_id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
@@ -118,9 +118,9 @@ else if (isset($_GET['email']))
 
 		require_once PUN_ROOT.'include/email.php';
 
-		pun_mail($recipient_email, $mail_subject, $mail_message, $pun_user['username'].' <'.$pun_user['email'].'>');
+		pun_mail($recipient_email, $mail_subject, $mail_message, '"'.str_replace('"', '', $pun_user['username']).'" <'.$pun_user['email'].'>');
 
-		redirect($_POST['redirect_url'], $lang_misc['E-mail sent redirect']);
+		redirect(htmlspecialchars($_POST['redirect_url']), $lang_misc['E-mail sent redirect']);
 	}
 
 
@@ -136,7 +136,7 @@ else if (isset($_GET['email']))
 <div class="blockform">
 	<h2><span><?php echo $lang_misc['Send e-mail to'] ?> <?php echo pun_htmlspecialchars($recipient) ?></span></h2>
 	<div class="box">
-		<form id="email" method="post" action="module.php?mod=punbb&amp;pgvaction=misc&amp;email=<?php echo $recipient_id ?>" onsubmit="this.submit.disabled=true;if(process_form(this)){return true;}else{this.submit.disabled=false;return false;}">
+		<form id="email" method="post" action="<?php genurl("misc.php?email={$recipient_id}", true, true)?>" onsubmit="this.submit.disabled=true;if(process_form(this)){return true;}else{this.submit.disabled=false;return false;}">
 			<div class="inform">
 				<fieldset>
 					<legend><?php echo $lang_misc['Write e-mail'] ?></legend>
@@ -202,7 +202,7 @@ else if (isset($_GET['report']))
 			if ($pun_config['o_mailing_list'] != '')
 			{
 				$mail_subject = 'Report('.$forum_id.') - \''.$subject.'\'';
-				$mail_message = 'User \''.$pun_user['username'].'\' has reported the following message:'."\n".$pun_config['o_base_url'].'/viewtopic.php?pid='.$post_id.'#p'.$post_id."\n\n".'Reason:'."\n".$reason;
+				$mail_message = 'User \''.$pun_user['username'].'\' has reported the following message:'."\n".$pun_config['o_base_url'].'/'.genurl('viewtopic.php?pid='.$post_id.'#p'.$post_id)."\n\n".'Reason:'."\n".$reason;
 
 				require PUN_ROOT.'include/email.php';
 
@@ -210,7 +210,7 @@ else if (isset($_GET['report']))
 			}
 		}
 
-		redirect('module.php?mod=punbb&amp;pgvaction=viewtopic&amp;pid='.$post_id.'#p'.$post_id, $lang_misc['Report redirect']);
+		redirect('viewtopic.php?pid='.$post_id.'#p'.$post_id, $lang_misc['Report redirect']);
 	}
 
 
@@ -223,7 +223,7 @@ else if (isset($_GET['report']))
 <div class="blockform">
 	<h2><span><?php echo $lang_misc['Report post'] ?></span></h2>
 	<div class="box">
-		<form id="report" method="post" action="module.php?mod=punbb&amp;pgvaction=misc&amp;report=<?php echo $post_id ?>" onsubmit="this.submit.disabled=true;if(process_form(this)){return true;}else{this.submit.disabled=false;return false;}">
+		<form id="report" method="post" action="<?php genurl("misc.php?report={$post_id}", true, true)?>" onsubmit="this.submit.disabled=true;if(process_form(this)){return true;}else{this.submit.disabled=false;return false;}">
 			<div class="inform">
 				<fieldset>
 					<legend><?php echo $lang_misc['Reason desc'] ?></legend>
@@ -258,7 +258,7 @@ else if (isset($_GET['subscribe']))
 
 	$db->query('INSERT INTO '.$db->prefix.'subscriptions (user_id, topic_id) VALUES('.$pun_user['id'].' ,'.$topic_id.')') or error('Unable to add subscription', __FILE__, __LINE__, $db->error());
 
-	redirect('module.php?mod=punbb&amp;pgvaction=viewtopic&amp;id='.$topic_id, $lang_misc['Subscribe redirect']);
+	redirect('viewtopic.php?id='.$topic_id, $lang_misc['Subscribe redirect']);
 }
 
 
@@ -277,7 +277,7 @@ else if (isset($_GET['unsubscribe']))
 
 	$db->query('DELETE FROM '.$db->prefix.'subscriptions WHERE user_id='.$pun_user['id'].' AND topic_id='.$topic_id) or error('Unable to remove subscription', __FILE__, __LINE__, $db->error());
 
-	redirect('module.php?mod=punbb&amp;pgvaction=viewtopic&amp;id='.$topic_id, $lang_misc['Unsubscribe redirect']);
+	redirect('viewtopic.php?id='.$topic_id, $lang_misc['Unsubscribe redirect']);
 }
 
 

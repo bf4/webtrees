@@ -28,25 +28,27 @@ if (!defined('PUN'))
 
 
 // Here you can add additional smilies if you like (please note that you must escape singlequote and backslash)
-//$smiley_text = array(':)', '=)', ':|', '=|', ':(', '=(', ':D', '=D', ':o', ':O', ';)', ':/', ':P', ':lol:', ':mad:', ':rolleyes:', ':cool:');
-//$smiley_img = array('smile.png', 'smile.png', 'neutral.png', 'neutral.png', 'sad.png', 'sad.png', 'big_smile.png', 'big_smile.png', 'yikes.png', 'yikes.png', 'wink.png', 'hmm.png', 'tongue.png', 'lol.png', 'mad.png', 'roll.png', 'cool.png');
-//
-// Get smilies from database
-//
-$smiley_text = array();
-$smiley_img = array();
-$result = $db->query('SELECT * FROM '.$db->prefix.'smilies') or error('Unable to retrieve smilies', __FILE__, __LINE__, $db->error());
-while ($db_smilies = $db->fetch_assoc($result))
-{
-	$smiley_text_array = array($db_smilies['text']);
-	$smiley_text = array_merge($smiley_text, $smiley_text_array);
+$smiley_text = array(':)', '=)', ':|', '=|', ':(', '=(', ':D', '=D', ':o', ':O', ';)', ':/', ':P', ':lol:', ':mad:', ':rolleyes:', ':cool:');
+$smiley_img = array('smile.png', 'smile.png', 'neutral.png', 'neutral.png', 'sad.png', 'sad.png', 'big_smile.png', 'big_smile.png', 'yikes.png', 'yikes.png', 'wink.png', 'hmm.png', 'tongue.png', 'lol.png', 'mad.png', 'roll.png', 'cool.png');
+// This is for the Smilies plugin
+	# Query the database
+$smiley_result = $db->query("SELECT * FROM " . $db->prefix . "smilies");
+if(is_resource($smiley_result))
+	{
+	$num_rows = $db->num_rows($smiley_result);
 
-	$smiley_img_array = array($db_smilies['image']);
-	$smiley_img = array_merge($smiley_img, $smiley_img_array);
-}
+	if($num_rows > 0)
+		{
+		while($smiley_row = $db->fetch_row($smiley_result))
+			{
+			$smiley_text[] 	= stripslashes($smiley_row[2]);
+			$smiley_img[] 	= stripslashes($smiley_row[3]);
+			}
+		}
+	}
 
 // Uncomment the next row if you add smilies that contain any of the characters &"'<>
-//$smiley_text = array_map('pun_htmlspecialchars', $smiley_text);
+$smiley_text = array_map('pun_htmlspecialchars', $smiley_text);
 
 
 //
@@ -59,24 +61,24 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 	$b = array('[b]', '[i]', '[u]', '[/b]', '[/i]', '[/u]');
 	$text = str_replace($a, $b, $text);
 
-	// Do the more complex BBCodes (and strip excessive whitespace)
-	$a = array( '#\[url=(.*?)\]\s*#i',
+	// Do the more complex BBCodes (also strip excessive whitespace and useless quotes)
+	$a = array( '#\[url=("|\'|)(.*?)\\1\]\s*#i',
 				'#\[url\]\s*#i',
 				'#\s*\[/url\]#i',
-				'#\[email=(.*?)\]\s*#i',
+				'#\[email=("|\'|)(.*?)\\1\]\s*#i',
 				'#\[email\]\s*#i',
 				'#\s*\[/email\]#i',
 				'#\[img\]\s*(.*?)\s*\[/img\]#is',
-				'#\[colou?r=(.*?)\](.*?)\[/colou?r\]#is');
+				'#\[colou?r=("|\'|)(.*?)\\1\](.*?)\[/colou?r\]#is');
 
-	$b = array(	'[url=$1]',
+	$b = array(	'[url=$2]',
 				'[url]',
 				'[/url]',
-				'[email=$1]',
+				'[email=$2]',
 				'[email]',
 				'[/email]',
 				'[img]$1[/img]',
-				'[color=$1]$2[/color]');
+				'[color=$2]$3[/color]');
 
 	if (!$is_signature)
 	{
@@ -196,8 +198,13 @@ function check_tag_order($text, &$error)
 		// We found a [code]
 		else if ($c_start < min($c_end, $q_start, $q_end))
 		{
+			// Make sure there's a [/code] and that any new [code] doesn't occur before the end tag
 			$tmp = strpos($text, '[/code]');
-			if ($tmp === false)
+			$tmp2 = strpos(substr($text, $c_start+6), '[code]');
+			if ($tmp2 !== false)
+				$tmp2 += $c_start+6;
+
+			if ($tmp === false || ($tmp2 !== false && $tmp2 < $tmp))
 			{
 				$error = $lang_common['BBCode error'].' '.$lang_common['BBCode error 2'];
 				return;
@@ -273,7 +280,7 @@ function handle_url_tag($url, $link = '')
 {
 	global $pun_user;
 
-	$full_url = str_replace(' ', '%20', $url);
+	$full_url = str_replace(array(' ', '\'', '`', '"'), array('%20', '', '', ''), $url);
 	if (strpos($url, 'www.') === 0)			// If it starts with www, we add http://
 		$full_url = 'http://'.$full_url;
 	else if (strpos($url, 'ftp.') === 0)	// Else if it starts with ftp, we add ftp://
@@ -313,13 +320,20 @@ function do_bbcode($text)
 {
 	global $lang_common, $pun_user;
 
+	if (strpos($text, 'quote') !== false)
+	{
+		$text = str_replace('[quote]', '</p><blockquote><div class="incqbox"><p>', $text);
+		$text = preg_replace('#\[quote=(&quot;|"|\'|)(.*)\\1\]#seU', '"</p><blockquote><div class=\"incqbox\"><h4>".str_replace(array(\'[\', \'\\"\'), array(\'&#91;\', \'"\'), \'$2\')." ".$lang_common[\'wrote\'].":</h4><p>"', $text);
+		$text = preg_replace('#\[\/quote\]\s*#', '</p></div></blockquote><p>', $text);
+	}
+
 	$pattern = array('#\[b\](.*?)\[/b\]#s',
 					 '#\[i\](.*?)\[/i\]#s',
 					 '#\[u\](.*?)\[/u\]#s',
-					 '#\[url\](.*?)\[/url\]#e',
-					 '#\[url=(.*?)\](.*?)\[/url\]#e',
-					 '#\[email\](.*?)\[/email\]#',
-					 '#\[email=(.*?)\](.*?)\[/email\]#',
+					 '#\[url\]([^\[]*?)\[/url\]#e',
+					 '#\[url=([^\[]*?)\](.*?)\[/url\]#e',
+					 '#\[email\]([^\[]*?)\[/email\]#',
+					 '#\[email=([^\[]*?)\](.*?)\[/email\]#',
 					 '#\[color=([a-zA-Z]*|\#?[0-9a-fA-F]{6})](.*?)\[/color\]#s');
 
 	$replace = array('<strong>$1</strong>',
@@ -333,13 +347,6 @@ function do_bbcode($text)
 
 	// This thing takes a while! :)
 	$text = preg_replace($pattern, $replace, $text);
-
-	if (strpos($text, 'quote') !== false)
-	{
-		$text = str_replace('[quote]', '</p><blockquote><div class="incqbox"><p>', $text);
-		$text = preg_replace('#\[quote=(&quot;|"|\'|)(.*)\\1\]#seU', '"</p><blockquote><div class=\"incqbox\"><h4>".str_replace(\'[\', \'&#91;\', \'$2\')." ".$lang_common[\'wrote\'].":</h4><p>"', $text);
-		$text = preg_replace('#\[\/quote\]\s*#', '</p></div></blockquote><p>', $text);
-	}
 
 	return $text;
 }
@@ -372,11 +379,7 @@ function do_smilies($text)
 
 	$num_smilies = count($smiley_text);
 	for ($i = 0; $i < $num_smilies; ++$i)
-	{
-		//$text = preg_replace("#(?<=.\W|\W.|^\W)".preg_quote($smiley_text[$i], '#')."(?=.\W|\W.|\W$)#m", '$1<img src="'.PUN_ROOT.'img/smilies/'.$smiley_img[$i].'" width="15" height="15" alt="'.substr($smiley_img[$i], 0, strrpos($smiley_img[$i], '.')).'" />$2', $text);
-		$imgsize = @getimagesize(PUN_ROOT.'img/smilies/'.$smiley_img[$i]);
-		$text = preg_replace("#(?<=.\W|\W.|^\W)".preg_quote($smiley_text[$i], '#')."(?=.\W|\W.|\W$)#m", '$1<img src="'.PUN_ROOT.'img/smilies/'.$smiley_img[$i].'" '.$imgsize[3].' alt="'.substr($smiley_img[$i], 0, strrpos($smiley_img[$i], '.')).'" />$2', $text);
-	}
+		$text = preg_replace("#(?<=.\W|\W.|^\W)".preg_quote($smiley_text[$i], '#')."(?=.\W|\W.|\W$)#m", '$1<img src="'.PUN_ROOT.'img/smilies/'.$smiley_img[$i].'" width="15" height="15" alt="'.substr($smiley_img[$i], 0, strrpos($smiley_img[$i], '.')).'" />$2', $text);
 
 	return substr($text, 1, -1);
 }

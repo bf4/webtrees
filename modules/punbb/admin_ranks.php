@@ -26,7 +26,7 @@
 // Tell header.php to use the admin template
 define('PUN_ADMIN_CONSOLE', 1);
 
-define('PUN_ROOT', 'modules/punbb/');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'include/common_admin.php';
 
@@ -60,7 +60,7 @@ if (isset($_POST['add_rank']))
 	require_once PUN_ROOT.'include/cache.php';
 	generate_ranks_cache();
 
-	redirect('module.php?mod=punbb&amp;pgvaction=admin_ranks', 'Rank added. Redirecting &hellip;');
+	redirect('admin_ranks.php', 'Rank added. Redirecting &hellip;');
 }
 
 
@@ -122,12 +122,12 @@ generate_admin_menu('ranks');
 	<div class="blockform">
 		<h2><span>Ranks</span></h2>
 		<div class="box">
-			<form id="ranks" method="post" action="module.php?mod=punbb&amp;pgvaction=admin_ranks&amp;action=foo">
+			<form id="ranks" method="post" action="<?php genurl('admin_ranks.php?action=foo', true, true)?>">
 				<div class="inform">
 					<fieldset>
 						<legend>Add rank</legend>
 						<div class="infldset">
-							<p>Enter a rank and the minimum number of posts that a user has to have to aquire the rank. Different ranks cannot have the same value for minimum posts. If a title is set for a user, the title will be displayed instead of any rank. <strong>User ranks must be enabled in <a href="module.php?mod=punbb&amp;pgvaction=admin_options#ranks">Options</a> for this to have any effect.</strong></p>
+							<p>Enter a rank and the minimum number of posts that a user has to have to aquire the rank. Different ranks cannot have the same value for minimum posts. If a title is set for a user, the title will be displayed instead of any rank. <strong>User ranks must be enabled in <a href="admin_options.php#ranks">Options</a> for this to have any effect.</strong></p>
 							<table  cellspacing="0">
 							<thead>
 								<tr>

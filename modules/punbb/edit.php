@@ -23,7 +23,7 @@
 ************************************************************************/
 
 
-define('PUN_ROOT', 'modules/punbb/');
+define('PUN_MOD_NAME', basename(dirname(__FILE__)));define('PUN_ROOT', 'modules/'.PUN_MOD_NAME.'/');
 require PUN_ROOT.'include/common.php';
 
 
@@ -126,7 +126,7 @@ if (isset($_POST['form_sent']))
 		// Update the post
 		$db->query('UPDATE '.$db->prefix.'posts SET message=\''.$db->escape($message).'\', hide_smilies=\''.$hide_smilies.'\''.$edited_sql.' WHERE id='.$id) or error('Unable to update post', __FILE__, __LINE__, $db->error());
 
-		redirect('module.php?mod=punbb&amp;pgvaction=viewtopic&amp;pid='.$id.'#p'.$id, $lang_post['Edit redirect']);
+		redirect('viewtopic.php?pid='.$id.'#p'.$id, $lang_post['Edit redirect']);
 	}
 }
 
@@ -142,7 +142,7 @@ $cur_index = 1;
 ?>
 <div class="linkst">
 	<div class="inbox">
-		<ul><li><a href="module.php?mod=punbb&amp;pgvaction=index"><?php echo $lang_common['Index'] ?></a></li><li>&nbsp;&raquo;&nbsp;<a href="module.php?mod=punbb&amp;pgvaction=viewforum&amp;id=<?php echo $cur_post['fid'] ?>"><?php echo pun_htmlspecialchars($cur_post['forum_name']) ?></a></li><li>&nbsp;&raquo;&nbsp;<?php echo pun_htmlspecialchars($cur_post['subject']) ?></li></ul>
+		<ul><li><a href="<?php genurl('index.php', false, true)?>"><?php echo $lang_common['Index'] ?></a></li><li>&nbsp;&raquo;&nbsp;<a href="<?php genurl("viewforum.php?id={$cur_post['fid']}", false, true)?>"><?php echo pun_htmlspecialchars($cur_post['forum_name']) ?></a></li><li>&nbsp;&raquo;&nbsp;<?php echo pun_htmlspecialchars($cur_post['subject']) ?></li></ul>
 	</div>
 </div>
 
@@ -175,7 +175,7 @@ if (!empty($errors))
 else if (isset($_POST['preview']))
 {
 	require_once PUN_ROOT.'include/parser.php';
-	$message = parse_message(trim($_POST['req_message']), $hide_smilies);
+	$preview_message = parse_message($message, $hide_smilies);
 
 ?>
 <div id="postpreview" class="blockpost">
@@ -184,7 +184,7 @@ else if (isset($_POST['preview']))
 		<div class="inbox">
 			<div class="postright">
 				<div class="postmsg">
-					<?php echo $message."\n" ?>
+					<?php echo $preview_message."\n" ?>
 				</div>
 			</div>
 		</div>
@@ -199,20 +199,45 @@ else if (isset($_POST['preview']))
 <div class="blockform">
 	<h2><?php echo $lang_post['Edit post'] ?></h2>
 	<div class="box">
-		<form id="edit" method="post" action="module.php?mod=punbb&amp;pgvaction=edit&amp;id=<?php echo $id ?>&amp;action=edit" onsubmit="return process_form(this)">
+		<form id="edit" method="post" action="<?php genurl("edit.php?id={$id}&amp;action=edit", true, true)?>" onsubmit="return process_form(this)">
 			<div class="inform">
 				<fieldset>
 					<legend><?php echo $lang_post['Edit post legend'] ?></legend>
 					<input type="hidden" name="form_sent" value="1" />
+					<!-- Start of smilies list -->
+					<fieldset style="margin-left:4px; line-height:1.5em; width:22%; float:right; margin-top:16px; text-align:left; text-decoration:none;border-style: solid;border-width: 1px;padding: 0 0 0 10px;">
+					<legend>Smilies</legend><div style="overflow:auto; height:300px; padding: 2px;">
+					<?php
+					require_once PUN_ROOT.'include/parser.php';
+					$smilies = "";
+					$images = array();
+					foreach($smiley_text as $key => $value)
+						{
+						$smiley_text[$key] = str_replace("</p>"," ",$smiley_text[$key]);
+						$smiley_text[$key] = str_replace("<p>"," ",$smiley_text[$key]);
+
+						if(in_array($smiley_img[$key],$images))
+								{
+								continue;
+								}
+						$images[] = $smiley_img[$key];
+						$smilies .= "<tt style=\"cursor:pointer;\" OnClick=\"javascript:insert_text(' ".$smiley_text[$key]." ', '')\"><span title=\"{$smiley_text[$key]}\">" . parse_message($smiley_text[$key],0) . "</span></tt>";
+						}
+					$smilies = str_replace(array("<p>","</p>")," ",$smilies);
+					echo $smilies;
+					?>
+					</div></fieldset>
+					<!-- End of smilies list -->
+
 					<div class="infldset txtarea">
 <?php if ($can_edit_subject): ?>						<label><?php echo $lang_common['Subject'] ?><br />
 						<input class="longinput" type="text" name="req_subject" size="80" maxlength="70" tabindex="<?php echo $cur_index++ ?>" value="<?php echo pun_htmlspecialchars(isset($_POST['req_subject']) ? $_POST['req_subject'] : $cur_post['subject']) ?>" /><br /></label>
-<?php endif; ?>						<label><?php echo $lang_common['Message'] ?><br />
-						<textarea name="req_message" rows="20" cols="95" tabindex="<?php echo $cur_index++ ?>"><?php echo pun_htmlspecialchars(isset($_POST['req_message']) ? $_POST['req_message'] : $cur_post['message']) ?></textarea><br /></label>
+<?php endif; $bbcode_form = 'edit'; $bbcode_field = 'req_message'; require PUN_ROOT.'mod_easy_bbcode.php'; ?>						<label><?php echo $lang_common['Message'] ?><br />
+						<textarea name="req_message" rows="20" cols="95" tabindex="<?php echo $cur_index++ ?>"><?php echo pun_htmlspecialchars(isset($_POST['req_message']) ? $message : $cur_post['message']) ?></textarea><br /></label>
 						<ul class="bblinks">
-							<li><a href="module.php?mod=punbb&amp;pgvaction=help#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
-							<li><a href="module.php?mod=punbb&amp;pgvaction=help#img" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo ($pun_config['p_message_img_tag'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
-							<li><a href="module.php?mod=punbb&amp;pgvaction=help#smilies" onclick="window.open(this.href); return false;"><?php echo $lang_common['Smilies'] ?></a>: <?php echo ($pun_config['o_smilies'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a>: <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="help.php#img" onclick="window.open(this.href); return false;"><?php echo $lang_common['img tag'] ?></a>: <?php echo ($pun_config['p_message_img_tag'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
+							<li><a href="help.php#smilies" onclick="window.open(this.href); return false;"><?php echo $lang_common['Smilies'] ?></a>: <?php echo ($pun_config['o_smilies'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></li>
 						</ul>
 					</div>
 				</fieldset>
