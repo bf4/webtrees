@@ -42,6 +42,11 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+-$pgv_lang["make_slklist"]							4 Jul 2006				D		Remove SLK references
+-$pgv_lang["excel_list"]							4 Jul 2006				D		Remove SLK references
+-$pgv_lang["excel_tab"]								4 Jul 2006				D		Remove SLK references
+-$pgv_lang["excel_create"]							4 Jul 2006				D		Remove SLK references
+-$pgv_lang["slk_list"]								4 Jul 2006				D		Remove SLK references
 +$pgv_lang["htmlplus_block_keyword"]                30 Jun 2006				A		Used in HTML Plus block
 +$pgv_lang["htmlplus_block_custom"]					27 Jun 2006				A		Used in HTML Plus block
 +$pgv_lang["htmlplus_block_current"]				27 Jun 2006				A		Used in HTML Plus block
