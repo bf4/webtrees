@@ -21,14 +21,14 @@ public class Activator extends AbstractUIPlugin {
 
 	// The shared instance
 	private static Activator plugin;
-	private static HashMap<String,PGVLangEntry> entries;
+	private static PGVLangMap entries;
 	
 	/**
 	 * The constructor
 	 */
 	public Activator() {
 		plugin = this;
-		entries = new HashMap<String,PGVLangEntry>();
+		if (entries==null) entries = PGVLangMap.getInstance();
 	}
 
 	/*
@@ -45,6 +45,7 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
+		//if (entries!=null) entries.writeMap();
 		super.stop(context);
 	}
 
@@ -66,51 +67,5 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
-	}
-
-	public static HashMap<String,PGVLangEntry> getEntries() {
-		return entries;
-	}
-	
-	public static void addEntry(PGVLangEntry entry) {
-		PGVLangEntry e = (PGVLangEntry) entries.get(entry.getKey());
-		if (e==null) {
-			entries.put(entry.getKey(), entry);
-		}
-		else {
-			List refs = entry.getReferences();
-			Iterator i = refs.iterator();
-			while(i.hasNext()) {
-				PGVLangReference ref = (PGVLangReference) i.next();
-				e.addReference(ref);
-			}
-		}
-	}
-	
-	public static void removeFileReferences(IFile file) {
-		Iterator i = entries.values().iterator();
-		while(i.hasNext()) {
-			PGVLangEntry e = (PGVLangEntry) i.next();
-			e.removeFileReferences(file);
-		}
-	}
-	
-	public static PGVLangEntry getEntry(String key) {
-		return entries.get(key);
-	}
-	
-	public static void setAllMarkers() {
-		Iterator i = entries.values().iterator();
-		while(i.hasNext()) {
-			PGVLangEntry e = (PGVLangEntry) i.next();
-			e.checkMarkers(null);
-		}
-	}
-	public static void setMarkers(IFile file) {
-		Iterator i = entries.values().iterator();
-		while(i.hasNext()) {
-			PGVLangEntry e = (PGVLangEntry) i.next();
-			e.checkMarkers(file);
-		}
 	}
 }

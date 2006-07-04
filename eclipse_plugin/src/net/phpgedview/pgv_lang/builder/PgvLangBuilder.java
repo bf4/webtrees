@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 import net.phpgedview.pgv_lang.Activator;
 import net.phpgedview.pgv_lang.PGVLangEntry;
+import net.phpgedview.pgv_lang.PGVLangMap;
 import net.phpgedview.pgv_lang.PGVLangReference;
 
 import org.eclipse.core.resources.IFile;
@@ -41,7 +42,8 @@ public class PgvLangBuilder extends IncrementalProjectBuilder {
 				break;
 			case IResourceDelta.REMOVED:
 				// handle removed resource
-				if (resource instanceof IFile) Activator.removeFileReferences((IFile)resource);
+				PGVLangMap entries = PGVLangMap.getInstance();
+				if (resource instanceof IFile) entries.removeFileReferences((IFile)resource);
 				break;
 			case IResourceDelta.CHANGED:
 				// handle changed resource
@@ -88,7 +90,9 @@ public class PgvLangBuilder extends IncrementalProjectBuilder {
 		if (resource instanceof IFile && (resource.getName().endsWith(".php")
 				|| resource.getName().endsWith(".html"))) {
 			IFile file = (IFile) resource;
+			PGVLangMap entries = PGVLangMap.getInstance();
 			try {
+				entries.clearReferences(file);
 				InputStream stream = file.getContents();
 				BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 				String line = reader.readLine();
@@ -101,10 +105,10 @@ public class PgvLangBuilder extends IncrementalProjectBuilder {
 						if (key.startsWith("\"")) key = key.substring(1, key.length()-1);
 						String value = m.group(2);
 						PGVLangReference ref = new PGVLangReference(file, l);
-						PGVLangEntry e = Activator.getEntry(key);
+						PGVLangEntry e = entries.getEntry(key);
 						if (e == null) {
 							e = new PGVLangEntry(key, value);
-							Activator.addEntry(e);
+							entries.addEntry(e);
 						}
 						else e.setValue(value);
 						e.addDefinition(ref);
@@ -115,11 +119,12 @@ public class PgvLangBuilder extends IncrementalProjectBuilder {
 					while(m.find()) {
 						String key = m.group(1);
 						if (key.startsWith("\"")) key = key.substring(1, key.length()-1);
+						else if (key.startsWith("'")) key = key.substring(1, key.length()-1);
 						PGVLangReference ref = new PGVLangReference(file, l);
-						PGVLangEntry e = Activator.getEntry(key);
+						PGVLangEntry e = entries.getEntry(key);
 						if (e == null) {
 							e = new PGVLangEntry(key, "");
-							Activator.addEntry(e);
+							entries.addEntry(e);
 						}
 						e.addReference(ref);
 					}	
@@ -132,7 +137,7 @@ public class PgvLangBuilder extends IncrementalProjectBuilder {
 				throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID,1,ioe.getMessage(), ioe));
 			}
 			deleteMarkers(file);
-			Activator.setMarkers(file);
+			entries.setMarkers(file);
 			/*XMLErrorHandler reporter = new XMLErrorHandler(file);
 			try {
 				getParser().parse(file.getContents(), reporter);

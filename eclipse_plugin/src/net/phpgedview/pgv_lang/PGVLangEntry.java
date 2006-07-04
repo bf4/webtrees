@@ -1,5 +1,6 @@
 package net.phpgedview.pgv_lang;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -9,9 +10,14 @@ import java.util.regex.Pattern;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 
-public class PGVLangEntry {
+public class PGVLangEntry implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 988197258245429203L;
 	String key;
 	String value;
+	boolean delta;
 	
 	ArrayList<PGVLangReference> references;
 	ArrayList<PGVLangReference> definitions;
@@ -21,6 +27,7 @@ public class PGVLangEntry {
 		this.value = value;
 		references = new ArrayList<PGVLangReference>();
 		definitions = new ArrayList<PGVLangReference>();
+		delta = true;
 	}
 
 	public String getKey() {
@@ -37,6 +44,7 @@ public class PGVLangEntry {
 
 	public void setReferences(ArrayList<PGVLangReference> references) {
 		this.references = references;
+		delta = true;
 	}
 
 	public String getValue() {
@@ -45,24 +53,29 @@ public class PGVLangEntry {
 
 	public void setValue(String value) {
 		this.value = value;
+		delta = true;
 	}
 	
 	public void removeFileReferences(IFile file) {
 		Iterator i = references.iterator();
 		while(i.hasNext()) {
 			PGVLangReference r = (PGVLangReference) i.next();
-			if (file==r.getFile()) i.remove();
+			if (file.getFullPath().toPortableString().equals(r.getFilePath())) i.remove();
 		}
 		
 		i = definitions.iterator();
 		while(i.hasNext()) {
 			PGVLangReference r = (PGVLangReference) i.next();
-			if (file==r.getFile()) i.remove();
+			if (file.getFullPath().toPortableString().equals(r.getFilePath())) i.remove();
 		}
+		delta = true;
 	}
 	
 	public void addReference(PGVLangReference ref) {
-		references.add(ref);
+		if (!references.contains(ref) && !definitions.contains(ref) ) {
+			references.add(ref);
+			delta = true;
+		}
 	}
 
 	public ArrayList<PGVLangReference> getDefinitions() {
@@ -71,10 +84,14 @@ public class PGVLangEntry {
 
 	public void setDefinitions(ArrayList<PGVLangReference> definitions) {
 		this.definitions = definitions;
+		delta = true;
 	}
 	
 	public void addDefinition(PGVLangReference ref) {
-		definitions.add(ref);
+		if (!definitions.contains(ref)) {
+			definitions.add(ref);
+			delta = true;
+		}
 	}
 	
 	public boolean hasReferences() {
@@ -86,13 +103,15 @@ public class PGVLangEntry {
 	}
 	
 	public void checkMarkers(IFile file) {
+//		if (!delta) return;
+//		delta = false;
+
 		//-- error if the entry is not defined
 		if (!hasDefinitions()) {
 			Iterator i = references.iterator();
 			while(i.hasNext()) {
 				PGVLangReference r = (PGVLangReference) i.next();
-				if (file==null || file==r.getFile())
-					r.addMarker("Language Entry "+key+" is never defined.", IMarker.SEVERITY_ERROR);
+				r.addMarker(file, "Language Entry "+key+" is never defined.", IMarker.SEVERITY_ERROR);
 			}
 		}
 		
@@ -101,24 +120,36 @@ public class PGVLangEntry {
 			Iterator i = definitions.iterator();
 			while(i.hasNext()) {
 				PGVLangReference r = (PGVLangReference) i.next();
-				if (file==null || file==r.getFile())
-					r.addMarker("Language Entry "+key+" is defined but never used.", IMarker.SEVERITY_ERROR);
+				r.addMarker(file, "Language Entry "+key+" is defined but never used.", IMarker.SEVERITY_ERROR);
 			}
 		}
 		
 		//-- warning if the entry is defined more than once
 		if (definitions.size()>1) {
 			Iterator i = definitions.iterator();
-			i.next();
+			PGVLangReference or = (PGVLangReference) i.next();
+			String message = "  Previous definition at "+or.getFilePath()+" line "+or.getLineNumber();
 			while(i.hasNext()) {
 				PGVLangReference r = (PGVLangReference) i.next();
-				if (file==null || file==r.getFile()) {
-					String fname = r.getFile().getName();
-					Pattern p = Pattern.compile("\\.en\\.php");
-					Matcher m = p.matcher(fname);
-					if (!m.find()) r.addMarker("Duplicate Language definition for "+key, IMarker.SEVERITY_WARNING);
-				}
+				String fname = r.getFilePath();
+				Pattern p = Pattern.compile("\\.en\\.php");
+				Matcher m = p.matcher(fname);
+				if (!m.find()) r.addMarker(file, "Duplicate Language definition for "+key+message, IMarker.SEVERITY_WARNING);
 			}
+		}
+	}
+	
+	public void clearReferences(IFile file) {
+		Iterator i = references.iterator();
+		while(i.hasNext()) {
+			PGVLangReference r = (PGVLangReference) i.next();
+			if (file.getFullPath().toPortableString().equals(r.getFilePath())) i.remove();
+		}
+	
+		i = definitions.iterator();
+		while(i.hasNext()) {
+			PGVLangReference r = (PGVLangReference) i.next();
+			if (file.getFullPath().toPortableString().equals(r.getFilePath())) i.remove();
 		}
 	}
 }
