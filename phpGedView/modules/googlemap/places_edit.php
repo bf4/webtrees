@@ -124,6 +124,8 @@ if ($action=="update") {
     $parent_id  = $row[4];
     $level      = $row[5];
     $zoomfactor = $row[6];
+    $parent_lati = "0.0";
+    $parent_long = "0.0";
     if(($row[1] != NULL) && ($row[2] != NULL)) {
         $place_lati = str_replace(array('N', 'S', ','), array('', '-', '.') , $row[1]);
         $place_long = str_replace(array('E', 'W', ','), array('', '-', '.') , $row[2]);
@@ -132,23 +134,26 @@ if ($action=="update") {
     }
     else {
         $res->free();
-        $place_lati = 0;
-        $place_long = 0;
+        $place_lati = null;
+        $place_long = null;
         $zoomfactor = 1;
         $show_marker = false;
-        do {
-            $sql = "SELECT pl_lati,pl_long,pl_parent_id,pl_zoom FROM ".$TBLPREFIX."placelocation WHERE pl_id=$parent_id ORDER BY pl_place";
-            $res = dbquery($sql);
-            $row =& $res->fetchRow();
-            if(($row[0] != NULL) && ($row[1] != NULL)) {
-                $place_lati = str_replace(array('N', 'S', ','), array('', '-', '.') , $row[0]);
-                $place_long = str_replace(array('E', 'W', ','), array('', '-', '.') , $row[1]);
+    }
+
+    do {
+        $sql = "SELECT pl_lati,pl_long,pl_parent_id,pl_zoom FROM ".$TBLPREFIX."placelocation WHERE pl_id=$parent_id ORDER BY pl_place";
+        $res = dbquery($sql);
+        $row =& $res->fetchRow();
+        if(($row[0] != NULL) && ($row[1] != NULL)) {
+            $parent_lati = str_replace(array('N', 'S', ','), array('', '-', '.') , $row[0]);
+            $parent_long = str_replace(array('E', 'W', ','), array('', '-', '.') , $row[1]);
+            if ($zoomfactor == 1) {
                 $zoomfactor = $row[3];
             }
-            $parent_id = $row[2];
-            $res->free();
-        } while (($row[2] != 0) && ($row[0] == NULL) && ($row[1] == NULL));
-    }
+        }
+        $parent_id = $row[2];
+        $res->free();
+    } while (($row[2] != 0) && ($row[0] == NULL) && ($row[1] == NULL));
 
     $success = false;
 
@@ -163,40 +168,39 @@ if ($action=="update") {
 if ($action=="add") {
     // --- find the place in the file
     if ($placeid <> 0) {
-        $sql = "SELECT pl_place,pl_lati,pl_long,pl_icon,pl_parent_id,pl_level,pl_zoom FROM ".$TBLPREFIX."placelocation WHERE pl_id=$placeid ORDER BY pl_place";
-        $res = dbquery($sql);
-
-        $row =& $res->fetchRow();
         $place_name = "";
-        $zoomfactor = $row[6];
-        if ($row[1] != null) {
-            $place_lati = str_replace(array('N', 'S', ','), array('', '-', '.') , $row[1]);
-        }
-        else {
-            $place_lati = "0.0";
-            $zoomfactor = 1;
-        }
-        if ($row[2] != null) {
-            $place_long = str_replace(array('E', 'W', ','), array('', '-', '.') , $row[2]);
-        }
-        else {
-            $place_long = "0.0";
-            $zoomfactor = 1;
-        }
-        $place_icon = $row[3];
-        $parent_id  = $row[4];
-        $level      = $row[5]+1;
-        $res->free();
+        $place_lati = null;
+        $place_long = null;
+        $zoomfactor = 1;
+        $parent_lati = "0.0";
+        $parent_long = "0.0";
+        $place_icon = "";
+        do {
+            $sql = "SELECT pl_lati,pl_long,pl_parent_id,pl_zoom,pl_level FROM ".$TBLPREFIX."placelocation WHERE pl_id=$parent_id ORDER BY pl_place";
+            $res = dbquery($sql);
+            $row =& $res->fetchRow();
+            if(($row[0] != NULL) && ($row[1] != NULL)) {
+                $parent_lati = str_replace(array('N', 'S', ','), array('', '-', '.') , $row[0]);
+                $parent_long = str_replace(array('E', 'W', ','), array('', '-', '.') , $row[1]);
+                $zoomfactor = $row[3];
+                $level      = $row[4]+1;
+            }
+            $parent_id = $row[2];
+            $res->free();
+        } while (($row[2] != 0) && ($row[0] == NULL) && ($row[1] == NULL));
     }
     else {
-        $place_name = "";
-        $place_lati = "0.0";
-        $place_long = "0.0";
-        $place_icon = "";
-        $parent_id  = 0;
-        $level      = 0;
-        $zoomfactor = 1;
+        $place_name  = "";
+        $place_lati  = null;
+        $place_long  = null;
+        $parent_lati = "0.0";
+        $parent_long = "0.0";
+        $place_icon  = "";
+        $parent_id   = 0;
+        $level       = 0;
+        $zoomfactor  = 1;
     }
+
     $show_marker = false;
 
     $success = false;
@@ -250,43 +254,52 @@ if ($action=="add") {
                 prec = document.editplaces.NEW_PRECISION[i].value;
             }
         }
-        latitude = parseFloat(document.editplaces.NEW_PLACE_LATI.value).toFixed(prec);
-        longitude = parseFloat(document.editplaces.NEW_PLACE_LONG.value).toFixed(prec);
-        document.editplaces.NEW_PLACE_LATI.value = latitude;
-        document.editplaces.NEW_PLACE_LONG.value = longitude;
-
-        if (latitude < 0.0) {
-            latitude = latitude * -1;
+        if ((document.editplaces.NEW_PLACE_LATI.value == "") ||
+            (document.editplaces.NEW_PLACE_LONG.value == "")) {
+            latitude = parseFloat(document.editplaces.parent_lati.value).toFixed(prec);
+            longitude = parseFloat(document.editplaces.parent_long.value).toFixed(prec);
+            point = new GLatLng (latitude, longitude);
+            map.clearOverlays();
+        } else {
+            latitude = parseFloat(document.editplaces.NEW_PLACE_LATI.value).toFixed(prec);
+            longitude = parseFloat(document.editplaces.NEW_PLACE_LONG.value).toFixed(prec);
             document.editplaces.NEW_PLACE_LATI.value = latitude;
-        }
-        if (longitude < 0.0) {
-            longitude = longitude * -1;
             document.editplaces.NEW_PLACE_LONG.value = longitude;
-        }
-        if(document.editplaces.LATI_CONTROL.value == "PL_S") {
-            latitude = latitude * -1;
-        }
-        if(document.editplaces.LONG_CONTROL.value == "PL_W") {
-            longitude = longitude * -1;
+
+            if (latitude < 0.0) {
+                latitude = latitude * -1;
+                document.editplaces.NEW_PLACE_LATI.value = latitude;
+            }
+            if (longitude < 0.0) {
+                longitude = longitude * -1;
+                document.editplaces.NEW_PLACE_LONG.value = longitude;
+            }
+            if(document.editplaces.LATI_CONTROL.value == "PL_S") {
+                latitude = latitude * -1;
+            }
+            if(document.editplaces.LONG_CONTROL.value == "PL_W") {
+                longitude = longitude * -1;
+            }
+
+            point = new GLatLng (latitude, longitude);
+
+            map.clearOverlays();
+
+            if (document.editplaces.icon.value == "") {
+                map.addOverlay(new GMarker(point));
+            }
+            else {
+                var flagicon = new GIcon();
+                flagicon.image = document.editplaces.icon.value;
+                flagicon.shadow = "modules/googlemap/flag_shadow.png";
+                flagicon.iconSize = new GSize(25, 15);
+                flagicon.shadowSize = new GSize(35, 45);
+                flagicon.iconAnchor = new GPoint(1, 45);
+                flagicon.infoWindowAnchor = new GPoint(5, 1);
+                map.addOverlay(new GMarker(point, flagicon));
+            } 
         }
 
-        point = new GLatLng (latitude, longitude);
-
-        map.clearOverlays();
-
-        if (document.editplaces.icon.value == "") {
-            map.addOverlay(new GMarker(point));
-        }
-        else {
-            var flagicon = new GIcon();
-            flagicon.image = document.editplaces.icon.value;
-            flagicon.shadow = "modules/googlemap/flag_shadow.png";
-            flagicon.iconSize = new GSize(25, 15);
-            flagicon.shadowSize = new GSize(35, 45);
-            flagicon.iconAnchor = new GPoint(1, 45);
-            flagicon.infoWindowAnchor = new GPoint(5, 1);
-            map.addOverlay(new GMarker(point, flagicon));
-        } 
         map.setCenter(point, zoom);
         document.getElementById('resultDiv').innerHTML = "";
 
@@ -378,8 +391,12 @@ if ($action=="add") {
             }});
             GEvent.addListener(map, "moveend",function() {
                 document.editplaces.NEW_ZOOM_FACTOR.value = map.getZoom();
-            }); 
+            });
+<?php if(($place_long == null) || ($place_lati == null)) { ?>
+            map.setCenter(new GLatLng( <?php print $parent_lati.", ".$parent_long."), ".$zoomfactor;?>, G_NORMAL_MAP );
+<?php }else { ?>
             map.setCenter(new GLatLng( <?php print $place_lati.", ".$place_long."), ".$zoomfactor;?>, G_NORMAL_MAP );
+<?php } ?>
 
 <?php   if ($level < 3) { ?>
             var childicon = new GIcon();
@@ -408,6 +425,8 @@ if ($action=="add") {
                         print "            flagicon.infoWindowAnchor = new GPoint(5, 1);\n";
                         print "            childplaces.push(new GMarker(new GLatLng(".str_replace(array('N', 'S', ','), array('', '-') , $row[1]).", ".str_replace(array('E', 'W', ','), array('', '-', '.') ,$row[2])."), flagicon));\n";
                     }
+                    print "            GEvent.addListener(childplaces[".$i."], \"click\", function() {\n";
+                    print "                childplaces[".$i."].openInfoWindowHtml(\"".$row[0]."\")});\n";
                     print "            map.addOverlay(childplaces[".$i."]);\n";
                     $i = $i + 1;
                 }
@@ -416,9 +435,13 @@ if ($action=="add") {
         }
 ?> 
 <?php   if ($show_marker == true) {
-            if (($place_icon == NULL) || ($place_icon == "")) { ?>
+            if (($place_icon == NULL) || ($place_icon == "")) { 
+                if (($place_lati == null) || ($place_long == null)) {?>
+            map.addOverlay(new GMarker(new GLatLng(<?php print $parent_lati.", ".$parent_long;?>)));
+<?php           } else { ?>
             map.addOverlay(new GMarker(new GLatLng(<?php print $place_lati.", ".$place_long;?>)));
-<?php       }
+<?php           }
+            }
             else { ?>
             var flagicon = new GIcon();
             flagicon.image = "<?php print $place_icon;?>";
@@ -427,8 +450,12 @@ if ($action=="add") {
             flagicon.shadowSize = new GSize(35, 45);
             flagicon.iconAnchor = new GPoint(12, 7);
             flagicon.infoWindowAnchor = new GPoint(5, 1);
+<?php           if (($place_lati == null) || ($place_long == null)) {?>
+            map.addOverlay(new GMarker(new GLatLng(<?php print $parent_lati.", ".$parent_long;?>), flagicon));
+<?php           } else { ?>
             map.addOverlay(new GMarker(new GLatLng(<?php print $place_lati.", ".$place_long;?>), flagicon));
-<?php       }
+<?php           }
+            }
         } ?>
             // Our info window content
       }
@@ -608,6 +635,11 @@ function paste_char(value,lang,mag) {
     <input type="hidden" name="placeid" value="<?php print $placeid;?>" />
     <input type="hidden" name="level" value="<?php print $level;?>" />
     <input type="hidden" name="icon" value="<?php print $place_icon;?>" />
+    <input type="hidden" name="parent_id" value="<?php print $parent_id;?>" />
+    <input type="hidden" name="place_long" value="<?php print $place_long;?>" />
+    <input type="hidden" name="place_lati" value="<?php print $place_lati;?>" />
+    <input type="hidden" name="parent_long" value="<?php print $parent_long;?>" />
+    <input type="hidden" name="parent_lati" value="<?php print $parent_lati;?>" />
     <input id="savebutton" name="save1" type="submit" value="<?php print $pgv_lang["save"];?>" /><br />
 
     <table class="facts_table">
@@ -648,19 +680,21 @@ function paste_char(value,lang,mag) {
         <td class="descriptionbox"><?php print_help_link("PLE_LATLON_CTRL_help", "qm", "PLE_LATLON_CTRL");?><?php print $factarray["LATI"];?></td>
         <td class="optionbox">
             <select name="LATI_CONTROL" tabindex="<?php $i++; print $i?>" onchange="updateMap();">
-                <option value="PL_N" <?php if ($place_lati >= 0) print " selected=\"selected\""; print ">".$pgv_lang["pl_north_short"]; ?></option>
+                <option value="" <?php if ($place_lati == null) print " selected=\"selected\"";?>></option>
+                <option value="PL_N" <?php if ($place_lati > 0) print " selected=\"selected\""; print ">".$pgv_lang["pl_north_short"]; ?></option>
                 <option value="PL_S" <?php if ($place_lati < 0) print " selected=\"selected\""; print ">".$pgv_lang["pl_south_short"]; ?></option>
             </select>
-            <input type="text" name="NEW_PLACE_LATI" value="<?php print abs($place_lati);?>" size="20" tabindex="<?php $i++; print $i?>" onchange="updateMap();" /></td>
+            <input type="text" name="NEW_PLACE_LATI" value="<?php if ($place_lati != null) print abs($place_lati);?>" size="20" tabindex="<?php $i++; print $i?>" onchange="updateMap();" /></td>
     </tr>
     <tr>
         <td class="descriptionbox"><?php print_help_link("PLE_LATLON_CTRL_help", "qm", "PLE_LATLON_CTRL");?><?php print $factarray["LONG"];?></td>
         <td class="optionbox">
             <select name="LONG_CONTROL" tabindex="<?php $i++; print $i?>" onchange="updateMap();">
-                <option value="PL_E" <?php if ($place_long >= 0) print " selected=\"selected\""; print ">".$pgv_lang["pl_east_short"]; ?></option>
+                <option value="" <?php if ($place_long == null) print " selected=\"selected\"";?>></option>
+                <option value="PL_E" <?php if ($place_long > 0) print " selected=\"selected\""; print ">".$pgv_lang["pl_east_short"]; ?></option>
                 <option value="PL_W" <?php if ($place_long < 0) print " selected=\"selected\""; print ">".$pgv_lang["pl_west_short"]; ?></option>
             </select>
-            <input type="text" name="NEW_PLACE_LONG" value="<?php print abs($place_long);?>" size="20" tabindex="<?php $i++; print $i?>" onchange="updateMap();" /></td>
+            <input type="text" name="NEW_PLACE_LONG" value="<?php if ($place_long != null) print abs($place_long);?>" size="20" tabindex="<?php $i++; print $i?>" onchange="updateMap();" /></td>
     </tr>
     <tr>
         <td class="descriptionbox"><?php print_help_link("PLE_ZOOM_help", "qm", "PLE_ZOOM");?><?php print $pgv_lang["pl_zoom_factor"];?></td>
