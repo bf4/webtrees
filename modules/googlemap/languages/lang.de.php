@@ -4,12 +4,12 @@
    Project:         phpGedView
    File:            lang.de.php
    Author:	    Christian Helms
-   Comments:        German Language file for Google map module / 2006-07-02 01:50
+   Comments:        German Language file for Google map module / 2006-07-03 13:10
 ===================================================*/
-
 
 $pgv_lang["googlemap"]              = "Karte";
 $pgv_lang["no_gmtab"]               = "Keine Karteninformation für diese Person";
+$pgv_lang["gm_disabled"]            = "Kartendarstellung deaktiviert";
 
 $pgv_lang["gm_redraw_map"]          = "Karte neu zeichnen";
 $pgv_lang["gm_map"]                 = "Karte";
@@ -22,6 +22,7 @@ $pgv_lang["configure_googlemap"]    = "Googlemap Konfiguration";
 $pgv_lang["gm_admin_error"]         = "Nur für Verwalter";
 $pgv_lang["gm_db_error"]            = "Tabelle 'placelocation' in Datenbank nicht vorhanden";
 $pgv_lang["gm_table_created"]       = "Tabelle 'placelocation' neu angelegt";
+$pgv_lang["googlemap_enable"]       = "Kartendarstellung aktivieren";
 $pgv_lang["googlemapkey"]           = "Googlemap API Schlüssel";
 $pgv_lang["gm_map_type"]            = "Standard Kartentyp";
 $pgv_lang["gm_map_size"]            = "Größe der Karte (in Pixel)";
@@ -29,8 +30,9 @@ $pgv_lang["gm_map_size_x"]          = "Breite";
 $pgv_lang["gm_map_size_y"]          = "Höhe";
 $pgv_lang["gm_map_zoom"]            = "Zoomfaktor der Karte";
 $pgv_lang["gm_digits"]              = "Nachkommastellen";
+$pgv_lang["gm_min"]                 = "Min.";
+$pgv_lang["gm_max"]                 = "Max.";
 
-$pgv_lang["GOOGLEMAP_API_KEY_help"]	= "~#pgv_lang[googlemapkey]#~<br /><br />Kopieren Sie Ihren Googlemap API Schlüssel hier hin.";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Ortskoordinaten bearbeiten";
@@ -51,6 +53,7 @@ $pgv_lang["pl_west_short"]          = "W";
 $pgv_lang["pl_places_filename"]     = "Datei mit Ortsdaten (CSV)";
 $pgv_lang["pl_clean_db"]            = "Alle Ortsdaten vor dem Import löschen?";
 $pgv_lang["pl_no_places_found"]     = "Keine Orte gefunden";
+$pgv_lang["pl_use_this_value"]      = "Use this value";
 $pgv_lang["pl_precision"]           = "Genauigkeit";
 $pgv_lang["pl_country"]             = "Staat";
 $pgv_lang["pl_state"]               = "Bundesland";
@@ -66,4 +69,5 @@ $pgv_lang["pl_remove_flag"]         = "Flagge entfernen";
 
 $pgv_lang["pl_remove_location"]     = "Diese Ortsdaten entfernen?";
 $pgv_lang["pl_delete_error"]        = "Ortsdaten wurden nicht entfernt! Es sind noch weitere, abhängige Ortsdaten vorhanden.";
+
 ?>
