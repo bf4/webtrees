@@ -21,14 +21,14 @@ public class Activator extends AbstractUIPlugin {
 
 	// The shared instance
 	private static Activator plugin;
-	private static PGVLangMap entries;
+//	private static PGVLangMap entries;
 	
 	/**
 	 * The constructor
 	 */
 	public Activator() {
 		plugin = this;
-		if (entries==null) entries = PGVLangMap.getInstance();
+//		if (entries==null) entries = PGVLangMap.getInstance();
 	}
 
 	/*

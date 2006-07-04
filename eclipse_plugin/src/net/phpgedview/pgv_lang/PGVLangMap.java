@@ -12,6 +12,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.IPath;
 
 public class PGVLangMap implements Serializable{
 	/**
@@ -20,16 +22,18 @@ public class PGVLangMap implements Serializable{
 	private static final long serialVersionUID = -1939521442107573918L;
 	private HashMap<String,PGVLangEntry> entries;
 	private static PGVLangMap singleton;
+	private String path;
 	
-	public PGVLangMap() {
+	public PGVLangMap(IPath p) {
 		entries = new HashMap<String,PGVLangEntry>();
+		path = p.toOSString();
 		singleton = this;
 	}
 	
-	public static void writeMap() {
+	public void writeMap() {
 		if (singleton==null) return;
 		try {
-			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(".pgvlang"));
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(path+".pgvlang"));
 			out.writeObject(singleton);
 			out.close();
 		} catch (FileNotFoundException e) {
@@ -41,10 +45,10 @@ public class PGVLangMap implements Serializable{
 		} 
 	}
 	
-	public static PGVLangMap getInstance() {
+	public static PGVLangMap getInstance(IPath path) {
 		if (singleton!=null) return singleton;
 		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(".pgvlang"));
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(path+".pgvlang"));
 			singleton = (PGVLangMap) in.readObject();
 			in.close();
 			if (singleton!=null) return singleton;
@@ -58,7 +62,7 @@ public class PGVLangMap implements Serializable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		singleton = new PGVLangMap();
+		singleton = new PGVLangMap(path);
 		return singleton;
 	}
 	
@@ -104,7 +108,7 @@ public class PGVLangMap implements Serializable{
 			if (!e.hasDefinitions() && !e.hasReferences()) i.remove();
 			else e.checkMarkers(file);
 		}
-		writeMap();
+//		writeMap();
 	}
 	
 	public void clearReferences(IFile file) {
@@ -115,6 +119,6 @@ public class PGVLangMap implements Serializable{
 			e.clearReferences(file);
 			if (!e.hasDefinitions() && !e.hasReferences()) i.remove();
 		}
-		writeMap();
+//		writeMap();
 	}
 }

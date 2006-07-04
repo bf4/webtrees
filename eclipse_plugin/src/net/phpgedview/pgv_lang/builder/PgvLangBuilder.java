@@ -42,7 +42,7 @@ public class PgvLangBuilder extends IncrementalProjectBuilder {
 				break;
 			case IResourceDelta.REMOVED:
 				// handle removed resource
-				PGVLangMap entries = PGVLangMap.getInstance();
+				PGVLangMap entries = PGVLangMap.getInstance(delta.getProjectRelativePath());
 				if (resource instanceof IFile) entries.removeFileReferences((IFile)resource);
 				break;
 			case IResourceDelta.CHANGED:
@@ -90,7 +90,7 @@ public class PgvLangBuilder extends IncrementalProjectBuilder {
 		if (resource instanceof IFile && (resource.getName().endsWith(".php")
 				|| resource.getName().endsWith(".html"))) {
 			IFile file = (IFile) resource;
-			PGVLangMap entries = PGVLangMap.getInstance();
+			PGVLangMap entries = PGVLangMap.getInstance(file.getProjectRelativePath());
 			try {
 				entries.clearReferences(file);
 				InputStream stream = file.getContents();
