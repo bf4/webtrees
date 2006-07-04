@@ -1546,14 +1546,9 @@ $pgv_lang["sort_by"]				= "Sort by";
 $pgv_lang["cleanup"]				= "Cleanup";
 $pgv_lang["skip_cleanup"]			= "Skip Cleanup";
 
-//-- CONFIGURE (extra) messages for programs patriarch, slklist and statistics
+//-- CONFIGURE (extra) messages for programs patriarch and statistics
 $pgv_lang["dynasty_list"]			= "Overview of families";
-$pgv_lang["make_slklist"]			= "Create EXCEL (SLK) list";
-$pgv_lang["excel_list"] 			= "Output in EXCEL (SLK) format on the following files (first use Patriarch list):";
-$pgv_lang["excel_tab"]				= "tabblad:";
-$pgv_lang["excel_create"]			= " will be created on file:";
 $pgv_lang["patriarch_list"] 		= "Patriarch list";
-$pgv_lang["slk_list"]				= "EXCEL SLK list";
 $pgv_lang["statistics"] 			= "Statistics";
 
 //-- Merge Records
