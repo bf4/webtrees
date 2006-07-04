@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: PGVLanguages Plug-in
+Bundle-SymbolicName: net.phpgedview.pgv_lang; singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: net.phpgedview.pgv_lang.Activator
+Bundle-Vendor: PhpGedView
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources
+Eclipse-LazyStart: true
+Export-Package: net.phpgedview.pgv_lang,
+ net.phpgedview.pgv_lang.builder
