@@ -23,6 +23,7 @@ $pgv_lang["configure_googlemap"]    	= "תצורת Googlemap";
 $pgv_lang["gm_admin_error"]         	= "דף רק של מנהלנים";
 $pgv_lang["gm_db_error"]            	= "טבלת מיקום לא נימצאה במאגר הנתונים";
 $pgv_lang["gm_table_created"]       	= "טבלת מיקום נוצרה";
+$pgv_lang["googlemap_enable"]       	= "אפשר Googlemap";
 $pgv_lang["googlemapkey"]           	= "מפתח API של Google Map";
 $pgv_lang["gm_map_type"]            	= "ברירת מחדל של סוג המפה";
 $pgv_lang["gm_map_size"]            	= "גודל המפה (בפיקסלים)";
@@ -30,8 +31,10 @@ $pgv_lang["gm_map_size_x"]          	= "רוחב";
 $pgv_lang["gm_map_size_y"]          	= "גובה";
 $pgv_lang["gm_map_zoom"]            	= "מקדם זום של המפה";
 $pgv_lang["gm_digits"]              		= "ספרות";
+$pgv_lang["gm_min"]                 	= "מינימום";
+$pgv_lang["gm_max"]                 	= "מכסימום";
 
-$pgv_lang["GOOGLEMAP_API_KEY_help"]	= "~#pgv_lang[googlemapkey]#~<br /><br />הכנס כאן את מפתח ה-API של ה-Google Map שלך.";
+//$pgv_lang["GOOGLEMAP_API_KEY_help"]	= "~#pgv_lang[googlemapkey]#~<br /><br />הכנס כאן את מפתח ה-API של ה-Google Map שלך.";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   	= "ערוך מיקומים";

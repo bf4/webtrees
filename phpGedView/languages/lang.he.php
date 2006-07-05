@@ -1611,12 +1611,12 @@ $pgv_lang["skip_cleanup"]		= "דלג על ניקיון";
 
 //-- CONFIGURE (extra) messgaes for programs patriarch, slklist and statistics
 $pgv_lang["dynasty_list"]		= "סקירה כללית של משפחות";
-$pgv_lang["make_slklist"]		= "צור רשימת <span dir=\"ltr\">EXCEL (SLK)</span>";
-$pgv_lang["excel_list"]		= "<span dir=\"ltr\">:(על הקבצים הבאים (השתמש תחילה ברשימת ראשי בית-אב EXCEL (slk) בפלט במבנה</span>";
-$pgv_lang["excel_tab"]		= "סימניות EXCEL:";
-$pgv_lang["excel_create"]		= " יבנה בקובץ:";
+//$pgv_lang["make_slklist"]		= "צור רשימת <span dir=\"ltr\">EXCEL (SLK)</span>";
+//$pgv_lang["excel_list"]		= "<span dir=\"ltr\">:(על הקבצים הבאים (השתמש תחילה ברשימת ראשי בית-אב EXCEL (slk) בפלט במבנה</span>";
+//$pgv_lang["excel_tab"]		= "סימניות EXCEL:";
+//$pgv_lang["excel_create"]		= " יבנה בקובץ:";
 $pgv_lang["patriarch_list"]		= "רשימת ראשי בית-אב";
-$pgv_lang["slk_list"]			= "רשימת EXCEL SLK";
+//$pgv_lang["slk_list"]			= "רשימת EXCEL SLK";
 $pgv_lang["statistics"]		= "סטטיסטיקות";
 
 //-- Merge Records
