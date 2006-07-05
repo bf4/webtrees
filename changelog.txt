@@ -10,6 +10,7 @@
 
 Version 4.1
  - Replacing ISR Hebrew place files by the 4.0 files (meliza)
+ - Fixed [ 1514913 ] 4.0 Parent's family with new spouse (yalnifj)
  - Fixed various bugs [ 1513150 ], [ 1513147 ], [ 1509571 ] (yalnifj)
  - Fixed [ 1508850 ] User Admin Page Changes GEDCOMs (yalnifj)
  - Fixed [ 1510437 ] slklist.php - EXCEL (SLK) - Errors, removed the file (yalnifj)

@@ -119,6 +119,11 @@ USAGE
   someone attempts to edit the fact data in PGV, you will be taken back to the 
   research assistant to edit the data.  This ensures that the data will be 
   updated for all records that it is linked to.
+  
+--Auto Generate Tasks
+  With this option you can automatically convert _TODO GEDCOM tags into 
+  research assistant tasks.  You will be given the option of editing the tasks
+  before they are added and of choosing the ones you want added.
 
 ===============================================================================
 DATABASE SCHEMA

@@ -199,7 +199,7 @@ class FamilyRoot extends BaseController
 
 		if ($this->showLivingHusb == false && $this->showLivingWife == false)
 		{
-			print_header("{$pgv_lang['private']} {$pgv_lang['family_info']}");
+			print_header($pgv_lang['private']." ".$pgv_lang['family_info']);
 			print_privacy_error($CONTACT_EMAIL);
 			print_footer();
 			exit;
@@ -428,13 +428,6 @@ class FamilyRoot extends BaseController
 			if (userCanAccept(getUserName()))
 			{
 				// edit_fam / accept_all
-				/*$submenu = new Menu($pgv_lang['accept_all']);
-				$submenu->addOnclick("window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;");
-				if (!empty($PGV_IMAGES["edit_fam"]["small"]))
-					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
-				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
-				$menu->addSubmenu($submenu);
-				*/
 				$submenu = new Menu($pgv_lang["undo_all"], "family.php?famid=".$this->famid."&amp;action=undo");
 				if (!empty($PGV_IMAGES["edit_fam"]["small"]))
 					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");

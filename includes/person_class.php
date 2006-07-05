@@ -475,8 +475,8 @@ class Person extends GedcomRecord {
 				$wife = $fam->getWife();
 				$husb = $fam->getHusband();
 				if ((is_null($husb) || !$husb->equals($father)) && (is_null($wife)||$wife->equals($mother))) {
-					if ($mother->getSex()=="F") $label = $pgv_lang["mothers_family_with"];
-					else $label = $pgv_lang["fathers_family_with"];
+					if ($mother->getSex()=="M") $label = $pgv_lang["fathers_family_with"];
+					else $label = $pgv_lang["mothers_family_with"];
 					if (!is_null($father)) $label .= $father->getName();
 					else $label .= $pgv_lang["unknown"];
 				}
