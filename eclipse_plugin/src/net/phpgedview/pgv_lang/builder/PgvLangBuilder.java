@@ -90,6 +90,12 @@ public class PgvLangBuilder extends IncrementalProjectBuilder {
 		if (resource instanceof IFile && (resource.getName().endsWith(".php")
 				|| resource.getName().endsWith(".html"))) {
 			IFile file = (IFile) resource;
+			boolean pass = false;
+			if (!file.getName().contains("lang.")||file.getName().contains("lang.en.")) pass=true;
+			else if (!file.getName().contains("help_text.")||file.getName().contains("help_text.en.")) pass=true;
+			else if (!file.getName().contains("configure_help.")||file.getName().contains("configure_help.en.")) pass=true;
+			else pass=false;
+			if (pass) {
 			PGVLangMap entries = PGVLangMap.getInstance(file.getProjectRelativePath());
 			try {
 				entries.clearReferences(file);
@@ -103,15 +109,19 @@ public class PgvLangBuilder extends IncrementalProjectBuilder {
 					while(m.find()) {
 						String key = m.group(1);
 						if (key.startsWith("\"")) key = key.substring(1, key.length()-1);
-						String value = m.group(2);
-						PGVLangReference ref = new PGVLangReference(file, l);
-						PGVLangEntry e = entries.getEntry(key);
-						if (e == null) {
-							e = new PGVLangEntry(key, value);
-							entries.addEntry(e);
+						else if (key.startsWith("'")) key = key.substring(1, key.length()-1);
+						else if (key.startsWith("\\")) key = key.substring(2, key.length()-2);
+						if (key.indexOf("$")==-1) {
+							String value = m.group(2);
+							PGVLangReference ref = new PGVLangReference(file, l);
+							PGVLangEntry e = entries.getEntry(key);
+							if (e == null) {
+								e = new PGVLangEntry(key, value);
+								entries.addEntry(e);
+							}
+							else e.setValue(value);
+							e.addDefinition(ref);
 						}
-						else e.setValue(value);
-						e.addDefinition(ref);
 					}
 					
 					p = Pattern.compile("pgv_lang\\[([^\\]]+)\\]");
@@ -120,13 +130,16 @@ public class PgvLangBuilder extends IncrementalProjectBuilder {
 						String key = m.group(1);
 						if (key.startsWith("\"")) key = key.substring(1, key.length()-1);
 						else if (key.startsWith("'")) key = key.substring(1, key.length()-1);
-						PGVLangReference ref = new PGVLangReference(file, l);
-						PGVLangEntry e = entries.getEntry(key);
-						if (e == null) {
-							e = new PGVLangEntry(key, "");
-							entries.addEntry(e);
+						else if (key.startsWith("\\")) key = key.substring(2, key.length()-2);
+						if (key.indexOf("$")==-1) {
+							PGVLangReference ref = new PGVLangReference(file, l);
+							PGVLangEntry e = entries.getEntry(key);
+							if (e == null) {
+								e = new PGVLangEntry(key, "");
+								entries.addEntry(e);
+							}
+							e.addReference(ref);
 						}
-						e.addReference(ref);
 					}	
 			
 					l++;
@@ -143,6 +156,7 @@ public class PgvLangBuilder extends IncrementalProjectBuilder {
 				getParser().parse(file.getContents(), reporter);
 			} catch (Exception e1) {
 			}*/
+			}
 		}
 	}
 	

@@ -132,9 +132,7 @@ public class PGVLangEntry implements Serializable {
 			while(i.hasNext()) {
 				PGVLangReference r = (PGVLangReference) i.next();
 				String fname = r.getFilePath();
-				Pattern p = Pattern.compile("\\.[a-z][a-z]\\.php");
-				Matcher m = p.matcher(fname);
-				if (!m.find()) r.addMarker(file, "Duplicate Language definition for "+key+message, IMarker.SEVERITY_WARNING);
+				if (fname.indexOf("/languages/")==-1) r.addMarker(file, "Duplicate Language definition for "+key+message, IMarker.SEVERITY_WARNING);
 			}
 		}
 	}
