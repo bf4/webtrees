@@ -625,6 +625,9 @@ function checkTableExists() {
 		if (!$has_auto_accept) {
 			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_auto_accept VARCHAR(2)";
 			$pres = dbquery($sql);
+			//-- set default for auto_accept to N
+			$sql = "UPDATE ".$TBLPREFIX."users SET u_auto_accept='N'";
+			$pres = dbquery($sql);
 		}
 	}
 	if (!$has_messages) {
