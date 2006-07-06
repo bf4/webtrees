@@ -35,6 +35,8 @@ Version 4.1
  - Added Search and Replace feature (Neumont)
 
 Version 4.0.1
+ - Fixed [ 1516456 ] Error on "My account" page (yalnifj)
+ - Fixed [ 1518035 ] Quick Updating - Add sibling (yalnifj)
  - Applied [ 1515896 ] Proposed fix for PGV 4.0 login problem (Win32 sites) (yalnifj)
  - Fixed [ 1507774 ] PGV 4.0 stable name edit (yalnifj)
  - Removed calls to flock() as some systems do not handle them properly (yalnifj)

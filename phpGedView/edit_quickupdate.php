@@ -2494,7 +2494,6 @@ $chil = find_children_in_record($famrec, $pid);
 					<td class="descriptionbox"><?php print $pgv_lang["remove"]; ?></td>
 				</tr>
 			<?php
-				$i=0;
 				foreach($chil as $c=>$child) {
 					print "<tr><td class=\"optionbox\">";
 					$name = get_person_name($child);
@@ -2532,7 +2531,6 @@ $chil = find_children_in_record($famrec, $pid);
 					</td>
 					<?php
 					print "</tr>\n";
-					$i++;
 				}
 			?>
 			<tr>
