@@ -25,9 +25,11 @@
  * @subpackage Admin
  * @version $Id$
  */
-require "config.php";
-require $confighelpfile["english"];
-if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
+require_once("config.php");
+require($confighelpfile["english"]);
+if (file_exists($confighelpfile[$LANGUAGE])) require($confighelpfile[$LANGUAGE]);
+
+require_once("includes/functions_export.php");
 
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
@@ -80,7 +82,7 @@ if ($proceed == "backup") {
 		if (file_exists($INDEX_DIRECTORY."favorites.dat")) unlink($INDEX_DIRECTORY."favorites.dat");
 
 		// Then make the new ones
-		um_export();
+		um_export($proceed);
 		
 		// Make filelist for files to ZIP
 		if (file_exists($INDEX_DIRECTORY."authenticate.php")) $flist[] = $INDEX_DIRECTORY."authenticate.php";
@@ -98,8 +100,20 @@ if ($proceed == "backup") {
 	// Backup gedcoms
 	if (isset($_POST["um_gedcoms"])) {
 		foreach($GEDCOMS as $key=> $gedcom) {
-			if (file_exists($gedcom["path"])) $flist[] = $gedcom["path"];
+			if ($SYNC_GEDCOM_FILE && file_exists($gedcom["path"])) $flist[] = $gedcom["path"];
+			else {
+				$oldged = $GEDCOM;
+				$GEDCOM = $gedcom;
+				$gedname = $INDEX_DIRECTORY.$gedcom.".bak";
+				if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_creating"]." \"$gedname\"<br /><br />";
+				$gedout = fopen(filename_decode($gedname), "wb");
+				print_gedcom('', '', '', '', 'yes', $gedout);
+				fclose($gedout);
+				$GEDCOM = $oldged;
+				$flist[] = $gedname;
+			}
 		}
+		$flist[] = $INDEX_DIRECTORY."pgv_changes.php";
 	}
 
 	// Backup gedcom settings
@@ -212,212 +226,6 @@ if (($proceed != "import") && ($proceed != "export") && ($proceed != "exportovr"
 	exit;
 }
 
-function um_export() {
-	global $INDEX_DIRECTORY, $TBLPREFIX, $DBCONN, $proceed, $pgv_lang;
-	
-
-	// Get user array and create authenticate.php
-	if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_creating"]." \"authenticate.php\"<br /><br />";
-	$authtext = "<?php\n\n\$users = array();\n\n";
-	$users = GetUsers();
-	foreach($users as $key=>$user) {
-		$user["firstname"] = $DBCONN->escapeSimple($user["firstname"]);
-		$user["lastname"] = $DBCONN->escapeSimple($user["lastname"]);
-		$user["comment"] = $DBCONN->escapeSimple($user["comment"]);
-		$authtext .= "\$user = array();\n";
-		foreach($user as $ukey=>$value) {
-			if (!is_array($value)) {
-				$value = preg_replace('/"/', '\\"', $value);
-				$authtext .= "\$user[\"$ukey\"] = '$value';\n";
-			}
-			else {
-				$authtext .= "\$user[\"$ukey\"] = array();\n";
-				foreach($value as $subkey=>$subvalue) {
-					$subvalue = preg_replace('/"/', '\\"', $subvalue);
-					$authtext .= "\$user[\"$ukey\"][\"$subkey\"] = '$subvalue';\n";
-				}
-			}
-		}
-		$authtext .= "\$users[\"$key\"] = \$user;\n\n";
-	}
-	$authtext .= "?>\n";
-	if (file_exists($INDEX_DIRECTORY."authenticate.php")) {
-		print $pgv_lang["um_file_create_fail1"]." ".$INDEX_DIRECTORY."authenticate.php<br /><br />";
-	}
-	else {
-		$fp = fopen($INDEX_DIRECTORY."authenticate.php", "w");
-		if ($fp) {
-			fwrite($fp, $authtext);
-			fclose($fp);
-			$logline = AddToLog("authenticate.php updated by >".getUserName()."<");
- 			if (!empty($COMMIT_COMMAND)) check_in($logline, "authenticate.php", $INDEX_DIRECTORY);	
-			if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_file_create_succ1"]." authenticate.php<br /><br />";
-		}
-		else print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."authenticate.php. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
-	}
-
-	// Get messages and create messages.dat 
-	if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_creating"]." \"messages.dat\"<br /><br />";
-	$messages = array();
-	$mesid = 1;
-	$sql = "SELECT * FROM ".$TBLPREFIX."messages ORDER BY m_id DESC";
-	$tempsql = dbquery($sql);
-$res =& $tempsql;
-	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$row = db_cleanup($row);
-		$message = array();
-		$message["id"] = $mesid;
-		$mesid = $mesid + 1;
-		$message["to"] = $row["m_to"];
-		$message["from"] = $row["m_from"];
-		$message["subject"] = stripslashes($row["m_subject"]);
-		$message["body"] = stripslashes($row["m_body"]);
-		$message["created"] = $row["m_created"];
-		$messages[] = $message;
-	}	
-	if ($mesid > 1) {
-		$mstring = serialize($messages);
-			if (file_exists($INDEX_DIRECTORY."messages.dat")) {
-			print $pgv_lang["um_file_create_fail1"]." ".$INDEX_DIRECTORY."messages.dat<br /><br />";
-		}
-		else {
-			$fp = fopen($INDEX_DIRECTORY."messages.dat", "wb");
-			if ($fp) {
-				fwrite($fp, $mstring);
-				fclose($fp);
-				$logline = AddToLog("messages.dat updated by >".getUserName()."<");
- 				if (!empty($COMMIT_COMMAND)) check_in($logline, "messages.dat", $INDEX_DIRECTORY);	
-				if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_file_create_succ1"]." messages.dat<br /><br />";
-			}
-		else print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."messages.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
-		}
-	}
-	else {
-		if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_nomsg"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
-	}
-
-	// Get favorites and create favorites.dat 
-	if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_creating"]." \"favorites.dat\"<br /><br />";
-	$favorites = array();
-	$sql = "SELECT * FROM ".$TBLPREFIX."favorites";
-	$tempsql = dbquery($sql);
-	$res =& $tempsql;
-	$favid = 1;
-	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$row = db_cleanup($row);
-		$favorite = array();
-		$favorite["id"] = $favid;
-		$favid = $favid + 1;
-		$favorite["username"] = $row["fv_username"];
-		$favorite["gid"] = $row["fv_gid"];
-		$favorite["type"] = $row["fv_type"];
-		$favorite["file"] = $row["fv_file"];
-		$favorite["title"] = $row["fv_title"];
-		$favorite["note"] = $row["fv_note"];
-		$favorite["url"] = $row["fv_url"];
-		$favorites[] = $favorite;
-	}
-	if ($favid > 1) {
-		$mstring = serialize($favorites);
-		if (file_exists($INDEX_DIRECTORY."favorites.dat")) {
-			print $pgv_lang["um_file_create_fail1"]." ".$INDEX_DIRECTORY."favorites.dat<br /><br />";
-			}
-		else {
-			$fp = fopen($INDEX_DIRECTORY."favorites.dat", "wb");
-			if ($fp) {
-				fwrite($fp, $mstring);
-				fclose($fp);
-				$logline = AddToLog("favorites.dat updated by >".getUserName()."<");
- 				if (!empty($COMMIT_COMMAND)) check_in($logline, "favorites.dat", $INDEX_DIRECTORY);	
-				if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_file_create_succ1"]." favorites.dat<br /><br />";
-			}
-			else print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."favorites.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
-		}
-	}
-	else {
-		if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_nofav"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
-	}
-
-	// Get news and create news.dat 
-	if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_creating"]." \"news.dat\"<br /><br />";
-	$allnews = array();
-	$sql = "SELECT * FROM ".$TBLPREFIX."news ORDER BY n_date DESC";
-	$tempsql = dbquery($sql);
-$res =& $tempsql;
-	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$row = db_cleanup($row);
-		$news = array();
-		$news["id"] = $row["n_id"];
-		$news["username"] = $row["n_username"];
-		$news["date"] = $row["n_date"];
-		$news["title"] = stripslashes($row["n_title"]);
-		$news["text"] = stripslashes($row["n_text"]);
-		$allnews[$row["n_id"]] = $news;
-	}
-	if (count($allnews) > 0) {
-		$mstring = serialize($allnews);
-		if (file_exists($INDEX_DIRECTORY."news.dat")) {
-			print $pgv_lang["um_file_create_fail1"].$INDEX_DIRECTORY."news.dat<br /><br />";
-			}
-		else {
-			$fp = fopen($INDEX_DIRECTORY."news.dat", "wb");
-			if ($fp) {
-				fwrite($fp, $mstring);
-				fclose($fp);
-				$logline = AddToLog("news.dat updated by >".getUserName()."<");
- 				if (!empty($COMMIT_COMMAND)) check_in($logline, "news.dat", $INDEX_DIRECTORY);	
-				if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_file_create_succ1"]." news.dat<br /><br />";
-			}
-			else print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."news.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
-		}
-	}
-	else {
-		if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_nonews"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
-	}
-
-	// Get blocks and create blocks.dat 
-	if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_creating"]." \"blocks.dat\"<br /><br />";
-	$allblocks = array();
-	$blocks["main"] = array();
-	$blocks["right"] = array();
-	$sql = "SELECT * FROM ".$TBLPREFIX."blocks ORDER BY b_location, b_order";
-	$tempsql = dbquery($sql);
-$res =& $tempsql;
-	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$row = db_cleanup($row);
-		$blocks = array();
-		$blocks["username"] = $row["b_username"];
-		$blocks["location"] = $row["b_location"];
-		$blocks["order"] = $row["b_order"];
-		$blocks["name"] = $row["b_name"];
-		$blocks["config"] = unserialize($row["b_config"]);
-		$allblocks[] = $blocks;
-	}
-	if (count($allblocks) > 0) {
-		$mstring = serialize($allblocks);
-		if (file_exists($INDEX_DIRECTORY."blocks.dat")) {
-			print $pgv_lang["um_file_create_fail1"]." ".$INDEX_DIRECTORY."blocks.dat<br /><br />";
-		}
-		else {
-			$fp = fopen($INDEX_DIRECTORY."blocks.dat", "wb");
-			if ($fp) {
-				fwrite($fp, $mstring);
-				fclose($fp);
-				$logline = AddToLog("blocks.dat updated by >".getUserName()."<");
- 				if (!empty($COMMIT_COMMAND)) check_in($logline, "blocks.dat", $INDEX_DIRECTORY);	
-				if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_file_create_succ1"]." blocks.dat<br /><br />";
-			}
-			else print $pgv_lang["um_file_create_fail2"]." ".$INDEX_DIRECTORY."blocks.dat. ".$pgv_lang["um_file_create_fail3"]."<br /><br />";
-		}
-	}
-	else {
-		if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_noblocks"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
-	}
-}
-
-
-
-
 if (($proceed == "export") || ($proceed == "exportovr")) {
 	
 	// Check if one of the files already exists
@@ -450,7 +258,7 @@ if (($proceed == "export") || ($proceed == "exportovr")) {
 		if (file_exists($INDEX_DIRECTORY."blocks.dat")) unlink($INDEX_DIRECTORY."blocks.dat");
 		if (file_exists($INDEX_DIRECTORY."favorites.dat")) unlink($INDEX_DIRECTORY."favorites.dat");
 	}
-	um_export();
+	um_export($proceed);
 }
 
 if ($proceed == "import") {
