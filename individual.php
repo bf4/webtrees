@@ -219,7 +219,7 @@ function show_gedcom_record(shownew) {
 }
 
 function showchanges() {
-	window.location = '<?php print $SCRIPT_NAME."?pid=".$controller->pid; ?>&show_changes=yes';
+	window.location = 'individual.php?pid=<?php print $controller->pid; ?>&show_changes=yes';
 }
 // The function below does not go well with validation.
 // The option to use getElementsByName is used in connection with code from

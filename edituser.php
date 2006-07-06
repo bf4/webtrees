@@ -30,7 +30,6 @@ require "config.php";
 require $confighelpfile["english"];
 if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
 require_once("includes/functions_print_lists.php");
-include_once("includes/functions_edit.php");
 
 if (!isset($action)) $action="";
 if (isset($firstname)) $firstname = stripslashes($firstname);
@@ -101,6 +100,7 @@ if ($action=="edituser2") {
 				$oldged = $GEDCOM;
 				foreach($user["gedcomid"] as $gedc=>$gedid) {
 					if (!empty($gedid)) {
+						include_once("includes/functions_edit.php");
 						$GEDCOM = $gedc;
 						$indirec = find_person_record($gedid);
 						if (!empty($indirec)) {
