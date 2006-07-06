@@ -564,6 +564,7 @@ END_OUT;
 			$newrec = ra_functions::deleteRAFacts($_REQUEST['taskid'], $person->getGedcomRecord());
 			$newpeoplerecs[$pid]=$newrec;
 		}
+		if (!isset($_REQUEST['factcount'])) $_REQUEST['factcount'] = 0;
 		$factcount = $_REQUEST['factcount'];
 		for($i=0; $i<$factcount; $i++) {
 			if (isset($_REQUEST['fact'.$i])) {
