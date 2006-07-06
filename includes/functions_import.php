@@ -1458,22 +1458,22 @@ function write_file() {
 		AddToChangeLog("ERROR 6: Unable to open GEDCOM file resource.  Unable to complete request. ->" . getUserName() ."<-");
 		return false;
 	}
-	$fl = flock($fp, LOCK_EX);
-	if (!$fl) {
-		print "ERROR 7: Unable to obtain file lock.\n";
-		AddToChangeLog("ERROR 7: Unable to obtain file lock. ->" . getUserName() ."<-");
-		fclose($fp);
-		return false;
-	}
+//	$fl = flock($fp, LOCK_EX);
+//	if (!$fl) {
+//		print "ERROR 7: Unable to obtain file lock.\n";
+//		AddToChangeLog("ERROR 7: Unable to obtain file lock. ->" . getUserName() ."<-");
+//		fclose($fp);
+//		return false;
+//	}
 	$fw = fwrite($fp, $fcontents);
 	if ($fw===false) {
 		print "ERROR 7: Unable to write to GEDCOM file.\n";
 		AddToChangeLog("ERROR 7: Unable to write to GEDCOM file. ->" . getUserName() ."<-");
-		$fl = flock($fp, LOCK_UN);
+//		$fl = flock($fp, LOCK_UN);
 		fclose($fp);
 		return false;
 	}
-	$fl = flock($fp, LOCK_UN);
+//	$fl = flock($fp, LOCK_UN);
 	fclose($fp);
 	unlock_file();
 	$logline = AddToLog($GEDCOMS[$GEDCOM]["path"]." updated by >".getUserName()."<");
