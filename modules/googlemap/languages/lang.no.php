@@ -22,12 +22,16 @@ $pgv_lang["configure_googlemap"]    = "Google Map innstillinger";
 $pgv_lang["gm_admin_error"]         = "Side bare for administratorer";
 $pgv_lang["gm_db_error"]            = "Fant ikke tabellen for kartreferanser til steder i databasen";
 $pgv_lang["gm_table_created"]       = "Tabell opprettet for kartreferanser til steder";
+$pgv_lang["googlemap_enable"]       = "Aktivere Google Map";
 $pgv_lang["googlemapkey"]           = "Nøkkel til Google Map API";
 $pgv_lang["gm_map_type"]            = "Standard karttype";
 $pgv_lang["gm_map_size"]            = "Størrelse på kartet (i punkter)";
 $pgv_lang["gm_map_size_x"]          = "Bredde";
 $pgv_lang["gm_map_size_y"]          = "Høyde";
 $pgv_lang["gm_map_zoom"]            = "Zoom-faktor for kart";
+$pgv_lang["gm_digits"]              = "siffer";
+$pgv_lang["gm_min"]                 = "Min.";
+$pgv_lang["gm_max"]                 = "Maks";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Rediger kartreferanser til steder";

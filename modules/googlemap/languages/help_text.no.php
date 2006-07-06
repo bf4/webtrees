@@ -28,6 +28,9 @@ if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
   exit;
 }
 
+$pgv_lang["GOOGLEMAP_ENABLE"]           = "Aktivere Google Map";
+$pgv_lang["GOOGLEMAP_ENABLE_help"]      = "~#pgv_lang[GOOGLEMAP_ENABLE]#~<br /><br />Her kan du aktivere eller deaktivere funksjonene til som bruker Google Map.<br>Arkfanen Kart på siden for opplysninger om en person vil bli vist uansett, men den vil være tom dersom dette valget er deaktivert. Valget for oppsett på siden for administrasjon vil uansett være tilgjengelig.";
+
 $pgv_lang["GOOGLEMAP_API_KEY"]          = "Google kart - API-nøkkel";
 $pgv_lang["GOOGLEMAP_API_KEY_help"]     = "~#pgv_lang[GOOGLEMAP_API_KEY]#~<br /><br />Oppgi nøkkelen din til Google Map API her.  Dersom du ikke har en nøkkel, kan du be om å få en på nettsiden til <a target=\"_blank\" href=\"http://www.google.com/apis/maps/\">Google kart</a>";
 
@@ -73,7 +76,7 @@ $pgv_lang["PLE_PRECISION"]              = "Angi nøyaktighet";
 $pgv_lang["PLE_PRECISION_help"]         = "Her kan du angi hvor nøyaktig et sted skal benevnes. Basert på denne innstillingen, vil dette bestemme hvor mange siffer som skal brukes i lengde- og breddegradene for stedet.";
 
 $pgv_lang["PLE_LATLON_CTRL"]            = "Angi lengde- og breddegrad";
-$pgv_lang["PLE_LATLON_CTRL_help"]       = "Her kan du angi lengde- og breddegraden til stedet. Først velger du området du ønsker å angi (E/W eller N/S). Deretter angir du verdien for lengde- eller breddegraden. Dett bør være en desimalverdi.<br>Desimalverdien kan bestemmes ved å konvertere minuttene og sekundene ved å bruke følgende format:<br>degrees_decimal = ((sekunder / 60) + minutter) / 60 + grader.";
+$pgv_lang["PLE_LATLON_CTRL_help"]       = "Her kan du angi lengde- og breddegraden til stedet. Først velger du området du ønsker å angi (Ø/V eller N/S). Deretter angir du verdien for lengde- eller breddegraden. Dett bør være en desimalverdi.<br>Desimalverdien kan bestemmes ved å konvertere minuttene og sekundene ved å bruke følgende format:<br>degrees_decimal = ((sekunder / 60) + minutter) / 60 + grader.";
 
 $pgv_lang["PLE_ZOOM"]                   = "Angi nivå for zoom";
 $pgv_lang["PLE_ZOOM_help"]              = "Her angir du ønsket nivå for zoom av kartutsnitt. Denne verdien vil bli brukt som minimumsverdi når stedet blir vist på et kart.";
@@ -83,5 +86,11 @@ $pgv_lang["PLE_ICON_help"]              = "Her kan du angi hva slags markering s
 
 $pgv_lang["PLE_FLAGS"]                  = "Velg flagg";
 $pgv_lang["PLE_FLAGS_help"]             = "Her kan du velge et land hvor flagget skal brukes. Dersom ingen flagg blir vist, er det ikke bestemt noe flagg for dette landet.";
+
+$pgv_lang["PLIF_FILENAME"]              = "Angi filnavn";
+$pgv_lang["PLIF_FILENAME_help"]         = "Oppgi navnet på filen som inneholder opplysninger om steder i CSV format.";
+
+$pgv_lang["PLIF_CLEAN"]                 = "Tøm tabellen i databasen med stedsopplysninger";
+$pgv_lang["PLIF_CLEAN_help"]            = "Her kan du du velge å tømme tabellen med stedsopplysninger i databasen. Det betyr at <u>kun</u> innholdet i tabellen blir fjernet, mens slektsfilen (GED) vil forbli inntakt.";
 
 ?>
