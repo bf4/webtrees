@@ -1015,8 +1015,8 @@ else print "<table class=\"facts_table\"><tr><td id=\"no_tab6\" colspan=\"2\" cl
 //--------------------------------Start 7th tab individual page
 //--- Google map
 if (file_exists("modules/googlemap/defaultconfig.php")) {
-	print "\n\t<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\">";
-	    print "<span class=\"subheaders\">".$pgv_lang["googlemap"]."</span>";
+	print "\n\t<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\" >\n";
+	    print "<span class=\"subheaders\">".$pgv_lang["googlemap"]."</span>\n";
         if (!$controller->indi->canDisplayName()) {
             print "\n\t<table class=\"facts_table\">";
             print "<tr><td class=\"facts_value\">";
