@@ -586,7 +586,7 @@ class DB
      */
     function isError($value)
     {
-      	if (get_class($value)=='DB_Error')
+      	if (strtolower(get_class($value))=='db_error')
         	return true;
         return false;
     }

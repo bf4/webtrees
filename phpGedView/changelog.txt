@@ -35,7 +35,20 @@ Version 4.1
  - Added Search and Replace feature (Neumont)
 
 Version 4.0.1
- - Fixed [ 1506564 ] CVS4.0 - Error 406 when try to define URL Favorite (yalnifj)
+ - Applied [ 1515896 ] Proposed fix for PGV 4.0 login problem (Win32 sites) (yalnifj)
+ - Fixed [ 1507774 ] PGV 4.0 stable name edit (yalnifj)
+ - Removed calls to flock() as some systems do not handle them properly (yalnifj)
+ - Fixed MySQL errors are not handled properly (yalnifj)
+ - Fixed [ 1514913 ] 4.0 Parent's family with new spouse (yalnifj)
+ - Fixed [ 1508850 ] User Admin Page Changes GEDCOMs (yalnifj)
+ - Fixed [ 1510437 ] slklist.php - EXCEL (SLK) - Errors, removed the file (yalnifj)
+ - Fixed [ 1509731 ] Delete Gedcom (yalnifj)
+ - Fixing some places missing from places table (yalnifj)
+ - Fixed [ 1511527 ] LOGIN failure (canajun2eh)
+ - Fixed [ 1506564 ] CVS4.0 - Error 406 when try to define URL Favorite(yalnifj)
+ - Fixed [ 1512101 ] 4.0 stable: Incorrect language for (unknown) in Family list (canajun2eh)
+ - Fixed [ 1511278 ] 4.0: Search page contains untranslated text (canajun2eh)
+ - Fixed [ 1508480 ] Individual List of a surname (canajun2eh)
  - Added [ 1509083 ] Date entry - quarters (opus27)
  - Fixed [ 1506971 ] Missing "Events of close relatives" for Some Individuals (opus27)
  - Added [ 1504541 ] Descendancy Chart - Marriage link (opus27)
@@ -45,7 +58,7 @@ Version 4.0.1
  - Fixed [ 1507590 ] 4.0rel ... source.php keeps the @N.N rather than "unknown" (canajun2eh)
  - Fixed [ 1506547 ] Media List - RtL File Name (canajun2eh)
  - Fixed [ 1507194 ] 4.0release: QUAY tag at wrong level within source citation (canajun2eh)
-
+ 
 Version 4.0 2006-06-13
  - Added GEDCOM config option for auto-generation of GUIDs (canajun2eh)
  - Fixed [ 1503342 ] 4.0b9: URL Favorite does not work (canajun2eh)
