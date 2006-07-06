@@ -82,7 +82,11 @@ if (!isset($level)) {
 if ($action=="addrecord") {
     if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
     getHighestIndex();
-    $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", $placeid, ".$level.", \"".$_POST["NEW_PLACE_NAME"]."\", \"".$_POST["LONG_CONTROL"][3].$_POST["NEW_PLACE_LONG"]."\" , \"".$_POST["LATI_CONTROL"][3].$_POST["NEW_PLACE_LATI"]."\", ".$_POST["NEW_ZOOM_FACTOR"].", \"".$_POST["icon"]."\");";
+    if (($_POST["LONG_CONTROL"] == "") || ($_POST["NEW_PLACE_LONG"] == "") || ($_POST["NEW_PLACE_LATI"] == "")) {
+        $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", $placeid, ".$level.", \"".$_POST["NEW_PLACE_NAME"]."\", \"\" , \"\", ".$_POST["NEW_ZOOM_FACTOR"].", \"".$_POST["icon"]."\");";
+    } else {
+        $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", $placeid, ".$level.", \"".$_POST["NEW_PLACE_NAME"]."\", \"".$_POST["LONG_CONTROL"][3].$_POST["NEW_PLACE_LONG"]."\" , \"".$_POST["LATI_CONTROL"][3].$_POST["NEW_PLACE_LATI"]."\", ".$_POST["NEW_ZOOM_FACTOR"].", \"".$_POST["icon"]."\");";
+    }
     if (userIsAdmin(getUserName())) {
         $res = dbquery($sql);
     }
@@ -94,7 +98,12 @@ if ($action=="addrecord") {
 
 if ($action=="updaterecord") {
     if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
-    $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_place=\"".$_POST["NEW_PLACE_NAME"]."\",pl_lati=\"".$_POST["LATI_CONTROL"][3].$_POST["NEW_PLACE_LATI"]."\",pl_long=\"".$_POST["LONG_CONTROL"][3].$_POST["NEW_PLACE_LONG"]."\",pl_zoom=\"".$_POST["NEW_ZOOM_FACTOR"]."\",pl_icon=\"".$_POST["icon"]."\" where pl_id=$placeid LIMIT 1";
+    print $_POST["LONG_CONTROL"]."  ".$_POST["NEW_PLACE_LONG"]."  ".$_POST["NEW_PLACE_LATI"];
+    if (($_POST["LONG_CONTROL"] == "") || ($_POST["NEW_PLACE_LONG"] == "") || ($_POST["NEW_PLACE_LATI"] == "")) {
+        $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_place=\"".$_POST["NEW_PLACE_NAME"]."\",pl_lati=\"\",pl_long=\"\",pl_zoom=\"".$_POST["NEW_ZOOM_FACTOR"]."\",pl_icon=\"".$_POST["icon"]."\" where pl_id=$placeid LIMIT 1";
+    } else {
+        $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_place=\"".$_POST["NEW_PLACE_NAME"]."\",pl_lati=\"".$_POST["LATI_CONTROL"][3].$_POST["NEW_PLACE_LATI"]."\",pl_long=\"".$_POST["LONG_CONTROL"][3].$_POST["NEW_PLACE_LONG"]."\",pl_zoom=\"".$_POST["NEW_ZOOM_FACTOR"]."\",pl_icon=\"".$_POST["icon"]."\" where pl_id=$placeid LIMIT 1";
+    }
     if (userIsAdmin(getUserName())) {
         $res = dbquery($sql);
     }
@@ -176,7 +185,7 @@ if ($action=="add") {
         $parent_long = "0.0";
         $place_icon = "";
         do {
-            $sql = "SELECT pl_lati,pl_long,pl_parent_id,pl_zoom,pl_level FROM ".$TBLPREFIX."placelocation WHERE pl_id=$parent_id ORDER BY pl_place";
+            $sql = "SELECT pl_lati,pl_long,pl_parent_id,pl_zoom,pl_level FROM ".$TBLPREFIX."placelocation WHERE pl_id=$placeid ORDER BY pl_place";
             $res = dbquery($sql);
             $row =& $res->fetchRow();
             if(($row[0] != NULL) && ($row[1] != NULL)) {

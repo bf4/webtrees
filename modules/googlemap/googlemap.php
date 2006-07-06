@@ -214,6 +214,7 @@ function build_indiv_map($indifacts, $famids) {
     global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOON, $GOOGLEMAP_MAX_ZOON, $GEDCOM;
     global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
     global $GOOGLEMAP_MAX_ZOOM, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_ENABLED, $TBLPREFIX, $DBCONN;
+    global $TEXT_DIRECTION;
 
     if ($GOOGLEMAP_ENABLED == "false") {
         print "<table class=\"facts_table\">\n";
@@ -263,9 +264,9 @@ function build_indiv_map($indifacts, $famids) {
                 $placerec = get_sub_record(2, "2 PLAC", $value[1]);
                 $addrFound = false;
             }
-            $ct = preg_match("/1 ADDR (.*)/", $value[1], $match);
+            $ct = preg_match("/\d ADDR (.*)/", $value[1], $match);
             if ($ct>0) {
-                $placerec = get_sub_record(1, "1 ADDR", $value[1]);
+                $placerec = get_sub_record(1, "\d ADDR", $value[1]);
                 $addrFound = true;
             }
             if (!empty($placerec)) {
@@ -428,8 +429,8 @@ function build_indiv_map($indifacts, $famids) {
         }
     }
 
-    print "<table class=\"facts_table\">\n";
     if ($i == 0) {
+        print "<table class=\"facts_table\">\n";
         print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_gmtab"]."<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script></td></tr>\n";
         print "<script type=\"text/javascript\">\n";
         print "function ResizeMap ()\n{\n}\n</script>\n";
@@ -553,10 +554,8 @@ function build_indiv_map($indifacts, $famids) {
                         print "       new GInfoWindowTab(\"".$mapdata["fact"][$j]."\", \"<div style=\'width:360px\'>".$mapdata["fact"][$j].":<br>";
                         if ($mapdata["name"][$j] != "") {
                             print "<a href=\\\"individual.php?pid=".$mapdata["name"][$j]."&amp;ged=$GEDCOM\\\">";
-                            if (displayDetailsById($mapdata["name"][$j])||showLivingNameById($mapdata["name"][$j]))
-                                print preg_replace("/\"/", "\\\"", PrintReady(get_person_name($mapdata["name"][$j])));
-                            else 
-                                print $pgv_lang["private"];
+                            if (displayDetailsById($mapdata["name"][$j])||showLivingNameById($mapdata["name"][$j])) print PrintReady(get_person_name($mapdata["name"][$j]));
+                            else print $pgv_lang["private"];
                             print "</a><br>";
                         }
                         if(preg_match("/2 PLAC (.*)/", $mapdata["placerec"][$j]) == 0) {
@@ -599,10 +598,8 @@ function build_indiv_map($indifacts, $famids) {
                                 print "       new GInfoWindowTab(\"".$mapdata["fact"][$k]."\", \"<div style=\'width:360px\'>".$mapdata["fact"][$k].":<br>";
                                 if ($mapdata["name"][$k] != "") {
                                     print "<a href=\\\"individual.php?pid=".$mapdata["name"][$k]."&amp;ged=$GEDCOM\\\">";
-                                    if (displayDetailsById($mapdata["name"][$k])||showLivingNameById($mapdata["name"][$k]))
-                                        print preg_replace("/\"/", "\\\"", PrintReady(get_person_name($mapdata["name"][$k])));
-                                    else
-                                        print $pgv_lang["private"];
+                                    if (displayDetailsById($mapdata["name"][$k])||showLivingNameById($mapdata["name"][$k])) print PrintReady(get_person_name($mapdata["name"][$k]));
+                                    else print $pgv_lang["private"];
                                     print "</a><br>";
                                 }
                                 if(preg_match("/2 PLAC (.*)/", $mapdata["placerec"][$k]) == 0) {
@@ -631,14 +628,17 @@ function build_indiv_map($indifacts, $famids) {
         }
         print "}\n";
         print "</script>\n";
-        print "<table width=\"95%\">\n";
+        print "<table class=\"facts_table\">\n";
         print "<tr><td valign=\"top\">\n";
+        print "<table width=\"95%\">\n";
         print "<img src=\"images/hline.gif\" width=\"".$GOOGLEMAP_XSIZE."\" height=\"0\" alt=\"\" /><br>";
-        // print "<div id=\"map_pane\" style=\"width: ".$GOOGLEMAP_XSIZE."px; height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
         print "<div id=\"map_pane\" style=\"height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
         print "<table width=100%><tr>\n";
-        print "<td align=\"left\"><a href=\"javascript:ResizeMap()\">".$pgv_lang["gm_redraw_map"]."</a></td>\n";
-        print "<td align=\"right\">\n";
+        if ($TEXT_DIRECTION=="ltr") print "<td align=\"left\">";
+        else print "<td align=\"right\">";
+        print "<a href=\"javascript:ResizeMap()\">".$pgv_lang["gm_redraw_map"]."</a></td>\n";
+        if ($TEXT_DIRECTION=="ltr") print "<td align=\"right\">\n";
+        else print "<td align=\"left\">\n";
         print "<a href=\"javascript:map.setMapType(G_NORMAL_MAP)\">".$pgv_lang["gm_map"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
         print "<a href=\"javascript:map.setMapType(G_SATELLITE_MAP)\">".$pgv_lang["gm_satellite"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
         print "<a href=\"javascript:map.setMapType(G_HYBRID_MAP)\">".$pgv_lang["gm_hybrid"]."</a>\n";
@@ -667,10 +667,8 @@ function build_indiv_map($indifacts, $famids) {
                 print "\" colspan=\"2\">\n";
                 if ($mapdata["name"][$j] != "") {
                     print "<a href=\"individual.php?pid=".$mapdata["name"][$j]."&amp;ged=$GEDCOM\">\n";
-                    if (displayDetailsById($mapdata["name"][$j])||showLivingNameById($mapdata["name"][$j]))
-                        print PrintReady(get_person_name($mapdata["name"][$j]));
-                    else
-                        print $pgv_lang["private"];
+                    if (displayDetailsById($mapdata["name"][$j])||showLivingNameById($mapdata["name"][$j])) print PrintReady(get_person_name($mapdata["name"][$j]));
+                    else print $pgv_lang["private"];
                     print "</a><br>\n";
                 }
                 if(preg_match("/2 PLAC (.*)/", $mapdata["placerec"][$j]) == 0) {
