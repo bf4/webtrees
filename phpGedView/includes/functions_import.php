@@ -42,7 +42,7 @@ include_once('includes/functions_lang.php');
 function import_record($indirec, $update = false) {
 	global $DBCONN, $gid, $type, $indilist, $famlist, $sourcelist, $otherlist, $TOTAL_QUERIES, $prepared_statement;
 	global $TBLPREFIX, $GEDCOM_FILE, $FILE, $pgv_lang, $USE_RIN, $CREATE_GENDEX, $gdfp, $placecache;
-	global $ALPHABET_upper, $ALPHABET_lower, $place_id, $WORD_WRAPPED_NOTES, $GEDCOMS, $media_count;
+	global $ALPHABET_upper, $ALPHABET_lower, $place_id, $WORD_WRAPPED_NOTES, $GEDCOMS;
 	global $MAX_IDS, $fpnewged, $GEDCOM, $USE_RTL_FUNCTIONS, $GENERATE_UIDS;
 
 	$FILE = $GEDCOM;
@@ -551,6 +551,7 @@ function update_media($gid, $indirec, $update = false) {
 			$sql = "INSERT INTO " . $TBLPREFIX . "media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec)";
 			$sql .= " VALUES('" . $DBCONN->escapeSimple($m_id) . "', '" . $DBCONN->escapeSimple($new_m_media) . "', '" . $DBCONN->escapeSimple($media->ext) . "', '" . $DBCONN->escapeSimple($media->title) . "', '" . $DBCONN->escapeSimple($media->file) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "', '" . $DBCONN->escapeSimple($indirec) . "')";
 			$res = dbquery($sql);
+			$media_count++;
 		} else {
 			$new_m_media = $new_media;
 			$found_ids[$old_m_media]["old_id"] = $old_m_media;
@@ -596,6 +597,7 @@ function update_media($gid, $indirec, $update = false) {
 						$sql = "INSERT INTO " . $TBLPREFIX . "media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec)";
 						$sql .= " VALUES('" . $DBCONN->escapeSimple($m_id) . "', '" . $DBCONN->escapeSimple($m_media) . "', '" . $DBCONN->escapeSimple($media->ext) . "', '" . $DBCONN->escapeSimple($media->title) . "', '" . $DBCONN->escapeSimple($media->file) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "', '" . $DBCONN->escapeSimple($objrec) . "')";
 						$res = dbquery($sql);
+						$media_count++;
 						//-- if this is not an update then write it to the new gedcom file
 						if (!$update && !empty ($fpnewged))
 							fwrite($fpnewged, trim($objrec) . "\r\n");
@@ -607,7 +609,6 @@ function update_media($gid, $indirec, $update = false) {
 					$sql = "INSERT INTO " . $TBLPREFIX . "media_mapping (mm_id, mm_media, mm_gid, mm_order, mm_gedfile, mm_gedrec)";
 					$sql .= " VALUES ('" . $DBCONN->escapeSimple($mm_id) . "', '" . $DBCONN->escapeSimple($m_media) . "', '" . $DBCONN->escapeSimple($gid) . "', '" . $DBCONN->escapeSimple($count) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]['id']) . "', '" . addslashes('' . $objlevel . ' OBJE @' . $m_media . '@') . "')";
 					$res = dbquery($sql);
-					$media_count++;
 					$count++;
 					// NOTE: Add the new media object to the record
 					$newrec .= $objlevel . " OBJE @" . $m_media . "@\r\n";
@@ -653,7 +654,6 @@ function update_media($gid, $indirec, $update = false) {
 				$sql = "INSERT INTO " . $TBLPREFIX . "media_mapping (mm_id, mm_media, mm_gid, mm_order, mm_gedfile, mm_gedrec) VALUES ('" . $DBCONN->escapeSimple($mm_id) . "', '" . $DBCONN->escapeSimple($new_mm_media) . "', '" . $DBCONN->escapeSimple($gid) . "', '" . $DBCONN->escapeSimple($count) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]['id']) . "', '" . $line . "')";
 				$res = & dbquery($sql);
 				//print "LINE ".__LINE__;
-				$media_count++;
 				$count++;
 				$objlevel = 0;
 				$objrec = "";
@@ -675,6 +675,7 @@ function update_media($gid, $indirec, $update = false) {
 							if (!$update && !empty ($fpnewged))
 								fwrite($fpnewged, trim($objrec) . "\r\n");
 							//print "LINE ".__LINE__;
+							$media_count++;
 							$objelist[$m_media] = $media;
 						} else
 							$m_media = $new_media;
@@ -682,7 +683,6 @@ function update_media($gid, $indirec, $update = false) {
 						$sql = "INSERT INTO " . $TBLPREFIX . "media_mapping (mm_id, mm_media, mm_gid, mm_order, mm_gedfile, mm_gedrec)";
 						$sql .= " VALUES ('" . $DBCONN->escapeSimple($mm_id) . "', '" . $DBCONN->escapeSimple($m_media) . "', '" . $DBCONN->escapeSimple($gid) . "', '" . $DBCONN->escapeSimple($count) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]['id']) . "', '" . addslashes('' . $objlevel . ' OBJE @' . $m_media . '@') . "')";
 						$res = dbquery($sql);
-						$media_count++;
 						$count++;
 						// NOTE: Add the new media object to the record
 						$newrec .= $objlevel . " OBJE @" . $m_media . "@\r\n";
@@ -724,6 +724,7 @@ function update_media($gid, $indirec, $update = false) {
 									if (!$update && !empty ($fpnewged))
 										fwrite($fpnewged, trim($objrec) . "\r\n");
 									//print "LINE ".__LINE__;
+									$media_count++;
 									$objelist[$m_media] = $media;
 								} else
 									$m_media = $new_media;
@@ -743,7 +744,6 @@ function update_media($gid, $indirec, $update = false) {
 							}
 							*/
 
-							$media_count++;
 							$count++;
 							$objrec = "";
 							$newrec .= $objlevel . " OBJE @" . $m_media . "@\r\n";

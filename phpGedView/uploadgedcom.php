@@ -945,6 +945,8 @@ if ($startimport == "true") {
 			$fcontents = $_SESSION["fcontents"];
 			$listtype = $_SESSION["listtype"];
 			$exectime_start = $_SESSION["exectime_start"];
+			$media_count = $_SESSION["media_count"];
+			$found_ids = $_SESSION["found_ids"];
 			$MAX_IDS = $_SESSION["MAX_IDS"];
 			$i = $_SESSION["i"];
 			fseek($fpged, $TOTAL_BYTES);
@@ -1020,7 +1022,7 @@ if ($startimport == "true") {
 					$type_BYTES = $TOTAL_BYTES;
 				}
 				//-- update the progress bars at every 50 records
-				if ($i % 50 == 0) {
+				if ($i % 25 == 0) {
 					$newtime = time();
 					$exectime = $newtime - $oldtime;
 					print "\n<script type=\"text/javascript\">update_progress($TOTAL_BYTES, $exectime);</script>\n";
@@ -1030,7 +1032,7 @@ if ($startimport == "true") {
 				$show_gid = $gid;
 
 				//-- check if we are getting close to timing out
-				if ($i % 10 == 0) {
+				if ($i % 5 == 0) {
 					//-- keep the browser informed by sending more data
 					print "\n";
 					$newtime = time();
@@ -1049,6 +1051,7 @@ if ($startimport == "true") {
 						$_SESSION["importtime"] = $importtime;
 						$_SESSION["MAX_IDS"] = $MAX_IDS;
 						$_SESSION["i"] = $i;
+						$_SESSION["found_ids"] = $found_ids;
 
 						//-- close the file connection
 						fclose($fpged);
@@ -1098,6 +1101,7 @@ if ($startimport == "true") {
 		if (!$res) {
 			print "<span class=\"error\">Unable to copy updated GEDCOM file ".$INDEX_DIRECTORY.basename($GEDCOM_FILE).".new to ".$GEDCOM_FILE."</span><br />";
 		} else {
+			@unlink($INDEX_DIRECTORY.basename($GEDCOM_FILE).".new");
 			$logline = AddToLog($GEDCOM_FILE." updated by >".getUserName()."<");
 			if (!empty ($COMMIT_COMMAND))
 				check_in($logline, $GEDCOM_FILE, $INDEX_DIRECTORY);
