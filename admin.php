@@ -203,7 +203,19 @@ foreach($users as $indexval => $user) {
 	  </td>
       <td class="optionbox"><?php print $d_logfile_str; ?></td>
    </tr>
-   <?php } ?>
+<?php    }
+
+$rep = opendir('./modules/');
+while ($file = readdir($rep)) {
+    if(($file <> ".") && ($file <> "..") && (is_dir('./modules/'.$file))) {
+        if (file_exists("modules/".$file."/admin-config.php")) {
+            require "modules/".$file."/admin-config.php";
+        }
+    }
+}
+closedir($rep);
+
+?>
   </table>
 
 <?php
