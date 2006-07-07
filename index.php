@@ -231,7 +231,7 @@ else {
 		window.location = 'index.php?command=<?php print $command; ?>';
 	}
 	function addnews(uname) {
-		window.open('editnews.php?uname='+uname, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+		window.open('editnews.php?username='+uname, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
 	}
 	function editnews(news_id) {
 		window.open('editnews.php?news_id='+news_id, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');

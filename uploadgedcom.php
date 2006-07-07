@@ -910,7 +910,7 @@ if ($startimport == "true") {
 		print "</td></tr>";
 		print "</table>";
 
-		print "The status bars below will let you know how the import is progressing.  If the time limit runs out the import will be stopped and you will be asked to press a continue button.  If you don't see a continue button, please go back and enter a smaller time limit value.";
+		print $pgv_lang['progress_bars_info'];
 		//print "<tr><td class=\"optionbox\">";
 		setup_progress_bar($FILE_SIZE);
 		//print "</td></tr>";

@@ -42,6 +42,8 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang['progress_bars_info']					7 Jul 2006				A
++$pgv_lang["upload_replacement"]					7 Jul 2006				A
 -$pgv_lang["make_slklist"]							4 Jul 2006				D		Remove SLK references
 -$pgv_lang["excel_list"]							4 Jul 2006				D		Remove SLK references
 -$pgv_lang["excel_tab"]								4 Jul 2006				D		Remove SLK references

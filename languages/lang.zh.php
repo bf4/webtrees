@@ -328,7 +328,7 @@ $pgv_lang["int"]			= "解釋";
 $pgv_lang["to"]				= "";
 $pgv_lang["cir"]			= "大約";
 $pgv_lang["apx"]			= "大約";
-
+ 
 //-- chinese numbers
 $pgv_lang["0"]			= "零";
 $pgv_lang["1"]			= "一";
@@ -395,34 +395,34 @@ $pgv_lang["utf8_to_ansi"]		= "您想要轉換這GEDCOM 從UTF-8 到ANSI (ISO-885
 $pgv_lang["relationship_chart"]		= "關係圖";
 $pgv_lang["person1"]			= "人一個";
 $pgv_lang["person2"]			= "人二";
-$pgv_lang["no_link_found"]		= "�?�接從二個體�?能被發�?�。";
+$pgv_lang["no_link_found"]		= "�?�接從二個體�?能被發�?�。";
 //--Sosa came from the lang.sv.php file it is a key value relationship pattern for parents and grandparents
 //1st generation
 $pgv_lang["sosa_2"]	= "父親";
-$pgv_lang["sosa_3"] = "�?親";
+$pgv_lang["sosa_3"] = "�?親";
 //2nd generation
 $pgv_lang["sosa_4"] = "祖父";
-$pgv_lang["sosa_5"] = "祖�?";
+$pgv_lang["sosa_5"] = "祖�?";
 $pgv_lang["sosa_6"] = "外父";
 $pgv_lang["sosa_7"] = "外婆";
 //3rd generation
 $pgv_lang["sosa_8"] = "曾祖父";
-$pgv_lang["sosa_9"] = "曾祖�?";
+$pgv_lang["sosa_9"] = "曾祖�?";
 $pgv_lang["sosa_10"] = "曾祖父";
-$pgv_lang["sosa_11"] = "曾祖�?";
+$pgv_lang["sosa_11"] = "曾祖�?";
 $pgv_lang["sosa_12"] = "曾外公";
 $pgv_lang["sosa_13"] = "曾外婆";
 $pgv_lang["sosa_14"] = "曾外公";
 $pgv_lang["sosa_15"] = "曾外婆";
 //4th generation
 $pgv_lang["sosa_16"] = "高祖父";
-$pgv_lang["sosa_17"] = "高祖�?";
+$pgv_lang["sosa_17"] = "高祖�?";
 $pgv_lang["sosa_18"] = "高祖父";
-$pgv_lang["sosa_19"] = "高祖�?";
+$pgv_lang["sosa_19"] = "高祖�?";
 $pgv_lang["sosa_20"] = "高祖父";
-$pgv_lang["sosa_21"] = "高祖�?";
+$pgv_lang["sosa_21"] = "高祖�?";
 $pgv_lang["sosa_22"] = "高祖父";
-$pgv_lang["sosa_23"] = "高祖�?";
+$pgv_lang["sosa_23"] = "高祖�?";
 $pgv_lang["sosa_24"] = "高外公";
 $pgv_lang["sosa_25"] = "高外婆";
 $pgv_lang["sosa_26"] = "高外公";
@@ -467,26 +467,26 @@ $pgv_lang["sosa_63"] = "N/A";
 
 //--Great-great-grandparnets Generation
 $pgv_lang["paternal great great grandfather"]	= "高祖父";
-$pgv_lang["paternal great great grandmother"]	= "高祖�?";
+$pgv_lang["paternal great great grandmother"]	= "高祖�?";
 $pgv_lang["maternal great great grandfather"]	= "高外公";
 $pgv_lang["maternal great great grandmother"]	= "高外婆";
 
 //--Great-grandparents Generation
 $pgv_lang["paternal great grandfather"]	= "曾祖父";
-$pgv_lang["paternal great grandmother"]	= "曾祖�?";
+$pgv_lang["paternal great grandmother"]	= "曾祖�?";
 $pgv_lang["maternal great grandfather"]	= "曾外公";
 $pgv_lang["maternal great grandmother"]	= "曾外婆";
 
 //--Grandparents Generation
 $pgv_lang["paternal grandfather"]	= "祖父";
-$pgv_lang["paternal grandmother"]	= "祖�?";
+$pgv_lang["paternal grandmother"]	= "祖�?";
 $pgv_lang["maternal grandfather"]	= "外父";
 $pgv_lang["maternal grandmother"]	= "外婆";
 $pgv_lang["paternal elder great uncle"]	= "伯祖父";
-$pgv_lang["paternal elder great uncle's wife"]	= "伯祖�?";
-$pgv_lang["paternal younger great uncle"]	= "�?�祖父";
-$pgv_lang["paternal younger great uncle's wife"] = "�?�祖�?"; 
-$pgv_lang["paternal great aunt"]	= "祖姑�?";
+$pgv_lang["paternal elder great uncle's wife"]	= "伯祖�?";
+$pgv_lang["paternal younger great uncle"]	= "�?�祖父";
+$pgv_lang["paternal younger great uncle's wife"] = "�?�祖�?"; 
+$pgv_lang["paternal great aunt"]	= "祖姑�?";
 $pgv_lang["paternal great aunt's husband"] = "姑爺祖姑丈";
 
 //--Parents generation
@@ -494,19 +494,19 @@ $pgv_lang["father"] = "父親";
 //could not find paternal uncle translation. this is our best guess.
 $pgv_lang["paternal uncle"] = "??";  
 $pgv_lang["paternal older uncle"]	= "伯父";
-$pgv_lang["paternal older uncle's wife"]	= "伯�?";
-$pgv_lang["paternal younger uncle"]	= "�?�父";
-$pgv_lang["paternal younger uncle's wife"] = "嬸�?";
-$pgv_lang["paternal aunt"] = "姑�?";
+$pgv_lang["paternal older uncle's wife"]	= "伯�?";
+$pgv_lang["paternal younger uncle"]	= "�?�父";
+$pgv_lang["paternal younger uncle's wife"] = "嬸�?";
+$pgv_lang["paternal aunt"] = "姑�?";
 $pgv_lang["paternal aunt's husband"] = "姑夫姑丈";
 $pgv_lang["paternal older aunt"]	= "姑媽姑";
 $pgv_lang["paternal older aunt's husband"] = "姑夫";       
 $pgv_lang["paternal younger aunt"]	= "姑";
 $pgv_lang["paternal younger aunt's husband"] = "姑夫";
-$pgv_lang["mother"] = "�?親";
+$pgv_lang["mother"] = "�?親";
 $pgv_lang["maternal uncle"]	= "舅父";
-$pgv_lang["maternal uncle's wife"]	= "舅�?";
-$pgv_lang["maternal elder aunt"]	= "姨�?";
+$pgv_lang["maternal uncle's wife"]	= "舅�?";
+$pgv_lang["maternal elder aunt"]	= "姨�?";
 $pgv_lang["maternal elder aunt's husband"] = "姨夫";
 $pgv_lang["maternal younger aunt"]	= "姨";
 $pgv_lang["maternal younger aunt's husband"] = "姨丈";
@@ -526,8 +526,8 @@ $pgv_lang["paternal elder male cousin's wife"]	= "堂嫂";
 $pgv_lang["paternal younger male cousin"]	= "堂弟";
 $pgv_lang["paternal younger male cousin's wife"] = "堂弟婦";
 $pgv_lang["paternal female cousin"]	= "堂姊妹"; 
-$pgv_lang["paternal elder female cousin"]	= "堂家�?";
-$pgv_lang["paternal elder female cousin's husband"]	= "堂�?夫";
+$pgv_lang["paternal elder female cousin"]	= "堂家�?";
+$pgv_lang["paternal elder female cousin's husband"]	= "堂�?夫";
 $pgv_lang["paternal younger female cousin"] = "堂妹"; 
 $pgv_lang["paternal younger female cousin's husband"]	= "堂妹夫";
 $pgv_lang["paternal male cousin"]	= "表兄弟";
@@ -541,10 +541,10 @@ $pgv_lang["paternal younger male cousin's wife"] = "表夫";
 $pgv_lang["maternal younger male cousin's wife "] = "表夫";
 $pgv_lang["paternal female cousin"]	= "表姊妹";
 $pgv_lang["maternal female cousin"]	= "表姊妹";
-$pgv_lang["paternal elder female cousin"]	= "表�?";
-$pgv_lang["maternal elder female cousin"]	= "表�?";
-$pgv_lang["paternal elder female cousin's husband"]	= "表�?夫";
-$pgv_lang["maternal elder female cousin's husband"]	= "表�?夫";
+$pgv_lang["paternal elder female cousin"]	= "表�?";
+$pgv_lang["maternal elder female cousin"]	= "表�?";
+$pgv_lang["paternal elder female cousin's husband"]	= "表�?夫";
+$pgv_lang["maternal elder female cousin's husband"]	= "表�?夫";
 $pgv_lang["paternal younger female cousin"]	= "表妹";
 $pgv_lang["maternal younger female cousin"]	= "表妹";
 $pgv_lang["paternal younger female cousin's husband"]	= "表妹夫";
@@ -554,10 +554,10 @@ $pgv_lang["maternal younger female cousin's husband"]	= "表妹夫";
 //--it is made up to follow the sosa pattern, "bosa" has no meaning that we know of.
 // add this key to other language files to work with the relationship algorithm
 //1st generation
-$pgv_lang["bosa_2"]	= "兒(儿)�?";
+$pgv_lang["bosa_2"]	= "兒(儿)�?";
 $pgv_lang["bosa_3"] = "女兒(儿)";
 //2nd generation
-$pgv_lang["bosa_4"] = "孫�?";
+$pgv_lang["bosa_4"] = "孫�?";
 $pgv_lang["bosa_5"] = "孫女";
 $pgv_lang["bosa_6"] = "外孫";
 $pgv_lang["bosa_7"] = "外孫女";
@@ -591,17 +591,17 @@ $pgv_lang["bosa_31"] = "玄孫";
 
 
 //--Children's Generation
-$pgv_lang["son"]	= "兒(儿)�?";
+$pgv_lang["son"]	= "兒(儿)�?";
 $pgv_lang["son's wife"]	= "媳婦";
 $pgv_lang["daughter"]	= "女兒(儿)";
 $pgv_lang["daughter's husband"] = "女婿";
-$pgv_lang["nephew"] = "姪�?";
+$pgv_lang["nephew"] = "姪�?";
 $pgv_lang["nephew's wife"] = "姪媳婦";
 $pgv_lang["niece"] = "姪女";
 $pgv_lang["niece's husband"]	= "姪女婿";
 
 //--Grandchildren's Generation from detail 
-$pgv_lang["son's son"]	= "孫�?";
+$pgv_lang["son's son"]	= "孫�?";
 $pgv_lang["son's son's wife"]	= "孫媳婦";
 $pgv_lang["son's daughter"]	= "孫女";
 $pgv_lang["son's daughter's husband"] = "孫女婿";
@@ -620,7 +620,7 @@ $pgv_lang["children's children's children's children's"] = "玄孫";
 
 
 
-$pgv_lang["sibling"]			= "兄弟�?妹";
+$pgv_lang["sibling"]			= "兄弟�?妹";
 $pgv_lang["follow_spouse"]		= "檢查關係由婚姻。";
 $pgv_lang["timeout_error"]		= "劇本被計時在關係能被發現之前。";
 $pgv_lang["son"]			= "兒子";

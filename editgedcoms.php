@@ -166,6 +166,7 @@ $GedCount = 0;
 			if ($TEXT_DIRECTION=="rtl") print "&rlm;(".$gedarray["id"].")&rlm;";
 			else print "&lrm;(".$gedarray["id"].")&lrm;";
 			if ($DEFAULT_GEDCOM==$gedc) print "</span>";
+			print "&nbsp;&nbsp;<a href=\"editconfig_gedcom.php?source=replace_form&amp;path=".urlencode($gedarray['path'])."\">".$pgv_lang['upload_replacement']."</a>\n";
 			print "</td>";
 			print "</tr>";
 
