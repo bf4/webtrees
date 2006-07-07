@@ -125,6 +125,11 @@ if ((!$disp)||(!$ALLOW_EDIT_GEDCOM)) {
 	exit;
 }
 
+//-- privatize the record so that line numbers etc. match what was in the display
+//-- data that is hidden because of privacy is stored in the $pgv_private_records array
+//-- any private data will be restored when the record is replaced
+$gedrec = privatize_gedcom($gedrec);
+
 //-- put the updates into the gedcom record
 if ($action=="update") {
 	function check_updated_facts($i, &$famrec, $TAGS, $prefix){
