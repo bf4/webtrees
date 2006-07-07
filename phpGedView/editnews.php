@@ -40,7 +40,7 @@ if (!isset($action)) $action="compose";
 
 print_simple_header($pgv_lang["edit_news"]);
 
-if (empty($uname)) $uname=$GEDCOM;
+if (empty($username)) $username=$GEDCOM;
 
 if ($action=="compose") {
 	print '<span class="subheaders">'.$pgv_lang["edit_news"].'</span>';
@@ -72,13 +72,13 @@ if ($action=="compose") {
 	else {
 		$news_id="";
 		$news = array();
-		$news["username"] = $uname;
+		$news["username"] = $username;
 		$news["date"] = time()-$_SESSION["timediff"];
 		$news["title"] = "";
 		$news["text"] = "";
 	}
 	print "<input type=\"hidden\" name=\"action\" value=\"save\" />\n";
-	print "<input type=\"hidden\" name=\"uname\" value=\"".$news["username"]."\" />\n";
+	print "<input type=\"hidden\" name=\"username\" value=\"".$news["username"]."\" />\n";
 	print "<input type=\"hidden\" name=\"news_id\" value=\"$news_id\" />\n";
 	print "<input type=\"hidden\" name=\"date\" value=\"".$news["date"]."\" />\n";
 	print "<table>\n";
@@ -113,7 +113,7 @@ else if ($action=="save") {
 	if (empty($text)) $text="No Text";
 	$message = array();
 	if (!empty($news_id)) $message["id"]=$news_id;
-	$message["username"] = $uname;
+	$message["username"] = $username;
 	$message["date"]=$date;
 	$message["title"] = $title;
 	$message["text"] = $text;

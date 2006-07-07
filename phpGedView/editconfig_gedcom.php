@@ -109,7 +109,7 @@ if (isset($GEDCOMPATH)) {
 		$GEDFILENAME = preg_replace('/[\+\&\%\$@]/', "_", $GEDFILENAME);
 
 		// NOTE: When uploading a file check if it doesn't exist yet
-		if (!isset($GEDCOMS[$GEDFILENAME]) && !file_exists($upload_path.$GEDFILENAME)) {
+		if ($action=="replace" || (!isset($GEDCOMS[$GEDFILENAME]) && !file_exists($upload_path.$GEDFILENAME))) {
 			if (move_uploaded_file($_FILES['GEDCOMPATH']['tmp_name'], $upload_path.$GEDFILENAME)) {
 				AddToLog("Gedcom ".$path.$GEDFILENAME." uploaded by >".getUserName()."<");
 				$GEDCOMPATH = $upload_path.$GEDFILENAME;
@@ -435,6 +435,9 @@ if ($action=="update") {
 		exit;
 	}
 }
+else if ($action=="replace") {
+	header("Location: uploadgedcom.php?action=upload_form&GEDFILENAME=$GEDFILENAME&path=$path&verify=validate_form");
+}
 
 //-- output starts here
 if (!isset($GENERATE_UIDS)) $GENERATE_UIDS = false;
@@ -505,7 +508,8 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
   </tr>
 </table>
 
-<input type="hidden" name="action" value="update" />
+<?php if ($source!="replace_form") { ?> <input type="hidden" name="action" value="update" />
+<?php } else { ?> <input type="hidden" name="action" value="replace" /> <?php } ?>
 <input type="hidden" name="source" value="<?php print $source; ?>" />
 <input type="hidden" name="oldged" value="<?php print $oldged; ?>" />
 <input type="hidden" name="old_DAYS_TO_SHOW_LIMIT" value="<?php print $DAYS_TO_SHOW_LIMIT; ?>" />
@@ -531,10 +535,11 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 	<tr>
 		<td class="descriptionbox wrap width20">
 		<?php
-		if ($source == "upload_form") {
+		if ($source == "upload_form" || $source=="replace_form") {
 			print_help_link("upload_path_help", "qm", "upload_path"); print $pgv_lang["upload_path"];
 			print "</td><td class=\"optionbox\">";
 			print "<input name=\"GEDCOMPATH\" type=\"file\" size=\"60\" />";
+			if ($source=="replace_form") print "<input type=\"hidden\" name=\"path\" value=\"".preg_replace('/\\*/', '\\', $path)."\" />";
 			if (!$filesize = ini_get('upload_max_filesize')) $filesize = "2M";
 			print " ( ".$pgv_lang["max_upload_size"]." $filesize )";
 		}
@@ -565,7 +570,9 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 		<input type="text" name="path" value="<?php print preg_replace('/\\*/', '\\', $path);?>" size="40" dir ="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('gedcom_path_help');" />
 		</td>
 	</tr>
-	<?php } ?>
+	<?php } 
+	if ($source != "replace_form") {
+	?>
 	<tr>
 		<td class="descriptionbox wrap"><?php print_help_link("gedcom_title_help", "qm", "gedcom_title", true); print print_text("gedcom_title");?></td>
 		<td class="optionbox"><input type="text" name="gedcom_title" dir="ltr" value="<?php print preg_replace("/\"/", "&quot;", PrintReady($gedcom_title)); ?>" size="40" tabindex="<?php $i++; print $i?>" onfocus="getHelp('gedcom_title_help');" /></td>
@@ -1659,6 +1666,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["meta_conf"]."\" onclick=\"expand
 			</select>
 		</td>
 	</tr>
+<?php } ?>
 </table>
 </div>
 <table class="facts_table" border="0">
@@ -1676,6 +1684,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["meta_conf"]."\" onclick=\"expand
 </script>
 <?php
 }
+
 // NOTE: Put the focus on the GEDCOM title field since the GEDCOM path actually
 // NOTE: needs no changing
 ?>

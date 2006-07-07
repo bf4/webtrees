@@ -173,6 +173,7 @@ if ($action=="createuser") {
 					$oldged = $GEDCOM;
 					foreach($user["gedcomid"] as $gedc=>$gedid) {
 						if (!empty($gedid)) {
+							require_once("./includes/functions_edit.php");
 							$GEDCOM = $gedc;
 							$indirec = find_person_record($gedid);
 							if (!empty($indirec)) {
@@ -298,6 +299,7 @@ if ($action=="edituser2") {
 				$oldged = $GEDCOM;
 				foreach($newuser["gedcomid"] as $gedc=>$gedid) {
 					if (!empty($gedid)) {
+						require_once("./includes/functions_edit.php");
 						$GEDCOM = $gedc;
 						$indirec = find_person_record($gedid);
 						if (!empty($indirec)) {
@@ -366,7 +368,6 @@ if ($action=="edituser2") {
 }
 //-- print the form to edit a user
 // NOTE: WORKING
-require_once("./includes/functions_edit.php");
 init_calendar_popup();
 if ($action=="edituser") {
 	$user = getUser($username);
@@ -616,7 +617,7 @@ if (($action == "listusers") || ($action == "edituser2") || ($action == "deleteu
 		case "sortllgn":
 			$users = getUsers("sessiontime","desc");
 			break;
-		case "sortuname":
+		case "sortusername":
 			$users = getUsers("username","asc");
 			break;
 		case "sortreg":
@@ -679,7 +680,7 @@ if (($action == "listusers") || ($action == "edituser2") || ($action == "deleteu
 			print "<td class=\"descriptionbox wrap\">";
 			print $pgv_lang["message"]."</td>";
 		} ?>
-		<td class="descriptionbox wrap"><?php print "<a href=\"useradmin.php?action=listusers&amp;sort=sortuname&amp;filter=".$filter."&amp;usrlang=".$usrlang. (!empty($ged)? "&amp;ged=".$ged : "") . "\">"; ?><?php print $pgv_lang["username"]; ?></a></td>
+		<td class="descriptionbox wrap"><?php print "<a href=\"useradmin.php?action=listusers&amp;sort=sortusername&amp;filter=".$filter."&amp;usrlang=".$usrlang. (!empty($ged)? "&amp;ged=".$ged : "") . "\">"; ?><?php print $pgv_lang["username"]; ?></a></td>
 		<td class="descriptionbox wrap"><?php print "<a href=\"useradmin.php?action=listusers&amp;sort=sortlname&amp;filter=".$filter."&amp;usrlang=".$usrlang. (!empty($ged)? "&amp;ged=".$ged : "") ."\">"; ?><?php print $pgv_lang["full_name"]; ?></a></td>
 		<td class="descriptionbox wrap"><?php print $pgv_lang["inc_languages"]; ?></td>
 		<td class="descriptionbox" style="padding-left:2px"><a href="javascript: <?php print $pgv_lang["privileges"];?>" onclick="<?php
