@@ -35,6 +35,7 @@ Version 4.1
  - Added Search and Replace feature (Neumont)
 
 Version 4.0.1
+ - Added private subrecords are removed during editing, and added again when edits are being stored.  This fixes bug [ 1514791 ] and several other privacy and editing bugs, including private data being shown during edit raw options. (yalnifj)
  - Fixed [ 1512069 ] Importing Problems (yalnifj)
  - Fixed [ 1512086 ] Upload Gedcom Requires Reconfiguration (yalnifj)
  - Applied [ 1517640 ] RUS Map (yalnifj)

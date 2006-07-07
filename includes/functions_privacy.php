@@ -714,12 +714,14 @@ function showFactDetails($fact, $pid) {
  * @return string the privatized gedcom record
  */
 function privatize_gedcom($gedrec) {
-	global $pgv_lang, $GEDCOM, $SHOW_PRIVATE_RELATIONSHIPS;
+	global $pgv_lang, $GEDCOM, $SHOW_PRIVATE_RELATIONSHIPS, $pgv_private_records;
+	
 	$gt = preg_match("/0 @(.+)@ (.+)/", $gedrec, $gmatch);
 	if ($gt > 0) {
 		$gid = trim($gmatch[1]);
 		$type = trim($gmatch[2]);
 		$disp = displayDetailsById($gid, $type);
+		$pgv_private_records[$gid] = "";
 //		print "[$gid $type $disp $sub]";
 		//-- check if the whole record is private
 		if (!$disp) {
@@ -786,15 +788,19 @@ function privatize_gedcom($gedrec) {
 			}
 			$newrec .= "1 NOTE ".trim($pgv_lang["person_private"])."\r\n";
 			//print $newrec;
+			$pgv_private_records[$gid] = $gedrec;
 			return $newrec;
 		}
 		else {
 			$newrec = "0 @".$gid."@ $type\r\n";
 			//-- check all of the sub facts for access
-			$subs = get_all_subrecords($gedrec, "", false, false);
-			$user = getUser(getUserName());
+			$subs = get_all_subrecords($gedrec, "", false, false, false);
 			foreach($subs as $indexval => $sub) {
-				if (FactViewRestricted($gid, $sub)==false) $newrec .= $sub;
+				$ct = preg_match("/1 (\w+)/", $sub, $match);
+				if ($ct > 0) $type = trim($match[1]);
+				else $type="";
+				if (FactViewRestricted($gid, $sub)==false && showFact($type, $gid) && showFactDetails($type, $gid)) $newrec .= $sub;
+				else $pgv_private_records[$gid] .= $sub;
 			}
 			return $newrec;
 		}
@@ -803,6 +809,13 @@ function privatize_gedcom($gedrec) {
 		//-- not a valid gedcom record
 		return $gedrec;
 	}
+}
+
+function get_last_private_data($gid) {
+	global $pgv_private_records;
+	
+	if (!isset($pgv_private_records[$gid])) return false;
+	return $pgv_private_records[$gid];
 }
 
 /**
@@ -886,6 +899,5 @@ function FactViewRestricted($pid, $factrec) {
 	}
 	return true;
 }
-
 
 ?>

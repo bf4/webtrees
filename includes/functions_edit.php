@@ -124,6 +124,9 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 	global $fcontents, $GEDCOM, $pgv_changes, $manual_save;
 
 	$gid = strtoupper($gid);
+	//-- restore any data that was hidden during privatizing
+	if (isset($pgv_private_records[$gid])) $gedrec = trim($gedrec)."\r\n".trim(get_last_private_data($gid));
+	
 	if (($gedrec = check_gedcom($gedrec, $chan))!==false) {
 		//-- the following block of code checks if the XREF was changed in this record.
 		//-- if it was changed we add a warning to the change log
