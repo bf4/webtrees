@@ -6,15 +6,17 @@ The files in this archive should be extracted into you modules directory.
 
 These are the instruction on getting your Googlemap interface to work:
 
-1. Get your personal Google Map API key from
-   http://www.google.com/apis/maps/signup.html
-2. Go to the Googlemap confiuration page
-3. Enter the key in the input field, and click save.
-
 If you are using version 3.3.8 of phpGedview you also need to do the
 following:
-4. Backup your individual.php in the PGV root
-5. Copy individual-3.3.8.php from the googlemap directory to PGV root.
+1. Backup your individual.php in the PGV root
+2. Copy individual-3.3.8.php from the googlemap directory to PGV root.
+
+Next follow the following steps (both 3.3.8 and 4.0):
+1. Get your personal Google Map API key from
+   http://www.google.com/apis/maps/signup.html
+2. Go to the Googlemap confiuration page. You can find this page under the
+   Map-tab on the individual page.
+3. Enter the key in the input field, and click save.
 
 The map will only be shown if at least one fact has a place with coordinates
 attached to it. Attaching a coordinate can be done through the generic
@@ -35,7 +37,7 @@ It is also possible to define a MAP record within a ADDR record, even though
 this is not according to the standard (these records are created by Legacy).
 
 Some special remarks for version 3.3.8:
-1. The Place-laction pages look a bit empty. This is because the styles used to 
+1. The Place-location pages look a bit empty. This is because the styles used to 
    format the table are not defined in version 3.3.8. You can create these by
    doing the following:
    - In your themes/<selected theme> open style.css
@@ -53,9 +55,10 @@ Contributers:
 - Norwegian translation: Geir Eikland (eikland)
 - German translation: Christian Helms (nolensvolens)
 - French translation: Thierry Durand (tdurand)
+- Hebrew translations: Meliza Amity (meliza)
 - Countries and US-states CSV file: Glen Carreras (carrerasg)
 - Testing and additional comments: Mike Elliott (Colored Pixels), Nigel
-  Osborn (nigelo) and Meliza Amity (meliza)
+  Osborn (nigelo)
 
 Changelog:
 Version 0.5:
