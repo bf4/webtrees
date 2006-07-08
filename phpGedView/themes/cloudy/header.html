@@ -23,7 +23,7 @@
  * @author w.a. bastein http://genealogy.bastein.biz
  * @package PhpGedView
  * @subpackage Themes
- * @version $Id: header.html,v 1.21.2.43 2006/06/06 22:34:56 yalnifj Exp $
+ * @version $Id: header.html 1 2006-07-08 14:31:02 canajun2eh Exp $
  */
 global $SEARCH_SPIDER;
 $menubar = new MenuBar();
@@ -51,20 +51,30 @@ $menubar = new MenuBar();
 								<?php print_user_links(); ?>
 							</div>
 						</td>
-						<td align="<?php print $TEXT_DIRECTION=="rtl"?"left":"right" ?>" valign="middle" >
-							<?php print_theme_dropdown(); ?>
-						</td>
-						<td style="white-space: normal;" align="<?php print $TEXT_DIRECTION=="rtl"?"left":"right" ?>" valign="middle" >
-							<form action="search.php" method="post">
-								<input type="hidden" name="action" value="general" />
-								<input type="hidden" name="topsearch" value="yes" />
-								<input type="text" class="formbut" accesskey="<?php print $pgv_lang["accesskey_search"]?>" name="query" size="15" value="<?php print $pgv_lang['search']?>" 
-									onfocus="if (this.value == '<?php print $pgv_lang['search']?>') this.value=''; focusHandler();" 
-									onblur="if (this.value == '') this.value='<?php print $pgv_lang['search']?>';" />
-								<input type="image" src="<?php print $THEME_DIR ?>/images/go.gif" align="top" title="<?php print $pgv_lang['search']?>
-								" />
-							</form>
-								<?php print_favorite_selector(0); ?>
+						<td>
+							<table width="100%" border="0" cellspacing="0" cellpadding="0" >
+								<tr>
+									<td align="<?php print $TEXT_DIRECTION=="rtl"?"left":"right" ?>" valign="middle" >
+										<?php print_theme_dropdown(); ?>
+									</td>
+									<td style="white-space: normal;" align="<?php print $TEXT_DIRECTION=="rtl"?"left":"right" ?>" valign="middle" >
+										<form action="search.php" method="post">
+											<input type="hidden" name="action" value="general" />
+											<input type="hidden" name="topsearch" value="yes" />
+											<input type="text" class="formbut" accesskey="<?php print $pgv_lang["accesskey_search"]?>" name="query" size="15" value="<?php print $pgv_lang['search']?>" 
+												onfocus="if (this.value == '<?php print $pgv_lang['search']?>') this.value=''; focusHandler();" 
+												onblur="if (this.value == '') this.value='<?php print $pgv_lang['search']?>';" />
+											<input type="image" src="<?php print $THEME_DIR ?>/images/go.gif" align="top" title="<?php print $pgv_lang['search']?>
+											" />
+										</form>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" align="<?php print $TEXT_DIRECTION=="rtl"?"left":"right" ?>" valign="middle" >
+										<?php print_favorite_selector(0); ?>
+									</td>
+								</tr>
+							</table
 						</td>
 						<?php } ?>
 						<td width="10">
