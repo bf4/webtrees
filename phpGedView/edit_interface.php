@@ -270,7 +270,7 @@ if ((!userCanEdit(getUserName()))||(!$disp)||(!$ALLOW_EDIT_GEDCOM)) {
 //-- privatize the record so that line numbers etc. match what was in the display
 //-- data that is hidden because of privacy is stored in the $pgv_private_records array
 //-- any private data will be restored when the record is replaced
-$gedrec = privatize_gedcom($gedrec);
+if (isset($gedrec)) $gedrec = privatize_gedcom($gedrec);
 
 if (!isset($type)) $type="";
 $level0type = $type;

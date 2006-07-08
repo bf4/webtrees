@@ -393,14 +393,14 @@ else
 		<tr>
 			<td class="descriptionbox width20 wrap">
 			<?php print $pgv_lang["gedcom_file"];?></td>
-			<td class="optionbox">
+			<td class="optionbox" dir="ltr">
 				<?php
 
 		if (isset ($GEDFILENAME))
-			print $path.$GEDFILENAME;
+			print PrintReady($path.$GEDFILENAME);
 		else
 			if (isset ($UPFILE))
-				print $UPFILE["name"];
+				print PrintReady($UPFILE["name"]);
 			else {
 				print "<input name=\"UPFILE\" type=\"file\" size=\"60\" />";
 				if (!$filesize = ini_get('upload_max_filesize'))
