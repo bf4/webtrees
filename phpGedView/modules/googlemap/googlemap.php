@@ -362,7 +362,6 @@ function build_indiv_map($indifacts, $famids) {
                         $placerec = get_sub_record(2, "2 PLAC", $birthrec);
                         if (!empty($placerec)) {
                             $ctd = preg_match("/\d DATE (.*)/", $birthrec, $matchd);
-                            $ctp = preg_match("/\d PLAC (.*)/", $birthrec, $matchp);
                             $ctla = preg_match("/\d LATI (.*)/", $placerec, $match1);
                             $ctlo = preg_match("/\d LONG (.*)/", $placerec, $match2);
                             if (($ctla>0) && ($ctlo>0)) {
@@ -387,7 +386,11 @@ function build_indiv_map($indifacts, $famids) {
                                     $match2[1] = ltrim(rtrim($match2[1]));
                                     $mapdata["lati"][$i]     = str_replace(array('N', 'S', ','), array('', '-', '.'), $match1[1]); 
                                     $mapdata["lng"][$i]      = str_replace(array('E', 'W', ','), array('', '-', '.'), $match2[1]); 
-                                    $mapdata["date"][$i]     = $matchd[1];
+                                    if ($ctd > 0) {
+                                        $mapdata["date"][$i] = $matchd[1];
+                                    } else {
+                                        $mapdata["date"][$i] = "";
+                                    }
                                     $mapdata["name"][$i]     = $smatch[$j][1];
                                 }
                             }
@@ -416,7 +419,11 @@ function build_indiv_map($indifacts, $famids) {
                                             if ($zoomLevel > $latlongval["zoom"]) $zoomLevel = $latlongval["zoom"];
                                             $mapdata["lati"][$i]     = str_replace(array('N', 'S', ','), array('', '-', '.'), $latlongval["lati"]); 
                                             $mapdata["lng"][$i]      = str_replace(array('E', 'W', ','), array('', '-', '.'), $latlongval["long"]); 
-                                            $mapdata["date"][$i]     = $matchd[1];
+                                            if ($ctd > 0) {
+                                                $mapdata["date"][$i] = $matchd[1];
+                                            } else {
+                                                $mapdata["date"][$i] = "";
+                                            }
                                             $mapdata["name"][$i]     = $smatch[$j][1];
                                         }
                                     }
@@ -554,10 +561,8 @@ function build_indiv_map($indifacts, $famids) {
                         print "       new GInfoWindowTab(\"".$mapdata["fact"][$j]."\", \"<div style=\'width:360px\'>".$mapdata["fact"][$j].":<br>";
                         if ($mapdata["name"][$j] != "") {
                             print "<a href=\\\"individual.php?pid=".$mapdata["name"][$j]."&amp;ged=$GEDCOM\\\">";
-                            if (displayDetailsById($mapdata["name"][$j])||showLivingNameById($mapdata["name"][$j]))
-                                print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($mapdata["name"][$j])));
-                            else
-                                print $pgv_lang["private"];
+                            if (displayDetailsById($mapdata["name"][$j])||showLivingNameById($mapdata["name"][$j])) print PrintReady(get_person_name($mapdata["name"][$j]));
+                            else print $pgv_lang["private"];
                             print "</a><br>";
                         }
                         if(preg_match("/2 PLAC (.*)/", $mapdata["placerec"][$j]) == 0) {
@@ -600,10 +605,8 @@ function build_indiv_map($indifacts, $famids) {
                                 print "       new GInfoWindowTab(\"".$mapdata["fact"][$k]."\", \"<div style=\'width:360px\'>".$mapdata["fact"][$k].":<br>";
                                 if ($mapdata["name"][$k] != "") {
                                     print "<a href=\\\"individual.php?pid=".$mapdata["name"][$k]."&amp;ged=$GEDCOM\\\">";
-                                    if (displayDetailsById($mapdata["name"][$k])||showLivingNameById($mapdata["name"][$k]))
-                                        print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($mapdata["name"][$k])));
-                                    else
-                                        print $pgv_lang["private"];
+                                    if (displayDetailsById($mapdata["name"][$k])||showLivingNameById($mapdata["name"][$k])) print PrintReady(get_person_name($mapdata["name"][$k]));
+                                    else print $pgv_lang["private"];
                                     print "</a><br>";
                                 }
                                 if(preg_match("/2 PLAC (.*)/", $mapdata["placerec"][$k]) == 0) {
