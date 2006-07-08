@@ -430,7 +430,7 @@ function update_places($gid, $indirec, $update = false) {
 				$std_soundex = soundex($place);
 				$dm_soundex = DMSoundex($place);
 				$p_id = get_next_id("places", "p_id");
-				$sql = 'INSERT INTO '.$TBLPREFIX.'places VALUES('.$p_id.', "'.$DBCONN->escapeSimple($place).'", '.$level.', '.$parent_id.', '.$DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]).', "'.$DBCONN->escapeSimple($std_soundex).'", "'.$DBCONN->escapeSimple(implode(":",$dm_soundex)).'")';
+				$sql = 'INSERT INTO ' . $TBLPREFIX . 'places VALUES(' . $p_id . ',  \''.$DBCONN->escapeSimple($place) . '\', '.$level.', '.$parent_id.', '.$DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]).', \''.$DBCONN->escapeSimple($std_soundex).'\', \''.$DBCONN->escapeSimple(implode(":",$dm_soundex)).'\')';
 				$res2 = dbquery($sql);
 			}
 			

@@ -499,6 +499,7 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
 		else if ($source == "add_form") print $pgv_lang["add_gedcom"];
 		else if ($source == "upload_form") print $pgv_lang["upload_gedcom"];
 		else if ($source == "add_new_form") print $pgv_lang["add_new_gedcom"];
+		else if ($source == "replace_form") print $pgv_lang['upload_replacement'];
 		print "</h2>";
 		print "<a href=\"editgedcoms.php\"><b>";
 		print $pgv_lang["lang_back_manage_gedcoms"];
@@ -538,7 +539,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 		if ($source == "upload_form" || $source=="replace_form") {
 			print_help_link("upload_path_help", "qm", "upload_path"); print $pgv_lang["upload_path"];
 			print "</td><td class=\"optionbox\">";
-			print "<input name=\"GEDCOMPATH\" type=\"file\" size=\"60\" />";
+			print "<input name=\"GEDCOMPATH\" type=\"file\" size=\"60\" dir=\"ltr\" />";
 			if ($source=="replace_form") print "<input type=\"hidden\" name=\"path\" value=\"".preg_replace('/\\*/', '\\', $path)."\" />";
 			if (!$filesize = ini_get('upload_max_filesize')) $filesize = "2M";
 			print " ( ".$pgv_lang["max_upload_size"]." $filesize )";
