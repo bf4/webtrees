@@ -561,8 +561,10 @@ function build_indiv_map($indifacts, $famids) {
                         print "       new GInfoWindowTab(\"".$mapdata["fact"][$j]."\", \"<div style=\'width:360px\'>".$mapdata["fact"][$j].":<br>";
                         if ($mapdata["name"][$j] != "") {
                             print "<a href=\\\"individual.php?pid=".$mapdata["name"][$j]."&amp;ged=$GEDCOM\\\">";
-                            if (displayDetailsById($mapdata["name"][$j])||showLivingNameById($mapdata["name"][$j])) print PrintReady(get_person_name($mapdata["name"][$j]));
-                            else print $pgv_lang["private"];
+                            if (displayDetailsById($mapdata["name"][$j])||showLivingNameById($mapdata["name"][$j]))
+                                print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($mapdata["name"][$j])));
+                            else
+                                print $pgv_lang["private"];
                             print "</a><br>";
                         }
                         if(preg_match("/2 PLAC (.*)/", $mapdata["placerec"][$j]) == 0) {
@@ -605,8 +607,10 @@ function build_indiv_map($indifacts, $famids) {
                                 print "       new GInfoWindowTab(\"".$mapdata["fact"][$k]."\", \"<div style=\'width:360px\'>".$mapdata["fact"][$k].":<br>";
                                 if ($mapdata["name"][$k] != "") {
                                     print "<a href=\\\"individual.php?pid=".$mapdata["name"][$k]."&amp;ged=$GEDCOM\\\">";
-                                    if (displayDetailsById($mapdata["name"][$k])||showLivingNameById($mapdata["name"][$k])) print PrintReady(get_person_name($mapdata["name"][$k]));
-                                    else print $pgv_lang["private"];
+                                    if (displayDetailsById($mapdata["name"][$k])||showLivingNameById($mapdata["name"][$k]))
+                                        print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($mapdata["name"][$k])));
+                                    else
+                                        print $pgv_lang["private"];
                                     print "</a><br>";
                                 }
                                 if(preg_match("/2 PLAC (.*)/", $mapdata["placerec"][$k]) == 0) {
