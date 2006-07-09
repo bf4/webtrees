@@ -757,6 +757,7 @@ function updateUser($username, $newuser, $msg = "updated") {
 
 	if (checkTableExists()) {
 		$newuser = db_prep($newuser);
+		$newuser['previous_username'] = $username;
 		$newuser["firstname"] = preg_replace("/\//", "", $newuser["firstname"]);
 		$newuser["lastname"] = preg_replace("/\//", "", $newuser["lastname"]);
 		$sql = "UPDATE ".$TBLPREFIX."users SET u_username='".$DBCONN->escapeSimple($newuser["username"])."', " .
