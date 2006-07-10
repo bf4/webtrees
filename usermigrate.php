@@ -283,6 +283,24 @@ $res =& $tempsql;
 		else $user["visibleonline"] = true;
 		if ($user["editaccount"] == "1") $user["editaccount"] = false;
 		else $user["editaccount"] = true;
+		//-- make sure fields are set for v4.0 DB
+		if (!isset($user["firstname"])) {
+			if (isset($user["fullname"])) {
+				$parts = preg_split("/ /", trim($user["fullname"]));
+				$user["lastname"] = array_pop($parts);
+				$user["firstname"] = implode(" ", $parts);
+			}
+			else {
+				$user["firstname"] = '';
+				$user["lastname"] = '';
+			}
+		}
+		if (!isset($user["comment"])) $user["comment"] = '';
+		if (!isset($user["comment_exp"])) $user["comment_exp"] = '';
+		if (!isset($user["sync_gedcom"])) $user["sync_gedcom"] = 'N';
+		if (!isset($user["relationship_privacy"])) $user["relationship_privacy"] = 'N';
+		if (!isset($user["max_relation_path"])) $user["max_relation_path"] = '2';
+		if (!isset($user["auto_accept"])) $user["auto_accept"] = 'N';
 		addUser($user, "imported");
 	}
 	$countnew = count(getUsers());
