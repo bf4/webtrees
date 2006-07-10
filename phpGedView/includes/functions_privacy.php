@@ -365,9 +365,9 @@ function displayDetailsByID($pid, $type = "INDI") {
 			return true;
 		}
 		if (userCanAccess($username)) {
+			$user = getUser($username);
 			if ($type=="INDI") {
 				$isdead = is_dead_id($pid);
-				$user = getUser($username);
 				if ($USE_RELATIONSHIP_PRIVACY || $user["relationship_privacy"]=="Y") {
 					if ($isdead) {
 						$indilist[$pid]['privacy'] = true;
