@@ -485,9 +485,9 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	global $META_AUTHOR, $META_PUBLISHER, $META_COPYRIGHT, $META_DESCRIPTION, $META_PAGE_TOPIC, $META_AUDIENCE, $META_PAGE_TYPE, $META_ROBOTS, $META_REVISIT, $META_KEYWORDS, $META_TITLE, $META_SURNAME_KEYWORDS;
 
 	// If not on allowed list, dump the spider onto the redirect page.
-	// This kills recognized spiders in their tracks.  
+	// This kills recognized spiders in their tracks.
 	// To stop unrecognized spiders, see META_ROBOTS below.
-	if(!empty($SEARCH_SPIDER)) { 
+	if(!empty($SEARCH_SPIDER)) {
 		if(!((strstr($SCRIPT_NAME, "/individual.php")) ||
 		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
 		     (strstr($SCRIPT_NAME, "/login.php")) ||
@@ -520,7 +520,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 
 	if (!isset($META_TITLE)) $META_TITLE = "";
 	print "<title>".PrintReady(strip_tags($title)." - ".$META_TITLE." - PhpGedView", TRUE)."</title>\n\t";
-	if (!$REQUIRE_AUTHENTICATION && $ENABLE_RSS){
+	if ($ENABLE_RSS){
 		$applicationType = "application/rss+xml";
 		if ($RSS_FORMAT == "ATOM" || $RSS_FORMAT == "ATOM0.3"){
 			$applicationType = "application/atom+xml";
@@ -530,7 +530,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		if(empty($gedcomTitle)){
 			$gedcomTitle = "RSS";
 		}
-		print "<link href=\"" . $SERVER_URL . "rss.php?ged=$GEDCOM\" rel=\"alternate\" type=\"$applicationType\" title=\"$gedcomTitle\" />\n\t";
+		print "<link href=\"" . $SERVER_URL . "rss.php?ged=$GEDCOM" . ($REQUIRE_AUTHENTICATION ? "&amp;auth=basic" : "") . "\" rel=\"alternate\" type=\"$applicationType\" title=\"$gedcomTitle\" />\n\t";
 	}
 	print "<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\" media=\"all\"></link>\n\t";
 	if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\"></link>\n\t";
@@ -584,9 +584,9 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		  // Restrict good search engine spiders to the index page and the individual.php pages.
 		  // Quick and dirty hack that will still leave some url only links in Google.
 		  // Also ignored by crawlers like wget, so other checks have to be done too.
-		  if((strstr($SCRIPT_NAME, "/individual.php")) || 
-		     (strstr($SCRIPT_NAME, "/indilist.php")) || 
-		     (strstr($SCRIPT_NAME, "/search_engine.php")) || 
+		  if((strstr($SCRIPT_NAME, "/individual.php")) ||
+		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
+		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
 		     (strstr($SCRIPT_NAME, "/index.php")) ) {
 			// empty case is to index,follow anyways.
 	 	  	if (empty($META_ROBOTS)) $META_ROBOTS = "index,follow";
@@ -732,7 +732,7 @@ function print_simple_header($title) {
 	 global $META_AUTHOR, $META_PUBLISHER, $META_COPYRIGHT, $META_DESCRIPTION, $META_PAGE_TOPIC, $META_AUDIENCE, $META_PAGE_TYPE, $META_ROBOTS, $META_REVISIT, $META_KEYWORDS, $META_TITLE, $META_SURNAME_KEYWORDS;
 
 	// If not on allowed list, dump the spider onto the redirect page.
-	// This kills recognized spiders in their tracks.  
+	// This kills recognized spiders in their tracks.
 	// To stop unrecognized spiders, see META_ROBOTS below.
 	if(!empty($SEARCH_SPIDER)) {
 		if(!((strstr($SCRIPT_NAME, "/individual.php")) ||
@@ -783,9 +783,9 @@ function print_simple_header($title) {
 		  // Restrict good search engine spiders to the index page and the individual.php pages.
 		  // Quick and dirty hack that will still leave some url only links in Google.
 		  // Also ignored by crawlers like wget, so other checks have to be done too.
-		  if((strstr($SCRIPT_NAME, "/individual.php")) || 
-		     (strstr($SCRIPT_NAME, "/indilist.php")) || 
-		     (strstr($SCRIPT_NAME, "/search_engine.php")) || 
+		  if((strstr($SCRIPT_NAME, "/individual.php")) ||
+		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
+		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
 		     (strstr($SCRIPT_NAME, "/index.php")) ) {
 			// empty case is to index,follow anyways.
 	 	  	if (empty($META_ROBOTS)) $META_ROBOTS = "index,follow";
@@ -1135,7 +1135,7 @@ function print_favorite_selector($option=0) {
 	$gedcomfavs = getUserFavorites($GEDCOM);
 	if ((empty($username))&&(count($gedcomfavs)==0)) return;
 
-	if(!empty($SEARCH_SPIDER)) {	
+	if(!empty($SEARCH_SPIDER)) {
 	    return; // show no favorites, because they taint every page that is indexed.
 	}
 
@@ -1997,16 +1997,16 @@ function PrintReady($text, $InHeaders=false) {
     	//		Delay the final clean-up and insertion of proper <span> and </span>
     	//		until parentheses, braces, and brackets have been processed
     }
-	
-	// Look for strings enclosed in parentheses, braces, or brackets.  
+
+	// Look for strings enclosed in parentheses, braces, or brackets.
 	//
-	// Parentheses, braces, and brackets have weak directionality and aren't handled properly 
-	// when they enclose text whose directionality differs from that of the page. 
+	// Parentheses, braces, and brackets have weak directionality and aren't handled properly
+	// when they enclose text whose directionality differs from that of the page.
 	//
 	// To correct the problem, we need to enclose the parentheses, braces, or brackets with
 	// zero-width characters (&lrm; or &rlm;) having a directionality that matches the
 	// directionality of the text that is enclosed by the parentheses, etc.
-	
+
 	$charPos = 0;
 	$lastChar = strlen($text);
 	$newText = "";
@@ -2034,7 +2034,7 @@ function PrintReady($text, $InHeaders=false) {
 			$newText .= $thisChar;
 			   			}
 			   			     }
-		
+
     // Parentheses, braces, and brackets have been processed:
     //		Finish processing of "Highlight Start and "Highlight end"
 	$newText = str_replace(array("\x02\x01", "\x02 \x01", "\x01", "\x02"), array("", " ", "<span class=\"search_hit\">", "</span>"), $newText);
@@ -2633,10 +2633,10 @@ function get_lds_glance($indirec) {
  *		This function produces a hexadecimal dump of the input string
  *		for debugging purposes
  */
- 
+
 function DumpString($input) {
 	if (empty($input)) return false;
-	
+
 	$UTF8 = array();
 	$hex1L = "";
 	$hex1R = "";
@@ -2658,57 +2658,57 @@ function DumpString($input) {
 		if (($byte0 & 0xF8) == 0xF0) $charLen = 4;		// 4-byte sequence
 		$thisChar = substr($input, $pos, $charLen);
 		$UTF8[] = $thisChar;
-		
+
 		// Separate the current UTF8 character into hexadecimal digits
 		$byte = ord(substr($thisChar, 0, 1));
 		$nibbleL = $byte >> 4;
-		$hex1L .= substr($hexLetters, $nibbleL, 1); 
-		$nibbleR = $byte & 0x0F; 
-		$hex1R .= substr($hexLetters, $nibbleR, 1); 
-		
+		$hex1L .= substr($hexLetters, $nibbleL, 1);
+		$nibbleR = $byte & 0x0F;
+		$hex1R .= substr($hexLetters, $nibbleR, 1);
+
 		if ($charLen > 1) {
 			$byte = ord(substr($thisChar, 1, 1));
 			$nibbleL = $byte >> 4;
-			$hex2L .= substr($hexLetters, $nibbleL, 1); 
-			$nibbleR = $byte & 0x0F; 
-			$hex2R .= substr($hexLetters, $nibbleR, 1); 
+			$hex2L .= substr($hexLetters, $nibbleL, 1);
+			$nibbleR = $byte & 0x0F;
+			$hex2R .= substr($hexLetters, $nibbleR, 1);
 		} else {
 			$hex2L .= " ";
 			$hex2R .= " ";
-		}		
-		
+		}
+
 		if ($charLen > 2) {
 			$byte = ord(substr($thisChar, 2, 1));
 			$nibbleL = $byte >> 4;
-			$hex3L .= substr($hexLetters, $nibbleL, 1); 
-			$nibbleR = $byte & 0x0F; 
-			$hex3R .= substr($hexLetters, $nibbleR, 1); 
+			$hex3L .= substr($hexLetters, $nibbleL, 1);
+			$nibbleR = $byte & 0x0F;
+			$hex3R .= substr($hexLetters, $nibbleR, 1);
 		} else {
 			$hex3L .= " ";
 			$hex3R .= " ";
 		}
-		
+
 		if ($charLen > 3) {
 			$byte = ord(substr($thisChar, 3, 1));
 			$nibbleL = $byte >> 4;
-			$hex4L .= substr($hexLetters, $nibbleL, 1); 
-			$nibbleR = $byte & 0x0F; 
-			$hex4R .= substr($hexLetters, $nibbleR, 1); 
+			$hex4L .= substr($hexLetters, $nibbleL, 1);
+			$nibbleR = $byte & 0x0F;
+			$hex4R .= substr($hexLetters, $nibbleR, 1);
 		} else {
 			$hex4L .= " ";
 			$hex4R .= " ";
-		}		
-		
+		}
+
 		$pos += $charLen;
 		if ($pos>=strlen($input)) break;
 	}
-	
+
 	$pos = 0;
 	$lastPos = count($UTF8);
 	$haveByte4 = (trim($hex4L)!="");
 	$haveByte3 = (trim($hex3L)!="");
 	$haveByte2 = (trim($hex2L)!="");
-	
+
 	// We're ready: now output everything
 	$lrm = chr(0xE2).chr(0x80).chr(0x8E);
 	$rlm = chr(0xE2).chr(0x80).chr(0x8F);
@@ -2716,12 +2716,12 @@ function DumpString($input) {
 	while (true) {
 		$lineLength = $lastPos - $pos;
 		if ($lineLength>100) $lineLength = 100;
-		
+
 		// Line 1: ruler
 		$thisLine = substr("      ".$pos, -6)." ";
 		$thisLine .= substr("........10........20........30........40........50........60........70........80........90.......100", 0, $lineLength);
 		print str_replace(" ", "&nbsp;", $thisLine)."<br />";
-		
+
 		// Line 2: UTF8 character string
 		$thisLine = "  UTF8 ";
 		for ($i=$pos; $i<($pos+$lineLength); $i++) {
@@ -2729,7 +2729,7 @@ function DumpString($input) {
 			else $thisLine .= "&lrm;".$UTF8[$i];
 		}
 		print str_replace(array(" ", $lrm, $rlm), array("&nbsp;", "&nbsp;", "&nbsp;"), $thisLine)."<br />";
-		
+
 		// Line 3:  First hexadecimal byte
 		$thisLine = "Byte 1 ";
 		$thisLine .= substr($hex1L, $pos, $lineLength);
@@ -2738,7 +2738,7 @@ function DumpString($input) {
 		$thisLine .= substr($hex1R, $pos, $lineLength);
 		$thisLine .= "<br />";
 		print str_replace(array(" ", "<br&nbsp;/>"), array("&nbsp;", "<br />"), $thisLine);
-		
+
 		// Line 4:  Second hexadecimal byte
 		if ($haveByte2) {
 			$thisLine = "Byte 2 ";
@@ -2749,7 +2749,7 @@ function DumpString($input) {
 			$thisLine .= "<br />";
 			print str_replace(array(" ", "<br&nbsp;/>"), array("&nbsp;", "<br />"), $thisLine);
 		}
-		
+
 		// Line 5:  Third hexadecimal byte
 		if ($haveByte3) {
 			$thisLine = "Byte 3 ";
@@ -2760,7 +2760,7 @@ function DumpString($input) {
 			$thisLine .= "<br />";
 			print str_replace(array(" ", "<br&nbsp;/>"), array("&nbsp;", "<br />"), $thisLine);
 		}
-		
+
 		// Line 6:  Fourth hexadecimal byte
 		if ($haveByte4) {
 			$thisLine = "Byte 4 ";
