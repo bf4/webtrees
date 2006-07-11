@@ -592,9 +592,9 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		if (ronly) {
 			updatewholename();
 			frm.NAME.readOnly=false;
-			frm.NAME_spec.style.display="inline";
-			frm.NAME_plus.style.display="inline";
-			frm.NAME_minus.style.display="none";
+			if (frm.NAME_spec) frm.NAME_spec.style.display="inline";
+			if (frm.NAME_plus) frm.NAME_plus.style.display="inline";
+			if (frm.NAME_minus) frm.NAME_minus.style.display="none";
 			disp="none";
 		}
 		else {
@@ -638,9 +638,9 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 
 			// NAME
 			frm.NAME.readOnly=true;
-			frm.NAME_spec.style.display="none";
-			frm.NAME_plus.style.display="none";
-			frm.NAME_minus.style.display="inline";
+			if (frm.NAME_spec) frm.NAME_spec.style.display="none";
+			if (frm.NAME_plus) frm.NAME_plus.style.display="none";
+			if (frm.NAME_minus) frm.NAME_minus.style.display="inline";
 			disp="table-row";
 			if (document.all) disp="inline"; // IE
 		}
@@ -896,8 +896,17 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		$element_name="NOTE[".$noteid."]";
 	}
 
-	if (in_array($fact, $emptyfacts)&&empty($value)) {
+//	if (in_array($fact, $emptyfacts)&&empty($value)) {
+	if (in_array($fact, $emptyfacts)) {
+		$value = strtoupper($value);
+		if ($fact=="BIRT" or $fact=="MARR") $value="Y"; // default YES
 		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".$value."\" />";
+		if ($level<=1) {
+			print "<input type=\"checkbox\" ";
+			if ($value=="Y") print " checked=\"checked\"";
+			print " onClick=\"if (this.checked) ".$element_id.".value='Y'; else ".$element_id.".value=''; \" />";
+			print $pgv_lang["yes"];
+		}
 	}
 	else if ($fact=="TEMP") {
 		print "<select tabindex=\"".$tabkey."\" name=\"".$element_name."\" >\n";
