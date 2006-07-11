@@ -799,7 +799,7 @@ function get_age($indirec, $datestr, $style=1) {
 				$at = preg_match("/([a-zA-Z]{3})\.?/", $birthdate[0]["ext"], $amatch);
 				if ($at==0) $at = preg_match("/([a-zA-Z]{3})\.?/", $datestr, $amatch);
 				if ($at>0) {
-					if (in_array(strtolower($amatch[1]), $estimates)) {
+					if ($amatch[1]!='ABT' && in_array(strtolower($amatch[1]), $estimates)) {
 						$realbirthdt .= " ".$pgv_lang["apx"];
 					}
 				}
@@ -811,7 +811,7 @@ function get_age($indirec, $datestr, $style=1) {
 					$m2 = $date[0]["mon"];
 					$d1 = $birthdate[0]["day"];
 					$d2 = $date[0]["day"];
-					$apx = (empty($m2) or empty($m1) or empty($d2) or empty($d1)); // approx
+					$apx = (empty($m2) || empty($m1) || empty($d2) || empty($d1)); // approx
 					if ($apx) $realbirthdt .= " ".$pgv_lang["apx"];
 					if (empty($m2)) $m2=$m1;
 					if (empty($m1)) $m1=$m2;
