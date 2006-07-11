@@ -734,8 +734,10 @@ else if ($action=="update") {
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	// add or remove Y
+	/**
 	if ($text[0]=="Y" or $text[0]=="y") $text[0]="";
 	if (in_array($tag[0], $emptyfacts) && array_unique($text)==array("") && !$islink[0]) $text[0]="Y";
+	**/
 	//-- check for photo update
 	if (count($_FILES)>0) {
 		$uploaded_files = array();
@@ -826,6 +828,7 @@ else if ($action=="addchildaction") {
 			}
 		}
 	}
+	else if (!empty($BIRT)) $gedrec .= "1 BIRT Y\r\n";
 	if ((!empty($DEAT_DATE))||(!empty($DEAT_PLAC))) {
 		$gedrec .= "1 DEAT\r\n";
 		if (!empty($DEAT_DATE)) {
@@ -841,6 +844,7 @@ else if ($action=="addchildaction") {
 			}
 		}
 	}
+	else if (!empty($DEAT)) $gedrec .= "1 DEAT Y\r\n";
 	if (!empty($famid)) $gedrec .= "1 FAMC @$famid@\r\n";
 
 	$gedrec = handle_updates($gedrec);
@@ -891,6 +895,7 @@ else if ($action=="addspouseaction") {
 			}
 		}
 	}
+	else if (!empty($BIRT)) $gedrec .= "1 BIRT Y\r\n";
 	if ((!empty($DEAT_DATE))||(!empty($DEAT_PLAC))) {
 		$gedrec .= "1 DEAT\r\n";
 		if (!empty($DEAT_DATE)) {
@@ -906,6 +911,7 @@ else if ($action=="addspouseaction") {
 			}
 		}
 	}
+	else if (!empty($DEAT)) $gedrec .= "1 DEAT Y\r\n";
 	$gedrec = handle_updates($gedrec);
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	$xref = append_gedrec($gedrec);
@@ -939,6 +945,7 @@ else if ($action=="addspouseaction") {
 				}
 			}
 		}
+		else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
 		if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
 		$famid = append_gedrec($famrec);
 	}
@@ -964,6 +971,7 @@ else if ($action=="addspouseaction") {
 					}
 				}
 			}
+			else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
 			if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
 			replace_gedrec($famid, $famrec);
 		}
@@ -1023,6 +1031,7 @@ else if ($action=="linkspouseaction") {
 						}
 					}
 				}
+				else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
 				if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
 				$famid = append_gedrec($famrec);
 			}
@@ -1073,6 +1082,7 @@ else if ($action=="addnewparentaction") {
 			}
 		}
 	}
+	else if (!empty($BIRT)) $gedrec .= "1 BIRT Y\r\n";
 	if ((!empty($DEAT_DATE))||(!empty($DEAT_PLAC))) {
 		$gedrec .= "1 DEAT\r\n";
 		if (!empty($DEAT_DATE)) {
@@ -1088,6 +1098,7 @@ else if ($action=="addnewparentaction") {
 			}
 		}
 	}
+	else if (!empty($DEAT)) $gedrec .= "1 DEAT Y\r\n";
 	$gedrec = handle_updates($gedrec);
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	$xref = append_gedrec($gedrec);
@@ -1119,6 +1130,7 @@ else if ($action=="addnewparentaction") {
 				}
 			}
 		}
+		else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
 
 		if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
 		$famid = append_gedrec($famrec);
@@ -1145,6 +1157,7 @@ else if ($action=="addnewparentaction") {
 					}
 				}
 			}
+			else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
 			if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
 			replace_gedrec($famid, $famrec);
 		}
