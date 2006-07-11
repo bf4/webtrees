@@ -30,9 +30,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
 	 exit;
 }
 
-//-- only inlude functions that are needed for the page
-//-- otherwise memory requirements go way up
-//require_once 'includes/functions_charts.php';
+require_once 'includes/functions_charts.php';
 
 /**
  * print the information for an individual chart box
@@ -2072,8 +2070,15 @@ function print_asso_rela_record($pid, $factrec, $linebr=false) {
 			if ($rct>0) {
 				// RELAtionship name in user language
 				$key = strtolower(trim($rmatch[1]));
+	            $cr = preg_match_all("/sosa_(.*)/", $key, $relamatch, PREG_SET_ORDER);
+                if ($cr > 0) {
+                    $rela = get_sosa_name($relamatch[0][1]);
+                }
+                else
+                {
 				    if (isset($pgv_lang["$key"])) $rela = $pgv_lang[$key];
 				    else $rela = $rmatch[1];
+                }
 				$p = strpos($rela, "(=");
 				if ($p>0) $rela = trim(substr($rela, 0, $p));
 				if ($pid2==$pid) print "<span class=\"details_label\">";
