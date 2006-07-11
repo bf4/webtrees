@@ -382,7 +382,7 @@ function find_media_record($rid, $gedfile='') {
 
 	$sql = "SELECT * FROM ".$TBLPREFIX."media WHERE m_media LIKE '".$DBCONN->escapeSimple($rid)."' AND m_gedfile='".$DBCONN->escapeSimple($GEDCOMS[$gedfile]["id"])."'";
 	$res = dbquery($sql);
-
+	if (DB::isError($res)) return false;
 	if ($res->numRows()!=0) {
 		$row = $res->fetchRow(DB_FETCHMODE_ASSOC);
 		$row = db_cleanup($row);

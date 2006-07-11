@@ -230,7 +230,7 @@ class DB_mysql extends DB_common
 
         $connect_function = $persistent ? 'mysql_pconnect' : 'mysql_connect';
 
-        $ini = ini_get('track_errors');
+        $ini = @ini_get('track_errors');
         $php_errormsg = '';
         if ($ini) {
             $this->connection = @call_user_func_array($connect_function,
