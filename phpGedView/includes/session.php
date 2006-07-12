@@ -44,29 +44,29 @@ function gen_spider_session_name($bot_name, $bot_language) {
 	$outname = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 
 	$bot_limit = strlen($bot_name);
-        if($bot_limit > 27) 
+        if($bot_limit > 27)
 		$bot_limit = 27;
 	for($x=0; $x < $bot_limit; $x++) {
 		if(isAlphaNum($bot_name{$x}))
 			$outname{$x+2} = strtoupper($bot_name{$x});
-		else if ($bot_name{$x} == '.')	
+		else if ($bot_name{$x} == '.')
 			$outname{$x+2} = 'd';
-		else if ($bot_name{$x} == ':')	
+		else if ($bot_name{$x} == ':')
 			$outname{$x+2} = 'c';
-		else if ($bot_name{$x} == '/')	
+		else if ($bot_name{$x} == '/')
 			$outname{$x+2} = 'f';
-		else if ($bot_name{$x} == ' ')	
+		else if ($bot_name{$x} == ' ')
 			$outname{$x+2} = 's';
-		else if ($bot_name{$x} == '-')	
+		else if ($bot_name{$x} == '-')
 			$outname{$x+2} = 't';
-		else if ($bot_name{$x} == '_')	
+		else if ($bot_name{$x} == '_')
 			$outname{$x+2} = 'u';
-		else 
+		else
 			$outname{$x+2} = 'o';
 	}
 	return($outname);
     }
-		
+
 
 // Search Engines are treated special, and receive only core data, without the
 // pretty bells and whistles.  Recursion is also going to be kept to a minimum.
@@ -91,12 +91,12 @@ foreach ($worms as $worm) {
 		}
 	}
 
-// The search list has been reversed.  Whitelist all browsers, and 
+// The search list has been reversed.  Whitelist all browsers, and
 // mark everything else as a spider/bot.
 // Java/ Axis/ and PEAR required for GDBI and our own cross site communication.
 $real_browsers = array(
 	'MSIE ',
-	'Opera', 
+	'Opera',
 	'Firefox',
 	'Konqueror',
 	'Gecko',
@@ -213,7 +213,7 @@ if(!$real) {
 			}
 		}
 	}
-	// The SEARCH_SPIDER is set to 70 vetted chars, the session to 26 chars.	
+	// The SEARCH_SPIDER is set to 70 vetted chars, the session to 26 chars.
 	$SEARCH_SPIDER = $spider_name;
 	$bot_session = gen_spider_session_name($spider_name, "");
 	session_id($bot_session);
@@ -318,8 +318,8 @@ $CONFIG_VARS = array(
 
 
 //-- Detect and report Windows or OS/2 Server environment
-//		Windows and OS/2 use the semi-colon as a separator in the "include_path", 
-//				*NIX uses a colon 
+//		Windows and OS/2 use the semi-colon as a separator in the "include_path",
+//				*NIX uses a colon
 //		Windows and OS/2 use the ISO character set in the server-side file system,
 //				*NIX and PhpGedView use UTF-8.  Consequently, PGV needs to translate
 //				from UTF-8 to ISO when handing a file/folder name to Windows and OS/2,
@@ -331,8 +331,8 @@ if(substr(PHP_OS, 0, 4) == 'OS/2') $WIN32 = true;
 if(substr(PHP_OS, 0, 7) == 'NetWare') $WIN32 = true;
 if($WIN32) $seperator=";"; else $seperator = ":";
 //-- append our 'includes/' path to the include_path ini setting for ease of use.
-$ini_include_path = ini_get('include_path'); 
-$includes_dir = dirname(realpath(__FILE__));  
+$ini_include_path = ini_get('include_path');
+$includes_dir = dirname(realpath(__FILE__));
 @ini_set('include_path', "{$includes_dir}{$seperator}{$ini_include_path}");
 unset($ini_include_path, $includes_dir); // destroy some variables for security reasons.
 
@@ -379,10 +379,10 @@ foreach ($language_settings as $key => $value) {
  */
 
 while (true) {
-	$configOverride = true;	
+	$configOverride = true;
 	// Check for override of $CONFIG_VARS
 	if (strstr($_SERVER["REQUEST_URI"], "CONFIG_VARS=")) break;
-	
+
 	// $CONFIG_VARS is safe: now check for any in its list
 	foreach($CONFIG_VARS as $indexval => $VAR) {
 		if (strstr($_SERVER["REQUEST_URI"], $VAR."=")) break;
@@ -394,7 +394,7 @@ while (true) {
 	if ((isset($_REQUEST["NEWLANGUAGE"])) && (empty($SEARCH_SPIDER))) {
 		if (empty($language_settings[$_REQUEST["NEWLANGUAGE"]]["pgv_lang_use"])) break;
 	}
-	
+
 	$configOverride = false;
 	break;
 }
@@ -470,7 +470,7 @@ $BADMEDIA = array(".","..","CVS","thumbs","index.php","MediaInfo.txt", ".cvsigno
 //-- start the php session
 $time = time()+$PGV_SESSION_TIME;
 $date = date("D M j H:i:s T Y", $time);
-//-- set the path to the pgv site so that users cannot login on one site 
+//-- set the path to the pgv site so that users cannot login on one site
 //-- and then automatically be logged in at another site on the same server
 $pgv_path = "/";
 if (!empty($_SERVER['SCRIPT_NAME'])) $pgv_path = str_replace("\\", "/", dirname($_SERVER['SCRIPT_NAME']));
@@ -491,15 +491,15 @@ if(!empty($SEARCH_SPIDER)) {
 	$spidertime = time();
 	$spiderdate = date("d.m.Y", $spidertime);
 	$_SESSION['last_spider_name'] = $SEARCH_SPIDER;
-	if(isset($_SESSION['spider_count'])) 
+	if(isset($_SESSION['spider_count']))
 		$spidercount = $_SESSION['spider_count'] + 1;
 	else {
-		$spidercount = 1; 
+		$spidercount = 1;
 		//adds a message to the log that a new spider session is starting
 		require_once("includes/authentication.php");      // -- Loaded early so AddToLog works
 		$outstr = preg_replace('/\s\s+/', ' ', $SEARCH_SPIDER); // trim trailing whitespace
 		// Don't allow ' - ' because that is the log seperator
-		$outstr = preg_replace('/ - /', ' ', $outstr); 
+		$outstr = preg_replace('/ - /', ' ', $outstr);
 		AddToLog("New search engine encountered: ->".$outstr."<-");
 	}
 	if(isset($_SESSION['last_spider_date'])) {
@@ -508,7 +508,7 @@ if(!empty($SEARCH_SPIDER)) {
 			require_once("includes/authentication.php");      // -- Loaded early so AddToLog works
 			$outstr = preg_replace('/\s\s+/', ' ', $SEARCH_SPIDER); // trim trailing whitespace
 			// Don't allow ' - ' because that is the log seperator
-			$outstr = preg_replace('/ - /', ' ', $outstr); 
+			$outstr = preg_replace('/ - /', ' ', $outstr);
  			AddToLog("Returning search engine last seen ".$_SESSION['spider_count']." times on ".$_SESSION['last_spider_date']." from ".$_SESSION['last_spider_ip']." ->".$outstr."<-");
 			$_SESSION['last_spider_date'] = $spiderdate;
 			$spidercount = 1;
@@ -516,9 +516,9 @@ if(!empty($SEARCH_SPIDER)) {
 	}
 	$_SESSION['last_spider_date'] = $spiderdate;
 	$_SESSION['spider_count'] = $spidercount;
-	if(isset($_SERVER['REMOTE_ADDR'])) 
+	if(isset($_SERVER['REMOTE_ADDR']))
 		$_SESSION['last_spider_ip'] = $_SERVER['REMOTE_ADDR'];
-	if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) 
+	if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
 		$_SESSION['last_spider_lang'] = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 }
 
@@ -869,21 +869,25 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
 	if ($REQUIRE_AUTHENTICATION) {
 		if (empty($pgv_username)) {
 			if ((strstr($SCRIPT_NAME, "login.php")===false)
-				&&(strstr($SCRIPT_NAME, "login_register.php")===false)
-				&&(strstr($SCRIPT_NAME, "client.php")===false)
-				&&(strstr($SCRIPT_NAME, "help_text.php")===false)
-				&&(strstr($SCRIPT_NAME, "message.php")===false)) {
-				$url = basename($_SERVER["SCRIPT_NAME"])."?".$QUERY_STRING;
-				if (stristr($url, "index.php")!==false) {
-					if (stristr($url, "command=")===false) {
-						if ((!isset($_SERVER['HTTP_REFERER'])) || (stristr($_SERVER['HTTP_REFERER'],$SERVER_URL)===false)) $url .= "&command=gedcom";
+					&&(strstr($SCRIPT_NAME, "login_register.php")===false)
+					&&(strstr($SCRIPT_NAME, "client.php")===false)
+					&&(strstr($SCRIPT_NAME, "help_text.php")===false)
+					&&(strstr($SCRIPT_NAME, "message.php")===false)) {
+				if (!empty($auth) && $auth=="basic") { //if user is attempting basic authentication //TODO: Update if degest auth is ever implemented
+						basicHTTPAuthenticateUser();
+				} else {
+					$url = basename($_SERVER["SCRIPT_NAME"])."?".$QUERY_STRING;
+					if (stristr($url, "index.php")!==false) {
+						if (stristr($url, "command=")===false) {
+							if ((!isset($_SERVER['HTTP_REFERER'])) || (stristr($_SERVER['HTTP_REFERER'],$SERVER_URL)===false)) $url .= "&command=gedcom";
+						}
 					}
+					if (stristr($url, "ged=")===false)  {
+						$url.="&ged=".$GEDCOM;
+					}
+					header("Location: login.php?url=".urlencode($url));
+					exit;
 				}
-				if (stristr($url, "ged=")===false)  {
-					$url.="&ged=".$GEDCOM;
-				}
-				header("Location: login.php?url=".urlencode($url));
-				exit;
 			}
 		}
 	}
@@ -919,7 +923,7 @@ if ((!empty($pgv_username))&&(!isset($logout))) {
 		userUpdateLogin($pgv_username);
 		$_SESSION['activity_time'] = time();
 	}
-	
+
 	$tempuser = getUser($pgv_username);
 	$usertheme = $tempuser["theme"];
 	if ((!empty($_POST["user_theme"]))&&(!empty($_POST["oldusername"]))&&($_POST["oldusername"]==$pgv_username)) $usertheme = $_POST["user_theme"];
