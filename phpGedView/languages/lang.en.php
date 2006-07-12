@@ -1664,6 +1664,7 @@ $pgv_lang["rss_feeds"]				= "RSS Feeds";
 $pgv_lang["no_feed_title"]			= "Feed not available";
 $pgv_lang["no_feed"]				= "There is no RSS feed available for this PhpGedView site";
 $pgv_lang["feed_login"]				= "If you have an account at this PhpGedView site, you can <a href=\"#AUTH_URL#\">log in</a> to the server using Basic HTTP Authentication to view private information.";
+$pgv_lang["authenticated_feed"]		= "Authenticated Feed";
 
 //-- ASSOciates RELAtionship
 // After any change in the following list, please check $assokeys in edit_interface.php
