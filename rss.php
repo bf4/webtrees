@@ -285,7 +285,7 @@ if($ENABLE_RSS) {
 		if (! empty($recentChanges[2])) {
 			$item = new FeedItem();
 			$item->title = $recentChanges[0];
-			$item->link = $SERVER_URL. "indilist.php";
+			$item->link = $SERVER_URL. "index.php?command=gedcom#recent_changes";
 			$item->description = $recentChanges[2];
 
 			//optional
