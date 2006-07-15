@@ -4,7 +4,7 @@
  * Seperated out of G2 embeding for use elseware.
  */
 
-global $SERVER_URL, $language_settings, $LANGUAGE, $modinfo;
+global $SERVER_URL, $language_settings, $LANGUAGE, $modinfo, $pgv_lang;
 
 // For block support
 if(!defined('PGV_MOD_SIMPLE')){$modinfo = parse_ini_file('modules/gallery2.php', true);}
@@ -34,12 +34,12 @@ require_once 'modules/gallery2/G2EmbedDiscoveryUtilities.class';
 
 function mod_gallery2_load($uid)
 {
-	global $SERVER_URL, $language_settings, $LANGUAGE, $modinfo;
+	global $SERVER_URL, $language_settings, $LANGUAGE, $modinfo, $pgv_lang;
 
 	if($SERVER_URL[strlen($SERVER_URL) - 1] == '/'){$sep = '';}else{$sep = '/';}
 
 	$ret = GalleryEmbed::init(array(
-		'embedUri'			=> 'index.php?mod=gallery2',
+		'embedUri'			=> "{$SERVER_URL}{$sep}index.php?mod=gallery2",
 		'g2Uri'				=> G2EmbedDiscoveryUtilities::normalizeG2Uri($modinfo['Gallery2']['path']),
 		'loginRedirect'		=> "{$SERVER_URL}{$sep}login.php",
 		'activeUserId'		=> $uid,
