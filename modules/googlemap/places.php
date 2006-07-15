@@ -66,9 +66,7 @@ if (($action=="ExportFile") && (userIsAdmin(getUserName()))) {
 }
 
 print_header($pgv_lang["edit_place_locations"]);
-?>
 
-<?php
 print "<span class=\"subheaders\">".$pgv_lang["edit_place_locations"]."</span><br><br>";
 if (!userIsAdmin(getUserName())) {
     print "<table class=\"facts_table\">\n";
@@ -415,6 +413,14 @@ if ($action=="ImportFile") {
             <td class="descriptionbox"><?php print_help_link("PLIF_CLEAN_help", "qm", "PLIF_CLEAN");?><?php print $pgv_lang["pl_clean_db"];?></td>
             <td class="optionbox"><input type="checkbox" name="cleardatabase"></td>
         </tr>
+        <tr>
+            <td class="descriptionbox"><?php print_help_link("PLIF_UPDATE_help", "qm", "PLIF_UPDATE");?><?php print $pgv_lang["pl_update_only"];?></td>
+            <td class="optionbox"><input type="checkbox" name="updateonly"></td>
+        </tr>
+        <tr>
+            <td class="descriptionbox"><?php print_help_link("PLIF_OVERWRITE_help", "qm", "PLIF_OVERWRITE");?><?php print $pgv_lang["pl_overwrite_data"];?></td>
+            <td class="optionbox"><input type="checkbox" name="overwritedata"></td>
+        </tr>
     </table>
     <input id="savebutton" type="submit" value="<?php print $pgv_lang["save"];?>" /><br />    
 </form>
@@ -495,40 +501,56 @@ if ($action=="ImportFile2") {
             if ($escparent == "") {
                 $escparent = "Unknown";
             }
-            $psql = "SELECT pl_id,pl_long,pl_lati,pl_zoom FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$parent_id AND pl_place LIKE '".$escparent."' ORDER BY pl_place";
+            $psql = "SELECT pl_id,pl_long,pl_lati,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$parent_id AND pl_place LIKE '".$escparent."' ORDER BY pl_place";
             $res = dbquery($psql);
             $row =& $res->fetchRow();
             $res->free();
             if (empty($row[0])) {       // this name does not yet exist: create entry
-                $highestIndex = $highestIndex + 1;
-                if (($i+1) == count($parent)) {
-                    $zoomlevel = $place["zoom"];
-                }
-                else {
-                    $zoomlevel = $default_zoom_level[$i];
-                }
-                if (($place["lati"] == "0") || ($place["long"] == "0") || (($i+1) < count($parent))) {
-                    $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", \"".$escparent."\", NULL, NULL, ".$default_zoom_level[$i].",\"".$place["icon"]."\");";
-                }
-                else {
-                    $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", \"".$escparent."\", \"".$place["long"]."\" , \"".$place["lati"]."\", ".$zoomlevel.",\"".$place["icon"]."\");";
-                }
-                $parent_id = $highestIndex;
-                if (userIsAdmin(getUserName())) {
-                    $res = dbquery($sql);
+                if (!isset($_POST["updateonly"])) {
+                    $highestIndex = $highestIndex + 1;
+                    if (($i+1) == count($parent)) {
+                        $zoomlevel = $place["zoom"];
+                    }
+                    else {
+                        $zoomlevel = $default_zoom_level[$i];
+                    }
+                    if (($place["lati"] == "0") || ($place["long"] == "0") || (($i+1) < count($parent))) {
+                        $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", \"".$escparent."\", NULL, NULL, ".$default_zoom_level[$i].",\"".$place["icon"]."\");";
+                    }
+                    else {
+                        $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", \"".$escparent."\", \"".$place["long"]."\" , \"".$place["lati"]."\", ".$zoomlevel.",\"".$place["icon"]."\");";
+                    }
+                    $parent_id = $highestIndex;
+                    if (userIsAdmin(getUserName())) {
+                        $res = dbquery($sql);
+                    }
                 }
             }
             else {
                 $parent_id = $row[0];
-                if ((($row[1] == "0") || ($row[1] == null)) && (($row[2] == "0") || ($row[2] == null))) {
-                    $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati=\"".$place["lati"]."\",pl_long=\"".$place["long"]."\" where pl_id=$parent_id LIMIT 1";
+                if ((isset($_POST["overwritedata"])) && ($i+1 == count($parent))) {
+                    $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati=\"".$place["lati"]."\",pl_long=\"".$place["long"]."\",pl_zoom=\"".$place["zoom"]."\",pl_icon=\"".$place["icon"]."\" where pl_id=$parent_id LIMIT 1";
                     if (userIsAdmin(getUserName())) {
                         $res = dbquery($sql);
                     }
                 }
                 else {
-                    $parent_long = $row[1];
-                    $parent_lati = $row[2];
+                    if ((($row[1] == "0") || ($row[1] == null)) && (($row[2] == "0") || ($row[2] == null))) {
+                        $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati=\"".$place["lati"]."\",pl_long=\"".$place["long"]."\" where pl_id=$parent_id LIMIT 1";
+                        if (userIsAdmin(getUserName())) {
+                            $res = dbquery($sql);
+                        }
+                    }
+                    else {
+                        $parent_long = $row[1];
+                        $parent_lati = $row[2];
+                    }
+                    if (($row[4] == "") || ($row[4] == null)) {
+                        $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_icon=\"".$place["icon"]."\",pl_long=\"".$place["long"]."\" where pl_id=$parent_id LIMIT 1";
+                        if (userIsAdmin(getUserName())) {
+                            $res = dbquery($sql);
+                        }
+                    }
                 }
             }
         }

@@ -136,8 +136,8 @@ if ($action=="update") {
     $parent_lati = "0.0";
     $parent_long = "0.0";
     if(($row[1] != NULL) && ($row[2] != NULL)) {
-        $place_lati = str_replace(array('N', 'S', ','), array('', '-', '.') , $row[1]);
-        $place_long = str_replace(array('E', 'W', ','), array('', '-', '.') , $row[2]);
+        $place_lati = (float)(str_replace(array('N', 'S', ','), array('', '-', '.') , $row[1]));
+        $place_long = (float)(str_replace(array('E', 'W', ','), array('', '-', '.') , $row[2]));
         $show_marker = true;
         $res->free();
     }
@@ -154,8 +154,8 @@ if ($action=="update") {
         $res = dbquery($sql);
         $row =& $res->fetchRow();
         if(($row[0] != NULL) && ($row[1] != NULL)) {
-            $parent_lati = str_replace(array('N', 'S', ','), array('', '-', '.') , $row[0]);
-            $parent_long = str_replace(array('E', 'W', ','), array('', '-', '.') , $row[1]);
+            $parent_lati = (float)(str_replace(array('N', 'S', ','), array('', '-', '.') , $row[0]));
+            $parent_long = (float)(str_replace(array('E', 'W', ','), array('', '-', '.') , $row[1]));
             if ($zoomfactor == 1) {
                 $zoomfactor = $row[3];
             }

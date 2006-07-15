@@ -90,5 +90,10 @@ $pgv_lang["PLIF_FILENAME_help"]         = "Voer de naam van het bestand in waar 
 $pgv_lang["PLIF_CLEAN"]                 = "Plaats-database leegmaken";
 $pgv_lang["PLIF_CLEAN_help"]            = "Als deze optie is geselecteerd zal de database met plaats-gegevens worden leeggemaakt. Deze bevat alleen de gegevens van de plaatsen. Er zullen geen wijzigingen in de GEDCOM gegevens worden aangebracht.";
 
+$pgv_lang["PLIF_UPDATE"]                = "Alleen bijwerken bestaande gegevens";
+$pgv_lang["PLIF_UPDATE_help"]           = "Alleen bijwerken van bestaande gegevens.<br>Als deze optie wordt geselecteerd zullen alleen de gegevens bijgewerkt worden welke al in de database aanwezig zijn. Er zullen geen nieuwe plaatsen toegevoegd worden aan de database.";
+
+$pgv_lang["PLIF_OVERWRITE"]             = "Overschrijf locatie gegevens";
+$pgv_lang["PLIF_OVERWRITE_help"]        = "Overschrijf locatie gegevens in de database met gegevens uit de file.<br>Indien deze optie is geselcteerd zullen de gegevens (indien aanwezig in de database) worden overschreven met de gegevens uit de file. Indien de gegevens niet aanwezig zijn zal een nieuwe plaats worden aangemaakt, tenzij de optie Alleen bijwerken ook is geselcteerd.";
 
 ?>
