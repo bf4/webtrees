@@ -35,11 +35,11 @@ $pgv_lang["gm_min"]                 = "Min.";
 $pgv_lang["gm_max"]                 = "Max.";
 
 // Texts used on the Places location page
-$pgv_lang["edit_place_locations"]   = "Edit place locations";
+$pgv_lang["edit_place_locations"]   = "Edit geographic place locations";
 $pgv_lang["pl_no_places_found"]     = "No places found";
 $pgv_lang["pl_zoom_factor"]         = "Zoom factor";
 $pgv_lang["pl_place_icon"]          = "Icon";
-$pgv_lang["pl_edit"]                = "Edit location";
+$pgv_lang["pl_edit"]                = "Edit geographic location";
 $pgv_lang["pl_add_place"]           = "Add place";
 $pgv_lang["pl_import_gedcom"]       = "Import from current GEDCOM";
 $pgv_lang["pl_import_all_gedcom"]   = "Import from all GEDCOMs";
@@ -52,6 +52,8 @@ $pgv_lang["pl_east_short"]          = "E";
 $pgv_lang["pl_west_short"]          = "W";
 $pgv_lang["pl_places_filename"]     = "File containing places (CSV)";
 $pgv_lang["pl_clean_db"]            = "Clear all place-locations before import?";
+$pgv_lang["pl_update_only"]         = "Update existing places only?";
+$pgv_lang["pl_overwrite_data"]      = "Overwrite location-data with data from file?";
 $pgv_lang["pl_no_places_found"]     = "No places found";
 $pgv_lang["pl_use_this_value"]      = "Use this value";
 $pgv_lang["pl_precision"]           = "Precision";

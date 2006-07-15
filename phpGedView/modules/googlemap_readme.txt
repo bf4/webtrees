@@ -56,6 +56,7 @@ Contributers:
 - German translation: Christian Helms (nolensvolens)
 - French translation: Thierry Durand (tdurand)
 - Hebrew translations: Meliza Amity (meliza)
+- Portugese translation: Clovis Bombardelli (cb-BR)
 - Countries and US-states CSV file: Glen Carreras (carrerasg)
 - Testing and additional comments: Mike Elliott (Colored Pixels), Nigel
   Osborn (nigelo)

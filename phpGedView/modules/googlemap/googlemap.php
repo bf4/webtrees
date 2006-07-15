@@ -250,7 +250,6 @@ function build_indiv_map($indifacts, $famids) {
     $tables = $DBCONN->getListOf('tables');
     if (in_array($TBLPREFIX."placelocation", $tables)) $placelocation = true;
     else $placelocation = false;
-
     //-- sort the facts
     usort($indifacts, "compare_facts");
     $i = 0;
@@ -264,10 +263,12 @@ function build_indiv_map($indifacts, $famids) {
                 $placerec = get_sub_record(2, "2 PLAC", $value[1]);
                 $addrFound = false;
             }
-            $ct = preg_match("/\d ADDR (.*)/", $value[1], $match);
-            if ($ct>0) {
-                $placerec = get_sub_record(1, "\d ADDR", $value[1]);
-                $addrFound = true;
+            else {
+                $ct = preg_match("/\d ADDR (.*)/", $value[1], $match);
+                if ($ct>0) {
+                    $placerec = get_sub_record(1, "\d ADDR", $value[1]);
+                    $addrFound = true;
+                }
             }
             if (!empty($placerec)) {
                 $ctla = preg_match("/\d LATI (.*)/", $placerec, $match1);
@@ -305,9 +306,8 @@ function build_indiv_map($indifacts, $famids) {
                         $mapdata["date"][$i] = "";
                     }
                     $mapdata["name"][$i]="";
-                    $ct = preg_match("/PGV_SPOUSE: (.*)/", $value[1], $match);
-                    if ($ct>0) {
-                        $mapdata["name"][$i]=$match[1];
+                    if ($ctlp>0) {
+                        $mapdata["name"][$i]=$spouseid[1];
                     }
                     $mapdata["sex"][$i]  = "-";
                 }
@@ -334,9 +334,8 @@ function build_indiv_map($indifacts, $famids) {
                                 $mapdata["date"][$i] = "";
                             }
                             $mapdata["name"][$i]="";
-                            $ct = preg_match("/PGV_SPOUSE: (.*)/", $value[1], $match);
-                            if ($ct>0) {
-                                $mapdata["name"][$i]=$match[1];
+                            if ($ctlp>0) {
+                                $mapdata["name"][$i]=$spouseid[1];
                             }
                             $mapdata["sex"][$i]  = "-";
                         }
@@ -609,7 +608,7 @@ function build_indiv_map($indifacts, $famids) {
                                     print "<a href=\\\"individual.php?pid=".$mapdata["name"][$k]."&amp;ged=$GEDCOM\\\">";
                                     if (displayDetailsById($mapdata["name"][$k])||showLivingNameById($mapdata["name"][$k]))
                                         print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($mapdata["name"][$k])));
-                                    else
+                                    else 
                                         print $pgv_lang["private"];
                                     print "</a><br>";
                                 }
