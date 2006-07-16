@@ -171,8 +171,17 @@ function outputLevel($parent, $level) {
 
 $tables = $DBCONN->getListOf('tables');
 if (!in_array($TBLPREFIX."placelocation", $tables)) {
-
-    $sql = "CREATE TABLE ".$TBLPREFIX."placelocation (pl_id int(11) NOT NULL, pl_parent_id int(11) default NULL, pl_level int(11) default NULL, pl_place varchar(255) default NULL, pl_long varchar(30) default NULL, pl_lati varchar(30) default NULL, pl_zoom int(4) unsigned default NULL, pl_icon varchar(255) default NULL, PRIMARY KEY  (pl_id), KEY pl_level (pl_level), KEY pl_long (pl_long), KEY pl_lati (pl_lati), KEY pl_name (pl_place), KEY pl_parent_id (pl_parent_id));";
+    $sql = "CREATE TABLE ".$TBLPREFIX."placelocation (pl_id int(11) NOT NULL, pl_parent_id int(11) default NULL, pl_level int(11) default NULL, pl_place varchar(255) default NULL, pl_long varchar(30) default NULL, pl_lati varchar(30) default NULL, pl_zoom int(4) default NULL, pl_icon varchar(255) default NULL, PRIMARY KEY (pl_id));";
+    $res = dbquery($sql);
+    $sql = "CREATE INDEX pl_level ON ".$TBLPREFIX."placelocation (pl_level)";    
+    $res = dbquery($sql);
+    $sql = "CREATE INDEX pl_long ON ".$TBLPREFIX."placelocation (pl_long)";    
+    $res = dbquery($sql);
+    $sql = "CREATE INDEX pl_lati ON ".$TBLPREFIX."placelocation (pl_lati)";    
+    $res = dbquery($sql);
+    $sql = "CREATE INDEX pl_name ON ".$TBLPREFIX."placelocation (pl_place)";    
+    $res = dbquery($sql);
+    $sql = "CREATE INDEX pl_parent_id ON ".$TBLPREFIX."placelocation (pl_parent_id)";    
     $res = dbquery($sql);
     $tables = $DBCONN->getListOf('tables');
     if (!in_array($TBLPREFIX."placelocation", $tables)) {
