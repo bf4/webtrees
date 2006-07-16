@@ -22,19 +22,13 @@
  * @package PhpGedView
  * @subpackage Gallery2
  * @version $Id: $
- * @author Patrick Kellum
+ * @author Clovis
  */
-$modinfo = parse_ini_file('modules/gallery2.php', true);
-if(!isset($modinfo['Gallery2']['path'])){$modinfo['Gallery2']['path'] = 'modules/gallery2';}
-if(file_exists("{$modinfo['Gallery2']['path']}/embed.php")){include_once "{$modinfo['Gallery2']['path']}/embed.php";}
-
-class mod_gallery2_logout
-{
-	function hook($params)
-	{
-		if(!class_exists('GalleryEmbed')){return null;}
-		$g2ret = GalleryEmbed::logout();
-		return null;
-	}
-}
+$pgv_lang['mod_gallery2'] = 'Galeria de fotos';
+$pgv_lang['mod_gallery2_siteadmin'] = 'Admin';
+$pgv_lang['mod_gallery2_useralbum'] = 'Meu Album';
+$pgv_lang['mod_gallery2_advsearch'] = 'Busca avan&ccedil;ada';
+$pgv_lang['mod_gallery2_error_user_create'] = "Ocorreram erros durante o registro do usu&aacute;rio.";
+$pgv_lang['mod_gallery2_error_user_check'] = "Ocorreram erros enquanto se procedia a verifica&ccedil;&atilde;o se o usu&aacute;rio existia.";
+$pgv_lang['mod_gallery2_error_init'] = "Ocorreram erros durante a inicializa&ccedil;&atilde;o do m&oacute;dulo Gallery.";
 ?>
