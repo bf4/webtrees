@@ -25,8 +25,14 @@
 //-- security check, only allow access from module.php
 if(strstr($_SERVER['SCRIPT_NAME'], 'menu.php')){print "Now, why would you want to do that.  You're not hacking are you?";exit;}
 
-require_once 'modules/gallery2/pgv.php';
-mod_gallery2_load(getUserName());
+//require_once 'modules/gallery2/pgv.php';
+//mod_gallery2_load(getUserName());
+
+// Load PGV embeding language file
+global $language_settings, $LANGUAGE, $pgv_lang;
+require_once 'modules/gallery2/language/mod_en.php';
+// Load other language file if needed
+if($language_settings[$LANGUAGE]['lang_short_cut'] != 'en' && file_exists("modules/gallery2/language/mod_{$language_settings[$LANGUAGE]['lang_short_cut']}.php")){require_once "modules/gallery2/language/mod_{$language_settings[$LANGUAGE]['lang_short_cut']}.php";}
 
 class gallery2_ModuleMenu
 {
@@ -44,7 +50,7 @@ class gallery2_ModuleMenu
 		if($TEXT_DIRECTION == 'rtl'){$ff = '_rtl';}else{$ff = '';}
 
 		// Gallery
-		$menu = new Menu($pgv_lang['mod_gallery2'], 'module.php?mod=gallery2', 'down');
+		$menu = new Menu($pgv_lang['mod_gallery2'], 'index.php?mod=gallery2', 'down');
 		if(!empty($PGV_IMAGES['media']['large'])){$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['media']['large']}");}
 		$menu->addClass("menuitem{$ff}", "menuitem_hover{$ff}", "submenu{$ff}");
 
@@ -55,6 +61,7 @@ class gallery2_ModuleMenu
 		$menu->addSubmenu($submenu);
 
 		// User Album
+/*
 		list($ret, $pluginStatus) = GalleryCoreApi::fetchPluginStatus('module');
 		if(!$ret)
 		{
@@ -92,6 +99,7 @@ class gallery2_ModuleMenu
 				}
 			}
 		}
+*/
 
 		// Site Admin
 		if(userIsAdmin(getUserName()))
