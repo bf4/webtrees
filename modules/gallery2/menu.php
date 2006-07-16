@@ -1,6 +1,6 @@
 <?php
 /**
- * Menu for research assistant
+ * Menu for Gallery 2 Module
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2005	John Finlay and Others
  *
@@ -19,8 +19,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @subpackage Charts
- * @version $Id: individual.php,v 1.252.2.98 2005/08/16 04:04:25 kosherjava Exp $
+ * @subpackage Gallery2
+ * @version $Id: $
+ * @author Patrick Kellum
  */
 //-- security check, only allow access from module.php
 if(strstr($_SERVER['SCRIPT_NAME'], 'menu.php')){print "Now, why would you want to do that.  You're not hacking are you?";exit;}
