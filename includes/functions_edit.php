@@ -803,6 +803,20 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		if (txt!='' && txt.charAt(0)!=neg && txt.charAt(0)!=pos) txt=pos+txt;
 		field.value = txt;
 	}
+	function toggle_lati_long() {
+		tr = document.getElementsByTagName('tr');
+		for (var i=0; i<tr.length; i++) {
+			if (tr[i].id.indexOf("LATI")>=0 || tr[i].id.indexOf("LONG")>=0) {
+				var disp = tr[i].style.display;
+				if (disp=="none") {
+					disp="table-row";
+					if (document.all) disp="inline"; // IE
+				}
+				else disp="none";
+				tr[i].style.display=disp;
+			}
+		}
+	}
 	//-->
 	</script>
 	<?php
@@ -844,7 +858,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	$style="";
 	print "<tr id=\"".$element_id."_tr\" ";
 	if (in_array($fact, $subnamefacts)) print " style=\"display:none;\""; // hide subname facts
-	if ($fact=="MAP") print " style=\"display:none;\""; // MAP is preceding LATI and LONG
+	if ($fact=="MAP" || $fact=="LATI" || $fact=="LONG") print " style=\"display:none;\"";
 	print " >\n";
 	if (in_array($fact, $subnamefacts) || $fact=="LATI" || $fact=="LONG")
 			print "<td class=\"optionbox $TEXT_DIRECTION wrap width25\">";
@@ -896,7 +910,6 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		$element_name="NOTE[".$noteid."]";
 	}
 
-//	if (in_array($fact, $emptyfacts)&&empty($value)) {
 	if (in_array($fact, $emptyfacts)) {
 		$value = strtoupper($value);
 		if ($fact=="BIRT" or $fact=="MARR") $value="Y"; // default YES
@@ -1032,6 +1045,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			print_specialchar_link($element_id, false);
 			print_findplace_link($element_id);
 			print "</div>\n";
+			print "<a href=\"javascript:;\" onclick=\"toggle_lati_long();\"><img src=\"images/buttons/target.gif\" border=\"0\" align=\"middle\" alt=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" title=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" /></a>";
 			if ($SPLIT_PLACES) {
 				if (!function_exists("print_place_subfields")) require("includes/functions_places.php");
 				print_place_subfields($element_id);
