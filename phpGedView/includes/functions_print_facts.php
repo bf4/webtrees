@@ -443,7 +443,7 @@ function print_repository_record($sid) {
  */
 function print_fact_sources($factrec, $level) {
 	 global $pgv_lang;
-	 global $factarray, $SEARCH_SPIDER;
+	 global $factarray;
 	 global $WORD_WRAPPED_NOTES, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_SOURCES, $EXPAND_SOURCES;
 	 $nlevel = $level+1;
 	 if ($SHOW_SOURCES<getUserAccessLevel(getUserName())) return;
@@ -474,16 +474,12 @@ function print_fact_sources($factrec, $level) {
 			$elementID = $sid."-".floor(microtime()*1000000);
 			if ($lt>0) print "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
 			print $pgv_lang["source"].":</span> <span class=\"field\">";
-			if(empty($SEARCH_SPIDER)) {
-				print "<a href=\"source.php?sid=".$sid."\">";
-			}
+			print "<a href=\"source.php?sid=".$sid."\">";
 			print PrintReady(get_source_descriptor($sid));
 			//-- Print additional source title
 	    	$add_descriptor = get_add_source_descriptor($sid);
 	    	if ($add_descriptor) print " - ".PrintReady($add_descriptor);
-			if(empty($SEARCH_SPIDER)) {
-				print "</a>";
-			}
+			print "</a>";
 			print "</span>";
 			print "<div id=\"$elementID\" class=\"source_citations\">";
 			$cs = preg_match("/$nlevel PAGE (.*)/", $srec, $cmatch);
@@ -772,7 +768,7 @@ function print_address_structure($factrec, $level) {
 
 function print_main_sources($factrec, $level, $pid, $linenum) {
 	 global $pgv_lang;
-	 global $factarray, $view, $SEARCH_SPIDER;
+	 global $factarray, $view;
 	 global $WORD_WRAPPED_NOTES, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_SOURCES;
 	 if ($SHOW_SOURCES<getUserAccessLevel(getUserName())) return;
 	 $nlevel = $level+1;
@@ -842,17 +838,13 @@ function print_main_sources($factrec, $level, $pid, $linenum) {
 		  //print "\n\t\t\t<td class=\"facts_value$styleadd\">";
 		  if (showFactDetails("SOUR", $pid)) {
 			   $source = find_source_record($match[$j][1]);
-			   if(empty($SEARCH_SPIDER)) {
-				   echo "<a href=\"source.php?sid=".$match[$j][1]."\">";
-			   }
+			   echo "<a href=\"source.php?sid=".$match[$j][1]."\">";
     		   $text = PrintReady(get_source_descriptor($match[$j][1]));
     		   //-- Print additional source title
     		   $add_descriptor = get_add_source_descriptor($match[$j][1]);
     		   if ($add_descriptor) $text .= " - ".PrintReady($add_descriptor);
 				if (strpos($source, " _ITALIC")) echo "<i>".$text."</i>"; else echo $text;
-			   if(empty($SEARCH_SPIDER)) {
 			        echo "</a>";
-			   }
 			   // PUBL
 				$cs = preg_match("/1 PUBL (.*)/", $source, $cmatch);
 				if ($cs>0) {

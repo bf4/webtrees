@@ -27,6 +27,8 @@ if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["SHOW_SPIDER_TAGLINE"]		= "Show spider tagline";
+$pgv_lang["SHOW_SPIDER_TAGLINE_help"]		= "~#pgv_lang[SHOW_SPIDER_TAGLINE]#~<br /><br />On pages generated for search engines, display as the last line the particular search engine the page detected.  If this option is on, it can bias Google AdSense towards search engine optimization tools.<br />";
 $pgv_lang["SHOW_PRIVATE_RELATIONSHIPS_help"] = "~#pgv_lang[SYNC_GEDCOM_FILE]#~<br /><br />This option will retain family links in privatized records.  This means that you will see empty \"private\" boxes on the pedigree chart and on other charts with private people.<br /><br />This is similar to the behavior of PhpGedView versions prior to v4.0.<br /><br />This setting is off by default.  It is recommended instead of turning this on, to point your pedigree root person in your GEDCOM configuration, to a person who is not private.<br />";
 $pgv_lang["SHOW_PRIVATE_RELATIONSHIPS"]	= "Show private relationships";
 $pgv_lang["SYNC_GEDCOM_FILE_help"] 			= "~#pgv_lang[SYNC_GEDCOM_FILE]#~<br /><br />In past versions of PGV the pending edits were stored in the GEDCOM file and the changed records were then \"accepted\" into the database.  Starting with v4.1 pending changes are no longer stored in the GEDCOM file but in the changes file.  <br /><br />Setting this value to true will update the GEDCOM file when changes are accepted into the database.  This will keep the GEDCOM file synchronized with the database.  For greater compatibility with previous versions the default value of this field is on.<br /><br />You may want to turn it off to conserver memory when accepting changes.<br />";

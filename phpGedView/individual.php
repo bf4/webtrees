@@ -1070,7 +1070,8 @@ else print "tabswitch(". ($controller->default_tab+1) .")";
 if(empty($SEARCH_SPIDER))
 	print_footer();
 else {
-	print $pgv_lang["label_search_engine_detected"].": ".$SEARCH_SPIDER;
+	if($SHOW_SPIDER_TAGLINE)
+		print $pgv_lang["label_search_engine_detected"].": ".$SEARCH_SPIDER;
 	print "\n</div>\n\t</body>\n</html>";
 }
 ?>

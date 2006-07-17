@@ -343,6 +343,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$SEARCHLOG_CREATE\s*=\s*".*";/', "\$SEARCHLOG_CREATE = \"".$_POST["NEW_SEARCHLOG_CREATE"]."\";", $configtext);
 	$configtext = preg_replace('/\$SHOW_CONTEXT_HELP\s*=\s*.*;/', "\$SHOW_CONTEXT_HELP = ".$boolarray[$_POST["NEW_SHOW_CONTEXT_HELP"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_COUNTER\s*=\s*.*;/', "\$SHOW_COUNTER = ".$boolarray[$_POST["NEW_SHOW_COUNTER"]].";", $configtext);
+	$configtext = preg_replace('/\$SHOW_SPIDER_TAGLINE\s*=\s*.*;/', "\$SHOW_SPIDER_TAGLINE = ".$boolarray[$_POST["NEW_SHOW_SPIDER_TAGLINE"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_EMPTY_BOXES\s*=\s*.*;/', "\$SHOW_EMPTY_BOXES = ".$boolarray[$_POST["NEW_SHOW_EMPTY_BOXES"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_FAM_ID_NUMBERS\s*=\s*.*;/', "\$SHOW_FAM_ID_NUMBERS = ".$boolarray[$_POST["NEW_SHOW_FAM_ID_NUMBERS"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_GEDCOM_RECORD\s*=\s*.*;/', "\$SHOW_GEDCOM_RECORD = ".$boolarray[$_POST["NEW_SHOW_GEDCOM_RECORD"]].";", $configtext);
@@ -1277,6 +1278,14 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["displ_hide_conf"]."\" onclick=\"
 		<td class="optionbox"><select name="NEW_SHOW_COUNTER" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SHOW_COUNTER_help');">
 				<option value="yes" <?php if ($SHOW_COUNTER) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 				<option value="no" <?php if (!$SHOW_COUNTER) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("SHOW_SPIDER_TAGLINE_help", "qm", "SHOW_SPIDER_TAGLINE"); print $pgv_lang["SHOW_SPIDER_TAGLINE"];?></td>
+		<td class="optionbox"><select name="NEW_SHOW_SPIDER_TAGLINE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SHOW_SPIDER_TAGLINE_help');">
+				<option value="yes" <?php if ($SHOW_SPIDER_TAGLINE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$SHOW_SPIDER_TAGLINE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 			</select>
 		</td>
 	</tr>
