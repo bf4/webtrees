@@ -329,6 +329,7 @@ $pgv_lang["search_tagfoff"]			= "Av";
 $pgv_lang["associate"]				= "associera";
 $pgv_lang["search_asso_label"]		= "Associationer";
 $pgv_lang["search_asso_text"]		= "Visa relaterade personer/familjer";
+$pgv_lang["results_per_page"]		= "Resultat per sida";
 
 
 //-- SOURCELIST FILE MESSAGES
@@ -764,12 +765,7 @@ $pgv_lang["sort_by"]			= "Sortera beroende på";
 $pgv_lang["cleanup"]			= "Städa upp";
 $pgv_lang["skip_cleanup"]		= "Hoppa över städning";
 $pgv_lang["dynasty_list"]		= "Översikt över familjer";
-$pgv_lang["make_slklist"]		= "Skapa EXCEL(SLK) lista";
-$pgv_lang["excel_list"]			= "Utskrift i EXCEL(slk)-format för följande filer (först används patriarklista):";
-$pgv_lang["excel_tab"]			= "Flik:";
-$pgv_lang["excel_create"]		= "kommer att skapas på fil:";
 $pgv_lang["patriarch_list"]		= "Patriarklista";
-$pgv_lang["slk_list"]			= "EXCEL SLK lista";
 $pgv_lang["statistics"]			= "Statistik";
 $pgv_lang["merge_records"]      = "Slå ihop poster";
 $pgv_lang["merge_same"]         = "Posterna är inte av samma typ. Kan inte slå ihop poster som inte är samma typ.";
@@ -1631,6 +1627,7 @@ $pgv_lang["stat_longest_life"]		= "Person som levt längst";
 $pgv_lang["stat_most_children"]		= "Familj med flest barn";
 $pgv_lang["stat_average_children"]	= "Genomsnittligt antal barn per familj";
 $pgv_lang["stat_events"]			= "Totalt antal händelser";
+$pgv_lang["stat_media"]				= "Mediaobjekt";
 $pgv_lang["stat_surnames"]			= "Totalt antal efternamn";
 $pgv_lang["stat_users"]				= "Totalt antal användare";
 $pgv_lang["no_family_facts"]		= "Inga fakta om denna familj.";
@@ -1760,5 +1757,6 @@ $pgv_lang["roman_surn"]				= "Romaniserat efternamn";
 $pgv_lang["roman_givn"]				= "Romaniserat förnamn";
 $pgv_lang["hebrew_surn"]			= "Hebreiskt efternamn";
 $pgv_lang["hebrew_givn"]			= "Hebreiskt förnamn";
+$pgv_lang["upload_replacement"]		="Ladda upp ersättningsfil";
 
 ?>
