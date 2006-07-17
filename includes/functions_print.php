@@ -489,6 +489,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		if(!((strstr($SCRIPT_NAME, "/individual.php")) ||
 		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
 		     (strstr($SCRIPT_NAME, "/login.php")) ||
+		     (strstr($SCRIPT_NAME, "/source.php")) ||
 		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
 		     (strstr($SCRIPT_NAME, "/index.php"))) ) {
 			header("Location: search_engine.php");
@@ -587,6 +588,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		  // Also ignored by crawlers like wget, so other checks have to be done too.
 		  if((strstr($SCRIPT_NAME, "/individual.php")) ||
 		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
+		     (strstr($SCRIPT_NAME, "/source.php")) ||
 		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
 		     (strstr($SCRIPT_NAME, "/index.php")) ) {
 			// empty case is to index,follow anyways.
@@ -738,6 +740,7 @@ function print_simple_header($title) {
 	if(!empty($SEARCH_SPIDER)) {
 		if(!((strstr($SCRIPT_NAME, "/individual.php")) ||
 		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
+		     (strstr($SCRIPT_NAME, "/source.php")) ||
 		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
 		     (strstr($SCRIPT_NAME, "/index.php"))) ) {
 			header("Location: search_engine.php");
@@ -786,6 +789,7 @@ function print_simple_header($title) {
 		  // Also ignored by crawlers like wget, so other checks have to be done too.
 		  if((strstr($SCRIPT_NAME, "/individual.php")) ||
 		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
+		     (strstr($SCRIPT_NAME, "/source.php")) ||
 		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
 		     (strstr($SCRIPT_NAME, "/index.php")) ) {
 			// empty case is to index,follow anyways.
