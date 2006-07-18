@@ -1766,13 +1766,12 @@ else if ($action=="reorder_update") {
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	asort($order);
 	reset($order);
-	$lines = preg_split("/\n/", $gedrec);
-	$newgedrec = "";
-	for($i=0; $i<count($lines); $i++) {
-		if (preg_match("/1 CHIL/", $lines[$i])==0) $newgedrec .= $lines[$i]."\n";
-	}
+	$newgedrec = $gedrec;
 	foreach($order as $child=>$num) {
-		$newgedrec .= "1 CHIL @".$child."@\r\n";
+		// move each child subrecord to the bottom
+		$subrec = get_sub_record(1, "1 CHIL @".$child."@", $gedrec);
+		$newgedrec = str_replace($subrec,"", $newgedrec);
+		$newgedrec .= $subrec."\r\n";
 	}
 	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
 	$success = (replace_gedrec($pid, $newgedrec));
