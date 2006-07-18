@@ -121,7 +121,7 @@ function get_prev_xref($gid, $type='INDI') {
  * @param string $linkpid	Tells whether or not this record change is linked with the record change of another record identified by $linkpid
  */
 function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
-	global $fcontents, $GEDCOM, $pgv_changes, $manual_save;
+	global $fcontents, $GEDCOM, $pgv_changes, $manual_save, $pgv_private_records;
 
 	$gid = strtoupper($gid);
 	//-- restore any data that was hidden during privatizing
@@ -790,8 +790,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		txt=txt.replace(/\+/g,''); // +17.1234 ==> 17.1234
 		txt=txt.replace(/-/g,neg);	// -0.5698 ==> W0.5698
 		txt=txt.replace(/,/g,'.');	// 0,5698 ==> 0.5698
-		// 0°34'11 ==> 0:34:11
-		txt=txt.replace(/\uB0/g,':'); // °
+		// 0ï¿½34'11 ==> 0:34:11
+		txt=txt.replace(/\uB0/g,':'); // ï¿½
 		txt=txt.replace(/\u27/g,':'); // '
 		// 0:34:11.2W ==> W0.5698
 		txt=txt.replace(/^([0-9]+):([0-9]+):([0-9.]+)(.*)/g, function($0, $1, $2, $3, $4) { var n=parseFloat($1); n+=($2/60); n+=($3/3600); n=Math.round(n*1E4)/1E4; return $4+n; });
