@@ -48,6 +48,15 @@ $pgv_lang["htmlplus_block_descr"]	= "Tämä on HTML-alue, jonka voit sijoittaa s
 $pgv_lang["htmlplus_block_templates"] 	= "Mallipohjat";
 $pgv_lang["htmlplus_block_content"] 	= "Sisällys";
 $pgv_lang["htmlplus_block_narrative"] 	= "Kertova tyyli (vain englanniksi)";
+$pgv_lang["htmlplus_block_keyword"]	= "Esimerkkejä avainsanoista (vain englanniksi)";
+$pgv_lang["htmlplus_block_current"]	= "Nykyinen";
+$pgv_lang["htmlplus_block_default"]	= "Oletusarvo";
+$pgv_lang["htmlplus_block_gedcom"]	= "Sukupuu";
+$pgv_lang["htmlplus_block_birth"]	= "syntymä";
+$pgv_lang["htmlplus_block_death"]	= "kuolema";
+$pgv_lang["htmlplus_block_marrage"]	= "avioliitto";
+$pgv_lang["htmlplus_block_adoption"]= "adoptio";
+$pgv_lang["htmlplus_block_burial"]	= "hautaus";
 $pgv_lang["num_to_show"]		= "Näytettävien kohteiden lukumäärä";
 $pgv_lang["days_to_show"]		= "Näytettävien päivien lukumäärä";
 $pgv_lang["before_or_after"]		= "Sijoita lukumäärät ennen nimeä tai sen jälkeen?";
@@ -305,6 +314,7 @@ $pgv_lang["suffix"]			= "Etuliite:";
 $pgv_lang["object_note"]		= "Kohteen lisätieto:";
 $pgv_lang["sex"]			= "Sukupuoli";
 $pgv_lang["personal_facts"]		= "Henkilön tietoja";
+$pgv_lang["lasttab"]				= "Henkilön viimeksi katsottu alasivu";
 $pgv_lang["type"]			= "Tyyppi";
 $pgv_lang["date"]			= "Päiväys";
 $pgv_lang["place_description"]		= "Paikka / Kuvaus";
@@ -399,6 +409,7 @@ $pgv_lang["place_list2"] 		= "Paikkaluettelo";
 $pgv_lang["show_place_hierarchy"]	= "Näytä paikat hierarkiana";
 $pgv_lang["show_place_list"]		= "Näytä kaikki paikat listassa";
 $pgv_lang["total_unic_places"]		= "Paikkoja yhteensä";
+$pgv_lang["external_objects"]		= "Ulkoiset kohteet";
 
 //-- MEDIALIST FILE MESSAGES
 $pgv_lang["multi_title"]		= "Multimedialuettelo";
@@ -446,6 +457,7 @@ $pgv_lang["search_geds"]		= "Haetaan seuraavista GEDCOM-tiedostoista";
 $pgv_lang["search_type"]		= "Hakumenetelmä";
 $pgv_lang["search_general"]		= "Yleishaku";
 $pgv_lang["search_soundex"]		= "Soundex-haku";
+$pgv_lang["search_replace"]			= "Etsi ja korvaa";
 $pgv_lang["search_inrecs"]		= "Hae";
 $pgv_lang["search_fams"]		= "Perheitä";
 $pgv_lang["search_indis"]		= "Henkilöitä";
@@ -463,6 +475,9 @@ $pgv_lang["search_tagfoff"]		= "Ei";
 $pgv_lang["associate"]		= "läheinen";
 $pgv_lang["search_asso_label"]	= "Läheiset";
 $pgv_lang["search_asso_text"]	= "Näytä sukulaishenkilöt- ja perheet.";
+$pgv_lang["results_per_page"]		= "Tuloksia sivulla";
+$pgv_lang["search_record"]			= "Koko tietue";
+$pgv_lang["replace_with"]			= "Korvaa tällä:";
 
 //-- SOURCELIST FILE MESSAGES
 $pgv_lang["sources_found"]		= "löydettyä lähdettä";
@@ -590,6 +605,16 @@ $pgv_lang["show"]			= "Näytä";
 $pgv_lang["year"]			= "Vuosi:";
 $pgv_lang["timeline_instructions"]	= "Useimmissa uusissa selaimissa laatikoita voi siirtää hiirellä kaaviossa paikasta toiseen.";
 $pgv_lang["zoom_out"]		= "Loitonna";
+$pgv_lang["timeline_beginYear"] = "Aloitusvuosi";
+$pgv_lang["timeline_endYear"] = "Lopetusvuosi";
+$pgv_lang["timeline_scrollSpeed"] = "Nopeus";
+$pgv_lang["timeline_zoom"] = "Lähennä";
+$pgv_lang["timeline_controls"] = "Aikajanaohjaimet";
+$pgv_lang["zoom_default"] = "Oletusarvo";
+$pgv_lang["zoom_2"]		= "Lähennä 2";
+$pgv_lang["zoom_3"]		= "Lähennä 3";
+$pgv_lang["include_family"] = "Sisällytä ydinperhe";
+$pgv_lang["lifespan_chart"] = "Elinkaarikaavio";
 $pgv_lang["zoom_in"]		= "Lähennä";
 
 //-- MONTH NAMES
@@ -735,6 +760,8 @@ $pgv_lang["next_path"]		= "Hae toinen reitti";
 $pgv_lang["show_path"]		= "Näytä polku";
 $pgv_lang["line_up_generations"]	= "Aseta sama sukupolvi riviin";
 $pgv_lang["oldest_top"]             	= "Näytä vanhin huipulla";
+$pgv_lang["bosa_2"] 				= "poika";
+$pgv_lang["bosa_3"] 				= "tytär";
 $pgv_lang["check_delete"]		= "Haluatko varmasti poistaa tämän GEDCOM tiedon?";
 $pgv_lang["access_denied"]		= "<b>Pääsy kielletty</b><br />Sinulla ei ole oikeutta tähän resurssiin.";
 
@@ -1132,6 +1159,7 @@ $pgv_lang["phpinfo"]		= "PHP-info";
 $pgv_lang["admin_info"]		= "Tiedoksi";
 $pgv_lang["admin_geds"]		= "Data- ja GEDCOM-ylläpito";
 $pgv_lang["admin_site"]		= "Sivuston ylläpito";
+$pgv_lang["relationship_great"]		= "iso";
 
 $pgv_lang["media_table_created"]	= "<i>Media</i>-taulun päivitys onnistui.";
 $pgv_lang["click_to_add_media"] 	= "Näpäytä tästä lisätäksesi yllä luetellut mediat GEDCOM-tiedostoon #GEDCOM#";
@@ -1317,6 +1345,7 @@ $pgv_lang["rss_feeds"]		= "RSS-syötteet";
 $pgv_lang["no_feed_title"]		= "Syöte ei ole käytettävissä";
 $pgv_lang["no_feed"]		= "Tällä PhpGedView-sivustolla ei ole käytettävissä RSS-syötettä.";
 $pgv_lang["feed_login"]		= "Mikäli sinulla on käyttäjätili tälle PhpGedView-sivustolle, voit <a href=\"#AUTH_URL#\">kirjautua</a> palvelimelle käyttäen HTTP-autentikointia nähdäksesi yksityisiä tietoja.";
+$pgv_lang["authenticated_feed"]		= "Autentikoitu syöte";
 
 //-- ASSOciates RELAtionship
 // After any change in the following list, please check $assokeys in edit_interface.php
@@ -1526,6 +1555,8 @@ $pgv_lang["TYPE__newspaper"] 	= "Sanomalehti";
 $pgv_lang["TYPE__photo"] 		= "Valokuva";
 $pgv_lang["TYPE__tombstone"] 	= "Hautakivi";
 $pgv_lang["TYPE__video"] 		= "Video";
+$pgv_lang["module_error_unknown_action_v2"] = "Tuntematon toiminto: [action].";
+$pgv_lang["module_error_unknown_type"] = "Tuntematon modulimuoto.";
 $pgv_lang["TYPE__newspaper"] 	= "Sanomalehti";
 
 $pgv_lang["link_new_husb"]		= "Lisää aviomies käyttäen tiedostossa olevaa henkilöä.";
@@ -1629,6 +1660,7 @@ $pgv_lang["stat_longest_life"]		= "Henkilö, joka eli kauimmin";
 $pgv_lang["stat_most_children"]	= "Perhe, jolla oli eniten lapsia";
 $pgv_lang["stat_average_children"]	= "Keskimääräinen lapsiluku perheessä";
 $pgv_lang["stat_events"]		= "Tapahtumia yhteensä";
+$pgv_lang["stat_media"]				= "Mediakohteet";
 $pgv_lang["stat_surnames"]		= "Sukunimiä yhteensä";
 $pgv_lang["stat_users"]		= "Käyttäjiä yhteensä";
 $pgv_lang["no_family_facts"]		= "Ei tietoja tästä perheestä";
@@ -1717,5 +1749,14 @@ $pgv_lang["roman_givn"]				= "Romanisoidut etunimet";
 $pgv_lang["hebrew_surn"]			= "Heprealainen sukunimi";
 $pgv_lang["hebrew_givn"]			= "Heprealaiset etunimet";
 $pgv_lang["include"]				= "Sisällytä:";
+$pgv_lang["upload_replacement"]		="Lataa korvaus";
+$pgv_lang['progress_bars_info']		= "Alla oleva tilapalkki kertoo latauksen edistymisestä. Mikäli aikaraja ylittyy lataaminen keskeytyy ja sinua pyydetään painamaan jatka-painiketta. Mikäli jatka-painiketta ei ole näkyvissä, palaa aiempaan ja anna lyhyempi aikaraja.";
+$pgv_lang["clear_chart"]			= "Tyhjennä kaavio";
+$pgv_lang["file_information"]		= "Tiedostoinformaatio";
+$pgv_lang["choose_file_type"]		= "Valitse tiedostomuoto";
+$pgv_lang["add_individual_by_id"]		= "Lisää henkilö ID-tunnuksen avulla";
+$pgv_lang["advanced_options"]		= "Lisäasetukset";
+$pgv_lang["zip_files"]				= "Zip-tiedosto(t)";
+$pgv_lang["include_media"]			= "Sisällytä media (automaattisesti zip-tiedosto)";
 if (file_exists( "languages/lang.fi.extra.php")) require  "languages/lang.fi.extra.php";
 ?>
