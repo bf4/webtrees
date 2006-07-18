@@ -187,13 +187,17 @@ function get_lati_long_placelocation ($place) {
     $place_id = 0;
     for($i=0; $i<count($parent); $i++) {
         $parent[$i] = rtrim(ltrim($parent[$i]));
-        $escparent=preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($parent[$i]));
-        $psql = "SELECT pl_id FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$place_id AND pl_place LIKE '".$escparent."' ORDER BY pl_place";
-        $res = dbquery($psql);
-        $row =& $res->fetchRow();
-        $res->free();
-        $place_id = $row[0];
-        if (empty($row[0])) break;
+        if($parent[$i] != "") {
+            $escparent=preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($parent[$i]));
+            $psql = "SELECT pl_id FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$place_id AND pl_place LIKE '".$escparent."' ORDER BY pl_place";
+            $res = dbquery($psql);
+            $row =& $res->fetchRow();
+            $res->free();
+            $place_id = $row[0];
+            if (empty($row[0])) break;
+        } else {
+            break;
+        }
     }
 
     $retval = array();
@@ -593,7 +597,20 @@ function build_indiv_map($indifacts, $famids) {
                                     $indexcounter = $indexcounter + 1;
                                     $tabcounter = 0;
                                     $markerindex = $markerindex + 1;
-                                    print "    var ".$marker["name"][$j]."_".$markerindex." = new GMarker(new GLatLng(".($mapdata["lati"][$j]-(0.0015*$markerindex)).", ".($mapdata["lng"][$j]+(0.0025*$markerindex))."));\n";
+
+                                    if ($marker["icon"][$j] == "") {
+                                        print "    var ".$marker["name"][$j]."_".$markerindex." = new GMarker(new GLatLng(".($mapdata["lati"][$j]-(0.0015*$markerindex)).", ".($mapdata["lng"][$j]+(0.0025*$markerindex))."));\n";
+                                    }
+                                    else {
+                                        print "    var ".$marker["name"][$j]."_".$markerindex."_flag = new GIcon();\n";
+                                        print "    ".$marker["name"][$j]."_".$markerindex."_flag.image = \"".$marker["icon"][$j]."\";\n";
+                                        print "    ".$marker["name"][$j]."_".$markerindex."_flag.shadow = \"modules/googlemap/flag_shadow.png\";\n";
+                                        print "    ".$marker["name"][$j]."_".$markerindex."_flag.iconSize = new GSize(25, 15);\n";
+                                        print "    ".$marker["name"][$j]."_".$markerindex."_flag.shadowSize = new GSize(35, 45);\n";
+                                        print "    ".$marker["name"][$j]."_".$markerindex."_flag.iconAnchor = new GPoint(1, 45);\n";
+                                        print "    ".$marker["name"][$j]."_".$markerindex."_flag.infoWindowAnchor = new GPoint(5, 1);\n";
+                                        print "    var ".$marker["name"][$j]."_".$markerindex." = new GMarker(new GLatLng(".($mapdata["lati"][$j]-(0.0015*$markerindex)).", ".($mapdata["lng"][$j]+(0.0025*$markerindex))."), ".$marker["name"][$j]."_".$markerindex."_flag);\n";
+                                    }
                                     print "    var ".$marker["name"][$j]."_".$markerindex."Info = [\n";
                                 }
                                 else
