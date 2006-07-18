@@ -31,6 +31,8 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["upload_replacement"]		="העלה החלפה";
+$pgv_lang['progress_bars_info']		= "סרגל הסטטוס שלמטה מאפשר לך לדעת את מצב הייבוא. אם תחום הזמן נגמר הייבוא נעצר ותתבקש ללחוץ על כפתור המשך. אם אינך רואה כפתור המשך, חזור אחורה והכנס תחום זמן קטן יותר.";
 $pgv_lang["clear_chart"]			= "נקה תרשים";
 $pgv_lang["file_information"]			= "מידע על קובץ";
 $pgv_lang["choose_file_type"]			= "בחר סוג קובץ";
@@ -1735,6 +1737,7 @@ $pgv_lang["rss_feeds"]		= "הזנות RSS";
 $pgv_lang["no_feed_title"]		= "ההזנה אינה זמינה";
 $pgv_lang["no_feed"]		= "אין הזנת RSS זמינה לאתר ה-PhpGedView הזה";
 $pgv_lang["feed_login"]		= "אם לך יש קוד משתמש באתר PhpGedView זה, תוכל להתחבר לשרת <a href=\"#AUTH_URL#\"> log in</a> ע\"י שימוש באימות בסיסי של HTTP כדי לראות נתונים פרטיים";
+$pgv_lang["authenticated_feed"]	= "הזנה מאושרת";
 
 //-- ASSOciates RELAtionship
 // Help1 http://oakroadsystems.com/genl/relation.htm
