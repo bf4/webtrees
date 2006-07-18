@@ -422,9 +422,9 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
 		if (count($match)<$num) return "";
 		$pos1 = $match[$num-1][0][1];
 		if ($pos1===false) return "";
-		$pos2 = strpos($gedrec, "\n$level", $pos1+5);
-		if (!$pos2) $pos2 = strpos($gedrec, "\n1", $pos1+5);
-		if (!$pos2) $pos2 = strpos($gedrec, "\nPGV_", $pos1+5); // PGV_SPOUSE, PGV_FAMILY_ID ...
+		$pos2 = @strpos($gedrec, "\n$level", $pos1+5);
+		if (!$pos2) $pos2 = @strpos($gedrec, "\n1", $pos1+5);
+		if (!$pos2) $pos2 = @strpos($gedrec, "\nPGV_", $pos1+5); // PGV_SPOUSE, PGV_FAMILY_ID ...
 		if (!$pos2) {
 			return substr($gedrec, $pos1);
 		}
@@ -1327,7 +1327,7 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 					$bLetter = str2upper($bLetter);
 				}
 
-				if ($aLetter!=$bLetter) {
+				if ($aLetter!=$bLetter && $bLetter!="" && $aLetter!="") {
 					//-- get the position of the letter in the alphabet string
 					if ($aMultiLetter) {
 						$sortAfter = substr($aLetter,0,1);
