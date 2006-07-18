@@ -37,6 +37,8 @@ Version 4.1
  - Added Search and Replace feature (Neumont)
 
 Version 4.0.2
+ - Fixed [ 1523672 ] 4.01 stable: SERIOUS: SSNs silently deleted after edit (yalnifj)
+ - Fixed [ 1520255 ] 4.0 Stable: Reordering children causes GEDcom errors (opus27)
  - Fixed [ 1520578 ] Longitude and Latitude in Editing Forms (opus27)
  - Added [ 1509123 ] Add HUSB/WIFE should also add a MARR (opus27)
 
