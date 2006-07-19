@@ -406,20 +406,22 @@ function get_first_tag($level, $tag, $gedrec, $num=1) {
  * @return string the subrecord that was found or an empty string "" if not found.
  */
 function get_sub_record($level, $tag, $gedrec, $num=1) {
+	if (empty($gedrec)) return "";
+	$gedrec .= "\n";
 	$pos1=0;
 	$subrec = "";
 	$tag = trim($tag);
-	$searchTarget = "/".preg_replace("~/~","\\/",$tag)."[\W]/"; // see [ 1492470 ] and [ 1507176 ]
-	if (empty($gedrec)) return "";
+	//$searchTarget = "/".preg_replace("~/~","\\/",$tag)."[\W]/"; // see [ 1492470 ] and [ 1507176 ]
+	$searchTarget = "/".preg_replace("~/~","\\/",$tag)."[\s\r\n]/";
 
+	$ct = preg_match_all($searchTarget, $gedrec, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
+	if ($ct==0) {
+		$tag = preg_replace("/(\w+)/", "_$1", $tag);
 		$ct = preg_match_all($searchTarget, $gedrec, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
-		if ($ct==0) {
-			$tag = preg_replace("/(\w+)/", "_$1", $tag);
-			$ct = preg_match_all($searchTarget, $gedrec, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
-			if ($ct==0) return "";
-		}
-		//print_r($match);
-		if (count($match)<$num) return "";
+		if ($ct==0) return "";
+	}
+
+	if (count($match)<$num) return "";
 		$pos1 = $match[$num-1][0][1];
 		if ($pos1===false) return "";
 		$pos2 = @strpos($gedrec, "\n$level", $pos1+5);
@@ -897,9 +899,9 @@ function find_record_in_file($gid) {
  */
 function find_updated_record($gid, $gedfile="") {
 	global $GEDCOMS, $GEDCOM, $pgv_changes;
-	
+
 	if (empty($gedfile)) $gedfile = $GEDCOM;
-	
+
 	if (isset($pgv_changes[$gid."_".$gedfile])) {
 		$change = end($pgv_changes[$gid."_".$gedfile]);
 		return $change['undo'];
@@ -2280,7 +2282,7 @@ function write_changes() {
  */
 function lock_file() {
 	global $GEDCOMS, $GEDCOM, $INDEX_DIRECTORY;
-	
+
 	file_locked_wait();
 	$fp = fopen($INDEX_DIRECTORY.$GEDCOM.".lock", "wb");
 	fclose($fp);
@@ -2291,7 +2293,7 @@ function lock_file() {
  */
 function file_locked_wait() {
 	global $GEDCOMS, $GEDCOM, $INDEX_DIRECTORY;
-	
+
 	$sleep_count = 0;
 	while(file_exists($INDEX_DIRECTORY.$GEDCOM.".lock") && $sleep_count<100) {
 		usleep(100000);
@@ -2310,7 +2312,7 @@ function file_locked_wait() {
  */
 function unlock_file() {
 	global $GEDCOMS, $GEDCOM, $INDEX_DIRECTORY;
-	
+
 	@unlink($INDEX_DIRECTORY.$GEDCOM.".lock");
 }
 
