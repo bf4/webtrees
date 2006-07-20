@@ -24,7 +24,7 @@
  * @version $Id$
  */
 
-require "config.php";
+require_once "config.php";
 if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
 require "includes/functions_edit.php";
 require $INDEX_DIRECTORY."pgv_changes.php";
