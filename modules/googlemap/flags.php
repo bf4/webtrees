@@ -24,7 +24,7 @@
  * @version $Id$
  */
 
-require "config.php";
+require_once "config.php";
 require "modules/googlemap/defaultconfig.php";
 if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
 require "includes/functions_edit.php";
