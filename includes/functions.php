@@ -413,14 +413,12 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
 	$tag = trim($tag);
 	//$searchTarget = "/".preg_replace("~/~","\\/",$tag)."[\W]/"; // see [ 1492470 ] and [ 1507176 ]
 	$searchTarget = "/".preg_replace("~/~","\\/",$tag)."[\s\r\n]/";
-
 	$ct = preg_match_all($searchTarget, $gedrec, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
 	if ($ct==0) {
 		$tag = preg_replace("/(\w+)/", "_$1", $tag);
 		$ct = preg_match_all($searchTarget, $gedrec, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
 		if ($ct==0) return "";
 	}
-
 	if (count($match)<$num) return "";
 		$pos1 = $match[$num-1][0][1];
 		if ($pos1===false) return "";
@@ -445,7 +443,6 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
 				$subrec = substr($gedrec, $pos1, $pos2-$pos1);
 			}
 		}
-
 	return $subrec;
 }
 

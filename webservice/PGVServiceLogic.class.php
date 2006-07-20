@@ -30,11 +30,6 @@ require_once('includes/GEWebService.php');
 
 $DEBUG = 1;
 
-//@todo implement security and banning
-//@todo implement connection/call throttle
-//@todo Implement compression
-//@todo use pgv naming standards
-
 class PGVServiceLogic extends GenealogyService
 {
 

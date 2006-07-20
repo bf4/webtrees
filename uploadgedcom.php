@@ -956,7 +956,8 @@ if ($startimport == "true") {
 			$place_count = 0;
 			$date_count = 0;
 			$media_count = 0;
-			$listtype = array ();
+			$MAX_IDS = array();
+			$listtype = array();
 			$_SESSION["resumed"] = 1;
 		}
 		while (!feof($fpged)) {
