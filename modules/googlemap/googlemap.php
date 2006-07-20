@@ -292,7 +292,13 @@ function build_indiv_map($indifacts, $famids) {
                 }
                 if (($ctla>0) && ($ctlo>0) && ($useThisItem==true)) {
                     $i = $i + 1;
-                    $mapdata["fact"][$i] = $factarray[$fact];
+                    if($fact == "EVEN") {
+                        $eventrec = get_sub_record(1, "2 TYPE", $value[1]);
+                        $ctpe = preg_match("/\d TYPE (.*)/", $eventrec, $match1);
+                        $mapdata["fact"][$i] = $match1[1];
+                    } else {
+                        $mapdata["fact"][$i] = $factarray[$fact];
+                    }
                     $mapdata["show"][$i] = "yes";
                     $marker["name"][$i] = "Marker".$i;
                     $marker["placed"][$i] = "no";
@@ -321,7 +327,13 @@ function build_indiv_map($indifacts, $famids) {
                         $latlongval = get_lati_long_placelocation($match1[1]);
                         if ((count($latlongval) != 0) && ($latlongval["lati"] != NULL) && ($latlongval["long"] != NULL)) {
                             $i = $i + 1;
-                            $mapdata["fact"][$i] = $factarray[$fact];
+                            if($fact == "EVEN") {
+                                $eventrec = get_sub_record(1, "2 TYPE", $value[1]);
+                                $ctpe = preg_match("/\d TYPE (.*)/", $eventrec, $match1);
+                                $mapdata["fact"][$i] = $match1[1];
+                            } else {
+                                $mapdata["fact"][$i] = $factarray[$fact];
+                            }
                             $mapdata["show"][$i] = "yes";
                             $marker["name"][$i] = "Marker".$i;
                             $marker["placed"][$i] = "no";
