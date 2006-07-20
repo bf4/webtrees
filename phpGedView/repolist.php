@@ -23,7 +23,7 @@
 
 require("config.php");
 require_once("includes/functions_print_lists.php");
-$repolist = get_repo_list();               //-- array of regular repository titles 
+$repolist = get_repo_list();               //-- array of regular repository titles
 $addrepolist = get_repo_add_title_list();  //-- array of additional repository titlesadd
 
 $cr = count($repolist);
@@ -33,6 +33,8 @@ $ctot = $cr + $ca;
 print_header($pgv_lang["repo_list"]);
 print "<div class=\"center\">";
 print "<h2>".$pgv_lang["repo_list"]."</h2>\n\t";
+
+print_repo_table(array_merge($repolist, $addrepolist));
 
 print "\n\t<table class=\"list_table $TEXT_DIRECTION\">\n\t\t<tr><td class=\"list_label\"";
 if($cr>12) print " colspan=\"2\"";
@@ -70,7 +72,7 @@ if ($cr>0){
 	}
 
 	print "\n\t\t</ul></td>\n\t\t";
- 
+
 	print "</tr><tr><td class=\"center\" colspan=\"2\">".$pgv_lang["total_repositories"]." ".count($repo_total)."<br /";
 	if (count($repo_hide)>0) print "  --  ".$pgv_lang["hidden"]." ".count($repo_hide);
 }
