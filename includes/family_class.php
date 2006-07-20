@@ -149,6 +149,8 @@ class Family extends GedcomRecord {
 	 * @return int 	the number of children
 	 */
 	function getNumberOfChildren() {
+		$nchi = get_gedcom_value("NCHI", 1, $this->gedrec);
+		if ($nchi!="") return $nchi.".";
 		return count($this->children);
 	}
 	/**
@@ -251,6 +253,18 @@ class Family extends GedcomRecord {
 	}
 
 	/**
+	 * get sortable marriage date
+	 * @return string the marriage date in sortable format YYYY-MM-DD HH:MM
+	 */
+	function getSortableMarriageDate() {
+		if (empty($this->marr_date)) $this->_parseMarriageRecord();
+		$pdate = parse_date($this->marr_date);
+		$ptime = get_gedcom_value("DATE:TIME", 2, $this->getMarriageRecord());
+		$sdate = sprintf("%04d-%02d-%02d %s", $pdate[0]["year"], $pdate[0]["mon"], $pdate[0]["day"], $ptime);
+		return $sdate;
+	}
+
+	/**
 	 * get the type for this marriage
 	 * @return string
 	 */
@@ -316,8 +330,8 @@ class Family extends GedcomRecord {
 	}
 
 	/**
-	 * get the URL to link to this person
-	 * @string a url that can be used to link to this person
+	 * get the URL to link to this family
+	 * @string a url that can be used to link to this family
 	 */
 	function getLinkUrl() {
 		global $GEDCOM;

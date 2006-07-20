@@ -109,7 +109,7 @@ class Source extends GedcomRecord {
 	}
 
 	/**
-	 * Parse the facts from the individual record
+	 * Parse the facts from the source record
 	 */
 	function parseFacts() {
 		if (!is_null($this->sourcefacts)) return;
@@ -203,6 +203,57 @@ class Source extends GedcomRecord {
 		$this->famlist = search_fams($query);
 		uasort($this->famlist, "itemsort");
 		return $this->famlist;
+	}
+
+	/**
+	 * get the repository of this source record
+	 * @return string
+	 */
+	function getRepo() {
+		if (!isset($this->repo)) $this->repo = get_gedcom_value("REPO", 1, $this->gedrec, '', false);
+		return $this->repo;
+	}
+
+	/**
+	 * get the author of this source record
+	 * @return string
+	 */
+	function getAuth() {
+		if (!isset($this->auth)) $this->auth = get_gedcom_value("AUTH", 1, $this->gedrec, '', false);
+		return $this->auth;
+	}
+
+	/**
+	 * get the URL to link to this source
+	 * @string a url that can be used to link to this source
+	 */
+	function getLinkUrl() {
+		global $GEDCOM;
+
+		$url = "source.php?sid=".$this->getXref()."&amp;ged=".$GEDCOM;
+		if ($this->isRemote()) {
+			$parts = preg_split("/:/", $this->rfn);
+			if (count($parts)==2) {
+				$servid = $parts[0];
+				$aliaid = $parts[1];
+				if (!empty($servid)&&!empty($aliaid)) {
+					$serviceClient = ServiceClient::getInstance($servid);
+					if (!empty($serviceClient)) {
+						$surl = $serviceClient->getURL();
+						$url = "source.php?sid=".$aliaid;
+						if ($serviceClient->getType()=="remote") {
+							if (!empty($surl)) $url = dirname($surl)."/".$url;
+						}
+						else {
+							$url = $surl.$url;
+						}
+						$gedcom = $serviceClient->getGedfile();
+						if (!empty($gedcom)) $url.="&amp;ged=".$gedcom;
+					}
+				}
+			}
+		}
+		return $url;
 	}
 }
 ?>

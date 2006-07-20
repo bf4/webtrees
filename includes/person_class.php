@@ -113,6 +113,24 @@ class Person extends GedcomRecord {
 		if (empty($name)) return $pgv_lang["unknown"];
 		return $name;
 	}
+
+	/**
+	 * get the persons sortable name
+	 * @return string
+	 */
+	function getSortableName() {
+		global $NAME_REVERSE, $pgv_lang;
+		if (!$this->canDisplayName()) return $pgv_lang["private"];
+		//return get_sortable_name($this->xref);
+		$name = get_gedcom_value("NAME", 1, $this->gedrec, '', false);
+		list($givn, $surn, $nsfx) = explode("/", $name."//");
+		$exp = explode(",",$givn); $givn = trim($exp[0]);
+		if (empty($givn)) $givn = $pgv_lang["PN"];
+		if (empty($surn)) $surn = $pgv_lang["NN"];
+		if ($NAME_REVERSE) return trim($givn.", ".$surn." ".$nsfx);
+		else return trim($surn.", ".$givn." ".$nsfx);
+	}
+
 	/**
 	 * get the persons surname
 	 * @return string
@@ -146,6 +164,20 @@ class Person extends GedcomRecord {
 	function getAddName() {
 		if (!$this->canDisplayName()) return "";
 		return get_add_person_name($this->xref);
+	}
+	/**
+	 * get the persons sortable additional name
+	 * @return string
+	 */
+	function getSortableAddName() {
+		global $NAME_REVERSE;
+		if (!$this->canDisplayName()) return "";
+		$addn = get_gedcom_value("NAME:_HEB", 1, $this->gedrec, '', false);
+		if (empty($addn)) $addn = get_gedcom_value("NAME:ROMN", 1, $this->gedrec, '', false);
+		if (empty($addn)) return "";
+		list($givn, $surn, $nsfx) = explode("/", $addn."//");
+		if ($NAME_REVERSE) return trim($givn.", ".$surn." ".$nsfx);
+		else return trim($surn.", ".$givn." ".$nsfx);
 	}
 	/**
 	 * Check if privacy options allow this record to be displayed
@@ -220,7 +252,7 @@ class Person extends GedcomRecord {
 	}
 	/**
 	 * get birth record
-	 * @param boolean $esitmate		Provide an estimated birth date for people without a birth record
+	 * @param boolean $estimate		Provide an estimated birth date for people without a birth record
 	 * @return string
 	 */
 	function getBirthRecord($estimate=true) {
@@ -230,7 +262,7 @@ class Person extends GedcomRecord {
 	}
 	/**
 	 * get death record
-	 * @param boolean $esitmate		Provide an estimated death date for people without a death record
+	 * @param boolean $estimate		Provide an estimated death date for people without a death record
 	 * @return string
 	 */
 	function getDeathRecord($estimate=true) {
@@ -245,6 +277,18 @@ class Person extends GedcomRecord {
 	function getBirthDate() {
 		if (empty($this->bdate)) $this->_parseBirthDeath();
 		return $this->bdate;
+	}
+
+	/**
+	 * get sortable birth date
+	 * @return string the birth date in sortable format YYYY-MM-DD HH:MM
+	 */
+	function getSortableBirthDate() {
+		if (empty($this->bdate)) $this->_parseBirthDeath();
+		$pdate = parse_date($this->bdate);
+		$ptime = get_gedcom_value("DATE:TIME", 2, $this->getBirthRecord());
+		$sdate = sprintf("%04d-%02d-%02d %s", $pdate[0]["year"], $pdate[0]["mon"], $pdate[0]["day"], $ptime);
+		return $sdate;
 	}
 
 	/**
@@ -284,6 +328,18 @@ class Person extends GedcomRecord {
 	}
 
 	/**
+	 * get sortable death date
+	 * @return string the death date in sortable format YYYY-MM-DD HH:MM
+	 */
+	function getSortableDeathDate() {
+		if (empty($this->ddate)) $this->_parseBirthDeath();
+		$pdate = parse_date($this->ddate);
+		$ptime = get_gedcom_value("DATE:TIME", 2, $this->getDeathRecord());
+		$sdate = sprintf("%04d-%02d-%02d %s", $pdate[0]["year"], $pdate[0]["mon"], $pdate[0]["day"], $ptime);
+		return $sdate;
+	}
+
+	/**
 	 * a function that returns the full GEDCOM line containing the death date
 	 * @return string the death date line from the gedcom in the format of '2 DATE 1 JAN 1900'
 	 */
@@ -316,6 +372,20 @@ class Person extends GedcomRecord {
 	 */
 	function getSex() {
 		return $this->sex;
+	}
+
+	/**
+	 * get the person's sex image
+	 * @return string 	<img ... />
+	 */
+	function getSexImage() {
+		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		$img ="<img src=\"".$PGV_IMAGE_DIR."/";
+		if ($this->getSex()=="M") $img .= $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
+		else if ($this->getSex()=="F") $img .= $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
+		else $img .= $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
+		$img .= "\" class=\"sex_image\" />";
+		return $img;
 	}
 
 	/**
@@ -1136,7 +1206,7 @@ class Person extends GedcomRecord {
 		}
 		//-- compare new and old media facts
 		/**
-		 * @depricated by new media system
+		 * @deprecated by new media system
 		for($i=0; $i<count($this->mediafacts); $i++) {
 			$found=false;
 			foreach($diff->mediafacts as $indexval => $newfact) {

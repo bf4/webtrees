@@ -31,6 +31,9 @@ if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
 	 exit;
 }
 
+require_once($factsfile["english"]);
+if (file_exists($factsfile[$LANGUAGE])) require_once($factsfile[$LANGUAGE]);
+
 /**
  * print a person in a list
  *
@@ -258,5 +261,261 @@ function print_list_repository($key, $value, $useli=true) {
 		print "</a></".$tag.">\n";
 	}
 	else $repo_hide[$key."[".$GEDCOM."]"] = 1;
+}
+
+/**
+ * print a sortable table of individuals
+ *
+ * @param array $datalist contain individuals that were extracted from the database.
+ */
+function print_indi_table($datalist) {
+	global $pgv_lang, $factarray, $factsfile, $LANGUAGE, $SHOW_ID_NUMBERS, $TEXT_DIRECTION;
+	global $tindilist;
+?>
+	<script type="text/javascript" src="strings.js"></script>
+	<script type="text/javascript" src="sorttable.js"></script>
+<?php
+	require_once("includes/person_class.php");
+	echo "<h3>".$pgv_lang["individuals"]."</h3>";
+	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
+
+	//-- filter buttons
+	$person = new Person("");
+	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'SEX', 'M')\">";
+	$person->sex = "M"; echo $person->getSexImage()."&nbsp;</button> ";
+	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'SEX', 'F')\">";
+	$person->sex = "F"; echo $person->getSexImage()."&nbsp;</button> ";
+	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'SEX', 'U')\">";
+	$person->sex = "U"; echo $person->getSexImage()."&nbsp;</button> ";
+	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'DEAD', '0')\">";
+	echo $pgv_lang["alive"]."</button> ";
+	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'DEAD', '1')\">";
+	echo $pgv_lang["dead"]."</button> ";
+	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', '', '')\">";
+	echo $pgv_lang["reset"]."</button> ";
+
+	//-- table header
+	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
+	echo "<tr>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label\">".$pgv_lang["id"]."</th>";
+	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
+	echo "<th class=\"list_label\" style=\"display:none\">SEX</th>";
+	echo "<th class=\"list_label\">".$factarray["BIRT"]."</th>";
+	echo "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
+	echo "<th class=\"list_label\" style=\"display:none\">DEAD</th>";
+	echo "<th class=\"list_label\">".$factarray["DEAT"]."</th>";
+	echo "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
+	echo "</tr>\n";
+
+	//-- table body
+	foreach($datalist as $key => $value) {
+		if (isset($value["gid"])) $gid = $value["gid"]; // from indilist
+		if (isset($value[4])) $gid = $value[4]; // from indilist ALL
+
+		if (isset($value["gedcom"])) $person = new Person($value["gedcom"]); // from source.php
+		else if (isset($tindilist[$gid])) $person = new Person($tindilist[$gid]["gedcom"]);
+		else $person = Person::getInstance($gid);
+		//if (!$person->canDisplayName()) continue;
+
+		echo "<tr><td class=\"$TEXT_DIRECTION list_value_wrap\">";
+		if ($SHOW_ID_NUMBERS) {
+			echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$person->xref."</a>";
+			echo "</td><td class=\"$TEXT_DIRECTION list_value_wrap\">";
+		}
+		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\"><b>".$person->getSortableName()."</b></a>";
+		echo $person->getSexImage();
+		$addname = $person->getSortableAddName();
+		if (!empty($addname)) echo "<br /><a href=\"".$person->getLinkUrl()."\" class=\"list_item\"><b>".$addname."</b></a>";
+
+		echo "</td><td class=\"$TEXT_DIRECTION list_value_wrap\" style=\"display:none\">";
+		echo $person->getSex();
+
+		echo "</td><td class=\"$TEXT_DIRECTION list_value_wrap\">";
+		echo "<span style=\"display:none\">".$person->getSortableBirthDate()."</span>"; // store hidden sortable datetime
+		echo "<a href=\"".$person->getDateUrl($person->bdate)."\" class=\"list_item\">".get_changed_date($person->getBirthDate())."</a>";
+
+		echo "&nbsp;</td><td class=\"$TEXT_DIRECTION list_value_wrap\">";
+		echo "<a href=\"".$person->getPlaceUrl($person->getBirthPlace())."\" class=\"list_item\">".$person->getPlaceShort($person->getBirthPlace())."</a>";
+
+		echo "&nbsp;</td><td class=\"$TEXT_DIRECTION list_value_wrap\" style=\"display:none\">";
+		if ($person->isDead()) echo "1"; else echo "0";
+
+		echo "</td><td class=\"$TEXT_DIRECTION list_value_wrap\">";
+		echo "<span style=\"display:none\">".$person->getSortableDeathDate()."</span>"; // store hidden sortable datetime
+		if ($person->isDead()) echo "<a href=\"".$person->getDateUrl($person->ddate)."\" class=\"list_item\">".get_changed_date($person->getDeathDate())."</a>";
+
+		echo "&nbsp;</td><td class=\"$TEXT_DIRECTION list_value_wrap\">";
+		echo "<a href=\"".$person->getPlaceUrl($person->getDeathPlace())."\" class=\"list_item\">".$person->getPlaceShort($person->getDeathPlace())."</a>";
+
+		echo "&nbsp;</td></tr>\n";
+	}
+	echo "</table>\n";
+}
+
+/**
+ * print a sortable table of families
+ *
+ * @param array $datalist contain families that were extracted from the database.
+ */
+function print_fam_table($datalist) {
+	global $pgv_lang, $factarray, $factsfile, $LANGUAGE, $SHOW_ID_NUMBERS, $TEXT_DIRECTION;
+?>
+	<script type="text/javascript" src="strings.js"></script>
+	<script type="text/javascript" src="sorttable.js"></script>
+<?php
+	require_once("includes/family_class.php");
+	echo "<h3>".$pgv_lang["families"]."</h3>";
+	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
+
+	//-- filter buttons
+	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'DEAD', '0')\">";
+	echo $pgv_lang["alive"]."</button> ";
+	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'DEAD', '1')\">";
+	echo $pgv_lang["dead"]."</button> ";
+	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', '', '')\">";
+	echo $pgv_lang["reset"]."</button> ";
+
+	//-- table header
+	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
+	echo "<tr>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label\">".$pgv_lang["id"]."</th>";
+	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
+	echo "<th class=\"list_label\">".$pgv_lang["spouse"]."</th>";
+	echo "<th class=\"list_label\">".$factarray["MARR"]."</th>";
+	echo "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
+	echo "<th class=\"list_label\">".$pgv_lang["children"]."</th>";
+	echo "<th class=\"list_label\" style=\"display:none\">DEAD</th>";
+	echo "</tr>\n";
+
+	//-- table body
+	foreach($datalist as $key => $value) {
+		if (isset($value["gid"])) $gid = $value["gid"];
+
+		if (isset($value["gedcom"])) $family = new Family($value["gedcom"]);
+		else if (isset($tfamlist[$gid])) $family = new Family($tfamlist[$gid]["gedcom"]);
+		else $family = Family::getInstance($gid);
+
+		$husb = $family->getHusband();
+		if (is_null($husb)) $husb = new Person('');
+		$wife = $family->getWife();
+		if (is_null($wife)) $wife = new Person('');
+		//if (!$husb->canDisplayName() and !$wife->canDisplayName()) continue;
+
+		echo "<tr><td class=\"$TEXT_DIRECTION list_value_wrap\">";
+		if ($SHOW_ID_NUMBERS) {
+			echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".$family->xref."</a>";
+			echo "</td><td class=\"$TEXT_DIRECTION list_value_wrap\">";
+		}
+		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\"><b>".$husb->getSortableName()."</b></a>";
+		echo $husb->getSexImage();
+		$addname = $husb->getSortableAddName();
+		if (!empty($addname)) echo "<br /><a href=\"".$family->getLinkUrl()."\" class=\"list_item\"><b>".$addname."</b></a>";
+
+		echo "</td><td class=\"$TEXT_DIRECTION list_value_wrap\">";
+		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\"><b>".$wife->getSortableName()."</b></a>";
+		echo $wife->getSexImage();
+		$addname = $wife->getSortableAddName();
+		if (!empty($addname)) echo "<br /><a href=\"".$family->getLinkUrl()."\" class=\"list_item\"><b>".$addname."</b></a>";
+
+		echo "</td><td class=\"$TEXT_DIRECTION list_value_wrap\">";
+		echo "<span style=\"display:none\">".$family->getSortableMarriageDate()."</span>"; // store hidden sortable datetime
+		echo "<a href=\"".$family->getDateUrl($family->marr_date)."\" class=\"list_item\">".get_changed_date($family->getMarriageDate())."</a>";
+
+		echo "&nbsp;</td><td class=\"$TEXT_DIRECTION  list_value_wrap\">";
+		echo "<a href=\"".$family->getPlaceUrl($family->getMarriagePlace())."\" class=\"list_item\">".$family->getPlaceShort($family->getMarriagePlace())."</a>";
+
+		echo "&nbsp;</td><td class=\"$TEXT_DIRECTION list_value_wrap\">";
+		echo "<center><a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".$family->getNumberOfChildren()."</a></center>";
+
+		echo "</td><td class=\"$TEXT_DIRECTION list_value_wrap\" style=\"display:none\">";
+		if ($husb->isDead() and $wife->isDead()) echo "1"; else echo "0";
+
+		echo "</td></tr>\n";
+	}
+	echo "</table>\n";
+}
+
+/**
+ * print a sortable table of sources
+ *
+ * @param array $datalist contain sources that were extracted from the database.
+ */
+function print_sour_table($datalist) {
+	global $pgv_lang, $factarray, $factsfile, $LANGUAGE, $SHOW_ID_NUMBERS, $TEXT_DIRECTION;
+?>
+	<script type="text/javascript" src="strings.js"></script>
+	<script type="text/javascript" src="sorttable.js"></script>
+<?php
+	require_once("includes/source_class.php");
+	echo "<h3>".$pgv_lang["sources"]."</h3>";
+	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
+
+	//-- table header
+	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
+	echo "<tr>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label\">".$pgv_lang["id"]."</th>";
+	echo "<th class=\"list_label\">".$factarray["TITL"]."</th>";
+	echo "<th class=\"list_label\">".$factarray["AUTH"]."</th>";
+	echo "<th class=\"list_label\">".$pgv_lang["individuals"]."</th>";
+	echo "<th class=\"list_label\">".$pgv_lang["families"]."</th>";
+	echo "</tr>\n";
+
+	//-- table body
+	foreach ($datalist as $key => $value) {
+		$source = new Source($value["gedcom"]);
+		echo "<tr><td class=\"$TEXT_DIRECTION list_value_wrap\">";
+		if ($SHOW_ID_NUMBERS) {
+			echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".$source->xref."</a>";
+			echo "</td><td class=\"$TEXT_DIRECTION list_value_wrap\">";
+		}
+		echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\"><b>".$value["name"]."</b></a>";
+
+		echo "</td><td class=\"$TEXT_DIRECTION list_value_wrap\">";
+		echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".$source->getAuth()."</a>";
+
+		echo "&nbsp;</td><td class=\"$TEXT_DIRECTION list_value_wrap\">";
+		echo "<center><a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".count($source->getSourceIndis())."</a></center>";
+
+		echo "</td><td class=\"$TEXT_DIRECTION list_value_wrap\">";
+		echo "<center><a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".count($source->getSourceFams())."</a></center>";
+
+		echo "</td></tr>\n";
+	}
+	echo "</table>\n";
+}
+
+/**
+ * print a sortable table of repositories
+ *
+ * @param array $datalist contain repositories that were extracted from the database.
+ */
+function print_repo_table($datalist) {
+	global $pgv_lang, $factarray, $factsfile, $LANGUAGE, $SHOW_ID_NUMBERS, $TEXT_DIRECTION;
+?>
+	<script type="text/javascript" src="strings.js"></script>
+	<script type="text/javascript" src="sorttable.js"></script>
+<?php
+	//TODO require_once("includes/repository_class.php");
+	echo "<h3>".$pgv_lang["repos_found"]."</h3>";
+	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
+
+	//-- table header
+	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
+	echo "<tr>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label\">".$pgv_lang["id"]."</th>";
+	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
+	echo "</tr>\n";
+	foreach ($datalist as $key => $value) {
+		//TODO $repo = new Repository($value["gedcom"]);
+		$url = "repo.php?rid=".$key."&amp;ged=".get_gedcom_from_id($value["gedfile"]);
+		echo "<tr><td class=\"$TEXT_DIRECTION list_value_wrap\">";
+		if ($SHOW_ID_NUMBERS) {
+			echo "<a href=\"".$url."\" class=\"list_item\">".$key."</a>";
+			echo "</td><td class=\"$TEXT_DIRECTION list_value_wrap\">";
+		}
+		echo "<a href=\"".$url."\" class=\"list_item\"><b>".$value["name"]."</b></a>";
+		echo "</td></tr>\n";
+	}
+	echo "</table>\n";
 }
 ?>
