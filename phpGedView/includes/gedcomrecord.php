@@ -25,7 +25,7 @@
  * @subpackage DataModel
  * @version $Id$
  */
- 
+
 require_once('includes/person_class.php');
 require_once('includes/family_class.php');
 require_once('includes/source_class.php');
@@ -69,7 +69,7 @@ class GedcomRecord {
 			$this->type = trim($match[2]);
 		}
 	}
-	
+
 	/**
 	 * Static function used to get an instance of an object
 	 * @param string $pid	the ID of the object to retrieve
@@ -113,7 +113,7 @@ class GedcomRecord {
 			}
 		}
 		if (empty($indirec)) return null;
-		
+
 		$ct = preg_match("/0 @.*@ (\w*)/", $indirec, $match);
 		if ($ct>0) {
 			$type = trim($match[1]);
@@ -144,7 +144,7 @@ class GedcomRecord {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * get the xref
 	 */
@@ -271,13 +271,49 @@ class GedcomRecord {
 
 		return false;
 	}
-	
+
 	/**
 	 * can the details of this record be shown
 	 * This method should be overridden in sub classes
-	 * @return boolean 
+	 * @return boolean
 	 */
 	function canDisplayDetails() {
 		return displayDetails($this->gedrec, $this->type);
+	}
+
+	/**
+	 * get the URL to link to a date
+	 * @string a url that can be used to link to calendar
+	 */
+	function getDateUrl($gedcom_date) {
+		global $GEDCOM;
+		$pdate = parse_date($gedcom_date);
+		$url = "calendar.php?action=year&amp;day=".$pdate[0]["day"]."&amp;month=".$pdate[0]["month"]."&amp;year=".$pdate[0]["year"]."&amp;ged=".$GEDCOM;
+		return $url;
+	}
+
+	/**
+	 * get the URL to link to a place
+	 * @string a url that can be used to link to placelist
+	 */
+	function getPlaceUrl($gedcom_place) {
+		global $GEDCOM;
+		$exp = explode(",", $gedcom_place);
+		$level = count($exp);
+		$url = "placelist.php?action=show&amp;level=".$level;
+		for ($i=0; $i<$level; $i++) $url .= "&amp;parent[".$i."]=".urlencode(trim($exp[$level-$i-1]));
+		$url .= "&amp;ged=".$GEDCOM;
+		return $url;
+	}
+
+	/**
+	 * get the first part of a place record
+	 * @string a url that can be used to link to placelist
+	 */
+	function getPlaceShort($gedcom_place) {
+		global $GEDCOM;
+		$gedcom_place = trim($gedcom_place, " ,");
+		$exp = explode(",", $gedcom_place);
+		return trim($exp[0]);
 	}
 }
