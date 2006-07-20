@@ -197,6 +197,7 @@ $factarray["FONE"] = "Foneettinen";
 $factarray["ROMN"] = "Romanisoitu";
 $factarray["_NAME"] = "Postinimi";
 $factarray["URL"] = "Verkko-osoite URL";
+$factarray["_URL"] = "Verkko-osoite URL";
 $factarray["_HEB"] = "Heprealainen";
 $factarray["_SCBK"] = "Leikekirja";
 $factarray["_TYPE"] = "Mediatyyppi";

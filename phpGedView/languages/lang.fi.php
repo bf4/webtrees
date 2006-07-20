@@ -1225,12 +1225,7 @@ $pgv_lang["skip_cleanup"]		= "Ohita siivous";
 
 //-- CONFIGURE (extra) messgaes for programs patriarch, slklist and statistics
 $pgv_lang["dynasty_list"]           	= "Perheiden yleiskuvaus";
-$pgv_lang["make_slklist"]           	= "Luo EXCEL (SLK) lista";
-$pgv_lang["excel_list"]             		= "Tuloste EXCEL (slk) muodossa seuraville tiedostoille (käytä ensin patriarkkalistaa):";
-$pgv_lang["excel_tab"]              	= "tab:";
-$pgv_lang["excel_create"]           	= " luodaan tiedostoon:";
 $pgv_lang["patriarch_list"]         	= "Patriarkkalista";
-$pgv_lang["slk_list"]               		= "EXCEL SLK lista";
 $pgv_lang["statistics"]             		= "Tilastot";
 
 //-- Merge Records
