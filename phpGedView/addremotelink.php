@@ -26,11 +26,11 @@
  * @version $Id$
  */
 
-require("config.php");
-require($factsfile["english"]);
+require_once("config.php");
+require_once($factsfile["english"]);
 if (file_exists($factsfile[$LANGUAGE])) require($factsfile[$LANGUAGE]);
-require("includes/functions_edit.php");
-require("includes/serviceclient_class.php");
+require_once("includes/functions_edit.php");
+require_once("includes/serviceclient_class.php");
 
 //-- require that the user have entered their password
 if ($_SESSION["cookie_login"]) {
@@ -257,16 +257,18 @@ if ($action=="addlink") {
             $indirec.="1 SOUR @".$serverID."@\r\n";
 			
 			$serviceClient = ServiceClient::getInstance($serverID);
-			//-- get rid of change date
-			$pos1 = strpos($indirec, "\n1 CHAN");
-			if ($pos1!==false) {
-				$pos2 = strpos($indirec, "\n1", $pos1+5);
-				if ($pos2===false) $indirec = substr($indirec, 0, $pos1+1);
-				else $indirec= substr($indirec, 0, $pos1+1).substr($indirec, $pos2+1);
+			if (!is_null($serviceClient)) {
+				//-- get rid of change date
+				$pos1 = strpos($indirec, "\n1 CHAN");
+				if ($pos1!==false) {
+					$pos2 = strpos($indirec, "\n1", $pos1+5);
+					if ($pos2===false) $indirec = substr($indirec, 0, $pos1+1);
+					else $indirec= substr($indirec, 0, $pos1+1).substr($indirec, $pos2+1);
+				}
+				//print "{".$indirec."}";
+				$indirec = $serviceClient->mergeGedcomRecord($link_pid, $indirec, true, true);
 			}
-			//print "{".$indirec."}";
-			$indirec = $serviceClient->mergeGedcomRecord($link_pid, $indirec, true, true);
-			
+			else print "Unable to find server";
             //$answer2 = replace_gedrec($pid, $indirec);
         }
         print "<b>".$pgv_lang["link_success"]."</b>";

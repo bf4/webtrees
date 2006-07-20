@@ -128,35 +128,49 @@ class Census1800 extends ra_form {
 //		  Country, City, Page, Head of Family input boxes
 		if(!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = 1;
         for($i = 0; $i < $_REQUEST['numOfRows']; $i++){
-        	$row = $citation['ts_array']['rows'][$i];
-        	$value = $row['headName'];
+        	$value = "";
+			if (isset($citation['ts_array']['rows'][$i]['headName'])) $value = $citation['ts_array']['rows'][$i]['headName'];
 	        $out .= '<tr><td class="optionbox"><input name="headName'.$i.'" type="text" size="19" value="'.htmlentities($value).'"></td>';
 	//        Free white males input boxes
-			$value = $row['underTenM'];
+			$value = "";
+			if (isset($citation['ts_array']['rows'][$i]['underTenM'])) $value = $citation['ts_array']['rows'][$i]['underTenM'];
 	        $out .= '<td class="optionbox"><input name="underTenM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['tenThruFifteenM'];
+	        $value = "";
+			if (isset($citation['ts_array']['rows'][$i]['tenThruFifteenM'])) $value = $citation['ts_array']['rows'][$i]['tenThruFifteenM'];
 	        $out .= '<td class="optionbox"><input name="tenThruFifteenM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	       	$value = $row['sixteenThruTwentyfiveM'];
+	       	$value = "";
+			if (isset($citation['ts_array']['rows'][$i]['sixteenThruTwentyfiveM'])) $value = $citation['ts_array']['rows'][$i]['sixteenThruTwentyfiveM'];
 	        $out .= '<td class="optionbox"><input name="sixteenThruTwentyfiveM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['twentysixThruFortyfourM'];
+	        $value = "";
+			if (isset($citation['ts_array']['rows'][$i]['twentysixThruFortyfourM'])) $value = $citation['ts_array']['rows'][$i]['twentysixThruFortyfourM'];
 	        $out .= '<td class="optionbox"><input name="twentysixThruFortyfourM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['fortyfiveAndOverM'];
+	        $value = "";
+			if (isset($citation['ts_array']['rows'][$i]['fortyfiveAndOverM'])) $value = $citation['ts_array']['rows'][$i]['fortyfiveAndOverM'];
 	        $out .= '<td class="optionbox"><input name="fortyfiveAndOverM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 	//		  Free white females input boxes 
 			$value = $row['underTenF'];
+			$value = "";
+			if (isset($citation['ts_array']['rows'][$i]['headName'])) $value = $citation['ts_array']['rows'][$i]['headName'];
 	        $out .= '<td class="optionbox"><input name="underTenF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 	        $value = $row['tenThruFifteenF'];
+	        $value = "";
+			if (isset($citation['ts_array']['rows'][$i]['headName'])) $value = $citation['ts_array']['rows'][$i]['headName'];
 	        $out .= '<td class="optionbox"><input name="tenThruFifteenF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['sixteenThruTwentyfiveF'];
+	        $value = "";
+			if (isset($citation['ts_array']['rows'][$i]['sixteenThruTwentyfiveF'])) $value = $citation['ts_array']['rows'][$i]['sixteenThruTwentyfiveF'];
 	        $out .= '<td class="optionbox"><input name="sixteenThruTwentyfiveF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['twentysixThruFortyfourF'];
+	        $value = "";
+			if (isset($citation['ts_array']['rows'][$i]['twentysixThruFortyfourF'])) $value = $citation['ts_array']['rows'][$i]['twentysixThruFortyfourF'];
 	        $out .= '<td class="optionbox"><input name="twentysixThruFortyfourF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['fortyfiveAndOverF'];
+	        $value = "";
+			if (isset($citation['ts_array']['rows'][$i]['fortyfiveAndOverF'])) $value = $citation['ts_array']['rows'][$i]['fortyfiveAndOverF'];
 	        $out .= '<td class="optionbox"><input name="fortyfiveAndOverF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 	//  	  Other Persons and Slaves input boxes
-			$value = $row['otherPersons'];
+			$value = "";
+			if (isset($citation['ts_array']['rows'][$i]['otherPersons'])) $value = $citation['ts_array']['rows'][$i]['otherPersons'];
 	        $out .= '<td class="optionbox"><input name="otherPersons'.$i.'" type="text" size="5" value="'.htmlentities($value).'"></td>';
-	        $value = $row['slaves'];
+	        $value = "";
+			if (isset($citation['ts_array']['rows'][$i]['slaves'])) $value = $citation['ts_array']['rows'][$i]['slaves'];
 	        $out .= '<td class="optionbox"><input name="slaves'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td></tr>';
         }
         $out .= '</table></td></tr>';

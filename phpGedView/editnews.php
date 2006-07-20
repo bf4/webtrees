@@ -28,8 +28,8 @@ if($useFCK){
 	include("./modules/FCKeditor/fckeditor.php");
 }
 
-$username = getUserName();
-if (empty($username)) {
+$user = getUserName();
+if (empty($user)) {
 	print_simple_header("");
 	print $pgv_lang["access_denied"];
 	print_simple_footer();

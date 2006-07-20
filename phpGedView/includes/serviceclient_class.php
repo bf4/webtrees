@@ -194,7 +194,7 @@ if ($this->DEBUG) print "In _merge()<br />";
 					$subrec2 = preg_replace("/\s+/", " ", $subrec2);
 
 					if ($subrec2 == $subrec)
-	  			{
+	  				{
 						$found = true;
 						break;
 					}
@@ -760,7 +760,7 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 			$id = trim($match[$i][1]);
 			$gid = get_remote_id($id);
 			if ($gid!==false)
-			$gedrec = preg_replace("/@".$id."@/", "@".$gid."@", $gedrec);
+				$gedrec = preg_replace("/@".$id."@/", "@".$gid."@", $gedrec);
 			}
 			return $gedrec;
 		}
@@ -953,14 +953,14 @@ if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
 	 * @return ServiceClient
 	 */
 	function &getInstance($id) {
-		global $PGV_SERVERS, $SERVER_URL;
+		global $PGV_SERVERS, $SERVER_URL, $GEDCOM;
 
 		if (isset($PGV_SERVERS[$id])) return $PGV_SERVERS[$id];
 		$gedrec = find_gedcom_record($id);
 		if (empty($gedrec)) $gedrec = find_updated_record($id);
 		if (!empty($gedrec)) {
 			$url = get_gedcom_value("URL",1,$gedrec);
-			$gedfile = get_gedcom_value("_GEDF", 1, $gedrec);
+			$gedfile = get_gedcom_value("_DBID", 1, $gedrec);
 			if (empty($url) && empty($gedfile))
 				return null;
 			if (!empty($url) && (strtolower($url)!=strtolower($SERVER_URL))) {
