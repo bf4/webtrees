@@ -51,7 +51,7 @@ function indi2roots() {
 	$keys= array();
 	$orignames= array();
 	$person = array();
-	
+
 	//--print "<br>start indi2:" . date("m/d/y G.i:s",time()) . "<br>\n";
 
 	$my2indilist = get_indi_list();
@@ -77,7 +77,7 @@ function indi2roots() {
 			$parents= find_parents($famc);
 			if (($parents["WIFE"] == "") and ($parents["HUSB"] == "")) $famc= "";
 		}
-		
+
 		//-- we assume that when there is a famc record, this person is not a patriarch
 		//-- in special cases it is possible that a child is a member of a famc record but no parents are given
 		//-- and so they are the patriarch's
@@ -233,7 +233,7 @@ if ($pass == TRUE) {
 }
 print "<a href=\"patriarchlist.php?show_all=yes&amp;surname_sublist=$surname_sublist\">";
 if ($show_all=="yes") print "<span class=\"warning\">";
-print_text("all"); 
+print_text("all");
 if ($show_all=="yes") print "</span>";
 print "</a>\n";
 if (isset($startalpha)) $alpha = $startalpha;
@@ -305,7 +305,7 @@ if (($surname_sublist=="yes")&&($show_all=="yes")) {
 		if (count($indi_hide)>0) print $pgv_lang["hidden"]." ".count($indi_hide);
 		if ($count>1) print "<br />".$pgv_lang["surnames"]." ".$count;
 		print "</td>\n";
-	}	
+	}
 }
 else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 	if (!isset($alpha)) $alpha="";
@@ -346,7 +346,7 @@ else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 		if ($i==$newcol && $i<$count) {
 			print "</td><td class=\"list_value\" style=\"padding: 14px;\">\n";
 			$newcol=$i+ceil($count/$col);
-		}	
+		}
 	}
 	print "</td>\n";
 	if ($count>1 || count($indi_hide)>0) {
@@ -419,6 +419,8 @@ else {
 	}
 }
 print "</tr></table>";
+
+print_indi_table($surnames);
 
 print "<br />";
 if ($alpha != "@") {

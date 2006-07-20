@@ -384,6 +384,8 @@ else {
 }
 print "</tr></table>";
 
+if (isset($partners)) print_fam_table($tfamlist);
+
 print "<br />";
 if ($alpha != "@") {
 	if ($surname_sublist=="yes") print_help_link("skip_sublist_help", "qm", "skip_surnames");

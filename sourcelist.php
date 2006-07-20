@@ -26,10 +26,10 @@
 require("config.php");
 require_once("includes/functions_print_lists.php");
 $addsourcelist = get_source_add_title_list();  //-- array of additional source titlesadd
-$sourcelist = get_source_list();               //-- array of regular source titles 
+$sourcelist = get_source_list();               //-- array of regular source titles
 
-uasort($sourcelist, "itemsort"); 
-uasort($addsourcelist, "itemsort"); 
+uasort($sourcelist, "itemsort");
+uasort($addsourcelist, "itemsort");
 
 $ca = count($addsourcelist);
 $cs = get_list_size("sourcelist");
@@ -37,6 +37,8 @@ $ctot = $ca + $cs;
 print_header($pgv_lang["source_list"]);
 print "<div class=\"center\">";
 print "<h2>".$pgv_lang["source_list"]."</h2>\n\t";
+
+print_sour_table(array_merge($sourcelist, $addsourcelist));
 
 print "\n\t<table class=\"list_table $TEXT_DIRECTION\">\n\t\t<tr><td class=\"list_label\"";
 if($ca>0 || $cs>12)	print " colspan=\"2\"";
@@ -75,7 +77,7 @@ if ($cs>0){
 	}
 
 	print "\n\t\t</ul></td>\n\t\t";
- 
+
 	print "</tr><tr><td class=\"center\" colspan=\"2\">".$pgv_lang["total_sources"]." ".$tot_sources."<br />";
 	if (count($source_total) != 0) print $pgv_lang["titles_found"]."&nbsp;".(count($source_total)+$tot_sources);
 	if (count($source_hide)>0) print "  --  ".$pgv_lang["hidden"]." ".count($source_hide);
