@@ -37,11 +37,12 @@ $pgv_lang["gm_max"]                 	= "מכסימום";
 //$pgv_lang["GOOGLEMAP_API_KEY_help"]	= "~#pgv_lang[googlemapkey]#~<br /><br />הכנס כאן את מפתח ה-API של ה-Google Map שלך.";
 
 // Texts used on the Places location page
-$pgv_lang["edit_place_locations"]   	= "ערוך מיקומים";
+$pgv_lang["edit_place_locations"]   	= "ערוך מיקומים גיאוגרפיים";
+
 $pgv_lang["pl_no_places_found"]     	= "לא נמצאו מקומות";
 $pgv_lang["pl_zoom_factor"]         	= "מקדם זום";
 $pgv_lang["pl_place_icon"]          	= "צלמית";
-$pgv_lang["pl_edit"]                		= "ערוך מיקום";
+$pgv_lang["pl_edit"]                		= "ערוך מיקום גיאוגרפי";
 $pgv_lang["pl_add_place"]           	= "הוסף מקום";
 $pgv_lang["pl_import_gedcom"]       	= "ייבא מקובץ ה-GEDCOM הנוכחי";
 $pgv_lang["pl_import_all_gedcom"]   	= "ייבא מכל קובצי ה-GEDCOM";
@@ -54,6 +55,8 @@ $pgv_lang["pl_east_short"]          	= "מזרח";
 $pgv_lang["pl_west_short"]          	= "מערב";
 $pgv_lang["pl_places_filename"]     	= "הקובץ כולל מיקומים (CSV)";
 $pgv_lang["pl_clean_db"]            	= "האם לנקות את כל המיקומים לפני ייבוא?";
+$pgv_lang["pl_update_only"]         	= "עדכן רק מקומות קיימים?";
+$pgv_lang["pl_overwrite_data"]      	= "העלה נתונים מקובץ על גבי נתוני מיקומים קיימים?";
 $pgv_lang["pl_no_places_found"]     	= "לא נמצאו מקומות";
 $pgv_lang["pl_use_this_value"]      	= "השתמש בערך הזה";
 $pgv_lang["pl_precision"]           	= "דיוק";
