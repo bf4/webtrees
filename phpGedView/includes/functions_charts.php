@@ -83,7 +83,7 @@ function print_family_header($famid) {
  */
 function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="", $personcount="1") {
 	global $pgv_lang, $view, $show_full, $show_famlink;
-	global $TEXT_DIRECTION, $SHOW_EMPTY_BOXES, $SHOW_ID_NUMBERS, $SHOW_FAM_ID_NUMBERS, $LANGUAGE;
+	global $TEXT_DIRECTION, $SHOW_EMPTY_BOXES, $SHOW_ID_NUMBERS, $LANGUAGE;
 	global $pbwidth, $pbheight;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $show_changes, $pgv_changes, $GEDCOM;
@@ -171,7 +171,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	print "</tr></table>\n\n";
 	if ($sosa!=0) {
 		print "<a href=\"family.php?famid=$famid\" class=\"details1\">";
-		if ($SHOW_FAM_ID_NUMBERS) print "($famid)&nbsp;&nbsp;";
+		if ($SHOW_ID_NUMBERS) print "($famid)&nbsp;&nbsp;";
 		else print str_repeat("&nbsp;", 10);
 		if (showFact("MARR", $famid)) print_simple_fact($family->getGedcomRecord(), "MARR", $wife->getXref()); else print $pgv_lang["private"];
 		print "</a>";
@@ -253,7 +253,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
  */
 function print_family_children($famid, $childid = "", $sosa = 0, $label="", $personcount="1") {
 	global $pgv_lang, $pbwidth, $pbheight, $view, $show_famlink, $show_cousins;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $show_changes, $pgv_changes, $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_FAM_ID_NUMBERS, $TEXT_DIRECTION;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $show_changes, $pgv_changes, $GEDCOM, $SHOW_ID_NUMBERS, $TEXT_DIRECTION;
 
 	$children = get_children_ids($famid);
 	print "<table border=\"0\" cellpadding=\"0\" cellspacing=\"2\"><tr>";
@@ -342,7 +342,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 						if ($famid) {
 							print "<br />";
 							print "<a class=\"details1\" href=\"family.php?famid=$famid\">";
-							if ($SHOW_FAM_ID_NUMBERS) print "&lrm;&nbsp;($famid)&nbsp;&lrm;";
+							if ($SHOW_ID_NUMBERS) print "&lrm;&nbsp;($famid)&nbsp;&lrm;";
 							print "</a>";
 						}
 						print "</td>\n";
@@ -382,7 +382,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
    else if ($sosa<1) {
 		print "<tr><td></td><td valign=\"top\" >";
 
-		$nchi = "";		
+		$nchi = "";
 		if (isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_updated_record($famid);
 		else $famrec = find_family_record($famid);
 		$ct = preg_match("/1 NCHI (\w+)/", $famrec, $match);
@@ -424,7 +424,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 function print_family_facts($famid, $sosa = 0) {
 	global $pgv_lang, $pbwidth, $pbheight, $view;
 	global $nonfacts, $factarray;
-	global $TEXT_DIRECTION, $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_FAM_ID_NUMBERS;
+	global $TEXT_DIRECTION, $GEDCOM, $SHOW_ID_NUMBERS;
 	global $show_changes, $pgv_changes;
 	global $linkToID;
 
@@ -572,7 +572,7 @@ function print_family_facts($famid, $sosa = 0) {
 		if ((count($indifacts) > 0) || (count($otheritems) > 0)) {
 			usort($indifacts, "compare_facts");
 			print "\n\t<span class=\"subheaders\">" . $pgv_lang["family_group_info"];
-			if ($SHOW_FAM_ID_NUMBERS and $famid != "") print "&nbsp;&nbsp;&nbsp;($famid)";
+			if ($SHOW_ID_NUMBERS and $famid != "") print "&nbsp;&nbsp;&nbsp;($famid)";
 			print "</span><br />\n\t<table class=\"facts_table\">";
 			foreach ($indifacts as $key => $value) {
 				print_fact($value[1], $famid, $value[0]);
@@ -600,7 +600,7 @@ function print_family_facts($famid, $sosa = 0) {
 		else {
 			if ($sosa==0) {
 				print "\n\t<span class=\"subheaders\">" . $pgv_lang["family_group_info"];
-				if ($SHOW_FAM_ID_NUMBERS and $famid != "") print "&nbsp;&nbsp;&nbsp;($famid)";
+				if ($SHOW_ID_NUMBERS and $famid != "") print "&nbsp;&nbsp;&nbsp;($famid)";
 				print "</span><br />\n\t";
 			}
 			print "<table class=\"facts_table\">";
