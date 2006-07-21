@@ -50,10 +50,21 @@ $rlm = chr(0xE2).chr(0x80).chr(0x8F);
 if (isset($alpha)) {
 	$alpha = stripslashes($alpha);
 	$alpha = str_replace(array($lrm, $rlm), "", $alpha);
+	$doctitle = $pgv_lang["family_list"]." : ".$alpha;
 }
 if (isset($surname)) {
 	$surname = stripslashes($surname);
 	$surname = str_replace(array($lrm, $rlm), "", $surname);
+	$doctitle = $pgv_lang["family_list"]." : ".$surname;
+}
+if (isset($doctitle)) {
+	?>
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		document.title = '<?php print $doctitle; ?>';
+	//-->
+	</script>
+	<?php
 }
 
 /**
