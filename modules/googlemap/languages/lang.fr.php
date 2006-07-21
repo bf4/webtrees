@@ -8,13 +8,13 @@
 ===================================================*/
 
 
-$pgv_lang["googlemap"]              = "Carte";
-$pgv_lang["no_gmtab"]               = "Pas de coordonnées géographiques pour cet individu";
+$pgv_lang["googlemap"]              = "Cartographie";
+$pgv_lang["no_gmtab"]               = "Aucune donnée cartographique";
 
-$pgv_lang['gm_redraw_map']          = "Redessiner la carte";
-$pgv_lang["gm_map"]                 = "Plan";
+$pgv_lang['gm_redraw_map']          = "Actualiser";
+$pgv_lang["gm_map"]                 = "Plan/Carte";
 $pgv_lang["gm_satellite"]           = "Satellite";
-$pgv_lang["gm_hybrid"]              = "Hybride";
+$pgv_lang["gm_hybrid"]              = "Mixte";
 
 // Configuration texts
 $pgv_lang["gm_manage"]              = "Configuration Googlemap";
@@ -38,7 +38,7 @@ $pgv_lang["pl_no_places_found"]     = "Lieu introuvable";
 $pgv_lang["pl_zoom_factor"]         = "Facteur de zoom";
 $pgv_lang["pl_place_icon"]          = "Icône";
 $pgv_lang["pl_edit"]                = "Éditer le lieu";
-$pgv_lang["pl_add_place"]           = "Ajouter un kieu";
+$pgv_lang["pl_add_place"]           = "Ajouter un lieu";
 $pgv_lang["pl_import_gedcom"]       = "Importer depuis le GEDCOM en cours";
 $pgv_lang["pl_import_all_gedcom"]   = "Importer depuis tous les GEDCOMs";
 $pgv_lang["pl_import_file"]         = "Importer depuis un fichier";
@@ -47,7 +47,7 @@ $pgv_lang["pl_export_all_file"]     = "Exporter tous les lieux vers un fichier";
 $pgv_lang["pl_north_short"]         = "N";
 $pgv_lang["pl_south_short"]         = "S";
 $pgv_lang["pl_east_short"]          = "E";
-$pgv_lang["pl_west_short"]          = "W";
+$pgv_lang["pl_west_short"]          = "O";
 $pgv_lang["pl_places_filename"]     = "Fichier contenant les lieux (CSV)";
 $pgv_lang["pl_clean_db"]            = "Supprimer tous les lieux/coordonnées avant d'importer ?";
 $pgv_lang["pl_no_places_found"]     = "Aucun lieu trouvé";
@@ -68,4 +68,3 @@ $pgv_lang["pl_remove_flag"]         = "Supprimer un drapeau";
 $pgv_lang["pl_remove_location"]     = "Supprimer ce lieu ?";
 $pgv_lang["pl_delete_error"]        = "Lieu non supprimé: ce lieu contient des sous-lieux";
 ?>
-
