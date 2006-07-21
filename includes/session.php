@@ -331,8 +331,8 @@ if(substr(PHP_OS, 0, 4) == 'OS/2') $WIN32 = true;
 if(substr(PHP_OS, 0, 7) == 'NetWare') $WIN32 = true;
 if($WIN32) $seperator=";"; else $seperator = ":";
 //-- append our 'includes/' path to the include_path ini setting for ease of use.
-$ini_include_path = ini_get('include_path');
-$includes_dir = dirname(realpath(__FILE__));
+$ini_include_path = @ini_get('include_path');
+$includes_dir = dirname(@realpath(__FILE__));
 @ini_set('include_path', "{$includes_dir}{$seperator}{$ini_include_path}");
 unset($ini_include_path, $includes_dir); // destroy some variables for security reasons.
 
