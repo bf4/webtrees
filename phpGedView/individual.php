@@ -533,7 +533,7 @@ foreach($families as $famid=>$family) {
 			<td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]; ?>" border="0" class="icon" alt="" /></td>
 			<td><span class="subheaders"><?php print PrintReady($controller->indi->getChildFamilyLabel($family)); ?></span>
 		<?php if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
-			 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_FAM_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
+			 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
 		<?php } ?>
 			</td>
 		</tr>
@@ -671,7 +671,7 @@ foreach($stepfams as $famid=>$family) {
 			<td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]; ?>" border="0" class="icon" alt="" /></td>
 			<td><span class="subheaders"><?php print PrintReady($controller->indi->getStepFamilyLabel($family)); ?></span>
 		<?php if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
-			 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_FAM_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
+			 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
 		<?php } ?>
 			</td>
 		</tr>
@@ -787,7 +787,7 @@ foreach($families as $famid=>$family) {
 			<td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]; ?>" border="0" class="icon" alt="" /></td>
 			<td><span class="subheaders"><?php print PrintReady($controller->indi->getSpouseFamilyLabel($family)); ?></span>
 		<?php if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
-			 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_FAM_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
+			 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
 		<?php } ?>
 			</td>
 		</tr>
