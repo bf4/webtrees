@@ -48,6 +48,9 @@ VERSION 4.0
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
++$pgv_lang["SHOW_LAST_CHANGE"]						21 Jul 2006				A
+-$pgv_lang["SHOW_FAM_NUMBERS"]						21 Jul 2006				D
+*$pgv_lang["SHOW_ID_NUMBERS"]							21 Jul 2006				w
 +$pgv_lang["SHOW_SPIDER_TAGLINE"]			14 Jul 2006				A
 +$pgv_lang["SHOW_SPIDER_TAGLINE_help"]			14 Jul 2006				A
 +$pgv_lang["SHOW_PRIVATE_RELATIONSHIPS"]			11 Jul 2006				A
