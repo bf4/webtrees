@@ -34,7 +34,7 @@ $PGV_BLOCKS["print_upcoming_events"]["config"] = array("days"=>30, "filter"=>"al
 //-- upcoming events block
 //-- this block prints a list of upcoming events of people in your gedcom
 function print_upcoming_events($block=true, $config="", $side, $index) {
-  global $pgv_lang, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $command, $TEXT_DIRECTION, $SHOW_FAM_ID_NUMBERS;
+  global $pgv_lang, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $command, $TEXT_DIRECTION;
   global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $PGV_BLOCKS;
   global $DAYS_TO_SHOW_LIMIT;
 
@@ -174,7 +174,7 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
                 if ($lastgid!=$gid) {
                   if ($lastgid != "") print "<br />";
                   print "<a href=\"family.php?famid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
-                  if ($SHOW_FAM_ID_NUMBERS) {
+                  if ($SHOW_ID_NUMBERS) {
 	                  print "&nbsp;";
 	                  if ($TEXT_DIRECTION=="rtl") print "&rlm;";
 	                  print "(".$gid.")";
