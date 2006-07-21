@@ -654,19 +654,21 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		// Display a list of forms for the user
 		if ($handle = opendir(BASEPATH."/forms")) {
 			while (($file = readdir($handle)) !== false) {
-				list ($file, $ext) = explode(".", $file);
-				// Make sure we don't show the . and .. nor any forms 
-				// that start with ra_ as those are forms that we use internally
-				if ($file != "." && $file != ".." && !is_dir($file) && (strstr($file, "ra_") === false)) {
-					// Setup pretty print for the users
-					$fileNoSpaces = preg_replace('/\s+/', '_', $file);
-					$fileSpaces = preg_replace('/_/', ' ', $file);
-
-					// Print a link with all the information to connect a person and their data.
-					if ($links)
-						$out .= '<a href="module.php?mod=research_assistant&amp;action=printform&amp;formname='.$fileNoSpaces.'">'.$fileSpaces.'</a><br/>';
-					else
-						$out .= $fileSpaces."\n";
+				if (strpos($file, ".")) {
+					list ($file, $ext) = explode(".", $file);
+					// Make sure we don't show the . and .. nor any forms 
+					// that start with ra_ as those are forms that we use internally
+					if ($file != "." && $file != ".." && !is_dir($file) && (strstr($file, "ra_") === false)) {
+						// Setup pretty print for the users
+						$fileNoSpaces = preg_replace('/\s+/', '_', $file);
+						$fileSpaces = preg_replace('/_/', ' ', $file);
+	
+						// Print a link with all the information to connect a person and their data.
+						if ($links)
+							$out .= '<a href="module.php?mod=research_assistant&amp;action=printform&amp;formname='.$fileNoSpaces.'">'.$fileSpaces.'</a><br/>';
+						else
+							$out .= $fileSpaces."\n";
+					}
 				}
 			}
 			closedir($handle);
