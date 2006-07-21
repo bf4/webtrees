@@ -314,10 +314,10 @@ function displayDetailsByID($pid, $type = "INDI") {
 
 	if (!$HIDE_LIVE_PEOPLE) return true;
 	if (empty($pid)) return true;
-	
+
 	//-- check if the privacy has been cached and use it
-	if ($type=="INDI" && isset($indilist[$pid]['privacy']) 
-			&& isset($indilist[$pid]['gedfile']) 
+	if ($type=="INDI" && isset($indilist[$pid]['privacy'])
+			&& isset($indilist[$pid]['gedfile'])
 			&& ($indilist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id'])) {
 		return $indilist[$pid]['privacy'];
 	}
@@ -620,12 +620,12 @@ function showLivingNameByID($pid) {
 			else return false;
 		}
 	}
-	
+
 	if (isset($person_privacy[$pid])) {
 		if ($person_privacy[$pid]>=getUserAccessLevel($username)) return true;
 		else return false;
 	}
-		
+
 	if ($SHOW_LIVING_NAMES>=getUserAccessLevel($username)) return true;
 	return false;
 }
@@ -650,7 +650,7 @@ function showFact($fact, $pid) {
 	global $global_facts, $person_facts, $SHOW_SOURCES;
 
 	$username = getUserName();
-	
+
 	//-- first check the global facts array
 	if (isset($global_facts[$fact]["show"])) {
 		if (getUserAccessLevel($username)>$global_facts[$fact]["show"]) return false;
@@ -691,7 +691,7 @@ function showFactDetails($fact, $pid) {
 	global $global_facts, $person_facts;
 
 	$username = getUserName();
-	
+
 	//-- first check the global facts array
 	if (isset($global_facts[$fact]["details"])) {
 		if (getUserAccessLevel($username)>$global_facts[$fact]["details"]) return false;
@@ -700,7 +700,7 @@ function showFactDetails($fact, $pid) {
 	if (isset($person_facts[$pid][$fact]["details"])) {
 		if (getUserAccessLevel($username)>$person_facts[$pid][$fact]["details"]) return false;
 	}
-	
+
 	return showFact($fact, $pid);
 }
 }
@@ -715,7 +715,7 @@ function showFactDetails($fact, $pid) {
  */
 function privatize_gedcom($gedrec) {
 	global $pgv_lang, $GEDCOM, $SHOW_PRIVATE_RELATIONSHIPS, $pgv_private_records;
-	
+
 	$gt = preg_match("/0 @(.+)@ (.+)/", $gedrec, $gmatch);
 	if ($gt > 0) {
 		$gid = trim($gmatch[1]);
@@ -786,6 +786,7 @@ function privatize_gedcom($gedrec) {
 					}
 				}
 			}
+			if ($type=="INDI") $newrec .= get_sub_record(1, "1 SEX", $gedrec)."\r\n"; // do not privatize gender
 			$newrec .= "1 NOTE ".trim($pgv_lang["person_private"])."\r\n";
 			//print $newrec;
 			$pgv_private_records[$gid] = $gedrec;
@@ -813,7 +814,7 @@ function privatize_gedcom($gedrec) {
 
 function get_last_private_data($gid) {
 	global $pgv_private_records;
-	
+
 	if (!isset($pgv_private_records[$gid])) return false;
 	return $pgv_private_records[$gid];
 }
