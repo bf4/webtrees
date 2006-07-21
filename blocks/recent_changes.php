@@ -34,7 +34,7 @@ $PGV_BLOCKS["print_recent_changes"]["config"] = array("days"=>30, "hide_empty"=>
 //-- Recent Changes block
 //-- this block prints a list of changes that have occurred recently in your gedcom
 function print_recent_changes($block=true, $config="", $side, $index) {
-	global $pgv_lang, $factarray, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $command, $TEXT_DIRECTION, $SHOW_FAM_ID_NUMBERS;
+	global $pgv_lang, $factarray, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $command, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $REGEXP_DB, $DEBUG, $ASC, $IGNORE_FACTS, $IGNORE_YEAR, $TOTAL_QUERIES, $LAST_QUERY, $PGV_BLOCKS, $SHOW_SOURCES;
     global $objectlist;
 
@@ -178,7 +178,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 					$name = get_family_descriptor($gid);
 					if ($lastgid!=$gid) {
 						print "<a href=\"family.php?famid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
-						if ($SHOW_FAM_ID_NUMBERS) {
+						if ($SHOW_ID_NUMBERS) {
 							print "&nbsp;&nbsp;";
 							if ($TEXT_DIRECTION=="rtl") print "&rlm;";
 							print "(".$gid.")";
@@ -210,7 +210,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 					$name = get_source_descriptor($gid);
 					if ($lastgid!=$gid) {
 						print "<a href=\"source.php?sid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
-						if ($SHOW_FAM_ID_NUMBERS) {
+						if ($SHOW_ID_NUMBERS) {
 							print "&nbsp;&nbsp;";
 							if ($TEXT_DIRECTION=="rtl") print "&rlm;";
 							print "(".$gid.")";
@@ -242,7 +242,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 					$name = get_repo_descriptor($gid);
 					if ($lastgid!=$gid) {
 						print "<a href=\"repo.php?rid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
-						if ($SHOW_FAM_ID_NUMBERS) {
+						if ($SHOW_ID_NUMBERS) {
 							print "&nbsp;&nbsp;";
 							if ($TEXT_DIRECTION=="rtl") print "&rlm;";
 							print "(".$gid.")";
@@ -276,7 +276,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 						$SearchTitle = preg_replace("/ /","+",$title);
 						if ($lastgid!=$gid) {
  							print "<a href=\"medialist.php?action=filter&amp;search=yes&amp;filter=$SearchTitle&amp;ged=".$GEDCOM."\"><b>".PrintReady($title)."</b>";
-							if ($SHOW_FAM_ID_NUMBERS) {
+							if ($SHOW_ID_NUMBERS) {
 								print "&nbsp;&nbsp;";
 								if ($TEXT_DIRECTION=="rtl") print "&rlm;";
 								print "(".$gid.")";

@@ -34,7 +34,7 @@ $PGV_BLOCKS["print_todays_events"]["config"] = array("filter"=>"all", "onlyBDM"=
 //-- today's events block
 //-- this block prints a list of today's upcoming events of living people in your gedcom
 function print_todays_events($block=true, $config="", $side, $index) {
-  global $pgv_lang, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $command, $TEXT_DIRECTION, $SHOW_FAM_ID_NUMBERS;
+  global $pgv_lang, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $command, $TEXT_DIRECTION;
   global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $PGV_BLOCKS;
 
   $block = true;      // Always restrict this block's height
@@ -170,7 +170,7 @@ function print_todays_events($block=true, $config="", $side, $index) {
                 if ($lastgid!=$gid) {
                   if ($lastgid != "") print "<br />";
                   print "<a href=\"family.php?famid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
-                  if ($SHOW_FAM_ID_NUMBERS) {
+                  if ($SHOW_ID_NUMBERS) {
 	                  print "&nbsp;";
 	                  if ($TEXT_DIRECTION=="rtl") print "&rlm";
 	                  print "(".$gid.")";
