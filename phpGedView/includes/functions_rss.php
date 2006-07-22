@@ -62,7 +62,7 @@ function iso8601_date($time) {
  * 				$dataArray[2] = data
  */
 function getUpcomingEvents() {
-	global $pgv_lang, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $command, $TEXT_DIRECTION, $SHOW_FAM_ID_NUMBERS;
+	global $pgv_lang, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $command, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $PGV_BLOCKS;
 	global $DAYS_TO_SHOW_LIMIT, $SERVER_URL;
 
@@ -113,7 +113,7 @@ function getUpcomingEvents() {
 							if ($onlyBDM == "yes") $filterev = "bdm";
 							$tempText = get_calendar_fact($factrec, "upcoming", $filter, $gid, $filterev);
                         	$text = str_replace('href="calendar.php', 'href="'.$SERVER_URL.'calendar.php', $tempText);
-                        	
+
 							if ($text!="filter") {
 								if (FactViewRestricted($gid, $factrec) or $text=="") {
 									$PrivateFacts = true;
@@ -228,7 +228,7 @@ function getUpcomingEvents() {
  * 				$dataArray[2] = data
  */
 function getTodaysEvents() {
-	global $pgv_lang, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $command, $TEXT_DIRECTION, $SHOW_FAM_ID_NUMBERS;
+	global $pgv_lang, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $command, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $PGV_BLOCKS;
 	global $SERVER_URL;
 	global $DAYS_TO_SHOW_LIMIT;
@@ -661,7 +661,7 @@ function getTop10Surnames() {
  * @TODO use date of most recent change instead of curent time
  */
 function getRecentChanges() {
-	global $pgv_lang, $factarray, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $command, $TEXT_DIRECTION, $SHOW_FAM_ID_NUMBERS;
+	global $pgv_lang, $factarray, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $command, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $REGEXP_DB, $DEBUG, $ASC, $IGNORE_FACTS, $IGNORE_YEAR, $TOTAL_QUERIES, $LAST_QUERY, $PGV_BLOCKS, $SHOW_SOURCES;
     global $objectlist, $SERVER_URL;
 
@@ -766,7 +766,7 @@ function getRecentChanges() {
 								if ($tt>0) {
 									$recentText .= " - ".$match[1];
 								}
-                    	
+
 						}
 						$recentText .=  "</li>\n";
 					}
@@ -782,7 +782,7 @@ function getRecentChanges() {
 						$name = get_family_descriptor($gid);
 						if ($lastgid!=$gid) {
 							$recentText .= "<li><a href=\"" .$SERVER_URL . "family.php?famid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
-							if ($SHOW_FAM_ID_NUMBERS) {
+							if ($SHOW_ID_NUMBERS) {
 								$recentText .= "&nbsp;&nbsp;";
 								if ($TEXT_DIRECTION=="rtl") $recentText .= "&rlm;";
 								$recentText .= "(".$gid.")";
@@ -799,7 +799,7 @@ function getRecentChanges() {
 							if ($tt>0) {
 								$recentText .= " - ".$match[1];
 							}
-                	
+
 						}
 						$recentText .=  "</li>\n";
 					}
@@ -815,7 +815,7 @@ function getRecentChanges() {
 						$name = get_source_descriptor($gid);
 						if ($lastgid!=$gid) {
 							$recentText .= "<li><a href=\"" . $SERVER_URL . "source.php?sid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
-							if ($SHOW_FAM_ID_NUMBERS) {
+							if ($SHOW_ID_NUMBERS) {
 								$recentText .= "&nbsp;&nbsp;";
 								if ($TEXT_DIRECTION=="rtl") $recentText .= "&rlm;";
 								$recentText .= "(".$gid.")";
@@ -832,7 +832,7 @@ function getRecentChanges() {
 							if ($tt>0) {
 								$recentText .= " - ".$match[1];
 							}
-                	
+
 						}
 						$recentText .=  "</li>\n";
 					}
@@ -848,7 +848,7 @@ function getRecentChanges() {
 						$name = get_repo_descriptor($gid);
 						if ($lastgid!=$gid) {
 							$recentText .= "<li><a href=\"" . $SERVER_URL . "repo.php?rid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
-							if ($SHOW_FAM_ID_NUMBERS) {
+							if ($SHOW_ID_NUMBERS) {
 								$recentText .= "&nbsp;&nbsp;";
 								if ($TEXT_DIRECTION=="rtl") $recentText .= "&rlm;";
 								$recentText .= "(".$gid.")";
@@ -865,7 +865,7 @@ function getRecentChanges() {
 							if ($tt>0) {
 								$recentText .=  " - ".$match[1];
 							}
-                	
+
 						}
 						$recentText .=  "</li>\n";
 					}
@@ -882,7 +882,7 @@ function getRecentChanges() {
 						$SearchTitle = preg_replace("/ /","+",$title);
 						if ($lastgid!=$gid) {
  							$recentText .= "<li><a href=\"" . $SERVER_URL . "medialist.php?action=filter&amp;search=yes&amp;filter=$SearchTitle&amp;ged=".$GEDCOM."\"><b>".PrintReady($title)."</b>";
-							if ($SHOW_FAM_ID_NUMBERS) {
+							if ($SHOW_ID_NUMBERS) {
 								$recentText .= "&nbsp;&nbsp;";
 								if ($TEXT_DIRECTION=="rtl") $recentText .= "&rlm;";
 								$recentText .= "(".$gid.")";
@@ -899,7 +899,7 @@ function getRecentChanges() {
 							if ($tt>0) {
 								$recentText .= " - ".$match[1];
 							}
-                    	
+
 						}
 						$recentText .= "</li>\n";
 					}

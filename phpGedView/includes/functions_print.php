@@ -1127,7 +1127,7 @@ function print_contact_links($style=0) {
 }
 //-- print user favorites
 function print_favorite_selector($option=0) {
-	global $pgv_lang, $GEDCOM, $SCRIPT_NAME, $SHOW_ID_NUMBERS, $pid, $INDEX_DIRECTORY, $indilist, $famlist, $sourcelist, $QUERY_STRING, $famid, $sid, $SHOW_FAM_ID_NUMBERS;
+	global $pgv_lang, $GEDCOM, $SCRIPT_NAME, $SHOW_ID_NUMBERS, $pid, $INDEX_DIRECTORY, $indilist, $famlist, $sourcelist, $QUERY_STRING, $famid, $sid;
 	global $TEXT_DIRECTION, $REQUIRE_AUTHENTICATION, $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER;
 	$username = getUserName();
 	if (!empty($username)) $userfavs = getUserFavorites($username);
@@ -1197,7 +1197,7 @@ function print_favorite_selector($option=0) {
 						if ($favorite["type"]=="FAM") {
 							$submenu["link"] = "family.php?famid=".$favorite["gid"]."&amp;ged=$GEDCOM";
 							$submenu["label"] = PrintReady(get_family_descriptor($favorite["gid"]));
-							if ($SHOW_FAM_ID_NUMBERS) {
+							if ($SHOW_ID_NUMBERS) {
 	 							if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
 								else $submenu["label"] .= " &rlm;(".$favorite["gid"].")&rlm;";
 							}
@@ -1268,7 +1268,7 @@ function print_favorite_selector($option=0) {
 							if ($favorite["type"]=="FAM") {
 								$submenu["link"] = "family.php?famid=".$favorite["gid"]."&amp;ged=$GEDCOM";
 								$submenu["label"] = PrintReady(get_family_descriptor($favorite["gid"]));
-								if ($SHOW_FAM_ID_NUMBERS) {
+								if ($SHOW_ID_NUMBERS) {
 	 								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
 									else $submenu["label"] .= " &rlm;(".$favorite["gid"].")&rlm;";
 							}
@@ -2064,7 +2064,7 @@ function PrintReady($text, $InHeaders=false) {
  * @param string $linebr 	optional linebreak
  */
 function print_asso_rela_record($pid, $factrec, $linebr=false) {
-	global $GEDCOM, $SHOW_ID_NUMBERS, $SHOW_FAM_ID_NUMBERS, $TEXT_DIRECTION, $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $view;
+	global $GEDCOM, $SHOW_ID_NUMBERS, $TEXT_DIRECTION, $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $view;
 	// get ASSOciate(s) ID(s)
 	$ct = preg_match_all("/\d ASSO @(.*)@/", $factrec, $match, PREG_SET_ORDER);
 	for ($i=0; $i<$ct; $i++) {
@@ -2140,7 +2140,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false) {
 			print "<a href=\"family.php?famid=$pid2\">";
 			if ($TEXT_DIRECTION == "ltr") print " &lrm;"; else print " &rlm;";
 			print "[".$pgv_lang["view_family"];
-  			if ($SHOW_FAM_ID_NUMBERS) print " &lrm;($pid2)&lrm;";
+  			if ($SHOW_ID_NUMBERS) print " &lrm;($pid2)&lrm;";
   			if ($TEXT_DIRECTION == "ltr") print "&lrm;]</a>\n"; else print "&rlm;]</a>\n";
 		}
 		else {

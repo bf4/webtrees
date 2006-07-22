@@ -47,7 +47,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false) {
 	 global $pgv_lang, $GEDCOM;
 	 global $WORD_WRAPPED_NOTES;
 	 global $TEXT_DIRECTION;
-	 global $HIDE_GEDCOM_ERRORS, $SHOW_ID_NUMBERS, $SHOW_FAM_ID_NUMBERS;
+	 global $HIDE_GEDCOM_ERRORS, $SHOW_ID_NUMBERS;
 	 global $CONTACT_EMAIL, $view, $FACT_COUNT, $monthtonum;
 	 global $SHOW_FACT_ICONS;
 	 global $dHebrew;
@@ -81,12 +81,12 @@ function print_fact($factrec, $pid, $linenum, $indirec=false) {
 	 $resn_tag = preg_match("/2 RESN (.*)/", $factrec, $match);
 	 if ($resn_tag == "1") $resn_value = strtolower(trim($match[1]));
 	 if (array_key_exists($fact, $factarray)) {
-	 	//-- check if this is a fact created by the research assistant and modify the 
+	 	//-- check if this is a fact created by the research assistant and modify the
 	   	//---- edit links to forward editing to the RA plugin if it was created there
    		$et = preg_match("/\d _RATID (.*)/", $factrec, $ematch);
    		if ($et>0) {
    			$taskid = trim($ematch[1]);
-   		} 
+   		}
 		  // -- handle generic facts
 		  if ($fact!="EVEN" && $fact!="FACT" && $fact!="OBJE") {
 			   $factref = $fact;
@@ -281,7 +281,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false) {
 						 if ($TEXT_DIRECTION == "ltr") print " &lrm;";
  						 else print " &rlm;";
 						 print "[".$pgv_lang["view_family"];
-  						 if ($SHOW_FAM_ID_NUMBERS) print " &lrm;($pid)&lrm;";
+  						 if ($SHOW_ID_NUMBERS) print " &lrm;($pid)&lrm;";
   						 if ($TEXT_DIRECTION == "ltr") print "&lrm;]</a>\n";
  						 else print "&rlm;]</a>\n";
                     }
@@ -545,7 +545,7 @@ function print_media_links($factrec, $level,$pid='') {
 	 global $pgv_lang, $factarray, $SEARCH_SPIDER, $view;
 	 global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $MEDIA_EXTERNAL, $THUMBNAIL_WIDTH;
 	 global $PGV_IMAGE_DIR, $PGV_IMAGES;
-	 global $GEDCOM, $SHOW_FAM_ID_NUMBERS;
+	 global $GEDCOM, $SHOW_ID_NUMBERS;
 	 if (!$MULTI_MEDIA) return;
 	 $nlevel = $level+1;
 	 if ($level==1) $size=50;
@@ -621,7 +621,7 @@ function print_media_links($factrec, $level,$pid='') {
 							$famid = trim($match[1]);
 							if(empty($SEARCH_SPIDER)) {
 								print "<a href=\"family.php?famid=$famid\">[".$pgv_lang["view_family"];
-								if ($SHOW_FAM_ID_NUMBERS) print " &lrm;($famid)&lrm;";
+								if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;";
 								print "]</a>\n";
 							}
 						}
@@ -1020,7 +1020,7 @@ function print_main_notes($factrec, $level, $pid, $linenum) {
  * @param boolean $related	Whether or not to grab media from related records
  */
 function print_main_media($pid, $level=1, $related=false) {
-	global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $SHOW_FAM_ID_NUMBERS, $MEDIA_EXTERNAL;
+	global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
 	global $pgv_lang, $pgv_changes, $factarray, $view;
 	global $GEDCOMS, $GEDCOM, $MEDIATYPE, $pgv_changes, $DBCONN, $DBTYPE;
 	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
@@ -1168,7 +1168,7 @@ function print_main_media($pid, $level=1, $related=false) {
  */
 function print_main_media_row($rtype, $rowm, $pid) {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $MEDIA_DIRECTORY, $TEXT_DIRECTION;
-	global $SHOW_FAM_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH;
+	global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH;
 	global $SEARCH_SPIDER;
 
 	//print $rtype." ".$rowm["m_media"]." ".$pid;
@@ -1296,7 +1296,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				if ($view != "preview") {
 						$famid = $rowm['mm_gid'];
 						print "<a href=\"family.php?famid=$famid\">[".$pgv_lang["view_family"];
-						if ($SHOW_FAM_ID_NUMBERS) print " &lrm;($famid)&lrm;";
+						if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;";
 						print "]</a>\n";
 				}
 			}
