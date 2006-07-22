@@ -849,6 +849,8 @@ $pgv_lang["confidential"]			= "Confidential";
 $pgv_lang["alpha_index"]				= "Alphabetical Index";
 $pgv_lang["name_list"] 				= "Name List";
 $pgv_lang["firstname_alpha_index"] 	= "Firstname Alphabetical Index";
+$pgv_lang["roots"]		 				= "Roots";
+$pgv_lang["leaves"] 					= "Leaves";
 
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]					= "Age";
