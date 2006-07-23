@@ -110,8 +110,8 @@
 	$dmcoding["Ĺ"] = array(8, 8, 8);
 	$dmcoding["Ł"] = array(7, 7, 7, 8, 8, 8);
 	$dmcoding["LL"] = array(8, 8, 8, 58, 8, 8, 1, -1, -1);
-	$dmcoding["LLY"] = array(1, -1, -1);
-	$dmcoding["LY"] = array(1, -1, -1);
+	$dmcoding["LLY"] = array(8, 8, 8, 1, -1, -1);
+	$dmcoding["LY"] = array(8, 8, 8, 1, -1, -1);
 	$dmcoding["M"] = array(6, 6, 6);
 	$dmcoding["MĔ"] = array(66, 66, 66);
 	$dmcoding["MN"] = array(66, 66, 66);
@@ -120,7 +120,6 @@
 	$dmcoding["Ň"] = array(6, 6, 6);
 	$dmcoding["Ñ"] = array(6, 6, 6);
 	$dmcoding["NM"] = array(66, 66, 66);
-	$dmcoding["NY"] = array(6, 6, 6);
 	$dmcoding["O"] = array(0, -1, -1);
 	$dmcoding["Ò"] = array(0, -1, -1);
 	$dmcoding["Ó"] = array(0, -1, -1);
@@ -194,7 +193,6 @@
 	$dmcoding["TC"] = array(4, 4, 4);
 	$dmcoding["TCH"] = array(4, 4, 4);
 	$dmcoding["TH"] = array(3, 3, 3);
-	$dmcoding["TI"] = array(4, 4, 4);
 	$dmcoding["TRS"] = array(4, 4, 4);
 	$dmcoding["TRZ"] = array(4, 4, 4);
 	$dmcoding["TS"] = array(4, 4, 4);
@@ -205,9 +203,7 @@
 	$dmcoding["TTS"] = array(4, 4, 4);
 	$dmcoding["TTSCH"] = array(4, 4, 4);
 	$dmcoding["TTSZ"] = array(4, 4, 4);
-	$dmcoding["TTY"] = array(3, 3, 3);
 	$dmcoding["TTZ"] = array(4, 4, 4);
-	$dmcoding["TY"] = array(3, 3, 3);
 	$dmcoding["TZ"] = array(4, 4, 4);
 	$dmcoding["TZS"] = array(4, 4, 4);
 	$dmcoding["U"] = array(0, -1, -1);
@@ -232,7 +228,7 @@
 	$dmcoding["UI"] = array(0, 1, -1);
 	$dmcoding["UJ"] = array(0, 1, -1);
 	$dmcoding["UY"] = array(0, 1, -1);
-	$dmcoding["UW"] = array(0, 1, -1);
+	$dmcoding["UW"] = array(0, 1, -1, 0, 7, 7);
 	$dmcoding["V"] = array(7, 7, 7);
 	$dmcoding["W"] = array(7, 7, 7, 7, -1, -1);
 	$dmcoding["X"] = array(5, 54, 54);
