@@ -851,6 +851,8 @@ $pgv_lang["name_list"] 				= "Name List";
 $pgv_lang["firstname_alpha_index"] 	= "Firstname Alphabetical Index";
 $pgv_lang["roots"]		 				= "Roots";
 $pgv_lang["leaves"] 					= "Leaves";
+$pgv_lang["widow"] 					= "Widow";
+$pgv_lang["widower"] 				= "Widower";
 
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]					= "Age";
@@ -1758,6 +1760,8 @@ $pgv_lang["is_alive_in"]			= "Is alive in #YEAR#";
 $pgv_lang["alive"]					= "Alive ";
 $pgv_lang["dead"]					= "Dead ";
 $pgv_lang["maybe"]					= "Maybe ";
+$pgv_lang["both_alive"]					= "Both alive ";
+$pgv_lang["both_dead"]					= "Both dead ";
 
 //-- Help system
 $pgv_lang["definitions"]			= "Definitions";
