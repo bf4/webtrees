@@ -29,6 +29,7 @@
 require_once('includes/person_class.php');
 require_once('includes/family_class.php');
 require_once('includes/source_class.php');
+require_once('includes/repository_class.php');
 class GedcomRecord {
 	var $gedrec = "";
 	var $xref = "";
@@ -75,7 +76,7 @@ class GedcomRecord {
 	 * @param string $pid	the ID of the object to retrieve
 	 */
 	function &getInstance($pid, $simple=true) {
-		global $indilist, $famlist, $sourcelist, $otherlist, $GEDCOM, $GEDCOMS, $pgv_changes;
+		global $indilist, $famlist, $sourcelist, $repo_id_list, $otherlist, $GEDCOM, $GEDCOMS, $pgv_changes;
 
 		//-- first check for the object in the cache
 		if (isset($indilist[$pid]) && $indilist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
@@ -86,6 +87,9 @@ class GedcomRecord {
 		}
 		if (isset($sourcelist[$pid]) && $sourcelist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
 			if (isset($sourcelist[$pid]['object'])) return $sourcelist[$pid]['object'];
+		}
+		if (isset($repo_id_list[$pid]) && $repo_id_list[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
+			if (isset($repo_id_list[$pid]['object'])) return $repo_id_list[$pid]['object'];
 		}
 		if (isset($otherlist[$pid]) && $otherlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
 			if (isset($otherlist[$pid]['object'])) return $otherlist[$pid]['object'];
@@ -288,6 +292,7 @@ class GedcomRecord {
 	function getDateUrl($gedcom_date) {
 		global $GEDCOM;
 		$pdate = parse_date($gedcom_date);
+		if ($pdate[0]["year"]==0) return "javascript:;";
 		$url = "calendar.php?action=year&amp;day=".$pdate[0]["day"]."&amp;month=".$pdate[0]["month"]."&amp;year=".$pdate[0]["year"]."&amp;ged=".$GEDCOM;
 		return $url;
 	}
@@ -315,5 +320,32 @@ class GedcomRecord {
 		$gedcom_place = trim($gedcom_place, " ,");
 		$exp = explode(",", $gedcom_place);
 		return trim($exp[0]);
+	}
+
+	/**
+	 * get  lastchange record
+	 * @return string the lastchange record
+	 */
+	function getLastchangeRecord() {
+		return trim(get_sub_record(1, "1 CHAN", $this->gedrec));
+	}
+
+	/**
+	 * get  lastchange date
+	 * @return string the lastchange date
+	 */
+	function getLastchangeDate() {
+		return get_gedcom_value("DATE", 2, $this->getLastchangeRecord(), '', false);
+	}
+
+	/**
+	 * get sortable lastchange date
+	 * @return string the lastchange date in sortable format YYYY-MM-DD HH:MM
+	 */
+	function getSortableLastchangeDate() {
+		$pdate = parse_date($this->getLastchangeDate());
+		$ptime = get_gedcom_value("DATE:TIME", 2, $this->getLastchangeRecord());
+		$sdate = sprintf("%04d-%02d-%02d %s", $pdate[0]["year"], $pdate[0]["mon"], $pdate[0]["day"], $ptime);
+		return $sdate;
 	}
 }
