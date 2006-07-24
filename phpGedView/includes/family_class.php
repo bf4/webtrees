@@ -37,6 +37,7 @@ class Family extends GedcomRecord {
 	var $marr_rec = null;
 	var $marr_date = null;
 	var $marr_type = null;
+	var $marr_est = false; // estimate
 	var $div_rec = null;
 
 	/**
@@ -213,6 +214,16 @@ class Family extends GedcomRecord {
 		$this->marr_date = get_gedcom_value("DATE", 2, $this->marr_rec, '', false);
 		$this->marr_type = get_sub_record(2, "2 TYPE", $this->marr_rec);
 		$this->div_rec = trim(get_sub_record(1, "1 DIV", $this->gedrec));
+		//-- if no date estimate from births
+		if (!empty($this->marr_rec) and empty($this->marr_date)) {
+			if (!is_null($this->husb)) $h=$this->husb->getBirthYear(); else $h=0;
+			if (!is_null($this->wife)) $w=$this->wife->getBirthYear(); else $w=0;
+			$myear=max($h,$w);
+			if ($myear>0) {
+				$this->marr_est=true;
+				$this->marr_date="AFT ".($myear+16); // MARR > BIRT+16
+			}
+		}
 	}
 
 	/**
@@ -248,6 +259,8 @@ class Family extends GedcomRecord {
 	 * @return string
 	 */
 	function getMarriageDate() {
+		global $pgv_lang;
+		if (!$this->disp) return $pgv_lang["private"];
 		if (is_null($this->marr_date)) $this->_parseMarriageRecord();
 		return $this->marr_date;
 	}
@@ -257,10 +270,15 @@ class Family extends GedcomRecord {
 	 * @return string the marriage date in sortable format YYYY-MM-DD HH:MM
 	 */
 	function getSortableMarriageDate() {
+		if (!$this->disp) return "";
 		if (empty($this->marr_date)) $this->_parseMarriageRecord();
 		$pdate = parse_date($this->marr_date);
-		$ptime = get_gedcom_value("DATE:TIME", 2, $this->getMarriageRecord());
-		$sdate = sprintf("%04d-%02d-%02d %s", $pdate[0]["year"], $pdate[0]["mon"], $pdate[0]["day"], $ptime);
+		$y = $pdate[0]["year"];
+		$m = $pdate[0]["mon"]; if ($m=="") $m=1;
+		$d = $pdate[0]["day"]; if ($d=="") $d=1;
+		$hms = get_gedcom_value("DATE:TIME", 2, $this->getMarriageRecord());
+		if ($y>3000) list($m, $d, $y) = explode("/", JDToGregorian(JewishToJD($m, $d, $y)));
+		$sdate = sprintf("%04d-%02d-%02d %s", $y, $m, $d, $hms);
 		return $sdate;
 	}
 
@@ -285,11 +303,12 @@ class Family extends GedcomRecord {
 	 * get the marriage year
 	 * @return string
 	 */
-	function getMarriageYear(){
-		$marryear = $this->getMarriageDate();
+	function getMarriageYear() {
+		return substr($this->getSortableMarriageDate(),0,4);
+		/**$marryear = $this->getMarriageDate();
 		$mdate = parse_date($marryear);
 		$myear = $mdate[0]['year'];
-		return $myear;
+		return $myear;**/
 	}
 
 	/**
