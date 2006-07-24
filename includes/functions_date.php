@@ -336,9 +336,11 @@ function get_changed_date($datestr) {
 			else if (isset($pgv_lang[str2lower($pdate[0]["ext"])])) $tmp = $pgv_lang[str2lower($pdate[0]["ext"])]." ";
 			else if ($pdate[0]["ext"]=="") $tmp = "";
 	   	 	else return $datestr;
-	   		if (isset($pdate[0]["mon"]))
+	   		if (isset($pdate[0]["mon"])) {
+					if (!function_exists("getJewishMonthName")) require_once("includes/functions_date_hebrew.php");
 		   		if ($LANGUAGE=="hebrew") $tmp .= getHebrewJewishMonth($pdate[0]["mon"], $CalYear);
 		   		else                     $tmp .= getJewishMonthName($pdate[0]["mon"], $CalYear);
+		   	}
 	    	else return $datestr;
         	return $tmp;
 		}
@@ -492,6 +494,7 @@ function get_changed_date($datestr) {
 					$pos2 = $pos1 + strlen($match[$i][0]);
 					$dstr_beg = substr($datestr, 0, $pos1);
 					$dstr_end = substr($datestr, $pos2);
+					if (!function_exists("convert_hdate")) require_once("includes/functions_date_hebrew.php");
 					if (!$dHebrew) $datestr = convert_date($dstr_beg, $dstr_end, $day, $month, $year);
 					else $datestr = convert_hdate($dstr_beg, $dstr_end, $day, $month, $year);
 				}
@@ -977,7 +980,7 @@ function parse_time($timestr)
 	$time['hour'] = $time[0];
 	$time['minutes'] = $time[1];
 	$time['seconds'] = $time[2];
-	
+
 	return $time;
 }
 
