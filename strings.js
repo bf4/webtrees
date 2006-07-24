@@ -49,5 +49,6 @@
 		s=s.replace(/[\u00D9-\u00DC]/g,'U');
 		s=s.replace(/[\u00DD]/g,'Y');
 		s=s.replace(/[\s\']/g,'-');
+		s=s.replace(/<[^>]+>/g,''); // remove html tags
 		return s;
 	}

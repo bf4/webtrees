@@ -133,7 +133,8 @@ function ts_resortTable(lnk,clid) {
 	}
 
 	span.innerHTML = ARROW;
-	lnk.style.cursor='pointer'; // PGV : reset cursor
+	table_renum(table.id); // PGV: update line counter
+	lnk.style.cursor='pointer'; // PGV: reset cursor
 }
 
 function getParent(el, pTagName) {
@@ -185,18 +186,22 @@ function ts_sort_caseinsensitive(a,b) {
 	bb = ts_getInnerText(b.cells[SORT_COLUMN_INDEX]).toLowerCase();
 
 	// PGV: get hidden sortkey if exists
-	aspan = a.cells[SORT_COLUMN_INDEX].getElementsByTagName("span");
-	if (aspan.length) aa = ts_getInnerText(aspan[0]);
-	bspan = b.cells[SORT_COLUMN_INDEX].getElementsByTagName("span");
-	if (bspan.length) bb = ts_getInnerText(bspan[0]);
+	akey = a.cells[SORT_COLUMN_INDEX].getElementsByTagName("code");
+	if (akey.length) aa = ts_getInnerText(akey[0]);
+	bkey = b.cells[SORT_COLUMN_INDEX].getElementsByTagName("code");
+	if (bkey.length) bb = ts_getInnerText(bkey[0]);
 
 	// PGV: clean UTF8 special chars before sorting
 	aa = strclean(aa);
 	bb = strclean(bb);
 
-	if (aa==bb) return 0;
 	if (aa<bb) return -1;
-	return 1;
+	if (aa>bb) return 1;
+
+	// PGV: when aa==bb keep previous order (=row index)
+	if (a.rowIndex<b.rowIndex) return -1
+	if (a.rowIndex>b.rowIndex) return 1
+	return 0;
 }
 
 function ts_sort_default(a,b) {
@@ -242,14 +247,31 @@ function table_filter(id, keyword, filter) {
 	for (var r=1;r<table.rows.length;r++) {
 		row = table.rows[r];
 		txt = row.cells[COLUMN].innerHTML;
-		if (txt.indexOf(filter)==-1) disp="none";
+//		if (txt.indexOf(filter)==-1) disp="none";
+		if (ts_getInnerText(txt).indexOf(filter)==-1) disp="none";
 		else {
 			disp="table-row";
 			if (document.all) disp="inline"; // IE
 		}
 		row.style.display=disp;
 	}
+	table_renum(id);
 	return false;
+}
+
+function table_renum(id) {
+	var table = document.getElementById(id);
+	var firstRow = table.rows[0];
+
+	// is first column counter ?
+	if (firstRow.cells[0].innerHTML.indexOf('>#<')==-1) return false;
+
+	// renumbering
+	count=1;
+	for (var r=1;r<table.rows.length;r++) {
+		row = table.rows[r];
+		if (row.style.display!='none') row.cells[0].innerHTML = count++;
+	}
 }
 
 //-->
