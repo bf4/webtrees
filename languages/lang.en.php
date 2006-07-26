@@ -182,6 +182,8 @@ $pgv_lang["stat_media"]				= "Media objects";
 $pgv_lang["stat_surnames"]			= "Total surnames";
 $pgv_lang["stat_users"]				= "Total users";
 $pgv_lang["no_family_facts"]		= "No facts for this family.";
+$pgv_lang["stat_males"]				= "Total males";
+$pgv_lang["stat_females"]			= "Total females";
 
 $pgv_lang["sunday_1st"]				= "Su";
 $pgv_lang["monday_1st"]				= "M";
@@ -283,6 +285,8 @@ $pgv_lang["htmlplus_block_content"] = "Content";
 $pgv_lang["htmlplus_block_narrative"] = "Narrative style (English only)";
 $pgv_lang["htmlplus_block_custom"]	= "Custom";
 $pgv_lang["htmlplus_block_keyword"]	= "Keyword Examples (English only)";
+$pgv_lang["htmlplus_block_taglist"]	= "Tag List";
+$pgv_lang["htmlplus_block_compat"]	= "Compatability Mode";
 $pgv_lang["htmlplus_block_current"]	= "Current";
 $pgv_lang["htmlplus_block_default"]	= "Default";
 $pgv_lang["htmlplus_block_gedcom"]	= "Family Tree";
