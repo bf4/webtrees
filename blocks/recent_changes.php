@@ -132,6 +132,11 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 		print_text("recent_changes_none");
 	} else {
 		print_text("recent_changes_some");
+
+	// sortable table
+	require_once("functions_print_lists.php");
+	print_changes_table($found_facts);
+
 		$lastgid="";
 		foreach($found_facts as $index=>$factarr) {
 			if ($factarr[2]=="INDI") {
