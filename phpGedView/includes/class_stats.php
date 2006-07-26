@@ -634,6 +634,8 @@ class stats
 // Lifespan                                                                  //
 ///////////////////////////////////////////////////////////////////////////////
 
+	// Both Sexes
+
 	function longestLife()
 	{
 		global $TBLPREFIX, $pgv_lang;
@@ -712,6 +714,169 @@ class stats
 		$rows = $this->_runSQL("SELECT AVG(death.d_year-birth.d_year) AS age FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth WHERE birth.d_gid=death.d_gid AND death.d_file='{$this->_gedcom['id']}' AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_year>0 AND death.d_year>0 AND birth.d_type IS NULL AND death.d_type IS NULL", 1);$row = $rows[0];
 		return sprintf('%d', $row['age']);
 	}
+
+	// Male Only
+
+	function longestLifeMale()
+	{
+		global $TBLPREFIX, $pgv_lang;
+		$rows = $this->_runSQL("SELECT death.d_year-birth.d_year AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file='{$this->_gedcom['id']}' AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_year>0 AND death.d_year>0 AND birth.d_type IS NULL AND death.d_type IS NULL AND i_gedcom LIKE '%1 SEX M%' ORDER BY age DESC", 1);$row = $rows[0];
+		if(displayDetailsById($row['d_gid']))
+		{
+			ob_start();
+			print_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $this->_gedcom['gedcom']), false, '', false);
+			$indi = ob_get_contents();
+			ob_end_clean();
+		}
+		else
+		{
+			$indi = $pgv_lang['privacy_error'];
+		}
+		return $indi;
+	}
+
+	function longestLifeMaleAge()
+	{
+		global $TBLPREFIX;
+		$rows = $this->_runSQL("SELECT death.d_year-birth.d_year AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file='{$this->_gedcom['id']}' AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_year>0 AND death.d_year>0 AND birth.d_type IS NULL AND death.d_type IS NULL AND i_gedcom LIKE '%1 SEX M%' ORDER BY age DESC", 1);$row = $rows[0];
+		return $row['age'];
+	}
+
+	function longestLifeMaleName()
+	{
+		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir;
+		$rows = $this->_runSQL("SELECT death.d_year-birth.d_year AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file='{$this->_gedcom['id']}' AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_year>0 AND death.d_year>0 AND birth.d_type IS NULL AND death.d_type IS NULL AND i_gedcom LIKE '%1 SEX M%' ORDER BY age DESC", 1);$row = $rows[0];
+		$id = '';
+		if($SHOW_ID_NUMBERS)
+		{
+			if($listDir == 'rtl')
+			{
+				$id = "&nbsp;&nbsp;&rlm;({$row['d_gid']})&rlm;";
+			}
+			else
+			{
+				$id = "&nbsp;&nbsp;({$row['d_gid']})";
+			}
+		}
+		return "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."{$id}</a>";
+	}
+
+	function topTenOldestMale()
+	{
+		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
+		$rows = $this->_runSQL("SELECT death.d_year-birth.d_year AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file='{$this->_gedcom['id']}' AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_year>0 AND death.d_year>0 AND birth.d_type IS NULL AND death.d_type IS NULL AND i_gedcom LIKE '%1 SEX M%' ORDER BY age DESC", 10);
+		$top10 = array();
+		foreach($rows as $row)
+		{
+			$top10[] = "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."</a> [{$row['age']} {$pgv_lang['years']}]";
+		}
+		$top10 = join("; ", $top10);
+		if($TEXT_DIRECTION == 'rtl'){$top10 = str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);}
+		return $top10;
+	}
+
+	function topTenOldestMaleList()
+	{
+		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
+		$rows = $this->_runSQL("SELECT death.d_year-birth.d_year AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file='{$this->_gedcom['id']}' AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_year>0 AND death.d_year>0 AND birth.d_type IS NULL AND death.d_type IS NULL AND i_gedcom LIKE '%1 SEX M%' ORDER BY age DESC", 10);
+		$top10 = array();
+		foreach($rows as $row)
+		{
+			$top10[] = "\t<li><a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."</a> [{$row['age']} {$pgv_lang['years']}]</li>";
+		}
+		$top10 = join("\n", $top10);
+		if($TEXT_DIRECTION == 'rtl'){$top10 = str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);}
+		return "<ul>\n{$top10}</ul>\n";
+	}
+
+	function averageLifespanMale()
+	{
+		global $TBLPREFIX;
+		$rows = $this->_runSQL("SELECT AVG(death.d_year-birth.d_year) AS age FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file='{$this->_gedcom['id']}' AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_year>0 AND death.d_year>0 AND birth.d_type IS NULL AND death.d_type IS NULL AND i_gedcom LIKE '%1 SEX M%'", 1);$row = $rows[0];
+		return sprintf('%d', $row['age']);
+	}
+
+	// Male Only
+
+	function longestLifeFemale()
+	{
+		global $TBLPREFIX, $pgv_lang;
+		$rows = $this->_runSQL("SELECT death.d_year-birth.d_year AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file='{$this->_gedcom['id']}' AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_year>0 AND death.d_year>0 AND birth.d_type IS NULL AND death.d_type IS NULL AND i_gedcom LIKE '%1 SEX F%' ORDER BY age DESC", 1);$row = $rows[0];
+		if(displayDetailsById($row['d_gid']))
+		{
+			ob_start();
+			print_list_person($row['d_gid'], array(get_person_name($row['d_gid']), $this->_gedcom['gedcom']), false, '', false);
+			$indi = ob_get_contents();
+			ob_end_clean();
+		}
+		else
+		{
+			$indi = $pgv_lang['privacy_error'];
+		}
+		return $indi;
+	}
+
+	function longestLifeFemaleAge()
+	{
+		global $TBLPREFIX;
+		$rows = $this->_runSQL("SELECT death.d_year-birth.d_year AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file='{$this->_gedcom['id']}' AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_year>0 AND death.d_year>0 AND birth.d_type IS NULL AND death.d_type IS NULL AND i_gedcom LIKE '%1 SEX F%' ORDER BY age DESC", 1);$row = $rows[0];
+		return $row['age'];
+	}
+
+	function longestLifeFemaleName()
+	{
+		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir;
+		$rows = $this->_runSQL("SELECT death.d_year-birth.d_year AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file='{$this->_gedcom['id']}' AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_year>0 AND death.d_year>0 AND birth.d_type IS NULL AND death.d_type IS NULL AND i_gedcom LIKE '%1 SEX F%' ORDER BY age DESC", 1);$row = $rows[0];
+		$id = '';
+		if($SHOW_ID_NUMBERS)
+		{
+			if($listDir == 'rtl')
+			{
+				$id = "&nbsp;&nbsp;&rlm;({$row['d_gid']})&rlm;";
+			}
+			else
+			{
+				$id = "&nbsp;&nbsp;({$row['d_gid']})";
+			}
+		}
+		return "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."{$id}</a>";
+	}
+
+	function topTenOldestFemale()
+	{
+		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
+		$rows = $this->_runSQL("SELECT death.d_year-birth.d_year AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file='{$this->_gedcom['id']}' AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_year>0 AND death.d_year>0 AND birth.d_type IS NULL AND death.d_type IS NULL AND i_gedcom LIKE '%1 SEX F%' ORDER BY age DESC", 10);
+		$top10 = array();
+		foreach($rows as $row)
+		{
+			$top10[] = "<a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."</a> [{$row['age']} {$pgv_lang['years']}]";
+		}
+		$top10 = join("; ", $top10);
+		if($TEXT_DIRECTION == 'rtl'){$top10 = str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);}
+		return $top10;
+	}
+
+	function topTenOldestFemaleList()
+	{
+		global $TBLPREFIX, $TEXT_DIRECTION, $pgv_lang;
+		$rows = $this->_runSQL("SELECT death.d_year-birth.d_year AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file='{$this->_gedcom['id']}' AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_year>0 AND death.d_year>0 AND birth.d_type IS NULL AND death.d_type IS NULL AND i_gedcom LIKE '%1 SEX F%' ORDER BY age DESC", 10);
+		$top10 = array();
+		foreach($rows as $row)
+		{
+			$top10[] = "\t<li><a href=\"individual.php?pid={$row['d_gid']}&amp;ged={$this->_gedcom['gedcom']}\">".get_person_name($row['d_gid'])."</a> [{$row['age']} {$pgv_lang['years']}]</li>";
+		}
+		$top10 = join("\n", $top10);
+		if($TEXT_DIRECTION == 'rtl'){$top10 = str_replace(array("[", "]", "(", ")", "+"), array("&rlm;[", "&rlm;]", "&rlm;(", "&rlm;)", "&rlm;+"), $top10);}
+		return "<ul>\n{$top10}</ul>\n";
+	}
+
+	function averageLifespanFemale()
+	{
+		global $TBLPREFIX;
+		$rows = $this->_runSQL("SELECT AVG(death.d_year-birth.d_year) AS age FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth, {$TBLPREFIX}individuals AS indi WHERE indi.i_id=birth.d_gid AND birth.d_gid=death.d_gid AND death.d_file='{$this->_gedcom['id']}' AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_year>0 AND death.d_year>0 AND birth.d_type IS NULL AND death.d_type IS NULL AND i_gedcom LIKE '%1 SEX F%'", 1);$row = $rows[0];
+		return sprintf('%d', $row['age']);
+	}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Events                                                                    //
