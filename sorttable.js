@@ -52,7 +52,7 @@ function ts_makeSortable(table) {
 		cell.innerHTML = '<a href="#" class="sortheader" '+
 		'onMousedown="this.style.cursor=\'wait\';" ' + // PGV: set cursor
 		'onclick="ts_resortTable(this, '+i+');return false;">' +
-		txt+'<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a>';
+		txt+'<span class="sortarrow">&nbsp;&nbsp;</span></a>';
 	}
 }
 
@@ -88,6 +88,13 @@ function ts_resortTable(lnk,clid) {
 	var column = clid || td.cellIndex;
 	var table = getParent(td,'TABLE');
 
+	// PGV : confirm action for big table
+	if (table.rows.length > 300
+	&& !confirm("Sorting this big table may take a long time\r\nContinue ?")) {
+		lnk.style.cursor='pointer';
+		return;
+	}
+	lnk.style.cursor='wait';
 	// Work out a type for the column
 	if (table.rows.length <= 1) return;
 	var itm = ts_getInnerText(table.rows[1].cells[column]);
@@ -107,11 +114,11 @@ function ts_resortTable(lnk,clid) {
 	newRows.sort(sortfn);
 
 	if (span.getAttribute("sortdir") == 'down') {
-		ARROW = '&nbsp;&nbsp;&uarr;';
+		ARROW = '&nbsp;&uarr;';
 		newRows.reverse();
 		span.setAttribute('sortdir','up');
 	} else {
-		ARROW = '&nbsp;&nbsp;&darr;';
+		ARROW = '&nbsp;&darr;';
 		span.setAttribute('sortdir','down');
 	}
 
@@ -126,7 +133,7 @@ function ts_resortTable(lnk,clid) {
 	for (var ci=0;ci<allspans.length;ci++) {
 		if (allspans[ci].className == 'sortarrow') {
 			if (getParent(allspans[ci],"table") == getParent(lnk,"table")) { // in the same table as us?
-				allspans[ci].innerHTML = '&nbsp;&nbsp;&nbsp;';
+				allspans[ci].innerHTML = '&nbsp;&nbsp;';
 				if (allspans[ci]!=span) allspans[ci].setAttribute('sortdir','up'); // PGV: reset sortdir
 			}
 		}
@@ -178,7 +185,13 @@ function ts_sort_numeric(a,b) {
 	if (isNaN(aa)) aa = 0;
 	bb = parseFloat(ts_getInnerText(b.cells[SORT_COLUMN_INDEX]));
 	if (isNaN(bb)) bb = 0;
-	return aa-bb;
+	//return aa-bb;
+	if (aa<bb) return -1;
+	if (aa>bb) return 1;
+	// PGV: when aa==bb keep previous order (=row index)
+	if (a.rowIndex<b.rowIndex) return -1
+	if (a.rowIndex>b.rowIndex) return 1
+	return 0;
 }
 
 function ts_sort_caseinsensitive(a,b) {
@@ -195,10 +208,9 @@ function ts_sort_caseinsensitive(a,b) {
 	aa = strclean(aa);
 	bb = strclean(bb);
 
+	// PGV: when aa==bb keep previous order (=row index)
 	if (aa<bb) return -1;
 	if (aa>bb) return 1;
-
-	// PGV: when aa==bb keep previous order (=row index)
 	if (a.rowIndex<b.rowIndex) return -1
 	if (a.rowIndex>b.rowIndex) return 1
 	return 0;
@@ -235,10 +247,10 @@ function addEvent(elm, evType, fn, useCapture)
 //
 function table_filter(id, keyword, filter) {
 	var table = document.getElementById(id);
-	var firstRow = table.rows[0];
 	// get column number
+	var firstRow = table.rows[0];
 	for (var c=0;c<firstRow.cells.length;c++) {
-		if (firstRow.cells[c].innerHTML.indexOf(keyword)!=-1) {
+		if (ts_getInnerText(firstRow.cells[c]).indexOf(keyword)!=-1) {
 			COLUMN=c;
 			break;
 		}
@@ -246,9 +258,7 @@ function table_filter(id, keyword, filter) {
 	// apply filter
 	for (var r=1;r<table.rows.length;r++) {
 		row = table.rows[r];
-		txt = row.cells[COLUMN].innerHTML;
-//		if (txt.indexOf(filter)==-1) disp="none";
-		if (ts_getInnerText(txt).indexOf(filter)==-1) disp="none";
+		if (ts_getInnerText(row.cells[COLUMN]).indexOf(filter)==-1) disp="none";
 		else {
 			disp="table-row";
 			if (document.all) disp="inline"; // IE
@@ -261,17 +271,52 @@ function table_filter(id, keyword, filter) {
 
 function table_renum(id) {
 	var table = document.getElementById(id);
-	var firstRow = table.rows[0];
-
 	// is first column counter ?
-	if (firstRow.cells[0].innerHTML.indexOf('>#<')==-1) return false;
-
+	var firstRow = table.rows[0];
+	if (ts_getInnerText(firstRow.cells[0]).indexOf('#')==-1) return false;
 	// renumbering
 	count=1;
 	for (var r=1;r<table.rows.length;r++) {
 		row = table.rows[r];
 		if (row.style.display!='none') row.cells[0].innerHTML = count++;
 	}
+}
+
+function table_filter_alive(id) {
+	var table = document.getElementById(id);
+	var year = document.getElementById("aliveyear").value;
+	if (year<1500) return;
+	// get birth and death column number
+	BCOL = -1;
+	DCOL = -1;
+	var firstRow = table.rows[1];
+	for (var c=0;c<firstRow.cells.length;c++) {
+		if (firstRow.cells[c].getElementsByTagName("code").length) {
+			if (BCOL<0) BCOL=c;
+			else {
+				DCOL=c;
+				break;
+			}
+		}
+	}
+	if (BCOL<0) return;
+	if (DCOL<0) return;
+	// apply filter
+	for (var r=1;r<table.rows.length;r++) {
+		row = table.rows[r];
+		bcode = row.cells[BCOL].getElementsByTagName("code");
+		dcode = row.cells[DCOL].getElementsByTagName("code");
+		byear = ts_getInnerText(bcode[0]).substring(0,4);
+		dyear = ts_getInnerText(dcode[0]).substring(0,4);
+		if (byear>0 && dyear>0 && (year<byear || dyear<year)) disp="none";
+		else {
+			disp="table-row";
+			if (document.all) disp="inline"; // IE
+		}
+		row.style.display=disp;
+	}
+	table_renum(id);
+	return false;
 }
 
 //-->
