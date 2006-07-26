@@ -210,8 +210,15 @@ class Source extends GedcomRecord {
 	 * @return string
 	 */
 	function getName() {
-		return $this->name;
-		//return get_gedcom_value("TITL", 1, $this->gedrec, '', false);
+		return $this->getTitle();
+	}
+
+	/**
+	 * get the source sortable name
+	 * @return string
+	 */
+	function getSortableName() {
+		return $this->getTitle();
 	}
 
 	/**

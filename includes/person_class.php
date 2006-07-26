@@ -311,7 +311,7 @@ class Person extends GedcomRecord {
 	 * @return string
 	 */
 	function getBirthPlace() {
-		return get_gedcom_value("PLAC", 2, $this->getBirthRecord());
+		return get_gedcom_value("PLAC", 2, $this->getBirthRecord(), '', false);
 	}
 
 	/**
@@ -367,7 +367,7 @@ class Person extends GedcomRecord {
 	 * @return string
 	 */
 	function getDeathPlace() {
-		return get_gedcom_value("PLAC", 2, $this->getDeathRecord());
+		return get_gedcom_value("PLAC", 2, $this->getDeathRecord(), '', false);
 	}
 
 	/**
@@ -376,10 +376,6 @@ class Person extends GedcomRecord {
 	 */
 	function getDeathYear() {
 		return substr($this->getSortableDeathDate(),0,4);
-		/**$deathyear = $this->getDeathDate();
-		$ddate = parse_date($deathyear);
-		$dyear = $ddate[0]['year'];
-		return $dyear;**/
 	}
 
 	/**

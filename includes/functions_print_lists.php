@@ -269,7 +269,6 @@ function print_list_repository($key, $value, $useli=true) {
  */
 function print_indi_table($datalist) {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
-	global $tindilist;
 	if (count($datalist)<1) return;
 	$name_subtags = array("", "_HEB", "ROMN", "_AKA");
 	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
@@ -283,22 +282,30 @@ function print_indi_table($datalist) {
 
 	//-- filter buttons
 	$person = new Person("");
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'SEX', 'M')\">";
+	echo "<button type=\"button\" alt=\"".$pgv_lang["male"]."\" title=\"".$pgv_lang["male"]
+	."\" onclick=\"return table_filter('".$table_id."', 'SEX', 'M')\">";
 	$person->sex = "M"; echo $person->getSexImage()."&nbsp;</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'SEX', 'F')\">";
+	echo "<button type=\"button\" alt=\"".$pgv_lang["female"]."\" title=\"".$pgv_lang["female"]
+	."\" onclick=\"return table_filter('".$table_id."', 'SEX', 'F')\">";
 	$person->sex = "F"; echo $person->getSexImage()."&nbsp;</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'SEX', 'U')\">";
+	echo "<button type=\"button\" alt=\"".$pgv_lang["unknown"]."\" title=\"".$pgv_lang["unknown"]
+	."\" onclick=\"return table_filter('".$table_id."', 'SEX', 'U')\">";
 	$person->sex = "U"; echo $person->getSexImage()."&nbsp;</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'N')\">";
-	echo $pgv_lang["alive"]."</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'Y')\">";
-	echo $pgv_lang["dead"]."</button> ";
 	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'TREE', 'R')\">";
 	echo $pgv_lang["roots"]."</button> ";
 	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'TREE', 'L')\">";
 	echo $pgv_lang["leaves"]."</button> ";
 	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', '', '')\">";
 	echo "<b>".$pgv_lang["reset"]."</b></button> ";
+	echo "<br />";
+	echo $pgv_lang["year"];
+	echo " <input type=\"text\" size=\"3\" id=\"aliveyear\" value=\"".date('Y')."\" /> ";
+	echo "<button type=\"button\" onclick=\"return table_filter_alive('".$table_id."')\">";
+	echo $pgv_lang["alive_in_year"]."</button> ";
+	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'N')\">";
+	echo $pgv_lang["alive"]."</button> ";
+	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'Y')\">";
+	echo $pgv_lang["dead"]."</button> ";
 	echo "<br />";
 	$y100 = get_changed_date(date('Y')-100);
 	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'BIRT', 'YES')\">";
@@ -342,11 +349,9 @@ function print_indi_table($datalist) {
 			if (isset($value[4])) $gid = $value[4]; // from indilist ALL
 
 			if (isset($value["gedcom"])) $person = new Person($value["gedcom"]); // from source.php
-			else if (isset($tindilist[$gid])) $person = new Person($tindilist[$gid]["gedcom"]);
 			else $person = Person::getInstance($gid);
 		}
 		//if (!$person->canDisplayName()) continue;
-		//print_r ($value["name"]);
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
 		if ($SHOW_ID_NUMBERS) {
@@ -356,11 +361,10 @@ function print_indi_table($datalist) {
 
 		if ($person->isDead()) echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		else echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap alive\">";
-		if (isset($value["name"])) $name = $value["name"];
+		if (isset($value["name"]) and $person->canDisplayName()) $name = $value["name"];
 		else $name = $person->getSortableName();
-		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\" dir=$TEXT_DIRECTION><b>".PrintReady($name)."</b></a>";
+		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\" dir=\"".$TEXT_DIRECTION."\"><b>".PrintReady($name)."</b></a>";
 		echo $person->getSexImage();
-		//$addname = $person->getSortableAddName();
 		foreach ($name_subtags as $key=>$subtag) {
 			$addname = $person->getSortableName($subtag);
 			if (!empty($addname) and $addname!=$name) echo "<br /><a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
@@ -403,16 +407,16 @@ function print_indi_table($datalist) {
 			echo "&nbsp;</td>";
 		}
 
-		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\" style=\"display:none\">";
+		echo "<td style=\"display:none\">";
 		echo $person->getSex();
 		echo "</td>";
 
-		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\" style=\"display:none\">";
+		echo "<td style=\"display:none\">";
 		if (!$person->disp or $person->getBirthYear()>=date('Y')-100) echo "Y100";
 		else echo "YES";
 		echo "</td>";
 
-		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\" style=\"display:none\">";
+		echo "<td style=\"display:none\">";
 		if ($person->isDead()) {
 			if ($person->getDeathYear()>=date('Y')-100) echo "Y100";
 			else echo "YES";
@@ -420,7 +424,7 @@ function print_indi_table($datalist) {
 		else echo "N";
 		echo "</td>";
 
-		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\" style=\"display:none\">";
+		echo "<td style=\"display:none\">";
 		if (!$person->getChildFamilyIds()) echo "R"; // roots
 		else if (!$person->isDead() and $person->getNumberOfChildren()<1) echo "L"; // leaves
 		echo "</td>";
@@ -501,7 +505,6 @@ function print_fam_table($datalist) {
 		if (isset($value["gid"])) $gid = $value["gid"];
 
 		if (isset($value["gedcom"])) $family = new Family($value["gedcom"]);
-		else if (isset($tfamlist[$gid])) $family = new Family($tfamlist[$gid]["gedcom"]);
 		else $family = Family::getInstance($gid);
 
 		$husb = $family->getHusband();
@@ -521,10 +524,8 @@ function print_fam_table($datalist) {
 		if ($husb->isDead()) echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		else echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap alive\">";
 		$name = $husb->getSortableName();
-		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\" dir=$TEXT_DIRECTION><b>".PrintReady($name)."</b></a>";
+		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\" dir=\"".$TEXT_DIRECTION."\"><b>".PrintReady($name)."</b></a>";
 		echo $husb->getSexImage();
-		//$addname = $husb->getSortableAddName();
-		//if (!empty($addname)) echo "<br /><a href=\"".$family->getLinkUrl()."\" class=\"list_item\"><b>".$addname."</b></a>";
 		foreach ($name_subtags as $key=>$subtag) {
 			$addname = $husb->getSortableName($subtag);
 			if (!empty($addname) and $addname!=$name) echo "<br /><a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
@@ -534,10 +535,8 @@ function print_fam_table($datalist) {
 		if ($wife->isDead()) echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		else echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap alive\">";
 		$name = $wife->getSortableName();
-		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\" dir=$TEXT_DIRECTION><b>".PrintReady($name)."</b></a>";
+		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\" dir=\"".$TEXT_DIRECTION."\"><b>".PrintReady($name)."</b></a>";
 		echo $wife->getSexImage();
-		//$addname = $wife->getSortableAddName();
-		//if (!empty($addname)) echo "<br /><a href=\"".$family->getLinkUrl()."\" class=\"list_item\"><b>".$addname."</b></a>";
 		foreach ($name_subtags as $key=>$subtag) {
 			$addname = $wife->getSortableName($subtag);
 			if (!empty($addname) and $addname!=$name) echo "<br /><a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
@@ -567,17 +566,14 @@ function print_fam_table($datalist) {
 			echo "&nbsp;</td>";
 		}
 
-		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\" style=\"display:none\">";
+		echo "<td style=\"display:none\">";
 		if (!$family->disp or $family->getMarriageRecord()=="") echo "?";
 		else if ($family->getMarriageYear()>=date('Y')-100) echo "Y100";
-		//else if (substr($family->getSortableMarriageDate(),0,4)>=date('Y')-100) echo "Y100";
 		else echo "YES";
-//		if (!$family->disp or $family->getMarriageYear()>=date('Y')-100) echo "Y100";
-//		else echo "YES";
 		if ($family->isDivorced()) echo " DIV";
 		echo "</td>";
 
-		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\" style=\"display:none\">";
+		echo "<td style=\"display:none\">";
 		if ($husb->isDead() and $wife->isDead()) echo "Y";
 		if ($husb->isDead() and !$wife->isDead()) {
 			if ($wife->getSex()=="F") echo "H";
@@ -590,7 +586,7 @@ function print_fam_table($datalist) {
 		if (!$husb->isDead() and !$wife->isDead()) echo "N";
 		echo "</td>";
 
-		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\" style=\"display:none\">";
+		echo "<td style=\"display:none\">";
 		if (!$husb->getChildFamilyIds() and !$wife->getChildFamilyIds()) echo "R"; // roots
 		else if (!$husb->isDead() and !$wife->isDead() and $family->getNumberOfChildren()<1) echo "L"; // leaves
 		echo "</td>";
@@ -724,6 +720,65 @@ function print_repo_table($datalist) {
 			echo "<a href=\"".$repo->getLinkUrl()."\" class=\"list_item\">".$timestamp."</a>";
 			echo "&nbsp;</td>";
 		}
+
+		echo "</tr>\n";
+	}
+	echo "</table>\n";
+}
+
+/**
+ * print a sortable table of recent changes
+ *
+ * @param array $datalist contain individuals that were extracted from the database.
+ */
+function print_changes_table($datalist) {
+	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	if (count($datalist)<1) return;
+?>
+	<script type="text/javascript" src="strings.js"></script>
+	<script type="text/javascript" src="sorttable.js"></script>
+<?php
+	require_once("includes/gedcomrecord.php");
+	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
+
+	//-- table header
+	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
+	echo "<tr>";
+	echo "<th class=\"list_label rela\">#</th>";
+	//if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
+	echo "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
+	echo "<th class=\"list_label\">".$factarray["CHAN"]."</th>";
+	echo "<th class=\"list_label\">".$factarray["_PGVU"]."</th>";
+	echo "</tr>\n";
+
+	//-- table body
+	$n = 1;
+	foreach($datalist as $key => $value) {
+		$gid = $value[0];
+		$record = GedcomRecord::getInstance($gid);
+		//if (!$person->canDisplayName()) continue;
+		echo "<tr>";
+		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
+		/**if ($SHOW_ID_NUMBERS) {
+			echo "<td class=\"list_value_wrap rela\">";
+			echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".$record->xref."</a></td>";
+		}**/
+
+		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
+		$name = $record->getSortableName();
+		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\" dir=\"".$TEXT_DIRECTION."\"><b>".PrintReady($name)."</b></a>";
+		if ($record->type=="INDI") echo $record->getSexImage();
+		echo "</td>";
+
+		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap \">";
+		echo "<code style=\"display:none\">".$record->getSortableLastchangeDate()."</code>"; // store hidden sortable datetime
+		$timestamp = get_changed_date($record->getLastchangeDate())." ".get_gedcom_value("DATE:TIME", 2, $record->getLastchangeRecord());
+		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".$timestamp."</a>";
+		echo "&nbsp;</td>";
+
+		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap \">";
+		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".$record->getLastchangeUser()."</a>";
+		echo "&nbsp;</td>";
 
 		echo "</tr>\n";
 	}
