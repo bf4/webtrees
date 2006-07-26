@@ -42,12 +42,14 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
-+$pgv_lang[widower]										24 Jul 2006				A
-+$pgv_lang[widow]											24 Jul 2006				A
-+$pgv_lang["both_alive"]								24 Jul 2006				A
-+$pgv_lang["both_dead"]									24 Jul 2006				A
-+$pgv_lang[roots]											22 Jul 2006				A
-+$pgv_lang[leaves]										22 Jul 2006				A
++$pgv_lang["htmlplus_block_compat"]                 25 Jul 2006				A		Used in HTML Plus block
++$pgv_lang["htmlplus_block_taglist"]                25 Jul 2006				A		Used in HTML Plus block
++$pgv_lang[widower]									24 Jul 2006				A
++$pgv_lang[widow]									24 Jul 2006				A
++$pgv_lang["both_alive"]							24 Jul 2006				A
++$pgv_lang["both_dead"]								24 Jul 2006				A
++$pgv_lang[roots]									22 Jul 2006				A
++$pgv_lang[leaves]									22 Jul 2006				A
 +$pgv_lang["authenticated_feed"]					11 Jul 2006				A
 +$pgv_lang['progress_bars_info']					7 Jul 2006				A
 +$pgv_lang["upload_replacement"]					7 Jul 2006				A
