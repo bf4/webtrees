@@ -1238,7 +1238,15 @@ else
 										)";
 
 			break;
-
+		case 'pgsql':
+			$sql = "CREATE TABLE " . $db->prefix . "smilies (
+										Id SERIAL ,
+										Smiley_Name VARCHAR( 255 ) NOT NULL ,
+										Smiley_Text CHAR( 15 ) NOT NULL ,
+										Smiley_Image VARCHAR( 255 ) NOT NULL ,
+										PRIMARY KEY ( Id )
+										)";
+			break;
 		default:
 			$sql = "CREATE TABLE " . $db->prefix . "smilies (
 										Id INT( 11 ) NOT NULL AUTO_INCREMENT ,
