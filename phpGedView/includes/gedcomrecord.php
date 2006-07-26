@@ -122,28 +122,34 @@ class GedcomRecord {
 		if ($ct>0) {
 			$type = trim($match[1]);
 			if ($type=="INDI") {
-				$person = new Person($indirec, $simple);
-				if (!empty($fromfile)) $person->setChanged(true);
-				$indilist[$pid]['object'] = &$person;
-				return $person;
+				$record = new Person($indirec, $simple);
+				if (!empty($fromfile)) $record->setChanged(true);
+				$indilist[$pid]['object'] = &$record;
+				return $record;
 			}
 			else if ($type=="FAM") {
-				$person = new Family($indirec, $simple);
-				if (!empty($fromfile)) $person->setChanged(true);
-				$famlist[$pid]['object'] = &$person;
-				return $person;
+				$record = new Family($indirec, $simple);
+				if (!empty($fromfile)) $record->setChanged(true);
+				$famlist[$pid]['object'] = &$record;
+				return $record;
 			}
 			else if ($type=="SOUR") {
-				$person = new Source($indirec, $simple);
-				if (!empty($fromfile)) $person->setChanged(true);
-				$sourcelist[$pid]['object'] = &$person;
-				return $person;
+				$record = new Source($indirec, $simple);
+				if (!empty($fromfile)) $record->setChanged(true);
+				$sourcelist[$pid]['object'] = &$record;
+				return $record;
+			}
+			else if ($type=="REPO") {
+				$record = new Repository($indirec, $simple);
+				if (!empty($fromfile)) $record->setChanged(true);
+				$repo_id_list[$pid]['object'] = &$record;
+				return $record;
 			}
 			else {
-				$person = new GedcomRecord($indirec, $simple);
-				if (!empty($fromfile)) $person->setChanged(true);
-				$otherlist[$pid]['object'] = &$person;
-				return $person;
+				$record = new GedcomRecord($indirec, $simple);
+				if (!empty($fromfile)) $record->setChanged(true);
+				$otherlist[$pid]['object'] = &$record;
+				return $record;
 			}
 		}
 		return null;
@@ -347,5 +353,13 @@ class GedcomRecord {
 		$ptime = get_gedcom_value("DATE:TIME", 2, $this->getLastchangeRecord());
 		$sdate = sprintf("%04d-%02d-%02d %s", $pdate[0]["year"], $pdate[0]["mon"], $pdate[0]["day"], $ptime);
 		return $sdate;
+	}
+
+	/**
+	 * get lastchange PGV user
+	 * @return string the lastchange user
+	 */
+	function getLastchangeUser() {
+		return get_gedcom_value("_PGVU", 2, $this->getLastchangeRecord(), '', false);
 	}
 }

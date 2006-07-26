@@ -87,16 +87,24 @@ class Repository extends GedcomRecord {
 	}
 
 	/**
-	 * get the source name
+	 * get the repository name
 	 * @return string
 	 */
 	function getName() {
-		return get_gedcom_value("NAME", 1, $this->gedrec, '', false);
 		return $this->name;
 	}
 
 	/**
-	 * get the source additional name
+	 * get the repository sortable name
+	 * @return string
+	 */
+	function getSortableName() {
+		//return get_gedcom_value("NAME", 1, $this->gedrec, '', false);
+		return $this->name;
+	}
+
+	/**
+	 * get the repository additional name
 	 * @return string
 	 */
 	function getAddName() {

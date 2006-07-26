@@ -154,6 +154,22 @@ class Family extends GedcomRecord {
 		if ($nchi!="") return $nchi.".";
 		return count($this->children);
 	}
+
+	/**
+	 * get the family sortable name
+	 * @return string
+	 */
+	function getSortableName() {
+		global $pgv_lang;
+		$name = "";
+		if (is_null($this->husb)) $name .= $pgv_lang["unknown"];
+		else $name .= $this->husb->getSortableName();
+		$name .= " + ";
+		if (is_null($this->wife)) $name .= $pgv_lang["unknown"];
+		else $name .= $this->wife->getSortableName();
+		return $name;
+	}
+
 	/**
 	 * Check if privacy options allow this record to be displayed
 	 * @return boolean
