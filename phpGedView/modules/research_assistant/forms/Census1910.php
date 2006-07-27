@@ -419,7 +419,26 @@ class Census1910 extends ra_form {
  		$out .='</tr>
 ';
  		
- 	$out .= '</table>';
+ 		
+ 		$out .='<tr><td class="descriptionbox">Person
+  </td>';		
+ 		
+ 		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+		$pid = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['personid'])) $pid = $citation['ts_array']['rows'][$i]['personid'];
+  			$person = Person::GetInstance($pid);
+  			
+			$out .= '
+	            <td id="peoplecell" class="optionbox">
+	                   <div id="peoplelink'.$i.'">';
+	                   		if (!is_null($person)) $out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+	                   $out .= '</div>
+	                   <input type="hidden" id="personid'.$i.'" name="personid'.$i.'" size="3" value="'.$pid.'" />';
+	                   $out .= print_findindi_link("personid".$i, "peoplelink".$i, true);
+	                   $out .= '<br /></td>';
+	        
+		}
+ 	$out .= '</tr></table>';
         
         $out .= '</td></tr>';
         return $out;
@@ -431,7 +450,7 @@ class Census1910 extends ra_form {
 
     function display_form() {
         $out = $this->header("module.php?mod=research_assistant&form=Census1910&action=func&func=step2&taskid=$_REQUEST[taskid]", "center", "1910 United States Federal Census", true);
-        $out .= $this->sourceCitationForm(5);
+        $out .= $this->sourceCitationForm(5,false);
         //$out .= $this->content();
         $out .= $this->footer();
         return $out;
@@ -440,6 +459,16 @@ class Census1910 extends ra_form {
     function step2() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
 		global $INDI_FACTS_ADD;
+					
+		$personid = "";
+		for($number = 0; $number < $_POST['numOfRows']; $number++)
+		{
+			if (!isset($_POST["personid".$number])) $_POST["personid".$number]="";
+			$personid .= $_POST["personid".$number];
+			$_POST["personid".$number] = trim($_POST["personid".$number], '; \r\n\t');
+		}
+		$_REQUEST['personid'] = $personid;
+		
 		
 		$this->processSourceCitation();
 		
@@ -524,6 +553,7 @@ class Census1910 extends ra_form {
 			if (!isset($_POST["CivilWar".$number])) $_POST["CivilWar".$number]="";
 			if (!isset($_POST["Blind".$number])) $_POST["Blind".$number]="";
 			if (!isset($_POST["Deaf".$number])) $_POST["Deaf".$number]="";
+			if (!isset($_POST["personid".$number])) $_POST["personid".$number]="";
 			
 			$rows[$number] = array(
 			"House"=>$_POST["House".$number],
@@ -556,7 +586,8 @@ class Census1910 extends ra_form {
 			"FarmSchedule"=>$_POST["FarmSchedule".$number],
 			"CivilWar"=>$_POST["CivilWar".$number],
 			"Blind"=>$_POST["Blind".$number],
-			"Deaf"=>$_POST["Deaf".$number]
+			"Deaf"=>$_POST["Deaf".$number],
+			"personid"=>$_POST["personid".$number]
 			);
 			
 			$text .= "\r\n";
@@ -591,6 +622,7 @@ class Census1910 extends ra_form {
 			if (!empty($_POST["CivilWar".$number])) $text .= ", Civil War:".$_POST["CivilWar".$number];
 			if (!empty($_POST["Blind".$number])) $text .= ", ".$_POST["Blind".$number];
 			if (!empty($_POST["Deaf".$number])) $text .= ", ".$_POST["Deaf".$number];
+			
 		}
 
 		$citation = array(
