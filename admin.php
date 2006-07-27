@@ -166,7 +166,7 @@ foreach($users as $indexval => $user) {
      <td class="optionbox"><?php print_help_link("edit_add_unlinked_source_help", "qm"); ?><a href="javascript: <?php print $pgv_lang["add_unlinked_source"]; ?>" onclick="addnewsource(''); return false;"><?php print $pgv_lang["add_unlinked_source"]; ?></a></td>
 	</tr>
    <tr>
-      <td class="optionbox"><?php print_help_link("help_uploadmedia.php", "qm", "manage_media"); ?><a href="media.php"><?php print $pgv_lang["manage_media"];?></a></td>
+      <td class="optionbox">&nbsp;</td>
       <td class="optionbox"><?php if ($d_pgv_changes != "") print $d_pgv_changes; else print "&nbsp;"; ?></td>
    </tr>
    <?php if (userIsAdmin(getUserName())) { ?>

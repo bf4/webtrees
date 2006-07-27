@@ -558,7 +558,16 @@ function print_media_links($factrec, $level,$pid='') {
 			$sql = "SELECT * FROM ".$TBLPREFIX."media where m_media = '".$media_id."' AND m_gedfile = '".$GEDCOMS[$GEDCOM]["id"]."'";
 			$tempsql = dbquery($sql);
 			$res =& $tempsql;
+			if ($res->numRows()>0) {
 			$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
+			}
+			else if (userCanEdit(getUserName())) {
+				$mediarec = find_updated_record($media_id);
+				$row["m_file"] = get_gedcom_value("FILE", 1, $mediarec);
+				$row["m_titl"] = get_gedcom_value("TITL", 1, $mediarec);
+				if (empty($row["m_titl"])) $row["m_titl"] = get_gedcom_value("FILE:TITL", 1, $mediarec);
+				$row["m_gedrec"] = $mediarec;
+			}
 
 			$mainMedia = check_media_depth($row["m_file"], "NOTRUNC");
 			$thumbnail = thumbnail_file($mainMedia);
