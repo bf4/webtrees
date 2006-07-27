@@ -179,6 +179,95 @@ function print_address_structure_map($factrec, $level) {
      if ($resultText!="<table></table>") print str_replace(chr(10), ' ' , $resultText);
 }
 
+function rem_prefix_from_placename($prefix_list, $place, $placelist) {
+    $prefix_split = preg_split ("/;/", $prefix_list);
+    foreach ($prefix_split as $key2 => $prefix) {
+        if ($prefix != "") {
+            if (preg_match('/^'.$prefix.' (.*)/', $place, $matches) != 0) {
+                $placelist[] = $matches[1];
+            }
+        }
+    }
+    return $placelist;
+}
+
+function rem_postfix_from_placename($postfix_list, $place, $placelist) {
+    $postfix_split = preg_split ("/;/", $postfix_list);
+    foreach ($postfix_split as $key3 => $postfix) {
+        if($postfix != "") {
+            if (preg_match('/^(.*) '.$postfix.'$/', $place, $matches) != 0) {
+                $placelist[] = $matches[1];
+            }
+        }
+    }
+    return $placelist;
+}
+
+function rem_prefix_postfix_from_placename($prefix_list, $postfix_list, $place, $placelist) {
+    $prefix_split = preg_split ("/;/", $prefix_list);
+    $postfix_split = preg_split ("/;/", $postfix_list);
+    foreach ($prefix_split as $key2 => $prefix) {
+        if ($prefix != "") {
+            foreach ($postfix_split as $key3 => $postfix) {
+                if ($postfix != "") {
+                    if (preg_match('/^'.$prefix.' (.*) '.$postfix.'$/', $place, $matches) != 0) {
+                        $placelist[] = $matches[1];
+                    }
+                }
+            }
+        }
+    }
+    return $placelist;
+}
+
+function create_possible_place_names ($placename, $level) {
+    global $GM_PREFIX, $GM_POSTFIX, $GM_PRE_POST_MODE;
+
+    $retlist = array();
+
+    switch ($GM_PRE_POST_MODE[$level]) {
+    case 0:     // 0: no pre/postfix
+        $retlist[] = $placename;
+        break;
+    case 1:     // 1 = Normal name, Prefix, Postfix, Both
+        $retlist[] = $placename;
+        $retlist = rem_prefix_from_placename($GM_PREFIX[$level], $placename, $retlist);
+        $retlist = rem_postfix_from_placename($GM_POSTFIX[$level], $placename, $retlist);
+        $retlist = rem_prefix_postfix_from_placename($GM_PREFIX[$level], $GM_POSTFIX[$level], $placename, $retlist);
+        break;
+    case 2:     // 2 = Normal name, Postfix, Prefxi, Both
+        $retlist[] = $placename;
+        $retlist = rem_postfix_from_placename($GM_POSTFIX[$level], $placename, $retlist);
+        $retlist = rem_prefix_from_placename($GM_PREFIX[$level], $placename, $retlist);
+        $retlist = rem_prefix_postfix_from_placename($GM_PREFIX[$level], $GM_POSTFIX[$level], $placename, $retlist);
+        break;
+    case 3:     // 3 = Prefix, Postfix, Both, Normal name
+        $retlist = rem_prefix_from_placename($GM_PREFIX[$level], $placename, $retlist);
+        $retlist = rem_postfix_from_placename($GM_POSTFIX[$level], $placename, $retlist);
+        $retlist = rem_prefix_postfix_from_placename($GM_PREFIX[$level], $GM_POSTFIX[$level], $placename, $retlist);
+        $retlist[] = $placename;
+        break;
+    case 4:     // 4 = Postfix, Prefix, Both, Normal name
+        $retlist = rem_postfix_from_placename($GM_POSTFIX[$level], $placename, $retlist);
+        $retlist = rem_prefix_from_placename($GM_PREFIX[$level], $placename, $retlist);
+        $retlist = rem_prefix_postfix_from_placename($GM_PREFIX[$level], $GM_POSTFIX[$level], $placename, $retlist);
+        $retlist[] = $placename;
+        break;
+    case 5:     // 5 = Prefix, Postfix, Normal name, Both
+        $retlist = rem_prefix_from_placename($GM_PREFIX[$level], $placename, $retlist);
+        $retlist = rem_postfix_from_placename($GM_POSTFIX[$level], $placename, $retlist);
+        $retlist[] = $placename;
+        $retlist = rem_prefix_postfix_from_placename($GM_PREFIX[$level], $GM_POSTFIX[$level], $placename, $retlist);
+        break;
+    case 6:     // 6 = Postfix, Prefix, Normal name, Both
+        $retlist = rem_postfix_from_placename($GM_POSTFIX[$level], $placename, $retlist);
+        $retlist = rem_prefix_from_placename($GM_PREFIX[$level], $placename, $retlist);
+        $retlist[] = $placename;
+        $retlist = rem_prefix_postfix_from_placename($GM_PREFIX[$level], $GM_POSTFIX[$level], $placename, $retlist);
+        break;
+    }
+    return $retlist;  
+}
 
 function get_lati_long_placelocation ($place) {
     global $DBCONN, $TBLPREFIX;
@@ -188,13 +277,17 @@ function get_lati_long_placelocation ($place) {
     for($i=0; $i<count($parent); $i++) {
         $parent[$i] = rtrim(ltrim($parent[$i]));
         if($parent[$i] != "") {
-            $escparent=preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($parent[$i]));
-            $psql = "SELECT pl_id FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$place_id AND pl_place LIKE '".$escparent."' ORDER BY pl_place";
-            $res = dbquery($psql);
-            $row =& $res->fetchRow();
-            $res->free();
-            $place_id = $row[0];
+            $placelist = create_possible_place_names($parent[$i], $i+1);
+            foreach ($placelist as $key => $placename) {
+                $escparent=preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($placename));
+                $psql = "SELECT pl_id FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$place_id AND pl_place LIKE '".$escparent."' ORDER BY pl_place";
+                $res = dbquery($psql);
+                $row =& $res->fetchRow();
+                $res->free();
+                if (!empty($row[0])) break;
+            }
             if (empty($row[0])) break;
+            $place_id = $row[0];
         } else {
             break;
         }
@@ -202,7 +295,7 @@ function get_lati_long_placelocation ($place) {
 
     $retval = array();
     if ($place_id > 0) {
-        $psql = "SELECT pl_lati,pl_long,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation WHERE pl_id=$place_id ORDER BY pl_place";
+        $psql = "SELECT pl_lati,pl_long,pl_zoom,pl_icon,pl_level FROM ".$TBLPREFIX."placelocation WHERE pl_id=$place_id ORDER BY pl_place";
         $res = dbquery($psql);
         $row =& $res->fetchRow();
         $res->free();
@@ -210,6 +303,7 @@ function get_lati_long_placelocation ($place) {
         $retval["long"] = rtrim(ltrim($row[1]));
         $retval["zoom"] = rtrim(ltrim($row[2]));
         $retval["icon"] = rtrim(ltrim($row[3]));
+        $retval["level"] = $row[4];
     }
     return $retval;
 }
@@ -218,7 +312,7 @@ function build_indiv_map($indifacts, $famids) {
     global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOON, $GOOGLEMAP_MAX_ZOON, $GEDCOM;
     global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
     global $GOOGLEMAP_MAX_ZOOM, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_ENABLED, $TBLPREFIX, $DBCONN;
-    global $TEXT_DIRECTION;
+    global $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE;
 
     if ($GOOGLEMAP_ENABLED == "false") {
         print "<table class=\"facts_table\">\n";
@@ -325,6 +419,13 @@ function build_indiv_map($indifacts, $famids) {
                     if (($placelocation == true) && ($useThisItem==true) && ($addrFound==false)) {
                         $ctpl = preg_match("/\d PLAC (.*)/", $placerec, $match1);
                         $latlongval = get_lati_long_placelocation($match1[1]);
+                        if ((count($latlongval) == 0) && ($GM_DEFAULT_TOP_VALUE != "")) {
+                            $latlongval = get_lati_long_placelocation($match1[1].", ".$GM_DEFAULT_TOP_VALUE);
+                            if ((count($latlongval) != 0) && ($latlongval["level"] == 0)) {
+                                $latlongval["lati"] = NULL;
+                                $latlongval["long"] = NULL;
+                            }
+                        }
                         if ((count($latlongval) != 0) && ($latlongval["lati"] != NULL) && ($latlongval["long"] != NULL)) {
                             $i = $i + 1;
                             if($fact == "EVEN") {
@@ -410,9 +511,16 @@ function build_indiv_map($indifacts, $famids) {
                                 }
                             }
                             else {
-                                if (($placelocation == true) && ($useThisItem==true)) {
+                                if ($placelocation == true) {
                                     $ctpl = preg_match("/\d PLAC (.*)/", $placerec, $match1);
                                     $latlongval = get_lati_long_placelocation($match1[1]);
+                                    if ((count($latlongval) == 0) && ($GM_DEFAULT_TOP_VALUE != "")) {
+                                        $latlongval = get_lati_long_placelocation($match1[1].", ".$GM_DEFAULT_TOP_VALUE);
+                                        if ((count($latlongval) != 0) && ($latlongval["level"] == 0)) {
+                                            $latlongval["lati"] = NULL;
+                                            $latlongval["long"] = NULL;
+                                        }
+                                    }
                                     if ((count($latlongval) != 0) && ($latlongval["lati"] != NULL) && ($latlongval["long"] != NULL)) {
                                         if (displayDetailsByID($smatch[$j][1])) {
                                             $i = $i + 1;

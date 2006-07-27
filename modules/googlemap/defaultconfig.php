@@ -43,4 +43,69 @@ $GOOGLEMAP_PRECISION_3 = "3";           // Neighborhood level
 $GOOGLEMAP_PRECISION_4 = "4";           // House level
 $GOOGLEMAP_PRECISION_5 = "9";           // Max prcision level
 
+$GM_MAX_NOF_LEVELS = "4";               // Max nr of levels to use in Googlemap
+$GM_DEFAULT_TOP_VALUE = "";             // Default value, inserted when no location can be found
+
+// Configuration-options per location-level
+$GM_MARKER_COLOR[1] = "Red";            // Marker to be used
+$GM_MARKER_SIZE[1] = "Large";           // "Small" or "Large"
+$GM_PREFIX[1] = "";                     // Text to be placed in front of the name
+$GM_POSTFIX[1] = "";                    // Text to be placed after the name
+$GM_PRE_POST_MODE[1] = "0";             // Prefix/Postfix mode. Possible value are:
+                                        // 0 = no pre/postfix
+                                        // 1 = Normal name, Prefix, Postfix, Both
+                                        // 2 = Normal name, Postfix, Prefxi, Both
+                                        // 3 = Prefix, Postfix, Both, Normal name
+                                        // 4 = Postfix, Prefix, Both, Normal name
+                                        // 5 = Prefix, Postfix, Normal name, Both
+                                        // 6 = Postfix, Prefix, Normal name, Both
+
+$GM_MARKER_COLOR[2] = "Red";            // Marker to be used
+$GM_MARKER_SIZE[2] = "Large";           // "Small" or "Large"
+$GM_PREFIX[2] = "";                     // Text to be placed in front of the name
+$GM_POSTFIX[2] = "";                    // Text to be placed after the name
+$GM_PRE_POST_MODE[2] = "0";             // See above for description
+
+$GM_MARKER_COLOR[3] = "Red";            // Marker to be used
+$GM_MARKER_SIZE[3] = "Large";           // "Small" or "Large"
+$GM_PREFIX[3] = "";                     // Text to be placed in front of the name
+$GM_POSTFIX[3] = "";                    // Text to be placed after the name
+$GM_PRE_POST_MODE[3] = "0";             // See above for description
+
+$GM_MARKER_COLOR[4] = "Red";            // Marker to be used
+$GM_MARKER_SIZE[4] = "Large";           // "Small" or "Large"
+$GM_PREFIX[4] = "";                     // Text to be placed in front of the name
+$GM_POSTFIX[4] = "";                    // Text to be placed after the name
+$GM_PRE_POST_MODE[4] = "0";             // See above for description
+
+$GM_MARKER_COLOR[5] = "Red";            // Marker to be used
+$GM_MARKER_SIZE[5] = "Large";           // "Small" or "Large"
+$GM_PREFIX[5] = "";                     // Text to be placed in front of the name
+$GM_POSTFIX[5] = "";                    // Text to be placed after the name
+$GM_PRE_POST_MODE[5] = "0";             // See above for description
+
+$GM_MARKER_COLOR[6] = "Red";            // Marker to be used
+$GM_MARKER_SIZE[6] = "Large";           // "Small" or "Large"
+$GM_PREFIX[6] = "";                     // Text to be placed in front of the name
+$GM_POSTFIX[6] = "";                    // Text to be placed after the name
+$GM_PRE_POST_MODE[6] = "0";             // See above for description
+
+$GM_MARKER_COLOR[7] = "Red";            // Marker to be used
+$GM_MARKER_SIZE[7] = "Large";           // "Small" or "Large"
+$GM_PREFIX[7] = "";                     // Text to be placed in front of the name
+$GM_POSTFIX[7] = "";                    // Text to be placed after the name
+$GM_PRE_POST_MODE[7] = "0";             // See above for description
+
+$GM_MARKER_COLOR[8] = "Red";            // Marker to be used
+$GM_MARKER_SIZE[8] = "Large";           // "Small" or "Large"
+$GM_PREFIX[8] = "";                     // Text to be placed in front of the name
+$GM_POSTFIX[8] = "";                    // Text to be placed after the name
+$GM_PRE_POST_MODE[8] = "0";             // See above for description
+
+$GM_MARKER_COLOR[9] = "Red";            // Marker to be used
+$GM_MARKER_SIZE[9] = "Large";           // "Small" or "Large"
+$GM_PREFIX[9] = "";                     // Text to be placed in front of the name
+$GM_POSTFIX[9] = "";                    // Text to be placed after the name
+$GM_PRE_POST_MODE[9] = "0";             // See above for description
+
 ?>
