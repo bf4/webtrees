@@ -234,7 +234,7 @@ function build_indiv_map($indifacts, $famids) {
         print "\n\t</table>\n<br />";
         return;
     }
-    
+
     $mapdata             = array();
     $mapdata["show"]     = array();         // Show this location on the map
     $mapdata["fact"]     = array();
@@ -306,8 +306,8 @@ function build_indiv_map($indifacts, $famids) {
                     $mapdata["placerec"][$i] = $placerec;
                     $match1[1] = ltrim(rtrim($match1[1]));
                     $match2[1] = ltrim(rtrim($match2[1]));
-                    $mapdata["lati"][$i] = str_replace(array('N', 'S', ','), array('', '-', '.') , $match1[1]); 
-                    $mapdata["lng"][$i] = str_replace(array('E', 'W', ','), array('', '-', '.') , $match2[1]); 
+                    $mapdata["lati"][$i] = str_replace(array('N', 'S', ','), array('', '-', '.') , $match1[1]);
+                    $mapdata["lng"][$i] = str_replace(array('E', 'W', ','), array('', '-', '.') , $match2[1]);
                     $ctd = preg_match("/2 DATE (.+)/", $value[1], $match);
                     if ($ctd>0) {
                         $mapdata["date"][$i] = $match[1];
@@ -329,8 +329,8 @@ function build_indiv_map($indifacts, $famids) {
                             $i = $i + 1;
                             if($fact == "EVEN") {
                                 $eventrec = get_sub_record(1, "2 TYPE", $value[1]);
-                                $ctpe = preg_match("/\d TYPE (.*)/", $eventrec, $match1);
-                                $mapdata["fact"][$i] = $match1[1];
+                                $ctpe = preg_match("/\d TYPE (.*)/", $eventrec, $match3);
+                                $mapdata["fact"][$i] = $match3[1];
                             } else {
                                 $mapdata["fact"][$i] = $factarray[$fact];
                             }
@@ -340,8 +340,8 @@ function build_indiv_map($indifacts, $famids) {
                             $marker["icon"][$i] = $latlongval["icon"];
                             $mapdata["placerec"][$i] = $placerec;
                             if ($zoomLevel > $latlongval["zoom"]) $zoomLevel = $latlongval["zoom"];
-                            $mapdata["lati"][$i] = str_replace(array('N', 'S', ','), array('', '-', '.') , $latlongval["lati"]); 
-                            $mapdata["lng"][$i] = str_replace(array('E', 'W', ','), array('', '-', '.') , $latlongval["long"]); 
+                            $mapdata["lati"][$i] = str_replace(array('N', 'S', ','), array('', '-', '.') , $latlongval["lati"]);
+                            $mapdata["lng"][$i] = str_replace(array('E', 'W', ','), array('', '-', '.') , $latlongval["long"]);
                             $ctd = preg_match("/2 DATE (.+)/", $value[1], $match);
                             if ($ctd>0) {
                                 $mapdata["date"][$i] = $match[1];
@@ -399,8 +399,8 @@ function build_indiv_map($indifacts, $famids) {
                                     $mapdata["placerec"][$i] = $placerec;
                                     $match1[1] = ltrim(rtrim($match1[1]));
                                     $match2[1] = ltrim(rtrim($match2[1]));
-                                    $mapdata["lati"][$i]     = str_replace(array('N', 'S', ','), array('', '-', '.'), $match1[1]); 
-                                    $mapdata["lng"][$i]      = str_replace(array('E', 'W', ','), array('', '-', '.'), $match2[1]); 
+                                    $mapdata["lati"][$i]     = str_replace(array('N', 'S', ','), array('', '-', '.'), $match1[1]);
+                                    $mapdata["lng"][$i]      = str_replace(array('E', 'W', ','), array('', '-', '.'), $match2[1]);
                                     if ($ctd > 0) {
                                         $mapdata["date"][$i] = $matchd[1];
                                     } else {
@@ -432,8 +432,8 @@ function build_indiv_map($indifacts, $famids) {
                                             $marker["icon"][$i] = $latlongval["icon"];
                                             $mapdata["placerec"][$i] = $placerec;
                                             if ($zoomLevel > $latlongval["zoom"]) $zoomLevel = $latlongval["zoom"];
-                                            $mapdata["lati"][$i]     = str_replace(array('N', 'S', ','), array('', '-', '.'), $latlongval["lati"]); 
-                                            $mapdata["lng"][$i]      = str_replace(array('E', 'W', ','), array('', '-', '.'), $latlongval["long"]); 
+                                            $mapdata["lati"][$i]     = str_replace(array('N', 'S', ','), array('', '-', '.'), $latlongval["lati"]);
+                                            $mapdata["lng"][$i]      = str_replace(array('E', 'W', ','), array('', '-', '.'), $latlongval["long"]);
                                             if ($ctd > 0) {
                                                 $mapdata["date"][$i] = $matchd[1];
                                             } else {
@@ -637,7 +637,7 @@ function build_indiv_map($indifacts, $famids) {
                                     print "<a href=\\\"individual.php?pid=".$mapdata["name"][$k]."&amp;ged=$GEDCOM\\\">";
                                     if (displayDetailsById($mapdata["name"][$k])||showLivingNameById($mapdata["name"][$k]))
                                         print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($mapdata["name"][$k])));
-                                    else 
+                                    else
                                         print $pgv_lang["private"];
                                     print "</a><br>";
                                 }
