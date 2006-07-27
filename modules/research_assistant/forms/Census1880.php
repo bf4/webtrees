@@ -48,9 +48,9 @@ class Census1880 extends ra_form {
 	    	if ($_REQUEST['numOfRows']<1) $_REQUEST['numOfRows']=1;
 	    	$out .= '<table align="center"><tr><td class="descriptionbox">'.$pgv_lang["rows"].'</td><td class="optionbox"><select name="numOfRows">';
 	    	for($i = 1; $i <= 20; $i++){
-	    		$out .= '<option value="'.$i;
+	    		$out .= '<option value="'.$i.'"';
 	    		if ($_REQUEST['numOfRows']==$i) $out .= " selected=\"selected\"";
-	    		$out .= '">'.$i;
+	    		$out .= '>'.$i;
 	    	}
 	    	$out .=	'</select></td></tr><tr><td colspan="2" class="topbottombar"><input type="submit" value="'.$pgv_lang["okay"].'"/></td></tr></table>';
 	    	$out .= '</form>';
@@ -62,7 +62,13 @@ class Census1880 extends ra_form {
         parse_str(html_entity_decode($action["query"]), $params);
         
         // Setup for our form to go through the module system
-        $out .=  '<form action="' . $action["path"] . '" method="post">';
+         $out .= '<script language="JavaScript" type="text/javascript">
+<!--
+function ValidateForm(myForm){ if(myForm.sourceid.value == ""){ alert("You must enter a source");
+return false;}return true;}
+//-->
+</script>';
+        $out .=  '<form action="' . $action["path"] . '" method="post" onsubmit="return ValidateForm(this)">';
 		$out .= '<input type="hidden" name="numOfRows" value="'.$_REQUEST['numOfRows'].'" />';
         foreach ($params as $key => $value) {
             $out .= '<input type="hidden" name="' . $key . '" value="' . $value . '">';
@@ -352,9 +358,29 @@ class Census1880 extends ra_form {
 	  		if (isset($citation['ts_array']['rows'][$i]['MothersPlaceOfBirth'])) $value = $citation['ts_array']['rows'][$i]['MothersPlaceOfBirth'];
   		$out .= '<td class="optionbox"><INPUT TYPE="TEXT" SIZE="22" name = "MothersPlaceOfBirth'.$i.'" value="'.htmlentities($value).'" /></td>';
 		}
- 		$out .='</tr></table>';
+ 		$out .='</tr>';
+        $out .= 
+'<tr>
+  <td class="descriptionbox">Person
+  </td>';
+	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+		$pid = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['personid'])) $pid = $citation['ts_array']['rows'][$i]['personid'];
+  			$person = Person::GetInstance($pid);
+  			
+			$out .= '
+	            <td id="peoplecell" class="optionbox">
+	                   <div id="peoplelink'.$i.'">';
+	                   		if (!is_null($person)) $out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+	                   $out .= '</div>
+	                   <input type="hidden" id="personid'.$i.'" name="personid'.$i.'" size="3" value="'.$pid.'" />';
+	                   $out .= print_findindi_link("personid".$i, "peoplelink".$i, true);
+	                   $out .= '<br /></td>';
         
+		}
+ 		$out .='</tr></tr></table>';
         $out .= '</td></tr>';
+        
         return $out;
     }
 
@@ -364,7 +390,7 @@ class Census1880 extends ra_form {
 
     function display_form() {
         $out = $this->header("module.php?mod=research_assistant&form=Census1880&action=func&func=step2&taskid=$_REQUEST[taskid]", "center", "1880 United States Federal Census", true);
-        $out .= $this->sourceCitationForm(5);
+        $out .= $this->sourceCitationForm(5, false);
         //$out .= $this->content();
         $out .= $this->footer();
         return $out;
@@ -374,11 +400,50 @@ class Census1880 extends ra_form {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
 		global $INDI_FACTS_ADD;
 		
-		$this->processSourceCitation();
+		$personid = "";
+		for($number = 0; $number < $_POST['numOfRows']; $number++)
+		{
+			if (!isset($_POST["personid".$number])) $_POST["personid".$number]="";
+			$personid .= $_POST["personid".$number];
+			$_POST["personid".$number] = trim($_POST["personid".$number], '; \r\n\t');
+		}
+		$_REQUEST['personid'] = $personid;
+		$return = $this->processSourceCitation();
 		
-		$out = $this->header("module.php?mod=research_assistant&form=Census1880&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1880 United States Federal Census");
-		$out .= $this->editFactsForm();
+		if(empty($return))
+		{
+		$out = $this->header("module.php?mod=research_assistant&form=Census1880&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1880 United States Federal Census2");
+		$out .= $this->editFactsForm(false);
 		$out .= $this->footer();
+		return $out;
+	}
+		else
+		{
+			
+		}
+	}
+	
+	function editFactsForm($printButton = true)
+	{
+		$citation = $this->getSourceCitationData();
+		$out = parent::editFactsForm(false);
+		$rows = $citation['ts_array']['rows'];
+		$inferFacts = $this->inferFacts($rows);
+		if(!empty($inferFacts))
+		{
+		$out .= '<tr><td colspan="2" id="inferData"><table class="list_table"><tbody><tr><td colspan="4" class="topbottombar">Inferred Facts</td></tr>
+<tr><td class="descriptionbox">Fact</td><td class="descriptionbox">Person</td><td class="descriptionbox">Reason</td><td class="descriptionbox">Add</td></tr>';
+		foreach($inferFacts as $key=>$value){
+		$out .='<tr>';
+		$out .="<td>".$value["Fact"]."</td>";
+		$out .="<td>".$value["Person"]."</td>";
+		$out .="<td>".$value["Reason"]."</td>";
+		$out .="<td>".'<input type="Checkbox"></td>';
+		$out .="</tr>";
+		}
+		
+		}
+		
 		return $out;
 	}
 	
@@ -397,6 +462,49 @@ class Census1880 extends ra_form {
 		return $out;
 	}
 
+	/**
+	 * This is a function that will attempt to infer facts from the census form.
+	 * If any facts can be inferred then it will attempt to validate them against the database.
+	 * If a fact differs from that in the database, or there is no fact present in the databse,
+	 * this function will suggest the facts to the user. 
+	 */
+	function inferFacts($rows){
+		
+		$inferredFacts = array();
+		$people = array();
+		
+		for($number = 0; $number < $_POST['numOfRows']; $number++)
+		{
+			$censusAge = $rows[$number]["Age"];
+			$censusMarried = $rows[$number]["Married"];
+			$birthDate = 1880 - $censusAge;
+			
+			$person = Person::getInstance($rows[$number]["personid"]);
+			if(!empty($person))
+			{
+			$bdate = $person->getBirthYear();
+			$placeOfBirth = $person->getBirthPlace();
+			}
+			print $placeOfBirth;
+			print "<br />";
+			
+			if(!empty($bdate))
+			{
+				 $bDiff = $birthDate - $bdate;
+				 if($bDiff >1 || $bDiff < 1)
+				 {
+				 	$inferredFacts["Person"] = $person->getName();
+				 	$inferredFacts["Reason"] = "A birth date difference was detected";
+				 	$inferredFacts["Fact"] = $birthDate;
+				 }
+			}
+			$people[$person->getXref()] = $inferredFacts;
+		}
+		return $people;
+		
+		
+	}
+	
 	/**
 	 * Override method from ra_form
 	 */
@@ -451,6 +559,7 @@ class Census1880 extends ra_form {
 			if (!isset($_POST["PlaceOfBirth".$number])) $_POST["PlaceOfBirth".$number]="";
 			if (!isset($_POST["FathersPlaceOfBirth".$number])) $_POST["FathersPlaceOfBirth".$number]="";
 			if (!isset($_POST["MothersPlaceOfBirth".$number])) $_POST["MothersPlaceOfBirth".$number]="";
+			if (!isset($_POST["personid".$number])) $_POST["personid".$number]="";
 			
 			$rows[$number] = array(
 			'House'=>$_POST["House".$number],
@@ -477,7 +586,8 @@ class Census1880 extends ra_form {
 			"Write"=>$_POST["Write".$number],
 			"PlaceOfBirth"=>$_POST["PlaceOfBirth".$number],
 			"FathersPlaceOfBirth"=>$_POST["FathersPlaceOfBirth".$number],
-			"MothersPlaceOfBirth"=>$_POST["MothersPlaceOfBirth".$number]
+			"MothersPlaceOfBirth"=>$_POST["MothersPlaceOfBirth".$number],
+			"personid"=>$_POST["personid".$number]
 			);
 			
 			$text .= "\r\n";
@@ -506,6 +616,7 @@ class Census1880 extends ra_form {
 			if (!empty($_POST["PlaceOfBirth".$number])) $text .= ", Place of birth: ".$_POST["PlaceOfBirth".$number];
 			if (!empty($_POST["FathersPlaceOfBirth".$number])) $text .= ", Father's Place of birth: ".$_POST["FathersPlaceOfBirth".$number];
 			if (!empty($_POST["MothersPlaceOfBirth".$number])) $text .= ", Mother's Place of birth: ".$_POST["MothersPlaceOfBirth".$number];
+			
 		}
 
 		$citation = array(
@@ -519,7 +630,6 @@ class Census1880 extends ra_form {
 			'county'=>$_POST['county'],
 			'state'=>$_POST['state'],
 			'rows'=>$rows));
-		
 		return $citation;
     }
     

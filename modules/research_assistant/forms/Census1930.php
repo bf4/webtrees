@@ -391,10 +391,28 @@ class Census1930 extends ra_form {
 	  		if (isset($citation['ts_array']['rows'][$i]['FarmSchedule'])) $value = $citation['ts_array']['rows'][$i]['FarmSchedule'];
   		$out .= '<td class="optionbox"><INPUT TYPE="TEXT" SIZE="6" name = "FarmSchedule'.$i.'" value="'.htmlentities($value).'" /></td>';
 		}
- 		$out .='</tr>
-';
+ 		$out .='</tr>';
+ 			
+ 		$out .='<tr><td class="descriptionbox">Person
+  </td>';		
  		
- 	$out .= '</table>';
+ 		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+		$pid = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['personid'])) $pid = $citation['ts_array']['rows'][$i]['personid'];
+  			$person = Person::GetInstance($pid);
+  			
+			$out .= '
+	            <td id="peoplecell" class="optionbox">
+	                   <div id="peoplelink'.$i.'">';
+	                   		if (!is_null($person)) $out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+	                   $out .= '</div>
+	                   <input type="hidden" id="personid'.$i.'" name="personid'.$i.'" size="3" value="'.$pid.'" />';
+	                   $out .= print_findindi_link("personid".$i, "peoplelink".$i, true);
+	                   $out .= '<br /></td>';
+	        
+		}
+ 		
+ 	$out .= '</tr></table>';
         
         $out .= '</td></tr>';
         return $out;
@@ -406,7 +424,7 @@ class Census1930 extends ra_form {
 
     function display_form() {
         $out = $this->header("module.php?mod=research_assistant&form=Census1930&action=func&func=step2&taskid=$_REQUEST[taskid]", "center", "1930 United States Federal Census", true);
-        $out .= $this->sourceCitationForm(5);
+        $out .= $this->sourceCitationForm(5,false);
         //$out .= $this->content();
         $out .= $this->footer();
         return $out;
@@ -415,6 +433,16 @@ class Census1930 extends ra_form {
     function step2() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
 		global $INDI_FACTS_ADD;
+			
+		$personid = "";
+		for($number = 0; $number < $_POST['numOfRows']; $number++)
+		{
+			if (!isset($_POST["personid".$number])) $_POST["personid".$number]="";
+			$personid .= $_POST["personid".$number];
+			$_POST["personid".$number] = trim($_POST["personid".$number], '; \r\n\t');
+		}
+		$_REQUEST['personid'] = $personid;
+		
 		
 		$this->processSourceCitation();
 		
@@ -497,6 +525,7 @@ class Census1930 extends ra_form {
 			if (!isset($_POST["Veteran".$number])) $_POST["Veteran".$number]="";
 			if (!isset($_POST["War".$number])) $_POST["War".$number]="";
 			if (!isset($_POST["FarmSchedule".$number])) $_POST["FarmSchedule".$number]="";
+			if (!isset($_POST["personid".$number])) $_POST["personid".$number]="";
 			
 			$rows[$number] = array(
 			"House"=>$_POST["House".$number],
@@ -527,7 +556,8 @@ class Census1930 extends ra_form {
 			"AtWork"=>$_POST["AtWork".$number],
 			"Veteran"=>$_POST["Veteran".$number],
 			"War"=>$_POST["War".$number],
-			"FarmSchedule"=>$_POST["FarmSchedule".$number]
+			"FarmSchedule"=>$_POST["FarmSchedule".$number],
+			"personid"=>$_POST["personid".$number]
 			);
 			
 			$text .= "\r\n";
@@ -560,6 +590,8 @@ class Census1930 extends ra_form {
 			if (!empty($_POST["Veteran".$number])) $text .= ", ".$_POST["Veteran".$number];
 			if (!empty($_POST["War".$number])) $text .= ", ".$_POST["War".$number];
 			if (!empty($_POST["FarmSchedule".$number])) $text .= ", Farm Schedule:".$_POST["FarmSchedule".$number];
+			if (!empty($_POST["personid".$number])) $text .= ", Persons ID: ".$_POST["personid".$number];
+		
 		}
 
 		$citation = array(

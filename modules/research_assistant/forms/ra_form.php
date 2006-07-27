@@ -207,7 +207,7 @@ class ra_form {
     /**
      * displays the form for editing the source citation information
      */
-    function sourceCitationForm($colspan=3) {
+    function sourceCitationForm($colspan=3, $showpeople=true) {
     	global $pgv_lang, $factarray;
 	
 		$citation = $this->getSourceCitationData();
@@ -226,12 +226,14 @@ class ra_form {
 	var pastefield;
 	var nameElement;
 	var lastId;
+	var findtype = "source";
 	function paste_id(value) {
-		pastefield.value = pastefield.value + ";" + value;
 		lastId = value;
+		pastefield.value = pastefield.value + ";" + value;
 	}
 	function pastename(name) {
-		nameElement.innerHTML = nameElement.innerHTML + \'<a id="link_\'+lastId+\'" href="source.php?sid=\'+pastefield.value+\'">\'+name+\'</a> <a id="rem_\'+lastId+\'" href="#" onclick="clearname(\\\'\'+pastefield.id+\'\\\', \\\'link_\'+lastId+\'\\\', \\\'\'+lastId+\'\\\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>\n\';
+		if (findtype=="source") nameElement.innerHTML = nameElement.innerHTML + \'<a id="link_\'+lastId+\'" href="source.php?sid=\'+lastId+\'">\'+name+\'</a> <a id="rem_\'+lastId+\'" href="#" onclick="clearname(\\\'\'+pastefield.id+\'\\\', \\\'link_\'+lastId+\'\\\', \\\'\'+lastId+\'\\\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>\n\';
+		else nameElement.innerHTML = nameElement.innerHTML + \'<a id="link_\'+lastId+\'" href="individual.php?pid=\'+lastId+\'">\'+name+\'</a> <a id="rem_\'+lastId+\'" href="#" onclick="clearname(\\\'\'+pastefield.id+\'\\\', \\\'link_\'+lastId+\'\\\', \\\'\'+lastId+\'\\\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>\n\';
 	}
 	function clearname(hiddenName, name, id) {
 		pastefield = document.getElementById(hiddenName);
@@ -269,23 +271,25 @@ class ra_form {
             </tr>';
             
 		$out .= $this->simpleCitationForm($citation);
-		$out .= '<tr>
-			<td class="descriptionbox">'.$pgv_lang["people"].'</td>
-            <td id="peoplecell" class="optionbox" colspan="'.$colspan.'">
-                   <div id="peoplelink">';
-                   			$people = $this->getPeople();
-                   			$pval = '';
-                   			foreach($people as $pid=>$person) {
-                   				$pval .= ';'.$person->getXref();
-                   				$out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
-                   			}
-                   $out .= '</div>
-                   <input type="hidden" id="personid" name="personid" size="3" value="'.$pval.'" />';
-                   $out .= print_findindi_link("personid", "peoplelink", true);
-                   $out .= '<br />
-            </td>
-        </tr>';
-        $out .= '<tr><td class="descriptionbox" align="center" colspan="'.($colspan+1).'"><input type="submit" value="Next &gt;&gt;"></td></tr>';
+		if ($showpeople) {
+			$out .= '<tr>
+				<td class="descriptionbox">'.$pgv_lang["people"].'</td>
+	            <td id="peoplecell" class="optionbox" colspan="'.$colspan.'">
+	                   <div id="peoplelink">';
+	                   			$people = $this->getPeople();
+	                   			$pval = '';
+	                   			foreach($people as $pid=>$person) {
+	                   				$pval .= ';'.$person->getXref();
+	                   				$out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+	                   			}
+	                   $out .= '</div>
+	                   <input type="hidden" id="personid" name="personid" size="3" value="'.$pval.'" />';
+	                   $out .= print_findindi_link("personid", "peoplelink", true);
+	                   $out .= '<br />
+	            </td>
+	        </tr>';
+		}
+        $out .= '<tr><td class="descriptionbox" align="center" colspan="'.($colspan+1).'"><input type="submit" value="'.$pgv_lang['next'].'"></td></tr>';
 		return $out;
     }
     
@@ -295,12 +299,9 @@ class ra_form {
     function processSourceCitation() {
     	global $GEDCOMS, $GEDCOM, $TBLPREFIX, $DBCONN;
     	if (empty($_REQUEST['sourceid'])) {
-			return $this->display_form("You must select a source.");
+			return "You must select a source.";
 		}
-		if (empty($_REQUEST['personid'])) {
-			return $this->display_form("You must select at least one person.");
-		}
-		
+
 		// UPDATE PEOPLE
 		$oldpeople = $this->getPeople();
 		
@@ -316,7 +317,6 @@ class ra_form {
 					$newrec = ra_functions::deleteRAFacts($_REQUEST['taskid'], $person->getGedcomRecord());
 					if ($newrec!=$person->getGedcomRecord()) replace_gedrec($pid, $newrec);
 				}
-					
 			}
 			//-- add the new people to the database
 			foreach($people as $i=>$pid) {
@@ -339,11 +339,11 @@ class ra_form {
 		$sql = "DELETE FROM ".$TBLPREFIX."tasksource WHERE ts_t_id='".$_REQUEST["taskid"]."'";
 		$res = dbquery($sql);
 
+		$citation = $this->processSimpleCitation();
 		if (isset ($_REQUEST['sourceid'])) {
 			$sources = preg_split("/;/", $_REQUEST['sourceid']);
 			foreach($sources as $i=>$sid) {
 				if (!empty($sid)) {
-					$citation = $this->processSimpleCitation();
 					$sql = 'INSERT INTO '.$TBLPREFIX.'tasksource (ts_t_id, ts_s_id, ts_page, ts_quay, ts_date, ts_text, ts_obje, ts_array) '."VALUES ('" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "', '".$DBCONN->escapeSimple($sid)."'" .
 							",'".$DBCONN->escapeSimple($citation['PAGE'])."'" .
 							",'".$DBCONN->escapeSimple($citation['QUAY'])."'" .
@@ -366,7 +366,7 @@ class ra_form {
     /**
      * display the form for adding and editing facts
      */
-    function editFactsForm() {
+    function editFactsForm($printButton = true) {
     	global $pgv_lang, $INDI_FACTS_ADD, $factarray;
     	$task = ra_functions::getTask($_REQUEST['taskid']);
     	$out = <<<END_OUT
@@ -528,7 +528,10 @@ END_OUT;
 			</td>
 		</tr>
 END_OUT;
+		if($printButton)
+		{
 		$out .= '<tr><td class="descriptionbox" align="center" colspan="2"><input type="submit" value="Complete"></td></tr>';
+		}
 		return $out;
     }
     
