@@ -294,8 +294,8 @@ function build_indiv_map($indifacts, $famids) {
                     $i = $i + 1;
                     if($fact == "EVEN") {
                         $eventrec = get_sub_record(1, "2 TYPE", $value[1]);
-                        $ctpe = preg_match("/\d TYPE (.*)/", $eventrec, $match1);
-                        $mapdata["fact"][$i] = $match1[1];
+                        $ctpe = preg_match("/\d TYPE (.*)/", $eventrec, $match3);
+                        $mapdata["fact"][$i] = $match3[1];
                     } else {
                         $mapdata["fact"][$i] = $factarray[$fact];
                     }
