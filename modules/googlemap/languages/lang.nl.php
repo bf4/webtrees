@@ -2,9 +2,9 @@
 /*=================================================
    charset=utf-8
    Project:         phpGedView
-   File:            lang.en.php
+   File:            lang.nl.php
    Author:          Johan Borkhuis
-   Comments:        English Language file for Google map module
+   Comments:        Dutch Language file for Google map module
 ===================================================*/
 
 
@@ -22,6 +22,8 @@ $pgv_lang["gm_hybrid"]              = "Combinatie";
 $pgv_lang["gm_manage"]              = "Beheer Googlemap configuratie";
 $pgv_lang["configure_googlemap"]    = "Googlemap Configuratie";
 $pgv_lang["gm_admin_error"]         = "Alleen voor Administrator";
+$pgv_lang["gm_db_error"]            = "placelocation tabel niet gevonden";
+$pgv_lang["gm_table_created"]       = "placelocation tabel aangemaakt";
 $pgv_lang["googlemap_enable"]       = "Googlemap aanzetten";
 $pgv_lang["googlemapkey"]           = "Google Map API key";
 $pgv_lang["gm_map_type"]            = "Standaard kaart soort";
@@ -32,6 +34,20 @@ $pgv_lang["gm_map_zoom"]            = "Zoom factor van de kaart";
 $pgv_lang["gm_digits"]              = "cijfers";
 $pgv_lang["gm_min"]                 = "Min.";
 $pgv_lang["gm_max"]                 = "Max.";
+$pgv_lang["gm_default_level0"]      = "Standaard waarde hoogste nivo";
+$pgv_lang["gm_nof_levels"]          = "Aantal nivo's";
+$pgv_lang["gm_config_per_level"]    = "Configuratie per nivo";
+$pgv_lang["gm_name_prefix"]         = "Voorvoegsel";
+$pgv_lang["gm_name_postfix"]        = "Achtervoegsel";
+$pgv_lang["gm_name_pre_post"]       = "Volgorde voor gebuik";
+$pgv_lang["gm_level"]               = "Nivo";
+$pgv_lang["gm_pp_none"]             = "Geen voor/achtervoegsel";
+$pgv_lang["gm_pp_n_pr_po_b"]        = "Normaal, voor, achter, beide";
+$pgv_lang["gm_pp_n_po_pr_b"]        = "Normaal, achter, voor, beide";
+$pgv_lang["gm_pp_pr_po_b_n"]        = "Voor, achter, beide, normaal";
+$pgv_lang["gm_pp_po_pr_b_n"]        = "Achter, voor, beide, normaal";
+$pgv_lang["gm_pp_pr_po_n_b"]        = "Voor, achter, normaal, beide";
+$pgv_lang["gm_pp_po_pr_n_b"]        = "Achter, voor, normaal, beide";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Wijzigen locatie gegevens";
