@@ -48,6 +48,55 @@ if (file_exists( "modules/googlemap/".$pgv_language[$LANGUAGE])) require  "modul
 require( "modules/googlemap/".$helptextfile["english"]);
 if (file_exists("modules/googlemap/".$helptextfile[$LANGUAGE])) require "modules/googlemap/".$helptextfile[$LANGUAGE];
 
+
+function print_level_config_table($level) {
+    global $pgv_lang, $GM_MARKER_COLOR, $GM_MARKER_SIZE, $GM_PREFIX;
+    global $GM_POSTFIX, $GM_PRE_POST_MODE, $GM_MAX_NOF_LEVELS, $i;
+?>
+            <div id="level<?php print $level;?>" style="display:<?php if ($GM_MAX_NOF_LEVELS >= $level) {print "block";} else {print "none";}?>">
+            <table class="facts_table">
+                <tr>
+                    <td class="descriptionbox" colspan="2">
+                        <?php print $pgv_lang["gm_level"]." ".$level."\n";?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <?php print_help_link("GM_NAME_PREFIX_help", "qm", "GM_NAME_PREFIX"); print $pgv_lang["gm_name_prefix"];?>
+                    </td>
+                    <td>
+                        <input type="text" name="NEW_NAME_PREFIX_<?php print $level;?>" value="<?php print $GM_PREFIX[$level];?>" size="20" tabindex="<?php $i++; print $i?>" onfocus="getHelp('GM_NAME_PREFIX_help');" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <?php print_help_link("GM_NAME_POSTFIX_help", "qm", "GM_NAME_POSTFIX"); print $pgv_lang["gm_name_postfix"];?>
+                    </td>
+                    <td>
+                        <input type="text" name="NEW_NAME_POSTFIX_<?php print $level;?>" value="<?php print $GM_POSTFIX[$level];?>" size="20" tabindex="<?php $i++; print $i?>" onfocus="getHelp('GM_NAME_POSTFIX_help');" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <?php print_help_link("GM_NAME_PRE_POST_help", "qm", "GM_NAME_PRE_POST"); print $pgv_lang["gm_name_pre_post"];?>
+                    </td>
+                    <td>
+                        <select name="NEW_PRE_POST_LEVEL_<?php print $level;?>" dir="ltr" tabindex="<?php $i++; print $i?>" onchange="showSelectedLevels()">
+                            <option value="0"<?php if ($GM_PRE_POST_MODE[$level] == 0) print " selected=\"selected\"";?>><?php print $pgv_lang["gm_pp_none"];?></option>
+                            <option value="1"<?php if ($GM_PRE_POST_MODE[$level] == 1) print " selected=\"selected\"";?>><?php print $pgv_lang["gm_pp_n_pr_po_b"];?></option>
+                            <option value="2"<?php if ($GM_PRE_POST_MODE[$level] == 2) print " selected=\"selected\"";?>><?php print $pgv_lang["gm_pp_n_po_pr_b"];?></option>
+                            <option value="3"<?php if ($GM_PRE_POST_MODE[$level] == 3) print " selected=\"selected\"";?>><?php print $pgv_lang["gm_pp_pr_po_b_n"];?></option>
+                            <option value="4"<?php if ($GM_PRE_POST_MODE[$level] == 4) print " selected=\"selected\"";?>><?php print $pgv_lang["gm_pp_po_pr_b_n"];?></option>
+                            <option value="5"<?php if ($GM_PRE_POST_MODE[$level] == 5) print " selected=\"selected\"";?>><?php print $pgv_lang["gm_pp_pr_po_n_b"];?></option>
+                            <option value="6"<?php if ($GM_PRE_POST_MODE[$level] == 6) print " selected=\"selected\"";?>><?php print $pgv_lang["gm_pp_po_pr_n_b"];?></option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            </div>
+<?php
+}
+
 print_header($pgv_lang["configure_googlemap"]);
 
 print "<span class=\"subheaders\">".$pgv_lang["configure_googlemap"]."</span>";
@@ -77,6 +126,14 @@ if ($action=="update" && !isset($security_user)) {
     $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_3\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_3 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_3"]."\";", $configtext);
     $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_4\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_4 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_4"]."\";", $configtext);
     $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_5\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_5 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_5"]."\";", $configtext);
+    $configtext = preg_replace('/\$GM_DEFAULT_TOP_VALUE\s*=\s*".*";/', "\$GM_DEFAULT_TOP_VALUE = \"".$_POST["NEW_DEFAULT_TOP_LEVEL"]."\";", $configtext);
+    $configtext = preg_replace('/\$GM_MAX_NOF_LEVELS\s*=\s*".*";/', "\$GM_MAX_NOF_LEVELS = \"".$_POST["NEW_LEVEL_COUNT"]."\";", $configtext);
+
+    for($i = 1; $i <= 9; $i++) {
+        $configtext = preg_replace('/\$GM_PREFIX\['.$i.'\]\s*=\s*".*";/', '\$GM_PREFIX['.$i.'] = "'.$_POST["NEW_NAME_PREFIX_".$i].'";', $configtext);
+        $configtext = preg_replace('/\$GM_POSTFIX\['.$i.'\]\s*=\s*".*";/', '\$GM_POSTFIX['.$i.'] = "'.$_POST["NEW_NAME_POSTFIX_".$i].'";', $configtext);
+        $configtext = preg_replace('/\$GM_PRE_POST_MODE\['.$i.'\]\s*=\s*".*";/', '\$GM_PRE_POST_MODE['.$i.'] = "'.$_POST["NEW_PRE_POST_LEVEL_".$i].'";', $configtext);
+    }
 
     $res = @eval($configtext);
     if ($res===false) {
@@ -114,6 +171,64 @@ $i = 0;
 	function closeHelp() {
 		if (helpWin) helpWin.close();
 	}
+
+    function showSelectedLevels() {
+        if (document.configform.NEW_LEVEL_COUNT.value >= 1) {
+            document.getElementById('level1').style.display = 'block';
+        }
+        else {
+            document.getElementById('level1').style.display = 'none';
+        }
+        if (document.configform.NEW_LEVEL_COUNT.value >= 2) {
+            document.getElementById('level2').style.display = 'block';
+        }
+        else {
+            document.getElementById('level2').style.display = 'none';
+        }
+        if (document.configform.NEW_LEVEL_COUNT.value >= 3) {
+            document.getElementById('level3').style.display = 'block';
+        }
+        else {
+            document.getElementById('level3').style.display = 'none';
+        }
+        if (document.configform.NEW_LEVEL_COUNT.value >= 4) {
+            document.getElementById('level4').style.display = 'block';
+        }
+        else {
+            document.getElementById('level4').style.display = 'none';
+        }
+        if (document.configform.NEW_LEVEL_COUNT.value >= 5) {
+            document.getElementById('level5').style.display = 'block';
+        }
+        else {
+            document.getElementById('level5').style.display = 'none';
+        }
+        if (document.configform.NEW_LEVEL_COUNT.value >= 6) {
+            document.getElementById('level6').style.display = 'block';
+        }
+        else {
+            document.getElementById('level6').style.display = 'none';
+        }
+        if (document.configform.NEW_LEVEL_COUNT.value >= 7) {
+            document.getElementById('level7').style.display = 'block';
+        }
+        else {
+            document.getElementById('level7').style.display = 'none';
+        }
+        if (document.configform.NEW_LEVEL_COUNT.value >= 8) {
+            document.getElementById('level8').style.display = 'block';
+        }
+        else {
+            document.getElementById('level8').style.display = 'none';
+        }
+        if (document.configform.NEW_LEVEL_COUNT.value >= 9) {
+            document.getElementById('level9').style.display = 'block';
+        }
+        else {
+            document.getElementById('level9').style.display = 'none';
+        }
+	}
+
 	//-->
 </script>
 
@@ -206,6 +321,46 @@ $i = 0;
                 <?php } ?>
             </select>&nbsp;&nbsp;<?php print $pgv_lang["gm_digits"];?></td></tr>
             </tr></table>
+        </td>
+    </tr>
+    <tr>
+        <td class="descriptionbox"><?php print_help_link("GM_DEFAULT_LEVEL_0_help", "qm", "GM_DEFAULT_LEVEL_0"); print $pgv_lang["gm_default_level0"];?></td>
+        <td class="optionbox"><input type="text" name="NEW_DEFAULT_TOP_LEVEL" value="<?php print $GM_DEFAULT_TOP_VALUE;?>" size="20" tabindex="<?php $i++; print $i?>" onfocus="getHelp('GM_DEFAULT_LEVEL_0_help');" /></td>
+    </tr>
+    <tr>
+        <td class="descriptionbox"><?php print_help_link("GM_NOF_LEVELS_help", "qm", "GM_NOF_LEVELS"); print $pgv_lang["gm_nof_levels"];?></td>
+        <td class="optionbox">
+            <select name="NEW_LEVEL_COUNT" dir="ltr" tabindex="<?php $i++; print $i?>" onchange="showSelectedLevels()">
+                <option value="1"<?php if ($GM_MAX_NOF_LEVELS == 1) print " selected=\"selected\"";?>>1</option>
+                <option value="2"<?php if ($GM_MAX_NOF_LEVELS == 2) print " selected=\"selected\"";?>>2</option>
+                <option value="3"<?php if ($GM_MAX_NOF_LEVELS == 3) print " selected=\"selected\"";?>>3</option>
+                <option value="4"<?php if ($GM_MAX_NOF_LEVELS == 4) print " selected=\"selected\"";?>>4</option>
+                <option value="5"<?php if ($GM_MAX_NOF_LEVELS == 5) print " selected=\"selected\"";?>>5</option>
+                <option value="6"<?php if ($GM_MAX_NOF_LEVELS == 6) print " selected=\"selected\"";?>>6</option>
+                <option value="7"<?php if ($GM_MAX_NOF_LEVELS == 7) print " selected=\"selected\"";?>>7</option>
+                <option value="8"<?php if ($GM_MAX_NOF_LEVELS == 8) print " selected=\"selected\"";?>>8</option>
+                <option value="9"<?php if ($GM_MAX_NOF_LEVELS == 9) print " selected=\"selected\"";?>>9</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td class="descriptionbox">
+            <?php print $pgv_lang["gm_config_per_level"];?>
+            </div>
+        </td>
+        <td class="optionbox">
+            <?php 
+                print_level_config_table(1, $i);
+                print_level_config_table(2, $i);
+                print_level_config_table(3, $i);
+                print_level_config_table(4, $i);
+                print_level_config_table(5, $i);
+                print_level_config_table(6, $i);
+                print_level_config_table(7, $i);
+                print_level_config_table(8, $i);
+                print_level_config_table(9, $i);
+            ?>
+            </div>
         </td>
     </tr>
     </table>
