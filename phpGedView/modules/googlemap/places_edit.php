@@ -457,7 +457,7 @@ if ($action=="add") {
             flagicon.shadow = "modules/googlemap/flag_shadow.png";
             flagicon.iconSize = new GSize(25, 15);
             flagicon.shadowSize = new GSize(35, 45);
-            flagicon.iconAnchor = new GPoint(12, 7);
+            flagicon.iconAnchor = new GPoint(1, 45);
             flagicon.infoWindowAnchor = new GPoint(5, 1);
 <?php           if (($place_lati == null) || ($place_long == null)) {?>
             map.addOverlay(new GMarker(new GLatLng(<?php print $parent_lati.", ".$parent_long;?>), flagicon));
