@@ -33,6 +33,20 @@ $pgv_lang["gm_map_zoom"]            = "Zoom factor of map";
 $pgv_lang["gm_digits"]              = "digits";
 $pgv_lang["gm_min"]                 = "Min.";
 $pgv_lang["gm_max"]                 = "Max.";
+$pgv_lang["gm_default_level0"]      = "Default top level value";
+$pgv_lang["gm_nof_levels"]          = "Number of levels";
+$pgv_lang["gm_config_per_level"]    = "Configuration per level";
+$pgv_lang["gm_name_prefix"]         = "Prefix";
+$pgv_lang["gm_name_postfix"]        = "Postfix";
+$pgv_lang["gm_name_pre_post"]       = "Prefix / Postfix order";
+$pgv_lang["gm_level"]               = "Nivo";
+$pgv_lang["gm_pp_none"]             = "No pre/postfix";
+$pgv_lang["gm_pp_n_pr_po_b"]        = "Normal, prefix, postfix, both";
+$pgv_lang["gm_pp_n_po_pr_b"]        = "Normal, postfix, prefix, both";
+$pgv_lang["gm_pp_pr_po_b_n"]        = "Prefix, postfix, both, normal";
+$pgv_lang["gm_pp_po_pr_b_n"]        = "Postfix, prefix, both, normal";
+$pgv_lang["gm_pp_pr_po_n_b"]        = "Prefix, postfix, normal, both";
+$pgv_lang["gm_pp_po_pr_n_b"]        = "Postfix, prefix, normal, both";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Edit geographic place locations";
