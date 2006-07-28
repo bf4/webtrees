@@ -58,7 +58,7 @@ if (($action=="ExportFile") && (userIsAdmin(getUserName()))) {
     $outputFileName = "places";
     for ($i = 0; $i < $level; $i++) $outputFileName .= "-".$parent[$i];
     $outputFileName .= ".csv";
-    outputLevel($parent, $level);
+    outputLevel($parent, $level, 4);
     header("Content-Type: application/octet-stream");
     header("Content-Disposition: attachment; filename=".$outputFileName);
     print_r ($outputLevelStr);
@@ -145,7 +145,7 @@ function getHighestIndex() {
     return $i;
 }
 
-function outputLevel($parent, $level) {
+function outputLevel($parent, $level, $nofLevels) {
     global $TBLPREFIX, $outputLevelStr;
     if ($level == 0) {
         $sql = "SELECT pl_id,pl_parent_id,pl_level,pl_place,pl_long,pl_lati,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation WHERE pl_level=0 ORDER BY pl_place ASC";
@@ -158,12 +158,12 @@ function outputLevel($parent, $level) {
     $parent_prefix = "";
     for($i=0; $i < $level; $i++) $parent_prefix = $parent_prefix.$parent[$i].";";
     $parent_postfix = ";";
-    for($i=3; $i > $level; $i--) $parent_postfix = $parent_postfix.";";
+    for($i=$nofLevels; $i > $level; $i--) $parent_postfix = $parent_postfix.";";
     while ($row =& $res->fetchRow()) {
         $outputLevelStr .= $row[2].";".$parent_prefix.$row[3].$parent_postfix.$row[4].";".$row[5].";".$row[6].";".$row[7]."\r\n";
         if($level < 3) {
             $parent[$level] = $row[3];
-            outputLevel($parent, $level+1);
+            outputLevel($parent, $level+1, $nofLevels);
         }
     }
     $res->free();
@@ -173,13 +173,13 @@ $tables = $DBCONN->getListOf('tables');
 if (!in_array($TBLPREFIX."placelocation", $tables)) {
     $sql = "CREATE TABLE ".$TBLPREFIX."placelocation (pl_id int(11) NOT NULL, pl_parent_id int(11) default NULL, pl_level int(11) default NULL, pl_place varchar(255) default NULL, pl_long varchar(30) default NULL, pl_lati varchar(30) default NULL, pl_zoom int(4) default NULL, pl_icon varchar(255) default NULL, PRIMARY KEY (pl_id));";
     $res = dbquery($sql);
-    $sql = "CREATE INDEX pl_level ON ".$TBLPREFIX."placelocation (pl_level)";    
+    $sql = "CREATE INDEX pl_level ON ".$TBLPREFIX."placelocation (pl_level)";
     $res = dbquery($sql);
-    $sql = "CREATE INDEX pl_long ON ".$TBLPREFIX."placelocation (pl_long)";    
+    $sql = "CREATE INDEX pl_long ON ".$TBLPREFIX."placelocation (pl_long)";
     $res = dbquery($sql);
-    $sql = "CREATE INDEX pl_lati ON ".$TBLPREFIX."placelocation (pl_lati)";    
+    $sql = "CREATE INDEX pl_lati ON ".$TBLPREFIX."placelocation (pl_lati)";
     $res = dbquery($sql);
-    $sql = "CREATE INDEX pl_name ON ".$TBLPREFIX."placelocation (pl_place)";    
+    $sql = "CREATE INDEX pl_name ON ".$TBLPREFIX."placelocation (pl_place)";
     $res = dbquery($sql);
     $sql = "CREATE INDEX pl_parent_id ON ".$TBLPREFIX."placelocation (pl_parent_id)";    
     $res = dbquery($sql);
@@ -448,6 +448,11 @@ if ($action=="ImportFile2") {
     $highestIndex = getHighestIndex();
     $placelist = array();
     $j = 0;
+    $maxLevel = 0;
+    foreach ($lines as $p => $placerec){
+        $fieldrec = preg_split ("/;/", $placerec);
+        if($fieldrec[0] > $maxLevel) $maxLevel = $fieldrec[0];
+    }
     foreach ($lines as $p => $placerec){
         $placelist[$j] = array();
         $fieldrec = preg_split ("/;/", $placerec);
@@ -692,10 +697,8 @@ if (count($placelist) <> 0) {
         ?>
         <tr>
             <?php
-            if ($level > 2) print "<td class=\"optionbox\">".PrintReady($placelist[$i]["place"])."</td>\n";
-            else { 
-                print "<td class=\"optionbox\"><a href=\"module.php?mod=googlemap&pgvaction=places".$placelink."\">".PrintReady($placelist[$i]["place"])."</a></td>\n";
-            } ?>
+            print "<td class=\"optionbox\"><a href=\"module.php?mod=googlemap&pgvaction=places".$placelink."\">".PrintReady($placelist[$i]["place"])."</a></td>\n";
+            ?>
 
             <td class="optionbox"><?php print $placelist[$i]["lati"];?></td>
             <td class="optionbox"><?php print $placelist[$i]["long"];?></td>
