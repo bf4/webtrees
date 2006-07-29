@@ -262,7 +262,7 @@ function getTitle(){
       		<th class="optionbox" colspan="3" align="left">
       			<?php
       				// get title, given taskid
-      				print getTitle();
+      				print PrintReady(getTitle());
       			?>
       		</th>    		
     	</tr>
@@ -273,7 +273,7 @@ function getTitle(){
       		</th>
 	      	<td class="optionbox" colspan="3" >
 	      		<?php
-	      			print getDescription();
+	      			print PrintReady(getDescription());
 	      		?>
 	      	</td>
 	    </tr>    
@@ -352,7 +352,7 @@ function getTitle(){
 				<td class="blockh3">&nbsp;</td>
 			</tr>
 		</table>
-        <?php print getComments(); ?>
+        <?php print PrintReady(getComments()); ?>
         
 	</div>
 <!--END COMMENT SECTION-->

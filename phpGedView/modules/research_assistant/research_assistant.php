@@ -71,7 +71,7 @@ class research_assistant extends ra_functions {
 	* @return	mixed	 Output to the user in HTML form
 	*/
 	function main() {
-		// Sprcify our lang variable and the table prefix.
+		// Specify our lang variable and the table prefix.
 		global $pgv_lang, $TBLPREFIX, $DBCONN;
 		
 		// PGV modules use the mod_print_header function to print out the default PGV full header

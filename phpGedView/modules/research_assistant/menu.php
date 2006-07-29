@@ -38,12 +38,16 @@ class research_assistant_ModuleMenu {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		global $SHOW_RESEARCH_ASSISTANT, $PRIV_USER, $PRIV_PUBLIC;
 		global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_VIEW_FOLDERS;
+		global $LANGUAGE, $pgv_language;
 		if (!file_exists("modules/research_assistant.php")) return null;
 		if ($SHOW_RESEARCH_ASSISTANT<getUserAccessLevel()) return null;
 
-		if (!file_exists('modules/research_assistant/languages/ra_lang.en.php')) return null;
+		require( $pgv_language["english"]);
+		if (file_exists( $pgv_language[$LANGUAGE])) require  $pgv_language[$LANGUAGE];
+		if (!file_exists('modules/research_assistant/languages/lang.en.php')) return null;
+		require_once 'modules/research_assistant/languages/lang.en.php';
+		if (file_exists("modules/research_assistant/".$pgv_language[$LANGUAGE])) require_once("modules/research_assistant/".$pgv_language[$LANGUAGE]);
 
-		require_once 'modules/research_assistant/languages/ra_lang.en.php';
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 
 		//-- main search menu item
