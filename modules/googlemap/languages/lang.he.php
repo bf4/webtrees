@@ -8,7 +8,6 @@
    Comments:        Hebrew Language file for Google map module
 ===================================================*/
 
-
 $pgv_lang["googlemap"]              	= "מפה";
 $pgv_lang["no_gmtab"]               	= "אין נתוני מפה עבור אדם זה";
 
@@ -33,6 +32,20 @@ $pgv_lang["gm_map_zoom"]            	= "מקדם זום של המפה";
 $pgv_lang["gm_digits"]              		= "ספרות";
 $pgv_lang["gm_min"]                 	= "מינימום";
 $pgv_lang["gm_max"]                 	= "מכסימום";
+$pgv_lang["gm_default_level0"]      	= "ערך ברירת המחדל של הרמה העליונה";
+$pgv_lang["gm_nof_levels"]          	= "מספר רמות";
+$pgv_lang["gm_config_per_level"]    	= "תצורה לרמה";
+$pgv_lang["gm_name_prefix"]         	= "תחילית";
+$pgv_lang["gm_name_postfix"]        	= "סיומת";
+$pgv_lang["gm_name_pre_post"]       	= "סדר תחילית / סיומת";
+$pgv_lang["gm_level"]               		= "רמה";
+$pgv_lang["gm_pp_none"]             	= "אין תחילית/סיומת";
+$pgv_lang["gm_pp_n_pr_po_b"]        	= "נורמלי, תחילית, סיומת, שניהם";
+$pgv_lang["gm_pp_n_po_pr_b"]        	= "נורמלי, סיומת, תחילית, שניהם";
+$pgv_lang["gm_pp_pr_po_b_n"]        	= "תחילית, סיומת, שניהם, נורמלי";
+$pgv_lang["gm_pp_po_pr_b_n"]        	= "סיומת, תחילית, שניהם, נורמלי";
+$pgv_lang["gm_pp_pr_po_n_b"]        	= "תחילית, סיומת, נורמלי, שניהם";
+$pgv_lang["gm_pp_po_pr_n_b"]        	= "סיומת, תחילית, נורמלי, שניהם";
 
 //$pgv_lang["GOOGLEMAP_API_KEY_help"]	= "~#pgv_lang[googlemapkey]#~<br /><br />הכנס כאן את מפתח ה-API של ה-Google Map שלך.";
 
