@@ -256,9 +256,9 @@ class ra_GenerateTasks extends ra_form
 		    }
 		    $out .= '>';
 		    if(strlen($foldername['fr_name']) < 30)
-				$out .= $foldername['fr_name'];
+				$out .= PrintReady($foldername['fr_name']);
 			else
-				$out .= $this->truncate($foldername['fr_name']);
+				$out .= PrintReady($this->truncate($foldername['fr_name']));
 			$out .= '</option>';
         }
         

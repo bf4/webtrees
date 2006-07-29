@@ -95,7 +95,7 @@ function getTitle(){
         
         $out = "";
         while($foldername =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		    $out .= '<option value="'.$foldername['fr_id'].'">'.$foldername['fr_name'] . '</option>';
+		    $out .= '<option value="'.$foldername['fr_id'].'">'.PrintReady($foldername['fr_name']) . '</option>';
 		}
         
         return $out;
@@ -242,7 +242,7 @@ function getTitle(){
       		<td class="optionbox">
       			<?php
       				// get title, given taskid
-      				print '<input type="text" name="title" value="'.getTitle().'" size="50"/>';
+      				print '<input type="text" name="title" value="'.PrintReady(getTitle()).'" size="50"/>';
       			?>
       		</td>
 <!--FOLDER-->
@@ -253,7 +253,7 @@ function getTitle(){
  				<select name="folder">
 					<?php
 						// Get a list of all available folders
-						print getFolders();
+						print PrintReady(getFolders());
 					?>
       			</select>
       		</td>
@@ -267,7 +267,7 @@ function getTitle(){
 	      		<?php
 	      			// get description, given taskid
 	      			print '<textarea name="desc" rows="3" cols="55">';
-	      			print getDescription();
+	      			print PrintReady(getDescription());
 	      			print '</textarea>';
 	      		?>
 	      	</td>

@@ -92,7 +92,7 @@ class ra_editfolder extends ra_form {
 		else $out .= $pgv_lang['add_folder'] . print_help_link("ra_add_folder_help", "qm", '', false, true);
 		$out .= '</h2></th></tr>';
 		$out .=	'<tr><td class="optionbox">'.
-			$pgv_lang['folder_name'].'</td><td class="descriptionbox"><input type="text" name="folderName" value="'.$fr_name.'"/></td></tr>'.
+			$pgv_lang['folder_name'].'</td><td class="descriptionbox"><input type="text" name="folderName" value="'.PrintReady($fr_name).'"/></td></tr>'.
 				'<tr><td class="optionbox">'.$pgv_lang['Parent_Folder:'].'</td><td class="descriptionbox"><select name="parentFolder">' .
 				'<option value="null">'.$pgv_lang['No_Parent'].'</option>';
                 
@@ -103,17 +103,17 @@ class ra_editfolder extends ra_form {
 				{
 					if($fr_parentFolder==$folder['fr_id'])
 					{	
-						$out.='<option value="'.$folder['fr_id'].'" selected="selected">'.$folder['fr_name'] . '</option>';
+						$out.='<option value="'.$folder['fr_id'].'" selected="selected">'.PrintReady($folder['fr_name']) . '</option>';
 					}
 					else
 					{
-					$out.='<option value="'.$folder['fr_id'].'">'.$folder['fr_name'] . '</option>';
+					$out.='<option value="'.$folder['fr_id'].'">'.PrintReady($folder['fr_name']) . '</option>';
 					}
 				}
 
                 // Finish up
 				$out.='</select></td></tr>';
-				$out.='<tr><td class="optionbox">'.$pgv_lang['Folder_Description:'].'</td><td class="descriptionbox"><textarea name="folderDescription" cols="50" rows="10">'.stripslashes($fr_description).'</textarea></td></tr>';
+				$out.='<tr><td class="optionbox">'.$pgv_lang['Folder_Description:'].'</td><td class="descriptionbox"><textarea name="folderDescription" cols="50" rows="10">'.PrintReady(stripslashes($fr_description)).'</textarea></td></tr>';
 				$out.='<tr><td colspan="2"><input type="submit" value="'.$pgv_lang['add'].'" /><input type="button" value="Delete" onclick="window.location=\'module.php?mod=research_assistant&amp;action=deletefolder&amp;folderid='.$fr_id.'\';" /><input type="reset" value="Reset"/></td></tr>';
 				$out.='</table></form>';
 		return $out;
