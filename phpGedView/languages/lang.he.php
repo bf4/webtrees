@@ -289,6 +289,8 @@ $pgv_lang["htmlplus_block_content"] 	= "תוכן";
 $pgv_lang["htmlplus_block_narrative"] 	= "סגנון סיפורי (רק באנגלית)";
 $pgv_lang["htmlplus_block_custom"]	= "מותאם";
 $pgv_lang["htmlplus_block_keyword"]	= "דוגמאות של מילות מפתח (רק באנגלית)";
+$pgv_lang["htmlplus_block_taglist"]	= "רשימת תוים";
+$pgv_lang["htmlplus_block_compat"]	= "צורה מתאימה";
 $pgv_lang["htmlplus_block_current"]	= "נוכחי";
 $pgv_lang["htmlplus_block_default"]	= "ברירת מחדל";
 $pgv_lang["htmlplus_block_gedcom"]	= "אילן יוחסין";
@@ -862,6 +864,10 @@ $pgv_lang["confidential"]		= "סודי";
 $pgv_lang["alpha_index"]		= "אינדקס אלף בית";
 $pgv_lang["name_list"] 		= "רשימת שמות";
 $pgv_lang["firstname_alpha_index"] 	= "אינדקס אלף בית של שמות פרטיים";
+$pgv_lang["roots"]		 	= "שורשים";
+$pgv_lang["leaves"] 			= "עלים";
+$pgv_lang["widow"] 			= "אלמנה";
+$pgv_lang["widower"] 		= "אלמן";
 
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]			= "גיל";
@@ -1833,6 +1839,8 @@ $pgv_lang["is_alive_in"]		= "חי ב-#YEAR# ";
 $pgv_lang["alive"]			= "חי ";
 $pgv_lang["dead"]			= "מת ";
 $pgv_lang["maybe"]			= "אולי ";
+$pgv_lang["both_alive"]		= "שניהם חיים ";
+$pgv_lang["both_dead"]		= "שניהם מתים ";
 
 //-- Help system
 $pgv_lang["definitions"]		= "הגדרות";
