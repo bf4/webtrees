@@ -85,4 +85,3 @@ $pgv_lang["PLE_FLAGS"]                  = "Drapeau";
 $pgv_lang["PLE_FLAGS_help"]             = "Ce menu déroulant permet de choisir un pays et de sélectionner son drapeau. Si aucun drapeau n'est défini pour ce pays aucun drapeau n'est montré.";
 
 ?>
-
