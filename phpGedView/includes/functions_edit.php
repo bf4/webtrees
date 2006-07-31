@@ -126,7 +126,7 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 	$gid = strtoupper($gid);
 	//-- restore any data that was hidden during privatizing
 	if (isset($pgv_private_records[$gid])) $gedrec = trim($gedrec)."\r\n".trim(get_last_private_data($gid));
-	
+
 	if (($gedrec = check_gedcom($gedrec, $chan))!==false) {
 		//-- the following block of code checks if the XREF was changed in this record.
 		//-- if it was changed we add a warning to the change log
@@ -212,13 +212,13 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 //-- the given $gid
 function delete_gedrec($gid, $linkpid='') {
 	global $fcontents, $GEDCOM, $pgv_changes, $manual_save;
-	
+
 		//-- first check if the record is not already deleted
 		if (isset($pgv_changes[$gid."_".$GEDCOM])) {
 			$change = end($pgv_changes[$gid."_".$GEDCOM]);
 			if ($change["type"]=="delete") return true;
 		}
-	
+
 	$undo = find_gedcom_record($gid);
 	if (empty($undo)) return false;
 	if (userAutoAccept()) {
@@ -403,7 +403,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	if (empty($namerec)) {
 		$indirec = "";
 		if ($famtag=="CHIL" and $nextaction=="addchildaction") {
-			if (isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_updated_record($famid); 
+			if (isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_updated_record($famid);
 			else $famrec = find_family_record($famid);
 			if (empty($famrec)) $famrec = find_record_in_file($famid);
 			$parents = find_parents_in_record($famrec);
@@ -754,7 +754,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	global $assorela, $tags, $emptyfacts, $TEXT_DIRECTION, $confighelpfile;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
 	global $tabkey, $STATUS_CODES, $REPO_ID_PREFIX, $SPLIT_PLACES, $pid, $linkToID;
-	
+
 	if (!isset($noClose) && isset($readOnly) && $readOnly=="NOCLOSE") {
 		$noClose = "NOCLOSE";
 		$readOnly = "";
@@ -821,7 +821,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	</script>
 	<?php
 	}
-	
+
 	// element name : used to POST data
 	if ($level==0) {
 		if ($upperlevel) $element_name=$upperlevel."_".$fact; // ex: BIRT_DATE | DEAT_DATE | ...
@@ -910,7 +910,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		$element_name="NOTE[".$noteid."]";
 	}
 
-	if (in_array($fact, $emptyfacts)) {
+	if (in_array($fact, $emptyfacts)&& (empty($value) or $value=="y" or $value=="Y")) {
 		$value = strtoupper($value);
 		if ($fact=="BIRT" or $fact=="MARR") $value="Y"; // default YES
 		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".$value."\" />";
