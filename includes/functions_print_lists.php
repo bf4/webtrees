@@ -760,7 +760,6 @@ function print_changes_table($datalist) {
 	foreach($datalist as $key => $value) {
 		$gid = $value[0];
 		$record = GedcomRecord::getInstance($gid);
-		if ($record->type=="OBJE") continue; // TODO process media item
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
 		if ($SHOW_ID_NUMBERS) {
