@@ -30,6 +30,7 @@ require_once('includes/person_class.php');
 require_once('includes/family_class.php');
 require_once('includes/source_class.php');
 require_once('includes/repository_class.php');
+require_once('includes/media_class.php');
 class GedcomRecord {
 	var $gedrec = "";
 	var $xref = "";
@@ -91,6 +92,9 @@ class GedcomRecord {
 		if (isset($repolist[$pid]) && $repolist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
 			if (isset($repolist[$pid]['object'])) return $repolist[$pid]['object'];
 		}
+		if (isset($objectlist[$pid]) && $objectlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
+			if (isset($objectlist[$pid]['object'])) return $objectlist[$pid]['object'];
+		}
 		if (isset($otherlist[$pid]) && $otherlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
 			if (isset($otherlist[$pid]['object'])) return $otherlist[$pid]['object'];
 		}
@@ -143,6 +147,12 @@ class GedcomRecord {
 				$record = new Repository($indirec, $simple);
 				if (!empty($fromfile)) $record->setChanged(true);
 				$repolist[$pid]['object'] = &$record;
+				return $record;
+			}
+			else if ($type=="OBJE") {
+				$record = new Media($indirec, $simple);
+				if (!empty($fromfile)) $record->setChanged(true);
+				$objectlist[$pid]['object'] = &$record;
 				return $record;
 			}
 			else {
