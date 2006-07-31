@@ -76,7 +76,7 @@ class GedcomRecord {
 	 * @param string $pid	the ID of the object to retrieve
 	 */
 	function &getInstance($pid, $simple=true) {
-		global $indilist, $famlist, $sourcelist, $repo_id_list, $otherlist, $GEDCOM, $GEDCOMS, $pgv_changes;
+		global $indilist, $famlist, $sourcelist, $repolist, $otherlist, $GEDCOM, $GEDCOMS, $pgv_changes;
 
 		//-- first check for the object in the cache
 		if (isset($indilist[$pid]) && $indilist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
@@ -88,8 +88,8 @@ class GedcomRecord {
 		if (isset($sourcelist[$pid]) && $sourcelist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
 			if (isset($sourcelist[$pid]['object'])) return $sourcelist[$pid]['object'];
 		}
-		if (isset($repo_id_list[$pid]) && $repo_id_list[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
-			if (isset($repo_id_list[$pid]['object'])) return $repo_id_list[$pid]['object'];
+		if (isset($repolist[$pid]) && $repolist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
+			if (isset($repolist[$pid]['object'])) return $repolist[$pid]['object'];
 		}
 		if (isset($otherlist[$pid]) && $otherlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
 			if (isset($otherlist[$pid]['object'])) return $otherlist[$pid]['object'];
@@ -142,7 +142,7 @@ class GedcomRecord {
 			else if ($type=="REPO") {
 				$record = new Repository($indirec, $simple);
 				if (!empty($fromfile)) $record->setChanged(true);
-				$repo_id_list[$pid]['object'] = &$record;
+				$repolist[$pid]['object'] = &$record;
 				return $record;
 			}
 			else {
@@ -219,7 +219,7 @@ class GedcomRecord {
 	}
 
 	/**
-	 * get the URL to link to this person
+	 * get the URL to link to this record
 	 * This method should be overriden in child sub-classes
 	 * @string a url that can be used to link to this person
 	 */
