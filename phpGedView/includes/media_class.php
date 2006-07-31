@@ -134,7 +134,7 @@ class Media extends GedcomRecord {
 	function getLinkUrl() {
 		global $GEDCOM;
 
-		$url = "medialist.php?action=filter&amp;search=yes&amp;filter=".$this->getName()."&amp;ged=".$GEDCOM;
+		$url = "medialist.php?action=filter&amp;search=yes&amp;filter=".$this->getTitle()."&amp;ged=".$GEDCOM;
 		/** FIXME
 		if ($this->isRemote()) {
 			$parts = preg_split("/:/", $this->rfn);
