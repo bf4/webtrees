@@ -94,7 +94,7 @@ class Source extends GedcomRecord {
 	 */
 	function getTitle() {
 		global $pgv_lang;
-
+		if (!$this->canDisplayDetails()) return $pgv_lang["private"];
 		if (empty($this->name)) return $pgv_lang["unknown"];
 		return $this->name;
 	}
@@ -217,8 +217,14 @@ class Source extends GedcomRecord {
 	 * get the source sortable name
 	 * @return string
 	 */
-	function getSortableName() {
-		return $this->getTitle();
+	function getSortableName($subtag="") {
+		global $pgv_lang;
+		if (!$this->canDisplayDetails()) {
+			if (empty($subtag)) return $pgv_lang["private"];
+			else return "";
+		}
+		if (empty($subtag)) return get_gedcom_value("TITL", 1, $this->gedrec, '', false);
+		else return get_gedcom_value("TITL:".$subtag, 1, $this->gedrec, '', false);
 	}
 
 	/**

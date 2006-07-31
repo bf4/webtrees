@@ -48,10 +48,10 @@ class Repository extends GedcomRecord {
 	 * @param string $pid	the ID of the repository to retrieve
 	 */
 	function &getInstance($pid, $simple=true) {
-		global $repo_id_list, $GEDCOM, $GEDCOMS, $pgv_changes;
+		global $repolist, $GEDCOM, $GEDCOMS, $pgv_changes;
 
-		if (isset($repo_id_list[$pid]) && $repo_id_list[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
-			if (isset($repo_id_list[$pid]['object'])) return $repo_id_list[$pid]['object'];
+		if (isset($repolist[$pid]) && $repolist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
+			if (isset($repolist[$pid]['object'])) return $repolist[$pid]['object'];
 		}
 
 		$repositoryrec = find_repository_record($pid);
@@ -74,7 +74,7 @@ class Repository extends GedcomRecord {
 		if (empty($repositoryrec)) return null;
 		$repository = new Repository($repositoryrec, $simple);
 		if (!empty($fromfile)) $repository->setChanged(true);
-		$repo_id_list[$pid]['object'] = &$repository;
+		$repolist[$pid]['object'] = &$repository;
 		return $repository;
 	}
 
@@ -98,9 +98,14 @@ class Repository extends GedcomRecord {
 	 * get the repository sortable name
 	 * @return string
 	 */
-	function getSortableName() {
-		//return get_gedcom_value("NAME", 1, $this->gedrec, '', false);
-		return $this->name;
+	function getSortableName($subtag="") {
+		global $pgv_lang;
+		if (!$this->canDisplayDetails()) {
+			if (empty($subtag)) return $pgv_lang["private"];
+			else return "";
+		}
+		if (empty($subtag)) return get_gedcom_value("NAME", 1, $this->gedrec, '', false);
+		else return get_gedcom_value("NAME:".$subtag, 1, $this->gedrec, '', false);
 	}
 
 	/**
