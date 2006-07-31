@@ -407,12 +407,13 @@ function get_first_tag($level, $tag, $gedrec, $num=1) {
  */
 function get_sub_record($level, $tag, $gedrec, $num=1) {
 	if (empty($gedrec)) return "";
-	$gedrec .= "\n";
+	// -- adding \n before and after gedrec
+	$gedrec = "\n".$gedrec."\n";
 	$pos1=0;
 	$subrec = "";
 	$tag = trim($tag);
 	//$searchTarget = "/".preg_replace("~/~","\\/",$tag)."[\W]/"; // see [ 1492470 ] and [ 1507176 ]
-	$searchTarget = "/".preg_replace("~/~","\\/",$tag)."[\s\r\n]/";
+	$searchTarget = "/[\r\n]".preg_replace("~/~","\\/",$tag)."[\s\r\n]/";
 	$ct = preg_match_all($searchTarget, $gedrec, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
 	if ($ct==0) {
 		$tag = preg_replace("/(\w+)/", "_$1", $tag);
@@ -420,29 +421,27 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
 		if ($ct==0) return "";
 	}
 	if (count($match)<$num) return "";
-		$pos1 = $match[$num-1][0][1];
-		if ($pos1===false) return "";
-		$pos2 = @strpos($gedrec, "\n$level", $pos1+5);
-		if (!$pos2) $pos2 = @strpos($gedrec, "\n1", $pos1+5);
-		if (!$pos2) $pos2 = @strpos($gedrec, "\nPGV_", $pos1+5); // PGV_SPOUSE, PGV_FAMILY_ID ...
-		if (!$pos2) {
-			return substr($gedrec, $pos1);
-		}
-		$subrec = substr($gedrec, $pos1, $pos2-$pos1);
-		//-- does anybody know what this is for?
-		if ($num==1) {
-			$lowtag = "\n".($level-1).(substr($tag, 1));
-			if (phpversion() < 5) {
-				if ($newpos = strrpos4($subrec, $lowtag)) {
-				$pos2 = $pos2 - (strlen($subrec) - $newpos);
-				$subrec = substr($gedrec, $pos1, $pos2-$pos1);
-				}
-			}
-			else if ($newpos = strripos($subrec, $lowtag)) {
-				$pos2 = $pos2 - (strlen($subrec) - $newpos);
-				$subrec = substr($gedrec, $pos1, $pos2-$pos1);
+	$pos1 = $match[$num-1][0][1];
+	$pos2 = strpos($gedrec, "\n$level", $pos1+1);
+	if (!$pos2) $pos2 = strpos($gedrec, "\n1", $pos1+1);
+	if (!$pos2) $pos2 = strpos($gedrec, "\nPGV_", $pos1+1); // PGV_SPOUSE, PGV_FAMILY_ID ...
+	if (!$pos2) return substr($gedrec, $pos1);
+	$subrec = substr($gedrec, $pos1, $pos2-$pos1);
+	//-- does anybody know what this is for?
+	/**
+	if ($num==1) {
+		$lowtag = "\n".($level-1).(substr($tag, 1));
+		if (phpversion() < 5) {
+			if ($newpos = strrpos4($subrec, $lowtag)) {
+			$pos2 = $pos2 - (strlen($subrec) - $newpos);
+			$subrec = substr($gedrec, $pos1, $pos2-$pos1);
 			}
 		}
+		else if ($newpos = strripos($subrec, $lowtag)) {
+			$pos2 = $pos2 - (strlen($subrec) - $newpos);
+			$subrec = substr($gedrec, $pos1, $pos2-$pos1);
+		}
+	}**/
 	return $subrec;
 }
 
