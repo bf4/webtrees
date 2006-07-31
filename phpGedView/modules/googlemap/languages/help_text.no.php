@@ -46,6 +46,21 @@ $pgv_lang["GOOGLEMAP_MAP_ZOOM_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_ZOOM]#~<br /
 $pgv_lang["GOOGLEMAP_PRECISION"]        = "Nøyaktighet for lengde- og breddegrad";
 $pgv_lang["GOOGLEMAP_PRECISION_help"]   = "~#pgv_lang[GOOGLEMAP_PRECISION]#~<br /><br />Dette angir hvor nøyaktig de forskjellige nivåene skal benevnes når en registerer nye steder. For eksempel vil et land bli angitt med nøyaktighet 0 (dvs. 0 siffer etter desimaltegnet), mens en by trenger 3 eller 4 siffer.";
 
+$pgv_lang["GM_DEFAULT_LEVEL_0"]         = "Standard verdi for toppnivå";
+$pgv_lang["GM_DEFAULT_LEVEL_0_help"]    = "~#pgv_lang[GM_DEFAULT_LEVEL_0]#~<br /><br />Her kan du definere standard nivå for det høyeste nivå i steds-hierarkiet. Dersom et sted ikke finnes i stedsbasen, vil stedsnavnet bli lagt angitt med høyeste nivå (land). Deretter vil det bli startet et nytt søk.";
+
+$pgv_lang["GM_NOF_LEVELS"]              = "Dette angir antall nivåer som brukes av modulen Google Map";
+$pgv_lang["GM_NOF_LEVELS_help"]         = "~#pgv_lang[GM_NOF_LEVELS]#~<br /><br />This field indicates the number of levels in the places-hierarchy that is being used by the Googlemap modules.<br>Standard verdi for steds-hirarki er 4 (land, fylke, kommune, sted), som til vanlig er godt nok. Dersom du ønsker å legge til et ekstra nivå (f.eks. for å legge til en kirkegård, skole eller lignende), kan du endre dene verdien. Du kan også fjerne et nivå (f.eks. sted), men dette er ikke å anbefale fordi stedene er lagret med en struktur på 4 nivå.";
+
+$pgv_lang["GM_NAME_PREFIX"]             = "Prefiks for navn brukt på dette nivået";
+$pgv_lang["GM_NAME_PREFIX_help"]        = "~#pgv_lang[GM_NAME_PREFIX]#~<br /><br />Denne verdien vil bli lagt til forran navnet for dette nivået. Du kan angi flere verdier, separert med semikolon";
+
+$pgv_lang["GM_NAME_POSTFIX"]            = "Postfiks for navn brukt på dette nivået";
+$pgv_lang["GM_NAME_POSTFIX_help"]       = "~#pgv_lang[GM_NAME_POSTFIX]#~<br /><br />Denne verdien vil bli lagt til etter navnet for dette nivået. Du kan angi flere verdier, separert med semikolon";
+
+$pgv_lang["GM_NAME_PRE_POST"]           = "Rekkefølgen som skal brukes for pre-/postfiks";
+$pgv_lang["GM_NAME_PRE_POST_help"]      = "~#pgv_lang[GM_NAME_PRE_POST]#~<br /><br />Dette feltet angir rekkefølgen for hvordan navn skal vises sammen med pre- og postfiks. Mulige kombinasjoner er:<br><ul><li>Ingen pre-/postfiks</li><li>Normalt navn, prefiks, postfiks, begge</li><li>Normalt navn, postfiks, prefiks, begge</li><li>Prefiks, postfiks, begge, normalt navn</li><li>Postfiks, prefiks, begge, normalt navn</li><li>Prefiks, postfiks, normalt navn, begge</li><li>Postfiks, prefiks, normalt navn, begge</li></ul>";
+
 $pgv_lang["PL_EDIT_LOCATION"]           = "Redigere eller slette et sted";
 $pgv_lang["PL_EDIT_LOCATION_help"]      = "Her kan du enten:<br><dl><dt>Redigere</dt><dd>Du vil få opp et nytt vindu der du kan endre verdiene til stedet.</dd><dt>Slette</dt><dd>Stedet vil bli slettet.<br>NB! Dette kan bare gjøres dersom det ikke er registrert andre steder \"under\" dette stedet (f.eks. kommuner i et fylke). Velget vil være deaktivert hvis dette er tilfelle.</dd></dl>";
 
@@ -92,5 +107,11 @@ $pgv_lang["PLIF_FILENAME_help"]         = "Oppgi navnet på filen som inneholder
 
 $pgv_lang["PLIF_CLEAN"]                 = "Tøm tabellen i databasen med stedsopplysninger";
 $pgv_lang["PLIF_CLEAN_help"]            = "Her kan du du velge å tømme tabellen med stedsopplysninger i databasen. Det betyr at <u>kun</u> innholdet i tabellen blir fjernet, mens slektsfilen (GED) vil forbli inntakt.";
+
+$pgv_lang["PLIF_UPDATE"]                = "Oppdatere bare steder som finnes fra før";
+$pgv_lang["PLIF_UPDATE_help"]           = "Her kan du oppdatere steder som er registrert fra før.<br>Dette valget kan brukes for å fylle ut lengde- og breddegrad for steder som allerede er importert fra en slektsfil. Det vil ikke bli lagt til noen nye steder.";
+
+$pgv_lang["PLIF_OVERWRITE"]             = "Overskrive kartreferanser";
+$pgv_lang["PLIF_OVERWRITE_help"]        = "Her kan du legge inn kartreferanser på nytt fra datafilen.<br>Dersom du velger dette, vil kartreferansene (lengde- og breddegrader, zoomnivå og flagg) til de ulike stedene bli overskrevet med dataene fra filen. Dersom valget \"Oppdatere bare steder som finnes fra før\" ikke er markert, vil også steder som ikke finnes fra før, bli importert.";
 
 ?>
