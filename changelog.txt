@@ -9,6 +9,11 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1530718 ] bug on recent changes block (opus27)
+ - Fixed [ 1527526 ] SVN 290 Reorder children causes duplicate child sometimes (opus27)
+ - Fixed [ 1527533 ] SVN 290 Add HUSB/WIFE missing 1 FAMS record (opus27)
+ - Added [ 1440050 ] To Show IDs or Not to Show IDs: That is the Question (opus27)
+ - Added [ 1524676 ] Javascript sortable tables (opus27)
  - Added UI entry for $SHOW_PRIVATE_RELATIONSHIPS settings (yalnifj)
  - Applied [ 1515923 ] GEDCOM import problem + patch (yalnifj)
  - Replacing ISR Hebrew place files by the 4.0 files (meliza)
@@ -75,7 +80,7 @@ Version 4.0.1 2006-07-10
  - Fixed [ 1507590 ] 4.0rel ... source.php keeps the @N.N rather than "unknown" (canajun2eh)
  - Fixed [ 1506547 ] Media List - RtL File Name (canajun2eh)
  - Fixed [ 1507194 ] 4.0release: QUAY tag at wrong level within source citation (canajun2eh)
- 
+
 Version 4.0 2006-06-13
  - Added GEDCOM config option for auto-generation of GUIDs (canajun2eh)
  - Fixed [ 1503342 ] 4.0b9: URL Favorite does not work (canajun2eh)
