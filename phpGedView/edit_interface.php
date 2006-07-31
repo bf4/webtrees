@@ -734,10 +734,8 @@ else if ($action=="update") {
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	// add or remove Y
-	/**
 	if ($text[0]=="Y" or $text[0]=="y") $text[0]="";
 	if (in_array($tag[0], $emptyfacts) && array_unique($text)==array("") && !$islink[0]) $text[0]="Y";
-	**/
 	//-- check for photo update
 	if (count($_FILES)>0) {
 		$uploaded_files = array();
@@ -917,6 +915,7 @@ else if ($action=="addspouseaction") {
 	$xref = append_gedrec($gedrec);
 	if ($xref) print "<br /><br />".$pgv_lang["update_successful"];
 	else exit;
+	$spouserec = $gedrec;
 	$success = true;
 	if ($famid=="new") {
 		$famrec = "0 @new@ FAM\r\n";
@@ -977,8 +976,11 @@ else if ($action=="addspouseaction") {
 		}
 	}
 	if ((!empty($famid))&&($famid!="new")) {
+		/**
 		$gedrec = "";
 		$gedrec = find_updated_record($xref);
+		**/
+		$gedrec = $spouserec;
 		$gedrec = trim($gedrec);
 		$gedrec .= "\r\n1 FAMS @$famid@\r\n";
 		if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
@@ -1104,6 +1106,7 @@ else if ($action=="addnewparentaction") {
 	$xref = append_gedrec($gedrec);
 	if ($xref) print "<br /><br />".$pgv_lang["update_successful"];
 	else exit;
+	$spouserec = $gedrec;
 	$success = true;
 	if ($famid=="new") {
 		$famrec = "0 @new@ FAM\r\n";
@@ -1163,9 +1166,12 @@ else if ($action=="addnewparentaction") {
 		}
 	}
 	if ((!empty($famid))&&($famid!="new")) {
+			/**
 			$gedrec = "";
 			if (isset($pgv_changes[$xref."_".$GEDCOM])) $gedrec = find_updated_record($xref);
 			else $gedrec = find_person_record($xref);
+			**/
+			$gedrec = $spouserec;
 			$gedrec = trim($gedrec);
 			$gedrec .= "\r\n1 FAMS @$famid@\r\n";
 			if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
