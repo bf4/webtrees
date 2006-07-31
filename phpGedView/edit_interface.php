@@ -1776,6 +1776,8 @@ else if ($action=="reorder_update") {
 	foreach($order as $child=>$num) {
 		// move each child subrecord to the bottom
 		$subrec = get_sub_record(1, "1 CHIL @".$child."@", $gedrec);
+		$subrec = trim($subrec,"\r\n");
+		if ($GLOBALS["DEBUG"]) echo "<pre>[".$subrec."]</pre>";
 		$newgedrec = str_replace($subrec,"", $newgedrec);
 		$newgedrec .= $subrec."\r\n";
 	}
