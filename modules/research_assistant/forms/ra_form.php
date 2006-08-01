@@ -402,6 +402,7 @@ END_OUT;
 			var factnames = new Array();
 			var peopleList = new Array();
 			var factcount = 0;
+			var inferredFacts = new Array();
 END_OUT;
 			$facts = $this->getFactData();
 			if (count($facts)>0) {
@@ -454,9 +455,11 @@ END_OUT;
 				build_table();
 			}
 			
-			function add_ra_fact_inferred(chkbx,fact,person,factType) {
+			function add_ra_fact_inferred(chkbx,fact,person,factType,name) {
 				if(chkbx.checked)
 				{
+					var myArray = new Array();
+					var counter = 0;
 					for(var ii = 0; ii < factcount; ii++)
 					{
 												
@@ -465,33 +468,50 @@ END_OUT;
 						}
 						else
 						{
-							facts[factcount] = fact;
-							factnames[factcount] = factType;
-							factcount++;
+							if(!inferredFacts[person+factType])
+							{
+								facts[factcount] = fact;
+								myArray[person+factType] = true;
+								counter++;
+								factnames[factcount] = factType;
+								var myPerson = "<option value=\""+name+"\"";
+									myPerson += "selected=\"selected\"";
+									myPerson +=">"+name+"</option>";
+								peopleList[i]= myPerson;
+								inferredFacts[person+factType] = person;
+								inferredFacts[factcount] = person;
+								factcount++;
+							}
 						}
 					}
 				}
 				else
-				{
-					
-						
-							newfacts = new Array();
-							newfactnames = new Array();
-							k=0;
-							for(j=0; j<factcount; j++) 
-							{
-								if (facts[j] != fact) 
-								{
-									newfacts[k]=facts[j];
-									newfactnames[k]=factnames[j];
-									k++;
-								}
-							}
-							facts = newfacts;
-							factnames = newfactnames;
-							factcount = k;							
-						
-					
+				{						
+					newfacts = new Array();
+					newfactnames = new Array();
+					newpeople = new Array();
+					newInferredFacts = new Array();
+					k=0;
+					for(j=0; j<factcount; j++) 
+					{
+						if(inferredFacts[j] != person)
+						{		
+							newfacts[k]=facts[j];
+							newfactnames[k]=factnames[j];
+							newpeople[k] = peopleList[j];
+							newInferredFacts[k] = inferredFacts[j];
+							k++;
+						}
+						else
+						{
+							inferredFacts[person+factType] = null;
+						}
+					}
+						inferredFacts = newInferredFacts;
+						facts = newfacts;
+						factnames = newfactnames;
+						factcount = k;						
+						peopleList = newpeople;	
 				}
 				build_table();
 				
@@ -518,21 +538,44 @@ END_OUT;
 				}
 			}
 			
-			function remove_fact(i) {
+			function remove_fact(i,person) {
 				newfacts = new Array();
-				newfactnames = new Array();
-				k=0;
-				for(j=0; j<factcount; j++) {
-					if (j!=i) {
-						newfacts[k]=facts[j];
-						newfactnames[k]=factnames[j];
-						k++;
-					}
+					newfactnames = new Array();
+					newpeople = new Array();
+					newInferredFacts = new Array();
+					k=0;
+					for(j=0; j<factcount; j++) 
+					{
+						if(inferredFacts[j] != person)
+						{		
+							newfacts[k]=facts[j];
+							newfactnames[k]=factnames[j];
+							newpeople[k] = peopleList[j];
+							newInferredFacts[k] = inferredFacts[j];
+							k++;
+						}
+						else
+						{
+							myChk = document.getElementById(inferredFacts[i]+factnames[i]);
+				
+							if(myChk)
+							{
+								myChk.checked = false;
+								inferredFacts[person+factnames[i]] = null;		
+							}	
+							else
+							{		
+								
+							}
+						}
+					
 				}
-				facts = newfacts;
-				factnames = newfactnames;
-				factcount = k;
-				build_table();
+					inferredFacts = newInferredFacts;
+					facts = newfacts;
+					factnames = newfactnames;
+					factcount = k;						
+					peopleList = newpeople;	
+					build_table();						
 			}
 			
 			function build_table() {
@@ -560,9 +603,18 @@ END_OUT;
 					if (peopleList[i]) out += peopleList[i]; 
 					else out += '$peopleList';
 					out += '</select></td>';
-					out += '<td class="optionbox"><a href="#" onclick="remove_fact('+i+'); return false;"><img src="images/remove.gif" border="0" /></a><br />' +
+					if(!inferredFacts[i])
+					{
+					out += '<td class="optionbox"><a href="#" onclick="remove_fact('+i+',null); return false;"><img src="images/remove.gif" border="0" /></a><br />' +
 							'<a href="#" onclick="edit_ra_fact('+i+'); return false;">{$pgv_lang["edit"]}</a>' +
 							'</td></tr>';
+					}
+					else
+					{
+						out += '<td class="optionbox"><a href="#" onclick="remove_fact('+i+',\''+inferredFacts[i]+'\'); return false;"><img src="images/remove.gif" border="0" /></a><br />' +
+							'<a href="#" onclick="edit_ra_fact('+i+'); return false;">{$pgv_lang["edit"]}</a>' +
+							'</td></tr>';
+					}
 				}
 				tempdata.innerHTML = out+'</table><input type="hidden" name="factcount" value="'+facts.length+'" />';
 			}

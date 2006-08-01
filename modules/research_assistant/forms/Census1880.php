@@ -439,7 +439,7 @@ return false;}return true;}
 					$out .="<td>".$value["shortDOB"]."</td>";
 					$out .="<td>".$value["Person"]."</td>";
 					$out .="<td>".$value["Reason"]."</td>";
-					$out .="<td>".'<input type="Checkbox" id="'.$key.$value["FactType"].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["DOB"]).'\',\''.$key.'\',\'BIRT\')"></td>';
+					$out .="<td>".'<input type="Checkbox" id="'.$key.$value["FactType"].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["DOB"]).'\',\''.$key.'\',\'BIRT\',\''.$value["Person"].'\')"></td>';
 					$out .="</tr>";
 				}
 			}

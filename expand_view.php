@@ -9,8 +9,6 @@ $indirec = find_person_record($pid);
 $skipfacts = array("SEX","FAMS","FAMC","NAME","TITL","NOTE","SOUR","SSN","OBJE","HUSB","WIFE","CHIL","ALIA","ADDR","PHON","SUBM","_EMAIL","CHAN","URL","EMAIL","WWW","RESI","_UID","_TODO");
 $subfacts = get_all_subrecords($indirec, implode(",", $skipfacts));
 	  
-//if(empty($SEARCH_SPIDER)) {
-//	  if ($show_full) print "\n<div id=\"inout-$pid.$personcount.$count\" style=\"display: none;\">\n";
 	  $f2 = 0;
 	  foreach($subfacts as $indexval => $factrec) {
 		  if (!FactViewRestricted($pid, $factrec)) {
@@ -71,8 +69,4 @@ $subfacts = get_all_subrecords($indirec, implode(",", $skipfacts));
 			print_fact_place($factrec, true, true);
 		}
 	  }
-
-	 // NOTE: Close div inout-$pid.$personcount.$count
-//	 print "</div>";
-// }
 ?>

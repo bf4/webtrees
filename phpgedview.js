@@ -453,6 +453,7 @@ var oldname = 0;
 var oldthumbdisp = 0;
 var repositioned = 0;
 var oldiconsdislpay = 0;
+
 function expandbox(boxid, bstyle) {
 	if (big==1) {
 		restorebox(oldboxid, bstyle);
@@ -514,21 +515,29 @@ function expandbox(boxid, bstyle) {
 		if (inbox) 
 		{
 			inbox.style.display='block';
-			
-			//-- load data from expand_view.php
-			var pid = boxid.split(".")[0];
-			var oXmlHttp = createXMLHttp();
-			oXmlHttp.open("get", "expand_view.php?pid=" + pid, true);
-			oXmlHttp.onreadystatechange=function()
+			if ( inbox.innerHTML.indexOf("LOADING")>0 )
 			{
-	  			if (oXmlHttp.readyState==4)
-	  			{
-	   				inbox.innerHTML = oXmlHttp.responseText;
-	   			}
-	  		};
-	  		oXmlHttp.send(null);
+				//-- load data from expand_view.php
+				var pid = boxid.split(".")[0];
+				var oXmlHttp = createXMLHttp();
+				oXmlHttp.open("get", "expand_view.php?pid=" + pid, true);
+				oXmlHttp.onreadystatechange=function()
+				{
+		  			if (oXmlHttp.readyState==4)
+		  			{
+		   				inbox.innerHTML = oXmlHttp.responseText;
+		   			}
+		  		};
+		  		oXmlHttp.send(null);
+	  		}
 		}
+		else
+		{
+			inbox.style.display='none';
+		}
+		
 		if (inbox2) inbox2.style.display='none';
+		
 		fontdef = document.getElementById("fontdef-"+boxid);
 		if (fontdef) {
 			oldfont = fontdef.className;
@@ -637,7 +646,7 @@ function restorebox(boxid, bstyle) {
 		if (namedef) namedef.className = oldname;
 		addnamedef = document.getElementById("addnamedef-"+boxid);
 		if (addnamedef) addnamedef.className = oldaddname;
-	}
+	}	
 	return true;
 }
 

@@ -327,15 +327,16 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 print "</a>";
     if(empty($SEARCH_SPIDER)) {
 	 // NOTE: Start div inout-$pid.$personcount.$count
-	 if (!$show_full) print "\n<div id=\"inout-$pid.$personcount.$count\" style=\"display: none;\">\n";
+	 //if (!$show_full) print "\n<div id=\"inout-$pid.$personcount.$count\" style=\"display: none;\">\n";
 	 // NOTE: Start div fontdev-$pid.$personcount.$count
 	 print "<div id=\"fontdef-$pid.$personcount.$count\" class=\"details$style\">";
 
 	 // NOTE: Start div inout2-$pid.$personcount.$count
 //	 if ($show_full) print "\n<div id=\"inout2-$pid.$personcount.$count\" style=\"display: block;\">\n";
+if ($show_full)
+{
 	 print "\n<div id=\"inout2-$pid.$personcount.$count\" ";
-	 if ($show_full) print " style=\"display: block;\">\n";
-	 else print " style=\"display: none;\">\n";
+	  print " style=\"display: block;\">\n";
 	 $birttag = "BIRT";
 	 $bpos1 = strpos($indirec, "1 BIRT");
 	 if ($bpos1) {
@@ -375,6 +376,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 foreach (array("BURI", "CREM") as $indexval => $tag) {
 	 	if (strpos($CHART_BOX_TAGS, $tag)!==false && showFact($tag, $pid)) print_simple_fact($indirec, $tag, $pid);
 	}
+}
 
 	 // NOTE: Close div inout2-$pid.$personcount.$count
 //	 if ($show_full) print "</div>\n";
@@ -388,10 +390,10 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 
 //   --All code to load information has been moved to expand_view.php
     if(empty($SEARCH_SPIDER)) {
-	  if ($show_full) print "\n<div id=\"inout-$pid.$personcount.$count\" style=\"display: none;\">\n";
-	  
+	  print "\n<div id=\"inout-$pid.$personcount.$count\" style=\"display: none;\">\n";
+	  print "<div id=\"LOADING\">";
 	  print $pgv_lang['loading'];
- 	  print "</div>";
+ 	  print "</div></div>";
     }// SEARCH_SPIDER
     
 	 // NOTE: Close div out-rand()
