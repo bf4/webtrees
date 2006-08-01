@@ -126,7 +126,7 @@ class ra_functions {
 			$res = dbquery($sql);
 		}
 		if (!in_array($TBLPREFIX.'taskfacts', $data)) {
-			$sql = "CREATE TABLE ".$TBLPREFIX."taskfacts (tf_id INT, tf_t_id INT, tf_factrec TEXT, tf_people VARCHAR(255), primary key (tf_id))";
+			$sql = "CREATE TABLE ".$TBLPREFIX."taskfacts (tf_id INT, tf_t_id INT, tf_factrec TEXT, tf_people VARCHAR(255),tf_multiple VARCHAR(3), primary key (tf_id))";
 			$res = dbquery($sql);
 		}
 		if(!in_array($TBLPREFIX.'user_comments', $data)){

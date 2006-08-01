@@ -381,30 +381,7 @@ if ($action=="update" && !isset($security_user)) {
 <form method="post" name="configform" action="editconfig.php">
 <input type="hidden" name="action" value="update" />
 <?php
-	if (($CONFIGURED || $action=="update") && !check_db(true)) {
-		print "<span class=\"error\">";
-		print $pgv_lang["db_setup_bad"];
-		print "</span><br />";
-		print "<span class=\"error\">".$DBCONN->getMessage()." ".$DBCONN->getUserInfo()."</span><br />";
-		if ($CONFIGURED==true) {
-			//-- force the incoming user to enter the database password before they can configure the site for security.
-			if (!isset($_POST["security_check"]) || !isset($_POST["security_user"]) || (($_POST["security_check"]!=$DBPASS)&&($_POST["security_user"]==$DBUSER))) {
-				print "<br /><br />";
-				print_text("enter_db_pass");
-				print "<br />";
-				print $pgv_lang["DBUSER"];
-				print " <input type=\"text\" name=\"security_user\" /><br />\n";
-				print $pgv_lang["DBPASS"];
-				print " <input type=\"password\" name=\"security_check\" /><br />\n";
-				print "<input type=\"submit\" value=\"";
-				print $pgv_lang["login"];
-				print "\" />\n";
-				print "</form>\n";
-				print_footer();
-				exit;
-			}
-		}
-	}
+	
 	print "<table class=\"facts_table\">";
 	print "<tr><td class=\"topbottombar\" colspan=\"2\">";
 	print "<span class=\"subheaders\">";
