@@ -843,7 +843,7 @@ if ($action == "createform") {
 	//-->
 	</script>
 
-	<form name="newform" method="post" action="<?php print $SCRIPT_NAME;?>" onsubmit="return checkform(this);">
+	<form name="newform" method="post" action="useradmin.php" onsubmit="return checkform(this);">
 	<input type="hidden" name="action" value="createuser" />
 	<!--table-->
 	<?php $tab = 0; ?>
@@ -1015,7 +1015,7 @@ if ($action == "createform") {
 //NOTE: WORKING
 if ($action == "cleanup") {
 	?>
-	<form name="cleanupform" method="post" action="">
+	<form name="cleanupform" method="post" action="useradmin.php">
 	<input type="hidden" name="action" value="cleanup2" />
 	<table class="center list_table width80 <?php print $TEXT_DIRECTION; ?>">
 	<tr>

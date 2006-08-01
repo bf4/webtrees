@@ -511,7 +511,23 @@ function expandbox(boxid, bstyle) {
 			//else parentbox.style.right=divleft+"px";
 		}
 		divbox.style.height='auto';
-		if (inbox) inbox.style.display='block';
+		if (inbox) 
+		{
+			inbox.style.display='block';
+			
+			//-- load data from expand_view.php
+			var pid = boxid.split(".")[0];
+			var oXmlHttp = createXMLHttp();
+			oXmlHttp.open("get", "expand_view.php?pid=" + pid, true);
+			oXmlHttp.onreadystatechange=function()
+			{
+	  			if (oXmlHttp.readyState==4)
+	  			{
+	   				inbox.innerHTML = oXmlHttp.responseText;
+	   			}
+	  		};
+	  		oXmlHttp.send(null);
+		}
 		if (inbox2) inbox2.style.display='none';
 		fontdef = document.getElementById("fontdef-"+boxid);
 		if (fontdef) {
@@ -547,6 +563,30 @@ function expandbox(boxid, bstyle) {
 	}
 	return true;
 }
+function createXMLHttp()
+{
+	if (typeof XMLHttpRequest != "undefined")
+	{
+		return new XMLHttpRequest();
+	}
+	else if (window.ActiveXObject)
+	{
+		var ARR_XMLHTTP_VERS=["MSXML2.XmlHttp.5.0","MSXML2.XmlHttp.4.0",
+			"MSXML2.XmlHttp.3.0","MSXML2.XmlHttp","Microsoft.XmlHttp"];
+	
+		for (var i = 0; i < ARR_XMLHTTP_VERS.length; i++)
+		{
+			try
+			{
+				var oXmlHttp = new ActiveXObject(ARR_XMLHTTP_VERS[i]);
+				return oXmlHttp;
+			}
+			catch (oError) {;}
+		}
+	}
+	throw new Error("XMLHttp object could not be created.");
+};
+	
 function restorebox(boxid, bstyle) {
 	divbox = document.getElementById("out-"+boxid);
 	inbox = document.getElementById("inout-"+boxid);

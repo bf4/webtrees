@@ -51,8 +51,8 @@ function authenticateUser($username, $password, $basic=false) {
 	checkTableExists();
 	$user = getUser($username);
 	//-- make sure that we have the actual username as it was stored in the DB
-	$username = $user['username'];
 	if ($user!==false) {
+		$username = $user['username'];
 		if (crypt($password, $user["password"])==$user["password"]) {
 	        if (!isset($user["verified"])) $user["verified"] = "";
 	        if (!isset($user["verified_by_admin"])) $user["verified_by_admin"] = "";
@@ -156,10 +156,10 @@ function userLogout($username = "") {
  */
 function userUpdateLogin($username) {
 	global $TBLPREFIX;
-
+	
 	if (empty($username)) $username = getUserName();
 	if (empty($username)) return;
-
+	
 	$sql = "UPDATE ".$TBLPREFIX."users SET u_sessiontime='".time()."' WHERE u_username='$username'";
 	$res = dbquery($sql);
 }
@@ -450,7 +450,7 @@ function checkTableExists() {
 	$has_relation_privacy = false;
 	$has_fav_note = false;
 	$has_auto_accept = false;
-
+	
 	$sqlite = ($DBTYPE == 'sqlite');
 
 	if (DB::isError($DBCONN)) return false;
@@ -502,7 +502,7 @@ function checkTableExists() {
 							case "u_auto_accept":
 								$has_auto_accept = true;
 								break;
-						}
+						}	
 					}
 					break;
 				case "messages":
@@ -796,7 +796,7 @@ function updateUser($username, $newuser, $msg = "updated") {
 		$res = dbquery($sql);
 		$activeuser = getUserName();
 		if ($activeuser == "") $activeuser = "Anonymous user";
-		AddToLog($activeuser." ".$msg." user -> ".$newuser["username"]." <-");
+		AddToLog($activeuser." ".$msg." user [old username '".$newuser['previous_username']."'] new username-> ".$newuser["username"]." <-");
 
 		//-- update all reference tables if username changed
 		if ($newuser["username"]!=$username) {
@@ -1172,7 +1172,7 @@ function addMessage($message) {
 
 	//-- do not allow users to send a message to themselves
 	if ($message["from"]==$message["to"]) return false;
-
+	
 	require_once('includes/functions_mail.php');
 
 	//-- setup the message body for the from user
