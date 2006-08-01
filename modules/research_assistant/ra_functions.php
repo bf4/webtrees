@@ -1117,6 +1117,19 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		global $pgv_lang, $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 		global $indilist, $controller;
 		global $factarray;
+		//Load up off site search names here
+		$sites = array();
+		$sites["ancestry"] = "Ancestry.com";
+		$sites["familysearch"] = "FamilySearch.org";
+		$opts = "";
+		$optCount = 1;
+			//load up the options into the html
+			foreach($sites as $key=>$value) 
+			{
+			    $opts .=	"<OPTION value='".$key."' class='".$optCount."'>".$value;
+			    $optCount+=1;
+			}
+		
 		if (!is_object($person)) return "";
 		$givennames = $person->getGivenNames();
 		$lastname = $person->getSurname();
@@ -1208,13 +1221,13 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 								</tr>		
 		 						<tr>
 					 				<td class='optionbox'>
-					 					Include surname:</td><td class='optionbox'> <input type='checkbox' name='surname' value=".$lastname." checked='checked' /> ".$lastname."</td></tr>
+					 					Include surname:</td><td class='optionbox'> <input type='checkbox' name='surname' value=\"".$lastname."\" checked='checked' /> ".$lastname."</td></tr>
 					 						<tr><td class='optionbox'>
-					 					Include given names:</td><td class='optionbox'> <input type='checkbox' name='givenname1' value=".$givennames." checked='checked'' /> ".$givennames."</td></tr>
+					 					Include given names:</td><td class='optionbox'> <input type='checkbox' name='givenname1' value=\"".$givennames."\" checked='checked'' /> ".$givennames."</td></tr>
 					 						<tr><td class ='optionbox'>
-					 					Include birth year:</td><td class ='optionbox'> <input type='checkbox' name='birthyear' value=".$byear." checked='checked' /> ".$byear."</td></tr>
+					 					Include birth year:</td><td class ='optionbox'> <input type='checkbox' name='birthyear' value=\"".$byear."\" checked='checked' /> ".$byear."</td></tr>
 					 						<tr><td class='optionbox'>
-					 					Include death year:</td><td class='optionbox'> <input type='checkbox' name='deathyear' value=".$dyear." checked='checked' />".$dyear."
+					 					Include death year:</td><td class='optionbox'> <input type='checkbox' name='deathyear' value=\"".$dyear."\" checked='checked' />".$dyear."
 					 				</td>
 		 						</tr>
 		 						<tr>
@@ -1222,9 +1235,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 									</td>
 									<td class='topbottombar'>
 					 					<SELECT name='cbosite'>
-										<OPTION value='listdemo1' class='1'>Ancestry.com
-										<OPTION value='listdemo2' class='2'>FamilySearch.org				
-										</SELECT>
+										" .$opts.	//Need to add effects so that changing the option crates a post back													
+										"</SELECT> 
 									</td>
 								</tr>
 							</table>
@@ -1290,7 +1302,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
  	function search_ancestry() {
  		ifrm = document.getElementById('ifrm');
  		frm = document.ancsearch;
- 		if (frm.cbosite.options[frm.cbosite.selectedIndex].value == 'listdemo2') { 				
+ 		if (frm.cbosite.options[frm.cbosite.selectedIndex].value == 'familysearch') { 				
  				url = 'http://www.familysearch.org/Eng/search/ancestorsearchresults.asp?';
  				if (frm.surname.checked){
  					url = url + 'last_name=' + frm.surname.value; 																		
@@ -1298,7 +1310,14 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
  				if (frm.surname.checked && frm.givenname1.checked){
  					url = url + '&first_name=' + frm.givenname1.value; 					
  				}
- 				else alert('You must search with a last name');			
+ 				else alert('You must search with a last name');
+ 				
+				if(frm.birthyear.checked && frm.surname.checked){
+ 				url = url + '&event_index=1&date_range=2&from_date=' + frm.birthyear.value; 
+ 				}
+ 				if(frm.deathyear.checked && frm.surname.checked && !frm.birthyear.checked){
+ 					url = url + '&event_index=3&date_range=2&from_date=' + frm.deathyear.value; 
+ 				}			
  				//if (document.all) ifrm.location = url;
 				//else ifrm.src = url;
 				window.open(url, '');									
@@ -1321,8 +1340,9 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 				// if (document.all) ifrm.location = url;
 				// else ifrm.src = url;
 				window.open(url, '');			
-		}	 	
- 	} 	
+		} 	
+	}
+
 	function editcomment(commentid) {
   		window.open('editcomment.php?pid=".$person->getXref()."&ucommentid='+commentid, '', 'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');
   	}

@@ -30,6 +30,7 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["loading"]				="Loading...";
 $pgv_lang["upload_replacement"]		="Upload Replacement";
 $pgv_lang['progress_bars_info']		= "The status bars below will let you know how the import is progressing.  If the time limit runs out the import will be stopped and you will be asked to press a continue button.  If you don't see a continue button, please go back and enter a smaller time limit value.";
 $pgv_lang["clear_chart"]			= "Clear Chart";

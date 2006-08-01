@@ -42,6 +42,12 @@ Version 4.1
  - Added Search and Replace feature (Neumont)
 
 Version 4.0.2
+ - Fixed username is not logged for incorrect login attempts (yalnifj)
+ - Changed trim slashes from $SCRIPT_NAME to prevent page not found errors (yalnifj)
+ - Changed get_media_list() to not automatically generate a thumbnail, will improve performance (yalnifj)
+ - Fixed [ 1508813 ] 4.0/4.1 Indi Page Error in function strpos (opus27)
+ - Fixed [ 1530143 ] 4.0.2 and 4.1 - Editing a Fact - Fact Descriptor (opus27)
+ - Fixed [ 1530637 ] 4.0.2 & 4.1 - Y filled while editing facts with data (opus27)
  - Fixed [ 1529616 ] 4.0.1: Admin menu, Manage Media option (canajun2eh)
  - Fixed [ 1523672 ] 4.01 stable: SERIOUS: SSNs silently deleted after edit (yalnifj)
  - Fixed [ 1520255 ] 4.0 Stable: Reordering children causes GEDcom errors (opus27)

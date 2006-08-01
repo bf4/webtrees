@@ -804,7 +804,7 @@ function get_medialist($currentdir=false, $directory="", $linkonly=false) {
 			$media["XREF"] = "";
 			$media["GEDFILE"] = "";
 			$media["FILE"] = $directory.$fileName;
-			$media["THUMB"] = thumbnail_file($directory.$fileName);
+			$media["THUMB"] = thumbnail_file($directory.$fileName, false);
 			$media["EXISTS"] = true;
 			$media["FORM"] = $ext;
 			if ($ext=="jpg" || $ext=="jp2") $media["FORM"] = "jpeg";
@@ -975,7 +975,7 @@ function thumbnail_file($filename, $generateThumb=true, $overwrite=false) {
 	
 	if (!$overwrite && file_exists(filename_decode($thumbDir.$thumbName))) return $thumbDir.$thumbName;
 
-	if ($AUTO_GENERATE_THUMBS) {
+	if ($AUTO_GENERATE_THUMBS && $generateThumb) {
 		if (generate_thumbnail($mainDir.$thumbName, $thumbDir.$thumbName)) {
 			return $thumbDir.$thumbName;
 		}

@@ -27,11 +27,14 @@
  * @version $Id$
  */
 
-require "config.php";
-require $confighelpfile["english"];
-if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
-require $helptextfile["english"];
-if (file_exists($helptextfile[$LANGUAGE])) require $helptextfile[$LANGUAGE];
+require_once "config.php";
+require_once $confighelpfile["english"];
+if (file_exists($confighelpfile[$LANGUAGE])) require_once $confighelpfile[$LANGUAGE];
+require_once $helptextfile["english"];
+if (file_exists($helptextfile[$LANGUAGE])) require_once $helptextfile[$LANGUAGE];
+require_once "sanity_check.php";
+
+
 if (!defined("DB_ERROR")) require_once('DB.php');
 
 if (empty($action)) $action="";
@@ -666,7 +669,9 @@ if ($action=="update" && !isset($security_user)) {
 		</td>
 	</tr>
 <?php
-	if (!file_is_writeable("config.php")) {
+	/*
+	 * 
+	 if (!file_is_writeable("config.php")) {
 			print "<tr><td class=\"descriptionbox wrap\" colspan=\"2\"><span class=\"largeError\">";
 			print_text("not_writable");
 			print "</span></td></tr>";
@@ -674,6 +679,7 @@ if ($action=="update" && !isset($security_user)) {
 			print $pgv_lang["download_file"];
 			print "\" name=\"download\" /></td></tr>\n";
 	}
+	*/
 ?>
 </table>
 </form>

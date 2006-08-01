@@ -314,8 +314,11 @@ class ra_form {
 			//-- delete any existing facts from old people
 			foreach($oldpeople as $pid=>$person) {
 				if (!isset($people[$pid])) {
+					if(is_object($person))
+					{
 					$newrec = ra_functions::deleteRAFacts($_REQUEST['taskid'], $person->getGedcomRecord());
 					if ($newrec!=$person->getGedcomRecord()) replace_gedrec($pid, $newrec);
+					}
 				}
 			}
 			//-- add the new people to the database
@@ -385,7 +388,10 @@ END_OUT;
 			$peopleList = "";
 			$people = $this->getPeople();
 			foreach($people as $pid=>$person) {
+				if(is_object($person))
+				{
 				$peopleList .= "<option value=\"$pid\" selected=\"selected\">".$person->getName()."</option>";
+				}
 			}
 			$out .= <<<END_OUT
 			<option value="EVEN">{$pgv_lang['custom_event']}</option>
@@ -410,9 +416,12 @@ END_OUT;
 					$people = $this->getPeople();
 					$selectedPeople = explode(";", $fact['tf_people']);
 					foreach($people as $pid=>$person) {
+						if(is_object($person))
+						{
 						$peopleList .= "<option value=\"$pid\" ";
 						if (in_array($pid, $selectedPeople)) $peopleList .= "selected=\"selected\"";
 						$peopleList .= ">".$person->getName()."</option>";
+						}
 					}
 					$out .= "peopleList[$i] = '$peopleList';\r\n";
 				}
@@ -443,6 +452,49 @@ END_OUT;
 				factnames[factcount] = factname;
 				factcount++;
 				build_table();
+			}
+			
+			function add_ra_fact_inferred(chkbx,fact,person,factType) {
+				if(chkbx.checked)
+				{
+					for(var ii = 0; ii < factcount; ii++)
+					{
+												
+						if(facts[ii] == fact)
+						{
+						}
+						else
+						{
+							facts[factcount] = fact;
+							factnames[factcount] = factType;
+							factcount++;
+						}
+					}
+				}
+				else
+				{
+					
+						
+							newfacts = new Array();
+							newfactnames = new Array();
+							k=0;
+							for(j=0; j<factcount; j++) 
+							{
+								if (facts[j] != fact) 
+								{
+									newfacts[k]=facts[j];
+									newfactnames[k]=factnames[j];
+									k++;
+								}
+							}
+							facts = newfacts;
+							factnames = newfactnames;
+							factcount = k;							
+						
+					
+				}
+				build_table();
+				
 			}
 			function paste_edit_data(data, factname) {
 				facts[editi] = data;
@@ -478,6 +530,7 @@ END_OUT;
 					}
 				}
 				facts = newfacts;
+				factnames = newfactnames;
 				factcount = k;
 				build_table();
 			}

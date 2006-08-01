@@ -83,7 +83,10 @@ $IconLarrow = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["larrow"]["other"]."\
 $IconRDarrow = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["rdarrow"]["other"]."\" width=\"20\" height=\"20\" alt=\"\" />";
 $IconLDarrow = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["ldarrow"]["other"]."\" width=\"20\" height=\"20\" alt=\"\" />";
 
-//-- load all of the blocks
+
+/**
+ * Load List of Blocks in blocks directory (unchanged)
+ */
 $PGV_BLOCKS = array();
 $d = dir("blocks");
 while (false !== ($entry = $d->read())) {
@@ -92,6 +95,34 @@ while (false !== ($entry = $d->read())) {
 	}
 }
 $d->close();
+/**
+ * End loading list of Blocks in blocks directory
+ * 
+ * Load List of Blocks in modules/XX/blocks directories
+ */
+$dir=dir("modules");
+while (false !== ($entry = $dir->read())) {
+	if (!strstr($entry,".") && ($entry!="..") && ($entry!="CVS")&& !strstr($entry, "svn")) {
+		$path = 'modules/' . $entry.'/blocks';
+		if (is_readable($path)) {
+			$d=dir($path);
+			while (false !== ($entry = $d->read())) {
+				if (($entry!=".") && ($entry!="..") && ($entry!="CVS")&& !strstr($entry, "svn")&&(strstr($entry, ".php")!==false)) {
+					echo ($p=$path.'/'.$entry).'<br />';
+					include_once($p);
+				}
+			}
+		}
+	}
+}
+/**
+ * End loading list of Blocks in modules/XX/blocks directories
+*/
+
+
+
+
+
 
 //	Build sorted table of block names, BUT:
 //		include in this table ONLY if the block is appropriate for this page
