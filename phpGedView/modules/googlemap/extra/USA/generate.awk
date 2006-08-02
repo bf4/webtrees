@@ -43,7 +43,7 @@ function getStateName(stateAbbr)
         if (stateAbbr == "OH") { staat = "Ohio" }
         if (stateAbbr == "OK") { staat = "Oklahoma" }
         if (stateAbbr == "OR") { staat = "Oregon" }
-        if (stateAbbr == "PA") { staat = "Pennsylvannia" }
+        if (stateAbbr == "PA") { staat = "Pennsylvania" }
         if (stateAbbr == "PR") { staat = "Puerto Rico" }
         if (stateAbbr == "PW") { staat = "Republic of Palau" }
         if (stateAbbr == "RI") { staat = "Rhode Island" }
