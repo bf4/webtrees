@@ -58,7 +58,7 @@ if (($action=="ExportFile") && (userIsAdmin(getUserName()))) {
     $outputFileName = "places";
     for ($i = 0; $i < $level; $i++) $outputFileName .= "-".$parent[$i];
     $outputFileName .= ".csv";
-    outputLevel($parent, $level, 4);
+    outputLevel($parent, $level, 3);
     header("Content-Type: application/octet-stream");
     header("Content-Disposition: attachment; filename=".$outputFileName);
     print_r ($outputLevelStr);
