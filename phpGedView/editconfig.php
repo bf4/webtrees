@@ -179,6 +179,24 @@ else {
 
 
 print_header($pgv_lang["configure_head"]);
+//Prints warnings
+if (count($warnings)>0)
+{
+	foreach($warnings as $warning) 
+	{
+		print $warning;
+	}
+}
+//Prints errors
+if (count($errors)>0)
+{
+	foreach($errors as $error) 
+	{
+		print $error;
+	}
+	print_footer();
+	exit;
+}
 if ($action=="update" && !isset($security_user)) {
 	if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
 	$boolarray = array();
