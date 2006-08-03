@@ -53,7 +53,7 @@ if ($proceed == "backup") {
 		if ($TEXT_DIRECTION == "ltr") print "left"; else print "right";
 		print ";\" >".$pgv_lang["um_bu_explain"]."<br /></td></tr>";
 		?></table><br /><br />
-		<form action="<?php print $SCRIPT_NAME; ?>" method="post">
+		<form action="usermigrate.php" method="post">
 		<table align="center">
 			<tr class="label"><td style="padding: 5px" colspan="2" class="facts_label03"><?php print $pgv_lang["options"]; ?></td></tr><br />
 			<tr><td class="list_label" style="padding: 5px; text-align:<?php if ($TEXT_DIRECTION == "ltr") print "left"; else print "right";?>; "><?php print $pgv_lang["um_bu_config"]; ?></td><td class="list_value" style="padding: 5px;"><input type="checkbox" name="um_config" value="yes" checked="checked" /></td></tr>
@@ -239,7 +239,7 @@ if (($proceed == "export") || ($proceed == "exportovr")) {
 		if ($i > 0) {
 			print "<br />".$pgv_lang["um_files_exist"]."<br /><br />";
 			?>
-			<form "<?php print $SCRIPT_NAME; ?>" method="post">
+			<form action="usermigrate.php" method="post">
 				<input type="hidden" class="button" value="<?php print $pgv_lang["yes"];?>" />
 				<input type="button" class="button" value="<?php print $pgv_lang["yes"];?>" onclick="window.location='usermigrate.php?proceed=exportovr';"/>
 				<input type="button" class="button" value="<?php print $pgv_lang["no"];?>" onclick="window.location='admin.php';"/>
