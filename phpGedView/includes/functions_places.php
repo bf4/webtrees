@@ -52,7 +52,7 @@ function print_place_subfields($element_id) {
 	$HEAD = find_gedcom_record("HEAD");
 	$HEAD_PLAC = get_sub_record(1, "1 PLAC", $HEAD);
 	$HEAD_PLAC_FORM = get_sub_record(1, "2 FORM", $HEAD_PLAC);
-	$HEAD_PLAC_FORM = substr($HEAD_PLAC_FORM, 6);
+	$HEAD_PLAC_FORM = substr($HEAD_PLAC_FORM, 8);
 	if (empty($HEAD_PLAC_FORM)) $HEAD_PLAC_FORM = $pgv_lang["default_form"];
 	$plac_label = preg_split ("/,/", $HEAD_PLAC_FORM);
 	$plac_label = array_reverse($plac_label);
