@@ -855,10 +855,9 @@ function print_main_sources($factrec, $level, $pid, $linenum) {
 				if (strpos($source, " _ITALIC")) echo "<i>".$text."</i>"; else echo $text;
 			        echo "</a>";
 			   // PUBL
-				$cs = preg_match("/1 PUBL (.*)/", $source, $cmatch);
-				if ($cs>0) {
-					echo "<br />";
-					$text = $cmatch[1];
+				$text = get_gedcom_value("PUBL", "1", $source);
+				if (!empty($text)) {
+					echo "<br /><span class=\"label\">".$factarray["PUBL"].": </span>";
 					if (strpos($source, " _PAREN")) echo "(".$text.")"; else echo $text;
 				}
 			   // See if RESN tag prevents display or edit/delete
@@ -872,7 +871,7 @@ function print_main_sources($factrec, $level, $pid, $linenum) {
 			   if ($source) {
 				    $cs = preg_match("/$nlevel PAGE (.*)/", $srec, $cmatch);
 					if ($cs>0) {
-						 print "\n\t\t\t<br />".$factarray["PAGE"].": $cmatch[1]";
+						 print "\n\t\t\t<br /><span class=\"label\">".$factarray["PAGE"].": </span>".$cmatch[1];
 						 $text = get_cont($nlevel+1, $srec);
 						 $text = preg_replace("'(https?://[\w\./\-&=?~%#]*)'", "<a href=\"$1\" target=\"blank\">$1</a>", $text);
 						 print PrintReady($text);
