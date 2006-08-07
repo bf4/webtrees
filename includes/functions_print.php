@@ -395,7 +395,7 @@ if ($show_full)
 	  print $pgv_lang['loading'];
  	  print "</div></div>";
     }// SEARCH_SPIDER
-    
+
 	 // NOTE: Close div out-rand()
 	 print "\n\t\t\t</td></tr></table></div>";
 }
@@ -2204,7 +2204,7 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 			else if ($indexval==2) print $pgv_lang["wife"];
 			else print $factarray["AGE"];
 			print "</span>: ";
-			$age = get_age_at_event(substr($agerec,5));
+			$age = get_age_at_event(substr($agerec,7));
 			print PrintReady($age);
 			print " ";
 		}
