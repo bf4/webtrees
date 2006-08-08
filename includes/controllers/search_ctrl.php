@@ -1028,7 +1028,7 @@ class SearchControllerRoot extends BaseController {
 	/**
 	 *
 	 */
-	function MultiSitet() {
+	function MultiSiteSearch() {
 		global $REGEXP_DB;
 		require_once ('includes/serviceclient_class.php');
 		//		AddToLog("is_multisite search");
