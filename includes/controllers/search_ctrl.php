@@ -1028,7 +1028,7 @@ class SearchControllerRoot extends BaseController {
 	/**
 	 *
 	 */
-	function MultiSiteSearch() {
+	function MultiSitet() {
 		global $REGEXP_DB;
 		require_once ('includes/serviceclient_class.php');
 		//		AddToLog("is_multisite search");
@@ -1575,8 +1575,8 @@ class SearchControllerRoot extends BaseController {
 							print $totalIndiResults;
 						else
 							if ($totalIndiResults > 0) {
-								print (($this->resultsPerPage * $this->resultsPageNum) + 1)." to ";
-								print (($this->resultsPerPage * $this->resultsPageNum) + $this->indiResultsPrinted)." of ".$totalIndiResults;
+								print (($this->resultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ";
+								print (($this->resultsPerPage * $this->resultsPageNum) + $this->indiResultsPrinted)." ".$pgv_lang["of"]." ".$totalIndiResults;
 							}
 						if (count($this->indi_private) > 0)
 							print "  (".$pgv_lang["private"]." ".count($this->indi_private).")";
@@ -1593,8 +1593,8 @@ class SearchControllerRoot extends BaseController {
 							print $totalFamResults;
 						else
 							if ($totalFamResults > 0) {
-								print (($this->resultsPerPage * $this->resultsPageNum) + 1)." to ";
-								print (($this->resultsPerPage * $this->resultsPageNum) + $this->famResultsPrinted)." of ".$totalFamResults;
+								print (($this->resultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ";
+								print (($this->resultsPerPage * $this->resultsPageNum) + $this->famResultsPrinted)." ".$pgv_lang["of"]." ".$totalFamResults;
 							}
 						if (count($this->fam_private) > 0)
 							print "  (".$pgv_lang["private"]." ".count($this->fam_private).")";
@@ -1611,8 +1611,8 @@ class SearchControllerRoot extends BaseController {
 							print $totalSrcResults;
 						else
 							if ($totalSrcResults > 0) {
-								print (($this->resultsPerPage * $this->resultsPageNum) + 1)." to ";
-								print (($this->resultsPerPage * $this->resultsPageNum) + $this->srcResultsPrinted)." of ".$totalSrcResults;
+								print (($this->resultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ";
+								print (($this->resultsPerPage * $this->resultsPageNum) + $this->srcResultsPrinted)." ".$pgv_lang["of"]." ".$totalSrcResults;
 							}
 						if (count($this->source_hide) > 0)
 							print "  --  ".$pgv_lang["hidden"]." ".count($this->source_hide);
@@ -1748,8 +1748,8 @@ class SearchControllerRoot extends BaseController {
 							print $totalIndiResults;
 						else
 							if ($totalIndiResults > 0) {
-								print (($this->resultsPerPage * $this->resultsPageNum) + 1)." to ";
-								print (($this->resultsPerPage * $this->resultsPageNum) + $this->indiResultsPrinted)." of ".$totalIndiResults;
+								print (($this->resultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ";
+								print (($this->resultsPerPage * $this->resultsPageNum) + $this->indiResultsPrinted)." ".$pgv_lang["of"]." ".$totalIndiResults;
 							}
 						if (count($this->indi_private) > 0)
 							print "  (".$pgv_lang["private"]." ".count($this->indi_private).")";
@@ -1764,8 +1764,8 @@ class SearchControllerRoot extends BaseController {
 								print $totalFamResults;
 							else
 								if ($this->resultsPerPage >= $totalFamResults) {
-									print (($this->resultsPerPage * $this->resultsPageNum) + 1)." to ";
-									print (($this->resultsPerPage * $this->resultsPageNum) + $this->famResultsPrinted)." of ".$totalFamResults;
+									print (($this->resultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ";
+									print (($this->resultsPerPage * $this->resultsPageNum) + $this->famResultsPrinted)." ".$pgv_lang["of"]." ".$totalFamResults;
 								}
 							if (count($this->fam_private) > 0)
 								print "  (".$pgv_lang["private"]." ".count($this->fam_private).")";
@@ -1880,8 +1880,8 @@ class SearchControllerRoot extends BaseController {
 							}
 							if ($this->multiTotalResults > 0) {
 								print "</tr><tr><td align=\"left\">Displaying individuals ";
-								print (($this->multiResultsPerPage * $this->resultsPageNum) + 1)." to ". (($this->multiResultsPerPage * $this->resultsPageNum) + $pageResultsNum);
-								print " of ". ($this->multiTotalResults)."</td></tr></table>";
+								print (($this->multiResultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ". (($this->multiResultsPerPage * $this->resultsPageNum) + $pageResultsNum);
+								print " ".$pgv_lang["of"]." ". ($this->multiTotalResults)."</td></tr></table>";
 								$this->multiTotalResults = 0;
 							} else
 								print "</tr></table>";

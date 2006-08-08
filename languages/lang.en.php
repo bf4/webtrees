@@ -745,6 +745,7 @@ $pgv_lang["search_asso_label"]		= "Associates";
 $pgv_lang["search_asso_text"]		= "Show related persons/families";
 $pgv_lang["results_per_page"]		= "Results per page";
 $pgv_lang["search_record"]			= "Entire record";
+$pgv_lang["search_to"]				= "to";
 $pgv_lang["replace_with"]			= "Replace with";
 
 //-- SOURCELIST FILE MESSAGES

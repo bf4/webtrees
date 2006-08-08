@@ -50,6 +50,8 @@ $pgv_lang["htmlplus_block_content"] 	= "Sisällys";
 $pgv_lang["htmlplus_block_narrative"] 	= "Kertova tyyli (vain englanniksi)";
 $pgv_lang["htmlplus_block_custom"]	= "Omat asetukset";
 $pgv_lang["htmlplus_block_keyword"]	= "Esimerkkejä avainsanoista (vain englanniksi)";
+$pgv_lang["htmlplus_block_taglist"]	= "Merkitsinluettelo";
+$pgv_lang["htmlplus_block_compat"]	= "Yhteensopivuustila";
 $pgv_lang["htmlplus_block_current"]	= "Nykyinen";
 $pgv_lang["htmlplus_block_default"]	= "Oletusarvo";
 $pgv_lang["htmlplus_block_gedcom"]	= "Sukupuu";
@@ -478,6 +480,7 @@ $pgv_lang["search_asso_label"]	= "Läheiset";
 $pgv_lang["search_asso_text"]	= "Näytä sukulaishenkilöt- ja perheet.";
 $pgv_lang["results_per_page"]		= "Tuloksia sivulla";
 $pgv_lang["search_record"]			= "Koko tietue";
+$pgv_lang["search_to"]				= "-";
 $pgv_lang["replace_with"]			= "Korvaa tällä:";
 
 //-- SOURCELIST FILE MESSAGES
@@ -589,6 +592,8 @@ $pgv_lang["name_list"] 		= "Nimiluettelo";
 $pgv_lang["firstname_alpha_index"] 	= "Aakkosellinen etunimihakemsito";
 $pgv_lang["roots"]		 				= "Juuret";
 $pgv_lang["leaves"] 					= "Lehdet";
+$pgv_lang["widow"] 					= "Leski";
+$pgv_lang["widower"] 				= "Leski";
 
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]			= "Ikä";
@@ -1436,6 +1441,8 @@ $pgv_lang["is_alive_in"]		= "Elossa vuonna ";
 $pgv_lang["alive"]			= "Elossa";
 $pgv_lang["dead"]			= "Kuollut";
 $pgv_lang["maybe"]			= "Ehkä";
+$pgv_lang["both_alive"]					= "Molemmat elossa";
+$pgv_lang["both_dead"]					= "Molemmat kuolleet";
 
 //-- find media
 $pgv_lang["add_directory"]		= "Lisää hakemisto";
@@ -1758,5 +1765,7 @@ $pgv_lang["add_individual_by_id"]		= "Lisää henkilö ID-tunnuksen avulla";
 $pgv_lang["advanced_options"]		= "Lisäasetukset";
 $pgv_lang["zip_files"]				= "Zip-tiedosto(t)";
 $pgv_lang["include_media"]			= "Sisällytä media (automaattisesti zip-tiedosto)";
+$pgv_lang["loading"]				="Ladataan...";
+
 if (file_exists( "languages/lang.fi.extra.php")) require  "languages/lang.fi.extra.php";
 ?>
