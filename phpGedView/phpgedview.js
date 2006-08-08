@@ -428,6 +428,15 @@ function valid_date(datefield) {
 	 	m = (q-1)*3;
 		if (0<q && q<5) datefield.value = "BET "+months[m]+" "+y+" AND "+months[(m+2)]+" "+y;
 	}
+	// e.g. 17.11.1860
+	var qsearch = /^(\d\d).(\d\d).(\d\d\d\d)$/i;
+ 	var found = qsearch.exec(datefield.value);
+ 	if (found) {
+	 	d = RegExp.$1;
+	 	m = RegExp.$2;
+	 	y = RegExp.$3;
+		datefield.value = d+" "+months[(m-1)]+" "+y;
+	}
 	// other format
 	date = new Date(datefield.value);
 	if (date && date.toString()!="NaN" && date.getDate().toString()!="NaN") {
@@ -512,7 +521,7 @@ function expandbox(boxid, bstyle) {
 			//else parentbox.style.right=divleft+"px";
 		}
 		divbox.style.height='auto';
-		if (inbox) 
+		if (inbox)
 		{
 			inbox.style.display='block';
 			if ( inbox.innerHTML.indexOf("LOADING")>0 )
@@ -535,9 +544,9 @@ function expandbox(boxid, bstyle) {
 		{
 			inbox.style.display='none';
 		}
-		
+
 		if (inbox2) inbox2.style.display='none';
-		
+
 		fontdef = document.getElementById("fontdef-"+boxid);
 		if (fontdef) {
 			oldfont = fontdef.className;
@@ -582,7 +591,7 @@ function createXMLHttp()
 	{
 		var ARR_XMLHTTP_VERS=["MSXML2.XmlHttp.5.0","MSXML2.XmlHttp.4.0",
 			"MSXML2.XmlHttp.3.0","MSXML2.XmlHttp","Microsoft.XmlHttp"];
-	
+
 		for (var i = 0; i < ARR_XMLHTTP_VERS.length; i++)
 		{
 			try
@@ -595,7 +604,7 @@ function createXMLHttp()
 	}
 	throw new Error("XMLHttp object could not be created.");
 };
-	
+
 function restorebox(boxid, bstyle) {
 	divbox = document.getElementById("out-"+boxid);
 	inbox = document.getElementById("inout-"+boxid);
@@ -646,7 +655,7 @@ function restorebox(boxid, bstyle) {
 		if (namedef) namedef.className = oldname;
 		addnamedef = document.getElementById("addnamedef-"+boxid);
 		if (addnamedef) addnamedef.className = oldaddname;
-	}	
+	}
 	return true;
 }
 
