@@ -31,7 +31,7 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
-$pgv_lang["loading"]				="@@טוען...";  //ma'ale??
+$pgv_lang["loading"]				="טוען...";  
 $pgv_lang["upload_replacement"]		="העלה החלפה";
 $pgv_lang['progress_bars_info']		= "סרגל הסטטוס שלמטה מאפשר לך לדעת את מצב הייבוא. אם תחום הזמן נגמר הייבוא נעצר ותתבקש ללחוץ על כפתור המשך. אם אינך רואה כפתור המשך, חזור אחורה והכנס תחום זמן קטן יותר.";
 $pgv_lang["clear_chart"]			= "נקה תרשים";
@@ -187,8 +187,8 @@ $pgv_lang["stat_surnames"]			= "סה\"כ שמות משפחה";
 $pgv_lang["stat_media"]			= "ישויות מדיה";
 $pgv_lang["stat_users"]			= "סה\"כ משתמשים";
 $pgv_lang["no_family_facts"]			= "אין עובדות למשפחה זו.";
-$pgv_lang["stat_males"]			= "@@סה\"כ גברים";
-$pgv_lang["stat_females"]			= "@@סה\"כ נשים";
+$pgv_lang["stat_males"]			= "סה\"כ גברים";
+$pgv_lang["stat_females"]			= "סה\"כ נשים";
 
 $pgv_lang["sunday_1st"]		= "א";
 $pgv_lang["monday_1st"]		= "ב";
@@ -758,7 +758,7 @@ $pgv_lang["search_asso_label"]	= "שותפים";
 $pgv_lang["search_asso_text"]		= "הראה אנשים/משפחות קשורים";
 $pgv_lang["results_per_page"]		= "תוצאות לדף"; 
 $pgv_lang["search_record"]		= "רשומה שלמה";
-$pgv_lang["search_to"]		= "@@עד";
+$pgv_lang["search_to"]		= "עד";
 $pgv_lang["replace_with"]		= "החלף ב-";
 
 //-- SOURCELIST FILE MESSAGES
@@ -1965,5 +1965,5 @@ $pgv_lang["module_error_unknown_action_v2"] 	= "פעולה בלתי ידועה: 
 $pgv_lang["module_error_unknown_type"] 	= "סוג מודול בלתי ידוע.";
 
 //if (file_exists($PGV_BASE_DIRECTORY . "languages/lang.he.extra.php")) require $PGV_BASE_DIRECTORY . "languages/lang.he.extra.php";
-if (file_exists( "languages/lang.he.extra.php")) require  "languages/lang.he.extra.php";
+if (file_exists("languages/lang.he.extra.php")) require "languages/lang.he.extra.php";
 ?>

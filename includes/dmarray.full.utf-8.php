@@ -361,6 +361,7 @@
 	$dmcoding["דץ"] = array(4, 4, 4);
 	$dmcoding["ד"] = array(3, 3, 3);
 	$dmcoding["הג"] = array(54, 54, 54, 55, 55, 55);
+	$dmcoding["הכ"] = array(55, 55, 55);
 	$dmcoding["הח"] = array(55, 55, 55);
 	$dmcoding["הק"] = array(55, 55, 55, 5, 5, 5);
 	$dmcoding["ה"] = array(5, 5, -1);
