@@ -715,16 +715,15 @@ class Person extends GedcomRecord {
 		if (!$this->canDisplayDetails()) return;
 		$this->parseFacts();
 		//-- Get the facts from the family with spouse (FAMS)
-		$ct = preg_match_all("/1\s+FAMS\s+@(.*)@/", $this->gedrec, $fmatch, PREG_SET_ORDER);
-		for($j=0; $j<$ct; $j++) {
-			$famid = $fmatch[$j][1];
+		foreach ($this->getSpouseFamilyIds() as $key=>$famid) {
 			$family = Family::getInstance($famid);
 			if (is_null($family)) continue;
 			$famrec = $family->getGedcomRecord();
-			$parents=find_parents_in_record($famrec);
-			if ($parents['HUSB']==$this->xref) $spouse=$parents['WIFE'];
-			else $spouse=$parents['HUSB'];
-			$indilines = split("\n", $famrec);	 // -- find the number of lines in the individuals record
+			$updfamily = $family->getUpdatedFamily(); //-- updated family ?
+			if ($updfamily) $famrec = $updfamily->getGedcomRecord();
+			if ($family->getHusbId()==$this->xref) $spouse = $family->getWifeId();
+			else $spouse = $family->getHusbId();
+			$indilines = split("\n", $famrec);	 // -- find the number of lines in the record
 			$lct = count($indilines);
 			$factrec = "";	 // -- complete fact record
 			$line = "";   // -- temporary line buffer
@@ -743,6 +742,7 @@ class Person extends GedcomRecord {
 						if ((!in_array($fact, $nonfacts))&&(!in_array($fact, $nonfamfacts))) {
 							$factrec.="\r\n1 _PGVS @$spouse@\r\n";
 							$factrec.="1 _PGVFS @$famid@\r\n";
+							if ($updfamily) $factrec .= "PGV_NEW\r\n";
 							$this->indifacts[]=array($linenum, $factrec);
 						}
 					}
