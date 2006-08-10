@@ -568,25 +568,39 @@ class MenuBar
 		}
 		//-- relationship submenu
 		if (file_exists("relationship.php")) {
+			$pids[] = $myid;
 			if ($rootid and empty($myid)) {
 				$username = getUserName();
 				if (!empty($username)) {
 					$user = getUser($username);
-					$myid = @$user["gedcomid"][$GEDCOM];
+					$pids[] = @$user["gedcomid"][$GEDCOM];
+					$pids[] = @$user["rootid"][$GEDCOM];
 				}
 			}
-			if (($myid and $myid!=$rootid) or empty($rootid)) {
-				$link = "relationship.php";
-				if ($rootid) {
-					$link .= "?pid1=".$myid."&amp;pid2=".$rootid;
-					$submenu = new Menu($pgv_lang["relationship_to_me"], $link);
-				} else {
-					$submenu = new Menu($pgv_lang["relationship_chart"], $link);
+			if ($rootid) {
+				foreach (getUserFavorites(getUserName()) as $key=>$favorite) {
+					$pid = $favorite["gid"];
+					if (displayDetailsById($pid, $favorite["type"])) {
+						if ($favorite["type"]=="INDI" && $favorite["file"]==$GEDCOM) $pids[]=$pid;
+					}
 				}
-				if (!empty($PGV_IMAGES["relationship"]["small"]))
-					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["relationship"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-				$menu->addSubmenu($submenu);
+			}
+			$pids = array_unique($pids);
+			foreach ($pids as $key=>$pid) {
+				if (($pid and $pid!=$rootid) or empty($rootid)) {
+					$link = "relationship.php";
+					if ($rootid) {
+						$link .= "?pid1=".$pid."&amp;pid2=".$rootid;
+						$label = $pgv_lang["relationship_chart"].": ".PrintReady(get_person_name($pid));
+						$submenu = new Menu($label, $link);
+					} else {
+						$submenu = new Menu($pgv_lang["relationship_chart"], $link);
+					}
+					if (!empty($PGV_IMAGES["relationship"]["small"]))
+						$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["relationship"]["small"]);
+					$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+					$menu->addSubmenu($submenu);
+				}
 			}
 		}
 		//-- produce a plot of statistics
