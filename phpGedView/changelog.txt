@@ -9,6 +9,8 @@
 =====================================================================
 
 Version 4.1
+ - Added dynamic module block loading (Neumont)
+ - Added site sanity check (Neumont)
  - Fixed [ 1506905 ] PUBL Truncated in Source Tab on Individual Page (opus27)
  - Fixed [ 1530718 ] bug on recent changes block (opus27)
  - Fixed [ 1527526 ] SVN 290 Reorder children causes duplicate child sometimes (opus27)
@@ -43,6 +45,9 @@ Version 4.1
  - Added Search and Replace feature (Neumont)
 
 Version 4.0.2
+ - Fixed Hourglass still uses 3.3 privacy rules (yalnifj)
+ - Fixed Marriage date edit doesn't show up (opus27)
+ - Fixed [ 1533985 ] 4.1 & 4.0.2 - Gedcom Age printed with a redund e (opus27)
  - Fixed username is not logged for incorrect login attempts (yalnifj)
  - Changed trim slashes from $SCRIPT_NAME to prevent page not found errors (yalnifj)
  - Changed get_media_list() to not automatically generate a thumbnail, will improve performance (yalnifj)

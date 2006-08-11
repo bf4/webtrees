@@ -39,6 +39,7 @@ require_once "includes/person_class.php";
  * 
  */
 class ra_form {
+	var $people;
 	/**
 	 * GETS all PEOPLE associated with the task given taskid
 	 * 
@@ -47,6 +48,8 @@ class ra_form {
 	function getPeople(){
         global $TBLPREFIX, $DBCONN;
 
+		if (!is_null($this->people)) return $this->people;
+		
 		$sql = 	"SELECT it_i_id FROM " . $TBLPREFIX . "individualtask WHERE it_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
 		$res = dbquery($sql);
 
@@ -55,6 +58,7 @@ class ra_form {
 			$people[$row[0]] = Person::getInstance($row[0]);
 		}
 		$res->free();
+		$this->people = $people;
 		return $people;
 	}
 	
@@ -381,6 +385,7 @@ class ra_form {
 			<td class="descriptionbox">Associate Facts</td>
 			<td class="optionbox"><select id="newfact" name="newfact">
 END_OUT;
+			
 			$facts = preg_split("/[, ;:]+/", $INDI_FACTS_ADD, -1, PREG_SPLIT_NO_EMPTY);
 			foreach($facts as $f=>$fact) {
 				$out .= '<option value="'.$fact.'">'.$factarray[$fact]. ' ['.$fact.']</option>';
@@ -416,12 +421,16 @@ END_OUT;
 					$peopleList = "";
 					$people = $this->getPeople();
 					$selectedPeople = explode(";", $fact['tf_people']);
+					// print_r($selectedPeople);
 					foreach($people as $pid=>$person) {
 						if(is_object($person))
 						{
-						$peopleList .= "<option value=\"$pid\" ";
-						if (in_array($pid, $selectedPeople)) $peopleList .= "selected=\"selected\"";
-						$peopleList .= ">".$person->getName()."</option>";
+							if ($fact['tf_multiple']=='Y' || in_array($pid, $selectedPeople)) {
+								$peopleList .= "<option value=\"$pid\" ";
+								if (in_array($pid, $selectedPeople)) $peopleList .= "selected=\"selected\"";
+								$peopleList .= ">".$person->getName()."</option>";
+							}
+						
 						}
 					}
 					$out .= "peopleList[$i] = '$peopleList';\r\n";
@@ -444,6 +453,7 @@ END_OUT;
 //				alert(factfield);
 				if (factfield) {
 					factvalue = factfield.value;
+//					alert(factvalue+escape(factvalue));
 					window.open('edit_interface.php?action=mod_edit_fact&mod=research_assistant&command=edit&factrec='+escape(factvalue)+"&"+sessionname+"="+sessionid, '', 'top=50,left=50,width=710,height=500,resizable=1,scrollbars=1');
 				}
 				return false;
@@ -474,7 +484,7 @@ END_OUT;
 								myArray[person+factType] = true;
 								counter++;
 								factnames[factcount] = factType;
-								var myPerson = "<option value=\""+name+"\"";
+								var myPerson = "<option value=\""+person+"\"";
 									myPerson += "selected=\"selected\"";
 									myPerson +=">"+name+"</option>";
 								peopleList[i]= myPerson;
@@ -546,7 +556,7 @@ END_OUT;
 					k=0;
 					for(j=0; j<factcount; j++) 
 					{
-						if(inferredFacts[j] != person)
+						if(i!=j || inferredFacts[j] != person)
 						{		
 							newfacts[k]=facts[j];
 							newfactnames[k]=factnames[j];
@@ -598,9 +608,13 @@ END_OUT;
 						else out += facts[i].slice(pos1, facts[i].length);
 					}
 					out += '<input type="hidden" name="fact'+i+'" id="fact'+i+'" value="'+facts[i]+'" />';
+					value ='N';
+					if (peopleList[i].split("<option ").length > 2) value='Y';
+//					alert(i+" "+peopleList[i]+peopleList[i].split("<option ").length+" "+value);
+					out += '<input type="hidden" name="multiple'+i+'" id="multiple'+i+'" value="'+value+'" />';
 					out += '</td>';
 					out += '<td class="optionbox"><select name="people'+i+'[]" size="3" multiple="multiple">';
-					if (peopleList[i]) out += peopleList[i]; 
+					if (peopleList[i]) out += peopleList[i];
 					else out += '$peopleList';
 					out += '</select></td>';
 					if(!inferredFacts[i])
@@ -637,6 +651,7 @@ END_OUT;
 		{
 		$out .= '<tr><td class="descriptionbox" align="center" colspan="2"><input type="submit" value="Complete"></td></tr>';
 		}
+		
 		return $out;
     }
     
@@ -687,7 +702,7 @@ END_OUT;
 				$sql = "INSERT INTO ".$TBLPREFIX."taskfacts VALUES('".get_next_id("taskfacts", "tf_id")."'," .
 					"'".$DBCONN->escapeSimple($_REQUEST['taskid'])."'," .
 					"'".$DBCONN->escapeSimple($factrec)."'," .
-					"'".$DBCONN->escapeSimple($peopleTxt)."')";
+					"'".$DBCONN->escapeSimple($peopleTxt)."', '".$_REQUEST['multiple'.$i]."')";
 				$res = dbquery($sql);
 				foreach($people as $in=>$pid) {
 					if (!empty($pid) && isset($newpeoplerecs[$pid])) {

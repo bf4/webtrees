@@ -108,7 +108,7 @@ while (false !== ($entry = $dir->read())) {
 			$d=dir($path);
 			while (false !== ($entry = $d->read())) {
 				if (($entry!=".") && ($entry!="..") && ($entry!="CVS")&& !strstr($entry, "svn")&&(strstr($entry, ".php")!==false)) {
-					echo ($p=$path.'/'.$entry).'<br />';
+					$p=$path.'/'.$entry;
 					include_once($p);
 				}
 			}
