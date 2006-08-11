@@ -338,8 +338,10 @@ function getTitle(){
                    			$people = getPeople();
                    			$pval = '';
                    			foreach($people as $pid=>$person) {
+                   				if(is_object($person)){
                    				$pval .= ';'.$person->getXref();
                    				print '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+                   				}
                    			}
                    		?>
                    </div>

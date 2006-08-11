@@ -55,16 +55,41 @@ if (file_exists($factsfile[$LANGUAGE])) require($factsfile[$LANGUAGE]);
  * - Leaving the type undefined allows it to be on both the user and gedcom portal
  * @global $PGV_BLOCKS
  */
-$PGV_BLOCKS = array();
 
-//-- load all of the blocks
+/**
+ * Load List of Blocks in blocks directory (unchanged)
+ */
+$PGV_BLOCKS = array();
 $d = dir("blocks");
 while (false !== ($entry = $d->read())) {
-	if (strstr($entry, ".")==".php") {
+	if (($entry!=".") && ($entry!="..") && ($entry!="CVS") && (strstr($entry, ".php")!==false)) {
 		include_once("blocks/".$entry);
 	}
 }
 $d->close();
+/**
+ * End loading list of Blocks in blocks directory
+ * 
+ * Load List of Blocks in modules/XX/blocks directories
+ */
+$dir=dir("modules");
+while (false !== ($entry = $dir->read())) {
+	if (!strstr($entry,".") && ($entry!="..") && ($entry!="CVS")&& !strstr($entry, "svn")) {
+		$path = 'modules/' . $entry.'/blocks';
+		if (is_readable($path)) {
+			$d=dir($path);
+			while (false !== ($entry = $d->read())) {
+				if (($entry!=".") && ($entry!="..") && ($entry!="CVS")&& !strstr($entry, "svn")&&(strstr($entry, ".php")!==false)) {
+					$p=$path.'/'.$entry;
+					include_once($p);
+				}
+			}
+		}
+	}
+}
+/**
+ * End loading list of Blocks in modules/XX/blocks directories
+*/
 
 if (isset($_SESSION["timediff"])) $time = time()-$_SESSION["timediff"];
 else $time = time();

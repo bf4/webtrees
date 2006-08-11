@@ -48,9 +48,9 @@ class Census1930 extends ra_form {
 	    	if ($_REQUEST['numOfRows']<1) $_REQUEST['numOfRows']=1;
 	    	$out .= '<table align="center"><tr><td class="descriptionbox">'.$pgv_lang["rows"].'</td><td class="optionbox"><select name="numOfRows">';
 	    	for($i = 1; $i <= 20; $i++){
-	    		$out .= '<option value="'.$i;
+	    		$out .= '<option value="'.$i.'"';
 	    		if ($_REQUEST['numOfRows']==$i) $out .= " selected=\"selected\"";
-	    		$out .= '">'.$i;
+	    		$out .= '>'.$i;
 	    	}
 	    	$out .=	'</select></td></tr><tr><td colspan="2" class="topbottombar"><input type="submit" value="'.$pgv_lang["okay"].'"/></td></tr></table>';
 	    	$out .= '</form>';
@@ -62,7 +62,13 @@ class Census1930 extends ra_form {
         parse_str(html_entity_decode($action["query"]), $params);
         
         // Setup for our form to go through the module system
-        $out .=  '<form action="' . $action["path"] . '" method="post">';
+       $out .= '<script language="JavaScript" type="text/javascript">
+<!--
+function ValidateForm(myForm){ if(myForm.sourceid && myForm.sourceid.value == ""){ alert("You must enter a source");
+return false;}return true;}
+//-->
+</script>';
+        $out .=  '<form action="' . $action["path"] . '" method="post" onsubmit="return ValidateForm(this)">';
 		$out .= '<input type="hidden" name="numOfRows" value="'.$_REQUEST['numOfRows'].'" />';
         foreach ($params as $key => $value) {
             $out .= '<input type="hidden" name="' . $key . '" value="' . $value . '">';
@@ -395,10 +401,14 @@ class Census1930 extends ra_form {
  			
  		$out .='<tr><td class="descriptionbox">Person
   </td>';		
- 		
+  $people = $this->getPeople();
+  $persons = array_values($people);
  		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$pid = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['personid'])) $pid = $citation['ts_array']['rows'][$i]['personid'];
+  			if (empty($pid)) {
+	  			if (isset($persons[$i])) $pid = $persons[$i]->getXref();
+	  		}
   			$person = Person::GetInstance($pid);
   			
 			$out .= '
@@ -438,19 +448,68 @@ class Census1930 extends ra_form {
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
 			if (!isset($_POST["personid".$number])) $_POST["personid".$number]="";
-			$personid .= $_POST["personid".$number];
+			$personid .= $_POST["personid".$number].";";
 			$_POST["personid".$number] = trim($_POST["personid".$number], '; \r\n\t');
 		}
 		$_REQUEST['personid'] = $personid;
+		$return = $this->processSourceCitation();
 		
-		
-		$this->processSourceCitation();
-		
+		if(empty($return))
+		{
 		$out = $this->header("module.php?mod=research_assistant&form=Census1930&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1930 United States Federal Census");
-		$out .= $this->editFactsForm();
+		$out .= $this->editFactsForm(false);
 		$out .= $this->footer();
 		return $out;
+		}
+		else
+		{
+			
+		}
 	}
+	
+		function editFactsForm($printButton = true)
+	{
+		$facts = $this->getFactData();
+		$citation = $this->getSourceCitationData();
+		$out = parent::editFactsForm(false);
+		$rows = $citation['ts_array']['rows'];
+		$inferFacts = $this->inferFacts($rows);
+		if(!empty($inferFacts))
+		{
+		$out .= '<tr><td colspan="2" id="inferData"><table class="list_table"><tbody><tr><td colspan="4" class="topbottombar">Inferred Facts</td></tr>
+<tr><td class="descriptionbox">Fact</td><td class="descriptionbox">Person</td><td class="descriptionbox">Reason</td><td class="descriptionbox">Add</td></tr>';
+		$completeFact = true;
+		foreach($inferFacts as $key=>$value){
+			if(!empty($value["DOB"]))
+				{
+					foreach($facts as $factKey=>$factValues)
+					{
+						$ct = preg_match("/1 (\w+)/", $factValues['tf_factrec'], $match);
+						$factname = trim($match[1]);
+						if($factValues["tf_people"] == $key  && $factname == "BIRT")	
+						{
+							$completeFact = false;
+						}
+					}
+					if($completeFact)
+					{
+						$out .='<tr>';
+						$out .="<td>".$value["shortDOB"]."</td>";
+						$out .="<td>".$value["Person"]."</td>";
+						$out .="<td>".$value["Reason"]."</td>";
+						$out .="<td>".'<input type="Checkbox" id="'.$key.$value["FactType"].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["DOB"]).'\',\''.$key.'\',\'BIRT\',\''.$value["Person"].'\')"></td>';
+						$out .="</tr>";
+					}
+				
+				}
+				
+			}
+		
+		}
+		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value="Complete"></td></tr>';
+		return $out;
+	}
+	
 	
 	function step3() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $pgv_lang;
@@ -465,6 +524,57 @@ class Census1930 extends ra_form {
 
 		// Return it to the buffer.
 		return $out;
+	}
+
+/**
+ * This is a function that will attempt to infer facts from the census form.
+	 * If any facts can be inferred then it will attempt to validate them against the database.
+	 * If a fact differs from that in the database, or there is no fact present in the databse,
+	 * this function will suggest the facts to the user. 
+	 */
+	 
+	function inferFacts($rows){
+		
+		
+		$people = array();
+		
+		for($number = 0; $number < $_POST['numOfRows']; $number++)
+		{
+			$inferredFacts = array();
+			$censusAge = $rows[$number]["Age"];
+			$birthDate = 1930 - $censusAge;
+			
+			$person = Person::getInstance($rows[$number]["personid"]);
+			if(!empty($person))
+			{
+			$bdate = $person->getBirthYear();
+			}
+			
+			if(!empty($bdate))
+			{
+				 $bDiff = $birthDate - $bdate;
+				 if($bDiff >1 || $bDiff < 0)
+				 {
+				 	$inferredFacts["Person"] = $person->getName();
+				 	$inferredFacts["Reason"] = "A birth date difference was detected";
+				 	$inferredFacts["DOB"] = "1 BIRT \r\n2 DATE ".$birthDate;
+				 	$inferredFacts["shortDOB"] = $birthDate;
+				 	$inferredFacts["FactType"] = "BIRT";
+				 }
+			}
+			else
+			{
+					$inferredFacts["Person"] = $person->getName();
+				 	$inferredFacts["Reason"] = "A birth date can be inferred";
+				 	$inferredFacts["DOB"] = "1 BIRT \r\n2 DATE ".$birthDate;
+				 	$inferredFacts["FactType"] = "BIRT";
+				 	$inferredFacts["shortDOB"] = $birthDate;
+			}
+			$people[$person->getXref()] = $inferredFacts;
+		}
+		return $people;
+		
+		
 	}
 
 	/**
@@ -489,7 +599,7 @@ class Census1930 extends ra_form {
 		$sql = "INSERT INTO ".$TBLPREFIX."taskfacts VALUES('".get_next_id("taskfacts", "tf_id")."'," .
 			"'".$DBCONN->escapeSimple($_REQUEST['taskid'])."'," .
 			"'".$DBCONN->escapeSimple($factrec)."'," .
-			"'".$DBCONN->escapeSimple(implode(";", $pids))."')";
+			"'".$DBCONN->escapeSimple(implode(";", $pids))."', 'Y')";
 		$res = dbquery($sql);
 		
 		$rows = array();

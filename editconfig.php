@@ -184,7 +184,7 @@ if (count($warnings)>0)
 {
 	foreach($warnings as $warning) 
 	{
-		print $warning;
+		print "<span style=\"color: blue; font-weight: bold;\">".$warning."</span>";
 	}
 }
 //Prints errors
@@ -192,7 +192,7 @@ if (count($errors)>0)
 {
 	foreach($errors as $error) 
 	{
-		print $error;
+		print "<span style=\"font-weight: bold;\">".$error."</span>";
 	}
 	print_footer();
 	exit;

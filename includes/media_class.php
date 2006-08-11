@@ -31,6 +31,7 @@ class Media extends GedcomRecord {
 	var $title = "";
 	var $file = "";
 	var $ext = "";
+	var $note = "";
 	var $indilist = null;
 	var $famlist = null;
 
@@ -42,6 +43,7 @@ class Media extends GedcomRecord {
 		parent::GedcomRecord($gedrec);
 		$this->disp = displayDetailsByID($this->xref, "OBJE");
 		$this->title = get_gedcom_value("TITL", 1, $gedrec);
+		$this->note = get_gedcom_value("NOTE", 1, $gedrec);
 		if (empty($this->title)) $this->title = get_gedcom_value("TITL", 2, $gedrec);
 		$this->file = get_gedcom_value("FILE", 1, $gedrec);
 		$et = preg_match("/(\.\w+)$/", $this->file, $ematch);
@@ -91,7 +93,11 @@ class Media extends GedcomRecord {
 	function canDisplayDetails() {
 		return $this->disp;
 	}
-
+	
+	//Returns the Note for the associated media
+	function getNote(){
+		return $this->note;
+	}
 	/**
 	 * get the media title
 	 * @return string

@@ -85,7 +85,8 @@ function check_db($ignore_previous=false) {
 	}
 
 	//-- protect the username and password on pages other than the Configuration page
-	if (strpos($_SERVER["SCRIPT_NAME"], "editconfig.php") === false) {
+	if (strpos($_SERVER["SCRIPT_NAME"], "editconfig.php") === false
+		&& strpos($_SERVER["SCRIPT_NAME"], "sanity_check.php") === false) {
 		$DBUSER = "";
 		$DBPASS = "";
 	}

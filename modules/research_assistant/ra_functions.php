@@ -1320,8 +1320,10 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
  				}			
  				//if (document.all) ifrm.location = url;
 				//else ifrm.src = url;
+				alert(url);
 				window.open(url, '');									
- 		}
+ 		}" .// change to else if and insert new site information
+ 				"
 		else {
 				url = 'http://search.ancestry.com/cgi-bin/sse.dll?';
 				if (frm.surname.checked) {

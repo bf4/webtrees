@@ -179,8 +179,10 @@ class HourglassControllerRoot extends BaseController {
 function print_person_pedigree($pid, $count) {
 	global $SHOW_EMPTY_BOXES, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	if ($count>=$this->generations) return;
-	$famids = find_family_ids($pid);
-	foreach($famids as $indexval => $famid) {
+	$person = Person::getInstance($pid);
+	if (is_null($person)) return;
+	$families = $person->getChildFamilies();
+	foreach($families as $famid => $family) {
 		print "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"empty-cells: show;\">\n";
 		$parents = find_parents($famid);
 		$height="100%";
@@ -221,17 +223,21 @@ function print_person_pedigree($pid, $count) {
  */
 function print_descendency($pid, $count) {
 	global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $bheight, $bwidth;
-		if ($count>=$this->dgenerations) return 0;
+	
+	if ($count>=$this->dgenerations) return 0;
+	$person = Person::getInstance($pid);
+	if (is_null($person)) return;
+	
 	//	print $this->dgenerations;
 	print "\n<!-- print_descendency for $pid -->\n";
 	print "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n";
 	print "<tr>";
 	print "<td width=\"$bwidth\">\n";
 	$numkids = 0;
-	$famids = find_sfamily_ids($pid);
-	if (count($famids)>0) {
+	$families = $person->getSpouseFamilies();
+	if (count($families)>0) {
 		$firstkids = 0;
-		foreach($famids as $indexval => $famid) {
+		foreach($families as $famid => $family) {
 			$famrec = find_family_record($famid);
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $match, PREG_SET_ORDER);
 			if ($ct>0) {
@@ -286,10 +292,9 @@ function print_descendency($pid, $count) {
 	}
 	//-- add offset divs to make things line up better
 	if ($this->show_spouse) {
-		foreach($famids as $indexval => $famid) {
-			$famrec = find_family_record($famid);
-			if (!empty($famrec)) {
-				$marrec = get_sub_record(1, "1 MARR", $famrec);
+		foreach($families as $famid => $family) {
+			if (!is_null($family)) {
+				$marrec = $family->getMarriageRecord();
 				if (!empty($marrec)) {
 					print "<br />";
 				}
@@ -300,7 +305,7 @@ function print_descendency($pid, $count) {
 	print_pedigree_person($pid);
 	// NOTE: If statement OK
 	if ($this->show_spouse) {
-		foreach($famids as $indexval => $famid) {
+		foreach($families as $famid => $family) {
 			$famrec = find_family_record($famid);
 			if (!empty($famrec)) {
 				$parents = find_parents_in_record($famrec);

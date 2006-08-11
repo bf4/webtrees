@@ -393,6 +393,15 @@ class research_assistant extends ra_functions {
 				$out .= $this->print_menu();
 				$out .= $this->print_simple_form('ra_Configure');
 			}
+			//Assign User To Task
+		else
+			if($_REQUEST['action'] == "assignUser" && !empty($_REQUEST['t_id']) && !empty($_REQUEST['t_username']))
+			{
+				$sql = "UPDATE ".$TBLPREFIX."tasks SET t_username='".$_REQUEST['t_username']."', t_enddate= NULL where t_id= '".$_REQUEST['t_id']."'";
+				$res = dbquery($sql);
+				$out .= $this->print_menu("", "");
+				$out .= $this->print_user_list(GetUserName());
+			}
 		// Default
 		else {
 			// Since there is nothing here to do, we should just show folders.

@@ -64,7 +64,7 @@ class Census1880 extends ra_form {
         // Setup for our form to go through the module system
          $out .= '<script language="JavaScript" type="text/javascript">
 <!--
-function ValidateForm(myForm){ if(myForm.sourceid.value == ""){ alert("You must enter a source");
+function ValidateForm(myForm){ if(myForm.sourceid && myForm.sourceid.value == ""){ alert("You must enter a source");
 return false;}return true;}
 //-->
 </script>';
@@ -363,11 +363,15 @@ return false;}return true;}
 '<tr>
   <td class="descriptionbox">Person
   </td>';
+  $people = $this->getPeople();
+  $persons = array_values($people);
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$pid = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['personid'])) $pid = $citation['ts_array']['rows'][$i]['personid'];
+	  		if (empty($pid)) {
+	  			if (isset($persons[$i])) $pid = $persons[$i]->getXref();
+	  		}
   			$person = Person::GetInstance($pid);
-  			
 			$out .= '
 	            <td id="peoplecell" class="optionbox">
 	                   <div id="peoplelink'.$i.'">';
@@ -377,7 +381,7 @@ return false;}return true;}
 	                   $out .= print_findindi_link("personid".$i, "peoplelink".$i, true);
 	                   $out .= '<br /></td>';
 		}
- 		$out .='</tr></tr></table>';
+ 		$out .='</tr></table>';
  		$out .= '</td></tr>';
         
         return $out;
@@ -403,7 +407,7 @@ return false;}return true;}
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
 			if (!isset($_POST["personid".$number])) $_POST["personid".$number]="";
-			$personid .= $_POST["personid".$number];
+			$personid .= $_POST["personid".$number].";";
 			$_POST["personid".$number] = trim($_POST["personid".$number], '; \r\n\t');
 		}
 		$_REQUEST['personid'] = $personid;
@@ -411,7 +415,7 @@ return false;}return true;}
 
 		if(empty($return))
 		{
-		$out = $this->header("module.php?mod=research_assistant&form=Census1880&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1880 United States Federal Census2");
+		$out = $this->header("module.php?mod=research_assistant&form=Census1880&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1880 United States Federal Census");
 		$out .= $this->editFactsForm(false);
 		$out .= $this->footer();
 		return $out;
@@ -424,6 +428,7 @@ return false;}return true;}
 	
 	function editFactsForm($printButton = true)
 	{
+		$facts = $this->getFactData();
 		$citation = $this->getSourceCitationData();
 		$out = parent::editFactsForm(false);
 		$rows = $citation['ts_array']['rows'];
@@ -432,20 +437,35 @@ return false;}return true;}
 		{
 		$out .= '<tr><td colspan="2" id="inferData"><table class="list_table"><tbody><tr><td colspan="4" class="topbottombar">Inferred Facts</td></tr>
 <tr><td class="descriptionbox">Fact</td><td class="descriptionbox">Person</td><td class="descriptionbox">Reason</td><td class="descriptionbox">Add</td></tr>';
+		$completeFact = true;
 		foreach($inferFacts as $key=>$value){
 			if(!empty($value["DOB"]))
 				{
-					$out .='<tr>';
-					$out .="<td>".$value["shortDOB"]."</td>";
-					$out .="<td>".$value["Person"]."</td>";
-					$out .="<td>".$value["Reason"]."</td>";
-					$out .="<td>".'<input type="Checkbox" id="'.$key.$value["FactType"].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["DOB"]).'\',\''.$key.'\',\'BIRT\',\''.$value["Person"].'\')"></td>';
-					$out .="</tr>";
+					foreach($facts as $factKey=>$factValues)
+					{
+						$ct = preg_match("/1 (\w+)/", $factValues['tf_factrec'], $match);
+						$factname = trim($match[1]);
+						if($factValues["tf_people"] == $key  && $factname == "BIRT")	
+						{
+							$completeFact = false;
+						}
+					}
+					if($completeFact)
+					{
+						$out .='<tr>';
+						$out .="<td>".$value["shortDOB"]."</td>";
+						$out .="<td>".$value["Person"]."</td>";
+						$out .="<td>".$value["Reason"]."</td>";
+						$out .="<td>".'<input type="Checkbox" id="'.$key.$value["FactType"].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["DOB"]).'\',\''.$key.'\',\'BIRT\',\''.$value["Person"].'\')"></td>';
+						$out .="</tr>";
+					}
+				
 				}
+				
 			}
 		
 		}
-		
+		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value="Complete"></td></tr>';
 		return $out;
 	}
 	
@@ -472,7 +492,6 @@ return false;}return true;}
 	 */
 	function inferFacts($rows){
 		
-		
 		$people = array();
 		
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
@@ -484,7 +503,7 @@ return false;}return true;}
 			$person = Person::getInstance($rows[$number]["personid"]);
 			if(!empty($person))
 			{
-			$bdate = $person->getBirthYear();
+				$bdate = $person->getBirthYear();
 			}
 			
 			if(!empty($bdate))
@@ -494,7 +513,7 @@ return false;}return true;}
 				 {
 				 	$inferredFacts["Person"] = $person->getName();
 				 	$inferredFacts["Reason"] = "A birth date difference was detected";
-				 	$inferredFacts["DOB"] = "1 BIRT \r\n 2 DATE ".$birthDate;
+				 	$inferredFacts["DOB"] = "1 BIRT \r\n2 DATE ".$birthDate;
 				 	$inferredFacts["shortDOB"] = $birthDate;
 				 	$inferredFacts["FactType"] = "BIRT";
 				 }
@@ -503,7 +522,7 @@ return false;}return true;}
 			{
 					$inferredFacts["Person"] = $person->getName();
 				 	$inferredFacts["Reason"] = "A birth date can be inferred";
-				 	$inferredFacts["DOB"] = "1 BIRT \\r\\n 2 DATE ".$birthDate;
+				 	$inferredFacts["DOB"] = "1 BIRT \r\n2 DATE ".$birthDate;
 				 	$inferredFacts["FactType"] = "BIRT";
 				 	$inferredFacts["shortDOB"] = $birthDate;
 			}
