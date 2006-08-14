@@ -136,7 +136,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				</td>
 				<td class="facts_value"><div dir="rtl">
 					<a href="indilist.php?surname_sublist=yes&amp;ged=<?php echo $GEDCOM?>"><?php echo $surname_count?></a>
-				</td>
+				</div></td>
 			</tr>
 			<?php
 		}
@@ -164,7 +164,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 			</tr>
 			<?php
 		}
-		if ($config["stat_media"]=="yes") { 
+		if ($config["stat_media"]=="yes") {
 			if ($MULTI_MEDIA==true) {
 				$sql = "SELECT COUNT(m_id) FROM ".$TBLPREFIX."media WHERE m_gedfile='".$GEDCOMS[$GEDCOM]["id"]."'";
 				$tempsql = dbquery($sql);
@@ -178,7 +178,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 			  			<?php echo $pgv_lang["stat_media"]?>
 					</td>
 					<td class="facts_value"><div dir="rtl">
-						<a href="medialist.php"><?php echo $media_count?>
+						<a href="medialist.php"><?php echo $media_count?></a>
 					</div></td>
 				</tr>
 				<?php
