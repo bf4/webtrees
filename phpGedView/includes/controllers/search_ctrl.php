@@ -386,7 +386,8 @@ class SearchControllerRoot extends BaseController {
 					exit;
 				}
 			}
-			// see if it's a repository ID. If it's found and privacy allows it, JUMP!!!!
+		
+				// see if it's a repository ID. If it's found and privacy allows it, JUMP!!!!
 			if ($SHOW_SOURCES >= getUserAccessLevel(getUserName())) {
 				if (find_repo_record($this->query)) {
 					header("Location: repo.php?rid=".$this->query."&ged=".$GEDCOM);
@@ -670,7 +671,8 @@ class SearchControllerRoot extends BaseController {
 	function Place_Search()
 	{
 		global $TBLPREFIX, $GEDCOM, $GEDCOMS, $DBQUERY;
-		$sql = "SELECT i.i_id, i.i_file, i.i_name FROM ".$TBLPREFIX."places JOIN ".$TBLPREFIX."placelinks ON p_id = pl_p_id JOIN ".$TBLPREFIX."individuals as i ON pl_gid = i_id WHERE p_file = ".$GEDCOMS[$GEDCOM]['id']." AND (";
+		$sql = "SELECT i.i_id, i.i_file, i.i_name FROM ".$TBLPREFIX."places JOIN ".$TBLPREFIX."placelinks ON p_id = pl_p_id JOIN ".$TBLPREFIX."individuals as i ON pl_gid = i_id WHERE p_file = ".$GEDCOMS[$GEDCOM]['id']." AND i_file = p_file AND (";
+
 					$place_sdx = "";
 					
 					$placearr = explode(",", $this->place);
@@ -696,7 +698,7 @@ class SearchControllerRoot extends BaseController {
 					// Strip the extra 'OR' at the end of the sql query
 					$sql = substr($sql, 0, strlen($sql) - 3);
 					$sql .= ")";
-					echo $sql;
+//					echo $sql; // debug
 					$res = dbquery($sql);
 					
 					//Stores results in printname[]
@@ -709,6 +711,23 @@ class SearchControllerRoot extends BaseController {
 
 	/**
 	 * 	Gathers results for a soundex search
+	 *
+	 *  TODO
+	 *  ====
+	 *  Does not search on the selected gedcoms, searches on all the gedcoms
+	 *  Does not work on first names, instead of the code, value array is used in the search 
+	 *  Returns all the names even when Names with hit selected
+	 *  Does not sort results by first name
+	 *  Does not work on separate double word surnames 
+	 *  Does not work on duplicate code values of the searched text and does not give the correct code
+	 *     Cohen should give DM codes 556000, 456000, 460000 and 560000, in 4.1 we search only on 560000??
+	 *  Print the DM codes at least when the URL contains &DEBUG=1
+	 *
+	 *  The names' Soundex SQL table contains all the soundex values twice
+	 *  The places table contains only one value
+	 *
+	 *  The code should be improved - see RFE 
+	 *
 	 */
 	function SoundexSearch() {
 		global $REGEXP_DB, $GEDCOM, $GEDCOMS;
@@ -839,7 +858,7 @@ class SearchControllerRoot extends BaseController {
 				$firstName .= "%";
 				$lastName .= "%";
 				
-				$sql = "SELECT i_id, i_gedcom, sx_n_id, i_file FROM ".$TBLPREFIX."soundex, ".$TBLPREFIX."individuals WHERE sx_i_id = i_id AND ";
+				$sql = "SELECT i_id, i_gedcom, sx_n_id, i_file FROM ".$TBLPREFIX."soundex, ".$TBLPREFIX."individuals WHERE sx_i_id = i_id AND sx_file = i_file AND ";
 				
 				if($this->soundex == "DaitchM")
 				{
@@ -885,7 +904,7 @@ class SearchControllerRoot extends BaseController {
 				
 				$sql .= $where;
 				
-				
+                // echo "<br />sql= ".$sql;	//debug			
 				
 				$res = dbquery($sql);
 				
