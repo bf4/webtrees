@@ -31,6 +31,7 @@ if (strstr($_SERVER["SCRIPT_NAME"], "functions")) {
 
 require_once('includes/media_class.php');
 include_once('includes/functions_lang.php');
+require_once('includes/mutex_class.php');
 
 /**
  * import record into database
@@ -1430,10 +1431,13 @@ function read_gedcom_file() {
 	global $pgv_lang;
 	$fcontents = "";
 	if (isset($GEDCOMS[$GEDCOM])) {
-		file_locked_wait();
+		//-- only allow one thread to write the file at a time
+		$mutex = new Mutex($GEDCOM);
+		$mutex.Wait();
 		$fp = fopen($GEDCOMS[$GEDCOM]["path"], "r");
 		$fcontents = fread($fp, filesize($GEDCOMS[$GEDCOM]["path"]));
 		fclose($fp);
+		$mutex.Release();
 	}
 }
 
@@ -1451,14 +1455,18 @@ function write_file() {
 		AddToChangeLog("ERROR 5: GEDCOM file is not writable.  Unable to complete request. ->" . getUserName() ."<-");
 		return false;
 	}
-	lock_file();
+	//-- only allow one thread to write the file at a time
+	$mutex = new Mutex($GEDCOM);
+	$mutex->Wait();
+	//-- what to do if file changed while waiting
+	
 	$fp = fopen($GEDCOMS[$GEDCOM]["path"], "wb");
 	if ($fp===false) {
 		print "ERROR 6: Unable to open GEDCOM file resource.  Unable to complete request.\n";
 		AddToChangeLog("ERROR 6: Unable to open GEDCOM file resource.  Unable to complete request. ->" . getUserName() ."<-");
 		return false;
 	}
-//	$fl = flock($fp, LOCK_EX);
+	$fl = @flock($fp, LOCK_EX);
 //	if (!$fl) {
 //		print "ERROR 7: Unable to obtain file lock.\n";
 //		AddToChangeLog("ERROR 7: Unable to obtain file lock. ->" . getUserName() ."<-");
@@ -1469,13 +1477,14 @@ function write_file() {
 	if ($fw===false) {
 		print "ERROR 7: Unable to write to GEDCOM file.\n";
 		AddToChangeLog("ERROR 7: Unable to write to GEDCOM file. ->" . getUserName() ."<-");
-//		$fl = flock($fp, LOCK_UN);
+		$fl = @flock($fp, LOCK_UN);
 		fclose($fp);
 		return false;
 	}
-//	$fl = flock($fp, LOCK_UN);
+	$fl = @flock($fp, LOCK_UN);
 	fclose($fp);
-	unlock_file();
+	//-- always release the mutex
+	$mutex->Release();
 	$logline = AddToLog($GEDCOMS[$GEDCOM]["path"]." updated by >".getUserName()."<");
  	if (!empty($COMMIT_COMMAND)) check_in($logline, basename($GEDCOMS[$GEDCOM]["path"]), dirname($GEDCOMS[$GEDCOM]["path"]));
 
@@ -1509,6 +1518,12 @@ function accept_changes($cid) {
 		
 		//-- write the changes back to the gedcom file
 		if ($SYNC_GEDCOM_FILE) {
+			if (!isset($manual_save) || $manual_save==false) {
+				//-- only allow one thread to accept changes at a time
+				$mutex = new Mutex("accept_changes");
+				$mutex->Wait();
+			}
+			
 			if (empty($fcontents)) read_gedcom_file();
 			if ($change["type"]=="delete") {
 				$pos1 = strpos($fcontents, "\n0 @".$gid."@");
@@ -1539,7 +1554,10 @@ function accept_changes($cid) {
 					else $fcontents = substr($fcontents, 0, $pos1+1).trim($indirec)."\r\n".substr($fcontents, $pos2+1);
 				}
 			}
-			if (!isset($manual_save) || $manual_save==false) write_file();
+			if (!isset($manual_save) || $manual_save==false) {
+				write_file();
+				$mutex->Release();
+			}
 		}
 
 		if ($change["type"] != "delete") {

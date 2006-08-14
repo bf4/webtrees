@@ -34,6 +34,8 @@ if (strstr($_SERVER["PHP_SELF"],"functions.php")) {
 	exit;
 }
 
+require_once('includes/mutex_class.php');
+
 /**
  * The level of error reporting
  * $ERROR_LEVEL = 0 will not print any errors
@@ -969,6 +971,7 @@ function find_highlighted_object($pid, $indirec) {
 				$object["file"] = check_media_depth($row[1]);
 				$object["thumb"] = $object["file"];
 				$object["level"] = $level;
+				$object["mid"] = $row[0];
 				break;
 			}
 			//-- take the first _PRIM Y object... _PRIM Y overrides first level 1 object
@@ -978,6 +981,7 @@ function find_highlighted_object($pid, $indirec) {
 					$object["thumb"] = thumbnail_file($row[1]);
 					$object["prim"] = $prim;
 					$object["level"] = $level;
+					$object["mid"] = $row[0];
 				}
 			}
 			//-- take the first level 1 object if we don't already have one and it doesn't have _THUM N or _PRIM N
@@ -985,6 +989,7 @@ function find_highlighted_object($pid, $indirec) {
 				$object["file"] = check_media_depth($row[1]);
 				$object["thumb"] = thumbnail_file($row[1]);
 				$object["level"] = $level;
+				$object["mid"] = $row[0];
 			}
 		}
 	}
@@ -2232,7 +2237,11 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
  */
 function write_changes() {
 	global $GEDCOMS, $GEDCOM, $pgv_changes, $INDEX_DIRECTORY, $CONTACT_EMAIL, $LAST_CHANGE_EMAIL;
-
+	
+	//-- only allow 1 thread to write changes at a time
+	$mutex = new Mutex("pgv_changes");
+	$mutex->Wait();
+	//-- what to do if file changed while waiting
 	if (!isset($LAST_CHANGE_EMAIL)) $LAST_CHANGE_EMAIL = time();
 	//-- write the changes file
 	$changestext = "<?php\n\$LAST_CHANGE_EMAIL = $LAST_CHANGE_EMAIL;\n\$pgv_changes = array();\n";
@@ -2267,50 +2276,15 @@ function write_changes() {
 		return false;
 	}
 	fclose($fp);
+	
+	//-- release the mutex acquired above
+	$mutex->Release();
+	
  	if (!empty($COMMIT_COMMAND)) {
 		$logline = AddToLog("pgv_changes.php updated by >".getUserName()."<");
  		check_in($logline, "pgv_changes.php", $INDEX_DIRECTORY);
  	}
 	return true;
-}
-
-/**
- * obtain a lock on the current GEDCOM file
- */
-function lock_file() {
-	global $GEDCOMS, $GEDCOM, $INDEX_DIRECTORY;
-
-	file_locked_wait();
-	$fp = fopen($INDEX_DIRECTORY.$GEDCOM.".lock", "wb");
-	fclose($fp);
-}
-
-/**
- * block until the file lock is released
- */
-function file_locked_wait() {
-	global $GEDCOMS, $GEDCOM, $INDEX_DIRECTORY;
-
-	$sleep_count = 0;
-	while(file_exists($INDEX_DIRECTORY.$GEDCOM.".lock") && $sleep_count<100) {
-		usleep(100000);
-		$sleep_count++;
-	}
-	if ($sleep_count>100) {
-		print "ERROR 30: Unable to obtain lock on file after 10 seconds.";
-		debug_print_backtrace();
-		AddToChangeLog("ERROR 30: Unable to obtain lock on file after 10 seconds. ->" . getUserName() ."<-");
-		exit;
-	}
-}
-
-/**
- * unlock the GEDCOM file
- */
-function unlock_file() {
-	global $GEDCOMS, $GEDCOM, $INDEX_DIRECTORY;
-
-	@unlink($INDEX_DIRECTORY.$GEDCOM.".lock");
 }
 
 /**
