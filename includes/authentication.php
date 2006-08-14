@@ -450,6 +450,7 @@ function checkTableExists() {
 	$has_relation_privacy = false;
 	$has_fav_note = false;
 	$has_auto_accept = false;
+	$has_mutex = false;
 	
 	$sqlite = ($DBTYPE == 'sqlite');
 
@@ -532,6 +533,9 @@ function checkTableExists() {
 					break;
 				case "news":
 					$has_news = true;
+					break;
+				case "mutex":
+					$has_mutex = true;
 					break;
 			}
 		}
@@ -674,6 +678,14 @@ function checkTableExists() {
 		$sql = "CREATE TABLE ".$TBLPREFIX."news (n_id INT NOT NULL, n_username VARCHAR(100), n_date INT, n_title VARCHAR(255), n_text TEXT, PRIMARY KEY(n_id))";
 		$res = dbquery($sql);
 		$sql = "CREATE INDEX news_username ON ".$TBLPREFIX."news (n_username)";
+		$res = dbquery($sql);
+	}
+	if (!$has_mutex) {
+		$sql = "DROP TABLE ".$TBLPREFIX."mutex";
+		$res = dbquery($sql, false);
+		$sql = "create table ".$TBLPREFIX."mutex (mx_id INT NOT NULL, mx_name VARCHAR(255), mx_thread VARCHAR(255), mx_time INT, PRIMARY KEY (mx_id))";
+		$res = dbquery($sql);
+		$sql = "CREATE INDEX mutex_name ON ".$TBLPREFIX."mutex (mx_name)";
 		$res = dbquery($sql);
 	}
 	return true;
