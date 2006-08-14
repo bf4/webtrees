@@ -66,18 +66,17 @@ $linkToID = $controller->sid;	// -- Tell addmedia.php what to link to
 				<tr>
 					<?php if ($editmenu!==false) { ?>
 					<td class="sublinks_cell <?php print $TEXT_DIRECTION?>">
+					<?php $editmenu->printMenu(); ?>
+					</td>
 					<?php
-						$editmenu->printMenu();
 					}
 					if ($othermenu!==false) {
 					?>
-					</td>
+
 					<td class="sublinks_cell <?php print $TEXT_DIRECTION?>">
-					<?php
-					$othermenu->printMenu();
-					} // other
-					?>
+					<?php $othermenu->printMenu(); ?>
 					</td>
+					<?php } ?>
 				</tr>
 			</table>
 			<?php }
@@ -130,13 +129,13 @@ if ((!$controller->isPrintPreview())&&($controller->userCanEdit())) {
 <?php
 //Print the tasks table
 if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel())) {
- include_once('modules/research_assistant/research_assistant.php'); 
+ include_once('modules/research_assistant/research_assistant.php');
  $mod = new ra_functions();
  $out = $mod->getSourceTasks($controller->sid);
  print $out;
 }?>
- 
- 
+
+
 <?php print_help_link("sources_listbox_help", "qm","other_records"); ?>
 <span class="label"><?php print $pgv_lang["other_records"]; ?></span>
 <?php
