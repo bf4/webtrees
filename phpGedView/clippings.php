@@ -36,6 +36,7 @@ require_once("includes/controllers/clippings_ctrl.php");
 print_header($pgv_lang["clip_cart"]); ?>
 <h2><?php $pgv_lang["clippings_cart"] ?></h2>
 <?php
+
 if ($action=='add') {
 	if ($type=='fam') {?>
 		<form action="clippings.php" method="get">
@@ -73,10 +74,15 @@ if ($action=='add') {
 	}
 $ct = count($cart);
 
+if ($controller->privCount>0) {
+	print "<span class=\"error\">".$pgv_lang["clipping_privacy"]."</span><br /><br />\n";
+}
+
 if($ct==0) {
 
 	// -- new lines, added by Jans, to display helptext when cart is empty
 	if ($action!='add') {
+		
 		require $helptextfile["english"];
 		if (file_exists($helptextfile[$LANGUAGE])) require $helptextfile[$LANGUAGE];
 		print_text("help_clippings.php");
@@ -116,6 +122,7 @@ if($ct==0) {
 		</form>
 		<?php
 	}
+	
 	// -- end new lines
 	print "\r\n\t\t<br /><br />".$pgv_lang["cart_is_empty"]."<br /><br />";
 }

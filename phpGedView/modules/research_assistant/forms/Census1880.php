@@ -428,45 +428,74 @@ return false;}return true;}
 	
 	function editFactsForm($printButton = true)
 	{
+		
 		$facts = $this->getFactData();
 		$citation = $this->getSourceCitationData();
 		$out = parent::editFactsForm(false);
 		$rows = $citation['ts_array']['rows'];
 		$inferFacts = $this->inferFacts($rows);
+		
 		if(!empty($inferFacts))
 		{
+			
 		$out .= '<tr><td colspan="2" id="inferData"><table class="list_table"><tbody><tr><td colspan="4" class="topbottombar">Inferred Facts</td></tr>
 <tr><td class="descriptionbox">Fact</td><td class="descriptionbox">Person</td><td class="descriptionbox">Reason</td><td class="descriptionbox">Add</td></tr>';
 		$completeFact = true;
+		$occufact = true;
 		foreach($inferFacts as $key=>$value){
-			if(!empty($value["DOB"]))
-				{
+		
 					foreach($facts as $factKey=>$factValues)
 					{
-						$ct = preg_match("/1 (\w+)/", $factValues['tf_factrec'], $match);
+						$ct = preg_match("/1 (\w+)/", $factValues['tf_factrec'], $match);						
 						$factname = trim($match[1]);
 						if($factValues["tf_people"] == $key  && $factname == "BIRT")	
 						{
 							$completeFact = false;
 						}
+					
+						if($factValues["tf_people"] == $key && $factname == "OCCU")
+						{
+							$occufact = false;
+						}
+					
 					}
+				
+						
+						if($occufact)
+						{
+								
+							print("I am in!");
+							if(!empty($value["OCCU"]))
+							{		
+								$out .='<tr>';
+								$out .="<td>Occupation</td>";
+								$out .="<td>".$value["OCCU"]["Person"]."</td>";
+								$out .="<td>".$value["OCCU"]["Reason"]."</td>";
+								$out .="<td>".'<input type="Checkbox" id="'.$key."OCCU".'" onclick="add_ra_fact_inferred(this,\''.$value["OCCU"]["Fact"].'\',\''.$key.'\',\'OCCU\',\''.$value["OCCU"]["Person"].'\')"></td>';
+								$out .="</tr>";
+							}
+						
+						}
+				
+					
 					if($completeFact)
 					{
 						$out .='<tr>';
-						$out .="<td>".$value["shortDOB"]."</td>";
-						$out .="<td>".$value["Person"]."</td>";
-						$out .="<td>".$value["Reason"]."</td>";
-						$out .="<td>".'<input type="Checkbox" id="'.$key.$value["FactType"].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["DOB"]).'\',\''.$key.'\',\'BIRT\',\''.$value["Person"].'\')"></td>';
+						$out .="<td>".$value["BIRT"]["Fact"]."</td>";
+						$out .="<td>".$value["BIRT"]["Person"]."</td>";
+						$out .="<td>".$value["BIRT"]["Reason"]."</td>";
+						$out .="<td>".'<input type="Checkbox" id="'.$key.'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["BIRT"]["Fact"]).'\',\''.$key.'\',\'BIRT\',\''.$value["BIRT"]["Person"].'\')"></td>';
 						$out .="</tr>";
 					}
 				
 				}
 				
-			}
+			
 		
-		}
+		
 		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value="Complete"></td></tr>';
 		return $out;
+	}
 	}
 	
 	function step3() {
@@ -483,6 +512,12 @@ return false;}return true;}
 		// Return it to the buffer.
 		return $out;
 	}
+	
+	function getOccupation($gedcomRecord)
+	{
+		$occupation = get_gedcom_value("OCCU", 1, $gedcomRecord);
+		return $occupation;
+	}
 
 	/**
 	 * This is a function that will attempt to infer facts from the census form.
@@ -491,19 +526,26 @@ return false;}return true;}
 	 * this function will suggest the facts to the user. 
 	 */
 	function inferFacts($rows){
-		
 		$people = array();
 		
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
 			$inferredFacts = array();
-			$censusAge = $rows[$number]["Age"];
-			$birthDate = 1880 - $censusAge;
-			
 			$person = Person::getInstance($rows[$number]["personid"]);
 			if(!empty($person))
 			{
 				$bdate = $person->getBirthYear();
+				$occupation = $this->getOccupation($person->getGedcomRecord());
+			}
+			$censusAge = $rows[$number]["Age"];
+			$birthDate = 1880 - $censusAge;
+				
+			if($occupation != $rows[$number]["Trade"])
+			{
+				$inferredFact["Person"] = $person->getName();
+				$inferredFact["Reason"] = "A discrepancy in occupation was detected!";
+				$inferredFact["Fact"] = "1 OCCU ".$rows[$number]["Trade"];
+				$inferredFacts['OCCU'] = $inferredFact;
 			}
 			
 			if(!empty($bdate))
@@ -511,20 +553,20 @@ return false;}return true;}
 				 $bDiff = $birthDate - $bdate;
 				 if($bDiff >1 || $bDiff < 0)
 				 {
-				 	$inferredFacts["Person"] = $person->getName();
-				 	$inferredFacts["Reason"] = "A birth date difference was detected";
-				 	$inferredFacts["DOB"] = "1 BIRT \r\n2 DATE ".$birthDate;
-				 	$inferredFacts["shortDOB"] = $birthDate;
-				 	$inferredFacts["FactType"] = "BIRT";
+				 	$inferredFact["Person"] = $person->getName();
+				 	$inferredFact["Reason"] = "A birth date difference was detected";
+				 	$inferredFact["Fact"] = "1 BIRT \r\n2 DATE ".$birthDate;
+				 	$inferredFact["shortDOB"] = $birthDate;		 	
+					$inferredFacts['BIRT'] = $inferredFact;
 				 }
 			}
 			else
 			{
 					$inferredFacts["Person"] = $person->getName();
 				 	$inferredFacts["Reason"] = "A birth date can be inferred";
-				 	$inferredFacts["DOB"] = "1 BIRT \r\n2 DATE ".$birthDate;
-				 	$inferredFacts["FactType"] = "BIRT";
-				 	$inferredFacts["shortDOB"] = $birthDate;
+				 	$inferredFacts["DOB"] = "1 BIRT \r\n2 DATE ".$birthDate;		
+				 	$inferredFact["shortDOB"] = $birthDate; 		 	
+					$inferredFacts['BIRT'] = $inferredFact;
 			}
 			$people[$person->getXref()] = $inferredFacts;
 		}

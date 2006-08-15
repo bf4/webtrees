@@ -145,6 +145,7 @@ class GrampsExport {
 	 * @param int $done - whether the method is called from the GrampsExport($done=1) or a sub-class
 	 */
 	function create_date($eParent, $dateRec, $level) {
+		if (empty($dateRec)) return;
 		$date = get_gedcom_value("DATE", $level, $dateRec);
 		$dateParsed = parse_date($date);
 
@@ -176,11 +177,11 @@ class GrampsExport {
 			$eDateVal = $eParent->appendChild($eDateVal);
 
 			//checks for the Type attribute values
-			if (($subcomp = substr_compare($date, "about", 0, strlen($date))) > 0 && $subcomp != 1)
+			if (($subcomp = substr_compare($date, "about", 0)) > 0 && $subcomp != 1)
 				$eDateVal->setAttribute("type", "about");
-			if (($subcomp = substr_compare($date, "after", 0, strlen($date))) > 0 && $subcomp != 1)
+			if (($subcomp = substr_compare($date, "after", 0)) > 0 && $subcomp != 1)
 				$eDateVal->setAttribute("type", "after");
-			if (($subcomp = substr_compare($date, "before", 0, strlen($date))) > 0 && $subcomp != 1)
+			if (($subcomp = substr_compare($date, "before", 0)) > 0 && $subcomp != 1)
 				$eDateVal->setAttribute("type", "before");
 
 			//sets the date value
