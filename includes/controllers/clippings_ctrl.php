@@ -68,6 +68,9 @@ class ClippingsControllerRoot extends BaseController {
 	
 	var $download_data;
 	var $media_list = array();
+	var $addCount = 0;
+	var $privCount = 0;
+	
 	/**
 	 * @param string $thing the id of the person
 	 */
@@ -114,7 +117,7 @@ class ClippingsControllerRoot extends BaseController {
 				}
 				else $type = strtolower($obj->getType());
 			}
-			else $action="";
+			else if (empty($id)) $action="";
 			if (!empty($id) && $type != 'fam' && $type != 'indi')
 				$action = 'add1';
 		}
@@ -489,20 +492,31 @@ function download_clipping(){
 			if ($clipping['type'] == "indi") {
 				if (displayDetailsById($clipping['id']) || showLivingNameById($clipping['id'])) {
 					$cart[] = $clipping;
-				} else
+					$this->addCount++;
+				} else {
+					$this->privCount++;
 					return false;
+				}
 			} else
 				if ($clipping['type'] == "fam") {
 					$parents = find_parents($clipping['id']);
 					if ((displayDetailsById($parents['HUSB']) || showLivingNameById($parents['HUSB'])) && (displayDetailsById($parents['WIFE']) || showLivingNameById($parents['WIFE']))) {
 						$cart[] = $clipping;
-					} else
+						$this->addCount++;
+					} else {
+						$this->privCount++;
 						return false;
+					}
 				} else {
 					if (displayDetailsById($clipping['id'], strtoupper($clipping['type'])))
+					{
 						$cart[] = $clipping;
-					else
+						$this->addCount++;
+					}
+					else {
+						$this->privCount++;
 						return false;
+					}
 				}
 			//-- look in the gedcom record for any linked SOUR, NOTE, or OBJE and also add them to the
 			//- clippings cart

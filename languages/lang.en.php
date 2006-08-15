@@ -30,7 +30,8 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
-$pgv_lang["loading"]				="Loading...";
+$pgv_lang["clipping_privacy"]		= "Some items could not be added due to privacy restrictions";
+$pgv_lang["loading"]				= "Loading...";
 $pgv_lang["upload_replacement"]		="Upload Replacement";
 $pgv_lang['progress_bars_info']		= "The status bars below will let you know how the import is progressing.  If the time limit runs out the import will be stopped and you will be asked to press a continue button.  If you don't see a continue button, please go back and enter a smaller time limit value.";
 $pgv_lang["clear_chart"]			= "Clear Chart";
@@ -469,7 +470,18 @@ $pgv_lang["repo_name"]				= "Repository Name:";
 $pgv_lang["address"]				= "Address:";
 $pgv_lang["phone"]					= "Phone:";
 $pgv_lang["source_name"]			= "Source Name:";
-$pgv_lang["title"]					= "Title";
+$pgv_lang["title"]					= "Title:";
+$pgv_lang["download_image"]			= "Download Image";
+$pgv_lang["relations_heading"]		= "The image relates to:";
+$pgv_lang["media_options"]			= "Media Options";
+$pgv_lang["desc"]					= "Description";
+$pgv_lang["no_desc"]				= "There is no description associated with this image";
+$pgv_lang["file_name"]				= "File Name:";
+$pgv_lang["file_size"]				= "File Size:";
+$pgv_lang["file_type"]				= "File Type";
+$pgv_lang["width"]					= "Width:";
+$pgv_lang["height"]					= "Height:";
+$pgv_lang["img_size"]				= "Image Size";
 $pgv_lang["author"] 				= "Author:";
 $pgv_lang["publication"]			= "Publication:";
 $pgv_lang["call_number"]			= "Call Number:";

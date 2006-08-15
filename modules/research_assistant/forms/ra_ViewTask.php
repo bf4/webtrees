@@ -167,10 +167,9 @@ function getTitle(){
 	 * @return sources associated with the task
 	 */
 	function getSources(){
-        global $TBLPREFIX, $DBCONN;
+        global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 
-		$sql = 	"SELECT s_name, s_id FROM " . $TBLPREFIX . "sources WHERE s_id IN " .
-				"(SELECT ts_s_id FROM ".$TBLPREFIX."tasksource WHERE ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "')";
+		$sql = 	"SELECT s_name, s_id FROM " . $TBLPREFIX . "sources, ".$TBLPREFIX."tasksource WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." AND ts_s_id=s_id AND ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
 		$res = dbquery($sql);
 
 		$sources = array();

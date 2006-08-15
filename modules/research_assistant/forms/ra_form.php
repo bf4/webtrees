@@ -480,6 +480,10 @@ END_OUT;
 						{
 							if(!inferredFacts[person+factType])
 							{
+								alert("Fact: "+fact);
+								alert("Person: "+person);
+								alert("Fact Type: "+factType);
+								alert("Name: "+name);
 								facts[factcount] = fact;
 								myArray[person+factType] = true;
 								counter++;
@@ -526,6 +530,7 @@ END_OUT;
 				build_table();
 				
 			}
+			
 			function paste_edit_data(data, factname) {
 				facts[editi] = data;
 				factnames[editi] = factname;
