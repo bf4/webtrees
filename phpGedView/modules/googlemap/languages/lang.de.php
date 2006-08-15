@@ -4,8 +4,9 @@
    Project:         phpGedView
    File:            lang.de.php
    Author:	    Christian Helms
-   Comments:        German Language file for Google map module / 2006-07-03 13:10
+   Comments:        German Language file for Google map module / 2006-08-02 10:30
 ===================================================*/
+
 
 $pgv_lang["googlemap"]              = "Karte";
 $pgv_lang["no_gmtab"]               = "Keine Karteninformation für diese Person";
@@ -32,14 +33,27 @@ $pgv_lang["gm_map_zoom"]            = "Zoomfaktor der Karte";
 $pgv_lang["gm_digits"]              = "Nachkommastellen";
 $pgv_lang["gm_min"]                 = "Min.";
 $pgv_lang["gm_max"]                 = "Max.";
-
+$pgv_lang["gm_default_level0"]      = "Standardwert der höchsten Stufen";
+$pgv_lang["gm_nof_levels"]          = "Anzahl der Stufen";
+$pgv_lang["gm_config_per_level"]    = "Konfiguration pro Stufe";
+$pgv_lang["gm_name_prefix"]         = "Präfix";
+$pgv_lang["gm_name_postfix"]        = "Suffix";
+$pgv_lang["gm_name_pre_post"]       = "Reihenfolge von Präfix / Suffix";
+$pgv_lang["gm_level"]               = "Stufe";
+$pgv_lang["gm_pp_none"]             = "Kein Präfix / Suffix";
+$pgv_lang["gm_pp_n_pr_po_b"]        = "Normal, Präfix, Suffix, beide";
+$pgv_lang["gm_pp_n_po_pr_b"]        = "Normal, Suffix, Präfix, beide";
+$pgv_lang["gm_pp_pr_po_b_n"]        = "Präfix, Suffix, beide, normal";
+$pgv_lang["gm_pp_po_pr_b_n"]        = "Suffix, Präfix, beide, normal";
+$pgv_lang["gm_pp_pr_po_n_b"]        = "Präfix, Suffix, normal, beide";
+$pgv_lang["gm_pp_po_pr_n_b"]        = "Suffix, Präfix, normal, beide";
 
 // Texts used on the Places location page
-$pgv_lang["edit_place_locations"]   = "Ortskoordinaten bearbeiten";
+$pgv_lang["edit_place_locations"]   = "Geografische Ortskoordinaten bearbeiten";
 $pgv_lang["pl_no_places_found"]     = "Keine Orte gefunden";
 $pgv_lang["pl_zoom_factor"]         = "Zoomfaktor";
 $pgv_lang["pl_place_icon"]          = "Icon";
-$pgv_lang["pl_edit"]                = "Ortsdaten bearbeiten";
+$pgv_lang["pl_edit"]                = "Geografische Ortsdaten bearbeiten";
 $pgv_lang["pl_add_place"]           = "Ort hinzufügen";
 $pgv_lang["pl_import_gedcom"]       = "Aus aktueller GEDCOM-Datei importieren";
 $pgv_lang["pl_import_all_gedcom"]   = "Aus allen GEDCOM-Dateien importieren";
@@ -52,8 +66,10 @@ $pgv_lang["pl_east_short"]          = "O";
 $pgv_lang["pl_west_short"]          = "W";
 $pgv_lang["pl_places_filename"]     = "Datei mit Ortsdaten (CSV)";
 $pgv_lang["pl_clean_db"]            = "Alle Ortsdaten vor dem Import löschen?";
+$pgv_lang["pl_update_only"]         = "Nur die vorhandenen Orte aktualisieren?";
+$pgv_lang["pl_overwrite_data"]      = "Überschreiben der Ortsdaten mit den Daten aus der Datei?";
 $pgv_lang["pl_no_places_found"]     = "Keine Orte gefunden";
-$pgv_lang["pl_use_this_value"]      = "Use this value";
+$pgv_lang["pl_use_this_value"]      = "Diesen Wert verwenden";
 $pgv_lang["pl_precision"]           = "Genauigkeit";
 $pgv_lang["pl_country"]             = "Staat";
 $pgv_lang["pl_state"]               = "Bundesland";
