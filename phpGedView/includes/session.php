@@ -108,7 +108,8 @@ $real_browsers = array(
 	'PEAR',
 	'Axis/',
 	'MSFrontPage',
-	'RssReader'
+	'RssReader',
+	'W3C_Validator'
 	);
 
 // We overlay the following name with carefully selected characters.
