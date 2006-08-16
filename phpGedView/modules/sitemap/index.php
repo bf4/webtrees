@@ -71,8 +71,9 @@ if ($action=="sendFiles") {
             print "      <loc>".$SERVER_URL."individual.php?pid=".$row[0]."&amp;ged=".$DBCONN->escapeSimple($gedcom_name)."</loc>\n";
             $arec = get_sub_record(1, "1 CHAN", $row[1], 1);
             if($arec != "") {
-                $cnt = preg_match("/2 DATE (..) (...) (....)/", $arec, $datematch);
-                print "      <lastmod>".date("Y-m-d", strtotime($datematch[1]."-".$datematch[2]."-".$datematch[3]))."</lastmod>\n";
+                $cnt = preg_match("/2 DATE (.*)/", $arec, $datematch);
+                $datearray = parse_date($datematch[1]);
+                print "      <lastmod>".date("Y-m-d", strtotime($datearray[0]["day"]."-".$datearray[0]["month"]."-".$datearray[0]["year"]))."</lastmod>\n";
             }
             print "      <changefreq>".$indirec_update."</changefreq>\n";
             print "      <priority>0.".$indirec_priority."</priority>\n";
@@ -89,8 +90,9 @@ if ($action=="sendFiles") {
             print "      <loc>".$SERVER_URL."family.php?pid=".$row[0]."&amp;ged=".$DBCONN->escapeSimple($gedcom_name)."</loc>\n";
             $arec = get_sub_record(1, "1 CHAN", $row[1], 1);
             if($arec != "") {
-                $cnt = preg_match("/2 DATE (..) (...) (....)/", $arec, $datematch);
-                print "      <lastmod>".date("Y-m-d", strtotime($datematch[1]."-".$datematch[2]."-".$datematch[3]))."</lastmod>\n";
+                $cnt = preg_match("/2 DATE (.*)/", $arec, $datematch);
+                $datearray = parse_date($datematch[1]);
+                print "      <lastmod>".date("Y-m-d", strtotime($datearray[0]["day"]."-".$datearray[0]["month"]."-".$datearray[0]["year"]))."</lastmod>\n";
             }
             print "      <changefreq>".$famrec_update."</changefreq>\n";
             print "      <priority>0.".$famrec_priority."</priority>\n";
