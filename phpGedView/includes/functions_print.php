@@ -376,10 +376,11 @@ if ($show_full)
 	 foreach (array("BURI", "CREM") as $indexval => $tag) {
 	 	if (strpos($CHART_BOX_TAGS, $tag)!==false && showFact($tag, $pid)) print_simple_fact($indirec, $tag, $pid);
 	}
+	print "</div>\n";
 }
 
 	 // NOTE: Close div inout2-$pid.$personcount.$count
-//	 if ($show_full) print "</div>\n";
+	 //if ($show_full) print "</div>\n";
 	 print "</div>\n";
     }// SEARCH_SPIDER
 
@@ -391,7 +392,7 @@ if ($show_full)
 //   --All code to load information has been moved to expand_view.php
     if(empty($SEARCH_SPIDER)) {
 	  print "\n<div id=\"inout-$pid.$personcount.$count\" style=\"display: none;\">\n";
-	  print "<div id=\"LOADING\">";
+	  print "<div id=\"LOADING-inout-$pid.$personcount.$count\">";
 	  print $pgv_lang['loading'];
  	  print "</div></div>";
     }// SEARCH_SPIDER
