@@ -1,7 +1,7 @@
 <?php
 /**
  * Mail specific functions
- * 
+ *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2005	John Finlay and Others
  *
@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @version $Id$
  */
- 
+
 //-- this function is a wrapper to the php mail() function so that we can change settings globally
 // for more info on format="flowed" see: http://www.joeclark.org/ffaq.html
 // for deatiled info on MIME (RFC 1521) email see: http://www.freesoft.org/CIE/RFC/1521/index.htm
@@ -206,6 +206,15 @@ function hex4email ($string,$charset) {
 	$encoded = preg_replace ("/=$/","",$encoded);
 	$string = "=?$charset?Q?=" . $encoded . "?=";
 	return $string;
+}
+
+
+function RFC2047Encode($string, $charset){
+	if(preg_match('/[^a-z ]/i', $string)){
+		$string = preg_replace('/([^a-z ])/ie', 'sprintf("=%02x", ord(StripSlashes("\\1")))', $string);
+		$string = str_replace(' ', '_', $string);
+		return "=?$charset?Q?$string?=";
+	}
 }
 
 ?>
