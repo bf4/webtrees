@@ -31,6 +31,7 @@ $pgv_lang["sm_monthly"]             = "monthly";
 $pgv_lang["sm_yearly"]              = "yearly";
 $pgv_lang["sm_never"]               = "never";
 $pgv_lang["sm_generate"]            = "Generate";
+$pgv_lang["gedcoms_privacy"]        = "No links to private inforation";
 
 
 ?>

@@ -50,6 +50,7 @@ if ($action=="sendFiles") {
     header("Content-Disposition: attachment; filename=".$filename);
 
     print "<?xml version='1.0' encoding='UTF-8'?>\n";
+    print "<?xml-stylesheet type=\"text/xsl\" href=\"".$SERVER_URL."modules/sitemap/gss.xsl\"?>\n";
     print "    <urlset xmlns=\"http://www.google.com/schemas/sitemap/0.84\"\n";
     print "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n";
     print "    xsi:schemaLocation=\"http://www.google.com/schemas/sitemap/0.84\n";
@@ -87,7 +88,7 @@ if ($action=="sendFiles") {
         $res = dbquery($sql);
         while ($row =& $res->fetchRow()) {
             print "   <url>\n";
-            print "      <loc>".$SERVER_URL."family.php?pid=".$row[0]."&amp;ged=".$DBCONN->escapeSimple($gedcom_name)."</loc>\n";
+            print "      <loc>".$SERVER_URL."family.php?famid=".$row[0]."&amp;ged=".$DBCONN->escapeSimple($gedcom_name)."</loc>\n";
             $arec = get_sub_record(1, "1 CHAN", $row[1], 1);
             if($arec != "") {
                 $cnt = preg_match("/2 DATE (.*)/", $arec, $datematch);
@@ -143,6 +144,7 @@ if ($action=="sendIndex") {
     header("Content-Disposition: attachment; filename=SitemapIndex.xml");
 
     print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+    print "<?xml-stylesheet type=\"text/xsl\" href=\"".$SERVER_URL."modules/sitemap/gss.xsl\"?>\n";
     print "   <sitemapindex xmlns=\"http://www.google.com/schemas/sitemap/0.84\">\n";
 
     if (isset($filenames)) {
@@ -189,6 +191,7 @@ if ($action=="generate") {
     if (isset($_POST["indi_list"])) print "<tr><td class=\"optionbox\">".$pgv_lang["sm_individual_list"]."</td></tr>\n";
     if (isset($_POST["fam_recs"])) print "<tr><td class=\"optionbox\">".$pgv_lang["sm_family_info"]."</td></tr>\n";
     if (isset($_POST["fam_list"])) print "<tr><td class=\"optionbox\">".$pgv_lang["sm_family_list"]."</td></tr>\n";
+//  if (isset($_POST["GEDCOM_Privacy"])) print "<tr><td class=\"optionbox\">".$pgv_lang["gedcoms_privacy"]."</td></tr>\n";
  
     print "   <tr><td class=\"topbottombar\">".$pgv_lang["gedcoms_selected"]."</td></tr>\n";
     foreach($GEDCOMS as $ged_index=>$ged_rec) {
@@ -207,11 +210,12 @@ if ($action=="generate") {
             if (isset($_POST["indi_list"])) print "&indi_lists=true&indilist_priority=".$indilist_priority."&indilist_update=".$indilist_update;
             if (isset($_POST["fam_recs"])) print "&fam_rec=true&famrec_priority=".$famrec_priority."&famrec_update=".$famrec_update;
             if (isset($_POST["fam_list"])) print "&fam_lists=true&famlist_priority=".$famlist_priority."&famlist_update=".$famlist_update;
+//          if (isset($_POST["GEDCOM_Privacy"])) print "&no_private_links=true";
             print "\">".$sitemapFilename."</a></td></tr>\n";
         }
     }
     if ($filecounter > 1) {
-        print "<tr><td class=\"optionbox\"><a href=\"sitemap.php?action=sendIndex";
+        print "<tr><td class=\"optionbox\"><a href=\"module.php?mod=sitemap&action=sendIndex";
         foreach($GEDCOMS as $ged_index=>$ged_rec) {
             if (isset($_POST["GEDCOM_".$ged_rec["id"]])) {
                 print "&filenames[".$ged_rec["id"]."]=".$ged_rec["gedcom"];
