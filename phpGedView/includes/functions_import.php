@@ -151,33 +151,33 @@ function import_record($indirec, $update = false) {
 
 			}
 			$j++;
-			
+
 			// Calculate Soundex Values and insert them into the database.
 			$firstName = explode("/", $name[0]);
 			$firstName = $firstName[0];
 			$lastName = $name[2];
-			
-			
+
+
 			// Start building the SQL Insert
 			$sql = "INSERT INTO ".$TBLPREFIX."soundex VALUES(" .
 					"'".$DBCONN->escapeSimple($gid)."'," .
 					"'".$DBCONN->escapeSimple($indexval)."'," .
 					"'".$DBCONN->escapeSimple($GEDCOMS[$FILE]["id"])."',";
-			
+
 			// Ensure there is a firstname or lastname.
 			// If there is no name in a field, it will contain the string "@N.N."
-			
+
 			if(trim($firstName) != "@P.N.")
 			{
 				Character_Substitute($firstName);
 				// Split the first name array
 				$fnames = explode(" ", $firstName);
-				
+
 				$std_array = array();
 				$firstName_std_soundex = "";
 				$firstName_dm_soundex = "";
 				$dm_array = array();
-				
+
 				$combined = "";
 				foreach($fnames as $fn)
 				{
@@ -189,10 +189,10 @@ function import_record($indirec, $update = false) {
 				}
 				$fn_nospaces = strtr($firstName, " ", "");
 				$dm_array = array_merge($dm_array, DMSoundex($fn_nospaces));
-				
+
 				$std_array[] = soundex($fn_nospaces);
 				$firstName_dm_soundex .= ":" . implode(":", array_unique($dm_array));
-				
+
 				$std_array = array_unique($std_array);
 				$firstName_std_soundex = implode(":", $std_array);
 				$sql .= "'".$DBCONN->escapeSimple(trim($firstName_std_soundex, ":"))."'," .
@@ -203,7 +203,7 @@ function import_record($indirec, $update = false) {
 				$sql .= "NULL," .
 						"NULL,";
 			}
-			
+
 			if(trim($lastName) != "@N.N.")
 			{
 				Character_Substitute($lastName);
@@ -212,33 +212,33 @@ function import_record($indirec, $update = false) {
 				$lastName_dm_soundex = "";
 				$dm_array = array();
 				$std_array = array();
-				
+
 				foreach($lnames as $ln)
 				{
 					$std_array[] = soundex($ln);
 					$dm_array = array_merge($dm_array, DMSoundex($ln));
 				}
-				
+
 				$ln_nospaces = strtr($lastName, " ", "");
-				
+
 				$std_array[] =  soundex($ln_nospaces);
 				$dm_array = array_merge($dm_array, DMSoundex($ln_nospaces));
 				$lastName_std_soundex .= ":" . implode(":", array_unique($std_array));
 				$lastName_dm_soundex .= ":" . implode(":", array_unique($dm_array));
-				
+
 				$sql .= "'".$DBCONN->escapeSimple(trim($lastName_std_soundex,":"))."'," .
-							"'".$DBCONN->escapeSimple(trim($lastName_dm_soundex,":"))."'"; 
+							"'".$DBCONN->escapeSimple(trim($lastName_dm_soundex,":"))."'";
 			}
 			else
 			{
 				$sql .= "NULL," .
 						"NULL";
 			}
-			
+
 			$sql .= ");";
-			
+
 			$res = dbquery($sql);
-			
+
 		}
 		$indi["names"] = $names;
 		$indi["isdead"] = $isdead;
@@ -412,7 +412,7 @@ function update_places($gid, $indirec, $update = false) {
 				$level++;
 				continue;
 			}
-			
+
 			//-- only search the database while we are finding places in it
 			if ($search) {
 				//-- check if this place and level has already been added
@@ -425,7 +425,7 @@ function update_places($gid, $indirec, $update = false) {
 				else $search = false;
 				$res->free();
 			}
-			
+
 			//-- if we are not searching then we have to insert the place into the db
 			if (!$search) {
 				$std_soundex = soundex($place);
@@ -434,7 +434,7 @@ function update_places($gid, $indirec, $update = false) {
 				$sql = 'INSERT INTO ' . $TBLPREFIX . 'places VALUES(' . $p_id . ',  \''.$DBCONN->escapeSimple($place) . '\', '.$level.', '.$parent_id.', '.$DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]).', \''.$DBCONN->escapeSimple($std_soundex).'\', \''.$DBCONN->escapeSimple(implode(":",$dm_soundex)).'\')';
 				$res2 = dbquery($sql);
 			}
-			
+
 			$sql = 'INSERT INTO ' . $TBLPREFIX . 'placelinks VALUES('.$p_id.', \'' . $DBCONN->escapeSimple($gid) . '\', ' . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . ')';
 			$res2 = dbquery($sql);
 			//-- increment the level and assign the parent id for the next place level
@@ -802,7 +802,7 @@ function setup_database() {
 	$has_other = false;
 	$has_sources = false;
 	$has_soundex = false;
-	
+
 	$sqlite = ($DBTYPE == "sqlite");
 
 	$data = $DBCONN->getListOf('tables');
@@ -965,11 +965,11 @@ function setup_database() {
 			$res = dbquery($sql); //print "p_gid dropped<br/>\n";
 		}
  		if (!$has_places_std_soundex) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."places ADD p_std_soundex text";	
+			$sql = "ALTER TABLE ".$TBLPREFIX."places ADD p_std_soundex text";
 			$res = dbquery($sql);//print "p_std_soundex added<br/>\n";
 		}
  		if (!$has_places_dm_soundex) {
-			$sql = "ALTER TABLE ".$TBLPREFIX."places ADD p_dm_soundex text";	
+			$sql = "ALTER TABLE ".$TBLPREFIX."places ADD p_dm_soundex text";
 			$res = dbquery($sql);//print "p_dm_soundex added<br/>\n";
 		}
 	}
@@ -1236,12 +1236,12 @@ function create_remotelinks_table() {
 function create_soundex_table()
 {
 	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
-	
+
 	$sql = "DROP TABLE ".$TBLPREFIX."soundex";
 	$res = dbquery($sql, false);
 	$sql = "CREATE TABLE ".$TBLPREFIX."soundex (sx_i_id varchar(255) NOT NULL, sx_n_id varchar(255) NOT NULL, sx_file int NOT NULL, sx_fn_std_code text NULL, sx_fn_dm_code text NULL, sx_ln_std_code text NULL, sx_ln_dm_code text NULL)";
 	$res = dbquery($sql);
-	
+
 	if (DB::isError($res)) {
 		exit;
 	}
@@ -1384,7 +1384,7 @@ function empty_database($FILE) {
 
 	$sql = "DELETE FROM " . $TBLPREFIX . "nextid WHERE ni_gedfile='$FILE'";
 	$res = dbquery($sql);
-	
+
 	$sql = "DELETE FROM ".$TBLPREFIX."soundex WHERE sx_file='$FILE'";
 	$res = dbquery($sql);
 }
@@ -1433,11 +1433,11 @@ function read_gedcom_file() {
 	if (isset($GEDCOMS[$GEDCOM])) {
 		//-- only allow one thread to write the file at a time
 		$mutex = new Mutex($GEDCOM);
-		$mutex.Wait();
+		$mutex->Wait();
 		$fp = fopen($GEDCOMS[$GEDCOM]["path"], "r");
 		$fcontents = fread($fp, filesize($GEDCOMS[$GEDCOM]["path"]));
 		fclose($fp);
-		$mutex.Release();
+		$mutex->Release();
 	}
 }
 
@@ -1459,7 +1459,7 @@ function write_file() {
 	$mutex = new Mutex($GEDCOM);
 	$mutex->Wait();
 	//-- what to do if file changed while waiting
-	
+
 	$fp = fopen($GEDCOMS[$GEDCOM]["path"], "wb");
 	if ($fp===false) {
 		print "ERROR 6: Unable to open GEDCOM file resource.  Unable to complete request.\n";
@@ -1515,7 +1515,7 @@ function accept_changes($cid) {
 		}
 
 		update_record($indirec, $change["type"]=="delete");
-		
+
 		//-- write the changes back to the gedcom file
 		if ($SYNC_GEDCOM_FILE) {
 			if (!isset($manual_save) || $manual_save==false) {
@@ -1523,7 +1523,7 @@ function accept_changes($cid) {
 				$mutex = new Mutex("accept_changes");
 				$mutex->Wait();
 			}
-			
+
 			if (empty($fcontents)) read_gedcom_file();
 			if ($change["type"]=="delete") {
 				$pos1 = strpos($fcontents, "\n0 @".$gid."@");
@@ -1660,7 +1660,7 @@ function update_record($indirec, $delete = false) {
 
 		$sql = "DELETE FROM " . $TBLPREFIX . "names WHERE n_gid LIKE '" . $DBCONN->escapeSimple($gid) . "' AND n_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 		$res = dbquery($sql);
-		
+
 		$sql = "DELETE FROM ".$TBLPREFIX."soundex WHERE sx_i_id LIKE '".$DBCONN->escapeSimple($gid)."' AND sx_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
 		$res = dbquery($sql);
 
@@ -1754,6 +1754,6 @@ function uuid() {
 	// 8 bits, the last two of which (positions 6 and 7) are 01, for "clk_seq_hi_res"
 	// (hence, the 2nd hex digit after the 3rd hyphen can only be 1, 5, 9 or d)
 	// 8 bits for "clk_seq_low"
-	mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535) // 48 bits for "node" 
+	mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535) // 48 bits for "node"
 	));
 }
