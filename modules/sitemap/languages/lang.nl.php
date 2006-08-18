@@ -30,6 +30,7 @@ $pgv_lang["sm_monthly"]             = "maandelijks";
 $pgv_lang["sm_yearly"]              = "jaarlijks";
 $pgv_lang["sm_never"]               = "nooit";
 $pgv_lang["sm_generate"]            = "Genereer";
+$pgv_lang["gedcoms_privacy"]        = "Geen links naar prive informatie";
 
 
 ?>
