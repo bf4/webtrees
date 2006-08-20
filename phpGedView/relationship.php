@@ -28,9 +28,456 @@
 
 // -- include config file
 require("config.php");
+require("includes/functions_charts.php");
 require_once("includes/person_class.php");
 require($factsfile["english"]);
 if (file_exists( $factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
+
+function getRelationshipSentence($node, $pid1, $pid2)
+{
+    global $pgv_lang, $lang_short_cut, $LANGUAGE;
+    $relationshipDescription = false;
+    $sentence = false;
+    $started = false;
+    $finished = false;
+    $numberOfSiblings = 0;
+    $generationsOlder = 0;
+    $generationsYounger = 0;
+    $sosa = 1;
+	$bosa = 1;
+    $numberOfSpouses = 0;
+    $lastRelationshipIsSpouse = false;
+    $checkFirstRelationship = false;
+    $firstRelationshipIsSpouse = false;
+    $siblingIsSister = false;
+
+
+    // sanity check - helps to prevent the possibility of recursing too deeply
+    if($pid1 == $pid2)
+        return false;
+
+    foreach($node["path"] as $index=>$pid)
+    {
+        // only start looking for relationships from the first pid passed in
+        if($pid == $pid1)
+        {
+            $started = true;
+		    $checkFirstRelationship = true;
+            continue;
+        }
+
+        if($started)
+        {
+            $lastRelationshipIsSpouse = false;
+            // look to see if we can find a relationship
+            switch( $node["relations"][$index])
+            {
+                case "self":
+                    break;
+
+                case "sister":
+				    $siblingIsSister = true;
+                case "brother":
+                    $numberOfSiblings++;
+                    break;
+
+                case "mother":
+                    $generationsOlder++;
+                    $sosa = $sosa * 2 + 1;
+                    break;
+
+                case "father":
+                    $generationsOlder++;
+                    $sosa = $sosa * 2;
+                    break;
+
+                case "son":
+                    $generationsYounger++;
+					$bosa = $bosa * 2;
+                    break;
+
+                case "daughter":
+                    $generationsYounger++;
+					$bosa = $bosa * 2 + 1;
+                    break;
+
+                case "husband":
+                case "wife":
+                    $numberOfSpouses++;
+                    $lastRelationshipIsSpouse = true;
+				    if($checkFirstRelationship)
+					{
+					    $firstRelationshipIsSpouse = true;
+					}
+                    break;
+            }
+		    $checkFirstRelationship = false;
+        }
+
+        if($pid == $pid2)
+        {
+            // we have found the second individual - look no further
+            $finished = true;
+            break;
+        }
+        
+    }
+    // sanity check
+    if(!$started || !$finished)
+    {
+        // passed in pid's are not found in the array!!!
+        return false;
+    }
+
+    $person1 = find_person_record($pid1);
+    $person2 = find_person_record($pid2);
+    $mf = "NN";
+    if (preg_match("/1 SEX F/", $person2, $smatch)>0) $mf="F";
+    if (preg_match("/1 SEX M/", $person2, $smatch)>0) $mf="M";
+
+    // now look to see if we can find some text to describe the relationship
+    //check if relationship is parent or grandparent        
+    if ($numberOfSpouses == 1 && $numberOfSiblings == 0 && $generationsOlder == 0 && $generationsYounger == 0) 
+    {
+        // check for spouse
+        if ($mf=="F")
+        {
+            if (isset($pgv_lang["wife"]))
+                $relationshipDescription = $pgv_lang["wife"];
+        }
+        else
+        {
+            if (isset($pgv_lang["husband"]))
+                $relationshipDescription = $pgv_lang["husband"];
+        }
+    }
+    //check if relationship is parent in law or step parent
+    else if ($numberOfSpouses == 1 && $numberOfSiblings == 0 && $generationsOlder == 1 && $generationsYounger == 0)
+    {
+		// is this an in-law relationship?
+		if(!$lastRelationshipIsSpouse)
+		{
+	        if (isset($pgv_lang["mother_in_law"]) &&$mf=="F")
+	        {
+	            $relationshipDescription = $pgv_lang["mother_in_law"];
+	        }
+	        else if (isset($pgv_lang["father_in_law"]))
+	        {
+	            $relationshipDescription = $pgv_lang["father_in_law"];
+	        }
+	    }
+		else // step relationship
+		{
+	        if (isset($pgv_lang["stepmom"]) &&$mf=="F")
+	        {
+	            $relationshipDescription = $pgv_lang["stepmom"];
+	        }
+	        else if (isset($pgv_lang["stepdad"]))
+	        {
+	            $relationshipDescription = $pgv_lang["stepdad"];
+	        }
+		}
+    }
+    //checks for brother in law, sister in law realtionships
+    else if ($numberOfSpouses == 1 && $numberOfSiblings == 1 && $generationsYounger == 0 && $generationsOlder == 0)
+    {
+        if (isset($pgv_lang["sister_in_law"]) &&$mf=="F")
+        {
+            $relationshipDescription = $pgv_lang["sister_in_law"];
+        }
+        else if (isset($pgv_lang["brother_in_law"]))
+        {
+            $relationshipDescription = $pgv_lang["brother_in_law"];
+        }
+    }
+    //check if relationship is child in law
+    else if ($numberOfSpouses == 1 && $numberOfSiblings == 0 && $generationsOlder == 0 && $generationsYounger == 1)
+    {
+		// is this an in-law relationship?
+		if($lastRelationshipIsSpouse)
+		{
+	        if (isset($pgv_lang["daughter_in_law"]) &&$mf=="F")
+	        {
+	            $relationshipDescription = $pgv_lang["daughter_in_law"];
+	        }
+	        else if (isset($pgv_lang["son_in_law"]))
+	        {
+	            $relationshipDescription = $pgv_lang["son_in_law"];
+	        }
+		}
+		else // step relationship
+		{
+	        if (isset($pgv_lang["step_daughter"]) &&$mf=="F")
+	        {
+	            $relationshipDescription = $pgv_lang["step_daughter"];
+	        }
+	        else if (isset($pgv_lang["step_son"]))
+	        {
+	            $relationshipDescription = $pgv_lang["step_son"];
+	        }
+		}
+    }
+    //checks for niece/nephew relationship
+    else if (($firstRelationshipIsSpouse || $numberOfSpouses == 0) && $numberOfSiblings == 1 && $generationsYounger >= 1 && $generationsOlder == 0)
+    {
+		if($siblingIsSister)
+		{
+			if (isset($pgv_lang["bosa_sisters_offspring_$bosa"]))
+			{
+				$relationshipDescription = $pgv_lang["bosa_sisters_offspring_$bosa"];
+			}
+			else
+			{
+	            if ($mf=="F" && isset($pgv_lang["n_x_sisters_daughter"]))
+				{
+				    $relationshipDescription = sprintf($pgv_lang["n_x_sisters_daughter"], $generationsYounger, $generationsYounger-1, $generationsYounger-2);
+			    }
+				else if(isset($pgv_lang["n_x_sisters_son"]))
+				{
+				    $relationshipDescription = sprintf($pgv_lang["n_x_sisters_son"], $generationsYounger, $generationsYounger-1, $generationsYounger-2);
+				}
+			}
+	    }
+		else
+		{
+			if (isset($pgv_lang["bosa_brothers_offspring_$bosa"]))
+			{
+				$relationshipDescription = $pgv_lang["bosa_brothers_offspring_$bosa"];
+			}
+			else
+			{
+	            if ($mf=="F" && isset($pgv_lang["n_x_brothers_daughter"]))
+				{
+				    $relationshipDescription = sprintf($pgv_lang["n_x_brothers_daughter"], $generationsYounger, $generationsYounger-1, $generationsYounger-2);
+			    }
+				else if(isset($pgv_lang["n_x_brothers_son"]))
+				{
+				    $relationshipDescription = sprintf($pgv_lang["n_x_brothers_son"], $generationsYounger, $generationsYounger-1, $generationsYounger-2);
+				}
+			}
+		}
+    }
+	// check for step siblings
+	else if($numberOfSpouses == 1 && $generationsYounger == 1 && $generationsOlder == 1 && !$firstRelationshipIsSpouse && !$lastRelationshipIsSpouse )
+	{
+	        if (isset($pgv_lang["stepsister"]) &&$mf=="F")
+	        {
+	            $relationshipDescription = $pgv_lang["stepsister"];
+	        }
+	        else if (isset($pgv_lang["stepbrother"]))
+	        {
+	            $relationshipDescription = $pgv_lang["stepbrother"];
+	        }
+	}
+    else if($numberOfSpouses > 0)
+    {
+        // we don't handle more than one spouse 
+    }
+    //check if relationship is parent or grandparent        
+    else if ($numberOfSiblings == 0 && $generationsOlder > 0 && $generationsYounger == 0)
+    {
+		// the get_sosa_name is probably the best way of getting this name
+		$relationshipDescription = get_sosa_name($sosa);
+	    if(($relationshipDescription == (($sosa%2) ? $pgv_lang["mother"] : $pgv_lang["father"]) . " " . floor($sosa/2))
+			&& ($generationsOlder > 3))
+		{
+			// the sosa route didn't find a name - lets see if we can find a great grandparent this way
+            if (isset($pgv_lang["n_x_great_grandmother"]) && ($mf=="F"))
+			{
+	            $relationshipDescription = sprintf( $pgv_lang["n_x_great_grandmother"], $generationsOlder-2);
+		    }
+			else if (isset($pgv_lang["n_x_great_grandfather"]))
+			{
+	            $relationshipDescription = sprintf( $pgv_lang["n_x_great_grandfather"], $generationsOlder-2);
+			}
+	    }
+    }
+    //checks for son/daughter and grandson/granddaughter
+    else if ($numberOfSiblings == 0 && $generationsYounger > 0 && $generationsOlder == 0)
+    {
+		if (isset($pgv_lang["bosa_$bosa"]))
+		{
+			$relationshipDescription = $pgv_lang["bosa_$bosa"];
+		}
+		else
+		{
+			// if line is through son
+            if(floor($bosa/pow(2,$generationsYounger-1)) == 2)
+			{
+	            if ($mf=="F" && isset($pgv_lang["n_x_granddaughter_from_son"]))
+				{
+				    $relationshipDescription = sprintf($pgv_lang["n_x_granddaughter_from_son"], $generationsYounger, $generationsYounger-1, $generationsYounger-2);
+			    }
+				else if(isset($pgv_lang["n_x_grandson_from_son"]))
+				{
+				    $relationshipDescription = sprintf($pgv_lang["n_x_grandson_from_son"], $generationsYounger, $generationsYounger-1, $generationsYounger-2);
+				}
+			}
+			else
+			{
+	            if ($mf=="F" && isset($pgv_lang["n_x_granddaughter_from_daughter"]))
+				{
+				    $relationshipDescription = sprintf($pgv_lang["n_x_granddaughter_from_daughter"], $generationsYounger, $generationsYounger-1, $generationsYounger-2);
+			    }
+				else if(isset($pgv_lang["n_x_grandson_from_daughter"]))
+				{
+				    $relationshipDescription = sprintf($pgv_lang["n_x_grandson_from_daughter"], $generationsYounger, $generationsYounger-1, $generationsYounger-2);
+				}
+			}
+		}
+    }
+    //checks for sibling realtionships
+    else if ($numberOfSiblings == 1 && $generationsYounger == 0 && $generationsOlder == 0)
+    {
+        if ($mf=="F")
+        {
+            if (isset($pgv_lang["sister"]))
+            {
+                $relationshipDescription = $pgv_lang["sister"];
+            }
+        }
+        else
+        {
+            if (isset($pgv_lang["brother"]))
+            {
+                $relationshipDescription = $pgv_lang["brother"];
+            }
+        }
+    }
+    //checks for aunt/uncle relationship
+    else if (($numberOfSiblings == 1 && $generationsYounger == 0 && $generationsOlder >= 1) && (($numberOfSpouses == 0) || (($numberOfSpouses == 1) && $lastRelationshipIsSpouse )))
+    {
+		if ($mf=="F" && isset($pgv_lang["sosa_aunt_$sosa"]))
+		{
+			$relationshipDescription = $pgv_lang["sosa_aunt_$sosa"];
+		}
+		else if (isset($pgv_lang["sosa_uncle_$sosa"]))
+		{
+			$relationshipDescription = $pgv_lang["sosa_uncle_$sosa"];
+		}
+		else
+		{
+			// if line is through father
+            if(floor($sosa/pow(2,$generationsOlder-1)) == 2)
+			{
+	            if ($mf=="F" && isset($pgv_lang["n_x_paternal_aunt"]))
+				{
+				    $relationshipDescription = sprintf($pgv_lang["n_x_paternal_aunt"], $generationsOlder, $generationsOlder-1, $generationsOlder-2);
+			    }
+				else if(isset($pgv_lang["n_x_paternal_uncle"]))
+				{
+				    $relationshipDescription = sprintf($pgv_lang["n_x_paternal_uncle"], $generationsOlder, $generationsOlder-1, $generationsOlder-2);
+				}
+			}
+			else
+			{
+	            if ($mf=="F" && isset($pgv_lang["n_x_maternal_aunt"]))
+				{
+				    $relationshipDescription = sprintf($pgv_lang["n_x_maternal_aunt"], $generationsOlder, $generationsOlder-1, $generationsOlder-2);
+			    }
+				else if(isset($pgv_lang["n_x_maternal_aunt"]))
+				{
+				    $relationshipDescription = sprintf($pgv_lang["n_x_maternal_aunt"], $generationsOlder, $generationsOlder-1, $generationsOlder-2);
+				}
+			}
+		}
+    }
+    //checks for nth cousin
+    else if ($numberOfSiblings == 1 && $generationsYounger > 0 && $generationsOlder > 0 && ($generationsYounger == $generationsOlder))
+    {
+        $degree = $generationsYounger;
+        if ($mf=="F")
+        {
+            if(isset($pgv_lang["female_cousin_" . $degree]))
+            {
+                $relationshipDescription = $pgv_lang["female_cousin_" . $degree];
+            }
+        }
+        else
+        {
+            // treat unknown gender as male
+            if(isset($pgv_lang["male_cousin_" . $degree]))
+            {
+                $relationshipDescription = $pgv_lang["male_cousin_" . $degree];
+            }
+        }
+    }
+	// Check for half sibling relationships
+	else if($numberOfSpouses == 0 && $generationsYounger == 1 && $generationsOlder == 1 && $numberOfSiblings == 0 )
+	{
+	        if (isset($pgv_lang["halfsister"]) &&$mf=="F")
+	        {
+	            $relationshipDescription = $pgv_lang["halfsister"];
+	        }
+	        else if (isset($pgv_lang["halfbrother"]))
+	        {
+	            $relationshipDescription = $pgv_lang["halfbrother"];
+	        }
+	}
+
+	if($relationshipDescription != false)
+	{
+	    $relationshipDescription = mb_strtolower($relationshipDescription, "UTF-8");
+	}
+
+	$langStr = str_replace("-", "_", $lang_short_cut[$LANGUAGE]);
+    // check for language specific override of relationship
+    $getLanguageSpecificRelationship = "getRelationshipText_" . $langStr;
+    if(function_exists($getLanguageSpecificRelationship ))
+    {
+        $relationshipDescription = $getLanguageSpecificRelationship($relationshipDescription, $node, $pid1, $pid2);
+    }
+
+    // check for language specific override of relationship
+    // functions to get locale specific names (eg Finnish genitive)
+    $getLanguageSpecificName = "getFirstRelationsName_" . $langStr;
+    if(function_exists($getLanguageSpecificName ))
+    {
+        $pid1Name = $getLanguageSpecificName($pid1);
+    }
+    else
+    {
+        $pid1Name = get_person_name($pid1);
+    }
+
+    $getLanguageSpecificName = "getSecondRelationsName_" . $langStr;
+    if(function_exists($getLanguageSpecificName ))
+    {
+        $pid2Name = $getLanguageSpecificName($pid2);
+    }
+    else
+    {
+        $pid2Name = get_person_name($pid2);
+    }
+
+    if($relationshipDescription != false) // we have a description - so lets form a sentence
+    {
+        if(($mf=="F") && isset($pgv_lang["relationship_female_1_is_the_2_of_3"]))
+        {
+            $sentence = sprintf($pgv_lang["relationship_female_1_is_the_2_of_3"], $pid2Name, $relationshipDescription, $pid1Name);
+        }
+        else
+        if(isset($pgv_lang["relationship_male_1_is_the_2_of_3"]))
+        {
+            $sentence = sprintf($pgv_lang["relationship_male_1_is_the_2_of_3"], $pid2Name, $relationshipDescription, $pid1Name);
+        }
+    }
+    else if(($pid1 == $node["path"][0]) && ($pid2 == $node["path"][count($node["path"])-1]) && $firstRelationshipIsSpouse )
+    {
+        // if no relationship was found it may be nice to check if this is a spouses relation
+        $firstRelationPid = $node["path"][1];
+        //get their relationship
+        $sentence1 = getRelationshipSentence($node, $pid1, $firstRelationPid);
+        //    get the relationship beteeen them and %pid2
+        $sentence2 = getRelationshipSentence($node, $firstRelationPid, $pid2);
+        //    if both the above gave strings then concatenate
+        if(($sentence1 != false)&&($sentence2 != false))
+        {
+            $sentence = $sentence1 . "<br/>" . $sentence2;
+        }
+    }
+    return $sentence;
+}
 
 if (!isset($show_full)) $show_full=$PEDIGREE_FULL_DETAILS;
 if (!isset($path_to_find)){
@@ -328,16 +775,6 @@ else {
 </div>
 <?php
 $maxyoffset = $Dbaseyoffset;
-$xposition = 0;
-$yup = 0;
-$ydown = 0;
-$first = true;
-$maternal = false;
-$paternal = false;
-$spouse = false;
-$sosa = 1;
-$bosa = 1;
-
 if ((!empty($pid1))&&(!empty($pid2))) {
 	if (!$disp) print_privacy_error($CONTACT_EMAIL);
 	else {
@@ -401,24 +838,6 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 					$linex += $Dbwidth/2;
 					$lh = 54;
 					$lw = 3;
-					$yup--;
-					$sosa = $sosa * 2;
-					// check for paternal/maternal relationship for cousin and aunt/uncle
-					if($first)
-					{
-						if($node["relations"][$index]=="father")
-						{
-							$paternal = true;
-							$maternal = false;
-						}
-						else if($node["relations"][$index]=="mother")
-						{
-							$paternal = false;
-							$maternal = true;
-						}
-						$first = false;
-					} 
-					if ($node["relations"][$index]=="mother") $sosa = $sosa + 1;
 					//check for paternal grandparent relationship                 
 					if ($pretty) {
                        if ($asc==0) $asc=1;
@@ -449,7 +868,6 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 					else $yoffset += $Dbheight+$Dbyspacing+50;
 			    }
 				if ($node["relations"][$index]=="sibling") {
-					$xposition++;
 					$arrow_img = $PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]["other"];
 					if ($mfstyle=="F") $node["relations"][$index]="sister";
 					if ($mfstyle=="") $node["relations"][$index]="brother";
@@ -468,7 +886,6 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 					}
 				}
 				if ($node["relations"][$index]=="spouse") {
-					$spouse = true;
 					$arrow_img = $PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]["other"];
 					if ($mfstyle=="F") $node["relations"][$index]="wife";
 					if ($mfstyle=="") $node["relations"][$index]="husband";
@@ -494,9 +911,6 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 					$linex += $Dbwidth/2;
 					$lh = 54;
 					$lw = 3;
-					$ydown++;
-					$bosa = $bosa * 2;
-					if ($node["relations"][$index]=="daughter") $bosa = $bosa + 1;
 					if ($pretty) {
 				       if ($asc==0) $asc=-1;
                        if ($asc==1) $arrow_img = $PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow"]["other"];
@@ -545,233 +959,22 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 					}
 					print "</div>\n";
 				}
-				$iref = rand();
-				print "<div id=\"box$pid.1.$iref\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".$pxoffset."px; top:".$yoffset."px; width:".$Dbwidth."px; height:".$Dbheight."px; z-index:".(count($node["path"])-$index)."; \"><table><tr><td colspan=\"2\" width=\"$Dbwidth\" height=\"$Dbheight\">";
-				print_pedigree_person($pid, 1, ($view!="preview"), $iref);
+				print "<div id=\"box$pid.0\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".$pxoffset."px; top:".$yoffset."px; width:".$Dbwidth."px; height:".$Dbheight."px; z-index:".(count($node["path"])-$index)."; \"><table><tr><td colspan=\"2\" width=\"$Dbwidth\" height=\"$Dbheight\">";
+				print_pedigree_person($pid, 1, ($view!="preview"));
 				print "</td></tr></table></div>\n";
 			}
 			
-			$person2 = find_person_record($_SESSION["pid2"]);
-			$person1 = find_person_record($_SESSION["pid1"]);
-			$mf = "NN";
-			if (preg_match("/1 SEX F/", $person2, $smatch)>0) $mf="F";
-			if (preg_match("/1 SEX M/", $person2, $smatch)>0) $mf="M";
 			
-			print "<br><br><br><h4><center>";
 			
-			if ($spouse)
-			{
-				print "No blood relation";
-			}
-			else
-			{			
-			print get_person_name($_SESSION["pid2"]) . " is  the ";	
-			//check if relationship is parent or grandparent		
-			if ($xposition == 0 && $yup < 0 && $ydown == 0)
-			{
-				if (isset($pgv_lang["sosa_" . $sosa])) print $pgv_lang["sosa_" . $sosa];
-			}
-			//checks for son/daughter and grandson/granddaughter
-			if ($xposition == 0 && $ydown > 0 && $yup == 0)
-			{
-				if (isset($pgv_lang["bosa_" . $bosa])) print $pgv_lang["bosa_" . $bosa];
-			}
-			//checks for sibling realtionships
-			if ($xposition == 1 && $ydown == 0 && $yup == 0)
-			{
-				$older = false;
-				if (get_age($person1, date("c"), 0) < get_age($person2, date("c"), 0)) $older = true;
-				if ($mf=="F")
-				{
-					if (isset($pgv_lang["elder sister"]) && $older) print $pgv_lang["elder sister"];
-					else print $pgv_lang["sister"];
-				}
-				else
-				{
-					if (isset($pgv_lang["older brother"]) && $older) print $pgv_lang["older brother"];
-					else print $pgv_lang["brother"];
-				}
-			}
-			//checks for niece/nephew relationship
-			if ($xposition == 1 && $ydown > 0 && $yup == 0)
-			{
-				if (isset($pgv_lang["niece"]) && $mf=="F") print $pgv_lang["niece"];
-				else if (isset($pgv_lang["nephew"])) print $pgv_lang["nephew"];
-			}
-			//checks for aunt/uncle relationship and prints name based on paternal and maternal for chinese language only
-			if ($xposition == 1 && $ydown == 0 && $yup == -1)
-			{
-				if ($mf=="F") 
-				{
-					$person1 = Person::getInstance($node["path"][count($node["path"])-1]);
-					$person2 = Person::getInstance($node["path"][count($node["path"])-2]);
-					if($person1->getBirthYear() < $person2->getBirthYear())
-					{
-						if($maternal)
-						{
-							if(isset($pgv_lang["maternal elder aunt"]))
-							{
-								print $pgv_lang["maternal elder aunt"];
-							}
-							else
-							{
-								print $pgv_lang["aunt"];
-							}
-						}
-						else if($paternal)
-						{
-							if(isset($pgv_lang["paternal older aunt"]))
-							{
-								print $pgv_lang["paternal older aunt"];
-							}
-							else
-							{
-								print $pgv_lang["aunt"];
-							}
-						}		
-					}
-					else
-					{
-						if($maternal)
-						{
-							if(isset($pgv_lang["maternal younger aunt"]))
-							{
-								print $pgv_lang["maternal younger aunt"];
-							}
-							else
-							{
-								print $pgv_lang["aunt"];
-							}
-						}
-						else if($paternal)
-						{
-							if(isset($pgv_lang["paternal younger aunt"]))
-							{
-								print $pgv_lang["paternal younger aunt"];
-							}
-							else
-							{
-								print $pgv_lang["aunt"];
-							}
-						}
-					}
-				}
-				else
-				{
-					$person1 = Person::getInstance($node["path"][count($node["path"])-1]);
-					$person2 = Person::getInstance($node["path"][count($node["path"])-2]);
-					if($person1->getBirthYear() < $person2->getBirthYear()) 
-					{
-						if($maternal)
-						{
-							if(isset($pgv_lang["maternal uncle"]))
-							{
-								print $pgv_lang["maternal uncle"];
-							}
-							else
-							{
-								print $pgv_lang["uncle"];
-							}
-						}
-						else if($paternal)
-						{
-							if(isset($pgv_lang["paternal older uncle"]))
-							{
-								print $pgv_lang["paternal older uncle"];
-							}
-							else
-							{
-								print $pgv_lang["uncle"];
-							}
-						}
-					}
-					else
-					{
-						if($maternal)
-						{
-							if(isset($pgv_lang["maternal uncle"]))
-							{
-								print $pgv_lang["maternal uncle"];
-							}
-							else
-							{
-								print $pgv_lang["uncle"];
-							}
-						}
-						else if($paternal)
-						{
-							if(isset($pgv_lang["paternal younger uncle"]))
-							{
-								print $pgv_lang["paternal younger uncle"];
-							}
-							else
-							{
-								print $pgv_lang["uncle"];
-							}
-						}
-					}
-				}
-			}	
-			//checks for cousin relation ship and prints paternal/maternal for chinese language		
-			if ($xposition == 1 && $ydown > 0 && $yup < 0)
-			{
-				$degree = $ydown;
-				$removed = $ydown + $yup;
-				if ($mf=="F")
-				{
-					if($maternal)
-					{
-						if(isset($pgv_lang["maternal female cousin"]))
-						{
-							print $pgv_lang["maternal female cousin"];
-						}
-						else
-						{
-							print $pgv_lang["femalecousin"];
-						}
-					}
-					else if($paternal)
-					{
-						if(isset($pgv_lang["paternal female cousin"]))
-						{
-							print $pgv_lang["paternal female cousin"];
-						}
-						else
-						{
-							print $pgv_lang["femalecousin"];
-						}
-					}
-				}
-				else
-				{
-					if($maternal)
-					{
-						if(isset($pgv_lang["maternal male cousin"]))
-						{
-							print $pgv_lang["maternal male cousin"];
-						}
-						else
-						{
-							print $pgv_lang["malecousin"];
-						}
-					}
-					else if($paternal)
-					{
-						if(isset($pgv_lang["paternal male cousin"]))
-						{
-							print $pgv_lang["paternal male cousin"];
-						}
-						else
-						{
-							print $pgv_lang["malecousin"];
-						}
-					}
-				}				
-			}					
-			print " of " . get_person_name($_SESSION["pid1"]);			
-			}
 			
-			print "</center></h4></div>\n";
+
+			$sentence = getRelationshipSentence($node, $pid1, $pid2);
+			if($sentence != false)
+			{
+				print "<br><br><br><h4><center>";
+			    print $sentence;
+				print "</center></h4></div>\n";
+			}
 		}
 	}
 }
@@ -783,7 +986,7 @@ $maxyoffset += 100;
 	if (!relationship_chart_div) relationship_chart_div = document.getElementById("relationship_chart_rtl");
 	if (relationship_chart_div) {
 		relationship_chart_div.style.height = <?php print $maxyoffset; ?> + "px";
-		relationship_chart_div.style.width = <?php print $maxxoffset; ?> + "px";
+		relationship_chart_div.style.width = "100%";
 	}
 </script>
 <?php

@@ -1056,6 +1056,295 @@ $pgv_lang["next_path"]		= "מצא הנתיב הבא";
 $pgv_lang["show_path"]		= "הראה את הנתיב";
 $pgv_lang["line_up_generations"]	= "סדר בשורה לפי דורות";
 $pgv_lang["oldest_top"]             	= "הראה את הישן למעלה";
+// %1$s replaced by first person, %2$s by the relationship and %3$s by the second person.
+$pgv_lang["relationship_male_1_is_the_2_of_3"] = '%1$s הוא %2$s של %3$s';
+$pgv_lang["relationship_female_1_is_the_2_of_3"] = '%1$s היא %2$s של %3$s';
+
+$pgv_lang["mother_in_law"]		= "חמות"; 
+$pgv_lang["father_in_law"]		= "חם";
+$pgv_lang["brother_in_law"]		= "גיס";
+$pgv_lang["sister_in_law"]		= "גיסה";
+$pgv_lang["son_in_law"]		= "חתן";
+$pgv_lang["daughter_in_law"]		= "כלה";
+
+$pgv_lang["step_son"]		= "בן חורג";
+$pgv_lang["step_daughter"]	    	= "בת חורגת";
+
+// NOTE in the translations below %d is replaced with the number of greats
+// The SOSA definitions should change in parallel !!
+
+
+$pgv_lang["great_grandfather"]		= "אב שלש"; //<=
+$pgv_lang["great_grandmother"]	= "אם שלשה"; //<=
+$pgv_lang["great_great_grandfather"]	= "אב רבע"; //<=
+$pgv_lang["great_great_grandmother"]	= "אם רבעה"; //<=
+$pgv_lang["n_x_great_grandfather"]	= "אב מדרגה %d"; 
+$pgv_lang["n_x_great_grandmother"]	= "אם מדרגה %d";  
+//great_great_great_grandmother 	= "אם מדרגה 5";
+
+// the bosa_brothers_offspring name is used for fraternal nephews and nieces - the names below can be extended to any number
+// of generations just by adding more translations.
+// 1st generation
+$pgv_lang["bosa_brothers_offspring_2"] = "נכדן";              // brother's son
+$pgv_lang["bosa_brothers_offspring_3"] = "נכדנית";          // brother's daughter
+// 2nd generation
+$pgv_lang["bosa_brothers_offspring_4"] = "נכדן משנה";     // brother's son's son 
+$pgv_lang["bosa_brothers_offspring_5"] = "נכדנית משנה"; // brother's son's daughter
+$pgv_lang["bosa_brothers_offspring_6"] = "נכדן משנה";     // brother's daughter's son
+$pgv_lang["bosa_brothers_offspring_7"] = "נכדנית משנה"; // brother's daughter's daughter
+// 3nd generation
+$pgv_lang["bosa_brothers_offspring_8"] = "נכדן שלש";       // brother's son's son's son 
+$pgv_lang["bosa_brothers_offspring_9"] = "נכדנית שלשה"; // brother's son's son's daughter
+$pgv_lang["bosa_brothers_offspring_10"] = "נכדן שלש";      // brother's son's daughter's son
+$pgv_lang["bosa_brothers_offspring_11"] = "נכדנית שלשה";// brother's son's daughter's daughter
+$pgv_lang["bosa_brothers_offspring_12"] = "נכדן שלש";      // brother's daughter's son's son 
+$pgv_lang["bosa_brothers_offspring_13"] = "נכדנית שלשה";// brother's daughter's son's daughter
+$pgv_lang["bosa_brothers_offspring_14"] = "נכדן שלש";      // brother's daughter's daughter's son
+$pgv_lang["bosa_brothers_offspring_15"] = "נכדנית שלשה";// brother's daughter's daughter's daughter
+// 4th generation
+$pgv_lang["bosa_brothers_offspring_16"] = "נכדן רבע ";       // brother's son's son's son's son 
+$pgv_lang["bosa_brothers_offspring_17"] = "נכדנית רבעה "; // brother's son's son's son's daughter
+$pgv_lang["bosa_brothers_offspring_18"] = "נכדן רבע ";       // brother's son's son's daughter's son
+$pgv_lang["bosa_brothers_offspring_19"] = "נכדנית רבעה "; // brother's son's son's daughter's daughter
+$pgv_lang["bosa_brothers_offspring_20"] = "נכדן רבע ";       // brother's son's daughter's son's son 
+$pgv_lang["bosa_brothers_offspring_21"] = "נכדנית רבעה "; // brother's son's daughter's son's daughter
+$pgv_lang["bosa_brothers_offspring_22"] = "נכדן רבע ";       // brother's son's daughter's daughter's son
+$pgv_lang["bosa_brothers_offspring_23"] = "נכדנית רבעה "; // brother's son's daughter's daughter's daughter
+$pgv_lang["bosa_brothers_offspring_24"] = "נכדן רבע ";       // brother's daughter's son's son's son 
+$pgv_lang["bosa_brothers_offspring_25"] = "נכדנית רבעה "; // brother's daughter's son's son's daughter
+$pgv_lang["bosa_brothers_offspring_26"] = "נכדן רבע ";       // brother's daughter's son's daughter's son
+$pgv_lang["bosa_brothers_offspring_27"] = "נכדנית רבעה "; // brother's daughter's son's daughter's daughter
+$pgv_lang["bosa_brothers_offspring_28"] = "נכדן רבע ";       // brother's daughter's daughter's son's son 
+$pgv_lang["bosa_brothers_offspring_29"] = "נכדנית רבעה "; // brother's daughter's daughter's son's daughter
+$pgv_lang["bosa_brothers_offspring_30"] = "נכדן רבע ";       // brother's daughter's daughter's daughter's son
+$pgv_lang["bosa_brothers_offspring_31"] = "נכדנית רבעה "; // brother's daughter's daughter's daughter's daughter
+// for the general case of offspring of the nth generation use the text below
+// in this text %1$d is replaced with the number of generations
+//              %2$d is replaced with the number of generations - 1
+//              %3$d is replaced with the number of generations - 2
+$pgv_lang["n_x_brothers_son"]	  = 'נכדנית מדרגה %1$d';
+$pgv_lang["n_x_brothers_daughter"] = 'נכדנית מדרגה %1$d';
+// the bosa_sisters_offspring name is used for sisters nephews and nieces - the names below can be extended to any number
+// of generations just by adding more translations.
+// 1st generation
+$pgv_lang["bosa_sisters_offspring_2"] = "נכדן";               // sister's son
+$pgv_lang["bosa_sisters_offspring_3"] = "נכדנית";           // sister's daughter
+// 2nd generation
+$pgv_lang["bosa_sisters_offspring_4"] = "נכדן משנה";      // sister's son's son 
+$pgv_lang["bosa_sisters_offspring_5"] = "נכדנית משנה";  // sister's son's daughter
+$pgv_lang["bosa_sisters_offspring_6"] = "נכדן משנה";      // sister's daughter's son
+$pgv_lang["bosa_sisters_offspring_7"] = "נכדנית משנה";  // sister's daughter's daughter
+// 3nd generation
+$pgv_lang["bosa_sisters_offspring_8"] = "נכדן שלש";        // sister's son's son's son 
+$pgv_lang["bosa_sisters_offspring_9"] = "נכדנית שלשה";  // sister's son's son's daughter
+$pgv_lang["bosa_sisters_offspring_10"] = "נכדן שלש";       // sister's son's daughter's son
+$pgv_lang["bosa_sisters_offspring_11"] = "נכדנית שלשה"; // sister's son's daughter's daughter
+$pgv_lang["bosa_sisters_offspring_12"] = "נכדן שלש";       // sister's daughter's son's son 
+$pgv_lang["bosa_sisters_offspring_13"] = "נכדנית שלשה"; // sister's daughter's son's daughter
+$pgv_lang["bosa_sisters_offspring_14"] = "נכדן שלש";       // sister's daughter's daughter's son
+$pgv_lang["bosa_sisters_offspring_15"] = "נכדנית שלשה"; // sister's daughter's daughter's daughter
+// 4th generation
+$pgv_lang["bosa_sisters_offspring_16"] = "נכדן רבע ";       // sister's son's son's son's son 
+$pgv_lang["bosa_sisters_offspring_17"] = "נכדנית רבעה "; // sister's son's son's son's daughter
+$pgv_lang["bosa_sisters_offspring_18"] = "נכדן רבע ";       // sister's son's son's daughter's son
+$pgv_lang["bosa_sisters_offspring_19"] = "נכדנית רבעה "; // sister's son's son's daughter's daughter
+$pgv_lang["bosa_sisters_offspring_20"] = "נכדן רבע ";       // sister's son's daughter's son's son 
+$pgv_lang["bosa_sisters_offspring_21"] = "נכדנית רבעה "; // sister's son's daughter's son's daughter
+$pgv_lang["bosa_sisters_offspring_22"] = "נכדן רבע ";       // sister's son's daughter's daughter's son
+$pgv_lang["bosa_sisters_offspring_23"] = "נכדנית רבעה "; // sister's son's daughter's daughter's daughter
+$pgv_lang["bosa_sisters_offspring_24"] = "נכדן רבע ";       // sister's daughter's son's son's son 
+$pgv_lang["bosa_sisters_offspring_25"] = "נכדנית רבעה "; // sister's daughter's son's son's daughter
+$pgv_lang["bosa_sisters_offspring_26"] = "נכדן רבע ";       // sister's daughter's son's daughter's son
+$pgv_lang["bosa_sisters_offspring_27"] = "נכדנית רבעה "; // sister's daughter's son's daughter's daughter
+$pgv_lang["bosa_sisters_offspring_28"] = "נכדן רבע ";       // sister's daughter's daughter's son's son 
+$pgv_lang["bosa_sisters_offspring_29"] = "נכדנית רבעה "; // sister's daughter's daughter's son's daughter
+$pgv_lang["bosa_sisters_offspring_30"] = "נכדן רבע ";       // sister's daughter's daughter's daughter's son
+$pgv_lang["bosa_sisters_offspring_31"] = "נכדנית רבעה "; // sister's daughter's daughter's daughter's daughter
+// for the general case of offspring of the nth generation use the text below
+// in this text %1$d is replaced with the number of generations
+//              %2$d is replaced with the number of generations - 1
+//              %3$d is replaced with the number of generations - 2
+$pgv_lang["n_x_sisters_son"]	  = 'נכדנית מדרגה %1$d';
+$pgv_lang["n_x_sisters_daughter"] = 'נכדנית מדרגה %1$d';
+
+
+// the bosa name is used for offspring - the names below can be extended to any number
+// of generations just by adding more translations.
+// 1st generation
+$pgv_lang["bosa_2"] 				= $pgv_lang["son"];                   // son
+$pgv_lang["bosa_3"] 				= $pgv_lang["daughter"];              // daughter
+// 2nd generation
+$pgv_lang["bosa_4"] 				= $pgv_lang["grandson"];              // son's son 
+$pgv_lang["bosa_5"] 				= $pgv_lang["granddaughter"];         // son's daughter
+$pgv_lang["bosa_6"] 				= $pgv_lang["grandson"];              // daughter's son
+$pgv_lang["bosa_7"] 				= $pgv_lang["granddaughter"];         // daughter's daughter
+// 3rd generation
+$pgv_lang["bosa_8"] 				= "שלש";     // son's son's son   
+$pgv_lang["bosa_9"] 				= "שלשה";   // son's son's daughter
+$pgv_lang["bosa_10"] 				= "שלש";		// son's daughters son
+$pgv_lang["bosa_11"] 				= "שלשה";   // son's daughters daughter
+$pgv_lang["bosa_12"] 				= "שלש";     // daughter's son's son 
+$pgv_lang["bosa_13"] 				= "שלשה";   // daughter's son's daughter
+$pgv_lang["bosa_14"] 				= "שלש";		// daughter's daughters son
+$pgv_lang["bosa_15"] 				= "שלשה";   // daughter's daughters daughter
+// 4th generation
+$pgv_lang["bosa_16"] 				= "רבע";     // son's son's son's son   
+$pgv_lang["bosa_17"] 				= "רבעה";   // son's son's son's daughter
+$pgv_lang["bosa_18"] 				= "רבע";		// son's son's daughters son
+$pgv_lang["bosa_19"] 				= "רבעה";   // son's son's daughters daughter
+$pgv_lang["bosa_20"] 				= "רבע";     // son's daughter's son's son 
+$pgv_lang["bosa_21"] 				= "רבעה";   // son's daughter's son's daughter
+$pgv_lang["bosa_22"] 				= "רבע";		// son's daughter's daughters son
+$pgv_lang["bosa_23"] 				= "רבעה";   // son's daughter's daughters daughter
+$pgv_lang["bosa_24"] 				= "רבע";     // daughter's son's son's son   
+$pgv_lang["bosa_25"] 				= "רבעה";   // daughter's son's son's daughter
+$pgv_lang["bosa_26"] 				= "רבע";		// daughter's son's daughters son
+$pgv_lang["bosa_27"] 				= "רבעה";   // daughter's son's daughters daughter
+$pgv_lang["bosa_28"] 				= "רבע";     // daughter's daughter's son's son 
+$pgv_lang["bosa_29"] 				= "רבעה";   // daughter's daughter's son's daughter
+$pgv_lang["bosa_30"] 				= "רבע";		// daughter's daughter's daughters son
+$pgv_lang["bosa_31"] 				= "רבעה";   // daughter's daughter's daughters daughter
+// for the general case of offspring of the nth generation use the text below
+// in this text %1$d is replaced with the number of generations
+//              %2$d is replaced with the number of generations - 1
+//              %3$d is replaced with the number of generations - 2
+$pgv_lang["n_x_grandson_from_son"]	  = 'נכד מדרגה %2$d';
+$pgv_lang["n_x_granddaughter_from_son"] = 'נכדה מדרגה %2$d';
+$pgv_lang["n_x_grandson_from_daughter"]	  = 'נכד מדרגה %2$d';
+$pgv_lang["n_x_granddaughter_from_daughter"] = 'נכדה מדרגה %2$d';
+
+// the sosa_uncle name is used for uncles - the names below can be extended to any number
+// of generations just by adding more translations.
+// to allow fo language variations we specify different relationships for paternal and maternal
+// aunts and uncles
+// 1st generation
+$pgv_lang["sosa_uncle_2"] 				= $pgv_lang["uncle"];            // fathers brother
+$pgv_lang["sosa_uncle_3"] 				= $pgv_lang["uncle"];            // mothers brother
+// 2nd generation
+$pgv_lang["sosa_uncle_4"] 				= "דוד סב";      // fathers's fathers brother 
+$pgv_lang["sosa_uncle_5"] 				= "דוד סב";      // fathers mothers brother
+$pgv_lang["sosa_uncle_6"] 				= "דוד סב";      // mothers fathers brother
+$pgv_lang["sosa_uncle_7"] 				= "דוד סב";      // mothers mothers brother
+// 3rd generation
+$pgv_lang["sosa_uncle_8"] 				= "דוד שלש";      // father's fathers's fathers brother 
+$pgv_lang["sosa_uncle_9"] 				= "דוד שלש";      // father's fathers mothers brother
+$pgv_lang["sosa_uncle_10"] 				= "דוד שלש";      // father's mothers fathers brother
+$pgv_lang["sosa_uncle_11"] 				= "דוד שלש";      // father's mothers mothers brother
+$pgv_lang["sosa_uncle_12"] 				= "דוד שלש";      // mother's fathers's fathers brother 
+$pgv_lang["sosa_uncle_13"] 				= "דוד שלש";      // mother's fathers mothers brother
+$pgv_lang["sosa_uncle_14"] 				= "דוד שלש";      // mother's mothers fathers brother
+$pgv_lang["sosa_uncle_15"] 				= "דוד שלש";      // mother's mothers mothers brother
+// 4th generation
+$pgv_lang["sosa_uncle_16"] 				= "דוד רבע";      // father's father's fathers's fathers brother 
+$pgv_lang["sosa_uncle_17"] 				= "דוד רבע";      // father's father's fathers mothers brother
+$pgv_lang["sosa_uncle_18"] 				= "דוד רבע";      // father's father's mothers fathers brother
+$pgv_lang["sosa_uncle_19"] 				= "דוד רבע";      // father's father's mothers mothers brother
+$pgv_lang["sosa_uncle_20"] 				= "דוד רבע";      // father's mother's fathers's fathers brother 
+$pgv_lang["sosa_uncle_21"] 				= "דוד רבע";      // father's mother's fathers mothers brother
+$pgv_lang["sosa_uncle_22"] 				= "דוד רבע";      // father's mother's mothers fathers brother
+$pgv_lang["sosa_uncle_23"] 				= "דוד רבע";      // father's mother's mothers mothers brother
+$pgv_lang["sosa_uncle_24"] 				= "דוד רבע";      // mother's father's fathers's fathers brother 
+$pgv_lang["sosa_uncle_25"] 				= "דוד רבע";      // mother's father's fathers mothers brother
+$pgv_lang["sosa_uncle_26"] 				= "דוד רבע";      // mother's father's mothers fathers brother
+$pgv_lang["sosa_uncle_27"] 				= "דוד רבע";      // mother's father's mothers mothers brother
+$pgv_lang["sosa_uncle_28"] 				= "דוד רבע";      // mother's mother's fathers's fathers brother 
+$pgv_lang["sosa_uncle_29"] 				= "דוד רבע";      // mother's mother's fathers mothers brother
+$pgv_lang["sosa_uncle_30"] 				= "דוד רבע";      // mother's mother's mothers fathers brother
+$pgv_lang["sosa_uncle_31"] 				= "דוד רבע";      // mother's mother's mothers mothers brother
+// for the general case of uncles of the nth degree use the text below
+// in this text %1$d is replaced with the number of generations
+//              %2$d is replaced with the number of generations - 1
+//              %3$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_uncle"]		= 'דוד מדרגה %1$d';
+$pgv_lang["n_x_maternal_uncle"]	    = 'דוד מדרגה %1$d';
+
+// the sosa_aunt name is used for aunt - the names below can be extended to any number
+// of generations just by adding more translations.
+// to allow fo language variations we specify different relationships for paternal and maternal
+// aunts and aunts
+// 1st generation
+$pgv_lang["sosa_aunt_2"] 				= $pgv_lang["aunt"];            // fathers sister
+$pgv_lang["bosa_aunt_3"] 				= $pgv_lang["aunt"];            // mothers sister
+// 2nd generation
+$pgv_lang["sosa_aunt_4"] 				= "דודה סבה";      // fathers's fathers sister 
+$pgv_lang["sosa_aunt_5"] 				= "דודה סבה";      // fathers mothers sister
+$pgv_lang["sosa_aunt_6"] 				= "דודה סבה";      // mothers fathers sister
+$pgv_lang["sosa_aunt_7"] 				= "דודה סבה";      // mothers mothers sister
+// 3rd generation
+$pgv_lang["sosa_aunt_8"] 				= "דורה שלשה";      // father's fathers's fathers sister 
+$pgv_lang["sosa_aunt_9"] 				= "דורה שלשה";      // father's fathers mothers sister
+$pgv_lang["sosa_aunt_10"] 				= "דורה שלשה";      // father's mothers fathers sister
+$pgv_lang["sosa_aunt_11"] 				= "דורה שלשה";      // father's mothers mothers sister
+$pgv_lang["sosa_aunt_12"] 				= "דורה שלשה";      // mother's fathers's fathers sister 
+$pgv_lang["sosa_aunt_13"] 				= "דורה שלשה";      // mother's fathers mothers sister
+$pgv_lang["sosa_aunt_14"] 				= "דורה שלשה";      // mother's mothers fathers sister
+$pgv_lang["sosa_aunt_15"] 				= "דורה שלשה";      // mother's mothers mothers sister
+// 4th generation
+$pgv_lang["sosa_aunt_16"] 				= "דודה רבעה";      // father's father's fathers's fathers sister 
+$pgv_lang["sosa_aunt_17"] 				= "דודה רבעה";      // father's father's fathers mothers sister
+$pgv_lang["sosa_aunt_18"] 				= "דודה רבעה";      // father's father's mothers fathers sister
+$pgv_lang["sosa_aunt_19"] 				= "דודה רבעה";      // father's father's mothers mothers sister
+$pgv_lang["sosa_aunt_20"] 				= "דודה רבעה";      // father's mother's fathers's fathers sister 
+$pgv_lang["sosa_aunt_21"] 				= "דודה רבעה";      // father's mother's fathers mothers sister
+$pgv_lang["sosa_aunt_22"] 				= "דודה רבעה";      // father's mother's mothers fathers sister
+$pgv_lang["sosa_aunt_23"] 				= "דודה רבעה";      // father's mother's mothers mothers sister
+$pgv_lang["sosa_aunt_24"] 				= "דודה רבעה";      // mother's father's fathers's fathers sister 
+$pgv_lang["sosa_aunt_25"] 				= "דודה רבעה";      // mother's father's fathers mothers sister
+$pgv_lang["sosa_aunt_26"] 				= "דודה רבעה";      // mother's father's mothers fathers sister
+$pgv_lang["sosa_aunt_27"] 				= "דודה רבעה";      // mother's father's mothers mothers sister
+$pgv_lang["sosa_aunt_28"] 				= "דודה רבעה";      // mother's mother's fathers's fathers sister 
+$pgv_lang["sosa_aunt_29"] 				= "דודה רבעה";      // mother's mother's fathers mothers sister
+$pgv_lang["sosa_aunt_30"] 				= "דודה רבעה";      // mother's mother's mothers fathers sister
+$pgv_lang["sosa_aunt_31"] 				= "דודה רבעה";      // mother's mother's mothers mothers sister
+// for the general case of aunts of the nth degree use the text below
+// in this text %1$d is replaced with the number of generations
+//              %2$d is replaced with the number of generations - 1
+//              %3$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_aunt"]		= 'דודה מדרגה %1$d';
+$pgv_lang["n_x_maternal_aunt"]	    = 'דודה מדרגה %1$d';
+
+
+$pgv_lang["male_cousin_1"]              	= "דודן";
+$pgv_lang["male_cousin_2"]             	= "דודן משנה";
+$pgv_lang["male_cousin_3"]              	= "דודן שילש";
+$pgv_lang["male_cousin_4"]              	= "דודן מדרגה 4";
+$pgv_lang["male_cousin_5"]              	= "דודן מדרגה 5";
+$pgv_lang["male_cousin_6"]              	= "דודן מדרגה 6";
+$pgv_lang["male_cousin_7"]              	= "דודן מדרגה 7";
+$pgv_lang["male_cousin_8"]              	= "דודן מדרגה 8";
+$pgv_lang["male_cousin_9"]              	= "דודן מדרגה 9";
+$pgv_lang["male_cousin_10"]             	= "דודן מדרגה 10";
+$pgv_lang["male_cousin_11"]             	= "דודן מדרגה 11";
+$pgv_lang["male_cousin_12"]             	= "דודן מדרגה 12";
+$pgv_lang["male_cousin_13"]             	= "דודן מדרגה 13";
+$pgv_lang["male_cousin_14"]             	= "דודן מדרגה 14";
+$pgv_lang["male_cousin_15"]             	= "דודן מדרגה 15";
+$pgv_lang["male_cousin_16"]             	= "דודן מדרגה 16";
+$pgv_lang["male_cousin_17"]             	= "דודן מדרגה 17";
+$pgv_lang["male_cousin_18"]             	= "דודן מדרגה 18";
+$pgv_lang["male_cousin_19"]             	= "דודן מדרגה 19";
+$pgv_lang["male_cousin_20"]             	= "דודן מדרגה 20";
+$pgv_lang["female_cousin_1"]            	= "דודנית";
+$pgv_lang["female_cousin_2"]            	= "דודנית משנה";
+$pgv_lang["female_cousin_3"]            	= "דודנית שילשה";
+$pgv_lang["female_cousin_4"]            	= "דודנית מדרגה 4";
+$pgv_lang["female_cousin_5"]            	= "דודנית מדרגה 5";
+$pgv_lang["female_cousin_6"]            	= "דודנית מדרגה 6";
+$pgv_lang["female_cousin_7"]            	= "דודנית מדרגה 7";
+$pgv_lang["female_cousin_8"]            	= "דודנית מדרגה 8";
+$pgv_lang["female_cousin_9"]            	= "דודנית מדרגה 9";
+$pgv_lang["female_cousin_10"]           	= "דודנית מדרגה 10";
+$pgv_lang["female_cousin_11"]           	= "דודנית מדרגה 11";
+$pgv_lang["female_cousin_12"]           	= "דודנית מדרגה 12";
+$pgv_lang["female_cousin_13"]           	= "דודנית מדרגה 13";
+$pgv_lang["female_cousin_14"]           	= "דודנית מדרגה 14";
+$pgv_lang["female_cousin_15"]           	= "דודנית מדרגה 15";
+$pgv_lang["female_cousin_16"]           	= "דודנית מדרגה 16";
+$pgv_lang["female_cousin_17"]           	= "דודנית מדרגה 17";
+$pgv_lang["female_cousin_18"]           	= "דודנית מדרגה 18";
+$pgv_lang["female_cousin_19"]           	= "דודנית מדרגה 19";
+$pgv_lang["female_cousin_20"]           	= "דודנית מדרגה 20";
+
 
 
 // 1st generation

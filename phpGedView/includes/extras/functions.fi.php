@@ -99,4 +99,118 @@ function getFinnishDate($datestr, $day) {
 	}
 	return $datestr;
 }
+
+//-- functions to calculate finnish specific genitive names
+// NOTE this function is incomplete and probably very inefficient.
+// I've decided that for now the task is beyond me, I have looked
+// for a freely availiable algorithm and failed to find one.
+// it is best left to a finnish speaker
+function getFirstRelationsName_fi($pid)
+{
+    // In Finnish we want the genitive form of the name
+    $name = get_person_name($pid);
+
+	// for now I have been asked to remove the body of this function - if any Finnish
+	// speaker can sort this out I would be grateful.
+    return $name;
+
+    // First we look for Consonant gradation
+    if(preg_match("/kki$/", $name))
+	{
+	    preg_replace("/kki$/", "kin", $name);
+	}
+    else if(preg_match("/kka$/", $name))
+	{
+	    preg_replace("/kka$/", "kan", $name);
+	}
+    else if(preg_match("/ppi$/", $name))
+	{
+	    preg_replace("/ppi$/", "pin", $name);
+	}
+    else if(preg_match("/ppa$/", $name))
+	{
+	    preg_replace("/ppa$/", "pan", $name);
+	}
+    else if(preg_match("/tti$/", $name))
+	{
+	    preg_replace("/tti$/", "tin", $name);
+	}
+    else if(preg_match("/tta$/", $name))
+	{
+	    preg_replace("/tta$/", "tan", $name);
+	}
+    else if(preg_match("/nti$/", $name))
+	{
+	    preg_replace("/nti$/", "nnin", $name);
+	}
+    else if(preg_match("/nta$/", $name))
+	{
+	    preg_replace("/nta$/", "nnan", $name);
+	}
+
+
+    //Now we sort out endings
+	// Names ending in 'e' now end 'een'
+    else if(preg_match("/e$/", $name))
+	{
+	    $name = $name . "en";
+	}
+	// Names ending 'nen' now end 'sen'
+	else if(preg_match("/nen$/", $name))
+	{
+	    preg_replace("/nen$/", "sen", $name);
+	}
+	// Names ending 'n' now end 'men'
+	else if(preg_match("/n$/", $name))
+	{
+	    preg_replace("/n$/", "men", $name);
+	}
+	// Names ending 'si' now end 'den'
+	else if(preg_match("/si$/", $name))
+	{
+	    preg_replace("/si$/", "den", $name);
+	}
+	// Names ending 'is' now end 'iin'
+	else if(preg_match("/is$/", $name))
+	{
+	    preg_replace("/is$/", "iin", $name);
+	}
+	// Names ending 'as' now end 'aan'
+	else if(preg_match("/as$/", $name))
+	{
+	    preg_replace("/as$/", "aan", $name);
+	}
+	// Names ending 'a' now end 'aan'
+	else if(preg_match("/a$/", $name))
+	{
+	    preg_replace("/a$/", "aan", $name);
+	}
+	// Names ending 'us' now end 'ksen'
+	else if(preg_match("/us$/", $name))
+	{
+	    preg_replace("/us$/", "ksen", $name);
+	}
+	// Names ending 'ys' now end 'ksen'
+	else if(preg_match("/ys$/", $name))
+	{
+	    preg_replace("/ys$/", "ksen", $name);
+	}
+	// Names ending 'os' now end 'ksen'
+	else if(preg_match("/os$/", $name))
+	{
+	    preg_replace("/os$/", "ksen", $name);
+	}
+	// Names ending 'ös' now end 'ksen'
+	else if(preg_match("/ös$/", $name))
+	{
+	    preg_replace("/ös$/", "ksen", $name);
+	}
+	// All other names have 'n' appended
+	else
+	{
+	    $name = $name . "n";
+	}
+
+    return $name;
+}
 ?>
