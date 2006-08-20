@@ -990,6 +990,200 @@ $pgv_lang["show_path"]                  = "Voir le chemin";
 $pgv_lang["line_up_generations"]        = "Aligner par génération";
 $pgv_lang["oldest_top"]                 = "Afficher les parents en haut";
 
+// %1 replaced by first person, %2 by the relationship and %3 by the second person.
+$pgv_lang["relationship_male_1_is_the_2_of_3"] = '%1$s est le %2$s de %3$s.';
+$pgv_lang["relationship_female_1_is_the_2_of_3"] = '%1$s est la %2$s de %3$s.';
+
+$pgv_lang["mother_in_law"]		    = "belle-mère";
+$pgv_lang["father_in_law"]		    = "beau-père";
+$pgv_lang["brother_in_law"]		    = "beau-frère";
+$pgv_lang["sister_in_law"]		    = "belle-soeur";
+$pgv_lang["son_in_law"]		        = "beau-fils";
+$pgv_lang["daughter_in_law"]		= "belle-fille";
+
+$pgv_lang["step_son"]		        = "beau-fils";
+$pgv_lang["step_daughter"]	    	= "belle-fille";
+
+$pgv_lang["n_x_great_grandfather"]	= "%d x arrière-grand-père";
+$pgv_lang["n_x_great_grandmother"]	= "%d x arrière-grand-mère";
+
+// the bosa_brothers_offspring name is used for fraternal nephews and nieces - the names below can be extended to any number
+// of generations just by adding more translations.
+// 1st generation
+$pgv_lang["bosa_brothers_offspring_2"] = "neveu";             // brother's son
+$pgv_lang["bosa_brothers_offspring_3"] = "nièce";            // brother's daughter
+// 2nd generation
+$pgv_lang["bosa_brothers_offspring_4"] = "petit-neveu";       // brother's son's son 
+$pgv_lang["bosa_brothers_offspring_5"] = "petite-nièce";     // brother's son's daughter
+$pgv_lang["bosa_brothers_offspring_6"] = "petit-neveu";       // brother's daughter's son
+$pgv_lang["bosa_brothers_offspring_7"] = "petite-nièce";     // brother's daughter's daughter
+// 3nd generation
+$pgv_lang["bosa_brothers_offspring_8"] = "arrière petit-neveu";       // brother's son's son's son 
+$pgv_lang["bosa_brothers_offspring_9"] = "arrière petite-nièce";     // brother's son's son's daughter
+$pgv_lang["bosa_brothers_offspring_10"] = "arrière petit-neveu";       // brother's son's daughter's son
+$pgv_lang["bosa_brothers_offspring_11"] = "arrière petite-nièce";     // brother's son's daughter's daughter
+$pgv_lang["bosa_brothers_offspring_12"] = "arrière petit-neveu";       // brother's daughter's son's son 
+$pgv_lang["bosa_brothers_offspring_13"] = "arrière petite-nièce";     // brother's daughter's son's daughter
+$pgv_lang["bosa_brothers_offspring_14"] = "arrière petit-neveu";       // brother's daughter's daughter's son
+$pgv_lang["bosa_brothers_offspring_15"] = "arrière petite-nièce";     // brother's daughter's daughter's daughter
+// for the general case of offspring of the nth generation use the text below
+// in this text %1$d is replaced with the number of generations
+//              %2$d is replaced with the number of generations - 1
+//              %3$d is replaced with the number of generations - 2
+$pgv_lang["n_x_brothers_son"]	  = '%2$d x arrière petit-neveu';
+$pgv_lang["n_x_brothers_daughter"] = '%2$d x arrière petite-nièce';
+// the bosa_sisters_offspring name is used for sisters nephews and nieces - the names below can be extended to any number
+// of generations just by adding more translations.
+// 1st generation
+$pgv_lang["bosa_sisters_offspring_2"] 				= "neveu";             // sister's son
+$pgv_lang["bosa_sisters_offspring_3"] 				= "nièce";              // sister's daughter
+// 2nd generation
+$pgv_lang["bosa_sisters_offspring_4"] 				= "petit-neveu";       // sister's son's son 
+$pgv_lang["bosa_sisters_offspring_5"] 				= "petite-nièce";        // sister's son's daughter
+$pgv_lang["bosa_sisters_offspring_6"] 				= "petit-neveu";       // sister's daughter's son
+$pgv_lang["bosa_sisters_offspring_7"] 				= "petite-nièce";        // sister's daughter's daughter
+// 3nd generation
+$pgv_lang["bosa_sisters_offspring_8"] = "arrière petit-neveu";       // sister's son's son's son 
+$pgv_lang["bosa_sisters_offspring_9"] = "arrière petite-nièce";     // sister's son's son's daughter
+$pgv_lang["bosa_sisters_offspring_10"] = "arrière petit-neveu";       // sister's son's daughter's son
+$pgv_lang["bosa_sisters_offspring_11"] = "arrière petite-nièce";     // sister's son's daughter's daughter
+$pgv_lang["bosa_sisters_offspring_12"] = "arrière petit-neveu";       // sister's daughter's son's son 
+$pgv_lang["bosa_sisters_offspring_13"] = "arrière petite-nièce";     // sister's daughter's son's daughter
+$pgv_lang["bosa_sisters_offspring_14"] = "arrière petit-neveu";       // sister's daughter's daughter's son
+$pgv_lang["bosa_sisters_offspring_15"] = "arrière petite-nièce";     // sister's daughter's daughter's daughter
+// for the general case of offspring of the nth generation use the text below
+// in this text %1$d is replaced with the number of generations
+//              %2$d is replaced with the number of generations - 1
+//              %3$d is replaced with the number of generations - 2
+$pgv_lang["n_x_sisters_son"]	  = '%2$d x arrière petit-neveu';
+$pgv_lang["n_x_sisters_daughter"] = '%2$d x arrière petite-nièce';
+
+// the bosa name is used for offspring - the names below can be extended to any number
+// of generations just by adding more translations.
+// 1st generation
+$pgv_lang["bosa_2"] 				= "son";                   // son
+$pgv_lang["bosa_3"] 				= "daughter";              // daughter
+// 2nd generation
+$pgv_lang["bosa_4"] 				= "petit-fils";            // son's son 
+$pgv_lang["bosa_5"] 				= "petit-fille";           // son's daughter
+$pgv_lang["bosa_6"] 				= "petit-fils";            // daughter's son
+$pgv_lang["bosa_7"] 				= "petit-fille";           // daughter's daughter
+// 3rd generation
+$pgv_lang["bosa_8"] 				= "arrière petit-fils";    // son's son's son   
+$pgv_lang["bosa_9"] 				= "arrière petit-fille";   // son's son's daughter
+$pgv_lang["bosa_10"] 				= "arrière petit-fils";	// son's daughters son
+$pgv_lang["bosa_11"] 				= "arrière petit-fille";   // son's daughters daughter
+$pgv_lang["bosa_12"] 				= "arrière petit-fils";    // daughter's son's son 
+$pgv_lang["bosa_13"] 				= "arrière petit-fille";   // daughter's son's daughter
+$pgv_lang["bosa_14"] 				= "arrière petit-fils";	// daughter's daughters son
+$pgv_lang["bosa_15"] 				= "arrière petit-fille";   // daughter's daughters daughter
+// for the general case of offspring of the nth generation use the text below
+// in this text %1$d is replaced with the number of generations
+//              %2$d is replaced with the number of generations - 1
+//              %3$d is replaced with the number of generations - 2
+$pgv_lang["n_x_grandson_from_son"]	  = '%3$d x arrière petit-fils';
+$pgv_lang["n_x_granddaughter_from_son"] = '%3$d x arrière petit-fille';
+$pgv_lang["n_x_grandson_from_daughter"]	  = '%3$d x arrière petit-fils';
+$pgv_lang["n_x_granddaughter_from_daughter"] = '%3$d x arrière petit-fille';
+
+// the sosa_uncle name is used for uncles - the names below can be extended to any number
+// of generations just by adding more translations.
+// to allow fo language variations we specify different relationships for paternal and maternal
+// aunts and uncles
+// 1st generation
+$pgv_lang["sosa_uncle_2"] 				= $pgv_lang["uncle"]; // fathers brother
+$pgv_lang["sosa_uncle_3"] 				= $pgv_lang["uncle"]; // mothers brother
+// 2nd generation
+$pgv_lang["sosa_uncle_4"] 				= "grand-oncle";      // fathers's fathers brother 
+$pgv_lang["sosa_uncle_5"] 				= "grand-oncle";      // fathers mothers brother
+$pgv_lang["sosa_uncle_6"] 				= "grand-oncle";      // mothers fathers brother
+$pgv_lang["sosa_uncle_7"] 				= "grand-oncle";      // mothers mothers brother
+// 2nd generation
+$pgv_lang["sosa_uncle_8"] 				= "arrière grand-oncle";      // father's fathers's fathers brother 
+$pgv_lang["sosa_uncle_9"] 				= "arrière grand-oncle";      // father's fathers mothers brother
+$pgv_lang["sosa_uncle_10"] 				= "arrière grand-oncle";      // father's mothers fathers brother
+$pgv_lang["sosa_uncle_11"] 				= "arrière grand-oncle";      // father's mothers mothers brother
+$pgv_lang["sosa_uncle_12"] 				= "arrière grand-oncle";      // mother's fathers's fathers brother 
+$pgv_lang["sosa_uncle_13"] 				= "arrière grand-oncle";      // mother's fathers mothers brother
+$pgv_lang["sosa_uncle_14"] 				= "arrière grand-oncle";      // mother's mothers fathers brother
+$pgv_lang["sosa_uncle_15"] 				= "arrière grand-oncle";      // mother's mothers mothers brother
+// for the general case of uncles of the nth degree use the text below
+// in this text %1$d is replaced with the number of generations
+//              %2$d is replaced with the number of generations - 1
+//              %3$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_uncle"]		= '%2$d x arrière grand-oncle';
+$pgv_lang["n_x_maternal_uncle"]	    = '%2$d x arrière grand-oncle';
+
+// the sosa_aunt name is used for aunts - the names below can be extended to any number
+// of generations just by adding more translations.
+// to allow fo language variations we specify different relationships for paternal and maternal
+// aunts and aunts
+// 1st generation
+$pgv_lang["sosa_aunt_2"] 				= $pgv_lang["aunt"];  // fathers sister
+$pgv_lang["bosa_aunt_3"] 				= $pgv_lang["aunt"];  // mothers sister
+// 2nd generation
+$pgv_lang["sosa_aunt_4"] 				= "grand-tante";      // fathers's fathers sister 
+$pgv_lang["sosa_aunt_5"] 				= "grand-tante";      // fathers mothers sister
+$pgv_lang["sosa_aunt_6"] 				= "grand-tante";      // mothers fathers sister
+$pgv_lang["sosa_aunt_7"] 				= "grand-tante";      // mothers mothers sister
+// 2nd generation
+$pgv_lang["sosa_aunt_8"] 				= "arrière grand-tante";      // father's fathers's fathers sister 
+$pgv_lang["sosa_aunt_9"] 				= "arrière grand-tante";      // father's fathers mothers sister
+$pgv_lang["sosa_aunt_10"] 				= "arrière grand-tante";      // father's mothers fathers sister
+$pgv_lang["sosa_aunt_11"] 				= "arrière grand-tante";      // father's mothers mothers sister
+$pgv_lang["sosa_aunt_12"] 				= "arrière grand-tante";      // mother's fathers's fathers sister 
+$pgv_lang["sosa_aunt_13"] 				= "arrière grand-tante";      // mother's fathers mothers sister
+$pgv_lang["sosa_aunt_14"] 				= "arrière grand-tante";      // mother's mothers fathers sister
+$pgv_lang["sosa_aunt_15"] 				= "arrière grand-tante";      // mother's mothers mothers sister
+// for the general case of aunts of the nth degree use the text below
+// in this text %1$d is replaced with the number of generations
+//              %2$d is replaced with the number of generations - 1
+//              %3$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_aunt"]		= '%2$d x ';
+$pgv_lang["n_x_maternal_aunt"]	    = '%2$d x ';
+
+$pgv_lang["male_cousin_1"]          = "cousin germain";
+$pgv_lang["male_cousin_2"]          = "cousin issus de germain";
+$pgv_lang["male_cousin_3"]          = "cousin issus d'issus germain";
+unset($pgv_lang["male_cousin_4"]);
+unset($pgv_lang["male_cousin_5"]);
+unset($pgv_lang["male_cousin_6"]);
+unset($pgv_lang["male_cousin_7"]);
+unset($pgv_lang["male_cousin_8"]);
+unset($pgv_lang["male_cousin_9"]);
+unset($pgv_lang["male_cousin_10"]);
+unset($pgv_lang["male_cousin_11"]);
+unset($pgv_lang["male_cousin_12"]);
+unset($pgv_lang["male_cousin_13"]);
+unset($pgv_lang["male_cousin_14"]);
+unset($pgv_lang["male_cousin_15"]);
+unset($pgv_lang["male_cousin_16"]);
+unset($pgv_lang["male_cousin_17"]);
+unset($pgv_lang["male_cousin_18"]);
+unset($pgv_lang["male_cousin_19"]);
+unset($pgv_lang["male_cousin_20"]);
+$pgv_lang["female_cousin_1"]        = "cousine germaine";
+$pgv_lang["female_cousin_2"]        = "cousine issus de germaine";
+$pgv_lang["female_cousin_3"]        = "cousine issus d'issus germaine";
+unset($pgv_lang["female_cousin_4"]);
+unset($pgv_lang["female_cousin_5"]);
+unset($pgv_lang["female_cousin_6"]);
+unset($pgv_lang["female_cousin_7"]);
+unset($pgv_lang["female_cousin_8"]);
+unset($pgv_lang["female_cousin_9"]);
+unset($pgv_lang["female_cousin_10"]);
+unset($pgv_lang["female_cousin_11"]);
+unset($pgv_lang["female_cousin_12"]);
+unset($pgv_lang["female_cousin_13"]);
+unset($pgv_lang["female_cousin_14"]);
+unset($pgv_lang["female_cousin_15"]);
+unset($pgv_lang["female_cousin_16"]);
+unset($pgv_lang["female_cousin_17"]);
+unset($pgv_lang["female_cousin_18"]);
+unset($pgv_lang["female_cousin_19"]);
+unset($pgv_lang["female_cousin_20"]);
+
+
 //-- GEDCOM edit utility
 $pgv_lang["check_delete"]               = "Confirmez-vous la suppression de cet élément ?";
 $pgv_lang["access_denied"]              = "<b>Accès interdit</b><br />Vous n'avez pas accès cette ressource";

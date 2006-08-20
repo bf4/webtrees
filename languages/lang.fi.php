@@ -772,6 +772,164 @@ $pgv_lang["bosa_2"] 				= "poika";
 $pgv_lang["bosa_3"] 				= "tytär";
 $pgv_lang["check_delete"]		= "Haluatko varmasti poistaa tämän GEDCOM tiedon?";
 $pgv_lang["access_denied"]		= "<b>Pääsy kielletty</b><br />Sinulla ei ole oikeutta tähän resurssiin.";
+// %1$s replaced by first person, %2$s by the relationship and %3$s by the second person.
+$pgv_lang["relationship_male_1_is_the_2_of_3"] 	= '%1$s - %3$s - %2$s.';
+$pgv_lang["relationship_female_1_is_the_2_of_3"] 	= '%1$s - %3$s - %2$s.';
+
+$pgv_lang["mother_in_law"]		= "anoppi";
+$pgv_lang["father_in_law"]		= "appi";
+$pgv_lang["brother_in_law"]		= "lanko";
+$pgv_lang["sister_in_law"]		= "käly";
+$pgv_lang["son_in_law"]		= "vävy";
+$pgv_lang["daughter_in_law"]		= "miniä";
+
+$pgv_lang["step_son"]		= "poikapuoli";
+$pgv_lang["step_daughter"]	    	= "tytärpuoli";
+
+$pgv_lang["n_x_great_grandfather"]	= "isoisä %d. polvessa"; //d+1?
+$pgv_lang["n_x_great_grandmother"]	= "isoäiti %d. polvessa"; //d+1?
+
+// the bosa_brothers_offspring name is used for fraternal nephews and nieces - the names below can be extended to any number
+// of generations just by adding more translations.
+// 1st generation
+$pgv_lang["bosa_brothers_offspring_2"] 				= "veljenpoika";            // brother's son
+$pgv_lang["bosa_brothers_offspring_3"] 				= "veljentytär";           // brother's daughter
+// 2nd generation
+$pgv_lang["bosa_brothers_offspring_4"] 				= "veljenpojanpoika";       // brother's son's son 
+$pgv_lang["bosa_brothers_offspring_5"] 				= "veljenpojantytär";      // brother's son's daughter
+$pgv_lang["bosa_brothers_offspring_6"] 				= "veljentyttärenpoika";   // brother's daughter's son
+$pgv_lang["bosa_brothers_offspring_7"] 				= "veljentyttärentytär";  // brother's daughter's daughter
+// for the general case of offspring of the nth generation use the text below
+// in this text %1$d is replaced with the number of generations
+//              %2$d is replaced with the number of generations - 1
+//              %3$d is replaced with the number of generations - 2
+$pgv_lang["n_x_brothers_son"]	  = 'veljenpoika %1$d. polvessa';
+$pgv_lang["n_x_brothers_daughter"] = 'veljentytär %1$d. polvessa';
+// the bosa_sisters_offspring name is used for sisters nephews and nieces - the names below can be extended to any number
+// of generations just by adding more translations.
+// 1st generation
+$pgv_lang["bosa_sisters_offspring_2"] 				= "sisarenpoika";             // sister's son
+$pgv_lang["bosa_sisters_offspring_3"] 				= "sisarentytär";           // sister's daughter
+// 2nd generation
+$pgv_lang["bosa_sisters_offspring_4"] 				= "sisarenpojanpoika";       // sister's son's son 
+$pgv_lang["bosa_sisters_offspring_5"] 				= "sisarenpojantytär";      // sister's son's daughter
+$pgv_lang["bosa_sisters_offspring_6"] 				= "sisarentyttärenpoika";   // sister's daughter's son
+$pgv_lang["bosa_sisters_offspring_7"] 				= "sisarentyttärentytär";  // sister's daughter's daughter
+// for the general case of offspring of the nth generation use the text below
+// in this text %1$d is replaced with the number of generations
+//              %2$d is replaced with the number of generations - 1
+//              %3$d is replaced with the number of generations - 2
+$pgv_lang["n_x_sisters_son"]	  = 'sisarenpoika %1$d. polvessa';
+$pgv_lang["n_x_sisters_daughter"] = 'sisarentytär %1$d. polvessa';
+
+
+// the bosa name is used for offspring - the names below can be extended to any number
+// of generations just by adding more translations.
+// 1st generation
+$pgv_lang["bosa_2"] 				= $pgv_lang["son"];                   // son
+$pgv_lang["bosa_3"] 				= $pgv_lang["daughter"];              // daughter
+// 2nd generation
+$pgv_lang["bosa_4"] 				= "pojanpoika";               // son's son 
+$pgv_lang["bosa_5"] 				= "pojantytär";              // son's daughter
+$pgv_lang["bosa_6"] 				= "tyttärenpoika";           // daughter's son
+$pgv_lang["bosa_7"] 				= "tyttärentytär";          // daughter's daughter
+// 3rd generation
+$pgv_lang["bosa_8"] 				= "pojanpojanpoika";          // son's son's son   
+$pgv_lang["bosa_9"] 				= "pojanpojantytär";         // son's son's daughter
+$pgv_lang["bosa_10"] 				= "pojantyttärenpoika";	  // son's daughters son
+$pgv_lang["bosa_11"] 				= "pojantyttärentytär";     // son's daughters daughter
+$pgv_lang["bosa_12"] 				= "tyttärenpojanpoika";      // daughter's son's son 
+$pgv_lang["bosa_13"] 				= "tyttärenpojantytär";     // daughter's son's daughter
+$pgv_lang["bosa_14"] 				= "tyttärentyttärenpoika";  // daughter's daughters son
+$pgv_lang["bosa_15"] 				= "tyttärentyttärentytär"; // daughter's daughters daughter
+// for the general case of offspring of the nth generation use the text below
+// in this text %1$d is replaced with the number of generations
+//              %2$d is replaced with the number of generations - 1
+//              %3$d is replaced with the number of generations - 2
+$pgv_lang["n_x_grandson_from_son"]	  = 'pojanpoika %2$d. polvessa';
+$pgv_lang["n_x_granddaughter_from_son"] = 'pojantytär %2$d. polvessa';
+$pgv_lang["n_x_grandson_from_daughter"]	  = 'tyttärenpoika %2$d. polvessa';
+$pgv_lang["n_x_granddaughter_from_daughter"] = 'tyttärentytär %2$d. polvessa';
+
+// the sosa_uncle name is used for uncles - the names below can be extended to any number
+// of generations just by adding more translations.
+// to allow fo language variations we specify different relationships for paternal and maternal
+// aunts and uncles
+// 1st generation
+$pgv_lang["sosa_uncle_2"] 				= "setä";            // fathers brother
+$pgv_lang["sosa_uncle_3"] 				= "eno";            // mothers brother
+// 2nd generation
+$pgv_lang["sosa_uncle_4"] 				= "isosetä";      // fathers's fathers brother 
+$pgv_lang["sosa_uncle_5"] 				= "isosetä";      // fathers mothers brother
+$pgv_lang["sosa_uncle_6"] 				= "isoeno";      // mothers fathers brother
+$pgv_lang["sosa_uncle_7"] 				= "isoeno";      // mothers mothers brother
+// for the general case of uncles of the nth degree use the text below
+// in this text %1$d is replaced with the number of generations
+//              %2$d is replaced with the number of generations - 1
+//              %3$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_uncle"]		= 'setä %1$d. polvessa';
+$pgv_lang["n_x_maternal_uncle"]	    = 'eno %1$d. polvessa';
+
+// the sosa_aunt name is used for aunts - the names below can be extended to any number
+// of generations just by adding more translations.
+// to allow fo language variations we specify different relationships for paternal and maternal
+// aunts and aunts
+// 1st generation
+$pgv_lang["sosa_aunt_2"] 				= $pgv_lang["aunt"];            // fathers sister
+$pgv_lang["bosa_aunt_3"] 				= $pgv_lang["aunt"];            // mothers sister
+// 2nd generation
+$pgv_lang["sosa_aunt_4"] 				= "isotäti";      // fathers's fathers sister 
+$pgv_lang["sosa_aunt_5"] 				= "isotäti";      // fathers mothers sister
+$pgv_lang["sosa_aunt_6"] 				= "isotäti";      // mothers fathers sister
+$pgv_lang["sosa_aunt_7"] 				= "isotäti";      // mothers mothers sister
+// for the general case of aunts of the nth degree use the text below
+// in this text %1$d is replaced with the number of generations
+//              %2$d is replaced with the number of generations - 1
+//              %3$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_aunt"]		= 'täti %1$d. polvessa';
+$pgv_lang["n_x_maternal_aunt"]	    = 'täti %1$d. polvessa';
+
+
+$pgv_lang["male_cousin_1"]              	= "serkku";
+$pgv_lang["male_cousin_2"]              	= "pikkuserkku";
+$pgv_lang["male_cousin_3"]              	= "sokeriserkku";
+$pgv_lang["male_cousin_4"]              	= "serkku 4. polvessa";
+$pgv_lang["male_cousin_5"]              	= "serkku 5. polvessa";
+$pgv_lang["male_cousin_6"]              	= "serkku 6. polvessa";
+$pgv_lang["male_cousin_7"]              	= "serkku 7. polvessa";
+$pgv_lang["male_cousin_8"]              	= "serkku 8. polvessa";
+$pgv_lang["male_cousin_9"]              	= "serkku 9. polvessa";
+$pgv_lang["male_cousin_10"]             	= "serkku 10. polvessa";
+$pgv_lang["male_cousin_11"]             	= "serkku 11. polvessa";
+$pgv_lang["male_cousin_12"]             	= "serkku 12. polvessa";
+$pgv_lang["male_cousin_13"]             	= "serkku 13. polvessa";
+$pgv_lang["male_cousin_14"]             	= "serkku 14. polvessa";
+$pgv_lang["male_cousin_15"]             	= "serkku 15. polvessa";
+$pgv_lang["male_cousin_16"]             	= "serkku 16. polvessa";
+$pgv_lang["male_cousin_17"]             	= "serkku 17. polvessa";
+$pgv_lang["male_cousin_18"]             	= "serkku 18. polvessa";
+$pgv_lang["male_cousin_19"]             	= "serkku 19. polvessa";
+$pgv_lang["male_cousin_20"]             	= "serkku 20. polvessa";
+$pgv_lang["female_cousin_1"]            	= "serkku";
+$pgv_lang["female_cousin_2"]            	= "pikkuserkku";
+$pgv_lang["female_cousin_3"]            	= "sokeriserkku";
+$pgv_lang["female_cousin_4"]              	= "serkku 4. polvessa";
+$pgv_lang["female_cousin_5"]              	= "serkku 5. polvessa";
+$pgv_lang["female_cousin_6"]              	= "serkku 6. polvessa";
+$pgv_lang["female_cousin_7"]              	= "serkku 7. polvessa";
+$pgv_lang["female_cousin_8"]              	= "serkku 8. polvessa";
+$pgv_lang["female_cousin_9"]              	= "serkku 9. polvessa";
+$pgv_lang["female_cousin_10"]             	= "serkku 10. polvessa";
+$pgv_lang["female_cousin_11"]             	= "serkku 11. polvessa";
+$pgv_lang["female_cousin_12"]             	= "serkku 12. polvessa";
+$pgv_lang["female_cousin_13"]             	= "serkku 13. polvessa";
+$pgv_lang["female_cousin_14"]             	= "serkku 14. polvessa";
+$pgv_lang["female_cousin_15"]             	= "serkku 15. polvessa";
+$pgv_lang["female_cousin_16"]             	= "serkku 16. polvessa";
+$pgv_lang["female_cousin_17"]             	= "serkku 17. polvessa";
+$pgv_lang["female_cousin_18"]             	= "serkku 18. polvessa";
+$pgv_lang["female_cousin_19"]             	= "serkku 19. polvessa";
+$pgv_lang["female_cousin_20"]             	= "serkku 20. polvessa";
 
 //-- GEDCOM edit utility
 $pgv_lang["gedrec_deleted"]		= "GEDCOM tietue poisettu.";
