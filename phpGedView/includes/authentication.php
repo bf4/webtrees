@@ -156,10 +156,10 @@ function userLogout($username = "") {
  */
 function userUpdateLogin($username) {
 	global $TBLPREFIX;
-	
+
 	if (empty($username)) $username = getUserName();
 	if (empty($username)) return;
-	
+
 	$sql = "UPDATE ".$TBLPREFIX."users SET u_sessiontime='".time()."' WHERE u_username='$username'";
 	$res = dbquery($sql);
 }
@@ -451,13 +451,13 @@ function checkTableExists() {
 	$has_fav_note = false;
 	$has_auto_accept = false;
 	$has_mutex = false;
-	
+
 	$sqlite = ($DBTYPE == 'sqlite');
 
 	if (DB::isError($DBCONN)) return false;
 	$data = $DBCONN->getListOf('tables');
 	foreach($data as $indexval => $table) {
-		if (strpos($table, $TBLPREFIX) == 0) {
+		if (strpos($table, $TBLPREFIX) === 0) {
 			switch(substr($table, strlen($TBLPREFIX))) {
 				case "users":
 					$has_users = true;
@@ -503,7 +503,7 @@ function checkTableExists() {
 							case "u_auto_accept":
 								$has_auto_accept = true;
 								break;
-						}	
+						}
 					}
 					break;
 				case "messages":
@@ -1184,7 +1184,7 @@ function addMessage($message) {
 
 	//-- do not allow users to send a message to themselves
 	if ($message["from"]==$message["to"]) return false;
-	
+
 	require_once('includes/functions_mail.php');
 
 	//-- setup the message body for the from user
