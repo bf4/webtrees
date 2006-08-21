@@ -28,7 +28,7 @@
 
 // -- include config file
 require("config.php");
-require("includes/functions_charts.php");
+//require("includes/functions_charts.php");
 require_once("includes/person_class.php");
 require($factsfile["english"]);
 if (file_exists( $factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
