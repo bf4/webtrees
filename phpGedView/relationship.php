@@ -28,7 +28,7 @@
 
 // -- include config file
 require("config.php");
-//require("includes/functions_charts.php");
+require_once("includes/functions_charts.php");
 require_once("includes/person_class.php");
 require($factsfile["english"]);
 if (file_exists( $factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
@@ -375,9 +375,9 @@ function getRelationshipSentence($node, $pid1, $pid2)
 				{
 				    $relationshipDescription = sprintf($pgv_lang["n_x_maternal_aunt"], $generationsOlder, $generationsOlder-1, $generationsOlder-2);
 			    }
-				else if(isset($pgv_lang["n_x_maternal_aunt"]))
+				else if(isset($pgv_lang["n_x_maternal_uncle"]))
 				{
-				    $relationshipDescription = sprintf($pgv_lang["n_x_maternal_aunt"], $generationsOlder, $generationsOlder-1, $generationsOlder-2);
+				    $relationshipDescription = sprintf($pgv_lang["n_x_maternal_uncle"], $generationsOlder, $generationsOlder-1, $generationsOlder-2);
 				}
 			}
 		}
