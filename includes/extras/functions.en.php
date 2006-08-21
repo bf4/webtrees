@@ -137,7 +137,7 @@ function getRelationshipText_en($relationshipDescription, $node, $pid1, $pid2)
 	    }
     }
     //checks for nth cousin n times removed
-    else if ($numberOfSiblings == 1 && $generationsYounger > 0 && $generationsOlder > 0 && ($generationsYounger != $generationsOlder))
+    else if ($numberOfSpouses == 0 && $numberOfSiblings == 1 && $generationsYounger > 0 && $generationsOlder > 0 && ($generationsYounger != $generationsOlder))
     {
         $degree = $generationsOlder;
         if ($mf=="F")
