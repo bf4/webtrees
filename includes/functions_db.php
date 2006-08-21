@@ -152,7 +152,25 @@ function check_for_import($ged) {
 	}
 	return false;
 }
-
+function get_media_id_from_file($filename){
+	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS;
+	$dbq = "select m_media from ".$TBLPREFIX."media where m_file = \"./".$filename."\"";
+	$dbr = dbquery($dbq);
+	$mid = $dbr->fetchRow();
+	return $mid[0];
+}
+//returns an array of rows from the database containing the Person ID's for the people associated with this picture
+function get_media_relations($mid){
+	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS;
+	$dbq = "select i.i_id from ".$TBLPREFIX."individuals i join ".$TBLPREFIX."media_mapping mm on i.i_id = mm.mm_gid where mm.mm_media = \"".$mid."\"";
+	$dbr = dbquery($dbq);
+	while($row = $dbr->fetchRow()) {
+		if ($row[0] != $mid){
+			$media[] = $row;
+		}
+	}
+	return $media;
+}
 /**
  * find the gedcom record for a family
  *
@@ -277,6 +295,15 @@ function find_gedcom_record($pid, $gedfile = "") {
 
 	//-- unable to guess the type so look in all the tables
 	if (empty($gedrec)) {
+		$sql1 = "select mm_gedrec from ".$TBLPREFIX."media_mapping where mm_gid =\"".$pid."\"";
+		$res1 = dbquery($sql1);
+		if ($res1->numRows() != 0){
+			$row1 =& $res1->fetchRow();
+			$res1->free();
+			$otherlist[$pid]["gedcom"] = $row1[0];
+			return $row1[0];
+		}
+		else{
 		$sql = "SELECT o_gedcom, o_file FROM ".$TBLPREFIX."other WHERE o_id LIKE '".$DBCONN->escapeSimple($pid)."' AND o_file='".$DBCONN->escapeSimple($GEDCOMS[$gedfile]["id"])."'";
 		$res =& dbquery($sql);
 		if ($res->numRows()!=0) {
@@ -290,6 +317,7 @@ function find_gedcom_record($pid, $gedfile = "") {
 		if (empty($gedrec)) $gedrec = find_family_record($pid, $gedfile);
 		if (empty($gedrec)) $gedrec = find_source_record($pid, $gedfile);
 		if (empty($gedrec)) $gedrec = find_media_record($pid, $gedfile);
+		}
 	}
 	return $gedrec;
 }

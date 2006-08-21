@@ -261,7 +261,7 @@ $GedCount = 0;
 			print "</td>";
 
 			unset($SEARCHLOG_CREATE);
-			require($gedarray["config"]);
+			if (file_exists($gedarray["config"])) require($gedarray["config"]);
 			print "<td valign=\"top\">";		// Column 2  (notices)
 			if (!isset($SEARCHLOG_CREATE)) {
 				print "&lrm;".$pgv_lang["none"];
@@ -313,7 +313,7 @@ $GedCount = 0;
 			print "</td>";
 
 			unset($CHANGELOG_CREATE);
-			require($gedarray["config"]);
+			if (file_exists($gedarray["config"])) require($gedarray["config"]);
 			print "<td valign=\"top\">";		// Column 2  (notices)
 			if (!isset($CHANGELOG_CREATE)) {
 				print "&lrm;".$pgv_lang["none"];

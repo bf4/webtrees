@@ -68,8 +68,10 @@ class Mutex {
 		//-- check if mutex is available
 		$available = false;
 		while(!$available) {
-			//-- do not allow a thread to hold the mutex for more than 1 hour (3600 secs), should not be a problem with PHP
-			$sql = "SELECT * FROM ".$TBLPREFIX."mutex WHERE mx_name='".$DBCONN->escapeSimple($this->name)."' AND (mx_thread='0' OR mx_time < ".(time()-3600).")";
+			//-- do not allow a thread to hold the mutex for more than 5 minutes (300 secs), should not be a problem with PHP
+			//--- this will allow another thread to access the mutex if another thread that held it crashed
+			//-- allow the same session to get the mutex more than once
+			$sql = "SELECT * FROM ".$TBLPREFIX."mutex WHERE mx_name='".$DBCONN->escapeSimple($this->name)."' AND (mx_thread='0' OR mx_thread='".session_id()."' OR mx_time < ".(time()-300).")";
 			$res = dbquery($sql);
 			if ($res->numRows() > 0) {
 				$available = true;

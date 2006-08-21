@@ -855,6 +855,7 @@ if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
 			{
 				//$change_date= "1 JAN 2000";
 				$this->authenticate();
+				if (!is_object($this->soapClient) || $this->isError($this->soapClient)) return false;
 				$person = $this->soapClient->checkUpdatesByID($this->SID, $xref, $change_date);
 				// If there are no changes between the local and remote copies
 				if (PEAR::isError($person) || isset($person->faultcode) || get_class($person)=='SOAP_Fault' || isset($person->error_message_prefix)) {

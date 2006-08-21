@@ -188,177 +188,254 @@ class Census1840 extends ra_form {
 //		  Country, City, Page, Head of Family input boxes
 		if(!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = 1;
         for($i = 0; $i < $_REQUEST['numOfRows']; $i++){
-        	$row = $citation['ts_array']['rows'][$i];
-        	$value = $row['headName'];
+        	$row = array();
+        	if (isset($citation['ts_array']['rows'][$i])) $row = $citation['ts_array']['rows'][$i];
+        	
+        	$value = "";
+        	if (isset($row['headName'])) $value = $row['headName'];
 	        $out .= '<tr><td class="optionbox"><input name="headName'.$i.'" type="text" size="19" value="'.htmlentities($value).'"></td>';
 	//        Free white males input boxes
-			$value = $row['under5M'];
+			$value = "";
+        	if (isset($row['under5M'])) $value = $row['under5M'];
 	        $out .= '<td class="optionbox"><input name="under5M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['5Thru10M'];
+	       	$value = "";
+        	if (isset($row['5Thru10M'])) $value = $row['5Thru10M'];
 	        $out .= '<td class="optionbox"><input name="5Thru10M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	       	$value = $row['10Thru15M'];
+	       	$value = "";
+        	if (isset($row['10Thru15M'])) $value = $row['10Thru15M'];
 	        $out .= '<td class="optionbox"><input name="10Thru15M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['15Thru20M'];
+	        $value = "";
+        	if (isset($row['15Thru20M'])) $value = $row['15Thru20M'];
 	        $out .= '<td class="optionbox"><input name="15Thru20M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['20Thru30M'];
+	        $value = "";
+        	if (isset($row['20Thru30M'])) $value = $row['20Thru30M'];
 	        $out .= '<td class="optionbox"><input name="20Thru30M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['30Thru40M'];
+			$value = "";
+        	if (isset($row['30Thru40M'])) $value = $row['30Thru40M'];
 	        $out .= '<td class="optionbox"><input name="30Thru40M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['40Thru50M'];
+			$value = "";
+        	if (isset($row['40Thru50M'])) $value = $row['40Thru50M'];
 	        $out .= '<td class="optionbox"><input name="40Thru50M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['50Thru60M'];
+			$value = "";
+        	if (isset($row['50Thru60M'])) $value = $row['50Thru60M'];
 	        $out .= '<td class="optionbox"><input name="50Thru60M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['60Thru70M'];
+			$value = "";
+        	if (isset($row['60Thru70M'])) $value = $row['60Thru70M'];
 	        $out .= '<td class="optionbox"><input name="60Thru70M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['70Thru80M'];
+			$value = "";
+        	if (isset($row['70Thru80M'])) $value = $row['70Thru80M'];
 	        $out .= '<td class="optionbox"><input name="70Thru80M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['80Thru90M'];
+			$value = "";
+        	if (isset($row['80Thru90M'])) $value = $row['80Thru90M'];
 	        $out .= '<td class="optionbox"><input name="80Thru90M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['90Thru100M'];
+			$value = "";
+        	if (isset($row['90Thru100M'])) $value = $row['90Thru100M'];
 	        $out .= '<td class="optionbox"><input name="90Thru100M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['100upM'];
+			$value = "";
+        	if (isset($row['100upM'])) $value = $row['100upM'];
 	        $out .= '<td class="optionbox"><input name="100upM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 
 	//		  Free white females input boxes 
-			$value = $row['under5F'];
+			$value = "";
+        	if (isset($row['under5F'])) $value = $row['under5F'];
 	        $out .= '<td class="optionbox"><input name="under5F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['5Thru10F'];
+	       	$value = "";
+        	if (isset($row['5Thru10F'])) $value = $row['5Thru10F'];
 	        $out .= '<td class="optionbox"><input name="5Thru10F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	       	$value = $row['10Thru15F'];
+	       	$value = "";
+        	if (isset($row['10Thru15F'])) $value = $row['10Thru15F'];
 	        $out .= '<td class="optionbox"><input name="10Thru15F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['15Thru20F'];
+	        $value = "";
+        	if (isset($row['15Thru20F'])) $value = $row['15Thru20F'];
 	        $out .= '<td class="optionbox"><input name="15Thru20F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['20Thru30F'];
+	        $value = "";
+        	if (isset($row['20Thru30F'])) $value = $row['20Thru30F'];
 	        $out .= '<td class="optionbox"><input name="20Thru30F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['30Thru40F'];
+			$value = "";
+        	if (isset($row['30Thru40F'])) $value = $row['30Thru40F'];
 	        $out .= '<td class="optionbox"><input name="30Thru40F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['40Thru50F'];
+			$value = "";
+        	if (isset($row['40Thru50F'])) $value = $row['40Thru50F'];
 	        $out .= '<td class="optionbox"><input name="40Thru50F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['50Thru60F'];
+			$value = "";
+        	if (isset($row['50Thru60F'])) $value = $row['50Thru60F'];
 	        $out .= '<td class="optionbox"><input name="50Thru60F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['60Thru70F'];
+			$value = "";
+        	if (isset($row['60Thru70F'])) $value = $row['60Thru70F'];
 	        $out .= '<td class="optionbox"><input name="60Thru70F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['70Thru80F'];
+			$value = "";
+        	if (isset($row['70Thru80F'])) $value = $row['70Thru80F'];
 	        $out .= '<td class="optionbox"><input name="70Thru80F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['80Thru90F'];
+			$value = "";
+        	if (isset($row['80Thru90F'])) $value = $row['80Thru90F'];
 	        $out .= '<td class="optionbox"><input name="80Thru90F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['90Thru100F'];
+			$value = "";
+        	if (isset($row['90Thru100F'])) $value = $row['90Thru100F'];
 	        $out .= '<td class="optionbox"><input name="90Thru100F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['100upF'];
+			$value = "";
+        	if (isset($row['100upF'])) $value = $row['100upF'];
 	        $out .= '<td class="optionbox"><input name="100upF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 
 	//  	  Other Persons and Slaves input boxes
-	        $value = $row['slavesUnder10M'];
+	        $value = "";
+        	if (isset($row['slavesUnder10M'])) $value = $row['slavesUnder10M'];
 	        $out .= '<td class="optionbox"><input name="slavesUnder10M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['slaves10To24M'];
+	        $value = "";
+        	if (isset($row['slaves10To24M'])) $value = $row['slaves10To24M'];
 	        $out .= '<td class="optionbox"><input name="slaves10To24M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['slaves24To36M'];
+	        $value = "";
+        	if (isset($row['slaves24To36M'])) $value = $row['slaves24To36M'];
 	        $out .= '<td class="optionbox"><input name="slaves24To36M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['slaves36To55M'];
+	        $value = "";
+        	if (isset($row['slaves36To55M'])) $value = $row['slaves36To55M'];
 	        $out .= '<td class="optionbox"><input name="slaves36To55M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['slaves55To100M'];
+			$value = "";
+        	if (isset($row['slaves55To100M'])) $value = $row['slaves55To100M'];
 	        $out .= '<td class="optionbox"><input name="slaves55To100M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['slaves100upM'];
+	        $value = "";
+        	if (isset($row['slaves100upM'])) $value = $row['slaves100upM'];
 	        $out .= '<td class="optionbox"><input name="slaves100upM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['slavesUnder10F'];
+	        $value = "";
+        	if (isset($row['slavesUnder10F'])) $value = $row['slavesUnder10F'];
 	        $out .= '<td class="optionbox"><input name="slavesUnder10F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['slaves10To24F'];
+	        $value = "";
+        	if (isset($row['slaves10To24F'])) $value = $row['slaves10To24F'];
 	        $out .= '<td class="optionbox"><input name="slaves10To24F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['slaves24To36F'];
+	        $value = "";
+        	if (isset($row['slaves24To36F'])) $value = $row['slaves24To36F'];
 	        $out .= '<td class="optionbox"><input name="slaves24To36F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['slaves36To55F'];
+	        $value = "";
+        	if (isset($row['slaves36To55F'])) $value = $row['slaves36To55F'];
 	        $out .= '<td class="optionbox"><input name="slaves36To55F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['slaves55To100F'];
+			$value = "";
+        	if (isset($row['slaves55To100F'])) $value = $row['slaves55To100F'];
 	        $out .= '<td class="optionbox"><input name="slaves55To100F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['slaves100upF'];
+	        $value = "";
+        	if (isset($row['slaves100upF'])) $value = $row['slaves100upF'];
 	        $out .= '<td class="optionbox"><input name="slaves100upF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 	        
 	// 			Free Colored Persons input boxes
-			$value = $row['FreeSlavesUnder10M'];
+			$value = "";
+        	if (isset($row['FreeSlavesUnder10M'])) $value = $row['FreeSlavesUnder10M'];
 	        $out .= '<td class="optionbox"><input name="FreeSlavesUnder10M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['FreeSlaves10To24M'];
+	        $value = "";
+        	if (isset($row['FreeSlaves10To24M'])) $value = $row['FreeSlaves10To24M'];
 	        $out .= '<td class="optionbox"><input name="FreeSlaves10To24M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['FreeSlaves24To36M'];
+	        $value = "";
+        	if (isset($row['FreeSlaves24To36M'])) $value = $row['FreeSlaves24To36M'];
 	        $out .= '<td class="optionbox"><input name="FreeSlaves24To36M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['FreeSlaves36To55M'];
+	        $value = "";
+        	if (isset($row['FreeSlaves36To55M'])) $value = $row['FreeSlaves36To55M'];
 	        $out .= '<td class="optionbox"><input name="FreeSlaves36To55M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['slaves55To100M'];
+			$value = "";
+        	if (isset($row['FreeSlaves55To100M'])) $value = $row['FreeSlaves55To100M'];
 	        $out .= '<td class="optionbox"><input name="FreeSlaves55To100M'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['FreeSlaves100upM'];
-	        $out .= '<td class="optionbox"><input name="FreeSlaves100upM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['FreeSlavesUnder10F'];
+	        $value = "";
+        	if (isset($row['FreeSlavesUnder10F'])) $value = $row['FreeSlavesUnder10F'];
 	        $out .= '<td class="optionbox"><input name="FreeSlavesUnder10F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['FreeSlaves10To24F'];
+			$value = "";
+        	if (isset($row['FreeSlavesUnder10F'])) $value = $row['FreeSlavesUnder10F'];
+	        $out .= '<td class="optionbox"><input name="FreeSlavesUnder10F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
+	        $value = "";
+        	if (isset($row['FreeSlaves10To24F'])) $value = $row['FreeSlaves10To24F'];
 	        $out .= '<td class="optionbox"><input name="FreeSlaves10To24F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['FreeSlaves24To36F'];
+	        $value = "";
+        	if (isset($row['FreeSlaves24To36F'])) $value = $row['FreeSlaves24To36F'];
 	        $out .= '<td class="optionbox"><input name="FreeSlaves24To36F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['FreeSlaves36To55F'];
+	        $value = "";
+        	if (isset($row['FreeSlaves36To55F'])) $value = $row['FreeSlaves36To55F'];
 	        $out .= '<td class="optionbox"><input name="FreeSlaves36To55F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['slaves55To100F'];
+			$value = "";
+        	if (isset($row['FreeSlaves55To100F'])) $value = $row['FreeSlaves55To100F'];
 	        $out .= '<td class="optionbox"><input name="FreeSlaves55To100F'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['FreeSlaves100upF'];
+	        $value = "";
+        	if (isset($row['FreeSlaves100upF'])) $value = $row['FreeSlaves100upF'];
 	        $out .= '<td class="optionbox"><input name="FreeSlaves100upF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 	       
 	       //Other inputs
-	        $value = $row['Totle'];
+	        $value = "";
+        	if (isset($row['Totle'])) $value = $row['Totle'];
 	        $out .= '<td class="optionbox"><input name="Totle'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        
-	        $value = $row['Mining'];
+	        $value = "";
+        	if (isset($row['Mining'])) $value = $row['Mining'];
 	        $out .= '<td class="optionbox"><input name="Mining'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['Agriculture'];
+	        $value = "";
+        	if (isset($row['Agriculture'])) $value = $row['Agriculture'];
 	        $out .= '<td class="optionbox"><input name="Agriculture'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['Commerce'];
+	        $value = "";
+        	if (isset($row['Commerce'])) $value = $row['Commerce'];
 	        $out .= '<td class="optionbox"><input name="Commerce'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['ManufactureAndTrade'];
+	        $value = "";
+        	if (isset($row['ManufactureAndTrade'])) $value = $row['ManufactureAndTrade'];
 	        $out .= '<td class="optionbox"><input name="ManufactureAndTrade'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['NavigationOfTheOcean'];
+	        $value = "";
+        	if (isset($row['NavigationOfTheOcean'])) $value = $row['NavigationOfTheOcean'];
 	        $out .= '<td class="optionbox"><input name="NavigationOfTheOcean'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['NavigationOfCanalsLakesRivers'];
+	        $value = "";
+        	if (isset($row['NavigationOfCanalsLakesRivers'])) $value = $row['NavigationOfCanalsLakesRivers'];
 	        $out .= '<td class="optionbox"><input name="NavigationOfCanalsLakesRivers'.$i.'" type="text" size="7" value="'.htmlentities($value).'"></td>';
-	        $value = $row['LearnedProfessionalEngineers'];
+	        $value = "";
+        	if (isset($row['LearnedProfessionalEngineers'])) $value = $row['LearnedProfessionalEngineers'];
 	        $out .= '<td class="optionbox"><input name="LearnedProfessionalEngineers'.$i.'" type="text" size="15" value="'.htmlentities($value).'"></td>';
 	        
-	        $value = $row['Name'];
+	        $value = "";
+        	if (isset($row['Name'])) $value = $row['Name'];
 	        $out .= '<td class="optionbox"><input name="Name'.$i.'" type="text" size="20" value="'.htmlentities($value).'"></td>';
 	        
 	        
-	        $value = $row['DeafDumbUnder14'];
+	        $value = "";
+        	if (isset($row['DeafDumbUnder14'])) $value = $row['DeafDumbUnder14'];
 	        $out .= '<td class="optionbox"><input name="DeafDumbUnder14'.$i.'" type="text" size="15" value="'.htmlentities($value).'"></td>';
-	        $value = $row['DeafDumb14to25'];
+	        $value = "";
+        	if (isset($row['DeafDumb14to25'])) $value = $row['DeafDumb14to25'];
 	        $out .= '<td class="optionbox"><input name="DeafDumb14to25'.$i.'" type="text" size="23" value="'.htmlentities($value).'"></td>';
-	        $value = $row['Deaf25andUp'];
+	        $value = "";
+        	if (isset($row['Deaf25andUp'])) $value = $row['Deaf25andUp'];
 	        $out .= '<td class="optionbox"><input name="Deaf25andUp'.$i.'" type="text" size="16" value="'.htmlentities($value).'"></td>';
-	        $value = $row['Blind'];
+	        $value = "";
+        	if (isset($row['Blind'])) $value = $row['Blind'];
 	        $out .= '<td class="optionbox"><input name="Blind'.$i.'" type="text" size="10" value="'.htmlentities($value).'"></td>';
-	        $value = $row['publicidiots'];
+	        $value = "";
+        	if (isset($row['publicidiots'])) $value = $row['publicidiots'];
 	        $out .= '<td class="optionbox"><input name="publicidiots'.$i.'" type="text" size="10" value="'.htmlentities($value).'"></td>';
-	        $value = $row['privateidiots'];
+	        $value = "";
+        	if (isset($row['privateidiots'])) $value = $row['privateidiots'];
 	        $out .= '<td class="optionbox"><input name="privateidiots'.$i.'" type="text" size="10" value="'.htmlentities($value).'"></td>';
 	        
-	        $value = $row['DeafDumbUnder14Slaves'];
-	        $out .= '<td class="optionbox"><input name="DeafDumbUnder14Slaves'.$i.'" type="text" size="8" value="'.htmlentities($value).'"></td>';
-	        $value = $row['DeafDumb14to25Slaves'];
+	        $value = "";
+        	if (isset($row['DeafDumb14to25Slaves'])) $value = $row['DeafDumb14to25Slaves'];
+	        $out .= '<td class="optionbox"><input name="DeafDumb14to25Slaves'.$i.'" type="text" size="8" value="'.htmlentities($value).'"></td>';
+	        $value = "";
+        	if (isset($row['DeafDumb14to25Slaves'])) $value = $row['DeafDumb14to25Slaves'];
 	        $out .= '<td class="optionbox"><input name="DeafDumb14to25Slaves'.$i.'" type="text" size="3" value="'.htmlentities($value).'"></td>';
-	        $value = $row['Deaf25andUpSlaves'];
+	        $value = "";
+        	if (isset($row['Deaf25andUpSlaves'])) $value = $row['Deaf25andUpSlaves'];
 	        $out .= '<td class="optionbox"><input name="Deaf25andUpSlaves'.$i.'" type="text" size="16" value="'.htmlentities($value).'"></td>';
-	        $value = $row['BlindSlaves'];
+	        $value = "";
+        	if (isset($row['BlindSlaves'])) $value = $row['BlindSlaves'];
 	        $out .= '<td class="optionbox"><input name="BlindSlaves" type="text" size="10" value="'.htmlentities($value).'"></td>';
 	        
-	         $value = $row['UniversitiesOrCollege'];
+	        $value = "";
+        	if (isset($row['UniversitiesOrCollege'])) $value = $row['UniversitiesOrCollege'];
 	        $out .= '<td class="optionbox"><input name="UniversitiesOrCollege" type="text" size="15" value="'.htmlentities($value).'"></td>';
-	         $value = $row['NumberOfStudents'];
+	        $value = "";
+        	if (isset($row['NumberOfStudents'])) $value = $row['NumberOfStudents'];
 	        $out .= '<td class="optionbox"><input name="NumberOfStudents" type="text" size="13" value="'.htmlentities($value).'"></td>';
-	         $value = $row['AcademiesAndGrammarSchools'];
+	        $value = "";
+        	if (isset($row['AcademiesAndGrammarSchools'])) $value = $row['AcademiesAndGrammarSchools'];
 	        $out .= '<td class="optionbox"><input name="AcademiesAndGrammarSchools" type="text" size="10" value="'.htmlentities($value).'"></td>';
-	         $value = $row['NoOfScholars'];
+	        $value = "";
+        	if (isset($row['NoOfScholars'])) $value = $row['NoOfScholars'];
 	        $out .= '<td class="optionbox"><input name="NoOfScholars" type="text" size="10" value="'.htmlentities($value).'"></td>';
-	         $value = $row['PrimaryAndCommonSchools'];
+	        $value = "";
+        	if (isset($row['PrimaryAndCommonSchools'])) $value = $row['PrimaryAndCommonSchools'];
 	        $out .= '<td class="optionbox"><input name="PrimaryAndCommonSchools" type="text" size="15" value="'.htmlentities($value).'"></td>';
-	         $value = $row['NoOfScholarsAtPublicCharge'];
+	        $value = "";
+        	if (isset($row['NoOfScholarsAtPublicCharge'])) $value = $row['NoOfScholarsAtPublicCharge'];
 	        $out .= '<td class="optionbox"><input name="NoOfScholarsAtPublicCharge" type="text" size="10" value="'.htmlentities($value).'"></td>';
-	         $value = $row['ReadAndWrite'];
+	        $value = "";
+        	if (isset($row['ReadAndWrite'])) $value = $row['ReadAndWrite'];
 	        $out .= '<td class="optionbox"><input name="ReadAndWrite" type="text" size="16" value="'.htmlentities($value).'"></td>';
-	        
         }
         $out .= '</table></td></tr>';
         return $out;
@@ -434,33 +511,160 @@ class Census1840 extends ra_form {
 		{
 			$rows[$number] = array(
 			'headName'=>$_POST["headName".$number],
-			'underTenM'=>$_POST["underTenM".$number],
-			'tenThruFifteenM'=>$_POST["tenThruFifteenM".$number],
-			"sixteenThruTwentyfiveM"=>$_POST["sixteenThruTwentyfiveM".$number],
-			"twentysixThruFortyfourM"=>$_POST["twentysixThruFortyfourM".$number],
-			"fortyfiveAndOverM"=>$_POST["fortyfiveAndOverM".$number],
-			"underTenF"=>$_POST["underTenF".$number],
-			"tenThruFifteenF"=>$_POST["tenThruFifteenF".$number],
-			"sixteenThruTwentyfiveF"=>$_POST["sixteenThruTwentyfiveF".$number],
-			"twentysixThruFortyfourF"=>$_POST["twentysixThruFortyfourF".$number],
-			"fortyfiveAndOverF"=>$_POST["fortyfiveAndOverF".$number],
-			"otherPersons"=>$_POST["otherPersons".$number],
-			"slaves"=>$_POST["slaves".$number]
+			'under5M'=>$_POST["under5M".$number],
+			'5Thru10M'=>$_POST["5Thru10M".$number],
+			"10Thru15M"=>$_POST["10Thru15M".$number],
+			"15Thru20M"=>$_POST["15Thru20M".$number],
+			"20Thru30M"=>$_POST["20Thru30M".$number],
+			"30Thru40M"=>$_POST["30Thru40M".$number],
+			"40Thru50M"=>$_POST["40Thru50M".$number],
+			"50Thru60M"=>$_POST["50Thru60M".$number],
+			"60Thru70M"=>$_POST["60Thru70M".$number],
+			"70Thru80M"=>$_POST["70Thru80M".$number],
+			"80Thru90M"=>$_POST["80Thru90M".$number],
+			"90Thru100M"=>$_POST["90Thru100M".$number],
+			"100upM"=>$_POST["100upM".$number],
+			"under5F"=>$_POST["under5M".$number],
+			"5Thru10F"=>$_POST["5Thru10F".$number],
+			"10Thru15F"=>$_POST["10Thru15F".$number],
+			"15Thru20F"=>$_POST["15Thru20F".$number],
+			"20Thru30F"=>$_POST["20Thru30F".$number],
+			"30Thru40F"=>$_POST["30Thru40F".$number],
+			"40Thru50F"=>$_POST["40Thru50F".$number],
+			"50Thru60F"=>$_POST["50Thru60F".$number],
+			"60Thru70F"=>$_POST["60Thru70F".$number],
+			"70Thru80F"=>$_POST["70Thru80F".$number],
+			"80Thru90F"=>$_POST["80Thru90F".$number],
+			"90Thru100F"=>$_POST["90Thru100F".$number],
+			"100upF"=>$_POST["100upF".$number],
+			"slavesUnder10M"=>$_POST["slavesUnder10M".$number],
+			"slaves10To24M"=>$_POST["slaves24To36M".$number],
+			"slaves36To55M"=>$_POST["slaves36To55M".$number],
+			"slaves55To100M"=>$_POST["slaves55To100M".$number],
+			"slaves100upM"=>$_POST["slaves100upM".$number],
+			"slavesUnder10F"=>$_POST["slavesUnder10F".$number],
+			"slaves10To24F"=>$_POST["slaves10To24F".$number],
+			"slaves24To36F"=>$_POST["slaves24To36F".$number],
+			"slaves36To55F"=>$_POST["slaves36To55F".$number],
+			"slaves55To100F"=>$_POST["slaves55To100F".$number],
+			"slaves100upF"=>$_POST["slaves100upF".$number],
+			"FreeSlavesUnder10M"=>$_POST["FreeSlavesUnder10M".$number],
+			"FreeSlaves10To24M"=>$_POST["FreeSlaves10To24M".$number],
+			"FreeSlaves24To36M"=>$_POST["FreeSlaves24To36M".$number],
+			"FreeSlaves36To55M"=>$_POST["FreeSlaves36To55M".$number],
+			"FreeSlaves55To100M"=>$_POST["FreeSlaves55To100M".$number],
+			"FreeSlaves100upM"=>$_POST["FreeSlaves100upM".$number],
+			"FreeSlavesUnder10F"=>$_POST["FreeSlavesUnder10F".$number],
+			"FreeSlaves10To24F"=>$_POST["FreeSlaves10To24F".$number],
+			"FreeSlaves24To36F"=>$_POST["FreeSlaves24To36F".$number],
+			"FreeSlaves36To55F"=>$_POST["FreeSlaves36To55F".$number],
+			"FreeSlaves55To100F"=>$_POST["FreeSlaves55To100F".$number],
+			"FreeSlaves100upF"=>$_POST["FreeSlaves100upF".$number],
+			"Totle"=>$_POST["Totle".$number],
+			"Mining"=>$_POST["Mining".$number],
+			"Agriculture"=>$_POST["Agriculture".$number],
+			"Commerce"=>$_POST["Commerce".$number],
+			"ManufactureAndTrade"=>$_POST["ManufactureAndTrade".$number],
+			"NavigationOfTheOcean"=>$_POST["NavigationOfTheOcean".$number],
+			"NavigationOfCanalsLakesRivers"=>$_POST["NavigationOfCanalsLakesRivers".$number],
+			"LearnedProfessionalEngineers"=>$_POST["LearnedProfessionalEngineers".$number],
+			"Name"=>$_POST["Name".$number],
+			"DeafDumbUnder14"=>$_POST["DeafDumbUnder14".$number],
+			"DeafDumb14to25"=>$_POST["DeafDumb14to25".$number],
+			"Deaf25andUp"=>$_POST["Deaf25andUp".$number],
+			"Blind"=>$_POST["Blind".$number],
+			"publicidiots"=>$_POST["publicidiots".$number],
+			"privateidiots"=>$_POST["privateidiots".$number],
+			"DeafDumbUnder14Slaves"=>$_POST["DeafDumbUnder14Slaves".$number],
+			"DeafDumb14to25Slaves"=>$_POST["DeafDumb14to25Slaves".$number],
+			"Deaf25andUpSlaves"=>$_POST["Deaf25andUpSlaves".$number],
+			"BlindSlaves"=>$_POST["BlindSlaves".$number],
+			"UniversitiesOrCollege"=>$_POST["UniversitiesOrCollege".$number],
+			"NumberOfStudents"=>$_POST["NumberOfStudents".$number],
+			"AcademiesAndGrammarSchools"=>$_POST["AcademiesAndGrammarSchools".$number],
+			"NoOfScholars"=>$_POST["NoOfScholars".$number],
+			"PrimaryAndCommonSchools"=>$_POST["PrimaryAndCommonSchools".$number],
+			"NoOfScholarsAtPublicCharge"=>$_POST["NoOfScholarsAtPublicCharge".$number],
+			"ReadAndWrite"=>$_POST["ReadAndWrite".$number]
 			);
 			$text .=$number==0?"" :"\r\n";
 			$text .= "\r\nHead of Family: ".$_POST["headName".$number];
-			$text .= "\r\nMales under 10: ".$_POST["underTenM".$number];
-			$text .= "\r\nMales Ten thru fifteen: ".$_POST["tenThruFifteenM".$number];
-			$text .= "\r\nMales Sixteen thru Twenty five: ".$_POST["sixteenThruTwentyfiveM".$number];
-			$text .= "\r\nMales Twenty six thru Forty four: ".$_POST["twentysixThruFortyfourM".$number];
-			$text .= "\r\nMales Forty five and Over: ".$_POST["fortyfiveAndOverM".$number];
-			$text .= "\r\nFemales under 10: ".$_POST["underTenF".$number];
-			$text .= "\r\nFemales Ten thru fifteen: ".$_POST["tenThruFifteenF".$number];
-			$text .= "\r\nFemales Sixteen thru Twenty five: ".$_POST["sixteenThruTwentyfiveF".$number];
-			$text .= "\r\nFemales Twentysix thru Forty four: ".$_POST["twentysixThruFortyfourF".$number];
-			$text .= "\r\nFemales Forty five and Over: ".$_POST["fortyfiveAndOverF".$number];
-			$text .= "\r\nAll other Free Persons: ".$_POST["otherPersons".$number];
-			$text .= "\r\nSlaves: ".$_POST["slaves".$number];
+			$text .= "\r\nMales under 5: ".$_POST["under5M".$number];
+			$text .= "\r\nMales 5 thru 10: ".$_POST["5Thru10M".$number];
+			$text .= "\r\nMales 10 thru 15: ".$_POST["10Thru15M".$number];
+			$text .= "\r\nMales 15 thru 20: ".$_POST["15Thru20M".$number];
+			$text .= "\r\nMales 20 thru 30: ".$_POST["20Thru30M".$number];
+			$text .= "\r\nMales 30 thru 40: ".$_POST["30Thru40M".$number];
+			$text .= "\r\nMales 40 thru 50: ".$_POST["40Thru50M".$number];
+			$text .= "\r\nMales 50 thru 60: ".$_POST["50Thru60M".$number];
+			$text .= "\r\nMales 60 thru 70: ".$_POST["60Thru70M".$number];
+			$text .= "\r\nMales 70 thru 80: ".$_POST["70Thru80M".$number];
+			$text .= "\r\nMales 80 thru 90: ".$_POST["80Thru90M".$number];
+			$text .= "\r\nMales 90 thru 100: ".$_POST["90Thru100M".$number];
+			$text .= "\r\nMales 100 and over: ".$_POST["100upM".$number];
+			$text .= "\r\nFemales under 5: ".$_POST["under5F".$number];
+			$text .= "\r\nFemales 5 thru 10: ".$_POST["5Thru10F".$number];
+			$text .= "\r\nFemales 10 thru 15: ".$_POST["10Thru15F".$number];
+			$text .= "\r\nFemales 15 thru 20: ".$_POST["15Thru20F".$number];
+			$text .= "\r\nFemales 20 thru 30: ".$_POST["20Thru30F".$number];
+			$text .= "\r\nFemales 30 thru 40: ".$_POST["30Thru40F".$number];
+			$text .= "\r\nFemales 40 thru 50: ".$_POST["40Thru50F".$number];
+			$text .= "\r\nFemales 50 thru 60: ".$_POST["50Thru60F".$number];
+			$text .= "\r\nFemales 60 thru 70: ".$_POST["60Thru70F".$number];
+			$text .= "\r\nFemales 70 thru 80: ".$_POST["70Thru80F".$number];
+			$text .= "\r\nFemales 80 thru 90: ".$_POST["80Thru90F".$number];
+			$text .= "\r\nFemales 90 thru 100: ".$_POST["90Thru100F".$number];
+			$text .= "\r\nFemales 100 and up: ".$_POST["100upF".$number];
+			$text .= "\r\nMale Salves under 10: ".$_POST["slavesUnder10M".$number];
+			$text .= "\r\nMale Slaves 10 thru 24: ".$_POST["slaves10To24M".$number];
+			$text .= "\r\nMale Slaves 24 thru 36: ".$_POST["slaves24To36M".$number];
+			$text .= "\r\nMale Salves 36 thru 55: ".$_POST["slaves36To55M".$number];
+			$text .= "\r\nMale Salves 55 thru 100: ".$_POST["slaves55To100M".$number];
+			$text .= "\r\nMale Salves 100 and up: ".$_POST["slaves100upM".$number];
+			$text .= "\r\nFemale Salves under 10: ".$_POST["slavesUnder10F".$number];
+			$text .= "\r\nFemale Slaves 10 thru 24: ".$_POST["slaves10To24F".$number];
+			$text .= "\r\nFemale Slaves 24 thru 36: ".$_POST["slaves24To36F".$number];
+			$text .= "\r\nFemale Salves 36 thru 55: ".$_POST["slaves36To55F".$number];
+			$text .= "\r\nFemale Salves 55 thru 100: ".$_POST["slaves55To100F".$number];
+			$text .= "\r\nFemale Salves 100 and up: ".$_POST["slaves100upF".$number];
+			$text .= "\r\nFree Male Salves under 10: ".$_POST["FreeSlavesUnder10M".$number];
+			$text .= "\r\nFree Male Slaves 10 thru 24: ".$_POST["FreeSlaves10To24M".$number];
+			$text .= "\r\nFree Male Slaves 24 thru 36: ".$_POST["FreeSlaves24To36M".$number];
+			$text .= "\r\nFree Male Salves 36 thru 55: ".$_POST["FreeSlaves36To55M".$number];
+			$text .= "\r\nFree Male Salves 55 thru 100: ".$_POST["FreeSlaves55To100M".$number];
+			$text .= "\r\nFree Male Salves 100 and up: ".$_POST["FreeSlaves100upM".$number];
+			$text .= "\r\nFree Female Salves under 10: ".$_POST["FreeSlavesUnder10F".$number];
+			$text .= "\r\nFree Female Slaves 10 thru 24: ".$_POST["FreeSlaves10To24F".$number];
+			$text .= "\r\nFree Female Slaves 24 thru 36: ".$_POST["FreeSlaves24To36F".$number];
+			$text .= "\r\nFree Female Salves 36 thru 55: ".$_POST["FreeSlaves36To55F".$number];
+			$text .= "\r\nFree Female Salves 55 thru 100: ".$_POST["FreeSlaves55To100F".$number];
+			$text .= "\r\nFree Female Salves 100 and up: ".$_POST["FreeSlaves100upF".$number];
+			$text .= "\r\nTotle: ".$_POST["Totle".$number];
+			$text .= "\r\nMining: ".$_POST["Mining".$number];
+			$text .= "\r\nAgriculture: ".$_POST["Agriculture".$number];
+			$text .= "\r\nCommerce: ".$_POST["Commerce".$number];
+			$text .= "\r\nManufacture and Trade: ".$_POST["ManufactureAndTrade".$number];
+			$text .= "\r\nNavigation of the Ocean: ".$_POST["NavigationOfTheOcean".$number];
+			$text .= "\r\nNavigation of Canals, Lakes, and Rivers: ".$_POST["NavigationOfCanalsLakesRivers".$number];
+			$text .= "\r\nLearned Professional Egineering: ".$_POST["LearnedProfessionalEngineers".$number];
+			$text .= "\r\nNames: ".$_POST["Name".$number];
+			$text .= "\r\nDeaf/Dumb under 14: ".$_POST["DeafDumbUnder14".$number];
+			$text .= "\r\nDeaf/Dumb 14 thru 25: ".$_POST["DeafDumb14to25".$number];
+			$text .= "\r\nDeaf/Dumb 15 and up: ".$_POST["Deaf25andUp".$number];
+			$text .= "\r\nBlind: ".$_POST["Blind".$number];
+			$text .= "\r\nPrivateidiots: ".$_POST["publicidiots".$number];
+			$text .= "\r\nPrivatidiots: ".$_POST["privateidiots".$number];
+			$text .= "\r\nDeaf/Bumb Salves under 14: ".$_POST["DeafDumbUnder14Slaves".$number];
+			$text .= "\r\nDeaf/Dumb Salves 14 thru 25: ".$_POST["DeafDumb14to25Slaves".$number];
+			$text .= "\r\nDeaf Salves 25 and up: ".$_POST["Deaf25andUpSlaves".$number];
+			$text .= "\r\nBlind Salves: ".$_POST["BlindSlaves".$number];
+			$text .= "\r\nUniversity or College: ".$_POST["UniversitiesOrCollege".$number];
+			$text .= "\r\nNumber of Students: ".$_POST["NumberOfStudents".$number];
+			$text .= "\r\nAcademies and Grammer Schools: ".$_POST["AcademiesAndGrammarSchools".$number];
+			$text .= "\r\nNumber of Scholars: ".$_POST["NoOfScholars".$number];
+			$text .= "\r\nPrivary and Common Schools: ".$_POST["PrimaryAndCommonSchools".$number];
+			$text .= "\r\nNumber of Scholars at Public Charge: ".$_POST["NoOfScholarsAtPublicCharge".$number];
+			$text .= "\r\nPeople who can not Read or Write: ".$_POST["ReadAndWrite".$number];
 		}
 
 		$citation = array(
