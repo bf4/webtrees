@@ -139,7 +139,7 @@ function getRelationshipText_en($relationshipDescription, $node, $pid1, $pid2)
     //checks for nth cousin n times removed
     else if ($numberOfSiblings == 1 && $generationsYounger > 0 && $generationsOlder > 0 && ($generationsYounger != $generationsOlder))
     {
-        $degree = $generationsYounger;
+        $degree = $generationsOlder;
         if ($mf=="F")
         {
             if(isset($pgv_lang["female_cousin_" . $degree]))
