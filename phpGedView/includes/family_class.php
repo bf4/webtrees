@@ -137,6 +137,29 @@ class Family extends GedcomRecord {
 	function &getWife() {
 		return $this->wife;
 	}
+	
+	/**
+	 * return the spouse of the given person
+	 * @param Person $person
+	 * @return Person
+	 */
+	function &getSpouse(&$person) {
+		if (!is_null($this->wife) && $this->wife->equals($person)) return $this->husb;
+		if (!is_null($this->husb) && $this->husb->equals($person)) return $this->wife;
+		return null;
+	}
+	
+	/**
+	 * return the spouse id of the given person id
+	 * @param string $pid
+	 * @return string
+	 */
+	function &getSpouseId($pid) {
+		if (!is_null($this->wife) && $this->wife->getXref()==$pid) return $this->husb->getXref();
+		if (!is_null($this->husb) && $this->husb->getXref()==$pid) return $this->wife->getXref();
+		return false;
+	}
+	
 	/**
 	 * get the children
 	 * @return array 	array of children Persons

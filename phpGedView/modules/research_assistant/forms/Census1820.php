@@ -138,58 +138,84 @@ class Census1820 extends ra_form {
 //		  Country, City, Page, Head of Family input boxes
 		if(!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = 1;
         for($i = 0; $i < $_REQUEST['numOfRows']; $i++){
-        	$row = $citation['ts_array']['rows'][$i];
-        	$value = $row['headName'];
+        	$row = array();
+        	if (isset($citation['ts_array']['rows'][$i])) $row = $citation['ts_array']['rows'][$i];
+        	
+        	$value = "";
+        	if (isset($row['headName'])) $value = $row['headName'];
 	        $out .= '<tr><td class="optionbox"><input name="headName'.$i.'" type="text" size="19" value="'.htmlentities($value).'"></td>';
 	//        Free white males input boxes
-			$value = $row['underTenM'];
+			$value = "";
+        	if (isset($row['underTenM'])) $value = $row['underTenM'];
 	        $out .= '<td class="optionbox"><input name="underTenM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['tenThruFifteenM'];
+	        $value = "";
+        	if (isset($row['tenThruFifteenM'])) $value = $row['tenThruFifteenM'];
 	        $out .= '<td class="optionbox"><input name="tenThruFifteenM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	       	$value = $row['sixteenThruTwentyfiveM'];
+	       	$value = "";
+        	if (isset($row['sixteenThruTwentyfiveM'])) $value = $row['sixteenThruTwentyfiveM'];
 	        $out .= '<td class="optionbox"><input name="sixteenThruTwentyfiveM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['twentysixThruFortyfourM'];
+	        $value = "";
+        	if (isset($row['twentysixThruFortyfourM'])) $value = $row['twentysixThruFortyfourM'];
 	        $out .= '<td class="optionbox"><input name="twentysixThruFortyfourM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['fortyfiveAndOverM'];
+	       $value = "";
+        	if (isset($row['fortyfiveAndOverM'])) $value = $row['fortyfiveAndOverM'];
 	        $out .= '<td class="optionbox"><input name="fortyfiveAndOverM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 	//		  Free white females input boxes 
-			$value = $row['underTenF'];
+			$value = "";
+        	if (isset($row['underTenF'])) $value = $row['underTenF'];
 	        $out .= '<td class="optionbox"><input name="underTenF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['tenThruFifteenF'];
+	        $value = "";
+        	if (isset($row['tenThruFifteenF'])) $value = $row['tenThruFifteenF'];
 	        $out .= '<td class="optionbox"><input name="tenThruFifteenF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['sixteenThruTwentyfiveF'];
+	        $value = "";
+        	if (isset($row['sixteenThruTwentyfiveF'])) $value = $row['sixteenThruTwentyfiveF'];
 	        $out .= '<td class="optionbox"><input name="sixteenThruTwentyfiveF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['twentysixThruFortyfourF'];
+	        $value = "";
+        	if (isset($row['twentysixThruFortyfourF'])) $value = $row['twentysixThruFortyfourF'];
 	        $out .= '<td class="optionbox"><input name="twentysixThruFortyfourF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['fortyfiveAndOverF'];
+	        $value = "";
+        	if (isset($row['fortyfiveAndOverF'])) $value = $row['fortyfiveAndOverF'];
 	        $out .= '<td class="optionbox"><input name="fortyfiveAndOverF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 	//  	  Other Persons and Slaves input boxes
-	        $value = $row['slavesTo14'];
+	        $value = "";
+        	if (isset($row['slavesTo14'])) $value = $row['slavesTo14'];
 	        $out .= '<td class="optionbox"><input name="slavesTo14'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['slavesTo26'];
+	      $value = "";
+        	if (isset($row['slavesTo26'])) $value = $row['slavesTo26'];
 	        $out .= '<td class="optionbox"><input name="slavesTo26'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['slavesTo45'];
+	       $value = "";
+        	if (isset($row['slavesTo45'])) $value = $row['slavesTo45'];
 	        $out .= '<td class="optionbox"><input name="slavesTo45'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['slaves45Older'];
+	        $value = "";
+        	if (isset($row['slaves45Older'])) $value = $row['slaves45Older'];
 	        $out .= '<td class="optionbox"><input name="slaves45Older'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 	// 			Free Colored Persons input boxes
-			$value = $row['FreeColoredPersonsTo14'];
+			$value = "";
+        	if (isset($row['FreeColoredPersonsTo14'])) $value = $row['FreeColoredPersonsTo14'];
 	        $out .= '<td class="optionbox"><input name="FreeColoredPersonsTo14'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['FreeColoredPersonsTo26'];
+	       $value = "";
+        	if (isset($row['FreeColoredPersonsTo26'])) $value = $row['FreeColoredPersonsTo26'];
 	        $out .= '<td class="optionbox"><input name="FreeColoredPersonsTo26'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['FreeColoredPersonsTo45'];
+	       $value = "";
+        	if (isset($row['FreeColoredPersonsTo45'])) $value = $row['FreeColoredPersonsTo45'];
 	        $out .= '<td class="optionbox"><input name="FreeColoredPersonsTo45'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['FreeColoredPersons45Older'];
+	       $value = "";
+        	if (isset($row['FreeColoredPersons45Older'])) $value = $row['FreeColoredPersons45Older'];
 	        $out .= '<td class="optionbox"><input name="FreeColoredPersons45Older'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-			$value = $row['Foreigners'];
+			$value = "";
+        	if (isset($row['Foreigners'])) $value = $row['Foreigners'];
 	        $out .= '<td class="optionbox"><input name="Foreigners'.$i.'" type="text" size="17" value="'.htmlentities($value).'"></td>';
-			$value = $row['Agriculture'];
+			$value = "";
+        	if (isset($row['Agriculture'])) $value = $row['Agriculture'];
 	        $out .= '<td class="optionbox"><input name="Agriculture'.$i.'" type="text" size="15" value="'.htmlentities($value).'"></td>';
-			$value = $row['Commerce'];
+			$value = "";
+        	if (isset($row['Commerce'])) $value = $row['Commerce'];
 	        $out .= '<td class="optionbox"><input name="Commerce'.$i.'" type="text" size="16" value="'.htmlentities($value).'"></td>';
-			$value = $row['Manufactures'];
+			$value = "";
+        	if (isset($row['Manufactures'])) $value = $row['Manufactures'];
 	        $out .= '<td class="optionbox"><input name="Manufactures'.$i.'" type="text" size="17" value="'.htmlentities($value).'"></td>';
-			$value = $row['AllOther'];
+			$value = "";
+        	if (isset($row['AllOther'])) $value = $row['AllOther'];
 	        $out .= '<td class="optionbox"><input name="AllOther'.$i.'" type="text" size="17" value="'.htmlentities($value).'"></td>';
 			
         }
@@ -277,9 +303,23 @@ class Census1820 extends ra_form {
 			"sixteenThruTwentyfiveF"=>$_POST["sixteenThruTwentyfiveF".$number],
 			"twentysixThruFortyfourF"=>$_POST["twentysixThruFortyfourF".$number],
 			"fortyfiveAndOverF"=>$_POST["fortyfiveAndOverF".$number],
-			"otherPersons"=>$_POST["otherPersons".$number],
-			"slaves"=>$_POST["slaves".$number]
+			//"otherPersons"=>$_POST["otherPersons".$number],
+			//"slaves"=>$_POST["slaves".$number]
+			"slavesTo14"=>$_POST["slavesTo14".$number],
+			"slavesTo26"=>$_POST["slavesTo26".$number],
+			"slavesTo45"=>$_POST["slavesTo45".$number],
+			"slaves45Older"=>$_POST["slaves45Older".$number],
+			"FreeColoredPersonsTo14"=>$_POST["FreeColoredPersonsTo14".$number],
+			"FreeColoredPersonsTo26"=>$_POST["FreeColoredPersonsTo26".$number],
+			"FreeColoredPersonsTo45"=>$_POST["FreeColoredPersonsTo45".$number],
+			"FreeColoredPersons45Older"=>$_POST["FreeColoredPersons45Older".$number],
+			"Foreigners"=>$_POST["Foreigners".$number],
+			"Agriculture"=>$_POST["Agriculture".$number],
+			"Commerce"=>$_POST["Commerce".$number],
+			"Manufactures"=>$_POST["Manufactures".$number],
+			"AllOther"=>$_POST["AllOther".$number],
 			);
+			
 			$text .=$number==0?"" :"\r\n";
 			$text .= "\r\nHead of Family: ".$_POST["headName".$number];
 			$text .= "\r\nMales under 10: ".$_POST["underTenM".$number];
@@ -292,8 +332,20 @@ class Census1820 extends ra_form {
 			$text .= "\r\nFemales Sixteen thru Twenty five: ".$_POST["sixteenThruTwentyfiveF".$number];
 			$text .= "\r\nFemales Twentysix thru Forty four: ".$_POST["twentysixThruFortyfourF".$number];
 			$text .= "\r\nFemales Forty five and Over: ".$_POST["fortyfiveAndOverF".$number];
-			$text .= "\r\nAll other Free Persons: ".$_POST["otherPersons".$number];
-			$text .= "\r\nSlaves: ".$_POST["slaves".$number];
+			//$text .= "\r\nAll other Free Persons: ".$_POST["otherPersons".$number];
+			//$text .= "\r\nSlaves: ".$_POST["slaves".$number];
+			$text .= "\r\nSlaves up to 14: ".$_POST["slavesTo14".$number];
+			$text .= "\r\nSlaves up to 26: ".$_POST["slavesTo26".$number];
+			$text .= "\r\nSlaves up to 45: ".$_POST["slavesTo45".$number];
+			$text .= "\r\nSlaves 45 & older: ".$_POST["slaves45Older".$number];
+			$text .= "\r\nFree Colored Persons up to 14: ".$_POST["FreeColoredPersonsTo14".$number];
+			$text .= "\r\nFree Colored Persons up to 26: ".$_POST["FreeColoredPersonsTo26".$number];
+			$text .= "\r\nFree Colored Persons up to 45: ".$_POST["FreeColoredPersonsTo45".$number];
+			$text .= "\r\nFree Colored Persons 45 & older: ".$_POST["FreeColoredPersons45Older".$number];
+			$text .= "\r\nForeigners: ".$_POST["Foreigners".$number];
+			$text .= "\r\nCommerce: ".$_POST["Commerce".$number];
+			$text .= "\r\nManufactures: ".$_POST["Manufactures".$number];
+			$text .= "\r\nAllOther: ".$_POST["AllOther".$number];
 		}
 
 		$citation = array(

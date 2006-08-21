@@ -150,7 +150,7 @@ class GrampsExport {
 		$dateParsed = parse_date($date);
 
 		//checks to see if there's is a 2nd date value and creates the daterange element
-		if (stripos($date, "/") != null || (($dateParsed[1]["year"] != null) || ($dateParsed[1]["mon"] != null) || ($dateParsed[1]["day"] != null))) {
+		if (stripos($date, "/") != false || empty($dateParsed[1]["year"]) || empty($dateParsed[1]["mon"]) || empty($dateParsed[1]["day"])) {
 			$eDateRange = $this->dom->createElement("daterange");
 			$eDateRange = $eParent->appendChild($eDateRange);
 

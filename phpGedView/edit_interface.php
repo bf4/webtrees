@@ -335,16 +335,17 @@ if ($action=="delete") {
 			}
 			$newged = "";
 			for($i=0; $i<$linenum; $i++) {
-				$newged .= $gedlines[$i]."\n";
+				if (trim($gedlines[$i])!="") $newged .= $gedlines[$i]."\n";
 			}
 			if (isset($gedlines[$linenum])) {
 				$fields = preg_split("/\s/", $gedlines[$linenum]);
 				$glevel = $fields[0];
 				$i++;
 				if ($i<count($gedlines)) {
-					while((isset($gedlines[$i]))&&($gedlines[$i]{0}>$glevel)) $i++;
+					//-- don't put empty lines in the record
+					while((isset($gedlines[$i]))&&(strlen($gedlines[$i])<4 || $gedlines[$i]{0}>$glevel)) $i++;
 					while($i<count($gedlines)) {
-						$newged .= $gedlines[$i]."\n";
+						if (trim($gedlines[$i])!="") $newged .= $gedlines[$i]."\n";
 						$i++;
 					}
 				}

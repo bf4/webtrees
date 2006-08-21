@@ -374,7 +374,7 @@ class ra_form {
      * display the form for adding and editing facts
      */
     function editFactsForm($printButton = true) {
-    	global $pgv_lang, $INDI_FACTS_ADD, $factarray;
+    	global $pgv_lang, $INDI_FACTS_ADD, $factarray, $FAM_FACTS_ADD,$FAM_FACTS_UNIQUE;
     	$task = ra_functions::getTask($_REQUEST['taskid']);
     	$out = <<<END_OUT
 		<tr>
@@ -382,7 +382,7 @@ class ra_form {
 			<td class="optionbox">{$task['t_title']}</td>
 		</tr>
 		<tr>
-			<td class="descriptionbox">Associate Facts</td>
+			<td class="descriptionbox">Associate Individual Facts</td>
 			<td class="optionbox"><select id="newfact" name="newfact">
 END_OUT;
 			
@@ -390,15 +390,8 @@ END_OUT;
 			foreach($facts as $f=>$fact) {
 				$out .= '<option value="'.$fact.'">'.$factarray[$fact]. ' ['.$fact.']</option>';
 			}
-			$peopleList = "";
-			$people = $this->getPeople();
-			foreach($people as $pid=>$person) {
-				if(is_object($person))
-				{
-				$peopleList .= "<option value=\"$pid\" selected=\"selected\">".$person->getName()."</option>";
-				}
-			}
 			$out .= <<<END_OUT
+			
 			<option value="EVEN">{$pgv_lang['custom_event']}</option>
 			</select>
 			<script language="JavaScript" type="text/javascript">
@@ -408,7 +401,21 @@ END_OUT;
 			var peopleList = new Array();
 			var factcount = 0;
 			var inferredFacts = new Array();
+			var facttypes = new Array();
 END_OUT;
+			$peopleList = "";
+			$familyList = "";
+			$people = $this->getPeople();
+			foreach($people as $pid=>$person) {
+				if(is_object($person))
+				{
+					$peopleList .= "<option value=\"$pid\" selected=\"selected\">".$person->getName()."</option>";
+					$families = $person->getSpouseFamilies();
+					foreach($families as $famid=>$family) {
+						if (is_object($family)) $familyList .= "<option value=\"$famid\">".$family->getSortableName()."</option>";
+					}
+				}
+			}
 			$facts = $this->getFactData();
 			if (count($facts)>0) {
 				$out .= "\r\nfactcount = ".count($facts).";\r\n";
@@ -417,32 +424,52 @@ END_OUT;
 					$ct = preg_match("/1 (\w+)/", $fact['tf_factrec'], $match);
 					$factname = trim($match[1]);
 					if (isset($factarray[$factname])) $factname = $factarray[$factname];
-					$out .= "factnames[".$i."] = '".$factname."'\r\n";
+					$out .= "factnames[".$i."] = '".$factname."';\r\n";
+					$out .= "facttypes[".$i."] = '".$fact['tf_type']."';\r\n";
 					$peopleList = "";
 					$people = $this->getPeople();
 					$selectedPeople = explode(";", $fact['tf_people']);
 					// print_r($selectedPeople);
-					foreach($people as $pid=>$person) {
-						if(is_object($person))
-						{
-							if ($fact['tf_multiple']=='Y' || in_array($pid, $selectedPeople)) {
-								$peopleList .= "<option value=\"$pid\" ";
-								if (in_array($pid, $selectedPeople)) $peopleList .= "selected=\"selected\"";
-								$peopleList .= ">".$person->getName()."</option>";
+					if ($fact['tf_type']=='indi') {
+						foreach($people as $pid=>$person) {
+							if(is_object($person))
+							{
+								if ($fact['tf_multiple']=='Y' || in_array($pid, $selectedPeople)) {
+									$peopleList .= "<option value=\"$pid\" ";
+									if (in_array($pid, $selectedPeople)) $peopleList .= "selected=\"selected\"";
+									$peopleList .= ">".$person->getName()."</option>";
+								}
+							
 							}
-						
 						}
+						$out .= "peopleList[$i] = '$peopleList';\r\n";
 					}
-					$out .= "peopleList[$i] = '$peopleList';\r\n";
+					if ($fact['tf_type']=='fam') {
+						foreach($people as $pid=>$person) {
+							if(is_object($person))
+							{
+								$families = $person->getSpouseFamilies();
+								foreach($families as $famid=>$family) {
+									if ($fact['tf_multiple']=='Y' || in_array($famid, $selectedPeople)) {
+										$familyList .= "<option value=\"$famid\" ";
+										if (in_array($famid, $selectedPeople)) $familyList .= "selected=\"selected\"";
+										$familyList .= ">".$family->getSortableName()."</option>";
+									}
+								}
+							}
+						}
+						$out .= "peopleList[$i] = '$familyList';\r\n";
+					}
 				}
 			}
 			
 			$out .= <<<END_OUT
-			function add_ra_fact(fact) {
+			function add_ra_fact(fact, type) {
 				factfield = document.getElementById(fact);
 				if (factfield) {
 					factvalue = factfield.options[factfield.selectedIndex].value;
-					window.open('edit_interface.php?action=mod_edit_fact&mod=research_assistant&command=add&fact='+factvalue+"&"+sessionname+"="+sessionid, '', 'top=50,left=50,width=710,height=500,resizable=1,scrollbars=1');
+					window.open('edit_interface.php?action=mod_edit_fact&mod=research_assistant&command=add&type='+type+'&fact='+factvalue+"&"+sessionname+"="+sessionid, '', 'top=50,left=50,width=710,height=500,resizable=1,scrollbars=1');
+					editi = factcount;
 				}
 				return false;
 			}
@@ -458,14 +485,17 @@ END_OUT;
 				}
 				return false;
 			}
-			function paste_data(data, factname) {
+			
+			function paste_data(data, factname, type) {
+				//alert(data);
 				facts[factcount] = data;
 				factnames[factcount] = factname;
+				facttypes[factcount] = type;
 				factcount++;
 				build_table();
 			}
 			
-			function add_ra_fact_inferred(chkbx,fact,person,factType,name) {
+			function add_ra_fact_inferred(chkbx,fact,person,factType,name,type) {
 				if(chkbx.checked)
 				{
 					var myArray = new Array();
@@ -480,11 +510,9 @@ END_OUT;
 						{
 							if(!inferredFacts[person+factType])
 							{
-								alert("Fact: "+fact);
-								alert("Person: "+person);
-								alert("Fact Type: "+factType);
-								alert("Name: "+name);
+								
 								facts[factcount] = fact;
+								facttypes[factcount] = type;
 								myArray[person+factType] = true;
 								counter++;
 								factnames[factcount] = factType;
@@ -492,7 +520,9 @@ END_OUT;
 									myPerson += "selected=\"selected\"";
 									myPerson +=">"+name+"</option>";
 								peopleList[i]= myPerson;
+								
 								inferredFacts[person+factType] = person;
+								
 								inferredFacts[factcount] = person;
 								factcount++;
 							}
@@ -505,25 +535,41 @@ END_OUT;
 					newfactnames = new Array();
 					newpeople = new Array();
 					newInferredFacts = new Array();
+					newfacttypes = new Array();
 					k=0;
 					for(j=0; j<factcount; j++) 
 					{
+							
 						if(inferredFacts[j] != person)
-						{		
-							newfacts[k]=facts[j];
-							newfactnames[k]=factnames[j];
-							newpeople[k] = peopleList[j];
-							newInferredFacts[k] = inferredFacts[j];
-							k++;
+						{	
+								newfacts[k]=facts[j];
+								newfactnames[k]=factnames[j];
+								newpeople[k] = peopleList[j];
+								newInferredFacts[k] = inferredFacts[j];
+								newfacttypes[k] = facttypes[j];
+								k++;							
 						}
 						else
 						{
+							if(facts[j] == fact)
+							{
 							inferredFacts[person+factType] = null;
+							}
+							else
+							{
+								newfacts[k]=facts[j];
+								newfactnames[k]=factnames[j];
+								newpeople[k] = peopleList[j];
+								newInferredFacts[k] = inferredFacts[j];
+								newfacttypes[k] = facttypes[j];
+								k++;	
+							}
 						}
 					}
 						inferredFacts = newInferredFacts;
 						facts = newfacts;
 						factnames = newfactnames;
+						facttypes = newfacttypes;
 						factcount = k;						
 						peopleList = newpeople;	
 				}
@@ -531,9 +577,11 @@ END_OUT;
 				
 			}
 			
-			function paste_edit_data(data, factname) {
+			function paste_edit_data(data, factname, type) {
+				if (editi==factcount) return paste_data(data, factname, type);
 				facts[editi] = data;
 				factnames[editi] = factname;
+				facttypes[editi] = type;
 				factfield = document.getElementById('fact'+editi);
 				if (factfield) {
 					factfield.value = data;
@@ -558,6 +606,7 @@ END_OUT;
 					newfactnames = new Array();
 					newpeople = new Array();
 					newInferredFacts = new Array();
+					newfacttypes = new Array();
 					k=0;
 					for(j=0; j<factcount; j++) 
 					{
@@ -567,6 +616,7 @@ END_OUT;
 							newfactnames[k]=factnames[j];
 							newpeople[k] = peopleList[j];
 							newInferredFacts[k] = inferredFacts[j];
+							newfacttypes[k] = facttypes[j];
 							k++;
 						}
 						else
@@ -588,6 +638,7 @@ END_OUT;
 					inferredFacts = newInferredFacts;
 					facts = newfacts;
 					factnames = newfactnames;
+					facttypes = newfacttypes;
 					factcount = k;						
 					peopleList = newpeople;	
 					build_table();						
@@ -603,6 +654,7 @@ END_OUT;
 				out = '<table class="facts_table"><tr><td colspan="3" class="topbottombar">Facts</td></tr>';
 				out += '<tr><td class="descriptionbox">Fact</td><td class="descriptionbox">People</td><td class="descriptionbox">remove</td></tr>';
 				for(i=0; i<facts.length; i++) {
+					//alert(facts[i]);
 					out += '<tr><td id="factname'+i+'" class="optionbox">'+factnames[i];
 					out += '<br />';
 					pos1 = facts[i].indexOf('2 DATE ');
@@ -614,13 +666,17 @@ END_OUT;
 					}
 					out += '<input type="hidden" name="fact'+i+'" id="fact'+i+'" value="'+facts[i]+'" />';
 					value ='N';
-					if (peopleList[i].split("<option ").length > 2) value='Y';
+					if (peopleList[i] && peopleList[i].split("<option ").length > 2) value='Y';
 //					alert(i+" "+peopleList[i]+peopleList[i].split("<option ").length+" "+value);
 					out += '<input type="hidden" name="multiple'+i+'" id="multiple'+i+'" value="'+value+'" />';
+					out += '<input type="hidden" name="type'+i+'" id="type'+i+'" value="'+facttypes[i]+'" />';
 					out += '</td>';
 					out += '<td class="optionbox"><select name="people'+i+'[]" size="3" multiple="multiple">';
 					if (peopleList[i]) out += peopleList[i];
-					else out += '$peopleList';
+					else {
+						if (facttypes[i]=='indi') out += '$peopleList';
+						else out += '$familyList';
+					}
 					out += '</select></td>';
 					if(!inferredFacts[i])
 					{
@@ -639,7 +695,23 @@ END_OUT;
 			}
 			//-->
 			</script>
-			<input type="button" value="{$pgv_lang["add"]}" onclick="add_ra_fact('newfact');" />
+			<input type="button" value="{$pgv_lang["add"]}" onclick="add_ra_fact('newfact','indi');" />
+			</td>
+		</tr>
+		<tr>
+		<td class="descriptionbox">Associate Family Facts</td>
+			<td class="optionbox"><select id="newfamfact" name="newfamfact">
+END_OUT;
+			
+			$facts = preg_split("/[, ;:]+/", $FAM_FACTS_ADD.",".$FAM_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY);
+			foreach($facts as $f=>$fact) {
+				$out .= '<option value="'.$fact.'">'.$factarray[$fact]. ' ['.$fact.']</option>';
+			}
+			$out .= <<<END_OUT
+			
+			<option value="EVEN">{$pgv_lang['custom_event']}</option>
+			</select>
+			<input type="button" value="{$pgv_lang["add"]}" onclick="add_ra_fact('newfamfact', 'fam');" />
 			</td>
 		</tr>
 		<tr>
@@ -687,13 +759,37 @@ END_OUT;
 
 		//-- delete all records from old people
 		$oldpeople = $this->getPeople();
+		$oldfamilies = array();
 		$newpeoplerecs = array();
 		foreach($oldpeople as $pid=>$person) {
 			$newrec = ra_functions::deleteRAFacts($_REQUEST['taskid'], $person->getGedcomRecord());
 			$newpeoplerecs[$pid]=$newrec;
+			$families = $person->getSpouseFamilies();
+			foreach($families as $famid=>$family) {
+				$newrec = ra_functions::deleteRAFacts($_REQUEST['taskid'], $family->getGedcomRecord());
+				$newpeoplerecs[$famid]=$newrec;
+				$oldfamilies[$famid] = $family;
+			}
 		}
+		
+		//-- delete any associated facts from people in this request
 		if (!isset($_REQUEST['factcount'])) $_REQUEST['factcount'] = 0;
 		$factcount = $_REQUEST['factcount'];
+		for($i=0; $i<$factcount; $i++) {
+			if (isset($_REQUEST['people'.$i])) {
+				$people = $_REQUEST['people'.$i];
+				foreach($people as $ind=>$pid) {
+					print $pid." ";
+					$person = Person::getInstance($pid);
+					if (!is_null($person)) {
+						$newrec = ra_functions::deleteRAFacts($_REQUEST['taskid'], $person->getGedcomRecord());
+						$newpeoplerecs[$pid] = $newrec; 
+						$oldpeople[$pid] = $person;
+					}
+				}
+			}
+		}
+		
 		for($i=0; $i<$factcount; $i++) {
 			if (isset($_REQUEST['fact'.$i])) {
 				$factrec = $_REQUEST['fact'.$i];
@@ -707,7 +803,7 @@ END_OUT;
 				$sql = "INSERT INTO ".$TBLPREFIX."taskfacts VALUES('".get_next_id("taskfacts", "tf_id")."'," .
 					"'".$DBCONN->escapeSimple($_REQUEST['taskid'])."'," .
 					"'".$DBCONN->escapeSimple($factrec)."'," .
-					"'".$DBCONN->escapeSimple($peopleTxt)."', '".$_REQUEST['multiple'.$i]."')";
+					"'".$DBCONN->escapeSimple($peopleTxt)."', '".$_REQUEST['multiple'.$i]."', '".$_REQUEST['type'.$i]."')";
 				$res = dbquery($sql);
 				foreach($people as $in=>$pid) {
 					if (!empty($pid) && isset($newpeoplerecs[$pid])) {
@@ -719,9 +815,12 @@ END_OUT;
 				}
 			}
 		}
-		
 		foreach($newpeoplerecs as $pid=>$indirec) {
-			if ($indirec!=$oldpeople[$pid]->getGedcomRecord()) {
+			if (isset($oldpeople[$pid]) && $indirec!=$oldpeople[$pid]->getGedcomRecord()) {
+				//$out .= "Replacing gedrec for ".$pid."<br />";
+				replace_gedrec($pid, $indirec);
+			}
+			if (isset($oldfamilies[$pid]) && $indirec!=$oldfamilies[$pid]->getGedcomRecord()) {
 				//$out .= "Replacing gedrec for ".$pid."<br />";
 				replace_gedrec($pid, $indirec);
 			}

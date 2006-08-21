@@ -128,35 +128,50 @@ class Census1810 extends ra_form {
 //		  Country, City, Page, Head of Family input boxes
 		if(!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = 1;
         for($i = 0; $i < $_REQUEST['numOfRows']; $i++){
-        	$row = $citation['ts_array']['rows'][$i];
-        	$value = $row['headName'];
+        	$row = array();
+        	if (isset($citation['ts_array']['rows'][$i])) $row = $citation['ts_array']['rows'][$i];
+        	
+        	$value = "";
+        	if (isset($row['headName'])) $value = $row['headName'];
 	        $out .= '<tr><td class="optionbox"><input name="headName'.$i.'" type="text" size="19" value="'.htmlentities($value).'"></td>';
 	//        Free white males input boxes
-			$value = $row['underTenM'];
+			$value = "";
+        	if (isset($row['underTenM'])) $value = $row['underTenM'];
 	        $out .= '<td class="optionbox"><input name="underTenM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['tenThruFifteenM'];
+	        $value = "";
+        	if (isset($row['tenThruFifteenM'])) $value = $row['tenThruFifteenM'];
 	        $out .= '<td class="optionbox"><input name="tenThruFifteenM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	       	$value = $row['sixteenThruTwentyfiveM'];
+	       	$value = "";
+        	if (isset($row['sixteenThruTwentyfiveM'])) $value = $row['sixteenThruTwentyfiveM'];
 	        $out .= '<td class="optionbox"><input name="sixteenThruTwentyfiveM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['twentysixThruFortyfourM'];
+	        $value = "";
+        	if (isset($row['twentysixThruFortyfourM'])) $value = $row['twentysixThruFortyfourM'];
 	        $out .= '<td class="optionbox"><input name="twentysixThruFortyfourM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['fortyfiveAndOverM'];
+	      	$value = "";
+        	if (isset($row['fortyfiveAndOverM'])) $value = $row['fortyfiveAndOverM'];
 	        $out .= '<td class="optionbox"><input name="fortyfiveAndOverM'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 	//		  Free white females input boxes 
-			$value = $row['underTenF'];
+			$value = "";
+        	if (isset($row['underTenF'])) $value = $row['underTenF'];
 	        $out .= '<td class="optionbox"><input name="underTenF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['tenThruFifteenF'];
+	       	$value = "";
+        	if (isset($row['tenThruFifteenF'])) $value = $row['tenThruFifteenF'];
 	        $out .= '<td class="optionbox"><input name="tenThruFifteenF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['sixteenThruTwentyfiveF'];
+	        $value = "";
+        	if (isset($row['sixteenThruTwentyfiveF'])) $value = $row['sixteenThruTwentyfiveF'];
 	        $out .= '<td class="optionbox"><input name="sixteenThruTwentyfiveF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['twentysixThruFortyfourF'];
+	        $value = "";
+        	if (isset($row['twentysixThruFortyfourF'])) $value = $row['twentysixThruFortyfourF'];
 	        $out .= '<td class="optionbox"><input name="twentysixThruFortyfourF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['fortyfiveAndOverF'];
+	      	 $value = "";
+        	if (isset($row['fortyfiveAndOverF'])) $value = $row['fortyfiveAndOverF'];
 	        $out .= '<td class="optionbox"><input name="fortyfiveAndOverF'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 	//  	  Other Persons and Slaves input boxes
-			$value = $row['otherPersons'];
+			$value = "";
+        	if (isset($row['otherPersons'])) $value = $row['otherPersons'];
 	        $out .= '<td class="optionbox"><input name="otherPersons'.$i.'" type="text" size="5" value="'.htmlentities($value).'"></td>';
-	        $value = $row['slaves'];
+	       	$value = "";
+        	if (isset($row['slaves'])) $value = $row['slaves'];
 	        $out .= '<td class="optionbox"><input name="slaves'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td></tr>';
         }
         $out .= '</table></td></tr>';

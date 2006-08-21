@@ -428,6 +428,7 @@ return false;}return true;}
 	
 	function editFactsForm($printButton = true)
 	{
+		global $factarray;
 		
 		$facts = $this->getFactData();
 		$citation = $this->getSourceCitationData();
@@ -442,53 +443,32 @@ return false;}return true;}
 <tr><td class="descriptionbox">Fact</td><td class="descriptionbox">Person</td><td class="descriptionbox">Reason</td><td class="descriptionbox">Add</td></tr>';
 		$completeFact = true;
 		$occufact = true;
-		foreach($inferFacts as $key=>$value){
-		
+		foreach($inferFacts as $key=>$inferredFacts) {
+			foreach($inferredFacts as $id=>$value) {
 					foreach($facts as $factKey=>$factValues)
 					{
 						$ct = preg_match("/1 (\w+)/", $factValues['tf_factrec'], $match);						
 						$factname = trim($match[1]);
-						if($factValues["tf_people"] == $key  && $factname == "BIRT")	
+					
+						if($factValues["tf_people"] == $key  && $factname == $value["factType"])	
 						{
 							$completeFact = false;
 						}
 					
-						if($factValues["tf_people"] == $key && $factname == "OCCU")
-						{
-							$occufact = false;
-						}
-					
 					}
-				
-						
-						if($occufact)
-						{
-								
-							print("I am in!");
-							if(!empty($value["OCCU"]))
-							{		
-								$out .='<tr>';
-								$out .="<td>Occupation</td>";
-								$out .="<td>".$value["OCCU"]["Person"]."</td>";
-								$out .="<td>".$value["OCCU"]["Reason"]."</td>";
-								$out .="<td>".'<input type="Checkbox" id="'.$key."OCCU".'" onclick="add_ra_fact_inferred(this,\''.$value["OCCU"]["Fact"].'\',\''.$key.'\',\'OCCU\',\''.$value["OCCU"]["Person"].'\')"></td>';
-								$out .="</tr>";
-							}
-						
-						}
-				
 					
 					if($completeFact)
 					{
 						$out .='<tr>';
-						$out .="<td>".$value["BIRT"]["Fact"]."</td>";
-						$out .="<td>".$value["BIRT"]["Person"]."</td>";
-						$out .="<td>".$value["BIRT"]["Reason"]."</td>";
-						$out .="<td>".'<input type="Checkbox" id="'.$key.'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["BIRT"]["Fact"]).'\',\''.$key.'\',\'BIRT\',\''.$value["BIRT"]["Person"].'\')"></td>';
+						$out .="<td>".$factarray[$value['factType']]." ".$value['date']."</td>";
+						$out .="<td>".$value["Person"]."</td>";
+						$out .="<td>".$value["Reason"]."</td>";
+						$out .="<td>".'<input type="Checkbox" id="'.$key.$value['factType'].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["Fact"]).'\',\''.$key.'\',\''.$value['factType'].'\',\''.$value["Person"].'\',\'indi\')"></td>';
 						$out .="</tr>";
 					}
 				
 				}
+		}
 				
 			
 		
@@ -545,7 +525,9 @@ return false;}return true;}
 				$inferredFact["Person"] = $person->getName();
 				$inferredFact["Reason"] = "A discrepancy in occupation was detected!";
 				$inferredFact["Fact"] = "1 OCCU ".$rows[$number]["Trade"];
-				$inferredFacts['OCCU'] = $inferredFact;
+				$inferredFact["factType"] = 'OCCU';
+				$inferredFact["date"] = '';
+				$inferredFacts[] = $inferredFact;
 			}
 			
 			if(!empty($bdate))
@@ -553,20 +535,35 @@ return false;}return true;}
 				 $bDiff = $birthDate - $bdate;
 				 if($bDiff >1 || $bDiff < 0)
 				 {
-				 	$inferredFact["Person"] = $person->getName();
-				 	$inferredFact["Reason"] = "A birth date difference was detected";
-				 	$inferredFact["Fact"] = "1 BIRT \r\n2 DATE ".$birthDate;
-				 	$inferredFact["shortDOB"] = $birthDate;		 	
-					$inferredFacts['BIRT'] = $inferredFact;
+				 	if(!empty($rows[$number]["PlaceOfBirth"]))
+				 	{
+				 		$inferredFact["Person"] = $person->getName();
+				 		$inferredFact["Reason"] = "A birth date difference was detected";
+				 		$inferredFact["Fact"] = "1 BIRT \r\n2 DATE ".$birthDate."\r\n2 PLAC ".$rows[$number]["PlaceOfBirth"];
+				 		$inferredFact["date"] = $birthDate;
+				 		$inferredFact["factType"] = 'BIRT';	 	
+						$inferredFacts[] = $inferredFact;
+				 		
+				 	}
+				 	else
+				 	{
+				 		$inferredFact["Person"] = $person->getName();
+				 		$inferredFact["Reason"] = "A birth date difference was detected";
+				 		$inferredFact["Fact"] = "1 BIRT \r\n2 DATE ".$birthDate;
+				 		$inferredFact["date"] = $birthDate;	
+				 		$inferredFact["factType"] = 'BIRT'; 	
+						$inferredFacts[] = $inferredFact;
+				 	}
 				 }
 			}
 			else
 			{
-					$inferredFacts["Person"] = $person->getName();
-				 	$inferredFacts["Reason"] = "A birth date can be inferred";
-				 	$inferredFacts["DOB"] = "1 BIRT \r\n2 DATE ".$birthDate;		
-				 	$inferredFact["shortDOB"] = $birthDate; 		 	
-					$inferredFacts['BIRT'] = $inferredFact;
+					$inferredFact["Person"] = $person->getName();
+				 	$inferredFact["Reason"] = "A birth date can be inferred";
+				 	$inferredFact["DOB"] = "1 BIRT \r\n2 DATE ".$birthDate;		
+				 	$inferredFact["date"] = $birthDate; 
+				 	$inferredFact["factType"] = 'BIRT';		 	
+					$inferredFacts[] = $inferredFact;
 			}
 			$people[$person->getXref()] = $inferredFacts;
 		}
@@ -597,7 +594,7 @@ return false;}return true;}
 		$sql = "INSERT INTO ".$TBLPREFIX."taskfacts VALUES('".get_next_id("taskfacts", "tf_id")."'," .
 			"'".$DBCONN->escapeSimple($_REQUEST['taskid'])."'," .
 			"'".$DBCONN->escapeSimple($factrec)."'," .
-			"'".$DBCONN->escapeSimple(implode(";", $pids))."', 'Y')";
+			"'".$DBCONN->escapeSimple(implode(";", $pids))."', 'Y', 'indi')";
 		$res = dbquery($sql);
 		
 		$rows = array();

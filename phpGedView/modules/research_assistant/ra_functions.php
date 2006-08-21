@@ -32,6 +32,7 @@
  * @author Mike Austin
  * @author Gavin Winkler
  * @author David Molton
+ * @author Daniel Parker
  */
 //-- security check, only allow access from module.php
 if (strstr($_SERVER["SCRIPT_NAME"],"ra_functions.php")) {
@@ -43,6 +44,7 @@ require_once 'languages/ra_lang.en.php'; //-- MA should change to lang.en.php - 
 //require_once 'languages/lang.en.php'; 
 
 include_once("modules/research_assistant/forms/ra_privacy.php");
+
 if (file_exists($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php")) include_once($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php");
 define("BASEPATH", 'modules/research_assistant/');
 $emptyfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","BAPL","CONL","ENDL","SLGC","EVEN","MARR","SLGS","MARL","ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARS","CHAN","_SEPR","RESI", "DATA", "MAP");
@@ -126,8 +128,25 @@ class ra_functions {
 			$res = dbquery($sql);
 		}
 		if (!in_array($TBLPREFIX.'taskfacts', $data)) {
-			$sql = "CREATE TABLE ".$TBLPREFIX."taskfacts (tf_id INT, tf_t_id INT, tf_factrec TEXT, tf_people VARCHAR(255),tf_multiple VARCHAR(3), primary key (tf_id))";
+			$sql = "CREATE TABLE ".$TBLPREFIX."taskfacts (tf_id INT, tf_t_id INT, tf_factrec TEXT, tf_people VARCHAR(255),tf_multiple VARCHAR(3), tf_type VARCHAR(4), primary key (tf_id))";
 			$res = dbquery($sql);
+		}
+		else {
+			$has_multiple = false;
+			$has_type = false;
+			$info = $DBCONN->tableInfo($TBLPREFIX."taskfacts");
+			foreach($info as $indexval => $field) {
+				if ($field["name"]=="tf_multiple") $has_multiple = true;
+				if ($field["name"]=="tf_type") $has_type = true;
+			}
+			if (!$has_multiple) {
+				$sql = "alter table ".$TBLPREFIX."taskfacts add tf_multiple varchar(3)";
+				$res = dbquery($sql);
+			}
+			if (!$has_type) {
+				$sql = "alter table ".$TBLPREFIX."taskfacts add tf_type varchar(4)";
+				$res = dbquery($sql);
+			}
 		}
 		if(!in_array($TBLPREFIX.'user_comments', $data)){
 			//$sql = 'create table'.$TBLPREFIX.'user_comments (uc_id INTEGER not null,uc_username VARCHAR(45) not null,uc_datetime INTEGER not null,uc_comment VARCHAR(500) not null,uc_p_id VARCHAR(255) not null,uc_f_id INTEGER not null, constraint '.$TBLPREFIX.'user_comments_PK primary key (uc_id));';
@@ -1118,9 +1137,11 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		global $indilist, $controller;
 		global $factarray;
 		//Load up off site search names here
+		//Search Plugin: To load up a new plugin follow the format for the two entries shown below
+		// ex $sites["myplugin.php"] = "mywebsite.com";
 		$sites = array();
-		$sites["ancestry"] = "Ancestry.com";
-		$sites["familysearch"] = "FamilySearch.org";
+		$sites["ancestry.php"] = "Ancestry.com";
+		$sites["familysearch.php"] = "FamilySearch.org";
 		$opts = "";
 		$optCount = 1;
 			//load up the options into the html
@@ -1211,39 +1232,37 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 							</table>
 						</td>";
 		//Beginning of the auto search feature which gets dynamically populated with an individuals information to be sent to ancestry or familySearch
-		$out .= "<form name='ancsearch' action='' method='post' onsubmit='return false;'> 
+		$out .= // indlude
+"<form name='selector' action='' method='post' onsubmit='return false;'> 
 						
 						<td align='left' valign='top'>
 							<table width='50%'>
 								<tr>
 									<td align='center' class='topbottombar' colspan='2' height='50%'><b>".print_help_link("auto_search", "qm", '', false, true)."<b>".$pgv_lang['auto_search_text']."</b>
+
 									</td>
-								</tr>		
+								</tr>				 				
 		 						<tr>
-					 				<td class='optionbox'>
-					 					Include surname:</td><td class='optionbox'> <input type='checkbox' name='surname' value=\"".$lastname."\" checked='checked' /> ".$lastname."</td></tr>
-					 						<tr><td class='optionbox'>
-					 					Include given names:</td><td class='optionbox'> <input type='checkbox' name='givenname1' value=\"".$givennames."\" checked='checked'' /> ".$givennames."</td></tr>
-					 						<tr><td class ='optionbox'>
-					 					Include birth year:</td><td class ='optionbox'> <input type='checkbox' name='birthyear' value=\"".$byear."\" checked='checked' /> ".$byear."</td></tr>
-					 						<tr><td class='optionbox'>
-					 					Include death year:</td><td class='optionbox'> <input type='checkbox' name='deathyear' value=\"".$dyear."\" checked='checked' />".$dyear."
-					 				</td>
-		 						</tr>
-		 						<tr>
-					 				<td class='topbottombar' align='center'><input type='button' value='Search' onclick='search_ancestry();''/>
+					 				<td class='topbottombar' align='center'><input type='button' value='Go' onclick='search_selector()'/>
 									</td>
 									<td class='topbottombar'>
-					 					<SELECT name='cbosite'>
+					 					<SELECT name='cbosite' onselect=''>
 										" .$opts.	//Need to add effects so that changing the option crates a post back													
 										"</SELECT> 
+
 									</td>
 								</tr>
+". // load up the frame when you know what site the user has selected
+"
+							
 							</table>
+							<div id=\"testdiv\"></div>
 						</td>
 					</form>
+				
 				</tr>
 			</table>";
+			
 
 		//Beginning of the comments feature
 		if (!empty($_REQUEST['action']) && $_REQUEST['action']=='delete_comment' && !empty($_REQUEST['uc_id'])) {
@@ -1298,7 +1317,47 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
  		folderID=form.folder.options[form.folder.selectedIndex].value;
  		return folderID;
  	}
- 				
+function search_ancestry() {
+ 		
+		//ifrm = document.getElementById('ifrm');
+ 		frm = document.ancsearch;
+
+				url = 'http://search.ancestry.com/cgi-bin/sse.dll?';
+				if (frm.surname.checked) {
+					url = url + '&gsln='+ frm.surname.value;
+				}
+				if (frm.givenname1.checked) {
+					url = url + '&gsfn=' + frm.givenname1.value; 			
+				}
+				if (frm.year.value == ".$byear.") {
+					url = url + '&gsby=' + ".$byear.";
+				}
+				else
+				 {
+					url = url + '&gsdy='+".$dyear."
+				} 	 
+				// -- old iframe method 
+				// if (document.all) ifrm.location = url;
+				// else ifrm.src = url;
+				window.open(url, '');			
+		} 	
+
+ 	function search_selector(){
+	frm = document.selector;
+
+				var oXmlHttp = createXMLHttp();
+				oXmlHttp.open('get', 'modules/research_assistant/search_plugin/'+ frm.cbosite.options[frm.cbosite.selectedIndex].value + '?pid=".$person->getXref()."', true);
+				oXmlHttp.onreadystatechange=function()
+				{
+		  			if (oXmlHttp.readyState==4)
+		  			{
+						inbox = document.getElementById('testdiv');
+		   				inbox.innerHTML = oXmlHttp.responseText;
+		   			}
+		  		};
+		  		oXmlHttp.send(null);
+    }
+	" /*		
  	function search_ancestry() {
  		ifrm = document.getElementById('ifrm');
  		frm = document.ancsearch;
@@ -1323,7 +1382,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 				alert(url);
 				window.open(url, '');									
  		}" .// change to else if and insert new site information
- 				"
+ 		"
 		else {
 				url = 'http://search.ancestry.com/cgi-bin/sse.dll?';
 				if (frm.surname.checked) {
@@ -1342,8 +1401,10 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 				// if (document.all) ifrm.location = url;
 				// else ifrm.src = url;
 				window.open(url, '');			
-		} 	
+		} 
+			
 	}
+	*/ ."
 
 	function editcomment(commentid) {
   		window.open('editcomment.php?pid=".$person->getXref()."&ucommentid='+commentid, '', 'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');
@@ -1371,11 +1432,15 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		
 		if ($_REQUEST['command']=='add' && !empty($_REQUEST['fact'])) {
 			$fact = $_REQUEST['fact'];
+			if (!empty($_REQUEST['type'])) $type = $_REQUEST['type'];
+			else $type='indi';
+			
 			init_calendar_popup();
 			print "<form method=\"post\" action=\"edit_interface.php\" enctype=\"multipart/form-data\">\n";
 			print "<input type=\"hidden\" name=\"action\" value=\"mod_edit_fact\" />\n";
 			print "<input type=\"hidden\" name=\"mod\" value=\"research_assistant\" />\n";
 			print "<input type=\"hidden\" name=\"command\" value=\"update\" />\n";
+			print "<input type=\"hidden\" name=\"type\" value=\"$type\" />\n";
 			
 			print "<br /><input type=\"submit\" value=\"".$pgv_lang["add"]."\" /><br />\n";
 		
@@ -1414,8 +1479,10 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		}
 		else if ($_REQUEST['command']=="update") {
 			$factrec = handle_updates('');
-			print "<pre>$factrec</pre>";
-			print '<script type="text/javascript">window.opener.paste_edit_data(\''.preg_replace("/\r?\n/", "\\r\\n", $factrec).'\', \''.$factarray[$tag[0]].'\'); window.close();</script>';
+			if (!empty($_REQUEST['type'])) $type = $_REQUEST['type'];
+			else $type='indi';
+			//print "<pre>$factrec</pre>";
+			print '<script type="text/javascript">window.opener.paste_edit_data(\''.preg_replace("/\r?\n/", "\\r\\n", $factrec).'\', \''.$factarray[$tag[0]].'\', \''.$type.'\'); window.close();</script>';
 		}
 	}
 	

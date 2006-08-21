@@ -137,35 +137,49 @@ class Census1850 extends ra_form {
 //		  Country, City, Page, Head of Family input boxes
 		if(!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = 1;
         for($i = 0; $i < $_REQUEST['numOfRows']; $i++){
-        	$row = $citation['ts_array']['rows'][$i];
-        	$value = $row['Dwelling'];
+        	$row = array();
+        	if (isset($citation['ts_array']['rows'][$i])) $row = $citation['ts_array']['rows'][$i];
+        	
+        	$value = "";
+        	if (isset($row['Dwelling'])) $value = $row['Dwelling'];
 	        $out .= '<tr><td class="optionbox"><input name="Dwelling'.$i.'" type="text" size="21" value="'.htmlentities($value).'"></td>';
 	//        Free white males input boxes
-			$value = $row['visitation'];
+			$value = "";
+        	if (isset($row['visitation'])) $value = $row['visitation'];
 	        $out .= '<td class="optionbox"><input name="visitation'.$i.'" type="text" size="15" value="'.htmlentities($value).'"></td>';
-	        $value = $row['colum3'];
+	        $value = "";
+        	if (isset($row['colum3'])) $value = $row['colum3'];
 	        $out .= '<td class="optionbox"><input name="colum3'.$i.'" type="text" size="45" value="'.htmlentities($value).'"></td>';
-	       	$value = $row['Age'];
+	       	$value = "";
+        	if (isset($row['Age'])) $value = $row['Age'];
 	        $out .= '<td class="optionbox"><input name="Age'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['Sex'];
+	        $value = "";
+        	if (isset($row['Sex'])) $value = $row['Sex'];
 	        $out .= '<td class="optionbox"><input name="Sex'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = $row['Color'];
+	        $value = "";
+        	if (isset($row['Color'])) $value = $row['Color'];
 	        $out .= '<td class="optionbox"><input name="Color'.$i.'" type="text" size="17" value="'.htmlentities($value).'"></td>';
-			$value = $row['Profession'];
+			$value = "";
+        	if (isset($row['Profession'])) $value = $row['Profession'];
 	        $out .= '<td class="optionbox"><input name="Profession'.$i.'" type="text" size="29" value="'.htmlentities($value).'"></td>';
-			$value = $row['ValueOfRealEstate'];
+			$value = "";
+        	if (isset($row['ValueOfRealEstate'])) $value = $row['ValueOfRealEstate'];
 	        $out .= '<td class="optionbox"><input name="ValueOfRealEstate'.$i.'" type="text" size="19" value="'.htmlentities($value).'"></td>';
-			$value = $row['PlaceOfBirth'];
+			$value = "";
+        	if (isset($row['PlaceOfBirth'])) $value = $row['PlaceOfBirth'];
 	        $out .= '<td class="optionbox"><input name="PlaceOfBirth'.$i.'" type="text" size="20" value="'.htmlentities($value).'"></td>';
-			$value = $row['Married'];
+			$value = "";
+        	if (isset($row['Married'])) $value = $row['Married'];
 	        $out .= '<td class="optionbox"><input name="Married'.$i.'" type="text" size="17" value="'.htmlentities($value).'"></td>';
-			$value = $row['AttendedSchool'];
+			$value = "";
+        	if (isset($row['AttendedSchool'])) $value = $row['AttendedSchool'];
 	        $out .= '<td class="optionbox"><input name="AttendedSchool'.$i.'" type="text" size="22" value="'.htmlentities($value).'"></td>';
-			$value = $row['CannotReadWrite'];
+			$value = "";
+        	if (isset($row['CannotReadWrite'])) $value = $row['CannotReadWrite'];
 	        $out .= '<td class="optionbox"><input name="CannotReadWrite'.$i.'" type="text" size="20" value="'.htmlentities($value).'"></td>';
-			$value = $row['DeafAndDumb'];
+			$value = "";
+        	if (isset($row['DeafAndDumb'])) $value = $row['DeafAndDumb'];
 	        $out .= '<td class="optionbox"><input name="DeafAndDumb'.$i.'" type="text" size="23" value="'.htmlentities($value).'"></td>';
-			
         }
         $out .= '</table></td></tr>';
         return $out;
@@ -240,34 +254,34 @@ class Census1850 extends ra_form {
 		for($number = 0; $number < $_REQUEST['numOfRows']; $number++)
 		{
 			$rows[$number] = array(
-			'headName'=>$_POST["headName".$number],
-			'underTenM'=>$_POST["underTenM".$number],
-			'tenThruFifteenM'=>$_POST["tenThruFifteenM".$number],
-			"sixteenThruTwentyfiveM"=>$_POST["sixteenThruTwentyfiveM".$number],
-			"twentysixThruFortyfourM"=>$_POST["twentysixThruFortyfourM".$number],
-			"fortyfiveAndOverM"=>$_POST["fortyfiveAndOverM".$number],
-			"underTenF"=>$_POST["underTenF".$number],
-			"tenThruFifteenF"=>$_POST["tenThruFifteenF".$number],
-			"sixteenThruTwentyfiveF"=>$_POST["sixteenThruTwentyfiveF".$number],
-			"twentysixThruFortyfourF"=>$_POST["twentysixThruFortyfourF".$number],
-			"fortyfiveAndOverF"=>$_POST["fortyfiveAndOverF".$number],
-			"otherPersons"=>$_POST["otherPersons".$number],
-			"slaves"=>$_POST["slaves".$number]
+			'Dwelling'=>$_POST["Dwelling".$number],
+			'FamiliesNumbered'=>$_POST["FamiliesNumbered".$number],
+			'NameOfEveryPerson'=>$_POST["NameOfEveryPerson".$number],
+			"Age"=>$_POST["Age".$number],
+			"Sex"=>$_POST["Sex".$number],
+			"Color"=>$_POST["Color".$number],
+			"Profession"=>$_POST["Profession".$number],
+			"ValueOfRealEstate"=>$_POST["ValueOfRealEstate".$number],
+			"PlaceOfBirth"=>$_POST["PlaceOfBirth".$number],
+			"Married"=>$_POST["Married".$number],
+			"AttendedSchool"=>$_POST["AttendedSchool".$number],
+			"CannotReadWrite"=>$_POST["CannotReadWrite".$number],
+			"DeafAndDumb"=>$_POST["DeafAndDumb".$number]
 			);
 			$text .=$number==0?"" :"\r\n";
-			$text .= "\r\nHead of Family: ".$_POST["headName".$number];
-			$text .= "\r\nMales under 10: ".$_POST["underTenM".$number];
-			$text .= "\r\nMales Ten thru fifteen: ".$_POST["tenThruFifteenM".$number];
-			$text .= "\r\nMales Sixteen thru Twenty five: ".$_POST["sixteenThruTwentyfiveM".$number];
-			$text .= "\r\nMales Twenty six thru Forty four: ".$_POST["twentysixThruFortyfourM".$number];
-			$text .= "\r\nMales Forty five and Over: ".$_POST["fortyfiveAndOverM".$number];
-			$text .= "\r\nFemales under 10: ".$_POST["underTenF".$number];
-			$text .= "\r\nFemales Ten thru fifteen: ".$_POST["tenThruFifteenF".$number];
-			$text .= "\r\nFemales Sixteen thru Twenty five: ".$_POST["sixteenThruTwentyfiveF".$number];
-			$text .= "\r\nFemales Twentysix thru Forty four: ".$_POST["twentysixThruFortyfourF".$number];
-			$text .= "\r\nFemales Forty five and Over: ".$_POST["fortyfiveAndOverF".$number];
-			$text .= "\r\nAll other Free Persons: ".$_POST["otherPersons".$number];
-			$text .= "\r\nSlaves: ".$_POST["slaves".$number];
+			$text .= "\r\nDwelling: ".$_POST["Dwelling".$number];
+			$text .= "\r\nFamilies numbered in the order of visitation: ".$_POST["FamiliesNumbered".$number];
+			$text .= "\r\nThe Name of every Person whose usual place of abode on the first day of June, 1850, was in this family: ".$_POST["NameOfEveryPerson".$number];
+			$text .= "\r\nAge: ".$_POST["Age".$number];
+			$text .= "\r\nSex: ".$_POST["Sex".$number];
+			$text .= "\r\nColor: ".$_POST["Color".$number];
+			$text .= "\r\nProfession: ".$_POST["Profession".$number];
+			$text .= "\r\nValue Of Real Estate: ".$_POST["ValueOfRealEstate".$number];
+			$text .= "\r\nPlace Of Birth: ".$_POST["PlaceOfBirth".$number];
+			$text .= "\r\nMarried: ".$_POST["Married".$number];
+			$text .= "\r\nAttended School: ".$_POST["AttendedSchool".$number];
+			$text .= "\r\nCan not Read or Write: ".$_POST["CannotReadWrite".$number];
+			$text .= "\r\nDeaf And Dumb: ".$_POST["DeafAndDumb".$number];
 		}
 
 		$citation = array(

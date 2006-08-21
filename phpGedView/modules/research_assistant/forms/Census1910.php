@@ -33,49 +33,6 @@ require_once "ra_form.php";
 require_once "includes/functions_edit.php";
 
 class Census1910 extends ra_form {
-
-function editFactsForm($printButton = true)
-	{
-		$facts = $this->getFactData();
-		$citation = $this->getSourceCitationData();
-		$out = parent::editFactsForm(false);
-		$rows = $citation['ts_array']['rows'];
-		$inferFacts = $this->inferFacts($rows);
-		if(!empty($inferFacts))
-		{
-		$out .= '<tr><td colspan="2" id="inferData"><table class="list_table"><tbody><tr><td colspan="4" class="topbottombar">Inferred Facts</td></tr>
-<tr><td class="descriptionbox">Fact</td><td class="descriptionbox">Person</td><td class="descriptionbox">Reason</td><td class="descriptionbox">Add</td></tr>';
-		$completeFact = true;
-		foreach($inferFacts as $key=>$value){
-			if(!empty($value["DOB"]))
-				{
-					foreach($facts as $factKey=>$factValues)
-					{
-						$ct = preg_match("/1 (\w+)/", $factValues['tf_factrec'], $match);
-						$factname = trim($match[1]);
-						if($factValues["tf_people"] == $key  && $factname == "BIRT")	
-						{
-							$completeFact = false;
-						}
-					}
-					if($completeFact)
-					{
-						$out .='<tr>';
-						$out .="<td>".$value["shortDOB"]."</td>";
-						$out .="<td>".$value["Person"]."</td>";
-						$out .="<td>".$value["Reason"]."</td>";
-						$out .="<td>".'<input type="Checkbox" id="'.$key.$value["FactType"].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["DOB"]).'\',\''.$key.'\',\'BIRT\',\''.$value["Person"].'\')"></td>';
-						$out .="</tr>";
-					}
-				
-				}
-				
-			}
-		
-		}
-		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value="Complete"></td></tr>';
-		return $out;
-	}
 	
     function header($action, $tableAlign, $heading, $showchoose = false) {
     	global $pgv_lang;
@@ -490,11 +447,10 @@ return false;}return true;}
 	                   <input type="hidden" id="personid'.$i.'" name="personid'.$i.'" size="3" value="'.$pid.'" />';
 	                   $out .= print_findindi_link("personid".$i, "peoplelink".$i, true);
 	                   $out .= '<br /></td>';
-	        
 		}
  	$out .= '</tr></table>';
+ 		$out .= '</td></tr>';
         
-        $out .= '</td></tr>';
         return $out;
     }
 
@@ -522,14 +478,12 @@ return false;}return true;}
 			$_POST["personid".$number] = trim($_POST["personid".$number], '; \r\n\t');
 		}
 		$_REQUEST['personid'] = $personid;
-		
-		
-		$this->processSourceCitation();
+		$return = $this->processSourceCitation();
 		
 		if(empty($return))
 		{
 		$out = $this->header("module.php?mod=research_assistant&form=Census1910&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1910 United States Federal Census");
-		$out .= $this->editFactsForm();
+		$out .= $this->editFactsForm(false);
 		$out .= $this->footer();
 		return $out;
 		}
@@ -539,6 +493,57 @@ return false;}return true;}
 		}
 	}
 	
+	function editFactsForm($printButton = true)
+	{
+		global $factarray;
+		
+		$facts = $this->getFactData();
+		$citation = $this->getSourceCitationData();
+		$out = parent::editFactsForm(false);
+		$rows = $citation['ts_array']['rows'];
+		$inferFacts = $this->inferFacts($rows);
+		
+		if(!empty($inferFacts))
+		{
+			
+		$out .= '<tr><td colspan="2" id="inferData"><table class="list_table"><tbody><tr><td colspan="4" class="topbottombar">Inferred Facts</td></tr>
+<tr><td class="descriptionbox">Fact</td><td class="descriptionbox">Person</td><td class="descriptionbox">Reason</td><td class="descriptionbox">Add</td></tr>';
+		$completeFact = true;
+		$occufact = true;
+		foreach($inferFacts as $key=>$inferredFacts) {
+			foreach($inferredFacts as $id=>$value) {
+					foreach($facts as $factKey=>$factValues)
+					{
+						$ct = preg_match("/1 (\w+)/", $factValues['tf_factrec'], $match);
+						$factname = trim($match[1]);
+					
+						if($factValues["tf_people"] == $key  && $factname == $value["factType"])	
+						{
+							$completeFact = false;
+						}
+					
+					}
+					
+					if($completeFact)
+					{
+						$out .='<tr>';
+						$out .="<td>".$factarray[$value['factType']]." ".$value['date']."</td>";
+						$out .="<td>".$value["Person"]."</td>";
+						$out .="<td>".$value["Reason"]."</td>";
+						$out .="<td>".'<input type="Checkbox" id="'.$key.$value['factType'].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["Fact"]).'\',\''.$key.'\',\''.$value['factType'].'\',\''.$value["Person"].'\',\'indi\')"></td>';
+						$out .="</tr>";
+					}
+				
+				}
+		}
+				
+			
+		
+		
+		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value="Complete"></td></tr>';
+		return $out;
+	}
+	}
 
 	function step3() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $pgv_lang;
@@ -555,6 +560,12 @@ return false;}return true;}
 		return $out;
 	}
 
+	function getOccupation($gedcomRecord)
+	{
+		$occupation = get_gedcom_value("OCCU", 1, $gedcomRecord);
+		return $occupation;
+	}
+
 	/**
 	 * This is a function that will attempt to infer facts from the census form.
 	 * If any facts can be inferred then it will attempt to validate them against the database.
@@ -562,19 +573,28 @@ return false;}return true;}
 	 * this function will suggest the facts to the user. 
 	 */
 	function inferFacts($rows){
-		
 		$people = array();
 		
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
 			$inferredFacts = array();
-			$censusAge = $rows[$number]["Age"];
-			$birthDate = 1880 - $censusAge;
-			
 			$person = Person::getInstance($rows[$number]["personid"]);
 			if(!empty($person))
 			{
 				$bdate = $person->getBirthYear();
+				$occupation = $this->getOccupation($person->getGedcomRecord());
+			}
+			$censusAge = $rows[$number]["Age"];
+			$birthDate = 1910 - $censusAge;
+			
+			if($occupation != $rows[$number]["Occupation"])
+			{
+				$inferredFact["Person"] = $person->getName();
+				$inferredFact["Reason"] = "A discrepancy in occupation was detected!";
+				$inferredFact["Fact"] = "1 OCCU ".$rows[$number]["Trade"];
+				$inferredFact["factType"] = 'OCCU';
+				$inferredFact["date"] = '';
+				$inferredFacts[] = $inferredFact;
 			}
 			
 			if(!empty($bdate))
@@ -582,20 +602,35 @@ return false;}return true;}
 				 $bDiff = $birthDate - $bdate;
 				 if($bDiff >1 || $bDiff < 0)
 				 {
-				 	$inferredFacts["Person"] = $person->getName();
-				 	$inferredFacts["Reason"] = "A birth date difference was detected";
-				 	$inferredFacts["DOB"] = "1 BIRT \r\n2 DATE ".$birthDate;
-				 	$inferredFacts["shortDOB"] = $birthDate;
-				 	$inferredFacts["FactType"] = "BIRT";
+				 	if(!empty($rows[$number]["PlaceOfBirth"]))
+				 	{
+				 		$inferredFact["Person"] = $person->getName();
+				 		$inferredFact["Reason"] = "A birth date difference was detected";
+				 		$inferredFact["Fact"] = "1 BIRT \r\n2 DATE ".$birthDate."\r\n2 PLAC ".$rows[$number]["PlaceOfBirth"];
+				 		$inferredFact["date"] = $birthDate;
+				 		$inferredFact["factType"] = 'BIRT';	 	
+						$inferredFacts[] = $inferredFact;
+				 		
+				 	}
+				 	else
+				 	{
+				 		$inferredFact["Person"] = $person->getName();
+				 		$inferredFact["Reason"] = "A birth date difference was detected";
+				 		$inferredFact["Fact"] = "1 BIRT \r\n2 DATE ".$birthDate;
+				 		$inferredFact["date"] = $birthDate;	
+				 		$inferredFact["factType"] = 'BIRT'; 	
+						$inferredFacts[] = $inferredFact;
+				 	}
 				 }
 			}
 			else
 			{
-					$inferredFacts["Person"] = $person->getName();
-				 	$inferredFacts["Reason"] = "A birth date can be inferred";
-				 	$inferredFacts["DOB"] = "1 BIRT \r\n2 DATE ".$birthDate;
-				 	$inferredFacts["FactType"] = "BIRT";
-				 	$inferredFacts["shortDOB"] = $birthDate;
+					$inferredFact["Person"] = $person->getName();
+				 	$inferredFact["Reason"] = "A birth date can be inferred";
+				 	$inferredFact["DOB"] = "1 BIRT \r\n2 DATE ".$birthDate;		
+				 	$inferredFact["date"] = $birthDate; 
+				 	$inferredFact["factType"] = 'BIRT';		 	
+					$inferredFacts[] = $inferredFact;
 			}
 			$people[$person->getXref()] = $inferredFacts;
 		}
@@ -626,7 +661,7 @@ return false;}return true;}
 		$sql = "INSERT INTO ".$TBLPREFIX."taskfacts VALUES('".get_next_id("taskfacts", "tf_id")."'," .
 			"'".$DBCONN->escapeSimple($_REQUEST['taskid'])."'," .
 			"'".$DBCONN->escapeSimple($factrec)."'," .
-			"'".$DBCONN->escapeSimple(implode(";", $pids))."', 'Y')";
+			"'".$DBCONN->escapeSimple(implode(";", $pids))."', 'Y', 'indi')";
 		$res = dbquery($sql);
 		
 		$rows = array();
@@ -747,7 +782,6 @@ return false;}return true;}
 			'county'=>$_POST['county'],
 			'state'=>$_POST['state'],
 			'rows'=>$rows));
-		
 		return $citation;
     }
     
