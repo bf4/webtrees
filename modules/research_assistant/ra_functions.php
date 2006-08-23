@@ -1141,7 +1141,9 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		// ex $sites["myplugin.php"] = "mywebsite.com";
 		$sites = array();
 		$sites["ancestry.php"] = "Ancestry.com";
-		$sites["familysearch.php"] = "FamilySearch.org";
+		$sites["ancestrycouk.php"] = "Ancestry.co.uk";
+		$sites["familysearch.php"] = "FamilySearch.org";	
+		$sites["genealogy.php"] = "Genealogy.com";	
 		$opts = "";
 		$optCount = 1;
 			//load up the options into the html
@@ -1232,10 +1234,9 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 							</table>
 						</td>";
 		//Beginning of the auto search feature which gets dynamically populated with an individuals information to be sent to ancestry or familySearch
-		$out .= // indlude
-"<form name='selector' action='' method='post' onsubmit='return false;'> 
-						
+		$out .= "		
 						<td align='left' valign='top'>
+							<form name='selector' action='' method='post' onsubmit='return false;'> 
 							<table width='50%'>
 								<tr>
 									<td align='center' class='topbottombar' colspan='2' height='50%'><b>".print_help_link("auto_search", "qm", '', false, true)."<b>".$pgv_lang['auto_search_text']."</b>
@@ -1243,23 +1244,21 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 									</td>
 								</tr>				 				
 		 						<tr>
-					 				<td class='topbottombar' align='center'><input type='button' value='Go' onclick='search_selector()'/>
-									</td>
 									<td class='topbottombar'>
-					 					<SELECT name='cbosite' onselect=''>
+					 					<SELECT name='cbosite' onchange='search_selector()'>
 										" .$opts.	//Need to add effects so that changing the option crates a post back													
 										"</SELECT> 
 
 									</td>
 								</tr>
-". // load up the frame when you know what site the user has selected
-"
-							
 							</table>
-							<div id=\"testdiv\"></div>
+							</form>
+							<div id=\"testdiv\">";
+							foreach($sites as $file=>$value) break;
+							include ("modules/research_assistant/search_plugin/".$file);
+							$out .=  autosearch_options();
+							$out .= "</div>
 						</td>
-					</form>
-				
 				</tr>
 			</table>";
 			
@@ -1317,36 +1316,13 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
  		folderID=form.folder.options[form.folder.selectedIndex].value;
  		return folderID;
  	}
-function search_ancestry() {
- 		
-		//ifrm = document.getElementById('ifrm');
- 		frm = document.ancsearch;
 
-				url = 'http://search.ancestry.com/cgi-bin/sse.dll?';
-				if (frm.surname.checked) {
-					url = url + '&gsln='+ frm.surname.value;
-				}
-				if (frm.givenname1.checked) {
-					url = url + '&gsfn=' + frm.givenname1.value; 			
-				}
-				if (frm.year.value == ".$byear.") {
-					url = url + '&gsby=' + ".$byear.";
-				}
-				else
-				 {
-					url = url + '&gsdy='+".$dyear."
-				} 	 
-				// -- old iframe method 
-				// if (document.all) ifrm.location = url;
-				// else ifrm.src = url;
-				window.open(url, '');			
-		} 	
 
  	function search_selector(){
 	frm = document.selector;
 
 				var oXmlHttp = createXMLHttp();
-				oXmlHttp.open('get', 'modules/research_assistant/search_plugin/'+ frm.cbosite.options[frm.cbosite.selectedIndex].value + '?pid=".$person->getXref()."', true);
+				oXmlHttp.open('get', 'module.php?mod=research_assistant&action=load_search_plugin&plugin='+ frm.cbosite.options[frm.cbosite.selectedIndex].value + '&pid=".$person->getXref()."', true);
 				oXmlHttp.onreadystatechange=function()
 				{
 		  			if (oXmlHttp.readyState==4)
@@ -1357,54 +1333,7 @@ function search_ancestry() {
 		  		};
 		  		oXmlHttp.send(null);
     }
-	" /*		
- 	function search_ancestry() {
- 		ifrm = document.getElementById('ifrm');
- 		frm = document.ancsearch;
- 		if (frm.cbosite.options[frm.cbosite.selectedIndex].value == 'familysearch') { 				
- 				url = 'http://www.familysearch.org/Eng/search/ancestorsearchresults.asp?';
- 				if (frm.surname.checked){
- 					url = url + 'last_name=' + frm.surname.value; 																		
- 				}
- 				if (frm.surname.checked && frm.givenname1.checked){
- 					url = url + '&first_name=' + frm.givenname1.value; 					
- 				}
- 				else alert('You must search with a last name');
- 				
-				if(frm.birthyear.checked && frm.surname.checked){
- 				url = url + '&event_index=1&date_range=2&from_date=' + frm.birthyear.value; 
- 				}
- 				if(frm.deathyear.checked && frm.surname.checked && !frm.birthyear.checked){
- 					url = url + '&event_index=3&date_range=2&from_date=' + frm.deathyear.value; 
- 				}			
- 				//if (document.all) ifrm.location = url;
-				//else ifrm.src = url;
-				alert(url);
-				window.open(url, '');									
- 		}" .// change to else if and insert new site information
- 		"
-		else {
-				url = 'http://search.ancestry.com/cgi-bin/sse.dll?';
-				if (frm.surname.checked) {
-					url = url + '&gsln='+ frm.surname.value;
-				}
-				if (frm.givenname1.checked) {
-					url = url + '&gsfn=' + frm.givenname1.value; 			
-				}
-				if (frm.birthyear.checked) {
-					url = url + '&gsby=' + frm.birthyear.value;
-				}
-				if (frm.deathyear.checked) {
-					url = url + '&gsdy='+ frm.deathyear.value;
-				} 	 
-				// -- old iframe method 
-				// if (document.all) ifrm.location = url;
-				// else ifrm.src = url;
-				window.open(url, '');			
-		} 
-			
-	}
-	*/ ."
+	
 
 	function editcomment(commentid) {
   		window.open('editcomment.php?pid=".$person->getXref()."&ucommentid='+commentid, '', 'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');

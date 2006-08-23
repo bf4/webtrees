@@ -81,6 +81,7 @@ class research_assistant extends ra_functions {
 		$out .= $this->Init();
 		if (empty ($_REQUEST['action']))
 			$_REQUEST['action'] = "none";
+		
 		// View tasks 
 		if ($_REQUEST['action'] == "viewtasks") {
 			$out .= $this->print_menu($_REQUEST['folderid']);
@@ -402,6 +403,28 @@ class research_assistant extends ra_functions {
 				$out .= $this->print_menu("", "");
 				$out .= $this->print_user_list(GetUserName());
 			}
+		else if ($_REQUEST['action']=='load_search_plugin') {
+			$out .= print_r($_REQUEST, true);
+			if (isset($_REQUEST['plugin'])) {
+				if (file_exists("modules/research_assistant/search_plugin/".$_REQUEST['plugin'])) { 
+					include_once("modules/research_assistant/search_plugin/".$_REQUEST['plugin']);
+					$out="";
+					$out = autosearch_options();
+					return $out;
+				}
+			}
+		}
+		else if ($_REQUEST['action']=='auto_search') {
+			$out .= print_r($_REQUEST, true);
+			if (isset($_REQUEST['searchtype'])) {
+				if (file_exists("modules/research_assistant/search_plugin/".$_REQUEST['searchtype'].".php")) { 
+					include_once("modules/research_assistant/search_plugin/".$_REQUEST['searchtype'].".php");
+					$out = "";
+					$out = autosearch_process();
+					return $out;
+				}
+			}
+		}
 		// Default
 		else {
 			// Since there is nothing here to do, we should just show folders.
