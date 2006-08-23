@@ -68,7 +68,6 @@ function ValidateForm(myForm){ if(myForm.sourceid && myForm.sourceid.value == ""
 return false;}return true;}
 //-->
 </script>';
-     
         $out .=  '<form action="' . $action["path"] . '" method="post"onsubmit="return ValidateForm(this)">';
 		$out .= '<input type="hidden" name="numOfRows" value="'.$_REQUEST['numOfRows'].'" />';
         foreach ($params as $key => $value) {
@@ -447,6 +446,7 @@ return false;}return true;}
 	                   <input type="hidden" id="personid'.$i.'" name="personid'.$i.'" size="3" value="'.$pid.'" />';
 	                   $out .= print_findindi_link("personid".$i, "peoplelink".$i, true);
 	                   $out .= '<br /></td>';
+	        
 		}
  	$out .= '</tr></table>';
  		$out .= '</td></tr>';
@@ -470,6 +470,7 @@ return false;}return true;}
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
 		global $INDI_FACTS_ADD;
 					
+			
 		$personid = "";
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
@@ -512,6 +513,7 @@ return false;}return true;}
 		$occufact = true;
 		foreach($inferFacts as $key=>$inferredFacts) {
 			foreach($inferredFacts as $id=>$value) {
+				$completeFact = true;
 					foreach($facts as $factKey=>$factValues)
 					{
 						$ct = preg_match("/1 (\w+)/", $factValues['tf_factrec'], $match);
@@ -530,7 +532,7 @@ return false;}return true;}
 						$out .="<td>".$factarray[$value['factType']]." ".$value['date']."</td>";
 						$out .="<td>".$value["Person"]."</td>";
 						$out .="<td>".$value["Reason"]."</td>";
-						$out .="<td>".'<input type="Checkbox" id="'.$key.$value['factType'].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["Fact"]).'\',\''.$key.'\',\''.$value['factType'].'\',\''.$value["Person"].'\',\'indi\')"></td>';
+						$out .="<td>".'<input type="Checkbox" id="'.$value['PersonID'].$value['factType'].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["Fact"]).'\',\''.$value['PersonID'].'\',\''.$value['factType'].'\',\''.$value["Person"].'\',\''.$value["factPeople"].'\')"></td>';
 						$out .="</tr>";
 					}
 				
@@ -590,11 +592,69 @@ return false;}return true;}
 			if($occupation != $rows[$number]["Occupation"])
 			{
 				$inferredFact["Person"] = $person->getName();
+				$inferredFact["PersonID"] = $person->getXref();
 				$inferredFact["Reason"] = "A discrepancy in occupation was detected!";
 				$inferredFact["Fact"] = "1 OCCU ".$rows[$number]["Trade"];
 				$inferredFact["factType"] = 'OCCU';
+				$inferredFact["factPeople"] = "indi";
 				$inferredFact["date"] = '';
 				$inferredFacts[] = $inferredFact;
+			}
+			
+			if($rows[$number]["Single"] == "Widowed")
+			{
+				
+				$spouseFams = $person->getSpouseFamilies();
+				foreach($spouseFams as $sFamKey => $sFamValue)
+				{
+					$spouse = $sFamValue->getSpouse($person);
+					$deathYear = $spouse->getDeathYear();
+					if($spouse->getDeathYear())	$diff = $deathYear - 1910;
+						if($diff)
+						{
+							if($diff > 1 || $diff < 0)
+							{
+								$tempArray = array();
+								$inferredFact["Person"] = $spouse->getName();								
+								$inferredFact["PersonID"] = $spouse->getXref();
+								$inferredFact["Reason"] = "A death Date can be inferred!";
+								$inferredFact["Fact"] = "1 DEAT \r\n2 DATE BEF 1910";
+								$inferredFact["factType"] = 'DEAT';
+								$inferredFact["date"] = 'BEF 1910';
+								$inferredFact["factPeople"] = "indi";
+								$inferredFacts[] = $inferredFact;
+							}
+						}
+					
+				}
+			
+			}
+			
+			if($rows[$number]["Single"] == "Married")
+			{
+				
+				$spouseFams = $person->getSpouseFamilies();
+				foreach($spouseFams as $sFamKey => $sFamValue)
+				{
+					$marriage = $sFamValue->getMarriageRecord();
+					if(!$marriage)
+					{
+						if(!is_null($sFamValue))
+						{
+							$tempArray = array();
+							$inferredFact["Person"] = $sFamValue->getSortableName();								
+							$inferredFact["PersonID"] = $sFamValue->getXref();
+							$inferredFact["Reason"] = "A Marriage Date can be inferred!";
+							$inferredFact["Fact"] = "1 MARR \r\n2 DATE BEF 1910";
+							$inferredFact["factType"] = 'MARR';
+							$inferredFact["date"] = 'BEF 1910';
+							$inferredFact["factPeople"] = "fam";
+							$tempArray[] = $inferredFact;
+							$people[$sFamValue->getXref()] = $tempArray;
+						}
+					}
+				}
+			
 			}
 			
 			if(!empty($bdate))
@@ -602,36 +662,36 @@ return false;}return true;}
 				 $bDiff = $birthDate - $bdate;
 				 if($bDiff >1 || $bDiff < 0)
 				 {
+				 		
+				 	if($birthDate != 1910)
+				 {
 				 	if(!empty($rows[$number]["PlaceOfBirth"]))
 				 	{
 				 		$inferredFact["Person"] = $person->getName();
+						$inferredFact["PersonID"] = $person->getXref();
 				 		$inferredFact["Reason"] = "A birth date difference was detected";
-				 		$inferredFact["Fact"] = "1 BIRT \r\n2 DATE ".$birthDate."\r\n2 PLAC ".$rows[$number]["PlaceOfBirth"];
-				 		$inferredFact["date"] = $birthDate;
+				 		$inferredFact["Fact"] = "1 BIRT \r\n2 DATE ABT".$birthDate."\r\n2 PLAC ".$rows[$number]["PlaceOfBirth"];
+				 		$inferredFact["date"] = "ABT ".$birthDate;
 				 		$inferredFact["factType"] = 'BIRT';	 	
+				 		$inferredFact["factPeople"] = "indi";	
 						$inferredFacts[] = $inferredFact;
 				 		
 				 	}
 				 	else
 				 	{
 				 		$inferredFact["Person"] = $person->getName();
+						$inferredFact["PersonID"] = $person->getXref();
 				 		$inferredFact["Reason"] = "A birth date difference was detected";
-				 		$inferredFact["Fact"] = "1 BIRT \r\n2 DATE ".$birthDate;
-				 		$inferredFact["date"] = $birthDate;	
+				 		$inferredFact["Fact"] = "1 BIRT \r\n2 DATE ABT".$birthDate;
+				 		$inferredFact["date"] = "ABT ".$birthDate;	
 				 		$inferredFact["factType"] = 'BIRT'; 	
+				 		$inferredFact["factPeople"] = "indi";
 						$inferredFacts[] = $inferredFact;
 				 	}
 				 }
 			}
-			else
-			{
-					$inferredFact["Person"] = $person->getName();
-				 	$inferredFact["Reason"] = "A birth date can be inferred";
-				 	$inferredFact["DOB"] = "1 BIRT \r\n2 DATE ".$birthDate;		
-				 	$inferredFact["date"] = $birthDate; 
-				 	$inferredFact["factType"] = 'BIRT';		 	
-					$inferredFacts[] = $inferredFact;
 			}
+		
 			$people[$person->getXref()] = $inferredFacts;
 		}
 		return $people;
@@ -782,6 +842,7 @@ return false;}return true;}
 			'county'=>$_POST['county'],
 			'state'=>$_POST['state'],
 			'rows'=>$rows));
+		
 		return $citation;
     }
     

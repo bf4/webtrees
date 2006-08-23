@@ -158,7 +158,7 @@ $pgv_lang["ra_add_task_help"]				= "<H2><B>Lis‰‰ uusi teht‰v‰:</B></H2></H2><ul>
 
 $pgv_lang["ra_edit_folder_help"]			= "<H2><B>Editoi hakemistoa:</B></H2><ul><li><B>Hakemiston nimi:</B> Lis‰‰ t‰h‰n editoitavan hakemiston nimi.</B></li><li><B>P‰‰hakemisto:</B> Voit m‰‰ritt‰‰ editoitavan hakemiston p‰‰hakemistoksi.</B></li><li><B>Hakemiston kuvaus:</B> Lis‰‰ hakemistosi kuvaus.</B></li><ul>";
 
-$pgv_lang["ra_add_folder_help"]				= "<H2><B>Lis‰‰ hakemisto:</B></H2><ul><li><B>Hakemiston nimi:</B> Lis‰‰ t‰h‰n lis‰tt‰v‰n hakemiston nimi.</B></li><li><B>P‰‰hakemisto:</B> Voit m‰‰ritt‰‰ editoitavan hakemiston p‰‰hakemistoksi.</B></li><li><B>Hakemiston kuvaus:</B> Lis‰‰ hakemistosi kuvaus.</B></li><ul>;
+$pgv_lang["ra_add_folder_help"]				= "<H2><B>Lis‰‰ hakemisto:</B></H2><ul><li><B>Hakemiston nimi:</B> Lis‰‰ t‰h‰n lis‰tt‰v‰n hakemiston nimi.</B></li><li><B>P‰‰hakemisto:</B> Voit m‰‰ritt‰‰ editoitavan hakemiston p‰‰hakemistoksi.</B></li><li><B>Hakemiston kuvaus:</B> Lis‰‰ hakemistosi kuvaus.</B></li><ul>";
 
 $pgv_lang["ra_view_task_help"]				= "<H2><B>Teht‰v‰n‰kym‰:</B></H2><ul><li><B>Teht‰v‰n nimi:</B> T‰ll‰ palstalla ovat kaikkien luomiesi teht‰vien nimet.</B></li><li><B>Kuvaus:</B> T‰ll‰ palstalla ovat teht‰viesi kuvaukset.</li><li><B>Aloitusp‰iv‰m‰‰r‰:</B> T‰ss‰ ovat kaikkien teht‰vien aloitusp‰iv‰m‰‰r‰t.</li><li><B>Valmis:</B>T‰ss‰ n‰kyy, onko teht‰v‰ suoritettu valmiiksi.</li><li><B>Yksityiskohdat:</B>T‰ss‰ n‰kyv‰t teht‰vien yksityiskohdat.</li><li><B>Poista:</B>T‰ss‰ poistetaan teht‰v‰.</li><ul><br /><a href=\"helpvids/MissingInformationUserHelp.htm\">K‰ytt‰j‰opastus</a>";
 

@@ -161,6 +161,7 @@ $pgv_lang["ra_comments_help"]				= "<H2><B>Comments:</B></H2><ul><li>This will c
 $pgv_lang["ra_GenerateTasks_help"]			= "<H2><B>Generate Tasks:</B></H2><p>This form generates tasks from the _TODO tags in your GEDCOM file.</p><ul><li><B>Generate:</B> check each task to generate when you press the Generate button.</li><li><B>Task Name:</B> This is the name the task will be given.  This defaults to the text in the actual _TODO tag, excluding any CONT tag&quot;s</li><li><B>Task Description:</B> The description the task will be given.  This is generated from the text in the _TODO tag plus all of the associated CONT tag&quots.  </li><li><B>Edit:</B> click the link to edit that task.</li><li><B>Select Folder:</B> select the folder to put the generated tasks in.</li><li><B>Generate:</B> generates the tasks that have been checked.</li><li><B>Done:</B> redirects you to the Folder View page.</li></ul>";
 $pgv_lang["ra_EditGenerateTasks_help"]		= "<H2><B>Edit Generated Task:</B></H2><p>This form allows you to edit the tasks generated from _TODO tags in your GEDCOM file.</p><ul><li><B>Task Name:</B> This is the name the task will be given.  </li><li><B>Task Description:</B> The description the task will be given. </li><li><B>People:</B> click the link to select the person to associate the task with.</li><li><B>Source:</B> click the link to select the source to associate the task with.</li><li><B>Save:</B> saves all your changes and redirects you to the Generate tasks page.</li><li><B>Cancel:</B> disregards all your changes and redirects you to the Generate tasks page.</li></ul>";
 $pgv_lang["ra_configure_privacy_help"]		= "<H2><B>Configure Privacy:</B></H2></H2><ul><li><B>Show To Public:</B> Makes specified task available to everyone.</li><li><B>Show Only To Authenticated Users:</B> Makes specified task available to authenticated users only.</li><li><B> Show To Admin Users:</B> Makes specified task available to admin users only.</li><li><B> Hide Even From Admin Users:</B> Makes specified task not available to anyone.</li></ul>";
+$pgv_lang["ra_edit_task_help"]				= "<H2><B>Edit Task:</B></H2></H2><ul><li><B>Title:</B>This should contain the title of the task that you are editing.</li><li><B>Folder:</B>In this field you can assign which folder you want your new task to go to.</li><li><B>Description:</B> Enter a description of the task you want to edit.</li><li><B>Sources:</B> Assign or edit any sources that you have for the task.</li><li><B>People:</B> Assign or edit any people associated for the task.</li></ul>";
 
 //-- RA_VIEWTASK MESSAGES
 $pgv_lang["view_task"]						= "View Task";
@@ -209,4 +210,15 @@ $pgv_lang["enumDate"]                   = "Enumeration Date";
 $pgv_lang["county"]                     = "County";
 $pgv_lang["city"]                       = "City";
 //$pgv_lang["page"]                       = "Page";                  
+
+//-- MY TASK BLOCK
+$pgv_lang["mytasks_block_descr"]		= "The My Task Block shows the task for the current user and can be configured to show completed tasks or to show task that are currently unassigned";
+$pgv_lang["mytasks_block"]				= "MyTask";   
+$pgv_lang["mytasks_edit"]               = "Edit";
+$pgv_lang["mytasks_unassigned"]			= "Unassigned";
+$pgv_lang["mytasks_takeOn"]				= "TakeOn";
+$pgv_lang["mytasks_help"]				= "~MY TASK BLOCK~<br /><br />The My Task Block shows the task for the current user<br />and can be configured to show completed tasks or to show<br />task that are currently unassigned";
+$pgv_lang["mytask_show_tasks"]   		= "Show unassigned tasks?";
+$pgv_lang["mytask_show_completed"]		= "Show completed tasks?";
+                 
 ?>

@@ -26,10 +26,12 @@
  * @subpackage Blocks
  */
 
+include("modules/research_assistant/languages/lang.en.php");
+
 $pgv_lang["mytasks_block"] = "MyTasks Block";
 
 $PGV_BLOCKS["print_mytasks"]["name"]        = $pgv_lang["mytasks_block"];
-$PGV_BLOCKS["print_mytasks"]["descr"]        = "mytasks_block_descr";
+$PGV_BLOCKS["print_mytasks"]["descr"]        = $pgv_lang["mytasks_block_descr"];
 $PGV_BLOCKS["print_mytasks"]["canconfig"]        = true;
 $PGV_BLOCKS["print_mytasks"]['config']		= array("unassigned" => "no", 
 "completed" => "no");
@@ -50,7 +52,7 @@ function print_mytasks($block=true, $config="", $side, $index) {
 		//USERS CURRENT TASKS
 		$sql =	"Select * From " .$TBLPREFIX. "tasks where t_username ='".$userName."' AND t_enddate IS NULL";
 		$res = dbquery($sql);
-		$out = "<table><tr><th class='descriptionbox'>Task Name</th><th class='descriptionbox'>Start Date</th><th class='descriptionbox'>Edit</th></tr>";
+		$out = "<table><tr><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["edit"]."</th></tr>";
 		while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$task = db_cleanup($task);
 			$tasktitle = '<a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'">'.$task['t_title'].'</a>';
@@ -65,7 +67,7 @@ function print_mytasks($block=true, $config="", $side, $index) {
 		if($completed =="yes"){
 		$sql = "Select * From " .$TBLPREFIX. "tasks where t_username ='".$userName."' and t_enddate is NOT NULL";
 		$res = dbquery($sql);
-		$out .= "<b>Completed Tasks</b><br/><table><tr><th class='descriptionbox'>Task Name</th><th class='descriptionbox'>Start Date</th><th class='descriptionbox'>Edit</th></tr>";
+		$out .= "<b>".$pgv_lang["completed"]."</b><br/><table><tr><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["edit"]."</th></tr>";
 		while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$task = db_cleanup($task);
 			$tasktitle = '<a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'">'.$task['t_title'].'</a>';
@@ -82,13 +84,13 @@ function print_mytasks($block=true, $config="", $side, $index) {
 		{
 			$sql = "Select * From " .$TBLPREFIX. "tasks where t_username =''";
 			$res = dbquery($sql);
-			$out .= "<b>Unassigned Tasks</b><br/><table><tr><th class='descriptionbox'>Task Name</th><th class='descriptionbox'>Start Date</th><th class='descriptionbox'>Edit</th><th class='descriptionbox'>TakeOn</th></tr>";
+			$out .= "<b>".$pgv_lang["mytasks_unassigned"]."</b><br/><table><tr><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["mytasks_edit"]."</th><th class='descriptionbox'>".$pgv_lang["mytasks_takeOn"]."</th></tr>";
 			while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 				$task = db_cleanup($task);
 				$tasktitle = '<a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'">'.$task['t_title'].'</a>';
 				$out .= '<tr><td>'.$tasktitle.'</td><td>'.date("d M Y",$task["t_startdate"]);
 				$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a>';
-				$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=assignUser&amp;t_id='.$task["t_id"].'&amp;t_username='.$userName.'" class="link">TakeOn</a></td></tr>';
+				$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=assignUser&amp;t_id='.$task["t_id"].'&amp;t_username='.$userName.'" class="link">'.$pgv_lang["mytasks_takeOn"].'</a></td></tr>';
 				}
 			$out .= '</table>';
 			$res->numRows();
@@ -101,7 +103,7 @@ function print_mytasks($block=true, $config="", $side, $index) {
 		print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
 		print "<td class=\"blockh1\" >&nbsp;</td>";
 		print "<td class=\"blockh2\" ><div class=\"blockhc\">";
-		print_help_link("mygedview_message_help", "qm");
+		print_help_link("mytasks_help", "qm");
 		
 		if ($PGV_BLOCKS["print_mytasks"]["canconfig"]) {
     		$username = getUserName();
@@ -131,7 +133,7 @@ function print_mytasks_config($config) {
 	if (!isset($config["unassigned"])) $config["unassigned"] = "no";
 	if (!isset($config["completed"])) $config["completed"] = "no";
 
-	print "<tr><td class=\"descriptionbox width20\"> Show unassigned tasks? </td>";?>
+	print "<tr><td class=\"descriptionbox width20\">".$pgv_lang["mytask_show_tasks"]."</td>";?>
 	<td class="optionbox">
    	<select name="unassigned">
     	<option value="no"<?php if ($config["unassigned"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
@@ -140,7 +142,7 @@ function print_mytasks_config($config) {
   	</td></tr>
 
   	<?php
-  	print "<tr><td class=\"descriptionbox width20\"> Show completed tasks? </td>";?>
+  	print "<tr><td class=\"descriptionbox width20\">".$pgv_lang["mytask_show_completed"]."</td>";?>
   	<td class="optionbox">
   	<select name="completed">
     	<option value="no"<?php if ($config["completed"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>

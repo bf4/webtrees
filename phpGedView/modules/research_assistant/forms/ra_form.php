@@ -362,6 +362,7 @@ class ra_form {
 				}
 			}
 		}
+		$this->people = null;
     }
     
     function processSimpleCitation() {

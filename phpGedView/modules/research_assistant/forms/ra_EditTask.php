@@ -36,6 +36,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_EditTask.php")) {
 // Require the database functions
 require_once("includes/functions_db.php");
 require_once("includes/person_class.php");
+include("modules/research_assistant/languages/ra_lang.en.php");
 global $pgv_lang, $TBLPREFIX, $DBCONN;
  
  	/**
@@ -229,7 +230,7 @@ function getTitle(){
 <!--HEADING-->
     		<th colspan="4" align="right" class="topbottombar">
     			<h2>
-    				<?php print $pgv_lang["edit_task"]; ?>
+    				<?php print $pgv_lang["edit_task"]; print_help_link("ra_edit_task_help", "qm", '', false, false); ?>
     			</h2>
     		</th>
     	</tr>
