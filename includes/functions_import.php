@@ -510,32 +510,64 @@ function update_dates($gid, $indirec) {
 }
 
 function insert_media($objrec, $objlevel, $update, $gid, $count) {
-	global $TBLPREFIX, $media_count, $GEDCOMS, $FILE, $DBCONN;
+	global $TBLPREFIX, $media_count, $GEDCOMS, $FILE, $DBCONN, $found_ids;
 
-	$m_media = get_new_xref("OBJE");
-	$objref = subrecord_createobjectref($objrec, $objlevel, $m_media);
-	//print "objrec = $objrec <br />objref=$objref<br />\n";
+	//-- check for linked OBJE records
+	//-- linked records don't need to insert to media table
+	$ct = preg_match("/OBJE @(.*)@/", $objrec, $match);
+	if ($ct>0) {
+		//-- get the old id
+		$old_m_media = $match[1];
+		$objref = $objrec;
+		//-- if this is an import not an update get the updated ID
+		if (!$update) {
+			if (isset ($found_ids[$old_m_media])) {
+				$new_m_media = $found_ids[$old_m_media]["new_id"];
+			} else {
+				$new_m_media = get_new_xref("OBJE");
+				$found_ids[$old_m_media]["old_id"] = $old_m_media;
+				$found_ids[$old_m_media]["new_id"] = $new_m_media;
+			}
+		}
+		//-- an update so the ID won't change
+		else $new_m_media = $old_m_media;
+		$m_media = $new_m_media;
+		if ($m_media != $old_m_media) $objref = preg_replace("/@$old_m_media@/", "@$m_media@", $objref);
+	}
+	//-- handle embedded OBJE records
+	else if (!$update) {
+		$m_media = get_new_xref("OBJE");
+		$objref = subrecord_createobjectref($objrec, $objlevel, $m_media);
+
+		//-- restructure the record to be a linked record
+		$objrec = preg_replace("/ OBJE/", " @" . $m_media . "@ OBJE", $objrec);
+		//-- renumber the lines
+		$objrec = preg_replace("/^(\d+) /me", "($1-$objlevel).' '", $objrec);
+		
+		//-- check if another picture with the same file and title was previously imported
+		$media = new Media($objrec);
+		$new_media = Media :: in_obje_list($media);
+		if ($new_media === false) {
+			//-- add it to the media database table
+			$m_id = get_next_id("media", "m_id");
+			$sql = "INSERT INTO " . $TBLPREFIX . "media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec)";
+			$sql .= " VALUES('" . $DBCONN->escapeSimple($m_id) . "', '" . $DBCONN->escapeSimple($m_media) . "', '" . $DBCONN->escapeSimple($media->ext) . "', '" . $DBCONN->escapeSimple($media->title) . "', '" . $DBCONN->escapeSimple($media->file) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "', '" . $DBCONN->escapeSimple($objrec) . "')";
+			$res = dbquery($sql);
+			$media_count++;
+			//-- if this is not an update then write it to the new gedcom file
+			if (!$update && !empty ($fpnewged))
+				fwrite($fpnewged, trim($objrec) . "\r\n");
+			//print "LINE ".__LINE__;
+			$objelist[$m_media] = $media;
+		} else {
+			//-- already added so update the local id
+			$objref = preg_replace("/@$m_media@/", "@$new_media@", $objref);
+			$m_media = $new_media;
+		}
+	}
 	
-	$objrec = preg_replace("/ OBJE/", " @" . $m_media . "@ OBJE", $objrec);
-	$objrec = preg_replace("/^(\d+) /me", "($1-$objlevel).' '", $objrec);
-	
-	$media = new Media($objrec);
-	$new_media = Media :: in_obje_list($media);
-	if ($new_media === false) {
-		$m_id = get_next_id("media", "m_id");
-		$sql = "INSERT INTO " . $TBLPREFIX . "media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec)";
-		$sql .= " VALUES('" . $DBCONN->escapeSimple($m_id) . "', '" . $DBCONN->escapeSimple($m_media) . "', '" . $DBCONN->escapeSimple($media->ext) . "', '" . $DBCONN->escapeSimple($media->title) . "', '" . $DBCONN->escapeSimple($media->file) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "', '" . $DBCONN->escapeSimple($objrec) . "')";
-		$res = dbquery($sql);
-		$media_count++;
-		//-- if this is not an update then write it to the new gedcom file
-		if (!$update && !empty ($fpnewged))
-			fwrite($fpnewged, trim($objrec) . "\r\n");
-		//print "LINE ".__LINE__;
-		$objelist[$m_media] = $media;
-	} else
-		$m_media = $new_media;
+	//-- add the entry to the media_mapping table
 	$mm_id = get_next_id("media_mapping", "mm_id");
-	
 	$sql = "INSERT INTO " . $TBLPREFIX . "media_mapping (mm_id, mm_media, mm_gid, mm_order, mm_gedfile, mm_gedrec)";
 	//$sql .= " VALUES ('" . $DBCONN->escapeSimple($mm_id) . "', '" . $DBCONN->escapeSimple($m_media) . "', '" . $DBCONN->escapeSimple($gid) . "', '" . $DBCONN->escapeSimple($count) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]['id']) . "', '" . addslashes('' . $objlevel . ' OBJE @' . $m_media . '@') . "')";
 	$sql .= " VALUES ('" . $DBCONN->escapeSimple($mm_id) . "', '" . $DBCONN->escapeSimple($m_media) . "', '" . $DBCONN->escapeSimple($gid) . "', '" . $DBCONN->escapeSimple($count) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]['id']) . "', '" . $objref . "')";
@@ -1699,7 +1731,10 @@ function subrecord_createobjectref($objrec, $objlevel, $m_media){
 	do
 	{
 		$tm = get_sub_record($level, $level . " _THUM", $objrec, $n);
-		if($tm != "") $thum = $thum . trim($tm)."\r\n";
+		if($tm != ""){
+			//- call image cropping function ($tm contains thum data)
+			$thum = $thum . trim($tm)."\r\n";
+		}
 		$n++;
 	}while($tm != "");
 	//- add object reference
@@ -1707,4 +1742,37 @@ function subrecord_createobjectref($objrec, $objlevel, $m_media){
 	
 	//- return the object media reference
 	return $objmed;
+}
+function cropImage($image, $dest_image, $fx, $fy){ //$image is the string location of the original image, $dest_image is the string file location of the new image, $fx is the..., $fy is the...
+
+	$ims = getimagesize($image);
+	if($ims['mime'] == "image/png") //if the type is png
+	{
+	$img = imagecreatetruecolor(($fy - $fx),($fy - $fx));
+	//$org_img = imagecreatefromjpeg($image);
+	$org_img = imagecreatefrompng($image);
+	$ims = getimagesize($image);
+	imagecopy($img,$org_img, 0, 0, $fx, fy, $ims[0], $ims[1]);
+	//imagejpeg($img,$dest_image,90);
+	imagepng($img,$dest_image);
+	imagedestroy($img);
+	}
+	if($ims['mime'] == "image/jpeg") //if the type is jpeg
+	{
+	$img = imagecreatetruecolor(($fy - $fx),($fy - $fx)); 
+	$org_img = imagecreatefromjpeg($image);
+	$ims = getimagesize($image);
+	imagecopy($img,$org_img, 0, 0, $fx, fy, $ims[0], $ims[1]);
+	imagejpeg($img,$dest_image,90);
+	imagedestroy($img);
+	}
+	if($ims['mime'] == "image/gif") //if the type is gif
+	{
+	$img = imagecreatetruecolor(($fy - $fx),($fy - $fx)); 
+	$org_img =  imagecreatefromgif($image);
+	$ims = getimagesize($image);
+	imagecopy($img,$org_img, 0, 0, $fx, fy, $ims[0], $ims[1]);
+	imagegif($img,$dest_image);
+	imagedestroy($img);
+	}
 }
