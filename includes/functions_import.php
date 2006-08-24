@@ -510,7 +510,7 @@ function update_dates($gid, $indirec) {
 }
 
 function insert_media($objrec, $objlevel, $update, $gid, $count) {
-	global $TBLPREFIX, $media_count, $GEDCOMS, $FILE, $DBCONN, $found_ids;
+	global $TBLPREFIX, $media_count, $GEDCOMS, $FILE, $DBCONN, $found_ids, $fpnewged;
 
 	//-- check for linked OBJE records
 	//-- linked records don't need to insert to media table
@@ -532,6 +532,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 		//-- an update so the ID won't change
 		else $new_m_media = $old_m_media;
 		$m_media = $new_m_media;
+//		print "LINK: old $old_m_media new $new_m_media $objref<br />";
 		if ($m_media != $old_m_media) $objref = preg_replace("/@$old_m_media@/", "@$m_media@", $objref);
 	}
 	//-- handle embedded OBJE records
@@ -558,7 +559,6 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 			if (!$update && !empty ($fpnewged))
 				fwrite($fpnewged, trim($objrec) . "\r\n");
 			//print "LINE ".__LINE__;
-			$objelist[$m_media] = $media;
 		} else {
 			//-- already added so update the local id
 			$objref = preg_replace("/@$m_media@/", "@$new_media@", $objref);
@@ -592,6 +592,7 @@ function update_media($gid, $indirec, $update = false) {
 	if (!$update && !isset ($MAX_IDS["OBJE"]))
 		$MAX_IDS["OBJE"] = 1;
 
+//		print substr($indirec, 0, 15)."<br />\n";
 	//-- handle level 0 media OBJE seperately
 	$ct = preg_match("/0 @(.*)@ OBJE/", $indirec, $match);
 	if ($ct > 0) {
@@ -608,12 +609,12 @@ function update_media($gid, $indirec, $update = false) {
 				$found_ids[$old_m_media]["new_id"] = $new_m_media;
 			}
 		}
+//		print "RECORD: old $old_m_media new $new_m_media $objref<br />";
 		$indirec = preg_replace("/@" . $old_m_media . "@/", "@" . $new_m_media . "@", $indirec);
 		$media = new Media($indirec);
 		//--check if we already have a similar object
 		$new_media = Media :: in_obje_list($media);
 		if ($new_media === false) {
-			$objelist[$new_m_media] = $media;
 			$sql = "INSERT INTO " . $TBLPREFIX . "media (m_id, m_media, m_ext, m_titl, m_file, m_gedfile, m_gedrec)";
 			$sql .= " VALUES('" . $DBCONN->escapeSimple($m_id) . "', '" . $DBCONN->escapeSimple($new_m_media) . "', '" . $DBCONN->escapeSimple($media->ext) . "', '" . $DBCONN->escapeSimple($media->title) . "', '" . $DBCONN->escapeSimple($media->file) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "', '" . $DBCONN->escapeSimple($indirec) . "')";
 			$res = dbquery($sql);
