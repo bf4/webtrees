@@ -114,7 +114,8 @@ if ($MULTI_MEDIA) {
 
 				if ($block) print " align=\"center\" class=\"details1\"";
 				else print " class=\"details2\"";
-				print " ><a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($medialist[$value]["FILE"])."',$imgwidth, $imgheight);\">";
+				$mediaid = get_media_id_from_file($medialist[$value]["FILE"]);
+				print " ><a href=\"mediaviewer.php?mid=".$mediaid."\">";
 				$mediaTitle = "";
 				if ($medialist[$value]["TITL"]!=$medialist[$value]["FILE"]) {
 					$mediaTitle = PrintReady($medialist[$value]["TITL"]);

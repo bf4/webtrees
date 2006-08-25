@@ -48,6 +48,7 @@ if ($_SESSION["cookie_login"]) {
 
 print_simple_header($pgv_lang["add_media_tool"]);
 $disp = true;
+if (empty($pid) && !empty($mid)) $pid = $mid;
 if (!empty($pid)) {
 	$pid = clean_input($pid);
 	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_media_record($pid);
