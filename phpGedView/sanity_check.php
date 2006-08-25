@@ -130,11 +130,13 @@ if (($CONFIGURED || (isset($_REQUEST['action']) && $_REQUEST['action']=="update"
 	require_once $confighelpfile["english"];
 	if (file_exists($confighelpfile[$LANGUAGE]))
 		require_once $confighelpfile[$LANGUAGE];
+	if (preg_match("/\Wsanity_check.php/", $_SERVER["SCRIPT_NAME"])>0) {
 	print_header("");
 	print "<span class=\"error\">";
 	print $pgv_lang["db_setup_bad"];
 	print "</span><br />";
 	print "<span class=\"error\">" . $DBCONN->getMessage() . " " . $DBCONN->getUserInfo() . "</span><br />";
+	}
 	if ($CONFIGURED == true) 
 	{
 		//-- force the incoming user to enter the database password before they can configure the site for security.

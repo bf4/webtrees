@@ -1068,7 +1068,7 @@ function print_main_media($pid, $level=1, $related=false) {
 	//-- for family and source page only show level 1 obje references
 	if ($level>0) $sqlmm .= "AND mm_gedrec LIKE '$level OBJE%'";
 
-	$sqlmm .= "ORDER BY mm_id ASC";
+	$sqlmm .= "ORDER BY mm_gid DESC";
 	$resmm = dbquery($sqlmm);
 	while($rowm = $resmm->fetchRow(DB_FETCHMODE_ASSOC)){
 		// NOTE: Determine the size of the mediafile

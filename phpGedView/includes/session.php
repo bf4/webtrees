@@ -605,7 +605,7 @@ else {
 if (isset($_REQUEST["ged"])) {
 	$GEDCOM = trim($_REQUEST["ged"]);
 }
-if ($GEDCOM>=1) $GEDCOM = get_gedcom_from_id($GEDCOM);
+if (is_int($GEDCOM)) $GEDCOM = get_gedcom_from_id($GEDCOM);
 $_SESSION["GEDCOM"] = $GEDCOM;
 $INDILIST_RETRIEVED = false;
 $FAMLIST_RETRIEVED = false;

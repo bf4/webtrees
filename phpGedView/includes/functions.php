@@ -103,14 +103,20 @@ function check_db($ignore_previous=false) {
  */
 function get_config_file() {
 	global $GEDCOMS, $GEDCOM;
+	$config = "config_gedcom.php";
 	if (count($GEDCOMS)==0) {
-		return "config_gedcom.php";
+		return $config;
 	}
-	if ((!empty($GEDCOM))&&(isset($GEDCOMS[$GEDCOM]))) return $GEDCOMS[$GEDCOM]["config"];
-	foreach($GEDCOMS as $GEDCOM=>$gedarray) {
-		$_SESSION["GEDCOM"] = $GEDCOM;
-		return $gedarray["config"];
+	if ((!empty($GEDCOM))&&(isset($GEDCOMS[$GEDCOM]))) $config = $GEDCOMS[$GEDCOM]["config"];
+	else {
+		foreach($GEDCOMS as $GEDCOM=>$gedarray) {
+			$_SESSION["GEDCOM"] = $GEDCOM;
+			$config = $gedarray["config"];
+			break;
+		}
 	}
+	if (!file_exists($config)) $config = "config_gedcom.php";
+	return $config;
 }
 
 /**
@@ -380,10 +386,11 @@ function strrpos4($haystack, $needle) {
  *
  */
 function get_first_tag($level, $tag, $gedrec, $num=1) {
-	$temp = get_sub_record($level, $tag, $gedrec, $num)."\n";
+	$temp = get_sub_record($level, $level." ".$tag, $gedrec, $num)."\n";
 	$temp = str_replace("\r\n", "\n", $temp);
 	$length = strpos($temp, "\n");
-	return substr($temp, 0, $length);
+	if ($length===false) $length = strlen($temp);
+	return substr($temp, 2, $length-2);
 }
 
 /**
@@ -428,7 +435,7 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
 	$pos2 = strpos($gedrec, "\n$level", $pos1+1);
 	if (!$pos2) $pos2 = strpos($gedrec, "\n1", $pos1+1);
 	if (!$pos2) $pos2 = strpos($gedrec, "\nPGV_", $pos1+1); // PGV_SPOUSE, PGV_FAMILY_ID ...
-	if (!$pos2) return substr($gedrec, $pos1);
+	if (!$pos2) return ltrim(substr($gedrec, $pos1));
 	$subrec = substr($gedrec, $pos1, $pos2-$pos1);
 	//-- does anybody know what this is for?
 	/**
@@ -445,7 +452,7 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
 			$subrec = substr($gedrec, $pos1, $pos2-$pos1);
 		}
 	}**/
-	return $subrec;
+	return ltrim($subrec);
 }
 
 /**
@@ -961,35 +968,77 @@ function find_highlighted_object($pid, $indirec) {
 	//-- for the given media choose the
 	foreach($media as $i=>$row) {
 		if (displayDetailsById($row[0], 'OBJE') && !FactViewRestricted($row[0], $row[2])) {
-			$thum = get_gedcom_value('_THUM', 1, $row[2]);
-			$prim = get_gedcom_value('_PRIM', 1, $row[2]);
-			$level=0;
-			$ct = preg_match("/(\d+) OBJE/", $row[3], $match);
-			if ($ct>0) $level = $match[1];
-			//-- always take _THUM Y objects
-			if ($thum=='Y') {
-				$object["file"] = check_media_depth($row[1]);
-				$object["thumb"] = $object["file"];
-				$object["level"] = $level;
-				$object["mid"] = $row[0];
-				break;
-			}
-			//-- take the first _PRIM Y object... _PRIM Y overrides first level 1 object
-			else if ($prim=='Y') {
-				if (!isset($object['prim']) || !isset($object['level']) || $object['level']>$level) {
+			if ($row[3] != null || $row[3] != ""){
+				$thum = get_gedcom_value('_THUM', 1, $row[3]);
+				$prim = get_gedcom_value('_PRIM', 1, $row[3]);
+				$note_mm = get_gedcom_value("NOTE", 1, $row[3]);
+				$note_m = get_gedcom_value("NOTE", 1, $row[2]);
+				$level=0;
+				$ct = preg_match("/(\d+) OBJE/", $row[3], $match);
+				if ($ct>0) $level = $match[1];
+				//-- always take _THUM Y objects
+				if ($thum=='Y') {
+					$object["file"] = check_media_depth($row[1]);
+					$object["thumb"] = $object["file"];
+					$object["level"] = $level;
+					$object["mid"] = $row[0];
+					$object["note_m"] = $note_m;
+					$object["note_mm"] = $note_mm;
+					break;
+				}
+				//-- take the first _PRIM Y object... _PRIM Y overrides first level 1 object
+				else if ($prim=='Y') {
+					if (!isset($object['prim']) || !isset($object['level']) || $object['level']>$level) {
+						$object["file"] = check_media_depth($row[1]);
+						$object["thumb"] = thumbnail_file($row[1]);
+						$object["prim"] = $prim;
+						$object["level"] = $level;
+						$object["mid"] = $row[0];
+					}
+				}
+				//-- take the first level 1 object if we don't already have one and it doesn't have _THUM N or _PRIM N
+				else if (empty($object['file']) && $level==1 && $thum!='N' && $prim!='N') {
 					$object["file"] = check_media_depth($row[1]);
 					$object["thumb"] = thumbnail_file($row[1]);
-					$object["prim"] = $prim;
 					$object["level"] = $level;
 					$object["mid"] = $row[0];
 				}
 			}
-			//-- take the first level 1 object if we don't already have one and it doesn't have _THUM N or _PRIM N
-			else if (empty($object['file']) && $level==1 && $thum!='N' && $prim!='N') {
-				$object["file"] = check_media_depth($row[1]);
-				$object["thumb"] = thumbnail_file($row[1]);
-				$object["level"] = $level;
-				$object["mid"] = $row[0];
+			else {
+				$thum = get_gedcom_value('_THUM', 1, $row[2]);
+				$prim = get_gedcom_value('_PRIM', 1, $row[2]);
+				$note_m = get_gedcom_value('NOTE', 1, $row[2]);
+				$note_mm = get_gedcom_value('NOTE', 1, $row[3]);
+				$level=0;
+				$ct = preg_match("/(\d+) OBJE/", $row[3], $match);
+				if ($ct>0) $level = $match[1];
+				//-- always take _THUM Y objects
+				if ($thum=='Y') {
+					$object["file"] = check_media_depth($row[1]);
+					$object["thumb"] = $object["file"];
+					$object["level"] = $level;
+					$object["mid"] = $row[0];
+					$object["note_m"] = $note_m;
+					$object["note_mm"] = $note_mm;
+					break;
+				}
+				//-- take the first _PRIM Y object... _PRIM Y overrides first level 1 object
+				else if ($prim=='Y') {
+					if (!isset($object['prim']) || !isset($object['level']) || $object['level']>$level) {
+						$object["file"] = check_media_depth($row[1]);
+						$object["thumb"] = thumbnail_file($row[1]);
+						$object["prim"] = $prim;
+						$object["level"] = $level;
+						$object["mid"] = $row[0];
+					}
+				}
+				//-- take the first level 1 object if we don't already have one and it doesn't have _THUM N or _PRIM N
+				else if (empty($object['file']) && $level==1 && $thum!='N' && $prim!='N') {
+					$object["file"] = check_media_depth($row[1]);
+					$object["thumb"] = thumbnail_file($row[1]);
+					$object["level"] = $level;
+					$object["mid"] = $row[0];
+				}
 			}
 		}
 	}
