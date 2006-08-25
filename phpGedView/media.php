@@ -1216,6 +1216,13 @@ if (check_media_structure()) {
 
 			foreach ($dirs as $indexval => $dir) {
 				print "<tr>";
+					print "<td class=\"descriptionbox $TEXT_DIRECTION\">";
+						print "<a href=\"media.php?directory=".rawurlencode($directory.$dir."/")."&amp;level=".($level+1).$thumbget."\">";
+						if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+						print $dir;
+						if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+						print "</a>";
+					print "</td>";
 					print "<td class=\"optionbox $TEXT_DIRECTION width10\">";
 						// Delete directory option
 						print "<form name=\"blah\" action=\"media.php\" method=\"post\">";
@@ -1227,13 +1234,6 @@ if (check_media_structure()) {
 						print "<input type=\"image\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]."\" alt=\"".$pgv_lang['delete']."\" onclick=\"return confirm('".$pgv_lang["confirm_folder_delete"]."');\">";
 						print "</form>";
 					print "</td>";
-					print "<td class=\"descriptionbox $TEXT_DIRECTION\">";
-						print "<a href=\"media.php?directory=".rawurlencode($directory.$dir."/")."&amp;level=".($level+1).$thumbget."\">";
-						if ($TEXT_DIRECTION=="rtl") print "&rlm;";
-						print $dir;
-						if ($TEXT_DIRECTION=="rtl") print "&rlm;";
-						print "</a>";
-					print "</td>";
 				print "</tr>";
 
 			}
@@ -1243,15 +1243,13 @@ if (check_media_structure()) {
 		// than the configured number of levels
 		if ($isadmin && $fileaccess && ($level < $MEDIA_DIRECTORY_LEVELS)) {
 			print "<tr>";
-				print "<td class=\"list_value $TEXT_DIRECTION\">";
+				print "<td class=\"list_value $TEXT_DIRECTION\" colspan=2>";
 					print "<form action=\"media.php\" method=\"get\">";
 					print "<input type=\"hidden\" name=\"directory\" value=\"".$directory."\" />";
 					print "<input type=\"hidden\" name=\"level\" value=\"".$level."\" />";
 					print "<input type=\"hidden\" name=\"action\" value=\"newdir\" />";
 					print "<input type=\"submit\" value=\"".$pgv_lang["add"]."\" />";
-				print "</td>";
-				print "<td class=\"descriptionbox $TEXT_DIRECTION\">";
-					print "<input type=\"text\" name=\"newdir\" size=\"50\"/></form>";
+					print "<input type=\"text\" name=\"newdir\" size=\"100%\"/></form>";
 				print "</td>";
 			print "</tr>";
 		}

@@ -633,7 +633,7 @@ var whichhelp = 'help_<?php print basename($SCRIPT_NAME)."&amp;action=".$action;
 <script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
 <?php
 	 print $head;
-	 print "</head>\n\t<body";
+	 print "</head>\n\t<body id=\"body\"";
 	 if ($view=="preview") print " onbeforeprint=\"hidePrint();\" onafterprint=\"showBack();\"";
 	 if ($TEXT_DIRECTION=="rtl" || !empty($ONLOADFUNCTION)) {
 		 print " onload=\"$ONLOADFUNCTION";
