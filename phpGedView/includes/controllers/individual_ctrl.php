@@ -352,7 +352,10 @@ class IndividualControllerRoot extends BaseController {
 					$imgsize = findImageSize($firstmediarec["file"]);
 					$imgwidth = $imgsize[0]+40;
 					$imgheight = $imgsize[1]+150;
-					$result .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($firstmediarec["file"])."',$imgwidth, $imgheight);\">";
+					//Gets the Media View Link Information and Concatinate
+					$mid = get_media_id_from_file($firstmediarec["file"]);
+					$mediaviewlink = "mediaviewer.php?mid=".$mid;
+					$result .= "<a href=\"".$mediaviewlink."\">";
 
 					$result .= "<img src=\"$filename\" align=\"left\" class=\"".$class."\" border=\"none\" alt=\"".$firstmediarec["file"]."\" />";
 					if ($imgsize) {
