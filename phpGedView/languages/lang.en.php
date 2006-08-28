@@ -31,6 +31,8 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 }
 
 $pgv_lang["clipping_privacy"]		= "Some items could not be added due to privacy restrictions";
+$pgv_lang["chart_new"]				= "Family Tree Chart";
+$pgv_lang["themecustomization"]		= "Theme Customization";
 $pgv_lang["loading"]				= "Loading...";
 $pgv_lang["upload_replacement"]		="Upload Replacement";
 $pgv_lang['progress_bars_info']		= "The status bars below will let you know how the import is progressing.  If the time limit runs out the import will be stopped and you will be asked to press a continue button.  If you don't see a continue button, please go back and enter a smaller time limit value.";
@@ -2012,6 +2014,9 @@ $pgv_lang["TYPE__newspaper"] = "Newspaper";
 $pgv_lang["TYPE__photo"] = "Photo";
 $pgv_lang["TYPE__tombstone"] = "Tombstone";
 $pgv_lang["TYPE__video"] = "Video";
+
+//-- Other media suff
+$pgv_lang["view_slideshow"] = "View as slideshow";
 
 //-- Modules
 $pgv_lang["module_error_unknown_action_v2"] = "Unknown action: [action].";
