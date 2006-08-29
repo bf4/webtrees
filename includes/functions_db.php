@@ -161,8 +161,8 @@ function get_media_id_from_file($filename){
 }
 //returns an array of rows from the database containing the Person ID's for the people associated with this picture
 function get_media_relations($mid){
-	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS;
-	$dbq = "select i.i_id from ".$TBLPREFIX."individuals i join ".$TBLPREFIX."media_mapping mm on i.i_id = mm.mm_gid where mm.mm_media = \"".$mid."\"";
+	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS, $GEDCOM;
+	$dbq = "select i.i_id from ".$TBLPREFIX."individuals i join ".$TBLPREFIX."media_mapping mm on i.i_id = mm.mm_gid where mm.mm_media = \"".$mid."\" AND mm.mm_gedfile='".$GEDCOMS[$GEDCOM]['id']."' AND mm.mm_gedfile=i.i_file";
 	$dbr = dbquery($dbq);
 	while($row = $dbr->fetchRow()) {
 		if ($row[0] != $mid){

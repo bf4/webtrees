@@ -345,7 +345,7 @@ class ra_form {
 				//  -Delete old sources
 		$sql = "DELETE FROM ".$TBLPREFIX."tasksource WHERE ts_t_id='".$_REQUEST["taskid"]."'";
 		$res = dbquery($sql);
-
+		$this->people = null;
 		$citation = $this->processSimpleCitation();
 		if (isset ($_REQUEST['sourceid'])) {
 			$sources = preg_split("/;/", $_REQUEST['sourceid']);
@@ -407,7 +407,9 @@ END_OUT;
 			$peopleList = "";
 			$familyList = "";
 			$people = $this->getPeople();
+			
 			foreach($people as $pid=>$person) {
+				
 				if(is_object($person))
 				{
 					$peopleList .= "<option value=\"$pid\" selected=\"selected\">".$person->getName()."</option>";
