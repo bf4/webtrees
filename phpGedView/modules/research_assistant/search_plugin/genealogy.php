@@ -1,4 +1,5 @@
 <?php 
+//@Author DParker
 require_once("includes/person_class.php");
 
 function autosearch_options()
@@ -45,7 +46,8 @@ if(isset($bloc)){
 	}
 
 	
-		$to_return.=		"<tr><td  align='center' class='topbottombar'colspan=2><input type='submit' value='Search' /></td></tr>
+		$to_return.=		"	<tr><td class='optionbox' colspan=2 align='center'>Genealogy.com Plug-In</td></tr>
+<tr><td  align='center' class='topbottombar'colspan=2><input type='submit' value='Search' /></td></tr>
 		 			
 							</table>
 						
