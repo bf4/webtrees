@@ -1144,6 +1144,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$sites["ancestrycouk.php"] = "Ancestry.co.uk";
 		$sites["familysearch.php"] = "FamilySearch.org";	
 		$sites["genealogy.php"] = "Genealogy.com";	
+		$sites["ellisisland.php"] = "ellisIslandRecords.org";	
 		$opts = "";
 		$optCount = 1;
 			//load up the options into the html
@@ -1246,7 +1247,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		 						<tr>
 									<td class='topbottombar'>
 					 					<SELECT name='cbosite' onchange='search_selector()'>
-										" .$opts.	//Need to add effects so that changing the option crates a post back													
+										" .$opts.														
 										"</SELECT> 
 
 									</td>

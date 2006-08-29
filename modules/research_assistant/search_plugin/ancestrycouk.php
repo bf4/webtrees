@@ -1,4 +1,5 @@
 <?php 
+//@Author DParker
 require_once("includes/person_class.php");
 
 function autosearch_options()
@@ -30,6 +31,7 @@ function autosearch_options()
 					 					Include death year:</td><td class='optionbox'> <input type='checkbox' name='dyear' value=\"".$dyear."\"  />".$dyear."
 					 				</td>
 		 						</tr>
+								<tr><td class='optionbox' colspan=2 align='center'>Ancestry.co.uk Plug-In</td></tr>
 								<tr><td  align='center' class='topbottombar'colspan=2><input type='submit' value='Search' /></td></tr>
 		 			
 							</table>
