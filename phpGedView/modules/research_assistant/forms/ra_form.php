@@ -782,7 +782,7 @@ END_OUT;
 			if (isset($_REQUEST['people'.$i])) {
 				$people = $_REQUEST['people'.$i];
 				foreach($people as $ind=>$pid) {
-					print $pid." ";
+//					print $pid." ";
 					$person = Person::getInstance($pid);
 					if (!is_null($person)) {
 						$newrec = ra_functions::deleteRAFacts($_REQUEST['taskid'], $person->getGedcomRecord());

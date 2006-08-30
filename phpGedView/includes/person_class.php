@@ -267,7 +267,8 @@ class Person extends GedcomRecord {
 	 */
 	function getDeathRecord($estimate=true) {
 		if (empty($this->drec)) $this->_parseBirthDeath();
-		if (!$estimate && $this->dest && !$this->isDead()) return '';
+		//if (!$estimate && $this->dest && !$this->isDead()) return '';
+		if (!$estimate && $this->dest) return '';
 		return $this->drec;
 	}
 	/**

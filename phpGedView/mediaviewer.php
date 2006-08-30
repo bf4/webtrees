@@ -11,9 +11,12 @@ print_header($controller->getPageTitle());
 if (isset($filename)){
 	//If the File Name ($filename) is set, then it will call the method to get the Media ID ($mid) from the File Name ($filename)
 	$mid = get_media_id_from_file($filename);
+	if (!$mid){
+		$mid = false;
+	}
 }
 //checks to see if the Media ID ($mid) is set. If the Media ID isn't set then there isn't any information avaliable for that picture the picture doesn't exist.
-if (isset($mid)){
+if (isset($mid) && $mid!=false){
 	//This creates a Media Object from the getInstance method of the Media Class. It takes the Media ID ($mid) and creates the object.
 	$mediaobject = Media::getInstance($mid);
 	//Gets the Image Description ($imagedescription) from the Media Object ($mediaobject)
@@ -62,23 +65,37 @@ if (isset($mid)){
 			<tr>
 				<td>
 					<?php 
-					//This part creates the link to download the picture 
-					?>
-					<a href="<?php print $mediaobject->getFilename(); ?>"><?php print $pgv_lang["download_image"]; ?></a><br/>
-					<?php 
-					//Makes it so the picture when clicked opens the Image View Page 
-					?>
-					<a href="javascript:;openImageView();">
-					<img src="<?php print $mediaobject->getFilename(); ?>"/ border = 0>
-					</a>
-					<?php
-					//The following java function is needed to open the image view page
-					?>
-					<script language="JavaScript" type="text/javascript">
-					function openImageView(){
-						window.open('imageview.php?filename=<?php print $mediaobject->getFilename(); ?>', '_Blank', 'width=800, height=800, toolbar=1, resizable=1');
+					if (file_exists($mediaobject->getFilename())){
+						$imagesize = getimagesize($mediaobject->getFilename());
+						
+							//This part creates the link to download the picture 
+							?>
+							<a href="<?php print $mediaobject->getFilename(); ?>"><?php print $pgv_lang["download_image"]; ?></a><br>
+							<?php 
+							if ($imagesize[0]){
+							//Makes it so the picture when clicked opens the Image View Page 
+							?>
+							<a href="javascript:;openImageView();">
+							<img src="<?php print $mediaobject->getFilename(); ?>"/ border = 0 width = 200>
+							</a>
+							<?php
+							//The following java function is needed to open the image view page
+							?>
+							<script language="JavaScript" type="text/javascript">
+							function openImageView(){
+								window.open('imageview.php?filename=<?php print $mediaobject->getFilename(); ?>', '_Blank', 'width=500, height=500, toolbar=1, resizable=1');
+							}
+							</script>
+							<?php
+						}
+						else{
+							print " This file has no preview ";
+						}
 					}
-					</script>
+					else{
+						print " File Not Found, Please contact Administrator ";
+					}
+					?>
 				</td>
 				<?php 
 				//The following section of code generates the table that show the details of the image
@@ -87,9 +104,9 @@ if (isset($mid)){
 					<table width=100%>
 						<tr>
 							<td height=50%>
-								<br/>
-								<font size=3><?php print $pgv_lang["title"]; ?></font><br/>
-								<font size=3><?php print $mediaobject->getTitle(); ?></font><br/>
+								<br>
+								 <?php print $pgv_lang["title"]; ?> <br>
+								 <?php print $mediaobject->getTitle(); ?> <br>
 							</td>
 						</tr>
 						<tr>
@@ -98,18 +115,22 @@ if (isset($mid)){
 								<hr width=75%>
 								<br>
 								<br>
-								<font size = 3> <?php print $pgv_lang["relations_heading"]; ?></br>
+								<?php
+								$persons = get_media_relations($mid);
+								if (isset($persons)){
+								?>
+								 <?php print $pgv_lang["relations_heading"]; ?><br>
 								<ul>
 								<?php
-									$persons = get_media_relations($mid);
-									foreach($persons as $i=>$row){
+										foreach($persons as $i=>$row){
 											$person = Person::getInstance($row[0]);
 											if ($person->canDisplayName()){
 												echo "<li><a href=".$person->getLinkUrl().">".$person->getName()."</a></li>";
+											}
 										}
+										//This closes the Unorderd List
+										echo "</ul> ";
 									}
-									//This closes the Unorderd List
-									echo "</ul></font>";
 									?>
 							</td>
 						</tr>
@@ -117,9 +138,9 @@ if (isset($mid)){
 				</td>
 			</tr>
 
-			<tr bgcolor = 9999FF>
-				<td bgcolor = 9999FF><font size=3><?php print $pgv_lang["desc"]; ?></font></td>
-				<td bgcolor = CCCCFF><font size=3><?php
+			<tr>
+				<td bgcolor = #9999FF> <?php print $pgv_lang["desc"]; ?> </td>
+				<td bgcolor = #CCCCFF> <?php
 								if ($mediaobject->getNote()!= ""){
 									print $mediaobject->getNote();
 								}
@@ -127,40 +148,49 @@ if (isset($mid)){
 									print $pgv_lang["no_desc"];
 								}
 				?>
-				</font></td>
-			</tr>
-			<tr bgcolor = 9999FF>
-				<td bgcolor = 9999FF><font size=3><?php print $pgv_lang["file_name"]; ?>:</font></td>
-				<td bgcolor = CCCCFF><font size=3><?php print $mediaobject->getFilename(); ?></font></td>
-			</tr>
-			<tr >
-				<td bgcolor = 9999FF><font size=3><?php print $pgv_lang["file_type"]?></font></td>
-				<td bgcolor = CCCCFF><font size=3><?php print $mediaobject->getFiletype(); ?></font></td>
+				 </td>
 			</tr>
 			<tr>
-				<td bgcolor = 9999FF><font size=3><?php print $pgv_lang["img_size"] ?></font></td>
-				<td bgcolor = CCCCFF><font size=3><?php
-				$imagesize = getimagesize($mediaobject->getFilename());
-				print $pgv_lang["width"].$imagesize[0]; 
-				print "</br>";
-				print $pgv_lang["height"].$imagesize[1];
-				?></font></td>
+				<td bgcolor = #9999FF> <?php print $pgv_lang["file_name"]; ?>: </td>
+				<td bgcolor = #CCCCFF> <?php print $mediaobject->getFilename(); ?> </td>
 			</tr>
 			<tr >
-				<td bgcolor = 9999FF><font size=3><?php print $pgv_lang["file_size"]?></font></td>
-				<td bgcolor = CCCCFF><font size=3><?php
-				$size = filesize($mediaobject->getFilename());
-				$size = $size/1024;
-				print $size." kb";
-				?></font></td>
+				<td bgcolor = #9999FF> <?php print $pgv_lang["file_type"]?> </td>
+				<td bgcolor = #CCCCFF> <?php print $mediaobject->getFiletype(); ?> </td>
 			</tr>
+			<?php
+				if (file_exists($mediaobject->getFilename())){
+					if ($imagesize[0]){
+				?>
+				<tr>
+					<td bgcolor = #9999FF> <?php print $pgv_lang["img_size"] ?> </td>
+					<td bgcolor = #CCCCFF> <?php
+					print $pgv_lang["width"].$imagesize[0]; 
+					print "<br>";
+					print $pgv_lang["height"].$imagesize[1];
+					?> </td>
+					<?php
+					}
+					?>
+				</tr>
+				<tr >
+					<td bgcolor = #9999FF> <?php print $pgv_lang["file_size"]?> </td>
+					<td bgcolor = #CCCCFF> <?php
+					$size = filesize($mediaobject->getFilename());
+					$size = round($size/1024, 2);
+					print $size." kb";
+					?> </td>
+				</tr>
+				<?php
+				}
+			?>
 		</table>
-		</font>
+		 
 	<?php
 	print_footer();
 }
 else{
-	echo "<font size=3><center>No individual is loaded. Please go to a page that will get an individual</center></font>";
+	echo "<div align=\"center\">".$pgv_lang["no_media"]."</div>";
 	print_footer();
 }
 ?>

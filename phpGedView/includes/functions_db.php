@@ -169,7 +169,9 @@ function get_media_relations($mid){
 			$media[] = $row;
 		}
 	}
+	if (isset($media)){
 	return $media;
+	}
 }
 /**
  * find the gedcom record for a family

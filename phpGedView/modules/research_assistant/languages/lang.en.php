@@ -209,7 +209,7 @@ $pgv_lang["call/url"]                   = "Call Number/URL";
 $pgv_lang["enumDate"]                   = "Enumeration Date";
 $pgv_lang["county"]                     = "County";
 $pgv_lang["city"]                       = "City";
-//$pgv_lang["page"]                       = "Page";                  
+//$pgv_lang["page"]                       = "Page"; 
 
 //-- MY TASK BLOCK
 $pgv_lang["mytasks_block_descr"]		= "The My Task Block shows the task for the current user and can be configured to show completed tasks or to show task that are currently unassigned";
@@ -220,5 +220,18 @@ $pgv_lang["mytasks_takeOn"]				= "TakeOn";
 $pgv_lang["mytasks_help"]				= "~MY TASK BLOCK~<br /><br />The My Task Block shows the task for the current user<br />and can be configured to show completed tasks or to show<br />task that are currently unassigned";
 $pgv_lang["mytask_show_tasks"]   		= "Show unassigned tasks?";
 $pgv_lang["mytask_show_completed"]		= "Show completed tasks?";
-                 
+
+//-- Auto Search Assistant
+$pgv_lang["autosearch_surname"]		    = "Include surname:";
+$pgv_lang["autosearch_givenname"]	    = "Include given names:";
+$pgv_lang["autosearch_byear"]		    = "Include birth year:";
+$pgv_lang["autosearch_bloc"]		    = "Include birth location:";  
+$pgv_lang["autosearch_dyear"]		    = "Include death year:";
+$pgv_lang["autosearch_dloc"]		    = "Include dlocation:";
+$pgv_lang["autosearch_gender"]          = "Include gender:";
+$pgv_lang["autosearch_plugin_name"]     = "";         
+$pgv_lang["autosearch_fsurname"]		= "Include father's surname:";
+$pgv_lang["autosearch_fgivennames"]		= "Include father's given names:";
+$pgv_lang["autosearch_msurname"]		= "Include mother's surname:";
+$pgv_lang["autosearch_mgivennames"]	    = "Include mother's given names:";   
 ?>

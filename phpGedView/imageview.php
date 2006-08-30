@@ -182,6 +182,6 @@ if (!$isExternal && (empty($filename) || (!@fclose(@fopen(filename_decode($filen
 }
 print "</form>\n";
 print "<div style=\"position: relative; \">\n";
-print_simple_footer();
 print "</div>\n";
+print_simple_footer();
 ?>
