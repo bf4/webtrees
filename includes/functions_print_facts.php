@@ -582,12 +582,12 @@ function print_media_links($factrec, $level,$pid='') {
 				if ($objectNum > 0) print "<br clear=all />";
 				print "<div>";
 				if ($isExternal ||file_exists(filename_decode($thumbnail))) {
-					print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\"><img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
+					print "<a href=\"mediaviewer.php?mid=".$media_id."\">";
 					if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
 					print " alt=\"". PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\" /></a>";
 				}
 				if(empty($SEARCH_SPIDER)) {
-					print "<a href=\"medialist.php?action=filter&amp;search=yes&amp;filter=". rawurlencode($mediaTitle) ."&amp;ged=".$GEDCOM."\">";
+					print "<a href=\"mediaviewer.php?mid=".$media_id.">";
 				}
 				if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>&lrm;".PrintReady($mediaTitle)."</i>";
 				else print "<i>".PrintReady($mediaTitle)."</i>";
@@ -1252,7 +1252,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				$imgsize = findImageSize(check_media_depth($rowm["m_file"], "NOTRUNC"));
 				$imgwidth = $imgsize[0]+40;
 				$imgheight = $imgsize[1]+150;
-				print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode(check_media_depth($rowm["m_file"], "NOTRUNC"))."',$imgwidth, $imgheight);\">";
+				print "<a href=\"mediaviewer.php?mid=".$rowm["m_media"]."\">";
 			}
 			print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 			if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
@@ -1260,7 +1260,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			if ($mainFileExists) print "</a>";
 		}
 		if(empty($SEARCH_SPIDER)) {
-			print "<a href=\"medialist.php?action=filter&amp;search=yes&amp;filter=".rawurlencode($mediaTitle)."&amp;ged=".$GEDCOM."\">";
+			print "<a href=\"mediaviewer.php?mid=".$rowm["m_media"]."\">";
 		}
 		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>&lrm;".PrintReady($mediaTitle)."</i>";
 		else print "<i>".PrintReady($mediaTitle)."</i>";

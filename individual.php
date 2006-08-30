@@ -87,7 +87,7 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 				}
 			}
 			//-- - put the birth info in this section
-			$birthrec = $controller->indi->getBirthRecord();
+			$birthrec = $controller->indi->getBirthRecord(false);
 			$deathrec = $controller->indi->getDeathRecord(false);
 			if ((!empty($birthrec)) || (!empty($deathrec)) || $SHOW_LDS_AT_GLANCE) {
 				$colspan = 0;

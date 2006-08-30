@@ -1137,14 +1137,14 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		global $indilist, $controller;
 		global $factarray;
 		//Load up off site search names here
-		//Search Plugin: To load up a new plugin follow the format for the two entries shown below
+		//Auto Search Plugin: To load up a new plugin follow the format for the two entries shown below
 		// ex $sites["myplugin.php"] = "mywebsite.com";
 		$sites = array();
 		$sites["ancestry.php"] = "Ancestry.com";
 		$sites["ancestrycouk.php"] = "Ancestry.co.uk";
 		$sites["familysearch.php"] = "FamilySearch.org";	
 		$sites["genealogy.php"] = "Genealogy.com";	
-		$sites["ellisisland.php"] = "ellisIslandRecords.org";	
+		$sites["ellisisland.php"] = "EllisIslandRecords.org";	
 		$opts = "";
 		$optCount = 1;
 			//load up the options into the html
