@@ -310,7 +310,7 @@ else if (strstr($action,"addnewparent")) {
 else {
 	if (isset($factarray[$type])) print "<b>".$factarray[$type]."</b>";
 }
-
+//------------------------------------------------------------------------------
 if ($action=="delete") {
 	global $MEDIA_ID_PREFIX;
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
@@ -354,6 +354,7 @@ if ($action=="delete") {
 		}
 	}
 }
+//------------------------------------------------------------------------------
 //-- print a form to edit the raw gedcom record in a large textarea
 else if ($action=="editraw") {
 	if (!$factedit) {
@@ -381,6 +382,7 @@ else if ($action=="editraw") {
 		print "\n//-->\n</script>\n";
 	}
 }
+//------------------------------------------------------------------------------
 //-- edit a fact record in a form
 else if ($action=="edit") {
 	init_calendar_popup();
@@ -407,6 +409,7 @@ else if ($action=="edit") {
 	print "<br /><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
 	print "</form>\n";
 }
+//------------------------------------------------------------------------------
 else if ($action=="add") {
 	//
 	// Start of add section...
@@ -438,16 +441,20 @@ else if ($action=="add") {
 	print "<br /><input type=\"submit\" value=\"".$pgv_lang["add"]."\" /><br />\n";
 	print "</form>\n";
 }
+//------------------------------------------------------------------------------
 else if ($action=="addchild") {
 //	print_indi_form("addchildaction", $famid);
 	print_indi_form("addchildaction", $famid, "", "", "CHIL", @$_REQUEST["sex"]);
 }
+//------------------------------------------------------------------------------
 else if ($action=="addspouse") {
 	print_indi_form("addspouseaction", $famid, "", "", $famtag);
 }
+//------------------------------------------------------------------------------
 else if ($action=="addnewparent") {
 	print_indi_form("addnewparentaction", $famid, "", "", $famtag);
 }
+//------------------------------------------------------------------------------
 else if ($action=="addfamlink") {
 	print "<form method=\"post\" name=\"addchildform\" action=\"edit_interface.php\">\n";
 	print "<input type=\"hidden\" name=\"action\" value=\"linkfamaction\" />\n";
@@ -462,6 +469,7 @@ else if ($action=="addfamlink") {
 	print "<input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /><br />\n";
 	print "</form>\n";
 }
+//------------------------------------------------------------------------------
 else if ($action=="linkspouse") {
 	init_calendar_popup();
 	print "<form method=\"post\" name=\"addchildform\" action=\"edit_interface.php\">\n";
@@ -484,6 +492,7 @@ else if ($action=="linkspouse") {
 	print "<input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /><br />\n";
 	print "</form>\n";
 }
+//------------------------------------------------------------------------------
 else if ($action=="linkfamaction") {
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_gedcom_record($famid);
@@ -542,6 +551,7 @@ else if ($action=="linkfamaction") {
 	}
 	else print "Family record not found";
 }
+//------------------------------------------------------------------------------
 //-- add new source
 else if ($action=="addnewsource") {
 	?>
@@ -592,6 +602,7 @@ else if ($action=="addnewsource") {
 	</form>
 	<?php
 }
+//------------------------------------------------------------------------------
 //-- create a source record from the incoming variables
 else if ($action=="addsourceaction") {
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
@@ -632,7 +643,7 @@ else if ($action=="addsourceaction") {
 		print "<a href=\"javascript:// SOUR $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
 	}
 }
-
+//------------------------------------------------------------------------------
 //-- add new repository
 else if ($action=="addnewrepository") {
 	?>
@@ -683,6 +694,7 @@ else if ($action=="addnewrepository") {
 	</form>
 	<?php
 }
+//------------------------------------------------------------------------------
 //-- create a repository record from the incoming variables
 else if ($action=="addrepoaction") {
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
@@ -721,7 +733,7 @@ else if ($action=="addrepoaction") {
 		print "<a href=\"javascript:// REPO $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_rid_into_field"]." <b>$xref</b></a>\n";
 	}
 }
-
+//------------------------------------------------------------------------------
 //-- get the new incoming raw gedcom record and store it in the file
 else if ($action=="updateraw") {
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
@@ -730,6 +742,7 @@ else if ($action=="updateraw") {
 	$success = (!empty($newgedrec)&&(replace_gedrec($pid, $newgedrec)));
 	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
 }
+//------------------------------------------------------------------------------
 //-- reconstruct the gedcom from the incoming fields and store it in the file
 else if ($action=="update") {
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
@@ -799,6 +812,7 @@ else if ($action=="update") {
 	$success = (replace_gedrec($pid, $newged));
 	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
 }
+//------------------------------------------------------------------------------
 else if ($action=="addchildaction") {
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	$gedrec = "0 @REF@ INDI\r\n1 NAME ".trim($NAME)."\r\n";
@@ -866,6 +880,7 @@ else if ($action=="addchildaction") {
 		$success = true;
 	}
 }
+//------------------------------------------------------------------------------
 else if ($action=="addspouseaction") {
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	$gedrec = "0 @REF@ INDI\r\n1 NAME ".trim($NAME)."\r\n";
@@ -999,6 +1014,7 @@ else if ($action=="addspouseaction") {
 		}
 	}
 }
+//------------------------------------------------------------------------------
 else if ($action=="linkspouseaction") {
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if (!empty($spid)) {
@@ -1057,6 +1073,7 @@ else if ($action=="linkspouseaction") {
 		}
 	}
 }
+//------------------------------------------------------------------------------
 else if ($action=="addnewparentaction") {
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	$gedrec = "0 @REF@ INDI\r\n1 NAME ".trim($NAME)."\r\n";
@@ -1194,6 +1211,7 @@ else if ($action=="addnewparentaction") {
 		}
 	}
 }
+//------------------------------------------------------------------------------
 else if ($action=="deleteperson") {
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
@@ -1250,6 +1268,7 @@ else if ($action=="deleteperson") {
 		}
 	}
 }
+//------------------------------------------------------------------------------
 else if ($action=="deletefamily") {
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
@@ -1294,6 +1313,7 @@ else if ($action=="deletefamily") {
 		}
 	}
 }
+//------------------------------------------------------------------------------
 else if ($action=="deletesource") {
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
@@ -1362,6 +1382,7 @@ else if ($action=="deletesource") {
 		if ($success) print "<br /><br />".$pgv_lang["gedrec_deleted"];
 	}
 }
+//------------------------------------------------------------------------------
 else if ($action=="deleterepo") {
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
@@ -1403,6 +1424,7 @@ else if ($action=="deleterepo") {
 		if ($success) print "<br /><br />".$pgv_lang["gedrec_deleted"];
 	}
 }
+//------------------------------------------------------------------------------
 else if ($action=="editname") {
 	$gedlines = preg_split("/\n/", trim($gedrec));
 	$fields = preg_split("/\s/", $gedlines[$linenum]);
@@ -1415,9 +1437,11 @@ else if ($action=="editname") {
 	}
 	print_indi_form("update", "", $linenum, $namerec);
 }
+//------------------------------------------------------------------------------
 else if ($action=="addname") {
 	print_indi_form("update", "", "new", "NEW");
 }
+//------------------------------------------------------------------------------
 else if ($action=="copy") {
 	//-- handle media differently now :P
 	if ($linenum=='media') {
@@ -1449,6 +1473,7 @@ else if ($action=="copy") {
 		print "<b>".$pgv_lang["record_copied"]."</b>\n";
 	}
 }
+//------------------------------------------------------------------------------
 else if ($action=="paste") {
 	$gedrec .= "\r\n".$_SESSION["clipboard"][$fact]["factrec"];
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
@@ -1456,15 +1481,18 @@ else if ($action=="paste") {
 	$success = replace_gedrec($pid, $gedrec);
 	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
 }
+//------------------------------------------------------------------------------
 else if ($action=="reorder_children") {
 	?>
+	<script src="js/conio.net/prototype.js" type="text/javascript"></script>
+	<script src="js/script.aculo.us/scriptaculous.js" type="text/javascript"></script>
 	<br /><b><?php print $pgv_lang["reorder_children"]; ?></b>
 	<?php print_help_link("reorder_children_help", "qm"); ?>
 	<form name="reorder_form" method="post" action="edit_interface.php">
 		<input type="hidden" name="action" value="reorder_update" />
 		<input type="hidden" name="pid" value="<?php print $pid; ?>" />
 		<input type="hidden" name="option" value="bybirth" />
-		<table>
+		<ul id="reorder_list">
 		<?php
 			$children = array();
 			$ct = preg_match_all("/1 CHIL @(.+)@/", $gedrec, $match, PREG_SET_ORDER);
@@ -1479,28 +1507,36 @@ else if ($action=="reorder_children") {
 			}
 			$i=0;
 			foreach($children as $pid=>$child) {
-				print "<tr>\n<td>\n";
-				print "<select name=\"order[$pid]\">\n";
-				for($j=0; $j<$ct; $j++) {
-					print "<option value=\"".($j)."\"";
-					if ($j==$i) print " selected=\"selected\"";
-					print ">".($j+1)."</option>\n";
-				}
-				print "</select>\n";
-				print "</td><td class=\"facts_value\">";
-				print PrintReady(get_person_name($pid));
-				print "<br />";
+				print "<li class=\"facts_value\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$pid\" >";
+				//print_pedigree_person($pid,2,false);
+				print "<span class=\"name2\">".PrintReady(get_person_name($pid))."</span>";
 				print_first_major_fact($pid);
-				print "</td>\n</tr>\n";
+				print "<input type=\"hidden\" name=\"order[$pid]\" value=\"$i\"/>";
+				print "</li>";
 				$i++;
 			}
 		?>
-		</table>
-		<input type="submit" value="<?php print $pgv_lang["save"]; ?>" />
-		<input type="button" value="<?php print $pgv_lang["sort_by_birth"]; ?>" onclick="document.reorder_form.action.value='reorder_children'; document.reorder_form.submit();" />
+		</ul>
+<script type="text/javascript" language="javascript">
+// <![CDATA[
+	new Effect.BlindDown('reorder_list', {duration: 1});
+	Sortable.create('reorder_list',
+		{
+			onUpdate : function() {
+				inputs = $('reorder_list').getElementsByTagName("input");
+				for (var i = 0; i < inputs.length; i++) inputs[i].value = i;
+			}
+		}
+	);
+// ]]>
+</script>
+		<button type="submit"><?php print $pgv_lang["save"];?></button>
+		<button type="submit" onclick="document.reorder_form.action.value='reorder_children'; document.reorder_form.submit();"><?php print $pgv_lang["sort_by_birth"];?></button>
+		<button type="submit" onclick="window.close();"><?php print $pgv_lang["cancel"];?></button>
 	</form>
 	<?php
 }
+//------------------------------------------------------------------------------
 else if ($action=="changefamily") {
 	require_once 'includes/family_class.php';
 	$family = new Family($gedrec);
@@ -1631,6 +1667,7 @@ else if ($action=="changefamily") {
 	</form>
 	<?php
 }
+//------------------------------------------------------------------------------
 else if ($action=="changefamily_update") {
 	require_once 'includes/family_class.php';
 	$family = new Family($gedrec);
@@ -1769,6 +1806,7 @@ else if ($action=="changefamily_update") {
 		if ($success) print "<br /><br />".$pgv_lang["update_successful"];
 	}
 }
+//------------------------------------------------------------------------------
 else if ($action=="reorder_update") {
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	asort($order);
@@ -1786,15 +1824,18 @@ else if ($action=="reorder_update") {
 	$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
 }
+//------------------------------------------------------------------------------
 else if ($action=="reorder_fams") {
 	?>
+	<script src="js/conio.net/prototype.js" type="text/javascript"></script>
+	<script src="js/script.aculo.us/scriptaculous.js" type="text/javascript"></script>
 	<br /><b><?php print $pgv_lang["reorder_families"]; ?></b>
 	<?php print_help_link("reorder_families_help", "qm"); ?>
 	<form name="reorder_form" method="post" action="edit_interface.php">
 		<input type="hidden" name="action" value="reorder_fams_update" />
 		<input type="hidden" name="pid" value="<?php print $pid; ?>" />
 		<input type="hidden" name="option" value="bymarriage" />
-		<table>
+		<ul id="reorder_list">
 		<?php
 			$fams = array();
 			$ct = preg_match_all("/1 FAMS @(.+)@/", $gedrec, $match, PREG_SET_ORDER);
@@ -1810,28 +1851,35 @@ else if ($action=="reorder_fams") {
 			}
 			$i=0;
 			foreach($fams as $famid=>$fam) {
-				print "<tr>\n<td>\n";
-				print "<select name=\"order[$famid]\">\n";
-				for($j=0; $j<$ct; $j++) {
-					print "<option value=\"".($j)."\"";
-					if ($j==$i) print " selected=\"selected\"";
-					print ">".($j+1)."</option>\n";
-				}
-				print "</select>\n";
-				print "</td><td class=\"facts_value\">";
-				print PrintReady(get_family_descriptor($famid));
-				print "<br />";
+				print "<li class=\"facts_value\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$famid\" >";
+				print "<span class=\"name2\">".PrintReady(get_family_descriptor($famid))."</span><br />";
 				print_simple_fact($fam["gedcom"], "MARR", $famid);
-				print "</td>\n</tr>\n";
+				print "<input type=\"hidden\" name=\"order[$famid]\" value=\"$i\"/>";
+				print "</li>";
 				$i++;
 			}
 		?>
-		</table>
-		<input type="submit" value="<?php print $pgv_lang["save"]; ?>" />
-		<input type="button" value="<?php print $pgv_lang["sort_by_marriage"]; ?>" onclick="document.reorder_form.action.value='reorder_fams'; document.reorder_form.submit();" />
+		</ul>
+<script type="text/javascript" language="javascript">
+// <![CDATA[
+	new Effect.BlindDown('reorder_list', {duration: 1});
+	Sortable.create('reorder_list',
+		{
+			onUpdate : function() {
+				inputs = $('reorder_list').getElementsByTagName("input");
+				for (var i = 0; i < inputs.length; i++) inputs[i].value = i;
+			}
+		}
+	);
+// ]]>
+</script>
+		<button type="submit"><?php print $pgv_lang["save"];?></button>
+		<button type="submit" onclick="document.reorder_form.action.value='reorder_fams'; document.reorder_form.submit();"><?php print $pgv_lang["sort_by_marriage"];?></button>
+		<button type="submit" onclick="window.close();"><?php print $pgv_lang["cancel"];?></button>
 	</form>
 	<?php
 }
+//------------------------------------------------------------------------------
 else if ($action=="reorder_fams_update") {
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	asort($order);
@@ -1848,6 +1896,7 @@ else if ($action=="reorder_fams_update") {
 	$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
 }
+//------------------------------------------------------------------------------
 //-- the following section provides a hook for modules
 //-- for reuse of editing functions from forms
 else if ($action=="mod_edit_fact") {
@@ -1857,7 +1906,7 @@ else if ($action=="mod_edit_fact") {
    		$module->edit_fact();
    }
 }
-
+//------------------------------------------------------------------------------
 // autoclose window when update successful
 if ($success and $EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
 
