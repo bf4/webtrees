@@ -274,7 +274,7 @@ function print_indi_table($datalist) {
 	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 ?>
 	<script type="text/javascript" src="strings.js"></script>
-	<script type="text/javascript" src="sorttable.js"></script>
+	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
 <?php
 	require_once("includes/person_class.php");
 	echo "<h3>".$pgv_lang["individuals"]."</h3>";
@@ -443,7 +443,7 @@ function print_fam_table($datalist) {
 	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 ?>
 	<script type="text/javascript" src="strings.js"></script>
-	<script type="text/javascript" src="sorttable.js"></script>
+	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
 <?php
 	require_once("includes/family_class.php");
 	echo "<h3>".$pgv_lang["families"]."</h3>";
@@ -602,7 +602,7 @@ function print_sour_table($datalist) {
 	$name_subtags = array("_HEB", "ROMN");
 ?>
 	<script type="text/javascript" src="strings.js"></script>
-	<script type="text/javascript" src="sorttable.js"></script>
+	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
 <?php
 	require_once("includes/source_class.php");
 	echo "<h3>".$pgv_lang["sources"]."</h3>";
@@ -677,7 +677,7 @@ function print_repo_table($datalist) {
 	$name_subtags = array("_HEB", "ROMN");
 ?>
 	<script type="text/javascript" src="strings.js"></script>
-	<script type="text/javascript" src="sorttable.js"></script>
+	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
 <?php
 	require_once("includes/repository_class.php");
 	echo "<h3>".$pgv_lang["repos_found"]."</h3>";
@@ -740,7 +740,7 @@ function print_changes_table($datalist) {
 	if (count($datalist)<1) return;
 ?>
 	<script type="text/javascript" src="strings.js"></script>
-	<script type="text/javascript" src="sorttable.js"></script>
+	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
 <?php
 	require_once("includes/gedcomrecord.php");
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
