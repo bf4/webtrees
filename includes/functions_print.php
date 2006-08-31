@@ -1240,8 +1240,10 @@ function print_favorite_selector($option=0) {
 			   print "\" method=\"post\" onsubmit=\"return false;\">";
 			   print "\n\t\t<select name=\"fav_id\" class=\"header_select\" onchange=\"if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value!='') window.location=document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value; if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value=='add') window.location='$SCRIPT_NAME?$QUERY_STRING&amp;action=addfav&amp;gid=$pid&amp;pid=$pid';\">";
 				print "\n\t\t\t<option value=\"\">".$pgv_lang["favorites"]."</option>\n";
-			   if (!empty($username)) {
+			if (!empty($username)) {
+				if (count($userfavs)>0 || (strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "family.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "source.php")!==false)) {
 					print "\n\t\t\t<optgroup label=\"".$pgv_lang["my_favorites"]."\">";
+				}
 					$mygedcom = $GEDCOM;
 					$current_gedcom = $GEDCOM;
 					$mypid = $pid;
@@ -1294,7 +1296,9 @@ function print_favorite_selector($option=0) {
 							}
 						}
 					}
-				print "\n\t\t\t</optgroup>";
+					if (count($userfavs)>0 || (strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "family.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "source.php")!==false)) {
+						print "\n\t\t\t</optgroup>";
+					}
 					$GEDCOM = $mygedcom;
 					$pid = $mypid;
 			   }

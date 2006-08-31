@@ -583,11 +583,12 @@ function print_media_links($factrec, $level,$pid='') {
 				print "<div>";
 				if ($isExternal ||file_exists(filename_decode($thumbnail))) {
 					print "<a href=\"mediaviewer.php?mid=".$media_id."\">";
+					print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 					if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
 					print " alt=\"". PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\" /></a>";
 				}
 				if(empty($SEARCH_SPIDER)) {
-					print "<a href=\"mediaviewer.php?mid=".$media_id.">";
+					print "<a href=\"mediaviewer.php?mid=".$media_id."\">";
 				}
 				if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>&lrm;".PrintReady($mediaTitle)."</i>";
 				else print "<i>".PrintReady($mediaTitle)."</i>";
@@ -609,7 +610,7 @@ function print_media_links($factrec, $level,$pid='') {
 					if (isset($pgv_lang[$varName])) $mediaType = $pgv_lang[$varName];
 					print "\n\t\t\t<br /><span class=\"label\">".$pgv_lang["type"].": </span> <span class=\"field\">$mediaType</span>";
 				}
-				print "</span>";
+				//print "</span>";
 				print "<br />\n";
 				//-- print spouse name for marriage events
 				$ct = preg_match("/PGV_SPOUSE: (.*)/", $factrec, $match);

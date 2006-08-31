@@ -282,13 +282,13 @@ function print_indi_table($datalist) {
 
 	//-- filter buttons
 	$person = new Person("");
-	echo "<button type=\"button\" alt=\"".$pgv_lang["male"]."\" title=\"".$pgv_lang["male"]
+	echo "<button type=\"button\" title=\"".$pgv_lang["male"]
 	."\" onclick=\"return table_filter('".$table_id."', 'SEX', 'M')\">";
 	$person->sex = "M"; echo $person->getSexImage()."&nbsp;</button> ";
-	echo "<button type=\"button\" alt=\"".$pgv_lang["female"]."\" title=\"".$pgv_lang["female"]
+	echo "<button type=\"button\" title=\"".$pgv_lang["female"]
 	."\" onclick=\"return table_filter('".$table_id."', 'SEX', 'F')\">";
 	$person->sex = "F"; echo $person->getSexImage()."&nbsp;</button> ";
-	echo "<button type=\"button\" alt=\"".$pgv_lang["unknown"]."\" title=\"".$pgv_lang["unknown"]
+	echo "<button type=\"button\" title=\"".$pgv_lang["unknown"]
 	."\" onclick=\"return table_filter('".$table_id."', 'SEX', 'U')\">";
 	$person->sex = "U"; echo $person->getSexImage()."&nbsp;</button> ";
 	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'TREE', 'R')\">";
