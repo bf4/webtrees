@@ -9,6 +9,9 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1549707 ] patriarchlist.php Sortable List Error (opus27)
+ - Added [ 1498689 ] Family page : using AJAX to reorder children (opus27)
+ - Added js library (opus27)
  - Added relationship labels to relationship.php for lots of relationships in english, french, finnish, hebrew and portugese
  - Added [ 1470282 ] Relationship to favorites (opus27)
  - Added dynamic module block loading (Neumont)
