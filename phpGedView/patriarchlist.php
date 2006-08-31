@@ -420,7 +420,7 @@ else {
 }
 print "</tr></table>";
 
-print_indi_table($surnames);
+//print_indi_table($surnames);
 
 print "<br />";
 if ($alpha != "@") {

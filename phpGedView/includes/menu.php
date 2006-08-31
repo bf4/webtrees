@@ -719,6 +719,7 @@ class MenuBar
 			$menu->addSubmenu($submenu);
 		}
 		//-- list most ancient parent of a family
+		/**
 		if (file_exists("patriarchlist.php")) {
 			$link = "patriarchlist.php";
 			if ($surname) $link .= "?surname=".$surname;
@@ -736,6 +737,7 @@ class MenuBar
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
+		**/
 		return $menu;
 	}
 
