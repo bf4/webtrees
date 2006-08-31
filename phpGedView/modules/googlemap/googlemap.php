@@ -266,7 +266,7 @@ function create_possible_place_names ($placename, $level) {
         $retlist = rem_prefix_postfix_from_placename($GM_PREFIX[$level], $GM_POSTFIX[$level], $placename, $retlist);
         break;
     }
-    return $retlist;  
+    return $retlist;
 }
 
 function get_lati_long_placelocation ($place) {
@@ -633,19 +633,19 @@ function build_indiv_map($indifacts, $famids) {
                         }
                         print "    GEvent.addListener(".$marker["name"][$j].", \"click\", function() {\n";
                         print "        ".$marker["name"][$j].".openInfoWindowHtml(\"";
-                        print $mapdata["fact"][$j].":<br>";
+                        print $mapdata["fact"][$j].":<br/>";
                         if ($mapdata["name"][$j] != "") {
                             if (displayDetailsById($mapdata["name"][$j])||showLivingNameById($mapdata["name"][$j]))
                                 print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($mapdata["name"][$j])));
                             else
                                 print $pgv_lang["private"];
-                            print "</a><br>";
+                            print "</a><br/>";
                         }
                         if(preg_match("/2 PLAC (.*)/", $mapdata["placerec"][$j]) == 0) {
                             print_address_structure_map($mapdata["placerec"][$j], 1);
                         } else {
                             print preg_replace("/\"/", "\\\"", print_fact_place_map($mapdata["placerec"][$j]));
-                            print "<br>";
+                            print "<br/>";
                         }
                         if ($mapdata["date"][$j] != "") {
                             print get_changed_date($mapdata["date"][$j]);
@@ -681,20 +681,20 @@ function build_indiv_map($indifacts, $famids) {
                         $marker["index"][$j] = $indexcounter;
                         $marker["tabindex"][$j] = $tabcounter;
                         $tabcounter = $tabcounter + 1;
-                        print "       new GInfoWindowTab(\"".$mapdata["fact"][$j]."\", \"<div style=\'width:360px\'>".$mapdata["fact"][$j].":<br>";
+                        print "       new GInfoWindowTab(\"".$mapdata["fact"][$j]."\", \"<div style=\'width:360px\'>".$mapdata["fact"][$j].":<br/>";
                         if ($mapdata["name"][$j] != "") {
                             print "<a href=\\\"individual.php?pid=".$mapdata["name"][$j]."&amp;ged=$GEDCOM\\\">";
                             if (displayDetailsById($mapdata["name"][$j])||showLivingNameById($mapdata["name"][$j]))
                                 print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($mapdata["name"][$j])));
                             else
                                 print $pgv_lang["private"];
-                            print "</a><br>";
+                            print "</a><br/>";
                         }
                         if(preg_match("/2 PLAC (.*)/", $mapdata["placerec"][$j]) == 0) {
                             print_address_structure_map($mapdata["placerec"][$j], 1);
                         } else {
                             print preg_replace("/\"/", "\\\"", print_fact_place_map($mapdata["placerec"][$j]));
-                            print "<br>";
+                            print "<br/>";
                         }
                         if ($mapdata["date"][$j] != "") {
                             print get_changed_date($mapdata["date"][$j]);
@@ -740,20 +740,20 @@ function build_indiv_map($indifacts, $famids) {
                                 $marker["index"][$k] = $indexcounter;
                                 $marker["tabindex"][$k] = $tabcounter;
                                 $tabcounter = $tabcounter + 1;
-                                print "       new GInfoWindowTab(\"".$mapdata["fact"][$k]."\", \"<div style=\'width:360px\'>".$mapdata["fact"][$k].":<br>";
+                                print "       new GInfoWindowTab(\"".$mapdata["fact"][$k]."\", \"<div style=\'width:360px\'>".$mapdata["fact"][$k].":<br/>";
                                 if ($mapdata["name"][$k] != "") {
                                     print "<a href=\\\"individual.php?pid=".$mapdata["name"][$k]."&amp;ged=$GEDCOM\\\">";
                                     if (displayDetailsById($mapdata["name"][$k])||showLivingNameById($mapdata["name"][$k]))
                                         print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($mapdata["name"][$k])));
                                     else
                                         print $pgv_lang["private"];
-                                    print "</a><br>";
+                                    print "</a><br/>";
                                 }
                                 if(preg_match("/2 PLAC (.*)/", $mapdata["placerec"][$k]) == 0) {
                                     print_address_structure_map($mapdata["placerec"][$k], 1);
                                 } else {
                                     print preg_replace("/\"/", "\\\"", print_fact_place_map($mapdata["placerec"][$k]));
-                                    print "<br>";
+                                    print "<br/>";
                                 }
                                 if ($mapdata["date"][$j] != "") {
                                     print get_changed_date($mapdata["date"][$k]);
@@ -778,7 +778,7 @@ function build_indiv_map($indifacts, $famids) {
         print "<table class=\"facts_table\">\n";
         print "<tr><td valign=\"top\">\n";
         print "<table width=\"95%\">\n";
-        print "<img src=\"images/hline.gif\" width=\"".$GOOGLEMAP_XSIZE."\" height=\"0\" alt=\"\" /><br>";
+        print "<img src=\"images/hline.gif\" width=\"".$GOOGLEMAP_XSIZE."\" height=\"0\" alt=\"\" /><br/>";
         print "<div id=\"map_pane\" style=\"height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
         print "<table width=100%><tr>\n";
         if ($TEXT_DIRECTION=="ltr") print "<td align=\"left\">";
@@ -816,16 +816,16 @@ function build_indiv_map($indifacts, $famids) {
                     print "<a href=\"individual.php?pid=".$mapdata["name"][$j]."&amp;ged=$GEDCOM\">\n";
                     if (displayDetailsById($mapdata["name"][$j])||showLivingNameById($mapdata["name"][$j])) print PrintReady(get_person_name($mapdata["name"][$j]));
                     else print $pgv_lang["private"];
-                    print "</a><br>\n";
+                    print "</a><br/>\n";
                 }
                 if(preg_match("/2 PLAC (.*)/", $mapdata["placerec"][$j]) == 0) {
                     print_address_structure_map($mapdata["placerec"][$j], 1);
                 } else {
                     print print_fact_place_map($mapdata["placerec"][$j]);
-                    print "<br>";
+                    print "<br/>";
                 }
                 if ($mapdata["date"][$j] != "") {
-                    print get_date_url($mapdata["date"][$j])."<br>\n";
+                    print get_date_url($mapdata["date"][$j])."<br/>\n";
                 }
                 print "</td></tr>\n";
             }

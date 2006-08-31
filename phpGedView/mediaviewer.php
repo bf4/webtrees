@@ -58,22 +58,22 @@ if (isset($mid) && $mid!=false){
 				</td>
 			</tr>
 		</table>
-		<?php 
-		//The next set of code draws the table that displays information about the person 
+		<?php
+		//The next set of code draws the table that displays information about the person
 		?>
 		<table width = 40%>
 			<tr>
 				<td>
-					<?php 
+					<?php
 					if (file_exists($mediaobject->getFilename())){
 						$imagesize = getimagesize($mediaobject->getFilename());
-						
-							//This part creates the link to download the picture 
+
+							//This part creates the link to download the picture
 							?>
-							<a href="<?php print $mediaobject->getFilename(); ?>"><?php print $pgv_lang["download_image"]; ?></a><br>
-							<?php 
+							<a href="<?php print $mediaobject->getFilename(); ?>"><?php print $pgv_lang["download_image"]; ?></a><br/>
+							<?php
 							if ($imagesize[0]){
-							//Makes it so the picture when clicked opens the Image View Page 
+							//Makes it so the picture when clicked opens the Image View Page
 							?>
 							<a href="javascript:;openImageView();">
 							<img src="<?php print $mediaobject->getFilename(); ?>"/ border = 0 width = 200>
@@ -97,29 +97,29 @@ if (isset($mid) && $mid!=false){
 					}
 					?>
 				</td>
-				<?php 
+				<?php
 				//The following section of code generates the table that show the details of the image
 				?>
 				<td valign="top">
 					<table width=100%>
 						<tr>
 							<td height=50%>
-								<br>
-								 <?php print $pgv_lang["title"]; ?> <br>
-								 <?php print $mediaobject->getTitle(); ?> <br>
+								<br/>
+								 <?php print $pgv_lang["title"]; ?> <br/>
+								 <?php print $mediaobject->getTitle(); ?> <br/>
 							</td>
 						</tr>
 						<tr>
 							<td height = 50%>
-								<br>
+								<br/>
 								<hr width=75%>
-								<br>
-								<br>
+								<br/>
+								<br/>
 								<?php
 								$persons = get_media_relations($mid);
 								if (isset($persons)){
 								?>
-								 <?php print $pgv_lang["relations_heading"]; ?><br>
+								 <?php print $pgv_lang["relations_heading"]; ?><br/>
 								<ul>
 								<?php
 										foreach($persons as $i=>$row){
@@ -165,8 +165,8 @@ if (isset($mid) && $mid!=false){
 				<tr>
 					<td bgcolor = #9999FF> <?php print $pgv_lang["img_size"] ?> </td>
 					<td bgcolor = #CCCCFF> <?php
-					print $pgv_lang["width"].$imagesize[0]; 
-					print "<br>";
+					print $pgv_lang["width"].$imagesize[0];
+					print "<br/>";
 					print $pgv_lang["height"].$imagesize[1];
 					?> </td>
 					<?php
@@ -185,7 +185,7 @@ if (isset($mid) && $mid!=false){
 				}
 			?>
 		</table>
-		 
+
 	<?php
 	print_footer();
 }
@@ -194,7 +194,7 @@ else{
 	print_footer();
 }
 ?>
-<?php 
+<?php
 // These java functions are needed for the code to work properly with the menu.
 ?>
 <script language="JavaScript" type="text/javascript">

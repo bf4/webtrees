@@ -105,7 +105,7 @@ if (!userIsAdmin(getUserName())) {
     print "<table class=\"facts_table\">\n";
     print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_admin_error"];
     print "</td></tr></table>\n";
-    print "<br><br><br>\n";
+    print "<br/><br/><br/>\n";
     print_footer();
     exit;
 }
@@ -349,7 +349,7 @@ $i = 0;
             </div>
         </td>
         <td class="optionbox">
-            <?php 
+            <?php
                 print_level_config_table(1, $i);
                 print_level_config_table(2, $i);
                 print_level_config_table(3, $i);
@@ -381,7 +381,7 @@ $i = 0;
     </table>
 </form>
 <?php
-if(empty($SEARCH_SPIDER)) 
+if(empty($SEARCH_SPIDER))
     print_footer();
 else {
     print $pgv_lang["label_search_engine_detected"].": ".$SEARCH_SPIDER;

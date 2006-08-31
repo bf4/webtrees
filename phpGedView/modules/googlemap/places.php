@@ -67,12 +67,12 @@ if (($action=="ExportFile") && (userIsAdmin(getUserName()))) {
 
 print_header($pgv_lang["edit_place_locations"]);
 
-print "<span class=\"subheaders\">".$pgv_lang["edit_place_locations"]."</span><br><br>";
+print "<span class=\"subheaders\">".$pgv_lang["edit_place_locations"]."</span><br/><br/>";
 if (!userIsAdmin(getUserName())) {
     print "<table class=\"facts_table\">\n";
     print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_admin_error"];
     print "</td></tr></table>\n";
-    print "<br><br><br>\n";
+    print "<br/><br/><br/>\n";
     print_footer();
     exit;
 }
@@ -181,21 +181,21 @@ if (!in_array($TBLPREFIX."placelocation", $tables)) {
     $res = dbquery($sql);
     $sql = "CREATE INDEX pl_name ON ".$TBLPREFIX."placelocation (pl_place)";
     $res = dbquery($sql);
-    $sql = "CREATE INDEX pl_parent_id ON ".$TBLPREFIX."placelocation (pl_parent_id)";    
+    $sql = "CREATE INDEX pl_parent_id ON ".$TBLPREFIX."placelocation (pl_parent_id)";
     $res = dbquery($sql);
     $tables = $DBCONN->getListOf('tables');
     if (!in_array($TBLPREFIX."placelocation", $tables)) {
         print "<table class=\"facts_table\">\n";
         print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_db_error"];
         print "</td></tr></table>\n";
-        print "<br><br><br>\n";
+        print "<br/><br/><br/>\n";
         print_footer();
         exit;
     }
     print "<table class=\"facts_table\">\n";
     print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_table_created"];
     print "</td></tr></table>\n";
-    print "<br><br><br>\n";
+    print "<br/><br/><br/>\n";
 }
 
 if ($action=="ImportGedcom") {
@@ -326,14 +326,14 @@ if ($action=="ImportGedcom") {
                 $placelistUniq[$j-1]["lati"] = $place["lati"];
                 $placelistUniq[$j-1]["long"] = $place["long"];
             } else if (($place["lati"] != "0") || ($place["long"] != "0")) {
-                print "Verscil: vorige waarde = $prevPlace, $prevLati, $prevLong, huidige = ".$place["place"].", ".$place["lati"].", ".$place["long"]."<br>";
+                print "Verscil: vorige waarde = $prevPlace, $prevLati, $prevLong, huidige = ".$place["place"].", ".$place["lati"].", ".$place["long"]."<br/>";
             }
         }
         $prevPlace = $place["place"];
         $prevLati = $place["lati"];
         $prevLong = $place["long"];
     }
-    
+
     $highestIndex = getHighestIndex();
 
     $default_zoom_level = array();
@@ -365,7 +365,7 @@ if ($action=="ImportGedcom") {
                     $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", \"".$escparent."\", \"".$place["long"]."\" , \"".$place["lati"]."\", ".$default_zoom_level[$i].", NULL);";
                 }
                 $parent_id = $highestIndex;
-                print $sql."<br>";
+                print $sql."<br/>";
                 if (userIsAdmin(getUserName())) {
                     $res = dbquery($sql);
                 }
@@ -374,7 +374,7 @@ if ($action=="ImportGedcom") {
                 $parent_id = $row[0];
                 if (($row[1] == "0") && ($row[2] == "0")) {
                     $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati=\"".$place["lati"]."\",pl_long=\"".$place["long"]."\" where pl_id=$parent_id LIMIT 1";
-                    print $sql."<br>";
+                    print $sql."<br/>";
                     if (userIsAdmin(getUserName())) {
                         $res = dbquery($sql);
                     }
@@ -431,7 +431,7 @@ if ($action=="ImportFile") {
             <td class="optionbox"><input type="checkbox" name="overwritedata"></td>
         </tr>
     </table>
-    <input id="savebutton" type="submit" value="<?php print $pgv_lang["save"];?>" /><br />    
+    <input id="savebutton" type="submit" value="<?php print $pgv_lang["save"];?>" /><br />
 </form>
 <?php
     print_footer();
@@ -491,7 +491,7 @@ if ($action=="ImportFile2") {
                 $placelistUniq[$j-1]["zoom"] = $place["zoom"];
                 $placelistUniq[$j-1]["icon"] = $place["icon"];
             } else if (($place["lati"] != "0") || ($place["long"] != "0")) {
-                print "Differenc: last value = $prevPlace, $prevLati, $prevLong, current = ".$place["place"].", ".$place["lati"].", ".$place["long"]."<br>";
+                print "Differenc: last value = $prevPlace, $prevLati, $prevLong, current = ".$place["place"].", ".$place["lati"].", ".$place["long"]."<br/>";
             }
         }
         $prevPlace = $place["place"];
@@ -634,7 +634,7 @@ if (count($placelist) == 0) {
     print "<table class=\"facts_table\">\n";
     print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["pl_no_places_found"];
     print "</td></tr></table>\n";
-    print "<br><br><br>\n";
+    print "<br/><br/><br/>\n";
 }
 
 ?>
@@ -688,7 +688,7 @@ if (count($placelist) <> 0) {
         </tr>
     <?php
     for($i = 0; $i < count($placelist); $i++)
-    { 
+    {
         $placelink = "&level=".($level+1);
         for($j = 0; $j < count($parent); $j++) {
             $placelink .= "&parent[$j]=".$parent[$j];
@@ -708,7 +708,7 @@ if (count($placelist) <> 0) {
                 print "&nbsp;";
                 print "<img src=\"http://labs.google.com/ridefinder/images/mm_20_red.png\">";
             }
-            else { 
+            else {
                 print "<img src=\"".$placelist[$i]["icon"]." \"width=\"25\" height=\"15\">";
             } ?>
             </td>
@@ -750,10 +750,10 @@ if (count($placelist) <> 0) {
             <td class="optionbox"><?php print_help_link("PL_EXPORT_FILE_help", "qm", "PL_EXPORT_FILE");?><a href="module.php?mod=googlemap&pgvaction=places&action=ExportFile&level=<?php print $level.$placelink;?>"><?php print $pgv_lang["pl_export_file"];?></a></td>
             <td class="optionbox"><?php print_help_link("PL_EXPORT_ALL_FILE_help", "qm", "PL_EXPORT_ALL_FILE");?><a href="module.php?mod=googlemap&pgvaction=places&action=ExportFile&level=0"><?php print $pgv_lang["pl_export_all_file"];?></a></td>
         </tr>
-    </table><br>
+    </table><br/>
 
     <?php
-if(empty($SEARCH_SPIDER)) 
+if(empty($SEARCH_SPIDER))
     print_footer();
 else {
     print $pgv_lang["label_search_engine_detected"].": ".$SEARCH_SPIDER;

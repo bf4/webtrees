@@ -120,7 +120,7 @@ function getRelationshipSentence($node, $pid1, $pid2)
             $finished = true;
             break;
         }
-        
+
     }
     // sanity check
     if(!$started || !$finished)
@@ -136,8 +136,8 @@ function getRelationshipSentence($node, $pid1, $pid2)
     if (preg_match("/1 SEX M/", $person2, $smatch)>0) $mf="M";
 
     // now look to see if we can find some text to describe the relationship
-    //check if relationship is parent or grandparent        
-    if ($numberOfSpouses == 1 && $numberOfSiblings == 0 && $generationsOlder == 0 && $generationsYounger == 0) 
+    //check if relationship is parent or grandparent
+    if ($numberOfSpouses == 1 && $numberOfSiblings == 0 && $generationsOlder == 0 && $generationsYounger == 0)
     {
         // check for spouse
         if ($mf=="F")
@@ -271,9 +271,9 @@ function getRelationshipSentence($node, $pid1, $pid2)
 	}
     else if($numberOfSpouses > 0)
     {
-        // we don't handle more than one spouse 
+        // we don't handle more than one spouse
     }
-    //check if relationship is parent or grandparent        
+    //check if relationship is parent or grandparent
     else if ($numberOfSiblings == 0 && $generationsOlder > 0 && $generationsYounger == 0)
     {
 		// the get_sosa_name is probably the best way of getting this name
@@ -798,7 +798,7 @@ if ((!empty($pid1))&&(!empty($pid2))) {
                $depth=0;
                foreach($node["path"] as $index=>$pid) {
                   if (($node["relations"][$index]=="father")||($node["relations"][$index]=="mother")) {
-                     
+
                      $depth++;
                      if ($depth>$dmax) $dmax=$depth;
                      if ($asc==0) $asc=1; // the first link is a parent link
@@ -838,7 +838,7 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 					$linex += $Dbwidth/2;
 					$lh = 54;
 					$lw = 3;
-					//check for paternal grandparent relationship                 
+					//check for paternal grandparent relationship
 					if ($pretty) {
                        if ($asc==0) $asc=1;
                        if ($asc==-1) $arrow_img = $PGV_IMAGE_DIR."/".$PGV_IMAGES["uarrow"]["other"];
@@ -963,15 +963,15 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 				print_pedigree_person($pid, 1, ($view!="preview"));
 				print "</td></tr></table></div>\n";
 			}
-			
-			
-			
-			
+
+
+
+
 
 			$sentence = getRelationshipSentence($node, $pid1, $pid2);
 			if($sentence != false)
 			{
-				print "<br><br><br><h4><center>";
+				print "<br/><br/><br/><h4><center>";
 			    print $sentence;
 				print "</center></h4></div>\n";
 			}

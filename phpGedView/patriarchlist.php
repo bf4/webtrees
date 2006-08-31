@@ -52,12 +52,12 @@ function indi2roots() {
 	$orignames= array();
 	$person = array();
 
-	//--print "<br>start indi2:" . date("m/d/y G.i:s",time()) . "<br>\n";
+	//--print "<br/>start indi2:" . date("m/d/y G.i:s",time()) . "<br/>\n";
 
 	$my2indilist = get_indi_list();
 	$ct = count($my2indilist);
 
-	//--	print "<br>tijd na getindi:" . date("m/d/y G.i:s",time()) . "<br>\n";
+	//--	print "<br/>tijd na getindi:" . date("m/d/y G.i:s",time()) . "<br/>\n";
 
 	//--	first select the names then do the alphabetic sort
 	$orignum=0;
@@ -84,7 +84,7 @@ function indi2roots() {
 
 		//-- first spouse record. assuming a person has just one father and one mother.
 		if ($famc == "") {
-			//--print "select:$orignum,$key,$value,$person<br>";
+			//--print "select:$orignum,$key,$value,$person<br/>";
 			$orignum ++;
 			$orignames["$key"]["name"]=$value;
 		 	$orignames["$key"]["gedfile"]=$value2;
@@ -92,13 +92,13 @@ function indi2roots() {
 		$i++;
 	}
 	$ct= $orignum;
-	//--print "totaal aantal=,$ct<br>";
-	//--	print "<br>indi2 na select:" . date("m/d/y G.i:s",time()) . "<br>\n";
+	//--print "totaal aantal=,$ct<br/>";
+	//--	print "<br/>indi2 na select:" . date("m/d/y G.i:s",time()) . "<br/>\n";
 	$patrilist=$orignames;
 	uasort($patrilist, "itemsort");
 
 	//--end search
-	//--print "<br>indi2 na sort:" . date("m/d/y G.i:s",time()) . "<br>\n";
+	//--print "<br/>indi2 na sort:" . date("m/d/y G.i:s",time()) . "<br/>\n";
 
 	$i=0;
 	$keys = array_keys($patrilist);
@@ -132,13 +132,13 @@ function indi2roots() {
 	 			$patrialpha[$letter]["gid"]= "$key";
 			}
 			else $patrialpha[$letter]["gid"].= ",$key";
-			//-- print " reeks: $letter,$key,==" . $patrialpha[$letter]["gid"] . "==<br>";
-			//-- print "select:$i,$letter,$key,$value,$person<br>";
+			//-- print " reeks: $letter,$key,==" . $patrialpha[$letter]["gid"] . "==<br/>";
+			//-- print "select:$i,$letter,$key,$value,$person<br/>";
 		}
 		$i++;
 	}
 	$patrilist=$orignames;
-	//--print "<br>indi2 na alpha:" . date("m/d/y G.i:s",time()) . "<br>\n";
+	//--print "<br/>indi2 na alpha:" . date("m/d/y G.i:s",time()) . "<br/>\n";
 }
 // end indi2roots
 
@@ -171,7 +171,7 @@ function get_alpha_patri($letter) {
 	$list = $patrialpha[$letter]["gid"];
 	$gids = preg_split("/[+,]/", $list);
 	foreach($gids as $indexval => $gid)	{
-//-- print "regel201:letter,gid,list,gids: " . $letter . ":" . $gid . ":" . $patrilist[$gid] . ":" . $gids[0] . ":<br>";
+//-- print "regel201:letter,gid,list,gids: " . $letter . ":" . $gid . ":" . $patrilist[$gid] . ":" . $gids[0] . ":<br/>";
 		$tpatrilist[$gid] = $patrilist[$gid];
 	}
 	return $tpatrilist;
@@ -361,7 +361,7 @@ else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 else {
 	$firstname_alpha = false;
 	//-- if the surname is set then only get the names in that surname list
-	//echo "<br> 3"; //-- MA @@@
+	//echo "<br/> 3"; //-- MA @@@
 	if ((!empty($surname))&&($surname_sublist=="yes")) {
 		$tpatrilist = get_patri_list();
 		$npatrilist = array();
@@ -374,7 +374,7 @@ else {
 	else $tpatrilist = get_alpha_patri($alpha);
 
 //		$ct = count($tpatrilist);
-//echo "<br> 4"; //-- MA @@@
+//echo "<br/> 4"; //-- MA @@@
 
 	$i=0;
 	$surnames = array();
