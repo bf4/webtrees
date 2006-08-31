@@ -46,9 +46,10 @@ print $pgv_lang["titles_found"];
 print_help_link("repolist_listbox_help", "qm");
 print "</td></tr><tr><td class=\"$TEXT_DIRECTION list_value_wrap";
 if($cr>12) print " width50";
-print "\"><ul>";
+print "\">";
 
 if ($cr>0){
+	print "<ul>";
 	$i=1;
 	// -- print the array
 	foreach ($repolist as $key => $value) {
@@ -76,7 +77,7 @@ if ($cr>0){
 	print "</tr><tr><td class=\"center\" colspan=\"2\">".$pgv_lang["total_repositories"]." ".count($repo_total)."<br /";
 	if (count($repo_hide)>0) print "  --  ".$pgv_lang["hidden"]." ".count($repo_hide);
 }
-else print "<span class=\"warning\"><i>".$pgv_lang["no_results"]."</span>";
+else print "<span class=\"warning\"><i>".$pgv_lang["no_results"]."</i></span>";
 
 print "</td>\n\t\t</tr>\n\t</table>";
 
