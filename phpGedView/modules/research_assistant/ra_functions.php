@@ -128,7 +128,7 @@ class ra_functions {
 			$res = dbquery($sql);
 		}
 		if (!in_array($TBLPREFIX.'taskfacts', $data)) {
-			$sql = "CREATE TABLE ".$TBLPREFIX."taskfacts (tf_id INT, tf_t_id INT, tf_factrec TEXT, tf_people VARCHAR(255),tf_multiple VARCHAR(3), tf_type VARCHAR(4), primary key (tf_id))";
+			$sql = "CREATE TABLE ".$TBLPREFIX."taskfacts (tf_id INTEGER NOT NULL, tf_t_id INTEGER, tf_factrec TEXT, tf_people VARCHAR(255),tf_multiple VARCHAR(3), tf_type VARCHAR(4), primary key (tf_id))";
 			$res = dbquery($sql);
 		}
 		else {
@@ -163,7 +163,7 @@ class ra_functions {
 		 * The break down is the first level element, second level element, relationship, percentage 
 		 */
 		if (!in_array($TBLPREFIX.'probabilities', $data)) {
-			$sql = "create table ".$TBLPREFIX."probabilities (pr_id int NOT NULL, pr_f_lvl varchar(200) NOT NULL, pr_s_lvl varchar(200), pr_rel varchar(200) NOT NULL, pr_matches INT NOT NULL, pr_count INT NOT NULL, pr_file INT, primary key (pr_id) )";
+			$sql = "create table ".$TBLPREFIX."probabilities (pr_id int NOT NULL, pr_f_lvl varchar(200) NOT NULL, pr_s_lvl varchar(200), pr_rel varchar(200) NOT NULL, pr_matches INT NOT NULL, pr_count INT NOT NULL, pr_file INTEGER, primary key (pr_id) )";
 			$res = dbquery($sql);
 		}
 	}
