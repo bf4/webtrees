@@ -42,7 +42,7 @@ if (!userIsAdmin(getUserName())) {
     print "<table class=\"facts_table\">\n";
     print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_admin_error"];
     print "</td></tr></table>\n";
-    print "<br><br><br>\n";
+    print "<br/><br/><br/>\n";
     print_simple_footer();
     exit;
 }
@@ -74,7 +74,7 @@ function getHighestIndex() {
     $res->free();
     return $i;
 }
- 
+
 if (!isset($level)) {
     $level=0;
 }
@@ -306,7 +306,7 @@ if ($action=="add") {
                 flagicon.iconAnchor = new GPoint(1, 45);
                 flagicon.infoWindowAnchor = new GPoint(5, 1);
                 map.addOverlay(new GMarker(point, flagicon));
-            } 
+            }
         }
 
         map.setCenter(point, zoom);
@@ -323,7 +323,7 @@ if ($action=="add") {
             map.addOverlay(childplaces[i]);
         }
     }
-    
+
     function loadMap() {
         var zoom;
         if (GBrowserIsCompatible()) {
@@ -331,12 +331,12 @@ if ($action=="add") {
             map.addControl(new GSmallMapControl());
             map.addControl(new GScaleControl()) ;
             GEvent.addListener(map, 'click', function(overlay, point) {
-        
+
                 if (overlay) {  //probably not needed in this case
                                 //map.removeOverlay(overlay);
                 } else if (point) {
                     map.clearOverlays();
-                    // Create our "tiny" yellow marker icon where the user clicked, 
+                    // Create our "tiny" yellow marker icon where the user clicked,
                     // The full size red marker is at the stored coordinates.
                     var smicon = new GIcon();
                     smicon.image = "http://labs.google.com/ridefinder/images/mm_20_yellow.png";
@@ -346,7 +346,7 @@ if ($action=="add") {
                     smicon.iconAnchor = new GPoint(6, 20);
                     smicon.infoWindowAnchor = new GPoint(5, 1);
 
-                    map.panTo(point); 
+                    map.panTo(point);
                     prec = 20;
                     for (i=0;i<document.editplaces.NEW_PRECISION.length;i++) {
                         if (document.editplaces.NEW_PRECISION[i].checked) {
@@ -381,7 +381,7 @@ if ($action=="add") {
                         flagicon.iconAnchor = new GPoint(1, 45);
                         flagicon.infoWindowAnchor = new GPoint(5, 1);
                         map.addOverlay(new GMarker(newval, flagicon));
-                    } 
+                    }
                     // Trying to get the smaller yellow icon drawn in front.
                     map.addOverlay(new GMarker(point, smicon));
                     document.getElementById('resultDiv').innerHTML = "";
@@ -442,9 +442,9 @@ if ($action=="add") {
             }
             $res->free();
         }
-?> 
+?>
 <?php   if ($show_marker == true) {
-            if (($place_icon == NULL) || ($place_icon == "")) { 
+            if (($place_icon == NULL) || ($place_icon == "")) {
                 if (($place_lati == null) || ($place_long == null)) {?>
             map.addOverlay(new GMarker(new GLatLng(<?php print $parent_lati.", ".$parent_long;?>)));
 <?php           } else { ?>
@@ -513,7 +513,7 @@ if ($action=="add") {
 
         var marker = new GMarker(point, icon);
         GEvent.addListener(marker, "click", function() {
-        marker.openInfoWindowHtml(name.name + "(" + name.countryCode + ")<br><a href=\"javascript:setLoc(" + name.lat + ", " + name.lng + ");\"><?php print PrintReady($pgv_lang["pl_use_this_value"])?></a>");
+        marker.openInfoWindowHtml(name.name + "(" + name.countryCode + ")<br/><a href=\"javascript:setLoc(" + name.lat + ", " + name.lng + ");\"><?php print PrintReady($pgv_lang["pl_use_this_value"])?></a>");
         });
         return marker;
     }
@@ -551,7 +551,7 @@ if ($action=="add") {
                 var point = new GLatLng(name.lat, name.lng);
                 map.addOverlay(createMarker(point, name));
                 count++;
-                html = html + name.name + "(" + name.countryCode + "): <a href=\"javascript:setLoc(" + name.lat + ", " + name.lng + ");\"><?php print $pgv_lang["pl_use_this_value"]?></a><br>";
+                html = html + name.name + "(" + name.countryCode + "): <a href=\"javascript:setLoc(" + name.lat + ", " + name.lng + ");\"><?php print $pgv_lang["pl_use_this_value"]?></a><br/>";
 <?php if ($level == 3) { ?>
             }
 <?php } ?>
@@ -730,6 +730,6 @@ function paste_char(value,lang,mag) {
 </form>
 <?php
 print "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();return false;\">".$pgv_lang["close_window"]."</a></div><br />\n";
-        
+
 print_simple_footer();
 ?>
