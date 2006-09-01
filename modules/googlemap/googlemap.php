@@ -44,7 +44,7 @@ function print_fact_place_map($factrec) {
         $place = trim($match[1]);
         // reverse the array so that we get the top level first
         $levels = array_reverse($levels);
-        $retStr .= PrintReady("<a href=\"placelist.php?action=show&amp;");
+        $retStr .= "<a href=\"placelist.php?action=show&amp;";
         foreach($levels as $pindex=>$ppart) {
              // routine for replacing ampersands
              $ppart = preg_replace("/amp\%3B/", "", trim($ppart));
@@ -681,9 +681,9 @@ function build_indiv_map($indifacts, $famids) {
                         $marker["index"][$j] = $indexcounter;
                         $marker["tabindex"][$j] = $tabcounter;
                         $tabcounter = $tabcounter + 1;
-                        print "       new GInfoWindowTab(\"".$mapdata["fact"][$j]."\", \"<div style=\'width:360px\'>".$mapdata["fact"][$j].":<br/>";
+                        print "       new GInfoWindowTab(\"".$mapdata["fact"][$j]."\", \"<div style='width:360px'>".$mapdata["fact"][$j].":<br/>";
                         if ($mapdata["name"][$j] != "") {
-                            print "<a href=\\\"individual.php?pid=".$mapdata["name"][$j]."&amp;ged=$GEDCOM\\\">";
+                            print "<a href=\"individual.php?pid=".$mapdata["name"][$j]."&amp;ged=$GEDCOM\">";
                             if (displayDetailsById($mapdata["name"][$j])||showLivingNameById($mapdata["name"][$j]))
                                 print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($mapdata["name"][$j])));
                             else
@@ -740,9 +740,9 @@ function build_indiv_map($indifacts, $famids) {
                                 $marker["index"][$k] = $indexcounter;
                                 $marker["tabindex"][$k] = $tabcounter;
                                 $tabcounter = $tabcounter + 1;
-                                print "       new GInfoWindowTab(\"".$mapdata["fact"][$k]."\", \"<div style=\'width:360px\'>".$mapdata["fact"][$k].":<br/>";
+                                print "       new GInfoWindowTab(\"".$mapdata["fact"][$k]."\", \"<div style='width:360px'>".$mapdata["fact"][$k].":<br/>";
                                 if ($mapdata["name"][$k] != "") {
-                                    print "<a href=\\\"individual.php?pid=".$mapdata["name"][$k]."&amp;ged=$GEDCOM\\\">";
+                                    print "<a href=\"individual.php?pid=".$mapdata["name"][$k]."&amp;ged=$GEDCOM\">";
                                     if (displayDetailsById($mapdata["name"][$k])||showLivingNameById($mapdata["name"][$k]))
                                         print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($mapdata["name"][$k])));
                                     else

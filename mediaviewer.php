@@ -278,7 +278,7 @@ function tabswitch(n) {
 	}
 	document.getElementById('door'+n).className='door optionbox';
 	//document.getElementById('door'+n).className='tab_cell_active';
-	//-- set a cookie which stores the last tab they clicked on
+	//set a cookie which stores the last tab they clicked on
 	document.cookie = "lasttabs=<?php print $controller->getCookieTabString().$controller->pid; ?>="+n;
 	return false;
 }
