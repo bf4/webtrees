@@ -50,12 +50,12 @@ if ($MULTI_MEDIA) {
 		$medialist = array();
 		$foundlist = array();
 
-		$medialist = get_medialist(false, '');
+		$medialist = get_medialist(false, '', false, true);
 		$ct = count($medialist);
 		if ($ct>0) {
 				$i=0;
 				$disp = false;
-				while(!$disp && $i<40) {
+				while(!$disp && $i<$ct) {
 					$value = array_rand($medialist);
 					//print_r($medialist[$value]); print "<br />";
 					$links = $medialist[$value]["LINKS"];
