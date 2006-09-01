@@ -26,7 +26,8 @@
  * @subpackage Blocks
  */
 
-include("modules/research_assistant/languages/lang.en.php");
+require("modules/research_assistant/languages/lang.en.php");
+if (file_exists("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php")) require("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php");
 
 $pgv_lang["mytasks_block"] = "MyTasks Block";
 

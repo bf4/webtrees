@@ -238,7 +238,7 @@ class Census1800 extends ra_form {
 		$sql = "INSERT INTO ".$TBLPREFIX."taskfacts VALUES('".get_next_id("taskfacts", "tf_id")."'," .
 			"'".$DBCONN->escapeSimple($_REQUEST['taskid'])."'," .
 			"'".$DBCONN->escapeSimple($factrec)."'," .
-			"'".$DBCONN->escapeSimple(implode(";", $pids))."')";
+			"'".$DBCONN->escapeSimple(implode(";", $pids))."', 'Y', 'indi')";
 		$res = dbquery($sql);
 		
 		$rows = array();

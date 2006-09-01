@@ -567,7 +567,7 @@ return false;}return true;}
 				$inferredFact["Person"] = $person->getName();
 				$inferredFact["PersonID"] = $person->getXref();
 				$inferredFact["Reason"] = "A discrepancy in occupation was detected!";
-				$inferredFact["Fact"] = "1 OCCU ".$rows[$number]["Trade"];
+				$inferredFact["Fact"] = "1 OCCU ".$rows[$number]["Occupation"];
 				$inferredFact["factType"] = 'OCCU';
 				$inferredFact["factPeople"] = "indi";
 				$inferredFact["date"] = '';

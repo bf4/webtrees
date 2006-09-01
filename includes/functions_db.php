@@ -61,7 +61,7 @@ function &dbquery($sql, $show_error=true, $count=0) {
 	}
 	//-- make sure a database connection has been established
 	if (DB::isError($DBCONN)) {
-		print $DBCONN->getCode()." ".$DBCONN->getMessage();
+		if ($DBCONN->getCode()!=-24) print $DBCONN->getCode()." ".$DBCONN->getMessage();
 		return $DBCONN;
 	}
 //print $TOTAL_QUERIES."-".$sql."<br />\n";

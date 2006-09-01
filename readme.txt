@@ -202,12 +202,18 @@ configuration options can be found online by clicking on the question mark
 
 PhpGedView has support for importing your GEDCOMs into a PEAR:DB supported 
 database like MySQL or PostgreSQL.  Currently, MySQL is the only fully tested 
-database.  Using a database requires that an existing user, password, and database already
-exist.
+database.  Using a database requires that an existing user, password, and 
+database already exist.
 
 You may reconfigure PhpGedView at any time by going to PhpGedView/admin.php 
 and logging in as an administrator user and clicking on the "Configuration" 
 link.
+
+If you are having any problems setting up PhpGedView then you should run the 
+sanity_check file. To do this you should type sanity_check.php into your URL 
+(for example, http://www.yourserver.com/PhpGedView/sanity_check.php). If you are 
+not able to view that page then you most likely don't have either the sanity_check 
+file or you do not have PHP installed properly.
 
 *D.  Create Admin User
 After you click the Save button, you will be asked to create an 

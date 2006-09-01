@@ -31,7 +31,9 @@
  
 require_once("includes/person_class.php");
 require_once("includes/family_class.php");
-include("modules/research_assistant/languages/lang.en.php");
+require("modules/research_assistant/languages/lang.en.php");
+if (file_exists("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php")) require("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php");
+asort($countries);
 
 function autosearch_options()
 {

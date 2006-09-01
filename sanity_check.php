@@ -39,9 +39,9 @@
 */
 $errors = array();
 $warnings = array();
-if ((double) phpversion() <= 4.3) 
+if ((double) phpversion() < 4.3) 
 {
-	$errors[] = "<center><span class=\"error\">You need to have PHP version 4.3 or higher.</span></center>";
+	$errors[] = "<span class=\"error\">You need to have PHP version 4.3 or higher.</span>";
 }
 
 //-- define function
@@ -67,7 +67,7 @@ foreach($arr as $k => $v)
 {
 	if (!file_exists($v))
 	{
-		$errors[] = "<center><span class=\"error\">The file \"$v\" does not exist. You might want to check and make sure that the file exists, was not missnamed, and read permissions are set correctly.</span></center>";
+		$errors[] = "<span class=\"error\">The file \"$v\" does not exist. You might want to check and make sure that the file exists, was not missnamed, and read permissions are set correctly.</span>";
 	}
 }
 if (count($errors)>0) print_sanity_errors();
@@ -77,7 +77,7 @@ if (!file_is_writable("config.php"))
 {
 	if (!@ chmod("config.php", 0777)) 
 	{
-		$errors[] = "<center><span class=\"error\">You need to change the security settings in your config.php file so that it is writable.</span></center>";
+		$errors[] = "<span class=\"error\">You need to change the security settings in your config.php file so that it is writable.</span>";
 	}
 }
 
@@ -85,7 +85,7 @@ if (!is_writable($INDEX_DIRECTORY))
 {
 	if (!@ chmod($INDEX_DIRECTORY, 0777)) 
 	{
-		$errors[] = "<center><span class=\"error\">You need to change the security settings in your index directory so that it is writable.</span></center>";
+		$errors[] = "<span class=\"error\">You need to change the security settings in your index directory so that it is writable.</span>";
 	}
 }
 
@@ -93,70 +93,68 @@ if (!is_writable($MEDIA_DIRECTORY))
 {
 	if (!@ chmod($MEDIA_DIRECTORY, 0777)) 
 	{
-		$errors[] = "<center><span class=\"error\">You need to change the security settings in your media directory so that it is writable.</span></center>";
+		$warnings[] = "You need to change the security settings in your media directory so that it is writable.";
 	}
 }
 if (!is_writable($MEDIA_DIRECTORY . "thumbs")) 
 {
 	if (!@ chmod($MEDIA_DIRECTORY . "thumbs", 0777)) 
 	{
-		$warnings[] = "<center>You need to change the security settings in your media thumbs directory so that it is writable.</center>";
+		$warnings[] = "You need to change the security settings in your media thumbs directory so that it is writable.";
 	}
 }
 
 if (!function_exists('imagecreatefromjpeg')) 
 {
-	$warnings[] = "<center>The GD imaging library does not exist. PhpGedView will still function, but some of the features, such as thumbnail generation and the circle diagram will not work without the GD library.  You can go to <a href=\"http://www.php.net/manual/en/ref.image.php\">http://www.php.net/manual/en/ref.image.php</a> for more information.</center>";
+	$warnings[] = "The GD imaging library does not exist. PhpGedView will still function, but some of the features, such as thumbnail generation and the circle diagram will not work without the GD library.  You can go to <a href=\"http://www.php.net/manual/en/ref.image.php\">http://www.php.net/manual/en/ref.image.php</a> for more information.";
 }
 
 if (!function_exists('xml_parser_create')) 
 {
-	$warnings[] = "<center>The XML Parser library does not exist. PhpGedView will still function, but some of the features, such as report generation and web services will not work without the xml parser library. You can go to <a href=\"http://us3.php.net/manual/en/ref.xml.php\">http://us3.php.net/manual/en/ref.xml.php</a> for more information.</center>";
+	$warnings[] = "The XML Parser library does not exist. PhpGedView will still function, but some of the features, such as report generation and web services will not work without the xml parser library. You can go to <a href=\"http://us3.php.net/manual/en/ref.xml.php\">http://us3.php.net/manual/en/ref.xml.php</a> for more information.";
 }
 
 if (!class_exists('DomDocument')) 
 {
-	$warnings[] = "<center>The DOM XML library does not exist. PhpGedView will still function, but some of the features, such as Gramps Export features in the clippings cart, download, and web services will not work. You can go to <a href=\"http://us2.php.net/manual/en/ref.dom.php\">http://us2.php.net/manual/en/ref.dom.php</a> for more information.</center>";
+	$warnings[] = "The DOM XML library does not exist. PhpGedView will still function, but some of the features, such as Gramps Export features in the clippings cart, download, and web services will not work. You can go to <a href=\"http://us2.php.net/manual/en/ref.dom.php\">http://us2.php.net/manual/en/ref.dom.php</a> for more information.";
+	
 }
 
 if (!function_exists('GregorianToJD')) 
 {
-	$warnings[] = "<center>The Calendar library does not exist. PhpGedView will still function, but some of the features, such as conversion to other calendars such as Hebrew or French will not work.  It is not essential for running PhpGedView. You can go to <a href=\"http://us2.php.net/manual/en/ref.calendar.php\">http://us2.php.net/manual/en/ref.calendar.php</a> for more information.</center>";
+	$warnings[] = "The Calendar library does not exist. PhpGedView will still function, but some of the features, such as conversion to other calendars such as Hebrew or French will not work.  It is not essential for running PhpGedView. You can go to <a href=\"http://us2.php.net/manual/en/ref.calendar.php\">http://us2.php.net/manual/en/ref.calendar.php</a> for more information.";
 }
 
 if (($CONFIGURED || (isset($_REQUEST['action']) && $_REQUEST['action']=="update")) && !check_db(true)) 
 {
-	require_once ('config.php');
 	require_once $confighelpfile["english"];
 	if (file_exists($confighelpfile[$LANGUAGE]))
 		require_once $confighelpfile[$LANGUAGE];
-	if (preg_match("/\Wsanity_check.php/", $_SERVER["SCRIPT_NAME"])>0) {
-	print_header("");
-	print "<span class=\"error\">";
-	print $pgv_lang["db_setup_bad"];
-	print "</span><br />";
-	print "<span class=\"error\">" . $DBCONN->getMessage() . " " . $DBCONN->getUserInfo() . "</span><br />";
-	}
+		$error = "";
+	$error = "<span class=\"error\">";
+	$error .= $pgv_lang["db_setup_bad"];
+	$error .= "</span><br />";
+	$error .= "<span class=\"error\">" . $DBCONN->getMessage() . " " . $DBCONN->getUserInfo() . "</span><br />";
+	
 	if ($CONFIGURED == true) 
 	{
 		//-- force the incoming user to enter the database password before they can configure the site for security.
 		if (!isset ($_POST["security_check"]) || !isset ($_POST["security_user"]) || (($_POST["security_check"] != $DBPASS) && ($_POST["security_user"] == $DBUSER))) 
 		{
-			print "<br /><br />";
-			print_text("enter_db_pass");
-			print "<br /><form method=\"post\" action=\"editconfig.php\"> ";
-			print $pgv_lang["DBUSER"];
-			print "<input type=\"text\" name=\"security_user\" /><br />\n";
-			print $pgv_lang["DBPASS"];
-			print " <input type=\"password\" name=\"security_check\" /><br />\n";
-			print "<input type=\"submit\" value=\"";
-			print $pgv_lang["login"];
-			print "\" />\n";
-			print "</form>\n";
-			print_footer();
-			exit;
+			$error .= "<br /><br />";
+			$error .= print_text("enter_db_pass", 0, 1);
+			$error .= "<br /><form method=\"post\" action=\"editconfig.php\"> ";
+			$error .= $pgv_lang["DBUSER"];
+			$error .= " <input type=\"text\" name=\"security_user\" /><br />\n";
+			$error .= $pgv_lang["DBPASS"];
+			$error .= " <input type=\"password\" name=\"security_check\" /><br />\n";
+			$error .= "<input type=\"submit\" value=\"";
+			$error .= $pgv_lang["login"];
+			$error .= "\" />\n";
+			$error .= "</form>\n";
 		}
 	}
+	$errors[] = $error;
 }
 
 function print_sanity_errors() {
@@ -169,7 +167,7 @@ function print_sanity_errors() {
 			print "<center><span style=\"color: green; font-weight: bold;\">Warnings: </span></center>";
 			foreach($warnings as $warning) 
 			{
-				print "<span style=\"color: blue; font-weight: bold;\">".$warning."</span>";
+				print "<center><span style=\"color: blue; font-weight: bold;\">".$warning."</span></center>";
 			}
 		}
 		//Prints errors
@@ -178,7 +176,7 @@ function print_sanity_errors() {
 			print "<center><span style=\"color: green; font-weight: bold;\">Errors: </span></center>";
 			foreach($errors as $error) 
 			{
-				print "<span style=\"color: red; font-weight: bold;\">".$error."</span>";
+				print "<center><span style=\"color: red; font-weight: bold;\">".$error."</span></center>";
 			}
 			exit;
 		}
