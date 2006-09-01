@@ -329,8 +329,8 @@ class Census1830 extends ra_form {
 	       
 	       //Other inputs
 	        $value = "";
-        	if (isset($row['Totle'])) $value = $row['Totle'];
-	        $out .= '<td class="optionbox"><input name="Totle'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
+        	if (isset($row['Total'])) $value = $row['Total'];
+	        $out .= '<td class="optionbox"><input name="Total'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 	     	$value = "";
         	if (isset($row['DeafDumbUnder14'])) $value = $row['DeafDumbUnder14'];
 	        $out .= '<td class="optionbox"><input name="DeafDumbUnder14'.$i.'" type="text" size="15" value="'.htmlentities($value).'"></td>';
@@ -425,7 +425,7 @@ class Census1830 extends ra_form {
 		$sql = "INSERT INTO ".$TBLPREFIX."taskfacts VALUES('".get_next_id("taskfacts", "tf_id")."'," .
 			"'".$DBCONN->escapeSimple($_REQUEST['taskid'])."'," .
 			"'".$DBCONN->escapeSimple($factrec)."'," .
-			"'".$DBCONN->escapeSimple(implode(";", $pids))."')";
+			"'".$DBCONN->escapeSimple(implode(";", $pids))."', 'Y', 'indi')";
 		$res = dbquery($sql);
 		
 		$rows = array();
@@ -484,7 +484,7 @@ class Census1830 extends ra_form {
 			"FreeSlaves36To55F"=>$_POST["FreeSlaves36To55F".$number],
 			"FreeSlaves55To100F"=>$_POST["FreeSlaves55To100F".$number],
 			"FreeSlaves100upF"=>$_POST["FreeSlaves100upF".$number],
-			"Totle"=>$_POST["Totle".$number],
+			"Total"=>$_POST["Total".$number],
 			"DeafDumbUnder14"=>$_POST["DeafDumbUnder14".$number],
 			"DeafDumb14to25"=>$_POST["DeafDumb14to25".$number],
 			"90Thru100F"=>$_POST["Deaf25andUp".$number],
@@ -547,7 +547,7 @@ class Census1830 extends ra_form {
 			$text .= "\r\nFree female slaves 36 to 55: ".$_POST["FreeSlaves36To55F".$number];
 			$text .= "\r\nFree female slaves 55 to 100: ".$_POST["FreeSlaves55To100F".$number];
 			$text .= "\r\nFree female slaves 100 and up: ".$_POST["FreeSlaves100upF".$number];
-			$text .= "\r\nTotle: ".$_POST["Totle".$number];
+			$text .= "\r\nTotal: ".$_POST["Total".$number];
 			$text .= "\r\nDeaf Dumb under 14: ".$_POST["DeafDumbUnder14".$number];
 			$text .= "\r\nDeaf Dumb 14 to 25: ".$_POST["DeafDumb14to25".$number];
 			$text .= "\r\nDeaf 25 and up: ".$_POST["Deaf25andUp".$number];
