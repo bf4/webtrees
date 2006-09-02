@@ -9,6 +9,8 @@
 =====================================================================
 
 Version 4.1
+ - Added [ 1549498 ] Add quick-click links to some fields that use drop-down list (opus27)
+ - Added [ 1550650 ] Auto-close copy/delete window (opus27)
  - Fixed [ 1549707 ] patriarchlist.php Sortable List Error (opus27)
  - Added [ 1498689 ] Family page : using AJAX to reorder children (opus27)
  - Added js library (opus27)
