@@ -1161,7 +1161,7 @@ $pgv_lang["n_x_maternal_uncle"]	    = '%2$d x great uncle';
 // aunts and aunts
 // 1st generation
 $pgv_lang["sosa_aunt_2"] 				= $pgv_lang["aunt"];            // father's sister
-$pgv_lang["bosa_aunt_3"] 				= $pgv_lang["aunt"];            // mother's sister
+$pgv_lang["sosa_aunt_3"] 				= $pgv_lang["aunt"];            // mother's sister
 // 2nd generation
 $pgv_lang["sosa_aunt_4"] 				= "great aunt";      // fathers's father's sister 
 $pgv_lang["sosa_aunt_5"] 				= "great aunt";      // father's mother's sister
