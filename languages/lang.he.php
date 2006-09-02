@@ -1264,7 +1264,7 @@ $pgv_lang["n_x_maternal_uncle"]	    = 'דוד מדרגה %1$d';
 // aunts and aunts
 // 1st generation
 $pgv_lang["sosa_aunt_2"] 				= $pgv_lang["aunt"];            // fathers sister
-$pgv_lang["bosa_aunt_3"] 				= $pgv_lang["aunt"];            // mothers sister
+$pgv_lang["sosa_aunt_3"] 				= $pgv_lang["aunt"];            // mothers sister
 // 2nd generation
 $pgv_lang["sosa_aunt_4"] 				= "דודה סבה";      // fathers's fathers sister 
 $pgv_lang["sosa_aunt_5"] 				= "דודה סבה";      // fathers mothers sister
