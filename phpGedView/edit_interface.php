@@ -350,7 +350,8 @@ if ($action=="delete") {
 					}
 				}
 			}
-			if (replace_gedrec($pid, $newged)) print "<br /><br />".$pgv_lang["gedrec_deleted"];
+			$success = (replace_gedrec($pid, $newged));
+			if ($success) print "<br /><br />".$pgv_lang["gedrec_deleted"];
 		}
 	}
 }
@@ -1471,6 +1472,7 @@ else if ($action=="copy") {
 		if (count($_SESSION["clipboard"])>4) array_pop($_SESSION["clipboard"]);
 		$_SESSION["clipboard"][] = array("type"=>$type, "factrec"=>$factrec, "fact"=>$fact);
 		print "<b>".$pgv_lang["record_copied"]."</b>\n";
+		$success = true;
 	}
 }
 //------------------------------------------------------------------------------
@@ -1908,7 +1910,10 @@ else if ($action=="mod_edit_fact") {
 }
 //------------------------------------------------------------------------------
 // autoclose window when update successful
-if ($success and $EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
+if ($success and $EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) {
+	if ($action=="copy") print "\n<script type=\"text/javascript\">\n<!--\nwindow.close();\n//-->\n</script>";
+	else print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
+}
 
 print "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();\">".$pgv_lang["close_window"]."</a></div><br />\n";
 print_simple_footer();
