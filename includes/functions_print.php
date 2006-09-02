@@ -2209,7 +2209,7 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 			else if ($indexval==2) print $pgv_lang["wife"];
 			else print $factarray["AGE"];
 			print "</span>: ";
-			$age = get_age_at_event(substr($agerec,7));
+			$age = get_age_at_event(substr($agerec,6));
 			print PrintReady($age);
 			print " ";
 		}
@@ -2404,7 +2404,11 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	}
 	print "</select>";
 	print "<input type=\"button\" value=\"".$pgv_lang["add"]."\" onclick=\"add_record('$id', 'newfact');\" />\n";
-
+	$quickfacts = array();
+	if ($type == "INDI") $quickfacts = array("BIRT","ADDR","RESI","OCCU","DEAT");
+	if ($type == "FAM") $quickfacts = array("MARR","DIV");
+	$quickfacts = array_intersect($quickfacts,$addfacts);
+	foreach($quickfacts as $k=>$v) echo "&nbsp;<small><a href='javascript://$v' onclick=\"add_new_record('$id', '$v');return false;\">".$factarray["$v"]."</a></small>&nbsp;";
 	print "</form>\n";
 	print "</td></tr>\n";
 }
