@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Removed use of unset in lang.xx.php files for relationship labels, added cousins of nth degree (cozensweb)
  - Added Dutch translations for relationship labels (cozensweb, vanpepep)
  - Added [ 1549498 ] Add quick-click links to some fields that use drop-down list (opus27)
  - Added [ 1550650 ] Auto-close copy/delete window (opus27)

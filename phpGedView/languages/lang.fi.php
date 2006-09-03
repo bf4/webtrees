@@ -890,6 +890,7 @@ $pgv_lang["n_x_paternal_aunt"]		= 'täti %1$d. polvessa';
 $pgv_lang["n_x_maternal_aunt"]	    = 'täti %1$d. polvessa';
 
 
+// if a specific cousin relationship cannot be represented in a language translate as "";
 $pgv_lang["male_cousin_1"]              	= "serkku";
 $pgv_lang["male_cousin_2"]              	= "pikkuserkku";
 $pgv_lang["male_cousin_3"]              	= "sokeriserkku";
@@ -910,6 +911,7 @@ $pgv_lang["male_cousin_17"]             	= "serkku 17. polvessa";
 $pgv_lang["male_cousin_18"]             	= "serkku 18. polvessa";
 $pgv_lang["male_cousin_19"]             	= "serkku 19. polvessa";
 $pgv_lang["male_cousin_20"]             	= "serkku 20. polvessa";
+$pgv_lang["male_cousin_n"]                  = "serkku %d. polvessa";
 $pgv_lang["female_cousin_1"]            	= "serkku";
 $pgv_lang["female_cousin_2"]            	= "pikkuserkku";
 $pgv_lang["female_cousin_3"]            	= "sokeriserkku";
@@ -930,6 +932,7 @@ $pgv_lang["female_cousin_17"]             	= "serkku 17. polvessa";
 $pgv_lang["female_cousin_18"]             	= "serkku 18. polvessa";
 $pgv_lang["female_cousin_19"]             	= "serkku 19. polvessa";
 $pgv_lang["female_cousin_20"]             	= "serkku 20. polvessa";
+$pgv_lang["female_cousin_n"]             	= "serkku %d. polvessa";
 
 //-- GEDCOM edit utility
 $pgv_lang["gedrec_deleted"]		= "GEDCOM tietue poisettu.";

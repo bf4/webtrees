@@ -1174,6 +1174,7 @@ $pgv_lang["sosa_aunt_7"] 				= "great aunt";      // mother's mother's sister
 $pgv_lang["n_x_paternal_aunt"]		= '%2$d x great aunt';
 $pgv_lang["n_x_maternal_aunt"]	    = '%2$d x great aunt';
 
+// if a specific cousin relationship cannot be represented in a language translate as "";
 $pgv_lang["male_cousin_1"]              = "first cousin";
 $pgv_lang["male_cousin_2"]              = "second cousin";
 $pgv_lang["male_cousin_3"]              = "third cousin";
@@ -1194,6 +1195,7 @@ $pgv_lang["male_cousin_17"]             = "seventeenth cousin";
 $pgv_lang["male_cousin_18"]             = "eighteenth cousin";
 $pgv_lang["male_cousin_19"]             = "nineteenth cousin";
 $pgv_lang["male_cousin_20"]             = "twentieth cousin";
+$pgv_lang["male_cousin_n"]              = "%d x cousin";
 $pgv_lang["female_cousin_1"]            = "first cousin";
 $pgv_lang["female_cousin_2"]            = "second cousin";
 $pgv_lang["female_cousin_3"]            = "third cousin";
@@ -1214,6 +1216,7 @@ $pgv_lang["female_cousin_17"]           = "seventeenth cousin";
 $pgv_lang["female_cousin_18"]           = "eighteenth cousin";
 $pgv_lang["female_cousin_19"]           = "nineteenth cousin";
 $pgv_lang["female_cousin_20"]           = "twentieth cousin";
+$pgv_lang["female_cousin_n"]            = "%d x cousin";
 
 // Only referenced from english specific functions
 $pgv_lang["removed_ascending_1"]   = " once removed ascending";

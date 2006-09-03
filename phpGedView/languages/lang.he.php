@@ -1304,6 +1304,7 @@ $pgv_lang["n_x_paternal_aunt"]		= 'דודה מדרגה %1$d';
 $pgv_lang["n_x_maternal_aunt"]	    = 'דודה מדרגה %1$d';
 
 
+// if a specific cousin relationship cannot be represented in a language translate as "";
 $pgv_lang["male_cousin_1"]              	= "דודן";
 $pgv_lang["male_cousin_2"]             	= "דודן משנה";
 $pgv_lang["male_cousin_3"]              	= "דודן שילש";
@@ -1324,6 +1325,7 @@ $pgv_lang["male_cousin_17"]             	= "דודן מדרגה 17";
 $pgv_lang["male_cousin_18"]             	= "דודן מדרגה 18";
 $pgv_lang["male_cousin_19"]             	= "דודן מדרגה 19";
 $pgv_lang["male_cousin_20"]             	= "דודן מדרגה 20";
+$pgv_lang["male_cousin_n"]             	    = "דודן מדרגה %d";
 $pgv_lang["female_cousin_1"]            	= "דודנית";
 $pgv_lang["female_cousin_2"]            	= "דודנית משנה";
 $pgv_lang["female_cousin_3"]            	= "דודנית שילשה";
@@ -1344,6 +1346,7 @@ $pgv_lang["female_cousin_17"]           	= "דודנית מדרגה 17";
 $pgv_lang["female_cousin_18"]           	= "דודנית מדרגה 18";
 $pgv_lang["female_cousin_19"]           	= "דודנית מדרגה 19";
 $pgv_lang["female_cousin_20"]           	= "דודנית מדרגה 20";
+$pgv_lang["female_cousin_n"]           	    = "דודנית מדרגה %d";
 
 
 
