@@ -1050,6 +1050,7 @@ $pgv_lang["n_x_paternal_aunt"]		= '%2$d x great aunt';
 $pgv_lang["n_x_maternal_aunt"]	    = '%2$d x great aunt';
 
 
+// if a specific cousin relationship cannot be represented in a language translate as "";
 $pgv_lang["male_cousin_1"]              = "primo";
 $pgv_lang["male_cousin_2"]              = "primo do 2º gravi";
 $pgv_lang["male_cousin_3"]              = "primo do 3º gravi";
@@ -1091,7 +1092,7 @@ $pgv_lang["female_cousin_17"]           = "prima do 17º gravi";
 $pgv_lang["female_cousin_18"]           = "prima do 18º gravi";
 $pgv_lang["female_cousin_19"]           = "prima do 19º gravi";
 $pgv_lang["female_cousin_20"]           = "prima do 20º gravi";
-$pgv_lang["female_cousin_n"]            = "prima do 2º gravi";
+$pgv_lang["female_cousin_n"]            = "prima do %dº gravi";
 
 $pgv_lang["check_delete"]="Confirma a exclusão deste fato do arquivo GEDCOM?";
 $pgv_lang["access_denied"]="<b>Acesso Negado</b><br />Você não tem acesso a este recurso.";

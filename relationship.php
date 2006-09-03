@@ -388,18 +388,27 @@ function getRelationshipSentence($node, $pid1, $pid2)
         $degree = $generationsYounger;
         if ($mf=="F")
         {
-            if(isset($pgv_lang["female_cousin_" . $degree]))
+            if(isset($pgv_lang["female_cousin_" . $degree]) && ($pgv_lang["female_cousin_" . $degree] != ""))
             {
                 $relationshipDescription = $pgv_lang["female_cousin_" . $degree];
             }
+			else if(isset($pgv_lang["female_cousin_n"]) && ($pgv_lang["female_cousin_n"] != ""))
+			{
+                $relationshipDescription = sprintf($pgv_lang["female_cousin_n"], $degree);
+			}
+
         }
         else
         {
             // treat unknown gender as male
-            if(isset($pgv_lang["male_cousin_" . $degree]))
+            if(isset($pgv_lang["male_cousin_" . $degree]) && ($pgv_lang["male_cousin_" . $degree] != ""))
             {
                 $relationshipDescription = $pgv_lang["male_cousin_" . $degree];
             }
+			else if(isset($pgv_lang["male_cousin_n"]) && ($pgv_lang["male_cousin_n"] != ""))
+			{
+                $relationshipDescription = sprintf($pgv_lang["male_cousin_n"], $degree);
+			}
         }
     }
 	// Check for half sibling relationships
