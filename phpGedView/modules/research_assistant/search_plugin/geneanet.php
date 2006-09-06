@@ -30,50 +30,45 @@
 
 require_once("includes/person_class.php");
 require("modules/research_assistant/languages/lang.en.php");
+global $lang_short_cut, $LANGUAGE;
 if (file_exists("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php")) require("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php");
-asort($countries);
 
-//Preloads english then check to see individual language settings for foreign users
-require("languages/countries.en.php");
-if (file_exists("languages/countries.".$lang_short_cut[$LANGUAGE].".php")) require("languages/countries.".$lang_short_cut[$LANGUAGE].".php");
-asort($countries);
 
 function autosearch_options()
 {
 	//import the pgv lang for multi langual support
 	global $pgv_lang;
-	global $countries;
+	global $countries, $lang_short_cut, $LANGUAGE;
+	
+	if (file_exists("languages/countries.".$lang_short_cut[$LANGUAGE].".php")) require("languages/countries.".$lang_short_cut[$LANGUAGE].".php");
 	//Title for the plugin
 	$pgv_lang["autosearch_plugin_name"] = "GeneaNet.org Plug-in";
-	
+	asort($countries);
 	$pid = "";
 	//get your person object 
 	if (!empty($_REQUEST['pid'])) $pid = clean_input($_REQUEST['pid']);
 	$person = Person::getInstance($pid);
 		if (!is_object($person)) return "";
 	//set values
-		$givennames = $person->getGivenNames();
+	
 		$lastname = $person->getSurname();
-		$byear = $person->getBirthYear();
-		$dyear = $person->getDeathYear();
+
 		$bplace = $person->getBirthPlace();
-		foreach($bplace->split(',') as $bword=>$bplace) break;
-		$bplc = $bplace;
+		$bArray = preg_split('/, ?/', $bplace);
+		//foreach($bArray as $bword=>$bplace) break;
+		//$bplc = $bplace;
+		$bplc = end($bArray);
 		
-		$dplace = $person->getDeathPlace();
-		foreach($dplace->split(',') as $dword=>$dplace) break;
-		$dplc = $dplace;
+		//$dplace = $person->getDeathPlace();
+		//foreach($dplace->split(',') as $dword=>$dplace) break;
+		//$dplc = $dplace;
 		
-		$dplcCode = "";
+		
 		$bplcCode = "";
 		
 		//If the last entry in the PLAC string is a real country this figures it out for us
 		foreach($countries as $key=>$value)
 		{
-			if($value == $dplc)
-			{
-				$dplcCode = $key;
-			}
 			if($value == $bplc)
 			{
 				$bplcCode = $key;
@@ -90,14 +85,32 @@ function autosearch_options()
 		$to_return .="		<tr>
 					 				<td class='optionbox'>
 					 					".$pgv_lang["autosearch_surname"]."</td><td class='optionbox'> <input type='checkbox' name='surname' value=\"".$lastname."\" checked='checked' /> ".$lastname."</td></tr>
-		 							<td class='optionbox'>
-					 					".$pgv_lang["autosearch_bloc"]."</td><td class='optionbox'> <input type='radio' name='location' value='bloc' checked='checked' />
+		 							
+									
+									<td class='optionbox'>
+					 					".$pgv_lang["autosearch_country"]."</td>
+									<td class='optionbox'>
 									<SELECT NAME='country' onChange=\"\"> ";
-					//if(!empty($bplcCode))
+					if(!empty($bplcCode))
+					{
+						$to_return.="<OPTION value=\"".$bplcCode."\">".$contries[$bplcCode]."</OPTION>";
+						$to_return.="<OPTION value=\"\"></OPTION>";
+					}
+					else
+					{
+						$to_return.="<OPTION value=\"\"></OPTION>";
+					}
+						
+						
+						foreach($countries as $key=>$value)
+						{
+							$to_return.="<OPTION value=\"".$key."\">".$value."</OPTION>";
+						}
+						
 						//TODO: write in logic to make first combo option the current birth country. 
 						// do the same for death and generate the dropdown list for all the countries.			
 								
-        $to_return.="	</td></tr>
+        $to_return.="	</select></td></tr>
 
 							
 							<tr><td class='optionbox' colspan=2 align='center'>".$pgv_lang["autosearch_plugin_name"]."</td></tr>
@@ -119,28 +132,23 @@ function autosearch_process() {
 	if (!empty($_REQUEST['pid'])) $pid = clean_input($_REQUEST['pid']);
 	$person = Person::getInstance($pid);
 		if (!is_object($person)) return "";
-		$byear = $person->getBirthYear();
-		$dyear = $person->getDeathYear();
+		
 	
 	//url of our search site
-	$url = "http://search.ancestry.com/cgi-bin/sse.dll?";
+	$url = "http://search.geneanet.org/result.php3?";
 	
 	//we pull our values for each of checked options above and add them to the search string
 	if(isset($_REQUEST['surname'])){
-		$url .= "&gsln=".urlencode($_REQUEST['surname']);
+		$url .= "&name=".urlencode($_REQUEST['surname']);
+	}
+	else
+	{
+		$url .= "&name=NULL";
+	}
+	if(isset($_REQUEST['country'])){
+		$url.= "&country=".urlencode($_REQUEST['country']);
 	}
 	
-	if(isset($_REQUEST['givenname1'])){
-		$url.= "&gsfn=".urlencode($_REQUEST['givenname1']);
-	}
-	if(isset($_REQUEST['byear'])){
-		
-			$url.= "&gsby=".urlencode($_REQUEST['byear']);
-	}
-	if(isset($_REQUEST['dyear'])){
-			$url.= "&gsdy=".urlencode($_REQUEST['dyear']);
-		
-	}
 	
 	//add any hidden fields here  $url .= &blah=1 etc
 	

@@ -510,6 +510,7 @@ function check_media_structure() {
  * - $media["LINKS"] 	Array of gedcom ids that this is linked to
  * - $media["CHANGE"]	Indicates the type of change waiting admin approval
  *
+ * @param boolean $random If $random is true then the function will return 5 random pictures.
  * @return mixed A media list array.
  */
 
@@ -1778,4 +1779,32 @@ function PrintMediaLinks($links, $size = "small") {
 		print "</sub>";
 	return true;
 }
+// clips a media item based on data from the gedcom
+function picture_clip($person_id, $image_id)
+{
+	global $GEDCOMS,$GEDCOM;
+	// This gets the gedrec
+	$query = "select m_gedrec from ".$TBLPREFIX."media where m_media=\"".$image_id."\" AND m_gedfile=".$GEDCOMS[$GEDCOM]['id'];
+	$result = dbquery($query);
+	//Get the location of the file, and then make a location for the clipped image
+	
+	//store values to the variables
+	$top = get_gedcom_value("_TOP", 3, $result[0]);
+	$bottom = get_gedcom_value("_BOTTOM", 3, $result[0]);
+	$left = get_gedcom_value("_LEFT", 3, $result[0]);
+	$right = get_gedcom_value("_RIGHT", 3, $result[0]);
+	//check to see if all values were retrived
+	if ($top != null || $bottom != null || $left != null || $right != null)
+	{
+		//Get the location of the file, and then make a location for the clipped image
+		$second_query = "select m_file from pgv_media where m_media = \"".$image_id."\" and m_gedfile = \"".$GEDCOMS[$GEDCOM]['id'];
+		$image_loc = dbquery($second_query);
+		
+		$image_filename = check_media_depth($image_loc[0]);
+		$image_dest = "./".$MEDIA_DIRECTORY."/thumbs/".$person_id."_".$image_filename[count($image_filename)-1];
+		//call the cropimage function
+		cropimage($image_loc[0], $image_dest, $top, $bottom + 50);
+	}
+}
+
 ?>

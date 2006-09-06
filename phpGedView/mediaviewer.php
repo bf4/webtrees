@@ -1,10 +1,35 @@
 <?php
+/**
+ * Media View Page
+ *
+ * This page displays all information about media that is selected in 
+ * PHPGedView.
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2003  John Finlay and Others
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * @package PhpGedView
+ * @subpackage Admin
+ * @see mediaviewer.php
+ * @version 3
+ */
 //These files are required for this page to work
-require_once("includes/controllers/individual_ctrl.php");
-require_once("includes/serviceclient_class.php");
-require_once("includes/person_class.php");
-require_once("includes/media_class.php");
-require("config.php");
+require_once("includes/controllers/media_ctrl.php");
+
 //This prints the header page
 print_header($controller->getPageTitle());
 //Checks to see if the File Name ($filename) exists
@@ -12,6 +37,7 @@ if (isset($filename)){
 	//If the File Name ($filename) is set, then it will call the method to get the Media ID ($mid) from the File Name ($filename)
 	$mid = get_media_id_from_file($filename);
 	if (!$mid){
+		//This will set the Media ID to be false if the File given doesn't match to anything in the database
 		$mid = false;
 	}
 }
@@ -58,22 +84,26 @@ if (isset($mid) && $mid!=false){
 				</td>
 			</tr>
 		</table>
-		<?php
-		//The next set of code draws the table that displays information about the person
+		<?php 
+		//The next set of code draws the table that displays information about the person 
 		?>
 		<table width = 40%>
 			<tr>
 				<td>
-					<?php
+					<?php 
+					//Checks to see if the File exist in the system.
 					if (file_exists($mediaobject->getFilename())){
+						//If the file exists, it will attempt to get the image size
+						//If the image size returns a null, then the file isn't a image.
 						$imagesize = getimagesize($mediaobject->getFilename());
-
-							//This part creates the link to download the picture
+						
+							//This part creates the link to download the picture 
 							?>
 							<a href="<?php print $mediaobject->getFilename(); ?>"><?php print $pgv_lang["download_image"]; ?></a><br/>
-							<?php
+							<?php 
+							//Checks if the image size is null.
 							if ($imagesize[0]){
-							//Makes it so the picture when clicked opens the Image View Page
+							//Makes it so the picture when clicked opens the Image View Page 
 							?>
 							<a href="javascript:;openImageView();">
 							<img src="<?php print $mediaobject->getFilename(); ?>"/ border = 0 width = 200>
@@ -97,7 +127,7 @@ if (isset($mid) && $mid!=false){
 					}
 					?>
 				</td>
-				<?php
+				<?php 
 				//The following section of code generates the table that show the details of the image
 				?>
 				<td valign="top">
@@ -159,13 +189,16 @@ if (isset($mid) && $mid!=false){
 				<td bgcolor = #CCCCFF> <?php print $mediaobject->getFiletype(); ?> </td>
 			</tr>
 			<?php
+				//This does another check to see if the file exists.
+				//If so it will then check to see if the file's image size is null.
+				//If the file is null, it will not show the width and the height of the image
 				if (file_exists($mediaobject->getFilename())){
 					if ($imagesize[0]){
 				?>
 				<tr>
 					<td bgcolor = #9999FF> <?php print $pgv_lang["img_size"] ?> </td>
 					<td bgcolor = #CCCCFF> <?php
-					print $pgv_lang["width"].$imagesize[0];
+					print $pgv_lang["width"].$imagesize[0]; 
 					print "<br/>";
 					print $pgv_lang["height"].$imagesize[1];
 					?> </td>
@@ -176,7 +209,9 @@ if (isset($mid) && $mid!=false){
 				<tr >
 					<td bgcolor = #9999FF> <?php print $pgv_lang["file_size"]?> </td>
 					<td bgcolor = #CCCCFF> <?php
+					//Prints the file size
 					$size = filesize($mediaobject->getFilename());
+					//Rounds the size of the imgae to 2 decimal places
 					$size = round($size/1024, 2);
 					print $size." kb";
 					?> </td>
@@ -185,16 +220,18 @@ if (isset($mid) && $mid!=false){
 				}
 			?>
 		</table>
-
+		 
 	<?php
+	//Prints the footer
 	print_footer();
 }
 else{
+	//If there isn't any media loaded then this will print the no media tag.
 	echo "<div align=\"center\">".$pgv_lang["no_media"]."</div>";
 	print_footer();
 }
 ?>
-<?php
+<?php 
 // These java functions are needed for the code to work properly with the menu.
 ?>
 <script language="JavaScript" type="text/javascript">
