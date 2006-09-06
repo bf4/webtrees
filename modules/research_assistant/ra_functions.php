@@ -1145,6 +1145,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$sites["familysearch.php"] = "FamilySearch.org";	
 		$sites["genealogy.php"] = "Genealogy.com";	
 		$sites["ellisisland.php"] = "EllisIslandRecords.org";	
+		$sites["geneanet.php"] = "GeneaNet.org";
 		$opts = "";
 		$optCount = 1;
 			//load up the options into the html
@@ -1237,8 +1238,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		//Beginning of the auto search feature which gets dynamically populated with an individuals information to be sent to ancestry or familySearch
 		$out .= "		
 						<td align='left' valign='top'>
-							<form name='selector' action='' method='post' onsubmit='return false;'> 
-							<table width='50%'>
+							 
+							<table>
 								<tr>
 									<td align='center' class='topbottombar' colspan='2' height='50%'><b>".print_help_link("auto_search", "qm", '', false, true)."<b>".$pgv_lang['auto_search_text']."</b>
 
@@ -1246,19 +1247,22 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 								</tr>				 				
 		 						<tr>
 									<td class='topbottombar'>
+										<form name='selector' action='' method='post' onsubmit='return false;'>
 					 					<SELECT name='cbosite' onchange='search_selector()'>
 										" .$opts.														
 										"</SELECT> 
-
+										</form>
 									</td>
 								</tr>
-							</table>
-							</form>
-							<div id=\"testdiv\">";
+							<tr><td>
+							
+							<div id=\"searchdiv\">";
 							foreach($sites as $file=>$value) break;
 							include ("modules/research_assistant/search_plugin/".$file);
 							$out .=  autosearch_options();
 							$out .= "</div>
+							</td></tr>
+							</table>
 						</td>
 				</tr>
 			</table>";
@@ -1328,7 +1332,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 				{
 		  			if (oXmlHttp.readyState==4)
 		  			{
-						inbox = document.getElementById('testdiv');
+						inbox = document.getElementById('searchdiv');
 		   				inbox.innerHTML = oXmlHttp.responseText;
 		   			}
 		  		};

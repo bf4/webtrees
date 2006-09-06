@@ -234,4 +234,5 @@ $pgv_lang["autosearch_fsurname"]		= "Include father's surname:";
 $pgv_lang["autosearch_fgivennames"]		= "Include father's given names:";
 $pgv_lang["autosearch_msurname"]		= "Include mother's surname:";
 $pgv_lang["autosearch_mgivennames"]	    = "Include mother's given names:";   
+$pgv_lang["autosearch_country"]  	    = "Include country:";  
 ?>

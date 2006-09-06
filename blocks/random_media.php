@@ -39,7 +39,7 @@ if ($MULTI_MEDIA) {
 	function print_random_media($block = true, $config="", $side, $index) {
 		global $pgv_lang, $GEDCOM, $foundlist, $medialist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES, $GEDCOM_ID_PREFIX, $FAM_ID_PREFIX, $SOURCE_ID_PREFIX;
-		global $MEDIATYPE, $THUMBNAIL_WIDTH;
+		global $MEDIATYPE, $THUMBNAIL_WIDTH, $SHOW_IMAGEVIEW_ON_THUMB_CLICK;
 		global $PGV_BLOCKS, $command;
 
   		if (empty($config)) $config = $PGV_BLOCKS["print_random_media"]["config"];
@@ -115,7 +115,13 @@ if ($MULTI_MEDIA) {
 				if ($block) print " align=\"center\" class=\"details1\"";
 				else print " class=\"details2\"";
 				$mediaid = get_media_id_from_file($medialist[$value]["FILE"]);
+				if ($SHOW_IMAGEVIEW_ON_THUMB_CLICK == false){
 				print " ><a href=\"mediaviewer.php?mid=".$mediaid."\">";
+				}
+				else
+				{
+					print " ><a href=\"imageview.php?filename=".$medialist[$value]["FILE"]."\">";
+				}
 				$mediaTitle = "";
 				if ($medialist[$value]["TITL"]!=$medialist[$value]["FILE"]) {
 					$mediaTitle = PrintReady($medialist[$value]["TITL"]);
@@ -137,7 +143,7 @@ if ($MULTI_MEDIA) {
 				    print "<a href=\"medialist.php?action=filter&amp;search=yes&amp;filter=".PrintReady($medialist[$value]["TITL"])."&amp;ged=".$GEDCOM."\">";
 				    if (strlen($medialist[$value]["TITL"]) > 0) print "<b>". $mediaTitle ."</b>";
 				}
-				else print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($medialist[$value]["FILE"])."',$imgwidth, $imgheight);\">";
+				else print "<a href=\"mediaviewer.php?mid=".$mediaid."\">";
 				print "</a><br />";
 
 				PrintMediaLinks ($medialist[$value]["LINKS"], "normal");
