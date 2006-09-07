@@ -110,7 +110,7 @@ if (isset($mid) && $mid!=false){
 							<?php
 								//if title is empty use file path as alt text? see implementation in old random media block and medialist
 							?>
-							<img src="<?php print $mediaobject->getFilename(); ?>" border = "0" width = "200" alt="<?php print $mediaobject->getTitle(); ?>" />
+							<img src="<?php print $mediaobject->getFilename(); ?>" border = "0" width = "200" alt="<?php print $mediaobject->getTitle(); ?>" title="<?php print $mediaobject->getTitle(); ?>" />
 							</a>
 							<?php
 							//The following JavaScript function is needed to open the image view page
@@ -206,10 +206,11 @@ if (isset($mid) && $mid!=false){
 					print "<br/>";
 					print $pgv_lang["height"].$imagesize[1];
 					?> </td>
+				</tr>
 					<?php
 					}
 					?>
-				</tr>
+
 				<tr >
 					<td bgcolor = "#9999FF"> <?php print $pgv_lang["file_size"]?> </td>
 					<td bgcolor = "#CCCCFF"> <?php
