@@ -2,7 +2,7 @@
 /**
  * Media View Page
  *
- * This page displays all information about media that is selected in 
+ * This page displays all information about media that is selected in
  * PHPGedView.
  *
  * phpGedView: Genealogy Viewer
@@ -26,6 +26,7 @@
  * @subpackage Admin
  * @see mediaviewer.php
  * @version 3
+ * @TODO use more theme specific CSS, allow a more fluid layout to take advantage of the page width
  */
 //These files are required for this page to work
 require_once("includes/controllers/media_ctrl.php");
@@ -84,32 +85,35 @@ if (isset($mid) && $mid!=false){
 				</td>
 			</tr>
 		</table>
-		<?php 
-		//The next set of code draws the table that displays information about the person 
+		<?php
+		//The next set of code draws the table that displays information about the person
 		?>
-		<table width = 40%>
+		<table width = "40%">
 			<tr>
 				<td>
-					<?php 
+					<?php
 					//Checks to see if the File exist in the system.
 					if (file_exists($mediaobject->getFilename())){
 						//If the file exists, it will attempt to get the image size
 						//If the image size returns a null, then the file isn't a image.
 						$imagesize = getimagesize($mediaobject->getFilename());
-						
-							//This part creates the link to download the picture 
+
+							//This part creates the link to download the picture
 							?>
 							<a href="<?php print $mediaobject->getFilename(); ?>"><?php print $pgv_lang["download_image"]; ?></a><br/>
-							<?php 
+							<?php
 							//Checks if the image size is null.
 							if ($imagesize[0]){
-							//Makes it so the picture when clicked opens the Image View Page 
+							//Makes it so the picture when clicked opens the Image View Page
 							?>
 							<a href="javascript:;openImageView();">
-							<img src="<?php print $mediaobject->getFilename(); ?>"/ border = 0 width = 200>
+							<?php
+								//if title is empty use file path as alt text? see implementation in old random media block and medialist
+							?>
+							<img src="<?php print $mediaobject->getFilename(); ?>" border = "0" width = "200" alt="<?php print $mediaobject->getTitle(); ?>" />
 							</a>
 							<?php
-							//The following java function is needed to open the image view page
+							//The following JavaScript function is needed to open the image view page
 							?>
 							<script language="JavaScript" type="text/javascript">
 							function openImageView(){
@@ -127,22 +131,22 @@ if (isset($mid) && $mid!=false){
 					}
 					?>
 				</td>
-				<?php 
+				<?php
 				//The following section of code generates the table that show the details of the image
 				?>
 				<td valign="top">
-					<table width=100%>
+					<table width="100%">
 						<tr>
-							<td height=50%>
+							<td height="50%">
 								<br/>
 								 <?php print $pgv_lang["title"]; ?> <br/>
 								 <?php print $mediaobject->getTitle(); ?> <br/>
 							</td>
 						</tr>
 						<tr>
-							<td height = 50%>
+							<td height = "50%">
 								<br/>
-								<hr width=75%>
+								<hr width="75%" />
 								<br/>
 								<br/>
 								<?php
@@ -155,7 +159,7 @@ if (isset($mid) && $mid!=false){
 										foreach($persons as $i=>$row){
 											$person = Person::getInstance($row[0]);
 											if ($person->canDisplayName()){
-												echo "<li><a href=".$person->getLinkUrl().">".$person->getName()."</a></li>";
+												echo "<li><a href=\"".$person->getLinkUrl()."\">".$person->getName()."</a></li>";
 											}
 										}
 										//This closes the Unorderd List
@@ -169,8 +173,8 @@ if (isset($mid) && $mid!=false){
 			</tr>
 
 			<tr>
-				<td bgcolor = #9999FF> <?php print $pgv_lang["desc"]; ?> </td>
-				<td bgcolor = #CCCCFF> <?php
+				<td bgcolor = "#9999FF"> <?php print $pgv_lang["desc"]; ?> </td>
+				<td bgcolor = "#CCCCFF"> <?php
 								if ($mediaobject->getNote()!= ""){
 									print $mediaobject->getNote();
 								}
@@ -181,12 +185,12 @@ if (isset($mid) && $mid!=false){
 				 </td>
 			</tr>
 			<tr>
-				<td bgcolor = #9999FF> <?php print $pgv_lang["file_name"]; ?>: </td>
-				<td bgcolor = #CCCCFF> <?php print $mediaobject->getFilename(); ?> </td>
+				<td bgcolor = "#9999FF"> <?php print $pgv_lang["file_name"]; ?> </td>
+				<td bgcolor = "#CCCCFF"> <?php print $mediaobject->getFilename(); ?> </td>
 			</tr>
 			<tr >
-				<td bgcolor = #9999FF> <?php print $pgv_lang["file_type"]?> </td>
-				<td bgcolor = #CCCCFF> <?php print $mediaobject->getFiletype(); ?> </td>
+				<td bgcolor = "#9999FF"> <?php print $pgv_lang["file_type"]?> </td>
+				<td bgcolor = "#CCCCFF"> <?php print $mediaobject->getFiletype(); ?> </td>
 			</tr>
 			<?php
 				//This does another check to see if the file exists.
@@ -196,9 +200,9 @@ if (isset($mid) && $mid!=false){
 					if ($imagesize[0]){
 				?>
 				<tr>
-					<td bgcolor = #9999FF> <?php print $pgv_lang["img_size"] ?> </td>
-					<td bgcolor = #CCCCFF> <?php
-					print $pgv_lang["width"].$imagesize[0]; 
+					<td bgcolor = "#9999FF"> <?php print $pgv_lang["img_size"] ?> </td>
+					<td bgcolor = "#CCCCFF"> <?php
+					print $pgv_lang["width"].$imagesize[0];
 					print "<br/>";
 					print $pgv_lang["height"].$imagesize[1];
 					?> </td>
@@ -207,8 +211,8 @@ if (isset($mid) && $mid!=false){
 					?>
 				</tr>
 				<tr >
-					<td bgcolor = #9999FF> <?php print $pgv_lang["file_size"]?> </td>
-					<td bgcolor = #CCCCFF> <?php
+					<td bgcolor = "#9999FF"> <?php print $pgv_lang["file_size"]?> </td>
+					<td bgcolor = "#CCCCFF"> <?php
 					//Prints the file size
 					$size = filesize($mediaobject->getFilename());
 					//Rounds the size of the imgae to 2 decimal places
@@ -220,7 +224,7 @@ if (isset($mid) && $mid!=false){
 				}
 			?>
 		</table>
-		 
+
 	<?php
 	//Prints the footer
 	print_footer();
@@ -231,8 +235,8 @@ else{
 	print_footer();
 }
 ?>
-<?php 
-// These java functions are needed for the code to work properly with the menu.
+<?php
+// These JavaScript functions are needed for the code to work properly with the menu.
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
