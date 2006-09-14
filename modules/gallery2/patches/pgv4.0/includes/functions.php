@@ -961,7 +961,7 @@ function find_highlighted_object($pid, $indirec) {
 			else if ($prim=='Y') {
 				if (!isset($object['prim']) || !isset($object['level']) || $object['level']>$level) {
 					$object["file"] = check_media_depth($row[1]);
-					$object["thumb"] = thumbnail_file($row[1]);
+					$object["thumb"] = thumbnail_file($row[1], true, false, $pid);
 					$object["prim"] = $prim;
 					$object["level"] = $level;
 				}
@@ -969,7 +969,7 @@ function find_highlighted_object($pid, $indirec) {
 			//-- take the first level 1 object if we don't already have one and it doesn't have _THUM N or _PRIM N
 			else if (empty($object['file']) && $level==1 && $thum!='N' && $prim!='N') {
 				$object["file"] = check_media_depth($row[1]);
-				$object["thumb"] = thumbnail_file($row[1]);
+				$object["thumb"] = thumbnail_file($row[1], true, false, $pid);
 				$object["level"] = $level;
 			}
 		}

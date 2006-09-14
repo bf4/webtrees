@@ -154,7 +154,7 @@ function check_for_import($ged) {
 }
 function get_media_id_from_file($filename){
 	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS;
-	$dbq = "select m_media from ".$TBLPREFIX."media where m_file = \"./".$filename."\"";
+	$dbq = "select m_media from ".$TBLPREFIX."media where m_file LIKE \"%".$filename."\"";
 	$dbr = dbquery($dbq);
 	$mid = $dbr->fetchRow();
 	return $mid[0];
@@ -171,6 +171,22 @@ function get_media_relations($mid){
 	}
 	if (isset($media)){
 	return $media;
+	}
+}
+//Basically calls the get_media_relations method but it uses a file name rather than a media id.
+function get_media_relations_with_file_name($filename){
+global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS, $GEDCOM;
+	$dbq = "select m_media from ".$TBLPREFIX."media where m_file=\"".$filename."\" and m_gedfile=\"".$GEDCOMS[$GEDCOM]['id']."\"";
+	$dbr = dbquery($dbq);
+	if (isset($dbr)){
+		while($result = $dbr->fetchRow()) {
+			$media_id = $result[0];
+			$media_array = get_media_relations($media_id);
+			return $media_array;
+		}
+	}
+	else{
+		return array();
 	}
 }
 /**

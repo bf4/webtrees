@@ -1024,7 +1024,10 @@ function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
 	// NOTE: Lets get the file details
 	if (strstr($filename, "://"))
 		return $filename;
+	$media_id_number = get_media_id_from_file($filename);
+	
 	$filename = check_media_depth($filename, "NOTRUNC");
+	
 	$parts = pathinfo($filename);
 	$mainDir = $parts["dirname"] . "/";
 	$thumbDir = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY . "thumbs/", $mainDir);
@@ -1033,6 +1036,12 @@ function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
 		$thumbExt = strtolower($parts["extension"]);
 	else
 		$thumbExt = "";
+
+	if (!empty($pid)) {
+		// run the clip method foreach person associated with the picture
+		$thumbnail = picture_clip($pid, $media_id_number, $filename, $thumbDir);
+		if (!empty($thumbnail)) return $thumbnail;
+	}
 
 	if (!$generateThumb)
 		return $thumbDir . $thumbName;
@@ -1780,30 +1789,65 @@ function PrintMediaLinks($links, $size = "small") {
 	return true;
 }
 // clips a media item based on data from the gedcom
-function picture_clip($person_id, $image_id)
+function picture_clip($person_id, $image_id, $filename, $thumbDir)
 {
-	global $GEDCOMS,$GEDCOM;
+	global $GEDCOMS,$GEDCOM,$TBLPREFIX,$MEDIA_DIRECTORY;
 	// This gets the gedrec
 	$query = "select m_gedrec from ".$TBLPREFIX."media where m_media=\"".$image_id."\" AND m_gedfile=".$GEDCOMS[$GEDCOM]['id'];
-	$result = dbquery($query);
+	$res = dbquery($query);
+	$result = $res->fetchRow();
 	//Get the location of the file, and then make a location for the clipped image
 	
 	//store values to the variables
-	$top = get_gedcom_value("_TOP", 3, $result[0]);
-	$bottom = get_gedcom_value("_BOTTOM", 3, $result[0]);
-	$left = get_gedcom_value("_LEFT", 3, $result[0]);
-	$right = get_gedcom_value("_RIGHT", 3, $result[0]);
+	$top = get_gedcom_value("_TOP", 2, $result[0]);
+	$bottom = get_gedcom_value("_BOTTOM", 2, $result[0]);
+	$left = get_gedcom_value("_LEFT", 2, $result[0]);
+	$right = get_gedcom_value("_RIGHT", 2, $result[0]);
 	//check to see if all values were retrived
 	if ($top != null || $bottom != null || $left != null || $right != null)
 	{
-		//Get the location of the file, and then make a location for the clipped image
-		$second_query = "select m_file from pgv_media where m_media = \"".$image_id."\" and m_gedfile = \"".$GEDCOMS[$GEDCOM]['id'];
-		$image_loc = dbquery($second_query);
-		
-		$image_filename = check_media_depth($image_loc[0]);
-		$image_dest = "./".$MEDIA_DIRECTORY."/thumbs/".$person_id."_".$image_filename[count($image_filename)-1];
+		$image_filename = check_media_depth($filename);
+		$image_dest = $thumbDir.$person_id."_".$image_filename[count($image_filename)-1].".jpg";
 		//call the cropimage function
-		cropimage($image_loc[0], $image_dest, $top, $bottom + 50);
+		cropimage($filename, $image_dest, $left, $top, $right, $bottom); //removed offset 50
+		return  $image_dest;
+	}
+}
+function cropImage($image, $dest_image, $left, $top, $right, $bottom){ //$image is the string location of the original image, $dest_image is the string file location of the new image, $fx is the..., $fy is the...
+	global $THUMBNAIL_WIDTH;
+	$ims = getimagesize($image);
+	$cwidth = ($ims[0]-$right)-$left;
+	$cheight = ($ims[1]-$bottom)-$top;
+	$width = $THUMBNAIL_WIDTH;
+	$height = round($cheight * ($width/$cwidth));
+	if($ims['mime'] == "image/png") //if the type is png
+	{
+	$img = imagecreatetruecolor(($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
+	//$org_img = imagecreatefromjpeg($image);
+	$org_img = imagecreatefrompng($image);
+	$ims = getimagesize($image);
+	imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
+	//imagejpeg($img,$dest_image,90);
+	imagepng($img,$dest_image);
+	imagedestroy($img);
+	}
+	if($ims['mime'] == "image/jpeg") //if the type is jpeg
+	{
+	$img = imagecreatetruecolor($width, $height);
+	$org_img = imagecreatefromjpeg($image);
+	$ims = getimagesize($image);
+	imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
+	imagejpeg($img,$dest_image,90);
+	imagedestroy($img);
+	}
+	if($ims['mime'] == "image/gif") //if the type is gif
+	{
+	$img = imagecreatetruecolor(($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
+	$org_img =  imagecreatefromgif($image);
+	$ims = getimagesize($image);
+	imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
+	imagegif($img,$dest_image);
+	imagedestroy($img);
 	}
 }
 

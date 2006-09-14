@@ -238,7 +238,7 @@ class cssparser {
       foreach($values as $key => $value) {
         $result .= "  $key: $value;\n";
       }
-      $result .= "}\n\n";
+      $result .= "}*\n\n";
     }
     return $result;
   }

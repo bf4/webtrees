@@ -353,7 +353,7 @@ class IndividualControllerRoot extends BaseController {
 					$imgwidth = $imgsize[0]+40;
 					$imgheight = $imgsize[1]+150;
 					//Gets the Media View Link Information and Concatinate
-					$mid = get_media_id_from_file($firstmediarec["file"]);
+					$mid = $firstmediarec['mid'];
 					$mediaviewlink = "mediaviewer.php?mid=".$mid;
 					$result .= "<a href=\"".$mediaviewlink."\">";
 
