@@ -584,6 +584,29 @@ $lang["MULTI_LETTER_ALPHABET"]	= "dz,ch";
 $lang["DICTIONARY_SORT"]	= true;
 $language_settings["slovak"]  = $lang;
 
+//-- settings for estonian
+$lang = array();
+$lang["pgv_langname"]    = "estonian";
+$lang["pgv_lang_use"]    = false;
+$lang["pgv_lang"]    = "Eesti";
+$lang["lang_short_cut"]    = "et";
+$lang["langcode"]    = "et;";
+$lang["pgv_language"]    = "languages/lang.et.php";
+$lang["confighelpfile"]    = "languages/configure_help.et.php";
+$lang["helptextfile"]    = "languages/help_text.et.php";
+$lang["flagsfile"]    = "images/flags/estonia.gif";
+$lang["factsfile"]    = "languages/facts.et.php";
+$lang["DATE_FORMAT"]    = "D. M Y";
+$lang["TIME_FORMAT"]    = "G:i:s";
+$lang["WEEK_START"]    = "1";
+$lang["TEXT_DIRECTION"]    = "ltr";
+$lang["NAME_REVERSE"]    = false;
+$lang["ALPHABET_upper"]    = "ABCDEFGHIJKLMNOPQRSŠZŽTUVWÕÄÖÜXY";
+$lang["ALPHABET_lower"]    = "abcdefghijklmnopqrsšzžtuvwõäöüxy";
+$lang["MULTI_LETTER_ALPHABET"]    = "";
+$lang["DICTIONARY_SORT"]    = false;
+$language_settings["estonian"]  = $lang;
+
 //-- NEVER manually delete or edit this entry and every line above this entry! --END--//
 
 ?>
