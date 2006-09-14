@@ -108,8 +108,8 @@ if (isset($mid) && $mid!=false){
 							if ($imagesize[0]){
 							//Makes it so the picture when clicked opens the Image View Page
 							?>
-							<a href="javascript:;openImageView();">
-							<img src="<?php print $filename; ?>"/ border = 0 width = 200>
+							<a href="javascript:;openImageView();" onclick="return openImageView();">
+							<img src="<?php print $filename; ?>" border="0" width="200" />
 							</a>
 							<?php
 							//The following JavaScript function is needed to open the image view page
