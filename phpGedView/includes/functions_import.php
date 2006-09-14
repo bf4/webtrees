@@ -1744,36 +1744,3 @@ function subrecord_createobjectref($objrec, $objlevel, $m_media){
 	//- return the object media reference
 	return $objmed;
 }
-function cropImage($image, $dest_image, $fx, $fy){ //$image is the string location of the original image, $dest_image is the string file location of the new image, $fx is the..., $fy is the...
-
-	$ims = getimagesize($image);
-	if($ims['mime'] == "image/png") //if the type is png
-	{
-	$img = imagecreatetruecolor(($fy - $fx),($fy - $fx));
-	//$org_img = imagecreatefromjpeg($image);
-	$org_img = imagecreatefrompng($image);
-	$ims = getimagesize($image);
-	imagecopy($img,$org_img, 0, 0, $fx, fy, $ims[0], $ims[1]);
-	//imagejpeg($img,$dest_image,90);
-	imagepng($img,$dest_image);
-	imagedestroy($img);
-	}
-	if($ims['mime'] == "image/jpeg") //if the type is jpeg
-	{
-	$img = imagecreatetruecolor(($fy - $fx),($fy - $fx)); 
-	$org_img = imagecreatefromjpeg($image);
-	$ims = getimagesize($image);
-	imagecopy($img,$org_img, 0, 0, $fx, fy, $ims[0], $ims[1]);
-	imagejpeg($img,$dest_image,90);
-	imagedestroy($img);
-	}
-	if($ims['mime'] == "image/gif") //if the type is gif
-	{
-	$img = imagecreatetruecolor(($fy - $fx),($fy - $fx)); 
-	$org_img =  imagecreatefromgif($image);
-	$ims = getimagesize($image);
-	imagecopy($img,$org_img, 0, 0, $fx, fy, $ims[0], $ims[1]);
-	imagegif($img,$dest_image);
-	imagedestroy($img);
-	}
-}

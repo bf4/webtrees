@@ -212,7 +212,9 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			   $imgsize = findImageSize($object["file"]);
 			   $imgwidth = $imgsize[0]+50;
 			   $imgheight = $imgsize[1]+150;
-			   print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
+			   
+				if (!empty($object['mid'])) print "<a href=\"mediaviewer.php?mid=".$object['mid']."\" >";
+				else print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
 
 			   print "<img id=\"box-$pid.$personcount.$count-thumb\" src=\"".$object["thumb"]."\" vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"\" ";
 			   if (!$show_full) print " style=\"display: none;\"";

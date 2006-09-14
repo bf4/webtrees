@@ -26,9 +26,10 @@
  * @subpackage Blocks
  */
 
-require("modules/research_assistant/languages/lang.en.php");
+require_once("modules/research_assistant/languages/lang.en.php");
 global $lang_short_cut, $LANGUAGE;
-if (file_exists("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php")) require("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php");
+if (file_exists("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php")) require_once("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php");
+if (file_exists('modules/research_assistant/research_assistant.php')) include_once('modules/research_assistant/research_assistant.php');
 
 $pgv_lang["mytasks_block"] = "MyTasks Block";
 
@@ -49,6 +50,8 @@ function print_mytasks($block=true, $config="", $side, $index) {
   		if (isset($config["completed"])) $completed = $config["completed"];  // "yes" or "no"
   		else $completed = "no";
   		
+	   	$mod = new ra_functions();
+	   	$mod->init();
 		$userName = getUserName();
 		
 		//USERS CURRENT TASKS

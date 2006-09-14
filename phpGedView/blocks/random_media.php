@@ -114,13 +114,13 @@ if ($MULTI_MEDIA) {
 
 				if ($block) print " align=\"center\" class=\"details1\"";
 				else print " class=\"details2\"";
-				$mediaid = get_media_id_from_file($medialist[$value]["FILE"]);
+				$mediaid = $medialist[$value]["XREF"];
 				if ($SHOW_IMAGEVIEW_ON_THUMB_CLICK == false){
 				print " ><a href=\"mediaviewer.php?mid=".$mediaid."\">";
 				}
 				else
 				{
-					print " ><a href=\"imageview.php?filename=".$medialist[$value]["FILE"]."\">";
+					print " ><a href=\"javascript:;\" onclick=\"return openImage('".$medialist[$value]["FILE"]."', $imgwidth, $imgheight);\">";
 				}
 				$mediaTitle = "";
 				if ($medialist[$value]["TITL"]!=$medialist[$value]["FILE"]) {

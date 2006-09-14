@@ -31,8 +31,6 @@
 //These files are required for this page to work
 require_once("includes/controllers/media_ctrl.php");
 
-//This prints the header page
-print_header($controller->getPageTitle());
 //Checks to see if the File Name ($filename) exists
 if (isset($filename)){
 	//If the File Name ($filename) is set, then it will call the method to get the Media ID ($mid) from the File Name ($filename)
@@ -50,6 +48,8 @@ if (isset($mid) && $mid!=false){
 	$imagedescription = $mediaobject->getNote();
 	//This sets the controller ID to be the Media ID
 	$controller->pid = $mid;
+	//This prints the header page
+	print_header($mid." - ".$mediaobject->getTitle());
 	//The following lines of code are used to print the menu box on the top right hand corner
 ?>
 <table class="sublinks_table" cellspacing="4" cellpadding="0" align = "right">
@@ -93,31 +93,30 @@ if (isset($mid) && $mid!=false){
 				<td>
 					<?php
 					//Checks to see if the File exist in the system.
-					if (file_exists($mediaobject->getFilename())){
+					$filename = check_media_depth($mediaobject->getFilename());
+					//print check_media_depth($filename);
+					if (file_exists($filename)){
 						//If the file exists, it will attempt to get the image size
 						//If the image size returns a null, then the file isn't a image.
-						$imagesize = getimagesize($mediaobject->getFilename());
+						$imagesize = getimagesize($filename);
 
 							//This part creates the link to download the picture
 							?>
-							<a href="<?php print $mediaobject->getFilename(); ?>"><?php print $pgv_lang["download_image"]; ?></a><br/>
+							<a href="<?php print $filename; ?>"><?php print $pgv_lang["download_image"]; ?></a><br/>
 							<?php
 							//Checks if the image size is null.
 							if ($imagesize[0]){
 							//Makes it so the picture when clicked opens the Image View Page
 							?>
 							<a href="javascript:;openImageView();">
-							<?php
-								//if title is empty use file path as alt text? see implementation in old random media block and medialist
-							?>
-							<img src="<?php print $mediaobject->getFilename(); ?>" border = "0" width = "200" alt="<?php print $mediaobject->getTitle(); ?>" title="<?php print $mediaobject->getTitle(); ?>" />
+							<img src="<?php print $filename; ?>"/ border = 0 width = 200>
 							</a>
 							<?php
 							//The following JavaScript function is needed to open the image view page
 							?>
 							<script language="JavaScript" type="text/javascript">
 							function openImageView(){
-								window.open('imageview.php?filename=<?php print $mediaobject->getFilename(); ?>', '_Blank', 'width=500, height=500, toolbar=1, resizable=1');
+								window.open('imageview.php?filename=<?php print $filename; ?>', '_Blank', 'width=500, height=500, toolbar=1, resizable=1');
 							}
 							</script>
 							<?php

@@ -1011,6 +1011,7 @@ if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_R
 	else {
 	   include_once('modules/research_assistant/research_assistant.php');
 	   $mod = new ra_functions();
+	   $mod->init();
 	   $out = $mod->tab($controller->indi);
 	   print $out;
 	}

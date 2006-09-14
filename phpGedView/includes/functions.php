@@ -990,7 +990,7 @@ function find_highlighted_object($pid, $indirec) {
 				else if ($prim=='Y') {
 					if (!isset($object['prim']) || !isset($object['level']) || $object['level']>$level) {
 						$object["file"] = check_media_depth($row[1]);
-						$object["thumb"] = thumbnail_file($row[1]);
+						$object["thumb"] = thumbnail_file($row[1], true, false, $pid);  
 						$object["prim"] = $prim;
 						$object["level"] = $level;
 						$object["mid"] = $row[0];
@@ -999,7 +999,7 @@ function find_highlighted_object($pid, $indirec) {
 				//-- take the first level 1 object if we don't already have one and it doesn't have _THUM N or _PRIM N
 				else if (empty($object['file']) && $level==1 && $thum!='N' && $prim!='N') {
 					$object["file"] = check_media_depth($row[1]);
-					$object["thumb"] = thumbnail_file($row[1]);
+					$object["thumb"] = thumbnail_file($row[1], true, false, $pid);
 					$object["level"] = $level;
 					$object["mid"] = $row[0];
 				}
@@ -1026,7 +1026,7 @@ function find_highlighted_object($pid, $indirec) {
 				else if ($prim=='Y') {
 					if (!isset($object['prim']) || !isset($object['level']) || $object['level']>$level) {
 						$object["file"] = check_media_depth($row[1]);
-						$object["thumb"] = thumbnail_file($row[1]);
+						$object["thumb"] = thumbnail_file($row[1], true, false, $pid);
 						$object["prim"] = $prim;
 						$object["level"] = $level;
 						$object["mid"] = $row[0];
@@ -1035,7 +1035,7 @@ function find_highlighted_object($pid, $indirec) {
 				//-- take the first level 1 object if we don't already have one and it doesn't have _THUM N or _PRIM N
 				else if (empty($object['file']) && $level==1 && $thum!='N' && $prim!='N') {
 					$object["file"] = check_media_depth($row[1]);
-					$object["thumb"] = thumbnail_file($row[1]);
+					$object["thumb"] = thumbnail_file($row[1], true, false, $pid);
 					$object["level"] = $level;
 					$object["mid"] = $row[0];
 				}
@@ -3219,7 +3219,7 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
 function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $LANGUAGE, $pgv_language, $lang_short_cut, $pgv_lang;
 	global $TEXT_DIRECTION, $TEXT_DIRECTION_array;
-	global $DATE_FORMAT, $DATE_FORMAT_array;
+	global $DATE_FORMAT, $DATE_FORMAT_array, $CONFIGURED;
 	global $TIME_FORMAT, $TIME_FORMAT_array;
 	global $WEEK_START, $WEEK_START_array;
 	global $NAME_REVERSE, $NAME_REVERSE_array;
@@ -3231,7 +3231,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	$result = false;
 	if ($forceLoad) {
 		$LANGUAGE = "english";
-		require ($pgv_language[$LANGUAGE]);			// Load English
+		require($pgv_language[$LANGUAGE]);			// Load English
 
 		$TEXT_DIRECTION = $TEXT_DIRECTION_array[$LANGUAGE];
 		$DATE_FORMAT	= $DATE_FORMAT_array[$LANGUAGE];
@@ -3239,15 +3239,19 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		$WEEK_START		= $WEEK_START_array[$LANGUAGE];
 		$NAME_REVERSE	= $NAME_REVERSE_array[$LANGUAGE];
 
+		check_db();
 		// Load functions that are specific to the active language
-		@include_once("./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php");
-
+		if (file_exists("./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php");
+		// load admin lang keys
+		if ((userGedcomAdmin(getUserName()) || !$CONFIGURED) && file_exists("./languages/admin.".$lang_short_cut[$LANGUAGE].".php")) include_once("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
+		// load the edit lang keys
+		if (userCanEdit(getUserName()) && file_exists("./languages/editor.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
 		$result = true;
 	}
 
 	if ($desiredLanguage!=$LANGUAGE && file_exists($pgv_language[$desiredLanguage])) {
 		$LANGUAGE = $desiredLanguage;
-		include($pgv_language[$LANGUAGE]);		// Load the requested language
+		include_once($pgv_language[$LANGUAGE]);		// Load the requested language
 
 		$TEXT_DIRECTION = $TEXT_DIRECTION_array[$LANGUAGE];
 		$DATE_FORMAT	= $DATE_FORMAT_array[$LANGUAGE];
@@ -3258,6 +3262,11 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// Load functions that are specific to the active language
 		@include_once("./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php");
 
+		check_db();
+		// load admin lang keys
+		if ((userGedcomAdmin(getUserName()) || !$CONFIGURED) && file_exists("./languages/admin.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
+		// load the edit lang keys
+		if (userCanEdit(getUserName()) && file_exists("./languages/editor.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
 		$result = true;
 	}
 

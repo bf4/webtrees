@@ -570,7 +570,7 @@ function print_media_links($factrec, $level,$pid='') {
 			}
 
 			$mainMedia = check_media_depth($row["m_file"], "NOTRUNC");
-			$thumbnail = thumbnail_file($mainMedia);
+			$thumbnail = thumbnail_file($mainMedia, true, false, $pid);
 			$isExternal = stristr($row["m_file"],"://");
 			$mediaTitle = $row["m_titl"];
 
@@ -1190,7 +1190,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	if ($rtype=='new') $styleadd = "change_new";
 	if ($rtype=='old') $styleadd = "change_old";
 	// NOTEStart printing the media details
-	$thumbnail = thumbnail_file($rowm["m_file"]);
+	$thumbnail = thumbnail_file($rowm["m_file"], true, false, $pid);
 	$isExternal = stristr($thumbnail,"://");
 
 	$linenum = 0;
