@@ -593,6 +593,7 @@ $pgv_lang["lang_name_arabic"]		= "Arabic";
 $pgv_lang["lang_name_lithuanian"]	= "Lithuanian";
 $pgv_lang["lang_name_vietnamese"]	= "Vietnamese";
 $pgv_lang["lang_name_slovak"]		= "Slovak";
+$pgv_lang["lang_name_estonian"]		= "Estonian";
 $pgv_lang["lang_new_language"]		= "New Language";
 $pgv_lang["original_lang_name"]		= "Original name of language in #D_LANGNAME#";
 $pgv_lang["original_lang_name_help"]	= "~Original name of language~<br /><br />How is this language named in this language?<br /><br />English calls itself <b>English</b>;  German calls itself <b>Deutsch</b>;  Dutch calls itself <b>Nederlands</b>;  Czech calls itself <b>Ceština</b>, etc.<br />";
