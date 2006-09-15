@@ -45,7 +45,7 @@ require_once 'modules/research_assistant/forms/ra_GeneratedTask.php';
 //}
 
 // If the user doesnt have access then take them to the index.
-if ($SHOW_RESEARCH_ASSISTANT < getUserAccessLevel()) {
+if ($SHOW_RESEARCH_ASSISTANT < getUserAccessLevel() && preg_match("/index.php/", $SCRIPT_NAME)==0) {
 	header("Location: index.php");
 	exit;
 }
