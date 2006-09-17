@@ -91,6 +91,7 @@ $factarray["FILE"] = "Zewnętrzny plik";
 $factarray["FORM"] = "Format";
 $factarray["GIVN"] = "Imię (Imiona)";
 $factarray["GRAD"] = "Ukończenie studiów";
+$factarray["HUSB"]  = "Mąż";
 $factarray["IDNO"] = "Numer Identyfikacyjny";
 $factarray["IMMI"] = "Imigracja";
 $factarray["LEGA"] = "Legatariusz / Zapisobiorca";
@@ -149,12 +150,15 @@ $factarray["TEXT"] = "Tekst";
 $factarray["TIME"] = "Czas";
 $factarray["TITL"] = "Tytuł";
 $factarray["TYPE"] = "Typ";
+$factarray["WIFE"]  = "Żona";
 $factarray["WILL"] = "Testament";
 $factarray["_EMAIL"] = "Adres email";
 $factarray["EMAIL"]	= "Adres email";
 $factarray["_TODO"] = "Do zrobienia";
 $factarray["_UID"] = "Uniwersalny Identyfikator";
 $factarray["_PGVU"]	= "Ostatnie zmiany wprowadził(a)";
+$factarray["SERV"] = "Zdalny serwer";
+$factarray["_GEDF"] = "Plik GEDCOM";
 $factarray["_PRIM"]	= "Wyróżnione zdjęcie";
 $factarray["_THUM"]	= "Użyj tego zdjęcia jako miniaturki?";
 
@@ -196,6 +200,7 @@ $factarray["ROMN"] = "Zromanizowany";
 // PAF related facts
 $factarray["_NAME"] = "Nazwisko adresowe";
 $factarray["URL"] = "Adres WWW";
+$factarray["_URL"] = "Adres WWW";
 $factarray["_HEB"] = "Hebrajski";
 $factarray["_SCBK"] = "Album";
 $factarray["_TYPE"] = "Rodzaj media";
@@ -204,6 +209,7 @@ $factarray["_SSHOW"] = "Przegląd slajdów";
 // Rootsmagic
 $factarray["_SUBQ"]= "Wersja skrócona";
 $factarray["_BIBL"] = "Bibliografia";
+$factarray["EMAL"]	= "Adres e-mail";
 
 // Other common customized facts
 $factarray["_ADPF"]	= "Adoptowany(a) przez ojca";
@@ -235,7 +241,20 @@ $factarray["_STAT"]	= "Status małżeński";
 $factarray["MARR_RELIGIOUS"] = "Ślub kościelny";
 $factarray["MARR_PARTNERS"] = "Zarejestrowane partnerstwo";
 $factarray["MARR_UNKNOWN"] = "Małżeństwo nieznanego typu";
+$factarray["_DEAT_GPAR"] = "Śmierć babci/dziadka";
 $factarray["_HNM"] = "Nazwisko hebrajskie";
+$factarray["_DEAT_SPOU"] = "Śmierć żony/męża";
+$factarray["_BIRT_SIBL"] = "Narodziny rodzeństwa";
+$factarray["_DEAT_MOTH"] = "Śmierć matki";
+$factarray["_MARR_MOTH"] = "Ślub matki";
+$factarray["_DEAT_FATH"] = "Śmierć ojca";
+$factarray["_MARR_FATH"] = "Ślub ojca";
+$factarray["_DEAT_GCHI"] = "Śmierć wnuka";
+$factarray["_MARR_GCHI"] = "Ślub wnuka";
+$factarray["_BIRT_GCHI"] = "Narodziny wnuka";
+$factarray["_DEAT_CHIL"] = "Śmierć dziecka";
+$factarray["_MARR_CHIL"] = "Ślub dziecka";
+$factarray["_BIRT_CHIL"] = "Narodziny dziecka";
 $factarray["MARR_CIVIL"] = "Ślub cywilny";
 $factarray["COMM"]	= "Komentarz";
 

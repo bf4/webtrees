@@ -32,6 +32,7 @@ $pgv_lang["configure"]			= "Konfiguracja PhpGedView";
 $pgv_lang["gedconf_head"]		= "Konfiguracja GEDCOM";
 $pgv_lang["configure_head"]		= "Konfiguracja PhpGedView";
 $pgv_lang["advanced_conf"]		= "Opcje zaawansowanej konfiguracji";
+$pgv_lang["media_conf"]			= "Multimedia";
 $pgv_lang["standard_conf"]		= "Opcje standartowej konfiguracji";
 $pgv_lang["default_user"]		= "Utwórz domyślnego użytkownika- administratora.";
 $pgv_lang["about_user"]			= "Musisz najpierw utworzyć  konto głównego użytkownika - administratora.  Ten użytkownik będzie miał prawo do uaktualniania plików konfiguracyjnych, przeglądania prywatnych danych, oraz tworzenia nowych użytkowników.";
@@ -87,6 +88,7 @@ $pgv_lang["AUTHENTICATION_MODULE"]	= "Plik modułu uwierzytelniania:";
 $pgv_lang["PRIVACY_MODULE"]		= "Plik prywatnosci:";
 $pgv_lang["HIDE_LIVE_PEOPLE"]		= "Ukryj żyjące osoby:";
 $pgv_lang["CHECK_CHILD_DATES"]		= "Sprawdź daty dzieci:";
+$pgv_lang["EDIT_AUTOCLOSE"]		= "Automatycznie zamykaj okno edycji";
 $pgv_lang["ALLOW_EDIT_GEDCOM"]		= "Zezwól na edycję on-line:";
 $pgv_lang["INDEX_DIRECTORY"]		= "Katalog pliku Index:";
 $pgv_lang["ALPHA_INDEX_LISTS"]		= "Połam długie listy według pierwszej litery:";
@@ -100,6 +102,7 @@ $pgv_lang["FAVICON"]			= "Ikona ulubionych:";
 $pgv_lang["THEME_DIR"]			= "Katalog motywów:";
 $pgv_lang["TIME_LIMIT"]			= "Limit czasu PHP:";
 $pgv_lang["PGV_SESSION_SAVE_PATH"]	= "Ścieżka zapisu sesji:";
+$pgv_lang["ALLOW_USER_THEMES"]		= "Pozwól użytkownikom zmieniać wygląd strony";
 $pgv_lang["PGV_SESSION_TIME"]		= "Limit czasu sesji:";
 $pgv_lang["SHOW_STATS"]			= "Pokazuj statystyki wykonywania:";
 
@@ -112,9 +115,12 @@ $pgv_lang["download_file"]	= "ściągnij plik";
 $pgv_lang["edit_privacy"]			= "Configuration of the privacy-file";
 $pgv_lang["save_changed_settings"]		= "Zapisz zmiany";
 $pgv_lang["SHOW_DEAD_PEOPLE"]			= "Pokaż nieżyjących";
+$pgv_lang["translator_tools"]	= "Narzędzia tłumacza";
+$pgv_lang["enable_disable_lang"]	= "Konfiguruj języki";
 
 //-- language edit utility
 $pgv_lang["edit_langdiff"]			= "Edytuj zawartość plików językowych";
+$pgv_lang["edit_lang_utility"]		= "Narzędzie edycji plików języka";
 $pgv_lang["language_to_edit"]			= "Język do edytowania";
 $pgv_lang["file_to_edit"]			= "Typ pliku";
 $pgv_lang["check"]			= "Sprawdź";
@@ -140,5 +146,6 @@ $pgv_lang["lang_name_polish"]		= "Polski";
 $pgv_lang["lang_language"]		= "Język";
 $pgv_lang["lang_edit"]			= "Edytuj";
 $pgv_lang["export"]			= "Eksportuj";
+$pgv_lang["SHOW_SOURCES"]			= "Pokaż źródła";
 
 ?>
