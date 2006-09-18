@@ -22,13 +22,13 @@
  * @package PhpGedView
  * @subpackage Gallery2
  * @version $Id$
- * @author Clovis
+ * Language author Ixen Gerthannes
  */
-$pgv_lang['mod_gallery2'] = 'Galeria de fotos';
-$pgv_lang['mod_gallery2_siteadmin'] = 'Admin';
-$pgv_lang['mod_gallery2_useralbum'] = 'Meu Album';
-$pgv_lang['mod_gallery2_advsearch'] = 'Busca avan&ccedil;ada';
-$pgv_lang['mod_gallery2_error_user_create'] = "Ocorreram erros durante o registro do usu&aacute;rio.";
-$pgv_lang['mod_gallery2_error_user_check'] = "Ocorreram erros enquanto se procedia a verifica&ccedil;&atilde;o se o usu&aacute;rio existia.";
-$pgv_lang['mod_gallery2_error_init'] = "Ocorreram erros durante a inicializa&ccedil;&atilde;o do m&oacute;dulo Gallery.";
+$pgv_lang['mod_gallery2'] = 'Galeria';
+$pgv_lang['mod_gallery2_siteadmin'] = 'Administracja galerią';
+$pgv_lang['mod_gallery2_useralbum'] = 'Twój album';
+$pgv_lang['mod_gallery2_advsearch'] = 'Wyszukiwanie zaawansowane';
+$pgv_lang['mod_gallery2_error_user_create'] = "Wystąpił błąd podczas tworzenia użytkownika.";
+$pgv_lang['mod_gallery2_error_user_check'] = "Wystąpił błąd podczas sprawdzania czy użytkownik już istnieje.";
+$pgv_lang['mod_gallery2_error_init'] = "Wystąpił błąd podczas próby inicjalizacji galerii.";
 ?>
