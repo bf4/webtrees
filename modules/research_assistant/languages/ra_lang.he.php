@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: research_assistant.php 47 2005-10-25 19:32:25Z wlasson $
+ * @version $Id$
  * @author		Jason Porter
  * @author 		Wade Lasson
  * @author 		Brandon Gagnon

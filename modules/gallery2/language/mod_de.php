@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Gallery2
- * @version $Id: $
+ * @version $Id$
  * @author Alexander [ali3n]
  */
 $pgv_lang['mod_gallery2'] = 'Gallery';
