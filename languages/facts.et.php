@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @author Anu Mullari
  * @created 2006-07-27
- * $Id: facts.et.php 1 2006-09-05 20:00:54 canajun2eh $
+ * $Id$
  */
 if (strstr($_SERVER["SCRIPT_NAME"],"facts")) {
   print "You cannot access a language file directly.";

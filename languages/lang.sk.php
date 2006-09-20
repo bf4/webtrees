@@ -1676,4 +1676,6 @@ $pgv_lang["page_x_of_y"]			= "Stránka #GLOBALS[currentPage]# z #GLOBALS[lastPag
 $pgv_lang["roman_surn"]				= "Priezvisko latinkou";
 $pgv_lang["roman_givn"]				= "Meno latinkou";
 $pgv_lang["upload_replacement"]		  	="Zmena cesty načítania";
+
+if (file_exists( "languages/lang.sk.extra.php")) require  "languages/lang.sk.extra.php";
 ?>
