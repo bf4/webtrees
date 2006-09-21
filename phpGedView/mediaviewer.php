@@ -82,7 +82,7 @@ else{
 					<?php 
 					//Checks to see if the File exist in the system.
 					$filename = $controller->getLocalFilename();
-					if (file_exists($filename)){
+					if (preg_match("~://~", $filename) || file_exists($filename)){
 						//If the file exists, it will attempt to get the image size
 						//If the image size returns a null, then the file isn't a image.
 						$imagesize = getimagesize($filename);
