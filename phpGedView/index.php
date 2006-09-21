@@ -31,7 +31,7 @@ if (isset ($_REQUEST['mod']))
 	exit;
 }
 
-require("config.php");
+require_once("config.php");
 
 if (!isset($CONFIGURED)) {
 	print "Unable to include the config.php file.  Make sure that . is in your PHP include path in the php.ini file.";

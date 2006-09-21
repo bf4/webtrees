@@ -2184,6 +2184,8 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 		// 1 DEAT Y with no DATE => print YES
 		// 1 DEAT N is not allowed
 		// It is not proper GEDCOM form to use a N(o) value with an event tag to infer that it did not happen.
+		$factrec = str_replace("\r\nPGV_OLD\r\n", "", $factrec);
+		$factrec = str_replace("\r\nPGV_NEW\r\n", "", $factrec);
 		$factdetail = preg_split("/ /",$factrec);
 		if (isset($factdetail)) if (count($factdetail) == 3) if (strtoupper(trim($factdetail[2])) === "Y") print $pgv_lang["yes"];
 	}

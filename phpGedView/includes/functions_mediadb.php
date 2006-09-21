@@ -1788,6 +1788,45 @@ function PrintMediaLinks($links, $size = "small") {
 		print "</sub>";
 	return true;
 }
+
+function get_media_id_from_file($filename){
+	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS;
+	$dbq = "select m_media from ".$TBLPREFIX."media where m_file LIKE \"%".$filename."\"";
+	$dbr = dbquery($dbq);
+	$mid = $dbr->fetchRow();
+	return $mid[0];
+}
+//returns an array of rows from the database containing the Person ID's for the people associated with this picture
+function get_media_relations($mid){
+	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS, $GEDCOM;
+	$dbq = "SELECT mm_gid FROM ".$TBLPREFIX."media_mapping WHERE mm_media=\"".$mid."\" AND mm_gedfile='".$GEDCOMS[$GEDCOM]['id']."'";
+	$dbr = dbquery($dbq);
+	while($row = $dbr->fetchRow()) {
+		if ($row[0] != $mid){
+			$media[$row[0]] = id_type($row[0]);
+		}
+	}
+	if (isset($media)){
+		return $media;
+	}
+}
+//Basically calls the get_media_relations method but it uses a file name rather than a media id.
+function get_media_relations_with_file_name($filename){
+global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS, $GEDCOM;
+	$dbq = "select m_media from ".$TBLPREFIX."media where m_file=\"".$filename."\" and m_gedfile=\"".$GEDCOMS[$GEDCOM]['id']."\"";
+	$dbr = dbquery($dbq);
+	if (isset($dbr)){
+		while($result = $dbr->fetchRow()) {
+			$media_id = $result[0];
+			$media_array = get_media_relations($media_id);
+			return $media_array;
+		}
+	}
+	else{
+		return array();
+	}
+}
+
 // clips a media item based on data from the gedcom
 function picture_clip($person_id, $image_id, $filename, $thumbDir)
 {

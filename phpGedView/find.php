@@ -355,6 +355,7 @@ print "<a href=\"javascript:;\" onclick=\"if (window.opener.showchanges) window.
 print "<br />";
 
 if ($action=="filter") {
+	$filter = trim($filter);
 	// Output Individual
 	if ($type == "indi") {
 		$oldged = $GEDCOM;
@@ -565,6 +566,7 @@ if ($action=="filter") {
 						if ($chooseType=="file" && !empty($media["XREF"])) $isvalid = false;
 						if ($chooseType!="file" && empty($media["XREF"])) $isvalid = false;
 					}
+					
 					if ($isvalid) {
 						if ($media["EXISTS"] && @filesize(filename_decode($media["FILE"])) != 0){
 							$imgsize = findImageSize($media["FILE"]);
