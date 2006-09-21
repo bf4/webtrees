@@ -2021,6 +2021,11 @@ $pgv_lang["TYPE__video"] = "Video";
 
 //-- Other media suff
 $pgv_lang["view_slideshow"] = "View as slideshow";
+$pgv_lang["download_image"]			= "Download File";
+$pgv_lang["no_media"]				= "No Media Found";
+$pgv_lang["relations_heading"]		= "The image relates to:";
+$pgv_lang["file_size"]				= "File Size";
+$pgv_lang["img_size"]				= "Image Size";
 
 //-- Modules
 $pgv_lang["module_error_unknown_action_v2"] = "Unknown action: [action].";

@@ -38,8 +38,9 @@ if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
  * @param string $pid		The Gedcom Xref ID of the person the fact belongs to (required to check fact privacy)
  * @param int $linenum		The line number where this fact started in the original gedcom record (required for editing)
  * @param string $indirec	optional INDI record for age calculation at family event
+ * @param boolean $noedit	Hide or show edit links
  */
-function print_fact($factrec, $pid, $linenum, $indirec=false) {
+function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 	 global $factarray;
 	 global $nonfacts, $birthyear, $birthmonth, $birthdate;
 	 global $hebrew_birthyear, $hebrew_birthmonth, $hebrew_birthdate;
@@ -99,7 +100,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false) {
 			   print $factarray[$fact];
 			   if ($fact=="_BIRT_CHIL" and isset($n_chil)) print "<br />".$pgv_lang["number_sign"].$n_chil++;
 			   if ($fact=="_BIRT_GCHI" and isset($n_gchi)) print "<br />".$pgv_lang["number_sign"].$n_gchi++;
-			   if ((userCanEdit(getUserName()))&&($styleadd!="change_old")&&($linenum>0)&&($view!="preview")&&(!FactEditRestricted($pid, $factrec))) {
+			   if (!$noedit && (userCanEdit(getUserName()))&&($styleadd!="change_old")&&($linenum>0)&&($view!="preview")&&(!FactEditRestricted($pid, $factrec))) {
 					$menu = array();
 					$menu["label"] = $pgv_lang["edit"];
 					$menu["labelpos"] = "right";
@@ -167,11 +168,12 @@ function print_fact($factrec, $pid, $linenum, $indirec=false) {
 			   else $rowID = "row_".$styleadd;
 			   print "\n\t\t<tr id=\"".$rowID."\" name=\"".$rowID."\">";
 			   if (isset($factarray["$factref"])) $label = $factarray[$factref];
+			   else if (isset($pgv_lang[$factref])) $label = $pgv_lang[$factref];
 			   else $label = $factref;
 			   print "<td class=\"descriptionbox $styleadd center width20\">";
 			   if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/".$factref.".gif")) print "<img src=\"".$PGV_IMAGE_DIR."/facts/".$factref.".gif\" alt=\"".$label."\" title=\"".$label."\" align=\"middle\" /> ";
 			   print $label;
-			   if ((userCanEdit(getUserName()))&&($styleadd!="change_old")&&($linenum>0)&&($view!="preview")&&(!FactEditRestricted($pid, $factrec))) {
+			   if (!$noedit && (userCanEdit(getUserName()))&&($styleadd!="change_old")&&($linenum>0)&&($view!="preview")&&(!FactEditRestricted($pid, $factrec))) {
 				   $menu = array();
 					$menu["label"] = $pgv_lang["edit"];
 					$menu["labelpos"] = "right";
@@ -304,12 +306,12 @@ function print_fact($factrec, $pid, $linenum, $indirec=false) {
 						if (get_sub_record(2, "2 DATE", $factrec)=="") {
 							print $pgv_lang["yes"]."<br />";
 						}
-					}
+					}*/
 					else if ($event=="N") {
 						if (get_sub_record(2, "2 DATE", $factrec)=="") {
-							print $pgv_lang["no"]."<br />";
+							print $pgv_lang["no"];
 						}
-					}*/
+						}
 					else if (strstr("URL WWW ", $fact." ")) {
 						 print "<a href=\"".$event."\" target=\"new\">".PrintReady($event)."</a>";
 					}
@@ -1151,6 +1153,7 @@ function print_main_media($pid, $level=1, $related=false) {
 		else {
 			$row = array();
 			$newrec = find_updated_record($media_id);
+			if (empty($newrec)) $newrec = find_media_record($media_id);
 			$row['m_media'] = $media_id;
 			$row['m_file'] = get_gedcom_value("FILE", 1, $newrec);
 			$row['m_titl'] = get_gedcom_value("TITL", 1, $newrec);

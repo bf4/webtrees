@@ -152,43 +152,7 @@ function check_for_import($ged) {
 	}
 	return false;
 }
-function get_media_id_from_file($filename){
-	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS;
-	$dbq = "select m_media from ".$TBLPREFIX."media where m_file LIKE \"%".$filename."\"";
-	$dbr = dbquery($dbq);
-	$mid = $dbr->fetchRow();
-	return $mid[0];
-}
-//returns an array of rows from the database containing the Person ID's for the people associated with this picture
-function get_media_relations($mid){
-	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS, $GEDCOM;
-	$dbq = "select i.i_id from ".$TBLPREFIX."individuals i join ".$TBLPREFIX."media_mapping mm on i.i_id = mm.mm_gid where mm.mm_media = \"".$mid."\" AND mm.mm_gedfile='".$GEDCOMS[$GEDCOM]['id']."' AND mm.mm_gedfile=i.i_file";
-	$dbr = dbquery($dbq);
-	while($row = $dbr->fetchRow()) {
-		if ($row[0] != $mid){
-			$media[] = $row;
-		}
-	}
-	if (isset($media)){
-	return $media;
-	}
-}
-//Basically calls the get_media_relations method but it uses a file name rather than a media id.
-function get_media_relations_with_file_name($filename){
-global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS, $GEDCOM;
-	$dbq = "select m_media from ".$TBLPREFIX."media where m_file=\"".$filename."\" and m_gedfile=\"".$GEDCOMS[$GEDCOM]['id']."\"";
-	$dbr = dbquery($dbq);
-	if (isset($dbr)){
-		while($result = $dbr->fetchRow()) {
-			$media_id = $result[0];
-			$media_array = get_media_relations($media_id);
-			return $media_array;
-		}
-	}
-	else{
-		return array();
-	}
-}
+
 /**
  * find the gedcom record for a family
  *

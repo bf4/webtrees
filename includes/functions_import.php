@@ -509,6 +509,15 @@ function update_dates($gid, $indirec) {
 	return $count;
 }
 
+/**
+ * Insert media items into the database
+ * This method is used in conjuction with the gedcom import/update routines
+ * @param string $objrec	The OBJE subrecord
+ * @param int $objlevel		The original level of this OBJE
+ * @param boolean $update	Whether or not this is an update or an import
+ * @param string $gid		The XREF ID of the record this OBJE is related to
+ * @param int $count		The count of OBJE records in the parent record
+ */
 function insert_media($objrec, $objlevel, $update, $gid, $count) {
 	global $TBLPREFIX, $media_count, $GEDCOMS, $FILE, $DBCONN, $found_ids, $fpnewged;
 
@@ -697,6 +706,16 @@ function update_media($gid, $indirec, $update = false) {
 				else $newrec .= $line . "\r\n";
 			}
 		}
+	}
+	//-- make sure the last line gets handled
+	if ($inobj) {
+		$objref = insert_media($objrec, $objlevel, $update, $gid, $count);
+		$count++;
+		$newrec .= $objref;
+
+		// NOTE: Set the details for the next media record
+		$objlevel = 0;
+		$inobj = false;
 	}
 	return $newrec;
 }
