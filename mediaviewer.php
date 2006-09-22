@@ -2,7 +2,7 @@
 /**
  * Media View Page
  *
- * This page displays all information about media that is selected in 
+ * This page displays all information about media that is selected in
  * PHPGedView.
  *
  * phpGedView: Genealogy Viewer
@@ -36,7 +36,7 @@ if (empty($controller->pid)) {
 	echo "<div align=\"center\">".$pgv_lang["no_media"]."</div>";
 }
 else{
-	
+
 	print_header($controller->getPageTitle());
 	//The following lines of code are used to print the menu box on the top right hand corner
 ?>
@@ -73,23 +73,23 @@ else{
 				</td>
 			</tr>
 		</table>
-		<?php 
-		//The next set of code draws the table that displays information about the person 
+		<?php
+		//The next set of code draws the table that displays information about the person
 		?>
 		<table width="70%">
 			<tr>
 				<td align="center">
-					<?php 
+					<?php
 					//Checks to see if the File exist in the system.
 					$filename = $controller->getLocalFilename();
 					if (preg_match("~://~", $filename) || file_exists($filename)){
 						//If the file exists, it will attempt to get the image size
 						//If the image size returns a null, then the file isn't a image.
 						$imagesize = getimagesize($filename);
-						
+
 						//Checks if the image size is null.
 						if ($imagesize[0]){
-							//Makes it so the picture when clicked opens the Image View Page 
+							//Makes it so the picture when clicked opens the Image View Page
 							?>
 							<a href="javascript:;openImageView();" onclick="return openImageView();">
 							<img src="<?php if (!$USE_THUMBS_MAIN) print $filename; else print thumbnail_file($filename); ?>" border="0" width="200" />
@@ -125,7 +125,7 @@ else{
 						</tr>
 						<tr>
 							<td>
-								<table class="facts_table">	
+								<table class="facts_table">
 									<?php
 										$facts = $controller->getFacts();
 										foreach($facts as $f=>$factrec) {
@@ -141,7 +141,7 @@ else{
 			<tr>
 				<td colspan="2">
 					<?php
-					$links = get_media_relations($mid);
+					$links = get_media_relations($controller->pid);
 					if (isset($links)){
 					?>
 					 <br /><?php print $pgv_lang["relations_heading"]; ?>
@@ -151,7 +151,7 @@ else{
 				</td>
 			</tr>
 		</table>
-<?php 
+<?php
 // These JavaScript functions are needed for the code to work properly with the menu.
 ?>
 <script language="JavaScript" type="text/javascript">
@@ -177,7 +177,7 @@ function ilinkitem(mediaid, type) {
 	return false;
 }
 //-->
-</script>		 
+</script>
 <br /><br /><br />
 	<?php
 }
