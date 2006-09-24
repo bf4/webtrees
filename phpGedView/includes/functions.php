@@ -968,7 +968,8 @@ function find_highlighted_object($pid, $indirec) {
 	//-- for the given media choose the
 	foreach($media as $i=>$row) {
 		if (displayDetailsById($row[0], 'OBJE') && !FactViewRestricted($row[0], $row[2])) {
-			if ($row[3] != null || $row[3] != ""){
+			// Wrong test to match against.   if ($row[3] != null || $row[3] != ""){
+			if(strstr($row[3], "_PRIM ")) {
 				$thum = get_gedcom_value('_THUM', 1, $row[3]);
 				$prim = get_gedcom_value('_PRIM', 1, $row[3]);
 				$note_mm = get_gedcom_value("NOTE", 1, $row[3]);
