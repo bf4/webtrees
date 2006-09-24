@@ -1437,8 +1437,10 @@ function linkMedia($mediaid, $linktoid, $level=1) {
 	}
 
 	if ($gedrec) {
-		$mediarec = "1 OBJE @".$mediaid."@\r\n";
-		$newrec = trim($gedrec."\r\n".$mediarec);
+		// Changed to match format of all other data adds.
+		//$mediarec = "1 OBJE @".$mediaid."@\r\n";
+		//$newrec = trim($gedrec."\r\n".$mediarec);
+		$newrec = $gedrec."\r\n1 OBJE @".$mediaid."@";
 
 		replace_gedrec($linktoid, $newrec);
 
