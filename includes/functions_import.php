@@ -661,6 +661,19 @@ function update_media($gid, $indirec, $update = false) {
 			// NOTE: Renumber the old ID to a new ID and save the old ID
 			// NOTE: in case there are more references to it
 			$level = $line{0};
+			//-- putting this code back since $objlevel, $objrec, etc vars will be 
+			//-- reset in sections after this
+			if ($objlevel>0 && ($level<=$objlevel || $key == $ct_lines-1)) {
+				$objref = insert_media($objrec, $objlevel, $update, $gid, $count);
+				$count++;
+				// NOTE: Add the new media object to the record
+				//$newrec .= $objlevel . " OBJE @" . $m_media . "@\r\n";
+				$newrec .= $objref;
+
+				// NOTE: Set the details for the next media record
+				$objlevel = 0;
+				$inobj = false;
+			}
 			if (preg_match("/[1-9]\sOBJE\s@(.*)@/", $line, $match) != 0) {
 					// NOTE: Set object level
 					$objlevel = $level;
@@ -696,6 +709,9 @@ function update_media($gid, $indirec, $update = false) {
 			}
 			// Do this check AFTER matching.  Checks above were matching on the
 			// last line, and the foreach would end before this work was done.
+			/*-- There is already code below which makes sure that the last line is properly handled.
+			-- if we do the checks at this point the necessary vars will have already changed and we could 
+			-- still lose media references
 			if ($objlevel>0 && ($level<=$objlevel || $key == $ct_lines-1)) {
 				$objref = insert_media($objrec, $objlevel, $update, $gid, $count);
 				$count++;
@@ -706,7 +722,7 @@ function update_media($gid, $indirec, $update = false) {
 				// NOTE: Set the details for the next media record
 				$objlevel = 0;
 				$inobj = false;
-			}
+			}*/
 		}
 	}
 	//-- make sure the last line gets handled
