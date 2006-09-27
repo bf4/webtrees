@@ -969,7 +969,8 @@ function find_highlighted_object($pid, $indirec) {
 	foreach($media as $i=>$row) {
 		if (displayDetailsById($row[0], 'OBJE') && !FactViewRestricted($row[0], $row[2])) {
 			// Wrong test to match against.   if ($row[3] != null || $row[3] != ""){
-			if(strstr($row[3], "_PRIM ")) {
+			// See rules in comments above... if we use this check rule #3 will not apply -- if(strstr($row[3], "_PRIM ")) {
+			if ($row[3] != null || $row[3] != ""){
 				$thum = get_gedcom_value('_THUM', 1, $row[3]);
 				$prim = get_gedcom_value('_PRIM', 1, $row[3]);
 				$note_mm = get_gedcom_value("NOTE", 1, $row[3]);
