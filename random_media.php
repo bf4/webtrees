@@ -39,7 +39,7 @@ if ($MULTI_MEDIA) {
 	function print_random_media($block = true, $config="", $side, $index) {
 		global $pgv_lang, $GEDCOM, $foundlist, $medialist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES, $GEDCOM_ID_PREFIX, $FAM_ID_PREFIX, $SOURCE_ID_PREFIX;
-		global $MEDIATYPE, $THUMBNAIL_WIDTH, $SHOW_IMAGEVIEW_ON_THUMB_CLICK;
+		global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 		global $PGV_BLOCKS, $command;
 
   		if (empty($config)) $config = $PGV_BLOCKS["print_random_media"]["config"];
@@ -50,12 +50,13 @@ if ($MULTI_MEDIA) {
 		$medialist = array();
 		$foundlist = array();
 
-		$medialist = get_medialist(false, '', false, true);
+		$medialist = get_medialist(false, '', true, true);
 		$ct = count($medialist);
 		if ($ct>0) {
 				$i=0;
 				$disp = false;
-				while(!$disp && $i<$ct) {
+				//-- try up to 20 times to get a media to display
+				while($i<20) {
 					$value = array_rand($medialist);
 					//print_r($medialist[$value]); print "<br />";
 					$links = $medialist[$value]["LINKS"];
@@ -84,6 +85,12 @@ if ($MULTI_MEDIA) {
 							if ($filter=="event" && $objectRefLevel=="1") $disp = false;
 						}
 					}
+					//-- leave the loop if we find an image that works
+					if ($disp) break;
+					//-- otherwise remove the private media item from the list
+					else unset($medialist[$value]);
+					//-- if there are no more media items, then try to get some more
+					if (count($medialist)==0) $medialist = get_medialist(false, '', false, true);
 					$i++;
 				}
 				if (!$disp) return false;
@@ -115,11 +122,10 @@ if ($MULTI_MEDIA) {
 				if ($block) print " align=\"center\" class=\"details1\"";
 				else print " class=\"details2\"";
 				$mediaid = $medialist[$value]["XREF"];
-				if ($SHOW_IMAGEVIEW_ON_THUMB_CLICK == false){
+				if ($USE_MEDIA_VIEWER) {
 				print " ><a href=\"mediaviewer.php?mid=".$mediaid."\">";
 				}
-				else
-				{
+				else {
 					print " ><a href=\"javascript:;\" onclick=\"return openImage('".$medialist[$value]["FILE"]."', $imgwidth, $imgheight);\">";
 				}
 				$mediaTitle = "";
@@ -139,11 +145,8 @@ if ($MULTI_MEDIA) {
 				print "</a>\n";
 				if ($block) print "<br />";
 				else print "</td><td class=\"details2\">";
-				if ($medialist[$value]["TITL"]!=$medialist[$value]["FILE"]) {
-				    print "<a href=\"medialist.php?action=filter&amp;search=yes&amp;filter=".PrintReady($medialist[$value]["TITL"])."&amp;ged=".$GEDCOM."\">";
-				    if (strlen($medialist[$value]["TITL"]) > 0) print "<b>". $mediaTitle ."</b>";
-				}
-				else print "<a href=\"mediaviewer.php?mid=".$mediaid."\">";
+				print "<a href=\"mediaviewer.php?mid=".$mediaid."\">";
+				print "<b>". $mediaTitle ."</b>";
 				print "</a><br />";
 
 				PrintMediaLinks ($medialist[$value]["LINKS"], "normal");
