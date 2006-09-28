@@ -30,6 +30,12 @@ if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["no_thumb_dir"]			= " thumbnail directory does not exist and it could not be created.";
+$pgv_lang["move_to"]				= "Move To";
+$pgv_lang["folder_created"]			= "Directory created";
+$pgv_lang["folder_no_create"]		= "Directory could not be created";
+$pgv_lang["security_no_create"]		= "Security Warning: Could not create file <b><i>index.php</i></b> in ";
+$pgv_lang["security_not_exist"]		= "Security Warning: File <b><i>index.php</i></b> does not exist in ";
 $pgv_lang["label_add_search_server"]	= "Add IP"; 
 $pgv_lang["label_add_server"]      		= "Add";
 $pgv_lang["label_ban_server"]			= "Submit";

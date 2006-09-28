@@ -289,14 +289,6 @@ function convert_date($dstr_beg, $dstr_end, $day, $month, $year) {
 		}
 		$newdate = trim(substr($temp_format,1));
 
-		if ($LANGUAGE=="chinese") {
-			$day = convert_number($day);
-			$yearStr = "".$year;
-			$year="";
-			for($i=0; $i<strlen($yearStr); $i++) {
-				$year .= convert_number($yearStr{$i});
-			}
-		}
 		$newdate = preg_replace("/D/", $day, $newdate);
 		$newdate = preg_replace("/M/", $month, $newdate);
 		$newdate = preg_replace("/Y/", $year, $newdate);
@@ -777,10 +769,8 @@ function get_age($indirec, $datestr, $style=1) {
 			$age1 = $date[0]["year"]-$birthdate[0]["year"];
 			$age2 = $date[1]["year"]-$birthdate[0]["year"];
 			if ($style) $realbirthdt = " <span class=\"age\">(".$pgv_lang["age"]." ";
-			$age1n = convert_number($age1);
-			$age2n = convert_number($age2);
-			$realbirthdt .= $pgv_lang["apx"]." ".$age1n;
-			if ($age2n > $age1n) $realbirthdt .= "-".$age2n;
+			$realbirthdt .= $pgv_lang["apx"]." ".$age1;
+			if ($age2 > $age1) $realbirthdt .= "-".$age2;
 			if ($style) $realbirthdt .= ")</span>";
 		}
 		else {
@@ -842,7 +832,7 @@ function get_age($indirec, $datestr, $style=1) {
 						else $realbirthdt .= $pgv_lang["months"];
 					}
 				}
-				else $realbirthdt .= " ".convert_number($age);
+				else $realbirthdt .= " ".$age;
 				if ($style) $realbirthdt .= ")</span>";
 				if ($age == 0) $realbirthdt = ""; // empty age
 			}

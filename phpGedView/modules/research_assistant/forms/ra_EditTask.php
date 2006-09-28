@@ -40,25 +40,6 @@ include("modules/research_assistant/languages/ra_lang.en.php");
 global $pgv_lang, $TBLPREFIX, $DBCONN;
  
  	/**
-	 * GETS the TITLE of the task with the given taskid
-	 * 
-	 * @return mixed title of the task
-	 */
-function getTitle(){
-    global $TBLPREFIX, $DBCONN;
-
-    $sql = "SELECT t_title FROM " . $TBLPREFIX . "tasks WHERE t_id='".$DBCONN->escapeSimple($_REQUEST['taskid'])."'";
-    $res = dbquery($sql);
-    $out = "";
-
-    while($title =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-        $out = db_cleanup($title["t_title"]);
-    }
-
-    return $out;
-}
-	
-	/**
 	 * GETS the DATES of the task with the given taskid
 	 * 
 	 * @return mixed dates of the task
@@ -124,25 +105,6 @@ function getTitle(){
 	}
 	
 	/**
-	 * GETS the DESCRIPTION of the task with the given taskid
-	 * 
-	 * @return mixed description of the task
-	 */
-	function getDescription(){
-        global $TBLPREFIX, $DBCONN;
-
-		$sql = "SELECT t_description FROM " . $TBLPREFIX . "tasks WHERE t_id='".$DBCONN->escapeSimple($_REQUEST['taskid'])."'";
-		$res = dbquery($sql);
-
-        $out = "";
-		while($desc =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-			$out = $desc["t_description"];
-		}
-
-		return $out;
-	}
-	
-	/**
 	 * GETS all SOURCES associated with the task given taskid
 	 * 
 	 * @return sources associated with the task
@@ -203,6 +165,8 @@ function getTitle(){
 		$sql = "DELETE FROM " . $TBLPREFIX . "comments WHERE c_id='".$DBCONN->escapeSimple($_REQUEST['delete'])."'";
 		$res = dbquery($sql);
 	}
+	
+	$task = ra_functions::getTask($_REQUEST['taskid']);
 ?>
 
 <!--JAVASCRIPT-->
@@ -242,7 +206,7 @@ function getTitle(){
       		<td class="optionbox">
       			<?php
       				// get title, given taskid
-      				print '<input type="text" name="title" value="'.PrintReady(getTitle()).'" size="50"/>';
+      				print '<input type="text" name="title" value="'.PrintReady($task['t_title']).'" size="50"/>';
       			?>
       		</td>
 <!--FOLDER-->
@@ -258,6 +222,26 @@ function getTitle(){
       			</select>
       		</td>
     	</tr>
+    	<!-- ASSIGN TASK -->
+    		<tr>
+    			<td class="descriptionbox">
+    				<?php print "Assign Task"; ?>
+    			</td>
+    			<td class="optionbox" colspan=3> 
+    			<select name="Users"> <option value=""></option>
+    			<?php $users = getusers(); 
+    				foreach($users as $username => $user)
+    				{
+    					print "<option value=\"$username\"";
+    					if ($username==$task['t_username']) print " selected=\"selected\"";
+						print ">".$user['firstname']." ".$user['lastname']."</option>";
+    				}
+    				?>  		
+    			</select>
+    				
+    			</td>
+    			<tr>
+    		</tr>
 	    <tr>
 <!--DESCRIPTION-->
 			<td class="descriptionbox">
@@ -267,7 +251,7 @@ function getTitle(){
 	      		<?php
 	      			// get description, given taskid
 	      			print '<textarea name="desc" rows="3" cols="55">';
-	      			print PrintReady(getDescription());
+	      			print PrintReady($task['t_description']);
 	      			print '</textarea>';
 	      		?>
 	      	</td>

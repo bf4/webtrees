@@ -161,7 +161,7 @@ class research_assistant extends ra_functions {
 		// Update task
 		else
 			if ($_REQUEST['action'] == "updatetask") {
-				$sql = "UPDATE ".$TBLPREFIX."tasks SET t_fr_id='".$DBCONN->escapeSimple($_POST["folder"])."', t_title='".$DBCONN->escapeSimple($_POST["title"])."', t_description='".$DBCONN->escapeSimple($_POST["desc"])."' WHERE t_id='".$DBCONN->escapeSimple($_REQUEST["taskid"])."'";
+				$sql = "UPDATE ".$TBLPREFIX."tasks SET t_fr_id='".$DBCONN->escapeSimple($_POST["folder"])."', t_title='".$DBCONN->escapeSimple($_POST["title"])."', t_description='".$DBCONN->escapeSimple($_POST["desc"])."', t_username='".$DBCONN->escapeSimple($_POST["Users"])."' WHERE t_id='".$DBCONN->escapeSimple($_REQUEST["taskid"])."'";
 				$res = dbquery($sql);
 
 				// UPDATE PEOPLE
