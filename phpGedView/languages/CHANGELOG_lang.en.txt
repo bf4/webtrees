@@ -7,7 +7,7 @@ For changes between 2005.03.15 and 2005.12.08, refer to LANG_CHANGELOG_bef.2005.
 The LANG_CHANGELOG.txt file was getting too big to work with easily.
 
 Use this file to follow the changes made to the English language files
-between different versions of phpGedView.  There are five separate CHANGELOG files,
+between different versions of phpGedView.  There are seven separate CHANGELOG files,
 one to correspond to each file that together make up the entire set of English text.
 
 The CHANGELOG files are:
@@ -16,6 +16,8 @@ The CHANGELOG files are:
 		CHANGELOG_facts.en.txt
 		CHANGELOG_help_text.en.txt
 		CHANGELOG_lang.en.txt
+		CHANGELOG_admin.en.txt
+		CHANGELOG_editor.en.txt
 
 + $pgv_lang["text"] / means added
 - $pgv_lang["text"] / deleted
@@ -42,7 +44,9 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["view_img_details"]						28 Sep 2006				A
 *$pgv_lang["htmlplus_block_compat"]					23 Sep 2006				S
++$pgv_lang["media_options"]							21 Sep 2006				A
 +$pgv_lang["clipping_privacy"]						15 Aug 2006				A
 +$pgv_lang[search_to]								7 Aug 2006				A
 +$pgv_lang["htmlplus_block_compat"]                 25 Jul 2006				A		Used in HTML Plus block

@@ -45,7 +45,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 global $HIDE_LIVE_PEOPLE, $SHOW_LIVING_NAMES, $PRIV_PUBLIC, $factarray, $ZOOM_BOXES, $LINK_ICONS, $view, $SCRIPT_NAME, $GEDCOM;
 	 global $pgv_lang, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $show_full, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
 	 global $CONTACT_EMAIL, $CONTACT_METHOD, $TEXT_DIRECTION, $DEFAULT_PEDIGREE_GENERATIONS, $OLD_PGENS, $talloffset, $PEDIGREE_LAYOUT, $MEDIA_DIRECTORY;
-	 global $PGV_IMAGE_DIR, $PGV_IMAGES, $ABBREVIATE_CHART_LABELS;
+	 global $PGV_IMAGE_DIR, $PGV_IMAGES, $ABBREVIATE_CHART_LABELS, $USE_MEDIA_VIEWER;
 	 global $chart_style, $box_width, $generations;
 	 global $CHART_BOX_TAGS, $SHOW_LDS_AT_GLANCE;
 	 global $SEARCH_SPIDER;
@@ -213,7 +213,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			   $imgwidth = $imgsize[0]+50;
 			   $imgheight = $imgsize[1]+150;
 			   
-				if (!empty($object['mid'])) print "<a href=\"mediaviewer.php?mid=".$object['mid']."\" >";
+				if (!empty($object['mid']) && $USE_MEDIA_VIEWER) print "<a href=\"mediaviewer.php?mid=".$object['mid']."\" >";
 				else print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
 
 			   print "<img id=\"box-$pid.$personcount.$count-thumb\" src=\"".$object["thumb"]."\" vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"\" ";

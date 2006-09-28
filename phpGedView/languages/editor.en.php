@@ -1,0 +1,155 @@
+<?php
+/*
+ * Created on Sep 6, 2006
+ *
+ * To change the template for this generated file go to
+ * Window - Preferences - PHPeclipse - PHP - Code Templates
+ */
+ if (preg_match("/editor\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "You cannot access a language file directly.";
+	exit;
+}
+
+$pgv_lang["edit_raw"]				= "Edit raw GEDCOM record";
+$pgv_lang["label_add_remote_link"]  = "Add Link";
+$pgv_lang["label_gedcom_id"]        = "GEDCOM ID";
+$pgv_lang["label_gedcom_id"]        = "Database ID";
+$pgv_lang["label_local_id"]         = "Person ID";
+$pgv_lang["accept"] 				= "Accept";
+$pgv_lang["accept_all"] 			= "Accept all changes";
+$pgv_lang["accept_gedcom"]			= "Decide for each change to either accept or reject it.<br /><br />To accept all changes at once, click <b>\"Accept all changes\"</b> in the box below.<br />To get more information about a change,<br />click <b>\"View change diff\"</b> to see the differences,<br />or click <b>\"View GEDCOM record\"</b> to see the new data in GEDCOM format.";
+$pgv_lang["accept_successful"]		= "Changes successfully accepted into database";
+$pgv_lang["add_child"]				= "Add child";
+$pgv_lang["add_child_to_family"]	= "Add a child to this family";
+$pgv_lang["add_fact"]				= "Add new fact";
+$pgv_lang["add_father"] 			= "Add a new father";
+$pgv_lang["add_husb"]				= "Add husband";
+$pgv_lang["add_husb_to_family"] 	= "Add a husband to this family";
+$pgv_lang["add_media"]				= "Add a new Media item";
+$pgv_lang["add_media_lbl"]			= "Add Media";
+$pgv_lang["add_mother"] 			= "Add a new mother";
+$pgv_lang["add_new_chil"] = "Add a new child";
+$pgv_lang["add_new_husb"]			= "Add a new husband";
+$pgv_lang["add_new_wife"]			= "Add a new wife";
+$pgv_lang["add_note"]				= "Add a new Note";
+$pgv_lang["add_note_lbl"]			= "Add Note";
+$pgv_lang["add_sibling"]			= "Add a brother or sister";
+$pgv_lang["add_son_daughter"]		= "Add a son or daughter";
+$pgv_lang["add_source"] 			= "Add a new Source Citation";
+$pgv_lang["add_source_lbl"] 		= "Add Source Citation";
+$pgv_lang["add_wife"]				= "Add wife";
+$pgv_lang["add_wife_to_family"] 	= "Add a wife to this family";
+$pgv_lang["advanced_search_discription"] = "Advanced site search";
+$pgv_lang["auto_thumbnail"]			= "Automatic thumbnail";
+$pgv_lang["basic_search"]			= "search";
+$pgv_lang["basic_search_discription"] = "Basic site search";
+$pgv_lang["birthdate_search"]		= "Birth date: ";
+$pgv_lang["birthplace_search"]		= "Birth Place: ";
+$pgv_lang["change"]					= "Change";
+$pgv_lang["change_family_instr"]	= "Use this page to change or remove family members.<br /><br />For each member in the family, you can use the Change link to choose a different person to fill that role in the family.  You can also use the Remove link to remove that person from the family.<br /><br />When you have finished changing the family members, click the Save button to save the changes.<br />";
+$pgv_lang["change_family_members"]	= "Change Family Members";
+$pgv_lang["changes_occurred"]		= "The following changes were made to this record:";
+$pgv_lang["confirm_delete_file"]	= "Are you sure you want to delete this file?";
+$pgv_lang["confirm_folder_delete"] = "Are you sure you want to delete this folder?";
+$pgv_lang["confirm_remove"]			= "Are you sure you want to remove this person from the family?";
+$pgv_lang["confirm_remove_links"]	= "Are you sure you want to remove all links to this object?";
+$pgv_lang["confirm_remove_object"]	= "Are you sure you want to remove this object from the database?";
+$pgv_lang["create_repository"]		= "Create Repository";
+$pgv_lang["create_source"]			= "Create a new source";
+$pgv_lang["current_person"]         = "Same As Current";
+$pgv_lang["date"]					= "Date";
+$pgv_lang["deathdate_search"]		= "Death date: ";
+$pgv_lang["deathplace_search"]		= "Death Place: ";
+$pgv_lang["delete_dir_success"]		= "Media and thumbnail directories successfully removed.";
+$pgv_lang["delete_file"]			= "Delete file";
+$pgv_lang["delete_repo"]			= "Delete Repository";
+$pgv_lang["description"]			= "Description";
+$pgv_lang["directory_not_empty"]	= "Directory not empty.";
+$pgv_lang["directory_not_exist"]	= "Directory does not exist.";
+$pgv_lang["error_remote"]           = "You have selected a remote site.";
+$pgv_lang["error_same"]             = "You have selected the same site.";
+$pgv_lang["external_file"]			= "This media object does not exist as a file on this server.  It cannot be deleted, moved, or renamed.";
+$pgv_lang["family"] 				= "Family";
+$pgv_lang["family_with"]			= "Family with";
+$pgv_lang["file_missing"]			= "No file was received. Please upload again.";
+$pgv_lang["file_partial"]			= "File was only partially uploaded, please try again";
+$pgv_lang["file_success"]			= "File successfully uploaded";
+$pgv_lang["file_too_big"]			= "Uploaded file exceeds the allowed size";
+$pgv_lang["folder"]		 			= "Folder on server";
+$pgv_lang["gedcom_editing_disabled"]	= "Editing this GEDCOM has been disabled by the administrator.";
+$pgv_lang["gedcomid"]				= "GEDCOM INDI record ID";
+$pgv_lang["gedrec_deleted"] 		= "GEDCOM record successfully deleted.";
+$pgv_lang["gen_thumb"]				= "Create thumbnail";
+$pgv_lang["gender_search"]			= "Sex: ";
+$pgv_lang["generate_thumbnail"]		= "Generate thumbnail automatically from ";
+$pgv_lang["hebrew_givn"]			= "Hebrew Given Names";
+$pgv_lang["hebrew_surn"]			= "Hebrew Surname";
+$pgv_lang["hide_changes"]			= "Click here to hide changes.";
+$pgv_lang["highlighted"]			= "Highlighted Image";
+$pgv_lang["illegal_chars"]			= "Blank name or illegal characters in name";
+$pgv_lang["invalid_search_input"] 	= "Please enter a Given name, Last name, or Place in addition to Year";
+$pgv_lang["invalid_search_multisite_input"] = "Please enter one of the following:  Name, Birth Date, Birth Place, Death Date, Death Place, and Sex ";
+$pgv_lang["invalid_search_multisite_input_gender"] = "Please search again with more information than just sex";
+$pgv_lang["label_diff_server"]      = "Different Site";
+$pgv_lang["label_location"]         = "Location";
+$pgv_lang["label_location"]         = "Site Location";
+$pgv_lang["label_password_id2"]		= "Password: ";
+$pgv_lang["label_rel_to_current"]   = "Relationship To Current Person";
+$pgv_lang["label_remote_id"]        = "Remote Person ID";
+$pgv_lang["label_same_server"]      = "Same Site";
+$pgv_lang["label_site"]             = "Site";
+$pgv_lang["label_site_url"]         = "Site URL:";
+$pgv_lang["label_username_id2"]		= "Username: ";
+$pgv_lang["lbl_server_list"]        = "Use an existing site.";
+$pgv_lang["lbl_type_server"]         = "Type in a new site.";
+$pgv_lang["link_as_child"]			= "Link this person to an existing family as a child";
+$pgv_lang["link_as_husband"]		= "Link this person to an existing family as a husband";
+$pgv_lang["link_success"]			= "Successfully added link";
+$pgv_lang["link_to_existing_media"]		= "Link to an existing Media item";
+$pgv_lang["max_media_depth"]		= "You can only go #MEDIA_DIRECTORY_LEVELS# directories deep";
+$pgv_lang["max_upload_size"]		= "Maximum upload size: ";
+$pgv_lang["media_deleted"]			= "Media directory successfully removed.";
+$pgv_lang["media_exists"]			= "Media file already exists.";
+$pgv_lang["media_file"] 			= "Media file to upload";
+$pgv_lang["media_file_deleted"]		= "Media file successfully deleted.";
+$pgv_lang["media_file_not_moved"]	= "Media file could not be moved.";
+$pgv_lang["media_file_not_renamed"]	= "Media file could not be moved or renamed.";
+$pgv_lang["media_thumb_exists"]		= "Media thumbnail already exists.";
+$pgv_lang["multi_site_search"] 		= "Multi Site Search";
+$pgv_lang["multiple_gedcoms"]		= "This file is linked to another genealogical database on this server.  It cannot be deleted, moved, or renamed until these links have been removed.";
+$pgv_lang["must_provide"]			= "You must provide a ";
+$pgv_lang["name"]					= "Name";
+$pgv_lang["name_search"]			= "Name: ";
+$pgv_lang["new_repo_created"]		= "New Repository created";
+$pgv_lang["new_source_created"] 	= "New source created successfully.";
+$pgv_lang["no_changes"] 			= "There are currently no changes to be reviewed.";
+$pgv_lang["no_known_servers"]		= "No known Servers<br />No results will be found";
+$pgv_lang["no_temple"]				= "No Temple - Living Ordinance";
+$pgv_lang["no_upload"]				= "Uploading media files is not allowed because multi-media items have been disabled or because the media directory is not writable.";
+$pgv_lang["paste_id_into_field"]	= "Paste the following ID into your editing fields to reference the newly created record ";
+$pgv_lang["paste_rid_into_field"]	= "Paste the following Repository ID into your editing fields to reference this Repository ";
+$pgv_lang["photo_replace"] = "Do you want to replace an older photo with this one?";
+$pgv_lang["privacy_not_granted"]	= "You have no access to";
+$pgv_lang["privacy_prevented_editing"]	= "Privacy settings prevent you from editing this record.";
+$pgv_lang["record_marked_deleted"]		= "This record has been marked for deletion upon admin approval.";
+$pgv_lang["replace_with"]			= "Replace with";
+$pgv_lang["show_changes"]			= "This record has been updated.  Click here to show changes.";
+$pgv_lang["thumb_genned"]			= "Thumbnail #thumbnail# generated automatically.";
+$pgv_lang["thumbgen_error"]			= "Thumbnail #thumbnail# could not be generated automatically.";
+$pgv_lang["thumbnail"]				= "Thumbnail to upload";
+$pgv_lang["title_remote_link"]      = "Add Remote Link";
+$pgv_lang["undo"]					= "Undo";
+$pgv_lang["undo_all"]				= "Undo all changes";
+$pgv_lang["undo_all_confirm"]		= "Are you sure you want to undo all of the changes for this GEDCOM?";
+$pgv_lang["undo_successful"]		= "Undo successful";
+$pgv_lang["update_successful"]		= "Update successful";
+$pgv_lang["upload"]					= "Upload";
+$pgv_lang["upload_error"]			= "There was an error uploading your file.";
+$pgv_lang["upload_media"]			= "Upload Media files";
+$pgv_lang["upload_successful"]		= "Upload successful.";
+$pgv_lang["view_change_diff"]		= "View Change Diff";
+
+ 
+if (file_exists( "languages/editor.en.extra.php")) require  "languages/editor.en.extra.php";
+ 
+?>

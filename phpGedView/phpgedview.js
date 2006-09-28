@@ -49,9 +49,8 @@ function openImage(filename, width, height) {
 	 	if (width>screenW-100) width=screenW-100;
 	 	if (height>screenH-110) height=screenH-120;
 		if ((filename.search(/\.je?pg$/gi)!=-1)||(filename.search(/\.gif$/gi)!=-1)||(filename.search(/\.png$/gi)!=-1)||(filename.search(/\.bmp$/gi)!=-1)) 
-			//todo - make this an option
-			//window.open('imageview.php?filename='+filename,'_blank','top=50,left=50,height='+height+',width='+width+',scrollbars=1,resizable=1');
-			window.location = 'mediaviewer.php?filename='+filename;
+			window.open('imageview.php?filename='+filename,'_blank','top=50,left=50,height='+height+',width='+width+',scrollbars=1,resizable=1');
+			//window.location = 'mediaviewer.php?filename='+filename;
 		else window.open(unescape(filename),'_blank','top=50,left=50,height='+height+',width='+width+',scrollbars=1,resizable=1');
 		return false;
 	}

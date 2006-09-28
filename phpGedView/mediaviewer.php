@@ -86,12 +86,14 @@ else{
 						//If the file exists, it will attempt to get the image size
 						//If the image size returns a null, then the file isn't a image.
 						$imagesize = getimagesize($filename);
+						$imgwidth = $imagesize[0]+40;
+						$imgheight = $imagesize[1]+150;
 
 						//Checks if the image size is null.
 						if ($imagesize[0]){
 							//Makes it so the picture when clicked opens the Image View Page
 							?>
-							<a href="javascript:;openImageView();" onclick="return openImageView();">
+							<a href="javascript:;" onclick="return openImage('<?php print rawurlencode($filename); ?>', <?php print $imgwidth; ?>, <?php print $imgheight; ?>);">
 							<img src="<?php if (!$USE_THUMBS_MAIN) print $filename; else print thumbnail_file($filename); ?>" border="0" width="200" />
 							</a>
 							<?php

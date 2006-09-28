@@ -1,6 +1,6 @@
 PHPGEDVIEW LANGUAGE FILE CHANGELOG
 
-# $Id$
+# $Id: CHANGELOG_help_text.en.txt 303 2006-07-26 19:20:53Z pkellum $
 
 For changes prior to 2005.03.15, please refer to LANG_CHANGELOG_bef.20050315.txt
 For changes between 2005.03.15 and 2005.12.08, refer to LANG_CHANGELOG_bef.2005.12.08.txt
@@ -18,7 +18,7 @@ The CHANGELOG files are:
 		CHANGELOG_lang.en.txt
 		CHANGELOG_admin.en.txt
 		CHANGELOG_editor.en.txt
-
+		
 + $pgv_lang["text"] / means added
 - $pgv_lang["text"] / deleted
 * $pgv_lang["text"] / text was changed
@@ -38,15 +38,7 @@ Additional codes, to help Translators, follow the date as follows:
 The above list of codes may be amended as new situations arise.
 For massive changes, the variable names should be listed in the order in which they
 occur in the respective language files.
-
-
 VERSION 4.1
 
-?$countries["whatever"]								dd Monthname, year		Change codes and comments
------------------------------------------------------------------------------------------
-
-
-VERSION 4.0
-
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
--------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
