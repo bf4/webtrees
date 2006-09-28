@@ -36,7 +36,7 @@ require_once("includes/controllers/ancestry_ctrl.php");
 // -- print html header information
 print_header($controller->name . " " . $pgv_lang["ancestry_chart"]);
 print "\n\t<table class=\"list_table $TEXT_DIRECTION\"><tr><td width=\"".$controller->cellwidth."px\" valign=\"top\">\n\t\t";
-if ($view == "preview") print "<h2>" . str_replace("#PEDIGREE_GENERATIONS#", convert_number($PEDIGREE_GENERATIONS), $pgv_lang["gen_ancestry_chart"]) . ":";
+if ($view == "preview") print "<h2>" . str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATIONS, $pgv_lang["gen_ancestry_chart"]) . ":";
 else print "<h2>" . $pgv_lang["ancestry_chart"] . ":";
 print "<br />".PrintReady($controller->name);
 if ($controller->addname != "") print "<br />" . PrintReady($controller->addname);
@@ -54,7 +54,7 @@ if ($view != "preview") {
 	//-->
 	</script>
 	<?php if (isset($controller->max_generation) == true) 
-	print "<span class=\"error\">" . str_replace("#PEDIGREE_GENERATIONS#", convert_number($PEDIGREE_GENERATIONS), $pgv_lang["max_generation"]) . "</span>";
+	print "<span class=\"error\">" . str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATIONS, $pgv_lang["max_generation"]) . "</span>";
 	if (isset($min_generation) == true) print "<span class=\"error\">" . $pgv_lang["min_generation"] . "</span>";?>
 	</td><td><form name="people" id="people" method="get" action="?">
 	<input type="hidden" name="show_full" value="<?php print $controller->show_full; ?>" />

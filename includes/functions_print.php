@@ -2125,13 +2125,13 @@ function print_parents_age($pid, $bdate) {
 			// father
 			$spouse = $parents["HUSB"];
 			if ($spouse and showFact("BIRT", $spouse)) {
-				$age = convert_number(get_age(find_person_record($spouse), $bdate, false));
+				$age = get_age(find_person_record($spouse), $bdate, false);
 				if (10<$age and $age<80) print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"sex_image\" />$age";
 			}
 			// mother
 			$spouse = $parents["WIFE"];
 			if ($spouse and showFact("BIRT", $spouse)) {
-				$age = convert_number(get_age(find_person_record($spouse), $bdate, false));
+				$age = get_age(find_person_record($spouse), $bdate, false);
 				if (10<$age and $age<80) print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"sex_image\" />$age";
 			}
 			print "</span>";

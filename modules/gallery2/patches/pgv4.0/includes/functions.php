@@ -2414,7 +2414,7 @@ function get_calendar_fact($factrec, $action, $filterof, $pid, $filterev="all") 
 				// Limit facts to before the given year in monthview
 				if (($age<0) && ($action == "calendar")) return "filter";
 				if ($action!='year'){
-					$text .= " (" . str_replace("#year_var#", convert_number($age), $pgv_lang["year_anniversary"]).")";
+					$text .= " (" . str_replace("#year_var#", $age, $pgv_lang["year_anniversary"]).")";
 				}
  				if($TEXT_DIRECTION == "rtl"){
  					$text .= "&lrm;";
@@ -2451,29 +2451,6 @@ function get_calendar_fact($factrec, $action, $filterof, $pid, $filterev="all") 
 	if ($text=="") return "filter";
 
 	return $text;
-}
-
-//-- this function will convert a digit number to a number in a different language
-function convert_number($num) {
-	global $pgv_lang, $LANGUAGE;
-
-	if ($LANGUAGE == "chinese") {
-		$numstr = "$num";
-		$zhnum = "";
-		//-- currently limited to numbers <10000
-		if (strlen($numstr)>4) return $numstr;
-
-		$ln = strlen($numstr);
-		$numstr = strrev($numstr);
-		for($i=0; $i<$ln; $i++) {
-			if (($i==1)&&($numstr{$i}!="0")) $zhnum = $pgv_lang["10"].$zhnum;
-			if (($i==2)&&($numstr{$i}!="0")) $zhnum = $pgv_lang["100"].$zhnum;
-			if (($i==3)&&($numstr{$i}!="0")) $zhnum = $pgv_lang["1000"].$zhnum;
-			if (($i!=1)||($numstr{$i}!=1)) $zhnum = $pgv_lang[$numstr{$i}].$zhnum;
-		}
-		return $zhnum;
-	}
-	return $num;
 }
 
 /**

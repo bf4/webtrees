@@ -33,7 +33,7 @@ require("includes/controllers/pedigree_ctrl.php");
 // -- print html header information
 print_header($controller->getPageTitle());
 print "<div style=\"position: relative; z-index: 1;\">\n";
-if ($controller->isPrintPreview()) print "<h2>".str_replace("#PEDIGREE_GENERATIONS#", convert_number($PEDIGREE_GENERATIONS), $pgv_lang["gen_ped_chart"]).":";
+if ($controller->isPrintPreview()) print "<h2>".str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATIONS, $pgv_lang["gen_ped_chart"]).":";
 else print "<h2>".$pgv_lang["index_header"].":";
 print "<br />".PrintReady($controller->getPersonName())."</h2>";
 
@@ -49,7 +49,7 @@ if (!$controller->isPrintPreview()) {
 	//-->
 	</script>
 	<?php
-	if ($controller->max_generation) print "<span class=\"error\">".str_replace("#PEDIGREE_GENERATIONS#", convert_number($PEDIGREE_GENERATIONS), $pgv_lang["max_generation"])."</span>";
+	if ($controller->max_generation) print "<span class=\"error\">".str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATIONS, $pgv_lang["max_generation"])."</span>";
 	if ($controller->min_generation) print "<span class=\"error\">".$pgv_lang["min_generation"]."</span>";
 	?>
 	<form name="people" method="get" action="pedigree.php">
