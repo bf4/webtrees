@@ -111,6 +111,7 @@ $SHOW_HIGHLIGHT_IMAGES = true;			// -- show highlighted photos on pedigree tree 
 $USE_THUMBS_MAIN = false;				// -- for the main image on the individual page, whether or not to use the full res image or the thumbnail
 $THUMBNAIL_WIDTH = "100";				// -- the width to use when automatically generating thumbnails
 $AUTO_GENERATE_THUMBS = true;			// -- whether PGV should try to automatically generate thumbnails
+$USE_MEDIA_VIEWER = true;				// -- If set to true, when a user clicks on an image they will be taken to the mediaviewer.php page.  If set to false a new window will open at imageview.php
 
 $HIDE_GEDCOM_ERRORS = false;			//-- a true value will disable error messages for undefined GEDCOM codes.  See the
 										//-- non-standard gedcom codes section of the readme file for more information.

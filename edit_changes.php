@@ -141,10 +141,16 @@ else {
 					if (empty($name)) $name = get_gedcom_value("TITL", 1, $gedrec);
 					$output .= "<b>".PrintReady($name)."</b> &lrm;(".$change["gid"].")&lrm;<br />\n";
 				}
+				else if ($type=="OBJE") {
+					$name = get_gedcom_value("TITL", 1, $gedrec);
+					if (empty($name)) $name = get_gedcom_value("TITL", 2, $gedrec);
+					$output .= "<b>".PrintReady($name)."</b> &lrm;(".$change["gid"].")&lrm;<br />\n";
+				}
 				else $output .= "<b>".$factarray[$type]."</b> &lrm;(".$change["gid"].")&lrm;<br />\n";
 				if ($type=="INDI") $output .= "<a href=\"javascript:;\" onclick=\"return show_diff('individual.php?pid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes');\">".$pgv_lang["view_change_diff"]."</a> | \n";
 				if ($type=="FAM") $output .= "<a href=\"javascript:;\" onclick=\"return show_diff('family.php?famid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes');\">".$pgv_lang["view_change_diff"]."</a> | \n";
 				if ($type=="SOUR") $output .= "<a href=\"javascript:;\" onclick=\"return show_diff('source.php?sid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes');\">".$pgv_lang["view_change_diff"]."</a> | \n";
+				if ($type=="OBJE") $output .= "<a href=\"javascript:;\" onclick=\"return show_diff('mediaviewer.php?mid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes');\">".$pgv_lang["view_change_diff"]."</a> | \n";
 				$output .= "<a href=\"javascript:show_gedcom_record('".$change["gid"]."');\">".$pgv_lang["view_gedcom"]."</a> | ";
 				$output .= "<a href=\"javascript:;\" onclick=\"return edit_raw('".$change["gid"]."');\">".$pgv_lang["edit_raw"]."</a><br />";
 				$output .= "<div class=\"indent\">\n";

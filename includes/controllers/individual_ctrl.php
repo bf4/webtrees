@@ -330,7 +330,7 @@ class IndividualControllerRoot extends BaseController {
 	 * @return string	HTML string for the <img> tag
 	 */
 	function getHighlightedObject() {
-		global $USE_THUMBS_MAIN, $THUMBNAIL_WIDTH;
+		global $USE_THUMBS_MAIN, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 		if ($this->canShowHighlightedObject()) {
 			$firstmediarec = $this->indi->findHighlightedMedia();
 			if (!empty($firstmediarec)) {
@@ -354,13 +354,15 @@ class IndividualControllerRoot extends BaseController {
 					$imgheight = $imgsize[1]+150;
 					//Gets the Media View Link Information and Concatinate
 					$mid = $firstmediarec['mid'];
-					$mediaviewlink = "mediaviewer.php?mid=".$mid;
-					$result .= "<a href=\"".$mediaviewlink."\">";
+					
+					if (!$USE_MEDIA_VIEWER && $imgsize) $result .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($firstmediarec["file"])."',$imgwidth, $imgheight);\">";
+					else {
+						$mediaviewlink = "mediaviewer.php?mid=".$mid;
+						$result .= "<a href=\"".$mediaviewlink."\">";
+					}
 
 					$result .= "<img src=\"$filename\" align=\"left\" class=\"".$class."\" border=\"none\" alt=\"".$firstmediarec["file"]."\" />";
-					if ($imgsize) {
-						$result .= "</a>";
-					}
+					$result .= "</a>";
 
 					return $result;
 				}

@@ -969,12 +969,9 @@ function find_highlighted_object($pid, $indirec) {
 	foreach($media as $i=>$row) {
 		if (displayDetailsById($row[0], 'OBJE') && !FactViewRestricted($row[0], $row[2])) {
 			// Wrong test to match against.   if ($row[3] != null || $row[3] != ""){
-			// See rules in comments above... if we use this check rule #3 will not apply -- if(strstr($row[3], "_PRIM ")) {
-			if ($row[3] != null || $row[3] != ""){
+			if(strstr($row[3], "_PRIM ")) {
 				$thum = get_gedcom_value('_THUM', 1, $row[3]);
 				$prim = get_gedcom_value('_PRIM', 1, $row[3]);
-				$note_mm = get_gedcom_value("NOTE", 1, $row[3]);
-				$note_m = get_gedcom_value("NOTE", 1, $row[2]);
 				$level=0;
 				$ct = preg_match("/(\d+) OBJE/", $row[3], $match);
 				if ($ct>0) $level = $match[1];
@@ -984,8 +981,6 @@ function find_highlighted_object($pid, $indirec) {
 					$object["thumb"] = $object["file"];
 					$object["level"] = $level;
 					$object["mid"] = $row[0];
-					$object["note_m"] = $note_m;
-					$object["note_mm"] = $note_mm;
 					break;
 				}
 				//-- take the first _PRIM Y object... _PRIM Y overrides first level 1 object
@@ -1009,8 +1004,6 @@ function find_highlighted_object($pid, $indirec) {
 			else {
 				$thum = get_gedcom_value('_THUM', 1, $row[2]);
 				$prim = get_gedcom_value('_PRIM', 1, $row[2]);
-				$note_m = get_gedcom_value('NOTE', 1, $row[2]);
-				$note_mm = get_gedcom_value('NOTE', 1, $row[3]);
 				$level=0;
 				$ct = preg_match("/(\d+) OBJE/", $row[3], $match);
 				if ($ct>0) $level = $match[1];
@@ -1020,8 +1013,6 @@ function find_highlighted_object($pid, $indirec) {
 					$object["thumb"] = $object["file"];
 					$object["level"] = $level;
 					$object["mid"] = $row[0];
-					$object["note_m"] = $note_m;
-					$object["note_mm"] = $note_mm;
 					break;
 				}
 				//-- take the first _PRIM Y object... _PRIM Y overrides first level 1 object

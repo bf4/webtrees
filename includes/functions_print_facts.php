@@ -545,7 +545,7 @@ function print_fact_sources($factrec, $level) {
 function print_media_links($factrec, $level,$pid='') {
 	 global $MULTI_MEDIA, $TEXT_DIRECTION, $TBLPREFIX, $GEDCOMS, $MEDIATYPE;
 	 global $pgv_lang, $factarray, $SEARCH_SPIDER, $view;
-	 global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $MEDIA_EXTERNAL, $THUMBNAIL_WIDTH;
+	 global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $MEDIA_EXTERNAL, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	 global $PGV_IMAGE_DIR, $PGV_IMAGES;
 	 global $GEDCOM, $SHOW_ID_NUMBERS;
 	 if (!$MULTI_MEDIA) return;
@@ -584,7 +584,8 @@ function print_media_links($factrec, $level,$pid='') {
 				if ($objectNum > 0) print "<br clear=all />";
 				print "<div>";
 				if ($isExternal ||file_exists(filename_decode($thumbnail))) {
-					print "<a href=\"mediaviewer.php?mid=".$media_id."\">";
+					if ($USE_MEDIA_VIEWER) print "<a href=\"mediaviewer.php?mid=".$media_id."\">";
+					else print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
 					print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 					if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
 					print " alt=\"". PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\" /></a>";
@@ -1180,7 +1181,7 @@ function print_main_media($pid, $level=1, $related=false) {
  */
 function print_main_media_row($rtype, $rowm, $pid) {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $MEDIA_DIRECTORY, $TEXT_DIRECTION;
-	global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH;
+	global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $SEARCH_SPIDER;
 
 	//print $rtype." ".$rowm["m_media"]." ".$pid;
@@ -1256,7 +1257,8 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				$imgsize = findImageSize(check_media_depth($rowm["m_file"], "NOTRUNC"));
 				$imgwidth = $imgsize[0]+40;
 				$imgheight = $imgsize[1]+150;
-				print "<a href=\"mediaviewer.php?mid=".$rowm["m_media"]."\">";
+				if ($USE_MEDIA_VIEWER) print "<a href=\"mediaviewer.php?mid=".$rowm["m_media"]."\">";
+				else print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
 			}
 			print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 			if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
