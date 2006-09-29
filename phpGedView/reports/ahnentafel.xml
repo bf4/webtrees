@@ -1,4 +1,4 @@
-<PGVReport access="PGV_PUBLIC" icon="ancestry" language="english">
+<PGVReport access="PRIV_PUBLIC" icon="ancestry" language="english">
 	<!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[ahnentafel_report]" /></PGVRTitle>
 	<PGVRDescription>Prints an Ahnentafel report for the selected individual</PGVRDescription>

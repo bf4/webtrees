@@ -1,4 +1,4 @@
-<PGVReport access="PGV_PUBLIC" icon="cfamily">
+<PGVReport access="PRIV_PUBLIC" icon="cfamily">
 <!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[relatives_report_ext]" /></PGVRTitle>
 	<PGVRDescription>Prints a list of individuals related to a specific person</PGVRDescription>

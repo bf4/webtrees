@@ -1,4 +1,4 @@
-<PGVReport access="PGV_PUBLIC" icon="indis">
+<PGVReport access="PRIV_PUBLIC" icon="indis">
 	<!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[individual_report]" /></PGVRTitle>
 	<PGVRDescription>Prints an individual record report</PGVRDescription>

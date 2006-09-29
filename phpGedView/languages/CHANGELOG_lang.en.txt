@@ -44,6 +44,10 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["play"]									29 Sep 2006				A
++$pgv_lang["stop"]									29 Sep 2006				A
++$pgv_lang["random_media_start_slide"]				29 Sep 2006				A
++$pgv_lang["random_media_ajax_controls"]			29 Sep 2006				A
 +$pgv_lang["view_img_details"]						28 Sep 2006				A
 *$pgv_lang["htmlplus_block_compat"]					23 Sep 2006				S
 +$pgv_lang["media_options"]							21 Sep 2006				A
