@@ -105,8 +105,10 @@ if ($action=="choose") {
 	print "<tr><td class=\"descriptionbox wrap width20 vmiddle\">".$pgv_lang["select_report"]."</td>";
 	print "<td class=\"optionbox\">";
 	print "<select name=\"report\">\n";
+	$username = getUserName();
 	foreach($reports as $file=>$report) {
-		print "<option value=\"".$report["file"]."\">".$report["title"][$LANGUAGE]."</option>\n";
+		if ($report["access"]>=getUserAccessLevel())
+			print "<option value=\"".$report["file"]."\">".$report["title"][$LANGUAGE]."</option>\n";
 	}
 	print "</select></td></tr>\n";
 	print "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["click_here"]."\" /></td></tr>";

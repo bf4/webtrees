@@ -30,6 +30,9 @@
 	exit;
 }
 
+$pgv_lang["replace"]				= "Replace record";
+$pgv_lang["append"] 				= "Append record";
+$pgv_lang["review_changes"] 		= "Review GEDCOM Changes";
 $pgv_lang["current_dir"]			= "Current directory";
 $pgv_lang["remove_object"]			= "Remove object";
 $pgv_lang["remove_links"]			= "Remove links";
@@ -139,7 +142,6 @@ $pgv_lang["error_remote"]           = "You have selected a remote site.";
 $pgv_lang["error_same"]             = "You have selected the same site.";
 $pgv_lang["external_file"]			= "This media object does not exist as a file on this server.  It cannot be deleted, moved, or renamed.";
 $pgv_lang["family"] 				= "Family";
-$pgv_lang["family_with"]			= "Family with";
 $pgv_lang["file_missing"]			= "No file was received. Please upload again.";
 $pgv_lang["file_partial"]			= "File was only partially uploaded, please try again";
 $pgv_lang["file_success"]			= "File successfully uploaded";
@@ -187,7 +189,6 @@ $pgv_lang["media_thumb_exists"]		= "Media thumbnail already exists.";
 $pgv_lang["multi_site_search"] 		= "Multi Site Search";
 $pgv_lang["multiple_gedcoms"]		= "This file is linked to another genealogical database on this server.  It cannot be deleted, moved, or renamed until these links have been removed.";
 $pgv_lang["must_provide"]			= "You must provide a ";
-$pgv_lang["name"]					= "Name";
 $pgv_lang["name_search"]			= "Name: ";
 $pgv_lang["new_repo_created"]		= "New Repository created";
 $pgv_lang["new_source_created"] 	= "New source created successfully.";

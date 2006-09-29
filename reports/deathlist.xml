@@ -1,4 +1,4 @@
-<PGVReport access="PGV_PUBLIC" icon="place">
+<PGVReport access="PRIV_PUBLIC" icon="place">
 	<!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[death_report]" /></PGVRTitle>
 	<PGVRDescription>Prints a list of individuals matching specific death criteria</PGVRDescription>

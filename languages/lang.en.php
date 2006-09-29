@@ -30,9 +30,13 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["play"]					= "Play";
+$pgv_lang["stop"]					= "Stop";
+$pgv_lang["random_media_start_slide"]	= "Start slideshow on page load?";
+$pgv_lang["random_media_ajax_controls"]	= "Show AJAX Controls?";
 $pgv_lang["view_img_details"]		= "View image details";
 $pgv_lang["media_options"]			= "Media Options";
-
+$pgv_lang["name"]					= "Name";
 $pgv_lang["children"]				= "Children";
 $pgv_lang["child"]					= "Child";
 $pgv_lang["as_child"]				= "Family with Parents";
@@ -249,6 +253,7 @@ $pgv_lang["common_upload_errors"]	= "This error probably means that the file you
 $pgv_lang["total_memory_usage"]		= "Total Memory Usage:";
 $pgv_lang["mothers_family_with"]	= "Mother's Family with ";
 $pgv_lang["fathers_family_with"]	= "Father's Family with ";
+$pgv_lang["family_with"]			= "Family with";
 $pgv_lang["halfsibling"]			= "Half-Sibling";
 $pgv_lang["halfbrother"]			= "Half-Brother";
 $pgv_lang["halfsister"]				= "Half-Sister";

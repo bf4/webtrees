@@ -1,4 +1,4 @@
-<PGVReport access="PGV_USER" icon="place">
+<PGVReport access="PRIV_USER" icon="place">
 	<!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[address_labels]" /></PGVRTitle>
 	<PGVRDescription>Prints address labels</PGVRDescription>

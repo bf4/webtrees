@@ -1,4 +1,4 @@
-<PGVReport access="PGV_PUBLIC" icon="pedigree">
+<PGVReport access="PRIV_PUBLIC" icon="pedigree">
 <!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[pedigree_chart]" /> (<PGVRvar var="pgv_lang[portrait]" />)</PGVRTitle>
 	<PGVRDescription>Prints a pedigree chart in portrait mode</PGVRDescription>

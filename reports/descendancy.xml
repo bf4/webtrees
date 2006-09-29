@@ -1,4 +1,4 @@
-<PGVReport access="PGV_PUBLIC" icon="descend">
+<PGVReport access="PRIV_PUBLIC" icon="descend">
 	<PGVRTitle><PGVRvar var="pgv_lang[descend_report]" /></PGVRTitle>
 	<PGVRDescription>Prints a descendant chart in portrait mode</PGVRDescription>
 	<PGVRInput name="pid" lookup="INDI" type="text" default=""><PGVRvar var="pgv_lang[enter_pid]" />:</PGVRInput>

@@ -44,6 +44,8 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["random_media_start_slide_help"]			29 Sep 2006				A
++$pgv_lang["random_media_ajax_controls_help"]		29 Sep 2006				A
 *$pgv_lang["index_htmlplus_compat_help"]			23 Sep 2006				S
 +$pgv_lang["index_htmlplus_compat_help"]			25 Jul 2006				W		Added to HTMLplus block.
 *$pgv_lang["index_htmlplus_content_help"]			25 Jul 2006				W		Removed tag list.  It's now in a seperate window.

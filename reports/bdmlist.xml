@@ -1,4 +1,4 @@
-<PGVReport access="PGV_PUBLIC" icon="place">
+<PGVReport access="PRIV_PUBLIC" icon="place">
 	<!--
 	@package PhpGedView
 	@subpackage Reports

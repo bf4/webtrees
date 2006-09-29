@@ -25,12 +25,6 @@
  * @version $Id$
  */
 
-if (isset ($_REQUEST['mod']))
-{
-	require_once 'module.php';
-	exit;
-}
-
 require_once("config.php");
 
 if (!isset($CONFIGURED)) {
@@ -38,8 +32,14 @@ if (!isset($CONFIGURED)) {
 	exit;
 }
 
-require($factsfile["english"]);
-if (file_exists($factsfile[$LANGUAGE])) require($factsfile[$LANGUAGE]);
+if (isset ($_REQUEST['mod']))
+{
+	require_once 'module.php';
+	exit;
+}
+
+require_once($factsfile["english"]);
+if (file_exists($factsfile[$LANGUAGE])) require_once($factsfile[$LANGUAGE]);
 
 /**
  * Block definition array
@@ -242,6 +242,49 @@ foreach($ublocks["main"] as $block) {
 	if ($block[0]=="print_login_block") $login_block_present = true;
 }
 
+//-- handle block AJAX calls
+/**
+ * In order for a block to make an AJAX call the following request parameters must be set
+ * block = the method name of the block to call (e.g. 'print_random_media')
+ * side = the side of the page the block is on (e.g. 'main' or 'right')
+ * bindex = the number of the block on that side, first block = 0
+ */
+if ($action=="ajax") {
+	//--  if a block wasn't sent then exit with nothing
+	if (!isset($_REQUEST['block'])) {
+		print "Block not sent";
+		exit;
+	}
+	$block = $_REQUEST['block'];
+	//-- set which side the block is on
+	$side = "main";
+	if (isset($_REQUEST['side'])) $side = $_REQUEST['side'];
+	//-- get the block number
+	if (isset($_REQUEST['bindex'])) {
+		if (isset($ublocks[$side][$_REQUEST['bindex']])) {
+			$blockval = $ublocks[$side][$_REQUEST['bindex']];
+			if ($blockval[0]==$block && function_exists($blockval[0])) {
+				if ($side=="main") $param1 = "false";
+				else $param1 = "true";
+				eval($blockval[0]."($param1, \$blockval[1], \"$side\", ".$_REQUEST['bindex'].");");
+				exit;
+			}
+		}
+	}
+	
+	//-- not sure which block to call so call the first one we find
+	foreach($ublocks["main"] as $bindex=>$blockval) {
+		if (isset($DEBUG)&&($DEBUG==true)) print_execution_stats();
+		if ($blockval[0]==$block && function_exists($blockval[0])) eval($blockval[0]."(false, \$blockval[1], \"main\", $bindex);");
+	}
+	foreach($ublocks["right"] as $bindex=>$blockval) {
+		if (isset($DEBUG)&&($DEBUG==true)) print_execution_stats();
+		if ($blockval[0]==$block && function_exists($blockval[0])) eval($blockval[0]."(true, \$blockval[1], \"right\", $bindex);");
+	}
+	exit;
+}
+//-- end of ajax call handler
+
 if ($command=="user") {
 	$helpindex = "index_myged_help";
 	print_header($pgv_lang["mygedview"]);
@@ -264,6 +307,37 @@ else {
 	var pastefield;
 	function paste_id(value) {
 		pastefield.value=value;
+	}
+	<?php if (isset($DEBUG)&&($DEBUG==true)) print "var DEBUG = true;\n"; else print "var DEBUG = false;\n"; ?>
+	/**
+	 * blocks may use this JS function to update themselves using AJAX technology
+	 * @param string targetId	the id of the block to target the results too
+	 * @param string block 	the method name of the block to call (e.g. 'print_random_media')
+ 	 * @param string side 	the side of the page the block is on (e.g. 'main' or 'right')
+	 * @param int bindex 	the number of the block on that side, first block = 0
+	 * @param boolean loading  Whether or not to show the loading message
+	 */
+	function ajaxBlock(targetId, block, side, bindex, loading) {
+		target = document.getElementById(targetId);
+		if (!target) return false;
+		
+		target.style.height = (target.offsetHeight-4) + "px";
+		if (loading) target.innerHTML = "<br /><br /><?php print $pgv_lang['loading']; ?><br /><br />";
+		
+		var oXmlHttp = createXMLHttp();
+		link = "index.php?action=ajax&block="+block+"&side="+side+"&bindex="+bindex;
+		if (DEBUG) link = link + "&DEBUG="+DEBUG;
+		oXmlHttp.open("get", link, true);
+		oXmlHttp.onreadystatechange=function()
+		{
+  			if (oXmlHttp.readyState==4)
+  			{
+   				target.innerHTML = oXmlHttp.responseText;
+   				target.style.height = 'auto';
+   			}
+  		};
+  		oXmlHttp.send(null);
+  		return false;
 	}
 //-->
 </script>

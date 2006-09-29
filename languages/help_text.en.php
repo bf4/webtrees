@@ -27,6 +27,8 @@ if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
   exit;
 }
 
+$pgv_lang["random_media_start_slide_help"]			= "~#pgv_lang[random_media_start_slide]#~<br /><br />Should the AJAX slideshow start automatically when the page is loaded.<br /><br />This features use AJAX technology to change the contents of the block without preloading information from the server and without reloading the entire page.<br /><br />";
+$pgv_lang["random_media_ajax_controls_help"]	= "~#pgv_lang[random_media_ajax_controls]#~<br /><br />You can use this setting to enable to disable player controls on the random media block which will allow the user to jump to another random object or to play through randomly selected media like a slideshow.<br /><br />These features use AJAX technology to change the contents of the block without preloading information from the server and without reloading the entire page.<br /><br />";
 $pgv_lang["edit_add_unlinked_source_help"]	= "~#pgv_lang[add_unlinked_source]#~<br /><br />Use this link to add a new source to your database without linking the source to a source citation in another record.  The new source will appear in the source list, but will not appear on any charts or anywhere else in the program until it is linked up to a source citation.";
 $pgv_lang["link_person_id_help"]	= "~#pgv_lang[label_local_id]#~<br /><br />In this field you enter the ID of the person you are linking to (e.g. I100).";
 $pgv_lang["link_gedcom_id_help"]	= "~#pgv_lang[label_gedcom_id]#~<br /><br />Use this section to select the alternate database identifier that contains the the person you are linking to.";

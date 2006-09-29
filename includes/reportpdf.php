@@ -1534,6 +1534,13 @@ function PGVRGedcomValueSHandler($attrs) {
 			else $level = $attrs["level"];
 			$truncate = "";
 			if (isset($attrs["truncate"])) $truncate=$attrs["truncate"];
+			$tags = preg_split("/:/", $tag);
+			//-- check all of the tags for privacy
+			foreach($tags as $t=>$subtag) {
+				if (!empty($subtag)) {
+					if (!showFact($tag, $id)||!showFactDetails($tag,$id)) return;
+				}
+			}
 			$value = get_gedcom_value($tag, $level, $gedrec, $truncate);
 			if (showFact($fact, $id)&&showFactDetails($fact,$id)) $currentElement->addText($value);
 		}
