@@ -580,8 +580,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 					$media["TITL"] = stripslashes($row["m_titl"]);
 					$media["GEDCOM"] = stripslashes($row["m_gedrec"]);
 					$gedrec = & trim($row["m_gedrec"]);
-					$media["LEVEL"] = $gedrec {
-						0 };
+					$media["LEVEL"] = $gedrec{0};
 					$media["LINKED"] = false;
 					$media["LINKS"] = array ();
 					$media["CHANGE"] = "";
@@ -1851,6 +1850,7 @@ function picture_clip($person_id, $image_id, $filename, $thumbDir)
 		cropimage($filename, $image_dest, $left, $top, $right, $bottom); //removed offset 50
 		return  $image_dest;
 	}
+	return "";
 }
 function cropImage($image, $dest_image, $left, $top, $right, $bottom){ //$image is the string location of the original image, $dest_image is the string file location of the new image, $fx is the..., $fy is the...
 	global $THUMBNAIL_WIDTH;

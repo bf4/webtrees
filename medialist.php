@@ -135,6 +135,15 @@ if ($search == "yes") {
 				<input type="submit" value=" &gt; "/>
 			</td>
 		</tr>
+		<?php if (file_exists("modules/slideshow.php")) { ?>
+		<tr>
+			<td class="list_label" colspan="2">				
+  				<?php 
+  				print "<a href=\"#\" onclick=\"runSlideShow(); showMe(); return false;\">$pgv_lang[view_slideshow]</a>\n";
+  				?> 
+			</td>
+		</tr>	
+		<?php } ?>
 	</table>
 </form>
 <?php
@@ -267,13 +276,13 @@ if ($ct>0){
 
 	    print "\n\t\t\t<td class=\"list_value_wrap\" width=\"50%\">";
 	    print "<table class=\"$TEXT_DIRECTION\">\n\t<tr>\n\t\t<td valign=\"top\" style=\"white-space: normal;\">";
-
-	    print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";
+	    if ($USE_MEDIA_VIEWER) print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
+	    else print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";
 		print "<img src=\"".thumbnail_file($media["FILE"])."\" align=\"left\" class=\"thumbnail\" border=\"none\"";
 		if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
 		print " alt=\"" . PrintReady($name) . "\" title=\"" . PrintReady($name) . "\" /></a>";
 		print "</td>\n\t\t<td class=\"list_value_wrap\" style=\"border: none;\" width=\"100%\">";
-	    print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";
+	    print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\"/>";
 
 	    if (begRTLText($name) && $TEXT_DIRECTION=="ltr") {
 			print "(".$media["XREF"].")&nbsp;&nbsp;&nbsp;";
@@ -386,6 +395,8 @@ if ($ct>0){
 	print "</table><br />";
 }
 print "\n</div>\n";
+//-- load up the slideshow code
+if (file_exists("modules/slideshow/slideshow.php")) include_once("modules/slideshow/slideshow.php");
 print_footer();
 
 ?>
