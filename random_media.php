@@ -82,7 +82,8 @@ if ($MULTI_MEDIA) {
 						foreach($links as $key=>$type) {
 							$gedrec = find_gedcom_record($key);
 							$disp &= !empty($gedrec);
-							$disp &= $type!="SOUR";
+							//-- source privacy is now available through the display details by id method
+							// $disp &= $type!="SOUR";
 							$disp &= displayDetailsById($key, $type);
 						}
 						if (isset($DEBUG)&&($DEBUG==true)&&!$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed link privacy</span><br />\n";}
@@ -107,7 +108,7 @@ if ($MULTI_MEDIA) {
 						unset($medialist[$value]);
 					}
 					//-- if there are no more media items, then try to get some more
-					if (count($medialist)==0) $medialist = get_medialist(false, '', false, true);
+					if (count($medialist)==0) $medialist = get_medialist(false, '', true, true);
 					$i++;
 				}
 				if (!$disp) return false;
@@ -146,9 +147,10 @@ if ($MULTI_MEDIA) {
 					print " ><a href=\"javascript:;\" onclick=\"return openImage('".$medialist[$value]["FILE"]."', $imgwidth, $imgheight);\">";
 				}
 				$mediaTitle = "";
-				if ($medialist[$value]["TITL"]!=$medialist[$value]["FILE"]) {
+				if (!empty($medialist[$value]["TITL"])) {
 					$mediaTitle = PrintReady($medialist[$value]["TITL"]);
 				}
+				else $mediaTitle = basename($medialist[$value]["FILE"]);
 				if ($block) {
 					print "<img src=\"".$medialist[$value]["THUMB"]."\" border=\"0\" class=\"thumbnail\"";
 					if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
