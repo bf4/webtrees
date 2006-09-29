@@ -9,6 +9,11 @@
 =====================================================================
 
 Version 4.1
+ - Reorganized language files based on user access level (Neumont/yalnifj)
+ - Added [ 1567427 ] AJAX slideshow controls to the Random media block (yalnifj)
+ - Added [ 1567427 ] AJAX framework to portal blocks so that blocks can refresh themselves without refreshing the entire page (yalnifj)
+ - Added media list slide show module support (Neumont/yalnifj)
+ - Added media view page (Neumont)
  - Removed use of unset in lang.xx.php files for relationship labels, added cousins of nth degree (cozensweb)
  - Added Dutch translations for relationship labels (cozensweb, vanpepep)
  - Added [ 1549498 ] Add quick-click links to some fields that use drop-down list (opus27)
@@ -54,6 +59,8 @@ Version 4.1
  - Added Search and Replace feature (Neumont)
 
 Version 4.0.2
+ - Fixed Address privacy in reports / report access privacy not used (yalnifj)
+ - Fixed Random Media block performance (Neumont / yalnifj)
  - Fixed [ 1542463 ] strpos errors during inital install (opus27)
  - Fixed Hourglass still uses 3.3 privacy rules (yalnifj)
  - Fixed Marriage date edit doesn't show up (opus27)

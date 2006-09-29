@@ -161,10 +161,12 @@ foreach($users as $indexval => $user) {
 	  <td class="optionbox"><?php print_help_link("edit_gedcoms_help", "qm"); ?><a href="editgedcoms.php"><?php print $pgv_lang["manage_gedcoms"];?></a></td>
 	  <td class="optionbox"><?php print_help_link("help_edit_merge.php", "qm"); ?><a href="edit_merge.php"><?php print $pgv_lang["merge_records"]; ?></a></td>
 	</tr>
+<?php if (userCanEdit(getUserName())) { ?>
 	<tr>
      <td class="optionbox"><?php print_help_link("edit_add_unlinked_person_help", "qm"); ?><a href="javascript: <?php print $pgv_lang["add_unlinked_person"]; ?>" onclick="addnewchild(''); return false;"><?php print $pgv_lang["add_unlinked_person"]; ?></a></td>
      <td class="optionbox"><?php print_help_link("edit_add_unlinked_source_help", "qm"); ?><a href="javascript: <?php print $pgv_lang["add_unlinked_source"]; ?>" onclick="addnewsource(''); return false;"><?php print $pgv_lang["add_unlinked_source"]; ?></a></td>
 	</tr>
+<?php } ?>
    <tr>
       <td class="optionbox">&nbsp;</td>
       <td class="optionbox"><?php if ($d_pgv_changes != "") print $d_pgv_changes; else print "&nbsp;"; ?></td>
