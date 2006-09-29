@@ -267,7 +267,7 @@ function print_list_repository($key, $value, $useli=true) {
  *
  * @param array $datalist contain individuals that were extracted from the database.
  */
-function print_indi_table($datalist) {
+function print_indi_table($datalist, $title="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
 	$name_subtags = array("", "_HEB", "ROMN", "_AKA");
@@ -277,45 +277,46 @@ function print_indi_table($datalist) {
 	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
 <?php
 	require_once("includes/person_class.php");
-	echo "<h3>".$pgv_lang["individuals"]."</h3>";
+	if (empty($title)) $title=$pgv_lang["individuals"];
+	echo "<fieldset><legend>".$title."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 
 	//-- filter buttons
 	$person = new Person("");
-	echo "<button type=\"button\" title=\"".$pgv_lang["male"]
+	echo "<button type=\"button\" class=\"sexM\" title=\"".$pgv_lang["male"]
 	."\" onclick=\"return table_filter('".$table_id."', 'SEX', 'M')\">";
 	$person->sex = "M"; echo $person->getSexImage()."&nbsp;</button> ";
-	echo "<button type=\"button\" title=\"".$pgv_lang["female"]
+	echo "<button type=\"button\" class=\"sexF\" title=\"".$pgv_lang["female"]
 	."\" onclick=\"return table_filter('".$table_id."', 'SEX', 'F')\">";
 	$person->sex = "F"; echo $person->getSexImage()."&nbsp;</button> ";
-	echo "<button type=\"button\" title=\"".$pgv_lang["unknown"]
+	echo "<button type=\"button\" class=\"sexU\" title=\"".$pgv_lang["unknown"]
 	."\" onclick=\"return table_filter('".$table_id."', 'SEX', 'U')\">";
 	$person->sex = "U"; echo $person->getSexImage()."&nbsp;</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'TREE', 'R')\">";
+	echo "<button type=\"button\" class=\"alive\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'N')\">";
+	echo $pgv_lang["alive"]."</button> ";
+	echo "<button type=\"button\" class=\"dead\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'Y')\">";
+	echo $pgv_lang["dead"]."</button> ";
+	echo "<button type=\"button\" class=\"roots\" onclick=\"return table_filter('".$table_id."', 'TREE', 'R')\">";
 	echo $pgv_lang["roots"]."</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'TREE', 'L')\">";
+	echo "<button type=\"button\" class=\"leaves\" onclick=\"return table_filter('".$table_id."', 'TREE', 'L')\">";
 	echo $pgv_lang["leaves"]."</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', '', '')\">";
-	echo "<b>".$pgv_lang["reset"]."</b></button> ";
+	echo "<br />";
+	$y100 = get_changed_date(date('Y')-100);
+	echo "<button type=\"button\" class=\"BIRT_Y\" onclick=\"return table_filter('".$table_id."', 'BIRT', 'YES')\">";
+	echo $factarray["BIRT"]."&gt;100</button> ";
+	echo "<button type=\"button\" class=\"BIRT_Y100\" onclick=\"return table_filter('".$table_id."', 'BIRT', 'Y100')\">";
+	echo $factarray["BIRT"]."&lt;=100</button> ";
+	echo "<button type=\"button\" class=\"DEAT_Y\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'YES')\">";
+	echo $factarray["DEAT"]."&gt;100</button> ";
+	echo "<button type=\"button\" class=\"DEAT_Y100\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'Y100')\">";
+	echo $factarray["DEAT"]."&lt;=100</button> ";
 	echo "<br />";
 	echo $pgv_lang["year"];
 	echo " <input type=\"text\" size=\"3\" id=\"aliveyear\" value=\"".date('Y')."\" /> ";
-	echo "<button type=\"button\" onclick=\"return table_filter_alive('".$table_id."')\">";
+	echo "<button type=\"button\" class=\"alive_in_year\" onclick=\"return table_filter_alive('".$table_id."')\">";
 	echo $pgv_lang["alive_in_year"]."</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'N')\">";
-	echo $pgv_lang["alive"]."</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'Y')\">";
-	echo $pgv_lang["dead"]."</button> ";
-	echo "<br />";
-	$y100 = get_changed_date(date('Y')-100);
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'BIRT', 'YES')\">";
-	echo $factarray["BIRT"]."&gt;100</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'BIRT', 'Y100')\">";
-	echo $factarray["BIRT"]."&lt;=100</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'YES')\">";
-	echo $factarray["DEAT"]."&gt;100</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'Y100')\">";
-	echo $factarray["DEAT"]."&lt;=100</button> ";
+	echo "<button type=\"button\" class=\"reset\" onclick=\"return table_filter('".$table_id."', '', '')\">";
+	echo $pgv_lang["reset"]."</button> ";
 
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
@@ -354,6 +355,7 @@ function print_indi_table($datalist) {
 		//if (!$person->canDisplayName()) continue;
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
+
 		if ($SHOW_ID_NUMBERS) {
 			echo "<td class=\"list_value_wrap rela\">";
 			echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$person->xref."</a></td>";
@@ -429,6 +431,7 @@ function print_indi_table($datalist) {
 		echo "</tr>\n";
 	}
 	echo "</table>\n";
+	echo "</fieldset>\n";
 }
 
 /**
@@ -436,7 +439,7 @@ function print_indi_table($datalist) {
  *
  * @param array $datalist contain families that were extracted from the database.
  */
-function print_fam_table($datalist) {
+function print_fam_table($datalist, $title="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
 	$name_subtags = array("", "_HEB", "ROMN", "_AKA");
@@ -446,39 +449,35 @@ function print_fam_table($datalist) {
 	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
 <?php
 	require_once("includes/family_class.php");
-	echo "<h3>".$pgv_lang["families"]."</h3>";
+	if (empty($title)) $title=$pgv_lang["families"];
+	echo "<fieldset><legend>".$title."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 
 	//-- filter buttons
-	$person = new Person("");
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'N')\">";
+	echo "<button type=\"button\" class=\"both_alive\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'N')\">";
 	echo $pgv_lang["both_alive"]."</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'W')\">";
-	echo $pgv_lang["widower"];
-	$person->sex = "M"; echo $person->getSexImage();
-	echo "</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'H')\">";
-	echo $pgv_lang["widow"];
-	$person->sex = "F"; echo $person->getSexImage();
-	echo "</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'Y')\">";
+	echo "<button type=\"button\" class=\"widower\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'W')\">";
+	echo $pgv_lang["widower"]."</button> ";
+	echo "<button type=\"button\" class=\"widow\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'H')\">";
+	echo $pgv_lang["widow"]."</button> ";
+	echo "<button type=\"button\" class=\"both_dead\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'Y')\">";
 	echo $pgv_lang["both_dead"]."</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'TREE', 'R')\">";
+	echo "<button type=\"button\" class=\"roots\" onclick=\"return table_filter('".$table_id."', 'TREE', 'R')\">";
 	echo $pgv_lang["roots"]."</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'TREE', 'L')\">";
+	echo "<button type=\"button\" class=\"leaves\" onclick=\"return table_filter('".$table_id."', 'TREE', 'L')\">";
 	echo $pgv_lang["leaves"]."</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', '', '')\">";
-	echo "<b>".$pgv_lang["reset"]."</b></button> ";
 	echo "<br />";
 	$y100 = get_changed_date(date('Y')-100);
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'MARR', '?')\">";
+	echo "<button type=\"button\" class=\"NMR\" onclick=\"return table_filter('".$table_id."', 'MARR', '?')\">";
 	echo $factarray["_NMR"]." ?</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'MARR', 'YES')\">";
+	echo "<button type=\"button\" class=\"MARR_Y\" onclick=\"return table_filter('".$table_id."', 'MARR', 'YES')\">";
 	echo $factarray["MARR"]."&gt;100</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'MARR', 'Y100')\">";
+	echo "<button type=\"button\" class=\"MARR_Y100\" onclick=\"return table_filter('".$table_id."', 'MARR', 'Y100')\">";
 	echo $factarray["MARR"]."&lt;=100</button> ";
-	echo "<button type=\"button\" onclick=\"return table_filter('".$table_id."', 'MARR', 'DIV')\">";
+	echo "<button type=\"button\" class=\"DIV\" onclick=\"return table_filter('".$table_id."', 'MARR', 'DIV')\">";
 	echo $factarray["DIV"]."</button> ";
+	echo "<button type=\"button\" class=\"reset\" onclick=\"return table_filter('".$table_id."', '', '')\">";
+	echo $pgv_lang["reset"]."</button> ";
 
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
@@ -589,6 +588,7 @@ function print_fam_table($datalist) {
 		echo "</tr>\n";
 	}
 	echo "</table>\n";
+	echo "</fieldset>\n";
 }
 
 /**
@@ -596,7 +596,7 @@ function print_fam_table($datalist) {
  *
  * @param array $datalist contain sources that were extracted from the database.
  */
-function print_sour_table($datalist) {
+function print_sour_table($datalist, $title="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
 	$name_subtags = array("_HEB", "ROMN");
@@ -605,7 +605,8 @@ function print_sour_table($datalist) {
 	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
 <?php
 	require_once("includes/source_class.php");
-	echo "<h3>".$pgv_lang["sources"]."</h3>";
+	if (empty($title)) $title=$pgv_lang["sources"];
+	echo "<fieldset><legend>".$title."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 
 	//-- table header
@@ -664,6 +665,7 @@ function print_sour_table($datalist) {
 		echo "</tr>\n";
 	}
 	echo "</table>\n";
+	echo "</fieldset>\n";
 }
 
 /**
@@ -671,7 +673,7 @@ function print_sour_table($datalist) {
  *
  * @param array $datalist contain repositories that were extracted from the database.
  */
-function print_repo_table($datalist) {
+function print_repo_table($datalist, $title="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
 	$name_subtags = array("_HEB", "ROMN");
@@ -680,7 +682,8 @@ function print_repo_table($datalist) {
 	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
 <?php
 	require_once("includes/repository_class.php");
-	echo "<h3>".$pgv_lang["repos_found"]."</h3>";
+	if (empty($title)) $title=$pgv_lang["repos_found"];
+	echo "<fieldset><legend>".$title."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 
 	//-- table header
@@ -728,6 +731,7 @@ function print_repo_table($datalist) {
 		echo "</tr>\n";
 	}
 	echo "</table>\n";
+	echo "</fieldset>\n";
 }
 
 /**

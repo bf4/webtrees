@@ -184,9 +184,11 @@ if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&($show_all=="yes")) {
 	if ($count>($minNamesPerColumn << 1)) $col=3;
 	if ($count>($minNamesPerColumn << 2)) $col=4;
 	$newcol=ceil($count/$col);
+	/**%
 	print "<td class=\"list_label\" colspan=\"$col\">";
 	print $TableTitle;
 	print $pgv_lang["surnames"]."</td></tr><tr>\n";
+	%**/
 	print "<td class=\"list_value wrap";
 	if ($col==4) print " width25";
 	if ($col==3) print " width33";
@@ -282,9 +284,11 @@ else if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&(empty($surname))&&
 	if ($count>($minNamesPerColumn << 1)) $col=3;
 	if ($count>($minNamesPerColumn << 2)) $col=4;
 	$newcol=ceil($count/$col);
+	/**%
 	print "<td class=\"list_label\" colspan=\"$col\">";
 	print $TableTitle;
 	print $pgv_lang["surnames"]."</td></tr><tr>\n";
+	%**/
 	print "<td class=\"list_value wrap";
 	if ($col==4) print " width25";
 	if ($col==3) print " width33";
@@ -354,6 +358,7 @@ else {
 		}
 		uasort($names, "itemsort");
 		reset($names);
+		/**%
 		$count = count($names);
 		$indi_show = array();
 		$total_indis = count($indilist);
@@ -375,6 +380,7 @@ else {
 			if ($SHOW_MARRIED_NAMES) print $pgv_lang["total_names"]." ".$count."<br />\n";
 			print $pgv_lang["total_indis"]." ".count($indi_show)."</td>\n";
 		}
+		%**/
 	}
 	else {
 		//--- the list is really long so divide it up again by the first letter of the first name
@@ -396,7 +402,6 @@ else {
 			}
 			else $firstalpha = $_SESSION[$surname."_firstalpha"];
 			print "<td class=\"list_label\" style=\"padding: 0pt 5pt 0pt 5pt; \" colspan=\"2\">";
-			print $TableTitle;
 			print PrintReady(str_replace("#surname#", check_NN($surname), $pgv_lang["indis_with_surname"]));
 			print "</td></tr><tr>\n";
 			print "<td style=\"text-align:center;\" colspan=\"2\">";
@@ -436,14 +441,13 @@ else {
 			}
 			print "</td></tr><tr>\n";
 		}
-		if ($firstname_alpha==false) {
+		/**%if ($firstname_alpha==false) {
 			print "<td class=\"list_label\" style=\"padding: 0pt 5pt 0pt 5pt; \" colspan=\"2\">";
-			print $TableTitle;
 			if (!empty($surname) && $surname_sublist=="yes") print PrintReady(str_replace("#surname#", check_NN($surname), $pgv_lang["indis_with_surname"]));
 			else print $pgv_lang["individuals"];
 			print "</td></tr><tr>\n";
-		}
-		print "<td class=\"list_value wrap width50 $TEXT_DIRECTION\"><ul>\n";
+		}%**/
+		//print "<td class=\"list_value wrap width50 $TEXT_DIRECTION\"><ul>\n";
 		$names = array();
 		foreach ($tindilist as $gid => $indi) {
 			foreach($indi["names"] as $name) {
@@ -504,6 +508,7 @@ else {
 			}
 		}
 		uasort($names, "itemsort");
+		/**%
 		$count = count($names);
 		$indi_show = array();
 		$i=0;
@@ -526,11 +531,10 @@ else {
 			if (count($indi_hide)>0) print $pgv_lang["hidden"]." ".count($indi_hide);
 			print "</td>\n";
 		}
+		%**/
 	}
 }
 print "</tr></table>";
-
-if (isset($names)) print_indi_table($names);
 
 print "<br />";
 if(empty($SEARCH_SPIDER)) {
@@ -542,6 +546,14 @@ if(empty($SEARCH_SPIDER)) {
 	}
 }
 print "<br /><br />\n";
+
+if (!empty($surname) && $surname_sublist=="yes") $legend = str_replace("#surname#", check_NN($surname), $pgv_lang["indis_with_surname"]);
+else if (isset($alpha)) $legend = str_replace("#surname#", $alpha.".", $pgv_lang["indis_with_surname"]);
+else $legend = $pgv_lang["individuals"];
+if (isset($falpha)) $legend .= " $falpha.";
+$legend = PrintReady($legend);
+if (isset($names)) print_indi_table($names, $legend);
+
 print "</div>\n";
 if(empty($SEARCH_SPIDER)) {
 	print_footer();

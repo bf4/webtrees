@@ -292,12 +292,12 @@ class FamilyRoot extends BaseController
 		else $ff="";
 
 		// charts menu
-		$menu = new Menu($pgv_lang['charts'], 'timeline.php?pids[0]='.$this->parents['HUSB'].'&amp;pids[1]='.$this->parents['WIFE']);
+		$menu = new Menu($pgv_lang['charts'], 'timeline.php?pids[0]='.$this->getHusband().'&amp;pids[1]='.$this->getWife());
 		if (!empty($PGV_IMAGES["timeline"]["small"]))
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 		// charts / parents_timeline
-		$submenu = new Menu($pgv_lang['parents_timeline'], 'timeline.php?pids[0]='.$this->parents['HUSB'].'&amp;pids[1]='.$this->parents['WIFE']);
+		$submenu = new Menu($pgv_lang['parents_timeline'], 'timeline.php?pids[0]='.$this->getHusband().'&amp;pids[1]='.$this->getWife());
 		if (!empty($PGV_IMAGES["timeline"]["small"]))
 			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
 		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
@@ -393,12 +393,14 @@ class FamilyRoot extends BaseController
 		$menu->addSubmenu($submenu);
 
 		// edit_fam / reorder_children
-		$submenu = new Menu($pgv_lang['reorder_children']);
-		$submenu->addOnclick("return reorder_children('".$this->getFamilyID()."');");
-		if (!empty($PGV_IMAGES["edit_fam"]["small"]))
-			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
-		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
-		$menu->addSubmenu($submenu);
+		if ($this->family->getNumberOfChildren() > 1) {
+			$submenu = new Menu($pgv_lang['reorder_children']);
+			$submenu->addOnclick("return reorder_children('".$this->getFamilyID()."');");
+			if (!empty($PGV_IMAGES["edit_fam"]["small"]))
+				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
+			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+			$menu->addSubmenu($submenu);
+		}
 
 		if (isset($pgv_changes[$this->getFamilyID().'_'.$GEDCOM]))
 		{
