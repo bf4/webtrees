@@ -31,20 +31,21 @@ if ($MULTI_MEDIA) {
 	$PGV_BLOCKS["print_random_media"]["name"]        = $pgv_lang["random_media_block"];
 	$PGV_BLOCKS["print_random_media"]["descr"]        = "random_media_descr";
 	$PGV_BLOCKS["print_random_media"]["canconfig"]        = true;
-	$PGV_BLOCKS["print_random_media"]["config"] = array("filter"=>"all");
+	$PGV_BLOCKS["print_random_media"]["config"] = array("filter"=>"all","controls"=>"yes","start"=>"no");
 
 	require_once 'includes/functions_print_facts.php';
 
 	//-- function to display a random picture from the gedcom
 	function print_random_media($block = true, $config="", $side, $index) {
-		global $pgv_lang, $GEDCOM, $foundlist, $medialist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $pgv_lang, $GEDCOM, $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES, $GEDCOM_ID_PREFIX, $FAM_ID_PREFIX, $SOURCE_ID_PREFIX;
-		global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
-		global $PGV_BLOCKS, $command;
-
+		global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $DEBUG;
+		global $PGV_BLOCKS, $command, $action;
   		if (empty($config)) $config = $PGV_BLOCKS["print_random_media"]["config"];
   		if (isset($config["filter"])) $filter = $config["filter"];  // indi, event, or all
   		else $filter = "all";
+  		if (!isset($config['controls'])) $config['controls'] ="yes";
+  		if (!isset($config['start'])) $config['start'] ="no";
 
 		if (!$MULTI_MEDIA) return;
 		$medialist = array();
@@ -55,18 +56,27 @@ if ($MULTI_MEDIA) {
 		if ($ct>0) {
 				$i=0;
 				$disp = false;
-				//-- try up to 20 times to get a media to display
-				while($i<20) {
+				//-- try up to 40 times to get a media to display
+				while($i<40) {
+					$error = false;
 					$value = array_rand($medialist);
-					//print_r($medialist[$value]); print "<br />";
+					if (isset($DEBUG)&&($DEBUG==true)) {
+						//print_r($medialist[$value]);
+						print "Trying ".$medialist[$value]["XREF"]."<br />\n";
+					}
 					$links = $medialist[$value]["LINKS"];
 					$disp = $medialist[$value]["EXISTS"] && $medialist[$value]["LINKED"] && $medialist[$value]["CHANGE"]!="delete" ;
+					if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." File does not exist, or is not linked to anyone, or is marked for deletion.</span><br />\n";}
+					
 					$disp &= displayDetailsByID($value["XREF"], "OBJE");
 					$disp &= !FactViewRestricted($value["XREF"], $value["GEDCOM"]);
 
+					if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." Failed to pass privacy</span><br />\n";}
+					
 					$isExternal = strstr($medialist[$value]["FILE"], "://");
 
 					if ($block && !$isExternal) $disp &= file_exists($medialist[$value]["THUMB"]);
+					if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." thumbnail file could not be found</span><br />\n";}
 
 					if ($disp && count($links) != 0){
 						foreach($links as $key=>$type) {
@@ -75,6 +85,7 @@ if ($MULTI_MEDIA) {
 							$disp &= $type!="SOUR";
 							$disp &= displayDetailsById($key, $type);
 						}
+						if (isset($DEBUG)&&($DEBUG==true)&&!$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed link privacy</span><br />\n";}
 						if ($disp && $filter!="all") {
 							// Apply filter criteria
 							$ct = preg_match("/0\s(@.*@)\sOBJE/", $medialist[$value]["GEDCOM"], $match);
@@ -83,19 +94,25 @@ if ($MULTI_MEDIA) {
 							$objectRefLevel = $match2[1];
 							if ($filter=="indi" && $objectRefLevel!="1") $disp = false;
 							if ($filter=="event" && $objectRefLevel=="1") $disp = false;
+							if (isset($DEBUG)&&($DEBUG==true)&&!$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed to pass config filter</span><br />\n";}
 						}
 					}
 					//-- leave the loop if we find an image that works
-					if ($disp) break;
+					if ($disp) {
+						break;
+					}
 					//-- otherwise remove the private media item from the list
-					else unset($medialist[$value]);
+					else {
+						if (isset($DEBUG)&&($DEBUG==true)) print "<span class=\"error\">".$medialist[$value]["XREF"]." Will not be shown</span><br />\n";
+						unset($medialist[$value]);
+					}
 					//-- if there are no more media items, then try to get some more
 					if (count($medialist)==0) $medialist = get_medialist(false, '', false, true);
 					$i++;
 				}
 				if (!$disp) return false;
 
-				print "<div id=\"random_picture\" class=\"block\">\n";
+				if ($action!="ajax") print "<div id=\"random_picture$index\" class=\"block\">\n";
 				print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
 				print "<td class=\"blockh1\" >&nbsp;</td>";
 				print "<td class=\"blockh2\" ><div class=\"blockhc\">";
@@ -154,9 +171,37 @@ if ($MULTI_MEDIA) {
 				print "<br /><div class=\"indent" . ($TEXT_DIRECTION=="rtl"?"_rtl":"") . "\">";
 				print_fact_notes($medialist[$value]["GEDCOM"], "1");
 				print "</div>";
+				if ($config['controls']=='yes') {
+					print "<br />\n";
+					print "<a href=\"javascript: ".$pgv_lang["play"].";\" onclick=\"play = true; playSlideShow(); return false;\">".$pgv_lang["play"]."</a> | ";
+					print "<a href=\"javascript: ".$pgv_lang["stop"].";\" onclick=\"play = false; return false;\">".$pgv_lang["stop"]."</a> | ";
+					print "<a href=\"javascript: ".$pgv_lang["next"].";\" onclick=\"return ajaxBlock('random_picture$index', 'print_random_media', '$side', $index, true);\">".$pgv_lang["next"]."</a>\n";
+					?>
+					<script language="JavaScript" type="text/javascript">
+					<!--
+						var play = false;
+						function playSlideShow() {
+							if (play) {
+								ajaxBlock('random_picture<?php print $index; ?>', 'print_random_media', '<?php print $side; ?>', <?php print $index; ?>, false);
+								window.setTimeout('playSlideShow()', 4000);
+							}
+						}
+					//-->
+					</script>
+					<?php
+				}
 				print "</td></tr></table>\n";
 				print "</div>"; // blockcontent
-				print "</div>"; // block
+				if ($config['start']=='yes') {
+					?>
+					<script language="JavaScript" type="text/javascript">
+					<!--
+						window.setTimeout('playSlideShow()', 4000);
+					//-->
+					</script>
+					<?php
+				}
+				if ($action!="ajax") print "</div>"; // block
 		}
 	}
 
@@ -165,6 +210,8 @@ if ($MULTI_MEDIA) {
 		global $pgv_lang, $PGV_BLOCKS, $TEXT_DIRECTION;
 		if (empty($config)) $config = $PGV_BLOCKS["print_random_media"]["config"];
 		if (!isset($config["filter"])) $config["filter"] = "all";
+		if (!isset($config["controls"])) $config["controls"] = "yes";
+		if (!isset($config["start"])) $config["start"] = "no";
 		print "<tr><td class=\"descriptionbox width20\">";
  			print_help_link("random_media_persons_or_all_help", "qm");
 			print $pgv_lang["random_media_persons_or_all"];
@@ -176,6 +223,18 @@ if ($MULTI_MEDIA) {
 	    	<option value="all"<?php if ($config["filter"]=="all") print " selected=\"selected\"";?>><?php print $pgv_lang["all"]; ?></option>
 	  	</select>
 	  	</td></tr>
+	  	<tr><td class="descriptionbox"><?php print_help_link("random_media_ajax_controls_help", "qm"); print $pgv_lang["random_media_ajax_controls"]; ?></td>
+	  	<td class="optionbox"><select name="controls">
+			<option value="yes" <?php if ($config["controls"]=="yes") print " selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
+			<option value="no" <?php if ($config["controls"]=="no") print " selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
+		</select>
+		</td></tr>
+		<tr><td class="descriptionbox"><?php print_help_link("random_media_start_slide_help", "qm"); print $pgv_lang["random_media_start_slide"]; ?></td>
+	  	<td class="optionbox"><select name="start">
+			<option value="yes" <?php if ($config["start"]=="yes") print " selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
+			<option value="no" <?php if ($config["start"]=="no") print " selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
+		</select>
+		</td></tr>
 
 	  	<?php
 	}
