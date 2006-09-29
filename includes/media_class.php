@@ -105,7 +105,11 @@ class Media extends GedcomRecord {
 	function getTitle() {
 		global $pgv_lang;
 		if (!$this->canDisplayDetails()) return $pgv_lang["private"];
-		if (empty($this->title)) return $pgv_lang["unknown"];
+		if (empty($this->title)) {
+			$title = basename($this->file);
+			if (!empty($title)) return $title;
+			return $pgv_lang["unknown"];
+		}
 		return $this->title;
 	}
 
@@ -140,7 +144,7 @@ class Media extends GedcomRecord {
 	function getLinkUrl() {
 		global $GEDCOM;
 
-		$url = "medialist.php?action=filter&amp;search=yes&amp;filter=".$this->getTitle()."&amp;ged=".$GEDCOM;
+		$url = "mediaviewer.php?mid=".$this->getXref()."&amp;ged=".$GEDCOM;
 		/** FIXME
 		if ($this->isRemote()) {
 			$parts = preg_split("/:/", $this->rfn);

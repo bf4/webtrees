@@ -269,9 +269,9 @@ if ($ct>0){
 	    $name = trim($media["TITL"]);
 		$showFile = $isEditUser;
 		if ($name=="") {
-			$showFile = false;
+			//$showFile = false;
 			if ($isExternal) $name = "URL";
-			else $name = $media["FILE"];
+			else $name = basename($media["FILE"]);
 	    }
 
 	    print "\n\t\t\t<td class=\"list_value_wrap\" width=\"50%\">";
