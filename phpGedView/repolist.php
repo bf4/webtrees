@@ -36,6 +36,7 @@ print "<h2>".$pgv_lang["repo_list"]."</h2>\n\t";
 
 print_repo_table(array_merge($repolist, $addrepolist));
 
+/**% DEPRECATED
 print "\n\t<table class=\"list_table $TEXT_DIRECTION\">\n\t\t<tr><td class=\"list_label\"";
 if($cr>12) print " colspan=\"2\"";
 print ">";
@@ -80,7 +81,7 @@ if ($cr>0){
 else print "<span class=\"warning\"><i>".$pgv_lang["no_results"]."</i></span>";
 
 print "</td>\n\t\t</tr>\n\t</table>";
-
+%**/
 print "</div>";
 print "<br /><br />";
 print_footer();

@@ -79,7 +79,7 @@ print_header("$name - $rid - ".$pgv_lang["repo_info"]);
 	}
 //-->
 </script>
-<table width="100%"><tr><td>
+<table class="list_table"><tr><td>
 <?php
 if ($accept_success) print "<b>".$pgv_lang["accept_successful"]."</b><br />";
 print "\n\t<span class=\"name_head\">".PrintReady($name);
@@ -218,7 +218,7 @@ if (($view!="preview") &&(userCanEdit(getUserName()))) {
 	print_add_new_fact($rid, $repofacts, "REPO");
 }
 print "</table>\n\n";
-print "\n\t\t<br /><br /><span class=\"label\">".$pgv_lang["other_repo_records"]."</span>";
+//print "\n\t\t<br /><br /><span class=\"label\">".$pgv_lang["other_repo_records"]."</span>";
 flush();
 
 $query = "REPO @$rid@";
@@ -229,8 +229,12 @@ $mysourcelist = search_sources($query);
 uasort($mysourcelist, "itemsort");
 $cs=count($mysourcelist);
 
+print_sour_table($mysourcelist, $pgv_lang["sources"]." @ ".$name);
+
+/**% DEPRECATED
 if ($cs>0) {
 	print_help_link("repos_listbox_help", "qm");
+
 	print "\n\t<table class=\"list_table $TEXT_DIRECTION\">\n\t\t<tr><td class=\"list_label\"";
 	if($cs>12)	print " colspan=\"2\"";
 	print "><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" border=\"0\" title=\"".$pgv_lang["titles_found"]."\" alt=\"".$pgv_lang["titles_found"]."\" />&nbsp;&nbsp;";
@@ -252,7 +256,7 @@ if ($cs>0) {
 	print "</tr>\n\t</table>";
 }
 else print "&nbsp;&nbsp;&nbsp;<span class=\"warning\"><i>".$pgv_lang["no_results"]."</span>";
-
+%**/
 print "<br /><br /></td><td valign=\"top\">";
 
 if ($view!="preview") {

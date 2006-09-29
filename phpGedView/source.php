@@ -125,7 +125,8 @@ if ((!$controller->isPrintPreview())&&($controller->userCanEdit())) {
 ?>
 		</table>
 		<br /><br />
-
+		</td></tr>
+		<tr class="center"><td colspan="2">
 <?php
 //Print the tasks table
 if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel())) {
@@ -133,17 +134,23 @@ if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_R
  $mod = new ra_functions();
  $out = $mod->getSourceTasks($controller->sid);
  print $out;
-}?>
+	echo "</td></tr>";
+	echo "<tr class=\"center\"><td colspan=\"2\">";
+}
 
+//print_help_link("sources_listbox_help", "qm","other_records");
+//echo "<span class=\"label\">".$pgv_lang["other_records"]."</span>";
 
-<?php print_help_link("sources_listbox_help", "qm","other_records"); ?>
-<span class="label"><?php print $pgv_lang["other_records"]; ?></span>
-<?php
 // -- array of names
 $myindilist = $controller->source->getSourceIndis();
 $myfamlist = $controller->source->getSourceFams();
 $ci=count($myindilist);
 $cf=count($myfamlist);
+
+if ($ci>0) print_indi_table($myindilist, $pgv_lang["individuals"]." @ ".$controller->source->getTitle());
+if ($cf>0) print_fam_table($myfamlist, $pgv_lang["families"]." @ ".$controller->source->getTitle());
+
+/**% DEPRECATED
 if (($ci>0)||($cf>0)) {
 	?>
 	<table class="list_table">
@@ -213,6 +220,7 @@ if (($ci>0)||($cf>0)) {
 	</table>
 <?php }
 else print "&nbsp;&nbsp;&nbsp;<span class=\"warning\"><i>".$pgv_lang["no_results"]."</span>";
+%**/
 ?>
 	<br />
 	<br />

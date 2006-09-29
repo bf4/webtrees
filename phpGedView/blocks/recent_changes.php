@@ -137,6 +137,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 	require_once("functions_print_lists.php");
 	print_changes_table($found_facts);
 
+/** DEPRECATED
 		$lastgid="";
 		foreach($found_facts as $index=>$factarr) {
 			if ($factarr[2]=="INDI") {
@@ -306,9 +307,8 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 				}
 			}
 		}
-
+**/
 	}
-
 	if ($block) print "</div>\n"; //small_inner_block
 	print "</div>"; // blockcontent
 	print "</div>"; // block

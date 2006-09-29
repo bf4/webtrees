@@ -510,7 +510,7 @@ class IndividualControllerRoot extends BaseController {
 			$submenu->addOnclick("return edit_raw('".$this->pid."');");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
-			if (count($this->indi->getSpouseFamilyIds())>0) {
+			if (count($this->indi->getSpouseFamilyIds())>1) {
 				$submenu = new Menu($pgv_lang["reorder_families"]);
 				$submenu->addOnclick("return reorder_families('".$this->pid."');");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
