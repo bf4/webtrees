@@ -44,6 +44,19 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["random_media_start_slide_help"]			30 Sep 2006				w		Fix grammar
+*$pgv_lang["random_media_ajax_controls_help"]		30 Sep 2006				wf
+*$pgv_lang["index_htmlplus_compat_help"]			30 Sep 2006				Sf		removed embedded "\n"
+*$pgv_lang["index_htmlplus_content_help"]			30 Sep 2006				f		removed embedded "\n"
+*$pgv_lang["index_htmlplus_help"]					30 Sep 2006				f		does not affect translation
+*$pgv_lang["index_htmlplus_title_help"]				30 Sep 2006				f		does not affect translation
+*$pgv_lang["lifespan_add_person_help"]				30 Sep 2006				pwC
+*$pgv_lang["timeline_control_help"]					30 Sep 2006				W
+*$pgv_lang["search_replace_help"]					30 Sep 2006				Sw
+*$pgv_lang["add_by_id_help"]						30 Sep 2006				SCwf
+*$pgv_lang["zip_help"]								30 Sep 2006				Cf		"zip" -> "ZIP"
+*$pgv_lang["include_media_help"]					30 Sep 2006				Swf
+*$pgv_lang["clip_cart_help"]						30 Sep 2006				WF
 +$pgv_lang["random_media_start_slide_help"]			29 Sep 2006				A
 +$pgv_lang["random_media_ajax_controls_help"]		29 Sep 2006				A
 *$pgv_lang["index_htmlplus_compat_help"]			23 Sep 2006				S
