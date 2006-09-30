@@ -267,6 +267,4 @@ $factarray["MARR_UNKNOWN"] 	= "Gewoon huwelijk";
 $factarray["_HNM"] 		= "Hebreeuwse naam";
 
 
-if (file_exists( "languages/facts.nl.extra.php")) require  "languages/facts.nl.extra.php";
-
 ?>

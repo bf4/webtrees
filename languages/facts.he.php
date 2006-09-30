@@ -292,6 +292,4 @@ $factarray["_PGVU"] = "האחרון ששינה";
 $factarray["SERV"]  = "שרת מרוחק";
 $factarray["_GEDF"] = "קובץ GEDCOM";
 
-//if (file_exists($PGV_BASE_DIRECTORY . "languages/facts.he.extra.php")) require $PGV_BASE_DIRECTORY . "languages/facts.he.extra.php";
-if (file_exists( "languages/facts.he.extra.php")) require  "languages/facts.he.extra.php";
 ?>

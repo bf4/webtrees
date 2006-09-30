@@ -261,6 +261,4 @@ $factarray["_BIRT_COUS"] = "Narodenie prvého bratranca";
 $factarray["_MARR_COUS"] = "Sobáš prvého bratranca";
 $factarray["_DEAT_COUS"] = "Úmrtie prvého bratranca";
 
-if (file_exists( "languages/facts.sk.extra.php")) require  "languages/facts.sk.extra.php";
-
 ?>

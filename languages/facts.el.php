@@ -223,6 +223,4 @@ $factarray["_MARNM"]	= "Όνομα γάμου";
 $factarray["_STAT"]		= "Κατάσταση γάμου";
 $factarray["COMM"]		= "Σχόλιο";
 
-if (file_exists("languages/facts.el.extra.php")) require "languages/facts.el.extra.php";
-
 ?>

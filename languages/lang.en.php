@@ -1699,5 +1699,4 @@ $pgv_lang["img_size"]				= "Image Size";
 $pgv_lang["module_error_unknown_action_v2"] = "Unknown action: [action].";
 $pgv_lang["module_error_unknown_type"] = "Unknown module type.";
 
-if (file_exists( "languages/lang.en.extra.php")) require  "languages/lang.en.extra.php";
 ?>

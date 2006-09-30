@@ -245,5 +245,4 @@ $factarray["_THUM"]="Usar esta imagem como Miniatura?";
 $factarray["_PGVU"]="Última Alteração por";
 $factarray["SERV"]="Servidor Remoto";
 $factarray["_GEDF"]="Arquivo GEDCOM";
-if (file_exists("languages/facts.pt-br.extra.php")) require "languages/facts.pt-br.extra.php";
 ?>

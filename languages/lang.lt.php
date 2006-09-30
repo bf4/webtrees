@@ -899,6 +899,4 @@ $pgv_lang["mothers_family_with"]	= "Motinos šeima su ";
 $pgv_lang["genealogy_contact"]		= "Giminės medžio kontaktinis asmuo";
 $pgv_lang["ahnentafel_report"]		= "Protėvių raportas";
 
-if (file_exists("languages/lang.lt.extra.php")) require "languages/lang.lt.extra.php";
-
 ?>

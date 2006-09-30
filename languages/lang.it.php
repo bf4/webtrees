@@ -780,6 +780,4 @@ $pgv_lang["total_living"]   = "Totale vivi";
 $pgv_lang["total_dead"]    = "Totale morti";
 $pgv_lang["remember_me"]   = "Ricordami da questo computer";
 
-if (file_exists( "languages/lang.it.extra.php")) require  "languages/lang.it.extra.php";
-
 ?>

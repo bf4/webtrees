@@ -1019,5 +1019,4 @@ $pgv_lang["fontfile_error"]						= "Font file not found on PHP server";
 $pgv_lang["rss_descr"]							= "Νέα και σύνδεσμοι από το #GEDCOM_TITLE# site";
 $pgv_lang["rss_logo_descr"]						= "Feed created by PhpGedView";
 
-if (file_exists("languages/lang.en.extra.php")) require "languages/lang.en.extra.php";
 ?>

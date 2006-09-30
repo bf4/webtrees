@@ -2256,6 +2256,4 @@ $pgv_lang["TYPE__video"] 			= "וידאו";
 $pgv_lang["module_error_unknown_action_v2"] 	= "פעולה בלתי ידועה: [פעולה].";
 $pgv_lang["module_error_unknown_type"] 	= "סוג מודול בלתי ידוע.";
 
-//if (file_exists($PGV_BASE_DIRECTORY . "languages/lang.he.extra.php")) require $PGV_BASE_DIRECTORY . "languages/lang.he.extra.php";
-if (file_exists("languages/lang.he.extra.php")) require "languages/lang.he.extra.php";
 ?>

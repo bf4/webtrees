@@ -199,6 +199,4 @@ $factarray["_PRMN"] = "Número fijo";
 $factarray["_WEIG"] = "Peso";
 $factarray["_YART"] = "Yartzeit";
 
-if (file_exists( "languages/facts.es.extra.php")) require  "languages/facts.es.extra.php";
-
 ?>

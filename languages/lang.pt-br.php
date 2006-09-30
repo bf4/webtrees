@@ -1778,5 +1778,5 @@ $pgv_lang["add_individual_by_id"]		= "Adicionar pessoa pelo ID";
 $pgv_lang["advanced_options"]		= "Opções avançadas";
 $pgv_lang["zip_files"]				= "Arquivo(s) Compactado(s)";
 $pgv_lang["include_media"]			= "Incluir mídia (compacta automaticamente)";
-if (file_exists("languages/lang.pt-br.extra.php")) require "languages/lang.pt-br.extra.php";
+
 ?>

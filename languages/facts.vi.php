@@ -259,6 +259,4 @@ $factarray["_DEAT_MSIB"] = "Tữ của anh (chị, em) của mẹ";
 $factarray["_MARR_MSIB"] = "Kết Hôn của anh (chị, em) của mẹ";
 $factarray["_HNM"] = "Tên Hê-brơ";
 
-if (file_exists("languages/facts.vi.extra.php")) require "languages/facts.vi.extra.php";
-
 ?>

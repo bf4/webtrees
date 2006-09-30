@@ -1750,5 +1750,4 @@ $pgv_lang["descendancy_header"]		= "Nachfahren Bericht von ";
 $pgv_lang["add_media_other_folder"]		= "Anderes Verzeichnis ... bitte eingeben";
 $pgv_lang["auto_thumbnail"]				= "Automatische Miniaturansicht";
 $pgv_lang["upload_replacement"]		="Ersatzdatei hochladen";
-if (file_exists( "languages/lang.de.extra.php")) require  "languages/lang.de.extra.php";
 ?>

@@ -257,7 +257,4 @@ $pgv_lang["welcome_new"]						= "Welcome to your new PhpGedView website.";
 $pgv_lang["yearly"]								= "Yearly";
 $pgv_lang["you_may_login"]						= " by the site administrator.  You may now login to the PhpGedView site by accessing the link below:";
 
-
-
-if (file_exists( "languages/admin.en.extra.php")) require  "languages/admin.en.extra.php";
 ?>

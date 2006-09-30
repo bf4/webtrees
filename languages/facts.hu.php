@@ -267,5 +267,4 @@ $factarray["_BIRT_COUS"] = "Elsö unokatestvér születése";
 $factarray["_MARR_COUS"] = "Elsö unokatestvér házassága";
 $factarray["_DEAT_COUS"] = "Elsö unokatestvér halála";
 
-if (file_exists("languages/facts.hu.extra.php")) require "languages/facts.hu.extra.php";
 ?>

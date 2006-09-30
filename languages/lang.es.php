@@ -647,6 +647,4 @@ $pgv_lang["backup_copied_success"]		= "archivo backup creado correctamente.";
 $pgv_lang["folder_created"]		= "Creada carpeta";
 $pgv_lang["process_error"]		= "Hay un problema al procesar la página. No se puede determinar la nueva versión.";
 
-if (file_exists( "languages/lang.es.extra.php")) require  "languages/lang.es.extra.php";
-
 ?>

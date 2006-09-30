@@ -945,6 +945,4 @@ $pgv_lang["description"]		= "Betimleme";
 //$pgv_lang["gedcom_title"]		= "Bu GEDCOM-Dosyasının içeriğini belirleyen bir başlık belirleyin:";
 //$pgv_lang["date_format"]		= "Tarih biçimi";
 
-if (file_exists( "languages/lang.tr.extra.php")) require  "languages/lang.tr.extra.php";
-
 ?>

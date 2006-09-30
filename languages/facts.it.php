@@ -169,6 +169,4 @@ $factarray["_NLIV"] = "Non in vita";
 $factarray["_NMAR"] = "Mai sposato";
 $factarray["_WEIG"] = "Peso";
 
-if (file_exists( "languages/facts.it.extra.php")) require  "languages/facts.it.extra.php";
-
 ?>

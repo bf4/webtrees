@@ -1247,6 +1247,4 @@ $pgv_lang["broadcast_never_logged_in"]	= "Gửi bức điện cho thành viên c
 $pgv_lang["stats_to_show"]			= "Chọn thống kê đặng xem trong khối này";
 $pgv_lang["noemail"] 				= "Địa chỉ không có thư điện tử";
 
-if (file_exists("languages/lang.vi.extra.php")) require "languages/lang.vi.extra.php";
-
 ?>

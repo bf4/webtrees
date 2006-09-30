@@ -287,6 +287,4 @@ $factarray["_PGVU"]	= "Sidst opdateret af";
 $factarray["SERV"] = "Remote server";
 $factarray["_GEDF"] = "GEDCOM-fil";
 
-if (file_exists("languages/facts.da.extra.php")) require "languages/facts.da.extra.php";
-
 ?>

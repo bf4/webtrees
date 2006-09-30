@@ -1510,5 +1510,4 @@ $pgv_lang["choose_file_type"]		= "Wybierz typ pliku";
 $pgv_lang["advanced_options"]		= "Opcje zaawansowane";
 $pgv_lang["zip_files"]				= "Plik(i) Zip";
 $pgv_lang["include_media"]			= "Dołącz media (automatycznie pakuje pliki)";
-if (file_exists("languages/lang.pl.extra.php")) require "languages/lang.pl.extra.php";
 ?>

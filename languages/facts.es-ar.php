@@ -205,6 +205,4 @@ $factarray["_MARNM"]	= "Nombre de matrimonio";
 $factarray["_STAT"]	= "Estado de matrimonio";
 $factarray["COMM"]	= "Comentario";
 
-if (file_exists("languages/facts.es.extra.php")) require "languages/facts.es.extra.php";
-
 ?>

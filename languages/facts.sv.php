@@ -262,6 +262,4 @@ $factarray["_NLIV"] = "Lever inte";
 $factarray["_NMAR"] = "Aldrig gift";
 $factarray["_PRMN"] = "Permanent nummer";
 
-if (file_exists( "languages/facts.sv.extra.php")) require  "languages/facts.sv.extra.php";
-
 ?>

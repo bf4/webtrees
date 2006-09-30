@@ -1261,5 +1261,4 @@ $pgv_lang["TYPE__photo"] 		= "Foto";
 $pgv_lang["TYPE__tombstone"] 	= "Hauakivi";
 $pgv_lang["TYPE__video"] 		= "Video";
 
-if (file_exists( "languages/lang.et.extra.php")) require  "languages/lang.et.extra.php";
 ?>

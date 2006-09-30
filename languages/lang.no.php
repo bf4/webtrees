@@ -1649,6 +1649,4 @@ $pgv_lang["TYPE__photo"]		= "Bilde";
 $pgv_lang["TYPE__tombstone"]	= "Gravstein";
 $pgv_lang["TYPE__video"]		= "Video";
 
-if (file_exists( "languages/lang.no.extra.php")) require  "languages/lang.no.extra.php";
-
 ?>

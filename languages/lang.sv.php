@@ -1748,9 +1748,6 @@ $pgv_lang["server_folder_advice2"]		= "Posten kommer att ignoreras om du skriver
 $pgv_lang["add_linkid_advice"]			= "Slriv in eller sök efter Idt för personen, familjen eller källan till vilket detta mediaobjekt ska länkas.";
 $pgv_lang["use_browse_advice"]			= "Använd  &laquo;Browse&raquo;-knappen för att söka på din lokala dator efter önskad fil.";
 
-
-
-if (file_exists("languages/lang.sv.extra.php")) require "languages/lang.sv.extra.php";
 $pgv_lang["page_x_of_y"]				= "Sida #GLOBALS[currentPage]# av #GLOBALS[lastPage]#<br />";
 $pgv_lang["include"]				= "Inkludera:";
 $pgv_lang["roman_surn"]				= "Romaniserat efternamn";
