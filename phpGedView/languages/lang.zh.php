@@ -838,6 +838,4 @@ $pgv_lang["select_fact"] = "選擇一個情況...";
 $pgv_lang["update_photo"] = "更新相片";
 $pgv_lang["quick_update_title"] = "快速更新";
 
-if (file_exists("languages/lang.zh.extra.php")) require "languages/lang.zh.extra.php";
-
 ?>

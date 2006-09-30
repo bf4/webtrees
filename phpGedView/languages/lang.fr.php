@@ -1939,5 +1939,4 @@ $pgv_lang["TYPE__newspaper"]            = "Journal";
 $pgv_lang["TYPE__tombstone"]            = "Pierre tombale";
 #pgv_lang["TYPE__video"]                = "Video";
 
-if (file_exists( "languages/lang.fr.extra.php")) require  "languages/lang.fr.extra.php";
 ?>

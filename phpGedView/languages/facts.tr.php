@@ -178,6 +178,4 @@ $factarray["_MARNM"]	= "Evlilik soyismi";
 $factarray["_STAT"]	= "Evlilik durumu";
 $factarray["COMM"]	= "Açıklama";
 
-if (file_exists( "languages/facts.tr.extra.php")) require  "languages/facts.tr.extra.php";
-
 ?>

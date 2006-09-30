@@ -29,14 +29,15 @@ $theme_name = "Standard";		//-- the name of this theme
 $stylesheet = $THEME_DIR."style.css";	//-- CSS level 2 stylesheet to use
 $rtl_stylesheet = $THEME_DIR."style_rtl.css";           //-- CSS level 2 stylesheet to use
 $print_stylesheet = $THEME_DIR."print.css";	//-- CSS level 2 print stylesheet to use
-$toplinks = $THEME_DIR."toplinks.html";	//-- File to display the icons and links to different sections
-$headerfile = $THEME_DIR."header.html";	//-- Header information for the site
-$footerfile = $THEME_DIR."footer.html";	//-- Footer information for the site
-$print_footerfile = $THEME_DIR."print_footer.html";	//-- Print Preview Footer information for the site
-$print_headerfile = $THEME_DIR."print_header.html";	//-- Print Preview Header information for the site
+$toplinks = $THEME_DIR."toplinks.php";	//-- File to display the icons and links to different sections
+$headerfile = $THEME_DIR."header.php";	//-- Header information for the site
+$footerfile = $THEME_DIR."footer.php";	//-- Footer information for the site
+$print_footerfile = $THEME_DIR."print_footer.php";	//-- Print Preview Footer information for the site
+$print_headerfile = $THEME_DIR."print_header.php";	//-- Print Preview Header information for the site
 
 $PGV_USE_HELPIMG = true;		// set to true to use image for help questionmark, set to false to use $pgv_lang["qm"]
 $PGV_IMAGE_DIR = "images";		//-- directory to look for images
+$PGV_MENU_LOCATION = "top";
 
 //-- variables for image names
 //- PGV main icons

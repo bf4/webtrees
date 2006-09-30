@@ -269,6 +269,4 @@ $factarray["_BIRT_COUS"] = "Serkun syntymä";
 $factarray["_MARR_COUS"] = "Serkun avioituminen";
 $factarray["_DEAT_COUS"] = "Serkun kuolema";
 
-if (file_exists( "languages/facts.fi.extra.php")) require  "languages/facts.fi.extra.php";
-//if (file_exists($PGV_BASE_DIRECTORY . "languages/facts.fi.extra.php")) require $PGV_BASE_DIRECTORY . "languages/facts.fi.extra.php";
 ?>

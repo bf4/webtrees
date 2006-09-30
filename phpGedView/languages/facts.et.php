@@ -147,5 +147,4 @@ $factarray["_DEAT_HSIB"] = "Poolõe / -venna surm";
 $factarray["_DEAT_FATH"] = "Isa surm";
 $factarray["ANCE"]	= "Esivanemad";
 
-if (file_exists( "languages/facts.et.extra.php")) require  "languages/facts.et.extra.php";
 ?>

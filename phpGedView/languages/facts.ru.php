@@ -207,6 +207,4 @@ $factarray["_ADPF"]	= "Усыновлен/удочерена отцом";
 $factarray["_ADPM"] 	= "Усыновлен/удочерена матерью";
 $factarray["_AKAN"] 	= "Также известен как";
 
-if (file_exists("languages/facts.ru.extra.php")) require "languages/facts.ru.extra.php";
-
 ?>

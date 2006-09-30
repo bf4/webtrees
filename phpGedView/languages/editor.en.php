@@ -100,7 +100,7 @@ $pgv_lang["add_husb_to_family"] 	= "Add a husband to this family";
 $pgv_lang["add_media"]				= "Add a new Media item";
 $pgv_lang["add_media_lbl"]			= "Add Media";
 $pgv_lang["add_mother"] 			= "Add a new mother";
-$pgv_lang["add_new_chil"] = "Add a new child";
+$pgv_lang["add_new_chil"] 			= "Add a new child";
 $pgv_lang["add_new_husb"]			= "Add a new husband";
 $pgv_lang["add_new_wife"]			= "Add a new wife";
 $pgv_lang["add_note"]				= "Add a new Note";
@@ -219,7 +219,4 @@ $pgv_lang["upload_media"]			= "Upload Media files";
 $pgv_lang["upload_successful"]		= "Upload successful.";
 $pgv_lang["view_change_diff"]		= "View Change Diff";
 
- 
-if (file_exists( "languages/editor.en.extra.php")) require  "languages/editor.en.extra.php";
- 
 ?>

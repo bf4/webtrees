@@ -1894,5 +1894,4 @@ $pgv_lang["hebrew_givn"]			= "Hebreeuwse voornamen";
 $pgv_lang["roman_surn"]				= "Geromaniseerde achternaam";
 $pgv_lang["roman_givn"]				= "Geromaniseerde voornamen";
 
-if (file_exists("languages/lang.nl.extra.php")) require "languages/lang.nl.extra.php";
 ?>

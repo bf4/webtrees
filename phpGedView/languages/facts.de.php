@@ -272,6 +272,4 @@ $factarray["_BIRT_COUS"] = "Geburt eines Cousins";
 $factarray["_MARR_COUS"] = "Ehe eines Cousins";
 $factarray["_DEAT_COUS"] = "Tod eines Cousins";
 
-if (file_exists( "languages/facts.de.extra.php")) require  "languages/facts.de.extra.php";
-
 ?>

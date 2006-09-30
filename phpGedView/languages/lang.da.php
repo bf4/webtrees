@@ -1699,6 +1699,4 @@ $pgv_lang["confirm_folder_delete"] = "Er du sikker på at du vil slette denne fo
 $pgv_lang["choose"] = "Vælg: ";
 $pgv_lang["account_information"] = "Kontooplysning";
 
-if (file_exists("languages/lang.da.extra.php")) require "languages/lang.da.extra.php";
-
 ?>

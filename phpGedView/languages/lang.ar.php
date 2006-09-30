@@ -62,6 +62,4 @@ $pgv_lang["nov"]					= "مم";
 $pgv_lang["dec"]					= "مم";
 $pgv_lang["apx"]					= "زهاء تقريبا";
 
-if (file_exists("languages/lang.ar.extra.php")) require "languages/lang.ar.extra.php";
-
 ?>

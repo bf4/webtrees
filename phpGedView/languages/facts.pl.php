@@ -258,6 +258,4 @@ $factarray["_BIRT_CHIL"] = "Narodziny dziecka";
 $factarray["MARR_CIVIL"] = "Ślub cywilny";
 $factarray["COMM"]	= "Komentarz";
 
-if (file_exists( "languages/facts.pl.extra.php")) require  "languages/facts.pl.extra.php";
-
 ?>

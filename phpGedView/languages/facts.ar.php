@@ -36,6 +36,4 @@ $factarray["GIVN"]	= "اِسم الخاص";
 $factarray["MARR"]	= "زواج";
 $factarray["SURN"]	= "إسم العائلة";
 
-if (file_exists("languages/facts.ar.extra.php")) require "languages/facts.ar.extra.php";
-
 ?>

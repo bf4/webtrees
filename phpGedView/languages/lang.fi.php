@@ -1928,5 +1928,4 @@ $pgv_lang["zip_files"]				= "Zip-tiedosto(t)";
 $pgv_lang["include_media"]			= "Sisällytä media (automaattisesti zip-tiedosto)";
 $pgv_lang["loading"]				="Ladataan...";
 
-if (file_exists( "languages/lang.fi.extra.php")) require  "languages/lang.fi.extra.php";
 ?>

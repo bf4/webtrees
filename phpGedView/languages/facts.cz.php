@@ -233,6 +233,4 @@ $factarray["_MARNM"]	= "Příjmení manželů";
 $factarray["_STAT"]	= "Rodinný stav";
 $factarray["COMM"]	= "Komentář";
 
-if (file_exists("languages/facts.en.extra.php")) require "languages/facts.en.extra.php";
-
 ?>

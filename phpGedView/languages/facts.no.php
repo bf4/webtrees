@@ -279,6 +279,4 @@ $factarray["_BIRT_MSIB"] = "Fødsel<br />- en av søsknene til moren";
 $factarray["_MARR_MSIB"] = "Ekteskap<br />- en av søsknene til moren";
 $factarray["_DEAT_MSIB"] = "Dødsfall<br />- en av søsknene til moren";
 
-if (file_exists( "languages/facts.no.extra.php")) require  "languages/facts.no.extra.php";
-
 ?>

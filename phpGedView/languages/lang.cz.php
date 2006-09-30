@@ -1022,6 +1022,4 @@ $pgv_lang["fontfile_error"]			= "Soubor s tímto fontem nebyl na PHP serveru nal
 $pgv_lang["rss_descr"]				= "Novinky a odkazy ze stránky #GEDCOM_TITLE#";
 $pgv_lang["rss_logo_descr"]			= "Materiál vytvořilo PhpGedView";
 
-if (file_exists("languages/lang.cz.extra.php")) require "languages/lang.cz.extra.php";
-
 ?>

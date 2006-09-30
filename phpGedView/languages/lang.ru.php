@@ -923,6 +923,4 @@ $pgv_lang["fontfile_error"]			= "Файл с шрифтами не найден 
 $pgv_lang["rss_descr"]				= "Новости и ссылки с сайта #GEDCOM_TITLE#";
 $pgv_lang["rss_logo_descr"]			= "Создано на базе PhpGedView";
 
-if (file_exists("languages/lang.ru.extra.php")) require "languages/lang.ru.extra.php";
-
 ?>

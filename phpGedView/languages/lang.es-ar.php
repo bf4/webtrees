@@ -825,6 +825,4 @@ $pgv_lang["month"]	= "Mes:";
 $pgv_lang["showcal"]	= "Mostrar acontecimientos de:";
 $pgv_lang["anniversary_calendar"] = "Calendario de Aniversarios";
 
-if (file_exists("languages/lang.es-ar.extra.php")) require "languages/lang.es-ar.extra.php";
-
 ?>

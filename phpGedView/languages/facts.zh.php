@@ -179,6 +179,4 @@ $factarray["_PRMN"] = "Permanent Number";
 $factarray["_WEIG"] = "Weight";
 $factarray["_YART"] = "Yartzeit";
 
-if (file_exists("languages/facts.zh.extra.php")) require "languages/facts.zh.extra.php";
-
 ?>

@@ -1531,5 +1531,4 @@ $pgv_lang["TYPE__photo"] = "Foto";
 $pgv_lang["TYPE__tombstone"] = "Sírkő";
 $pgv_lang["TYPE__video"] = "Video";
 	 
-if (file_exists("languages/lang.hu.extra.php")) require "languages/lang.hu.extra.php";
 ?>
