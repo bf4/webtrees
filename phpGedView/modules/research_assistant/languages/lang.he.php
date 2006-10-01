@@ -52,32 +52,30 @@ $pgv_lang["help_comments"] 		= $temp_out_comments;
 $pgv_lang["my_tasks"]		= "המשימות שלי";
 $pgv_lang["add_task"]		= "הוסף משימה";
 $pgv_lang["view_folders"]		= "התבונן בתיקיות";
-$pgv_lang["view_probabilities"]	= "התבונן בהסתברויות";
+$pgv_lang["view_probabilities"]		= "התבונן בהסתברויות";
 $pgv_lang["up_folder"]		= "עלה תיקייה";
 //$pgv_lang["edit_folder"]		= "Add/Edit Folder";
 $pgv_lang["gen_tasks"]		= "צור משימות אוטומטית";
 
 
 // -- RA GENERAL MESSAGES
-//$pgv_lang["delete"]		= "Delete";
+//$pgv_lang["delete"]			= "Delete";
 $pgv_lang["edit_task"]		= "ערוך משימה";
 //$pgv_lang["view"]			= "View";
 //$pgv_lang["name"]			= "Name";
 //$pgv_lang["folder"]			= "Folder";   // Exists as "Folder on Server"
 $pgv_lang["completed"]		= "סיום";
-//$pgv_lang["source"]		= "Source";
-//$pgv_lang["people"]		= "People";
-$pgv_lang["comres"]		= "Comments/Results";
+$pgv_lang["comres"]			= "Comments/Results";
 $pgv_lang["description"]		= "תיאור";
-$pgv_lang["created"]		= "Created";
+$pgv_lang["created"]			= "Created";
 $pgv_lang["modified"]		= "Modified";
 $pgv_lang["folder_list"]		= "Folder List";
 $pgv_lang["details"]			= "Details";
-$pgv_lang["result"]                     		= "תוצאה";
+$pgv_lang["result"]                     	= "תוצאה";
 $pgv_lang["okay"]                               	= "Okay";
 
 // -- RA_FOLDER MESSAGES
-$pgv_lang["Edit_Task"]                 	= "Edit Task";
+$pgv_lang["Edit_Task"]                 	= "ערוך משימה2"; //@@ where used
 $pgv_lang["End_Date"]                 	= "End Date";
 $pgv_lang["Start_Date"]                 	= "תאריך התחלה";
 $pgv_lang["Task_Name"]                	= "שם משימה";
@@ -113,7 +111,7 @@ $pgv_lang["parent_id"]		= "None";
 $pgv_lang["folder_users"]		= "Other Users who can see this folder";
 
 // -- RA_EDITLOG MESSAGES
-$pgv_lang["edit_research_log"]	= "Edit Research Log";
+$pgv_lang["edit_research_log"]		= "Edit Research Log";
 $pgv_lang["log_not_exist"]		= "This log does not exist: ";
 
 // -- RA_LOG MESSAGES
@@ -164,6 +162,7 @@ $pgv_lang["ra_comments_help"]	= "<H2><B>Comments:</B></H2><ul><li>This will cont
 $pgv_lang["ra_GenerateTasks_help"]	= "<H2><B>Generate Tasks:</B></H2><p>This form generates tasks from the _TODO tags in your GEDCOM file.</p><ul><li><B>Generate:</B> check each task to generate when you press the Generate button.</li><li><B>Task Name:</B> This is the name the task will be given.  This defaults to the text in the actual _TODO tag, excluding any CONT tag&quot;s</li><li><B>Task Description:</B> The description the task will be given.  This is generated from the text in the _TODO tag plus all of the associated CONT tag&quots.  </li><li><B>Edit:</B> click the link to edit that task.</li><li><B>Select Folder:</B> select the folder to put the generated tasks in.</li><li><B>Generate:</B> generates the tasks that have been checked.</li><li><B>Done:</B> redirects you to the Folder View page.</li></ul>";
 $pgv_lang["ra_EditGenerateTasks_help"] = "<H2><B>Edit Generated Task:</B></H2><p>This form allows you to edit the tasks generated from _TODO tags in your GEDCOM file.</p><ul><li><B>Task Name:</B> This is the name the task will be given.  </li><li><B>Task Description:</B> The description the task will be given. </li><li><B>People:</B> click the link to select the person to associate the task with.</li><li><B>Source:</B> click the link to select the source to associate the task with.</li><li><B>Save:</B> saves all your changes and redirects you to the Generate tasks page.</li><li><B>Cancel:</B> disregards all your changes and redirects you to the Generate tasks page.</li></ul>";
 $pgv_lang["ra_configure_privacy_help"]	= "<H2><B>Configure Privacy:</B></H2></H2><ul><li><B>Show To Public:</B> Makes specified task available to everyone.</li><li><B>Show Only To Authenticated Users:</B> Makes specified task available to authenticated users only.</li><li><B> Show To Admin Users:</B> Makes specified task available to admin users only.</li><li><B> Hide Even From Admin Users:</B> Makes specified task not available to anyone.</li></ul>";
+$pgv_lang["ra_edit_task_help"]		= "<H2><B>Edit Task:</B></H2></H2><ul><li><B>Title:</B>This should contain the title of the task that you are editing.</li><li><B>Folder:</B>In this field you can assign which folder you want your new task to go to.</li><li><B>Description:</B> Enter a description of the task you want to edit.</li><li><B>Sources:</B> Assign or edit any sources that you have for the task.</li><li><B>People:</B> Assign or edit any people associated for the task.</li></ul>";
 
 //-- RA_VIEWTASK MESSAGES
 $pgv_lang["view_task"]		= "התבונן במשימה";
@@ -173,22 +172,22 @@ $pgv_lang["no_sources"]		= "There are no sources associated with this task.";
 $pgv_lang["no_people"]		= "There are no people associated with this task.";
 $pgv_lang["no_indi_tasks"]		= "אין משימות השייכות לאדם זה.";
 $pgv_lang["edit_comment"]		= "ערוך הערה";
-$pgv_lang["comment_success"]	= "Your comment was successfully added.";
+$pgv_lang["comment_success"]		= "Your comment was successfully added.";
 $pgv_lang['comment_body']		= 'הערה';
 
 //-- RA_COMMENT MESSAGES
 $pgv_lang["comment_delete_check"]	= "Are you sure you want to delete this comment?";
 
 //-- RA_ADDTASK MESSAGES
-$pgv_lang["add_new_task"]		= "Add New Task";
+$pgv_lang["add_new_task"]		= "הוסף משימה";
 //$pgv_lang["title"]			= "Title";
 $pgv_lang["submit"]			= "טען";
 
 //-- RA_EDITTASK MESSAGES
-//$pgv_lang["edit_task"]		= "Edit Task";
+//$pgv_lang["edit_task"]		= "ערוך משימה";
 
 //-- RA_CONFIGURE PRIVACY MESSAGES
-$pgv_lang["configure_privacy"]	= "עצב פרטיות";
+$pgv_lang["configure_privacy"]		= "עצב פרטיות";
 $pgv_lang["show_my_tasks"]              	= "הראה את המשימות שלי";
 $pgv_lang["show_add_task"]		= "הראה הוסף משימה";
 $pgv_lang["show_auto_gen_task"]         	= "הראה צור משימות אוטומטית";
@@ -206,10 +205,35 @@ $pgv_lang["comment_help"]		= "Click here for help.";
 
 //-- Census Forms
 $pgv_lang["rows"]                       	= "Number of Rows";
-$pgv_lang["state"]                      		= "State";
-$pgv_lang["call/url"]                   		= "Call Number/URL";
+$pgv_lang["state"]                      	= "State";
+$pgv_lang["call/url"]                   	= "Call Number/URL";
 $pgv_lang["enumDate"]                   	= "Enumeration Date";
 $pgv_lang["county"]                     	= "County";
-$pgv_lang["city"]                       		= "City";
-//$pgv_lang["page"]                       	= "Page";                  
+$pgv_lang["city"]                       	= "City";
+//$pgv_lang["page"]                       	= "Page";  
+
+//-- MY TASK BLOCK @@
+$pgv_lang["mytasks_block"]		= "המשימות שלי";   //@@   
+//$pgv_lang["mytasks_edit"]               	= "Edit";
+$pgv_lang["mytasks_unassigned"]	= "Unassigned";
+$pgv_lang["mytasks_takeOn"]		= "TakeOn";
+$pgv_lang["mytasks_help"]		= "~MY TASK BLOCK~<br /><br />The My Task Block shows the task for the current user<br />and can be configured to show completed tasks or to show<br />task that are currently unassigned";
+$pgv_lang["mytask_show_tasks"]   	= "האם להציג משימות שאינן מיוחסות?";
+$pgv_lang["mytask_show_completed"]	= "האם להציג משימות שהסתיימו?";
+
+//-- Auto Search Assistant @@
+$pgv_lang["autosearch_surname"]	= "כלול שם משפחה:";
+$pgv_lang["autosearch_givenname"]	= "כלול שם פרטי:";
+$pgv_lang["autosearch_byear"]		= "כלול שנת לידה:";
+$pgv_lang["autosearch_bloc"]		= "Include birth location:";  
+$pgv_lang["autosearch_dyear"]		= "כלול שנת פטירה:";
+$pgv_lang["autosearch_dloc"]		= "Include death location:";
+$pgv_lang["autosearch_gender"]          	= "Include gender:";
+$pgv_lang["autosearch_plugin_name"]     	= "";         
+$pgv_lang["autosearch_fsurname"]	= "Include father's surname:";
+$pgv_lang["autosearch_fgivennames"]	= "Include father's given names:";
+$pgv_lang["autosearch_msurname"]	= "Include mother's surname:";
+$pgv_lang["autosearch_mgivennames"]	= "Include mother's given names:";   
+$pgv_lang["autosearch_country"]  	= "Include country:";  
+                
 ?>
