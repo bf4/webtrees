@@ -176,6 +176,14 @@ class Source extends GedcomRecord {
 	}
 
 	/**
+	 * get the count of individuals connected to this source
+	 * @return array
+	 */
+	function countSourceIndis() {
+		return get_list_size("indilist", "SOUR @".$this->xref."@");
+	}
+
+	/**
 	 * get the list of individuals connected to this source
 	 * @return array
 	 */
@@ -191,6 +199,14 @@ class Source extends GedcomRecord {
 	}
 
 	/**
+	 * get the count of families connected to this source
+	 * @return array
+	 */
+	function countSourceFams() {
+		return get_list_size("famlist", "SOUR @".$this->xref."@");
+	}
+
+	/**
 	 * get the list of families connected to this source
 	 * @return array
 	 */
@@ -203,6 +219,14 @@ class Source extends GedcomRecord {
 		$this->famlist = search_fams($query);
 		uasort($this->famlist, "itemsort");
 		return $this->famlist;
+	}
+
+	/**
+	 * get the count of objects connected to this source
+	 * @return array
+	 */
+	function countSourceObjects() {
+		return get_list_size("objectlist", "SOUR @".$this->xref."@");
 	}
 
 	/**

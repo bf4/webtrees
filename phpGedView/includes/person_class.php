@@ -121,6 +121,7 @@ class Person extends GedcomRecord {
 	 */
 	function getSortableName($subtag="", $starred=true) {
 		global $pgv_lang, $NAME_REVERSE, $UNDERLINE_NAME_QUOTES;
+		global $unknownNN, $unknownPN;
 		if (!$this->canDisplayName()) {
 			if (empty($subtag)) return $pgv_lang["private"];
 			else return "";
@@ -133,8 +134,16 @@ class Person extends GedcomRecord {
 		}
 		list($givn, $surn, $nsfx) = explode("/", $name."//");
 		$exp = explode(",",$givn); $givn = trim($exp[0]);
-		if (empty($surn) or trim("@".$surn,"_")=="@" or $surn=="@N.N.") $surn = $pgv_lang["NN"];
-		if (empty($givn) or trim("@".$givn,"_")=="@" or $givn=="@P.N.") $givn = $pgv_lang["PN"];
+		if (empty($surn) or trim("@".$surn,"_")=="@" or $surn=="@N.N.") {
+			$lang = whatLanguage($givn);
+			$surn = $unknownNN[$lang];
+			//$surn = $pgv_lang["NN"];
+		}
+		if (empty($givn) or trim("@".$givn,"_")=="@" or $givn=="@P.N.") {
+			$lang = whatLanguage($surn);
+			$givn = $unknownPN[$lang];
+			//$givn = $pgv_lang["PN"];
+		}
 		else if ($starred) {
 			if ($UNDERLINE_NAME_QUOTES) $givn = preg_replace("/\"(.+)\"/", "<span class=\"starredname\">$1</span>", $givn);
 			$givn = preg_replace("/([^ ]+)\*/", "<span class=\"starredname\">$1</span>", $givn);
