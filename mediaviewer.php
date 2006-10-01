@@ -94,14 +94,14 @@ else{
 							//Makes it so the picture when clicked opens the Image View Page
 							?>
 							<a href="javascript:;" onclick="return openImage('<?php print rawurlencode($filename); ?>', <?php print $imgwidth; ?>, <?php print $imgheight; ?>);">
-							<img src="<?php if (!$USE_THUMBS_MAIN) print $filename; else print thumbnail_file($filename); ?>" border="0" width="200" />
+							<img src="<?php if (!$USE_THUMBS_MAIN) print $filename; else print thumbnail_file($filename); ?>" border="0" width="200" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
 							</a>
 							<?php
 						}
 						else{
 							?>
 							<a href="<?php print $filename; ?>" target="_BLANK">
-							<img src="<?php print thumbnail_file($filename); ?>" border="0" width="150" />
+							<img src="<?php print thumbnail_file($filename); ?>" border="0" width="150" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
 							</a>
 							<?php
 						}
@@ -111,7 +111,7 @@ else{
 					}
 					else{
 						?>
-						<img src="<?php print thumbnail_file($filename); ?>" border="0" width="100" />
+						<img src="<?php print thumbnail_file($filename); ?>" border="0" width="100" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
 						<br /><span class="error"><?php print $pgv_lang["file_not_found"];?></span>
 						<?php
 					}
