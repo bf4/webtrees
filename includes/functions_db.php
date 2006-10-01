@@ -143,7 +143,7 @@ function check_for_import($ged) {
 	if (!DB::isError($DBCONN)) {
 		$sql = "SELECT count(i_id) FROM ".$TBLPREFIX."individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$ged]["id"])."'";
 		$res = dbquery($sql, false);
-	
+
 		if (!DB::isError($res)) {
 			$row =& $res->fetchRow();
 			$res->free();
@@ -856,7 +856,7 @@ function search_indis($query, $allgeds=false, $ANDOR="AND") {
 		}
 		$sql .= ")";
 	}
-//	print $sql;
+	//print $sql;
 	$res = dbquery($sql);
 
 	if (!DB::isError($res)) {
@@ -2474,30 +2474,47 @@ function delete_gedcom($ged) {
 
 //-- return the current size of the given list
 //- list options are indilist famlist sourcelist and otherlist
-function get_list_size($list) {
-	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS;
+function get_list_size($list, $filter="") {
+	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS, $DBTYPE;
+
+	if ($filter) {
+		if (stristr($DBTYPE, "mysql")!==false) $term = "REGEXP";
+		else if (stristr($DBTYPE, "pgsql")!==false) $term = "~*";
+		else $term = "LIKE";
+	}
 
 	switch($list) {
 		case "indilist":
 			$sql = "SELECT count(i_id) FROM ".$TBLPREFIX."individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+			if ($filter) $sql .= " AND i_gedcom $term '$filter'";
 			$res = dbquery($sql);
 
 			while($row =& $res->fetchRow()) return $row[0];
 		break;
 		case "famlist":
 			$sql = "SELECT count(f_id) FROM ".$TBLPREFIX."families WHERE f_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+			if ($filter) $sql .= " AND f_gedcom $term '$filter'";
 			$res = dbquery($sql);
 
 			while($row =& $res->fetchRow()) return $row[0];
 		break;
 		case "sourcelist":
 			$sql = "SELECT count(s_id) FROM ".$TBLPREFIX."sources WHERE s_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+			if ($filter) $sql .= " AND s_gedcom $term '$filter'";
 			$res = dbquery($sql);
 
 			while($row =& $res->fetchRow()) return $row[0];
 		break;
-		case "otherlist":
+		case "objectlist": // media object
+			$sql = "SELECT count(m_id) FROM ".$TBLPREFIX."media WHERE m_gedfile='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+			if ($filter) $sql .= " AND m_gedrec $term '$filter'";
+			$res = dbquery($sql);
+
+			while($row =& $res->fetchRow()) return $row[0];
+		break;
+		case "otherlist": // REPO
 			$sql = "SELECT count(o_id) FROM ".$TBLPREFIX."other WHERE o_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+			if ($filter) $sql .= " AND o_gedcom $term '$filter'";
 			$res = dbquery($sql);
 
 			while($row =& $res->fetchRow()) return $row[0];
@@ -2849,3 +2866,4 @@ function compare_foundFacts_datestamp($a, $b) {
 	if ($a[3] == $b[3]) return 0;
 	return ($a[3] < $b[3]) ? -1 : 1;
 }
+?>
