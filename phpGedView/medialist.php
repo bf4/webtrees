@@ -46,7 +46,7 @@ if (!isset($_SESSION["medialist"])) $search = "yes";
 print_header($pgv_lang["multi_title"]);
 print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t";
 
-$isEditUser = userCanEdit(getUserName());		//-- Determines whether to show file names
+$isEditUser = userCanEdit(getUserName());		// -- Determines whether to show file names
 
 //-- automatically generate an image
 if (userIsAdmin(getUserName()) && $action=="generate" && !empty($file) && !empty($thumb)) {
@@ -137,12 +137,12 @@ if ($search == "yes") {
 		</tr>
 		<?php if (file_exists("modules/slideshow.php")) { ?>
 		<tr>
-			<td class="list_label" colspan="2">				
-  				<?php 
+			<td class="list_label" colspan="2">
+  				<?php
   				print "<a href=\"#\" onclick=\"runSlideShow(); showMe(); return false;\">$pgv_lang[view_slideshow]</a>\n";
-  				?> 
+  				?>
 			</td>
-		</tr>	
+		</tr>
 		<?php } ?>
 	</table>
 </form>
@@ -282,7 +282,7 @@ if ($ct>0){
 		if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
 		print " alt=\"" . PrintReady($name) . "\" title=\"" . PrintReady($name) . "\" /></a>";
 		print "</td>\n\t\t<td class=\"list_value_wrap\" style=\"border: none;\" width=\"100%\">";
-	    print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\"/>";
+	    print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
 
 	    if (begRTLText($name) && $TEXT_DIRECTION=="ltr") {
 			print "(".$media["XREF"].")&nbsp;&nbsp;&nbsp;";
@@ -395,7 +395,7 @@ if ($ct>0){
 	print "</table><br />";
 }
 print "\n</div>\n";
-//-- load up the slideshow code
+// -- load up the slideshow code
 if (file_exists("modules/slideshow/slideshow.php")) include_once("modules/slideshow/slideshow.php");
 print_footer();
 
