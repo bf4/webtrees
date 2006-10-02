@@ -1249,12 +1249,13 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	print "</td><td class=\"optionbox wrap $styleadd\"><span class=\"field\">";
 	if (showFactDetails("OBJE", $pid)) {
 		$mediaTitle = $rowm["m_titl"];
+		$mainMedia = check_media_depth($rowm["m_file"], "NOTRUNC");
 		if ($mediaTitle=="") $mediaTitle = basename($rowm["m_file"]);
 		if ($isExternal || file_exists(filename_decode($thumbnail))) {
 			$mainFileExists = false;
-			if ($isExternal || file_exists(check_media_depth($rowm["m_file"], "NOTRUNC"))) {
+			if ($isExternal || file_exists($mainMedia)) {
 				$mainFileExists = true;
-				$imgsize = findImageSize(check_media_depth($rowm["m_file"], "NOTRUNC"));
+				$imgsize = findImageSize($mainMedia);
 				$imgwidth = $imgsize[0]+40;
 				$imgheight = $imgsize[1]+150;
 				if ($USE_MEDIA_VIEWER) print "<a href=\"mediaviewer.php?mid=".$rowm["m_media"]."\">";

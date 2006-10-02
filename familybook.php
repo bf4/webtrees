@@ -28,8 +28,6 @@
 
 require("config.php");
 require_once("includes/functions_charts.php");
-require($factsfile["english"]);
-if (file_exists( $factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
 
 function print_descendency($pid, $count) {
 	global $show_spouse, $dgenerations, $bwidth, $bheight, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $generations, $box_width, $view, $show_full, $pgv_lang;

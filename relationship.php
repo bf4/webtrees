@@ -30,8 +30,6 @@
 require("config.php");
 require_once("includes/functions_charts.php");
 require_once("includes/person_class.php");
-require($factsfile["english"]);
-if (file_exists( $factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
 
 function getRelationshipSentence($node, $pid1, $pid2)
 {

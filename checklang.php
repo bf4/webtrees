@@ -25,8 +25,6 @@
  */
 // -- include config file
 require("config.php");
-require( $factsfile["english"]);
-if (file_exists( $factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
 
 print_header("checklang");
 

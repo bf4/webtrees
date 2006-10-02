@@ -33,8 +33,6 @@ require $confighelpfile["english"];
 if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
 require $helptextfile["english"];
 if (file_exists($helptextfile[$LANGUAGE])) require $helptextfile[$LANGUAGE];
-require($factsfile["english"]);
-if (file_exists($factsfile[$LANGUAGE])) require($factsfile[$LANGUAGE]);
 
 if (empty($ged)) $ged = $GEDCOM;
 

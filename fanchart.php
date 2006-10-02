@@ -27,8 +27,6 @@
  */
 require("config.php");
 require_once("includes/functions_charts.php");
-require( $factsfile["english"]);
-if (file_exists( $factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
 
 /**
  * split and center text by lines

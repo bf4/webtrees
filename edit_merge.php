@@ -28,8 +28,6 @@
 
 require("config.php");
 require("includes/functions_edit.php");
-require($factsfile["english"]);
-if (file_exists($factsfile[$LANGUAGE])) require($factsfile[$LANGUAGE]);
 
 if (empty($action)) $action="choose";
 if (empty($gid1)) $gid1="";

@@ -32,8 +32,6 @@
  * load config file
  */
 require("config.php");
-require($factsfile["english"]);
-if (file_exists($factsfile[$LANGUAGE])) require $factsfile[$LANGUAGE];
 
 require_once("includes/functions_print_lists.php");
 require_once("includes/functions_edit.php");

@@ -32,8 +32,6 @@ global $SEARCH_SPIDER, $CHARACTER_SET;
 global $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $DEFAULT_GEDCOM;
 
 require "config.php";
-require($factsfile["english"]);
-if (file_exists( $factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
 require $helptextfile["english"];
 if (file_exists($helptextfile[$LANGUAGE])) require $helptextfile[$LANGUAGE];
 

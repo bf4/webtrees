@@ -1,7 +1,5 @@
 <?php
 require_once("config.php");
-require_once($factsfile["english"]);
-if (file_exists($factsfile[$LANGUAGE])) require_once($factsfile[$LANGUAGE]);
 
 $pid = $_REQUEST['pid'];
 $indirec = find_person_record($pid);

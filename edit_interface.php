@@ -26,8 +26,6 @@
 
 require("config.php");
 require("includes/functions_edit.php");
-require($factsfile["english"]);
-if (file_exists( $factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
 
 require("languages/countries.en.php");
 if (file_exists("languages/countries.".$lang_short_cut[$LANGUAGE].".php")) require("languages/countries.".$lang_short_cut[$LANGUAGE].".php");

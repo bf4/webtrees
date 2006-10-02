@@ -38,9 +38,6 @@ if (isset ($_REQUEST['mod']))
 	exit;
 }
 
-require_once($factsfile["english"]);
-if (file_exists($factsfile[$LANGUAGE])) require_once($factsfile[$LANGUAGE]);
-
 /**
  * Block definition array
  *

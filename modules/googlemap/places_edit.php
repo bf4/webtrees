@@ -28,13 +28,13 @@ require_once "config.php";
 if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
 require "includes/functions_edit.php";
 require $INDEX_DIRECTORY."pgv_changes.php";
-require($factsfile["english"]);
+require_once($factsfile["english"]);
 require( "modules/googlemap/".$pgv_language["english"]);
 if (file_exists( "modules/googlemap/".$pgv_language[$LANGUAGE])) require  "modules/googlemap/".$pgv_language[$LANGUAGE];
 require( "modules/googlemap/".$helptextfile["english"]);
 if (file_exists("modules/googlemap/".$helptextfile[$LANGUAGE])) require "modules/googlemap/".$helptextfile[$LANGUAGE];
 
-if (file_exists( $factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
+if (file_exists( $factsfile[$LANGUAGE])) require_once $factsfile[$LANGUAGE];
 
 print_simple_header($pgv_lang["edit_place_locations"]);
 

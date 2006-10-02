@@ -44,9 +44,6 @@ if (empty($rssStyle)){
 	$rssStyle=$RSS_FORMAT;
 }
 
-require($factsfile["english"]);
-if (file_exists($factsfile[$LANGUAGE])) require($factsfile[$LANGUAGE]);
-
 if (!isset($_SERVER['QUERY_STRING'])) $_SERVER['QUERY_STRING'] = "lang=".$LANGUAGE;
 
 $user=getUser($CONTACT_EMAIL);

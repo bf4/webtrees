@@ -28,8 +28,6 @@
 
 require("config.php");
 require("includes/functions_edit.php");
-require($factsfile["english"]);
-if (file_exists( $factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
 
 if ($_SESSION["cookie_login"]) {
 	header("Location: login.php?type=simple&url=edit_interface.php");

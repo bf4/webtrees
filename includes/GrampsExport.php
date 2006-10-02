@@ -28,11 +28,6 @@
  * 
  */
 global $LANGUAGE;
-//require_once ("includes/person_class.php");
-//if (file_exists($factsfile[$LANGUAGE]))
-//	require_once ($factsfile[$LANGUAGE]);
-
-
  
  /*
   * This is an abstract class and should only be used through its subclasses, all

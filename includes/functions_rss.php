@@ -30,8 +30,6 @@ if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
 }
 
 require("config.php");
-require($factsfile["english"]);
-if (file_exists($factsfile[$LANGUAGE])) require($factsfile[$LANGUAGE]);
 
 if (isset($_SESSION["timediff"])) $time = time()-$_SESSION["timediff"];
 else $time = time();

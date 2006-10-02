@@ -108,12 +108,6 @@ if ((!empty($searchtext)) && (($searchuser == "yes") || ($searchconfig == "yes")
 	$helpvarnames = array();
 	unset($pgv_lang);
 	
-	// Load the factarray: Help text requires it
-	if (!isset($factarray)) {
-		require  $factsfile["english"];
-		if (file_exists( $factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
-	}
-	
 	// Load the user help if chosen
 	if ($searchuser == "yes") {
 		require  $helptextfile["english"];
