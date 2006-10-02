@@ -3,7 +3,7 @@
  * Class that defines a media object
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005	John Finlay and Others
+ * Copyright (C) 2002 to 2006	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,9 @@ class Media extends GedcomRecord {
 	var $file = "";
 	var $ext = "";
 	var $note = "";
+	var $filesize = -1;
+	var $width = 0;
+	var $height = 0;
 	var $indilist = null;
 	var $famlist = null;
 
@@ -46,9 +49,6 @@ class Media extends GedcomRecord {
 		$this->note = get_gedcom_value("NOTE", 1, $gedrec);
 		if (empty($this->title)) $this->title = get_gedcom_value("TITL", 2, $gedrec);
 		$this->file = get_gedcom_value("FILE", 1, $gedrec);
-		$et = preg_match("/(\.\w+)$/", $this->file, $ematch);
-		$this->ext = "";
-		if ($et>0) $this->ext = substr(trim($ematch[1]),1);
 	}
 
 	/**
@@ -130,10 +130,33 @@ class Media extends GedcomRecord {
 	}
 
 	/**
+	 * get the media file size
+	 * @return string
+	 */
+	function getFilesize() {
+		if ($this->filesize<0) $this->filesize = sprintf("%.2f", @filesize($this->file)/1024);
+		return $this->filesize;
+	}
+
+	/**
 	 * get the media file type
 	 * @return string
 	 */
 	function getFiletype() {
+		if ($this->ext) return $this->ext;
+		// image ?
+		$imageTypes = array("","GIF", "JPG", "PNG", "SWF", "PSD", "BMP", "TIFF", "TIFF", "JPC", "JP2", "JPX", "JB2", "SWC", "IFF", "WBMP", "XBM");
+		$imgsize = @getimagesize($this->file); // [0]=width [1]=height [2]=filetype
+		$this->width = 0+$imgsize[0];
+		$this->height = 0+$imgsize[1];
+		$this->ext = $imageTypes[0+$imgsize[2]];
+		if ($this->ext) return $this->ext;
+		// not an image : get file extension
+		$exp = explode("?", $this->file);
+		$pathinfo = pathinfo($exp[0]);
+		$this->ext = @strtoupper($pathinfo['extension']);
+		// unknown file type
+		if (!$this->ext) $this->ext = "-";
 		return $this->ext;
 	}
 
