@@ -93,14 +93,14 @@ if (!is_writable($MEDIA_DIRECTORY))
 {
 	if (!@ chmod($MEDIA_DIRECTORY, 0777)) 
 	{
-		$warnings[] = "You need to change the security settings in your media directory so that it is writable.";
+		$warnings[] = "Your media directory is not writable.  You will not be able to upload media files or generate thumbnails in PhpGedView unless this directory is writable.";
 	}
 }
 if (!is_writable($MEDIA_DIRECTORY . "thumbs")) 
 {
 	if (!@ chmod($MEDIA_DIRECTORY . "thumbs", 0777)) 
 	{
-		$warnings[] = "You need to change the security settings in your media thumbs directory so that it is writable.";
+		$warnings[] = "Your thumbs directory is not writable.  You will not be able to upload thumbnails or generate thumbnails in PhpGedView unless this directory is writable.";
 	}
 }
 
