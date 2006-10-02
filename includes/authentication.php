@@ -400,7 +400,10 @@ function userAutoAccept($username = "") {
  * @return boolean true if an admin user has been defined
  */
 function adminUserExists() {
-	global $TBLPREFIX, $DBCONN;
+	global $TBLPREFIX, $DBCONN, $PGV_ADMIN_EXISTS;
+	
+	if (isset($PGV_ADMIN_EXISTS)) return $PGV_ADMIN_EXISTS;
+	
 	if (checkTableExists()) {
 		$sql = "SELECT u_username FROM ".$TBLPREFIX."users WHERE u_canadmin='Y'";
 		$res = dbquery($sql);
@@ -409,7 +412,11 @@ function adminUserExists() {
 			$count = $res->numRows();
 			while($row =& $res->fetchRow());
 			$res->free();
-			if ($count==0) return false;
+			if ($count==0) {
+				$PGV_ADMIN_EXISTS = false;
+				return false;
+			}
+			$PGV_ADMIN_EXISTS = true;
 			return true;
 		}
 	}
@@ -424,11 +431,11 @@ function adminUserExists() {
  * to the latest version of the database schema.
  */
 function checkTableExists() {
-	global $TBLPREFIX, $DBCONN, $DBTYPE, $CHECKED_TABLES;
+	global $TBLPREFIX, $DBCONN, $DBTYPE, $PGV_CHECKED_TABLES;
 
 	//-- make sure we only run this function once
-	if (!empty($CHECKED_TABLES) && $CHECKED_TABLES) return true;
-	$CHECKED_TABLES = true;
+	if (!empty($PGV_CHECKED_TABLES) && $PGV_CHECKED_TABLES) return true;
+	$PGV_CHECKED_TABLES = true;
 
 	$has_users = false;
 	$has_gedcomid = false;
@@ -553,6 +560,19 @@ function checkTableExists() {
 				"u_sessiontime INT, u_contactmethod VARCHAR(20), u_visibleonline VARCHAR(2), u_editaccount VARCHAR(2), " .
 				"u_defaulttab INT, u_comment VARCHAR(255), u_comment_exp VARCHAR(20), u_sync_gedcom VARCHAR(2), " .
 				"u_relationship_privacy VARCHAR(2), u_max_relation_path INT, u_auto_accept VARCHAR(2), PRIMARY KEY(u_username))";
+		/*
+		 * -- the following sql queries will revert the users table back to 3.x
+		alter table pgv_users drop column u_comment;
+		alter table pgv_users drop column u_comment_exp;
+		alter table pgv_users drop column u_sync_gedcom;
+		alter table pgv_users drop column u_relationship_privacy;
+		alter table pgv_users drop column u_max_relation_path;
+		alter table pgv_users drop column u_auto_accept;
+		alter table pgv_users add column u_fullname VARCHAR(255) after u_password;
+		update table pgv_users set u_fullname = concat(u_firstname," ",u_lastname);
+		alter table pgv_users drop column u_firstname;
+		alter table pgv_users drop column u_lastname;
+		 */
 		$res = dbquery($sql);
 		$sql = "CREATE INDEX users_username ON ".$TBLPREFIX."users (u_username)";
 		$res = dbquery($sql);

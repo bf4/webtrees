@@ -1156,6 +1156,18 @@ function print_favorite_selector($option=0) {
 							}
 							unset($sourcelist[$pid]);
 						}
+						if ($favorite["type"]=="OBJE") {
+							$media = Media::getInstance($pid);
+							if (!is_null($media)) {
+								$submenu["link"] = "mediaviewer.php?mid=".$favorite["gid"]."&amp;ged=$GEDCOM";
+								$submenu["label"] = PrintReady($media->getTitle());
+								if ($SHOW_ID_NUMBERS) {
+		 							if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
+									else $submenu["label"] .= " &rlm;(".$favorite["gid"].")&rlm;";
+								}
+								unset($medialist[$pid]);
+							}
+						}
 						$submenu["labelpos"] = "right";
 						$submenu["class"] = "favsubmenuitem";
 						$submenu["hoverclass"] = "favsubmenuitem_hover";
@@ -1293,6 +1305,19 @@ function print_favorite_selector($option=0) {
 								}
 								print "\n\t\t\t\t<option value=\"source.php?sid=";
 								   unset($sourcelist[$pid]);
+								}
+								if ($favorite["type"]=="OBJE") {
+									$media = Media::getInstance($pid);
+									if (!is_null($media)) {
+										$name = strip_tags(PrintReady($media->getTitle()));
+										if (strlen($name)>50) $name = substr($name, 0, 50);
+										if ($SHOW_ID_NUMBERS) {
+											if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
+											else $name .= " &rlm;(".$favorite["gid"].")&rlm;";
+										}
+										print "\n\t\t\t\t<option value=\"mediaviewer.php?mid=";
+										unset($sourcelist[$pid]);
+									}
 								}
 							print $favorite["gid"]."&amp;ged=".$GEDCOM."\">".$name."</option>";
 							}

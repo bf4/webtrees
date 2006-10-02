@@ -40,7 +40,7 @@ else{
 	print_header($controller->getPageTitle());
 	//The following lines of code are used to print the menu box on the top right hand corner
 ?>
-		<table class="sublinks_table" cellspacing="4" cellpadding="0" align="right">
+		<table class="sublinks_table rtl" cellspacing="4" cellpadding="0" align="<? print $TEXT_DIRECTION=='ltr'?'right':'left';?>">
 			<tr>
 				<td class="list_label <?php echo $TEXT_DIRECTION; ?>" colspan="5"><?php print $pgv_lang["media_options"]; ?></td>
 			</tr>

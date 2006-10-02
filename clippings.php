@@ -253,7 +253,7 @@ else {
 				if ($tag=='REPO') 
 					print "<a href=\"repo.php?rid=".$clipping['id']."\">".PrintReady(get_repo_descriptor($clipping['id']))."</a>";
 				if ($tag=="OBJE") {
-				  	print PrintReady(get_media_descriptor($clipping['id']));
+				  	print "<a href=\"mediaviewer.php?mid=".$clipping['id']."\">".PrintReady(get_media_descriptor($clipping['id']))."</a>";
 				  }
 			}
 			?>

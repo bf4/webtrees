@@ -35,6 +35,7 @@ $pgv_lang["stop"]					= "Stop";
 $pgv_lang["random_media_start_slide"]	= "Start slideshow on page load?";
 $pgv_lang["random_media_ajax_controls"]	= "Show AJAX Controls?";
 $pgv_lang["view_img_details"]		= "View image details";
+$pgv_lang["server_folder"]			= "Folder name on server";
 $pgv_lang["media_options"]			= "Media Options";
 $pgv_lang["name"]					= "Name";
 $pgv_lang["children"]				= "Children";

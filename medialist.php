@@ -323,7 +323,7 @@ if ($ct>0){
 			print "&nbsp;&nbsp;&nbsp;<span class=\"field\" style=\"direction: ltr;\">" . $sizeString . "</span>";
 		}
 
-			if(!empty($imgsize[0]) && !empty($imgsize[1])){
+			if($imgsize[2]!==false){
 		    	print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?" &rlm;x&rlm; " : " x ") . $imgsize[1] . "</span>";
 			}
 

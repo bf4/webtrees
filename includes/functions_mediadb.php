@@ -1664,6 +1664,7 @@ function findImageSize($file) {
 	if (!$imgsize) {
 		$imgsize[0] = 300;
 		$imgsize[1] = 300;
+		$imgsize[2] = false;
 	}
 	return $imgsize;
 }

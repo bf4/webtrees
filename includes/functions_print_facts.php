@@ -66,6 +66,10 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 		  $fact="";
 		  $event="";
 	 }
+	 
+	 if ($fact=="NOTE") return print_main_notes($factrec, 1, $pid, $linenum);
+	 if ($fact=="SOUR") return print_main_sources($factrec, 1, $pid, $linenum);
+	 
 	 $styleadd="";
 	 $ct = preg_match("/PGV_NEW/", $factrec, $match);
 	 if ($ct>0) $styleadd="change_new";
@@ -318,7 +322,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 					else if (strstr("_EMAIL", $fact)) {
 						 print "<a href=\"mailto:".$event."\">".$event."</a>";
 					}
- 					else if (strstr("FAX PHON ", $fact." ")) print "&lrm;".$event." &lrm;";
+ 					else if (strstr("FAX PHON FILE", $fact." ")) print "&lrm;".$event." &lrm;";
 					else if (!strstr("ADDR ", $fact." ") && $event!="Y") print PrintReady($event." ");
 					$temp = trim(get_cont(2, $factrec), "\r\n");
 					if (strstr("PHON ADDR ", $fact." ")===false && $temp!="") {
@@ -602,7 +606,7 @@ function print_media_links($factrec, $level,$pid='') {
 				// NOTE: Print the format of the media
 				if (!empty($row["m_ext"])) {
 					print "\n\t\t\t<br /><span class=\"label\">".$factarray["FORM"].": </span> <span class=\"field\">".$row["m_ext"]."</span>";
-					if(!empty($imgsize[0]) && !empty($imgsize[1])){
+					if($imgsize[2]!==false){
 						print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?" &rlm;x&rlm; " : " x ") . $imgsize[1] . "</span>";
 					}
 				}
@@ -1278,7 +1282,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		// NOTE: Print the format of the media
 		if (!empty($rowm["m_ext"])) {
 			print "\n\t\t\t<br /><span class=\"label\">".$factarray["FORM"].": </span> <span class=\"field\">".$rowm["m_ext"]."</span>";
-			if(! empty($imgsize[0]) &&  ! empty($imgsize[1])){
+			if($imgsize[2]!==false){
 				print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?" &rlm;x&rlm; " : " x ") . $imgsize[1] . "</span>";
 			}
 		}
