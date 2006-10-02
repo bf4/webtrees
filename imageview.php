@@ -44,8 +44,12 @@ print_simple_header($pgv_lang["imageview"]);
 		i = document.getElementById('theimage');
 		zoom=zoom-10;
 		if (zoom<10) zoom=10;
+		diff = i.offsetWidth - Math.round((zoom/100)*imgwidth);
 		i.style.width=Math.round((zoom/100)*imgwidth)+"px";
 		i.style.height=null;
+		viewport = document.getElementById("imagecropper");
+		if (i.offsetLeft<-5) i.style.left = i.offsetLeft+diff + "px";
+		if (i.offsetTop<-5) i.style.top = i.offsetTop+diff+ "px";
 		document.getElementById('zoomval').value=Math.round(zoom);
 	}
 	function setzoom(perc) {
@@ -54,6 +58,9 @@ print_simple_header($pgv_lang["imageview"]);
 		if (zoom<10) zoom=10;
 		i.style.width=Math.round((zoom/100)*imgwidth)+"px";
 		i.style.height=null;
+		//viewport = document.getElementById("imagecropper");
+		//if (i.offsetLeft + i.offsetWidth < 0) i.style.left = (viewport.offsetWidth - i.offsetWidth) + "px";
+		//if (i.offsetTop + i.offsetHeight < 0) i.style.top = (viewport.offsetHeight - i.offsetHeight) + "px";
 	}
 	function resetimage() {
 		setzoom('100');
@@ -185,5 +192,6 @@ if (!$isExternal && (empty($filename) || (!@fclose(@fopen(filename_decode($filen
 print "</form>\n";
 print "<div style=\"position: relative; \">\n";
 print "</div>\n";
+print "<div class=\"center\"><br /><a href=\"javascript:;\" onclick=\"window.close();\">".$pgv_lang["close_window"]."</a></div><br />\n";
 print_simple_footer();
 ?>

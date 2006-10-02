@@ -75,33 +75,33 @@ if (count($errors)>0) print_sanity_errors();
 
 if (!file_is_writable("config.php")) 
 {
-	if (!@ chmod("config.php", 0777)) 
-	{
+	//if (!@ chmod("config.php", 0777)) 
+	//{
 		$errors[] = "<span class=\"error\">You need to change the security settings in your config.php file so that it is writable.</span>";
-	}
+	//}
 }
 
 if (!is_writable($INDEX_DIRECTORY)) 
 {
-	if (!@ chmod($INDEX_DIRECTORY, 0777)) 
-	{
+	//if (!@ chmod($INDEX_DIRECTORY, 0777)) 
+	//{
 		$errors[] = "<span class=\"error\">You need to change the security settings in your index directory so that it is writable.</span>";
-	}
+	//}
 }
 
 if (!is_writable($MEDIA_DIRECTORY)) 
 {
-	if (!@ chmod($MEDIA_DIRECTORY, 0777)) 
-	{
+	//if (!@ chmod($MEDIA_DIRECTORY, 0777)) 
+	//{
 		$warnings[] = "Your media directory is not writable.  You will not be able to upload media files or generate thumbnails in PhpGedView unless this directory is writable.";
-	}
+	//}
 }
 if (!is_writable($MEDIA_DIRECTORY . "thumbs")) 
 {
-	if (!@ chmod($MEDIA_DIRECTORY . "thumbs", 0777)) 
-	{
+	//if (!@ chmod($MEDIA_DIRECTORY . "thumbs", 0777)) 
+	//{
 		$warnings[] = "Your thumbs directory is not writable.  You will not be able to upload thumbnails or generate thumbnails in PhpGedView unless this directory is writable.";
-	}
+	//}
 }
 
 if (!function_exists('imagecreatefromjpeg')) 
