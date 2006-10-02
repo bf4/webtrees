@@ -64,8 +64,11 @@ class MediaControllerRoot extends IndividualController{
 	function getPageTitle() {
 		global $pgv_lang, $GEDCOM;
 
-		$name = $this->mediaobject->getTitle();
-		return $name." - ".$this->mediaobject->getXref();
+		if (!is_null($this->mediaobject)) {
+			$name = $this->mediaobject->getTitle();
+			return $name." - ".$this->mediaobject->getXref();
+		}
+		else return $pgv_lang["unknown"];
 	}
 	
 	/**

@@ -2324,12 +2324,8 @@ function print_fact_place($factrec, $anchor=false, $sub=false, $lds=false) {
  * @param string $key	indi pid
  */
 function print_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM", "DEAT", "BURI", "BAPL", "ADOP")) {
-	global $pgv_lang, $factarray, $factsfile, $LANGUAGE, $TEXT_DIRECTION;
-	// make sure factarray is loaded
-	if (!isset($factarray)) {
-		require($factsfile["english"]);
-		if (file_exists($factsfile[$LANGUAGE])) require($factsfile[$LANGUAGE]);
-	}
+	global $pgv_lang, $factarray, $LANGUAGE, $TEXT_DIRECTION;
+	
 	$indirec = find_person_record($key);
 	if (!$indirec) $indirec = find_family_record($key);
 	foreach ($majorfacts as $indexval => $fact) {

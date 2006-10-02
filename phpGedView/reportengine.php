@@ -28,8 +28,6 @@
 
 require("config.php");
 require_once("includes/functions_charts.php");
-require($factsfile["english"]);
-if (file_exists($factsfile[$LANGUAGE])) require($factsfile[$LANGUAGE]);
 
 //-- try to increase the time limit because reports can take a long time
 @set_time_limit($TIME_LIMIT*2);

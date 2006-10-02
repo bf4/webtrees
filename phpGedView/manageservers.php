@@ -29,8 +29,6 @@
 
 require("config.php");
 require_once("includes/functions.php");
-require($factsfile["english"]);
-if (file_exists($factsfile[$LANGUAGE])) require($factsfile[$LANGUAGE]);
 require_once("includes/functions_edit.php");
 require_once("includes/functions_import.php");
 require_once("includes/serviceclient_class.php");

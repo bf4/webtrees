@@ -28,8 +28,6 @@ require "config.php";
 require "includes/functions_edit.php";
 require "includes/functions_import.php";
 require $INDEX_DIRECTORY."pgv_changes.php";
-require($factsfile["english"]);
-if (file_exists( $factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
 
 if (!userCanAccept(getUserName())) {
 	header("Location: login.php?url=edit_changes.php");

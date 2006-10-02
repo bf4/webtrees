@@ -73,9 +73,7 @@ class ra_ViewInferences extends ra_form {
      */
  	function contents() {
  		global $TBLPREFIX,$DBCONN, $GEDCOMS, $GEDCOM;
- 		global $factsfile, $LANGUAGE, $factarray;
-		require_once($factsfile["english"]);
-		if (file_exists($factsfile[$LANGUAGE])) require_once($factsfile[$LANGUAGE]);
+ 		global $LANGUAGE, $factarray;
 		 		
  		$out = "<table class=\"width80\" align=\"center\"><tr><td><p>This page analyzes the data for the active GEDCOM dataset and shows the correlations between different data elements. ";
  		$out .= "For example, there could be a 95% correlation that the surname in a local record is the same as the surname in the father's record.  This would mean that 95% of the people in this GEDCOM dataset share the same surname as their father.</p>";

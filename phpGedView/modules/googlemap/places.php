@@ -41,8 +41,8 @@ require $confighelpfile["english"];
 if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
 require $helptextfile["english"];
 if (file_exists($helptextfile[$LANGUAGE])) require $helptextfile[$LANGUAGE];
-require($factsfile["english"]);
-if (file_exists( $factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
+require_once($factsfile["english"]);
+if (file_exists( $factsfile[$LANGUAGE])) require_once $factsfile[$LANGUAGE];
 
 require( "modules/googlemap/".$pgv_language["english"]);
 if (file_exists( "modules/googlemap/".$pgv_language[$LANGUAGE])) require  "modules/googlemap/".$pgv_language[$LANGUAGE];

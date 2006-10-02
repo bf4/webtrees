@@ -26,9 +26,6 @@
  */
 require_once ("config.php");
 require_once ("includes/functions_charts.php");
-require_once ($factsfile["english"]);
-if (file_exists($factsfile[$LANGUAGE]))
-	require_once $factsfile[$LANGUAGE];
 require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/person_class.php';
 

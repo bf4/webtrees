@@ -30,8 +30,6 @@ if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
 	 print "Now, why would you want to do that. You're not hacking are you?";
 	 exit;
 }
-require_once($factsfile["english"]);
-if (file_exists($factsfile[$LANGUAGE])) require_once($factsfile[$LANGUAGE]);
 
 /**
  * print a person in a list

@@ -29,8 +29,6 @@
  */
 require('config.php');
 require_once("includes/functions_print_lists.php");
-require($factsfile["english"]);
-if (file_exists($factsfile[$LANGUAGE])) require($factsfile[$LANGUAGE]);
 
 print_simple_header('View Connections');
 

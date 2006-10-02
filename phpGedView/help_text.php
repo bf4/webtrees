@@ -28,8 +28,6 @@
  */
 
 require "config.php";
-require($factsfile["english"]);
-if (file_exists( $factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
 require $helptextfile["english"];
 if (file_exists($helptextfile[$LANGUAGE])) require $helptextfile[$LANGUAGE];
 if (file_exists('modules/research_assistant/languages/ra_lang.en.php')) require 'modules/research_assistant/languages/ra_lang.en.php';

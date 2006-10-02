@@ -33,8 +33,6 @@
  */
 require("config.php");
 require("includes/adodb-time.inc.php");
-require($factsfile["english"]);
-if (file_exists( $factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
 
 if (empty($day)) $day = adodb_date("j");
 if (empty($month)) $month = adodb_date("M");

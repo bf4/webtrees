@@ -32,11 +32,6 @@ require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/functions_charts.php';
 require_once 'includes/family_class.php';
 require_once 'includes/menu.php';
-require_once $factsfile['english'];
-if (file_exists($factsfile[$LANGUAGE]))
-{
-	require_once $factsfile[$LANGUAGE];
-}
 
 class FamilyRoot extends BaseController
 {

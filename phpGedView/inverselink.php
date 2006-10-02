@@ -27,7 +27,6 @@
  */
 require("config.php");
 require("includes/functions_edit.php");
-require($factsfile["english"]);
 
 //-- page parameters and checking
 $paramok = true;
