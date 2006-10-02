@@ -1855,7 +1855,7 @@ function picture_clip($person_id, $image_id, $filename, $thumbDir)
 }
 function cropImage($image, $dest_image, $left, $top, $right, $bottom){ //$image is the string location of the original image, $dest_image is the string file location of the new image, $fx is the..., $fy is the...
 	global $THUMBNAIL_WIDTH;
-	$ims = getimagesize($image);
+	$ims = @getimagesize($image);
 	$cwidth = ($ims[0]-$right)-$left;
 	$cheight = ($ims[1]-$bottom)-$top;
 	$width = $THUMBNAIL_WIDTH;
@@ -1865,7 +1865,7 @@ function cropImage($image, $dest_image, $left, $top, $right, $bottom){ //$image 
 	$img = imagecreatetruecolor(($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
 	//$org_img = imagecreatefromjpeg($image);
 	$org_img = imagecreatefrompng($image);
-	$ims = getimagesize($image);
+	$ims = @getimagesize($image);
 	imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
 	//imagejpeg($img,$dest_image,90);
 	imagepng($img,$dest_image);
@@ -1875,7 +1875,7 @@ function cropImage($image, $dest_image, $left, $top, $right, $bottom){ //$image 
 	{
 	$img = imagecreatetruecolor($width, $height);
 	$org_img = imagecreatefromjpeg($image);
-	$ims = getimagesize($image);
+	$ims = @getimagesize($image);
 	imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
 	imagejpeg($img,$dest_image,90);
 	imagedestroy($img);
@@ -1884,7 +1884,7 @@ function cropImage($image, $dest_image, $left, $top, $right, $bottom){ //$image 
 	{
 	$img = imagecreatetruecolor(($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
 	$org_img =  imagecreatefromgif($image);
-	$ims = getimagesize($image);
+	$ims = @getimagesize($image);
 	imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
 	imagegif($img,$dest_image);
 	imagedestroy($img);

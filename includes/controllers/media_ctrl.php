@@ -304,7 +304,7 @@ class MediaControllerRoot extends IndividualController{
 		//If so it will then check to see if the file's image size is null.
 		//If the file is null, it will not show the width and the height of the image
 		if (file_exists($this->getLocalFileName())){
-			$imagesize = getimagesize($this->getLocalFileName());
+			$imagesize = @getimagesize($this->getLocalFileName());
 			if ($imagesize[0]){
 				$facts[] = "1 EVEN &lrm;".$imagesize[0]." x ".$imagesize[1]."&lrm;\r\n2 TYPE image_size";
 			}

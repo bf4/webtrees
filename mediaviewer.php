@@ -85,7 +85,7 @@ else{
 					if (preg_match("~://~", $filename) || file_exists($filename)){
 						//If the file exists, it will attempt to get the image size
 						//If the image size returns a null, then the file isn't a image.
-						$imagesize = getimagesize($filename);
+						$imagesize = @getimagesize($filename);
 						$imgwidth = $imagesize[0]+40;
 						$imgheight = $imagesize[1]+150;
 
