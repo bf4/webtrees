@@ -30,6 +30,23 @@ if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["files_in_backup"]		= "Files included in this backup";
+$pgv_lang["created_remotelinks"]	= "Successfully created <i>Remotelinks</i> table.";
+$pgv_lang["created_remotelinks_fail"] 	= "Unable to create <i>Remotelinks</i> table.";
+$pgv_lang["created_indis"]			= "Successfully created <i>Individuals</i> table.";
+$pgv_lang["created_indis_fail"] 	= "Unable to create <i>Individuals</i> table.";
+$pgv_lang["created_fams"]			= "Successfully created <i>Families</i> table.";
+$pgv_lang["created_fams_fail"]		= "Unable to create <i>Families</i> table.";
+$pgv_lang["created_sources"]		= "Successfully created <i>Sources</i> table.";
+$pgv_lang["created_sources_fail"]	= "Unable to create <i>Sources</i> table.";
+$pgv_lang["created_other"]			= "Successfully created <i>Other</i> table.";
+$pgv_lang["created_other_fail"] 	= "Unable to create <i>Other</i> table.";
+$pgv_lang["created_places"] 		= "Successfully created <i>Places</i> table.";
+$pgv_lang["created_places_fail"]	= "Unable to create <i>Places</i> table.";
+$pgv_lang["created_placelinks"] 	= "Successfully created <i>Place links</i> table.";
+$pgv_lang["created_placelinks_fail"]	= "Unable to create <i>Place links</i> table.";
+$pgv_lang["created_media_fail"]	= "Unable to create <i>Media</i> table.";
+$pgv_lang["created_media_mapping_fail"]	= "Unable to create <i>Media mappings</i> table.";
 $pgv_lang["no_thumb_dir"]			= " thumbnail directory does not exist and it could not be created.";
 $pgv_lang["move_to"]				= "Move To";
 $pgv_lang["folder_created"]			= "Directory created";

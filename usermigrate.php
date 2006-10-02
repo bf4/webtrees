@@ -174,7 +174,13 @@ if ($proceed == "backup") {
 			print $pgv_lang["um_zip_succ"]."</td></tr>";
 			print "<tr><td class=\"list_value\" style=\"padding: 5px;\" ><a href=\"downloadbackup.php?fname=".$buname."\" target=\"_blank\">".$pgv_lang["um_zip_dl"]." ".$fname."</a>  (";
 			printf("%.0f Kb", (filesize($fname)/1024));
-			print")</td></tr>";
+			print") <br />\n";
+			print $pgv_lang["files_in_backup"]."<ul>\n";
+			foreach($flist as $f=>$file) {
+				print "<li>".$file."</li>\n";
+			}
+			print "</ul>";
+			print "</td></tr>";
 		}
 		if (isset($_POST["um_usinfo"])) {
 

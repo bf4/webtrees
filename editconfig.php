@@ -32,8 +32,8 @@ require_once $confighelpfile["english"];
 if (file_exists($confighelpfile[$LANGUAGE])) require_once $confighelpfile[$LANGUAGE];
 require_once $helptextfile["english"];
 if (file_exists($helptextfile[$LANGUAGE])) require_once $helptextfile[$LANGUAGE];
-require_once "sanity_check.php";
 
+require_once "sanity_check.php";
 
 if (!defined("DB_ERROR")) require_once('DB.php');
 

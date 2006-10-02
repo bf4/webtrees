@@ -1015,7 +1015,7 @@ function setup_database() {
  * Create the individuals table
  */
 function create_individuals_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "individuals";
 	$res = dbquery($sql, false);
@@ -1037,13 +1037,13 @@ function create_individuals_table() {
 	$sql = "CREATE INDEX indi_surn ON " . $TBLPREFIX . "individuals (i_surname)";
 	$res = dbquery($sql);
 
-	print $pgv_lang["created_indis"] . "<br />\n";
+	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_indis"] . "<br />\n";
 }
 /**
  * Create the families table
  */
 function create_families_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "families";
 	$res = dbquery($sql, false);
@@ -1059,13 +1059,13 @@ function create_families_table() {
 	$sql = "CREATE INDEX fam_file ON " . $TBLPREFIX . "families (f_file)";
 	$res = dbquery($sql);
 
-	print $pgv_lang["created_fams"] . "<br />\n";
+	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_fams"] . "<br />\n";
 }
 /**
  * Create the sources table
  */
 function create_sources_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "sources";
 	$res = dbquery($sql, false);
@@ -1082,13 +1082,13 @@ function create_sources_table() {
 	$res = dbquery($sql);
 	$sql = "CREATE INDEX sour_file ON " . $TBLPREFIX . "sources (s_file)";
 	$res = dbquery($sql);
-	print $pgv_lang["created_sources"] . "<br />\n";
+	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_sources"] . "<br />\n";
 }
 /**
  * Create the other table
  */
 function create_other_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "other";
 	$res = dbquery($sql, false);
@@ -1103,13 +1103,13 @@ function create_other_table() {
 	$res = dbquery($sql);
 	$sql = "CREATE INDEX other_file ON " . $TBLPREFIX . "other (o_file)";
 	$res = dbquery($sql);
-	print $pgv_lang["created_other"] . "<br />\n";
+	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_other"] . "<br />\n";
 }
 /**
  * Create the placelinks table
  */
 function create_placelinks_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "placelinks";
 	$res = dbquery($sql, false);
@@ -1126,13 +1126,13 @@ function create_placelinks_table() {
 	$sql = "CREATE INDEX plindex_file ON ".$TBLPREFIX."placelinks (pl_file)";
 	$res = dbquery($sql);
 
-	print $pgv_lang["created_placelinks"] . "<br />\n";
+	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_placelinks"] . "<br />\n";
 }
 /**
  * Create the places table
  */
 function create_places_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "places";
 	$res = dbquery($sql, false);
@@ -1151,13 +1151,13 @@ function create_places_table() {
 	$sql = "CREATE INDEX place_file ON " . $TBLPREFIX . "places (p_file)";
 	$res = dbquery($sql);
 
-	print $pgv_lang["created_places"] . "<br />\n";
+	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_places"] . "<br />\n";
 }
 /**
  * Create the names table
  */
 function create_names_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "names";
 	$res = dbquery($sql, false);
@@ -1165,6 +1165,7 @@ function create_names_table() {
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
+		print "Unable to create names table";
 		exit;
 	}
 	$sql = "CREATE INDEX name_gid ON " . $TBLPREFIX . "names (n_gid)";
@@ -1177,12 +1178,13 @@ function create_names_table() {
 	$res = dbquery($sql);
 	$sql = "CREATE INDEX name_surn ON " . $TBLPREFIX . "names (n_surname)";
 	$res = dbquery($sql);
+	if (isset($DEBUG) && $DEBUG==true) print "Successfully created names table.<br />\n";
 }
 /**
  * Create the remotelinks table
  */
 function create_remotelinks_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "remotelinks";
 	$res = dbquery($sql, false);
@@ -1198,14 +1200,14 @@ function create_remotelinks_table() {
 	$sql = "CREATE INDEX r_link_id ON " . $TBLPREFIX . "remotelinks (r_linkid)";
 	$res = dbquery($sql);
 
-	print $pgv_lang["created_remotelinks"] . "<br />\n";
+	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_remotelinks"] . "<br />\n";
 }
 /**
  * Create the soundex table
  */
 function create_soundex_table()
 {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
 	
 	$sql = "DROP TABLE ".$TBLPREFIX."soundex";
 	$res = dbquery($sql, false);
@@ -1217,12 +1219,13 @@ function create_soundex_table()
 	}
 	$sql = "CREATE INDEX sx_i_id_ix ON ".$TBLPREFIX."soundex (sx_i_id)";
 	$res = dbquery($sql);
+	if (isset($DEBUG) && $DEBUG==true) print "Successfully created soundex table.<br />\n";
 }
 /**
  * Create the media table
  */
 function create_media_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "media";
 	$res = dbquery($sql, false);
@@ -1238,12 +1241,13 @@ function create_media_table() {
 	$res = dbquery($sql);
 	$sql = "CREATE INDEX m_media_id ON " . $TBLPREFIX . "media (m_media)";
 	$res = dbquery($sql);
+	if (isset($DEBUG) && $DEBUG==true) "Successfully created media table.<br />\n";
 }
 /**
  * Create the dates table
  */
 function create_dates_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "dates";
 	$res = dbquery($sql, false);
@@ -1273,13 +1277,14 @@ function create_dates_table() {
 	$res = dbquery($sql);
 	$sql = "CREATE INDEX date_fact_gid ON ".$TBLPREFIX."dates (d_fact, d_gid)";
 	$res = dbquery($sql);
+	if (isset($DEBUG) && $DEBUG==true) print "Successfully created dates table.<br />\n";
 }
 
 /**
  * Create the media_mapping table
  */
 function create_media_mapping_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "media_mapping";
 	$res = dbquery($sql, false);
@@ -1296,12 +1301,13 @@ function create_media_mapping_table() {
 	$res = dbquery($sql);
 	$sql = "CREATE INDEX mm_media_gedfile ON " . $TBLPREFIX . "media_mapping (mm_gedfile)";
 	$res = dbquery($sql);
+	if (isset($DEBUG) && $DEBUG==true) print "Successfully created media_mapping table.<br />\n";
 }
 /**
  * Create the nextid table
  */
 function create_nextid_table() {
-	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "nextid ";
 	$res = dbquery($sql, false);
@@ -1311,6 +1317,7 @@ function create_nextid_table() {
 	if (DB :: isError($res)) {
 		exit;
 	}
+	if (isset($DEBUG) && $DEBUG==true) print "Created nextid table.<br />\n";
 }
 /**
  * delete a gedcom from the database

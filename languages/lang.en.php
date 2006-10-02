@@ -625,22 +625,6 @@ $pgv_lang["dateconvert"]			= "Date Conversion tool";
 $pgv_lang["xreftorin"]				= "Convert XREF IDs to RIN number";
 $pgv_lang["tools_readme"]			= "See the Tools section of the README.TXT file for more information.";
 $pgv_lang["sec"]					= "sec.";
-$pgv_lang["created_remotelinks"]	= "Successfully created <i>Remotelinks</i> table.";
-$pgv_lang["created_remotelinks_fail"] 	= "Unable to create <i>Remotelinks</i> table.";
-$pgv_lang["created_indis"]			= "Successfully created <i>Individuals</i> table.";
-$pgv_lang["created_indis_fail"] 	= "Unable to create <i>Individuals</i> table.";
-$pgv_lang["created_fams"]			= "Successfully created <i>Families</i> table.";
-$pgv_lang["created_fams_fail"]		= "Unable to create <i>Families</i> table.";
-$pgv_lang["created_sources"]		= "Successfully created <i>Sources</i> table.";
-$pgv_lang["created_sources_fail"]	= "Unable to create <i>Sources</i> table.";
-$pgv_lang["created_other"]			= "Successfully created <i>Other</i> table.";
-$pgv_lang["created_other_fail"] 	= "Unable to create <i>Other</i> table.";
-$pgv_lang["created_places"] 		= "Successfully created <i>Places</i> table.";
-$pgv_lang["created_places_fail"]	= "Unable to create <i>Places</i> table.";
-$pgv_lang["created_placelinks"] 	= "Successfully created <i>Place links</i> table.";
-$pgv_lang["created_placelinks_fail"]	= "Unable to create <i>Place links</i> table.";
-$pgv_lang["created_media_fail"]	= "Unable to create <i>Media</i> table.";
-$pgv_lang["created_media_mapping_fail"]	= "Unable to create <i>Media mappings</i> table.";
 
 //-- INDIVIDUAL AND FAMILYLIST FILE MESSAGES
 $pgv_lang["total_fams"] 			= "Total families";

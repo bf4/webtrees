@@ -156,6 +156,7 @@ if (($CONFIGURED || (isset($_REQUEST['action']) && $_REQUEST['action']=="update"
 		}
 		else $warnings[] = $error;
 	}
+	else $warnings[] = $error;
 }
 
 function print_sanity_errors() {
