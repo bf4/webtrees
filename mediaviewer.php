@@ -121,7 +121,7 @@ else{
 					<table width="100%">
 						<tr>
 							<td class="name_head">
-								 <?php print PrintReady($controller->mediaobject->getTitle()); ?> <br/><br />
+								 <?php print PrintReady($controller->mediaobject->getTitle()); if ($SHOW_ID_NUMBERS) print " &lrm;(".$controller->pid.")&lrm;"; ?> <br/><br />
 								 <?php if ($controller->mediaobject->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 							</td>
 						</tr>
