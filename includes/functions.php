@@ -3187,7 +3187,7 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
  *
  */
 function loadLanguage($desiredLanguage="english", $forceLoad=false) {
-	global $LANGUAGE, $pgv_language, $lang_short_cut, $pgv_lang, $factsfile;
+	global $LANGUAGE, $pgv_language, $lang_short_cut, $pgv_lang, $factarray, $factsfile;
 	global $TEXT_DIRECTION, $TEXT_DIRECTION_array;
 	global $DATE_FORMAT, $DATE_FORMAT_array, $CONFIGURED;
 	global $TIME_FORMAT, $TIME_FORMAT_array;
