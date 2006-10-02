@@ -63,6 +63,17 @@ function check_db($ignore_previous=false) {
 			return false;
 		}
 	}
+	else {
+		//-- if we are not configured then try to connect with the updated values
+		if (!$CONFIGURED || userIsAdmin(getUserName())) {
+			if (isset($_POST['NEW_DBTYPE'])) $DBTYPE = $_POST['NEW_DBTYPE'];
+			if (isset($_POST['NEW_DBUSER'])) $DBUSER = $_POST['NEW_DBUSER'];
+			if (isset($_POST['NEW_DBPASS'])) $DBPASS = $_POST['NEW_DBPASS'];
+			if (isset($_POST['NEW_DBHOST'])) $DBHOST = $_POST['NEW_DBHOST'];
+			if (isset($_POST['NEW_DBNAME'])) $DBNAME = $_POST['NEW_DBNAME'];
+			if (isset($_POST['NEW_DBPERSIST'])) $DBPERSIST = $_POST['NEW_DBPERSIST'];
+		}
+	}
 	//-- initialize query counter
 	$TOTAL_QUERIES = 0;
 
