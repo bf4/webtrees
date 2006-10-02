@@ -923,6 +923,7 @@ function find_updated_record($gid, $gedfile="") {
  * 1. The first _THUM Y object will be used regardless of the object's level in the gedcom record
  * 2. The first _PRIM Y object will be used if no _THUM Y exists regardless of level in gedcom record
  * 3. The first level 1 object will be used if there is no _THUM Y or _PRIM Y and if its doesn't have _THUM N or _PRIM N (level 1 objects appear on the media tab on the individual page)
+ * 4. Adding _PRIM N to any object will cause it not to be shown as a highlighted media.
  * @param string $pid the individual, source, or family id
  * @param string $indirec the gedcom record to look in
  * @return array an object array with indexes "thumb" and "file" for thumbnail and filename
@@ -3210,13 +3211,13 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		$WEEK_START		= $WEEK_START_array[$LANGUAGE];
 		$NAME_REVERSE	= $NAME_REVERSE_array[$LANGUAGE];
 
-		check_db();
+		$goodDB = check_db();
 		// Load functions that are specific to the active language
 		if (file_exists("./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php");
 		// load admin lang keys
-		if ((userGedcomAdmin(getUserName()) || !$CONFIGURED) && file_exists("./languages/admin.".$lang_short_cut[$LANGUAGE].".php")) include_once("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
+		if ((!$goodDB || userGedcomAdmin(getUserName()) || !$CONFIGURED) && file_exists("./languages/admin.".$lang_short_cut[$LANGUAGE].".php")) include_once("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
 		// load the edit lang keys
-		if (userCanEdit(getUserName()) && file_exists("./languages/editor.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
+		if ((!$goodDB || userCanEdit(getUserName())) && file_exists("./languages/editor.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
 		
 		if (file_exists("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php");
 		if (file_exists("./languages/extra.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/extra.".$lang_short_cut[$LANGUAGE].".php");
@@ -3237,11 +3238,11 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// Load functions that are specific to the active language
 		@include_once("./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php");
 
-		check_db();
+		$goodDB = check_db();
 		// load admin lang keys
-		if ((userGedcomAdmin(getUserName()) || !$CONFIGURED) && file_exists("./languages/admin.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
+		if ((!$goodDB || userGedcomAdmin(getUserName()) || !$CONFIGURED) && file_exists("./languages/admin.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
 		// load the edit lang keys
-		if (userCanEdit(getUserName()) && file_exists("./languages/editor.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
+		if ((!$goodDB || userCanEdit(getUserName())) && file_exists("./languages/editor.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
 		if (file_exists("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php");
 		if (file_exists("./languages/extra.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/extra.".$lang_short_cut[$LANGUAGE].".php");
 		$result = true;

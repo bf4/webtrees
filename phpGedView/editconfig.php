@@ -201,7 +201,7 @@ if (count($errors)>0)
 	print_footer();
 	exit;
 }
-if ($action=="update" && !isset($security_user)) {
+if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DBUSER'])) {
 	if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
 	$boolarray = array();
 	$boolarray["yes"]="true";
@@ -402,6 +402,8 @@ if ($action=="update" && !isset($security_user)) {
 </script>
 <form method="post" name="configform" action="editconfig.php">
 <input type="hidden" name="action" value="update" />
+<?php if (isset($_POST['security_check'])) { ?><input type="hidden" name="security_check" value="<?php print $_POST['security_check']; ?>" /><?php }?>
+<?php if (isset($_POST['security_user'])) { ?><input type="hidden" name="security_user" value="<?php print $_POST['security_user']; ?>" /><?php }?>
 <?php
 	
 	print "<table class=\"facts_table\">";

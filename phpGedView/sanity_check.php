@@ -152,9 +152,10 @@ if (($CONFIGURED || (isset($_REQUEST['action']) && $_REQUEST['action']=="update"
 			$error .= $pgv_lang["login"];
 			$error .= "\" />\n";
 			$error .= "</form>\n";
+			$errors[] = $error;
 		}
+		else $warnings[] = $error;
 	}
-	$errors[] = $error;
 }
 
 function print_sanity_errors() {
