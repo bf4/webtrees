@@ -1554,7 +1554,7 @@ function lettersort($a, $b) {
 	return stringsort($a["letter"], $b["letter"]);
 }
 
-function compare_fact_type($arec, $brec) {
+function compare_fact_type($afact, $bfact) {
 	global $factarray, $pgv_lang, $ASC, $IGNORE_YEAR, $IGNORE_FACTS, $DEBUG, $USE_RTL_FUNCTIONS;
 
 	$bef = -1;
@@ -1563,16 +1563,6 @@ function compare_fact_type($arec, $brec) {
 		$bef = 1;
 		$aft = -1;
 	}
-
-	$ft = preg_match("/1\s(\w+)(.*)/", $arec, $match);
-	if ($ft>0) $afact = $match[1];
-	else $afact="";
-	$afact = trim($afact);
-
-	$ft = preg_match("/1\s(\w+)(.*)/", $brec, $match);
-	if ($ft>0) $bfact = $match[1];
-	else $bfact="";
-	$bfact = trim($bfact);
 
 	//-- array for sorting facts in the correct order
 	$factsort = array("BIRT"=>1, "FCOM"=>2, "CHR"=>3, "ADOP"=>4, "BAPM"=>5, "BARM"=>6, "BASM"=>6, "NATU"=>8, "EMIG"=>8, "IMMI"=>8, "MARR"=>7, "DIV"=>8, "RESI"=>8, "OCCU"=>8, "RETI"=>9, "DEAT"=>10, "BURI"=>11, "CREM"=>12, "BAPL"=>51, "ENDL"=>52, "SLGC"=>50, "SLGS"=>53, "CHAN"=>100);
@@ -1722,11 +1712,20 @@ function compare_facts($a, $b) {
 	if ($cta>0) $adate = parse_date(trim($match[1]));
 	$ctb = preg_match("/2 DATE (.*)/", $brec, $match);
 	if ($ctb>0) $bdate = parse_date(trim($match[1]));
+	$ft = preg_match("/1\s(\w+)(.*)/", $arec, $match);
+	if ($ft>0) $afact = $match[1];
+	else $afact="";
+	$afact = trim($afact);
+
+	$ft = preg_match("/1\s(\w+)(.*)/", $brec, $match);
+	if ($ft>0) $bfact = $match[1];
+	else $bfact="";
+	$bfact = trim($bfact);
 	//-- if the date of one fact is missing, or it is missing a year, then sort
 	//-- based on fact label
 	if ($cta==0 || $ctb==0 || empty($adate[0]["year"]) || empty($bdate[0]["year"])) {
 		if (!$IGNORE_FACTS) {
-			$res = compare_fact_type($arec, $brec);
+			$res = compare_fact_type($afact, $bfact);
 			if ($res!==false) return $res;
 		}
 
@@ -1778,7 +1777,7 @@ function compare_facts($a, $b) {
     	if ($USE_RTL_FUNCTIONS && isset($bdate[0]["ext"]) && strstr($bdate[0]["ext"], "#DHEBREW")!==false) $bdate = jewishGedcomDateToGregorian($bdate);
     }
 
-if ($DEBUG) print $adate[0]["year"]."==".$bdate[0]["year"]." ";
+	if ($DEBUG) print $adate[0]["year"]."==".$bdate[0]["year"]." ";
 	if ($adate[0]["year"]==$bdate[0]["year"] || $IGNORE_YEAR) {
 		// Check month
 		$montha = $adate[0]["mon"];
@@ -1799,7 +1798,7 @@ if ($DEBUG) print $adate[0]["year"]."==".$bdate[0]["year"]." ";
 				if($cta>$ctb) return $bef;
 				//-- neither had a time
 				if(($cta==0)&&($ctb==0)) {
-					$res = compare_fact_type($arec, $brec);
+					$res = compare_fact_type($afact, $bfact);
 					if ($res!==false) return $res;
 					return 0;
 				}
@@ -1807,14 +1806,14 @@ if ($DEBUG) print $adate[0]["year"]."==".$bdate[0]["year"]." ";
 				$btime = trim($bmatch[1]);
 				$astamp = strtotime($newa." ".$atime);
 				$bstamp = strtotime($newb." ".$btime);
-				if ($astamp==$bstamp) return compare_fact_type($arec, $brec);
+				if ($astamp==$bstamp) return compare_fact_type($afact, $bfact);
 			}
 			if ($DEBUG) print ($astamp < $bstamp) ? "bef".$bef : "aft".$aft;
 			return ($astamp < $bstamp) ? $bef : $aft;
 		}
 		else return ($montha < $monthb) ? $bef : $aft;
 	}
-if ($DEBUG) print (($adate[0]["year"] < $bdate[0]["year"]) ? "bef".$bef : "aft".$aft)." ";
+	if ($DEBUG) print (($adate[0]["year"] < $bdate[0]["year"]) ? "bef".$bef : "aft".$aft)." ";
 	return ($adate[0]["year"] < $bdate[0]["year"]) ? $bef : $aft;
 }
 
@@ -1830,7 +1829,8 @@ function sort_facts(&$factlist) {
 	$count = count($factlist);
 	if ($DEBUG==1) {
 		for($i=0; $i<$count; $i++) {
-			print "[".$i."=>".substr($factlist[$i][1], 0, 6)."]";
+			if (is_array($factlist[$i])) print "[".$i."=>".substr($factlist[$i][1], 0, 6)."]";
+			else print "[".$i."=>".substr($factlist[$i], 0, 6)."]";
 		}
 	}
 	$newfacts = array();
@@ -1855,7 +1855,8 @@ function sort_facts(&$factlist) {
 		if ($DEBUG==1) {
 			print "<br />Small=".$small." C=$c";
 			for($k=0; $k<$countj+1; $k++) {
-				print "[".$k."=>".substr($newfacts[$k][1], 0, 6)."]";
+				if (is_array($factlist[$k])) print "[".$k."=>".substr($newfacts[$k][1], 0, 6)."]";
+				else print "[".$k."=>".substr($newfacts[$k], 0, 6)."]";
 			}
 		}
 	}
@@ -3226,9 +3227,9 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// Load functions that are specific to the active language
 		if (file_exists("./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php");
 		// load admin lang keys
-		if ((!$goodDB || userGedcomAdmin(getUserName()) || !$CONFIGURED) && file_exists("./languages/admin.".$lang_short_cut[$LANGUAGE].".php")) include_once("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
+		if ((!$goodDB || !adminUserExists() || userGedcomAdmin(getUserName()) || !$CONFIGURED) && file_exists("./languages/admin.".$lang_short_cut[$LANGUAGE].".php")) include_once("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
 		// load the edit lang keys
-		if ((!$goodDB || userCanEdit(getUserName())) && file_exists("./languages/editor.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
+		if ((!$goodDB || !adminUserExists() || userCanEdit(getUserName())) && file_exists("./languages/editor.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
 		
 		if (file_exists("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php");
 		if (file_exists("./languages/extra.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/extra.".$lang_short_cut[$LANGUAGE].".php");
@@ -3251,9 +3252,9 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 
 		$goodDB = check_db();
 		// load admin lang keys
-		if ((!$goodDB || userGedcomAdmin(getUserName()) || !$CONFIGURED) && file_exists("./languages/admin.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
+		if ((!$goodDB || !adminUserExists() || userGedcomAdmin(getUserName()) || !$CONFIGURED) && file_exists("./languages/admin.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
 		// load the edit lang keys
-		if ((!$goodDB || userCanEdit(getUserName())) && file_exists("./languages/editor.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
+		if ((!$goodDB || !adminUserExists() || userCanEdit(getUserName())) && file_exists("./languages/editor.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
 		if (file_exists("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php");
 		if (file_exists("./languages/extra.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/extra.".$lang_short_cut[$LANGUAGE].".php");
 		$result = true;

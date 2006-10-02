@@ -56,7 +56,6 @@ $pgv_lang["add_unlinked_source"]	= "Add an unlinked source";
 $pgv_lang["server_file"]				= "File name on server";
 $pgv_lang["server_file_advice"]			= "Do not change to keep original file name.";
 $pgv_lang["server_file_advice2"]		= "You may enter a URL, beginning with &laquo;http://&raquo;.";
-$pgv_lang["server_folder"]				= "Folder name on server";
 $pgv_lang["server_folder_advice"]		= "You can enter up to #GLOBALS[MEDIA_DIRECTORY_LEVELS]# folder names to follow the default &laquo;#GLOBALS[MEDIA_DIRECTORY]#&raquo;.<br />Do not enter the &laquo;#GLOBALS[MEDIA_DIRECTORY]#&raquo; part of the destination folder name.";
 $pgv_lang["server_folder_advice2"]		= "This entry is ignored if you have entered a URL into the file name field.";
 $pgv_lang["add_linkid_advice"]			= "Enter or search for the ID of the person, family, or source to which this media item should be linked.";

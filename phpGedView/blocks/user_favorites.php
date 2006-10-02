@@ -98,6 +98,12 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 						print_list_source($favorite["gid"], $sourcelist[$favorite["gid"]], false);
 						print PrintReady($favorite["note"]);
 					}
+					if ($favorite["type"]=="OBJE") {
+						print "<div id=\"box".$favorite["gid"].".0\">\n";
+						if ($command=="user" || userIsAdmin(getUserName())) print $removeFavourite;
+						print_media_links("1 OBJE @".$favorite["gid"]."@", 1, $favorite["gid"]);
+						print PrintReady($favorite["note"]);
+					}
 				}
 				print "</div>\n";
 				print "</td></tr>\n";

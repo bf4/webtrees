@@ -52,9 +52,45 @@ class MediaControllerRoot extends IndividualController{
 			$this->mediaobject = Media::getInstance($mid);
 			//This sets the controller ID to be the Media ID
 			$this->pid = $mid;
+			
+			if (is_null($this->mediaobject)) $this->mediaobject = new Media("0 @".$mid."@ OBJE");
 		}
 		
 		parent::init();
+	}
+	
+	/**	
+	 * Add a new favorite for the action user
+	 */
+	function addFavorite() {
+		global $GEDCOM;
+		if (empty($this->uname)) return;
+		if (!empty($_REQUEST["gid"])) {
+			$gid = strtoupper($_REQUEST["gid"]);
+			$indirec = find_gedcom_record($gid);
+			if ($indirec) {
+				$favorite = array();
+				$favorite["username"] = $this->uname;
+				$favorite["gid"] = $gid;
+				$favorite["type"] = "OBJE";
+				$favorite["file"] = $GEDCOM;
+				$favorite["url"] = "";
+				$favorite["note"] = "";
+				$favorite["title"] = "";
+				addFavorite($favorite);
+			}
+		}
+	}
+	
+	/**
+	 * Accept any edit changes into the database
+	 * Also update the indirec we will use to generate the page
+	 */
+	function acceptChanges() {
+		parent::acceptChanges();
+		$this->mediaobject = Media::getInstance($this->pid);
+		//This sets the controller ID to be the Media ID
+		if (is_null($this->mediaobject)) $this->mediaobject = new Media("0 @".$this->pid."@ OBJE");
 	}
 	
 	/**	
@@ -167,6 +203,57 @@ class MediaControllerRoot extends IndividualController{
 	}
 	
 	/**
+	 * get the "other" menu
+	 * @return Menu
+	 */
+	function &getOtherMenu() {
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $THEME_DIR;
+		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART, $pgv_lang;
+		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
+		else $ff="";
+		//-- main other menu item
+		$menu = new Menu($pgv_lang["other"]);
+		if ($SHOW_GEDCOM_RECORD) {
+			if (!empty($PGV_IMAGES["gedcom"]["small"]))
+				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
+			if ($this->show_changes=="yes"  && userCanEdit($this->uname))
+				$menu->addOnclick("return show_gedcom_record('new');");
+			else
+				$menu->addOnclick("return show_gedcom_record('');");
+		}
+		else {
+			if (!empty($PGV_IMAGES["clippings"]["small"]))
+				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
+			$menu->addLink("clippings.php?action=add&amp;id=".$this->pid."&amp;type=obje");
+		}
+		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
+		if ($this->canShowGedcomRecord()) {
+			$submenu = new Menu($pgv_lang["view_gedcom"]);
+			if (!empty($PGV_IMAGES["gedcom"]["small"]))
+				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
+			if ($this->show_changes=="yes"  && userCanEdit($this->uname)) $submenu->addOnclick("return show_gedcom_record('new');");
+			else $submenu->addOnclick("return show_gedcom_record();");
+			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+			$menu->addSubmenu($submenu);
+		}
+		if ($this->mediaobject->canDisplayDetails() && $ENABLE_CLIPPINGS_CART>=getUserAccessLevel()) {
+			$submenu = new Menu($pgv_lang["add_to_cart"], "clippings.php?action=add&amp;id=".$this->pid."&amp;type=obje");
+			if (!empty($PGV_IMAGES["clippings"]["small"]))
+				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["clippings"]["small"]);
+			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+			$menu->addSubmenu($submenu);
+		}
+		if ($this->mediaobject->canDisplayDetails() && !empty($this->uname)) {
+			$submenu = new Menu($pgv_lang["add_to_my_favorites"], "mediaviewer.php?action=addfav&amp;mid=".$this->pid."&amp;gid=".$this->pid);
+			if (!empty($PGV_IMAGES["gedcom"]["small"]))
+				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
+			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+			$menu->addSubmenu($submenu);
+		}
+		return $menu;
+	}
+	
+	/**
 	 * return a list of facts
 	 * @return array
 	 */
@@ -219,12 +306,12 @@ class MediaControllerRoot extends IndividualController{
 		if (file_exists($this->getLocalFileName())){
 			$imagesize = getimagesize($this->getLocalFileName());
 			if ($imagesize[0]){
-				$facts[] = "1 EVEN ".$imagesize[0]." x ".$imagesize[1]."\r\n2 TYPE image_size";
+				$facts[] = "1 EVEN &lrm;".$imagesize[0]." x ".$imagesize[1]."&lrm;\r\n2 TYPE image_size";
 			}
 			//Prints the file size
 			$size = filesize($this->getLocalFileName());
 			//Rounds the size of the imgae to 2 decimal places
-			$size = round($size/1024, 2)." kb";
+			$size = "&lrm;".round($size/1024, 2)." kb&lrm;";
 			
 			$facts[] = "1 EVEN ".$size."\r\n2 TYPE file_size";
 			

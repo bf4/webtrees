@@ -98,6 +98,12 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 							print PrintReady($favorite["note"]);
 							print "</div>\n";
 						}
+						if ($favorite["type"]=="OBJE") {
+							print "<div id=\"box".$favorite["gid"].".0\">\n";
+							if ($command=="user" || userIsAdmin(getUserName())) print $removeFavourite;
+							print_media_links("1 OBJE @".$favorite["gid"]."@", 1, $favorite["gid"]);
+							print PrintReady($favorite["note"]);
+						}
 					}
 				}
 				print "</td></tr>\n";

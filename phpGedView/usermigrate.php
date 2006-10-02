@@ -167,7 +167,11 @@ if ($proceed == "backup") {
 		$fname = $INDEX_DIRECTORY.$buname;
 		$comment = "Created by PhpGedView ".$VERSION." ".$VERSION_RELEASE." on ".adodb_date("r").".";
 		$archive = new PclZip($fname);
-		$v_list = $archive->create($flist, PCLZIP_OPT_COMMENT, $comment);
+		//-- remove ../ from file paths when creating zip
+        $ct = preg_match("~((\.\./)+)~", $INDEX_DIRECTORY, $match);
+        $rmpath = "";
+        if ($ct>0) $rmpath = $match[1];
+        $v_list = $archive->create($flist, PCLZIP_OPT_COMMENT, $comment, PCLZIP_OPT_REMOVE_PATH, $rmpath);
 		print "<tr><td class=\"list_label\" style=\"padding: 5px;\" >";
 		if ($v_list == 0) print "Error : ".$archive->errorInfo(true)."</td></tr>";
 		else {
