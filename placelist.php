@@ -340,6 +340,7 @@ if ($level > 0) {
 			}
 		}
 
+		/**%
 		print "\n\t<br /><br /><table class=\"list_table $TEXT_DIRECTION\">\n\t\t<tr>";
 		$ci = count($myindilist);
 		$cs = count($mysourcelist);
@@ -372,12 +373,6 @@ if ($level > 0) {
 	    		print_list_person($value["gid"], array($value["name"], $GEDCOM));
 				$i++;
 			}
-			/*
-			if ($indi_hide>0) {
-				print "<li>".$pgv_lang["hidden"]." (".$indi_hide.")";
-				print_help_link("privacy_error_help", "qm");
-				print "</li>";
-			}*/
 			print "\n</ul>";
 			print "\n\t\t</td>\n\t\t";
 		}
@@ -401,7 +396,7 @@ if ($level > 0) {
 		$surnames = array();
 		foreach($myfamlist as $gid=>$fam) {
 			// Added space to regexp after z to also remove prefixes
-			$name = preg_replace(array("/ [jJsS][rR]\.?,/", "/ I+,/", "/^[a-z. ]*/"), array(",",",",""), $fam);
+			$name = preg_replace(array("/ [jJsS][rR]\.?,/", "/ I+,/", "/^[a-z. ]* /"), array(",",",",""), $fam);
 			$name = trim($name);
 			$names = preg_split("/[,+]/", $name);
 			$surname = $names[0];
@@ -430,11 +425,6 @@ if ($level > 0) {
 				print_list_family($value["gid"], array($value["name"], $GEDCOM));
 				$i++;
 			}
-			/*if ($fam_hide>0) {
-				print "<li>".$pgv_lang["hidden"]." (".$fam_hide.")";
-				print_help_link("privacy_error_help", "qm");
-				print "</li>";
-			}*/
 			print "</ul></td>";
 		}
 		print "\n\t\t</tr><tr>";
@@ -467,7 +457,13 @@ if ($level > 0) {
 		}
 		print "</tr>\n\t</table>";
 		print_help_link("ppp_name_list_help", "qm");
+		%**/
 		print "<br />";
+
+		$title = ""; foreach ($parent as $k=>$v) $title = $v.", ".$title;
+		print_indi_table($myindilist, $pgv_lang["individuals"]." @ ".$title);
+		print_fam_table($myfamlist, $pgv_lang["families"]." @ ".$title);
+		print_sour_table($mysourcelist, $pgv_lang["sources"]." @ ".$title);
 	}
 }
 

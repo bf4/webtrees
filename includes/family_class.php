@@ -335,7 +335,7 @@ class Family extends GedcomRecord {
 	 * @return string
 	 */
 	function getMarriagePlace() {
-		return get_gedcom_value("PLAC", 2, $this->getMarriageRecord());
+		return get_gedcom_value("PLAC", 2, $this->getMarriageRecord(), '', false);
 	}
 
 	/**

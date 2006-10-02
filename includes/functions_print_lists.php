@@ -278,7 +278,10 @@ function print_indi_table($datalist, $title="") {
 	if (empty($title)) $title=$pgv_lang["individuals"];
 	echo "<fieldset><legend>".$title."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
-
+	//-- root for sosa
+	$rootid = check_rootid(clean_input(""));
+	require_once("includes/functions_charts.php");
+	$treeid = ancestry_array($rootid,16);
 	//-- filter buttons
 	$person = new Person("");
 	echo "<button type=\"button\" class=\"sexM\" title=\"".$pgv_lang["male"]
@@ -321,6 +324,7 @@ function print_indi_table($datalist, $title="") {
 	echo "<tr>";
 	echo "<th class=\"list_label rela\">#</th>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
+	echo "<th class=\"list_label rela\">Sosa</th>";
 	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["BIRT"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
@@ -337,16 +341,14 @@ function print_indi_table($datalist, $title="") {
 	//-- table body
 	$n = 1;
 	foreach($datalist as $key => $value) {
-		//print_r($value);
 		if (!is_array($value)) {
-			$gid = $value;
-			if (empty($gid)) continue;
-			$person = Person::getInstance($gid);
+			$person = Person::getInstance($key);
+			unset ($value);
 		}
 		else {
+			$gid = "";
 			if (isset($value["gid"])) $gid = $value["gid"]; // from indilist
 			if (isset($value[4])) $gid = $value[4]; // from indilist ALL
-
 			if (isset($value["gedcom"])) $person = new Person($value["gedcom"]); // from source.php
 			else $person = Person::getInstance($gid);
 		}
@@ -359,11 +361,17 @@ function print_indi_table($datalist, $title="") {
 			echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$person->xref."</a></td>";
 		}
 
+		echo "<td class=\"list_value_wrap rela\">";
+		$sosa = array_search($person->xref,$treeid);
+		echo "<code style=\"display:none\">".sprintf("%06d", $sosa+0)."</code>"; // store hidden sortable key
+		if ($sosa) echo "<a title=\"".$pgv_lang["relationship_to_me"]."\" href=\"relationship.php?pid1=".$rootid."&pid2=".$person->xref."\" class=\"list_item name2\">".$sosa."</a>";
+		echo "&nbsp;</td>";
+		
 		if ($person->isDead()) echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		else echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap alive\">";
 		if (isset($value["name"]) and $person->canDisplayName()) $name = $value["name"];
 		else $name = $person->getSortableName();
-		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+		echo "<a title=\"".$person->xref."\" href=\"".$person->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		echo $person->getSexImage();
 		foreach ($name_subtags as $key=>$subtag) {
 			$addname = $person->getSortableName($subtag);
@@ -450,7 +458,10 @@ function print_fam_table($datalist, $title="") {
 	if (empty($title)) $title=$pgv_lang["families"];
 	echo "<fieldset><legend>".$title."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
-
+	//-- root for sosa
+	$rootid = check_rootid(clean_input(""));
+	require_once("includes/functions_charts.php");
+	$treeid = ancestry_array($rootid,16);
 	//-- filter buttons
 	echo "<button type=\"button\" class=\"both_alive\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'N')\">";
 	echo $pgv_lang["both_alive"]."</button> ";
@@ -482,6 +493,7 @@ function print_fam_table($datalist, $title="") {
 	echo "<tr>";
 	echo "<th class=\"list_label rela\">#</th>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
+	echo "<th class=\"list_label rela\">Sosa</th>";
 	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["spouse"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["MARR"]."</th>";
@@ -496,10 +508,16 @@ function print_fam_table($datalist, $title="") {
 	//-- table body
 	$n = 1;
 	foreach($datalist as $key => $value) {
-		if (isset($value["gid"])) $gid = $value["gid"];
-
-		if (isset($value["gedcom"])) $family = new Family($value["gedcom"]);
-		else $family = Family::getInstance($gid);
+		if (!is_array($value)) {
+			$family = Family::getInstance($key);
+			unset($value);
+		}
+		else {
+			$gid = "";
+			if (isset($value["gid"])) $gid = $value["gid"];
+			if (isset($value["gedcom"])) $family = new Family($value["gedcom"]);
+			else $family = Family::getInstance($gid);
+		}
 
 		$husb = $family->getHusband();
 		if (is_null($husb)) $husb = new Person('');
@@ -515,10 +533,19 @@ function print_fam_table($datalist, $title="") {
 			echo "</td>";
 		}
 
+		echo "<td class=\"list_value_wrap rela\">";
+		$sosa_h = array_search($husb->xref,$treeid);
+		$sosa_w = array_search($wife->xref,$treeid);
+		echo "<code style=\"display:none\">".sprintf("%06d", max($sosa_h,$sosa_w)+0)."</code>"; // store hidden sortable key
+		if ($sosa_h) echo "<a title=\"".$pgv_lang["relationship_to_me"]."\" href=\"relationship.php?pid1=".$rootid."&pid2=".$husb->xref."\" class=\"list_item name2\">".$sosa_h."</a>";
+		echo "&nbsp;";
+		if ($sosa_w) echo "<a title=\"".$pgv_lang["relationship_to_me"]."\" href=\"relationship.php?pid1=".$rootid."&pid2=".$wife->xref."\" class=\"list_item name2\">".$sosa_w."</a>";
+		echo "</td>";
+
 		if ($husb->isDead()) echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		else echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap alive\">";
 		$name = $husb->getSortableName();
-		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+		echo "<a title=\"".$husb->xref."\" href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($husb->xref) echo $husb->getSexImage();
 		foreach ($name_subtags as $key=>$subtag) {
 			$addname = $husb->getSortableName($subtag);
@@ -529,7 +556,7 @@ function print_fam_table($datalist, $title="") {
 		if ($wife->isDead()) echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		else echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap alive\">";
 		$name = $wife->getSortableName();
-		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+		echo "<a title=\"".$wife->xref."\" href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($wife->xref) echo $wife->getSexImage();
 		foreach ($name_subtags as $key=>$subtag) {
 			$addname = $wife->getSortableName($subtag);
@@ -624,7 +651,16 @@ function print_sour_table($datalist, $title="") {
 	//-- table body
 	$n = 1;
 	foreach ($datalist as $key => $value) {
-		$source = new Source($value["gedcom"]);
+		if (!is_array($value)) {
+			$source = Source::getInstance($key);
+			unset($value);
+		}
+		else {
+			$gid = "";
+			if (isset($value["gid"])) $gid = $value["gid"];
+			if (isset($value["gedcom"])) $source = new Source($value["gedcom"]);
+			else $source = Source::getInstance($gid);
+		}
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
 		if ($SHOW_ID_NUMBERS) {
@@ -635,7 +671,7 @@ function print_sour_table($datalist, $title="") {
 
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		$name = $source->getSortableName();
-		echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
+		echo "<a title=\"".$source->xref."\" href=\"".$source->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
 		echo "</td>";
 		
 		// alternate title in a new column
@@ -646,7 +682,7 @@ function print_sour_table($datalist, $title="") {
 				echo "<a title=\"".$subtag."\" href=\"".$source->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a><br />";
 			}
 		}
-		echo "</td>";
+		echo "&nbsp;</td>";
 
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".PrintReady($source->getAuth())."</a>";
@@ -711,7 +747,16 @@ function print_repo_table($datalist, $title="") {
 	//-- table body
 	$n = 1;
 	foreach ($datalist as $key => $value) {
-		$repo = new Repository($value["gedcom"]);
+		if (!is_array($value)) {
+			$repo = Repository::getInstance($key);
+			unset($value);
+		}
+		else {
+			$gid = "";
+			if (isset($value["gid"])) $gid = $value["gid"];
+			if (isset($value["gedcom"])) $repo = new Repository($value["gedcom"]);
+			else $repo = Repository::getInstance($gid);
+		}
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
 		if ($SHOW_ID_NUMBERS) {
@@ -721,7 +766,7 @@ function print_repo_table($datalist, $title="") {
 		}
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		$name = $repo->getSortableName();
-		echo "<a href=\"".$repo->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
+		echo "<a title=\"".$repo->xref."\" href=\"".$repo->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
 		foreach ($name_subtags as $key=>$subtag) {
 			$addname = $repo->getSortableName($subtag);
 			if (!empty($addname) and $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$repo->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
@@ -780,7 +825,6 @@ function print_media_table($datalist, $title="") {
 	//-- table body
 	$n = 1;
 	foreach ($datalist as $key => $value) {
-		//print_r ($value);
 		$media = new Media($value["GEDCOM"]);
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
@@ -791,34 +835,33 @@ function print_media_table($datalist, $title="") {
 		}
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		$name = $media->getSortableName();
-		echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
+		echo "<a title=\"".$media->xref."\" href=\"".$media->getLinkUrl()."\" class=\"list_item name2\" title=\"".$media->file."\">".PrintReady($name)."</a>";
 		echo "</td>";
 
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		foreach ($value["LINKS"] as $k=>$v) {
-		  if ($v=="INDI") $target = Person::getInstance($k);
-		  else if ($v=="FAM") $target = Family::getInstance($k);
-		  else if ($v=="SOUR") $target = Source::getInstance($k);
-			echo "<a href=\"".$target->getLinkUrl()."\" class=\"list_item\">".PrintReady($target->getSortableName())."</a><br />";
+		  if ($v=="INDI") $record = Person::getInstance($k);
+		  else if ($v=="FAM") $record = Family::getInstance($k);
+		  else if ($v=="SOUR") $record = Source::getInstance($k);
+		  else continue;
+			echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\" title=\"".$k."\">".PrintReady($record->getSortableName())."</a><br />";
 		}
 		echo "</td>";
 
-		$imgsize = @getimagesize($media->file); // [0]=width [1]=height [2]=filetype
-		$imageTypes = array("-","GIF", "JPG", "PNG", "SWF", "PSD", "BMP", "TIFF", "TIFF", "JPC", "JP2", "JPX", "JB2", "SWC", "IFF", "WBMP", "XBM");
 		echo "<td class=\"list_value_wrap\">";
-		echo "<a title=\"".$media->file."\" href=\"".$media->getLinkUrl()."\" class=\"list_item\">".$imageTypes[(0+$imgsize[2])]."</a>";
+		echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item\" title=\"".$media->file."\">".$media->getFiletype()."</a>";
 		echo "</td>";
 
 		echo "<td class=\"list_value_wrap\">";
-		if ($imgsize[2]) echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item\">".sprintf("%.1f", @filesize($media->file)/1024)."</a>";
+		echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item\" title=\"".$media->file."\">".$media->getFilesize()."</a>";
 		echo "</td>";
 
 		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item\">".(0+$imgsize[0])."</a>";
+		echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item\" title=\"".$media->file."\">".$media->width."</a>";
 		echo "</td>";
 
 		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item\">".(0+$imgsize[1])."</a>";
+		echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item\" title=\"".$media->file."\">".$media->height."</a>";
 		echo "</td>";
 		
 		if ($SHOW_LAST_CHANGE) {
@@ -863,8 +906,7 @@ function print_changes_table($datalist) {
 	//-- table body
 	$n = 1;
 	foreach($datalist as $key => $value) {
-		$gid = $value[0];
-		$record = GedcomRecord::getInstance($gid);
+		$record = GedcomRecord::getInstance($value[0]);
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
 		if ($SHOW_ID_NUMBERS) {
@@ -874,7 +916,7 @@ function print_changes_table($datalist) {
 
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		$name = $record->getSortableName();
-		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+		echo "<a title=\"".$record->xref."\" href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($record->type=="INDI") echo $record->getSexImage();
 		echo "</td>";
 
