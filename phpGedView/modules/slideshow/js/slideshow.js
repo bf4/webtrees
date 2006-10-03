@@ -394,7 +394,7 @@ function getImageInfo(someImage){
     var strSize = someImage.width + "x" + someImage.height;
 //    var strFileSize = someImage.fileSize + " bytes";
     nameCell = document.getElementById("imgName");
-    if (nameCell) nameCell.innerHTML = "Name: "+ strName +
+    if (nameCell) nameCell.innerHTML = "Name: "+ decodeURI(strName) +
     "<br><br>" + "Dimensions: " + strSize;
 //    "<br><br>" + "Size: " + strFileSize;
     
