@@ -281,24 +281,36 @@ class GEClippings extends GrampsExport {
 				$eName->setAttribute("type", "Birth Name");
 
 				$givn = get_gedcom_value("GIVN", 2, $nameRec);
-				$eFirstName = $this->dom->createElement("first");
-				if (!isset ($givn))
+				$surn = get_gedcom_value("SURN", 2, $nameRec);
+				//-- if no GIVN/SURN sub records then get the names from the 1 NAME line
+				if (empty($surn) || empty($givn)) {
+					$name = get_gedcom_value("NAME", 1, $nameRec);
+					if (!empty($name)) {
+						$nparts = preg_split("~/~", $name);
+						$givn = trim($nparts[0]);
+						if (count($nparts)>1) $surn = trim($nparts[1]);
+						if (count($nparts)>2) $nnsfx = trim($nparts[2]);
+					}
+				}
+				if (empty($surn))
+					$surn = $pgv_lang["unknown"];
+				if (empty($givn))
 					$givn = $pgv_lang["unknown"];
+					
+				$eFirstName = $this->dom->createElement("first");
 				$etFirstName = $this->dom->createTextNode($givn);
 				$etFirstName = $eFirstName->appendChild($etFirstName);
 				$eFirstName = $eName->appendChild($eFirstName);
 
-				$surn = get_gedcom_value("SURN", 2, $nameRec);
 				$eLastName = $this->dom->createElement("last");
-				if (!isset ($surn))
-					$surn = $pgv_lang["unknown"];
 				$etLastName = $this->dom->createTextNode($surn);
 				$etLastName = $eLastName->appendChild($etLastName);
 				$eLastName = $eName->appendChild($eLastName);
 				$eName = $ePerson->appendChild($eName);
 
-				if (($nsfx = get_gedcom_value("NSFX", 2, $nameRec)) != null) {
+				if (!empty($nnsfx) || (($nsfx = get_gedcom_value("NSFX", 2, $nameRec)) != null)) {
 					$eSuffix = $this->dom->createElement("suffix");
+					if (empty($nsfx)) $nsfx = $nnsfx;
 					$etSuffix = $this->dom->createTextNode($nsfx);
 					$etSuffix = $eSuffix->appendChild($etSuffix);
 					$eSuffix = $eName->appendChild($eSuffix);
