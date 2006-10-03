@@ -1071,7 +1071,7 @@ function print_contact_links($style=0) {
 }
 //-- print user favorites
 function print_favorite_selector($option=0) {
-	global $pgv_lang, $GEDCOM, $SCRIPT_NAME, $SHOW_ID_NUMBERS, $pid, $INDEX_DIRECTORY, $indilist, $famlist, $sourcelist, $QUERY_STRING, $famid, $sid;
+	global $pgv_lang, $GEDCOM, $SCRIPT_NAME, $SHOW_ID_NUMBERS, $pid, $INDEX_DIRECTORY, $indilist, $famlist, $sourcelist, $medialist, $QUERY_STRING, $famid, $sid;
 	global $TEXT_DIRECTION, $REQUIRE_AUTHENTICATION, $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER;
 	$username = getUserName();
 	if (!empty($username)) $userfavs = getUserFavorites($username);
@@ -1165,7 +1165,7 @@ function print_favorite_selector($option=0) {
 		 							if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
 									else $submenu["label"] .= " &rlm;(".$favorite["gid"].")&rlm;";
 								}
-								unset($medialist[$pid]);
+								if (isset($medialist[$pid])) unset($medialist[$pid]);
 							}
 						}
 						$submenu["labelpos"] = "right";

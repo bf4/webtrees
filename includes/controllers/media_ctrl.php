@@ -107,6 +107,10 @@ class MediaControllerRoot extends IndividualController{
 		else return $pgv_lang["unknown"];
 	}
 	
+	function canDisplayDetails() {
+		return $this->mediaobject->canDisplayDetails();
+	}
+	
 	/**
 	 * get the edit menu
 	 * @return Menu

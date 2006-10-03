@@ -67,8 +67,8 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 		  $event="";
 	 }
 	 
-	 if ($fact=="NOTE") return print_main_notes($factrec, 1, $pid, $linenum);
-	 if ($fact=="SOUR") return print_main_sources($factrec, 1, $pid, $linenum);
+	 if ($fact=="NOTE") return print_main_notes($factrec, 1, $pid, $linenum, $noedit);
+	 if ($fact=="SOUR") return print_main_sources($factrec, 1, $pid, $linenum, $noedit);
 	 
 	 $styleadd="";
 	 $ct = preg_match("/PGV_NEW/", $factrec, $match);
@@ -783,7 +783,7 @@ function print_address_structure($factrec, $level) {
 	 if ($resultText!="<table></table>") print $resultText;
 }
 
-function print_main_sources($factrec, $level, $pid, $linenum) {
+function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 	 global $pgv_lang;
 	 global $factarray, $view;
 	 global $WORD_WRAPPED_NOTES, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_SOURCES;
@@ -807,7 +807,7 @@ function print_main_sources($factrec, $level, $pid, $linenum) {
 		  //print "\n\t\t\t<tr><td class=\"facts_label$styleadd\">";
 		  print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" alt=\"\" /><br />";
 		  print $factarray["SOUR"];
-		  if (userCanEdit(getUserName())&&(!FactEditRestricted($pid, $factrec))&&($styleadd!="red")&&($view!="preview")) {
+		  if (!$noedit && userCanEdit(getUserName())&&(!FactEditRestricted($pid, $factrec))&&($styleadd!="red")&&($view!="preview")) {
 			  $menu = array();
 				$menu["label"] = $pgv_lang["edit"];
 				$menu["labelpos"] = "right";
@@ -930,8 +930,9 @@ function print_main_sources($factrec, $level, $pid, $linenum) {
  * @param int $level		The start level for this note, usually 1
  * @param string $pid		The gedcom XREF id for the level 0 record that this note is a part of
  * @param int $linenum		The line number in the level 0 record where this record was found.  This is used for online editing.
+ * @param boolean $noedit	Whether or not to allow this fact to be edited
  */
-function print_main_notes($factrec, $level, $pid, $linenum) {
+function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 	 global $pgv_lang;
 	 global $factarray, $view;
 	 global $WORD_WRAPPED_NOTES, $PGV_IMAGE_DIR;
@@ -950,7 +951,7 @@ function print_main_notes($factrec, $level, $pid, $linenum) {
 		  $nrec = substr($factrec, $spos1, $spos2-$spos1);
 		  if (!showFact("NOTE", $pid)||FactViewRestricted($pid, $factrec)) return false;
 		  print "\n\t\t<tr><td valign=\"top\" class=\"descriptionbox $styleadd center width20\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\" alt=\"\" /><br />".$factarray["NOTE"];
-		  if (userCanEdit(getUserName())&&(!FactEditRestricted($pid, $factrec))&&($styleadd!="red")&&($view!="preview")) {
+		  if (!$noedit && userCanEdit(getUserName())&&(!FactEditRestricted($pid, $factrec))&&($styleadd!="red")&&($view!="preview")) {
 			$menu = array();
 			$menu["label"] = $pgv_lang["edit"];
 			$menu["labelpos"] = "right";
@@ -1035,7 +1036,7 @@ function print_main_notes($factrec, $level, $pid, $linenum) {
  * @param int $level	The level of media object to find
  * @param boolean $related	Whether or not to grab media from related records
  */
-function print_main_media($pid, $level=1, $related=false) {
+function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
 	global $pgv_lang, $pgv_changes, $factarray, $view;
 	global $GEDCOMS, $GEDCOM, $MEDIATYPE, $pgv_changes, $DBCONN, $DBTYPE;
