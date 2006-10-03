@@ -47,7 +47,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 	 global $BOXFILLCOLOR, $PGV_IMAGE_DIR;
 	 global $pgv_lang, $GEDCOM;
 	 global $WORD_WRAPPED_NOTES;
-	 global $TEXT_DIRECTION;
+	 global $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
 	 global $HIDE_GEDCOM_ERRORS, $SHOW_ID_NUMBERS;
 	 global $CONTACT_EMAIL, $view, $FACT_COUNT, $monthtonum;
 	 global $SHOW_FACT_ICONS;
@@ -236,7 +236,12 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				}
 			   print "</td>";
 		  }
-		  print "<td class=\"optionbox $styleadd wrap\">";
+		  $align = "";
+		  if (!empty($event)) {
+		  	if ($TEXT_DIRECTION=="rtl" && !hasRTLText($event)) $align=" align=\"left\"";
+		  	if ($TEXT_DIRECTION=="ltr" && $USE_RTL_FUNCTIONS && !hasLTRText($event)) $align=" align=\"right\"";
+		  }
+		  print "<td class=\"optionbox $styleadd wrap\" $align>";
 		  //print "<td class=\"facts_value facts_value$styleadd\">";
 		  $user = getUser(getUserName());
 		  if ((showFactDetails($factref, $pid)) && (FactViewRestricted($pid, $factrec))) {
@@ -937,6 +942,7 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 	 global $factarray, $view;
 	 global $WORD_WRAPPED_NOTES, $PGV_IMAGE_DIR;
 	 global $PGV_IMAGES;
+	 global $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
 	 $styleadd="";
 	 $ct = preg_match("/PGV_NEW/", $factrec, $match);
 	 if ($ct>0) $styleadd="change_new";
@@ -994,15 +1000,13 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			print_menu($menu);
 			print "</div>";
 		}
-		  print " </td>\n<td class=\"optionbox $styleadd wrap\">";
-		  if (showFactDetails("NOTE", $pid)) {
 			   $nt = preg_match("/\d NOTE @(.*)@/", $match[$j][0], $nmatch);
 			   if ($nt==0) {
 					//-- print embedded note records
 					$text = preg_replace("/~~/", "<br />", trim($match[$j][1]));
 					$text .= get_cont($nlevel, $nrec);
 					$text = preg_replace("'(https?://[\w\./\-&=?~%#]*)'", "<a href=\"$1\" target=\"blank\">$1</a>", $text);
-					print PrintReady($text);
+				$text = PrintReady($text);
 			   }
 			   else {
 					//-- print linked note records
@@ -1012,9 +1016,17 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 					if ($nt>0) $text = preg_replace("/~~/", "<br />", trim($n1match[1]));
 					$text .= get_cont(1, $noterec);
 					$text = preg_replace("'(https?://[\w\./\-&=?~%#]*)'", "<a href=\"$1\" target=\"blank\">$1</a>", $text);
-					print PrintReady($text)."<br />\n";
-					print_fact_sources($noterec, 1);
+				$text = PrintReady($text)."<br />\n";
 			   }
+		  $align = "";
+		  if (!empty($text)) {
+		  	if ($TEXT_DIRECTION=="rtl" && !hasRTLText($text)) $align=" align=\"left\"";
+		  	if ($TEXT_DIRECTION=="ltr" && $USE_RTL_FUNCTIONS && !hasLTRText($text)) $align=" align=\"right\"";
+		  }
+		  print " </td>\n<td class=\"optionbox $styleadd wrap\" $align>";
+		  if (showFactDetails("NOTE", $pid)) {
+		  		print $text;
+			   if (!empty($noterec)) print_fact_sources($noterec, 1);
 			   // See if RESN tag prevents display or edit/delete
 	 			$resn_tag = preg_match("/2 RESN (.*)/", $factrec, $match);
 	 			if ($resn_tag > 0) $resn_value = strtolower(trim($match[1]));
