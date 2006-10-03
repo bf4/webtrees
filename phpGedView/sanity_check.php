@@ -1,8 +1,7 @@
 <?php
 /**
 * Checks to see if the version of php you are using is newer then 4.3.
-* Checks to see if the config.php, the index directory, the media directory, the media thumbs directory,
-* and the media/themes directory are writable.
+* Checks to see if the config.php, the index directory, the media directory, and the media/thumbs directory are writable.
 * Checks to see if the imagecreatefromjpeg, xml_parser_create, and GregorianToJD functions exist. 
 * Checks to see if the DomDocument class exists.
 * Checks to see if the database is configured correctly.
@@ -14,7 +13,6 @@
 "privacy.php", and "hitcount.php" files exist.
 * All of these things are checked when the editconfig.php file is first loaded. 
 * If any of the checks fail the appropriate error or warning message will be displayed.
-* 
 * 
 * phpGedView: Genealogy Viewer
 * Copyright (C) 2002 to 2003  John Finlay and Others
@@ -68,6 +66,9 @@ foreach($arr as $k => $v)
 	if (!file_exists($v))
 	{
 		$errors[] = "<span class=\"error\">The file \"$v\" does not exist. You might want to check and make sure that the file exists, was not missnamed, and read permissions are set correctly.</span>";
+	}
+	if (!is_dir($v) && filesize($v)<10) {
+		$errors[] = "<span class=\"error\">The file \"$v\" did not upload correctly. You should try to upload the file again.</span>";
 	}
 }
 if (count($errors)>0) print_sanity_errors();

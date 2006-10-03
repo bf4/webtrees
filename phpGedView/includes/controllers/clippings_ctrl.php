@@ -423,7 +423,12 @@ function zip_cart()
 		$archive = new PclZip($fname);
 		$this->media_list[]= $tempFileName;
 		$c = count($this->media_list);
-		$v_list = $archive->create($this->media_list, PCLZIP_OPT_COMMENT, $comment);
+		//-- remove ../ from file paths when creating zip
+        $ct = preg_match("~((\.\./)+)~", $INDEX_DIRECTORY, $match);
+        $rmpath = "";
+        if ($ct>0) $rmpath = $match[1];
+        $v_list = $archive->create($this->media_list, PCLZIP_OPT_COMMENT, $comment, PCLZIP_OPT_REMOVE_PATH, $rmpath);
+//		$v_list = $archive->create($this->media_list, PCLZIP_OPT_COMMENT, $comment);
 		if ($v_list == 0) print "Error : ".$archive->errorInfo(true)."</td></tr>";
 		else {
 			$openedFile = fopen($fname,"rb");
