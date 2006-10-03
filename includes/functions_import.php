@@ -663,7 +663,7 @@ function update_media($gid, $indirec, $update = false) {
 			$level = $line{0};
 			//-- putting this code back since $objlevel, $objrec, etc vars will be 
 			//-- reset in sections after this
-			if ($objlevel>0 && ($level<=$objlevel || $key == $ct_lines-1)) {
+			if ($objlevel>0 && ($level<=$objlevel)) {
 				$objref = insert_media($objrec, $objlevel, $update, $gid, $count);
 				$count++;
 				// NOTE: Add the new media object to the record
@@ -688,41 +688,12 @@ function update_media($gid, $indirec, $update = false) {
 			} else {
 				$ct = preg_match("/(\d+)\s(\w+)(.*)/", $line, $match);
 				if ($ct > 0) {
-					/* -- this section just seems to be pulling the line apart and then putting it back together
-					 * -- we don't need it anymore 
-					 * 
-					 $level = $match[1];
-					$fact = $match[2];
-					$desc = trim($match[3]);
-					if ($fact == "FILE") {
-						// Correct Media depth and other common mistakes in file name
-						//$desc = check_media_depth($desc, "FRONT", "QUIET");
-						$match[3] = $desc;
-						$line = $match[1] . " " . $match[2] . " " . $match[3];
-					}
-					*/
 					if ($inobj)
 						$objrec .= $line . "\r\n";
 					else $newrec .= $line . "\r\n";
 				}
 				else $newrec .= $line . "\r\n";
 			}
-			// Do this check AFTER matching.  Checks above were matching on the
-			// last line, and the foreach would end before this work was done.
-			/*-- There is already code below which makes sure that the last line is properly handled.
-			-- if we do the checks at this point the necessary vars will have already changed and we could 
-			-- still lose media references
-			if ($objlevel>0 && ($level<=$objlevel || $key == $ct_lines-1)) {
-				$objref = insert_media($objrec, $objlevel, $update, $gid, $count);
-				$count++;
-				// NOTE: Add the new media object to the record
-				//$newrec .= $objlevel . " OBJE @" . $m_media . "@\r\n";
-				$newrec .= $objref;
-
-				// NOTE: Set the details for the next media record
-				$objlevel = 0;
-				$inobj = false;
-			}*/
 		}
 	}
 	//-- make sure the last line gets handled

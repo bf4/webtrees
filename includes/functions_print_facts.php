@@ -1254,6 +1254,8 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	print "</td><td class=\"optionbox wrap $styleadd\"><span class=\"field\">";
 	if (showFactDetails("OBJE", $pid)) {
 		$mediaTitle = $rowm["m_titl"];
+		$subtitle = get_gedcom_value("TITL", 2, $rowm["mm_gedrec"]);
+		if (!empty($subtitle)) $mediaTitle = $subtitle;
 		$mainMedia = check_media_depth($rowm["m_file"], "NOTRUNC");
 		if ($mediaTitle=="") $mediaTitle = basename($rowm["m_file"]);
 		if ($isExternal || file_exists(filename_decode($thumbnail))) {
@@ -1322,8 +1324,14 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			}
 		}
 		print "<br />\n";
+		$prim = get_gedcom_value("_PRIM", 2, $rowm["mm_gedrec"]);
+		if (!empty($prim)) print "<span class=\"label\">".$factarray["_PRIM"].":</span> ".$prim."<br />\n";
+		$thum = get_gedcom_value("_THUM", 2, $rowm["mm_gedrec"]);
+		if (!empty($thum)) print "<span class=\"label\">".$factarray["_THUM"].":</span> ".$thum."<br />\n";
 		print_fact_sources($rowm["m_gedrec"], 1);
+		print_fact_sources($rowm["mm_gedrec"], 2);
 		print_fact_notes($rowm["m_gedrec"], 1);
+		print_fact_notes($rowm["mm_gedrec"], 2);
 	}
 	print "</td></tr>";
 	return true;
