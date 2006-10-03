@@ -164,6 +164,7 @@ if ($action=="edituser2") {
 <?php $tab=0; ?>
 <table class="list_table <?php print $TEXT_DIRECTION; ?>">
 	<tr><td class="topbottombar" colspan="2"><h2><?php print $pgv_lang["editowndata"];?></h2></td></tr>
+	<tr><td class="topbottombar" colspan="2"><input type="submit" tabindex="<?php $tab++; print $tab; ?>" value="<?php print $pgv_lang["update_myaccount"]; ?>" /></td></tr>
 	<tr><td class="descriptionbox width20 wrap"><?php print_help_link("edituser_username_help", "qm");print $pgv_lang["username"];?></td><td class="optionbox"><input type="text" name="username" tabindex="<?php $tab++; print $tab; ?>" value="<?php print $user['username']?>" /></td></tr>
 	<tr><td class="descriptionbox wrap"><?php print_help_link("edituser_firstname_help", "qm");print $pgv_lang["firstname"];?></td><td class="optionbox"><input type="text" name="firstname" tabindex="<?php $tab++; print $tab; ?>" value="<?php print $user['firstname']?>" /></td></tr>
 	<tr><td class="descriptionbox wrap"><?php print_help_link("edituser_lastname_help", "qm");print $pgv_lang["lastname"];?></td><td class="optionbox"><input type="text" name="lastname" tabindex="<?php $tab++; print $tab; ?>" value="<?php print $user['lastname']?>" /></td></tr>
