@@ -95,7 +95,7 @@ else{
 							//Makes it so the picture when clicked opens the Image View Page
 							?>
 							<a href="javascript:;" onclick="return openImage('<?php print rawurlencode($filename); ?>', <?php print $imgwidth; ?>, <?php print $imgheight; ?>);">
-							<img src="<?php if (!$USE_THUMBS_MAIN) print $filename; else print thumbnail_file($filename); ?>" border="0" width="200" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
+								<img src="<?php if (!$USE_THUMBS_MAIN) print $filename; else print thumbnail_file($filename); ?>" border="0" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
 							</a>
 							<?php
 						}
@@ -123,7 +123,8 @@ else{
 					<table width="100%">
 						<tr>
 							<td class="name_head">
-								 <?php print PrintReady($controller->mediaobject->getTitle()); if ($SHOW_ID_NUMBERS) print " &lrm;(".$controller->pid.")&lrm;"; ?> <br/><br />
+								 <?php print PrintReady($controller->mediaobject->getTitle()); if ($SHOW_ID_NUMBERS) print " &lrm;(".$controller->pid.")&lrm;"; ?>
+								 <?php print PrintReady($controller->mediaobject->getAddTitle()); ?> <br/><br />	 
 								 <?php if ($controller->mediaobject->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 							</td>
 						</tr>

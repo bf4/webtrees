@@ -1276,8 +1276,17 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		if(empty($SEARCH_SPIDER)) {
 			print "<a href=\"mediaviewer.php?mid=".$rowm["m_media"]."\">";
 		}
-		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>&lrm;".PrintReady($mediaTitle)."</i>";
-		else print "<i>".PrintReady($mediaTitle)."</i>";
+		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>&lrm;".PrintReady($mediaTitle);
+		else print "<i>".PrintReady($mediaTitle);
+		$addtitle = get_gedcom_value("TITL:_HEB", 2, $rowm["mm_gedrec"]);
+		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:_HEB", 2, $rowm["m_gedrec"]);
+		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:_HEB", 1, $rowm["m_gedrec"]);
+		if (!empty($addtitle)) print "<br />\n".PrintReady($addtitle);
+		$addtitle = get_gedcom_value("TITL:ROMN", 2, $rowm["mm_gedrec"]);
+		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:ROMN", 2, $rowm["m_gedrec"]);
+		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:ROMN", 1, $rowm["m_gedrec"]);
+		if (!empty($addtitle)) print "<br />\n".PrintReady($addtitle);
+		print "</i>";
 		if(empty($SEARCH_SPIDER)) {
 			print "</a>";
 		}
@@ -1325,9 +1334,13 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		}
 		print "<br />\n";
 		$prim = get_gedcom_value("_PRIM", 2, $rowm["mm_gedrec"]);
-		if (!empty($prim)) print "<span class=\"label\">".$factarray["_PRIM"].":</span> ".$prim."<br />\n";
+		if (!empty($prim)) print "<span class=\"label\">".$factarray["_PRIM"].":</span> ";
+		if ($prim=="Y") print $pgv_lang["yes"]; else print $pgv_lang["no"];
+		print "<br />\n";
 		$thum = get_gedcom_value("_THUM", 2, $rowm["mm_gedrec"]);
-		if (!empty($thum)) print "<span class=\"label\">".$factarray["_THUM"].":</span> ".$thum."<br />\n";
+		if (!empty($thum)) print "<span class=\"label\">".$factarray["_THUM"].":</span> ";
+		if ($thum=="Y") print $pgv_lang["yes"]; else print $pgv_lang["no"];
+		print "<br />\n";
 		print_fact_sources($rowm["m_gedrec"], 1);
 		print_fact_sources($rowm["mm_gedrec"], 2);
 		print_fact_notes($rowm["m_gedrec"], 1);
