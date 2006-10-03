@@ -32,28 +32,20 @@
 	echo "var Pic = new Array();\n";	// The main images
 	echo "var myImages = new Array();\n";	// The preview images
 	
-//	$dbq = "select m_file from ".$TBLPREFIX."media WHERE m_gedfile=".$GEDCOMS[$GEDCOM]['id'];	// Get the file list from the DB
-//	$dbr = dbquery($dbq);
 	$ix = 0;
 	
-	// Loop through the query reults and store the images in each array
-//	storeImages($ix);
-
-//function storeImages($dbr, $ix){	
-//	global $MEDIA_DIRECTORY;
 	$yz = 0;
 	$numImages = 0;
 	foreach($medialist as $mid=>$media) {
 		// Check to see if the item is a real image
 		$imgsize = @getimagesize($media['FILE']);
 		if($imgsize != false){		
-	 		echo "Pic[$ix] = '".check_media_depth($media['FILE'])."';\n";
-			echo "myImages[$ix] = '".thumbnail_file($media['FILE'])."';\n";
+	 		echo "Pic[$ix] = '".addcslashes(check_media_depth($media['FILE']), "'")."';\n";
+			echo "myImages[$ix] = '".addcslashes(thumbnail_file($media['FILE']), "'")."';\n";
 			global $ix;
 	 		$ix++;
 		}
 	}	
-//}
 echo "</script>\n"; 	
 ?>
 <style>
@@ -77,43 +69,34 @@ border:0px solid #7777aa;
 <link type="text/css" rel="StyleSheet" href="modules/slideshow/css/bluecurve.css" />
 <!-- BEGIN FLOATING SLIDE SHOW CODE //-->
 <div id="theLayer" style="position:absolute;left:0;top:0;visibility:hidden;z-index:	100;">
-<!-- Set thin outer border color here //-->
-<table border="0" bgcolor="#CCCCFF" cellspacing="0" cellpadding="2" >
-<tr>
-<td>
-<!-- Set thicker inner border color here //-->
-<table border="0" bgcolor="#A1BFE0" cellspacing="0" cellpadding="5" >
-<tr>
-<td>
-  <table border="0" cellspacing="0" cellpadding="0">
+  <table border="0" cellspacing="0" cellpadding="3" class="person_box">
   <tr>
   <td id="titleBar" style="cursor:move" align="middle">
-  <ilayer onSelectStart="return false">
-  <layer onMouseover="isHot=true;if (isN4) ddN4(theLayer)" onMouseout="isHot=false">
+  <div onSelectStart="return false">
+  <div onMouseover="isHot=true;if (isN4) ddN4(theLayer)" onMouseout="isHot=false">
 <input type="image" src="modules/slideshow/images/previous.gif" onclick="btnPreviousClick()" style="cursor:pointer">
 <input type="image" src="modules/slideshow/images/pause.gif" onclick="btnPauseClick()" style="cursor:pointer">
 <input type="image" src="modules/slideshow/images/play.gif" onclick="btnStartClick()" style="cursor:pointer">
 <input type="image" src="modules/slideshow/images/next.gif" onclick="btnNextClick()" style="cursor:pointer">
-  </layer>
-  </ilayer>
+  </div>
+  </div>
   </td>
   <td style="cursor:hand" align="right">
   <a style="text-decoration:none" href="#" onClick="btnPauseClick(); hideMe(); return false;"><font color="#ffffff" size="4" face="arial"><b>X</b> </font></a>
   </td>
   </tr>
   <tr>
-  <td bgcolor="#FFFFFF" style="padding:0px" colspan="2" >
+  <td style="padding:0px" colspan="2" >
 <table border="0" cellpadding="0" cellspacing="0" >
 <tr>
 <td id="VU">
 <!-- Set your image URL and dimensions here //-->
 <img src="SS1.jpg" name='SlideShow' height="300"></td> 
-<td id="imgName" valign="top" style="padding:5px" bgcolor="#ddddee" width="150" />
+<td id="imgName" valign="top" style="padding:5px" width="150" />
 </tr>
 </table>
   </td>
-  </tr>
-  </table>
+  <tr><td colspan="2">
   <form id="myForm">
     <!--  <input id="cbx" name="cb1" type="checkbox" value="ON">Automatically restart slideshow 
     <br />
@@ -141,7 +124,7 @@ border:0px solid #7777aa;
 </script>
 	
     </form>
-    <!-- uncomment to show preview bar
+    <?php /* uncomment to show preview bar
   <table align="center">
   <tr>
       <td>
@@ -158,13 +141,10 @@ border:0px solid #7777aa;
         </td>
   </tr>
   </table>
-  -->
-</td>
-</tr>
-</table>
-</td>
-</tr>
-</table>
+  */ ?>
+    </td>
+    </tr>
+  </table>
 </div>
 
 <!-- END FLOATING SLIDESHOW CODE //--> 
