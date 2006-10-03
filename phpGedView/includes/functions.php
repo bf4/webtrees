@@ -980,74 +980,45 @@ function find_highlighted_object($pid, $indirec) {
 	//-- for the given media choose the
 	foreach($media as $i=>$row) {
 		if (displayDetailsById($row[0], 'OBJE') && !FactViewRestricted($row[0], $row[2])) {
+			$level=0;
+			$ct = preg_match("/(\d+) OBJE/", $row[3], $match);
+			if ($ct>0) $level = $match[1];
 			// Wrong test to match against.   if ($row[3] != null || $row[3] != ""){
 			if(strstr($row[3], "_PRIM ")) {
-				$thum = get_gedcom_value('_THUM', 1, $row[3]);
-				$prim = get_gedcom_value('_PRIM', 1, $row[3]);
-				$level=0;
-				$ct = preg_match("/(\d+) OBJE/", $row[3], $match);
-				if ($ct>0) $level = $match[1];
-				//-- always take _THUM Y objects
-				if ($thum=='Y') {
-					$object["file"] = check_media_depth($row[1]);
-					$object["thumb"] = $object["file"];
-					$object["level"] = $level;
-					$object["mid"] = $row[0];
-					break;
-				}
-				//-- take the first _PRIM Y object... _PRIM Y overrides first level 1 object
-				else if ($prim=='Y') {
-					if (!isset($object['prim']) || !isset($object['level']) || $object['level']>$level) {
-						$object["file"] = check_media_depth($row[1]);
-						$object["thumb"] = thumbnail_file($row[1], true, false, $pid);  
-						$object["prim"] = $prim;
-						$object["level"] = $level;
-						$object["mid"] = $row[0];
-					}
-				}
-				//-- take the first level 1 object if we don't already have one and it doesn't have _THUM N or _PRIM N
-				else if (empty($object['file']) && $level==1 && $thum!='N' && $prim!='N') {
-					$object["file"] = check_media_depth($row[1]);
-					$object["thumb"] = thumbnail_file($row[1], true, false, $pid);
-					$object["level"] = $level;
-					$object["mid"] = $row[0];
-				}
+				$thum = get_gedcom_value('_THUM', $level+1, $row[3]);
+				$prim = get_gedcom_value('_PRIM', $level+1, $row[3]);
 			}
 			else {
 				$thum = get_gedcom_value('_THUM', 1, $row[2]);
 				$prim = get_gedcom_value('_PRIM', 1, $row[2]);
-				$level=0;
-				$ct = preg_match("/(\d+) OBJE/", $row[3], $match);
-				if ($ct>0) $level = $match[1];
-				//-- always take _THUM Y objects
-				if ($thum=='Y') {
-					$object["file"] = check_media_depth($row[1]);
-					$object["thumb"] = $object["file"];
-					$object["level"] = $level;
-					$object["mid"] = $row[0];
-					break;
-				}
-				//-- take the first _PRIM Y object... _PRIM Y overrides first level 1 object
-				else if ($prim=='Y') {
-					if (!isset($object['prim']) || !isset($object['level']) || $object['level']>$level) {
-						$object["file"] = check_media_depth($row[1]);
-						$object["thumb"] = thumbnail_file($row[1], true, false, $pid);
-						$object["prim"] = $prim;
-						$object["level"] = $level;
-						$object["mid"] = $row[0];
-					}
-				}
-				//-- take the first level 1 object if we don't already have one and it doesn't have _THUM N or _PRIM N
-				else if (empty($object['file']) && $level==1 && $thum!='N' && $prim!='N') {
+			}
+			//-- always take _THUM Y objects
+			if ($thum=='Y') {
+				$object["file"] = check_media_depth($row[1]);
+				$object["thumb"] = $object["file"];
+				$object["level"] = $level;
+				$object["mid"] = $row[0];
+				break;
+			}
+			//-- take the first _PRIM Y object... _PRIM Y overrides first level 1 object
+			else if ($prim=='Y') {
+				if (!isset($object['prim']) || !isset($object['level']) || $object['level']>$level) {
 					$object["file"] = check_media_depth($row[1]);
 					$object["thumb"] = thumbnail_file($row[1], true, false, $pid);
+					$object["prim"] = $prim;
 					$object["level"] = $level;
 					$object["mid"] = $row[0];
 				}
 			}
+			//-- take the first level 1 object if we don't already have one and it doesn't have _THUM N or _PRIM N
+			else if (empty($object['file']) && $level==1 && $thum!='N' && $prim!='N') {
+				$object["file"] = check_media_depth($row[1]);
+				$object["thumb"] = thumbnail_file($row[1], true, false, $pid);
+				$object["level"] = $level;
+				$object["mid"] = $row[0];
+			}
 		}
 	}
-
 	return $object;
 }
 
