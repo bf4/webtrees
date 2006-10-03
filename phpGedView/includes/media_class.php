@@ -114,6 +114,26 @@ class Media extends GedcomRecord {
 	}
 
 	/**
+	 * get the _HEB or ROMN media title
+	 * @return string
+	 */
+	function getAddTitle() {
+		global $pgv_lang;
+
+		if (!$this->canDisplayDetails()) return "";
+		
+		$addtitle = get_gedcom_value("TITL:_HEB", 2, $this->gedrec);
+		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:_HEB", 1, $this->gedrec);
+		if (!empty($addtitle)) $addtitle = "<br />".$addtitle;
+		
+		$addtitle2 = get_gedcom_value("TITL:ROMN", 2, $this->gedrec);
+		if (empty($addtitle2)) $addtitle2 = get_gedcom_value("TITL:ROMN", 1, $this->gedrec);
+		
+		if (!empty($addtitle2)) $addtitle .= "<br />\n".$addtitle2;
+		return $addtitle;
+	}
+
+	/**
 	 * get the media sortable name
 	 * @return string
 	 */
