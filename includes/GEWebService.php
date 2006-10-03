@@ -42,30 +42,42 @@ function create_person($personRec = "", $personID = "") {
 			$num = 1;
 			$etGender = $eGender->appendChild($etGender);
 
-			if (($nameRec = get_sub_record(1, "1 NAME", $personRec)) != null) {
+if (($nameRec = get_sub_record(1, "1 NAME", $personRec)) != null) {
 				//creates name
 				$eName = $this->dom->createElement("name");
 				$eName->setAttribute("type", "Birth Name");
 
 				$givn = get_gedcom_value("GIVN", 2, $nameRec);
-				$eFirstName = $this->dom->createElement("first");
-				if (!isset ($givn))
+				$surn = get_gedcom_value("SURN", 2, $nameRec);
+				//-- if no GIVN/SURN sub records then get the names from the 1 NAME line
+				if (empty($surn) || empty($givn)) {
+					$name = get_gedcom_value("NAME", 1, $nameRec);
+					if (!empty($name)) {
+						$nparts = preg_split("~/~", $name);
+						$givn = trim($nparts[0]);
+						if (count($nparts)>1) $surn = trim($nparts[1]);
+						if (count($nparts)>2) $nnsfx = trim($nparts[2]);
+					}
+				}
+				if (empty($surn))
+					$surn = $pgv_lang["unknown"];
+				if (empty($givn))
 					$givn = $pgv_lang["unknown"];
+					
+				$eFirstName = $this->dom->createElement("first");
 				$etFirstName = $this->dom->createTextNode($givn);
 				$etFirstName = $eFirstName->appendChild($etFirstName);
 				$eFirstName = $eName->appendChild($eFirstName);
 
-				$surn = get_gedcom_value("SURN", 2, $nameRec);
 				$eLastName = $this->dom->createElement("last");
-				if (!isset ($surn))
-					$surn = $pgv_lang["unknown"];
 				$etLastName = $this->dom->createTextNode($surn);
 				$etLastName = $eLastName->appendChild($etLastName);
 				$eLastName = $eName->appendChild($eLastName);
 				$eName = $ePerson->appendChild($eName);
 
-				if (($nsfx = get_gedcom_value("NSFX", 2, $nameRec)) != null) {
+				if (!empty($nnsfx) || (($nsfx = get_gedcom_value("NSFX", 2, $nameRec)) != null)) {
 					$eSuffix = $this->dom->createElement("suffix");
+					if (empty($nsfx)) $nsfx = $nnsfx;
 					$etSuffix = $this->dom->createTextNode($nsfx);
 					$etSuffix = $eSuffix->appendChild($etSuffix);
 					$eSuffix = $eName->appendChild($eSuffix);
@@ -79,7 +91,7 @@ function create_person($personRec = "", $personID = "") {
 					$eTitle = $eName->appendChild($eTitle);
 				}
 
-				//retrieves the nick
+				//retrieves the nickname
 				if (($nick = get_gedcom_value("NICK", 2, $nameRec)) != null) {
 					$eNick = $this->dom->createElement("nick");
 					$etNick = $this->dom->createTextNode($nick);
@@ -95,7 +107,7 @@ function create_person($personRec = "", $personID = "") {
 				//creates SourceRef
 				$num = 1;
 				while (($nameSource = get_sub_record(2, "2 SOUR", $nameRec, $num)) != null) {
-					$this->create_sourceref($eName, $nameSource, 2,0);
+					$this->create_sourceref($eName, $nameSource, 2);
 					$num++;
 				}
 
