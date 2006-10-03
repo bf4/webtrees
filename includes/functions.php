@@ -1568,7 +1568,7 @@ function compare_fact_type($afact, $bfact) {
 	$factsort = array("BIRT"=>1, "FCOM"=>2, "CHR"=>3, "ADOP"=>4, "BAPM"=>5, "BARM"=>6, "BASM"=>6, "NATU"=>8, "EMIG"=>8, "IMMI"=>8, "MARR"=>7, "DIV"=>8, "RESI"=>8, "OCCU"=>8, "RETI"=>9, "DEAT"=>10, "BURI"=>11, "CREM"=>12, "BAPL"=>51, "ENDL"=>52, "SLGC"=>50, "SLGS"=>53, "CHAN"=>100);
 	if (isset($factsort[$afact]) || isset($factsort[$bfact])) {
 		if (!isset($factsort[$afact])) {
-			if (preg_match("/ASSO/", $arec)>0) $factsort[$afact] = 9;
+			if (preg_match("/ASSO/", $afact)>0) $factsort[$afact] = 9;
 			else {
 				//-- this line causes issues with the sorting algorithm
 //				if ($bfact=="DEAT" || $bfact=="BURI") return $bef;
@@ -1577,7 +1577,7 @@ function compare_fact_type($afact, $bfact) {
 			}
 		}
 		if (!isset($factsort[$bfact])) {
-			if (preg_match("/ASSO/", $brec)>0) $factsort[$bfact] = 9;
+			if (preg_match("/ASSO/", $bfact)>0) $factsort[$bfact] = 9;
 			else {
 //				if ($afact=="BIRT" || $afact=="CHR") return $aft;
 				if ($DEBUG) print " adeat bef";
