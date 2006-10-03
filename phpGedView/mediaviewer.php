@@ -80,6 +80,7 @@ else{
 			<tr>
 				<td align="center">
 					<?php
+					if ($controller->canDisplayDetails()) {
 					//Checks to see if the File exist in the system.
 					$filename = $controller->getLocalFilename();
 					if (preg_match("~://~", $filename) || file_exists($filename)){
@@ -114,6 +115,7 @@ else{
 						<img src="<?php print thumbnail_file($filename); ?>" border="0" width="100" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
 						<br /><span class="error"><?php print $pgv_lang["file_not_found"];?></span>
 						<?php
+					}
 					}
 					?>
 				</td>
