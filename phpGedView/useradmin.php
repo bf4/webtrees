@@ -387,6 +387,10 @@ if ($action=="edituser") {
 	?>
   </td>
   </tr>
+    <tr><td class="topbottombar" colspan="2">
+  	<input type="submit" tabindex="<?php $tab++; print $tab; ?>" value="<?php print $pgv_lang["update_user"]; ?>" />
+	<input type="button" tabindex="<?php $tab++; print $tab; ?>" value="<?php print $pgv_lang["back"];?>" onclick="window.location='useradmin.php?action=listusers&amp;sort=<?php print $sort;?>&amp;filter=<?php print $filter;?>&amp;usrlang=<?php print $usrlang;?>&amp;ged=<?php print $ged;?>';"/>
+	</td></tr>
     <tr>
       <td class="descriptionbox width20 wrap"><?php print_help_link("useradmin_username_help", "qm","username"); print $pgv_lang["username"];?></td>
       <td class="optionbox wrap"><input type="text" name="uusername" tabindex="<?php $tab++; print $tab; ?>" value="<?php print $user['username']?>" /></td>
@@ -853,6 +857,13 @@ if ($action == "createform") {
 		<h2><?php print $pgv_lang["add_user"];?></h2>
 		</td>
 	</tr>
+	<tr><td class="topbottombar" colspan="2">
+	<input type="hidden" name="pwrequested" value="" />
+	<input type="hidden" name="reg_timestamp" value="<?php print date("U");?>" />
+	<input type="hidden" name="reg_hashcode" value="" />
+	<input type="submit" tabindex="<?php $tab++; print $tab; ?>" value="<?php print $pgv_lang["create_user"]; ?>" />
+	<input type="button" tabindex="<?php $tab++; print $tab; ?>" value="<?php print $pgv_lang["back"];?>" onclick="window.location='useradmin.php';"/>
+	</td></tr>
 		<tr><td class="descriptionbox wrap width20"><?php print_help_link("useradmin_username_help", "qm", "username"); print $pgv_lang["username"];?></td><td class="optionbox wrap"><input type="text" name="uusername" tabindex="<?php $tab++; print $tab; ?>" /></td></tr>
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_firstname_help", "qm","firstname"); print $pgv_lang["firstname"];?></td><td class="optionbox wrap"><input type="text" name="ufirstname" tabindex="<?php $tab++; print $tab; ?>" size="50" /></td></tr>
 		<tr><td class="descriptionbox wrap"><?php print_help_link("useradmin_lastname_help", "qm", "lastname"); print $pgv_lang["lastname"];?></td><td class="optionbox wrap"><input type="text" name="ulastname" tabindex="<?php $tab++; print $tab; ?>" size="50" /></td></tr>
