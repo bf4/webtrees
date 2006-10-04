@@ -397,7 +397,9 @@ if ($ct>0){
 print "\n</div>\n";
 
 require_once("includes/functions_print_lists.php");
-print_media_table($medialist, $pgv_lang["media"]);
+$legend = $pgv_lang["media"];
+if ($filter) $legend .= " : &laquo;".$filter."&raquo;";
+print_media_table($medialist, $legend);
 
 // -- load up the slideshow code
 if (file_exists("modules/slideshow/slideshow.php")) include_once("modules/slideshow/slideshow.php");

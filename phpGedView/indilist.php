@@ -550,7 +550,8 @@ print "<br /><br />\n";
 if (!empty($surname) && $surname_sublist=="yes") $legend = str_replace("#surname#", check_NN($surname), $pgv_lang["indis_with_surname"]);
 else if (isset($alpha)) $legend = str_replace("#surname#", $alpha.".", $pgv_lang["indis_with_surname"]);
 else $legend = $pgv_lang["individuals"];
-if (isset($falpha)) $legend .= " $falpha.";
+if ($show_all_firstnames=="yes") $falpha = "@";
+if (isset($falpha) and $falpha!="@") $legend .= " ".$falpha.".";
 $legend = PrintReady($legend);
 if (isset($names)) print_indi_table($names, $legend);
 

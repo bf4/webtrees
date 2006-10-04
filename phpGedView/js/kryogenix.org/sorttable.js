@@ -291,7 +291,9 @@ function table_filter_alive(id) {
 	DCOL = -1;
 	var firstRow = table.rows[1];
 	for (var c=0;c<firstRow.cells.length;c++) {
-		if (firstRow.cells[c].getElementsByTagName("code").length) {
+		tcode = firstRow.cells[c].getElementsByTagName("code");
+		if (!tcode.length) continue;
+		if (ts_getInnerText(tcode[0]).length>7) {
 			if (BCOL<0) BCOL=c;
 			else {
 				DCOL=c;
