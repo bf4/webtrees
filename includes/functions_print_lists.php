@@ -24,7 +24,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id$
+ * @version $Id:$
  */
 if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
 	 print "Now, why would you want to do that. You're not hacking are you?";
@@ -313,7 +313,7 @@ function print_indi_table($datalist, $title="") {
 	echo $factarray["DEAT"]."&lt;=100</button> ";
 	echo "<br />";
 	echo $pgv_lang["year"];
-	echo " <input type=\"text\" size=\"3\" id=\"aliveyear\" value=\"".date('Y')."\" /> ";
+	echo " <input type=\"text\" size=\"4\" id=\"aliveyear\" value=\"".date('Y')."\" /> ";
 	echo "<button type=\"button\" class=\"alive_in_year\" onclick=\"return table_filter_alive('".$table_id."')\">";
 	echo $pgv_lang["alive_in_year"]."</button> ";
 	echo "<button type=\"button\" class=\"reset\" onclick=\"return table_filter('".$table_id."', '', '')\">";
@@ -366,7 +366,7 @@ function print_indi_table($datalist, $title="") {
 		echo "<code style=\"display:none\">".sprintf("%06d", $sosa+0)."</code>"; // store hidden sortable key
 		if ($sosa) echo "<a title=\"".$pgv_lang["relationship_to_me"]."\" href=\"relationship.php?pid1=".$rootid."&pid2=".$person->xref."\" class=\"list_item name2\">".$sosa."</a>";
 		echo "&nbsp;</td>";
-
+		
 		if ($person->isDead()) echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		else echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap alive\">";
 		if (isset($value["name"]) and $person->canDisplayName()) $name = $value["name"];
@@ -385,7 +385,7 @@ function print_indi_table($datalist, $title="") {
 		echo "&nbsp;</td>";
 
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
-		echo "<a href=\"".$person->getPlaceUrl($person->getBirthPlace())."\" class=\"list_item\">".$person->getPlaceShort($person->getBirthPlace())."</a>";
+		echo "<a href=\"".$person->getPlaceUrl($person->getBirthPlace())."\" class=\"list_item\">".PrintReady($person->getPlaceShort($person->getBirthPlace()))."</a>";
 		echo "&nbsp;</td>";
 
 		echo "<td class=\"list_value_wrap\">";
@@ -401,7 +401,7 @@ function print_indi_table($datalist, $title="") {
 		echo "&nbsp;</td>";
 
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
-		echo "<a href=\"".$person->getPlaceUrl($person->getDeathPlace())."\" class=\"list_item\">".$person->getPlaceShort($person->getDeathPlace())."</a>";
+		echo "<a href=\"".$person->getPlaceUrl($person->getDeathPlace())."\" class=\"list_item\">".PrintReady($person->getPlaceShort($person->getDeathPlace()))."</a>";
 		echo "&nbsp;</td>";
 
 		if ($SHOW_LAST_CHANGE) {
@@ -538,9 +538,8 @@ function print_fam_table($datalist, $title="") {
 		$sosa_w = array_search($wife->xref,$treeid);
 		echo "<code style=\"display:none\">".sprintf("%06d", max($sosa_h,$sosa_w)+0)."</code>"; // store hidden sortable key
 		if ($sosa_h) echo "<a title=\"".$pgv_lang["relationship_to_me"]."\" href=\"relationship.php?pid1=".$rootid."&pid2=".$husb->xref."\" class=\"list_item name2\">".$sosa_h."</a>";
-		echo "&nbsp;";
-		if ($sosa_w) echo "<a title=\"".$pgv_lang["relationship_to_me"]."\" href=\"relationship.php?pid1=".$rootid."&pid2=".$wife->xref."\" class=\"list_item name2\">".$sosa_w."</a>";
-		echo "</td>";
+		if ($sosa_w) echo "+<a title=\"".$pgv_lang["relationship_to_me"]."\" href=\"relationship.php?pid1=".$rootid."&pid2=".$wife->xref."\" class=\"list_item name2\">".$sosa_w."</a>";
+		echo "&nbsp;</td>";
 
 		if ($husb->isDead()) echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		else echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap alive\">";
@@ -570,7 +569,7 @@ function print_fam_table($datalist, $title="") {
 		echo "&nbsp;</td>";
 
 		echo "<td class=\"".$TEXT_DIRECTION."  list_value_wrap\">";
-		echo "<a href=\"".$family->getPlaceUrl($family->getMarriagePlace())."\" class=\"list_item\">".$family->getPlaceShort($family->getMarriagePlace())."</a>";
+		echo "<a href=\"".$family->getPlaceUrl($family->getMarriagePlace())."\" class=\"list_item\">".PrintReady($family->getPlaceShort($family->getMarriagePlace()))."</a>";
 		echo "&nbsp;</td>";
 
 		echo "<td class=\"list_value_wrap\">";
@@ -673,7 +672,7 @@ function print_sour_table($datalist, $title="") {
 		$name = $source->getSortableName();
 		echo "<a title=\"".$source->xref."\" href=\"".$source->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
 		echo "</td>";
-
+		
 		// alternate title in a new column
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		foreach ($name_subtags as $key=>$subtag) {
@@ -814,11 +813,9 @@ function print_media_table($datalist, $title="") {
 	echo "<th class=\"list_label rela\">#</th>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["TITL"]."</th>";
-	echo "<th class=\"list_label\">".$pgv_lang["media_linked"]."</th>";
-	echo "<th class=\"list_label\">".$pgv_lang["media_format"]."</th>";
-	echo "<th class=\"list_label\">".$pgv_lang["media_file_size"]."</th>";
-	echo "<th class=\"list_label\">Width</th>";
-	echo "<th class=\"list_label\">Height</th>";
+	echo "<th class=\"list_label\">".$pgv_lang["individuals"]."</th>";
+	echo "<th class=\"list_label\">".$pgv_lang["families"]."</th>";
+	echo "<th class=\"list_label\">".$pgv_lang["sources"]."</th>";
 	if ($SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
 	echo "</tr>\n";
 
@@ -835,34 +832,28 @@ function print_media_table($datalist, $title="") {
 		}
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		$name = $media->getSortableName();
-		echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item name2\" title=\"".$media->file."\">".PrintReady($name)."</a>";
+		echo "<a title=\"".$media->xref."\" href=\"".$media->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
+		echo "<br /><a href=\"".$media->getLinkUrl()."\">".basename($media->file)."</a>";
+		echo "<br />".$media->getFiletype();
+		echo "&nbsp;&nbsp;".$media->width."x".$media->height;
+		echo "&nbsp;&nbsp;".$media->getFilesize()."kB";
+		print_fact_notes("1 NOTE ".$media->getNote(),1);
 		echo "</td>";
 
-		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
-		foreach ($value["LINKS"] as $k=>$v) {
-		  if ($v=="INDI") $record = Person::getInstance($k);
-		  else if ($v=="FAM") $record = Family::getInstance($k);
-		  else if ($v=="SOUR") $record = Source::getInstance($k);
-		  else continue;
-			echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\" title=\"".$k."\">".PrintReady($record->getSortableName())."</a><br />";
+		foreach (array("INDI", "FAM", "SOUR") as $rectype) {
+			echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
+			$resu = array();
+			foreach ($value["LINKS"] as $k=>$v) {
+			  if ($v!=$rectype) continue;
+				$record = GedcomRecord::getInstance($k);
+				$txt = $record->getSortableName();
+				if ($SHOW_ID_NUMBERS) $txt .= " (".$k.")";
+				$resu[] = $txt;
+			}
+			sort($resu);
+			foreach ($resu as $txt) echo " &bull; <a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($txt)."</a><br />";
+			echo "</td>";
 		}
-		echo "</td>";
-
-		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item\" title=\"".$media->file."\">".$media->getFiletype()."</a>";
-		echo "</td>";
-
-		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item\" title=\"".$media->file."\">".$media->getFilesize()."</a>";
-		echo "</td>";
-
-		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item\" title=\"".$media->file."\">".$media->width."</a>";
-		echo "</td>";
-
-		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item\" title=\"".$media->file."\">".$media->height."</a>";
-		echo "</td>";
 
 		if ($SHOW_LAST_CHANGE) {
 			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
