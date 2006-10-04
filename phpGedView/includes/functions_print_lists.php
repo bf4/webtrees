@@ -366,7 +366,7 @@ function print_indi_table($datalist, $title="") {
 		echo "<code style=\"display:none\">".sprintf("%06d", $sosa+0)."</code>"; // store hidden sortable key
 		if ($sosa) echo "<a title=\"".$pgv_lang["relationship_to_me"]."\" href=\"relationship.php?pid1=".$rootid."&pid2=".$person->xref."\" class=\"list_item name2\">".$sosa."</a>";
 		echo "&nbsp;</td>";
-		
+
 		if ($person->isDead()) echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		else echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap alive\">";
 		if (isset($value["name"]) and $person->canDisplayName()) $name = $value["name"];
@@ -673,7 +673,7 @@ function print_sour_table($datalist, $title="") {
 		$name = $source->getSortableName();
 		echo "<a title=\"".$source->xref."\" href=\"".$source->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
 		echo "</td>";
-		
+
 		// alternate title in a new column
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		foreach ($name_subtags as $key=>$subtag) {
@@ -835,7 +835,7 @@ function print_media_table($datalist, $title="") {
 		}
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		$name = $media->getSortableName();
-		echo "<a title=\"".$media->xref."\" href=\"".$media->getLinkUrl()."\" class=\"list_item name2\" title=\"".$media->file."\">".PrintReady($name)."</a>";
+		echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item name2\" title=\"".$media->file."\">".PrintReady($name)."</a>";
 		echo "</td>";
 
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
@@ -863,7 +863,7 @@ function print_media_table($datalist, $title="") {
 		echo "<td class=\"list_value_wrap\">";
 		echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item\" title=\"".$media->file."\">".$media->height."</a>";
 		echo "</td>";
-		
+
 		if ($SHOW_LAST_CHANGE) {
 			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
 			echo "<code style=\"display:none\">".$media->getSortableLastchangeDate()."</code>"; // store hidden sortable datetime
