@@ -57,10 +57,6 @@ border:0px solid #7777aa;
 	width:	auto;
 }
 </style>
-<script type="text/javascript">
-	cssFile = "css/bluecurve/bluecurve.css";
-	document.write("<link type=\"text/css\" rel=\"StyleSheet\" href=\"" + cssFile + "\" />" );
-</script>
 <script type="text/javascript" src="modules/slideshow/js/slideshow.js"></script>
 <script type="text/javascript" src="modules/slideshow/js/range.js"></script>
 <script type="text/javascript" src="modules/slideshow/js/timer.js"></script>

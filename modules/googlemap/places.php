@@ -171,7 +171,7 @@ function outputLevel($parent, $level, $nofLevels) {
 
 $tables = $DBCONN->getListOf('tables');
 if (!in_array($TBLPREFIX."placelocation", $tables)) {
-    $sql = "CREATE TABLE ".$TBLPREFIX."placelocation (pl_id int(11) NOT NULL, pl_parent_id int(11) default NULL, pl_level int(11) default NULL, pl_place varchar(255) default NULL, pl_long varchar(30) default NULL, pl_lati varchar(30) default NULL, pl_zoom int(4) default NULL, pl_icon varchar(255) default NULL, PRIMARY KEY (pl_id));";
+    $sql = "CREATE TABLE ".$TBLPREFIX."placelocation (pl_id int NOT NULL, pl_parent_id int default NULL, pl_level int default NULL, pl_place varchar(255) default NULL, pl_long varchar(30) default NULL, pl_lati varchar(30) default NULL, pl_zoom int default NULL, pl_icon varchar(255) default NULL, PRIMARY KEY (pl_id));";
     $res = dbquery($sql);
     $sql = "CREATE INDEX pl_level ON ".$TBLPREFIX."placelocation (pl_level)";
     $res = dbquery($sql);
@@ -373,10 +373,10 @@ if ($action=="ImportGedcom") {
             else {
                 $parent_id = $row[0];
                 if (($row[1] == "0") && ($row[2] == "0")) {
-                    $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati=\"".$place["lati"]."\",pl_long=\"".$place["long"]."\" where pl_id=$parent_id LIMIT 1";
+                    $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati=\"".$place["lati"]."\",pl_long=\"".$place["long"]."\" where pl_id=$parent_id";
                     print $sql."<br/>";
                     if (userIsAdmin(getUserName())) {
-                        $res = dbquery($sql);
+                        $res = dbquery($sql, true, 1);
                     }
                 }
                 else {
@@ -543,16 +543,16 @@ if ($action=="ImportFile2") {
             else {
                 $parent_id = $row[0];
                 if ((isset($_POST["overwritedata"])) && ($i+1 == count($parent))) {
-                    $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati=\"".$place["lati"]."\",pl_long=\"".$place["long"]."\",pl_zoom=\"".$place["zoom"]."\",pl_icon=\"".$place["icon"]."\" where pl_id=$parent_id LIMIT 1";
+                    $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati=\"".$place["lati"]."\",pl_long=\"".$place["long"]."\",pl_zoom=\"".$place["zoom"]."\",pl_icon=\"".$place["icon"]."\" where pl_id=$parent_id";
                     if (userIsAdmin(getUserName())) {
-                        $res = dbquery($sql);
+                        $res = dbquery($sql, true, 1);
                     }
                 }
                 else {
                     if ((($row[1] == "0") || ($row[1] == null)) && (($row[2] == "0") || ($row[2] == null))) {
-                        $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati=\"".$place["lati"]."\",pl_long=\"".$place["long"]."\" where pl_id=$parent_id LIMIT 1";
+                        $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati=\"".$place["lati"]."\",pl_long=\"".$place["long"]."\" where pl_id=$parent_id";
                         if (userIsAdmin(getUserName())) {
-                            $res = dbquery($sql);
+                            $res = dbquery($sql, true, 1);
                         }
                     }
                     else {
@@ -560,9 +560,9 @@ if ($action=="ImportFile2") {
                         $parent_lati = $row[2];
                     }
                     if (($row[4] == "") || ($row[4] == null)) {
-                        $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_icon=\"".$place["icon"]."\",pl_long=\"".$place["long"]."\" where pl_id=$parent_id LIMIT 1";
+                        $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_icon=\"".$place["icon"]."\",pl_long=\"".$place["long"]."\" where pl_id=$parent_id";
                         if (userIsAdmin(getUserName())) {
-                            $res = dbquery($sql);
+                            $res = dbquery($sql, true, 1);
                         }
                     }
                 }
@@ -579,8 +579,8 @@ if ($action=="DeleteRecord") {
     $res = dbquery($sql);
     if ($res->numRows() == 0) {
         $res->free();
-        $sql = "DELETE FROM ".$TBLPREFIX."placelocation WHERE pl_id=".$deleteRecord." LIMIT 1";
-        $res = dbquery($sql);
+        $sql = "DELETE FROM ".$TBLPREFIX."placelocation WHERE pl_id=".$deleteRecord;
+        $res = dbquery($sql, true, 1);
     }
     else { ?>
     <table class="facts_table">

@@ -420,8 +420,9 @@ function find_media_record($rid, $gedfile='') {
 function find_first_person() {
 	global $GEDCOM, $TBLPREFIX, $GEDCOMS, $DBTYPE, $DBCONN;
 	$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."' ORDER BY i_id";
-	if ($DBTYPE!="sqlite") $sql.=" LIMIT 1";
-	$row = $DBCONN->getRow($sql);
+	$res = dbquery($sql,false,1);
+	$row = $res->fetchRow();
+	$res->free();
 	if (!DB::isError($row)) return $row[0];
 	else return "I1";
 }

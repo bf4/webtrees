@@ -451,8 +451,8 @@ function getGedcomStats() {
 
 	if (!isset($config["stat_long_life"]) || $config["stat_long_life"]=="yes") {
 		//-- get the person who lived the longest
-		$sql = "select death.d_year-birth.d_year as age, death.d_gid from ".$TBLPREFIX."dates as death, ".$TBLPREFIX."dates as birth where birth.d_gid=death.d_gid AND death.d_file='".$GEDCOMS[$GEDCOM]["id"]."' and birth.d_file=death.d_file AND birth.d_fact='BIRT' and death.d_fact='DEAT' AND birth.d_year>0 and death.d_year>0 and birth.d_type is null and death.d_type is null ORDER BY age DESC limit 1";
-		$tempsql = dbquery($sql);
+		$sql = "select death.d_year-birth.d_year as age, death.d_gid from ".$TBLPREFIX."dates as death, ".$TBLPREFIX."dates as birth where birth.d_gid=death.d_gid AND death.d_file='".$GEDCOMS[$GEDCOM]["id"]."' and birth.d_file=death.d_file AND birth.d_fact='BIRT' and death.d_fact='DEAT' AND birth.d_year>0 and death.d_year>0 and birth.d_type is null and death.d_type is null ORDER BY age DESC";
+		$tempsql = dbquery($sql, true, 1);
 		$res =& $tempsql;
 		$row =& $res->fetchRow();
 		$res->free();
@@ -472,9 +472,9 @@ function getGedcomStats() {
 	//TODO: print_list_family is not sutible for use here due to its output of HTML
 	/*if (!isset($config["stat_most_chil"]) || $config["stat_most_chil"]=="yes") {
 		//-- most children
-		$sql = "SELECT f_numchil, f_id FROM ".$TBLPREFIX."families WHERE f_file='".$GEDCOMS[$GEDCOM]["id"]."' ORDER BY f_numchil DESC LIMIT 10";
+		$sql = "SELECT f_numchil, f_id FROM ".$TBLPREFIX."families WHERE f_file='".$GEDCOMS[$GEDCOM]["id"]."' ORDER BY f_numchil DESC";
 		//print $sql;
-		$tempsql = dbquery($sql);
+		$tempsql = dbquery($sql, true, 10);
 		if (!DB::isError($tempsql)) {
 			$res =& $tempsql;
 			$row =& $res->fetchRow();
