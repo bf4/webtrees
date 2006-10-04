@@ -84,8 +84,8 @@ if ($cs>0){
 	if (count($source_hide)>0) print "  --  ".$pgv_lang["hidden"]." ".count($source_hide);
 }
 else print "<span class=\"warning\"><i>".$pgv_lang["no_results"]."</span>";
-%**/
 print "</td>\n\t\t</tr>\n\t</table>";
+%**/
 
 print "</div>";
 print "<br /><br />";
