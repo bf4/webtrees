@@ -100,12 +100,12 @@ if ($action=="updaterecord") {
     if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
     print $_POST["LONG_CONTROL"]."  ".$_POST["NEW_PLACE_LONG"]."  ".$_POST["NEW_PLACE_LATI"];
     if (($_POST["LONG_CONTROL"] == "") || ($_POST["NEW_PLACE_LONG"] == "") || ($_POST["NEW_PLACE_LATI"] == "")) {
-        $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_place=\"".$_POST["NEW_PLACE_NAME"]."\",pl_lati=\"\",pl_long=\"\",pl_zoom=\"".$_POST["NEW_ZOOM_FACTOR"]."\",pl_icon=\"".$_POST["icon"]."\" where pl_id=$placeid LIMIT 1";
+        $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_place=\"".$_POST["NEW_PLACE_NAME"]."\",pl_lati=\"\",pl_long=\"\",pl_zoom=\"".$_POST["NEW_ZOOM_FACTOR"]."\",pl_icon=\"".$_POST["icon"]."\" where pl_id=$placeid";
     } else {
-        $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_place=\"".$_POST["NEW_PLACE_NAME"]."\",pl_lati=\"".$_POST["LATI_CONTROL"][3].$_POST["NEW_PLACE_LATI"]."\",pl_long=\"".$_POST["LONG_CONTROL"][3].$_POST["NEW_PLACE_LONG"]."\",pl_zoom=\"".$_POST["NEW_ZOOM_FACTOR"]."\",pl_icon=\"".$_POST["icon"]."\" where pl_id=$placeid LIMIT 1";
+        $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_place=\"".$_POST["NEW_PLACE_NAME"]."\",pl_lati=\"".$_POST["LATI_CONTROL"][3].$_POST["NEW_PLACE_LATI"]."\",pl_long=\"".$_POST["LONG_CONTROL"][3].$_POST["NEW_PLACE_LONG"]."\",pl_zoom=\"".$_POST["NEW_ZOOM_FACTOR"]."\",pl_icon=\"".$_POST["icon"]."\" where pl_id=$placeid";
     }
     if (userIsAdmin(getUserName())) {
-        $res = dbquery($sql);
+        $res = dbquery($sql, true, 1);
     }
     if ($EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
     print "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();return false;\">".$pgv_lang["close_window"]."</a></div><br />\n";

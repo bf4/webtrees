@@ -6,7 +6,7 @@
 
 .dynamic-slider-control {
 	position:			relative;
-	background-color:	rgb(161,191,224);
+	/*background-color:	rgb(161,191,224);*/
 	-moz-user-focus:	normal;
 	-moz-user-select:	none;
 	cursor:				default;
@@ -56,7 +56,7 @@
 	font-size:			0.01mm;
 	overflow:			hidden;
 	border:				1px solid rgb(90,97,90);
-	background:			rgb(189,190,189);
+	/* background:			rgb(189,190,189); */
 	
 	behavior:			url("css/boxsizing.htc"); /* ie path bug */
 	box-sizing:			content-box;

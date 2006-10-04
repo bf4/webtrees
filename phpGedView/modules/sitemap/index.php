@@ -65,8 +65,8 @@ if ($action=="sendFiles") {
     }
 
     if (isset($indi_rec)) {
-        $sql = "SELECT i_id,i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file='".$index."' ORDER BY 'i_id' ASC LIMIT 0,20000";
-        $res = dbquery($sql);
+        $sql = "SELECT i_id,i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file='".$index."' ORDER BY 'i_id' ASC";
+        $res = dbquery($sql, true, 20000);
         while ($row =& $res->fetchRow()) {
             print "   <url>\n";
             print "      <loc>".$SERVER_URL."individual.php?pid=".$row[0]."&amp;ged=".$DBCONN->escapeSimple($gedcom_name)."</loc>\n";
@@ -84,8 +84,8 @@ if ($action=="sendFiles") {
     }
 
     if (isset($fam_rec)) {
-        $sql = "SELECT f_id,f_gedcom FROM ".$TBLPREFIX."families WHERE f_file='".$index."' ORDER BY 'f_id' ASC LIMIT 0,20000";
-        $res = dbquery($sql);
+        $sql = "SELECT f_id,f_gedcom FROM ".$TBLPREFIX."families WHERE f_file='".$index."' ORDER BY 'f_id' ASC";
+        $res = dbquery($sql, true, 20000);
         while ($row =& $res->fetchRow()) {
             print "   <url>\n";
             print "      <loc>".$SERVER_URL."family.php?famid=".$row[0]."&amp;ged=".$DBCONN->escapeSimple($gedcom_name)."</loc>\n";

@@ -713,6 +713,12 @@ function update_media($gid, $indirec, $update = false) {
  *
  * function that checks if the database exists and creates tables
  * automatically handles version updates
+ * - postgres does not support fields of type int(11) and
+ * with a similar construct
+ * - postgres does not like strings to be inserted into
+ * the db surrounded by double quotes - it tries to treat
+ * it as if it was the name of another column; the proper
+ * way is to surround it by single quotes.
  */
 function setup_database() {
 	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE;
