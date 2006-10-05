@@ -389,11 +389,11 @@ while (true) {
 		if (strstr($_SERVER["REQUEST_URI"], $VAR."=")) break;
 	}
 
-	// Check for $LANGUAGE variable override, except from search engines
-	//  Later, will fine tune to allow search engines multi-language support
-	//  Currently, search engines get default language of gedcom only.
-	if ((isset($_REQUEST["NEWLANGUAGE"])) && (empty($SEARCH_SPIDER))) {
-		if (empty($language_settings[$_REQUEST["NEWLANGUAGE"]]["pgv_lang_use"])) break;
+	// Check for $LANGUAGE variable override
+	//		Don't let incoming request change to an unsupported or inactive language
+	if (isset($_REQUEST["NEWLANGUAGE"])) {
+		if (empty($pgv_lang_use[$_REQUEST["NEWLANGUAGE"]])) break;
+		if (!$pgv_lang_use[$_REQUEST["NEWLANGUAGE"]]) break;
 	}
 
 	$configOverride = false;
