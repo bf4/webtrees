@@ -237,9 +237,10 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			   print "</td>";
 		  }
 		  $align = "";
-		  if (!empty($event)) {
-		  	if ($TEXT_DIRECTION=="rtl" && !hasRTLText($event)) $align=" align=\"left\"";
-		  	if ($TEXT_DIRECTION=="ltr" && $USE_RTL_FUNCTIONS && !hasLTRText($event)) $align=" align=\"right\"";
+		  $ct = preg_match("/2 DATE (.+)/", $factrec, $match);
+		  if (!empty($event) && $ct==0) {	
+		  	if ($TEXT_DIRECTION=="rtl" && !hasRTLText($event) && hasLTRText($event) && $event!="N" && $event!="Y") $align=" align=\"left\"";
+		  	if ($TEXT_DIRECTION=="ltr" && $USE_RTL_FUNCTIONS && !hasLTRText($event) && hasRTLText($event)) $align=" align=\"right\"";		  	
 		  }
 		  print "<td class=\"optionbox $styleadd wrap\" $align>";
 		  //print "<td class=\"facts_value facts_value$styleadd\">";
@@ -1019,9 +1020,9 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 				$text = PrintReady($text)."<br />\n";
 			   }
 		  $align = "";
-		  if (!empty($text)) {
-		  	if ($TEXT_DIRECTION=="rtl" && !hasRTLText($text)) $align=" align=\"left\"";
-		  	if ($TEXT_DIRECTION=="ltr" && $USE_RTL_FUNCTIONS && !hasLTRText($text)) $align=" align=\"right\"";
+    	  if (!empty($text)) {	
+		  	if ($TEXT_DIRECTION=="rtl" && !hasRTLText($text) && hasLTRText($text)) $align=" align=\"left\"";
+		  	if ($TEXT_DIRECTION=="ltr" && $USE_RTL_FUNCTIONS && !hasLTRText($text) && hasRTLText($text)) $align=" align=\"right\"";
 		  }
 		  print " </td>\n<td class=\"optionbox $styleadd wrap\" $align>";
 		  if (showFactDetails("NOTE", $pid)) {
