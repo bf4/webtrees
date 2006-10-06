@@ -517,7 +517,7 @@ function check_media_structure() {
 function get_medialist($currentdir = false, $directory = "", $linkonly = false, $random = false) {
 	global $MEDIA_DIRECTORY_LEVELS, $BADMEDIA, $thumbdir, $TBLPREFIX, $MEDIATYPE, $DBCONN;
 	global $level, $dirs, $ALLOW_CHANGE_GEDCOM, $GEDCOM, $GEDCOMS, $MEDIA_DIRECTORY;
-	global $MEDIA_EXTERNAL, $medialist, $pgv_changes;
+	global $MEDIA_EXTERNAL, $medialist, $pgv_changes, $DBTYPE;
 
 	// Retrieve the gedcoms to search in
 	$sgeds = array ();
@@ -546,7 +546,9 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	$myDir = str_replace($MEDIA_DIRECTORY, "", $directory);
 	$sql = "SELECT * FROM " . $TBLPREFIX . "media WHERE m_gedfile='" . $GEDCOMS[$GEDCOM]["id"] . "'";
 	if ($random == true) {
-		$sql .= " ORDER BY RAND()";
+		if ($DBTYPE=='pgsql') $sql .= " ORDER BY RANDOM()";
+		else if ($DBTYPE=='pgsql') $sql .= " ORDER BY NEWID()";
+		else $sql .= " ORDER BY RAND()";
 		$res = & dbquery($sql, true, 5);
 	} else {
 		$sql .= " AND (m_file LIKE '%" . $DBCONN->escapeSimple($myDir) . "%' OR m_file LIKE '%://%') ORDER BY m_id desc";
