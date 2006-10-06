@@ -1436,6 +1436,10 @@ function linkMedia($mediaid, $linktoid, $level=1) {
 		$gedrec = find_gedcom_record($linktoid);
 	}
 
+	//-- check if we are re-editing an unaccepted link that is not already in the DB
+	$ct = preg_match("/1 OBJE @$mediaid@/", $gedrec);
+	if ($ct>0) return false;
+	
 	if ($gedrec) {
 		// Changed to match format of all other data adds.
 		//$mediarec = "1 OBJE @".$mediaid."@\r\n";

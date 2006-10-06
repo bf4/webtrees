@@ -100,6 +100,8 @@ if (!isset ($import_existing))
 if (!isset ($skip_cleanup))
 	$skip_cleanup = false;
 if (!isset($utf8convert)) $utf8convert = "no";
+if (isset($_REQUEST['keepmedia']) && $_REQUEST['keepmedia']=='yes') $keepmedia=true;
+else $keepmedia = false;
 
 // NOTE: GEDCOM was uploaded
 if ($check == "upload") {
@@ -732,6 +734,18 @@ if ($import == true) {
 		print "<option value=\"no\" selected=\"selected\">".$pgv_lang["no"]."</option>\n</select>";
 	}
 	print "</td></tr>";
+	?>
+	<tr>
+		<td class="descriptionbox wrap width20">
+			<?php print_help_link("keep_media_help", "qm", "keep_media"); print $pgv_lang["keep_media"];?></td>
+		<td class="optionbox">
+			<select name="keepmedia">
+				<option value="no"><?php print $pgv_lang["no"]; ?></option>
+				<option value="yes"><?php print $pgv_lang["yes"]; ?></option>
+			</select>
+		</td>
+	</tr>
+	<?php
 
 	// NOTE: change XREF to RIN, REFN, or Don't change
 	print "<tr><td class=\"descriptionbox wrap\">";
@@ -887,7 +901,7 @@ if ($startimport == "true") {
 		$_SESSION["resumed"] = 0;
 		if (file_exists($INDEX_DIRECTORY.basename($GEDCOM_FILE).".new"))
 			unlink($INDEX_DIRECTORY.basename($GEDCOM_FILE).".new");
-		empty_database($FILE);
+		empty_database($FILE, $keepmedia);
 		//-- erase any of the changes
 		foreach ($pgv_changes as $cid => $changes) {
 			if ($changes[0]["gedcom"] == $ged)

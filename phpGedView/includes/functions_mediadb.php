@@ -1790,8 +1790,8 @@ function PrintMediaLinks($links, $size = "small") {
 }
 
 function get_media_id_from_file($filename){
-	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS;
-	$dbq = "select m_media from ".$TBLPREFIX."media where m_file LIKE \"%".$filename."\"";
+	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS, $DBCONN;
+	$dbq = "select m_media from ".$TBLPREFIX."media where m_file LIKE '%".$DBCONN->escapeSimple($filename)."'";
 	$dbr = dbquery($dbq);
 	$mid = $dbr->fetchRow();
 	return $mid[0];
@@ -1799,7 +1799,7 @@ function get_media_id_from_file($filename){
 //returns an array of rows from the database containing the Person ID's for the people associated with this picture
 function get_media_relations($mid){
 	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS, $GEDCOM;
-	$dbq = "SELECT mm_gid FROM ".$TBLPREFIX."media_mapping WHERE mm_media=\"".$mid."\" AND mm_gedfile='".$GEDCOMS[$GEDCOM]['id']."'";
+	$dbq = "SELECT mm_gid FROM ".$TBLPREFIX."media_mapping WHERE mm_media='".$mid."' AND mm_gedfile='".$GEDCOMS[$GEDCOM]['id']."'";
 	$dbr = dbquery($dbq);
 	while($row = $dbr->fetchRow()) {
 		if ($row[0] != $mid){
@@ -1813,7 +1813,7 @@ function get_media_relations($mid){
 //Basically calls the get_media_relations method but it uses a file name rather than a media id.
 function get_media_relations_with_file_name($filename){
 global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS, $GEDCOM;
-	$dbq = "select m_media from ".$TBLPREFIX."media where m_file=\"".$filename."\" and m_gedfile=\"".$GEDCOMS[$GEDCOM]['id']."\"";
+	$dbq = "select m_media from ".$TBLPREFIX."media where m_file='".$filename."' and m_gedfile='".$GEDCOMS[$GEDCOM]['id']."'";
 	$dbr = dbquery($dbq);
 	if (isset($dbr)){
 		while($result = $dbr->fetchRow()) {
@@ -1832,7 +1832,7 @@ function picture_clip($person_id, $image_id, $filename, $thumbDir)
 {
 	global $GEDCOMS,$GEDCOM,$TBLPREFIX,$MEDIA_DIRECTORY;
 	// This gets the gedrec
-	$query = "select m_gedrec from ".$TBLPREFIX."media where m_media=\"".$image_id."\" AND m_gedfile=".$GEDCOMS[$GEDCOM]['id'];
+	$query = "select m_gedrec from ".$TBLPREFIX."media where m_media='".$image_id."' AND m_gedfile=".$GEDCOMS[$GEDCOM]['id'];
 	$res = dbquery($query);
 	$result = $res->fetchRow();
 	//Get the location of the file, and then make a location for the clipped image

@@ -505,13 +505,13 @@ if ($action == "update") {
 		//-- look for the old record media in the file
 		//-- if the old media record does not exist that means it was 
 		//-- generated at import and we need to append it
-		$oldrec = find_record_in_file($pid);
-		if (!empty($oldrec)) {
+		//$oldrec = find_record_in_file($pid);
+		//if (!empty($oldrec)) {
 			if (replace_gedrec($pid, $newrec)) AddToChangeLog("Media ID ".$pid." successfully updated.");
-		} else {
-			$pid = append_gedrec($newrec);
-			if ($pid) AddToChangeLog("Media ID ".$pid." successfully added.");
-		}
+		//} else {
+		//	$pid = append_gedrec($newrec);
+		//	if ($pid) AddToChangeLog("Media ID ".$pid." successfully added.");
+		//}
     	
 		if ($pid && $linktoid!="") {
 			$link = linkMedia($pid, $linktoid, $level);
