@@ -198,11 +198,12 @@ function ts_sort_caseinsensitive(a,b) {
 	aa = ts_getInnerText(a.cells[SORT_COLUMN_INDEX]).toLowerCase();
 	bb = ts_getInnerText(b.cells[SORT_COLUMN_INDEX]).toLowerCase();
 
-	// PGV: get hidden sortkey if exists
-	akey = a.cells[SORT_COLUMN_INDEX].getElementsByTagName("code");
-	if (akey.length) aa = ts_getInnerText(akey[0]);
-	bkey = b.cells[SORT_COLUMN_INDEX].getElementsByTagName("code");
-	if (bkey.length) bb = ts_getInnerText(bkey[0]);
+	// PGV: get "title" sortkey if exists
+	akey = a.cells[SORT_COLUMN_INDEX].getElementsByTagName("a");
+	if (akey.length && akey[0].title) aa = akey[0].title;
+	bkey = b.cells[SORT_COLUMN_INDEX].getElementsByTagName("a");
+	if (bkey.length && bkey[0].title) bb = bkey[0].title;
+
 
 	// PGV: clean UTF8 special chars before sorting
 	aa = strclean(aa);
@@ -291,9 +292,10 @@ function table_filter_alive(id) {
 	DCOL = -1;
 	var firstRow = table.rows[1];
 	for (var c=0;c<firstRow.cells.length;c++) {
-		tcode = firstRow.cells[c].getElementsByTagName("code");
-		if (!tcode.length) continue;
-		if (ts_getInnerText(tcode[0]).length>7) {
+		key = firstRow.cells[c].getElementsByTagName("a");
+		// <a href="url" title="YYYY-MM-DD HH:MM:SS" ...
+		// is "title" a date sortkey ?
+		if (key.length && key[0].title && key[0].title.substr(4,1)=='-') {
 			if (BCOL<0) BCOL=c;
 			else {
 				DCOL=c;
@@ -306,10 +308,10 @@ function table_filter_alive(id) {
 	// apply filter
 	for (var r=1;r<table.rows.length;r++) {
 		row = table.rows[r];
-		bcode = row.cells[BCOL].getElementsByTagName("code");
-		dcode = row.cells[DCOL].getElementsByTagName("code");
-		byear = ts_getInnerText(bcode[0]).substring(0,4);
-		dyear = ts_getInnerText(dcode[0]).substring(0,4);
+		key = row.cells[BCOL].getElementsByTagName("a");
+		byear = key[0].title.substring(0,4);
+		key = row.cells[DCOL].getElementsByTagName("a");
+		dyear = key[0].title.substring(0,4);
 		if (byear>0 && dyear>0 && (year<byear || dyear<year)) disp="none";
 		else {
 			disp="table-row";
