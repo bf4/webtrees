@@ -24,7 +24,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id:$
+ * @version $Id$
  */
 if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
 	 print "Now, why would you want to do that. You're not hacking are you?";
@@ -264,8 +264,9 @@ function print_list_repository($key, $value, $useli=true) {
  * print a sortable table of individuals
  *
  * @param array $datalist contain individuals that were extracted from the database.
+ * @param string $legend optional legend of the fieldset
  */
-function print_indi_table($datalist, $title="") {
+function print_indi_table($datalist, $legend="", $option="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
 	$name_subtags = array("", "_HEB", "ROMN", "_AKA");
@@ -275,13 +276,9 @@ function print_indi_table($datalist, $title="") {
 	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
 <?php
 	require_once("includes/person_class.php");
-	if (empty($title)) $title=$pgv_lang["individuals"];
-	echo "<fieldset><legend>".$title."</legend>";
+	if (empty($legend)) $legend=$pgv_lang["individuals"];
+	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
-	//-- root for sosa
-	$rootid = check_rootid(clean_input(""));
-	require_once("includes/functions_charts.php");
-	$treeid = ancestry_array($rootid,16);
 	//-- filter buttons
 	$person = new Person("");
 	echo "<button type=\"button\" class=\"sexM\" title=\"".$pgv_lang["male"]
@@ -323,9 +320,9 @@ function print_indi_table($datalist, $title="") {
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
 	echo "<tr>";
 	echo "<th class=\"list_label rela\">#</th>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
-	echo "<th class=\"list_label rela\">Sosa</th>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
 	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
+	if ($option=="sosa") echo "<th class=\"list_label\">Sosa</th>";
 	echo "<th class=\"list_label\">".$factarray["BIRT"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["children"]."</th>";
@@ -342,7 +339,7 @@ function print_indi_table($datalist, $title="") {
 	$n = 1;
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
-			$person = Person::getInstance($key);
+			$person = Person::getInstance($value); // from ancestry chart
 			unset ($value);
 		}
 		else {
@@ -352,7 +349,10 @@ function print_indi_table($datalist, $title="") {
 			if (isset($value["gedcom"])) $person = new Person($value["gedcom"]); // from source.php
 			else $person = Person::getInstance($gid);
 		}
-		//if (!$person->canDisplayName()) continue;
+		if (is_null($person)) continue;
+		if ($person->getSex()=="M") $box = "fan_chart_box";
+		if ($person->getSex()=="F") $box = "fan_chart_boxF";
+		
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
 
@@ -360,29 +360,38 @@ function print_indi_table($datalist, $title="") {
 			echo "<td class=\"list_value_wrap rela\">";
 			echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$person->xref."</a></td>";
 		}
-
-		echo "<td class=\"list_value_wrap rela\">";
-		$sosa = array_search($person->xref,$treeid);
-		echo "<code style=\"display:none\">".sprintf("%06d", $sosa+0)."</code>"; // store hidden sortable key
-		if ($sosa) echo "<a title=\"".$pgv_lang["relationship_to_me"]."\" href=\"relationship.php?pid1=".$rootid."&pid2=".$person->xref."\" class=\"list_item name2\">".$sosa."</a>";
-		echo "&nbsp;</td>";
 		
 		if ($person->isDead()) echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		else echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap alive\">";
 		if (isset($value["name"]) and $person->canDisplayName()) $name = $value["name"];
 		else $name = $person->getSortableName();
-		echo "<a title=\"".$person->xref."\" href=\"".$person->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		echo $person->getSexImage();
-		foreach ($name_subtags as $key=>$subtag) {
+		foreach ($name_subtags as $k=>$subtag) {
 			$addname = $person->getSortableName($subtag);
 			if (!empty($addname) and $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$person->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 		}
 		echo "</td>";
 
+		if ($option=="sosa") {
+			echo "<td class=\"list_value_wrap\">";
+			$sosa = $key;
+			$rootid = $datalist[1];
+			echo "<a href=\"relationship.php?pid1=".$rootid."&amp;pid2=".$person->xref."\"".
+			" title=\"".$pgv_lang["relationship_chart"]."\"".
+			" class=\"list_item name2\">".$sosa."</a>";
+			echo "</td>";
+		}
+
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		echo "<code style=\"display:none\">".$person->getSortableBirthDate()."</code>"; // store hidden sortable datetime
-		if (!$person->best) echo "<a href=\"".$person->getDateUrl($person->bdate)."\" class=\"list_item\">".get_changed_date($person->getBirthDate())."</a>";
-		echo "&nbsp;</td>";
+		$sortkey = $person->getSortableBirthDate();
+		$txt = get_changed_date($person->getBirthDate());
+		if (empty($txt)) $txt = $pgv_lang["yes"];
+		echo "<a href=\"".$person->getDateUrl($person->bdate)."\"".
+		" title=\"".$sortkey."\"".
+		" class=\"list_item\">".$txt."</a>";
+		//echo get_date_url($person->bdate);
+		echo "</td>";
 
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		echo "<a href=\"".$person->getPlaceUrl($person->getBirthPlace())."\" class=\"list_item\">".PrintReady($person->getPlaceShort($person->getBirthPlace()))."</a>";
@@ -393,12 +402,15 @@ function print_indi_table($datalist, $title="") {
 		echo "</td>";
 
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		echo "<code style=\"display:none\">".$person->getSortableDeathDate()."</code>"; // store hidden sortable datetime
-		if ($person->isDead()) {
-			if ($person->dest) echo "<span class=\"list_item\">".$pgv_lang["yes"]."</span>";
-			else echo "<a href=\"".$person->getDateUrl($person->ddate)."\" class=\"list_item\">".get_changed_date($person->getDeathDate())."</a>";
-		}
-		echo "&nbsp;</td>";
+		$sortkey = $person->getSortableDeathDate();
+		$txt = get_changed_date($person->getDeathDate());
+		if ($person->dest) $txt = $pgv_lang["yes"];
+		if (!$person->isDead()) $txt = "&nbsp;";
+		echo "<a href=\"".$person->getDateUrl($person->ddate)."\"".
+		" title=\"".$sortkey."\"".
+		" class=\"list_item\">".$txt."</a>";
+		//echo get_date_url($person->ddate);
+		echo "</td>";
 
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		echo "<a href=\"".$person->getPlaceUrl($person->getDeathPlace())."\" class=\"list_item\">".PrintReady($person->getPlaceShort($person->getDeathPlace()))."</a>";
@@ -406,9 +418,10 @@ function print_indi_table($datalist, $title="") {
 
 		if ($SHOW_LAST_CHANGE) {
 			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-			echo "<code style=\"display:none\">".$person->getSortableLastchangeDate()."</code>"; // store hidden sortable datetime
 			$timestamp = get_changed_date($person->getLastchangeDate())." ".get_gedcom_value("DATE:TIME", 2, $person->getLastchangeRecord());
-			echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$timestamp."</a>";
+			echo "<a href=\"".$person->getLinkUrl()."\"".
+			" title=\"".$person->getSortableLastchangeDate()."\"".
+			" class=\"list_item\">".$timestamp."</a>";
 			echo "&nbsp;</td>";
 		}
 
@@ -444,8 +457,9 @@ function print_indi_table($datalist, $title="") {
  * print a sortable table of families
  *
  * @param array $datalist contain families that were extracted from the database.
+ * @param string $legend optional legend of the fieldset
  */
-function print_fam_table($datalist, $title="") {
+function print_fam_table($datalist, $legend="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
 	$name_subtags = array("", "_HEB", "ROMN", "_AKA");
@@ -455,13 +469,9 @@ function print_fam_table($datalist, $title="") {
 	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
 <?php
 	require_once("includes/family_class.php");
-	if (empty($title)) $title=$pgv_lang["families"];
-	echo "<fieldset><legend>".$title."</legend>";
+	if (empty($legend)) $legend=$pgv_lang["families"];
+	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
-	//-- root for sosa
-	$rootid = check_rootid(clean_input(""));
-	require_once("includes/functions_charts.php");
-	$treeid = ancestry_array($rootid,16);
 	//-- filter buttons
 	echo "<button type=\"button\" class=\"both_alive\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'N')\">";
 	echo $pgv_lang["both_alive"]."</button> ";
@@ -492,9 +502,10 @@ function print_fam_table($datalist, $title="") {
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
 	echo "<tr>";
 	echo "<th class=\"list_label rela\">#</th>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
-	echo "<th class=\"list_label rela\">Sosa</th>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">FAM</th>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
 	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["spouse"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["MARR"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
@@ -509,7 +520,7 @@ function print_fam_table($datalist, $title="") {
 	$n = 1;
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
-			$family = Family::getInstance($key);
+			$family = Family::getInstance($value); // from ancestry chart
 			unset($value);
 		}
 		else {
@@ -523,7 +534,6 @@ function print_fam_table($datalist, $title="") {
 		if (is_null($husb)) $husb = new Person('');
 		$wife = $family->getWife();
 		if (is_null($wife)) $wife = new Person('');
-		//if (!$husb->canDisplayName() and !$wife->canDisplayName()) continue;
 
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
@@ -533,40 +543,49 @@ function print_fam_table($datalist, $title="") {
 			echo "</td>";
 		}
 
-		echo "<td class=\"list_value_wrap rela\">";
-		$sosa_h = array_search($husb->xref,$treeid);
-		$sosa_w = array_search($wife->xref,$treeid);
-		echo "<code style=\"display:none\">".sprintf("%06d", max($sosa_h,$sosa_w)+0)."</code>"; // store hidden sortable key
-		if ($sosa_h) echo "<a title=\"".$pgv_lang["relationship_to_me"]."\" href=\"relationship.php?pid1=".$rootid."&pid2=".$husb->xref."\" class=\"list_item name2\">".$sosa_h."</a>";
-		if ($sosa_w) echo "+<a title=\"".$pgv_lang["relationship_to_me"]."\" href=\"relationship.php?pid1=".$rootid."&pid2=".$wife->xref."\" class=\"list_item name2\">".$sosa_w."</a>";
-		echo "&nbsp;</td>";
+		if ($SHOW_ID_NUMBERS) {
+			echo "<td class=\"list_value_wrap rela\">";
+			echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".$husb->xref."</a>";
+			echo "</td>";
+		}
 
 		if ($husb->isDead()) echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		else echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap alive\">";
 		$name = $husb->getSortableName();
-		echo "<a title=\"".$husb->xref."\" href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($husb->xref) echo $husb->getSexImage();
-		foreach ($name_subtags as $key=>$subtag) {
+		foreach ($name_subtags as $k=>$subtag) {
 			$addname = $husb->getSortableName($subtag);
 			if (!empty($addname) and $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 		}
 		echo "</td>";
 
+		if ($SHOW_ID_NUMBERS) {
+			echo "<td class=\"list_value_wrap rela\">";
+			echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".$wife->xref."</a>";
+			echo "</td>";
+		}
+		
 		if ($wife->isDead()) echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		else echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap alive\">";
 		$name = $wife->getSortableName();
-		echo "<a title=\"".$wife->xref."\" href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($wife->xref) echo $wife->getSexImage();
-		foreach ($name_subtags as $key=>$subtag) {
+		foreach ($name_subtags as $k=>$subtag) {
 			$addname = $wife->getSortableName($subtag);
 			if (!empty($addname) and $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 		}
 		echo "</td>";
 
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		echo "<code style=\"display:none\">".$family->getSortableMarriageDate()."</code>"; // store hidden sortable datetime
-		if (!$family->marr_est) echo "<a href=\"".$family->getDateUrl($family->marr_date)."\" class=\"list_item\">".get_changed_date($family->getMarriageDate())."</a>";
-		echo "&nbsp;</td>";
+		$sortkey = $family->getSortableMarriageDate();
+		if (!$family->marr_est) $txt = get_changed_date($family->getMarriageDate());
+		if (empty($txt) and !empty($family->marr_rec)) $txt = $pgv_lang["yes"];
+		echo "<a href=\"".$family->getDateUrl($family->marr_date)."\"".
+		" title=\"".$sortkey."\"".
+		" class=\"list_item\">".$txt."</a>";
+		//echo get_date_url($family->marr_date);
+		echo "</td>";
 
 		echo "<td class=\"".$TEXT_DIRECTION."  list_value_wrap\">";
 		echo "<a href=\"".$family->getPlaceUrl($family->getMarriagePlace())."\" class=\"list_item\">".PrintReady($family->getPlaceShort($family->getMarriagePlace()))."</a>";
@@ -578,9 +597,10 @@ function print_fam_table($datalist, $title="") {
 
 		if ($SHOW_LAST_CHANGE) {
 			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-			echo "<code style=\"display:none\">".$family->getSortableLastchangeDate()."</code>"; // store hidden sortable datetime
 			$timestamp = get_changed_date($family->getLastchangeDate())." ".get_gedcom_value("DATE:TIME", 2, $family->getLastchangeRecord());
-			echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".$timestamp."</a>";
+			echo "<a href=\"".$family->getLinkUrl()."\"".
+			" title=\"".$family->getSortableLastchangeDate()."\"".
+			" class=\"list_item\">".$timestamp."</a>";
 			echo "&nbsp;</td>";
 		}
 
@@ -619,8 +639,9 @@ function print_fam_table($datalist, $title="") {
  * print a sortable table of sources
  *
  * @param array $datalist contain sources that were extracted from the database.
+ * @param string $legend optional legend of the fieldset
  */
-function print_sour_table($datalist, $title="") {
+function print_sour_table($datalist, $legend="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
 	$name_subtags = array("_HEB", "ROMN");
@@ -629,15 +650,15 @@ function print_sour_table($datalist, $title="") {
 	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
 <?php
 	require_once("includes/source_class.php");
-	if (empty($title)) $title=$pgv_lang["sources"];
-	echo "<fieldset><legend>".$title."</legend>";
+	if (empty($legend)) $legend=$pgv_lang["sources"];
+	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
 	echo "<tr>";
 	echo "<th class=\"list_label rela\">#</th>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">SOUR</th>";
 	echo "<th class=\"list_label\">".$factarray["TITL"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["TITL"]."2</th>";
 	echo "<th class=\"list_label\">".$factarray["AUTH"]."</th>";
@@ -651,7 +672,7 @@ function print_sour_table($datalist, $title="") {
 	$n = 1;
 	foreach ($datalist as $key => $value) {
 		if (!is_array($value)) {
-			$source = Source::getInstance($key);
+			$source = Source::getInstance($value);
 			unset($value);
 		}
 		else {
@@ -670,15 +691,15 @@ function print_sour_table($datalist, $title="") {
 
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		$name = $source->getSortableName();
-		echo "<a title=\"".$source->xref."\" href=\"".$source->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
+		echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
 		echo "</td>";
 		
 		// alternate title in a new column
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
-		foreach ($name_subtags as $key=>$subtag) {
+		foreach ($name_subtags as $k=>$subtag) {
 			$addname = $source->getSortableName($subtag);
 			if (!empty($addname) and $addname!=$name) {
-				echo "<a title=\"".$subtag."\" href=\"".$source->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a><br />";
+				echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a><br />";
 			}
 		}
 		echo "&nbsp;</td>";
@@ -703,9 +724,10 @@ function print_sour_table($datalist, $title="") {
 
 		if ($SHOW_LAST_CHANGE) {
 			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-			echo "<code style=\"display:none\">".$source->getSortableLastchangeDate()."</code>"; // store hidden sortable datetime
 			$timestamp = get_changed_date($source->getLastchangeDate())." ".get_gedcom_value("DATE:TIME", 2, $source->getLastchangeRecord());
-			echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".$timestamp."</a>";
+			echo "<a href=\"".$source->getLinkUrl()."\"".
+			" title=\"".$source->getSortableLastchangeDate()."\"".
+			" class=\"list_item\">".$timestamp."</a>";
 			echo "&nbsp;</td>";
 		}
 
@@ -719,8 +741,9 @@ function print_sour_table($datalist, $title="") {
  * print a sortable table of repositories
  *
  * @param array $datalist contain repositories that were extracted from the database.
+ * @param string $legend optional legend of the fieldset
  */
-function print_repo_table($datalist, $title="") {
+function print_repo_table($datalist, $legend="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
 	$name_subtags = array("_HEB", "ROMN");
@@ -729,15 +752,15 @@ function print_repo_table($datalist, $title="") {
 	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
 <?php
 	require_once("includes/repository_class.php");
-	if (empty($title)) $title=$pgv_lang["repos_found"];
-	echo "<fieldset><legend>".$title."</legend>";
+	if (empty($legend)) $legend=$pgv_lang["repos_found"];
+	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
 	echo "<tr>";
 	echo "<th class=\"list_label rela\">#</th>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">REPO</th>";
 	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["sources"]."</th>";
 	if ($SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
@@ -747,7 +770,7 @@ function print_repo_table($datalist, $title="") {
 	$n = 1;
 	foreach ($datalist as $key => $value) {
 		if (!is_array($value)) {
-			$repo = Repository::getInstance($key);
+			$repo = Repository::getInstance($value);
 			unset($value);
 		}
 		else {
@@ -765,8 +788,8 @@ function print_repo_table($datalist, $title="") {
 		}
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		$name = $repo->getSortableName();
-		echo "<a title=\"".$repo->xref."\" href=\"".$repo->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
-		foreach ($name_subtags as $key=>$subtag) {
+		echo "<a href=\"".$repo->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
+		foreach ($name_subtags as $k=>$subtag) {
 			$addname = $repo->getSortableName($subtag);
 			if (!empty($addname) and $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$repo->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 		}
@@ -778,9 +801,10 @@ function print_repo_table($datalist, $title="") {
 
 		if ($SHOW_LAST_CHANGE) {
 			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-			echo "<code style=\"display:none\">".$repo->getSortableLastchangeDate()."</code>"; // store hidden sortable datetime
 			$timestamp = get_changed_date($repo->getLastchangeDate())." ".get_gedcom_value("DATE:TIME", 2, $repo->getLastchangeRecord());
-			echo "<a href=\"".$repo->getLinkUrl()."\" class=\"list_item\">".$timestamp."</a>";
+			echo "<a href=\"".$repo->getLinkUrl()."\"".
+			" title=\"".$repo->getSortableLastchangeDate()."\"".
+			" class=\"list_item\">".$timestamp."</a>";
 			echo "&nbsp;</td>";
 		}
 
@@ -794,8 +818,9 @@ function print_repo_table($datalist, $title="") {
  * print a sortable table of media objects
  *
  * @param array $datalist contain media objects that were extracted from the database.
+ * @param string $legend optional legend of the fieldset
  */
-function print_media_table($datalist, $title="") {
+function print_media_table($datalist, $legend="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
 ?>
@@ -803,15 +828,15 @@ function print_media_table($datalist, $title="") {
 	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
 <?php
 	require_once("includes/media_class.php");
-	if (empty($title)) $title=$pgv_lang["media"];
-	echo "<fieldset><legend>".$title."</legend>";
+	if (empty($legend)) $legend=$pgv_lang["media"];
+	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
 	echo "<tr>";
 	echo "<th class=\"list_label rela\">#</th>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">OBJE</th>";
 	echo "<th class=\"list_label\">".$factarray["TITL"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["individuals"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["families"]."</th>";
@@ -832,7 +857,7 @@ function print_media_table($datalist, $title="") {
 		}
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		$name = $media->getSortableName();
-		echo "<a title=\"".$media->xref."\" href=\"".$media->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
+		echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
 		echo "<br /><a href=\"".$media->getLinkUrl()."\">".basename($media->file)."</a>";
 		echo "<br />".$media->getFiletype();
 		echo "&nbsp;&nbsp;".$media->width."x".$media->height;
@@ -851,15 +876,16 @@ function print_media_table($datalist, $title="") {
 				$resu[] = $txt;
 			}
 			sort($resu);
-			foreach ($resu as $txt) echo " &bull; <a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($txt)."</a><br />";
+			foreach ($resu as $txt) echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady("&bull; ".$txt)."</a><br />";
 			echo "</td>";
 		}
 
 		if ($SHOW_LAST_CHANGE) {
 			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-			echo "<code style=\"display:none\">".$media->getSortableLastchangeDate()."</code>"; // store hidden sortable datetime
 			$timestamp = get_changed_date($media->getLastchangeDate())." ".get_gedcom_value("DATE:TIME", 2, $media->getLastchangeRecord());
-			echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item\">".$timestamp."</a>";
+			echo "<a href=\"".$media->getLinkUrl()."\"".
+			" title=\"".$media->getSortableLastchangeDate()."\"".
+			" class=\"list_item\">".$timestamp."</a>";
 			echo "&nbsp;</td>";
 		}
 
@@ -907,14 +933,15 @@ function print_changes_table($datalist) {
 
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		$name = $record->getSortableName();
-		echo "<a title=\"".$record->xref."\" href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($record->type=="INDI") echo $record->getSexImage();
 		echo "</td>";
 
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap \">";
-		echo "<code style=\"display:none\">".$record->getSortableLastchangeDate()."</code>"; // store hidden sortable datetime
 		$timestamp = get_changed_date($record->getLastchangeDate())." ".get_gedcom_value("DATE:TIME", 2, $record->getLastchangeRecord());
-		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".$timestamp."</a>";
+		echo "<a href=\"".$record->getLinkUrl()."\"".
+		" title=\"".$record->getSortableLastchangeDate()."\"".
+		" class=\"list_item\">".$timestamp."</a>";
 		echo "&nbsp;</td>";
 
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap \">";
