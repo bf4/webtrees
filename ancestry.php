@@ -110,21 +110,16 @@ if ($view != "preview") {
 	else print "0\" onclick=\"document.people.show_cousins.value='1';\"";
 	print " />";
 	print $pgv_lang["show_cousins"];
-	?>
-	</td>
-	<td rowspan="2" class="optionbox">
-	<?php
-	print "<input type=\"radio\" name=\"chart_style\" value=\"2\"";
+
+	print "<br /><input type=\"radio\" name=\"chart_style\" value=\"2\"";
 	if ($controller->chart_style == "2") print " checked=\"checked\" ";
 	print " />".$pgv_lang["individual_list"];
 	print "<br /><input type=\"radio\" name=\"chart_style\" value=\"3\"";
 	if ($controller->chart_style == "3") print " checked=\"checked\" ";
 	print " />".$pgv_lang["family_list"];
-
 	?>
 	</td>
 
-	
 	<!-- // NOTE: submit -->
 	<td rowspan="2" class="facts_label03">
 	<input type="submit" value="<?php print $pgv_lang["view"] ?>" />

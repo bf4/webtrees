@@ -308,8 +308,13 @@ class GedcomRecord {
 	function getDateUrl($gedcom_date) {
 		global $GEDCOM;
 		$pdate = parse_date($gedcom_date);
-		if ($pdate[0]["year"]==0) return "javascript:;";
-		$url = "calendar.php?action=year&amp;day=".$pdate[0]["day"]."&amp;month=".$pdate[0]["month"]."&amp;year=".$pdate[0]["year"]."&amp;ged=".$GEDCOM;
+		$y = $pdate[0]["year"];
+		$m = $pdate[0]["mon"]; if ($m=="") $m=1;
+		$d = $pdate[0]["day"]; if ($d=="") $d=1;
+		if ($y=="") return "javascript:;";
+		if ($y>3000) list($m, $d, $y) = explode("/", JDToGregorian(JewishToJD($m, $d, $y)));
+		$ged_months = array("", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC");
+		$url = "calendar.php?action=year&amp;day=".$d."&amp;month=".$ged_months[$m]."&amp;year=".$y."&amp;ged=".$GEDCOM;
 		return $url;
 	}
 
