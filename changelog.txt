@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Added keep media links option when uploading replacement GEDCOMs (yalnifj)
  - Reorganized language files based on user access level (Neumont/yalnifj)
  - Added [ 1567427 ] AJAX slideshow controls to the Random media block (yalnifj)
  - Added [ 1567427 ] AJAX framework to portal blocks so that blocks can refresh themselves without refreshing the entire page (yalnifj)

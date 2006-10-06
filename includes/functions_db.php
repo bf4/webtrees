@@ -64,8 +64,17 @@ function &dbquery($sql, $show_error=true, $count=0) {
 		if ($DBCONN->getCode()!=-24) print $DBCONN->getCode()." ".$DBCONN->getMessage();
 		return $DBCONN;
 	}
-//print $TOTAL_QUERIES."-".$sql."<br />\n";
-//debug_print_backtrace()."<br /><br />";
+	
+	/**
+	 * Debugging code for multi-database support
+	 */
+	if (preg_match('/[^\\\]"/', $sql)>0) {
+		pgv_error_handler(2, "<span class=\"error\">Double quote query: $sql</span><br>","","");
+	}
+	if (preg_match('/LIMIT \d/', $sql)>0) {
+		pgv_error_handler(2,"<span class=\"error\">Limit query error, use dbquery \$count parameter instead: $sql</span><br>","","");
+	}
+	
 	if ($count == 0)
 		$res =& $DBCONN->query($sql);
 	else
@@ -277,7 +286,7 @@ function find_gedcom_record($pid, $gedfile = "") {
 
 	//-- unable to guess the type so look in all the tables
 	if (empty($gedrec)) {
-		$sql1 = "select mm_gedrec from ".$TBLPREFIX."media_mapping where mm_gid =\"".$pid."\"";
+		$sql1 = "select mm_gedrec from ".$TBLPREFIX."media_mapping where mm_gid ='".$pid."'";
 		$res1 = dbquery($sql1);
 		if ($res1->numRows() != 0){
 			$row1 =& $res1->fetchRow();
@@ -295,11 +304,13 @@ function find_gedcom_record($pid, $gedfile = "") {
 			$otherlist[$pid]["gedfile"] = $row[1];
 			return $row[0];
 		}
+		$res->free();
 		$gedrec = find_person_record($pid, $gedfile);
 		if (empty($gedrec)) $gedrec = find_family_record($pid, $gedfile);
 		if (empty($gedrec)) $gedrec = find_source_record($pid, $gedfile);
 		if (empty($gedrec)) $gedrec = find_media_record($pid, $gedfile);
 		}
+		$res1->free();
 	}
 	return $gedrec;
 }
@@ -2567,8 +2578,6 @@ function get_top_surnames($num) {
  * @param string $table 	the name of the table
  * @param string $field		the field to get the next number for
  * @return int the new id
-JFileChooser chooser = new JFileChooser();
-			//chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
  */
 function get_next_id($table, $field) {
 	global $TBLPREFIX, $TABLE_IDS;

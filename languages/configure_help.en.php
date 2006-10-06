@@ -27,6 +27,7 @@ if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["keep_media_help"]			= "~#pgv_lang[keep_media]#~<br /><br />When uploading a replacement GEDCOM do you want to delete all of the media links.  Normally you would leave this option set to \"No.\"<br /><br />You would set this option to \"Yes\" if you are exporting your GEDCOM from a genealogy program that does not support the export of media object (OBJE) records and you do not want to lose all of the media references when you upload a new GEDCOM.  Selecting \"Yes\" on this option will keep your media tables in place and will add the media links back into the GEDCOM when it is imported.<br /><br />";
 $pgv_lang["USE_MEDIA_VIEWER"]			= "Use Media Viewer";
 $pgv_lang["USE_MEDIA_VIEWER_help"]		= "~#pgv_lang[USE_MEDIA_VIEWER]#~<br /><br />With this value set to true, when users click on images in your site they will be taken to the media view page introduced in v4.1.  The media view page shows the details of an image and allows you to edit the details of the image. <br /><br />Setting this value to false will provide the old behavior from versions of PhpGedView prior to v4.1 where clicking on an image opens up the full resolution image in a new popup window.<br /><br />";
 $pgv_lang["SHOW_SPIDER_TAGLINE"]		= "Show spider tagline";
@@ -109,8 +110,6 @@ $pgv_lang["CHART_BOX_TAGS_help"]		= "~#pgv_lang[CHART_BOX_TAGS]#~<br /><br />Thi
 
 
 //-- CONFIGURE FILE MESSAGES
-$pgv_lang["standard_conf"]		= "Standard Configuration Options";
-$pgv_lang["advanced_conf"]		= "Advanced Configuration Options";
 $pgv_lang["gedcom_conf"]		= "GEDCOM Basics";
 $pgv_lang["media_conf"]			= "Multimedia";
 $pgv_lang["accpriv_conf"]		= "Access and Privacy";

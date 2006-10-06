@@ -1074,6 +1074,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	$ct = preg_match_all($regexp, $gedrec, $match, PREG_SET_ORDER);
 	for($i=0; $i<$ct; $i++) {
 		$current_objes[$match[$i][1]] = true;
+		$obje_links[$match[$i][1]] = $match[$i][0];
 	}
 
 	$media_found = false;
@@ -1127,6 +1128,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 			if ($et>0) $ext = substr(trim($ematch[1]),1);
 			$row['m_ext'] = $ext;
 			$row['mm_gid'] = $pid;
+			$row['mm_gedrec'] = $rowm["mm_gedrec"];
 			$rows['new'] = $row;
 			$rows['old'] = $rowm;
 			unset($current_objes[$rowm['m_media']]);
@@ -1165,6 +1167,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 				if ($et>0) $ext = substr(trim($ematch[1]),1);
 				$row['m_ext'] = $ext;
 				$row['mm_gid'] = $pid;
+				$row['mm_gedrec'] = get_sub_record($obje_links[$media_id]{0}, $obje_links[$media_id], $gedrec);
 				$res = print_main_media_row('normal', $row, $pid);
 				$media_found = $media_found || $res;
 			}
@@ -1183,6 +1186,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 			if ($et>0) $ext = substr(trim($ematch[1]),1);
 			$row['m_ext'] = $ext;
 			$row['mm_gid'] = $pid;
+			$row['mm_gedrec'] = get_sub_record($obje_links[$media_id]{0}, $obje_links[$media_id], $gedrec);
 			$res = print_main_media_row('new', $row, $pid);
 			$media_found = $media_found || $res;
 		}
@@ -1347,13 +1351,19 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		}
 		print "<br />\n";
 		$prim = get_gedcom_value("_PRIM", 2, $rowm["mm_gedrec"]);
-		if (!empty($prim)) print "<span class=\"label\">".$factarray["_PRIM"].":</span> ";
+		if (empty($prim)) $prim = get_gedcom_value("_PRIM", 1, $rowm["m_gedrec"]);
+		if (!empty($prim)) {
+			print "<span class=\"label\">".$factarray["_PRIM"].":</span> ";
 		if ($prim=="Y") print $pgv_lang["yes"]; else print $pgv_lang["no"];
 		print "<br />\n";
+		}
 		$thum = get_gedcom_value("_THUM", 2, $rowm["mm_gedrec"]);
-		if (!empty($thum)) print "<span class=\"label\">".$factarray["_THUM"].":</span> ";
+		if (empty($thum)) $thum = get_gedcom_value("_THUM", 1, $rowm["m_gedrec"]);
+		if (!empty($thum)) {
+			print "<span class=\"label\">".$factarray["_THUM"].":</span> ";
 		if ($thum=="Y") print $pgv_lang["yes"]; else print $pgv_lang["no"];
 		print "<br />\n";
+		}
 		print_fact_sources($rowm["m_gedrec"], 1);
 		print_fact_sources($rowm["mm_gedrec"], 2);
 		print_fact_notes($rowm["m_gedrec"], 1);

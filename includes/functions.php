@@ -3118,6 +3118,7 @@ function id_type($id) {
 	else if (substr($id, 0, $source_length) == $SOURCE_ID_PREFIX) return "SOUR";
 	else if (substr($id, 0, $repo_length) == $REPO_ID_PREFIX) return "REPO";
 	else if (substr($id, 0, $media_length) == $MEDIA_ID_PREFIX) return "OBJE";
+	else if (substr($id, 0, 1) == 'M') return "OBJE";
 	else return "";
 }
 

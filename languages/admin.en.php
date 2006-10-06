@@ -30,6 +30,7 @@ if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["keep_media"]				= "Keep media links";
 $pgv_lang["files_in_backup"]		= "Files included in this backup";
 $pgv_lang["created_remotelinks"]	= "Successfully created <i>Remotelinks</i> table.";
 $pgv_lang["created_remotelinks_fail"] 	= "Unable to create <i>Remotelinks</i> table.";

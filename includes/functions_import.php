@@ -590,7 +590,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
  */
 function update_media($gid, $indirec, $update = false) {
 	global $GEDCOMS, $FILE, $TBLPREFIX, $DBCONN, $MEDIA_ID_PREFIX, $media_count, $found_ids;
-	global $zero_level_media, $fpnewged, $objelist, $MAX_IDS;
+	global $zero_level_media, $fpnewged, $objelist, $MAX_IDS, $keepmedia;
 
 	if (!isset ($media_count))
 		$media_count = 0;
@@ -598,8 +598,16 @@ function update_media($gid, $indirec, $update = false) {
 		$found_ids = array ();
 	if (!isset ($zero_level_media))
 		$zero_level_media = false;
-	if (!$update && !isset ($MAX_IDS["OBJE"]))
-		$MAX_IDS["OBJE"] = 1;
+	if (!$update && !isset ($MAX_IDS["OBJE"])) {
+		if (!$keepmedia) $MAX_IDS["OBJE"] = 1;
+		else {
+			$sql = "SELECT ni_id FROM ".$TBLPREFIX."nextid WHERE ni_type='OBJE' AND ni_gedfile='".$GEDCOMS[$FILE]['id']."'";
+			$res = dbquery($sql);
+			$row =& $res->fetchRow();
+			$MAX_IDS["OBJE"] = $row[0];
+			$res->free();
+		}
+	}
 
 //		print substr($indirec, 0, 15)."<br />\n";
 	//-- handle level 0 media OBJE seperately
@@ -639,12 +647,20 @@ function update_media($gid, $indirec, $update = false) {
 		return $indirec;
 	}
 
+	if ($keepmedia) {
+		$sql = "SELECT mm_media, mm_gedrec FROM ".$TBLPREFIX."media_mapping WHERE mm_gid='".$gid."' AND mm_gedfile='".$GEDCOMS[$FILE]['id']."'";
+		$res = dbquery($sql);
+		$old_linked_media = array();
+		while($row =& $res->fetchRow()) {
+			$old_linked_media[] = $row;
+		}
+		$res->free();
+	}
+
 	//-- check to see if there are any media records
 	//-- if there aren't any media records then don't look for them just return
 	$pt = preg_match("/\d OBJE/", $indirec, $match);
-	if ($pt == 0)
-		return $indirec;
-
+	if ($pt > 0) {
 	//-- go through all of the lines and replace any local
 	//--- OBJE to referenced OBJEs
 	$newrec = "";
@@ -706,6 +722,16 @@ function update_media($gid, $indirec, $update = false) {
 		$objlevel = 0;
 		$inobj = false;
 	}
+	}
+	else $newrec = $indirec;
+	
+	if ($keepmedia) {
+		$newrec = trim($newrec)."\r\n";
+		foreach($old_linked_media as $i=>$row) {
+			$newrec .= trim($row[1])."\r\n";
+		}
+	}
+	
 	return $newrec;
 }
 /**
@@ -1301,8 +1327,9 @@ function create_nextid_table() {
  *
  * deletes all of the imported data about a gedcom from the database
  * @param string $FILE	the gedcom to remove from the database
+ * @param boolean $keepmedia	Whether or not to keep media and media links in the tables
  */
-function empty_database($FILE) {
+function empty_database($FILE, $keepmedia=false) {
 	global $TBLPREFIX, $DBCONN, $GEDCOMS;
 
 	$FILE = $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]);
@@ -1330,14 +1357,30 @@ function empty_database($FILE) {
 	$sql = "DELETE FROM " . $TBLPREFIX . "dates WHERE d_file='$FILE'";
 	$res = dbquery($sql);
 
+	if (!$keepmedia) {
 	$sql = "DELETE FROM " . $TBLPREFIX . "media WHERE m_gedfile='$FILE'";
 	$res = dbquery($sql);
 
 	$sql = "DELETE FROM " . $TBLPREFIX . "media_mapping WHERE mm_gedfile='$FILE'";
 	$res = dbquery($sql);
+	}
+	else {
+		//-- make sure that we keep the correct IDs for media
+		$sql = "SELECT ni_id FROM ".$TBLPREFIX."nextid WHERE ni_type='OBJE' AND ni_gedfile='".$FILE."'";
+		$res =& dbquery($sql);
+		if ($res->numRows() > 0) {
+			$row =& $res->fetchRow();
+			$num = $row[0];
+		}
+		$res->free();
+	}
 
 	$sql = "DELETE FROM " . $TBLPREFIX . "nextid WHERE ni_gedfile='$FILE'";
 	$res = dbquery($sql);
+	if ($keepmedia && isset($num)) {
+		$sql = "INSERT INTO ".$TBLPREFIX."nextid VALUES('".$DBCONN->escapeSimple($num-1)."', 'OBJE', '".$FILE."')";
+		$res2 = dbquery($sql);
+	}
 	
 	$sql = "DELETE FROM ".$TBLPREFIX."soundex WHERE sx_file='$FILE'";
 	$res = dbquery($sql);

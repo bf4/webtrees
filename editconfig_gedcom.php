@@ -880,8 +880,8 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["media_conf"]."\" onclick=\"expan
 	<tr>
 		<td class="descriptionbox wrap"><?php print_help_link("USE_MEDIA_VIEWER_help", "qm", "USE_MEDIA_VIEWER"); print $pgv_lang["USE_MEDIA_VIEWER"];?></td>
 		<td class="optionbox"><select name="NEW_USE_MEDIA_VIEWER" tabindex="<?php $i++; print $i?>" onfocus="getHelp('USE_MEDIA_VIEWER_help');">
-				<option value="yes" <?php if ($USE_THUMBS_MAIN) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$USE_THUMBS_MAIN) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+				<option value="yes" <?php if ($USE_MEDIA_VIEWER) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$USE_MEDIA_VIEWER) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 			</select>
 		</td>
 	</tr>
