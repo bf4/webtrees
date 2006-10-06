@@ -254,6 +254,7 @@ class Family extends GedcomRecord {
 		$this->marr_type = get_sub_record(2, "2 TYPE", $this->marr_rec);
 		$this->div_rec = trim(get_sub_record(1, "1 DIV", $this->gedrec));
 		//-- if no date estimate from births
+		/** FIXME
 		if (!empty($this->marr_rec) and empty($this->marr_date)) {
 			if (!is_null($this->husb)) $h=$this->husb->getBirthYear(); else $h=0;
 			if (!is_null($this->wife)) $w=$this->wife->getBirthYear(); else $w=0;
@@ -262,7 +263,7 @@ class Family extends GedcomRecord {
 				$this->marr_est=true;
 				$this->marr_date="AFT ".($myear+16); // MARR > BIRT+16
 			}
-		}
+		}**/
 	}
 
 	/**
@@ -309,8 +310,9 @@ class Family extends GedcomRecord {
 	 * @return string the marriage date in sortable format YYYY-MM-DD HH:MM
 	 */
 	function getSortableMarriageDate() {
-		if (!$this->disp) return "";
+		if (!$this->disp) return "0000-00-01";
 		if (empty($this->marr_date)) $this->_parseMarriageRecord();
+		if (empty($this->marr_rec)) return "0000-00-00";
 		$pdate = parse_date($this->marr_date);
 		$y = $pdate[0]["year"];
 		$m = $pdate[0]["mon"]; if ($m=="") $m=1;

@@ -90,16 +90,15 @@ if ($view != "preview") {
 	<?php
 	if ($controller->chart_style == "0") print " checked=\"checked\" ";
 	print "onclick=\"toggleStatus('cousins');";
-	if ($controller->chart_style != "1") print " document.people.chart_style.value='1';";
+	//if ($controller->chart_style != "1") print " document.people.chart_style.value='1';";
 	print "\" />".$pgv_lang["chart_list"];
 	print "<br /><input type=\"radio\" name=\"chart_style\" value=\"1\"";
 	if ($controller->chart_style == "1") print " checked=\"checked\" ";
 	print "onclick=\"toggleStatus('cousins');";
-	if ($controller->chart_style != "1") print " document.people.chart_style.value='0';"; 
-	print "\""?> />
-	<?php print $pgv_lang["chart_booklet"];?>
+	//if ($controller->chart_style != "1") print " document.people.chart_style.value='0';";
+	print "\" />".$pgv_lang["chart_booklet"];
+	?>
 
-	
 		<!-- // NOTE: show cousins -->
 	<br />
 	<?php
@@ -110,7 +109,19 @@ if ($view != "preview") {
 	if ($controller->show_cousins) print "1\" checked=\"checked\" onclick=\"document.people.show_cousins.value='0';\"";
 	else print "0\" onclick=\"document.people.show_cousins.value='1';\"";
 	print " />";
-	print $pgv_lang["show_cousins"];?>
+	print $pgv_lang["show_cousins"];
+	?>
+	</td>
+	<td rowspan="2" class="optionbox">
+	<?php
+	print "<input type=\"radio\" name=\"chart_style\" value=\"2\"";
+	if ($controller->chart_style == "2") print " checked=\"checked\" ";
+	print " />".$pgv_lang["individual_list"];
+	print "<br /><input type=\"radio\" name=\"chart_style\" value=\"3\"";
+	if ($controller->chart_style == "3") print " checked=\"checked\" ";
+	print " />".$pgv_lang["family_list"];
+
+	?>
 	</td>
 
 	
@@ -158,7 +169,16 @@ if ($view != "preview") {
 </td></tr></table>
 
 <?php
-if ($controller->chart_style) {
+//-- list
+if ($controller->chart_style==0) {
+	$pidarr=array();
+	print "<ul style=\"list-style: none; display: block;\" id=\"ancestry_chart".($TEXT_DIRECTION=="rtl" ? "_rtl" : "") ."\">\r\n";
+	$controller->print_child_ascendancy($controller->rootid, 1, $OLD_PGENS);
+	print "</ul>";
+	print "<br />";
+}
+//-- booklet
+if ($controller->chart_style==1) {
 	// first page : show indi facts
 	print_pedigree_person($controller->rootid, 2, false, 1);
 	// expand the layer
@@ -187,12 +207,27 @@ END;
 		}
 	}
 }
-else {
-	$pidarr=array();
-	print "<ul style=\"list-style: none; display: block;\" id=\"ancestry_chart".($TEXT_DIRECTION=="rtl" ? "_rtl" : "") ."\">\r\n";
-	$controller->print_child_ascendancy($controller->rootid, 1, $OLD_PGENS);
-	print "</ul>";
-	print "<br />";
+//-- Individual list
+if ($controller->chart_style==2) {
+	require_once("includes/functions_print_lists.php");
+	$treeid = ancestry_array($controller->rootid);
+	echo "<div class=\"center\">";
+	print_indi_table($treeid, $pgv_lang["ancestry_chart"]." : ".PrintReady($controller->name), "sosa");
+	echo "</div>";
+}
+//-- Family list
+if ($controller->chart_style==3) {
+	require_once("includes/functions_print_lists.php");
+	$treeid = ancestry_array($controller->rootid);
+	$famlist = array();
+	foreach ($treeid as $p=>$pid) {
+	  $person = Person::getInstance($pid);
+		if (is_null($person)) continue;
+	  foreach ($person->getChildFamilyIds() as $f=>$famc) $famlist[] = $famc;
+	}
+	echo "<div class=\"center\">";
+	print_fam_table(array_unique($famlist), $pgv_lang["ancestry_chart"]." : ".PrintReady($controller->name));
+	echo "</div>";
 }
 
 print_footer();

@@ -296,7 +296,7 @@ class Person extends GedcomRecord {
 	 * @return string the birth date in sortable format YYYY-MM-DD HH:MM
 	 */
 	function getSortableBirthDate() {
-		if (!$this->disp) return "";
+		if (!$this->disp) return "0000-00-00";
 		if (empty($this->bdate)) $this->_parseBirthDeath();
 		$pdate = parse_date($this->bdate);
 		$y = $pdate[0]["year"];
@@ -352,7 +352,7 @@ class Person extends GedcomRecord {
 	 * @return string the death date in sortable format YYYY-MM-DD HH:MM
 	 */
 	function getSortableDeathDate() {
-		if (!$this->disp) return "";
+		if (!$this->disp) return "0000-00-00";
 		if (empty($this->ddate)) $this->_parseBirthDeath();
 		$pdate = parse_date($this->ddate);
 		$y = $pdate[0]["year"];
