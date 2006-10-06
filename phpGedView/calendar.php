@@ -32,6 +32,7 @@
  * load the configuration and create the context
  */
 require("config.php");
+require_once("includes/functions_print_lists.php");
 require("includes/adodb-time.inc.php");
 
 if (empty($day)) $day = adodb_date("j");
@@ -962,6 +963,7 @@ if (($action=="today") || ($action=="year")) {
 	}
 
 	// Print the day/year list(s)
+	/**%
 	if (!empty($text_indi) || !empty($text_fam) || $count_private_indi>0 || $count_private_fam>0) {
 		print "\n\t\t<table class=\"center $TEXT_DIRECTION\">\n\t\t<tr>";
 		if (!empty($text_indi) || ($count_private_indi>0)) {
@@ -1043,6 +1045,16 @@ if (($action=="today") || ($action=="year")) {
 		print $pgv_lang["no_results"];
 		print "</i><br />\n\t\t</td></tr>";
 	}
+	%**/
+	$legend = $pgv_lang["individuals"];
+	if ($action=="today") $legend .= " : ".$day." ".$pgv_lang[$month];
+	if ($action=="year") $legend .= " : ".$year;
+	print_indi_table($myindilist, $legend);
+	$legend = $pgv_lang["families"];
+	if ($action=="today") $legend .= " : ".$day." ".$pgv_lang[$month];
+	if ($action=="year") $legend .= " : ".$year;
+	print_fam_table($myfamlist, $legend);
+
 	if ($view=="preview") print "<tr><td>";
 }
 else if ($action=="calendar") {
