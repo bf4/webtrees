@@ -959,7 +959,8 @@ function parse_date($datestr) {
 	$y = $dates[0]["year"];
 	$m = $dates[0]["mon"];
 	$d = $dates[0]["day"];
-	if ($dates[0]["ext"]=="AFT") {
+	$e = $dates[0]["ext"];
+	if ($e=="AFT") {
 		if ($m=="") $m=12;
 		if ($d=="") {
 			$d=31;
@@ -969,7 +970,9 @@ function parse_date($datestr) {
 	}
 	if ($m=="") $m=1;
 	if ($d=="") $d=1;
-	if ($y>3000) list($m, $d, $y) = explode("/", JDToGregorian(JewishToJD($m, $d, $y)));
+	if (strpos($e, "#DHEBREW")) list($m, $d, $y) = explode("/", JDToGregorian(JewishToJD($m, $d, $y)));
+	if (strpos($e, "#DFRENCH")) list($m, $d, $y) = explode("/", JDToGregorian(FrenchToJD($m, $d, $y)));
+	if (strpos($e, "#DJULIAN")) list($m, $d, $y) = explode("/", JDToGregorian($m, $d, $y));
 	$dates[0]["sort"] = sprintf("%04d-%02d-%02d", $y, $m, $d);
 	//print_r($dates);
 	return $dates;

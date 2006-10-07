@@ -44,6 +44,10 @@ class Person extends GedcomRecord {
 	var $drec = "";
 	var $best = false;
 	var $dest = false;
+	var $bdate2 = "";
+	var $ddate2 = "";
+	var $brec2 = "";
+	var $drec2 = "";
 	var $fams = null;
 	var $famc = null;
 	var $spouseFamilies = null;
@@ -309,6 +313,17 @@ class Person extends GedcomRecord {
 	}
 
 	/**
+	 * get sortable birth date2
+	 * @return string the birth date2 in sortable format YYYY-MM-DD HH:MM
+	 */
+	function getSortableBirthDate2() {
+		if (empty($this->bdate2)) $this->_parseBirthDeath();
+		$pdate = parse_date($this->bdate2);
+		$hms = get_gedcom_value("DATE:TIME", 2, $this->brec2);
+		return $pdate[0]["sort"]." ".$hms;
+	}
+
+	/**
 	 * a function that returns the full GEDCOM line containing the birth date
 	 * @return string the date line from the gedcom birth record in the format of '2 DATE 1 JAN 1900'
 	 */
@@ -356,6 +371,17 @@ class Person extends GedcomRecord {
 		if (empty($this->ddate)) $this->_parseBirthDeath();
 		$pdate = parse_date($this->ddate);
 		$hms = get_gedcom_value("DATE:TIME", 2, $this->drec);
+		return $pdate[0]["sort"]." ".$hms;
+	}
+
+	/**
+	 * get sortable death date2
+	 * @return string the death date2 in sortable format YYYY-MM-DD HH:MM
+	 */
+	function getSortableDeathDate2() {
+		if (empty($this->ddate2)) $this->_parseBirthDeath();
+		$pdate = parse_date($this->ddate2);
+		$hms = get_gedcom_value("DATE:TIME", 2, $this->drec2);
 		return $pdate[0]["sort"]." ".$hms;
 	}
 

@@ -807,6 +807,7 @@ $monthtonum["sep"] = 9;
 $monthtonum["oct"] = 10;
 $monthtonum["nov"] = 11;
 $monthtonum["dec"] = 12;
+//-- @#DHEBREW@
 $monthtonum["tsh"] = 1;
 $monthtonum["csh"] = 2;
 $monthtonum["ksl"] = 3;
@@ -820,6 +821,20 @@ $monthtonum["svn"] = 10;
 $monthtonum["tmz"] = 11;
 $monthtonum["aav"] = 12;
 $monthtonum["ell"] = 13;
+//-- @#DFRENCH R@
+$monthtonum["vend"] = 1;
+$monthtonum["brum"] = 2;
+$monthtonum["frim"] = 3;
+$monthtonum["nivo"] = 4;
+$monthtonum["pluv"] = 5;
+$monthtonum["vent"] = 6;
+$monthtonum["germ"] = 7;
+$monthtonum["flor"] = 8;
+$monthtonum["prai"] = 9;
+$monthtonum["mess"] = 10;
+$monthtonum["ther"] = 11;
+$monthtonum["fruc"] = 12;
+$monthtonum["comp"] = 13;
 
 if (!isset($show_context_help)) $show_context_help = "";
 if (!isset($_SESSION["show_context_help"])) $_SESSION["show_context_help"] = $SHOW_CONTEXT_HELP;

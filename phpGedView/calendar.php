@@ -1046,17 +1046,19 @@ if (($action=="today") || ($action=="year")) {
 		print "</i><br />\n\t\t</td></tr>";
 	}
 	%**/
-	$month = $pgv_lang[strtolower($month)];
+	$legend = "";
+	if ($action=="today") {
+		$legend = " : ".$day." ".$pgv_lang[strtolower($month)];
+		if (isset($hDay)) $legend .= " / ".$hDay." ".$hMonth;
+	}
+	if ($action=="year") {
+		$legend = " : ".$year;
+		if (isset($hYear)) $legend .= " / ".$hYear;
+	}
 	//-- indilist
-	$legend = $pgv_lang["individuals"];
-	if ($action=="today") $legend .= " : ".$day." ".$month;
-	if ($action=="year") $legend .= " : ".$year;
-	print_indi_table($myindilist, $legend);
+	print_indi_table($myindilist, $pgv_lang["individuals"]." ".$legend);
 	//-- famlist
-	$legend = $pgv_lang["families"];
-	if ($action=="today") $legend .= " : ".$day." ".$month;
-	if ($action=="year") $legend .= " : ".$year;
-	print_fam_table($myfamlist, $legend);
+	print_fam_table($myfamlist, $pgv_lang["families"]." ".$legend);
 
 	if ($view=="preview") print "<tr><td>";
 }

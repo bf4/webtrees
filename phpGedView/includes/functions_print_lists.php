@@ -339,7 +339,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 	$n = 1;
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
-			$person = Person::getInstance($value); // from ancestry chart
+			$person = Person::getInstance($key); // from placelist
+			if (is_null($person)) $person = Person::getInstance($value); // from ancestry chart
 			unset ($value);
 		}
 		else {
@@ -390,7 +391,9 @@ function print_indi_table($datalist, $legend="", $option="") {
 		" class=\"list_item\">".$txt."</a>";
 		//-- 2nd date ?
 		$txt = get_changed_date($person->bdate2);
-		if ($txt) echo "<br /><a href=\"".$person->getDateUrl($person->bdate2)."\" class=\"list_item\">".$txt."</a>";
+		if ($txt) echo "<br /><a href=\"".$person->getDateUrl($person->bdate2)."\"".
+		" title=\"".$person->getSortableBirthDate2()."\"".
+		" class=\"list_item\">".$txt."</a>";
 		echo "</td>";
 
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
@@ -411,7 +414,9 @@ function print_indi_table($datalist, $legend="", $option="") {
 		" class=\"list_item\">".$txt."</a>";
 		//-- 2nd date ?
 		$txt = get_changed_date($person->ddate2);
-		if ($txt) echo "<br /><a href=\"".$person->getDateUrl($person->ddate2)."\" class=\"list_item\">".$txt."</a>";
+		if ($txt) echo "<br /><a href=\"".$person->getDateUrl($person->ddate2)."\"".
+		" title=\"".$person->getSortableDeathDate2()."\"".
+		" class=\"list_item\">".$txt."</a>";
 		echo "</td>";
 
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
@@ -522,7 +527,8 @@ function print_fam_table($datalist, $legend="") {
 	$n = 1;
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
-			$family = Family::getInstance($value); // from ancestry chart
+			$family = Family::getInstance($key); // from placelist
+			if (is_null($family)) $family = Family::getInstance($value); // from ancestry chart
 			unset($value);
 		}
 		else {
@@ -531,7 +537,8 @@ function print_fam_table($datalist, $legend="") {
 			if (isset($value["gedcom"])) $family = new Family($value["gedcom"]);
 			else $family = Family::getInstance($gid);
 		}
-
+		if (is_null($family)) continue;
+		
 		$husb = $family->getHusband();
 		if (is_null($husb)) $husb = new Person('');
 		$wife = $family->getWife();
@@ -588,7 +595,9 @@ function print_fam_table($datalist, $legend="") {
 		" class=\"list_item\">".$txt."</a>";
 		//-- 2nd date ?
 		$txt = get_changed_date($family->marr_date2);
-		if ($txt) echo "<br /><a href=\"".$family->getDateUrl($family->marr_date2)."\" class=\"list_item\">".$txt."</a>";
+		if ($txt) echo "<br /><a href=\"".$family->getDateUrl($family->marr_date2)."\"".
+		" title=\"".$family->getSortableMarriageDate2()."\"".
+		" class=\"list_item\">".$txt."</a>";
 		echo "</td>";
 
 		echo "<td class=\"".$TEXT_DIRECTION."  list_value_wrap\">";
@@ -676,7 +685,8 @@ function print_sour_table($datalist, $legend="") {
 	$n = 1;
 	foreach ($datalist as $key => $value) {
 		if (!is_array($value)) {
-			$source = Source::getInstance($value);
+			$source = Source::getInstance($key); // from placelist
+			if (is_null($source)) $source = Source::getInstance($value);
 			unset($value);
 		}
 		else {
@@ -685,6 +695,8 @@ function print_sour_table($datalist, $legend="") {
 			if (isset($value["gedcom"])) $source = new Source($value["gedcom"]);
 			else $source = Source::getInstance($gid);
 		}
+		if (is_null($source)) continue;
+		
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
 		if ($SHOW_ID_NUMBERS) {
@@ -774,7 +786,8 @@ function print_repo_table($datalist, $legend="") {
 	$n = 1;
 	foreach ($datalist as $key => $value) {
 		if (!is_array($value)) {
-			$repo = Repository::getInstance($value);
+			$repo = Repository::getInstance($key);
+			if (is_null($repo)) $repo = Repository::getInstance($value);
 			unset($value);
 		}
 		else {
@@ -783,6 +796,8 @@ function print_repo_table($datalist, $legend="") {
 			if (isset($value["gedcom"])) $repo = new Repository($value["gedcom"]);
 			else $repo = Repository::getInstance($gid);
 		}
+		if (is_null($repo)) continue;
+		
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
 		if ($SHOW_ID_NUMBERS) {
@@ -852,6 +867,9 @@ function print_media_table($datalist, $legend="") {
 	$n = 1;
 	foreach ($datalist as $key => $value) {
 		$media = new Media($value["GEDCOM"]);
+		if (is_null($media)) $media = Media::getInstance($key);
+		if (is_null($media)) continue;
+		
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
 		if ($SHOW_ID_NUMBERS) {
@@ -927,7 +945,10 @@ function print_changes_table($datalist) {
 	//-- table body
 	$n = 1;
 	foreach($datalist as $key => $value) {
-		$record = GedcomRecord::getInstance($value[0]);
+		$record = GedcomRecord::getInstance($key);
+		if (is_null($record)) $record = GedcomRecord::getInstance($value[0]);
+		if (is_null($record)) continue;
+
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
 		if ($SHOW_ID_NUMBERS) {

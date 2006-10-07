@@ -547,6 +547,7 @@ if(empty($SEARCH_SPIDER)) {
 }
 print "<br /><br />\n";
 
+if ($show_all=="yes") unset($alpha);
 if (!empty($surname) && $surname_sublist=="yes") $legend = str_replace("#surname#", check_NN($surname), $pgv_lang["indis_with_surname"]);
 else if (isset($alpha)) $legend = str_replace("#surname#", $alpha.".", $pgv_lang["indis_with_surname"]);
 else $legend = $pgv_lang["individuals"];
