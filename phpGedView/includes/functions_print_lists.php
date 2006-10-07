@@ -350,8 +350,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 			else $person = Person::getInstance($gid);
 		}
 		if (is_null($person)) continue;
-		if ($person->getSex()=="M") $box = "fan_chart_box";
-		if ($person->getSex()=="F") $box = "fan_chart_boxF";
 		
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
@@ -390,7 +388,9 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "<a href=\"".$person->getDateUrl($person->bdate)."\"".
 		" title=\"".$sortkey."\"".
 		" class=\"list_item\">".$txt."</a>";
-		//echo get_date_url($person->bdate);
+		//-- 2nd date ?
+		$txt = get_changed_date($person->bdate2);
+		if ($txt) echo "<br /><a href=\"".$person->getDateUrl($person->bdate2)."\" class=\"list_item\">".$txt."</a>";
 		echo "</td>";
 
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
@@ -409,7 +409,9 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "<a href=\"".$person->getDateUrl($person->ddate)."\"".
 		" title=\"".$sortkey."\"".
 		" class=\"list_item\">".$txt."</a>";
-		//echo get_date_url($person->ddate);
+		//-- 2nd date ?
+		$txt = get_changed_date($person->ddate2);
+		if ($txt) echo "<br /><a href=\"".$person->getDateUrl($person->ddate2)."\" class=\"list_item\">".$txt."</a>";
 		echo "</td>";
 
 		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
@@ -584,7 +586,9 @@ function print_fam_table($datalist, $legend="") {
 		echo "<a href=\"".$family->getDateUrl($family->marr_date)."\"".
 		" title=\"".$sortkey."\"".
 		" class=\"list_item\">".$txt."</a>";
-		//echo get_date_url($family->marr_date);
+		//-- 2nd date ?
+		$txt = get_changed_date($family->marr_date2);
+		if ($txt) echo "<br /><a href=\"".$family->getDateUrl($family->marr_date2)."\" class=\"list_item\">".$txt."</a>";
 		echo "</td>";
 
 		echo "<td class=\"".$TEXT_DIRECTION."  list_value_wrap\">";

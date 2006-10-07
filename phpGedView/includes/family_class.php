@@ -253,6 +253,9 @@ class Family extends GedcomRecord {
 		$this->marr_date = get_gedcom_value("DATE", 2, $this->marr_rec, '', false);
 		$this->marr_type = get_sub_record(2, "2 TYPE", $this->marr_rec);
 		$this->div_rec = trim(get_sub_record(1, "1 DIV", $this->gedrec));
+		//-- 2nd record with alternate date (hebrew...)
+		$this->marr_rec2 = trim(get_sub_record(1, "1 MARR", $this->gedrec, 2));
+		$this->marr_date2 = get_gedcom_value("DATE", 2, $this->marr_rec2, '', false);
 		//-- if no date estimate from births
 		/** FIXME
 		if (!empty($this->marr_rec) and empty($this->marr_date)) {
@@ -314,13 +317,8 @@ class Family extends GedcomRecord {
 		if (empty($this->marr_date)) $this->_parseMarriageRecord();
 		if (empty($this->marr_rec)) return "0000-00-00";
 		$pdate = parse_date($this->marr_date);
-		$y = $pdate[0]["year"];
-		$m = $pdate[0]["mon"]; if ($m=="") $m=1;
-		$d = $pdate[0]["day"]; if ($d=="") $d=1;
-		$hms = get_gedcom_value("DATE:TIME", 2, $this->getMarriageRecord());
-		if ($y>3000) list($m, $d, $y) = explode("/", JDToGregorian(JewishToJD($m, $d, $y)));
-		$sdate = sprintf("%04d-%02d-%02d %s", $y, $m, $d, $hms);
-		return $sdate;
+		$hms = get_gedcom_value("DATE:TIME", 2, $this->marr_rec);
+		return $pdate[0]["sort"]." ".$hms;
 	}
 
 	/**

@@ -955,6 +955,22 @@ function parse_date($datestr) {
 			}
 		}
 	}
+	// adding sortable date
+	$y = $dates[0]["year"];
+	$m = $dates[0]["mon"];
+	$d = $dates[0]["day"];
+	if ($dates[0]["ext"]=="AFT") {
+		if ($m=="") $m=12;
+		if ($d=="") {
+			$d=31;
+			if ($m==4 or $m==6 or $m==9 or $m==11) $d=30;
+			if ($m==2) $d=28;
+		}
+	}
+	if ($m=="") $m=1;
+	if ($d=="") $d=1;
+	if ($y>3000) list($m, $d, $y) = explode("/", JDToGregorian(JewishToJD($m, $d, $y)));
+	$dates[0]["sort"] = sprintf("%04d-%02d-%02d", $y, $m, $d);
 	//print_r($dates);
 	return $dates;
 }
