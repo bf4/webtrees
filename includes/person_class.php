@@ -228,6 +228,11 @@ class Person extends GedcomRecord {
 		$this->drec = trim(get_sub_record(1, "1 DEAT", $this->gedrec));
 		$this->bdate = get_gedcom_value("DATE", 2, $this->brec, '', false);
 		$this->ddate = get_gedcom_value("DATE", 2, $this->drec, '', false);
+		//-- 2nd record with alternate date (hebrew...)
+		$this->brec2 = trim(get_sub_record(1, "1 BIRT", $this->gedrec, 2));
+		$this->drec2 = trim(get_sub_record(1, "1 DEAT", $this->gedrec, 2));
+		$this->bdate2 = get_gedcom_value("DATE", 2, $this->brec2, '', false);
+		$this->ddate2 = get_gedcom_value("DATE", 2, $this->drec2, '', false);
 		//-- if no birthdate look for christening
 		if (empty($this->bdate)) {
 			$this->bdate = get_gedcom_value("CHR:DATE", 1, $this->gedrec, '', false);
@@ -299,13 +304,8 @@ class Person extends GedcomRecord {
 		if (!$this->disp) return "0000-00-00";
 		if (empty($this->bdate)) $this->_parseBirthDeath();
 		$pdate = parse_date($this->bdate);
-		$y = $pdate[0]["year"];
-		$m = $pdate[0]["mon"]; if ($m=="") $m=1;
-		$d = $pdate[0]["day"]; if ($d=="") $d=1;
-		$hms = get_gedcom_value("DATE:TIME", 2, $this->getBirthRecord());
-		if ($y>3000) list($m, $d, $y) = explode("/", JDToGregorian(JewishToJD($m, $d, $y)));
-		$sdate = sprintf("%04d-%02d-%02d %s", $y, $m, $d, $hms);
-		return $sdate;
+		$hms = get_gedcom_value("DATE:TIME", 2, $this->brec);
+		return $pdate[0]["sort"]." ".$hms;
 	}
 
 	/**
@@ -355,13 +355,8 @@ class Person extends GedcomRecord {
 		if (!$this->disp) return "0000-00-00";
 		if (empty($this->ddate)) $this->_parseBirthDeath();
 		$pdate = parse_date($this->ddate);
-		$y = $pdate[0]["year"];
-		$m = $pdate[0]["mon"]; if ($m=="") $m=1;
-		$d = $pdate[0]["day"]; if ($d=="") $d=1;
-		$hms = get_gedcom_value("DATE:TIME", 2, $this->getDeathRecord());
-		if ($y>3000) list($m, $d, $y) = explode("/", JDToGregorian(JewishToJD($m, $d, $y)));
-		$sdate = sprintf("%04d-%02d-%02d %s", $y, $m, $d, $hms);
-		return $sdate;
+		$hms = get_gedcom_value("DATE:TIME", 2, $this->drec);
+		return $pdate[0]["sort"]." ".$hms;
 	}
 
 	/**
