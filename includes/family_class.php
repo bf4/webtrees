@@ -39,6 +39,8 @@ class Family extends GedcomRecord {
 	var $marr_type = null;
 	var $marr_est = false; // estimate
 	var $div_rec = null;
+	var $marr_rec2 = null;
+	var $marr_date2 = null;
 
 	/**
 	 * constructor
@@ -321,6 +323,17 @@ class Family extends GedcomRecord {
 		return $pdate[0]["sort"]." ".$hms;
 	}
 
+	/**
+	 * get sortable marriage date2
+	 * @return string the marriage date2 in sortable format YYYY-MM-DD HH:MM
+	 */
+	function getSortableMarriageDate2() {
+		if (empty($this->marr_date2)) $this->_parseMarriageRecord();
+		if (empty($this->marr_rec2)) return "0000-00-00";
+		$pdate = parse_date($this->marr_date2);
+		$hms = get_gedcom_value("DATE:TIME", 2, $this->marr_rec2);
+		return $pdate[0]["sort"]." ".$hms;
+	}
 	/**
 	 * get the type for this marriage
 	 * @return string
