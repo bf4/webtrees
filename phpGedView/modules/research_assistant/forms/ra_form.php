@@ -420,7 +420,7 @@ END_OUT;
 			if (count($facts)>0) {
 				$out .= "\r\nfactcount = ".count($facts).";\r\n";
 				foreach($facts as $i=>$fact) {
-					$out .= "facts[$i] = '".preg_replace("/\r?\n/", "\\r\\n",$fact['tf_factrec'])."'\r\n";
+					$out .= "facts[$i] = '".preg_replace("/\r?\n/", "\\r\\n",$fact['tf_factrec'])."';\r\n";
 					$ct = preg_match("/1 (\w+)/", $fact['tf_factrec'], $match);
 					$factname = trim($match[1]);
 					if (isset($factarray[$factname])) $factname = $factarray[$factname];
@@ -519,7 +519,7 @@ END_OUT;
 								var myPerson = "<option value=\""+person+"\"";
 									myPerson += "selected=\"selected\"";
 									myPerson +=">"+name+"</option>";
-								peopleList[i]= myPerson;
+								peopleList[factcount]= myPerson;
 								
 								inferredFacts[person+factType] = person;
 								
@@ -645,7 +645,7 @@ END_OUT;
 			}
 			
 			function build_table() {
-				tempdata = document.getElementById('tempdata');
+				var tempdata = document.getElementById('tempdata');
 				if (!tempdata) return;
 				if (facts.length==0) {
 					tempdata.innerHTML = "";
@@ -680,15 +680,15 @@ END_OUT;
 					out += '</select></td>';
 					if(!inferredFacts[i])
 					{
-					out += '<td class="optionbox"><a href="#" onclick="remove_fact('+i+',null); return false;"><img src="images/remove.gif" border="0" /></a><br />' +
-							'<a href="#" onclick="edit_ra_fact('+i+'); return false;">{$pgv_lang["edit"]}</a>' +
-							'</td></tr>';
+						out += '<td class="optionbox"><a href="#" onclick="remove_fact('+i+',null); return false;"><img src="images/remove.gif" border="0" /></a><br />';
+						out += '<a href="#" onclick="edit_ra_fact('+i+'); return false;">{$pgv_lang["edit"]}</a>';
+						out += '</td></tr>';
 					}
 					else
 					{
-						out += '<td class="optionbox"><a href="#" onclick="remove_fact('+i+',\''+inferredFacts[i]+'\'); return false;"><img src="images/remove.gif" border="0" /></a><br />' +
-							'<a href="#" onclick="edit_ra_fact('+i+'); return false;">{$pgv_lang["edit"]}</a>' +
-							'</td></tr>';
+						out += '<td class="optionbox"><a href="#" onclick="remove_fact('+i+',\''+inferredFacts[i]+'\'); return false;"><img src="images/remove.gif" border="0" /></a><br />';
+						out += '<a href="#" onclick="edit_ra_fact('+i+'); return false;">{$pgv_lang["edit"]}</a>';
+						out += '</td></tr>';
 					}
 				}
 				tempdata.innerHTML = out+'</table><input type="hidden" name="factcount" value="'+facts.length+'" />';
