@@ -464,10 +464,10 @@ return false;}return true;}
 					if($completeFact)
 					{
 						$out .='<tr>';
-						$out .="<td>".$factarray[$value['factType']]." ".$value['date']."</td>";
-						$out .="<td>".$value["Person"]."</td>";
-						$out .="<td>".$value["Reason"]."</td>";
-						$out .="<td>".'<input type="Checkbox" id="'.$value['PersonID'].$value['factType'].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["Fact"]).'\',\''.$value['PersonID'].'\',\''.$value['factType'].'\',\''.$value["Person"].'\',\''.$value["factPeople"].'\')"></td>';
+						$out .="<td class=\"optionbox\">".$factarray[$value['factType']]." ".$value['date']."</td>";
+						$out .="<td class=\"optionbox\">".$value["Person"]."</td>";
+						$out .="<td class=\"optionbox\">".$value["Reason"]."</td>";
+						$out .="<td class=\"optionbox\">".'<input type="Checkbox" id="'.$value['PersonID'].$value['factType'].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["Fact"]).'\',\''.$value['PersonID'].'\',\''.$value['factType'].'\',\''.htmlentities($value["Person"]).'\',\''.$value["factPeople"].'\')"></td>'."\n";
 						$out .="</tr>";
 					}
 				
@@ -516,6 +516,7 @@ return false;}return true;}
 		{
 			$inferredFacts = array();
 			$person = Person::getInstance($rows[$number]["personid"]);
+			if (is_null($person)) continue;
 			if(!empty($person))
 			{
 				$bdate = $person->getBirthYear();
@@ -528,7 +529,7 @@ return false;}return true;}
 			{
 				$inferredFact["Person"] = $person->getName();
 				$inferredFact["PersonID"] = $person->getXref();
-				$inferredFact["Reason"] = "A discrepancy in occupation was detected!";
+				$inferredFact["Reason"] = "Add <i>".$rows[$number]["Trade"]."</i> occupation fact.";
 				$inferredFact["Fact"] = "1 OCCU ".$rows[$number]["Trade"];
 				$inferredFact["factType"] = 'OCCU';
 				$inferredFact["factPeople"] = "indi";
