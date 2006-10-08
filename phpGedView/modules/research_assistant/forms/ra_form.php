@@ -68,9 +68,8 @@ class ra_form {
 	function getSources(){
         global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 
-		$sql = 	"SELECT s_name, s_id FROM " . $TBLPREFIX . "sources, " . $TBLPREFIX . "tasksource WHERE s_id = ts_t_id AND s_file=".$GEDCOMS[$GEDCOM]['id']." AND ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
+		$sql = 	"SELECT s_name, s_id FROM " . $TBLPREFIX . "sources, " . $TBLPREFIX . "tasksource WHERE s_id = ts_s_id AND s_file=".$GEDCOMS[$GEDCOM]['id']." AND ts_t_id='" . $DBCONN->escapeSimple($_REQUEST["taskid"]) . "'";
 		$res = dbquery($sql);
-
 		$sources = array();
 		while($source =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 			$sources[$source["s_id"]] = $source["s_name"];
@@ -266,6 +265,7 @@ class ra_form {
                    			}
                    $out .= '</div>
                    <input type="hidden" id="sourceid" name="sourceid" size="3" value="'.$sval.'" />';
+		
                    $out .= print_findsource_link("sourceid", "sourcelink", true);
                    $out .= '<br />
                 </td>
