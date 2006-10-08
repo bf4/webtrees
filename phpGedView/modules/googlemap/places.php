@@ -362,7 +362,7 @@ if ($action=="ImportGedcom") {
                     $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", \"".$escparent."\", NULL, NULL, ".$default_zoom_level[$i].", NULL);";
                 }
                 else {
-                    $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", \"".$escparent."\", \"".$place["long"]."\" , \"".$place["lati"]."\", ".$default_zoom_level[$i].", NULL);";
+                    $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', '".$place["long"]."' , '".$place["lati"]."', ".$default_zoom_level[$i].", NULL);";
                 }
                 $parent_id = $highestIndex;
                 print $sql."<br/>";
@@ -373,7 +373,7 @@ if ($action=="ImportGedcom") {
             else {
                 $parent_id = $row[0];
                 if (($row[1] == "0") && ($row[2] == "0")) {
-                    $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati=\"".$place["lati"]."\",pl_long=\"".$place["long"]."\" where pl_id=$parent_id";
+                    $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati='".$place["lati"]."',pl_long='".$place["long"]."' where pl_id=$parent_id";
                     print $sql."<br/>";
                     if (userIsAdmin(getUserName())) {
                         $res = dbquery($sql, true, 1);
