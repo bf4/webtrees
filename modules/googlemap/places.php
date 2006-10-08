@@ -532,7 +532,7 @@ if ($action=="ImportFile2") {
                         $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", \"".$escparent."\", NULL, NULL, ".$default_zoom_level[$i].",\"".$place["icon"]."\");";
                     }
                     else {
-                        $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", \"".$escparent."\", \"".$place["long"]."\" , \"".$place["lati"]."\", ".$zoomlevel.",\"".$place["icon"]."\");";
+                        $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', '".$place["long"]."' , '".$place["lati"]."', ".$zoomlevel.",'".$place["icon"]."');";
                     }
                     $parent_id = $highestIndex;
                     if (userIsAdmin(getUserName())) {
@@ -543,7 +543,7 @@ if ($action=="ImportFile2") {
             else {
                 $parent_id = $row[0];
                 if ((isset($_POST["overwritedata"])) && ($i+1 == count($parent))) {
-                    $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati=\"".$place["lati"]."\",pl_long=\"".$place["long"]."\",pl_zoom=\"".$place["zoom"]."\",pl_icon=\"".$place["icon"]."\" where pl_id=$parent_id";
+                    $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati='".$place["lati"]."',pl_long='".$place["long"]."',pl_zoom='".$place["zoom"]."',pl_icon='".$place["icon"]."' where pl_id=$parent_id";
                     if (userIsAdmin(getUserName())) {
                         $res = dbquery($sql, true, 1);
                     }
