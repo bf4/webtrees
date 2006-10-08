@@ -359,7 +359,7 @@ if ($action=="ImportGedcom") {
             if (empty($row[0])) {       // this name does not yet exist: create entry
                 $highestIndex = $highestIndex + 1;
                 if (($place["lati"] == "0") || ($place["long"] == "0") || (($i+1) < count($parent))) {
-                    $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", \"".$escparent."\", NULL, NULL, ".$default_zoom_level[$i].", NULL);";
+                    $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', NULL, NULL, ".$default_zoom_level[$i].", NULL);";
                 }
                 else {
                     $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', '".$place["long"]."' , '".$place["lati"]."', ".$default_zoom_level[$i].", NULL);";
@@ -529,7 +529,7 @@ if ($action=="ImportFile2") {
                         $zoomlevel = $default_zoom_level[$i];
                     }
                     if (($place["lati"] == "0") || ($place["long"] == "0") || (($i+1) < count($parent))) {
-                        $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", \"".$escparent."\", NULL, NULL, ".$default_zoom_level[$i].",\"".$place["icon"]."\");";
+                        $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', NULL, NULL, ".$default_zoom_level[$i].",'".$place["icon"]."');";
                     }
                     else {
                         $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', '".$place["long"]."' , '".$place["lati"]."', ".$zoomlevel.",'".$place["icon"]."');";
@@ -550,7 +550,7 @@ if ($action=="ImportFile2") {
                 }
                 else {
                     if ((($row[1] == "0") || ($row[1] == null)) && (($row[2] == "0") || ($row[2] == null))) {
-                        $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati=\"".$place["lati"]."\",pl_long=\"".$place["long"]."\" where pl_id=$parent_id";
+                        $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati='".$place["lati"]."',pl_long='".$place["long"]."' where pl_id=$parent_id";
                         if (userIsAdmin(getUserName())) {
                             $res = dbquery($sql, true, 1);
                         }
@@ -560,7 +560,7 @@ if ($action=="ImportFile2") {
                         $parent_lati = $row[2];
                     }
                     if (($row[4] == "") || ($row[4] == null)) {
-                        $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_icon=\"".$place["icon"]."\",pl_long=\"".$place["long"]."\" where pl_id=$parent_id";
+                        $sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_icon='".$place["icon"]."',pl_long='".$place["long"]."' where pl_id=$parent_id";
                         if (userIsAdmin(getUserName())) {
                             $res = dbquery($sql, true, 1);
                         }
