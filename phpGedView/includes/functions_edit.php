@@ -44,12 +44,38 @@ $NPFX_accept = array("Adm", "Amb", "Brig", "Can", "Capt", "Chan", "Chapln", "Cmd
 $SPFX_accept = array("al", "da", "de", "den", "dem", "der", "di", "du", "el", "la", "van", "von");
 $NSFX_accept = array("Jr", "Sr", "I", "II", "III", "IV", "MD", "PhD");
 $FILE_FORM_accept = array("avi", "bmp", "gif", "jpeg", "mp3", "ole", "pcx", "png", "tiff", "wav");
-$emptyfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","BAPL","CONL","ENDL","SLGC","EVEN","MARR","SLGS","MARL","ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARS","CHAN","_SEPR","RESI", "DATA", "MAP", "_HOL", "_NMR");
-$templefacts = array("SLGC","SLGS","BAPL","ENDL","CONL");
-$nonplacfacts = array("ENDL","NCHI","SLGC","SLGS");
-$nondatefacts = array("ABBR","ADDR","AFN","AUTH","EMAIL","FAX","NAME","NCHI","NOTE","OBJE","PHON","PUBL","REFN","REPO","SEX","SOUR","SSN","TEXT","TITL","WWW","_EMAIL");
+$emptyfacts = array("_HOL", "_NMR", "_SEPR", "ADOP", "ANUL", "BAPL", "BAPM", "BARM", "BASM",
+"BIRT", "BLES", "BURI", "CENS", "CHAN", "CHR", "CHRA", "CONF", "CONL", "CREM",
+"DATA", "DEAT", "DIV", "DIVF", "EMIG", "ENDL", "ENGA", "EVEN", "FCOM", "GRAD",
+"HUSB", "IMMI", "MAP", "MARB", "MARC", "MARL", "MARR", "MARS", "NATU", "ORDN",
+"PROB", "RESI", "RETI", "SLGC", "SLGS", "WIFE", "WILL");
 $typefacts = array();	//-- special facts that go on 2 TYPE lines
 
+// Next two vars used by insert_missing_subtags()
+$date_and_time=array("BIRT","DEAT"); // Tags with date and time
+$level2_tags=array( // The order of the $keys is significant
+	"TEMP" =>array("BAPL","CONL","ENDL","SLGC","SLGS"),
+	"STAT" =>array("BAPL","CONL","ENDL","SLGC","SLGS"),
+	"_HEB" =>array("NAME","TITL"),
+	"ROMN" =>array("NAME","TITL"),
+	"TYPE" =>array("GRAD","EVEN","FACT","IDNO","MARR","ORDN"),
+	"AGNC" =>array("EDUC","GRAD","OCCU","RETI","ORDN"),
+	"CAUS" =>array("DEAT"),
+	"CALN" =>array("REPO"),
+	"CEME" =>array("BURI"), // CEME is NOT a valid 5.5.1 tag; use _CEME ??
+	"DATE" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN"),
+	"PLAC" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN"),
+	"ADDR" =>array("BIRT","DEAT","MARR","CENS","EDUC","GRAD","OCCU","ORDN","RESI"),
+	"PHON" =>array("OCCU","RESI"),
+	"FAX"  =>array("OCCU","RESI"),
+	"URL"  =>array("OCCU","RESI"),
+	"EMAIL"=>array("OCCU","RESI"),
+	"AGE"  =>array("CENS","DEAT"),
+	"HUSB" =>array("MARR"),
+	"WIFE" =>array("MARR"),
+	"FILE" =>array("OBJE"),
+	"_PRIM"=>array("OBJE"),
+);
 //-------------------------------------------- newConnection
 //-- this function creates a new unique connection
 //-- and adds it to the connections file
@@ -767,10 +793,6 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 
 	if (empty($linkToID)) $linkToID = $pid;
 
-    // Work around for $emptyfacts being mysteriously unset
-    if (empty($emptyfacts))
-        $emptyfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","BAPL","CONL","ENDL","SLGC","EVEN","MARR","SLGS","MARL","ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARS","CHAN","_SEPR","RESI", "DATA", "MAP");
-
 	$largetextfacts = array("TEXT","PUBL","NOTE");
 	$subnamefacts = array("NPFX", "GIVN", "NICK", "SPFX", "SURN", "NSFX");
 
@@ -839,6 +861,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	if ($islink) $value=trim($value, " @");
 	else $value=trim(substr($tag, strlen($fact)+3));
 	if ($fact=="REPO") $islink = true;
+	if ($fact=="SOUR") $islink = true;
+	if ($fact=="OBJE") $islink = true;
 
 	// rows & cols
 	$rows=1;
@@ -1460,95 +1484,20 @@ function linkMedia($mediaid, $linktoid, $level=1) {
  * @param string $fact	the new fact we are adding
  */
 function create_add_form($fact) {
-	global $templefacts, $nondatefacts, $nonplacfacts;
 	global $tags;
 
+	$tags = array();
+
 	// handle  MARRiage TYPE
-	$type_val="";
 	if (substr($fact,0,5)=="MARR_") {
-		$type_val=substr($fact,5);
-		$fact="MARR";
+		$tags[0] = "MARR";
+		add_simple_tag("1 MARR");
+		insert_missing_subtags($fact);
 	}
-
-	$tags=array();
-	$tags[0]=$fact;
-
-	if ($fact=="SOUR") add_simple_tag("1 SOUR @");
-	else add_simple_tag("1 ".$fact);
-
-	if ($fact=="EVEN" or $fact=="GRAD" or $fact=="MARR") {
-		// 1 EVEN|GRAD|MARR
-		// 2 TYPE
-		add_simple_tag("2 TYPE ".$type_val);
-	}
-	if (in_array($fact, $templefacts)) {
-		// 2 TEMP
-		add_simple_tag("2 TEMP");
-		// 2 STAT
-		add_simple_tag("2 STAT");
-	}
-	if ($fact=="SOUR") {
-		// 1 SOUR
-		// 2 PAGE
-		add_simple_tag("2 PAGE");
-		// 2 DATA
-		// 3 TEXT
-		add_simple_tag("3 TEXT");
-	}
-	if ($fact=="EDUC" or $fact=="GRAD" or $fact=="OCCU") {
-		// 1 EDUC|GRAD|OCCU
-		// 2 CORP
-		add_simple_tag("2 CORP");
-	}
-	if (!in_array($fact, $nondatefacts)) {
-		// 2 DATE
-		add_simple_tag("2 DATE");
-		// 3 TIME
-		add_simple_tag("3 TIME");
-		// 2 PLAC
-		// 3 MAP
-		// 4 LATI
-		// 4 LONG
-		if (!in_array($fact, $nonplacfacts)) {
-			add_simple_tag("2 PLAC");
-			add_simple_tag("3 MAP");
-			add_simple_tag("4 LATI");
-			add_simple_tag("4 LONG");
-		}
-	}
-	if ($fact=="BURI") {
-		// 1 BURI
-		// 2 CEME
-		add_simple_tag("2 CEME");
-	}
-	if ($fact=="BIRT" or $fact=="DEAT" or $fact=="MARR"
-	or $fact=="CENS" or $fact=="EDUC" or $fact=="GRAD"
-	or $fact=="OCCU" or $fact=="ORDN" or $fact=="RESI") {
-		// 1 BIRT|DEAT|MARR|CENS|EDUC|GRAD|OCCU|ORDN|RESI
-		// 2 ADDR
-		add_simple_tag("2 ADDR");
-	}
-	if ($fact=="OCCU" or $fact=="RESI") {
-		// 1 OCCU|RESI
-		// 2 PHON|FAX|EMAIL|URL
-		add_simple_tag("2 PHON");
-		add_simple_tag("2 FAX");
-		add_simple_tag("2 EMAIL");
-		add_simple_tag("2 URL");
-	}
-	if ($fact=="DEAT") {
-		// 1 DEAT
-		// 2 CAUS
-		add_simple_tag("2 CAUS");
-	}
-	if ($fact=="REPO") {
-		//1 REPO
-		//2 CALN
-		add_simple_tag("2 CALN");
-	}
-	if ($fact!="OBJE") {
-		// 2 RESN
-		add_simple_tag("2 RESN");
+	else {
+		$tags[0] = $fact;
+		add_simple_tag("1 ".$fact);
+		insert_missing_subtags($fact);
 	}
 }
 
@@ -1560,7 +1509,7 @@ function create_add_form($fact) {
  * @param string $level0type	the type of the level 0 gedcom record
  */
 function create_edit_form($gedrec, $linenum, $level0type) {
-	global $WORD_WRAPPED_NOTES, $pgv_lang, $templefacts, $nondatefacts, $nonplacfacts;
+	global $WORD_WRAPPED_NOTES, $pgv_lang;
 	global $tags;
 
 	$gedlines = split("\n", $gedrec);	// -- find the number of lines in the record
@@ -1599,13 +1548,6 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 			$subrecord = $level." ".$type." ".$text;
 			if ($inSource && $type=="DATE") add_simple_tag($subrecord, "", $pgv_lang["date_of_entry"]);
 			else add_simple_tag($subrecord, $level0type);
-		}
-		if (!$inSource && $type=="DATE" && !strpos(@$gedlines[$i+1], " TIME")) add_simple_tag(($level+1)." TIME");
-		if ($type=="MARR" && !strpos(@$gedlines[$i+1], " TYPE")) add_simple_tag(($level+1)." TYPE");
-		if ($type=="PLAC" && !strpos(@$gedlines[$i+1], " MAP")) {
-			add_simple_tag(($level+1)." MAP");
-			add_simple_tag(($level+2)." LATI");
-			add_simple_tag(($level+2)." LONG");
 		}
 
 		if ($type=="SOUR") {
@@ -1663,97 +1605,60 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 
 	}
 
-	// Now add some missing tags :
-	if (in_array($tags[0], $templefacts)) {
-		// 2 TEMP
-		if (!in_array("TEMP", $tags)) add_simple_tag("2 TEMP");
-		// 2 STAT
-		if (!in_array("STAT", $tags)) add_simple_tag("2 STAT");
-	}
-	if ($level1type=="NAME" || $level1type=="TITL") {
-		// 1 NAME
-		// 2 _HEB
-		// 2 ROMN
-		if (!in_array("_HEB", $tags)) add_simple_tag("2 _HEB");
-		if (!in_array("ROMN", $tags)) add_simple_tag("2 ROMN");
-	}
-	if ($level1type=="GRAD") {
-		// 1 GRAD
-		// 2 TYPE
-		if (!in_array("TYPE", $tags)) add_simple_tag("2 TYPE");
-	}
-	if ($level1type=="EDUC" or $level1type=="GRAD" or $level1type=="OCCU") {
-		// 1 EDUC|GRAD|OCCU
-		// 2 CORP
-		if (!in_array("CORP", $tags)) add_simple_tag("2 CORP");
-	}
-	if ($level1type=="DEAT") {
-		// 1 DEAT
-		// 2 CAUS
-		if (!in_array("CAUS", $tags)) add_simple_tag("2 CAUS");
-	}
-	// "SOUR" is handled earlier; this tag can occur at levels other than 1.
-	if ($level1type=="REPO") {
-		// 1 REPO
-		// 2 CALN
-		if (!in_array("CALN", $tags)) add_simple_tag("2 CALN");
-	}
-	if (!in_array($level1type, $nondatefacts)) {
-		// 2 DATE
-		// 3 TIME
-		if (!in_array("DATE", $tags)) {
-			add_simple_tag("2 DATE");
-			add_simple_tag("3 TIME");
-		}
-		// 2 PLAC
-		// 3 MAP
-		// 4 LATI
-		// 4 LONG
-		if (!in_array("PLAC", $tags) && !in_array($level1type, $nonplacfacts) && !in_array("TEMP", $tags)) {
-			add_simple_tag("2 PLAC");
-			add_simple_tag("3 MAP");
-			add_simple_tag("4 LATI");
-			add_simple_tag("4 LONG");
-		}
-	}
-	if ($level1type=="BURI") {
-		// 1 BURI
-		// 2 CEME
-		if (!in_array("CEME", $tags)) add_simple_tag("2 CEME");
-	}
-	if ($level1type=="BIRT" or $level1type=="DEAT" or $level1type=="MARR"
-	or $level1type=="CENS" or $level1type=="EDUC" or $level1type=="GRAD"
-	or $level1type=="OCCU" or $level1type=="ORDN" or $level1type=="RESI") {
-		// 1 BIRT|DEAT|MARR|CENS|EDUC|GRAD|OCCU|ORDN|RESI
-		// 2 ADDR
-		if (!in_array("ADDR", $tags)) add_simple_tag("2 ADDR");
-	}
-	if ($level1type=="OCCU" or $level1type=="RESI") {
-		// 1 OCCU|RESI
-		// 2 PHON|FAX|EMAIL|URL
-		if (!in_array("PHON", $tags)) add_simple_tag("2 PHON");
-		if (!in_array("FAX", $tags)) add_simple_tag("2 FAX");
-		if (!in_array("EMAIL", $tags)) add_simple_tag("2 EMAIL");
-		if (!in_array("URL", $tags)) add_simple_tag("2 URL");
-	}
-	if ($level1type=="OBJE") {
-		// 1 OBJE
-
-		if (!$levellink) {
-			// 2 FORM
-			if (!in_array("FORM", $tags)) add_simple_tag("2 FORM");
-			// 2 FILE
-			if (!in_array("FILE", $tags)) add_simple_tag("2 FILE");
-			// 2 TITL
-			if (!in_array("TITL", $tags)) add_simple_tag("2 TITL");
-		}
-		// 2 _PRIM
-		if (!in_array("_PRIM", $tags)) add_simple_tag("2 _PRIM");
-		// 2 _THUM
-		if (!in_array("_THUM", $tags)) add_simple_tag("2 _THUM");
-	}
-	// 2 RESN
-	if (!in_array("RESN", $tags)) add_simple_tag("2 RESN");
-
+	insert_missing_subtags($level1type);
 	return $level1type;
 }
+
+/**
+ * Populates the global $tags array with any missing sub-tags.
+ * @param string $level1tag	the type of the level 1 gedcom record
+ */
+function insert_missing_subtags($level1tag)
+{
+	global $tags, $date_and_time, $level2_tags;
+
+	// handle  MARRiage TYPE
+	$type_val = "";
+	if (substr($level1tag,0,5)=="MARR_") {
+		$type_val = substr($level1tag,5);
+		$level1tag = "MARR";
+	}
+
+	foreach ($level2_tags as $key=>$value) {
+		if (in_array($level1tag, $value) && !in_array($key, $tags)) {
+			if ($key=="TYPE") add_simple_tag("2 TYPE ".$type_val);
+			else add_simple_tag("2 ".$key);
+			switch ($key) { // Add level 3/4 tags as appropriate
+				case "PLAC":
+					add_simple_tag("3 MAP");
+					add_simple_tag("4 LATI");
+					add_simple_tag("4 LONG");
+					break;
+				case "FILE":
+					add_simple_tag("3 FORM");
+					break;
+				case "STAT":
+					add_simple_tag("3 DATE");
+					break;
+				case "DATE":
+					if (in_array($level1tag, $date_and_time))
+						add_simple_tag("3 TIME"); // TIME is NOT a valid 5.5.1 tag; use _TIME ??
+					break;
+				case "HUSB":
+				case "WIFE":
+					add_simple_tag("3 AGE");
+					break;
+			}
+		}
+	}
+	// Do something (anything!) with unrecognised custom tags
+	if (preg_match('/^_/', $level1tag) && count($tags)==1) {
+		add_simple_tag("2 DATE");
+		add_simple_tag("2 PLAC");
+		add_simple_tag("2 ADDR");
+		add_simple_tag("2 AGNC");
+		add_simple_tag("2 TYPE");
+		add_simple_tag("2 AGE");
+	}
+}
+?>

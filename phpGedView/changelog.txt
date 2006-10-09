@@ -1,4 +1,4 @@
-﻿=====================================================================
+=====================================================================
 	Change Log
 	phpGedView
 
@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Added [ 1571523 ] Misuse of CORP tag (fisharebest)
  - Added keep media links option when uploading replacement GEDCOMs (yalnifj)
  - Reorganized language files based on user access level (Neumont/yalnifj)
  - Added [ 1567427 ] AJAX slideshow controls to the Random media block (yalnifj)
@@ -59,9 +60,11 @@ Version 4.1
  - Added Database table for storing soundex calculations (Neumont)
  - Added Search and Replace feature (Neumont)
 
-Version 4.0.2
+Version 4.0.2 2006-10-03
+ - Fixed [ 1568908 ] gedcom_stats.php output doesn't validate (canajun2eh)
+ - Added Support for Estonian language (canajun2eh)
  - Fixed Address privacy in reports / report access privacy not used (yalnifj)
- - Fixed Random Media block performance (Neumont / yalnifj)
+ - Fixed Random Media block performance (yalnifj)
  - Fixed [ 1542463 ] strpos errors during inital install (opus27)
  - Fixed Hourglass still uses 3.3 privacy rules (yalnifj)
  - Fixed Marriage date edit doesn't show up (opus27)
