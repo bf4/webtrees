@@ -799,6 +799,8 @@ END_OUT;
 					$people = $_REQUEST['people'.$i];
 					$peopleTxt = implode(';',$_REQUEST['people'.$i]);
 				}
+				if (!isset($_REQUEST['multiple'.$i])) $_REQUEST['multiple'.$i]='Y';
+				if (!isset($_REQUEST['type'.$i])) $_REQUEST['type'.$i]='';
 				//-- store the fact associations in the database
 				$sql = "INSERT INTO ".$TBLPREFIX."taskfacts VALUES('".get_next_id("taskfacts", "tf_id")."'," .
 					"'".$DBCONN->escapeSimple($_REQUEST['taskid'])."'," .

@@ -272,7 +272,7 @@ function getTitle(){
       		</th>
 	      	<td class="optionbox" colspan="3" >
 	      		<?php
-	      			print PrintReady(getDescription());
+	      			print PrintReady(nl2br(getDescription()));
 	      		?>
 	      	</td>
 	    </tr>    
