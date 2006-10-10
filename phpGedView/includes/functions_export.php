@@ -26,7 +26,7 @@
 
 function print_gedcom($privatize_export='', $privatize_export_level='', $convert='', $remove='', $zip='', $gedout='') {
 		global $GEDCOMS, $GEDCOM, $ged, $VERSION, $VERSION_RELEASE, $pgv_lang;
-		global $TBLPREFIX;
+		global $TBLPREFIX, $GEDCOM_ID_PREFIX, $SOURCE_ID_PREFIX, $FAM_ID_PREFIX, $REPO_ID_PREFIX, $MEDIA_ID_PREFIX;
 
 		if ($privatize_export == "yes") {
 			create_export_user($privatize_export_level);
@@ -92,7 +92,7 @@ function print_gedcom($privatize_export='', $privatize_export_level='', $convert
 		else
 			print $head;
 
-		$sql = "SELECT i_gedcom FROM " . $TBLPREFIX . "individuals WHERE i_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY i_id";
+		$sql = "SELECT i_gedcom FROM " . $TBLPREFIX . "individuals WHERE i_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY CAST(REPLACE(i_id,'$GEDCOM_ID_PREFIX','') AS UNSIGNED INTEGER)";
 		$res = dbquery($sql);
 		while ($row = $res->fetchRow()) {
 			$rec = trim($row[0]) . "\r\n";
@@ -108,7 +108,7 @@ function print_gedcom($privatize_export='', $privatize_export_level='', $convert
 		}
 		$res->free();
 
-		$sql = "SELECT f_gedcom FROM " . $TBLPREFIX . "families WHERE f_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY f_id";
+		$sql = "SELECT f_gedcom FROM " . $TBLPREFIX . "families WHERE f_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY CAST(REPLACE(f_id,'$FAM_ID_PREFIX','') AS UNSIGNED INTEGER)";
 		$res = dbquery($sql);
 		while ($row = $res->fetchRow()) {
 			$rec = trim($row[0]) . "\r\n";
@@ -124,7 +124,7 @@ function print_gedcom($privatize_export='', $privatize_export_level='', $convert
 		}
 		$res->free();
 
-		$sql = "SELECT s_gedcom FROM " . $TBLPREFIX . "sources WHERE s_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY s_id";
+		$sql = "SELECT s_gedcom FROM " . $TBLPREFIX . "sources WHERE s_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY CAST(REPLACE(s_id,'$SOURCE_ID_PREFIX','') AS UNSIGNED INTEGER)";
 		$res = dbquery($sql);
 		while ($row = $res->fetchRow()) {
 			$rec = trim($row[0]) . "\r\n";
@@ -140,7 +140,7 @@ function print_gedcom($privatize_export='', $privatize_export_level='', $convert
 		}
 		$res->free();
 
-		$sql = "SELECT o_gedcom, o_type FROM " . $TBLPREFIX . "other WHERE o_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY o_id";
+		$sql = "SELECT o_gedcom, o_type FROM " . $TBLPREFIX . "other WHERE o_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY CAST(REPLACE(o_id,'$REPO_ID_PREFIX','') AS UNSIGNED INTEGER)";
 		$res = dbquery($sql);
 		while ($row = $res->fetchRow()) {
 			$rec = trim($row[0]) . "\r\n";
@@ -159,7 +159,7 @@ function print_gedcom($privatize_export='', $privatize_export_level='', $convert
 		}
 		$res->free();
 
-		$sql = "SELECT m_gedrec FROM " . $TBLPREFIX . "media WHERE m_gedfile=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY m_media";
+		$sql = "SELECT m_gedrec FROM " . $TBLPREFIX . "media WHERE m_gedfile=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY CAST(REPLACE(m_media,'$MEDIA_ID_PREFIX','') AS UNSIGNED INTEGER)";
 		$res = dbquery($sql);
 		while ($row = $res->fetchRow()) {
 			$rec = trim($row[0]) . "\r\n";
@@ -452,4 +452,3 @@ $res =& $tempsql;
 		if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_noblocks"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
 	}
 }
-	
