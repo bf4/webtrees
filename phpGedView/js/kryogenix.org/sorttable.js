@@ -177,7 +177,17 @@ function ts_sort_date(a,b) {
 function ts_sort_currency(a,b) {
 	aa = ts_getInnerText(a.cells[SORT_COLUMN_INDEX]).replace(/[^0-9.]/g,'');
 	bb = ts_getInnerText(b.cells[SORT_COLUMN_INDEX]).replace(/[^0-9.]/g,'');
-	return parseFloat(aa) - parseFloat(bb);
+	//return parseFloat(aa) - parseFloat(bb);
+	aa = parseFloat(aa);
+	if (isNaN(aa)) aa = 0;
+	bb = parseFloat(bb);
+	if (isNaN(bb)) bb = 0;
+	if (aa<bb) return -1;
+	if (aa>bb) return 1;
+	// PGV: when aa==bb keep previous order (=row index)
+	if (a.rowIndex<b.rowIndex) return -1
+	if (a.rowIndex>b.rowIndex) return 1
+	return 0;
 }
 
 function ts_sort_numeric(a,b) {

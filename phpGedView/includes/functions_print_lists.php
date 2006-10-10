@@ -290,6 +290,10 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "<button type=\"button\" class=\"sexU\" title=\"".$pgv_lang["unknown"]
 	."\" onclick=\"return table_filter('".$table_id."', 'SEX', 'U')\">";
 	$person->sex = "U"; echo $person->getSexImage()."&nbsp;</button> ";
+	//echo $pgv_lang["year"];
+	echo " <input type=\"text\" size=\"4\" id=\"aliveyear\" value=\"".date('Y')."\" /> ";
+	echo "<button type=\"button\" class=\"alive_in_year\" onclick=\"return table_filter_alive('".$table_id."')\">";
+	echo $pgv_lang["alive_in_year"]."</button> ";
 	echo "<button type=\"button\" class=\"alive\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'N')\">";
 	echo $pgv_lang["alive"]."</button> ";
 	echo "<button type=\"button\" class=\"dead\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'Y')\">";
@@ -308,11 +312,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo $factarray["DEAT"]."&gt;100</button> ";
 	echo "<button type=\"button\" class=\"DEAT_Y100\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'Y100')\">";
 	echo $factarray["DEAT"]."&lt;=100</button> ";
-	echo "<br />";
-	echo $pgv_lang["year"];
-	echo " <input type=\"text\" size=\"4\" id=\"aliveyear\" value=\"".date('Y')."\" /> ";
-	echo "<button type=\"button\" class=\"alive_in_year\" onclick=\"return table_filter_alive('".$table_id."')\">";
-	echo $pgv_lang["alive_in_year"]."</button> ";
 	echo "<button type=\"button\" class=\"reset\" onclick=\"return table_filter('".$table_id."', '', '')\">";
 	echo $pgv_lang["reset"]."</button> ";
 
