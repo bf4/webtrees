@@ -399,7 +399,7 @@ function get_changed_date($datestr) {
 					$frenchDate = jdtofrench($jd);
 					list ($fMonth, $fDay, $fYear) = split ('/', $frenchDate);
 					$fMonthName = jdmonthname ($jd, 5);
-					$adate .= " <u>$fDay $fMonthName An $fYear</u> ";
+					$adate = "<u>$fDay $fMonthName An $fYear</u> ".$adate;
 				}
 			}
 			if (isset($pdate[$i]["ext"])) {
@@ -909,7 +909,14 @@ function parse_date($datestr) {
 	$dates[0]["ext"] = "";
 	$strs = preg_split("/[\s\.,\-\\/\(\)\[\]\+'<>]+/", $datestr, -1, PREG_SPLIT_NO_EMPTY);
 	$index = 0;
-	$longmonth = array("january"=>"jan", "february"=>"feb", "march"=>"mar", "april"=>"apr", "may"=>"may", "june"=>"jun", "july"=>"jul", "august"=>"aug", "september"=>"sep", "october"=>"oct", "november"=>"nov", "december"=>"dec");
+	$longmonth = array("january"=>"jan", "february"=>"feb", "march"=>"mar",
+	"april"=>"apr", "may"=>"may", "june"=>"jun",
+	"july"=>"jul", "august"=>"aug", "september"=>"sep",
+	"october"=>"oct", "november"=>"nov", "december"=>"dec",
+	// adding french-style year num (e.g. @#DFRENCH R@ 29 PLUV an XI)
+	"an"=>"", "i"=>"1",	"ii"=>"2", "iii"=>"3", "iv"=>"4", "v"=>"5", "vi"=>"6", "vii"=>"7",
+	"viii"=>"8", "ix"=>"9", "x"=>"10", "xi"=>"11", "xii"=>"12", "xiii"=>"13", "xiv"=>"14"
+	);
 
 	for($i=0; $i<count($strs); $i++) {
 		if (isset($longmonth[strtolower($strs[$i])])) {
@@ -972,7 +979,7 @@ function parse_date($datestr) {
 	if ($d=="") $d=1;
 	if (strpos($e, "#DHEBREW")) list($m, $d, $y) = explode("/", JDToGregorian(JewishToJD($m, $d, $y)));
 	if (strpos($e, "#DFRENCH")) list($m, $d, $y) = explode("/", JDToGregorian(FrenchToJD($m, $d, $y)));
-	if (strpos($e, "#DJULIAN")) list($m, $d, $y) = explode("/", JDToGregorian($m, $d, $y));
+	if (strpos($e, "#DJULIAN")) list($m, $d, $y) = explode("/", JDToGregorian(JulianToJD($m, $d, $y)));
 	$dates[0]["sort"] = sprintf("%04d-%02d-%02d", $y, $m, $d);
 	//print_r($dates);
 	return $dates;
