@@ -557,6 +557,7 @@ $legend = PrintReady($legend);
 if (isset($names)) print_indi_table($names, $legend);
 
 print "</div>\n";
+load_behaviour();
 if(empty($SEARCH_SPIDER)) {
 	print_footer();
 }
