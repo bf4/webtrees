@@ -580,6 +580,7 @@ else
 <br />
 <?php
 $controller->printResults();
+echo "<br /><br /><br />";
+load_behaviour();
+print_footer();
 ?>
-<br /><br /><br />
-<?php print_footer(); ?>

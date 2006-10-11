@@ -49,7 +49,7 @@ function ts_makeSortable(table) {
 	for (var i=0;i<firstRow.cells.length;i++) {
 		var cell = firstRow.cells[i];
 		var txt = ts_getInnerText(cell);
-		cell.innerHTML = '<a href="#" class="sortheader" '+
+		cell.innerHTML = '<a href="javascript:;" class="sortheader" '+
 		'onMousedown="this.style.cursor=\'wait\';" ' + // PGV: set cursor
 		'onclick="ts_resortTable(this, '+i+');return false;">' +
 		txt+'<span class="sortarrow">&nbsp;&nbsp;</span></a>';
@@ -268,7 +268,8 @@ function table_filter(id, keyword, filter) {
 	}
 	// apply filter
 	for (var r=1;r<table.rows.length;r++) {
-		row = table.rows[r];
+		var row = table.rows[r];
+		var disp = "";
 		if (ts_getInnerText(row.cells[COLUMN]).indexOf(filter)==-1) disp="none";
 		else {
 			disp="table-row";
@@ -298,8 +299,8 @@ function table_filter_alive(id) {
 	var year = document.getElementById("aliveyear").value;
 	if (year<1500) return;
 	// get birth and death column number
-	BCOL = -1;
-	DCOL = -1;
+	var BCOL = -1;
+	var DCOL = -1;
 	var firstRow = table.rows[1];
 	for (var c=0;c<firstRow.cells.length;c++) {
 		key = firstRow.cells[c].getElementsByTagName("a");
@@ -317,11 +318,12 @@ function table_filter_alive(id) {
 	if (DCOL<0) return;
 	// apply filter
 	for (var r=1;r<table.rows.length;r++) {
-		row = table.rows[r];
+		var row = table.rows[r];
 		key = row.cells[BCOL].getElementsByTagName("a");
 		byear = key[0].title.substring(0,4);
 		key = row.cells[DCOL].getElementsByTagName("a");
 		dyear = key[0].title.substring(0,4);
+		var disp = "";
 		if (byear>0 && dyear>0 && (year<byear || dyear<year)) disp="none";
 		else {
 			disp="table-row";

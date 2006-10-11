@@ -89,5 +89,6 @@ print "</td>\n\t\t</tr>\n\t</table>";
 
 print "</div>";
 print "<br /><br />";
+load_behaviour();
 print_footer();
 ?>
