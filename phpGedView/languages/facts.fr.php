@@ -66,7 +66,7 @@ $factarray["CITY"]                      = "Localité";
 $factarray["CONF"]                      = "Confirmation";
 $factarray["CONL"]                      = "Confirmation (LDS)";
 $factarray["COPR"]                      = "Copyright";
-$factarray["CORP"]                      = "Institution";
+$factarray["CORP"]                      = "Entreprise";
 $factarray["CREM"]                      = "Incinération";
 $factarray["CTRY"]                      = "Pays";
 $factarray["DATA"]                      = "Données";
@@ -157,7 +157,6 @@ $factarray["EMAIL"]                     = "Adresse courriel";
 $factarray["_TODO"]                     = "Note";
 $factarray["_UID"]                      = "Identificateur universel (UID)";
 $factarray["_PRIM"]                     = "Image principale";
-
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"]                     = "Médical";
 $factarray["_DEG"]                      = "Diplôme";
@@ -182,7 +181,6 @@ $factarray["_MREL"]                     = "Lien avec la mère";
 $factarray["_FREL"]                     = "Lien avec le père";
 $factarray["_MSTAT"]                    = "Début Mariage (LDS)";
 $factarray["_MEND"]                     = "Fin Mariage (LDS)";
-
 // GEDCOM 5.5.1 related facts
 $factarray["FAX"]                       = "Fax";
 $factarray["FACT"]                      = "Evènement";
@@ -192,22 +190,19 @@ $factarray["LATI"]                      = "Latitude";
 $factarray["LONG"]                      = "Longitude";
 $factarray["FONE"]                      = "Phonétique";
 $factarray["ROMN"]                      = "Alphabet Romain";
-
 // PAF related facts
 $factarray["_NAME"]                     = "Adresse Mailing";
 $factarray["URL"]                       = "URL";
+$factarray["_URL"]                      = "Web URL";
 $factarray["_HEB"]                      = "Hébreu";
 $factarray["_SCBK"]                     = "Album";
 $factarray["_TYPE"]                     = "Type MultiMedia";
 $factarray["_SSHOW"]                    = "Diaporama";
-
 // Rootsmagic
 $factarray["_SUBQ"]                     = "Version courte";
 $factarray["_BIBL"]                     = "Bibliographie";
-
 // Reunion
 $factarray["EMAL"]                      = "Adresse courriel";
-
 // Other common customized facts
 $factarray["_ADPF"]                     = "Adoption par le père";
 $factarray["_ADPM"]                     = "Adoption par la mère";
@@ -234,58 +229,43 @@ $factarray["_YART"]                     = "Yartzeit";
 $factarray["_MARNM"]                    = "Nom de mariage";
 $factarray["_STAT"]                     = "Statut Mariage";
 $factarray["COMM"]                      = "Commentaire";
-
 // Aldfaer related facts
 $factarray["MARR_CIVIL"]                = "Mariage civil";
 $factarray["MARR_RELIGIOUS"]            = "Mariage religieux";
 $factarray["MARR_PARTNERS"]             = "Partenaires";
 $factarray["MARR_UNKNOWN"]              = "";
-
 $factarray["_HNM"]                      = "Nom hébreu";
-
 // Pseudo-facts for relatives
 $factarray["_DEAT_SPOU"]                = "Décès du conjoint";
-
 $factarray["_BIRT_CHIL"]                = "Naissance d'un enfant";
 $factarray["_MARR_CHIL"]                = "Mariage d'un enfant";
 $factarray["_DEAT_CHIL"]                = "Décès d'un enfant";
-
 $factarray["_BIRT_GCHI"]                = "Naissance d'un petit-enfant";
 $factarray["_MARR_GCHI"]                = "Mariage d'un petit-enfant";
 $factarray["_DEAT_GCHI"]                = "Décès d'un petit-enfant";
-
 $factarray["_MARR_FATH"]                = "Mariage du père";
 $factarray["_DEAT_FATH"]                = "Décès du père";
-
 $factarray["_MARR_MOTH"]                = "Mariage de la mère";
 $factarray["_DEAT_MOTH"]                = "Décès de la mère";
-
 $factarray["_BIRT_SIBL"]                = "Naissance frère/sœur";
 $factarray["_MARR_SIBL"]                = "Mariage frère/sœur";
 $factarray["_DEAT_SIBL"]                = "Décès frère/sœur";
-
 $factarray["_BIRT_HSIB"]                = "Naissance demi-frère/sœur";
 $factarray["_MARR_HSIB"]                = "Mariage demi-frère/sœur";
 $factarray["_DEAT_HSIB"]                = "Décès demi-frère/sœur";
-
 $factarray["_DEAT_GPAR"]                = "Décès d'un grand-parent";
-
 $factarray["_BIRT_FSIB"]                = "Naissance frère/sœur du père";
 $factarray["_MARR_FSIB"]                = "Mariage frère/sœur du père";
 $factarray["_DEAT_FSIB"]                = "Décès frère/sœur du père";
-
 $factarray["_BIRT_MSIB"]                = "Naissance frère/sœur de la mère";
 $factarray["_MARR_MSIB"]                = "Mariage frère/sœur de la mère";
 $factarray["_DEAT_MSIB"]                = "Décès frère/sœur de la mère";
-
 $factarray["_BIRT_COUS"]                = "Naissance cousin(e) germain(e)";
 $factarray["_MARR_COUS"]                = "Mariage cousin(e) germain(e)";
 $factarray["_DEAT_COUS"]                = "Décès cousin(e) germain(e)";
-
 //-- PGV Only facts
 $factarray["_THUM"]                     = "Vignette";
-$factarray["_PGVU"]                     = "Dernière modification par";
+$factarray["_PGVU"]                     = "par";
 $factarray["SERV"]                      = "Serveur distant";
 $factarray["_GEDF"]                     = "Fichier GEDCOM";
-
 ?>
