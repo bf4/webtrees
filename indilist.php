@@ -454,7 +454,7 @@ else {
             	// Make sure we only display true "hits"
 				$trueHit = false;
 				if (!empty($surname)) {
-					if (strcasecmp($surname, strip_prefix($name[2]))==0) $trueHit = true;
+					if (strcasecmp(strip_prefix($surname), strip_prefix($name[2]))==0) $trueHit = true;
 				} else {
 					$firstLetter = get_first_letter(strip_prefix($name[2]));
 					if (strcasecmp($alpha, $firstLetter)==0) $trueHit = true;
