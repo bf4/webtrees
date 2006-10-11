@@ -454,10 +454,10 @@ else {
             	// Make sure we only display true "hits"
 				$trueHit = false;
 				if (!empty($surname)) {
-					if ($surname==strip_prefix($name[2])) $trueHit = true;
+					if (strcasecmp($surname, strip_prefix($name[2]))==0) $trueHit = true;
 				} else {
 					$firstLetter = get_first_letter(strip_prefix($name[2]));
-					if ($alpha==$firstLetter) $trueHit = true;
+					if (strcasecmp($alpha, $firstLetter)==0) $trueHit = true;
 
 					if (!$trueHit && $DICTIONARY_SORT[$LANGUAGE]) {
 						if (strlen($firstLetter)==2) {
@@ -473,7 +473,7 @@ else {
 									$firstLetter = substr($LCDiacritStrip, $aPos, 1);
 								}
 							}
-							if ($alpha==$firstLetter) $trueHit = true;
+							if (strcasecmp($alpha, $firstLetter)==0) $trueHit = true;
 						}
 					}
 				}
@@ -481,7 +481,7 @@ else {
 					// Make sure we only display true "hits" on the first name
 					$trueHit = false;
 					$firstLetter = get_first_letter($name[0]);
-					if ($falpha==$firstLetter) $trueHit = true;
+					if (strcasecmp($falpha, $firstLetter)==0) $trueHit = true;
 
 					if (!$trueHit && $DICTIONARY_SORT[$LANGUAGE]) {
 						if (strlen($firstLetter)==2) {
@@ -497,7 +497,7 @@ else {
 									$firstLetter = substr($LCDiacritStrip, $aPos, 1);
 								}
 							}
-							if ($falpha==$firstLetter) $trueHit = true;
+							if (strcasecmp($falpha, $firstLetter)==0) $trueHit = true;
 						}
 					}
 				}
