@@ -65,12 +65,12 @@ function print_gedcom($privatize_export='', $privatize_export_level='', $convert
 			$head = trim($head);
 			$head .= "\r\n1 SOUR PhpGedView\r\n2 NAME PhpGedView Online Genealogy\r\n2 VERS $VERSION $VERSION_RELEASE\r\n";
 			$head .= "1 DATE " . date("j M Y") . "\r\n";
-			$head .= "2 TIME " . date("h:i:s") . "\r\n";
+			$head .= "2 TIME " . date("H:i:s") . "\r\n";
 			if (strstr($head, "1 PLAC") === false) {
 				$head .= "1 PLAC\r\n2 FORM " . $pgv_lang["default_form"] . "\r\n";
 			}
 		} else {
-			$head = "0 HEAD\r\n1 SOUR PhpGedView\r\n2 NAME PhpGedView Online Genealogy\r\n2 VERS $VERSION $VERSION_RELEASE\r\n1 DEST DISKETTE\r\n1 DATE " . date("j M Y") . "\r\n2 TIME " . date("h:i:s") . "\r\n";
+			$head = "0 HEAD\r\n1 SOUR PhpGedView\r\n2 NAME PhpGedView Online Genealogy\r\n2 VERS $VERSION $VERSION_RELEASE\r\n1 DEST DISKETTE\r\n1 DATE " . date("j M Y") . "\r\n2 TIME " . date("H:i:s") . "\r\n";
 			$head .= "1 GEDC\r\n2 VERS 5.5\r\n2 FORM LINEAGE-LINKED\r\n1 CHAR $CHARACTER_SET\r\n1 PLAC\r\n2 FORM " . $pgv_lang["default_form"] . "\r\n";
 		}
 		if ($convert == "yes") {
