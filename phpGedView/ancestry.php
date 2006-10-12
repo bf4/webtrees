@@ -209,7 +209,6 @@ if ($controller->chart_style==2) {
 	echo "<div class=\"center\">";
 	print_indi_table($treeid, $pgv_lang["ancestry_chart"]." : ".PrintReady($controller->name), "sosa");
 	echo "</div>";
-	load_behaviour();
 }
 //-- Family list
 if ($controller->chart_style==3) {
@@ -224,8 +223,6 @@ if ($controller->chart_style==3) {
 	echo "<div class=\"center\">";
 	print_fam_table(array_unique($famlist), $pgv_lang["ancestry_chart"]." : ".PrintReady($controller->name));
 	echo "</div>";
-	load_behaviour();
 }
-
 print_footer();
 ?>

@@ -1510,6 +1510,5 @@ if ($view=="preview"){
 }
 print "</table>\n";
 print "</div><br />\n";
-load_behaviour();
 print_footer();
 ?>

@@ -800,6 +800,7 @@ function print_footer() {
 	 global $without_close, $pgv_lang, $view, $buildindex, $pgv_changes, $VERSION_RELEASE, $DBTYPE;
 	 global $VERSION, $SHOW_STATS, $SCRIPT_NAME, $QUERY_STRING, $footerfile, $print_footerfile, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $printlink;
 	 global $PGV_IMAGE_DIR, $theme_name, $PGV_IMAGES, $TEXT_DIRECTION, $footer_count;
+
 	 if (!isset($footer_count)) $footer_count = 1;
 	 else $footer_count++;
 	 print "<!-- begin footer -->\n";
@@ -819,6 +820,7 @@ function print_footer() {
 		  print "\n\t<a id=\"backlink\" style=\"display: none;\" href=\"javascript:;\" onclick=\"window.location='".$backlink."'; return false;\">".$pgv_lang["cancel_preview"]."</a><br />";
 		  print "</div>";
 	 }
+	 if (function_exists("load_behaviour")) load_behaviour();  // @see function_print_lists.php
 	 print "\n\t</body>\n</html>";
 }
 // -- print the html to close the page
