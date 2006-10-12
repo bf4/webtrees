@@ -281,48 +281,34 @@ function print_indi_table($datalist, $legend="", $option="") {
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- filter buttons
 	$person = new Person("");
-	echo "<button type=\"button\" class=\"sexM\" value=\"".@$pgv_lang["button_sexM"]
-	."\" onclick=\"return table_filter('".$table_id."', 'SEX', 'M')\">";
+	echo "<button type=\"button\" class=\"SEX_M\" title=\"".@$pgv_lang["button_SEX_M"]."\" >";
 	$person->sex = "M"; echo $person->getSexImage()."&nbsp;</button> ";
-	echo "<button type=\"button\" class=\"sexF\" value=\"".@$pgv_lang["button_sexF"]
-	."\" onclick=\"return table_filter('".$table_id."', 'SEX', 'F')\">";
+	echo "<button type=\"button\" class=\"SEX_F\" title=\"".@$pgv_lang["button_SEX_F"]."\" >";
 	$person->sex = "F"; echo $person->getSexImage()."&nbsp;</button> ";
-	echo "<button type=\"button\" class=\"sexU\" value=\"".@$pgv_lang["button_sexU"]
-	."\" onclick=\"return table_filter('".$table_id."', 'SEX', 'U')\">";
+	echo "<button type=\"button\" class=\"SEX_U\" title=\"".@$pgv_lang["button_SEX_U"]."\" >";
 	$person->sex = "U"; echo $person->getSexImage()."&nbsp;</button> ";
-	//echo $pgv_lang["year"];
 	echo " <input type=\"text\" size=\"4\" id=\"aliveyear\" value=\"".date('Y')."\" /> ";
-	echo "<button type=\"button\" class=\"alive_in_year\" value=\"".@$pgv_lang["button_alive_in_year"]
-	."\" onclick=\"return table_filter_alive('".$table_id."')\">";
+	echo "<button type=\"button\" class=\"alive_in_year\" title=\"".@$pgv_lang["button_alive_in_year"]."\" >";
 	echo $pgv_lang["alive_in_year"]."</button> ";
-	echo "<button type=\"button\" class=\"DEAT_N\" value=\"".@$pgv_lang["button_DEAT_N"]
-	."\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'N')\">";
+	echo "<button type=\"button\" class=\"DEAT_N\" title=\"".@$pgv_lang["button_DEAT_N"]."\" >";
 	echo $pgv_lang["alive"]."</button> ";
-	echo "<button type=\"button\" class=\"DEAT_Y\" value=\"".@$pgv_lang["button_DEAT_Y"]
-	."\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'Y')\">";
+	echo "<button type=\"button\" class=\"DEAT_Y\" title=\"".@$pgv_lang["button_DEAT_Y"]."\" >";
 	echo $pgv_lang["dead"]."</button> ";
-	echo "<button type=\"button\" class=\"roots\" value=\"".@$pgv_lang["button_roots"]
-	."\" onclick=\"return table_filter('".$table_id."', 'TREE', 'R')\">";
+	echo "<button type=\"button\" class=\"TREE_R\" title=\"".@$pgv_lang["button_TREE_R"]."\" >";
 	echo $pgv_lang["roots"]."</button> ";
-	echo "<button type=\"button\" class=\"leaves\" value=\"".@$pgv_lang["button_leaves"]
-	."\"onclick=\"return table_filter('".$table_id."', 'TREE', 'L')\">";
+	echo "<button type=\"button\" class=\"TREE_L\" title=\"".@$pgv_lang["button_TREE_L"]."\" >";
 	echo $pgv_lang["leaves"]."</button> ";
 	echo "<br />";
 	$y100 = get_changed_date(date('Y')-100);
-	echo "<button type=\"button\" class=\"BIRT_YES\" value=\"".@$pgv_lang["button_BIRT_YES"]
-	."\"onclick=\"return table_filter('".$table_id."', 'BIRT', 'YES')\">";
+	echo "<button type=\"button\" class=\"BIRT_YES\" title=\"".@$pgv_lang["button_BIRT_YES"]."\" >";
 	echo $factarray["BIRT"]."&gt;100</button> ";
-	echo "<button type=\"button\" class=\"BIRT_Y100\" value=\"".@$pgv_lang["button_BIRT_Y100"]
-	."\"onclick=\"return table_filter('".$table_id."', 'BIRT', 'Y100')\">";
+	echo "<button type=\"button\" class=\"BIRT_Y100\" title=\"".@$pgv_lang["button_BIRT_Y100"]."\" >";
 	echo $factarray["BIRT"]."&lt;=100</button> ";
-	echo "<button type=\"button\" class=\"DEAT_YES\" value=\"".@$pgv_lang["button_DEAT_YES"]
-	."\"onclick=\"return table_filter('".$table_id."', 'DEAT', 'YES')\">";
+	echo "<button type=\"button\" class=\"DEAT_YES\" title=\"".@$pgv_lang["button_DEAT_YES"]."\" >";
 	echo $factarray["DEAT"]."&gt;100</button> ";
-	echo "<button type=\"button\" class=\"DEAT_Y100\" value=\"".@$pgv_lang["button_DEAT_Y100"]
-	."\"onclick=\"return table_filter('".$table_id."', 'DEAT', 'Y100')\">";
+	echo "<button type=\"button\" class=\"DEAT_Y100\" title=\"".@$pgv_lang["button_DEAT_Y100"]."\" >";
 	echo $factarray["DEAT"]."&lt;=100</button> ";
-	echo "<button type=\"button\" class=\"reset\" value=\"".@$pgv_lang["button_reset"]
-	."\"onclick=\"return table_filter('".$table_id."', '', '')\">";
+	echo "<button type=\"button\" class=\"reset\" title=\"".@$pgv_lang["button_reset"]."\" >";
 	echo $pgv_lang["reset"]."</button> ";
 
 	//-- table header
@@ -490,40 +476,29 @@ function print_fam_table($datalist, $legend="") {
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- filter buttons
-	echo "<button type=\"button\" class=\"both_alive\" value=\"".@$pgv_lang["button_both_alive"]
-	."\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'N')\">";
+	echo "<button type=\"button\" class=\"DEAT_N\" title=\"".@$pgv_lang["button_DEAT_N"]."\" >";
 	echo $pgv_lang["both_alive"]."</button> ";
-	echo "<button type=\"button\" class=\"widower\" value=\"".@$pgv_lang["button_widower"]
-	."\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'W')\">";
+	echo "<button type=\"button\" class=\"DEAT_W\" title=\"".@$pgv_lang["button_DEAT_W"]."\" >";
 	echo $pgv_lang["widower"]."</button> ";
-	echo "<button type=\"button\" class=\"widow\" value=\"".@$pgv_lang["button_widow"]
-	."\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'H')\">";
+	echo "<button type=\"button\" class=\"DEAT_H\" title=\"".@$pgv_lang["button_DEAT_H"]."\" >";
 	echo $pgv_lang["widow"]."</button> ";
-	echo "<button type=\"button\" class=\"both_dead\" value=\"".@$pgv_lang["button_both_dead"]
-	."\" onclick=\"return table_filter('".$table_id."', 'DEAT', 'Y')\">";
+	echo "<button type=\"button\" class=\"DEAT_Y\" title=\"".@$pgv_lang["button_DEAT_Y"]."\" >";
 	echo $pgv_lang["both_dead"]."</button> ";
-	echo "<button type=\"button\" class=\"roots\" value=\"".@$pgv_lang["button_roots"]
-	."\" onclick=\"return table_filter('".$table_id."', 'TREE', 'R')\">";
+	echo "<button type=\"button\" class=\"TREE_R\" title=\"".@$pgv_lang["button_TREE_R"]."\" >";
 	echo $pgv_lang["roots"]."</button> ";
-	echo "<button type=\"button\" class=\"leaves\" value=\"".@$pgv_lang["button_leaves"]
-	."\" onclick=\"return table_filter('".$table_id."', 'TREE', 'L')\">";
+	echo "<button type=\"button\" class=\"TREE_L\" title=\"".@$pgv_lang["button_TREE_L"]."\" >";
 	echo $pgv_lang["leaves"]."</button> ";
 	echo "<br />";
 	$y100 = get_changed_date(date('Y')-100);
-	echo "<button type=\"button\" class=\"MARR_U\" value=\"".@$pgv_lang["button_MARR_U"]
-	."\" onclick=\"return table_filter('".$table_id."', 'MARR', '?')\">";
+	echo "<button type=\"button\" class=\"MARR_U\" title=\"".@$pgv_lang["button_MARR_U"]."\" >";
 	echo $factarray["MARR"]." ?</button> ";
-	echo "<button type=\"button\" class=\"MARR_YES\" value=\"".@$pgv_lang["button_MARR_YES"]
-	."\" onclick=\"return table_filter('".$table_id."', 'MARR', 'YES')\">";
+	echo "<button type=\"button\" class=\"MARR_YES\" title=\"".@$pgv_lang["button_MARR_YES"]."\" >";
 	echo $factarray["MARR"]."&gt;100</button> ";
-	echo "<button type=\"button\" class=\"MARR_Y100\" value=\"".@$pgv_lang["button_MARR_Y100"]
-	."\" onclick=\"return table_filter('".$table_id."', 'MARR', 'Y100')\">";
+	echo "<button type=\"button\" class=\"MARR_Y100\" title=\"".@$pgv_lang["button_MARR_Y100"]."\" >";
 	echo $factarray["MARR"]."&lt;=100</button> ";
-	echo "<button type=\"button\" class=\"DIV\" value=\"".@$pgv_lang["button_DIV"]
-	."\" onclick=\"return table_filter('".$table_id."', 'MARR', 'DIV')\">";
+	echo "<button type=\"button\" class=\"MARR_DIV\" title=\"".@$pgv_lang["button_MARR_DIV"]."\" >";
 	echo $factarray["DIV"]."</button> ";
-	echo "<button type=\"button\" class=\"reset\" value=\"".@$pgv_lang["button_reset"]
-	."\" onclick=\"return table_filter('".$table_id."', '', '')\">";
+	echo "<button type=\"button\" class=\"reset\" title=\"".@$pgv_lang["button_reset"]."\" >";
 	echo $pgv_lang["reset"]."</button> ";
 
 	//-- table header
@@ -640,7 +615,7 @@ function print_fam_table($datalist, $legend="") {
 		}
 
 		echo "<td style=\"display:none\">";
-		if (!$family->disp or $family->getMarriageRecord()=="" or $family->getMarriageYear()=="0000") echo "?";
+		if (!$family->disp or $family->getMarriageRecord()=="" or $family->getMarriageYear()=="0000") echo "U";
 		else if ($family->getMarriageYear()>=date('Y')-100) echo "Y100";
 		else echo "YES";
 		if ($family->isDivorced()) echo " DIV";
@@ -1008,6 +983,7 @@ function print_changes_table($datalist) {
  * @param none
  */
 function load_behaviour() {
+	global $pgv_lang;
 ?>
 	<script type="text/javascript" src="js/conio.net/prototype.js"></script>
 	<script type="text/javascript" src="js/bennolan.com/behaviour.js"></script>
@@ -1015,21 +991,38 @@ function load_behaviour() {
 	<script type="text/javascript">
 	var myrules = {
 		'fieldset button' : function(element) {
-			element.onmouseover = function() {
-				helptext = this.value;
+			element.onmouseover = function() { // show helptext
+				helptext = this.title;
+				if (helptext=='') helptext = this.value;
 				if (helptext=='') helptext = 'Help text : button_'+this.className;
+				this.title = helptext; if (document.all) return; // IE = title
+				this.value = helptext; this.title = ''; // Firefox = value
 				return overlib(helptext, CAPTION, this.innerHTML);
 			}
-			element.onmouseout = nd;
+			element.onmouseout = nd; // hide helptext
+			element.onmousedown = function() { // show active button
+				var buttons = this.parentNode.getElementsByTagName("button");
+				for (var i=0; i<buttons.length; i++) buttons[i].style.opacity = 1;
+				this.style.opacity = 0.67;
+			}
+			element.onclick = function() { // apply filter
+				var table = this.parentNode.getElementsByTagName("table")[0].id;
+				var args = this.className.split('_'); // eg: BIRT_YES
+				if (args[0]=="alive") return table_filter_alive(table);
+				if (args[0]=="reset") return table_filter(table, "", "");
+				if (args[1].length) return table_filter(table, args[0], args[1]);
+				return false;
+			}
 		},
 		'fieldset th' : function(element) {
-			element.onmouseover = function() {
+			element.onmouseout = nd; // hide helptext
+			element.onmouseover = function() { // show helptext
 				helptext = 'Click to sort this column';
+				//helptext = <?php echo "'".$pgv_lang["sort_by"]."'"?>;
 				return overlib(helptext);
 			}
-			element.onmouseout = nd;
-		},
-	};
+		}
+	}
 	Behaviour.register(myrules);
 	</script>
 <?php

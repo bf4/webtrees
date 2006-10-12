@@ -1504,17 +1504,17 @@ class SearchControllerRoot extends BaseController {
 				foreach ($this->sgeds as $key=>$GEDCOM) {
 					$datalist = array();
 					foreach ($printindiname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[]=$v[1];
-					print_indi_table($datalist, $pgv_lang["individuals"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
+					print_indi_table(array_unique($datalist), $pgv_lang["individuals"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
 				}
 				foreach ($this->sgeds as $key=>$GEDCOM) {
 					$datalist = array();
 					foreach ($printfamname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[]=$v[1];
-					print_fam_table($datalist, $pgv_lang["families"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
+					print_fam_table(array_unique($datalist), $pgv_lang["families"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
 				}
 				foreach ($this->sgeds as $key=>$GEDCOM) {
 					$datalist = array();
 					foreach ($actualsourcelist as $k=>$v) if ($v["gedfile"]==$GEDCOMS[$GEDCOM]["id"]) $datalist[]=$k;
-					print_sour_table($datalist, $pgv_lang["sources"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
+					print_sour_table(array_unique($datalist), $pgv_lang["sources"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
 				}
 				$GEDCOM = $oldged;
 				//-- [end] new code for sortable tables

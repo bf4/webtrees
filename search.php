@@ -581,6 +581,5 @@ else
 <?php
 $controller->printResults();
 echo "<br /><br /><br />";
-load_behaviour();
 print_footer();
 ?>

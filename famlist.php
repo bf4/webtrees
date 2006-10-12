@@ -436,6 +436,5 @@ if (!empty($surname) or $surname_sublist=="no") print_fam_table($tfamlist, $lege
 
 print "<br /><br />\n";
 print "</div>\n";
-load_behaviour();
 print_footer();
 ?>

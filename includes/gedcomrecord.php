@@ -236,7 +236,8 @@ class GedcomRecord {
 	function getLinkUrl() {
 		global $GEDCOM, $SERVER_URL;
 
-		$url = "index.php";
+		//$url = "index.php";
+		$url = "gedrecord.php?pid=".$this->xref; // no class yet for NOTE record
 		if ($this->isRemote()) {
 			$parts = preg_split("/:/", $this->rfn);
 			$servid = $parts[0];
@@ -314,7 +315,7 @@ class GedcomRecord {
 		$url = "calendar.php?action=year&amp;day=".$d."&amp;month=".$ged_months[$m+0]."&amp;year=".$y."&amp;ged=".$GEDCOM;
 		return $url;
 	}
-
+	
 	/**
 	 * get the URL to link to a place
 	 * @string a url that can be used to link to placelist
@@ -338,6 +339,16 @@ class GedcomRecord {
 		$gedcom_place = trim($gedcom_place, " ,");
 		$exp = explode(",", $gedcom_place);
 		return trim($exp[0]);
+	}
+
+	/**
+	 * get the sortable name
+	 * This method should be overriden in child sub-classes
+	 * (no class yet for NOTE record)
+	 * @return string
+	 */
+	function getSortableName() {
+		return $this->type." ".$this->xref;
 	}
 
 	/**
