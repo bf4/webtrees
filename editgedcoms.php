@@ -183,6 +183,7 @@ $GedCount = 0;
 				else print "&lrm;".$gedarray["path"]." &rlm;(";
 				printf("%.2fKb", (filesize($gedarray["path"])/1024));
 				print ")";
+				/** deactivate [ 1573749 ]
 				if($SECURITY_CHECK_GEDCOM_DOWNLOADABLE){
 					$url = check_gedcom_downloadable($gedarray["path"]);
 					if ($url!==false) {
@@ -190,7 +191,7 @@ $GedCount = 0;
 						print "<span class=\"error\">".$pgv_lang["gedcom_downloadable"]." :</span>";
 						print "<br /><a href=\"$url\">$url</a>";
 					}
-				}
+				}**/
 			}
 			else print "<span class=\"error\">".$pgv_lang["file_not_found"]."</span>";
 			print "</td>";
