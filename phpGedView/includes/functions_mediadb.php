@@ -546,9 +546,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	$myDir = str_replace($MEDIA_DIRECTORY, "", $directory);
 	$sql = "SELECT * FROM " . $TBLPREFIX . "media WHERE m_gedfile='" . $GEDCOMS[$GEDCOM]["id"] . "'";
 	if ($random == true) {
-		if ($DBTYPE=='pgsql') $sql .= " ORDER BY RANDOM()";
-		else if ($DBTYPE=='pgsql') $sql .= " ORDER BY NEWID()";
-		else $sql .= " ORDER BY RAND()";
+		$sql .= " ORDER BY ".DB_RANDOM."()";
 		$res = & dbquery($sql, true, 5);
 	} else {
 		$sql .= " AND (m_file LIKE '%" . $DBCONN->escapeSimple($myDir) . "%' OR m_file LIKE '%://%') ORDER BY m_id desc";

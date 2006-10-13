@@ -64,7 +64,7 @@ Version 4.0.2 2006-10-03
  - Fixed [ 1568908 ] gedcom_stats.php output doesn't validate (canajun2eh)
  - Added Support for Estonian language (canajun2eh)
  - Fixed Address privacy in reports / report access privacy not used (yalnifj)
- - Fixed Random Media block performance (yalnifj)
+ - Fixed Random Media block performance (Neumont / yalnifj)
  - Fixed [ 1542463 ] strpos errors during inital install (opus27)
  - Fixed Hourglass still uses 3.3 privacy rules (yalnifj)
  - Fixed Marriage date edit doesn't show up (opus27)
