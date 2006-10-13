@@ -44,6 +44,26 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["button_alive_in_year"]		12 Oct 2006				A
++$pgv_lang["button_BIRT_Y100"]				12 Oct 2006				A
++$pgv_lang["button_BIRT_YES"]					12 Oct 2006				A
++$pgv_lang["button_DEAT_H"]						12 Oct 2006				A
++$pgv_lang["button_DEAT_N"]						12 Oct 2006				A
++$pgv_lang["button_DEAT_W"]						12 Oct 2006				A
++$pgv_lang["button_DEAT_Y"]						12 Oct 2006				A
++$pgv_lang["button_DEAT_Y100"]				12 Oct 2006				A
++$pgv_lang["button_DEAT_YES"]					12 Oct 2006				A
++$pgv_lang["button_MARR_DIV"]					12 Oct 2006				A
++$pgv_lang["button_MARR_U"]						12 Oct 2006				A
++$pgv_lang["button_MARR_Y100"]				12 Oct 2006				A
++$pgv_lang["button_MARR_YES"]					12 Oct 2006				A
++$pgv_lang["button_reset"]						12 Oct 2006				A
++$pgv_lang["button_SEX_F"]						12 Oct 2006				A
++$pgv_lang["button_SEX_M"]						12 Oct 2006				A
++$pgv_lang["button_SEX_U"]						12 Oct 2006				A
++$pgv_lang["button_TREE_L"]						12 Oct 2006				A
++$pgv_lang["button_TREE_R"]						12 Oct 2006				A
++$pgv_lang["sort_column"]							12 Oct 2006				A
 +$pgv_lang["activate"]									12 Oct 2006				A
 +$pgv_lang["deactivate"]								12 Oct 2006				A
 +$pgv_lang["play"]									29 Sep 2006				A
