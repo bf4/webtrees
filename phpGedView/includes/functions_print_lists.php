@@ -994,10 +994,10 @@ function load_behaviour() {
 			element.onmouseover = function() { // show helptext
 				helptext = this.title;
 				if (helptext=='') helptext = this.value;
-				if (helptext=='') helptext = 'Help text : button_'+this.className;
+				if (helptext=='' || helptext==undefined) helptext = 'Help text : button_'+this.className;
 				this.title = helptext; if (document.all) return; // IE = title
 				this.value = helptext; this.title = ''; // Firefox = value
-				return overlib(helptext, CAPTION, this.innerHTML);
+				return overlib(helptext, BGCOLOR, "#000000", FGCOLOR, "#FFFFE0");
 			}
 			element.onmouseout = nd; // hide helptext
 			element.onmousedown = function() { // show active button
@@ -1017,9 +1017,12 @@ function load_behaviour() {
 		'fieldset th' : function(element) {
 			element.onmouseout = nd; // hide helptext
 			element.onmouseover = function() { // show helptext
-				helptext = 'Click to sort this column';
-				//helptext = <?php echo "'".$pgv_lang["sort_by"]."'"?>;
-				return overlib(helptext);
+				helptext = this.title;
+				if (helptext=='') helptext = this.value;
+				if (helptext=='' || helptext==undefined) helptext = <?php echo "'".@$pgv_lang["sort_column"]."'"?>;
+				this.title = helptext; if (document.all) return; // IE = title
+				this.value = helptext; this.title = ''; // Firefox = value
+				return overlib(helptext, BGCOLOR, "#000000", FGCOLOR, "#FFFFE0");
 			}
 		}
 	}

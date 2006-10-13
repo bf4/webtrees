@@ -1686,4 +1686,25 @@ $pgv_lang["img_size"]				= "Image Size";
 $pgv_lang["module_error_unknown_action_v2"] = "Unknown action: [action].";
 $pgv_lang["module_error_unknown_type"] = "Unknown module type.";
 
+//-- sortable tables buttons
+$pgv_lang["button_alive_in_year"] = "Show persons alive in the indicated year.";
+$pgv_lang["button_BIRT_Y100"] = "Show persons born within the last 100 years.";
+$pgv_lang["button_BIRT_YES"] = "Show persons born more than 100 years ago.";
+$pgv_lang["button_DEAT_H"] = "Show couples where only the male partner is deceased.";
+$pgv_lang["button_DEAT_N"] = "Show people who are alive or couples where both partners are alive.";
+$pgv_lang["button_DEAT_W"] = "Show couples where only the female partner is deceased.";
+$pgv_lang["button_DEAT_Y"] = "Show people who are dead or couples where both partners are deceased.";
+$pgv_lang["button_DEAT_Y100"] = "Show people who died within the last 100 years.";
+$pgv_lang["button_DEAT_YES"] = "Show people who died more than 100 years ago.";
+$pgv_lang["button_MARR_DIV"] = "Show divorced couples.";
+$pgv_lang["button_MARR_U"] = "Show couples with an unknown marriage date.";
+$pgv_lang["button_MARR_Y100"] = "Show couples who married within the last 100 years.";
+$pgv_lang["button_MARR_YES"] = "Show couples who married more than 100 years ago.";
+$pgv_lang["button_reset"] = "Reset to the list defaults.";
+$pgv_lang["button_SEX_F"] = "Show only females.";
+$pgv_lang["button_SEX_M"] = "Show only males.";
+$pgv_lang["button_SEX_U"] = "Show only persons of whom the gender is not known.";
+$pgv_lang["button_TREE_L"] = "Show &laquo;leaves&raquo; couples or individuals.  These are individuals who are alive but have no children recorded in the database.";
+$pgv_lang["button_TREE_R"] = "Show &laquo;roots&raquo; couples or individuals.  These people may also be called &laquo;patriarchs&raquo;.  They are individuals who have no parents recorded in the database.";
+$pgv_lang["sort_column"] = "Sort by this column.";
 ?>

@@ -1704,4 +1704,5 @@ $pgv_lang["button_SEX_M"] = "Affichage des hommes uniquement.";
 $pgv_lang["button_SEX_U"] = "Affichage des personnes de sexe indéterminé.";
 $pgv_lang["button_TREE_L"] = "Affichage des couples ou individus &laquo;feuilles&raquo;, c'est-à-dire : vivants à la date d'aujourd'hui mais n'ayant pas d'enfant enregistré dans la base.";
 $pgv_lang["button_TREE_R"] = "Affichage des couples ou individus &laquo;racines&raquo;, appelés également &laquo;patriarches&raquo;, c'est-à-dire : dont ni le père ni la mère ne sont enregistrés dans la base.";
+$pgv_lang["sort_column"] = "Trier sur cette colonne.";
 ?>
