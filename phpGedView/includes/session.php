@@ -75,6 +75,8 @@ function gen_spider_session_name($bot_name, $bot_language) {
 
 global $SEARCH_SPIDER;
 $SEARCH_SPIDER = false;		// set empty at start
+global $SESSION_HIDE_GOOGLEMAP;
+$SESSION_HIDE_GOOGLEMAP = "empty";
 
 $ua = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "";
 
@@ -396,6 +398,15 @@ while (true) {
 		if (!$pgv_lang_use[$_REQUEST["NEWLANGUAGE"]]) break;
 	}
 
+	if ((isset($_REQUEST["HIDE_GOOGLEMAP"])) && (empty($SEARCH_SPIDER))) {
+		if(stristr("true", $_REQUEST["HIDE_GOOGLEMAP"])) {
+			$SESSION_HIDE_GOOGLEMAP = "true";
+		}
+		if(stristr("false", $_REQUEST["HIDE_GOOGLEMAP"])) {
+			$SESSION_HIDE_GOOGLEMAP = "false";
+		}
+	}
+
 	$configOverride = false;
 	break;
 }
@@ -534,6 +545,16 @@ if(!empty($SEARCH_SPIDER)) {
 	$_SESSION['CLANGUAGE'] = "";	// Force language to gedcom default language.
 	session_write_close();
 	session_start();
+}
+
+// change the session values and store if needed.
+if($SESSION_HIDE_GOOGLEMAP == "true") $_SESSION['hide_googlemap'] = true;
+if($SESSION_HIDE_GOOGLEMAP == "false") $_SESSION['hide_googlemap'] = false;
+if($SESSION_HIDE_GOOGLEMAP == "empty") {
+	if((isset($_SESSION['hide_googlemap'])) && ($_SESSION['hide_googlemap'] == true))
+ 		$SESSION_HIDE_GOOGLEMAP = "true";
+	else 
+ 		$SESSION_HIDE_GOOGLEMAP = "false";
 }
 
 //-- import the post, get, and cookie variable into the scope on new versions of php
