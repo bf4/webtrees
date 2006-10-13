@@ -39,6 +39,35 @@ require_once 'DB.php';
 //-- set the REGEXP status of databases
 $REGEXP_DB = (stristr($DBTYPE,'mysql') !== false || $DBTYPE=='pgsql');
 
+/**
+ * Field and function definition variances between sql databases
+ */
+//-- mysql
+if (stristr($DBTYPE,'mysql') !== false) {
+	define('DB_RANDOM', 'RAND');
+	define('DB_LONGTEXT_TYPE', 'LONGTEXT');
+	define('DB_BEGIN_TRANS', 'BEGIN');
+	define('DB_COMMIT_TRANS', 'COMMIT');
+}
+else if ($DBTYPE=='pgsql') {
+	define('DB_RANDOM', 'RANDOM');
+	define('DB_LONGTEXT_TYPE', 'TEXT');
+	define('DB_BEGIN_TRANS', 'BEGIN');
+	define('DB_COMMIT_TRANS', 'COMMIT');
+}
+else if ($DBTYPE=='sqlite') {
+	define('DB_RANDOM', 'RANDOM');
+	define('DB_LONGTEXT_TYPE', 'TEXT');
+	define('DB_BEGIN_TRANS', 'BEGIN');
+	define('DB_COMMIT_TRANS', 'COMMIT');
+}
+else if ($DBTYPE=='mssql') {
+	define('DB_RANDOM', 'NEWID');
+	define('DB_LONGTEXT_TYPE', 'TEXT');
+	define('DB_BEGIN_TRANS', 'BEGIN TRANSACTION');
+	define('DB_COMMIT_TRANS', 'COMMIT TRANSACTION');
+}
+
 //-- uncomment the following line to turn on sql query logging
 //$SQL_LOG = true;
 

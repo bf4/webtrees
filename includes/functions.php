@@ -2724,7 +2724,7 @@ function runHooks($type, $params=array())
 		while(false !== ($f = $d->read()))
 		{
 			if($f === '.' || $f === '..'){continue;}
-			if(file_exists("modules/{$f}/pgvhooks/{$type}.php"))
+			if(is_dir("modules/$f") && file_exists("modules/{$f}/pgvhooks/{$type}.php"))
 			{
 				$hooks[$f] = "modules/{$f}/pgvhooks/{$type}.php";
 			}

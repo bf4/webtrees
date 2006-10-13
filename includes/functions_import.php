@@ -1022,7 +1022,7 @@ function create_individuals_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "individuals";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "individuals (i_id VARCHAR(255), i_file INT, i_rin VARCHAR(255), i_name VARCHAR(255), i_isdead INT DEFAULT 1, i_gedcom TEXT, i_letter VARCHAR(5), i_surname VARCHAR(100))";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "individuals (i_id VARCHAR(255), i_file INT, i_rin VARCHAR(255), i_name VARCHAR(255), i_isdead INT DEFAULT 1, i_gedcom ".DB_LONGTEXT_TYPE.", i_letter VARCHAR(5), i_surname VARCHAR(100))";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
@@ -1050,7 +1050,7 @@ function create_families_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "families";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE ".$TBLPREFIX."families (f_id VARCHAR(255), f_file INT, f_husb VARCHAR(255), f_wife VARCHAR(255), f_chil TEXT, f_gedcom TEXT, f_numchil INT)";
+	$sql = "CREATE TABLE ".$TBLPREFIX."families (f_id VARCHAR(255), f_file INT, f_husb VARCHAR(255), f_wife VARCHAR(255), f_chil TEXT, f_gedcom ".DB_LONGTEXT_TYPE.", f_numchil INT)";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
@@ -1072,7 +1072,7 @@ function create_sources_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "sources";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "sources (s_id VARCHAR(255), s_file INT, s_name VARCHAR(255), s_gedcom TEXT)";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "sources (s_id VARCHAR(255), s_file INT, s_name VARCHAR(255), s_gedcom ".DB_LONGTEXT_TYPE.")";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
@@ -1095,7 +1095,7 @@ function create_other_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "other";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "other (o_id VARCHAR(255), o_file INT, o_type VARCHAR(20), o_gedcom TEXT)";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "other (o_id VARCHAR(255), o_file INT, o_type VARCHAR(20), o_gedcom ".DB_LONGTEXT_TYPE.")";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
@@ -1232,8 +1232,7 @@ function create_media_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "media";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "media (m_id INT NOT NULL, m_media VARCHAR(15), m_ext VARCHAR(6), m_titl VARCHAR(255), m_file VARCHAR(255), m_gedfile INT, m_gedrec TEXT, PRIMARY KEY (m_id))";
-	//	$sql = "CREATE TABLE ".$TBLPREFIX."media (m_id INT NOT NULL, m_media VARCHAR(15) NOT NULL DEFAULT '', m_ext VARCHAR(6) NOT NULL DEFAULT '', m_titl VARCHAR(255) DEFAULT NULL, m_file VARCHAR(255) NOT NULL DEFAULT '', m_gedfile INT DEFAULT NULL, m_gedrec TEXT, PRIMARY KEY (m_id))";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "media (m_id INT NOT NULL, m_media VARCHAR(15), m_ext VARCHAR(6), m_titl VARCHAR(255), m_file VARCHAR(255), m_gedfile INT, m_gedrec ".DB_LONGTEXT_TYPE.", PRIMARY KEY (m_id))";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
@@ -1291,7 +1290,7 @@ function create_media_mapping_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "media_mapping";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "media_mapping (mm_id INT NOT NULL, mm_media VARCHAR(15) NOT NULL DEFAULT '', mm_gid VARCHAR(15) NOT NULL DEFAULT '', mm_order INT NOT NULL DEFAULT '0', mm_gedfile INT DEFAULT NULL, mm_gedrec TEXT, PRIMARY KEY (mm_id))";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "media_mapping (mm_id INT NOT NULL, mm_media VARCHAR(15) NOT NULL DEFAULT '', mm_gid VARCHAR(15) NOT NULL DEFAULT '', mm_order INT NOT NULL DEFAULT '0', mm_gedfile INT DEFAULT NULL, mm_gedrec ".DB_LONGTEXT_TYPE.", PRIMARY KEY (mm_id))";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
