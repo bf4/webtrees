@@ -44,6 +44,8 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["activate"]									12 Oct 2006				A
++$pgv_lang["deactivate"]								12 Oct 2006				A
 +$pgv_lang["play"]									29 Sep 2006				A
 +$pgv_lang["stop"]									29 Sep 2006				A
 +$pgv_lang["random_media_start_slide"]				29 Sep 2006				A

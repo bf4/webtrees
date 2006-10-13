@@ -1026,6 +1026,20 @@ else print "<table class=\"facts_table\"><tr><td id=\"no_tab6\" colspan=\"2\" cl
 if (file_exists("modules/googlemap/defaultconfig.php")) {
 	print "\n\t<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\" >\n";
 	    print "<span class=\"subheaders\">".$pgv_lang["googlemap"]."</span>\n";
+
+            if(empty($SEARCH_SPIDER)) {
+	    	$tNew = preg_replace("/&HIDE_GOOGLEMAP=true/", "", $_SERVER["REQUEST_URI"]);
+	    	$tNew = preg_replace("/&HIDE_GOOGLEMAP=false/", "", $tNew);
+	    	if($SESSION_HIDE_GOOGLEMAP == "true") {
+		    print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"http://".$_SERVER["SERVER_NAME"].$tNew."&HIDE_GOOGLEMAP=false\">";
+		    print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["activate"]."\" title=\"".$pgv_lang["activate"]."\" />";
+		    print " ".$pgv_lang["activate"]."</a></span>\n";
+	    	} else {
+		    print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"http://".$_SERVER["SERVER_NAME"].$tNew."&HIDE_GOOGLEMAP=true\">";
+		    print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["deactivate"]."\" title=\"".$pgv_lang["deactivate"]."\" />";
+		    print " ".$pgv_lang["deactivate"]."</a></span>\n";
+		}
+	    }
         if (!$controller->indi->canDisplayName()) {
             print "\n\t<table class=\"facts_table\">";
             print "<tr><td class=\"facts_value\">";
@@ -1037,15 +1051,17 @@ if (file_exists("modules/googlemap/defaultconfig.php")) {
         }
         else {
             if(empty($SEARCH_SPIDER)) {
+		if($SESSION_HIDE_GOOGLEMAP == "false") {
 	            include_once('modules/googlemap/googlemap.php');
-                $famids = array();
-                $families = $controller->indi->getSpouseFamilies();
-                foreach($families as $famid=>$family) {
-                    $famids[] = $family->getXref();
-                }
-                if (build_indiv_map($indifacts, $famids) == 0) {
-                    print "<tr><td id=\"no_tab7\" colspan=\"2\" class=\"facts_value\"></td></tr>\n";
-                }
+                    $famids = array();
+                    $families = $controller->indi->getSpouseFamilies();
+                    foreach($families as $famid=>$family) {
+                    	$famids[] = $family->getXref();
+                    }
+                    if (build_indiv_map($indifacts, $famids) == 0) {
+                   	print "<tr><td id=\"no_tab7\" colspan=\"2\" class=\"facts_value\"></td></tr>\n";
+                    }
+		}
             }
         }
 	// start

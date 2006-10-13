@@ -30,6 +30,8 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["activate"]					= "Activate";
+$pgv_lang["deactivate"]					= "Deactivate";
 $pgv_lang["play"]					= "Play";
 $pgv_lang["stop"]					= "Stop";
 $pgv_lang["random_media_start_slide"]	= "Start slideshow on page load?";
