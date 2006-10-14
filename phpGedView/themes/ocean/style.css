@@ -314,11 +314,11 @@ table.center{
 .date {
 	color: #333377;
 }
+.label, .field {
+	font: 11px  tahoma, verdana, arial, helvetica, sans-serif;
+}
 .label {
 	font-weight: bold;
-	font-size: 12px;
-}
-.field {
 }
 .error {
 	color: #DD0000;
