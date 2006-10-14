@@ -33,7 +33,7 @@
 BODY {
 	COLOR: #000000;
 	background-color: #FFFFFF;
-	font-family: verdana, helvetica, arial, sans-serif;
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
 	font-size: 12px;
 }
 A {
@@ -275,7 +275,7 @@ table.center{
 }
 .name1 {
 	color: #000000;
-	FONT: bold 10px verdana, helvetica, arial, sans-serif;
+	FONT: bold 10px tahoma, verdana, arial, helvetica, sans-serif;
 }
 .namered {
 	border: solid red 1px;
@@ -284,21 +284,21 @@ table.center{
 	border: solid blue 1px;
 }
 .details1 {
-	font: normal 10px verdana, helvetica, arial, sans-serif;
+	font: normal 10px tahoma, verdana, arial, helvetica, sans-serif;
 }
 .name2 {
 	color: #000000;
-	font: bold 12px verdana, helvetica, arial, sans-serif;
+	font: bold 12px tahoma, verdana, arial, helvetica, sans-serif;
 }
 .details2 {
-	FONT: normal 12px verdana, helvetica, arial, sans-serif;
+	FONT: normal 12px tahoma, verdana, arial, helvetica, sans-serif;
 }
 .nameZoom {
 	color: #000000;
-	FONT: bold 14px verdana, helvetica, arial, sans-serif;
+	FONT: bold 14px tahoma, verdana, arial, helvetica, sans-serif;
 }
 .detailsZoom {
-	FONT: 14px verdana, helvetica, arial, sans-serif;
+	FONT: 14px tahoma, verdana, arial, helvetica, sans-serif;
 	text-decoration: none;
 }
 .details_label {
@@ -306,31 +306,32 @@ table.center{
 }
 .name_head {
 	color: #000000;
-	FONT: bold 16px verdana, helvetica, arial, sans-serif;
+	FONT: bold 16px tahoma, verdana, arial, helvetica, sans-serif;
 	letter-spacing: .2px;
 }
 .date {
 	font-weight: bold;
 }
-.label {
+.label, .field {
 	color: #000000;
-	font: bold 11px verdana, helvetica, arial, sans-serif;
+	font: 11px tahoma, verdana, arial, helvetica, sans-serif;
 }
-.field {
+.label {
+	font-weight: bold;
 }
 .error {
 	color: #DD0000;
-	font-family: verdana, helvetica, arial, sans-serif;
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
 	font-weight: bold;
 }
 .largeError {
 	color: #DD0000;
-	font: large verdana, helvetica, arial, sans-serif;
+	font: large tahoma, verdana, arial, helvetica, sans-serif;
 	font-weight: bold;
 }
 .warning {
 	color: #DD0000;
-	font-family: verdana, helvetica, arial, sans-serif;
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
 	font-weight: bold;
 }
 .indent {
@@ -614,7 +615,7 @@ table.center{
 /*	height: auto;  */
 	max-height: 200px;
 	overflow: auto;
-	FONT: normal 10px tahoma, verdana, arial, Helvetica, sans-serif;
+	FONT: normal 10px tahoma, tahoma, verdana, arial, helvetica, sans-serif;
 	text-decoration: none;
 }
 
@@ -820,7 +821,7 @@ table.center{
 }
 .title {
 	font-size: 20px;
-	font-family: tahoma, verdana, arial, helvetica, sans-serif;
+	font-family: tahoma, tahoma, verdana, arial, helvetica, sans-serif;
 }
 .accesskeys{
 	width : 1px;

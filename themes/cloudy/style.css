@@ -630,13 +630,12 @@ th {
 }
 .date {
 }
-.label {
-	color: #000066;
-	font: bold 11px verdana, helvetica, arial, sans-serif;
-}
-.field {
+.label, .field {
 	color: #000066;
 	font: 11px verdana, helvetica, arial, sans-serif;
+}
+.label {
+	font-weight: bold;
 }
 .error {
 	color: #DD0000;

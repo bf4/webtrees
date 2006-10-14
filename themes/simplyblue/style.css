@@ -355,11 +355,11 @@ table.center{
 	color: #ffffff;
 	font-weight: bold; }
 
-.label {
-	font: bold 11px tahoma, verdana, arial, helvetica, sans-serif; }
+.label, .field {
+	font: 11px tahoma, verdana, arial, helvetica, sans-serif; }
 
-.field {
-   }
+.label {
+	font-weight: bold; }
 
 .error {
 	color: yellow;
