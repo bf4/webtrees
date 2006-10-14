@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Themes
- * @version $Id: theme.php,v 1.27.2.25 2006/03/02 15:23:17 canajun2eh Exp $
+ * @version $Id$
  */
 
 $theme_name = "Xenea";		//-- the name of this theme

@@ -1,9 +1,17 @@
-<?php global $SEARCH_SPIDER; ?>
+<?php global $SEARCH_SPIDER; $TEXT_DIRECTION;?>
 <div id="header" class="<?php print $TEXT_DIRECTION; ?>">
 <table width="100%" border="0" cellspacing="0" cellpadding="1" bgcolor="#003399">
    <tr>
       <td>
-      <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-image:url('<?php print $PGV_IMAGE_DIR; ?>/cabeza.jpg'); height:40;">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-image:url('<?php 
+      		if ($TEXT_DIRECTION=="ltr") {
+	      		print $PGV_IMAGE_DIR."/cabeza.jpg'); ";
+	      		print "background-position:left top; ";
+  			} else {
+	  			print $PGV_IMAGE_DIR."/cabeza_rtl.jpg'); ";
+	  			print "background-position:right top; ";
+  			}
+      		?>background-repeat:repeat-y; height:40;">
               <tr>
                 <td width="10"><img src="<?php print $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" /></td>
                 <td valign="middle"><font color="#FFFFFF" size="5" face="Verdana, Arial, Helvetica, sans-serif"><?php global $GEDCOMS, $GEDCOM; print PrintReady($GEDCOMS[$GEDCOM]["title"], TRUE); ?></font></td>

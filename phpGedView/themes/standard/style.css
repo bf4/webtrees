@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Themes
- * @version $Id: style.css,v 1.93.2.50 2006/05/21 12:15:55 canajun2eh Exp $
+ * @version $Id$
  */
 
 .something {
@@ -68,7 +68,6 @@ ul {
 }
 .person_boxF {
 	background-color: #E9DAF1;
-/*	border: solid #9CA3D4 1px;  */
 	border: 1px solid #ff2080;
 }
 .person_boxNN {
@@ -136,7 +135,6 @@ table.center {
 
 .list_item {
 	font-size:10px;
-	/* white-space: nowrap; */
 }
 .facts_table {
 	width: 99%;
@@ -159,7 +157,6 @@ table.center {
 	font-family: Arial, sans-serif;
 	font-size: 14px;
 	padding: 4px 4px 4px 4px;
-	/* width: 20%; */
 	text-align: center;
 	font-weight: bold;
 }
@@ -414,12 +411,6 @@ table.center {
 	width: 50px;
 	height: 50px;
 }
-.menuitem2 .icon {
-	width: 25px;
-	height: 25px;
-	background-color: #D6E0EA;
-}
-
 .submenu .icon {
 	width: 25px;
 	height: 25px;
@@ -483,7 +474,7 @@ table.center {
 	font-weight: bold;
 	cursor: help;
 }
-.menuitem {
+.menuitem, .menuitem_rtl {
 	color: #555555;
 	text-decoration: none;
 	font-family: Arial, sans-serif;
@@ -491,7 +482,7 @@ table.center {
 	text-align: center;
 	padding: 1px;
 }
-.menuitem_hover	{
+.menuitem_hover, .menuitem_hover_rtl {
 	color: #000000;
 	text-decoration: underline;
 	font-family: Arial, sans-serif;
@@ -499,7 +490,7 @@ table.center {
 	text-align: center;
 	padding: 1px;
 }
-.submenu {
+.submenu, .submenu_rtl {
 	color: #000000;
 	text-decoration: none;
 	font-family: Arial, sans-serif;
@@ -509,54 +500,28 @@ table.center {
 	border: solid #9CA3D4 1px;
 	white-space: nowrap;
 }
-.submenu_rtl {
-	color: #000000;
-	text-decoration: none;
-	font-family: Arial, sans-serif;
-	font-size: 11px;
-	text-align: center;
-	background-color: #D6E0EA;
-	border: solid #9CA3D4 1px;
-	white-space: nowrap;
-}
-.submenuitem {
+.submenuitem, .submenuitem_rtl {
 	color: #555555;
 	text-decoration: none;
 	font-family: Arial, sans-serif;
 	font-size: 11px;
 	background-color: #D6E0EA;
 	white-space: nowrap;
+	padding: 1px;
+}
+.submenuitem, .submenuitem_hover {
 	text-align: left;
-	padding: 1px;
 }
-.submenuitem_rtl {
-	color: #555555;
-	text-decoration: none;
-	font-family: Arial, sans-serif;
-	font-size: 11px;
-	background-color: #D6E0EA;
-	white-space: nowrap;
+.submenuitem_rtl, .submenuitem_hover_rtl {
 	text-align: right;
-	padding: 1px;
 }
-.submenuitem_hover {
+.submenuitem_hover, .submenuitem_hover_rtl {
 	color: #000000;
 	text-decoration: underline;
 	font-family: Arial, sans-serif;
 	font-size: 11px;
 	background-color: #E6F0FA;
 	white-space: nowrap;
-	text-align: left;
-	padding: 1px;
-}
-.submenuitem_hover_rtl {
-	color: #000000;
-	text-decoration: underline;
-	font-family: Arial, sans-serif;
-	font-size: 11px;
-	background-color: #E6F0FA;
-	white-space: nowrap;
-	text-align: right;
 	padding: 1px;
 }
 .news_box {
@@ -621,7 +586,6 @@ table.center {
 
 /*-- index.php specific style sheets -- */
 .small_inner_block {
-/*	height: auto;   */
 	max-height: 200px;
 	overflow: auto;
 	font: normal 10px tahoma, verdana, arial, Helvetica, sans-serif;
@@ -653,7 +617,6 @@ table.center {
 #index_full_blocks {
 	clear: none;
 	width: 100%;
-	/*float: center;*/
 }
 
 #random_picture {

@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Themes
- * @version $Id: style.css,v 1.80.2.48 2006/04/28 18:14:42 canajun2eh Exp $
+ * @version $Id$
  */
 
 .something {
@@ -33,34 +33,24 @@
 body {
 	color: #000066;
 	background-color: #FFFFFF;
-	font-family: arial, Helvetica, sans-serif;
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
 	font-size: 12px;
 	margin: 1px;
 }
-a.link:link {
+a.link:link, a.link:active, a.link:visited {
 	color: #FFFFFF;
-	font-family: Verdana, Helvetica, sans-serif;
-	font-weight: bold;
-}
-a.link:active {
-	color: #FFFFFF;
-	font-family: Verdana, Helvetica, sans-serif;
-	font-weight: bold;
-}
-a.link:visited {
-	color: #FFFFFF;
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
 	font-weight: bold;
 }
 a.link:hover {
 	color: #333366;
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
 	font-weight: bold;
 }
 a {
 	color: #0000FF;
 	text-decoration: none;
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
 }
 
 a:hover	{
@@ -72,32 +62,31 @@ ul {
 	padding-right: 15px;
 	margin: 8px;
 }
-.center { text-align: center; }
+.center { 
+	text-align: center; 
+}
 table.center{
  	margin-left: auto;
  	margin-right: auto;
 }
 th {
-	font-weight: 100; }
+	font-weight: 100; 
+}
 .button {
 	width: 60px
 }
 .gedcom_table {
-	border: 1px solid #84beff;
+	border: 1px solid #84BEFF;
 	margin:0;
 	width:99%;
 }
 .person_box {
-	background-color: #f0F9FF;
-	border: 1px solid #84beff;
-/*	background-color: #FFFFFF;
-	border: solid #84beff 1px;  */
+	background-color: #F0F9FF;
+	border: 1px solid #84BEFF;
 }
 .person_boxF {
-	background-color: #fff0f0;
-	border: 1px solid #ff2080;
-/*	background-color: #FFFFFF;
-	border: solid #993366 1px;  */
+	background-color: #FFF0F0;
+	border: 1px solid #FF2080;
 }
 .person_boxNN {
 	background-color: #FFFFFF;
@@ -110,38 +99,24 @@ th {
 	margin-left: auto;
 	margin-right: auto;
 }
-.list_label {
+.list_label, .list_label_wrap {
 	color: #000066;
 	background-color: #C3DFFF;
 	font-family: Arial, sans-serif;
-	font-size: 13px;
+	font-size: 12px;
 	font-weight: bold;
 	text-align: center;
 }
-.list_label_wrap {
+.list_value, .list_value_wrap {
+	background-color: #ECF5FF;
+	border: solid #C3DFFF 1px;
 	color: #000066;
-	background-color: #C3DFFF;
 	font-family: Arial, sans-serif;
-	font-size: 13px;
-	font-weight: bold;
-	text-align: center;
+	font-size: 12px;
+	vertical-align: top;
 }
 .list_value {
-	background-color: #ECF5FF;
-	border: solid #C3DFFF 1px;
-	color: #000066;
-	font-family: Arial, sans-serif;
-	font-size: 12px;
-	vertical-align: top;
 	white-space: nowrap;
-}
-.list_value_wrap {
-	background-color: #ECF5FF;
-	border: solid #C3DFFF 1px;
-	color: #000066;
-	font-family: Arial, sans-serif;
-	font-size: 12px;
-	vertical-align: top;
 }
 .list_value_wrap_red {
 	background-color: #ECF5FF;
@@ -153,8 +128,7 @@ th {
 }
 
 .list_item {
-	font-size:10px;
-	/*white-space: nowrap;*/
+	font-size: 10px;
 }
 .facts_table {
 	width: 99%;
@@ -162,7 +136,7 @@ th {
 .facts_label {
 	color: #000066;
 	background-color: #C3DFFF;
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: Arial, sans-serif;
 	font-size: 12px;
 	padding: 4px 4px 4px 4px;
 	width: 20%;
@@ -171,23 +145,12 @@ th {
 .facts_labelrela {
 	background-color: #B3CFEF;
 }
-.facts_label02 {
+.facts_label02, .facts_label03 {
 	color: #FFFFFF;
 	background-color: #84beff;
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: Arial, sans-serif;
 	font-size: 12px;
 	padding: 4px 4px 4px 4px;
-	/* width: 20%; */
-	text-align: center;
-	font-weight: bold;
-}
-.facts_label03 {
-	color: #FFFFFF;
-	background-color: #84beff;
-	font-family: Verdana, Helvetica, sans-serif;
-	font-size: 12px;
-	padding: 4px 4px 4px 4px;
-	/* width: 20%; */
 	text-align: center;
 	font-weight: bold;
 }
@@ -198,7 +161,6 @@ th {
 	font-family: Arial, sans-serif;
 	font-size: 12px;
 	padding: 4px 4px 4px 4px;
-	/*text-align: left;*/
 }
 .facts_valuerela {
 	background-color: #DCE5EF;
@@ -209,11 +171,15 @@ th {
 	font-family: Arial, sans-serif;
 	font-size: 12px;
 	padding: 4px 4px 4px 4px;
-	/*text-align: left;*/
 }
-.facts_labelred {
-	color: #000066;
+.facts_labelred, .facts_valuered {
 	border: solid red 2px;
+}
+.facts_labelblue, .facts_valueblue {
+	border: solid blue 2px;
+}
+.facts_labelred, .facts_labelblue {
+	color: #000066;
 	background-color: #9DD8FF;
 	font-family: Arial, sans-serif;
 	font-size: 12px;
@@ -221,33 +187,12 @@ th {
 	width: 20%;
 	text-align: center;
 }
-.facts_valuered {
+.facts_valuered, .facts_valueblue {
 	background-color: #FBFDFF;
-	border: solid red 2px;
 	color: #000066;
 	font-family: Arial, sans-serif;
 	font-size: 12px;
 	padding: 4px 4px 4px 4px;
-	/*text-align: left;*/
-}
-.facts_labelblue {
-	color: #000066;
-	border: solid blue 2px;
-	background-color: #9DD8FF;
-	font-family: Arial, sans-serif;
-	font-size: 12px;
-	padding: 4px 4px 4px 4px;
-	width: 20%;
-	text-align: center;
-}
-.facts_valueblue {
-	background-color: #FBFDFF;
-	border: solid blue 2px;
-	color: #000066;
-	font-family: Arial, sans-serif;
-	font-size: 12px;
-	padding: 4px 4px 4px 4px;
-	/*text-align: left;*/
 }
 .tabs_table {
 	width: 99%;
@@ -309,7 +254,7 @@ th {
 }
 .name1 {
 	color: #000066;
-	font: bold 10px  tahoma, verdana, arial, helvetica, sans-serif;
+	font: bold 10px tahoma, verdana, arial, helvetica, sans-serif;
 }
 .namered {
   border: solid red 1px;
@@ -319,56 +264,52 @@ th {
 }
 .details1 {
     color: #000066;
-	font: 10px  tahoma, verdana, arial, helvetica, sans-serif;
+	font: 10px tahoma, verdana, arial, helvetica, sans-serif;
 	text-decoration: none;
 }
 .name2 {
 	color: #000066;
-	font: bold 11px  tahoma, verdana, arial, helvetica, sans-serif;
+	font: bold 11px tahoma, verdana, arial, helvetica, sans-serif;
 }
 .details2 {
     color: #000066;
-	font: 11px  tahoma, verdana, arial, helvetica, sans-serif;
+	font: 11px tahoma, verdana, arial, helvetica, sans-serif;
 	text-decoration: none;
 }
 .nameZoom {
 	color: #000066;
-	font: bold 14px  tahoma, verdana, arial, helvetica, sans-serif;
+	font: bold 14px tahoma, verdana, arial, helvetica, sans-serif;
 }
 .detailsZoom {
-	font: 14px  tahoma, verdana, arial, helvetica, sans-serif;
+	font: 14px tahoma, verdana, arial, helvetica, sans-serif;
 	text-decoration: none;
 }
 
 .name_head {
 	color: #000066;
-	font: bold 16px verdana, helvetica, arial, sans-serif;
+	font: bold 16px tahoma, verdana, arial, helvetica, sans-serif;
 	letter-spacing: .2px;
 }
 .date {
 	font-weight: bold;
 }
-.label {
+.label, .field {
     color: #000066;
-	font: bold 11px verdana, helvetica, arial, sans-serif;
-}
-.field {
-	color: #000066;
-	font: 11px verdana, helvetica, arial, sans-serif;
+	font: bold 11px tahoma, verdana, arial, helvetica, sans-serif;
 }
 .error {
 	color: #DD0000;
-	font-family: verdana, helvetica, arial, sans-serif;
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
 	font-weight: bold;
 }
 .largeError {
 	color: #DD0000;
-	font: large verdana, helvetica, arial, sans-serif;
+	font: large tahoma, verdana, arial, helvetica, sans-serif;
 	font-weight: bold;
 }
 .warning {
 	color: red;
-	font-family: verdana, helvetica, arial, sans-serif;
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
 	font-weight: bold;
 }
 .indent {
@@ -385,7 +326,6 @@ th {
 .sex_image {
 	height: 9px;
 	width: 9px;
-/*	margin: 0px 3px;  */
 	padding-left: 3px;
 	padding-right: 3px;
 	border: none;
@@ -516,7 +456,7 @@ th {
 .thememenuitem {
 	color: white;
 	font-size: 11px;
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
 	font-weight: bold;
 	text-decoration: none;
 	padding: 1px;
@@ -527,7 +467,7 @@ th {
 .thememenuitem_hover {
 	color: #FF0000;
 	font-size: 11px;
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
 	font-weight: bold;
 	text-decoration: none;
 	padding: 1px;
@@ -546,7 +486,7 @@ th {
 .favmenuitem {
 	color: white;
 	font-size: 11px;
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
 	font-weight: normal;
 	text-decoration: none;
 	padding: 1px;
@@ -557,7 +497,7 @@ th {
 .favmenuitem_hover {
 	color: #FF0000;
 	font-size: 11px;
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
 	font-weight: normal;
 	text-decoration: none;
 	padding: 1px;
@@ -565,7 +505,7 @@ th {
 .favsubmenu {
 	color: #000000;
 	text-decoration: none;
-	font-family: Arial, sans-serif;
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
 	font-size: 11px;
 	text-align: center;
 	background-color: #ECF5FF;
@@ -575,7 +515,7 @@ th {
 .favsubmenuitem A {
 	color: #000000;
 	font-size: 11px;
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
 	font-weight: normal;
 	text-decoration: none;
 	background-color: #ECF5FF;
@@ -585,7 +525,7 @@ th {
 .favsubmenuitem_hover A {
 	color: #ff0000;
 	font-size: 11px;
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
 	font-weight: normal;
 	text-decoration: none;
 	background-color: #ffffff;
@@ -596,25 +536,25 @@ th {
 	font-weight: bold;
 	cursor: help;
 }
-.menuitem {
+.menuitem, .menuitem_rtl {
 	color: #000000;
 	font-size: 11px;
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: Arial, sans-serif;
 	font-weight: normal;
 	text-decoration: none;
 	text-align: center;
 	padding: 1px;
 }
-.menuitem_hover	{
+.menuitem_hover, .menuitem_hover_rtl {
 	color: #000000;
 	font-size: 11px;
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: Arial, sans-serif;
 	font-weight: normal;
 	text-decoration: none;
 	text-align: center;
 	padding: 1px;
 }
-.submenu {
+.submenu, .submenu_rtl {
 	color: #000000;
 	text-decoration: none;
 	font-family: Arial, sans-serif;
@@ -624,59 +564,37 @@ th {
 	border: solid #84beff 1px;
 	white-space: nowrap;
 }
-.submenu_rtl {
+.submenuitem, .submenuitem_rtl {
 	color: #000000;
-	text-decoration: none;
-	font-family: Arial, sans-serif;
 	font-size: 11px;
-	text-align: center;
+	font-family: Arial, sans-serif;
+	font-weight: normal;
+	text-decoration: none;
 	background-color: #ECF5FF;
-	border: solid #84beff 1px;
 	white-space: nowrap;
+	padding: 1px;
 }
 .submenuitem {
-	color: #000000;
-	font-size: 11px;
-	font-family: Verdana, Helvetica, sans-serif;
-	font-weight: normal;
-	text-decoration: none;
-	background-color: #ECF5FF;
-	white-space: nowrap;
 	text-align: left;
-	padding: 1px;
 }
 .submenuitem_rtl {
+	text-align: right;
+}
+.submenuitem_hover, .submenuitem_hover_rtl {
 	color: #000000;
 	font-size: 11px;
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: Arial, sans-serif;
 	font-weight: normal;
 	text-decoration: none;
-	background-color: #ECF5FF;
+	background-color: #ffffff;
 	white-space: nowrap;
-	text-align: right;
 	padding: 1px;
 }
 .submenuitem_hover {
-	color: #000000;
-	font-size: 11px;
-	font-family: Verdana, Helvetica, sans-serif;
-	font-weight: normal;
-	text-decoration: none;
-	background-color: #ffffff;
-	white-space: nowrap;
 	text-align: left;
-	padding: 1px;
 }
 .submenuitem_hover_rtl {
-	color: #000000;
-	font-size: 11px;
-	font-family: Verdana, Helvetica, sans-serif;
-	font-weight: normal;
-	text-decoration: none;
-	background-color: #ffffff;
-	white-space: nowrap;
 	text-align: right;
-	padding: 1px;
 }
 .news_box {
 	background-color: #f0F9FF;
@@ -735,7 +653,7 @@ th {
 #footer {
 	clear: both;
 	color: #000066;
-	font-family: arial, Helvetica, sans-serif;
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
 	font-size: 12px;
 	width: 99%;
 }
@@ -743,7 +661,6 @@ th {
 /*-- index.php specific style sheets -- */
 .small_inner_block {
 	max-height: 190px;
-/*	height: auto; */
 	overflow: auto;
 	font: normal 10px tahoma, verdana, arial, Helvetica, sans-serif;
 	text-decoration: none;
@@ -775,7 +692,6 @@ th {
 #index_full_blocks {
 	clear: none;
 	width: 100%;
-	/*float: center;*/
 }
 
 #random_picture {
@@ -926,53 +842,41 @@ th {
 .barra {
 	color: #000000;
 	font-size: 11px;
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: tahoma, verdana, arial, Helvetica, sans-serif;
 	font-weight: normal
 }
 .blanco {
 	color: #FFFFFF;
 	font-size: 10px;
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: tahoma, verdana, arial, Helvetica, sans-serif;
 	font-weight: bold
 }
-input {
-	border-top-color: #ffffff;
-	border-left-color: #ffffff;
+input, textarea {
+	border-top-color: #FFFFFF;
+	border-left-color: #FFFFFF;
 	border-right-color: #000066;
 	border-bottom-color: #000066;
 	border-top-width: 1px;
 	border-left-width: 1px;
 	font-size: 10px;
 	border-bottom-width: 1px;
-	font-family: Verdana, Helvetica, sans-serif;
-	border-right-width: 1px
-}
-textarea {
-	border-top-color: #ffffff;
-	border-left-color: #ffffff;
-	border-right-color: #000066;
-	border-bottom-color: #000066;
-	border-top-width: 1px;
-	border-left-width: 1px;
-	font-size: 10px;
-	border-bottom-width: 1px;
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: tahoma, verdana, arial, Helvetica, sans-serif;
 	border-right-width: 1px
 }
 select {
-	border-top-color: #84beff;
-	border-left-color: #84beff;
-	border-right-color: #84beff;
-	border-bottom-color: #84beff;
+	border-top-color: #84BEFF;
+	border-left-color: #84BEFF;
+	border-right-color: #84BEFF;
+	border-bottom-color: #84BEFF;
 	border-top-width: 1px;
 	border-left-width: 1px;
 	font-size: 10px;
 	border-bottom-width: 1px;
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: tahoma, verdana, arial, Helvetica, sans-serif;
 	border-right-width: 1px
 }
 form {
-	font-family: Verdana, Helvetica, sans-serif;
+	font-family: tahoma, verdana, arial, Helvetica, sans-serif;
 	font-size: 10px
 }
 H2 {
@@ -1021,7 +925,7 @@ H2 {
 /* Style for the top and bottom bar */
 .topbottombar {
 	color: #FFFFFF;
-	background-color: #84beff;
+	background-color: #84BEFF;
 	font-family: Verdana, Helvetica, sans-serif;
 	font-size: 12px;
 	padding: 4px;

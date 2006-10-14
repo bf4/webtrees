@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Themes
- * @version $Id: theme.php,v 1.29.2.22 2005/12/17 01:53:16 canajun2eh Exp $
+ * @version $Id$
  */
 
 $theme_name = "Ocean";		//-- the name of this theme
