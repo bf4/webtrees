@@ -49,6 +49,10 @@ $emptyfacts = array("_HOL", "_NMR", "_SEPR", "ADOP", "ANUL", "BAPL", "BAPM", "BA
 "DATA", "DEAT", "DIV", "DIVF", "EMIG", "ENDL", "ENGA", "EVEN", "FCOM", "GRAD",
 "HUSB", "IMMI", "MAP", "MARB", "MARC", "MARL", "MARR", "MARS", "NATU", "ORDN",
 "PROB", "RESI", "RETI", "SLGC", "SLGS", "WIFE", "WILL");
+$templefacts = array("SLGC","SLGS","BAPL","ENDL","CONL");
+$nonplacfacts = array("ENDL","NCHI","SLGC","SLGS");
+$nondatefacts = array("ABBR","ADDR","AFN","AUTH","EMAIL","FAX","NAME","NCHI","NOTE","OBJE",
+"PHON","PUBL","REFN","REPO","SEX","SOUR","SSN","TEXT","TITL","WWW","_EMAIL");
 $typefacts = array();	//-- special facts that go on 2 TYPE lines
 
 // Next two vars used by insert_missing_subtags()
