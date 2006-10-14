@@ -609,6 +609,8 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		var surn=trim(frm.SURN.value);
 		var nsfx=trim(frm.NSFX.value);
 		frm.NAME.value = npfx + givn + " /" + spfx + surn + "/ " + nsfx;
+		frm.NAME.value = frm.NAME.value.replace(/,/g," ");
+		frm.NAME.value = frm.NAME.value.replace(/  +/g," ");
 	}
 	function togglename() {
 		frm = document.forms[0];
