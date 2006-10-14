@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Themes
- * @version $Id: style.css,v 1.71.2.49 2006/05/21 12:15:55 canajun2eh Exp $
+ * @version $Id$
  */
 
 .something {
@@ -141,7 +141,6 @@ table.center{
 
 .list_item {
 	font-size:10px;
-	/* white-space: nowrap; */
 }
 .facts_table {
 	width: 100%;
@@ -164,7 +163,6 @@ table.center{
 	font-family: Arial, sans-serif;
 	font-size: 14px;
 	padding: 4px 4px 4px 4px;
-	/* width: 20%; */
 	text-align: center;
 	font-weight: bold;
 }
@@ -174,7 +172,6 @@ table.center{
 	font-family: Arial, sans-serif;
 	font-size: 14px;
 	padding: 4px 4px 4px 4px;
-	/* width: 20%; */
 	text-align: center;
 	font-weight: bold;
 }
@@ -185,7 +182,6 @@ table.center{
 	font-family: Arial, sans-serif;
 	font-size: 14px;
 	padding: 4px 4px 4px 4px;
-	/*text-align: left;*/
 }
 .facts_valuerela {
 	background-color: #DAD0C4;
@@ -197,7 +193,6 @@ table.center{
 	font-family: Arial, sans-serif;
 	font-size: 14px;
 	padding: 4px 4px 4px 4px;
-	/*text-align: left;*/
 }
 .facts_labelred {
 	color: white;
@@ -216,7 +211,6 @@ table.center{
 	font-family: Arial, sans-serif;
 	font-size: 14px;
 	padding: 4px 4px 4px 4px;
-	/*text-align: left;*/
 }
 .facts_labelblue {
 	color: white;
@@ -235,7 +229,6 @@ table.center{
 	font-family: Arial, sans-serif;
 	font-size: 14px;
 	padding: 4px 4px 4px 4px;
-	/*text-align: left;*/
 }
 .tabs_table {
 	width: 95%;
@@ -368,7 +361,6 @@ table.center{
 .sex_image {
 	height: 9px;
 	width: 9px;
-/*	margin: 0px 3px; */
 	padding-left: 3px;
 	padding-right: 3px;
 	border: none;
@@ -505,96 +497,63 @@ table.center{
 	font-weight: bold;
 	cursor: help;
 }
-.menuitem {
+.menuitem, .menuitem_rtl {
 	color: #EEEEEE;
 	text-decoration: none;
 	font-family: Arial, sans-serif;
 	font-size: 14px;
-	text-align: left;
 	padding: 1px;
 }
-.menuitem_rtl {
-	color: #EEEEEE;
+.menuitem, .menuitem_hover {
+	text-align: left;
+}
+.menuitem_rtl, .menuitem_hover_rtl {
+	text-align: right;
+}
+.menuitem_hover, .menuitem_hover_rtl {
+	color: #FFFFFF;
+	text-decoration: underline;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	padding: 1px;
+}
+.submenu, .submenu_rtl {
+	color: #FFFFFF;
 	text-decoration: none;
 	font-family: Arial, sans-serif;
-	font-size: 14px;
-	text-align: right;
-	padding: 1px;
-}
-.menuitem_hover	{
-	color: #FFFFFF;
-	text-decoration: underline;
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-	text-align: left;
-	padding: 1px;
-}
-.menuitem_hover_rtl	{
-	color: #FFFFFF;
-	text-decoration: underline;
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-	text-align: right;
-	padding: 1px;
+	font-size: 12px;
+	background-color: #EAE0D4;
+	border: solid #9CA3D4 1px;
+	white-space: nowrap;
 }
 .submenu {
-	color: #FFFFFF;
-	text-decoration: none;
-	font-family: Arial, sans-serif;
-	font-size: 12px;
 	text-align: left;
-	background-color: #EAE0D4;
-	border: solid #9CA3D4 1px;
-	white-space: nowrap;
 }
 .submenu_rtl {
-	color: #FFFFFF;
-	text-decoration: none;
-	font-family: Arial, sans-serif;
-	font-size: 12px;
 	text-align: left;
-	background-color: #EAE0D4;
-	border: solid #9CA3D4 1px;
-	white-space: nowrap;
 }
-.submenuitem {
+.submenuitem, .submenuitem_rtl {
 	color: #EEEEEE;
 	text-decoration: none;
 	font-family: Arial, sans-serif;
 	font-size: 12px;
 	background-color: #EAE0D4;
 	white-space: nowrap;
+	padding: 1px;
+}
+.submenuitem, .submenuitem_hover {
 	text-align: left;
-	padding: 1px;
 }
-.submenuitem_rtl {
-	color: #EEEEEE;
-	text-decoration: none;
-	font-family: Arial, sans-serif;
-	font-size: 12px;
-	background-color: #EAE0D4;
-	white-space: nowrap;
+.submenuitem_rtl, .submenuitem_hover_rtl {
 	text-align: right;
-	padding: 1px;
 }
-.submenuitem_hover	{
+.submenuitem_hover, .submenuitem_hover_rtl {
 	color: #FFFFFF;
 	text-decoration: underline;
 	font-family: Arial, sans-serif;
 	font-size: 12px;
 	background-color: #FAF0E4;
 	white-space: nowrap;
-	text-align: left;
-	padding: 1px;
-}
-.submenuitem_hover_rtl	{
-	color: #FFFFFF;
-	text-decoration: underline;
-	font-family: Arial, sans-serif;
-	font-size: 12px;
-	background-color: #FAF0E4;
-	white-space: nowrap;
-	text-align: right;
 	padding: 1px;
 }
 .menuitem a {
@@ -626,7 +585,6 @@ table.center{
 	text-decoration: none;
 	font-family: Arial, sans-serif;
 	font-size: 14px;
-/*	text-align: left;*/
 	padding: 1px;
 }
 .favmenuitem_hover	{
@@ -634,7 +592,6 @@ table.center{
 	text-decoration: underline;
 	font-family: Arial, sans-serif;
 	font-size: 14px;
-/*	text-align: left;*/
 	padding: 1px;
 }
 .favsubmenu {
@@ -770,7 +727,6 @@ table.center{
 
 /*-- index.php specific style sheets -- */
 .small_inner_block {
-/*	height: auto;  */
 	max-height: 200px;
 	overflow: auto;
 	font: normal 10px tahoma, verdana, arial, Helvetica, sans-serif;
@@ -810,7 +766,6 @@ table.center{
 #index_full_blocks {
 	clear: none;
 	width: 100%;
-	/*float: center;*/
 }
 
 #random_picture {
@@ -1012,7 +967,6 @@ button {
 	white-space: nowrap;
 }
 .title {
-/*	font-size: 20px; */
 	font-size: 18pt;
 	font-family: tahoma, verdana, arial, helvetica, sans-serif;
 }

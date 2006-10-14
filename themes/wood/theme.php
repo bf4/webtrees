@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Themes
- * @version $Id: theme.php,v 1.33.2.17 2005/12/17 01:53:16 canajun2eh Exp $
+ * @version $Id$
  */
 
 $theme_name = "Wood";		//-- the name of this theme

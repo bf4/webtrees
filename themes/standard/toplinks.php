@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Themes
- * @version $Id: toplinks.html,v 1.44.2.30 2006/05/13 09:03:29 coloredpixels Exp $
+ * @version $Id$
  */
 global $PGV_MENU_LOCATION;
 $menubar = new MenuBar();

@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Themes
- * @version $Id: theme.php,v 1.31.2.19 2006/03/02 15:23:17 canajun2eh Exp $
+ * @version $Id$
  */
 
 $theme_name = "Minimal";		//-- the name of this theme

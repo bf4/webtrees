@@ -22,7 +22,7 @@
  * @author w.a. bastein http://genealogy.bastein.biz
  * @package PhpGedView
  * @subpackage Themes
- * @version $Id: theme.php,v 1.18.2.22 2005/12/17 01:53:16 canajun2eh Exp $
+ * @version $Id$
  */
 
 $theme_name = "Cloudy";                           //-- the name of this theme

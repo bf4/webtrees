@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Themes
- * @version $Id: theme.php,v 1.1.2.1 2005/12/31 04:12:22 canajun2eh Exp $
+ * @version $Id$
  */
 
 $theme_name = "SimplyBlue";        //-- the name of this theme
