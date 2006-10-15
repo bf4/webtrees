@@ -177,6 +177,8 @@ if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&($show_all=="yes")) {
 	}
 	$i = 0;
 	uasort($surnames, "itemsort");
+	print_surn_table($surnames);
+	/**%
 	$count = count($surnames);
 	$count_indi = 0;
 	$col = 1;
@@ -184,11 +186,9 @@ if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&($show_all=="yes")) {
 	if ($count>($minNamesPerColumn << 1)) $col=3;
 	if ($count>($minNamesPerColumn << 2)) $col=4;
 	$newcol=ceil($count/$col);
-	/**%
 	print "<td class=\"list_label\" colspan=\"$col\">";
 	print $TableTitle;
 	print $pgv_lang["surnames"]."</td></tr><tr>\n";
-	%**/
 	print "<td class=\"list_value wrap";
 	if ($col==4) print " width25";
 	if ($col==3) print " width33";
@@ -230,6 +230,7 @@ if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&($show_all=="yes")) {
 		if ($count>1) print "<br />".$pgv_lang["surnames"]." ".$count;
 		print "</td>\n";
 	}
+	%**/
 }
 else if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 	if (!isset($alpha)) $alpha="";
@@ -277,6 +278,8 @@ else if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&(empty($surname))&&
 
 	$i = 0;
 	uasort($surnames, "itemsort");
+	print_surn_table($surnames);
+	/**%
 	$count = count($surnames);
 	$count_indi = 0;
 	$col = 1;
@@ -284,11 +287,10 @@ else if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&(empty($surname))&&
 	if ($count>($minNamesPerColumn << 1)) $col=3;
 	if ($count>($minNamesPerColumn << 2)) $col=4;
 	$newcol=ceil($count/$col);
-	/**%
 	print "<td class=\"list_label\" colspan=\"$col\">";
 	print $TableTitle;
 	print $pgv_lang["surnames"]."</td></tr><tr>\n";
-	%**/
+
 	print "<td class=\"list_value wrap";
 	if ($col==4) print " width25";
 	if ($col==3) print " width33";
@@ -327,6 +329,8 @@ else if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&(empty($surname))&&
 		if (count($indi_show)>1) print "<br />".$pgv_lang["surnames"]." ".$count;
 		print "</td>\n";
 	}
+	%**/
+
 }
 else {
 	$firstname_alpha = false;

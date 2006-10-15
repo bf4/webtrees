@@ -457,6 +457,62 @@ function print_indi_table($datalist, $legend="", $option="") {
 }
 
 /**
+ * print a sortable table of surnames
+ *
+ * @param array $datalist contain records that were extracted from the database.
+ * @param string $target where to go after clicking a surname : INDI page or FAM page
+ */
+function print_surn_table($datalist, $target="INDI") {
+	global $pgv_lang, $factarray, $GEDCOM, $TEXT_DIRECTION;
+	if (count($datalist)<1) return;
+?>
+	<script type="text/javascript" src="strings.js"></script>
+	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
+<?php
+	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
+
+	//-- table header
+	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
+	echo "<tr>";
+	echo "<th class=\"list_label rela\">#</th>";
+	echo "<th class=\"list_label\">".$factarray["SURN"]."</th>";
+	echo "<th class=\"list_label\">";
+	if ($target=="FAM") echo $pgv_lang["families"]; else echo $pgv_lang["individuals"];
+	echo "</th>";
+	echo "</tr>\n";
+
+	//-- table body
+	$total = 0;
+	$n = 1;
+	foreach($datalist as $key => $value) {
+		if (!isset($value["name"])) break;
+		if (empty($value["name"])) continue;
+		if ($target=="FAM") $url = "famlist.php";	else $url = "indilist.php";
+		$url .= "?ged=".$GEDCOM."&amp;surname=".urlencode($value["name"]);
+
+		echo "<tr>";
+		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
+
+		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
+		echo "<a href=\"".$url."\" class=\"list_item name1\">".PrintReady($value["name"])."</a>";
+		echo "&nbsp;</td>";
+
+		echo "<td class=\"list_value_wrap\">";
+		echo "<a href=\"".$url."\" class=\"list_item name2\">".$value["match"]."</a>";
+		echo "</td>";
+		$total += $value["match"];
+
+		echo "</tr>\n";
+	}
+	echo "<tr class=\"sortbottom\">";
+	echo "<td class=\"list_item\">&nbsp;</td>";
+	echo "<td class=\"list_item\">&nbsp;</td>";
+	echo "<td class=\"list_label name2\">".$total."</td>";
+	echo "</tr>\n";
+	echo "</table>\n";
+}
+
+/**
  * print a sortable table of families
  *
  * @param array $datalist contain families that were extracted from the database.
@@ -1014,7 +1070,7 @@ function load_behaviour() {
 				return false;
 			}
 		},
-		'fieldset th' : function(element) {
+		'.sortable th' : function(element) {
 			element.onmouseout = nd; // hide helptext
 			element.onmouseover = function() { // show helptext
 				helptext = this.title;

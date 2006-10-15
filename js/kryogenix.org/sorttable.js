@@ -50,7 +50,7 @@ function ts_makeSortable(table) {
 		var cell = firstRow.cells[i];
 		var txt = ts_getInnerText(cell);
 		cell.innerHTML = '<a href="javascript:;" class="sortheader" '+
-		'onMousedown="this.style.cursor=\'wait\';" ' + // PGV: set cursor
+		'onmousedown="this.style.cursor=\'wait\';" ' + // PGV: set cursor
 		'onclick="ts_resortTable(this, '+i+');return false;">' +
 		txt+'<span class="sortarrow">&nbsp;&nbsp;</span></a>';
 	}
@@ -290,6 +290,9 @@ function table_renum(id) {
 	count=1;
 	for (var r=1;r<table.rows.length;r++) {
 		row = table.rows[r];
+		// don't do sortbottom last rows
+		if (row.className && (row.className.indexOf('sortbottom') != -1)) break;
+		// count only visible rows
 		if (row.style.display!='none') row.cells[0].innerHTML = count++;
 	}
 }

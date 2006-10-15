@@ -423,12 +423,10 @@ class Person extends GedcomRecord {
 	 */
 	function getSexImage() {
 		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
-		$img ="<img src=\"".$PGV_IMAGE_DIR."/";
-		if ($this->getSex()=="M") $img .= $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
-		else if ($this->getSex()=="F") $img .= $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
-		else $img .= $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
-		$img .= "\" class=\"sex_image\" />";
-		return $img;
+		if ($this->getSex()=="M") $s = "sex";
+		else if ($this->getSex()=="F") $s = "sexf";
+		else $s = "sexn";
+		return "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$s]["small"]."\" alt=\"\" class=\"sex_image\" />";
 	}
 
 	/**

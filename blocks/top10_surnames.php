@@ -99,6 +99,9 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 		print "</table>";
 		print "<div class=\"blockcontent\">\n";
 		if ($block) print "<div class=\"small_inner_block\">\n";
+		
+		print_surn_table(array_slice($surnames, 0, $config["num"]));
+		/**%
 		print "<table>";
 		$i=0;
 		foreach($surnames as $indexval => $surname) {
@@ -127,6 +130,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 			}
 		}
 		print "</table>";
+		%**/
 		if ($block) print "</div>\n";
 		print "</div>";
 		print "</div>";

@@ -148,6 +148,8 @@ if (($surname_sublist=="yes")&&($show_all=="yes")) {
 	}
 	$i = 0;
 	uasort($surnames, "itemsort");
+	print_surn_table($surnames, "FAM");
+	/**%
 	$count = count($surnames);
 	$col = 1;
 	if ($count>$minNamesPerColumn) $col=2;
@@ -156,18 +158,17 @@ if (($surname_sublist=="yes")&&($show_all=="yes")) {
 	$newcol=ceil($count/$col);
 	print "<td class=\"list_label\" style=\"padding: 0pt 5pt 0pt 5pt; \" colspan=\"$col\">";
 	print $TableTitle;
-	/**%
+
 	print $pgv_lang["surnames"]."</td></tr><tr>\n";
 	print "<td class=\"list_value wrap";
 	if ($col==4) print " width25";
 	if ($col==3) print " width33";
 	if ($col==2) print " width50";
 	print "\" style=\"padding: 14px;\">\n";
-	%**/
+
 	foreach($surnames as $surname1=>$namecount) {
 		if (stristr($namecount["name"], "@")) $namelist = check_NN($namecount["name"]);
 		else $namelist = $namecount["name"];
-		/**%
 		if (begRTLText($namecount["name"])) {
 			print "<div class =\"rtl\" dir=\"rtl\">&nbsp;<a href=\"?alpha=".$namecount["alpha"]."&amp;surname_sublist=".$surname_sublist."&amp;surname=".urlencode($namecount["name"])."\">&nbsp;".$namelist . "&rlm; - [".($namecount["match"])."]&rlm;";
 		}
@@ -184,7 +185,6 @@ if (($surname_sublist=="yes")&&($show_all=="yes")) {
 			print "\" style=\"padding: 14px;\">\n";
 			$newcol=$i+ceil($count/$col);
 		}
-		%**/
 	}
 	print "</td>\n";
 	if ($count>1 || count($fam_hide)>0) {
@@ -195,6 +195,7 @@ if (($surname_sublist=="yes")&&($show_all=="yes")) {
 		if ($count>1) print "<br />".$pgv_lang["surnames"]." ".$count;
 		print "</td>\n";
 	}
+	%**/
 }
 else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 	if (!isset($alpha)) $alpha="";
@@ -213,6 +214,8 @@ else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 	}
 	$i = 0;
 	uasort($surnames, "itemsort");
+	print_surn_table($surnames, "FAM");
+	/**%
 	$count = count($surnames);
 	$count_indi = 0;
 	$count_fam = 0;
@@ -253,6 +256,7 @@ else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 		print $pgv_lang["total_fams"]." ".count($tfamlist)."&nbsp;<br />";
 		print $pgv_lang["surnames"]." ".$count."&nbsp;</td>\n";
 	}
+	%**/
 }
 else {
 	$firstname_alpha = false;
