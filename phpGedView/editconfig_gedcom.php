@@ -1337,8 +1337,8 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["editopt_conf"]."\" onclick=\"exp
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("SYNC_GEDCOM_FILE_help", "qm", "SYNC_GEDCOM_FILE"); print $pgv_lang["SYNC_GEDCOM_FILE"];?></td>
 		<td class="optionbox"><select name="NEW_SYNC_GEDCOM_FILE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SYNC_GEDCOM_FILE_help');">
-				<option value="yes" <?php if ($ALLOW_EDIT_GEDCOM) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$ALLOW_EDIT_GEDCOM) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+				<option value="yes" <?php if ($SYNC_GEDCOM_FILE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$SYNC_GEDCOM_FILE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 			</select>
 		</td>
 	</tr>
