@@ -109,6 +109,9 @@ if ($action == "new_lang") {
   $pgv_language[$ln]    = "languages/lang.".$new_shortcut.".php";
   $confighelpfile[$ln]  = "languages/configure_help.".$new_shortcut.".php";
   $helptextfile[$ln]    = "languages/help_text.".$new_shortcut.".php";
+  $admintextfile[$ln]    = "languages/admin.".$new_shortcut.".php";
+  $editortextfile[$ln]    = "languages/editor.".$new_shortcut.".php";
+
 
   // Suggest a suitable flag file
   $temp = strtolower($lng_codes[$new_shortcut][1]).".gif";
@@ -457,7 +460,9 @@ if ($action != "save" and $action != "toggleActive") {
   if (!isset($v_config_filename)) $v_config_filename = "languages/configure_help.".$v_lang_shortcut.".php";
   if (!isset($v_factsfile)) $v_factsfile = "languages/facts.".$v_lang_shortcut.".php";
   if (!isset($v_helpfile)) $v_helpfile = "languages/help_text.".$v_lang_shortcut.".php";
-
+  if (!isset($v_adminfile)) $v_adminfile = "languages/admin.".$v_lang_shortcut.".php";
+  if (!isset($v_editorfile)) $v_editorfile = "languages/editor.".$v_lang_shortcut.".php";
+ 
   if ($action != "new_lang"){
     print "<tr>";
     print "<td class=\"facts_label\" >";
@@ -478,9 +483,14 @@ if ($action != "save" and $action != "toggleActive") {
     if (!file_exists($v_helpfile)) print "&nbsp;&nbsp;<b class=\"error\">" . $pgv_lang["file_does_not_exist"] . "</b>";
     print "<br />";
 
-    print $v_lang_filename;
-    if (!file_exists($v_lang_filename)) print "&nbsp;&nbsp;<b class=\"error\">" . $pgv_lang["file_does_not_exist"] . "</b>";
-
+    print $v_adminfile;
+    if (!file_exists($v_adminfile)) print "&nbsp;&nbsp;<b class=\"error\">" . $pgv_lang["file_does_not_exist"] . "</b>";
+    print "<br />";
+    
+    print $v_editorfile;
+    if (!file_exists($v_editorfile)) print "&nbsp;&nbsp;<b class=\"error\">" . $pgv_lang["file_does_not_exist"] . "</b>";
+    print "<br />";
+    
     print "</td>";
     print "</tr>";
   }
@@ -514,6 +524,8 @@ if ($action == "save") {
     $confighelpfile[$ln]  = "languages/configure_help.".$v_lang_shortcut.".php";
     $helptextfile[$ln]    = "languages/help_text.".$v_lang_shortcut.".php";
     $factsfile[$ln]    = "languages/facts.".$v_lang_shortcut.".php";
+    $adminfile[$ln]    = "languages/admin.".$v_lang_shortcut.".php";
+    $editorfile[$ln]    = "languages/editor.".$v_lang_shortcut.".php";
     $language_settings[$ln]  = $lang;
     $languages[$ln]    = $ln;
   }
@@ -569,6 +581,8 @@ if ($action == "save" or $action=="toggleActive") {
         fwrite($fp, "\$lang[\"helptextfile\"]    = \"" . $helptextfile[$key] . "\";\r\n");
         fwrite($fp, "\$lang[\"flagsfile\"]    = \"" . $flagsfile[$key] . "\";\r\n");
         fwrite($fp, "\$lang[\"factsfile\"]    = \"" . $factsfile[$key] . "\";\r\n");
+        fwrite($fp, "\$lang[\"adminfile\"]    = \"" . $adminfile[$key] . "\";\r\n");
+        fwrite($fp, "\$lang[\"editorfile\"]    = \"" . $editorfile[$key] . "\";\r\n");
         fwrite($fp, "\$lang[\"DATE_FORMAT\"]    = \"" . $DATE_FORMAT_array[$key] . "\";\r\n");
         fwrite($fp, "\$lang[\"TIME_FORMAT\"]    = \"" . $TIME_FORMAT_array[$key] . "\";\r\n");
         fwrite($fp, "\$lang[\"WEEK_START\"]    = \"" . $WEEK_START_array[$key] . "\";\r\n");
