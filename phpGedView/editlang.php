@@ -140,6 +140,14 @@ switch ($action) {
 		print "\n\t\t\t<option value=\"help_text\"";
 		if ($file_type == "help_text") print " selected=\"selected\"";
 		print ">" . "help_text.xx.php" . "</option>";
+		
+		print "\n\t\t\t<option value=\"admin\"";
+		if ($file_type == "admin") print " selected=\"selected\"";
+		print ">" . "admin.xx.php" . "</option>";
+		
+		print "\n\t\t\t<option value=\"editor\"";
+		if ($file_type == "editor") print " selected=\"selected\"";
+		print ">" . "editor.xx.php" . "</option>";
 
 		print "</select>";
 		print "</td>";
@@ -222,6 +230,28 @@ switch ($action) {
 					// read the chosen lang.xx.php file into array
 					$new_language_array = array();
 					$new_language_array = read_complete_file_into_array($helptextfile[$language2], "pgv_lang[");
+					break;
+				case "admin" 		:
+		      		print $adminfile["english"]."\" ";
+					print $pgv_lang["and"] . " \"";
+					print $adminfile[$language2];
+					// read the english lang.en.php file into array
+					$english_language_array = array();
+					$english_language_array = read_complete_file_into_array($adminfile["english"], "pgv_lang[");
+					// read the chosen lang.xx.php file into array
+					$new_language_array = array();
+					$new_language_array = read_complete_file_into_array($adminfile[$language2], "pgv_lang[");
+					break;
+				case "editor" 		:
+		      		print $editorfile["english"]."\" ";
+					print $pgv_lang["and"] . " \"";
+					print $editorfile[$language2];
+					// read the english lang.en.php file into array
+					$english_language_array = array();
+					$english_language_array = read_complete_file_into_array($editorfile["english"], "pgv_lang[");
+					// read the chosen lang.xx.php file into array
+					$new_language_array = array();
+					$new_language_array = read_complete_file_into_array($editorfile[$language2], "pgv_lang[");
 					break;
 		    }
 		    print "\"</span><br /><br />\n";
@@ -673,6 +703,92 @@ switch ($action) {
 		      }
 		      print "</table>\n";
 		    }
+		    if (file_exists($adminfile[$language2]))
+		    {
+		      print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"100%\" height=\"6\" alt=\"\" /><br />\n";
+		      print "<span class=\"subheaders\">".$d_pgv_lang["comparing"]."<br />\"".$adminfile[$language1]."\" <---> \"".$adminfile[$language2]."\"</span><br /><br />\n";
+		      $pgv_lang=array();
+		      require $adminfile[$language1];
+		      $lang1 = $pgv_lang;
+		      $pgv_lang=array();
+		      if (file_exists($adminfile[$language2])) require $adminfile[$language2];
+		      print "<span class=\"subheaders\">".$d_pgv_lang["additions"].":</span><table class=\"facts_table $TEXT_DIRECTION\">\n";
+		      $count=0;
+		      foreach($lang1 as $key=>$value)
+		      {
+		      	if (!array_key_exists($key, $pgv_lang))
+		      	{
+		      	  print "<tr><td class=\"facts_label\">\$pgv_lang[\"$key\"]</td>\n";
+		      	  print "<td class=\"facts_value\">\"$value\";</td></tr>\n";
+		      	  $count++;
+		      	}
+		      }
+		      if ($count==0)
+		      {
+		        print "<tr><td colspan=\"2\" class=\"facts_value\">".$d_pgv_lang["no_additions"]."</td></tr>\n";
+		      }
+
+		      print "</table><br /><br />\n";
+		      print "<span class=\"subheaders\">".$d_pgv_lang["subtractions"].":</span><table class=\"facts_table $TEXT_DIRECTION\">\n";
+		      $count=0;
+		      foreach($pgv_lang as $key=>$value)
+		      {
+		      	if (!array_key_exists($key, $lang1))
+		      	{
+		      	  print "<tr><td class=\"facts_label\">\$pgv_lang[\"$key\"]</td>\n";
+		      	  print "<td class=\"facts_value\">\"$value\";</td></tr>\n";
+		      	  $count++;
+		      	}
+		      }
+		      if ($count==0)
+		      {
+		      	print "<tr><td colspan=\"2\" class=\"facts_value\">".$d_pgv_lang["no_subtractions"]."</td></tr>\n";
+		      }
+		      print "</table>\n";
+		    }
+		     if (file_exists($editorfile[$language2]))
+		    {
+		      print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"100%\" height=\"6\" alt=\"\" /><br />\n";
+		      print "<span class=\"subheaders\">".$d_pgv_lang["comparing"]."<br />\"".$editorfile[$language1]."\" <---> \"".$editorfile[$language2]."\"</span><br /><br />\n";
+		      $pgv_lang=array();
+		      require $editorfile[$language1];
+		      $lang1 = $pgv_lang;
+		      $pgv_lang=array();
+		      if (file_exists($editorfile[$language2])) require $editorfile[$language2];
+		      print "<span class=\"subheaders\">".$d_pgv_lang["additions"].":</span><table class=\"facts_table $TEXT_DIRECTION\">\n";
+		      $count=0;
+		      foreach($lang1 as $key=>$value)
+		      {
+		      	if (!array_key_exists($key, $pgv_lang))
+		      	{
+		      	  print "<tr><td class=\"facts_label\">\$pgv_lang[\"$key\"]</td>\n";
+		      	  print "<td class=\"facts_value\">\"$value\";</td></tr>\n";
+		      	  $count++;
+		      	}
+		      }
+		      if ($count==0)
+		      {
+		        print "<tr><td colspan=\"2\" class=\"facts_value\">".$d_pgv_lang["no_additions"]."</td></tr>\n";
+		      }
+
+		      print "</table><br /><br />\n";
+		      print "<span class=\"subheaders\">".$d_pgv_lang["subtractions"].":</span><table class=\"facts_table $TEXT_DIRECTION\">\n";
+		      $count=0;
+		      foreach($pgv_lang as $key=>$value)
+		      {
+		      	if (!array_key_exists($key, $lang1))
+		      	{
+		      	  print "<tr><td class=\"facts_label\">\$pgv_lang[\"$key\"]</td>\n";
+		      	  print "<td class=\"facts_value\">\"$value\";</td></tr>\n";
+		      	  $count++;
+		      	}
+		      }
+		      if ($count==0)
+		      {
+		      	print "<tr><td colspan=\"2\" class=\"facts_value\">".$d_pgv_lang["no_subtractions"]."</td></tr>\n";
+		      }
+		      print "</table>\n";
+		    }
 		    require $pgv_language[$language1];
 		    require $pgv_language[$language2];
 		    require  $confighelpfile["english"];
@@ -768,6 +884,8 @@ $helptextfile 			= array();
 $flagsfile 				= array();
 $factsfile 				= array();
 $factsarray 			= array();
+$adminarray 			= array();
+$editorarray 			= array();
 $pgv_lang_name 			= array();
 $langcode				= array();
 $ALPHABET_upper			= array();
@@ -791,6 +909,8 @@ foreach ($language_settings as $key => $value) {
 	$helptextfile[$key]			= $value["helptextfile"];
 	$flagsfile[$key]			= $value["flagsfile"];
 	$factsfile[$key]			= $value["factsfile"];
+	$adminfile[$key]			= $value["adminfile"];
+	$editorfile[$key]			= $value["editorfile"];
 	$ALPHABET_upper[$key]		= $value["ALPHABET_upper"];
 	$ALPHABET_lower[$key]		= $value["ALPHABET_lower"];
 	$MULTI_LETTER_ALPHABET[$key] = $value["ALPHABET_lower"];

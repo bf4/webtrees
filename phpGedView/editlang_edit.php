@@ -65,6 +65,12 @@ switch ($file_type)
   case "help_text"	: $lang_filename = $helptextfile[$language2];
   			  $lang_filename_orig = $helptextfile["english"];
   			  break;
+  case "admin"	: $lang_filename = $adminfile[$language2];
+  			  $lang_filename_orig = $adminfile["english"];
+  			  break;
+  case "editor"	: $lang_filename = $editorfile[$language2];
+  			  $lang_filename_orig = $editorfile["english"];
+  			  break;
 }
 
 if ($action != "save")
@@ -180,6 +186,22 @@ if ($action == "save")
         			  // read the chosen lang.xx.php file into array
         			  $new_language_array = array();
         			  $new_language_file =  $helptextfile[$language2];
+        			  $new_language_array = read_complete_file_into_array($new_language_file, "pgv_lang[");
+        			  break;
+    case "admin"	: // read the english lang.en.php file into array
+        			  $english_language_array = array();
+        			  $english_language_array = read_complete_file_into_array($adminfile["english"], "pgv_lang[");
+        			  // read the chosen lang.xx.php file into array
+        			  $new_language_array = array();
+        			  $new_language_file =  $adminfile[$language2];
+        			  $new_language_array = read_complete_file_into_array($new_language_file, "pgv_lang[");
+        			  break;
+    case "editor"	: // read the english lang.en.php file into array
+        			  $english_language_array = array();
+        			  $english_language_array = read_complete_file_into_array($editorfile["english"], "pgv_lang[");
+        			  // read the chosen lang.xx.php file into array
+        			  $new_language_array = array();
+        			  $new_language_file =  $editorfile[$language2];
         			  $new_language_array = read_complete_file_into_array($new_language_file, "pgv_lang[");
         			  break;
   }
