@@ -314,7 +314,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
 	echo "<tr>";
-	echo "<th class=\"list_label rela\">#</th>";
+	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
 	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
 	if ($option=="sosa") echo "<th class=\"list_label\">Sosa</th>";
@@ -331,7 +331,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "</tr>\n";
 
 	//-- table body
-	$n = 1;
+	$hidden = 0;
+	$n = 0;
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
 			$person = Person::getInstance($key); // from placelist
@@ -346,19 +347,24 @@ function print_indi_table($datalist, $legend="", $option="") {
 			else $person = Person::getInstance($gid);
 		}
 		if (is_null($person)) continue;
+		if (!$person->canDisplayName()) {
+			$hidden++;
+			continue;
+		}
 		
 		echo "<tr>";
-		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
+		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
 
 		if ($SHOW_ID_NUMBERS) {
 			echo "<td class=\"list_value_wrap rela\">";
 			echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$person->xref."</a></td>";
 		}
 		
-		if ($person->isDead()) echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
-		else echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap alive\">";
 		if (isset($value["name"]) and $person->canDisplayName()) $name = $value["name"];
 		else $name = $person->getSortableName();
+		if ($person->isDead()) echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\"";
+		else echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap alive\"";
+		echo " align=\"".get_align($name)."\">";
 		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		echo $person->getSexImage();
 		foreach ($name_subtags as $k=>$subtag) {
@@ -391,7 +397,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		" class=\"list_item\">".$txt."</a>";
 		echo "</td>";
 
-		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
+		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\" align=\"".get_align($person->getBirthPlace())."\">";
 		echo "<a href=\"".$person->getPlaceUrl($person->getBirthPlace())."\" class=\"list_item\">".PrintReady($person->getPlaceShort($person->getBirthPlace()))."</a>";
 		echo "&nbsp;</td>";
 
@@ -415,7 +421,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		" class=\"list_item\">".$txt."</a>";
 		echo "</td>";
 
-		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
+		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\" align=\"".get_align($person->getDeathPlace())."\">";
 		echo "<a href=\"".$person->getPlaceUrl($person->getDeathPlace())."\" class=\"list_item\">".PrintReady($person->getPlaceShort($person->getDeathPlace()))."</a>";
 		echo "&nbsp;</td>";
 
@@ -452,6 +458,22 @@ function print_indi_table($datalist, $legend="", $option="") {
 
 		echo "</tr>\n";
 	}
+	if ($hidden) {
+		echo "<tr class=\"sortbottom\">";
+		echo "<td></td>";
+		if ($SHOW_ID_NUMBERS) echo "<td></td>";
+		echo "<td class=\"list_label\">";
+		echo $pgv_lang["total_names"]." : ".$n;
+		echo "<br />".$pgv_lang["hidden"]." : ".$hidden;
+		echo "</td>";
+		echo "<td></td>";
+		echo "<td></td>";
+		echo "<td></td>";
+		echo "<td></td>";
+		echo "<td></td>";
+		if ($SHOW_LAST_CHANGE) echo "<td></td>";
+		echo "</tr>";
+	}
 	echo "</table>\n";
 	echo "</fieldset>\n";
 }
@@ -474,7 +496,7 @@ function print_surn_table($datalist, $target="INDI") {
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
 	echo "<tr>";
-	echo "<th class=\"list_label rela\">#</th>";
+	echo "<td></td>";
 	echo "<th class=\"list_label\">".$factarray["SURN"]."</th>";
 	echo "<th class=\"list_label\">";
 	if ($target=="FAM") echo $pgv_lang["families"]; else echo $pgv_lang["individuals"];
@@ -483,18 +505,19 @@ function print_surn_table($datalist, $target="INDI") {
 
 	//-- table body
 	$total = 0;
-	$n = 1;
+	$n = 0;
 	foreach($datalist as $key => $value) {
 		if (!isset($value["name"])) break;
-		if (empty($value["name"])) continue;
+		$surn = $value["name"];
 		if ($target=="FAM") $url = "famlist.php";	else $url = "indilist.php";
-		$url .= "?ged=".$GEDCOM."&amp;surname=".urlencode($value["name"]);
+		$url .= "?ged=".$GEDCOM."&amp;surname=".urlencode($surn);
 
 		echo "<tr>";
-		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
+		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
 
-		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
-		echo "<a href=\"".$url."\" class=\"list_item name1\">".PrintReady($value["name"])."</a>";
+		if (empty($surn) or trim("@".$surn,"_")=="@" or $surn=="@N.N.") $surn = $pgv_lang["NN"];
+		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\" align=\"".get_align($surn)."\">";
+		echo "<a href=\"".$url."\" class=\"list_item name1\">".PrintReady($surn)."</a>";
 		echo "&nbsp;</td>";
 
 		echo "<td class=\"list_value_wrap\">";
@@ -560,7 +583,7 @@ function print_fam_table($datalist, $legend="") {
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
 	echo "<tr>";
-	echo "<th class=\"list_label rela\">#</th>";
+	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">FAM</th>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
 	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
@@ -576,7 +599,8 @@ function print_fam_table($datalist, $legend="") {
 	echo "</tr>\n";
 
 	//-- table body
-	$n = 1;
+	$hidden = 0;
+	$n = 0;
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
 			$family = Family::getInstance($key); // from placelist
@@ -595,9 +619,13 @@ function print_fam_table($datalist, $legend="") {
 		if (is_null($husb)) $husb = new Person('');
 		$wife = $family->getWife();
 		if (is_null($wife)) $wife = new Person('');
-
+		if (!$husb->canDisplayName() or !$wife->canDisplayName()) {
+			$hidden++;
+			continue;
+		}
+		
 		echo "<tr>";
-		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
+		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
 		if ($SHOW_ID_NUMBERS) {
 			echo "<td class=\"list_value_wrap rela\">";
 			echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".$family->xref."</a>";
@@ -610,9 +638,10 @@ function print_fam_table($datalist, $legend="") {
 			echo "</td>";
 		}
 
-		if ($husb->isDead()) echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
-		else echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap alive\">";
 		$name = $husb->getSortableName();
+		if ($husb->isDead()) echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\"";
+		else echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap alive\"";
+		echo " align=\"".get_align($name)."\">";
 		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($husb->xref) echo $husb->getSexImage();
 		foreach ($name_subtags as $k=>$subtag) {
@@ -627,9 +656,10 @@ function print_fam_table($datalist, $legend="") {
 			echo "</td>";
 		}
 		
-		if ($wife->isDead()) echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
-		else echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap alive\">";
 		$name = $wife->getSortableName();
+		if ($wife->isDead()) echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\"";
+		else echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap alive\"";
+		echo " align=\"".get_align($name)."\">";
 		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($wife->xref) echo $wife->getSexImage();
 		foreach ($name_subtags as $k=>$subtag) {
@@ -653,7 +683,7 @@ function print_fam_table($datalist, $legend="") {
 		" class=\"list_item\">".$txt."</a>";
 		echo "</td>";
 
-		echo "<td class=\"".$TEXT_DIRECTION."  list_value_wrap\">";
+		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\" align=\"".get_align($family->getMarriagePlace())."\">";
 		echo "<a href=\"".$family->getPlaceUrl($family->getMarriagePlace())."\" class=\"list_item\">".PrintReady($family->getPlaceShort($family->getMarriagePlace()))."</a>";
 		echo "&nbsp;</td>";
 
@@ -697,6 +727,23 @@ function print_fam_table($datalist, $legend="") {
 
 		echo "</tr>\n";
 	}
+	if ($hidden) {
+		echo "<tr class=\"sortbottom\">";
+		echo "<td></td>";
+		if ($SHOW_ID_NUMBERS) echo "<td></td>";
+		if ($SHOW_ID_NUMBERS) echo "<td></td>";
+		echo "<td class=\"list_label\">";
+		echo $pgv_lang["total_names"]." : ".$n;
+		echo "<br />".$pgv_lang["hidden"]." : ".$hidden;
+		echo "</td>";
+		if ($SHOW_ID_NUMBERS) echo "<td></td>";
+		echo "<td></td>";
+		echo "<td></td>";
+		echo "<td></td>";
+		echo "<td></td>";
+		if ($SHOW_LAST_CHANGE) echo "<td></td>";
+		echo "</tr>";
+	}
 	echo "</table>\n";
 	echo "</fieldset>\n";
 }
@@ -723,7 +770,7 @@ function print_sour_table($datalist, $legend="") {
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
 	echo "<tr>";
-	echo "<th class=\"list_label rela\">#</th>";
+	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">SOUR</th>";
 	echo "<th class=\"list_label\">".$factarray["TITL"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["TITL"]."2</th>";
@@ -735,7 +782,7 @@ function print_sour_table($datalist, $legend="") {
 	echo "</tr>\n";
 
 	//-- table body
-	$n = 1;
+	$n = 0;
 	foreach ($datalist as $key => $value) {
 		if (!is_array($value)) {
 			$source = Source::getInstance($key); // from placelist
@@ -751,15 +798,15 @@ function print_sour_table($datalist, $legend="") {
 		if (is_null($source)) continue;
 		
 		echo "<tr>";
-		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
+		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
 		if ($SHOW_ID_NUMBERS) {
 			echo "<td class=\"list_value_wrap rela\">";
 			echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".$source->xref."</a>";
 			echo "</td>";
 		}
 
-		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		$name = $source->getSortableName();
+		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\" align=\"".get_align($name)."\">";
 		echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
 		echo "</td>";
 		
@@ -773,7 +820,7 @@ function print_sour_table($datalist, $legend="") {
 		}
 		echo "&nbsp;</td>";
 
-		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
+		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\" align=\"".get_align($source->getAuth())."\">";
 		echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".PrintReady($source->getAuth())."</a>";
 		echo "&nbsp;</td>";
 
@@ -828,7 +875,7 @@ function print_repo_table($datalist, $legend="") {
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
 	echo "<tr>";
-	echo "<th class=\"list_label rela\">#</th>";
+	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">REPO</th>";
 	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["sources"]."</th>";
@@ -836,7 +883,7 @@ function print_repo_table($datalist, $legend="") {
 	echo "</tr>\n";
 
 	//-- table body
-	$n = 1;
+	$n = 0;
 	foreach ($datalist as $key => $value) {
 		if (!is_array($value)) {
 			$repo = Repository::getInstance($key);
@@ -852,14 +899,15 @@ function print_repo_table($datalist, $legend="") {
 		if (is_null($repo)) continue;
 		
 		echo "<tr>";
-		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
+		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
 		if ($SHOW_ID_NUMBERS) {
 			echo "<td class=\"list_value_wrap rela\">";
 			echo "<a href=\"".$repo->getLinkUrl()."\" class=\"list_item\">".$repo->xref."</a>";
 			echo "</td>";
 		}
-		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
+
 		$name = $repo->getSortableName();
+		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\" align=\"".get_align($name)."\">";
 		echo "<a href=\"".$repo->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
 		foreach ($name_subtags as $k=>$subtag) {
 			$addname = $repo->getSortableName($subtag);
@@ -907,7 +955,7 @@ function print_media_table($datalist, $legend="") {
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
 	echo "<tr>";
-	echo "<th class=\"list_label rela\">#</th>";
+	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">OBJE</th>";
 	echo "<th class=\"list_label\">".$factarray["TITL"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["individuals"]."</th>";
@@ -917,21 +965,22 @@ function print_media_table($datalist, $legend="") {
 	echo "</tr>\n";
 
 	//-- table body
-	$n = 1;
+	$n = 0;
 	foreach ($datalist as $key => $value) {
 		$media = new Media($value["GEDCOM"]);
 		if (is_null($media)) $media = Media::getInstance($key);
 		if (is_null($media)) continue;
 		
 		echo "<tr>";
-		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
+		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
 		if ($SHOW_ID_NUMBERS) {
 			echo "<td class=\"list_value_wrap rela\">";
 			echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item\">".$media->xref."</a>";
 			echo "</td>";
 		}
-		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
+
 		$name = $media->getSortableName();
+		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\" align=\"".get_align($name)."\">";
 		echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
 		echo "<br /><a href=\"".$media->getLinkUrl()."\">".basename($media->file)."</a>";
 		echo "<br />".$media->getFiletype();
@@ -941,7 +990,6 @@ function print_media_table($datalist, $legend="") {
 		echo "</td>";
 
 		foreach (array("INDI", "FAM", "SOUR") as $rectype) {
-			echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 			$resu = array();
 			foreach ($value["LINKS"] as $k=>$v) {
 			  if ($v!=$rectype) continue;
@@ -951,6 +999,7 @@ function print_media_table($datalist, $legend="") {
 				$resu[] = $txt;
 			}
 			sort($resu);
+			echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\" align=\"".get_align(@$resu[0])."\">";
 			foreach ($resu as $txt) echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady("&bull; ".$txt)."</a><br />";
 			echo "</td>";
 		}
@@ -988,7 +1037,7 @@ function print_changes_table($datalist) {
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
 	echo "<tr>";
-	echo "<th class=\"list_label rela\">#</th>";
+	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["CHAN"]."</th>";
@@ -996,21 +1045,21 @@ function print_changes_table($datalist) {
 	echo "</tr>\n";
 
 	//-- table body
-	$n = 1;
+	$n = 0;
 	foreach($datalist as $key => $value) {
 		$record = GedcomRecord::getInstance($key);
 		if (is_null($record)) $record = GedcomRecord::getInstance($value[0]);
 		if (is_null($record)) continue;
 
 		echo "<tr>";
-		echo "<td class=\"list_value_wrap rela list_item\">".$n++."</td>";
+		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
 		if ($SHOW_ID_NUMBERS) {
 			echo "<td class=\"list_value_wrap rela\">";
 			echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".$record->xref."</a></td>";
 		}
 
-		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\">";
 		$name = $record->getSortableName();
+		echo "<td class=\"".$TEXT_DIRECTION." list_value_wrap\" align=\"".get_align($name)."\">";
 		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($record->type=="INDI") echo $record->getSexImage();
 		echo "</td>";
@@ -1029,6 +1078,23 @@ function print_changes_table($datalist) {
 		echo "</tr>\n";
 	}
 	echo "</table>\n";
+}
+
+/**
+ * check string align direction depending on language and rtl config
+ *
+ * @param string $txt string argument
+ * @return string left|right
+ */
+function get_align($txt) {
+		global $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
+		
+		if (!empty($txt)) {
+  			if ($TEXT_DIRECTION=="rtl" && !hasRTLText($txt) && hasLTRText($txt)) return "left";
+  			if ($TEXT_DIRECTION=="ltr" && hasRTLText($txt) && !hasLTRText($txt) && $USE_RTL_FUNCTIONS) return "right";
+		}
+		if ($TEXT_DIRECTION=="rtl") return "right";
+		return "left";
 }
 
 /**
