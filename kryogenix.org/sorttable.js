@@ -49,6 +49,7 @@ function ts_makeSortable(table) {
 	for (var i=0;i<firstRow.cells.length;i++) {
 		var cell = firstRow.cells[i];
 		var txt = ts_getInnerText(cell);
+		if (txt=="") continue; // PGV: do not process empty cols
 		cell.innerHTML = '<a href="javascript:;" class="sortheader" '+
 		'onmousedown="this.style.cursor=\'wait\';" ' + // PGV: set cursor
 		'onclick="ts_resortTable(this, '+i+');return false;">' +
@@ -269,9 +270,11 @@ function table_filter(id, keyword, filter) {
 	// apply filter
 	for (var r=1;r<table.rows.length;r++) {
 		var row = table.rows[r];
-		var disp = "";
-		if (ts_getInnerText(row.cells[COLUMN]).indexOf(filter)==-1) disp="none";
-		else {
+		// don't do sortbottom last rows
+		if (row.className && (row.className.indexOf('sortbottom') != -1)) break;
+		// display row when matching filter
+		var disp = "none";
+		if (row.cells[COLUMN] && ts_getInnerText(row.cells[COLUMN]).indexOf(filter)!=-1) {
 			disp="table-row";
 			if (document.all) disp="inline"; // IE
 		}
@@ -285,9 +288,9 @@ function table_renum(id) {
 	var table = document.getElementById(id);
 	// is first column counter ?
 	var firstRow = table.rows[0];
-	if (ts_getInnerText(firstRow.cells[0]).indexOf('#')==-1) return false;
+	//if (ts_getInnerText(firstRow.cells[0]).indexOf('#')==-1) return false;
 	// renumbering
-	count=1;
+	var count=1;
 	for (var r=1;r<table.rows.length;r++) {
 		row = table.rows[r];
 		// don't do sortbottom last rows
