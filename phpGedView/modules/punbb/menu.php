@@ -19,8 +19,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @subpackage punBB
- * @version $Id: $
+ * @subpackage Modules, punBB
+ * @version $Id$
  * @author Patrick Kellum
  */
 //-- security check, only allow access from module.php
@@ -35,7 +35,7 @@ if($language_settings[$LANGUAGE]['lang_short_cut'] != 'en' && file_exists("modul
 class punbb_ModuleMenu
 {
 	/**
-	 * get the research assistant menu
+	 * get the punbb menu
 	 * @todo	create a way to abstract menus for plugins
 	 * @return Menu 	the menu item
 	 */
@@ -49,7 +49,7 @@ class punbb_ModuleMenu
 
 		// punBB
 		$menu = new Menu($pgv_lang['mod_punbb'], 'index.php?mod=punbb', 'down');
-		$menu->addIcon("{$PGV_IMAGE_DIR}/edit_sour.gif");
+		if(!empty($PGV_IMAGES['menu_punbb']['large'])){$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['menu_punbb']['large']}");}
 		$menu->addClass("menuitem{$ff}", "menuitem_hover{$ff}", "submenu{$ff}");
 
 		// Search
