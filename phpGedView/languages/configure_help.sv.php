@@ -233,6 +233,8 @@ $pgv_lang["NAME_FROM_GEDCOM"]			= "Hämta titelnamn ifrån GEDCOM-filen";
 $pgv_lang["NAME_FROM_GEDCOM_help"]		= "~#pgv_lang[NAME_FROM_GEDCOM]#~<br /><br />Som standard använder PhpGedView namnet som finns lagrat i indexen för att få tag på en persons namn. Med vissa GEDCOM-format och språk visas inte sorterade namn på ett korrekt sätt och det bästa sättet är då att hämta det korrekta namnet direkt från GEDCOM-filen istället. Spanska namn är ett utmärkt exempel på detta. Ett spanskt namn kan ha formen Förnamn Faderns Efternamn Moderns Efternamn. Används indexen för att sortera och visa detta namn skulle det felaktigt visas som Förnamn Moderns Efternamn Faderns Efternamn. Används istället namnet lagrat i GEDCOM-filen visas däremot namnen korrekt. En nackdel med denna metod är dock att programmets prestanda försämras.<br /><br />Detta ställer in variabeln \$NAME_FROM_GEDCOM i filen <i>config.php</i>.<br />";
 $pgv_lang["SHOW_ID_NUMBERS"]			= "Visa ID-nummer bredvid namnet";
 $pgv_lang["SHOW_ID_NUMBERS_help"]		= "~#pgv_lang[SHOW_ID_NUMBERS]#~<br /><br />Visa ID-nummer i en parantes efter personnamnet i tavlorna.<br />";
+$pgv_lang["SHOW_LAST_CHANGE"]		= "Visa GEDCOM-posternas senaste ändrade datum i listor";
+$pgv_lang["SHOW_LAST_CHANGE_help"]	= "~#pgv_lang[SHOW_LAST_CHANGE]#~<br /><br />Denna inställning kontrollerar om senaste ändrade datum ska visas i listor eller inte.<br />";
 $pgv_lang["SHOW_FAM_ID_NUMBERS"]		= "Visa ID-nummer intill familjenamn";
 $pgv_lang["SHOW_FAM_ID_NUMBERS_help"]	= "~#pgv_lang[SHOW_FAM_ID_NUMBERS]#~<br /><br />Visa familjeid inom parantes efter familjenamnen i tavlor och på ansedelsidan.<br />";
 $pgv_lang["SHOW_PEDIGREE_PLACES"]		= "Orter detaljnivå";
@@ -506,6 +508,7 @@ $pgv_lang["lang_name_arabic"]			= "Arabiska";
 $pgv_lang["lang_name_lithuanian"]	= "Litauiska";
 $pgv_lang["lang_name_vietnamese"]	= "Vietnamesiska";
 $pgv_lang["lang_name_slovak"]		= "Slovakiska";
+$pgv_lang["lang_name_estonian"]		= "Estländska";
 $pgv_lang["lang_new_language"]			= "Nytt språk";
 $pgv_lang["original_lang_name"]			= "Ursprungligt namn på språket i #D_LANGNAME#";
 $pgv_lang["original_lang_name_help"]	= "Vad kallas språket på sitt eget språk?<br /><br />Engelska kallas på Engelska: <b>English</b>; Tyska kallas på Tyska: <b>Deutsch</b>; Holländska kallas på Holländska: <b>Nederlands</b>; Tjeckien kallas på tjekiska <b>Ceština</b> osv.";
@@ -727,5 +730,9 @@ $pgv_lang["COMMIT_COMMAND"] 			= "Versionskontroll incheckningskommando";
 $pgv_lang["SHOW_MULTISITE_SEARCH_help"]	= "~#pgv_lang[SHOW_MULTISITE_SEARCH]#~<br /><br />Multi-sajtsökning tillåter användare att söka genom flera PhpGedView-sajter som du har satt upp i hantera sajter administration område eller som vi har länkat till. Detta val kontrollerar om Multi-sajt sökning ska vara på för alla eller endast för inloggade användare.<br />";
 $pgv_lang["SHOW_MULTISITE_SEARCH"]		= "Visa multi-sajt sökning";
 $pgv_lang["COMMIT_COMMAND_help"] 			= "~#pgv_lang[COMMIT_COMMAND]#~<br /><br />Om du vill använda ett versionskontroll system som CVS att arkivera ändringar för din GEDCOM-fil och dina konfigurations och integritetsinställningar, skriv in kommandot här. Lämna rutan tom om du inte vill använda något versionkontrollsystem. Godkända val är <b>cvs</b> och <b>svn</b>.";
+$pgv_lang["USE_MEDIA_VIEWER"]			= "Använd mediavisaren";
+$pgv_lang["SHOW_SPIDER_TAGLINE"]		= "Visa sökmotorns tagline";
+$pgv_lang["SHOW_PRIVATE_RELATIONSHIPS"]	= "Visa relationer för levande personer";
+$pgv_lang["SYNC_GEDCOM_FILE"]			= "Synkronisera redigeringar med GEDOM-filen";
 
 ?>

@@ -195,6 +195,7 @@ $factarray["FONE"] = "Fonetisk";
 $factarray["ROMN"] = "Romaniserad";
 $factarray["_NAME"] = "Adressat";
 $factarray["URL"] = "Web URL";
+$factarray["_URL"] = "Webadress";
 $factarray["_HEB"] = "Hebreiska";
 $factarray["_SCBK"] = "Urklippsalbum";
 $factarray["_TYPE"] = "Mediatyp";
