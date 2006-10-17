@@ -697,7 +697,8 @@ table.center{
 	left: 1px;
 	top: 1px;
 	width: 200px;
-	height: 555px;
+	/* height: 650px; */
+	height: auto;
 	z-index: 2;
 	border: outset #98753D 3px;
 	background-image: url("11wy10.jpg");

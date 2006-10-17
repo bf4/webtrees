@@ -19,8 +19,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @subpackage Charts
- * @version $Id: individual.php,v 1.252.2.98 2005/08/16 04:04:25 kosherjava Exp $
+ * @subpackage Modules, Research Assistant
+ * @version $Id$
  */
 //-- security check, only allow access from module.php
 if (strstr($_SERVER["SCRIPT_NAME"],"menu.php")) {
@@ -52,8 +52,7 @@ class research_assistant_ModuleMenu {
 
 		//-- main search menu item
 		$menu = new Menu($pgv_lang["research_assistant"], "module.php?mod=research_assistant", "down");
-		if (!empty($PGV_IMAGES["gedcom"]["large"]))
-			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["large"]);
+		if(!empty($PGV_IMAGES['menu_research']['large'])){$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['menu_research']['large']}");}
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
 		
 		//'My Tasks' ddl menu item

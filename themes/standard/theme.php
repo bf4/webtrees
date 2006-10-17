@@ -55,6 +55,11 @@ $PGV_IMAGES["search"]["large"] = "search.gif";
 $PGV_IMAGES["sfamily"]["large"] = "sfamily.gif";
 $PGV_IMAGES["source"]["large"] = "source.gif";
 
+//- PGV main icons for optional modules
+$PGV_IMAGES["menu_gallery"]["large"] = "menu_gallery.gif";
+$PGV_IMAGES["menu_punbb"]["large"] = "menu_punbb.gif";
+$PGV_IMAGES["menu_research"]["large"] = "menu_research.gif";
+
 //- PGV small icons
 $PGV_IMAGES["admin"]["small"] = "small/admin.gif";
 $PGV_IMAGES["ancestry"]["small"] = "small/ancestry.gif";
