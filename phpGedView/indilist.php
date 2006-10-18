@@ -55,7 +55,8 @@ if (isset($alpha)) {
 if (isset($surname)) {
 	$surname = stripslashes($surname);
 	$surname = str_replace(array($lrm, $rlm), "", $surname);
-	$doctitle = $pgv_lang["individual_list"]." : ".$surname;
+	$doctitle = $pgv_lang["individual_list"];
+	if (empty($surname) or trim("@".$surname,"_")=="@" or $surname=="@N.N.") $doctitle .= " : ".$pgv_lang["NN"];
 }
 if (isset($doctitle)) {
 	?>
@@ -178,7 +179,7 @@ if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&($show_all=="yes")) {
 	$i = 0;
 	uasort($surnames, "itemsort");
 	print_surn_table($surnames);
-	/**%
+	/** DEPRECATED
 	$count = count($surnames);
 	$count_indi = 0;
 	$col = 1;
@@ -230,7 +231,7 @@ if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&($show_all=="yes")) {
 		if ($count>1) print "<br />".$pgv_lang["surnames"]." ".$count;
 		print "</td>\n";
 	}
-	%**/
+	**/
 }
 else if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 	if (!isset($alpha)) $alpha="";
@@ -279,7 +280,7 @@ else if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&(empty($surname))&&
 	$i = 0;
 	uasort($surnames, "itemsort");
 	print_surn_table($surnames);
-	/**%
+	/** DEPRECATED
 	$count = count($surnames);
 	$count_indi = 0;
 	$col = 1;
@@ -329,7 +330,7 @@ else if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&(empty($surname))&&
 		if (count($indi_show)>1) print "<br />".$pgv_lang["surnames"]." ".$count;
 		print "</td>\n";
 	}
-	%**/
+	**/
 
 }
 else {
@@ -362,7 +363,7 @@ else {
 		}
 		uasort($names, "itemsort");
 		reset($names);
-		/**%
+		/** DEPRECATED
 		$count = count($names);
 		$indi_show = array();
 		$total_indis = count($indilist);
@@ -384,7 +385,7 @@ else {
 			if ($SHOW_MARRIED_NAMES) print $pgv_lang["total_names"]." ".$count."<br />\n";
 			print $pgv_lang["total_indis"]." ".count($indi_show)."</td>\n";
 		}
-		%**/
+		**/
 	}
 	else {
 		//--- the list is really long so divide it up again by the first letter of the first name
@@ -445,12 +446,12 @@ else {
 			}
 			print "</td></tr><tr>\n";
 		}
-		/**%if ($firstname_alpha==false) {
+		/**if ($firstname_alpha==false) {
 			print "<td class=\"list_label\" style=\"padding: 0pt 5pt 0pt 5pt; \" colspan=\"2\">";
 			if (!empty($surname) && $surname_sublist=="yes") print PrintReady(str_replace("#surname#", check_NN($surname), $pgv_lang["indis_with_surname"]));
 			else print $pgv_lang["individuals"];
 			print "</td></tr><tr>\n";
-		}%**/
+		}**/
 		//print "<td class=\"list_value wrap width50 $TEXT_DIRECTION\"><ul>\n";
 		$names = array();
 		foreach ($tindilist as $gid => $indi) {
@@ -512,7 +513,7 @@ else {
 			}
 		}
 		uasort($names, "itemsort");
-		/**%
+		/** DEPRECATED
 		$count = count($names);
 		$indi_show = array();
 		$i=0;
@@ -535,7 +536,7 @@ else {
 			if (count($indi_hide)>0) print $pgv_lang["hidden"]." ".count($indi_hide);
 			print "</td>\n";
 		}
-		%**/
+		**/
 	}
 }
 print "</tr></table>";

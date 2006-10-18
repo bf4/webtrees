@@ -3,7 +3,7 @@
  * Parses gedcom file and displays a list of the sources in the file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2006  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ print "<h2>".$pgv_lang["source_list"]."</h2>\n\t";
 
 print_sour_table(array_merge($sourcelist, $addsourcelist));
 
-/**% DEPRECATED
+/** DEPRECATED
 print "\n\t<table class=\"list_table $TEXT_DIRECTION\">\n\t\t<tr><td class=\"list_label\"";
 if($ca>0 || $cs>12)	print " colspan=\"2\"";
 print "><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" border=\"0\" title=\"".$pgv_lang["sources"]."\" alt=\"".$pgv_lang["sources"]."\" />&nbsp;&nbsp;";
@@ -85,7 +85,7 @@ if ($cs>0){
 }
 else print "<span class=\"warning\"><i>".$pgv_lang["no_results"]."</span>";
 print "</td>\n\t\t</tr>\n\t</table>";
-%**/
+**/
 
 print "</div>";
 print "<br /><br />";

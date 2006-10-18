@@ -4,7 +4,7 @@
  * Also shows how many sources reference this repository.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2006  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -229,7 +229,7 @@ $cs=count($mysourcelist);
 
 print_sour_table($mysourcelist, $pgv_lang["sources"]." @ ".$name);
 
-/**% DEPRECATED
+/** DEPRECATED
 if ($cs>0) {
 	print_help_link("repos_listbox_help", "qm");
 
@@ -254,7 +254,7 @@ if ($cs>0) {
 	print "</tr>\n\t</table>";
 }
 else print "&nbsp;&nbsp;&nbsp;<span class=\"warning\"><i>".$pgv_lang["no_results"]."</span>";
-%**/
+**/
 print "<br /><br /></td><td valign=\"top\">";
 
 if ($view!="preview") {

@@ -3,7 +3,7 @@
  * Displays a place hierachy
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2006  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -340,7 +340,7 @@ if ($level > 0) {
 			}
 		}
 
-		/**%
+		/** DEPRECATED
 		print "\n\t<br /><br /><table class=\"list_table $TEXT_DIRECTION\">\n\t\t<tr>";
 		$ci = count($myindilist);
 		$cs = count($mysourcelist);
@@ -457,7 +457,7 @@ if ($level > 0) {
 		}
 		print "</tr>\n\t</table>";
 		print_help_link("ppp_name_list_help", "qm");
-		%**/
+		**/
 		print "<br />";
 
 		$title = ""; foreach ($parent as $k=>$v) $title = $v.", ".$title;
