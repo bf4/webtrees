@@ -120,22 +120,31 @@ class Person extends GedcomRecord {
 
 	/**
 	 * get the persons sortable name
+	 * @param string $subtag optional subtag _AKA _HEB etc...
+	 * @param int $num which matching subtag to get
 	 * @param boolean $starred option to add starredname html code
 	 * @return string
 	 */
-	function getSortableName($subtag="", $starred=true) {
+	function getSortableName($subtag="", $num=1, $starred=true) {
 		global $pgv_lang, $NAME_REVERSE, $UNDERLINE_NAME_QUOTES;
 		global $unknownNN, $unknownPN;
 		if (!$this->canDisplayName()) {
 			if (empty($subtag)) return $pgv_lang["private"];
 			else return "";
 		}
-		//return get_sortable_name($this->xref);
-		if (empty($subtag)) $name = get_gedcom_value("NAME", 1, $this->gedrec, '', false);
-		else {
-			$name = get_gedcom_value("NAME:".$subtag, 1, $this->gedrec, '', false);
-			if (empty($name)) return "";
+		// if subtag contains '/' we assume this is a name to change as sortable
+		// else we get name from gedcom record
+		if (stristr($subtag, "/")) $name = $subtag;
+		else if (empty($subtag)) {
+			$namerec = get_sub_record(1, "1 NAME", $this->gedrec, $num);
+			$name = get_gedcom_value("NAME", 1, $namerec, '', false);
 		}
+		else {
+			$namerec = get_sub_record(2, "2 ".$subtag, $this->gedrec, $num);
+			$name = get_gedcom_value($subtag, 2, $namerec, '', false);
+		}
+		if (empty($name)) return "";
+		// get GIVN and SURN
 		list($givn, $surn, $nsfx) = explode("/", $name."//");
 		$exp = explode(",",$givn); $givn = trim($exp[0]);
 		if (empty($surn) or trim("@".$surn,"_")=="@" or $surn=="@N.N.") {

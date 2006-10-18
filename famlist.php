@@ -149,7 +149,7 @@ if (($surname_sublist=="yes")&&($show_all=="yes")) {
 	$i = 0;
 	uasort($surnames, "itemsort");
 	print_surn_table($surnames, "FAM");
-	/**%
+	/** DEPRECATED
 	$count = count($surnames);
 	$col = 1;
 	if ($count>$minNamesPerColumn) $col=2;
@@ -195,7 +195,7 @@ if (($surname_sublist=="yes")&&($show_all=="yes")) {
 		if ($count>1) print "<br />".$pgv_lang["surnames"]." ".$count;
 		print "</td>\n";
 	}
-	%**/
+	**/
 }
 else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 	if (!isset($alpha)) $alpha="";
@@ -215,7 +215,7 @@ else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 	$i = 0;
 	uasort($surnames, "itemsort");
 	print_surn_table($surnames, "FAM");
-	/**%
+	/** DEPRECATED
 	$count = count($surnames);
 	$count_indi = 0;
 	$count_fam = 0;
@@ -256,7 +256,7 @@ else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 		print $pgv_lang["total_fams"]." ".count($tfamlist)."&nbsp;<br />";
 		print $pgv_lang["surnames"]." ".$count."&nbsp;</td>\n";
 	}
-	%**/
+	**/
 }
 else {
 	$firstname_alpha = false;
@@ -276,7 +276,7 @@ else {
 	if (($surname_sublist=="no")&&($show_all=="yes")) {
 		$tfamlist = get_fam_list();
 		uasort($tfamlist, "itemsort");
-		/**%
+		/** DEPRECATED
 		$count = count($tfamlist);
 		$i=0;
 		print "<td class=\"list_label\" style=\"padding: 0pt 5pt 0pt 5pt; \" colspan=\"2\">";
@@ -300,7 +300,7 @@ else {
 			print "</tr><tr><td colspan=\"2\" align=\"center\">";
 			print $pgv_lang["total_fams"]." ".$count."</td>\n";
 		}
-		%**/
+		**/
 	}
 	else {
 		//--- the list is really long so divide it up again by the first letter of the first name
@@ -371,7 +371,7 @@ else {
 			print "</td></tr><tr>\n";
 		}
 		uasort($tfamlist, "itemsort");
-		/**%
+		/** DEPRECATED
 		$count = count($tfamlist);
 		$i=0;
 		if ($firstname_alpha==false) {
@@ -402,7 +402,7 @@ else {
 			if (count($fam_hide)>0) print $pgv_lang["hidden"]." ".count($fam_hide);
 			print "</td>\n";
 		}
-		%**/
+		**/
 	}
 }
 print "</tr></table>";

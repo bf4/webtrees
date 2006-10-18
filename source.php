@@ -4,7 +4,7 @@
  * reference this source.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005 PGV Development Team
+ * Copyright (C) 2002 to 2006 PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -150,7 +150,7 @@ $cf=count($myfamlist);
 if ($ci>0) print_indi_table($myindilist, $pgv_lang["individuals"]." @ ".$controller->source->getTitle());
 if ($cf>0) print_fam_table($myfamlist, $pgv_lang["families"]." @ ".$controller->source->getTitle());
 
-/**% DEPRECATED
+/** DEPRECATED
 if (($ci>0)||($cf>0)) {
 	?>
 	<table class="list_table">
@@ -220,7 +220,7 @@ if (($ci>0)||($cf>0)) {
 	</table>
 <?php }
 else print "&nbsp;&nbsp;&nbsp;<span class=\"warning\"><i>".$pgv_lang["no_results"]."</span>";
-%**/
+**/
 ?>
 	<br />
 	<br />
