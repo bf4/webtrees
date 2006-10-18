@@ -1,28 +1,39 @@
 <?php
-/*
- * Created on Nov 7, 2005
+/**
+ * PopUp Window to allow editing of comments.
  *
- * To change the template for this generated file go to
- * Window - Preferences - PHPeclipse - PHP - Code Templates
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2005  John Finlay and Others
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * This Page Is Valid XHTML 1.0 Transitional! > 19 August 2005
+ *
+ * @package PhpGedView
+ * @subpackage Edit
+ * @version $Id$
  */
  
 
  require_once("config.php");
- if (file_exists('modules/research_assistant/languages/ra_lang.en.php')) include_once('modules/research_assistant/languages/ra_lang.en.php');
- global $TBLPREFIX;
+ include_once("modules/research_assistant/languages/lang.en.php");
+ @include_once("modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php");
 
 /***********************************************************************************************************
  *                                        AUTHENTICATING                                                   *
  ***********************************************************************************************************/
- 
- 
-	//********************************************************************************************** 
-  	// If the user is not logged in, take them to the login page.
-//	if (empty($_SESSION['pgv_user'])){
-// 		header("Location: login.php?url={$PHP_SELF}");
-// 		exit;
-//	}
- 
  
  	//**********************************************************************************************
  	// If the user doesnt have access then take them to the index.
@@ -30,11 +41,6 @@
  		header("Location: index.php");
  		exit;
  	}
-
-	
-
-
-
 
 /***********************************************************************************************************
  *                                           REQUESTS                                                      *
@@ -126,11 +132,6 @@
 	  	print_error();
 	}
 	
-	
-	
-	
-	
-	
 /***********************************************************************************************************
  *                                           FUNCTIONS                                                     *
  ***********************************************************************************************************/
@@ -200,11 +201,6 @@
  			exit;
 		}
 	}
- 
- 
- 
- 
- 
  
 /***********************************************************************************************************
 *                                           FOOTER                                                         *

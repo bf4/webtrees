@@ -40,9 +40,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_functions.php")) {
 	exit;
 }
 // Set up our default language file.
-require_once 'languages/ra_lang.en.php'; //-- MA should change to lang.en.php - where is the $pgv_lang array filled with the $LANGUAGE texts?
-//require_once 'languages/lang.en.php'; 
-
+require_once('modules/research_assistant/languages/lang.en.php'); 
 include_once("modules/research_assistant/forms/ra_privacy.php");
 
 if (file_exists($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php")) include_once($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php");

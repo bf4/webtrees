@@ -734,6 +734,10 @@ if ($action=="filter") {
 			print "</td></tr>";
 		}
 		print "</table>";
+		if (userCanEdit(getUserName())) {
+			print_help_link("edit_add_unlinked_source_help", "qm"); ?><a href="javascript: <?php print $pgv_lang["add_unlinked_source"]; ?>" onclick="addnewsource(''); return false;"><?php print $pgv_lang["add_unlinked_source"]; ?></a>
+		<?php
+		}
 	}
 
 	// Output Special Characters

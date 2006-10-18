@@ -30,10 +30,10 @@
 	exit;
 }
 
+$pgv_lang["accept_changes"] 		= "Accept / Reject Changes";
 $pgv_lang["replace"]				= "Replace record";
 $pgv_lang["append"] 				= "Append record";
 $pgv_lang["review_changes"] 		= "Review GEDCOM Changes";
-$pgv_lang["current_dir"]			= "Current directory";
 $pgv_lang["remove_object"]			= "Remove object";
 $pgv_lang["remove_links"]			= "Remove links";
 $pgv_lang["media_not_deleted"]		= "Media directory not removed.";
@@ -120,10 +120,7 @@ $pgv_lang["change"]					= "Change";
 $pgv_lang["change_family_instr"]	= "Use this page to change or remove family members.<br /><br />For each member in the family, you can use the Change link to choose a different person to fill that role in the family.  You can also use the Remove link to remove that person from the family.<br /><br />When you have finished changing the family members, click the Save button to save the changes.<br />";
 $pgv_lang["change_family_members"]	= "Change Family Members";
 $pgv_lang["changes_occurred"]		= "The following changes were made to this record:";
-$pgv_lang["confirm_delete_file"]	= "Are you sure you want to delete this file?";
-$pgv_lang["confirm_folder_delete"] = "Are you sure you want to delete this folder?";
 $pgv_lang["confirm_remove"]			= "Are you sure you want to remove this person from the family?";
-$pgv_lang["confirm_remove_links"]	= "Are you sure you want to remove all links to this object?";
 $pgv_lang["confirm_remove_object"]	= "Are you sure you want to remove this object from the database?";
 $pgv_lang["create_repository"]		= "Create Repository";
 $pgv_lang["create_source"]			= "Create a new source";
@@ -134,7 +131,6 @@ $pgv_lang["deathplace_search"]		= "Death Place: ";
 $pgv_lang["delete_dir_success"]		= "Media and thumbnail directories successfully removed.";
 $pgv_lang["delete_file"]			= "Delete file";
 $pgv_lang["delete_repo"]			= "Delete Repository";
-$pgv_lang["description"]			= "Description";
 $pgv_lang["directory_not_empty"]	= "Directory not empty.";
 $pgv_lang["directory_not_exist"]	= "Directory does not exist.";
 $pgv_lang["error_remote"]           = "You have selected a remote site.";
@@ -215,6 +211,7 @@ $pgv_lang["update_successful"]		= "Update successful";
 $pgv_lang["upload"]					= "Upload";
 $pgv_lang["upload_error"]			= "There was an error uploading your file.";
 $pgv_lang["upload_media"]			= "Upload Media files";
+$pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>#MEDIA_DIRECTORY#</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to #MEDIA_DIRECTORY#. For example, #MEDIA_DIRECTORY#myfamily. If the thumbnail directory does not exist, it is created automatically.";
 $pgv_lang["upload_successful"]		= "Upload successful.";
 $pgv_lang["view_change_diff"]		= "View Change Diff";
 

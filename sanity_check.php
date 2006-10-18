@@ -13,7 +13,7 @@
 "privacy.php", and "hitcount.php" files exist.
 * All of these things are checked when the editconfig.php file is first loaded. 
 * If any of the checks fail the appropriate error or warning message will be displayed.
-* 
+*  
 * phpGedView: Genealogy Viewer
 * Copyright (C) 2002 to 2003  John Finlay and Others
 *
@@ -71,8 +71,17 @@ foreach($arr as $k => $v)
 		$errors[] = "<span class=\"error\">The file \"$v\" did not upload correctly. You should try to upload the file again.</span>";
 	}
 }
-if (count($errors)>0) print_sanity_errors();
+
 @require_once("config.php");
+if (isset($CONFIGURED)) $errors[] = "<span class=\"error\">config.php file is corrupt.</span>";
+
+if (count($errors)>0) {
+	print_sanity_errors();
+	exit;
+}
+
+//-- if we have a good configuration only allow admins to this page
+if ($CONFIGURED && adminUserExists() && !userIsAdmin(getUserName())) exit;
 
 if (!file_is_writable("config.php")) 
 {

@@ -44,6 +44,7 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
+-$pgv_lang["message"]								17 Oct 2006				D
 *$pgv_lang["keep_media_help"]						10 Oct 2006				W
 *$pgv_lang["USE_MEDIA_VIEWER_help"]					10 Oct 2006				wC
 +$pgv_lang["keep_media_help"]						5 Oct 2006				A
@@ -64,9 +65,9 @@ VERSION 4.0
 -------------------------------------------------------------------------------------------
 +$pgv_lang["SHOW_LAST_CHANGE"]						21 Jul 2006				A
 -$pgv_lang["SHOW_FAM_NUMBERS"]						21 Jul 2006				D
-*$pgv_lang["SHOW_ID_NUMBERS"]						21 Jul 2006				w
-+$pgv_lang["SHOW_SPIDER_TAGLINE"]					14 Jul 2006				A
-+$pgv_lang["SHOW_SPIDER_TAGLINE_help"]				14 Jul 2006				A
+*$pgv_lang["SHOW_ID_NUMBERS"]							21 Jul 2006				w
++$pgv_lang["SHOW_SPIDER_TAGLINE"]			14 Jul 2006				A
++$pgv_lang["SHOW_SPIDER_TAGLINE_help"]			14 Jul 2006				A
 +$pgv_lang["SHOW_PRIVATE_RELATIONSHIPS"]			11 Jul 2006				A
 +$pgv_lang["SHOW_PRIVATE_RELATIONSHIPS_help"]		11 Jul 2006				A
 +$pgv_lang["SYNC_GEDCOM_FILE_help"]					13 Jun 2006				A
