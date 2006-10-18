@@ -119,25 +119,8 @@ function getRelationshipText_en($relationshipDescription, $node, $pid1, $pid2)
 	if (preg_match("/1 SEX F/", $person2, $smatch)>0) $mf="F";
 	if (preg_match("/1 SEX M/", $person2, $smatch)>0) $mf="M";
 
-    //check if relationship is parent or grandparent        
-    if ($numberOfSiblings == 0 && $generationsOlder > 0 && $generationsYounger == 0 && $numberOfSpouses == 0)
-    {
-		if($generationsOlder > 3)
-		{
-			// I don't like the format from get_sosa_name for large numbers of generations
-			// so do our own thing here. Once I have SVN access maybe I should patch get_sos_name instead.
-            if (isset($pgv_lang["n_x_great_grandmother"]) && ($mf=="F"))
-			{
-	            $relationshipDescription = sprintf( $pgv_lang["n_x_great_grandmother"], $generationsOlder-2);
-		    }
-			else if (isset($pgv_lang["n_x_great_grandfather"]))
-			{
-	            $relationshipDescription = sprintf( $pgv_lang["n_x_great_grandfather"], $generationsOlder-2);
-			}
-	    }
-    }
     //checks for nth cousin n times removed
-    else if ($numberOfSpouses == 0 && $numberOfSiblings == 1 && $generationsYounger > 0 && $generationsOlder > 0 && ($generationsYounger != $generationsOlder))
+    if ($numberOfSpouses == 0 && $numberOfSiblings == 1 && $generationsYounger > 0 && $generationsOlder > 0 && ($generationsYounger != $generationsOlder))
     {
         $degree = $generationsOlder;
         if ($mf=="F")

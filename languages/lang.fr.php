@@ -1426,39 +1426,15 @@ $pgv_lang["sosa_28"]                    = "Arrière-arrière-grand-père";
 $pgv_lang["sosa_29"]                    = "Arrière-arrière-grand-mère";
 $pgv_lang["sosa_30"]                    = "Arrière-arrière-grand-père";
 $pgv_lang["sosa_31"]                    = "Arrière-arrière-grand-mère";
-// 5th generation
-$pgv_lang["sosa_32"]                    = "Arrière-arrière-arrière-grand-père";
-$pgv_lang["sosa_33"]                    = "Arrière-arrière-arrière-grand-mère";
-$pgv_lang["sosa_34"]                    = "Arrière-arrière-arrière-grand-père";
-$pgv_lang["sosa_35"]                    = "Arrière-arrière-arrière-grand-mère";
-$pgv_lang["sosa_36"]                    = "Arrière-arrière-arrière-grand-père";
-$pgv_lang["sosa_37"]                    = "Arrière-arrière-arrière-grand-mère";
-$pgv_lang["sosa_38"]                    = "Arrière-arrière-arrière-grand-père";
-$pgv_lang["sosa_39"]                    = "Arrière-arrière-arrière-grand-mère";
-$pgv_lang["sosa_40"]                    = "Arrière-arrière-arrière-grand-père";
-$pgv_lang["sosa_41"]                    = "Arrière-arrière-arrière-grand-mère";
-$pgv_lang["sosa_42"]                    = "Arrière-arrière-arrière-grand-père";
-$pgv_lang["sosa_43"]                    = "Arrière-arrière-arrière-grand-mère";
-$pgv_lang["sosa_44"]                    = "Arrière-arrière-arrière-grand-père";
-$pgv_lang["sosa_45"]                    = "Arrière-arrière-arrière-grand-mère";
-$pgv_lang["sosa_46"]                    = "Arrière-arrière-arrière-grand-père";
-$pgv_lang["sosa_47"]                    = "Arrière-arrière-arrière-grand-mère";
-$pgv_lang["sosa_48"]                    = "Arrière-arrière-arrière-grand-père";
-$pgv_lang["sosa_49"]                    = "Arrière-arrière-arrière-grand-mère";
-$pgv_lang["sosa_50"]                    = "Arrière-arrière-arrière-grand-père";
-$pgv_lang["sosa_51"]                    = "Arrière-arrière-arrière-grand-mère";
-$pgv_lang["sosa_52"]                    = "Arrière-arrière-arrière-grand-père";
-$pgv_lang["sosa_53"]                    = "Arrière-arrière-arrière-grand-mère";
-$pgv_lang["sosa_54"]                    = "Arrière-arrière-arrière-grand-père";
-$pgv_lang["sosa_55"]                    = "Arrière-arrière-arrière-grand-mère";
-$pgv_lang["sosa_56"]                    = "Arrière-arrière-arrière-grand-père";
-$pgv_lang["sosa_57"]                    = "Arrière-arrière-arrière-grand-mère";
-$pgv_lang["sosa_58"]                    = "Arrière-arrière-arrière-grand-père";
-$pgv_lang["sosa_59"]                    = "Arrière-arrière-arrière-grand-mère";
-$pgv_lang["sosa_60"]                    = "Arrière-arrière-arrière-grand-père";
-$pgv_lang["sosa_61"]                    = "Arrière-arrière-arrière-grand-mère";
-$pgv_lang["sosa_62"]                    = "Arrière-arrière-arrière-grand-père";
-$pgv_lang["sosa_63"]                    = "Arrière-arrière-arrière-grand-mère";
+
+// for the general case of ancestors of the nth generation use the text below
+// in this text %1$d is replaced with the number of generations
+//              %2$d is replaced with the number of generations - 1
+//              %3$d is replaced with the number of generations - 2
+$pgv_lang["sosa_paternal_female_n_generations"]	= '%3$d x arrière grand-père';
+$pgv_lang["sosa_paternal_male_n_generations"]	= '%3$d x arrière grand-mère';
+$pgv_lang["sosa_maternal_female_n_generations"]	= '%3$d x arrière grand-père';
+$pgv_lang["sosa_maternal_male_n_generations"]	= '%3$d x arrière grand-mère';
 
 //-- FAN CHART
 $pgv_lang["compact_chart"]              = "Arbre compact";
