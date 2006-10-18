@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id$
+ * @version $Id: ra_lang.pl.php 413 2006-09-18 00:05:50Z canajun2eh $
  * @author Jason Porter
  * @author Wade Lasson
  * @author Brandon Gagnon

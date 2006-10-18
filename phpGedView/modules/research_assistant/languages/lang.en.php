@@ -22,12 +22,6 @@
  * @package PhpGedView
  * @subpackage Research_Assistant
  * @version $Id$
- * @author Jason Porter
- * @author Wade Lasson
- * @author Brandon Gagnon
- * @author Brian Kramer
- * @author Julian Gautier
- * @author Hector Pena
  */
 
 //-- security check, only allow access from module.php
@@ -58,11 +52,7 @@ $pgv_lang["gen_tasks"]							= "Auto Generate Tasks";
 
 
 // -- RA GENERAL MESSAGES
-//$pgv_lang["delete"]							= "Delete";
 $pgv_lang["edit_task"]							= "Edit Task";
-//$pgv_lang["view"]								= "View";
-//$pgv_lang["name"]								= "Name";
-//$pgv_lang["folder"]							= "Folder";   // Exists as "Folder on Server"
 $pgv_lang["completed"]							= "Completed";
 $pgv_lang["comres"]								= "Comments/Results";
 $pgv_lang["description"]						= "Description";
@@ -136,9 +126,7 @@ $pgv_lang["function_folder_delete"]			= "ERROR: Cannot delete this folder becaus
 $pgv_lang["function_subfolder_delete"]		= "ERROR: Cannot delete this folder because it still contains subfolders.<br />First move or delete these subfolders and then try to delete the folder again.";
 $pgv_lang["folder_delete_ok"]				= "The folder #folder_name# has been deleted sucessfully.";
 $pgv_lang["folder_update_ok"]				= "The folder #folder_name# has been sucessfully updated.";
-$_SESSION['pgv_lang["keywords"]']			= "Keywords:";
 $pgv_lang["folder_added"]					= "The folder #folder_name# was sucessfully added.";
-$_SESSION['pgv_lang["search"]']				= "Search";
 
 //-- RA_SEARCH MESSAGES
 $pgv_lang["search_results"]					= "Search Results";
@@ -165,7 +153,6 @@ $pgv_lang["ra_edit_task_help"]				= "<H2><B>Edit Task:</B></H2></H2><ul><li><B>T
 
 //-- RA_VIEWTASK MESSAGES
 $pgv_lang["view_task"]						= "View Task";
-//$pgv_lang["comments"]						= "Comments";
 $pgv_lang["add_new_comment"]				= "Add New Comment";
 $pgv_lang["no_sources"]						= "There are no sources associated with this task.";
 $pgv_lang["no_people"]						= "There are no people associated with this task.";
@@ -179,11 +166,7 @@ $pgv_lang["comment_delete_check"]		= "Are you sure you want to delete this comme
 
 //-- RA_ADDTASK MESSAGES
 $pgv_lang["add_new_task"]				= "Add New Task";
-//$pgv_lang["title"]					= "Title";
 $pgv_lang["submit"]						= "Submit";
-
-//-- RA_EDITTASK MESSAGES
-//$pgv_lang["edit_task"]				= "Edit Task";
 
 //-- RA_CONFIGURE PRIVACY MESSAGES
 $pgv_lang["configure_privacy"]		    = "Configure Privacy";
@@ -194,9 +177,6 @@ $pgv_lang["show_view_folders"]		    = "Show View Folders";
 $pgv_lang["show_add_folder"]		    = "Show Add Folder";
 $pgv_lang["show_add_unlinked_source"]   = "Show Add Unlinked Source";
 $pgv_lang["show_view_probabilities"]	= "Show View Probabilities";
-
-
-
 
 //-- COMMENT HELP
 $pgv_lang["comment_title_help"]			= "Comment Title Help here.";
@@ -209,7 +189,6 @@ $pgv_lang["call/url"]                   = "Call Number/URL";
 $pgv_lang["enumDate"]                   = "Enumeration Date";
 $pgv_lang["county"]                     = "County";
 $pgv_lang["city"]                       = "City";
-//$pgv_lang["page"]                       = "Page"; 
 
 //-- MY TASK BLOCK
 $pgv_lang["mytasks_block_descr"]		= "The My Task Block shows the task for the current user and can be configured to show completed tasks or to show task that are currently unassigned";
@@ -229,10 +208,10 @@ $pgv_lang["autosearch_bloc"]		    = "Include birth location:";
 $pgv_lang["autosearch_dyear"]		    = "Include death year:";
 $pgv_lang["autosearch_dloc"]		    = "Include death location:";
 $pgv_lang["autosearch_gender"]          = "Include gender:";
-$pgv_lang["autosearch_plugin_name"]     = "";         
+$pgv_lang["autosearch_plugin_name"]     = "";  
 $pgv_lang["autosearch_fsurname"]		= "Include father's surname:";
 $pgv_lang["autosearch_fgivennames"]		= "Include father's given names:";
 $pgv_lang["autosearch_msurname"]		= "Include mother's surname:";
-$pgv_lang["autosearch_mgivennames"]	    = "Include mother's given names:";   
+$pgv_lang["autosearch_mgivennames"]	    = "Include mother's given names:"; 
 $pgv_lang["autosearch_country"]  	    = "Include country:";  
 ?>

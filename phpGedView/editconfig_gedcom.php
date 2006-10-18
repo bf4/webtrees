@@ -667,7 +667,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 			    }
 			    else {
 					print "<span class=\"error\">";
-					print $pgv_lang["unable_to_find_indi"];
+					print $pgv_lang["unable_to_find_record"];
 					print "</span>";
 				}
 				print_findindi_link("NEW_PEDIGREE_ROOT_ID","");

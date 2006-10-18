@@ -27,6 +27,7 @@ if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["new_gedcom_title"]		= "Genealogy from [#GEDCOMFILE#]";
 $pgv_lang["keep_media_help"]			= "~#pgv_lang[keep_media]#~<br /><br />Should existing media links be retained in the database when a replacement GEDCOM is being uploaded. The <b>No</b> option removes existing media links from the database, while the <b>Yes</b> option keeps them.<br /><br />This option is useful when you export your GEDCOM from PhpGedView to an off-line GEDCOM maintenance program that does not handle embedded media pointers properly, and then subsequently re-import that changed GEDCOM into PhpGedView.  Under such circumstances, the media pointers within the GEDCOM you exported to your off-line editing program are destroyed, and you would have to re-link all of your media files to the proper Person, Family, and Source records after you re-import the GEDCOM into PhpGedView.<br /><br />The <b>Yes</b> option tells PhpGedView to keep the existing media links so that you do not have to re-create them after you import the changed GEDCOM, but this requires the off-line editing program to always produce the same Person, Family, and Source identification numbers.<br /><br /><i>Family Tree Maker</i> is one of several off-line editing programs that does <u>not</u> properly handle media object pointers within the GEDCOM.  <i>Legacy</i>, among many others, <u>does</u> handle these properly.<br /><br />";
 $pgv_lang["USE_MEDIA_VIEWER"]			= "Use Media Viewer";
 $pgv_lang["USE_MEDIA_VIEWER_help"]		= "~#pgv_lang[USE_MEDIA_VIEWER]#~<br /><br />With this value set to <b>Yes</b>, when users click on images in your site they will be taken to the Media View page introduced in v4.1.  The Media View page shows the details of an image and allows you to edit the details of the image. <br /><br />Setting this value to <b>No</b> will provide the old behavior from versions of PhpGedView prior to v4.1 where clicking on an image opens up the full resolution image in a new popup window.<br /><br />";
@@ -260,7 +261,6 @@ $pgv_lang["ALPHA_INDEX_LISTS"]		= "Break up long lists by the first letter";
 $pgv_lang["ALPHA_INDEX_LISTS_help"]	= "~#pgv_lang[ALPHA_INDEX_LISTS]#~<br /><br />For very long Individual and Family lists, set this to <b>Yes</b> to split the list into pages by the first letter of their last name.<br />";
 $pgv_lang["NAME_FROM_GEDCOM"]		= "Get display name from GEDCOM";
 $pgv_lang["NAME_FROM_GEDCOM_help"]	= "~#pgv_lang[NAME_FROM_GEDCOM]#~<br /><br />By default PhpGedView uses the name stored in the indexes to get a person's name.  With some GEDCOM formats and languages, the sortable name stored in the indexes does not get displayed properly and the best way to get the correct display name is from the GEDCOM.<br /><br />Spanish names are a good example of this.  A Spanish name can take the form (Given Names) (Father's Surname) (Mother's Surname).  Using the Indexes for sorting and display, the name would display like this: (Given Names) (Mother's Surname) (Father's Surname), which is incorrect.  Going back to the GEDCOM for the name will return the correct name.  However, retrieving the name from the GEDCOM will slow the program down.<br />";
-$pgv_lang["SHOW_ID_NUMBERS"]		= "Show ID numbers next to names";
 $pgv_lang["SHOW_ID_NUMBERS_help"]	= "~#pgv_lang[SHOW_ID_NUMBERS]#~<br /><br />This option controls whether or not to show ID numbers in parentheses after names on charts and lists.<br />";
 $pgv_lang["SHOW_LAST_CHANGE"]		= "Show GEDCOM record last change date on lists";
 $pgv_lang["SHOW_LAST_CHANGE_help"]	= "~#pgv_lang[SHOW_LAST_CHANGE]#~<br /><br />This option controls whether or not to show GEDCOM record last change date on lists.<br />";
@@ -274,7 +274,6 @@ $pgv_lang["MEDIA_DIRECTORY"]		= "MultiMedia directory";
 $pgv_lang["MEDIA_DIRECTORY_help"]	= "~#pgv_lang[MEDIA_DIRECTORY]#~<br /><br />The path to a readable and writable directory where PhpGedView should store media files (include the trailing \"/\").  PhpGedView does not require this directory's name to be \"media\".  You can choose any name you like.<br /><br />For security, this directory should be placed somewhere in the server's file space that is not accessible from the Internet. An example of such a structure follows:<br /><b>PhpGedView:</b> dir1/dir2/dir3/PhpGedView<br /><b>Media:</b> dir1/dir4/dir5/dir6/media<br /><br />For the example shown, you would enter <b>../../dir4/dir5/dir6/media/</b> in this field.<br />";
 $pgv_lang["MEDIA_DIRECTORY_LEVELS"]	= "Multi-Media directory levels to keep";
 $pgv_lang["MEDIA_DIRECTORY_LEVELS_help"]	= "~#pgv_lang[MEDIA_DIRECTORY_LEVELS]#~<br /><br />A value of 0 will ignore all directories in the file path for the media object.  A value of 1 will retain the first directory containing this image.  Increasing the numbers increases number of parent directories to retain in the path.<br /><br />For example, if you link an image in your GEDCOM with a path like <b>C:\\Documents&nbsp;and&nbsp;Settings\\User\\My&nbsp;Documents\\My&nbsp;Pictures\\Genealogy\\Surname&nbsp;Line\\grandpa.jpg</b>, a value of 0 will translate this path to <b>./media/grandpa.jpg</b>.  A value of 1 will translate this to <b>./media/Surname&nbsp;Line/grandpa.jpg</b>, etc.  Most people will only need to use a 0.  However, it is possible that some media objects kept in different directories have identical names and would overwrite each other when this option is set to 0.  Non-zero settings allow you to keep some organization in your media thereby preventing name collisions.<br />";
-$pgv_lang["SHOW_HIGHLIGHT_IMAGES"]	= "Show highlight images in people boxes";
 $pgv_lang["SHOW_HIGHLIGHT_IMAGES_help"]	= "~#pgv_lang[SHOW_HIGHLIGHT_IMAGES]#~<br /><br />If you have enabled multimedia in your site, you can have PhpGedView display a thumbnail image next to the person's name in charts and boxes.<br /><br />Currently, PhpGedView uses the first multimedia object listed in the GEDCOM record as the highlight image.  For people with multiple images, you should arrange the multimedia objects such that the one you wish to be highlighted appears first, before any others.<br /><br />See the Multimedia section in the <a href=\"readme.txt\">readme.txt</a> file for more information about including media in your site.<br />";
 $pgv_lang["USE_THUMBS_MAIN"]	= "Use thumbnail for main picture on Individual page";
 $pgv_lang["USE_THUMBS_MAIN_help"]	= "~#pgv_lang[USE_THUMBS_MAIN]#~<br /><br />Depending on how you want to store your images, it may be better for you to use thumbnails for the picture next to the name on the Individual page.<br /><br />If your main images are very large, they can take a long time to download and if your thumbnails are high enough quality they could be used in place of the full resolution image.  Set this item to <b>Yes</b> to use thumbnails or leave it as <b>No</b> to use the full resolution image.<br />";
@@ -394,10 +393,6 @@ $pgv_lang["import_sql"]			= "SQL files have been found in your index directory. 
 //-- edit privacy messages
 $pgv_lang["edit_privacy"]			= "Edit Privacy";
 $pgv_lang["edit_privacy_title"]			= "Edit GEDCOM privacy settings";
-$pgv_lang["PRIV_PUBLIC"]			= "Show to public";
-$pgv_lang["PRIV_USER"]				= "Show only to authenticated users";
-$pgv_lang["PRIV_NONE"]				= "Show only to admin users";
-$pgv_lang["PRIV_HIDE"]				= "Hide even from admin users";
 $pgv_lang["save_changed_settings"]		= "Save changes";
 $pgv_lang["add_new_pp_setting"]			= "Add new setting for Privacy by ID";
 $pgv_lang["add_new_up_setting"]			= "Add new setting for User Privacy";
@@ -474,7 +469,6 @@ $pgv_lang["listing"]			= "Listing";
 $pgv_lang["no_content"]			= "No Content";
 $pgv_lang["editlang"]			= "Edit";
 $pgv_lang["editlang_help"]		= "~#pgv_lang[editlang]#~<br /><br />Edit message from language file.<br />";
-$pgv_lang["cancel"]			= "Cancel";
 $pgv_lang["savelang"]			= "Save";
 $pgv_lang["savelang_help"]		= "~#pgv_lang[savelang]#~<br /><br />Save edited message to language file.<br />";
 $pgv_lang["original_message"]		= "Original message";
@@ -584,13 +578,6 @@ $pgv_lang["lang_file_write_error"]	= "E R R O R !!!<br /><br />Could not write c
 $pgv_lang["no_open"]	= "E R R O R !!!<br /><br />Cannot open file <b>#lang_filename#</b>";
 $pgv_lang["users_langs"]			= "Users' languages";
 $pgv_lang["configured_languages"]	= "Languages used";
-$pgv_lang["ip_address"]				= "IP address";
-$pgv_lang["date_time"]				= "Date and time";
-$pgv_lang["message"]				= "Message";
-$pgv_lang["searchtype"]				= "Search type";
-$pgv_lang["type"]					= "Type";
-$pgv_lang["query"]					= "Query";
-
 
 //-- User Migration Tool messages
 $pgv_lang["um_header"] = "User Information Migration tool";

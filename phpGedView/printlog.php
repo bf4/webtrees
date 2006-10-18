@@ -25,6 +25,12 @@
 
 require "config.php";
 
+//-- only allow admins
+if (!userGedcomAdmin(getUserName())) {
+	header("Location: login.php?url=admin.php");
+	exit;
+}
+
 require  $confighelpfile["english"];
 if (file_exists( $confighelpfile[$LANGUAGE])) require  $confighelpfile[$LANGUAGE];
 
@@ -68,7 +74,7 @@ if ($auth) {
 		print "<tr><td colspan=\"3\" class=\"topbottombar\">".$pgv_lang["logfile_content"]." [&lrm;".$INDEX_DIRECTORY.$logfile."]</td></tr>";
 		print "<tr><td colspan=\"3\" class=\"topbottombar\">";
 		print"<input type=\"button\" value=\"".$pgv_lang["back"]."\" onclick='self.close()';/>&nbsp;<input type=\"button\" value=\"".$pgv_lang["refresh"]."\" onclick='window.location.reload()';/></td></tr>";
-		print "<tr><td class=\"list_label width10\">".$pgv_lang["date_time"]."</td><td class=\"list_label width10\">".$pgv_lang["ip_address"]."</td><td class=\"list_label width80\">".$pgv_lang["message"]."</td></tr>";
+		print "<tr><td class=\"list_label width10\">".$pgv_lang["date_time"]."</td><td class=\"list_label width10\">".$pgv_lang["ip_address"]."</td><td class=\"list_label width80\">".$pgv_lang["log_message"]."</td></tr>";
 		for ($i = 0; $i < $num ; $i++)	{
 			print "<tr>";
 			$result = preg_split("/ - /", $lines[$i], 3);

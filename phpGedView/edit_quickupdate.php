@@ -26,8 +26,10 @@
  * @version $Id$
  */
 
-require("config.php");
-require("includes/functions_edit.php");
+require_once("config.php");
+require_once("includes/functions_edit.php");
+@include_once("./languages/editor.en.php");
+@include_once("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
 
 if ($_SESSION["cookie_login"]) {
 	header("Location: login.php?type=simple&url=edit_interface.php");

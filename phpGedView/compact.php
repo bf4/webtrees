@@ -25,8 +25,6 @@
  */
 require("config.php");
 require_once("includes/functions_charts.php");
-require($confighelpfile["english"]);
-if (file_exists($confighelpfile[$LANGUAGE])) require($confighelpfile[$LANGUAGE]);
 
 // -- args
 if (!isset($rootid)) $rootid = "";
