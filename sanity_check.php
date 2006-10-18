@@ -73,7 +73,7 @@ foreach($arr as $k => $v)
 }
 
 @require_once("config.php");
-if (isset($CONFIGURED)) $errors[] = "<span class=\"error\">config.php file is corrupt.</span>";
+if (!isset($CONFIGURED)) $errors[] = "<span class=\"error\">config.php file is corrupt.</span>";
 
 if (count($errors)>0) {
 	print_sanity_errors();
