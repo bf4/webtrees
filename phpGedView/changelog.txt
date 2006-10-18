@@ -9,6 +9,8 @@
 =====================================================================
 
 Version 4.1
+ - Added handling n x great grandfather style of output to get_sosa_name (cozensweb)
+ - Added german translations of relationship labels (nolensvolens, cozensweb)
  - Added [ 1571523 ] Misuse of CORP tag (fisharebest)
  - Added keep media links option when uploading replacement GEDCOMs (yalnifj)
  - Reorganized language files based on user access level (Neumont/yalnifj)

@@ -884,7 +884,35 @@ function get_sosa_name( $sosa ) {
 	$sosanr = floor($sosa/2);
 	$gen = floor( log($sosanr) / log(2) );
 
+    // first try a generic algorithm, this is later overridden
+	// by language specific algorithms.
+	if (isset($pgv_lang["sosa_$sosa"]) && !empty($pgv_lang["sosa_$sosa"]))
+	{
+	    $sosaname = $pgv_lang["sosa_$sosa"];
+	}
+	else if($gen > 2)
+	{
+        $paternal = (floor($sosa/pow(2,$gen)) == 2);
+		if ($sosa%2){
+			if($paternal && !empty($pgv_lang["sosa_paternal_male_n_generations"])) {
+				$sosaname = sprintf($pgv_lang["sosa_paternal_male_n_generations"], $gen+1, $gen, $gen-1);
+			}
+			else if ( !empty($pgv_lang["sosa_maternal_male_n_generations"])){
+				$sosaname = sprintf($pgv_lang["sosa_maternal_male_n_generations"], $gen+1, $gen, $gen-1);
+			}
+		}
+		else {
+			if($paternal && !empty($pgv_lang["sosa_paternal_female_n_generations"])) {
+				$sosaname = sprintf($pgv_lang["sosa_paternal_female_n_generations"], $gen+1, $gen, $gen-1);
+			}
+			else if (!empty($pgv_lang["sosa_maternal_female_n_generations"])){
+				$sosaname = sprintf($pgv_lang["sosa_maternal_female_n_generations"], $gen+1, $gen, $gen-1);
+			}
+		}
+    }
+
 	if ($LANGUAGE == "danish" || $LANGUAGE == "norwegian" || $LANGUAGE == "swedish") {
+		$sosaname = "";
 		$addname = "";
 		$father = strtolower($pgv_lang["father"]);
 		$mother = strtolower($pgv_lang["mother"]);
@@ -915,6 +943,7 @@ function get_sosa_name( $sosa ) {
 		if ($LANGUAGE != "swedish") if (!empty($addname)) $sosaname .= ($gen>5?"<br />&nbsp;&nbsp;&nbsp;&nbsp;":"")." <small>(".$addname.")</small>";
 	}
 	if ($LANGUAGE == "dutch") {
+	    $sosaname = "";
 		if ($gen & 256) $sosaname .= $pgv_lang["sosa_11"];
 		if ($gen & 128) $sosaname .= $pgv_lang["sosa_10"];
 		if ($gen & 64) $sosaname .= $pgv_lang["sosa_9"];
@@ -931,16 +960,8 @@ function get_sosa_name( $sosa ) {
 		$sosaname = str2upper(substr($sosaname, 0,1)).substr($sosaname,1);
 		return $sosaname;
 	}
-	if ($LANGUAGE == "english") {
-		for($i = $gen; $i > 1; $i--) {
-			$sosaname .= "Great-";
-		}
-		if ($gen >= 1) $sosaname .= "Grand";
-		if (!($sosa%2)) $sosaname .= strtolower($pgv_lang["father"]);
-		else $sosaname .= strtolower($pgv_lang["mother"]);
-		$sosaname = str2upper(substr($sosaname, 0,1)).substr($sosaname,1);
-	}
 	if ($LANGUAGE == "finnish") {
+	    $sosaname = "";
 		$father = str2lower($pgv_lang["father"]);
 		$mother = str2lower($pgv_lang["mother"]);
 //		$father = "isä";
@@ -956,22 +977,8 @@ function get_sosa_name( $sosa ) {
 		if (substr($sosaname, 0,1)=="i") $sosaname = str2upper(substr($sosaname, 0,1)).substr($sosaname,1);
 		else $sosaname = str2upper(substr($mother, 0,2)).substr($sosaname,2);
 	}
-	if ($LANGUAGE == "french") {
-		if ($gen>4) $sosaname = "Arrière(x". ($gen-1) . ")-";
-		else for($i = $gen; $i > 1; $i--) {
-			$sosaname .= "Arrière-";
-		}
-		if ($gen >= 1) $sosaname .= "Grand-";
-		if (!($sosa%2)) $sosaname .= $pgv_lang["father"];
-		else $sosaname .= $pgv_lang["mother"];
-		if ($gen == 1){
-			if ($sosa<6) $sosaname .= " Pater";
-			else $sosaname .= " Mater";
-			$sosaname .= "nel";
-			if ($sosa%2) $sosaname .= "le";
-		}
-	}
 	if ($LANGUAGE == "german") {
+	    $sosaname = "";
 		for($i = $gen; $i > 1; $i--) {
 			$sosaname .= "Ur-";
 		}
@@ -981,6 +988,7 @@ function get_sosa_name( $sosa ) {
 		$sosaname = str2upper(substr($sosaname, 0,1)).substr($sosaname,1);
 	}
 	if ($LANGUAGE == "hebrew") {
+	    $sosaname = "";
 		$addname = "";
 		$father = $pgv_lang["father"];
 		$mother = $pgv_lang["mother"];
@@ -1022,9 +1030,7 @@ function get_sosa_name( $sosa ) {
 		}
 	}
 	if (!empty($sosaname)) return "$sosaname<!-- sosa=$sosa nr=$sosanr gen=$gen -->";
-
-	if (isset($pgv_lang["sosa_$sosa"])) return $pgv_lang["sosa_$sosa"];
-	else return (($sosa%2) ? $pgv_lang["mother"] : $pgv_lang["father"]) . " " . floor($sosa/2);
+	else return  "<!-- sosa=$sosa nr=$sosanr gen=$gen -->";
 }
 
 /**

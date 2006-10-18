@@ -803,10 +803,6 @@ $pgv_lang["daughter_in_law"]		= "daughter in law";
 $pgv_lang["step_son"]		        = "step son";
 $pgv_lang["step_daughter"]	    	= "step daughter";
 
-// NOTE in the translations below %d is replaced with the number of greats
-$pgv_lang["n_x_great_grandfather"]	= "%d x great grandfather";
-$pgv_lang["n_x_great_grandmother"]	= "%d x great grandmother";
-
 // the bosa_brothers_offspring name is used for fraternal nephews and nieces - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
@@ -1426,39 +1422,15 @@ $pgv_lang["sosa_28"]				= "Great-great-grandfather";
 $pgv_lang["sosa_29"]				= "Great-great-grandmother";
 $pgv_lang["sosa_30"]				= "Great-great-grandfather";
 $pgv_lang["sosa_31"]				= "Great-great-grandmother";
-// 5th generation
-$pgv_lang["sosa_32"]			   = "Great-great-great-grandfather";
-$pgv_lang["sosa_33"]			   = "Great-great-great-grandmother";
-$pgv_lang["sosa_34"]			   = "Great-great-great-grandfather";
-$pgv_lang["sosa_35"]			   = "Great-great-great-grandmother";
-$pgv_lang["sosa_36"]			   = "Great-great-great-grandfather";
-$pgv_lang["sosa_37"]			   = "Great-great-great-grandmother";
-$pgv_lang["sosa_38"]			   = "Great-great-great-grandfather";
-$pgv_lang["sosa_39"]			   = "Great-great-great-grandmother";
-$pgv_lang["sosa_40"]			   = "Great-great-great-grandfather";
-$pgv_lang["sosa_41"]			   = "Great-great-great-grandmother";
-$pgv_lang["sosa_42"]			   = "Great-great-great-grandfather";
-$pgv_lang["sosa_43"]			   = "Great-great-great-grandmother";
-$pgv_lang["sosa_44"]			   = "Great-great-great-grandfather";
-$pgv_lang["sosa_45"]			   = "Great-great-great-grandmother";
-$pgv_lang["sosa_46"]			   = "Great-great-great-grandfather";
-$pgv_lang["sosa_47"]			   = "Great-great-great-grandmother";
-$pgv_lang["sosa_48"]			   = "Great-great-great-grandfather";
-$pgv_lang["sosa_49"]			   = "Great-great-great-grandmother";
-$pgv_lang["sosa_50"]			   = "Great-great-great-grandfather";
-$pgv_lang["sosa_51"]			   = "Great-great-great-grandmother";
-$pgv_lang["sosa_52"]			   = "Great-great-great-grandfather";
-$pgv_lang["sosa_53"]			   = "Great-great-great-grandmother";
-$pgv_lang["sosa_54"]			   = "Great-great-great-grandfather";
-$pgv_lang["sosa_55"]			   = "Great-great-great-grandmother";
-$pgv_lang["sosa_56"]			   = "Great-great-great-grandfather";
-$pgv_lang["sosa_57"]			   = "Great-great-great-grandmother";
-$pgv_lang["sosa_58"]			   = "Great-great-great-grandfather";
-$pgv_lang["sosa_59"]			   = "Great-great-great-grandmother";
-$pgv_lang["sosa_60"]			   = "Great-great-great-grandfather";
-$pgv_lang["sosa_61"]			   = "Great-great-great-grandmother";
-$pgv_lang["sosa_62"]			   = "Great-great-great-grandfather";
-$pgv_lang["sosa_63"]			   = "Great-great-great-grandmother";
+
+// for the general case of ancestors of the nth generation use the text below
+// in this text %1$d is replaced with the number of generations
+//              %2$d is replaced with the number of generations - 1
+//              %3$d is replaced with the number of generations - 2
+$pgv_lang["sosa_paternal_female_n_generations"]	= '%3$d x great grandfather';
+$pgv_lang["sosa_paternal_male_n_generations"]	= '%3$d x great grandmother';
+$pgv_lang["sosa_maternal_female_n_generations"]	= '%3$d x great grandfather';
+$pgv_lang["sosa_maternal_male_n_generations"]	= '%3$d x great grandmother';
 
 //-- FAN CHART
 $pgv_lang["compact_chart"]			= "Compact Chart";
