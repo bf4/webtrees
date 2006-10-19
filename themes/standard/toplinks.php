@@ -34,60 +34,60 @@ if ($PGV_MENU_LOCATION=="top") {
 			<?php 		
 			$menu = $menubar->getGedcomMenu(); 
 			if($menu->link != "") {
-				print "\t\t\t<td width=\"10%\" valign=\"top\">\n";
+				print "\t\t\t<td width=\"7%\" valign=\"top\">\n";
 				$menu->printMenu(); 
 				print "\t\t\t</td>\n";
 			}	
 			$menu = $menubar->getMygedviewMenu(); 
 			if($menu->link != "") {
-				print "\t\t\t<td width=\"10%\" valign=\"top\">\n";
+				print "\t\t\t<td width=\"7%\" valign=\"top\">\n";
 				$menu->printMenu(); 
 				print "\t\t\t</td>\n";
 			}	
 			$menu = $menubar->getChartsMenu(); 
 			if($menu->link != "") {
-				print "\t\t\t<td width=\"10%\" valign=\"top\">\n";
+				print "\t\t\t<td width=\"7%\" valign=\"top\">\n";
 				$menu->printMenu(); 
 				print "\t</td>\n";
 			}	
 			$menu = $menubar->getListsMenu(); 
 			if($menu->link != "") {
-				print "\t<td width=\"10%\" valign=\"top\">\n";
+				print "\t<td width=\"7%\" valign=\"top\">\n";
 				$menu->printMenu(); 
 				print "\t</td>\n";
 			}	
 			$menu = $menubar->getCalendarMenu(); 
 			if($menu->link != "") {
-				print "\t\t\t<td width=\"10%\" valign=\"top\">\n";
+				print "\t\t\t<td width=\"7%\" valign=\"top\">\n";
 				$menu->printMenu(); 
 				print "\t</td>\n";
 			}	
 			$menu = $menubar->getReportsMenu(); 
 			if($menu->link != "") {
-				print "\t\t\t<td width=\"10%\" valign=\"top\">\n";
+				print "\t\t\t<td width=\"7%\" valign=\"top\">\n";
 				$menu->printMenu(); 
 				print "\t</td>\n";
 			}
 			$menu = $menubar->getClippingsMenu(); 
 			if ((!is_null($menu)) && ($menu->link != "")) { ?> 
-				<td width="10%" valign="top"><?php $menu->printMenu(); ?></td>
+				<td width="7%" valign="top"><?php $menu->printMenu(); ?></td>
 			<?php 
 			} 
 
 			$menu = $menubar->getSearchMenu(); 
 			if($menu->link != "") {
-				print "\t<td width=\"10%\" valign=\"top\">\n";
+				print "\t<td width=\"7%\" valign=\"top\">\n";
 				$menu->printMenu(); 
 				print "\t\t\t</td>\n";
 			}	
 
 			$menus = $menubar->getModuleMenus(); foreach($menus as $m=>$menu) { ?> 
-			<td width="10%" valign="top"><?php $menu->printMenu(); ?></td>
+			<td width="7%" valign="top"><?php $menu->printMenu(); ?></td>
 			<?php } 
 
 			$menu = $menubar->getHelpMenu(); 
 			if($menu->link != "") {
-				print "\t<td width=\"10%\" valign=\"top\">\n";
+				print "\t<td width=\"7%\" valign=\"top\">\n";
 				$menu->printMenu(); 
 				print "\t\t\t</td>\n";
 			}	
