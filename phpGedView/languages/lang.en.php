@@ -901,6 +901,7 @@ $pgv_lang["today"]					= "Today";
 $pgv_lang["day"]					= "Day:";
 $pgv_lang["month"]					= "Month:";
 $pgv_lang["showcal"]				= "Show events of:";
+$pgv_lang["anniversary"]			= "Anniversary";
 $pgv_lang["anniversary_calendar"]	= "Anniversary Calendar";
 $pgv_lang["sunday"] 				= "Sunday";
 $pgv_lang["monday"] 				= "Monday";
