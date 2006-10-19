@@ -27,35 +27,35 @@ $menubar = new MenuBar();
 ?>
 <table width="100%" border="1" cellspacing="0">
 	<tr>
-		<td width="10%" valign="top">
+		<td width="7%" valign="top">
 			<?php $menu = $menubar->getGedcomMenu(); $menu->addIcon(null); $menu->printMenu(); ?>
 		</td>
-		<td width="10%" valign="top">
+		<td width="7%" valign="top">
 			<?php $menu = $menubar->getMygedviewMenu(); $menu->addIcon(null); $menu->printMenu(); ?>
 		</td>
-		<td width="10%" valign="top">
+		<td width="7%" valign="top">
 			<?php $menu = $menubar->getChartsMenu(); $menu->addIcon(null); $menu->printMenu(); ?>
 		</td>
-		<td width="10%" valign="top">
+		<td width="7%" valign="top">
 			<?php $menu = $menubar->getListsMenu(); $menu->addIcon(null); $menu->printMenu(); ?>
 		</td>
-		<td width="10%" valign="top">
+		<td width="7%" valign="top">
 			<?php $menu = $menubar->getCalendarMenu(); $menu->addIcon(null); $menu->printMenu(); ?>
 		</td>
-		<td width="10%" valign="top">
+		<td width="7%" valign="top">
 			<?php $menu = $menubar->getReportsMenu(); $menu->addIcon(null); $menu->printMenu(); ?>
 		</td>
 		<?php $menu = $menubar->getClippingsMenu(); 
 		if (!is_null($menu)) { ?> 
-		<td width="10%" valign="top"><?php $menu->printMenu(); ?></td>
+		<td width="7%" valign="top"><?php $menu->printMenu(); ?></td>
 		<?php } ?>
-		<td width="10%" valign="top">
+		<td width="7%" valign="top">
 			<?php $menu = $menubar->getSearchMenu(); $menu->addIcon(null); $menu->printMenu(); ?>
 		</td>
 		<?php $menus = $menubar->getModuleMenus(); foreach($menus as $m=>$menu) { $menu->addIcon(null); ?> 
-		<td width="10%" valign="top"><?php $menu->printMenu(); ?></td>
+		<td width="7%" valign="top"><?php $menu->printMenu(); ?></td>
 		<?php } ?>
-		<td width="10%" valign="top">
+		<td width="7%" valign="top">
 			<?php $menu = $menubar->getHelpMenu(); $menu->addIcon(null); $menu->printMenu(); ?>
 		</td>
 	</tr>
