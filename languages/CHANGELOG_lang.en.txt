@@ -43,6 +43,7 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["anniversary"]							19 Oct 2006				A
 -$pgv_lang["savedata"]							18 Oct 2006				D unused
 -$pgv_lang["datachanged"]						18 Oct 2006				D unused
 -$pgv_lang["datachanged_name"]					18 Oct 2006				D unused

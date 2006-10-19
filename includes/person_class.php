@@ -107,7 +107,7 @@ class Person extends GedcomRecord {
 	}
 
 	/**
-	 * get the persons name
+	 * get the name
 	 * @return string
 	 */
 	function getName() {
@@ -119,7 +119,7 @@ class Person extends GedcomRecord {
 	}
 
 	/**
-	 * get the persons sortable name
+	 * get the sortable name
 	 * @param string $subtag optional subtag _AKA _HEB etc...
 	 * @param int $num which matching subtag to get
 	 * @param boolean $starred option to add starredname html code
@@ -150,23 +150,22 @@ class Person extends GedcomRecord {
 		if (empty($surn) or trim("@".$surn,"_")=="@" or $surn=="@N.N.") {
 			$lang = whatLanguage($givn);
 			$surn = $unknownNN[$lang];
-			//$surn = $pgv_lang["NN"];
 		}
 		if (empty($givn) or trim("@".$givn,"_")=="@" or $givn=="@P.N.") {
 			$lang = whatLanguage($surn);
 			$givn = $unknownPN[$lang];
-			//$givn = $pgv_lang["PN"];
 		}
 		else if ($starred) {
 			if ($UNDERLINE_NAME_QUOTES) $givn = preg_replace("/\"(.+)\"/", "<span class=\"starredname\">$1</span>", $givn);
 			$givn = preg_replace("/([^ ]+)\*/", "<span class=\"starredname\">$1</span>", $givn);
 		}
-		if ($NAME_REVERSE) return trim($givn.", ".$surn." ".$nsfx);
-		else return trim($surn.", ".$givn." ".$nsfx);
+		if ($nsfx) $surn .= " ".trim($nsfx);
+		if ($NAME_REVERSE) return trim($givn.", ".$surn);
+		else return trim($surn.", ".$givn);
 	}
 
 	/**
-	 * get the persons surname
+	 * get the surname
 	 * @return string
 	 */
 	function getSurname() {
@@ -179,7 +178,7 @@ class Person extends GedcomRecord {
 		return $name;
 	}
 	/**
-	 * get the persons given names
+	 * get the given names
 	 * @return string
 	 */
 	function getGivenNames(){
@@ -349,7 +348,7 @@ class Person extends GedcomRecord {
 	}
 
 	/**
-	 * get the persons birth year
+	 * get the birth year
 	 * @return string
 	 */
 	function getBirthYear(){
@@ -378,6 +377,7 @@ class Person extends GedcomRecord {
 	function getSortableDeathDate() {
 		if (!$this->disp) return "0000-00-00";
 		if (empty($this->ddate)) $this->_parseBirthDeath();
+		if ($this->isDead() and $this->dest) return "0000-00-01";
 		$pdate = parse_date($this->ddate);
 		$hms = get_gedcom_value("DATE:TIME", 2, $this->drec);
 		return $pdate[0]["sort"]." ".$hms;
@@ -411,7 +411,7 @@ class Person extends GedcomRecord {
 	}
 
 	/**
-	 * get the persons death year
+	 * get the death year
 	 * @return string the year of death
 	 */
 	function getDeathYear() {
@@ -419,7 +419,22 @@ class Person extends GedcomRecord {
 	}
 
 	/**
-	 * get the person's sex
+	 * get the age
+	 * @param string $birtrec	gedcom record containing BIRT date
+	 * @param string $when	ending date to calculate age
+	 * @return string the age
+	 */
+	function getAge($birtrec="", $when="") {
+		if (empty($birtrec)) $birtrec=$this->gedrec;
+		if (empty($when)) {
+			if ($this->isDead()) $when = $this->ddate; // age at death
+			else $when = date("d M Y"); // today
+		}
+		return get_age($birtrec, $when, 0);
+	}
+
+	/**
+	 * get the sex
 	 * @return string 	return M, F, or U
 	 */
 	function getSex() {
