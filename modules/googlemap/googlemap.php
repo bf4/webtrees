@@ -683,7 +683,7 @@ function build_indiv_map($indifacts, $famids) {
                         $tabcounter = $tabcounter + 1;
                         print "       new GInfoWindowTab(\"".$mapdata["fact"][$j]."\", \"<div style='width:360px'>".$mapdata["fact"][$j].":<br/>";
                         if ($mapdata["name"][$j] != "") {
-                            print "<a href=\"individual.php?pid=".$mapdata["name"][$j]."&amp;ged=$GEDCOM\">";
+                            print "<a href=\\\"individual.php?pid=".$mapdata["name"][$j]."&amp;ged=$GEDCOM\\\">";
                             if (displayDetailsById($mapdata["name"][$j])||showLivingNameById($mapdata["name"][$j]))
                                 print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($mapdata["name"][$j])));
                             else
@@ -742,7 +742,7 @@ function build_indiv_map($indifacts, $famids) {
                                 $tabcounter = $tabcounter + 1;
                                 print "       new GInfoWindowTab(\"".$mapdata["fact"][$k]."\", \"<div style='width:360px'>".$mapdata["fact"][$k].":<br/>";
                                 if ($mapdata["name"][$k] != "") {
-                                    print "<a href=\"individual.php?pid=".$mapdata["name"][$k]."&amp;ged=$GEDCOM\">";
+                                    print "<a href=\\\"individual.php?pid=".$mapdata["name"][$k]."&amp;ged=$GEDCOM\\\">";
                                     if (displayDetailsById($mapdata["name"][$k])||showLivingNameById($mapdata["name"][$k]))
                                         print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($mapdata["name"][$k])));
                                     else
