@@ -405,7 +405,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "<td class=\"list_value_wrap rela\">";
 		$age = $person->getAge("", date("d M Y"));
 		if ($age) $age = str_replace($pgv_lang["apx"]." ", "", $age);
-		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\"> ".$age."</a>";
+		if (!$age) $age = "&nbsp;";
+		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$age."</a>";
 		echo "</td>";
 		//-- Birth place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($person->getBirthPlace())."\">";
@@ -431,14 +432,15 @@ function print_indi_table($datalist, $legend="", $option="") {
 		" title=\"".$person->getSortableDeathDate2()."\"".
 		" class=\"list_item\">".$txt."</a>";
 		echo "</td>";
-		//-- Birth anniversary
+		//-- Death anniversary
 		echo "<td class=\"list_value_wrap rela\">";
 		$age = "";
 		if ($person->isDead() and !$person->dest) {
 			$age = $person->getAge("\n1 BIRT\n2 DATE ".$person->ddate."\n", date("d M Y"));
 			if ($age) $age = str_replace($pgv_lang["apx"]." ", "", $age);
 		}
-		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\"> ".$age."</a>";
+		if (!$age) $age = "&nbsp;";
+		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$age."</a>";
 		echo "</td>";
 		//-- Age at death
 		echo "<td class=\"list_value_wrap\">";
@@ -452,7 +454,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 			else if (strpos($age, $pgv_lang["days"]) or strpos($age, $pgv_lang["day1"])) $sortkey = $age*1;
 			else $sortkey = $age*365;
 		}
-		echo "<a href=\"".$person->getLinkUrl()."\" title=\"".sprintf("%05d",$sortkey)."\" class=\"list_item\"> ".$age."</a>";
+		if (!$age) $age = "&nbsp;";
+		echo "<a href=\"".$person->getLinkUrl()."\" title=\"".sprintf("%05d",$sortkey)."\" class=\"list_item\">".$age."</a>";
 		echo "</td>";
 		//-- Death place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($person->getDeathPlace())."\">";
@@ -671,11 +674,15 @@ function print_fam_table($datalist, $legend="") {
 		//-- Husband ID
 		if ($SHOW_ID_NUMBERS) {
 			echo "<td class=\"list_value_wrap rela\">";
-			echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".$husb->xref."</a>";
+			echo "<a href=\"".$husb->getLinkUrl()."\" class=\"list_item\">".$husb->xref."</a>";
 			echo "</td>";
 		}
 		//-- Husband name(s)
-		$name = $husb->getSortableName();
+		if (isset($value["name"])) {
+			$partners = explode(" + ", $value["name"]); // "husb + wife"
+			$name = check_NN($partners[0]);
+		}
+		else $name = $husb->getSortableName();
 		if ($husb->isDead()) echo "<td class=\"list_value_wrap\"";
 		else echo "<td class=\"list_value_wrap alive\"";
 		echo " align=\"".get_align($name)."\">";
@@ -692,11 +699,12 @@ function print_fam_table($datalist, $legend="") {
 		//-- Wife ID
 		if ($SHOW_ID_NUMBERS) {
 			echo "<td class=\"list_value_wrap rela\">";
-			echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".$wife->xref."</a>";
+			echo "<a href=\"".$wife->getLinkUrl()."\" class=\"list_item\">".$wife->xref."</a>";
 			echo "</td>";
 		}
 		//-- Wife name(s)
-		$name = $wife->getSortableName();
+		if (isset($value["name"])) $name = check_NN($partners[1]);
+		else $name = $wife->getSortableName();
 		if ($wife->isDead()) echo "<td class=\"list_value_wrap\"";
 		else echo "<td class=\"list_value_wrap alive\"";
 		echo " align=\"".get_align($name)."\">";
@@ -732,7 +740,8 @@ function print_fam_table($datalist, $legend="") {
 			$age = $husb->getAge("\n1 BIRT\n2 DATE ".$family->marr_date."\n", date("d M Y"));
 			if ($age) $age = str_replace($pgv_lang["apx"]." ", "", $age);
 		}
-		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\"> ".$age."</a>";
+		if (!$age) $age = "&nbsp;";
+		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".$age."</a>";
 		echo "</td>";
 		//-- Husband age
 		echo "<td class=\"list_value_wrap\">";
@@ -741,7 +750,8 @@ function print_fam_table($datalist, $legend="") {
 			$age = $husb->getAge("", $family->getMarriageDate());
 			$age = str_replace($pgv_lang["apx"]." ", "", $age);
 		}
-		echo "<a href=\"".$family->getLinkUrl()."\" title=\"".sprintf("%02d",$age)."\" class=\"list_item\"> ".$age."</a>";
+		if (!$age) $age = "&nbsp;";
+		echo "<a href=\"".$husb->getLinkUrl()."\" title=\"".sprintf("%02d",$age)."\" class=\"list_item\">".$age."</a>";
 		echo "</td>";
 		//-- Wife age
 		echo "<td class=\"list_value_wrap\">";
@@ -750,7 +760,8 @@ function print_fam_table($datalist, $legend="") {
 			$age = $wife->getAge("", $family->getMarriageDate());
 			$age = str_replace($pgv_lang["apx"]." ", "", $age);
 		}
-		echo "<a href=\"".$family->getLinkUrl()."\" title=\"".sprintf("%02d",$age)."\" class=\"list_item\"> ".$age."</a>";
+		if (!$age) $age = "&nbsp;";
+		echo "<a href=\"".$wife->getLinkUrl()."\" title=\"".sprintf("%02d",$age)."\" class=\"list_item\">".$age."</a>";
 		echo "</td>";
 		//-- Marriage place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($family->getMarriagePlace())."\">";
