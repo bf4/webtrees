@@ -30,9 +30,10 @@ if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
-#pgv_lang["keep_media_help"]            = "~#pgv_lang[keep_media]#~<br /><br />When uploading a replacement GEDCOM do you want to delete all of the media links.  Normally you would leave this option set to \"No.\"<br /><br />You would set this option to \"Yes\" if you are exporting your GEDCOM from a genealogy program that does not support the export of media object (OBJE) records and you do not want to lose all of the media references when you upload a new GEDCOM.  Selecting \"Yes\" on this option will keep your media tables in place and will add the media links back into the GEDCOM when it is imported.<br /><br />";
+$pgv_lang["new_gedcom_title"]           = "Généalogie de [#GEDCOMFILE#]";
+#pgv_lang["keep_media_help"]            = "~#pgv_lang[keep_media]#~<br /><br />Should existing media links be retained in the database when a replacement GEDCOM is being uploaded. The <b>No</b> option removes existing media links from the database, while the <b>Yes</b> option keeps them.<br /><br />This option is useful when you export your GEDCOM from PhpGedView to an off-line GEDCOM maintenance program that does not handle embedded media pointers properly, and then subsequently re-import that changed GEDCOM into PhpGedView.  Under such circumstances, the media pointers within the GEDCOM you exported to your off-line editing program are destroyed, and you would have to re-link all of your media files to the proper Person, Family, and Source records after you re-import the GEDCOM into PhpGedView.<br /><br />The <b>Yes</b> option tells PhpGedView to keep the existing media links so that you do not have to re-create them after you import the changed GEDCOM, but this requires the off-line editing program to always produce the same Person, Family, and Source identification numbers.<br /><br /><i>Family Tree Maker</i> is one of several off-line editing programs that does <u>not</u> properly handle media object pointers within the GEDCOM.  <i>Legacy</i>, among many others, <u>does</u> handle these properly.<br /><br />";
 #pgv_lang["USE_MEDIA_VIEWER"]           = "Use Media Viewer";
-#pgv_lang["USE_MEDIA_VIEWER_help"]      = "~#pgv_lang[USE_MEDIA_VIEWER]#~<br /><br />With this value set to true, when users click on images in your site they will be taken to the media view page introduced in v4.1.  The media view page shows the details of an image and allows you to edit the details of the image. <br /><br />Setting this value to false will provide the old behavior from versions of PhpGedView prior to v4.1 where clicking on an image opens up the full resolution image in a new popup window.<br /><br />";
+#pgv_lang["USE_MEDIA_VIEWER_help"]      = "~#pgv_lang[USE_MEDIA_VIEWER]#~<br /><br />With this value set to <b>Yes</b>, when users click on images in your site they will be taken to the Media View page introduced in v4.1.  The Media View page shows the details of an image and allows you to edit the details of the image. <br /><br />Setting this value to <b>No</b> will provide the old behavior from versions of PhpGedView prior to v4.1 where clicking on an image opens up the full resolution image in a new popup window.<br /><br />";
 #pgv_lang["SHOW_SPIDER_TAGLINE"]        = "Show spider tagline";
 #pgv_lang["SHOW_SPIDER_TAGLINE_help"]   = "~#pgv_lang[SHOW_SPIDER_TAGLINE]#~<br /><br />On pages generated for search engines, display as the last line the particular search engine the page detected.  If this option is on, it can bias Google AdSense towards search engine optimization tools.<br />";
 #pgv_lang["SHOW_PRIVATE_RELATIONSHIPS_help"]= "~#pgv_lang[SYNC_GEDCOM_FILE]#~<br /><br />This option will retain family links in privatized records.  This means that you will see empty \"private\" boxes on the pedigree chart and on other charts with private people.<br /><br />This is similar to the behavior of PhpGedView versions prior to v4.0.<br /><br />This setting is off by default.  It is recommended instead of turning this on, to point your pedigree root person in your GEDCOM configuration, to a person who is not private.<br />";
@@ -263,7 +264,6 @@ $pgv_lang["ALPHA_INDEX_LISTS"]          = "Découper les longues listes de noms"
 $pgv_lang["ALPHA_INDEX_LISTS_help"]     = "Les très longues listes de familles et d'individus seront découpées selon la lettre initiale du nom de famille.";
 $pgv_lang["NAME_FROM_GEDCOM"]           = "Afficher le nom à partir du fichier GEDCOM";
 $pgv_lang["NAME_FROM_GEDCOM_help"]      = "Par défaut PhpGedView affiche le nom d'individu qui est stocké dans ses fichiers d'index.  Dans certains formats GEDCOM et avec certaines langues le nom stocké dans les fichiers d'index ne s'affiche pas correctement et la solution alternative est de le prendre dans le fichier GEDCOM.  Les noms espagnols sont un bon exemple de ce problème. Un nom de famille espagnol peut avoir le format 'Prénoms Nom de famille du père Nom de famille de la mère'. En utilisant les index pour le tri et l'affichage, ce nom serait affiché ainsi 'Prénoms Nom de famille de la mère Nom de famille du père'. En prenant le nom inscrit dans le fichier GEDCOM on retrouvera le nom correct. Cependant, la récupération du nom dans le fichier GEDCOM ralentira le programme.";
-$pgv_lang["SHOW_ID_NUMBERS"]            = "Afficher les identificateurs des personnes";
 $pgv_lang["SHOW_ID_NUMBERS_help"]       = "Option pour afficher l'identifiant des individus entre parenthèses sur les arbres et les listes.";
 #pgv_lang["SHOW_LAST_CHANGE"]           = "Show GEDCOM record last change date on lists";
 #pgv_lang["SHOW_LAST_CHANGE_help"]      = "~#pgv_lang[SHOW_LAST_CHANGE]#~<br /><br />This option controls whether or not to show GEDCOM record last change date on lists.<br />";
@@ -277,7 +277,6 @@ $pgv_lang["MEDIA_DIRECTORY"]            = "Répertoire MultiMedia";
 $pgv_lang["MEDIA_DIRECTORY_help"]       = "Chemin d'accès à un répertoire accessible en lecture où PhpGedView doit trouver les fichiers MultiMedia (coder le '/' final).";
 $pgv_lang["MEDIA_DIRECTORY_LEVELS"]     = "Niveaux de sous-répertoires MultiMedia";
 $pgv_lang["MEDIA_DIRECTORY_LEVELS_help"]= "Une valeur de 0 permettra d'ignorer tous les sous-répertoires du chemin d'accès aux objets MultiMedia.<br />Une valeur de 1 permettra d'accèder au sous-répertoire qui contient l'objet.<br />En augmentant cette valeur on augmentera le nombre des sous-répertoires parents à inclure dans ce chemin d'accès.<br />Par exemple : si le lien vers une image de votre fichier GEDCOM est libellé ainsi C:\\Documents and Settings\\User\\My Documents\\My Pictures\\Genealogy\\Surname Line\\grandpa.jpg, alors une valeur de 0 traduira ce chemin en ./media/grandpa.jpg. Une valeur de 1 le traduira en ./media/Surname Line/grandpa.jpg, etc. Vous n'aurez le plus souvent qu'à utiliser la valeur de 0. Mais il est possible que certains objets MultiMedia aient des noms identiques et se substituent de ce fait l'un à l'autre. Ce paramètre vous permet de conserver l'organisation de vos sous-répertoires en évitant les conflits de noms.";
-$pgv_lang["SHOW_HIGHLIGHT_IMAGES"]      = "Afficher les miniatures des individus";
 $pgv_lang["SHOW_HIGHLIGHT_IMAGES_help"] = "Si vous avez activé les fonctions MultiMedia sur votre site, vous pouvez faire afficher une image miniature à côté du nom de la personne dans les cases des arbres. PhpGedView utilise comme image le premier objet MultiMedia cité dans l'enregistrement GEDCOM. Pour les personnes qui ont plusieurs images, vous devrez organiser vos données GEDCOM de manière à mettre en première position l'image souhaitée.<br />Voir le chapitre multimedia du fichier <a href=readme.txt>readme.txt</a> pour des informations complémentaires.";
 $pgv_lang["USE_THUMBS_MAIN"]            = "Afficher les vignettes à la place des images";
 $pgv_lang["USE_THUMBS_MAIN_help"]       = "A l'écran, il est souvent préférable d'afficher uniquement les vignettes (thumbnails), plus rapides à charger que les images d'origine. Cela dépend surtout de votre façon d'organiser les images, de leur poids, et de la qualité des vignettes.";
@@ -329,7 +328,7 @@ $pgv_lang["SHOW_STATS"]                 = "Afficher les statistiques";
 $pgv_lang["SHOW_STATS_help"]            = "Affichage des statistiques d'exécution du programme et des requêtes faites sur la base de données au bas de chaque page.";
 $pgv_lang["SHOW_COUNTER"]               = "Afficher le compteur de visites";
 $pgv_lang["SHOW_COUNTER_help"]          = "Compteur du nombre d'accès aux pages du site.";
-$pgv_lang["USE_REGISTRATION_MODULE"]    = "Permettre aux utilisateurs de demander l'enregistrement de leur compte";
+$pgv_lang["USE_REGISTRATION_MODULE"]    = "Autoriser les visiteurs à demander un compte";
 $pgv_lang["USE_REGISTRATION_MODULE_help"]= "Autoriser les utilisateurs à demander l'ouverture d'un compte sur ce site. Les administrateurs devront approuver l'inscription pour que le compte devienne actif.<br /><br />Variable \$USE_REGISTRATION_MODULE du fichier config.php.";
 $pgv_lang["ALLOW_USER_THEMES"]          = "Permettre aux utilisateurs de choisir leur propre thème";
 $pgv_lang["ALLOW_USER_THEMES_help"]     = "Autoriser les utilisateurs à choisir leur propre thème.<br /><br />Variable \$ALLOW_USER_THEMES du fichier config.php.";
@@ -397,10 +396,6 @@ $pgv_lang["upload_to_index"]            = "Télécharger le fichier sur le serve
 //-- edit privacy messages
 $pgv_lang["edit_privacy"]               = "Règles de confidentialité";
 $pgv_lang["edit_privacy_title"]         = "Modifier les règles de confidentialité";
-$pgv_lang["PRIV_PUBLIC"]                = "Montrer à tout le monde";
-$pgv_lang["PRIV_USER"]                  = "Montrer uniquement aux utilisateurs authentifiés";
-$pgv_lang["PRIV_NONE"]                  = "Montrer uniquement à l'administrateur";
-$pgv_lang["PRIV_HIDE"]                  = "Ne montrer à personne";
 $pgv_lang["save_changed_settings"]      = "Enregistrer les modifications";
 $pgv_lang["add_new_pp_setting"]         = "Ajouter une nouvelle règle";
 $pgv_lang["add_new_up_setting"]         = "Ajouter une nouvelle règle";
@@ -477,7 +472,6 @@ $pgv_lang["listing"]                    = "Liste";
 $pgv_lang["no_content"]                 = "Vide";
 $pgv_lang["editlang"]                   = "Modifier";
 $pgv_lang["editlang_help"]              = "Editer un message du fichier";
-$pgv_lang["cancel"]                     = "Annuler";
 $pgv_lang["savelang"]                   = "Enregistrer";
 $pgv_lang["savelang_help"]              = "Sauvegarder le message";
 $pgv_lang["original_message"]           = "Message original";
@@ -540,7 +534,7 @@ $pgv_lang["lang_name_arabic"]           = "Arabe";
 $pgv_lang["lang_name_lithuanian"]       = "Lituanien";
 $pgv_lang["lang_name_vietnamese"]       = "Vietnamien";
 $pgv_lang["lang_name_slovak"]           = "Slovaque";
-#pgv_lang["lang_name_estonian"]         = "Estonian";
+$pgv_lang["lang_name_estonian"]         = "Estonien";
 $pgv_lang["lang_new_language"]          = "Nouvelle Langue";
 $pgv_lang["original_lang_name"]         = "Nom d'origine de la langue en #D_LANGNAME#";
 $pgv_lang["original_lang_name_help"]    = "Comment se nomme cette langue dans cette langue ?<br /><br />En anglais, l'anglais se nomme : English<br />En allemand, l'allemand se nomme : Deutsch<br />etc.";
@@ -571,7 +565,7 @@ $pgv_lang["alphabet_lower"]             = "Alphabet des minuscules";
 $pgv_lang["alphabet_lower_help"]        = "Alphabet des minuscules dans cette langue. Utilisé pour le tri des noms en minuscules.";
 #pgv_lang["multi_letter_alphabet"]      = "Multi-letter alphabet";
 #pgv_lang["multi_letter_alphabet_help"] = "~#pgv_lang[multi_letter_alphabet]#~<br /><br />Multi-letter combinations that are to be treated as a single distinct letter when sorting lists of names and titles in this language.<br /><br />Some languages, Hungarian and Slovak for example, consider certain combinations of letters to be distinct letters in their own right.  The order in which you specify these letter combinations determines the order in which they are inserted into the normal alphabet during sorting.  This is important when several multi-letter combinations have the same first letter.  Except for <b>ch</b>, these letter combinations are inserted into the normal alphabet according to their first letter.  <b>ch</b> is always inserted after <b>h</b>.<br />";
-#pgv_lang["dictionary_sort"]            = "Use dictionary rules while sorting";
+$pgv_lang["dictionary_sort"]            = "Tri dans l'ordre du dictionnaire";
 #pgv_lang["dictionary_sort_help"]       = "~#pgv_lang[dictionary_sort]#~<br /><br />This option controls how characters with diacritic marks are handled when sorting lists of names and titles.<br /><br />When set to <b>#pgv_lang[yes]#</b>, all characters with diacritic marks are treated as if they did not have any marks.  Diacritic marks are considered only when the two words being considered are otherwise identical.  When set to <b>#pgv_lang[no]#</b>, all letters are distinct, regardless of the presence or absence of diacritic marks.<br />";
 $pgv_lang["lang_config_write_error"]    = "Erreur d'écriture du fichier [language_settings.php]. Vérifier les droits d'accès et réessayer.";
 $pgv_lang["translation_forum"]          = "Forum traduction";
@@ -587,13 +581,6 @@ $pgv_lang["lang_file_write_error"]      = "ERREUR !!!<br /><br />Impossible d'é
 $pgv_lang["no_open"]                    = "E R R E U R !!!<br /><br />Impossible d'ouvrir le fichier #lang_filename#";
 $pgv_lang["users_langs"]                = "Langues des utilisateurs";
 $pgv_lang["configured_languages"]       = "Langues activées";
-$pgv_lang["ip_address"]                 = "Adresse IP";
-$pgv_lang["date_time"]                  = "Date et heure";
-$pgv_lang["message"]                    = "Envoi de message";
-$pgv_lang["searchtype"]                 = "Type de recherche";
-$pgv_lang["type"]                       = "Type";
-$pgv_lang["query"]                      = "Requête";
-
 
 //-- User Migration Tool messages
 $pgv_lang["um_header"]                  = "Exporter les comptes utilisateurs pour passage mode Index <-> mode SQL";
