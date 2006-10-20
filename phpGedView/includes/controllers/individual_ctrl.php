@@ -46,7 +46,7 @@ $nonfacts[] = "WIFE";
 $nonfacts[] = "RFN";
 $nonfacts[] = "";
 
-$nonfamfacts[] = "NCHI";
+//$nonfamfacts[] = "NCHI";  	// Turning back on NCHI display for the indi page.
 $nonfamfacts[] = "UID";
 $nonfamfacts[] = "";
 /**

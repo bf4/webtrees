@@ -100,7 +100,10 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			   else $rowID = "row_".$styleadd;
 			   print "\n\t\t<tr id=\"".$rowID."\" name=\"".$rowID."\">";
 			   print "\n\t\t\t<td class=\"descriptionbox $styleadd center width20\">";
-			   if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/".$factref.".gif")) print "<img src=\"".$PGV_IMAGE_DIR."/facts/".$factref.".gif\"  alt=\"".$factarray[$fact]."\" title=\"".$factarray[$fact]."\" align=\"middle\" /> ";
+			   $label = $factref;
+			   if (isset($factarray["$factref"])) $label = $factarray[$factref];
+			   if (isset($pgv_lang[$factref])) $label = $pgv_lang[$factref];
+			   print_fact_icon($fact, $factrec, $label, $pid);
 			   print $factarray[$fact];
 			   if ($fact=="_BIRT_CHIL" and isset($n_chil)) print "<br />".$pgv_lang["number_sign"].$n_chil++;
 			   if ($fact=="_BIRT_GCHI" and isset($n_gchi)) print "<br />".$pgv_lang["number_sign"].$n_gchi++;
@@ -171,11 +174,11 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			   if ($styleadd=="") $rowID = "row_".floor(microtime()*1000000);
 			   else $rowID = "row_".$styleadd;
 			   print "\n\t\t<tr id=\"".$rowID."\" name=\"".$rowID."\">";
+			   $label = $factref;
 			   if (isset($factarray["$factref"])) $label = $factarray[$factref];
-			   else if (isset($pgv_lang[$factref])) $label = $pgv_lang[$factref];
-			   else $label = $factref;
+			   if (isset($pgv_lang[$factref])) $label = $pgv_lang[$factref];
 			   print "<td class=\"descriptionbox $styleadd center width20\">";
-			   if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/".$factref.".gif")) print "<img src=\"".$PGV_IMAGE_DIR."/facts/".$factref.".gif\" alt=\"".$label."\" title=\"".$label."\" align=\"middle\" /> ";
+			   print_fact_icon($fact, $factrec, $label, $pid);
 			   print $label;
 			   if (!$noedit && (userCanEdit(getUserName()))&&($styleadd!="change_old")&&($linenum>0)&&($view!="preview")&&(!FactEditRestricted($pid, $factrec))) {
 				   $menu = array();
@@ -345,7 +348,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				// -- print BURIal -> CEMEtery
 				$ct = preg_match("/2 CEME (.*)/", $factrec, $match);
 				if ($ct>0) {
-				   if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/CEME.gif")) print "<img src=\"".$PGV_IMAGE_DIR."/facts/CEME.gif\" alt=\"".$factarray["CEME"]."\" title=\"".$factarray["CEME"]."\" align=\"middle\" /> ";
+					print_fact_icon("CEME", $factrec, $factarray["CEME"], $pid);
 					print $factarray["CEME"].": ".$match[1]."<br />\n";
 				}
 			   //-- print address structure
@@ -377,8 +380,8 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 						if (!in_array($factref, $special_facts)) {
 							if (isset($factarray[$factref])) $label = $factarray[$factref];
 							else $label = $factref;
-						   if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/".$factref.".gif")) print "<img src=\"".$PGV_IMAGE_DIR."/facts/".$factref.".gif\" alt=\"".$label."\" title=\"".$label."\" align=\"middle\" /> ";
-						   else print "<span class=\"label\">".$label.": </span>";
+						        if ($SHOW_FACT_ICONS && file_exists($PGV_IMAGE_DIR."/facts/".$factref.".gif")) print_fact_icon($factref, $factrec, $label, $pid);
+						        else print "<span class=\"label\">".$label.": </span>";
 							$value = trim($match[$i][2]);
 							if (isset($pgv_lang[strtolower($value)])) print $pgv_lang[strtolower($value)];
 							else print PrintReady($value);
@@ -1371,5 +1374,81 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	}
 	print "</td></tr>";
 	return true;
+}
+/**
+ * Print a fact icon that varies by the decade, century, and subtype
+ *
+ * Many facts change over time.  Military uniforms, marriage dress, census forms.
+ * This is a cutesy way to show the changes over time.  More icons need to be added
+ * to the themes/?????/images/facts/ directory with a form of nn00_TYPE.gif or nnn0_TYPE.gif.
+ * A special case of nn00_OCCU_FARM.gif has been added to celebrate farmers and farm hands.
+ * A special case of nn00_OCCU_HOUS.gif has been added for KEEPing HOUSe or HOUSe KEEPers.
+ * Generic subtyping is done by storing the first four characters of the value of the
+ * record in a filename.  "1 RELI Methodist" is RELI_METH.gif or 1900_RELI_METH.gif.
+ * 1960__MILI_CONF.gif would be Confederate soldier, and 1860__MILI_UNIO.gif would be 
+ * the counterpart Union soldier.  The most specific match wins.
+ * Examples: 1900_CENS.gif 1910_CENS.gif 1900_OCCU_FARM.gif 1800_OCCU_FARM.gif
+ *
+ * @param string $fact		The fact type to print
+ * @param string $factrec	The gedcom subrecord
+ * @param string $label		The fact type described and possibly translated
+ * @param string $pid		The gedcom id record the fact orginiated from
+ */
+require_once 'includes/gedcomrecord.php';
+require_once 'includes/person_class.php';
+function print_fact_icon($fact, $factrec, $label, $pid) {
+	global $SHOW_FACT_ICONS, $PGV_IMAGE_DIR;
+	global $factarray;
+	global $birthyear;
+
+	if ($SHOW_FACT_ICONS) {
+		$fact_image = "";
+		$factdate = parse_date($factrec);
+		// If the date is not on the fact, fall back to birth if available
+		// Does not catch the date if it is attached to the source of the fact
+		// (ratid entered OCCU) or if the fact comes from a family record. (MARR)
+		if($factdate[0]["year"] == 0) {
+			$joe = Person::getInstance($pid);
+			if (!is_null($joe)) {
+				$fallback = $joe->getBirthYear();
+				if(!empty($fallback)) 
+					$factdate[0]["year"] = $fallback;
+				}
+		}
+		// converting from scalar to array string.
+		$century = $decade = sprintf("%04d", $factdate[0]["year"]);
+		$decade[3] = '0';	// Zero out the years
+		$century[2] = '0';	// Zero out the decades
+		$century[3] = '0';
+
+		if(file_exists($PGV_IMAGE_DIR."/facts/".$fact.".gif")) 
+			$fact_image = $PGV_IMAGE_DIR."/facts/".$fact;
+		if(file_exists($PGV_IMAGE_DIR."/facts/".$century."_".$fact.".gif")) 
+			$fact_image = $PGV_IMAGE_DIR."/facts/".$century."_".$fact;
+		if(file_exists($PGV_IMAGE_DIR."/facts/".$decade."_".$fact.".gif")) 
+			$fact_image = $PGV_IMAGE_DIR."/facts/".$decade."_".$fact;
+
+		// Since so much of the population before 1900 were farmers and their 
+		// wives keeping house, why not show a special icon.
+		if(($fact == "OCCU") && ((stristr(substr($factrec, 7, 30), "house")) || 
+		                         (stristr(substr($factrec, 7, 30), "keep")))) {
+			if(file_exists($fact_image."_HOUS.gif"))
+				$fact_image = $fact_image."_HOUS";
+			}
+		if(($fact == "OCCU") && (stristr(substr($factrec, 7, 30), "farm"))) {
+			if(file_exists($fact_image."_FARM.gif"))
+				$fact_image = $fact_image."_FARM";
+			}
+		$j = explode(" ", substr($factrec, 0, 20));
+		if((!empty($j[2])) && (!empty($fact_image))) {
+			$subtype = strtoupper(substr($j[2], 0, 4));
+			if(file_exists($fact_image."_".$subtype.".gif"))
+				$fact_image = $fact_image."_".$subtype;
+			}
+
+		if(!empty($fact_image))
+			print "<img src=\"".$fact_image.".gif\" alt=\"".$label."\" title=\"".$label."\" align=\"middle\" /> ";
+	}
+	return;
 }
 ?>
