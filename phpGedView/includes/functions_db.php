@@ -2315,6 +2315,7 @@ function get_alpha_fams($letter) {
 					}
 				}
 				$name = $hname ." + ". $wname;
+				if ($famlist[$famid]["wife"]==$gid) $name = $wname ." + ". $hname; // force husb first
 				$famlist[$famid]["name"] = $name;
 				if (!isset($famlist[$famid]["surnames"])||count($famlist[$famid]["surnames"])==0) $famlist[$famid]["surnames"] = $surnames;
 				else pgv_array_merge($famlist[$famid]["surnames"], $surnames);
@@ -2401,6 +2402,7 @@ function get_surname_fams($surname) {
 					}
 				}
 				$name = $hname ." + ". $wname;
+				if ($famlist[$famid]["wife"]==$gid) $name = $wname ." + ". $hname; // force husb first
 				$famlist[$famid]["name"] = $name;
 				$tfamlist[$famid] = $famlist[$famid];
 			}
