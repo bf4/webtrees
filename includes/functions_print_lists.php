@@ -281,34 +281,34 @@ function print_indi_table($datalist, $legend="", $option="") {
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- filter buttons
 	$person = new Person("");
-	echo "<button type=\"button\" class=\"SEX_M\" title=\"".@$pgv_lang["button_SEX_M"]."\" >";
+	echo "<button type=\"button\" class=\"SEX_M\" title=\"".$pgv_lang["button_SEX_M"]."\" >";
 	$person->sex = "M"; echo $person->getSexImage()."&nbsp;</button> ";
-	echo "<button type=\"button\" class=\"SEX_F\" title=\"".@$pgv_lang["button_SEX_F"]."\" >";
+	echo "<button type=\"button\" class=\"SEX_F\" title=\"".$pgv_lang["button_SEX_F"]."\" >";
 	$person->sex = "F"; echo $person->getSexImage()."&nbsp;</button> ";
-	echo "<button type=\"button\" class=\"SEX_U\" title=\"".@$pgv_lang["button_SEX_U"]."\" >";
+	echo "<button type=\"button\" class=\"SEX_U\" title=\"".$pgv_lang["button_SEX_U"]."\" >";
 	$person->sex = "U"; echo $person->getSexImage()."&nbsp;</button> ";
 	echo " <input type=\"text\" size=\"4\" id=\"aliveyear\" value=\"".date('Y')."\" /> ";
-	echo "<button type=\"button\" class=\"alive_in_year\" title=\"".@$pgv_lang["button_alive_in_year"]."\" >";
+	echo "<button type=\"button\" class=\"alive_in_year\" title=\"".$pgv_lang["button_alive_in_year"]."\" >";
 	echo $pgv_lang["alive_in_year"]."</button> ";
-	echo "<button type=\"button\" class=\"DEAT_N\" title=\"".@$pgv_lang["button_DEAT_N"]."\" >";
+	echo "<button type=\"button\" class=\"DEAT_N\" title=\"".$pgv_lang["button_DEAT_N"]."\" >";
 	echo $pgv_lang["alive"]."</button> ";
-	echo "<button type=\"button\" class=\"DEAT_Y\" title=\"".@$pgv_lang["button_DEAT_Y"]."\" >";
+	echo "<button type=\"button\" class=\"DEAT_Y\" title=\"".$pgv_lang["button_DEAT_Y"]."\" >";
 	echo $pgv_lang["dead"]."</button> ";
-	echo "<button type=\"button\" class=\"TREE_R\" title=\"".@$pgv_lang["button_TREE_R"]."\" >";
+	echo "<button type=\"button\" class=\"TREE_R\" title=\"".$pgv_lang["button_TREE_R"]."\" >";
 	echo $pgv_lang["roots"]."</button> ";
-	echo "<button type=\"button\" class=\"TREE_L\" title=\"".@$pgv_lang["button_TREE_L"]."\" >";
+	echo "<button type=\"button\" class=\"TREE_L\" title=\"".$pgv_lang["button_TREE_L"]."\" >";
 	echo $pgv_lang["leaves"]."</button> ";
 	echo "<br />";
 	$y100 = get_changed_date(date('Y')-100);
-	echo "<button type=\"button\" class=\"BIRT_YES\" title=\"".@$pgv_lang["button_BIRT_YES"]."\" >";
+	echo "<button type=\"button\" class=\"BIRT_YES\" title=\"".$pgv_lang["button_BIRT_YES"]."\" >";
 	echo $factarray["BIRT"]."&gt;100</button> ";
-	echo "<button type=\"button\" class=\"BIRT_Y100\" title=\"".@$pgv_lang["button_BIRT_Y100"]."\" >";
+	echo "<button type=\"button\" class=\"BIRT_Y100\" title=\"".$pgv_lang["button_BIRT_Y100"]."\" >";
 	echo $factarray["BIRT"]."&lt;=100</button> ";
-	echo "<button type=\"button\" class=\"DEAT_YES\" title=\"".@$pgv_lang["button_DEAT_YES"]."\" >";
+	echo "<button type=\"button\" class=\"DEAT_YES\" title=\"".$pgv_lang["button_DEAT_YES"]."\" >";
 	echo $factarray["DEAT"]."&gt;100</button> ";
-	echo "<button type=\"button\" class=\"DEAT_Y100\" title=\"".@$pgv_lang["button_DEAT_Y100"]."\" >";
+	echo "<button type=\"button\" class=\"DEAT_Y100\" title=\"".$pgv_lang["button_DEAT_Y100"]."\" >";
 	echo $factarray["DEAT"]."&lt;=100</button> ";
-	echo "<button type=\"button\" class=\"reset\" title=\"".@$pgv_lang["button_reset"]."\" >";
+	echo "<button type=\"button\" class=\"reset\" title=\"".$pgv_lang["button_reset"]."\" >";
 	echo $pgv_lang["reset"]."</button> ";
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
@@ -318,11 +318,11 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
 	if ($option=="sosa") echo "<th class=\"list_label\">Sosa</th>";
 	echo "<th class=\"list_label\">".$factarray["BIRT"]."</th>";
-	echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".@$pgv_lang["anniversary"]."\" title=\"".@$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
+	echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
 	echo "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["children"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["DEAT"]."</th>";
-	echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".@$pgv_lang["anniversary"]."\" title=\"".@$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
+	echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
 	echo "<th class=\"list_label\">".$factarray["AGE"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
 	if ($SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
@@ -392,7 +392,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		$sortkey = $person->getSortableBirthDate();
 		$txt = get_changed_date($person->getBirthDate());
 		if (empty($txt)) $txt = $pgv_lang["yes"];
-		echo "<a href=\"".$person->getDateUrl($person->bdate)."\"".
+		echo "&nbsp;<a href=\"".$person->getDateUrl($person->bdate)."\"".
 		" title=\"".$sortkey."\"".
 		" class=\"list_item\">".$txt."</a>";
 		//-- Birth 2nd date ?
@@ -404,9 +404,11 @@ function print_indi_table($datalist, $legend="", $option="") {
 		//-- Birth anniversary
 		echo "<td class=\"list_value_wrap rela\">";
 		$age = $person->getAge("", date("d M Y"));
-		if ($age) $age = str_replace($pgv_lang["apx"]." ", "", $age);
-		if (!$age) $age = "&nbsp;";
-		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$age."</a>";
+		if ($age) {
+			$age = str_replace($pgv_lang["apx"]." ", "", $age);
+			echo "<a href=\"".$person->getDateUrl($person->bdate)."\" class=\"list_item\">".$age."</a>";
+		}
+		else echo "&nbsp;";
 		echo "</td>";
 		//-- Birth place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($person->getBirthPlace())."\">";
@@ -421,9 +423,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 		$sortkey = $person->getSortableDeathDate();
 		$txt = get_changed_date($person->getDeathDate());
 		if ($person->dest) $txt = $pgv_lang["yes"];
-		if (!$person->isDead()) $txt = "&nbsp;";
-		if (empty($txt)) $txt = "&nbsp;";
-		echo "<a href=\"".$person->getDateUrl($person->ddate)."\"".
+		if (!$person->isDead()) $txt = "";
+		echo "&nbsp;<a href=\"".$person->getDateUrl($person->ddate)."\"".
 		" title=\"".$sortkey."\"".
 		" class=\"list_item\">".$txt."</a>";
 		//-- Death 2nd date ?
@@ -435,12 +436,12 @@ function print_indi_table($datalist, $legend="", $option="") {
 		//-- Death anniversary
 		echo "<td class=\"list_value_wrap rela\">";
 		$age = "";
-		if ($person->isDead() and !$person->dest) {
-			$age = $person->getAge("\n1 BIRT\n2 DATE ".$person->ddate."\n", date("d M Y"));
-			if ($age) $age = str_replace($pgv_lang["apx"]." ", "", $age);
+		if ($person->isDead() and !$person->dest) $age = $person->getAge("\n1 BIRT\n2 DATE ".$person->ddate."\n", date("d M Y"));
+		if ($age) {
+			$age = str_replace($pgv_lang["apx"]." ", "", $age);
+			echo "<a href=\"".$person->getDateUrl($person->ddate)."\" class=\"list_item\">".$age."</a>";
 		}
-		if (!$age) $age = "&nbsp;";
-		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$age."</a>";
+		else echo "&nbsp;";
 		echo "</td>";
 		//-- Age at death
 		echo "<td class=\"list_value_wrap\">";
@@ -454,8 +455,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 			else if (strpos($age, $pgv_lang["days"]) or strpos($age, $pgv_lang["day1"])) $sortkey = $age*1;
 			else $sortkey = $age*365;
 		}
-		if (!$age) $age = "&nbsp;";
-		echo "<a href=\"".$person->getLinkUrl()."\" title=\"".sprintf("%05d",$sortkey)."\" class=\"list_item\">".$age."</a>";
+		echo "<a href=\"".$person->getLinkUrl()."\" title=\"".sprintf("%05d",$sortkey)."\" class=\"list_item\">&nbsp;".$age."</a>";
 		echo "</td>";
 		//-- Death place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($person->getDeathPlace())."\">";
@@ -593,29 +593,29 @@ function print_fam_table($datalist, $legend="") {
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- filter buttons
-	echo "<button type=\"button\" class=\"DEAT_N\" title=\"".@$pgv_lang["button_DEAT_N"]."\" >";
+	echo "<button type=\"button\" class=\"DEAT_N\" title=\"".$pgv_lang["button_DEAT_N"]."\" >";
 	echo $pgv_lang["both_alive"]."</button> ";
-	echo "<button type=\"button\" class=\"DEAT_W\" title=\"".@$pgv_lang["button_DEAT_W"]."\" >";
+	echo "<button type=\"button\" class=\"DEAT_W\" title=\"".$pgv_lang["button_DEAT_W"]."\" >";
 	echo $pgv_lang["widower"]."</button> ";
-	echo "<button type=\"button\" class=\"DEAT_H\" title=\"".@$pgv_lang["button_DEAT_H"]."\" >";
+	echo "<button type=\"button\" class=\"DEAT_H\" title=\"".$pgv_lang["button_DEAT_H"]."\" >";
 	echo $pgv_lang["widow"]."</button> ";
-	echo "<button type=\"button\" class=\"DEAT_Y\" title=\"".@$pgv_lang["button_DEAT_Y"]."\" >";
+	echo "<button type=\"button\" class=\"DEAT_Y\" title=\"".$pgv_lang["button_DEAT_Y"]."\" >";
 	echo $pgv_lang["both_dead"]."</button> ";
-	echo "<button type=\"button\" class=\"TREE_R\" title=\"".@$pgv_lang["button_TREE_R"]."\" >";
+	echo "<button type=\"button\" class=\"TREE_R\" title=\"".$pgv_lang["button_TREE_R"]."\" >";
 	echo $pgv_lang["roots"]."</button> ";
-	echo "<button type=\"button\" class=\"TREE_L\" title=\"".@$pgv_lang["button_TREE_L"]."\" >";
+	echo "<button type=\"button\" class=\"TREE_L\" title=\"".$pgv_lang["button_TREE_L"]."\" >";
 	echo $pgv_lang["leaves"]."</button> ";
 	echo "<br />";
 	$y100 = get_changed_date(date('Y')-100);
-	echo "<button type=\"button\" class=\"MARR_U\" title=\"".@$pgv_lang["button_MARR_U"]."\" >";
+	echo "<button type=\"button\" class=\"MARR_U\" title=\"".$pgv_lang["button_MARR_U"]."\" >";
 	echo $factarray["MARR"]." ?</button> ";
-	echo "<button type=\"button\" class=\"MARR_YES\" title=\"".@$pgv_lang["button_MARR_YES"]."\" >";
+	echo "<button type=\"button\" class=\"MARR_YES\" title=\"".$pgv_lang["button_MARR_YES"]."\" >";
 	echo $factarray["MARR"]."&gt;100</button> ";
-	echo "<button type=\"button\" class=\"MARR_Y100\" title=\"".@$pgv_lang["button_MARR_Y100"]."\" >";
+	echo "<button type=\"button\" class=\"MARR_Y100\" title=\"".$pgv_lang["button_MARR_Y100"]."\" >";
 	echo $factarray["MARR"]."&lt;=100</button> ";
-	echo "<button type=\"button\" class=\"MARR_DIV\" title=\"".@$pgv_lang["button_MARR_DIV"]."\" >";
+	echo "<button type=\"button\" class=\"MARR_DIV\" title=\"".$pgv_lang["button_MARR_DIV"]."\" >";
 	echo $factarray["DIV"]."</button> ";
-	echo "<button type=\"button\" class=\"reset\" title=\"".@$pgv_lang["button_reset"]."\" >";
+	echo "<button type=\"button\" class=\"reset\" title=\"".$pgv_lang["button_reset"]."\" >";
 	echo $pgv_lang["reset"]."</button> ";
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
@@ -627,7 +627,7 @@ function print_fam_table($datalist, $legend="") {
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["spouse"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["MARR"]."</th>";
-	echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".@$pgv_lang["anniversary"]."\" title=\"".@$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
+	echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
 	echo "<th class=\"list_label\">".$factarray["AGE"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["AGE"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
@@ -723,8 +723,7 @@ function print_fam_table($datalist, $legend="") {
 		$sortkey = $family->getSortableMarriageDate();
 		if (!$family->marr_est) $txt = get_changed_date($family->getMarriageDate());
 		if (empty($txt) and !empty($family->marr_rec)) $txt = $pgv_lang["yes"];
-		if (empty($txt)) $txt = "&nbsp;";
-		echo "<a href=\"".$family->getDateUrl($family->marr_date)."\"".
+		echo "&nbsp;<a href=\"".$family->getDateUrl($family->marr_date)."\"".
 		" title=\"".$sortkey."\"".
 		" class=\"list_item\">".$txt."</a>";
 		//-- Marriage 2nd date ?
@@ -736,12 +735,12 @@ function print_fam_table($datalist, $legend="") {
 		//-- Marriage anniversary
 		echo "<td class=\"list_value_wrap rela\">";
 		$age = "";
-		if (!$family->marr_est) {
-			$age = $husb->getAge("\n1 BIRT\n2 DATE ".$family->marr_date."\n", date("d M Y"));
-			if ($age) $age = str_replace($pgv_lang["apx"]." ", "", $age);
+		if (!$family->marr_est) $age = $husb->getAge("\n1 BIRT\n2 DATE ".$family->marr_date."\n", date("d M Y"));
+		if ($age) {
+			$age = str_replace($pgv_lang["apx"]." ", "", $age);
+			echo "<a href=\"".$family->getDateUrl($family->marr_date)."\" class=\"list_item\">".$age."</a>";
 		}
-		if (!$age) $age = "&nbsp;";
-		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".$age."</a>";
+		else echo "&nbsp;";
 		echo "</td>";
 		//-- Husband age
 		echo "<td class=\"list_value_wrap\">";
@@ -750,8 +749,7 @@ function print_fam_table($datalist, $legend="") {
 			$age = $husb->getAge("", $family->getMarriageDate());
 			$age = str_replace($pgv_lang["apx"]." ", "", $age);
 		}
-		if (!$age) $age = "&nbsp;";
-		echo "<a href=\"".$husb->getLinkUrl()."\" title=\"".sprintf("%02d",$age)."\" class=\"list_item\">".$age."</a>";
+		echo "<a href=\"".$husb->getLinkUrl()."\" title=\"".sprintf("%02d",$age)."\" class=\"list_item\">&nbsp; ".$age."</a>";
 		echo "</td>";
 		//-- Wife age
 		echo "<td class=\"list_value_wrap\">";
@@ -760,8 +758,7 @@ function print_fam_table($datalist, $legend="") {
 			$age = $wife->getAge("", $family->getMarriageDate());
 			$age = str_replace($pgv_lang["apx"]." ", "", $age);
 		}
-		if (!$age) $age = "&nbsp;";
-		echo "<a href=\"".$wife->getLinkUrl()."\" title=\"".sprintf("%02d",$age)."\" class=\"list_item\">".$age."</a>";
+		echo "<a href=\"".$wife->getLinkUrl()."\" title=\"".sprintf("%02d",$age)."\" class=\"list_item\">&nbsp;".$age."</a>";
 		echo "</td>";
 		//-- Marriage place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($family->getMarriagePlace())."\">";
@@ -1208,6 +1205,7 @@ function load_behaviour() {
 	<script type="text/javascript" src="js/bennolan.com/behaviour.js"></script>
 	<script type="text/javascript" src="js/bosrup.com/overlib.js"></script>
 	<script type="text/javascript">
+	// <![CDATA[
 	var myrules = {
 		'fieldset button' : function(element) {
 			element.onmouseover = function() { // show helptext
@@ -1238,7 +1236,7 @@ function load_behaviour() {
 			element.onmouseover = function() { // show helptext
 				helptext = this.title;
 				if (helptext=='') helptext = this.value;
-				if (helptext=='' || helptext==undefined) helptext = <?php echo "'".@$pgv_lang["sort_column"]."'"?>;
+				if (helptext=='' || helptext==undefined) helptext = <?php echo "'".$pgv_lang["sort_column"]."'"?>;
 				this.title = helptext; if (document.all) return; // IE = title
 				this.value = helptext; this.title = ''; // Firefox = value
 				return overlib(helptext, BGCOLOR, "#000000", FGCOLOR, "#FFFFE0");
@@ -1246,6 +1244,7 @@ function load_behaviour() {
 		}
 	}
 	Behaviour.register(myrules);
+	// ]]>
 	</script>
 <?php
 }
