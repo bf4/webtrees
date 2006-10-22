@@ -218,7 +218,7 @@ else {
 }
 	
 
-print "<br /><br />\n</center></div>\n";
+print "<br /><br />\n</div>\n";
 print "<center><a href=\"javascript:;\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a><br /></center>\n";
 print_simple_footer();
 ?>
