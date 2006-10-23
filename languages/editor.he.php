@@ -221,4 +221,8 @@ $pgv_lang["upload_media"]		= "העלאת קבצי מדיה";
 $pgv_lang["upload_successful"]		= "ההעלאה הצליחה.";
 $pgv_lang["view_change_diff"]		= "התבונן בשינויים ";
 
+$pgv_lang["accept_changes"]		= "קבל/דחה את השינויים";
+$pgv_lang["upload_media_help"]	= "~#pgv_lang[upload_media]#~<br /><br />בחר קבצים מהמחשב המקומי שלך להעלאה לשרת שלך. כל הקבצים מועלים לתיקיית <b>#MEDIA_DIRECTORY#</b> או לאחת מהתיקיות מתחתיה.<br /><br />שמות החוצצים שאתה מציין יתווספו ל-#MEDIA_DIRECTORY#. למשל, #MEDIA_DIRECTORY#myfamily. אם תיקיית התמונות המזעריות אינה קיימת, היא תווצר בצורה אוטומטית.";
+
+
 ?>

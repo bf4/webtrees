@@ -261,4 +261,35 @@ $pgv_lang["welcome_new"]		= "ברוך הבא לאתר האינטרנט החדש 
 $pgv_lang["yearly"]			= "שנתי";
 $pgv_lang["you_may_login"]		= "הקישור מתחת מביא אותך לאתר ה-PhpGedView:";
 
+$pgv_lang["user"]			= "משתמש מאושר";
+$pgv_lang["thumbnail_deleted"]		= "קובץ תמונה מזערית נמחק בהצלחה.";
+$pgv_lang["thumbnail_not_deleted"]	= "לא ניתן למחוק את קובץ התמונה המזערית.";
+$pgv_lang["step2"]			= "שלב 2 מתוך 4:";
+$pgv_lang["refresh"]			= "רענן";
+$pgv_lang["move_file_success"]	= "קובצי מדיה והתמונה המזערית הועברו בהצלחה.";
+$pgv_lang["media_folder_corrupt"]	= "תיקיית המדיה מקולקלת.";
+$pgv_lang["media_file_not_deleted"]	= "לא ניתן למחוק את קובץ המדיה.";
+$pgv_lang["gedcom_deleted"]		= "[#GED#] נימחק בהצלחה.";
+$pgv_lang["gedadmin"]		= "מנהלן GEDCOM";
+$pgv_lang["full_name"]		= "שם מלא";
+$pgv_lang["error_header"] 		= "קובץ ה-GEDCOM, <b>#GEDCOM#</b>, לא נימצא במקום שצוין";
+$pgv_lang["manage_gedcoms"]		= "נהל קבצי GEDCOM וערוך פרטיות";
+$pgv_lang["created_remotelinks"]	= "טבלת <i>קשרים מרוחקים</i> נוצרה בהצלחה.";
+$pgv_lang["created_remotelinks_fail"] 	= "לא ניתן ליצור טבלת <i>קשרים מרוחקים</i>.";
+$pgv_lang["created_indis"]		= "טבלת <i>אנשים</i> נוצרה בהצלחה.";
+$pgv_lang["created_indis_fail"]		= "לא ניתן ליצור טבלת <i>אנשים</i>";
+$pgv_lang["created_fams"]		= "טבלת <i>משפחות</i> נוצרה בהצלחה.";
+$pgv_lang["created_fams_fail"]		= "לא ניתן ליצור טבלת <i>משפחות</i>";
+$pgv_lang["created_sources"]		= "טבלת <i>מקורות</i> נוצרה בהצלחה.";
+$pgv_lang["created_sources_fail"]	= "לא ניתן ליצור טבלת <i>מקורות</i>";
+$pgv_lang["created_other"]		= "טבלת <i>אחר</i> נוצרה בהצלחה.";
+$pgv_lang["created_other_fail"]		= "לא ניתן ליצור טבלת <i>אחר</i>";
+$pgv_lang["created_places"]		= "טבלת <i>מקומות</i> נוצרה בהצלחה.";
+$pgv_lang["created_places_fail"]	= "לא ניתן ליצור טבלת <i>מקומות</i>";
+$pgv_lang["created_placelinks"] 	= "טבלת <i>קישור מקומות</i> נוצרה בהצלחה.";
+$pgv_lang["created_placelinks_fail"]	= "לא ניתן ליצור טבלת <i>קישור מקומות</i>.";
+$pgv_lang["created_media_fail"]	= "לא ניתן ליצור את טבלת ה<i>מדיה</i>.";
+$pgv_lang["created_media_mapping_fail"]  = "לא ניתן ליצור את טבלת ה <i>מיפוי של המדיה</i>.";
+
+
 ?>

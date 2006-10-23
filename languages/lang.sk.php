@@ -13,7 +13,6 @@ if (preg_match("/lang\...\.php$/", $_SERVER["PHP_SELF"])>0) {
 	print "Nemáte priamy prístup k súboru so slovenčinou.";
 	exit;
 }
-
 //-- GENERAL HELP MESSAGES
 $pgv_lang["qm"]				= "?";
 $pgv_lang["qm_ah"]			= "?";
@@ -30,11 +29,8 @@ $pgv_lang["menu"]			= "Menu";
 $pgv_lang["header"]			= "Záhlavie";
 $pgv_lang["imageview"]			= "Prehliadač obrázkov";
 $pgv_lang["login_head"]			= "Prihlásenie uživateľa PhpGedView";
-
 //-- CONFIG FILE MESSAGES
 $pgv_lang["error_title"]		= "CHYBA: Nie je možné otvoriť súbor GEDCOM";
-$pgv_lang["error_header"] 		= "Súbor GEDCOM, [#GEDCOM#], nie je na zadanom mieste.";
-$pgv_lang["error_header_write"]		= "Do súboru GEDCOM [#GEDCOM#] sa nedá zapisovať. Skontrolujte vlastnosti a prístupové práva súboru.";
 $pgv_lang["for_support"]		= "Pre technickú podporu a ďalšie informácie kontaktujte";
 $pgv_lang["for_contact"]		= "S otázkami k rodokmeňu sa obracajte na";
 $pgv_lang["for_all_contact"]		= "Pre technickú podporu alebo s otázkami k rodokmeňu prosím kontaktujte";
@@ -48,7 +44,6 @@ $pgv_lang["firstname"]			= "Meno";
 $pgv_lang["lastname"]			= "Priezvisko";
 $pgv_lang["password"]			= "Heslo";
 $pgv_lang["confirm"]			= "Potvrdenie hesla";
-$pgv_lang["user_contact_method"]	= "Uprednostňovaný spôsob kontaktu";
 $pgv_lang["login"]			= "Prihlásiť sa";
 $pgv_lang["login_aut"]			= "Upraviť uživateľa";
 $pgv_lang["logout"]			= "Odhlásiť sa";
@@ -58,11 +53,8 @@ $pgv_lang["my_pedigree"]		= "Môj vývod";
 $pgv_lang["my_indi"]			= "Môj osobný záznam";
 $pgv_lang["yes"]			= "Ano";
 $pgv_lang["no"]				= "Nie";
-$pgv_lang["add_gedcom"]			= "Pridať GEDCOM";
 $pgv_lang["add_gedcom"]			= "Pridať další GEDCOM";
 $pgv_lang["change_theme"]		= "Zmena motívu";
-$pgv_lang["gedcom_downloadable"] 	= "Tento GEDCOM môže byť stiahnutý po internete!<br />Prosím prečítajte si odstavec o BEZPEČNOSTI v súbore <a href=\"readme.txt\">readme.txt</a> a zjednajte nápravu";
-
 //-- INDEX (PEDIGREE_TREE) FILE MESSAGES
 $pgv_lang["index_header"]		= "Vývod";
 $pgv_lang["gen_ped_chart"]		= "#PEDIGREE_GENERATIONS# - generačná schéma";
@@ -84,7 +76,6 @@ $pgv_lang["welcome_page"]		= "Úvodná stránka";
 $pgv_lang["max_generation"]		= "Maximálny počet generácií  je #PEDIGREE_GENERATIONS#.";
 $pgv_lang["min_generation"]		= "Minimálny počet generácií je 3.";
 $pgv_lang["box_width"] 			= "Šírka rámčeka";
-
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Nie je možné nájsť rodinu s ID";
 $pgv_lang["unable_to_find_indi"]	= "Nie je možné nájsť osobu s ID";
@@ -141,7 +132,6 @@ $pgv_lang["total_privacy_checks"]	= "Úplných kontrol utajenia celkom:";
 $pgv_lang["back"]			= "Späť";
 $pgv_lang["privacy_list_indi_error"]	= "Kvôli nastaveniu utajenia je jedna či viac osôb skrytých.";
 $pgv_lang["privacy_list_fam_error"]	= "Kvôli nastaveniu utajenia je jedna či viac rodín skrytých.";
-
 //-- INDIVIDUAL FILE MESSAGES
 $pgv_lang["aka"]			= "alias";
 $pgv_lang["male"]			= "Muž";
@@ -160,7 +150,6 @@ $pgv_lang["unrecognized_code_msg"]	= "Došlo k chybe. Radi by sme ju opravili. P
 $pgv_lang["indi_info"]			= "Informácie o osobe";
 $pgv_lang["pedigree_chart"]		= "Vývod";
 $pgv_lang["individual"]			= "Osoba";
-$pgv_lang["family"]			= "Rodina";
 $pgv_lang["family_with"]		= "Rodina s";
 $pgv_lang["as_spouse"]			= "Rodina s partnerom";
 $pgv_lang["as_child"]			= "Rodina s rodičmi";
@@ -177,7 +166,6 @@ $pgv_lang["object_note"]		= "Poznámka k objektu:";
 $pgv_lang["sex"]			= "Pohlavie";
 $pgv_lang["personal_facts"]		= "Osobné údaje a podrobnosti";
 $pgv_lang["type"]			= "Typ";
-$pgv_lang["date"]			= "Dátum";
 $pgv_lang["place_description"]		= "Miesto / Popis";
 $pgv_lang["parents"] 			= "Rodičia:";
 $pgv_lang["siblings"] 			= "Súrodenci";
@@ -198,9 +186,7 @@ $pgv_lang["disproved"]			= "Vyvrátené";
 $pgv_lang["infant"]			= "Maloletý";
 $pgv_lang["stillborn"]			= "Mŕtvonarodený";
 $pgv_lang["deceased"]			= "Zosnulý";
-$pgv_lang["link_as_child"]		= "Pridať túto osobu k existujúcej rodine ako dieťa";
 $pgv_lang["link_as_wife"]		= "Pridať túto osobu k existujúcej rodine ako manželku";
-$pgv_lang["link_as_husband"]		= "Pridať túto osobu k existujúcej rodine ako manžela";
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 $pgv_lang["no_tab1"]			= "K tejto osobe nie sú dostupné žiadne údaje.";
 $pgv_lang["no_tab2"]			= "K tejto osobe nie sú žiadne poznámky.";
@@ -208,7 +194,6 @@ $pgv_lang["no_tab3"]			= "K tejto osobe nie sú žiadne citácie zdrojov.";
 $pgv_lang["no_tab4"]			= "K tejto osobe nie sú k dispozícii žiadne obrázky.";
 $pgv_lang["no_tab5"]			= "K tejto osobe nie sú dostupný žiadny blízky príbuzný.";
 $pgv_lang["no_tab6"]			= "K tejto osobe nie sú pripojené žiadne záznamy v bádateľskom záznamníku.";
-
 //-- FAMILY FILE MESSAGES
 $pgv_lang["family_info"]		= "Informácie o rodine";
 $pgv_lang["family_group_info"]		= "Informácie o rodine (manželstvo)";
@@ -225,9 +210,7 @@ $pgv_lang["no_children"]		= "Žiadne zaznamenané deti";
 $pgv_lang["childless_family"]		= "Táto rodina zostala bezdetná";
 $pgv_lang["number_children"]		= "Počet detí:";
 $pgv_lang["parents_timeline"]		= "Ukázať pár na<br />časovej ose";
-
 //-- CLIPPINGS FILE MESSAGES
-
 $pgv_lang["clip_cart"]			= "Schránka výstrižkov";
 $pgv_lang["clip_explaination"]		= "Schránka výstrižkov vám umožňuje urobiť z tohoto rodokmeňa &quot;výstrižky&quot; a uložiť ich do samostatného GEDCOM súboru ku stiahnutiu.<br /><br />";
 $pgv_lang["item_with_id"]		= "Položka s ID";
@@ -260,7 +243,6 @@ $pgv_lang["download_now"]		= "Stiahnuť";
 $pgv_lang["indi_downloaded_from"]	= "Táto osoba bola stiahnutá z:";
 $pgv_lang["family_downloaded_from"]	= "Táto rodina bola stiahnutá z:";
 $pgv_lang["source_downloaded_from"]	= "Tento zdroj bol stiahnutý z:";
-
 //-- PLACELIST FILE MESSAGES
 $pgv_lang["connections"]		= "nájdených súvislostí v miestach";
 $pgv_lang["top_level"]			= "Horná úroveň";
@@ -276,7 +258,6 @@ $pgv_lang["show_place_hierarchy"]	= "Zobraziť miesta hierarchicky";
 $pgv_lang["show_place_list"]		= "Zobraziť všetky miesta zo zoznamu.";
 $pgv_lang["total_unic_places"]		= "Unikátnych miest celkove";
 $pgv_lang["external_objects"]		= "Externé objekty";
-
 //-- MEDIALIST FILE MESSAGES
 $pgv_lang["multi_title"]		= "Zoznam multimediálnych súborov";
 $pgv_lang["media_found"]		= "nájdených mediálnych súborov.";
@@ -290,23 +271,7 @@ $pgv_lang["file_not_found"]		= "Súbor nebol nájdený.";
 $pgv_lang["medialist_show"] 		= "Zobraziť";
 $pgv_lang["per_page"]			= "mediálnych objektov na stránku";
 $pgv_lang["delete_directory"]		= "Zmazať adresár";
-$pgv_lang["remove_object"]		= "Odstrániť objekt";
-$pgv_lang["confirm_remove_object"]	= "Ste si istý, že chcete odstrániť tento objekt z databázy?";
-$pgv_lang["remove_links"]		= "Odstrániť spojenia";
-$pgv_lang["confirm_remove_links"]	= "Ste si istý, že chcete odstrániť všetky spojenia pre tento objekt?";
-$pgv_lang["delete_file"]		= "Zmazať súbor";
-$pgv_lang["confirm_delete_file"]	= "Ste si istý, že chcete zmazať tento súbor?";
-$pgv_lang["multiple_gedcoms"]		= "Tento súbor je spojený s inou genealogickou databázou na tomto servere. Nemôže byť zmazaný, presunutý alebo premenovaný skôr než budú tieto spojenia odstránené.";
-$pgv_lang["external_file"]		= "Tento objekt édií neexistuje na serveri ako súbor. Nemôže byť preto zmazný, presunutý alebo premenovaný.";
-$pgv_lang["directory_not_empty"]	= "Adresár nie je prázdny:";
-$pgv_lang["directory_not_exist"]	= "Adresár neexistuje.";
-$pgv_lang["media_not_deleted"]		= "Adresár medií nebol odstránený.";
-$pgv_lang["media_deleted"]		= "Adresár médií bol úspešne odstránený.";
-$pgv_lang["thumbs_not_deleted"]		= "Adresár náhľadov nebol odstránený.";
-$pgv_lang["thumbs_deleted"]		= "Adresár náhľadov bol úspešne odstránený.";
-$pgv_lang["delete_dir_success"]		= "Adresáre medií a náhľadov boli úspešne odstránené.";
 $pgv_lang["current_dir"]		= "Aktuálny adresár";
-
 //-- SEARCH FILE MESSAGES
 $pgv_lang["search_gedcom"]		= "Hľadanie súborov GEDCOM";
 $pgv_lang["enter_terms"]		= "Vložte výraz, ktorý sa má vyhľadať:";
@@ -317,11 +282,9 @@ $pgv_lang["lastname_search"]		= "Priezvisko: ";
 $pgv_lang["search_place"]		= "Miesto: ";
 $pgv_lang["search_year"]		= "Rok: ";
 $pgv_lang["no_results"]			= "Zodpovedajúci záznam nebol nájdený.";
-$pgv_lang["invalid_search_input"] 	= "Prosím zadajte k roku ešte meno, priezvisko alebo miesto.";
 $pgv_lang["search_options"]		= "Voľby hľadania";
 $pgv_lang["search_geds"]		= "Hľadať GEDCOMy v";
 $pgv_lang["search_type"]		= "Druh vyhľadávania";
-
 //-- SOURCELIST FILE MESSAGES
 $pgv_lang["sources_found"]		= "Nájdené zdroje";
 $pgv_lang["titles_found"]		= "Tituly";
@@ -331,32 +294,22 @@ $pgv_lang["repos_found"]		= "Nájdené pramene";
 $pgv_lang["find_repository"]		= "Hľadanie prameňov";
 $pgv_lang["total_repositories"]		= "Pramene celkove";
 $pgv_lang["repo_info"]			= "Informácie o prameni";
-$pgv_lang["delete_repo"]		= "Zmazať prameň";
 $pgv_lang["other_repo_records"]		= "Záznamy, ktoré sa odkazujú na tento prameň:";
-$pgv_lang["create_repository"]		= "Založiť prameň";
-$pgv_lang["new_repo_created"]		= "Nový prameň bol založený";
-$pgv_lang["paste_rid_into_field"]	= "Vložte toto ID prameňa do políčok, z ktorých sa chcete odvolávať na tento prameň.";
 $pgv_lang["confirm_delete_repo"]	= "Naozaj chcete zmazať tento prameň z databázy?";
-
 //-- SOURCE FILE MESSAGES
 $pgv_lang["source_info"]		= "Informácie o zdroji";
 $pgv_lang["other_records"]		= "Záznamy, ktoré sa odkazujú na tento zdroj:";
 $pgv_lang["people"]			= "Ľudia";
 $pgv_lang["families"]			= "Rodiny";
 $pgv_lang["total_sources"]		= "Zdrojov celkove";
-
 //-- BUILDINDEX FILE MESSAGES
 $pgv_lang["building_indi"]		= "Vytváranie indexu osôb a rodín";
 $pgv_lang["building_index"]		= "Vytváranie zoznamov indexov";
 $pgv_lang["invalid_gedformat"]		= "Neplatný formát (nezodpovedá štandardu GEDCOM 5.5)";
 $pgv_lang["importing_records"]		= "Importovanie záznamov do databáze";
 $pgv_lang["detected_change"]		= "PhpGedView zaznamenal zmenu v GEDCOM súbore #GEDCOM#. Súbory indexov sa teraz musia prepísať.";
-$pgv_lang["please_be_patient"]		= "PROSÍM O STRPENIE";
-$pgv_lang["reading_file"]		= "Načítanie súboru GEDCOM";
 $pgv_lang["flushing"]			= "Obsah pamäte";
-$pgv_lang["found_record"]		= "Nájdený záznam";
 $pgv_lang["exec_time"]			= "Celkový čas:";
-$pgv_lang["time_limit"]			= "Časový limit:";
 $pgv_lang["unable_to_create_index"]	= "Nie je možné vytvoriť indexový súbor. Uistite sa, že máte právo zápisu do zložky PhpGedView. Aktuálne nastavenie práv môžete obnoviť po zapísaní súborov.";
 $pgv_lang["indi_complete"]		= "Aktualizácia súboru s indexom osôb je hotová.";
 $pgv_lang["family_complete"]		= "Aktualizácia súboru s indexom rodín je hotová.";
@@ -367,14 +320,10 @@ $pgv_lang["drop_tables"]		= "Zmazať aktuálne tabuľky";
 $pgv_lang["import_multiple"]		= "Importovať a pracovať s viacerými GEDCOM súbormi";
 $pgv_lang["explain_options"]		= "Ak zvolíte možnosť \"zmazať tabuľky\", všetky dáta budú nahradené dátami z tohoto GEDCOM súboru.<br />Ak zvolíte \"importovať a pracovať z GEDCOM súbormi\", PhpGedView zmaže všetky dáta, ktoré boli importované z rovnomenného GEDCOM súboru. Táto voľba vám umožňuje ukladať dáta z viacerých GEDCOM súborov v rovnakých tabuľkách a jednoducho medzi nimi prepínat.";
 $pgv_lang["path_to_gedcom"]		= "Zadajte cestu k vašemu GEDCOM súboru:";
-$pgv_lang["dataset_exists"]		= "GEDCOM súbor z týmto názvom už bol do databázy importovaný.";
 $pgv_lang["changes_present"]		= "Tento GEDCOM má zmeny čakajúce na kontrolu. Ak budete pokračovať v importe, čakajúce zmeny budú okamžite zapísané do databázy. Môžete ich skontrolovať než dokončíte import.";
-$pgv_lang["empty_dataset"]		= "Chcete vymazať staré dáta a nahradiť ich novými?";
 $pgv_lang["empty_dataset"]		= "Chcete vyprázdniť databázu?";
 $pgv_lang["index_complete"]		= "Index je hotový.";
-$pgv_lang["click_here_to_go_to_pedigree_tree"]	= "Kliknite sem pre vstup do rodokmeňa.";
 $pgv_lang["updating_is_dead"]		= "Doplnenie stavu k zomrelým osobám ";
-$pgv_lang["import_complete"]		= "Importovanie je hotové";
 $pgv_lang["updating_family_names"]	= "Aktualizácia priezvísk pre FAM ";
 $pgv_lang["processed_for"]		= "Zpracovaný súbor pre ";
 $pgv_lang["run_tools"]			= "Chcete spustiť jeden z následujúcich nástrojov ešte pred importovaním GEDCOM súboru:";
@@ -383,25 +332,6 @@ $pgv_lang["dateconvert"]		= "Konverzia dát";
 $pgv_lang["xreftorin"]			= "Zkonvertovať identifikátory XREF na čísla RIN";
 $pgv_lang["tools_readme"]		= "Pre ďalšie informácie sa podívajte do časti \"tools\" v súbore #README.TXT#.";
 $pgv_lang["sec"]			= "s";
-$pgv_lang["bytes_read"]			= "Načítané bajty:";
-$pgv_lang["created_remotelinks"]	= "Tabuľka <i>Remotelinks</i> úspešne vytvorená.";
-$pgv_lang["created_remotelinks_fail"] 	= "Nie je možné vytvoriť tabuľku <i>Remotelinks</i>.";
-$pgv_lang["created_indis"]		= "Tabuľka <i>Osoby</i> bola úspešne vytvorená.";
-$pgv_lang["created_indis_fail"]		= "Nie je možné vytvoriť tabuľku <i>Osoby</i>.";
-$pgv_lang["created_fams"]		= "Tabuľka <i>Rodiny</i> bola úspešne vytvorená.";
-$pgv_lang["created_fams_fail"]		= "Nie je možné vytvoriť tabuľku <i>Rodiny</i>.";
-$pgv_lang["created_sources"]		= "Tabuľka <i>Pramene</i> bola úspešne vytvorená.";
-$pgv_lang["created_sources_fail"]	= "Nie je možné vytvoriť tabuľku <i>Pramene</i>.";
-$pgv_lang["created_other"]		= "Tabuľka <i>Ostatné</i> bola úspešne vytvorená.";
-$pgv_lang["created_other_fail"]		= "Nie je možné vytvoriť tabuľku <i>Ostatné</i>.";
-$pgv_lang["created_places"]		= "Tabuľka <i>Miesta</i> bola úspešne vytvorená.";
-$pgv_lang["created_places_fail"]	= "Nie je možné vytvoriť tabuľku <i>Miesta</i>.";
-$pgv_lang["created_placelinks"] 	= "Tabuľka <i>Prepojené Miesta</i> bola úspešne vytvorená.";
-$pgv_lang["created_placelinks_fail"]	= "Nie je možné vytvoriť tabuľku <i>Prepojené Miesta</i>.";
-$pgv_lang["created_media_fail"]		= "Nie je možné vytvoriť tabuľku <i>Médiá</i>.";
-$pgv_lang["created_media_mapping_fail"]	= "Nie je možné vytvoriť tabuľku <i>Zobrazenie médií</i>.";
-$pgv_lang["import_progress"]		= "Priebeh nahrávania...";
-
 //-- INDIVIDUAL AND FAMILYLIST FILE MESSAGES
 $pgv_lang["total_fams"]			= "Všetky rodiny";
 $pgv_lang["total_indis"]		= "Všetky osoby";
@@ -427,7 +357,6 @@ $pgv_lang["confidential"]		= "Dôverné";
 $pgv_lang["alpha_index"]		= "Abecedný index";
 $pgv_lang["name_list"] 			= "Zoznam mien";
 $pgv_lang["firstname_alpha_index"] 	= "Abecedný index vlastných mien";
-
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]			= "Vek";
 $pgv_lang["days"]			= "dni";
@@ -447,7 +376,6 @@ $pgv_lang["year"]			= "Rok:";
 $pgv_lang["timeline_instructions"]	= "Vo väčšine novších prehliadačov môžete klepnúť na meno v rámčeku a pretiahnuť ho na osu.";
 $pgv_lang["zoom_in"]			= "Zväčšiť";
 $pgv_lang["zoom_out"]			= "Zmenšiť";
-
 //-- MONTH NAMES
 $pgv_lang["jan"]			= "január";
 $pgv_lang["feb"]			= "február";
@@ -473,34 +401,17 @@ $pgv_lang["int"]			= "interpretované";
 $pgv_lang["to"]				= "do";
 $pgv_lang["cir"]			= "asi";
 $pgv_lang["apx"]			= "pribl.";
-
 //-- Admin File Messages
-$pgv_lang["select_an_option"]		= "Vyberte jednu z možností:";
-$pgv_lang["readme_documentation"]	= "README dokumentácia";
-$pgv_lang["view_readme"]		= "Zobraziť súbor readme.txt";
-$pgv_lang["configuration"]		= "Konfigurácia";
 $pgv_lang["rebuild_indexes"]		= "Prepísať Indexy";
 $pgv_lang["user_admin"]			= "Správa uživateľov";
-$pgv_lang["user_created"]		= " Uživateľ bol úspešne vytvorený.";
-$pgv_lang["user_create_error"]		= "Nie je možné pridať uživateľa. Prosím vráťte sa späť a skúste to znovu.";
 $pgv_lang["password_mismatch"]		= "Heslá sa nezhodujú.";
 $pgv_lang["enter_username"]		= "Musíte vložiť uživateľské meno.";
 $pgv_lang["enter_fullname"]		= "Musíte vložiť celé meno.";
 $pgv_lang["enter_password"]		= "Musíte vložiť heslo.";
 $pgv_lang["confirm_password"]		= "Musíte potvrdiť heslo.";
-$pgv_lang["update_user"]		= "Aktualizovať uživateľský účet";
-$pgv_lang["update_myaccount"]		= "Aktualizovať môj účet";
 $pgv_lang["save"]			= "Uložiť";
 $pgv_lang["delete"]			= "Zmazať";
 $pgv_lang["edit"]			= "Úpravy";
-$pgv_lang["full_name"]			= "Celé meno";
-$pgv_lang["visibleonline"]		= "Viditeľný pre iných uživateľov, keď je online";
-$pgv_lang["comment"]			= "Poznámky admina k uživateľovi";
-$pgv_lang["comment_exp"]		= "Varovania admina ku dňu";
-$pgv_lang["editaccount"]		= "Umožniť tomuto uživateľovi upravovať informácie o svojom účte";
-$pgv_lang["admin_gedcom"]		= "Spravovať GEDCOM";
-$pgv_lang["confirm_user_delete"]	= "Ste si istý, že chcete zmazať uživateľa";
-$pgv_lang["create_user"]		= "Vytvoriť uživateľa";
 $pgv_lang["no_login"]			= "Nie je možné overiť uživateľa.";
 $pgv_lang["basic_realm"]		= "Systém autorizácie PhpGedView";
 $pgv_lang["basic_auth_failure"]		= "Musíte zadať platné prihlasovacie ID a heslo pre prístup k tomuto zdroji.";
@@ -508,61 +419,28 @@ $pgv_lang["basic_auth"]			= "Základná autorizácia";
 $pgv_lang["digest_auth"]		= "Výberová autorizácia";
 $pgv_lang["no_auth_needed"]		= "Žiadna autorizácia";
 $pgv_lang["import_gedcom"]		= "Importovať tento GEDCOM súbor";
-$pgv_lang["duplicate_username"]		= "Toto uživateľské meno už existuje. Prosím, vráťte sa späť a vyberte iné uživateľské meno.";
-$pgv_lang["gedcomid"]			= "ID osoby";
 $pgv_lang["enter_gedcomid"]		= "Musíte vložit ID GEDCOM souboru.";
 $pgv_lang["user_info"]			= "Informácie o mojom uživateľovi";
-$pgv_lang["rootid"]			= "Východisková osoba vývodu";
-$pgv_lang["download_gedcom"]		= "Stiahnúť GEDCOM";
-$pgv_lang["upload_gedcom"]		= "Nahrať GEDCOM";
-$pgv_lang["add_new_gedcom"]		= "Vytvoriť nový GEDCOM";
-$pgv_lang["gedcom_file"]		= "Súbor GEDCOM:";
 $pgv_lang["enter_filename"]		= "Musíte vložiť názov GEDCOM súboru.";
 $pgv_lang["file_not_exists"]		= "Súbor, ktorého názov ste zadali, neexistuje.";
 $pgv_lang["file_not_present"]		= "Súbor neexistuje.";
 $pgv_lang["file_exists"]		= "GEDCOM súbor s týmto názvom už je tu. Prosím vyberte iný názov súboru, alebo zmažte starý súbor.";
 $pgv_lang["new_gedcom_title"]		= "Genealógia z [#GEDCOMFILE#]";
-$pgv_lang["upload_error"]		= "V priebehu nahrávania vášho súboru sa objavila chyba.";
-$pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />Vyberte súbory na vašom lokálnom počítači pre načítanie na váš server. Všetky súbory budú načítané do adresára <b>#MEDIA_DIRECTORY#</b> alebo do niektorého z poddaresárov.<br /><br />Adresár, ktorého meno ste zadali, bude pridaný do #MEDIA_DIRECTORY#. Napríklad, #MEDIA_DIRECTORY#mojarodina. Ak adresár náhľadov neexistuje, bude založený automaticky.";
 $pgv_lang["upload_gedcom_help"]		= "Vyberte GEDCOM alebo ZIP súbor na vašom lokálnom počítači pre načítanie na váš server. Súbor bude načítaný do adresára <b>#INDEX_DIRECTORY#</b>.<br /><br />Ak načítate ZIP súbor, tak môže odsahovať iba jeden GEDCOM a tento GEDCOM bude automaticky použitý v nasledujúcich krokoch.<br /><br />";
 $pgv_lang["add_gedcom_instructions"]	= "Zadajte názov pre tento nový GEDCOM súbor. Tento súbor bude uložený do hlavného adresára: ";
-$pgv_lang["file_success"]		= "Súbor bol úspešne nahraný";
-$pgv_lang["file_too_big"]		= "Nahraný súbor presiahol povolenú veľkosť";
-$pgv_lang["file_partial"]		= "Súbor bol nahraný iba čiastočne, prosím skúste to znovu";
-$pgv_lang["file_missing"]		= "Žiadny súbor k načítaniu. Nahrajte ho znovu";
-$pgv_lang["manage_gedcoms"]		= "Správa GEDCOM súborov a úprava utajenia";
 $pgv_lang["research_assistant"]		= "Asistent bádateľa";
-$pgv_lang["administration"]		= "Administrácia";
-$pgv_lang["ansi_to_utf8"]		= "Previesť kódovanie v tomto GEDCOM súbore z ANSI (ISO-8859-1) na UTF-8?";
 $pgv_lang["utf8_to_ansi"]		= "Chcete zmeniť kódovanie v tomto GEDCOM súbore z UTF-8 na ANSI (ISO-8859-1)?";
-$pgv_lang["visitor"]			= "Návštevník";
-$pgv_lang["user"]			= "Autorizovaný uživateľ";
-$pgv_lang["gedadmin"]			= "Administrátor GEDCOMu";
-$pgv_lang["siteadmin"]			= "Administrátor stránky";
-$pgv_lang["apply_privacy"]		= "Použiť nastavenie utajenia?";
-$pgv_lang["choose_priv"]		= "Vyberte úroveň utajenia:";
 $pgv_lang["user_manual"]		= "Uživateľský manuál aplikácie PhpGedView";
 $pgv_lang["upgrade"]			= "Aktualizovať PhpGedView";
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-$pgv_lang["view_logs"]			= "Zobraziť logfiles";
-$pgv_lang["logfile_content"]		= "Obsah \"log\" súboru";
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 $pgv_lang["step1"]			= "Krok 1 z 4:";
-$pgv_lang["step2"]			= "Krok 2 z 4:";
 $pgv_lang["step3"]			= "Krok 3 z 4:";
 $pgv_lang["step4"]			= "Krok 4 z 4:";
-$pgv_lang["validate_gedcom"]		= "Potvrdiť platnosť GEDCOMu";
-$pgv_lang["img_admin_settings"]		= "Upraviť nastavenie nakladania z obrázkami";
-$pgv_lang["download_note"]		= "POZNÁMKA: Veľké GEDCOM súbory sa môžu sťahovať veľmi dlho. Ak PHP preruší proces ešte pred úplným stiahnutím súboru, stiahnutý GEDCOM nebude kompletný. Ak sa chcete uistiť, že je váš súbor celý, podívajte sa, či je na jeho konci riadok 0 TRLR. Stiahnutie súboru by malo trvať približne rovnako dlho ako jeho nahranie.";
-$pgv_lang["pgv_registry"]		= "Zobraziť iné weby používajúce PhpGedView";
-$pgv_lang["verify_upload_instructions"]	= "Ak zvolíte Pokračovať, bude starý GEDCOM súbor nahradený novým súborom, ktorý ste nahrali, a importovanie začne znovu. Ak zvolíte Zrušiť, zostane starý súbor zachovaný.";
 $pgv_lang["cancel_upload"]		= "Ukončiť nahrávanie";
 $pgv_lang["add_media_records"]		= "Pridať záznamy médií";
 $pgv_lang["manage_media_files"]		= "Spravovať súbory médií";
 $pgv_lang["link_media_records"]		= "Priradiť média osobám";
-
-
 //-- Relationship chart messages
 $pgv_lang["relationship_chart"]		= "Schéma vzťahov";
 $pgv_lang["person1"]			= "Osoba 1";
@@ -595,87 +473,33 @@ $pgv_lang["next_path"]			= "Nájsť ďalší vzťah";
 $pgv_lang["show_path"]			= "Ukázať vzťah";
 $pgv_lang["line_up_generations"]	= "Vyrovnať podľa generačnej úrovne";
 $pgv_lang["oldest_top"]             	= "Zobraziť najstarších hore";
-
 //-- GEDCOM edit utility
 $pgv_lang["check_delete"]		= "Ste si istý, že chcete zmazať tento údaj?";
 $pgv_lang["access_denied"]		= "<b>Prístup bol odoprený</b><br />Nemáte prístup k tomuto zdroju.";
-$pgv_lang["gedrec_deleted"]		= "Záznam bol úspešne zmazaný.";
-$pgv_lang["gedcom_deleted"]		= "GEDCOM súbor [#GED#] bol úspešne zmazaný.";
 $pgv_lang["changes_exist"]		= "V tomto GEDCOM súbore boly urobené zmeny.";
-$pgv_lang["accept_changes"]		= "Prijať / Odmietnuť zmeny";
-$pgv_lang["show_changes"]		= "Tento záznam bol aktualizovaný. Kliknite sem pre zobrazenie zmien.";
-$pgv_lang["hide_changes"]		= "Ak chcete skryť zmeny, kliknite sem.";
-$pgv_lang["review_changes"]		= "Revízia zmien v GEDCOM súboroch";
-$pgv_lang["undo_successful"]		= "Návrat bol úspešný";
-$pgv_lang["undo"]			= "Späť";
-$pgv_lang["view_change_diff"]		= "Prehliadnúť si zmeny";
-$pgv_lang["changes_occurred"]		= "U tejto osoby boly urobené nasledujúce zmeny:";
 $pgv_lang["find_place"]			= "Nájsť miesto";
-$pgv_lang["refresh"]			= "Obnoviť";
 $pgv_lang["close_window"]		= "Zatvoriť okno";
 $pgv_lang["close_window_without_refresh"] = "Zatvoriť okno bez opätovného načítania";
 $pgv_lang["place_contains"]		= "Miesto obsahuje:";
-$pgv_lang["accept_gedcom"]		= "U každej zmeny sa rozhodnite, či ju chcete prijať, alebo zamietnuť.<br />Ak chcete prijať všetky zmeny naraz, kliknite na \"Prijať všetky zmeny\" v políčku dolu.<br />Ak chcete viacej informácií k niektorej úprave, kliknite na \"Zobraziť rozdiely\" a uvidíte rozdiely medzi starou a novou verziou, <br /> alebo kliknite na \"Zobraziť priamo záznam GEDCOM\" a uvidíte novú verziu zapísanú priamo vo formáte GEDCOM.";
-$pgv_lang["ged_import"]			= "Import";
 $pgv_lang["now_import"]			= "Teraz by ste mali importovať záznamy do PhpGedView kliknutím na odkaz \"Importovať\".";
-$pgv_lang["add_fact"]			= "Pridať nový údaj";
 $pgv_lang["add"]			= "Pridať";
 $pgv_lang["custom_event"]		= "Vlastná udalosť";
-$pgv_lang["update_successful"]		= "Aktualizácia bola úspešná";
-$pgv_lang["add_child"]			= "Pridať dieťa";
-$pgv_lang["add_child_to_family"]	= "Pridať dieťa k tejto rodine";
-$pgv_lang["add_sibling"]		= "Pridať brata alebo sestru";
-$pgv_lang["add_son_daughter"]		= "Pridať syna alebo dcéru";
-$pgv_lang["must_provide"]		= "Musíte poskytnúť";
 $pgv_lang["delete_person"]		= "Zmazať túto osobu";
 $pgv_lang["confirm_delete_person"]	= "Ste si istý, že chcete vymazať túto osobu z GEDCOM súboru?";
 $pgv_lang["find_media"]			= "Nájsť média";
 $pgv_lang["set_link"]			= "Nastaviť odkaz";
-$pgv_lang["add_source_lbl"]		= "Pridať citáciu ku zdroju";
-$pgv_lang["add_source"]			= "Pridať novú citáciu ku zdroju";
-$pgv_lang["add_note_lbl"]		= "Pridať poznámku";
-$pgv_lang["add_note"]			= "Pridať novú poznámku";
-$pgv_lang["add_media_lbl"]		= "Pridať média";
-$pgv_lang["add_media"]			= "Pridať do médií novú položku";
 $pgv_lang["delete_source"]		= "Zmazať tento zdroj";
 $pgv_lang["confirm_delete_source"]	= "Ste si istý, že chcete vymazať tento zdroj z GEDCOM súboru?";
-$pgv_lang["add_husb"]			= "Pridať manžela";
-$pgv_lang["add_husb_to_family"]		= "Pridať manžela k tejto rodine";
-$pgv_lang["add_wife"]			= "Pridať manželku";
-$pgv_lang["add_wife_to_family"]		= "Pridať manželku k tejto rodine";
 $pgv_lang["find_family"]		= "Nájsť rodinu";
 $pgv_lang["find_fam_list"]		= "Zostaviť zoznam rodín";
-$pgv_lang["add_new_wife"]		= "Pridať novú manželku";
-$pgv_lang["add_new_husb"]		= "Pridať nového manžela";
 $pgv_lang["edit_name"]			= "Upraviť meno";
 $pgv_lang["delete_name"]		= "Zmazať meno";
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-$pgv_lang["no_temple"]			= "No Temple - Living Ordinance";
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-$pgv_lang["replace"]			= "Nahradiť záznam";
-$pgv_lang["append"]			= "Pripojiť záznam";
-$pgv_lang["add_father"]			= "Pridať nového otca";
-$pgv_lang["add_mother"]			= "Pridať novú matku";
-$pgv_lang["add_obje"]			= "Pridať nový multimediálny súbor";
-$pgv_lang["no_changes"]			= "Zatiaľ neboly urobené žiadne zmeny, ktoré by se maly preskúmať.";
-$pgv_lang["accept"]				= "Prijať";
-$pgv_lang["accept_all"]			= "Prijať všetky zmeny";
-$pgv_lang["accept_successful"]	= "Zmeny boly prijaté a nové údaje zapísané do databáze";
-$pgv_lang["edit_raw"]			= "Upraviť priamo záznam GEDCOM";
 $pgv_lang["select_date"]		= "Vybrať dátum";
-$pgv_lang["create_source"]		= "Vytvoriť nový zdroj";
-$pgv_lang["new_source_created"]	= "Nový zdroj bol vytvorený.";
-$pgv_lang["paste_id_into_field"]= "Vložte toto ID zdroja do políčok, z ktorých sa chcete odvolávať na tento zdroj.";
-$pgv_lang["add_name"]				= "Pridať nové meno";
-$pgv_lang["privacy_not_granted"]	= "Nemáte prístup k";
 $pgv_lang["user_cannot_edit"]		= "Tento uživateľ nemôže upravovať tento GEDCOM.";
-$pgv_lang["gedcom_editing_disabled"]	= "Upravovanie tohoto GEDCOMu bolo zakázané administrátorom systému.";
-$pgv_lang["privacy_prevented_editing"]	= "Nastavenie utajenia vám neumožňuje upravovať tento záznam.";
-$pgv_lang["add_asso"]				= "Pridať novú osobu";
-$pgv_lang["edit_sex"]				= "Opraviť pohlavie";
 $pgv_lang["ged_noshow"]				= "Této stránka bola zakázaná administrátorom stránky.";
 $pgv_lang["bdm"]					= "Narodenia, úmrtia, sobáše";
-
 //-- calendar.php messages
 $pgv_lang["on_this_day"]		= "Tohoto dňa vo vašej histórii...";
 $pgv_lang["in_this_month"]		= "V tomto mesiaci vo vašej histórii...";
@@ -701,19 +525,7 @@ $pgv_lang["living_only"]		= "Žijúci ľudia";
 $pgv_lang["recent_events"]		= "Nedávne udalosti (< 100 rokov)";
 $pgv_lang["day_not_set"]			= "Dátum nezadaný";
 $pgv_lang["year_error"]			= "Dátumy pred rokom 1970 nie sú bohužiaľ podporované.";
-
 //-- upload media messages
-$pgv_lang["upload_media"]		= "Nahrať multimediálne súbory";
-$pgv_lang["folder"]		 			= "Adresár na serveri";
-$pgv_lang["media_file"]			= "Súbory médií";
-$pgv_lang["thumbnail"]			= "Zmenšenina";
-$pgv_lang["upload_successful"]		= "Nahranie bolo úspešné";
-$pgv_lang["media_file_deleted"]		= "Súbor médií bol úspešne zmazaný.";
-$pgv_lang["media_file_not_deleted"]	= "Súbor médií nemôže byť zmazaný.";
-$pgv_lang["media_file_not_moved"]	= "Súbor médií nemôže byť presunutý.";
-$pgv_lang["media_file_not_renamed"]	= "Súbor médií nemôže byť presunutý alebo premenovaný.";
-$pgv_lang["thumbnail_deleted"]		= "Súbor náhľadu bol úspešne zmazaný.";
-$pgv_lang["thumbnail_not_deleted"]	= "Súbor náhľadu nemôže byť zmazaný.";
 $pgv_lang["media_record_deleted"]	= "Záznam médií #xref# a odkazy boli úspešne zmazané z databázi.";
 $pgv_lang["media_record_not_deleted"]	= "Záznam médií #xref# a odkazy nemôžu byť zmazané z databázi.";
 $pgv_lang["record_updated"]			= "Záznam #pid# bol úspešne aktualizovaný.";
@@ -723,90 +535,67 @@ $pgv_lang["record_not_removed"]		= "Záznam #xref# nemôže byť odstránený z 
 $pgv_lang["record_added"]			= "Záznam #xref# bol úspešne pridaný do GEDCOMu.";
 $pgv_lang["record_not_added"]		= "Záznam #xref# nemôže byť pridaný do GEDCOMu.";
 $pgv_lang["lost_password"]		= "Zabudli ste svoje heslo?";
-
 //-- user self registration module
 $pgv_lang["requestpassword"]		= "Zažiadať o nové heslo";
 $pgv_lang["no_account_yet"]		= "Nemáte ešte svoj účet?";
 $pgv_lang["requestaccount"]		= "Zažiadať o nový uživateľský účet";
 $pgv_lang["emailadress"]		= "E-mailová adresa";
 $pgv_lang["mandatory"] 			= "Polia označené * sú povinné.";
-
 $pgv_lang["mail01_line01"]		= "Ahoj #user_fullname# ...";
 $pgv_lang["mail01_line02"]		= "Z adresy ( #SERVER_NAME# ) bol odoslaný požiadavok na prihlásenie pod vašou e-mailovou adresou ( #user_email# ).";
 $pgv_lang["mail01_line03"]		= "Boli použité nasledujúce údaje.";
 $pgv_lang["mail01_line04"]		= "Prosím kliknite na odkaz dole a vyplňte požadované údaje pre overenie vášho účtu a vašej e-mailovej adresy.";
 $pgv_lang["mail01_line05"]		= "Ak by ste tieto údaje nevyžadovali, môžete túto správu kľudne zmazať.";
 $pgv_lang["mail01_line06"]		= "Žiadny ďalší e-mail z tohoto systému už nedostanete, pretože účet bude do siedmich dní bez overenia zmazaný.";
-
 $pgv_lang["mail01_subject"]		= "Vaša registrácia na #SERVER_NAME#";
-
 $pgv_lang["mail02_line01"]		= "Ahoj administrátor ...";
 $pgv_lang["mail02_line02"]		= "Nový uživateľ sa zaregistroval na ( #SERVER_NAME# ).";
 $pgv_lang["mail02_line03"]		= "Uživateľ obdržal e-mail s údajmi nutnými k overeniu svojho účtu.";
 $pgv_lang["mail02_line04"]		= "Keď si uživateľ dokončí toto overovanie, budete e-mailom informovaný, aby ste uživateľovi dali práva k prihláseniu na vaše stránky. Nový uživateľ sa bude môcť prihlásiť až potom čo mu zaktivujete účet.";
 $pgv_lang["mail02_line04a"]			= "Keď si uživateľ dokončí toto overovanie, budete o tom informovaný e-mailom. Po verifikácii sa môže uživateľ prihlásiť bez akéhokoľvek vašeho zásahu.";
-
 $pgv_lang["mail02_subject"]		= "Nová registrácia na #SERVER_NAME#";
-
 $pgv_lang["hashcode"]			= "Overovací kód:";
 $pgv_lang["thankyou"]			= "Ahoj #user_fullname# ...<br />Vďaka za registráciu.";
 $pgv_lang["pls_note06"]			= "Teraz na e-mail ( #user_email# ) obdržíte potvrdenie. Tento e-mail použijte k aktivovaniu svojho účtu; ak se vám nepodarí aktivovat svoj účet do siedmich dní, bude vymazaný (potom sa môžete znovu pokúsiť zaregistrovať). Po vašej aktivácii vám ešte musí povoliť prístup administrátor. Abyste sa mohli prihlásiť na tieto stránky, budete potrebovať vedieť svoje prihlasovacie meno a heslo.";
 $pgv_lang["pls_note06a"] 			= "Teraz na e-mail ( #user_email# ) obdržíte potvrdenie. Tento e-mail použijte k aktivovaniu svojho účtu; ak se vám nepodarí aktivovat svoj účet do siedmich dní, bude vymazaný (potom sa môžete znovu pokúsiť zaregistrovať). Po vašej aktivácii sa môžete okamžite prihlásiť do systému. Abyste sa mohli prihlásiť na tieto stránky, budete potrebovať vedieť svoje prihlasovacie meno a heslo.";
-
 $pgv_lang["registernew"]		= "Potvrdenie nového účtu";
 $pgv_lang["user_verify"]		= "Overenie uživateľa";
 $pgv_lang["send"]			= "Odoslať";
-
 $pgv_lang["pls_note07"]			= "Prosím vložte svoje uživateľské meno, heslo a overovací kód, ktorý ste obdržali z tohoto systému, pre overenie vašej žiadosti o účet.";
 $pgv_lang["pls_note08"]			= "Údaje pre uživateľa #user_name# boli skontrolované.";
-
 $pgv_lang["mail03_line01"]		= "Ahoj administrátor ...";
 $pgv_lang["mail03_line02"]		= "Uživateľ #newuser[username]# ( #newuser[fullname]# ) skontroloval registračné údaje.";
 $pgv_lang["mail03_line03"]		= "Pre prihlásenie a úpravu uživateľa a povolenie k prihláseniu na vaše stránky prosím kliknite na odkaz dolu.";
 $pgv_lang["mail03_line03a"]			= "Nemusíte nič urobiť, uživateľ sa môže prihlásiť.";
-
 $pgv_lang["mail03_subject"]		= "Nové overenie na #SERVER_NAME#";
-
 $pgv_lang["pls_note09"]			= "Bol ste identifikovaný ako registrovaný uživateľ.";
 $pgv_lang["pls_note10"]			= "Administrátor bol upozornený.<br />Keď Vám dá povolenie k prihláseniu, budete sa môcť prihlásiť zadaním svojho uživateľského mena a hesla.";
 $pgv_lang["pls_note10a"]			= "Teraz sa môžete prihlásiť pod svojím uživateľom a heslom.";
 $pgv_lang["data_incorrect"]		= "Údaje neboli správne!<br />Prosím skúste to znovu!";
 $pgv_lang["user_not_found"]		= "Nebolo možné overiť údaje, ktoré ste vložili.  Prosím vráťte sa späť a skúste to znovu.";
-
 $pgv_lang["lost_pw_reset"]		= "Zabudnuté heslo";
-
 $pgv_lang["pls_note11"]			= "Ak chcete, aby vaše staré heslo bolo zmazané, pošlite nám uživatelské meno a e-mailovú adresu, ktorú ste zadal pri zakladaní svojho uživateľského účtu. <br /><br />Pošleme vám e-mailom odkaz na stránku, ktorá obsahuje zakódované heslo pre váš účet. Ak navštívite túto URL, budete mať možnosť zmeniť si heslo a prihlásiť sa do tohoto systému. Z bezpečnostných dôvodov by ste mali toto heslo uchovať v tajnosti (nemali by ho poznať ani administrátorovia týchto stránok; nebudeme sa naň pýtať).<br /><br />Ak budete požadovať pomoc administrátora, prosím kontaktujte administrátora stránok.";
 $pgv_lang["enter_email"]		= "Musíte zadať e-mailovú adresu.";
-
 $pgv_lang["mail04_line01"]		= "Ahoj #user_fullname# ...";
 $pgv_lang["mail04_line02"]		= "Bolo zažiadané o nové heslo pre vaše uživateľské meno!";
 $pgv_lang["mail04_line03"]		= "Doporučenie:";
 $pgv_lang["mail04_line04"]		= "Teraz prosím kliknite na odkaz dole, prihláste sa novým heslom a ihneď si ho zmeňte, aby ste uchovali svoje údaje v tajnosti.";
 $pgv_lang["mail04_line05"]			= "Po prihlásení vyberte link '#pgv_lang[myuserdata]#' v menu '#pgv_lang[mygedview]#' a vyplňte pole heslo, pre zmenu vášho hesla.";
-
 $pgv_lang["mail04_subject"]		= "Dáta požadované na #SERVER_NAME#";
-
 $pgv_lang["pwreqinfo"]			= "Ahoj...<br /><br />Na adresu (#user[email]#) bol zaslaný e-mail z novým heslom.<br /><br />Prosím skontrolujte svoju e-mailovú schránku, správu by ste mali obdržať v priebehu niekoľkých minút.<br /><br />Doporučenie:<br /><br />Potom, čo požiadate o e-mail, mali by ste sa na tieto stránky prihlásiť zo svojím novým heslom a zmeniť si ho, aby ste uchovali svoje údaje v tajnosti.";
-
 $pgv_lang["editowndata"]		= "Môj účet";
 $pgv_lang["savedata"]			= "Uložiť zmenené údaje";
 $pgv_lang["datachanged"]		= "Uživateľské údaje boli zmenené!";
 $pgv_lang["datachanged_name"]		= "Možno bude potrebné, aby ste sa prihlásili znovu (so svojím novým uživateľským menom).";
 $pgv_lang["myuserdata"]			= "Môj účet";
-$pgv_lang["verified"]			= "Uživateľ potvrdil registráciu";
-$pgv_lang["verified_by_admin"]		= "Uživateľ bol adminom povolený";
 $pgv_lang["user_theme"]			= "Môj motív";
 $pgv_lang["mgv"]			= "MyGedView";
 $pgv_lang["mygedview"]			= "Vstupná brána MyGedView";
 $pgv_lang["passwordlength"]		= "Heslo musí obsahovať aspoň 6 znakov.";
-$pgv_lang["admin_approved"]		= "Váš účet na #SERVER_NAME# bol povolený";
-$pgv_lang["you_may_login"]		= " administrátorom stránok. Teraz sa môžete odkazom dolu prihlásiť do systému PhpGedView:";
 $pgv_lang["welcome_text_auth_mode_1"]	=	"<center><b>VITAJTE NA TÝCHTO RODOPISNÝCH STRÁNKACH</b></center><br />Prístup na tieto stránky je povolený všetkým návštevníkom, ktorý tu majú zriadený účet. Ak tu už máte svoj účet, môžete sa na tejto stránke prihlásiť.<br /><br />Ak ešte účet nemáte, môžete požiadať o založenie kliknutím na príslušný odkaz na tejto stránke.<br />Po overení zadaných údajov vám administrátor účet zprístupní. Oznámenie o zprístupnení obdržíte e-mailom.";
 $pgv_lang["welcome_text_auth_mode_2"]	=	"<center><b>VITAJTE NA TÝCHTO RODOPISNÝCH STRÁNKÁCH</b></center><br/>Prístup na tieto stránky je umožnený iba <b>prihláseným</b> užívateľom.<br />Ak tu už máte svoj účet, môžete sa na tejto stránke prihlásiť.<br /><br />Ak ešte účet nemáte, môžete požiadať o založenie kliknutím na príslušný odkaz na tejto stránke.<br />Po overení zadaných údajov administrátor vašu žiadosť buď prijme, alebo zamietne.<br />Oznámenie o prijatí vašej žiadosti obdržíte e-mailom.";
 $pgv_lang["welcome_text_auth_mode_3"]	=	"<center><b>VITAJTE NA TÝCHTO RODOPISNÝCH STRÁNKACH</b></center><br />Prístup na tieto stránky je povolený iba <b>členom rodiny</b>.<br />Ak tu už máte svoj účet, môžete sa na tejto stránke prihlásiť.<br /><br />Ak ešte účet nemáte, môžete požiadať o založenie kliknutím na príslušný odkaz na tejto stránke.<br />Po overení zadaných údajov administrátor vašu žiadosť buď prijme, alebo odmietne.<br />Oznámenie o prijatí svojej žiadosti obdržíte e-mailom.";
 $pgv_lang["welcome_text_cust_head"]		=	"<center><b>VITAJTE NA TÝCHTO RODOPISNÝCH STRÁNKACH</b></center><br />Prístup na tieto stránky je umožnený iba užívateľom, ktorý tu majú zriadený svoj uživateľský účet z heslom.<br />";
-
-
 //-- mygedview page
 $pgv_lang["welcome"]			= "Vitajte";
 $pgv_lang["upcoming_events"]		= "Nadchádzajúce udalosti";
@@ -962,63 +751,32 @@ $pgv_lang["hide_block_warn"]		= "Ak ukryjete prázdny blok, nebudete môcť meni
 $pgv_lang["delete_selected_messages"]	= "Zmazať vybrané správy";
 $pgv_lang["use_blocks_for_default"]	= "Použiť tieto bloky ako implicitné nastavenie blokov pre všetkých uživateľov?";
 $pgv_lang["block_not_configure"]	=	"Tento blok nemôže byť konfigurovaný.";
-
 //-- upgrade.php messages
 $pgv_lang["options"]			= "Voľby:";
-$pgv_lang["inc_languages"]		= " Jazyky";
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 $pgv_lang["config_update_ok"]		= "Konfiguračný súbor bol úspešne aktualizovaný.";
-$pgv_lang["date_of_entry"]				= "Dátum záznamu v orginálnom zdroji";
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-$pgv_lang["folder_created"]		= "Vytvorená zložka";
-$pgv_lang["folder_no_create"]		= "Vytvoriť adresár nie je možné";
-
 //-- validate GEDCOM
-$pgv_lang["performing_validation"]	= "Vykonávanie validácie (skontrolovanie) GEDCOMu, vyberte potrebné možnosti a kliknite na 'Pokračovať'";
 ////////////////////////////////////////////////////////////////////////////
 $pgv_lang["changed_mac"]		= "Nájdené Macintoshove zakončenia riadkov. Tam, kde bol len návrat na koniec (riadku?), bol vložený návrat na koniec a riadek bol doplnený.";
 ////////////////////////////////////////////////////////////////////////////
 $pgv_lang["changed_places"]		= "Rozoznané neplatné kódovanie miest. Záznamy o miestach boli vyčistené tak, aby vyhovovali štandardu GEDCOM 5.5. Ukážka z vášho GEDCOM:";
-$pgv_lang["invalid_dates"]		= "Rozoznané nesprávné formáty dátumu, vyčistením budú tieto formáty zmenené do podoby DD MMM YYYY (napr. 1 JAN 2005).";
-$pgv_lang["valid_gedcom"]		= "Validný GEDCOM. Žiadne opravy nebolo treba.";
 $pgv_lang["optional_tools"]		= "Pred importovaním môžete zvoliť spustenie niektorého z ponúkaných nástrojov.";
 $pgv_lang["optional"]			= "Voliteľné nástroje";
-$pgv_lang["day_before_month"]		= "Deň pred mesiacom (DD MM YYYY)";
-$pgv_lang["month_before_day"]		= "Mesiac pred dňom (MM DD YYYY)";
-$pgv_lang["do_not_change"]		= "Nemeniť";
-$pgv_lang["change_id"]			= "Zmeniť ID osôb na:";
-$pgv_lang["example_place"]		= "Ukážka neplatného formátu miesta z vášho GEDCOMu:";
-$pgv_lang["example_date"]		= "Ukážka neplatného dátového formátu z vášho GEDCOMu:";
 $pgv_lang["add_media_tool"]		= "Nástroj pre pridanie médií";
 $pgv_lang["launch_media_tool"]		= "Kliknite sem, ak chcete spustiť nástroj pre pridanie médií.";
 $pgv_lang["add_media_descr"]		= "Tento nástroj pridá do GEDCOMu tagy OBJE. Po ukončení pridávania médií zatvorte toto okno.";
-$pgv_lang["highlighted"]		= "Zvýraznený obrázok";
 $pgv_lang["extension"]			= "Prípona";
 $pgv_lang["order"]			= "Poradie";
 $pgv_lang["inject_media_tool"]		= "Pridať média do GEDCOM súboru";
 $pgv_lang["add_media_button"]		= "Pridať média";
 $pgv_lang["media_linked"]		= "Tento objekt médií je spojený s nasledujúcim:";
 $pgv_lang["media_not_linked"]		= "Tento objekt médií nie je spojený s žiadnym GEDCOM záznamom.";
-$pgv_lang["phpinfo"]			= "PHPInfo";
-$pgv_lang["admin_info"]			= "Informačný blok";
-$pgv_lang["admin_site"]			= "Administrácia stránky";
-$pgv_lang["admin_geds"]			= "Administrácia dát a GEDCOMU";
 $pgv_lang["media_table_created"]	= "Tabuľka <i>Médiá</i> bola úspešne vytvorená.";
 $pgv_lang["click_to_add_media"]		= "Kliknite sem pre pridanie médií (zo zoznamu hore) do GEDCOMu #GEDCOM#";
 $pgv_lang["adds_completed"]		= "Média boli do GEDCOMu úspešne pridané.";
-$pgv_lang["ansi_encoding_detected"]	= "Rozoznané kódovanie ANSI. PhpGedView pracuje najlepšie zo súbormi s kódovaním UTF-8.";
-$pgv_lang["invalid_header"]		= "V GEDCOM súbore boli nájdené riadky pred hlavičkou GEDCOM <b>0&nbsp;HEAD</b>. Pri čistení súboru budú tieto riadky odstránené.";
-$pgv_lang["macfile_detected"]		= "Bol nájdený súbor pre Macintosh. Pri čistení bude tento súbor prevedený na súbor pre DOS.";
-$pgv_lang["place_cleanup_detected"]	= "Bolo rozoznané zlé kódovanie miest. Tieto chyby by mali byť opravené. Nasledujúci príklad ukazuje jedno z nesprávne zapísaných miest:";
-$pgv_lang["cleanup_places"]		= "Vyčistenie miest";
-$pgv_lang["empty_lines_detected"]	= "Vo vašom GEDCOM súbore boli nájdené prázdné riadky. Pri čistení budú tieto riadky odstránené.";
-$pgv_lang["import_options"]		= "Voľby importu.";
 $pgv_lang["import_options_help"] 	= "Môžete vybrať dodatočné voľby, ktoré budú použité pri importe GEDCOMu.";
-$pgv_lang["verify_gedcom"]		= "Verifikácia GEDCOMu";
 $pgv_lang["verify_gedcom_help"]		= "Tu môžete zvoliť ďalšie pokračovanie načítania a importu GEDCOM súboru, alebo zrušiť načítanie a import.";
-$pgv_lang["import_statistics"]		= "Štatistika importu";
-
 //-- hourglass chart
 $pgv_lang["hourglass_chart"]			= "Schéma presýpacích hodín";
 $pgv_lang["choose_report"]			= "Vybrať správu, ktorá sa má vytvoriť";
@@ -1060,14 +818,10 @@ $pgv_lang["marrplace"]				= "Miesto sobáša obsahuje";
 $pgv_lang["marrdate1"]				= "Rozsah dátumu sobášov začína";
 $pgv_lang["marrdate2"]				= "Rozsah dátumu sobášov končí";
 $pgv_lang["sort_by"]				= "Zoradené podľa";
-
-
 $pgv_lang["cleanup"]				= "Opraviť";
-$pgv_lang["skip_cleanup"]			= "Preskočiť opravovanie";
 $pgv_lang["dynasty_list"]			= "Prehľad rodín";
 $pgv_lang["patriarch_list"]			= "Zoznam praotcov";
 $pgv_lang["statistics"]				= "Štatistika";
-$pgv_lang["merge_records"]			= "Zlúčiť záznamy";
 $pgv_lang["merge_same"] 			= "Záznamy nie sú rovnakého typu. Nie je možné zlúčit záznamy rôznych typov.";
 $pgv_lang["merge_step1"]			= "Zlučovanie - krok 1 z 3";
 $pgv_lang["merge_step2"]			= "Zlučovanie - krok 2 z 3";
@@ -1248,30 +1002,14 @@ $pgv_lang["is_alive_in"]		= "Žijúci v #YEAR#";
 $pgv_lang["alive"]			= "Živý";
 $pgv_lang["dead"]			= "Zomrelý";
 $pgv_lang["maybe"]			= "Možno";
-$pgv_lang["show_thumbnail"]		= "Zobraz náhľad";
 $pgv_lang["image_format"]		= "Formát obrázku";
 $pgv_lang["media_format"]		= "Formát médií";
 $pgv_lang["image_size"]			= "Rozmery obrázku -- ";
 $pgv_lang["media_file_size"]		= "Veľkosť médií";
-$pgv_lang["no_thumb_dir"]		= "adresár náhľadov neexistuje a nemohol byť založený.";
 $pgv_lang["manage_media"]		= "Spravovať média";
-$pgv_lang["gen_thumb"]			= "Vytvor náhľad";
 $pgv_lang["add_directory"]		= "Pridaj adresár";
-$pgv_lang["move_to"]			= "Presunúť do -->";
-$pgv_lang["security_no_create"]		= "Bezpečnostné hlásenie: Súbor <b><i>index.php</i> neexistuje v";
-$pgv_lang["security_not_exist"]		= "Bezpečnostné hlásenie: Súbor <b><i>index.php</i></b> nemohol byť vytvorený v";
-$pgv_lang["illegal_chars"]		= "Neprípustné znaky v mene";
-$pgv_lang["link_media"]			= "Priraď média";
-$pgv_lang["to_person"]			= "ku osobe";
-$pgv_lang["to_family"]			= "ku rodine";
-$pgv_lang["to_source"]			= "ku zdroju";
 $pgv_lang["media_id"]			= "ID média";
 $pgv_lang["invalid_id"]			= "Žiadne také ID neexistuje v tomto GEDCOM súbore.";
-$pgv_lang["media_exists"]			= "Súbor médií už existuje.";
-$pgv_lang["media_thumb_exists"]		= "Náhľad médií už existuje.";
-$pgv_lang["move_file_success"]		= "Súbory medií a náhľadov boli úspešne presunuté.";
-$pgv_lang["media_folder_corrupt"]	= "Adresár médií je vadný.";
-$pgv_lang["max_media_depth"]		= "Môžete ísť iba do #MEDIA_DIRECTORY_LEVELS# úrovne adresárov";
 $pgv_lang["definitions"]		= "Definície";
 $pgv_lang["description"]			= "Popis";
 $pgv_lang["block_desc"]				= "Popis bloku";
@@ -1333,7 +1071,6 @@ $pgv_lang["hs_searchsentence"]	= "Presne frázu";
 $pgv_lang["hs_intruehelp"]		= "Iba text nápovedy";
 $pgv_lang["hs_inallhelp"]		= "Všetok text";
 $pgv_lang["media_import"] = "Importovať a konvertovať média";
-$pgv_lang["confirm_folder_delete"] = "Ste si istý, že chcete zmazať tento adresár?";
 $pgv_lang["choose"] = "Vyber:";
 $pgv_lang["account_information"] = "Informácie o účte";
 $pgv_lang["TYPE__audio"] = "Audio";
@@ -1351,35 +1088,23 @@ $pgv_lang["TYPE__newspaper"] = "Noviny";
 $pgv_lang["TYPE__photo"] = "Fotografia";
 $pgv_lang["TYPE__tombstone"] = "Náhrobok";
 $pgv_lang["TYPE__video"] = "Video";
-
 $pgv_lang["quick_update_title"] = "Rýchla aktualizácia";
 $pgv_lang["quick_update_instructions"] = "Táto stránka vám umožňuje rychle aktualizovať informácie o osobe. Musíte iba zadať informácie, ktoré sú nové, alebo ktoré sa zmenily (oproti aktuálnym v databáze). Vaše zmeny budú predložené ku schváleniu administrátorovi predtým, než budú prístupné všetkým.";
 $pgv_lang["update_name"] = "Aktualizovať meno";
 $pgv_lang["update_fact"] = "Aktualizovať udalosť";
 $pgv_lang["update_fact_restricted"] = "Aktualizácia tejto udalosti je zakázaná:";
 $pgv_lang["update_photo"] = "Aktualizovať foto";
-$pgv_lang["photo_replace"] = "Chcete prepísať starú fotku touto novou?";
 $pgv_lang["select_fact"] = "Vyber udalosť";
 $pgv_lang["update_address"] = "Aktualizácia adresy";
-$pgv_lang["add_new_chil"] = "Pridať nové dieťa";
 $pgv_lang["top10_pageviews_descr"]	= "Tento blok ukáže 10 záznamov, ktoré boli najčastejšie zobrazené. Tento blok vyžaduje aby bolo povolené počitadlo prístupov v konfigurácii GEDCOMU.";
 $pgv_lang["top10_pageviews"]		= "Najčastejšie zobrazované záznamy";
 $pgv_lang["top10_pageviews_block"]		= "Blok najčastejšie zobrazovaných záznamov";
-$pgv_lang["user_default_tab"]		= "Implicitné záložky k zobrazeniu na osobnej informačnej stránke";
 $pgv_lang["stepfamily"]				= "Nevlastná rodina";
 $pgv_lang["stepdad"]				= "Nevlastný otec";
 $pgv_lang["stepmom"]				= "Nevlastná matka";
 $pgv_lang["stepsister"]				= "Nevlastná sestra";
 $pgv_lang["stepbrother"]			= "Nevlastný brat";
-$pgv_lang["max_upload_size"]		= "Maximálna veľkosť uploadu:";
-$pgv_lang["edit_fam"]				= "Upraviť rodinu";
 $pgv_lang["fams_charts"]			= "Nastavenia pre rodinu";
-$pgv_lang["sort_by_birth"]			= "Triediť podľa dátumu narodenia";
-$pgv_lang["reorder_children"]		= "Znovu usporiadať deti";
-$pgv_lang["add_from_clipboard"]		= "Pridať zo schránky:";
-$pgv_lang["record_copied"]			= "Záznam bol skopírovaný do schránky";
-$pgv_lang["copy"]					= "Kopíruj";
-$pgv_lang["cut"]					= "Vystrihnúť";
 $pgv_lang["indis_charts"]			= "Nastavenia pre osobu";
 $pgv_lang["edit_indi"] 				= "Zmeniť osobu";
 $pgv_lang["locked"]					= "Nemeniť";
@@ -1387,7 +1112,6 @@ $pgv_lang["privacy"]				= "Súkromné";
 $pgv_lang["number_sign"]			= "#";
 $pgv_lang["show_spouses"]		= "Zobrazenie manželov";
 $pgv_lang["changelog"]				= "Zmeny verzie #VERSION#";
-$pgv_lang["view_changelog"]			= "Zobraziť changelog.txt súbor";
 $pgv_lang["html_block_descr"]		= "Toto je jednoduchý HTML blok, ktorý môžete pridať na svoju stránku pre zobrazenie ľubovolných správ.";
 $pgv_lang["html_block_sample_part1"]	= "<p class=\"blockhc\"><b>Sem vložte váš názov</b></p><br /><p>Kliknite na tlačítko konfigurácia";
 $pgv_lang["html_block_sample_part2"]	= "pre zmenu, ktorá je zobrazená tu.</p>";
@@ -1406,7 +1130,6 @@ $pgv_lang["config_block"]			= "Kofigurácia bloku";
 $pgv_lang["pls_note12"]				= "Prosím použijte toto pole k popisu prečo chcete založiť účet na tejto stránke a aký je váš vzťah k rodokmeňu.";
 $pgv_lang["enter_comments"]			= "Prosim napíšte svoj pribuzenský vzťah k dátam do poľa komentáre.";
 $pgv_lang["comments"]				= "Poznámky";
-$pgv_lang["none"]					= "Žiadny";
 $pgv_lang["ahnentafel_report"]		= "Vývod (Ahnentafel).";
 $pgv_lang["ahnentafel_header"]		= "Vývod (Ahnentafel) pre";
 $pgv_lang["ahnentafel_generation"]	= "Generácia";
@@ -1438,8 +1161,6 @@ $pgv_lang["remove_custom_tags"]		= "Odstrániť uživateľské PGV príznaky? (n
 $pgv_lang["download_zipped"]		= "Export GEDCOMU ako ZIP súboru?";
 $pgv_lang["cookie_login_help"]		= "Táto stránka si zapamätá vaše predchádzajúce prihlásenie. Tým umožníte prístup k vaším súkromným informáciám a ďalším uživateľským nastaveniam. Ak budete chcieť editovať, alebo administrovať tieto stránky, musíte sa  pre zvýšenie bezpečnosti znovu prihlásiť.";
 $pgv_lang["remember_me"]			= "Uložiť v tomto počítači?";
-$pgv_lang["add_unlinked_person"]	= "Pridať nezávislú osobu";
-$pgv_lang["add_unlinked_source"]	= "Pridať nezávislý zdroj";
 $pgv_lang["fams_with_surname"]		= "Rodina s priezviskom #surname#";
 $pgv_lang["support_contact"]		= "Kontakt na technickú pomoc";
 $pgv_lang["genealogy_contact"]		= "Kontakt genealogický";
@@ -1459,17 +1180,9 @@ $pgv_lang["sort_by_marriage"]		= "Triedenie podľa dátumu svadby";
 $pgv_lang["reorder_families"]		= "Pretriediť rodiny";
 $pgv_lang["indis_with_surname"]		= "Osoby s priezviskom #surname#";
 $pgv_lang["first_letter_fname"]		= "Vyber písmeno k zobrazeniu osôb, ktorých meno začíná týmto písmenom.";
-$pgv_lang["import_marr_names"]		= "Import mien po sobáši";
 $pgv_lang["marr_name_import_instr"]	= "Kliknite na tlačítko dole, ak chcete aby PhpGedView odhadol priezviská po sobáši pre ženy v tomto GEDCOMe. To vám umožní vyhľadávať a zobrazovať ženy podľa ich priezviska po sobáši.";
-$pgv_lang["calc_marr_names"]		= "Odhadnúť mená po sobáši";
 $pgv_lang["total_names"]			= "Mená celkove";
 $pgv_lang["upload_file"]			= "Načítanie súboru z vašeho počítača";
-$pgv_lang["thumb_genned"]			= "Náhľad bol automaticky generovaný";
-$pgv_lang["thumbgen_error"]			= "Nie je možné vytvoriť náhľad pre";
-$pgv_lang["generate_thumbnail"]		= "Vytvor náhľad automaticky z";
-$pgv_lang["auto_thumbnail"]			= "Automatický náhľad";
-$pgv_lang["no_upload"]				= "Nie je povolené načítať súbory médií, pretože nie sú povolené multimediálne položky v konfigurácii, alebo zložka Media je chránená proti zápisu.";
-$pgv_lang["upload"]					= "Import";
 $pgv_lang["top10_pageviews_nohits"]	= "Žiadne prístupy k zobrazeniu.";
 $pgv_lang["top10_pageviews_msg"]	= "Pre správne fungovanie tohoto bloku musí byť povolené počitadlo v konfigurácii GEDCOMu.";
 $pgv_lang["review_changes_descr"]	= "Blok \"Čakajúce zmeny\" ukazuje uživateľom s právom editovať, zoznam záznamov, ktoré boli zmenené v online režime a ktoré doteraz čakajú na kontrolu a akceptáciu. Tieto zmeny čakajú na potvrdenie, alebo zamietnutie. <br /><br />Ak je tento blok povolený, uživatelia s právom akceptácie dostanú raz denne e-mail, ktorý ich upozorní na potrebu kontroly týchto zmien.";
@@ -1478,24 +1191,12 @@ $pgv_lang["review_changes_email"]	= "Odoslať pripomínacie e-maily?";
 $pgv_lang["review_changes_email_freq"]	= "Frekvencia pripomínacích e-mailov (v dňoch)";
 $pgv_lang["review_changes_subject"]	= "PhpGedView - prehľad zmien";
 $pgv_lang["review_changes_body"]	= "Boli urobené online zmeny v genealogickej databáze. Tieto zmeny musia byť skontrolované a potvrdené predtým, než se zobrazia všetkým uživateľom. Prosím použite URL dole ku vstupu do PhpGedView stráky a prihláseniu do systému k revízii zmien.";
-
 if (file_exists( "languages/lang.sk.extra.php")) require  "languages/lang.sk.extra.php";
-$pgv_lang["server_file"]				= "Meno súboru na servere";
-$pgv_lang["server_file_advice"]			= "Nemeňte uložené orginálne meno súboru.";
-$pgv_lang["server_file_advice2"]		= "Musíte vložiť URL začínajúcu na &laquo;http://&raquo;.<br />";
 $pgv_lang["server_folder"]				= "Meno adresára na servere";
-$pgv_lang["add_linkid_advice"]			= "Vložte alebo vyhľadajte ID osoby, rodiny alebo zdroja, ku ktorému má byť tento súbor médií pripojený.";
-$pgv_lang["use_browse_advice"]			= "Použite tlačítko &laquo;Prehľadať&raquo; na vyhľadanie vašeho lokálneho počítača pre žiadaný súbor.";
-$pgv_lang["server_folder_advice"]		= "You can enter up to #GLOBALS[MEDIA_DIRECTORY_LEVELS]# folder names to follow the default &laquo;#GLOBALS[MEDIA_DIRECTORY]#&raquo;.<br />Do not enter the &laquo;#GLOBALS[MEDIA_DIRECTORY]#&raquo; part of the destination folder name.";
-$pgv_lang["server_folder_advice2"]		= "Tento vstup je ignorovaný, ak ste zadali URL do poľa pre meno súboru.";
-$pgv_lang["add_media_other_folder"]		= "Ďalší adresár... prosím zadajte";
-$pgv_lang["add_media_file"]				= "Existujúci súbor médii na servere";
 $pgv_lang["descend_report"]				= "Zoznam potomkov";
 $pgv_lang["descendancy_header"]		= "Zoznam potomkov pre";
-$pgv_lang["link_to_existing_media"]		= "Link na existujúcu položku médií";
 $pgv_lang["page_size"]					= "Veľkosť stránky";
 $pgv_lang["record_not_found"]			= "Požadovaný GEDCOM záznam nebol nájdený. To môže byť spôsobené linkom na neplatnú osobu, alebo poškodeným GEDCOM súborom.";
-$pgv_lang["record_marked_deleted"]		= "Tento záznam je označený na zmazanie, po schválení administrátorom.";
 $pgv_lang["result_page"]				= "Stránka výsledku";
 $pgv_lang["edit_media"]					= "Upraviť položku médií";
 $pgv_lang["wiki_main_page"]				= "Wiki - hlavná stránka";
@@ -1504,49 +1205,17 @@ $pgv_lang["wiki_admin_guide"]			= "Wiki - príručka administrátora";
 $pgv_lang["no_search_for"]			= "Uistite sa, že máte vybrané kritéria pre vyhľadávanie.";
 $pgv_lang["no_search_site"]			= "Uistite sa, že máte vybranú aspoň jednu vzdialenú stránku.";
 $pgv_lang["other_searches"]			= "Ďalšie hľadania";
-$pgv_lang["multi_site_search"] 		= "Multi stránkové hľadanie";
 $pgv_lang["search_sites"] 			= "Stránky na hľadanie";
 $pgv_lang["search_sites_discription"] = "Hľadať známe stránky";
 $pgv_lang["search_asso_text_unavailable"] = "Spojenie <br /> ešte nie je dostupné s <br /> hľadaním stránky";
-$pgv_lang["no_known_servers"]		= "Žiadny známy server <br /> Nebudú nájdené žiadne výsledoky";
-$pgv_lang["basic_search_discription"] = "Základné hľadanie stránky";
-$pgv_lang["advanced_search_discription"] = "Rozšírené hľadanie stránky";
-$pgv_lang["basic_search"]			= "hľadanie";
 $pgv_lang["advanced_search"]		= "Rozšírené hľadanie stránky";
-$pgv_lang["name_search"]			= "Meno:";
-$pgv_lang["birthdate_search"]		= "Dátum narodenia:";
-$pgv_lang["birthplace_search"]		= "Miesto narodenia:";
-$pgv_lang["deathdate_search"]		= "Dátum úmrtia:";
-$pgv_lang["deathplace_search"]		= "Miesto úmrtia:";
-$pgv_lang["gender_search"]			= "Pohlavie:";
 $pgv_lang["site_list"]				= "Stránka:";
 $pgv_lang["site_had"]				= "obsahuje nasledujúce";
-$pgv_lang["invalid_search_multisite_input"] = "Prosím vložte niektorý z následujúcich údajov: meno, dátum narodenia, miesto narodenia, datum úmrtia, miesto úmrtia, pohlavie.";
-$pgv_lang["invalid_search_multisite_input_gender"] = "Prosím hľadajte ešte raz z viac informáciami než iba pohlavím";
-$pgv_lang["link_manage_servers"]    = "Správa stránok";
 $pgv_lang["indi_is_remote"]			= "Informácie tejto osoby boli linkované zo vzdialanej stránky.";
 $pgv_lang["link_remote"]            = "Pripojiť vzdialenú osobu";
-$pgv_lang["label_gedcom_id"]        = "GEDCOM ID";
-$pgv_lang["label_gedcom_id2"]       = "GEDCOM ID:";
-$pgv_lang["label_add_remote_link"]  = "Pridať link";
-$pgv_lang["error_remote"]           = "Máte vybranú vzdialenú stránku.";
-$pgv_lang["error_same"]             = "Máte vybranú totožnú stránku.";
 $pgv_lang["error_server_exists"]    = "Stránka ktorú skúšate vložiť už neexistuje, prosím vyberte ju zo zoznamu dole. Použiť nejakú existujúcu stránku?";
-$pgv_lang["lbl_server_list"]        = "Použiť existujúcu stránku.";
-$pgv_lang["lbl_type_server"]        = "Vložte novú stránku.";
-$pgv_lang["link_success"]		= "Úspešne pridané pripojenie";
-$pgv_lang["error_url_blank"]		= "Prosím nenechajte názov a URL vzdialenej stránky prázdny";
-$pgv_lang["error_siteauth_failed"]	= "Neúspešná autorizácia na vzdialenej stránke";
-$pgv_lang["label_ban_server"]		= "Postúpené";
-$pgv_lang["label_add_search_server"]	= "Pridať IP";
-$pgv_lang["remove_ip"] 			= "Odstrániť IP";
-$pgv_lang["label_remove_ip"]		= "Zakázaná IP adresa (napr. 198.128.*.*):";
-$pgv_lang["label_remove_search"]	= "Označte IP adresy ako Search Engine Spiders:";
-$pgv_lang["change"]			= "Zmeniť";
-$pgv_lang["change_family_instr"]	= "Použite túto stránku ku zmene, alebo zmazaniu členov rodiny.<br /><br />Pre každého člena rodiny môžete použiť link Zmena na výber inej osoby, ktorá plní túto rolu v rodine. Môžete tiež použiť link Odstrániť ku zmazaniu tejto osoby z rodiny.<br /><br />Keď skončíte zmeny členov rodiny, kliknite na tlačítko Uložiť, pre uloženie vykonaných zmien.<br />";
 $pgv_lang["cancel"]			= "Zrušiť";
 $pgv_lang["cookie_help"]		= "Táto stránka používa cookies na uloženie informácií o vašom prihlásení.<br /><br />Cookies nie sú povolené vo vašom prehliadači. Pred prihlásením musíte povoliť cookies. Môžete si pomôcť nápovedou vašeho prehliadača ak to neviete urobiť.";
-$pgv_lang["change_family_members"]	= "Zmeniť členov rodiny";
 $pgv_lang["delete_family_confirm"]	= "Zmazanie rodiny spôsobí zrušenie spojenia medzi osobami, ktoré sú členmi rodiny, ale nezruší ich záznamy. Ste si istý, že chcete zmazať túto rodinu?";
 $pgv_lang["delete_family"]		= "Zmazať rodinu";
 $pgv_lang["add_favorite"]		= "Pridať nové obľúbené";
@@ -1554,10 +1223,8 @@ $pgv_lang["url"]			= "URL";
 $pgv_lang["add_fav_enter_note"]		= "Vložte ľubovolnú poznámku o tomto obľúbenom.";
 $pgv_lang["add_fav_or_enter_url"]	= "Alebo<br />\nVložte URL a názov";
 $pgv_lang["add_fav_enter_id"]		= "Zadajte ID osoby, rodiny alebo zdroja";
-$pgv_lang["import_time_exceeded"]	= "Časový limit pre spracovanie bol prekročený. Kliknite na tlačítko Pokračovať pre zobrazenie rekapitulácie importu GEDCOM súboru.";
 $pgv_lang["next_email_sent"]		= "Ďalšia upomienka e-mailom bude odoslaná po";
 $pgv_lang["last_email_sent"]		= "Posledná upomienka e-mailo bola odoslaná";
-$pgv_lang["confirm_remove"]		= "Ste si istý, že chcete odstrániť túto osobu z rodiny?";
 $pgv_lang["remove_child"]		= "Odstrániť toto dieťa z rodiny";
 $pgv_lang["link_new_husb"]		= "Pridať existujúcu osobu ako manžela";
 $pgv_lang["link_new_wife"]		= "Pridať existujúcu osobu ako manželku";
@@ -1565,38 +1232,15 @@ $pgv_lang["address_labels"]		= "Adresné štítky";
 $pgv_lang["filter_address"]		= "Zobraziť adresy, ktoré obsahujú:";
 $pgv_lang["address_list"]		= "Zoznam adries";
 $pgv_lang["autocomplete"]		= "Automatické dokončenie";
-$pgv_lang["undo_all_confirm"]		= "Ste si istý, že chcete zrušiť všetky zmeny pre tento GEDCOM?";
-$pgv_lang["undo_all"]			= "Zrušiť všetky zmeny";
 $pgv_lang["index_edit_advice"]		= "Označte blok a potom kliknite na niektorú ikonu šípky k presunu označeného bloku v smere šípky.";
 $pgv_lang["importing_dates"]		= "Import dátumových záznamov";
-$pgv_lang["label_username_id"]		= "Uživateľské meno";
-$pgv_lang["label_username_id2"]		= "Uživateľské meno:";
-$pgv_lang["label_password_id"]		= "Heslo";
-$pgv_lang["label_password_id2"]		= "Heslo:";
-$pgv_lang["error_ban_server"]       = "Neplatná IP adresa.";
 $pgv_lang["error_view_connections"] = "Musíte vybrať stránku na zobrazenie.";
 $pgv_lang["error_delete_server"]    = "Musíte vybrať stránku na zmazanie.";
-$pgv_lang["title_manage_servers"]   = "Spravovať stránky";
-$pgv_lang["label_banned_servers"]   = "Zakázané stránky podle IP";
-$pgv_lang["label_manual_search_engines"]   = "Manuálne určite Search Engines pomocou IP";
 $pgv_lang["label_search_engine_detected"]  = "Search Engine Spider bol nájdený";
 $pgv_lang["label_search_engine_spider"]    = "Search Engine Spider";
 $pgv_lang["label_ban_view_links"]   = "Zobraziť odkazy na túto zakázanú stránku.";
-$pgv_lang["label_delete"]           = "Zmazať";
-$pgv_lang["label_new_server"]       = "Pridať novú stránku";
-$pgv_lang["label_server_url"]       = "URL/IP stránky";
-$pgv_lang["label_add_server"]       = "Pridať";
-$pgv_lang["label_added_servers"]	= "Pridané vzdialené servery";
 $pgv_lang["error_url"]              = "Stránka musí mať nejaké URL/IP.";
 $pgv_lang["error_exists_server"]    = "Stránka už existuje";
-$pgv_lang["error_view_info"]        = "Musíte vybrať osobu ktorej informácie chcete zobraziť.";
-$pgv_lang["error_delete_person"]    = "Musíte vybrať osobu ktorej vzdialený link chcete zmazať.";
-$pgv_lang["title_view_conns"]       = "Zobraziť spojenie.";
-$pgv_lang["label_server_info"]      = "Všetci sú vzdialene pripojený cez stránku:";
-$pgv_lang["label_view_local"]       = "Zobraziť lokálne informácie o osobe";
-$pgv_lang["label_view_remote"]      = "Zobraziť vzdialené informácie o osobe";
-$pgv_lang["label_individuals"]      = "Osoby";
-$pgv_lang["label_families"]         = "Rodiny";
 $pgv_lang["ex-spouse"] = "Ex-manželia";
 $pgv_lang["ex-wife"] = "Ex-manželka";
 $pgv_lang["ex-husband"] = "Ex-manžel";
@@ -1639,42 +1283,13 @@ $pgv_lang["source_menu"]			= "Voľby pre zdroj";
 $pgv_lang["familybook_chart"]		= "Schéma Rodinná kronika";
 $pgv_lang["family_of"]				= "Rodina:&nbsp;";
 $pgv_lang["descent_steps"]			= "Počet generácií potomkov";
-$pgv_lang["user_auto_accept"]		= "Automaticky akceptovať zmeny urobené uživateľom";
-$pgv_lang["current_person"]         = "Rovnaký ako aktuálny";
-$pgv_lang["title_remote_link"]      = "Pridať vzdialené pripojenie";
 $pgv_lang["title_search_link"]      = "Pridať lokálne pripojenie";
-$pgv_lang["label_same_server"]      = "Tá istá stránka";
-$pgv_lang["label_diff_server"]      = "Iná stránka";
 $pgv_lang["label_accept_changes"]   = "Akceptovať všetky zmeny";
 $pgv_lang["label_ask_first"]        = "Najskôr sa ma spýtať";
-$pgv_lang["label_rel_to_current"]   = "Vzťah k aktuálnej osobe";
-$pgv_lang["label_location"]         = "Umiestnenie";
-$pgv_lang["label_site"]             = "Stránka";
-$pgv_lang["label_site_url"]         = "URL stránky:";
 $pgv_lang["label_site_url2"]        = "URL stránky";
-$pgv_lang["label_remote_id"]        = "ID vzdialenej osoby";
-$pgv_lang["label_local_id"]         = "ID osoby";
 $pgv_lang["label_merge_options"]    = "Voľby spojenia";
-$pgv_lang["main_media_ok1"]				= "Hlavný súbor medií <b>#GLOBALS[oldMediaName]#</b> bol úspešne premenovaný na <b>#GLOBALS[newMediaName]#</b>.";
-$pgv_lang["main_media_ok2"]				= "Hlavný súbor médií <b>#GLOBALS[oldMediaName]#</b> bol úspešne presunutý z <b>#GLOBALS[oldMediaFolder]#</b> do <b>#GLOBALS[newMediaFolder]#</b>.";
-$pgv_lang["main_media_ok3"]				= "Hlavný súbor médií bol úspešne presunutý a premenovaný z <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> na <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";
-$pgv_lang["main_media_fail0"]			= "Hlavný súbor médií <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> neexistuje.";
-$pgv_lang["main_media_fail1"]			= "Hlavný súbor médií <b>#GLOBALS[oldMediaName]#</b> nemôže byť premenovaný na <b>#GLOBALS[newMediaName]#</b>.";
-$pgv_lang["main_media_fail2"]			= "Hlavný súbor médií <b>#GLOBALS[oldMediaName]#</b> nemôže byť presunutý z <b>#GLOBALS[oldMediaFolder]#</b> do <b>#GLOBALS[newMediaFolder]#.";
-$pgv_lang["main_media_fail3"]			= "Hlavný súbor médií nemôže byť presunutý a premenovaný z <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> na <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";
-$pgv_lang["thumb_media_ok1"]			= "Súbor náhľadu <b>#GLOBALS[oldMediaName]#</b> bol úspešne premenovaný na <b>#GLOBALS[newMediaName]#</b>.";
-$pgv_lang["thumb_media_ok2"]			= "Súbor náhľadu <b>#GLOBALS[oldMediaName]#</b> bol úspešne presunutý z <b>#GLOBALS[oldThumbFolder]#</b> do <b>#GLOBALS[newThumbFolder]#</b>.";
-$pgv_lang["thumb_media_ok3"]			= "Súbor náhľadu bol úspešne presunutý a premenovaný z  <b>#GLOBALS[oldThumbFolder]##GLOBALS[oldMediaName]#</b> na <b>#GLOBALS[newThumbFolder]##GLOBALS[newMediaName]#</b>.";
-$pgv_lang["thumb_media_fail0"]			= "Súbor náhľadu <b>#GLOBALS[oldThumbFolder]##GLOBALS[oldMediaName]#</b> neexistuje.";
-$pgv_lang["thumb_media_fail1"]			= "Súbor náhľadu <b>#GLOBALS[oldMediaName]#</b> nemôže byť premenovaný na <b>#GLOBALS[newMediaName]#</b>.";
-$pgv_lang["thumb_media_fail2"]			= "Súbor náhľadu <b>#GLOBALS[oldMediaName]#</b> nemôže byť presunutý z <b>#GLOBALS[oldThumbFolder]#</b> do <b>#GLOBALS[newThumbFolder]#</b>.";
-$pgv_lang["thumb_media_fail3"]			= "Súbor náhľadu nemôže byť presunutý a premenovaný z  <b>#GLOBALS[oldThumbFolder]##GLOBALS[oldMediaName]#</b> na <b>#GLOBALS[newThumbFolder]##GLOBALS[newMediaName]#</b>.";
-$pgv_lang["hebrew_surn"]			= "Židovské priezvisko";
-$pgv_lang["hebrew_givn"]			= "Židovské meno";
 $pgv_lang["include"]				= "Zahrnúť:";
 $pgv_lang["page_x_of_y"]			= "Stránka #GLOBALS[currentPage]# z #GLOBALS[lastPage]#";
 $pgv_lang["roman_surn"]				= "Priezvisko latinkou";
 $pgv_lang["roman_givn"]				= "Meno latinkou";
-$pgv_lang["upload_replacement"]		  	="Zmena cesty načítania";
-
 ?>

@@ -27,6 +27,9 @@ if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
   exit;
 }
 
+$pgv_lang["import_options_help"] 	= "You can choose additional options to be used when importing the GEDCOM.";
+$pgv_lang["verify_gedcom_help"]	= "Here you can choose to either continue with the upload and import of this GEDCOM file or to abort the upload and import.";
+$pgv_lang["add_gedcom_instructions"]= "Enter a file name for this new GEDCOM.  The new GEDCOM file will be created in the Index directory: #INDEX_DIRECTORY#";
 $pgv_lang["upload_gedcom_help"]		= "Select the GEDCOM or ZIP file from your local computer to upload to your server.  The file will be uploaded to the directory <b>#INDEX_DIRECTORY#</b>.<br /><br />If you upload a ZIP file, it should contain only one GEDCOM, and that GEDCOM will be used automatically in the next steps.<br /><br />";
 $pgv_lang["random_media_start_slide_help"]			= "~#pgv_lang[random_media_start_slide]#~<br /><br />Should the AJAX slideshow start automatically when the page is loaded.<br /><br />This feature uses AJAX technology to change the contents of the block without preloading information from the server and without reloading the entire page.<br /><br />";
 $pgv_lang["random_media_ajax_controls_help"]	= "~#pgv_lang[random_media_ajax_controls]#~<br /><br />You can use this setting to enable to disable player controls on the random media block.  Player controls allow the user to jump to another random object or to play through randomly selected media like a slideshow. These features use AJAX technology to change the contents of the block without preloading information from the server and without reloading the entire page.<br /><br />";

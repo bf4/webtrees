@@ -44,15 +44,32 @@ VERSION 4.1
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
 +$pgv_lang["anniversary"]							19 Oct 2006				A
--$pgv_lang["savedata"]							18 Oct 2006				D unused
--$pgv_lang["datachanged"]						18 Oct 2006				D unused
--$pgv_lang["datachanged_name"]					18 Oct 2006				D unused
--$pgv_lang["year_error"]						18 Oct 2006				D unused
--$pgv_lang["now_import"]						18 Oct 2006				D unused
--$pgv_lang["add_media_records"]					18 Oct 2006				D unused
--$pgv_lang["manage_media_files"]				18 Oct 2006				D unused
--$pgv_lang["link_media_records"]				18 Oct 2006				D unused
--$pgv_lang["add_media_button"]					18 Oct 2006				D unused
+-$pgv_lang["media_import"]						19 Oct 2006				D unused
+-$pgv_lang["individual_list_report"]			19 Oct 2006				D unused
+-$pgv_lang["run_report"]						19 Oct 2006				D unused
+-$pgv_lang["import_options_help"] 				19 Oct 2006				M	Moved to help_text
+-$pgv_lang["verify_gedcom_help"]				19 Oct 2006				M	Moved to help_text
+-$pgv_lang["launch_media_tool"]					19 Oct 2006				D unused
+-$pgv_lang["add_media_descr"]					19 Oct 2006				D unused
+-$pgv_lang["extension"]							19 Oct 2006				D unused
+-$pgv_lang["order"]								19 Oct 2006				D unused
+-$pgv_lang["inject_media_tool"]					19 Oct 2006				D unused
+-$pgv_lang["media_table_created"]				19 Oct 2006				D unused
+-$pgv_lang["click_to_add_media"] 				19 Oct 2006				D unused
+-$pgv_lang["adds_completed"] 					19 Oct 2006				D unused
+-$pgv_lang["changed_mac"]						19 Oct 2006				D unused
+-$pgv_lang["changed_places"]					19 Oct 2006				D unused
+-$pgv_lang["optional_tools"]					19 Oct 2006				D unused
+-$pgv_lang["optional"]							19 Oct 2006				D unused
+-$pgv_lang["savedata"]							19 Oct 2006				D unused
+-$pgv_lang["datachanged"]						19 Oct 2006				D unused
+-$pgv_lang["datachanged_name"]					19 Oct 2006				D unused
+-$pgv_lang["year_error"]						19 Oct 2006				D unused
+-$pgv_lang["now_import"]						19 Oct 2006				D unused
+-$pgv_lang["add_media_records"]					19 Oct 2006				D unused
+-$pgv_lang["manage_media_files"]				19 Oct 2006				D unused
+-$pgv_lang["link_media_records"]				19 Oct 2006				D unused
+-$pgv_lang["add_media_button"]					19 Oct 2006				D unused
 -$pgv_lang["user_manual"]						18 Oct 2006				D unused
 -$pgv_lang["upgrade"]							18 Oct 2006				D unused
 -$pgv_lang["step1"]								18 Oct 2006				D unused

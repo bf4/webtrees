@@ -46,11 +46,8 @@ $pgv_lang["imageview"]					= "Afbeelding bekijken";
 $pgv_lang["login_head"]					= "PhpGedView aanmelden gebruiker";
 $pgv_lang["help_contents"]				= "Inhoud";
 $pgv_lang["help_for_this_page"]			= "Help bij deze pagina";
-
 //-- CONFIG FILE MESSAGES
 $pgv_lang["error_title"]				= "FOUT: kan GEDCOM-bestand niet openen";
-$pgv_lang["error_header"]				= "Het GEDCOM-bestand, [#GEDCOM#], kan niet worden gevonden op de aangegeven plaats.";
-$pgv_lang["error_header_write"]			= "Schrijfrechten benodigd op het GEDCOM-bestand [#GEDCOM#], controleer attributen en toegangsrechten.";
 $pgv_lang["for_support"]				= "Voor ondersteuning en informatie neem contact op met";
 $pgv_lang["for_contact"]				= "Neem voor genealogische vragen contact op met";
 $pgv_lang["for_all_contact"]			= "Neem voor genealogische vragen en vragen over de site contact op met";
@@ -74,10 +71,7 @@ $pgv_lang["my_pedigree"]				= "Mijn kwartierstaat";
 $pgv_lang["my_indi"]					= "Mijn persoonsgegevens";
 $pgv_lang["yes"]						= "Ja";
 $pgv_lang["no"]							= "Nee";
-$pgv_lang["add_gedcom"]					= "GEDCOM-bestand toevoegen";
 $pgv_lang["change_theme"]				= "Wijzig site-opmaak";
-$pgv_lang["gedcom_downloadable"]		= "Dit GEDCOM-bestand kan worden gedownload vanaf het Internet!<br />Lees de SECURITY-sectie in het <a href=\"readme.txt\">readme.txt</a>-bestand om dit probleem te verhelpen.";
-
 //-- INDEX (PEDIGREE_TREE) FILE MESSAGES
 $pgv_lang["index_header"]				= "Kwartierstaat";
 $pgv_lang["gen_ped_chart"]				= "Kwartierstaat (#PEDIGREE_GENERATIONS# Generaties)";
@@ -99,7 +93,6 @@ $pgv_lang["welcome_page"]				= "Welkomstpagina";
 $pgv_lang["min_generation"]				= "Het minimum aantal generaties in de kwartierstaat is 3.";
 $pgv_lang["box_width"]					= "Breedte vak";
 $pgv_lang["max_generation"]				= "Het maximum aantal generaties in de kwartierstaat is #PEDIGREE_GENERATIONS#.";
-
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]  	= "Niet gevonden: gezin met ID";
 $pgv_lang["unable_to_find_indi"]		= "Niet gevonden: persoon met ID";
@@ -138,7 +131,6 @@ $pgv_lang["back"]						= "Terug";
 $pgv_lang["privacy_list_fam_error"] 	= "Een of meer gezinnen zijn verborgen als gevolg van privacy-instellingen.";
 $pgv_lang["aka"]						= "Ook bekend als ";
 $pgv_lang["privacy_list_indi_error"]	= "Een of meer personen zijn verborgen als gevolg van privacy-instellingen.";
-
 //-- INDIVUDUAL FILE MESSAGES
 $pgv_lang["male"]						= "Man";
 $pgv_lang["female"]						= "Vrouw";
@@ -157,7 +149,6 @@ $pgv_lang["indi_info"]					= "Persoonsinformatie";
 $pgv_lang["pedigree_chart"]				= "Kwartierstaat";
 $pgv_lang["desc_chart2"]				= "Nakomelingen";
 $pgv_lang["individual"]					= "Persoon";
-$pgv_lang["family"]						= "Gezin";
 $pgv_lang["family_with"]				= "Gezin met";
 $pgv_lang["as_spouse"]					= "Gezin met partner";
 $pgv_lang["as_child"]					= "Gezin met ouders";
@@ -174,7 +165,6 @@ $pgv_lang["object_note"]				= "Object notitie:";
 $pgv_lang["sex"]						= "Geslacht";
 $pgv_lang["personal_facts"]				= "Persoonlijke feiten en details";
 $pgv_lang["type"]						= "Type";
-$pgv_lang["date"]						= "Datum";
 $pgv_lang["place_description"]			= "Plaats / Omschrijving";
 $pgv_lang["parents"]					= "Ouders:";
 $pgv_lang["siblings"]					= "Broers/zussen";
@@ -189,9 +179,7 @@ $pgv_lang["surnames"]					= "Achternamen";
 $pgv_lang["adopted"]					= "Geadopteerd";
 $pgv_lang["foster"]						= "Pleeg";
 $pgv_lang["sealing"]					= "Zegeling";
-$pgv_lang["link_as_husband"]			= "Koppel deze persoon als partner aan een bestaand gezin";
 $pgv_lang["link_as_wife"]				= "Koppel deze persoon als partner aan een bestaand gezin";
-$pgv_lang["link_as_child"]				= "Koppel deze persoon als kind aan een bestaand gezin";
 $pgv_lang["challenged"]					= "Aan te tonen";
 $pgv_lang["deceased"]					= "Overleden";
 $pgv_lang["stillborn"]					= "Doodgeboren";
@@ -204,7 +192,6 @@ $pgv_lang["no_tab3"]					= "Geen bronvermeldingen voor deze persoon.";
 $pgv_lang["no_tab4"]					= "Geen multimedia-objecten voor deze persoon.";
 $pgv_lang["no_tab5"]					= "Geen verwanten voor deze persoon.";
 $pgv_lang["no_tab6"]					= "Geen onderzoekslogboek gekoppeld aan deze persoon.";
-
 //-- FAMILY FILE MESSAGES
 $pgv_lang["family_info"]				= "Gezinsinformatie";
 $pgv_lang["family_group_info"]			= "Gezinsinformatie";
@@ -219,7 +206,6 @@ $pgv_lang["no_children"]				= "Geen kinderen";
 $pgv_lang["childless_family"]		= "Dit gezin bleef kinderloos";
 $pgv_lang["number_children"]			= "Aantal kinderen:";
 $pgv_lang["parents_timeline"]			= "Toon partners op de tijdlijn";
-
 //-- CLIPPINGS FILE MESSAGES
 $pgv_lang["clip_cart"]					= "Knipselbak";
 $pgv_lang["clip_explaination"]			= "De Stamboom knipselbak geeft u de mogelijkheid om \"knipsels\" van deze stamboom te nemen en deze samen te bundelen in één GEDCOM-bestand om te kunnen downloaden.<br /><br />";
@@ -253,7 +239,6 @@ $pgv_lang["download_now"]				= "Nu downloaden";
 $pgv_lang["indi_downloaded_from"]		= "Deze persoon is gedownload van:";
 $pgv_lang["family_downloaded_from"]		= "Dit gezin is gedownload van:";
 $pgv_lang["source_downloaded_from"]		= "Deze bron is gedownload van:";
-
 //-- PLACELIST FILE MESSAGES
 $pgv_lang["connections"]				= "Locatieverbindingen gevonden";
 $pgv_lang["top_level"]					= "Hoogste niveau";
@@ -269,7 +254,6 @@ $pgv_lang["show_place_hierarchy"]		= "Toon locaties op hoogste niveau";
 $pgv_lang["show_place_list"]			= "Toon alle locaties in een lijst";
 $pgv_lang["total_unic_places"]			= "Aantal unieke locaties";
 $pgv_lang["external_objects"]		= "Externe objecten";
-
 //-- MEDIALIST FILE MESSAGES
 $pgv_lang["multi_title"]				= "Multimedialijst";
 $pgv_lang["media_found"]				= "Multimedia-objecten gevonden";
@@ -282,25 +266,9 @@ $pgv_lang["next"]						= "volgende &gt;";
 $pgv_lang["file_not_found"]				= "Bestand niet gevonden.";
 $pgv_lang["medialist_show"]				= "Toon";
 $pgv_lang["per_page"]					= "media objecten per pagina";
-$pgv_lang["delete_dir_success"]			= "Mappen voor multimedia en miniweergaves succesvol verwijderd";
 $pgv_lang["current_dir"]				= "Huidige map: ";
 $pgv_lang["delete_dir_success"]			= "Map voor miniatuurweergaves succesvol verwijderd";
-$pgv_lang["thumbs_not_deleted"]			= "Map voor miniweergaves niet verwijderd";
-$pgv_lang["thumbs_deleted"]				= "Map miniweergaves succesvol verwijderd";
-$pgv_lang["media_deleted"]				= "Multimediamap succesvol verwijderd";
-$pgv_lang["media_not_deleted"]			= "Multimediamap niet verwijderd";
-$pgv_lang["directory_not_exist"]		= "Map bestaat niet";
-$pgv_lang["directory_not_empty"]		= "Map is niet leeg";
-$pgv_lang["delete_file"]				= "Verwijder bestand";
-$pgv_lang["confirm_delete_file"]	= "Bestand verwijderen?";
-$pgv_lang["multiple_gedcoms"]		= "Deze file is gekoppeld aan een andere genealogische database op deze server. De file kan niet worden verwijderd, verplaatsts of hernoemd totdat deze koppelingen zijn verwijderd.";
-$pgv_lang["external_file"]			= "Dit mediabestand bestaat niet op deze server. Het kan niet worden verwijderd, verplaatsts of hernoemd.";
 $pgv_lang["delete_directory"]			= "Verwijder map";
-$pgv_lang["remove_object"]			= "Verwijder object";
-$pgv_lang["confirm_remove_object"]	= "Object uit database verwijderen?";
-$pgv_lang["remove_links"]			= "Verwijder koppelingen";
-$pgv_lang["confirm_remove_links"]	= "Alle koppelingen naar dit object verwijderen?";
-
 //-- SEARCH FILE MESSAGES
 $pgv_lang["search_gedcom"]				= "Doorzoek genealogie(en)";
 $pgv_lang["enter_terms"]				= "Geef zoekcriteria op:";
@@ -311,7 +279,6 @@ $pgv_lang["lastname_search"]			= "Achternaam:";
 $pgv_lang["search_place"]				= "Locatie:";
 $pgv_lang["search_year"]				= "Jaar:";
 $pgv_lang["no_results"]					= "Geen resultaat gevonden.";
-$pgv_lang["invalid_search_input"]		= "Jaar wordt alleen gebruikt in combinatie met een achternaam, voornaam of locatienaam.";
 $pgv_lang["search_options"]				= "Zoekopties";
 $pgv_lang["search_geds"]				= "Zoek in genealogie";
 $pgv_lang["search_type"]				= "Zoekmethode";
@@ -334,7 +301,6 @@ $pgv_lang["search_tagfilter"]			= "Zoekfilter:";
 $pgv_lang["search_prthit"]				= "Gevonden namen";
 $pgv_lang["search_prtnames"]			= "Toon namen<br />van persoon:";
 $pgv_lang["search_russell"]				= "Russell";
-
 //-- SOURCELIST FILE MESSAGES
 $pgv_lang["sources_found"]				= "Bronnen gevonden";
 $pgv_lang["titles_found"]				= "Titels";
@@ -344,32 +310,22 @@ $pgv_lang["repos_found"]				= "Bewaarplaatsen gevonden";
 $pgv_lang["find_repository"]			= "Zoek bewaarplaats";
 $pgv_lang["total_repositories"]			= "Aantal bewaarplaatsen";
 $pgv_lang["repo_info"]					= "Informatie bewaarplaats";
-$pgv_lang["delete_repo"]				= "Verwijder bewaarplaats";
 $pgv_lang["other_repo_records"]			= "Gegevens die verwijzen naar deze bewaarplaats:";
-$pgv_lang["create_repository"]			= "Maak nieuwe bewaarplaats";
-$pgv_lang["new_repo_created"]			= "Nieuwe bewaarplaats aangemaakt";
-$pgv_lang["paste_rid_into_field"]		= "Plak het ID van de bewaarplaats in uw invoerpagina om de verwijzing naar de bewaarplaats over te nemen ";
 $pgv_lang["confirm_delete_repo"]		= "Weet u zeker dat u de bewaarplaats uit uw genealogie wilt verwijderen?";
-
 //-- SOURCE FILE MESSAGES
 $pgv_lang["source_info"]				= "Bron-informatie";
 $pgv_lang["other_records"]				= "Andere gegevens die verwijzen naar deze bron:";
 $pgv_lang["people"]						= "PERSONEN";
 $pgv_lang["families"]					= "GEZINNEN";
 $pgv_lang["total_sources"]				= "Aantal bronnen";
-
 //-- BUILDINDEX FILE MESSAGES
 $pgv_lang["building_indi"]				= "Persoons- en gezinsindexering wordt opgebouwd";
 $pgv_lang["building_index"]				= "Indexlijsten worden gebouwd";
 $pgv_lang["invalid_gedformat"]			= "Ongeldig GEDCOM 5.5 formaat";
 $pgv_lang["importing_records"]			= "Toevoegen records aan de database";
 $pgv_lang["detected_change"]			= "PhpGedView heeft een verandering gevonden in het GEDCOM-bestand #GEDCOM#. Index bestanden moeten eerst opnieuw worden gemaakt voordat u kunt doorgaan.";
-$pgv_lang["please_be_patient"]			= "EVEN GEDULD A.U.B.";
-$pgv_lang["reading_file"]				= "GEDCOM-bestand inlezen";
 $pgv_lang["flushing"]					= "Inhoud verwijderen";
-$pgv_lang["found_record"]				= "Record gevonden";
 $pgv_lang["exec_time"]					= "Uitvoeringstijd:";
-$pgv_lang["time_limit"]					= "Tijdslimiet:";
 $pgv_lang["unable_to_create_index"]		= "Schrijven van indexbestand is mislukt. Schrijfrechten op de index-map van PhpGedView zijn vereist. U kunt de schrijfrechten later weer verwijderen als de indexbestanden zijn weggeschreven.";
 $pgv_lang["indi_complete"]				= "Persoonsindex voltooid";
 $pgv_lang["family_complete"]			= "Gezinsindex voltooid";
@@ -380,40 +336,17 @@ $pgv_lang["drop_tables"]				= "De huidige tabellen verwijderen";
 $pgv_lang["import_multiple"]			= "werken met meerdere GEDCOM-bestanden";
 $pgv_lang["explain_options"]			= "Als u ervoor kiest om de bestaande tabellen te verwijderen dan wordt alle informatie vervangen door die in dit GEDCOM-bestand.<br />Als u ervoor kiest om met meerdere GEDCOM-bestanden te werken dan zal PhpGedView alle gegevens verwijderen die dezelfde GEDCOM-bestandsnaam hebben. Deze optie maakt het mogelijk om meerdere GEDCOM-bestanden in dezelfde tabellen op te slaan en eenvoudig te wisselen.";
 $pgv_lang["path_to_gedcom"]				= "Geef het pad naar uw GEDCOM-bestand:";
-$pgv_lang["dataset_exists"]				= "Een GEDCOM-bestand met deze naam staat reeds in de database.";
 $pgv_lang["changes_present"]			= "Er zijn nog niet goedgekeurde wijzigingen aanwezig. Als u doorgaat met importeren, worden deze automatisch in het bestand doorgevoerd.";
-$pgv_lang["empty_dataset"]				= "Wilt u de oude gegevens verwijderen en de gegevens uit het nieuwe GEDCOM-bestand toevoegen?";
 $pgv_lang["index_complete"]				= "Indexeren gereed.";
-$pgv_lang["click_here_to_go_to_pedigree_tree"] = "Klik hier om naar de kwartierstaat te gaan.";
 $pgv_lang["updating_is_dead"]			= "Aanpassen van overlijden voor INDI";
-$pgv_lang["bytes_read"]					= "Bytes gelezen:";
-$pgv_lang["created_remotelinks"]	= "Maken van tabel <i>Remotelinks</i> geslaagd.";
-$pgv_lang["created_remotelinks_fail"] 	= "De tabel <i>Remotelinks</i> kan niet worden aangemaakt.";
-$pgv_lang["created_indis"]				= "Maken van tabel <i>Individuals</i> geslaagd.";
-$pgv_lang["created_indis_fail"]			= "De tabel <i>Individuals</i> kan niet worden aangemaakt.";
-$pgv_lang["created_fams"]				= "Maken van tabel <i>Families</i> geslaagd.";
-$pgv_lang["created_fams_fail"]			= "De tabel <i>Families</i> kan niet worden aangemaakt.";
-$pgv_lang["created_sources"]			= "Maken van tabel <i>Sources</i> geslaagd.";
-$pgv_lang["created_sources_fail"]		= "De tabel <i>Sources</i> kan niet worden aangemaakt.";
-$pgv_lang["created_other"]				= "Maken van tabel <i>Other</i> geslaagd.";
-$pgv_lang["created_other_fail"]			= "De tabel <i>Other</i> kan niet worden aangemaakt.";
-$pgv_lang["created_places"]				= "Maken van tabel <i>Places</i> geslaagd.";
-$pgv_lang["created_places_fail"]		= "De tabel <i>Places</i> kan niet worden aangemaakt.";
-$pgv_lang["created_placelinks"] 	= "Maken van tabel <i>Placelinks</i> geslaagd.";
-$pgv_lang["created_media_mapping_fail"]	= "De tabel <i>media mappings</i> kan niet worden aangemaakt.";
-$pgv_lang["created_media_fail"]	= "De tabel <i>media</i> kan niet worden aangemaakt.";
-$pgv_lang["created_placelinks_fail"]	= "De tabel <i>placelinks</i> kan niet worden aangemaakt.";
-$pgv_lang["import_progress"]			= "Voortgang importeren....";
 $pgv_lang["sec"]						= "sec.";
 $pgv_lang["tools_readme"]				= "Zie ook de \"tools-section\" van het #README.TXT# bestand voor meer informatie.";
 $pgv_lang["xreftorin"]					= "Omzetten XREF ID's naar RIN-nummer";
 $pgv_lang["dateconvert"]				= "Programma datumconversie";
 $pgv_lang["addmedia"]					= "Toevoegen Multimediabestanden";
 $pgv_lang["run_tools"]					= "Wilt u een van de volgende programma's uitvoeren voordat het GEDCOM-bestand wordt geïmporteerd:";
-$pgv_lang["import_complete"]			= "Import gereed";
 $pgv_lang["updating_family_names"]		= "Bijwerken familienamen voor FAM";
 $pgv_lang["processed_for"]				= "Bestand verwerkt voor";
-
 //-- INDIVIDUAL AND FAMILYLIST FILE MESSAGES
 $pgv_lang["total_fams"]					= "Gezinnen gevonden";
 $pgv_lang["total_indis"]				= "Personen gevonden";
@@ -439,7 +372,6 @@ $pgv_lang["confidential"]				= "vertrouwelijk";
 $pgv_lang["alpha_index"]					= "Alfabetische index";
 $pgv_lang["name_list"] 					= "Namenlijst";
 $pgv_lang["firstname_alpha_index"] 		= "Alfabetische index op voornaam";
-
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]						= "Leeftijd";
 $pgv_lang["days"]						= "dagen";
@@ -459,7 +391,6 @@ $pgv_lang["year"]						= "Jaar:";
 $pgv_lang["timeline_instructions"]		= "In de nieuwste Internet Verkenners is het mogelijk om de weergegeven blokken te verschuiven zoals u dat wilt.";
 $pgv_lang["zoom_in"]					= "Inzoomen";
 $pgv_lang["zoom_out"]					= "Uitzoomen";
-
 // -- MONTH NAMES
 $pgv_lang["jan"]						= "januari";
 $pgv_lang["feb"]						= "februari";
@@ -485,92 +416,44 @@ $pgv_lang["int"]						= "afgeleid";
 $pgv_lang["to"]							= "tot";
 $pgv_lang["cir"]						= "circa";
 $pgv_lang["apx"]						= "ongeveer";
-
 //-- Admin File Messages
-$pgv_lang["select_an_option"]			= "Selecteer een optie:";
-$pgv_lang["readme_documentation"]		= "README documentatie";
-$pgv_lang["view_readme"]				= "README documentatie";
-$pgv_lang["configuration"]				= "Instellingen";
 $pgv_lang["rebuild_indexes"]			= "Indexen (opnieuw) aanmaken";
 $pgv_lang["user_admin"]					= "Beheer gebruikers";
-$pgv_lang["user_created"]				= "Gebruiker gemaakt.";
-$pgv_lang["user_create_error"]			= "Het is niet mogelijk om de gebruiker toe te voegen. Probeer het opnieuw.";
 $pgv_lang["password_mismatch"]			= "Wachtwoorden zijn verschillend.";
 $pgv_lang["enter_username"]				= "U moet de gebruikersnaam invullen.";
 $pgv_lang["enter_fullname"]				= "U moet de volledige naam invullen.";
 $pgv_lang["enter_password"]				= "U moet het wachtwoord invullen.";
 $pgv_lang["confirm_password"]			= "U moet het wachtwoord twee keer invullen.";
-$pgv_lang["update_user"]				= "Aanpassen gebruiker";
-$pgv_lang["update_myaccount"]			= "Mijn gegevens bijwerken";
 $pgv_lang["save"]						= "Opslaan";
 $pgv_lang["delete"]						= "Verwijder";
 $pgv_lang["edit"]						= "Wijzig";
-$pgv_lang["full_name"]					= "Volledige naam";
-$pgv_lang["visibleonline"]				= "Zichtbaar voor anderen als aangemeld";
-$pgv_lang["comment"]					= "Commentaar beheerder";
-$pgv_lang["comment_exp"]				= "Waarschuw beheerder op datum";
-$pgv_lang["editaccount"]				= "Sta gebruiker toe om gebruikersgegevens te wijzigen";
-$pgv_lang["admin_gedcom"]				= "Beheren";
-$pgv_lang["confirm_user_delete"]		= "Weet u zeker dat u deze gebruiker wilt verwijderen?";
-$pgv_lang["create_user"]				= "Gebruiker maken";
 $pgv_lang["no_login"]					= "De gebruiker is niet geautoriseerd.";
 $pgv_lang["basic_realm"]			= "PhpGedView Authentication System";
 $pgv_lang["basic_auth_failure"]		= "Voer een geldig login naam en wachtwoord in om  deze gegevens te benaderen";
 $pgv_lang["basic_auth"]				= "Eenvoudige authorisatie";
 $pgv_lang["no_auth_needed"]			= "Geen authorisatie";
 $pgv_lang["import_gedcom"]				= "Importeer dit GEDCOM-bestand";
-$pgv_lang["duplicate_username"]			= "Een gebruiker met die naam is reeds aanwezig. Ga terug en kies een andere naam.";
-$pgv_lang["gedcomid"]					= "Uw ID in de genealogie";
 $pgv_lang["enter_gedcomid"]				= "U moet een GEDCOM-ID invoeren.";
 $pgv_lang["user_info"]					= "Mijn gebruikersinformatie";
-$pgv_lang["rootid"]						= "Startpersoon van de kwartierstaat";
-$pgv_lang["download_gedcom"]			= "Download GEDCOM-bestand";
-$pgv_lang["upload_gedcom"]				= "Upload GEDCOM-bestand";
-$pgv_lang["add_new_gedcom"]				= "Nieuw GEDCOM-bestand maken";
 $pgv_lang["file_not_present"]		= "Het bestand bestaat niet.";
-$pgv_lang["gedcom_file"]				= "GEDCOM-bestand";
 $pgv_lang["enter_filename"]				= "Voer een GEDCOM-bestandsnaam in.";
 $pgv_lang["file_not_exists"]			= "Er bestaat geen bestand met de opgegeven naam.";
 $pgv_lang["file_exists"]				= "Er bestaat al een GEDCOM-bestand met die naam. Kies een andere naam, of verwijder het oude bestand.";
 $pgv_lang["new_gedcom_title"]			= "Genealogie van [#GEDCOMFILE#]";
-$pgv_lang["upload_error"]				= "Er is een fout opgetreden bij het uploaden van het bestand.";
-$pgv_lang["upload_media_help"]			= "Selecteer de bestanden op uw computer die u naar de server wilt uploaden. Alle bestanden worden geplaatst in de map <b>#MEDIA_DIRECTORY#</b> of een van de submappen.<br /><br />Mapnamen die u specificeert worden toegevoegd aan #MEDIA_DIRECTORY#, bijvoorbeeld #MEDIA_DIRECTORY#fotoos. Als de map voor miniweergaves niet bestaat, wordt deze automatisch aangemaakt.<br /><br />";
 $pgv_lang["upload_gedcom_help"]			= "Selecteer op uw computer het GEDCOM- of ZIP-bestand dat u naar de server wilt uploaden. Het bestand wordt geplaatst in de map <b>#INDEX_DIRECTORY#</b>.<br /><br />Als u een ZIP-bestand upload, mag dit maar een GEDCOM-bestand bevatten. Dit GEDCOM bestand wordt automatisch in de volgende stappen gebruikt.<br /><br />";
 $pgv_lang["add_gedcom_instructions"]		= "Geef een naam voor het nieuwe GEDCOM-bestand. Deze zal worden geplaatst in de Index-map.";
-$pgv_lang["file_success"]				= "Het bestand is goed verstuurd";
-$pgv_lang["file_too_big"]				= "Het bestand is te groot.";
-$pgv_lang["file_partial"]				= "Het bestand is slechts gedeeltelijk overgestuurd. Probeer het opnieuw.";
-$pgv_lang["file_missing"]				= "Geen bestand ontvangen. Verstuur het bestand opnieuw.";
-$pgv_lang["manage_gedcoms"]				= "Beheer GEDCOM-bestanden en privacy-instellingen";
 $pgv_lang["research_assistant"]		= "Onderzoeks Helper";
 $pgv_lang["research_log"]				= "Onderzoekslogboek";
-$pgv_lang["administration"]				= "Beheer";
-$pgv_lang["ansi_to_utf8"]				= "Converteer dit GEDCOM-bestand van ANSI (ISO-8859-1) naar UTF-8?";
 $pgv_lang["utf8_to_ansi"]				= "Converteer dit GEDCOM-bestand van UTF-8 naar ANSI (ISO-8859-1)?";
-$pgv_lang["choose_priv"]				= "Kies privacy-niveau:";
-$pgv_lang["apply_privacy"]				= "Privacy-instellingen toepassen?";
-$pgv_lang["siteadmin"]					= "Site-beheerder";
-$pgv_lang["gedadmin"]					= "GEDCOM-beheerder";
-$pgv_lang["user"]						= "Aangemelde gebruiker";
-$pgv_lang["visitor"]					= "Bezoeker";
 $pgv_lang["user_manual"]				= "PhpGedView gebruikershandboek";
 $pgv_lang["upgrade"]					= "Upgrade PhpGedView";
-$pgv_lang["view_logs"]					= "Bekijk log-bestanden";
-$pgv_lang["logfile_content"]			= "Inhoud van log-bestand";
-$pgv_lang["img_admin_settings"]			= "Configureren bewerking afbeeldingen";
-$pgv_lang["download_note"]				= "LET OP: Bij grote GEDCOM-bestanden kan het lang duren voordat de download gereed is.<br />De toegestane limiet voor de uitvoeringstijd van een PHP-pagina kan hierdoor worden overschreden.<br />Controleer daarom altijd of het gedownloade GEDCOM-bestand als laatste regel '0 TRLR' bevat.";
-$pgv_lang["pgv_registry"]				= "Andere websites met PhpGedView";
-$pgv_lang["verify_upload_instructions"]		= "Als u kiest om door te gaan, wordt het oude GEDCOM-bestand overschreven door het GEDCOM-bestand dat u heeft ge-upload, en begint het importeren opnieuw. Als u Annuleren kiest blijft het oude GEDCOM-bestand intact.";
 $pgv_lang["cancel_upload"]				= "Upload annuleren";
 $pgv_lang["add_media_records"]			= "Toevoegen multimediagegevens";
 $pgv_lang["manage_media_files"]			= "Beheren multimediabestanden";
 $pgv_lang["link_media_records"]			= "Koppel multimedia aan personen";
 $pgv_lang["step4"]						= "Stap 4 van 4:";
-$pgv_lang["validate_gedcom"]			= "Valideren GEDCOM-bestand";
 $pgv_lang["step3"]						= "Stap 3 van 4:";
-$pgv_lang["step2"]						= "Stap 2 van 4:";
 $pgv_lang["step1"]						= "Stap 1 van 4:";
-
 //-- Relationship chart messages
 $pgv_lang["relationship_chart"]			= "Verwantschap";
 $pgv_lang["person1"]					= "Persoon 1";
@@ -603,25 +486,20 @@ $pgv_lang["next_path"]					= "Zoek volgend pad";
 $pgv_lang["show_path"]					= "Toon pad";
 $pgv_lang["line_up_generations"]		= "Uitlijnen gelijke generaties";
 $pgv_lang["oldest_top"]					= "Toon oudste bovenaan";
-
 // %1$s vervangen door eerste persoon, %2$s door de verwantschap en %3$s door de tweede persoon
 $pgv_lang["relationship_male_1_is_the_2_of_3"] = '%1$s is de %2$s van %3$s.';
 $pgv_lang["relationship_female_1_is_the_2_of_3"] = '%1$s is de %2$s van %3$s.';
-
 $pgv_lang["mother_in_law"]		    = "schoonmoeder";
 $pgv_lang["father_in_law"]		    = "schoonvader";
 $pgv_lang["brother_in_law"]		    = "schoonbroer";
 $pgv_lang["sister_in_law"]		    = "schoonzuster";
 $pgv_lang["son_in_law"]		        = "schoonzoon";
 $pgv_lang["daughter_in_law"]		= "schoondochter";
-
 $pgv_lang["step_son"]		        = "stiefzoon";
 $pgv_lang["step_daughter"]	    	= "stiefdochter";
-
 // NOTE in the translations below %d is replaced with the number of greats
 $pgv_lang["n_x_great_grandfather"]	= "%d x groot grootvader";
 $pgv_lang["n_x_great_grandmother"]	= "%d x groot grootmoeder";
-
 // the bosa_brothers_offspring name is used for fraternal nephews and nieces - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
@@ -654,7 +532,6 @@ $pgv_lang["bosa_sisters_offspring_7"] 				= "achternicht";        // sister's da
 //              %3$d is replaced with the number of generations - 2
 $pgv_lang["n_x_sisters_son"]	  = '%2$d x achterneef';
 $pgv_lang["n_x_sisters_daughter"] = '%2$d x achternicht';
-
 // the bosa name is used for offspring - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
@@ -682,7 +559,6 @@ $pgv_lang["n_x_grandson_from_son"]	  = '%3$d x achterkleinzoon';
 $pgv_lang["n_x_granddaughter_from_son"] = '%3$d x achterkleindochter';
 $pgv_lang["n_x_grandson_from_daughter"]	  = '%3$d x achterkleinzoon';
 $pgv_lang["n_x_granddaughter_from_daughter"] = '%3$d x achterkleindochter';
-
 // the sosa_uncle name is used for uncles - the names below can be extended to any number
 // of generations just by adding more translations.
 // to allow fo language variations we specify different relationships for paternal and maternal
@@ -701,7 +577,6 @@ $pgv_lang["sosa_uncle_7"] 				= "oud-oom";      // mother's mother's brother
 //              %3$d is replaced with the number of generations - 2
 $pgv_lang["n_x_paternal_uncle"]		= '%2$d x oud-oom';
 $pgv_lang["n_x_maternal_uncle"]	    = '%2$d x oud-oom';
-
 // the sosa_aunt name is used for aunts - the names below can be extended to any number
 // of generations just by adding more translations.
 // to allow fo language variations we specify different relationships for paternal and maternal
@@ -720,7 +595,6 @@ $pgv_lang["sosa_aunt_7"] 				= "oud-tante";      // mother's mother's sister
 //              %3$d is replaced with the number of generations - 2
 $pgv_lang["n_x_paternal_aunt"]		= '%2$d x oud-tante';
 $pgv_lang["n_x_maternal_aunt"]	    = '%2$d x oud-tante';
-
 // if a specific cousin relationship cannot be represented in a language translate as "";
 $pgv_lang["male_cousin_1"]              = "neef";
 $pgv_lang["male_cousin_2"]              = "volle achterneef";
@@ -764,53 +638,22 @@ $pgv_lang["female_cousin_18"]           = "";
 $pgv_lang["female_cousin_19"]           = "";
 $pgv_lang["female_cousin_20"]           = "";
 $pgv_lang["female_cousin_n"]            = "";
-
 //-- GEDCOM edit utility
 $pgv_lang["check_delete"]				= "Weet u zeker dat u dit GEDCOM-feit wilt verwijderen?";
 $pgv_lang["access_denied"]				= "<b>Toegang geweigerd</b><br />U heeft geen toegang tot deze bron.";
-$pgv_lang["gedrec_deleted"]				= "GEDCOM-record verwijderd.";
-$pgv_lang["gedcom_deleted"]				= "GEDCOM [#GED#] verwijderd.";
 $pgv_lang["changes_exist"]				= "Dit GEDCOM-bestand is gewijzigd.";
-$pgv_lang["accept_changes"]				= "Wijzigingen accepteren/ongedaan maken";
-$pgv_lang["show_changes"]				= "Dit record is gewijzigd. Klik hier om de wijzigingen te tonen.";
-$pgv_lang["hide_changes"]				= "Klik hier om wijzigingen te verbergen.";
-$pgv_lang["review_changes"]				= "Beoordeel GEDCOM-wijzigingen";
-$pgv_lang["undo_successful"]			= "Ongedaan maken geslaagd";
-$pgv_lang["undo"]						= "Maak ongedaan";
-$pgv_lang["view_change_diff"]			= "Toon wijzigingen";
-$pgv_lang["changes_occurred"]			= "De volgende wijzigingen zijn voorgekomen voor deze persoon:";
 $pgv_lang["find_place"]					= "Zoek locatie";
-$pgv_lang["refresh"]					= "Ververs";
 $pgv_lang["close_window"]				= "Sluit venster";
 $pgv_lang["close_window_without_refresh"]	= "Sluit venster zonder herladen";
 $pgv_lang["place_contains"]				= "Locatie bevat:";
-$pgv_lang["accept_gedcom"]				= "Geef voor iedere wijziging aan of deze geaccepteerd moet worden of ongedaan gemaakt.<br />Klik \"Accepteer alle wijzigingen\" om alle in een handeling door te voeren.<br />Klik \"Toon wijzigingen\" om de oude en nieuwe situatie te zien,<br />klik \"Toon GEDCOM-gegevens\" om de nieuwe situatie in GEDCOM-formaat te bekijken.";
-$pgv_lang["ged_import"]					= "Importeer";
 $pgv_lang["now_import"]					= "Klik op de onderstaande koppeling om het GEDCOM-bestand te importeren in PhpGedView";
-$pgv_lang["add_fact"]					= "Nieuw feit toevoegen";
 $pgv_lang["add"]						= "Toevoegen";
 $pgv_lang["custom_event"]				= "Vrij te kiezen gebeurtenis";
-$pgv_lang["update_successful"]			= "Bijwerken geslaagd.";
-$pgv_lang["add_child"]					= "Kind toevoegen";
-$pgv_lang["add_child_to_family"]		= "Kind toevoegen aan dit gezin";
-$pgv_lang["add_sibling"]				= "Voeg broer of zus toe";
-$pgv_lang["add_son_daughter"]			= "Voeg zoon of dochter toe";
-$pgv_lang["must_provide"]				= "Invoeren:";
 $pgv_lang["delete_person"]				= "Verwijder deze persoon";
 $pgv_lang["confirm_delete_person"]		= "Weet u zeker dat u deze persoon uit het GEDCOM-bestand wilt verwijderen?";
 $pgv_lang["find_media"]					= "Zoek multimedia";
-$pgv_lang["add_media"]					= "Voeg nieuwe koppeling met multimedia toe";
-$pgv_lang["ansi_encoding_detected"]		= "ANSI bestandscodering geconstateerd. PhpGedView werkt het best met bestanden gecodeerd volgens UTF-8.";
-$pgv_lang["invalid_header"]				= "GEDCOM-regels aanwezig voor de kopregel (0 HEAD). Deze worden bij het opschonen verwijderd.";
-$pgv_lang["macfile_detected"]			= "Het bestand is in Macintosh-formaat. Bij het opschonen wordt het omgezet naar DOS-formaat.";
-$pgv_lang["place_cleanup_detected"]		= "Foutieve locatiecoderingen aanwezig. Deze fouten moeten hersteld worden. Het volgende bestandsdeel geeft de foutieve locatiecodering aan:";
-$pgv_lang["cleanup_places"]				= "Opschonen locaties";
-$pgv_lang["empty_lines_detected"]		= "Lege regels ontdekt in uw GEDCOM-bestand. Bij het opschonen worden deze verwijderd.";
 $pgv_lang["verify_gedcom_help"]	= "Kies hier om door te gaan met de upload en import van het GEDCOM-bestand of om deze af te breken.";
 $pgv_lang["import_options_help"] 	= "U kunt extra opties kiezen voor het importeren van het GEDCOM-bestand.";
-$pgv_lang["import_options"]		= "Importopties";
-$pgv_lang["import_statistics"]	= "Importeren statistieken";
-$pgv_lang["verify_gedcom"]		= "Gedcom verifieren";
 $pgv_lang["hourglass_chart"]			= "Zandloperdiagram";
 $pgv_lang["choose_report"]				= "Kies een rapport";
 $pgv_lang["enter_report_values"]		= "Voer waarden voor het rapport in";
@@ -821,7 +664,6 @@ $pgv_lang["download_report"]			= "Rapport downloaden";
 $pgv_lang["reports"]					= "Rapporten";
 $pgv_lang["pdf_reports"]				= "PDF rapporten";
 $pgv_lang["html_reports"]				= "HTML rapporten";
-
 //-- Ahnentafel report
 $pgv_lang["ahnentafel_report"]		= "Voorouders";
 $pgv_lang["ahnentafel_header"]		= "Voorouder Rapport voor ";
@@ -840,11 +682,9 @@ $pgv_lang["ahnentafel_buried_m"]	= "werd begraven op";
 $pgv_lang["ahnentafel_buried_f"]	= "werd begraven op";
 $pgv_lang["ahnentafel_place"]		= " in ";
 $pgv_lang["ahnentafel_no_details"]	= " maar de details zijn onbekend";
-
 //-- Descendancy report
 $pgv_lang["descend_report"]		= "Nakomelingen";
 $pgv_lang["descendancy_header"]		= "Nakomelingen rapport voor ";
-
 $pgv_lang["family_group_report"]		= "Gezin";
 $pgv_lang["page"]						= "Pagina";
 $pgv_lang["of"]							= "van";
@@ -876,7 +716,6 @@ $pgv_lang["marrdate2"]				= "Huwelijksdatum-bereik eind";
 $pgv_lang["marrdate1"]				= "Huwelijksdatum-bereik start";
 $pgv_lang["sort_by"]					= "Sorteren op";
 $pgv_lang["cleanup"]					= "Opschonen";
-$pgv_lang["skip_cleanup"]				= "Opschonen overslaan";
 $pgv_lang["dynasty_list"]				= "Overzicht van stamouders";
 $pgv_lang["make_slklist"]				= "Export naar Excel bestand (SLK formaat)";
 $pgv_lang["excel_list"]					= "Uitvoer in Excel (SLK formaat) naar de volgende bestanden (gebruik eerst lijst stamouders):";
@@ -885,7 +724,6 @@ $pgv_lang["excel_create"]				= " wordt aangemakt in het bestand: ";
 $pgv_lang["patriarch_list"]				= "Stamouders";
 $pgv_lang["slk_list"]					= "Excel (SLK) lijst";
 $pgv_lang["statistics"]					= "Statistieken";
-$pgv_lang["merge_records"]				= "Gegevens samenvoegen";
 $pgv_lang["merge_same"]					= "Gegevens zijn niet van hetzelfde type en kunnen daarom niet worden samengevoegd.";
 $pgv_lang["merge_step1"]				= "Samenvoegen stap 1 van 3";
 $pgv_lang["merge_step2"]				= "Samenvoegen stap 2 van 3";
@@ -1011,48 +849,16 @@ $pgv_lang["twin_sister"]				= "Tweelingzus";
 $pgv_lang["witness"]					= "Getuige";
 $pgv_lang["adds_completed"]				= "Multimedia is succesvol toegevoegd aan het GEDCOM-bestand.";
 $pgv_lang["set_link"]					= "Maak koppeling";
-$pgv_lang["add_source_lbl"]				= "Voeg bronvermelding toe";
-$pgv_lang["add_note_lbl"]				= "Voeg notitie toe";
-$pgv_lang["add_media_lbl"]				= "Voeg koppeling met multimedia toe";
-$pgv_lang["add_source"]					= "Voeg nieuwe bronvermelding toe";
-$pgv_lang["add_note"]					= "Voeg nieuwe notitie toe";
 $pgv_lang["delete_source"]				= "Verwijder deze bron";
 $pgv_lang["confirm_delete_source"]		= "Weet u zeker dat u deze bron uit het GEDCOM-bestand wilt verwijderen?";
-$pgv_lang["add_husb"]					= "Partner toevoegen";
-$pgv_lang["add_husb_to_family"]			= "Voeg partner toe aan dit gezin";
-$pgv_lang["add_wife"]					= "Partner toevoegen";
-$pgv_lang["add_wife_to_family"]			= "Voeg partner toe aan dit gezin";
 $pgv_lang["find_family"]				= "Zoek gezin";
 $pgv_lang["find_fam_list"]				= "Lijst gezinnen zoeken";
-$pgv_lang["add_new_wife"]				= "Nieuwe partner toevoegen";
-$pgv_lang["add_new_husb"]				= "Nieuwe partner toevoegen";
-$pgv_lang["add_obje"]					= "Multimedia-object toevoegen";
-$pgv_lang["no_changes"]					= "Er zijn op dit moment geen wijzigingen ter beoordeling.";
-$pgv_lang["accept"]						= "Accepteer";
-$pgv_lang["accept_all"]					= "Accepteer alle wijzigingen";
-$pgv_lang["accept_successful"]			= "Wijzigingen succesvol aangebracht in de database";
-$pgv_lang["edit_raw"]					= "Wijzig GEDCOM-gegevens";
 $pgv_lang["select_date"]				= "Selecteer een datum";
-$pgv_lang["create_source"]				= "Nieuwe bron";
-$pgv_lang["new_source_created"]			= "Bron succesvol aangemaakt.";
-$pgv_lang["paste_id_into_field"]		= "Plak dit bron-ID in de invoervelden voor verwijzing naar deze bron ";
-$pgv_lang["add_name"]					= "Nieuwe voor/achternaam toevoegen";
-$pgv_lang["privacy_not_granted"]		= "U heeft geen toegang tot";
 $pgv_lang["user_cannot_edit"]			= "Gebruiker kan deze genealogie niet aanpassen.";
-$pgv_lang["privacy_prevented_editing"]	= "Volgens de privacy-instellingen heeft u geen rechten om deze gegevens te wijzigen.";
-$pgv_lang["edit_sex"]					= "Wijzig geslacht";
 $pgv_lang["ged_noshow"]					= "Deze functie is door de beheerder uitgeschakeld.";
 $pgv_lang["bdm"]						= "Geboortes, overlijdens, huwelijken";
-$pgv_lang["add_asso"]					= "Nieuwe relatie toevoegen";
-$pgv_lang["gedcom_editing_disabled"]	= "De beheerder staat het wijzigen van deze genealogie niet toe.";
-$pgv_lang["add_mother"]					= "Moeder toevoegen";
-$pgv_lang["add_father"]					= "Vader toevoegen";
-$pgv_lang["append"]						= "Gegevens toevoegen";
-$pgv_lang["replace"]					= "Gegevens vervangen";
 $pgv_lang["edit_name"]					= "Wijzig naam";
 $pgv_lang["delete_name"]				= "Verwijder naam";
-$pgv_lang["no_temple"]					= "Geen Temple - Living Ordinance";
-
 //-- calendar.php messages
 $pgv_lang["on_this_day"]				= "Op deze dag, in het verleden...";
 $pgv_lang["in_this_month"]				= "In deze maand, in het verleden...";
@@ -1078,15 +884,7 @@ $pgv_lang["living_only"]				= "Levende personen";
 $pgv_lang["recent_events"]				= "Recent verleden (< 100 jaar)";
 $pgv_lang["day_not_set"]				= "Dag niet bekend";
 $pgv_lang["year_error"]					= "Sorry, datums voor 1970 worden in het maandoverzicht niet ondersteund.";
-$pgv_lang["upload"]						= "Upload";
-
 //-- upload media messages
-$pgv_lang["upload_media"]				= "Uploaden mediabestanden";
-$pgv_lang["folder"]		 				= "Map";
-$pgv_lang["media_file"]					= "Mediabestand";
-$pgv_lang["thumbnail"]					= "Miniweergave";
-$pgv_lang["upload_successful"]			= "Upload geslaagd";
-$pgv_lang["thumbnail_not_deleted"]	= "Miniweergave kan niet worden verwijderd.";
 $pgv_lang["media_record_not_deleted"]	= "Mediagegevens van #xref# en koppelingen kunnen niet worden verwijderd uit het bestand.";
 $pgv_lang["record_not_updated"]		= "Gegevens van #pid# kunnen niet worden bijgewerkt.";
 $pgv_lang["record_not_removed"]		= "Gegevens van #xref# kunnen niet uit het bestand worden verwijderd.";
@@ -1095,13 +893,7 @@ $pgv_lang["record_not_added"]		= "Gegevens van #xref# kunnen niet worden toegevo
 $pgv_lang["record_removed"]			= "Gegevens van #xref# zijn verwijderd uit het bestand.";
 $pgv_lang["record_updated"]			= "Gegevens van #pid# zijn bijgewerkt.";
 $pgv_lang["media_record_deleted"]	= "Mediagegevens van #xref# en koppelingen zijn uit het bestand verwijderd.";
-$pgv_lang["thumbnail_deleted"]		= "Miniweergave verwijderd.";
-$pgv_lang["media_file_not_deleted"]	= "Mediabestand kan niet worden verwijderd.";
-$pgv_lang["media_file_not_moved"]	= "Mediabestand kan niet worden verplaatst.";
-$pgv_lang["media_file_not_renamed"]	= "Mediabestand kan niet worden verplaatst of hernoemd.";
-$pgv_lang["media_file_deleted"]		= "Mediabestand verwijderd.";
 $pgv_lang["lost_password"]				= "Wachtwoord vergeten?";
-
 //-- user self registration module
 $pgv_lang["requestpassword"]			= "Vraag nieuw wachtwoord aan";
 $pgv_lang["no_account_yet"]				= "Nog geen gebruikersnaam?";
@@ -1155,21 +947,14 @@ $pgv_lang["savedata"]					= "Gewijzigde gegevens opslaan";
 $pgv_lang["datachanged"]				= "Gebruikersgegevens zijn gewijzigd!";
 $pgv_lang["datachanged_name"]			= "Opnieuw aanmelden met nieuwe gebruikersnaam a.u.b.";
 $pgv_lang["myuserdata"]					= "Mijn gegevens";
-$pgv_lang["verified"]					= "Registratie bevestigd";
-$pgv_lang["verified_by_admin"]			= "Registratie goedgekeurd";
 $pgv_lang["user_theme"]					= "Mijn site-opmaak";
 $pgv_lang["mgv"]						= "MyGedView";
-$pgv_lang["user_contact_method"]		= "Gewenste verzendwijze";
 $pgv_lang["mygedview"]					= "MyGedView";
 $pgv_lang["passwordlength"]				= "Het wachtwoord moet uit minimaal 6 karakters bestaan.";
-$pgv_lang["admin_approved"]				= "Uw aanmelding op #SERVER_NAME# is goedgekeurd";
-$pgv_lang["you_may_login"]				= " door de Beheerder. U kunt nu aanloggen op de website door op de onderstaande koppeling te klikken.";
 $pgv_lang["welcome_text_auth_mode_1"]		= "<b>WELKOM OP DEZE GENEALOGIE WEBSITE</b><br /><br />Toegang tot deze website is voorbehouden aan bezoekers die hiervoor zijn geautoriseerd.<br />Als u al beschikt over een gebruikersnaam en wachtwoord, dan kunt u zich op deze pagina aanmelden.<br /><br />Als u nog geen gebruikersnaam en wachtwoord heeft, kunt u er met behulp van de onderstaande koppeling een aanvragen.<br />Na verificatie van de door u verstrekte informatie zal de sitebeheerder uw gebruikersnaam activeren.<br />Zodra activering heeft plaatsgevonden, ontvangt u hierover een e-mailbericht.";
 $pgv_lang["welcome_text_auth_mode_2"]		= "<b>WELKOM OP DEZE GENEALOGIE WEBSITE</b><br /><br />Toegang tot deze website is voorbehouden aan bezoekers die hiervoor zijn <b>geautoriseerd</b>.<br />Als u al beschikt over een gebruikersnaam en wachtwoord, dan kunt u zich op deze pagina aanmelden.<br /><br />Als u nog geen gebruikersnaam en wachtwoord heeft, kunt u er met behulp van de onderstaande koppeling een aanvragen.<br />Na verificatie van de door u verstrekte informatie kan de sitebeheerder uw aanvraag toekennen of afwijzen.<br />Zodra uw aanvraag wordt toegekend, ontvangt u hierover een e-mailbericht.";
 $pgv_lang["welcome_text_auth_mode_3"]		= "<b>WELKOM OP DEZE GENEALOGIE WEBSITE</b><br /><br />Toegang tot deze website is voorbehouden aan <b>familieleden</b><br /><br />Als u al beschikt over een gebruikersnaam en wachtwoord, dan kunt u zich op deze pagina aanmelden.<br /><br />Als u nog geen gebruikersnaam en wachtwoord heeft, kunt u er met behulp van de onderstaande koppeling een aanvragen.<br />Na verificatie van de door u verstrekte informatie kan de sitebeheerder uw aanvraag toekennen of afwijzen.<br />Zodra uw aanvraag wordt toegekend, ontvangt u hierover een e-mailbericht.";
 $pgv_lang["welcome_text_cust_head"]			= "<b>WELKOM OP DEZE GENEALOGIE WEBSITE</b><br /><br />Toegang is voorbehouden aan gebruikers die beschikken over een gebruikersnaam en wachtwoord voor deze site.<br />";
-
-
 //-- mygedview page
 $pgv_lang["welcome"]					= "Welkom";
 $pgv_lang["no_events_living1"]			= "Er zijn geen gebeurtenissen van levende personen voor morgen.";
@@ -1325,7 +1110,6 @@ $pgv_lang["message_email3"]				= "U zond het volgende bericht naar de PhpGedView
 $pgv_lang["viewing_url"]				= "Het bericht is verzonden vanaf de volgende URL:";
 $pgv_lang["messaging2_help"]			= "Als u dit bericht verzendt, ontvangt u een kopie op het e-mailadres dat u heeft opgegeven.";
 $pgv_lang["random_picture"]				= "Willekeurige afbeelding";
-
 //-- upgrade.php messages
 $pgv_lang["upgrade_util"]				= "Opwaardeerprogramma";
 $pgv_lang["no_upgrade"]					= "Er zijn geen bestanden om bij te werken.";
@@ -1340,7 +1124,6 @@ $pgv_lang["include"]					= "Toevoegen:";
 $pgv_lang["page_x_of_y"]				= "Pagina #GLOBALS[currentPage]# van #GLOBALS[lastPage]#";
 $pgv_lang["options"]					= "Opties:";
 $pgv_lang["inc_phpgedview"]				= "PhpGedView";
-$pgv_lang["inc_languages"]				= "Talen";
 $pgv_lang["inc_config"]					= "Configuratiebestand";
 $pgv_lang["inc_researchlog"]			= "Onderzoekslogboek";
 $pgv_lang["inc_index"]					= "Indexbestanden";
@@ -1356,37 +1139,10 @@ $pgv_lang["new_variable"]				= "Nieuwe variabele gevonden:";
 $pgv_lang["file_write_error"]			= "FOUT!! Kan niet schrijven naar bestand [#pgv_lang[global_str1]#].";
 $pgv_lang["file_open_error"]			= "Er is een fout opgetreden bij het openen van het bestand [#pgv_lang[global_str1]#].";
 $pgv_lang["config_open_error"]			= "Fout bij het openen van het configuratiebestand.";
-$pgv_lang["gedcom_config_write_error"]	= "Fout! Kan niet schrijven naar GEDCOM-configuratiebestand.";
 $pgv_lang["config_update_ok"]			= "Configuratiebestand is bijgewerkt.";
-$pgv_lang["date_of_entry"]				= "Invoerdatum bij bron";
-$pgv_lang["main_media_ok1"]				= "Mediabestand <b>#GLOBALS[oldMediaName]#</b> hernoemd naar <b>#GLOBALS[newMediaName]#</b>.";
-$pgv_lang["main_media_ok2"]				= "Mediabestand <b>#GLOBALS[oldMediaName]#</b> verplaatst van <b>#GLOBALS[oldMediaFolder]#</b> naar <b>#GLOBALS[newMediaFolder]#</b>";
-$pgv_lang["main_media_ok3"]				= "Mediabestand verplaatst en hernoemd van <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> naar <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";
-$pgv_lang["main_media_fail0"]			= "Mediabestand <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> bestaat niet.";
-$pgv_lang["main_media_fail1"]			= "Mediabestand <b>#GLOBALS[oldMediaName]#</b> kan nier worden hernoemd naar <b>#GLOBALS[newMediaName]#</b>.";
-$pgv_lang["main_media_fail2"]			= "Mediabestand <b>#GLOBALS[oldMediaName]#</b> kan niet worden verplaatst van <b>#GLOBALS[oldMediaFolder]#</b> naar <b>#GLOBALS[newMediaFolder]#</b>.";
-$pgv_lang["main_media_fail3"]			= "Mediabestand kan niet worden verplaatst en hernoemd van <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> naar <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";
-$pgv_lang["thumb_media_ok1"]			= "Miniatuurweergave <b>#GLOBALS[oldMediaName]#</b> hernoemd naar <b>#GLOBALS[newMediaName]#</b>.";
-$pgv_lang["thumb_media_ok2"]			= "Miniatuurweergave <b>#GLOBALS[oldMediaName]#</b> verplaatst van <b>#GLOBALS[oldThumbFolder]#</b> naar <b>#GLOBALS[newThumbFolder]#</b>.";
-$pgv_lang["thumb_media_ok3"]			= "Miniatuurweergave verplaatst en hernoemd van <b>#GLOBALS[oldThumbFolder]##GLOBALS[oldMediaName]#</b> naar <b>#GLOBALS[newThumbFolder]##GLOBALS[newMediaName]#</b>.|";
-$pgv_lang["thumb_media_fail0"]			= "Miniatuurweergave <b>#GLOBALS[oldThumbFolder]##GLOBALS[oldMediaName]#</b> bestaat niet.";
-$pgv_lang["thumb_media_fail1"]			= "Miniatuurweergave <b>#GLOBALS[oldMediaName]#</b> kan niet worden hernoemd naar <b>#GLOBALS[newMediaName]#</b>.";
-$pgv_lang["thumb_media_fail2"]			= "Miniatuurweergave <b>#GLOBALS[oldMediaName]#</b> kan niet worden verplaatst van <b>#GLOBALS[oldThumbFolder]#</b> naar <b>#GLOBALS[newThumbFolder]#</b>.|";
-$pgv_lang["thumb_media_fail3"]			= "Miniatuurweergave kan niet worden verplaatst en hernoemd van <b>#GLOBALS[oldThumbFolder]##GLOBALS[oldMediaName]#</b> naar <b>#GLOBALS[newThumbFolder]##GLOBALS[newMediaName]#</b>.";
-$pgv_lang["server_file"]				= "Bestandsnaam op server";
-$pgv_lang["server_file_advice"]			= "Niet wijzigen om originele bestandsnaam te behouden.";
-$pgv_lang["server_file_advice2"]		= "Hier kan een URL worden ingevoerd, beginnend met &laquo;http://&raquo;.";
 $pgv_lang["server_folder"]				= "Mapnaam op server";
-$pgv_lang["server_folder_advice"]		= "Voer maximaal #GLOBALS[MEDIA_DIRECTORY_LEVELS]# mapnamen in, welke komen na &laquo;#GLOBALS[MEDIA_DIRECTORY]#&raquo;.<br />Voer niet het  &laquo;#GLOBALS[MEDIA_DIRECTORY]#&raquo; deel van de mapnaam in.";
-$pgv_lang["server_folder_advice2"]		= "Dit veld wordt genegeerd indien een URL is ingevoerd in het bestandsnaam veld.";
-$pgv_lang["add_linkid_advice"]			= "Voer de ID van de persoon, familie of bron in (of zoek hiernaar) met welke dit mediabestand moet worden verbonden.";
-$pgv_lang["use_browse_advice"]			= "Gebruik de knop &laquo;Bladeren&raquo; of &laquo;Browse&raquo; om op uw computer naar de gewenste file te zoeken.";
-$pgv_lang["add_media_other_folder"]		= "Andere map ... voer in";
-$pgv_lang["add_media_file"]				= "Bestaand mediabestand op server";
-$pgv_lang["link_to_existing_media"]		= "Verbind met bestaand mediabestand";
 $pgv_lang["page_size"]					= "Paginaformaat";
 $pgv_lang["record_not_found"]			= "De opgevraagde gegevens zijn niet gevonden. Dit kan worden veroorzaakt door een verbinding met een onjuist persoon of door een beschadigd GEDCOM bestand.";
-$pgv_lang["record_marked_deleted"]		= "Dit record wordt verwijderd na goedkeuring door de beheerder.";
 $pgv_lang["result_page"]				= "Resultaat pagina";
 $pgv_lang["edit_media"]					= "Wijzigen media bestand";
 $pgv_lang["wiki_main_page"]				= "Wiki Hoofd Pagina";
@@ -1395,25 +1151,12 @@ $pgv_lang["wiki_admin_guide"]			= "Wiki Beheerders Handleiding";
 $pgv_lang["no_search_for"]			= "Selecteer een optie waar naar gezocht moet worden.";
 $pgv_lang["no_search_site"]			= "Selecteer ten minste één site.";
 $pgv_lang["other_searches"]			= "Andere zoekacties ";
-$pgv_lang["multi_site_search"] 		= "Meerdere sites doorzoeken";
 $pgv_lang["search_sites"] 			= "Te doorzoeken sites";
 $pgv_lang["search_asso_text_unavailable"] = "Verbinding<br /> nog niet beschikbaar met <br /> site zoeken";
-$pgv_lang["no_known_servers"]		= "Geen bekende servers<br/>Geen resultaten gevonden";
 $pgv_lang["search_sites_discription"] = "Doorzoek bekende sites";
-$pgv_lang["basic_search_discription"] = "Eenvoudig zoeken";
-$pgv_lang["advanced_search_discription"] = "Geavanceerd zoeken";
-$pgv_lang["basic_search"]			= "Zoeken";
 $pgv_lang["advanced_search"]		= "Geavanceerd zoeken";
-$pgv_lang["name_search"]			= "Naam: ";
-$pgv_lang["birthdate_search"]		= "Geboortedatum: ";
-$pgv_lang["birthplace_search"]		= "Geboorteplaats: ";
-$pgv_lang["deathdate_search"]		= "Overlijdensdatum: ";
-$pgv_lang["deathplace_search"]		= "Plaats van overlijden: ";
 $pgv_lang["site_had"]				= "bevat de volgende";
-$pgv_lang["gender_search"]			= "Geslacht: ";
 $pgv_lang["site_list"]				= "Site: ";
-$pgv_lang["invalid_search_multisite_input"] = "Voer één van de volgende gegevens in: Naam, Geboortedatum, Geboorteplaats, Overlijdensdatum, Plaats van overlijden of Geslacht";
-$pgv_lang["invalid_search_multisite_input_gender"] = "Zoek nogmaals met meer informatie dan alleen geslacht";
 $pgv_lang["config_uptodate"]			= "Uw configuratiebestand is bijgewerkt.";
 $pgv_lang["processing"]					= "Bezig.......";
 $pgv_lang["privacy_open_error"]			= "Fout bij het openen van het [#PRIVACY_MODULE#] bestand.";
@@ -1431,41 +1174,24 @@ $pgv_lang["heading_researchlog"]		= "Bestanden onderzoekslogboek:";
 $pgv_lang["heading_researchloglang"]	= "Taalbestanden onderzoekslogboek:";
 $pgv_lang["copied_success"]				= "kopiëren geslaagd";
 $pgv_lang["backup_copied_success"]		= "reservekopie maken geslaagd.";
-$pgv_lang["folder_created"]				= "Map gemaakt";
-$pgv_lang["folder_no_create"]		= "Map kan niet worden aangemaakt";
 $pgv_lang["add_media_button"]			= "Multimedia toevoegen";
 $pgv_lang["media_linked"]				= "Dit multimediabestand is gekoppeld aan:";
 $pgv_lang["media_not_linked"]			= "Dit multimediabestand is niet aan genealogiegegevens gekoppeld.";
-$pgv_lang["phpinfo"]					= "Toon PHP-informatie";
-$pgv_lang["admin_info"]					= "Informatie";
-$pgv_lang["admin_geds"]					= "Beheer GEDCOM's en gegevens";
-$pgv_lang["admin_site"]					= "Beheer website";
 $pgv_lang["media_table_created"]		= "De <i>media</i>tabel is bijgewerkt.";
 $pgv_lang["click_to_add_media"]			= "Klik hier om de bovenstaande media-items toe te voegen aan het GEDCOM-bestand #GEDCOM#";
-$pgv_lang["performing_validation"]		= "GEDCOM-validatie wordt uitgevoerd, selecteer de benodigde opties en klik op \"Opschonen\"";
-$pgv_lang["invalid_dates"]				= "Ongeldig datumformaat gevonden. Bij het opschonen worden deze datums gewijzigd in het formaat DD MMM YYYY (bijvoorbeeld 1 JAN 2004).";
 $pgv_lang["optional"]					= "Optionele programma's";
-$pgv_lang["month_before_day"]			= "Maand voor dag (MM DD YYYY)";
 $pgv_lang["order"]						= "Volgorde";
 $pgv_lang["inject_media_tool"]			= "Multimedia toevoegen aan GEDCOM-bestand";
 $pgv_lang["extension"]					= "Bestandstype";
-$pgv_lang["highlighted"]				= "Primaire afbeelding";
-$pgv_lang["example_place"]			= "Voorbeeld van een foutieve locatieaanduiding in uw GEDCOM-bestand:";
 $pgv_lang["add_media_descr"]			= "Dit programma voegt een OBJE-markering toe aan het GEDCOM-bestand. Sluit het venster als u klaar bent met toevoegen van multimedia.";
 $pgv_lang["launch_media_tool"]			= "Klik hier om multimedia toe te voegen.";
 $pgv_lang["add_media_tool"]				= "Toevoegen multimedia";
-$pgv_lang["example_date"]				= "Voorbeeld van een ongeldige datum in uw GEDCOM-bestand:";
-$pgv_lang["change_id"]					= "Wijzig persoons-ID in:";
-$pgv_lang["do_not_change"]				= "Niet wijzigen";
-$pgv_lang["day_before_month"]			= "Dag voor maand (DD MM YYYY)";
 $pgv_lang["optional_tools"]				= "U kunt kiezen om de volgende programma's uit te voeren, voordat het GEDCOM-bestand wordt geïmporteerd.";
-$pgv_lang["valid_gedcom"]				= "Geldig GEDCOM-bestand gevonden. Opschonen is niet noodzakelijk.";
 $pgv_lang["changed_places"]				= "Ongeldige plaatscoderingen gevonden. Plaatsgegevens zijn opgeschoond zodat deze voldoen aan de GEDCOM 5.5 specificaties.";
 $pgv_lang["changed_mac"]				= "Regeleinden in Macintosh-formaat gevonden. Regeleinden met alleen een 'CR' zijn gewijzigd in 'CR' en 'LF'.";
 $pgv_lang["process_error"]				= "Er is een probleem met de pagina. Een nieuwere versie kan niet worden gevonden.";
 $pgv_lang["upgrade_completed"]			= "Opwaarderen succesvol beëindigd";
 $pgv_lang["start_using_upgrad"]			= "Klik hier om te beginnen met versie";
-
 //-- statistics utility
 $pgv_lang["statutci"]					= "kan de index niet aanmaken";
 $pgv_lang["statnnames"]					= "aantal namen		=";
@@ -1505,7 +1231,6 @@ $pgv_lang["statar_xgp"]					= "grenswaarden voor perioden (z-as):";
 $pgv_lang["statmess1"]					= "<b>Verander eventueel de volgende waarden afhankelijk van settings x-as en z-as</b>";
 $pgv_lang["statreset"]					= "herstel";
 $pgv_lang["statsubmit"]					= "laat plot zien";
-
 //-- statisticsplot utility
 $pgv_lang["stpl"]						= "...";
 $pgv_lang["stplnoim"]					= "niet geïmplementeerd:";
@@ -1531,26 +1256,10 @@ $pgv_lang["add_directory"]				= "Map toevoegen";
 $pgv_lang["image_format"]				= "Type afbeelding";
 $pgv_lang["media_format"]				= "Multimediatype";
 $pgv_lang["image_file_size"]			= "Afmeting afbeelding";
-$pgv_lang["show_thumbnail"]				= "Toon miniweergaves";
 $pgv_lang["gen_all_thumb"]				= "Niet bestaande miniweergaves maken";
 $pgv_lang["image_size"]					= "Afmetingen afbeelding";
 $pgv_lang["media_file_size"]			= "Multimediagrootte";
-$pgv_lang["no_thumb_dir"]				= " map voor miniweergaves bestaat niet en kan niet worden aangemaakt";
 $pgv_lang["manage_media"]				= "Beheren multimedia";
-$pgv_lang["gen_thumb"]					= "Genereren miniweergave";
-$pgv_lang["move_to"]					= "Verplaats naar -->";
-$pgv_lang["security_no_create"]			= "Beveiligingswaarschuwing: index.php bestaat niet in ";
-$pgv_lang["security_not_exist"]			= "Beveiligingswaarschuwing: kan index.php niet aanmaken in ";
-$pgv_lang["illegal_chars"]				= "Ongeldige karakters in de naam";
-$pgv_lang["link_media"]					= "Koppel multimedia";
-$pgv_lang["to_person"]					= "aan een persoon";
-$pgv_lang["to_family"]					= "aan een gezin";
-$pgv_lang["move_file_success"]			= "Multimedia- en miniweergavebestanden succesvol verplaatst.";
-$pgv_lang["max_media_depth"]		= "U kunt niet meer dan #MEDIA_DIRECTORY_LEVELS# niveaus diep in de mappen gaan";
-$pgv_lang["media_folder_corrupt"]		= "De multimediamap is corrupt.";
-$pgv_lang["media_thumb_exists"]			= "Miniweergave bestaat al.";
-$pgv_lang["media_exists"]				= "Multimediabestand bestaat al.";
-$pgv_lang["to_source"]					= "aan een bron";
 $pgv_lang["media_id"]					= "Multimedia ID";
 $pgv_lang["invalid_id"]					= "Dit ID bestaat niet in deze genealogie.";
 $pgv_lang["definitions"]				= "Definities";
@@ -1604,7 +1313,6 @@ $pgv_lang["hs_searchany"]				= "Een of meer woorden";
 $pgv_lang["hs_searchsentence"]			= "Exacte zin";
 $pgv_lang["hs_intruehelp"]				= "Volwaardige Help-teksten";
 $pgv_lang["hs_inallhelp"]				= "Alle tekst in de Help-bestanden";
-$pgv_lang["confirm_folder_delete"] = "Map verwijderen?";
 $pgv_lang["media_import"] = "Importeren en omzetten multimediagegevens";
 $pgv_lang["choose"] = "Kies:";
 $pgv_lang["hs_searchuser"]				= "Help voor gebruikers";
@@ -1617,34 +1325,22 @@ $pgv_lang["click_here_help"]			= "~#pgv_lang[click_here]#~<br /><br />Klik op de
 $pgv_lang["block_summaries"]			= "~#pgv_lang[block_desc]#~<br /><br />Hier volgt een korte beschrijving van de vakken die u kunt toevoegen aan de #pgv_lang[welcome]# of de #pgv_lang[mygedview]# pagina.<br /><center><table border='1'><tr><td class='list_value'><b>#pgv_lang[name]#</b></td><td class='list_value'><b>#pgv_lang[description]#</b></td></tr>#pgv_lang[block_summary_table]#</table></center><br /><br />";
 $pgv_lang["total_places"]				= "Locaties gevonden";
 $pgv_lang["block_summary_table"]		= "&nbsp;";
-
 $pgv_lang["privacy"]					= "privé";
 $pgv_lang["number_sign"]				= "#";
 $pgv_lang["locked"]						= "niet wijzigen";
 $pgv_lang["edit_indi"]					= "Wijzig persoon";
 $pgv_lang["indis_charts"]				= "Opties voor persoon";
-$pgv_lang["cut"]						= "Knippen";
-$pgv_lang["record_copied"]				= "Gegevens naar klembord gekopieerd";
-$pgv_lang["copy"]						= "Kopiëren";
-$pgv_lang["add_from_clipboard"]			= "Toevoegen vanaf klembord";
-$pgv_lang["reorder_children"]			= "Kinderen herschikken";
-$pgv_lang["sort_by_birth"]				= "Sorteren op geboortedatum";
 $pgv_lang["fams_charts"]				= "Opties voor gezin";
-$pgv_lang["edit_fam"]					= "Wijzig gezin";
-$pgv_lang["max_upload_size"]			= "Maximale uploadgrootte: ";
 $pgv_lang["stepbrother"]				= "Stiefbroer";
 $pgv_lang["stepsister"]					= "Stiefzuster";
 $pgv_lang["stepmom"]					= "Stiefmoeder";
 $pgv_lang["stepdad"]					= "Stiefvader";
 $pgv_lang["stepfamily"]					= "Stiefgezin";
-$pgv_lang["user_default_tab"]			= "Standaard tabblad voor persoonspagina";
 $pgv_lang["top10_pageviews"]			= "Meest bekeken gegevens";
 $pgv_lang["top10_pageviews_block"]		= "Meest bekeken gegevens";
 $pgv_lang["top10_pageviews_descr"]		= "Dit blok toont de 10 gegevens die het meest zijn bekeken. Het is noodzakelijk dat de bezoekteller is ingeschakeld. Zie hiervoor de GEDCOM-configuratie.";
-$pgv_lang["add_new_chil"]				= "Nieuw kind toevoegen";
 $pgv_lang["update_address"]				= "Adres bijwerken";
 $pgv_lang["select_fact"]				= "Selecteer een feit....";
-$pgv_lang["photo_replace"]				= "Wilt u een bestaande afbeelding vervangen door deze?";
 $pgv_lang["update_photo"]				= "Afbeelding bijwerken";
 $pgv_lang["update_fact_restricted"] 	= "Bijwerken van dit feit is beperkt:";
 $pgv_lang["update_fact"]				= "Feit bijwerken";
@@ -1664,16 +1360,9 @@ $pgv_lang["sort_by_marriage"]			= "Sorteren op huwelijksdatum";
 $pgv_lang["reorder_families"]			= "Gezinnen herschikken";
 $pgv_lang["indis_with_surname"]			= "Personen met achternaam #surname#";
 $pgv_lang["first_letter_fname"]			= "Kies een letter om personen te tonen wiens voornaam begint met die letter.";
-$pgv_lang["import_marr_names"]			= "Importeren achternamen in huwelijk";
 $pgv_lang["marr_name_import_instr"]		= "Kies deze functie alleen als u de huwelijkse achternamen wilt opnemen voor vrouwelijke personen in deze genealogie. Dit maakt het mogelijk om vrouwen te zoeken en te tonen op hun huwelijkse achternaam.";
-$pgv_lang["calc_marr_names"]			= "Bepalen huwelijkse achternamen";
 $pgv_lang["total_names"]				= "Totaal aantal namen";
 $pgv_lang["upload_file"]				= "Bestand uploaden vanaf uw computer";
-$pgv_lang["thumb_genned"]				= "Miniweergave is automatisch gegenereerd.";
-$pgv_lang["thumbgen_error"]				= "Kan miniweergave niet genereren voor ";
-$pgv_lang["generate_thumbnail"]			= "Genereer automatisch miniweergave van ";
-$pgv_lang["auto_thumbnail"]			= "Automatische miniweergave";
-$pgv_lang["no_upload"]					= "Het uploaden van multimediabestanden is niet toegestaan omdat gebruik van multimedia is uitgeschakeld, of omdat u in de multimediamap geen schrijfrechten heeft.";
 $pgv_lang["top10_pageviews_nohits"]		= "Er zijn geen bezoeken geregisteerd.";
 $pgv_lang["top10_pageviews_msg"]		= "Om dit vak te laten functioneren moet de bezoekteller zijn ingeschakeld in de GEDCOM-configuratie.";
 $pgv_lang["review_changes_descr"]		= "Het vak \"Te beoordelen wijzigingen\" toont een lijst met gegevens die op de website zijn aangebracht, maar nog niet zijn beoordeeld en goed- of afgekeurd. Als dit vak is geactiveerd, wordt eens per dag een e-mailbericht verzonden aan gebruikers die accepteer-rechten hebben, om ze te waarschuwen dat er wijzigingen wachten op beoordeling.";
@@ -1689,11 +1378,8 @@ $pgv_lang["importing_places"]			= "Bezig met importeren locaties";
 $pgv_lang["support_contact"]			= "Contactpersoon technische hulp";
 $pgv_lang["genealogy_contact"]			= "Contactpersoon genealogie";
 $pgv_lang["remember_me"]				= "Onthoudt mij op deze PC?";
-$pgv_lang["add_unlinked_person"]		= "Niet gekoppeld persoon toevoegen";
-$pgv_lang["add_unlinked_source"]	= "Niet gekoppelde bron toevoegen";
 $pgv_lang["fams_with_surname"]			= "Gezinnen met achternaam #surname#";
 $pgv_lang["cookie_login_help"]			= "Uw gegevens van een vorige maal aanmelden zijn onthouden op deze PC. Hiermee kunt u direct alle voor u toegankelijke informatie benaderen en aan u toegestane functies uitvoeren. Echter, om gegevens te wijzigen of de site te beheren, moet u vanwege veiligheidredenen opnieuw aanmelden.";
-$pgv_lang["none"]						= "Geen";
 $pgv_lang["child-family"]				= "Ouders, broers en zusters";
 $pgv_lang["spouse-family"]				= "Partner en kinderen";
 $pgv_lang["direct-ancestors"]			= "Directe voorouders";
@@ -1709,7 +1395,6 @@ $pgv_lang["download_zipped"]			= "Download GEDCOM-bestand als ZIP-bestand?";
 $pgv_lang["pls_note12"]					= "Gebruik dit vak om aan te geven waarom u als gebruiker wilt worden geregisteerd en hoe u gerelateerd bent aan deze genealogie.";
 $pgv_lang["enter_comments"]				= "Geef uw relatie tot de genealogie aan in het commentaarvak.";
 $pgv_lang["comments"]					= "Commentaar";
-
 $pgv_lang["html_block_descr"]			= "Dit is een eenvoudig HTML-tekstvak waarin u uw eigen tekst kunt plaatsen.";
 $pgv_lang["html_block_sample_part1"]	= "<p class=\"blockhc\"><b>Plaats hier de titel</b></p>rn<p>Klik op de knop \"Instellen\"";
 $pgv_lang["html_block_sample_part2"]	= "om aan te passen wat hier is weergegeven.</p>";
@@ -1725,119 +1410,60 @@ $pgv_lang["before"]						= "voor";
 $pgv_lang["after"]						= "achter";
 $pgv_lang["config_block"]				= "Vak instellen";
 $pgv_lang["changelog"]					= "Versie #VERSION# aanpassingen";
-$pgv_lang["view_changelog"]				= "Versie #VERSION# aanpassingen";
 $pgv_lang["continue_import2"]			= "Doorgaan met importeren datums";
 $pgv_lang["importing_dates"]			= "Bezig met importeren datums";
 $pgv_lang["index_edit_advice"]			= "Selecteer een vaknaam en klik op een van de pijlen om het vak in de aangegeven richting te verplaatsen.";
 $pgv_lang["index_edit_advice2"]			= "Klik op de knop \"<b>#pgv_lang[save]#</b>\" om uw wijzigingen door te voeren.";
-$pgv_lang["undo_all_confirm"]			= "Weet u zeker dat u alle wijzigingen ongedaan wilt maken?";
-$pgv_lang["undo_all"]					= "Alle wijzigingen ongedaan maken";
 $pgv_lang["autocomplete"]				= "Auto-aanvullen";
 $pgv_lang["address_list"]				= "Adreslijst";
 $pgv_lang["filter_address"]				= "Toon adressen die bevatten:";
 $pgv_lang["address_labels"]				= "Adresetiketten";
-
-
 $pgv_lang["link_new_husb"]				= "Mannelijke partner toevoegen aan bestaand persoon";
 $pgv_lang["link_new_wife"]				= "Vrouwelijke partner toevoegen aan bestaand persoon";
-$pgv_lang["change"]						= "Wijzig";
-$pgv_lang["change_family_instr"]	= "Op deze pagina kunt u gezinsleden wijzigen en verwijderen.<br /><br />Voor ieder gezinslid kunt u de koppeling \"Wijzig\" gebruiken om en ander persoon de desbetreffende rol binnen het gezin te geven. U kunt ook de koppeling \"Verwijderen\"gebruiken om de persoon uit het gezin te verwijderen.<br /><br />Als u klaar bent met aanpassen van de gezinsleden, kunt u de wijzigingen opslaan met de \"Opslaan\"-knop.<br />";
 $pgv_lang["cancel"]						= "Afbreken";
 $pgv_lang["cookie_help"]			= "Deze site gebruikt \"cookies\" om uw aanmelding vast te houden.<br /><br />Het gebruik van \"cookies\" is niet toegestaan in uw windows-verkenner, waardoor u niet kunt aanmelden. Raadpleeg de Help-informatie van uw windows-verkenner om het gebruik van \"cookies\" toe te staan.<br />";
-$pgv_lang["change_family_members"]		= "Wijzig gezinsleden";
 $pgv_lang["delete_family_confirm"]	= "Door het verwijderen van het gezin verbreekt u het verband tussen de personen. De gegevens van de personen zelf worden niet verwijderd. Weet u zeker dat u dit gezin wilt verwijderen?";
 $pgv_lang["delete_family"]				= "Verwijder gezin";
 $pgv_lang["add_favorite"]				= "Favoriet toevoegen";
 $pgv_lang["url"]						= "URL";
 $pgv_lang["add_fav_enter_note"]			= "Type een notitie bij deze favoriet (optie)";
 $pgv_lang["add_fav_or_enter_url"]		= "OF<br />type een URL en een titel";
-$pgv_lang["import_time_exceeded"]	= "De maximale uitvoeringstijd is bereikt. Druk op de knop \"Doorgaan\" om de import van het GEDCOM-bestand voort te zetten.";
 $pgv_lang["add_fav_enter_id"]			= "Type een persoons-, gezins- of bron-ID";
 $pgv_lang["next_email_sent"]			= "De volgende e-mailherinnering wordt verzonden na ";
 $pgv_lang["last_email_sent"]			= "De laatste e-mailherinnering is verzonden op ";
-$pgv_lang["confirm_remove"]				= "Weet u zeker dat u deze persoon uit het gezin wilt verwijderen?";
 $pgv_lang["remove_child"]				= "Verwijder dit kind uit het gezin";
-$pgv_lang["link_manage_servers"]    	= "Site-koppelingen beheren";
 $pgv_lang["indi_is_remote"]				= "De informatie over deze persoon is afkomstig van een gekoppelde site.";
 $pgv_lang["link_remote"]            	= "Koppel persoon op andere site";
-$pgv_lang["current_person"]         	= "Zelfde als huidige";
-$pgv_lang["title_remote_link"]      	= "Koppeling naar andere site toevoegen";
 $pgv_lang["title_search_link"]      = "Lokale koppeling toevoegen";
 $pgv_lang["label_allowed_servers"]  	= "Toegestane sites";
-$pgv_lang["label_banned_servers"]   	= "Geblokkeerde sites";
-$pgv_lang["label_manual_search_engines"]   = "Handmatig zoekmachines markeren op basis van IP adres";
 $pgv_lang["label_search_engine_detected"]  = "Zoekmachine gedetecteerd";
 $pgv_lang["label_search_engine_spider"]    = "Zoekmachine";
-$pgv_lang["label_ban_server"]       	= "Blokkeer&gt;&gt;";
-$pgv_lang["label_add_search_server"]	= "IP-Adres toevoegen";
-$pgv_lang["remove_ip"] 			= "Verwijder IP adres";
-$pgv_lang["label_remove_ip"]		= "Blokkeer IP adres: ";
-$pgv_lang["label_remove_search"]	= "Markeer IP adres als Zoekmachine Spin";
-$pgv_lang["label_username_id"]		= "Gebruikersnaam";
-$pgv_lang["label_username_id2"]		= "Gebruikersnaam: ";
-$pgv_lang["label_password_id"]		= "Wachtwoord";
-$pgv_lang["label_password_id2"]		= "Wachtwoord: ";
 $pgv_lang["label_allow_server"]     	= "&lt;&lt;Sta toe";
 $pgv_lang["label_allow_view_links"] 	= "Bekijk koppelingen met deze toegestane site";
 $pgv_lang["label_ban_view_links"]   	= "Bekijk koppelingen met deze geblokkeerde site";
-$pgv_lang["label_delete"]           	= "Verwijder";
-$pgv_lang["label_new_server"]       	= "Site toevoegen";
 $pgv_lang["label_server_type"]      	= "Type";
-$pgv_lang["label_server_url"]       	= "URL/IP";
 $pgv_lang["label_banned"]           	= "Geblokkeerd";
 $pgv_lang["label_allowed"]          	= "Toegestaan";
 $pgv_lang["error_exists_server"]    	= "De site bestaat al.";
-$pgv_lang["title_view_conns"]       = "Bekijk verbindingen";
-$pgv_lang["label_server_info"]      = "Alle personen gekoppeld via deze site:";
-$pgv_lang["label_view_remote"]      = "Bekijk gekoppelde informatie van een persoon";
-$pgv_lang["label_view_local"]       = "Bekijk lokale informatie van een persoon";
-$pgv_lang["label_added_servers"]	= "Toegevoegde gekoppelde servers";
-$pgv_lang["error_delete_person"]    = "Selecteer de persoon waarvan de externe koppeling verwijderd moet worden.";
-$pgv_lang["error_view_info"]        = "Selecteer de persoon waarvan de informatie moet worden getoond.";
-$pgv_lang["label_add_server"]       	= "Toevoegen";
 $pgv_lang["error_url"]              	= "Een site moet een IP-adres of URL hebben.";
-$pgv_lang["label_individuals"]      	= "Personen";
-$pgv_lang["label_families"]         	= "Gezinnen";
 $pgv_lang["ex-spouse"] = "Ex-echtgenoot";
 $pgv_lang["ex-wife"] = "Ex-vrouw";
 $pgv_lang["ex-husband"] = "Ex-man";
 $pgv_lang["onlyemail"] 				= "Alleen adressen met email-adres";
 $pgv_lang["noemail"] 				= "Adressen zonder email-adres";
-$pgv_lang["label_same_server"]      	= "Zelfde site";
-$pgv_lang["label_diff_server"]      	= "Andere site";
-$pgv_lang["error_same"]             	= "U heeft dezelfde site geselecteerd.";
-$pgv_lang["lbl_server_list"]        = "Gebruik een bestaande site.";
-$pgv_lang["link_success"]			= "Koppeling toegevoegd";
-$pgv_lang["error_url_blank"]		= "Gekoppelde site naam of URL niet leeg laten";
-$pgv_lang["error_siteauth_failed"]	= "Aanmelden bij gekoppelde site niet gelukt";
-$pgv_lang["lbl_type_server"]         = "Voer nieuwe site in:";
 $pgv_lang["error_delete_server"]    = "Selecteer de site die u wilt verwijderen.";
 $pgv_lang["error_view_connections"] = "Selecteer de site die u wilt bekijken.";
-$pgv_lang["error_ban_server"]       = "Selecteer de site die u wilt blokkeren.";
 $pgv_lang["error_allow_server"]     = "Selecteer de site die u wilt toestaan.";
 $pgv_lang["error_server_exists"]    	= "De site die u probeert toe te voegen bestaat al.<br />Gebruik de keuzelijst om de site te selecteren.";
-$pgv_lang["error_remote"]           	= "U heeft een gekoppelde site geselecteerd.";
-$pgv_lang["label_add_remote_link"]  	= "Koppeling toevoegen";
-$pgv_lang["title_manage_servers"]   	= "Beheer sites";
-$pgv_lang["label_gedcom_id2"]       = "GEDCOM-ID:";
-$pgv_lang["label_gedcom_id"]        	= "GEDCOM-ID";
 $pgv_lang["label_merge_options"]    	= "Samenvoegopties";
-$pgv_lang["label_local_id"]         	= "Persoons-ID";
-$pgv_lang["label_remote_id"]        	= "ID persoon op andere site";
-$pgv_lang["label_site_url"]         	= "Website URL:";
 $pgv_lang["label_site_url2"]        = "Website URL";
-$pgv_lang["label_site"]             = "Site";
-$pgv_lang["label_location"]         	= "Locatie";
-$pgv_lang["label_rel_to_current"]   	= "Relatie met huidige persoon";
 $pgv_lang["label_ask_first"]        	= "Eerst vragen";
 $pgv_lang["label_accept_changes"]   	= "Accepteer alle wijzigingen";
-
 $pgv_lang["edit_source"]			= "Bewerk bron";
 $pgv_lang["family_of"]				= "Familie van: &nbsp;";
 $pgv_lang["descent_steps"]			= "Nakomelingen stappen";
 $pgv_lang["source_menu"]			= "Opties voor bron";
 $pgv_lang["familybook_chart"]		= "Familieboek";
-$pgv_lang["user_auto_accept"]		= "Accepteer wijzigingen van deze gebruiker automatisch";
 $pgv_lang["sunday_1st"]					= "Zo";
 $pgv_lang["monday_1st"]					= "Ma";
 $pgv_lang["tuesday_1st"]				= "Di";
@@ -1845,7 +1471,6 @@ $pgv_lang["wednesday_1st"]				= "Wo";
 $pgv_lang["thursday_1st"]				= "Do";
 $pgv_lang["friday_1st"]					= "Vrij";
 $pgv_lang["saturday_1st"]				= "Za";
-
 $pgv_lang["january_1st"]			= "Jan";
 $pgv_lang["february_1st"]			= "Feb";
 $pgv_lang["march_1st"]				= "Maa";
@@ -1858,7 +1483,6 @@ $pgv_lang["september_1st"]			= "Sep";
 $pgv_lang["october_1st"]			= "Okt";
 $pgv_lang["november_1st"]			= "Nov";
 $pgv_lang["december_1st"]			= "Dec";
-
 $pgv_lang["maxviews_exceeded"]		= "Maximaal aantal pagina's overschreden, probeer later opnieuw.";
 $pgv_lang["broadcast_not_logged_6mo"]	= "Bericht aan langer dan 6 maanden niet aangemelde gebruikers";
 $pgv_lang["stat_average_children"]	= "Gemiddeld aantal kinderen per gezin";
@@ -1871,7 +1495,6 @@ $pgv_lang["stat_longest_life"]		= "Langst levende persoon";
 $pgv_lang["stat_avg_age_at_death"]	= "Gemiddelde leeftijd bij overlijden";
 $pgv_lang["stats_to_show"]			= "Selecteer in dit vak te tonen statistieken";
 $pgv_lang["broadcast_never_logged_in"]	= "Bericht aan nooit aangemelde gebruikers";
-
 //-- Media item "TYPE" sub-field
 $pgv_lang["TYPE__audio"] = "Audio";
 $pgv_lang["TYPE__book"] = "Boek";
@@ -1888,10 +1511,6 @@ $pgv_lang["TYPE__newspaper"] = "Krant";
 $pgv_lang["TYPE__photo"] = "Foto";
 $pgv_lang["TYPE__tombstone"] = "Grafsteen";
 $pgv_lang["TYPE__video"] = "Video";
-$pgv_lang["hebrew_surn"]			= "Hebreeuwse achternaam";
-$pgv_lang["hebrew_givn"]			= "Hebreeuwse voornamen";
-
 $pgv_lang["roman_surn"]				= "Geromaniseerde achternaam";
 $pgv_lang["roman_givn"]				= "Geromaniseerde voornamen";
-
 ?>

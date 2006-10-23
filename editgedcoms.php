@@ -117,6 +117,8 @@ if (count($GEDCOMS)>0) {
 	}
 }
 
+print_help_link('SECURITY_CHECK_GEDCOM_DOWNLOADABLE_help', 'qm');
+print '<a href="editgedcoms.php?check_download=true">'.$pgv_lang['SECURITY_CHECK_GEDCOM_DOWNLOADABLE']."</a>\n";
 // Print table heading
 print "<table class=\"gedcom_table\">";
 if (userIsAdmin($username)) {
@@ -184,14 +186,17 @@ $GedCount = 0;
 				printf("%.2fKb", (filesize($gedarray["path"])/1024));
 				print ")";
 				/** deactivate [ 1573749 ]
-				if($SECURITY_CHECK_GEDCOM_DOWNLOADABLE){
+				 * -- activating based on a request parameter instead of a config parameter
+				 */
+				if(!empty($_REQUEST['check_download'])){
 					$url = check_gedcom_downloadable($gedarray["path"]);
 					if ($url!==false) {
 						print "<br />\n";
 						print "<span class=\"error\">".$pgv_lang["gedcom_downloadable"]." :</span>";
 						print "<br /><a href=\"$url\">$url</a>";
 					}
-				}**/
+					else print "<br /><b>".str_replace("#GEDCOM#", $gedarray["path"], $pgv_lang['gedcom_download_secure'])."</b><br />";
+				}
 			}
 			else print "<span class=\"error\">".$pgv_lang["file_not_found"]."</span>";
 			print "</td>";

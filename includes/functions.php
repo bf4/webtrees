@@ -557,7 +557,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $Ap
  *
  * returns the value of a gedcom tag from the given gedcom record
  * @param string $tag	The tag to find, use : to delineate subtags
- * @param int $level	The gedcom line level of the first tag to find
+ * @param int $level	The gedcom line level of the first tag to find, setting level to 0 will cause it to use 1+ the level of the incoming record
  * @param string $gedrec	The gedcom record to get the value from
  * @param int $truncate	Should the value be truncated to a certain number of characters
  * @param boolean $convert	Should data like dates be converted using the configuration settings
@@ -567,12 +567,20 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 	global $SHOW_PEDIGREE_PLACES, $pgv_lang;
 
 	$tags = preg_split("/:/", $tag);
+	$origlevel = $level;
+	if ($level==0) {
+		$level = $gedrec{0} + 1;
+	}
 
 	$subrec = $gedrec;
-	//print $level;
+//	print $level;
 	foreach($tags as $indexval => $t) {
 		$lastsubrec = $subrec;
 		$subrec = get_sub_record($level, "$level $t", $subrec);
+		if (empty($subrec) && $origlevel==0) {
+			$level--;
+			$subrec = get_sub_record($level, "$level $t", $lastsubrec);
+		}
 		if (empty($subrec)) {
 			if ($t=="TITL") {
 				$subrec = get_sub_record($level, "$level ABBR", $lastsubrec);

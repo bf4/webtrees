@@ -27,11 +27,9 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "You cannot access a language file directly.";
 	exit;
 }
-
 $pgv_lang["continue_import2"]		= "Tarih verilerini okumaya devam et";
 $pgv_lang["importing_dates"]		= "Tarih verileri okunuyor";
 $pgv_lang["changelog"]			= "v#VERSION# sürümündeki değişiklikler";
-$pgv_lang["none"]					= "Hiç biri";
 $pgv_lang["ahnentafel_report"]		= "Soy ağacı tablosu raporu";
 $pgv_lang["choose_relatives"]		= "Akrabaları seçin";
 $pgv_lang["relatives_report"]		= "Akrabalık raporu";
@@ -40,7 +38,6 @@ $pgv_lang["total_dead"]				= "Ölülerin sayısı";
 $pgv_lang["total_not_born"]			= "Doğmamışların sayısı";
 $pgv_lang["download_zipped"]		= "GEDCOM ZİP-dosyası olarak indirilsin mi?";
 $pgv_lang["remember_me"]		= "Beni bu bilgisayarda hatırla";
-$pgv_lang["add_unlinked_person"]	= "Yeni şahıs ekle";
 $pgv_lang["support_contact"]		= "Teknik yardım ilişkisi";
 $pgv_lang["other"]			= "Çeşitli";
 $pgv_lang["total_names"]			= "Toplam isim sayısı";
@@ -48,15 +45,11 @@ $pgv_lang["show_spouses"]		= "Eşleri göster";
 $pgv_lang["quick_update_title"]		= "Hızlı güncelleme";
 $pgv_lang["update_fact"]		= "Hadiseyi güncelle";
 $pgv_lang["update_photo"]		= "Fotoğrafı güncelle";
-$pgv_lang["photo_replace"]		= "Bu fotoğrafı eski bir fotoğraf yerine mi koymak istiyorsunuz?";
 $pgv_lang["select_fact"]		= "Hadise seç...";
 $pgv_lang["update_address"]		= "Adresi güncelle";
-$pgv_lang["add_new_chil"]		= "Yeni çocuk ekle";
-$pgv_lang["user_default_tab"]		= "Şahısların bilgileri sayfasında gösterilecek ilk sekme";
 $pgv_lang["indis_charts"]		= "Şahsi seçenekler";
 $pgv_lang["locked"]					= "Değiştirme";
 $pgv_lang["privacy"]				= "Mahremiyet";
-
 //-- GENERAL HELP MESSAGES
 $pgv_lang["qm"]				= "?";
 $pgv_lang["page_help"]			= "Yardım";
@@ -70,11 +63,8 @@ $pgv_lang["resolution"]			= "Ekran çözünürlüğü";
 $pgv_lang["menu"]			= "Seçenek listesi";
 $pgv_lang["header"]			= "Başlık";
 $pgv_lang["login_head"]			= "PhpGedView üye girişi";
-
 //-- CONFIG FILE MESSAGES
 $pgv_lang["error_title"]		= "HATA: GEDCOM dosyası açılamıyor";
-$pgv_lang["error_header"]		= "[#GEDCOM#], isimli GEDCOM dosyası, belirlenen yerde bulunamadı.";
-$pgv_lang["error_header_write"] 	= "[#GEDCOM#] isimli GEDCOM dosyasına yazma izni yoktur. Check attributes and access rights.";
 $pgv_lang["for_support"]		= "Teknik yardım ve bilgi için danışabileceğiniz ilişki adresi:";
 $pgv_lang["for_contact"]		= "Seçere hakkında yardım için danışabileceğiniz ilişki adresi:";
 $pgv_lang["for_all_contact"]		= "Teknik yardım veya seçere ile ilgili sorular için danışabileceğiniz ilişki adresi:";
@@ -87,7 +77,6 @@ $pgv_lang["invalid_username"]		= "Rumuz içinde geçersiz harfler bulunmaktadır
 $pgv_lang["fullname"]			= "Komple isim";
 $pgv_lang["password"]			= "Şifre";
 $pgv_lang["confirm"]			= "Şifre tekrarlaması";
-$pgv_lang["user_contact_method"]	= "Tercih edilen ilişki yöntemi";
 $pgv_lang["login"]			= "Giriş";
 $pgv_lang["login_aut"]			= "Üye verilerini işle";
 $pgv_lang["logout"]			= "Çıkış";
@@ -97,11 +86,8 @@ $pgv_lang["my_pedigree"]		= "Benim soyağacım";
 $pgv_lang["my_indi"]			= "Şahsi sayfam";
 $pgv_lang["yes"]			= "Evet";
 $pgv_lang["no"]				= "Hayır";
-$pgv_lang["add_gedcom"]			= "GEDCOM ekle";
 $pgv_lang["no_support"]			= "Sizin tarayıcınızın bu PhpGedView sitesi için gerekli olan standartları desteklemediği tespit edildi. Çoğu tarayıcılar en yeni sürümlerinde bu standartları desteklemektedirler. Bunun için tarayıcınızı güncelleştirmenizi önermek isteriz.";
 $pgv_lang["change_theme"]		= "Temayı değiştir ";
-$pgv_lang["gedcom_downloadable"]	= "Bu GEDECOM dosyası İnternet üzerinden indirilebilinir!<br />Lütfen <a href=\"readme.txt\">readme.txt</a> dosyasının \"SECURITY\" bölümünü okuyup bu sorunu ortadan kaldırın.";
-
 //-- INDEX (PEDIGREE_TREE) FILE MESSAGES
 $pgv_lang["index_header"]		= "Soy ağacı - Seçere";
 $pgv_lang["gen_ped_chart"]		= "#PEDIGREE_GENERATIONS# nesil - Soy ağacı - Seçere görüntüsü";
@@ -120,7 +106,6 @@ $pgv_lang["charts"]			= "Çizgeler";
 $pgv_lang["lists"]			= "Listeler";
 $pgv_lang["welcome_page"]		= "Karşılama sayfası";
 $pgv_lang["box_width"]			= "Kutu eni";
-
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Bu numaraya bağlı aile bulunamadı";
 $pgv_lang["unable_to_find_indi"]	= "Bu numaraya bağlı şahıs bulunamadı";
@@ -158,7 +143,6 @@ $pgv_lang["back"]			= "geri dön";
 $pgv_lang["privacy_list_indi_error"]	= "Mahremiyet kuralları yüzünden bazı şahısların detayları gizli tutulmaktadır.";
 $pgv_lang["privacy_list_fam_error"]	= "Mahremiyet kuralları yüzünden bazı ailelerin detayları gizli tutulmaktadır.";
 $pgv_lang["aka"]			= "Tanındığı diğer isimler";
-
 //-- INDIVIDUAL FILE MESSAGES
 $pgv_lang["male"]			= "erkek";
 $pgv_lang["female"]			= "kadın";
@@ -176,7 +160,6 @@ $pgv_lang["unrecognized_code_msg"]	= "Bu düzeltmek istediğimiz bir hatadır. B
 $pgv_lang["indi_info"]			= "Kişisel bilgi";
 $pgv_lang["pedigree_chart"]		= "Soy ağacı çizgesi";
 $pgv_lang["desc_chart2"]		= "Şahsı izleyen nesillerin görüntüsü";
-$pgv_lang["family"]			= "Aile";
 $pgv_lang["as_spouse"]			= "Aile tablosu (eş olarak)";
 $pgv_lang["as_child"]			= "Aile tablosu (çocuk olarak)";
 $pgv_lang["view_gedcom"]		= "GEDCOM kayıtını göster";
@@ -192,7 +175,6 @@ $pgv_lang["object_note"]		= "Nesne notu:";
 $pgv_lang["sex"]			= "Cinsiyet";
 $pgv_lang["personal_facts"]		= "Kişisel bilgiler ve detaylar";
 $pgv_lang["type"]			= "Tip";
-$pgv_lang["date"]			= "Tarih";
 $pgv_lang["place_description"]		= "Yer / Tarif";
 $pgv_lang["parents"]			= "Anne ve baba:";
 $pgv_lang["siblings"] 			= "Kardeşleri";
@@ -208,7 +190,6 @@ $pgv_lang["no_tab2"]				= "Bu şahıs ile ilgili hiç bir not bulunmamaktadır."
 $pgv_lang["no_tab4"]				= "Bu şahıs ile ilgili hiç bir mültimedya nesnesi bulunmamaktadır.";
 $pgv_lang["no_tab5"]				= "Bu şahıs ile ilgili hiç bir yakın akraba bulunmamaktadır.";
 $pgv_lang["spouse"]			= "Eşi";
-
 //-- FAMILY FILE MESSAGES
 $pgv_lang["family_info"]		= "Aile bilgisi";
 $pgv_lang["family_group_info"]		= "Aile gurubu üzerine bilgi";
@@ -220,7 +201,6 @@ $pgv_lang["media_object"]		= "Mültimedya nesnesi:";
 $pgv_lang["children"]			= "Çocuklar";
 $pgv_lang["no_children"]		= "Kayıt edilmiş çocuk yok";
 $pgv_lang["parents_timeline"]		= "Çifti zaman çizgisinde göster";
-
 //-- CLIPPINGS FILE MESSAGES
 $pgv_lang["clip_cart"]			= "Parça toplama mahfazası";
 $pgv_lang["clip_explaination"]		= "Parça toplama mahfazası bu seçereden istediğiniz &quot;parçaları&quot işaretleyip sonradan işaretlediğiniz tüm parçaları özel bir GEDCOM dosyası halinde indirmeniz içindir.<br /><br />";
@@ -254,7 +234,6 @@ $pgv_lang["download_now"]		= "Şimdi indir";
 $pgv_lang["indi_downloaded_from"]	= "Şahısın bilgileri buradan indirildi:";
 $pgv_lang["family_downloaded_from"]	= "Ailenin bilgileri buradan indirildi:";
 $pgv_lang["source_downloaded_from"]	= "Kaynağın bilgileri buradan indirildi:";
-
 //-- PLACELIST FILE MESSAGES
 $pgv_lang["connections"]		= "Yer bağlantısı bulundu<br />Şimdi sonuçlara bak";
 $pgv_lang["top_level"]			= "geri dön";
@@ -266,7 +245,6 @@ $pgv_lang["individuals"]		= "Şahıslar";
 $pgv_lang["view_records_in_place"]	= "Bu yer ile ilgili tüm kayıtları göster";
 $pgv_lang["place_list2"]		= "Yer listesi";
 $pgv_lang["show_place_list"]		= "Tüm yerleri tek liste halinde göster";
-
 //-- MEDIALIST FILE MESSAGES
 $pgv_lang["multi_title"]		= "Mültimedya nesne listesi";
 $pgv_lang["media_found"]		= "mültimedya nesnesi bulundu";
@@ -278,7 +256,6 @@ $pgv_lang["next"]			= "bir sayfa ilerle &gt;";
 $pgv_lang["file_not_found"]		= "Dosya bulunamadı";
 $pgv_lang["medialist_show"] 		= "Göster";
 $pgv_lang["per_page"]			= "mültimedya nesnesini bir sayfada";
-
 //-- SEARCH FILE MESSAGES
 $pgv_lang["search_gedcom"]		= "GEDCOM dosyası içinde arama";
 $pgv_lang["enter_terms"]		= "Aranan terimleri ekle";
@@ -289,34 +266,25 @@ $pgv_lang["lastname_search"]		= "Soy isim";
 $pgv_lang["search_place"]		= "Yer";
 $pgv_lang["search_year"]		= "Sene";
 $pgv_lang["no_results"]			= "Hiçbir sonuç bulunmadı.";
-$pgv_lang["invalid_search_input"]	= "Lütfen sene ile beraber bir isim, soy isim ya da bir yerin ismini ekleyin";
-
 //-- SOURCELIST FILE MESSAGES
 $pgv_lang["sources_found"]		= "Kaynak bulundu";
 $pgv_lang["titles_found"]			= "Başlıklar";
-
 //-- REPOLIST FILE MESSAGES
 $pgv_lang["repo_list"]			= "Veri havuzu listesi";
 $pgv_lang["repos_found"]		= "Veri havuzları bulundu";
-
-
 //-- SOURCE FILE MESSAGES
 $pgv_lang["source_info"]		= "Kaynak bilgisi";
 $pgv_lang["other_records"]		= "Bu kaynakla ilişkide olan diğer kayıtlar:";
 $pgv_lang["people"]			= "Şahıslar";
 $pgv_lang["families"]			= "Aileler";
 $pgv_lang["total_sources"]		= "Toplam kaynak sayısı";
-
 //-- BUILDINDEX FILE MESSAGES
 $pgv_lang["building_indi"]		= "Şahıs ve aile indeksini geliştiriyorum";
 $pgv_lang["building_index"]		= "İndeks listelerini geliştiriyorum";
 $pgv_lang["invalid_gedformat"]		= "Hatalı GEDCOM 5.5 biçimi";
 $pgv_lang["importing_records"]		= "Kayıtları veritabanına işliyorum";
 $pgv_lang["detected_change"]		= "PhpGedView \$GEDCOM isimli GEDCOM dosyasının değiştiğini fark etti. Devam etmeden önce indeks dosyalarının yenilenmesi lazım.";
-$pgv_lang["please_be_patient"]		= "LÜTFEN BİRAZ SABIRLI OLUN";
-$pgv_lang["reading_file"]		= "GEDCOM dosyası okunuyor";
 $pgv_lang["flushing"]			= "İçerikleri siliyorum";
-$pgv_lang["found_record"]		= "Bulunan kayıt";
 $pgv_lang["exec_time"]			= "Toplam işletim süresi:";
 $pgv_lang["unable_to_create_index"]	= "İndeks dosyasını yenileyemedim. PhpGedView dizinine yazma izninizin olup olmadığını denetleyin. İzinler indeks dosyalarının yaratılmasından sonra eski duruma geri getirilebilinir.";
 $pgv_lang["indi_complete"]		= "Şahısların indeks dosyası yenilendi.";
@@ -327,20 +295,13 @@ $pgv_lang["you_may"]			= "Seçenekleriniz:";
 $pgv_lang["drop_tables"]		= "Aktüel sql-table ları silin";
 $pgv_lang["import_multiple"]		= "Çeşitli GEDCOM-Dosyalarını ithal edip devam edin";
 $pgv_lang["path_to_gedcom"]		= "GEDCOM-Dosyanızın yerini belirleyin:";
-$pgv_lang["dataset_exists"]		= "Veri tabanına bu isim altında başka bir GEDCOM-Dosyası ithal edilmiştir.";
-$pgv_lang["empty_dataset"]		= "Veri kümesini hakikatten silmek istiyor musunuz?";
 $pgv_lang["index_complete"]		= "İndeks tamamlandı.";
-$pgv_lang["click_here_to_go_to_pedigree_tree"]	= "Soy ağacı - seçere tablosuna ulaşmak için buraya tıklayın";
-$pgv_lang["import_complete"]		= "İçerik aktarımı tamamlandı";
 $pgv_lang["updating_family_names"]	= "Aile soy isimleri FAM için güncelleştiriliyor ";
 $pgv_lang["addmedia"]			= "Medya ekleme aracı";
 $pgv_lang["dateconvert"]		= "Tarihleri dönüştürme aracı";
 $pgv_lang["xreftorin"]			= "XREF İD'lerini RİN numarasına dönüştür";
 $pgv_lang["tools_readme"]		= "Ayrıntılı bilgi için #README.TXT# dosyasının \"tools\" bölümünü okuyun.";
 $pgv_lang["sec"]			= "saniye";
-$pgv_lang["bytes_read"]			= "Okunan byte miktarı:";
-$pgv_lang["import_progress"]		= "İthal gelişimi...";
-
 //-- INDIVIDUAL AND FAMILYLIST FILE MESSAGES
 $pgv_lang["total_fams"]			= "Toplam aile sayısı";
 $pgv_lang["total_indis"]		= "Toplam şahıs sayısı";
@@ -361,7 +322,6 @@ $pgv_lang["show_surnames"]		= "Soy isim listesini göster";
 $pgv_lang["all"]			= "HEPSİ";
 $pgv_lang["hidden"]			= "Saklı";
 $pgv_lang["confidential"]		= "Özel";
-
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]			= "Yaş";
 $pgv_lang["timeline_title"]		= "PhpGedView zaman çizgisi";
@@ -375,7 +335,6 @@ $pgv_lang["year"]			= "Sene:";
 $pgv_lang["timeline_instructions"]	= "Yeni tarayıcıların çoğunda tıklayarak veyahut kutuları çekerek görüntünün bir yerinden diğerine yerleştirebilirsiniz.";
 $pgv_lang["zoom_out"]			= "Görüntüyü küçült";
 $pgv_lang["zoom_in"]			= "Görüntüyü büyüt";
-
 //-- MONTH NAMES
 $pgv_lang["jan"]			= "Ocak";
 $pgv_lang["feb"]			= "Şubat";
@@ -401,70 +360,35 @@ $pgv_lang["int"]			= "herhalde";
 $pgv_lang["to"]				= "'#EXT# kadar";
 $pgv_lang["apx"]			= "takriben";
 $pgv_lang["cir"]			= "dolaylarında";
-
 //-- Admin File Messages
-$pgv_lang["configuration"]		= "Genel ayarlar";
 $pgv_lang["rebuild_indexes"]		= "İndeks dosyalarını yenile";
 $pgv_lang["user_admin"]			= "Üyelerin ayarları";
-$pgv_lang["user_created"]		= "Üye başarıyla eklendi.";
-$pgv_lang["user_create_error"]		= "Üye eklenemedi. Lütfen bir sayfa geri dönüp tekrar deneyin.";
-$pgv_lang["select_an_option"]		= "Aşağıdaki seçeneklerden birini seçin:";
-$pgv_lang["readme_documentation"]	= "README belgelemesi";
 $pgv_lang["password_mismatch"]		= "Şifreler birbirine uymuyor.";
 $pgv_lang["enter_username"]		= "Üyenin rumuzunu işlemeniz gerekiyor.";
 $pgv_lang["enter_fullname"]		= "Üyenin komple ismini işlemeniz gerekiyor.";
 $pgv_lang["enter_password"]		= "Üyenin şifresini işlemeniz gerekiyor.";
 $pgv_lang["confirm_password"]		= "Şifreyi tekrarlamanız lazım";
-$pgv_lang["update_user"]		= "Üye verilerini güncelleştir";
-$pgv_lang["update_myaccount"]		= "Benim üyelik verilerimi güncelleştir";
 $pgv_lang["save"]			= "Hafıza et";
 $pgv_lang["delete"]			= "Sil";
 $pgv_lang["edit"]			= "İşle";
-$pgv_lang["full_name"]			= "Komple isim";
-$pgv_lang["visibleonline"]		= "Siteye bağlantılı iken diğer üyelere görünür";
-$pgv_lang["editaccount"]		= "Bu üyeye kendi üyelik verilerini işleme hakkı ver";
-$pgv_lang["admin_gedcom"]		= "GEDCOM ayarlarını düzenle";
-$pgv_lang["confirm_user_delete"]	= "Üyeyi hakikatten silmek mi istiyorsunuz";
-$pgv_lang["create_user"]		= "Yeni üye yarat";
 $pgv_lang["no_login"]			= "İlettiğiniz rumuz ya da şifre tasdik edilemedi :-(";
 $pgv_lang["import_gedcom"]		= "Bu GEDCOM dosyasını ithal et";
-$pgv_lang["duplicate_username"]		= "Çifte rumuz. Siteye bu rumuz ile başka bir üye kayıtlıdır. Lütfen geri dönüp başka bir rumuz seçiniz.";
-$pgv_lang["gedcomid"]			= "Şahsın GEDCOM kayıt numarası";
 $pgv_lang["enter_gedcomid"]		= "GEDCOM kayıt numarasını işlemeniz gerekiyor.";
-$pgv_lang["upload_gedcom"]		= "GEDCOM dosyasını yolla";
-$pgv_lang["add_new_gedcom"]		= "Yeni bir GEDCOM yarat";
 $pgv_lang["user_info"]			= "Kişisel sayfam";
-$pgv_lang["rootid"]			= "Soyağacının kök şahsı";
-$pgv_lang["download_gedcom"]		= "GEDCOM dosyasını indir";
-$pgv_lang["manage_gedcoms"]		= "GEDCOM - Veritabanı ayarları";
-$pgv_lang["gedcom_file"]		= "GEDCOM dosyası";
 $pgv_lang["enter_filename"]		= "GEDCOM dosyasının ismini işlemeniz gerekiyor.";
 $pgv_lang["file_not_exists"]		= "İşlediğiniz isimli dosya yoktur.";
 $pgv_lang["file_exists"]		= "Bu isim altında başka bir GEDCOM bulunmuştur. Lütfen başka bir isim seçin ya da eski dosyayı önce silin.";
 $pgv_lang["new_gedcom_title"]		= "[#GEDCOMFILE#] dosyasından alınan seçere ile ilgili veri";
-$pgv_lang["upload_error"]		= "Dosyayı yollarken bir hata oldu.";
 $pgv_lang["upload_help"]		= "Yerel bilgisayarınızdan sunucuya yollamak için bir dosya seçin. Tüm dosyalar dizine yollanılacaktır.";
 $pgv_lang["add_gedcom_instructions"]	= "Bu yeni GEDCOM için bir dosya ismini işleyin. Yeni GEDCOM dosyası indeks dizininde yaratılacaktır.";
-$pgv_lang["file_partial"]		= "Dosya tamamen yollanamadı. Lütfen tekrar deneyin";
-$pgv_lang["file_missing"]		= "Dosya buraya ulaşmadı. Tekrar yollayın.";
-$pgv_lang["file_success"]		= "Dosya başarı ile yollandı.";
-$pgv_lang["file_too_big"]		= "Yollanılan dosya izin verilen büyüklüğü geçiyor.";
 $pgv_lang["user_manual"]		= "PhpGedView - Kullanıcı belgelemesi";
 $pgv_lang["upgrade"]			= "PhpGedView yazılımını güncelleştir";
-$pgv_lang["administration"]		= "İdare / Ayarlar";
-$pgv_lang["ansi_to_utf8"]		= "ANSİ ile kodlanmısş bu GEDCOM veritabanı UTF-8'e dönüştürülsün mü?";
 $pgv_lang["utf8_to_ansi"]		= "UTF-8 ile kodlanmısş bu GEDCOM veritabanı ANSİ'ye (ISO-8859-1) dönüştürülsün mü?";
-$pgv_lang["view_logs"]			= "Sistemin günlük raporuna bak";
-$pgv_lang["logfile_content"]		= "Sistemin günlük raporunun içeriği. Günlük dosyasının isimi:";
 $pgv_lang["step1"]			= "4 adımdan 1'incisi:";
-$pgv_lang["step2"]			= "4 adımdan 2'ncisi:";
 $pgv_lang["step3"]			= "4 adımdan 3'üncüsü:";
 $pgv_lang["step4"]			= "4 adımdan 4'üncüsü:";
-$pgv_lang["validate_gedcom"]		= "GEDCOM veritabanının geçerliğini denetle";
-$pgv_lang["pgv_registry"]		= "PhpGedView kullanan diğer sitelerin listesi";
 $pgv_lang["cancel_upload"]		= "Yollamayı iptal et";
 $pgv_lang["manage_media_files"]		= "Mültimedya dosyalarını yönet";
-
 //-- Relationship chart messages
 $pgv_lang["relationship_chart"]		= "Akrabalık çizimi";
 $pgv_lang["person1"]			= "1. şahıs";
@@ -480,78 +404,30 @@ $pgv_lang["sister"]			= "Kız kardeş";
 $pgv_lang["relationship_to_me"]		= "Benimle olan akrabalığı";
 $pgv_lang["line_up_generations"]	= "Ayni kuşaktan olan şahısları bir seviyede göster";
 $pgv_lang["oldest_top"]			= "En yaşlıları üstte göster";
-
 //-- gedcom edit utility
 $pgv_lang["check_delete"]		= "Bu GEDCOM hadisesini gerçekten silmek istiyor musunuz?";
-$pgv_lang["gedrec_deleted"] 		= "GEDCOM kayıtı başarı ile silindi.";
-$pgv_lang["gedcom_deleted"] 		= "[#GED#] isimli GEDCOM veritabanı başarı ile silindi.";
 $pgv_lang["changes_exist"]		= "Bu GEDCOM dosyasında değişiklikler yapılmıştır";
-$pgv_lang["accept_changes"]		= "Veritabanındaki değişiklikleri kabul/ret et";
-$pgv_lang["show_changes"]		= "Bu kayıt güncelleştirilmiştir. Buraya tıklayıp değişiklikleri gözden geçirin.";
-$pgv_lang["hide_changes"]		= "Buraya tıklayıp değişiklikleri saklayın.";
-$pgv_lang["review_changes"]		= "GEDCOM içindeki değişiklikleri göster";
-$pgv_lang["undo_successful"]		= "Değişiklikler geri alındı";
-$pgv_lang["undo"]			= "Geri al";
-$pgv_lang["view_change_diff"]		= "Değişiklikler dosyasına bak";
-$pgv_lang["changes_occurred"]		= "Bu şahısın hakkında yapılan değişiklikler";
 $pgv_lang["place_contains"]		= "Yerin içeriği:";
-$pgv_lang["ged_import"]			= "İçeri aktarımı (import)";
 $pgv_lang["now_import"]			= "Şimdi GEDCOM kayıtlarını aşağıdaki \"İçeri aktarımı (import)\" bağlantısına tıklayarak PhpGedView içine ithal etmeniz gerekiyor.";
 $pgv_lang["find_place"]			= "Yer ara";
 $pgv_lang["close_window"]		= "Pencereyi kapat";
 $pgv_lang["close_window_without_refresh"]	= "Pencereyi tazelemeden kapat";
-$pgv_lang["add_fact"]			= "Yeni hadise ekle";
 $pgv_lang["add"]			= "Ekle";
-$pgv_lang["add_new_husb"]		= "Yeni bir erkek eş ekle";
 $pgv_lang["edit_name"]			= "İsimi işle";
-$pgv_lang["add_wife"]			= "Bayan eş ekle";
-$pgv_lang["add_new_wife"]		= "Yeni bir bayan eş ekle";
-$pgv_lang["add_wife_to_family"]		= "Bu aileye bayan eş ekle";
 $pgv_lang["find_family"]		= "Aile ara";
 $pgv_lang["find_fam_list"]		= "Aile arama listesi";
 $pgv_lang["custom_event"]		= "Kişisel hadise";
-$pgv_lang["update_successful"]		= "Güncelleştirme başarılıydı";
-$pgv_lang["add_child"]			= "Çocuk ekle";
 $pgv_lang["delete_name"]		= "İsimi sil";
-$pgv_lang["replace"]			= "Kayıtı değiştir";
-$pgv_lang["append"] 			= "Kayıtı ekle";
-$pgv_lang["add_father"]			= "Yeni bir baba ekle";
-$pgv_lang["add_mother"]			= "Yeni bir anne ekle";
-$pgv_lang["add_obje"]			= "Yeni mültimedya nesnesini ekle";
-$pgv_lang["no_changes"]			= "Aktüel olarak yapılmış hiç bir değişiklik yoktur.";
-$pgv_lang["accept"]			= "Kabul et";
-$pgv_lang["accept_all"] 		= "Tüm değişiklikleri kabul et";
-$pgv_lang["accept_successful"]		= "Değişiklikler başarı ile veritabanına işlenmiştir";
-$pgv_lang["edit_raw"]			= "Sade GEDCOM kayıtını düzenle";
 $pgv_lang["select_date"]		= "Bir tarih seçiniz";
-$pgv_lang["create_source"]		= "Yeni kaynak ekle";
-$pgv_lang["new_source_created"] 	= "Yeni kaynak başarı ile eklenmiştir.";
-$pgv_lang["add_name"]			= "Yeni isim ekle";
 $pgv_lang["user_cannot_edit"]		= "Bu rumuzlu üye bu GEDCOM veritabanını düzenleyemez.";
-$pgv_lang["gedcom_editing_disabled"]	= "Bu GEDCOM veritabanının düzenlenmesi sistem yöneticisi tarafından engellenmiştir.";
-$pgv_lang["privacy_prevented_editing"]	= "Mahremiyet ayarları bu kayıtı düzenlemenizi engellemektedir.";
-$pgv_lang["add_asso"]				= "Yeni bir ilişki / eş ekle";
 $pgv_lang["delete_source"]		= "Bu kaynağı sil";
 $pgv_lang["confirm_delete_source"]	= "Bu kaynağı hakikatten GEDCOM dosyasından silmek istiyor musunuz?";
-$pgv_lang["add_husb"]			= "Erkek eş ekle";
-$pgv_lang["add_husb_to_family"]		= "Bu aileye erkek eş ekle";
-$pgv_lang["add_child_to_family"]	= "Bu aileye bir çocuk ekle";
-$pgv_lang["add_sibling"]		= "Erkek ya da kız kardeş ekle";
-$pgv_lang["add_son_daughter"]		= "Erkek ya da kız çocuk ekle";
 $pgv_lang["delete_person"]		= "Bu şahsı sil";
 $pgv_lang["confirm_delete_person"]	= "Bu şahsı hakikatten GEDCOM dosyasından silmek istiyor musunuz?";
 $pgv_lang["find_media"]			= "Mültimedya dosyalarını ara";
 $pgv_lang["set_link"]			= "Bağlantı ekle";
-$pgv_lang["add_source_lbl"]		= "Kaynak alıntısını ekle";
-$pgv_lang["add_note"]			= "Hadiseye not ekle";
-$pgv_lang["add_media_lbl"]		= "Mültimedya nesnesini ekle";
-$pgv_lang["add_media"]			= "Yeni mültimedya nesnesini ekle";
-$pgv_lang["add_source"]			= "Hadiseye yeni bir kaynak alıntısını ekle";
-$pgv_lang["add_note_lbl"]		= "Not ekle";
-
 $pgv_lang["in_this_month"]		= "Sizin tarihinizde bu ay içinde...";
 $pgv_lang["in_this_year"]		= "Bu sene içinde - Sizin tarihinizde...";
-
 //-- calendar.php messages
 $pgv_lang["on_this_day"]		= "Sizin tarihinizde bu günde...";
 $pgv_lang["year_anniversary"]		= "#year_var#. yıl dönümü";
@@ -578,13 +454,7 @@ $pgv_lang["viewyear"]			= "Seneyi göster";
 $pgv_lang["min6chars"]			= "Şifre en azından 6 harf ya da sayı uzunluğunda olmalıdır";
 $pgv_lang["pls_note03"]			= "Bu E-posta adresi üyeliğinizin canlandırılmasından önce tasdik edilecektir. Bu adres yöneticiden başka kimseye gösterilmeyecektir. Bu adres üzerinden size üyelik hesabınızın içeriklerini gösteren bir mektup gönderilecektir. Bu mektup sayesinde üyelik hesabınızı tasdik edebileceksiniz.";
 $pgv_lang["pls_note02"]			= "Lütfen dikkat edin: Şifrenizde sırf alfabenin büyük / küçük harflerini ya da sayıları kullanın. Eğer şifrenizin içinde diğer özel harfleri kullanacak olursanız başka bir sistemden giriş yapmak isterken zorluklarla karşılaşabilirsiniz.";
-
 //-- upload media messages
-$pgv_lang["media_file"]			= "Medya dosyası";
-$pgv_lang["upload_media"]		= "Medya dosyalarını yolla";
-$pgv_lang["thumbnail"]			= "Tırnak resim";
-$pgv_lang["upload_successful"]		= "Yollama başarılı idi";
-
 //-- user self registration module
 $pgv_lang["requestpassword"]		= "Şifremi unuttum. Yeni şifre istiyorum";
 $pgv_lang["no_account_yet"]		= "Üye değil misiniz?";
@@ -598,8 +468,6 @@ $pgv_lang["savedata"]			= "Değişiklikleri hafıza et";
 $pgv_lang["datachanged"]		= "Üyenin verileri değiştirilmiştir!";
 $pgv_lang["datachanged_name"]		= "Yeni rumuzunuz ile tekrar giriş yapmak zorunda kalabilirsiniz.";
 $pgv_lang["myuserdata"]			= "Şahsi ayarlar";
-$pgv_lang["verified"]			= "Üye kendini tasdik etti";
-$pgv_lang["verified_by_admin"]		= "Yönetici üyeyi tasdik etti";
 $pgv_lang["user_theme"]			= "Şahsi tema";
 $pgv_lang["mgv"]			= "Şahsi GedView";
 $pgv_lang["editowndata"]		= "Şahsi ayarlar";
@@ -671,9 +539,6 @@ $pgv_lang["mail04_line03"]		= "Tavsiye:";
 $pgv_lang["mail04_line04"]		= "Lütfen şimdi aşağıdaki bağlantıyı tıklayıp yeni şifreniz ile giriş yapın ve sonra şifrenizi güvenlik nedenleri yüzünden tekrar değiştirin.";
 $pgv_lang["mygedview"]			= "Şahsi GedView bölümü";
 $pgv_lang["passwordlength"]		= "Şifre en azından 6 harf ya da sayı uzunluğunda olmalıdır";
-$pgv_lang["admin_approved"]		= "#SERVER_NAME# sitesindeki üyeliğiniz yönetici tarafından tasdik edilmiştir.";
-$pgv_lang["you_may_login"]		= "Şimdi isterseniz aşağıdaki bağlantıya giderek PhpGedView sitesine girebilirsiniz...";
-
 //-- mygedview page
 $pgv_lang["welcome"]			= "Hoş geldiniz";
 $pgv_lang["upcoming_events"]		= "Gelecek yıldönümleri";
@@ -736,7 +601,6 @@ $pgv_lang["recent_changes"]		= "En son değişiklikler";
 $pgv_lang["recent_changes_block"]	= "\"En son değişiklikler\" kutusu";
 $pgv_lang["delete_selected_messages"]	= "Seçilmiş mesajları sil";
 $pgv_lang["use_blocks_for_default"]	= "Bu kutular tüm ziyaretçiler icin varsayılan olarak kullanılsın mı?";
-
 //-- upgrade.php messages
 $pgv_lang["upgrade_util"]		= "Güncelleştirme aracı";
 $pgv_lang["no_upgrade"]			= "Güncelleştirilecek dosya yoktur.";
@@ -746,7 +610,6 @@ $pgv_lang["upgrade_download"]		= "İndir:";
 $pgv_lang["latest"]			= "Kullandığınız PhpGedView sürümü günceldir.";
 $pgv_lang["location"]			= "Güncelleme dosyalarının bulundugu yer: ";
 $pgv_lang["options"]			= "Seçenekler:";
-$pgv_lang["inc_languages"]		= "Diller";
 $pgv_lang["inc_config"]			= "Yapılandırma dosyası";
 $pgv_lang["inc_index"]			= "İndeks dosyaları";
 $pgv_lang["inc_themes"]			= " Temalar";
@@ -759,7 +622,6 @@ $pgv_lang["not_configured"]		= "Daha PhpGedView ayarlarını yapılandırmadın�
 $pgv_lang["location_upgrade"]		= "Lütfen güncelleme dosyalarınızın bulunduğu yeri işleyin.";
 $pgv_lang["new_variable"]		= "Yeni değişken bulundu: ";
 $pgv_lang["config_open_error"]		= "Yapilandırma dosyasını açarken bir hata oluştu.";
-$pgv_lang["gedcom_config_write_error"]	= "HATA!!! GEDCOM yapılandırma dosyasına yazamıyorum.";
 $pgv_lang["config_update_ok"]		= "Yapılandırma dosyanız başarı ile güncelleştirilmiştir.";
 $pgv_lang["config_uptodate"]		= "Yapılandırma dosyanız günceldir.";
 $pgv_lang["processing"]			= "İşliyorum...";
@@ -776,30 +638,17 @@ $pgv_lang["heading_theme"]		= "Tema dosyaları:";
 $pgv_lang["heading_docs"]		= "Elkitapları:";
 $pgv_lang["copied_success"]		= "başarıyla kopyalandı.";
 $pgv_lang["backup_copied_success"]	= "yedekleme dosyası başarı ile yaratıldı.";
-$pgv_lang["folder_created"]		= "Klasör yaratıldı";
 $pgv_lang["upgrade_completed"]		= "Güncelleme başarı ile gerçekleştirilmiştir";
-
 //-- validate gedcom
-$pgv_lang["invalid_dates"]		= "Hatalı tarih biçimleri bulunmuştur. Temizlemeyi seçerseniz bunlar GG AAA SSSS (örnek: 1 JAN 2004) biçimine çevirilecektir.";
-$pgv_lang["valid_gedcom"]		= "Geçerli GEDCOM bulundu. Temizlemeye gerek yok. ";
 $pgv_lang["optional_tools"]		= "İsterseniz ithal etmeden önce asağıdaki seçmeli aracları kullanabilirsiniz.";
 $pgv_lang["optional"]			= "Seçmeli araçlar";
-$pgv_lang["day_before_month"]		= "Önce gün sonra ay (GG AA SSSS)";
-$pgv_lang["month_before_day"]		= "Önce ay sonra gün (AA GG SSSS)";
-$pgv_lang["do_not_change"]		= "Değiştirme";
-$pgv_lang["example_date"]		= "GEDCOM veritabanınızdan hatalı bir tarih biçiminin örneği:";
 $pgv_lang["add_media_tool"]		= "Medya dosyası ekleme aracı";
 $pgv_lang["launch_media_tool"]		= "Buraya tıklayarak \"medya ekleme aracını\" kullanabilirsiniz.";
-$pgv_lang["highlighted"]		= "Vurgulanan resim";
 $pgv_lang["extension"]			= "Uzantı";
 $pgv_lang["add_media_button"]		= "Medya dosyası ekle";
 $pgv_lang["adds_completed"]		= "Medya dosyası başarı ile GEDCOM veritabanına eklenmiştir.";
-$pgv_lang["cleanup_places"]		= "Yerleri temizle";
-$pgv_lang["empty_lines_detected"]	= "GEDCOM veritabanınızda boş sıralar bulunmuştur. Temizlemeyi seçerseniz bunlar silinecektir.";
-
 //-- hourglass chart
 $pgv_lang["hourglass_chart"]		= "Kum saati çizimi";
-
 //-- report engine
 $pgv_lang["choose_report"]		= "Rapor seçimi";
 $pgv_lang["enter_report_values"]	= "Rapor içeriklerini işleyin";
@@ -826,26 +675,20 @@ $pgv_lang["birthplace"]				= "Doğum yeri içeriği";
 $pgv_lang["birthdate1"]				= "Başlangıc tarihi";
 $pgv_lang["birthdate2"]				= "Bitiş tarihi";
 $pgv_lang["sort_by"]			= "Sıralama biçimi:";
-
 $pgv_lang["cleanup"]			= "Temizle";
-$pgv_lang["skip_cleanup"]		= "Temizlemeyi atla";
-
 //-- CONFIGURE (extra) messages for programs patriarch, slklist and statistics
 $pgv_lang["dynasty_list"]		= "Aile tablosu";
 $pgv_lang["make_slklist"]		= "EXCEL (SLK) listesini yarat.";
 $pgv_lang["patriarch_list"]		= "Ata listesi";
 $pgv_lang["slk_list"]			= "EXCEL (SLK) listesi";
 $pgv_lang["statistics"]			= "İstatistikler";
-
 //-- Merge Records
-$pgv_lang["merge_records"]		= "Kayıtları birleştir";
 $pgv_lang["merge_step1"]		= "Kayıt birleştirme - 3 adımdan 1'incisi";
 $pgv_lang["merge_step2"]		= "Kayıt birleştirme - 3 adımdan 2'ncisi";
 $pgv_lang["merge_step3"]		= "Kayıt birleştirme - 3 adımdan 3'üncüsü";
 $pgv_lang["no_matches_found"]		= "Uyan hiç bir hadise bulunamadı";
 $pgv_lang["record"]			= "Kayıt";
 $pgv_lang["merge_more"]			= "Kayıt birleştirmeye devam et.";
-
 //-- ANCESTRY FILE MESSAGES
 $pgv_lang["ancestry_chart"]		= "Soy ağacı tablosu";
 $pgv_lang["chart_style"]		= "Çizim türü";
@@ -869,19 +712,15 @@ $pgv_lang["sosa_13"]			= "Dedenin annesi";
 $pgv_lang["sosa_14"]			= "Anneannenin babası";
 $pgv_lang["sosa_15"]			= "Anneannenin annesi";
 // 4th generation
-
 // 5th generation
-
 //-- FAN CHART
 $pgv_lang["fan_chart"]			= "Değirmi çizge";
 $pgv_lang["fan_width"]			= "Değirmi çizge'nin eni";
 $pgv_lang["fontfile_error"]		= "Yazı tipi dosyası PHP sunucusunda bulunamadı";
-
 //-- RSS Feed
 $pgv_lang["rss_descr"]			= "Haberler ve bağlantılar #GEDCOM_TITLE# sitesindendir";
 $pgv_lang["rss_logo_descr"]		= "Feed PhpGedView tarfından yaratılmıştır";
 $pgv_lang["statutci"]			= "İndeks yaratılamadı";
-
 //-- statistics utility
 $pgv_lang["statnnames"]			= "Soy isim sayısı =";
 $pgv_lang["statnfam"]			= "Aile sayısı =";
@@ -919,30 +758,20 @@ $pgv_lang["statar_xga"]			= "Miktarlar için gerekli olan limit değerler (x-eks
 $pgv_lang["statar_zgp"]			= "Periyotlar için gerekli olan limit değerler (z-ekseni):";
 $pgv_lang["statreset"]			= "Sıfırla - İlk duruma getir";
 $pgv_lang["statsubmit"]			= "Çizimi göster";
-
 //-- statisticsplot utility
 $pgv_lang["stpl"]			= "...";
 $pgv_lang["alive_in_year"]			= "Yılda yaşayan";
 $pgv_lang["is_alive_in"]			= "#YEAR# senesinde hayatta olanlar";
-
 //-- alive in year
-
 //-- find media
 $pgv_lang["add_directory"]		= "Dizin ekle";
-$pgv_lang["show_thumbnail"]		= "Tırnak resimleri göster";
-
 //-- link media
-$pgv_lang["link_media"]			= "Mültimedya bağla";
-
 //-- Help system
 $pgv_lang["definitions"]		= "Tanımlar";
-
 //-- Index_edit
 $pgv_lang["description"]		= "Betimleme";
-
 //$pgv_lang["add_main_block"]		= "Ana bölüme bir kutu ekle...";
 //$pgv_lang["add_right_block"]		= "Sağ bölüme bir kutu ekle...";
 //$pgv_lang["gedcom_title"]		= "Bu GEDCOM-Dosyasının içeriğini belirleyen bir başlık belirleyin:";
 //$pgv_lang["date_format"]		= "Tarih biçimi";
-
 ?>
