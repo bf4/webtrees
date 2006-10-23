@@ -114,7 +114,7 @@ class Census1840 extends ra_form {
         $out .= '<td class="descriptionbox">'.$pgv_lang["city"].'</td><td class="optionbox"><input name="city" type="text" size="27" value="'.htmlentities($city).'"></td>';
         $out .=	'<td class="descriptionbox">'.$pgv_lang["page"].'</td><td class="optionbox"><input name="page" type="text" size="5" value="'.htmlentities($page).'"></td></tr>';
 //        Next Table
-        $out .= '<tr><td colspan="6"><table align="center" id="inputTable">';
+        $out .= '</table><table align="center" id="inputTable">';
         $out .= '<td class="descriptionbox" align="center" rowspan="2">Names of heads of families</td>';
         $out .= '<td colspan="13" class="descriptionbox" align="center">Free White Males</td>';
         $out .= '<td colspan="13" class="descriptionbox" align="center">Free White Females</td>';
@@ -122,7 +122,7 @@ class Census1840 extends ra_form {
         $out .= '<td colspan="6" class="descriptionbox" align="center">Female Slaves</td>';
         $out .= '<td colspan="6" class="descriptionbox" align="center">Free Male Colored Persons</td>';
         $out .= '<td colspan="6" class="descriptionbox" align="center">Free Female Colored Persons</td>';
-        $out .= '<td class="descriptionbox" align="center" rowspan="2">Totle</td>';
+        $out .= '<td class="descriptionbox" align="center" rowspan="2">Total</td>';
         
         $out .= '<td colspan="7" class="descriptionbox" align="center">Number of persons in each<br>family employed in</td>';
         $out .= '<td colspan="1" class="descriptionbox" align="center">Pensioners for Revolutionary<br>or military services, included<br>in the foregoing.</td>';
@@ -354,8 +354,8 @@ class Census1840 extends ra_form {
 	       
 	       //Other inputs
 	        $value = "";
-        	if (isset($row['Totle'])) $value = $row['Totle'];
-	        $out .= '<td class="optionbox"><input name="Totle'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
+        	if (isset($row['Total'])) $value = $row['Total'];
+	        $out .= '<td class="optionbox"><input name="Total'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
 	        $value = "";
         	if (isset($row['Mining'])) $value = $row['Mining'];
 	        $out .= '<td class="optionbox"><input name="Mining'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
@@ -437,12 +437,12 @@ class Census1840 extends ra_form {
         	if (isset($row['ReadAndWrite'])) $value = $row['ReadAndWrite'];
 	        $out .= '<td class="optionbox"><input name="ReadAndWrite" type="text" size="16" value="'.htmlentities($value).'"></td>';
         }
-        $out .= '</table></td></tr>';
+        $out .= '</table>';
         return $out;
     }
 
     function footer() {
-        return '</table></form>';
+        return '</form>';
     }
 
     function display_form() {
@@ -560,7 +560,7 @@ class Census1840 extends ra_form {
 			"FreeSlaves36To55F"=>$_POST["FreeSlaves36To55F".$number],
 			"FreeSlaves55To100F"=>$_POST["FreeSlaves55To100F".$number],
 			"FreeSlaves100upF"=>$_POST["FreeSlaves100upF".$number],
-			"Totle"=>$_POST["Totle".$number],
+			"Total"=>$_POST["Total".$number],
 			"Mining"=>$_POST["Mining".$number],
 			"Agriculture"=>$_POST["Agriculture".$number],
 			"Commerce"=>$_POST["Commerce".$number],
@@ -639,7 +639,7 @@ class Census1840 extends ra_form {
 			$text .= "\r\nFree Female Salves 36 thru 55: ".$_POST["FreeSlaves36To55F".$number];
 			$text .= "\r\nFree Female Salves 55 thru 100: ".$_POST["FreeSlaves55To100F".$number];
 			$text .= "\r\nFree Female Salves 100 and up: ".$_POST["FreeSlaves100upF".$number];
-			$text .= "\r\nTotle: ".$_POST["Totle".$number];
+			$text .= "\r\nTotal: ".$_POST["Total".$number];
 			$text .= "\r\nMining: ".$_POST["Mining".$number];
 			$text .= "\r\nAgriculture: ".$_POST["Agriculture".$number];
 			$text .= "\r\nCommerce: ".$_POST["Commerce".$number];
