@@ -338,7 +338,6 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$REQUIRE_AUTHENTICATION\s*=\s*.*;/', "\$REQUIRE_AUTHENTICATION = ".$boolarray[$_POST["NEW_REQUIRE_AUTHENTICATION"]].";", $configtext);
 	$configtext = preg_replace('/\$RSS_FORMAT\s*=\s*".*";/', "\$RSS_FORMAT = \"".$_POST["NEW_RSS_FORMAT"]."\";", $configtext);
 	$configtext = preg_replace('/\$SEARCHLOG_CREATE\s*=\s*".*";/', "\$SEARCHLOG_CREATE = \"".$_POST["NEW_SEARCHLOG_CREATE"]."\";", $configtext);
-	//$configtext = preg_replace('/\$SECURITY_CHECK_GEDCOM_DOWNLOADABLE\s*=\s*.*;/', "\$SECURITY_CHECK_GEDCOM_DOWNLOADABLE = ".$boolarray[$_POST["NEW_SECURITY_CHECK_GEDCOM_DOWNLOADABLE"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_CONTEXT_HELP\s*=\s*.*;/', "\$SHOW_CONTEXT_HELP = ".$boolarray[$_POST["NEW_SHOW_CONTEXT_HELP"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_COUNTER\s*=\s*.*;/', "\$SHOW_COUNTER = ".$boolarray[$_POST["NEW_SHOW_COUNTER"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_EMPTY_BOXES\s*=\s*.*;/', "\$SHOW_EMPTY_BOXES = ".$boolarray[$_POST["NEW_SHOW_EMPTY_BOXES"]].";", $configtext);
@@ -804,16 +803,6 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 		<td class="descriptionbox wrap"><?php print_help_link("TIME_LIMIT_help", "qm", "TIME_LIMIT"); print $pgv_lang["TIME_LIMIT"];?></td>
 		<td class="optionbox"><input type="text" name="NEW_TIME_LIMIT" value="<?php print $TIME_LIMIT?>" size="5" tabindex="<?php $i++; print $i?>" onfocus="getHelp('TIME_LIMIT_help');" /></td>
 	</tr>
-	<!--
-	<tr>
-		<td class="descriptionbox wrap"><?php print_help_link("SECURITY_CHECK_GEDCOM_DOWNLOADABLE_help", "qm", "SECURITY_CHECK_GEDCOM_DOWNLOADABLE"); print $pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE"];?></td>
-		<td class="optionbox"><select name="NEW_SECURITY_CHECK_GEDCOM_DOWNLOADABLE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SECURITY_CHECK_GEDCOM_DOWNLOADABLE_help');">
-				<option value="yes" <?php if ($SECURITY_CHECK_GEDCOM_DOWNLOADABLE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$SECURITY_CHECK_GEDCOM_DOWNLOADABLE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
-			</select>
-		</td>
-	</tr>
-	-->
 </table>
 <table class="facts_table" border="0">
 <tr><td style="padding: 5px" class="topbottombar">

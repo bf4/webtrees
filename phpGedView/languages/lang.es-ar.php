@@ -26,10 +26,8 @@
  */
 //-- Spanish Date Format
 $DATE_FORMAT = "D M Y";
-
 //-- Day that a week starts
 //-- 0 = Sunday, 6 = Saturday
-
 $pgv_lang["qm"]	= "?";
 $pgv_lang["page_help"]	= "Ayuda";
 $pgv_lang["help_for_this_page"]	= "Ayuda con ésta página";
@@ -44,12 +42,8 @@ $pgv_lang["header"]	= "Encabezamiento";
 $pgv_lang["imageview"]			= "Visualizador de imágenes";
 $pgv_lang["login_head"]			= "Ingreso de usuario PhpGedView";
 $pgv_lang["confirm"]	= "Confirme Contraseña:";
-
-
 //-- CONFIG FILE MESSAGES
 $pgv_lang["error_title"]	= "ERROR: No es posible abrir el archivo GEDCOM";
-$pgv_lang["error_header_write"]	= "El archivo GEDCOM, [#GEDCOM#], no es grabable. Controle sus atributos y privilegios de acceso.";
-$pgv_lang["error_header"] 	= "El archivo GEDCOM, [#GEDCOM#], No existe en la ubicación especificada.";
 $pgv_lang["for_support"]	= "Para ayuda o información póngase en contacto con";
 $pgv_lang["for_contact"]	= "Para ayuda con preguntas de genealogía por favor póngase en contacto con";
 $pgv_lang["for_all_contact"]	= "Para soporte técnico o preguntas de genealogía póngase en contacto con: ";
@@ -61,7 +55,6 @@ $pgv_lang["username"]	= "Nombre de Usuario:";
 $pgv_lang["invalid_username"]	= "El nombre de usuario contiene caracteres inválidos";
 $pgv_lang["fullname"]	= "Nombre completo";
 $pgv_lang["password"]	= "Contraseña";
-$pgv_lang["user_contact_method"] = "Método de Contacto Preferido";
 $pgv_lang["login"]	= "Ingresar";
 $pgv_lang["login_aut"]	= "Editar Usuario";
 $pgv_lang["logout"]	= "Salir";
@@ -72,9 +65,7 @@ $pgv_lang["my_indi"]	= "Mi Ficha";
 $pgv_lang["yes"]	= "Sí";
 $pgv_lang["no"]	= "No";
 $pgv_lang["change_theme"]		= "Cambiar el Tema";
-$pgv_lang["add_gedcom"]	= "Añadir otro archivo GEDCOM";
 $pgv_lang["no_support"]	= "Se ha detectado que su navegador no soporta las normas utilizadas en el sitio PhpGedView. Muchos navegadores soportan estas normas en sus más recientes versiones. Por favor actualice su navegador a una versión más reciente.";
-
 //-- INDEX (PEDIGREE_TREE) FILE MESSAGES
 $pgv_lang["index_header"]	= "Árbol de Antepasados";
 $pgv_lang["gen_ped_chart"]	= "#PEDIGREE_GENERATIONS# generaciones de Antepasados";
@@ -94,7 +85,6 @@ $pgv_lang["lists"]	= "Listas";
 $pgv_lang["welcome_page"]	= "Página de Bienvenida";
 $pgv_lang["max_generation"]	= "El número máximo de generaciones es #PEDIGREE_GENERATIONS#.";
 $pgv_lang["min_generation"]	= "El número mínimo de generaciones es 3";
-
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Imposible encontrar una familia con el ID";
 $pgv_lang["unable_to_find_indi"]	= "Imposible encontrar una persona con el ID";
@@ -131,7 +121,6 @@ $pgv_lang["back"]	= "Regresar";
 $pgv_lang["privacy_list_indi_error"]	= "Por reglas de privacidad, una o más personas están ocultas.";
 $pgv_lang["privacy_list_fam_error"]	= "Por reglas de privacidad, una o más familias están ocultas.";
 $pgv_lang["aka"]	= "También conocido(s) como";
-
 //-- INDIVUDUAL FILE MESSAGES
 $pgv_lang["male"]	= "Hombre";
 $pgv_lang["female"]	= "Mujer";
@@ -149,7 +138,6 @@ $pgv_lang["unrecognized_code_msg"]	= "Este es un error y desearíamos corregirlo
 $pgv_lang["indi_info"]	= "Información Personal";
 $pgv_lang["pedigree_chart"] 	= "Gráfico de Antepasados";
 $pgv_lang["desc_chart2"]	= "Gráfico de Descendientes";
-$pgv_lang["family"]	= "Familia";
 $pgv_lang["family_with"]	= "Familia con";
 $pgv_lang["as_spouse"]	= "Familia con el Cónyuge";
 $pgv_lang["as_child"]	= "Familia con los Padres";
@@ -166,7 +154,6 @@ $pgv_lang["object_note"]	= "Nota Objeto:";
 $pgv_lang["sex"]	= "Sexo";
 $pgv_lang["personal_facts"]	= "Acontecimientos y detalles personales";
 $pgv_lang["type"]	= "Tipo";
-$pgv_lang["date"]	= "Fecha";
 $pgv_lang["place_description"]	= "Lugar/Descripción";
 $pgv_lang["parents"] 	= "Padres:";
 $pgv_lang["siblings"] 	= "Hermano";
@@ -180,7 +167,6 @@ $pgv_lang["adopted"]	= "Adoptado";
 $pgv_lang["foster"]	= "Adoptivo";
 $pgv_lang["link_as"]	= "Relacione esta persona a una familia existente como un(a) ";
 $pgv_lang["sealing"]	= "Sealing";
-
 //-- FAMILY FILE MESSAGES
 $pgv_lang["family_info"]	= "Información de la Familia";
 $pgv_lang["family_group_info"]	= "Información del Grupo Familiar";
@@ -193,7 +179,6 @@ $pgv_lang["media_object"]	= "Objeto Multimedio:";
 $pgv_lang["children"]	= "Hijos";
 $pgv_lang["no_children"]	= "Sin Hijos";
 $pgv_lang["parents_timeline"]	= "Ver a la pareja en el gráfico de Cronología";
-
 //-- CLIPPINGS FILE MESSAGES
 $pgv_lang["clip_cart"]	= "Carrito Genealógico";
 $pgv_lang["clip_explaination"]	= "El Carrito Genealógico le permite tomar 'segmentos' del árbol familiar y reunirlos en un solo archivo GEDCOM para grabarlo.<br /><br />";
@@ -227,7 +212,6 @@ $pgv_lang["download_now"]	= "Grabar ahora";
 $pgv_lang["indi_downloaded_from"]	= "Este individuo fue obtenido de:";
 $pgv_lang["family_downloaded_from"] = "Esta familia fue obtenida de:";
 $pgv_lang["source_downloaded_from"] = "Esta fuente fue obtenida de:";
-
 //-- PLACELIST FILE MESSAGES
 $pgv_lang["connections"]	= "Conexiones con Lugares encontradas";
 $pgv_lang["top_level"]	= "Nivel principal";
@@ -238,7 +222,6 @@ $pgv_lang["view_records_in_place"]	= "Ver todos los registros encontrados para e
 $pgv_lang["gedcom_form_info"]	= "(GEDCOM)";
 $pgv_lang["unknown"]	= "Desconocido";
 $pgv_lang["individuals"]	= "Individuos";
-
 //-- MEDIALIST FILE MESSAGES
 $pgv_lang["multi_title"]	= "Lista de objetos MultiMedio";
 $pgv_lang["media_found"]	= "Objetos MultiMedio encontrados";
@@ -248,7 +231,6 @@ $pgv_lang["view_source"]	= "Ver Fuente";
 $pgv_lang["prev"]	= "&lt; Anterior";
 $pgv_lang["next"]	= "Siguiente &gt;";
 $pgv_lang["file_not_found"]	= "No se encontró el Archivo.";
-
 //-- SEARCH FILE MESSAGES
 $pgv_lang["search_gedcom"]	= "Buscar en los archivos GEDCOM";
 $pgv_lang["enter_terms"]	= "Ingrese términos de búsqueda:";
@@ -262,26 +244,20 @@ $pgv_lang["search_year"]	= "Año:";
 $pgv_lang["lastname_empty"]	= "Por favor escriba un apellido.";
 $pgv_lang["no_results"]	= "No se encontraron resultados.";
 $pgv_lang["soundex_results"]	= "Quizás las siguientes coincidencias Soundex le sean de ayuda.";
-
 //-- SOURCELIST FILE MESSAGES
 $pgv_lang["sources_found"]	= "Fuentes encontradas";
-
 //-- SOURCE FILE MESSAGES
 $pgv_lang["source_info"]	= "Información de la Fuente";
 $pgv_lang["other_records"]	= "Otros registros relacionados con esta fuente:";
 $pgv_lang["people"]	= "Personas";
 $pgv_lang["families"]	= "Familias";
 $pgv_lang["invalid_gedformat"]	= "Formato GEDCOM 5.5 inválido";
-
 //-- BUILDINDEX FILE MESSAGES
 $pgv_lang["building_indi"]	= "Construyendo el Índice de Personas y Familias";
 $pgv_lang["building_index"]	= "Construyendo el Índice";
 $pgv_lang["importing_records"]	= "Importando Registros a la Base de datos";
 $pgv_lang["detected_change"]	= "PhpGedView detectó un cambio en el archivo #GEDCOM#. El archivo Índice debe reconstruirse antes de continuar.";
-$pgv_lang["please_be_patient"]	= "POR FAVOR SEA PACIENTE";
-$pgv_lang["reading_file"]	= "Leyendo archivo GEDCOM";
 $pgv_lang["flushing"]	= "Depurando Contenidos";
-$pgv_lang["found_record"]	= "Registros encontrados";
 $pgv_lang["exec_time"]	= "Tiempo total de ejecución:";
 $pgv_lang["unable_to_create_index"] = "No se pudo crear un archivo Índice. Asegúrese que están habilitados los permisos de escritura en el directorio de PhpGedView. Los permisos pueden cambiarse nuevamente una vez que se han grabado los archivos.";
 $pgv_lang["indi_complete"]	= "Archivo Índice de individuos actualizado.";
@@ -294,32 +270,15 @@ $pgv_lang["import_multiple"]	= "Importar y trabajar con varios GEDCOM";
 $pgv_lang["explain_options"]	= "Si elige eliminar las tablas, todos los datos serán reemplazados con este GEDCOM <br>Si escoge importar y trabajar con múltiples GEDCOMs, PhpGedView borrará todos los datos que sean importados usando un GEDCOM con el mismo nombre de archivo. Esta opción le permite guardar múltiples GEDCOM en las mismas tablas y cambiar fácilmente entre ellos.";
 $pgv_lang["path_to_gedcom"]	= "Ingrese la ruta de su archivo GEDCOM:";
 $pgv_lang["gedcom_title"]	= "Ingrese una descripción para los datos de este archivo GEDCOM";
-$pgv_lang["dataset_exists"]	= "Un GEDCOM con este nombre ya ha sido importado en esta Base de datos.";
-$pgv_lang["empty_dataset"]	= "Desea eliminar los datos anteriores y reemplazarlos con la nueva información?";
 $pgv_lang["index_complete"]	= "Índice completo.";
-$pgv_lang["click_here_to_go_to_pedigree_tree"] = "Presione aquí para ver el árbol de antepasados.";
 $pgv_lang["updating_is_dead"]	= "La actualización está detenida para las INDI";
-$pgv_lang["import_complete"]	= "Importación completa";
 $pgv_lang["updating_family_names"]	= "Actualizando los nombres de las familias para las FAM";
 $pgv_lang["processed_for"]	= "Archivo procesado para";
 $pgv_lang["run_tools"]	= "Desea ejecutar alguna de las siguientes herramientas en su GEDCOM antes de ser importado?:";
 $pgv_lang["addmedia"]	= "Agregar herramienta de MultiMedio";
-$pgv_lang["created_indis_fail"]	= "No se pudo crear la tabla <i>Individuos</i>";
 $pgv_lang["dateconvert"]	= "Herramienta de conversión de fechas";
 $pgv_lang["xreftorin"]	= "Convertir IDs XREF a números RIN";
 $pgv_lang["tools_readme"]	= "Vea la sección herramientas del archivo #README.TXT# para mayor información.";
-$pgv_lang["bytes_read"]	= "Bytes leídos:";
-$pgv_lang["created_indis"]	= "Tabla de <i>Individuos</i> creada exitosamente.";
-$pgv_lang["created_fams"]	= "Tabla de <i>Familias</i> creada exitosamente.";
-$pgv_lang["created_fams_fail"]	= "No se pudo crear la tabla <i>Familias</i>.";
-$pgv_lang["created_sources_fail"]	= "No se pudo crear la tabla <i>Fuentes</i>.";
-$pgv_lang["created_other_fail"]	= "No se pudo crear la tabla <i>Otros</i>.";
-$pgv_lang["import_progress"]	= "Progreso de la importación...";
-$pgv_lang["created_places_fail"]	= "No se pudo crear la tabla <i>Lugares</i>.";
-$pgv_lang["created_sources"]	= "Tabla de <i>Fuentes</i> creada exitosamente.";
-$pgv_lang["created_other"]	= "Tabla <i>Otros</i> creada exitosamente.";
-$pgv_lang["created_places"]	= "Tabla de <i>Lugares</i> creada exitosamente.";
-
 //-- INDIVIDUAL AND FAMILY LIST FILE MESSAGES
 $pgv_lang["total_fams"]	= "Total de familias encontradas";
 $pgv_lang["total_indis"]	= "Total de personas encontradas";
@@ -337,8 +296,6 @@ $pgv_lang["find_sourceid"]	= "Encontrar ID de la fuente";
 $pgv_lang["skip_surnames"]	= "Mostrar listas de nombres completos";
 $pgv_lang["show_surnames"]	= "Mostrar listas de apellidos";
 $pgv_lang["all"]	= "Todos";
-
-
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]	= "Edad";
 $pgv_lang["timeline_title"]	= "Cronología de PhpGedView";
@@ -352,7 +309,6 @@ $pgv_lang["year"]	= "Año:";
 $pgv_lang["timeline_instructions"]	= "En los navegadores actuales puede seleccionar y mover las cajas en el gráfico.";
 $pgv_lang["zoom_in"]	= "Agrandar";
 $pgv_lang["zoom_out"]	= "Achicar";
-
 //-- MONTH NAMES
 $pgv_lang["jan"]	= "Enero";
 $pgv_lang["feb"]	= "Febrero";
@@ -378,67 +334,33 @@ $pgv_lang["int"]	= "interpretada";
 $pgv_lang["cir"]	= "alrededor de";
 $pgv_lang["apx"]	= "aprox.";
 $pgv_lang["to"]	= "a";
-
 //-- Admin File Messages
-$pgv_lang["select_an_option"]	= "Seleccione una opción:";
-$pgv_lang["readme_documentation"]	= "Documentación \"LÉAME\"";
-$pgv_lang["configuration"]	= "Configuración";
 $pgv_lang["rebuild_indexes"]	= "Reconstruir los Índices";
 $pgv_lang["user_admin"]	= "Administrador de Usuarios";
-$pgv_lang["user_created"]	= "Usuario creado exitosamente.";
-$pgv_lang["user_create_error"]	= "No es posible añadir el usuario. Por favor retroceda y comience nuevamente.";
 $pgv_lang["password_mismatch"]	= "Las contraseñas no coinciden.";
 $pgv_lang["enter_username"]	= "Debe ingresar un Nombre de Usuario.";
 $pgv_lang["enter_fullname"]	= "Escriba su nombre completo.";
 $pgv_lang["enter_password"]	= "Escriba una contraseña.";
 $pgv_lang["confirm_password"]	= "Debe confirmar la contraseña.";
-$pgv_lang["update_user"]	= "Actualizar Cuenta de Usuario";
-$pgv_lang["update_myaccount"]	= "Actualizar mi cuenta";
 $pgv_lang["delete"]	= "Borrar";
 $pgv_lang["edit"]	= "Editar";
-$pgv_lang["full_name"]	= "Nombre Completo";
-$pgv_lang["confirm_user_delete"]	= "Seguro que desea borrar el usuario";
-$pgv_lang["create_user"]	= "Crear Usuario";
 $pgv_lang["no_login"]	= "No es posible autenticar al usuario.";
 $pgv_lang["import_gedcom"]	= "Importar este archivo GEDCOM";
-$pgv_lang["duplicate_username"]	= "Nombre de Usuario duplicado. Ya existe un usuario con ese nombre. Por favor regrese y cree un usuario con un nombre diferente.";
-$pgv_lang["gedcomid"]	= "ID personal del registro GEDCOM";
 $pgv_lang["enter_gedcomid"]	= "Debe ingresar una ID GEDCOM.";
 $pgv_lang["user_info"]	= "Mi información de Usuario";
-$pgv_lang["rootid"]	= "Persona inicial en el Gráfico de Antepasados";
 $pgv_lang["file_not_exists"]	= "El archivo ingresado no existe.";
-$pgv_lang["download_gedcom"]	= "Grabar GEDCOM";
-$pgv_lang["upload_gedcom"]	= "Cargar GEDCOM";
-$pgv_lang["add_new_gedcom"]	= "Crear un nuevo GEDCOM";
-$pgv_lang["gedcom_file"]	= "Archivo GEDCOM:";
 $pgv_lang["enter_filename"]	= "Debe ingresar un nombre de archivo GEDCOM";
 $pgv_lang["file_exists"]	= "Ya existe un archivo GEDCOM con ese nombre. Por favor elija otro nombre o elimine el archivo anterior.";
 $pgv_lang["new_gedcom_title"]	= "Genealogía de [#GEDCOMFILE#]";
-$pgv_lang["upload_error"]	= "Hubo un error cargando su archivo GEDCOM.";
 $pgv_lang["upload_help"]	= "Seleccione un archivo de su computadora local para cargar al servidor. Todos los archivos se guardarán en el directorio: ";
 $pgv_lang["add_gedcom_instructions"] = "Ingrese un nombre de archivo para este GEDCOM. El nuevo archivo GEDCOM será creado en el directorio \"index\":";
-$pgv_lang["file_success"]	= "Archivo cargado exitosamente";
-$pgv_lang["file_too_big"]	= "El archivo a cargar excede el tamaño permitido";
-$pgv_lang["file_partial"]	= "Archivo parcialmente cargado, por favor intente nuevamente.";
-$pgv_lang["file_missing"]	= "No se recibió el archivo. Envíelo nuevamente.";
-$pgv_lang["manage_gedcoms"]	= "Administración de GEDCOMs y Edición de Privacidad";
 $pgv_lang["research_log"]	= "Registro de investigación";
-$pgv_lang["logfile_content"]	= "Contenido del archivo de registro";
-$pgv_lang["administration"]	= "Administración";
-$pgv_lang["ansi_to_utf8"]	= "Convertir este GEDCOM codificado ANSI a UTF-8?";
 $pgv_lang["utf8_to_ansi"]	= "Desea convertir la codificación de este GEDCOM de UTF-8 a ANSI (ISO-8859-1)?";
 $pgv_lang["user_manual"]	= "Manual del usuario PhpGedView";
 $pgv_lang["upgrade"]	= "Actualice PhpGedView";
-$pgv_lang["download_note"]		= "NOTA: Los archivos GEDCOM de gran tamaño pueden demorar mucho tiempo de proceso antes de su descarga. Si PHP produce un 'time-out' antes de completar la descarga, esta podría quedar incompleta. Puede controlar la existencia de la línea 0 TRLR al final del archivo para asegurarse de su descarga completa. En general insume tanto tiempo descargar como importar un archivo GEDCOM.";
-$pgv_lang["pgv_registry"]		= "Ver otros sitios usando PhpGedView";
-$pgv_lang["view_logs"]	= "Ver archivos de registro";
 $pgv_lang["step1"]	= "Paso 1 de 4";
-$pgv_lang["step2"]	= "Paso 2 de 4";
 $pgv_lang["step3"]	= "Paso 3 de 4";
 $pgv_lang["step4"]	= "Paso 4 de 4";
-$pgv_lang["validate_gedcom"]	= "Validar GEDCOM";
-$pgv_lang["img_admin_settings"]	= "Configuración de Manejo de Imágenes";
-
 //-- Relationship chart messages
 $pgv_lang["relationship_chart"]	= "Gráfico de Parentesco";
 $pgv_lang["person1"]	= "Persona 1";
@@ -455,76 +377,30 @@ $pgv_lang["relationship_to_me"]	= "Parentesco conmigo";
 $pgv_lang["next_path"]	= "Hallar próxima línea";
 $pgv_lang["line_up_generations"]	= "Alinear las mismas generaciones";
 $pgv_lang["show_path"]	= "Mostrar línea";
-
 //-- language edit utility
 $pgv_lang["save"]	= "Guardar";
 $pgv_lang["close_window"]	= "Cerrar ventana";
-
 //-- GEDCOM edit utility
 $pgv_lang["check_delete"]	= "Seguro que desea eliminar este acontecimiento GEDCOM?";
 $pgv_lang["access_denied"]	= "<b>Acceso denegado</b><br>No tiene permiso para acceder a este recurso.";
-$pgv_lang["gedrec_deleted"]	= "Registro GEDCOM correctamente eliminado.";
-$pgv_lang["gedcom_deleted"]	= "GEDCOM [#GED#] correctamente eliminado.";
 $pgv_lang["changes_exist"]	= "Se han efectuado modificaciones a este GEDCOM.";
-$pgv_lang["hide_changes"]		= "Presione aquí para ocultar los cambios.";
-$pgv_lang["accept_changes"]	= "Aceptar/Rechazar Cambios";
-$pgv_lang["show_changes"]	= "Este registro ha sido actualizado. Presione aquí para ver los cambios.";
-$pgv_lang["review_changes"]	= "Revisión de los cambios al GEDCOM";
-$pgv_lang["undo_successful"]	= "Se ha anulado con éxito";
-$pgv_lang["undo"]	= "Deshacer";
-$pgv_lang["view_change_diff"]	= "Ver modificaciones";
-$pgv_lang["changes_occurred"]	= "Este individuo tuvo los siguientes cambios:";
 $pgv_lang["find_place"]	= "Encontrar Lugar";
 $pgv_lang["close_window_without_refresh"] = "Cerrar ventana sin actualizar";
 $pgv_lang["place_contains"]	= "Los Lugares tienen:";
-$pgv_lang["accept_gedcom"]	= "Para rechazar un cambio, seleccione Deshacer. Para aceptar todos los cambios a un GEDCOM, re-importe el archivo.";
-$pgv_lang["ged_import"]	= "Importar GEDCOM";
 $pgv_lang["now_import"]	= "Ahora puede importar los registros GEDCOM en PhpGedView seleccionando el vínculo inferior.";
-$pgv_lang["add_fact"]	= "Añadir un nuevo acontecimiento";
 $pgv_lang["add"]	= "Añadir";
 $pgv_lang["custom_event"]	= "Evento singular";
-$pgv_lang["update_successful"]	= "Actualización exitosa";
-$pgv_lang["add_child"]	= "Agregar hijo";
-$pgv_lang["add_child_to_family"] = "Agregar un hijo a ésta familia";
-$pgv_lang["add_sibling"]	= "Agregar un hermano o hermana";
-$pgv_lang["add_son_daughter"]	= "Agregar un hijo o una hija";
-$pgv_lang["must_provide"]	= "Debe suministrar un ";
 $pgv_lang["delete_person"]	= "Borrar este individuo";
 $pgv_lang["confirm_delete_person"] = "Realmente desea borrar este individuo del archivo GEDCOM?";
 $pgv_lang["find_media"]	= "Buscar MultiMedios";
 $pgv_lang["set_link"]	= "Crear vínculo";
-$pgv_lang["add_source_lbl"]	= "Agregar Cita de Fuente";
-$pgv_lang["add_source"]	= "Agregar nueva Cita de Fuente";
-$pgv_lang["add_note_lbl"]	= "Agregar Nota";
-$pgv_lang["add_note"]	= "Agregar una Nota nueva";
-$pgv_lang["add_media_lbl"]	= "Agregar Medios";
-$pgv_lang["add_media"]	= "Agregar un nuevo ítem de Medios";
 $pgv_lang["delete_source"]	= "Borrar esta Fuente";
 $pgv_lang["confirm_delete_source"] = "Realmente desea borrar esta Fuente del archivo GEDCOM?";
-$pgv_lang["add_husb"]	= "Agregar esposo";
-$pgv_lang["add_husb_to_family"] = "Agregar esposo a esta familia";
 $pgv_lang["find_fam_list"]		= "Encontrar la lista de Familia";
-$pgv_lang["add_wife"]	= "Agregar esposa";
-$pgv_lang["add_wife_to_family"] = "Agregar esposa a esta familia";
 $pgv_lang["find_family"]	= "Buscar familia";
-$pgv_lang["add_new_wife"]	= "Agregar nueva esposa";
-$pgv_lang["add_new_husb"]	= "Agregar nuevo esposo";
 $pgv_lang["edit_name"]	= "Modificar nombre";
 $pgv_lang["delete_name"]	= "Borrar nombre";
-$pgv_lang["replace"]	= "Reemplazar Registro";
-$pgv_lang["no_changes"]			= "Actualmente no existen cambios que deban ser revisados.";
 $pgv_lang["select_date"]		= "Seleccione una fecha";
-$pgv_lang["paste_id_into_field"]= "Pegar la siguiente fuente ID en los campos de edición para referenciar esta fuenta";
-$pgv_lang["new_source_created"]	= "Nueva Fuente creada exitosamente.";
-$pgv_lang["create_source"]		= "Crear una nueva fuente";
-$pgv_lang["edit_raw"]			= "Editar el registro GEDCOM original";
-$pgv_lang["accept_successful"]	= "Modificaciones aceptadas con éxito en la base de datos";
-$pgv_lang["accept_all"]			= "Aceptar todas las modificaciones";
-$pgv_lang["accept"]				= "Aceptar";
-$pgv_lang["append"]	= "Agregar Registro";
-$pgv_lang["add_father"]	= "Agregar un nuevo padre";
-$pgv_lang["add_mother"]	= "Agregar una nueva madre";
-$pgv_lang["add_obje"]	= "Agregar un nuevo Objeto MultiMedio";
 $pgv_lang["sunday"]	= "Domingo";
 $pgv_lang["monday"]	= "Lunes";
 $pgv_lang["tuesday"]	= "Martes";
@@ -539,10 +415,6 @@ $pgv_lang["all_people"]	= "Todos las personas";
 $pgv_lang["living_only"]	= "Personas vivas";
 $pgv_lang["recent_events"]	= "Años recientes (< 100 años)";
 $pgv_lang["year_error"]	= "Disculpe. no se aceptan fechas anteriores a 1970.";
-$pgv_lang["upload_media"]	= "Cargar archivos MultiMedio";
-$pgv_lang["media_file"]	= "Archivo MultiMedio";
-$pgv_lang["thumbnail"]	= "Miniatura";
-$pgv_lang["upload_successful"]	= "Carga exitosa";
 $pgv_lang["lost_password"]	= "Perdió su Contraseña?";
 $pgv_lang["requestpassword"]	= "Solicitar nueva contraseña";
 $pgv_lang["no_account_yet"]	= "Sin cuenta todavía?";
@@ -551,9 +423,7 @@ $pgv_lang["register_info_01"]	= "La información públicamente visible puede ser
 $pgv_lang["pls_note01"]	= "Considere que el sistema distingue letras mayúsculas y minúsculas!";
 $pgv_lang["min6chars"]	= "La contraseña debe contener al menos 6 caracteres";
 $pgv_lang["pls_note02"]	= "Las contraseñas pueden contener números, letras y otros caracteres.";
-
 $pgv_lang["pls_note03"]	= "Esta dirección de correo electrónico será verificada antes de la activación de la cuenta. No será publicada en el sitio. Recibirá un mensaje en esta dirección de correo electrónico con sus datos de ingreso.";
-
 $pgv_lang["emailadress"]	= "Dirección de correo electrónico";
 $pgv_lang["pls_note04"]	= "Los campos indicados con * son obligatorios";
 $pgv_lang["pls_note05"]	= "La finalización del formulario y verificación de sus respuestas se halla pendiente. Le será enviada una confirmación por correo electrónico a la dirección indicada en esta página. Utilizando el correo de confirmación Ud. deberá activar su cuenta; si no lo hace dentro de los siete días, será depurado (Ud. puede registrarse nuevamente a partir de ese momento). Para utilizar este sitio, deberá conocer su Nombre de Usuario y la Contraseña. Debe especificar una dirección de correo electrónico válida y existente para recibir la confirmación por correo electrónico.<br /><br />Si encuentra algún problema registrándose en este sitio, por favor envíe una Solicitud de Soporte al Adminstrador.";
@@ -571,7 +441,6 @@ $pgv_lang["mail02_line04"]	= "Tan pronto como el usuario haya hecho esta verific
 $pgv_lang["mail02_subject"]	= "Nueva registración en #SERVER_NAME#";
 $pgv_lang["hashcode"]	= "Código de verificación:";
 $pgv_lang["thankyou"]	= "Hola #user_fullname# ...<br>Gracias por registrarse";
-
 //-- calendar.php messages
 $pgv_lang["pls_note06"]	= "Ud. recibirá un correo electrónico de confirmación a la dirección ( #user_email# ). Usando el correo electrónico de confirmación activará su cuenta; si no la activa dentro de 7 días será depurado (podrá registrarse nuevamente a partir de este punto). Para registrarse en este sitio, deberá recordar su nombre y contraseña";
 $pgv_lang["registernew"]	= "Nueva confirmación de cuenta.";
@@ -601,8 +470,6 @@ $pgv_lang["savedata"]	= "Información modificada archivada";
 $pgv_lang["datachanged"]	= "Información del usuario modificada!";
 $pgv_lang["datachanged_name"]	= "Necesita registrarse nuevamente con su nuevo Nombre de Usuario";
 $pgv_lang["myuserdata"]	= "Mi Cuenta";
-$pgv_lang["verified"]	= "El usuario se ha autoverificado";
-$pgv_lang["verified_by_admin"]	= "Usuario aprobado por el Administrador";
 $pgv_lang["welcome_text_auth_mode_1"]	=	"<b>BIENVENIDO A ESTE SITIO DE GENEALOGÍA</b></br></br>Se permite el acceso a todo visitante que posea una cuenta de usuario en el sitio.</br>Si ya posee una cuenta de usuario, puede ingresar al sitio en esta página.</br></br>Si aún no la posee, puede solicitarla presionando el enlace adecuado en esta página.</br>Despues de verificar sus datos, el administrador del sitio activarå su cuenta.</br> Recibirá un correo electrónico cuando su cuenta sea activada.";
 $pgv_lang["welcome_text_cust_head"]		=	"<b>BIENVENIDO A ESTE SITIO DE GENEALOGÍA</b></br></br>Se permite el acceso a usuarios que posean una cuenta de usuario y una contraseña asigandas.</br>";
 $pgv_lang["welcome_text_auth_mode_3"]	=	"<b>BIENVENIDO A ESTE SITIO DE GENEALOGÍA</b></br></br>Se permite el acceso <b>solamente a los miembros de la familia</b>.</br>Si ya posee una cuenta de usuario, puede ingresar al sitio en esta página.</br></br>Si aún no la posee, puede solicitarla presionando el enlace adecuado en esta página.</br>Despues de verificar sus datos, el administrador del sitio activarå su cuenta.</br> Recibirá un correo electrónico cuando su cuenta sea activada.";
@@ -611,8 +478,6 @@ $pgv_lang["user_theme"]	= "Mi Tema";
 $pgv_lang["mgv"]	= "Mi GedView";
 $pgv_lang["mygedview"]	= "Portal Mi GedView";
 $pgv_lang["passwordlength"]	= "La contraseña debe contener al menos 6 caracteres";
-$pgv_lang["admin_approved"]	= "Su cuenta en #SERVER_NAME# ha sido aprobada";
-$pgv_lang["you_may_login"]	= " por el administrador. Ud. puede ingresar al sitio PhpGedView presionando el vínculo siguiente:";
 $pgv_lang["welcome"] = "Bienvenido a su nuevo sitio de PhpGedView. Dado que está viendo esta página, ha instalado satisfactoriamente PhpGedView en su servidor y listo para ser configurado en la forma que desee.<br>";
 $pgv_lang["upcoming_events"]	= "Eventos por suceder";
 $pgv_lang["chat"]	= "Conversación";
@@ -723,7 +588,6 @@ $pgv_lang["common_surnames"]	= "Apellidos más comunes";
 $pgv_lang["default_news_title"]	= "Bienvenido a Su Genealogía";
 $pgv_lang["default_news_text"]	= "La información genealógica de este sitio está controlada por <a href=\"http://www.phpgedview.net/\" target=\"_blank\">PhpGedView3</a>. Esta página suministra una introducción e información general de esta genealogía. Para comenzar a trabajar con la información, elija una de las páginas de gráficos del menú de gráficos, diríjase a la lista de personas o busque un nombre o un lugar.<br /><br />Si tiene problemas con el uso del sitio, seleccionando el menú de ayuda obtendrá información sobre cómo utilizar la página en la que se encuentra.<br /><br />Gracias por visitar este sitio.";
 $pgv_lang["reset_default_blocks"]	= "Reestablecer los bloques por omisión";
-
 //-- upgrade.php messages
 $pgv_lang["upgrade_util"]	= "Utilitario de actualización";
 $pgv_lang["no_upgrade"]	= "No existen archivos a actualizar";
@@ -734,7 +598,6 @@ $pgv_lang["latest"]	= "Está ejecutando la última versión de PhpGedView";
 $pgv_lang["location"]	= "Ubicación de los archivos de actualización";
 $pgv_lang["include"]	= "Incluir";
 $pgv_lang["options"]	= "Opciones";
-$pgv_lang["inc_languages"]	= "Idiomas";
 $pgv_lang["inc_config"]	= "Archivo de configuración";
 $pgv_lang["inc_researchlog"]	= "Registro de investigación";
 $pgv_lang["inc_index"]	= "Archivos Índice";
@@ -767,32 +630,17 @@ $pgv_lang["heading_researchlog"] = "Archivos del Registro de Investigación:";
 $pgv_lang["heading_researchloglang"] = "Archivos de idioma de los archivos del Registro de Investigación:";
 $pgv_lang["copied_success"]	= "Copiados con éxito";
 $pgv_lang["backup_copied_success"] = "Archivo de resguardo creado con éxito";
-$pgv_lang["folder_created"]	= "Carpeta creada";
 $pgv_lang["process_error"]	= "Existen problemas al procesar la página. No se puede determinar una versión más reciente.";
 $pgv_lang["upgrade_completed"]	= "Actualización realizada con éxito";
 $pgv_lang["start_using_upgrad"]	= "Presione aquí para comenzar usando la versión ";
-$pgv_lang["performing_validation"]	= "Realizando validación del GEDCOM. Seleccione las opciones necesarias y presione 'Limpieza'";
 $pgv_lang["changed_mac"]	= "Se detectó finales de línea tipo Macintosh. Se cambió las líneas finalizando sólo con 'return' a 'return'+'linefeed'";
 $pgv_lang["changed_places"]	= "Se detectó codificación de lugares inválida. Se realizó una limpieza de los registros de lugares para conformar las especificaciones GEDCOM 5.5 adecuadas. Un ejemplo para su GEDCOM es:";
-$pgv_lang["invalid_dates"]	= "Se detectó formatos de fecha inválidos, al realizar 'Limpieza' se cambiarán al formato DD MMM YYYY (p.ej. 1 ENE 2004).";
-$pgv_lang["valid_gedcom"]	= "Se detectó un GEDCOM válido. No se requiere 'Limpieza'.";
 $pgv_lang["optional_tools"]	= "Si desea, puede ejecutar las siguientes herramientas opcionales antes de realizar la importación.";
 $pgv_lang["optional"]	= "Herramientas opcionales";
 $pgv_lang["date_format"]	= "Formato de fecha:";
-$pgv_lang["day_before_month"]	= "Día antes del mes (DD MM YYYY)";
-$pgv_lang["month_before_day"]	= "Mes antes del día (MM DD YYYY)";
-$pgv_lang["do_not_change"]	= "No modificar";
-$pgv_lang["change_id"]	= "Cambiar el ID individual a:";
-$pgv_lang["example_date"]	= "Ejemplo de fecha inválida para su GEDCOM:";
 $pgv_lang["add_media_tool"]	= "Agregar Herramienta de Medios";
 $pgv_lang["launch_media_tool"]	= "Presione aquí para ejecutar Agregar Herramienta de Medios.";
-$pgv_lang["invalid_header"]		= "Se detectaron registros antes del encabezamiento GEDCOM (0 HEAD). Al realizar limpieza estos registros se eliminarán.";
-$pgv_lang["empty_lines_detected"]	= "Se detectaron líneas vacías en su archivo GEDCOM. Al realizar limpieza, las líneas vacías se eliminarán.";
-$pgv_lang["cleanup_places"]		= "Lugares depurados";
-$pgv_lang["place_cleanup_detected"]	= "Se detectaron codificaciones de lugar incorrectas. Estos errores deben ser corregidos. El ejemplo siguiente muestra el lugar inválido detectado:";
-$pgv_lang["macfile_detected"]	= "Se detectó un archivo Macintosh. Al realizar limpieza será convertido a archivo DOS.";
 $pgv_lang["add_media_descr"]	= "Esta herramienta agregará etiquetas OBJE al GEDCOM. Cierre esta ventana cuando finalice el agregado de Medios.";
-$pgv_lang["highlighted"]	= "Imagen destacada";
 $pgv_lang["extension"]	= "Extensión";
 $pgv_lang["order"]	= "Orden";
 $pgv_lang["add_media_button"]	= "Agregar Medios";
@@ -813,7 +661,6 @@ $pgv_lang["excel_create"]		= "se creará en el archivo:";
 $pgv_lang["excel_list"]			= "Salida en formato EXCEL (SLK) en los siguientes archivos (primero use la lista de patriarcas):";
 $pgv_lang["make_slklist"]		= "Crear una lista EXCEL (SLK)";
 $pgv_lang["dynasty_list"]		= "Información general de familias";
-$pgv_lang["ansi_encoding_detected"]	= "Archivo detectado con codificación ANSI. PhpGedView funciona mejor con archivos codificados en UTF-8.";
 $pgv_lang["hourglass_chart"]	= "Gráfico 'Reloj de Arena'";
 $pgv_lang["cleanup"]	= "Limpieza";
 $pgv_lang["in_this_month"]	= "En este mes en su Historia";
@@ -824,5 +671,4 @@ $pgv_lang["day"]	= "Día:";
 $pgv_lang["month"]	= "Mes:";
 $pgv_lang["showcal"]	= "Mostrar acontecimientos de:";
 $pgv_lang["anniversary_calendar"] = "Calendario de Aniversarios";
-
 ?>

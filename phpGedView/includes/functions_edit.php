@@ -450,39 +450,34 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		}
 		if ($surn) $namerec = "1 NAME  /".trim($surn,"\r\n")."/";
 	}
+	// TODO make these tags a configuration setting
+	$default_name_fields = array("NPFX"=>"","NAME"=>"","GIVN"=>"","SPFX"=>"","SURN"=>"","NSFX"=>"");
+	$advanced_name_fields = array("NICK"=>"", "_MARNM"=>"", "ROMN"=>"");
+	//-- if they are using an RTL language then they probably want _HEB by default
+	if ($USE_RTL_FUNCTIONS)  $default_name_fields["_HEB"] = "";
+	else $advanced_name_fields["_HEB"] = "";
+	
+	//-- iterate over the name tags and find the values from the name record.
+	foreach($default_name_fields as $tag=>$value) {
+		$value = get_gedcom_value($tag, 0, $namerec);
 	// handle PAF extra NPFX [ 961860 ]
-	$nt = preg_match("/\d NPFX (.*)/", $namerec, $nmatch);
-	$npfx=trim(@$nmatch[1]);
+		if ($tag=="NAME") {
 	// 1 NAME = NPFX GIVN /SURN/ NSFX
-	$nt = preg_match("/\d NAME (.*)/", $namerec, $nmatch);
-	$name=@$nmatch[1];
-	if (strlen($npfx) and strpos($name, $npfx)===false) $name = $npfx." ".$name;
-	add_simple_tag("0 NAME ".$name);
-	// 2 NPFX
-	add_simple_tag("0 NPFX ".$npfx);
-	// 2 GIVN
-	$nt = preg_match("/\d GIVN (.*)/", $namerec, $nmatch);
-	add_simple_tag("0 GIVN ".@$nmatch[1]);
-	// 2 NICK
-	$nt = preg_match("/\d NICK (.*)/", $namerec, $nmatch);
-	add_simple_tag("0 NICK ".@$nmatch[1]);
-	// 2 SPFX
-	$nt = preg_match("/\d SPFX (.*)/", $namerec, $nmatch);
-	add_simple_tag("0 SPFX ".@$nmatch[1]);
-	// 2 SURN
-	$nt = preg_match("/\d SURN (.*)/", $namerec, $nmatch);
-	add_simple_tag("0 SURN ".@$nmatch[1]);
-	// 2 NSFX
-	$nt = preg_match("/\d NSFX (.*)/", $namerec, $nmatch);
-	add_simple_tag("0 NSFX ".@$nmatch[1]);
-	// 2 _HEB
-	$nt = preg_match("/\d _HEB (.*)/", $namerec, $nmatch);
-	if ($nt>0 || $USE_RTL_FUNCTIONS) {
-		add_simple_tag("0 _HEB ".@$nmatch[1]);
+			if (!empty($default_name_fields["NPFX"]) && strpos($value, $default_name_fields["NPFX"])===false) 
+					$value = $default_name_fields." ".$value;
+		}
+		$default_name_fields[$tag]= $value;
+		add_simple_tag("0 ".$tag." ".$value);
 	}
-	// 2 ROMN
-	$nt = preg_match("/\d ROMN (.*)/", $namerec, $nmatch);
-	add_simple_tag("0 ROMN ".@$nmatch[1]);
+	//-- advanced name fields
+	print "<tr id=\"advanced_name\"><td class=\"descriptionbox\" colspan=\"2\">";
+	print "<a href=\"javascript:;\" onclick=\"toggleAdvancedName(); return false;\"><img id=\"advanced_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> Advanced Name Fields</a>";
+	print "</td></tr>\n";
+	foreach($advanced_name_fields as $tag=>$value) {
+		$value = get_gedcom_value($tag, 0, $namerec);
+		$default_name_fields[$tag]= $value;
+		add_simple_tag("0 ".$tag." ".$value, "", "", "", "", false);
+	}
 
 	if ($surn) $namerec = ""; // reset if modified
 
@@ -551,7 +546,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			$level1type = $type;
 			$tags=array();
 			$i = 0;
-			$namefacts = array("NPFX", "GIVN", "NICK", "SPFX", "SURN", "NSFX", "NAME", "_HEB", "ROMN");
+			$namefacts = array("NPFX", "GIVN", "NICK", "SPFX", "SURN", "NSFX", "NAME", "_HEB", "ROMN", "_MARNM");
 			do {
 				if (!in_array($type, $namefacts)) {
 					$text = "";
@@ -579,7 +574,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			} while (($level>$glevel)&&($i<count($gedlines)));
 		}
 		// 2 _MARNM
-		add_simple_tag("0 _MARNM");
+//		add_simple_tag("0 _MARNM");
 		print "</tr>\n";
 		print "</table>\n";
 		print_add_layer("SOUR");
@@ -616,6 +611,24 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		frm.NAME.value = frm.NAME.value.replace(/,/g," ");
 		frm.NAME.value = frm.NAME.value.replace(/  +/g," ");
 	}
+	
+	function toggleAdvancedName() {
+		var img = document.getElementById('advanced_img');
+		if (img) {
+			if (img.src.indexOf('plus')>=0) {
+				img.src = '<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]; ?>';
+				var disp = 'table-row';
+			}
+			else {
+				img.src = '<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]; ?>';
+				var disp = 'none';
+			}
+			<?php foreach($advanced_name_fields as $tag=>$value) { ?>
+				document.getElementById("<?php print $tag; ?>_tr").style.display=disp;
+			<?php } ?>
+		}
+	}
+	
 	function togglename() {
 		frm = document.forms[0];
 
@@ -679,23 +692,13 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		// show/hide
 		document.getElementById("NPFX_tr").style.display=disp;
 		document.getElementById("GIVN_tr").style.display=disp;
-		document.getElementById("NICK_tr").style.display=disp;
+		// document.getElementById("NICK_tr").style.display=disp;
 		document.getElementById("SPFX_tr").style.display=disp;
 		document.getElementById("SURN_tr").style.display=disp;
 		document.getElementById("NSFX_tr").style.display=disp;
 	}
 	function checkform() {
 		frm = document.addchildform;
-		/* if (frm.GIVN.value=="") {
-			alert('<?php print $pgv_lang["must_provide"]; print $pgv_lang["given_name"]; ?>');
-			frm.GIVN.focus();
-			return false;
-		}
-		if (frm.SURN.value=="") {
-			alert('<?php print $pgv_lang["must_provide"]; print $pgv_lang["surname"]; ?>');
-			frm.SURN.focus();
-			return false;
-		}*/
 		var fname=frm.NAME.value;
 		fname=fname.replace(/ /g,'');
 		fname=fname.replace(/\//g,'');
@@ -780,8 +783,9 @@ function print_addnewsource_link($element_id) {
  * @param string $readOnly		optional, when "READONLY", fact data can't be changed
  * @param string $noClose		optional, when "NOCLOSE", final "</td></tr>" won't be printed
  *								(so that additional text can be printed in the box)
+ * @param boolean $rowDisplay	True to have the row displayed by default, false to hide it by default
  */
-function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose="") {
+function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose="", $rowDisplay=true) {
 	global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES;
 	global $assorela, $tags, $emptyfacts, $TEXT_DIRECTION, $confighelpfile;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
@@ -800,7 +804,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	if (empty($linkToID)) $linkToID = $pid;
 
 	$largetextfacts = array("TEXT","PUBL","NOTE");
-	$subnamefacts = array("NPFX", "GIVN", "NICK", "SPFX", "SURN", "NSFX");
+	$subnamefacts = array("NPFX", "GIVN", "SPFX", "SURN", "NSFX");
 
 	@list($level, $fact, $value) = explode(" ", $tag);
 
@@ -887,7 +891,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	// label
 	$style="";
 	print "<tr id=\"".$element_id."_tr\" ";
-	if (in_array($fact, $subnamefacts)) print " style=\"display:none;\""; // hide subname facts
+	if (!$rowDisplay || in_array($fact, $subnamefacts)) print " style=\"display:none;\""; // hide subname facts
 	if ($fact=="MAP" || $fact=="LATI" || $fact=="LONG") print " style=\"display:none;\"";
 	print " >\n";
 	if (in_array($fact, $subnamefacts) || $fact=="LATI" || $fact=="LONG")

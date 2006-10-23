@@ -27,7 +27,6 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "You cannot access a language file directly.";
 	exit;
 }
-
 //-- GENERAL HELP MESSAGES
 $pgv_lang["qm"]					= "?";
 $pgv_lang["qm_ah"]				= "?";
@@ -43,12 +42,9 @@ $pgv_lang["resolution"]			= "Skärmupplösning";
 $pgv_lang["menu"]				= "Meny";
 $pgv_lang["header"]				= "Rubrik";
 $pgv_lang["imageview"]			= "Bildvisare";
-
 //-- CONFIG FILE MESSAGES
 $pgv_lang["login_head"]			= "PhpGedView användarinloggning";
 $pgv_lang["error_title"]		= "Fel: Kan inte öppna GEDCOM-filen";
-$pgv_lang["error_header"] 		= "GEDCOM-filen, <b>[#GEDCOM#]</b>, finns inte på den angivna platsen.";
-$pgv_lang["error_header_write"]	= "GEDCOM-filen, <b>[#GEDCOM#]</b>, är inte skrivbar. Kontrollera fil- och access-rättigheter.";
 $pgv_lang["for_support"]		= "För teknisk support och information kontakta";
 $pgv_lang["for_contact"]		= "För hjälp med släktfrågor kontakta";
 $pgv_lang["for_all_contact"]	= "För teknisk support eller släktfrågor kontakta";
@@ -62,7 +58,6 @@ $pgv_lang["firstname"]				= "Förnamn";
 $pgv_lang["lastname"]				= "Efternamn";
 $pgv_lang["password"]			= "Lösenord";
 $pgv_lang["confirm"]            = "Bekräfta lösenord";
-$pgv_lang["user_contact_method"]= "Föredragen kontaktmetod";
 $pgv_lang["login"]				= "Logga in";
 $pgv_lang["login_aut"]			= "Ändra användarinställningar";
 $pgv_lang["logout"]				= "Logga ut";
@@ -72,10 +67,7 @@ $pgv_lang["my_pedigree"]		= "Mina anor";
 $pgv_lang["my_indi"]			= "Min personliga post";
 $pgv_lang["yes"]				= "Ja";
 $pgv_lang["no"]					= "Nej";
-$pgv_lang["add_gedcom"]			= "Lägg till GEDCOM-fil";
 $pgv_lang["change_theme"]		= "Ändra tema";
-$pgv_lang["gedcom_downloadable"] 	= "Denna GEDCOM-fil är nerladdningsbar över internet!<br />Var vänlig läs Säkerhetssektionen i <a href=\"readme.txt\">readme.txt</a> för att rätta till problemet";
-
 //-- INDEX (PEDIGREE_TREE) FILE MESSAGES
 $pgv_lang["index_header"]		= "Antavla";
 $pgv_lang["gen_ped_chart"]		= "#PEDIGREE_GENERATIONS# generationers antavla";
@@ -97,7 +89,6 @@ $pgv_lang["welcome_page"]		= "Välkomstsidan";
 $pgv_lang["max_generation"]		= "Det maximala antalet generationer i antavlan är #PEDIGREE_GENERATIONS#.";
 $pgv_lang["min_generation"]		= "Det minsta antalet generationer i antavlan är 3.";
 $pgv_lang["box_width"] 			= "Boxvidd";
-
 //-- FUNCTIONS FILE MESSAGES
 $pgv_lang["unable_to_find_family"]	= "Kan inte hitta familj med id";
 $pgv_lang["unable_to_find_indi"]	= "Kan inte hitta person med id";
@@ -134,8 +125,6 @@ $pgv_lang["total_privacy_checks"] = "Totalt antal integritetskontroller: ";
 $pgv_lang["back"]				= "Tillbaka";
 $pgv_lang["privacy_list_indi_error"] = "På grund av integritetsregler är en eller flera personer dolda.";
 $pgv_lang["privacy_list_fam_error"] = "På grund av integritetsregler är en eller flera familjer dolda.";
-
-
 //-- INDIVUDUAL FILE MESSAGES
 $pgv_lang["aka"]				= "Också känd som";
 $pgv_lang["male"]				= "Man";
@@ -154,7 +143,6 @@ $pgv_lang["unrecognized_code_msg"]	= "Detta är ett fel och vi skulle gärna vil
 $pgv_lang["indi_info"]			= "Personlig information";
 $pgv_lang["pedigree_chart"]		= "Antavla";
 $pgv_lang["individual"]			= "Person";
-$pgv_lang["family"]				= "Familj";
 $pgv_lang["family_with"]		= "Familj med";
 $pgv_lang["as_spouse"]			= "Familj med make/maka";
 $pgv_lang["as_child"]			= "Familj med föräldrar";
@@ -171,7 +159,6 @@ $pgv_lang["object_note"]		= "Objektnotis:";
 $pgv_lang["sex"]				= "Kön";
 $pgv_lang["personal_facts"]		= "Personliga fakta och detaljer";
 $pgv_lang["type"]				= "Typ";
-$pgv_lang["date"]				= "Datum";
 $pgv_lang["place_description"]	= "Ort / Beskrivning";
 $pgv_lang["parents"] 			= "Föräldrar:";
 $pgv_lang["siblings"] 			= "Syskon";
@@ -191,16 +178,13 @@ $pgv_lang["disproved"]			= "Motbevisat";
 $pgv_lang["infant"]				= "Spädbarn";
 $pgv_lang["stillborn"]			= "Dödfödd";
 $pgv_lang["deceased"]			= "Avliden";
-$pgv_lang["link_as_child"]			= "Länka personen till existerande familj som barn";
 $pgv_lang["link_as_wife"]			= "Länka personen till existerande familj som maka";
-$pgv_lang["link_as_husband"]		= "Länka personen till existerande familj som make";
 $pgv_lang["no_tab1"]			= "Det finns ingen fakta om denna person.";
 $pgv_lang["no_tab2"]			= "Det finns inga antecknngar om denna person.";
 $pgv_lang["no_tab3"]			= "Det finns ingen källcitat om denna person.";
 $pgv_lang["no_tab4"]			= "Det finns ingen mediaobjekt för denna person.";
 $pgv_lang["no_tab5"]			= "Det finns inga nära släktingar till denna person.";
 $pgv_lang["no_tab6"]			= "Det finns inte någon forskningsloggar kopplade till denna person. ";
-
 //-- FAMILY FILE MESSAGES
 $pgv_lang["family_info"]		= "Familjeinformation";
 $pgv_lang["family_group_info"]	= "Familjens gruppinformation";
@@ -215,7 +199,6 @@ $pgv_lang["no_children"]		= "Inga registrerade barn";
 $pgv_lang["childless_family"]		= "Denna familj förblev barnlös";
 $pgv_lang["number_children"]		= "Antal barn: ";
 $pgv_lang["parents_timeline"]	= "Visa par på tidslinje";
-
 //-- CLIPPINGS FILE MESSAGES
 $pgv_lang["clip_cart"]			= "Urklippskorg";
 $pgv_lang["clip_explaination"]	= "Famljeurklipskorgen gör det möjligt att göra &quot;urklipp&quot; från detta familjeträd och gruppera ihop dem till en enda GEDCOM-fil för nedladning.<br /><br />";
@@ -249,7 +232,6 @@ $pgv_lang["download_now"]		= "Ladda ner nu";
 $pgv_lang["indi_downloaded_from"]	= "Denna person nedladdades från:";
 $pgv_lang["family_downloaded_from"]	= "Familjen nedladdades från:";
 $pgv_lang["source_downloaded_from"]	= "Källan nedladdades från:";
-
 //-- PLACELIST FILE MESSAGES
 $pgv_lang["connections"]		= "Ortskopplingar hittade";
 $pgv_lang["top_level"]			= "Toppnivå";
@@ -265,7 +247,6 @@ $pgv_lang["show_place_hierarchy"]	= "Visa orter i hierarkin";
 $pgv_lang["show_place_list"]	= "Visa alla orter i en lista";
 $pgv_lang["total_unic_places"]	= "Totalt antal unika platser";
 $pgv_lang["external_objects"]		= "Externa objekt";
-
 //-- MEDIALIST FILE MESSAGES
 $pgv_lang["multi_title"]		= "Lista över Multimediaobjekt";
 $pgv_lang["media_found"]		= "Mediaobjekt funna";
@@ -279,23 +260,7 @@ $pgv_lang["file_not_found"]		= "Filen kunde inte hittas.";
 $pgv_lang["medialist_show"]     = "Visa";
 $pgv_lang["per_page"]           = "mediaobjekt per sida";
 $pgv_lang["delete_directory"]		= "Radera mapp";
-$pgv_lang["remove_object"]			= "Ta bort objekt";
-$pgv_lang["confirm_remove_object"]	= "Är du säker på att du vill tabort detta objekt ifrån databasen?";
-$pgv_lang["remove_links"]			= "Ta bort länk";
-$pgv_lang["confirm_remove_links"]	= "Är du säker på att du vill ta bort alla länkar till detta objekt?";
-$pgv_lang["delete_file"]			= "Radera fil";
-$pgv_lang["confirm_delete_file"]	= "Är du säker på at du vill radera denna fil?";
-$pgv_lang["multiple_gedcoms"]		= "Denna fil är länkad till en databas på denna server. Den kan inte raderas flyttas eller döpas om förrän dessa länkar är borttagna.";
-$pgv_lang["external_file"]			= "Detta mediaobjekt finns inte som file på denna server. Den kan inte flyttas, raderas eller döpas om.";
-$pgv_lang["directory_not_empty"]	= "Mappen är inte tom.";
-$pgv_lang["directory_not_exist"]	= "Mappen existerar inte.";
-$pgv_lang["media_not_deleted"]		= "Mediamappen togs inte bort.";
-$pgv_lang["media_deleted"]			= "Mediamappen borttagen.";
-$pgv_lang["thumbs_not_deleted"]		= "Miniatyrbildsmappen togs inte bort.";
-$pgv_lang["thumbs_deleted"]			= "Miniatyrbildsmappen togs bort.";
-$pgv_lang["delete_dir_success"]		= "Media och miniatyrbildsmappen togs bort.";
 $pgv_lang["current_dir"]			= "Nuvarande mapp: ";
-
 //-- SEARCH FILE MESSAGES
 $pgv_lang["search_gedcom"]		= "Sök GEDCOM-fil(er)";
 $pgv_lang["enter_terms"]		= "Ange sökkriterier:";
@@ -306,7 +271,6 @@ $pgv_lang["lastname_search"]	= "Efternamn";
 $pgv_lang["search_place"]		= "Ort";
 $pgv_lang["search_year"]		= "År";
 $pgv_lang["no_results"]			= "Inga resultat funna.";
-$pgv_lang["invalid_search_input"] 	= "Var vänlig och skriv in ett förnamn, efternamn eller ort \\n\\t tillsammans med ett årtal";
 $pgv_lang["search_options"]			= "Sökmöjlighter";
 $pgv_lang["search_geds"]			= "GEDCOM-filer att söka i";
 $pgv_lang["search_type"]			= "Söktyp";
@@ -342,8 +306,6 @@ $pgv_lang["search_to"]				= "till";
 $pgv_lang["search_asso_label"]		= "Associationer";
 $pgv_lang["search_asso_text"]		= "Visa relaterade personer/familjer";
 $pgv_lang["results_per_page"]		= "Resultat per sida";
-
-
 //-- SOURCELIST FILE MESSAGES
 $pgv_lang["sources_found"]			= "Funna källor";
 $pgv_lang["titles_found"]			= "Titlar";
@@ -353,32 +315,22 @@ $pgv_lang["repos_found"]			= "Hittade arkiv";
 $pgv_lang["find_repository"]		= "Hitta arkiv";
 $pgv_lang["total_repositories"]		= "Totalt antal arkiv";
 $pgv_lang["repo_info"]				= "Arkivinformation";
-$pgv_lang["delete_repo"]			= "Radera arkiv";
 $pgv_lang["other_repo_records"]		= "Poster som länkar till detta arkiv:";
-$pgv_lang["create_repository"]		= "Skapa arkiv";
-$pgv_lang["new_repo_created"]		= "Nytt arkiv skapat";
-$pgv_lang["paste_rid_into_field"]	= "Klistra in följande arkivid i ditt redigeringsfält för att referera till detta arkiv ";
 $pgv_lang["confirm_delete_repo"]	= "Är du säker på att du vill radera detta arkiv från databasen?";
-
 //-- SOURCE FILE MESSAGES
 $pgv_lang["source_info"]		= "Källinformation";
 $pgv_lang["other_records"]		= "Poster som länkar till denna källa:";
 $pgv_lang["people"]				= "Personer";
 $pgv_lang["families"]			= "Familjer";
 $pgv_lang["total_sources"]		= "Totalt antal källor";
-
 //-- BUILDINDEX FILE MESSAGES
 $pgv_lang["building_indi"]		= "Skapar Person och familjeindex";
 $pgv_lang["building_index"]		= "Skapar indexlistor";
 $pgv_lang["invalid_gedformat"]	= "Felaktigt GEDCOM 5.5 format";
 $pgv_lang["importing_records"]	= "Importerar poster till databasen";
 $pgv_lang["detected_change"]	= "PhpGedView upptäckte en förändring i <b>#GEDCOM#</b>. Indexfilerna måste byggas om innan det går att fortsätta.";
-$pgv_lang["please_be_patient"]	= "Var god vänta...";
-$pgv_lang["reading_file"]		= "Läser GEDCOM-fil";
 $pgv_lang["flushing"]			= "Tömmer innehållet";
-$pgv_lang["found_record"]		= "Hittade poster";
 $pgv_lang["exec_time"]			= "Exekveringstid:";
-$pgv_lang["time_limit"]				= "Tidsgräns:";
 $pgv_lang["unable_to_create_index"]	= "Kan inte att skapa indexfil.  Se till så att du har skrivrättigheter i PhpGedView-katalogen.  Rättigheterna kan återställas efter att indexfilerna har skapats och skrivits färdigt.";
 $pgv_lang["indi_complete"]		= "Uppdatering av personindex färdigt.";
 $pgv_lang["family_complete"]	= "Uppdaterig av familjeindex färdigt.";
@@ -389,10 +341,7 @@ $pgv_lang["drop_tables"]		= "Ta bort nuvarande tabeller";
 $pgv_lang["import_multiple"]	= "Importera och arbeta med multipla GEDCOM-filer";
 $pgv_lang["explain_options"]	= "Om du väljer att ta bort tabellerna kommer <u>alla</u> data ersättas med data funna i denna GEDCOM-fil.<br /><br />Om du väljer att importera och arbeta med multipla GEDCOM-filer kommer PhpGedView ta bort alla data som importerades i en eventuell tidigare importerad GEDCOM-fil med samma namn.  Det här valet gör det möjligt att spara data från flera GEDCOM-filer i samma tabeller och enkelt byta mellan dem.<br /><br /><b>Tänk på att filnamnen är känsliga för stora och små bokstäver.</b> Detta betyder att <b>Test.GED är <u>inte</u> samma som <b>test.ged</b>.";
 $pgv_lang["path_to_gedcom"]		= "Ange sökväg till din GEDCOM-fil:";
-
-$pgv_lang["dataset_exists"]		= "En GEDCOM-fil med detta namn är redan importerad i databasen.";
 $pgv_lang["changes_present"]	= "Deb nuvarande GEDCOM-filen har ändringar som inte är accepterade. Om du fortsätter med importen kommer dessa ändringar att skrivas till databasen. Du bör kolla dessa ändringar innan du fortsätter med importen.";
-$pgv_lang["empty_dataset"]		= "Vill du radera den gamla datan och ersätta den med den nya datan?";
 $pgv_lang["index_complete"]		= "Index färdigt.";
 $pgv_lang["updating_family_names"]	= "Uppdaterar familjenamnen för familjeposter ";
 $pgv_lang["processed_for"]		= "Bearbetade filen för";
@@ -402,28 +351,7 @@ $pgv_lang["dateconvert"]		= "Datumkonverteringsverktyg";
 $pgv_lang["xreftorin"]			= "Konvertera XREF id till RIN nummer";
 $pgv_lang["tools_readme"]		= "Se vertygssektionen för #README.TXT# för att få mer information.";
 $pgv_lang["sec"]				= "sek.";
-$pgv_lang["bytes_read"]			= "Bytes lästa:";
-$pgv_lang["created_remotelinks"]	= "Lyckades skapa <i>länk till andra</i> tabellen.";
-$pgv_lang["created_remotelinks_fail"] 	= "Kunde inte skapa <i>länk till andra</i> tabellen.";
-$pgv_lang["created_indis"]		= "Skapande av <i>Persontabell</i> lyckades.";
-$pgv_lang["created_indis_fail"]	= "Kunde inte skapa <i>Persontabellen</i>.";
-$pgv_lang["created_fams"]		= "Skapande av <i>Familjetabell</i> lyckades.";
-$pgv_lang["created_fams_fail"]	= "Kunde inte skapa <i>Familjetabellen<i>.";
-$pgv_lang["created_sources"]	= "Skapande av <i>Källtabell</i> lyckades.";
-$pgv_lang["created_sources_fail"]	= "Kunde inte skapa <i>Källtabellen</i>.";
-$pgv_lang["created_other"]		= "Skapande av <i>Diversetabell</i> lyckades.";
-$pgv_lang["created_other_fail"]	= "Kunde inte skapa <i>diversetabellen</i>.";
-$pgv_lang["created_places"]		= "Skapande av <i>Ortstabell</i> lyckades.";
-$pgv_lang["created_places_fail"]= "Kunde inte skapa <i>Orttabellen</i>.";
-$pgv_lang["created_placelinks"] 	= "<i>Ortlänkstabellen</i> skapades utan problem.";
-$pgv_lang["created_placelinks_fail"]	= "Kan inte skapa <i>ortlänkstabellen</i>.";
-$pgv_lang["created_media_fail"]	= "Kan inte skapa <i>Mediatabell</i>.";
-$pgv_lang["created_media_mapping_fail"]	= "Kan inte skapa <i>Mediamappningstabellen.</i>";
-$pgv_lang["import_progress"]	= "Import framsteg...";
-$pgv_lang["import_complete"]	= "Importen är färdig";
-$pgv_lang["click_here_to_go_to_pedigree_tree"] = "Klicka här för att gå till antavlan.";
 $pgv_lang["updating_is_dead"]	= "Uppdaterar \"är död\" status för personposter ";
-
 //-- INDIVIDUAL AND FAMILYLIST FILE MESSAGES
 $pgv_lang["total_fams"]			= "Totalt antal familjer";
 $pgv_lang["all"]				= "Alla";
@@ -453,7 +381,6 @@ $pgv_lang["find_familyid"]      = "Sök id för familj";
 $pgv_lang["find_sourceid"]		= "Sök id för källa";
 $pgv_lang["find_specialchar"]	= "Hitta specialbokstäver";
 $pgv_lang["magnify"]			= "Förstora";
-
 //-- TIMELINE FILE MESSAGES
 $pgv_lang["age"]				= "Ålder";
 $pgv_lang["days"]					= "Dagar";
@@ -483,7 +410,6 @@ $pgv_lang["zoom_3"]		= "Zoom 3";
 $pgv_lang["include_family"] = "Inkludera nära familjemedlemmar";
 $pgv_lang["lifespan_chart"] = "livslinjetavla";
 $pgv_lang["zoom_in"]			= "Zooma in";
-
 //-- MONTH NAMES
 $pgv_lang["jan"]				= "Januari";
 $pgv_lang["feb"]				= "Februari";
@@ -509,34 +435,17 @@ $pgv_lang["int"]				= "tolkat";
 $pgv_lang["to"]					= "till";
 $pgv_lang["cir"]				= "cirka";
 $pgv_lang["apx"]				= "ungefär";
-
 //-- Admin File Messages
-$pgv_lang["select_an_option"]	= "Välj alternativ nedan:";
-$pgv_lang["readme_documentation"]	= "README-dokumentation";
-$pgv_lang["view_readme"]			= "Visa readme.txt-fil";
-$pgv_lang["configuration"]		= "Konfiguration";
 $pgv_lang["rebuild_indexes"]	= "Återskapa indexfilerna";
 $pgv_lang["user_admin"]			= "Användaradministration";
-$pgv_lang["user_created"]		= "Ny användare skapad.";
-$pgv_lang["user_create_error"]	= "Går inte att skapa användare.  Var snäll gå tillbaka och försök igen.";
 $pgv_lang["password_mismatch"]	= "Lösenorden stämmer inte överens.";
 $pgv_lang["enter_username"]		= "Du måste mata in ett användarnamn.";
 $pgv_lang["enter_fullname"]		= "Du måste ange användarens fullständiga namn.";
 $pgv_lang["enter_password"]		= "Du måste ange ett lösenord.";
 $pgv_lang["confirm_password"]	= "Du måste bekräfta lösenordet.";
-$pgv_lang["update_user"]		= "Uppdatera användarkonto";
-$pgv_lang["update_myaccount"]	= "Uppdatera mitt konto";
 $pgv_lang["save"]				= "Spara";
 $pgv_lang["delete"]				= "Radera";
 $pgv_lang["edit"]				= "Ändra";
-$pgv_lang["full_name"]			= "Fullständigt namn";
-$pgv_lang["visibleonline"]		= "Synlig för andra användare när du är online";
-$pgv_lang["comment"]			= "Administratörens kommentarer om användaren";
-$pgv_lang["comment_exp"]			= "Adminstratörvarning utfärdad den";
-$pgv_lang["editaccount"]		= "Tillåt användaren att redigera sin kontoinformation";
-$pgv_lang["admin_gedcom"]		= "Administrera GEDCOM";
-$pgv_lang["confirm_user_delete"]= "Är det säkert att du vill ta bort denna användare";
-$pgv_lang["create_user"]		= "Skapa ny användare";
 $pgv_lang["no_login"]			= "Kan inte logga in användaren.";
 $pgv_lang["basic_realm"]			= "PhpGedViews autenticeringssystem";
 $pgv_lang["basic_auth_failure"]		= "Du måste skriva in ett korrekt Inloggningsid och lösenord för att få tillgång till denna resurs";
@@ -544,58 +453,26 @@ $pgv_lang["basic_auth"]				= "Normal autenticiering";
 $pgv_lang["digest_auth"]				= "Sammandrag autenticiering";
 $pgv_lang["no_auth_needed"]			= "Ingen autenticiering";
 $pgv_lang["import_gedcom"]		= "Importera denna GEDCOM-fil";
-$pgv_lang["duplicate_username"]	= "Användarnamn upptaget.  En användare med det användarnamnet finns redan.  Gå tillbaka och välj ett annat namn och försök igen.";
-$pgv_lang["gedcomid"]			= "GEDCOM personpostID";
 $pgv_lang["enter_gedcomid"]		= "Du måste ange ett GEDCOM-ID.";
 $pgv_lang["user_info"]			= "'Min användare' information";
-$pgv_lang["rootid"]				= "Startperson för antavla";
-$pgv_lang["download_gedcom"]	= "Ladda ner GEDCOM-fil";
-$pgv_lang["upload_gedcom"]		= "Ladda upp GEDCOM-fil";
-$pgv_lang["add_new_gedcom"]		= "Skapa ny GEDCOM-fil";
-$pgv_lang["gedcom_file"]		= "GEDCOM-fil:";
 $pgv_lang["enter_filename"]		= "Du måste skriva in ett filnamn för GEDCOM-filen";
 $pgv_lang["file_not_exists"]	= "Filnamnet du skrev finns inte.";
 $pgv_lang["file_not_present"]		= "Filen existerar inte.";
 $pgv_lang["file_exists"]		= "Det finns redan en GEDCOM-fil med det filnamnet. Välj ett annat namn eller radera den gamla filen.";
 $pgv_lang["new_gedcom_title"]	= "Genealogi från [#GEDCOMFILE#]";
-$pgv_lang["upload_error"]		= "Det uppstod ett fel vid uppladdningen av din fil.";
-$pgv_lang["upload_media_help"]	= "~#pgv_lang[upload_media]#~<br /><br />Välj filer från din lokala dator som ska laddas upp till din server. Alla filer kommer att laddas upp till mappen <b>#MEDIA_DIRECTORY#</b> eller til en av dess undermappar.<br /><br />Mappnamnen som du angav kommer att läggas till #MEDIA_DIRECTORY#. T.ex. #MEDIA_DIRECTORY#myfamily. Om miniatyrbildsmappen inte finns kommer den att skapas automatiskt.";
 $pgv_lang["upload_gedcom_help"]	= "Välj GEDCOM- eller ZIP-filen som ska laddas upp från din lokala dator till server. Denna fil kommer att laddas upp till mappen <b>#INDEX_DIRECTORY#</b>.<br /><br />Om du laddar upp en ZIP-filen, bör den inte innehålla mer än en GEDCOM och den GEDCOM-filen kommer att användas automatiskt i de följande stegen.<br /><br />";
 $pgv_lang["add_gedcom_instructions"]= "Skriv in ett filnamn för den nya GEDCOM-filen. Den nya GEDCOM-filen kommer att skapas i Indexmappen: #INDEX_DIRECTORY#";
-$pgv_lang["file_success"]		= "Filen laddades upp utan problem";
-$pgv_lang["file_too_big"]		= "Uppladdad fil överskrider max tillåtna storlek";
-$pgv_lang["file_partial"]		= "Filen blev endast delvis uppladdad, var god försök igen";
-$pgv_lang["file_missing"]		= "Ingen fil mottogs. Ladda upp filen igen.";
-$pgv_lang["manage_gedcoms"]		= "Administrera GEDCOM-filer och integritetsinställningar";
 $pgv_lang["research_assistant"]		= "Forskningsassistent";
-$pgv_lang["administration"]		= "Administration";
-$pgv_lang["ansi_to_utf8"]		= "Konvertera denna ANSI(iso-8859-1) kodade GEDCOM till UTF-8?";
 $pgv_lang["utf8_to_ansi"]		= "Vill du konvertera från UTF-8 till ANSI(ISO-8859-1)?";
-$pgv_lang["visitor"]				= "Besökare";
-$pgv_lang["user"]					= "Inloggade användare";
-$pgv_lang["gedadmin"]				= "GEDCOM-administratör";
-$pgv_lang["siteadmin"]				= "Sajt-administratör";
-$pgv_lang["apply_privacy"]			= "Tillämpa integritetsinställningar?";
-$pgv_lang["choose_priv"]			= "Välj integritetsnivå:";
 $pgv_lang["user_manual"]		= "PhpGedView användarmanual";
 $pgv_lang["upgrade"]			= "Uppgradera PhpGedView";
-$pgv_lang["view_logs"]			= "Visa loggfiler";
-$pgv_lang["logfile_content"]	= "Innehåll i loggfil";
 $pgv_lang["step1"]				= "Steg 1 av 4:";
-$pgv_lang["step2"]				= "Steg 2 av 4:";
 $pgv_lang["step3"]				= "Steg 3 av 4:";
 $pgv_lang["step4"]				= "Steg 4 av 4:";
-$pgv_lang["validate_gedcom"]	= "Validera GEDCOM-filen";
-$pgv_lang["img_admin_settings"]	= "Ändra bildmanipuleringskonfigurationen";
-$pgv_lang["download_note"]		= "NOTERING: Stora GEDCOM kan ta lång tid att processa innan nerladdning. Om PHP-tidsinställningen är för kort är det inte säkert att din nerladdning blir komplett.<br /><br />Du kan kontrollera din nerladdad GEDCOM-fil efter <b>0 TRLR</b> raden i slutet av filen för att försäkra dig om att filen är komplett. GEDCOM-filen är text, du kan använda en texteditor, men var försiktig så att du <u>inte</u> sparar GEDCOM-filen efter du kontrollerat den.<br /><br />Vanligtvis kan det ta lika lång tid att ladda ner som det tog att importera din GEDCOM.";
-$pgv_lang["pgv_registry"]		= "Visa andra PhpGedView-sajter";
-$pgv_lang["verify_upload_instructions"]	= "Om du väljer att fortsätta kommer den gamla GEDCOM-filen att ersättas med filen du har laddat upp och importprocessen kommer att börja igen. Om du väljer att avbryta kommer den gamla GEDCOM-filen att förbli oförändrad.";
 $pgv_lang["cancel_upload"]		= "Avbryt uppladdning";
 $pgv_lang["add_media_records"]	= "Lägg till mediaposter";
 $pgv_lang["manage_media_files"] = "Hantera mediafiler";
 $pgv_lang["link_media_records"]	= "Länka media till individ";
-
-
 //-- Relationship chart messages
 $pgv_lang["relationship_chart"]	= "Relationer";
 $pgv_lang["person1"]			= "Person 1";
@@ -641,7 +518,6 @@ $pgv_lang["bosa_brothers_offspring_3"] 				= "Brorsdotter";
 $pgv_lang["bosa_sisters_offspring_2"] 				= "Systerson";
 $pgv_lang["bosa_sisters_offspring_3"] 				= "Systerdotter";
 $pgv_lang["cousin_in_law"]			= "Make/makas kusiner";
-
 //--part of the relationship algorithm to find child relations
 //--bosa came from the lang.sv.php file it is a key value relationship pattern for parents and children
 //--it is made up to follow the sosa pattern, "bosa" has no meaning that we know of.
@@ -712,54 +588,20 @@ $pgv_lang["bosa_60"]			   = "dotterdotterdottersonson";
 $pgv_lang["bosa_61"]			   = "dotterdotterdottersondotter";
 $pgv_lang["bosa_62"]			   = "dotterdotterdotterdotterson";
 $pgv_lang["bosa_63"]			   = "dotterdotterdotterdotterdotter";
-
-
 //-- GEDCOM edit utility
 $pgv_lang["check_delete"]		= "Är du säker på att du vill ta bort denna GEDCOM-fakta?";
 $pgv_lang["access_denied"]		= "<b>Åtkomst nekad</b><br />Du saknar behörighet till denna resurs.";
-$pgv_lang["gedrec_deleted"]		= "GEDCOM-post raderad.";
-$pgv_lang["gedcom_deleted"]		= "Radering av GEDCOM [#GED#] lyckades.";
 $pgv_lang["changes_exist"]		= "Förändringar har gjorts på denna GEDCOM-fil.";
-$pgv_lang["accept_changes"]		= "Acceptera / Förkasta ändringar";
-$pgv_lang["show_changes"]		= "Denna post har uppdaterats. Klicka här för att se ändringarna.";
-$pgv_lang["hide_changes"]		= "Klicka här för att dölja ändringar.";
-$pgv_lang["review_changes"]		= "Granska ändringar i GEDCOM-fil";
-$pgv_lang["undo_successful"]	= "Ångra lyckades";
-$pgv_lang["undo"]				= "Ångra";
-$pgv_lang["view_change_diff"]	= "Visa förändringar";
-$pgv_lang["changes_occurred"]	= "Följande ändringar har gjorts för denna person:";
 $pgv_lang["find_place"]			= "Sök ort";
-$pgv_lang["refresh"]				= "Ladda om";
 $pgv_lang["close_window"]		= "Stäng fönster";
 $pgv_lang["close_window_without_refresh"]	= "Stäng fönster utan att ladda om";
 $pgv_lang["place_contains"]		= "Orten består av:";
-$pgv_lang["accept_gedcom"]		= "Bestäm för varje ändring att antingen godkänna eller underkänna den.<br /><br />För att godkänna alla ändringar på en gång, klicka <b>\"Accpetera alla ändringar\"</b> i boxen nedan.<br />För att få mer information om ändringar, <br />Klicka på <b>\"Visa Ändringar\"</b> för att se skillnaderna mellan den gamla och den nya posten, <br />eller klicka <b>\"Visa GEDCOM-post\"</b> för att se den nya datan i GEDCOM-format.";
-$pgv_lang["ged_import"]			= "Importera";
-$pgv_lang["update_successful"]	= "Uppdatering genomförd";
-$pgv_lang["add_child_to_family"]= "Lägg till barn till denna familj";
-$pgv_lang["add_son_daughter"]	= "Lägg till en son eller dotter";
-$pgv_lang["add_sibling"]		= "Lägg till en bror eller syster";
 $pgv_lang["confirm_delete_person"]	= "Är du säker på att du vill ta bort denna person från GEDCOM-filen?";
 $pgv_lang["find_media"]			= "Hitta media";
 $pgv_lang["set_link"]			= "Sätt länk";
-$pgv_lang["add_source_lbl"]		= "Lägg till källcitat";
-$pgv_lang["add_note_lbl"]		= "Lägg till en anteckning";
-$pgv_lang["add_media_lbl"]		= "Lägg till media";
-$pgv_lang["add_source"]			= "Lägg till nytt källcitat";
-$pgv_lang["add_note"]			= "Lägg till ny anteckning";
-$pgv_lang["add_media"]			= "Lägg till ny mediaartikel";
 $pgv_lang["adds_completed"]		= "Media lades till i GEDCOM-filen.";
-$pgv_lang["ansi_encoding_detected"]	= "ANSIkodning upptäckt i filen. PhpGedView fungerar bäst med teckenkodningen UTF-8.";
-$pgv_lang["invalid_header"]		= "Upptäckt rader före GEDCOM-headern (0 HEAD). Dessa rader kommer att raderas vid städning.";
-$pgv_lang["macfile_detected"]	= "Macintosh fil upptäckt. Filen kommer att konverteras till en DOS-fil vid städning.";
-$pgv_lang["place_cleanup_detected"]	= "Felaktig ortskodning upptäckt. Dessa fel bör rättas till. Följande prov visar den felaktiga orten som upptäcktes:";
-$pgv_lang["cleanup_places"]		= "Städa orter";
-$pgv_lang["empty_lines_detected"]	= "Tomma rader upptäcktes i din GEDCOM-fil. Vid städning kommer dessa tomma rader att tas bort.";
-$pgv_lang["import_options"]		= "Importeringsval";
 $pgv_lang["import_options_help"] 	= "Du kan välja extra val som ska användas vid import av GEDCOM-filen.";
-$pgv_lang["verify_gedcom"]		= "Verifiera GEDCOM";
 $pgv_lang["verify_gedcom_help"]	= "Här kan du välja att antingen fortsätta och ladda upp och importera GEDCOM-filen eller avbryta uppladningen och importen.";
-$pgv_lang["import_statistics"]	= "Importeringsstatistik";
 $pgv_lang["hourglass_chart"]	= "Timglas";
 $pgv_lang["choose_report"]		= "Välj en rapport att köra";
 $pgv_lang["enter_report_values"]= "Fyll i rapportvärden";
@@ -802,11 +644,9 @@ $pgv_lang["marrdate2"]				= "Vigsel slutdatum";
 $pgv_lang["deathplace"]				= "Dödsort innehåller";
 $pgv_lang["sort_by"]			= "Sortera beroende på";
 $pgv_lang["cleanup"]			= "Städa upp";
-$pgv_lang["skip_cleanup"]		= "Hoppa över städning";
 $pgv_lang["dynasty_list"]		= "Översikt över familjer";
 $pgv_lang["patriarch_list"]		= "Patriarklista";
 $pgv_lang["statistics"]			= "Statistik";
-$pgv_lang["merge_records"]      = "Slå ihop poster";
 $pgv_lang["merge_same"]         = "Posterna är inte av samma typ. Kan inte slå ihop poster som inte är samma typ.";
 $pgv_lang["merge_step1"]        = "Slå ihop steg 1 av 3";
 $pgv_lang["merge_step2"]        = "Slå ihop steg 2 av 3";
@@ -824,48 +664,18 @@ $pgv_lang["merge_more"]         = "Slå ihop flera poster.";
 $pgv_lang["same_ids"]           = "Du skrev in samma ID. Du kan inte slå ihop samma poster.";
 $pgv_lang["delete_source"]	 	= "Radera källa";
 $pgv_lang["confirm_delete_source"]	= "Är du säker på att du vill radera denna källa från GEDCOM-filen?";
-$pgv_lang["add_husb"]			= "Lägg till make";
-$pgv_lang["add_husb_to_family"]	= "Lägg till en make till denna familj";
-$pgv_lang["add_wife"]			= "Lägg till maka";
-$pgv_lang["add_wife_to_family"]	= "Lägg till en maka till denna familj";
 $pgv_lang["find_family"]		= "Hitta familj";
 $pgv_lang["find_fam_list"]		= "Hitta familjelista";
-$pgv_lang["add_new_wife"]		= "Lägg till en ny maka";
-$pgv_lang["add_new_husb"]		= "Lägg till en ny make";
 $pgv_lang["edit_name"]			= "Ändra namn";
 $pgv_lang["delete_name"]		= "Radera namn";
-$pgv_lang["no_temple"]			= "Inget tempel - Living Ordinance";
-$pgv_lang["replace"]			= "Ersätt post";
-$pgv_lang["append"]				= "Lägg till post";
-$pgv_lang["add_father"]			= "Lägg till en ny fader";
-$pgv_lang["add_mother"]			= "Lägg till en ny moder";
-$pgv_lang["add_obje"]			= "Lägg till ett nytt multimediaobjekt";
-$pgv_lang["no_changes"]			= "Det finns för närvarande inga ändringar som behöver granskas.";
-$pgv_lang["accept"]				= "Godkänn";
-$pgv_lang["accept_all"]			= "Godkänn alla ändringar";
-$pgv_lang["accept_successful"]	= "Godkända ändringar införda i databasen";
-$pgv_lang["edit_raw"]			= "Redigera rå GEDCOM-post";
 $pgv_lang["select_date"]		= "Välj ett datum";
-$pgv_lang["create_source"]		= "Skapa en ny källa";
-$pgv_lang["new_source_created"]	= "Ny källa skapades korrekt.";
-$pgv_lang["paste_id_into_field"]= "Klistra in följande källid in i ditt redigeringsfält för att referera till denna källa  ";
-$pgv_lang["add_name"]			= "Lägg till nytt namn";
-$pgv_lang["privacy_not_granted"]= "Du har inte access till";
 $pgv_lang["user_cannot_edit"]	= "Detta användarnamn kan inte redigera denna GEDCOM-fil.";
-$pgv_lang["gedcom_editing_disabled"]	= "Redigering av denna GEDCOM har stängta av av administratören.";
-$pgv_lang["privacy_prevented_editing"]	= "Integritetsinställningarna hindrar dig från att redigera denna post.";
-$pgv_lang["add_asso"]			= "Lägg till ny bekant";
-$pgv_lang["edit_sex"]			= "Redigera kön";
 $pgv_lang["ged_noshow"]			= "Denna sida har spärrats av sajtadminstratören.";
 $pgv_lang["bdm"]				= "Födda, döda, vigda";
 $pgv_lang["delete_person"]		= "Radera denna person";
-$pgv_lang["must_provide"]		= "Du måste tillhandahålla";
-$pgv_lang["add_child"]			= "Lägg till barn";
 $pgv_lang["now_import"]			= "Nu bör du importera GEDCOM-posterna in i PhpGedView genom att klicka på import länken nedan.";
 $pgv_lang["custom_event"]		= "Specialhändelse";
 $pgv_lang["add"]				= "Lägg till";
-$pgv_lang["add_fact"]			= "Lägg till ny fakta tag";
-
 //-- calendar.php messages
 $pgv_lang["on_this_day"]		= "Historiska händelser denna dag...";
 $pgv_lang["in_this_month"]		= "Historiska händelser denna månad...";
@@ -891,20 +701,7 @@ $pgv_lang["living_only"]		= "Levande Personer";
 $pgv_lang["recent_events"]		= "Senare år(< 100 år)";
 $pgv_lang["day_not_set"]		= "Dag inte satt";
 $pgv_lang["year_error"]			= "Ursäkta, men datum före 1970 stöds inte.";
-$pgv_lang["upload"]					= "Ladda upp";
-
 //-- upload media messages
-$pgv_lang["upload_media"]		= "Ladda upp mediafiler";
-$pgv_lang["folder"]		 		= "Mapp";
-$pgv_lang["media_file"]			= "Mediafiler";
-$pgv_lang["thumbnail"]			= "Miniatyrbild";
-$pgv_lang["upload_successful"]	= "Uppladdning lyckades";
-$pgv_lang["media_file_deleted"]		= "Mediafiler raderades.";
-$pgv_lang["media_file_not_deleted"]	= "Mediafil kunde inte raderas.";
-$pgv_lang["media_file_not_moved"]	= "Mediafil kunde inte flyttas.";
-$pgv_lang["media_file_not_renamed"]	= "Mediafil kunde inte flyttas eller döpas om.";
-$pgv_lang["thumbnail_deleted"]		= "Miniatyrbild raderades.";
-$pgv_lang["thumbnail_not_deleted"]	= "Miniatyrbild kunde inte raderas.";
 $pgv_lang["media_record_deleted"]	= "Mediapost #xref# och länkar raderades från databasen.";
 $pgv_lang["media_record_not_deleted"]	= "Mediapost #xref# och länkar kunde inte raderas från databasen.";
 $pgv_lang["record_updated"]			= "Post #pid# uppdaterades.";
@@ -914,90 +711,67 @@ $pgv_lang["record_not_removed"]		= "Post #xref# kunde inte raderas från GEDCOM-
 $pgv_lang["record_added"]			= "Post #xref# blev tillagd till GEDCOM-filen.";
 $pgv_lang["record_not_added"]		= "Post #xref# kunde inte läggas till i GEDCOM-filen.";
 $pgv_lang["lost_password"]		= "Förlorat ditt lösenord?";
-
 //-- user self registration module
 $pgv_lang["requestpassword"]	= "Begär nytt lösenord";
 $pgv_lang["no_account_yet"]		= "Inget konto än?";
 $pgv_lang["requestaccount"]		= "Begär nytt användarkonto";
 $pgv_lang["emailadress"]		= "E-postadress";
 $pgv_lang["mandatory"] 			= "Fält markerat med * är obligatoriska.";
-
 $pgv_lang["mail01_line01"]		= "Hej #user_fullname# ...";
 $pgv_lang["mail01_line02"]		= "En begäran mottogs från (#SERVER_#NAME) om att skapa ett konto med din e-postadress (#user_email#).";
 $pgv_lang["mail01_line03"]		= "Informationen om förfrågan visas under länken nedan.";
 $pgv_lang["mail01_line04"]		= "Klicka på länken nedan och fyll i den begärda datan för att verifiera ditt konto och e-postadress.";
 $pgv_lang["mail01_line05"]		= "Om du inte begärde ett konto kan du radera meddelandet.";
 $pgv_lang["mail01_line06"]		= "Du kommer inte få några fler mail från detta systemet efterom kontot kommer att raderas inom sju dagar om ingen verifiering görs.";
-
 $pgv_lang["mail01_subject"]		= "Din registrering på #SERVER_NAME#";
-
 $pgv_lang["mail02_line01"]		= "Hej administratör...";
 $pgv_lang["mail02_line02"]		= "En ny användare gjorde en ny användarregistrering på (#SERVER_NAME#)";
 $pgv_lang["mail02_line03"]		= "Användaren fick ett e-postmeddelande med den nödvändiga datan för att kunna verifiera sitt konto.";
 $pgv_lang["mail02_line04"]		= "Så snart användaren har gjort sin verifiering kommer du att informeras via e-post. Du kan nu slutföra processen genom att aktivera användarnamnet. Den nya användaren kan inte logga in förrän du har aktiverat kontot.";
 $pgv_lang["mail02_line04a"]		= "Du kommer att bli informerad via epost när den användaren som ansökt om kontot har verifierat sig själv. Efter verifikation kommer användaren att kunna logga in utan att du behöver göra något.";
-
 $pgv_lang["mail02_subject"]		= "Ny registrering på #SERVER_NAME#";
-
 $pgv_lang["hashcode"]			= "Verifieringskod:";
 $pgv_lang["thankyou"]			= "Hej #user_fullname#...<br />Tack för din registrering";
 $pgv_lang["pls_note06"]			= "Ni kommer att få en bekräftelse via e-post till e-postadressen(#user_email#). Använd bekräftelsen för att aktivera ditt konto, om du misslyckas att aktiver ditt konto inom sju dagar kommer det att raderas (du kan då registrera kontot igen).<br /><br />Efter du har följt instruktionerna i bekräftelse-eposten, måste administratören fortfarande godkänna din begäran innan du kan använda ditt konto.<br /><br />För att logga in på sajten måste du veta ditt användarnamn och lösenord.";
 $pgv_lang["pls_note06a"] 		= "Vi kommer nu att skicka ett konfirmationsepost till adressen (#user_email#). Du måste verifiera ditt kontobegäran genom att följa instruktionerna i bekräftelse eposten. Om du inte verifierar ditt kontobegrän inom 7 dagar kommer din begäran att avslås automatiskt. Du för ansöka igen.<br /><br />Efter du följt instruktionerna i konfirmationsbegäran så kan du logga in. För att logga in på denna sajt måste du veta ditt användarnamn och lösenord.";
-
 $pgv_lang["registernew"]		= "Bekräftelse av ett nytt konto";
 $pgv_lang["user_verify"]		= "Användarverifiering";
 $pgv_lang["send"]				= "Skicka";
-
 $pgv_lang["pls_note07"]			= "~#pgv_lang[user_verify]#~<br /><br />Skriv in ditt användarnamn, lösenord och verifieringskoden som du fick via e-post från systemet för att aktivera ditt konto.";
 $pgv_lang["pls_note08"]			= "Datan för användaren #user_name# är kontrollerad.";
-
 $pgv_lang["mail03_line01"]		= "Hej administratör";
 $pgv_lang["mail03_line02"]		= "#newuser[username]# (#newuser[fullname]#) har verifierat registreringsdatan.";
 $pgv_lang["mail03_line03"]		= "Vänligen klicka på länken nedan för att logga in till din sajt för att redigera användaren och ge honom rättigheter att logga in på din sajt";
 $pgv_lang["mail03_line03a"]		= "Du behöver inte göra något, användaren kan nu logga in.";
-
 $pgv_lang["mail03_subject"]		= "Ny verifiering på #SERVER_NAME#";
-
 $pgv_lang["pls_note09"]			= "Du har konfirmerat din förfrågan att bli en registrerad användare.";
 $pgv_lang["pls_note10"]			= "Adminstratören har blivit informerad. Så snart han har gett dig rättigheter att logga in kan du logga in med ditt användarnamn och lösenord.";
 $pgv_lang["pls_note10a"]		= "Du kan nu logga in med ditt användarnamn och lösenord.";
 $pgv_lang["data_incorrect"]		= "Datan var inte korrekt, försök igen";
 $pgv_lang["user_not_found"]		= "Kunde inte verifiera informationen du skrev in. Gå tillbaka och försök igen.";
-
 $pgv_lang["lost_pw_reset"]		= "Begär återställning av bortglömt lösenord.";
-
 $pgv_lang["pls_note11"]			= "För att få lösenordet återställt, ange ditt användarnamn och din e-postadress för ditt användarkonto.<br /><br />Vi kommer att skicka en speciell länk (URL) via e-post. Länken innehåller en bekräftelse-hash för ditt konto. Genom att besöka den sända URLn kommer du att få rättigheter att ändra lösenord och användarnamn för sajten. För att öka säkerheten skall du inte ge bekräftelse hashen till någon, inklusive administratörerna av denna sajt (vi kommer inte att fråga efter den).<br /><br />Om du behöver hjälp, kontakta då sajtens administratör.";
 $pgv_lang["enter_email"]		= "Du måste skriva in en e-postadress.";
-
 $pgv_lang["mail04_line01"]		= "Hej #user_fullname#...";
 $pgv_lang["mail04_line02"]		= "Ett nytt lösenord efterfrågas för ditt användarnamn.";
 $pgv_lang["mail04_line03"]		= "Rekommendation:";
 $pgv_lang["mail04_line04"]		= "Klicka på länken nedan, logga in med ditt nya lösenord. Ändra sedan lösenordet så att säkerheten bibehålls för din data.";
 $pgv_lang["mail04_line05"]			= "Efter att du logat in, välj '#pgv_lang[myuserdata]#'-länken under '#pgv_lang[mygedview]#'-menyn, fyll i lösenordsfälten för att ändra dit lösenord.";
-
 $pgv_lang["mail04_subject"]		= "Dataförfrågan på #SERVER_NAME#";
-
 $pgv_lang["pwreqinfo"]			= "Hej...<br /><br />Ett e-post med det nya lösenordet sändes till e-postadressen(#user[email]#).<br /><br />Kontrollera din e-postlåda om en liten stund.<br /><br />Rekommendation:<br /><br />Efter du fått ditt e-postmeddelande bör du logga in och ändra ditt lösenord för att öka säkerheten.";
-
 $pgv_lang["editowndata"]		= "Mitt konto";
 $pgv_lang["savedata"]			= "Spara ändrade data";
 $pgv_lang["datachanged"]		= "Användardata har ändrats";
 $pgv_lang["datachanged_name"]	= "Du kommer kanske att behöva logga in igen med ditt nya användarnamn.";
 $pgv_lang["myuserdata"]			= "Mitt konto";
-$pgv_lang["verified"]			= "Användaren verifierade sig själv";
-$pgv_lang["verified_by_admin"]	= "Användare godkänd av admin";
 $pgv_lang["user_theme"]			= "Mitt tema";
 $pgv_lang["mgv"]				= "Min GedView";
 $pgv_lang["mygedview"]			= "Min GedViewPortal";
 $pgv_lang["passwordlength"]		= "Lösenordet måste innehålla minst 6 tecken.";
-$pgv_lang["admin_approved"]		= "Ditt konto på #SERVER_NAME# har blivit godkänt.";
-$pgv_lang["you_may_login"]		= " av sajt administratören. Du kan nu logga in på PhpGedView sajten genom att följa länken nedan:";
 $pgv_lang["welcome_text_auth_mode_1"]	=	"<center><b>Välkommen till denna genealogiska websajt</b></center><br />Access är tillåten för alla besökare som har ett användarkonto på denna sajt.<br /><br />Om du redan har ett konto kan du logga in på denna sida. Om du inte har ett konto ännu, kan du ansöka om ett genom att klicka på länken på denna sida.<br /><br />Efter att vi verifierat din information, kommer administratören att aktivera ditt konto. Du kommer att få ett e-postmeddelande när kontot aktiveras.";
 $pgv_lang["welcome_text_auth_mode_2"]	=	"<center><b>Välkommen till denna genealogiska websajt</b></center><br />Access är tillåten endast för <u>auktoriserade</u> användare.<br /><br />Om du redan har ett konto kan du logga in på denna sida. Om du inte har ett konto ännu, kan du ansöka om ett genom att klicka på länken på denna sida.<br /><br />Efter att vi verifierat din information, kommer administratören att gogkänna eller avslå din begäran. Du kommer att få ett e-postmeddelande om din begäran godkänns.";
 $pgv_lang["welcome_text_auth_mode_3"]	=	"<center><b>Välkommen till denna genealogiska websajt</b></center><br />Access är tillåten <u>endast för familjemedlemmar</u>. Om du redan har ett konto kan du logga in på denna sida. Om du inte har ett konto ännu, kan du ansöka om ett genom att klicka på länken på denna sida.<br /><br />Efter att vi verifierat din information, kommer administratören antingen godkänna eller avslå din begäran. Du kommer att få ett e-postmeddelande när kontot godkänns.";
 $pgv_lang["welcome_text_cust_head"]		=	"<center><b>Välkommen till denna genealogiska websajt</b></center><br />Access är tillåten för användare som har ett användarkonto och lösenord för denna websajt.<br />";
-
-
 //-- mygedview page
 $pgv_lang["welcome"]				= "Välkommen";
 $pgv_lang["upcoming_events"]		= "Kommande händelser";
@@ -1153,44 +927,24 @@ $pgv_lang["hide_block_warn"]		= "Om du döljer ett tomt område, kan du inte lä
 $pgv_lang["delete_selected_messages"]	= "Radera markerade meddelande";
 $pgv_lang["use_blocks_for_default"]		= "Använd dessa block som standard blockkonfiguration för alla användare?";
 $pgv_lang["block_not_configure"]	=	"Detta område kan inte konfigureras.";
-
 //-- upgrade.php messages
 $pgv_lang["options"]			= "Inställningar:";
-$pgv_lang["inc_languages"]				= "Språk";
 $pgv_lang["config_update_ok"]			= "Lyckad uppdatering av konfigurationsfil.";
-$pgv_lang["date_of_entry"]		= "Datum i orginalkälla";
-$pgv_lang["folder_created"]		= "Skapad mapp";
-$pgv_lang["folder_no_create"]		= "Kan inte skapa mapp";
-$pgv_lang["performing_validation"]	= "Genomför GEDCOM-validering...";
 $pgv_lang["changed_mac"]			= "Macintosh radavslutningar upptäckta. Ändrar radslut från endast returntecken till retur och radmatningstecken. Detta ändrar det interna filformatet från Macintosh till DOS så som PhpGedView kräver.";
 $pgv_lang["changed_places"]			= "Ogiltig ortskodning upptäckt. Städar upp ortsposterna så att de övernsstämmer med GEDCOM-standarden version 5.5. Ett exempel från din GEDCOM-fil är:";
-$pgv_lang["invalid_dates"]			= "Upptäckte ogiltigt datumformat, vid upprensning kommer formatet att ändras till DD MMM ÅÅÅÅ(t.ex. 1 JAN 2004).";
-$pgv_lang["valid_gedcom"]			= "Godkänd GEDCOM-fil upptäckt. Ingen rensning behövs.";
 $pgv_lang["optional_tools"]			= "Du kan också välja att köra några av följande verktyg före import.";
 $pgv_lang["optional"]				= "Frivilliga verktyg";
-$pgv_lang["day_before_month"]		= "Dag före månad (DD MM ÅÅÅÅ)";
-$pgv_lang["month_before_day"]		= "Månad före dag (MM DD ÅÅÅÅ)";
-$pgv_lang["do_not_change"]			= "Ändra inte";
-$pgv_lang["change_id"]				= "Ändra person ID till:";
-$pgv_lang["example_place"]			= "Exempel på en felaktig ort från din GEDCOM:";
-$pgv_lang["example_date"]			= "Exempel på ogiltigt datum från din GEDCOM-fil:";
 $pgv_lang["add_media_tool"]			= "Verktyg för att lägga till media";
 $pgv_lang["launch_media_tool"]		= "Klicka här för att starta verkyget för att lägga till media.";
 $pgv_lang["add_media_descr"]		= "Detta verktyg kommer att lägga till OBJE taggar till din GEDCOM-fil. Stäng detta fönster när du är klar med att lägga till media.";
-$pgv_lang["highlighted"]			= "Framhäv bild";
 $pgv_lang["extension"]				= "Förlängning";
 $pgv_lang["order"]					= "Ordning";
 $pgv_lang["inject_media_tool"]		= "Lägg till media till GEDCOM-filen";
 $pgv_lang["add_media_button"]		= "Lägg till media";
 $pgv_lang["media_linked"]			= "Detta mediaobjekt länkat till följande:";
 $pgv_lang["media_not_linked"]		= "Detta mediaobjekt är inte länkat till någon GEDCOM-post.";
-$pgv_lang["phpinfo"]				= "PHP Info";
-$pgv_lang["admin_info"]				= "Information";
-$pgv_lang["admin_geds"]				= "Data och GEDCOM-administration";
-$pgv_lang["admin_site"]				= "Sajtadministration";
 $pgv_lang["media_table_created"]	= "Lyckad uppdatering av <i>mediatabellen</i>.";
 $pgv_lang["click_to_add_media"]		= "Klicka här för att addera media listad ovan till GEDCOM-filen #GEDCOM#";
-
 //-- ANCESTRY FILE MESSAGES
 $pgv_lang["ancestry_chart"] 		= "Släktöversikt";
 $pgv_lang["gen_ancestry_chart"]     = "#PEDIGREE_GENERATIONS# generationer släktöversikten";
@@ -1198,7 +952,6 @@ $pgv_lang["chart_style"]        	= "Tavelstil";
 $pgv_lang["chart_list"]				= "Lista";
 $pgv_lang["chart_booklet"]   		= "Häfte";
 $pgv_lang["show_cousins"]			= "Visa kusiner";
-
 //sosa pattern is now used to find relationships, it is the key and value pair that needs to be set up in all other languages.
 //1st generation
 $pgv_lang["sosa_2"] 			    = "Far";
@@ -1264,7 +1017,6 @@ $pgv_lang["sosa_61"]			= "Mormors morfars mor";
 $pgv_lang["sosa_62"]			= "Mormors mormors far";
 $pgv_lang["sosa_63"]			= "Mormors mormors mor";
 $pgv_lang["compact_chart"]		= "Kompakt släktöversikt";
-
 //-- FAN CHART
 $pgv_lang["fan_chart"]			= "Solfjäder";
 $pgv_lang["gen_fan_chart"]    	= "#PEDIGREE_GENERATIONS# Generationer i Solfjädertavla";
@@ -1274,7 +1026,6 @@ $pgv_lang["gd_freetype"]		= "Felkonfigurering av PHP-servern: Freetype bibliotek
 $pgv_lang["gd_helplink"]		= "http://www.php.net/gd";
 $pgv_lang["fontfile_error"]   	= "Teckensnittsfilen finns inte på PHP servern";
 $pgv_lang["fanchart_IE"]		= "Solfjäderstavlan kan inte skrivas ut direkt av din webläsare. Använd högerklick, spara och skriv sedan ut bilden.";
-
 //-- RSS Feed
 $pgv_lang["rss_descr"]			= "Nyheter och länkar från #GEDCOM_TITLE#-sajten";
 $pgv_lang["rss_logo_descr"]		= "RSS-flöde skapat med PhpGedView";
@@ -1303,7 +1054,6 @@ $pgv_lang["seller"] 			= "Säljare";
 $pgv_lang["servant"] 			= "Tjänare";
 $pgv_lang["top10_pageviews"]	= "De mest besökta objekten";
 $pgv_lang["top10_pageviews_block"]	= "Område för mest besökta artikel";
-$pgv_lang["user_default_tab"]	= "Den flik som visas som standard på ansedelsidan";
 $pgv_lang["stepfamily"]			= "Styvfamilj";
 $pgv_lang["stepdad"]			= "Styvfar";
 $pgv_lang["stepmom"]			= "Styvmor";
@@ -1374,29 +1124,13 @@ $pgv_lang["maybe"]				= "Kanske ";
 $pgv_lang["both_alive"]					= "Båda levde ";
 $pgv_lang["both_dead"]					= "Båda döda ";
 $pgv_lang["add_directory"]		= "Lägg till mapp";
-$pgv_lang["show_thumbnail"]		= "Visa miniatyrbilder";
 $pgv_lang["image_format"]		= "Bildformat";
 $pgv_lang["media_format"]		= "Mediaformat";
 $pgv_lang["image_size"]			= "Bilddimensioner";
 $pgv_lang["media_file_size"]	= "Mediastorlek";
-$pgv_lang["no_thumb_dir"]		= "miniatyrbildsmappen existerar inte och det gick inte att skapa en.";
 $pgv_lang["manage_media"]		= "Hantera media";
-$pgv_lang["gen_thumb"]			= "Skapa miniatyrbilder";
-$pgv_lang["move_to"]			= "Flytta till";
-$pgv_lang["security_no_create"]	= "Säkerhetsvarning: Filen <b><i>index.php</i></b> finns inte i ";
-$pgv_lang["security_not_exist"]	= "Säkerhetsvarning, kan inte skapa <b><i>index.php</i></b> i ";
-$pgv_lang["illegal_chars"]		= "Otillåtna tecken i namnet";
-$pgv_lang["link_media"]			= "Länka media";
-$pgv_lang["to_person"]			= "Till person";
-$pgv_lang["to_family"]			= "Till familj";
-$pgv_lang["to_source"]			= "Till källa";
 $pgv_lang["media_id"]			= "Media ID";
 $pgv_lang["invalid_id"]			= "Idt finns inte i denna GEDCOM-fil. ";
-$pgv_lang["media_exists"]			= "Mediafil existerar redan.";
-$pgv_lang["media_thumb_exists"]		= "Media-miniatyr existerar redan.";
-$pgv_lang["move_file_success"]		= "Media- och miniatyrfiler flyttades korrekt.";
-$pgv_lang["media_folder_corrupt"]	= "Mediamappen är skadad.";
-$pgv_lang["max_media_depth"]		= "Du kan endast flytta #MEDIA_DIRECTORY_LEVELS#-mappar djupt";
 $pgv_lang["definitions"]		= "Definitioner";
 $pgv_lang["description"]		= "Beskrivning";
 $pgv_lang["block_desc"]			= "Områdesbeskrivning";
@@ -1458,32 +1192,17 @@ $pgv_lang["hs_searchsentence"]	= "Exakt fras";
 $pgv_lang["hs_intruehelp"]		= "Endast hjälptext";
 $pgv_lang["hs_inallhelp"]		= "All text";
 $pgv_lang["media_import"] = "Importera och konvertera media";
-$pgv_lang["confirm_folder_delete"] = "Är du säker på att du vill radera denna mapp?";
 $pgv_lang["choose"] = "Välj:";
 $pgv_lang["account_information"] = "Kontoinformation";
 $pgv_lang["stepbrother"]		= "Styvbror";
-$pgv_lang["max_upload_size"]	= "Max uppladdningsstorlek: ";
-$pgv_lang["edit_fam"]			= "Redigera familj";
 $pgv_lang["fams_charts"]		= "Valmöjligheter för familjer";
-$pgv_lang["sort_by_birth"]		= "Sortera efter födelsedatum";
-$pgv_lang["reorder_children"]	= "Ändra ordning på barn";
-$pgv_lang["add_from_clipboard"]	= "Lägg till urklippskorgen:";
-$pgv_lang["record_copied"]		= "Post som är kopierad till urklippskorgen";
-$pgv_lang["copy"]				= "Kopiera";
-$pgv_lang["cut"]				= "Klipp ut";
 $pgv_lang["indis_charts"]		= "Val för personer";
 $pgv_lang["edit_indi"] 			= "Redigera person";
 $pgv_lang["locked"]				= "Ändra inte";
 $pgv_lang["privacy"]			= "integritet";
 $pgv_lang["number_sign"]			= "#";
 $pgv_lang["top10_pageviews_descr"]	= "Detta område visar de 10 poster som har blivit besökta oftast. Detta område kräver att träffräknaren är aktiverad i GEDCOM-konfigurationsinställningen. ";
-
 $pgv_lang["upload_file"]		= "Ladda upp fil ifrån din dator";
-$pgv_lang["thumb_genned"]		= "Miniatyrbilder #thumbnail# genererades automatiskt.";
-$pgv_lang["thumbgen_error"]		= "Kan inte generera miniatyrbilder för ";
-$pgv_lang["generate_thumbnail"]	= "Generera miniatyrbilder automatiskt från ";
-$pgv_lang["auto_thumbnail"]			= "Automatiska miniatyrbilder";
-$pgv_lang["no_upload"]			= "Uppladdning av media filer är inte tillåten eftersom multimediaartiklar är avstängt eller så är mediamappen inte skrivbar.";
 $pgv_lang["top10_pageviews_nohits"]	= "Det finns för närvarande inga träffar att visa.";
 $pgv_lang["top10_pageviews_msg"]	= "Räknarna måste vara igång i GEDCOM-filen för detta område att fungera.";
 $pgv_lang["review_changes_descr"]	= "Ej accepterade ändringar-området visar en lista av poster, för användare med redigeringsrättighter, som har ändrats online som behöver kontrolleras och accepteras. Dessa ändringar väntar på att bli accepterade eller avslagna.<br /><br />Om detta område är aktiverad, kommer användare med acceptera rättigheter kommer att få ett mail om dagen med en notis om att det finns ändringar att kontrollera.";
@@ -1499,10 +1218,8 @@ $pgv_lang["update_name"] 		= "Uppdatera namn";
 $pgv_lang["update_fact"] 		= "Uppdatera en fakta";
 $pgv_lang["update_fact_restricted"] = "Uppdatering av denna fakta är begränsad:";
 $pgv_lang["update_photo"] 		= "Uppdatera foto";
-$pgv_lang["photo_replace"] 		= "Vill du byta ut ett äldre foto med detta?";
 $pgv_lang["select_fact"] 		= "Välj ett fakta...";
 $pgv_lang["update_address"] 	= "Uppdatera adress";
-$pgv_lang["add_new_chil"] 		= "Lägg till ett nytt barn";
 $pgv_lang["family_timeline"]	= "Visa familj p� tidslinje";
 $pgv_lang["children_timeline"]	= "Visa barn p� tidslinje";
 $pgv_lang["other"]				= "Annan";
@@ -1510,9 +1227,7 @@ $pgv_lang["sort_by_marriage"]	= "Sortera efter vigseldatum";
 $pgv_lang["reorder_families"]	= "Ändra ordning på familjer";
 $pgv_lang["indis_with_surname"]	= "Personer med efternamn #surname#";
 $pgv_lang["first_letter_fname"]	= "Välj bokstav för att visa personer vars namn börjar med den bokstaven.";
-$pgv_lang["import_marr_names"]	= "Importera namn från vigsel";
 $pgv_lang["marr_name_import_instr"]	= "Klicka på knappen nedan endast om du vill automatiskt beräkna namn kvinnor fått vid vigsel i denna GEDCOM. Detta låter dig söka och lista kvinnor via deras nya namn efter vigsel. <i>Obs: Det beräknade efternamnet för kvinnor kommer endast att visas om sätter på valet i GEDCOM-konfigurationen. <b>Beräkna vigselnamn är frivilligt.</b></i>";
-$pgv_lang["calc_marr_names"]	= "Beräknar namn för vigda";
 $pgv_lang["total_names"]		= "Totalt antal namn";
 $pgv_lang["mothers_family_with"]= "Moderns familj med ";
 $pgv_lang["fathers_family_with"]= "Faderns familj med ";
@@ -1526,11 +1241,8 @@ $pgv_lang["importing_places"]	= "Importera ortsposter";
 $pgv_lang["common_upload_errors"]	= "Detta fel beror troligen på att filen du försöker ladda upp är större än gränsen som är satt av ditt webhotell. Standardgränsen i PHP är 2 MB. Du kan kontakta ditt webhotell och försöka få dem att öka gränsen i php.ini-filen, eller kan du ladda upp filen via FTP. Använd <a href=\"uploadgedcom.php?action=add_form\">Lägg till GEDCOM</a> sidan för att lägga till en GEDCOM som blivit uppladdad via FTP.";
 $pgv_lang["total_memory_usage"]	= "Total minnesanvändning:";
 $pgv_lang["fams_with_surname"]	= "Familjer med efternamn #surname#";
-$pgv_lang["add_unlinked_person"]= "Lägg till en olänkad person";
-$pgv_lang["add_unlinked_source"]	= "Lägg till en olänkad källa";
 $pgv_lang["remember_me"]		= "Kom ihåg mej ifrån denna dator?";
 $pgv_lang["cookie_login_help"]	= "Denna sajt kommer ihåg dej ifrån föregående inloggningar. Detta tillåter dig att komma åt privat information och andra användarinställningar, men för att administrera denna sajt så måste du logga in igen för att öka säkerheten.";
-$pgv_lang["none"]				= "Inga";
 $pgv_lang["ahnentafel_report"]	= "Antavlerapport";
 $pgv_lang["ahnentafel_header"]		= "Antavlerapport för ";
 $pgv_lang["ahnentafel_generation"]	= "Generationer ";
@@ -1591,9 +1303,6 @@ $pgv_lang["before"]				= "före";
 $pgv_lang["after"]				= "efter";
 $pgv_lang["config_block"]		= "Konfigurationsområde";
 $pgv_lang["changelog"]			= "Ändringar i #VERSION#";
-$pgv_lang["view_changelog"]		= "Visa changelog.txt-filen";
-$pgv_lang["undo_all_confirm"]	= "Är du säker på att du vill ångra alla ändringar gjorde på denna GEDCOM-fil?";
-$pgv_lang["undo_all"]			= "Ångra alla ändringar";
 $pgv_lang["index_edit_advice"]	= "Markera ett områdes namn, klicka sedan på en av pilikonerna för att flytta det markerade området i pilens riktning.";
 $pgv_lang["importing_dates"]	= "Importera datumposter";
 $pgv_lang["autocomplete"]		= "Autokompletera";
@@ -1602,13 +1311,10 @@ $pgv_lang["address_list"]		= "Adresslista";
 $pgv_lang["link_new_husb"]		= "Lägg till en make för en existerande person";
 $pgv_lang["link_new_wife"]		= "Lägg till en maka för en existerande person";
 $pgv_lang["address_labels"]		= "Adressetikett";
-
 $pgv_lang["next_email_sent"]		= "Nästa epostpåminnelse kommer att skickas efter ";
 $pgv_lang["last_email_sent"]		= "Senaste epostpåminnelse skickades ";
-$pgv_lang["confirm_remove"]			= "Är du säker på att du vill ta bort denna person ifrån familjen?";
 $pgv_lang["remove_child"]			= "Tabort detta barn från familjen";
 $pgv_lang["cancel"]					= "Avbryt";
-$pgv_lang["change_family_members"]	= "Ändra familjemedlemmar";
 $pgv_lang["delete_family_confirm"]	= "Radering av familjen kommer att koppla loss alla personerna ifrån familjen men kommer att lämna alla personerna orörda. Är du säker på att du ska radera familjen?";
 $pgv_lang["delete_family"]			= "Radera familj";
 $pgv_lang["add_favorite"]			= "Lägg till en ny favorit";
@@ -1616,39 +1322,15 @@ $pgv_lang["url"]					= "URL";
 $pgv_lang["add_fav_enter_note"]		= "Skriv en frivillig notering om denna favorit";
 $pgv_lang["add_fav_or_enter_url"]	= "ELLER<br />Skriv in en URL och en titel";
 $pgv_lang["add_fav_enter_id"]		= "Skriv in ett person-, familj- eller käll- id";
-$pgv_lang["import_time_exceeded"]	= "Exekveringstidens gräns nåddes. Klicka på fortsätt nedan för att fortsätta importera GEDCOM-filen.";
 $pgv_lang["cookie_help"]			= "Denna sajt använder cookies för att komma ihåg din inloggningsstatus.<br /><br />Cookies ser inte ut att vara tillåtna av din webläsare. Du måste tillåta cookies för att kunna använda denna sajt. Du kan läsa i webläsarens hjälpdokumentation för att få reda på hur du tillåter cookies.";
 $pgv_lang["indi_is_remote"]			= "Informationen om denna person är länkad ifrån en annan sajt.";
 $pgv_lang["link_remote"]            = "Länka en person från en annan sajt";
-$pgv_lang["current_person"]         = "Samma som nuvarande";
-$pgv_lang["title_remote_link"]      = "Lägg till länk från annan plats";
 $pgv_lang["title_search_link"]      = "Lägg till lokal länk";
-$pgv_lang["label_same_server"]      = "Samma sajt";
-$pgv_lang["label_diff_server"]      = "Annan sajt";
 $pgv_lang["label_accept_changes"]   = "Acceptera alla ändringar";
 $pgv_lang["label_ask_first"]        = "Fråga mig först";
-$pgv_lang["label_rel_to_current"]   = "Relation till vald person";
-$pgv_lang["label_location"]         = "Sajtplats";
-$pgv_lang["label_site"]             = "Sajt";
-$pgv_lang["label_site_url"]         = "Sajt URL:";
 $pgv_lang["label_site_url2"]        = "Sajt URL";
-$pgv_lang["label_remote_id"]        = "Person-ID för person på annan sajt";
-$pgv_lang["label_local_id"]         = "Person-ID";
 $pgv_lang["label_merge_options"]    = "Ihopslagningsval";
-$pgv_lang["label_gedcom_id"]        = "DatabasID";
-$pgv_lang["label_gedcom_id2"]       = "DatabasID:";
-$pgv_lang["label_add_remote_link"]  = "Lägg till länk";
-$pgv_lang["error_remote"]           = "Du har valt en sajt från en annan plats.";
-$pgv_lang["error_same"]             = "Du har valt samma sajt.";
 $pgv_lang["error_server_exists"]    = "Sajten som du försöker lägga till existerar redan, välj den ifrån rullgardinsmenyn märkt, <b>använd en existerande sajt</b>.";
-$pgv_lang["lbl_server_list"]        = "Använd en existerande sajt.";
-$pgv_lang["lbl_type_server"]         = "Skriv in en ny sajt.";
-$pgv_lang["error_url_blank"]		= "Lämna inte sajt titel eller URL tom";
-$pgv_lang["error_siteauth_failed"]	= "Kunde inte logga in på sajten";
-$pgv_lang["link_success"]			= "Lyckades lägga till länk";
-$pgv_lang["change"]					= "Ändra";
-$pgv_lang["change_family_instr"]	= "Använd denna sida att lägga till eller tabort familjemedlemmar.<br /><br />För varje medlem i familjen kan du använda ändra länken för att välja en annan person att ta platsen i familjen. Du kan också tabortlänken för att tabort personen från familjen.<br /><br />När du är klar med ändringarna av familjemedlemmarna ska du klicka på spara-knappen för att spara ändringarna.<br />";
-$pgv_lang["user_auto_accept"]		= "Acceptera automatiskt ändringar gjorda av denna användare";
 $pgv_lang["sunday_1st"]				= "S";
 $pgv_lang["monday_1st"]				= "M";
 $pgv_lang["tuesday_1st"]			= "Ti";
@@ -1673,7 +1355,6 @@ $pgv_lang["source_menu"]			= "Val för källor";
 $pgv_lang["familybook_chart"]		= "Familjebok";
 $pgv_lang["family_of"]				= "Familj för:&nbsp;";
 $pgv_lang["descent_steps"]			= "Härstamning antal steg";
-
 $pgv_lang["stats_to_show"]			= "Välj vilken statistik som ska visas i detta område";
 $pgv_lang["stat_avg_age_at_death"]	= "Medelålder vid död";
 $pgv_lang["stat_longest_life"]		= "Person som levt längst";
@@ -1689,7 +1370,6 @@ $pgv_lang["stat_females"]			= "Total antal kvinnor";
 $pgv_lang["maxviews_exceeded"]		= "Det maximala antalet visade sidor har överstigits, försök igen senare.";
 $pgv_lang["broadcast_not_logged_6mo"]	= "Skicka meddelande till användare som inte loggat in på 6 månader";
 $pgv_lang["broadcast_never_logged_in"]	= "Skicka meddelande till användare som aldrig loggat in";
-
 $pgv_lang["ex-wife"] 				= "F.d fru";
 $pgv_lang["ex-husband"] 			= "F.d man";
 $pgv_lang["noemail"] 				= "Adresser utan epost";
@@ -1701,64 +1381,22 @@ $pgv_lang["wiki_admin_guide"]		= "WIKI administrationsguide";
 $pgv_lang["no_search_for"]			= "Du måste välja något att söka efter.";
 $pgv_lang["no_search_site"]			= "Du måste välja minst en annan sajt.";
 $pgv_lang["other_searches"]			= "Andra sökningar";
-$pgv_lang["multi_site_search"] 		= "Flersajtssökning";
 $pgv_lang["search_sites"] 			= "Sajter att söka";
 $pgv_lang["search_sites_discription"] = "Sök kända sajter";
 $pgv_lang["search_asso_text_unavailable"] = "Associationssökning<br />är inte tillgänglig<br />via sajtsökning";
-$pgv_lang["no_known_servers"]		= "Inga kända servrar.<br />Inget resultat kommer att hittas.";
-$pgv_lang["basic_search_discription"] = "Standard sajtsökning";
-$pgv_lang["advanced_search_discription"] = "Avancerad sajtsökning";
-$pgv_lang["basic_search"]			= "sök";
 $pgv_lang["advanced_search"]		= "Avancerad sajtsökning";
-$pgv_lang["name_search"]			= "Namn: ";
-$pgv_lang["birthdate_search"]		= "Födelsedatum: ";
-$pgv_lang["birthplace_search"]		= "Födelseort: ";
-$pgv_lang["deathdate_search"]		= "Dödsdatum: ";
-$pgv_lang["deathplace_search"]		= "Dödsort: ";
-$pgv_lang["gender_search"]			= "Kön: ";
 $pgv_lang["site_list"]				= "Sajt: ";
 $pgv_lang["site_had"]				= " innehöll följande";
-$pgv_lang["invalid_search_multisite_input"] = "Var vänlig skriv in ett av följande: namn, födelsedatum, födelseort, dödsdatum, dödsort eller kön ";
-$pgv_lang["invalid_search_multisite_input_gender"] = "Var vänlig sök igen med mer information än kön";
-$pgv_lang["label_ban_server"] 		= "Skicka";
-$pgv_lang["label_add_search_server"]	= "Lägg till IP-adress";
-$pgv_lang["remove_ip"] 			= "Tabort IP-adress";
-$pgv_lang["label_remove_ip"]		= "Förbjud IPAdress(t.ex. 198.128.*.*): ";
-$pgv_lang["label_remove_search"]	= "Markera IP-Adress som en sökmotorspindel: ";
-$pgv_lang["label_username_id"]		= "Användarnamn";
-$pgv_lang["label_username_id2"]		= "Användarnamn: ";
-$pgv_lang["label_password_id"]		= "Lösenord";
-$pgv_lang["label_password_id2"]		= "Lösenord: ";
-$pgv_lang["error_ban_server"]       = "Felaktig IPadress.";
 $pgv_lang["error_view_connections"] = "Du måste välja sajt som ska visas.";
 $pgv_lang["error_delete_server"]    = "Du måste välja sajt som ska raderas.";
-$pgv_lang["title_manage_servers"]   = "Hantera sajter";
-$pgv_lang["label_banned_servers"]   = "Förbjud sajter via IP";
-$pgv_lang["label_manual_search_engines"]   = "Markera manuellt Sökmotorspindlar via IP-adress";
 $pgv_lang["label_search_engine_detected"]  = "Sökmotorspindel upptäckt";
 $pgv_lang["label_search_engine_spider"]    = "Sökmotorspindel";
 $pgv_lang["label_ban_view_links"]   = "Visa länkar till denna förbjudna sajt";
-$pgv_lang["label_delete"]           = "Radera";
-$pgv_lang["label_new_server"]       = "Lägg till ny sajt";
-$pgv_lang["label_server_url"]       = "Sajt URL/IP";
-$pgv_lang["label_add_server"]       = "Lägga till";
-$pgv_lang["label_added_servers"]	= "Lagt till server";
 $pgv_lang["error_url"]              = "En sajt måste ha en URL/IP.";
 $pgv_lang["error_exists_server"]    = "Sajten finns redan.";
-$pgv_lang["error_view_info"]        = "Du måste välja personen som du vill visa information om.";
-$pgv_lang["error_delete_person"]    = "Du måste välja person vars länk ska raderas.";
-$pgv_lang["title_view_conns"]       = "Visa kopplingar";
-$pgv_lang["label_server_info"]      = "Alla personer som är länkade från andra sajter:";
-$pgv_lang["label_view_local"]       = "Visa lokal information om person";
-$pgv_lang["label_view_remote"]      = "Visa inforamtion från annan sajt om person";
-$pgv_lang["label_individuals"]      = "Personer";
-$pgv_lang["label_families"]         = "Familjer";
-$pgv_lang["link_manage_servers"]    = "Hantera sajter";
 $pgv_lang["edit_media"]					= "Redigera mediaartikel";
 $pgv_lang["result_page"]				= "Resultatsida";
 $pgv_lang["record_not_found"]			= "Det efterfrågade GEDCOM-posten kunde inte hittas. Detta kan ha orsakats av en länk till en person som inte finns eller en skadad GEDCOM-fil.";
-$pgv_lang["record_marked_deleted"]		= "Denna post har markerats för radering efter godkännande av administratören.";
-
 $pgv_lang["TYPE__audio"] 			= "Ljud";
 $pgv_lang["TYPE__book"] 			= "Bok";
 $pgv_lang["TYPE__card"] 			= "Kort";
@@ -1800,43 +1438,15 @@ $pgv_lang["button_SEX_U"] = "Visa endast personer som inte har ett känt kön.";
 $pgv_lang["button_TREE_L"] = "Visa &laquo;löv&raquo; för par eller personer. Dessa är personer som lever men har inga barn registereade i databasen.";
 $pgv_lang["button_TREE_R"] = "Visa &laquo;rötter&raquo; för par eller personer. Dessa personer kan också kallas &laquo;patriarker&raquo;. Dessa är personer som inte har föräldrar registrerade i databasen.";
 $pgv_lang["sort_column"] = "Sortera på denna kolumn.";
-$pgv_lang["link_to_existing_media"]		= "Länka till en existerande mediaartikel";
 $pgv_lang["page_size"]					= "Sidstorlek";
-$pgv_lang["add_media_file"]				= "Existerande mediafil på servern";
 $pgv_lang["descend_report"]				= "Ättlingsrapport";
 $pgv_lang["descendancy_header"]		= "Ättlingsrapport för ";
-$pgv_lang["add_media_other_folder"]		= "Annan mapp.. Skriv in mappnamn";
-$pgv_lang["main_media_ok1"]				= "Huvudmediafilen <b>#GLOBALS[oldMediaName]#</b> fick det nya namnet <b>#GLOBALS[newMediaName]#</b>.";
-$pgv_lang["main_media_ok2"]				= "Huvudmediafilen <b>#GLOBALS[oldMediaName]#</b> blev flyttad ifrån <b>#GLOBALS[oldMediaFolder]#</b> till <b>#GLOBALS[newMediaFolder]#</b>.";
-$pgv_lang["main_media_ok3"]				= "Huvudmediafil blev flyttad och omdöpt från <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> till <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";
-$pgv_lang["main_media_fail0"]			= "Huvudmediafilen <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> finns inte.";
-$pgv_lang["main_media_fail1"]			= "huvudmediafilen <b>#GLOBALS[oldMediaName]#</b> kunde inte döpas om till <b>#GLOBALS[newMediaName]#</b>.";
-$pgv_lang["main_media_fail2"]			= "Huvudmediafilen <b>#GLOBALS[oldMediaName]#</b> kunde inte flyttas ifrån <b>#GLOBALS[oldMediaFolder]#</b> till <b>#GLOBALS[newMediaFolder]#.";
-$pgv_lang["main_media_fail3"]			= "Huvudmediafilen kunde inte flyttas och döpas om ifrån <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> till <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";
-$pgv_lang["thumb_media_ok1"]			= "Miniatyrbildsfilen b>#GLOBALS[oldMediaName]#</b> döptes om till <b>#GLOBALS[newMediaName]#</b>.";
-$pgv_lang["thumb_media_ok2"]			= "Miniatyrbildsfilen <b>#GLOBALS[oldMediaName]#</b> flyttades ifrån <b>#GLOBALS[oldThumbFolder]#</b> till <b>#GLOBALS[newThumbFolder]#</b>.";
-$pgv_lang["thumb_media_ok3"]			= "Miniatyrbildsfilen flyttades och döptes om ifrån <b>#GLOBALS[oldThumbFolder]##GLOBALS[oldMediaName]#</b> till <b>#GLOBALS[newThumbFolder]##GLOBALS[newMediaName]#</b>.";
-$pgv_lang["thumb_media_fail0"]			= "Miniatyrsbildsfilen <b>#GLOBALS[oldThumbFolder]##GLOBALS[oldMediaName]#</b> finns inte.";
-$pgv_lang["thumb_media_fail1"]			= "Miniatyrbildsfilen <b>#GLOBALS[oldMediaName]#</b> kunde inte döpas om till <b>#GLOBALS[newMediaName]#</b>.";
-$pgv_lang["thumb_media_fail2"]			= "Miniatyrbildfilen <b>#GLOBALS[oldMediaName]#</b> kunde inte flyttas ifrån <b>#GLOBALS[oldThumbFolder]#</b> till <b>#GLOBALS[newThumbFolder]#</b>.";
-$pgv_lang["thumb_media_fail3"]			= "Miniatyrbildsfiler kunde inte flyttas och döpas om ifrån <b>#GLOBALS[oldThumbFolder]##GLOBALS[oldMediaName]#</b> till <b>#GLOBALS[newThumbFolder]##GLOBALS[newMediaName]#</b>.";
-$pgv_lang["server_file"]				= "Filnamn på servern";
-$pgv_lang["server_file_advice"]			= "Ändra inte för att behålla orginalfilnamnet.";
-$pgv_lang["server_file_advice2"]		= "Du kan skriva in en URL som börjar med &laquo;http://&raquo;.";
 $pgv_lang["server_folder"]				= "Mappnamn på servern";
 $pgv_lang["media_options"]			= "Mediaval";
-$pgv_lang["server_folder_advice"]		= "Du kan skriva in upp till #GLOBALS[MEDIA_DIRECTORY_LEVELS]# mappnamn som följer efter standard &laquo;#GLOBALS[MEDIA_DIRECTORY]#&raquo;.<br />Skriv inte in &laquo;#GLOBALS[MEDIA_DIRECTORY]#&raquo; som del av målmappens namn.";
-$pgv_lang["server_folder_advice2"]		= "Posten kommer att ignoreras om du skriver in en URL i Filnamnsfältet.";
-$pgv_lang["add_linkid_advice"]			= "Slriv in eller sök efter Idt för personen, familjen eller källan till vilket detta mediaobjekt ska länkas.";
-$pgv_lang["use_browse_advice"]			= "Använd  &laquo;Browse&raquo;-knappen för att söka på din lokala dator efter önskad fil.";
-
 $pgv_lang["page_x_of_y"]				= "Sida #GLOBALS[currentPage]# av #GLOBALS[lastPage]#<br />";
 $pgv_lang["include"]				= "Inkludera:";
 $pgv_lang["roman_surn"]				= "Romaniserat efternamn";
 $pgv_lang["roman_givn"]				= "Romaniserat förnamn";
-$pgv_lang["hebrew_surn"]			= "Hebreiskt efternamn";
-$pgv_lang["hebrew_givn"]			= "Hebreiskt förnamn";
-$pgv_lang["upload_replacement"]		="Ladda upp ersättningsfil";
 $pgv_lang["activate"]					= "Aktivera";
 $pgv_lang["deactivate"]					= "Avaktivera";
 $pgv_lang["play"]					= "Spela";
@@ -1844,5 +1454,4 @@ $pgv_lang["stop"]					= "Stopp";
 $pgv_lang["random_media_start_slide"]	= "Starta bildspel när sidan laddas?";
 $pgv_lang["random_media_ajax_controls"]	= "Visa AJAX-kontroller?";
 $pgv_lang["view_img_details"]		= "Visa bilddetaljer";
-
 ?>

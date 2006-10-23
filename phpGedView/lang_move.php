@@ -1,4 +1,13 @@
 <?php
+require 'config.php';
+if (!userIsAdmin(getUserName())) {
+	header('Location: index.php');
+	exit;
+}
+
+if (!empty($_REQUEST['action'])) $action = $_REQUEST['action'];
+else $action = "";
+
 $datastore = "./index/langref.php";
 $datastore2 = "./index/plangref.php";
 if (isset($_REQUEST['action'])) $action = $_REQUEST['action'];
@@ -183,6 +192,147 @@ else if ($action=="editoronly") {
 		print "</li>\n";
 	}
 	print "</ul>\n";
+}
+else if ($action=="fix_lang" && isset($_REQUEST['langcode'])) {
+	$langcode = $_REQUEST['langcode'];
+	if (!file_exists("languages/admin.".$langcode.".php")) {
+		$fileconts = file_get_contents("languages/admin.en.php");
+		$pos1 = strpos($fileconts, "*/");
+		$temp = substr($fileconts, 0, $pos1+2);
+		print "<br />Creating file languages/admin.".$langcode.".php";
+		$fp = fopen("languages/admin.".$langcode.".php", "wb");
+		fwrite($fp, $temp."\r\n");
+		$langconts = file_get_contents("./languages/lang.".$langcode.".php");
+		foreach($lang["./languages/admin.en.php"] as $k=>$key) {
+			if (in_array($key, $lang["./languages/lang.".$langcode.".php"])) {
+				$pos1 = strpos($langconts, '$pgv_lang["'.$key.'"]');
+				if ($pos1!==false) {
+					$pos2 = strpos($langconts, '";', $pos1+10);
+					if ($pos2!==false) {
+						$pos2+=2;
+						$def = substr($langconts, $pos1, $pos2-$pos1);
+						print "<br />Moving lang key $key";
+						fwrite($fp, $def."\r\n");
+						$langconts = substr($langconts, 0, $pos1).substr($langconts, $pos2);
+					}
+				}
+			}
+		}
+		fwrite($fp, "\r\n\r\n?>");
+		fclose($fp);
+		$b=0;
+		while(file_exists("./languages/lang.".$langcode.".php.bak".$b)) $b++;
+		copy("./languages/lang.".$langcode.".php", "./languages/lang.".$langcode.".php.bak".$b);
+		$langconts = preg_replace("/[\r\n]+/", "\r\n", $langconts);
+		$fp = fopen("./languages/lang.".$langcode.".php", "wb");
+		fwrite($fp, $langconts);
+		fclose($fp);
+	}
+	else {
+		print "<br />Updating file languages/admin.".$langcode.".php";
+		$adminconts = file_get_contents("./languages/admin.".$langcode.".php");
+		$adminconts = substr($adminconts, 0, strpos($adminconts, "?>"));
+		$b=0;
+		while(file_exists("./languages/admin.".$langcode.".php.bak".$b)) $b++;
+		copy("./languages/admin.".$langcode.".php", "./languages/admin.".$langcode.".php.bak".$b);
+		$fp = fopen("languages/admin.".$langcode.".php", "wb");
+		fwrite($fp, $adminconts);
+		$langconts = file_get_contents("./languages/lang.".$langcode.".php");
+		foreach($lang["./languages/admin.en.php"] as $k=>$key) {
+			if (in_array($key, $lang["./languages/lang.".$langcode.".php"]) 
+						&& stristr($adminconts, '$pgv_lang["'.$key.'"]')===false) {
+				$pos1 = strpos($langconts, '$pgv_lang["'.$key.'"]');
+				if ($pos1!==false) {
+					$pos2 = strpos($langconts, '";', $pos1+10);
+					if ($pos2!==false) {
+						$pos2+=2;
+						$def = substr($langconts, $pos1, $pos2-$pos1);
+						print "<br />Moving lang key $key";
+						fwrite($fp, $def."\r\n");
+						$langconts = substr($langconts, 0, $pos1).substr($langconts, $pos2);
+					}
+				}
+			}
+		}
+		fwrite($fp, "\r\n\r\n?>");
+		fclose($fp);
+		$b=0;
+		while(file_exists("./languages/lang.".$langcode.".php.bak".$b)) $b++;
+		copy("./languages/lang.".$langcode.".php", "./languages/lang.".$langcode.".php.bak".$b);
+		$langconts = preg_replace("/[\r\n]+/", "\r\n", $langconts);
+		$fp = fopen("./languages/lang.".$langcode.".php", "wb");
+		fwrite($fp, $langconts);
+		fclose($fp);
+	}
+	if (!file_exists("languages/editor.".$langcode.".php")) {
+		$fileconts = file_get_contents("languages/editor.en.php");
+		$pos1 = strpos($fileconts, "*/");
+		$temp = substr($fileconts, 0, $pos1+2);
+		print "<br /><br />Creating file languages/editor.".$langcode.".php";
+		$fp = fopen("languages/editor.".$langcode.".php", "wb");
+		fwrite($fp, $temp."\r\n");
+		$langconts = file_get_contents("./languages/lang.".$langcode.".php");
+		foreach($lang["./languages/editor.en.php"] as $k=>$key) {
+			if (in_array($key, $lang["./languages/lang.".$langcode.".php"])) {
+				$pos1 = strpos($langconts, '$pgv_lang["'.$key.'"]');
+				if ($pos1!==false) {
+					$pos2 = strpos($langconts, '";', $pos1+10);
+					if ($pos2!==false) {
+						$pos2+=2;
+						$def = substr($langconts, $pos1, $pos2-$pos1);
+						print "<br />Moving lang key $key";
+						fwrite($fp, $def."\r\n");
+						$langconts = substr($langconts, 0, $pos1).substr($langconts, $pos2);
+					}
+				}
+			}
+		}
+		fwrite($fp, "\r\n\r\n?>");
+		fclose($fp);
+		$b=0;
+		while(file_exists("./languages/lang.".$langcode.".php.bak".$b)) $b++;
+		copy("./languages/lang.".$langcode.".php", "./languages/lang.".$langcode.".php.bak".$b);
+		$langconts = preg_replace("/[\r\n]+/", "\r\n", $langconts);
+		$fp = fopen("./languages/lang.".$langcode.".php", "wb");
+		fwrite($fp, $langconts);
+		fclose($fp);
+	}
+	else {
+		print "<br />Updating file languages/editor.".$langcode.".php";
+		$adminconts = file_get_contents("./languages/editor.".$langcode.".php");
+		$adminconts = substr($adminconts, 0, strpos($adminconts, "?>"));
+		$b=0;
+		while(file_exists("./languages/editor.".$langcode.".php.bak".$b)) $b++;
+		copy("./languages/editor.".$langcode.".php", "./languages/editor.".$langcode.".php.bak".$b);
+		$fp = fopen("languages/editor.".$langcode.".php", "wb");
+		fwrite($fp, $adminconts);
+		$langconts = file_get_contents("./languages/lang.".$langcode.".php");
+		foreach($lang["./languages/editor.en.php"] as $k=>$key) {
+			if (in_array($key, $lang["./languages/lang.".$langcode.".php"]) 
+						&& stristr($adminconts, '$pgv_lang["'.$key.'"]')===false) {
+				$pos1 = strpos($langconts, '$pgv_lang["'.$key.'"]');
+				if ($pos1!==false) {
+					$pos2 = strpos($langconts, '";', $pos1+10);
+					if ($pos2!==false) {
+						$pos2+=2;
+						$def = substr($langconts, $pos1, $pos2-$pos1);
+						print "<br />Moving lang key $key";
+						fwrite($fp, $def."\r\n");
+						$langconts = substr($langconts, 0, $pos1).substr($langconts, $pos2);
+					}
+				}
+			}
+		}
+		fwrite($fp, "\r\n\r\n?>");
+		fclose($fp);
+		$b=0;
+		while(file_exists("./languages/lang.".$langcode.".php.bak".$b)) $b++;
+		copy("./languages/lang.".$langcode.".php", "./languages/lang.".$langcode.".php.bak".$b);
+		$langconts = preg_replace("/[\r\n]+/", "\r\n", $langconts);
+		$fp = fopen("./languages/lang.".$langcode.".php", "wb");
+		fwrite($fp, $langconts);
+		fclose($fp);
+	}
 }
 else if (isset($_REQUEST['file'])) {
 	print "<ul>";
