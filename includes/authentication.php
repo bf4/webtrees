@@ -408,9 +408,10 @@ function adminUserExists() {
 		$sql = "SELECT u_username FROM ".$TBLPREFIX."users WHERE u_canadmin='Y'";
 		$res = dbquery($sql);
 
-		if ($res) {
+		if (!DB::isError($res)) {
 			$count = $res->numRows();
-			while($row =& $res->fetchRow());
+			//-- no need to iterate, we only need the count
+			// while($row =& $res->fetchRow());
 			$res->free();
 			if ($count==0) {
 				$PGV_ADMIN_EXISTS = false;
