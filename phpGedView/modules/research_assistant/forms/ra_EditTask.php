@@ -68,7 +68,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN;
 	 * 
 	 * @return mixed list of available folders
 	 */
-	function getFolders() {
+	function getFolders($folderid) {
         global $TBLPREFIX;
 
         $sql = "select fr_name, fr_id from " . $TBLPREFIX . "folders";
@@ -76,9 +76,15 @@ global $pgv_lang, $TBLPREFIX, $DBCONN;
         
         $out = "";
         while($foldername =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		    $out .= '<option value="'.$foldername['fr_id'].'">'.PrintReady($foldername['fr_name']) . '</option>';
+        	if($foldername["fr_id"] != $folderid)
+		    	$out .= '<option value="'.$foldername['fr_id'].'">'.PrintReady($foldername['fr_name']) . '</option>';
+		    else
+		    	$out .= '<option value="'.$foldername['fr_id'].'" selected="selected">'.PrintReady($foldername['fr_name']) . '</option>';
+		    	
+		
 		}
-        
+		print($folderid);
+     print("This is a test");
         return $out;
 	}
 	
@@ -216,7 +222,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN;
  				<select name="folder">
 					<?php
 						// Get a list of all available folders
-						print PrintReady(getFolders());
+						print PrintReady(getFolders($task["t_fr_id"]));
 					?>
       			</select>
       		</td>

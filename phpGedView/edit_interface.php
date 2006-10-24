@@ -1003,7 +1003,7 @@ else if ($action=="addspouseaction") {
 	}
 	if (!empty($pid)) {
 		$indirec="";
-		if (!isset($pgv_changes[$famid."_".$GEDCOM])) $indirec = find_gedcom_record($pid);
+		if (!isset($pgv_changes[$pid."_".$GEDCOM])) $indirec = find_gedcom_record($pid);
 		else $indirec = find_updated_record($pid);
 		if ($indirec) {
 			$indirec = trim($indirec);

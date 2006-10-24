@@ -54,6 +54,9 @@ $pgv_lang["gen_tasks"]							= "Auto Generate Tasks";
 // -- RA GENERAL MESSAGES
 $pgv_lang["edit_task"]							= "Edit Task";
 $pgv_lang["completed"]							= "Completed";
+$pgv_lang["complete"]							= "Complete";
+$pgv_lang["all"]								= "All";
+$pgv_lang["incomplete"]							= "Incomplete";
 $pgv_lang["comres"]								= "Comments/Results";
 $pgv_lang["description"]						= "Description";
 $pgv_lang["created"]							= "Created";
@@ -62,6 +65,7 @@ $pgv_lang["folder_list"]						= "Folder List";
 $pgv_lang["details"]							= "Details";
 $pgv_lang["result"]                     		= "Result";
 $pgv_lang["okay"]                               = "Okay";
+$pgv_lang["editform"]							= "Edit Form Data";
 
 // -- RA_FOLDER MESSAGES
 $pgv_lang["Edit_Task"]                 			= "Edit Task";

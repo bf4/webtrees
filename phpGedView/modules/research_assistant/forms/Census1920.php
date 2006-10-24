@@ -436,7 +436,7 @@ return false;}return true;}
 		
 		if(empty($return))
 		{
-		$out = $this->header("module.php?mod=research_assistant&form=Census1880&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1880 United States Federal Census2");
+		$out = $this->header("module.php?mod=research_assistant&form=Census1920&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1920 United States Federal Census");
 		$out .= $this->editFactsForm(false);
 		$out .= $this->footer();
 		return $out;
@@ -538,7 +538,7 @@ return false;}return true;}
 			{
 			$bdate = $person->getBirthYear();
 				$occupation = $this->getOccupation($person->getGedcomRecord());
-			}
+			
 			$censusAge = $rows[$number]["Age"];
 			$birthDate = 1920 - $censusAge;
 			
@@ -553,7 +553,7 @@ return false;}return true;}
 				$inferredFact["date"] = '';
 				$inferredFacts[] = $inferredFact;
 			}
-			
+			}
 			if($rows[$number]["Single"] == "Widowed")
 			{
 				

@@ -482,8 +482,8 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	if ($surn) $namerec = ""; // reset if modified
 
 	if (empty($namerec)) {
-		// 2 _MARNM
-		add_simple_tag("0 _MARNM");
+		// 2 _MARNM -- handled by advanced name fields
+		// add_simple_tag("0 _MARNM");
 		// 1 SEX
 		if ($famtag=="HUSB" or $sextag=="M") add_simple_tag("0 SEX M");
 		else if ($famtag=="WIFE" or $sextag=="F") add_simple_tag("0 SEX F");

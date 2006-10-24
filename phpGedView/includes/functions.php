@@ -55,7 +55,7 @@ if (isset($DEBUG)) $ERROR_LEVEL = 2;
  */
 function check_db($ignore_previous=false) {
 	global $DBTYPE, $DBHOST, $DBUSER, $DBPASS, $DBNAME, $DBCONN, $TOTAL_QUERIES, $PHP_SELF, $DBPERSIST, $CONFIGURED;
-	global $GEDCOM, $GEDCOMS, $INDEX_DIRECTORY, $BUILDING_INDEX, $indilist, $famlist, $sourcelist, $otherlist;
+	global $GEDCOM, $GEDCOMS, $INDEX_DIRECTORY, $BUILDING_INDEX;
 
 	if (!$ignore_previous) {
 		if ((is_object($DBCONN)) && (!DB::isError($DBCONN))) return true;
@@ -566,6 +566,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $Ap
 function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 	global $SHOW_PEDIGREE_PLACES, $pgv_lang;
 
+	if (empty($gedrec)) return "";
 	$tags = preg_split("/:/", $tag);
 	$origlevel = $level;
 	if ($level==0) {
@@ -980,10 +981,12 @@ function find_highlighted_object($pid, $indirec) {
 	//-- find all of the media items for a person
 	$sql = "SELECT m_media, m_file, m_gedrec, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping WHERE m_media=mm_media AND m_gedfile=mm_gedfile AND m_gedfile='".$GEDCOMS[$GEDCOM]["id"]."' AND mm_gid='".$DBCONN->escapeSimple($pid)."' ORDER BY m_id";
 	$res = dbquery($sql);
-	while($row = $res->fetchRow()) {
-		$media[] = $row;
+	if (!DB::isError($res)) {
+		while($row = $res->fetchRow()) {
+			$media[] = $row;
+		}
+		$res->free();
 	}
-	$res->free();
 
 	//-- for the given media choose the
 	foreach($media as $i=>$row) {

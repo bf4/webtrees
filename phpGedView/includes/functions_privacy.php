@@ -722,7 +722,7 @@ function privatize_gedcom($gedrec) {
 		$type = trim($gmatch[2]);
 		$disp = displayDetailsById($gid, $type);
 		$pgv_private_records[$gid] = "";
-//		print "[$gid $type $disp $sub]";
+//		print "[$gid $type $disp]";
 		//-- check if the whole record is private
 		if (!$disp) {
 			//-- check if name should be private

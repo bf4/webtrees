@@ -372,6 +372,7 @@ class research_assistant extends ra_functions {
                 $out .= $this->print_menu();
                 $task = $this->getTask($_REQUEST['taskid']);
 				if (!empty($task['t_form'])&&!isset($_POST['commonFrm'])) $_POST['commonFrm'] = $task['t_form'];
+				print($task['t_form']);
                 $out .= $this->print_form('ra_CompleteTask');
 			}
 		else

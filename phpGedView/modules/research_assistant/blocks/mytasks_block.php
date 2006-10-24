@@ -28,7 +28,8 @@
 
 require_once("modules/research_assistant/languages/lang.en.php");
 global $lang_short_cut, $LANGUAGE;
-if (file_exists("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php")) require_once("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php");
+if (file_exists("modules/research_assistant/languages/lang.en.php")) require_once("modules/research_assistant/languages/lang.en.php");
+if (file_exists("modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php")) require_once("modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php");
 if (file_exists('modules/research_assistant/research_assistant.php')) include_once('modules/research_assistant/research_assistant.php');
 
 $pgv_lang["mytasks_block"] = "MyTasks Block";
