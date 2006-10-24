@@ -461,8 +461,8 @@ else {
 print_header(PrintReady($name) . " " . $pgv_lang["fan_chart"]);
 if (strlen($name)<30) $cellwidth="420";
 else $cellwidth=(strlen($name)*14);
-print "\n\t<table class=\"list_table $TEXT_DIRECTION\"><tr><td width=\"${cellwidth}px\" valign=\"top\">\n\t\t";
-if ($view == "preview") print "<h2>" . str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATION), $pgv_lang["gen_fan_chart"]) . ":";
+print "\n\t<table class=\"list_table $TEXT_DIRECTION\"><tr><td width=\"".$cellwidth."px\" valign=\"top\">\n\t\t";
+if ($view == "preview") print "<h2>" . str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATION, $pgv_lang["gen_fan_chart"]) . ":";
 else print "<h2>" . $pgv_lang["fan_chart"] . ":";
 print "<br />".PrintReady($name);
 if ($addname != "") print "<br />" . PrintReady($addname);
