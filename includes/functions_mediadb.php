@@ -553,12 +553,12 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 		//print "sql: ".$sql."<br />";
 		$res = & dbquery($sql);
 	}
-	$ct = $res->numRows();
-	//print $directory.$sql;
+	$mediaObjects = array ();
 
+	if (!DB::isError($res)) {
+		$ct = $res->numRows();
 	// Build the raw medialist array, 
 	// but weed out any folders we're not interested in 
-	$mediaObjects = array ();
 	while ($row = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		if ($row) {
 			if (!empty ($row["m_file"])) {
@@ -600,6 +600,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 		}
 	}
 	$res->free();
+	}
 	//print "medialist: "; print_r($medialist); print "<br/><br/>";
 
 	// Look for new Media objects in the list of changes pending approval

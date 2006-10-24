@@ -315,15 +315,6 @@ function find_gedcom_record($pid, $gedfile = "") {
 
 	//-- unable to guess the type so look in all the tables
 	if (empty($gedrec)) {
-		$sql1 = "select mm_gedrec from ".$TBLPREFIX."media_mapping where mm_gid ='".$pid."'";
-		$res1 = dbquery($sql1);
-		if ($res1->numRows() != 0){
-			$row1 =& $res1->fetchRow();
-			$res1->free();
-			$otherlist[$pid]["gedcom"] = $row1[0];
-			return $row1[0];
-		}
-		else{
 		$sql = "SELECT o_gedcom, o_file FROM ".$TBLPREFIX."other WHERE o_id LIKE '".$DBCONN->escapeSimple($pid)."' AND o_file='".$DBCONN->escapeSimple($GEDCOMS[$gedfile]["id"])."'";
 		$res =& dbquery($sql);
 		if ($res->numRows()!=0) {
@@ -338,8 +329,18 @@ function find_gedcom_record($pid, $gedfile = "") {
 		if (empty($gedrec)) $gedrec = find_family_record($pid, $gedfile);
 		if (empty($gedrec)) $gedrec = find_source_record($pid, $gedfile);
 		if (empty($gedrec)) $gedrec = find_media_record($pid, $gedfile);
-		}
-		$res1->free();
+			//-- why are we looking in the media_mapping table here?
+			if (empty($gedrec)) {
+				$sql1 = "select mm_gedrec, mm_gedfile from ".$TBLPREFIX."media_mapping where mm_gid ='".$pid."' && mm_gedfile=".$GEDCOMS[$GEDCOM]['id'];
+				$res1 = dbquery($sql1);
+				if ($res1->numRows() != 0){
+					$row1 =& $res1->fetchRow();
+					$res1->free();
+					$otherlist[$pid]["gedcom"] = $row1[0];
+					$otherlist[$pid]["gedfile"] = $row1[1];
+					return $row1[0];
+				}
+			}
 	}
 	return $gedrec;
 }
@@ -2084,21 +2085,22 @@ function get_alpha_indis($letter) {
 	if (!empty($surname)) $sql .= "AND i_surname LIKE '%".$DBCONN->escapeSimple($surname)."%' ";
 	$sql .= "AND i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."' ORDER BY i_name";
 	$res = dbquery($sql);
-
-	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$row = db_cleanup($row);
-		//if (substr($row["i_letter"], 0, 1)==substr($letter, 0, 1)||(isset($text)?substr($row["i_letter"], 0, 1)==substr($text, 0, 1):FALSE)){
-			$indi = array();
-			$indi["names"] = array(array($row["i_name"], $row["i_letter"], $row["i_surname"], 'P'));
-			$indi["isdead"] = $row["i_isdead"];
-			$indi["gedcom"] = $row["i_gedcom"];
-			$indi["gedfile"] = $row["i_file"];
-			$tindilist[$row["i_id"]] = $indi;
-			//-- cache the item in the $indilist for improved speed
-			$indilist[$row["i_id"]] = $indi;
-		//}
+	if (!DB::isError($res)) {
+		while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
+			$row = db_cleanup($row);
+			//if (substr($row["i_letter"], 0, 1)==substr($letter, 0, 1)||(isset($text)?substr($row["i_letter"], 0, 1)==substr($text, 0, 1):FALSE)){
+				$indi = array();
+				$indi["names"] = array(array($row["i_name"], $row["i_letter"], $row["i_surname"], 'P'));
+				$indi["isdead"] = $row["i_isdead"];
+				$indi["gedcom"] = $row["i_gedcom"];
+				$indi["gedfile"] = $row["i_file"];
+				$tindilist[$row["i_id"]] = $indi;
+				//-- cache the item in the $indilist for improved speed
+				$indilist[$row["i_id"]] = $indi;
+			//}
+		}
+		$res->free();
 	}
-	$res->free();
 
 	$checkDictSort = true;
 
@@ -2155,7 +2157,7 @@ function get_alpha_indis($letter) {
 	if (!$SHOW_MARRIED_NAMES) $sql .= "AND n_type!='C' ";
 	$sql .= "AND i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."' ORDER BY i_name";
 	$res = dbquery($sql);
-
+	if (!DB::isError($res)) {
 	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
 		//if (substr($row["n_letter"], 0, strlen($letter))==$letter||(isset($text)?substr($row["n_letter"], 0, strlen($text))==$text:FALSE)){
@@ -2176,6 +2178,7 @@ function get_alpha_indis($letter) {
 		//}
 	}
 	$res->free();
+	}
 
 	return $tindilist;
 }
