@@ -233,7 +233,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		if (getUserAccessLevel(getUserName())<=$SHOW_ADD_FOLDER && empty ($folderid))
 			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=addfolder"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["add_folder"].'" border="0"></img><br />'.$pgv_lang["add_folder"].'</a></td>';
 		//button 'Add Unlinked Source'
-		if (getUserAccessLevel(getUserName())<=$SHOW_ADD_UNLINKED_SOURCE && empty ($folderid))
+		if (getUserAccessLevel(getUserName())<=$SHOW_ADD_UNLINKED_SOURCE && userCanEdit(getUserName()) && empty ($folderid))
 			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="javascript: '.$pgv_lang["add_unlinked_source"].'" onclick="addnewsource(\'\'); return false;"><img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["add_unlinked_source"].'"border=0"></img><br />'.$pgv_lang["add_unlinked_source"].'</a></td>';
 		//button 'View Probabilities'
 		if (getUserAccessLevel(getUserName())<=$SHOW_VIEW_PROBABILITIES && empty ($folderid))
