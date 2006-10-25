@@ -73,6 +73,7 @@ $PGV_IMAGES["search"]["small"] = "small/search.gif";
 $PGV_IMAGES["sex"]["small"] = "small/male.gif";
 $PGV_IMAGES["sexf"]["small"] = "small/female.gif";
 $PGV_IMAGES["sexn"]["small"] = "small/fe_male.gif";
+$PGV_IMAGES["sfamily"]["small"] = "sfamily.gif";
 $PGV_IMAGES["source"]["small"] = "small/source.gif";
 $PGV_IMAGES["timeline"]["small"] = "small/timeline.gif";
 
