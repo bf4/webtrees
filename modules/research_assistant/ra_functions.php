@@ -1134,23 +1134,19 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	}
 
 	/**
-	 * tab is the function that builds the display for the different screens.
-	 * These screens are identified by a tab
+	 * Get Tasks for Source
 	 */
-
-	//Get Tasks for Source
-	function getSourceTasks(& $sId) {
-		global $pgv_lang, $TBLPREFIX;
+	function getSourceTasks($sId) {
+		global $pgv_lang, $TBLPREFIX, $GEDCOMS, $GEDCOM;
 		global $indilist, $controller;
 		global $factarray;
         	
-		$sql = "SELECT * FROM ".$TBLPREFIX."tasks join ".$TBLPREFIX."tasksource on t_id = ts_t_id join ".$TBLPREFIX."sources on s_id = ts_s_id where s_id ='".$sId."'";
-		
+		$sql = "SELECT * FROM ".$TBLPREFIX."tasks join ".$TBLPREFIX."tasksource on t_id = ts_t_id join ".$TBLPREFIX."sources on s_id = ts_s_id where s_id ='".$sId."' AND s_file=".$GEDCOMS[$GEDCOM]['id'];
 		$res = dbquery($sql);
 	
 		$out = "\n\t<table class=\"list_table\">";
 		$out .= "<tr><td class ='topbottombar' colspan='4' align='center'>".print_help_link("task_list_text", "qm", '', false, true)."<b>".$pgv_lang['task_list']."</b></td></tr>";
-		if ($res->numRows()==0) $out .= "<tr><td class ='topbottombar' colspan='4' align='center'>".$pgv_lang['no_indi_tasks']."</td></tr>";
+		if ($res->numRows()==0) $out .= "<tr><td class ='topbottombar' colspan='4' align='center'>".$pgv_lang['no_sour_tasks']."</td></tr>";
 		else { 
 			$out .= "\n\t\t<tr><td class=\"list_label\"><strong>".$pgv_lang["details"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["title"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["completed"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["created"]."</strong></td></tr>";
 			// Loop through all the task ID's and pull the info we need on them,
@@ -1160,7 +1156,6 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 				$result = dbquery($sql);
 				$task = $result->fetchrow(DB_FETCHMODE_ASSOC);
      			$task = db_cleanup($task);
-//				$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'" class="link">'.$pgv_lang['details'].'</a></td><td class="list_label">'.$task['t_title'].'</td><td class="list_label">'.$this->checkComplete($task).'</td><td class="list_label">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td></tr>';
 				$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'" class="link">'.PrintReady($pgv_lang['details']).'</a></td><td class="list_label">'.PrintReady($task['t_title']).'</td><td class="list_label">'.$this->checkComplete($task).'</td><td class="list_label">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td></tr>';
 			}
 		}

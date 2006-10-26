@@ -230,7 +230,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN;
     	<!-- ASSIGN TASK -->
     		<tr>
     			<td class="descriptionbox">
-    				<?php print "Assign Task"; ?>
+    				<?php print $pgv_lang['assign_task']; ?>
     			</td>
     			<td class="optionbox" colspan=3> 
     			<select name="Users"> <option value=""></option>
@@ -357,7 +357,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN;
 	<tr class="topbottombar">
     		<td colspan="4">
     		<input type="submit" value="<?php print $pgv_lang["save"]; ?>" />
-    		<input type="button" value="Complete" name="complete" onclick="window.location='module.php?mod=research_assistant&amp;action=completeTask&amp;taskid=<?php print $_REQUEST['taskid'] ?>'" />
+    		<input type="button" value="<?php print $pgv_lang["complete"];?>" name="complete" onclick="window.location='module.php?mod=research_assistant&amp;action=completeTask&amp;taskid=<?php print $_REQUEST['taskid'] ?>'" />
     		</td>
    	</tr>
 				

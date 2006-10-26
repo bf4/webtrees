@@ -69,7 +69,7 @@ border:0px solid #7777aa;
   <tr>
   <td id="titleBar" style="cursor:move" align="middle">
   <div onSelectStart="return false">
-  <div onMouseover="isHot=true;if (isN4) ddN4(theLayer)" onMouseout="isHot=false">
+  <div onMouseover="isHot=true;if (isN4) ddN4(theLayer)" onMouseout="isHot=false" dir="rtl">
 <input type="image" src="modules/slideshow/images/previous.gif" onclick="btnPreviousClick()" style="cursor:pointer">
 <input type="image" src="modules/slideshow/images/pause.gif" onclick="btnPauseClick()" style="cursor:pointer">
 <input type="image" src="modules/slideshow/images/play.gif" onclick="btnStartClick()" style="cursor:pointer">

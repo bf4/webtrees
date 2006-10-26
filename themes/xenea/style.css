@@ -1084,3 +1084,7 @@ H2 {
 	-moz-border-radius-topleft: 0.6em;
 	-moz-border-radius-topright: 0.6em;
 }
+
+.note_details {
+	display: none;
+}

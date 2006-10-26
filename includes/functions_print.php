@@ -1427,7 +1427,45 @@ function print_simple_fact($indirec, $fact, $pid) {
 	print "<br />\n";
 }
 
-//-- Print all of the notes in this fact record
+/**
+ * print a note record
+ * @param string $text
+ * @param int $nlevel	the level of the note record
+ * @param string $nrec	the note record to print
+ * @return boolean
+ */
+function print_note_record($text, $nlevel, $nrec) {
+	global $pgv_lang;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+	$elementID = "N-".floor(microtime()*1000000);
+	$text = preg_replace("/~~/", "<br />", trim($text));
+	$text .= get_cont($nlevel, $nrec);
+	$text = preg_replace("'(https?://[\w\./\-&=?~%#]*)'", "<a href=\"$1\" target=\"blank\">URL</a>", $text);
+	$text = trim($text);
+	if (!empty($text)) {
+		$text = PrintReady($text);
+		$brpos = strpos($text, "<br />");
+		print "\n\t\t<br /><span class=\"label\">";
+		if ($brpos !== false) print "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
+		print $pgv_lang["note"].": </span><span class=\"field\">";
+		if ($brpos !== false) {
+			print substr($text, 0, $brpos);
+			print "<span id=\"$elementID\" class=\"note_details\">";
+			print substr($text, $brpos + 6);
+			print "</span>";
+		} else {
+			print $text;
+		}
+		return true;
+	}
+	return false;
+}
+
+/**
+ * Print all of the notes in this fact record
+ * @param string $factrec	the factrecord to print the notes from
+ * @param int $level		The level of the factrecord
+ */
 function print_fact_notes($factrec, $level) {
 	 global $pgv_lang;
 	 global $factarray;
@@ -1444,31 +1482,14 @@ function print_fact_notes($factrec, $level) {
 		  $closeSpan = false;
 		  if ($nt==0) {
 			   //-- print embedded note records
-			   $text = preg_replace("/~~/", "<br />", trim($match[$j][1]));
-			   $text .= get_cont($nlevel, $nrec);
-			   $text = preg_replace("'(http://[\w\./\-&=?~%#]*)'", "<a href=\"$1\" target=\"blank\">URL</a>", $text);
-			   $text = trim($text);
-			   if (!empty($text)) {
-				   print "\n\t\t<br /><span class=\"label\">".$pgv_lang["note"].": </span><span class=\"field\">";
-			   	   print PrintReady($text);
-			   	   $closeSpan = true;
-		   		}
+				$closeSpan = print_note_record($match[$j][1], $nlevel, $nrec);
 		  }
 		  else {
 		  	if (displayDetailsByID($nmatch[1], "NOTE")) {
 			   //-- print linked note records
 			   $noterec = find_gedcom_record($nmatch[1]);
 			   $nt = preg_match("/0 @$nmatch[1]@ NOTE (.*)/", $noterec, $n1match);
-			   $text ="";
-			   if ($nt>0) $text = preg_replace("/~~/", "<br />", trim($n1match[1]));
-			   $text .= get_cont(1, $noterec);
-			   $text = preg_replace("'(https?://[\w\./\-&=?~%#]*)'", "<a href=\"$1\" target=\"blank\">URL</a>", $text);
-			   $text = trim($text);
-			   if (!empty($text)) {
-				   print "\n\t\t<br /><span class=\"label\">".$pgv_lang["note"].": </span><span class=\"field\">";
-			   	   print PrintReady($text);
-			   	   $closeSpan = true;
-		   		}
+			   $closeSpan = print_note_record(($nt>0)?$n1match[1]:"", 1, $noterec);
 		   		if (preg_match("/1 SOUR/", $noterec)>0) {
 			   		print "<br />\n";
 					print_fact_sources($noterec, 1);
