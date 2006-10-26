@@ -1030,7 +1030,7 @@ $pgv_lang["no_messages"]                = "Vous n'avez pas de messages en attent
 $pgv_lang["clicking_ok"]                = "En cliquant sur OK, vous ouvrirez une autre fenêtre où vous pourrez contacter #user[fullname]#";
 $pgv_lang["favorites"]                  = "Favoris";
 $pgv_lang["my_favorites"]               = "Mes favoris";
-$pgv_lang["no_favorites"]               = "Vous n'avez pas sélectionné de favoris. Pour ajouter un individu à vos favoris, lancez une recherche et cliquez sur <b>Ajouter</b> ou utilisez la case ci-dessous pour coder une clé individu.";
+$pgv_lang["no_favorites"]               = "Vous n'avez pas sélectionné de favoris. Pour ajouter un individu à vos favoris, lancez une recherche et cliquez sur <b>Ajouter</b> ou utilisez la case ci-dessous pour entrer un identifiant.";
 $pgv_lang["add_to_my_favorites"]        = "Ajouter à mes favoris";
 $pgv_lang["gedcom_favorites"]           = "Favoris";
 $pgv_lang["no_gedcom_favorites"]        = "L'administrateur n'a sélectionné aucun favori.";
@@ -1249,7 +1249,7 @@ $pgv_lang["record"]                     = "Enregistrement";
 $pgv_lang["adding"]                     = "Ajout";
 $pgv_lang["updating_linked"]            = "Mise à jour de l'enregistrement lié";
 $pgv_lang["merge_more"]                 = "Fusionner d'autres enregistrements.";
-$pgv_lang["same_ids"]                   = "Entrer des clés différentes.";
+$pgv_lang["same_ids"]                   = "Entrer des identifiants différents.";
 
 //-- ANCESTRY FILE MESSAGES
 $pgv_lang["ancestry_chart"]             = "Tableau d'ascendance";
@@ -1508,7 +1508,7 @@ $pgv_lang["TYPE__certificate"]          = "Certificat";
 #pgv_lang["TYPE__film"]                 = "Microfilm";
 #pgv_lang["TYPE__magazine"]             = "Magazine";
 $pgv_lang["TYPE__manuscript"]           = "Manuscrit";
-#pgv_lang["TYPE__map"]                  = "Map";
+$pgv_lang["TYPE__map"]                  = "Carte ou plan";
 $pgv_lang["TYPE__newspaper"]            = "Journal";
 #pgv_lang["TYPE__photo"]                = "Photo";
 $pgv_lang["TYPE__tombstone"]            = "Pierre tombale";
@@ -1516,9 +1516,9 @@ $pgv_lang["TYPE__tombstone"]            = "Pierre tombale";
 
 //-- Other media suff
 $pgv_lang["view_slideshow"]             = "Voir en diaporama";
-#pgv_lang["download_image"]             = "Download File";
-#pgv_lang["no_media"]                   = "No Media Found";
-#pgv_lang["relations_heading"]          = "The image relates to:";
+$pgv_lang["download_image"]             = "Télécharger le fichier";
+$pgv_lang["no_media"]                   = "Aucun objet MultiMedia trouvé";
+$pgv_lang["relations_heading"]          = "Cette image est liée à :";
 $pgv_lang["file_size"]                  = "Taille du fichier";
 $pgv_lang["img_size"]                   = "Taille de l'image";
 
