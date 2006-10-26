@@ -190,6 +190,7 @@ $pgv_lang["photo_replace"] 		= "Vill du byta ut ett äldre foto med detta?";
 $pgv_lang["privacy_not_granted"]= "Du har inte access till";
 $pgv_lang["privacy_prevented_editing"]	= "Integritetsinställningarna hindrar dig från att redigera denna post.";
 $pgv_lang["record_marked_deleted"]		= "Denna post har markerats för radering efter godkännande av administratören.";
+$pgv_lang["replace_with"]			= "Ersätt med";
 $pgv_lang["show_changes"]		= "Denna post har uppdaterats. Klicka här för att se ändringarna.";
 $pgv_lang["thumb_genned"]		= "Miniatyrbilder #thumbnail# genererades automatiskt.";
 $pgv_lang["thumbgen_error"]		= "Kan inte generera miniatyrbilder för ";
