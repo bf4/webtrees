@@ -161,6 +161,7 @@ $pgv_lang["add_new_comment"]				= "Add New Comment";
 $pgv_lang["no_sources"]						= "There are no sources associated with this task.";
 $pgv_lang["no_people"]						= "There are no people associated with this task.";
 $pgv_lang["no_indi_tasks"]					= "No tasks associated with this individual.";
+$pgv_lang["no_sour_tasks"]					= "No tasks associated with this source.";
 $pgv_lang["edit_comment"]					= "Edit Comment";
 $pgv_lang["comment_success"]				= "Your comment was successfully added.";
 $pgv_lang['comment_body']					= 'Comment';
@@ -171,6 +172,7 @@ $pgv_lang["comment_delete_check"]		= "Are you sure you want to delete this comme
 //-- RA_ADDTASK MESSAGES
 $pgv_lang["add_new_task"]				= "Add New Task";
 $pgv_lang["submit"]						= "Submit";
+$pgv_lang["assign_task"]				= "Assign Task";
 
 //-- RA_CONFIGURE PRIVACY MESSAGES
 $pgv_lang["configure_privacy"]		    = "Configure Privacy";
@@ -193,6 +195,9 @@ $pgv_lang["call/url"]                   = "Call Number/URL";
 $pgv_lang["enumDate"]                   = "Enumeration Date";
 $pgv_lang["county"]                     = "County";
 $pgv_lang["city"]                       = "City";
+$pgv_lang["complete_title"]				= "Complete the Task";
+$pgv_lang["select_form"]				= "Select Form";
+$pgv_lang['choose_form_label']			= "Choose a common research form:";
 
 //-- MY TASK BLOCK
 $pgv_lang["mytasks_block_descr"]		= "The My Task Block shows the task for the current user and can be configured to show completed tasks or to show task that are currently unassigned";

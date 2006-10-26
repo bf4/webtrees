@@ -138,8 +138,6 @@ if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_R
 	echo "<tr class=\"center\"><td colspan=\"2\">";
 }
 
-//print_help_link("sources_listbox_help", "qm","other_records");
-//echo "<span class=\"label\">".$pgv_lang["other_records"]."</span>";
 
 // -- array of names
 $myindilist = $controller->source->getSourceIndis();
@@ -150,77 +148,6 @@ $cf=count($myfamlist);
 if ($ci>0) print_indi_table($myindilist, $pgv_lang["individuals"]." @ ".$controller->source->getTitle());
 if ($cf>0) print_fam_table($myfamlist, $pgv_lang["families"]." @ ".$controller->source->getTitle());
 
-/** DEPRECATED
-if (($ci>0)||($cf>0)) {
-	?>
-	<table class="list_table">
-		<tr>
-		<?php if ($ci>0) { ?>
-			<td class="list_label">
-				<?php print $pgv_lang["individuals"]; ?>
-			</td>
-		<?php }
-		if ($cf>0) { ?>
-			<td class="list_label">
-				<?php print $pgv_lang["families"]; ?>
-			</td>
-		<?php } ?>
-		</tr>
-		<tr>
-			<?php if ($ci>0) { ?>
-			<td class="list_value_wrap">
-				<ul>
-				<?php
-				foreach ($myindilist as $key => $value) {
-					print_list_person($key, array(check_NN(get_sortable_name($key)), get_gedcom_from_id($value["gedfile"])));
-					print "\n";
-				}
-				if (count($indi_hide)>0) {
-					print "<li>".$pgv_lang["hidden"]." (".count($indi_hide).")";
-					print_help_link("privacy_error_help", "qm");
-					print "</li>";
-				}
-				?>
-				</ul>
-			</td>
-			<?php }
-			if ($cf>0) { ?>
-			<td class="list_value_wrap">
-				<ul>
-				<?php
-				foreach ($myfamlist as $key => $value) {
-					print_list_family($key, array(get_sortable_family_descriptor($key), get_gedcom_from_id($value["gedfile"])));
-				}
-				if (count($fam_hide)>0) {
-					print "<li>".$pgv_lang["hidden"]." (".count($fam_hide).")";
-					print_help_link("privacy_error_help", "qm");
-					print "</li>";
-				}
-				?>
-				</ul>
-			</td>
-			<?php } ?>
-		</tr>
-		<tr>
-			<?php if ($ci>0) { ?>
-			<td>
-				<?php print $pgv_lang["total_indis"]." ".$ci; ?>
-				<?php if (count($indi_private)>0) print "&nbsp;(".$pgv_lang["private"]." ".count($indi_private).")"; ?>
-				<?php if (count($indi_hide)>0) print "&nbsp;--&nbsp;".$pgv_lang["hidden"]." ".count($indi_hide); ?>
-			</td>
-			<?php }
-			if ($cf>0) { ?>
-			<td>
-			<?php print $pgv_lang["total_fams"]." ".$cf; ?>
-			<?php if (count($fam_private)>0) print "&nbsp;(".$pgv_lang["private"]." ".count($fam_private).")"; ?>
-			<?php if (count($fam_hide)>0) print "&nbsp;--&nbsp;".$pgv_lang["hidden"]." ".count($fam_hide); ?>
-			</td>
-			<?php } ?>
-		</tr>
-	</table>
-<?php }
-else print "&nbsp;&nbsp;&nbsp;<span class=\"warning\"><i>".$pgv_lang["no_results"]."</span>";
-**/
 ?>
 	<br />
 	<br />

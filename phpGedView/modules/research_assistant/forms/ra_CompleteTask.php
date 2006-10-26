@@ -50,19 +50,21 @@ require_once 'ra_form.php';
      */
  	function contents()
     {
+    	global $pgv_lang;
+    	
         $temp = ra_functions::print_form_list();
         $filenames = explode("\n",$temp);
         $out = '<form name="frmSelect" method="post"><input type="hidden" name="mod" value="research_assistant" />'
             . '<input type="hidden" name="action" value="completeTask" />'
             . '<input type="hidden" name="taskid" value="' . $_REQUEST['taskid'] . '" />'
             . '<table align="center">'
-            . '<tr><th class="descriptionbox" colspan="2"><h1>Complete the Task</h1></th></tr>'
-            . '<tr><td class="optionbox">Choose the common research source:</td><td>';
+            . '<tr><th class="descriptionbox" colspan="2"><h2>'.$pgv_lang['complete_title'].'</h2></th></tr>'
+            . '<tr><td class="optionbox">'.$pgv_lang['choose_form_label'].'</td><td>';
         
         $out .=	'<select name="commonFrm" onchange="document.forms[\'frmSelect\'].submit();">';
 
         // Show all of the form options
-        $out .= "<option>Select Form</option>";
+        $out .= "<option>".$pgv_lang['select_form']."</option>";
         for($i=0; $i<count($filenames); $i++)
         {
             if (!empty($filenames[$i])  )
@@ -71,19 +73,17 @@ require_once 'ra_form.php';
                 if(!empty($_POST['commonFrm']) && $filenames[$i]==preg_replace('/_/', ' ', $_POST['commonFrm']))
                 {
                 $out .= '<option value="'. preg_replace('/\s+/', '_',$optVal).'" selected="selected">'.$filenames[$i].'</option>';
-                
                 }
             else
             {
                 $out .= '<option value="'. preg_replace('/\s+/', '_', $optVal).'">'.$filenames[$i].'</option>';
             }
-                
             }
         }
 
         $out .=	'</select></table></form>';
 
-        if(!empty($_POST['commonFrm']) && $_POST['commonFrm']!="Select Form")
+        if(!empty($_POST['commonFrm']) && $_POST['commonFrm']!=$pgv_lang['select_form'])
             $out .= ra_functions::print_form($_POST['commonFrm']);
 
         return $out;
