@@ -2,11 +2,10 @@
 /**
  * Media View Page
  *
- * This page displays all information about media that is selected in
- * PHPGedView.
+ * This page displays all information about media that is selected in PHPGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2006  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,9 +22,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @subpackage Admin
- * @see mediaviewer.php
- * @version 3
+ * @subpackage Display
+ * @version $Id: functions_print.php 491 2006-10-12 15:51:11Z opus27 $
  * @TODO use more theme specific CSS, allow a more fluid layout to take advantage of the page width
  */
 //These files are required for this page to work
@@ -124,7 +122,7 @@ else{
 						<tr>
 							<td class="name_head">
 								 <?php print PrintReady($controller->mediaobject->getTitle()); if ($SHOW_ID_NUMBERS) print " &lrm;(".$controller->pid.")&lrm;"; ?>
-								 <?php print PrintReady($controller->mediaobject->getAddTitle()); ?> <br/><br />	 
+								 <?php print PrintReady($controller->mediaobject->getAddTitle()); ?> <br /><br />
 								 <?php if ($controller->mediaobject->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 							</td>
 						</tr>
@@ -151,7 +149,9 @@ else{
 					?>
 					 <br /><?php print $pgv_lang["relations_heading"]; ?>
 					<?php
-						PrintMediaLinks($links, "");
+						//PrintMediaLinks($links, "");
+						require_once 'includes/functions_print_lists.php';
+						print_changes_table($links);
 					}	?>
 				</td>
 			</tr>

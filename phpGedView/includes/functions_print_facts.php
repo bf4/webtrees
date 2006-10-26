@@ -5,7 +5,7 @@
  * Various printing functions used to print fact records
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2006  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1320,7 +1320,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		}
 		$ttype = preg_match("/\d TYPE (.*)/", $rowm["m_gedrec"], $match);
 		if ($ttype>0){
-			$mediaType = $match[1];
+			$mediaType = trim($match[1]);
 			$varName = "TYPE__".strtolower($mediaType);
 			if (isset($pgv_lang[$varName])) $mediaType = $pgv_lang[$varName];
 			print "\n\t\t\t<br /><span class=\"label\">".$pgv_lang["type"].": </span> <span class=\"field\">$mediaType</span>";
