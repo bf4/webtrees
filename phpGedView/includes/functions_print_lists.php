@@ -6,7 +6,7 @@
  * used on the indilist, famlist, find, and search pages.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2006  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -495,7 +495,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 
 		echo "</tr>\n";
 	}
-
+	//-- table footer
 	echo "<tr class=\"sortbottom\">";
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
@@ -513,7 +513,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "<td></td>";
 	if ($SHOW_LAST_CHANGE) echo "<td></td>";
 	echo "</tr>";
-
 	echo "</table>\n";
 	echo "</fieldset>\n";
 }
@@ -565,6 +564,7 @@ function print_surn_table($datalist, $target="INDI") {
 
 		echo "</tr>\n";
 	}
+	//-- table footer
 	echo "<tr class=\"sortbottom\">";
 	echo "<td class=\"list_item\">&nbsp;</td>";
 	echo "<td class=\"list_item\">&nbsp;</td>";
@@ -805,7 +805,7 @@ function print_fam_table($datalist, $legend="") {
 
 		echo "</tr>\n";
 	}
-
+	//-- table footer
 	echo "<tr class=\"sortbottom\">";
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
@@ -824,7 +824,6 @@ function print_fam_table($datalist, $legend="") {
 	echo "<td></td>";
 	if ($SHOW_LAST_CHANGE) echo "<td></td>";
 	echo "</tr>";
-	
 	echo "</table>\n";
 	echo "</fieldset>\n";
 }
@@ -853,7 +852,7 @@ function print_sour_table($datalist, $legend="") {
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">SOUR</th>";
 	echo "<th class=\"list_label\">".$factarray["TITL"]."</th>";
-	echo "<th class=\"list_label\">".$factarray["TITL"]."2</th>";
+	$t2 = false; echo "<td class=\"list_label t2\">".$factarray["TITL"]."2</td>";
 	echo "<th class=\"list_label\">".$factarray["AUTH"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["individuals"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["families"]."</th>";
@@ -890,11 +889,12 @@ function print_sour_table($datalist, $legend="") {
 		echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
 		echo "</td>";
 		// alternate title in a new column
-		echo "<td class=\"list_value_wrap\">";
+		echo "<td class=\"list_value_wrap t2\">";
 		foreach ($name_subtags as $k=>$subtag) {
 			$addname = $source->getSortableName($subtag);
 			if (!empty($addname) and $addname!=$name) {
 				echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a><br />";
+				$t2 = true;
 			}
 		}
 		echo "&nbsp;</td>";
@@ -930,6 +930,18 @@ function print_sour_table($datalist, $legend="") {
 	}
 	echo "</table>\n";
 	echo "</fieldset>\n";
+	//-- hide TITLE2 col if empty
+	if (!$t2) {
+		echo <<< T2
+		<script type="text/javascript">
+		// <![CDATA[
+			var table = document.getElementById("$table_id");
+			cells = table.getElementsByTagName('td');
+			for (i=0;i<cells.length;i++) if (cells[i].className && (cells[i].className.indexOf('t2') != -1)) cells[i].style.display='none';
+		// ]]>
+		</script>
+T2;
+	}
 }
 
 /**
@@ -1099,7 +1111,7 @@ function print_media_table($datalist, $legend="") {
 /**
  * print a sortable table of recent changes
  *
- * @param array $datalist contain individuals that were extracted from the database.
+ * @param array $datalist contain records that were extracted from the database.
  */
 function print_changes_table($datalist) {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
@@ -1123,7 +1135,7 @@ function print_changes_table($datalist) {
 	$n = 0;
 	foreach($datalist as $key => $value) {
 		$record = GedcomRecord::getInstance($key);
-		if (is_null($record)) $record = GedcomRecord::getInstance($value[0]);
+		if (is_null($record) and isset($value[0])) $record = GedcomRecord::getInstance($value[0]);
 		if (is_null($record)) continue;
 		//-- Counter
 		echo "<tr>";
@@ -1171,6 +1183,151 @@ function print_changes_table($datalist) {
 
 		echo "</tr>\n";
 	}
+	echo "</table>\n";
+}
+
+/**
+ * print a sortable table of events
+ * and generates hCalendar records
+ * @see http://microformats.org/
+ *
+ * @param array $datalist contain records that were extracted from the database.
+ */
+function print_events_table($datalist, $nextdays=1, $option="") {
+	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	if (count($datalist)<1) return;
+?>
+	<script type="text/javascript" src="strings.js"></script>
+	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
+<?php
+	require_once("includes/gedcomrecord.php");
+	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
+	//-- table header
+	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
+	echo "<tr>";
+	echo "<td></td>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
+	echo "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
+	echo "<th class=\"list_label\">".$factarray["EVEN"]."</th>";
+	echo "<th class=\"list_label\">".$factarray["DATE"]."</th>";
+	echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
+	echo "</tr>\n";
+	//-- table body
+	$hidden = 0;
+	$n = 0;
+	foreach($datalist as $key => $value) {
+	//echo "<pre>";print_r($value);echo "</pre>";
+		//-- get gedcom record
+		$record = GedcomRecord::getInstance($value[0]);
+		if (is_null($record)) continue;
+		if (!$record->canDisplayDetails()) {
+			$hidden++;
+			continue;
+		}
+		//-- only living people ?
+		if (strpos($option, "living")) {
+			if ($record->type=="INDI" and $record->isDead()) continue;
+			if ($record->type=="FAM") {
+				$husb = $record->getHusband();
+				if ($husb->isDead()) continue;
+				$wife = $record->getWife();
+				if ($wife->isDead()) continue;
+			}
+		}
+		//-- Event name
+		$exp = explode("\n", $value[1]);
+		$exp = explode(" ", $exp[0]);
+		$event = trim($exp[1]);
+		if (empty($event)) continue;
+		//-- only birt/marr/deat ?
+		if (strpos($option, "onlyBDM") and strpos(" BIRT MARR DEAT", $event)===false) continue;
+		//-- Event date
+		$edate = get_gedcom_value("DATE", 2, $value[1], "", false);
+		if (empty($edate)) continue;
+		$timestamp = get_changed_date($edate);
+		$pdate = parse_date($edate);
+		$anniv = mktime(0, 0, 0, $pdate[0]["mon"], $pdate[0]["day"], date("Y"));
+		// add 1 year if anniversary before today
+		if (date("Ymd", $anniv) < date("Ymd")) $anniv = mktime(0, 0, 0, $pdate[0]["mon"], $pdate[0]["day"], date("Y")+1);
+		// max anniversary date
+		$datemax = mktime(0, 0, 0, date("m"), date("d")+$nextdays-1, date("Y"));
+		if (date("Ymd", $datemax) < date("Ymd", $anniv)) continue;
+		// upcoming events starting tomorrow
+		if ($nextdays>1 and date("Ymd") == date("Ymd", $anniv)) continue;
+		// sorting by MM-DD-YYYY
+		$sortkey = sprintf("%02d-%02d-%04d", $pdate[0]["mon"], $pdate[0]["day"], $pdate[0]["year"]);
+		//-- Counter
+		echo "<tr class=\"vevent\">"; // hCalendar:vevent
+		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
+		//-- Record ID
+		if ($SHOW_ID_NUMBERS) {
+			echo "<td class=\"list_value_wrap rela\">";
+			echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".$record->xref."</a></td>";
+		}
+		//-- Record name(s)
+		$name = $record->getSortableName();
+		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
+		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+		if ($record->type=="INDI") {
+			echo $record->getSexImage();
+			$name_subtags = array("", "_HEB", "ROMN", "_AKA");
+			if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
+			foreach ($name_subtags as $k=>$subtag) {
+				for ($num=1; $num<9; $num++) {
+					$addname = $record->getSortableName($subtag, $num);
+					if (!empty($addname) and $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+					if (empty($addname)) break;
+				}
+			}
+		}
+		if ($record->type=="SOUR" or $record->type=="REPO") {
+			$name_subtags = array("_HEB", "ROMN");
+			foreach ($name_subtags as $k=>$subtag) {
+				$addname = $record->getSortableName($subtag);
+				if (!empty($addname) and $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+			}
+		}
+		echo "</td>";
+		//-- Event name
+		echo "<td class=\"list_value_wrap\">";
+		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item url\">".$factarray[$event]."</a>"; // hCalendar:url
+		echo "&nbsp;</td>";
+		//-- Event date
+		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
+		echo "<a href=\"".$record->getDateUrl($edate)."\"".
+		" title=\"".$sortkey."\"".
+		" class=\"list_item\">".$timestamp."</a>";
+		echo "</td>";
+		//-- Anniversary
+		echo "<td class=\"list_value_wrap rela\">";
+		$person = new Person("");
+		$age = $person->getAge("\n1 BIRT\n2 DATE ".$edate."\n", date("d M Y", $anniv));
+		$age = str_replace($pgv_lang["apx"]." ", "", $age);
+		echo "<a href=\"".$record->getDateUrl($edate)."\"".
+		" title=\"".get_changed_date(date("d M Y", $anniv))."\"".
+		" class=\"list_item\">".$age."</a>";
+		echo "<abbr class=\"dtstart\" title=\"".date("Ymd", $anniv)."\"></abbr>"; // hCalendar:dtstart
+		echo "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$age ".$factarray[$event]." : ".PrintReady(strip_tags($name))."\"></abbr>"; // hCalendar:summary
+		echo "</td>";
+
+		echo "</tr>\n";
+	}
+	//-- table footer
+	echo "<tr class=\"sortbottom\">";
+	echo "<td></td>";
+	if ($SHOW_ID_NUMBERS) echo "<td></td>";
+	echo "<td class=\"list_label\">";
+	echo $pgv_lang["total_names"]." : ".$n;
+	if ($hidden) echo "<br />".$pgv_lang["hidden"]." : ".$hidden;
+	echo "</td>";
+	echo "<td></td>";
+	echo "<td>";
+	$uri = "http://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+	$title = $pgv_lang["download_now"]." : hCal-events.ics";
+	if ($n) echo "<a href=\"http://feeds.technorati.com/events/".$uri."\"><img src=\"images/hcal.png\" border=\"0\" alt=\"".$title."\" title=\"".$title."\" /></a>";
+	echo "</td>";
+	echo "<td></td>";
+	echo "</tr>";
 	echo "</table>\n";
 }
 

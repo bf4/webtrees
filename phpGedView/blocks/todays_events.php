@@ -5,7 +5,7 @@
  * This block will print a list of today's events
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2006  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@ function print_todays_events($block=true, $config="", $side, $index) {
 
   print "<div class=\"blockcontent\" >";
   if ($block) print "<div class=\"small_inner_block\">\n";
-
+	/** DEPRECATED
   $OutputDone = false;
   $PrivateFacts = false;
   $lastgid="";
@@ -202,7 +202,11 @@ function print_todays_events($block=true, $config="", $side, $index) {
     print_text($Advisory);
     print "</b><br />";
   }
-
+  **/
+  $option = "";
+  if ($onlyBDM == "yes") $option .= " onlyBDM";
+  if ($filter == "living") $option .= " living";
+	print_events_table($found_facts, 1, $option);
   if ($block) print "</div>\n";
   print "</div>"; // blockcontent
   print "</div>"; // block
