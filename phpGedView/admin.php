@@ -113,6 +113,8 @@ foreach($users as $indexval => $user) {
       	print "</h2>";
       	print $pgv_lang["system_time"];
       	print " ".get_changed_date(date("j M Y"))." - ".date($TIME_FORMAT);
+      	print "<br />".$pgv_lang["user_time"];
+      	print " ".get_changed_date(date("j M Y", time()-$_SESSION["timediff"]))." - ".date($TIME_FORMAT, time()-$_SESSION["timediff"]);
       	if (userIsAdmin(getUserName())) {
 		  if ($err_write) {
 			  print "<br /><span class=\"error\">";
