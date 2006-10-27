@@ -408,7 +408,7 @@ function adminUserExists() {
 		$sql = "SELECT u_username FROM ".$TBLPREFIX."users WHERE u_canadmin='Y'";
 		$res = dbquery($sql);
 
-		if (!DB::isError($res)) {
+		if ($res!==false && !DB::isError($res)) {
 			$count = $res->numRows();
 			//-- no need to iterate, we only need the count
 			// while($row =& $res->fetchRow());
