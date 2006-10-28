@@ -1246,11 +1246,11 @@ function print_events_table($datalist, $nextdays=1, $option="") {
 		if (empty($edate)) continue;
 		$timestamp = get_changed_date($edate);
 		$pdate = parse_date($edate);
-		$anniv = mktime(0, 0, 0, $pdate[0]["mon"], $pdate[0]["day"], date("Y"));
+		$anniv = mktime(0, 0, 0, (int) $pdate[0]["mon"], (int) $pdate[0]["day"], date("Y"));
 		// add 1 year if anniversary before today
-		if (date("Ymd", $anniv) < date("Ymd")) $anniv = mktime(0, 0, 0, $pdate[0]["mon"], $pdate[0]["day"], date("Y")+1);
+		if (date("Ymd", $anniv) < date("Ymd")) $anniv = mktime(0, 0, 0, (int) $pdate[0]["mon"], (int) $pdate[0]["day"], date("Y")+1);
 		// max anniversary date
-		$datemax = mktime(0, 0, 0, date("m"), date("d")+$nextdays-1, date("Y"));
+		$datemax = mktime(0, 0, 0, (int) date("m"), ((int) date("d")+$nextdays-1), date("Y"));
 		if (date("Ymd", $datemax) < date("Ymd", $anniv)) continue;
 		// upcoming events starting tomorrow
 		if ($nextdays>1 and date("Ymd") == date("Ymd", $anniv)) continue;
