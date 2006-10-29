@@ -44,3 +44,5 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["label_location"]						29 October, 2006		w	(deleted duplicate entry)
+*$pgv_lang["label_gedcom_id"]						29 October, 2006		w	(deleted duplicate entry)
