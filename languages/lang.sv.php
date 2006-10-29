@@ -545,6 +545,7 @@ $pgv_lang["today"]				= "Idag";
 $pgv_lang["day"]				= "Dag:";
 $pgv_lang["month"]				= "Månad:";
 $pgv_lang["showcal"]			= "Visa händelser för:";
+$pgv_lang["anniversary"]			= "Årsdag";
 $pgv_lang["anniversary_calendar"]	= "Historisk kalender";
 $pgv_lang["sunday"]				= "Söndag";
 $pgv_lang["saturday"]			= "Lördag";
