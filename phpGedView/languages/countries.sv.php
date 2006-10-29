@@ -1,6 +1,40 @@
 <?php
 /**
- * @see http://unstats.un.org/unsd/methods/m49/m49alpha.htm
+ * see http://unstats.un.org/unsd/methods/m49/m49alpha.htm
+ * see http://www.foreignword.com/countries/  for a comprehensive list, with translations
+ * see http://susning.nu/Landskod  (list #7) for another list, taken from ISO standards
+ * see http://helpdesk.rootsweb.com/codes for a comprehensive list of Chapman codes.
+ * see http://www.rootsweb.com/~wlsgfhs/ChapmanCodes.htm for another list of Chapman codes
+ *
+ * The list that follows is the list of Chapman country codes, with additions from the
+ * other sources mentioned above.
+ *
+ * These codes do not appear in the two Chapman lists cited:
+ *		ALA		Åland Islands
+ *		COD		Congo (Brazzaville)		This country was known as Zaire
+ *		NFK		Norfolk Island
+ *		PRI		Puerto Rico				Chapman lists this as a state of the USA
+ *		SCG		Serbia and Montenegro	Chapman lists these separately
+ *		TLS		Timor-Leste
+ *		UMI		US Minor Outlying Islands
+ *		VIR		US Virgin Islands		Chapman lists this as a state of the USA
+ *		
+ * These Chapman country codes do not appear in the list following:
+ *		UEL		United Empire Loyalist		This is NOT a country or region, it's
+ *											a group of people
+ *		UK		United Kingdom				This is the only two-letter country code,
+ *											and GBR or one of its components should be
+ *											used instead.
+ *		SLK		Slovakia					This code, listed in the last source cited,
+ *											should be SVK
+ *		SLO		Slovenia					This code, listed in the last source cited,
+ *											should be SVN
+ *		SAM		South America				This code, listed in the last source cited,
+ *											is not precise enough
+ *		TMP		East Timor					Official name is TLS "Timor-Leste"
+ *		HOL		Holland						Official name is NLD "Netherlands"
+ *		ESM		Western Samoa				Official name is WSM "Samoa"
+ *											
  * @package PhpGedView
  * @subpackage Languages
  * @version $Id$
@@ -9,247 +43,295 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 		print "You cannot access a language file directly.";
 		exit;
 }
-
-$countries["AND"]="Andorra";
-$countries["ARE"]="Förenade arabemiraten";
+$countries["ABW"]="Aruba";
+$countries["ACA"]="Acadia";
 $countries["AFG"]="Afghanistan";
-$countries["ATG"]="Antigua och Barbuda";
+$countries["AGO"]="Angola";
 $countries["AIA"]="Anguilla";
 $countries["ALA"]="Åland";
 $countries["ALB"]="Albanien";
-$countries["DZA"]="Algeriet";
-$countries["ASM"]="Amerikanska Samoa";
-$countries["AGO"]="Angola";
+$countries["AND"]="Andorra";
+$countries["ANT"]="Nederländska Antillerna";
+$countries["ARE"]="Förenade arabemiraten";
 $countries["ARG"]="Argentina";
 $countries["ARM"]="Armenien";
-$countries["ABW"]="Aruba";
+$countries["ASM"]="Amerikanska Samoa";
+$countries["ATA"]="Antarktis";
+$countries["ATF"]="Fransla s�dra teritorierna";
+$countries["ATG"]="Antigua och Barbuda";
 $countries["AUS"]="Australien";
 $countries["AUT"]="Österrike";
 $countries["AZE"]="Azerbajdzjan";
-$countries["BHS"]="Bahamas";
-$countries["BHR"]="Bahrain";
-$countries["BGD"]="Bangladesh";
-$countries["BRB"]="Barbados";
-$countries["BLR"]="Vitryssland";
-$countries["BEL"]="Belgien";
-$countries["BLZ"]="Belize";
-$countries["BEN"]="Benin";
-$countries["BMU"]="Bermuda";
-$countries["BTN"]="Bhutan";
-$countries["BOL"]="Bolivia";
-$countries["BIH"]="Bosnien-Hercegovina";
-$countries["BWA"]="Botswana";
-$countries["BRA"]="Brasilien";
-$countries["VGB"]="Brittiska Jungfruöarna";
-$countries["BRN"]="Brunei Darussalam";
-$countries["BGR"]="Bulgarien";
-$countries["BFA"]="Burkina Faso";
+$countries["AZR"]="Azorererna";
+
 $countries["BDI"]="Burundi";
-$countries["KHM"]="Kambodja";
-$countries["CMR"]="Kamerun";
-$countries["CAN"]="Kanada";
-$countries["CPV"]="Kap Verde";
-$countries["CYM"]="Caymanöarna";
+$countries["BEL"]="Belgien";
+$countries["BEN"]="Benin";
+$countries["BFA"]="Burkina Faso";
+$countries["BGD"]="Bangladesh";
+$countries["BGR"]="Bulgarien";
+$countries["BHR"]="Bahrain";
+$countries["BHS"]="Bahamas";
+$countries["BIH"]="Bosnien-Hercegovina";
+$countries["BLR"]="Vitryssland";
+$countries["BLZ"]="Belize";
+$countries["BMU"]="Bermuda";
+$countries["BOL"]="Bolivia";
+$countries["BRA"]="Brasilien";
+$countries["BRB"]="Barbados";
+$countries["BRN"]="Brunei Darussalam";
+$countries["BTN"]="Bhutan";
+$countries["BVT"]="Bouvetön";
+$countries["BWA"]="Botswana";
+$countries["BWI"]="Britiska väst Indien";
+
 $countries["CAF"]="Centralafrikanska republiken";
-$countries["TCD"]="Tchad";
+$countries["CAN"]="Kanada";
+$countries["CAP"]="Kap Kolonien?";
+$countries["CCK"]="Kokosöarna";
+$countries["CHE"]="Schweiz";
+$countries["CHI"]="Kanalöarna?";
 $countries["CHL"]="Chile";
 $countries["CHN"]="Kina";
-$countries["HKG"]="Hong Kong";
-$countries["MAC"]="Macau";
-$countries["COL"]="Colombia";
-$countries["COM"]="Comorerna";
+$countries["CIV"]="Elfenbenskusten";
+$countries["CMR"]="Kamerun";
+$countries["COD"]="Kongo-Kinshasa";
 $countries["COG"]="Kongo-Brazzaville";
 $countries["COK"]="Cooköarna";
+$countries["COL"]="Colombia";
+$countries["COM"]="Comorerna";
+$countries["CPV"]="Kap Verde";
 $countries["CRI"]="Costa Rica";
-$countries["CIV"]="Elfenbenskusten";
-$countries["HRV"]="Kroatien";
+$countries["CSK"]="Tjekoslovakien";
 $countries["CUB"]="Kuba";
+$countries["CXR"]="Julön";
+$countries["CYM"]="Caymanöarna";
 $countries["CYP"]="Cypern";
 $countries["CZE"]="Tjeckien";
-$countries["PRK"]="Nordkorea";
-$countries["COD"]="Kongo-Kinshasa";
-$countries["DNK"]="Danmark";
+
+$countries["DEU"]="Tyskland";
 $countries["DJI"]="Djibouti";
 $countries["DMA"]="Dominica";
+$countries["DNK"]="Danmark";
 $countries["DOM"]="Dominikanska republiken";
+$countries["DZA"]="Algeriet";
+
+
 $countries["ECU"]="Ecuador";
 $countries["EGY"]="Egypten";
-$countries["SLV"]="El Salvador";
-$countries["GNQ"]="Ekvatorialguinea";
+$countries["EIR"]="Eire";
+$countries["ENG"]="England";
 $countries["ERI"]="Eritrea";
+$countries["ESH"]="Västsahara";
+$countries["ESP"]="Spanien";
 $countries["EST"]="Estland";
 $countries["ETH"]="Etiopien";
-$countries["FRO"]="Färöarna";
-$countries["FLK"]="Falklandsöarna";
-$countries["FJI"]="Fiji";
+
 $countries["FIN"]="Finland";
+$countries["FJI"]="Fiji";
+$countries["FLD"]="Flandern";
+$countries["FLK"]="Falklandsöarna";
 $countries["FRA"]="Frankrike";
-$countries["GUF"]="Franska Guyana";
-$countries["PYF"]="Franska Polynesien";
+$countries["FRO"]="Färöarna";
+$countries["FSM"]="Mikronesien";
+
 $countries["GAB"]="Gabon";
-$countries["GMB"]="Gambia";
+$countries["GBR"]="Storbritannien";
 $countries["GEO"]="Georgien";
-$countries["DEU"]="Tyskland";
 $countries["GHA"]="Ghana";
 $countries["GIB"]="Gibraltar";
-$countries["GRC"]="Grekland";
-$countries["GRL"]="Grönland";
-$countries["GRD"]="Grenada";
-$countries["GLP"]="Guadeloupe";
-$countries["GUM"]="Guam";
-$countries["GTM"]="Guatemala";
 $countries["GIN"]="Guinea";
+$countries["GLP"]="Guadeloupe";
+$countries["GMB"]="Gambia";
 $countries["GNB"]="Guinea Bissau";
+$countries["GNQ"]="Ekvatorialguinea";
+$countries["GRC"]="Grekland";
+$countries["GRD"]="Grenada";
+$countries["GRL"]="Grönland";
+$countries["GTM"]="Guatemala";
+$countries["GUF"]="Franska Guyana";
+$countries["GUM"]="Guam";
 $countries["GUY"]="Guyana";
-$countries["HTI"]="Haiti";
-$countries["VAT"]="Vatikanstaten";
+
+$countries["HKG"]="Hong Kong";
+$countries["HMD"]="Heardön och McDonaldsöarna";
 $countries["HND"]="Honduras";
+$countries["HRV"]="Kroatien";
+$countries["HTI"]="Haiti";
 $countries["HUN"]="Ungern";
-$countries["ISL"]="Island";
-$countries["IND"]="Indien";
+
 $countries["IDN"]="Indonesien";
+$countries["IND"]="Indien";
+$countries["IOT"]="Brittiska territoriet i Indiska Oceanen";
+$countries["IRL"]="Irland";
+
 $countries["IRN"]="Iran";
 $countries["IRQ"]="Irak";
-$countries["IRL"]="Irland";
+$countries["ISL"]="Island";
 $countries["ISR"]="Israel";
 $countries["ITA"]="Italien";
+
 $countries["JAM"]="Jamaica";
-$countries["JPN"]="Japan";
 $countries["JOR"]="Jordanien";
+$countries["JPN"]="Japan";
+
 $countries["KAZ"]="Kazakstan";
 $countries["KEN"]="Kenya";
-$countries["KIR"]="Kiribati";
-$countries["KWT"]="Kuwait";
 $countries["KGZ"]="Kirgizistan";
+$countries["KHM"]="Kambodja";
+$countries["KIR"]="Kiribati";
+$countries["KNA"]="St Christopher och Nevis";
+$countries["KOR"]="Sydkorea";
+$countries["KWT"]="Kuwait";
+
 $countries["LAO"]="Laos";
-$countries["LVA"]="Lettland";
 $countries["LBN"]="Libanon";
-$countries["LSO"]="Lesotho";
 $countries["LBR"]="Liberia";
 $countries["LBY"]="Libyen";
+$countries["LCA"]="St Lucia";
 $countries["LIE"]="Liechtenstein";
+$countries["LKA"]="Sri Lanka";
+$countries["LSO"]="Lesotho";
 $countries["LTU"]="Litauen";
 $countries["LUX"]="Luxemburg";
+$countries["LVA"]="Lettland";
+
+$countries["MAC"]="Macau";
+$countries["MAR"]="Marocko";
+$countries["MCO"]="Monaco";
+$countries["MDA"]="Moldavien";
 $countries["MDG"]="Madagaskar";
-$countries["MWI"]="Malawi";
-$countries["MYS"]="Malaysia";
 $countries["MDV"]="Maldiverna";
+$countries["MEX"]="Mexiko";
+$countries["MHL"]="Marshallöarna";
+$countries["MKD"]="Makedonien";
 $countries["MLI"]="Mali";
 $countries["MLT"]="Malta";
-$countries["MHL"]="Marshallöarna";
-$countries["MTQ"]="Martinique";
-$countries["MRT"]="Mauretanien";
-$countries["MUS"]="Mauritius";
-$countries["MYT"]="Mayotte";
-$countries["MEX"]="Mexiko";
-$countries["FSM"]="Mikronesien";
-$countries["MCO"]="Monaco";
-$countries["MNG"]="Mongoliet";
-$countries["MSR"]="Montserrat";
-$countries["MAR"]="Marocko";
-$countries["MOZ"]="Moçambique";
 $countries["MMR"]="Burma";
-$countries["NAM"]="Namibia";
-$countries["NRU"]="Nauru";
-$countries["NPL"]="Nepal";
-$countries["NLD"]="Nederländerna";
-$countries["ANT"]="Nederländska Antillerna";
-$countries["NCL"]="Nya Kaledonien";
-$countries["NZL"]="Nya Zeeland";
-$countries["NIC"]="Nicaragua";
-$countries["NER"]="Niger";
-$countries["NGA"]="Nigeria";
-$countries["NIU"]="Niue";
-$countries["NFK"]="Norfolkön";
+$countries["MNG"]="Mongoliet";
 $countries["MNP"]="Nordmarianerna";
+$countries["MNT"]="Montenegro";
+$countries["MOZ"]="Moçambique";
+$countries["MRT"]="Mauretanien";
+$countries["MSR"]="Montserrat";
+$countries["MTQ"]="Martinique";
+$countries["MUS"]="Mauritius";
+$countries["MWI"]="Malawi";
+$countries["MYS"]="Malaysia";
+$countries["MYT"]="Mayotte";
+
+$countries["NAM"]="Namibia";
+$countries["NCL"]="Nya Kaledonien";
+$countries["NER"]="Niger";
+$countries["NFK"]="Norfolkön";
+$countries["NGA"]="Nigeria";
+$countries["NIC"]="Nicaragua";
+$countries["NIR"]="Nord Irland";
+$countries["NIU"]="Niue";
+$countries["NLD"]="Nederländerna";
 $countries["NOR"]="Norge";
-$countries["PSE"]="Palestina";
+
+$countries["NPL"]="Nepal";
+$countries["NRU"]="Nauru";
+$countries["NTZ"]="Neutral Zon";
+$countries["NZL"]="Nya Zeeland";
+
 $countries["OMN"]="Oman";
+
 $countries["PAK"]="Pakistan";
-$countries["PLW"]="Palau";
 $countries["PAN"]="Panama";
-$countries["PNG"]="Papua Nya Guinea";
-$countries["PRY"]="Paraguay";
+$countries["PCN"]="Pitcairn";
 $countries["PER"]="Peru";
 $countries["PHL"]="Filippinerna";
-$countries["PCN"]="Pitcairn";
+$countries["PLW"]="Palau";
+$countries["PNG"]="Papua Nya Guinea";
 $countries["POL"]="Polen";
-$countries["PRT"]="Portugal";
 $countries["PRI"]="Puerto Rico";
+$countries["PRK"]="Nordkorea";
+$countries["PRT"]="Portugal";
+$countries["PRY"]="Paraguay";
+$countries["PSE"]="Palestina";
+$countries["PYF"]="Franska Polynesien";
+
 $countries["QAT"]="Qatar";
-$countries["KOR"]="Sydkorea";
-$countries["MDA"]="Moldavien";
+
 $countries["REU"]="Reunion";
+$countries["ROM"]="Rumänien";
 $countries["ROU"]="Uruguay";
 $countries["RUS"]="Ryssland";
 $countries["RWA"]="Rwanda";
-$countries["SHN"]="St Helena";
-$countries["KNA"]="St Christopher och Nevis";
-$countries["LCA"]="St Lucia";
-$countries["SPM"]="St Pierre och Miquelon";
-$countries["VCT"]="St Vincent och Grenadinerna";
-$countries["WSM"]="Samoa";
-$countries["SMR"]="San Marino";
-$countries["STP"]="São Tomé och Príncipe";
+
 $countries["SAU"]="Saudiarabien";
-$countries["SEN"]="Senegal";
 $countries["SCG"]="Serbien-Montenegro";
-$countries["SYC"]="Seychellerna";
-$countries["SLE"]="Sierra Leone";
+$countries["SCT"]="Skotland";
+$countries["SDN"]="Sudan";
+$countries["SEA"]="Till sjös";
+$countries["SEN"]="Senegal";
+$countries["SER"]="Serbien";
 $countries["SGP"]="Singapore";
+$countries["SGS"]="Södra Georgia och Sandwichöarna";
+$countries["SHN"]="St Helena";
+$countries["SIC"]="Sicillien";
+$countries["SJM"]="Svalbard och Jan Mayen";
+$countries["SLB"]="Salomonöarna";
+$countries["SLE"]="Sierra Leone";
+$countries["SLV"]="El Salvador";
+$countries["SMR"]="San Marino";
+$countries["SOM"]="Somalia";
+$countries["SPM"]="St Pierre och Miquelon";
+$countries["STP"]="São Tomé och Príncipe";
+$countries["SUN"]="U.S.S.R. (Sovjet Unionen)";
+$countries["SUR"]="Surinam";
 $countries["SVK"]="Slovakien";
 $countries["SVN"]="Slovenien";
-$countries["SLB"]="Salomonöarna";
-$countries["SOM"]="Somalia";
-$countries["ZAF"]="Sydafrika";
-$countries["ESP"]="Spanien";
-$countries["LKA"]="Sri Lanka";
-$countries["SDN"]="Sudan";
-$countries["SUR"]="Surinam";
-$countries["SJM"]="Svalbard och Jan Mayen";
-$countries["SWZ"]="Swaziland";
 $countries["SWE"]="Sverige";
-$countries["CHE"]="Schweiz";
+$countries["SWZ"]="Swaziland";
+$countries["SYC"]="Seychellerna";
 $countries["SYR"]="Syrien";
-$countries["TJK"]="Tadzjikistan";
-$countries["THA"]="Thailand";
-$countries["MKD"]="Makedonien";
-$countries["TLS"]="Östtimor";
+
+$countries["TCA"]="Turks- och Caicosöarna";
+$countries["TCD"]="Tchad";
 $countries["TGO"]="Togo";
+$countries["THA"]="Thailand";
+$countries["TJK"]="Tadzjikistan";
 $countries["TKL"]="Tokelau";
+$countries["TKM"]="Turkmenistan";
+$countries["TLS"]="Östtimor";
 $countries["TON"]="Tonga";
+$countries["TRN"]="Transylvanien";
 $countries["TTO"]="Trinidad och Tobago";
 $countries["TUN"]="Tunisien";
 $countries["TUR"]="Turkiet";
-$countries["TKM"]="Turkmenistan";
-$countries["TCA"]="Turks- och Caicosöarna";
 $countries["TUV"]="Tuvalu";
+$countries["TWN"]="Taiwan";
+$countries["TZA"]="Tanzania";
+
 $countries["UGA"]="Uganda";
 $countries["UKR"]="Ukraina";
-
-$countries["GBR"]="Storbritannien";
-$countries["TZA"]="Tanzania";
-$countries["USA"]="USA";
-$countries["VIR"]="Jungfruöarna";
+$countries["UMI"]="Förenta staternas mindre öar i Oceanien och Västindien";
 $countries["URY"]="Uruguay";
+$countries["USA"]="USA";
 $countries["UZB"]="Uzbekistan";
-$countries["VUT"]="Vanuatu";
+
+$countries["VAT"]="Vatikanstaten";
+$countries["VCT"]="St Vincent och Grenadinerna";
 $countries["VEN"]="Venezuela";
+$countries["VGB"]="Brittiska Jungfruöarna";
+$countries["VIR"]="Jungfruöarna";
 $countries["VNM"]="Vietnam";
+$countries["VUT"]="Vanuatu";
+
+$countries["WAF"]="Väst Afrika";
 $countries["WLF"]="Wallis- och Futunaöarna";
-$countries["ESH"]="Västsahara";
+$countries["WLS"]="Wales";
+$countries["WSM"]="Samoa";
+
 $countries["YEM"]="Yemen";
+$countries["YUG"]="Jugoslavien";
+
+$countries["ZAF"]="Sydafrika";
+$countries["ZAR"]="Zaire";
 $countries["ZMB"]="Zambia";
 $countries["ZWE"]="Zimbabwe";
-
-$countries["BVT"]="Bouvetön";
-$countries["CCK"]="Kokosöarna";
-$countries["CXR"]="Julön";
-$countries["HMD"]="Heardön och McDonaldsöarna";
-$countries["IOT"]="Brittiska territoriet i Indiska Oceanen";
-$countries["ROM"]="Rumänien";
-$countries["TWN"]="Taiwan";
-$countries["UMI"]="Förenta staternas mindre öar i Oceanien och Västindien";
-$countries["ATA"]="Antarktis";
 
 ?>

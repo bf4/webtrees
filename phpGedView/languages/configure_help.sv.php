@@ -286,6 +286,7 @@ $pgv_lang["RSS_FORMAT"]				= "RSS-format";
 $pgv_lang["RSS_FORMAT_help"]		= "~#pgv_lang[RSS_FORMAT]#~<br /><br />Formatet för RSS som ska användas som standard RSS-matningsformat för denna sajt. Det numeriska suffixet <u>visar inte</u> version utan identifierar formatet. T.ex. RSS 2.0 är inte nyare än RSS 1.0 utan ett annat format. RSS-matningsläsare bör kunna läsa alla format. där är för tillfället ingen skilnad mellan ATOM och ATOM 0.3. Båda använder ATOM 0.3 utkast till specifikation.<br />";
 $pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE"] = "Kontrollera om det finns en nerladdningsbar GEDCOM-fil";
 $pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE_help"] = "~#pgv_lang[SECURITY_CHECK_GEDCOM_DOWNLOADABLE]#~<br /><br />Av säkerhetsorsaker bör inte GEDCOM-filen finnas på ett ställe där den är direkt nerladdningsbar, och därigenom undvika alla integritetskontroller. Denna kontroll kan orsaka prestandaproblem på vissa servrar.<br /><br />Om du vet att GEDCOM-filen inte finns i en mapp som är direktåtkomlig från internet, då kan du avaktivera denna kontroll.<br />";
+$pgv_lang["gedcom_download_secure"]	= "#GEDCOM# kan inte laddas ner.";
 $pgv_lang["PGV_STORE_MESSAGES"]			= "Tillåt att meddelande sparas online";
 $pgv_lang["PGV_MEMORY_LIMIT_help"]		= "~#pgv_lang[PGV_MEMORY_LIMIT]#~<br /><br />Det maximala mängden minne som kan användas av PhpGedViewskripten. Standardinställningen är 32M. Många webhotell stänger av denna inställning i sin php-konfiguration, så ändringen av detta värde har ibland ingen effekt.<br /><br />Denna inställning sätter variabeln \$PGV_MEMORY_LIMIT i filen <i>config.php</i>.<br />";
 $pgv_lang["PGV_MEMORY_LIMIT"]			= "Minnesgräns";
@@ -634,5 +635,6 @@ $pgv_lang["USE_MEDIA_VIEWER"]			= "Använd mediavisaren";
 $pgv_lang["SHOW_SPIDER_TAGLINE"]		= "Visa sökmotorns tagline";
 $pgv_lang["SHOW_PRIVATE_RELATIONSHIPS"]	= "Visa relationer för levande personer";
 $pgv_lang["SYNC_GEDCOM_FILE"]			= "Synkronisera redigeringar med GEDOM-filen";
+$pgv_lang["new_gedcom_title"]		= "Genealogi från [#GEDCOMFILE#]";
 
 ?>
