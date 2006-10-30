@@ -57,6 +57,7 @@ $pgv_lang["htmlplus_block_death"]	= "kuolema";
 $pgv_lang["htmlplus_block_marrage"]	= "avioliitto";
 $pgv_lang["htmlplus_block_adoption"]= "adoptio";
 $pgv_lang["htmlplus_block_burial"]	= "hautaus";
+$pgv_lang["htmlplus_block_census"]	= "väestönlaskenta lisätty";
 $pgv_lang["num_to_show"]		= "Näytettävien kohteiden lukumäärä";
 $pgv_lang["days_to_show"]		= "Näytettävien päivien lukumäärä";
 $pgv_lang["before_or_after"]		= "Sijoita lukumäärät ennen nimeä tai sen jälkeen?";
@@ -224,6 +225,7 @@ $pgv_lang["address"]		= "Osoite:";
 $pgv_lang["phone"]			= "Puhelin:";
 $pgv_lang["source_name"]		= "Lähdenimi:";
 $pgv_lang["title"]			= "Nimike:";
+$pgv_lang["media_options"]			= "Media-asetukset";
 $pgv_lang["author"]			= "Kirjoittaja:";
 $pgv_lang["publication"]		= "Julkaisu:";
 $pgv_lang["call_number"]		= "Tallennuspaikkanumero";
@@ -600,6 +602,8 @@ $pgv_lang["follow_spouse"]		= "Tarkista sukulaisuus myös avioliiton kautta.";
 $pgv_lang["timeout_error"]		= "Aika loppui - sukulaisuutta ei vielä löytynyt";
 $pgv_lang["son"]			= "Poika";
 $pgv_lang["daughter"]		= "Tytär";
+$pgv_lang["clipping_privacy"]		= "Joitakin kohteita ei voitu lisätä yksityisyysrajoitusten vuoksi.";
+$pgv_lang["chart_new"]				= "Sukupuukaavio";
 $pgv_lang["son-in-law"]		= "Käly";
 $pgv_lang["daughter-in-law"]		= "Miniä";
 $pgv_lang["grandchild"]		= "Lapsenlapsi";
@@ -637,18 +641,18 @@ $pgv_lang["son_in_law"]		= "vävy";
 $pgv_lang["daughter_in_law"]		= "miniä";
 $pgv_lang["step_son"]		= "poikapuoli";
 $pgv_lang["step_daughter"]	    	= "tytärpuoli";
-$pgv_lang["n_x_great_grandfather"]	= "isoisä %d. polvessa"; //d+1?
-$pgv_lang["n_x_great_grandmother"]	= "isoäiti %d. polvessa"; //d+1?
+$pgv_lang["n_x_great_grandfather"]	= "isoisä %d. polvessa";
+$pgv_lang["n_x_great_grandmother"]	= "isoäiti %d. polvessa";
 // the bosa_brothers_offspring name is used for fraternal nephews and nieces - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
-$pgv_lang["bosa_brothers_offspring_2"] 				= "veljenpoika";            // brother's son
-$pgv_lang["bosa_brothers_offspring_3"] 				= "veljentytär";           // brother's daughter
+$pgv_lang["bosa_brothers_offspring_2"] 				= "veljenpoika";
+$pgv_lang["bosa_brothers_offspring_3"] 				= "veljentytär";
 // 2nd generation
-$pgv_lang["bosa_brothers_offspring_4"] 				= "veljenpojanpoika";       // brother's son's son 
-$pgv_lang["bosa_brothers_offspring_5"] 				= "veljenpojantytär";      // brother's son's daughter
-$pgv_lang["bosa_brothers_offspring_6"] 				= "veljentyttärenpoika";   // brother's daughter's son
-$pgv_lang["bosa_brothers_offspring_7"] 				= "veljentyttärentytär";  // brother's daughter's daughter
+$pgv_lang["bosa_brothers_offspring_4"] 				= "veljenpojanpoika";
+$pgv_lang["bosa_brothers_offspring_5"] 				= "veljenpojantytär";
+$pgv_lang["bosa_brothers_offspring_6"] 				= "veljentyttärenpoika";
+$pgv_lang["bosa_brothers_offspring_7"] 				= "veljentyttärentytär";
 // for the general case of offspring of the nth generation use the text below
 // in this text %1$d is replaced with the number of generations
 //              %2$d is replaced with the number of generations - 1
@@ -658,13 +662,13 @@ $pgv_lang["n_x_brothers_daughter"] = 'veljentytär %1$d. polvessa';
 // the bosa_sisters_offspring name is used for sisters nephews and nieces - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
-$pgv_lang["bosa_sisters_offspring_2"] 				= "sisarenpoika";             // sister's son
-$pgv_lang["bosa_sisters_offspring_3"] 				= "sisarentytär";           // sister's daughter
+$pgv_lang["bosa_sisters_offspring_2"] 				= "sisarenpoika";
+$pgv_lang["bosa_sisters_offspring_3"] 				= "sisarentytär";
 // 2nd generation
-$pgv_lang["bosa_sisters_offspring_4"] 				= "sisarenpojanpoika";       // sister's son's son 
-$pgv_lang["bosa_sisters_offspring_5"] 				= "sisarenpojantytär";      // sister's son's daughter
-$pgv_lang["bosa_sisters_offspring_6"] 				= "sisarentyttärenpoika";   // sister's daughter's son
-$pgv_lang["bosa_sisters_offspring_7"] 				= "sisarentyttärentytär";  // sister's daughter's daughter
+$pgv_lang["bosa_sisters_offspring_4"] 				= "sisarenpojanpoika";
+$pgv_lang["bosa_sisters_offspring_5"] 				= "sisarenpojantytär";
+$pgv_lang["bosa_sisters_offspring_6"] 				= "sisarentyttärenpoika";
+$pgv_lang["bosa_sisters_offspring_7"] 				= "sisarentyttärentytär";
 // for the general case of offspring of the nth generation use the text below
 // in this text %1$d is replaced with the number of generations
 //              %2$d is replaced with the number of generations - 1
@@ -677,19 +681,19 @@ $pgv_lang["n_x_sisters_daughter"] = 'sisarentytär %1$d. polvessa';
 $pgv_lang["bosa_2"] 				= $pgv_lang["son"];                   // son
 $pgv_lang["bosa_3"] 				= $pgv_lang["daughter"];              // daughter
 // 2nd generation
-$pgv_lang["bosa_4"] 				= "pojanpoika";               // son's son 
-$pgv_lang["bosa_5"] 				= "pojantytär";              // son's daughter
-$pgv_lang["bosa_6"] 				= "tyttärenpoika";           // daughter's son
-$pgv_lang["bosa_7"] 				= "tyttärentytär";          // daughter's daughter
+$pgv_lang["bosa_4"] 				= "pojanpoika";
+$pgv_lang["bosa_5"] 				= "pojantytär";
+$pgv_lang["bosa_6"] 				= "tyttärenpoika";
+$pgv_lang["bosa_7"] 				= "tyttärentytär";
 // 3rd generation
-$pgv_lang["bosa_8"] 				= "pojanpojanpoika";          // son's son's son   
-$pgv_lang["bosa_9"] 				= "pojanpojantytär";         // son's son's daughter
-$pgv_lang["bosa_10"] 				= "pojantyttärenpoika";	  // son's daughters son
-$pgv_lang["bosa_11"] 				= "pojantyttärentytär";     // son's daughters daughter
-$pgv_lang["bosa_12"] 				= "tyttärenpojanpoika";      // daughter's son's son 
-$pgv_lang["bosa_13"] 				= "tyttärenpojantytär";     // daughter's son's daughter
-$pgv_lang["bosa_14"] 				= "tyttärentyttärenpoika";  // daughter's daughters son
-$pgv_lang["bosa_15"] 				= "tyttärentyttärentytär"; // daughter's daughters daughter
+$pgv_lang["bosa_8"] 				= "pojanpojanpoika";
+$pgv_lang["bosa_9"] 				= "pojanpojantytär";
+$pgv_lang["bosa_10"] 				= "pojantyttärenpoika";
+$pgv_lang["bosa_11"] 				= "pojantyttärentytär";
+$pgv_lang["bosa_12"] 				= "tyttärenpojanpoika";
+$pgv_lang["bosa_13"] 				= "tyttärenpojantytär";
+$pgv_lang["bosa_14"] 				= "tyttärentyttärenpoika";
+$pgv_lang["bosa_15"] 				= "tyttärentyttärentytär";
 // for the general case of offspring of the nth generation use the text below
 // in this text %1$d is replaced with the number of generations
 //              %2$d is replaced with the number of generations - 1
@@ -703,13 +707,13 @@ $pgv_lang["n_x_granddaughter_from_daughter"] = 'tyttärentytär %2$d. polvessa';
 // to allow fo language variations we specify different relationships for paternal and maternal
 // aunts and uncles
 // 1st generation
-$pgv_lang["sosa_uncle_2"] 				= "setä";            // fathers brother
-$pgv_lang["sosa_uncle_3"] 				= "eno";            // mothers brother
+$pgv_lang["sosa_uncle_2"] 				= "setä";
+$pgv_lang["sosa_uncle_3"] 				= "eno";
 // 2nd generation
-$pgv_lang["sosa_uncle_4"] 				= "isosetä";      // fathers's fathers brother 
-$pgv_lang["sosa_uncle_5"] 				= "isosetä";      // fathers mothers brother
-$pgv_lang["sosa_uncle_6"] 				= "isoeno";      // mothers fathers brother
-$pgv_lang["sosa_uncle_7"] 				= "isoeno";      // mothers mothers brother
+$pgv_lang["sosa_uncle_4"] 				= "isosetä";
+$pgv_lang["sosa_uncle_5"] 				= "isosetä";
+$pgv_lang["sosa_uncle_6"] 				= "isoeno";
+$pgv_lang["sosa_uncle_7"] 				= "isoeno";
 // for the general case of uncles of the nth degree use the text below
 // in this text %1$d is replaced with the number of generations
 //              %2$d is replaced with the number of generations - 1
@@ -724,10 +728,10 @@ $pgv_lang["n_x_maternal_uncle"]	    = 'eno %1$d. polvessa';
 $pgv_lang["sosa_aunt_2"] 				= $pgv_lang["aunt"];            // fathers sister
 $pgv_lang["sosa_aunt_3"] 				= $pgv_lang["aunt"];            // mothers sister
 // 2nd generation
-$pgv_lang["sosa_aunt_4"] 				= "isotäti";      // fathers's fathers sister 
-$pgv_lang["sosa_aunt_5"] 				= "isotäti";      // fathers mothers sister
-$pgv_lang["sosa_aunt_6"] 				= "isotäti";      // mothers fathers sister
-$pgv_lang["sosa_aunt_7"] 				= "isotäti";      // mothers mothers sister
+$pgv_lang["sosa_aunt_4"] 				= "isotäti";
+$pgv_lang["sosa_aunt_5"] 				= "isotäti";
+$pgv_lang["sosa_aunt_6"] 				= "isotäti";
+$pgv_lang["sosa_aunt_7"] 				= "isotäti";
 // for the general case of aunts of the nth degree use the text below
 // in this text %1$d is replaced with the number of generations
 //              %2$d is replaced with the number of generations - 1
@@ -1413,6 +1417,12 @@ $pgv_lang["TYPE__newspaper"] 	= "Sanomalehti";
 $pgv_lang["TYPE__photo"] 		= "Valokuva";
 $pgv_lang["TYPE__tombstone"] 	= "Hautakivi";
 $pgv_lang["TYPE__video"] 		= "Video";
+$pgv_lang["view_slideshow"] = "Katsele diaesityksenä";
+$pgv_lang["download_image"]			= "Lataa tiedosto";
+$pgv_lang["no_media"]				= "Mediaa ei löydy";
+$pgv_lang["relations_heading"]		= "Kuva liittyy:";
+$pgv_lang["file_size"]				= "Tiedoston koko";
+$pgv_lang["img_size"]				= "Kuvan koko";
 $pgv_lang["module_error_unknown_action_v2"] = "Tuntematon toiminto: [action].";
 $pgv_lang["module_error_unknown_type"] = "Tuntematon modulimuoto.";
 $pgv_lang["TYPE__newspaper"] 	= "Sanomalehti";
@@ -1522,4 +1532,11 @@ $pgv_lang["advanced_options"]		= "Lisäasetukset";
 $pgv_lang["zip_files"]				= "Zip-tiedosto(t)";
 $pgv_lang["include_media"]			= "Sisällytä media (automaattisesti zip-tiedosto)";
 $pgv_lang["loading"]				="Ladataan...";
+$pgv_lang["random_media_start_slide"]	= "Aloitetaanko diaesitys sivun latatutuessa?";
+$pgv_lang["random_media_ajax_controls"]	= "Näytetäänkö AJAX-kontrollit?";
+$pgv_lang["random_media_ajax_controls"]	= "Näytä AJAX kontrollit";
+$pgv_lang["view_img_details"]		= "Näytä kuvan tiedot";
+$pgv_lang["play"]					= "Käynnistä";
+$pgv_lang["stop"]					= "Pysäytä";
+
 ?>

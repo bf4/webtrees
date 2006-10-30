@@ -23,13 +23,60 @@
  * @author PGV Developers
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: admin.he.php 430 2006-09-30 06:32:10Z yalnifj $
+ * @version $Id$
  */
 if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "You cannot access a language file directly.";
 	exit;
 }
 
+$pgv_lang["ip_address"]		= "כתובת IP";
+$pgv_lang["date_time"]		= "תאריך וזמן";
+
+$pgv_lang["log_message"]		= "הודעת לוג";	
+
+$pgv_lang["searchtype"]		= "צורת חיפוש";
+$pgv_lang["query"]			= "שאילתא";
+$pgv_lang["user"]			= "משתמש מאושר";
+$pgv_lang["thumbnail_deleted"]		= "קובץ תמונה מזערית נמחק בהצלחה.";
+$pgv_lang["thumbnail_not_deleted"]	= "לא ניתן למחוק את קובץ התמונה המזערית.";
+$pgv_lang["step2"]			= "שלב 2 מתוך 4:";
+$pgv_lang["refresh"]			= "רענן";
+$pgv_lang["move_file_success"]	= "קובצי מדיה והתמונה המזערית הועברו בהצלחה.";
+$pgv_lang["media_folder_corrupt"]	= "תיקיית המדיה מקולקלת.";
+$pgv_lang["media_file_not_deleted"]	= "לא ניתן למחוק את קובץ המדיה.";
+$pgv_lang["gedcom_deleted"]		= "[#GED#] נימחק בהצלחה.";
+$pgv_lang["gedadmin"]		= "מנהלן GEDCOM";
+$pgv_lang["full_name"]		= "שם מלא";
+$pgv_lang["error_header"] 		= "קובץ ה-GEDCOM, <b>#GEDCOM#</b>, לא נימצא במקום שצוין";
+
+$pgv_lang["confirm_delete_file"]	= "אשר שברצונך למחוק קובץ זה.";	
+$pgv_lang["confirm_folder_delete"] 	= "אשר שברצונך למחוק תקייה זו.";	
+$pgv_lang["confirm_remove_links"]	= "אשר שברצונך למחוק את כל הקישורים לישות זו.";	
+
+$pgv_lang["PRIV_PUBLIC"]		= "הראה לקהל הרחב";
+$pgv_lang["PRIV_USER"]		= "הראה רק למשתמשים מורשים";
+$pgv_lang["PRIV_NONE"]		= "הראה רק למנהלנים";
+$pgv_lang["PRIV_HIDE"]		= "הסתר אפילו ממנהלנים";
+$pgv_lang["manage_gedcoms"]		= "נהל קבצי GEDCOM וערוך פרטיות";
+$pgv_lang["keep_media"]		= "שמור קישורי מדיה"; 
+$pgv_lang["files_in_backup"]		= "קבצים הנכללים בגיבוי זה";
+$pgv_lang["created_remotelinks"]	= "טבלת <i>קשרים מרוחקים</i> נוצרה בהצלחה.";
+$pgv_lang["created_remotelinks_fail"] 	= "לא ניתן ליצור טבלת <i>קשרים מרוחקים</i>.";
+$pgv_lang["created_indis"]		= "טבלת <i>אנשים</i> נוצרה בהצלחה.";
+$pgv_lang["created_indis_fail"]		= "לא ניתן ליצור טבלת <i>אנשים</i>";
+$pgv_lang["created_fams"]		= "טבלת <i>משפחות</i> נוצרה בהצלחה.";
+$pgv_lang["created_fams_fail"]		= "לא ניתן ליצור טבלת <i>משפחות</i>";
+$pgv_lang["created_sources"]		= "טבלת <i>מקורות</i> נוצרה בהצלחה.";
+$pgv_lang["created_sources_fail"]	= "לא ניתן ליצור טבלת <i>מקורות</i>";
+$pgv_lang["created_other"]		= "טבלת <i>אחר</i> נוצרה בהצלחה.";
+$pgv_lang["created_other_fail"]		= "לא ניתן ליצור טבלת <i>אחר</i>";
+$pgv_lang["created_places"]		= "טבלת <i>מקומות</i> נוצרה בהצלחה.";
+$pgv_lang["created_places_fail"]	= "לא ניתן ליצור טבלת <i>מקומות</i>";
+$pgv_lang["created_placelinks"] 	= "טבלת <i>קישור מקומות</i> נוצרה בהצלחה.";
+$pgv_lang["created_placelinks_fail"]	= "לא ניתן ליצור טבלת <i>קישור מקומות</i>.";
+$pgv_lang["created_media_fail"]	= "לא ניתן ליצור את טבלת ה<i>מדיה</i>.";
+$pgv_lang["created_media_mapping_fail"]  = "לא ניתן ליצור את טבלת ה <i>מיפוי של המדיה</i>.";
 $pgv_lang["no_thumb_dir"]		= " תיקיית התמונות המזעריות לא קיימת ולא ניתן ליצור אותה עבורך";
 $pgv_lang["move_to"]		= "העבר אל";
 $pgv_lang["folder_created"]		= "תיקייה נוצרה";
@@ -37,14 +84,8 @@ $pgv_lang["folder_no_create"]		= "לא ניתן ליצור תיקייה";
 $pgv_lang["security_no_create"]	= "התרעת ביטחון: לא ניתן ליצור <b><i>index.php</i></b> בתוך ";
 $pgv_lang["security_not_exist"] 	= "התרעת ביטחון: קובץ <b><i>index.php</i></b> לא קיים בתוך ";
 $pgv_lang["label_add_search_server"]	= "הוסף IP"; 
-//$pgv_lang["label_add_search_server"]	= "Add IP"; 
-//$pgv_lang["label_add_search_server"]	= "Add IP";
 $pgv_lang["label_add_server"]      	= "הוסף";
-//$pgv_lang["label_add_server"]      	= "Add";
-//$pgv_lang["label_add_server"]  	= "Add";
 $pgv_lang["label_ban_server"]		= "הגש";
-//$pgv_lang["label_ban_server"]	= "Submit";
-//$pgv_lang["label_ban_server"]	= "Submit";
 $pgv_lang["label_delete"]           	= "מחק";
 $pgv_lang['progress_bars_info']	= "סרגל הסטטוס שלמטה מאפשר לך לדעת את מצב הייבוא. אם תחום הזמן נגמר הייבוא נעצר ותתבקש ללחוץ על כפתור המשך. אם אינך רואה כפתור המשך, חזור אחורה והכנס תחום זמן קטן יותר.";
 $pgv_lang["upload_replacement"]	="העלה החלפה";
@@ -88,7 +129,7 @@ $pgv_lang["configuration"]		= "תצורה";
 $pgv_lang["configure"]		= "עצב PhpGedView";
 $pgv_lang["configure_head"]		= "PhpGedView-תצורת ה";
 $pgv_lang["confirm_gedcom_delete"]	= "GEDCOM האם ברצונך באמת לבטל";
-$pgv_lang["confirm_password"]	= ".יש לאשר את הסיסמא";
+//$pgv_lang["confirm_password"]	= ".יש לאשר את הסיסמא";
 $pgv_lang["confirm_user_delete"]	= "אשר שברצונך למחוק משתמש";
 $pgv_lang["create_user"]		= "בנה משתמש";
 $pgv_lang["current_users"]		= "רשימת משתמשים";
@@ -104,7 +145,10 @@ $pgv_lang["del_unvera"]		= "המשתמש לא אושר ע\"י המנהלן.";
 $pgv_lang["del_unveru"]		= "המשתמש לא אישר עצמו תוך 7 ימים.";
 $pgv_lang["do_not_change"]		= "אין לשנות";
 $pgv_lang["download_file"]		= "הורד קובץ";
-$pgv_lang["download_gedconf"]	= "הורד את תצורת GEDCOM.";
+
+$pgv_lang["download_gedcom"]	= "הורד GEDCOM";
+
+//$pgv_lang["download_gedconf"]	= "הורד את תצורת GEDCOM.";
 $pgv_lang["download_here"]		= "לחץ כאן כדי להוריד את הקובץ.";
 $pgv_lang["download_note"]		= "הערה: יתכן שזמן העיבוד להורדת קובצי GEDCOM גדולים לוקח זמן רב. אם משך הזמן להורדה אינו מספיק, יתכן וההורדה לא תהייה שלמה.<br /><br />תוכל לבדוק ב-GEDCOM שהורד יש שורת <b>0&nbsp;TRLR</b> בסוף הקובץ, כדי לוודא שהוא הורד בצורה נכונה. קובצי ה-GEDCOM הם קובצי טכסט; ניתן להשתמש בתוכנת עריכה מתאימה של טכסטים , אבל <u>אין</u> לשמור את קובץ ה-GEDCOM שהורד אחרי שבדקת אותו.<br /><br />בד\"כ ההורדה עורכת משך זמן דומה למשך ייבוא ה-GEDCOM שלך.";
 $pgv_lang["duplicate_username"]	= "קוד משתמש כפול. משתמש עם קוד זה מוגדר כבר. נא בחר קוד משתמש אחר.";
@@ -112,8 +156,8 @@ $pgv_lang["editaccount"]		= "הרשאה למשתמש זה לערוך את נתו
 $pgv_lang["empty_dataset"]		= "האם ברצונך לרוקן את מסד הנתונים ולהחליף אותו בנתונים החדשים הללו?";
 $pgv_lang["empty_lines_detected"]	= "שורות ריקות התגלו בקובץ ה-GEDCOM שלך. הניקיון ימחוק את השורות הריקות הללו.";
 $pgv_lang["enable_disable_lang"]	= "הגדר את השפות הנתמכות";
-$pgv_lang["enter_email"]		= ".יש להכניס כתובת לדואר אלקטרוני";
-$pgv_lang["enter_fullname"]		= ".יש למלא שם פרטי ושם משפחה";
+//$pgv_lang["enter_email"]		= ".יש להכניס כתובת לדואר אלקטרוני";
+//$pgv_lang["enter_fullname"]		= ".יש למלא שם פרטי ושם משפחה";
 $pgv_lang["error_ban_server"]       	= "כתובת IP שגויה.";
 $pgv_lang["error_delete_person"]    	= "עליך לבחור את האדם שאת הקשר המרוחק שלו ברצונך לבטל.";
 $pgv_lang["error_header_write"]	= "לא ניתן לכתוב על קובץ ה-GEDCOM, <b>#GEDCOM#</b>. בדוק תכונות והרשאות גישה.";
@@ -168,7 +212,7 @@ $pgv_lang["leave_blank"]		= "השאר את תיבת הסיסמא ריקה, אם 
 $pgv_lang["link_manage_servers"]    	= "נהל אתרים";
 $pgv_lang["logfile_content"]		= "תוכן קובץ יומן";
 $pgv_lang["macfile_detected"]		= "התגלה שהקובץ הוא קובץ מקינטוש. הניקוי ייסב את הקובץ למבנה DOS.";
-$pgv_lang["mailto"]					= "קישור דואר אלקטרוני";
+$pgv_lang["mailto"]			= "קישור דואר אלקטרוני";
 $pgv_lang["merge_records"]                	= "מזג רשומות";
 $pgv_lang["message_to_all"]		= "שלח הודעה לכל המשתמשים";
 $pgv_lang["messaging"]		= "הודעות פנימיות של PhpGedView";
@@ -202,7 +246,7 @@ $pgv_lang["privileges"]		= "זכויות";
 $pgv_lang["reading_file"]		= "קובץ GEDCOM בקריאה";
 $pgv_lang["readme_documentation"]	= "תיעוד (Readme)";
 $pgv_lang["remove_ip"] 		= "הסר IP";
-$pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION_help"] = "~#pgv_lang[REQUIRE_ADMIN_AUTH_REGISTRATION]#~<br /><br />If the option <b>#pgv_lang[USE_REGISTRATION_MODULE]#</b> is enabled this setting controls whether the admin must approve the registration.<br /><br />Setting this to <b>Yes</b> will require that all new users first verify themselves and then be approved by an admin before they can login.  With this setting on <b>No</b>, the <b>#pgv_lang[verified_by_admin]#</b> checkbox will be checked automatically when users verify their account, thus allowing an immediate login afterwards without admin intervention.<br /><br />This sets \$REQUIRE_ADMIN_AUTH_REGISTRATION in <i>config.php</i>.<br />";
+$pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION"]	= "דרוש מהמנהלן לאשר רישום של משתמשים חדשים";
 $pgv_lang["review_readme"]		= "עיין תחילה בקובץ <a href=\"readme.txt\" target=\"_blank\">readme.txt</a> לפני שאתה ממשיך להגדיר את PhpGedView.<br /><br />";
 $pgv_lang["rootid"]			= "אדם ההתחלה באילן היוחסין";
 $pgv_lang["seconds"]		= "&nbsp;&nbsp;שניות";
@@ -214,7 +258,8 @@ $pgv_lang["skip_cleanup"]		= "דלג על ניקיון";
 $pgv_lang["sqlite"]			= "SQLite";
 $pgv_lang["sybase"]			= "Sybase";
 $pgv_lang["sync_gedcom"]		= "סנכרן הגדרות משתמש עם נתוני GEDCOM";
-$pgv_lang["system_time"]		= "זמן מערכת נוכחי:";
+$pgv_lang["system_time"]		= "הזמן הנוכחי של השרת:";  
+$pgv_lang["user_time"]		= "הזמן הנוכחי של המשתמש :"; 
 $pgv_lang["TBLPREFIX"]		= "קידומת שמות קבצי מסד הנתונים";
 $pgv_lang["themecustomization"]	= "התאמה אישית של העיצוב";
 $pgv_lang["time_limit"]		= "הגבלת הזמן:";
@@ -225,7 +270,8 @@ $pgv_lang["update_myaccount"]	= "עדכן המשתמש שלי";
 $pgv_lang["update_user"]		= "עדכן נתוני המשתמש";
 $pgv_lang["upload_gedcom"]		= "העלה GEDCOM";
 $pgv_lang["USE_REGISTRATION_MODULE"]	= "אפשר למשתמשים לבקש רישום באתר";
-$pgv_lang["user_auto_accept"]	= "קבל בצורה אוטומטית את השינויים שמשתמש זה עושה";
+$pgv_lang["user_auto_accept"]	= "קבל בצורה אוטומטית את השינויים שמשתמש זה עושה";could be
+
 $pgv_lang["user_contact_method"] 	= "שיטת התקשורת המועדפת";
 $pgv_lang["user_create_error"]		= "לא ניתן להוסיף משתמש. נשא שנית .";
 $pgv_lang["user_created"]		= "בנית המשתמש הצליחה.";
@@ -260,36 +306,5 @@ $pgv_lang["weekly"]			= "שבועי";
 $pgv_lang["welcome_new"]		= "ברוך הבא לאתר האינטרנט החדש PhpGedView שלך.";
 $pgv_lang["yearly"]			= "שנתי";
 $pgv_lang["you_may_login"]		= "הקישור מתחת מביא אותך לאתר ה-PhpGedView:";
-
-$pgv_lang["user"]			= "משתמש מאושר";
-$pgv_lang["thumbnail_deleted"]		= "קובץ תמונה מזערית נמחק בהצלחה.";
-$pgv_lang["thumbnail_not_deleted"]	= "לא ניתן למחוק את קובץ התמונה המזערית.";
-$pgv_lang["step2"]			= "שלב 2 מתוך 4:";
-$pgv_lang["refresh"]			= "רענן";
-$pgv_lang["move_file_success"]	= "קובצי מדיה והתמונה המזערית הועברו בהצלחה.";
-$pgv_lang["media_folder_corrupt"]	= "תיקיית המדיה מקולקלת.";
-$pgv_lang["media_file_not_deleted"]	= "לא ניתן למחוק את קובץ המדיה.";
-$pgv_lang["gedcom_deleted"]		= "[#GED#] נימחק בהצלחה.";
-$pgv_lang["gedadmin"]		= "מנהלן GEDCOM";
-$pgv_lang["full_name"]		= "שם מלא";
-$pgv_lang["error_header"] 		= "קובץ ה-GEDCOM, <b>#GEDCOM#</b>, לא נימצא במקום שצוין";
-$pgv_lang["manage_gedcoms"]		= "נהל קבצי GEDCOM וערוך פרטיות";
-$pgv_lang["created_remotelinks"]	= "טבלת <i>קשרים מרוחקים</i> נוצרה בהצלחה.";
-$pgv_lang["created_remotelinks_fail"] 	= "לא ניתן ליצור טבלת <i>קשרים מרוחקים</i>.";
-$pgv_lang["created_indis"]		= "טבלת <i>אנשים</i> נוצרה בהצלחה.";
-$pgv_lang["created_indis_fail"]		= "לא ניתן ליצור טבלת <i>אנשים</i>";
-$pgv_lang["created_fams"]		= "טבלת <i>משפחות</i> נוצרה בהצלחה.";
-$pgv_lang["created_fams_fail"]		= "לא ניתן ליצור טבלת <i>משפחות</i>";
-$pgv_lang["created_sources"]		= "טבלת <i>מקורות</i> נוצרה בהצלחה.";
-$pgv_lang["created_sources_fail"]	= "לא ניתן ליצור טבלת <i>מקורות</i>";
-$pgv_lang["created_other"]		= "טבלת <i>אחר</i> נוצרה בהצלחה.";
-$pgv_lang["created_other_fail"]		= "לא ניתן ליצור טבלת <i>אחר</i>";
-$pgv_lang["created_places"]		= "טבלת <i>מקומות</i> נוצרה בהצלחה.";
-$pgv_lang["created_places_fail"]	= "לא ניתן ליצור טבלת <i>מקומות</i>";
-$pgv_lang["created_placelinks"] 	= "טבלת <i>קישור מקומות</i> נוצרה בהצלחה.";
-$pgv_lang["created_placelinks_fail"]	= "לא ניתן ליצור טבלת <i>קישור מקומות</i>.";
-$pgv_lang["created_media_fail"]	= "לא ניתן ליצור את טבלת ה<i>מדיה</i>.";
-$pgv_lang["created_media_mapping_fail"]  = "לא ניתן ליצור את טבלת ה <i>מיפוי של המדיה</i>.";
-
 
 ?>
