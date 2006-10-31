@@ -41,8 +41,7 @@ function autosearch_options()
 	global $countries, $lang_short_cut, $LANGUAGE;
 	
 	if (file_exists("languages/countries.".$lang_short_cut[$LANGUAGE].".php")) require("languages/countries.".$lang_short_cut[$LANGUAGE].".php");
-	//Title for the plugin
-	$pgv_lang["autosearch_plugin_name"] = "GeneaNet.org Plug-in";
+
 	asort($countries);
 	$pid = "";
 	//get your person object 
@@ -113,7 +112,7 @@ function autosearch_options()
         $to_return.="	</select></td></tr>
 
 							
-							<tr><td class='optionbox' colspan=2 align='center'>".$pgv_lang["autosearch_plugin_name"]."</td></tr>
+							<tr><td class='optionbox' colspan=2 align='center'>".$pgv_lang["autosearch_plugin_name_genNet"]."</td></tr>
 							<tr><td  align='center' class='topbottombar'colspan=2><input type='submit' value='Search' /></td></tr>
 		 			
 							</table>

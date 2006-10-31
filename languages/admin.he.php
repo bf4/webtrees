@@ -270,7 +270,7 @@ $pgv_lang["update_myaccount"]	= "עדכן המשתמש שלי";
 $pgv_lang["update_user"]		= "עדכן נתוני המשתמש";
 $pgv_lang["upload_gedcom"]		= "העלה GEDCOM";
 $pgv_lang["USE_REGISTRATION_MODULE"]	= "אפשר למשתמשים לבקש רישום באתר";
-$pgv_lang["user_auto_accept"]	= "קבל בצורה אוטומטית את השינויים שמשתמש זה עושה";could be
+$pgv_lang["user_auto_accept"]	= "קבל בצורה אוטומטית את השינויים שמשתמש זה עושה"; // could be
 
 $pgv_lang["user_contact_method"] 	= "שיטת התקשורת המועדפת";
 $pgv_lang["user_create_error"]		= "לא ניתן להוסיף משתמש. נשא שנית .";

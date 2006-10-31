@@ -37,7 +37,7 @@ function autosearch_options()
 {
 	global $pgv_lang;
 	//Title
-	$pgv_lang["autosearch_plugin_name"] = "Ancestry.co.uk Plug-In";
+	
 	
 	$pid = "";
 	if (!empty($_REQUEST['pid'])) $pid = clean_input($_REQUEST['pid']);
@@ -68,7 +68,7 @@ function autosearch_options()
 					 				<tr><td class='optionbox'>
 					 					".$pgv_lang["autosearch_dyear"]."</td><td class='optionbox'> <input type='checkbox' name='dyear' value=\"".$dyear."\"  />".$dyear."</td></tr>
 									<tr><td class='optionbox' colspan=2 align='center'>
-										".$pgv_lang["autosearch_plugin_name"]."</td></tr>
+										".$pgv_lang["autosearch_plugin_name_ancestrycouk"]."</td></tr>
 									<tr><td  align='center' class='topbottombar'colspan=2>
 										<input type='submit' value='Search' /></td></tr>
 		 			

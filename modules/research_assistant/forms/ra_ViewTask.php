@@ -234,7 +234,7 @@ function getTitle(){
   	}
   	function confirm_prompt(text, commentid) {
     	if (confirm(text)) {
-      		window.location = 'module.php?mod=research_assistant&action=edittask&delete='+commentid+'&taskid=<?php print $_REQUEST['taskid']; ?>';
+      		window.location = 'module.php?mod=research_assistant&action=edittask&folder'+<?php $_REQUEST['folder']?>+'&delete='+commentid+'&taskid=<?php print $_REQUEST['taskid']; ?>';
     	}
     }
     //-->
