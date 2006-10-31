@@ -44,6 +44,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_AddTask.php")) {
 	 * 
 	 * @return all available folders
 	 */
+	
     function getFolders() {
         global $TBLPREFIX;
 
@@ -91,9 +92,10 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_AddTask.php")) {
 
 <!--BEGIN ADD NEW TASK FORM-->
 
-<form action="module.php" method="post">
+<form action="module.php" method="post" name="addtaskfrm">
     <input type="hidden" name="mod" value="research_assistant" />
     <input type="hidden" name="action" value="submittask" />
+    <input type="hidden" name="complete" value="0" />
 	<table class="list_table" align="center">
         <tbody>
             <tr>
@@ -125,7 +127,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_AddTask.php")) {
     <!-- ASSIGN TASK -->
     		<tr>
     			<td class="descriptionbox">
-    				<?php print $pgv_lang['assign_task']; ?>
+    				<?php print "Assign Task"; ?>
     			</td>
     			<td class="optionbox" colspan=3> 
     			<select name="Users"> <option value=""></option>
@@ -154,7 +156,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_AddTask.php")) {
                 </td>
                 <td class="optionbox" colspan="3">
                 <script language="JavaScript" type="text/javascript">
-	<!--
+	//<!--
 	var pastefield;
 	var nameElement;
 	var lastId;
@@ -215,7 +217,10 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_AddTask.php")) {
             <tr>
     <!--SUBMIT-->
                 <th colspan="4" align="right" class="topbottombar">
-                    <input type="submit" value="<?php print $pgv_lang["submit"]; ?>" onclick="javascript:selectList(); selectPeopleList();" />
+                    <input type="submit" value="<?php print $pgv_lang["submit"]; ?>" />
+                    <input type="submit" value="Save and Complete" onclick="document.addtaskfrm.complete.value='1';" />
+                   <!--<input type="button" value="Complete" name="complete" onclick="window.location='module.php?mod=research_assistant&amp;action=completeTask&amp;taskid=<?php print $_REQUEST['taskid'] ?>'" />
+                -->
                 </th>
             </tr>
         </tbody>

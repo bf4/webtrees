@@ -38,7 +38,7 @@ function autosearch_options()
 	//import the pgv lang for multi langual support
 	global $pgv_lang;
 	//Title for the plugin
-	$pgv_lang["autosearch_plugin_name"] = "Ancestry.com Plug-In";
+	
 	
 	$pid = "";
 	//get your person object 
@@ -72,7 +72,7 @@ function autosearch_options()
 					 					".$pgv_lang["autosearch_dyear"]."</td><td class='optionbox'> <input type='checkbox' name='dyear' value=\"".$dyear."\"  />".$dyear."
 					 				</td>
 		 						</tr>
-								<tr><td class='optionbox' colspan=2 align='center'>".$pgv_lang["autosearch_plugin_name"]."</td></tr>
+								<tr><td class='optionbox' colspan=2 align='center'>".$pgv_lang["autosearch_plugin_name_ancestry"]."</td></tr>
 								<tr><td  align='center' class='topbottombar'colspan=2><input type='submit' value='Search' /></td></tr>
 		 			
 							</table>

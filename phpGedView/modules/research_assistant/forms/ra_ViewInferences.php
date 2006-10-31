@@ -74,14 +74,10 @@ class ra_ViewInferences extends ra_form {
  	function contents() {
  		global $TBLPREFIX,$DBCONN, $GEDCOMS, $GEDCOM;
  		global $LANGUAGE, $factarray;
-		 		
- 		$out = "<table class=\"width80\" align=\"center\"><tr><td><p>This page analyzes the data for the active GEDCOM dataset and shows the correlations between different data elements. ";
- 		$out .= "For example, there could be a 95% correlation that the surname in a local record is the same as the surname in the father's record.  This would mean that 95% of the people in this GEDCOM dataset share the same surname as their father.</p>";
- 		$out .= "<p>In this version of the Research Assistant, these calculations are not being used in other areas of the program and are only provided as a" .
- 				"as a help to you in your research.  In the future we plan to use this data to help provide you with meaningful suggestions of where you " .
- 				"should focus some of your future research.</p></td></tr></table>";
+				 		
+ 		$out = "<table class=\"width80\" align=\"center\"><tr><td><p>".$pgv_lang["ViewProbExplanation"]."</p></td></tr></table>";
  		$out .= "<table align='center'><tr><td class='topbottombar' colspan='4'><b>Data Correlations</b></td></tr>";
- 		$out .= "<tr><td class=\"descriptionbox\">Local Data</td><td class=\"descriptionbox\">Related Record</td><td class=\"descriptionbox\">Related Data</td><td  class=\"descriptionbox\">Percent</td></tr>";
+ 		$out .= "<tr><td class=\"descriptionbox\">".$pgv_lang["LocalData"]."</td><td class=\"descriptionbox\">".$pgv_lang["RelatedRecord"]."</td><td class=\"descriptionbox\">".$pgv_lang["RelatedData"]."</td><td  class=\"descriptionbox\">".$pgv_lang["Percent"]."</td></tr>";
  		
  		$sql = "select * from ".$TBLPREFIX."probabilities where pr_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY (pr_matches / pr_count) DESC";
  		$result = dbquery($sql);
@@ -106,7 +102,7 @@ class ra_ViewInferences extends ra_form {
  					$out .= "<td class='optionbox'>". sprintf("%.2f%%",$row['pr_per'])."</td></tr>"; 
  				}
  		}
- 		$out .= "<tr><td class='topbottombar' colspan='4'><form method=\"get\" action=\"\"><input type=\"button\" value=\"Recalculate\" onclick=\"window.location='http://localhost/fresh/module.php?mod=research_assistant&action=viewProbabilities&amp;recount=1';\" /></form></td></tr>";
+ 		$out .= "<tr><td class='topbottombar' colspan='4'><form method=\"get\" action=\"\"><input type=\"button\" value=\"".$pgv_lang["Recalculate"]."\" onclick=\"window.location='http://localhost/fresh/module.php?mod=research_assistant&action=viewProbabilities&amp;recount=1';\" /></form></td></tr>";
  		//Returns the table to display
  		return $out;
  	}

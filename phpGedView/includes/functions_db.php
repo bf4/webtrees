@@ -113,7 +113,9 @@ function &dbquery($sql, $show_error=true, $count=0) {
 	$TOTAL_QUERIES++;
 	if (!empty($SQL_LOG)) {
 		$fp = fopen($INDEX_DIRECTORY."/sql_log.txt", "a");
-		fwrite($fp, date("Y-m-d h:i:s")."\t".$_SERVER["SCRIPT_NAME"]."\t".$TOTAL_QUERIES."-".$sql."\r\n");
+		$backtrace = debug_backtrace();
+		$temp = basename($backtrace[0]["file"])." at line ".$backtrace[0]["line"];
+		fwrite($fp, date("Y-m-d h:i:s")."\t".$_SERVER["SCRIPT_NAME"]."\t".$temp."\t".$TOTAL_QUERIES."-".$sql."\r\n");
 		fclose($fp);
 	}
 	if (DB::isError($res)) {

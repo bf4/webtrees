@@ -66,6 +66,16 @@ $pgv_lang["details"]							= "Details";
 $pgv_lang["result"]                     		= "Result";
 $pgv_lang["okay"]                               = "Okay";
 $pgv_lang["editform"]							= "Edit Form Data";
+$pgv_lang["FilterBy"]							= "Filter By";
+$pgv_lang["Recalculate"]						= "Recalculate";
+$pgv_lang["LocalData"]							= "Local Data";
+$pgv_lang["RelatedRecord"]						= "Related Record";
+$pgv_lang["RelatedData"]						= "Related Data";
+$pgv_lang["Percent"]							= "Percent";
+
+
+// -- RA EXPLANATION
+$pgv_lang["ViewProbExplanation"]					= "This page analyzes the data for the active GEDCOM dataset and shows the correlations between different data elements. For example, there could be a 95% correlation that the surname in a local record is the same as the surname in the father's record.  This would mean that 95% of the people in this GEDCOM dataset share the same surname as their father. In this version of the Research Assistant, these calculations are not being used in other areas of the program and are only provided as a help to you in your research.  In the future we plan to use this data to help provide you with meaningful suggestions of where you should focus some of your future research. ";
 
 // -- RA_FOLDER MESSAGES
 $pgv_lang["Edit_Task"]                 			= "Edit Task";
@@ -222,5 +232,11 @@ $pgv_lang["autosearch_fsurname"]		= "Include father's surname:";
 $pgv_lang["autosearch_fgivennames"]		= "Include father's given names:";
 $pgv_lang["autosearch_msurname"]		= "Include mother's surname:";
 $pgv_lang["autosearch_mgivennames"]	    = "Include mother's given names:"; 
-$pgv_lang["autosearch_country"]  	    = "Include country:";  
+$pgv_lang["autosearch_country"]  	    = "Include country:"; 
+$pgv_lang["autosearch_plugin_name_ancestry"] = "Ancestry.com Plug-in";
+$pgv_lang["autosearch_plugin_name_ancestrycouk"] = "Ancestry.co.uk Plug-in";
+$pgv_lang["autosearch_plugin_name_ellisIsland"] = "EllisIslandRecords.org Plug-in";
+$pgv_lang["autosearch_plugin_name_genNet"] = "GeneaNet.com Plug-in";
+$pgv_lang["autosearch_plugin_name_gen"] = "Genealogy.com Plug-in"; 
+$pgv_lang["autosearch_plugin_name_fs"] = "FamilySearch.org Plug-in";
 ?>

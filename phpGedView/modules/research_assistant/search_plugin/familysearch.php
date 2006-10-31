@@ -38,8 +38,7 @@ if (file_exists("modules/research_assistant/languages/.".$lang_short_cut[$LANGUA
 function autosearch_options()
 {
 	global $pgv_lang;
-	//Title
-	$pgv_lang["autosearch_plugin_name"] = "FamilySearch.org Plug-In";
+	
 	
 	$pid = "";
 	if (!empty($_REQUEST['pid'])) $pid = clean_input($_REQUEST['pid']);
@@ -143,7 +142,7 @@ function autosearch_options()
 					 				</td>
 		 						</tr>";
 		}
-		 					$to_return .= "	<tr><td class='optionbox' colspan=2 align='center'>".$pgv_lang["autosearch_plugin_name"]."</td></tr>	
+		 					$to_return .= "	<tr><td class='optionbox' colspan=2 align='center'>".$pgv_lang["autosearch_plugin_name_fs"]."</td></tr>	
 							<tr><td  align='center' class='topbottombar'colspan=2><input type='submit' value='Search' /></td></tr>
 							</table>						
 					</form>";

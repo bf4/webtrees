@@ -488,7 +488,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 	
 	 	$out .= "<table id='Tasks' class='list_table' align='center' width='700' border='0'>";
 		$out .= "<tr><th colspan='7' class='topbottombar'><h2>".$pgv_lang["Task_View"].print_help_link("ra_view_task_help", "qm", '', false, true)."</h2>";
-		$out .= "<form name=\"mytasks\" method=\"GET\" action=\"module.php\"><input type=\"hidden\" name=\"mod\" value=\"research_assistant\" /><input type=\"hidden\" name=\"action\" value=\"mytasks\" /><p>Filter By: <select name=\"Filter\" onchange=\"document.mytasks.submit()\">";
+		$out .= "<form name=\"mytasks\" method=\"GET\" action=\"module.php\"><input type=\"hidden\" name=\"mod\" value=\"research_assistant\" /><input type=\"hidden\" name=\"action\" value=\"mytasks\" /><p>".$pgv_lang["FilterBy"].": <select name=\"Filter\" onchange=\"document.mytasks.submit()\">";
 		
 		$out .= "<option ";
 		if ($filter == "All") $out .= "selected=\"selected\" ";

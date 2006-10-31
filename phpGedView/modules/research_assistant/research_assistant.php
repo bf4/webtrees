@@ -138,8 +138,10 @@ class research_assistant extends ra_functions {
 				}
 
                 // Catch for the taskid not being set
-                if (!isset($_POST['taskid']))
+                if (!isset($_POST['taskid'])) {
                     $_POST['taskid'] = $taskid;
+                    $_REQUEST['taskid'] = $taskid;
+                }
 
 				// ADD PEOPLE
 				if (isset ($_POST['personid'])) {
@@ -150,11 +152,35 @@ class research_assistant extends ra_functions {
 				if (isset ($_POST['sourceid'])) {
 					$this->add_sources($_POST['taskid'], $_POST['sourceid']);
 				}
-
-				$out .= $this->print_menu($_POST['folder']);
-				$out .= $this->print_folder_view($_POST['folder']);
-				$out .= $this->print_list($_POST['folder']);
-				// $out .= $this->printMessage("Task Added.", true);
+				if(isset($_POST['complete']))
+				{
+					if($_POST['complete'] == 1)
+					{
+							//SAVE & Complete
+							$out = mod_print_header($pgv_lang["page_header"]);
+							//$out. = $this->print_menu();
+	               			 //$task = $this->getTask($_REQUEST['taskid']);
+	              				$out .= $this->print_form('ra_CompleteTask');
+					}
+					else
+					{
+						$out .= $this->print_menu($_POST['folder']);
+						$out .= $this->print_folder_view($_POST['folder']);
+						$out .= $this->print_list($_POST['folder']);
+						// $out .= $this->printMessage("Task Added.", true);
+						
+					}
+				}
+				else
+				{
+				    $out .= $this->print_menu($_POST['folder']);
+					$out .= $this->print_folder_view($_POST['folder']);
+					$out .= $this->print_list($_POST['folder']);
+					// $out .= $this->printMessage("Task Added.", true);
+				
+				}
+			
+				
 
 			}
 
@@ -193,13 +219,16 @@ class research_assistant extends ra_functions {
 				$out .= $this->print_simple_form("ra_EditTask");
 			}
 			// Delete task
-		else
+			else
 			if ($_REQUEST['action'] == "deletetask" && !empty ($_REQUEST['taskid'])) {
 				$this->deleteTask($_REQUEST['taskid']);
 				$out .= $this->print_menu("", $_REQUEST['taskid']);
 				//if($_REQUEST['userName'] == "")
 				//{
-					$out .= $this->print_folder_view();
+					
+				//$out .= $this->print_folder_view();
+					$out .= $this->print_folder_view($_REQUEST['folder']);
+					$out .= $this->print_list($_REQUEST['folder']);
 //					$out .= $this->print_list();
 				//}
 			}
@@ -372,7 +401,6 @@ class research_assistant extends ra_functions {
                 $out .= $this->print_menu();
                 $task = $this->getTask($_REQUEST['taskid']);
 				if (!empty($task['t_form'])&&!isset($_POST['commonFrm'])) $_POST['commonFrm'] = $task['t_form'];
-				print($task['t_form']);
                 $out .= $this->print_form('ra_CompleteTask');
 			}
 		else

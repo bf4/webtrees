@@ -29,14 +29,15 @@
  * For further commenting see ancestry.php
  */
 require_once("includes/person_class.php");
-include("modules/research_assistant/languages/lang.en.php");
+require("modules/research_assistant/languages/lang.en.php");
+global $lang_short_cut, $LANGUAGE;
+if (file_exists("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php")) require("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php");
 
 
 function autosearch_options()
 {
 	global $pgv_lang;
-	//Title
-	$pgv_lang["autosearch_plugin_name"] = "Genealogy.com Plug-In";
+
 	
 	$pid = "";
 	if (!empty($_REQUEST['pid'])) $pid = clean_input($_REQUEST['pid']);
@@ -80,7 +81,7 @@ if(isset($bloc)){
 	}
 
 	
-		$to_return.=		"	<tr><td class='optionbox' colspan=2 align='center'>".$pgv_lang["autosearch_plugin_name"]."</td></tr>
+		$to_return.=		"	<tr><td class='optionbox' colspan=2 align='center'>".$pgv_lang["autosearch_plugin_name_gen"]."</td></tr>
 <tr><td  align='center' class='topbottombar'colspan=2><input type='submit' value='Search' /></td></tr>
 		 			
 							</table>
