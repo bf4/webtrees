@@ -3,7 +3,7 @@
  * Class file for a person
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005	John Finlay and Others
+ * Copyright (C) 2002 to 2006	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * Page does not validate see line number 1109 -> 15 August 2005
  *
  * @package PhpGedView
  * @subpackage DataModel
@@ -184,6 +182,7 @@ class Person extends GedcomRecord {
 	function getGivenNames(){
 		global $pgv_lang, $indilist;
 		if (!$this->canDisplayName()) return $pgv_lang["private"];
+		if (!isset($indilist[$this->getXref()]['names'])) return $pgv_lang['unknown'];
 		$ct = preg_match("~^([^\s]*)~",$indilist[$this->getXref()]['names'][0][0], $match);//pregmatch
 		$name = trim($match[1]);
 		if (empty($name)) return $pgv_lang["unknown"];
@@ -1386,7 +1385,7 @@ class Person extends GedcomRecord {
 				}
 			}
 		}
-		return $url;
+		return $url."#content";
 	}
 }
 ?>

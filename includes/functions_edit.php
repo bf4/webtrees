@@ -3,7 +3,7 @@
  * Various functions used by the Edit interface
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2006  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -415,7 +415,9 @@ function undo_change($cid, $index) {
 function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag="CHIL", $sextag="") {
 	global $pgv_lang, $factarray, $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $monthtonum, $WORD_WRAPPED_NOTES;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $USE_RTL_FUNCTIONS, $GEDCOM;
+	global $bdm;
 
+	$bdm = ""; // used to copy '1 SOUR' to '2 SOUR' for BIRT DEAT MARR
 	init_calendar_popup();
 	print "<form method=\"post\" name=\"addchildform\" onsubmit=\"return checkform();\">\n";
 	print "<input type=\"hidden\" name=\"action\" value=\"$nextaction\" />\n";
@@ -512,6 +514,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		add_simple_tag("0 MAP", "DEAT");
 		add_simple_tag("0 LATI", "DEAT");
 		add_simple_tag("0 LONG", "DEAT");
+		$bdm = "BD";
 		print "</table>\n";
 		//-- if adding a spouse add the option to add a marriage fact to the new family
 		if ($nextaction=='addspouseaction' || ($nextaction=='addnewparentaction' && $famid!='new')) {
@@ -529,6 +532,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			add_simple_tag("0 MAP", "MARR");
 			add_simple_tag("0 LATI", "MARR");
 			add_simple_tag("0 LONG", "MARR");
+			$bdm .= "M";
 			print "</table>\n";
 		}
 		print_add_layer("SOUR", 1);
@@ -790,6 +794,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	global $assorela, $tags, $emptyfacts, $TEXT_DIRECTION, $confighelpfile;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
 	global $tabkey, $STATUS_CODES, $REPO_ID_PREFIX, $SPLIT_PLACES, $pid, $linkToID;
+	global $bdm;
 
 	if (!isset($noClose) && isset($readOnly) && $readOnly=="NOCLOSE") {
 		$noClose = "NOCLOSE";
@@ -885,7 +890,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	if ($fact=="GIVN" or $fact=="SURN") $cols=25;
 	if ($fact=="NPFX" or $fact=="SPFX" or $fact=="NSFX") $cols=12;
 	if (in_array($fact, $largetextfacts)) { $rows=10; $cols=70; }
-	if ($fact=="ADDR") $rows=5;
+	if ($fact=="ADDR") $rows=4;
 	if ($fact=="REPO") $cols = strlen($REPO_ID_PREFIX) + 4;
 
 	// label
@@ -947,6 +952,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	if (in_array($fact, $emptyfacts)&& (empty($value) or $value=="y" or $value=="Y")) {
 		$value = strtoupper($value);
 		if ($fact=="BIRT" or $fact=="MARR") $value="Y"; // default YES
+		else if ($level==1) $value="Y"; // default YES
 		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".$value."\" />";
 		if ($level<=1) {
 			print "<input type=\"checkbox\" ";
@@ -1066,10 +1072,10 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		else {
 			print "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value))."\" size=\"".$cols."\" dir=\"ltr\"";
 			if ($fact=="NPFX") print " onkeyup=\"wactjavascript_autoComplete(npfx_accept,this,event)\" autocomplete=\"off\" ";
-			if (in_array($fact, $subnamefacts)) print " onchange=\"updatewholename();\"";
-			if ($fact=="DATE") print " onblur=\"valid_date(this);\"";
-			if ($fact=="LATI") print " onblur=\"valid_lati_long(this, 'N', 'S');\"";
-			if ($fact=="LONG") print " onblur=\"valid_lati_long(this, 'E', 'W');\"";
+			if (in_array($fact, $subnamefacts)) print " onblur=\"updatewholename();\" onmouseout=\"updatewholename();\"";
+			if ($fact=="DATE") print " onblur=\"valid_date(this);\" onmouseout=\"valid_date(this);\"";
+			if ($fact=="LATI") print " onblur=\"valid_lati_long(this, 'N', 'S');\" onmouseout=\"valid_lati_long(this, 'N', 'S');\"";
+			if ($fact=="LONG") print " onblur=\"valid_lati_long(this, 'E', 'W');\" onmouseout=\"valid_lati_long(this, 'E', 'W');\"";
 			//if ($fact=="FILE") print " onchange=\"if (updateFormat) updateFormat(this.value);\"";
 			print " ".$readOnly." />\n";
 		}
@@ -1114,6 +1120,26 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		if ($fact=="SOUR") {
 			print_findsource_link($element_id);
 			print_addnewsource_link($element_id);
+			//print_autopaste_link($element_id, array("S1", "S2"), false, false, true);
+			//-- checkboxes to apply '1 SOUR' to BIRT/MARR/DEAT as '2 SOUR'
+			if ($level==1) {
+				echo "<br />";
+				echo "<input type=\"hidden\" id=\"SOUR_BIRT\" name=\"SOUR_BIRT\" value=\"Y\" />";
+				echo "<input type=\"hidden\" id=\"SOUR_MARR\" name=\"SOUR_MARR\" value=\"Y\" />";
+				echo "<input type=\"hidden\" id=\"SOUR_DEAT\" name=\"SOUR_DEAT\" value=\"Y\" />";
+				if (strpos($bdm, "B")!==false) {
+					echo "&nbsp;<input type=\"checkbox\" checked=\"checked\" onclick=\"if (this.checked) SOUR_BIRT.value='Y'; else SOUR_BIRT.value='';\" />";
+					echo $factarray["BIRT"];
+				}
+				if (strpos($bdm, "M")!==false) {
+					echo "&nbsp;<input type=\"checkbox\" checked=\"checked\" onclick=\"if (this.checked) SOUR_MARR.value='Y'; else SOUR_MARR.value='';\" />";
+					echo $factarray["MARR"];
+				}
+				if (strpos($bdm, "D")!==false) {
+					echo "&nbsp;<input type=\"checkbox\" checked=\"checked\" onclick=\"if (this.checked) SOUR_DEAT.value='Y'; else SOUR_DEAT.value='';\" />";
+					echo $factarray["DEAT"];
+				}
+			}
 		}
 		if ($fact=="REPO") {
 			print_findrepository_link($element_id);

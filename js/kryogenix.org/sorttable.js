@@ -215,7 +215,6 @@ function ts_sort_caseinsensitive(a,b) {
 	bkey = b.cells[SORT_COLUMN_INDEX].getElementsByTagName("a");
 	if (bkey.length && bkey[0].title) bb = bkey[0].title;
 
-
 	// PGV: clean UTF8 special chars before sorting
 	aa = strclean(aa);
 	bb = strclean(bb);
@@ -287,8 +286,8 @@ function table_filter(id, keyword, filter) {
 function table_renum(id) {
 	var table = document.getElementById(id);
 	// is first column counter ?
-	var firstRow = table.rows[0];
-	//if (ts_getInnerText(firstRow.cells[0]).indexOf('#')==-1) return false;
+	var firstRow = table.rows[1];
+	if (ts_getInnerText(firstRow.cells[0])!='1') return false;
 	// renumbering
 	var count=1;
 	for (var r=1;r<table.rows.length;r++) {

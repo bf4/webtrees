@@ -2550,7 +2550,7 @@ function print_specialchar_link($element_id,$vert) {
 	print "</a>";
 }
 
-function print_autopaste_link($element_id, $choices, $concat=1, $name=1) {
+function print_autopaste_link($element_id, $choices, $concat=1, $name=1, $submit=0) {
 	global $pgv_lang;
 
 	print "<small>";
@@ -2559,6 +2559,7 @@ function print_autopaste_link($element_id, $choices, $concat=1, $name=1) {
 		if ($concat) print "+=' "; else print "='";
 		print $choice."'; ";
 		if ($name) print " updatewholename();";
+		if ($submit) print " document.forms[0].submit();";
 		print " return false;\">".$choice."</a>";
 	}
 	print "</small>";

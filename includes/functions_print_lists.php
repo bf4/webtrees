@@ -271,10 +271,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	if (count($datalist)<1) return;
 	$name_subtags = array("", "_HEB", "ROMN", "_AKA");
 	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
-?>
-	<script type="text/javascript" src="strings.js"></script>
-	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
-<?php
+	require_once("js/sorttable.js.htm");
 	require_once("includes/person_class.php");
 	if (empty($legend)) $legend=$pgv_lang["individuals"];
 	echo "<fieldset><legend>".$legend."</legend>";
@@ -390,13 +387,13 @@ function print_indi_table($datalist, $legend="", $option="") {
 		//-- Birth date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		$sortkey = $person->getSortableBirthDate();
-		$txt = get_changed_date($person->getBirthDate());
+		$txt = get_changed_date($person->getBirthDate(), true);
 		if (empty($txt)) $txt = $pgv_lang["yes"];
 		echo "&nbsp;<a href=\"".$person->getDateUrl($person->bdate)."\"".
 		" title=\"".$sortkey."\"".
 		" class=\"list_item\">".$txt."</a>";
 		//-- Birth 2nd date ?
-		$txt = get_changed_date($person->bdate2);
+		$txt = get_changed_date($person->bdate2, true);
 		if ($txt) echo "<br /><a href=\"".$person->getDateUrl($person->bdate2)."\"".
 		" title=\"".$person->getSortableBirthDate2()."\"".
 		" class=\"list_item\">".$txt."</a>";
@@ -421,14 +418,15 @@ function print_indi_table($datalist, $legend="", $option="") {
 		//-- Death date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		$sortkey = $person->getSortableDeathDate();
-		$txt = get_changed_date($person->getDeathDate());
+		$txt = get_changed_date($person->getDeathDate(), true);
 		if ($person->dest) $txt = $pgv_lang["yes"];
 		if (!$person->isDead()) $txt = "";
+		//else if (get_sub_record(1, "1 DEAT", $person->gedrec)=="") $txt .= "***";
 		echo "&nbsp;<a href=\"".$person->getDateUrl($person->ddate)."\"".
 		" title=\"".$sortkey."\"".
 		" class=\"list_item\">".$txt."</a>";
 		//-- Death 2nd date ?
-		$txt = get_changed_date($person->ddate2);
+		$txt = get_changed_date($person->ddate2, true);
 		if ($txt) echo "<br /><a href=\"".$person->getDateUrl($person->ddate2)."\"".
 		" title=\"".$person->getSortableDeathDate2()."\"".
 		" class=\"list_item\">".$txt."</a>";
@@ -526,10 +524,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 function print_surn_table($datalist, $target="INDI") {
 	global $pgv_lang, $factarray, $GEDCOM, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
-?>
-	<script type="text/javascript" src="strings.js"></script>
-	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
-<?php
+	require_once("js/sorttable.js.htm");
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
@@ -584,10 +579,7 @@ function print_fam_table($datalist, $legend="") {
 	if (count($datalist)<1) return;
 	$name_subtags = array("", "_HEB", "ROMN", "_AKA");
 	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
-?>
-	<script type="text/javascript" src="strings.js"></script>
-	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
-<?php
+	require_once("js/sorttable.js.htm");
 	require_once("includes/family_class.php");
 	if (empty($legend)) $legend=$pgv_lang["families"];
 	echo "<fieldset><legend>".$legend."</legend>";
@@ -721,13 +713,13 @@ function print_fam_table($datalist, $legend="") {
 		//-- Marriage date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		$sortkey = $family->getSortableMarriageDate();
-		if (!$family->marr_est) $txt = get_changed_date($family->getMarriageDate());
+		if (!$family->marr_est) $txt = get_changed_date($family->getMarriageDate(), true);
 		if (empty($txt) and !empty($family->marr_rec)) $txt = $pgv_lang["yes"];
 		echo "&nbsp;<a href=\"".$family->getDateUrl($family->marr_date)."\"".
 		" title=\"".$sortkey."\"".
 		" class=\"list_item\">".$txt."</a>";
 		//-- Marriage 2nd date ?
-		$txt = get_changed_date($family->marr_date2);
+		$txt = get_changed_date($family->marr_date2, true);
 		if ($txt) echo "<br /><a href=\"".$family->getDateUrl($family->marr_date2)."\"".
 		" title=\"".$family->getSortableMarriageDate2()."\"".
 		" class=\"list_item\">".$txt."</a>";
@@ -838,10 +830,7 @@ function print_sour_table($datalist, $legend="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
 	$name_subtags = array("_HEB", "ROMN");
-?>
-	<script type="text/javascript" src="strings.js"></script>
-	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
-<?php
+	require_once("js/sorttable.js.htm");
 	require_once("includes/source_class.php");
 	if (empty($legend)) $legend=$pgv_lang["sources"];
 	echo "<fieldset><legend>".$legend."</legend>";
@@ -954,10 +943,7 @@ function print_repo_table($datalist, $legend="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
 	$name_subtags = array("_HEB", "ROMN");
-?>
-	<script type="text/javascript" src="strings.js"></script>
-	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
-<?php
+	require_once("js/sorttable.js.htm");
 	require_once("includes/repository_class.php");
 	if (empty($legend)) $legend=$pgv_lang["repos_found"];
 	echo "<fieldset><legend>".$legend."</legend>";
@@ -1033,10 +1019,7 @@ function print_repo_table($datalist, $legend="") {
 function print_media_table($datalist, $legend="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
-?>
-	<script type="text/javascript" src="strings.js"></script>
-	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
-<?php
+	require_once("js/sorttable.js.htm");
 	require_once("includes/media_class.php");
 	if (empty($legend)) $legend=$pgv_lang["media"];
 	echo "<fieldset><legend>".$legend."</legend>";
@@ -1116,10 +1099,7 @@ function print_media_table($datalist, $legend="") {
 function print_changes_table($datalist) {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
-?>
-	<script type="text/javascript" src="strings.js"></script>
-	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
-<?php
+	require_once("js/sorttable.js.htm");
 	require_once("includes/gedcomrecord.php");
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
@@ -1146,9 +1126,10 @@ function print_changes_table($datalist) {
 			echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".$record->xref."</a></td>";
 		}
 		//-- Record name(s)
-		$name = $record->getSortableName();
+		if ($record->type=="FAM") $name = $record->getSortableName(true);
+		else $name = $record->getSortableName();
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
-		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($record->type=="INDI") {
 			echo $record->getSexImage();
 			$name_subtags = array("", "_HEB", "ROMN", "_AKA");
@@ -1196,21 +1177,18 @@ function print_changes_table($datalist) {
 function print_events_table($datalist, $nextdays=1, $option="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
-?>
-	<script type="text/javascript" src="strings.js"></script>
-	<script type="text/javascript" src="js/kryogenix.org/sorttable.js"></script>
-<?php
+	require_once("js/sorttable.js.htm");
 	require_once("includes/gedcomrecord.php");
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
 	echo "<tr>";
-	echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
+	//echo "<td></td>";
+	//if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
-	echo "<th class=\"list_label\">".$factarray["EVEN"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["DATE"]."</th>";
 	echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
+	echo "<th class=\"list_label\">".$factarray["EVEN"]."</th>";
 	echo "</tr>\n";
 	//-- table body
 	$hidden = 0;
@@ -1220,10 +1198,6 @@ function print_events_table($datalist, $nextdays=1, $option="") {
 		//-- get gedcom record
 		$record = GedcomRecord::getInstance($value[0]);
 		if (is_null($record)) continue;
-		if (!$record->canDisplayDetails()) {
-			$hidden++;
-			continue;
-		}
 		//-- only living people ?
 		if (strpos($option, "living")) {
 			if ($record->type=="INDI" and $record->isDead()) continue;
@@ -1244,30 +1218,38 @@ function print_events_table($datalist, $nextdays=1, $option="") {
 		//-- Event date
 		$edate = get_gedcom_value("DATE", 2, $value[1], "", false);
 		if (empty($edate)) continue;
-		$timestamp = get_changed_date($edate);
+		$timestamp = get_changed_date($edate, true);
 		$pdate = parse_date($edate);
-		$anniv = mktime(0, 0, 0, (int) $pdate[0]["mon"], (int) $pdate[0]["day"], date("Y"));
+		if ($pdate[0]["day"] == "") continue;
+		$anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], date("Y"));
 		// add 1 year if anniversary before today
-		if (date("Ymd", $anniv) < date("Ymd")) $anniv = mktime(0, 0, 0, (int) $pdate[0]["mon"], (int) $pdate[0]["day"], date("Y")+1);
+		if (date("Ymd", $anniv) < date("Ymd")) $anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], date("Y")+1);
 		// max anniversary date
-		$datemax = mktime(0, 0, 0, (int) date("m"), ((int) date("d")+$nextdays-1), date("Y"));
-		if (date("Ymd", $datemax) < date("Ymd", $anniv)) continue;
+		$datemax = mktime(0, 0, 0, date("m"), date("d")+$nextdays-1, date("Y"));
+		if ($datemax < $anniv) continue;
 		// upcoming events starting tomorrow
 		if ($nextdays>1 and date("Ymd") == date("Ymd", $anniv)) continue;
 		// sorting by MM-DD-YYYY
 		$sortkey = sprintf("%02d-%02d-%04d", $pdate[0]["mon"], $pdate[0]["day"], $pdate[0]["year"]);
+		// Privacy
+		if (!$record->canDisplayDetails()) {
+			$hidden++;
+			continue;
+		}
 		//-- Counter
 		echo "<tr class=\"vevent\">"; // hCalendar:vevent
-		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
+		//echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
+		$n++;
 		//-- Record ID
-		if ($SHOW_ID_NUMBERS) {
+		/**if ($SHOW_ID_NUMBERS) {
 			echo "<td class=\"list_value_wrap rela\">";
 			echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".$record->xref."</a></td>";
-		}
+		}**/
 		//-- Record name(s)
-		$name = $record->getSortableName();
+		if ($record->type=="FAM") $name = $record->getSortableName(true);
+		else $name = $record->getSortableName();
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
-		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($record->type=="INDI") {
 			echo $record->getSexImage();
 			$name_subtags = array("", "_HEB", "ROMN", "_AKA");
@@ -1288,10 +1270,6 @@ function print_events_table($datalist, $nextdays=1, $option="") {
 			}
 		}
 		echo "</td>";
-		//-- Event name
-		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item url\">".$factarray[$event]."</a>"; // hCalendar:url
-		echo "&nbsp;</td>";
 		//-- Event date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		echo "<a href=\"".$record->getDateUrl($edate)."\"".
@@ -1307,25 +1285,29 @@ function print_events_table($datalist, $nextdays=1, $option="") {
 		" title=\"".get_changed_date(date("d M Y", $anniv))."\"".
 		" class=\"list_item\">".$age."</a>";
 		echo "<abbr class=\"dtstart\" title=\"".date("Ymd", $anniv)."\"></abbr>"; // hCalendar:dtstart
-		echo "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$age ".$factarray[$event]." : ".PrintReady(strip_tags($name))."\"></abbr>"; // hCalendar:summary
+		echo "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$age ".$factarray[$event]." : ".PrintReady(strip_tags($record->getSortableName()))."\"></abbr>"; // hCalendar:summary
 		echo "</td>";
+		//-- Event name
+		echo "<td class=\"list_value_wrap\">";
+		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item url\">".$factarray[$event]."</a>"; // hCalendar:url
+		echo "&nbsp;</td>";
 
 		echo "</tr>\n";
 	}
 	//-- table footer
 	echo "<tr class=\"sortbottom\">";
-	echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<td></td>";
+	//echo "<td></td>";
+	//if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
 	echo $pgv_lang["total_names"]." : ".$n;
 	if ($hidden) echo "<br />".$pgv_lang["hidden"]." : ".$hidden;
 	echo "</td>";
-	echo "<td></td>";
 	echo "<td>";
 	$uri = "http://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
 	$title = $pgv_lang["download_now"]." : hCal-events.ics";
 	if ($n) echo "<a href=\"http://feeds.technorati.com/events/".$uri."\"><img src=\"images/hcal.png\" border=\"0\" alt=\"".$title."\" title=\"".$title."\" /></a>";
 	echo "</td>";
+	echo "<td></td>";
 	echo "<td></td>";
 	echo "</tr>";
 	echo "</table>\n";
@@ -1357,10 +1339,10 @@ function get_align($txt) {
  */
 function load_behaviour() {
 	global $pgv_lang;
+	require_once("js/prototype.js.htm");
+	require_once("js/behaviour.js.htm");
+	require_once("js/overlib.js.htm");
 ?>
-	<script type="text/javascript" src="js/conio.net/prototype.js"></script>
-	<script type="text/javascript" src="js/bennolan.com/behaviour.js"></script>
-	<script type="text/javascript" src="js/bosrup.com/overlib.js"></script>
 	<script type="text/javascript">
 	// <![CDATA[
 	var myrules = {

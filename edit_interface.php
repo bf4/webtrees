@@ -3,7 +3,7 @@
  * PopUp Window to provide editing features.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2006  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -839,6 +839,10 @@ else if ($action=="addchildaction") {
 				$gedrec .= "4 LONG $BIRT_LONG\r\n";
 			}
 		}
+		if (isset($SOUR_BIRT) and $SOUR_BIRT and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
+			$gedrec .= "2 SOUR @".$text[0]."@\r\n";
+			if ($tag[1]=="PAGE" and $text[1]!="") $gedrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
+		}
 	}
 	else if (!empty($BIRT)) $gedrec .= "1 BIRT Y\r\n";
 	if ((!empty($DEAT_DATE))||(!empty($DEAT_PLAC))) {
@@ -854,6 +858,10 @@ else if ($action=="addchildaction") {
 				$gedrec .= "4 LATI $DEAT_LATI\r\n";
 				$gedrec .= "4 LONG $DEAT_LONG\r\n";
 			}
+		}
+		if (isset($SOUR_DEAT) and $SOUR_DEAT and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
+			$gedrec .= "2 SOUR @".$text[0]."@\r\n";
+			if ($tag[1]=="PAGE" and $text[1]!="") $gedrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
 		}
 	}
 	else if (!empty($DEAT)) $gedrec .= "1 DEAT Y\r\n";
@@ -907,6 +915,10 @@ else if ($action=="addspouseaction") {
 				$gedrec .= "4 LONG $BIRT_LONG\r\n";
 			}
 		}
+		if (isset($SOUR_BIRT) and $SOUR_BIRT and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
+			$gedrec .= "2 SOUR @".$text[0]."@\r\n";
+			if ($tag[1]=="PAGE" and $text[1]!="") $gedrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
+		}
 	}
 	else if (!empty($BIRT)) $gedrec .= "1 BIRT Y\r\n";
 	if ((!empty($DEAT_DATE))||(!empty($DEAT_PLAC))) {
@@ -922,6 +934,10 @@ else if ($action=="addspouseaction") {
 				$gedrec .= "4 LATI $DEAT_LATI\r\n";
 				$gedrec .= "4 LONG $DEAT_LONG\r\n";
 			}
+		}
+		if (isset($SOUR_DEAT) and $SOUR_DEAT and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
+			$gedrec .= "2 SOUR @".$text[0]."@\r\n";
+			if ($tag[1]=="PAGE" and $text[1]!="") $gedrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
 		}
 	}
 	else if (!empty($DEAT)) $gedrec .= "1 DEAT Y\r\n";
@@ -958,6 +974,10 @@ else if ($action=="addspouseaction") {
 					$famrec .= "4 LONG $MARR_LONG\r\n";
 				}
 			}
+			if (isset($SOUR_MARR) and $SOUR_MARR and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
+				$famrec .= "2 SOUR @".$text[0]."@\r\n";
+				if ($tag[1]=="PAGE" and $text[1]!="") $famrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
+			}
 		}
 		else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
 		if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
@@ -983,6 +1003,10 @@ else if ($action=="addspouseaction") {
 						$famrec .= "4 LATI $MARR_LATI\r\n";
 						$famrec .= "4 LONG $MARR_LONG\r\n";
 					}
+				}
+				if (isset($SOUR_MARR) and $SOUR_MARR and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
+					$famrec .= "2 SOUR @".$text[0]."@\r\n";
+					if ($tag[1]=="PAGE" and $text[1]!="") $famrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
 				}
 			}
 			else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
@@ -1048,6 +1072,10 @@ else if ($action=="linkspouseaction") {
 							$famrec .= "4 LONG $MARR_LONG\r\n";
 						}
 					}
+					if (isset($SOUR_MARR) and $SOUR_MARR and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
+						$famrec .= "2 SOUR @".$text[0]."@\r\n";
+						if ($tag[1]=="PAGE" and $text[1]!="") $famrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
+					}
 				}
 				else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
 				if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
@@ -1100,6 +1128,10 @@ else if ($action=="addnewparentaction") {
 				$gedrec .= "4 LONG $BIRT_LONG\r\n";
 			}
 		}
+		if (isset($SOUR_BIRT) and $SOUR_BIRT and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
+			$gedrec .= "2 SOUR @".$text[0]."@\r\n";
+			if ($tag[1]=="PAGE" and $text[1]!="") $gedrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
+		}
 	}
 	else if (!empty($BIRT)) $gedrec .= "1 BIRT Y\r\n";
 	if ((!empty($DEAT_DATE))||(!empty($DEAT_PLAC))) {
@@ -1115,6 +1147,10 @@ else if ($action=="addnewparentaction") {
 				$gedrec .= "4 LATI $DEAT_LATI\r\n";
 				$gedrec .= "4 LONG $DEAT_LONG\r\n";
 			}
+		}
+		if (isset($SOUR_DEAT) and $SOUR_DEAT and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
+			$gedrec .= "2 SOUR @".$text[0]."@\r\n";
+			if ($tag[1]=="PAGE" and $text[1]!="") $gedrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
 		}
 	}
 	else if (!empty($DEAT)) $gedrec .= "1 DEAT Y\r\n";
@@ -1149,6 +1185,10 @@ else if ($action=="addnewparentaction") {
 					$famrec .= "4 LONG $MARR_LONG\r\n";
 				}
 			}
+			if (isset($SOUR_MARR) and $SOUR_MARR and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
+				$famrec .= "2 SOUR @".$text[0]."@\r\n";
+				if ($tag[1]=="PAGE" and $text[1]!="") $famrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
+			}
 		}
 		else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
 
@@ -1175,6 +1215,10 @@ else if ($action=="addnewparentaction") {
 						$famrec .= "4 LATI $MARR_LATI\r\n";
 						$famrec .= "4 LONG $MARR_LONG\r\n";
 					}
+				}
+				if (isset($SOUR_MARR) and $SOUR_MARR and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
+					$famrec .= "2 SOUR @".$text[0]."@\r\n";
+					if ($tag[1]=="PAGE" and $text[1]!="") $famrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
 				}
 			}
 			else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
@@ -1483,11 +1527,11 @@ else if ($action=="paste") {
 }
 //------------------------------------------------------------------------------
 else if ($action=="reorder_children") {
+	require_once("js/prototype.js.htm");
+	require_once("js/scriptaculous.js.htm");
+	print "<br /><b>".$pgv_lang["reorder_children"]."</b>";
+	print_help_link("reorder_children_help", "qm");
 	?>
-	<script src="js/conio.net/prototype.js" type="text/javascript"></script>
-	<script src="js/script.aculo.us/scriptaculous.js" type="text/javascript"></script>
-	<br /><b><?php print $pgv_lang["reorder_children"]; ?></b>
-	<?php print_help_link("reorder_children_help", "qm"); ?>
 	<form name="reorder_form" method="post" action="edit_interface.php">
 		<input type="hidden" name="action" value="reorder_update" />
 		<input type="hidden" name="pid" value="<?php print $pid; ?>" />
@@ -1826,11 +1870,11 @@ else if ($action=="reorder_update") {
 }
 //------------------------------------------------------------------------------
 else if ($action=="reorder_fams") {
+	require_once("js/prototype.js.htm");
+	require_once("js/scriptaculous.js.htm");
+	print "<br /><b>".$pgv_lang["reorder_families"]."</b>";
+	print_help_link("reorder_families_help", "qm");
 	?>
-	<script src="js/conio.net/prototype.js" type="text/javascript"></script>
-	<script src="js/script.aculo.us/scriptaculous.js" type="text/javascript"></script>
-	<br /><b><?php print $pgv_lang["reorder_families"]; ?></b>
-	<?php print_help_link("reorder_families_help", "qm"); ?>
 	<form name="reorder_form" method="post" action="edit_interface.php">
 		<input type="hidden" name="action" value="reorder_fams_update" />
 		<input type="hidden" name="pid" value="<?php print $pid; ?>" />
