@@ -1314,7 +1314,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		// NOTE: Print the format of the media
 		if (!empty($rowm["m_ext"])) {
 			print "\n\t\t\t<br /><span class=\"label\">".$factarray["FORM"].": </span> <span class=\"field\">".$rowm["m_ext"]."</span>";
-			if($imgsize[2]!==false){
+			if(isset($imgsize) and $imgsize[2]!==false){
 				print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?" &rlm;x&rlm; " : " x ") . $imgsize[1] . "</span>";
 			}
 		}

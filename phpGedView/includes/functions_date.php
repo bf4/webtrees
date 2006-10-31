@@ -6,7 +6,7 @@
  * routines and sorting functions.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2006  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -305,7 +305,7 @@ function convert_date($dstr_beg, $dstr_end, $day, $month, $year) {
  * @param string $datestr the date string (ie everything after the DATE tag)
  * @return string the new date string
  */
-function get_changed_date($datestr) {
+function get_changed_date($datestr, $linebr=false) {
 	global $pgv_lang, $DATE_FORMAT, $LANGUAGE, $CALENDAR_FORMAT, $monthtonum, $dHebrew;
 	global $USE_RTL_FUNCTIONS; //--- required??
 	global $CalYear;   //-- Hebrew calendar year
@@ -399,7 +399,7 @@ function get_changed_date($datestr) {
 					$frenchDate = jdtofrench($jd);
 					list ($fMonth, $fDay, $fYear) = split ('/', $frenchDate);
 					$fMonthName = jdmonthname ($jd, 5);
-					$adate = "<u>$fDay $fMonthName An $fYear</u> ".$adate;
+					$adate = "<u>$fDay $fMonthName An $fYear</u>".($linebr ? "<br />" : " ").$adate;
 				}
 			}
 			if (isset($pdate[$i]["ext"])) {
@@ -735,10 +735,11 @@ function get_age($indirec, $datestr, $style=1) {
 	$bdatestr = "";
 
 	//-- get birth date for age calculations
-	$bpos1 = strpos($indirec, "1 BIRT");
-	if ($bpos1) {
+	$btag = "1 BIRT";
+	if (strpos($indirec, $btag)===false) $btag = "1 CHR";
+	if (strpos($indirec, $btag)) {
 		$index = 1;
-		$birthrec = get_sub_record(1, "1 BIRT", $indirec, $index);
+		$birthrec = get_sub_record(1, $btag, $indirec, $index);
 		while(!empty($birthrec)) {
 			$hct = preg_match("/2 DATE.*(@#DHEBREW@)/", $birthrec, $match);
 			if ($hct>0) {
@@ -751,7 +752,7 @@ function get_age($indirec, $datestr, $style=1) {
 				if ($dct>0) $birthdate = parse_date(trim($match[1]));
 			}
 			$index++;
-			$birthrec = get_sub_record(1, "1 BIRT", $indirec, $index);
+			$birthrec = get_sub_record(1, $btag, $indirec, $index);
 		}
 	}
 	$convert_hebrew = false;

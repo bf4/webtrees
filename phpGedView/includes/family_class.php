@@ -3,7 +3,7 @@
  * Class file for a Family
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005	John Finlay and Others
+ * Copyright (C) 2002 to 2006	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * Page does not validate see line number 1109 -> 15 August 2005
  *
  * @package PhpGedView
  * @subpackage DataModel
@@ -184,14 +182,20 @@ class Family extends GedcomRecord {
 	 * get the family sortable name
 	 * @return string
 	 */
-	function getSortableName() {
+	function getSortableName($linebr=false) {
 		global $pgv_lang;
 		$name = "";
 		if (is_null($this->husb)) $name .= $pgv_lang["unknown"];
-		else $name .= $this->husb->getSortableName();
-		$name .= " + ";
+		else {
+			$name .= $this->husb->getSortableName();
+			if ($linebr) $name .= $this->husb->getSexImage();
+		}
+		if ($linebr) $name .= "<br />"; else $name .= " + ";
 		if (is_null($this->wife)) $name .= $pgv_lang["unknown"];
-		else $name .= $this->wife->getSortableName();
+		else {
+			$name .= $this->wife->getSortableName();
+			if ($linebr) $name .= $this->wife->getSexImage();
+		}
 		return $name;
 	}
 
@@ -426,7 +430,7 @@ class Family extends GedcomRecord {
 				}
 			}
 		}
-		return $url;
+		return $url."#content";
 	}
 }
 ?>
