@@ -1826,8 +1826,14 @@ function print_theme_dropdown($style=0) {
 		  $user = getUser($uname);
 		  isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
 		  $frompage = $_SERVER["SCRIPT_NAME"].$tqstring;
+		  if(isset($_REQUEST['mod'])){
+		  	if(!strstr("?", $frompage)) $frompage.="?";
+		  	$frompage.="&mod=".$_REQUEST['mod'];
+		  }
+		  
 		  $themes = get_theme_names();
 		  print "<div class=\"theme_form\">\n";
+		  $module = "";
 		  switch ($style) {
 			   case 0:
 			   print "<form action=\"themechange.php\" name=\"themeform$themeformcount\" method=\"post\">";

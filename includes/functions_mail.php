@@ -23,9 +23,11 @@
  * @version $Id$
  */
 
-//-- this function is a wrapper to the php mail() function so that we can change settings globally
-// for more info on format="flowed" see: http://www.joeclark.org/ffaq.html
-// for deatiled info on MIME (RFC 1521) email see: http://www.freesoft.org/CIE/RFC/1521/index.htm
+/**
+ * this function is a wrapper to the php mail() function so that we can change settings globally
+ * for more info on format="flowed" see: http://www.joeclark.org/ffaq.html
+ * for deatiled info on MIME (RFC 1521) email see: http://www.freesoft.org/CIE/RFC/1521/index.htm
+ */
 function pgvMail($to, $subject, $message, $extraHeaders){
 	global $pgv_lang, $CHARACTER_SET, $LANGUAGE, $PGV_STORE_MESSAGES, $TEXT_DIRECTION;
 	$mailFormat = "plain";
