@@ -178,8 +178,8 @@ return false;}return true;}
   <td class="descriptionbox">Are you: </td>';
 		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 			$value = "";
-			if (isset($citation['ts_array']['rows'][$i]['Race'])) $value = $citation['ts_array']['rows'][$i]['Race'];
-			$out .= '<td class="optionbox"><select name="Race'.$i.'">
+			if (isset($citation['ts_array']['rows'][$i]['Citizen'])) $value = $citation['ts_array']['rows'][$i]['Citizen'];
+			$out .= '<td class="optionbox"><select name="Citizen'.$i.'">
 		<option value="1"'.($value=='1'?' selected="selected"':'').'>Natural Born Citizen</option>
 		<option value="2"'.($value=='2'?' selected="selected"':'').'>Naturalized Citizen</option>
 		<option value="3"'.($value=='3'?' selected="selected"':'').'>Alien</option>
@@ -607,6 +607,7 @@ return false;}return true;}
 			if (!isset($_POST["Regstate".$number])) $_POST["Regstate".$number]="";
 			if (!isset($_POST["HairColor".$number])) $_POST["HairColor".$number]="";
 			if (!isset($_POST["EyeColor".$number])) $_POST["EyeColor".$number]="";
+			if (!isset($_POST["Citizen".$number])) $_POST["Citizen".$number]="";
 		
 		
 			$rows[$number] = array(
@@ -638,6 +639,7 @@ return false;}return true;}
 			"EyeColor"=>$_POST["EyeColor".$number],
 			"Appendage"=>$_POST["Appendage".$number],
 			"Bald"=>$_POST["Bald".$number],
+			"Citizen"=>$_POST["Citizen".$number],
 			"Regstate"=>$_POST["Regstate".$number]
 			);
 		

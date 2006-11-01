@@ -1267,7 +1267,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 										$out .= "<tr><td class='optionbox' colspan='2' align='center'><h5>Folder:&nbsp;&nbsp;</h><select name='folder'>";
 										$out .= $this->folder_search();
 										$out .= "</select></td></tr>";
-										$out .= "<tr><td colspan='2'class='topbottombar'><input type='submit' value='Add Task' /></td></tr>
+										$out .= "<tr><td colspan='2'class='topbottombar'><input type='submit' value='".$pgv_lang["AddTask"]."' /></td></tr>
 									</form>
 							</table>
 						</td>";

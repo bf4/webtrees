@@ -183,6 +183,7 @@ $pgv_lang["comment_delete_check"]		= "Are you sure you want to delete this comme
 $pgv_lang["add_new_task"]				= "Add New Task";
 $pgv_lang["submit"]						= "Submit";
 $pgv_lang["assign_task"]				= "Assign Task";
+$pgv_lang["AddTask"]					= "Add Task";
 
 //-- RA_CONFIGURE PRIVACY MESSAGES
 $pgv_lang["configure_privacy"]		    = "Configure Privacy";
