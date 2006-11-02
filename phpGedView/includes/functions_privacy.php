@@ -786,7 +786,7 @@ function privatize_gedcom($gedrec) {
 					}
 				}
 			}
-			if ($type=="INDI") $newrec .= get_sub_record(1, "1 SEX", $gedrec)."\r\n"; // do not privatize gender
+			if ($type=="INDI") $newrec .= trim(get_sub_record(1, "1 SEX", $gedrec))."\r\n"; // do not privatize gender
 			$newrec .= "1 NOTE ".trim($pgv_lang["person_private"])."\r\n";
 			//print $newrec;
 			$pgv_private_records[$gid] = $gedrec;

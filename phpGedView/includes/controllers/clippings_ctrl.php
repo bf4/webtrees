@@ -1,11 +1,9 @@
 <?php
-
-
 /**
  * Controller for the Clippings Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005	John Finlay and Others
+ * Copyright (C) 2002 to 2006	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +18,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * Page does not validate see line number 1109 -> 15 August 2005
  *
  * @package PhpGedView
  * @subpackage Charts
@@ -223,7 +219,7 @@ class ClippingsControllerRoot extends BaseController {
 							$media = array ();
 							$mediacount = 0;
 							$ct = count($cart);
-							$filetext = "0 HEAD\r\n1 SOUR PhpGedView\r\n2 NAME PhpGedView Online Genealogy\r\n2 VERS $VERSION $VERSION_RELEASE\r\n1 DEST DISKETTE\r\n1 DATE " . date("j M Y") . "\r\n2 TIME " . date("h:i:s") . "\r\n";
+							$filetext = "0 HEAD\r\n1 SOUR PhpGedView\r\n2 NAME PhpGedView Online Genealogy\r\n2 VERS $VERSION $VERSION_RELEASE\r\n1 DEST DISKETTE\r\n1 DATE " . date("j M Y") . "\r\n2 TIME " . date("H:i:s") . "\r\n";
 							$filetext .= "1 GEDC\r\n2 VERS 5.5\r\n2 FORM LINEAGE-LINKED\r\n1 CHAR $CHARACTER_SET\r\n";
 							$head = find_gedcom_record("HEAD");
 							$placeform = trim(get_sub_record(1, "1 PLAC", $head));

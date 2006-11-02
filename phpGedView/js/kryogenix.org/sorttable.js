@@ -286,8 +286,8 @@ function table_filter(id, keyword, filter) {
 function table_renum(id) {
 	var table = document.getElementById(id);
 	// is first column counter ?
-	var firstRow = table.rows[1];
-	if (ts_getInnerText(firstRow.cells[0])!='1') return false;
+	var firstRow = table.rows[0];
+	if (ts_getInnerText(firstRow.cells[0])!='') return false;
 	// renumbering
 	var count=1;
 	for (var r=1;r<table.rows.length;r++) {
