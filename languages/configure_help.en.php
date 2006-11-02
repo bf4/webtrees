@@ -620,6 +620,7 @@ $pgv_lang["um_bu_gedcoms"] = "GEDCOM Files";
 $pgv_lang["um_bu_gedsets"] = "GEDCOM Settings, Configuration and Privacy files";
 $pgv_lang["um_bu_logs"] = "GEDCOM Counters, SearchLogs and PhpGedView Logfiles";
 $pgv_lang["um_bu_usinfo"] = "User definitions, Block settings, Favorites, Messages, News";
+$pgv_lang["um_bu_media"]	= "Media files";
 $pgv_lang["um_mk_bu"] = "Make Backup";
 $pgv_lang["um_nofiles"] = "No files found for backup.";
 $pgv_lang["um_files_exist"] = "One or more files already exist. Do you want to overwrite them?";

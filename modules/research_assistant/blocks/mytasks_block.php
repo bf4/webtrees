@@ -32,8 +32,6 @@ if (file_exists("modules/research_assistant/languages/lang.en.php")) require_onc
 if (file_exists("modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php")) require_once("modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php");
 if (file_exists('modules/research_assistant/research_assistant.php')) include_once('modules/research_assistant/research_assistant.php');
 
-$pgv_lang["mytasks_block"] = "MyTasks Block";
-
 $PGV_BLOCKS["print_mytasks"]["name"]        = $pgv_lang["mytasks_block"];
 $PGV_BLOCKS["print_mytasks"]["descr"]        = $pgv_lang["mytasks_block_descr"];
 $PGV_BLOCKS["print_mytasks"]["canconfig"]        = true;
