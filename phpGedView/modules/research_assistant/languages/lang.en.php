@@ -212,7 +212,7 @@ $pgv_lang['choose_form_label']			= "Choose a common research form:";
 
 //-- MY TASK BLOCK
 $pgv_lang["mytasks_block_descr"]		= "The My Task Block shows the task for the current user and can be configured to show completed tasks or to show task that are currently unassigned";
-$pgv_lang["mytasks_block"]				= "MyTask";   
+$pgv_lang["mytasks_block"] 				= "MyTasks Block";
 $pgv_lang["mytasks_edit"]               = "Edit";
 $pgv_lang["mytasks_unassigned"]			= "Unassigned";
 $pgv_lang["mytasks_takeOn"]				= "TakeOn";

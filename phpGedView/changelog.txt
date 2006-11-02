@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Added option to include media files in backup (yalnifj)
  - Added [ 1424477 ] Export Dates for external Calender (opus27)
  - Applied [ 1585247 ] Collapsable fact notes (yalnifj)
  - Fixed [ 1582849 ] 4.0.3 & 4.1 Minimal Theme - small missing (canajun2eh)
