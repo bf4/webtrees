@@ -25,7 +25,7 @@
  */
 
 function print_gedcom($privatize_export='', $privatize_export_level='', $convert='', $remove='', $zip='', $gedout='') {
-		global $GEDCOMS, $GEDCOM, $ged, $VERSION, $VERSION_RELEASE, $pgv_lang;
+		global $GEDCOMS, $GEDCOM, $ged, $VERSION, $VERSION_RELEASE, $pgv_lang, $CHARACTER_SET;
 		global $TBLPREFIX, $GEDCOM_ID_PREFIX, $SOURCE_ID_PREFIX, $FAM_ID_PREFIX, $REPO_ID_PREFIX, $MEDIA_ID_PREFIX;
 
 		if ($privatize_export == "yes") {
@@ -278,7 +278,7 @@ function um_export($proceed) {
 		}
 		$authtext .= "\$users[\"$key\"] = \$user;\n\n";
 	}
-	$authtext .= "?>\n";
+	$authtext .= "?".">\n";
 	if (file_exists($INDEX_DIRECTORY."authenticate.php")) {
 		print $pgv_lang["um_file_create_fail1"]." ".$INDEX_DIRECTORY."authenticate.php<br /><br />";
 	}
@@ -452,3 +452,4 @@ $res =& $tempsql;
 		if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_noblocks"]." ".$pgv_lang["um_file_not_created"]."<br /><br />";
 	}
 }
+?>

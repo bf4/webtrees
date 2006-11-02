@@ -1123,7 +1123,8 @@ function print_changes_table($datalist) {
 		//-- Record ID
 		if ($SHOW_ID_NUMBERS) {
 			echo "<td class=\"list_value_wrap rela\">";
-			echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".$record->xref."</a></td>";
+			$sortkey = substr($record->xref, 0 ,1).sprintf("%05d", substr($record->xref, 1));
+			echo "<a href=\"".$record->getLinkUrl()."\" title=\"".$sortkey."\" class=\"list_item\">".$record->xref."</a></td>";
 		}
 		//-- Record name(s)
 		if ($record->type=="FAM") $name = $record->getSortableName(true);
