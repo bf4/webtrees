@@ -473,7 +473,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	}
 	//-- advanced name fields
 	print "<tr id=\"advanced_name\"><td class=\"descriptionbox\" colspan=\"2\">";
-	print "<a href=\"javascript:;\" onclick=\"toggleAdvancedName(); return false;\"><img id=\"advanced_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> Advanced Name Fields</a>";
+	print "<a href=\"javascript:;\" onclick=\"toggleAdvancedName(); return false;\"><img id=\"advanced_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["advanced_name_fields"]."</a>";
 	print "</td></tr>\n";
 	foreach($advanced_name_fields as $tag=>$value) {
 		$value = get_gedcom_value($tag, 0, $namerec);

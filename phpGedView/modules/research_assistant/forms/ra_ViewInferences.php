@@ -73,7 +73,7 @@ class ra_ViewInferences extends ra_form {
      */
  	function contents() {
  		global $TBLPREFIX,$DBCONN, $GEDCOMS, $GEDCOM;
- 		global $LANGUAGE, $factarray;
+ 		global $LANGUAGE, $factarray, $pgv_lang;
 				 		
  		$out = "<table class=\"width80\" align=\"center\"><tr><td><p>".$pgv_lang["ViewProbExplanation"]."</p></td></tr></table>";
  		$out .= "<table align='center'><tr><td class='topbottombar' colspan='4'><b>Data Correlations</b></td></tr>";
@@ -102,7 +102,7 @@ class ra_ViewInferences extends ra_form {
  					$out .= "<td class='optionbox'>". sprintf("%.2f%%",$row['pr_per'])."</td></tr>"; 
  				}
  		}
- 		$out .= "<tr><td class='topbottombar' colspan='4'><form method=\"get\" action=\"\"><input type=\"button\" value=\"".$pgv_lang["Recalculate"]."\" onclick=\"window.location='http://localhost/fresh/module.php?mod=research_assistant&action=viewProbabilities&amp;recount=1';\" /></form></td></tr>";
+ 		$out .= "<tr><td class='topbottombar' colspan='4'><form method=\"get\" action=\"\"><input type=\"button\" value=\"".$pgv_lang["Recalculate"]."\" onclick=\"window.location='module.php?mod=research_assistant&action=viewProbabilities&recount=1';\" /></form></td></tr>";
  		//Returns the table to display
  		return $out;
  	}

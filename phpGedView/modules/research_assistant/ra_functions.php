@@ -1236,13 +1236,13 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 				//beginning of the missing information table, which gets populated with missing information for that individual and allows the user to "autoadd" tasks
 				//a checkbox to view link conversion is included if a piece of missing information is already auto tasked
 		$out .="
-				<table width='100%'>
+				<table width='100%' border=\"0\">
 					<tr>
-						<td width='50%'>
-							<table align='right'>
+						<td>
+							<table align='center'>
 									<form name='auto' action='individual.php' method='post'><input type='hidden' name='pid' value='".$controller->pid."' /><input type='hidden' name='action' value='ra_addtask' />
 									<tr>
-										<td align='right' colspan=2 class='topbottombar'>".print_help_link("ra_missing_info_help", "qm", '', false, true)."<b>".$pgv_lang['missing_info'].
+										<td align='center' colspan=2 class='topbottombar'>".print_help_link("ra_missing_info_help", "qm", '', false, true)."<b>".$pgv_lang['missing_info'].
 										"</td>
 									</tr>";
 										foreach ($Missing as $key => $val) //every missing item gets a checkbox , so you check check it and make a task out of it
@@ -1264,7 +1264,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 												$out .= "<tr><td width='20' class='optionbox'><a href=module.php?mod=research_assistant&action=viewtask&taskid=$taskid>View</a></td><td class='optionbox'>".$tasktitle."</td></tr>";
 										}
 										// Create the selection box and add all the folder names and values
-										$out .= "<tr><td class='optionbox' colspan='2' align='center'><h5>Folder:&nbsp;&nbsp;</h><select name='folder'>";
+										$out .= "<tr><td class='optionbox' colspan='2' align='center'><h5>".$pgv_lang['folder']."&nbsp;&nbsp;</h><select name='folder'>";
 										$out .= $this->folder_search();
 										$out .= "</select></td></tr>";
 										$out .= "<tr><td colspan='2'class='topbottombar'><input type='submit' value='".$pgv_lang["AddTask"]."' /></td></tr>
@@ -1273,8 +1273,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 						</td>";
 		//Beginning of the auto search feature which gets dynamically populated with an individuals information to be sent to ancestry or familySearch
 		$out .= "		
-						<td align='left' valign='top'>
-							 
+						<td align='center' valign='top'>
 							<table>
 								<tr>
 									<td align='center' class='topbottombar' colspan='2' height='50%'><b>".print_help_link("auto_search", "qm", '', false, true)."<b>".$pgv_lang['auto_search_text']."</b>

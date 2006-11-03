@@ -5,7 +5,7 @@
  * This block will randomly choose media items and show them in a block
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2006  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@ if ($MULTI_MEDIA) {
 		global $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES, $GEDCOM_ID_PREFIX, $FAM_ID_PREFIX, $SOURCE_ID_PREFIX;
 		global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $DEBUG;
 		global $PGV_BLOCKS, $command, $action;
+		global $PGV_IMAGE_DIR, $PGV_IMAGES;
   		if (empty($config)) $config = $PGV_BLOCKS["print_random_media"]["config"];
   		if (isset($config["filter"])) $filter = $config["filter"];  // indi, event, or all
   		else $filter = "all";
@@ -178,13 +179,30 @@ if ($MULTI_MEDIA) {
 				print "</div>";
 				if ($config['controls']=='yes') {
 					print "<br />\n";
-					print "<a href=\"javascript: ".$pgv_lang["play"].";\" onclick=\"play = true; playSlideShow(); return false;\">".$pgv_lang["play"]."</a> | ";
-					print "<a href=\"javascript: ".$pgv_lang["stop"].";\" onclick=\"play = false; return false;\">".$pgv_lang["stop"]."</a> | ";
-					print "<a href=\"javascript: ".$pgv_lang["next"].";\" onclick=\"return ajaxBlock('random_picture$index', 'print_random_media', '$side', $index, true);\">".$pgv_lang["next"]."</a>\n";
+					if ($config['start']=='yes' || isset($_COOKIE['rmblockplay'])) $image = "stop";
+					else $image = "rarrow";
+					print "<a href=\"javascript: ".$pgv_lang["play"]."/".$pgv_lang["stop"].";\" onclick=\"togglePlay(); return false;\"><img id=\"play_stop\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$image]['other']."\" border=\"0\" alt=\"".$pgv_lang["play"]."/".$pgv_lang["stop"]."\" title=\"".$pgv_lang["play"]."/".$pgv_lang["stop"]."\"/></a>\n";
+					print "<a href=\"javascript: ".$pgv_lang["next"].";\" onclick=\"return ajaxBlock('random_picture$index', 'print_random_media', '$side', $index, true);\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES['rdarrow']['other']."\" border=\0\" alt=\"".$pgv_lang["next"]."\" title=\"".$pgv_lang["next"]."\" /></a>\n";
 					?>
 					<script language="JavaScript" type="text/javascript">
 					<!--
 						var play = false;
+						function togglePlay() {
+							if (play) {
+								play = false;
+								imgid = document.getElementById('play_stop');
+								imgid.src = '<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]['other']; ?>';
+								document.cookie = 'rmblockplay=true;';
+							}
+							else {
+								play = true; 
+								playSlideShow();
+								imgid = document.getElementById('play_stop');
+								imgid.src = '<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["stop"]['other']; ?>';
+								document.cookie = 'rmblockplay=; expires=Thu, 2 Aug 2001 20:47:11 UTC;';
+							}
+						}
+						
 						function playSlideShow() {
 							if (play) {
 								ajaxBlock('random_picture<?php print $index; ?>', 'print_random_media', '<?php print $side; ?>', <?php print $index; ?>, false);
