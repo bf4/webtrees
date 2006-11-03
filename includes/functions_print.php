@@ -1827,8 +1827,12 @@ function print_theme_dropdown($style=0) {
 		  isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
 		  $frompage = $_SERVER["SCRIPT_NAME"].$tqstring;
 		  if(isset($_REQUEST['mod'])){
-		  	if(!strstr("?", $frompage)) $frompage.="?";
-		  	$frompage.="&mod=".$_REQUEST['mod'];
+		  	if(!strstr("?", $frompage)) 
+		  	{
+		  		if(!strstr("%3F", $frompage)) ;
+		  		else $frompage.="?";
+		  	}
+		  	if(!strstr("&mod",$frompage))$frompage.="&mod=".$_REQUEST['mod'];
 		  }
 		  
 		  $themes = get_theme_names();

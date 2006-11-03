@@ -78,6 +78,7 @@ $pgv_lang["Percent"]							= "Percent";
 $pgv_lang["ViewProbExplanation"]					= "This page analyzes the data for the active GEDCOM dataset and shows the correlations between different data elements. For example, there could be a 95% correlation that the surname in a local record is the same as the surname in the father's record.  This would mean that 95% of the people in this GEDCOM dataset share the same surname as their father. In this version of the Research Assistant, these calculations are not being used in other areas of the program and are only provided as a help to you in your research.  In the future we plan to use this data to help provide you with meaningful suggestions of where you should focus some of your future research. ";
 
 // -- RA_FOLDER MESSAGES
+$pgv_lang["Folder"]                             = "Folder:";
 $pgv_lang["Edit_Task"]                 			= "Edit Task";
 $pgv_lang["End_Date"]                 			= "End Date";
 $pgv_lang["Start_Date"]                 		= "Start Date";

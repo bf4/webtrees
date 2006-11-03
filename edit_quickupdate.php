@@ -377,10 +377,12 @@ if ($action=="update") {
 			$thumbnail = $MEDIA_DIRECTORY."thumbs/".basename($_FILES['FILE']['name']);
 			generate_thumbnail($filename, $thumbnail);
 
-			$factrec = "1 OBJE\r\n";
-			$factrec .= "2 FILE ".$filename."\r\n";
-			if (!empty($TITL)) $factrec .= "2 TITL $TITL\r\n";
+			$objrec = "0 @new@ OBJE\r\n";
+			$objrec .= "1 FILE ".$filename."\r\n";
+			if (!empty($TITL)) $objrec .= "2 TITL $TITL\r\n";
+			$objid = append_gedrec($objrec);
 
+			$factrec = "1 OBJE @".$objid."@\r\n1 _PRIM Y\r\n";
 			if (empty($replace)) $gedrec .= "\r\n".$factrec;
 			else {
 				$fact = "OBJE";
