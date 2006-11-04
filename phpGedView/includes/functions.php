@@ -255,9 +255,11 @@ function store_gedcoms() {
 	}
 	$gedcomtext .= "\n\$DEFAULT_GEDCOM = \"$DEFAULT_GEDCOM\";\n";
 	$gedcomtext .= "\n?".">";
-	$fp = fopen($INDEX_DIRECTORY."gedcoms.php", "wb");
+	$fp = @fopen($INDEX_DIRECTORY."gedcoms.php", "wb");
 	if (!$fp) {
-		print "<span class=\"error\">".$pgv_lang["gedcom_config_write_error"]."<br /></span>\n";
+		global $whichFile;
+		$whichFile = $INDEX_DIRECTORY."gedcoms.php";
+		print "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."<br /></span>\n";
 	}
 	else {
 		fwrite($fp, $gedcomtext);

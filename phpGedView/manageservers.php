@@ -55,9 +55,11 @@ function add_banned_ip($ip) {
 	$bannedtext .= "\$banned[] = \"".$ip."\";\n";
 	$bannedtext .= "\n"."?>";
 
-	$fp = fopen($INDEX_DIRECTORY."banned.php", "wb");
+	$fp = @fopen($INDEX_DIRECTORY."banned.php", "wb");
 	if (!$fp) {
-		print "<span class=\"error\">".$pgv_lang["gedcom_config_write_error"]."<br /></span>\n";
+		global $whichFile;
+		$whichFile = $INDEX_DIRECTORY."banned.php";
+		print "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."<br /></span>\n";
 	}
 	else {
 		fwrite($fp, $bannedtext);
@@ -89,9 +91,11 @@ function add_search_engine_ip($ip) {
 	$searchtext .= "\$search_engines[] = \"".$ip."\";\n";
 	$searchtext .= "\n"."?>";
 
-	$fp = fopen($INDEX_DIRECTORY."search_engines.php", "wb");
+	$fp = @fopen($INDEX_DIRECTORY."search_engines.php", "wb");
 	if (!$fp) {
-		print "<span class=\"error\">".$pgv_lang["gedcom_config_write_error"]."<br /></span>\n";
+		global $whichFile;
+		$whichFile = $INDEX_DIRECTORY."search_engines.php";
+		print "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."<br /></span>\n";
 	}
 	else {
 		fwrite($fp, $searchtext);
@@ -125,9 +129,11 @@ function delete_banned_ip($ip) {
 	
 	$bannedtext .= "\n"."?>";
 
-	$fp = fopen($INDEX_DIRECTORY."banned.php", "wb");
+	$fp = @fopen($INDEX_DIRECTORY."banned.php", "wb");
 	if (!$fp) {
-		print "<span class=\"error\">".$pgv_lang["gedcom_config_write_error"]."<br /></span>\n";
+		global $whichFile;
+		$whichFile = $INDEX_DIRECTORY."banned.php";
+		print "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."<br /></span>\n";
 	}
 	else {
 		fwrite($fp, $bannedtext);
@@ -161,9 +167,11 @@ function delete_search_engine_ip($ip) {
 	
 	$searchtext .= "\n"."?>";
 
-	$fp = fopen($INDEX_DIRECTORY."search_engines.php", "wb");
+	$fp = @fopen($INDEX_DIRECTORY."search_engines.php", "wb");
 	if (!$fp) {
-		print "<span class=\"error\">".$pgv_lang["gedcom_config_write_error"]."<br /></span>\n";
+		global $whichFile;
+		$whichFile = $INDEX_DIRECTORY."search_engines.php";
+		print "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."<br /></span>\n";
 	}
 	else {
 		fwrite($fp, $searchtext);
