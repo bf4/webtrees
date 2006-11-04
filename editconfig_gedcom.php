@@ -378,18 +378,18 @@ if ($action=="update") {
 		$errors = true;
 	}
 	$configtext = preg_replace('/\$TIME_LIMIT\s*=\s*".*";/', "\$TIME_LIMIT = \"".$_POST["NEW_TIME_LIMIT"]."\";", $configtext);
+	global $whichFile;
+	$whichFile = $INDEX_DIRECTORY.$FILE."_conf.php";
 	if (!is_writable($INDEX_DIRECTORY.$FILE."_conf.php")) {
 		$errors = true;
-		$pgv_lang["global_str1"] = $gedcom_config;
-		$error_msg .= "<span class=\"error\"><b>".print_text("file_write_error",0,1)."</b></span><br />";
+		$error_msg .= "<span class=\"error\"><b>".print_text("gedcom_config_write_error",0,1)."</b></span><br />";
 		$_SESSION[$gedcom_config]=$configtext;
 		$error_msg .= "<br /><br /><a href=\"config_download.php?file=$gedcom_config\">".$pgv_lang["download_gedconf"]."</a> ".$pgv_lang["upload_to_index"]."$INDEX_DIRECTORY<br /><br />\n";
 	}
-	$fp = fopen($INDEX_DIRECTORY.$FILE."_conf.php", "wb");
+	$fp = @fopen($INDEX_DIRECTORY.$FILE."_conf.php", "wb");
 	if (!$fp) {
 		$errors = true;
-		$pgv_lang["global_str1"] = $gedcom_config;
-		$error_msg .= "<span class=\"error\">".print_text("file_write_error",0,1)."</span><br />\n";
+		$error_msg .= "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."</span><br />\n";
 	}
 	else {
 		fwrite($fp, $configtext);
