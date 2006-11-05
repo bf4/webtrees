@@ -30,7 +30,7 @@
 	exit;
 }
 
-$pgv_lang["advanced_name_fields"]	= "Advanced Name Fields";
+$pgv_lang["advanced_name_fields"]	= "Additional names (nickname, married name, etc.)";
 $pgv_lang["accept_changes"] 		= "Accept / Reject Changes";
 $pgv_lang["replace"]				= "Replace record";
 $pgv_lang["append"] 				= "Append record";

@@ -415,7 +415,7 @@ function undo_change($cid, $index) {
 function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag="CHIL", $sextag="") {
 	global $pgv_lang, $factarray, $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $monthtonum, $WORD_WRAPPED_NOTES;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $USE_RTL_FUNCTIONS, $GEDCOM;
-	global $bdm;
+	global $bdm, $TEXT_DIRECTION;
 
 	$bdm = ""; // used to copy '1 SOUR' to '2 SOUR' for BIRT DEAT MARR
 	init_calendar_popup();
@@ -456,7 +456,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	$default_name_fields = array("NPFX"=>"","NAME"=>"","GIVN"=>"","SPFX"=>"","SURN"=>"","NSFX"=>"");
 	$advanced_name_fields = array("NICK"=>"", "_MARNM"=>"", "ROMN"=>"");
 	//-- if they are using an RTL language then they probably want _HEB by default
-	if ($USE_RTL_FUNCTIONS)  $default_name_fields["_HEB"] = "";
+	if ($TEXT_DIRECTION=="rtl")  $default_name_fields["_HEB"] = "";
 	else $advanced_name_fields["_HEB"] = "";
 	
 	//-- iterate over the name tags and find the values from the name record.
