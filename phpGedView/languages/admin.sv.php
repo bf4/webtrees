@@ -151,6 +151,7 @@ $pgv_lang["found_record"]		= "Hittade poster";
 $pgv_lang["ged_download"]						= "Ladda ner";
 $pgv_lang["ged_import"]			= "Importera";
 $pgv_lang["gedcom_adm_head"]					= "GEDCOM-administration";
+$pgv_lang["gedcom_config_write_error"]			= "FEL!!!<br />Kunde inte skriva till filen <i>#GLOBALS[whichFile]#</i>.Kontrollera att filen har skrivrättighter.";
 $pgv_lang["gedcom_downloadable"] 	= "Denna GEDCOM-fil är nerladdningsbar över internet!<br />Var vänlig läs Säkerhetssektionen i <a href=\"readme.txt\">readme.txt</a> för att rätta till problemet";
 $pgv_lang["gedcom_file"]		= "GEDCOM-fil:";
 $pgv_lang["gedcom_not_imported"]				= "Denna GEDOM-fil har inte blivit importerad ännu.";
