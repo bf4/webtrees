@@ -77,6 +77,7 @@ $level2_tags=array( // The order of the $keys is significant
 	"AGE"  =>array("CENS","DEAT"),
 	"HUSB" =>array("MARR"),
 	"WIFE" =>array("MARR"),
+	"FAMC" =>array("ADOP"),
 	"FILE" =>array("OBJE"),
 	"_PRIM"=>array("OBJE"),
 );
@@ -878,6 +879,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	if ($fact=="REPO") $islink = true;
 	if ($fact=="SOUR") $islink = true;
 	if ($fact=="OBJE") $islink = true;
+	if ($fact=="FAMC") $islink = true;
 
 	// rows & cols
 	$rows=1;
@@ -968,6 +970,18 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			print "<option value=\"$code\"";
 			if ($code==$value) print " selected=\"selected\"";
 			print ">$temple</option>\n";
+		}
+		print "</select>\n";
+	}
+	else if ($fact=="ADOP") {
+		print "<select tabindex=\"".$tabkey."\" name=\"".$element_name."\" >";
+		foreach (array("BOTH"=>$factarray["HUSB"]."+".$factarray["WIFE"],
+		               "HUSB"=>$factarray["HUSB"],
+		               "WIFE"=>$factarray["WIFE"]) as $k=>$v) {
+			print "<option value='$k'";
+			if ($value==$k)
+				print " selected";
+			print ">$v</option>";
 		}
 		print "</select>\n";
 	}
@@ -1683,6 +1697,9 @@ function insert_missing_subtags($level1tag)
 				case "HUSB":
 				case "WIFE":
 					add_simple_tag("3 AGE");
+					break;
+				case "FAMC":
+					add_simple_tag("3 ADOP BOTH");
 					break;
 			}
 		}

@@ -464,6 +464,16 @@ else if ($action=="addfamlink") {
 	print "<td class=\"facts_value\"><input type=\"text\" name=\"famid\" size=\"8\" /> ";
 	print_findfamily_link("famid");
 	print "\n</td></tr>";
+	if ($famtag=="CHIL") {
+		print "<tr><td class=\"facts_label\">".$factarray["PEDI"]."</td>";
+		print "<td class=\"facts_value\"><select name=\"pedigree\">";
+		print "<option value=\"\"></option>";
+		print "<option value=\"birth\">".$pgv_lang["birth"]."</option>";
+		print "<option value=\"adopted\">".$pgv_lang["adopted"]."</option>";
+		print "<option value=\"foster\">".$pgv_lang["foster"]."</option>";
+		print "<option value=\"sealing\">".$pgv_lang["sealing"]."</option>";
+		print "</select></tr>";
+	}
 	print "</table>\n";
 	print "<input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /><br />\n";
 	print "</form>\n";
@@ -504,6 +514,11 @@ else if ($action=="linkfamaction") {
 		//-- update the individual record for the person
 		if (preg_match("/1 $itag @$famid@/", $gedrec)==0) {
 			$gedrec = trim($gedrec)."\r\n1 $itag @$famid@";
+			if ($itag=="FAMC" && !empty($pedigree)) {
+				$gedrec.="\r\n2 PEDI $pedigree";
+				if ($pedigree=="adopted")
+					$gedrec.="\r\n1 ADOP\r\n2 FAMC @$famid@\r\n3 ADOP BOTH";
+			}
 			if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 			replace_gedrec($pid, $gedrec);
 		}
