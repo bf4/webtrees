@@ -153,6 +153,7 @@ $PGV_IMAGES["udarrow"]["other"] = "udarrow.gif";
 $PGV_IMAGES["vline"]["other"] = "vline.gif";
 $PGV_IMAGES["zoomin"]["other"] = "zoomin.gif";
 $PGV_IMAGES["zoomout"]["other"] = "zoomout.gif";
+$PGV_IMAGES["stop"]["other"] = "stop.gif";
 
 //- digits
 $PGV_IMAGES["0"]["digit"] = "small/0.jpg";
