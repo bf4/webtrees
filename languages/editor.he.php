@@ -23,16 +23,19 @@
  * @author PGV Developers
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: editor.he.php 430 2006-09-30 06:32:10Z yalnifj $
+ * @version $Id$
  */
  if (preg_match("/editor\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "You cannot access a language file directly.";
 	exit;
 }
+
+$pgv_lang["advanced_name_fields"]	= "שמות נוספים (שם כינוי, שם נישואים, וכו')"; 
+$pgv_lang["accept_changes"]		= "קבל/דחה את השינויים";
 $pgv_lang["replace"]			= "החלפת רשומה";
 $pgv_lang["append"]			= "הוספת רשומה בסוף";
 $pgv_lang["review_changes"]		= "סקור שינויי GEDCOM";
-$pgv_lang["current_dir"]		= "התיקייה הנוכחית";
+//$pgv_lang["current_dir"]		= "התיקייה הנוכחית";
 $pgv_lang["remove_object"]		= "הסר ישות מדיה";
 $pgv_lang["remove_links"]		= "הסר קישור";
 $pgv_lang["media_not_deleted"]	= "תיקיית המדיה לא הוסרה.";
@@ -55,7 +58,6 @@ $pgv_lang["add_unlinked_source"]	= "הוסף מקור לא קשור";
 $pgv_lang["server_file"]		= "שם הקובץ בשרת";
 $pgv_lang["server_file_advice"]		= "אין לשנות אם ברצונך לשמור על שם הקובץ המקורי.";
 $pgv_lang["server_file_advice2"]	= "ניתן להכניס URL שמתחיל ב-<span dir=\"ltr\">&laquo;http://&raquo;</span>.";
-$pgv_lang["server_folder"]		= "שם התיקייה בשרת";
 $pgv_lang["server_folder_advice"]	= "ניתן להכניס עד ל-#GLOBALS[MEDIA_DIRECTORY_LEVELS]# שמות של תיקיות לאחר ברירת המחדל &laquo;#GLOBALS[MEDIA_DIRECTORY]#&raquo;.<br />אין להכניס את החלק &laquo;<span dir=\"ltr\">#GLOBALS[MEDIA_DIRECTORY]#</span>&raquo; של שם התיקייה בשרת.";
 $pgv_lang["server_folder_advice2"]	= "מתעלמים מכניסה זו אם הוכנס URL בשדה שם הקובץ.";
 $pgv_lang["add_linkid_advice"]	= "הכנס או חפש את קוד הזיהוי של האדם, המשפחה או המקור שאליו יש לקשר את המדיה הזו.";
@@ -83,10 +85,7 @@ $pgv_lang["add_obje"]		= "הוסף ישות מולטימדיה חדשה";
 $pgv_lang["add_name"]		= "הוסף שם";
 $pgv_lang["edit_raw"]		= "ערוך את רשומת ה-GEDCOM הלא מעובדת";
 $pgv_lang["label_add_remote_link"]  	= "הוסף קשר";
-//$pgv_lang["label_gedcom_id"]        	= "זיהוי GEDCOM";
 $pgv_lang["label_gedcom_id"]        	= "קוד של מסד הנתונים";
-//$pgv_lang["label_gedcom_id"]        	= "GEDCOM ID";
-//$pgv_lang["label_gedcom_id"]       	 = "Database ID";  
 $pgv_lang["label_local_id"]         	= "קוד זיהוי אישי";
 $pgv_lang["accept"]			= "אשר";
 $pgv_lang["accept_all"]		= "אשר את כל השינויים";
@@ -122,10 +121,10 @@ $pgv_lang["change"]			= "שנה";
 $pgv_lang["change_family_instr"]	= "השתמש בדף זה כדי לשנות או להסיר בני משפחה.<br /><br />עבור כל בן משפחה, ניתן להשתמש בקישורית \"שנה\" כדי לשנות אדם אחר בתפקיד זה בתוך המשפחה. ניתן גם כן להשתמש בקישור \"הסר\" כדי להסיר את האדם מהמשפחה.<br /><br />אחרי שתסיים לשנות בני משפחה, לחץ על כפתור שמור כדי לשמור את השינויים.<br />";
 $pgv_lang["change_family_members"]	= "שנה בני משפחה";
 $pgv_lang["changes_occurred"]	= "השינויים הבאים בוצעו ברשומה זו:";
-$pgv_lang["confirm_delete_file"]	= "האם אתה בטוח שתרצה למחוק את הקובץ הזה?";
-$pgv_lang["confirm_folder_delete"] 	= "האם אתה בטוח שברצונך למחוק את התיקייה?";
+//$pgv_lang["confirm_delete_file"]	= "האם אתה בטוח שתרצה למחוק את הקובץ הזה?";
+//$pgv_lang["confirm_folder_delete"] 	= "האם אתה בטוח שברצונך למחוק את התיקייה?";
 $pgv_lang["confirm_remove"]		= "האם אתה בטוח שתרצה להסיר אדם זה מהמשפחה?";
-$pgv_lang["confirm_remove_links"]	= "האם אתה בטוח שתרצה להסיר את כל הקישורים לישות המדיה הזו?";
+//$pgv_lang["confirm_remove_links"]	= "האם אתה בטוח שתרצה להסיר את כל הקישורים לישות המדיה הזו?";
 $pgv_lang["confirm_remove_object"]	= "האם אתה בטוח שתרצה להסיר את ישות המדיה הזו ממאגר הנתונים?";
 $pgv_lang["create_repository"]		= "צור מאגר";
 $pgv_lang["create_source"]		= "צור מקור חדש";
@@ -136,7 +135,7 @@ $pgv_lang["deathplace_search"]	= "מקום פטירה: ";
 $pgv_lang["delete_dir_success"]	= "תיקיות המדיה והתמונות המזעריות הוסרו בהצלחה.";
 $pgv_lang["delete_file"]		= "מחק קובץ";
 $pgv_lang["delete_repo"]		= "מחק מאגר";
-$pgv_lang["description"]		= "תאור";
+//$pgv_lang["description"]		= "תאור";
 $pgv_lang["directory_not_empty"]	= "התיקייה אינה ריקה.";
 $pgv_lang["directory_not_exist"]	= "התיקייה אינה קיימת.";
 $pgv_lang["error_remote"]           	= "בחרת אתר מרוחק.";
@@ -163,9 +162,7 @@ $pgv_lang["invalid_search_input"] 	= "הכנס בבקשה שם פרטי, שם מ
 $pgv_lang["invalid_search_multisite_input"]  = "הכנס אחד מהפרטים הבאים: שם, תאריך לידה, מקום לידה, תאריך פטירה, מקום פטירה ומין ";
 $pgv_lang["invalid_search_multisite_input_gender"] 	= "אנא חפש שנית עם יותר נתונים, לא רק מין";
 $pgv_lang["label_diff_server"]      	= "אתר אחר";
-//$pgv_lang["label_location"]         	= "Location";
-//$pgv_lang["label_location"]         	= "Site Location";
-$pgv_lang["label_location"]         	= "מיקום";
+$pgv_lang["label_location"]         	= "מיקום האתר"; 
 $pgv_lang["label_password_id2"]	= "סיסמא: ";
 $pgv_lang["label_rel_to_current"]   	= "קשר לאדם הנוכחי";
 $pgv_lang["label_remote_id"]        	= "קוד זיהוי אישי מרוחק";
@@ -218,11 +215,8 @@ $pgv_lang["update_successful"]		= "העדכון הצליח";
 $pgv_lang["upload"]			= "העלה";
 $pgv_lang["upload_error"]		= "התגלתה שגיאה בהעלאת הקובץ שלך.";
 $pgv_lang["upload_media"]		= "העלאת קבצי מדיה";
+$pgv_lang["upload_media_help"]	= "~#pgv_lang[upload_media]#~<br /><br />בחר קבצים מהמחשב המקומי שלך להעלאה לשרת שלך. כל הקבצים מועלים לתיקיית <b>#MEDIA_DIRECTORY#</b> או לאחת מהתיקיות מתחתיה.<br /><br />שמות החוצצים שאתה מציין יתווספו ל-#MEDIA_DIRECTORY#. למשל, #MEDIA_DIRECTORY#myfamily. אם תיקיית התמונות המזעריות אינה קיימת, היא תווצר בצורה אוטומטית.";
 $pgv_lang["upload_successful"]		= "ההעלאה הצליחה.";
 $pgv_lang["view_change_diff"]		= "התבונן בשינויים ";
-
-$pgv_lang["accept_changes"]		= "קבל/דחה את השינויים";
-$pgv_lang["upload_media_help"]	= "~#pgv_lang[upload_media]#~<br /><br />בחר קבצים מהמחשב המקומי שלך להעלאה לשרת שלך. כל הקבצים מועלים לתיקיית <b>#MEDIA_DIRECTORY#</b> או לאחת מהתיקיות מתחתיה.<br /><br />שמות החוצצים שאתה מציין יתווספו ל-#MEDIA_DIRECTORY#. למשל, #MEDIA_DIRECTORY#myfamily. אם תיקיית התמונות המזעריות אינה קיימת, היא תווצר בצורה אוטומטית.";
-
 
 ?>
