@@ -154,7 +154,7 @@ $pgv_lang["disabled"]			= "Disabled";
 $pgv_lang["mouseover"]			= "On Mouse Over";
 $pgv_lang["mousedown"]			= "On Mouse Down";
 $pgv_lang["click"]			= "On Mouse Click";
-$pgv_lang["enter_db_pass"]		= "For security, you must enter the #pgv_lang[DBUSER]# and #pgv_lang[DBPASS]# before changing configuration values.";
+$pgv_lang["enter_db_pass"]		= "For security, you must always enter the #pgv_lang[DBUSER]# and #pgv_lang[DBPASS]# when changing any configuration values.";
 $pgv_lang["server_url_note"]	= "This should be the URL to your PhpGedView folder.  You should only change this setting if you are sure you know what you are doing.  PhpGedView has determined this value to be <b>#GUESS_URL#</b>";
 
 $pgv_lang["DBTYPE"]			= "Database Type";

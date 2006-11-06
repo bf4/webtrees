@@ -44,6 +44,7 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
+*$pgv_lang["enter_db_pass"]							6 Nov 2006				w
 *$pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE"]	4 Nov 2006				w
 *$pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE_help"]	4 Nov 2006			w
 +$pgv_lang["um_bu_media"]							1 Nov 2006				A
