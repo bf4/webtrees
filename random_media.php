@@ -117,7 +117,8 @@ if ($MULTI_MEDIA) {
 				}
 				if (!$disp) return false;
 
-				if ($action!="ajax") print "<div id=\"random_picture$index\" class=\"block\">\n";
+				if ($action!="ajax") {
+					print "<div id=\"random_picture$index\" class=\"block\">\n";
 				print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
 				print "<td class=\"blockh1\" >&nbsp;</td>";
 				print "<td class=\"blockh2\" ><div class=\"blockhc\">";
@@ -135,7 +136,8 @@ if ($MULTI_MEDIA) {
 				print "</div></td>";
 				print "<td class=\"blockh3\">&nbsp;</td></tr>\n";
 				print "</table>";
-				print "<div class=\"blockcontent\" >";
+					print "<div class=\"blockcontent\" id=\"random_picture_content$index\">";
+				}
 				$imgsize = findImageSize($medialist[$value]["FILE"]);
 				$imgwidth = $imgsize[0]+40;
 				$imgheight = $imgsize[1]+150;
@@ -177,12 +179,18 @@ if ($MULTI_MEDIA) {
 				print "<br /><div class=\"indent" . ($TEXT_DIRECTION=="rtl"?"_rtl":"") . "\">";
 				print_fact_notes($medialist[$value]["GEDCOM"], "1");
 				print "</div>";
+				print "</td></tr></table>\n";
+				if ($action!="ajax") {
+					print "</div>"; // blockcontent
 				if ($config['controls']=='yes') {
-					print "<br />\n";
-					if ($config['start']=='yes' || isset($_COOKIE['rmblockplay'])) $image = "stop";
+						print "<div class=\"center\">\n";
+						if ($config['start']=='yes' || (isset($_COOKIE['rmblockplay'])&&$_COOKIE['rmblockplay']=='true')) $image = "stop";
 					else $image = "rarrow";
-					print "<a href=\"javascript: ".$pgv_lang["play"]."/".$pgv_lang["stop"].";\" onclick=\"togglePlay(); return false;\"><img id=\"play_stop\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$image]['other']."\" border=\"0\" alt=\"".$pgv_lang["play"]."/".$pgv_lang["stop"]."\" title=\"".$pgv_lang["play"]."/".$pgv_lang["stop"]."\"/></a>\n";
-					print "<a href=\"javascript: ".$pgv_lang["next"].";\" onclick=\"return ajaxBlock('random_picture$index', 'print_random_media', '$side', $index, true);\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES['rdarrow']['other']."\" border=\0\" alt=\"".$pgv_lang["next"]."\" title=\"".$pgv_lang["next"]."\" /></a>\n";
+						print "<a href=\"javascript: ".$pgv_lang["play"]."/".$pgv_lang["stop"].";\" onclick=\"togglePlay(); return false;\">";
+						if (isset($PGV_IMAGES[$image]['other'])) print "<img id=\"play_stop\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$image]['other']."\" border=\"0\" alt=\"".$pgv_lang["play"]."/".$pgv_lang["stop"]."\" title=\"".$pgv_lang["play"]."/".$pgv_lang["stop"]."\"/>";
+						else print $pgv_lang["play"]."/".$pgv_lang["stop"];
+						print "</a>\n";
+						print "<a href=\"javascript: ".$pgv_lang["next"].";\" onclick=\"return ajaxBlock('random_picture_content$index', 'print_random_media', '$side', $index, true);\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES['rdarrow']['other']."\" border=\0\" alt=\"".$pgv_lang["next"]."\" title=\"".$pgv_lang["next"]."\" /></a>\n";
 					?>
 					<script language="JavaScript" type="text/javascript">
 					<!--
@@ -192,29 +200,26 @@ if ($MULTI_MEDIA) {
 								play = false;
 								imgid = document.getElementById('play_stop');
 								imgid.src = '<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]['other']; ?>';
-								document.cookie = 'rmblockplay=true;';
 							}
 							else {
 								play = true; 
 								playSlideShow();
 								imgid = document.getElementById('play_stop');
 								imgid.src = '<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["stop"]['other']; ?>';
-								document.cookie = 'rmblockplay=; expires=Thu, 2 Aug 2001 20:47:11 UTC;';
 							}
 						}
 						
 						function playSlideShow() {
 							if (play) {
-								ajaxBlock('random_picture<?php print $index; ?>', 'print_random_media', '<?php print $side; ?>', <?php print $index; ?>, false);
+									ajaxBlock('random_picture_content<?php print $index; ?>', 'print_random_media', '<?php print $side; ?>', <?php print $index; ?>, false);
 								window.setTimeout('playSlideShow()', 4000);
 							}
 						}
 					//-->
 					</script>
+						</div>
 					<?php
 				}
-				print "</td></tr></table>\n";
-				print "</div>"; // blockcontent
 				if ($config['start']=='yes') {
 					?>
 					<script language="JavaScript" type="text/javascript">
@@ -224,7 +229,8 @@ if ($MULTI_MEDIA) {
 					</script>
 					<?php
 				}
-				if ($action!="ajax") print "</div>"; // block
+				}
+				print "</div>"; // block
 		}
 	}
 
