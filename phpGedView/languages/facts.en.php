@@ -282,7 +282,7 @@ $factarray["_DEAT_COUS"] = "Death of a first cousin";
 
 //-- PGV Only facts
 $factarray["_THUM"]	= "Use this image as the thumbnail?";
-$factarray["_PGVU"]	= "Last changed by";
+$factarray["_PGVU"]	= "by"; // last changed by
 $factarray["SERV"] = "Remote Server";
 $factarray["_GEDF"] = "GEDCOM File";
 

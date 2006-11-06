@@ -1250,7 +1250,7 @@ function print_events_table($datalist, $nextdays=1, $option="") {
 		if ($record->type=="FAM") $name = $record->getSortableName(true);
 		else $name = $record->getSortableName();
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
-		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($record->type=="INDI") {
 			echo $record->getSexImage();
 			$name_subtags = array("", "_HEB", "ROMN", "_AKA");
