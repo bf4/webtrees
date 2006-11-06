@@ -23,8 +23,9 @@
  * @author PGV Developers
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: editor.en.php 425 2006-09-29 12:08:49Z canajun2eh $
+ * @version $Id$
  */
+$pgv_lang["advanced_name_fields"]	= "Additional names (nickname, married name, etc.)"; //@@@
 $pgv_lang["accept_changes"]		= "Hyväksy/Hylkää muutokset";
 $pgv_lang["replace"]		= "Vaihda tietue";
 $pgv_lang["append"]		= "Lisää tietue";
@@ -207,6 +208,5 @@ $pgv_lang["upload_media"]		= "Lataa mediatiedostot palvelimelle";
 $pgv_lang["upload_media_help"]	= "Valitse ne tiedostot omalta tietokoneeltasi, jotka haluat ladata palvelimelle. Kaikki tiedostot ladataan hakemistoon <b>#MEDIA_DIRECTORY#</b> tai johonkin sen alihakemistoon.<br /><br />Määrittelemäsi hakemistonimet lisätään  #MEDIA_DIRECTORY#:n perään. Esimerkiksi  #MEDIA_DIRECTORY#myfamily- Mikäli pienoiskuvahakemistoa ei vielä ole olemassa, se luodaan automaattisesti.<br /><br />";
 $pgv_lang["upload_successful"]	= "Koneelle lataaminen onnistui";
 $pgv_lang["view_change_diff"]		= "Näytä muutokset";
-
 
 ?>
