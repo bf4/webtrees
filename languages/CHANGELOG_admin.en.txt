@@ -42,6 +42,20 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["sanity_err0"]							6 Nov 2006				A
++$pgv_lang["sanity_err1"]							6 Nov 2006				A
++$pgv_lang["sanity_err2"]                  			6 Nov 2006				A
++$pgv_lang["sanity_err3"]							6 Nov 2006				A              
++$pgv_lang["sanity_err4"]							6 Nov 2006				A              
++$pgv_lang["sanity_err5"]                  			6 Nov 2006				A
++$pgv_lang["sanity_err6"]                  			6 Nov 2006				A
++$pgv_lang["sanity_warn0"]                  		6 Nov 2006				A
++$pgv_lang["sanity_warn1"]                  		6 Nov 2006				A
++$pgv_lang["sanity_warn2"]                  		6 Nov 2006				A
++$pgv_lang["sanity_warn3"]                  		6 Nov 2006				A
++$pgv_lang["sanity_warn4"]                  		6 Nov 2006				A
++$pgv_lang["sanity_warn5"]                  		6 Nov 2006				A
++$pgv_lang["sanity_warn6"]                  		6 Nov 2006				A
 *$pgv_lang["gedcom_config_write_error"]				4 Nov 2004				W
 *$pgv_lang["admin_gedcoms"]							4 Nov 2006				C		GEDCOMS -> GEDCOMs
 +$pgv_lang["user_time"]								27 Oct 2006				A
