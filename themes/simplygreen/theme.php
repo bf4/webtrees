@@ -129,6 +129,7 @@ $PGV_IMAGES["udarrow"]["other"] = "udarrow.gif";
 $PGV_IMAGES["ldarrow"]["other"] = "ldarrow.gif";
 $PGV_IMAGES["ddarrow"]["other"] = "ddarrow.gif";
 $PGV_IMAGES["remove"]["other"]	= "remove.gif";
+$PGV_IMAGES["stop"]["other"] = "stop.gif";
 
 //- digits
 $PGV_IMAGES["0"]["digit"] = "0.jpg";

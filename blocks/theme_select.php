@@ -51,6 +51,7 @@ function print_block_theme_select($style=0, $config="", $side, $index) {
 	$user = getUser($uname);
 	isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
 	$frompage = $_SERVER["SCRIPT_NAME"].$tqstring;
+	
 	$themes = get_theme_names();
 	print "<div class=\"theme_form\">\n";
 	$style=0;
