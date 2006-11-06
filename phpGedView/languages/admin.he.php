@@ -171,7 +171,7 @@ $pgv_lang["found_record"]		= "רשומה נמצאה";
 $pgv_lang["ged_download"]		= "הורד";
 $pgv_lang["ged_import"] 		= "ייבא";
 $pgv_lang["gedcom_adm_head"]	= "ניהול ה-GEDCOM";
-$pgv_lang["gedcom_config_write_error"]  = "";
+$pgv_lang["gedcom_config_write_error"]	= "ש ג י א ה !!!<br />לא ניתן לכתוב לקובץ  <i>#GLOBALS[whichFile]#</i>. נא בדוק שיש הרשאת כתיבה."; 
 $pgv_lang["gedcom_downloadable"] 	= "את קובץ ה-GEDCOM הזה ניתן להוריד דרך האינטרנט!<br />ראה את פרק ה-SECURITY של קובץ ה-<a href=\"readme.txt\"><b>readme.txt</b></a> כדי לפתור את הבעיה";
 $pgv_lang["gedcom_file"]		= "קובץ GEDCOM:";
 $pgv_lang["gedcom_not_imported"]	= "ה-GEDCOM הזה טרם יובא.";

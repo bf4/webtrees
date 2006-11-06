@@ -518,5 +518,8 @@ $pgv_lang["link_remote_rel_help"]	= "~#pgv_lang[label_rel_to_current]#~<br /><br
 $pgv_lang["edit_add_unlinked_source_help"]	= "~#pgv_lang[add_unlinked_source]#~<br /><br />Käytä tätä linkkiä lisätäksesi uuden lähteen tietokantaan linkittämättä lähdettä toisen tietueen lähdeviitteeseen. Uusi lähde näkyy lähdeluettelossa mutta ei missään kaaviossa tai muuallakaan ohjelmassa ennenkuin se on linkitetty lähdeviitteeseen.";
 $pgv_lang["random_media_start_slide_help"]			= "~#pgv_lang[random_media_start_slide]#~<br /><br />Tulisiko AJAX-diaesityksen käynnistyä automaattisesti kun sivu on ladattu.<br /><br />Tämä ominaisuus käyttää AJAX-tekniikkaa muuttamaan alueen sisältöä esilataamatta tietoa palvelimelta ja lataamatta koko sivua uudelleen.<br /><br />";
 $pgv_lang["random_media_ajax_controls_help"]	= "~#pgv_lang[random_media_ajax_controls]#~<br /><br />Voit käyttää tätä asetusta kykemään päälle tai pois soittimen ohjauspainikkeet satunnaismedia-alueella, jossa käyttäjä voi joko hypätä toiseen satunnaiseen kohteeseen tai esittää satunnaisesti valittuja kohteita, kuten esimerkiksi diaesityksen.<br /><br />Tämä ominaisuus käyttää AJAX-tekniikkaa muuttamaan alueen sisältöä esilataamatta tietoa palvelimelta ja lataamatta koko sivua uudelleen.<br /><br /> ";
+$pgv_lang["import_options_help"] 	= "Voit valita lisävaihtoehtoja käytettäväksi GEDCOM-tiedoston tuonnissa.";
+$pgv_lang["verify_gedcom_help"]	= "Tässä voit vaihtoehtoisesti joko jatkaa tai keskeyttää tämän GEDCOM-tiedoston latauksen tai tuonnin.";
+$pgv_lang["add_gedcom_instructions"]= "Anna tiedostonimi tälle uudelle GEDCOM-tiedostolle. Uusi GEDCOM-tiedosto luodaan indeksihakemistoon: #INDEX_DIRECTORY#";
 
 ?>

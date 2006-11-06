@@ -398,7 +398,7 @@ $pgv_lang["RSS_FORMAT"]				= "מבנה RSS";
 $pgv_lang["RSS_FORMAT_help"]			= "~#pgv_lang[RSS_FORMAT]#~<br /><br />The format of RSS to be used as the default RSS feed format for the site. The numeric suffixes <u>do not</u> indicate version, they identify formats.  For example, RSS 2.0 is not newer than RSS 1.0, but a different format. Feed readers should be able to read any format. There is currently no difference between ATOM and ATOM 0.3. Both use the ATOM 0.3 draft specification.<br />";
 
 $pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE"] = "בדוק שקבצי ה-GEDCOM ניתנים להורדה"; 
-$pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE_help"] = "~#pgv_lang[SECURITY_CHECK_GEDCOM_DOWNLOADABLE]#~<br /><br />For security reasons, the GEDCOM file should not be in a location where it can be directly downloaded, thus bypassing privacy checks. Clicking this link will check if your GEDCOMS can be downloaded over the network.<br /><br />On some systems this check has been known to take a really long time or not even complete.  If that is the case for you, then you should try to point your browser directly at your GEDCOM to see if it can be downloaded.<br />";
+$pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE_help"] = "~#pgv_lang[SECURITY_CHECK_GEDCOM_DOWNLOADABLE]#~<br /><br />For security reasons, GEDCOM files should not be in a location where they can be directly downloaded, thus bypassing privacy checks. Clicking this link will check if your GEDCOM files can be downloaded over the network.<br /><br />On some systems this check has been known to take a really long time or not even complete.  If that is the case for you, then you should try to point your browser directly at your GEDCOM to see if it can be downloaded.<br />";
 $pgv_lang["gedcom_download_secure"]	= "לא ניתן להוריד את קובץ #GEDCOM# ."; 
 
 $pgv_lang["welcome_new2"]				= "<br /><br />מכיוון שאתה רואה דף זה, התקנת בהצלחה את PhpGedView על שרת האינטרנט שלך ואתה מוכן לעצב אותו לפי בחירתך.<br /><br />";
@@ -669,6 +669,7 @@ $pgv_lang["um_bu_gedcoms"] 			= "קבצי GEDCOM";
 $pgv_lang["um_bu_gedsets"] 			= "קבצי הגדרות, תצורה ופרטיות של GEDCOM";
 $pgv_lang["um_bu_logs"] 			= "מוני GEDCOM, קבצי לוג של חיפוש וקבצי לוג של PhpGedView";
 $pgv_lang["um_bu_usinfo"] 			= "הגדרות משתמש, הגדרות אזורים, מועדפים, הודעות, חדשות";
+$pgv_lang["um_bu_media"]			= "קיבצי מדיה"; 
 $pgv_lang["um_mk_bu"] 			= "צור גיבוי";
 $pgv_lang["um_nofiles"] 			= "לא נמצאו קבצים לגיבוי.";
 $pgv_lang["um_files_exist"] 			= "קובץ אחד או יותר קיימים כבר. האם אתה רוצה לעלות עליהם?";
