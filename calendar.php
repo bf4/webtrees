@@ -5,7 +5,7 @@
  * Displays events on a daily, monthly, or yearly calendar.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2006  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -963,7 +963,7 @@ if (($action=="today") || ($action=="year")) {
 	}
 
 	// Print the day/year list(s)
-	/**%
+#	/** DEPRECATED
 	if (!empty($text_indi) || !empty($text_fam) || $count_private_indi>0 || $count_private_fam>0) {
 		print "\n\t\t<table class=\"center $TEXT_DIRECTION\">\n\t\t<tr>";
 		if (!empty($text_indi) || ($count_private_indi>0)) {
@@ -1045,7 +1045,8 @@ if (($action=="today") || ($action=="year")) {
 		print $pgv_lang["no_results"];
 		print "</i><br />\n\t\t</td></tr>";
 	}
-	%**/
+#	**/
+	/** Not ready
 	$legend = "";
 	if ($action=="today") {
 		$legend = " : ".$day." ".$pgv_lang[strtolower($month)];
@@ -1056,10 +1057,11 @@ if (($action=="today") || ($action=="year")) {
 		if (isset($hYear)) $legend .= " / ".$hYear;
 	}
 	//-- indilist
+	echo "<pre>"; print_r ($myindilist); echo "</pre>";
 	print_indi_table($myindilist, $pgv_lang["individuals"]." ".$legend);
 	//-- famlist
 	print_fam_table($myfamlist, $pgv_lang["families"]." ".$legend);
-
+	**/
 	if ($view=="preview") print "<tr><td>";
 }
 else if ($action=="calendar") {

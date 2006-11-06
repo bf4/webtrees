@@ -5,7 +5,7 @@
  * To learn more about CSS visit http://www.w3.org/TR/REC-CSS2/
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003 John Finlay and Others
+ * Copyright (C) 2002 to 2006 John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,6 +35,13 @@ BODY {
 	background-color: #FFFFFF;
 	font-family: tahoma, verdana, arial, helvetica, sans-serif;
 	font-size: 12px;
+}
+fieldset {
+	margin: 8px 8px 4px 8px;
+	-moz-border-radius: 0.6em;
+}
+legend {
+	font-weight: bold;
 }
 A {
 	color: #333333;
@@ -133,7 +140,7 @@ table.center{
 
 .list_item {
 	font-size:10px;
-	white-space: nowrap;
+	/*white-space: nowrap;*/
 }
 .facts_table {
 	width: 100%;
@@ -632,13 +639,13 @@ table.center{
 
 #index_main_blocks {
 	clear: none;
-	width: 73%;
+	width: 66%;
 	float: left;
 }
 
 #index_small_blocks {
 	clear: none;
-	width: 25%;
+	width: 33%;
 	float: right;
 }
 
