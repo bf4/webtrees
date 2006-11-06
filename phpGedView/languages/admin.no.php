@@ -23,7 +23,7 @@
  * @author PGV Developers
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: lang.en.php 294 2006-07-24 12:27:56Z opus27 $
+ * @version $Id$
  */
 $pgv_lang["user"]					= "Godkjent bruker";
 $pgv_lang["thumbnail_deleted"]		= "Miniatyrbilde-fil er nå slettet.";

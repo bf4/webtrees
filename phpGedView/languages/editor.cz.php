@@ -23,7 +23,7 @@
  * @author PGV Developers
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: editor.en.php 425 2006-09-29 12:08:49Z canajun2eh $
+ * @version $Id$
  */
 $pgv_lang["accept_changes"]		= "Přijmout / Odmítnout změny";
 $pgv_lang["replace"]			= "Nahradit záznam";
