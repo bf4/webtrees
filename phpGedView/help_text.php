@@ -31,6 +31,7 @@ require "config.php";
 require $helptextfile["english"];
 if (file_exists($helptextfile[$LANGUAGE])) require $helptextfile[$LANGUAGE];
 if (file_exists('modules/research_assistant/languages/lang.en.php')) require 'modules/research_assistant/languages/lang.en.php';
+if (file_exists('modules/research_assistant/'.$pgv_language[$LANGUAGE])) require 'modules/research_assistant/'.$pgv_language[$LANGUAGE];
 
 if (!isset($help)) $help = "";
 
