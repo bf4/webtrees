@@ -38,7 +38,7 @@ $pgv_lang["random_media_start_slide"]   = "Démarrer le diaporama au chargement 
 $pgv_lang["random_media_ajax_controls"] = "Afficher les contrôles AJAX ?";
 $pgv_lang["description"]                = "Description";
 $pgv_lang["current_dir"]                = "Répertoire actif: ";
-$pgv_lang["SHOW_ID_NUMBERS"]            = "Afficher le code des enregistrements GEDCOM (exemple: F234)";
+$pgv_lang["SHOW_ID_NUMBERS"]            = "Afficher le code GEDCOM";
 $pgv_lang["SHOW_HIGHLIGHT_IMAGES"]      = "Afficher les miniatures des individus";
 $pgv_lang["view_img_details"]           = "Voir les détails de l'image";
 $pgv_lang["server_folder"]              = "Nom du dossier sur le serveur";
@@ -1144,21 +1144,7 @@ $pgv_lang["use_blocks_for_default"]     = "Utiliser ce bloc par défaut pour tou
 $pgv_lang["block_not_configure"]        =	"Ce bloc ne peut pas être configuré.";
 
 //-- validate GEDCOM
-$pgv_lang["changed_mac"]                = "Format fin de ligne Macintosh détecté. [CR] sera changé en [CR+LF].";
-$pgv_lang["changed_places"]             = "Mauvais codage des noms de lieux. Ils doivent suivre la norme GEDCOM 5.5. Un exemple issu de votre fichier";
-$pgv_lang["optional_tools"]             = "Vous pouvez lancer les utilitaires suivants avant d'importer le fichier.";
-$pgv_lang["optional"]                   = "Utilitaires";
 $pgv_lang["add_media_tool"]             = "Utilitaire «Ajout media»";
-$pgv_lang["launch_media_tool"]          = "Lancement de l'utilitaire «Ajout media»";
-$pgv_lang["add_media_descr"]            = "Cet utilitaire va ajouter le media OBJE au fichier GEDCOM.  Fermer cette fenêtre après l'opération.";
-$pgv_lang["extension"]                  = "Extension";
-$pgv_lang["order"]                      = "Ordre";
-$pgv_lang["inject_media_tool"]          = "Ajouter un objet MultiMedia au fichier GEDCOM";
-$pgv_lang["media_table_created"]        = "Table <i>media</i> mise à jour.";
-$pgv_lang["click_to_add_media"]         = "Ajouter les objets MultiMedia suivants au fichier GEDCOM #GEDCOM#";
-$pgv_lang["adds_completed"]             = "Objet MultiMedia ajouté au fichier GEDCOM.";
-$pgv_lang["import_options_help"]        = "Vous pouvez sélectionner des options additionelles pour l'importation de ce fichier GEDCOM.";
-$pgv_lang["verify_gedcom_help"]         = "Vous pouvez continuer le téléchargement et importation de ce fichier GEDCOM ou les annuler.";
 //-- hourglass chart
 $pgv_lang["hourglass_chart"]            = "Sablier";
 
@@ -1166,7 +1152,6 @@ $pgv_lang["hourglass_chart"]            = "Sablier";
 $pgv_lang["choose_report"]              = "Choisir un rapport";
 $pgv_lang["enter_report_values"]        = "Entrer les paramètres du rapport";
 $pgv_lang["selected_report"]            = "Rapport sélectionné";
-$pgv_lang["run_report"]                 = "Afficher le rapport";
 $pgv_lang["select_report"]              = "Selectionner";
 $pgv_lang["download_report"]            = "Enregistrer le rapport";
 $pgv_lang["reports"]                    = "Rapports";
@@ -1210,7 +1195,6 @@ $pgv_lang["on"]                         = "le";
 $pgv_lang["in"]                         = "en";
 $pgv_lang["individual_report"]          = "Individu";
 $pgv_lang["enter_pid"]                  = "Code individu";
-$pgv_lang["individual_list_report"]     = "Liste individus";
 $pgv_lang["generated_by"]               = "Généré par";
 $pgv_lang["list_children"]              = "Liste des enfants par ordre de naissance.";
 $pgv_lang["birth_report"]               = "Naissances par lieu";
@@ -1493,7 +1477,6 @@ $pgv_lang["hs_intruehelp"]              = "Texte d'aide seulement";
 $pgv_lang["hs_inallhelp"]               = "Tout le texte";
 
 // Media import
-$pgv_lang["media_import"]               = "Import d'objets MultiMedia";
 $pgv_lang["choose"]                     = "Choisir : ";
 $pgv_lang["account_information"]        = "Informations du compte";
 

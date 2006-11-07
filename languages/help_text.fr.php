@@ -29,6 +29,9 @@ if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
   print "You cannot access a language file directly.";
   exit;
 }
+$pgv_lang["import_options_help"]        = "Vous pouvez sélectionner des options additionelles pour l'importation de ce fichier GEDCOM.";
+$pgv_lang["verify_gedcom_help"]         = "Vous pouvez continuer le téléchargement et importation de ce fichier GEDCOM ou les annuler.";
+#pgv_lang["add_gedcom_instructions"]    = "Enter a file name for this new GEDCOM.  The new GEDCOM file will be created in the Index directory: #INDEX_DIRECTORY#";
 $pgv_lang["upload_gedcom_help"]         = "~#pgv_lang[upload_gedcom]#~<br /><br />Le chargement d'un fichier sur le serveur peut se faire directement ici, sans programme de type <tt>ftp</tt>.<br /><br />Il suffit de sélectionner un fichier GEDCOM sur votre poste, soit en entrant le chemin complet comme par exemple <tt>C:\\Program Files\\PAF\\famille.ged</tt>, soit en utilisant le sélecteur de fichier sur la page.<br /><br />D'autres textes d'aide seront disponibles pendant le déroulement de la procédure.";
 #pgv_lang["random_media_start_slide_help"]= "~#pgv_lang[random_media_start_slide]#~<br /><br />Should the AJAX slideshow start automatically when the page is loaded.<br /><br />This feature uses AJAX technology to change the contents of the block without preloading information from the server and without reloading the entire page.<br /><br />";
 #pgv_lang["random_media_ajax_controls_help"]= "~#pgv_lang[random_media_ajax_controls]#~<br /><br />You can use this setting to enable to disable player controls on the random media block.  Player controls allow the user to jump to another random object or to play through randomly selected media like a slideshow. These features use AJAX technology to change the contents of the block without preloading information from the server and without reloading the entire page.<br /><br />";

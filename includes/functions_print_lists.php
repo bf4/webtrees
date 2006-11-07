@@ -1204,8 +1204,10 @@ function print_events_table($datalist, $nextdays=1, $option="") {
 			if ($record->type=="INDI" and $record->isDead()) continue;
 			if ($record->type=="FAM") {
 				$husb = $record->getHusband();
+				if (is_null($husb)) continue;
 				if ($husb->isDead()) continue;
 				$wife = $record->getWife();
+				if (is_null($wife)) continue;
 				if ($wife->isDead()) continue;
 			}
 		}
@@ -1283,7 +1285,8 @@ function print_events_table($datalist, $nextdays=1, $option="") {
 		$age = $person->getAge("\n1 BIRT\n2 DATE ".$edate."\n", date("d M Y", $anniv));
 		$age = str_replace($pgv_lang["apx"]." ", "", $age);
 		echo "<a href=\"".$record->getDateUrl($edate)."\"".
-		" title=\"".get_changed_date(date("d M Y", $anniv))."\"".
+		//" title=\"".strip_tags(get_changed_date(date("d M Y", $anniv)))."\"".
+		" title=\"".date("m-d-Y", $anniv)."\"".
 		" class=\"list_item\">".$age."</a>";
 		echo "<abbr class=\"dtstart\" title=\"".date("Ymd", $anniv)."\"></abbr>"; // hCalendar:dtstart
 		echo "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$age ".$factarray[$event]." : ".PrintReady(strip_tags($record->getSortableName()))."\"></abbr>"; // hCalendar:summary
