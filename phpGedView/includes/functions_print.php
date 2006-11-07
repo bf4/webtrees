@@ -2244,23 +2244,23 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 		// It is not proper GEDCOM form to use a N(o) value with an event tag to infer that it did not happen.
 		$factrec = str_replace("\r\nPGV_OLD\r\n", "", $factrec);
 		$factrec = str_replace("\r\nPGV_NEW\r\n", "", $factrec);
-		$factdetail = preg_split("/ /",$factrec);
-		if (isset($factdetail)) if (count($factdetail) == 3) if (strtoupper(trim($factdetail[2])) === "Y") print $pgv_lang["yes"];
+		$factdetail = preg_split("/ /", trim($factrec));
+		if (isset($factdetail)) if (count($factdetail) == 3) if (strtoupper($factdetail[2]) == "Y") print $pgv_lang["yes"];
 	}
 	// gedcom indi age
 	$ages=array();
-	$agerec = get_sub_record(2, "2 AGE", $factrec);
+	$agerec = get_gedcom_value("AGE", 2, $factrec);
 	$daterec = get_sub_record(2, "2 DATE", $factrec);
-	if (empty($agerec)) $agerec = get_sub_record(3, "3 AGE", $daterec);
+	if (empty($agerec)) $agerec = get_gedcom_value("AGE", 3, $daterec);
 	$ages[0] = $agerec;
 	// gedcom husband age
 	$husbrec = get_sub_record(2, "2 HUSB", $factrec);
-	if (!empty($husbrec)) $agerec = get_sub_record(3, "3 AGE", $husbrec);
+	if (!empty($husbrec)) $agerec = get_gedcom_value("AGE", 3, $husbrec);
 	else $agerec = "";
 	$ages[1] = $agerec;
 	// gedcom wife age
 	$wiferec = get_sub_record(2, "2 WIFE", $factrec);
-	if (!empty($wiferec)) $agerec = get_sub_record(3, "3 AGE", $wiferec);
+	if (!empty($wiferec)) $agerec = get_gedcom_value("AGE", 3, $wiferec);
 	else $agerec = "";
 	$ages[2] = $agerec;
 	// print gedcom ages
@@ -2271,7 +2271,7 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 			else if ($indexval==2) print $pgv_lang["wife"];
 			else print $factarray["AGE"];
 			print "</span>: ";
-			$age = get_age_at_event(substr($agerec,6));
+			$age = get_age_at_event($agerec);
 			print PrintReady($age);
 			print " ";
 		}
