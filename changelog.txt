@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Added patch [ 1586676 ] Opera problem showing Events of close relatives (opus27)
  - Fixed [ 1591352 ] 4.1SVN: sanity_check.php contains hard-coded English text (canajun2eh)
  - Changed [ 1590796 ] 4.1SVN: Site re-config requires DB password (canajun2eh)
  - Added option to include media files in backup (yalnifj)
