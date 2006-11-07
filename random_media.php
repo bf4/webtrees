@@ -68,12 +68,12 @@ if ($MULTI_MEDIA) {
 					$links = $medialist[$value]["LINKS"];
 					$disp = $medialist[$value]["EXISTS"] && $medialist[$value]["LINKED"] && $medialist[$value]["CHANGE"]!="delete" ;
 					if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." File does not exist, or is not linked to anyone, or is marked for deletion.</span><br />\n";}
-					
+
 					$disp &= displayDetailsByID($value["XREF"], "OBJE");
 					$disp &= !FactViewRestricted($value["XREF"], $value["GEDCOM"]);
 
 					if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." Failed to pass privacy</span><br />\n";}
-					
+
 					$isExternal = strstr($medialist[$value]["FILE"], "://");
 
 					if ($block && !$isExternal) $disp &= file_exists($medialist[$value]["THUMB"]);
@@ -190,7 +190,7 @@ if ($MULTI_MEDIA) {
 						if (isset($PGV_IMAGES[$image]['other'])) print "<img id=\"play_stop\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$image]['other']."\" border=\"0\" alt=\"".$pgv_lang["play"]."/".$pgv_lang["stop"]."\" title=\"".$pgv_lang["play"]."/".$pgv_lang["stop"]."\"/>";
 						else print $pgv_lang["play"]."/".$pgv_lang["stop"];
 						print "</a>\n";
-						print "<a href=\"javascript: ".$pgv_lang["next"].";\" onclick=\"return ajaxBlock('random_picture_content$index', 'print_random_media', '$side', $index, true);\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES['rdarrow']['other']."\" border=\0\" alt=\"".$pgv_lang["next"]."\" title=\"".$pgv_lang["next"]."\" /></a>\n";
+						print "<a href=\"javascript: ".$pgv_lang["next"].";\" onclick=\"return ajaxBlock('random_picture_content$index', 'print_random_media', '$side', $index, true);\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES['rdarrow']['other']."\" border=\"0\" alt=\"".$pgv_lang["next"]."\" title=\"".$pgv_lang["next"]."\" /></a>\n";
 					?>
 					<script language="JavaScript" type="text/javascript">
 					<!--
@@ -202,13 +202,13 @@ if ($MULTI_MEDIA) {
 								imgid.src = '<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]['other']; ?>';
 							}
 							else {
-								play = true; 
+								play = true;
 								playSlideShow();
 								imgid = document.getElementById('play_stop');
 								imgid.src = '<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["stop"]['other']; ?>';
 							}
 						}
-						
+
 						function playSlideShow() {
 							if (play) {
 									ajaxBlock('random_picture_content<?php print $index; ?>', 'print_random_media', '<?php print $side; ?>', <?php print $index; ?>, false);
