@@ -43,160 +43,163 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["style"]									7 Nov 2006				A
++$pgv_lang["style1"]								7 Nov 2006				A
++$pgv_lang["style2"]								7 Nov 2006				A
 +$pgv_lang["anniversary"]							19 Oct 2006				A
--$pgv_lang["media_import"]						19 Oct 2006				D unused
--$pgv_lang["individual_list_report"]			19 Oct 2006				D unused
--$pgv_lang["run_report"]						19 Oct 2006				D unused
--$pgv_lang["import_options_help"] 				19 Oct 2006				M	Moved to help_text
--$pgv_lang["verify_gedcom_help"]				19 Oct 2006				M	Moved to help_text
--$pgv_lang["launch_media_tool"]					19 Oct 2006				D unused
--$pgv_lang["add_media_descr"]					19 Oct 2006				D unused
--$pgv_lang["extension"]							19 Oct 2006				D unused
--$pgv_lang["order"]								19 Oct 2006				D unused
--$pgv_lang["inject_media_tool"]					19 Oct 2006				D unused
--$pgv_lang["media_table_created"]				19 Oct 2006				D unused
--$pgv_lang["click_to_add_media"] 				19 Oct 2006				D unused
--$pgv_lang["adds_completed"] 					19 Oct 2006				D unused
--$pgv_lang["changed_mac"]						19 Oct 2006				D unused
--$pgv_lang["changed_places"]					19 Oct 2006				D unused
--$pgv_lang["optional_tools"]					19 Oct 2006				D unused
--$pgv_lang["optional"]							19 Oct 2006				D unused
--$pgv_lang["savedata"]							19 Oct 2006				D unused
--$pgv_lang["datachanged"]						19 Oct 2006				D unused
--$pgv_lang["datachanged_name"]					19 Oct 2006				D unused
--$pgv_lang["year_error"]						19 Oct 2006				D unused
--$pgv_lang["now_import"]						19 Oct 2006				D unused
--$pgv_lang["add_media_records"]					19 Oct 2006				D unused
--$pgv_lang["manage_media_files"]				19 Oct 2006				D unused
--$pgv_lang["link_media_records"]				19 Oct 2006				D unused
--$pgv_lang["add_media_button"]					19 Oct 2006				D unused
--$pgv_lang["user_manual"]						18 Oct 2006				D unused
--$pgv_lang["upgrade"]							18 Oct 2006				D unused
--$pgv_lang["step1"]								18 Oct 2006				D unused
--$pgv_lang["step2"]								18 Oct 2006				D unused
--$pgv_lang["step3"]								18 Oct 2006				D unused
--$pgv_lang["step4"]								18 Oct 2006				D unused
--$pgv_lang["cancel_upload"]						18 Oct 2006				D unused
--$pgv_lang["file_not_present"]					18 Oct 2006				D unused
--$pgv_lang["file_exists"]						18 Oct 2006				D unused
--$pgv_lang["enter_filename"]					18 Oct 2006				D unused
--$pgv_lang["user_info"]							18 Oct 2006				D unused
--$pgv_lang["enter_gedcomid"]					18 Oct 2006				D unused
--$pgv_lang["import_gedcom"]						18 Oct 2006				D unused
--$pgv_lang["zoom_default"] 						18 Oct 2006				D unused
--$pgv_lang["zoom_2"]							18 Oct 2006				D unused
--$pgv_lang["zoom_3"]							18 Oct 2006				D unused
--$pgv_lang["timeline_zoom"]						18 Oct 2006				D unused
--$pgv_lang["starts_with"]						18 Oct 2006				D unused
--$pgv_lang["person_list"]						18 Oct 2006				D unused
--$pgv_lang["paste_person"]						18 Oct 2006				D unused
--$pgv_lang["notes_sources_media"]				18 Oct 2006				D unused
--$pgv_lang["index_complete"] 					18 Oct 2006				D unused
--$pgv_lang["updating_is_dead"]					18 Oct 2006				D unused
--$pgv_lang["updating_family_names"]				18 Oct 2006				D unused
--$pgv_lang["processed_for"]						18 Oct 2006				D unused
--$pgv_lang["run_tools"]							18 Oct 2006				D unused
--$pgv_lang["addmedia"]							18 Oct 2006				D unused
--$pgv_lang["dateconvert"]						18 Oct 2006				D unused
--$pgv_lang["xreftorin"]							18 Oct 2006				D unused
--$pgv_lang["tools_readme"]						18 Oct 2006				D unused
--$pgv_lang["indi_complete"]						18 Oct 2006				D unused
--$pgv_lang["family_complete"]					18 Oct 2006				D unused
--$pgv_lang["source_complete"]					18 Oct 2006				D unused
--$pgv_lang["tables_exist"]						18 Oct 2006				D unused
--$pgv_lang["you_may"]							18 Oct 2006				D unused
--$pgv_lang["drop_tables"]						18 Oct 2006				D unused
--$pgv_lang["import_multiple"]					18 Oct 2006				D unused
--$pgv_lang["explain_options"]					18 Oct 2006				D unused
--$pgv_lang["path_to_gedcom"]					18 Oct 2006				D unused
--$pgv_lang["flushing"]							18 Oct 2006				D unused
--$pgv_lang["detected_change"]					18 Oct 2006				D unused
--$pgv_lang["importing_records"]					18 Oct 2006				D unused
--$pgv_lang["building_indi"]						18 Oct 2006				D unused
--$pgv_lang["building_index"]					18 Oct 2006				D unused
--$pgv_lang["sources_found"]						18 Oct 2006				D unused
--$pgv_lang["search_type"]						18 Oct 2006				D unused
--$pgv_lang["search_options"]					18 Oct 2006				D unused
--$pgv_lang["media_record_deleted"]				18 Oct 2006				D unused
--$pgv_lang["media_record_not_deleted"]			18 Oct 2006				D unused
--$pgv_lang["media_file_size"]					18 Oct 2006				D unused
--$pgv_lang["image_format"]						18 Oct 2006				D unused
--$pgv_lang["gedcom_form_info"]					18 Oct 2006				D unused
--$pgv_lang["media_files"]						18 Oct 2006				D unused
--$pgv_lang["person_living"]						18 Oct 2006				D unused
--$pgv_lang["unable_to_open"]					18 Oct 2006				D unused
--$pgv_lang["error_already"]						18 Oct 2006				D unused
--$pgv_lang["item_with_id"]						18 Oct 2006				D unused
--$pgv_lang["clip_explaination"]					18 Oct 2006				D unused
--$pgv_lang["number_children"]					18 Oct 2006				D unused
--$pgv_lang["media_object"]						18 Oct 2006				D unused
--$pgv_lang["place_description"]					18 Oct 2006				D unused
--$pgv_lang["object_note"]						18 Oct 2006				D unused
--$pgv_lang["still_living_error"]				18 Oct 2006				D unused
--$pgv_lang["citation"]							18 Oct 2006				D unused
--$pgv_lang["privacy_list_indi_error"]			18 Oct 2006				D unused
--$pgv_lang["privacy_list_fam_error"]			18 Oct 2006				D unused
--$pgv_lang["address"]							18 Oct 2006				D unused
--$pgv_lang["phone"]								18 Oct 2006				D unused
--$pgv_lang["source_name"]						18 Oct 2006				D unused
--$pgv_lang["media_options"]						18 Oct 2006				D unused
--$pgv_lang["author"] 							18 Oct 2006				D unused
--$pgv_lang["publication"]						18 Oct 2006				D unused
--$pgv_lang["call_number"]						18 Oct 2006				D unused
--$pgv_lang["repo_name"]							18 Oct 2006				D unused
--$pgv_lang["unable_to_find_repo"]				18 Oct 2006				D unused
--$pgv_lang["unable_to_find_source"]				18 Oct 2006				D unused
--$pgv_lang["login_aut"]							18 Oct 2006				D unused
--$pgv_lang["choose_gedcom"]						18 Oct 2006				D unused
--$pgv_lang["please_wait"]						18 Oct 2006				D unused
--$pgv_lang["build_title"]						18 Oct 2006				D unused
--$pgv_lang["error_title"]						18 Oct 2006				D unused
--$pgv_lang["resolution"]						18 Oct 2006				D unused
--$pgv_lang["stepfamily"]						18 Oct 2006				D unused
--$pgv_lang["marr_name_import_instr"]			18 Oct 2006				D unused
--$pgv_lang["label_accept_changes"]				18 Oct 2006				D unused
--$pgv_lang["importing_places"]					18 Oct 2006				D unused
--$pgv_lang["continue_import"]					18 Oct 2006				D unused
--$pgv_lang["download_zipped"]					18 Oct 2006				D unused
--$pgv_lang["pls_note12"]						18 Oct 2006				D unused
--$pgv_lang["importing_dates"]					18 Oct 2006				D unused
--$pgv_lang["error_server_exists"]				18 Oct 2006				D unused
--$pgv_lang["error_exists_server"]				18 Oct 2006				D unused
--$pgv_lang["error_url"]							18 Oct 2006				D unused
--$pgv_lang["label_ban_view_links"]				18 Oct 2006				D unused
--$pgv_lang["label_search_engine_spider"]		18 Oct 2006				D unused
--$pgv_lang["error_delete_server"]				18 Oct 2006				D unused
--$pgv_lang["error_view_connections"]			18 Oct 2006				D unused
--$pgv_lang["label_merge_options"]				18 Oct 2006				D unused
--$pgv_lang["label_ask_first"]					18 Oct 2006				D unused
--$pgv_lang["label_accept_changes"]				18 Oct 2006				D unused
--$pgv_lang["advanced_search"]					18 Oct 2006				D unused
--$pgv_lang["advanced_search"]					18 Oct 2006				D unused
--$pgv_lang["search_asso_text_unavailable"]		18 Oct 2006				D unused
--$pgv_lang["search_sites_discription"]			18 Oct 2006				D unused
--$pgv_lang["unable_to_find_indi"]			17 Oct 2006			D
-+$pgv_lang["button_alive_in_year"]		12 Oct 2006				A
-+$pgv_lang["button_BIRT_Y100"]				12 Oct 2006				A
-+$pgv_lang["button_BIRT_YES"]					12 Oct 2006				A
-+$pgv_lang["button_DEAT_H"]						12 Oct 2006				A
-+$pgv_lang["button_DEAT_N"]						12 Oct 2006				A
-+$pgv_lang["button_DEAT_W"]						12 Oct 2006				A
-+$pgv_lang["button_DEAT_Y"]						12 Oct 2006				A
-+$pgv_lang["button_DEAT_Y100"]				12 Oct 2006				A
-+$pgv_lang["button_DEAT_YES"]					12 Oct 2006				A
-+$pgv_lang["button_MARR_DIV"]					12 Oct 2006				A
-+$pgv_lang["button_MARR_U"]						12 Oct 2006				A
-+$pgv_lang["button_MARR_Y100"]				12 Oct 2006				A
-+$pgv_lang["button_MARR_YES"]					12 Oct 2006				A
-+$pgv_lang["button_reset"]						12 Oct 2006				A
-+$pgv_lang["button_SEX_F"]						12 Oct 2006				A
-+$pgv_lang["button_SEX_M"]						12 Oct 2006				A
-+$pgv_lang["button_SEX_U"]						12 Oct 2006				A
-+$pgv_lang["button_TREE_L"]						12 Oct 2006				A
-+$pgv_lang["button_TREE_R"]						12 Oct 2006				A
+-$pgv_lang["media_import"]							19 Oct 2006				D unused
+-$pgv_lang["individual_list_report"]				19 Oct 2006				D unused
+-$pgv_lang["run_report"]							19 Oct 2006				D unused
+-$pgv_lang["import_options_help"] 					19 Oct 2006				M	Moved to help_text
+-$pgv_lang["verify_gedcom_help"]					19 Oct 2006				M	Moved to help_text
+-$pgv_lang["launch_media_tool"]						19 Oct 2006				D unused
+-$pgv_lang["add_media_descr"]						19 Oct 2006				D unused
+-$pgv_lang["extension"]								19 Oct 2006				D unused
+-$pgv_lang["order"]									19 Oct 2006				D unused
+-$pgv_lang["inject_media_tool"]						19 Oct 2006				D unused
+-$pgv_lang["media_table_created"]					19 Oct 2006				D unused
+-$pgv_lang["click_to_add_media"] 					19 Oct 2006				D unused
+-$pgv_lang["adds_completed"] 						19 Oct 2006				D unused
+-$pgv_lang["changed_mac"]							19 Oct 2006				D unused
+-$pgv_lang["changed_places"]						19 Oct 2006				D unused
+-$pgv_lang["optional_tools"]						19 Oct 2006				D unused
+-$pgv_lang["optional"]								19 Oct 2006				D unused
+-$pgv_lang["savedata"]								19 Oct 2006				D unused
+-$pgv_lang["datachanged"]							19 Oct 2006				D unused
+-$pgv_lang["datachanged_name"]						19 Oct 2006				D unused
+-$pgv_lang["year_error"]							19 Oct 2006				D unused
+-$pgv_lang["now_import"]							19 Oct 2006				D unused
+-$pgv_lang["add_media_records"]						19 Oct 2006				D unused
+-$pgv_lang["manage_media_files"]					19 Oct 2006				D unused
+-$pgv_lang["link_media_records"]					19 Oct 2006				D unused
+-$pgv_lang["add_media_button"]						19 Oct 2006				D unused
+-$pgv_lang["user_manual"]							18 Oct 2006				D unused
+-$pgv_lang["upgrade"]								18 Oct 2006				D unused
+-$pgv_lang["step1"]									18 Oct 2006				D unused
+-$pgv_lang["step2"]									18 Oct 2006				D unused
+-$pgv_lang["step3"]									18 Oct 2006				D unused
+-$pgv_lang["step4"]									18 Oct 2006				D unused
+-$pgv_lang["cancel_upload"]							18 Oct 2006				D unused
+-$pgv_lang["file_not_present"]						18 Oct 2006				D unused
+-$pgv_lang["file_exists"]							18 Oct 2006				D unused
+-$pgv_lang["enter_filename"]						18 Oct 2006				D unused
+-$pgv_lang["user_info"]								18 Oct 2006				D unused
+-$pgv_lang["enter_gedcomid"]						18 Oct 2006				D unused
+-$pgv_lang["import_gedcom"]							18 Oct 2006				D unused
+-$pgv_lang["zoom_default"] 							18 Oct 2006				D unused
+-$pgv_lang["zoom_2"]								18 Oct 2006				D unused
+-$pgv_lang["zoom_3"]								18 Oct 2006				D unused
+-$pgv_lang["timeline_zoom"]							18 Oct 2006				D unused
+-$pgv_lang["starts_with"]							18 Oct 2006				D unused
+-$pgv_lang["person_list"]							18 Oct 2006				D unused
+-$pgv_lang["paste_person"]							18 Oct 2006				D unused
+-$pgv_lang["notes_sources_media"]					18 Oct 2006				D unused
+-$pgv_lang["index_complete"] 						18 Oct 2006				D unused
+-$pgv_lang["updating_is_dead"]						18 Oct 2006				D unused
+-$pgv_lang["updating_family_names"]					18 Oct 2006				D unused
+-$pgv_lang["processed_for"]							18 Oct 2006				D unused
+-$pgv_lang["run_tools"]								18 Oct 2006				D unused
+-$pgv_lang["addmedia"]								18 Oct 2006				D unused
+-$pgv_lang["dateconvert"]							18 Oct 2006				D unused
+-$pgv_lang["xreftorin"]								18 Oct 2006				D unused
+-$pgv_lang["tools_readme"]							18 Oct 2006				D unused
+-$pgv_lang["indi_complete"]							18 Oct 2006				D unused
+-$pgv_lang["family_complete"]						18 Oct 2006				D unused
+-$pgv_lang["source_complete"]						18 Oct 2006				D unused
+-$pgv_lang["tables_exist"]							18 Oct 2006				D unused
+-$pgv_lang["you_may"]								18 Oct 2006				D unused
+-$pgv_lang["drop_tables"]							18 Oct 2006				D unused
+-$pgv_lang["import_multiple"]						18 Oct 2006				D unused
+-$pgv_lang["explain_options"]						18 Oct 2006				D unused
+-$pgv_lang["path_to_gedcom"]						18 Oct 2006				D unused
+-$pgv_lang["flushing"]								18 Oct 2006				D unused
+-$pgv_lang["detected_change"]						18 Oct 2006				D unused
+-$pgv_lang["importing_records"]						18 Oct 2006				D unused
+-$pgv_lang["building_indi"]							18 Oct 2006				D unused
+-$pgv_lang["building_index"]						18 Oct 2006				D unused
+-$pgv_lang["sources_found"]							18 Oct 2006				D unused
+-$pgv_lang["search_type"]							18 Oct 2006				D unused
+-$pgv_lang["search_options"]						18 Oct 2006				D unused
+-$pgv_lang["media_record_deleted"]					18 Oct 2006				D unused
+-$pgv_lang["media_record_not_deleted"]				18 Oct 2006				D unused
+-$pgv_lang["media_file_size"]						18 Oct 2006				D unused
+-$pgv_lang["image_format"]							18 Oct 2006				D unused
+-$pgv_lang["gedcom_form_info"]						18 Oct 2006				D unused
+-$pgv_lang["media_files"]							18 Oct 2006				D unused
+-$pgv_lang["person_living"]							18 Oct 2006				D unused
+-$pgv_lang["unable_to_open"]						18 Oct 2006				D unused
+-$pgv_lang["error_already"]							18 Oct 2006				D unused
+-$pgv_lang["item_with_id"]							18 Oct 2006				D unused
+-$pgv_lang["clip_explaination"]						18 Oct 2006				D unused
+-$pgv_lang["number_children"]						18 Oct 2006				D unused
+-$pgv_lang["media_object"]							18 Oct 2006				D unused
+-$pgv_lang["place_description"]						18 Oct 2006				D unused
+-$pgv_lang["object_note"]							18 Oct 2006				D unused
+-$pgv_lang["still_living_error"]					18 Oct 2006				D unused
+-$pgv_lang["citation"]								18 Oct 2006				D unused
+-$pgv_lang["privacy_list_indi_error"]				18 Oct 2006				D unused
+-$pgv_lang["privacy_list_fam_error"]				18 Oct 2006				D unused
+-$pgv_lang["address"]								18 Oct 2006				D unused
+-$pgv_lang["phone"]									18 Oct 2006				D unused
+-$pgv_lang["source_name"]							18 Oct 2006				D unused
+-$pgv_lang["media_options"]							18 Oct 2006				D unused
+-$pgv_lang["author"] 								18 Oct 2006				D unused
+-$pgv_lang["publication"]							18 Oct 2006				D unused
+-$pgv_lang["call_number"]							18 Oct 2006				D unused
+-$pgv_lang["repo_name"]								18 Oct 2006				D unused
+-$pgv_lang["unable_to_find_repo"]					18 Oct 2006				D unused
+-$pgv_lang["unable_to_find_source"]					18 Oct 2006				D unused
+-$pgv_lang["login_aut"]								18 Oct 2006				D unused
+-$pgv_lang["choose_gedcom"]							18 Oct 2006				D unused
+-$pgv_lang["please_wait"]							18 Oct 2006				D unused
+-$pgv_lang["build_title"]							18 Oct 2006				D unused
+-$pgv_lang["error_title"]							18 Oct 2006				D unused
+-$pgv_lang["resolution"]							18 Oct 2006				D unused
+-$pgv_lang["stepfamily"]							18 Oct 2006				D unused
+-$pgv_lang["marr_name_import_instr"]				18 Oct 2006				D unused
+-$pgv_lang["label_accept_changes"]					18 Oct 2006				D unused
+-$pgv_lang["importing_places"]						18 Oct 2006				D unused
+-$pgv_lang["continue_import"]						18 Oct 2006				D unused
+-$pgv_lang["download_zipped"]						18 Oct 2006				D unused
+-$pgv_lang["pls_note12"]							18 Oct 2006				D unused
+-$pgv_lang["importing_dates"]						18 Oct 2006				D unused
+-$pgv_lang["error_server_exists"]					18 Oct 2006				D unused
+-$pgv_lang["error_exists_server"]					18 Oct 2006				D unused
+-$pgv_lang["error_url"]								18 Oct 2006				D unused
+-$pgv_lang["label_ban_view_links"]					18 Oct 2006				D unused
+-$pgv_lang["label_search_engine_spider"]			18 Oct 2006				D unused
+-$pgv_lang["error_delete_server"]					18 Oct 2006				D unused
+-$pgv_lang["error_view_connections"]				18 Oct 2006				D unused
+-$pgv_lang["label_merge_options"]					18 Oct 2006				D unused
+-$pgv_lang["label_ask_first"]						18 Oct 2006				D unused
+-$pgv_lang["label_accept_changes"]					18 Oct 2006				D unused
+-$pgv_lang["advanced_search"]						18 Oct 2006				D unused
+-$pgv_lang["advanced_search"]						18 Oct 2006				D unused
+-$pgv_lang["search_asso_text_unavailable"]			18 Oct 2006				D unused
+-$pgv_lang["search_sites_discription"]				18 Oct 2006				D unused
+-$pgv_lang["unable_to_find_indi"]					17 Oct 2006				D
++$pgv_lang["button_alive_in_year"]					12 Oct 2006				A
++$pgv_lang["button_BIRT_Y100"]						12 Oct 2006				A
++$pgv_lang["button_BIRT_YES"]						12 Oct 2006				A
++$pgv_lang["button_DEAT_H"]							12 Oct 2006				A
++$pgv_lang["button_DEAT_N"]							12 Oct 2006				A
++$pgv_lang["button_DEAT_W"]							12 Oct 2006				A
++$pgv_lang["button_DEAT_Y"]							12 Oct 2006				A
++$pgv_lang["button_DEAT_Y100"]						12 Oct 2006				A
++$pgv_lang["button_DEAT_YES"]						12 Oct 2006				A
++$pgv_lang["button_MARR_DIV"]						12 Oct 2006				A
++$pgv_lang["button_MARR_U"]							12 Oct 2006				A
++$pgv_lang["button_MARR_Y100"]						12 Oct 2006				A
++$pgv_lang["button_MARR_YES"]						12 Oct 2006				A
++$pgv_lang["button_reset"]							12 Oct 2006				A
++$pgv_lang["button_SEX_F"]							12 Oct 2006				A
++$pgv_lang["button_SEX_M"]							12 Oct 2006				A
++$pgv_lang["button_SEX_U"]							12 Oct 2006				A
++$pgv_lang["button_TREE_L"]							12 Oct 2006				A
++$pgv_lang["button_TREE_R"]							12 Oct 2006				A
 +$pgv_lang["sort_column"]							12 Oct 2006				A
-+$pgv_lang["activate"]									12 Oct 2006				A
-+$pgv_lang["deactivate"]								12 Oct 2006				A
++$pgv_lang["activate"]								12 Oct 2006				A
++$pgv_lang["deactivate"]							12 Oct 2006				A
 +$pgv_lang["play"]									29 Sep 2006				A
 +$pgv_lang["stop"]									29 Sep 2006				A
 +$pgv_lang["random_media_start_slide"]				29 Sep 2006				A

@@ -261,7 +261,7 @@ if ($action=="update") {
 
 if ($action=="configure" && isset($ublocks[$side][$index])) {
 	$block = $ublocks[$side][$index];
-	print "<table class=\"facts_table <?php print $TEXT_DIRECTION ?>\" width=\"99%\">";
+	print "<table class=\"facts_table ".$TEXT_DIRECTION."\" width=\"99%\">";
 	print "<tr><td class=\"facts_label\">";
 	print "<h2>".$pgv_lang["config_block"]."</h2>";
 	print "</td></tr>";
@@ -277,7 +277,7 @@ if ($action=="configure" && isset($ublocks[$side][$index])) {
 	print "<input type=\"hidden\" name=\"nextaction\" value=\"configure\" />\n";
 	print "<input type=\"hidden\" name=\"side\" value=\"$side\" />\n";
 	print "<input type=\"hidden\" name=\"index\" value=\"$index\" />\n";
-	print "<table border=\"0\" class=\"facts_table <?php print $TEXT_DIRECTION ?>\" width=\"99%\">";
+	print "<table border=\"0\" class=\"facts_table ".$TEXT_DIRECTION."\" width=\"99%\">";
 	if ($PGV_BLOCKS[$block[0]]["canconfig"]) {
 		eval($block[0]."_config(\$block[1]);");
 		print "<tr><td colspan=\"2\" class=\"topbottombar\">";

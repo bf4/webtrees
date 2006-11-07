@@ -44,6 +44,8 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["style_help"]							7 Nov 2006				A
+*$pgv_lang["def_gedcom_date_help"]					7 Nov 2006				W
 +$pgv_lang["import_options_help"] 					19 Oct 2006				M 	Moved from lang
 +$pgv_lang["verify_gedcom_help"]					19 Oct 2006				M   Moved from lang
 *$pgv_lang["random_media_start_slide_help"]			30 Sep 2006				w		Fix grammar
