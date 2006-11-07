@@ -230,7 +230,7 @@ function togglerow(label) {
 	else disp="";
 	if (disp=="none") {
 		disp="table-row";
-		if (document.all) disp="inline"; // IE
+		if (document.all && !window.opera) disp = "inline"; // IE
 		document.getElementById('rela_plus').style.display="none";
 		document.getElementById('rela_minus').style.display="inline";
 	}

@@ -623,6 +623,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			if (img.src.indexOf('plus')>=0) {
 				img.src = '<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]; ?>';
 				var disp = 'table-row';
+				if (document.all && !window.opera) disp = "inline"; // IE
 			}
 			else {
 				img.src = '<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]; ?>';
@@ -692,7 +693,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			if (frm.NAME_plus) frm.NAME_plus.style.display="none";
 			if (frm.NAME_minus) frm.NAME_minus.style.display="inline";
 			disp="table-row";
-			if (document.all) disp="inline"; // IE
+			if (document.all && !window.opera) disp = "inline"; // IE
 		}
 		// show/hide
 		document.getElementById("NPFX_tr").style.display=disp;
@@ -811,7 +812,6 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 
 	$largetextfacts = array("TEXT","PUBL","NOTE");
 	$subnamefacts = array("NPFX", "GIVN", "SPFX", "SURN", "NSFX");
-
 	@list($level, $fact, $value) = explode(" ", $tag);
 
 	if ($fact=="LATI" || $fact=="LONG") {
@@ -848,7 +848,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 				var disp = tr[i].style.display;
 				if (disp=="none") {
 					disp="table-row";
-					if (document.all) disp="inline"; // IE
+					if (document.all && !window.opera) disp = "inline"; // IE
 				}
 				else disp="none";
 				tr[i].style.display=disp;
