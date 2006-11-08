@@ -182,7 +182,7 @@ class Census1800 extends ra_form {
     }
 
     function display_form() {
-        $out = $this->header("module.php?mod=research_assistant&form=Census1800&action=func&func=step2&taskid=$_REQUEST[taskid]", "center", "1800 United States Federal Census", true);
+        $out = $this->header("module.php?mod=research_assistant&form=Census1800&action=func&func=step2&taskid=".$_REQUEST['taskid'], "center", "1800 United States Federal Census", true);
         $out .= $this->sourceCitationForm(5);
         //$out .= $this->content();
         $out .= $this->footer();

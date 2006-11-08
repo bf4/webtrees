@@ -72,7 +72,14 @@ $pgv_lang["LocalData"]							= "Local Data";
 $pgv_lang["RelatedRecord"]						= "Related Record";
 $pgv_lang["RelatedData"]						= "Related Data";
 $pgv_lang["Percent"]							= "Percent";
-
+$pgv_lang["Fields"]								= "Number of Fields";
+$pgv_lang["FieldName"]							= "Field Name";
+$pgv_lang["InputType"]							= "Input Type";
+$pgv_lang["Values"]								= "Values";
+$pgv_lang["FormName"]							= "Enter the form name";
+$pgv_lang["MultiplePeople"]						= "Does the form apply to multiple people?";
+$pgv_lang["EnterGEDCOMExtension"]				= "Please enter the GEDCOM extension for the form's fact type";
+$pgv_lang['FormDesciption']						= "Please enter a description for the form";
 
 // -- RA EXPLANATION
 $pgv_lang["ViewProbExplanation"]					= "This page analyzes the data for the active GEDCOM dataset and shows the correlations between different data elements. For example, there could be a 95% correlation that the surname in a local record is the same as the surname in the father's record.  This would mean that 95% of the people in this GEDCOM dataset share the same surname as their father. In this version of the Research Assistant, these calculations are not being used in other areas of the program and are only provided as a help to you in your research.  In the future we plan to use this data to help provide you with meaningful suggestions of where you should focus some of your future research. ";
