@@ -174,6 +174,7 @@ $pgv_lang["fbsql"]								= "FrontBase";
 $pgv_lang["found_record"]						= "Found record";
 $pgv_lang["ged_download"]						= "Download";
 $pgv_lang["ged_import"] 						= "Import";
+$pgv_lang["ged_check"] 							= "Check";
 $pgv_lang["gedcom_adm_head"]					= "GEDCOM Administration";
 $pgv_lang["gedcom_config_write_error"]			= "E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions.";
 $pgv_lang["gedcom_downloadable"] 				= "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem";
@@ -312,4 +313,29 @@ $pgv_lang["welcome_new"]						= "Welcome to your new PhpGedView website.";
 $pgv_lang["yearly"]								= "Yearly";
 $pgv_lang["you_may_login"]						= " by the site administrator.  You may now login to the PhpGedView site by accessing the link below:";
 
+// Text for the Gedcom Checker
+$pgv_lang['gedcheck']     = 'Gedcom checker';          // Module title
+$pgv_lang['gedcheck_text']= 'This module checks the format of a GEDCOM file against the <a href="http://phpgedview.sourceforge.net/ged551-5.pdf">5.5.1 GEDCOM Specification</a>.  It also checks for a number of common errors in your data.  Note that there are lots of versions, extensions and variations on the specification so you should not be concerned with any issues other than those flagged as "Critical".  The explanation for all the line-by-line errors can be found in the specification, so please check there before asking for help.';
+$pgv_lang['level']        = 'Level';                   // Levels of checking
+$pgv_lang['critical']     = 'Critical';
+$pgv_lang['error']        = 'Error';
+$pgv_lang['warning']      = 'Warning';
+$pgv_lang['info']         = 'Info';
+$pgv_lang['open_link']    = 'Open links in';           // Where to open links
+$pgv_lang['same_win']     = 'Same tab/window';
+$pgv_lang['new_win']      = 'New tab/window';
+$pgv_lang['context_lines']= 'Lines of GEDCOM context'; // Number of lines either side of error
+$pgv_lang['all_rec']      = 'All records';             // What to show
+$pgv_lang['err_rec']      = 'Records with errors';
+$pgv_lang['missing']      = 'missing';                 // General error messages
+$pgv_lang['multiple']     = 'multiple';
+$pgv_lang['invalid']      = 'invalid';
+$pgv_lang['too_many']     = 'too many';
+$pgv_lang['too_few']      = 'too few';
+$pgv_lang['no_link']      = 'does not link back';
+$pgv_lang['data']         = 'data';                    // Specific errors (used with general errors)
+$pgv_lang['level']        = 'level';
+$pgv_lang['tag']          = 'tag';
+$pgv_lang['spacing']      = 'spacing';
+$pgv_lang['before']       = 'before';                  // More specific errors, for stage 2
 ?>
