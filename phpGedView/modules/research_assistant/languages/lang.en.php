@@ -55,7 +55,6 @@ $pgv_lang["gen_tasks"]							= "Auto Generate Tasks";
 $pgv_lang["edit_task"]							= "Edit Task";
 $pgv_lang["completed"]							= "Completed";
 $pgv_lang["complete"]							= "Complete";
-$pgv_lang["all"]								= "All";
 $pgv_lang["incomplete"]							= "Incomplete";
 $pgv_lang["comres"]								= "Comments/Results";
 $pgv_lang["description"]						= "Description";
