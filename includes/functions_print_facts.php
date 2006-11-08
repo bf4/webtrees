@@ -1099,7 +1099,11 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	}
 
 	$media_found = false;
-	$sqlmm = "SELECT DISTINCT ";
+	//-- $sqlmm = "SELECT DISTINCT ";
+	//-- DISTINCT doesn't work the same in all DBs, particularly 
+	//-- why do we want to get DISTINCT anyway?  Wouldn't we want to show multiple links to the same image if they are there
+	//-- the title, notes, or other data could be different
+	$sqlmm = "SELECT ";
 	$sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping where ";
 	$sqlmm .= "mm_gid IN (";
 	$i=0;

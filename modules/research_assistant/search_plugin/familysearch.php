@@ -104,46 +104,46 @@ function autosearch_options()
 							<table width='50%'>			
 		 						<tr>
 					 				<td class='optionbox'>
-					 					".$pgv_lang["autosearch_surname"]."</td><td class='optionbox'> <input type='checkbox' name='surname' value=\"".$lastname."\" checked='checked' /> ".$lastname."</td></tr>
+					 					".$pgv_lang["autosearch_surname"]."</td><td class='optionbox'> <input type='checkbox' name='surname' value=\"".$lastname."\" checked='checked' />&nbsp; ".$lastname."</td></tr>
 					 						<tr><td class='optionbox'>
-					 					".$pgv_lang["autosearch_givenname"]."</td><td class='optionbox'> <input type='checkbox' name='givenname1' value=\"".$givennames."\" checked='checked'' /> ".$givennames."</td></tr>
+					 					".$pgv_lang["autosearch_givenname"]."</td><td class='optionbox'> <input type='checkbox' name='givenname1' value=\"".$givennames."\" checked='checked'' />&nbsp; ".$givennames."</td></tr>
 					 						<tr><td class ='optionbox'>
-					 					".$pgv_lang["autosearch_byear"]."</td><td class ='optionbox'> <input type='radio' name='year' value=\"".$byear."\" checked='checked' /> ".$byear."</td></tr>
+					 					".$pgv_lang["autosearch_byear"]."</td><td class ='optionbox'> <input type='radio' name='year' value=\"".$byear."\" checked='checked' /> &nbsp;".$byear."</td></tr>
 					 						<tr><td class='optionbox'>
-											".$pgv_lang["autosearch_dyear"]."</td><td class='optionbox'> <input type='radio' name='year' value=\"".$dyear."\"  />".$dyear."
+											".$pgv_lang["autosearch_dyear"]."</td><td class='optionbox'> <input type='radio' name='year' value=\"".$dyear."\"  />&nbsp;".$dyear."
 					 				</td>
 		 						</tr>";
 		 						
 		if(!empty($fgivennames))
 		{
 			$to_return.= "	<tr><td class='optionbox'>
-											".$pgv_lang["autosearch_fgivennames"]."</td><td class='optionbox'> <input type='checkbox' name='fgivennames' value=\"".$fgivennames."\"  />".$fgivennames."
+											".$pgv_lang["autosearch_fgivennames"]."</td><td class='optionbox'> <input type='checkbox' name='fgivennames' value=\"".$fgivennames."\"  />&nbsp;".$fgivennames."
 					 				</td>
 		 						</tr>";
 		}
 		if(!empty($fsurname))
 		{
 			$to_return.= "	<tr><td class='optionbox'>
-											".$pgv_lang["autosearch_fsurname"]."</td><td class='optionbox'> <input type='checkbox' name='fsurname' value=\"".$fsurname."\"  />".$fsurname."
+											".$pgv_lang["autosearch_fsurname"]."</td><td class='optionbox'> <input type='checkbox' name='fsurname' value=\"".$fsurname."\"  />&nbsp;".$fsurname."
 					 				</td>
 		 						</tr>";
 		}
 		if(!empty($mgivennames))
 		{
 			$to_return.= "	<tr><td class='optionbox'>
-											".$pgv_lang["autosearch_mgivennames"]."</td><td class='optionbox'> <input type='checkbox' name='mgivennames' value=\"".$mgivennames."\"  />".$mgivennames."
+											".$pgv_lang["autosearch_mgivennames"]."</td><td class='optionbox'> <input type='checkbox' name='mgivennames' value=\"".$mgivennames."\"  />&nbsp;".$mgivennames."
 					 				</td>
 		 						</tr>";
 		}
 		if(!empty($msurname))
 		{
 			$to_return.= "	<tr><td class='optionbox'>
-											".$pgv_lang["autosearch_msurname"]."</td><td class='optionbox'> <input type='checkbox' name='msurname' value=\"".$msurname."\"  />".$msurname."
+											".$pgv_lang["autosearch_msurname"]."</td><td class='optionbox'> <input type='checkbox' name='msurname' value=\"".$msurname."\"  />&nbsp;".$msurname."
 					 				</td>
 		 						</tr>";
 		}
 		 					$to_return .= "	<tr><td class='optionbox' colspan=2 align='center'>".$pgv_lang["autosearch_plugin_name_fs"]."</td></tr>	
-							<tr><td  align='center' class='topbottombar'colspan=2><input type='submit' value='Search' /></td></tr>
+							<tr><td  align='center' class='topbottombar'colspan=2><input type='submit' value='".$pgv_lang["autosearch_search"]."' /></td></tr>
 							</table>						
 					</form>";
  

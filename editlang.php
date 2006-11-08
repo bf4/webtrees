@@ -932,7 +932,12 @@ foreach ($language_settings as $key => $value) {
 		$ct = strpos($dDummy, ";");
 	}
 }
+// Language specific admin editor language tags
+global $lang_short_cut;
+require "languages/editor.en.php";
+if(file_exists("languages/editor.".$lang_short_cut[$LANGUAGE].".php")) require "languages/editor.".$lang_short_cut[$LANGUAGE].".php";
 
+//Normal footer stuff
 require $pgv_language["english"];
 require $pgv_language[$LANGUAGE];
 print_footer();

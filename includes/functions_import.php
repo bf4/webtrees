@@ -545,7 +545,7 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 		if ($m_media != $old_m_media) $objref = preg_replace("/@$old_m_media@/", "@$m_media@", $objref);
 	}
 	//-- handle embedded OBJE records
-	else if (!$update) {
+	else {
 		$m_media = get_new_xref("OBJE");
 		$objref = subrecord_createobjectref($objrec, $objlevel, $m_media);
 
@@ -574,13 +574,18 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 			$m_media = $new_media;
 		}
 	}
-	
+	if (isset($m_media)) {
 	//-- add the entry to the media_mapping table
 	$mm_id = get_next_id("media_mapping", "mm_id");
 	$sql = "INSERT INTO " . $TBLPREFIX . "media_mapping (mm_id, mm_media, mm_gid, mm_order, mm_gedfile, mm_gedrec)";
 	$sql .= " VALUES ('" . $DBCONN->escapeSimple($mm_id) . "', '" . $DBCONN->escapeSimple($m_media) . "', '" . $DBCONN->escapeSimple($gid) . "', '" . $DBCONN->escapeSimple($count) . "', '" . $DBCONN->escapeSimple($GEDCOMS[$FILE]['id']) . "', '" . $DBCONN->escapeSimple($objref) . "')";
 	$res = dbquery($sql);
 	return $objref;
+	}
+	else {
+		print "Media reference error ".$objrec;
+		return "";
+	}
 } 
 /**
  * import media items from record
