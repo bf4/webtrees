@@ -1099,7 +1099,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	}
 
 	$media_found = false;
-	$sqlmm = "SELECT ";
+	$sqlmm = "SELECT DISTINCT ";
 	$sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping where ";
 	$sqlmm .= "mm_gid IN (";
 	$i=0;
