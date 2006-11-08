@@ -895,6 +895,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	if (in_array($fact, $largetextfacts)) { $rows=10; $cols=70; }
 	if ($fact=="ADDR") $rows=4;
 	if ($fact=="REPO") $cols = strlen($REPO_ID_PREFIX) + 4;
+	if ($fact=='_UID') $cols=50;
 
 	// label
 	$style="";
@@ -1530,8 +1531,12 @@ function create_add_form($fact) {
 	}
 	else {
 		$tags[0] = $fact;
+		if ($fact=='_UID') {
+			require_once ("functions_import.php");
+			$fact.=" ".uuid();
+		}
 		add_simple_tag("1 ".$fact);
-		insert_missing_subtags($fact);
+		insert_missing_subtags($tags[0]);
 	}
 }
 
@@ -1689,7 +1694,7 @@ function insert_missing_subtags($level1tag)
 		}
 	}
 	// Do something (anything!) with unrecognised custom tags
-	if (preg_match('/^_/', $level1tag) && count($tags)==1) {
+	if (substr($level1tag, 0, 1)=='_' && $level1tag!='_UID' && count($tags)==1) {
 		add_simple_tag("2 DATE");
 		add_simple_tag("2 PLAC");
 		add_simple_tag("2 ADDR");
