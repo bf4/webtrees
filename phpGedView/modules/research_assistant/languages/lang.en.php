@@ -247,4 +247,5 @@ $pgv_lang["autosearch_plugin_name_ellisIsland"] = "EllisIslandRecords.org Plug-i
 $pgv_lang["autosearch_plugin_name_genNet"] = "GeneaNet.com Plug-in";
 $pgv_lang["autosearch_plugin_name_gen"] = "Genealogy.com Plug-in"; 
 $pgv_lang["autosearch_plugin_name_fs"] = "FamilySearch.org Plug-in";
+$pgv_lang["autosearch_search"]           = "Search";
 ?>

@@ -58,19 +58,19 @@ function autosearch_options()
 							<table width='50%'>		
 		 						<tr>
 					 				<td class='optionbox'>
-					 					".$pgv_lang["autosearch_surname"]."</td><td class='optionbox'> <input type='checkbox' name='surname' value=\"".$lastname."\" checked='checked' /> ".$lastname."</td></tr>
+					 					".$pgv_lang["autosearch_surname"]."</td><td class='optionbox'> <input type='checkbox' name='surname' value=\"".$lastname."\" checked='checked' />&nbsp; ".$lastname."</td></tr>
 					 				<tr><td class='optionbox'>
 					 					".$pgv_lang["autosearch_givenname"]."</td>
-											<td class='optionbox'> <input type='checkbox' name='givenname1' value=\"".$givennames."\" checked='checked'' /> ".$givennames."</td>
+											<td class='optionbox'> <input type='checkbox' name='givenname1' value=\"".$givennames."\" checked='checked'' /> &nbsp;".$givennames."</td>
 									</tr>
 					 				<tr><td class ='optionbox'>
-					 					".$pgv_lang["autosearch_byear"]."</td><td class ='optionbox'> <input type='checkbox' name='byear' value=\"".$byear."\" checked='checked' /> ".$byear."</td></tr>
+					 					".$pgv_lang["autosearch_byear"]."</td><td class ='optionbox'> <input type='checkbox' name='byear' value=\"".$byear."\" checked='checked' />&nbsp; ".$byear."</td></tr>
 					 				<tr><td class='optionbox'>
-					 					".$pgv_lang["autosearch_dyear"]."</td><td class='optionbox'> <input type='checkbox' name='dyear' value=\"".$dyear."\"  />".$dyear."</td></tr>
+					 					".$pgv_lang["autosearch_dyear"]."</td><td class='optionbox'> <input type='checkbox' name='dyear' value=\"".$dyear."\"  />&nbsp;".$dyear."</td></tr>
 									<tr><td class='optionbox' colspan=2 align='center'>
 										".$pgv_lang["autosearch_plugin_name_ancestrycouk"]."</td></tr>
 									<tr><td  align='center' class='topbottombar'colspan=2>
-										<input type='submit' value='Search' /></td></tr>
+										<input type='submit' value='".$pgv_lang["autosearch_search"]."' /></td></tr>
 		 			
 							</table>
 						
