@@ -795,6 +795,22 @@ $pgv_lang["chart_style"]        	= "Tavelstil";
 $pgv_lang["chart_list"]				= "Lista";
 $pgv_lang["chart_booklet"]   		= "Häfte";
 $pgv_lang["show_cousins"]			= "Visa kusiner";
+
+// the sosa_uncle name is used for uncles - the names below can be extended to any number
+// of generations just by adding more translations.
+// to allow fo language variations we specify different relationships for paternal and maternal
+// aunts and uncles
+// 1st generation
+$pgv_lang["sosa_uncle_2"] 				= "farbror";            // father's brother
+$pgv_lang["sosa_uncle_3"] 				= "morbror";            // mother's brother
+// the sosa_aunt name is used for aunts - the names below can be extended to any number
+// of generations just by adding more translations.
+// to allow fo language variations we specify different relationships for paternal and maternal
+// aunts and aunts
+// 1st generation
+$pgv_lang["sosa_aunt_2"] 				= "faster";            // father's sister
+$pgv_lang["sosa_aunt_3"] 				= "moster";            // mother's sister
+
 //sosa pattern is now used to find relationships, it is the key and value pair that needs to be set up in all other languages.
 //1st generation
 $pgv_lang["sosa_2"] 			    = "Far";
@@ -871,6 +887,10 @@ $pgv_lang["stepsister"]			= "Styvsyster";
 $pgv_lang["twin"] 				= "Tvilling";
 $pgv_lang["twin_brother"] 		= "Tvillingbror";
 $pgv_lang["twin_sister"] 		= "Tvillingsyster";
+// %1$s replaced by first person, %2$s by the relationship and %3$s by the second person.
+$pgv_lang["relationship_male_1_is_the_2_of_3"] = '%1$s är %2$s till %3$s.';
+$pgv_lang["relationship_female_1_is_the_2_of_3"] = '%1$s är %2$s till %3$s.';
+
 $pgv_lang["witness"] 			= "Vittne";
 $pgv_lang["statutci"]			= "Kan inte skapa index";
 $pgv_lang["statnnames"]         = "antal namn =";
