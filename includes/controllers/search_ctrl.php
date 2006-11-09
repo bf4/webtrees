@@ -810,12 +810,13 @@ class SearchControllerRoot extends BaseController {
 				{
 					$arr2 = array(soundex($this->lastname));
 				}
+			
 				$farr = array ();
 				if (!empty ($this->firstname)) {
 					$firstnames = preg_split("/\s/", trim($this->firstname));
 					for ($j = 0; $j < count($firstnames); $j ++) {
 						if ($this->soundex == "Russell")
-							$farr[$j] = soundex($firstnames[$j]);
+							$farr[$j] = array(soundex($firstnames[$j]));
 						if ($this->soundex == "DaitchM")
 							$farr[$j] = DMsoundex($firstnames[$j]);
 					}
@@ -844,9 +845,10 @@ class SearchControllerRoot extends BaseController {
 				$firstName = "";
 				foreach($farr as $name)
 				{
-					$firstName .= "%" . $name;
+					//$firstName .= "%" . $name;
+					foreach($name as $name1)
+						$firstName .= "%" . $name1;
 				}
-				
 				if (!empty($arr2))
 				{
 				foreach($arr2 as $name);
