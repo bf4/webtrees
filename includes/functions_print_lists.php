@@ -1303,13 +1303,15 @@ function print_events_table($datalist, $nextdays=1, $option="") {
 	//echo "<td></td>";
 	//if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
-	echo $pgv_lang["total_names"]." : ".$n;
-	if ($hidden) echo "<br />".$pgv_lang["hidden"]." : ".$hidden;
+	echo $pgv_lang["total_names"].": ".$n;
+	if ($hidden) echo "<br />".$pgv_lang["hidden"].": ".$hidden;
 	echo "</td>";
 	echo "<td>";
-	$uri = "http://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
-	$title = $pgv_lang["download_now"]." : hCal-events.ics";
-	if ($n) echo "<a href=\"http://feeds.technorati.com/events/".$uri."\"><img src=\"images/hcal.png\" border=\"0\" alt=\"".$title."\" title=\"".$title."\" /></a>";
+	if (strpos($option, "noDownload")===false) {
+		$uri = "http://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+		$title = $pgv_lang["download_now"].": hCal-events.ics";
+		if ($n) echo "<a href=\"http://feeds.technorati.com/events/".$uri."\"><img src=\"images/hcal.png\" border=\"0\" alt=\"".$title."\" title=\"".$title."\" /></a>";
+	}
 	echo "</td>";
 	echo "<td></td>";
 	echo "<td></td>";
