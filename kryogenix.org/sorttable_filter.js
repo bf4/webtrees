@@ -24,7 +24,7 @@
  * @subpackage Display
  * @version $Id$
  */
-<!--
+
 function table_filter(id, keyword, filter) {
 	var table = document.getElementById(id);
 	// get column number
@@ -108,5 +108,3 @@ function table_filter_alive(id) {
 	table_renum(id);
 	return false;
 }
-
-//-->

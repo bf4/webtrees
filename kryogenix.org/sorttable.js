@@ -2,26 +2,15 @@
  *
  * Copyright (c) 1997-2006 Stuart Langridge (www.kryogenix.org)
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * @licence MIT-licence http://www.kryogenix.org/code/browser/licence.html
+ * @author Stuart Langridge
+ * @see http://www.kryogenix.org/code/browser/sorttable/
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @author http://www.kryogenix.org/code/browser/sorttable/
  * @package PhpGedView
  * @subpackage Display
  * @version $Id$
  */
-<!--
+
 addEvent(window, "load", sortables_init);
 
 var SORT_COLUMN_INDEX;
@@ -251,4 +240,3 @@ function addEvent(elm, evType, fn, useCapture)
 		alert("Handler could not be removed");
 	}
 }
-//-->
