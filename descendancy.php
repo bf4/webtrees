@@ -185,7 +185,7 @@ if ($controller->chart_style==2) {
 	}
 	indi_desc($controller->pid, $controller->generations);
 	echo "<div class=\"center\">";
-	print_indi_table($datalist, $pgv_lang["descend_chart"]." : ".PrintReady($controller->name));
+	print_indi_table(array_unique($datalist), $pgv_lang["descend_chart"]." : ".PrintReady($controller->name));
 	echo "</div>";
 }
 //-- Family list
@@ -207,7 +207,7 @@ if ($controller->chart_style==3) {
 	}
 	fam_desc($controller->pid, $controller->generations);
 	echo "<div class=\"center\">";
-	print_fam_table($datalist, $pgv_lang["descend_chart"]." : ".PrintReady($controller->name));
+	print_fam_table(array_unique($datalist), $pgv_lang["descend_chart"]." : ".PrintReady($controller->name));
 	echo "</div>";
 }
 print_footer();
