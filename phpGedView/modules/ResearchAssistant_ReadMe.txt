@@ -64,7 +64,8 @@ INSTALLING
 1. Requires a running of PhpGedView v4.0 or higher
 2. Extract the files and copy them to the "modules" directory in your 
    PhpGedView installation
-3. Move the editcomments.php file into the main PhpGedView directory
+3. For PhpGedView 4.0.x, move the files from 4.0compat folder into the main 
+   PhpGedView directory
 4. After logging in you should see a new "Research Assistant" icon in your
    main PhpGedView menu bar.
 5. Click on the "Research Assistant" icon to build the database tables and

@@ -3429,3 +3429,5 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 
 // optional extra file
 if (file_exists( "includes/functions.extra.php")) require  "includes/functions.extra.php";
+
+?>

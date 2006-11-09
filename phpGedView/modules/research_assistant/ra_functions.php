@@ -1172,6 +1172,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		global $pgv_lang, $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 		global $indilist, $controller;
 		global $factarray;
+		global $VERSION;
+		
 		//Load up off site search names here
 		//Auto Search Plugin: To load up a new plugin follow the format for the two entries shown below
 		// ex $sites["myplugin.php"] = "mywebsite.com";
@@ -1202,6 +1204,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 
 		//$probabilities = $this->inferences();
 
+		if ($VERSION<4.1) print "<script src=\"compat.js\" language\"JavaScript\" type=\"text/javascript\"></script>\n";
 		// gets task id from the database
 		$sql = "SELECT * FROM ".$TBLPREFIX."individualtask WHERE it_i_id = '".$DBCONN->escapeSimple($person->getXref())."' AND it_i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id'])."'";		
 		$res = dbquery($sql);
