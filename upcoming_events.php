@@ -26,11 +26,12 @@
  * @version $Id$
  */
 
-$PGV_BLOCKS["print_upcoming_events"]["name"]        = $pgv_lang["upcoming_events_block"];
-$PGV_BLOCKS["print_upcoming_events"]["descr"]        = "upcoming_events_descr";
-$PGV_BLOCKS["print_upcoming_events"]["infoStyle"]        = "style2";
-$PGV_BLOCKS["print_upcoming_events"]["canconfig"]        = true;
-$PGV_BLOCKS["print_upcoming_events"]["config"] = array("days"=>30, "filter"=>"all", "onlyBDM"=>"no", "infoStyle"=>"style2");
+$PGV_BLOCKS["print_upcoming_events"]["name"]		= $pgv_lang["upcoming_events_block"];
+$PGV_BLOCKS["print_upcoming_events"]["descr"]		= "upcoming_events_descr";
+$PGV_BLOCKS["print_upcoming_events"]["infoStyle"]	= "style2";
+$PGV_BLOCKS["print_todays_events"]["allowDownload"]	= "yes";
+$PGV_BLOCKS["print_upcoming_events"]["canconfig"]	= true;
+$PGV_BLOCKS["print_upcoming_events"]["config"] = array("days"=>30, "filter"=>"all", "onlyBDM"=>"no", "infoStyle"=>"style2", "allowDownload"=>"yes");
 
 //-- upcoming events block
 //-- this block prints a list of upcoming events of people in your gedcom
@@ -51,7 +52,14 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
   else $onlyBDM = "no";
   if (isset($config["infoStyle"])) $infoStyle = $config["infoStyle"];  // "style1" or "style2"
   else $infoStyle = "style2";
+  if (isset($config["allowDownload"])) $allowDownload = $config["allowDownload"];	// "yes" or "no"
+  else $allowDownload = "yes";
+  
+  // Don't permit calendar download if not logged in
+  $username = getUserName();
+  if (empty($username)) $allowDownload = "no";
 
+  
   if ($daysprint < 1) $daysprint = 1;
   if ($daysprint > $DAYS_TO_SHOW_LIMIT) $daysprint = $DAYS_TO_SHOW_LIMIT;  // valid: 1 to limit
 
@@ -224,6 +232,7 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 	$option = "";
 	if ($onlyBDM == "yes") $option .= " onlyBDM";
 	if ($filter == "living") $option .= " living";
+	if ($allowDownload == "no") $option .= " noDownload";
 	print_events_table($found_facts, $daysprint, $option);
   }
 
@@ -241,6 +250,7 @@ function print_upcoming_events_config($config) {
   if (!isset($config["filter"])) $config["filter"] = "all";
   if (!isset($config["onlyBDM"])) $config["onlyBDM"] = "no";
   if (!isset($config["infoStyle"])) $config["infoStyle"] = "style2";
+  if (!isset($config["allowDownload"])) $config["allowDownload"] = "yes";
 
   if ($config["days"] < 1) $config["days"] = 1;
   if ($config["days"] > $DAYS_TO_SHOW_LIMIT) $config["days"] = $DAYS_TO_SHOW_LIMIT;  // valid: 1 to limit
@@ -289,6 +299,18 @@ function print_upcoming_events_config($config) {
     	<option value="style2"<?php if ($config["infoStyle"]=="style2") print " selected=\"selected\"";?>><?php print $pgv_lang["style2"]; ?></option>
   	</select>
 	</td></tr>
+ 
+  	<tr><td class="descriptionbox wrap width33">
+  	<?php
+ 	print_help_link("cal_dowload_help", "qm");
+  	print $pgv_lang["cal_download"]."</td>";
+  	?>
+  	<td class="optionbox">
+  	<select name="allowDownload">
+    	<option value="yes"<?php if ($config["allowDownload"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
+    	<option value="no"<?php if ($config["allowDownload"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
+  	</select>
+  	</td></tr>
   <?php
 }
 ?>

@@ -26,11 +26,12 @@
  * @version $Id$
  */
 
-$PGV_BLOCKS["print_todays_events"]["name"]        = $pgv_lang["todays_events_block"];
-$PGV_BLOCKS["print_todays_events"]["descr"]        = "todays_events_descr";
-$PGV_BLOCKS["print_todays_events"]["infoStyle"]        = "style2";
-$PGV_BLOCKS["print_todays_events"]["canconfig"]        = true;
-$PGV_BLOCKS["print_todays_events"]["config"] = array("filter"=>"all", "onlyBDM"=>"no", "infoStyle"=>"style2");
+$PGV_BLOCKS["print_todays_events"]["name"]			= $pgv_lang["todays_events_block"];
+$PGV_BLOCKS["print_todays_events"]["descr"]			= "todays_events_descr";
+$PGV_BLOCKS["print_todays_events"]["infoStyle"]		= "style2";
+$PGV_BLOCKS["print_todays_events"]["allowDownload"]	= "yes";
+$PGV_BLOCKS["print_todays_events"]["canconfig"]		= true;
+$PGV_BLOCKS["print_todays_events"]["config"] = array("filter"=>"all", "onlyBDM"=>"no", "infoStyle"=>"style2", "allowDownload"=>"yes");
 
 //-- today's events block
 //-- this block prints a list of today's upcoming events of living people in your gedcom
@@ -47,6 +48,13 @@ function print_todays_events($block=true, $config="", $side, $index) {
   else $onlyBDM = "no";
   if (isset($config["infoStyle"])) $infoStyle = $config["infoStyle"];  // "style1" or "style2"
   else $infoStyle = "style2";
+  if (isset($config["allowDownload"])) $allowDownload = $config["allowDownload"];	// "yes" or "no"
+  else $allowDownload = "yes";
+  
+  // Don't permit calendar download if not logged in
+  $username = getUserName();
+  if (empty($username)) $allowDownload = "no";
+  
 
   // Look for cached Facts data
   $found_facts = get_event_list();
@@ -214,6 +222,7 @@ function print_todays_events($block=true, $config="", $side, $index) {
 	$option = "";
 	if ($onlyBDM == "yes") $option .= " onlyBDM";
 	if ($filter == "living") $option .= " living";
+	if ($allowDownload == "no") $option .= " noDownload";
 	print_events_table($found_facts, 1, $option);
   }
   if ($block) print "</div>\n";
@@ -227,6 +236,7 @@ function print_todays_events_config($config) {
 	if (!isset($config["filter"])) $config["filter"] = "all";
 	if (!isset($config["onlyBDM"])) $config["onlyBDM"] = "no";
 	if (!isset($config["infoStyle"])) $config["infoStyle"] = "style2";
+	if (!isset($config["allowDownload"])) $config["allowDownload"] = "yes";
 
 	?>
 	<tr><td class="descriptionbox wrap width33">
@@ -261,6 +271,18 @@ function print_todays_events_config($config) {
   	<select name="infoStyle">
     	<option value="style1"<?php if ($config["infoStyle"]=="style1") print " selected=\"selected\"";?>><?php print $pgv_lang["style1"]; ?></option>
     	<option value="style2"<?php if ($config["infoStyle"]=="style2") print " selected=\"selected\"";?>><?php print $pgv_lang["style2"]; ?></option>
+  	</select>
+  	</td></tr>
+ 
+  	<tr><td class="descriptionbox wrap width33">
+  	<?php
+ 	print_help_link("cal_dowload_help", "qm");
+  	print $pgv_lang["cal_download"]."</td>";
+  	?>
+  	<td class="optionbox">
+  	<select name="allowDownload">
+    	<option value="yes"<?php if ($config["allowDownload"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
+    	<option value="no"<?php if ($config["allowDownload"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
   	</select>
   	</td></tr>
   <?php
