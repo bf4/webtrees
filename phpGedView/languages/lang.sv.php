@@ -632,6 +632,9 @@ $pgv_lang["welcome"]				= "Välkommen";
 $pgv_lang["upcoming_events"]		= "Kommande händelser";
 $pgv_lang["living_or_all"]			= "Visa händelser enbart för levande personer?";
 $pgv_lang["basic_or_all"]			= "Visa endast födda, döda och vigda?";
+$pgv_lang["style"]					= "Presentationsstil";
+$pgv_lang["style1"]					= "Text";
+$pgv_lang["style2"]					= "Tabell";
 $pgv_lang["no_events_living"]		= "Inga händelser för levande personer existerar för de närmaste #pgv_lang[global_num1]# dagarna.";
 $pgv_lang["no_events_living1"]		= "Inga händelser för levande personer existerar för imorgon.";
 $pgv_lang["no_events_all"]			= "Inga händelser existerar de närmaste #pgv_lang[global_num1]# dagarna.";
@@ -801,15 +804,17 @@ $pgv_lang["show_cousins"]			= "Visa kusiner";
 // to allow fo language variations we specify different relationships for paternal and maternal
 // aunts and uncles
 // 1st generation
-$pgv_lang["sosa_uncle_2"] 				= "farbror";            // father's brother
-$pgv_lang["sosa_uncle_3"] 				= "morbror";            // mother's brother
+$pgv_lang["sosa_uncle_2"] 				= "farbror";
+$pgv_lang["sosa_uncle_3"] 				= "morbror";
 // the sosa_aunt name is used for aunts - the names below can be extended to any number
 // of generations just by adding more translations.
 // to allow fo language variations we specify different relationships for paternal and maternal
 // aunts and aunts
 // 1st generation
-$pgv_lang["sosa_aunt_2"] 				= "faster";            // father's sister
-$pgv_lang["sosa_aunt_3"] 				= "moster";            // mother's sister
+$pgv_lang["sosa_aunt_2"] 				= "faster";
+$pgv_lang["sosa_aunt_3"] 				= "moster";
+$pgv_lang["male_cousin_1"]              = "kusin";
+$pgv_lang["female_cousin_1"]            = "kusin";
 
 //sosa pattern is now used to find relationships, it is the key and value pair that needs to be set up in all other languages.
 //1st generation

@@ -150,6 +150,7 @@ $pgv_lang["fbsql"]								= "FrontBase";
 $pgv_lang["found_record"]		= "Hittade poster";
 $pgv_lang["ged_download"]						= "Ladda ner";
 $pgv_lang["ged_import"]			= "Importera";
+$pgv_lang["ged_check"] 							= "Kontrollera";
 $pgv_lang["gedcom_adm_head"]					= "GEDCOM-administration";
 $pgv_lang["gedcom_config_write_error"]			= "FEL!!!<br />Kunde inte skriva till filen <i>#GLOBALS[whichFile]#</i>.Kontrollera att filen har skrivrättighter.";
 $pgv_lang["gedcom_downloadable"] 	= "Denna GEDCOM-fil är nerladdningsbar över internet!<br />Var vänlig läs Säkerhetssektionen i <a href=\"readme.txt\">readme.txt</a> för att rätta till problemet";
@@ -284,11 +285,27 @@ $pgv_lang["weekly"]								= "Veckovis";
 $pgv_lang["welcome_new"]						= "Välkommen till din nya PhpGedView sajt.";
 $pgv_lang["yearly"]								= "Årlig";
 $pgv_lang["you_may_login"]		= " av sajt administratören. Du kan nu logga in på PhpGedView sajten genom att följa länken nedan:";
+$pgv_lang['gedcheck_text']= 'Denna modul kontrollera formatet i GEDCOM-filen mot <a href="http://phpgedview.sourceforge.net/ged551-5.pdf";
 
 $pgv_lang["ip_address"]				= "IPadress";
 $pgv_lang["date_time"]				= "Datum och tid";
 $pgv_lang["log_message"]			= "Logmeddelande";
 $pgv_lang["searchtype"]				= "Söktyp";
 $pgv_lang["query"]					= "Fråga";
+$pgv_lang["sanity_err0"]			= "Fel:";
+$pgv_lang["sanity_err1"]			= "Du behöver PHP version 4.3 eller nyare.";
+$pgv_lang["sanity_err2"]			= "Filen eller katalogen <i>#GLOBALS[whichFile]#</i> finns inte. Kontrollera att filen eller katalogen finns, inte var felstavad och läsrättigheter är satta korrekt.";
+$pgv_lang["sanity_err3"]			= "Filen <i>#GLOBALS[whichFile]#</i> laddades inte upp korrekt. Försök ladda upp den igen.";
+$pgv_lang["sanity_err4"]			= "Filen <i>config.php</i> är skadad.";
+$pgv_lang["sanity_err5"]			= "Filen <i>config.php</i> är inte skrivbar.";
+$pgv_lang["sanity_err6"]			= "Katalogen <i>#GLOBALS[INDEX_DIRECTORY]#</i> är inte skrivbar.";
+$pgv_lang["sanity_warn0"]			= "Varningar:";
+$pgv_lang["sanity_warn1"]			= "Katalogen <i>#GLOBALS[MEDIA_DIRECTORY]#</i> är inte skrivbar. Du kommer inte kunna ladda upp mediafiler eller skapa miniatyrbilder.";
+$pgv_lang["sanity_warn2"]			= "Katalogen <i>#GLOBALS[MEDIA_DIRECTORY]#thumbs</i> är inte skrivbar. Du kommer inte kunna ladda upp eller skapa miniatyrbilder i PhpGedView.";
+$pgv_lang["sanity_warn3"]			= "GD bildbiblioteket finns inte. PhpGedView kommer att fungera men vissa funktioner som miniatyrbildsskapning och cirkeltavlan kommer inte fungera. Läs <a href='http://www.php.net/manual/en/ref.image.php'>http://www.php.net/manual/en/ref.image.php</a> för mer information.";
+$pgv_lang["sanity_warn4"]			= "XML parsningsbiblioteket finns inte. PhpGedView kommer fortfarande att fungera men vissa funktioner som rapportgenerering och web service kommer inte fungera. Läs <a href='http://www.php.net/manual/en/ref.xml.php'>http://www.php.net/manual/en/ref.xml.php</a> för mer information.";
+$pgv_lang["sanity_warn6"]			= "";
+$pgv_lang["sanity_warn5"]			= "DOM XML biblioteket finns inte. PhpGedView kommer fortfarande att fungera men vissa funktioner som GRAMPS export urklippskorgen, nerladdning och web service kommer inte fungera. Läs <a href='http://www.php.net/manual/en/ref.dom.php'>http://www.php.net/manual/en/ref.dom.php</a> för mer information.";
+$pgv_lang["sanity_warn6"]			= "Kalender biblioteket finns inte. PhpGedView kommer fortfarande att fungera men vissa funktioner som Konverteringar till andra kalendrar som hebreisk och fransk inte fungera. Läs <a href='http://www.php.net/manual/en/ref.calendar.php'>http://www.php.net/manual/en/ref.calendar.php</a> för mer information.";
 
 ?>
