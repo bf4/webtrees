@@ -55,19 +55,6 @@ function findReferences($directory) {
 	}
 }
 
-?>
-<table border="1">
-<tr>
-	<td><a href="lang_move.php?action=find">Parse Files</a></td>
-	<td><a href="lang_move.php?action=list">List All</a></td>
-	<td><a href="lang_move.php?action=adminonly">List Admin Only</a></td>
-	<td><a href="lang_move.php?action=editoronly">List Editor Only</a></td>
-	<td><a href="lang_move.php?file=./pedigree.php">List from a File</a></td>
-	<td><a href="lang_move.php">Conflicts</a></td>
-</tr>
-</table>
-<?php
-
 $lang = array();
 if (file_exists($datastore)) {
 	$fcontents = file_get_contents($datastore);
@@ -94,6 +81,29 @@ if ($action=="find") {
 	fwrite($fp, $temp);
 	fclose($fp);
 }
+
+?>
+<table border="1">
+<tr>
+	<td><a href="lang_move.php?action=find">Parse Files</a></td>
+	<td><a href="lang_move.php?action=list">List All</a></td>
+	<td><a href="lang_move.php?action=adminonly">List Admin Only</a></td>
+	<td><a href="lang_move.php?action=editoronly">List Editor Only</a></td>
+	<td><form name="fileform" action="lang_move.php" method="get">List keys from a File
+	<select name="file" onchange="document.fileform.submit();">
+	<?php
+		foreach($lang as $key=>$entries) {
+			if (substr($key, 0, 2)=="./") print "<option value=\"".$key."\">".$key."</option>\n";
+		}
+	?>
+	</select><input type="submit" value="go" /></form></td>
+	<td><form name="keyform" action="lang_move.php" method="get">Search for a lang key:
+	<br /><input type="text" name="file" value="" /><input type="submit" value="go" /></form></td>
+	<td><a href="lang_move.php">Conflicts</a></td>
+</tr>
+</table>
+<?php
+
 
 if ($action=="list") {
 	print "<ul>";
@@ -335,6 +345,7 @@ else if ($action=="fix_lang" && isset($_REQUEST['langcode'])) {
 	}
 }
 else if (isset($_REQUEST['file'])) {
+	print "<b>Language keys for <i>".$_REQUEST['file']."</i></b>";
 	print "<ul>";
 	if (isset($_REQUEST['file'])) $file = $_REQUEST['file'];
 	else $file = "./admin.php";
@@ -392,7 +403,7 @@ else {
 			}
 		}
 	}
-	print "<b>Found ".count($unused)." undefined<br /></b>\n";
+	print "<b>Found ".count($unused)." possible unused<br /></b>\n";
 	print "<ul>";
 	foreach($unused as $c=>$key) {
 		print "<li><span style=\"color:blue\">".$key."</span> - ";
@@ -402,7 +413,7 @@ else {
 	print "</ul>";
 	
 	$undefined = array();
-	print "<b>Found ".count($undefined)." undefined<br /></b>\n";
+	print "<b>Found ".count($undefined)." possible undefined<br /></b>\n";
 	print "<ul>";
 	foreach($undefined as $c=>$key) {
 		print "<li><span style=\"color:blue\">".$key."</span> - ";
