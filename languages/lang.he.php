@@ -785,9 +785,9 @@ $pgv_lang["next_path"]		= "מצא הנתיב הבא";
 $pgv_lang["show_path"]		= "הראה את הנתיב";
 $pgv_lang["line_up_generations"]	= "סדר בשורה לפי דורות";
 $pgv_lang["oldest_top"]             	= "הראה את הישן למעלה";
-// %1$s replaced by first person, %2$s by the relationship and %3$s by the second person.
-$pgv_lang["relationship_male_1_is_the_2_of_3"] = '%1$s הוא %2$s של %3$s';
-$pgv_lang["relationship_female_1_is_the_2_of_3"] = '%1$s היא %2$s של %3$s';
+// %1\$s replaced by first person, %2\$s by the relationship and %3\$s by the second person.
+$pgv_lang["relationship_male_1_is_the_2_of_3"] = "%1\$s הוא %2\$s של %3\$s";
+$pgv_lang["relationship_female_1_is_the_2_of_3"] = "%1\$s היא %2\$s של %3\$s";
 $pgv_lang["mother_in_law"]		= "חמות"; 
 $pgv_lang["father_in_law"]		= "חם";
 $pgv_lang["brother_in_law"]		= "גיס";
@@ -844,11 +844,11 @@ $pgv_lang["bosa_brothers_offspring_30"] = "נכדן רבע ";       // brother's
 $pgv_lang["bosa_brothers_offspring_31"] = "נכדנית רבעה "; // brother's daughter's daughter's daughter's daughter
 */
 // for the general case of offspring of the nth generation use the text below
-// in this text %1$d is replaced with the number of generations
-//              %2$d is replaced with the number of generations - 1
-//              %3$d is replaced with the number of generations - 2
-$pgv_lang["n_x_brothers_son"]	  = 'נכדנית מדרגה %1$d';
-$pgv_lang["n_x_brothers_daughter"] = 'נכדנית מדרגה %1$d';
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_brothers_son"]	  = "נכדנית מדרגה %1\$d";
+$pgv_lang["n_x_brothers_daughter"] = "נכדנית מדרגה %1\$d";
 // the bosa_sisters_offspring name is used for sisters nephews and nieces - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
@@ -888,11 +888,11 @@ $pgv_lang["bosa_sisters_offspring_30"] = "נכדן רבע ";       // sister's d
 $pgv_lang["bosa_sisters_offspring_31"] = "נכדנית רבעה "; // sister's daughter's daughter's daughter's daughter
 */
 // for the general case of offspring of the nth generation use the text below
-// in this text %1$d is replaced with the number of generations
-//              %2$d is replaced with the number of generations - 1
-//              %3$d is replaced with the number of generations - 2
-$pgv_lang["n_x_sisters_son"]	  = 'נכדנית מדרגה %1$d';
-$pgv_lang["n_x_sisters_daughter"] = 'נכדנית מדרגה %1$d';
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_sisters_son"]	  = "נכדנית מדרגה %1\$d";
+$pgv_lang["n_x_sisters_daughter"] = "נכדנית מדרגה %1\$d";
 // the bosa name is used for offspring - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
@@ -932,13 +932,13 @@ $pgv_lang["bosa_30"] 				= "רבע";		// daughter's daughter's daughters son
 $pgv_lang["bosa_31"] 				= "רבעה";   // daughter's daughter's daughters daughter
 */
 // for the general case of offspring of the nth generation use the text below
-// in this text %1$d is replaced with the number of generations
-//              %2$d is replaced with the number of generations - 1
-//              %3$d is replaced with the number of generations - 2
-$pgv_lang["n_x_grandson_from_son"]	  = 'נכד מדרגה %2$d';
-$pgv_lang["n_x_granddaughter_from_son"] = 'נכדה מדרגה %2$d';
-$pgv_lang["n_x_grandson_from_daughter"]	  = 'נכד מדרגה %2$d';
-$pgv_lang["n_x_granddaughter_from_daughter"] = 'נכדה מדרגה %2$d';
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_grandson_from_son"]	  = "נכד מדרגה %2\$d";
+$pgv_lang["n_x_granddaughter_from_son"] = "נכדה מדרגה %2\$d";
+$pgv_lang["n_x_grandson_from_daughter"]	  = "נכד מדרגה %2\$d";
+$pgv_lang["n_x_granddaughter_from_daughter"] = "נכדה מדרגה %2\$d";
 /*
 // 5th generation
 $pgv_lang["bosa_32"]			   = "Great-great-great-grandson";
@@ -1015,11 +1015,11 @@ $pgv_lang["sosa_uncle_30"] 				= "דוד רבע";      // mother's mother's moth
 $pgv_lang["sosa_uncle_31"] 				= "דוד רבע";      // mother's mother's mothers mothers brother
 */
 // for the general case of uncles of the nth degree use the text below
-// in this text %1$d is replaced with the number of generations
-//              %2$d is replaced with the number of generations - 1
-//              %3$d is replaced with the number of generations - 2
-$pgv_lang["n_x_paternal_uncle"]		= 'דוד מדרגה %1$d';
-$pgv_lang["n_x_maternal_uncle"]	    	= 'דוד מדרגה %1$d';
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_uncle"]		= "דוד מדרגה %1\$d";
+$pgv_lang["n_x_maternal_uncle"]	    	= "דוד מדרגה %1\$d";
 // the sosa_aunt name is used for aunt - the names below can be extended to any number
 // of generations just by adding more translations.
 // to allow fo language variations we specify different relationships for paternal and maternal
@@ -1061,11 +1061,11 @@ $pgv_lang["sosa_aunt_30"] 				= "דודה רבעה";      // mother's mother's m
 $pgv_lang["sosa_aunt_31"] 				= "דודה רבעה";      // mother's mother's mothers mothers sister
 */
 // for the general case of aunts of the nth degree use the text below
-// in this text %1$d is replaced with the number of generations
-//              %2$d is replaced with the number of generations - 1
-//              %3$d is replaced with the number of generations - 2
-$pgv_lang["n_x_paternal_aunt"]		= 'דודה מדרגה %1$d';
-$pgv_lang["n_x_maternal_aunt"]	    	= 'דודה מדרגה %1$d';
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_aunt"]		= "דודה מדרגה %1\$d";
+$pgv_lang["n_x_maternal_aunt"]	    	= "דודה מדרגה %1\$d";
 
 // if a specific cousin relationship cannot be represented in a language translate as "";
 $pgv_lang["male_cousin_1"]              	= "דודן";
@@ -1609,13 +1609,13 @@ $pgv_lang["sosa_63"]            		= "N/A";
 */
 
 // for the general case of ancestors of the nth generation use the text below
-// in this text %1$d is replaced with the number of generations
-//              %2$d is replaced with the number of generations - 1
-//              %3$d is replaced with the number of generations - 2
-$pgv_lang["sosa_paternal_female_n_generations"]	= '%3$d x great grandfather'; //@@
-$pgv_lang["sosa_paternal_male_n_generations"]	= '%3$d x great grandmother'; //@@
-$pgv_lang["sosa_maternal_female_n_generations"]	= '%3$d x great grandfather'; //@@
-$pgv_lang["sosa_maternal_male_n_generations"]	= '%3$d x great grandmother'; //@@
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["sosa_paternal_female_n_generations"]	= "%3\$d x great grandfather"; //@@
+$pgv_lang["sosa_paternal_male_n_generations"]	= "%3\$d x great grandmother"; //@@
+$pgv_lang["sosa_maternal_female_n_generations"]	= "%3\$d x great grandfather"; //@@
+$pgv_lang["sosa_maternal_male_n_generations"]	= "%3\$d x great grandmother"; //@@
 
 //-- FAN CHART
 $pgv_lang["compact_chart"]		= "תרשים קומפקטי";
