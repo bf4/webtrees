@@ -684,7 +684,11 @@ class SearchControllerRoot extends BaseController {
 						{
 							$place_sdx = DMSoundex($place);
 							
-							$sql .= "p_dm_soundex = '".$place_sdx[0]."' OR ";
+							foreach($place_sdx as $key=>$val)
+							{
+								
+									$sql .= "p_dm_soundex like '%".$place_sdx[$key]."%' OR ";
+							}
 						}
 						
 						if($this->soundex == "Russell")
@@ -835,6 +839,7 @@ class SearchControllerRoot extends BaseController {
 				$firstName = "";
 				$lastName = "";
 				
+				
 				if(!empty($this->place) && empty($this->firstname) && empty($this->lastname))
 				{
 					$this->Place_Search();
@@ -856,6 +861,7 @@ class SearchControllerRoot extends BaseController {
 					$lastName .= "%" . $name;
 				}
 				}
+				
 				
 				$firstName .= "%";
 				$lastName .= "%";
