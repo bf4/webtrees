@@ -216,6 +216,11 @@ $pgv_lang["city"]                       = "City";
 $pgv_lang["complete_title"]				= "Complete the Task";
 $pgv_lang["select_form"]				= "Select Form";
 $pgv_lang['choose_form_label']			= "Choose a common research form:";
+$pgv_lang["book"]                 		= "Book";
+$pgv_lang["folio"]                   	= "Folio";
+$pgv_lang["uk_county"]					= "County";
+$pgv_lang["uk_boro"]						= "City or Borough";
+$pgv_lang["uk_place"]					= "Place";
 
 //-- MY TASK BLOCK
 $pgv_lang["mytasks_block_descr"]		= "The My Task Block shows the task for the current user and can be configured to show completed tasks or to show task that are currently unassigned";

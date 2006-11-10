@@ -530,7 +530,7 @@ return false;}return true;}
 				$inferredFact["Person"] = $person->getName();
 				$inferredFact["PersonID"] = $person->getXref();
 				$inferredFact["Reason"] = "Add <i>".$rows[$number]["Trade"]."</i> occupation fact.";
-				$inferredFact["Fact"] = "1 OCCU ".$rows[$number]["Trade"];
+				$inferredFact["Fact"] = "1 OCCU ".$rows[$number]["Trade"]."\r\n2 DATE ABT 1880";
 				$inferredFact["factType"] = 'OCCU';
 				$inferredFact["factPeople"] = "indi";
 				$inferredFact["date"] = '';
