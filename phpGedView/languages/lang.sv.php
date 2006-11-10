@@ -892,9 +892,9 @@ $pgv_lang["stepsister"]			= "Styvsyster";
 $pgv_lang["twin"] 				= "Tvilling";
 $pgv_lang["twin_brother"] 		= "Tvillingbror";
 $pgv_lang["twin_sister"] 		= "Tvillingsyster";
-// %1$s replaced by first person, %2$s by the relationship and %3$s by the second person.
-$pgv_lang["relationship_male_1_is_the_2_of_3"] = '%1$s är %2$s till %3$s.';
-$pgv_lang["relationship_female_1_is_the_2_of_3"] = '%1$s är %2$s till %3$s.';
+// %1\$s replaced by first person, %2\$s by the relationship and %3\$s by the second person.
+$pgv_lang["relationship_male_1_is_the_2_of_3"] = "%1\$s är %2\$s till %3\$s.";
+$pgv_lang["relationship_female_1_is_the_2_of_3"] = "%1\$s är %2\$s till %3\$s.";
 
 $pgv_lang["witness"] 			= "Vittne";
 $pgv_lang["statutci"]			= "Kan inte skapa index";

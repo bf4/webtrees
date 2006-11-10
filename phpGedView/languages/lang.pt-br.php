@@ -670,9 +670,9 @@ $pgv_lang["next_path"]="Localizar novo caminho ";
 $pgv_lang["show_path"]="Exibir caminho";
 $pgv_lang["line_up_generations"]="Alinhar as mesmas generações";
 $pgv_lang["oldest_top"]="Exibir mais velho no topo";
-// %1$s replaced by first person, %2$s by the relationship and %3$s by the second person.
-$pgv_lang["relationship_male_1_is_the_2_of_3"] = '%1$s é o %2$s de %3$s.';
-$pgv_lang["relationship_female_1_is_the_2_of_3"] = '%1$s é o %2$s de %3$s.';
+// %1\$s replaced by first person, %2\$s by the relationship and %3\$s by the second person.
+$pgv_lang["relationship_male_1_is_the_2_of_3"] = "%1\$s é o %2\$s de %3\$s.";
+$pgv_lang["relationship_female_1_is_the_2_of_3"] = "%1\$s é o %2\$s de %3\$s.";
 $pgv_lang["mother_in_law"]		    = "sogra";
 $pgv_lang["father_in_law"]		    = "sogro";
 $pgv_lang["brother_in_law"]		    = "cunhado";
@@ -699,11 +699,11 @@ $pgv_lang["bosa_brothers_offspring_5"] 				= "great niece";        // brother's 
 $pgv_lang["bosa_brothers_offspring_6"] 				= "great nephew";       // brother's daughter's son
 $pgv_lang["bosa_brothers_offspring_7"] 				= "great niece";        // brother's daughter's daughter
 // for the general case of offspring of the nth generation use the text below
-// in this text %1$d is replaced with the number of generations
-//              %2$d is replaced with the number of generations - 1
-//              %3$d is replaced with the number of generations - 2
-$pgv_lang["n_x_brothers_son"]	  = '%2$d x great nephew';
-$pgv_lang["n_x_brothers_daughter"] = '%2$d x great niece';
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_brothers_son"]	  = "%2\$d x great nephew";
+$pgv_lang["n_x_brothers_daughter"] = "%2\$d x great niece";
 // the bosa_sisters_offspring name is used for sisters nephews and nieces - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
@@ -715,11 +715,11 @@ $pgv_lang["bosa_sisters_offspring_5"] 				= "great niece";        // sister's so
 $pgv_lang["bosa_sisters_offspring_6"] 				= "great nephew";       // sister's daughter's son
 $pgv_lang["bosa_sisters_offspring_7"] 				= "great niece";        // sister's daughter's daughter
 // for the general case of offspring of the nth generation use the text below
-// in this text %1$d is replaced with the number of generations
-//              %2$d is replaced with the number of generations - 1
-//              %3$d is replaced with the number of generations - 2
-$pgv_lang["n_x_sisters_son"]	  = '%2$d x great nephew';
-$pgv_lang["n_x_sisters_daughter"] = '%2$d x great niece';
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_sisters_son"]	  = "%2\$d x great nephew";
+$pgv_lang["n_x_sisters_daughter"] = "%2\$d x great niece";
 // the bosa name is used for offspring - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
@@ -740,13 +740,13 @@ $pgv_lang["bosa_13"] 				= "bis-neta";   // daughter's son's daughter
 $pgv_lang["bosa_14"] 				= "bis-neto";   // daughter's daughters son
 $pgv_lang["bosa_15"] 				= "bis-neta";   // daughter's daughters daughter
 // for the general case of offspring of the nth generation use the text below
-// in this text %1$d is replaced with the number of generations
-//              %2$d is replaced with the number of generations - 1
-//              %3$d is replaced with the number of generations - 2
-$pgv_lang["n_x_grandson_from_son"]	  = '%3$d x bis-neto';
-$pgv_lang["n_x_granddaughter_from_son"] = '%3$d x bis-neta';
-$pgv_lang["n_x_grandson_from_daughter"]	  = '%3$d x bis-neto';
-$pgv_lang["n_x_granddaughter_from_daughter"] = '%3$d x bis-neta';
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_grandson_from_son"]	  = "%3\$d x bis-neto";
+$pgv_lang["n_x_granddaughter_from_son"] = "%3\$d x bis-neta";
+$pgv_lang["n_x_grandson_from_daughter"]	  = "%3\$d x bis-neto";
+$pgv_lang["n_x_granddaughter_from_daughter"] = "%3\$d x bis-neta";
 // the sosa_uncle name is used for uncles - the names below can be extended to any number
 // of generations just by adding more translations.
 // to allow fo language variations we specify different relationships for paternal and maternal
@@ -760,11 +760,11 @@ $pgv_lang["sosa_uncle_5"] 				= "tio-avô";      // fathers mothers brother
 $pgv_lang["sosa_uncle_6"] 				= "tio-avô";      // mothers fathers brother
 $pgv_lang["sosa_uncle_7"] 				= "tio-avô";      // mothers mothers brother
 // for the general case of uncles of the nth degree use the text below
-// in this text %1$d is replaced with the number of generations
-//              %2$d is replaced with the number of generations - 1
-//              %3$d is replaced with the number of generations - 2
-$pgv_lang["n_x_paternal_uncle"]		= '%2$d x great uncle';
-$pgv_lang["n_x_maternal_uncle"]	    = '%2$d x great uncle';
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_uncle"]		= "%2\$d x great uncle";
+$pgv_lang["n_x_maternal_uncle"]	    = "%2\$d x great uncle";
 // the sosa_aunt name is used for aunts - the names below can be extended to any number
 // of generations just by adding more translations.
 // to allow fo language variations we specify different relationships for paternal and maternal
@@ -778,11 +778,11 @@ $pgv_lang["sosa_aunt_5"] 				= "tia-avó";      // fathers mothers sister
 $pgv_lang["sosa_aunt_6"] 				= "tia-avó";      // mothers fathers sister
 $pgv_lang["sosa_aunt_7"] 				= "tia-avó";      // mothers mothers sister
 // for the general case of aunts of the nth degree use the text below
-// in this text %1$d is replaced with the number of generations
-//              %2$d is replaced with the number of generations - 1
-//              %3$d is replaced with the number of generations - 2
-$pgv_lang["n_x_paternal_aunt"]		= '%2$d x great aunt';
-$pgv_lang["n_x_maternal_aunt"]	    = '%2$d x great aunt';
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_aunt"]		= "%2\$d x great aunt";
+$pgv_lang["n_x_maternal_aunt"]	    = "%2\$d x great aunt";
 // if a specific cousin relationship cannot be represented in a language translate as "";
 $pgv_lang["male_cousin_1"]              = "primo";
 $pgv_lang["male_cousin_2"]              = "primo do 2º gravi";
