@@ -3312,21 +3312,25 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 
 		$goodDB = check_db();
 		// Load functions that are specific to the active language
-		if (file_exists("./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php");
+		@include_once("./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php");
 		// load admin lang keys
-		if ((!$goodDB || !adminUserExists() || userGedcomAdmin(getUserName()) || !$CONFIGURED) && file_exists("./languages/admin.".$lang_short_cut[$LANGUAGE].".php")) include_once("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
+		if (!$goodDB || !adminUserExists() || userGedcomAdmin(getUserName()) || !$CONFIGURED) {
+			@include_once("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
+		}
 		// load the edit lang keys
-		if ((!$goodDB || !adminUserExists() || userCanEdit(getUserName())) && file_exists("./languages/editor.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
+		if (!$goodDB || !adminUserExists() || userCanEdit(getUserName())) {
+			@include_once("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
+		}
 		
-		if (file_exists("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php");
-		if (file_exists("./languages/extra.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/extra.".$lang_short_cut[$LANGUAGE].".php");
+		@include_once("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php");
+		@include_once("./languages/extra.".$lang_short_cut[$LANGUAGE].".php");
 		$result = true;
 	}
 
 	if ($desiredLanguage!=$LANGUAGE && file_exists($pgv_language[$desiredLanguage])) {
 		$LANGUAGE = $desiredLanguage;
-		include_once($pgv_language[$LANGUAGE]);		// Load the requested language
-		if (file_exists($factsfile[$LANGUAGE])) include_once($factsfile[$LANGUAGE]);
+		@include_once($pgv_language[$LANGUAGE]);		// Load the requested language
+		@include_once($factsfile[$LANGUAGE]);
 
 		$TEXT_DIRECTION = $TEXT_DIRECTION_array[$LANGUAGE];
 		$DATE_FORMAT	= $DATE_FORMAT_array[$LANGUAGE];
@@ -3340,11 +3344,15 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		$goodDB = check_db();
 		
 		// load admin lang keys
-		if ((!$goodDB || !adminUserExists() || userGedcomAdmin(getUserName()) || !$CONFIGURED) && file_exists("./languages/admin.".$lang_short_cut[$LANGUAGE].".php")) include_once("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
+		if ((!$goodDB || !adminUserExists() || userGedcomAdmin(getUserName()) || !$CONFIGURED)) {
+			@include_once("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
+		}
 		// load the edit lang keys
-		if ((!$goodDB || !adminUserExists() || userCanEdit(getUserName())) && file_exists("./languages/editor.".$lang_short_cut[$LANGUAGE].".php")) include_once("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
-		if (file_exists("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php")) include_once("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php");
-		if (file_exists("./languages/extra.".$lang_short_cut[$LANGUAGE].".php")) include_once("./languages/extra.".$lang_short_cut[$LANGUAGE].".php");
+		if ((!$goodDB || !adminUserExists() || userCanEdit(getUserName()))) {
+			@include_once("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
+		}
+		@include_once("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php");
+		@include_once("./languages/extra.".$lang_short_cut[$LANGUAGE].".php");
 		$result = true;
 	}
 
