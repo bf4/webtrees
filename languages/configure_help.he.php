@@ -113,13 +113,11 @@ $pgv_lang["CHART_BOX_TAGS"]			= "נתונים אחרים שניתן להציג �
 $pgv_lang["CHART_BOX_TAGS_help"]			= "~#pgv_lang[CHART_BOX_TAGS]#~<br /><br />This should be a comma or space separated list of facts, in addition to Birth and Death, that you want to appear in chart boxes such as the Pedigree chart.  This list requires you to use fact tags as defined in the GEDCOM 5.5.1 Standard.  For example, if you wanted the occupation to show up in the box, you would add \"OCCU\" to this field.<br /><br />This sets \$CHART_BOX_TAGS in <i><u>xxx</u>.GED_conf.php</i>.<br />";
 
 //-- CONFIGURE FILE MESSAGES
-//$pgv_lang["standard_conf"]				= "מאפייני תצורה בסיסיים";
-//$pgv_lang["advanced_conf"]				= "מאפייני תצורה מתקדמים";
 $pgv_lang["gedcom_conf"]				= "בסיס GEDCOM";
 $pgv_lang["media_conf"]				= "מולטימדיה";
 $pgv_lang["accpriv_conf"]				= "גישה ופרטיות";
 $pgv_lang["displ_conf"]				= "תצוגה ומבנה";
-$pgv_lang["displ_names_conf"]			= "שמות";
+$pgv_lang["displ_names_conf"]				= "שמות";
 $pgv_lang["displ_comsurn_conf"] 			= "שמות משפחה שכיחים";
 $pgv_lang["displ_layout_conf"]				= "מבנה";
 $pgv_lang["displ_hide_conf"]				= "הסתר והראה";
@@ -128,8 +126,6 @@ $pgv_lang["useropt_conf"]				= "בחירות משתמש";
 $pgv_lang["contact_conf"]				= "נתוני קשר";
 $pgv_lang["meta_conf"]				= "מאפייני תצורה של האתר ותווי META";
 $pgv_lang["gedconf_head"]				= "תצורת GEDCOM";
-
-//$pgv_lang["accept"]				= "אשר";
 $pgv_lang["other_theme"]				= "אחר, הקלד";
 $pgv_lang["performing_update"]			= "מבצע עדכון:";
 $pgv_lang["config_file_read"]				= "קריאת קובץ תצורה";
@@ -138,7 +134,6 @@ $pgv_lang["media_drive_letter"]			= "אין לכלול בכתובת המדיה �
 $pgv_lang["db_setup_bad"]				= "התצורה הנוכחית שלך של מסד הנתונים אינה מתאימה. נא בדוק את הפרמטרים של קישוריות מסד הנתונים ועצב מחדש.";
 $pgv_lang["bad_host_user_pass"]			= "PhpGedView was unable to make a connection to your MySQL database host.  Check the host, username, and password to make sure they are correct.";
 $pgv_lang["bad_database_name"]			= "PhpGedView made a connection to your database host, but was unable to use the database with the name you entered.  Check that the database exists and that the username you entered has the appropriate permissions on that database.";
-//$pgv_lang["index"]					= "קבצי אינדקס";
 $pgv_lang["db"]					= "מסד נתונים";
 $pgv_lang["dbase"]					= "dBase";
 $pgv_lang["current_gedcoms"]				= "GEDCOM-ים נוכחיים";
@@ -161,11 +156,8 @@ $pgv_lang["disabled"]				= "נפסל";
 $pgv_lang["mouseover"]				= "עכבר עובר מעל";
 $pgv_lang["mousedown"]				= "עכבר מושבת";
 $pgv_lang["click"]					= "קליק עם עכבר";
-$pgv_lang["enter_db_pass"]				= "עבור הגנה, עליך להכניס #pgv_lang[DBUSER]# ו#pgv_lang[DBPASS]# לפני שתשנה את ערכי התצורה.";
+$pgv_lang["enter_db_pass"]				= "עבור הגנה, עליך להכניס תמיד #pgv_lang[DBUSER]# ו#pgv_lang[DBPASS]# כאשר משנים את ערכי התצורה.";
 $pgv_lang["server_url_note"]				= "זה צריך להיות ה-URL לתיקיית ה-PhpGedView שלך. שנה אותו רק אם אתה בטוח שאתה יודע מה שאתה עושה. PhpGedView חישב ערך <b><span dir=\"ltr\">#GUESS_URL#</span></b>";
-
-//$pgv_lang["PGV_DATABASE"]			= "הצורה לשמירת נתוני PhpGedView";
-//$pgv_lang["PGV_DATABASE_help"]			= "~#pgv_lang[PGV_DATABASE]#~<br /><br />This tells PhpGedView what type of datastore you want to use for the GEDCOM files you import into the system.<br /><br />Select <b>#pgv_lang[index]#</b> to use index files stored in the index directory, or select <b>#pgv_lang[db]#</b> to use a database like MySQL.  If your server is using PHP 5, you should use the SQLite database instead of Index files; you will get much better performance.<br /><br />This sets \$PGV_DATABASE in <i>config.php</i>.<br />";
 $pgv_lang["DBTYPE"]				= "סוג מסד נתונים";
 $pgv_lang["DBTYPE_help"]				= "~#pgv_lang[DBTYPE]#~<br /><br />The type of PEAR supported database to connect to.<br /><br />PhpGedView supports MySQL, PostgreSQL, and SQLite databases.  MySQL and PostgreSQL both require libraries to be installed in PHP.  SQLite comes installed by default in PHP 5.<br /><br />With SQLite you don't need to configure #pgv_lang[DBHOST]#, #pgv_lang[DBUSER]#, or #pgv_lang[DBPASS]#, but you will need to set a file path for your database in the #pgv_lang[DBNAME]# field.<br /><br />This sets \$DBTYPE in <i>config.php</i>.<br />";
 $pgv_lang["DBHOST"]				= "מארח מסד נתונים";
@@ -184,7 +176,6 @@ $pgv_lang["upload_path"]				= "נתיב טעינה";
 $pgv_lang["upload_path_help"]		= "~#pgv_lang[upload_path]#~<br /><br />This is the path where the GEDCOM file you wish to upload can be found. To select the path, click on <b>Browse</b> and navigate to your GEDCOM file and then click <b>Open</b>.";
 $pgv_lang["gedcom_path"]				= "נתיב ושם קובץ ה-GEDCOM";
 $pgv_lang["gedcom_path_help"]		    = "~#pgv_lang[gedcom_path]#~<br /><br />There are two ways of importing your GEDCOM file into PhpGedView. They are:<ol><li>FTP the file to the server</li><li>Upload within PhpGedView</li></ol>When your file already exists on the server, you engage the <i>#pgv_lang[add_gedcom]#</i> procedure and fill in the path and name of your GEDCOM file as they exist on the server. The name can be with or without extension. If no extension is given, .ged will be assumed. The path is optional. If no path is given, the value of the <i>#pgv_lang[INDEX_DIRECTORY]#</i> option, as set in your PhpGedView site configuration, will be used.  Please note that on most servers, file and path names are case sensitive.<br /><br />When you engage the <i>#pgv_lang[upload_gedcom]#</i> procedure built into PhpGedView, you can use the <b>Browse</b> button to locate the desired file on your local computer. This can be a regular GEDCOM file or a ZIP file containing the GEDCOM file. PhpGedView will automatically extract and then use the GEDCOM file contained in that ZIP file.<br /><br />See the <a href=\"readme.txt\">Readme.txt</a> file for more information.<br />";
-
 $pgv_lang["CHARACTER_SET"]			= "סוג קידוד תווים";
 $pgv_lang["CHARACTER_SET_help"]			= "~#pgv_lang[CHARACTER_SET]#~<br /><br />This is the character set of your GEDCOM file.  UTF-8 is the default and should work for almost all sites.  If you export your GEDCOM using IBM Windows encoding, you should put WINDOWS here.<br /><br />NOTE: PhpGedView can't support UNICODE (UTF-16) because the support is missing in PHP.<br />";
 $pgv_lang["LANGUAGE"] 				= "שפה";
@@ -239,8 +230,6 @@ $pgv_lang["EXPAND_RELATIVES_EVENTS"]      		= "הרחב בצורה אוטומט�
 $pgv_lang["EXPAND_RELATIVES_EVENTS_help"] 	= "~#pgv_lang[EXPAND_RELATIVES_EVENTS]#~<br /><br />This option controls whether or not to automatically expand the <i>Events of close relatives</i> list.<br />";
 $pgv_lang["EXPAND_SOURCES"]      			= "הרחב אוטומטית את המקורות";
 $pgv_lang["EXPAND_SOURCES_help"] = "~#pgv_lang[EXPAND_SOURCES]#~<br /><br />This option controls whether or not to automatically display content of a <i>Source</i> record on the Individual page.<br />";
-//$pgv_lang["AUTHENTICATION_MODULE"]		= "קובץ של תת-מערכת אימות";
-//$pgv_lang["AUTHENTICATION_MODULE_help"]	= "~#pgv_lang[AUTHENTICATION_MODULE]#~<br /><br />File from which to load authentication functions.  By implementing the functions in this file, administrators can customize PhpGedView to use a different method to authenticate users and store users in a different user database.<br /><br />This sets \$AUTHENTICATION_MODULE in <i>config.php</i>.<br /><br />If you have implemented an alternate authentication method, please share it with the PhpGedView development team.<br />";
 $pgv_lang["HIDE_LIVE_PEOPLE"]			= "אפשר פרטיות";
 $pgv_lang["HIDE_LIVE_PEOPLE_help"]		= "~#pgv_lang[HIDE_LIVE_PEOPLE]#~<br /><br />This option will enable all privacy settings and hide the details of living people.<br /><br />Living people are defined to be those who do not have an event more recent than the number of years specified in variable \$MAX_ALIVE_AGE.  For this purpose, births of children are considered to be such events as well.<br />";
 $pgv_lang["REQUIRE_AUTHENTICATION"] 		= "דרוש אשור מהמבקרים";
@@ -273,25 +262,19 @@ $pgv_lang["ALPHA_INDEX_LISTS"]			= "פרק רשימה ארוכה לפי אות �
 $pgv_lang["ALPHA_INDEX_LISTS_help"]		= "~#pgv_lang[ALPHA_INDEX_LISTS]#~<br /><br />For very long Individual and Family lists, set this to <b>Yes</b> to split the list into pages by the first letter of their last name.<br />";
 $pgv_lang["NAME_FROM_GEDCOM"]			= "קבל השם להצגה מ-GEDCOM";
 $pgv_lang["NAME_FROM_GEDCOM_help"]		= "~#pgv_lang[NAME_FROM_GEDCOM]#~<br /><br />By default PhpGedView uses the name stored in the indexes to get a person's name.  With some GEDCOM formats and languages, the sortable name stored in the indexes does not get displayed properly and the best way to get the correct display name is from the GEDCOM.<br /><br />Spanish names are a good example of this.  A Spanish name can take the form (Given Names) (Father's Surname) (Mother's Surname).  Using the Indexes for sorting and display, the name would display like this: (Given Names) (Mother's Surname) (Father's Surname), which is incorrect.  Going back to the GEDCOM for the name will return the correct name.  However, retrieving the name from the GEDCOM will slow the program down.<br />";
-//$pgv_lang["SHOW_ID_NUMBERS"]			= "הראה קודי זיהוי ליד שמות";
 $pgv_lang["SHOW_ID_NUMBERS_help"]		= "~#pgv_lang[SHOW_ID_NUMBERS]#~<br /><br />This option controls whether or not to show ID numbers in parentheses after person names on charts.<br />";
-//$pgv_lang["SHOW_FAM_ID_NUMBERS"]		= "הראה קוד זיהוי של משפחה על יד משפחות";
-//$pgv_lang["SHOW_FAM_ID_NUMBERS_help"]		= "~#pgv_lang[SHOW_FAM_ID_NUMBERS]#~<br /><br />This option controls whether or not to show family ID numbers in parentheses after family names on charts and on the Individual page.<br />";
 $pgv_lang["SHOW_LAST_CHANGE"]			= "הראה ברשימות את תאריך השינוי האחרון של רשומת ה-GEDCOM";
 $pgv_lang["SHOW_LAST_CHANGE_help"]		= "~#pgv_lang[SHOW_LAST_CHANGE]#~<br /><br />This option controls whether or not to show GEDCOM record last change date on lists.<br />";
 $pgv_lang["SHOW_PEDIGREE_PLACES"]		= "מספר הרמות של המקומות המוצגים בתיבות האישיות:";
 $pgv_lang["SHOW_PEDIGREE_PLACES_help"]		= "~#pgv_lang[SHOW_PEDIGREE_PLACES]#~<br /><br />This sets how much of the place information is shown in the person boxes on charts.<br /><br />Setting the value to 9 will guarantee to show all place levels.  Setting the value to 0 will hide places completely.  Setting the value to 1 will show the first level, setting it to 2 will show the first two levels, etc.<br />";
 $pgv_lang["MULTI_MEDIA"]				= "לאפשר מאפיינים של מולטימדיה";
 $pgv_lang["MULTI_MEDIA_help"]			= "~#pgv_lang[MULTI_MEDIA]#~<br /><br />GEDCOM 5.5.1 allows you to link pictures, videos, and other multimedia objects into your GEDCOM.  If you do not include multimedia objects in your GEDCOM, you can disable the multimedia features by setting this value to <b>No</b>.<br /><br />See the Multimedia section in the <a href=\"readme.txt\">readme.txt</a> file for more information about including media in your site.<br />";
-//$pgv_lang["MULTI_MEDIA_DB"]			= "אפשר פיקוח מולטימדיה ע\"י מאגר נתונים";
-//$pgv_lang["MULTI_MEDIA_DB_help"]			= "~#pgv_lang[MULTI_MEDIA_DB]#~<br /><br />If your exported GEDCOM file does not contain images, you can control the website images using this option. Media items are injected into a freshly exported GEDCOM file, keeping all the links from before.<br />";
 $pgv_lang["MEDIA_EXTERNAL"]			= "שמור קישורים";
 $pgv_lang["MEDIA_EXTERNAL_help"]			= "~#pgv_lang[MEDIA_EXTERNAL]#~<br /><br />When a multimedia link is found starting with for example http://, ftp://, mms:// it will not be altered when set to <b>Yes</b>. For example, http://www.myfamily.com/photo/dad.jpg will stay http://www.myfamily.com/photo/dad.jpg.  When set to <b>No</b>, the link will be handled as a standard reference and the media depth will be used.  For example: http://www.myfamily.com/photo/dad.jpg will be changed to ./media/dad.jpg<br />";
 $pgv_lang["MEDIA_DIRECTORY"]			= "תיקיית מולטימדיה";
 $pgv_lang["MEDIA_DIRECTORY_help"]	= "~#pgv_lang[MEDIA_DIRECTORY]#~<br /><br />The path to a readable and writable directory where PhpGedView should store media files (include the trailing \"/\").  PhpGedView does not require this directory's name to be \"media\".  You can choose any name you like.<br /><br />Unfortunately, this directory must be accessible to your Browser.  For that reason, it is best to use the default name \"media/\" in the default location, within the PhpGedView install directory.<br />";
 $pgv_lang["MEDIA_DIRECTORY_LEVELS"]		= "מספר הרמות של תיקיות מולטימדיה";
 $pgv_lang["MEDIA_DIRECTORY_LEVELS_help"]		= "~#pgv_lang[MEDIA_DIRECTORY_LEVELS]#~<br /><br />A value of 0 will ignore all directories in the file path for the media object.  A value of 1 will retain the first directory containing this image.  Increasing the numbers increases number of parent directories to retain in the path.<br /><br />For example, if you link an image in your GEDCOM with a path like <b>C:\\Documents&nbsp;and&nbsp;Settings\\User\\My&nbsp;Documents\\My&nbsp;Pictures\\Genealogy\\Surname&nbsp;Line\\grandpa.jpg</b>, a value of 0 will translate this path to <b>./media/grandpa.jpg</b>.  A value of 1 will translate this to <b>./media/Surname&nbsp;Line/grandpa.jpg</b>, etc.  Most people will only need to use a 0.  However, it is possible that some media objects kept in different directories have identical names and would overwrite each other when this option is set to 0.  Non-zero settings allow you to keep some organization in your media thereby preventing name collisions.<br />";
-//$pgv_lang["SHOW_HIGHLIGHT_IMAGES"]		= "הראה תמונות מודגשות בתיבות אישיות";
 $pgv_lang["SHOW_HIGHLIGHT_IMAGES_help"]		= "~#pgv_lang[SHOW_HIGHLIGHT_IMAGES]#~<br /><br />If you have enabled multimedia in your site, you can have PhpGedView display a thumbnail image next to the person's name in charts and boxes.<br /><br />Currently, PhpGedView uses the first multimedia object listed in the GEDCOM record as the highlight image.  For people with multiple images, you should arrange the multimedia objects such that the one you wish to be highlighted appears first, before any others.<br /><br />See the Multimedia section in the <a href=\"readme.txt\">readme.txt</a> file for more information about including media in your site.<br />";
 $pgv_lang["USE_THUMBS_MAIN"]			= "השתמש בתמונות מזעריות כתמונה ראשית על הדף האישי";
 $pgv_lang["USE_THUMBS_MAIN_help"] 		= "~#pgv_lang[USE_THUMBS_MAIN]#~<br /><br />Depending on how you want to store your images, it may be better for you to use thumbnails for the picture next to the name on the Individual page.<br /><br />If your main images are very large, they can take a long time to download and if your thumbnails are high enough quality they could be used in place of the full resolution image.  Set this item to <b>Yes</b> to use thumbnails or leave it as <b>No</b> to use the full resolution image.<br />";
@@ -340,7 +323,6 @@ $pgv_lang["LOGIN_URL_help"]			= "~#pgv_lang[LOGIN_URL]#~<br /><br />You only nee
 $pgv_lang["PGV_SESSION_TIME"]	= "פסק-זמן מתחברות עד לניתוק אוטומטי";
 $pgv_lang["PGV_SESSION_TIME_help"]		= "~#pgv_lang[PGV_SESSION_TIME]#~<br /><br />The time in seconds that a PhpGedView session remains active before requiring a login.  The default is 7200, which is 2 hours.<br /><br />This sets \$PGV_SESSION_TIME in <i>config.php</i>.<br />";
 $pgv_lang["SHOW_STATS"] 				= "הצג סטטיסטיקות של העיבוד";
-//$pgv_lang["SHOW_STATS_help"]			= "הראה בתחתית כל דף את הסטטיסטיקה של זמן הריצה ואת מספר השאילתות על בסיס הנתונים .";
 $pgv_lang["SHOW_STATS_help"]			= "~#pgv_lang[SHOW_STATS]#~<br /><br />Show runtime statistics and database queries at the bottom of every page.<br />";
 $pgv_lang["SHOW_COUNTER"] 			= "הראה מוני פגיעה";
 $pgv_lang["SHOW_COUNTER_help"]			= "~#pgv_lang[SHOW_COUNTER]#~<br /><br />Show hit counters on Portal and Individual pages.<br />";
@@ -391,16 +373,13 @@ $pgv_lang["META_SURNAME_KEYWORDS"]		= "הוסף את שמות המשפחה הש�
 $pgv_lang["META_SURNAME_KEYWORDS_help"]	 = "~#pgv_lang[META_SURNAME_KEYWORDS]#~<br /><br />With this option set to <b>Yes</b> the surnames from the #pgv_lang[common_surnames]# list will be added to the Keywords meta field.  This can help search engines better find your site.<br /><br />This sets \$META_SURNAME_KEYWORDS in <i><u>xxx</u>.GED_conf.php</i>.<br />";
 $pgv_lang["META_TITLE"]				= "הוסף לתג הכתרת TITLE";
 $pgv_lang["META_TITLE_help"]			= "~#pgv_lang[META_TITLE]#~<br /><br />Anything on this line will be added to the TITLE tag in the HTML page header after the regular page title and before the PhpGedView credit.<br /><br />This sets \$META_TITLE in <i><u>xxx</u>.GED_conf.php</i>.<br />";
-
 $pgv_lang["ENABLE_RSS"]				= "אפשר RSS";
 $pgv_lang["ENABLE_RSS_help"]			= "~#pgv_lang[ENABLE_RSS]#~<br /><br />This option lets you disable the RSS feature.<br /><br />RSS lets users monitor your site for changes to the Index page without actually visiting your site periodically.  If too many users make use of this feature or if the refresh frequency set by these users is too high, RSS can use up too much bandwidth or server capacity.<br />";
 $pgv_lang["RSS_FORMAT"]				= "מבנה RSS";
 $pgv_lang["RSS_FORMAT_help"]			= "~#pgv_lang[RSS_FORMAT]#~<br /><br />The format of RSS to be used as the default RSS feed format for the site. The numeric suffixes <u>do not</u> indicate version, they identify formats.  For example, RSS 2.0 is not newer than RSS 1.0, but a different format. Feed readers should be able to read any format. There is currently no difference between ATOM and ATOM 0.3. Both use the ATOM 0.3 draft specification.<br />";
-
 $pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE"] = "בדוק שקבצי ה-GEDCOM ניתנים להורדה"; 
 $pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE_help"] = "~#pgv_lang[SECURITY_CHECK_GEDCOM_DOWNLOADABLE]#~<br /><br />For security reasons, GEDCOM files should not be in a location where they can be directly downloaded, thus bypassing privacy checks. Clicking this link will check if your GEDCOM files can be downloaded over the network.<br /><br />On some systems this check has been known to take a really long time or not even complete.  If that is the case for you, then you should try to point your browser directly at your GEDCOM to see if it can be downloaded.<br />";
 $pgv_lang["gedcom_download_secure"]	= "לא ניתן להוריד את קובץ #GEDCOM# ."; 
-
 $pgv_lang["welcome_new2"]				= "<br /><br />מכיוון שאתה רואה דף זה, התקנת בהצלחה את PhpGedView על שרת האינטרנט שלך ואתה מוכן לעצב אותו לפי בחירתך.<br /><br />";
 $pgv_lang["welcome_new_help"]			= "~#pgv_lang[welcome_new]#~#pgv_lang[welcome_new2]#This Help page will guide you through the configuration process.  As you enter different fields, this window will provide you with help information about the field you are in.  You may close this window; to open it again click on one of the \"?\" question marks next to the field label.<br />";
 $pgv_lang["return_editconfig"]				= "תוכל לחזור להגדרה זו מתי שתרצה ע\"י הצבעה של תוכנת הגלישה שלך על הקובץ <i>edit_config.php</i>, או ע\"י לחיצה על הקישור <b>תצורה</b> הנמצא בדף <b>ניהול של PhpGedView </b>.<br />";
@@ -414,43 +393,26 @@ $pgv_lang["import_sql"]				= "בתיקיית האינדקס שלך יש קבצי
 //-- edit privacy messages
 $pgv_lang["edit_privacy"]			= "ערוך פרטיות";
 $pgv_lang["edit_privacy_title"]			= "ערוך הגדרת פרטיות של GEDCOM";
-//$pgv_lang["PRIV_PUBLIC"]			= "הראה לקהל הרחב";
-//$pgv_lang["PRIV_USER"]			= "הראה רק למשתמשים מורשים";
-//$pgv_lang["PRIV_NONE"]			= "הראה רק למנהלנים";
-//$pgv_lang["PRIV_HIDE"]			= "הסתר אפילו ממנהלנים";
 $pgv_lang["save_changed_settings"]		= "שמור שינויים";
 $pgv_lang["add_new_pp_setting"]		= "הוסף הגדרות חדשות לפרטיות לפי קוד זיהוי";
-
 $pgv_lang["add_new_up_setting"]		= "הוסף הגדרה חדשה לפרטיות משתמש";
 $pgv_lang["add_new_gf_setting"]		= "הוסף הגדרה חדשה לפרטיות ערכים כלליים";
 $pgv_lang["add_new_pf_setting"]		= "הוסף הגדרה חדשה לפרטיות ערכים לפי קוד זיהוי";
-
-//$pgv_lang["add_new_pf_setting_indi"]		= "הוסף הגדרת פרטיות חדשה של עובדות עבור אנשים";
-//$pgv_lang["add_new_pf_setting_source"]	= "הוסף הגדרת פרטיות חדשה של עובדות עבור מקורות";
-//$pgv_lang["privacy_indi_id"]			= "קוד זיהוי אישי";
-//$pgv_lang["privacy_source_id"]		= "קוד זיהוי מקור";
-//$pgv_lang["privacy_indi_source"]		= "אישי / מקור";
-//$pgv_lang["privacy_indi"]			= "אישי";
-//$pgv_lang["privacy_source"]			= "מקור";
 $pgv_lang["file_read_error"]			= "ש ג י א ה!!! לא ניתן לקרוא קובץ פרטיות!";
 $pgv_lang["edit_exist_person_privacy_settings"]	= "ערוך הגדרות קיימות לפרטיות לפי קוד זיהוי";
 $pgv_lang["edit_exist_user_privacy_settings"]	= "ערוך הגדרות קיימות לפרטיות משתמש";
 $pgv_lang["edit_exist_global_facts_settings"]	= "ערוך הגדרות קיימות לפרטיות ערכים כלליים";
 $pgv_lang["edit_exist_person_facts_settings"]	= "ערוך הגדרה קיימת של פרטיות ערכים אישיים";
-
 $pgv_lang["general_privacy"]			= "ערכי פרטיות כלליים";
 $pgv_lang["general_privacy_help"]		= "~#pgv_lang[general_privacy]#~<br /><br />You can have different Privacy settings for each GEDCOM on your PhpGedView web site.  Check under the page title whether you are editing the correct GEDCOM.<br /><br />You can override these general settings by using the other Privacy forms on the #pgv_lang[edit_privacy_title]# page.<br />#pgv_lang[more_config_hjaelp]#";
 $pgv_lang["person_privacy"]			= "ערכי פרטיות לפי קוד זיהוי";
 $pgv_lang["person_privacy_help"]		= "~#pgv_lang[person_privacy]#~<br /><br />These settings allow administrators to override default privacy settings for a particular person, family, source, or media object.<br /><br />Suppose for example you have a child who died in infancy. Normally because the child is dead, its details would be shown to public users. However, you and everyone else in your family are still private. You don't want to remove the death record for the child but you want to hide the details and make them private. If this child had the ID of I100 you should enter the following privacy settings:<br />ID: I100<br />Show to: Show only to authenticated users<br /><br />This works the other way as well. If you wanted to make public the details of someone (ID 101) who you know to be dead but don't have a death date for, you could add the following:<br />ID: I101<br />Show to: Show to public<br /><br />This sets \$person_privacy in <i><u>xxx</u>.GED_priv.php</i>.<br />";
-
 $pgv_lang["user_privacy"]			= "ערכי פרטיות של משתמשים";
 $pgv_lang["user_privacy_help"]		= "~#pgv_lang[user_privacy]#~<br /><br />These settings give administrators the ability to override default privacy settings for individuals in the GEDCOM based on Username.  Suppose you don't want the Username <b>John</b> to be able to see any details of ID 100 in the GEDCOM, you could configure it like this:<br />Username: John<br />ID: I100<br />Show?: \"Hide\"<br /><br />and details for the specified individual would be hidden for the Username \"John\" only.<br /><br />To show the details of I101 (which usually would be hidden because I101 is still alive) to Username \"John\" set:<br /><br />Username: John<br />ID: I101<br />Show?: \"Show\"<br /><br />This sets \$user_privacy in <i><u>xxx</u>.GED_priv.php</i>.<br />";
 $pgv_lang["global_facts"]			= "ערכי פרטיות של נתונים גלובליים";
 $pgv_lang["global_facts_help"]			= "~#pgv_lang[global_facts]#~<br /><br />These settings define facts on a global level that should be hidden for all individuals in the GEDCOM.  This only applies to level 1 fact records such as BIRT or DEAT that will appear with their own headings on the personal facts and details tab of the individual page.<br /><ul><li>The <b>#pgv_lang[name_of_fact]#</b> element determines which fact should be hidden.</li><li>The <b>#pgv_lang[choice]#</b> element specifies the fact itself or related details.</li><li>The <b>#pgv_lang[accessible_by]#</b> element determines at what access level the fact is shown.</li></ul><br />This feature is meant to hide certain facts, identified by GEDCOM tags, for all individuals alive or dead. By default the SSN tag is hidden to public users. This is to prevent people from stealing social security numbers and committing identity theft of dead persons.  This is probably mostly relevant for the USA.<br /><br />If you wanted to hide all marriages from public users in your GEDCOM you could set:<br /><br /><b>#pgv_lang[name_of_fact]#</b> (MARR) - Marriage<br /><b>#pgv_lang[choice]#</b> \"#pgv_lang[fact_show]#\"<br /><b>#pgv_lang[accessible_by]#</b> \"#pgv_lang[PRIV_USER]#\"<br /><br /><b>#pgv_lang[name_of_fact]#</b> (MARR) - Marriage<br /><b>#pgv_lang[choice]#</b> \"#pgv_lang[fact_details]#\"<br /><b>#pgv_lang[accessible_by]#</b> \"#pgv_lang[PRIV_USER]#\"<br /><br />These settings would hide marriages and related details to everyone who wasn't an admin.<br /><br />Unlike all other settings, in <b>#pgv_lang[edit_exist_global_facts_settings]#</b> you can hide facts even from admin users. Unwanted facts are completely suppressed.<br /><br />This sets \$global_facts in <i><u>xxx</u>.GED_priv.php</i>.<br />";
-
 $pgv_lang["person_facts"]			= "ערכי פרטיות של נתונים לפי קוד זיהוי";
 $pgv_lang["person_facts_help"]		= "~#pgv_lang[person_facts]#~<br /><br />These settings define facts that are hidden for a specific person, family, or source and the level at which they are hidden.  This only applies to level 1 fact records such as BIRT or DEAT that will appear with their own headings on the relevant details page  of the person, family, or source.<br /><br />The first element is the ID of the person, family, or source. The second element is the fact.  The <b>#pgv_lang[choice]#</b> element specifies the fact itself or related details.  The <b>#pgv_lang[accessible_by]#</b> element determines at what access level the fact is shown.  Not all facts shown in the list are applicable to all types of IDs.  For example, Birth and Death facts are not relevant to Source records.<br /><br />The \$person_facts array works the same as the \$global_facts array except that you also specify the GEDCOM ID of the person you want to hide facts for. You could, for example, hide the marriage record for a specific person.<br /><br />This sets \$person_facts in <i><u>xxx</u>.GED_priv.php</i>.<br />";
-
 $pgv_lang["accessible_by"]			= "הראה ל-";
 $pgv_lang["hide"]				= "הסתר";
 $pgv_lang["show_question"]			= "הראה?";
@@ -467,8 +429,6 @@ $pgv_lang["SHOW_LIVING_NAMES"]		= "הראה שמות של אנשים חיים";
 $pgv_lang["SHOW_LIVING_NAMES_help"]	= "~#pgv_lang[SHOW_LIVING_NAMES]#~<br /><br />Should the names of living people be shown to the public?<br /><br />This sets \$SHOW_LIVING_NAMES in <i><u>xxx</u>.GED_priv.php</i>.<br />";
 $pgv_lang["SHOW_RESEARCH_ASSISTANT"]		= "הראה עזרה למחקר";
 $pgv_lang["SHOW_RESEARCH_ASSISTANT_help"]	= "~#pgv_lang[SHOW_RESEARCH_ASSISTANT]#~<br /><br />What type of user can view the research assistant module if it is installed?<br /><br />This sets \$SHOW_RESEARCH_ASSISTANT in <i><u>xxx</u>.GED_priv.php</i>.<br />";
-//$pgv_lang["SHOW_RESEARCH_LOG"]		= "הראה לוג המחקר";
-//$pgv_lang["SHOW_RESEARCH_LOG_help"]		= "~#pgv_lang[SHOW_RESEARCH_LOG]#~<br /><br />What type of user can view the research log if it is installed?<br /><br />This sets \$SHOW_RESEARCH_LOG in <i><u>xxx</u>.GED_priv.php</i>.<br />";
 $pgv_lang["USE_RELATIONSHIP_PRIVACY"]	= "השתמש בפרטיות בקשרי משפחה";
 $pgv_lang["USE_RELATIONSHIP_PRIVACY_help"]	= "~#pgv_lang[USE_RELATIONSHIP_PRIVACY]#~<br /><br /><b>No</b> means that authenticated users can see the details of all living people.  <b>Yes</b> means that users can only see the private information of living people they are related to.<br /><br />This sets \$USE_RELATIONSHIP_PRIVACY in <i><u>xxx</u>.GED_priv.php</i>.<br />";
 $pgv_lang["MAX_RELATION_PATH_LENGTH"]	= "אורך מכסימלי של נתיב קשר משפחתי";
@@ -510,7 +470,6 @@ $pgv_lang["listing"]				= "רישום";
 $pgv_lang["no_content"]			= "אין תוכן";
 $pgv_lang["editlang"]			= "ערוך";
 $pgv_lang["editlang_help"]			= "~#pgv_lang[editlang]#~<br /><br />ערוך הודעה מקובץ שפה.<br />";
-//$pgv_lang["cancel"]				= "בטל";
 $pgv_lang["savelang"]			= "שמור";
 $pgv_lang["savelang_help"]			= "~#pgv_lang[savelang]#~<br /><br />שמור הודעה שנערכה בקובץ השפה.<br />";
 $pgv_lang["original_message"]			= "הודעה מקורית";
@@ -607,7 +566,6 @@ $pgv_lang["multi_letter_alphabet_help"]		= "~#pgv_lang[multi_letter_alphabet]#~<
 $pgv_lang["dictionary_sort"]			= "השתמש בכללי המילון למיון"; 
 $pgv_lang["dictionary_sort_help"]		= "~#pgv_lang[dictionary_sort]#~<br /><br />This option controls how characters with diacritic marks are handled when sorting lists of names and titles.<br /><br />When set to <b>#pgv_lang[yes]#</b>, all characters with diacritic marks are treated as if they did not have any marks.  Diacritic marks are considered only when the two words being considered are otherwise identical.  When set to <b>#pgv_lang[no]#</b>, all letters are distinct, regardless of the presence or absence of diacritic marks.<br />";
 $pgv_lang["lang_config_write_error"]		= "שגיאה בכתיבת הגדרת השפה לתוך קובץ <b>lang_settings.php</b>. בדוק הרשאות ונסה שנית.";
-//$pgv_lang["lang_save_success"]		= "שמירת השינויים לתצורת #PGV_LANG# הצליחה.";
 $pgv_lang["translation_forum"]			= "פורום התרגומים של PhpGedView על SourceForge";
 $pgv_lang["translation_forum_help"]		= "~#pgv_lang[translation_forum]#~<br /><br />#pgv_lang[translation_forum_desc]#<br />";
 $pgv_lang["translation_forum_desc"]		= "<a href=\"http://sourceforge.net/forum/forum.php?forum_id=294245\" target=\"_blank\"><b>הקישור הזה</b></a> פותח חלון גלישה חדש. אתה תופנה לפורום התרגום של PhpGedView ובו תוכל לשוחח על בעיות מיוחדות הקשורות לתרגומים.";
@@ -621,12 +579,6 @@ $pgv_lang["lang_file_write_error"]		= "ש ג י א ה  !!!<br /><br />לא ני�
 $pgv_lang["no_open"]			= "ש ג י א ה !!!<br /><br />לא ניתן לפתוח את הקובץ  <b>#lang_filename#</b>";
 $pgv_lang["users_langs"]			= "שפות המשתמשים";
 $pgv_lang["configured_languages"]		= "השפות שבשימוש";
-//$pgv_lang["ip_address"]			= "כתובת IP";
-//$pgv_lang["date_time"]			= "תאריך וזמן";
-//$pgv_lang["message"]			= "הודעה";
-//$pgv_lang["searchtype"]			= "צורת חיפוש";
-//$pgv_lang["type"]				= "סוג";
-//$pgv_lang["query"]				= "שאילתא";
 
 //-- User Migration Tool messages
 $pgv_lang["um_header"] 			= "כלי להגירת נתוני משתמשים";
@@ -643,7 +595,6 @@ $pgv_lang["um_nofav"] 			= "נראה שאין מועדפים במערכת.";
 $pgv_lang["um_nonews"] 			= "נראה שאין חדשות במערכת.";
 $pgv_lang["um_noblocks"] 			= "נראה שאין אזורים במערכת.";
 $pgv_lang["um_index_sql"] 			= "כלי זה ייבא <i>authenticate.php</i> וקבצי <i>.dat</i> אחרים מתיקית ה-index שלך למאגר המידע שלך.<br />";
-//$pgv_lang["um_mixedmode"] 			= "אתה מריץ PhpGedView בצורת מאגר נתונים, אבל עם מודול אימות של צורת אינדקס.<br /><br />נתוני משתמשים, מועדפים, הגדרות אזור, הודעות וחדשות נשמרו כבר במבנה הדרוש לצורת האינדקס. תוכל עכשיו לעבור לצורת אינדקס; הגירת נתוני משתמשים אינה נחוצה.<br />";
 $pgv_lang["um_noaction"] 			= "אין צורך בפעולה כלשהי להגירת נתוני משתמשים לצורת SQL.<br /><br />כאשר תעבור לצורת SQL, תצטרך להפעיל שנית את כלי הגירת המשתמשים כדי לייבא את כל הנתונים למאגר נתוני SQL.  PhpGedView ישתמש בקבצים הקיימים בצורת האינדקס.<br /><br /><b><u>אין</u> למחוק <i>authenticate.php</i> וקבצי <i>.dat</i> מתיקיית ה- index שלך בזמן המעבר.</b><br />";
 $pgv_lang["um_import"] 			= "ייבא";
 $pgv_lang["um_export"] 			= "ייצא";
@@ -688,7 +639,6 @@ $pgv_lang["moveup_faq_item"] 		= "העבר ישות FAQ למעלה";
 $pgv_lang["moveup_faq_item_help"] 		= "~#pgv_lang[moveup_faq_item]#~<br />This option will let you move an item upwards on the FAQ page.<br /><br />Each time you use this option, the FAQ Position number of this item is reduced by one.  You can achieve the same effect by editing the item in question and changing the FAQ Position field.  When more than one FAQ item has the same position number, only one of these items will be visible.<br />";
 $pgv_lang["movedown_faq_item"] 		= "העבר ישות FAQ למטה";
 $pgv_lang["movedown_faq_item_help"]		= "~#pgv_lang[movedown_faq_item]#~<br />This option will let you move an item downwards on the FAQ page.<br /><br />Each time you use this option, the FAQ Position number of this item is increased by one.  You can achieve the same effect by editing the item in question and changing the FAQ Position field.  When more than one FAQ item has the same position number, only one of these items will be visible.<br />";
-//$pgv_lang["add_faq_header_help"] 		= "~כותרת FAQ~<br /><br />This is the title or subject of the FAQ item.<br />";
 $pgv_lang["add_faq_header_help"] 		= "~כותרת FAQ~<br />This is the title or subject of the FAQ item.<br /><br />What you enter here can be formatted; HTML tags such as &lt;b&gt; and &lt;br&gt; are allowed, as are HTML entities such as &amp;amp; and &amp;nbsp;.  There is no way to enter HTML tags so that they will be interpreted as text.<br />";
 $pgv_lang["add_faq_body_help"] 		= "~גוף ה-FAQ~<br />The text of the FAQ item is entered here.<br /><br />The text can be formatted; HTML tags such as &lt;b&gt; and &lt;br&gt; are allowed, as are HTML entities such as &amp;amp; and &amp;nbsp;.  There is no way to enter HTML tags so that they will be interpreted as text.<br />";
 $pgv_lang["add_faq_order_help"] 		= "~מיקום FAQ~<br />This field controls the order in which the FAQ items are displayed.<br /><br />You do not have to enter the numbers sequentially.  If you leave holes in the numbering scheme, you can insert other items later.  For example, if you use the numbers 1, 6, 11, 16, you can later insert items with the missing sequence numbers.  Negative numbers and zero are allowed, and can be used to insert items in front of the first one.<br /><br />When more than one FAQ item has the same position number, only one of these items will be visible.<br />";
@@ -696,19 +646,5 @@ $pgv_lang["time_limit_help"]			= "~#pgv_lang[time_limit]#~<br /><br />The maximu
 
 // Media items
 $pgv_lang["media_import_help"] 		= "~#pgv_lang[media_import]#~<br />This import will convert the multimedia links in your GEDCOM file to multimedia records. For example, the following media entry will be changed from:<blockquote><code>1 OBJE<br />2 FORM jpg<br />2 FILE media/grandma.jpg<br />2 TITL Picture of grandma</code></blockquote>to:<blockquote><code>0 @M1@ OBJE<br />1 FORM jpg<br />1 FILE media/grandma.jpg<br />1 TITL Picture of grandma</code></blockquote>The new multimedia record will be stored separately in the database. Links to external multimedia files will be changed to references to the new multimedia record, which will in turn contain a reference to the external file. For example, the following GEDCOM record will be changed from:<blockquote><code>0 @I1@ INDI<br />1 NAME Your/Name/<br />1 OBJE<br />2 FORM jpg<br />2 FILE media/grandma.jpg<br />2 TITL Picture of grandma</code></blockquote>to:<blockquote><code>0 @I1@ INDI<br />1 NAME Your/Name/<br />1 OBJE @M1@<br /></code></blockquote>The advantage of using multimedia records is that you can easily administer your media. When you change the title of a multimedia record, it is changed for all GEDCOM records that link to this multimedia record. Several people,families, or sources can be linked to the same multimedia record.";
-
-//$pgv_lang["type_audio"] 			= "אודיו";
-//$pgv_lang["type_book"] 			= "ספר";
-//$pgv_lang["type_card"] 			= "כרטיס";
-//$pgv_lang["type_electronic"] 			= "חשמלי";
-//$pgv_lang["type_fiche"] 			= "פיש";
-//$pgv_lang["type_film"] 			= "סרט";
-//$pgv_lang["type_magazine"] 			= "כתב עת";
-//$pgv_lang["type_manuscript"] 		= "כתב-יד";
-//$pgv_lang["type_map"] 			= "מפה";
-//$pgv_lang["type_newspaper"] 		= "עיתון";
-//$pgv_lang["type_photo"] 			= "צילום";
-//$pgv_lang["type_tombstone"] 			= "מצבה";
-//$pgv_lang["type_video"] 			= "וידאו";
 
 ?>

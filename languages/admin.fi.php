@@ -109,6 +109,7 @@ $pgv_lang["example_date"]		= "Esimerkki virheellisestä päivämäärämuodosta 
 $pgv_lang["example_place"]		= "Esimerkki epäkelvosta paikasta GEDCOM-tiedostossasi:";
 $pgv_lang["found_record"]		= "Löytyi tietue";
 $pgv_lang["ged_import"] 		= "Tuonti";
+$pgv_lang["ged_check"]                           = "Tarkasta";
 $pgv_lang["gedcom_downloadable"] 	= "Tämä GEDCOM-tiedosto on ladattavissa internetistä.<br />Katso TURVALLISUUS-osion <a href=\"readme.txt\">readme.txt</a> -tiedostosta korjataksesi tämän ongelman.";
 $pgv_lang["gedcom_file"]		= "GEDCOM-tiedosto:";
 $pgv_lang["img_admin_settings"] 	= "Editoi kuvankäsittelyn asetuksia";
@@ -179,5 +180,30 @@ $pgv_lang["visibleonline"]		= "Näkyvissä muille käyttäjille online-tilassa."
 $pgv_lang["visitor"]			= "Vierailija";
 $pgv_lang["you_may_login"]		= " Voit kirjautua PhpGedView verkkopaikkaan alla olevan linkin avulla.";
 
+// Text for the Gedcom Checker
+$pgv_lang["gedcheck"]     = "Gedcom-tarkastaja";          // Module title
+$pgv_lang["gedcheck_text"]= "Tässä moduulissa tarkastetaan GEDCOM-tiedoston formaatti verrattuna <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">5.5.1 GEDCOM-määrittelyyn</a>. Siinä tarkastetaan myös tiedostossasi mehdollisesti esiintyviä yleisiä virheitä. Huomaa, että määrittelyllä on useita versioita ja laajennuksia, joten ota huomioon vain ne, jotka on merkitty \"Kriittinen\". Selitykset kaikkiin rivikohtaisiin virheisiin löytyvät määrittelystä, joten tarkista ensin sieltä ennenkuin pyydät apua.";
+$pgv_lang["level"]        = "Taso";                   // Levels of checking
+$pgv_lang["critical"]     = "Kriittinen";
+$pgv_lang["error"]        = "Virhe";
+$pgv_lang["warning"]      = "Varoitus";
+$pgv_lang["info"]         = "Info";
+$pgv_lang["open_link"]    = "Avaa linkit osoitteessa:";           // Where to open links
+$pgv_lang["same_win"]     = "Sama välilehti/ikkuna";
+$pgv_lang["new_win"]      = "Uusi välilehti/ikkuna";
+$pgv_lang["context_lines"]= "GEDCOM kontekstin rivejä "; // Number of lines either side of error
+$pgv_lang["all_rec"]      = "Kaikki tietueet";             // What to show
+$pgv_lang["err_rec"]      = "Virheelliset tietueet";
+$pgv_lang["missing"]      = "puuttuu";                 // General error messages
+$pgv_lang["multiple"]     = "useita samoja";
+$pgv_lang["invalid"]      = "epäkelpo";
+$pgv_lang["too_many"]     = "liian monta";
+$pgv_lang["too_few"]      = "liian vähän";
+$pgv_lang["no_link"]      = "ei linkity takaisin";
+$pgv_lang["data"]         = "data";                    // Specific errors (used with general errors)
+$pgv_lang["level"]        = "taso";
+$pgv_lang["tag"]          = "merkitsin";
+$pgv_lang["spacing"]      = "välistys";
+//$pgv_lang["before"]       = "ennen";                  // More specific errors, for stage 2
 
 ?>
