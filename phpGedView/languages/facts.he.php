@@ -288,7 +288,7 @@ $factarray["_DEAT_COUS"] = "פטירת בן דוד מדרגה ראשונה";
 
 //-- PGV Only facts
 $factarray["_THUM"] = "השתמש בתמונה זו כתמונה ממוזערת?";
-$factarray["_PGVU"] = "האחרון ששינה";
+$factarray["_PGVU"] = "ע\"י"; 
 $factarray["SERV"]  = "שרת מרוחק";
 $factarray["_GEDF"] = "קובץ GEDCOM";
 

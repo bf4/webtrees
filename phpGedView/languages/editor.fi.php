@@ -25,7 +25,7 @@
  * @subpackage Languages
  * @version $Id$
  */
-$pgv_lang["advanced_name_fields"]	= "Additional names (nickname, married name, etc.)"; //@@@
+$pgv_lang["advanced_name_fields"]	= "Lisänimiä (lempinimi, avionimi, jne.)"; 
 $pgv_lang["accept_changes"]		= "Hyväksy/Hylkää muutokset";
 $pgv_lang["replace"]		= "Vaihda tietue";
 $pgv_lang["append"]		= "Lisää tietue";

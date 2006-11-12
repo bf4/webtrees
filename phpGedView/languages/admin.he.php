@@ -30,11 +30,24 @@ if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["sanity_err0"]			= "Errors:"; //@@
+$pgv_lang["sanity_err1"]			= "You need to have PHP version 4.3 or higher."; //@@
+$pgv_lang["sanity_err2"]			= "The file or directory <i>#GLOBALS[whichFile]#</i> does not exist. Please verify that the file or directory exists, was not mis-named, and Read permissions are set correctly."; //@@
+$pgv_lang["sanity_err3"]			= "The file <i>#GLOBALS[whichFile]#</i> did not upload correctly. Please try to upload the file again."; //@@
+$pgv_lang["sanity_err4"]			= "The file <i>config.php</i> is corrupt."; //@@
+$pgv_lang["sanity_err5"]			= "The <i>config.php</i> file is not writable."; //@@
+$pgv_lang["sanity_err6"]			= "The <i>#GLOBALS[INDEX_DIRECTORY]#</i> directory is not writable."; //@@
+$pgv_lang["sanity_warn0"]			= "Warnings:"; //@@
+$pgv_lang["sanity_warn1"]			= "The <i>#GLOBALS[MEDIA_DIRECTORY]#</i> directory is not writable.  You will not be able to upload media files or generate thumbnails in PhpGedView."; //@@
+$pgv_lang["sanity_warn2"]			= "The <i>#GLOBALS[MEDIA_DIRECTORY]#thumbs</i> directory is not writable.  You will not be able to upload thumbnails or generate thumbnails in PhpGedView."; //@@
+$pgv_lang["sanity_warn3"]			= "The GD imaging library does not exist. PhpGedView will still function, but some of the features, such as thumbnail generation and the circle diagram, will not work without the GD library.  Please see <a href='http://www.php.net/manual/en/ref.image.php'>http://www.php.net/manual/en/ref.image.php</a> for more information."; //@@
+$pgv_lang["sanity_warn4"]			= "The XML Parser library does not exist. PhpGedView will still function, but some of the features, such as report generation and web services, will not work without the XML Parser library. Please see <a href='http://www.php.net/manual/en/ref.xml.php'>http://www.php.net/manual/en/ref.xml.php</a> for more information."; //@@
+$pgv_lang["sanity_warn5"]			= "The DOM XML library does not exist. PhpGedView will still function, but some of the features, such as Gramps Export features in the clippings cart, download, and web services, will not work. Please see <a href='http://www.php.net/manual/en/ref.dom.php'>http://www.php.net/manual/en/ref.dom.php</a> for more information."; //@@
+$pgv_lang["sanity_warn6"]			= "The Calendar library does not exist. PhpGedView will still function, but some of the features, such as conversion to other calendars such as Hebrew or French, will not work.  It is not essential for running PhpGedView. Please see <a href='http://www.php.net/manual/en/ref.calendar.php'>http://www.php.net/manual/en/ref.calendar.php</a> for more information."; //@@
+
 $pgv_lang["ip_address"]		= "כתובת IP";
 $pgv_lang["date_time"]		= "תאריך וזמן";
-
 $pgv_lang["log_message"]		= "הודעת לוג";	
-
 $pgv_lang["searchtype"]		= "צורת חיפוש";
 $pgv_lang["query"]			= "שאילתא";
 $pgv_lang["user"]			= "משתמש מאושר";
@@ -87,7 +100,7 @@ $pgv_lang["label_add_search_server"]	= "הוסף IP";
 $pgv_lang["label_add_server"]      	= "הוסף";
 $pgv_lang["label_ban_server"]		= "הגש";
 $pgv_lang["label_delete"]           	= "מחק";
-$pgv_lang['progress_bars_info']	= "סרגל הסטטוס שלמטה מאפשר לך לדעת את מצב הייבוא. אם תחום הזמן נגמר הייבוא נעצר ותתבקש ללחוץ על כפתור המשך. אם אינך רואה כפתור המשך, חזור אחורה והכנס תחום זמן קטן יותר.";
+$pgv_lang["progress_bars_info"]	= "סרגל הסטטוס שלמטה מאפשר לך לדעת את מצב הייבוא. אם תחום הזמן נגמר הייבוא נעצר ותתבקש ללחוץ על כפתור המשך. אם אינך רואה כפתור המשך, חזור אחורה והכנס תחום זמן קטן יותר.";
 $pgv_lang["upload_replacement"]	="העלה החלפה";
 $pgv_lang["about_user"]		= "עליך ליצור קודם כל משתמש מנהלתי ראשי. למשתמש זה יהיו זכויות לעדכן קבצי תצורה, לראות נתונים אישיים וליצור משתמשים אחרים.";
 $pgv_lang["access"]			= "גישה";
@@ -129,7 +142,6 @@ $pgv_lang["configuration"]		= "תצורה";
 $pgv_lang["configure"]		= "עצב PhpGedView";
 $pgv_lang["configure_head"]		= "PhpGedView-תצורת ה";
 $pgv_lang["confirm_gedcom_delete"]	= "GEDCOM האם ברצונך באמת לבטל";
-//$pgv_lang["confirm_password"]	= ".יש לאשר את הסיסמא";
 $pgv_lang["confirm_user_delete"]	= "אשר שברצונך למחוק משתמש";
 $pgv_lang["create_user"]		= "בנה משתמש";
 $pgv_lang["current_users"]		= "רשימת משתמשים";
@@ -145,10 +157,7 @@ $pgv_lang["del_unvera"]		= "המשתמש לא אושר ע\"י המנהלן.";
 $pgv_lang["del_unveru"]		= "המשתמש לא אישר עצמו תוך 7 ימים.";
 $pgv_lang["do_not_change"]		= "אין לשנות";
 $pgv_lang["download_file"]		= "הורד קובץ";
-
 $pgv_lang["download_gedcom"]	= "הורד GEDCOM";
-
-//$pgv_lang["download_gedconf"]	= "הורד את תצורת GEDCOM.";
 $pgv_lang["download_here"]		= "לחץ כאן כדי להוריד את הקובץ.";
 $pgv_lang["download_note"]		= "הערה: יתכן שזמן העיבוד להורדת קובצי GEDCOM גדולים לוקח זמן רב. אם משך הזמן להורדה אינו מספיק, יתכן וההורדה לא תהייה שלמה.<br /><br />תוכל לבדוק ב-GEDCOM שהורד יש שורת <b>0&nbsp;TRLR</b> בסוף הקובץ, כדי לוודא שהוא הורד בצורה נכונה. קובצי ה-GEDCOM הם קובצי טכסט; ניתן להשתמש בתוכנת עריכה מתאימה של טכסטים , אבל <u>אין</u> לשמור את קובץ ה-GEDCOM שהורד אחרי שבדקת אותו.<br /><br />בד\"כ ההורדה עורכת משך זמן דומה למשך ייבוא ה-GEDCOM שלך.";
 $pgv_lang["duplicate_username"]	= "קוד משתמש כפול. משתמש עם קוד זה מוגדר כבר. נא בחר קוד משתמש אחר.";
@@ -156,8 +165,6 @@ $pgv_lang["editaccount"]		= "הרשאה למשתמש זה לערוך את נתו
 $pgv_lang["empty_dataset"]		= "האם ברצונך לרוקן את מסד הנתונים ולהחליף אותו בנתונים החדשים הללו?";
 $pgv_lang["empty_lines_detected"]	= "שורות ריקות התגלו בקובץ ה-GEDCOM שלך. הניקיון ימחוק את השורות הריקות הללו.";
 $pgv_lang["enable_disable_lang"]	= "הגדר את השפות הנתמכות";
-//$pgv_lang["enter_email"]		= ".יש להכניס כתובת לדואר אלקטרוני";
-//$pgv_lang["enter_fullname"]		= ".יש למלא שם פרטי ושם משפחה";
 $pgv_lang["error_ban_server"]       	= "כתובת IP שגויה.";
 $pgv_lang["error_delete_person"]    	= "עליך לבחור את האדם שאת הקשר המרוחק שלו ברצונך לבטל.";
 $pgv_lang["error_header_write"]	= "לא ניתן לכתוב על קובץ ה-GEDCOM, <b>#GEDCOM#</b>. בדוק תכונות והרשאות גישה.";
@@ -170,6 +177,7 @@ $pgv_lang["fbsql"]			= "FrontBase";
 $pgv_lang["found_record"]		= "רשומה נמצאה";
 $pgv_lang["ged_download"]		= "הורד";
 $pgv_lang["ged_import"] 		= "ייבא";
+$pgv_lang["ged_check"] 							= "##Check";
 $pgv_lang["gedcom_adm_head"]	= "ניהול ה-GEDCOM";
 $pgv_lang["gedcom_config_write_error"]	= "ש ג י א ה !!!<br />לא ניתן לכתוב לקובץ  <i>#GLOBALS[whichFile]#</i>. נא בדוק שיש הרשאת כתיבה."; 
 $pgv_lang["gedcom_downloadable"] 	= "את קובץ ה-GEDCOM הזה ניתן להוריד דרך האינטרנט!<br />ראה את פרק ה-SECURITY של קובץ ה-<a href=\"readme.txt\"><b>readme.txt</b></a> כדי לפתור את הבעיה";
@@ -192,7 +200,6 @@ $pgv_lang["label_added_servers"]	= "שרתים מרוחקים שהוספו";
 $pgv_lang["label_banned_servers"]   	= "אסור אתרים לפי IP";
 $pgv_lang["label_families"]         	= "משפחות";
 $pgv_lang["label_gedcom_id2"]       	= "זיהוי GEDCOM:"; 
-//$pgv_lang["label_gedcom_id2"]        	= "קוד של מסד הנתונים:";
 $pgv_lang["label_individuals"]      	= "אנשים";
 $pgv_lang["label_manual_search_engines"] = "סמן ידנית מנועי חיפוש לפי IP"; 
 $pgv_lang["label_new_server"]       	= "הוסף אתר";
@@ -270,8 +277,7 @@ $pgv_lang["update_myaccount"]	= "עדכן המשתמש שלי";
 $pgv_lang["update_user"]		= "עדכן נתוני המשתמש";
 $pgv_lang["upload_gedcom"]		= "העלה GEDCOM";
 $pgv_lang["USE_REGISTRATION_MODULE"]	= "אפשר למשתמשים לבקש רישום באתר";
-$pgv_lang["user_auto_accept"]	= "קבל בצורה אוטומטית את השינויים שמשתמש זה עושה"; // could be
-
+$pgv_lang["user_auto_accept"]		= "קבל בצורה אוטומטית את השינויים שמשתמש זה עושה"; // could be
 $pgv_lang["user_contact_method"] 	= "שיטת התקשורת המועדפת";
 $pgv_lang["user_create_error"]		= "לא ניתן להוסיף משתמש. נשא שנית .";
 $pgv_lang["user_created"]		= "בנית המשתמש הצליחה.";
@@ -306,5 +312,31 @@ $pgv_lang["weekly"]			= "שבועי";
 $pgv_lang["welcome_new"]		= "ברוך הבא לאתר האינטרנט החדש PhpGedView שלך.";
 $pgv_lang["yearly"]			= "שנתי";
 $pgv_lang["you_may_login"]		= "הקישור מתחת מביא אותך לאתר ה-PhpGedView:";
+
+// Text for the Gedcom Checker
+$pgv_lang["gedcheck"]    	= "בדיקת Gedcom"; 	     // Module title
+$pgv_lang["gedcheck_text"]	= "המודול הזה בודק את המבנה של קובץ GEDCOM מול המפרט <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">5.5.1 GEDCOM</a>. הוא בודק גם מספר שגיאות כלליות בנתוניך.  שים לב שקיימות ורסיות, הערכות ווריאציות רבות למפרטים כך שיש צורך לחשוש רק בסוגיות המסומנות כ\"קריטיות\"  את ההסבר לכל השגיאות שורה אחרי שורה תמצא במפרט, כך שבבקשה לבדוק שם לפני בקשת עזרה.";
+$pgv_lang["level"]        	= "רמה"; 
+$pgv_lang["critical"]     	= "קריטי";
+$pgv_lang["error"]        	= "שגיאה";
+$pgv_lang["warning"]      	= "התראה";
+$pgv_lang["info"]         	= "מידע";
+$pgv_lang["open_link"]    	= "פתח קישורים ב-";  			// Where to open links
+$pgv_lang["same_win"]     	= "אותו חוצץ/חלון";
+$pgv_lang["new_win"]      	= "חוצץ/חלון חדש";
+$pgv_lang["context_lines"]        = "שורות של תוכן GEDCOM"; 	// Number of lines either side of error
+$pgv_lang["all_rec"]      	= "כל הרשומות";    // What to show
+$pgv_lang["err_rec"]      	= "רשומות עם שגיאות";
+$pgv_lang["missing"]      	= "חסר"; 
+$pgv_lang["multiple"]     	= "כפול";
+$pgv_lang["invalid"]      	= "אינו תקין";
+$pgv_lang["too_many"]     	= "יותר מדי";
+$pgv_lang["too_few"]      	= "פחות מדי";
+$pgv_lang["no_link"]      	= "אינו מקשר בחזרה";
+$pgv_lang["data"]                     = "נתונים"; 
+$pgv_lang["level"]        	= "רמה";
+$pgv_lang["tag"]          	= "תג";
+$pgv_lang["spacing"]      	= "רווחים";
+//$pgv_lang["before"]       	= "לפני";              // More specific errors, for stage 2
 
 ?>
