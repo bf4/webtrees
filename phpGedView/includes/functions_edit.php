@@ -880,7 +880,6 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	if ($fact=="SOUR") $islink = true;
 	if ($fact=="OBJE") $islink = true;
 	if ($fact=="FAMC") $islink = true;
-	if ($fact=="DATE") $value=user_friendly_edit_date($value);
 
 	// rows & cols
 	$rows=1;
@@ -1408,7 +1407,7 @@ function handle_updates($newged) {
 			$newline = $glevels[$j]." ".$tag[$j];
 			//-- check and translate the incoming dates
 			if ($tag[$j]=="DATE" && !empty($text[$j])) {
-				$text[$j] = gedcom_date($text[$j]);
+				$text[$j] = check_input_date($text[$j]);
 			}
 			// print $newline;
 //			if (!empty($text[$j])) $newline .= " ".$text[$j];
@@ -1448,6 +1447,23 @@ function breakConts($newline, $level) {
 		}
 	}
 	return $newged;
+}
+
+/**
+ * check the given date that was input by a user and convert it
+ * to proper gedcom date if possible
+ * @author John Finlay
+ * @param string $datestr	the date input by the user
+ * @return string	the converted date string
+ */
+function check_input_date($datestr) {
+	if (preg_match("/^\d+ \w\w\w \d\d\d\d$/", $datestr)>0) return $datestr;
+	$date = parse_date($datestr);
+	//print_r($date);
+	if ((count($date)==1)&&empty($date[0]['ext'])&&!empty($date[0]['month'])&&!empty($date[0]['year'])) {
+		$datestr = strtoupper($date[0]['day']." ".$date[0]['month']." ".$date[0]['year']);
+	}
+	return $datestr;
 }
 
 function print_quick_resn($name) {
@@ -1703,184 +1719,4 @@ function insert_missing_subtags($level1tag)
 		add_simple_tag("2 AGE");
 	}
 }
-
-/**
- * Convert a gedcom date (with calendar escapes) to a user edit date (with year suffixes).
- * Be as forgiving as possible of non-standard date formats.
- * @param string $date	the date to convert
- * @return string	the converted date
- */
-function user_friendly_edit_date($date)
-{
-	$date=gedcom_date($date); // fix/normalise our date, if we can.
-
-	if (preg_match("/(FROM|BET) (.+) (TO|AND) (.+)/", $date, $match))
-		return $match[1].' '._friendly_date($match[2]).' '.$match[3].' '._friendly_date($match[4]);
-	if (preg_match("/(ABT|CAL|EST|BEF|AFT) (.+)/", $date, $match))
-		return $match[1].' '._friendly_date($match[2]);
-	if (preg_match("/(INT) (.+)(\(.*\))/", $date, $match))
-		return $match[1].' '._friendly_date($match[2]).' '.$match[3];
-	if (preg_match("/(\(.*\))/", $date, $match))
-		return $date;
-	return _friendly_date($date);
-}
-
-function _friendly_date($date)
-{
-	$gregor_old=array('/@#DGREGORIAN@ /');
-	$gregor_new=array('');
-	$julian_old=array('/@#DJULIAN@ /', '/ B[.]C[.]$/', "/(\d)$/");
-	$julian_new=array('', 'bc', '${1}ad');
-	$hebrew_old=array('/@#DHEBREW@ /', "/(\d)$/");
-	$hebrew_new=array('', '${1}am');
-	$french_old=array('/@#DFRENCH R@ /', "/(\d+)$/");
-	$french_new=array('', 'an ${1}');
-
-	if (preg_match('/@#D(.+)@ *(.*)/', $date, $match))
-		switch ($match[1]) {
-		case 'GREGORIAN': return preg_replace($gregor_old, $gregor_new, $date);
-		case 'JULIAN':    return preg_replace($julian_old, $julian_new, $date);
-		case 'HEBREW':    return preg_replace($hebrew_old, $hebrew_new, $date);
-		case 'FRENCH R':  return preg_replace($french_old, $french_new, $date);
-		}
-	return $date;
-}
-
-/**
- * Convert a user edit date (with year suffixes) to a gedcom date (with calendar escapes)
- * Be as forgiving as possible of non-standard date formats.
- * This function could also be used to tidy up imported data.
- * @param string $date	the date to convert
- * @return string	the converted date
- */
-function gedcom_date($date)
-{
-	// The order of this array is significant.  The compiled regexes should stay cached by
-	// the server, so performance isn't an issue.  Keeping all the translations in data
-	// saves us from lots of error-prone ad-hoc code.
-	$non_standard_text=array(
-		"/(\D)(\d)/", "/(\d)(\D)/",  // "26JUN1602ad" => "26 JUN 1602 ad"
-		"/[[{(]/", "/[]})]/",        // Tidy brackets
-		// Year suffixes
-		"/\bB\.?C\.?(E\.?)?$/i",
-		"/\b(A\.?D\.?|C\.?E\.?)$/i",
-		"/\bA[.]?M[.]$/i",
-		"/\bAN\b/i", "/\b1 er\b/i",   // French peculiarities
-		// Keywords
-		"/\b(ABT|C|CIR|CIRCA|ABOUT|APX|APPROX)\b/i",
-		"/\b(AFT|AFTER)\b/i", "/\bBEF(ORE)?\b/i", "/\bFROM\b/i", "/\bTO\b/i",
-		"/\bCAL(C(ULATED)?)?\b/i", "/\bEST(IMATED?)?\b/i",
-		"/\bBET(WEEN)?\b/i", "/\b(AND|&)\b/i",
-		// English months
-		"/\bJAN(uary)?\b/i", "/\bFEB(ruary)?\b/i", "/\bMAR(ch)?\b/i",
-		"/\bAPR(il)?\b/i", "/\bMAY\b/i", "/\bJUN(e)?\b/i",
-		"/\bJUL(y)?\b/i", "/\bAUG(ust)?\b/i", "/\bSEP(tember)?\b/i",
-		"/\bOCT(ober)?\b/i", "/\bNOV(ember)?\b/i", "/\bDEC(ember)?\b/i",
-		// Hebrew months
-		"/\b(TSH|Tishri)\b/i", "/\b(CSH|Cheshvan)\b/i", "/\b(KSL|Kislev)\b/i",
-		"/\b(TVT|Tevet)\b/i", "/\b(SHV|Shevat)\b/i", "/\b(ADR|Adar)\b/i", 
-		"/\b(ADS|Adar *Sheni)\b/i", "/\b(NSN|Nisan)\b/i", "/\b(IYR|Iyar)\b/i", 
-		"/\b(SVN|Sivan)\b/i", "/\b(TMZ|Tammuz)\b/i", "/\b(AAV|Av)\b/i", "/\b(ELL|Elul)\b/i", 
-		// French months
-		"/\bVEND(emiaire)?\b/i", "/\bBRUM(aire)?\b/i", "/\bFRIM(aire)?\b/i",
-		"/\bNIVO(se)?\b/i", "/\bPLUV(ose)?\b/i", "/\bVENT(ose)?\b/i",
-		"/\bGERM(inal)?\b/i", "/\bFLOR(eal)?\b/i", "/\bPRAI(rial)?\b/i",
-		"/\bMESS(idor)?\b/i", "/\bTHER(midor)?\b/i", "/\bFRUC(tidor)?\b/i", "/\bCOMP|Jour[ _]Complementairs\b/i",
-		// Tidy whitespace
-		"/\s+/", "/^\s+/", "/\s+$/",
-		// Date layouts
-		"/\b(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC) (\d\d?)( ,)? (\d\d\d\d)\b/",
-		"/\b(\d\d\d\d) [.\/:] 0?1 [.\/:] (\d\d?)\b/",
-		"/\b(\d\d\d\d) [.\/:] 0?2 [.\/:] (\d\d?)\b/",
-		"/\b(\d\d\d\d) [.\/:] 0?3 [.\/:] (\d\d?)\b/",
-		"/\b(\d\d\d\d) [.\/:] 0?4 [.\/:] (\d\d?)\b/",
-		"/\b(\d\d\d\d) [.\/:] 0?5 [.\/:] (\d\d?)\b/",
-		"/\b(\d\d\d\d) [.\/:] 0?6 [.\/:] (\d\d?)\b/",
-		"/\b(\d\d\d\d) [.\/:] 0?7 [.\/:] (\d\d?)\b/",
-		"/\b(\d\d\d\d) [.\/:] 0?8 [.\/:] (\d\d?)\b/",
-		"/\b(\d\d\d\d) [.\/:] 0?9 [.\/:] (\d\d?)\b/",
-		"/\b(\d\d\d\d) [.\/:] 10 [.\/:] (\d\d?)\b/",
-		"/\b(\d\d\d\d) [.\/:] 11 [.\/:] (\d\d?)\b/",
-		"/\b(\d\d\d\d) [.\/:] 12 [.\/:] (\d\d?)\b/"
-	);
-	$standard_text=array(
-		'${1} ${2}', '${1} ${2}',
-		' (', ')',
-		'BC',
-		'AD',
-		'AM',
-		'AN', '1',
-		'ABT', 'AFT', 'BEF', 'FROM', 'TO',
-		'CAL', 'EST',
-		'BET', 'AND',
-		'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', 
-		'TSH', 'CSH', 'KSL', 'TVT', 'SHV', 'ADR', 'ADS', 'NSN', 'IYR', 'SVN', 'TMZ', 'AAV', 'ELL',
-		'VEND','BRUM','FRIM','NIVO','PLUV','VENT','GERM','FLOR','PRAI','MESS','THER','FRUC','COMP',
-		' ', '', '',
-		'${2} ${1} ${4}',
-		'${2} JAN ${1}',
-		'${2} FEB ${1}',
-		'${2} MAR ${1}',
-		'${2} APR ${1}',
-		'${2} MAY ${1}',
-		'${2} JUN ${1}',
-		'${2} JUL ${1}',
-		'${2} AUG ${1}',
-		'${2} SEP ${1}',
-		'${2} OCT ${1}',
-		'${2} NOV ${1}',
-		'${2} DEC ${1}',
-		'${1} JAN ${2}',
-		'${1} FEB ${2}',
-		'${1} MAR ${2}',
-		'${1} APR ${2}',
-		'${1} MAY ${2}',
-		'${1} JUN ${2}',
-		'${1} JUL ${2}',
-		'${1} AUG ${2}',
-		'${1} SEP ${2}',
-		'${1} OCT ${2}',
-		'${1} NOV ${2}',
-		'${1} DEC ${2}',
-	);
-
-	$date=preg_replace($non_standard_text, $standard_text, $date);
-
-	if (preg_match("/(FROM|BET) (.+) (TO|AND) (.+)/", $date, $match))
-		return $match[1].' '._gedcom_date($match[2]).' '.$match[3].' '._gedcom_date($match[4]);
-	if (preg_match("/(ABT|CAL|EST|BEF|AFT) (.+)/", $date, $match))
-		return $match[1].' '._gedcom_date($match[2]);
-	if (preg_match("/(INT) (.+)(\(.*\))/", $date, $match))
-		return $match[1].' '._gedcom_date($match[2]).' '.$match[3];
-	if (preg_match("/(\(.*\))/", $date, $match))
-		return $date;
-	return _gedcom_date($date);
-}
-
-function _gedcom_date($date)
-{
-	$gregor_hints="/\d\d\d\d\/\d\d$/";
-	$gregor_old=array();
-	$gregor_new=array();
-
-	$julian_hints="/ (BC|AD)$/i";
-	$julian_old=array("/^/", "/ AD$/i", "/ BC$/i" );
-	$julian_new=array("@#DJULIAN@ ", "", "B.C.");
-
-	$hebrew_hints="/(TSH|CSH|KSL|TVT|SHV|ADR|ADS|NSN|IYR|SVN|TMZ|AAV|ELL|\d+ AM$)/i";
-	$hebrew_old=array("/^/", "/ AM$/i");
-	$hebrew_new=array("@#DHEBREW@ ", "");
-
-	$french_hints="/(VEND|BRUM|FRIM|NIVO|PLUV|VENT|GERM|FLOR|PRAI|MESS|THER|FRUC|COMP|\bAN (\d+|[MDCLXVI+])$)/i";
-	$french_old=array("/^/", "/\bAN /i", "/\bI\b/i", "/\bII\b/i", "/\bIII\b/i", "/\bIV\b/i", "/\bV\b/i", "/\bVI\b/i", "/\bVII\b/i", "/\bVIII\b/i", "/\bIX\b/i", "/\bX\b/i", "/\bXI\b/i", "/\bXII\b/i", "/\bXIII\b/i", "/\bXIV\b/i");
-	$french_new=array("@#DFRENCH R@ ", "", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14");
-
-	if (preg_match('/@#D.+@/i',   $date)) return $date;
-	if (preg_match($gregor_hints, $date)) return preg_replace($gregor_old, $gregor_new, $date);
-	if (preg_match($julian_hints, $date)) return preg_replace($julian_old, $julian_new, $date);
-	if (preg_match($hebrew_hints, $date)) return preg_replace($hebrew_old, $hebrew_new, $date);
-	if (preg_match($french_hints, $date)) return preg_replace($french_old, $french_new, $date);
-	return preg_replace($gregor_old, $gregor_new, $date);
-}
-
 ?>
