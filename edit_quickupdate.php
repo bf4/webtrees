@@ -161,7 +161,7 @@ if ($action=="update") {
 				if (!isset($repeat_tags[$fact])) $repeat_tags[$fact] = 1;
 				else $repeat_tags[$fact]++;
 				
-				$DATES[$j] = gedcom_date($DATES[$j]);
+				$DATES[$j] = check_input_date($DATES[$j]);
 				if (!isset($REMS[$j])) $REMS[$j] = 0;
 				if ($REMS[$j]==1) {
 					$DATES[$j]="";
@@ -354,7 +354,7 @@ if ($action=="update") {
 		if (!in_array($newfact, $typefacts)) $factrec = "1 $newfact\r\n";
 		else $factrec = "1 EVEN\r\n2 TYPE $newfact\r\n";
 		if (!empty($DATE)) {
-			$DATE = gedcom_date($DATE);
+			$DATE = check_input_date($DATE);
 			$factrec .= "2 DATE $DATE\r\n";
 		}
 		if (!empty($PLAC)) $factrec .= "2 PLAC $PLAC\r\n";
@@ -522,7 +522,7 @@ if ($action=="update") {
 				$spouserec .= "1 BIRT\r\n";
 				if (!empty($$bdate)) {
 					$bdate = $$bdate;
-					$bdate = gedcom_date($bdate);
+					$bdate = check_input_date($bdate);
 					$spouserec .= "2 DATE $bdate\r\n";
 				}
 				if (!empty($$bplac)) $spouserec .= "2 PLAC ".$$bplac."\r\n";
@@ -559,7 +559,7 @@ if ($action=="update") {
 			if (!empty($$var)) $FDATE = $$var;
 			else $FDATE = "";
 			if (!empty($FDATE)) {
-				$FDATE = gedcom_date($FDATE);
+				$FDATE = check_input_date($FDATE);
 				$factrec .= "2 DATE $FDATE\r\n";
 			}
 			$var = "F".$i."PLAC";
@@ -639,7 +639,7 @@ if ($action=="update") {
 			if (!empty($$var)) $cplac = $$var;
 			if (!empty($cdate)||!empty($cplac)) {
 				$childrec .= "1 BIRT\r\n";
-				$cdate = gedcom_date($cdate);
+				$cdate = check_input_date($cdate);
 				if (!empty($cdate)) $childrec .= "2 DATE $cdate\r\n";
 				if (!empty($cplac)) $childrec .= "2 PLAC $cplac\r\n";
 				$var = "C".$i."RESN";
@@ -698,7 +698,7 @@ if ($action=="update") {
 			$updated = true;
 		}
 		$factrec = "1 MARR\r\n";
-		$MDATE = gedcom_date($MDATE);
+		$MDATE = check_input_date($MDATE);
 		if (!empty($MDATE)) $factrec .= "2 DATE $MDATE\r\n";
 		if (!empty($MPLAC)) $factrec .= "2 PLAC $MPLAC\r\n";
 		if (!empty($MRESN)) $factrec .= "2 RESN $MRESN\r\n";
@@ -718,7 +718,7 @@ if ($action=="update") {
 		if (!empty($CSEX)) $childrec .= "1 SEX $CSEX\r\n";
 		if (!empty($CDATE)||!empty($CPLAC)) {
 			$childrec .= "1 BIRT\r\n";
-			$CDATE = gedcom_date($CDATE);
+			$CDATE = check_input_date($CDATE);
 			if (!empty($CDATE)) $childrec .= "2 DATE $CDATE\r\n";
 			if (!empty($CPLAC)) $childrec .= "2 PLAC $CPLAC\r\n";
 			if (!empty($CRESN)) $childrec .= "2 RESN $CRESN\r\n";
@@ -805,7 +805,7 @@ if ($action=="update") {
 					$spouserec .= "1 BIRT\r\n";
 					if (!empty($$bdate)) $bdate = $$bdate;
 					else $bdate = "";
-					$bdate = gedcom_date($bdate);
+					$bdate = check_input_date($bdate);
 					if (!empty($bdate)) $spouserec .= "2 DATE $bdate\r\n";
 					if (!empty($$bplac)) $spouserec .= "2 PLAC ".$$bplac."\r\n";
 					$bresn = "FBRESN$i";
@@ -817,7 +817,7 @@ if ($action=="update") {
 					$spouserec .= "1 DEAT\r\n";
 					if (!empty($$bdate)) $bdate = $$bdate;
 					else $bdate = "";
-					$bdate = gedcom_date($bdate);
+					$bdate = check_input_date($bdate);
 					if (!empty($bdate)) $spouserec .= "2 DATE $bdate\r\n";
 					if (!empty($$bplac)) $spouserec .= "2 PLAC ".$$bplac."\r\n";
 					$bresn = "FDRESN$i";
@@ -885,7 +885,7 @@ if ($action=="update") {
 					$spouserec .= "1 BIRT\r\n";
 					if (!empty($$bdate)) $bdate = $$bdate;
 					else $bdate = "";
-					$bdate = gedcom_date($bdate);
+					$bdate = check_input_date($bdate);
 					if (!empty($bdate)) $spouserec .= "2 DATE $bdate\r\n";
 					if (!empty($$bplac)) $spouserec .= "2 PLAC ".$$bplac."\r\n";
 					$bresn = "MBRESN$i";
@@ -897,7 +897,7 @@ if ($action=="update") {
 					$spouserec .= "1 DEAT\r\n";
 					if (!empty($$bdate)) $bdate = $$bdate;
 					else $bdate = "";
-					$bdate = gedcom_date($bdate);
+					$bdate = check_input_date($bdate);
 					if (!empty($bdate)) $spouserec .= "2 DATE $bdate\r\n";
 					if (!empty($$bplac)) $spouserec .= "2 PLAC ".$$bplac."\r\n";
 					$bresn = "MDRESN$i";
@@ -957,7 +957,7 @@ if ($action=="update") {
 			$var = "F".$i."DATE";
 			if (!empty($$var)) $FDATE = $$var;
 			else $FDATE = "";
-			$FDATE = gedcom_date($FDATE);
+			$FDATE = check_input_date($FDATE);
 			if (!empty($FDATE)) $factrec .= "2 DATE $FDATE\r\n";
 			$var = "F".$i."PLAC";
 			if (!empty($$var)) $FPLAC = $$var;
@@ -1042,7 +1042,7 @@ if ($action=="update") {
 			else $cplac = "";
 			if (!empty($cdate)||!empty($cplac)) {
 				$childrec .= "1 BIRT\r\n";
-				$cdate = gedcom_date($cdate);
+				$cdate = check_input_date($cdate);
 				if (!empty($cdate)) $childrec .= "2 DATE $cdate\r\n";
 				if (!empty($cplac)) $childrec .= "2 PLAC $cplac\r\n";
 				$var = "C".$i."RESN";

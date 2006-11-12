@@ -843,7 +843,7 @@ else if ($action=="addchildaction") {
 	if ((!empty($BIRT_DATE))||(!empty($BIRT_PLAC))) {
 		$gedrec .= "1 BIRT\r\n";
 		if (!empty($BIRT_DATE)) {
-			$BIRT_DATE = gedcom_date($BIRT_DATE);
+			$BIRT_DATE = check_input_date($BIRT_DATE);
 			$gedrec .= "2 DATE $BIRT_DATE\r\n";
 		}
 		if (!empty($BIRT_PLAC)) {
@@ -863,7 +863,7 @@ else if ($action=="addchildaction") {
 	if ((!empty($DEAT_DATE))||(!empty($DEAT_PLAC))) {
 		$gedrec .= "1 DEAT\r\n";
 		if (!empty($DEAT_DATE)) {
-			$DEAT_DATE = gedcom_date($DEAT_DATE);
+			$DEAT_DATE = check_input_date($DEAT_DATE);
 			$gedrec .= "2 DATE $DEAT_DATE\r\n";
 		}
 		if (!empty($DEAT_PLAC)) {
@@ -919,7 +919,7 @@ else if ($action=="addspouseaction") {
 	if ((!empty($BIRT_DATE))||(!empty($BIRT_PLAC))) {
 		$gedrec .= "1 BIRT\r\n";
 		if (!empty($BIRT_DATE)) {
-			$BIRT_DATE = gedcom_date($BIRT_DATE);
+			$BIRT_DATE = check_input_date($BIRT_DATE);
 			$gedrec .= "2 DATE $BIRT_DATE\r\n";
 		}
 		if (!empty($BIRT_PLAC)) {
@@ -939,7 +939,7 @@ else if ($action=="addspouseaction") {
 	if ((!empty($DEAT_DATE))||(!empty($DEAT_PLAC))) {
 		$gedrec .= "1 DEAT\r\n";
 		if (!empty($DEAT_DATE)) {
-			$DEAT_DATE = gedcom_date($DEAT_DATE);
+			$DEAT_DATE = check_input_date($DEAT_DATE);
 			$gedrec .= "2 DATE $DEAT_DATE\r\n";
 		}
 		if (!empty($DEAT_PLAC)) {
@@ -978,7 +978,7 @@ else if ($action=="addspouseaction") {
 		if ((!empty($MARR_DATE))||(!empty($MARR_PLAC))) {
 			$famrec .= "1 MARR\r\n";
 			if (!empty($MARR_DATE)) {
-				$MARR_DATE = gedcom_date($MARR_DATE);
+				$MARR_DATE = check_input_date($MARR_DATE);
 				$famrec .= "2 DATE $MARR_DATE\r\n";
 			}
 			if (!empty($MARR_PLAC)) {
@@ -1008,7 +1008,7 @@ else if ($action=="addspouseaction") {
 			if ((!empty($MARR_DATE))||(!empty($MARR_PLAC))) {
 				$famrec .= "1 MARR\r\n";
 				if (!empty($MARR_DATE)) {
-					$MARR_DATE = gedcom_date($MARR_DATE);
+					$MARR_DATE = check_input_date($MARR_DATE);
 					$famrec .= "2 DATE $MARR_DATE\r\n";
 				}
 				if (!empty($MARR_PLAC)) {
@@ -1076,7 +1076,7 @@ else if ($action=="linkspouseaction") {
 				if ((!empty($MARR_DATE))||(!empty($MARR_PLAC))) {
 					$famrec .= "1 MARR\r\n";
 					if (!empty($MARR_DATE)) {
-						$MARR_DATE = gedcom_date($MARR_DATE);
+						$MARR_DATE = check_input_date($MARR_DATE);
 						$famrec .= "2 DATE $MARR_DATE\r\n";
 					}
 					if (!empty($MARR_PLAC)) {
@@ -1132,7 +1132,7 @@ else if ($action=="addnewparentaction") {
 	if ((!empty($BIRT_DATE))||(!empty($BIRT_PLAC))) {
 		$gedrec .= "1 BIRT\r\n";
 		if (!empty($BIRT_DATE)) {
-			$BIRT_DATE = gedcom_date($BIRT_DATE);
+			$BIRT_DATE = check_input_date($BIRT_DATE);
 			$gedrec .= "2 DATE $BIRT_DATE\r\n";
 		}
 		if (!empty($BIRT_PLAC)) {
@@ -1152,7 +1152,7 @@ else if ($action=="addnewparentaction") {
 	if ((!empty($DEAT_DATE))||(!empty($DEAT_PLAC))) {
 		$gedrec .= "1 DEAT\r\n";
 		if (!empty($DEAT_DATE)) {
-			$DEAT_DATE = gedcom_date($DEAT_DATE);
+			$DEAT_DATE = check_input_date($DEAT_DATE);
 			$gedrec .= "2 DATE $DEAT_DATE\r\n";
 		}
 		if (!empty($DEAT_PLAC)) {
@@ -1189,7 +1189,7 @@ else if ($action=="addnewparentaction") {
 		if ((!empty($MARR_DATE))||(!empty($MARR_PLAC))) {
 			$famrec .= "1 MARR\r\n";
 			if (!empty($MARR_DATE)) {
-				$MARR_DATE = gedcom_date($MARR_DATE);
+				$MARR_DATE = check_input_date($MARR_DATE);
 				$famrec .= "2 DATE $MARR_DATE\r\n";
 			}
 			if (!empty($MARR_PLAC)) {
@@ -1220,7 +1220,7 @@ else if ($action=="addnewparentaction") {
 			if ((!empty($MARR_DATE))||(!empty($MARR_PLAC))) {
 				$famrec .= "1 MARR\r\n";
 				if (!empty($MARR_DATE)) {
-					$MARR_DATE = gedcom_date($MARR_DATE);
+					$MARR_DATE = check_input_date($MARR_DATE);
 					$famrec .= "2 DATE $MARR_DATE\r\n";
 				}
 				if (!empty($MARR_PLAC)) {
