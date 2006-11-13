@@ -43,6 +43,7 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["resolution"]							13 Nov 2006				A
 +$pgv_lang["cal_download"]							9 Nov 2006				A
 +$pgv_lang["style"]									7 Nov 2006				A
 +$pgv_lang["style1"]								7 Nov 2006				A
