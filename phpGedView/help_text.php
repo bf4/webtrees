@@ -28,10 +28,22 @@
  */
 
 require "config.php";
+// Load language keys for English
 require $helptextfile["english"];
-if (file_exists($helptextfile[$LANGUAGE])) require $helptextfile[$LANGUAGE];
-if (file_exists('modules/research_assistant/languages/lang.en.php')) require 'modules/research_assistant/languages/lang.en.php';
-if (file_exists('modules/research_assistant/'.$pgv_language[$LANGUAGE])) require 'modules/research_assistant/'.$pgv_language[$LANGUAGE];
+@include("modules/research_assistant/languages/lang.".$lang_short_cut["english"].".php");
+@include("./languages/admin.".$lang_short_cut["english"].".php");
+@include("./languages/editor.".$lang_short_cut["english"].".php");
+@include("./languages/lang.extra.".$lang_short_cut["english"].".php");
+@include("./languages/extra.".$lang_short_cut["english"].".php");
+// Load language keys for language other than English
+if ($LANGUAGE != "english") {
+	@include($helptextfile[$LANGUAGE]);
+	@include("modules/research_assistant/languages/lang.".$lang_short_cut["english"].".php");
+	@include("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
+	@include("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
+	@include("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php");
+	@include("./languages/extra.".$lang_short_cut[$LANGUAGE].".php");
+}
 
 if (!isset($help)) $help = "";
 

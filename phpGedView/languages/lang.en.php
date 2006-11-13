@@ -291,6 +291,7 @@ $pgv_lang["hide_context_help"]		= "Hide Contextual Help";
 $pgv_lang["sorry"]					= "<b>Sorry, Help text for this page or item is not yet available.</b>";
 $pgv_lang["help_not_exist"] 		= "<b>Help text for this page or item is not yet available.</b>";
 $pgv_lang["var_not_exist"]			= "<span style=\"font-weight: bold\">The language variable does not exist. Please report this as it is an error.</span>";
+$pgv_lang["resolution"] 			= "Screen Resolution";
 $pgv_lang["menu"]					= "Menu";
 $pgv_lang["header"] 				= "Header";
 $pgv_lang["imageview"]				= "Image Viewer";
