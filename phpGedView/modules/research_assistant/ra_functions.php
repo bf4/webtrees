@@ -230,7 +230,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		if (getUserAccessLevel(getUserName())<=$SHOW_VIEW_FOLDERS)
 			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["view_folders"].'" border="0"></img><br />'.$pgv_lang["view_folders"].'</a></td>';
 		//button 'Add Folder'
-		if (getUserAccessLevel(getUserName())<=$SHOW_ADD_FOLDER && empty ($folderid))
+		if (getUserAccessLevel(getUserName())<=$SHOW_ADD_FOLDER )
 			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=addfolder"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["add_folder"].'" border="0"></img><br />'.$pgv_lang["add_folder"].'</a></td>';
 		//button 'Add Unlinked Source'
 		if (getUserAccessLevel(getUserName())<=$SHOW_ADD_UNLINKED_SOURCE && userCanEdit(getUserName()) && empty ($folderid))
@@ -588,7 +588,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	/**
 	 * Returns the the top folder from the database
 	 *
-	 * @param Int $folderId The folder to look forn
+	 * @param Int $folderId The folder to look for
 	 * @return mixed Results from the database 
 	 */
 	function get_top_folder($folderId) {
@@ -642,13 +642,14 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 
 		if ($res->numRows() > 0) {
 			$out .= '<table class="list_table" align="center" border="0" width="700">';
-			$out .= '<tr><th colspan="2" class="topbottombar"><h2>'.$pgv_lang["Folder_View"].print_help_link("ra_fold_name_help", "qm", '', false, true).'</h2></th></tr>';
+			$out .= '<tr><th colspan="3" class="topbottombar"><h2>'.$pgv_lang["Folder_View"].print_help_link("ra_fold_name_help", "qm", '', false, true).'</h2></th></tr>';
 			$out .= '<tr><th class="descriptionbox"><a href="module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid='.$folderId.'&amp;orderbyfolder=fr_name&amp;type='.$_REQUEST["type"].'">'.$pgv_lang["Folder_Name"].'</a></th>';
-			$out .= '<th class="descriptionbox"><a href="module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid='.$folderId.'&amp;orderbyfolder=fr_description&amp;type='.$_REQUEST["type"].'">'.$pgv_lang["description"].'</a></th></tr>';
+			$out .= '<th class="descriptionbox"><a href="module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid='.$folderId.'&amp;orderbyfolder=fr_description&amp;type='.$_REQUEST["type"].'">'.$pgv_lang["description"].'</a></th>';
+			$out .= '<th class="descriptionbox">'.$pgv_lang["edit"].'</th></tr>';
 		}
 
 		while ($folders = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
- 			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid='.$folders["fr_id"].'"><img src="modules/research_assistant/images/folder.gif" border="0" alt="Folder"></img>'.PrintReady($folders["fr_name"]).'</a></td><td class="optionbox wrap"><br />'.nl2br(PrintReady(stripslashes($folders["fr_description"]))).'</td></tr>';
+ 			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid='.$folders["fr_id"].'"><img src="modules/research_assistant/images/folder.gif" border="0" alt="Folder"></img>'.PrintReady($folders["fr_name"]).'</a></td><td class="optionbox wrap"><br />'.nl2br(PrintReady(stripslashes($folders["fr_description"]))).'</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=editfolder&amp;folderid='.$folders["fr_id"].'">'.$pgv_lang["edit"].'</a></td></tr>';
 		}
 		$out .= '</table>';
 		return $out;
