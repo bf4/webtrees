@@ -26,7 +26,9 @@
  * @package PhpGedView
  * @subpackage Themes
  */
-
+#backprint {
+	display:none;
+}
 /*-- pedigree chart specific stylesheets --*/
 #pedigree_chart {
 	position: absolute;
@@ -88,3 +90,19 @@
 
 #header, #footer, .noprint {display:none !important;}
 form {display: none;}
+
+.lifespan_outer {
+	position: relative; 
+	width: auto;
+	height: auto; 
+	overflow: visible; 
+	border: none;
+}
+
+.lifespan_people {
+	position: absolute; 
+	width: auto; 
+	left: -10px; 
+	top: -60px; 
+	z-index:1;
+}

@@ -3,7 +3,7 @@
  * Displays a fan chart
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2006  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * This Page Is Valid XHTML 1.0 Transitional! > 23 August 2005
  *
  * @package PhpGedView
  * @subpackage Charts
@@ -462,7 +460,7 @@ print_header(PrintReady($name) . " " . $pgv_lang["fan_chart"]);
 if (strlen($name)<30) $cellwidth="420";
 else $cellwidth=(strlen($name)*14);
 print "\n\t<table class=\"list_table $TEXT_DIRECTION\"><tr><td width=\"".$cellwidth."px\" valign=\"top\">\n\t\t";
-if ($view == "preview") print "<h2>" . str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATION, $pgv_lang["gen_fan_chart"]) . ":";
+if ($view == "preview") print "<h2>" . str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATIONS, $pgv_lang["gen_fan_chart"]) . ":";
 else print "<h2>" . $pgv_lang["fan_chart"] . ":";
 print "<br />".PrintReady($name);
 if ($addname != "") print "<br />" . PrintReady($addname);

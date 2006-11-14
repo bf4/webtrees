@@ -804,13 +804,12 @@ function print_footer() {
 	 if (!isset($footer_count)) $footer_count = 1;
 	 else $footer_count++;
 	 print "<!-- begin footer -->\n";
-	 $QUERY_STRING = preg_replace("/&/", "&", $QUERY_STRING);
 	 if ($view!="preview") {
 		  include($footerfile);
 	 }
 	 else {
 		  include($print_footerfile);
-		  print "\n\t<div style=\"text-align: center; width: 95%\"><br />";
+		  print "\n\t<div id=\"backprint\" style=\"text-align: center; width: 95%\"><br />";
 		  $backlink = $SCRIPT_NAME."?".get_query_string();
 		  if (!$printlink) {
 			   print "\n\t<br /><a id=\"printlink\" href=\"javascript:;\" onclick=\"print(); return false;\">".$pgv_lang["print"]."</a><br />";

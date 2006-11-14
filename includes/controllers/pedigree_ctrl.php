@@ -116,7 +116,7 @@ class PedigreeControllerRoot extends BaseController {
 		}
 		//-- adjustments for preview
 		if ($this->isPrintPreview()) {
-			$baseyoffset -= 100;
+			$baseyoffset -= 20;
 		}
 		
 		$this->pbwidth = $bwidth+6;

@@ -127,11 +127,6 @@ class Menu
 			$PGV_IMAGES
 		;
 
-//	if ($TEXT_DIRECTION=="rtl") {
-//			if ($this->labelpos=="right") $this->labelpos="left";
-//			else if ($this->labelpos=="left") $this->labelpos="right";
-//		}
-
 		if (!isset($menucount))
 		{
 			$menucount = 0;
@@ -142,10 +137,9 @@ class Menu
 		}
 		if ($this->seperator)
 		{
-			$output = "<div id=\"menu{$menucount}\" style=\"width: 90%; clear: both;\">"
-				."<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['hline']['other']}\" width=\"90%\" height=\"3\" alt=\"\" />"
-				."</div>\n"
-			;
+			$output = "<div id=\"menu{$menucount}\" class=\"menu_seperator\" style=\"clear: both;\">"
+			."<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['hline']['other']}\" 
+			style=\"width:8em;height:3px\" alt=\"\" />";
 			return $output;
 		}
 		$c = count($this->submenus);

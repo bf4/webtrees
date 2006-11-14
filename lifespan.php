@@ -35,55 +35,6 @@ require_once("includes/controllers/lifespan_ctrl.php");
 print_header($pgv_lang["lifespan_chart"]);
 ?>
 <h2><?php print $pgv_lang["lifespan_chart"]; ?></h2>
-<style type="text/css">
-<!--
-a.showit {
-   position: relative;
-   z-index: 24;
-  
-   color: #000000;
-   text-decoration: none;
-}
-a.showit:hover {
-   z-index: 25;
-   background-color: #ffff9b;
-   cursor: crosshair;
-}
-a.showit span {
-   display: none;
-}
-a.showit:hover span {
-   display: block;
-   position: absolute;
-   top: 22px;
-   left: 0px;
-   width: 225px;
-   border-style: outset;
-   border-left: 15px outset #1f1f1f;
-   border-top: 2px solid #1f1f1f;
-   border-bottom: 2px solid #000000;
-   border-right: 2px solid #000000;
-   padding: 3px;
-   background: #4f4f4f;
-   color: #ffffff;
-   font-family: arial;
-   font-size: 15px;
-   text-align: left;
-   FILTER: Alpha(Opacity=90, FinishOpacity=90, Style=2);
-   -moz-opacity: .85;
-   -khtml-opacity: .85;
-   z-index: 5;
-}
-span:first-letter {
-   color: #ff0000;
-   font-size: 20px;
-   font-weight: bold;
-   font-family: arial;
-   font-variant: small-caps;
-   padding: 1px;
-}
--->
-</style>
 <table><tr><td>
 <form name="people" action="lifespan.php">
 <table>
@@ -207,6 +158,7 @@ var oldMx = 0;
 //-->
 </script>
 </td><td>
+<?php if (!$controller->isPrintPreview()) { ?>
 <form name="buttons" action="lifespan.php" method="get">
 
   <table>
@@ -248,12 +200,13 @@ var oldMx = 0;
   	print "<br /><b>".count($controller->people)." ".$pgv_lang['individuals']."</b>";
   } ?>
 </form>
+<?php } ?>
 </td></tr></table>
-<div id="outerDiv" style="position: relative; width: 99.5%; height: 600px; overflow: hidden; border: solid blue 1px;">
-	<div id="topInner" style="position: absolute; width: 100%; left: -10px; top:-65px; z-index:2; background-color: white" onmousedown="pandiv(); return false;">		
+<div id="outerDiv" class="lifespan_outer">
+	<div id="topInner"  class="lifespan_timeline" onmousedown="pandiv(); return false;">		
 	<?php $controller->PrintTimeline($controller->timelineMinYear,$controller->timelineMaxYear); ?>
 	</div>
-		<div id="inner" style="position: absolute; width: 500px; left: -10px; top: -60px; z-index:1;" onmousedown="pandiv(); return false;">
+		<div id="inner" class="lifespan_people" onmousedown="pandiv(); return false;">
 		<?php $maxY = $controller->fillTL($controller->people,$controller->minYear,$controller->YrowLoc); ?>
 	<?php 	
 	?>
