@@ -53,7 +53,7 @@ if (!isset($showall))       $showall=0;        // Show details of records with n
 
 print "<form method='post' name='gedcheck' action='gedcheck.php'>\n";
 print "<table class='list_table, $TEXT_DIRECTION'>\n";
-print "<tr><td class='list_label'>&nbsp; Level &nbsp;</td>\n";
+print "<tr><td class='list_label'>&nbsp; {$pgv_lang["level"]} &nbsp;</td>\n";
 print "<td class='optionbox'><select name='err_level'>\n";
 for ($i=0; $i<count($levels); $i++)
   print "<option value='$i'".($i==$err_level?" selected='selected'":"").">{$levels[$i]}</option>\n";
@@ -966,7 +966,7 @@ foreach ($gedfile as $num=>$text) {
       if ($err_level>=$warning && $err=='') { // WARNING CHECKS - data
         if (!preg_match('/_/', $tmp) && !preg_match('/^'.$CONTEXT[$tmp].'$/i', $tag_data))
           $err=invalid($pgv_lang['data']);
-        elseif ($tag_level=='0' && $xref!='' && !isset($used_xrefs[$xref.$tag])) $err='Nothing references this record';
+        elseif ($tag_level=='0' && $xref!='' && !isset($used_xrefs[$xref.$tag])) $err=$pgv_lang["noref"];
           if ($err_level>=$info && $err=='') { // INFOMATIONAL CHECKS - spacing
             if ($whitespace1!=''  ||
                 $whitespace2!=' ' ||
@@ -1010,7 +1010,7 @@ foreach ($gedfile as $num=>$text) {
       $last_err_num=$num;
     }
     $last_err_num=$num;
-    printf("<b><font color='red'>%07d[[</font><b>%s</b><font color='red'>]]  %s; see %s</font></b>\n", $i+1, $text, $err, pgv_href($curr_l0tag, $curr_xref));
+    printf("<b><font color='red'>%07d[[</font><b>%s</b><font color='red'>]]  %s; {$pgv_lang["see"]} %s</font></b>\n", $i+1, $text, $err, pgv_href($curr_l0tag, $curr_xref));
   }
 }
 ////////////////////////////////////////////////////////////////////////////////

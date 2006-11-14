@@ -42,6 +42,8 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["noref"]										14 Nov 2006				A
++$pgv_lang["see"]											14 Nov 2006				A
 +$pgv_lang["ged_check"]								8 Nov 2006				A
 $pgv_lang['gedcheck']								8 Nov 2006				A
 $pgv_lang['gedcheck_text']							8 Nov 2006				A

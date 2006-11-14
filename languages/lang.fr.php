@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  Christophe Bx, Julien Damon
+ * Copyright (C) 2002 to 2006  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,7 +82,7 @@ $pgv_lang["search_general"]             = "Recherche générale";
 $pgv_lang["clipping_privacy"]           = "Respect de la vie privée : certains enregistrements n'ont pu être ajoutés";
 $pgv_lang["chart_new"]                  = "Arbre de la famille";
 $pgv_lang["loading"]                    = "Chargement...";
-#pgv_lang["clear_chart"]                = "Clear Chart";
+$pgv_lang["clear_chart"]                = "Effacer tout";
 $pgv_lang["file_information"]           = "Informations du fichier";
 $pgv_lang["choose_file_type"]           = "Type du fichier";
 $pgv_lang["add_individual_by_id"]       = "Ajout d'individus par leur code";
@@ -199,7 +199,7 @@ $pgv_lang["htmlplus_block_content"]     = "Contenu";
 #pgv_lang["htmlplus_block_narrative"]   = "Narrative style (English only)";
 $pgv_lang["htmlplus_block_custom"]      = "Personnalisé";
 #pgv_lang["htmlplus_block_keyword"]     = "Keyword Examples (English only)";
-$pgv_lang["htmlplus_block_taglist"]     = "Liste de Tags";
+$pgv_lang["htmlplus_block_taglist"]     = "Liste de balises";
 $pgv_lang["htmlplus_block_compat"]      = "Compatibilité";
 $pgv_lang["htmlplus_block_current"]     = "Courant";
 $pgv_lang["htmlplus_block_default"]     = "Défaut";
@@ -291,6 +291,7 @@ $pgv_lang["hide_context_help"]          = "Masquer l'aide contextuelle";
 $pgv_lang["sorry"]                      = "<b>Désolé, texte d'aide non disponible</b>";
 $pgv_lang["help_not_exist"]             = "<b>Texte d'aide non disponible</b>";
 $pgv_lang["var_not_exist"]              = "<span style=font-weight: bold>Variable langue non trouvée. Merci de signaler cette erreur.</span>";
+$pgv_lang["resolution"]                 = "Résolution de l'écran";
 $pgv_lang["menu"]                       = "Menu";
 $pgv_lang["header"]                     = "Bandeau";
 $pgv_lang["imageview"]                  = "Afficheur d'images";
@@ -476,8 +477,8 @@ $pgv_lang["view_person"]                = "Afficher la personne";
 $pgv_lang["view_family"]                = "Afficher la famille";
 $pgv_lang["view_source"]                = "Afficher la source";
 $pgv_lang["view_object"]                = "Afficher l'objet";
-$pgv_lang["prev"]                       = "&lt; Précédent";
-$pgv_lang["next"]                       = "Suivant &gt;";
+$pgv_lang["prev"]                       = "Précédent";
+$pgv_lang["next"]                       = "Suivant";
 $pgv_lang["file_not_found"]             = "Fichier non trouvé";
 $pgv_lang["medialist_show"]             = "Afficher";
 $pgv_lang["per_page"]                   = "Objets MultiMedia par page";
@@ -490,7 +491,7 @@ $pgv_lang["record_not_updated"]         = "Impossible de mettre à jour l'enregi
 $pgv_lang["record_removed"]             = "Enregistrement #xref# supprimé du fichier GEDCOM.";
 $pgv_lang["record_not_removed"]         = "Impossible de supprimer l'enregistrement #xref# du fichier GEDCOM.";
 $pgv_lang["record_added"]               = "Enregistrement #xref# ajouté au fichier GEDCOM.";
-$pgv_lang["record_not_added"]           = "Impossible d'ajouter l'enregistrementRecord #xref# au fichier GEDCOM.";
+$pgv_lang["record_not_added"]           = "Impossible d'ajouter l'enregistrement #xref# au fichier GEDCOM.";
 
 //-- SEARCH FILE MESSAGES
 $pgv_lang["soundex_search"]             = "Recherche phonétique du nom (méthode SOUNDEX)";
@@ -991,6 +992,10 @@ $pgv_lang["welcome_text_cust_head"]     =	"<b>BIENVENUE</b><br /><br />L'accès 
 $pgv_lang["upcoming_events"]            = "Prochains anniversaires";
 $pgv_lang["living_or_all"]              = "Voir seulement les personnes vivantes ?";
 $pgv_lang["basic_or_all"]               = "Voir seulement Naissances, Mariages et Décès ?";
+$pgv_lang["style"]                      = "Style de présentation";
+$pgv_lang["style1"]                     = "Texte";
+#pgv_lang["style2"]                     = "Table";
+$pgv_lang["cal_download"]               = "Afficher le bouton de téléchargement des évènements au format hcal ?";
 $pgv_lang["no_events_living"]           = "Aucun évènement pour une personne vivante dans les #pgv_lang[global_num1]# prochains jours.";
 $pgv_lang["no_events_living1"]          = "Aucun évènement pour une personne vivante pour demain.";
 $pgv_lang["no_events_all"]              = "Aucun évènement dans les #pgv_lang[global_num1]# prochains jours.";
