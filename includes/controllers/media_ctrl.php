@@ -269,6 +269,16 @@ class MediaControllerRoot extends IndividualController{
 	}
 	
 	/**
+	 * check if we can show the gedcom record
+	 * @return boolean
+	 */
+	function canShowGedcomRecord() {
+		global $SHOW_GEDCOM_RECORD;
+		if ($SHOW_GEDCOM_RECORD && $this->mediaobject->canDisplayDetails())
+			return true;
+	}
+	
+	/**
 	 * return a list of facts
 	 * @return array
 	 */
