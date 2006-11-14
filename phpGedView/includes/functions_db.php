@@ -333,17 +333,19 @@ function find_gedcom_record($pid, $gedfile = "") {
 		if (empty($gedrec)) $gedrec = find_media_record($pid, $gedfile);
 			//-- why are we looking in the media_mapping table here?
 			if (empty($gedrec)) {
-				$sql1 = "select mm_gedrec, mm_gedfile from ".$TBLPREFIX."media_mapping where mm_gid ='".$pid."' && mm_gedfile=".$GEDCOMS[$GEDCOM]['id'];
+				$sql1 = "select mm_gedrec, mm_gedfile from ".$TBLPREFIX."media_mapping where mm_gid ='".$DBCONN->escapeSimple($pid)."' && mm_gedfile=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']);
 				$res1 = dbquery($sql1);
-				if ($res1->numRows() != 0){
-					$row1 =& $res1->fetchRow();
-					$res1->free();
-					$otherlist[$pid]["gedcom"] = $row1[0];
-					$otherlist[$pid]["gedfile"] = $row1[1];
-					return $row1[0];
+				if (!DB::isError($res1) && $res1!==false) {
+					if ($res1->numRows() != 0){
+						$row1 =& $res1->fetchRow();
+						$res1->free();
+						$otherlist[$pid]["gedcom"] = $row1[0];
+						$otherlist[$pid]["gedfile"] = $row1[1];
+						return $row1[0];
+					}
 				}
 			}
-	}
+		}
 	return $gedrec;
 }
 

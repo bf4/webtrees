@@ -207,6 +207,17 @@ class MediaControllerRoot extends IndividualController{
 	}
 	
 	/**
+	 * check if we can show the other menu
+	 * @return boolean
+	 */
+	function canShowOtherMenu() {
+		global $SHOW_GEDCOM_RECORD, $ENABLE_CLIPPINGS_CART;
+		if ($this->mediaobject->canDisplayDetails() && ($SHOW_GEDCOM_RECORD || $ENABLE_CLIPPINGS_CART>=getUserAccessLevel()))
+			return true;
+		return false;
+	}
+	
+	/**
 	 * get the "other" menu
 	 * @return Menu
 	 */
