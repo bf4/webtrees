@@ -218,7 +218,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_AddTask.php")) {
     <!--SUBMIT-->
                 <th colspan="4" align="right" class="topbottombar">
                     <input type="submit" value="<?php print $pgv_lang["submit"]; ?>" />
-                    <input type="submit" value="Save and Complete" onclick="document.addtaskfrm.complete.value='1';" />
+                    <input type="submit" value="<?php print $pgv_lang["save_and_complete"]; ?>" onclick="document.addtaskfrm.complete.value='1';" />
                    <!--<input type="button" value="Complete" name="complete" onclick="window.location='module.php?mod=research_assistant&amp;action=completeTask&amp;taskid=<?php print $_REQUEST['taskid'] ?>'" />
                 -->
                 </th>

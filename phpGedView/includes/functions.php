@@ -2929,7 +2929,8 @@ function get_query_string() {
 	if (!empty($_GET)) {
 		foreach($_GET as $key => $value) {
 			if($key != "view") {
-				$qstring .= $key."=".$value."&amp;";
+				if (!is_array($value)) $qstring .= $key."=".$value."&amp;";
+				else foreach($value as $k=>$v) $qstring .= $key."[".$k."]=".$v."&amp;";
 			}
 		}
 	}
@@ -2937,7 +2938,8 @@ function get_query_string() {
 		if (!empty($_POST)) {
 			foreach($_POST as $key => $value) {
 				if($key != "view") {
-					$qstring .= $key."=".$value."&amp;";
+					if (!is_array($value)) $qstring .= $key."=".$value."&amp;";
+					else foreach($value as $k=>$v) $qstring .= $key."[".$k."]=".$v."&amp;";
 				}
 			}
 		}

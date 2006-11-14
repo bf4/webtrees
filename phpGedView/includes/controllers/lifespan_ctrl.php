@@ -189,7 +189,7 @@ class LifespanControllerRoot extends BaseController {
 						$dyear = $person->getDeathYear();
 							
 						//--Checks to see if the details of that person can be viewed
-						if (!empty ($byear) && !empty ($dyear) && $person->canDisplayDetails()) {
+						if (!empty ($byear) && $byear!="0000" && !empty($dyear) && $dyear!="0000" && $person->canDisplayDetails()) {
 							$this->people[] = $person;
 						}
 					}
@@ -222,7 +222,7 @@ class LifespanControllerRoot extends BaseController {
 						$byear = $person->getBirthYear();
 						$dyear = $person->getDeathYear();
 						//--Checks to see if the details of that person can be viewed
-						if (!empty ($byear) && !empty ($dyear) && $person->canDisplayDetails()) {
+						if (!empty ($byear) && $byear!="0000" && !empty($dyear) && $dyear!="0000" && $person->canDisplayDetails()) {
 							$this->people[] = $person;
 						}
 					}
@@ -347,12 +347,12 @@ class LifespanControllerRoot extends BaseController {
 		$timelineTick = $totalYears / $yearSpan; //calculates the length of the timeline
 
 		for ($i = 0; $i < $timelineTick; $i ++) { //prints the timeline
-			echo "<div style=' background-color: white; position: absolute; top: ".$top."px;left: ".$leftPosition."px; width: ".$tickDistance."px;'>$newStartYear<img src=\"images/timelineChunk.gif\" alt=\"\" /></div>";
+			echo "<div style='position: absolute; top: ".$top."px;left: ".$leftPosition."px; width: ".$tickDistance."px;'>$newStartYear<img src=\"images/timelineChunk.gif\" alt=\"\" /></div>";
 			$leftPosition += $tickDistance;
 			$newStartYear += $yearSpan;
 
 		}
-		echo "<div style='background-color: white; position: absolute; top: ".$top."px;left: ".$leftPosition."px; width: ".$tickDistance."px;'>$newStartYear</div>";
+		echo "<div style='position: absolute; top: ".$top."px;left: ".$leftPosition."px; width: ".$tickDistance."px;'>$newStartYear</div>";
 	}
 	//method used to place the person boxes onto the timeline
 	function fillTL($ar, $int, $Y) {
