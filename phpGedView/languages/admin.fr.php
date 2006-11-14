@@ -51,12 +51,12 @@ $pgv_lang["searchtype"]                 = "Type de recherche";
 $pgv_lang["query"]                      = "Requête";
 $pgv_lang["user"]                       = "Utilisateur authentifié";
 $pgv_lang["thumbnail_deleted"]          = "Vignette supprimée.";
-$pgv_lang["thumbnail_not_deleted"]      = "Impossible de supprimer la vignette.";
+$pgv_lang["thumbnail_not_deleted"]      = "Ce fichier vignette est protégé et ne peut pas être supprimé sans autorisation.";
 $pgv_lang["step2"]                      = "Etape 2/4 :";
 $pgv_lang["refresh"]                    = "Rafraîchir";
 $pgv_lang["move_file_success"]          = "Le fichier MultiMedia et la vignette ont été déplacés.";
 $pgv_lang["media_folder_corrupt"]       = "Le dossier MultiMedia est corrompu.";
-$pgv_lang["media_file_not_deleted"]     = "Impossible de supprimer le fichier MultiMedia.";
+$pgv_lang["media_file_not_deleted"]     = "Ce fichier MultiMedia est protégé et ne peut pas être supprimé sans autorisation.";
 $pgv_lang["gedcom_deleted"]             = "GEDCOM [#GED#] supprimé avec succès.";
 $pgv_lang["gedadmin"]                   = "Administrateur GEDCOM";
 $pgv_lang["full_name"]                  = "Prénom et nom";
@@ -174,6 +174,7 @@ $pgv_lang["fbsql"]                      = "FrontBase";
 $pgv_lang["found_record"]               = "enregistrement(s) trouvé(s)";
 $pgv_lang["ged_download"]               = "Télécharger (<i>Download</i>)";
 $pgv_lang["ged_import"]                 = "Importer";
+$pgv_lang["ged_check"]                  = "Vérifier";
 $pgv_lang["gedcom_adm_head"]            = "Administration GEDCOM";
 $pgv_lang["gedcom_config_write_error"]  = "E R R E U R !!!<br />Impossible d'écrire dans le fichier <i>#GLOBALS[whichFile]#</i>. Vérifier les droits d'accès.";
 $pgv_lang["gedcom_downloadable"]        = "Ce fichier GEDCOM est téléchargeable par n'importe qui sur Internet !<br />Consultez la section SECURITY du fichier <a href=\"readme.txt\">readme.txt</a> pour corriger ce problème";
@@ -312,4 +313,29 @@ $pgv_lang["welcome_new"]                = "Bienvenue sur votre site PhpGedView. 
 $pgv_lang["yearly"]                     = "Annuel";
 $pgv_lang["you_may_login"]              = " a été approuvé par l'administrateur du site. Vous pouvez maintenant vous connecter au site PhpGedView par ce lien";
 
+// Text for the Gedcom Checker
+$pgv_lang["gedcheck"]                   = "Vérificateur Gedcom";          // Module title
+$pgv_lang["gedcheck_text"]              = "Ce module vérifie le format du fichier GEDCOM selon la norme <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">GEDCOM 5.5.1</a>. L'outil détecte aussi certaines erreurs fréquentes dans les données. Comme il existe de nombreuses variantes de cette norme, seules les erreurs 'graves' sont indispensables à corriger. Merci de bien lire l'explication de chaque erreur dans la norme avant de demander de l'aide.";
+$pgv_lang["level"]                      = "Niveau";                   // Levels of checking
+$pgv_lang["critical"]                   = "Erreur grave";
+$pgv_lang["error"]                      = "Erreur";
+$pgv_lang["warning"]                    = "Avertissement";
+$pgv_lang["info"]                       = "Information";
+$pgv_lang["open_link"]                  = "Ouvrir les liens dans";           // Where to open links
+$pgv_lang["same_win"]                   = "le même onglet ou la même fenêtre";
+$pgv_lang["new_win"]                    = "un nouvel onglet ou une nouvelle fenêtre";
+$pgv_lang["context_lines"]              = "Nombre de lignes GEDCOM<br />avant et après la ligne en erreur"; // Number of lines either side of error
+$pgv_lang["all_rec"]                    = "Tous les enregistrements";             // What to show
+$pgv_lang["err_rec"]                    = "Les enregistrements comportant une erreur";
+$pgv_lang["missing"]                    = "balise manquante";                 // General error messages
+$pgv_lang["multiple"]                   = "multiple";
+$pgv_lang["invalid"]                    = "mauvaise";
+$pgv_lang["too_many"]                   = "trop";
+$pgv_lang["too_few"]                    = "pas assez";
+$pgv_lang["no_link"]                    = "le lien de retour est manquant";
+$pgv_lang["data"]                       = "donnée";                    // Specific errors (used with general errors)
+$pgv_lang["see"]                        = "voir";
+$pgv_lang["noref"]                      = "aucun lien vers cet enregistrement";
+$pgv_lang["tag"]                        = "balise";
+$pgv_lang["spacing"]                    = "espacement";
 ?>

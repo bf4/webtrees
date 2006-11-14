@@ -310,6 +310,7 @@ class GedcomRecord {
 		list($y, $m, $d) = explode("-", $pdate[0]["sort"]);
 		if ($y=="0000") return "javascript:;";
 		$ged_months = array("", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC");
+		if ($m>12) $m=0;
 		$url = "calendar.php?action=year&amp;day=".$d."&amp;month=".$ged_months[$m+0]."&amp;year=".$y."&amp;ged=".$GEDCOM;
 		return $url;
 	}

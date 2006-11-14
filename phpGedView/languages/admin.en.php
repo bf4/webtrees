@@ -334,7 +334,8 @@ $pgv_lang["too_many"]     = "too many";
 $pgv_lang["too_few"]      = "too few";
 $pgv_lang["no_link"]      = "does not link back";
 $pgv_lang["data"]         = "data";                    // Specific errors (used with general errors)
-$pgv_lang["level"]        = "level";
+$pgv_lang["see"]          = "see";
+$pgv_lang["noref"]        = "Nothing references this record";
 $pgv_lang["tag"]          = "tag";
 $pgv_lang["spacing"]      = "spacing";
 ?>
