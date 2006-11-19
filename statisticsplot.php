@@ -278,7 +278,7 @@ function fill_ydata($z,$x,$val) {
 function myplot($mytitle,$n,$xdata,$xtitle,$ydata,$ytitle,$legend) {
 	global $x_as, $y_as, $z_as, $nrfam, $famgeg, $nrpers, $persgeg, $key2ind, $n1;
 	global $legend, $xdata, $ydata, $xmax, $xgrenzen, $zmax, $zgrenzen, $xgiven, $zgiven, $percentage;
-	global $pgv_lang;
+	global $pgv_lang, $SERVER_URL;
 
 	$colors= array("blue","orange","red","brown","green","yellow");
 
@@ -319,11 +319,23 @@ function myplot($mytitle,$n,$xdata,$xtitle,$ydata,$ytitle,$legend) {
 	if ($n==4) $accbar = new GroupBarPlot(array($b[0],$b[1],$b[2],$b[3]));
 	if ($n==5) $accbar = new GroupBarPlot(array($b[0],$b[1],$b[2],$b[3],$b[4]));
 
+	$graphFile = tempnam("/tmp", "PGV");
 	$graph-> Add($accbar);
-	$graph-> Stroke("./index/graph.png");
+	$graph-> Stroke($graphFile);
+	unset($_SESSION["image_data"]);			// Make sure imageflush.php
+	$_SESSION["graphFile"] = $graphFile;	//   uses the right image source
+	$imageSize = getimagesize($graphFile);
+	if ($imageSize===false) {
+		unset($imageSize);
+		$imageSize[0] = 300;
+		$imageSize[1] = 300;
+	}
+	$titleLength = strpos($mytitle."\n", "\n");
+	$title = substr($mytitle, 0, $titleLength);
+	$image_name = time();
 	print "<center>";
-	print "<img src=\"./index/graph.png\">";
-	print "</center>";
+	print "<img src=\"imageflush.php?image_type=png&amp;image_name=$image_name\" width=\"$imageSize[0]\" height=\"$imageSize[1]\" border=\"0\" alt=\"$title\" title=\"$title\"/>";
+	print "</center><br /><br />";
 }
 
 function get_plot_data() {
