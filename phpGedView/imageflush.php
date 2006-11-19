@@ -48,12 +48,18 @@ if ($image_type=="jpg") $image_type="jpeg";
 if ($image_type=="") $image_type="png";
 //ImageFlushError($image_type);
 
-// read image_data from SESSION variable
+// read image_data from SESSION variable or from file pointed to by SESSION variable
 //session_start();
-$image_data = @$_SESSION['image_data'];
-$image_data = @unserialize($image_data);
-unset($_SESSION['image_data']);
-if (empty($image_data)) ImageFlushError("Error : \$_SESSION['image_data'] is empty");
+if (isset($_SESSION["image_data"])) {
+	$image_data = @$_SESSION['image_data'];
+	$image_data = @unserialize($image_data);
+	unset($_SESSION['image_data']);
+} else if (isset($_SESSION["graphFile"])) {
+	$image_data = file_get_contents($_SESSION["graphFile"]);
+	unlink($_SESSION["graphFile"]);
+	unset($_SESSION["graphFile"]);
+}
+if (empty($image_data)) ImageFlushError("Error: \$_SESSION['image_data'] or \$_SESSION['graphFile'] is empty");
 
 // send data to browser
 Header("Content-Type: image/$image_type");

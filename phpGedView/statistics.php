@@ -419,24 +419,6 @@ global $match1,$match2;
 	$_SESSION[$GEDCOM . "nrvrouw"]= $nrvrouw;
 
 {
-	?>
-	<script type="text/javascript">
-	<!--
-	var pasteto;
-	function open_find(textbox)
-	{
-		pasteto = textbox;
-//--<?php print "textbox".textbox."<br/>"; ?>
-		findwin = window.open('statistiekplot.php', '_blank', 'left=50,top=50,width=600,height=500,resizable=1,scrollbars=1');
-	}
-	function paste_id(value)
-	{
-		pasteto.value=value;
-	}
-	//-->
-	</script>
-
-<?php
 if (!isset($plottype)) $plottype=0;
 
 ?>
