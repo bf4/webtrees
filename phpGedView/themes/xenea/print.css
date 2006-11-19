@@ -587,7 +587,7 @@ H2       {FONT-FAMILY: arial, Helvetica, sans-serif; FONT-SIZE: 18px; FONT-WEIGH
 }
 
 div#header, div#footer, .noprint {display:none !important;}
-form {display: none;}
+form, button, input {display: none;} /* buttons and input are used out of forms in sortable tables*/
 
 /*-- pseudo-class for fanchart : used on server-side to draw image --*/
 .fan_chart {

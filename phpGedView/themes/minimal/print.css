@@ -89,7 +89,7 @@
 }
 
 #header, #footer, .noprint {display:none !important;}
-form {display: none;}
+form, button, input {display: none;} /* buttons and input are used out of forms in sortable tables*/
 
 .lifespan_outer {
 	position: relative; 
