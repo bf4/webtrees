@@ -38,6 +38,7 @@ function ts_makeSortable(table) {
 	for (var i=0;i<firstRow.cells.length;i++) {
 		var cell = firstRow.cells[i];
 		var txt = ts_getInnerText(cell);
+		if (cell.getElementsByTagName("img") && cell.nodeName.toLowerCase()=="th") txt = cell.innerHTML; // PGV: allow icon as text
 		if (txt=="") continue; // PGV: do not process empty cols
 		cell.innerHTML = '<a href="javascript:;" class="sortheader" '+
 		'onmousedown="this.style.cursor=\'wait\';" ' + // PGV: set cursor
