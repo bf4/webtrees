@@ -322,8 +322,9 @@ function myplot($mytitle,$n,$xdata,$xtitle,$ydata,$ytitle,$legend) {
 	$graphFile = tempnam("/tmp", "PGV");
 	$graph-> Add($accbar);
 	$graph-> Stroke($graphFile);
+	$tempVarName = "V".time();
 	unset($_SESSION["image_data"]);			// Make sure imageflush.php
-	$_SESSION["graphFile"] = $graphFile;	//   uses the right image source
+	$_SESSION[$tempVarName] = $graphFile;	//   uses the right image source
 	$imageSize = getimagesize($graphFile);
 	if ($imageSize===false) {
 		unset($imageSize);
@@ -332,9 +333,8 @@ function myplot($mytitle,$n,$xdata,$xtitle,$ydata,$ytitle,$legend) {
 	}
 	$titleLength = strpos($mytitle."\n", "\n");
 	$title = substr($mytitle, 0, $titleLength);
-	$image_name = time();
 	print "<center>";
-	print "<img src=\"imageflush.php?image_type=png&amp;image_name=$image_name\" width=\"$imageSize[0]\" height=\"$imageSize[1]\" border=\"0\" alt=\"$title\" title=\"$title\"/>";
+	print "<img src=\"imageflush.php?image_type=png&amp;image_name=$tempVarName\" width=\"$imageSize[0]\" height=\"$imageSize[1]\" border=\"0\" alt=\"$title\" title=\"$title\"/>";
 	print "</center><br /><br />";
 }
 

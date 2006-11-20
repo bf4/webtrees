@@ -43,23 +43,24 @@ function ImageFlushError($txt) {
 
 // get image_type
 $image_type = @$_GET['image_type'];
+if (empty($image_type)) $image_type = "png";
 $image_type = strtolower($image_type);
-if ($image_type=="jpg") $image_type="jpeg";
-if ($image_type=="") $image_type="png";
-//ImageFlushError($image_type);
+if ($image_type=="jpg") $image_type = "jpeg";
+// get name of SESSION variable containing an image file name
+$tempVarName = @$_GET["image_name"];
+if (empty($tempVarName)) $tempVarName = "graphFile";
 
 // read image_data from SESSION variable or from file pointed to by SESSION variable
-//session_start();
 if (isset($_SESSION["image_data"])) {
 	$image_data = @$_SESSION['image_data'];
 	$image_data = @unserialize($image_data);
 	unset($_SESSION['image_data']);
-} else if (isset($_SESSION["graphFile"])) {
-	$image_data = file_get_contents($_SESSION["graphFile"]);
-	unlink($_SESSION["graphFile"]);
-	unset($_SESSION["graphFile"]);
+} else if (isset($_SESSION[$tempVarName])) {
+	$image_data = file_get_contents($_SESSION[$tempVarName]);
+	unlink($_SESSION[$tempVarName]);
+	unset($_SESSION[$tempVarName]);
 }
-if (empty($image_data)) ImageFlushError("Error: \$_SESSION['image_data'] or \$_SESSION['graphFile'] is empty");
+if (empty($image_data)) ImageFlushError("Error: \$_SESSION['image_data'] or \$_SESSION['".$tempVarName."'] is empty");
 
 // send data to browser
 Header("Content-Type: image/$image_type");
