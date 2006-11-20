@@ -843,9 +843,12 @@ function print_sour_table($datalist, $legend="") {
 	echo "<th class=\"list_label\">".$factarray["TITL"]."</th>";
 	$t2 = false; echo "<td class=\"list_label t2\">".$factarray["TITL"]."2</td>";
 	echo "<th class=\"list_label\">".$factarray["AUTH"]."</th>";
-	echo "<th class=\"list_label\">".$pgv_lang["individuals"]."</th>";
-	echo "<th class=\"list_label\">".$pgv_lang["families"]."</th>";
-	echo "<th class=\"list_label\">".$pgv_lang["media"]."</th>";
+	$show_details = (get_list_size("indilist")<4000);
+	if ($show_details) {
+		echo "<th class=\"list_label\">".$pgv_lang["individuals"]."</th>";
+		echo "<th class=\"list_label\">".$pgv_lang["families"]."</th>";
+		echo "<th class=\"list_label\">".$pgv_lang["media"]."</th>";
+	}
 	if ($SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
 	echo "</tr>\n";
 	//-- table body
@@ -891,20 +894,21 @@ function print_sour_table($datalist, $legend="") {
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($source->getAuth())."\">";
 		echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".PrintReady($source->getAuth())."</a>";
 		echo "&nbsp;</td>";
-		//-- Linked INDIs
-		echo "<td class=\"list_value_wrap\">";
-//		echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".count($source->getSourceIndis())."</a>";
-		echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".$source->countSourceIndis()."</a>";
-		echo "</td>";
-		//-- Linked FAMs
-		echo "<td class=\"list_value_wrap\">";
-//		echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".count($source->getSourceFams())."</a>";
-		echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".$source->countSourceFams()."</a>";
-		echo "</td>";
-		//-- Linked SOURces
-		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".$source->countSourceObjects()."</a>";
-		echo "</td>";
+		
+		if ($show_details) {
+			//-- Linked INDIs
+			echo "<td class=\"list_value_wrap\">";
+			echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".$source->countSourceIndis()."</a>";
+			echo "</td>";
+			//-- Linked FAMs
+			echo "<td class=\"list_value_wrap\">";
+			echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".$source->countSourceFams()."</a>";
+			echo "</td>";
+			//-- Linked OBJEcts
+			echo "<td class=\"list_value_wrap\">";
+			echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".$source->countSourceObjects()."</a>";
+			echo "</td>";
+		}
 		//-- Last change
 		if ($SHOW_LAST_CHANGE) {
 			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
