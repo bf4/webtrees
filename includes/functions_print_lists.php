@@ -317,7 +317,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "<th class=\"list_label\">".$factarray["BIRT"]."</th>";
 	echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
 	echo "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
-	echo "<th class=\"list_label\">".$pgv_lang["children"]."</th>";
+	echo "<th class=\"list_label\"><img src=\"./images/children.gif\" alt=\"".$pgv_lang["children"]."\" title=\"".$pgv_lang["children"]."\" border=\"0\" /></th>";
 	echo "<th class=\"list_label\">".$factarray["DEAT"]."</th>";
 	echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
 	echo "<th class=\"list_label\">".$factarray["AGE"]."</th>";
@@ -623,7 +623,7 @@ function print_fam_table($datalist, $legend="") {
 	echo "<th class=\"list_label\">".$factarray["AGE"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["AGE"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
-	echo "<th class=\"list_label\">".$pgv_lang["children"]."</th>";
+	echo "<th class=\"list_label\"><img src=\"./images/children.gif\" alt=\"".$pgv_lang["children"]."\" title=\"".$pgv_lang["children"]."\" border=\"0\" /></th>";
 	if ($SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
 	echo "<th class=\"list_label\" style=\"display:none\">MARR</th>";
 	echo "<th class=\"list_label\" style=\"display:none\">DEAT</th>";
@@ -1130,7 +1130,7 @@ function print_changes_table($datalist) {
 		if ($record->type=="FAM") $name = $record->getSortableName(true);
 		else $name = $record->getSortableName();
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
-		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($record->type=="INDI") {
 			echo $record->getSexImage();
 			$name_subtags = array("", "_HEB", "ROMN", "_AKA");

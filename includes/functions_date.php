@@ -930,12 +930,6 @@ function parse_date($datestr) {
 			$strs[1] = array_search($strs[1], $monthtonum);
 			$strs = array_reverse($strs);
 		}
-		//-- this section will convert a date like 1-31-2005 to 31 jan 2005
-		if ($strs[0]<13 && $strs[1]<32) {
-			$s1 = $strs[1];
-			$strs[1] = array_search($strs[0], $monthtonum);
-			$strs[0] = $s1;
-		}
 	}
 
 	for($i=0; $i<count($strs); $i++) {
