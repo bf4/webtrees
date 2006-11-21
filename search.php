@@ -319,8 +319,9 @@ if ($controller->action == "soundex") {
 			<?php print $pgv_lang["search_DM"]; ?>
 		</td>
 	</tr>
+	  
 	<!-- Individuals' names to print options (Names with hit, All names) -->
-	<tr>
+	<!-- <tr>
 		<td class="list_label">
 			<?php 	print $pgv_lang["search_prtnames"]; ?>
 		</td>
@@ -332,7 +333,7 @@ if ($controller->action == "soundex") {
 				<?php if ($controller->nameprt == "all") print " checked=\"checked\" "; ?> />
 				<?php print $pgv_lang["search_prtall"]; ?>
 		</td>
-	</tr>
+	</tr> -->
 	<tr>
 		<td class="list_label" style="padding: 5px;">
 			<?php print $pgv_lang["search_asso_label"]; ?>

@@ -3333,7 +3333,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 			}
 		}
 		
-		$file = "./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php";
+		$file = "./languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
 		if (file_exists($file)) {
 			include($file);
 		}
@@ -3383,7 +3383,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 				include($file);
 			}
 		}
-		$file = "./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php";
+		$file = "./languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
 		if (file_exists($file)) {
 			include($file);
 		}

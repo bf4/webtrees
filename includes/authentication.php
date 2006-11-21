@@ -253,7 +253,7 @@ function getUserName() {
 	if ($ALLOW_REMEMBER_ME) {
 		$tSERVER_URL = preg_replace(array("'https?://'", "'www.'", "'/$'"), array("","",""), $SERVER_URL);
 		if(empty($tSERVER_URL)) $tSERVER_URL = $SERVER_URL; 	// cannot assume we had a match.
-		if ((isset($_SERVER['HTTP_REFERER'])) && (stristr($_SERVER['HTTP_REFERER'],$tSERVER_URL)!==false)) $referrer_found=true;
+		if ((isset($_SERVER['HTTP_REFERER'])) && !empty($tSERVER_URL) && (stristr($_SERVER['HTTP_REFERER'],$tSERVER_URL)!==false)) $referrer_found=true;
 		if (!empty($_COOKIE["pgv_rem"])&& (empty($referrer_found)) && empty($logout)) {
 			if (!is_object($DBCONN)) return $_COOKIE["pgv_rem"];
 			$user = getUser($_COOKIE["pgv_rem"]);
