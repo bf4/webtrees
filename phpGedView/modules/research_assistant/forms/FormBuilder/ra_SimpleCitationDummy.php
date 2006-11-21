@@ -21,7 +21,7 @@ return false;}return true;}
         $out .= '<th colspan="6" align="right"class="topbottombar"><h2>' . $heading . '</h2></th>';
         $out .= '</tr>';
         return $out;
-    }
+    }%ADDCURLY%
     
     function getFieldValue($j, $lines) {
     	$value = "";

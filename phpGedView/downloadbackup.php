@@ -26,7 +26,7 @@
 
 require "config.php";
 
-if ((!userGedcomAdmin(getUserName()))||(empty($fname))) {
+if ((!userGedcomAdmin(getUserName()))||(empty($fname))||(preg_match("/\.zip$/", $fname)==0)) {
 	print $pgv_lang['access_denied'];
 	exit;
 }

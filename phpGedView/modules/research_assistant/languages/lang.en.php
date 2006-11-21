@@ -79,6 +79,8 @@ $pgv_lang["FormName"]							= "Enter the form name";
 $pgv_lang["MultiplePeople"]						= "Does the form apply to multiple people?";
 $pgv_lang["EnterGEDCOMExtension"]				= "Please enter the GEDCOM extension for the form's fact type";
 $pgv_lang['FormDesciption']						= "Please enter a description for the form";
+$pgv_lang["FormGeneration"]						= "Form Generation Complete!";
+$pgv_lang["CustomField"]						= "Custom Field Name";
 
 // -- RA EXPLANATION
 $pgv_lang["ViewProbExplanation"]					= "This page analyzes the data for the active GEDCOM dataset and shows the correlations between different data elements. For example, there could be a 95% correlation that the surname in a local record is the same as the surname in the father's record.  This would mean that 95% of the people in this GEDCOM dataset share the same surname as their father. In this version of the Research Assistant, these calculations are not being used in other areas of the program and are only provided as a help to you in your research.  In the future we plan to use this data to help provide you with meaningful suggestions of where you should focus some of your future research. ";
@@ -178,7 +180,7 @@ $pgv_lang["add_new_comment"]				= "Add New Comment";
 $pgv_lang["no_sources"]						= "There are no sources associated with this task.";
 $pgv_lang["no_people"]						= "There are no people associated with this task.";
 $pgv_lang["no_indi_tasks"]					= "No tasks associated with this individual.";
-$pgv_lang["no_sour_tasks"]					= "No tasks associated with this source.";
+$pgv_lang["no_sour_tasks"]					= "No tasks associated with this ssource.";
 $pgv_lang["edit_comment"]					= "Edit Comment";
 $pgv_lang["comment_success"]				= "Your comment was successfully added.";
 $pgv_lang['comment_body']					= 'Comment';
@@ -189,7 +191,7 @@ $pgv_lang["comment_delete_check"]		= "Are you sure you want to delete this comme
 //-- RA_ADDTASK MESSAGES
 $pgv_lang["add_new_task"]				= "Add New Task";
 $pgv_lang["submit"]						= "Submit";
-$pgv_lain["save_and_complete"]          = "Save and Complete";
+$pgv_lang["save_and_complete"]          = "Save and Complete";
 $pgv_lang["assign_task"]				= "Assign Task";
 $pgv_lang["AddTask"]					= "Add Task";
 

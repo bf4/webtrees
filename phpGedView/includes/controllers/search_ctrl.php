@@ -181,7 +181,8 @@ class SearchControllerRoot extends BaseController {
 					$_REQUEST["$str"] = 'yes';
 				}
 			}
-		} else
+		}
+		 else
 			$this->sgeds[] = $GEDCOM;
 			
 		// Retrieve the sites that can be searched
@@ -735,6 +736,9 @@ class SearchControllerRoot extends BaseController {
 	 */
 	function SoundexSearch() {
 		global $REGEXP_DB, $GEDCOM, $GEDCOMS;
+		global $TBLPREFIX;
+		global $DBCONN;
+		
 		if (((!empty ($this->lastname)) || (!empty ($this->firstname)) || (!empty ($this->place))) && (count($this->sgeds) > 0)) {
 			$logstring = "Type: Soundex<br />";
 			if (!empty ($this->lastname))
@@ -835,7 +839,6 @@ class SearchControllerRoot extends BaseController {
 				$this->printname = array ();
 				$this->printfamname = array ();
 				
-				global $TBLPREFIX;
 				$firstName = "";
 				$lastName = "";
 				
@@ -868,6 +871,15 @@ class SearchControllerRoot extends BaseController {
 				
 				$sql = "SELECT i_id, i_gedcom, sx_n_id, i_file FROM ".$TBLPREFIX."soundex, ".$TBLPREFIX."individuals WHERE sx_i_id = i_id AND sx_file = i_file AND ";
 				
+				if ((is_array($this->sgeds)) && (count($this->sgeds) != 0)) {
+					$sql .= " (";
+					for ($i=0; $i<count($this->sgeds); $i++) {
+						$sql .= "i_file='".$DBCONN->escapeSimple($GEDCOMS[$this->sgeds[$i]]["id"])."'";
+						if ($i < count($this->sgeds)-1) $sql .= " OR ";
+					}
+					$sql .= ") AND ";
+				}
+				
 				if($this->soundex == "DaitchM")
 				{
 					$x = 0;
@@ -876,7 +888,7 @@ class SearchControllerRoot extends BaseController {
 				
 					if(!empty($firstName))
 					{ 
-						$where = "sx_fn_dm_code LIKE '%".$firstName."%' ";
+						$where = "sx_fn_dm_code LIKE '%".$DBCONN->escapeSimple($firstName)."%' ";
 						$x++;
 					}
 					
@@ -885,7 +897,7 @@ class SearchControllerRoot extends BaseController {
 						if($x > 0)
 							$where .= "AND ";
 							
-						$where .= "sx_ln_dm_code LIKE '".$lastName."' ";
+						$where .= "sx_ln_dm_code LIKE '".$DBCONN->escapeSimple($lastName)."' ";
 					}
 				}
 				
@@ -897,7 +909,7 @@ class SearchControllerRoot extends BaseController {
 					
 					if(!empty($firstName))
 					{ 
-						$where = "sx_fn_std_code LIKE '%".$firstName."%' ";
+						$where = "sx_fn_std_code LIKE '%".$DBCONN->escapeSimple($firstName)."%' ";
 						$x++;
 					}
 					
@@ -906,7 +918,7 @@ class SearchControllerRoot extends BaseController {
 						if($x > 0)
 							$where .= "AND ";
 							
-						$where .= "sx_ln_std_code LIKE '".$lastName."' ";
+						$where .= "sx_ln_std_code LIKE '".$DBCONN->escapeSimple($lastName)."' ";
 					}
 				}
 				

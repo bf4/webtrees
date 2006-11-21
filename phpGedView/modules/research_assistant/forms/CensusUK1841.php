@@ -38,6 +38,7 @@ class CensusUK1841 extends ra_form {
     function header($action, $tableAlign, $heading, $showchoose = false) {
     	global $pgv_lang;
     	$out = "";
+    	
     	if ($showchoose) {
 	    	//Row Form
 	    	$out = '<form action="module.php" method="post">';
@@ -246,6 +247,7 @@ $out .= ' <tr>
 			$_POST["personid".$number] = trim($_POST["personid".$number], '; \r\n\t');
 		}
 		$_REQUEST['personid'] = $personid;
+		
 		$return = $this->processSourceCitation();
 
 		if(empty($return))
@@ -295,12 +297,24 @@ $out .= ' <tr>
 					
 					if($completeFact)
 					{
-						$out .='<tr>';
-						$out .="<td class=\"optionbox\">".$factarray[$value['factType']]." ".$value['date']."</td>";
-						$out .="<td class=\"optionbox\">".$value["Person"]."</td>";
-						$out .="<td class=\"optionbox\">".$value["Reason"]."</td>";
-						$out .="<td class=\"optionbox\">".'<input type="Checkbox" id="'.$value['PersonID'].$value['factType'].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["Fact"]).'\',\''.$value['PersonID'].'\',\''.$value['factType'].'\',\''.htmlentities($value["Person"]).'\',\''.$value["factPeople"].'\')"></td>'."\n";
-						$out .="</tr>";
+						if(!$value["factType"] == "newp")
+						{
+							$out .='<tr>';
+							$out .="<td class=\"optionbox\">".$factarray[$value['factType']]." ".$value['date']."</td>";
+							$out .="<td class=\"optionbox\">".$value["Person"]."</td>";
+							$out .="<td class=\"optionbox\">".$value["Reason"]."</td>";
+							$out .="<td class=\"optionbox\">".'<input type="Checkbox" id="'.$value['PersonID'].$value['factType'].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["Fact"]).'\',\''.$value['PersonID'].'\',\''.$value['factType'].'\',\''.htmlentities($value["Person"]).'\',\''.$value["factPeople"].'\')"></td>'."\n";
+							$out .="</tr>";
+						}
+						else						
+						{
+							$out .='<tr>';
+							$out .="<td class=\"optionbox\">".$factarray[$value['factType']]." ".$value['date']."</td>";
+							$out .="<td class=\"optionbox\">".$value["Person"]."</td>";
+							$out .="<td class=\"optionbox\">Adding INDI fact</td>";
+							$out .="<td class=\"optionbox\">".'<input type="Checkbox" id="'.$value['PersonID'].$value['factType'].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["Fact"]).'\',\''.$value['PersonID'].'\',\''.$value['factType'].'\',\''.htmlentities($value["Person"]).'\',\''.$value["factPeople"].'\')"></td>'."\n";
+							$out .="</tr>";
+						}
 					}
 				
 				}
@@ -458,6 +472,13 @@ $out .= ' <tr>
 				 	}
 				 }
 			}
+			}
+			
+			if(empty($rows[$number]["personid"]))
+			{
+					$inferredFact["PersonName"] = $rows[$number]["NameOfPeople"];	
+			 		$inferredFact["Sex"] = $rows[$number]["Sex"];
+					$inferredFacts[] = $inferredFact;
 			}
 		
 			$people[$person->getXref()] = $inferredFacts;
