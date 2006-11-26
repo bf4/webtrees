@@ -38,6 +38,7 @@ $pgv_lang["hide_context_help"]	= "Göm kontextuell hjälp";
 $pgv_lang["sorry"]				= "<b>Ursäkta, men vi har ännu inte gjort klart hjälptexten för denna sida eller sak</b>";
 $pgv_lang["help_not_exist"]		= "<b>Hjälptext för denna sida eller artikel är inte tillgänglig än</b>";
 $pgv_lang["var_not_exist"]		= "<span style=font-weight: bold>Språkvariabeln existera inte. Var vänlig att rapportera detta eftersom det är en bug.</span>";
+$pgv_lang["resolution"] 			= "Skärmupplösning";
 $pgv_lang["menu"]				= "Meny";
 $pgv_lang["header"]				= "Rubrik";
 $pgv_lang["imageview"]			= "Bildvisare";
@@ -344,7 +345,7 @@ $pgv_lang["timeline_endYear"] = "Slutår";
 $pgv_lang["timeline_scrollSpeed"] = "Hastighet";
 $pgv_lang["timeline_controls"] = "Tidslinjekontroll";
 $pgv_lang["include_family"] = "Inkludera nära familjemedlemmar";
-$pgv_lang["lifespan_chart"] = "livslinjetavla";
+$pgv_lang["lifespan_chart"] = "Livslinjetavla";
 $pgv_lang["zoom_in"]			= "Zooma in";
 //-- MONTH NAMES
 $pgv_lang["jan"]				= "Januari";
@@ -635,6 +636,7 @@ $pgv_lang["basic_or_all"]			= "Visa endast födda, döda och vigda?";
 $pgv_lang["style"]					= "Presentationsstil";
 $pgv_lang["style1"]					= "Text";
 $pgv_lang["style2"]					= "Tabell";
+$pgv_lang["cal_download"]			= "Tillåt nerladdning av kalenderhändelser?";
 $pgv_lang["no_events_living"]		= "Inga händelser för levande personer existerar för de närmaste #pgv_lang[global_num1]# dagarna.";
 $pgv_lang["no_events_living1"]		= "Inga händelser för levande personer existerar för imorgon.";
 $pgv_lang["no_events_all"]			= "Inga händelser existerar de närmaste #pgv_lang[global_num1]# dagarna.";
@@ -806,6 +808,10 @@ $pgv_lang["show_cousins"]			= "Visa kusiner";
 // 1st generation
 $pgv_lang["sosa_uncle_2"] 				= "farbror";
 $pgv_lang["sosa_uncle_3"] 				= "morbror";
+$pgv_lang["sosa_uncle_4"] 				= "farfars bror";
+$pgv_lang["sosa_uncle_5"] 				= "farmors bror";
+$pgv_lang["sosa_uncle_6"] 				= "morfars bror";
+$pgv_lang["sosa_uncle_7"] 				= "mormors bror";
 // the sosa_aunt name is used for aunts - the names below can be extended to any number
 // of generations just by adding more translations.
 // to allow fo language variations we specify different relationships for paternal and maternal
@@ -813,8 +819,52 @@ $pgv_lang["sosa_uncle_3"] 				= "morbror";
 // 1st generation
 $pgv_lang["sosa_aunt_2"] 				= "faster";
 $pgv_lang["sosa_aunt_3"] 				= "moster";
+$pgv_lang["sosa_aunt_4"] 				= "farfars syster";
+$pgv_lang["sosa_aunt_5"] 				= "farmors syster";
+$pgv_lang["sosa_aunt_6"] 				= "morfars syster";
+$pgv_lang["sosa_aunt_7"] 				= "mormors syster";
 $pgv_lang["male_cousin_1"]              = "kusin";
+$pgv_lang["male_cousin_2"]              = "Tremänning";
+$pgv_lang["male_cousin_3"]              = "Fyrmänning";
+$pgv_lang["male_cousin_4"]              = "Femmänning";
+$pgv_lang["male_cousin_5"]              = "Sexmänning";
+$pgv_lang["male_cousin_6"]              = "Sjumänning";
+$pgv_lang["male_cousin_7"]              = "Åttamänning";
+$pgv_lang["male_cousin_8"]              = "Niomänning";
+$pgv_lang["male_cousin_9"]              = "Tiomänning";
+$pgv_lang["male_cousin_10"]             = "Elvamänning";
+$pgv_lang["male_cousin_11"]             = "Tolvmänning";
+$pgv_lang["male_cousin_12"]             = "Trettonmänning";
+$pgv_lang["male_cousin_13"]             = "Fjortonmänning";
+$pgv_lang["male_cousin_14"]             = "Femtonmänning";
+$pgv_lang["male_cousin_15"]             = "Sextonmänning";
+$pgv_lang["male_cousin_16"]             = "Sjuttonmänning";
+$pgv_lang["male_cousin_17"]             = "Artonmänning";
+$pgv_lang["male_cousin_18"]             = "Nittonmänning";
+$pgv_lang["male_cousin_19"]             = "Tjugomänning";
+$pgv_lang["male_cousin_20"]             = "Tjugoenmänning";
+$pgv_lang["male_cousin_n"]              = "%d x männing";
 $pgv_lang["female_cousin_1"]            = "kusin";
+$pgv_lang["female_cousin_2"]            = "Tremänning";
+$pgv_lang["female_cousin_3"]            = "Fyrmänning";
+$pgv_lang["female_cousin_4"]            = "Femmänning";
+$pgv_lang["female_cousin_5"]            = "Sexmänning";
+$pgv_lang["female_cousin_6"]            = "Sjumänning";
+$pgv_lang["female_cousin_7"]            = "Åttamänning";
+$pgv_lang["female_cousin_8"]            = "Niomänning";
+$pgv_lang["female_cousin_9"]            = "Tiomänning";
+$pgv_lang["female_cousin_10"]           = "Elvamänning";
+$pgv_lang["female_cousin_11"]           = "Tolvmänning";
+$pgv_lang["female_cousin_12"]           = "Trettonmänning";
+$pgv_lang["female_cousin_13"]           = "Fjortonmänning";
+$pgv_lang["female_cousin_14"]           = "Femtonmänning";
+$pgv_lang["female_cousin_15"]           = "Sextonmänning";
+$pgv_lang["female_cousin_16"]           = "Sjuttonmänning";
+$pgv_lang["female_cousin_17"]           = "Artonmänning";
+$pgv_lang["female_cousin_18"]           = "Nittonmänning";
+$pgv_lang["female_cousin_19"]           = "Tjugomänning";
+$pgv_lang["female_cousin_20"]           = "Tjugoenmänning";
+$pgv_lang["female_cousin_n"]            = "%d x männing";
 
 //sosa pattern is now used to find relationships, it is the key and value pair that needs to be set up in all other languages.
 //1st generation
@@ -865,6 +915,7 @@ $pgv_lang["rss_feeds"]			= "RSS fl�den";
 $pgv_lang["no_feed_title"]		= "Matningen är inte tillgänglig";
 $pgv_lang["no_feed"]			= "Det finns ingen RSS-matning tillgänglig för denna PhpGedViewsajt";
 $pgv_lang["feed_login"]			= "Om du haer ett konto på denna PhpGedViewsajt då kan du <a href=\"#AUTH_URL#\">logga in</a> på servern med normal HTTP autenticiering för att se personlig inforamtion.";
+$pgv_lang["authenticated_feed"]		= "Autenticeringsmatning";
 $pgv_lang["attendant"] 			= "Deltagare";
 $pgv_lang["attending"] 			= "Närvara";
 $pgv_lang["best_man"] = "Best man";
