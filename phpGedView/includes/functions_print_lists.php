@@ -388,7 +388,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		$sortkey = $person->getSortableBirthDate();
 		$txt = get_changed_date($person->getBirthDate(), true);
-		if (empty($txt)) $txt = $pgv_lang["yes"];
+		//if (empty($txt)) $txt = $pgv_lang["yes"];
 		echo "&nbsp;<a href=\"".$person->getDateUrl($person->bdate)."\"".
 		" title=\"".$sortkey."\"".
 		" class=\"list_item\">".$txt."</a>";
@@ -852,6 +852,7 @@ function print_sour_table($datalist, $legend="") {
 	if ($SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
 	echo "</tr>\n";
 	//-- table body
+	$hidden = 0;
 	$n = 0;
 	foreach ($datalist as $key => $value) {
 		if (!is_array($value)) {
@@ -866,6 +867,10 @@ function print_sour_table($datalist, $legend="") {
 			else $source = Source::getInstance($gid);
 		}
 		if (is_null($source)) continue;
+		if (!$source->canDisplayDetails()) {
+			$hidden++;
+			continue;
+		}
 		//-- Counter
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
@@ -921,6 +926,24 @@ function print_sour_table($datalist, $legend="") {
 
 		echo "</tr>\n";
 	}
+	//-- table footer
+	echo "<tr class=\"sortbottom\">";
+	echo "<td></td>";
+	if ($SHOW_ID_NUMBERS) echo "<td></td>";
+	echo "<td class=\"list_label\">";
+	echo $pgv_lang["total_names"]." : ".$n;
+	if ($hidden) echo "<br />".$pgv_lang["hidden"]." : ".$hidden;
+	echo "</td>";
+	echo "<td></td>";
+	echo "<td class=\"t2\"></td>";
+	echo "<td></td>";
+	if ($show_details) {
+		echo "<td></td>";
+		echo "<td></td>";
+		echo "<td></td>";
+	}
+	if ($SHOW_LAST_CHANGE) echo "<td></td>";
+	echo "</tr>";
 	echo "</table>\n";
 	echo "</fieldset>\n";
 	//-- hide TITLE2 col if empty
@@ -1109,21 +1132,28 @@ function print_changes_table($datalist) {
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
 	echo "<tr>";
-	echo "<td></td>";
+	//echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["CHAN"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["_PGVU"]."</th>";
 	echo "</tr>\n";
 	//-- table body
+	$hidden = 0;
 	$n = 0;
 	foreach($datalist as $key => $value) {
 		$record = GedcomRecord::getInstance($key);
 		if (is_null($record) and isset($value[0])) $record = GedcomRecord::getInstance($value[0]);
 		if (is_null($record)) continue;
+		// Privacy
+		if (!$record->canDisplayDetails()) {
+			$hidden++;
+			continue;
+		}
 		//-- Counter
 		echo "<tr>";
-		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
+		//echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
+		++$n;
 		//-- Record ID
 		if ($SHOW_ID_NUMBERS) {
 			echo "<td class=\"list_value_wrap rela\">";
@@ -1169,6 +1199,17 @@ function print_changes_table($datalist) {
 
 		echo "</tr>\n";
 	}
+	//-- table footer
+	echo "<tr class=\"sortbottom\">";
+	//echo "<td></td>";
+	if ($SHOW_ID_NUMBERS) echo "<td></td>";
+	echo "<td class=\"list_label\">";
+	echo $pgv_lang["total_names"].": ".$n;
+	if ($hidden) echo "<br />".$pgv_lang["hidden"].": ".$hidden;
+	echo "</td>";
+	echo "<td></td>";
+	echo "<td></td>";
+	echo "</tr>";
 	echo "</table>\n";
 }
 
