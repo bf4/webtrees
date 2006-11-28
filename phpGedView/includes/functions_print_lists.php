@@ -803,7 +803,7 @@ function print_fam_table($datalist, $legend="") {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
-	echo $pgv_lang["total_names"]." : ".$n;
+	echo $pgv_lang["total_fams"]." : ".$n;
 	if ($hidden) echo "<br />".$pgv_lang["hidden"]." : ".$hidden;
 	echo "</td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
