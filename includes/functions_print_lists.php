@@ -899,7 +899,7 @@ function print_sour_table($datalist, $legend="") {
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($source->getAuth())."\">";
 		echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".PrintReady($source->getAuth())."</a>";
 		echo "&nbsp;</td>";
-		
+
 		if ($show_details) {
 			//-- Linked INDIs
 			echo "<td class=\"list_value_wrap\">";
@@ -931,7 +931,7 @@ function print_sour_table($datalist, $legend="") {
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
-	echo $pgv_lang["total_names"]." : ".$n;
+	echo $pgv_lang["total_sources"]." : ".$n;
 	if ($hidden) echo "<br />".$pgv_lang["hidden"]." : ".$hidden;
 	echo "</td>";
 	echo "<td></td>";
@@ -1372,7 +1372,7 @@ function print_events_table($datalist, $nextdays=1, $option="") {
  */
 function get_align($txt) {
 		global $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
-		
+
 		if (!empty($txt)) {
   			if ($TEXT_DIRECTION=="rtl" && !hasRTLText($txt) && hasLTRText($txt)) return "left";
   			if ($TEXT_DIRECTION=="ltr" && hasRTLText($txt) && !hasLTRText($txt) && $USE_RTL_FUNCTIONS) return "right";
