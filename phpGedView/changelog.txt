@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1606344 ] GEDCOM synch query (yalnifj)
  - Fixed [ 1604909 ] Bogus "no cookie support in browser" error (canajun2eh)
  - Fixed [ 1604907 ] Bogus "bad database config" error (canajun2eh)
  - Fixed [ 1603287 ] Recent Changes Block - Should have total at the Bottom (opus27)
