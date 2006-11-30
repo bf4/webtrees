@@ -83,7 +83,7 @@ if ($controller->proceed == "backup") {
 		</tr>
 		<tr>
 			<td class="list_value" style="padding: 5px;" >
-				<a href="downloadbackup.php?fname="<?php print $controller->buname; ?>" target="_blank"><?php print $pgv_lang["um_zip_dl"]; ?> <?php print $controller->fname; ?></a>  
+				<a href="downloadbackup.php?fname=<?php print $controller->buname; ?>" target="_blank"><?php print $pgv_lang["um_zip_dl"]; ?> <?php print $controller->fname; ?></a>  
 				( <?php printf("%.0f Kb", (filesize($controller->fname)/1024)); ?> ) <br />
 				<?php print $pgv_lang["files_in_backup"]; ?>
 				<ul>
