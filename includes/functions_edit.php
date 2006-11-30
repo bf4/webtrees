@@ -176,11 +176,7 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 				}
 			}
 		}
-		if (userAutoAccept()) {
-			require_once("includes/functions_import.php");
-			update_record($gedrec);
-		}
-		else {
+		
 			$change = array();
 			$change["gid"] = $gid;
 			$change["gedcom"] = $GEDCOM;
@@ -192,6 +188,12 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 			$change["undo"] = $gedrec;
 			if (!isset($pgv_changes[$gid."_".$GEDCOM])) $pgv_changes[$gid."_".$GEDCOM] = array();
 			$pgv_changes[$gid."_".$GEDCOM][] = $change;
+		
+		if (userAutoAccept()) {
+			require_once("includes/functions_import.php");
+			accept_changes($gid."_".$GEDCOM);
+		}
+		else {
 			write_changes();
 		}
 			AddToChangeLog("Replacing gedcom record $gid ->" . getUserName() ."<-");
@@ -214,11 +216,7 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 		if (preg_match("/\d+/", $gid)==0) $xref = get_new_xref($type);
 		else $xref = $gid;
 		$gedrec = preg_replace("/0 @(.*)@/", "0 @$xref@", $gedrec);
-		if (userAutoAccept()) {
-			require_once("includes/functions_import.php");
-			update_record($gedrec);
-		}
-		else {
+		
 			$change = array();
 			$change["gid"] = $xref;
 			$change["gedcom"] = $GEDCOM;
@@ -230,6 +228,12 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 			$change["undo"] = $gedrec;
 			if (!isset($pgv_changes[$xref."_".$GEDCOM])) $pgv_changes[$xref."_".$GEDCOM] = array();
 			$pgv_changes[$xref."_".$GEDCOM][] = $change;
+		
+		if (userAutoAccept()) {
+			require_once("includes/functions_import.php");
+			accept_changes($xref."_".$GEDCOM);
+		}
+		else {
 			write_changes();
 		}
 		AddToChangeLog("Appending new $type record $xref ->" . getUserName() ."<-");
@@ -252,11 +256,7 @@ function delete_gedrec($gid, $linkpid='') {
 
 	$undo = find_gedcom_record($gid);
 	if (empty($undo)) return false;
-	if (userAutoAccept()) {
-		require_once("includes/functions_import.php");
-		update_record($undo, true);
-	}
-	else {
+	
 		$change = array();
 		$change["gid"] = $gid;
 		$change["gedcom"] = $GEDCOM;
@@ -268,6 +268,12 @@ function delete_gedrec($gid, $linkpid='') {
 		$change["undo"] = "";
 		if (!isset($pgv_changes[$gid."_".$GEDCOM])) $pgv_changes[$gid."_".$GEDCOM] = array();
 		$pgv_changes[$gid."_".$GEDCOM][] = $change;
+	
+	if (userAutoAccept()) {
+		require_once("includes/functions_import.php");
+		accept_changes($gid."_".$GEDCOM);
+	}
+	else {
 		write_changes();
 	}
 	AddToChangeLog("Deleting gedcom record $gid ->" . getUserName() ."<-");
