@@ -57,9 +57,30 @@ function print_user_messages($block=true, $config="", $side, $index) {
 			print $pgv_lang["no_messages"]."<br />";
 		}
 		else {
+			?>
+			<script language="JavaScript" type="text/javascript">
+			<!--
+				function select_all() {
+					<?php
+					foreach($usermessages as $key=>$message) {
+						if (isset($message["id"])) $key = $message["id"];
+						?>
+						var cb = document.getElementById("cb_message<?php print $key; ?>");
+						if (cb) {
+							if (!cb.checked) cb.checked = true;
+							else cb.checked = false;
+						}
+						<?php
+					}
+					?>
+					return false;
+				}
+			//-->
+			</script>
+			<?php
 			print "<input type=\"hidden\" name=\"action\" value=\"deletemessage\" />\n";
 			print "<table class=\"list_table\"><tr>\n";
-			print "<td class=\"list_label\">".$pgv_lang["delete"]."</td>\n";
+			print "<td class=\"list_label\">".$pgv_lang["delete"]."<br /><a href=\"javascript:;\" onclick=\"return select_all();\">".$pgv_lang["all"]."</a></td>\n";
 			print "<td class=\"list_label\">".$pgv_lang["message_subject"]."</td>\n";
 			print "<td class=\"list_label\">".$pgv_lang["date_created"]."</td>\n";
 			print "<td class=\"list_label\">".$pgv_lang["message_from"]."</td>\n";
@@ -67,7 +88,7 @@ function print_user_messages($block=true, $config="", $side, $index) {
 			foreach($usermessages as $key=>$message) {
 				if (isset($message["id"])) $key = $message["id"];
 				print "<tr>";
-				print "<td class=\"list_value_wrap\"><input type=\"checkbox\" name=\"message_id[]\" value=\"$key\" /></td>\n";
+				print "<td class=\"list_value_wrap\"><input type=\"checkbox\" id=\"cb_message$key\" name=\"message_id[]\" value=\"$key\" /></td>\n";
 				$showmsg=preg_replace("/(\w)\/(\w)/","\$1/<span style=\"font-size:1px;\"> </span>\$2",PrintReady($message["subject"]));
 				$showmsg=preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$showmsg);
 				print "<td class=\"list_value_wrap\"><a href=\"javascript:;\" onclick=\"expand_layer('message$key'); return false;\"><b>".$showmsg."</b> <img id=\"message${key}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" title=\"\" /></a></td>\n";
