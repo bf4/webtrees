@@ -212,7 +212,7 @@ class UserMigrateControllerRoot extends BaseController {
 			$dir = dir($MEDIA_DIRECTORY);
 			while(false !== ($entry = $dir->read())) {
 				if ($entry{0} != ".") {
-					if (!is_dir($MEDIA_DIRECTORY.$entry)) $this->flist[] = $MEDIA_DIRECTORY.$entry;
+					if ($entry != "thumbs") $this->flist[] = $MEDIA_DIRECTORY.$entry;
 				}
 			}
 		}
