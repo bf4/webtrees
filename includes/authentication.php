@@ -1096,7 +1096,7 @@ function getUserByGedcomId($id, $gedcom) {
  * @return string returns the log line if successfully inserted into the log
  */
 function AddToLog($LogString, $savelangerror=false) {
-	global $INDEX_DIRECTORY, $LOGFILE_CREATE;
+	global $INDEX_DIRECTORY, $LOGFILE_CREATE, $argc;
 
 	$wroteLogString = false;
 
@@ -1105,7 +1105,8 @@ function AddToLog($LogString, $savelangerror=false) {
 	//-- do not allow code to be written to the log file
 	$LogString = preg_replace("/<\?.*\?>/", "*** CODE DETECTED ***", $LogString);
 
-	$REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
+	if (isset($_SERVER['REMOTE_ADDR'])) $REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
+	else if ($argc>1) $REMOTE_ADDR = "cli";
 	if ($LOGFILE_CREATE !== "none" && $savelangerror === false) {
 		if (empty($LOGFILE_CREATE)) $LOGFILE_CREATE="daily";
 		if ($LOGFILE_CREATE=="daily") $logfile = $INDEX_DIRECTORY."/pgv-" . date("Ymd") . ".log";
