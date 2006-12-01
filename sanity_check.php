@@ -126,7 +126,8 @@ if (!file_is_writable("config.php"))
 {
 	//if (!@ chmod("config.php", 0777)) 
 	//{
-		$errors[] = "<span class=\"error\">".$pgv_lang["sanity_err5"]."</span>";
+		if (!$CONFIGURED) $errors[] = "<span class=\"error\">".$pgv_lang["sanity_err5"]."</span>";
+		else $warnings[] = "<span class=\"error\">".$pgv_lang["sanity_err5"]."</span>";
 	//}
 }
 
@@ -195,6 +196,6 @@ if (($CONFIGURED || (isset($_REQUEST['action']) && $_REQUEST['action']=="update"
 	}
 	else $warnings[] = $error;
 }
-
-if (count($warnings!=0) || count($errors!=0)) print_sanity_errors();
+if (strstr($_SERVER['PHP_SELF'], "editconfig.php")===false) 
+	if (count($warnings!=0) || count($errors!=0)) print_sanity_errors();
 ?>

@@ -180,26 +180,9 @@ else {
 
 print_header($pgv_lang["configure_head"]);
 //Prints warnings
-if (count($warnings)>0)
-{
-	print "<center><div style=\"border: solid blue 1px; width: 80%\"><ul style=\"text-align: left;\">";
-	foreach($warnings as $warning) 
-	{
-		print "<li style=\"font-weight: bold; text-align: left;\"><span style=\"color:blue;\">".$warning."</span></li>";
-	}
-	print "</ul></div></center>";
-}
-//Prints errors
-if (count($errors)>0)
-{
-	print "<center><div style=\"border: solid red 1px; width: 80%\"><ul style=\"text-align: left;\">";
-	foreach($errors as $error) 
-	{
-		print "<li style=\"font-weight: bold;\">".$error."</li>";
-	}
-	print "</ul></div></center>";
-	print_footer();
-	exit;
+if (count($warnings)>0 || count($errors)>0) {
+	print_sanity_errors();
+	if (count($errors)>0) exit;
 }
 if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DBUSER'])) {
 	if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
