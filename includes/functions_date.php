@@ -918,10 +918,10 @@ function parse_date($datestr) {
 	"an"=>"", "i"=>"1",	"ii"=>"2", "iii"=>"3", "iv"=>"4", "v"=>"5", "vi"=>"6", "vii"=>"7",
 	"viii"=>"8", "ix"=>"9", "x"=>"10", "xi"=>"11", "xii"=>"12", "xiii"=>"13", "xiv"=>"14",
 	// month abbreviations for the current language
-	$pgv_lang["january_1st"]=>"jan", $pgv_lang["february_1st"]=>"feb",$pgv_lang["march_1st"]=>"mar",
-	$pgv_lang["april_1st"]=>"apr",$pgv_lang["may_1st"]=>"may",$pgv_lang["june_1st"]=>"jun",
-	$pgv_lang["july_1st"]=>"jul",$pgv_lang["august_1st"]=>"aug",$pgv_lang["september_1st"]=>"sep",
-	$pgv_lang["october_1st"]=>"oct",$pgv_lang["november_1st"]=>"nov",$pgv_lang["december_1st"]=>"dec"
+	strtolower($pgv_lang["january_1st"])=>"jan", strtolower($pgv_lang["february_1st"])=>"feb",strtolower($pgv_lang["march_1st"])=>"mar",
+	strtolower($pgv_lang["april_1st"])=>"apr",strtolower($pgv_lang["may_1st"])=>"may",strtolower($pgv_lang["june_1st"])=>"jun",
+	strtolower($pgv_lang["july_1st"])=>"jul",strtolower($pgv_lang["august_1st"])=>"aug",strtolower($pgv_lang["september_1st"])=>"sep",
+	strtolower($pgv_lang["october_1st"])=>"oct",strtolower($pgv_lang["november_1st"])=>"nov",strtolower($pgv_lang["december_1st"])=>"dec"
 	);
 
 	for($i=0; $i<count($strs); $i++) {
@@ -950,11 +950,14 @@ function parse_date($datestr) {
 			else {
 				$dates[$index]["year"] = (int)$strs[$i];
 				$index++;
-				$dates[$index]["day"] = ""; //1;
-				$dates[$index]["month"] = ""; //"JAN";
-				$dates[$index]["mon"] = ""; //1;
-				$dates[$index]["year"] = 0;
-				$dates[$index]["ext"] = "";
+				//-- don't add another date array unless there is more info
+				if (isset($strs[$i+1])) {
+					$dates[$index]["day"] = ""; //1;
+					$dates[$index]["month"] = ""; //"JAN";
+					$dates[$index]["mon"] = ""; //1;
+					$dates[$index]["year"] = 0;
+					$dates[$index]["ext"] = "";
+				}
 			}
 		}
 		else {

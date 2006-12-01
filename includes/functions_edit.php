@@ -1463,10 +1463,11 @@ function breakConts($newline, $level) {
  * @return string	the converted date string
  */
 function check_input_date($datestr) {
-	if (preg_match("/^\d+ \w\w\w \d\d\d\d$/", $datestr)>0) return $datestr;
 	$date = parse_date($datestr);
-	//print_r($date);
-	if ((count($date)==1)&&empty($date[0]['ext'])&&!empty($date[0]['month'])&&!empty($date[0]['year'])) {
+	//-- if there was no change to the date then return the original
+	if (preg_match("/^".$date[0]['day']." ".$date[0]['month']." ".$date[0]['year']."$/i", $datestr)>0) return $datestr;
+	//-- reconstruct using the GEDCOM standards
+	if ((count($date)==1 || implode("",$date[1])=="")&&empty($date[0]['ext'])&&!empty($date[0]['month'])&&!empty($date[0]['year'])) {
 		$datestr = strtoupper($date[0]['day']." ".$date[0]['month']." ".$date[0]['year']);
 	}
 	return $datestr;
