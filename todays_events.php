@@ -223,7 +223,7 @@ function print_todays_events($block=true, $config="", $side, $index) {
 	if ($onlyBDM == "yes") $option .= " onlyBDM";
 	if ($filter == "living") $option .= " living";
 	if ($allowDownload == "no") $option .= " noDownload";
-	print_events_table($found_facts, 1, $option);
+	print_events_table($found_facts, 0, $option);
   }
   if ($block) print "</div>\n";
   print "</div>"; // blockcontent
