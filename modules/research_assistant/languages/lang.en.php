@@ -253,7 +253,13 @@ $pgv_lang["autosearch_plugin_name_ancestry"] = "Ancestry.com Plug-in";
 $pgv_lang["autosearch_plugin_name_ancestrycouk"] = "Ancestry.co.uk Plug-in";
 $pgv_lang["autosearch_plugin_name_ellisIsland"] = "EllisIslandRecords.org Plug-in";
 $pgv_lang["autosearch_plugin_name_genNet"] = "GeneaNet.com Plug-in";
-$pgv_lang["autosearch_plugin_name_gen"] = "Genealogy.com Plug-in"; 
-$pgv_lang["autosearch_plugin_name_fs"] = "FamilySearch.org Plug-in";
+$pgv_lang["autosearch_plugin_name_gen"]  = "Genealogy.com Plug-in"; 
+$pgv_lang["autosearch_plugin_name_fs"]   = "FamilySearch.org Plug-in";
+$pgv_lang["autosearch_plugin_name_werelate"]   = "Werelate.org Plug-in";
 $pgv_lang["autosearch_search"]           = "Search";
+$pgv_lang["autosearch_keywords"] = "Keywords:";
+
+//Folder deletion error messages
+$pgv_lang["has_tasks"]                 ="The folder currently contains tasks and cannot be deleted";
+$pgv_lang["has_folders"]               ="The folder currently countains folders and cannot be deleted";
 ?>

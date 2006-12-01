@@ -338,7 +338,9 @@ $out .= '</tr>
 	                   		if (!is_null($person)) $out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
 	                   $out .= '</div>
 	                   <INPUT tabindex="'.($i*100+36).'"  type="hidden" id="personid'.$i.'" name="personid'.$i.'" size="3" value="'.$pid.'" />';
-	                   $out .= print_findindi_link("personid".$i, "peoplelink".$i, true);
+	                   if(isset($citation['ts_array']['rows'][$i]['Families'])) $searchName = $citation['ts_array']['rows'][$i]['Families'];
+						else $searchName = '';
+	                   $out .= print_findindi_link("personid".$i, "peoplelink".$i, true,false,'',$searchName);
 	                   $out .= '<br /></td>';
 	        
 		}

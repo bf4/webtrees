@@ -45,14 +45,13 @@ function autosearch_options()
 		if (!is_object($person)) return "";
 		$givennames = $person->getGivenNames();
 		$lastname = $person->getSurname();
-		$byear = $person->getBirthYear();
-		$dyear = $person->getDeathYear();
+
 		
 	$to_return ="<form name='ancsearch' action='module.php' target=\"_blank\" method='post'> 
 						<input type=\"hidden\" name=\"mod\" value=\"research_assistant\" />
 						<input type=\"hidden\" name=\"action\" value=\"auto_search\" />
 						"; //The value of the searchtype should be the same as the file name minus .php 
-		$to_return .="<input type=\"hidden\" name=\"searchtype\" value=\"ancestrycouk\" />
+		$to_return .="<input type=\"hidden\" name=\"searchtype\" value=\"werelate\" />
 						
 						<input type=\"hidden\" name=\"pid\" value=\"".$pid."\" />
 							<table width='50%'>		
@@ -63,12 +62,12 @@ function autosearch_options()
 					 					".$pgv_lang["autosearch_givenname"]."</td>
 											<td class='optionbox'> <input type='checkbox' name='givenname1' value=\"".$givennames."\" checked='checked'' /> &nbsp;".$givennames."</td>
 									</tr>
-					 				<tr><td class ='optionbox'>
-					 					".$pgv_lang["autosearch_byear"]."</td><td class ='optionbox'> <input type='checkbox' name='byear' value=\"".$byear."\" checked='checked' />&nbsp; ".$byear."</td></tr>
-					 				<tr><td class='optionbox'>
-					 					".$pgv_lang["autosearch_dyear"]."</td><td class='optionbox'> <input type='checkbox' name='dyear' value=\"".$dyear."\"  />&nbsp;".$dyear."</td></tr>
-									<tr><td class='optionbox' colspan=2 align='center'>
-										".$pgv_lang["autosearch_plugin_name_ancestrycouk"]."</td></tr>
+									<tr><td class='optionbox'>
+					 					".$pgv_lang["autosearch_keywords"]."</td>
+											<td class='optionbox'> <input type='text' name='keywords'/></td>
+									</tr>
+					 				<tr><td class='optionbox' colspan=2 align='center'>
+										".$pgv_lang["autosearch_plugin_name_werelate"]."</td></tr>
 									<tr><td  align='center' class='topbottombar'colspan=2>
 										<input type='submit' value='".$pgv_lang["autosearch_search"]."' /></td></tr>
 		 			
@@ -90,24 +89,19 @@ function autosearch_process() {
 		$byear = $person->getBirthYear();
 		$dyear = $person->getDeathYear();
 	
-	$url = "http://search.ancestry.co.uk/cgi-bin/sse.dll?";
-	
-	if(isset($_REQUEST['surname'])){
-		$url .= "&gsln=".urlencode($_REQUEST['surname']);
-	}
+	$url = "http://www.werelate.org/search?";
 	
 	if(isset($_REQUEST['givenname1'])){
-		$url.= "&gsfn=".urlencode($_REQUEST['givenname1']);
+		$url.= "&givenname=".urlencode($_REQUEST['givenname1']);
 	}
-	if(isset($_REQUEST['byear'])){
-		
-			$url.= "&gsby=".urlencode($_REQUEST['byear']);
+	if(isset($_REQUEST['surname'])){
+		$url .= "&surname=".urlencode($_REQUEST['surname']);
 	}
-	if(isset($_REQUEST['dyear'])){
-			$url.= "&gsdy=".urlencode($_REQUEST['dyear']);
-		
+	if(isset($_REQUEST['keywords'])){
+		$url .= "&keywords=".urlencode($_REQUEST['keywords']);
 	}
-	
+
+	$url .="&hitsPerPage=10";
 	// debug: print the $_REQUEST
 	//return $ret;  
 	Header("Location: ".$url);

@@ -92,7 +92,7 @@ function autosearch_options()
 									<SELECT NAME='country' onChange=\"\"> ";
 					if(!empty($bplcCode))
 					{
-						$to_return.="<OPTION value=\"".$bplcCode."\">".$contries[$bplcCode]."</OPTION>";
+						$to_return.="<OPTION value=\"".$bplcCode."\">".$countries[$bplcCode]."</OPTION>";
 						$to_return.="<OPTION value=\"\"></OPTION>";
 					}
 					else

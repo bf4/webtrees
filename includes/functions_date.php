@@ -899,7 +899,7 @@ function get_age_at_event($agestring) {
  * @return array		returns an array with indexes "day"=1 "month"=JAN "mon"=1 "year"=2002 "ext" = abt
  */
 function parse_date($datestr) {
-	global $monthtonum;
+	global $monthtonum, $pgv_lang;
 
 	$datestr = trim($datestr);
 	$dates = array();
@@ -916,7 +916,12 @@ function parse_date($datestr) {
 	"october"=>"oct", "november"=>"nov", "december"=>"dec",
 	// adding french-style year num (e.g. @#DFRENCH R@ 29 PLUV an XI)
 	"an"=>"", "i"=>"1",	"ii"=>"2", "iii"=>"3", "iv"=>"4", "v"=>"5", "vi"=>"6", "vii"=>"7",
-	"viii"=>"8", "ix"=>"9", "x"=>"10", "xi"=>"11", "xii"=>"12", "xiii"=>"13", "xiv"=>"14"
+	"viii"=>"8", "ix"=>"9", "x"=>"10", "xi"=>"11", "xii"=>"12", "xiii"=>"13", "xiv"=>"14",
+	// month abbreviations for the current language
+	$pgv_lang["january_1st"]=>"jan", $pgv_lang["february_1st"]=>"feb",$pgv_lang["march_1st"]=>"mar",
+	$pgv_lang["april_1st"]=>"apr",$pgv_lang["may_1st"]=>"may",$pgv_lang["june_1st"]=>"jun",
+	$pgv_lang["july_1st"]=>"jul",$pgv_lang["august_1st"]=>"aug",$pgv_lang["september_1st"]=>"sep",
+	$pgv_lang["october_1st"]=>"oct",$pgv_lang["november_1st"]=>"nov",$pgv_lang["december_1st"]=>"dec"
 	);
 
 	for($i=0; $i<count($strs); $i++) {
