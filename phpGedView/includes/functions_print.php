@@ -2510,14 +2510,14 @@ function init_calendar_popup() {
  * @param boolean $multiple		Whether or not the user will be selecting multiple people
  * @param string $ged			The GEDCOM to search in
  */
-function print_findindi_link($element_id, $indiname, $asString=false, $multiple=false, $ged='') {
+function print_findindi_link($element_id, $indiname, $asString=false, $multiple=false, $ged='', $fieldName) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	$text = $pgv_lang["find_id"];
 	if (empty($ged)) $ged=$GEDCOM;
 	if (isset($PGV_IMAGES["indi"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indi"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
-	$out = " <a href=\"javascript:;\" onclick=\"findIndi(document.getElementById('".$element_id."'), document.getElementById('".$indiname."'), '".$multiple."', '".$ged."'); findtype='individual'; return false;\">";
+	$out = " <a href=\"javascript:;\" onclick=\"findIndi(document.getElementById('".$element_id."'), document.getElementById('".$indiname."'), '".$multiple."', '".$ged."', '".$fieldName."'); findtype='individual'; return false;\">";
 	$out .= $Link;
 	$out .= "</a>";
 	if ($asString) return $out;

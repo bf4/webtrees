@@ -16,7 +16,9 @@
 	                   		if (!is_null($person)) $out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
 	                   $out .= '</div>
 	                   <input type="hidden" id="personid'.$i.'" name="personid'.$i.'" size="3" value="'.$pid.'" />';
-	                   $out .= print_findindi_link("personid".$i, "peoplelink".$i, true);
+						//To have the pop up box autopopulate the persons name, simply change the last argument to be the location of the value in the citation array.
+						// I.E. $citation['ts_array']['rows'][$i]['PersonsName'] would replace the ''
+	                   $out .= print_findindi_link("personid".$i, "peoplelink".$i, true,false,'');
 	                   $out .= '<br /></td>';
 	        
 		}

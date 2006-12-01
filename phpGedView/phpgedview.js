@@ -419,6 +419,13 @@ function addnewsource(field) {
 
 function valid_date(datefield) {
 	months = new Array("JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC");
+	// year only no validation
+	var qsearch = /^(\d\d\d\d)$/i;
+ 	var found = qsearch.exec(datefield.value);
+ 	if (found) {
+	 	return;
+ 	}
+ 	
 	// quarter format [ 1509083 ]
 	// e.g. Q1 1900
 	var qsearch = /^Q(\d) (\d\d\d\d)$/i;
@@ -1071,10 +1078,17 @@ var monthLabels = new Array();
   	cal_toggleDate(dateDivId, dateFieldId);
   	return false;
   }
-function findIndi(field, indiname, multiple, ged) {
+function findIndi(field, indiname, multiple, ged,filter) {
         pastefield = field;
         nameElement = indiname;
+        if(filter)
+        {
+        window.open('find.php?type=indi&multiple='+multiple+'&ged='+ged+'&filter='+filter, '_blank', 'left=50,top=50,width=600,height=500,resizable=1,scrollbars=1');
+        }
+        else
+        {
         window.open('find.php?type=indi&multiple='+multiple+'&ged='+ged, '_blank', 'left=50,top=50,width=600,height=500,resizable=1,scrollbars=1');
+        }
         return false;
 }
 

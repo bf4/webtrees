@@ -547,6 +547,57 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		return $res;
 	}
 
+	/*
+	 * Returns if a folder currently has tasks in it and dissallows users from deleting it 
+	 * @param takes in a given folder id
+	 * 
+	 * @returns true or false
+	 */
+	function folder_hastasks($folderid){
+	   global $TBLPREFIX;
+	  if(empty($folderid)){
+	  return false;
+	  } 
+	  else{
+		  $sql = "SELECT * FROM ".$TBLPREFIX."tasks where t_fr_id =".$folderid;
+		  $res = dbquery($sql);
+		  
+		  //need to process the results...
+		  
+		  if($res->numRows()==0) {
+			return true;
+		  }
+		  else{
+		 	return false;
+		  }
+	  }
+	}
+	
+	/*
+	 * Returns if a folder currently has folders in it and dissallows users from deleting it 
+	 * @param takes in a given folder id
+	 * 
+	 * @returns true or false
+	 */
+	function folder_hasfolders($folderid){
+	   global $TBLPREFIX;
+	  if(empty($folderid)){
+	  return false;
+	  } 
+	  else{
+		  $sql = "SELECT * FROM ".$TBLPREFIX."folders where fr_parentid =".$folderid;
+		  $res = dbquery($sql);
+		  
+		  //need to process the results...
+		  
+		  if($res->numRows()==0) {
+			return true;
+		  }
+		  else{
+		 	return false;
+		  }
+	  }
+	}
 	/**
 	 * Switch the orderby clause
 	 * 
@@ -1185,6 +1236,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$sites["genealogy.php"] = "Genealogy.com";	
 		$sites["ellisisland.php"] = "EllisIslandRecords.org";	
 		$sites["geneanet.php"] = "GeneaNet.org";
+		$sites["werelate.php"] = "Werelate.org";
 		$opts = "";
 		$optCount = 1;
 			//load up the options into the html

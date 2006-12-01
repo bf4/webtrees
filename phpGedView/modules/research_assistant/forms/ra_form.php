@@ -281,13 +281,13 @@ class ra_form {
 	                   			$pval = '';
 	                   			foreach($people as $pid=>$person) {
 							if (!is_null($person)) {
-	                   					$pval .= ';'.$person->getXref();
-		                   				$out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+	                   				$pval .= ';'.$person->getXref();
+	                   				$out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
 							}
 	                   			}
 	                   $out .= '</div>
 	                   <input type="hidden" id="personid" name="personid" size="3" value="'.$pval.'" />';
-	                   $out .= print_findindi_link("personid", "peoplelink", true);
+	                   $out .= print_findindi_link("personid", "peoplelink", true,false,'','');
 	                   $out .= '<br />
 	            </td>
 	        </tr>';

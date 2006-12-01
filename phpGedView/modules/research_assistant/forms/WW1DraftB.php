@@ -347,7 +347,9 @@ return false;}return true;}
 			if (!is_null($person)) $out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
 			$out .= '</div>
 	                   <input type="hidden" id="personid'.$i.'" name="personid'.$i.'" size="3" value="'.$pid.'" />';
-			$out .= print_findindi_link("personid".$i, "peoplelink".$i, true);
+			if(isset($citation['ts_array']['rows'][$i]['Name'])) $searchName = $citation['ts_array']['rows'][$i]['Name'];
+			else $searchName = '';
+			$out .= print_findindi_link("personid".$i, "peoplelink".$i, true,false,'',$searchName);
 			$out .= '<br /></td>';
 	    
 		}

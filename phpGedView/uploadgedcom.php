@@ -148,6 +148,10 @@ else
 					$utf8convert = "no";
 					$ged = $GEDFILENAME;
 					$startimport = "true";
+					//-- set the current GEDCOM to be this new GEDCOM file 
+					//-- so that the import can proceed correctly
+					$GEDCOM = $GEDFILENAME;
+					$FILE = $GEDCOM;
 				}
 			} else {
 				if ($path != "")
