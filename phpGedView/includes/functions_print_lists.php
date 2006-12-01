@@ -1220,7 +1220,7 @@ function print_changes_table($datalist) {
  *
  * @param array $datalist contain records that were extracted from the database.
  */
-function print_events_table($datalist, $nextdays=1, $option="") {
+function print_events_table($datalist, $nextdays=0, $option="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
 	require_once("js/sorttable.js.htm");
@@ -1240,7 +1240,6 @@ function print_events_table($datalist, $nextdays=1, $option="") {
 	$hidden = 0;
 	$n = 0;
 	foreach($datalist as $key => $value) {
-	//echo "<pre>";print_r($value);echo "</pre>";
 		//-- get gedcom record
 		$record = GedcomRecord::getInstance($value[0]);
 		if (is_null($record)) continue;
@@ -1273,10 +1272,10 @@ function print_events_table($datalist, $nextdays=1, $option="") {
 		// add 1 year if anniversary before today
 		if (date("Ymd", $anniv) < date("Ymd")) $anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], date("Y")+1);
 		// max anniversary date
-		$datemax = mktime(0, 0, 0, date("m"), date("d")+$nextdays-1, date("Y"));
+		$datemax = mktime(0, 0, 0, date("m"), date("d")+$nextdays, date("Y"));
 		if ($datemax < $anniv) continue;
 		// upcoming events starting tomorrow
-		if ($nextdays>1 and date("Ymd") == date("Ymd", $anniv)) continue;
+		if ($nextdays>0 and date("Ymd") == date("Ymd", $anniv)) continue;
 		// sorting by MM-DD-YYYY
 		$sortkey = sprintf("%02d-%02d-%04d", $pdate[0]["mon"], $pdate[0]["day"], $pdate[0]["year"]);
 		// Privacy
