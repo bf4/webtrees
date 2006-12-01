@@ -968,19 +968,24 @@ function parse_date($datestr) {
 	$m = $dates[0]["mon"];
 	$d = $dates[0]["day"];
 	$e = $dates[0]["ext"];
-	if ($e=="AFT") {
+	/**if ($e=="AFT") {
 		if ($m=="") $m=12;
 		if ($d=="") {
 			$d=31;
 			if ($m==4 or $m==6 or $m==9 or $m==11) $d=30;
 			if ($m==2) $d=28;
 		}
+	}**/
+	if (strpos($e, "#")) {
+		if ($m=="") $m=1;
+		if ($d=="") $d=1;
+		if (strpos($e, "#DHEBREW")) list($m, $d, $y) = explode("/", JDToGregorian(JewishToJD($m, $d, $y)));
+		if (strpos($e, "#DFRENCH")) list($m, $d, $y) = explode("/", JDToGregorian(FrenchToJD($m, $d, $y)));
+		if (strpos($e, "#DJULIAN")) list($m, $d, $y) = explode("/", JDToGregorian(JulianToJD($m, $d, $y)));
+	} else {
+		if ($m=="") $m=0;
+		if ($d=="") $d=0;
 	}
-	if ($m=="") $m=1;
-	if ($d=="") $d=1;
-	if (strpos($e, "#DHEBREW")) list($m, $d, $y) = explode("/", JDToGregorian(JewishToJD($m, $d, $y)));
-	if (strpos($e, "#DFRENCH")) list($m, $d, $y) = explode("/", JDToGregorian(FrenchToJD($m, $d, $y)));
-	if (strpos($e, "#DJULIAN")) list($m, $d, $y) = explode("/", JDToGregorian(JulianToJD($m, $d, $y)));
 	$dates[0]["sort"] = sprintf("%04d-%02d-%02d", $y, $m, $d);
 	//print_r($dates);
 	return $dates;
