@@ -138,8 +138,7 @@ class Menu
 		if ($this->seperator)
 		{
 			$output = "<div id=\"menu{$menucount}\" class=\"menu_seperator\" style=\"clear: both;\">"
-			."<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['hline']['other']}\" 
-			style=\"width:8em;height:3px\" alt=\"\" />";
+			."<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['hline']['other']}\" style=\"width:8em;height:3px\" alt=\"\" /></div>";
 			return $output;
 		}
 		$c = count($this->submenus);
