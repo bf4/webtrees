@@ -1,12 +1,11 @@
 <?php
 /**
  * Displays pedigree tree as a printable booklet
- *
  * with Sosa-Stradonitz numbering system
  * ($rootid=1, father=2, mother=3 ...)
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2006  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,16 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * This Page Is Valid XHTML 1.0 Transitional! > 21 August 2005
- *
  * @package PhpGedView
  * @subpackage Charts
  * @version $Id$
  */
 
 require_once("includes/controllers/ancestry_ctrl.php");
- 
-
 
 // -- print html header information
 print_header($controller->name . " " . $pgv_lang["ancestry_chart"]);
