@@ -210,7 +210,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_AddTask.php")) {
                    		print '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.get_person_name($pid).'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\''.$pid.'\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
                    } ?>
                    </div>
-                     <?php print_findindi_link("personid", "peoplelink", false, true); ?>
+                     <?php print_findindi_link("personid", "peoplelink", false, true,'',''); ?>
                     <br />
                 </td>
             </tr>

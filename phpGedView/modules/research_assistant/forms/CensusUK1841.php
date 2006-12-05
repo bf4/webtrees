@@ -215,6 +215,7 @@ $out .= ' <tr>
 	                   if(isset($citation['ts_array']['rows'][$i]['NameOfPeople'])) $searchName = $citation['ts_array']['rows'][$i]['NameOfPeople'];
 						else $searchName = '';
 	                   $out .= print_findindi_link("personid".$i, "peoplelink".$i, true,false,'',$searchName);
+	                   $out .= "<br />Create New Person: <input type=\"checkbox\" value=\"newPerson\"/>";
 	                   $out .= '<br /></td>';
 	        
 		}

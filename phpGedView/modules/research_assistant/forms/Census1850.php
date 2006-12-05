@@ -275,6 +275,7 @@ $out .= '</tr>
 	                              if(isset($citation['ts_array']['rows'][$i]['NameOfPeople'])) $searchName = $citation['ts_array']['rows'][$i]['NameOfPeople'];
 						else $searchName = '';
 	                   $out .= print_findindi_link("personid".$i, "peoplelink".$i, true,false,'',$searchName);
+	                   $out .= "<br />Create New Person: <input type=\"checkbox\" value=\"newPerson\"/>";
 	                   $out .= '<br /></td>';
 	        
 		}
@@ -296,21 +297,59 @@ $out .= '</tr>
         return $out;
     }
     
+    function createPerson($i)
+    {
+    	$indiFact = "0 @new@ INDI\r\n";
+    	$indiFact .= "1 NAME ".$_POST["NameOfPeople".$i]."\r\n";
+    	
+    	if(!empty($_POST["Age".$i]))
+    	{
+    		$age = 1850 - $_POST["Age".$i];
+    		$indiFact .= "1 BIRT\r\n";
+    		$indiFact .= "2 DATE ABT ".$age;
+    	}
+    	
+    	if(!empty($_POST["PlaceOfBirth".$i]))
+    	{
+    		$indiFact .= "2 PLAC ".$_POST["PlaceOfBirth"];
+    	}
+    	
+    	if(!empty($_POST["Sex".$i]))
+    	{
+    		$indiFact .= "1 SEX ".$_POST["Sex".$i];
+    	}
+    	
+    	return $indiFact;
+    	
+    }
+    
     function step2() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
 		global $INDI_FACTS_ADD;
 		
+		$people = array();
+		$pids = array();
+		$positions = array();
 			
 		$personid = "";
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
+			if(!empty($_POST["newPerson".$number]))
+			{
+				$tempPerson = $this->createPerson($number);
+				$_POST["personid".$number] = append_gedrec($tempPerson,true,'');
+			}
+			
 			if (!isset($_POST["personid".$number])) $_POST["personid".$number]="";
 			$personid .= $_POST["personid".$number].";";
 			$_POST["personid".$number] = trim($_POST["personid".$number], '; \r\n\t');
+			
+			
 		}
+		
 		$_REQUEST['personid'] = $personid;
 		$return = $this->processSourceCitation();
-
+		
 		if(empty($return))
 		{
 		$out = $this->header("module.php?mod=research_assistant&form=Census1850&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1850 United States Federal Census");
@@ -391,7 +430,7 @@ $out .= '</tr>
 		// Return it to the buffer.
 		return $out;
 	}
-	
+
 	function getOccupation($gedcomRecord)
 	{
 		$occupation = get_gedcom_value("OCCU", 1, $gedcomRecord);
@@ -416,7 +455,7 @@ $out .= '</tr>
 			{
 				$bdate = $person->getBirthYear();
 				$occupation = $this->getOccupation($person->getGedcomRecord());
-			}
+			
 			$censusAge = $rows[$number]["Age"];
 			$birthDate = 1850 - $censusAge;
 				
@@ -431,37 +470,9 @@ $out .= '</tr>
 				$inferredFact["date"] = '';
 				$inferredFacts[] = $inferredFact;
 			}
-		/*	
-			if($rows[$number]["Single"] == "Widowed")
-			{
-				
-				$spouseFams = $person->getSpouseFamilies();
-				foreach($spouseFams as $sFamKey => $sFamValue)
-				{
-					$spouse = $sFamValue->getSpouse($person);
-					$deathYear = $spouse->getDeathYear();
-					if($spouse->getDeathYear())	$diff = $deathYear - 1850;
-						if($diff)
-						{
-							if($diff > 1 || $diff < 0)
-							{
-								$tempArray = array();
-								$inferredFact["Person"] = $spouse->getName();								
-								$inferredFact["PersonID"] = $spouse->getXref();
-								$inferredFact["Reason"] = "A death Date can be inferred!";
-								$inferredFact["Fact"] = "1 DEAT \r\n2 DATE BEF 1850";
-								$inferredFact["factType"] = 'DEAT';
-								$inferredFact["date"] = 'BEF 1850';
-								$inferredFact["factPeople"] = "indi";
-								$inferredFacts[] = $inferredFact;
-							}
-						}
-					
-				}
-			
 			}
 			
-			if($rows[$number]["Single"] == "Married")
+			if($rows[$number]["MarriedWithinYear"] == "Married")
 			{
 				
 				$spouseFams = $person->getSpouseFamilies();
@@ -476,9 +487,9 @@ $out .= '</tr>
 							$inferredFact["Person"] = $sFamValue->getSortableName();								
 							$inferredFact["PersonID"] = $sFamValue->getXref();
 							$inferredFact["Reason"] = "A Marriage Date can be inferred!";
-							$inferredFact["Fact"] = "1 MARR \r\n2 DATE BEF 1850";
+							$inferredFact["Fact"] = "1 MARR \r\n2 DATE ABT 1850";
 							$inferredFact["factType"] = 'MARR';
-							$inferredFact["date"] = 'BEF 1850';
+							$inferredFact["date"] = 'ABT 1850';
 							$inferredFact["factPeople"] = "fam";
 							$tempArray[] = $inferredFact;
 							$people[$sFamValue->getXref()] = $tempArray;
@@ -487,7 +498,7 @@ $out .= '</tr>
 				}
 			
 			}
-			*/
+			
 		
 			if(!empty($bdate))
 			{

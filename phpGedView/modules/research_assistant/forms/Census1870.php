@@ -341,6 +341,7 @@ $out .= '</tr>
 	                   if(isset($citation['ts_array']['rows'][$i]['Families'])) $searchName = $citation['ts_array']['rows'][$i]['Families'];
 						else $searchName = '';
 	                   $out .= print_findindi_link("personid".$i, "peoplelink".$i, true,false,'',$searchName);
+	                   $out .= "<br />Create New Person: <input type=\"checkbox\" value=\"newPerson\"/>";
 	                   $out .= '<br /></td>';
 	        
 		}
@@ -362,21 +363,59 @@ $out .= '</tr>
         return $out;
     }
     
+    function createPerson($i)
+    {
+    	$indiFact = "0 @new@ INDI\r\n";
+    	$indiFact .= "1 NAME ".$_POST["NameOfPeople".$i]."\r\n";
+    	
+    	if(!empty($_POST["Age".$i]))
+    	{
+    		$age = 1870 - $_POST["Age".$i];
+    		$indiFact .= "1 BIRT\r\n";
+    		$indiFact .= "2 DATE ABT ".$age;
+    	}
+    	
+    	if(!empty($_POST["PlaceOfBirth".$i]))
+    	{
+    		$indiFact .= "2 PLAC ".$_POST["PlaceOfBirth"];
+    	}
+    	
+    	if(!empty($_POST["Sex".$i]))
+    	{
+    		$indiFact .= "1 SEX ".$_POST["Sex".$i];
+    	}
+    	
+    	return $indiFact;
+    	
+    }
+    
     function step2() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
 		global $INDI_FACTS_ADD;
 		
+		$people = array();
+		$pids = array();
+		$positions = array();
 			
 		$personid = "";
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
+			if(!empty($_POST["newPerson".$number]))
+			{
+				$tempPerson = $this->createPerson($number);
+				$_POST["personid".$number] = append_gedrec($tempPerson,true,'');
+			}
+			
 			if (!isset($_POST["personid".$number])) $_POST["personid".$number]="";
 			$personid .= $_POST["personid".$number].";";
 			$_POST["personid".$number] = trim($_POST["personid".$number], '; \r\n\t');
+			
+			
 		}
+		
 		$_REQUEST['personid'] = $personid;
 		$return = $this->processSourceCitation();
-
+		
 		if(empty($return))
 		{
 		$out = $this->header("module.php?mod=research_assistant&form=Census1870&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1870 United States Federal Census");
@@ -414,7 +453,7 @@ $out .= '</tr>
 					{
 						$ct = preg_match("/1 (\w+)/", $factValues['tf_factrec'], $match);						
 						$factname = trim($match[1]);
-					
+						
 						if($factValues["tf_people"] == $key  && $factname == $value["factType"])	
 						{
 							$completeFact = false;
@@ -457,7 +496,7 @@ $out .= '</tr>
 		// Return it to the buffer.
 		return $out;
 	}
-	
+
 	function getOccupation($gedcomRecord)
 	{
 		$occupation = get_gedcom_value("OCCU", 1, $gedcomRecord);
@@ -482,7 +521,7 @@ $out .= '</tr>
 			{
 				$bdate = $person->getBirthYear();
 				$occupation = $this->getOccupation($person->getGedcomRecord());
-			}
+			
 			$censusAge = $rows[$number]["Age"];
 			$birthDate = 1870 - $censusAge;
 				
@@ -497,7 +536,7 @@ $out .= '</tr>
 				$inferredFact["date"] = '';
 				$inferredFacts[] = $inferredFact;
 			}
-		/*	
+			}
 			if($rows[$number]["Single"] == "Widowed")
 			{
 				
@@ -553,7 +592,7 @@ $out .= '</tr>
 				}
 			
 			}
-			*/
+			
 		
 			if(!empty($bdate))
 			{
