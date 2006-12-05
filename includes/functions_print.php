@@ -1,5 +1,5 @@
 <?php
-  /**
+/**
  * Function for printing
  *
  * Various printing functions used by all scripts and included by the functions.php file.

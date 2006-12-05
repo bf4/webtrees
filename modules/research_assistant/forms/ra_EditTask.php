@@ -335,7 +335,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN;
                    		?>
                    </div>
                    <input type="hidden" id="personid" name="personid" size="3" value="<?php print $pval; ?>" />
-                     <?php print_findindi_link("personid", "peoplelink"); ?>
+                     <?php print_findindi_link("personid", "peoplelink",false,true,'',''); ?>
                     <br />
             </td>
         </tr>

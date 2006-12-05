@@ -910,23 +910,23 @@ function parse_date($datestr) {
 	$dates[0]["ext"] = "";
 	$strs = preg_split("/[\s\.,\-\\/\(\)\[\]\+'<>]+/", $datestr, -1, PREG_SPLIT_NO_EMPTY);
 	$index = 0;
-	$longmonth = array("january"=>"jan", "february"=>"feb", "march"=>"mar",
-	"april"=>"apr", "may"=>"may", "june"=>"jun",
-	"july"=>"jul", "august"=>"aug", "september"=>"sep",
-	"october"=>"oct", "november"=>"nov", "december"=>"dec",
+	$longmonth = array(str2lower($pgv_lang["jan"])=>"jan", str2lower($pgv_lang["feb"])=>"feb", str2lower($pgv_lang["mar"])=>"mar",
+	str2lower($pgv_lang["apr"])=>"apr", str2lower($pgv_lang["may"])=>"may", str2lower($pgv_lang["jun"])=>"jun",
+	str2lower($pgv_lang["jul"])=>"jul", str2lower($pgv_lang["aug"])=>"aug", str2lower($pgv_lang["sep"])=>"sep",
+	str2lower($pgv_lang["oct"])=>"oct", str2lower($pgv_lang["nov"])=>"nov", str2lower($pgv_lang["dec"])=>"dec",
 	// adding french-style year num (e.g. @#DFRENCH R@ 29 PLUV an XI)
 	"an"=>"", "i"=>"1",	"ii"=>"2", "iii"=>"3", "iv"=>"4", "v"=>"5", "vi"=>"6", "vii"=>"7",
 	"viii"=>"8", "ix"=>"9", "x"=>"10", "xi"=>"11", "xii"=>"12", "xiii"=>"13", "xiv"=>"14",
 	// month abbreviations for the current language
-	strtolower($pgv_lang["january_1st"])=>"jan", strtolower($pgv_lang["february_1st"])=>"feb",strtolower($pgv_lang["march_1st"])=>"mar",
-	strtolower($pgv_lang["april_1st"])=>"apr",strtolower($pgv_lang["may_1st"])=>"may",strtolower($pgv_lang["june_1st"])=>"jun",
-	strtolower($pgv_lang["july_1st"])=>"jul",strtolower($pgv_lang["august_1st"])=>"aug",strtolower($pgv_lang["september_1st"])=>"sep",
-	strtolower($pgv_lang["october_1st"])=>"oct",strtolower($pgv_lang["november_1st"])=>"nov",strtolower($pgv_lang["december_1st"])=>"dec"
+	str2lower($pgv_lang["january_1st"])=>"jan", str2lower($pgv_lang["february_1st"])=>"feb",str2lower($pgv_lang["march_1st"])=>"mar",
+	str2lower($pgv_lang["april_1st"])=>"apr",str2lower($pgv_lang["may_1st"])=>"may",str2lower($pgv_lang["june_1st"])=>"jun",
+	str2lower($pgv_lang["july_1st"])=>"jul",str2lower($pgv_lang["august_1st"])=>"aug",str2lower($pgv_lang["september_1st"])=>"sep",
+	str2lower($pgv_lang["october_1st"])=>"oct",str2lower($pgv_lang["november_1st"])=>"nov",str2lower($pgv_lang["december_1st"])=>"dec"
 	);
 
 	for($i=0; $i<count($strs); $i++) {
-		if (isset($longmonth[strtolower($strs[$i])])) {
-			$strs[$i] = $longmonth[strtolower($strs[$i])];
+		if (isset($longmonth[str2lower($strs[$i])])) {
+			$strs[$i] = $longmonth[str2lower($strs[$i])];
 		}
 	}
 	if (count($strs)==3) {
@@ -961,9 +961,9 @@ function parse_date($datestr) {
 			}
 		}
 		else {
-			if (isset($monthtonum[strtolower($strs[$i])])) {
+			if (isset($monthtonum[str2lower($strs[$i])])) {
 				$dates[$index]["month"] = $strs[$i];
-				$dates[$index]["mon"] = $monthtonum[strtolower($strs[$i])];
+				$dates[$index]["mon"] = $monthtonum[str2lower($strs[$i])];
 			}
 			else {
 				if (!isset($dates[$index]["ext"])) $dates[$index]["ext"] = "";
