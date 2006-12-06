@@ -926,6 +926,7 @@ class MenuBar
 	 */
 	function getModuleMenus() {
 		$menus = array();
+		if (!file_exists("modules")) return $menus;
 		$d = dir("modules");
 		while (false !== ($entry = $d->read())) {
 			if ($entry{0}!="." && $entry!="CVS" && is_dir("modules/$entry")) {
