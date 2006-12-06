@@ -51,6 +51,7 @@ $pgv_lang["up_folder"]		= "עלה תיקייה";
 $pgv_lang["edit_folder"]		= "##Add/Edit Folder";
 $pgv_lang["gen_tasks"]		= "צור משימות אוטומטית";
 
+
 // -- RA GENERAL MESSAGES
 $pgv_lang["edit_task"]		= "ערוך משימה";
 $pgv_lang["completed"]		= "סיום";
@@ -64,21 +65,23 @@ $pgv_lang["folder_list"]		= "##Folder List";
 $pgv_lang["details"]			= "פירוט"; 
 $pgv_lang["result"]                     	= "תוצאה";
 $pgv_lang["okay"]                               	= "OK";
-$pgv_lang["editform"]		= "##Edit Form Data";
+$pgv_lang["editform"]		= "ערוך את נתוני הטופס"; 
 $pgv_lang["FilterBy"]		= "סנן לפי"; 
 $pgv_lang["Recalculate"]		= "חשב מחדש"; 
 $pgv_lang["LocalData"]		= "נתונים מקומיים"; 
 $pgv_lang["RelatedRecord"]		= "רשומה קשורה"; 
 $pgv_lang["RelatedData"]		= "נתונים קשורים"; 
 $pgv_lang["Percent"]		= "אחוז"; 
-$pgv_lang["Fields"]			= "##Number of Fields"; //@@
-$pgv_lang["FieldName"]		= "##Field Name"; //@@
-$pgv_lang["InputType"]		= "##Input Type"; //@@
-$pgv_lang["Values"]			= "##Values"; //@@
-$pgv_lang["FormName"]		= "##Enter the form name"; //@@
-$pgv_lang["MultiplePeople"]		= "##Does the form apply to multiple people?"; //@@
-$pgv_lang["EnterGEDCOMExtension"]	= "##Please enter the GEDCOM extension for the form's fact type"; //@@
-$pgv_lang['FormDesciption']		= "##Please enter a description for the form"; //@@
+$pgv_lang["Fields"]			= "מספר השדות"; 
+$pgv_lang["FieldName"]		= "שם השדה";  
+$pgv_lang["InputType"]		= "סוג הקלט";  
+$pgv_lang["Values"]			= "ערכים"; 
+$pgv_lang["FormName"]		= "הכנס את שם הטופס";  
+$pgv_lang["MultiplePeople"]		= "האם הטופס משמש מספר אנשים?"; 
+$pgv_lang["EnterGEDCOMExtension"]	= "נא הכנס את סיומת ה-GEDCOM לסוג העובדה של הטופס"; 
+$pgv_lang['FormDesciption']		= "נא הכנס תאור לטופס"; 
+$pgv_lang["FormGeneration"]		= "יצירת הטופס הסתיימה!"; 
+$pgv_lang["CustomField"]		= "שם שדה פרטי"; 
 
 // -- RA EXPLANATION
 $pgv_lang["ViewProbExplanation"]	= "דף זה מנתח את נתוני קובץ ה-GEDCOM הפעיל ומראה את היחס בין הנתונים השונים. לדוגמא, תתכן קורלציה של 95% ששם משפחה ברשומה זהה לשם משפחה ברשומה של האב. משמעות הדבר של95% של האנשים בקובץ ה-GEDCOM הזה יש את אותו שם משפחה כמו לאביהם. בגירסה הזו של עוזר המחקר, החישובים הללו אינם משמשים בחלקים אחרים של התוכנה ומחשבים אותם רק כדי לעזור לך במחקרך. בעתיד אנחנו מתכננים להשתמש בנתונים האלו כדי להציע לך היכן כדאי להתרכז במחקרך העתידי."; 
@@ -162,8 +165,8 @@ $pgv_lang["help_rs_editfolder.php"]	= "##Research Assistant Edit Folders<br />#p
 $pgv_lang["help_rs_editlog.php"]	= "##Research Assistant Edit Log<br />#pgv_lang[sorry]#";
 $pgv_lang["ra_fold_name_help"]	= "<H2><B>מבט תיקייות:</B></H2><ul><li><B>שם תיקייה:</B> העמוד הזה כולל את השמות של כל התיקיות שיצרת.</li><li><B>תאור:</B> העמוד הזה כולל את התאור של התיקיות.</li></ul><br /><br /><a href=\"helpvids/ResearchAssistantUserHelp.htm\">הדרכה עצמית לעוזר מחקר (Tutorial)</a>"; 
 $pgv_lang["ra_add_task_help"]		= "<H2><B>הוסף משימה:</B></H2></H2><ul><li><B>כותרת:</B> כאן תמלא את הכותרת של המשימה שאותה אתה מוסיף.</li><li><B>תיקייה:</B> בשדה זה ניתן להקצות את התיקייה שבה יש לשים את המשימה החדשה.</li><li><B>תאור:</B> הכנס את תאור המשימה שאותה אתה מוסיף.</li><li><B>מקורות:</B>  הקצה מקורות למשימה.</li><li><B>אנשים:</B> הקצה אנשים הקשורים למשימה החדשה.</li></ul>";
-$pgv_lang["ra_edit_folder_help"]	= "<H2><B>ערוך תיקייה:</B></H2><ul><li><B>שם התיקייה:</B> כאן תמלא את הכותרת של המשימה שאותה אתה עורך.</B></li><li><B>תיקיית הורה:</B> תוכל להקצות תיקיית הורה, אם בכלל, לתיקייה שאתה עורך.</B></li><li><B>תאור התיקייה:</B> תאור המשימה שאותה אתה עורך.</B></li><ul>"; //@@
-$pgv_lang["ra_add_folder_help"]	= "<H2><B>הוסף תיקייה:</B></H2><ul><li><B>שם תיקייה:</B> כאן תמלא את הכותרת של התיקייה שאותה אתה מוסיף.</B></li><li><B>תיקיית הורה:</B> תוכל להקצות תיקיית הורה, אם בכלל, לתיקייה שאתה מוסיף.</B></li><li><B>תאור התיקייה:</B> כאן תרשום את תאור התיקייה שאתה מוסיף.</B></li><ul>"; 
+$pgv_lang["ra_edit_folder_help"]	= "<H2><B>ערוך תיקייה:</B></H2><ul><li><B>שם התיקייה:</B> כאן תמלא את הכותרת של המשימה שאותה אתה עורך.</B></li><li><B>תיקיית הורה:</B> תוכל להקצות תיקיית הורה לתיקייה שאתה עורך.</B></li><li><B>תאור התיקייה:</B> תאור המשימה שאותה אתה עורך.</B></li><ul>"; 
+$pgv_lang["ra_add_folder_help"]	= "<H2><B>הוסף תיקייה:</B></H2><ul><li><B>שם תיקייה:</B> כאן תמלא את הכותרת של התיקייה שאותה אתה מוסיף.</B></li><li><B>תיקיית הורה:</B> תוכל להקצות תיקיית הורה לתיקייה שאתה מוסיף.</B></li><li><B>תאור התיקייה:</B> כאן תרשום את תאור התיקייה שאתה מוסיף.</B></li><ul>"; 
 $pgv_lang["ra_view_task_help"]	= "<H2><B>מבט משימות:</B></H2><ul><li><B>שם משימה:</B> העמודה כוללת את השם של המשימות שלך.</B></li><li><B>תאור:</B> העמוד הזה כולל את התאור של המשימות.</li><li><B>תאריך התחלה:</B> כאן רשומים תאריכי ההתחלה של המשימות.</li><li><B>סיום:</B> כאן תראה אם המשימה הסתיימה.</li><li><B>פרוט:</B> כאן מראים את פירוט המשימה.</li><li><B>מחק:</B> מחיקת המשימה.</li><ul><br /><a href=\"helpvids/MissingInformationUserHelp.htm\">הדרכה עצמית למשתמש (Tutorial)</a>"; 
 $pgv_lang["ra_task_view_help"]	= "<H2><B>התבונן במשימה:</B></H2><ul><li><B>כותרת:</B> כאן תמלא את הכותרת של המשימה שאותה אתה מוסיף.</li><li><B>אנשים:</B> הקצה אנשים הקשורים למשימה החדשה.</li><li><B>תאור:</B> הכנס את תאור המשימה שאותה אתה מוסיף.</li><li><B>מקורות:</B> הקצה מקורות למשימה.</li><li>לחץ על כפתור 'ערוך משימה' כדי לערוך את הפרטים של המשימה.</li></ul>"; 
 $pgv_lang["ra_comments_help"]	= "<H2><B>הערות:</B></H2><ul><li>כאן תוסיף הערות הקשורות למשימה. לחץ על כפתור 'הוסף הערה חדשה' כדי להוסיף הערות.</li></ul>"; 
@@ -189,6 +192,7 @@ $pgv_lang["comment_delete_check"]	= "האם באמת תרצה למחוק את ה
 //-- RA_ADDTASK MESSAGES
 $pgv_lang["add_new_task"]		= "הוסף משימה";
 $pgv_lang["submit"]			= "שמור"; 
+$pgv_lain["save_and_complete"]         	= "שמור וסיים";
 $pgv_lang["assign_task"]		= "הקצה משימה";
 $pgv_lang["AddTask"]		= "הוסף משימה"; 
 
@@ -210,17 +214,17 @@ $pgv_lang["comment_help"]		= "##Click here for help.";
 $pgv_lang["rows"]                       	= "מספר שורות";
 $pgv_lang["state"]                      	= "מדינה"; 
 $pgv_lang["call/url"]                   	= "מספר סידורי/URL"; 
-$pgv_lang["enumDate"]                   	= "תאריך ספירה"; 
+$pgv_lang["enumDate"]                   	= "תאריך מספור";  
 $pgv_lang["county"]                     	= "מחוז"; 
 $pgv_lang["city"]                       	= "עיר"; 
 $pgv_lang["complete_title"]		= "סיים משימה"; 
 $pgv_lang["select_form"]		= "בחר טופס"; 
 $pgv_lang['choose_form_label']	= "בחר טופס מחקר משותף ";
-$pgv_lang["book"]                 		= "ספר"; //@@
-$pgv_lang["folio"]                   		= "פוליו"; //@@
-$pgv_lang["uk_county"]		= "מחוז"; //@@
-$pgv_lang["uk_boro"]		= "עיר"; //@@
-$pgv_lang["uk_place"]		= "מקום"; //@@
+$pgv_lang["book"]                 		= "ספר"; 
+$pgv_lang["folio"]                   		= "פוליו"; 
+$pgv_lang["uk_county"]		= "מחוז";
+$pgv_lang["uk_boro"]		= "עיר"; 
+$pgv_lang["uk_place"]		= "מקום"; 
 
 //-- MY TASK BLOCK 
 $pgv_lang["mytasks_block_descr"]	= "אזור המשימות שלי מראה משימות של המשתמש הנוכחי וניתן לעצב אותן כך שניתן לראות משימות שהסתיימו או משימות שטרם  הוקצו."; 
@@ -252,6 +256,11 @@ $pgv_lang["autosearch_plugin_name_ellisIsland"] 	= "##EllisIslandRecords.org Plu
 $pgv_lang["autosearch_plugin_name_genNet"] 	= "##GeneaNet.com Plug-in"; //@@
 $pgv_lang["autosearch_plugin_name_gen"] 	= "##Genealogy.com Plug-in";  //@@
 $pgv_lang["autosearch_plugin_name_fs"] 		= "##FamilySearch.org Plug-in"; //@@
-$pgv_lang["autosearch_search"]           = "##Search"; //@@
-              
+$pgv_lang["autosearch_plugin_name_werelate"]   = "##Werelate.org Plug-in";
+$pgv_lang["autosearch_search"]           		= "##Search"; //@@
+$pgv_lang["autosearch_keywords"] = "##Keywords:";
+
+//Folder deletion error messages
+$pgv_lang["has_tasks"]                 ="התיקייה מכילה משימות ולא ניתן למחוק אותה"; 
+$pgv_lang["has_folders"]               ="התיקייה מכילה תיקיות ולא ניתן למחוק אותה"; 
 ?>
