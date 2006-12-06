@@ -177,7 +177,7 @@ $pgv_lang["fbsql"]			= "FrontBase";
 $pgv_lang["found_record"]		= "רשומה נמצאה";
 $pgv_lang["ged_download"]		= "הורד";
 $pgv_lang["ged_import"] 		= "ייבא";
-$pgv_lang["ged_check"] 							= "##Check";
+$pgv_lang["ged_check"] 		= "בדוק"; 
 $pgv_lang["gedcom_adm_head"]	= "ניהול ה-GEDCOM";
 $pgv_lang["gedcom_config_write_error"]	= "ש ג י א ה !!!<br />לא ניתן לכתוב לקובץ  <i>#GLOBALS[whichFile]#</i>. נא בדוק שיש הרשאת כתיבה."; 
 $pgv_lang["gedcom_downloadable"] 	= "את קובץ ה-GEDCOM הזה ניתן להוריד דרך האינטרנט!<br />ראה את פרק ה-SECURITY של קובץ ה-<a href=\"readme.txt\"><b>readme.txt</b></a> כדי לפתור את הבעיה";
@@ -335,6 +335,8 @@ $pgv_lang["too_few"]      	= "פחות מדי";
 $pgv_lang["no_link"]      	= "אינו מקשר בחזרה";
 $pgv_lang["data"]                     = "נתונים"; 
 $pgv_lang["level"]        	= "רמה";
+$pgv_lang["see"]          	= "ראה";
+$pgv_lang["noref"]        	= "אין התיחסות לרשומה זו"; 
 $pgv_lang["tag"]          	= "תג";
 $pgv_lang["spacing"]      	= "רווחים";
 //$pgv_lang["before"]       	= "לפני";              // More specific errors, for stage 2
