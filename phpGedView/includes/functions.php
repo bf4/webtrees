@@ -2835,16 +2835,18 @@ function runHooks($type, $params=array())
 		// look for core hooks, shouldn't be needed, but may be useful for quick site customizing
 		if(file_exists("hooks/{$type}.php")){$hooks = array('core'=>"hooks/{$type}.php");}else{$hooks = array();}
 		// look for module hooks
-		$d = dir('modules/');
-		while(false !== ($f = $d->read()))
-		{
-			if($f === '.' || $f === '..'){continue;}
-			if(is_dir("modules/$f") && file_exists("modules/{$f}/pgvhooks/{$type}.php"))
+		if (file_exists("modules")) {
+			$d = dir('modules/');
+			while(false !== ($f = $d->read()))
 			{
-				$hooks[$f] = "modules/{$f}/pgvhooks/{$type}.php";
+				if($f === '.' || $f === '..'){continue;}
+				if(is_dir("modules/$f") && file_exists("modules/{$f}/pgvhooks/{$type}.php"))
+				{
+					$hooks[$f] = "modules/{$f}/pgvhooks/{$type}.php";
+				}
 			}
+			$d->close();
 		}
-		$d->close();
 		// look for theme hooks
 		if(file_exists("{$THEME_DIR}hooks/{$type}.php")){$hooks['theme'] = "{$THEME_DIR}hooks/{$type}.php";}
 		// cache the results for speed
