@@ -55,70 +55,70 @@ if ($MULTI_MEDIA) {
 		$medialist = get_medialist(false, '', true, true);
 		$ct = count($medialist);
 		if ($ct>0) {
-				$i=0;
-				$disp = false;
-				//-- try up to 40 times to get a media to display
-				while($i<40) {
-					$error = false;
-					$value = array_rand($medialist);
-					if (isset($DEBUG)&&($DEBUG==true)) {
-						//print_r($medialist[$value]);
-						print "Trying ".$medialist[$value]["XREF"]."<br />\n";
-					}
-					$links = $medialist[$value]["LINKS"];
-					$disp = $medialist[$value]["EXISTS"] && $medialist[$value]["LINKED"] && $medialist[$value]["CHANGE"]!="delete" ;
-					if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." File does not exist, or is not linked to anyone, or is marked for deletion.</span><br />\n";}
-
-					$disp &= displayDetailsByID($value["XREF"], "OBJE");
-					$disp &= !FactViewRestricted($value["XREF"], $value["GEDCOM"]);
-
-					if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." Failed to pass privacy</span><br />\n";}
-
-					$isExternal = strstr($medialist[$value]["FILE"], "://");
-
-					if ($block && !$isExternal) $disp &= file_exists($medialist[$value]["THUMB"]);
-					if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." thumbnail file could not be found</span><br />\n";}
-
-					if ($disp && count($links) != 0){
-						foreach($links as $key=>$type) {
-							$gedrec = find_gedcom_record($key);
-							$disp &= !empty($gedrec);
-							//-- source privacy is now available through the display details by id method
-							// $disp &= $type!="SOUR";
-							$disp &= displayDetailsById($key, $type);
-						}
-						if (isset($DEBUG)&&($DEBUG==true)&&!$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed link privacy</span><br />\n";}
-						if ($disp && $filter!="all") {
-							// Apply filter criteria
-							$ct = preg_match("/0\s(@.*@)\sOBJE/", $medialist[$value]["GEDCOM"], $match);
-							$objectID = $match[1];
-							$ct2 = preg_match("/(\d)\sOBJE\s{$objectID}/", $gedrec, $match2);
-							if ($ct2>0) {
-								$objectRefLevel = $match2[1];
-								if ($filter=="indi" && $objectRefLevel!="1") $disp = false;
-								if ($filter=="event" && $objectRefLevel=="1") $disp = false;
-								if (isset($DEBUG)&&($DEBUG==true)&&!$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed to pass config filter</span><br />\n";}
-							}
-							else $disp = false;
-						}
-					}
-					//-- leave the loop if we find an image that works
-					if ($disp) {
-						break;
-					}
-					//-- otherwise remove the private media item from the list
-					else {
-						if (isset($DEBUG)&&($DEBUG==true)) print "<span class=\"error\">".$medialist[$value]["XREF"]." Will not be shown</span><br />\n";
-						unset($medialist[$value]);
-					}
-					//-- if there are no more media items, then try to get some more
-					if (count($medialist)==0) $medialist = get_medialist(false, '', true, true);
-					$i++;
+			$i=0;
+			$disp = false;
+			//-- try up to 40 times to get a media to display
+			while($i<40) {
+				$error = false;
+				$value = array_rand($medialist);
+				if (isset($DEBUG)&&($DEBUG==true)) {
+					//print_r($medialist[$value]);
+					print "Trying ".$medialist[$value]["XREF"]."<br />\n";
 				}
-				if (!$disp) return false;
+				$links = $medialist[$value]["LINKS"];
+				$disp = $medialist[$value]["EXISTS"] && $medialist[$value]["LINKED"] && $medialist[$value]["CHANGE"]!="delete" ;
+				if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." File does not exist, or is not linked to anyone, or is marked for deletion.</span><br />\n";}
 
-				if ($action!="ajax") {
-					print "<div id=\"random_picture$index\" class=\"block\">\n";
+				$disp &= displayDetailsByID($value["XREF"], "OBJE");
+				$disp &= !FactViewRestricted($value["XREF"], $value["GEDCOM"]);
+
+				if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." Failed to pass privacy</span><br />\n";}
+
+				$isExternal = strstr($medialist[$value]["FILE"], "://");
+
+				if ($block && !$isExternal) $disp &= file_exists($medialist[$value]["THUMB"]);
+				if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." thumbnail file could not be found</span><br />\n";}
+
+				if ($disp && count($links) != 0){
+					foreach($links as $key=>$type) {
+						$gedrec = find_gedcom_record($key);
+						$disp &= !empty($gedrec);
+						//-- source privacy is now available through the display details by id method
+						// $disp &= $type!="SOUR";
+						$disp &= displayDetailsById($key, $type);
+					}
+					if (isset($DEBUG)&&($DEBUG==true)&&!$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed link privacy</span><br />\n";}
+					if ($disp && $filter!="all") {
+						// Apply filter criteria
+						$ct = preg_match("/0\s(@.*@)\sOBJE/", $medialist[$value]["GEDCOM"], $match);
+						$objectID = $match[1];
+						$ct2 = preg_match("/(\d)\sOBJE\s{$objectID}/", $gedrec, $match2);
+						if ($ct2>0) {
+							$objectRefLevel = $match2[1];
+							if ($filter=="indi" && $objectRefLevel!="1") $disp = false;
+							if ($filter=="event" && $objectRefLevel=="1") $disp = false;
+							if (isset($DEBUG)&&($DEBUG==true)&&!$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed to pass config filter</span><br />\n";}
+						}
+						else $disp = false;
+					}
+				}
+				//-- leave the loop if we find an image that works
+				if ($disp) {
+					break;
+				}
+				//-- otherwise remove the private media item from the list
+				else {
+					if (isset($DEBUG)&&($DEBUG==true)) print "<span class=\"error\">".$medialist[$value]["XREF"]." Will not be shown</span><br />\n";
+					unset($medialist[$value]);
+				}
+				//-- if there are no more media items, then try to get some more
+				if (count($medialist)==0) $medialist = get_medialist(false, '', true, true);
+				$i++;
+			}
+			if (!$disp) return false;
+
+			if ($action!="ajax") {
+				print "<div id=\"random_picture$index\" class=\"block\">\n";
 				print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
 				print "<td class=\"blockh1\" >&nbsp;</td>";
 				print "<td class=\"blockh2\" ><div class=\"blockhc\">";
@@ -136,62 +136,18 @@ if ($MULTI_MEDIA) {
 				print "</div></td>";
 				print "<td class=\"blockh3\">&nbsp;</td></tr>\n";
 				print "</table>";
-					print "<div class=\"blockcontent\" id=\"random_picture_content$index\">";
-				}
-				$imgsize = findImageSize($medialist[$value]["FILE"]);
-				$imgwidth = $imgsize[0]+40;
-				$imgheight = $imgsize[1]+150;
-				print "<table id=\"random_picture_box\" width=\"95%\"><tr><td valign=\"top\"";
-
-				if ($block) print " align=\"center\" class=\"details1\"";
-				else print " class=\"details2\"";
-				$mediaid = $medialist[$value]["XREF"];
-				if ($USE_MEDIA_VIEWER) {
-				print " ><a href=\"mediaviewer.php?mid=".$mediaid."\">";
-				}
-				else {
-					print " ><a href=\"javascript:;\" onclick=\"return openImage('".$medialist[$value]["FILE"]."', $imgwidth, $imgheight);\">";
-				}
-				$mediaTitle = "";
-				if (!empty($medialist[$value]["TITL"])) {
-					$mediaTitle = PrintReady($medialist[$value]["TITL"]);
-				}
-				else $mediaTitle = basename($medialist[$value]["FILE"]);
-				if ($block) {
-					print "<img src=\"".$medialist[$value]["THUMB"]."\" border=\"0\" class=\"thumbnail\"";
-					if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
-					print " alt=\"" . $mediaTitle . "\" title=\"" . $mediaTitle . "\" />";
-				} else {
-					print "<img src=\"".$medialist[$value]["FILE"]."\" border=\"0\" class=\"thumbnail\" ";
-					$imgsize = findImageSize($medialist[$value]["FILE"]);
-					if ($imgsize[0] > 175) print "width=\"175\" ";
-					print " alt=\"" . $mediaTitle . "\" title=\"" . $mediaTitle . "\" />";
-				}
-				print "</a>\n";
-				if ($block) print "<br />";
-				else print "</td><td class=\"details2\">";
-				print "<a href=\"mediaviewer.php?mid=".$mediaid."\">";
-				print "<b>". $mediaTitle ."</b>";
-				print "</a><br />";
-
-				PrintMediaLinks ($medialist[$value]["LINKS"], "normal");
-
-				print "<br /><div class=\"indent" . ($TEXT_DIRECTION=="rtl"?"_rtl":"") . "\">";
-				print_fact_notes($medialist[$value]["GEDCOM"], "1");
-				print "</div>";
-				print "</td></tr></table>\n";
-				if ($action!="ajax") {
-					print "</div>"; // blockcontent
+				print "<div class=\"blockcontent\" id=\"random_picture_container$index\">\n";
 				if ($config['controls']=='yes') {
-						print "<div class=\"center\">\n";
-						if ($config['start']=='yes' || (isset($_COOKIE['rmblockplay'])&&$_COOKIE['rmblockplay']=='true')) $image = "stop";
+					print "<div class=\"center\" id=\"random_picture_controls$index\">\n<br />";
+					if ($config['start']=='yes' || (isset($_COOKIE['rmblockplay'])&&$_COOKIE['rmblockplay']=='true')) $image = "stop";
 					else $image = "rarrow";
-						print "<a href=\"javascript: ".$pgv_lang["play"]."/".$pgv_lang["stop"].";\" onclick=\"togglePlay(); return false;\">";
-						if (isset($PGV_IMAGES[$image]['other'])) print "<img id=\"play_stop\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$image]['other']."\" border=\"0\" alt=\"".$pgv_lang["play"]."/".$pgv_lang["stop"]."\" title=\"".$pgv_lang["play"]."/".$pgv_lang["stop"]."\"/>";
-						else print $pgv_lang["play"]."/".$pgv_lang["stop"];
-						print "</a>\n";
-						print "<a href=\"javascript: ".$pgv_lang["next"].";\" onclick=\"return ajaxBlock('random_picture_content$index', 'print_random_media', '$side', $index, true);\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES['rdarrow']['other']."\" border=\"0\" alt=\"".$pgv_lang["next"]."\" title=\"".$pgv_lang["next"]."\" /></a>\n";
+					print "<a href=\"javascript: ".$pgv_lang["play"]."/".$pgv_lang["stop"].";\" onclick=\"togglePlay(); return false;\">";
+					if (isset($PGV_IMAGES[$image]['other'])) print "<img id=\"play_stop\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$image]['other']."\" border=\"0\" alt=\"".$pgv_lang["play"]."/".$pgv_lang["stop"]."\" title=\"".$pgv_lang["play"]."/".$pgv_lang["stop"]."\"/>";
+					else print $pgv_lang["play"]."/".$pgv_lang["stop"];
+					print "</a>\n";
+					print "<a href=\"javascript: ".$pgv_lang["next"].";\" onclick=\"return ajaxBlock('random_picture_content$index', 'print_random_media', '$side', $index, true);\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES['rdarrow']['other']."\" border=\"0\" alt=\"".$pgv_lang["next"]."\" title=\"".$pgv_lang["next"]."\" /></a>\n";
 					?>
+					</div>
 					<script language="JavaScript" type="text/javascript">
 					<!--
 						var play = false;
@@ -208,7 +164,7 @@ if ($MULTI_MEDIA) {
 								imgid.src = '<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["stop"]['other']; ?>';
 							}
 						}
-
+            	
 						function playSlideShow() {
 							if (play) {
 									ajaxBlock('random_picture_content<?php print $index; ?>', 'print_random_media', '<?php print $side; ?>', <?php print $index; ?>, false);
@@ -217,20 +173,69 @@ if ($MULTI_MEDIA) {
 						}
 					//-->
 					</script>
-						</div>
 					<?php
 				}
 				if ($config['start']=='yes') {
 					?>
 					<script language="JavaScript" type="text/javascript">
 					<!--
+						play = true;
+						imgid = document.getElementById('play_stop');
+						imgid.src = '<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["stop"]['other']; ?>';
 						window.setTimeout('playSlideShow()', 4000);
 					//-->
 					</script>
 					<?php
 				}
-				}
-				print "</div>"; // block
+				print "<div id=\"random_picture_content$index\">";
+			}
+			$imgsize = findImageSize($medialist[$value]["FILE"]);
+			$imgwidth = $imgsize[0]+40;
+			$imgheight = $imgsize[1]+150;
+			print "<table id=\"random_picture_box\" width=\"95%\"><tr><td valign=\"top\"";
+
+			if ($block) print " align=\"center\" class=\"details1\"";
+			else print " class=\"details2\"";
+			$mediaid = $medialist[$value]["XREF"];
+			if ($USE_MEDIA_VIEWER) {
+			print " ><a href=\"mediaviewer.php?mid=".$mediaid."\">";
+			}
+			else {
+				print " ><a href=\"javascript:;\" onclick=\"return openImage('".$medialist[$value]["FILE"]."', $imgwidth, $imgheight);\">";
+			}
+			$mediaTitle = "";
+			if (!empty($medialist[$value]["TITL"])) {
+				$mediaTitle = PrintReady($medialist[$value]["TITL"]);
+			}
+			else $mediaTitle = basename($medialist[$value]["FILE"]);
+			if ($block) {
+				print "<img src=\"".$medialist[$value]["THUMB"]."\" border=\"0\" class=\"thumbnail\"";
+				if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
+				print " alt=\"" . $mediaTitle . "\" title=\"" . $mediaTitle . "\" />";
+			} else {
+				print "<img src=\"".$medialist[$value]["FILE"]."\" border=\"0\" class=\"thumbnail\" ";
+				$imgsize = findImageSize($medialist[$value]["FILE"]);
+				if ($imgsize[0] > 175) print "width=\"175\" ";
+				print " alt=\"" . $mediaTitle . "\" title=\"" . $mediaTitle . "\" />";
+			}
+			print "</a>\n";
+			if ($block) print "<br />";
+			else print "</td><td class=\"details2\">";
+			print "<a href=\"mediaviewer.php?mid=".$mediaid."\">";
+			print "<b>". $mediaTitle ."</b>";
+			print "</a><br />";
+
+			PrintMediaLinks ($medialist[$value]["LINKS"], "normal");
+
+			print "<br /><div class=\"indent" . ($TEXT_DIRECTION=="rtl"?"_rtl":"") . "\">";
+			print_fact_notes($medialist[$value]["GEDCOM"], "1");
+			print "</div>";
+			print "</td></tr></table>\n";
+			if ($action!="ajax") {
+				print "</div>"; // random_picture_content
+				print "</div>"; // blockcontent
+			}
+			print "</div>"; // block
 		}
 	}
 
