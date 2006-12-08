@@ -37,6 +37,7 @@ $pgv_lang["page_x_of_y"]			= "Seite #GLOBALS[currentPage]# von #GLOBALS[lastPage
 $pgv_lang["options"]				= "Optionen:";
 $pgv_lang["config_update_ok"]		= "Die Konfigurations-Datei wurde aktualisiert.";
 $pgv_lang["server_folder"]			= "Verzeichnisname auf dem Server";
+$pgv_lang["media_options"]			= "Medien-Optionen";
 $pgv_lang["index_edit_advice"]           = "Markieren Sie den Namen eines Blockes und klicken Sie auf eines der Pfeil-Symbole, um den markierten Block in die gewünschte Richtung zu bewegen.";
 $pgv_lang["index_edit_advice2"]          = "Sie müssen auf den Button <b>#pgv_lang[save]#</b> klicken, um die Änderungen zu übernehmen.";
 $pgv_lang["continue_import2"]            = "Datumsimport fortsetzen";
@@ -379,11 +380,15 @@ $pgv_lang["view_source"]                = "Quelle zeigen";
 $pgv_lang["view_object"]				= "Objekt zeigen";
 $pgv_lang["prev"]                        = "&lt; Vorhergehende Seite";
 $pgv_lang["next"]                        = "Nächste Seite &gt;";
+$pgv_lang["next_image"]                  = "Nächstes Bild";
 $pgv_lang["file_not_found"]                = "Datei nicht gefunden.";
 $pgv_lang["medialist_show"]             = "Zeige";
 $pgv_lang["per_page"]                   = "Objekte pro Seite";
 $pgv_lang["delete_directory"]		= "Verzeichnis löschen";
 $pgv_lang["current_dir"]			= "Aktuelles Verzeichnis";
+$pgv_lang["SHOW_ID_NUMBERS"]		= "ID-Nummern zeigen";
+$pgv_lang["SHOW_HIGHLIGHT_IMAGES"]	= "Definierte Fotos in den Personenboxen anzeigen";
+$pgv_lang["view_img_details"]		= "Einzelheiten zeigen";
 //-- SEARCH FILE MESSAGES
 $pgv_lang["search_gedcom"]			= "Dateien durchsuchen";
 $pgv_lang["enter_terms"]			= "Suchbegriffe eingeben";
@@ -398,6 +403,9 @@ $pgv_lang["search_options"]			= "Such Optionen";
 $pgv_lang["search_geds"]			= "Dateien in denen gesucht wird";
 $pgv_lang["search_type"]			= "Such Methode";
 $pgv_lang["search_general"]			= "Normale Suche";
+$pgv_lang["clipping_privacy"]		= "Einige Daten konnten wegen Datenschutz nicht hinzugefügt werden";
+$pgv_lang["chart_new"]				= "Stammbaum";
+$pgv_lang["loading"]				= "Laden...";
 $pgv_lang["search_soundex"]			= "Soundex Suche";
 $pgv_lang["search_inrecs"]			= "Suchen nach";
 $pgv_lang["search_fams"]			= "Familien";
@@ -627,13 +635,13 @@ $pgv_lang["n_x_great_grandmother"]	= "%d x Urgroßmutter";
 // the bosa_brothers_offspring name is used for fraternal nephews and nieces - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
-$pgv_lang["bosa_brothers_offspring_2"] 				= "Neffe";             // brother's son
-$pgv_lang["bosa_brothers_offspring_3"] 				= "Nichte";              // brother's daughter
+$pgv_lang["bosa_brothers_offspring_2"] 				= "Neffe";
+$pgv_lang["bosa_brothers_offspring_3"] 				= "Nichte";
 // 2nd generation
-$pgv_lang["bosa_brothers_offspring_4"] 				= "Großneffe";       // brother's son's son
-$pgv_lang["bosa_brothers_offspring_5"] 				= "Großnichte";        // brother's son's daughter
-$pgv_lang["bosa_brothers_offspring_6"] 				= "Großneffe";       // brother's daughter's son
-$pgv_lang["bosa_brothers_offspring_7"] 				= "Großnichte";        // brother's daughter's daughter
+$pgv_lang["bosa_brothers_offspring_4"] 				= "Großneffe";
+$pgv_lang["bosa_brothers_offspring_5"] 				= "Großnichte";
+$pgv_lang["bosa_brothers_offspring_6"] 				= "Großneffe";
+$pgv_lang["bosa_brothers_offspring_7"] 				= "Großnichte";
 // for the general case of offspring of the nth generation use the text below
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
@@ -643,13 +651,13 @@ $pgv_lang["n_x_brothers_daughter"] = "%2\$d x Großnichte"; //Urgroßnichte, Uru
 // the bosa_sisters_offspring name is used for sisters nephews and nieces - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
-$pgv_lang["bosa_sisters_offspring_2"] 				= "Neffe";             // sister's son
-$pgv_lang["bosa_sisters_offspring_3"] 				= "Nichte";              // sister's daughter
+$pgv_lang["bosa_sisters_offspring_2"] 				= "Neffe";
+$pgv_lang["bosa_sisters_offspring_3"] 				= "Nichte";
 // 2nd generation
-$pgv_lang["bosa_sisters_offspring_4"] 				= "Großneffe";       // sister's son's son
-$pgv_lang["bosa_sisters_offspring_5"] 				= "Großnichte";        // sister's son's daughter
-$pgv_lang["bosa_sisters_offspring_6"] 				= "Großneffe";       // sister's daughter's son
-$pgv_lang["bosa_sisters_offspring_7"] 				= "Großnichte";        // sister's daughter's daughter
+$pgv_lang["bosa_sisters_offspring_4"] 				= "Großneffe";
+$pgv_lang["bosa_sisters_offspring_5"] 				= "Großnichte";
+$pgv_lang["bosa_sisters_offspring_6"] 				= "Großneffe";
+$pgv_lang["bosa_sisters_offspring_7"] 				= "Großnichte";
 // for the general case of offspring of the nth generation use the text below
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
@@ -659,22 +667,22 @@ $pgv_lang["n_x_sisters_daughter"] = "%2\$d x Großnichte";
 // the bosa name is used for offspring - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
-$pgv_lang["bosa_2"] 				= "Sohn"; // $pgv_lang["son"];                  // son
-$pgv_lang["bosa_3"] 				= "Tochter"; //$pgv_lang["daughter"];              // daughter
+$pgv_lang["bosa_2"] 				= "Sohn"; // $pgv_lang["son";
+$pgv_lang["bosa_3"] 				= "Tochter"; //$pgv_lang["daughter";
 // 2nd generation
-$pgv_lang["bosa_4"] 				= "Enkel"; //$pgv_lang["Enkel"];              // son's son
-$pgv_lang["bosa_5"] 				= "Enkelin"; //$pgv_lang["Enkelin"];         // son's daughter
-$pgv_lang["bosa_6"] 				= "Enkel"; //$pgv_lang["Enkel"];              // daughter's son
-$pgv_lang["bosa_7"] 				= "Enkelin";//$pgv_lang["Enkelin"];         // daughter's daughter
+$pgv_lang["bosa_4"] 				= "Enkel"; //$pgv_lang["Enkel";
+$pgv_lang["bosa_5"] 				= "Enkelin"; //$pgv_lang["Enkelin";
+$pgv_lang["bosa_6"] 				= "Enkel"; //$pgv_lang["Enkel";
+$pgv_lang["bosa_7"] 				= "Enkelin";//$pgv_lang["Enkelin";
 // 3rd generation
-$pgv_lang["bosa_8"] 				= "Urenkel";        // son's son's son
-$pgv_lang["bosa_9"] 				= "Urenkelin";   // son's son's daughter
-$pgv_lang["bosa_10"] 				= "Urenkel";		   // son's daughter's son
-$pgv_lang["bosa_11"] 				= "Urenkelin";   // son's daughter's daughter
-$pgv_lang["bosa_12"] 				= "Urenkel";        // daughter's son's son
-$pgv_lang["bosa_13"] 				= "Urenkelin";   // daughter's son's daughter
-$pgv_lang["bosa_14"] 				= "Urenkel";		   // daughter's daughter's son
-$pgv_lang["bosa_15"] 				= "Urenkelin";   // daughter's daughter's daughter
+$pgv_lang["bosa_8"] 				= "Urenkel";
+$pgv_lang["bosa_9"] 				= "Urenkelin";
+$pgv_lang["bosa_10"] 				= "Urenkel";
+$pgv_lang["bosa_11"] 				= "Urenkelin";
+$pgv_lang["bosa_12"] 				= "Urenkel";
+$pgv_lang["bosa_13"] 				= "Urenkelin";
+$pgv_lang["bosa_14"] 				= "Urenkel";
+$pgv_lang["bosa_15"] 				= "Urenkelin";
 // for the general case of offspring of the nth generation use the text below
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
@@ -691,10 +699,10 @@ $pgv_lang["n_x_granddaughter_from_daughter"] = "%3\$d x Urenkelin";
 $pgv_lang["sosa_uncle_2"] 				= $pgv_lang["uncle"];            // father's brother
 $pgv_lang["sosa_uncle_3"] 				= $pgv_lang["uncle"];            // mother's brother
 // 2nd generation
-$pgv_lang["sosa_uncle_4"] 				= "Großonkel";      // fathers's father's brother
-$pgv_lang["sosa_uncle_5"] 				= "Großonkel";      // father's mother's brother
-$pgv_lang["sosa_uncle_6"] 				= "Großonkel";      // mother's father's brother
-$pgv_lang["sosa_uncle_7"] 				= "Großonkel";      // mother's mother's brother
+$pgv_lang["sosa_uncle_4"] 				= "Großonkel";
+$pgv_lang["sosa_uncle_5"] 				= "Großonkel";
+$pgv_lang["sosa_uncle_6"] 				= "Großonkel";
+$pgv_lang["sosa_uncle_7"] 				= "Großonkel";
 // for the general case of uncles of the nth degree use the text below
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
@@ -709,10 +717,10 @@ $pgv_lang["n_x_maternal_uncle"]	    = "%2\$d x Großonkel";
 $pgv_lang["sosa_aunt_2"] 				= $pgv_lang["aunt"];            // father's sister
 $pgv_lang["sosa_aunt_3"] 				= $pgv_lang["aunt"];            // mother's sister
 // 2nd generation
-$pgv_lang["sosa_aunt_4"] 				= "Großtante";      // fathers's father's sister
-$pgv_lang["sosa_aunt_5"] 				= "Großtante";      // father's mother's sister
-$pgv_lang["sosa_aunt_6"] 				= "Großtante";      // mother's father's sister
-$pgv_lang["sosa_aunt_7"] 				= "Großtante";      // mother's mother's sister
+$pgv_lang["sosa_aunt_4"] 				= "Großtante";
+$pgv_lang["sosa_aunt_5"] 				= "Großtante";
+$pgv_lang["sosa_aunt_6"] 				= "Großtante";
+$pgv_lang["sosa_aunt_7"] 				= "Großtante";
 // for the general case of aunts of the nth degree use the text below
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
@@ -720,7 +728,7 @@ $pgv_lang["sosa_aunt_7"] 				= "Großtante";      // mother's mother's sister
 $pgv_lang["n_x_paternal_aunt"]		= "%2\$d x Großtante";  // "Großtante n. Grades"
 $pgv_lang["n_x_maternal_aunt"]	    = "%2\$d x Großtante";
 // if a specific cousin relationship cannot be represented in a language translate as "";
-$pgv_lang["male_cousin_1"]              = "Cousin";  // or "Vetter"
+$pgv_lang["male_cousin_1"]              = "Cousin";  // or "Vetter";
 $pgv_lang["male_cousin_2"]              = "Cousin 2. Grades";
 $pgv_lang["male_cousin_3"]              = "Cousin 3. Grades";
 $pgv_lang["male_cousin_4"]              = "Cousin 4. Grades";
@@ -741,7 +749,7 @@ $pgv_lang["male_cousin_18"]             = "Cousin 18. Grades";
 $pgv_lang["male_cousin_19"]             = "Cousin 19. Grades";
 $pgv_lang["male_cousin_20"]             = "Cousin 20. Grades";
 $pgv_lang["male_cousin_n"]              = "Cousin %d. Grades";
-$pgv_lang["female_cousin_1"]            = "Cousine";  // or // "Base"
+$pgv_lang["female_cousin_1"]            = "Cousine";  // or // "Base";
 $pgv_lang["female_cousin_2"]            = "Cousine 2. Grades";
 $pgv_lang["female_cousin_3"]            = "Cousine 3. Grades";
 $pgv_lang["female_cousin_4"]            = "Cousine 4. Grades";
@@ -1504,5 +1512,11 @@ $pgv_lang["result_page"]				= "Seite";
 $pgv_lang["record_not_found"]			= "Der gewünschte GEDCOM Datensatz wurde nicht gefunden.  Der Grund dafür könnte eine ungültige Personen-Verbindung oder eine beschädigte GEDCOM-Datei sein.";
 $pgv_lang["page_size"]					= "Format";
 $pgv_lang["descend_report"]				= "Nachfahren Bericht";
+$pgv_lang["activate"]					= "Aktivieren";
+$pgv_lang["stop"]					= "Stop";
+$pgv_lang["random_media_start_slide"]	= "Wiedergabe automatisch abspielen?";
+$pgv_lang["random_media_ajax_controls"]	= "AJAX-Regler zeigen?";
+$pgv_lang["play"]					= "Start";
+$pgv_lang["deactivate"]					= "Halten";
 $pgv_lang["descendancy_header"]		= "Nachfahren Bericht von ";
 ?>

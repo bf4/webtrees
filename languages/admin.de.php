@@ -239,7 +239,7 @@ $pgv_lang["sybase"]								= "Sybase";
 $pgv_lang["sync_gedcom"]						= "Benutzer Einstellungen mit den GEDCOM Daten synchronisieren";
 $pgv_lang["system_time"]						= "Aktuelle Zeit des Systems:";
 $pgv_lang["user_time"]							= "Aktuelle Zeit beim Benutzer:";
-$pgv_lang["TBLPREFIX"]							= "Prefix der Datenbank Tabelle";
+$pgv_lang["TBLPREFIX"]							= "Präfix der Datenbank Tabellennamen";
 $pgv_lang["themecustomization"]					= "Anpassung der Theme";
 $pgv_lang["time_limit"]				= "Zeitbeschränkung:";
 $pgv_lang["title_manage_servers"]   = "Internetseiten verwalten";
@@ -290,5 +290,19 @@ $pgv_lang["date_time"]				= "Datum und Uhrzeit";
 $pgv_lang["log_message"]			= "Mitteilung";
 $pgv_lang["searchtype"]				= "Art der Suche";
 $pgv_lang["query"]					= "Abfrage";
+$pgv_lang["sanity_err0"]			= "Fehler:";
+$pgv_lang["sanity_err1"]			= "Ihre PHP-Version muss mindestens 4.3 sein.";
+$pgv_lang["sanity_err2"]			= "Datei oder Verzeichnis <i>#GLOBALS[whichFile]#</i> ist nicht vorhanden. Bitte prüfen Sie, ob diese Datei oder dieses Verzeichnis wirklich nicht vorhanden ist, nicht mit falschem Namen benannt ist, und die richtigen Lese-Rechte hat.";
+$pgv_lang["sanity_err3"]			= "Die Datei <i>#GLOBALS[whichFile]#</i> wurde nicht richtig auf den Server hochgeladen. Bitte wiederholen Sie das Hochladen.";
+$pgv_lang["sanity_err4"]			= "Die Datei <i>config.php</i> enthält Fehler.";
+$pgv_lang["sanity_err5"]			= "Die Datei <i>config.php</i> kann nicht geschrieben werden.";
+$pgv_lang["sanity_err6"]			= "Das Verzeichnis <i>#GLOBALS[INDEX_DIRECTORY]#</i> hat falsche Schreib-Rechte.";
+$pgv_lang["sanity_warn0"]			= "Warnungen:";
+$pgv_lang["sanity_warn1"]			= "Das Medien-Verzeichnis <i>#GLOBALS[MEDIA_DIRECTORY]#</i> hat falsche Schreib-Rechte. Sie können durch PhpGedView keine Medien-Dateien hochladen oder Miniaturansichen erstellen.";
+$pgv_lang["sanity_warn2"]			= "Das Miniaturansichten-Verzeichnis <i>#GLOBALS[MEDIA_DIRECTORY]#thumbs</i> hat falsche Schreib-Rechte. Sie können durch PhpGedView keine Miniaturansichten hochladen oder erstellen.";
+$pgv_lang["sanity_warn3"]			= "Tools zur Bearbeitung von Bildern (GD Library) sind nicht vorhanden. PhpGedView funktioniert, aber einige Teile, zB Miniaturansichten-Erstellung und Kreisdiagramm, benötigen die GD Library. Bitte besuchen Sie <a href='http://www.php.net/manual/en/ref.image.php'>http://www.php.net/manual/en/ref.image.php</a> um ausführlichere Auskunft zu bekommen.";
+$pgv_lang["sanity_warn4"]			= "Tools zur Bearbeitung von XML-Dateien (XML Parser) sind nicht vorhanden.  PhpGedView funktioniert, aber einige Teile, zb Erstellung von Berichten und Verbindungen zu anderen PhpGedView Seiten, benötigen die XML Parser Tools. Bitte besuchen Sie <a href='http://www.php.net/manual/en/ref.xml.php'>http://www.php.net/manual/en/ref.xml.php</a> um ausführlichere Auskunft zu bekommen.";
+$pgv_lang["sanity_warn5"]			= "Tools zur Bearbeitung von XML-Dateien (DOM XML Library) sind nicht vorhanden. PhpGedView funktioniert, aber einige Teile, zB Gramps Export des Sammelbehälters, herunterladen, und Verbindungen zu anderen PhpGedView Seiten, benötigen die DOM XML Library. Bitte besuchen Sie <a href='http://www.php.net/manual/en/ref.dom.php'>http://www.php.net/manual/en/ref.dom.php</a> um ausführlichere Auskunft zu bekommen.";
+$pgv_lang["sanity_warn6"]			= "Tools zur Sonderbearbeitung von Daten (Calendar Library) sind nicht vorhanden. PhpGedView funktioniert, aber einige Teile, zB Bearbeitung von Hebräischen oder Französischen Daten, benötigen die Calendar Library. Die Calendar Library ist oft für das richtige Ablaufen von PhpGedView nicht notwendig. Bitte besuchen Sie <a href='http://www.php.net/manual/en/ref.calendar.php'>http://www.php.net/manual/en/ref.calendar.php</a> um ausführlichere Auskunft zu bekommen.";
 
 ?>

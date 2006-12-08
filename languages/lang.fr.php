@@ -479,6 +479,7 @@ $pgv_lang["view_source"]                = "Afficher la source";
 $pgv_lang["view_object"]                = "Afficher l'objet";
 $pgv_lang["prev"]                       = "Précédent";
 $pgv_lang["next"]                       = "Suivant";
+$pgv_lang["next_image"]                 = "Image suivante";
 $pgv_lang["file_not_found"]             = "Fichier non trouvé";
 $pgv_lang["medialist_show"]             = "Afficher";
 $pgv_lang["per_page"]                   = "Objets MultiMedia par page";

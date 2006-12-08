@@ -44,6 +44,8 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["random_media_start_slide_help"]			8 Dec 2006				W
+*$pgv_lang["random_media_ajax_controls_help"]		8 Dec 2006				W
 *$pgv_lang["def_gedcom_date_help"]					12 Nov 2006				W		Reverse 7 Nov 2006 change
 +$pgv_lang["cal_dowload_help"]						9 Nov 2006				A
 +$pgv_lang["style_help"]							7 Nov 2006				A
