@@ -332,7 +332,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 						 print "<a href=\"mailto:".$event."\">".$event."</a>";
 					}
  					else if (strstr("FAX PHON FILE", $fact." ")) print "&lrm;".$event." &lrm;";
-					else if (!strstr("ADDR ", $fact." ") && $event!="Y") print PrintReady($event." ");
+					else if (!strstr("ADDR _RATID ", $fact." ") && $event!="Y") print PrintReady($event." ");
 					$temp = trim(get_cont(2, $factrec), "\r\n");
 					if (strstr("PHON ADDR ", $fact." ")===false && $temp!="") {
 						if ($WORD_WRAPPED_NOTES) print " ";

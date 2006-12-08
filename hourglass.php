@@ -43,6 +43,38 @@ else print "\n\t<h2 style=\"text-align: center\">".$pgv_lang["hourglass_chart"].
 	function paste_id(value) {
 		pastefield.value=value;
 	}
+	
+	// <!--Hourglass control..... Ajax arrows at the end of chart-->
+ 	function ChangeDiv(div_id, ARID, full, spouse, width) {
+ 		var divelement = document.getElementById(div_id);
+ 		var oXmlHttp = createXMLHttp();	
+ 		oXmlHttp.open("get", "hourglass_ajax.php?show_full="+full+"&pid="+ ARID + "&generations=1&box_width="+width+"&show_spouse="+spouse, true);
+ 		oXmlHttp.onreadystatechange=function()
+ 		{
+  			if (oXmlHttp.readyState==4)
+   			{	
+    				divelement.innerHTML = oXmlHttp.responseText;
+    		}
+   		};
+  		oXmlHttp.send(null);	
+  		return false;
+	}
+	
+	// <!--Hourglass control..... Ajax arrows at the end of descendants chart-->
+	function ChangeDis(div_id, ARID, full, spouse, width) {
+ 		var divelement = document.getElementById(div_id);
+ 		var oXmlHttp = createXMLHttp();	
+ 		oXmlHttp.open("get", "hourglass_ajax_dis.php?show_full="+full+"&pid="+ ARID + "&generations=1&box_width="+width+"&show_spouse="+spouse, true);
+ 		oXmlHttp.onreadystatechange=function()
+ 		{
+  			if (oXmlHttp.readyState==4)
+   			{	
+    				divelement.innerHTML = oXmlHttp.responseText;
+    		}
+   		};
+  		oXmlHttp.send(null);	
+  		return false;
+	}
 //-->
 </script>
 

@@ -98,10 +98,13 @@ function &dbquery($sql, $show_error=true, $count=0) {
 	 * Debugging code for multi-database support
 	 */
 	if (preg_match('/[^\\\]"/', $sql)>0) {
-		pgv_error_handler(2, "<span class=\"error\">Double quote query: $sql</span><br>","","");
+		pgv_error_handler(2, "<span class=\"error\">Incompatible SQL syntax. Double quote query: $sql</span><br>","","");
 	}
 	if (preg_match('/LIMIT \d/', $sql)>0) {
-		pgv_error_handler(2,"<span class=\"error\">Limit query error, use dbquery \$count parameter instead: $sql</span><br>","","");
+		pgv_error_handler(2,"<span class=\"error\">Incompatible SQL syntax. Limit query error, use dbquery \$count parameter instead: $sql</span><br>","","");
+	}
+	if (preg_match('/(&&)|(\|\|)/', $sql)>0) {
+		pgv_error_handler(2,"<span class=\"error\">Incompatible SQL syntax.  Use 'AND' instead of '&&'.  Use 'OR' instead of '||'.: $sql</span><br>","","");
 	}
 	
 	if ($count == 0)

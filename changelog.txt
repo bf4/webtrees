@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Added AJAX extensions to hourglass chart (Neumont)
  - Fixed Random Media player controls should be at top of block (canajun2eh)
  - Fixed Missing "modules" directory causes errors (canajun2eh)
  - Fixed Remote linking to father/mother etc cause strange results (yalnifj)
