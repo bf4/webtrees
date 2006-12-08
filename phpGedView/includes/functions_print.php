@@ -46,7 +46,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 global $pgv_lang, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $show_full, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
 	 global $CONTACT_EMAIL, $CONTACT_METHOD, $TEXT_DIRECTION, $DEFAULT_PEDIGREE_GENERATIONS, $OLD_PGENS, $talloffset, $PEDIGREE_LAYOUT, $MEDIA_DIRECTORY;
 	 global $PGV_IMAGE_DIR, $PGV_IMAGES, $ABBREVIATE_CHART_LABELS, $USE_MEDIA_VIEWER;
-	 global $chart_style, $box_width, $generations;
+	 global $chart_style, $box_width, $generations, $show_spouse, $show_full;
 	 global $CHART_BOX_TAGS, $SHOW_LDS_AT_GLANCE;
 	 global $SEARCH_SPIDER;
 	 flush();
@@ -91,7 +91,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 					if (file_exists("ancestry.php")) print "<a href=\"ancestry.php?rootid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\"><b>".$pgv_lang["ancestry_chart"]."</b></a><br />\n";
 					if (file_exists("compact.php"))  print "<a href=\"compact.php?rootid=$pid&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\"><b>".$pgv_lang["compact_chart"]."</b></a><br />\n";
 					if (file_exists("fanchart.php") and defined("IMG_ARC_PIE") and function_exists("imagettftext"))  print "<a href=\"fanchart.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\"><b>".$pgv_lang["fan_chart"]."</b></a><br />\n";
-					if (file_exists("hourglass.php")) print "<a href=\"hourglass.php?pid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\"><b>".$pgv_lang["hourglass_chart"]."</b></a><br />\n";
+					if (file_exists("hourglass.php")) print "<a href=\"hourglass.php?pid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM&amp;show_spouse=$show_spouse&amp;show_full=$show_full\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\"><b>".$pgv_lang["hourglass_chart"]."</b></a><br />\n";
 					$ct = preg_match_all("/1\s*FAMS\s*@(.*)@/", $indirec, $match, PREG_SET_ORDER);
 					for ($i=0; $i<$ct; $i++) {
 						 $famid = $match[$i][1];
