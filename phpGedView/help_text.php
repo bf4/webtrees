@@ -38,7 +38,7 @@ require $helptextfile["english"];
 // Load language keys for language other than English
 if ($LANGUAGE != "english") {
 	@include($helptextfile[$LANGUAGE]);
-	@include("modules/research_assistant/languages/lang.".$lang_short_cut["english"].".php");
+	@include("modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php");
 	@include("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
 	@include("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
 	@include("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php");
