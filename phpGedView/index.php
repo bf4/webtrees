@@ -320,7 +320,7 @@ else {
 		target = document.getElementById(targetId);
 		if (!target) return false;
 		
-		target.style.height = (target.offsetHeight-4) + "px";
+		target.style.height = (target.offsetHeight) + "px";
 		if (loading) target.innerHTML = "<br /><br /><?php print $pgv_lang['loading']; ?><br /><br />";
 		
 		var oXmlHttp = createXMLHttp();

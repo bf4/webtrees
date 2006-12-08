@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed Random Media player controls should be at top of block (canajun2eh)
  - Fixed Missing "modules" directory causes errors (canajun2eh)
  - Fixed Remote linking to father/mother etc cause strange results (yalnifj)
  - Fixed [ 1606215 ] editconfig.php Should Allow Viewing Even When Not Writable (yalnifj)
