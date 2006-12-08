@@ -209,15 +209,17 @@ foreach($users as $indexval => $user) {
    </tr>
 <?php    }
 
-$rep = opendir('./modules/');
-while ($file = readdir($rep)) {
-    if(($file <> ".") && ($file <> "..") && (is_dir('./modules/'.$file))) {
-        if (file_exists("modules/".$file."/admin-config.php")) {
-            require "modules/".$file."/admin-config.php";
-        }
-    }
+if (file_exists("modules")) {
+	$rep = opendir('./modules/');
+	while ($file = readdir($rep)) {
+	    if(($file <> ".") && ($file <> "..") && (is_dir('./modules/'.$file))) {
+	        if (file_exists("modules/".$file."/admin-config.php")) {
+	            require "modules/".$file."/admin-config.php";
+	        }
+	    }
+	}
+	closedir($rep);
 }
-closedir($rep);
 
 ?>
   </table>
