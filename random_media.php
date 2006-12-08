@@ -145,7 +145,7 @@ if ($MULTI_MEDIA) {
 					if (isset($PGV_IMAGES[$image]['other'])) print "<img id=\"play_stop\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$image]['other']."\" border=\"0\" alt=\"".$pgv_lang["play"]."/".$pgv_lang["stop"]."\" title=\"".$pgv_lang["play"]."/".$pgv_lang["stop"]."\"/>";
 					else print $pgv_lang["play"]."/".$pgv_lang["stop"];
 					print "</a>\n";
-					print "<a href=\"javascript: ".$pgv_lang["next"].";\" onclick=\"return ajaxBlock('random_picture_content$index', 'print_random_media', '$side', $index, true);\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES['rdarrow']['other']."\" border=\"0\" alt=\"".$pgv_lang["next"]."\" title=\"".$pgv_lang["next"]."\" /></a>\n";
+					print "<a href=\"javascript: ".$pgv_lang["next"].";\" onclick=\"return ajaxBlock('random_picture_content$index', 'print_random_media', '$side', $index, true);\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES['rdarrow']['other']."\" border=\"0\" alt=\"".$pgv_lang["next_image"]."\" title=\"".$pgv_lang["next_image"]."\" /></a>\n";
 					?>
 					</div>
 					<script language="JavaScript" type="text/javascript">
