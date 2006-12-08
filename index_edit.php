@@ -100,16 +100,18 @@ $d->close();
  * 
  * Load List of Blocks in modules/XX/blocks directories
  */
-$dir=dir("modules");
-while (false !== ($entry = $dir->read())) {
-	if (!strstr($entry,".") && ($entry!="..") && ($entry!="CVS")&& !strstr($entry, "svn")) {
-		$path = 'modules/' . $entry.'/blocks';
-		if (is_readable($path)) {
-			$d=dir($path);
-			while (false !== ($entry = $d->read())) {
-				if (($entry!=".") && ($entry!="..") && ($entry!="CVS")&& !strstr($entry, "svn")&&(strstr($entry, ".php")!==false)) {
-					$p=$path.'/'.$entry;
-					include_once($p);
+if (file_exists("modules")) {
+	$dir=dir("modules");
+	while (false !== ($entry = $dir->read())) {
+		if (!strstr($entry,".") && ($entry!="..") && ($entry!="CVS")&& !strstr($entry, "svn")) {
+			$path = 'modules/' . $entry.'/blocks';
+			if (is_readable($path)) {
+				$d=dir($path);
+				while (false !== ($entry = $d->read())) {
+					if (($entry!=".") && ($entry!="..") && ($entry!="CVS")&& !strstr($entry, "svn")&&(strstr($entry, ".php")!==false)) {
+						$p=$path.'/'.$entry;
+						include_once($p);
+					}
 				}
 			}
 		}
