@@ -114,7 +114,7 @@ class ClippingsControllerRoot extends BaseController {
 				else $type = strtolower($obj->getType());
 			}
 			else if (empty($id)) $action="";
-			if (!empty($id) && $type != 'fam' && $type != 'indi')
+			if (!empty($id) && $type != 'fam' && $type != 'indi' && $type != 'sour')
 				$action = 'add1';
 		}
 
@@ -126,6 +126,14 @@ class ClippingsControllerRoot extends BaseController {
 			$clipping['gedcom'] = $GEDCOM;
 			$ret = $this->add_clipping($clipping);
 			if ($ret) {
+				if ($type == 'sour') {
+					if ($others == 'linked') {
+						foreach (search_indis(" SOUR @$id@") as $indi=>$dummy)
+							$ret=$this->add_clipping(array('type'=>'indi', 'id'=>$indi));
+						foreach (search_fams(" SOUR @$id@") as $fam=>$dummy)
+							$ret=$this->add_clipping(array('type'=>'fam', 'id'=>$fam));
+					}
+				}
 				if ($type == 'fam') {
 					if ($others == 'parents') {
 						$parents = find_parents($id);
