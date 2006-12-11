@@ -43,6 +43,9 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["which_s_links"]							11 Dec 2006			A
++$pgv_lang["just_source"]							11 Dec 2006			A
++$pgv_lang["linked_source"]							11 Dec 2006			A
 *$pgv_lang["random_media_ajax_controls"]			8 Dec 2006				W
 +$pgv_lang["next_image"]							8 Dec 2006				A
 +$pgv_lang["resolution"]							13 Nov 2006				A

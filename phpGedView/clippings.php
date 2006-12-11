@@ -70,6 +70,18 @@ if ($action=='add') {
 			<tr><td class="topbottombar"><input type="submit" value="<?php print $pgv_lang["continue"]?>" />
 		</table>
 		</form>
+	<?php } else if ($type=='sour')  {?>
+		<form action="clippings.php" method="get">
+		<table>
+			<tr><td class="topbottombar"><?php print $pgv_lang["which_s_links"]?>
+			<input type="hidden" name="id" value="<?php print $id; ?>" />
+			<input type="hidden" name="type" value="<?php print $type ?>" />
+			<input type="hidden" name="action" value="add1" /></tr></td>
+			<tr><td class="optionbox"><input type="radio" name="others" checked value="none" /><?php print $pgv_lang["just_source"]?></tr></td>
+			<tr><td class="optionbox"><input type="radio" name="others" value="linked" /><?php print $pgv_lang["linked_source"]?></tr></td>
+			<tr><td class="topbottombar"><input type="submit" value="<?php print $pgv_lang["continue"]?>" />
+		</table>
+		</form>
 	<?php }
 	}
 $ct = count($cart);
