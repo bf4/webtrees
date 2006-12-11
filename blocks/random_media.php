@@ -138,14 +138,17 @@ if ($MULTI_MEDIA) {
 				print "</table>";
 				print "<div class=\"blockcontent\" id=\"random_picture_container$index\">\n";
 				if ($config['controls']=='yes') {
-					print "<div class=\"center\" id=\"random_picture_controls$index\">\n<br />";
 					if ($config['start']=='yes' || (isset($_COOKIE['rmblockplay'])&&$_COOKIE['rmblockplay']=='true')) $image = "stop";
 					else $image = "rarrow";
-					print "<a href=\"javascript: ".$pgv_lang["play"]."/".$pgv_lang["stop"].";\" onclick=\"togglePlay(); return false;\">";
+					$linkNextImage = "<a href=\"javascript: ".$pgv_lang["next_image"]."\" onclick=\"return ajaxBlock('random_picture_content$index', 'print_random_media', '$side', $index, true);\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES['rdarrow']['other']."\" border=\"0\" alt=\"".$pgv_lang["next_image"]."\" title=\"".$pgv_lang["next_image"]."\" /></a>\n";
+	
+					print "<div class=\"center\" id=\"random_picture_controls$index\">\n<br />";
+					if ($TEXT_DIRECTION=="rtl") print $linkNextImage;
+					print "<a href=\"javascript: ".$pgv_lang["play"]."/".$pgv_lang["stop"]."\" onclick=\"togglePlay(); return false;\">";
 					if (isset($PGV_IMAGES[$image]['other'])) print "<img id=\"play_stop\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$image]['other']."\" border=\"0\" alt=\"".$pgv_lang["play"]."/".$pgv_lang["stop"]."\" title=\"".$pgv_lang["play"]."/".$pgv_lang["stop"]."\"/>";
 					else print $pgv_lang["play"]."/".$pgv_lang["stop"];
 					print "</a>\n";
-					print "<a href=\"javascript: ".$pgv_lang["next"].";\" onclick=\"return ajaxBlock('random_picture_content$index', 'print_random_media', '$side', $index, true);\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES['rdarrow']['other']."\" border=\"0\" alt=\"".$pgv_lang["next_image"]."\" title=\"".$pgv_lang["next_image"]."\" /></a>\n";
+					if ($TEXT_DIRECTION=="ltr") print $linkNextImage;
 					?>
 					</div>
 					<script language="JavaScript" type="text/javascript">
@@ -187,12 +190,12 @@ if ($MULTI_MEDIA) {
 					</script>
 					<?php
 				}
-				print "<div id=\"random_picture_content$index\">";
+				print "<div class=\"center\" id=\"random_picture_content$index\">";
 			}
 			$imgsize = findImageSize($medialist[$value]["FILE"]);
 			$imgwidth = $imgsize[0]+40;
 			$imgheight = $imgsize[1]+150;
-			print "<table id=\"random_picture_box\" width=\"95%\"><tr><td valign=\"top\"";
+			print "<table id=\"random_picture_box\" width=\"100%\"><tr><td valign=\"top\"";
 
 			if ($block) print " align=\"center\" class=\"details1\"";
 			else print " class=\"details2\"";
