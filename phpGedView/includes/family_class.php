@@ -301,8 +301,8 @@ class Family extends GedcomRecord {
 	 * @return boolean true if there is a non-empty divorce record, false if no divorce record exists
 	 */
 	function isDivorced() {
-		$divRec = $this-> getDivorceRecord();
-		return !empty($divRec);
+		// Bypass privacy rules so we can differentiate Spouse from Ex-Spouse
+		return preg_match('/[\r\n]1 DIV( Y)?[\r\n]/', find_gedcom_record($this->xref));
 	}
 
 	/**
