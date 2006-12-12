@@ -717,8 +717,7 @@ class IndividualControllerRoot extends BaseController {
 			$labels["brother"] = $pgv_lang["halfbrother"];
 		}
 		if ($type=="spouse") {
-			$div_rec = $family->getDivorceRecord();
-			if (!empty($div_rec)) {
+			if ($family->isDivorced()) {
 				$labels["parent"] = $pgv_lang["ex-spouse"];
 				$labels["mother"] = $pgv_lang["ex-wife"];
 				$labels["father"] = $pgv_lang["ex-husband"];
