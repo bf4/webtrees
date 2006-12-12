@@ -89,12 +89,12 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 		if ($ct>0) {
 			$softrec = get_sub_record(1, "1 SOUR", $head);
 			$tt= preg_match("/2 NAME (.*)/", $softrec, $tmatch);
-			if ($tt>0) $title = trim($tmatch[1]);
+			if ($tt>0) $title = printReady(trim($tmatch[1]));
 			else $title = trim($match[1]);
 			if (!empty($title)) {
 					$text = str_replace(array("#SOFTWARE#", "#CREATED_SOFTWARE#"), $title, $pgv_lang["gedcom_created_using"]);
 					$tt = preg_match("/2 VERS (.*)/", $softrec, $tmatch);
-					if ($tt>0) $version = trim($tmatch[1]);
+					if ($tt>0) $version = printReady(trim($tmatch[1]));
 					else $version="";
 					$text = str_replace(array("#VERSION#", "#CREATED_VERSION#"), $version, $text);
 					print $text;
