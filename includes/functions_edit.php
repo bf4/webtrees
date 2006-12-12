@@ -960,8 +960,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 
 	if (in_array($fact, $emptyfacts)&& (empty($value) or $value=="y" or $value=="Y")) {
 		$value = strtoupper($value);
-		if ($fact=="BIRT" or $fact=="MARR") $value="Y"; // default YES
-		else if ($level==1) $value="Y"; // default YES
+		if ($fact=="MARR" or $level==1) $value="Y"; // default YES
 		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".$value."\" />";
 		if ($level<=1) {
 			print "<input type=\"checkbox\" ";
