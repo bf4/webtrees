@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1613742 ] My Account - Undefined indexes (canajun2eh)
  - Added AJAX extensions to hourglass chart (Neumont)
  - Fixed Random Media player controls should be at top of block (canajun2eh)
  - Fixed Missing "modules" directory causes errors (canajun2eh)
