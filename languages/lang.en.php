@@ -454,6 +454,7 @@ $pgv_lang["name_description"]		= "Name / Description";
 $pgv_lang["remove"] 				= "Remove";
 $pgv_lang["empty_cart"] 			= "Empty Cart";
 $pgv_lang["download_now"]			= "Download Now";
+$pgv_lang["download_file"]			= "Download file #GLOBALS[whichFile]#";
 $pgv_lang["indi_downloaded_from"]	= "This Individual was downloaded from:";
 $pgv_lang["family_downloaded_from"] = "This Family was downloaded from:";
 $pgv_lang["source_downloaded_from"] = "This Source was downloaded from:";

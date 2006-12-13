@@ -1353,7 +1353,9 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 	echo "<td>";
 	if (strpos($option, "noDownload")===false) {
 		$uri = "http://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
-		$title = $pgv_lang["download_now"].": hCal-events.ics";
+		global $whichFile;
+		$whichFile = "hCal-events.ics";
+		$title = print_text("download_file",0,1);
 		if ($n) echo "<a href=\"http://feeds.technorati.com/events/".$uri."\"><img src=\"images/hcal.png\" border=\"0\" alt=\"".$title."\" title=\"".$title."\" /></a>";
 	}
 	echo "</td>";
