@@ -353,6 +353,7 @@ $pgv_lang["name_description"]                = "Name / Beschreibung";
 $pgv_lang["remove"]                        = "Entfernen";
 $pgv_lang["empty_cart"]                        = "Sammelbehälter leeren";
 $pgv_lang["download_now"]                = "Jetzt herunterladen";
+$pgv_lang["download_file"]                = "Datei #GLOBAL[whichFile]# herunterladen";
 $pgv_lang["indi_downloaded_from"]        = "Daten dieser Person wurden geladen von:";
 $pgv_lang["family_downloaded_from"]        = "Daten dieser Familie wurden geladen von:";
 $pgv_lang["source_downloaded_from"]        = "Daten dieser Quelle wurden geladen von:";
