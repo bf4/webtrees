@@ -419,7 +419,11 @@ function addnewsource(field) {
 
 function valid_date(datefield) {
 	months = new Array("JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC");
-	// year only no validation
+
+	//-- don't try to validate empty dates for Safari/opera
+	if (datefield.value=="") return;
+	
+	// year only no validation for Safari/opera
 	var qsearch = /^(\d\d\d\d)$/i;
  	var found = qsearch.exec(datefield.value);
  	if (found) {
