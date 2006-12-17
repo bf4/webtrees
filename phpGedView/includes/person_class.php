@@ -257,8 +257,7 @@ class Person extends GedcomRecord {
 			$pdate=parse_date($this->bdate);
 			if ($pdate[0]["year"]>0) {
 				$this->dest = true;
-//				$this->drec = "2 DATE EST BEF ".($pdate[0]["year"]+$MAX_ALIVE_AGE);
-				$this->drec = "2 DATE BEF ".($pdate[0]["year"]+$MAX_ALIVE_AGE);
+				$this->drec .= "\n2 DATE BEF ".($pdate[0]["year"]+$MAX_ALIVE_AGE);
 				$this->ddate = get_gedcom_value("DATE", 2, $this->drec, '', false);
 			}
 			else if (!empty($this->drec)) $this->ddate = $pgv_lang["yes"];
@@ -268,8 +267,7 @@ class Person extends GedcomRecord {
 			$pdate=parse_date($this->ddate);
 			if ($pdate[0]["year"]>0) {
 				$this->best = true;
-//				$this->brec = "2 DATE EST AFT ".($pdate[0]["year"]-$MAX_ALIVE_AGE);
-				$this->brec = "2 DATE AFT ".($pdate[0]["year"]-$MAX_ALIVE_AGE);
+				$this->brec .= "\n2 DATE AFT ".($pdate[0]["year"]-$MAX_ALIVE_AGE);
 				$this->bdate = get_gedcom_value("DATE", 2, $this->brec, '', false);
 			}
 			else if (!empty($this->brec)) $this->bdate = $pgv_lang["yes"];
@@ -282,7 +280,7 @@ class Person extends GedcomRecord {
 	 */
 	function getBirthRecord($estimate=true) {
 		if (empty($this->brec)) $this->_parseBirthDeath();
-		if (!$estimate && $this->best) return '';
+		if (!$estimate && $this->best) return get_sub_record(1, "1 BIRT", $this->gedrec);
 		return $this->brec;
 	}
 	/**
@@ -292,8 +290,7 @@ class Person extends GedcomRecord {
 	 */
 	function getDeathRecord($estimate=true) {
 		if (empty($this->drec)) $this->_parseBirthDeath();
-		//if (!$estimate && $this->dest && !$this->isDead()) return '';
-		if (!$estimate && $this->dest) return '';
+		if (!$estimate && $this->dest) return get_sub_record(1, "1 DEAT", $this->gedrec);
 		return $this->drec;
 	}
 	/**
