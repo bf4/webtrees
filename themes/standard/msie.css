@@ -11,11 +11,3 @@
 .dimflag {
 	filter: alpha(opacity=40);
 }
-.small_inner_block {
-/*	height: auto;   */
-	max-height: 200px;
-	overflow: auto;
-	font-family: tahoma, verdana, arial, helvetica, sans-serif;
-	font-size: 10px;
-	text-decoration: none;
-}

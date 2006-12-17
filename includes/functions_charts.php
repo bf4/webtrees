@@ -34,13 +34,18 @@ if (strstr($_SERVER["SCRIPT_NAME"], "functions")) {
  *
  * @param int $sosa
  * @param string $pid optional pid
+ * @param bool $makeBlank   should the number show or not (to align boxes in Descendancy chart)
  */
-function print_sosa_number($sosa, $pid = "") {
+function print_sosa_number($sosa, $pid = "", $makeBlank = false) {
 	global $view, $pbwidth, $pbheight;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
-	print "<td class=\"subheaders\" style=\"vertical-align: middle; white-space: nowrap;\">";
-	print $sosa;
+	if (substr($sosa,-1,1)==".") $personLabel = substr($sosa,0,-1);
+	else $personLabel = $sosa;
+	if ($makeBlank) $visibility = "hidden";
+	else $visibility = "normal";
+	print "<td class=\"subheaders\" style=\"vertical-align: middle; white-space: nowrap; visibility: $visibility;\">";
+	print "&lrm;$personLabel&lrm;";
 	if ($sosa != "1") {
 		print "<br />";
 		print_url_arrow($pid, "#$pid", "#$pid");
@@ -114,7 +119,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	print "\n\t<table style=\"width: " . ($pbwidth) . "px; height: " . $pbheight . "px;\" border=\"0\"><tr>";
 	if ($parid) {
 		if ($husb->getXref()==$parid) print_sosa_number($label);
-		else print_sosa_number(str_repeat("&nbsp; ", strlen($label)-1));
+		else print_sosa_number($label, "", true);
 	}
 	else if ($sosa > 0) print_sosa_number($sosa * 2);
 	if (isset($newparents) && $husb->getXref() != $newparents["HUSB"]) {
@@ -171,7 +176,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	print "</tr></table>\n\n";
 	if ($sosa!=0) {
 		print "<a href=\"family.php?famid=$famid\" class=\"details1\">";
-		if ($SHOW_ID_NUMBERS) print "($famid)&nbsp;&nbsp;";
+		if ($SHOW_ID_NUMBERS) print "&lrm;($famid)&lrm;&nbsp;&nbsp;";
 		else print str_repeat("&nbsp;", 10);
 		if (showFact("MARR", $famid)) print_simple_fact($family->getGedcomRecord(), "MARR", $wife->getXref()); else print $pgv_lang["private"];
 		print "</a>";
@@ -186,7 +191,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	print "\n\t<table style=\"width: " . ($pbwidth) . "px; height: " . $pbheight . "px;\"><tr>";
 	if ($parid) {
 		if ($wife->getXref()==$parid) print_sosa_number($label);
-		else print_sosa_number(str_repeat("&nbsp; ", strlen($label)-1));
+		else print_sosa_number($label, "", true);
 	}
 	else if ($sosa > 0) print_sosa_number($sosa * 2 + 1);
 	if (isset($newparents) && $wife->getXref() != $newparents["WIFE"]) {
@@ -1159,7 +1164,7 @@ function find_last_spouse($pid) {
  */
 function print_cousins($famid, $personcount="1") {
 	global $show_full, $bheight, $bwidth;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $TEXT_DIRECTION;
 
 	$fchildren = get_children_ids($famid);
 	$kids = count($fchildren);
@@ -1176,7 +1181,10 @@ function print_cousins($famid, $personcount="1") {
 		$ctkids = count($fchildren);
 		$i = 1;
 		foreach ($fchildren as $indexval => $fchil) {
-			print "<td><img width=\"7px\" height=\"3px\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" alt=\"\" /></td><td>";
+			print "<td><img width=\"10px\" height=\"3px\" style=\"padding-";
+			if ($TEXT_DIRECTION=="ltr") print "right";
+			else print "left";
+			print ": 2px;\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" alt=\"\" /></td><td>";
 			print_pedigree_person($fchil, 1 , false, 0, $personcount);
 			$personcount++;
 			print "</td></tr>";

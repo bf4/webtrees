@@ -159,18 +159,19 @@ $bwidth = 240;		// -- width of boxes on pedigree chart
 $bheight = 80;		// -- height of boxes on pedigree chart
 $baseyoffset = 10;	// -- position the entire pedigree tree relative to the top of the page
 $basexoffset = 10;	// -- position the entire pedigree tree relative to the left of the page
-$bxspacing = 0;		// -- horizontal spacing between boxes on the pedigree chart
-$byspacing = 2;		// -- vertical spacing between boxes on the pedigree chart
+$bxspacing = 2;		// -- horizontal spacing between boxes on the pedigree chart
+$byspacing = 7;		// -- vertical spacing between boxes on the pedigree chart
+$brborder = 3;		// -- box right border thickness
 
 // -- global variables for the descendancy chart
 $Dbaseyoffset = 0;	// -- position the entire descendancy tree relative to the top of the page
-$Dbasexoffset = 0;		// -- position the entire descendancy tree relative to the left of the page
-$Dbxspacing = 0;		// -- horizontal spacing between boxes
-$Dbyspacing = 1;		// -- vertical spacing between boxes
-$Dbwidth = 270;			// -- width of DIV layer boxes
-$Dbheight = 80;			// -- height of DIV layer boxes
-$Dindent = 15;			// -- width to indent descendancy boxes
-$Darrowwidth = 15;		// -- additional width to include for the up arrows
+$Dbasexoffset = 0;	// -- position the entire descendancy tree relative to the left of the page
+$Dbxspacing = 0;	// -- horizontal spacing between boxes
+$Dbyspacing = 1;	// -- vertical spacing between boxes
+$Dbwidth = 270;		// -- width of DIV layer boxes
+$Dbheight = 80;		// -- height of DIV layer boxes
+$Dindent = 15;		// -- width to indent descendancy boxes
+$Darrowwidth = 15;	// -- additional width to include for the up arrows
 
 $PEDIGREE_LAYOUT = false;		//-- default this theme to the portrait mode of the pedigree chart
 $CHARTS_CLOSE_HTML = false;		//-- should the charts, pedigree, descendacy, etc clost the HTML on the page

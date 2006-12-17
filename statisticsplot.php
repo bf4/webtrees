@@ -280,7 +280,7 @@ function myplot($mytitle,$n,$xdata,$xtitle,$ydata,$ytitle,$legend) {
 	global $legend, $xdata, $ydata, $xmax, $xgrenzen, $zmax, $zgrenzen, $xgiven, $zgiven, $percentage;
 	global $pgv_lang, $SERVER_URL;
 
-	$colors= array("blue","orange","red","brown","green","yellow");
+	$colors= array("blue","orange","red","brown","green","yellow","pink","magenta");
 
 	$b= array();
 
@@ -318,6 +318,9 @@ function myplot($mytitle,$n,$xdata,$xtitle,$ydata,$ytitle,$legend) {
 	if ($n==3) $accbar = new GroupBarPlot(array($b[0],$b[1],$b[2]));
 	if ($n==4) $accbar = new GroupBarPlot(array($b[0],$b[1],$b[2],$b[3]));
 	if ($n==5) $accbar = new GroupBarPlot(array($b[0],$b[1],$b[2],$b[3],$b[4]));
+	if ($n==6) $accbar = new GroupBarPlot(array($b[0],$b[1],$b[2],$b[3],$b[4],$b[5]));
+	if ($n==7) $accbar = new GroupBarPlot(array($b[0],$b[1],$b[2],$b[3],$b[4],$b[5],$b[6]));
+	if ($n==8) $accbar = new GroupBarPlot(array($b[0],$b[1],$b[2],$b[3],$b[4],$b[5],$b[6],$b[7]));
 
 	$graphFile = tempnam("/tmp", "PGV");
 	$graph-> Add($accbar);
@@ -417,7 +420,7 @@ function calc_legend($grenzen_zas) {
 	$legend[$zmax]= ">" . "$hulpar[$zmax1]";
 	$zgrenzen[$zmax]= 10000;
 	$zmax= $zmax+1;
-	if ($zmax > 5) $zmax=5;
+	if ($zmax > 8) $zmax=8;
 }
 
 //--------------------nr,-----bron ,xgiven,zgiven,title, xtitle,ytitle,grenzen_xas, grenzen-zas,functie,
@@ -535,6 +538,12 @@ if ($action=="update") {
 	$xas_grenzen_maanden= $_POST["xas-grenzen-maanden"];
 	$xas_grenzen_aantallen= $_POST["xas-grenzen-aantallen"];
 	$zas_grenzen_periode= $_POST["zas-grenzen-periode"];
+	
+	$_SESSION[$GEDCOM."statTicks"]["xasGrLeeftijden"] = $xas_grenzen_leeftijden;
+	$_SESSION[$GEDCOM."statTicks"]["xasGrMaanden"] = $xas_grenzen_maanden;
+	$_SESSION[$GEDCOM."statTicks"]["xasGrAantallen"] = $xas_grenzen_aantallen;
+	$_SESSION[$GEDCOM."statTicks"]["zasGrPeriode"] = $zas_grenzen_periode;
+
 
 	// Save the input variables
 	$savedInput = array();

@@ -36,13 +36,19 @@ html {
 	caption-side: left;
 	display: table;
 }
-#index_main_blocks .blockhc {
-	direction: rtl;
+.blockh1 {
+	background-image: url(images/right3.gif);
+	width: 6px;
 }
-#index_small_blocks .blockh2 {
-	direction: rtl;
+.blockh3 {
+	background-image: url(images/right1B.gif);
+	width: 28px;
 }
-.door {
+.blockhc {
+	padding-left: 15px;
+	padding-right: 5px;
+}
+.blockh2, .blockhc, .door {
 	direction: rtl;
 }
 .door dd {
