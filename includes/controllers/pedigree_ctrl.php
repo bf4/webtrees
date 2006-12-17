@@ -65,7 +65,7 @@ class PedigreeControllerRoot extends BaseController {
 		global $PEDIGREE_FULL_DETAILS, $PEDIGREE_LAYOUT, $MAX_PEDIGREE_GENERATIONS;
 		global $DEFAULT_PEDIGREE_GENERATIONS, $SHOW_EMPTY_BOXES;
 		global $bwidth, $bheight, $baseyoffset, $basexoffset, $byspacing, $bxspacing;
-		global $TEXT_DIRECTION;
+		global $TEXT_DIRECTION, $BROWSER_TYPE;
 		
 		$this->log2 = log(2);
 		if ($this->isPrintPreview()) {
@@ -188,7 +188,7 @@ class PedigreeControllerRoot extends BaseController {
 			}
 			// -- calculate the xoffset
 			$this->xoffset = 20+$basexoffset+ (($this->PEDIGREE_GENERATIONS - $this->curgen) * (($this->pbwidth+$bxspacing)/(2-$this->talloffset)));
-			if ($this->curgen == 1 && $this->talloffset && $TEXT_DIRECTION=="ltr") $this->xoffset += 10;
+			if ($this->curgen == 1 && $this->talloffset) $this->xoffset += 10;
 			$this->offsetarray[$i]["x"]=$this->xoffset;
 			$this->offsetarray[$i]["y"]=$this->yoffset;
 		}
