@@ -90,11 +90,11 @@ class HourglassControllerRoot extends BaseController {
 	 * Initialization function
 	 */
 	function init() {
-	global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $bheight, $bwidth, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS;
+	global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $bheight, $bwidth, $bhalfheight, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS;
 	global $PGV_IMAGES, $PGV_IMAGE_DIR, $TEXT_DIRECTION;
 
 
-		if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
+	if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
 	if (!empty($_REQUEST["pid"])) $this->pid = strtoupper($_REQUEST["pid"]);
 
 	//-- flip the arrows for RTL languages
@@ -127,17 +127,11 @@ class HourglassControllerRoot extends BaseController {
 	$this->box_width=max($this->box_width, 50);
 	$this->box_width=min($this->box_width, 300);
 	// If show details is unchecked it makes the boxes smaller
-	if (!$this->show_full) {
-		$bwidth *= $this->box_width / 150;
-	}
-	else {
-		$bwidth*=$this->box_width/100;
-	}
+	if (!$this->show_full) $bwidth *= $this->box_width / 150;
+	else $bwidth*=$this->box_width/100;
 
-	if (!$this->show_full) {
-		$bheight = $bheight / 2;
-	}
-	
+	if (!$this->show_full) $bheight = (int)($bheight / 2);
+	$bhalfheight = (int)($bheight / 2);	
 	
 	// -- root id
 	if (!isset($this->pid)) $this->pid="";
@@ -251,7 +245,7 @@ function print_person_pedigree($pid, $count) {
  * @return void
  */
 function print_descendency($pid, $count) {
-	global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $bheight, $bwidth;
+	global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $bheight, $bwidth, $bhalfheight;
 	
 	if ($count>=$this->dgenerations) return 0;
 	$person = Person::getInstance($pid);
@@ -268,75 +262,65 @@ function print_descendency($pid, $count) {
 	$numkids = 0;
 	$families = $person->getSpouseFamilies();
 	$famcount = count($families);
+	$famNum = 0;
+	$kidNum = 0;
 	if ($famcount>0) {
-		$firstkids = 0;
 		foreach($families as $famid => $family) {
+			$famNum ++;
 			$famrec = find_family_record($famid);
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $match, PREG_SET_ORDER);
 			if ($ct>0) {
 				print "<table style=\"position: relative; top: auto; text-align: $tablealign;\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">";
-			for($i=0; $i<$ct; $i++) {
-				$rowspan = 2;
-				if (($i>0)&&($i<$ct-1)) $rowspan=1;
-				$chil = trim($match[$i][1]);
-					///////////////////////////////////////////////////////////
-					//// use the $kids as the "$ARID" when you add the method call
-								
-				if ($count+1 < $this->dgenerations) {
+				for($i=0; $i<$ct; $i++) {
+					$rowspan = 2;
+					if (($i>0)&&($i<$ct-1)) $rowspan=1;
+					$chil = trim($match[$i][1]);
+						///////////////////////////////////////////////////////////
+						//// use the $kids as the "$ARID" when you add the method call
+									
+					if ($count+1 < $this->dgenerations) {
 						print "<tr>";
-						print "<td id=\"td_".$chil."\" rowspan=\"$rowspan\">";
-					$kids = $this->print_descendency($chil, $count+1);
-					if ($i==0) $firstkids = $kids;
-					$numkids += $kids;
+						print "<td id=\"td_".$chil."\" class=\"$TEXT_DIRECTION\" rowspan=\"$rowspan\">";
+						$kids = $this->print_descendency($chil, $count+1);
+						$numkids += $kids;
 						print "</td>";
-						
-				}
-				else {
-						
+					} else {
 						$person2 = Person::getInstance($chil);	
 						$fam = $person2->getSpouseFamilies();
 						if (count($fam)>0) {
 							$numchil = 0;
 							foreach($fam as $famid=>$family) {
 								if (!is_null($family)) $numchil += $family->getNumberOfChildren();
-								}
-							if ($numchil>0) {
-								print "<td align=\"".$tablealign."\" id=\"td_".$chil."\" rowspan=\"$rowspan\"><a href=\".$chil.\" onclick=\"return ChangeDis('td_".$chil."','".$chil."','".$this->show_full."','".$this->show_spouse."','".$this->box_width."')\"><img id=\"arrow\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["larrow"]["other"]."\" border=\"0\" alt=\"\" /></a></td>";
 							}
-							else{
-								print "<td id= \"td_".$chil."\" rowspan=\"$rowspan\"><div style=\"width: ".$this->arrwidth."px; height: ".$this->arrheight."px;\">&nbsp;</div></td>";
-							}
-						}
-						else{
-							print "<td id= \"td_".$chil."\" rowspan=\"$rowspan\"><div style=\"width: ".$this->arrwidth."px; height: ".$this->arrheight."px;\">&nbsp;</div></td>";
-						}
+							if ($numchil>0) print "<td align=\"".$tablealign."\" id=\"td_".$chil."\" rowspan=\"$rowspan\"><a href=\".$chil.\" onclick=\"return ChangeDis('td_".$chil."','".$chil."','".$this->show_full."','".$this->show_spouse."','".$this->box_width."')\"><img id=\"arrow\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["larrow"]["other"]."\" border=\"0\" alt=\"\" /></a></td>";
+							else print "<td id= \"td_".$chil."\" rowspan=\"$rowspan\"><div style=\"width: ".$this->arrwidth."px; height: ".$this->arrheight."px;\">&nbsp;</div></td>";
+						} else print "<td id= \"td_".$chil."\" rowspan=\"$rowspan\"><div style=\"width: ".$this->arrwidth."px; height: ".$this->arrheight."px;\">&nbsp;</div></td>";
 						
 						print "<td class=\"$TEXT_DIRECTION\" rowspan=\"$rowspan\" width=\"$bwidth\" style=\"padding-top: 2px;\">";
-					print_pedigree_person($chil);
-					$numkids++;
+						print_pedigree_person($chil);
+						$numkids++;
+						$kidNum ++;
 						print "</td>";
-				}
-					
-				$twidth = 7;
-				if ($ct==1) $twidth+=3;
+					}
+						
+					$twidth = 7;
+					if ($ct==1) $twidth+=3;
 					print "<td rowspan=\"$rowspan\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"$twidth\" height=\"3\" alt=\"\" /></td>";
-				if ($ct>1) {
-					if ($i==0) {
+					if ($ct>1) {
+						if ($i==0) {
 							//////////////////////
-							print "<td height=\"50%\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>";
-							print "<tr><td height=\"50%\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
-					}
-					else if ($i==$ct-1) {
-							print "<td height=\"50%\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>";
-							print "<td height=\"50%\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" />";
-					}
-					else {
+							print "<td height=\"".($bhalfheight+4)."px\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>";
+							print "<tr><td height=\"".$bhalfheight."px\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
+						} else if ($i==$ct-1) {
+							print "<td height=\"".($bhalfheight+4)."px\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>";
+							print "<tr><td height=\"".$bhalfheight."px\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
+						} else {
 							print "<td style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
+						}
 					}
-				}
 					print "</tr>";
-					
-			}
+						
+				}
 				print "</table>\n";
 			}
 		}
@@ -537,7 +521,7 @@ function print_descendency($pid, $count) {
 // Prints the descendency half of the chart via ajax
 
 function print_descendency_ajax($pid, $count) {
-	global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $bheight, $bwidth;
+	global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $bheight, $bwidth, $bhalfheight;
 	
 	if ($count>=$this->dgenerations) return 0;
 	$person = Person::getInstance($pid);
@@ -627,16 +611,14 @@ function print_descendency_ajax($pid, $count) {
 					if ($i==0) {
 						//////////////////////
 						
-						print "<td height=\"50%\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>";
-						print "<tr valign=\"bottom\"><td height=\"50%\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
+						print "<td height=\"".($bhalfheight+4)."px\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>";
+						print "<tr valign=\"bottom\"><td height=\"".$bhalfheight."px\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
 					    
-					}
-					else if ($i==($ct-1)) {
-						print "<td height=\"50%\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>";
-						print "<td height=\"50%\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" />";
+					} else if ($i==($ct-1)) {
+						print "<td height=\"".($bhalfheight+4)."px\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>";
+						print "<tr><td height=\"".$bhalfheight."px\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
 						
-					}
-					else {
+					} else {
 						print "<td style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /> <td/>";
 					}
 				}

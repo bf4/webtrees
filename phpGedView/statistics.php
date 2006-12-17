@@ -420,6 +420,17 @@ global $match1,$match2;
 
 {
 if (!isset($plottype)) $plottype=0;
+if (isset($_SESSION[$GEDCOM."statTicks"])) {
+	$xasGrLeeftijden = $_SESSION[$GEDCOM."statTicks"]["xasGrLeeftijden"];
+	$xasGrMaanden = $_SESSION[$GEDCOM."statTicks"]["xasGrMaanden"];
+	$xasGrAantallen = $_SESSION[$GEDCOM."statTicks"]["xasGrAantallen"];
+	$zasGrPeriode = $_SESSION[$GEDCOM."statTicks"]["zasGrPeriode"];
+} else {
+	$xasGrLeeftijden = "1,5,10,20,30,40,50,60,70,80,90,100";
+	$xasGrMaanden = "-24,-12,0,8,12,18,24,48";
+	$xasGrAantallen = "1,2,3,4,5,6,7,8,9,10";
+	$zasGrPeriode = "1700,1750,1800,1850,1900,1950,2000";
+}
 
 ?>
 	<h3><?php print $pgv_lang["statvars"]; ?> <?php print_help_link("stat_help","qm"); ?> </h3>
@@ -462,40 +473,30 @@ if (!isset($plottype)) $plottype=0;
 	</table>
 <br/>
 
-<?php
-print "<h3>" . $pgv_lang["statmess1"] . "</h3>";
-/*
-#	<tr>
-#	<td> <?php print $pgv_lang["statrfpx"]; ?> </td>
-#	<td> <input type="text" name="grenzen-jaren" value="1700,1800,1850,1900,1950,1980,2000"
-#			size="60" onfocus="getHelp('periode_help');">
-#	</td>
-#	</tr>
-*/
-?>
+<h3><?php print $pgv_lang["statmess1"]; ?></h3>
 
 	<table class="facts_table">
 	<tr>
 	<td class="descriptionbox width20 wrap"> <?php print $pgv_lang["statar_xgl"]; ?> </td>
-	<td class="optionbox"> <input type="text" name="xas-grenzen-leeftijden" value="1,5,10,20,30,40,50,60,70,80,90"
+	<td class="optionbox"> <input type="text" name="xas-grenzen-leeftijden" value="<?php print $xasGrLeeftijden; ?>"
 			size="60" onfocus="getHelp('periode_help');">
 	</td>
 	</tr>
 	<tr>
 	<td class="descriptionbox width20 wrap"> <?php print $pgv_lang["statar_xgm"]; ?> </td>
-	<td class="optionbox"> <input type="text" name="xas-grenzen-maanden" value="-24,-12,0,8,12,18,24,48"
+	<td class="optionbox"> <input type="text" name="xas-grenzen-maanden" value="<?php print $xasGrMaanden; ?>"
 			size="60" onfocus="getHelp('periode_help');">
 	</td>
 	</tr>
 	<tr>
 	<td class="descriptionbox width20 wrap"> <?php print $pgv_lang["statar_xga"]; ?> </td>
-	<td class="optionbox"> <input type="text" name="xas-grenzen-aantallen" value="1,2,3,4,5,6,7,8,9,10"
+	<td class="optionbox"> <input type="text" name="xas-grenzen-aantallen" value="<?php print $xasGrAantallen; ?>"
 			size="60" onfocus="getHelp('periode_help');">
 	</td>
 	</tr>
 	<tr>
 	<td class="descriptionbox width20 wrap"> <?php print $pgv_lang["statar_zgp"]; ?> </td>
-	<td class="optionbox"> <input type="text" name="zas-grenzen-periode" value="1800,1850,1900,1950,1980"
+	<td class="optionbox"> <input type="text" name="zas-grenzen-periode" value="<?php print $zasGrPeriode; ?>"
 			size="60" onfocus="getHelp('periode_help');">
 	</td>
 	</tr>

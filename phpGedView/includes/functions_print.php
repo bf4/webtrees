@@ -1847,8 +1847,7 @@ function print_theme_dropdown($style=0) {
 					print "<option value=\"".$themedir["dir"]."\"";
 					if ($uname) {
 						 if ($themedir["dir"] == $user["theme"]) print " class=\"selected-option\"";
-					}
-					else {
+					} else {
 						  if ($themedir["dir"] == $THEME_DIR) print " class=\"selected-option\"";
 					}
 					print ">".$themedir["name"]."</option>\n";
@@ -1866,13 +1865,18 @@ function print_theme_dropdown($style=0) {
 					$menu["submenuclass"] = "themesubmenu";
 					$menu["items"] = array();
 					foreach($themes as $indexval => $themedir) {
-						 $submenu = array();
-						 $submenu["label"] = $themedir["name"];
-						 $submenu["labelpos"] = "right";
-						 $submenu["link"] = "themechange.php?frompage=".urlencode($frompage)."&amp;mytheme=".$themedir["dir"];
-						 $submenu["class"] = "favsubmenuitem";
-						 $submenu["hoverclass"] = "favsubmenuitem_hover";
-						 $menu["items"][] = $submenu;
+						$submenu = array();
+						$submenu["label"] = $themedir["name"];
+						$submenu["labelpos"] = "right";
+						$submenu["link"] = "themechange.php?frompage=".urlencode($frompage)."&amp;mytheme=".$themedir["dir"];
+						$submenu["class"] = "favsubmenuitem";
+						if ($uname) {
+							 if ($themedir["dir"] == $user["theme"]) $submenu["class"] = "favsubmenuitem_selected";
+						} else {
+							 if ($themedir["dir"] == $THEME_DIR) $submenu["class"] = "favsubmenuitem_selected";
+						}
+						$submenu["hoverclass"] = "favsubmenuitem_hover";
+						$menu["items"][] = $submenu;
 					}
 					print_menu($menu);
 			   break;

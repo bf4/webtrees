@@ -140,16 +140,14 @@ function print_descendency($pid, $count) {
 			}
 			// NOTE: If statement OK
 			if ($famids||($num>1)) {
-				print "\n\t\t<div id=\"childarrow.$pid\" dir=\"";
-				if ($TEXT_DIRECTION=="rtl") print "rtl\" style=\"position:absolute; ";
-				else print "ltr\" style=\"position:absolute; ";
-				print "width:10px; height:10px; \">";
+				print "\n\t\t<div id=\"childarrow.$pid\"";
+				print " style=\"position:absolute; width:".$bwidth."px; height:10px; \">"; 
 				if ($view!="preview") {
-					print "<a href=\"javascript: ".$pgv_lang["show"]."\" onclick=\"return togglechildrenbox('$pid');\" onmouseover=\"swap_image('larrow.$pid',3);\" onmouseout=\"swap_image('larrow.$pid',3);\">";
+					print "&nbsp;&nbsp;<a href=\"javascript: ".$pgv_lang["show"]."\" onclick=\"return togglechildrenbox('$pid');\" onmouseover=\"swap_image('larrow.$pid',3);\" onmouseout=\"swap_image('larrow.$pid',3);\">";
 					print "<img id=\"larrow.$pid\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"]."\" border=\"0\" alt=\"\" />";
-					print "</a>";
+					print "</a>&nbsp;&nbsp;";
 				}
-				print "\n\t\t<div id=\"childbox.$pid\" dir=\"";
+				print "</div>\n\t\t<div id=\"childbox.$pid\" dir=\"";
 				if ($TEXT_DIRECTION=="rtl") print "rtl\" style=\"position:absolute; right: 20px; ";
 				else print "ltr\" style=\"position:absolute; left: 20px;";
 				print " width:".$bwidth."px; height:".$bheight."px; visibility: hidden;\">";

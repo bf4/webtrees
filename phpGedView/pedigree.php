@@ -124,6 +124,7 @@ $yoffset=0;				// -- used to offset the position of each box as it is generated
 $xoffset=0;
 $prevyoffset=0;		// -- used to track the y position of the previous box
 $maxyoffset = 0;
+if (!isset($brborder)) $brborder = 1;	// Avoid errors from old custom themes
 for($i=($controller->treesize-1); $i>=0; $i--) {
 	// -- check to see if we have moved to the next generation
 	if ($i < floor($controller->treesize / (pow(2, $curgen)))) {
@@ -133,7 +134,7 @@ for($i=($controller->treesize-1); $i>=0; $i--) {
 	$xoffset = $controller->offsetarray[$i]["x"];
 	$yoffset = $controller->offsetarray[$i]["y"];
 	// -- if we are in the middle generations then we need to draw the connecting lines
-	if (($curgen >(1+$controller->talloffset)) && ($curgen < $controller->PEDIGREE_GENERATIONS)) {
+	if (($curgen > $controller->talloffset) && ($curgen < $controller->PEDIGREE_GENERATIONS)) {
 		if ($i%2==1) {
 			if ($SHOW_EMPTY_BOXES || ($controller->treeid[$i]) || ($controller->treeid[$i+1])) {
 				$vlength = ($prevyoffset-$yoffset);
@@ -153,6 +154,11 @@ for($i=($controller->treesize-1); $i>=0; $i--) {
 	}
 	// -- draw the box
 	if (!empty($controller->treeid[$i]) || $SHOW_EMPTY_BOXES) {
+		// Work around a bug in FireFox that mis-places some boxes in Portrait RTL, resulting in 
+		// vertical lines that themselves appear to be mis-placed.
+		if ($TEXT_DIRECTION=="rtl" && $BROWSERTYPE=="mozilla" && ($curgen <= 2)) $xoffset += 10;
+		if ($TEXT_DIRECTION=="rtl") $xoffset += $brborder;		// Account for thickness of right box border
+
 		if ($yoffset>$maxyoffset) $maxyoffset=$yoffset;
 		$widthadd = 0;
 		if ($i==0) $iref = rand();
@@ -167,7 +173,7 @@ for($i=($controller->treesize-1); $i>=0; $i--) {
 		else print ".1.$iref\" style=\"position:absolute; left:";
 		print $xoffset."px; top:".$yoffset."px; width:".($controller->pbwidth+$widthadd)."px; height:".$controller->pbheight."px; z-index: 0;\">";
 		print "\n\t\t\t<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" dir=\"$TEXT_DIRECTION\">";
-		if (($curgen >(1+$controller->talloffset)) && ($curgen < $controller->PEDIGREE_GENERATIONS)) {
+		if (($curgen > $controller->talloffset) && ($curgen < $controller->PEDIGREE_GENERATIONS)) {
 			print "<tr><td>";
 			print "\n\t\t\t<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" align=\"left\" hspace=\"0\" vspace=\"0\" alt=\"\" />";
 			print "\n\t\t\t</td><td width=\"100%\">";
