@@ -51,11 +51,7 @@ class HourglassControllerRoot extends BaseController {
 	var $show_changes = "yes";
 	var $action = "";
 	var $pid = "";
-	var $default_tab = 0;
-	var $hourPerson = null;
 
-	var $diffindi = null;
-	var $NAME_LINENUM = 1;
 	var $uname = "";
 	var $user = false;
 	var $accept_success = false;
