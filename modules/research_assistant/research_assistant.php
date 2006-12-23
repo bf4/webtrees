@@ -34,7 +34,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"research_assistant.php")) {
 	exit;
 }
 // Require our base class and db functions
-require_once ("ra_functions.php");
+require_once ("modules/research_assistant/ra_functions.php");
 require_once 'modules/research_assistant/forms/ra_GeneratedTask.php';
 
 //-- commmented out because the other section should take care of redirecting
