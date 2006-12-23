@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Added AJAX to individual page tabs (yalnifj)
  - Fixed [ 1599037 ] 4.0SVN: Place does't show in Individual list Or Indi Page (opus27)
  - Fixed [ 1613742 ] My Account - Undefined indexes (canajun2eh)
  - Added AJAX extensions to hourglass chart (Neumont)
