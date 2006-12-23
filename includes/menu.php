@@ -135,8 +135,7 @@ class Menu
 		{
 			$menucount++;
 		}
-		$temp = strval($this);
-		$id = $menucount.preg_replace("/[\s#]/", "", $temp);
+		$id = $menucount.rand();
 		if ($this->seperator)
 		{
 			$output = "<div id=\"menu{$id}\" class=\"menu_seperator\" style=\"clear: both;\">"
