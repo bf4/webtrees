@@ -286,7 +286,7 @@ function tabswitch(n) {
 	// current tab area
 	if (n>0) {
 		document.getElementById(tabid[n]).style.display='block';
-		//-- load ajax
+		// load ajax
 		if (!loadedTabs[n]) {
 			target = document.getElementById(tabid[n]+'_content');
 			if (target) {
