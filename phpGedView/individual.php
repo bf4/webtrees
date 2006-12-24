@@ -259,6 +259,11 @@ function tempObj(tab, oXmlHttp) {
   				evalAjaxJavascript(oXmlHttp.responseText, target);
   				target.style.height = 'auto';
   				loadedTabs[tab] = true;
+  				//-- call resizemap for google map module
+  				if (tab==6) {
+  					ResizeMap();
+  					ResizeMap();
+  				}
   			}
  		};
 }
@@ -349,16 +354,16 @@ if (!$controller->isPrintPreview()) {
 ?>
 <div class="door">
 <dl>
-<dd id="door1"><a href="javascript:;" onclick="tabswitch(1)" ><?php print $pgv_lang["personal_facts"]?></a></dd>
-<dd id="door2"><a href="javascript:;" onclick="tabswitch(2)" ><?php print $pgv_lang["notes"]?></a></dd>
-<dd id="door3"><a href="javascript:;" onclick="tabswitch(3)" ><?php print $pgv_lang["ssourcess"]?></a></dd>
-<dd id="door4"><a href="javascript:;" onclick="tabswitch(4)" ><?php print $pgv_lang["media"]?></a></dd>
-<dd id="door5"><a href="javascript:;" onclick="tabswitch(5)" ><?php print $pgv_lang["relatives"]?></a></dd>
-<dd id="door6"><a href="javascript:;" onclick="tabswitch(6)" ><?php print $pgv_lang["research_assistant"]?></a></dd>
+<dd id="door1"><a href="javascript:;" onclick="tabswitch(1); return false;" ><?php print $pgv_lang["personal_facts"]?></a></dd>
+<dd id="door2"><a href="javascript:;" onclick="tabswitch(2); return false;" ><?php print $pgv_lang["notes"]?></a></dd>
+<dd id="door3"><a href="javascript:;" onclick="tabswitch(3); return false;" ><?php print $pgv_lang["ssourcess"]?></a></dd>
+<dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["media"]?></a></dd>
+<dd id="door5"><a href="javascript:;" onclick="tabswitch(5); return false;" ><?php print $pgv_lang["relatives"]?></a></dd>
+<dd id="door6"><a href="javascript:;" onclick="tabswitch(6); return false;" ><?php print $pgv_lang["research_assistant"]?></a></dd>
 <?php if (file_exists("modules/googlemap/defaultconfig.php")) {?>
-<dd id="door7"><a href="javascript:;" onclick="tabswitch(7);ResizeMap();ResizeMap()" ><?php print $pgv_lang["googlemap"]?></a></dd>
+<dd id="door7"><a href="javascript:;" onclick="tabswitch(7); return false;" ><?php print $pgv_lang["googlemap"]?></a></dd>
 <?php }?>
-<dd id="door0"><a href="javascript:;" onclick="tabswitch(0);ResizeMap();ResizeMap()" ><?php print $pgv_lang["all"]?></a></dd>
+<dd id="door0"><a href="javascript:;" onclick="tabswitch(0); return false;" ><?php print $pgv_lang["all"]?></a></dd>
 </dl>
 </div>
 <br />
