@@ -646,11 +646,27 @@ function evalAjaxJavascript(text, parentElement) {
 		parentElement.innerHTML += text.substring(0, pos1);
 		
 		//-- find the close of the <script> tag
-		pos1 = text.indexOf(">",pos1+5);
-		if (pos1==-1) {
+		pos2 = text.indexOf(">",pos1+5);
+		if (pos2==-1) {
 			parentElement.innerHTML += "Error: incomplete text";
 			return;
 		}
+		//-- create a new <script> element to add to the parentElement
+		jselement = document.createElement("script");
+		jselement.type = "text/javascript";
+		//-- look for any src attributes
+		scripttag = text.substring(pos1, pos2);
+		regex = new RegExp("\\ssrc=\".*\"", "gi");
+		results = scripttag.match(regex);
+		if (results) {
+			for(i=0; i<results.length; i++) {
+				src = results[i].substring(results[i].indexOf("\"")+1, results[i].indexOf("\"", 6));
+				src = src.replace(/&amp;/gi, "&");
+				jselement.src = src;
+			}
+		}
+		opos1 = pos1;
+		pos1 = pos2;
 		//-- find the closing </script> tag
 		pos2 = text.indexOf("</script",pos1+1);
 		if (pos2==-1) {
@@ -658,17 +674,17 @@ function evalAjaxJavascript(text, parentElement) {
 			return;
 		}
 		//-- get the JS code between the <script></script> tags
-		jscode = text.substring(pos1+1, pos2);
-		//-- create a new <script> element to add to the parentElement
-		jselement = document.createElement("script");
-		//-- add the JS code to the <script> element as a text node
-		jselement.appendChild(document.createTextNode(jscode));
+		if (!results || results.length==0) {
+			jscode = text.substring(pos1+1, pos2);
+			//-- add the JS code to the <script> element as a text node
+			jselement.appendChild(document.createTextNode(jscode));
+		}
 		//-- add the javascript element to the parent element
 		parentElement.appendChild(jselement);
 		//-- shrink the text for the next iteration
 		text = text.substring(pos2+9, text.length);
 		//-- look for the next <script> tag
-		pos1 = text.indexOf("<script", pos2+1);
+		pos1 = text.indexOf("<script");
 	}
 	//-- make sure any HTML/text after the last </script> gets added
 	parentElement.innerHTML += text;
