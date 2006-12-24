@@ -349,6 +349,7 @@ function resize_content_div(i) {
 }
 //-->
 </script>
+<script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
 <?php
 if (!$controller->isPrintPreview()) {
 ?>
