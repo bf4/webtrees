@@ -286,7 +286,7 @@ function tabswitch(n) {
 	// current tab area
 	if (n>0) {
 		document.getElementById(tabid[n]).style.display='block';
-		// load ajax
+		//-- load ajax
 		if (!loadedTabs[n]) {
 			target = document.getElementById(tabid[n]+'_content');
 			if (target) {
@@ -389,7 +389,10 @@ if (!$controller->isPrintPreview()) {
 <div id="notes" class="tab_page" style="display:none;" >
 <?php print "<span class=\"subheaders\">".$pgv_lang["notes"]."</span><div id=\"notes_content\">";
 	if ($controller->default_tab==1) $controller->getTab(1);
-	else print "<br /><br />".$pgv_lang['loading'];
+	else {
+		if ($controller->get_note_count()>0) print "<br /><br />".$pgv_lang['loading'];
+		else print "<span id=\"no_tab2\">".$pgv_lang["no_tab2"]."</span>";
+	}
 ?>
 </div>
 </div>
@@ -399,7 +402,10 @@ if (!$controller->isPrintPreview()) {
 if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) {
 	print "<span class=\"subheaders\">".$pgv_lang["ssourcess"]."</span><div id=\"sources_content\">";
 	if ($controller->default_tab==2) $controller->getTab(2);
-	else print "<br /><br />".$pgv_lang['loading'];
+	else {
+		if ($controller->get_source_count()>0) print "<br /><br />".$pgv_lang['loading'];
+		else print "<span id=\"no_tab3\">".$pgv_lang["no_tab3"]."</span>";
+	}
 ?>
 </div>
 <?php
@@ -411,7 +417,7 @@ if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) {
 <span class="subheaders"><?php print $pgv_lang["media"];?></span>
 <div id="media_content">
 <?php
-	if ($MULTI_MEDIA) {
+	if ($MULTI_MEDIA && ($controller->get_media_count()>0 || userCanEdit(getUserName()))) {
 		if ($controller->default_tab==3) $controller->getTab(3);
 		else print "<br /><br />".$pgv_lang['loading'];
    }

@@ -1005,6 +1005,21 @@ class IndividualControllerRoot extends BaseController {
 		<?php
 	}
 	
+	function get_note_count() {
+		$notecount=0;
+		$otherfacts = $this->getOtherFacts();
+		foreach ($otherfacts as $key => $factrec) {
+			$ft = preg_match("/\d\s(\w+)(.*)/", $factrec[1], $match);
+			if ($ft>0) $fact = $match[1];
+			else $fact="";
+			$fact = trim($fact);
+			if ($fact=="NOTE") {
+				$notecount++;
+			}
+		}
+		return $notecount;
+	}
+	
 	function print_notes_tab() {
 		global $pgv_lang, $CONTACT_EMAIL, $FACT_COUNT;
 		?>
@@ -1045,6 +1060,21 @@ class IndividualControllerRoot extends BaseController {
 		</table>
 		<br />
 		<?php
+	}
+	
+	function get_source_count() {
+		$sourcecount = 0;
+		$otheritems = $this->getOtherFacts();
+		foreach ($otheritems as $key => $factrec) {
+			$ft = preg_match("/\d\s(\w+)(.*)/", $factrec[1], $match);
+			if ($ft>0) $fact = $match[1];
+			else $fact="";
+			$fact = trim($fact);
+			if ($fact=="SOUR") {
+				$sourcecount++;
+			}
+		}
+		return $sourcecount;
 	}
 	
 	function print_sources_tab() {
@@ -1090,6 +1120,18 @@ class IndividualControllerRoot extends BaseController {
 		<?php
 	}
 	
+	/**
+	 * get the number of media items for this person
+	 * @return int
+	 */
+	function get_media_count() {
+		$ct = preg_match("/\d OBJE/", $this->indi->getGedcomRecord());
+		return $ct;
+	}
+	
+	/**
+	 * print the media tab
+	 */
 	function print_media_tab() {
 		global $CONTACT_EMAIL, $pgv_lang, $MULTI_MEDIA;
 		
@@ -1635,6 +1677,10 @@ class IndividualControllerRoot extends BaseController {
 	function print_map_tab() {
 		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $pgv_lang, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_language;
 		global $LANGUAGE;
+		global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOON, $GOOGLEMAP_MAX_ZOON, $GEDCOM;
+	    global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
+	    global $GOOGLEMAP_MAX_ZOOM, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_ENABLED, $TBLPREFIX, $DBCONN;
+	    global $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE;
         if(empty($SEARCH_SPIDER)) {
 	    	$tNew = preg_replace("/&HIDE_GOOGLEMAP=true/", "", $_SERVER["REQUEST_URI"]);
 	    	$tNew = preg_replace("/&HIDE_GOOGLEMAP=false/", "", $tNew);
