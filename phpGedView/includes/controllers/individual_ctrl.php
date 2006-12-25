@@ -1096,7 +1096,7 @@ class IndividualControllerRoot extends BaseController {
 					$fact = trim($fact);
 					if ($fact=="SOUR") {
 						$sourcecount++;
-						print_main_sources($factrec[1], 1, $pid, $factrec[0]);
+						print_main_sources($factrec[1], 1, $this->pid, $factrec[0]);
 					}
 					$FACT_COUNT++;
 				}
