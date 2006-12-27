@@ -1,5 +1,5 @@
 <!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
-<!-- @version $Id: CAN.txt,v 1.1.2.2 2005/11/25 13:29:16 opus27 Exp $ -->
+<!-- @version $Id$ -->
 Alberta (AB)
 British Columbia (BC)
 Colombie-Britannique (BC)

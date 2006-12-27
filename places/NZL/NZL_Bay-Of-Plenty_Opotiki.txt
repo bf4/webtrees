@@ -1,5 +1,5 @@
 <!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
-<!-- @version $Id: NZL_Bay-Of-Plenty_Opotiki.txt,v 1.1.2.1 2005/11/20 18:05:20 roland-d Exp $ -->
+<!-- @version $Id$ -->
 <!-- @see http://xtabs.stats.govt.nz/eng/statsbyarea/area_main.asp -->
 Cape Runaway 
 Ohiwa Harbour 

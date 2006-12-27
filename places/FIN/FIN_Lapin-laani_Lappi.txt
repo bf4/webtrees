@@ -1,5 +1,5 @@
 <!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
-<!-- $Id: FIN_Lapin-laani_Lappi.txt,v 1.1.2.1 2005/03/17 20:04:25 meliza Exp $ -->
+<!-- @version $Id$ -->
 Kemi
 Kemijärvi
 Rovaniemi

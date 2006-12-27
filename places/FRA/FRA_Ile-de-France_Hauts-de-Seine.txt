@@ -1,5 +1,5 @@
 <!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
-<!-- @version $Id: FRA_Ile-de-France_Hauts-de-Seine.txt,v 1.1.2.1 2005/02/22 19:42:38 opus27 Exp $ -->
+<!-- @version $Id$ -->
 <!-- @see http://www.insee.fr/fr/nom_def_met/nomenclatures/cog/donnees/france_txt.zip -->
 Antony 92002
 Asnières-sur-Seine 92004
