@@ -562,22 +562,16 @@ function paste_id(value) {
 	pastefield.value=value;
 }
 </script>
-<div style="position: relative; z-index: 1; width:98%;">
-<table class="list_table <?php print $TEXT_DIRECTION ?>" style="width:100%;"><tr><td valign="top">
-<h2><?php PrintReady($title_string)?>
-</h2>
-</td><td>
+<div id="relationship_chart_options<?php print ($TEXT_DIRECTION=="ltr")?"":"_rtl";?>" style="position: relative; z-index: 90; width:98%;">
+<h2><?php print PrintReady($title_string);?></h2><br />
 <!-- // Print the form to change the number of displayed generations -->
 <?php
 if ($view!="preview") {
-	$Dbaseyoffset += 70; ?>
+	$Dbaseyoffset += 110; ?>
 	<form name="people" method="get" action="relationship.php">
 	<input type="hidden" name="path_to_find" value="<?php print $path_to_find ?>" />
 
-	<table class="list_table <?php print $TEXT_DIRECTION ?>" align="
-		<?php
-	if ($TEXT_DIRECTION == "ltr") print "right";
-	else print "left";?>" >
+	<table class="list_table <?php print $TEXT_DIRECTION ?>" style="align:<?php print ($TEXT_DIRECTION=="ltr"?"left":"right");?>; margin:0;">
 
 	<!-- // Relationship header -->
 	<tr><td colspan="2" class="topbottombar center">
@@ -778,8 +772,8 @@ else {
 	$Dbasexoffset=10;
 }
 ?>
-</td></tr></table>
 </div>
+<div id="relationship_chart<?php print ($TEXT_DIRECTION=="ltr")?"":"_rtl";?>" style="position: relative; z-index: 1; width:98%;">
 <?php
 $maxyoffset = $Dbaseyoffset;
 if ((!empty($pid1))&&(!empty($pid2))) {
@@ -824,12 +818,13 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 
 			$maxxoffset = -1*$Dbwidth-20;
 			$maxyoffset = $yoffset;
-			if ($TEXT_DIRECTION=="rtl") {
-				$PGV_IMAGES["rarrow"]["other"] = $PGV_IMAGES["larrow"]["other"];
+			if ($TEXT_DIRECTION=="ltr") {
+				$rArrow = $PGV_IMAGES["rarrow"]["other"];
+				$lArrow = $PGV_IMAGES["larrow"]["other"];
+			} else {
+				$rArrow = $PGV_IMAGES["larrow"]["other"];
+				$lArrow = $PGV_IMAGES["rarrow"]["other"];
 			}
-			print "<div id=\"relationship_chart";
-			if ($TEXT_DIRECTION=="rtl") print "_rtl";
-			print "\">\n";
 			foreach($node["path"] as $index=>$pid) {
 			    print "\r\n\r\n<!-- Node $index -->\r\n";
 				$linex = $xoffset;
@@ -875,7 +870,7 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 					else $yoffset += $Dbheight+$Dbyspacing+50;
 			    }
 				if ($node["relations"][$index]=="sibling") {
-					$arrow_img = $PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]["other"];
+					$arrow_img = $PGV_IMAGE_DIR."/".$rArrow;
 					if ($mfstyle=="F") $node["relations"][$index]="sister";
 					if ($mfstyle=="") $node["relations"][$index]="brother";
 					$xoffset += $Dbwidth+$Dbxspacing+70;
@@ -893,7 +888,7 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 					}
 				}
 				if ($node["relations"][$index]=="spouse") {
-					$arrow_img = $PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]["other"];
+					$arrow_img = $PGV_IMAGE_DIR."/".$rArrow;
 					if ($mfstyle=="F") $node["relations"][$index]="wife";
 					if ($mfstyle=="") $node["relations"][$index]="husband";
 					$xoffset += $Dbwidth+$Dbxspacing+70;
@@ -949,6 +944,12 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 				if ($yoffset > $maxyoffset) $maxyoffset = $yoffset;
 				$plinex = $linex;
 				$pxoffset = $xoffset;
+
+				// Adjust all box positions for proper placement with respect to other page elements
+				if ($BROWSERTYPE=="mozilla" && $TEXT_DIRECTION=="rtl") $pxoffset += 10;
+				else $pxoffset -= 3;
+				$pyoffset = $yoffset - 2;
+
 				if ($index>0) {
 					if ($TEXT_DIRECTION=="rtl" && $line!=$PGV_IMAGES["hline"]["other"]) {
 						print "<div id=\"line$index\" dir=\"ltr\" style=\"background:none; position:absolute; right:".($plinex+$Dbxspacing)."px; top:".($liney+$Dbyspacing)."px; width:".($lw+$lh*2)."px; z-index:".(count($node["path"])-$index)."; \" align=\"right\">";
@@ -966,7 +967,7 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 					}
 					print "</div>\n";
 				}
-				print "<div id=\"box$pid.0\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".$pxoffset."px; top:".$yoffset."px; width:".$Dbwidth."px; height:".$Dbheight."px; z-index:".(count($node["path"])-$index)."; \"><table><tr><td colspan=\"2\" width=\"$Dbwidth\" height=\"$Dbheight\">";
+				print "<div id=\"box$pid.0\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".$pxoffset."px; top:".$pyoffset."px; width:".$Dbwidth."px; height:".$Dbheight."px; z-index:".(count($node["path"])-$index)."; \"><table><tr><td colspan=\"2\" width=\"$Dbwidth\" height=\"$Dbheight\">";
 				print_pedigree_person($pid, 1, ($view!="preview"));
 				print "</td></tr></table></div>\n";
 			}
@@ -978,9 +979,10 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 			$sentence = getRelationshipSentence($node, $pid1, $pid2);
 			if($sentence != false)
 			{
-				print "<br/><br/><br/><h4><center>";
+				print "<div style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":1px; top:".($Dbaseyoffset-70)."px; z-index:1;\">";
+				print "<h4>";
 			    print $sentence;
-				print "</center></h4></div>\n";
+				print "</h4></div>\n";
 			}
 		}
 	}
@@ -988,11 +990,12 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 
 $maxyoffset += 100;
 ?>
+</div>
 <script language="JavaScript" type="text/javascript">
 	relationship_chart_div = document.getElementById("relationship_chart");
 	if (!relationship_chart_div) relationship_chart_div = document.getElementById("relationship_chart_rtl");
 	if (relationship_chart_div) {
-		relationship_chart_div.style.height = <?php print $maxyoffset; ?> + "px";
+		relationship_chart_div.style.height = <?php print ($maxyoffset-50); ?> + "px";
 		relationship_chart_div.style.width = "100%";
 	}
 </script>

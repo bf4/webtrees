@@ -30,7 +30,7 @@ require("config.php");
 require_once("includes/functions_charts.php");
 
 function print_descendency($pid, $count) {
-	global $show_spouse, $dgenerations, $bwidth, $bheight, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $generations, $box_width, $view, $show_full, $pgv_lang;
+	global $show_spouse, $dgenerations, $bwidth, $bheight, $bhalfheight, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $generations, $box_width, $view, $show_full, $pgv_lang;
 	if ($count>=$dgenerations) return 0;
 	print "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n";
 	print "<tr>";
@@ -64,12 +64,12 @@ function print_descendency($pid, $count) {
 				print "<td rowspan=\"$rowspan\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"$twidth\" height=\"3\" alt=\"\" /></td>\n";
 				if ($ct>1) {
 					if ($i==0) {
-						print "<td height=\"50%\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n";
-						print "<tr><td height=\"50%\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
+						print "<td height=\"".$bhalfheight."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n";
+						print "<tr><td height=\"".$bhalfheight."\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
 					}
 					else if ($i==$ct-1) {
-						print "<td height=\"50%\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n";
-						print "<tr><td height=\"50%\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
+						print "<td height=\"".$bhalfheight."\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n";
+						print "<tr><td height=\"".$bhalfheight."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
 					}
 					else {
 						print "<td style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
@@ -140,17 +140,14 @@ function print_descendency($pid, $count) {
 			}
 			// NOTE: If statement OK
 			if ($famids||($num>1)) {
-				print "\n\t\t<div id=\"childarrow.$pid\"";
-				print " style=\"position:absolute; width:".$bwidth."px; height:10px; \">"; 
+				print "\n\t\t<div class=\"center\" id=\"childarrow.$pid\" dir=\"".$TEXT_DIRECTION."\"";
+				print " style=\"position:absolute; width:".$bwidth."px; \">"; 
 				if ($view!="preview") {
-					print "&nbsp;&nbsp;<a href=\"javascript: ".$pgv_lang["show"]."\" onclick=\"return togglechildrenbox('$pid');\" onmouseover=\"swap_image('larrow.$pid',3);\" onmouseout=\"swap_image('larrow.$pid',3);\">";
+					print "<a href=\"javascript: ".$pgv_lang["show"]."\" onclick=\"return togglechildrenbox('$pid');\" onmouseover=\"swap_image('larrow.$pid',3);\" onmouseout=\"swap_image('larrow.$pid',3);\">";
 					print "<img id=\"larrow.$pid\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"]."\" border=\"0\" alt=\"\" />";
-					print "</a>&nbsp;&nbsp;";
+					print "</a>";
 				}
-				print "</div>\n\t\t<div id=\"childbox.$pid\" dir=\"";
-				if ($TEXT_DIRECTION=="rtl") print "rtl\" style=\"position:absolute; right: 20px; ";
-				else print "ltr\" style=\"position:absolute; left: 20px;";
-				print " width:".$bwidth."px; height:".$bheight."px; visibility: hidden;\">";
+				print "\n\t\t<div id=\"childbox.$pid\" dir=\"".$TEXT_DIRECTION."\" style=\"width:".$bwidth."px; height:".$bheight."px; visibility: hidden;\">";
 				print "\n\t\t\t<table class=\"person_box\"><tr><td>";
 				for($f=0; $f<count($famids); $f++) {
 					$famrec = find_family_record(trim($famids[$f]));
@@ -276,7 +273,7 @@ function max_descendency_generations($pid, $depth) {
 }
 
 function print_person_pedigree($pid, $count) {
-	global $generations, $SHOW_EMPTY_BOXES, $PGV_IMAGE_DIR, $PGV_IMAGES, $bheight;
+	global $generations, $SHOW_EMPTY_BOXES, $PGV_IMAGE_DIR, $PGV_IMAGES, $bheight, $bhalfheight;
 	if ($count>=$generations) return;
 	$famids = find_family_ids($pid);
 	foreach($famids as $indexval => $famid) {
@@ -284,7 +281,7 @@ function print_person_pedigree($pid, $count) {
 		$parents = find_parents($famid);
 		$height="100%";
 		print "<tr>";
-		if ($count<$generations-1) print "<td height=\"50%\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
+		if ($count<$generations-1) print "<td height=\"".$bhalfheight."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>\n";
 		if ($count<$generations-1) print "<td rowspan=\"2\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"7\" height=\"3\" alt=\"\" /></td>\n";
 		print "<td rowspan=\"2\">\n";
 		print_pedigree_person($parents["HUSB"]);
@@ -292,10 +289,10 @@ function print_person_pedigree($pid, $count) {
 		print "<td rowspan=\"2\">\n";
 		print_person_pedigree($parents["HUSB"], $count+1);
 		print "</td>\n";
-		print "</tr>\n<tr>\n<td height=\"50%\"";
+		print "</tr>\n<tr>\n<td height=\"".$bhalfheight."\"";
 		if ($count<$generations-1) print " style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\" ";
 		print "><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n<tr>\n";
-		if ($count<$generations-1) print "<td height=\"50%\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
+		if ($count<$generations-1) print "<td height=\"".$bhalfheight."\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
 		if ($count<$generations-1) print "<td rowspan=\"2\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"7\" height=\"3\" alt=\"\" /></td>\n";
 		print "<td rowspan=\"2\">\n";
 		print_pedigree_person($parents["WIFE"]);
@@ -304,7 +301,7 @@ function print_person_pedigree($pid, $count) {
 		print_person_pedigree($parents["WIFE"], $count+1);
 		print "</td>\n";
 		print "</tr>\n";
-		if ($count<$generations-1) print "<tr>\n<td height=\"50%\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n";
+		if ($count<$generations-1) print "<tr>\n<td height=\"".$bhalfheight."\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n";
 		print "</table>\n";
 	}
 }
@@ -351,7 +348,7 @@ function print_family_book($pid, $descent)
 // -- args
 if (!isset($show_full)) $show_full=$PEDIGREE_FULL_DETAILS;
 if (!isset($show_spouse)) $show_spouse=0;
-if (empty($generations)) $generations = 1;
+if (empty($generations)) $generations = 2;
 if (empty($descent)) $descent = 5;
 if ($generations > $MAX_DESCENDANCY_GENERATIONS) $generations = $MAX_DESCENDANCY_GENERATIONS;
 if (!isset($view)) $view="";
@@ -360,11 +357,13 @@ if (!isset($view)) $view="";
 if (empty($box_width)) $box_width = "100";
 $box_width=max($box_width, 50);
 $box_width=min($box_width, 300);
-if (!$show_full) $bwidth = $bwidth / 1.5;
-$bwidth*=$box_width/100;
+if (!$show_full) $bwidth = ($bwidth / 1.5);
+$bwidth = (int) ($bwidth * $box_width/100);
+
 if ($show_full==false) {
-	$bheight = $bheight / 2.5;
+	$bheight = (int) ($bheight / 2.5);
 }
+$bhalfheight = (int) ($bheight / 2);
 
 // -- root id
 if (!isset($pid)) $pid="";
@@ -374,9 +373,13 @@ else $name = $pgv_lang["private"];
 
 // -- print html header information
 print_header(PrintReady($name)." ".$pgv_lang["familybook_chart"]);
-print "\n\t<table width=\"100%\" class=\"list_table $TEXT_DIRECTION\"><tr><td valign=\"top\">\n\t\t";
-if ($view!="preview") print "\n\t<h2>".$pgv_lang["familybook_chart"].":<br />".PrintReady($name)."</h2>";
-else print "\n\t<h2 style=\"text-align: center\">".$pgv_lang["familybook_chart"].":<br />".PrintReady($name)."</h2>";
+if ($view=="preview") {
+	print "<h2 style=\"text-align: center\">".$pgv_lang["familybook_chart"].":&nbsp;&nbsp;&nbsp;".PrintReady($name)."</h2>";
+} else { 
+	print "<!-- // NOTE: Start table header -->";
+	print "<table><tr><td valign=\"top\">";
+	print "<h2>".$pgv_lang["familybook_chart"].":<br />".PrintReady($name)."</h2>";
+}
 ?>
 
 <script language="JavaScript" type="text/javascript">
@@ -395,59 +398,100 @@ else print "\n\t<h2 style=\"text-align: center\">".$pgv_lang["familybook_chart"]
 <?php
 $gencount=0;
 if ($view!="preview") {
-	print "</td><td><form method=\"get\" name=\"people\" action=\"?\">\n";
-	print "\n\t\t<table class=\"list_table $TEXT_DIRECTION\">\n\t\t<tr>";
-	print "<td class=\"list_label\">&nbsp;" . $pgv_lang["root_person"] . "&nbsp;</td>";
-	print "<td class=\"list_value\">";
-	print "\n\t\t<input class=\"pedigree_form\" type=\"text\" name=\"pid\" size=\"3\" value=\"$pid\" />";
-	print "<font size=\"1\"> <a href=\"javascript:open_find(document.people.pid);\">".$pgv_lang["find_id"]."</a></font>";
-	print_help_link("desc_rootid_help", "qm");
-	print "</td>";
-	print "<td rowspan=\"4\" class=\"list_value\">";
-	print "\n\t\t<table class=\"$TEXT_DIRECTION\" style=\"width: 100%;\">\n\t\t<tr><td class=\"sublinks_cell\" style=\" vertical-align:top;\">";
-	print "<input type=\"hidden\" name=\"show_full\" value=\"$show_full\" />";
-	print "<input type=\"checkbox\" value=\"";
-	if ($show_full) print "1\" checked=\"checked\" onclick=\"document.people.show_full.value='0';\"";
-	else print "0\" onclick=\"document.people.show_full.value='1';\"";
-	print " />".$pgv_lang["show_details"];
-	print_help_link("show_full_help", "qm");
-	print "<br />\n";
-	print "<input type=\"checkbox\" value=\"1\" name=\"show_spouse\"";
-	if ($show_spouse) print " checked=\"checked\"";
-	print " />".$pgv_lang["show_spouses"];
-	print_help_link("show_spouse_help", "qm");
-	print "<br /><br /><br /></td><td class=\"subheaders\" style=\"width: 60px; vertical-align:bottom;text-align: ".($TEXT_DIRECTION=="rtl"?"left":"right").";\">";
-	print "<input type=\"submit\" value=\"".$pgv_lang["view"]."\" />";
-	print "</td></tr></table>\n";
-	print "</td>";
-	print "</tr><tr>";
-	print "<td class=\"list_label\" >&nbsp;" . $pgv_lang["generations"] . "&nbsp;</td>";
-	print "<td class=\"list_value\">";
-//	print "<input type=\"text\" size=\"3\" name=\"generations\" value=\"$generations\" />";
-	print "<select name=\"generations\">";
+?>
+<!--	// NOTE: Start form and table -->
+	</td><td width="50px">&nbsp;</td><td><form method="get" name="people" action="?">
+	<table><tr>
+	
+		<!-- // NOTE: Root ID -->
+	<td class="descriptionbox">
+	<?php print_help_link("desc_rootid_help", "qm");	
+	print $pgv_lang["root_person"] . "</td>";?>
+	<td class="optionbox">
+	<input class="pedigree_form" type="text" name="pid" id="pid" size="3" value="<?php print $pid ?>"	/>
+	<?php print_findindi_link("pid","");?>
+	</td>
+
+	<!-- // NOTE: Show Details -->
+	<td class="descriptionbox">
+	<?php print_help_link("show_full_help", "qm");
+	print $pgv_lang["show_details"]?>
+	</td>
+	<td class="optionbox">
+	<input type="hidden" name="show_full" value="<?php print $show_full;?>" />
+	<input type="checkbox" value="<?php 
+		if ($show_full) print "1\" checked=\"checked\" onclick=\"document.people.show_full.value='0';";
+	else print "0\" onclick=\"document.people.show_full.value='1';";?>" />
+	</td>
+	
+	<!-- // NOTE: Submit button -->
+	<td rowspan="4" class="topbottombar vmiddle">
+	<input type="submit" value="<?php print $pgv_lang["view"] ?>" />
+	</td></tr>
+
+	<!-- // NOTE: Generations -->
+	<tr><td class="descriptionbox" >
+	<?php print_help_link("desc_generations_help", "qm");
+	print $pgv_lang["generations"]?>
+	</td>
+	<td class="optionbox">
+	<select name="generations">
+	<?php
 	for ($i=2; $i<=$MAX_DESCENDANCY_GENERATIONS; $i++) {
 		print "<option value=\"".$i."\"" ;
 		if ($i == $generations) print "selected=\"selected\" ";
 		print ">".$i."</option>";
 	}
-	print "</select>";
-	print_help_link("desc_generations_help", "qm");
-	print "</td>";
-	print "</tr><tr>";
-	print "<td class=\"list_label\">&nbsp;" . $pgv_lang["box_width"] . "&nbsp;</td>";
-	print "<td class=\"list_value\"><input type=\"text\" size=\"3\" name=\"box_width\" value=\"$box_width\" /> <b>%</b>";
-	print_help_link("box_width_help", "qm");
-	print "</td>";
-	print "</tr><tr>";
-	print "<td class=\"list_label\" >&nbsp;" . $pgv_lang["descent_steps"] . "&nbsp;</td>";
-	print "<td class=\"list_value\"><input type=\"text\" size=\"3\" name=\"descent\" value=\"$descent\" />";
-	print_help_link("fambook_descent_help", "qm");
-	print "</td>";
-	print "</tr></table>";
-	print "</form>\n";
-}
-print "</td></tr></table>\n";
+	?>
+	</select>
+	</td>
+
+	<!-- // NOTE: Show spouses -->
+	<td class="descriptionbox">
+	<?php print_help_link("show_spouse_help", "qm");
+	print $pgv_lang["show_spouses"]?>
+	</td>
+	<td class="optionbox">
+	<input type="checkbox" value="1" name="show_spouse"
+	<?php
+	if ($show_spouse) print " checked=\"checked\""; ?> />
+	</td></tr>
+	
+	<!-- // NOTE: Box width -->
+	<tr><td class="descriptionbox">
+	<?php print_help_link("box_width_help", "qm");
+	print $pgv_lang["box_width"]?>
+	</td>
+	<td class="optionbox"><input type="text" size="3" name="box_width" value="<?php print $box_width; ?>" />
+	<b>%</b>
+	</td>
+	
+	<!-- // NOTE: Empty field -->
+	<td class="descriptionbox">&nbsp;</td><td class="optionbox">&nbsp;</td></tr>
+	
+	<!-- // NOTE: Descent steps -->
+	<tr><td class="descriptionbox">
+	<?php print_help_link("fambook_descent_help", "qm");
+	print $pgv_lang["descent_steps"]?>
+	</td>
+	<td class="optionbox"><input type="text" size="3" name="descent" value="<?php print $descent;?>" />
+	</td>
+	
+	<!-- // NOTE: Empty field -->
+	<td class="descriptionbox">&nbsp;</td><td class="optionbox">&nbsp;</td></tr>
+	
+	<!-- // NOTE: End table and form -->
+	</table></form>
+
+	<!-- // NOTE: Close table header -->
+	</td></tr></table>
+<?php } ?>
+<div id="familybook_chart<?php print ($TEXT_DIRECTION=="ltr")?"":"_rtl"; ?>" style="<?php if ($view=="preview") print "top: 1px;"; else print "width:98%; direction:".$TEXT_DIRECTION."; z-index:1;";?>" >
+<?php
+
 print_family_book($pid, $descent);
+
+print "</div>";
 print "<br /><br />\n";
 print_footer();
 ?>

@@ -54,8 +54,8 @@ a {
 }
 
 a:hover	{
-	color: black;
-	text-decoration: underline;
+	color: red;
+	text-decoration: none;
 }
 
 th {
@@ -119,43 +119,27 @@ table.center{
 	margin-right: auto;
 }
 
-.list_label {
+.list_label, .list_label_wrap {
 	color: white;
 	background-color: #98753d;
 	font: bold 12px tahoma, arial, helvetica, sans-serif;
 	text-align: center;
 }
 
-.list_label_wrap {
-	color: white;
-	background-color: #98753d;
-	font: bold 12px tahoma, arial, helvetica, sans-serif;
-	text-align: center;
-}
-
-.list_value {
+.list_value, .list_value_wrap {
 	background-color: #eae0d4;
 	color: black;
 	border: solid #9ca3d4 1px;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	vertical-align: top;
+}
+
+.list_label, .list_value, .nowrap {
 	white-space: nowrap;
 }
 
-.list_value_wrap {
-	background-color: #eae0d4;
-	color: black;
-	border: solid #9ca3d4 1px;
-	font: 12px tahoma, arial, helvetica, sans-serif;
-	vertical-align: top;
-}
-
-.list_value_wrap_red {
-	background-color: #eae0d4;
-	color: red;
-	border: solid #9ca3d4 1px;
-	font: 12px tahoma, arial, helvetica, sans-serif;
-	vertical-align: top;
+.list_label_wrap, .list_value_wrap, .wrap {
+	white-space: normal;
 }
 
 .list_item {
@@ -169,86 +153,65 @@ table.center{
 .facts_label {
 	color: white;
 	background-color: #98753d;
-	font: 14px tahoma, arial, helvetica, sans-serif;
+	font: 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px 4px 4px 4px;
 	width: 20%;
 	text-align: center;
 }
 
-.facts_labelrela {
-	background-color: #88652d;
+.facts_label02, .facts_label03 {
+	color: #333333;
+	font: bold 12px tahoma, arial, helvetica, sans-serif;
+	padding: 4px 4px 4px 4px;
+	text-align: center;
 }
 
 .facts_label02 {
-	color: #333333;
 	background-color: #98753d;
-	font: bold 14px tahoma, arial, helvetica, sans-serif;
-	padding: 4px 4px 4px 4px;
-	text-align: center;
 }
 
 .facts_label03 {
-	color: #333333;
 	background-color: #c7974d;
-	font: bold 14px tahoma, arial, helvetica, sans-serif;
-	padding: 4px 4px 4px 4px;
-	text-align: center;
 }
 
 .facts_value {
 	background-color: #eae0d4;
 	color: black;
 	border: solid #9ca3d4 1px;
-	font: 14px tahoma, arial, helvetica, sans-serif;
+	font: 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px 4px 4px 4px;
-}
-
-.facts_valuerela {
-	background-color: #dad0c4;
 }
 
 .facts_value02 {
 	background-color: #f2f5f9;
 	color: black;
 	border: solid #9ca3d4 1px;
-	font: 14px tahoma, arial, helvetica, sans-serif;
+	font: 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px 4px 4px 4px;
 }
 
-.facts_labelred {
+.facts_labelred, .facts_labelblue {
 	color: white;
 	background-color: #98753d;
-	border: solid red 2px;
-	font: 14px tahoma, arial, helvetica, sans-serif;
+	font: 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px 4px 4px 4px;
 	width: 20%;
 	text-align: center;
 }
 
-.facts_valuered {
+.facts_valuered, .facts_valueblue {
 	background-color: #eae0d4;
 	color: black;
+	font: 12px tahoma, arial, helvetica, sans-serif;
+	padding: 4px 4px 4px 4px;
+}
+
+.facts_labelred, .facts_valuered {
 	border: solid red 2px;
-	font: 14px tahoma, arial, helvetica, sans-serif;
-	padding: 4px 4px 4px 4px;
 }
 
-.facts_labelblue {
-	color: white;
-	background-color: #98753d;
+.facts_labelblue, .facts_valueblue {
 	border: solid blue 2px;
-	font: 14px tahoma, arial, helvetica, sans-serif;
-	padding: 4px 4px 4px 4px;
-	width: 20%;
-	text-align: center;
-}
-
-.facts_valueblue {
-	background-color: #eae0d4;
-	color: black;
-	border: solid blue 2px;
-	font: 14px tahoma, arial, helvetica, sans-serif;
-	padding: 4px 4px 4px 4px;
 }
 
 .tabs_table {
@@ -365,7 +328,8 @@ table.center{
 }
 
 .date {
-	color: #333377;
+	color: #444455;
+	font-weight: bold;
 }
 
 .label, .field {
@@ -417,30 +381,16 @@ table.center{
 	vertical-align: middle;
 }
 
-.pedigree_image_portrait {
+.pedigree_image_portrait, .pedigree_image_landscape {
 	float: left;
-	height: 60px;
+	height: 50px;
 	border: solid black 1px;
 	margin-right: 3px;
 }
 
-.pedigree_image_portrait_rtl {
+.pedigree_image_portrait_rtl, .pedigree_image_landscape_rtl {
 	float: right;
-	height: 60px;
-	border: solid black 1px;
-	margin-left: 3px;
-}
-
-.pedigree_image_landscape {
-	float: left;
-	width: 60px;
-	border: solid black 1px;
-	margin-right: 3px;
-}
-
-.pedigree_image_landscape_rtl {
-	float: right;
-	width: 60px;
+	height: 50px;
 	border: solid black 1px;
 	margin-left: 3px;
 }
@@ -644,13 +594,13 @@ table.center{
 	color: #eeeeee;
 }
 
-.menuitem_hover a {
+/* .menuitem_hover a {
 	color: white;
 }
 
 .menuitem_hover_rtl a {
 	color: white;
-}
+} */
 
 .submenuitem a {
 	color: #444455;
@@ -867,16 +817,16 @@ table.center{
 #pedigree_chart {
 	position: relative;
 	top: -240px;
-	left: -50px;
-	width: 99%;
+	left: 0px;
+	width: 100%;
 }
 
 /*-- pedigree chart rtl specific stylesheets --*/
 #pedigree_chart_rtl {
 	position: relative;
 	top: -240px;
-	right: -50px;
-	width: 99%;
+	right: 0px;
+	width: 100%;
 }
 
 /*-- descendancy chart specific stylesheets --*/
@@ -1080,6 +1030,11 @@ h2 {
 	font: bold 18px tahoma, arial, helvetica, sans-serif;
 }
 
+h4 {
+	color: #000066;
+	font: bold 12px tahoma, arial, helvetica, sans-serif;
+}
+
 .formField {
 	font: 12px tahoma, arial, helvetica, sans-serif;
 }
@@ -1163,10 +1118,6 @@ h2 {
 	padding: 3px;
 	vertical-align: top;
 	white-space: nowrap;
-}
-
-.wrap {
-	white-space: normal;
 }
 
 .vmiddle {
@@ -1347,10 +1298,19 @@ h2 {
 
 .lifespan_outer {
 	position: relative; 
-	width: 99.5%; 
+	width: 1050px;
 	height: 600px; 
-	overflow: hidden; 
+	overflow: visible; 
 	border: solid blue 1px;
+}
+
+.lifespan_outer a {
+	color: black;
+}
+
+.lifespan_outer a:hover {
+	color: red;
+	text-decoration: none;
 }
 
 .lifespan_timeline {

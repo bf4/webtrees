@@ -239,7 +239,7 @@ else {
 			if ($tag=='NOTE') $icon = "note";
 			if ($tag=='OBJE') $icon = "media";
 			?>
-			<tr><td clas="list_value"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES[$icon]["small"];?>" border="0" alt="<?php echo $tag;?>" title="<?php echo $tag;?>" /></td>
+			<tr><td class="list_value"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES[$icon]["small"];?>" border="0" alt="<?php echo $tag;?>" title="<?php echo $tag;?>" /></td>
 			<td class="list_value ltr"><?php echo $clipping['id']?></td>
 			<td class="list_value">
 			<?php

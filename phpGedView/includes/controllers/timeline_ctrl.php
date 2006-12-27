@@ -292,7 +292,7 @@ class TimelineControllerRoot extends BaseController {
 						}
 					}
 					//-- print the diagnal line
-					print "\n\t\t<div id=\"dbox$factcount\" style=\"position:absolute; ".($TEXT_DIRECTION =="ltr"?"left: ".($basexoffset+20):"right: ".($basexoffset+20))."px; top:".($dyoffset)."px; font-size: 8pt; height: ".(abs($tyoffset))."px; width: ".(abs($tyoffset))."px;";
+					print "\n\t\t<div id=\"dbox$factcount\" style=\"position:absolute; ".($TEXT_DIRECTION =="ltr"?"left: ".($basexoffset+23):"right: ".($basexoffset+23))."px; top:".($dyoffset)."px; font-size: 8pt; height: ".(abs($tyoffset))."px; width: ".(abs($tyoffset))."px;";
 					print " background-image: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$img]["other"]."');";
 					print " background-position: 0% $ypos; \" >\n";
 					print "</div>\n";

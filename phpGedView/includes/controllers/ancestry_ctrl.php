@@ -1,6 +1,6 @@
 <?php
 /**
- * Controller for the Hourglass Page
+ * Controller for the Ancestry Page
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2006	John Finlay and Others
@@ -179,7 +179,7 @@ class AncestryControllerRoot extends BaseController {
  * @param int $depth the ascendancy depth to show
  */
 function print_child_ascendancy($pid, $sosa, $depth) {
-	global $pgv_lang, $OLD_PGENS;
+	global $pgv_lang, $TEXT_DIRECTION, $OLD_PGENS;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $Dindent;
 	global $SHOW_EMPTY_BOXES, $pidarr, $box_width;
 
@@ -188,14 +188,22 @@ function print_child_ascendancy($pid, $sosa, $depth) {
 	print "<li>";
 	print "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td><a name=\"sosa".$sosa."\"></a>";
 	$new=($pid=="" or !isset($pidarr["$pid"]));
-	if ($sosa==1) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"2\" width=\"$Dindent\" border=\"0\" alt=\"\" /></td><td>\n";
-	else print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" height=\"2\" width=\"$Dindent\" border=\"0\" alt=\"\" /></td><td>\n";
+	if ($sosa==1) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"3\" width=\"$Dindent\" border=\"0\" alt=\"\" /></td><td>\n";
+	else {
+		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"3\" width=\"2\" border=\"0\" alt=\"\" />";
+		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" height=\"3\" width=\"".($Dindent-2)."\" border=\"0\" alt=\"\" /></td><td>\n";
+	}
 	print_pedigree_person($pid, 1, $this->view!="preview");
 	print "</td>";
 	print "<td>";
-	if ($sosa>1) print_url_arrow($pid, "?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;show_full=$this->show_full&amp;box_width=$box_width&amp;chart_style=$this->chart_style", $pgv_lang["ancestry_chart"], 3);
+	if ($TEXT_DIRECTION=="ltr") {
+		$label = $pgv_lang["ancestry_chart"].": ".$pid;
+	} else {
+		$label = $pid." :".$pgv_lang["ancestry_chart"];
+	}
+	if ($sosa>1) print_url_arrow($pid, "?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;show_full=$this->show_full&amp;box_width=$box_width&amp;chart_style=$this->chart_style", $label, 3);
 	print "</td>";
-	print "<td class=\"details1\">&nbsp;<span class=\"person_box". (($sosa==1) ? "NN" : (($sosa%2) ? "F" : "")) . "\">&nbsp;$sosa&nbsp;</span>&nbsp;";
+	print "<td class=\"details1\">&nbsp;<span dir=\"ltr\" class=\"person_box". (($sosa==1)?"NN":(($sosa%2)?"F":"")) . "\">&nbsp;$sosa&nbsp;</span>&nbsp;";
 	print "</td><td class=\"details1\">";
 	$relation ="";
 	if (!$new) $relation = "<br />[=<a href=\"#sosa".$pidarr["$pid"]."\">".$pidarr["$pid"]."</a> - ".get_sosa_name($pidarr["$pid"])."]";
