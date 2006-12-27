@@ -1,6 +1,6 @@
 <!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
 <!-- @author: Anderson Wilson -->
-<!-- @version $Id: BRA.txt,v 1.1.2.1 2006/04/07 02:43:22 canajun2eh Exp $ -->
+<!-- @version $Id$ -->
 Rio Grande do Sul (RS)
 Santa Catarina (SC)
 Paraná (PR)

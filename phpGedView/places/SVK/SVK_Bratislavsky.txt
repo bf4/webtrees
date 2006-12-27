@@ -1,5 +1,5 @@
 <!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
-<!-- @version $Id: SVK_Bratislavsky.txt,v 1.1.2.1 2005/11/27 17:33:50 opus27 Exp $ -->
+<!-- @version $Id$ -->
 Bratislava I (B1)
 Bratislava II (B2)
 Bratislava III (B3)

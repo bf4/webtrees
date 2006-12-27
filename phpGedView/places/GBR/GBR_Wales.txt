@@ -1,4 +1,4 @@
-<!-- @version $Id: GBR_Wales.txt,v 1.1.2.2 2005/11/25 17:42:45 canajun2eh Exp $ -->
+<!-- @version $Id$ -->
 <!-- @see http://www.wirksworth.org.uk/A26-CHAP.htm#Wales -->
 Anglesey (AGY) -1974
 Breconshire (BRE) -1974

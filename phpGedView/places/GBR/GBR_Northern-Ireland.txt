@@ -1,4 +1,4 @@
-<!-- @version $Id: GBR_Northern-Ireland.txt,v 1.1.2.1 2005/11/25 13:34:55 opus27 Exp $ -->
+<!-- @version $Id$ -->
 <!-- @see http://www.wirksworth.org.uk/A26-CHAP.htm#Ireland -->
 Antrim (ANT) 1922+
 Armagh (ARM) 1922+

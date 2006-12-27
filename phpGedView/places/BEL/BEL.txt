@@ -1,4 +1,4 @@
-<!-- @version $Id: BEL.txt,v 1.1.2.1 2005/11/25 16:23:45 opus27 Exp $ -->
+<!-- @version $Id$ -->
 Bruxelles-Capitale (BXL)
 Flandre (FLD)
 Wallonie (WAL)
