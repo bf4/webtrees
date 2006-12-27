@@ -34,22 +34,26 @@ if (strstr($_SERVER["SCRIPT_NAME"], "functions")) {
  *
  * @param int $sosa
  * @param string $pid optional pid
- * @param bool $makeBlank   should the number show or not (to align boxes in Descendancy chart)
+ * @param string $arrowDirection   direction of link arrow
  */
-function print_sosa_number($sosa, $pid = "", $makeBlank = false) {
+function print_sosa_number($sosa, $pid = "", $arrowDirection = "up") {
 	global $view, $pbwidth, $pbheight;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	if (substr($sosa,-1,1)==".") $personLabel = substr($sosa,0,-1);
 	else $personLabel = $sosa;
-	if ($makeBlank) $visibility = "hidden";
+	if ($arrowDirection=="blank") $visibility = "hidden";
 	else $visibility = "normal";
-	print "<td class=\"subheaders\" style=\"vertical-align: middle; white-space: nowrap; visibility: $visibility;\">";
+	print "<td class=\"subheaders center\" style=\"vertical-align: middle; text-indent: 0px; margin-top: 0px; white-space: nowrap; visibility: $visibility;\">";
 	print "&lrm;$personLabel&lrm;";
-	if ($sosa != "1") {
+	if ($sosa != "1" && $pid != "") {
+		if ($arrowDirection=="left") $dir = 0;
+		else if ($arrowDirection=="right") $dir = 1;
+		else if ($arrowDirection== "down") $dir = 3;
+		else $dir = 2;		// either "blank" or "up"
 		print "<br />";
-		print_url_arrow($pid, "#$pid", "#$pid");
-		print "&nbsp;";
+		print_url_arrow($pid, "#$pid", "$pid", $dir);
+//		print "&nbsp;";
 	}
 	print "</td>";
 }
@@ -119,7 +123,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	print "\n\t<table style=\"width: " . ($pbwidth) . "px; height: " . $pbheight . "px;\" border=\"0\"><tr>";
 	if ($parid) {
 		if ($husb->getXref()==$parid) print_sosa_number($label);
-		else print_sosa_number($label, "", true);
+		else print_sosa_number($label, "", "blank");
 	}
 	else if ($sosa > 0) print_sosa_number($sosa * 2);
 	if (isset($newparents) && $husb->getXref() != $newparents["HUSB"]) {
@@ -149,7 +153,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 		if ($hparents or ($sosa != 0 and $SHOW_EMPTY_BOXES)) {
 			// husband's father
 			print "\n\t<table style=\"width: " . ($pbwidth) . "px; height: " . $pbheight . "px;\" border=\"0\"><tr>";
-			if ($sosa > 0) print_sosa_number($sosa * 4);
+			if ($sosa > 0) print_sosa_number($sosa * 4, $hparents['HUSB'], "down");
 			if (!empty($gparid) and $hparents['HUSB']==$gparid) print_sosa_number(trim(substr($label,0,-3),".").".");
 			print "\n\t<td valign=\"top\">";
 			print_pedigree_person($hparents['HUSB'], 1, $show_famlink, 4, $personcount);
@@ -159,14 +163,14 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	}
 	if (!empty($upfamid) and ($sosa!=-1) and ($view != "preview")) {
 		print "<td valign=\"middle\" rowspan=\"2\">";
-		print_url_arrow($upfamid, ($sosa==0 ? "?famid=$upfamid&amp;show_full=$show_full" : "#$upfamid"), "#$upfamid", 1);
+		print_url_arrow($upfamid, ($sosa==0 ? "?famid=$upfamid&amp;show_full=$show_full" : "#$upfamid"), "$upfamid", 1);
 		print "</td>\n";
 	}
 	if ($hparents or ($sosa != 0 and $SHOW_EMPTY_BOXES)) {
 		// husband's mother
 		print "</tr><tr><td><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" alt=\"\" /></td><td>";
 		print "\n\t<table style=\"width: " . ($pbwidth) . "px; height: " . $pbheight . "px;\" border=\"0\"><tr>";
-		if ($sosa > 0) print_sosa_number($sosa * 4 + 1);
+		if ($sosa > 0) print_sosa_number($sosa * 4 + 1, $hparents['WIFE'], "down");
 		if (!empty($gparid) and $hparents['WIFE']==$gparid) print_sosa_number(trim(substr($label,0,-3),".").".");
 		print "\n\t<td valign=\"top\">";
 		print_pedigree_person($hparents['WIFE'], 1, $show_famlink, 5, $personcount);
@@ -191,7 +195,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	print "\n\t<table style=\"width: " . ($pbwidth) . "px; height: " . $pbheight . "px;\"><tr>";
 	if ($parid) {
 		if ($wife->getXref()==$parid) print_sosa_number($label);
-		else print_sosa_number($label, "", true);
+		else print_sosa_number($label, "", "blank");
 	}
 	else if ($sosa > 0) print_sosa_number($sosa * 2 + 1);
 	if (isset($newparents) && $wife->getXref() != $newparents["WIFE"]) {
@@ -221,7 +225,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 		if ($hparents or ($sosa != 0 and $SHOW_EMPTY_BOXES)) {
 			// wife's father
 			print "\n\t<table style=\"width: " . ($pbwidth) . "px; height: " . $pbheight . "px;\"><tr>";
-			if ($sosa > 0) print_sosa_number($sosa * 4 + 2);
+			if ($sosa > 0) print_sosa_number($sosa * 4 + 2, $hparents['HUSB'], "down");
 			if (!empty($gparid) and $hparents['HUSB']==$gparid) print_sosa_number(trim(substr($label,0,-3),".").".");
 			print "\n\t<td valign=\"top\">";
 			print_pedigree_person($hparents['HUSB'], 1, $show_famlink, 6, $personcount);
@@ -231,14 +235,14 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	}
 	if (!empty($upfamid) and ($sosa!=-1) and ($view != "preview")) {
 		print "<td valign=\"middle\" rowspan=\"2\">";
-		print_url_arrow($upfamid.$label, ($sosa==0 ? "?famid=$upfamid&amp;show_full=$show_full" : "#$upfamid"), "#$upfamid", 1);
+		print_url_arrow($upfamid.$label, ($sosa==0 ? "?famid=$upfamid&amp;show_full=$show_full" : "#$upfamid"), "$upfamid", 1);
 		print "</td>\n";
 	}
 	if ($hparents or ($sosa != 0 and $SHOW_EMPTY_BOXES)) {
 		// wife's mother
 		print "</tr><tr><td><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" alt=\"\" /></td><td>";
 		print "\n\t<table style=\"width: " . ($pbwidth) . "px; height: " . $pbheight . "px;\"><tr>";
-		if ($sosa > 0) print_sosa_number($sosa * 4 + 3);
+		if ($sosa > 0) print_sosa_number($sosa * 4 + 3, $hparents['WIFE'], "down");
 		if (!empty($gparid) and $hparents['WIFE']==$gparid) print_sosa_number(trim(substr($label,0,-3),".").".");
 		print "\n\t<td valign=\"top\">";
 		print_pedigree_person($hparents['WIFE'], 1, $show_famlink, 7, $personcount);

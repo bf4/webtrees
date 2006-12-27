@@ -32,7 +32,7 @@ require("includes/controllers/pedigree_ctrl.php");
 
 // -- print html header information
 print_header($controller->getPageTitle());
-print "<div style=\"position: relative; z-index: 1;\">\n";
+print "<div id=\"pedigree_chart_options"; print ($TEXT_DIRECTION=="ltr")?"":"_rtl";print "\" style=\"position: relative; z-index: 90; width:98%;\">";
 if ($controller->isPrintPreview()) print "<h2>".str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATIONS, $pgv_lang["gen_ped_chart"]).":";
 else print "<h2>".$pgv_lang["index_header"].":";
 print "<br />".PrintReady($controller->getPersonName())."</h2>";
@@ -142,12 +142,12 @@ for($i=($controller->treesize-1); $i>=0; $i--) {
 					$parent = ceil(($i-1)/2);
 					$vlength = $controller->offsetarray[$parent]["y"]-$yoffset;
 				}
-				$linexoffset = $xoffset-1;
+				$linexoffset = $xoffset;
 				print "<div id=\"line$i\" dir=\"";
 				if ($TEXT_DIRECTION=="rtl") print "rtl\" style=\"position:absolute; right:";
 				else print "ltr\" style=\"position:absolute; left:";
-				print $linexoffset."px; top:".($yoffset+$controller->pbheight/2)."px; z-index: 0;\">";
-				print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."\" width=\"3\" height=\"".$vlength."\" alt=\"\" />";
+				print $linexoffset."px; top:".($yoffset+1+$controller->pbheight/2)."px; z-index: 0;\">";
+				print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."\" width=\"3\" height=\"".($vlength-1)."\" alt=\"\" />";
 				print "</div>";
 			}
 		}

@@ -305,10 +305,10 @@ function print_descendency($pid, $count) {
 					if ($ct>1) {
 						if ($i==0) {
 							//////////////////////
-							print "<td height=\"".($bhalfheight+4)."px\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>";
-							print "<tr><td height=\"".$bhalfheight."px\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
+							print "<td height=\"".$bhalfheight."px\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>";
+							print "<tr><td height=\"".$bhalfheight."px\"style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
 						} else if ($i==$ct-1) {
-							print "<td height=\"".($bhalfheight+4)."px\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>";
+							print "<td height=\"".$bhalfheight."px\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>";
 							print "<tr><td height=\"".$bhalfheight."px\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
 						} else {
 							print "<td style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
@@ -386,20 +386,15 @@ function print_descendency($pid, $count) {
 			}
 			// NOTE: If statement OK
 			if ($famids||($num>1)) {
-				print "\n\t\t<div id=\"childarrow\" dir=\"";
-				if ($TEXT_DIRECTION=="rtl") print "rtl\" style=\"position:absolute; ";
-				else print "ltr\" style=\"position:absolute; ";
-				print "width:10px; height:10px; \">";
+				print "\n\t\t<div class=\"center\" id=\"childarrow\" dir=\"".$TEXT_DIRECTION."\"";
+				print " style=\"position:absolute; width:".$bwidth."px; \">";
 				if ($this->view!="preview") {
 					print "<a href=\"javascript: ".$pgv_lang["show"]."\" onclick=\"togglechildrenbox(); return false;\" onmouseover=\"swap_image('larrow',3);\" onmouseout=\"swap_image('larrow',3);\">";
 					print "<img id=\"larrow\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow"]["other"]."\" border=\"0\" alt=\"\" />";
-					print "</a>";
+					print "</a><br />";
 					
 				}
-				print "\n\t\t<div id=\"childbox\" dir=\"";
-				if ($TEXT_DIRECTION=="rtl") print "rtl\" style=\"position:absolute; right: 20px; ";
-				else print "ltr\" style=\"position:absolute; left: 20px;";
-				print " width:".$bwidth."px; height:".$bheight."px; visibility: hidden;\">";
+				print "\n\t\t<div id=\"childbox\" dir=\"".$TEXT_DIRECTION."\" style=\"width:".$bwidth."px; height:".$bheight."px; visibility: hidden;\">";
 				print "\n\t\t\t<table class=\"person_box\"><tr><td>";
 				
 				foreach($famids as $famid=>$family) {

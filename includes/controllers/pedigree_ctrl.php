@@ -76,7 +76,7 @@ class PedigreeControllerRoot extends BaseController {
 		else $this->show_full = $_REQUEST['show_full'];
 		if ($this->show_full=="") $this->show_full = 0;
 		
-		if (!isset($_REQUEST['talloffset'])) $this->talloffset=$PEDIGREE_LAYOUT;
+		if (!isset($_REQUEST['talloffset'])) $this->talloffset = (int)$PEDIGREE_LAYOUT;
 		else $this->talloffset = $_REQUEST['talloffset'];
 		if ($this->talloffset=="") $this->talloffset = 0;
 		
@@ -111,7 +111,6 @@ class PedigreeControllerRoot extends BaseController {
 		//-- adjustments for portrait mode
 		if ($this->talloffset==0) {
 			$bxspacing+=12;
-			$basexoffset+=50;
 			$bwidth+=20;
 			$baseyoffset -= 20*($this->PEDIGREE_GENERATIONS-1);
 		}
@@ -187,7 +186,14 @@ class PedigreeControllerRoot extends BaseController {
 				}
 			}
 			// -- calculate the xoffset
-			$this->xoffset = 20+$basexoffset+ (($this->PEDIGREE_GENERATIONS - $this->curgen) * (($this->pbwidth+$bxspacing)/(2-$this->talloffset)));
+			if ($this->talloffset) {
+				// -- Landscape
+				$this->xoffset = 10 + $basexoffset + (($this->PEDIGREE_GENERATIONS - $this->curgen) * ($this->pbwidth+$bxspacing));
+				if ($this->curgen == $this->PEDIGREE_GENERATIONS) $this->xoffset += 10;
+			} else {
+				// -- Portrait
+				$this->xoffset = 20 + $basexoffset + (($this->PEDIGREE_GENERATIONS - $this->curgen) * (($this->pbwidth+$bxspacing) / 2));
+			}
 			if ($this->curgen == 1 && $this->talloffset) $this->xoffset += 10;
 			$this->offsetarray[$i]["x"]=$this->xoffset;
 			$this->offsetarray[$i]["y"]=$this->yoffset;

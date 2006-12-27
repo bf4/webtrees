@@ -83,14 +83,10 @@ if ($view!="preview") {
 	<input type="radio" name="chart_style" value="0"
 	<?php
 	if ($controller->chart_style == "0") print " checked=\"checked\" ";
-	print "onclick=\"toggleStatus('cousins');";
-	//if ($controller->chart_style != "1") print " document.people.chart_style.value='1';";
-	print "\" />".$pgv_lang["chart_list"];
+	print "/>".$pgv_lang["chart_list"];
 	print "<br /><input type=\"radio\" name=\"chart_style\" value=\"1\"";
 	if ($controller->chart_style == "1") print " checked=\"checked\" ";
-	print "onclick=\"toggleStatus('cousins');";
-	//if ($controller->chart_style != "1") print " document.people.chart_style.value='0';";
-	print "\" />".$pgv_lang["chart_booklet"];
+	print "/>".$pgv_lang["chart_booklet"];
 	print "<br /><input type=\"radio\" name=\"chart_style\" value=\"2\"";
 	if ($controller->chart_style == "2") print " checked=\"checked\" ";
 	print " />".$pgv_lang["individual_list"];
@@ -114,7 +110,7 @@ if ($view!="preview") {
 	<td class="optionbox vmiddle">
 	<select name="generations">
 	<?php
-	for ($i=1; $i<=$MAX_DESCENDANCY_GENERATIONS; $i++) {
+	for ($i=2; $i<=$MAX_DESCENDANCY_GENERATIONS; $i++) {
 	print "<option value=\"".$i."\"" ;
 	if ($i == $controller->generations) print "selected=\"selected\" ";
 		print ">".$i."</option>";
