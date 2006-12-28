@@ -32,7 +32,7 @@ require("includes/controllers/pedigree_ctrl.php");
 
 // -- print html header information
 print_header($controller->getPageTitle());
-print "<div id=\"pedigree_chart_options"; print ($TEXT_DIRECTION=="ltr")?"":"_rtl";print "\" style=\"position: relative; z-index: 90; width:98%;\">";
+print "<div id=\"pedigree_chart_options"; print ($TEXT_DIRECTION=="ltr")?"":"_rtl";print "\" style=\"position: relative; z-index: 1; width:98%;\">";
 if ($controller->isPrintPreview()) print "<h2>".str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATIONS, $pgv_lang["gen_ped_chart"]).":";
 else print "<h2>".$pgv_lang["index_header"].":";
 print "<br />".PrintReady($controller->getPersonName())."</h2>";

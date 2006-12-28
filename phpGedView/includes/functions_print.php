@@ -79,12 +79,12 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 					print "\n\t\t\t<table class=\"person_box$isF\"><tr><td class=\"details1\">";
 					// NOTE: Zoom
 					print "<a href=\"pedigree.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;talloffset=$talloffset&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\"><b>".$pgv_lang["index_header"]."</b></a>\n";
-					print "<br /><a href=\"descendancy.php?pid=$pid&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\"><b>".$pgv_lang["descend_chart"]."</b></a><br />\n";
+					print "<br /><a href=\"descendancy.php?pid=$pid&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\"><b>".$pgv_lang["descend_chart"]."</b></a><br />\n";
 					$username = getUserName();
 					if (!empty($username)) {
 						 $tuser=getUser($username);
 						 if (!empty($tuser["gedcomid"][$GEDCOM])) {
-							  print "<a href=\"relationship.php?pid1=".$tuser["gedcomid"][$GEDCOM]."&amp;pid2=".$pid."&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\"><b>".$pgv_lang["relationship_to_me"]."</b></a><br />\n";
+							  print "<a href=\"relationship.php?pid1=".$tuser["gedcomid"][$GEDCOM]."&amp;pid2=".$pid."&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\"><b>".$pgv_lang["relationship_to_me"]."</b></a><br />\n";
 						 }
 					}
 					// NOTE: Zoom
@@ -103,9 +103,9 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 							  if ($pid==$parents["WIFE"]) $spouse=$parents["HUSB"];
 							  $num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
 							  if ((!empty($spouse))||($num>0)) {
-								   print "<a href=\"family.php?famid=$famid&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\"><b>".$pgv_lang["fam_spouse"]."</b></a><br /> \n";
+								   print "<a href=\"family.php?famid=$famid&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\"><b>".$pgv_lang["fam_spouse"]."</b></a><br /> \n";
 								if (!empty($spouse)) {
-									print "<a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid."');\">";
+									print "<a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\">";
  									   if (($SHOW_LIVING_NAMES>=$PRIV_PUBLIC) || (displayDetailsByID($spouse))||(showLivingNameByID($spouse))) print PrintReady(get_person_name($spouse));
 									   else print $pgv_lang["private"];
 									   print "</a><br />\n";
@@ -113,7 +113,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 							  }
 							  for($j=0; $j<$num; $j++) {
 								   $cpid = $smatch[$j][1];
-								   print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"individual.php?pid=$cpid&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">";
+								   print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"individual.php?pid=$cpid&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\">";
  								   if (($SHOW_LIVING_NAMES>=$PRIV_PUBLIC) || (displayDetailsByID($cpid))||(showLivingNameByID($cpid))) print PrintReady(get_person_name($cpid));
 								   else print $pgv_lang["private"];
 								   print "<br /></a>";
