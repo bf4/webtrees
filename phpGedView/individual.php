@@ -351,7 +351,7 @@ function resize_content_div(i) {
 </script>
 <script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
 <?php
-if (!$controller->isPrintPreview()) {
+if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
 ?>
 <div class="door">
 <dl>
@@ -376,10 +376,14 @@ if (!$controller->isPrintPreview()) {
 </table>
 
 <!-- ======================== Start 1st tab individual page ============ Personal Facts and Details -->
-<div id="facts" class="tab_page" style="display:none;" >
-<?php print "<span class=\"subheaders\">".$pgv_lang["personal_facts"]."</span><div id=\"facts_content\">";
-	if ($controller->default_tab==0) $controller->getTab(0);
-	else print $pgv_lang['loading'];
+<?php
+if(empty($SEARCH_SPIDER)) 
+	print "<div id=\"facts\" class=\"tab_page\" style=\"display:none;\" >\n";
+else
+	print "<div id=\"facts\" class=\"tab_page\" style=\"display:block;\" >\n";
+print "<span class=\"subheaders\">".$pgv_lang["personal_facts"]."</span><div id=\"facts_content\">";
+if (($controller->default_tab==0)||(!empty($SEARCH_SPIDER))) $controller->getTab(0);
+else print $pgv_lang['loading'];
 ?>
 </div>
 </div>
@@ -388,64 +392,82 @@ if (!$controller->isPrintPreview()) {
 	// hide button if list is empty
 	ebn = document.getElementsByName('row_rela');
 	if (ebn.length==0) document.getElementById('row_top').style.display="none";
-	<?php if (!$EXPAND_RELATIVES_EVENTS) print "togglerow('row_rela');"?>
+	<?php if (!$EXPAND_RELATIVES_EVENTS) print "togglerow('row_rela');\n"; ?>
 //-->
 </script>
 <!-- ======================== Start 2nd tab individual page ==== Notes ======= -->
-<div id="notes" class="tab_page" style="display:none;" >
-<?php print "<span class=\"subheaders\">".$pgv_lang["notes"]."</span><div id=\"notes_content\">";
-	if ($controller->default_tab==1) $controller->getTab(1);
-	else {
-		if ($controller->get_note_count()>0) print "<br /><br />".$pgv_lang['loading'];
-		else print "<span id=\"no_tab2\">".$pgv_lang["no_tab2"]."</span>";
+<?php
+if(empty($SEARCH_SPIDER)) 
+	print "<div id=\"notes\" class=\"tab_page\" style=\"display:none;\" >\n";
+else
+	print "<div id=\"notes\" class=\"tab_page\" style=\"display:block;\" >\n";
+print "<span class=\"subheaders\">".$pgv_lang["notes"]."</span><div id=\"notes_content\">";
+if (($controller->default_tab==1)||(!empty($SEARCH_SPIDER))) $controller->getTab(1);
+else {
+	if ($controller->get_note_count()>0) print "<br /><br />".$pgv_lang['loading'];
+	else print "<span id=\"no_tab2\">".$pgv_lang["no_tab2"]."</span>";
 	}
 ?>
 </div>
 </div>
 <!-- =========================== Start 3rd tab individual page === Sources -->
-<div id="sources" class="tab_page" style="display:none;" >
 <?php
+if(empty($SEARCH_SPIDER)) 
+	print "<div id=\"sources\" class=\"tab_page\" style=\"display:none;\" >\n";
+else
+	print "<div id=\"sources\" class=\"tab_page\" style=\"display:block;\" >\n";
 if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) {
 	print "<span class=\"subheaders\">".$pgv_lang["ssourcess"]."</span><div id=\"sources_content\">";
-	if ($controller->default_tab==2) $controller->getTab(2);
+	if (($controller->default_tab==2)||(!empty($SEARCH_SPIDER))) $controller->getTab(2);
 	else {
 		if ($controller->get_source_count()>0) print "<br /><br />".$pgv_lang['loading'];
 		else print "<span id=\"no_tab3\">".$pgv_lang["no_tab3"]."</span>";
 	}
-?>
-</div>
-<?php
+	print "</div>\n";
 }
 ?>
 </div>
 <!-- ==================== Start 4th tab individual page ==== Media -->
-<div id="media" class="tab_page" style="display:none;" >
+<?php
+if(empty($SEARCH_SPIDER)) 
+	print "<div id=\"media\" class=\"tab_page\" style=\"display:none;\" >\n";
+else
+	print "<div id=\"media\" class=\"tab_page\" style=\"display:block;\" >\n";
+?>
 <span class="subheaders"><?php print $pgv_lang["media"];?></span>
 <div id="media_content">
 <?php
 	if ($MULTI_MEDIA && ($controller->get_media_count()>0 || userCanEdit(getUserName()))) {
-		if ($controller->default_tab==3) $controller->getTab(3);
+		if (($controller->default_tab==3)||(!empty($SEARCH_SPIDER))) $controller->getTab(3);
 		else print "<br /><br />".$pgv_lang['loading'];
-   }
-		else print "<table class=\"facts_table\"><tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr></table>\n";
+   		}
+	else print "<table class=\"facts_table\"><tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr></table>\n";
 ?>
 </div>
 </div>
 <!-- ============================= Start 5th tab individual page ==== Close relatives -->
-<div id="relatives" class="tab_page" style="display:none;" >
+<?php
+if(empty($SEARCH_SPIDER)) 
+	print "<div id=\"relatives\" class=\"tab_page\" style=\"display:none;\" >\n";
+else
+	print "<div id=\"relatives\" class=\"tab_page\" style=\"display:block;\" >\n";
+?>
 <div id="relatives_content">
 <?php
-	if ($controller->default_tab==4) $controller->getTab(4);
+	if (($controller->default_tab==4)||(!empty($SEARCH_SPIDER))) $controller->getTab(4);
 	else print "<br /><br />".$pgv_lang['loading'];
 ?>
 </div>
 </div>
 
 <!-- ===================================== Start 6th tab individual page === Research Assistant -->
-<div id="researchlog" class="tab_page" style="display:none;" >
-<span class="subheaders"><?php print $pgv_lang["research_assistant"]; ?></span>
-<div id="researchlog_content">
 <?php
+// Only show this section if we are not talking to a search engine.
+if(empty($SEARCH_SPIDER)) {
+	print "<div id=\"researchlog\" class=\"tab_page\" style=\"display:none;\" >\n";
+	print "<span class=\"subheaders\">".$pgv_lang["research_assistant"]."</span>\n";
+	print "<div id=\"researchlog_content\">\n";
+
 	if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel())) {
 		if ($controller->default_tab==5) $controller->getTab(5);
 		else print "<br /><br />".$pgv_lang['loading'];
@@ -453,25 +475,23 @@ if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) {
 	else {
 		print "<table class=\"facts_table\"><tr><td id=\"no_tab6\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab6"]."</td></tr></table>\n";
 	}
-?>
-</div>
-</div>
+	print "</div>\n";
+	print "</div>\n";
+}
 
-<?php
+// Only show this section if we are not talking to a search engine.
 //--------------------------------Start 7th tab individual page
 //--- Google map
-if (file_exists("modules/googlemap/defaultconfig.php")) {
-	?>
-	<div id="googlemap" class="tab_page" style="display:none;" >
-    <span class="subheaders"><?php print $pgv_lang["googlemap"]; ?></span>
-	<div id="googlemap_content">
-	<?php
+if(empty($SEARCH_SPIDER)) {
+	if (file_exists("modules/googlemap/defaultconfig.php")) {
+		print "<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\" >\n";
+    		print "<span class=\"subheaders\">".$pgv_lang["googlemap"]."</span>\n";
+		print "<div id=\"googlemap_content\">\n";
 		if ($controller->default_tab==6) $controller->getTab(6);
 		else print "<br /><br />".$pgv_lang['loading'];
-	?>
-	</div>
-	</div>
-	<?php
+		print "</div>\n";
+		print "</div>\n";
+	}
 }
 ?>
 
