@@ -1467,10 +1467,12 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		$folders = get_media_folders();
 		print "<span dir=\"ltr\"><select name=\"folder_list\" onchange=\"document.newmedia.folder.value=this.options[this.selectedIndex].value;\">\n";
 		foreach ($folders as $f) {
-			print "<option value=\"$f\"";
-			if ($folder == $f)
-				print " selected=\"selected\"";
-			print ">$f</option>\n";
+			if (!strpos($f, ".svn")){    //Do not print subversion directories
+				print "<option value=\"$f\"";
+				if ($folder == $f)
+					print " selected=\"selected\"";
+				print ">$f</option>\n";
+			}
 		}
 		if (userGedcomAdmin(getUserName()))
 			print "<option value=\"other\">" . $pgv_lang["add_media_other_folder"] . "</option>\n";
