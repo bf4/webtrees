@@ -1479,6 +1479,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print "</select></span>\n";
 		if (userGedcomAdmin(getUserName()))
 			print "<span dir=\"ltr\"><input type=\"text\" name=\"folder\" size=\"30\" value=\"" . $folder . "\"></span>";
+		else print "<span dir=\"ltr\"><input type=\"hidden\" name=\"folder\" size=\"30\" value=\"" . $folder . "\"></span>";
 		if ($gedfile == "FILE") {
 			print "<br /><sub>" . $pgv_lang["server_folder_advice2"] . "</sub></td></tr>";
 		}
