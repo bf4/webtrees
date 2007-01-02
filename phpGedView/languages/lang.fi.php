@@ -163,6 +163,7 @@ $pgv_lang["hide_context_help"]	= "Piilota pika-avusteet ";
 $pgv_lang["sorry"]			= "<b>Valitettavasti emme ole viimeistelleet tämän sivun tai kohteen ohjetta</b>";
 $pgv_lang["help_not_exist"] 		= "<b>Tämän sivun tai kohteen ohjetta ei vielä ole olemassa</b>";
 $pgv_lang["var_not_exist"]		= "<span style=font-weight: bold>Kielimuuttuja puuttuu. Ilmoita tästä koska se on virhe.</span>";
+$pgv_lang["resolution"] 			= "Näytön tarkkuus";
 //$pgv_lang["resolution"]		= "Näytön tarkkuus";
 $pgv_lang["menu"]			= "Valikko";
 $pgv_lang["header"]			= "Otsikko";
@@ -382,6 +383,7 @@ $pgv_lang["view_source"]		= "Katso lähdettä";
 $pgv_lang["view_object"]		= "Katso kohdetta";
 $pgv_lang["prev"]			= "&lt; Edellinen";
 $pgv_lang["next"]			= "Seuraava &gt;";
+$pgv_lang["next_image"]				= "Seuraava";
 $pgv_lang["file_not_found"]		= "Tiedostoa ei löydy.";
 $pgv_lang["medialist_show"]     	= "Näytä";
 $pgv_lang["per_page"]          		= "mediakohdetta sivulla";
@@ -643,8 +645,8 @@ $pgv_lang["son_in_law"]		= "vävy";
 $pgv_lang["daughter_in_law"]		= "miniä";
 $pgv_lang["step_son"]		= "poikapuoli";
 $pgv_lang["step_daughter"]	    	= "tytärpuoli";
-$pgv_lang["n_x_great_grandfather"]	= "isoisä %d. polvessa";  //@@?
-$pgv_lang["n_x_great_grandmother"]	= "isoäiti %d. polvessa"; //@@? 
+$pgv_lang["n_x_great_grandfather"]	= "isoisä %d. polvessa";
+$pgv_lang["n_x_great_grandmother"]	= "isoäiti %d. polvessa";
 // the bosa_brothers_offspring name is used for fraternal nephews and nieces - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
@@ -909,6 +911,10 @@ $pgv_lang["welcome"]		= "Tervetuloa";
 $pgv_lang["upcoming_events"]	= "Tulevia tapahtumia";
 $pgv_lang["living_or_all"]		= "Näytä vain elossa olevien henkilöiden tapahtumat?";
 $pgv_lang["basic_or_all"]		= "Näytä vain syntymät, kuolemat ja avioliitot?";
+$pgv_lang["style"]					= "Esitystyyli";
+$pgv_lang["style1"]					= "Teksti";
+$pgv_lang["style2"]					= "Taulukko";
+$pgv_lang["cal_download"]			= "Sallitko kalenteritapahtumien latauksen?";
 $pgv_lang["no_events_living"]		= "Elossa olevien henkilöiden tapahtumia ei ole seuraavien #pgv_lang[global_num1]# päivän aikana.";
 $pgv_lang["no_events_living1"]	= "Elossa olevien henkilöiden tapahtumia ei ole huomenna.";
 $pgv_lang["no_events_all"]		= "Mitään tapahtumia ei ole seuraavien #pgv_lang[global_num1]# päivän aikana.";
@@ -1187,6 +1193,10 @@ $pgv_lang["sosa_28"]         	     	= "N/A";
 $pgv_lang["sosa_29"]         	     	= "N/A";
 $pgv_lang["sosa_30"]          	    	= "N/A";
 $pgv_lang["sosa_31"]          	    	= "N/A";
+$pgv_lang["sosa_paternal_female_n_generations"]	= "%3\$d x isoisoisiä";
+$pgv_lang["sosa_paternal_male_n_generations"]	= "%3\$d x isoisoäiti";
+$pgv_lang["sosa_maternal_female_n_generations"]	= "%3\$d x isoisoisiä";
+$pgv_lang["sosa_maternal_male_n_generations"]	= "%3\$d x isoisoäiti";
 // 5th generation
 /*$pgv_lang["sosa_32"]          	    	= "N/A";
 $pgv_lang["sosa_33"]          	    	= "N/A";

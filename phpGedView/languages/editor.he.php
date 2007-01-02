@@ -57,7 +57,7 @@ $pgv_lang["add_unlinked_source"]	= "הוסף מקור לא קשור";
 $pgv_lang["server_file"]		= "שם הקובץ בשרת";
 $pgv_lang["server_file_advice"]		= "אין לשנות אם ברצונך לשמור על שם הקובץ המקורי.";
 $pgv_lang["server_file_advice2"]	= "ניתן להכניס URL שמתחיל ב-<span dir=\"ltr\">&laquo;http://&raquo;</span>.";
-$pgv_lang["server_folder_advice"]	= "ניתן להכניס עד ל-#GLOBALS[MEDIA_DIRECTORY_LEVELS]# שמות של תיקיות לאחר ברירת המחדל &laquo;#GLOBALS[MEDIA_DIRECTORY]#&raquo;.<br />אין להכניס את החלק &laquo;<span dir=\"ltr\">#GLOBALS[MEDIA_DIRECTORY]#</span>&raquo; של שם התיקייה בשרת.";
+$pgv_lang["server_folder_advice"]	= "ניתן להכניס עד ל-#GLOBALS[MEDIA_DIRECTORY_LEVELS]# שמות של תיקיות לאחר ברירת המחדל &laquo;<span dir=\"ltr\">#GLOBALS[MEDIA_DIRECTORY]#</span>&raquo;.<br />אין להכניס את החלק &laquo;<span dir=\"ltr\">#GLOBALS[MEDIA_DIRECTORY]#</span>&raquo; של שם התיקייה בשרת.";
 $pgv_lang["server_folder_advice2"]	= "מתעלמים מכניסה זו אם הוכנס URL בשדה שם הקובץ.";
 $pgv_lang["add_linkid_advice"]	= "הכנס או חפש את קוד הזיהוי של האדם, המשפחה או המקור שאליו יש לקשר את המדיה הזו.";
 $pgv_lang["use_browse_advice"]	= "השתמש בכפתור ה-&laquo;Browse&raquo; כדי לחפש את הקובץ הרצוי במחשב המקומי שלך.";
@@ -210,7 +210,7 @@ $pgv_lang["update_successful"]		= "העדכון הצליח";
 $pgv_lang["upload"]			= "העלה";
 $pgv_lang["upload_error"]		= "התגלתה שגיאה בהעלאת הקובץ שלך.";
 $pgv_lang["upload_media"]		= "העלאת קבצי מדיה";
-$pgv_lang["upload_media_help"]	= "~#pgv_lang[upload_media]#~<br /><br />בחר קבצים מהמחשב המקומי שלך להעלאה לשרת שלך. כל הקבצים מועלים לתיקיית <b>#MEDIA_DIRECTORY#</b> או לאחת מהתיקיות מתחתיה.<br /><br />שמות החוצצים שאתה מציין יתווספו ל-#MEDIA_DIRECTORY#. למשל, #MEDIA_DIRECTORY#myfamily. אם תיקיית התמונות המזעריות אינה קיימת, היא תווצר בצורה אוטומטית.";
+$pgv_lang["upload_media_help"]	= "~#pgv_lang[upload_media]#~<br /><br />בחר קבצים מהמחשב המקומי שלך להעלאה לשרת שלך. כל הקבצים מועלים לתיקיית <b><span dir=\"ltr\">#MEDIA_DIRECTORY#</span></b> או לאחת מהתיקיות מתחתיה.<br /><br />שמות החוצצים שאתה מציין יתווספו ל-<span dir=\"ltr\">#MEDIA_DIRECTORY#</span>, למשל, #MEDIA_DIRECTORY#myfamily. אם תיקיית התמונות המזעריות אינה קיימת, היא תווצר בצורה אוטומטית.";
 $pgv_lang["upload_successful"]		= "ההעלאה הצליחה.";
 $pgv_lang["view_change_diff"]		= "התבונן בשינויים ";
 
