@@ -250,15 +250,15 @@ $pgv_lang["autosearch_fgivennames"]	= "כלול שמות פרטיים של הא�
 $pgv_lang["autosearch_msurname"]	= "כלול שם משפחה של האם:"; 
 $pgv_lang["autosearch_mgivennames"]	= "כלול שמות פרטיים של האם:";    
 $pgv_lang["autosearch_country"]  	= "כלול ארץ:"; 
-$pgv_lang["autosearch_plugin_name_ancestry"] 	= "##Ancestry.com Plug-in"; //@@
-$pgv_lang["autosearch_plugin_name_ancestrycouk"] = "##Ancestry.co.uk Plug-in"; //@@
-$pgv_lang["autosearch_plugin_name_ellisIsland"] 	= "##EllisIslandRecords.org Plug-in"; //@@
-$pgv_lang["autosearch_plugin_name_genNet"] 	= "##GeneaNet.com Plug-in"; //@@
-$pgv_lang["autosearch_plugin_name_gen"] 	= "##Genealogy.com Plug-in";  //@@
-$pgv_lang["autosearch_plugin_name_fs"] 		= "##FamilySearch.org Plug-in"; //@@
-$pgv_lang["autosearch_plugin_name_werelate"]   = "##Werelate.org Plug-in";
-$pgv_lang["autosearch_search"]           		= "##Search"; //@@
-$pgv_lang["autosearch_keywords"] = "##Keywords:";
+$pgv_lang["autosearch_plugin_name_ancestry"] 	= "חיבור Ancestry.com"; 
+$pgv_lang["autosearch_plugin_name_ancestrycouk"] = "חיבור Ancestry.co.uk"; 
+$pgv_lang["autosearch_plugin_name_ellisIsland"] 	= "חיבור EllisIslandRecords.org"; 
+$pgv_lang["autosearch_plugin_name_genNet"] 	= "חיבור GeneaNet.com";
+$pgv_lang["autosearch_plugin_name_gen"] 	= "חיבור Genealogy.com";  
+$pgv_lang["autosearch_plugin_name_fs"] 		= "חיבור FamilySearch.org"; 
+$pgv_lang["autosearch_plugin_name_werelate"]   	= "חיבור Werelate.org";
+$pgv_lang["autosearch_search"]           		= "חפש"; 
+$pgv_lang["autosearch_keywords"] 		= "##Keywords:";
 
 //Folder deletion error messages
 $pgv_lang["has_tasks"]                 ="התיקייה מכילה משימות ולא ניתן למחוק אותה"; 
