@@ -192,7 +192,7 @@ $pgv_lang["comment_delete_check"]	= "האם באמת תרצה למחוק את ה
 //-- RA_ADDTASK MESSAGES
 $pgv_lang["add_new_task"]		= "הוסף משימה";
 $pgv_lang["submit"]			= "שמור"; 
-$pgv_lain["save_and_complete"]         	= "שמור וסיים";
+$pgv_lang["save_and_complete"]         	= "שמור וסיים";
 $pgv_lang["assign_task"]		= "הקצה משימה";
 $pgv_lang["AddTask"]		= "הוסף משימה"; 
 
@@ -229,9 +229,9 @@ $pgv_lang["uk_place"]		= "מקום";
 //-- MY TASK BLOCK 
 $pgv_lang["mytasks_block_descr"]	= "אזור המשימות שלי מראה משימות של המשתמש הנוכחי וניתן לעצב אותן כך שניתן לראות משימות שהסתיימו או משימות שטרם  הוקצו."; 
 $pgv_lang["mytasks_block"]		= "המשימות שלי";      
-$pgv_lang["mytasks_edit"]               	= "##Edit";
-$pgv_lang["mytasks_unassigned"]	= "##Unassigned";
-$pgv_lang["mytasks_takeOn"]		= "##TakeOn";
+$pgv_lang["mytasks_edit"]               	= "ערוך"; 
+$pgv_lang["mytasks_unassigned"]	= "לא מיוחסים";
+$pgv_lang["mytasks_takeOn"]		= "תפוס"; 
 $pgv_lang["mytasks_help"]		= "~אזור המשימות שלי~<br /><br />אזור המשימות שלי מראה משימות של המשתמש הנוכחי<br />וניתן לעצב אותן כך שניתן לראות משימות שהסתיימו או משימות שטרם  הוקצו.";
 $pgv_lang["mytask_show_tasks"]   	= "האם להציג משימות שאינן מיוחסות?";
 $pgv_lang["mytask_show_completed"]	= "האם להציג משימות שהסתיימו?";
