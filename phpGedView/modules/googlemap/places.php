@@ -358,6 +358,7 @@ if ($action=="ImportGedcom") {
             $res->free();
             if (empty($row[0])) {       // this name does not yet exist: create entry
                 $highestIndex = $highestIndex + 1;
+                if (!isset($default_zoom_level[$i])) $default_zoom_level[$i] = $default_zoom_level[$i-1];
                 if (($place["lati"] == "0") || ($place["long"] == "0") || (($i+1) < count($parent))) {
                     $sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', NULL, NULL, ".$default_zoom_level[$i].", NULL);";
                 }

@@ -134,6 +134,12 @@ class IndividualControllerRoot extends BaseController {
 			}
 		}
 
+		if (isset($_REQUEST['tab'])) {
+			$this->default_tab = $_REQUEST['tab'];
+		}
+		
+		if ($this->default_tab<0 || $this->default_tab>7) $this->default_tab=0;
+
 		$this->indi = new Person($indirec, false);
 
 		//-- if the person is from another gedcom then forward to the correct site
@@ -1681,47 +1687,18 @@ class IndividualControllerRoot extends BaseController {
 	    global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
 	    global $GOOGLEMAP_MAX_ZOOM, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_ENABLED, $TBLPREFIX, $DBCONN;
 	    global $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE;
-        if(empty($SEARCH_SPIDER)) {
-	    	$tNew = preg_replace("/&HIDE_GOOGLEMAP=true/", "", $_SERVER["REQUEST_URI"]);
-	    	$tNew = preg_replace("/&HIDE_GOOGLEMAP=false/", "", $tNew);
-	    	if($SESSION_HIDE_GOOGLEMAP == "true") {
-		    print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"http://".$_SERVER["SERVER_NAME"].$tNew."&HIDE_GOOGLEMAP=false\">";
-		    print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["activate"]."\" title=\"".$pgv_lang["activate"]."\" />";
-		    print " ".$pgv_lang["activate"]."</a></span>\n";
-	    	} else {
-		    print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"http://".$_SERVER["SERVER_NAME"].$tNew."&HIDE_GOOGLEMAP=true\">";
-		    print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["deactivate"]."\" title=\"".$pgv_lang["deactivate"]."\" />";
-		    print " ".$pgv_lang["deactivate"]."</a></span>\n";
-		}
-	    }
-        if (!$this->indi->canDisplayName()) {
-            print "\n\t<table class=\"facts_table\">";
-            print "<tr><td class=\"facts_value\">";
-            print_privacy_error($CONTACT_EMAIL);
-            print "</td></tr>";
-            print "\n\t</table>\n<br />";
-            print "<script type=\"text/javascript\">\n";
-            print "function ResizeMap ()\n{\n}\n</script>\n";
-        }
-        else {
-            if(empty($SEARCH_SPIDER)) {
-				if($SESSION_HIDE_GOOGLEMAP == "false") {
+
 			            include_once('modules/googlemap/googlemap.php');
+	    
 		                $famids = array();
 		                $families = $this->indi->getSpouseFamilies();
 		                foreach($families as $famid=>$family) {
 		                    $famids[] = $family->getXref();
 		                }
 		                if (build_indiv_map($this->getIndiFacts(), $famids) == 0) {
-		                    print "<tr><td id=\"no_tab7\" colspan=\"2\" class=\"facts_value\"></td></tr>\n";
+            print "<table><tr><td id=\"no_tab7\" colspan=\"2\"></td></tr></table>\n";
 		                }
 				}
-            }
-        }
-		// start
-		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" id=\"marker6\" width=\"1\" height=\"1\" alt=\"\" />";
-		// end
-	}
 }
 // -- end of class
 //-- load a user extended class if one exists
