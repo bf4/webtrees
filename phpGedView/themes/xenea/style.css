@@ -1007,7 +1007,7 @@ h4 {
 .topbottombar {
 	color: white;
 	background-color: #84beff;
-	font: 12px tahoma, arial, Helvetica, sans-serif;
+	font: bold 12px tahoma, arial, Helvetica, sans-serif;
 	padding: 4px;
 	text-align: center;
 }
