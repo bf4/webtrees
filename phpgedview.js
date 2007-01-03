@@ -638,6 +638,11 @@ function createXMLHttp()
  */
 function evalAjaxJavascript(text, parentElement) {
 	parentElement.innerHTML = "";
+	/* -- uncomment for debugging
+	debugelement = document.createElement("pre");
+	debugelement.appendChild(document.createTextNode(text));
+	parentElement.appendChild(debugelement);
+	*/
 	pos2 = -1;
 	//-- find the first occurrence of <script>
 	pos1 = text.indexOf("<script", pos2+1);
@@ -676,8 +681,12 @@ function evalAjaxJavascript(text, parentElement) {
 		//-- get the JS code between the <script></script> tags
 		if (!results || results.length==0) {
 			jscode = text.substring(pos1+1, pos2);
-			//-- add the JS code to the <script> element as a text node
-			jselement.appendChild(document.createTextNode(jscode));
+			if (jscode.length>0) {
+				ttext = document.createTextNode(jscode);
+				//-- add the JS code to the <script> element as a text node
+				jscode=jscode.replace(/function ([^( ]*)/g,'window.$1 = function');
+				eval(jscode);
+			}
 		}
 		//-- add the javascript element to the parent element
 		parentElement.appendChild(jselement);

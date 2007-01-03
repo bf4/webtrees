@@ -308,6 +308,39 @@ function get_lati_long_placelocation ($place) {
     return $retval;
 }
 
+function setup_map() {
+	global $GOOGLEMAP_ENABLED, $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $pgv_lang;
+	if ($GOOGLEMAP_ENABLED == "false") {
+		return;
+	}
+    ?>
+    <script src="http://maps.google.com/maps?file=api&v=2&key=<?php print $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
+    <script src="modules/googlemap/pgvGoogleMap.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        if (window.attachEvent) {
+            window.attachEvent("onload", function() {
+                loadMap(<?php print $GOOGLEMAP_MAP_TYPE;?>);      // Internet Explorer
+                if (loadedTabs[7]) SetMarkersAndBounds();
+            });
+            window.attachEvent("onunload", function() {
+                GUnload();      // Internet Explorer
+            });
+        } else {
+            window.addEventListener("load", function() {
+                loadMap(<?php print $GOOGLEMAP_MAP_TYPE;?>);      // Firefox and standard browsers
+                if (loadedTabs[7]) SetMarkersAndBounds();
+            }, false);
+            window.addEventListener("unload", function() {
+                GUnload(); // Firefox and standard browsers
+            }, false);
+        }
+    var minZoomLevel = <?php print $GOOGLEMAP_MIN_ZOOM;?>;
+    var maxZoomLevel = <?php print $GOOGLEMAP_MAX_ZOOM;?>;
+    var startZoomLevel = <?php print $GOOGLEMAP_MAX_ZOOM;?>;
+    </script>
+    <?php
+}
+
 function build_indiv_map($indifacts, $famids) {
     global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOON, $GOOGLEMAP_MAX_ZOON, $GEDCOM;
     global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
@@ -318,14 +351,19 @@ function build_indiv_map($indifacts, $famids) {
         print "<table class=\"facts_table\">\n";
         print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script></td></tr>\n";
         print "<script type=\"text/javascript\">\n";
-        print "function ResizeMap ()\n{\n}\n</script>\n";
+        print "function ResizeMap ()\n{\n}\nfunction SetMarkersAndBounds ()\n{\n}\n</script>\n";
         if (userIsAdmin(getUserName())) {
             print "<tr><td align=\"center\" colspan=\"2\">\n";
             print "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
             print "</td></tr>\n";
         }
-        print "\n\t</td></tr>";
         print "\n\t</table>\n<br />";
+        ?>
+        <script type="text/javascript">
+        	document.getElementById("googlemap_left").innerHTML = document.getElementById("googlemap_content").innerHTML;
+        	document.getElementById("googlemap_content").innerHTML = "";
+        </script>
+        <?php
         return;
     }
 
@@ -571,29 +609,8 @@ function build_indiv_map($indifacts, $famids) {
         }
     }
     else {
-        print "<script src=\"http://maps.google.com/maps?file=api&amp;v=2&amp;key=".$GOOGLEMAP_API_KEY."\" type=\"text/javascript\"></script>\n";
         ?>
-        <script src="modules/googlemap/pgvGoogleMap.js" type="text/javascript"></script>
         <script type="text/javascript">
-            if (window.attachEvent) {
-                window.attachEvent("onload", function() {
-                    loadMap(<?php print $GOOGLEMAP_MAP_TYPE;?>);      // Internet Explorer
-                });
-                window.attachEvent("onunload", function() {
-                    GUnload();      // Internet Explorer
-                });
-            } else {
-                window.addEventListener("load", function() {
-                    loadMap(<?php print $GOOGLEMAP_MAP_TYPE;?>);      // Firefox and standard browsers
-                }, false);
-                window.addEventListener("unload", function() {
-                    GUnload(); // Firefox and standard browsers
-                }, false);
-            }
-        var minZoomLevel = <?php print $GOOGLEMAP_MIN_ZOOM;?>;
-        var maxZoomLevel = <?php print $GOOGLEMAP_MAX_ZOOM;?>;
-        var startZoomLevel = <?php print $zoomLevel;?>;
-
         function SetMarkersAndBounds (){
             var bounds = new GLatLngBounds();
         <?php
@@ -775,28 +792,6 @@ function build_indiv_map($indifacts, $famids) {
         }
         print "}\n";
         print "</script>\n";
-        print "<table class=\"facts_table\">\n";
-        print "<tr><td valign=\"top\">\n";
-        print "<table width=\"95%\">\n";
-        print "<img src=\"images/hline.gif\" width=\"".$GOOGLEMAP_XSIZE."\" height=\"0\" alt=\"\" /><br/>";
-        print "<div id=\"map_pane\" style=\"height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
-        print "<table width=100%><tr>\n";
-        if ($TEXT_DIRECTION=="ltr") print "<td align=\"left\">";
-        else print "<td align=\"right\">";
-        print "<a href=\"javascript:ResizeMap()\">".$pgv_lang["gm_redraw_map"]."</a></td>\n";
-        if ($TEXT_DIRECTION=="ltr") print "<td align=\"right\">\n";
-        else print "<td align=\"left\">\n";
-        print "<a href=\"javascript:map.setMapType(G_NORMAL_MAP)\">".$pgv_lang["gm_map"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
-        print "<a href=\"javascript:map.setMapType(G_SATELLITE_MAP)\">".$pgv_lang["gm_satellite"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
-        print "<a href=\"javascript:map.setMapType(G_HYBRID_MAP)\">".$pgv_lang["gm_hybrid"]."</a>\n";
-        print "</td></tr>\n";
-        if (userIsAdmin(getUserName())) {
-            print "<tr><td align=\"center\" colspan=\"2\">\n";
-            print "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
-            print "</td></tr>\n";
-        }
-        print "</table>\n";
-        print "<td valign=\"top\" width=\"33%\">\n";
         print "\t<table class=\"facts_table\">";
     }
     if ($i>0) {
@@ -832,8 +827,7 @@ function build_indiv_map($indifacts, $famids) {
         }
         print "\n\t</table>\n<br />";
     }
-    print "\n\t</td></tr>";
-    print "\n\t</table>\n<br />";
+    print "\n<br />";
 
     return $i;
 }

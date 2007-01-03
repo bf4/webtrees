@@ -210,7 +210,7 @@ class ra_functions {
 		if ($folderid == "")
 			$percent = "";
 		else
-			$percent = " width='22%' ";
+			$percent = " width=\"22%\" ";
 
 		// Display for the menu
 global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, $SHOW_ADD_FOLDER, $SHOW_ADD_UNLINKED_SOURCE, $SHOW_VIEW_PROBABILITIES;//show
@@ -281,12 +281,12 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		if ($status) {
 			$status = "Success!";
 			$image = "modules/research_assistant/images/checkbutton.gif";
-			$div = "<span style='color:green'>";
+			$div = "<span class=\"warning\">";
 			$end = "</span>";
 		} else {
 			$status = "Error!";
 			$image = "modules/research_assistant/images/xbutton.gif";
-			$div = "<div class='error'>";
+			$div = "<div class=\"error\">";
 			$end = "</div>";
 		}
 
@@ -363,7 +363,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			// Load the form.
 			return $this->get_include_contents($path);
 		} else {
-			return "<div class='error'>ERROR: File modules/research_assistant/forms/".$name.".php was not found.</div>";
+			return "<div class=\"error\">ERROR: File modules/research_assistant/forms/".$name.".php was not found.</div>";
 		}
 	}
 
@@ -450,7 +450,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$out = $this->print_tasks($folderId, $res);
 
 		if (empty ($out)) {
-			$out = "<div class='error'>ERROR: Nothing was found in your database.</div>";
+			$out = "<div class=\"error\">ERROR: Nothing was found in your database.</div>";
 		}
 
 		return $out;
@@ -486,8 +486,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$out = "";
 		}
 	 	
-	 	$out .= "<table id='Tasks' class='list_table' align='center' width='700' border='0'>";
-		$out .= "<tr><th colspan='7' class='topbottombar'><h2>".$pgv_lang["Task_View"].print_help_link("ra_view_task_help", "qm", '', false, true)."</h2>";
+	 	$out .= "<table id=\"Tasks\" class=\"list_table\" align=\"center\" width=\"700\" border=\"0\">";
+		$out .= "<tr><th colspan=\"7\" class=\"topbottombar\"><h2>".$pgv_lang["Task_View"].print_help_link("ra_view_task_help", "qm", '', false, true)."</h2>";
 		$out .= "<form name=\"mytasks\" method=\"GET\" action=\"module.php\"><input type=\"hidden\" name=\"mod\" value=\"research_assistant\" /><input type=\"hidden\" name=\"action\" value=\"mytasks\" /><p>".$pgv_lang["FilterBy"].": <select name=\"Filter\" onchange=\"document.mytasks.submit()\">";
 		
 		$out .= "<option ";
@@ -503,7 +503,10 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$out .= "value=\"Incomplete\">".$pgv_lang["incomplete"]."</option>";
         
 		$out .= "</select></form></th></tr>";
-		$out .= "<tr><th class='descriptionbox'><a href='module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=&amp;orderby=t_title&amp;type='>".$pgv_lang["Task_Name"]."</a></th><th class='descriptionbox'><a href='module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=&amp;orderby=t_startdate&amp;type='>".$pgv_lang["Start_Date"]."</a></th>"."<th class='descriptionbox'><a href='module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=&amp;orderby=t_enddate&amp;type='>".$pgv_lang["completed"]."</a></th><th class='descriptionbox'>".$pgv_lang["edit"]."</th><th class='descriptionbox'>".$pgv_lang["delete"]."</th><th class='descriptionbox'>".$pgv_lang["complete"]."</tr>";
+		$out .= "<tr><th class=\"descriptionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=&amp;orderby=t_title&amp;type=\">".$pgv_lang["Task_Name"]."</a></th><th class=\"descriptionbox\">
+				<a href='module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=&amp;orderby=t_startdate&amp;type=\">".$pgv_lang["Start_Date"]."</a></th>"."<th class=\"descriptionbox\">
+				<a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=&amp;orderby=t_enddate&amp;type=\">".$pgv_lang["completed"]."</a></th><th class=\"descriptionbox\">".$pgv_lang["edit"]."</th><th class=\"descriptionbox\">".$pgv_lang["delete"]."</th>\n
+				<th class=\"descriptionbox\">".$pgv_lang["complete"]."</tr>";
 		
 		while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$task = db_cleanup($task);
@@ -546,7 +549,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 
 		return $res;
 	}
-
+	
 	/*
 	 * Returns if a folder currently has tasks in it and dissallows users from deleting it 
 	 * @param takes in a given folder id
@@ -726,9 +729,12 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 
 		// Display tasks if we're inside of a folder
 		if (!empty ($folderId)) {
-			$out .= "<table id='Tasks' class='list_table' align='center' width='700' border='0'>";
-			$out .= "<tr><th colspan='7' class='topbottombar'><h2>".$pgv_lang["Task_View"].print_help_link("ra_view_task_help", "qm", '', false, true)."</h2></th></tr>";
-			$out .= "<tr><th class='descriptionbox'><a href='module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=".$folderId."&amp;orderby=t_title&amp;type=".$_REQUEST["type"]."'>".$pgv_lang["Task_Name"]."</a></th><th class='descriptionbox'><a href='module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=".$folderId."&amp;orderby=t_startdate&amp;type=".$_REQUEST["type"]."'>".$pgv_lang["Start_Date"]."</a></th>"."<th class='descriptionbox'><a href='module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=".$folderId."&amp;orderby=t_enddate&amp;type=".$_REQUEST["type"]."'>".$pgv_lang["completed"]."</a></th><th class='descriptionbox'>".$pgv_lang["edit"]."</th><th class='descriptionbox'>".$pgv_lang["delete"]."</th></tr>";
+			$out .= "<table id=\"Tasks\" class=\"list_table\" align=\"center\" width=\"700\" border=\"0\">";
+			$out .= "<tr><th colspan=\"7\" class=\"topbottombar\"><h2>".$pgv_lang["Task_View"].print_help_link("ra_view_task_help", "qm", '', false, true)."</h2></th></tr>";
+			$out .= "<tr><th class=\"descriptionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=".$folderId."&amp;orderby=t_title&amp;type=".$_REQUEST["type"]."\">".$pgv_lang["Task_Name"]."</a></th>
+					<th class=\"descriptionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=".$folderId."&amp;orderby=t_startdate&amp;type=".$_REQUEST["type"]."\">".$pgv_lang["Start_Date"]."</a></th>\n
+					<th class=\"descriptionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=".$folderId."&amp;orderby=t_enddate&amp;type=".$_REQUEST["type"]."\">".$pgv_lang["completed"]."</a></th>\n
+					<th class='\"descriptionbox\">".$pgv_lang["edit"]."</th><th class=\"descriptionbox\">".$pgv_lang["delete"]."</th></tr>";
 
 		}
 
@@ -1197,8 +1203,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$res = dbquery($sql);
 	
 		$out = "\n\t<table class=\"list_table\">";
-		$out .= "<tr><td class ='topbottombar' colspan='4' align='center'>".print_help_link("task_list_text", "qm", '', false, true)."<b>".$pgv_lang['task_list']."</b></td></tr>";
-		if ($res->numRows()==0) $out .= "<tr><td class ='topbottombar' colspan='4' align='center'>".$pgv_lang['no_sour_tasks']."</td></tr>";
+		$out .= "<tr><td class=\"topbottombar\" colspan=\"4\" align=\"center\">".print_help_link("task_list_text", "qm", '', false, true)."<b>".$pgv_lang['task_list']."</b></td></tr>\n";
+		if ($res->numRows()==0) $out .= "<tr><td class=\"topbottombar\" colspan=\"4\" align=\"center\">".$pgv_lang['no_sour_tasks']."</td></tr>\n";
 		else { 
 			$out .= "\n\t\t<tr><td class=\"list_label\"><strong>".$pgv_lang["details"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["title"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["completed"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["created"]."</strong></td></tr>";
 			// Loop through all the task ID's and pull the info we need on them,
@@ -1219,7 +1225,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 * tab is the function that builds the display for the different screens.
 	 * These screens are identified by a tab
 	 */
-	function tab(& $person) {
+	function tab(&$person) {
 		// Start our engines.
 		global $pgv_lang, $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 		global $indilist, $controller;
@@ -1242,7 +1248,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			//load up the options into the html
 			foreach($sites as $key=>$value) 
 			{
-			    $opts .=	"<OPTION value='".$key."' class='".$optCount."'>".$value;
+			    $opts .=	"<option value=\"".$key."\" class=\"".$optCount."\">".$value."</option>\n";
 			    $optCount+=1;
 			}
 		
@@ -1267,8 +1273,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		}
 		// Start of HTML output
 		$out = "\n\t<table class=\"list_table\">";
-		$out .= "<tr><td class ='topbottombar' colspan='4' align='center'>".print_help_link("task_list_text", "qm", '', false, true)."<b>".$pgv_lang['task_list']."</b></td></tr>";
-		if ($res->numRows()==0) $out .= "<tr><td class ='topbottombar' colspan='4' align='center'>".$pgv_lang['no_indi_tasks']."</td></tr>";
+		$out .= "<tr><td class=\"topbottombar\" colspan=\"4\" align=\"center\">".print_help_link("task_list_text", "qm", '', false, true)."<b>".$pgv_lang['task_list']."</b></td></tr>";
+		if ($res->numRows()==0) $out .= "<tr><td class=\"topbottombar\" colspan=\"4\" align=\"center\">".$pgv_lang['no_indi_tasks']."</td></tr>";
 		else { 
 			$out .= "\n\t\t<tr><td class=\"list_label\"><strong>".$pgv_lang["details"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["title"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["completed"]."</strong></td><td class=\"list_label\"><strong>".$pgv_lang["created"]."</strong></td></tr>";
 			// Loop through all the task ID's and pull the info we need on them,
@@ -1287,20 +1293,18 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		//This is where the missing info check will happen
 		$Missing = $this->getMissinginfo($person);
 
-		$out .= "<tr><td class=\"topbottombar\" colspan=\"4\"><a href=\"module.php?mod=research_assistant&amp;action=addtask&amp;pid=".$person->getXref()."\">".$pgv_lang["task_entry"]."</a></td></tr></table>";
+		$out .= "<tr><td class=\"topbottombar\" colspan=\"4\"><a href=\"module.php?mod=research_assistant&amp;action=addtask&amp;pid=".$person->getXref()."\">".$pgv_lang["task_entry"]."</a></td></tr></table>\n";
 				
 				//beginning of the missing information table, which gets populated with missing information for that individual and allows the user to "autoadd" tasks
 				//a checkbox to view link conversion is included if a piece of missing information is already auto tasked
-		$out .="
-				<table width='100%' border=\"0\">
-					<tr>
-						<td>
-							<table align='center'>
-									<form name='auto' action='individual.php' method='post'><input type='hidden' name='pid' value='".$controller->pid."' /><input type='hidden' name='action' value='ra_addtask' />
+		$out .='<table align="center"><tr><td valign="top">
+						<form name="autotask" action="individual.php" method="post">
+							<table border="0">
+									<input type="hidden" name="pid" value="'.$controller->pid.'" /><input type="hidden" name="action" value="ra_addtask" />
 									<tr>
-										<td align='center' colspan=2 class='topbottombar'>".print_help_link("ra_missing_info_help", "qm", '', false, true)."<b>".$pgv_lang['missing_info'].
-										"</td>
-									</tr>";
+										<td align="center" colspan="2" class="topbottombar">'.print_help_link("ra_missing_info_help", "qm", '', false, true).'<b>'.$pgv_lang['missing_info'].
+										'</td>
+									</tr>';
 										foreach ($Missing as $key => $val) //every missing item gets a checkbox , so you check check it and make a task out of it
 										{
 											$tasktitle = "";
@@ -1313,50 +1317,48 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 											$taskid = $this->task_check($tasktitle, $person->getXref());
 											if (!$taskid) // if the task_check passes, create a check box
 												{
-												$out .= "<tr><td width='20' class='optionbox'><input type='checkbox' name=\"missingName[]\" value=\"".$tasktitle."\" /></td><td class ='optionbox'>";
+												$out .= "<tr><td width=\"20\" class=\"optionbox\"><input type=\"checkbox\" name=\"missingName[]\" value=\"".$tasktitle."\" /></td><td class=\"optionbox\">\n";
 												$out .= $tasktitle."</td></tr>";
 											} else // if not allow user to view the already created task
 								
-												$out .= "<tr><td width='20' class='optionbox'><a href=module.php?mod=research_assistant&action=viewtask&taskid=$taskid>View</a></td><td class='optionbox'>".$tasktitle."</td></tr>";
+												$out .= "<tr><td width=\"20\" class=\"optionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtask&amp;taskid=$taskid\">View</a></td><td class=\"optionbox\">".$tasktitle."</td></tr>\n";
 										}
 										// Create the selection box and add all the folder names and values
-										$out .= "<tr><td class='optionbox' colspan='2' align='center'><h5>".$pgv_lang['folder']."&nbsp;&nbsp;</h><select name='folder'>";
+										$out .= "<tr><td class=\"optionbox\" colspan=\"2\" align=\"center\"><h5>".$pgv_lang['folder']."&nbsp;&nbsp;</h><select name=\"folder\">";
 										$out .= $this->folder_search();
 										$out .= "</select></td></tr>";
-										$out .= "<tr><td colspan='2'class='topbottombar'><input type='submit' value='".$pgv_lang["AddTask"]."' /></td></tr>
-									</form>
-							</table>
-						</td>";
+										$out .= "<tr><td colspan=\"2\" class=\"topbottombar\"><input type=\"submit\" value=\"".$pgv_lang["AddTask"]."\" /></td></tr>
+							</table>\n
+						</form>\n
+					</td>
+					<td width=\"5%\"><br /></td>\n<td valign=\"top\">
+						";
 		//Beginning of the auto search feature which gets dynamically populated with an individuals information to be sent to ancestry or familySearch
-		$out .= "		
-						<td align='center' valign='top'>
-							<table>
+		$out .= "		\n<table border=\"0\">
 								<tr>
-									<td align='center' class='topbottombar' colspan='2' height='50%'><b>".print_help_link("auto_search", "qm", '', false, true)."<b>".$pgv_lang['auto_search_text']."</b>
+									<td align=\"center\" class=\"topbottombar\" colspan=\"2\" height=\"50%\"><b>".print_help_link("auto_search", "qm", '', false, true)."<b>".$pgv_lang['auto_search_text']."</b>
 
 									</td>
 								</tr>				 				
 		 						<tr>
-									<td class='topbottombar'>
-										<form name='selector' action='' method='post' onsubmit='return false;'>
-					 					<SELECT name='cbosite' onchange='search_selector()'>
+									<td class=\"topbottombar\">
+										<form name=\"selector\" action=\"\" method=\"post\" onsubmit=\"return false;\">
+					 					<select name=\"cbosite\" onchange=\"search_selector()\">
 										" .$opts.														
-										"</SELECT> 
+										"</select> 
 										</form>
 									</td>
 								</tr>
-							<tr><td>
+							<tr><td>\n
 							
 							<div id=\"searchdiv\">";
 							foreach($sites as $file=>$value) break;
 							include ("modules/research_assistant/search_plugin/".$file);
 							$out .=  autosearch_options();
 							$out .= "</div>
-							</td></tr>
-							</table>
-						</td>
-				</tr>
-			</table>";
+							</td></tr>\n
+							</table>\n
+					</td></tr></table>";
 			
 
 		//Beginning of the comments feature
@@ -1364,7 +1366,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$sql = "DELETE FROM ".$TBLPREFIX."user_comments WHERE uc_id=".$_REQUEST['uc_id'];
 			$res = dbquery($sql);
 		}
-		$out .= '<br /><br /><table width="50%" align="center"><tr><td class="topbottombar">'.$pgv_lang['comments'].'</td></tr>';
+		$out .= '<br /><br />
+		<table width="50%" align="center"><tr><td class="topbottombar">'.$pgv_lang['comments'].'</td></tr>';
 		$out .= '<tr><td class="optionbox">';
 		// Display comments
 		$sql = "select uc_id, uc_username, uc_datetime, uc_comment from ".$TBLPREFIX . "user_comments WHERE uc_f_id='".$GEDCOMS[$GEDCOM]['id']."' AND uc_p_id='" . $person->getXref() . "' ORDER BY uc_datetime DESC";
@@ -1391,56 +1394,13 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$out .= '<br /></div></div><br />';
 		}
 		$out .= '</td></tr><tr><td class="topbottombar">';
-		$out .= '<form action="" onsubmit="return false;"><input type="button" value="'.$pgv_lang["add_new_comment"].'" onclick="window.open(\'editcomment.php?pid='.$person->getXref().'\', \'\',\'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1\');"></form>';
+		$out .= '<form action="" onsubmit="return false;">
+				<input type="button" value="'.$pgv_lang["add_new_comment"].'" onclick="window.open(\'editcomment.php?pid='.$person->getXref().'\', \'\',\'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1\');"></form>';
 		$out .= '</td></tr></table>';
 		
-		
-//		if(isset($_REQUEST['delete']) && !empty($_REQUEST['delete'])){
-//		// TODO: Verify user
-//		$sql = "DELETE FROM " . $TBLPREFIX . "user_comments WHERE uc_id='$_REQUEST[delete]'";
-//		$res = dbquery($sql);
-		
-		
-		
-			
 		//Beginning of our JavaScript
 		$out .= "
- <script language='JavaScript'>
- <!--
-		function find_folder_id() {
- 		form = document.auto;
- 		folderID=form.folder.options[form.folder.selectedIndex].value;
- 		return folderID;
- 	}
-
-
- 	function search_selector(){
-	frm = document.selector;
-
-				var oXmlHttp = createXMLHttp();
-				oXmlHttp.open('get', 'module.php?mod=research_assistant&action=load_search_plugin&plugin='+ frm.cbosite.options[frm.cbosite.selectedIndex].value + '&pid=".$person->getXref()."', true);
-				oXmlHttp.onreadystatechange=function()
-				{
-		  			if (oXmlHttp.readyState==4)
-		  			{
-						inbox = document.getElementById('searchdiv');
-		   				inbox.innerHTML = oXmlHttp.responseText;
-		   			}
-		  		};
-		  		oXmlHttp.send(null);
-    }
-	
-
-	function editcomment(commentid) {
-  		window.open('editcomment.php?pid=".$person->getXref()."&ucommentid='+commentid, '', 'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');
-  	}
-	function confirm_prompt(text, commentid) {
-    	if (confirm(text)) {
-      		window.location = 'individual.php?pid=".$person->getXref()."&action=delete_comment&uc_id='+commentid;
-    	}
-    }
- 	//-->
- </script>";
+ <script language=\"JavaScript\" type=\"text/javascript\" src=\"modules/research_assistant/research_assistant.js\"></script>";
 		$out .= "\n\t<br /><br />";
 		// Return the goods.		 	
 		return $out;

@@ -248,7 +248,7 @@ var tabid = new Array('0', 'facts','notes','sources','media','relatives','resear
 var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog','googlemap');
 <?php }?>
 var loadedTabs = new Array(false,false,false,false,false,false,false,false);
-<?php print "loadedTabs[".($controller->default_tab+1)."] = true;"; ?>
+loadedTabs[<?php print ($controller->default_tab+1); ?>] = true; 
 
 function tempObj(tab, oXmlHttp) {
 	this.processFunc = function()
@@ -259,8 +259,8 @@ function tempObj(tab, oXmlHttp) {
   				evalAjaxJavascript(oXmlHttp.responseText, target);
   				target.style.height = 'auto';
   				loadedTabs[tab] = true;
-  				//-- call resizemap for google map module
-  				if (tab==6) {
+  				if (tab==7) {
+  					SetMarkersAndBounds();
   					ResizeMap();
   					ResizeMap();
   				}
@@ -362,9 +362,9 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
 <dd id="door5"><a href="javascript:;" onclick="tabswitch(5); return false;" ><?php print $pgv_lang["relatives"]?></a></dd>
 <dd id="door6"><a href="javascript:;" onclick="tabswitch(6); return false;" ><?php print $pgv_lang["research_assistant"]?></a></dd>
 <?php if (file_exists("modules/googlemap/defaultconfig.php")) {?>
-<dd id="door7"><a href="javascript:;" onclick="tabswitch(7); return false;" ><?php print $pgv_lang["googlemap"]?></a></dd>
+<dd id="door7"><a href="javascript:;" onclick="tabswitch(7); if (loadedTabs[7]) {ResizeMap(); ResizeMap();} return false;" ><?php print $pgv_lang["googlemap"]?></a></dd>
 <?php }?>
-<dd id="door0"><a href="javascript:;" onclick="tabswitch(0); return false;" ><?php print $pgv_lang["all"]?></a></dd>
+<dd id="door0"><a href="javascript:;" onclick="tabswitch(0); if (loadedTabs[7]) {ResizeMap(); ResizeMap();} return false;" ><?php print $pgv_lang["all"]?></a></dd>
 </dl>
 </div>
 <br />
@@ -486,10 +486,70 @@ if(empty($SEARCH_SPIDER)) {
 	if (file_exists("modules/googlemap/defaultconfig.php")) {
 		print "<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\" >\n";
     		print "<span class=\"subheaders\">".$pgv_lang["googlemap"]."</span>\n";
+    	if(empty($SEARCH_SPIDER)) {
+	    	$tNew = preg_replace("/&HIDE_GOOGLEMAP=true/", "", $_SERVER["REQUEST_URI"]);
+	    	$tNew = preg_replace("/&HIDE_GOOGLEMAP=false/", "", $tNew);
+	    	if($SESSION_HIDE_GOOGLEMAP == "true") {
+			    print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"http://".$_SERVER["SERVER_NAME"].$tNew."&HIDE_GOOGLEMAP=false\">";
+			    print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["activate"]."\" title=\"".$pgv_lang["activate"]."\" />";
+			    print " ".$pgv_lang["activate"]."</a></span>\n";
+		    	} else {
+			    print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"http://".$_SERVER["SERVER_NAME"].$tNew."&HIDE_GOOGLEMAP=true\">";
+			    print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["deactivate"]."\" title=\"".$pgv_lang["deactivate"]."\" />";
+			    print " ".$pgv_lang["deactivate"]."</a></span>\n";
+			}
+	    }
+        if (!$controller->indi->canDisplayName()) {
+            print "\n\t<table class=\"facts_table\">";
+            print "<tr><td class=\"facts_value\">";
+            print_privacy_error($CONTACT_EMAIL);
+            print "</td></tr>";
+            print "\n\t</table>\n<br />";
+            print "<script type=\"text/javascript\">\n";
+            print "function ResizeMap ()\n{\n}\n</script>\n";
+        }
+        else {
+            if(empty($SEARCH_SPIDER)) {
+				if($SESSION_HIDE_GOOGLEMAP == "false") {
+			            include_once('modules/googlemap/googlemap.php');
+				        print "<table class=\"facts_table\">\n";
+				        print "<tr><td valign=\"top\">\n";
+				        print "<div id=\"googlemap_left\">\n";
+				        print "<img src=\"images/hline.gif\" width=\"".$GOOGLEMAP_XSIZE."\" height=\"0\" alt=\"\" /><br/>";
+				        print "<div id=\"map_pane\" style=\"height: ".$GOOGLEMAP_YSIZE."px\"></div>\n";
+				        print "<table width=\"100%\"><tr>\n";
+				        if ($TEXT_DIRECTION=="ltr") print "<td align=\"left\">";
+				        else print "<td align=\"right\">";
+				        print "<a href=\"javascript:ResizeMap()\">".$pgv_lang["gm_redraw_map"]."</a></td>\n";
+				        if ($TEXT_DIRECTION=="ltr") print "<td align=\"right\">\n";
+				        else print "<td align=\"left\">\n";
+				        print "<a href=\"javascript:map.setMapType(G_NORMAL_MAP)\">".$pgv_lang["gm_map"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
+				        print "<a href=\"javascript:map.setMapType(G_SATELLITE_MAP)\">".$pgv_lang["gm_satellite"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
+				        print "<a href=\"javascript:map.setMapType(G_HYBRID_MAP)\">".$pgv_lang["gm_hybrid"]."</a>\n";
+				        print "</td></tr>\n";
+				        if (userIsAdmin(getUserName())) {
+				            print "<tr><td align=\"center\" colspan=\"2\">\n";
+				            print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+				            print "</td></tr>\n";
+				        }
+				        print "</table>\n";
+				        print "</div>\n";
+				        print "</td>\n";
+				        print "<td valign=\"top\" width=\"33%\">\n";
 		print "<div id=\"googlemap_content\">\n";
-		if ($controller->default_tab==6) $controller->getTab(6);
+				        setup_map();
+				        if ($controller->default_tab==6) {
+				        	$controller->getTab(6);
+				        }
 		else print "<br /><br />".$pgv_lang['loading'];
 		print "</div>\n";
+						print "</td></tr></table>\n";
+				}
+            }
+        }
+		// start
+		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" id=\"marker6\" width=\"1\" height=\"1\" alt=\"\" />";
+		// end
 		print "</div>\n";
 	}
 }
@@ -502,7 +562,7 @@ if(empty($SEARCH_SPIDER)) {
 		catch_and_ignore = value;
 	}
 <?php if ($controller->isPrintPreview()) print "tabswitch(0)";
-else print "tabswitch(". ($controller->default_tab+1) .")";
+else print "tabswitch(". ($controller->default_tab+1) .");\n";
 ?>
 //-->
 </script>
