@@ -280,11 +280,11 @@ if ($action=="update") {
 	$configtext = $configtext_beg . $person_privacy_text . $configtext_end;
 	
 	$PRIVACY_MODULE = $INDEX_DIRECTORY.$GEDCOM."_priv.php";
-	$fp = fopen($PRIVACY_MODULE, "wb");
+	$fp = @fopen($PRIVACY_MODULE, "wb");
 	if (!$fp) {
-		print "<span class=\"error\">";
-		print $pgv_lang["gedcom_config_write_error"];
-		print "<br /></span>\n";
+		global $whichFile;
+		$whichFile = $PRIVACY_MODULE;
+		print "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."<br /></span>\n";
 	}
 	else {
 		fwrite($fp, $configtext);

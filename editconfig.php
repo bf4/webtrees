@@ -180,26 +180,9 @@ else {
 
 print_header($pgv_lang["configure_head"]);
 //Prints warnings
-if (count($warnings)>0)
-{
-	print "<center><div style=\"border: solid blue 1px; width: 80%\"><ul style=\"text-align: left;\">";
-	foreach($warnings as $warning) 
-	{
-		print "<li style=\"font-weight: bold; text-align: left;\"><span style=\"color:blue;\">".$warning."</span></li>";
-	}
-	print "</ul></div></center>";
-}
-//Prints errors
-if (count($errors)>0)
-{
-	print "<center><div style=\"border: solid red 1px; width: 80%\"><ul style=\"text-align: left;\">";
-	foreach($errors as $error) 
-	{
-		print "<li style=\"font-weight: bold;\">".$error."</li>";
-	}
-	print "</ul></div></center>";
-	print_footer();
-	exit;
+if (count($warnings)>0 || count($errors)>0) {
+	print_sanity_errors();
+	if (count($errors)>0) exit;
 }
 if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DBUSER'])) {
 	if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
@@ -425,6 +408,12 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 ?>
 	<table class="facts_table">
 	<tr>
+		<td class="topbottombar" colspan="2"><input type="submit" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["save_config"];?>" onclick="closeHelp();" />
+		&nbsp;&nbsp;
+		<input type="reset" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["reset"];?>" />
+		</td>
+	</tr>
+	<tr>
 		<td class="descriptionbox width20 wrap"><?php print_help_link("DBTYPE_help", "qm", "DBTYPE"); print $pgv_lang["DBTYPE"];?></td>
 		<td class="optionbox"><select name="NEW_DBTYPE" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBTYPE_help');" onchange="changeDBtype(this);">
 				<!--<option value="dbase" <?php if ($DBTYPE=='dbase') print "selected=\"selected\""; ?>><?php print $pgv_lang["dbase"];?></option>-->
@@ -453,7 +442,7 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("DBPASS_help", "qm", "DBPASS"); print $pgv_lang["DBPASS"];?></td>
-		<td class="optionbox"><input type="password" name="NEW_DBPASS" value="" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBPASS_help');" /></td>
+		<td class="optionbox"><input type="password" name="NEW_DBPASS" value="" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBPASS_help');" /><br /><span style="color: red;"><?php print_text("enter_db_pass");?></span></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("DBNAME_help", "qm", "DBNAME"); print $pgv_lang["DBNAME"];?></td>

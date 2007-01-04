@@ -80,9 +80,11 @@ if ($action=="delete") {
 if (($action=="setdefault") && isset($default_ged)) {
 	$configtext = implode('', file($INDEX_DIRECTORY."gedcoms.php"));
 	$configtext = preg_replace('/\$DEFAULT_GEDCOM\s*=\s*".*";/', "\$DEFAULT_GEDCOM = \"".urldecode($_POST["default_ged"])."\";", $configtext);
-	$fp = fopen($INDEX_DIRECTORY."gedcoms.php", "wb");
+	$fp = @fopen($INDEX_DIRECTORY."gedcoms.php", "wb");
 	if (!$fp) {
-		print "<span class=\"error\">".$pgv_lang["gedcom_config_write_error"]."<br /></span>\n";
+		global $whichFile;
+		$whichFile = $INDEX_DIRECTORY."gedcoms.php";
+		print "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."<br /></span>\n";
 	}
 	else {
 		$DEFAULT_GEDCOM = urldecode($_POST["default_ged"]);
@@ -162,7 +164,7 @@ $GedCount = 0;
 			// Row 1: Heading
 			print "<tr>";
 			print "<td colspan=\"1\" class=\"list_label\">".$pgv_lang["ged_title"]."</td>";
-			print "<td colspan=\"4\" class=\"list_value_wrap\">";
+			print "<td colspan=\"5\" class=\"list_value_wrap\">";
 			if ($DEFAULT_GEDCOM==$gedc) print "<span class=\"label\">";
 			print PrintReady($gedarray["title"])."&nbsp;&nbsp;";
 			if ($TEXT_DIRECTION=="rtl") print "&rlm;(".$gedarray["id"].")&rlm;";
@@ -219,6 +221,11 @@ $GedCount = 0;
 			print "&nbsp;&nbsp;";
 			print "</td>";
 
+			print "<td valign=\"top\">";		// Column 6  (Check action)
+			print "<a href=\"gedcheck.php?ged=$gedc\">".$pgv_lang["ged_check"]."</a>";
+			print "&nbsp;&nbsp;";
+			print "</td>";
+
 			print "</tr>";
 
 
@@ -236,7 +243,7 @@ $GedCount = 0;
 			print "<a href=\"editconfig_gedcom.php?ged=".urlencode($gedc)."\">".$pgv_lang["edit"]."</a>";
 			print "</td>";
 
-			print "<td colspan=\"2\" valign=\"top\">";		// Columns 4-6  (blank)
+			print "<td colspan=\"3\" valign=\"top\">";		// Columns 4-6  (blank)
 			print "&nbsp;";
 			print "</td>";
 			print "</tr>";
@@ -255,7 +262,7 @@ $GedCount = 0;
 			print "<a href=\"edit_privacy.php?action=edit&amp;ged=".urlencode($gedc)."\">".$pgv_lang["edit"]."</a>";
 			print "</td>";
 
-			print "<td colspan=\"2\" valign=\"top\">";		// Columns 4-6  (blank)
+			print "<td colspan=\"3\" valign=\"top\">";		// Columns 4-6  (blank)
 			print "&nbsp;";
 			print "</td>";
 			print "</tr>";
@@ -277,7 +284,7 @@ $GedCount = 0;
 			}
 			print "</td>";
 
-			print "<td colspan=\"3\" valign=\"top\">";		// Columns 3-6  (file name selector)
+			print "<td colspan=\"4\" valign=\"top\">";		// Columns 3-6  (file name selector)
 			// Get the logfiles
 			if (!isset($logfilename)) $logfilename = "";
 			$file_nr = 0;
@@ -329,7 +336,7 @@ $GedCount = 0;
 			}
 			print "</td>";
 
-			print "<td colspan=\"3\" valign=\"top\">";		// Columns 3-6  (file name selector)
+			print "<td colspan=\"4\" valign=\"top\">";		// Columns 3-6  (file name selector)
 			// Get the logfiles
 			if (!isset($logfilename)) $logfilename = "";
 			$file_nr = 0;

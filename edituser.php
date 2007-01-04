@@ -31,7 +31,21 @@ require $confighelpfile["english"];
 if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
 require_once("includes/functions_print_lists.php");
 
+// Load language keys for English
+@include_once("./languages/admin.".$lang_short_cut["english"].".php");
+@include_once("./languages/editor.".$lang_short_cut["english"].".php");
+@include_once("./languages/lang.extra.".$lang_short_cut["english"].".php");
+@include_once("./languages/extra.".$lang_short_cut["english"].".php");
+// Load language keys for language other than English
+if ($LANGUAGE != "english") {
+	@include_once("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
+	@include_once("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
+	@include_once("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php");
+	@include_once("./languages/extra.".$lang_short_cut[$LANGUAGE].".php");
+}
+	
 if (!isset($action)) $action="";
+
 if (isset($firstname)) $firstname = stripslashes($firstname);
 if (isset($lastname)) $lastname = stripslashes($lastname);
 
