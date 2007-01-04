@@ -1196,7 +1196,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 */
 	function getSourceTasks($sId) {
 		global $pgv_lang, $TBLPREFIX, $GEDCOMS, $GEDCOM;
-		global $indilist, $controller;
+		global $indilist;
 		global $factarray;
         	
 		$sql = "SELECT * FROM ".$TBLPREFIX."tasks join ".$TBLPREFIX."tasksource on t_id = ts_t_id join ".$TBLPREFIX."sources on s_id = ts_s_id where s_id ='".$sId."' AND s_file=".$GEDCOMS[$GEDCOM]['id'];
@@ -1228,7 +1228,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	function tab(&$person) {
 		// Start our engines.
 		global $pgv_lang, $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
-		global $indilist, $controller;
+		global $indilist;
 		global $factarray;
 		global $VERSION;
 		
@@ -1300,7 +1300,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$out .='<table align="center"><tr><td valign="top">
 						<form name="autotask" action="individual.php" method="post">
 							<table border="0">
-									<input type="hidden" name="pid" value="'.$controller->pid.'" /><input type="hidden" name="action" value="ra_addtask" />
+									<input type="hidden" name="pid" value="'.$person->getXref().'" />
+									<input type="hidden" name="action" value="ra_addtask" />
 									<tr>
 										<td align="center" colspan="2" class="topbottombar">'.print_help_link("ra_missing_info_help", "qm", '', false, true).'<b>'.$pgv_lang['missing_info'].
 										'</td>
@@ -1343,7 +1344,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		 						<tr>
 									<td class=\"topbottombar\">
 										<form name=\"selector\" action=\"\" method=\"post\" onsubmit=\"return false;\">
-					 					<select name=\"cbosite\" onchange=\"search_selector()\">
+					 					<select name=\"cbosite\" onchange=\"search_selector('".$person->getXref()."');\">
 										" .$opts.														
 										"</select> 
 										</form>
@@ -1353,7 +1354,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 							
 							<div id=\"searchdiv\">";
 							foreach($sites as $file=>$value) break;
-							include ("modules/research_assistant/search_plugin/".$file);
+							include_once("modules/research_assistant/search_plugin/".$file);
 							$out .=  autosearch_options();
 							$out .= "</div>
 							</td></tr>\n
@@ -1385,11 +1386,11 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 					'<hr size="1" />';
 					
 			if((userIsAdmin(getUserName())) || (getUserName() == $comment["uc_username"])){
-				$out .= '<a href="javascript:;" onclick="editcomment(' .
-							''.$comment["uc_id"].'' .	// INSERT commentid
+				$out .= '<a href="javascript:;" onclick="editcomment('.
+							$comment["uc_id"].', \''.$person->getXref().'\'' .	// INSERT commentid
 							')">'.$pgv_lang["edit"].'</a> | <a href="" onclick="confirm_prompt(\''.$pgv_lang["comment_delete_check"].'\', ' .
-							''.$comment["uc_id"].'' .	// INSERT commentid
-							'); return false;">'.$pgv_lang["delete"].'</a>';
+							$comment["uc_id"].	// INSERT commentid
+							', \''.$person->getXref().'\'); return false;">'.$pgv_lang["delete"].'</a>';
 			}
 			$out .= '<br /></div></div><br />';
 		}
@@ -1400,7 +1401,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		
 		//Beginning of our JavaScript
 		$out .= "
- <script language=\"JavaScript\" type=\"text/javascript\" src=\"modules/research_assistant/research_assistant.js\"></script>";
+ <script type=\"text/javascript\" src=\"modules/research_assistant/research_assistant.js\"></script>";
 		$out .= "\n\t<br /><br />";
 		// Return the goods.		 	
 		return $out;
