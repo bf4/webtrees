@@ -2,26 +2,15 @@
  *
  * Copyright (c) 1997-2006 Stuart Langridge (www.kryogenix.org)
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * @licence MIT-licence http://www.kryogenix.org/code/browser/licence.html
+ * @author Stuart Langridge
+ * @see http://www.kryogenix.org/code/browser/sorttable/
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @author http://www.kryogenix.org/code/browser/sorttable/
  * @package PhpGedView
  * @subpackage Display
  * @version $Id$
  */
-<!--
+
 addEvent(window, "load", sortables_init);
 
 var SORT_COLUMN_INDEX;
@@ -49,6 +38,7 @@ function ts_makeSortable(table) {
 	for (var i=0;i<firstRow.cells.length;i++) {
 		var cell = firstRow.cells[i];
 		var txt = ts_getInnerText(cell);
+		if (cell.getElementsByTagName("img") && cell.nodeName.toLowerCase()=="th") txt = cell.innerHTML; // PGV: allow icon as text
 		if (txt=="") continue; // PGV: do not process empty cols
 		cell.innerHTML = '<a href="javascript:;" class="sortheader" '+
 		'onmousedown="this.style.cursor=\'wait\';" ' + // PGV: set cursor
@@ -251,93 +241,3 @@ function addEvent(elm, evType, fn, useCapture)
 		alert("Handler could not be removed");
 	}
 }
-
-
-//
-// More functions for PGV
-//
-function table_filter(id, keyword, filter) {
-	var table = document.getElementById(id);
-	// get column number
-	var firstRow = table.rows[0];
-	for (var c=0;c<firstRow.cells.length;c++) {
-		if (ts_getInnerText(firstRow.cells[c]).indexOf(keyword)!=-1) {
-			COLUMN=c;
-			break;
-		}
-	}
-	// apply filter
-	for (var r=1;r<table.rows.length;r++) {
-		var row = table.rows[r];
-		// don't do sortbottom last rows
-		if (row.className && (row.className.indexOf('sortbottom') != -1)) break;
-		// display row when matching filter
-		var disp = "none";
-		if (row.cells[COLUMN] && ts_getInnerText(row.cells[COLUMN]).indexOf(filter)!=-1) {
-			disp="table-row";
-			if (document.all) disp="inline"; // IE
-		}
-		row.style.display=disp;
-	}
-	table_renum(id);
-	return false;
-}
-
-function table_renum(id) {
-	var table = document.getElementById(id);
-	// is first column counter ?
-	var firstRow = table.rows[0];
-	if (ts_getInnerText(firstRow.cells[0])!='') return false;
-	// renumbering
-	var count=1;
-	for (var r=1;r<table.rows.length;r++) {
-		row = table.rows[r];
-		// don't do sortbottom last rows
-		if (row.className && (row.className.indexOf('sortbottom') != -1)) break;
-		// count only visible rows
-		if (row.style.display!='none') row.cells[0].innerHTML = count++;
-	}
-}
-
-function table_filter_alive(id) {
-	var table = document.getElementById(id);
-	var year = document.getElementById("aliveyear").value;
-	if (year<1500) return;
-	// get birth and death column number
-	var BCOL = -1;
-	var DCOL = -1;
-	var firstRow = table.rows[1];
-	for (var c=0;c<firstRow.cells.length;c++) {
-		key = firstRow.cells[c].getElementsByTagName("a");
-		// <a href="url" title="YYYY-MM-DD HH:MM:SS" ...
-		// is "title" a date sortkey ?
-		if (key.length && key[0].title && key[0].title.substr(4,1)=='-') {
-			if (BCOL<0) BCOL=c;
-			else {
-				DCOL=c;
-				break;
-			}
-		}
-	}
-	if (BCOL<0) return;
-	if (DCOL<0) return;
-	// apply filter
-	for (var r=1;r<table.rows.length;r++) {
-		var row = table.rows[r];
-		key = row.cells[BCOL].getElementsByTagName("a");
-		byear = key[0].title.substring(0,4);
-		key = row.cells[DCOL].getElementsByTagName("a");
-		dyear = key[0].title.substring(0,4);
-		var disp = "";
-		if (byear>0 && dyear>0 && (year<byear || dyear<year)) disp="none";
-		else {
-			disp="table-row";
-			if (document.all) disp="inline"; // IE
-		}
-		row.style.display=disp;
-	}
-	table_renum(id);
-	return false;
-}
-
-//-->
