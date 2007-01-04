@@ -1663,6 +1663,7 @@ class IndividualControllerRoot extends BaseController {
 	
 	function print_research_tab() {
 		global $pgv_lang, $SHOW_RESEARCH_ASSISTANT, $CONTACT_EMAIL, $GEDCOM, $INDEX_DIRECTORY, $factarray, $templefacts, $nondatefacts, $nonplacfacts;
+		global $LANGUAGE, $lang_short_cut;
 		if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel())) {
 			if (!$this->indi->canDisplayDetails()) { ?>
 				<table class="facts_table">

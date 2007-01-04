@@ -41,6 +41,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_functions.php")) {
 }
 // Set up our default language file.
 require_once('modules/research_assistant/languages/lang.en.php'); 
+@include_once("modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php");
 include_once("modules/research_assistant/forms/ra_privacy.php");
 
 if (file_exists($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php")) include_once($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php");
