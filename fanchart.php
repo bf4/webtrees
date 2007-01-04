@@ -3,7 +3,7 @@
  * Displays a fan chart
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2006  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * This Page Is Valid XHTML 1.0 Transitional! > 23 August 2005
  *
  * @package PhpGedView
  * @subpackage Charts
@@ -235,7 +233,8 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 					$name = get_person_name($pid);
 					$addname = get_add_person_name($pid);
 				}
-				$text = ltr_string($name) . "\r\n" . ltr_string($addname). "\r\n";
+				$text = ltr_string($name) . "\r\n";
+				if (!empty($addname)) $text .= ltr_string($addname). "\r\n";
 				if (displayDetailsByID($pid)) {
 					$birthrec = get_sub_record(1, "1 BIRT", $indirec);
 					$ct = preg_match("/2 DATE.*(\d\d\d\d)/", $birthrec, $match);
@@ -415,7 +414,8 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 
 	// step 2. call imageflush.php to read this session variable and display image
 	// note: arg "image_name=" is to avoid image miscaching
-	$image_name=time();
+	$image_name= "V".time();
+	unset($_SESSION[$image_name]);		// statisticsplot.php uses this to hold a file name to send to browser
 	$image_title=preg_replace("~<.*>~", "", $name) . " " . $pgv_lang["fan_chart"];
 	echo "\r\n<p align=\"center\" >";
 	echo "<img src=\"imageflush.php?image_type=png&amp;image_name=$image_name\" width=\"$fanw\" height=\"$fanh\" border=\"0\" alt=\"$image_title\" title=\"$image_title\" usemap=\"#fanmap\" />";
@@ -462,7 +462,7 @@ print_header(PrintReady($name) . " " . $pgv_lang["fan_chart"]);
 if (strlen($name)<30) $cellwidth="420";
 else $cellwidth=(strlen($name)*14);
 print "\n\t<table class=\"list_table $TEXT_DIRECTION\"><tr><td width=\"".$cellwidth."px\" valign=\"top\">\n\t\t";
-if ($view == "preview") print "<h2>" . str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATION, $pgv_lang["gen_fan_chart"]) . ":";
+if ($view == "preview") print "<h2>" . str_replace("#PEDIGREE_GENERATIONS#", $PEDIGREE_GENERATIONS, $pgv_lang["gen_fan_chart"]) . ":";
 else print "<h2>" . $pgv_lang["fan_chart"] . ":";
 print "<br />".PrintReady($name);
 if ($addname != "") print "<br />" . PrintReady($addname);
