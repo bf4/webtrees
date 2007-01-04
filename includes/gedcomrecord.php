@@ -306,11 +306,14 @@ class GedcomRecord {
 	 */
 	function getDateUrl($gedcom_date) {
 		global $GEDCOM;
+		$ged_months = array("", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC");
 		$pdate = parse_date($gedcom_date);
 		list($y, $m, $d) = explode("-", $pdate[0]["sort"]);
-		if ($y=="0000") return "javascript:;";
-		$ged_months = array("", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC");
-		$url = "calendar.php?action=year&amp;day=".$d."&amp;month=".$ged_months[$m+0]."&amp;year=".$y."&amp;ged=".$GEDCOM;
+		$d+=0; $m+=0; $y+=0; // convert to num
+		if ($y<1) $y = date('Y');
+		if ($m<1 or $m>12) $url = "calendar.php?action=year&amp;year=".$y."&amp;ged=".$GEDCOM;
+		else if ($d<1 or $d>31) $url = "calendar.php?action=calendar&amp;month=".$ged_months[$m+0]."&amp;year=".$y."&amp;ged=".$GEDCOM;
+		else $url = "calendar.php?action=today&amp;day=".$d."&amp;month=".$ged_months[$m+0]."&amp;year=".$y."&amp;ged=".$GEDCOM;
 		return $url;
 	}
 	

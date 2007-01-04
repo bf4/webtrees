@@ -767,6 +767,10 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 
 	/**
 	 * merge a local gedcom record with the information from the remote site
+	 * @param string $xref		the remote ID to merge with
+	 * @param string $localrec	the local gedcom record to merge the remote record with
+	 * @param boolean $isStub	whether or not this is a stub record
+	 * @param boolean $firstLink	is this the first time this record is being linked
 	 */
 	function mergeGedcomRecord($xref, $localrec, $isStub=false, $firstLink=false) {
 		global $FILE, $GEDCOM, $indilist, $famlist, $sourcelist, $otherlist;
@@ -950,7 +954,7 @@ if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
 	}
 
 	/**
-	 * get a singleton instance of this record
+	 * get a singleton instance of this client
 	 * @return ServiceClient
 	 */
 	function &getInstance($id) {

@@ -98,8 +98,8 @@ function check_db($ignore_previous=false) {
 	}
 
 	//-- protect the username and password on pages other than the Configuration page
-	if (strpos($_SERVER["SCRIPT_NAME"], "editconfig.php") === false
-		&& strpos($_SERVER["SCRIPT_NAME"], "sanity_check.php") === false) {
+	if (strpos($_SERVER["PHP_SELF"], "editconfig.php") === false
+		&& strpos($_SERVER["PHP_SELF"], "sanity_check.php") === false) {
 		$DBUSER = "";
 		$DBPASS = "";
 	}
@@ -255,9 +255,11 @@ function store_gedcoms() {
 	}
 	$gedcomtext .= "\n\$DEFAULT_GEDCOM = \"$DEFAULT_GEDCOM\";\n";
 	$gedcomtext .= "\n?".">";
-	$fp = fopen($INDEX_DIRECTORY."gedcoms.php", "wb");
+	$fp = @fopen($INDEX_DIRECTORY."gedcoms.php", "wb");
 	if (!$fp) {
-		print "<span class=\"error\">".$pgv_lang["gedcom_config_write_error"]."<br /></span>\n";
+		global $whichFile;
+		$whichFile = $INDEX_DIRECTORY."gedcoms.php";
+		print "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."<br /></span>\n";
 	}
 	else {
 		fwrite($fp, $gedcomtext);
@@ -2833,16 +2835,18 @@ function runHooks($type, $params=array())
 		// look for core hooks, shouldn't be needed, but may be useful for quick site customizing
 		if(file_exists("hooks/{$type}.php")){$hooks = array('core'=>"hooks/{$type}.php");}else{$hooks = array();}
 		// look for module hooks
-		$d = dir('modules/');
-		while(false !== ($f = $d->read()))
-		{
-			if($f === '.' || $f === '..'){continue;}
-			if(is_dir("modules/$f") && file_exists("modules/{$f}/pgvhooks/{$type}.php"))
+		if (file_exists("modules")) {
+			$d = dir('modules/');
+			while(false !== ($f = $d->read()))
 			{
-				$hooks[$f] = "modules/{$f}/pgvhooks/{$type}.php";
+				if($f === '.' || $f === '..'){continue;}
+				if(is_dir("modules/$f") && file_exists("modules/{$f}/pgvhooks/{$type}.php"))
+				{
+					$hooks[$f] = "modules/{$f}/pgvhooks/{$type}.php";
+				}
 			}
+			$d->close();
 		}
-		$d->close();
 		// look for theme hooks
 		if(file_exists("{$THEME_DIR}hooks/{$type}.php")){$hooks['theme'] = "{$THEME_DIR}hooks/{$type}.php";}
 		// cache the results for speed
@@ -2927,7 +2931,8 @@ function get_query_string() {
 	if (!empty($_GET)) {
 		foreach($_GET as $key => $value) {
 			if($key != "view") {
-				$qstring .= $key."=".$value."&amp;";
+				if (!is_array($value)) $qstring .= $key."=".$value."&amp;";
+				else foreach($value as $k=>$v) $qstring .= $key."[".$k."]=".$v."&amp;";
 			}
 		}
 	}
@@ -2935,7 +2940,8 @@ function get_query_string() {
 		if (!empty($_POST)) {
 			foreach($_POST as $key => $value) {
 				if($key != "view") {
-					$qstring .= $key."=".$value."&amp;";
+					if (!is_array($value)) $qstring .= $key."=".$value."&amp;";
+					else foreach($value as $k=>$v) $qstring .= $key."[".$k."]=".$v."&amp;";
 				}
 			}
 		}
@@ -3300,7 +3306,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	if ($forceLoad) {
 		$LANGUAGE = "english";
 		require($pgv_language[$LANGUAGE]);			// Load English
-		require_once($factsfile[$LANGUAGE]);
+		require($factsfile[$LANGUAGE]);
 
 		$TEXT_DIRECTION = $TEXT_DIRECTION_array[$LANGUAGE];
 		$DATE_FORMAT	= $DATE_FORMAT_array[$LANGUAGE];
@@ -3310,21 +3316,46 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 
 		$goodDB = check_db();
 		// Load functions that are specific to the active language
-		if (file_exists("./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php");
+		$file = "./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php";
+		if (file_exists($file)) {
+			include_once($file);
+		}
 		// load admin lang keys
-		if ((!$goodDB || !adminUserExists() || userGedcomAdmin(getUserName()) || !$CONFIGURED) && file_exists("./languages/admin.".$lang_short_cut[$LANGUAGE].".php")) include_once("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
+		$file = "./languages/admin.".$lang_short_cut[$LANGUAGE].".php";
+		if (file_exists($file)) {
+			if (!$goodDB || !adminUserExists() || userGedcomAdmin(getUserName()) || !$CONFIGURED) {
+				include($file);
+			}
+		}
 		// load the edit lang keys
-		if ((!$goodDB || !adminUserExists() || userCanEdit(getUserName())) && file_exists("./languages/editor.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
+		$file = "./languages/editor.".$lang_short_cut[$LANGUAGE].".php";
+		if (file_exists($file)) {
+			if (!$goodDB || !adminUserExists() || userGedcomAdmin(getUserName()) || userCanEdit(getUserName())) {
+				include($file);
+			}
+		}
 		
-		if (file_exists("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php");
-		if (file_exists("./languages/extra.".$lang_short_cut[$LANGUAGE].".php")) @include_once("./languages/extra.".$lang_short_cut[$LANGUAGE].".php");
+		$file = "./languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
+		if (file_exists($file)) {
+			include($file);
+		}
+		$file = "./languages/extra.".$lang_short_cut[$LANGUAGE].".php";
+		if (file_exists($file)) {
+			include($file);
+		}
 		$result = true;
 	}
 
-	if ($desiredLanguage!=$LANGUAGE && file_exists($pgv_language[$desiredLanguage])) {
+	if ($desiredLanguage!=$LANGUAGE) {
 		$LANGUAGE = $desiredLanguage;
-		include_once($pgv_language[$LANGUAGE]);		// Load the requested language
-		if (file_exists($factsfile[$LANGUAGE])) include_once($factsfile[$LANGUAGE]);
+		$file = $pgv_language[$LANGUAGE];
+		if (file_exists($file)) {
+			include($file);		// Load the requested language
+		}
+		$file = $factsfile[$LANGUAGE];
+		if (file_exists($file)) {
+			include($file);
+		}
 
 		$TEXT_DIRECTION = $TEXT_DIRECTION_array[$LANGUAGE];
 		$DATE_FORMAT	= $DATE_FORMAT_array[$LANGUAGE];
@@ -3333,16 +3364,35 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		$NAME_REVERSE	= $NAME_REVERSE_array[$LANGUAGE];
 
 		// Load functions that are specific to the active language
-		@include_once("./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php");
+		$file = "./includes/extras/functions.".$lang_short_cut[$LANGUAGE].".php";
+		if (file_exists($file)) {
+			include_once($file);
+		}
 
 		$goodDB = check_db();
 		
 		// load admin lang keys
-		if ((!$goodDB || !adminUserExists() || userGedcomAdmin(getUserName()) || !$CONFIGURED) && file_exists("./languages/admin.".$lang_short_cut[$LANGUAGE].".php")) include_once("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
+		$file = "./languages/admin.".$lang_short_cut[$LANGUAGE].".php";
+		if (file_exists($file)) {
+			if ((!$goodDB || !adminUserExists() || userGedcomAdmin(getUserName()) || !$CONFIGURED)) {
+					include($file);
+			}
+		}
 		// load the edit lang keys
-		if ((!$goodDB || !adminUserExists() || userCanEdit(getUserName())) && file_exists("./languages/editor.".$lang_short_cut[$LANGUAGE].".php")) include_once("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
-		if (file_exists("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php")) include_once("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php");
-		if (file_exists("./languages/extra.".$lang_short_cut[$LANGUAGE].".php")) include_once("./languages/extra.".$lang_short_cut[$LANGUAGE].".php");
+		$file = "./languages/editor.".$lang_short_cut[$LANGUAGE].".php";
+		if (file_exists($file)) {
+			if ((!$goodDB || !adminUserExists() || userGedcomAdmin(getUserName()) || userCanEdit(getUserName()))) {
+				include($file);
+			}
+		}
+		$file = "./languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
+		if (file_exists($file)) {
+			include($file);
+		}
+		$file = "./languages/extra.".$lang_short_cut[$LANGUAGE].".php";
+		if (file_exists($file)) {
+			include($file);
+		}
 		$result = true;
 	}
 
@@ -3427,3 +3477,5 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 
 // optional extra file
 if (file_exists( "includes/functions.extra.php")) require  "includes/functions.extra.php";
+
+?>

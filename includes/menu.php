@@ -127,11 +127,6 @@ class Menu
 			$PGV_IMAGES
 		;
 
-//	if ($TEXT_DIRECTION=="rtl") {
-//			if ($this->labelpos=="right") $this->labelpos="left";
-//			else if ($this->labelpos=="left") $this->labelpos="right";
-//		}
-
 		if (!isset($menucount))
 		{
 			$menucount = 0;
@@ -140,43 +135,42 @@ class Menu
 		{
 			$menucount++;
 		}
+		$id = $menucount.rand();
 		if ($this->seperator)
 		{
-			$output = "<div id=\"menu{$menucount}\" style=\"width: 90%; clear: both;\">"
-				."<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['hline']['other']}\" width=\"90%\" height=\"3\" alt=\"\" />"
-				."</div>\n"
-			;
+			$output = "<div id=\"menu{$id}\" class=\"menu_seperator\" style=\"clear: both;\">"
+			."<img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['hline']['other']}\" style=\"width:8em;height:3px\" alt=\"\" /></div>";
 			return $output;
 		}
 		$c = count($this->submenus);
-		$output = "<div id=\"menu{$menucount}\" style=\"clear: both;\" class=\"{$this->class}\">\n";
+		$output = "<div id=\"menu{$id}\" style=\"clear: both;\" class=\"{$this->class}\">\n";
 		if ($this->link=="#") $this->link = "javascript:;";
 		$link = "<a href=\"{$this->link}\" onmouseover=\""
 		;
 		if ($c >= 0)
 		{
-			$link .= "show_submenu('menu{$menucount}_subs', 'menu{$menucount}', '{$this->flyout}'); ";
+			$link .= "show_submenu('menu{$id}_subs', 'menu{$id}', '{$this->flyout}'); ";
 		}
 		if ($this->hoverclass !== null)
 		{
-			$link .= "change_class('menu{$menucount}', '{$this->hoverclass}'); ";
+			$link .= "change_class('menu{$id}', '{$this->hoverclass}'); ";
 		}
 		if ($this->hovericon !== null)
 		{
-			$link .= "change_icon('menu{$menucount}_icon', '{$this->hovericon}'); ";
+			$link .= "change_icon('menu{$id}_icon', '{$this->hovericon}'); ";
 		}
 		$link .= '" onmouseout="';
 		if ($c >= 0)
 		{
-			$link .= "timeout_submenu('menu{$menucount}_subs'); ";
+			$link .= "timeout_submenu('menu{$id}_subs'); ";
 		}
 		if ($this->hoverclass !== null)
 		{
-			$link .= "change_class('menu{$menucount}', '{$this->class}'); ";
+			$link .= "change_class('menu{$id}', '{$this->class}'); ";
 		}
 		if ($this->hovericon !== null)
 		{
-			$link .= "change_icon('menu{$menucount}_icon', '{$this->icon}'); ";
+			$link .= "change_icon('menu{$id}_icon', '{$this->icon}'); ";
 		}
 		if ($this->onclick !== null)
 		{
@@ -193,7 +187,7 @@ class Menu
 		$link .= "\">";
 		if ($this->icon !== null)
 		{
-			$MenuIcon = "<img id=\"menu{$menucount}_icon\" src=\"{$this->icon}\" class=\"icon\" alt=\"".preg_replace("/\"/", '', $this->label).'" title="'.preg_replace("/\"/", '', $this->label).'" '." />";
+			$MenuIcon = "<img id=\"menu{$id}_icon\" src=\"{$this->icon}\" class=\"icon\" alt=\"".preg_replace("/\"/", '', $this->label).'" title="'.preg_replace("/\"/", '', $this->label).'" '." />";
 			switch ($this->labelpos) {
 			case "right":
 				$output .= "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">";
@@ -260,7 +254,7 @@ class Menu
 
 		if ($c > 0)
 		{
-			$submenuid = "menu{$menucount}_subs";
+			$submenuid = "menu{$id}_subs";
 			if ($TEXT_DIRECTION == 'ltr')
 			{
 				$output .= '<div style="text-align: left;">';
@@ -269,7 +263,7 @@ class Menu
 			{
 				$output .= '<div style="text-align: right;">';
 			}
-			$output .= "<div id=\"menu{$menucount}_subs\" class=\"{$this->submenuclass}\" style=\"position: absolute; visibility: hidden; z-index: 100;";
+			$output .= "<div id=\"menu{$id}_subs\" class=\"{$this->submenuclass}\" style=\"position: absolute; visibility: hidden; z-index: 100;";
 			if ($this->flyout == 'right')
 			{
 				if ($TEXT_DIRECTION == 'ltr')
@@ -281,7 +275,7 @@ class Menu
 					$output .= ' right: 50px;';
 				}
 			}
-			$output .= "\" onmouseover=\"show_submenu('{$this->parentmenu}'); show_submenu('{$submenuid}');\" onmouseout=\"timeout_submenu('menu{$menucount}_subs');\">\n";
+			$output .= "\" onmouseover=\"show_submenu('{$this->parentmenu}'); show_submenu('{$submenuid}');\" onmouseout=\"timeout_submenu('menu{$id}_subs');\">\n";
 			foreach($this->submenus as $submenu)
 			{
 				$submenu->parentmenu = $submenuid;
@@ -933,6 +927,7 @@ class MenuBar
 	 */
 	function getModuleMenus() {
 		$menus = array();
+		if (!file_exists("modules")) return $menus;
 		$d = dir("modules");
 		while (false !== ($entry = $d->read())) {
 			if ($entry{0}!="." && $entry!="CVS" && is_dir("modules/$entry")) {

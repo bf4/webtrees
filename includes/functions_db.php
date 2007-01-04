@@ -98,10 +98,13 @@ function &dbquery($sql, $show_error=true, $count=0) {
 	 * Debugging code for multi-database support
 	 */
 	if (preg_match('/[^\\\]"/', $sql)>0) {
-		pgv_error_handler(2, "<span class=\"error\">Double quote query: $sql</span><br>","","");
+		pgv_error_handler(2, "<span class=\"error\">Incompatible SQL syntax. Double quote query: $sql</span><br>","","");
 	}
 	if (preg_match('/LIMIT \d/', $sql)>0) {
-		pgv_error_handler(2,"<span class=\"error\">Limit query error, use dbquery \$count parameter instead: $sql</span><br>","","");
+		pgv_error_handler(2,"<span class=\"error\">Incompatible SQL syntax. Limit query error, use dbquery \$count parameter instead: $sql</span><br>","","");
+	}
+	if (preg_match('/(&&)|(\|\|)/', $sql)>0) {
+		pgv_error_handler(2,"<span class=\"error\">Incompatible SQL syntax.  Use 'AND' instead of '&&'.  Use 'OR' instead of '||'.: $sql</span><br>","","");
 	}
 	
 	if ($count == 0)
@@ -333,17 +336,19 @@ function find_gedcom_record($pid, $gedfile = "") {
 		if (empty($gedrec)) $gedrec = find_media_record($pid, $gedfile);
 			//-- why are we looking in the media_mapping table here?
 			if (empty($gedrec)) {
-				$sql1 = "select mm_gedrec, mm_gedfile from ".$TBLPREFIX."media_mapping where mm_gid ='".$pid."' && mm_gedfile=".$GEDCOMS[$GEDCOM]['id'];
+				$sql1 = "select mm_gedrec, mm_gedfile from ".$TBLPREFIX."media_mapping where mm_gid='".$DBCONN->escapeSimple($pid)."' AND mm_gedfile=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']);
 				$res1 = dbquery($sql1);
-				if ($res1->numRows() != 0){
-					$row1 =& $res1->fetchRow();
-					$res1->free();
-					$otherlist[$pid]["gedcom"] = $row1[0];
-					$otherlist[$pid]["gedfile"] = $row1[1];
-					return $row1[0];
+				if (!DB::isError($res1) && $res1!==false) {
+					if ($res1->numRows() != 0){
+						$row1 =& $res1->fetchRow();
+						$res1->free();
+						$otherlist[$pid]["gedcom"] = $row1[0];
+						$otherlist[$pid]["gedfile"] = $row1[1];
+						return $row1[0];
+					}
 				}
 			}
-	}
+		}
 	return $gedrec;
 }
 

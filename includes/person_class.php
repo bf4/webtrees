@@ -3,7 +3,7 @@
  * Class file for a person
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006	John Finlay and Others
+ * Copyright (C) 2002 to 2007	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,7 +76,9 @@ class Person extends GedcomRecord {
 	function &getInstance($pid, $simple=true) {
 		global $indilist, $GEDCOM, $GEDCOMS, $pgv_changes;
 
-		if (isset($indilist[$pid]) && $indilist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
+		if (isset($indilist[$pid])
+			&& isset($indilist[$pid]['gedfile'])
+			&& $indilist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
 			if (isset($indilist[$pid]['object'])) return $indilist[$pid]['object'];
 		}
 
@@ -257,8 +259,7 @@ class Person extends GedcomRecord {
 			$pdate=parse_date($this->bdate);
 			if ($pdate[0]["year"]>0) {
 				$this->dest = true;
-//				$this->drec = "2 DATE EST BEF ".($pdate[0]["year"]+$MAX_ALIVE_AGE);
-				$this->drec = "2 DATE BEF ".($pdate[0]["year"]+$MAX_ALIVE_AGE);
+				$this->drec .= "\n2 DATE BEF ".($pdate[0]["year"]+$MAX_ALIVE_AGE);
 				$this->ddate = get_gedcom_value("DATE", 2, $this->drec, '', false);
 			}
 			else if (!empty($this->drec)) $this->ddate = $pgv_lang["yes"];
@@ -268,8 +269,7 @@ class Person extends GedcomRecord {
 			$pdate=parse_date($this->ddate);
 			if ($pdate[0]["year"]>0) {
 				$this->best = true;
-//				$this->brec = "2 DATE EST AFT ".($pdate[0]["year"]-$MAX_ALIVE_AGE);
-				$this->brec = "2 DATE AFT ".($pdate[0]["year"]-$MAX_ALIVE_AGE);
+				$this->brec .= "\n2 DATE AFT ".($pdate[0]["year"]-$MAX_ALIVE_AGE);
 				$this->bdate = get_gedcom_value("DATE", 2, $this->brec, '', false);
 			}
 			else if (!empty($this->brec)) $this->bdate = $pgv_lang["yes"];
@@ -282,7 +282,7 @@ class Person extends GedcomRecord {
 	 */
 	function getBirthRecord($estimate=true) {
 		if (empty($this->brec)) $this->_parseBirthDeath();
-		if (!$estimate && $this->best) return '';
+		if (!$estimate && $this->best) return get_sub_record(1, "1 BIRT", $this->gedrec);
 		return $this->brec;
 	}
 	/**
@@ -292,8 +292,7 @@ class Person extends GedcomRecord {
 	 */
 	function getDeathRecord($estimate=true) {
 		if (empty($this->drec)) $this->_parseBirthDeath();
-		//if (!$estimate && $this->dest && !$this->isDead()) return '';
-		if (!$estimate && $this->dest) return '';
+		if (!$estimate && $this->dest) return get_sub_record(1, "1 DEAT", $this->gedrec);
 		return $this->drec;
 	}
 	/**
@@ -312,9 +311,11 @@ class Person extends GedcomRecord {
 	 * @return string the birth date in sortable format YYYY-MM-DD HH:MM
 	 */
 	function getSortableBirthDate() {
+		global $pgv_lang;
 		if (!$this->disp) return "0000-00-00";
 		if (empty($this->bdate)) $this->_parseBirthDeath();
 		$pdate = parse_date($this->bdate);
+		if ($this->best) return $pdate[0]["sort"]." ".$pgv_lang["est"];
 		$hms = get_gedcom_value("DATE:TIME", 2, $this->brec);
 		return $pdate[0]["sort"]." ".$hms;
 	}
@@ -374,10 +375,12 @@ class Person extends GedcomRecord {
 	 * @return string the death date in sortable format YYYY-MM-DD HH:MM
 	 */
 	function getSortableDeathDate() {
+		global $pgv_lang;
 		if (!$this->disp) return "0000-00-00";
 		if (empty($this->ddate)) $this->_parseBirthDeath();
-		if ($this->isDead() and $this->dest) return "0000-00-01";
+		//if ($this->isDead() and $this->dest) return "0000-00-01";
 		$pdate = parse_date($this->ddate);
+		if ($this->isDead() and $this->dest) return $pdate[0]["sort"]." ".$pgv_lang["est"];
 		$hms = get_gedcom_value("DATE:TIME", 2, $this->drec);
 		return $pdate[0]["sort"]." ".$hms;
 	}

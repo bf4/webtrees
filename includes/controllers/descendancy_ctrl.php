@@ -3,7 +3,7 @@
  * Controller for the Descendancy Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005	John Finlay and Others
+ * Copyright (C) 2002 to 2006	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * Page does not validate see line number 1109 -> 15 August 2005
  *
  * @package PhpGedView
  * @subpackage Charts
@@ -233,8 +231,11 @@ function print_child_descendancy(&$person, $depth) {
 	//print_r($person);
 	print "<li>";
 	print "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td>";
-	if ($depth==$this->generations) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"2\" width=\"$Dindent\" border=\"0\" alt=\"\" /></td><td>\n";
-	else print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" height=\"2\" width=\"$Dindent\" border=\"0\" alt=\"\" /></td><td>\n";
+	if ($depth==$this->generations) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"3\" width=\"$Dindent\" border=\"0\" alt=\"\" /></td><td>\n";
+	else {
+		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"3\" width=\"3\" border=\"0\" alt=\"\" />";
+		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" height=\"3\" width=\"".($Dindent-3)."\" border=\"0\" alt=\"\" /></td><td>\n";
+	}
 	print_pedigree_person($person->getXref(), 1, $this->view!="preview",'',$personcount);
 	print "</td>";
 
@@ -307,7 +308,7 @@ function print_family_descendancy(&$person, &$family, $depth) {
 
 		// print marriage info
 		print "<li>";
-		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"2\" width=\"$Dindent\" border=\"0\" alt=\"\" />";
+		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" height=\"2\" width=\"".($Dindent+4)."\" border=\"0\" alt=\"\" />";
 		print "<span class=\"details1\" style=\"white-space: nowrap; \" >";
 		print "<a href=\"#\" onclick=\"expand_layer('".$famid.$personcount."'); return false;\" class=\"top\"><img id=\"".$famid.$personcount."_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" align=\"middle\" hspace=\"0\" vspace=\"3\" border=\"0\" alt=\"".$pgv_lang["view_family"]."\" /></a> ";
 		echo "<a href=\"family.php?famid=$famid&amp;ged=$GEDCOM\" class=\"details1\">";
@@ -343,7 +344,7 @@ function print_family_descendancy(&$person, &$family, $depth) {
 
 		// children
 		$children = $family->getChildren();
-		print "<tr><td colspan=\"3\" class=\"details1\" >&nbsp;";
+		print "<tr><td colspan=\"3\" class=\"details1\" >&nbsp;&nbsp;";
 		if (count($children)<1) print $pgv_lang["no_children"];
 		else print $factarray["NCHI"].": ".count($children);
 		print "</td></tr></table>";

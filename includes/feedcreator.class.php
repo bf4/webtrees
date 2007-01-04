@@ -1,64 +1,110 @@
 <?php
 /***************************************************************************
- * FeedCreator class v1.7.2-ppt
- * originally (c) Kai Blankenhorn
- * www.bitfolge.de
- * kaib@bitfolge.de
- * v1.3 work by Scott Reynen (scott@randomchaos.com) and Kai Blankenhorn
- * v1.5 OPML support by Dirk Clemens
- * v1.7.2-mod on-the-fly feed generation by Fabian Wolf (info@f2w.de)
- * v1.7.2-ppt ATOM 1.0 support by Mohammad Hafiz bin Ismail (mypapit@gmail.com)
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @author www.bitfolge.de
- * @package PhpGedView
- * @subpackage RSS
- * @version $Id$
- *
- * Changelog:
- *
- * v1.7.2-ppt	11-21-05
- *	added Atom 1.0 support
- *	added enclosure support for RSS 2.0/ATOM 1.0
- *	added docs for v1.7.2-ppt only!
- *
- * v1.7.2-mod	03-12-05
- *	added output function outputFeed for on-the-fly feed generation
- *
- * v1.7.2	10-11-04
- *	license changed to LGPL
- *
- * v1.7.1
- *	fixed a syntax bug
- *	fixed left over debug code
- *
- * v1.7	07-18-04
- * 	added HTML and JavaScript feeds (configurable via CSS) (thanks to Pascal Van Hecke)
- *	added HTML descriptions for all feed formats (thanks to Pascal Van Hecke)
- *	added a switch to select an external stylesheet (thanks to Pascal Van Hecke)
- *	changed default content-type to application/xml
- *	added character encoding setting
- *	fixed numerous smaller bugs (thanks to Sören Fuhrmann of golem.de)
- *	improved changing ATOM versions handling (thanks to August Trometer)
- *	improved the UniversalFeedCreator's useCached method (thanks to Sören Fuhrmann of golem.de)
- *	added charset output in HTTP headers (thanks to Sören Fuhrmann of golem.de)
- *	added Slashdot namespace to RSS 1.0 (thanks to Sören Fuhrmann of golem.de)
- *
- * See www.bitfolge.de for additional changelog info
- */
+
+FeedCreator class v1.8.0-dev (development)
+http://feedcreator.org
+maintained by Mohammad Hafiz bin Ismail (info@mypapit.net)
+feedcreator.org
+
+originally (c) Kai Blankenhorn
+www.bitfolge.de
+kaib@bitfolge.de
+
+
+v1.3 work by Scott Reynen (scott@randomchaos.com) and Kai Blankenhorn
+v1.5 OPML support by Dirk Clemens
+v1.7.2-mod on-the-fly feed generation by Fabian Wolf (info@f2w.de)
+v1.7.2-ppt ATOM 1.0 support by Mohammad Hafiz bin Ismail (mypapit@gmail.com)
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+****************************************************************************
+
+
+
+
+***************************************************************************/
+
+/*** GENERAL USAGE *********************************************************
+
+include("feedcreator.class.php");
+
+$rss = new UniversalFeedCreator();
+$rss->useCached(); // use cached version if age<1 hour
+$rss->title = "PHP news";
+$rss->description = "daily news from the PHP scripting world";
+
+//optional
+$rss->descriptionTruncSize = 500;
+$rss->descriptionHtmlSyndicated = true;
+
+$rss->link = "http://www.dailyphp.net/news";
+$rss->syndicationURL = "http://www.dailyphp.net/".$_SERVER["PHP_SELF"];
+
+$image = new FeedImage();
+$image->title = "dailyphp.net logo";
+$image->url = "http://www.dailyphp.net/images/logo.gif";
+$image->link = "http://www.dailyphp.net";
+$image->description = "Feed provided by dailyphp.net. Click to visit.";
+
+//optional
+$image->descriptionTruncSize = 500;
+$image->descriptionHtmlSyndicated = true;
+
+$rss->image = $image;
+
+// get your news items from somewhere, e.g. your database:
+mysql_select_db($dbHost, $dbUser, $dbPass);
+$res = mysql_query("SELECT * FROM news ORDER BY newsdate DESC");
+while ($data = mysql_fetch_object($res)) {
+    $item = new FeedItem();
+    $item->title = $data->title;
+    $item->link = $data->url;
+    $item->description = $data->short;
+
+    //optional
+    item->descriptionTruncSize = 500;
+    item->descriptionHtmlSyndicated = true;
+
+    //optional (enclosure)
+    $item->enclosure = new EnclosureItem();
+    $item->enclosure->url='http://http://www.dailyphp.net/media/voice.mp3';
+    $item->enclosure->length="950230";
+    $item->enclosure->type='audio/x-mpeg'
+
+
+
+    $item->date = $data->newsdate;
+    $item->source = "http://www.dailyphp.net";
+    $item->author = "John Doe";
+
+    $rss->addItem($item);
+}
+
+// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1 (deprecated),
+// MBOX, OPML, ATOM, ATOM10, ATOM0.3, HTML, JS
+echo $rss->saveFeed("RSS1.0", "news/feed.xml");
+
+//to generate "on-the-fly"
+$rss->outputFeed("RSS1.0");
+
+
+***************************************************************************
+*          A little setup                                                 *
+**************************************************************************/
+
 // your local timezone, set to "" to disable or for GMT
 define("TIME_ZONE","");
 
@@ -69,7 +115,7 @@ define("TIME_ZONE","");
  * Version string.
  **/
 
-define("FEEDCREATOR_VERSION", "FeedCreator 1.7.2-ppt (phpgedview.net)");
+define("FEEDCREATOR_VERSION", "FeedCreator 1.8.0-dev (info@mypapit.net)");
 
 
 
@@ -270,61 +316,13 @@ class FeedHtmlField {
 class UniversalFeedCreator extends FeedCreator {
 	var $_feed;
 
-	function _setMIME($format) {
-		switch (strtoupper($format)) {
-
-			case "2.0":
-				// fall through
-			case "RSS2.0":
-				header('Content-type: text/xml', true);
-				break;
-
-			case "1.0":
-				// fall through
-			case "RSS1.0":
-				header('Content-type: text/xml', true);
-				break;
-
-			case "PIE0.1":
-				header('Content-type: text/xml', true);
-				break;
-
-			case "MBOX":
-				header('Content-type: text/plain', true);
-				break;
-
-			case "OPML":
-				header('Content-type: text/xml', true);
-				break;
-
-			case "ATOM":
-				// fall through: always the latest ATOM version
-			case "ATOM1.0":
-				header('Content-type: application/xml', true);
-				break;
-
-			case "ATOM0.3":
-				header('Content-type: application/xml', true);
-				break;
+	function _setMIME() {
+		//switch (strtoupper($format)) {
 
 
-			case "HTML":
-				header('Content-type: text/html', true);
-				break;
+		header('Content-type: ' . $this->contentType .'; charset=' . $this->encoding, true);
 
-			case "JS":
-				// fall through
-			case "JAVASCRIPT":
-				header('Content-type: text/javascript', true);
-				break;
 
-			default:
-			case "0.91":
-				// fall through
-			case "RSS0.91":
-				header('Content-type: text/xml', true);
-				break;
-		}
 	}
 
 	function _setFormat($format) {
@@ -482,10 +480,17 @@ class FeedCreator extends HtmlDescribable {
 	var $syndicationURL, $image, $language, $copyright, $pubDate, $lastBuildDate, $editor, $editorEmail, $webmaster, $category, $docs, $ttl, $rating, $skipHours, $skipDays;
 
 	/**
-	* The url of the external xsl stylesheet used to format the naked rss feed.
+	* The url of the external xsl stylesheet used to format the naked syndication feed.
 	* Ignored in the output when empty.
 	*/
 	var $xslStyleSheet = "";
+	
+	
+	/**
+	* The url of the external css stylesheet used to format the naked syndication feed.
+	* Ignored in the output when empty.
+		*/
+	var $cssStyleSheet = "";
 
 
 	/**
@@ -506,6 +511,7 @@ class FeedCreator extends HtmlDescribable {
 	 * This feed's character encoding.
 	 * @since 1.6.1
 	 **/
+	//var $encoding = "ISO-8859-1"; //original :p
 	var $encoding = "utf-8";
 
 
@@ -715,6 +721,11 @@ class FeedCreator extends HtmlDescribable {
 		echo $this->createFeed();
 	}
 
+	function setEncoding($encoding="utf-8") {
+		$this->encoding = "utf-8";
+
+	}
+
 
 }
 
@@ -785,8 +796,13 @@ class FeedDate {
 	 */
 	function rfc822() {
 		//return gmdate("r",$this->unix);
-		$date = gmdate("D, d M Y H:i:s", $this->unix);
-		if (TIME_ZONE!="") $date .= " ".str_replace(":","",TIME_ZONE);
+		$date = gmdate("D, d M Y H:i:s", time());
+
+		if (TIME_ZONE!="") {
+			$date .= " ".str_replace(":","",TIME_ZONE);
+		} else {
+			$date .= " ".str_replace(":","","GMT");
+		}
 		return $date;
 	}
 
@@ -1158,7 +1174,11 @@ class PIECreator01 extends FeedCreator {
 			$feed.= "    </author>\n";
 		}
 		$feed.= "    <generator>".FEEDCREATOR_VERSION."</generator>\n";
-		$feed.= "<link rel=\"self\" type=\"application/atom+xml\" href=\"". $this->syndicationURL . "\" />\n";
+		
+		// Mark D. Hamill fixes 
+		// Next line shows original and was commented out and replaced with the one below in order to remove a Feedvalidator.org warning
+		// $feed.= "<link rel=\"self\" type=\"application/atom+xml\" href=\"". $this->syndicationURL . "\" />\n";
+		$feed.= "<link rel=\"self\" type=\"application/atom+xml\" href=\"". htmlspecialchars($this->link). "\" />\n";
 		$feed.= $this->_createAdditionalElements($this->additionalElements, "    ");
 		for ($i=0;$i<count($this->items);$i++) {
 			$feed.= "    <entry>\n";
@@ -1281,7 +1301,7 @@ class MBOXCreator extends FeedCreator {
 
 	function MBOXCreator() {
 		$this->contentType = "text/plain";
-		$this->encoding = "utf-8";
+		$this->encoding = "ISO-8859-15";
 	}
 
 	function qp_enc($input = "", $line_max = 76) {
@@ -1599,4 +1619,5 @@ class JSCreator extends HTMLCreator {
 	}
 
 }
+
 ?>

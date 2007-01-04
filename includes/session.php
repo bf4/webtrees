@@ -23,7 +23,7 @@
  * @subpackage Reports
  * @version $Id$
  */
-if (strstr($_SERVER["SCRIPT_NAME"],"session")) {
+if (strstr($_SERVER["PHP_SELF"],"session")) {
 	print "Now, why would you want to do that.  You're not hacking are you?";
 	exit;
 }
@@ -285,7 +285,7 @@ if (!isset($_SERVER['REQUEST_URI'])) $_SERVER['REQUEST_URI'] = "";
 
 //-- version of phpgedview
 $VERSION = "4.1";
-$VERSION_RELEASE = "beta 2";
+$VERSION_RELEASE = "beta 3";
 $REQUIRED_PRIVACY_VERSION = "3.1";
 
 //-- list of critical configuration variables
@@ -486,7 +486,7 @@ $date = date("D M j H:i:s T Y", $time);
 //-- set the path to the pgv site so that users cannot login on one site
 //-- and then automatically be logged in at another site on the same server
 $pgv_path = "/";
-if (!empty($_SERVER['SCRIPT_NAME'])) $pgv_path = str_replace("\\", "/", dirname($_SERVER['SCRIPT_NAME']));
+if (!empty($_SERVER["PHP_SELF"])) $pgv_path = str_replace("\\", "/", dirname($_SERVER["PHP_SELF"]));
 session_set_cookie_params($date, $pgv_path);
 if (($PGV_SESSION_TIME>0)&&(function_exists('session_cache_expire'))) session_cache_expire($PGV_SESSION_TIME/60);
 if (!empty($PGV_SESSION_SAVE_PATH)) session_save_path($PGV_SESSION_SAVE_PATH);
@@ -817,7 +817,7 @@ require_once(get_privacy_file());
 //-- load the privacy functions
 require_once("includes/functions_privacy.php");
 
-if (!isset($SCRIPT_NAME)) $SCRIPT_NAME=$_SERVER["SCRIPT_NAME"];
+if (!isset($SCRIPT_NAME)) $SCRIPT_NAME=$_SERVER["PHP_SELF"];
 
 $monthtonum = array();
 $monthtonum["jan"] = 1;
@@ -918,7 +918,7 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
 				if (!empty($auth) && $auth=="basic") { //if user is attempting basic authentication //TODO: Update if degest auth is ever implemented
 						basicHTTPAuthenticateUser();
 				} else {
-					$url = basename($_SERVER["SCRIPT_NAME"])."?".$QUERY_STRING;
+					$url = basename($_SERVER["PHP_SELF"])."?".$QUERY_STRING;
 					if (stristr($url, "index.php")!==false) {
 						if (stristr($url, "command=")===false) {
 							if ((!isset($_SERVER['HTTP_REFERER'])) || (stristr($_SERVER['HTTP_REFERER'],$SERVER_URL)===false)) $url .= "&command=gedcom";

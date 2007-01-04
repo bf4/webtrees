@@ -44,7 +44,9 @@ class LifespanControllerRoot extends BaseController {
 	var $minYear = 0;
 	// GEDCOM elements that will be found but should not be displayed
 	var $nonfacts = "FAMS,FAMC,MAY,BLOB,OBJE,SEX,NAME,SOUR,NOTE,BAPL,ENDL,SLGC,SLGS,_TODO,CHAN,HUSB,WIFE,CHIL";
-	var $colors = array ('Aliceblue', ' Antiquewhite', 'Aqua', ' Aquamarine', '	Azure', '	Beige', ' Bisque', ' Blanchedalmond', ' Blue', ' Blueviolet', ' Brown', ' Burlywood', ' Cadetblue', ' Chartreuse', ' Chocolate', ' Coral', ' Cornflowerblue', ' Cornsilk', ' Crimson', ' Cyan', ' Darkcyan', ' Darkgoldenrod', ' Darkgray', ' Darkgreen', ' Darkkhaki', ' Darkmagenta', ' Darkolivegreen', ' Darkorange', ' Darkorchid', ' Darkred', ' Darksalmon', ' Darkseagreen', ' Darkslateblue', ' Darkturquoise', ' Darkviolet', ' deeppink', ' Deepskyblue', ' 	Dimgray', ' Dodgerblue', ' Firebrick', ' Floralwhite', ' Forestgreen', ' Fuchsia', ' Gainsboro', ' Ghostwhite', ' Gold', ' Goldenrod', ' Gray', ' Green', ' Greenyellow', ' Honeydew', ' Hotpink', ' Indianred', ' Ivory', ' Khaki', ' Lavender', ' Lavenderblush', ' Lawngreen', ' Lemonchiffon', ' Lightblue', ' Lightcoral', ' Lightcyan', ' Lightgoldenrodyellow', ' Lightgreen', ' Lightgrey', ' Lightpink', ' Lightsalmon', ' Lightseagreen', ' Lightskyblue', ' Lightslategray', ' Lightsteelblue', ' Lightyellow', ' 	Lime', ' Limegreen', ' Linen', ' Magenta', ' Maroon', ' Mediumauqamarine�', '� Mediumblue�', '� Mediumorchid�', '� Mediumpurple�', '� Mediumseagreen', ' Mediumslateblue', ' Mediumspringgreen', ' Mediumturquoise', ' Mediumvioletred', 'Mintcream', ' Mistyrose', ' Moccasin', ' Navajowhite', ' Oldlace', ' Olive', ' Olivedrab', ' Orange', ' Orangered', ' Orchid', ' Palegoldenrod', ' Palegreen', ' Paleturquoise', ' Palevioletred', ' Papayawhip', ' Peachpuff', ' Peru', ' Pink', ' Plum', ' Powderblue', ' Purple', ' Red', ' Rosybrown', ' Royalblue', ' Saddlebrown', ' Salmon', ' Sandybrown', ' Seagreen', ' Seashell', ' Sienna', ' Silver', ' Skyblue', ' Slateblue', ' Slategray', ' Snow', ' Springgreen', ' Steelblue', ' Tan', ' Teal', ' Thistle', ' Tomato', ' Turquoise', ' Violet', ' Wheat', ' White', ' Whitesmoke', ' Yellow', ' YellowGreen');
+	// The following colours are deliberately omitted from the $colors list:
+	// Blue, Red, Black, White, Green
+	var $colors = array ('Aliceblue', ' Antiquewhite', 'Aqua', ' Aquamarine', '	Azure', ' Beige', ' Bisque', ' Blanchedalmond', ' Blueviolet', ' Brown', ' Burlywood', ' Cadetblue', ' Chartreuse', ' Chocolate', ' Coral', ' Cornflowerblue', ' Cornsilk', ' Crimson', ' Cyan', ' Darkcyan', ' Darkgoldenrod', ' Darkgray', ' Darkgreen', ' Darkkhaki', ' Darkmagenta', ' Darkolivegreen', ' Darkorange', ' Darkorchid', ' Darkred', ' Darksalmon', ' Darkseagreen', ' Darkslateblue', ' Darkturquoise', ' Darkviolet', ' Deeppink', ' Deepskyblue', ' Dimgray', ' Dodgerblue', ' Firebrick', ' Floralwhite', ' Forestgreen', ' Fuchsia', ' Gainsboro', ' Ghostwhite', ' Gold', ' Goldenrod', ' Gray', ' Greenyellow', ' Honeydew', ' Hotpink', ' Indianred', ' Ivory', ' Khaki', ' Lavender', ' Lavenderblush', ' Lawngreen', ' Lemonchiffon', ' Lightblue', ' Lightcoral', ' Lightcyan', ' Lightgoldenrodyellow', ' Lightgreen', ' Lightgrey', ' Lightpink', ' Lightsalmon', ' Lightseagreen', ' Lightskyblue', ' Lightslategray', ' Lightsteelblue', ' Lightyellow', ' Lime', ' Limegreen', ' Linen', ' Magenta', ' Maroon', ' Mediumaqamarine�', '� Mediumblue�', '� Mediumorchid�', '� Mediumpurple�', '� Mediumseagreen', ' Mediumslateblue', ' Mediumspringgreen', ' Mediumturquoise', ' Mediumvioletred', 'Mintcream', ' Mistyrose', ' Moccasin', ' Navajowhite', ' Oldlace', ' Olive', ' Olivedrab', ' Orange', ' Orangered', ' Orchid', ' Palegoldenrod', ' Palegreen', ' Paleturquoise', ' Palevioletred', ' Papayawhip', ' Peachpuff', ' Peru', ' Pink', ' Plum', ' Powderblue', ' Purple', ' Rosybrown', ' Royalblue', ' Saddlebrown', ' Salmon', ' Sandybrown', ' Seagreen', ' Seashell', ' Sienna', ' Silver', ' Skyblue', ' Slateblue', ' Slategray', ' Snow', ' Springgreen', ' Steelblue', ' Tan', ' Teal', ' Thistle', ' Tomato', ' Turquoise', ' Violet', ' Wheat', ' Whitesmoke', ' Yellow', ' YellowGreen');
 	var $color;
 	var $colorindex;
 	var $zoomfactor;
@@ -189,7 +191,7 @@ class LifespanControllerRoot extends BaseController {
 						$dyear = $person->getDeathYear();
 							
 						//--Checks to see if the details of that person can be viewed
-						if (!empty ($byear) && !empty ($dyear) && $person->canDisplayDetails()) {
+						if (!empty ($byear) && $byear!="0000" && !empty($dyear) && $dyear!="0000" && $person->canDisplayDetails()) {
 							$this->people[] = $person;
 						}
 					}
@@ -222,7 +224,7 @@ class LifespanControllerRoot extends BaseController {
 						$byear = $person->getBirthYear();
 						$dyear = $person->getDeathYear();
 						//--Checks to see if the details of that person can be viewed
-						if (!empty ($byear) && !empty ($dyear) && $person->canDisplayDetails()) {
+						if (!empty ($byear) && $byear!="0000" && !empty($dyear) && $dyear!="0000" && $person->canDisplayDetails()) {
 							$this->people[] = $person;
 						}
 					}
@@ -347,12 +349,12 @@ class LifespanControllerRoot extends BaseController {
 		$timelineTick = $totalYears / $yearSpan; //calculates the length of the timeline
 
 		for ($i = 0; $i < $timelineTick; $i ++) { //prints the timeline
-			echo "<div style=' background-color: white; position: absolute; top: ".$top."px;left: ".$leftPosition."px; width: ".$tickDistance."px;'>$newStartYear<img src=\"images/timelineChunk.gif\" alt=\"\" /></div>";
+			echo "<div style='position: absolute; top: ".$top."px;left: ".$leftPosition."px; width: ".$tickDistance."px;'>$newStartYear<img src=\"images/timelineChunk.gif\" alt=\"\" /></div>";
 			$leftPosition += $tickDistance;
 			$newStartYear += $yearSpan;
 
 		}
-		echo "<div style='background-color: white; position: absolute; top: ".$top."px;left: ".$leftPosition."px; width: ".$tickDistance."px;'>$newStartYear</div>";
+		echo "<div style='position: absolute; top: ".$top."px;left: ".$leftPosition."px; width: ".$tickDistance."px;'>$newStartYear</div>";
 	}
 	//method used to place the person boxes onto the timeline
 	function fillTL($ar, $int, $Y) {
@@ -406,7 +408,7 @@ class LifespanControllerRoot extends BaseController {
 				if ($width > ($minlength +110)) {
 
 					
-					echo "\n<div style='position: absolute;;top:".$Y."px; left:".$startPos."px;width:".$width."px; height:20px;" .
+					echo "\n<div style='position: absolute;top:".$Y."px; left:".$startPos."px;width:".$width."px; height:20px;" .
 							" background-color:".$this->color."; border: solid blue 1px; z-index:$zindex;'>" .
 									"\n\t<table><tr>\n\t\t<td width='15'><a class='showit' href='#'><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".get_changed_date($value->getBirthDate())." ".$value->getBirthPlace()."</span></a></td>" .
 											"\n\t\t<td width='100%'><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getName().":  $lifespan </a></td>" .
@@ -420,7 +422,7 @@ class LifespanControllerRoot extends BaseController {
 											"\n\t\t<td width='100%'><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getName()."</a></td>" .
 											"\n\t\t<td width='15'><a class='showit' href='#'><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getName()."<br/>".$pgv_lang["death"]." ".get_changed_date($value->getDeathDate())." ".$value->getDeathPlace()."</span></a></td></tr></table></div>";
 					} else {						
-						echo	"\n<div style='position: absolute;top:".$Y."px; left:".$startPos."px;width:".$width."px; height:20px;" .
+						echo "\n<div style='position: absolute;top:".$Y."px; left:".$startPos."px;width:".$width."px; height:20px;" .
 							" background-color:".$this->color."; border: solid blue 1px; z-index:$zindex;'>" .
 									"<a class='showit' href=\"individual.php?pid=".$value->getXref()."\"><b>B</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".get_changed_date($value->getBirthDate())." ".$value->getBirthPlace()."<br/>".$pgv_lang["death"]." ".get_changed_date($value->getDeathDate())." ".$value->getBirthPlace()."</span></a></a></div>";
 											

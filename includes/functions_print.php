@@ -46,7 +46,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 global $pgv_lang, $MULTI_MEDIA, $SHOW_HIGHLIGHT_IMAGES, $bwidth, $bheight, $show_full, $PEDIGREE_FULL_DETAILS, $SHOW_ID_NUMBERS, $SHOW_PEDIGREE_PLACES;
 	 global $CONTACT_EMAIL, $CONTACT_METHOD, $TEXT_DIRECTION, $DEFAULT_PEDIGREE_GENERATIONS, $OLD_PGENS, $talloffset, $PEDIGREE_LAYOUT, $MEDIA_DIRECTORY;
 	 global $PGV_IMAGE_DIR, $PGV_IMAGES, $ABBREVIATE_CHART_LABELS, $USE_MEDIA_VIEWER;
-	 global $chart_style, $box_width, $generations;
+	 global $chart_style, $box_width, $generations, $show_spouse, $show_full;
 	 global $CHART_BOX_TAGS, $SHOW_LDS_AT_GLANCE;
 	 global $SEARCH_SPIDER;
 	 flush();
@@ -79,19 +79,19 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 					print "\n\t\t\t<table class=\"person_box$isF\"><tr><td class=\"details1\">";
 					// NOTE: Zoom
 					print "<a href=\"pedigree.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;talloffset=$talloffset&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\"><b>".$pgv_lang["index_header"]."</b></a>\n";
-					print "<br /><a href=\"descendancy.php?pid=$pid&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\"><b>".$pgv_lang["descend_chart"]."</b></a><br />\n";
+					print "<br /><a href=\"descendancy.php?pid=$pid&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\"><b>".$pgv_lang["descend_chart"]."</b></a><br />\n";
 					$username = getUserName();
 					if (!empty($username)) {
 						 $tuser=getUser($username);
 						 if (!empty($tuser["gedcomid"][$GEDCOM])) {
-							  print "<a href=\"relationship.php?pid1=".$tuser["gedcomid"][$GEDCOM]."&amp;pid2=".$pid."&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\"><b>".$pgv_lang["relationship_to_me"]."</b></a><br />\n";
+							  print "<a href=\"relationship.php?pid1=".$tuser["gedcomid"][$GEDCOM]."&amp;pid2=".$pid."&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\"><b>".$pgv_lang["relationship_to_me"]."</b></a><br />\n";
 						 }
 					}
 					// NOTE: Zoom
 					if (file_exists("ancestry.php")) print "<a href=\"ancestry.php?rootid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\"><b>".$pgv_lang["ancestry_chart"]."</b></a><br />\n";
 					if (file_exists("compact.php"))  print "<a href=\"compact.php?rootid=$pid&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\"><b>".$pgv_lang["compact_chart"]."</b></a><br />\n";
 					if (file_exists("fanchart.php") and defined("IMG_ARC_PIE") and function_exists("imagettftext"))  print "<a href=\"fanchart.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\"><b>".$pgv_lang["fan_chart"]."</b></a><br />\n";
-					if (file_exists("hourglass.php")) print "<a href=\"hourglass.php?pid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\"><b>".$pgv_lang["hourglass_chart"]."</b></a><br />\n";
+					if (file_exists("hourglass.php")) print "<a href=\"hourglass.php?pid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM&amp;show_spouse=$show_spouse&amp;show_full=$show_full\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\"><b>".$pgv_lang["hourglass_chart"]."</b></a><br />\n";
 					$ct = preg_match_all("/1\s*FAMS\s*@(.*)@/", $indirec, $match, PREG_SET_ORDER);
 					for ($i=0; $i<$ct; $i++) {
 						 $famid = $match[$i][1];
@@ -103,9 +103,9 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 							  if ($pid==$parents["WIFE"]) $spouse=$parents["HUSB"];
 							  $num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
 							  if ((!empty($spouse))||($num>0)) {
-								   print "<a href=\"family.php?famid=$famid&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\"><b>".$pgv_lang["fam_spouse"]."</b></a><br /> \n";
+								   print "<a href=\"family.php?famid=$famid&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\"><b>".$pgv_lang["fam_spouse"]."</b></a><br /> \n";
 								if (!empty($spouse)) {
-									print "<a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid."');\">";
+									print "<a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\">";
  									   if (($SHOW_LIVING_NAMES>=$PRIV_PUBLIC) || (displayDetailsByID($spouse))||(showLivingNameByID($spouse))) print PrintReady(get_person_name($spouse));
 									   else print $pgv_lang["private"];
 									   print "</a><br />\n";
@@ -113,7 +113,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 							  }
 							  for($j=0; $j<$num; $j++) {
 								   $cpid = $smatch[$j][1];
-								   print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"individual.php?pid=$cpid&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$count."');\">";
+								   print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"individual.php?pid=$cpid&amp;ged=$GEDCOM\" onmouseover=\"clear_family_box_timeout('".$pid.".".$personcount.".".$count."');\" onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');\">";
  								   if (($SHOW_LIVING_NAMES>=$PRIV_PUBLIC) || (displayDetailsByID($cpid))||(showLivingNameByID($cpid))) print PrintReady(get_person_name($cpid));
 								   else print $pgv_lang["private"];
 								   print "<br /></a>";
@@ -804,13 +804,12 @@ function print_footer() {
 	 if (!isset($footer_count)) $footer_count = 1;
 	 else $footer_count++;
 	 print "<!-- begin footer -->\n";
-	 $QUERY_STRING = preg_replace("/&/", "&", $QUERY_STRING);
 	 if ($view!="preview") {
 		  include($footerfile);
 	 }
 	 else {
 		  include($print_footerfile);
-		  print "\n\t<div style=\"text-align: center; width: 95%\"><br />";
+		  print "\n\t<div id=\"backprint\" style=\"text-align: center; width: 95%\"><br />";
 		  $backlink = $SCRIPT_NAME."?".get_query_string();
 		  if (!$printlink) {
 			   print "\n\t<br /><a id=\"printlink\" href=\"javascript:;\" onclick=\"print(); return false;\">".$pgv_lang["print"]."</a><br />";
@@ -1827,8 +1826,12 @@ function print_theme_dropdown($style=0) {
 		  isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
 		  $frompage = $_SERVER["SCRIPT_NAME"].$tqstring;
 		  if(isset($_REQUEST['mod'])){
-		  	if(!strstr("?", $frompage)) $frompage.="?";
-		  	$frompage.="&mod=".$_REQUEST['mod'];
+		  	if(!strstr("?", $frompage)) 
+		  	{
+		  		if(!strstr("%3F", $frompage)) ;
+		  		else $frompage.="?";
+		  	}
+		  	if(!strstr("&mod",$frompage))$frompage.="&mod=".$_REQUEST['mod'];
 		  }
 		  
 		  $themes = get_theme_names();
@@ -1844,8 +1847,7 @@ function print_theme_dropdown($style=0) {
 					print "<option value=\"".$themedir["dir"]."\"";
 					if ($uname) {
 						 if ($themedir["dir"] == $user["theme"]) print " class=\"selected-option\"";
-					}
-					else {
+					} else {
 						  if ($themedir["dir"] == $THEME_DIR) print " class=\"selected-option\"";
 					}
 					print ">".$themedir["name"]."</option>\n";
@@ -1863,13 +1865,18 @@ function print_theme_dropdown($style=0) {
 					$menu["submenuclass"] = "themesubmenu";
 					$menu["items"] = array();
 					foreach($themes as $indexval => $themedir) {
-						 $submenu = array();
-						 $submenu["label"] = $themedir["name"];
-						 $submenu["labelpos"] = "right";
-						 $submenu["link"] = "themechange.php?frompage=".urlencode($frompage)."&amp;mytheme=".$themedir["dir"];
-						 $submenu["class"] = "favsubmenuitem";
-						 $submenu["hoverclass"] = "favsubmenuitem_hover";
-						 $menu["items"][] = $submenu;
+						$submenu = array();
+						$submenu["label"] = $themedir["name"];
+						$submenu["labelpos"] = "right";
+						$submenu["link"] = "themechange.php?frompage=".urlencode($frompage)."&amp;mytheme=".$themedir["dir"];
+						$submenu["class"] = "favsubmenuitem";
+						if ($uname) {
+							 if ($themedir["dir"] == $user["theme"]) $submenu["class"] = "favsubmenuitem_selected";
+						} else {
+							 if ($themedir["dir"] == $THEME_DIR) $submenu["class"] = "favsubmenuitem_selected";
+						}
+						$submenu["hoverclass"] = "favsubmenuitem_hover";
+						$menu["items"][] = $submenu;
 					}
 					print_menu($menu);
 			   break;
@@ -2073,7 +2080,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false) {
 		$level = substr($match[$i][0],0,1);
 		$pid2 = $match[$i][1];
 		// get RELAtionship field
-		$assorec = get_sub_record($level, " ASSO ", $factrec, $i+1);
+		$assorec = get_sub_record($level, "$level ASSO ", $factrec, $i+1);
 //		if (substr($_SERVER["SCRIPT_NAME"],1) == "pedigree.php") {
 			$rct = preg_match("/\d RELA (.*)/", $assorec, $rmatch);
 			if ($rct>0) {
@@ -2240,23 +2247,23 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 		// It is not proper GEDCOM form to use a N(o) value with an event tag to infer that it did not happen.
 		$factrec = str_replace("\r\nPGV_OLD\r\n", "", $factrec);
 		$factrec = str_replace("\r\nPGV_NEW\r\n", "", $factrec);
-		$factdetail = preg_split("/ /",$factrec);
-		if (isset($factdetail)) if (count($factdetail) == 3) if (strtoupper(trim($factdetail[2])) === "Y") print $pgv_lang["yes"];
+		$factdetail = preg_split("/ /", trim($factrec));
+		if (isset($factdetail)) if (count($factdetail) == 3) if (strtoupper($factdetail[2]) == "Y") print $pgv_lang["yes"];
 	}
 	// gedcom indi age
 	$ages=array();
-	$agerec = get_sub_record(2, "2 AGE", $factrec);
+	$agerec = get_gedcom_value("AGE", 2, $factrec);
 	$daterec = get_sub_record(2, "2 DATE", $factrec);
-	if (empty($agerec)) $agerec = get_sub_record(3, "3 AGE", $daterec);
+	if (empty($agerec)) $agerec = get_gedcom_value("AGE", 3, $daterec);
 	$ages[0] = $agerec;
 	// gedcom husband age
 	$husbrec = get_sub_record(2, "2 HUSB", $factrec);
-	if (!empty($husbrec)) $agerec = get_sub_record(3, "3 AGE", $husbrec);
+	if (!empty($husbrec)) $agerec = get_gedcom_value("AGE", 3, $husbrec);
 	else $agerec = "";
 	$ages[1] = $agerec;
 	// gedcom wife age
 	$wiferec = get_sub_record(2, "2 WIFE", $factrec);
-	if (!empty($wiferec)) $agerec = get_sub_record(3, "3 AGE", $wiferec);
+	if (!empty($wiferec)) $agerec = get_gedcom_value("AGE", 3, $wiferec);
 	else $agerec = "";
 	$ages[2] = $agerec;
 	// print gedcom ages
@@ -2267,7 +2274,7 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 			else if ($indexval==2) print $pgv_lang["wife"];
 			else print $factarray["AGE"];
 			print "</span>: ";
-			$age = get_age_at_event(substr($agerec,6));
+			$age = get_age_at_event($agerec);
 			print PrintReady($age);
 			print " ";
 		}
@@ -2507,14 +2514,14 @@ function init_calendar_popup() {
  * @param boolean $multiple		Whether or not the user will be selecting multiple people
  * @param string $ged			The GEDCOM to search in
  */
-function print_findindi_link($element_id, $indiname, $asString=false, $multiple=false, $ged='') {
+function print_findindi_link($element_id, $indiname, $asString=false, $multiple=false, $ged='', $filter='') {
 	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 
 	$text = $pgv_lang["find_id"];
 	if (empty($ged)) $ged=$GEDCOM;
 	if (isset($PGV_IMAGES["indi"]["button"])) $Link = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indi"]["button"]."\" alt=\"".$text."\" title=\"".$text."\" border=\"0\" align=\"middle\" />";
 	else $Link = $text;
-	$out = " <a href=\"javascript:;\" onclick=\"findIndi(document.getElementById('".$element_id."'), document.getElementById('".$indiname."'), '".$multiple."', '".$ged."'); findtype='individual'; return false;\">";
+	$out = " <a href=\"javascript:;\" onclick=\"findIndi(document.getElementById('".$element_id."'), document.getElementById('".$indiname."'), '".$multiple."', '".$ged."', '".$filter."'); findtype='individual'; return false;\">";
 	$out .= $Link;
 	$out .= "</a>";
 	if ($asString) return $out;

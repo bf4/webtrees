@@ -77,6 +77,7 @@ $level2_tags=array( // The order of the $keys is significant
 	"AGE"  =>array("CENS","DEAT"),
 	"HUSB" =>array("MARR"),
 	"WIFE" =>array("MARR"),
+	"FAMC" =>array("ADOP"),
 	"FILE" =>array("OBJE"),
 	"_PRIM"=>array("OBJE"),
 );
@@ -175,11 +176,7 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 				}
 			}
 		}
-		if (userAutoAccept()) {
-			require_once("includes/functions_import.php");
-			update_record($gedrec);
-		}
-		else {
+		
 			$change = array();
 			$change["gid"] = $gid;
 			$change["gedcom"] = $GEDCOM;
@@ -191,6 +188,12 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 			$change["undo"] = $gedrec;
 			if (!isset($pgv_changes[$gid."_".$GEDCOM])) $pgv_changes[$gid."_".$GEDCOM] = array();
 			$pgv_changes[$gid."_".$GEDCOM][] = $change;
+		
+		if (userAutoAccept()) {
+			require_once("includes/functions_import.php");
+			accept_changes($gid."_".$GEDCOM);
+		}
+		else {
 			write_changes();
 		}
 			AddToChangeLog("Replacing gedcom record $gid ->" . getUserName() ."<-");
@@ -213,11 +216,7 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 		if (preg_match("/\d+/", $gid)==0) $xref = get_new_xref($type);
 		else $xref = $gid;
 		$gedrec = preg_replace("/0 @(.*)@/", "0 @$xref@", $gedrec);
-		if (userAutoAccept()) {
-			require_once("includes/functions_import.php");
-			update_record($gedrec);
-		}
-		else {
+		
 			$change = array();
 			$change["gid"] = $xref;
 			$change["gedcom"] = $GEDCOM;
@@ -229,6 +228,12 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 			$change["undo"] = $gedrec;
 			if (!isset($pgv_changes[$xref."_".$GEDCOM])) $pgv_changes[$xref."_".$GEDCOM] = array();
 			$pgv_changes[$xref."_".$GEDCOM][] = $change;
+		
+		if (userAutoAccept()) {
+			require_once("includes/functions_import.php");
+			accept_changes($xref."_".$GEDCOM);
+		}
+		else {
 			write_changes();
 		}
 		AddToChangeLog("Appending new $type record $xref ->" . getUserName() ."<-");
@@ -251,11 +256,7 @@ function delete_gedrec($gid, $linkpid='') {
 
 	$undo = find_gedcom_record($gid);
 	if (empty($undo)) return false;
-	if (userAutoAccept()) {
-		require_once("includes/functions_import.php");
-		update_record($undo, true);
-	}
-	else {
+	
 		$change = array();
 		$change["gid"] = $gid;
 		$change["gedcom"] = $GEDCOM;
@@ -267,6 +268,12 @@ function delete_gedrec($gid, $linkpid='') {
 		$change["undo"] = "";
 		if (!isset($pgv_changes[$gid."_".$GEDCOM])) $pgv_changes[$gid."_".$GEDCOM] = array();
 		$pgv_changes[$gid."_".$GEDCOM][] = $change;
+	
+	if (userAutoAccept()) {
+		require_once("includes/functions_import.php");
+		accept_changes($gid."_".$GEDCOM);
+	}
+	else {
 		write_changes();
 	}
 	AddToChangeLog("Deleting gedcom record $gid ->" . getUserName() ."<-");
@@ -415,7 +422,7 @@ function undo_change($cid, $index) {
 function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag="CHIL", $sextag="") {
 	global $pgv_lang, $factarray, $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $monthtonum, $WORD_WRAPPED_NOTES;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $USE_RTL_FUNCTIONS, $GEDCOM;
-	global $bdm;
+	global $bdm, $TEXT_DIRECTION;
 
 	$bdm = ""; // used to copy '1 SOUR' to '2 SOUR' for BIRT DEAT MARR
 	init_calendar_popup();
@@ -456,7 +463,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	$default_name_fields = array("NPFX"=>"","NAME"=>"","GIVN"=>"","SPFX"=>"","SURN"=>"","NSFX"=>"");
 	$advanced_name_fields = array("NICK"=>"", "_MARNM"=>"", "ROMN"=>"");
 	//-- if they are using an RTL language then they probably want _HEB by default
-	if ($USE_RTL_FUNCTIONS)  $default_name_fields["_HEB"] = "";
+	if ($TEXT_DIRECTION=="rtl")  $default_name_fields["_HEB"] = "";
 	else $advanced_name_fields["_HEB"] = "";
 	
 	//-- iterate over the name tags and find the values from the name record.
@@ -473,7 +480,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	}
 	//-- advanced name fields
 	print "<tr id=\"advanced_name\"><td class=\"descriptionbox\" colspan=\"2\">";
-	print "<a href=\"javascript:;\" onclick=\"toggleAdvancedName(); return false;\"><img id=\"advanced_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> Advanced Name Fields</a>";
+	print "<a href=\"javascript:;\" onclick=\"toggleAdvancedName(); return false;\"><img id=\"advanced_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["advanced_name_fields"]."</a>";
 	print "</td></tr>\n";
 	foreach($advanced_name_fields as $tag=>$value) {
 		$value = get_gedcom_value($tag, 0, $namerec);
@@ -622,6 +629,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			if (img.src.indexOf('plus')>=0) {
 				img.src = '<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]; ?>';
 				var disp = 'table-row';
+				if (document.all && !window.opera) disp = "inline"; // IE
 			}
 			else {
 				img.src = '<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]; ?>';
@@ -691,7 +699,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			if (frm.NAME_plus) frm.NAME_plus.style.display="none";
 			if (frm.NAME_minus) frm.NAME_minus.style.display="inline";
 			disp="table-row";
-			if (document.all) disp="inline"; // IE
+			if (document.all && !window.opera) disp = "inline"; // IE
 		}
 		// show/hide
 		document.getElementById("NPFX_tr").style.display=disp;
@@ -810,7 +818,6 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 
 	$largetextfacts = array("TEXT","PUBL","NOTE");
 	$subnamefacts = array("NPFX", "GIVN", "SPFX", "SURN", "NSFX");
-
 	@list($level, $fact, $value) = explode(" ", $tag);
 
 	if ($fact=="LATI" || $fact=="LONG") {
@@ -847,7 +854,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 				var disp = tr[i].style.display;
 				if (disp=="none") {
 					disp="table-row";
-					if (document.all) disp="inline"; // IE
+					if (document.all && !window.opera) disp = "inline"; // IE
 				}
 				else disp="none";
 				tr[i].style.display=disp;
@@ -878,6 +885,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	if ($fact=="REPO") $islink = true;
 	if ($fact=="SOUR") $islink = true;
 	if ($fact=="OBJE") $islink = true;
+	if ($fact=="FAMC") $islink = true;
 
 	// rows & cols
 	$rows=1;
@@ -892,6 +900,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	if (in_array($fact, $largetextfacts)) { $rows=10; $cols=70; }
 	if ($fact=="ADDR") $rows=4;
 	if ($fact=="REPO") $cols = strlen($REPO_ID_PREFIX) + 4;
+	if ($fact=='_UID') $cols=50;
 
 	// label
 	$style="";
@@ -951,8 +960,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 
 	if (in_array($fact, $emptyfacts)&& (empty($value) or $value=="y" or $value=="Y")) {
 		$value = strtoupper($value);
-		if ($fact=="BIRT" or $fact=="MARR") $value="Y"; // default YES
-		else if ($level==1) $value="Y"; // default YES
+		if ($fact=="MARR" or $level==1) $value="Y"; // default YES
 		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".$value."\" />";
 		if ($level<=1) {
 			print "<input type=\"checkbox\" ";
@@ -968,6 +976,18 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			print "<option value=\"$code\"";
 			if ($code==$value) print " selected=\"selected\"";
 			print ">$temple</option>\n";
+		}
+		print "</select>\n";
+	}
+	else if ($fact=="ADOP") {
+		print "<select tabindex=\"".$tabkey."\" name=\"".$element_name."\" >";
+		foreach (array("BOTH"=>$factarray["HUSB"]."+".$factarray["WIFE"],
+		               "HUSB"=>$factarray["HUSB"],
+		               "WIFE"=>$factarray["WIFE"]) as $k=>$v) {
+			print "<option value='$k'";
+			if ($value==$k)
+				print " selected";
+			print ">$v</option>";
 		}
 		print "</select>\n";
 	}
@@ -1442,10 +1462,11 @@ function breakConts($newline, $level) {
  * @return string	the converted date string
  */
 function check_input_date($datestr) {
-	if (preg_match("/^\d+ \w\w\w \d\d\d\d$/", $datestr)>0) return $datestr;
 	$date = parse_date($datestr);
-	//print_r($date);
-	if ((count($date)==1)&&empty($date[0]['ext'])&&!empty($date[0]['month'])&&!empty($date[0]['year'])) {
+	//-- if there was no change to the date then return the original
+	if (preg_match("/^".$date[0]['day']." ".$date[0]['month']." ".$date[0]['year']."$/i", $datestr)>0) return $datestr;
+	//-- reconstruct using the GEDCOM standards
+	if ((count($date)==1 || implode("",$date[1])=="")&&empty($date[0]['ext'])&&!empty($date[0]['month'])&&!empty($date[0]['year'])) {
 		$datestr = strtoupper($date[0]['day']." ".$date[0]['month']." ".$date[0]['year']);
 	}
 	return $datestr;
@@ -1532,8 +1553,12 @@ function create_add_form($fact) {
 	}
 	else {
 		$tags[0] = $fact;
+		if ($fact=='_UID') {
+			require_once ("functions_import.php");
+			$fact.=" ".uuid();
+		}
 		add_simple_tag("1 ".$fact);
-		insert_missing_subtags($fact);
+		insert_missing_subtags($tags[0]);
 	}
 }
 
@@ -1684,11 +1709,14 @@ function insert_missing_subtags($level1tag)
 				case "WIFE":
 					add_simple_tag("3 AGE");
 					break;
+				case "FAMC":
+					add_simple_tag("3 ADOP BOTH");
+					break;
 			}
 		}
 	}
 	// Do something (anything!) with unrecognised custom tags
-	if (preg_match('/^_/', $level1tag) && count($tags)==1) {
+	if (substr($level1tag, 0, 1)=='_' && $level1tag!='_UID' && count($tags)==1) {
 		add_simple_tag("2 DATE");
 		add_simple_tag("2 PLAC");
 		add_simple_tag("2 ADDR");

@@ -181,7 +181,8 @@ class SearchControllerRoot extends BaseController {
 					$_REQUEST["$str"] = 'yes';
 				}
 			}
-		} else
+		}
+		 else
 			$this->sgeds[] = $GEDCOM;
 			
 		// Retrieve the sites that can be searched
@@ -684,7 +685,11 @@ class SearchControllerRoot extends BaseController {
 						{
 							$place_sdx = DMSoundex($place);
 							
-							$sql .= "p_dm_soundex = '".$place_sdx[0]."' OR ";
+							foreach($place_sdx as $key=>$val)
+							{
+								
+									$sql .= "p_dm_soundex like '%".$place_sdx[$key]."%' OR ";
+							}
 						}
 						
 						if($this->soundex == "Russell")
@@ -731,6 +736,9 @@ class SearchControllerRoot extends BaseController {
 	 */
 	function SoundexSearch() {
 		global $REGEXP_DB, $GEDCOM, $GEDCOMS;
+		global $TBLPREFIX;
+		global $DBCONN;
+		
 		if (((!empty ($this->lastname)) || (!empty ($this->firstname)) || (!empty ($this->place))) && (count($this->sgeds) > 0)) {
 			$logstring = "Type: Soundex<br />";
 			if (!empty ($this->lastname))
@@ -810,12 +818,13 @@ class SearchControllerRoot extends BaseController {
 				{
 					$arr2 = array(soundex($this->lastname));
 				}
+			
 				$farr = array ();
 				if (!empty ($this->firstname)) {
 					$firstnames = preg_split("/\s/", trim($this->firstname));
 					for ($j = 0; $j < count($firstnames); $j ++) {
 						if ($this->soundex == "Russell")
-							$farr[$j] = soundex($firstnames[$j]);
+							$farr[$j] = array(soundex($firstnames[$j]));
 						if ($this->soundex == "DaitchM")
 							$farr[$j] = DMsoundex($firstnames[$j]);
 					}
@@ -823,16 +832,16 @@ class SearchControllerRoot extends BaseController {
 				if ((!empty ($this->place)) && ($this->soundex == "DaitchM"))
 					$parr = DMsoundex($this->place);
 				if ((!empty ($this->place)) && ($this->soundex == "Russell"))
-					$parr = soundex(trim($this->place));
+				$parr = array(soundex(trim($this->place)));
 
 				// Start the search
 				//$oldged = $GEDCOM;
 				$this->printname = array ();
 				$this->printfamname = array ();
 				
-				global $TBLPREFIX;
 				$firstName = "";
 				$lastName = "";
+				
 				
 				if(!empty($this->place) && empty($this->firstname) && empty($this->lastname))
 				{
@@ -844,9 +853,10 @@ class SearchControllerRoot extends BaseController {
 				$firstName = "";
 				foreach($farr as $name)
 				{
-					$firstName .= "%" . $name;
+					//$firstName .= "%" . $name;
+					foreach($name as $name1)
+						$firstName .= "%" . $name1;
 				}
-				
 				if (!empty($arr2))
 				{
 				foreach($arr2 as $name);
@@ -855,10 +865,38 @@ class SearchControllerRoot extends BaseController {
 				}
 				}
 				
+					$places = "";
+					if(!empty($this->place))
+					{
+						foreach ($parr as $place)
+						{
+							$places .= "%" . $place;
+						}
+					}
+					
+
+				
 				$firstName .= "%";
 				$lastName .= "%";
+					$places .= "%";
 				
-				$sql = "SELECT i_id, i_gedcom, sx_n_id, i_file FROM ".$TBLPREFIX."soundex, ".$TBLPREFIX."individuals WHERE sx_i_id = i_id AND sx_file = i_file AND ";
+					$sql = "SELECT i_id, i_gedcom, sx_n_id, i_file FROM ".$TBLPREFIX."soundex, ".$TBLPREFIX."individuals";
+					if (!empty($this->place)) {
+						$sql .= ", ".$TBLPREFIX."placelinks, ".$TBLPREFIX."places";
+					}
+					$sql .= " WHERE sx_i_id = i_id AND sx_file = i_file AND ";
+					if (!empty($this->place)) {
+						$sql .= "pl_file = i_file AND i_file = p_file AND pl_gid = i_id AND pl_p_id = p_id AND ";
+					}
+				
+				if ((is_array($this->sgeds)) && (count($this->sgeds) != 0)) {
+					$sql .= " (";
+					for ($i=0; $i<count($this->sgeds); $i++) {
+						$sql .= "i_file='".$DBCONN->escapeSimple($GEDCOMS[$this->sgeds[$i]]["id"])."'";
+						if ($i < count($this->sgeds)-1) $sql .= " OR ";
+					}
+					$sql .= ") AND ";
+				}
 				
 				if($this->soundex == "DaitchM")
 				{
@@ -868,7 +906,7 @@ class SearchControllerRoot extends BaseController {
 				
 					if(!empty($firstName))
 					{ 
-						$where = "sx_fn_dm_code LIKE '%".$firstName."%' ";
+							$where = "sx_fn_dm_code LIKE '".$DBCONN->escapeSimple($firstName)."' ";
 						$x++;
 					}
 					
@@ -877,8 +915,11 @@ class SearchControllerRoot extends BaseController {
 						if($x > 0)
 							$where .= "AND ";
 							
-						$where .= "sx_ln_dm_code LIKE '".$lastName."' ";
+						$where .= "sx_ln_dm_code LIKE '".$DBCONN->escapeSimple($lastName)."' ";
 					}
+						if (!empty($this->place)) {
+							$where .= "AND p_dm_soundex LIKE '".$DBCONN->escapeSimple($places)."' "; 
+						}
 				}
 				
 				if ($this->soundex == "Russell")
@@ -889,7 +930,7 @@ class SearchControllerRoot extends BaseController {
 					
 					if(!empty($firstName))
 					{ 
-						$where = "sx_fn_std_code LIKE '%".$firstName."%' ";
+							$where = "sx_fn_std_code LIKE '".$DBCONN->escapeSimple($firstName)."' ";
 						$x++;
 					}
 					
@@ -898,11 +939,16 @@ class SearchControllerRoot extends BaseController {
 						if($x > 0)
 							$where .= "AND ";
 							
-						$where .= "sx_ln_std_code LIKE '".$lastName."' ";
+						$where .= "sx_ln_std_code LIKE '".$DBCONN->escapeSimple($lastName)."' ";
 					}
+						if (!empty($this->place)) {
+							$where .= "AND p_std_soundex LIKE '".$DBCONN->escapeSimple($places)."' "; 
+						}
 				}
 				
 				$sql .= $where;
+					//--group by
+					$sql .= "GROUP BY i_id";
 				
                 // echo "<br />sql= ".$sql;	//debug			
 				

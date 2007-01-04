@@ -332,7 +332,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 						 print "<a href=\"mailto:".$event."\">".$event."</a>";
 					}
  					else if (strstr("FAX PHON FILE", $fact." ")) print "&lrm;".$event." &lrm;";
-					else if (!strstr("ADDR ", $fact." ") && $event!="Y") print PrintReady($event." ");
+					else if (!strstr("ADDR _RATID ", $fact." ") && $event!="Y") print PrintReady($event." ");
 					$temp = trim(get_cont(2, $factrec), "\r\n");
 					if (strstr("PHON ADDR ", $fact." ")===false && $temp!="") {
 						if ($WORD_WRAPPED_NOTES) print " ";
@@ -368,6 +368,24 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				   print "<img src=\"images/RESN_".$resn_value.".gif\" alt=\"".$pgv_lang[$resn_value]."\" title=\"".$pgv_lang[$resn_value]."\" />\n";
 					print_help_link("RESN_help", "qm");
 			   }
+				if ($fact=="ADOP" && preg_match("/[\r\n]2 FAMC @(.+)@/", $factrec, $match)) {
+					print "<br/><span class=\"label\">".$factarray["FAMC"].":</span> ";
+					print "<a href=\"family.php?famid=".$match[1]."&amp;ged=$GEDCOM\">";
+					print get_family_descriptor($match[1]);
+					print "</a>";
+					if (preg_match("/[\r\n]3 ADOP (HUSB|WIFE|BOTH)/", $factrec, $match)) {
+						print "<br/><span class=\"label\">".$factarray["ADOP"].":</span> ";
+						switch ($match[1]) {
+						case 'HUSB':
+						case 'WIFE':
+							print "<span class=\"field\">".$factarray[$match[1]]."</span> ";
+							break;
+						case 'BOTH':
+							print "<span class=\"field\">".$factarray['HUSB']."+".$factarray['WIFE']."</span> ";
+							break;
+						}
+					}
+				} else
 				if ($fact!="ADDR") {
 					//-- catch all other facts that could be here
 					$special_facts = array("ADDR","ALIA","ASSO","CEME","CONC","CONT","DATE","DESC","EMAIL",
@@ -1081,6 +1099,10 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	}
 
 	$media_found = false;
+	//-- $sqlmm = "SELECT DISTINCT ";
+	//-- DISTINCT doesn't work the same in all DBs, particularly 
+	//-- why do we want to get DISTINCT anyway?  Wouldn't we want to show multiple links to the same image if they are there
+	//-- the title, notes, or other data could be different
 	$sqlmm = "SELECT ";
 	$sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping where ";
 	$sqlmm .= "mm_gid IN (";

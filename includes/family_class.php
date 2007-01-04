@@ -144,8 +144,9 @@ class Family extends GedcomRecord {
 	 * @return Person
 	 */
 	function &getSpouse(&$person) {
-		if (!is_null($this->wife) && $this->wife->equals($person)) return $this->husb;
-		if (!is_null($this->husb) && $this->husb->equals($person)) return $this->wife;
+		if (is_null($this->wife) or is_null($this->husb)) return null;
+		if ($this->wife->equals($person)) return $this->husb;
+		if ($this->husb->equals($person)) return $this->wife;
 		return null;
 	}
 	
@@ -155,9 +156,10 @@ class Family extends GedcomRecord {
 	 * @return string
 	 */
 	function &getSpouseId($pid) {
-		if (!is_null($this->wife) && $this->wife->getXref()==$pid) return $this->husb->getXref();
-		if (!is_null($this->husb) && $this->husb->getXref()==$pid) return $this->wife->getXref();
-		return false;
+		if (is_null($this->wife) or is_null($this->husb)) return null;
+		if ($this->wife->getXref()==$pid) return $this->husb->getXref();
+		if ($this->husb->getXref()==$pid) return $this->wife->getXref();
+		return null;
 	}
 	
 	/**
@@ -299,8 +301,8 @@ class Family extends GedcomRecord {
 	 * @return boolean true if there is a non-empty divorce record, false if no divorce record exists
 	 */
 	function isDivorced() {
-		$divRec = $this-> getDivorceRecord();
-		return !empty($divRec);
+		// Bypass privacy rules so we can differentiate Spouse from Ex-Spouse
+		return preg_match('/[\r\n]1 DIV( Y)?[\r\n]/', find_gedcom_record($this->xref));
 	}
 
 	/**

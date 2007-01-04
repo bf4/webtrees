@@ -899,7 +899,7 @@ function get_age_at_event($agestring) {
  * @return array		returns an array with indexes "day"=1 "month"=JAN "mon"=1 "year"=2002 "ext" = abt
  */
 function parse_date($datestr) {
-	global $monthtonum;
+	global $monthtonum, $pgv_lang;
 
 	$datestr = trim($datestr);
 	$dates = array();
@@ -910,18 +910,23 @@ function parse_date($datestr) {
 	$dates[0]["ext"] = "";
 	$strs = preg_split("/[\s\.,\-\\/\(\)\[\]\+'<>]+/", $datestr, -1, PREG_SPLIT_NO_EMPTY);
 	$index = 0;
-	$longmonth = array("january"=>"jan", "february"=>"feb", "march"=>"mar",
-	"april"=>"apr", "may"=>"may", "june"=>"jun",
-	"july"=>"jul", "august"=>"aug", "september"=>"sep",
-	"october"=>"oct", "november"=>"nov", "december"=>"dec",
+	$longmonth = array(str2lower($pgv_lang["jan"])=>"jan", str2lower($pgv_lang["feb"])=>"feb", str2lower($pgv_lang["mar"])=>"mar",
+	str2lower($pgv_lang["apr"])=>"apr", str2lower($pgv_lang["may"])=>"may", str2lower($pgv_lang["jun"])=>"jun",
+	str2lower($pgv_lang["jul"])=>"jul", str2lower($pgv_lang["aug"])=>"aug", str2lower($pgv_lang["sep"])=>"sep",
+	str2lower($pgv_lang["oct"])=>"oct", str2lower($pgv_lang["nov"])=>"nov", str2lower($pgv_lang["dec"])=>"dec",
 	// adding french-style year num (e.g. @#DFRENCH R@ 29 PLUV an XI)
 	"an"=>"", "i"=>"1",	"ii"=>"2", "iii"=>"3", "iv"=>"4", "v"=>"5", "vi"=>"6", "vii"=>"7",
-	"viii"=>"8", "ix"=>"9", "x"=>"10", "xi"=>"11", "xii"=>"12", "xiii"=>"13", "xiv"=>"14"
+	"viii"=>"8", "ix"=>"9", "x"=>"10", "xi"=>"11", "xii"=>"12", "xiii"=>"13", "xiv"=>"14",
+	// month abbreviations for the current language
+	str2lower($pgv_lang["january_1st"])=>"jan", str2lower($pgv_lang["february_1st"])=>"feb",str2lower($pgv_lang["march_1st"])=>"mar",
+	str2lower($pgv_lang["april_1st"])=>"apr",str2lower($pgv_lang["may_1st"])=>"may",str2lower($pgv_lang["june_1st"])=>"jun",
+	str2lower($pgv_lang["july_1st"])=>"jul",str2lower($pgv_lang["august_1st"])=>"aug",str2lower($pgv_lang["september_1st"])=>"sep",
+	str2lower($pgv_lang["october_1st"])=>"oct",str2lower($pgv_lang["november_1st"])=>"nov",str2lower($pgv_lang["december_1st"])=>"dec"
 	);
 
 	for($i=0; $i<count($strs); $i++) {
-		if (isset($longmonth[strtolower($strs[$i])])) {
-			$strs[$i] = $longmonth[strtolower($strs[$i])];
+		if (isset($longmonth[str2lower($strs[$i])])) {
+			$strs[$i] = $longmonth[str2lower($strs[$i])];
 		}
 	}
 	if (count($strs)==3) {
@@ -945,17 +950,20 @@ function parse_date($datestr) {
 			else {
 				$dates[$index]["year"] = (int)$strs[$i];
 				$index++;
-				$dates[$index]["day"] = ""; //1;
-				$dates[$index]["month"] = ""; //"JAN";
-				$dates[$index]["mon"] = ""; //1;
-				$dates[$index]["year"] = 0;
-				$dates[$index]["ext"] = "";
+				//-- don't add another date array unless there is more info
+				if (isset($strs[$i+1])) {
+					$dates[$index]["day"] = ""; //1;
+					$dates[$index]["month"] = ""; //"JAN";
+					$dates[$index]["mon"] = ""; //1;
+					$dates[$index]["year"] = 0;
+					$dates[$index]["ext"] = "";
+				}
 			}
 		}
 		else {
-			if (isset($monthtonum[strtolower($strs[$i])])) {
+			if (isset($monthtonum[str2lower($strs[$i])])) {
 				$dates[$index]["month"] = $strs[$i];
-				$dates[$index]["mon"] = $monthtonum[strtolower($strs[$i])];
+				$dates[$index]["mon"] = $monthtonum[str2lower($strs[$i])];
 			}
 			else {
 				if (!isset($dates[$index]["ext"])) $dates[$index]["ext"] = "";
@@ -968,19 +976,24 @@ function parse_date($datestr) {
 	$m = $dates[0]["mon"];
 	$d = $dates[0]["day"];
 	$e = $dates[0]["ext"];
-	if ($e=="AFT") {
+	/**if ($e=="AFT") {
 		if ($m=="") $m=12;
 		if ($d=="") {
 			$d=31;
 			if ($m==4 or $m==6 or $m==9 or $m==11) $d=30;
 			if ($m==2) $d=28;
 		}
+	}**/
+	if (strpos($e, "#")) {
+		if ($m=="") $m=1;
+		if ($d=="") $d=1;
+		if (strpos($e, "#DHEBREW")) list($m, $d, $y) = explode("/", JDToGregorian(JewishToJD($m, $d, $y)));
+		if (strpos($e, "#DFRENCH")) list($m, $d, $y) = explode("/", JDToGregorian(FrenchToJD($m, $d, $y)));
+		if (strpos($e, "#DJULIAN")) list($m, $d, $y) = explode("/", JDToGregorian(JulianToJD($m, $d, $y)));
+	} else {
+		if ($m=="") $m=0;
+		if ($d=="") $d=0;
 	}
-	if ($m=="") $m=1;
-	if ($d=="") $d=1;
-	if (strpos($e, "#DHEBREW")) list($m, $d, $y) = explode("/", JDToGregorian(JewishToJD($m, $d, $y)));
-	if (strpos($e, "#DFRENCH")) list($m, $d, $y) = explode("/", JDToGregorian(FrenchToJD($m, $d, $y)));
-	if (strpos($e, "#DJULIAN")) list($m, $d, $y) = explode("/", JDToGregorian(JulianToJD($m, $d, $y)));
 	$dates[0]["sort"] = sprintf("%04d-%02d-%02d", $y, $m, $d);
 	//print_r($dates);
 	return $dates;

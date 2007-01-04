@@ -3,7 +3,7 @@
  * Controller for the Individual Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005	John Finlay and Others
+ * Copyright (C) 2002 to 2006	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * Page does not validate see line number 1109 -> 15 August 2005
  *
  * @package PhpGedView
  * @subpackage Charts
@@ -71,6 +69,7 @@ class IndividualControllerRoot extends BaseController {
 	var $total_names = 0;
 	var $SEX_COUNT = 0;
 	var $sexarray = array();
+	var $tabarray = array("facts","notes","sources","media","relatives","research","map");
 
 	/**
 	 * constructor
@@ -134,6 +133,16 @@ class IndividualControllerRoot extends BaseController {
 				}
 			}
 		}
+
+		//-- if the action is a research assistant action then default to the RA tab
+		if (strstr($this->action, 'ra_')!==false) $this->default_tab = 5;
+		
+		//-- set the default tab from a request parameter
+		if (isset($_REQUEST['tab'])) {
+			$this->default_tab = $_REQUEST['tab'];
+		}
+		
+		if ($this->default_tab<0 || $this->default_tab>7) $this->default_tab=0;
 
 		$this->indi = new Person($indirec, false);
 
@@ -225,6 +234,15 @@ class IndividualControllerRoot extends BaseController {
 					}
 				}
 			}
+		}
+		
+		//-- handle ajax calls
+		if ($this->action=="ajax") {
+			$tab = 0;
+			if (isset($_REQUEST['tab'])) $tab = $_REQUEST['tab']-1;
+			$this->getTab($tab);
+			//-- only get the requested tab and then exit
+			exit;
 		}
 	}
 	//-- end of init function
@@ -719,8 +737,7 @@ class IndividualControllerRoot extends BaseController {
 			$labels["brother"] = $pgv_lang["halfbrother"];
 		}
 		if ($type=="spouse") {
-			$div_rec = $family->getDivorceRecord();
-			if (!empty($div_rec)) {
+			if ($family->isDivorced()) {
 				$labels["parent"] = $pgv_lang["ex-spouse"];
 				$labels["mother"] = $pgv_lang["ex-wife"];
 				$labels["father"] = $pgv_lang["ex-husband"];
@@ -920,6 +937,773 @@ class IndividualControllerRoot extends BaseController {
 		$people['delchildren'] = $delchildren;
 		return $people;
 	}
+	
+	function getTab($tab) {
+		//var $tabarray = array("facts","notes","sources","media","relatives","research","map");
+		$tabType = $this->tabarray[$tab];
+		switch($tabType) {
+			case "facts":
+				$this->print_facts_tab();
+				break;
+			case "notes":
+				$this->print_notes_tab();
+				break;
+			case "sources":
+				$this->print_sources_tab();
+				break;
+			case "media":
+				$this->print_media_tab();
+				break;
+			case "relatives":
+				$this->print_relatives_tab();
+				break;
+			case "research":
+				$this->print_research_tab();
+				break;
+			case "map":
+				$this->print_map_tab();
+				break;
+			default:
+				print "No tab found";
+				break;
+		}
+	}
+	
+	function print_facts_tab() {
+		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
+		$indifacts = $this->getIndiFacts();
+		?>
+		<table class="facts_table">
+		<?php if (!$this->indi->canDisplayDetails()) {
+			$user = getUser($CONTACT_EMAIL);
+			print "<tr><td class=\"facts_value\" colspan=\"2\">";
+			print_privacy_error($CONTACT_EMAIL);
+			print "</td></tr>";
+		}
+		else {
+			if (count($indifacts)==0) print "<tr><td id=\"no_tab1\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab1"]."</td></tr>\n";
+			print "<tr id=\"row_top\"><td></td><td class=\"descriptionbox rela\">";
+			print "<a href=\"javascript:;\" onclick=\"togglerow('row_rela'); return false;\">";
+			print "<img style=\"display:none;\" id=\"rela_plus\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" />";
+			print "<img id=\"rela_minus\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["hide_details"]."\" title=\"".$pgv_lang["hide_details"]."\" />";
+			print " ".$pgv_lang["relatives_events"];
+			print "</a></td></tr>\n";
+			$yetdied=false;
+			$n_chil=1;
+			$n_gchi=1;
+			foreach ($indifacts as $key => $value) {
+				if (stristr($value[1], "1 DEAT")) $yetdied=true;
+				if (stristr($value[1], "1 BURI")) $yetdied=true;
+				if (preg_match("/1 _PGVFS @(.*)@/", $value[1], $match)>0) {
+					// do not show family events after death
+					if (!$yetdied) {
+						print_fact($value[1],trim($match[1]),$value[0], $this->indi->getGedcomRecord()); ?><?php
+					}
+				}
+				else print_fact($value[1],$this->pid,$value[0], $this->indi->getGedcomRecord());
+				$FACT_COUNT++;
+		//		print_r($value);
+			}
+		}
+		//-- new fact link
+		if ((!$this->isPrintPreview()) && (userCanEdit($this->uname)) && ($this->indi->canDisplayDetails())) {
+			print_add_new_fact($this->pid, $indifacts, "INDI");
+		}
+		?>
+		</table>
+		<br />
+		<?php
+	}
+	
+	function get_note_count() {
+		$notecount=0;
+		$otherfacts = $this->getOtherFacts();
+		foreach ($otherfacts as $key => $factrec) {
+			$ft = preg_match("/\d\s(\w+)(.*)/", $factrec[1], $match);
+			if ($ft>0) $fact = $match[1];
+			else $fact="";
+			$fact = trim($fact);
+			if ($fact=="NOTE") {
+				$notecount++;
+			}
+		}
+		return $notecount;
+	}
+	
+	function print_notes_tab() {
+		global $pgv_lang, $CONTACT_EMAIL, $FACT_COUNT;
+		?>
+		<table class="facts_table">
+		<?php if (!$this->indi->canDisplayDetails()) {
+		   print "<tr><td class=\"facts_value\">";
+		   print_privacy_error($CONTACT_EMAIL);
+		   print "</td></tr>";
+		}
+		else {
+			$notecount=0;
+			$otherfacts = $this->getOtherFacts();
+			foreach ($otherfacts as $key => $factrec) {
+				$ft = preg_match("/\d\s(\w+)(.*)/", $factrec[1], $match);
+				if ($ft>0) $fact = $match[1];
+				else $fact="";
+				$fact = trim($fact);
+				if ($fact=="NOTE") {
+					print_main_notes($factrec[1], 1, $this->pid, $factrec[0]);
+					$notecount++;
+				}
+				$FACT_COUNT++;
+			}
+		   if ($notecount==0) print "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab2"]."</td></tr>\n";
+			//-- New Note Link
+			if (!$this->isPrintPreview() && (userCanEdit($this->uname))&&$this->indi->canDisplayDetails()) {
+			?>
+				<tr>
+					<td class="facts_label"><?php print_help_link("add_note_help", "qm"); ?><?php echo $pgv_lang["add_note_lbl"]; ?></td>
+					<td class="facts_value"><a href="javascript:;" onclick="add_new_record('<?php echo $this->pid; ?>','NOTE'); return false;"><?php echo $pgv_lang["add_note"]; ?></a>
+					<br />
+					</td>
+				</tr>
+			<?php
+			}
+		}
+		?>
+		</table>
+		<br />
+		<?php
+	}
+	
+	function get_source_count() {
+		$sourcecount = 0;
+		$otheritems = $this->getOtherFacts();
+		foreach ($otheritems as $key => $factrec) {
+			$ft = preg_match("/\d\s(\w+)(.*)/", $factrec[1], $match);
+			if ($ft>0) $fact = $match[1];
+			else $fact="";
+			$fact = trim($fact);
+			if ($fact=="SOUR") {
+				$sourcecount++;
+			}
+		}
+		return $sourcecount;
+	}
+	
+	function print_sources_tab() {
+		global $CONTACT_EMAIL, $pgv_lang, $FACT_COUNT;
+		?>
+		<table class="facts_table">
+		<?php	if (!$this->indi->canDisplayDetails()) {
+				print "<tr><td class=\"facts_value\">";
+				print_privacy_error($CONTACT_EMAIL);
+				print "</td></tr>";
+			}
+			else {
+				$sourcecount = 0;
+				$otheritems = $this->getOtherFacts();
+				foreach ($otheritems as $key => $factrec) {
+					$ft = preg_match("/\d\s(\w+)(.*)/", $factrec[1], $match);
+					if ($ft>0) $fact = $match[1];
+					else $fact="";
+					$fact = trim($fact);
+					if ($fact=="SOUR") {
+						$sourcecount++;
+						print_main_sources($factrec[1], 1, $this->pid, $factrec[0]);
+					}
+					$FACT_COUNT++;
+				}
+			   if ($sourcecount==0) print "<tr><td id=\"no_tab3\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab3"]."</td></tr>\n";
+				//-- New Source Link
+				if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+				?>
+					<tr>
+						<td class="facts_label"><?php print_help_link("add_source_help", "qm"); ?><?php echo $pgv_lang["add_source_lbl"]; ?></td>
+						<td class="facts_value">
+						<a href="javascript:;" onclick="add_new_record('<?php echo $this->pid; ?>','SOUR'); return false;"><?php echo $pgv_lang["add_source"]; ?></a>
+						<br />
+						</td>
+					</tr>
+				<?php
+				}
+			}
+			?>
+		</table>
+		<br />
+		<?php
+	}
+	
+	/**
+	 * get the number of media items for this person
+	 * @return int
+	 */
+	function get_media_count() {
+		$ct = preg_match("/\d OBJE/", $this->indi->getGedcomRecord());
+		return $ct;
+	}
+	
+	/**
+	 * print the media tab
+	 */
+	function print_media_tab() {
+		global $CONTACT_EMAIL, $pgv_lang, $MULTI_MEDIA;
+		
+		?>
+		<table class="facts_table">
+		<?php
+		$media_found = false;
+		if (!$this->indi->canDisplayDetails()) {
+			print "<tr><td class=\"facts_value\">";
+			print_privacy_error($CONTACT_EMAIL);
+			print "</td></tr>";
+		}
+		else {
+			$media_found = print_main_media($this->pid, 0, true);
+			if (!$media_found) print "<tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr>\n";
+		
+			//-- New Media link
+			if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+		   	?>
+				<tr>
+					<td class="facts_label"><?php print_help_link("add_media_help", "qm"); ?><?php print $pgv_lang["add_media_lbl"]; ?></td>
+					<td class="facts_value">
+						<a href="javascript:;" onclick="window.open('addmedia.php?action=showmediaform&amp;linktoid=<?php echo $this->pid; ?>', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;"> <?php echo $pgv_lang["add_media"]; ?></a><br />
+						<a href="javascript:;" onclick="window.open('inverselink.php?linktoid=<?php echo $this->pid; ?>&amp;linkto=person', '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1'); return false;"><?php echo $pgv_lang["link_to_existing_media"]; ?></a>
+					</td>
+				</tr>
+			<?php
+		   }
+		}
+		?>
+		</table>
+		<?php
+	}
+	
+	function print_relatives_tab() {
+		global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		$personcount=0;
+		$families = $this->indi->getChildFamilies();
+		if (count($families)==0) {
+			print "<span class=\"subheaders\">".$pgv_lang["relatives"]."</span>";
+			if (/**(!$this->isPrintPreview()) &&**/ (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+				?>
+				<table class="facts_table">
+					<tr>
+						<td class="facts_value"><?php print_help_link("edit_add_parent_help", "qm"); ?><a href="javascript:;" onclick="return addnewparent('<?php print $this->pid; ?>', 'HUSB');"><?php print $pgv_lang["add_father"]; ?></a></td>
+					</tr>
+					<tr>
+						<td class="facts_value"><?php print_help_link("edit_add_parent_help", "qm"); ?><a href="javascript:;" onclick="return addnewparent('<?php print $this->pid; ?>', 'WIFE');"><?php print $pgv_lang["add_mother"]; ?></a></td>
+					</tr>
+				</table>
+				<?php
+			}
+		}
+		//-- parent families
+		foreach($families as $famid=>$family) {
+			?>
+			<table>
+				<tr>
+					<td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]; ?>" border="0" class="icon" alt="" /></td>
+					<td><span class="subheaders"><?php print PrintReady($this->indi->getChildFamilyLabel($family)); ?></span>
+				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
+					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
+				<?php } ?>
+					</td>
+				</tr>
+			</table>
+			<table class="facts_table">
+				<?php
+				//$personcount = 0;
+				$people = $this->buildFamilyList($family, "parents");
+				$styleadd = "";
+				if (isset($people["newhusb"])) {
+					$styleadd = "red";
+					?>
+					<tr>
+						<td class="facts_labelblue"><?php print $people["newhusb"]->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($people["newhusb"]); ?>">
+						<?php print_pedigree_person($people["newhusb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+				}
+				if (isset($people["husb"])) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $people["husb"]->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
+						<?php print_pedigree_person($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+				}
+				else if (!isset($people["newhusb"])) {
+					if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+					?>
+					<tr><td class="facts_label"><?php print $pgv_lang["add_father"]; ?></td>
+					<td class="facts_value"><?php print_help_link("edit_add_parent_help", "qm"); ?> <a href="javascript <?php print $pgv_lang["add_father"]; ?>" onclick="return addnewparentfamily('<?php print $this->pid; ?>', 'HUSB', '<?php print $famid; ?>');"><?php print $pgv_lang["add_father"]; ?></a></td>
+					</tr>
+					<?php
+					}
+				}
+				$styleadd = "";
+				if (isset($people["newwife"])) {
+					$styleadd = "red";
+					?>
+					<tr>
+						<td class="facts_labelblue"><?php print $people["newwife"]->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($people["newwife"]); ?>">
+						<?php print_pedigree_person($people["newwife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+				}
+				if (isset($people["wife"])) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $people["wife"]->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($people["wife"]); ?>">
+						<?php print_pedigree_person($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+				}
+				else if (!isset($people["newwife"])) {
+					if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+						?>
+						<tr><td class="facts_label"><?php print $pgv_lang["add_mother"]; ?></td>
+						<td class="facts_value"><?php print_help_link("edit_add_parent_help", "qm"); ?> <a href="javascript:;" onclick="return addnewparentfamily('<?php print $this->pid; ?>', 'WIFE', '<?php print $famid; ?>');"><?php print $pgv_lang["add_mother"]; ?></a></td>
+						</tr>
+						<?php
+					}
+				}
+				$styleadd = "blue";
+				if (isset($people["newchildren"])) {
+					foreach($people["newchildren"] as $key=>$child) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($child); ?>">
+						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+					}
+				}
+				$styleadd = "";
+				if (isset($people["children"])) {
+					foreach($people["children"] as $key=>$child) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($child); ?>">
+						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+					}
+				}
+				$styleadd = "red";
+				if (isset($people["delchildren"])) {
+					foreach($people["delchildren"] as $key=>$child) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($child); ?>">
+						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+					}
+				}
+				if (isset($family) && (!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+					?>
+					<tr>
+						<td class="facts_label"><?php echo $pgv_lang["add_child_to_family"]; ?></td>
+						<td class="facts_value"><?php print_help_link("add_sibling_help", "qm"); ?>
+							<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>');"><?php print $pgv_lang["add_sibling"]; ?></a>
+							<span style='white-space:nowrap;'>
+								<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>','M');"><?php print "[<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["brother"] . "\" alt=\"" . $pgv_lang["brother"] . "\" class=\"sex_image\" />]"?></a>
+								<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>','F');"><?php print "[<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["sister"] . "\" alt=\"" . $pgv_lang["sister"] . "\" class=\"sex_image\" />]"?></a>
+							</span>
+						</td>
+					</tr>
+					<?php
+				}
+				?>
+			</table>
+		<?php
+		}
+		
+		//-- step families
+		$stepfams = $this->indi->getStepFamilies();
+		foreach($stepfams as $famid=>$family) {
+			?>
+			<table>
+				<tr>
+					<td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]; ?>" border="0" class="icon" alt="" /></td>
+					<td><span class="subheaders"><?php print PrintReady($this->indi->getStepFamilyLabel($family)); ?></span>
+				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
+					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
+				<?php } ?>
+					</td>
+				</tr>
+			</table>
+			<table class="facts_table">
+				<?php
+				//$personcount = 0;
+				$people = $this->buildFamilyList($family, "step");
+				$styleadd = "";
+				if (isset($people["newhusb"])) {
+					$styleadd = "red";
+					?>
+					<tr>
+						<td class="facts_labelblue"><?php print $people["newhusb"]->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($people["newhusb"]); ?>">
+						<?php print_pedigree_person($people["newhusb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+				}
+				if (isset($people["husb"])) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $people["husb"]->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
+						<?php print_pedigree_person($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+				}
+				$styleadd = "";
+				if (isset($people["newwife"])) {
+					$styleadd = "red";
+					?>
+					<tr>
+						<td class="facts_labelblue"><?php print $people["newwife"]->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($people["newwife"]); ?>">
+						<?php print_pedigree_person($people["newwife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+				}
+				if (isset($people["wife"])) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $people["wife"]->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($people["wife"]); ?>">
+						<?php print_pedigree_person($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+				}
+				$styleadd = "blue";
+				if (isset($people["newchildren"])) {
+					foreach($people["newchildren"] as $key=>$child) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($child); ?>">
+						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+					}
+				}
+				$styleadd = "";
+				if (isset($people["children"])) {
+					foreach($people["children"] as $key=>$child) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($child); ?>">
+						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+					}
+				}
+				$styleadd = "red";
+				if (isset($people["delchildren"])) {
+					foreach($people["delchildren"] as $key=>$child) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($child); ?>">
+						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+					}
+				}
+				if (isset($family) && ($this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+					?>
+					<tr>
+						<td class="facts_label"><?php echo $pgv_lang["add_child_to_family"]; ?></td>
+						<td class="facts_value"><?php print_help_link("add_sibling_help", "qm"); ?>
+							<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>');"><?php print $pgv_lang["add_sibling"]; ?></a>
+						</td>
+					</tr>
+					<?php
+				}
+				?>
+			</table>
+		<?php
+		}
+		
+		//-- spouses and children
+		$families = $this->indi->getSpouseFamilies();
+		foreach($families as $famid=>$family) {
+			?>
+			<table>
+				<tr>
+					<td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]; ?>" border="0" class="icon" alt="" /></td>
+					<td><span class="subheaders"><?php print PrintReady($this->indi->getSpouseFamilyLabel($family)); ?></span>
+				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
+					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
+				<?php } ?>
+					</td>
+				</tr>
+			</table>
+			<table class="facts_table">
+				<?php
+				//$personcount = 0;
+				$people = $this->buildFamilyList($family, "spouse");
+				$styleadd = "";
+				if ($this->indi->equals($people["husb"])) $spousetag = 'WIFE';
+				else $spousetag = 'HUSB';
+				if (isset($people["newhusb"])) {
+					$styleadd = "red";
+					?>
+					<tr>
+						<td class="facts_labelblue"><?php print $people["newhusb"]->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($people["newhusb"]); ?>">
+						<?php print_pedigree_person($people["newhusb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+				}
+				if (isset($people["husb"])) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $people["husb"]->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($people["husb"]); ?>">
+						<?php print_pedigree_person($people["husb"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+				}
+				$styleadd = "";
+				if (isset($people["newwife"])) {
+					$styleadd = "red";
+					?>
+					<tr>
+						<td class="facts_labelblue"><?php print $people["newwife"]->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($people["newwife"]); ?>">
+						<?php print_pedigree_person($people["newwife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+				}
+				if (isset($people["wife"])) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $people["wife"]->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($people["wife"]); ?>">
+						<?php print_pedigree_person($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+				}
+				if ($spousetag=="WIFE" && !isset($people["newwife"]) && !isset($people["wife"])) {
+					if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+						?>
+						<tr><td class="facts_label"><?php print $pgv_lang["add_wife"]; ?></td>
+						<td class="facts_value"><a href="javascript:;" onclick="return addnewspouse('<?php print $famid; ?>', 'WIFE');"><?php print $pgv_lang["add_wife_to_family"]; ?></a></td>
+						</tr>
+						<?php
+					}
+				}
+				if ($spousetag=="HUSB" && !isset($people["newhusb"]) && !isset($people["husb"])) {
+					if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+						?>
+						<tr><td class="facts_label"><?php print $pgv_lang["add_husb"]; ?></td>
+						<td class="facts_value"><a href="javascript:;" onclick="return addnewspouse('<?php print $famid; ?>', 'HUSB');"><?php print $pgv_lang["add_husb_to_family"]; ?></a></td>
+						</tr>
+						<?php
+					}
+				}
+				$styleadd = "blue";
+				if (isset($people["newchildren"])) {
+					foreach($people["newchildren"] as $key=>$child) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($child); ?>">
+						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+					}
+				}
+				$styleadd = "";
+				if (isset($people["children"])) {
+					foreach($people["children"] as $key=>$child) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($child); ?>">
+						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+					}
+				}
+				$styleadd = "red";
+				if (isset($people["delchildren"])) {
+					foreach($people["delchildren"] as $key=>$child) {
+					?>
+					<tr>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
+						<td class="<?php print $this->getPersonStyle($child); ?>">
+						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
+						</td>
+					</tr>
+					<?php
+					}
+				}
+				if (isset($family) && (!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+					?>
+					<tr>
+						<td class="facts_label"><?php echo $pgv_lang["add_child_to_family"]; ?></td>
+						<td class="facts_value"><?php print_help_link("add_son_daughter_help", "qm"); ?>
+							<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>');"><?php print $pgv_lang["add_son_daughter"]; ?></a>
+							<span style='white-space:nowrap;'>
+								<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>','M');"><?php print "[<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["son"] . "\" alt=\"" . $pgv_lang["son"] . "\" class=\"sex_image\" />]"?></a>
+								<a href="javascript:;" onclick="return addnewchild('<?php print $family->getXref(); ?>','F');"><?php print "[<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["daughter"] . "\" alt=\"" . $pgv_lang["daughter"] . "\" class=\"sex_image\" />]"?></a>
+							</span>
+						</td>
+					</tr>
+					<?php
+				}
+				?>
+			</table>
+		<?php
+		}
+		if ($personcount==0) print "<table><tr><td id=\"no_tab5\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab5"]."</td></tr></table>\n";
+		?>
+		<br />
+		<?php
+		if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+		?>
+		<table class="facts_table">
+		<?php if (count($families)>1) { ?>
+			<tr>
+				<td class="facts_value">
+				<?php print_help_link("reorder_families_help", "qm"); ?>
+				<a href="javascript:;" onclick="return reorder_families('<?php print $this->pid; ?>');"><?php print $pgv_lang["reorder_families"]; ?></a>
+				</td>
+			</tr>
+		<?php } ?>
+			<tr>
+				<td class="facts_value">
+				<?php print_help_link("link_child_help", "qm"); ?>
+				<a href="javascript:;" onclick="return add_famc('<?php print $this->pid; ?>');"><?php print $pgv_lang["link_as_child"]; ?></a>
+				</td>
+			</tr>
+			<?php if ($this->indi->getSex()!="F") { ?>
+			<tr>
+				<td class="facts_value">
+				<?php print_help_link("add_wife_help", "qm"); ?>
+				<a href="javascript:;" onclick="return addspouse('<?php print $this->pid; ?>','WIFE');"><?php print $pgv_lang["add_new_wife"]; ?></a>
+				</td>
+			</tr>
+			<tr>
+				<td class="facts_value">
+				<?php print_help_link("link_new_wife_help", "qm"); ?>
+				<a href="javascript:;" onclick="return linkspouse('<?php print $this->pid; ?>','WIFE');"><?php print $pgv_lang["link_new_wife"]; ?></a>
+				</td>
+			</tr>
+			<tr>
+				<td class="facts_value">
+				<?php print_help_link("link_new_husband_help", "qm"); ?>
+				<a href="javascript:;" onclick="return add_fams('<?php print $this->pid; ?>','HUSB');"><?php print $pgv_lang["link_as_husband"]; ?></a>
+				</td>
+			</tr>
+		   <?php }
+			if ($this->indi->getSex()!="M") { ?>
+			<tr>
+				<td class="facts_value">
+				<?php print_help_link("add_husband_help", "qm"); ?>
+				<a href="javascript:;" onclick="return addspouse('<?php print $this->pid; ?>','HUSB');"><?php print $pgv_lang["add_new_husb"]; ?></a>
+				</td>
+			</tr>
+			<tr>
+				<td class="facts_value">
+				<?php print_help_link("link_new_husband_help", "qm"); ?>
+				<a href="javascript:;" onclick="return linkspouse('<?php print $this->pid; ?>','HUSB');"><?php print $pgv_lang["link_new_husb"]; ?></a>
+				</td>
+			</tr>
+			<tr>
+				<td class="facts_value">
+				<?php print_help_link("link_wife_help", "qm"); ?>
+				<a href="javascript:;" onclick="return add_fams('<?php print $this->pid; ?>','WIFE');"><?php print $pgv_lang["link_as_wife"]; ?></a>
+				</td>
+			</tr>
+			<?php } if (userGedcomAdmin($this->uname)) { ?>
+			<tr>
+				<td class="facts_value">
+				<?php print_help_link("link_remote_help", "qm"); ?>
+				<a href="javascript:;" onclick="return open_link_remote('<?php print $this->pid; ?>');"><?php print $pgv_lang["link_remote"]; ?></a>
+		    	</td>
+		    </tr>
+		    <?php } ?>
+		</table>
+		<?php } ?>
+		<br />
+		<?php
+	}
+	
+	function print_research_tab() {
+		global $pgv_lang, $SHOW_RESEARCH_ASSISTANT, $CONTACT_EMAIL, $GEDCOM, $INDEX_DIRECTORY, $factarray, $templefacts, $nondatefacts, $nonplacfacts;
+		global $LANGUAGE, $lang_short_cut;
+		if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel())) {
+			if (!$this->indi->canDisplayDetails()) { ?>
+				<table class="facts_table">
+			    <tr><td class="facts_value">
+			    <?php print_privacy_error($CONTACT_EMAIL); ?>
+			    </td></tr>
+			    </table>
+			    <br />
+			<?php
+			}
+			else {
+			   include_once('modules/research_assistant/research_assistant.php');
+			   $mod = new ra_functions();
+			   $mod->init();
+			   $out = $mod->tab($this->indi);
+			   print $out;
+			}
+		}
+		else print "<table class=\"facts_table\"><tr><td id=\"no_tab6\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab6"]."</td></tr></table>\n";
+	}
+	
+	function print_map_tab() {
+		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $pgv_lang, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_language;
+		global $LANGUAGE;
+		global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOON, $GOOGLEMAP_MAX_ZOON, $GEDCOM;
+	    global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
+	    global $GOOGLEMAP_MAX_ZOOM, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_ENABLED, $TBLPREFIX, $DBCONN;
+	    global $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE;
+
+			            include_once('modules/googlemap/googlemap.php');
+	    
+		                $famids = array();
+		                $families = $this->indi->getSpouseFamilies();
+		                foreach($families as $famid=>$family) {
+		                    $famids[] = $family->getXref();
+		                }
+		                if (build_indiv_map($this->getIndiFacts(), $famids) == 0) {
+            print "<table><tr><td id=\"no_tab7\" colspan=\"2\"></td></tr></table>\n";
+		                }
+				}
 }
 // -- end of class
 //-- load a user extended class if one exists
