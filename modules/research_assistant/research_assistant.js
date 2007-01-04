@@ -5,11 +5,11 @@
  	}
 
 
- 	function search_selector(){
+ 	function search_selector(pid){
 		frm = document.selector;
 
-		var oXmlHttp = createXMLHttp();
-		oXmlHttp.open('get', 'module.php?mod=research_assistant&action=load_search_plugin&plugin='+ frm.cbosite.options[frm.cbosite.selectedIndex].value + '&pid=".$person->getXref()."', true);
+		var oXmlHttp = createXMLHttp();		
+		oXmlHttp.open('get', 'module.php?mod=research_assistant&action=load_search_plugin&plugin='+ frm.cbosite.options[frm.cbosite.selectedIndex].value + '&pid='+pid, true);
 		oXmlHttp.onreadystatechange=function()
 		{
   			if (oXmlHttp.readyState==4)
@@ -22,11 +22,11 @@
     }
 	
 
-	function editcomment(commentid) {
-  		window.open('editcomment.php?pid=".$person->getXref()."&ucommentid='+commentid, '', 'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');
+	function editcomment(commentid, pid) {
+  		window.open('editcomment.php?pid='+pid+'&ucommentid='+commentid, '', 'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');
   	}
-	function confirm_prompt(text, commentid) {
+	function confirm_prompt(text, commentid, pid) {
     	if (confirm(text)) {
-      		window.location = 'individual.php?pid=".$person->getXref()."&action=delete_comment&uc_id='+commentid;
+      		window.location = 'individual.php?pid='+pid+'&action=delete_comment&uc_id='+commentid+'&tab=5';
     	}
     }
