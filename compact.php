@@ -374,7 +374,9 @@ function print_td_person($n) {
 function print_arrow_person($n, $arrow_dir) {
 	global $treeid;
 	global $view, $showids, $showthumbs;
-	global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $pgv_lang, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
+
+	$pid = $treeid[$n];
 
 	$arrow_swap = array("l"=>"0", "r"=>"1", "u"=>"2", "d"=>"3");
 
@@ -383,10 +385,15 @@ function print_arrow_person($n, $arrow_dir) {
 		if ($arrow_dir=="l") $arrow_dir="r";
 		else if ($arrow_dir=="r") $arrow_dir="l";
 	}
-	$arrow_img = "<img id='arrow$n' src='".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$arrow_dir."arrow"]["other"]."' border='0' align='middle' alt='' />";
+	if ($TEXT_DIRECTION=="ltr") {
+		$title = $pgv_lang["compact_chart"].": ".$pid;
+	} else {
+		$title = $pid." :".$pgv_lang["compact_chart"];
+	}
+	$arrow_img = "<img id='arrow$n' src='".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$arrow_dir."arrow"]["other"]."' border='0' align='middle' alt='$title' title='$title' />";
+	$hideArrow = "<img id='arrow$n' src='".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$arrow_dir."arrow"]["other"]."' border='0' align='middle' alt='$title' title='$title' style='visibility:hidden;' />";
 
 	$text = "";
-	$pid = $treeid[$n];
 	if ($pid) {
 		$text .= "<a href=\"?rootid=".$pid;
 		if ($showids) $text .="&amp;showids=".$showids;
@@ -396,7 +403,7 @@ function print_arrow_person($n, $arrow_dir) {
 		$text .= $arrow_img."</a>";
 	}
 	// -- arrow to empty box does not have a url attached.
-	else $text = $arrow_img;
+	else $text = $hideArrow;
 	print $text;
 }
 ?>
