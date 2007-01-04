@@ -154,7 +154,7 @@ $pgv_lang["disabled"]			= "Disabled";
 $pgv_lang["mouseover"]			= "On Mouse Over";
 $pgv_lang["mousedown"]			= "On Mouse Down";
 $pgv_lang["click"]			= "On Mouse Click";
-$pgv_lang["enter_db_pass"]		= "For security, you must enter the #pgv_lang[DBUSER]# and #pgv_lang[DBPASS]# before changing configuration values.";
+$pgv_lang["enter_db_pass"]		= "For security, you must always enter the #pgv_lang[DBUSER]# and #pgv_lang[DBPASS]# when changing any configuration values.";
 $pgv_lang["server_url_note"]	= "This should be the URL to your PhpGedView folder.  You should only change this setting if you are sure you know what you are doing.  PhpGedView has determined this value to be <b>#GUESS_URL#</b>";
 
 $pgv_lang["DBTYPE"]			= "Database Type";
@@ -377,8 +377,8 @@ $pgv_lang["ENABLE_RSS"]				= "Enable RSS";
 $pgv_lang["ENABLE_RSS_help"]		= "~#pgv_lang[ENABLE_RSS]#~<br /><br />This option lets you disable the RSS feature.<br /><br />RSS lets users monitor your site for changes to the Index page without actually visiting your site periodically.  If too many users make use of this feature or if the refresh frequency set by these users is too high, RSS can use up too much bandwidth or server capacity.<br />";
 $pgv_lang["RSS_FORMAT"]				= "RSS Format";
 $pgv_lang["RSS_FORMAT_help"]		= "~#pgv_lang[RSS_FORMAT]#~<br /><br />The format of RSS to be used as the default RSS feed format for the site. The numeric suffixes <u>do not</u> indicate version, they identify formats.  For example, RSS 2.0 is not newer than RSS 1.0, but a different format. Feed readers should be able to read any format. There is currently no difference between ATOM and ATOM 0.3. Both use the ATOM 0.3 draft specification.<br />";
-$pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE"] = "Check if GEDCOMS are downloadable";
-$pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE_help"] = "~#pgv_lang[SECURITY_CHECK_GEDCOM_DOWNLOADABLE]#~<br /><br />For security reasons, the GEDCOM file should not be in a location where it can be directly downloaded, thus bypassing privacy checks. Clicking this link will check if your GEDCOMS can be downloaded over the network.<br /><br />On some systems this check has been known to take a really long time or not even complete.  If that is the case for you, then you should try to point your browser directly at your GEDCOM to see if it can be downloaded.<br />";
+$pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE"] = "Check if GEDCOM files are downloadable";
+$pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE_help"] = "~#pgv_lang[SECURITY_CHECK_GEDCOM_DOWNLOADABLE]#~<br /><br />For security reasons, GEDCOM files should not be in a location where they can be directly downloaded, thus bypassing privacy checks. Clicking this link will check if your GEDCOM files can be downloaded over the network.<br /><br />On some systems this check has been known to take a really long time or not even complete.  If that is the case for you, then you should try to point your browser directly at your GEDCOM to see if it can be downloaded.<br />";
 $pgv_lang["gedcom_download_secure"]	= "#GEDCOM# cannot be downloaded.";
 
 $pgv_lang["welcome_new2"]			= "<br /><br />Since you are seeing this page, you have successfully installed PhpGedView on your server and are ready to begin configuring it to your requirements.<br /><br />";
@@ -620,6 +620,7 @@ $pgv_lang["um_bu_gedcoms"] = "GEDCOM Files";
 $pgv_lang["um_bu_gedsets"] = "GEDCOM Settings, Configuration and Privacy files";
 $pgv_lang["um_bu_logs"] = "GEDCOM Counters, SearchLogs and PhpGedView Logfiles";
 $pgv_lang["um_bu_usinfo"] = "User definitions, Block settings, Favorites, Messages, News";
+$pgv_lang["um_bu_media"]	= "Media files";
 $pgv_lang["um_mk_bu"] = "Make Backup";
 $pgv_lang["um_nofiles"] = "No files found for backup.";
 $pgv_lang["um_files_exist"] = "One or more files already exist. Do you want to overwrite them?";

@@ -211,7 +211,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN;
       		<td class="optionbox">
       			<?php
       				// get title, given taskid
-      				print '<input type="text" name="title" value="'.PrintReady($task['t_title']).'" size="50"/>';
+      				print '<input type="text" name="title" value="'.PrintReady(htmlspecialchars(stripslashes($task['t_title']))).'" size="50"/>';
       			?>
       		</td>
 <!--FOLDER-->
@@ -256,7 +256,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN;
 	      		<?php
 	      			// get description, given taskid
 	      			print '<textarea name="desc" rows="3" cols="55">';
-	      			print PrintReady($task['t_description']);
+	      			print PrintReady(htmlspecialchars(stripslashes($task['t_description'])));
 	      			print '</textarea>';
 	      		?>
 	      	</td>
@@ -335,7 +335,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN;
                    		?>
                    </div>
                    <input type="hidden" id="personid" name="personid" size="3" value="<?php print $pval; ?>" />
-                     <?php print_findindi_link("personid", "peoplelink"); ?>
+                     <?php print_findindi_link("personid", "peoplelink",false,true,'',''); ?>
                     <br />
             </td>
         </tr>

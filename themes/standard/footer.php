@@ -1,8 +1,6 @@
 <?php
 if (!isset($without_close)) print "</div> <!-- closing div id=\"content\" -->\n";//FIXME uncomment as soon as ready
-?>
-</td></tr></table>
-<?php
+
 print "<div id=\"footer\" class=\"$TEXT_DIRECTION\">";
 
 print_contact_links();

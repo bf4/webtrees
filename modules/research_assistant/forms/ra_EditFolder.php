@@ -114,8 +114,26 @@ class ra_editfolder extends ra_form {
                 // Finish up
 				$out.='</select></td></tr>';
 				$out.='<tr><td class="optionbox">'.$pgv_lang['Folder_Description:'].'</td><td class="descriptionbox"><textarea name="folderDescription" cols="50" rows="10">'.PrintReady(stripslashes($fr_description)).'</textarea></td></tr>';
-				$out.='<tr><td colspan="2"><input type="submit" value="'.$pgv_lang['add'].'" /><input type="button" value="Delete" onclick="window.location=\'module.php?mod=research_assistant&amp;action=deletefolder&amp;folderid='.$fr_id.'\';" /><input type="reset" value="Reset"/></td></tr>';
-				$out.='</table></form>';
+				$out.='<tr><td colspan="2"><input type="submit" value="'.$pgv_lang['add'].'" />';
+				//if task or folders exist inside this folder do not show the delete button
+				$hastasks = ra_functions::folder_hastasks($fr_id);
+				$hasfolders = ra_functions::folder_hasfolders($fr_id);
+				$errormsg = "";
+				if($hastasks)
+				{
+					if($hasfolders){
+					$out.='<input type="button" value="'.$pgv_lang["delete"].'" onclick="window.location=\'module.php?mod=research_assistant&amp;action=deletefolder&amp;folderid='.$fr_id.'\';" />';
+					}
+					else{
+						$errormsg = $pgv_lang["has_folders"];
+					}				
+				}
+				else{
+					$errormsg = $pgv_lang["has_tasks"];
+				}
+				$out.='<input type="reset" value="Reset"/>';
+				$out.='<span class="error">'.$errormsg.'</span>';
+				$out.='</td></tr></table></form>';
 		return $out;
  	}
 

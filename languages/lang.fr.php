@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  Christophe Bx, Julien Damon
+ * Copyright (C) 2002 to 2006  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ $pgv_lang["random_media_start_slide"]   = "Démarrer le diaporama au chargement 
 $pgv_lang["random_media_ajax_controls"] = "Afficher les contrôles AJAX ?";
 $pgv_lang["description"]                = "Description";
 $pgv_lang["current_dir"]                = "Répertoire actif: ";
-$pgv_lang["SHOW_ID_NUMBERS"]            = "Afficher le code des enregistrements GEDCOM (exemple: F234)";
+$pgv_lang["SHOW_ID_NUMBERS"]            = "Afficher le code GEDCOM";
 $pgv_lang["SHOW_HIGHLIGHT_IMAGES"]      = "Afficher les miniatures des individus";
 $pgv_lang["view_img_details"]           = "Voir les détails de l'image";
 $pgv_lang["server_folder"]              = "Nom du dossier sur le serveur";
@@ -82,7 +82,7 @@ $pgv_lang["search_general"]             = "Recherche générale";
 $pgv_lang["clipping_privacy"]           = "Respect de la vie privée : certains enregistrements n'ont pu être ajoutés";
 $pgv_lang["chart_new"]                  = "Arbre de la famille";
 $pgv_lang["loading"]                    = "Chargement...";
-#pgv_lang["clear_chart"]                = "Clear Chart";
+$pgv_lang["clear_chart"]                = "Effacer tout";
 $pgv_lang["file_information"]           = "Informations du fichier";
 $pgv_lang["choose_file_type"]           = "Type du fichier";
 $pgv_lang["add_individual_by_id"]       = "Ajout d'individus par leur code";
@@ -199,7 +199,7 @@ $pgv_lang["htmlplus_block_content"]     = "Contenu";
 #pgv_lang["htmlplus_block_narrative"]   = "Narrative style (English only)";
 $pgv_lang["htmlplus_block_custom"]      = "Personnalisé";
 #pgv_lang["htmlplus_block_keyword"]     = "Keyword Examples (English only)";
-$pgv_lang["htmlplus_block_taglist"]     = "Liste de Tags";
+$pgv_lang["htmlplus_block_taglist"]     = "Liste de balises";
 $pgv_lang["htmlplus_block_compat"]      = "Compatibilité";
 $pgv_lang["htmlplus_block_current"]     = "Courant";
 $pgv_lang["htmlplus_block_default"]     = "Défaut";
@@ -291,6 +291,7 @@ $pgv_lang["hide_context_help"]          = "Masquer l'aide contextuelle";
 $pgv_lang["sorry"]                      = "<b>Désolé, texte d'aide non disponible</b>";
 $pgv_lang["help_not_exist"]             = "<b>Texte d'aide non disponible</b>";
 $pgv_lang["var_not_exist"]              = "<span style=font-weight: bold>Variable langue non trouvée. Merci de signaler cette erreur.</span>";
+$pgv_lang["resolution"]                 = "Résolution de l'écran";
 $pgv_lang["menu"]                       = "Menu";
 $pgv_lang["header"]                     = "Bandeau";
 $pgv_lang["imageview"]                  = "Afficheur d'images";
@@ -476,8 +477,9 @@ $pgv_lang["view_person"]                = "Afficher la personne";
 $pgv_lang["view_family"]                = "Afficher la famille";
 $pgv_lang["view_source"]                = "Afficher la source";
 $pgv_lang["view_object"]                = "Afficher l'objet";
-$pgv_lang["prev"]                       = "&lt; Précédent";
-$pgv_lang["next"]                       = "Suivant &gt;";
+$pgv_lang["prev"]                       = "Précédent";
+$pgv_lang["next"]                       = "Suivant";
+$pgv_lang["next_image"]                 = "Image suivante";
 $pgv_lang["file_not_found"]             = "Fichier non trouvé";
 $pgv_lang["medialist_show"]             = "Afficher";
 $pgv_lang["per_page"]                   = "Objets MultiMedia par page";
@@ -490,7 +492,7 @@ $pgv_lang["record_not_updated"]         = "Impossible de mettre à jour l'enregi
 $pgv_lang["record_removed"]             = "Enregistrement #xref# supprimé du fichier GEDCOM.";
 $pgv_lang["record_not_removed"]         = "Impossible de supprimer l'enregistrement #xref# du fichier GEDCOM.";
 $pgv_lang["record_added"]               = "Enregistrement #xref# ajouté au fichier GEDCOM.";
-$pgv_lang["record_not_added"]           = "Impossible d'ajouter l'enregistrementRecord #xref# au fichier GEDCOM.";
+$pgv_lang["record_not_added"]           = "Impossible d'ajouter l'enregistrement #xref# au fichier GEDCOM.";
 
 //-- SEARCH FILE MESSAGES
 $pgv_lang["soundex_search"]             = "Recherche phonétique du nom (méthode SOUNDEX)";
@@ -667,9 +669,9 @@ $pgv_lang["show_path"]                  = "Voir le chemin";
 $pgv_lang["line_up_generations"]        = "Aligner par génération";
 $pgv_lang["oldest_top"]                 = "Afficher les parents en haut";
 
-// %1$s replaced by first person, %2$s by the relationship and %3$s by the second person.
-$pgv_lang["relationship_male_1_is_the_2_of_3"]= '%1$s est le %2$s de %3$s.';
-$pgv_lang["relationship_female_1_is_the_2_of_3"]= '%1$s est la %2$s de %3$s.';
+// %1\$s replaced by first person, %2\$s by the relationship and %3\$s by the second person.
+$pgv_lang["relationship_male_1_is_the_2_of_3"]= "%1\$s est le %2\$s de %3\$s.";
+$pgv_lang["relationship_female_1_is_the_2_of_3"]= "%1\$s est la %2\$s de %3\$s.";
 
 $pgv_lang["mother_in_law"]              = "belle-mère";
 $pgv_lang["father_in_law"]              = "beau-père";
@@ -692,11 +694,11 @@ $pgv_lang["bosa_brothers_offspring_5"]  = "petite-nièce";     // brother's son'
 $pgv_lang["bosa_brothers_offspring_6"]  = "petit-neveu";       // brother's daughter's son
 $pgv_lang["bosa_brothers_offspring_7"]  = "petite-nièce";     // brother's daughter's daughter
 // for the general case of offspring of the nth generation use the text below
-// in this text %1$d is replaced with the number of generations
-//              %2$d is replaced with the number of generations - 1
-//              %3$d is replaced with the number of generations - 2
-$pgv_lang["n_x_brothers_son"]           = '%2$d x arrière petit-neveu';
-$pgv_lang["n_x_brothers_daughter"]      = '%2$d x arrière petite-nièce';
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_brothers_son"]           = "%2\$d x arrière petit-neveu";
+$pgv_lang["n_x_brothers_daughter"]      = "%2\$d x arrière petite-nièce";
 // the bosa_sisters_offspring name is used for sisters nephews and nieces - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
@@ -708,11 +710,11 @@ $pgv_lang["bosa_sisters_offspring_5"]   = "petite-nièce";        // sister's so
 $pgv_lang["bosa_sisters_offspring_6"]   = "petit-neveu";       // sister's daughter's son
 $pgv_lang["bosa_sisters_offspring_7"]   = "petite-nièce";        // sister's daughter's daughter
 // for the general case of offspring of the nth generation use the text below
-// in this text %1$d is replaced with the number of generations
-//              %2$d is replaced with the number of generations - 1
-//              %3$d is replaced with the number of generations - 2
-$pgv_lang["n_x_sisters_son"]            = '%2$d x arrière petit-neveu';
-$pgv_lang["n_x_sisters_daughter"]       = '%2$d x arrière petite-nièce';
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_sisters_son"]            = "%2\$d x arrière petit-neveu";
+$pgv_lang["n_x_sisters_daughter"]       = "%2\$d x arrière petite-nièce";
 
 // the bosa name is used for offspring - the names below can be extended to any number
 // of generations just by adding more translations.
@@ -734,13 +736,13 @@ $pgv_lang["bosa_13"]                    = "arrière petite-fille";   // daughter
 $pgv_lang["bosa_14"]                    = "arrière petit-fils";	// daughter's daughters son
 $pgv_lang["bosa_15"]                    = "arrière petite-fille";   // daughter's daughters daughter
 // for the general case of offspring of the nth generation use the text below
-// in this text %1$d is replaced with the number of generations
-//              %2$d is replaced with the number of generations - 1
-//              %3$d is replaced with the number of generations - 2
-$pgv_lang["n_x_grandson_from_son"]      = '%3$d x arrière petit-fils';
-$pgv_lang["n_x_granddaughter_from_son"] = '%3$d x arrière petite-fille';
-$pgv_lang["n_x_grandson_from_daughter"] = '%3$d x arrière petit-fils';
-$pgv_lang["n_x_granddaughter_from_daughter"]= '%3$d x arrière petite-fille';
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_grandson_from_son"]      = "%3\$d x arrière petit-fils";
+$pgv_lang["n_x_granddaughter_from_son"] = "%3\$d x arrière petite-fille";
+$pgv_lang["n_x_grandson_from_daughter"] = "%3\$d x arrière petit-fils";
+$pgv_lang["n_x_granddaughter_from_daughter"]= "%3\$d x arrière petite-fille";
 
 // the sosa_uncle name is used for uncles - the names below can be extended to any number
 // of generations just by adding more translations.
@@ -755,11 +757,11 @@ $pgv_lang["sosa_uncle_5"]               = "grand-oncle";      // fathers mothers
 $pgv_lang["sosa_uncle_6"]               = "grand-oncle";      // mothers fathers brother
 $pgv_lang["sosa_uncle_7"]               = "grand-oncle";      // mothers mothers brother
 // for the general case of uncles of the nth degree use the text below
-// in this text %1$d is replaced with the number of generations
-//              %2$d is replaced with the number of generations - 1
-//              %3$d is replaced with the number of generations - 2
-$pgv_lang["n_x_paternal_uncle"]         = '%2$d x arrière grand-oncle';
-$pgv_lang["n_x_maternal_uncle"]         = '%2$d x arrière grand-oncle';
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_uncle"]         = "%2\$d x arrière grand-oncle";
+$pgv_lang["n_x_maternal_uncle"]         = "%2\$d x arrière grand-oncle";
 
 // the sosa_aunt name is used for aunts - the names below can be extended to any number
 // of generations just by adding more translations.
@@ -774,11 +776,11 @@ $pgv_lang["sosa_aunt_5"]                = "grand-tante";      // fathers mothers
 $pgv_lang["sosa_aunt_6"]                = "grand-tante";      // mothers fathers sister
 $pgv_lang["sosa_aunt_7"]                = "grand-tante";      // mothers mothers sister
 // for the general case of aunts of the nth degree use the text below
-// in this text %1$d is replaced with the number of generations
-//              %2$d is replaced with the number of generations - 1
-//              %3$d is replaced with the number of generations - 2
-$pgv_lang["n_x_paternal_aunt"]          = '%2$d x ';
-$pgv_lang["n_x_maternal_aunt"]          = '%2$d x ';
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_aunt"]          = "%2\$d x ";
+$pgv_lang["n_x_maternal_aunt"]          = "%2\$d x ";
 
 // if a specific cousin relationship cannot be represented in a language translate as "";
 $pgv_lang["male_cousin_1"]              = "cousin germain";
@@ -991,6 +993,10 @@ $pgv_lang["welcome_text_cust_head"]     =	"<b>BIENVENUE</b><br /><br />L'accès 
 $pgv_lang["upcoming_events"]            = "Prochains anniversaires";
 $pgv_lang["living_or_all"]              = "Voir seulement les personnes vivantes ?";
 $pgv_lang["basic_or_all"]               = "Voir seulement Naissances, Mariages et Décès ?";
+$pgv_lang["style"]                      = "Style de présentation";
+$pgv_lang["style1"]                     = "Texte";
+#pgv_lang["style2"]                     = "Table";
+$pgv_lang["cal_download"]               = "Afficher le bouton de téléchargement des évènements au format hcal ?";
 $pgv_lang["no_events_living"]           = "Aucun évènement pour une personne vivante dans les #pgv_lang[global_num1]# prochains jours.";
 $pgv_lang["no_events_living1"]          = "Aucun évènement pour une personne vivante pour demain.";
 $pgv_lang["no_events_all"]              = "Aucun évènement dans les #pgv_lang[global_num1]# prochains jours.";
@@ -1144,21 +1150,7 @@ $pgv_lang["use_blocks_for_default"]     = "Utiliser ce bloc par défaut pour tou
 $pgv_lang["block_not_configure"]        =	"Ce bloc ne peut pas être configuré.";
 
 //-- validate GEDCOM
-$pgv_lang["changed_mac"]                = "Format fin de ligne Macintosh détecté. [CR] sera changé en [CR+LF].";
-$pgv_lang["changed_places"]             = "Mauvais codage des noms de lieux. Ils doivent suivre la norme GEDCOM 5.5. Un exemple issu de votre fichier";
-$pgv_lang["optional_tools"]             = "Vous pouvez lancer les utilitaires suivants avant d'importer le fichier.";
-$pgv_lang["optional"]                   = "Utilitaires";
 $pgv_lang["add_media_tool"]             = "Utilitaire «Ajout media»";
-$pgv_lang["launch_media_tool"]          = "Lancement de l'utilitaire «Ajout media»";
-$pgv_lang["add_media_descr"]            = "Cet utilitaire va ajouter le media OBJE au fichier GEDCOM.  Fermer cette fenêtre après l'opération.";
-$pgv_lang["extension"]                  = "Extension";
-$pgv_lang["order"]                      = "Ordre";
-$pgv_lang["inject_media_tool"]          = "Ajouter un objet MultiMedia au fichier GEDCOM";
-$pgv_lang["media_table_created"]        = "Table <i>media</i> mise à jour.";
-$pgv_lang["click_to_add_media"]         = "Ajouter les objets MultiMedia suivants au fichier GEDCOM #GEDCOM#";
-$pgv_lang["adds_completed"]             = "Objet MultiMedia ajouté au fichier GEDCOM.";
-$pgv_lang["import_options_help"]        = "Vous pouvez sélectionner des options additionelles pour l'importation de ce fichier GEDCOM.";
-$pgv_lang["verify_gedcom_help"]         = "Vous pouvez continuer le téléchargement et importation de ce fichier GEDCOM ou les annuler.";
 //-- hourglass chart
 $pgv_lang["hourglass_chart"]            = "Sablier";
 
@@ -1166,7 +1158,6 @@ $pgv_lang["hourglass_chart"]            = "Sablier";
 $pgv_lang["choose_report"]              = "Choisir un rapport";
 $pgv_lang["enter_report_values"]        = "Entrer les paramètres du rapport";
 $pgv_lang["selected_report"]            = "Rapport sélectionné";
-$pgv_lang["run_report"]                 = "Afficher le rapport";
 $pgv_lang["select_report"]              = "Selectionner";
 $pgv_lang["download_report"]            = "Enregistrer le rapport";
 $pgv_lang["reports"]                    = "Rapports";
@@ -1210,7 +1201,6 @@ $pgv_lang["on"]                         = "le";
 $pgv_lang["in"]                         = "en";
 $pgv_lang["individual_report"]          = "Individu";
 $pgv_lang["enter_pid"]                  = "Code individu";
-$pgv_lang["individual_list_report"]     = "Liste individus";
 $pgv_lang["generated_by"]               = "Généré par";
 $pgv_lang["list_children"]              = "Liste des enfants par ordre de naissance.";
 $pgv_lang["birth_report"]               = "Naissances par lieu";
@@ -1294,13 +1284,13 @@ $pgv_lang["sosa_30"]                    = "Arrière-arrière-grand-père";
 $pgv_lang["sosa_31"]                    = "Arrière-arrière-grand-mère";
 
 // for the general case of ancestors of the nth generation use the text below
-// in this text %1$d is replaced with the number of generations
-//              %2$d is replaced with the number of generations - 1
-//              %3$d is replaced with the number of generations - 2
-$pgv_lang["sosa_paternal_female_n_generations"]= '%3$d x arrière grand-père';
-$pgv_lang["sosa_paternal_male_n_generations"]= '%3$d x arrière grand-mère';
-$pgv_lang["sosa_maternal_female_n_generations"]= '%3$d x arrière grand-père';
-$pgv_lang["sosa_maternal_male_n_generations"]= '%3$d x arrière grand-mère';
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["sosa_paternal_female_n_generations"]= "%3\$d x arrière grand-père";
+$pgv_lang["sosa_paternal_male_n_generations"]= "%3\$d x arrière grand-mère";
+$pgv_lang["sosa_maternal_female_n_generations"]= "%3\$d x arrière grand-père";
+$pgv_lang["sosa_maternal_male_n_generations"]= "%3\$d x arrière grand-mère";
 
 //-- FAN CHART
 $pgv_lang["compact_chart"]              = "Arbre compact";
@@ -1493,7 +1483,6 @@ $pgv_lang["hs_intruehelp"]              = "Texte d'aide seulement";
 $pgv_lang["hs_inallhelp"]               = "Tout le texte";
 
 // Media import
-$pgv_lang["media_import"]               = "Import d'objets MultiMedia";
 $pgv_lang["choose"]                     = "Choisir : ";
 $pgv_lang["account_information"]        = "Informations du compte";
 

@@ -1,5 +1,5 @@
 <!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
-<!-- @version $Id: TUR_Ardahan.txt,v 1.1.2.2 2005/11/25 22:57:44 opus27 Exp $ -->
+<!-- @version $Id$ -->
 Çildir
 Damal
 Göle

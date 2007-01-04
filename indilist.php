@@ -55,8 +55,9 @@ if (isset($alpha)) {
 if (isset($surname)) {
 	$surname = stripslashes($surname);
 	$surname = str_replace(array($lrm, $rlm), "", $surname);
-	$doctitle = $pgv_lang["individual_list"];
-	if (empty($surname) or trim("@".$surname,"_")=="@" or $surname=="@N.N.") $doctitle .= " : ".$pgv_lang["NN"];
+	$doctitle = $pgv_lang["individual_list"]." : ";
+	if (empty($surname) or trim("@".$surname,"_")=="@" or $surname=="@N.N.") $doctitle .= $pgv_lang["NN"];
+	else $doctitle .= $surname;
 }
 if (isset($doctitle)) {
 	?>

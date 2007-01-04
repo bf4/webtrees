@@ -30,6 +30,20 @@ if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["sanity_err0"]                = "Erreurs:";
+$pgv_lang["sanity_err1"]                = "Ce programme nécessite PHP version 4.3 ou supérieure.";
+$pgv_lang["sanity_err2"]                = "Fichier ou répertoire non trouvé : <i>#GLOBALS[whichFile]#</i>. Vérifier son existence et ses droits d'accès.";
+$pgv_lang["sanity_err3"]                = "Fichier mal téléchargé : <i>#GLOBALS[whichFile]#</i>. Essayer à nouveau.";
+$pgv_lang["sanity_err4"]                = "Fichier corrompu : <i>config.php</i>.";
+$pgv_lang["sanity_err5"]                = "Impossible d'écrire dans le fichier : <i>config.php</i>.";
+$pgv_lang["sanity_err6"]                = "Impossible d'écrire dans le répertoire : <i>#GLOBALS[INDEX_DIRECTORY]#</i>.";
+$pgv_lang["sanity_warn0"]               = "Avertissements:";
+$pgv_lang["sanity_warn1"]               = "Impossible d'écrire dans le répertoire : <i>#GLOBALS[MEDIA_DIRECTORY]#</i>. Vous ne pourrez pas charger d'objets MultiMedia.";
+$pgv_lang["sanity_warn2"]               = "Impossible d'écrire dans le répertoire : <i>#GLOBALS[MEDIA_DIRECTORY]#thumbs</i>. Vous ne pourrez pas créer les vignettes des objets MultiMedia.";
+$pgv_lang["sanity_warn3"]               = "Librairie 'GD' absente. Il vous sera impossible d'utiliser certaines fonctionnalités : génération automatique des vignettes MultiMedia et le diagramme circulaire. Pour en savoir plus : <a href='http://www.php.net/manual/fr/ref.image.php'>http://www.php.net/manual/fr/ref.image.php</a>.";
+$pgv_lang["sanity_warn4"]               = "Librairie 'XML Parser' absente. Il vous sera impossible d'utiliser certaines fonctionnalités : rapports, services web.... Pour en savoir plus : <a href='http://www.php.net/manual/fr/ref.xml.php'>http://www.php.net/manual/fr/ref.xml.php</a>.";
+$pgv_lang["sanity_warn5"]               = "Librairie 'DOM XML'  absente. Il vous sera impossible d'utiliser certaines fonctionnalités : export 'Gramps', téléchargements, services web... Pour en savoir plus : <a href='http://www.php.net/manual/fr/ref.dom.php'>http://www.php.net/manual/fr/ref.dom.php</a>.";
+$pgv_lang["sanity_warn6"]               = "Librairie 'Calendar' absente. Il vous sera impossible d'utiliser certaines fonctionnalités : conversion de dates au format hébreu ou calendrier révolutionnaire. Pour en savoir plus : <a href='http://www.php.net/manual/fr/ref.calendar.php'>http://www.php.net/manual/fr/ref.calendar.php</a>.";
 $pgv_lang["ip_address"]                 = "Adresse IP";
 $pgv_lang["date_time"]                  = "Date et heure";
 #pgv_lang["log_message"]                = "Log Message";
@@ -37,12 +51,12 @@ $pgv_lang["searchtype"]                 = "Type de recherche";
 $pgv_lang["query"]                      = "Requête";
 $pgv_lang["user"]                       = "Utilisateur authentifié";
 $pgv_lang["thumbnail_deleted"]          = "Vignette supprimée.";
-$pgv_lang["thumbnail_not_deleted"]      = "Impossible de supprimer la vignette.";
+$pgv_lang["thumbnail_not_deleted"]      = "Ce fichier vignette est protégé et ne peut pas être supprimé sans autorisation.";
 $pgv_lang["step2"]                      = "Etape 2/4 :";
-$pgv_lang["refresh"]                    = "Rafraichir";
+$pgv_lang["refresh"]                    = "Rafraîchir";
 $pgv_lang["move_file_success"]          = "Le fichier MultiMedia et la vignette ont été déplacés.";
 $pgv_lang["media_folder_corrupt"]       = "Le dossier MultiMedia est corrompu.";
-$pgv_lang["media_file_not_deleted"]     = "Impossible de supprimer le fichier MultiMedia.";
+$pgv_lang["media_file_not_deleted"]     = "Ce fichier MultiMedia est protégé et ne peut pas être supprimé sans autorisation.";
 $pgv_lang["gedcom_deleted"]             = "GEDCOM [#GED#] supprimé avec succès.";
 $pgv_lang["gedadmin"]                   = "Administrateur GEDCOM";
 $pgv_lang["full_name"]                  = "Prénom et nom";
@@ -83,8 +97,8 @@ $pgv_lang["label_add_search_server"]    = "Ajouter IP";
 $pgv_lang["label_add_server"]           = "Ajouter";
 $pgv_lang["label_ban_server"]           = "Soumettre";
 $pgv_lang["label_delete"]               = "Supprimer";
-#pgv_lang['progress_bars_info']         = "The status bars below will let you know how the import is progressing.  If the time limit runs out the import will be stopped and you will be asked to press a continue button.  If you don't see a continue button, please go back and enter a smaller time limit value.";
-#pgv_lang["upload_replacement"]         = "Upload Replacement";
+$pgv_lang['progress_bars_info']         = "La barre d'état ci-dessous vous indique l'avancement du téléchargement. Si le temps-limite est dépassé, le téléchargement sera arrêté et vous devrez cliquer sur le bouton pour continuer. Si le bouton ne s'affichait pas, relancer le chargement en entrant un temps-limite plus petit.";
+$pgv_lang["upload_replacement"]         = "Ecraser le fichier";
 $pgv_lang["about_user"]                 = "Vous devez d'abord créer un <b>administrateur principal</b>. Cet utilisateur pourra mettre à jour les fichiers de configuration, consulter les données privées et accorder des droits à d'autres utilisateurs.";
 $pgv_lang["access"]                     = "Droits pour Consulter";
 $pgv_lang["add_gedcom"]                 = "Paramètrer un GEDCOM déjà envoyé sur le serveur";
@@ -160,8 +174,9 @@ $pgv_lang["fbsql"]                      = "FrontBase";
 $pgv_lang["found_record"]               = "enregistrement(s) trouvé(s)";
 $pgv_lang["ged_download"]               = "Télécharger (<i>Download</i>)";
 $pgv_lang["ged_import"]                 = "Importer";
+$pgv_lang["ged_check"]                  = "Vérifier";
 $pgv_lang["gedcom_adm_head"]            = "Administration GEDCOM";
-#pgv_lang["gedcom_config_write_error"]  = "";
+$pgv_lang["gedcom_config_write_error"]  = "E R R E U R !!!<br />Impossible d'écrire dans le fichier <i>#GLOBALS[whichFile]#</i>. Vérifier les droits d'accès.";
 $pgv_lang["gedcom_downloadable"]        = "Ce fichier GEDCOM est téléchargeable par n'importe qui sur Internet !<br />Consultez la section SECURITY du fichier <a href=\"readme.txt\">readme.txt</a> pour corriger ce problème";
 $pgv_lang["gedcom_file"]                = "Fichier GEDCOM";
 $pgv_lang["gedcom_not_imported"]        = "Ce fichier GEDCOM n'a pas encore été chargé.";
@@ -251,6 +266,7 @@ $pgv_lang["sqlite"]                     = "SQLite";
 $pgv_lang["sybase"]                     = "Sybase";
 $pgv_lang["sync_gedcom"]                = "Synchroniser avec les données GEDCOM";
 $pgv_lang["system_time"]                = "Heure du serveur";
+$pgv_lang["user_time"]                  = "Heure du navigateur";
 $pgv_lang["TBLPREFIX"]                  = "Préfixe des noms de tables";
 $pgv_lang["themecustomization"]         = "Personnalisation des thèmes";
 $pgv_lang["time_limit"]                 = "Durée max.";
@@ -297,4 +313,29 @@ $pgv_lang["welcome_new"]                = "Bienvenue sur votre site PhpGedView. 
 $pgv_lang["yearly"]                     = "Annuel";
 $pgv_lang["you_may_login"]              = " a été approuvé par l'administrateur du site. Vous pouvez maintenant vous connecter au site PhpGedView par ce lien";
 
+// Text for the Gedcom Checker
+$pgv_lang["gedcheck"]                   = "Vérificateur Gedcom";          // Module title
+$pgv_lang["gedcheck_text"]              = "Ce module vérifie le format du fichier GEDCOM selon la norme <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">GEDCOM 5.5.1</a>. L'outil détecte aussi certaines erreurs fréquentes dans les données. Comme il existe de nombreuses variantes de cette norme, seules les erreurs 'graves' sont indispensables à corriger. Merci de bien lire l'explication de chaque erreur dans la norme avant de demander de l'aide.";
+$pgv_lang["level"]                      = "Niveau";                   // Levels of checking
+$pgv_lang["critical"]                   = "Erreur grave";
+$pgv_lang["error"]                      = "Erreur";
+$pgv_lang["warning"]                    = "Avertissement";
+$pgv_lang["info"]                       = "Information";
+$pgv_lang["open_link"]                  = "Ouvrir les liens dans";           // Where to open links
+$pgv_lang["same_win"]                   = "le même onglet ou la même fenêtre";
+$pgv_lang["new_win"]                    = "un nouvel onglet ou une nouvelle fenêtre";
+$pgv_lang["context_lines"]              = "Nombre de lignes GEDCOM<br />avant et après la ligne en erreur"; // Number of lines either side of error
+$pgv_lang["all_rec"]                    = "Tous les enregistrements";             // What to show
+$pgv_lang["err_rec"]                    = "Les enregistrements comportant une erreur";
+$pgv_lang["missing"]                    = "balise manquante";                 // General error messages
+$pgv_lang["multiple"]                   = "multiple";
+$pgv_lang["invalid"]                    = "mauvaise";
+$pgv_lang["too_many"]                   = "trop";
+$pgv_lang["too_few"]                    = "pas assez";
+$pgv_lang["no_link"]                    = "le lien de retour est manquant";
+$pgv_lang["data"]                       = "donnée";                    // Specific errors (used with general errors)
+$pgv_lang["see"]                        = "voir";
+$pgv_lang["noref"]                      = "aucun lien vers cet enregistrement";
+$pgv_lang["tag"]                        = "balise";
+$pgv_lang["spacing"]                    = "espacement";
 ?>

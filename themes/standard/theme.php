@@ -142,6 +142,7 @@ $PGV_IMAGES["udarrow"]["other"] = "udarrow.gif";
 $PGV_IMAGES["vline"]["other"] = "vline.gif";
 $PGV_IMAGES["zoomin"]["other"] = "zoomin.gif";
 $PGV_IMAGES["zoomout"]["other"] = "zoomout.gif";
+$PGV_IMAGES["stop"]["other"] = "stop.gif";
 
 //- digits
 $PGV_IMAGES["0"]["digit"] = "0.jpg";
@@ -161,7 +162,8 @@ $bheight = 80;		// -- height of boxes on pedigree chart
 $baseyoffset = 10;	// -- position the entire pedigree tree relative to the top of the page
 $basexoffset = 10;	// -- position the entire pedigree tree relative to the left of the page
 $bxspacing = 0;		// -- horizontal spacing between boxes on the pedigree chart
-$byspacing = 2;		// -- vertical spacing between boxes on the pedigree chart
+$byspacing = 5;		// -- vertical spacing between boxes on the pedigree chart
+$brborder = 1;		// -- box right border thickness
 
 // -- global variables for the descendancy chart
 $Dbaseyoffset = 0;	// -- position the entire descendancy tree relative to the top of the page

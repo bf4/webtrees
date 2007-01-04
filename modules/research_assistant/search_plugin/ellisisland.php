@@ -5,7 +5,7 @@
  * This is a plug-in file for the Auto search Assistant
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2006  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,15 +58,15 @@ function autosearch_options()
 							<table width='50%'>		
 		 						<tr>
 					 				<td class='optionbox'>
-					 					".$pgv_lang["autosearch_surname"]."</td><td class='optionbox'> <input type='checkbox' name='surname' value=\"".$lastname."\" checked='checked' /> ".$lastname."</td></tr>
+					 					".$pgv_lang["autosearch_surname"]."</td><td class='optionbox'> <input type='checkbox' name='surname' value=\"".$lastname."\" checked='checked' />&nbsp; ".$lastname."</td></tr>
 					 						<tr><td class='optionbox'>
-					 					".$pgv_lang["autosearch_givenname"]."</td><td class='optionbox'> <input type='checkbox' name='givenname1' value=\"".$givennames."\" checked='checked'' /> ".$givennames."</td></tr>
+					 					".$pgv_lang["autosearch_givenname"]."</td><td class='optionbox'> <input type='checkbox' name='givenname1' value=\"".$givennames."\" checked='checked'' />&nbsp; ".$givennames."</td></tr>
 					 						<tr><td class ='optionbox'>
-					 					".$pgv_lang["autosearch_byear"]."</td><td class ='optionbox'> <input type='checkbox' name='byear' value=\"".$byear."\" checked='checked' /> ".$byear."</td></tr>
+					 					".$pgv_lang["autosearch_byear"]."</td><td class ='optionbox'> <input type='checkbox' name='byear' value=\"".$byear."\" checked='checked' />&nbsp; ".$byear."</td></tr>
 					 						 						<tr><td class ='optionbox'>
-					 					".$pgv_lang["autosearch_gender"]."</td><td class ='optionbox'> <input type='checkbox' name='sex' value=\"".$sex."\" checked='checked' /> ".$sex.$seximg."</td></tr>				
+					 					".$pgv_lang["autosearch_gender"]."</td><td class ='optionbox'> <input type='checkbox' name='sex' value=\"".$sex."\" checked='checked' />&nbsp; ".$sex.$seximg."</td></tr>				
 								<tr><td class='optionbox' colspan=2 align='center'>".$pgv_lang["autosearch_plugin_name_ellisIsland"]."</td></tr>
-								<tr><td  align='center' class='topbottombar'colspan=2><input type='submit' value='Search' /></td></tr>
+								<tr><td  align='center' class='topbottombar'colspan=2><input type='submit' value='".$pgv_lang["autosearch_search"]."' /></td></tr>
 		 			
 							</table>
 						

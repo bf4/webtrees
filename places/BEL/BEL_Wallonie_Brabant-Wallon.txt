@@ -1,5 +1,5 @@
 <!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
-<!-- @version $Id: BEL_Wallonie_Brabant-Wallon.txt,v 1.1.2.1 2005/11/25 18:37:06 opus27 Exp $ -->
+<!-- @version $Id$ -->
 <!-- @see http://www.brabantwallon.be/index.cfm?Content_ID=7068988&R_ID=4506766 -->
 Beauvechain
 Braine-l'Alleud

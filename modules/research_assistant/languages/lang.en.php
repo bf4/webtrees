@@ -55,7 +55,6 @@ $pgv_lang["gen_tasks"]							= "Auto Generate Tasks";
 $pgv_lang["edit_task"]							= "Edit Task";
 $pgv_lang["completed"]							= "Completed";
 $pgv_lang["complete"]							= "Complete";
-$pgv_lang["all"]								= "All";
 $pgv_lang["incomplete"]							= "Incomplete";
 $pgv_lang["comres"]								= "Comments/Results";
 $pgv_lang["description"]						= "Description";
@@ -72,12 +71,22 @@ $pgv_lang["LocalData"]							= "Local Data";
 $pgv_lang["RelatedRecord"]						= "Related Record";
 $pgv_lang["RelatedData"]						= "Related Data";
 $pgv_lang["Percent"]							= "Percent";
-
+$pgv_lang["Fields"]								= "Number of Fields";
+$pgv_lang["FieldName"]							= "Field Name";
+$pgv_lang["InputType"]							= "Input Type";
+$pgv_lang["Values"]								= "Values";
+$pgv_lang["FormName"]							= "Enter the form name";
+$pgv_lang["MultiplePeople"]						= "Does the form apply to multiple people?";
+$pgv_lang["EnterGEDCOMExtension"]				= "Please enter the GEDCOM extension for the form's fact type";
+$pgv_lang['FormDesciption']						= "Please enter a description for the form";
+$pgv_lang["FormGeneration"]						= "Form Generation Complete!";
+$pgv_lang["CustomField"]						= "Custom Field Name";
 
 // -- RA EXPLANATION
 $pgv_lang["ViewProbExplanation"]					= "This page analyzes the data for the active GEDCOM dataset and shows the correlations between different data elements. For example, there could be a 95% correlation that the surname in a local record is the same as the surname in the father's record.  This would mean that 95% of the people in this GEDCOM dataset share the same surname as their father. In this version of the Research Assistant, these calculations are not being used in other areas of the program and are only provided as a help to you in your research.  In the future we plan to use this data to help provide you with meaningful suggestions of where you should focus some of your future research. ";
 
 // -- RA_FOLDER MESSAGES
+$pgv_lang["Folder"]                             = "Folder:";
 $pgv_lang["Edit_Task"]                 			= "Edit Task";
 $pgv_lang["End_Date"]                 			= "End Date";
 $pgv_lang["Start_Date"]                 		= "Start Date";
@@ -171,7 +180,7 @@ $pgv_lang["add_new_comment"]				= "Add New Comment";
 $pgv_lang["no_sources"]						= "There are no sources associated with this task.";
 $pgv_lang["no_people"]						= "There are no people associated with this task.";
 $pgv_lang["no_indi_tasks"]					= "No tasks associated with this individual.";
-$pgv_lang["no_sour_tasks"]					= "No tasks associated with this source.";
+$pgv_lang["no_sour_tasks"]					= "No tasks associated with this ssource.";
 $pgv_lang["edit_comment"]					= "Edit Comment";
 $pgv_lang["comment_success"]				= "Your comment was successfully added.";
 $pgv_lang['comment_body']					= 'Comment';
@@ -182,6 +191,7 @@ $pgv_lang["comment_delete_check"]		= "Are you sure you want to delete this comme
 //-- RA_ADDTASK MESSAGES
 $pgv_lang["add_new_task"]				= "Add New Task";
 $pgv_lang["submit"]						= "Submit";
+$pgv_lang["save_and_complete"]          = "Save and Complete";
 $pgv_lang["assign_task"]				= "Assign Task";
 $pgv_lang["AddTask"]					= "Add Task";
 
@@ -209,10 +219,15 @@ $pgv_lang["city"]                       = "City";
 $pgv_lang["complete_title"]				= "Complete the Task";
 $pgv_lang["select_form"]				= "Select Form";
 $pgv_lang['choose_form_label']			= "Choose a common research form:";
+$pgv_lang["book"]                 		= "Book";
+$pgv_lang["folio"]                   	= "Folio";
+$pgv_lang["uk_county"]					= "County";
+$pgv_lang["uk_boro"]						= "City or Borough";
+$pgv_lang["uk_place"]					= "Place";
 
 //-- MY TASK BLOCK
 $pgv_lang["mytasks_block_descr"]		= "The My Task Block shows the task for the current user and can be configured to show completed tasks or to show task that are currently unassigned";
-$pgv_lang["mytasks_block"]				= "MyTask";   
+$pgv_lang["mytasks_block"] 				= "MyTasks Block";
 $pgv_lang["mytasks_edit"]               = "Edit";
 $pgv_lang["mytasks_unassigned"]			= "Unassigned";
 $pgv_lang["mytasks_takeOn"]				= "TakeOn";
@@ -238,6 +253,13 @@ $pgv_lang["autosearch_plugin_name_ancestry"] = "Ancestry.com Plug-in";
 $pgv_lang["autosearch_plugin_name_ancestrycouk"] = "Ancestry.co.uk Plug-in";
 $pgv_lang["autosearch_plugin_name_ellisIsland"] = "EllisIslandRecords.org Plug-in";
 $pgv_lang["autosearch_plugin_name_genNet"] = "GeneaNet.com Plug-in";
-$pgv_lang["autosearch_plugin_name_gen"] = "Genealogy.com Plug-in"; 
-$pgv_lang["autosearch_plugin_name_fs"] = "FamilySearch.org Plug-in";
+$pgv_lang["autosearch_plugin_name_gen"]  = "Genealogy.com Plug-in"; 
+$pgv_lang["autosearch_plugin_name_fs"]   = "FamilySearch.org Plug-in";
+$pgv_lang["autosearch_plugin_name_werelate"]   = "Werelate.org Plug-in";
+$pgv_lang["autosearch_search"]           = "Search";
+$pgv_lang["autosearch_keywords"] = "Keywords:";
+
+//Folder deletion error messages
+$pgv_lang["has_tasks"]                 ="The folder currently contains tasks and cannot be deleted";
+$pgv_lang["has_folders"]               ="The folder currently countains folders and cannot be deleted";
 ?>

@@ -56,7 +56,6 @@ $rss->title = $GEDCOMS[$GEDCOM]["title"];
 //optional
 $rss->descriptionTruncSize = 500;
 $rss->descriptionHtmlSyndicated = true;
-$rss->cssStyleSheet="";
 //end optional
 
 $rss->link = $SERVER_URL;

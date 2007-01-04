@@ -23,7 +23,7 @@
  * @author PGV Developers
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: editor.en.php 425 2006-09-29 12:08:49Z canajun2eh $
+ * @version $Id$
  */
 $pgv_lang["accept_changes"]		= "接受更改";
 $pgv_lang["review_changes"]		= "覆核GEDCOM 更改s";

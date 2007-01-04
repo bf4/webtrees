@@ -62,13 +62,13 @@ class Census1910 extends ra_form {
         parse_str(html_entity_decode($action["query"]), $params);
         
         // Setup for our form to go through the module system
-         $out .= '<script language="JavaScript" type="text/javascript">
+       $out .= '<script language="JavaScript" type="text/javascript">
 <!--
 function ValidateForm(myForm){ if(myForm.sourceid && myForm.sourceid.value == ""){ alert("You must enter a source");
 return false;}return true;}
 //-->
 </script>';
-        $out .=  '<form action="' . $action["path"] . '" method="post"onsubmit="return ValidateForm(this)">';
+        $out .=  '<form action="' . $action["path"] . '" method="post" onsubmit="return ValidateForm(this)">';
 		$out .= '<input type="hidden" name="numOfRows" value="'.$_REQUEST['numOfRows'].'" />';
         foreach ($params as $key => $value) {
             $out .= '<input type="hidden" name="' . $key . '" value="' . $value . '">';
@@ -444,7 +444,10 @@ return false;}return true;}
 	                   		if (!is_null($person)) $out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
 	                   $out .= '</div>
 	                   <input type="hidden" id="personid'.$i.'" name="personid'.$i.'" size="3" value="'.$pid.'" />';
-	                   $out .= print_findindi_link("personid".$i, "peoplelink".$i, true);
+	                   if(isset($citation['ts_array']['rows'][$i]['NameOfPeople'])) $searchName = $citation['ts_array']['rows'][$i]['NameOfPeople'];
+						else $searchName = '';
+	                   $out .= print_findindi_link("personid".$i, "peoplelink".$i, true,false,'',$searchName);
+	                   $out .= "<br />Create New Person: <input type=\"checkbox\" value=\"newPerson\"/>";
 	                   $out .= '<br /></td>';
 	        
 		}
@@ -459,25 +462,63 @@ return false;}return true;}
     }
 
     function display_form() {
-        $out = $this->header("module.php?mod=research_assistant&form=Census1910&action=func&func=step2&taskid=$_REQUEST[taskid]", "center", "1910 United States Federal Census", true);
+        $out = $this->header("module.php?mod=research_assistant&form=Census1910&action=func&func=step2&taskid=".$_REQUEST['taskid'], "center", "1910 United States Federal Census", true);
         $out .= $this->sourceCitationForm(5,false);
         //$out .= $this->content();
         $out .= $this->footer();
         return $out;
     }
     
+    function createPerson($i)
+    {
+    	$indiFact = "0 @new@ INDI\r\n";
+    	$indiFact .= "1 NAME ".$_POST["NameOfPeople".$i]."\r\n";
+    	
+    	if(!empty($_POST["Age".$i]))
+    	{
+    		$age = 1910 - $_POST["Age".$i];
+    		$indiFact .= "1 BIRT\r\n";
+    		$indiFact .= "2 DATE ABT ".$age;
+    	}
+    	
+    	if(!empty($_POST["PlaceOfBirth".$i]))
+    	{
+    		$indiFact .= "2 PLAC ".$_POST["PlaceOfBirth"];
+    	}
+    	
+    	if(!empty($_POST["Sex".$i]))
+    	{
+    		$indiFact .= "1 SEX ".$_POST["Sex".$i];
+    	}
+    	
+    	return $indiFact;
+    	
+    }
+    
     function step2() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
 		global $INDI_FACTS_ADD;
-					
+		
+		$people = array();
+		$pids = array();
+		$positions = array();
 			
 		$personid = "";
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
+			if(!empty($_POST["newPerson".$number]))
+			{
+				$tempPerson = $this->createPerson($number);
+				$_POST["personid".$number] = append_gedrec($tempPerson,true,'');
+			}
+			
 			if (!isset($_POST["personid".$number])) $_POST["personid".$number]="";
 			$personid .= $_POST["personid".$number].";";
 			$_POST["personid".$number] = trim($_POST["personid".$number], '; \r\n\t');
+			
+			
 		}
+		
 		$_REQUEST['personid'] = $personid;
 		$return = $this->processSourceCitation();
 		
@@ -546,7 +587,7 @@ return false;}return true;}
 		return $out;
 	}
 	}
-
+	
 	function step3() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $pgv_lang;
 
@@ -585,7 +626,7 @@ return false;}return true;}
 			{
 				$bdate = $person->getBirthYear();
 				$occupation = $this->getOccupation($person->getGedcomRecord());
-			}
+			
 			$censusAge = $rows[$number]["Age"];
 			$birthDate = 1910 - $censusAge;
 			
@@ -594,13 +635,13 @@ return false;}return true;}
 				$inferredFact["Person"] = $person->getName();
 				$inferredFact["PersonID"] = $person->getXref();
 				$inferredFact["Reason"] = "A discrepancy in occupation was detected!";
-				$inferredFact["Fact"] = "1 OCCU ".$rows[$number]["Occupation"];
+				$inferredFact["Fact"] = "1 OCCU ".$rows[$number]["Occupation"]."\r\n2 DATE ABT 1910";
 				$inferredFact["factType"] = 'OCCU';
 				$inferredFact["factPeople"] = "indi";
 				$inferredFact["date"] = '';
 				$inferredFacts[] = $inferredFact;
 			}
-			
+			}
 			if($rows[$number]["Single"] == "Widowed")
 			{
 				
@@ -698,7 +739,7 @@ return false;}return true;}
 		
 		
 	}
-	
+
 	/**
 	 * Override method from ra_form
 	 */

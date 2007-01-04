@@ -23,8 +23,9 @@
  * @author PGV Developers
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: editor.en.php 425 2006-09-29 12:08:49Z canajun2eh $
+ * @version $Id$
  */
+$pgv_lang["advanced_name_fields"]	= "Weitere Namen (Spitzname, Ehename, usw.)";
 $pgv_lang["accept_changes"]                = "Änderungen übernehmen / verwerfen";
 $pgv_lang["replace"]                        = "Datensatz ersetzen";
 $pgv_lang["append"]                                = "Datensatz hinzufügen";

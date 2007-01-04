@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @subpackage Research_Assistant
  * @version $Id: Birth_Information.php 200 2005-11-09 20:37:48Z jporter $
- * @author James Dickinson
+ * @author Brandon Gagnon
  */
  //-- security check, only allow access from module.php
 if (strstr($_SERVER["SCRIPT_NAME"],"Census1870.php")) {
@@ -40,37 +40,53 @@ class Census1870 extends ra_form {
     	if ($showchoose) {
 	    	//Row Form
 	    	$out = '<form action="module.php" method="post">';
-	    	$out .= '<input type="hidden" name="mod" value="research_assistant" />' .
-	    			'<input type="hidden" name="action" value="printform" />' .
-	    			'<input type="hidden" name="formname" value="Census1870" />' .
-	    			'<input type="hidden" name="taskid" value="'.$_REQUEST['taskid'].'" />';
-	    	if (!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = 1;
+	    	$out .= '<INPUT tabindex="1"  type="hidden" name="mod" value="research_assistant" />' .
+	    			'<INPUT tabindex="2"  type="hidden" name="action" value="printform" />' .
+	    			'<INPUT tabindex="3"  type="hidden" name="formname" value="Census1870" />' .
+	    			'<INPUT tabindex="4"  type="hidden" name="taskid" value="'.$_REQUEST['taskid'].'" />';
+	    	if (!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = count($this->getPeople());
+	    	if ($_REQUEST['numOfRows']<1) $_REQUEST['numOfRows']=1;
 	    	$out .= '<table align="center"><tr><td class="descriptionbox">'.$pgv_lang["rows"].'</td><td class="optionbox"><select name="numOfRows">';
 	    	for($i = 1; $i <= 20; $i++){
-	    		$out .= '<option value="'.$i;
+	    		$out .= '<option value="'.$i.'"';
 	    		if ($_REQUEST['numOfRows']==$i) $out .= " selected=\"selected\"";
-	    		$out .= '">'.$i;
+	    		$out .= '>'.$i;
 	    	}
-	    	$out .=	'</select></td></tr><tr><td colspan="2" class="topbottombar"><input type="submit" value="'.$pgv_lang["okay"].'"/></td></tr></table>';
+	    	$out .=	'</select></td></tr><tr><td colspan="2" class="topbottombar"><INPUT tabindex="5"  type="submit" value="'.$pgv_lang["okay"].'"/></td></tr></table>';
 	    	$out .= '</form>';
     	}
     	
 		// Split action and use it for hidden inputs
         $action = parse_url($action);
-        global $params;
+        $params = array();
         parse_str(html_entity_decode($action["query"]), $params);
         
         // Setup for our form to go through the module system
-        $out .=  '<form action="' . $action["path"] . '" method="post">';
-		$out .= '<input type="hidden" name="numOfRows" value="'.$_REQUEST['numOfRows'].'" />';
+         $out .= '<script language="JavaScript" type="text/javascript">
+<!--
+function ValidateForm(myForm){ if(myForm.sourceid && myForm.sourceid.value == ""){ alert("You must enter a source");
+return false;}return true;}
+//-->
+</script>';
+        $out .=  '<form action="' . $action["path"] . '" method="post" onsubmit="return ValidateForm(this)">';
+		$out .= '<INPUT tabindex="6"  type="hidden" name="numOfRows" value="'.$_REQUEST['numOfRows'].'" />';
         foreach ($params as $key => $value) {
-            $out .= '<input type="hidden" name="' . $key . '" value="' . $value . '">';
+            $out .= '<INPUT tabindex="7"  type="hidden" name="' . $key . '" value="' . $value . '">';
         }
         $out .= '<table id="Census1870" class="list_table" align="' . $tableAlign . '">';
         $out .= '<tr>';
-        $out .= '<th colspan="12" align="right"class="topbottombar"><h2>' . $heading . '</h2></th>';
+        $out .= '<th colspan="6" align="right"class="topbottombar"><h2>' . $heading . '</h2></th>';
         $out .= '</tr>';
         return $out;
+    }
+    
+    function getFieldValue($j, $lines) {
+    	$value = "";
+    	if (empty($lines[$j])) return $value;
+    	$line = $lines[$j];
+    	$ct = preg_match("/: (.*)/", $line, $match);
+    	if ($ct>0) $value = trim($match[1]);
+    	return $value;
     }
 	
 	/**
@@ -80,8 +96,10 @@ class Census1870 extends ra_form {
     	global $pgv_lang, $factarray;
     	if (empty($_POST['data']))
     		$data = array();
-    	if (empty($_REQUEST['row']))
-    		$row = 1;
+    	if (empty($_REQUEST['row'])) {
+    		$people = $this->getPeople();
+    		$row = count($people);
+    	}
     	
     	$citation = $this->getSourceCitationData();
     	$page = "";
@@ -103,85 +121,233 @@ class Census1870 extends ra_form {
 //        Start of Table
 		$out = '<tr>
 			<td class="descriptionbox">'.print_help_link("edit_media_help", "qm",'',false,true).$factarray['OBJE'].'</td>
-			<td class="optionbox" colspan="5"><input type="text" name="OBJE" id="OBJE" size="5" value="'.$citation['ts_obje'].'"/>';
+			<td class="optionbox" colspan="5"><INPUT tabindex="8"  type="text" name="OBJE" id="OBJE" size="5" value="'.$citation['ts_obje'].'"/>';
 		$out .= print_findmedia_link("OBJE", true, '', true);
 		$out .= '<br /><a href="javascript:;" onclick="pastefield=document.getElementById(\'OBJE\'); window.open(\'addmedia.php?action=showmediaform\', \'\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["add_media"].'</a>';
 		$out .= '</td></tr>';
-        $out .= '<tr><td class="descriptionbox">'.$pgv_lang["state"].'</td><td class="optionbox"><input name="state" type="text" size="27"  value="'.htmlentities($state).'"></td>';
-        $out .= '<td class="descriptionbox">'.$pgv_lang["call/url"].'</td><td class="optionbox"><input name="CallNumberURL" type="text" size="27" value="'.htmlentities($callno).'"></td>';
-        $out .= '<td class="descriptionbox">'.$pgv_lang["enumDate"].'</td><td class="optionbox"><input name="EnumerationDate" type="text" size="27" value="'.htmlentities($date).'"></td></tr>';
-        $out .= '<tr><td class="descriptionbox">'.$pgv_lang["county"].'</td><td class="optionbox"><input name="county" type="text" size="27" value="'.htmlentities($county).'"></td>';
-        $out .= '<td class="descriptionbox">'.$pgv_lang["city"].'</td><td class="optionbox"><input name="city" type="text" size="27" value="'.htmlentities($city).'"></td>';
-        $out .=	'<td class="descriptionbox">'.$pgv_lang["page"].'</td><td class="optionbox"><input name="page" type="text" size="5" value="'.htmlentities($page).'"></td></tr>';
+        $out .= '<tr><td class="descriptionbox">'.$pgv_lang["state"].'</td><td class="optionbox"><INPUT tabindex="9"  name="state" type="text" size="27"  value="'.htmlentities($state).'"></td>';
+        $out .= '<td class="descriptionbox">'.$pgv_lang["call/url"].'</td><td class="optionbox"><INPUT tabindex="10"  name="CallNumberURL" type="text" size="27" value="'.htmlentities($callno).'"></td>';
+        $out .= '<td class="descriptionbox">'.$pgv_lang["enumDate"].'</td><td class="optionbox"><INPUT tabindex="11"  name="EnumerationDate" type="text" size="27" value="'.htmlentities($date).'"></td></tr>';
+        $out .= '<tr><td class="descriptionbox">'.$pgv_lang["county"].'</td><td class="optionbox"><INPUT tabindex="12"  name="county" type="text" size="27" value="'.htmlentities($county).'"></td>';
+        $out .= '<td class="descriptionbox">'.$pgv_lang["city"].'</td><td class="optionbox"><INPUT tabindex="13"  name="city" type="text" size="27" value="'.htmlentities($city).'"></td>';
+        $out .=	'<td class="descriptionbox">'.$pgv_lang["page"].'</td><td class="optionbox"><INPUT tabindex="14"  name="page" type="text" size="5" value="'.htmlentities($page).'"></td></tr>';
 //        Next Table
-        $out .= '<tr><td colspan="6"><table align="center" id="inputTable">';
-        $out .= '<td class="descriptionbox" align="center" rowspan="2"rowspan="2">Dwelling -houses numbered<br>in the order of visitation</td>';
-        $out .= '<td colspan="1" class="descriptionbox" align="center"rowspan="2">Families numbered in<br>the order of visitation</td>';
-        $out .= '<td colspan="1" class="descriptionbox" align="center"rowspan="2">The Name of every Person whose usual place<br>of abode on the first day of June, 1870, was in this family</td>';
-        $out .= '<td colspan="3" class="descriptionbox" align="center">Description</td>';
-        $out .= '<td colspan="1" class="descriptionbox" align="center"rowspan="2">Profession, Occupation, or Trade of<br>each Male Person over 15 years of age</td>';
-        $out .= '<td colspan="1" class="descriptionbox" align="center"rowspan="2">Value of Real Estate owned</td>';
-        $out .= '<td colspan="1" class="descriptionbox" align="center" rowspan="2">Place of Birth Naming<br>the State, Territory, or Country</td>';
-        $out .= '<td class="descriptionbox" align="center" rowspan="2">Married within the year</td>';
+        $out .= '<tr><td colspan="6">';
         
-        $out .= '<td colspan="1" class="descriptionbox" align="center" rowspan="2">Attended School within the year</td>';
-        $out .= '<td colspan="1" class="descriptionbox" align="center" rowspan="2">Persons over 20 years of<br>age who cannot read & write</td>';
+        $out .= '<table>
+ <tr>
+  <td class="descriptionbox">Dwelling - houses numbered in the order of visitation</td>';
+  for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+  	$value = "";
+  	if (isset($citation['ts_array']['rows'][$i]['Dwelling'])) $value = $citation['ts_array']['rows'][$i]['Dwelling'];
+  	$out.='<td class="optionbox"><INPUT tabindex="'.($i*100+15).'" TYPE="TEXT" SIZE="22" name="Dwelling'.$i.'" value="'.htmlentities($value).'" /></td>';
+  }
+  $out .='</tr>
+ <tr>
+  <td class="descriptionbox">Families Numbered in the order of visitation</td>';
+	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+		$value = "";
+  		if (isset($citation['ts_array']['rows'][$i]['Families'])) $value = $citation['ts_array']['rows'][$i]['Families'];
+		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+16).'" TYPE="TEXT" SIZE="22" name="Families'.$i.'" value="'.htmlentities($value).'" /></td>';
+	}
+	$out .='</tr>
+ <tr>
+  <td class="descriptionbox">The name of every Person whose usual place of <br /> abode on the first day of June, 1870, was in this family</td>';
+  		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+  			$value = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['NameOfPeople'])) $value = $citation['ts_array']['rows'][$i]['NameOfPeople'];
+  			$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+17).'"  TYPE="TEXT" SIZE="23" name = "NameOfPeople'.$i.'" value="'.htmlentities($value).'" /></td>'; 
+  		}
+ $out .='</tr>
+<tr>
+  <td class="descriptionbox">Age at last birthday. If under 1 year, give months in fractions, thus 3/12 </td>';
+	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+		$value = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['Age'])) $value = $citation['ts_array']['rows'][$i]['Age'];
+  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+18).'"  TYPE="TEXT" SIZE="22" name = "Age'.$i.'" value="'.htmlentities($value).'" /></td>';
+		}
+ 		$out .='</tr>
+<tr>
+  <td class="descriptionbox">Sex</td>';
+  		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+  			$value = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['Sex'])) $value = $citation['ts_array']['rows'][$i]['Sex'];
+  				$out .= '<td class="optionbox">
+ 				Male:<INPUT tabindex="'.($i*100+19).'"  TYPE="RADIO" value="M" name="Sex'.$i.'"'.($value=='M'?' checked="checked"':'').' /> 
+				Female:<INPUT tabindex="'.($i*100+20).'"  TYPE="RADIO" value="F" name="Sex'.$i.'"'.($value=='F'?' checked="checked"':'').' /></td>';
+	}
+	$out .='</tr>
+ <tr>
+  <td class="descriptionbox">Color</td>';
+  		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+  			$value = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['Race'])) $value = $citation['ts_array']['rows'][$i]['Race'];
+  				$out .= '<td class="optionbox"><select name="Race'.$i.'" tabindex="'.($i*100+21).'">
+		<option value="W"'.($value=='W'?' selected="selected"':'').'>White</option>
+		<option value="B"'.($value=='B'?' selected="selected"':'').'>Black</option>
+		<option value="MU"'.($value=='MU'?' selected="selected"':'').'>Mulatto</option>
+		<option value="Ch"'.($value=='Ch'?' selected="selected"':'').'>Chinese</option>
+		<option value="In"'.($value=='In'?' selected="selected"':'').'>Indian</option>
+	</select>
+  </td>';}
+$out .= '</tr>
+<tr>
+  <td class="descriptionbox">Profession, Occupation, or Trade <br /> of each Male person over 15 years of age
+   </td>';
+	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+		$value = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['Trade'])) $value = $citation['ts_array']['rows'][$i]['Trade'];
+  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+22).'"  TYPE="TEXT" SIZE="22" name = "Trade'.$i.'" value="'.htmlentities($value).'" /></td>';
+		}
+ 		$out .='</tr>';
+  				
+  
+  $out .= '</tr>
+ <tr>
+  <td class="descriptionbox">Value of Real estate</td>';
+	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+		$value = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['realestate'])) $value = $citation['ts_array']['rows'][$i]['realestate'];
+  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+23).'"  TYPE="TEXT" SIZE="22" name = "realestate'.$i.'" value="'.htmlentities($value).'" /></td>';
+		}
+ 		$out .='</tr>
+<tr>
+  <td class="descriptionbox">Value of Personal estate</td>';
+	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+		$value = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['personalestate'])) $value = $citation['ts_array']['rows'][$i]['personalestate'];
+  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+24).'"  TYPE="TEXT" SIZE="22" name = "personalestate'.$i.'" value="'.htmlentities($value).'" /></td>';
+		}
+ 		$out .='</tr>
+ <tr>
+  <td class="descriptionbox">Place of Birth Naming the State, Territory, or Country</td>';
+	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+		$value = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['PofB'])) $value = $citation['ts_array']['rows'][$i]['PofB'];
+  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+25).'"  TYPE="TEXT" SIZE="22" name = "PofB'.$i.'" value="'.htmlentities($value).'" /></td>';
+		}
+ 		$out .='</tr>
+ 
+ <tr>
+  <td class="descriptionbox">Father of foreign born
+   </td>';
+	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+		$value = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['fatherborn'])) $value = $citation['ts_array']['rows'][$i]['fatherborn'];
+  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+26).'"  TYPE="TEXT" SIZE="22" name = "fatherborn'.$i.'" value="'.htmlentities($value).'" /></td>';
+		}
+ 		$out .='</tr>
+ <tr>
+  <td class="descriptionbox">Mother of foreign born
+   </td>';
+	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+		$value = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['motherborn'])) $value = $citation['ts_array']['rows'][$i]['motherborn'];
+  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+27).'"  TYPE="TEXT" SIZE="22" name = "motherborn'.$i.'" value="'.htmlentities($value).'" /></td>';
+		}
+ 		$out .='</tr>
+ 		<tr>
+  <td class="descriptionbox">If born within the year, state month (Jan, & c.)
+   </td>';
+	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+		$value = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['borninyear'])) $value = $citation['ts_array']['rows'][$i]['borninyear'];
+  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+28).'"  TYPE="TEXT" SIZE="22" name = "borninyear'.$i.'" value="'.htmlentities($value).'" /></td>';
+		}
+ 		$out .='</tr>
+	<tr>
+  <td class="descriptionbox">If Married within the year, state month (Jan, & c.)
+   </td>';
+	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+		$value = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['marriedinyear'])) $value = $citation['ts_array']['rows'][$i]['marriedinyear'];
+  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+29).'"  TYPE="TEXT" SIZE="22" name = "marriedinyear'.$i.'" value="'.htmlentities($value).'" /></td>';
+		}
+ 		$out .='</tr>
+<tr>
+  <td class="descriptionbox">Attended school within the year
+   </td>';
+	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+		$value = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['schoolinyear'])) $value = $citation['ts_array']['rows'][$i]['schoolinyear'];
+  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+30).'"  TYPE="TEXT" SIZE="22" name = "schoolinyear'.$i.'" value="'.htmlentities($value).'" /></td>';
+		}
+ 		$out .='</tr>
+<tr>
+  <td class="descriptionbox">Cannot read</td>';
+	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+		$value = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['cannotread'])) $value = $citation['ts_array']['rows'][$i]['cannotread'];
+  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+31).'"  TYPE="CHECKBOX" value="cannotread" name="cannotread'.$i.'" '.($value=='cannotread'?' checked="checked"':'').' /></td>';
+		}
+ 		$out .='</tr>
+<tr>
+  <td class="descriptionbox">Cannot write</td>';
+	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+		$value = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['cannotwrite'])) $value = $citation['ts_array']['rows'][$i]['cannotwrite'];
+  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+32).'"  TYPE="CHECKBOX" value="cannotwrite" name="cannotwrite'.$i.'" '.($value=='cannotwrite'?' checked="checked"':'').' /></td>';
+		}
+ 		$out .='</tr>
+<tr>
+  <td class="descriptionbox">Whether deaf and dumb, blind, insane, idiotic, pauper, or convict
+   </td>';
+	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+		$value = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['Disablity'])) $value = $citation['ts_array']['rows'][$i]['Disablity'];
+  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+33).'"  TYPE="TEXT" SIZE="22" name = "Disablity'.$i.'" value="'.htmlentities($value).'" /></td>';
+		}
+ 		$out .='</tr>
+<tr>
+  <td class="descriptionbox">Male citizens of U.S. of 21 years of age and upwards
+   </td>';
+	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+		$value = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['21andup'])) $value = $citation['ts_array']['rows'][$i]['21andup'];
+  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+34).'"  TYPE="TEXT" SIZE="22" name = "21andup'.$i.'" value="'.htmlentities($value).'" /></td>';
+		}
+ 		$out .='</tr>
+
+<tr>
+  <td class="descriptionbox">Male citizens of U.S. of 21 years of age and upwards where rights<br /> to vote is denied on other grounds than rebellion or other crime
+   </td>';
+	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+		$value = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['21andupbanned'])) $value = $citation['ts_array']['rows'][$i]['21andupbanned'];
+  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+35).'"  TYPE="TEXT" SIZE="22" name = "21andupbanned'.$i.'" value="'.htmlentities($value).'" /></td>';
+		}
+ 		$out .='</tr>'
+ 		;
+        $out .= 
+'<tr>
+  <td class="descriptionbox">Person
+  </td>';
+  $people = $this->getPeople();
+  $persons = array_values($people);
+	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
+		$pid = "";
+	  		if (isset($citation['ts_array']['rows'][$i]['personid'])) $pid = $citation['ts_array']['rows'][$i]['personid'];
+	  		if (empty($pid)) {
+	  			if (isset($persons[$i])) $pid = $persons[$i]->getXref();
+	  		}
+  			$person = Person::GetInstance($pid);
+  			
+			$out .= '
+	            <td id="peoplecell" class="optionbox">
+	                   <div id="peoplelink'.$i.'">';
+	                   		if (!is_null($person)) $out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+	                   $out .= '</div>
+	                   <INPUT tabindex="'.($i*100+36).'"  type="hidden" id="personid'.$i.'" name="personid'.$i.'" size="3" value="'.$pid.'" />';
+	                   if(isset($citation['ts_array']['rows'][$i]['Families'])) $searchName = $citation['ts_array']['rows'][$i]['Families'];
+						else $searchName = '';
+	                   $out .= print_findindi_link("personid".$i, "peoplelink".$i, true,false,'',$searchName);
+	                   $out .= "<br />Create New Person: <input type=\"checkbox\" value=\"newPerson\"/>";
+	                   $out .= '<br /></td>';
+	        
+		}
+ 		$out .='</tr></table>';
+ 		$out .= '</td></tr>';
         
-        $out .= '<td colspan="1" class="descriptionbox" align="center" rowspan="2">Whether deaf, dumb, blind,<br>insane, idiotic, pauper, or convict</td>';
-        
-//		  Next row of description cells
-        $out .=	'<tr><td class="descriptionbox" align="center">Age</td>';
-        $out .= '<td class="descriptionbox" align="center">Sex</td>';
-        $out .=	'<td class="descriptionbox" align="center">Color<br>(White, black, or mulatto)</td>';
-        
-//		  Country, City, Page, Head of Family input boxes
-		if(!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = 1;
-        for($i = 0; $i < $_REQUEST['numOfRows']; $i++){
-        $row = array();
-        	if (isset($citation['ts_array']['rows'][$i])) $row = $citation['ts_array']['rows'][$i];
-        	$value = "";
-        	if (isset($row['Dwelling'])) $value = $row['Dwelling'];
-	        $out .= '<tr><td class="optionbox"><input name="Dwelling'.$i.'" type="text" size="21" value="'.htmlentities($value).'"></td>';
-	//        Free white males input boxes
-			$value = "";
-        	if (isset($row['visitation'])) $value = $row['visitation'];
-	        $out .= '<td class="optionbox"><input name="visitation'.$i.'" type="text" size="15" value="'.htmlentities($value).'"></td>';
-	       $value = "";
-        	if (isset($row['colum3'])) $value = $row['colum3'];
-	        $out .= '<td class="optionbox"><input name="colum3'.$i.'" type="text" size="45" value="'.htmlentities($value).'"></td>';
-	       	$value = "";
-        	if (isset($row['Age'])) $value = $row['Age'];
-	        $out .= '<td class="optionbox"><input name="Age'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = "";
-        	if (isset($row['Sex'])) $value = $row['Sex'];
-	        $out .= '<td class="optionbox"><input name="Sex'.$i.'" type="text" size="4" value="'.htmlentities($value).'"></td>';
-	        $value = "";
-        	if (isset($row['Color'])) $value = $row['Color'];
-	        $out .= '<td class="optionbox"><input name="Color'.$i.'" type="text" size="17" value="'.htmlentities($value).'"></td>';
-			$value = "";
-        	if (isset($row['Profession'])) $value = $row['Profession'];
-	        $out .= '<td class="optionbox"><input name="Profession'.$i.'" type="text" size="29" value="'.htmlentities($value).'"></td>';
-			$value = "";
-        	if (isset($row['ValueOfRealEstate'])) $value = $row['ValueOfRealEstate'];
-	        $out .= '<td class="optionbox"><input name="ValueOfRealEstate'.$i.'" type="text" size="19" value="'.htmlentities($value).'"></td>';
-			$value = "";
-        	if (isset($row['PlaceOfBirth'])) $value = $row['PlaceOfBirth'];
-	        $out .= '<td class="optionbox"><input name="PlaceOfBirth'.$i.'" type="text" size="20" value="'.htmlentities($value).'"></td>';
-			$value = "";
-        	if (isset($row['Married'])) $value = $row['Married'];
-	        $out .= '<td class="optionbox"><input name="Married'.$i.'" type="text" size="17" value="'.htmlentities($value).'"></td>';
-			$value = "";
-        	if (isset($row['AttendedSchool'])) $value = $row['AttendedSchool'];
-	        $out .= '<td class="optionbox"><input name="AttendedSchool'.$i.'" type="text" size="22" value="'.htmlentities($value).'"></td>';
-			$value = "";
-        	if (isset($row['CannotReadWrite'])) $value = $row['CannotReadWrite'];
-	        $out .= '<td class="optionbox"><input name="CannotReadWrite'.$i.'" type="text" size="20" value="'.htmlentities($value).'"></td>';
-			$value = "";
-        	if (isset($row['DeafAndDumb'])) $value = $row['DeafAndDumb'];
-	        $out .= '<td class="optionbox"><input name="DeafAndDumb'.$i.'" type="text" size="23" value="'.htmlentities($value).'"></td>';
-			
-        }
-        $out .= '</table></td></tr>';
         return $out;
     }
 
@@ -190,23 +356,130 @@ class Census1870 extends ra_form {
     }
 
     function display_form() {
-        $out = $this->header("module.php?mod=research_assistant&form=Census1870&action=func&func=step2&taskid=$_REQUEST[taskid]", "center", "1870 United States Federal Census", true);
-        $out .= $this->sourceCitationForm(5);
+        $out = $this->header("module.php?mod=research_assistant&form=Census1870&action=func&func=step2&taskid=".$_REQUEST['taskid'], "center", "1870 United States Federal Census", true);
+        $out .= $this->sourceCitationForm(5, false);
         //$out .= $this->content();
         $out .= $this->footer();
         return $out;
+    }
+    
+    function createPerson($i)
+    {
+    	$indiFact = "0 @new@ INDI\r\n";
+    	$indiFact .= "1 NAME ".$_POST["NameOfPeople".$i]."\r\n";
+    	
+    	if(!empty($_POST["Age".$i]))
+    	{
+    		$age = 1870 - $_POST["Age".$i];
+    		$indiFact .= "1 BIRT\r\n";
+    		$indiFact .= "2 DATE ABT ".$age;
+    	}
+    	
+    	if(!empty($_POST["PlaceOfBirth".$i]))
+    	{
+    		$indiFact .= "2 PLAC ".$_POST["PlaceOfBirth"];
+    	}
+    	
+    	if(!empty($_POST["Sex".$i]))
+    	{
+    		$indiFact .= "1 SEX ".$_POST["Sex".$i];
+    	}
+    	
+    	return $indiFact;
+    	
     }
     
     function step2() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
 		global $INDI_FACTS_ADD;
 		
-		$this->processSourceCitation();
+		$people = array();
+		$pids = array();
+		$positions = array();
+			
+		$personid = "";
+		for($number = 0; $number < $_POST['numOfRows']; $number++)
+		{
+			if(!empty($_POST["newPerson".$number]))
+			{
+				$tempPerson = $this->createPerson($number);
+				$_POST["personid".$number] = append_gedrec($tempPerson,true,'');
+			}
+			
+			if (!isset($_POST["personid".$number])) $_POST["personid".$number]="";
+			$personid .= $_POST["personid".$number].";";
+			$_POST["personid".$number] = trim($_POST["personid".$number], '; \r\n\t');
+			
+			
+		}
 		
+		$_REQUEST['personid'] = $personid;
+		$return = $this->processSourceCitation();
+		
+		if(empty($return))
+		{
 		$out = $this->header("module.php?mod=research_assistant&form=Census1870&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1870 United States Federal Census");
-		$out .= $this->editFactsForm();
+		$out .= $this->editFactsForm(false);
 		$out .= $this->footer();
 		return $out;
+		}
+		else
+		{
+			
+		}
+	}
+	
+	function editFactsForm($printButton = true)
+	{
+		global $factarray;
+		
+		$facts = $this->getFactData();
+		$citation = $this->getSourceCitationData();
+		$out = parent::editFactsForm(false);
+		$rows = $citation['ts_array']['rows'];
+		$inferFacts = $this->inferFacts($rows);
+		
+		if(!empty($inferFacts))
+		{
+			
+		$out .= '<tr><td colspan="2" id="inferData"><table class="list_table"><tbody><tr><td colspan="4" class="topbottombar">Inferred Facts</td></tr>
+<tr><td class="descriptionbox">Fact</td><td class="descriptionbox">Person</td><td class="descriptionbox">Reason</td><td class="descriptionbox">Add</td></tr>';
+		$completeFact = true;
+		$occufact = true;
+		foreach($inferFacts as $key=>$inferredFacts) {
+			foreach($inferredFacts as $id=>$value) {
+				$completeFact = true;
+					foreach($facts as $factKey=>$factValues)
+					{
+						$ct = preg_match("/1 (\w+)/", $factValues['tf_factrec'], $match);						
+						$factname = trim($match[1]);
+						
+						if($factValues["tf_people"] == $key  && $factname == $value["factType"])	
+						{
+							$completeFact = false;
+						}
+					
+					}
+					
+					if($completeFact)
+					{
+						$out .='<tr>';
+						$out .="<td class=\"optionbox\">".$factarray[$value['factType']]." ".$value['date']."</td>";
+						$out .="<td class=\"optionbox\">".$value["Person"]."</td>";
+						$out .="<td class=\"optionbox\">".$value["Reason"]."</td>";
+						$out .="<td class=\"optionbox\">".'<INPUT type="Checkbox" id="'.$value['PersonID'].$value['factType'].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["Fact"]).'\',\''.$value['PersonID'].'\',\''.$value['factType'].'\',\''.htmlentities($value["Person"]).'\',\''.$value["factPeople"].'\')"></td>'."\n";
+						$out .="</tr>";
+					}
+				
+				}
+		}
+				
+			
+		
+		
+		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><INPUT tabindex="30"  type="submit" value="Complete"></td></tr>';
+		return $out;
+	}
 	}
 	
 	function step3() {
@@ -224,6 +497,145 @@ class Census1870 extends ra_form {
 		return $out;
 	}
 
+	function getOccupation($gedcomRecord)
+	{
+		$occupation = get_gedcom_value("OCCU", 1, $gedcomRecord);
+		return $occupation;
+	}
+
+	/**
+	 * This is a function that will attempt to infer facts from the census form.
+	 * If any facts can be inferred then it will attempt to validate them against the database.
+	 * If a fact differs from that in the database, or there is no fact present in the databse,
+	 * this function will suggest the facts to the user. 
+	 */
+	function inferFacts($rows){
+		$people = array();
+		
+		for($number = 0; $number < $_POST['numOfRows']; $number++)
+		{
+			$inferredFacts = array();
+			$person = Person::getInstance($rows[$number]["personid"]);
+			if (is_null($person)) continue;
+			if(!empty($person))
+			{
+				$bdate = $person->getBirthYear();
+				$occupation = $this->getOccupation($person->getGedcomRecord());
+			
+			$censusAge = $rows[$number]["Age"];
+			$birthDate = 1870 - $censusAge;
+				
+			if($occupation != $rows[$number]["Trade"])
+			{
+				$inferredFact["Person"] = $person->getName();
+				$inferredFact["PersonID"] = $person->getXref();
+				$inferredFact["Reason"] = "Add <i>".$rows[$number]["Trade"]."</i> occupation fact.";
+				$inferredFact["Fact"] = "1 OCCU ".$rows[$number]["Trade"];
+				$inferredFact["factType"] = 'OCCU';
+				$inferredFact["factPeople"] = "indi";
+				$inferredFact["date"] = '';
+				$inferredFacts[] = $inferredFact;
+			}
+			}
+			if($rows[$number]["Single"] == "Widowed")
+			{
+				
+				$spouseFams = $person->getSpouseFamilies();
+				foreach($spouseFams as $sFamKey => $sFamValue)
+				{
+					$spouse = $sFamValue->getSpouse($person);
+					$deathYear = $spouse->getDeathYear();
+					if($spouse->getDeathYear())	$diff = $deathYear - 1870;
+						if($diff)
+						{
+							if($diff > 1 || $diff < 0)
+							{
+								$tempArray = array();
+								$inferredFact["Person"] = $spouse->getName();								
+								$inferredFact["PersonID"] = $spouse->getXref();
+								$inferredFact["Reason"] = "A death Date can be inferred!";
+								$inferredFact["Fact"] = "1 DEAT \r\n2 DATE BEF 1870";
+								$inferredFact["factType"] = 'DEAT';
+								$inferredFact["date"] = 'BEF 1870';
+								$inferredFact["factPeople"] = "indi";
+								$inferredFacts[] = $inferredFact;
+							}
+						}
+					
+				}
+			
+			}
+			
+			if($rows[$number]["Single"] == "Married")
+			{
+				
+				$spouseFams = $person->getSpouseFamilies();
+				foreach($spouseFams as $sFamKey => $sFamValue)
+				{
+					$marriage = $sFamValue->getMarriageRecord();
+					if(!$marriage)
+					{
+						if(!is_null($sFamValue))
+						{
+							$tempArray = array();
+							$inferredFact["Person"] = $sFamValue->getSortableName();								
+							$inferredFact["PersonID"] = $sFamValue->getXref();
+							$inferredFact["Reason"] = "A Marriage Date can be inferred!";
+							$inferredFact["Fact"] = "1 MARR \r\n2 DATE BEF 1870";
+							$inferredFact["factType"] = 'MARR';
+							$inferredFact["date"] = 'BEF 1870';
+							$inferredFact["factPeople"] = "fam";
+							$tempArray[] = $inferredFact;
+							$people[$sFamValue->getXref()] = $tempArray;
+						}
+					}
+				}
+			
+			}
+			
+		
+			if(!empty($bdate))
+			{
+				 $bDiff = $birthDate - $bdate;
+				 if($bDiff >1 || $bDiff < 0)
+				 {
+				 		
+				 	if($birthDate != 1870)
+				 {
+				 	if(!empty($rows[$number]["PlaceOfBirth"]))
+				 	{
+				 		$inferredFact["Person"] = $person->getName();
+						$inferredFact["PersonID"] = $person->getXref();
+				 		$inferredFact["Reason"] = "A birth date difference was detected";
+				 		$inferredFact["Fact"] = "1 BIRT \r\n2 DATE ABT".$birthDate."\r\n2 PLAC ".$rows[$number]["PlaceOfBirth"];
+				 		$inferredFact["date"] = "ABT ".$birthDate;
+				 		$inferredFact["factType"] = 'BIRT';	 	
+				 		$inferredFact["factPeople"] = "indi";	
+						$inferredFacts[] = $inferredFact;
+				 		
+				 	}
+				 	else
+				 	{
+				 		$inferredFact["Person"] = $person->getName();
+						$inferredFact["PersonID"] = $person->getXref();
+				 		$inferredFact["Reason"] = "A birth date difference was detected";
+				 		$inferredFact["Fact"] = "1 BIRT \r\n2 DATE ABT".$birthDate;
+				 		$inferredFact["date"] = "ABT ".$birthDate;	
+				 		$inferredFact["factType"] = 'BIRT'; 	
+				 		$inferredFact["factPeople"] = "indi";
+						$inferredFacts[] = $inferredFact;
+				 	}
+				 }
+			}
+			}
+		
+			$people[$person->getXref()] = $inferredFacts;
+		}
+		return $people;
+		
+		
+	}
+	
 	/**
 	 * Override method from ra_form
 	 */
@@ -251,37 +663,76 @@ class Census1870 extends ra_form {
 		
 		$rows = array();
 		$text = $_POST['city'].", ".$_POST['county'].", ".$_POST['state'].", 1870 US Census";
-		for($number = 0; $number < $_REQUEST['numOfRows']; $number++)
+		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
+			if (!isset($_POST["Dwelling".$number])) $_POST["Dwelling".$number]="";
+			if (!isset($_POST["Families".$number])) $_POST["Families".$number]="";
+			if (!isset($_POST["NameOfPeople".$number])) $_POST["NameOfPeople".$number]="";
+			if (!isset($_POST["Age".$number])) $_POST["Age".$number]="";
+			if (!isset($_POST["Sex".$number])) $_POST["Sex".$number]="";
+			if (!isset($_POST["Race".$number])) $_POST["Race".$number]="";			
+			if (!isset($_POST["Trade".$number])) $_POST["Trade".$number]="";
+			if (!isset($_POST["realestate".$number])) $_POST["realestate".$number]="";
+			if (!isset($_POST["PofB".$number])) $_POST["PofB".$number]="";
+			if (!isset($_POST["personid".$number])) $_POST["personid".$number]="";
+			if (!isset($_POST["personalestate".$number])) $_POST["personalestate".$number]="";
+			if (!isset($_POST["fatherborn".$number])) $_POST["fatherborn".$number]="";
+			if (!isset($_POST["motherborn".$number])) $_POST["motherborn".$number]="";
+			if (!isset($_POST["borninyear".$number])) $_POST["borninyear".$number]="";
+			if (!isset($_POST["marriedinyear".$number])) $_POST["borninyear".$number]="";
+			if (!isset($_POST["schoolinyear".$number])) $_POST["schoolinyear".$number]="";
+			if (!isset($_POST["cannotwrite".$number])) $_POST["cannotwrite".$number]="";
+			if (!isset($_POST["cannotread".$number])) $_POST["cannotread".$number]="";
+			if (!isset($_POST["21andup".$number])) $_POST["21andup".$number]="";
+			if (!isset($_POST["21andupbanned".$number])) $_POST["21andupbanned".$number]="";
+			
+			
 			$rows[$number] = array(
 			'Dwelling'=>$_POST["Dwelling".$number],
-			'visitation'=>$_POST["visitation".$number],
-			'colum3'=>$_POST["colum3".$number],
-			"Age"=>$_POST["Age".$number],
+			'Families'=>$_POST["Families".$number],
+			"NameOfPeople"=>$_POST["NameOfPeople".$number],
+			"Race"=>$_POST["Race".$number],
 			"Sex"=>$_POST["Sex".$number],
-			"Color"=>$_POST["Color".$number],
-			"Profession"=>$_POST["Profession".$number],
-			"ValueOfRealEstate"=>$_POST["ValueOfRealEstate".$number],
-			"PlaceOfBirth"=>$_POST["PlaceOfBirth".$number],
-			"Married"=>$_POST["Married".$number],
-			"AttendedSchool"=>$_POST["AttendedSchool".$number],
-			"CannotReadWrite"=>$_POST["CannotReadWrite".$number],
-			"DeafAndDumb"=>$_POST["DeafAndDumb".$number]
+			"Age"=>$_POST["Age".$number],
+			"Trade"=>$_POST["Trade".$number],
+			"realestate"=>$_POST["realestate".$number],
+			"Disablity"=>$_POST["Disablity".$number],
+			"PofB"=>$_POST["PofB".$number],
+			"personalestate"=>$_POST["personalestate".$number],		
+			"fatherborn"=>$_POST["fatherborn".$number],	
+			"motherborn"=>$_POST["motherborn".$number],	
+			"borninyear"=>$_POST["borninyear".$number],		
+			"marriedinyear"=>$_POST["marriedinyear".$number],	
+			"schoolinyear"=>$_POST["schoolinyear".$number],		
+			"cannotread"=>$_POST["cannotread".$number],		
+			"cannotwrite"=>$_POST["cannotwrite".$number],	
+			"21andup"=>$_POST["21andup".$number],	
+			"21andupbanned"=>$_POST["21andupbanned".$number],			
+			"personid"=>$_POST["personid".$number]
 			);
-			$text .=$number==0?"" :"\r\n";
-			$text .= "\r\nDwelling: ".$_POST["Dwelling".$number];
-			$text .= "\r\nFamilies numbered in the order of visitation: ".$_POST["visitation".$number];
-			$text .= "\r\nThe Name of every Person whose usual place of abode on the first day of June, 1850, was in this family: ".$_POST["colum3".$number];
-			$text .= "\r\nAge: ".$_POST["Age".$number];
-			$text .= "\r\nSex: ".$_POST["Sex".$number];
-			$text .= "\r\nColor: ".$_POST["Color".$number];
-			$text .= "\r\nProfession: ".$_POST["Profession".$number];
-			$text .= "\r\nValue Of Real Estate: ".$_POST["ValueOfRealEstate".$number];
-			$text .= "\r\nFemales Sixteen thru Twenty five: ".$_POST["PlaceOfBirth".$number];
-			$text .= "\r\nPlace Of Birth: ".$_POST["Married".$number];
-			$text .= "\r\nAttended School: ".$_POST["AttendedSchool".$number];
-			$text .= "\r\nCan not Read Write: ".$_POST["CannotReadWrite".$number];
-			$text .= "\r\nDeaf And Dumb: ".$_POST["DeafAndDumb".$number];
+			
+			$text .= "\r\n";
+			if (!empty($_POST["Dwelling".$number])) $text .= "Dwelling number: ".$_POST["Dwelling".$number];
+			if (!empty($_POST["Families".$number])) $text .= " Family number: ".$_POST["Families".$number];
+			if (!empty($_POST["NameOfPeople".$number])) $text .= " Name: ".$_POST["NameOfPeople".$number];
+			if (!empty($_POST["Race".$number])) $text .= ", Color: ".$_POST["Race".$number];
+			if (!empty($_POST["Sex".$number])) $text .= ", Sex: ".$_POST["Sex".$number];
+			if (!empty($_POST["Age".$number])) $text .= ", Age: ".$_POST["Age".$number];
+			if (!empty($_POST["Trade".$number])) $text .= ", Profession, Occupation or Trade: ".$_POST["Trade".$number];
+			if (!empty($_POST["realestate".$number])) $text .= ", ".$_POST["realestate".$number];
+			if (!empty($_POST["Disablity".$number])) $text .= ", ".$_POST["Disablity".$number];
+			if (!empty($_POST["PofB".$number])) $text .= ", ".$_POST["PofB".$number];
+			if (!empty($_POST["personalestate".$number])) $text .= ", Value of Personal Estate: ".$_POST["personalestate".$number];
+			if (!empty($_POST["fatherborn".$number])) $text .= ", ".$_POST["fatherborn".$number];
+			if (!empty($_POST["motherborn".$number])) $text .= ", ".$_POST["motherborn".$number];
+			if (!empty($_POST["borninyear".$number])) $text .= ", ".$_POST["borninyear".$number];
+			if (!empty($_POST["marriedinyear".$number])) $text .= ", ".$_POST["marriedinyear".$number];
+			if (!empty($_POST["schoolinyear".$number])) $text .= ", ".$_POST["schoolinyear".$number];
+			if (!empty($_POST["cannotread".$number])) $text .= ", ".$_POST["cannotread".$number];
+			if (!empty($_POST["cannotwrite".$number])) $text .= ", ".$_POST["cannotwrite".$number];
+			if (!empty($_POST["21andup".$number])) $text .= ", ".$_POST["21andup".$number];
+			if (!empty($_POST["21andupbanned".$number])) $text .= ", ".$_POST["21andupbanned".$number];
+						
 		}
 
 		$citation = array(
@@ -289,13 +740,13 @@ class Census1870 extends ra_form {
 			"QUAY"=>'', 
     		"DATE"=>!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"1870", 
 			"TEXT"=>$text, 
-			"OBJE"=>'',
+			"OBJE"=>$_POST['OBJE'],
 			"array"=>array(
 			'city'=>$_POST['city'],
 			'county'=>$_POST['county'],
 			'state'=>$_POST['state'],
 			'rows'=>$rows));
-					
+		
 		return $citation;
     }
     

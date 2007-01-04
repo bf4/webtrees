@@ -23,7 +23,7 @@
  * @author PGV Developers
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: editor.en.php 425 2006-09-29 12:08:49Z canajun2eh $
+ * @version $Id$
  */
 $pgv_lang["accept_changes"]		= "Accetta/Rifiuta le modifiche";
 $pgv_lang["review_changes"]		= "Rivedi le modifiche al file GEDCOM";

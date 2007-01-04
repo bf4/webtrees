@@ -37,41 +37,29 @@ else{
 
 	print_header($controller->getPageTitle());
 	//The following lines of code are used to print the menu box on the top right hand corner
-?>
-		<table class="sublinks_table rtl" cellspacing="4" cellpadding="0" align="<? print $TEXT_DIRECTION=='ltr'?'right':'left';?>">
+	if ($controller->userCanEdit() || $controller->canShowOtherMenu()) { ?>
+		<table class="sublinks_table rtl" style="margin: 10px;" cellspacing="4" cellpadding="0" align="<? print $TEXT_DIRECTION=='ltr'?'right':'left';?>">
 			<tr>
 				<td class="list_label <?php echo $TEXT_DIRECTION; ?>" colspan="5"><?php print $pgv_lang["media_options"]; ?></td>
 			</tr>
 			<tr>
-				<td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
 				<?php
-				//-- get charts menu from menubar
-				$menubar = new MenuBar();
-				?>
-				</td>
-				<td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
-				<?php
-				if (file_exists("reports/individual.xml")) {?>
-					</td><td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
-					<?php
-				}
 				if ($controller->userCanEdit()) {
 				?>
-				</td>
 				<td class="sublinks_cell <?php echo $TEXT_DIRECTION;?>">
-				<?php $menu = $controller->getEditMenu(); $menu->printMenu();
-				}
+					<?php $menu = $controller->getEditMenu(); $menu->printMenu(); ?>
+				</td>
+				<?php }
 				if ($controller->canShowOtherMenu()) {
 				?>
-				</td>
 				<td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
-				<?php $menu = $controller->getOtherMenu(); $menu->printMenu();
-				}
-				?>
+				<?php $menu = $controller->getOtherMenu(); $menu->printMenu(); ?>
 				</td>
+				<?php }	?>
 			</tr>
 		</table>
 		<?php
+	}
 		//The next set of code draws the table that displays information about the person
 		?>
 		<table width="70%">
@@ -90,10 +78,12 @@ else{
 
 						//Checks if the image size is null.
 						if ($imagesize[0]){
+								$dwidth = 300;
+								if ($imagesize[0]<300) $dwidth = $imagesize[0];
 							//Makes it so the picture when clicked opens the Image View Page
 							?>
 							<a href="javascript:;" onclick="return openImage('<?php print rawurlencode($filename); ?>', <?php print $imgwidth; ?>, <?php print $imgheight; ?>);">
-								<img src="<?php if (!$USE_THUMBS_MAIN) print $filename; else print thumbnail_file($filename); ?>" border="0" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
+								<img src="<?php if (!$USE_THUMBS_MAIN) print $filename; else print thumbnail_file($filename); ?>" border="0" <?php if (!$USE_THUMBS_MAIN) print "width=\"" . $dwidth . "\"";?> alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
 							</a>
 							<?php
 						}

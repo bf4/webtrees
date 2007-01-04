@@ -23,7 +23,7 @@
  * @author PGV Developers
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: editor.en.php 425 2006-09-29 12:08:49Z canajun2eh $
+ * @version $Id$
  */
 $pgv_lang["accept_changes"]		= "Acceptera / Förkasta ändringar";
 $pgv_lang["replace"]			= "Ersätt post";
@@ -208,5 +208,6 @@ $pgv_lang["upload_media_help"]	= "~#pgv_lang[upload_media]#~<br /><br />Välj fi
 $pgv_lang["upload_successful"]	= "Uppladdning lyckades";
 $pgv_lang["view_change_diff"]	= "Visa förändringar";
 
+$pgv_lang["advanced_name_fields"]	= "Övriga namn (smeknamn, vigselnamn etc.)";
 
 ?>

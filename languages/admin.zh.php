@@ -23,7 +23,7 @@
  * @author PGV Developers
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: lang.en.php 294 2006-07-24 12:27:56Z opus27 $
+ * @version $Id$
  */
 $pgv_lang["full_name"]			= "全名";
 $pgv_lang["error_header"] 		= "GEDCOM 文件, [#GEDCOM#], 不存在在被指定的地點。";

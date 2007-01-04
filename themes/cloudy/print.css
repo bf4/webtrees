@@ -30,6 +30,9 @@
 .something {
 /*empty style to make sure that the BODY style is not ignored */
 }
+#backprint {
+	display:none;
+}
 body {
 padding: 5pt 5pt 0pt 5pt;
 COLOR: #000066;
@@ -996,4 +999,20 @@ font-size: 12px;
 /* Font sizes */
 .font11 {
 	font-size: 11px;
+}
+
+.lifespan_outer {
+	position: relative; 
+	width: auto;
+	height: auto; 
+	overflow: visible; 
+	border: none;
+}
+
+.lifespan_people {
+	position: absolute; 
+	width: auto; 
+	left: -10px; 
+	top: -60px; 
+	z-index:1;
 }

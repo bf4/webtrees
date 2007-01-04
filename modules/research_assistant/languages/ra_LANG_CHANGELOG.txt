@@ -12,7 +12,8 @@ file to view the english text for these changes.
 
 --------------------------------------------------------------
 
-+ $pgv_lang["page"]                         // December 13, 2005 
+- $pgv_lang["all"]                         // November 7, 2006
++ $pgv_lang["page"]                         // December 13, 2005
 + $pgv_lang["city"]                         // December 13, 2005 
 + $pgv_lang["county"]                       // December 13, 2005 
 + $pgv_lang["enumDate"]                     // December 13, 2005 

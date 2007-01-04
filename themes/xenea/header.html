@@ -20,8 +20,8 @@
                	<form action="search.php" method="get">
 				<input type="hidden" name="action" value="general" />
 				<input type="hidden" name="topsearch" value="yes" />
-				<input type="text" class="formbut" size="15" maxlength="40" name="query" accesskey="<?php print $pgv_lang["accesskey_search"]?>" value="<?php if ($action=="general") print $query; ?>" />
-				<input type="submit" value="<?php print $pgv_lang["search"]?>" />
+				<input type="text" name="query" accesskey="<?php print $pgv_lang["accesskey_search"]?>" size="12" value="<?php print $pgv_lang['search']?>" onfocus="if (this.value == '<?php print $pgv_lang['search']?>') this.value=''; focusHandler();" onblur="if (this.value == '') this.value='<?php print $pgv_lang['search']?>';" />
+				<input type="submit" name="search" value="&gt;" />
 				</form>
 				</td>
 				<td width="10"><img src="<?php print $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" /></td>

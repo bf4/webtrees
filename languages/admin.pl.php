@@ -23,7 +23,7 @@
  * @author PGV Developers
  * @package PhpGedView
  * @subpackage Languages
- * @version $Id: lang.en.php 294 2006-07-24 12:27:56Z opus27 $
+ * @version $Id$
  */
 $pgv_lang["user"]					= "Użytkownik zalogowany";
 $pgv_lang["step2"]				= "Krok 2 z 4:";

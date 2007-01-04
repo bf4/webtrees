@@ -5,7 +5,7 @@
  * This is a plug-in file for the Auto search Assistant
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2006  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,25 +52,25 @@ function autosearch_options()
 						<input type=\"hidden\" name=\"mod\" value=\"research_assistant\" />
 						<input type=\"hidden\" name=\"action\" value=\"auto_search\" />
 						"; //The value of the searchtype should be the same as the file name minus .php 
-		$to_return ="<input type=\"hidden\" name=\"searchtype\" value=\"ancestrycouk\" />
+		$to_return .="<input type=\"hidden\" name=\"searchtype\" value=\"ancestrycouk\" />
 						
 						<input type=\"hidden\" name=\"pid\" value=\"".$pid."\" />
 							<table width='50%'>		
 		 						<tr>
 					 				<td class='optionbox'>
-					 					".$pgv_lang["autosearch_surname"]."</td><td class='optionbox'> <input type='checkbox' name='surname' value=\"".$lastname."\" checked='checked' /> ".$lastname."</td></tr>
+					 					".$pgv_lang["autosearch_surname"]."</td><td class='optionbox'> <input type='checkbox' name='surname' value=\"".$lastname."\" checked='checked' />&nbsp; ".$lastname."</td></tr>
 					 				<tr><td class='optionbox'>
 					 					".$pgv_lang["autosearch_givenname"]."</td>
-											<td class='optionbox'> <input type='checkbox' name='givenname1' value=\"".$givennames."\" checked='checked'' /> ".$givennames."</td>
+											<td class='optionbox'> <input type='checkbox' name='givenname1' value=\"".$givennames."\" checked='checked'' /> &nbsp;".$givennames."</td>
 									</tr>
 					 				<tr><td class ='optionbox'>
-					 					".$pgv_lang["autosearch_byear"]."</td><td class ='optionbox'> <input type='checkbox' name='byear' value=\"".$byear."\" checked='checked' /> ".$byear."</td></tr>
+					 					".$pgv_lang["autosearch_byear"]."</td><td class ='optionbox'> <input type='checkbox' name='byear' value=\"".$byear."\" checked='checked' />&nbsp; ".$byear."</td></tr>
 					 				<tr><td class='optionbox'>
-					 					".$pgv_lang["autosearch_dyear"]."</td><td class='optionbox'> <input type='checkbox' name='dyear' value=\"".$dyear."\"  />".$dyear."</td></tr>
+					 					".$pgv_lang["autosearch_dyear"]."</td><td class='optionbox'> <input type='checkbox' name='dyear' value=\"".$dyear."\"  />&nbsp;".$dyear."</td></tr>
 									<tr><td class='optionbox' colspan=2 align='center'>
 										".$pgv_lang["autosearch_plugin_name_ancestrycouk"]."</td></tr>
 									<tr><td  align='center' class='topbottombar'colspan=2>
-										<input type='submit' value='Search' /></td></tr>
+										<input type='submit' value='".$pgv_lang["autosearch_search"]."' /></td></tr>
 		 			
 							</table>
 						

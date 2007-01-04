@@ -50,7 +50,6 @@ function openImage(filename, width, height) {
 	 	if (height>screenH-110) height=screenH-120;
 		if ((filename.search(/\.je?pg$/gi)!=-1)||(filename.search(/\.gif$/gi)!=-1)||(filename.search(/\.png$/gi)!=-1)||(filename.search(/\.bmp$/gi)!=-1)) 
 			window.open('imageview.php?filename='+filename,'_blank','top=50,left=50,height='+height+',width='+width+',scrollbars=1,resizable=1');
-			//window.location = 'mediaviewer.php?filename='+filename;
 		else window.open(unescape(filename),'_blank','top=50,left=50,height='+height+',width='+width+',scrollbars=1,resizable=1');
 		return false;
 	}
@@ -225,7 +224,7 @@ var show = false;
 
 	var timeouts = new Array();
 	function family_box_timeout(boxid) {
-		tout = setTimeout("hide_family_box('"+boxid+"')", 1500);
+		tout = setTimeout("hide_family_box('"+boxid+"')", 2500);
 		timeouts[boxid] = tout;
 	}
 
@@ -260,145 +259,6 @@ var show = false;
 		return false;
 	}
 	
-	function expand_layer_chart(sid, show)
-	{		
-		var sbox = document.getElementById("person-"+sid);
-		
-		if (! sbox ) //should never hit this if working properly
-			alert(sid);
-		
-		var sbox_img = document.getElementById( sid + "_img" );
-		var sbox_style = sbox.style;
-		
-		//contains the ids of any spouses/children that also need to be shown/hidden
-		var infoDiv = document.getElementById("INFO" + sid);
-		if ( infoDiv )
-			var childDivs = infoDiv.innerHTML.split(".");
-		
-		//determine wether to show or hide certain elements
-		var wasNull;
-		if ( null == show )
-		{
-			wasNull = true;
-			if ( ( (sbox_style.display=='none') || (sbox_style.display=='') ) )
-				var show = true;
-			else
-				var show = false;
-		}
-		else
-			wasNull = false;
-			
-		//text - the primary display mode
-		//tex2 - the secondary display mode 
-		var text;
-		var text2;
-		if (show)
-		{
-			text = "block";
-			text2 = "none";
-
-			if (sbox_img) sbox_img.src = plusminus[1].src;
-		}
-		else
-		{
-			text2 = "block";
-			text = "none";
-			if (sbox_img) sbox_img.src = plusminus[0].src;
-		}
-		
-		sbox_style.display = text;
-		
-		//hide or show child elements
-		if ( infoDiv )
-			for ( var i = 1; i < childDivs.length; i++ ) //for each spouse/child
-			{	
-				var infoDivChild = document.getElementById("INFO" + childDivs[i]);
-				if ( infoDivChild )
-				{
-					var childDivsChild = infoDivChild.innerHTML.split(".");
-				
-					if (!( childDivs[i].indexOf("PERSON") > 0 && childDivsChild.length < 2 && show ))
-						expand_layer_chart(childDivs[i], show); //call recursively
-					else
-					{
-						var factChildDiv = document.getElementById("fact"+childDivs[i]);
-						if ( factChildDiv )
-						{
-							factChildDiv.style.display = "block";
-							
-							var btnChildDiv = document.getElementById(childDivs[i]+"J");
-							if ( btnChildDiv )
-								btnChildDiv.style.display = factChildDiv.style.display;
-						}
-					}
-				}
-			}
-			
-		//the plus/minus sign assosciated with that spouse
-		var btnDiv = document.getElementById(sid+"J");
-			if ( btnDiv )
-					btnDiv.style.display = text;
-				
-		//old fact stuff that does nothing that needs to be taken out
-		var factDiv = document.getElementById("fact"+sid);
-			if ( factDiv )
-			{
-				if ( wasNull )
-					factDiv.style.display = text2;
-				else
-					factDiv.style.display = "none";
-					
-				//used to make sure and not hide the last plus sign
-				//needs to be moved and done a different way so the fact stuff can be taken out
-				if ( btnDiv && btnDiv.style.display == "none" )
-					btnDiv.style.display = factDiv.style.display;
-			}
-
-		//arrow for ancestors
-		var arrowDiv = document.getElementById(sid+"A");
-			if ( arrowDiv )
-					arrowDiv.style.display = text;
-			
-		//sid.indexOf("PERSON") > 0 checks that the person is a spouse
-		//childDivs.length < 2 checks that the person does not already have children displayed
-		//show checks that the person is being displayed not hidden
-		if ( sid.indexOf("PERSON") > 0 && childDivs.length < 2 && show )
-			GetChildren(sid.substring(0, sid.indexOf("PERSON")));
-
-		return false;
-	}
-
-	//dynamically expand layer
-	function GetChildren(pid)
-	{	
-		//collect needed information
-		var showFull = document.getElementById("showFull").innerHTML;
-		var famID = document.getElementById("family-"+pid).innerHTML;
-		var widthHeight = document.getElementById("width.height").innerHTML;
-		var width = widthHeight.split("~")[0];
-		var height = widthHeight.split("~")[1];
-		
-		//Ajax stuff
-		var oXmlHttp = createXMLHttp();
-		oXmlHttp.open("get", "get_descendents.php?pid=" + pid + "&showFull=" + showFull
-		+ "&famID=" + famID + "&bwidth=" + width + "&bheight=" + height, true);
-		oXmlHttp.onreadystatechange=function()
-		{
-			if (oXmlHttp.readyState==4)
-			{
-				//find place to put children
-				var ChildDiv = document.getElementById("kids-"+pid);
-				ChildDiv.innerHTML = oXmlHttp.responseText;
-				
-				//update expand information
-				var newInfo = document.getElementById("NewInfo"+pid).innerHTML;
-				var infoDiv = document.getElementById("INFO" + pid + "PERSON");
-				infoDiv.innerHTML = infoDiv.innerHTML + newInfo;
-			}
-		};
-		oXmlHttp.send(null);
-	}
-
 	//-- function used for mouse overs of arrows
 	//- arrow is the id of the arrow to swap
 	//- index is the index into the arrows array
@@ -559,6 +419,17 @@ function addnewsource(field) {
 
 function valid_date(datefield) {
 	months = new Array("JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC");
+
+	//-- don't try to validate empty dates for Safari/opera
+	if (datefield.value=="") return;
+	
+	// year only no validation for Safari/opera
+	var qsearch = /^(\d\d\d\d)$/i;
+ 	var found = qsearch.exec(datefield.value);
+ 	if (found) {
+	 	return;
+ 	}
+ 	
 	// quarter format [ 1509083 ]
 	// e.g. Q1 1900
 	var qsearch = /^Q(\d) (\d\d\d\d)$/i;
@@ -757,6 +628,76 @@ function createXMLHttp()
 	}
 	throw new Error("XMLHttp object could not be created.");
 };
+
+/**
+ * function to extract JS code from a text string.  Useful to call when loading
+ * content dynamically through AJAX which contains a mix of HTML and JavaScript.
+ * retrieves all of the JS code between <script></script> tags and adds it as a <script> node
+ * @param string text   the text that contains a mix of html and inline javascript
+ * @param DOMElement parentElement	the element that the text and JavaScript will added to
+ */
+function evalAjaxJavascript(text, parentElement) {
+	parentElement.innerHTML = "";
+	/* -- uncomment for debugging
+	debugelement = document.createElement("pre");
+	debugelement.appendChild(document.createTextNode(text));
+	parentElement.appendChild(debugelement);
+	*/
+	pos2 = -1;
+	//-- find the first occurrence of <script>
+	pos1 = text.indexOf("<script", pos2+1);
+	while(pos1>-1) {
+		//-- append the text up to the <script tag to the content of the parent element
+		parentElement.innerHTML += text.substring(0, pos1);
+		
+		//-- find the close of the <script> tag
+		pos2 = text.indexOf(">",pos1+5);
+		if (pos2==-1) {
+			parentElement.innerHTML += "Error: incomplete text";
+			return;
+		}
+		//-- create a new <script> element to add to the parentElement
+		jselement = document.createElement("script");
+		jselement.type = "text/javascript";
+		//-- look for any src attributes
+		scripttag = text.substring(pos1, pos2);
+		regex = new RegExp("\\ssrc=\".*\"", "gi");
+		results = scripttag.match(regex);
+		if (results) {
+			for(i=0; i<results.length; i++) {
+				src = results[i].substring(results[i].indexOf("\"")+1, results[i].indexOf("\"", 6));
+				src = src.replace(/&amp;/gi, "&");
+				jselement.src = src;
+			}
+		}
+		opos1 = pos1;
+		pos1 = pos2;
+		//-- find the closing </script> tag
+		pos2 = text.indexOf("</script",pos1+1);
+		if (pos2==-1) {
+			parentElement.innerHTML += "Error: incomplete text";
+			return;
+		}
+		//-- get the JS code between the <script></script> tags
+		if (!results || results.length==0) {
+			jscode = text.substring(pos1+1, pos2);
+			if (jscode.length>0) {
+				ttext = document.createTextNode(jscode);
+				//-- add the JS code to the <script> element as a text node
+				jscode=jscode.replace(/function ([^( ]*)/g,'window.$1 = function');
+				eval(jscode);
+			}
+		}
+		//-- add the javascript element to the parent element
+		parentElement.appendChild(jselement);
+		//-- shrink the text for the next iteration
+		text = text.substring(pos2+9, text.length);
+		//-- look for the next <script> tag
+		pos1 = text.indexOf("<script");
+	}
+	//-- make sure any HTML/text after the last </script> gets added
+	parentElement.innerHTML += text;
+}
 
 function restorebox(boxid, bstyle) {
 	divbox = document.getElementById("out-"+boxid);
@@ -1211,10 +1152,17 @@ var monthLabels = new Array();
   	cal_toggleDate(dateDivId, dateFieldId);
   	return false;
   }
-function findIndi(field, indiname, multiple, ged) {
+function findIndi(field, indiname, multiple, ged,filter) {
         pastefield = field;
         nameElement = indiname;
+        if(filter)
+        {
+        window.open('find.php?type=indi&multiple='+multiple+'&ged='+ged+'&filter='+filter, '_blank', 'left=50,top=50,width=600,height=500,resizable=1,scrollbars=1');
+        }
+        else
+        {
         window.open('find.php?type=indi&multiple='+multiple+'&ged='+ged, '_blank', 'left=50,top=50,width=600,height=500,resizable=1,scrollbars=1');
+        }
         return false;
 }
 

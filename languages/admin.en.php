@@ -30,6 +30,20 @@ if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["sanity_err0"]			= "Errors:";
+$pgv_lang["sanity_err1"]			= "You need to have PHP version 4.3 or higher.";
+$pgv_lang["sanity_err2"]			= "The file or directory <i>#GLOBALS[whichFile]#</i> does not exist. Please verify that the file or directory exists, was not mis-named, and Read permissions are set correctly.";
+$pgv_lang["sanity_err3"]			= "The file <i>#GLOBALS[whichFile]#</i> did not upload correctly. Please try to upload the file again.";
+$pgv_lang["sanity_err4"]			= "The file <i>config.php</i> is corrupt.";
+$pgv_lang["sanity_err5"]			= "The <i>config.php</i> file is not writable.";
+$pgv_lang["sanity_err6"]			= "The <i>#GLOBALS[INDEX_DIRECTORY]#</i> directory is not writable.";
+$pgv_lang["sanity_warn0"]			= "Warnings:";
+$pgv_lang["sanity_warn1"]			= "The <i>#GLOBALS[MEDIA_DIRECTORY]#</i> directory is not writable.  You will not be able to upload media files or generate thumbnails in PhpGedView.";
+$pgv_lang["sanity_warn2"]			= "The <i>#GLOBALS[MEDIA_DIRECTORY]#thumbs</i> directory is not writable.  You will not be able to upload thumbnails or generate thumbnails in PhpGedView.";
+$pgv_lang["sanity_warn3"]			= "The GD imaging library does not exist. PhpGedView will still function, but some of the features, such as thumbnail generation and the circle diagram, will not work without the GD library.  Please see <a href='http://www.php.net/manual/en/ref.image.php'>http://www.php.net/manual/en/ref.image.php</a> for more information.";
+$pgv_lang["sanity_warn4"]			= "The XML Parser library does not exist. PhpGedView will still function, but some of the features, such as report generation and web services, will not work without the XML Parser library. Please see <a href='http://www.php.net/manual/en/ref.xml.php'>http://www.php.net/manual/en/ref.xml.php</a> for more information.";
+$pgv_lang["sanity_warn5"]			= "The DOM XML library does not exist. PhpGedView will still function, but some of the features, such as Gramps Export features in the clippings cart, download, and web services, will not work. Please see <a href='http://www.php.net/manual/en/ref.dom.php'>http://www.php.net/manual/en/ref.dom.php</a> for more information.";
+$pgv_lang["sanity_warn6"]			= "The Calendar library does not exist. PhpGedView will still function, but some of the features, such as conversion to other calendars such as Hebrew or French, will not work.  It is not essential for running PhpGedView. Please see <a href='http://www.php.net/manual/en/ref.calendar.php'>http://www.php.net/manual/en/ref.calendar.php</a> for more information.";
 $pgv_lang["ip_address"]				= "IP address";
 $pgv_lang["date_time"]				= "Date and time";
 $pgv_lang["log_message"]			= "Log Message";
@@ -83,7 +97,7 @@ $pgv_lang["label_add_search_server"]	= "Add IP";
 $pgv_lang["label_add_server"]      		= "Add";
 $pgv_lang["label_ban_server"]			= "Submit";
 $pgv_lang["label_delete"]           	= "Delete";
-$pgv_lang['progress_bars_info']			= "The status bars below will let you know how the import is progressing.  If the time limit runs out the import will be stopped and you will be asked to press a continue button.  If you don't see a continue button, please go back and enter a smaller time limit value.";
+$pgv_lang["progress_bars_info"]			= "The status bars below will let you know how the import is progressing.  If the time limit runs out the import will be stopped and you will be asked to press a continue button.  If you don't see a continue button, please go back and enter a smaller time limit value.";
 $pgv_lang["upload_replacement"]			= "Upload Replacement";
 $pgv_lang["about_user"]					= "You must first create your main administrative user.  This user will have privileges to update the configuration files, view private data, and create other users.";
 $pgv_lang["access"]						= "Access";
@@ -93,7 +107,7 @@ $pgv_lang["add_new_language"]			= "Add files and settings for a new language";
 $pgv_lang["add_user"]					= "Add a new user";
 $pgv_lang["admin_approved"] 			= "Your account at #SERVER_NAME# has been approved";
 $pgv_lang["admin_gedcom"]				= "Admin GEDCOM";
-$pgv_lang["admin_gedcoms"]				= "Click here to administer GEDCOMS";
+$pgv_lang["admin_gedcoms"]				= "Click here to administer GEDCOMs";
 $pgv_lang["admin_geds"]					= "Data and GEDCOM administration";
 $pgv_lang["admin_info"]					= "Informational";
 $pgv_lang["admin_site"]					= "Site administration";
@@ -160,8 +174,9 @@ $pgv_lang["fbsql"]								= "FrontBase";
 $pgv_lang["found_record"]						= "Found record";
 $pgv_lang["ged_download"]						= "Download";
 $pgv_lang["ged_import"] 						= "Import";
+$pgv_lang["ged_check"] 							= "Check";
 $pgv_lang["gedcom_adm_head"]					= "GEDCOM Administration";
-$pgv_lang["gedcom_config_write_error"]  		= "";
+$pgv_lang["gedcom_config_write_error"]			= "E R R O R !!!<br />Could not write to file <i>#GLOBALS[whichFile]#</i>.  Please check it for proper Write permissions.";
 $pgv_lang["gedcom_downloadable"] 				= "This GEDCOM file is downloadable over the internet!<br />Please see the SECURITY section of the <a href=\"readme.txt\"><b>readme.txt</b></a> file to fix this problem";
 $pgv_lang["gedcom_file"]						= "GEDCOM File:";
 $pgv_lang["gedcom_not_imported"]				= "This GEDCOM has not yet been imported.";
@@ -298,4 +313,29 @@ $pgv_lang["welcome_new"]						= "Welcome to your new PhpGedView website.";
 $pgv_lang["yearly"]								= "Yearly";
 $pgv_lang["you_may_login"]						= " by the site administrator.  You may now login to the PhpGedView site by accessing the link below:";
 
+// Text for the Gedcom Checker
+$pgv_lang["gedcheck"]     = "Gedcom checker";          // Module title
+$pgv_lang["gedcheck_text"]= "This module checks the format of a GEDCOM file against the <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">5.5.1 GEDCOM Specification</a>.  It also checks for a number of common errors in your data.  Note that there are lots of versions, extensions and variations on the specification so you should not be concerned with any issues other than those flagged as \"Critical\".  The explanation for all the line-by-line errors can be found in the specification, so please check there before asking for help.";
+$pgv_lang["level"]        = "Level";                   // Levels of checking
+$pgv_lang["critical"]     = "Critical";
+$pgv_lang["error"]        = "Error";
+$pgv_lang["warning"]      = "Warning";
+$pgv_lang["info"]         = "Info";
+$pgv_lang["open_link"]    = "Open links in";           // Where to open links
+$pgv_lang["same_win"]     = "Same tab/window";
+$pgv_lang["new_win"]      = "New tab/window";
+$pgv_lang["context_lines"]= "Lines of GEDCOM context"; // Number of lines either side of error
+$pgv_lang["all_rec"]      = "All records";             // What to show
+$pgv_lang["err_rec"]      = "Records with errors";
+$pgv_lang["missing"]      = "missing";                 // General error messages
+$pgv_lang["multiple"]     = "multiple";
+$pgv_lang["invalid"]      = "invalid";
+$pgv_lang["too_many"]     = "too many";
+$pgv_lang["too_few"]      = "too few";
+$pgv_lang["no_link"]      = "does not link back";
+$pgv_lang["data"]         = "data";                    // Specific errors (used with general errors)
+$pgv_lang["see"]          = "see";
+$pgv_lang["noref"]        = "Nothing references this record";
+$pgv_lang["tag"]          = "tag";
+$pgv_lang["spacing"]      = "spacing";
 ?>

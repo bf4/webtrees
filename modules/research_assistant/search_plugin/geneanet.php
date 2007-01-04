@@ -5,7 +5,7 @@
  * This is a plug-in file for the Auto search Assistant
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2006  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -83,7 +83,7 @@ function autosearch_options()
 		// If you want to use logic to show which fields you want to show you can insert it here
 		$to_return .="		<tr>
 					 				<td class='optionbox'>
-					 					".$pgv_lang["autosearch_surname"]."</td><td class='optionbox'> <input type='checkbox' name='surname' value=\"".$lastname."\" checked='checked' /> ".$lastname."</td></tr>
+					 					".$pgv_lang["autosearch_surname"]."</td><td class='optionbox'> <input type='checkbox' name='surname' value=\"".$lastname."\" checked='checked' />&nbsp; ".$lastname."</td></tr>
 		 							
 									
 									<td class='optionbox'>
@@ -92,7 +92,7 @@ function autosearch_options()
 									<SELECT NAME='country' onChange=\"\"> ";
 					if(!empty($bplcCode))
 					{
-						$to_return.="<OPTION value=\"".$bplcCode."\">".$contries[$bplcCode]."</OPTION>";
+						$to_return.="<OPTION value=\"".$bplcCode."\">".$countries[$bplcCode]."</OPTION>";
 						$to_return.="<OPTION value=\"\"></OPTION>";
 					}
 					else
@@ -113,7 +113,7 @@ function autosearch_options()
 
 							
 							<tr><td class='optionbox' colspan=2 align='center'>".$pgv_lang["autosearch_plugin_name_genNet"]."</td></tr>
-							<tr><td  align='center' class='topbottombar'colspan=2><input type='submit' value='Search' /></td></tr>
+							<tr><td  align='center' class='topbottombar'colspan=2><input type='submit' value='".$pgv_lang["autosearch_search"]."' /></td></tr>
 		 			
 							</table>
 						
