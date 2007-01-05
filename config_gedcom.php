@@ -75,7 +75,7 @@ $PEDIGREE_FULL_DETAILS = true;			// -- Show the birth and death details of an in
 $PEDIGREE_LAYOUT = true;					// -- Set to true for Landscape mode, false for portrait mode
 $SHOW_EMPTY_BOXES = true;				// -- Show empty boxes on charts if the person is unknown
 $ZOOM_BOXES = "click";				// -- When should pedigree boxes zoom.  Values are "disabled", "mouseover", "click"
-$LINK_ICONS = "click";				// -- When should pedigree box extra links show up.  Values are "disabled", "mouseover", "click"
+$LINK_ICONS = "mouseover";				// -- When should pedigree box extra links show up.  Values are "disabled", "mouseover", "click"
 $ABBREVIATE_CHART_LABELS = false;		//-- should chart labels like "Birth" be abbreviated as "B"
 $SHOW_PARENTS_AGE = true;				// -- show age of parents on charts next to the birth date
 
