@@ -10,6 +10,7 @@
 
 Version 4.1
  - Fixed [ 1593602 ] [Research assistant] multiple persons linked to a task (beakerboy)
+ - Fixed [ 1628280 ] WSDL for SOAP API has incorrect types (yalnifj)
  - Fixed [ 1621342 ] GEDFILE Error in adding DAU to FAM (opus27)
  - Added AJAX to individual page tabs (yalnifj)
  - Fixed [ 1599037 ] 4.0SVN: Place does't show in Individual list Or Indi Page (opus27)

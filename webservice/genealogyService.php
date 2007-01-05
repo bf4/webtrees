@@ -56,7 +56,7 @@ class GenealogyService
 	var $__dispatch_map = array();
 	var $__typeref = array();
 	var $__namespace = 'Genealogy';
-	var $service_version = '1.0b';
+	var $service_version = '1.0';
 	var $varNames = array();
 
 	function GenealogyService() 
@@ -187,7 +187,7 @@ class GenealogyService
 		array(
 			'in' => array(
 				'SID' => 'string',//session id
-				'limit' => 'string' //limit results 0 = all
+				'limit' => 'int' //limit results 0 = all
 			),
 			'out' => array(
 				'servers' => '{urn:' . $this->__namespace . '}ArrayOfServer'
@@ -202,8 +202,8 @@ class GenealogyService
 			'in' => array(
 				'SID' => 'string', //session ID
 				'query' => 'string', //query string
-				'start' => 'string', //index to start at
-				'maxResults' => 'string' //max results to return
+				'start' => 'int', //index to start at
+				'maxResults' => 'int' //max results to return
 			), 
 			'out' => array(
 				'Results' => '{urn:' . $this->__namespace . '}SearchResult'
@@ -270,7 +270,7 @@ class GenealogyService
 			'in'	=>	array(
 				'SID' => 'string', //session ID
 				'rootID' => 'string', //id to start at
-				'generations' => 'string', //# of gens. to go
+				'generations' => 'int', //# of gens. to go
 				'returnGedcom' => 'boolean'//return gedcom with result
 			),
 			'out' => array(
@@ -286,7 +286,7 @@ class GenealogyService
 			'in'	=>	array(
 				'SID' => 'string', //session ID
 				'rootID' => 'string', //id to start at
-				'generations' => 'string', //# of gens. to go
+				'generations' => 'int', //# of gens. to go
 				'returnGedcom' => 'boolean' //return gedcom with result
 			),
 			'out' => array(
@@ -386,7 +386,7 @@ class GenealogyService
 
 		$this->__typedef['SearchResult'] = 
 		array(
-			'totalResults'	=>	'string',
+			'totalResults'	=>	'int',
 			'persons'		=>	'{urn:' . $this->__namespace . '}ArrayOfPerson'
 		);
 

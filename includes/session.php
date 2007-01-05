@@ -913,6 +913,7 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
 			if ((strstr($SCRIPT_NAME, "login.php")===false)
 					&&(strstr($SCRIPT_NAME, "login_register.php")===false)
 					&&(strstr($SCRIPT_NAME, "client.php")===false)
+					&&(strstr($SCRIPT_NAME, "genservice.php")===false)
 					&&(strstr($SCRIPT_NAME, "help_text.php")===false)
 					&&(strstr($SCRIPT_NAME, "message.php")===false)) {
 				if (!empty($auth) && $auth=="basic") { //if user is attempting basic authentication //TODO: Update if degest auth is ever implemented
