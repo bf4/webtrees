@@ -145,9 +145,9 @@ class Menu
 		$c = count($this->submenus);
 		$output = "<div id=\"menu{$id}\" style=\"clear: both;\" class=\"{$this->class}\">\n";
 		if ($this->link=="#") $this->link = "javascript:;";
-		$link = "<a href=\"{$this->link}\" onmouseover=\""
+		$link = "<a href=\"{$this->link}\" class=\"{$this->class}\" onmouseover=\""
 		;
-		if ($c >= 0)
+		/* if ($c >= 0)
 		{
 			$link .= "show_submenu('menu{$id}_subs', 'menu{$id}', '{$this->flyout}'); ";
 		}
@@ -172,6 +172,7 @@ class Menu
 		{
 			$link .= "change_icon('menu{$id}_icon', '{$this->icon}'); ";
 		}
+		*/
 		if ($this->onclick !== null)
 		{
 			$link .= "\" onclick=\"{$this->onclick}";
@@ -263,8 +264,8 @@ class Menu
 			{
 				$output .= '<div style="text-align: right;">';
 			}
-			$output .= "<div id=\"menu{$id}_subs\" class=\"{$this->submenuclass}\" style=\"position: absolute; visibility: hidden; z-index: 100;";
-			if ($this->flyout == 'right')
+			$output .= "<div id=\"menu{$id}_subs\" class=\"{$this->submenuclass}\" ";
+			/*if ($this->flyout == 'right')
 			{
 				if ($TEXT_DIRECTION == 'ltr')
 				{
@@ -274,8 +275,9 @@ class Menu
 				{
 					$output .= ' right: 50px;';
 				}
-			}
-			$output .= "\" onmouseover=\"show_submenu('{$this->parentmenu}'); show_submenu('{$submenuid}');\" onmouseout=\"timeout_submenu('menu{$id}_subs');\">\n";
+			}*/
+			//$output .= "\" onmouseover=\"show_submenu('{$this->parentmenu}'); show_submenu('{$submenuid}');\" onmouseout=\"timeout_submenu('menu{$id}_subs');\">\n";
+			$output .= ">\n";
 			foreach($this->submenus as $submenu)
 			{
 				$submenu->parentmenu = $submenuid;
@@ -290,6 +292,14 @@ class Menu
 	function printMenu()
 	{
 		print $this->getMenu();
+	}
+	
+	/**
+	 * returns the number of submenu's in this menu
+	 * @return int
+	 */
+	function subCount() {
+		return count($this->submenus);
 	}
 }
 
