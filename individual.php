@@ -486,6 +486,20 @@ if(empty($SEARCH_SPIDER)) {
 	if (file_exists("modules/googlemap/defaultconfig.php")) {
 		print "<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\" >\n";
     		print "<span class=\"subheaders\">".$pgv_lang["googlemap"]."</span>\n";
+    	include_once('modules/googlemap/googlemap.php');
+		if ($GOOGLEMAP_ENABLED == "false") {
+	        print "<table class=\"facts_table\">\n";
+	        print "<tr><td id=\"no_tab7\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</script></td></tr>\n";
+	        print "<script type=\"text/javascript\">\n";
+	        print "function ResizeMap ()\n{\n}\nfunction SetMarkersAndBounds ()\n{\n}\n</script>\n";
+	        if (userIsAdmin(getUserName())) {
+	            print "<tr><td align=\"center\" colspan=\"2\">\n";
+	            print "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+	            print "</td></tr>\n";
+	        }
+	        print "\n\t</table>\n<br />";
+	    }
+	    else {
     	if(empty($SEARCH_SPIDER)) {
 	    	$tNew = preg_replace("/&HIDE_GOOGLEMAP=true/", "", $_SERVER["REQUEST_URI"]);
 	    	$tNew = preg_replace("/&HIDE_GOOGLEMAP=false/", "", $tNew);
@@ -547,6 +561,7 @@ if(empty($SEARCH_SPIDER)) {
 				}
             }
         }
+	    }
 		// start
 		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" id=\"marker6\" width=\"1\" height=\"1\" alt=\"\" />";
 		// end

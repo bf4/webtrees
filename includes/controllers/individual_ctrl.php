@@ -1178,6 +1178,14 @@ class IndividualControllerRoot extends BaseController {
 	
 	function print_relatives_tab() {
 		global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		
+		/* -- following added based on feedback from UI discussion */
+		include_once("includes/functions_charts.php");
+		global $show_full, $bheight, $pbheight;
+		$show_full = false;
+		$bheight = 25;
+		$pbheight = $bheight + 14;
+		
 		$personcount=0;
 		$families = $this->indi->getChildFamilies();
 		if (count($families)==0) {
@@ -1330,6 +1338,9 @@ class IndividualControllerRoot extends BaseController {
 				?>
 			</table>
 		<?php
+			/* -- following added based on feedback from UI discussion */
+			print print_family_parents($famid);
+			print_family_children($famid);
 		}
 		
 		//-- step families
@@ -1586,6 +1597,9 @@ class IndividualControllerRoot extends BaseController {
 				?>
 			</table>
 		<?php
+			/* -- following added based on feedback from UI discussion */
+			print print_family_parents($famid);
+			print_family_children($famid);
 		}
 		if ($personcount==0) print "<table><tr><td id=\"no_tab5\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab5"]."</td></tr></table>\n";
 		?>
@@ -1695,6 +1709,27 @@ class IndividualControllerRoot extends BaseController {
 
 			            include_once('modules/googlemap/googlemap.php');
 	    
+		if ($GOOGLEMAP_ENABLED == "false") {
+	        print "<table class=\"facts_table\">\n";
+	        print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script></td></tr>\n";
+	        print "<script type=\"text/javascript\">\n";
+	        print "function ResizeMap ()\n{\n}\nfunction SetMarkersAndBounds ()\n{\n}\n</script>\n";
+	        if (userIsAdmin(getUserName())) {
+	            print "<tr><td align=\"center\" colspan=\"2\">\n";
+	            print "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+	            print "</td></tr>\n";
+	        }
+	        print "\n\t</table>\n<br />";
+	        ?>
+	        <script type="text/javascript">
+	        	document.getElementById("googlemap_left").innerHTML = document.getElementById("googlemap_content").innerHTML;
+	        	document.getElementById("googlemap_content").innerHTML = "";
+	        </script>
+	        <?php
+	        return;
+	    }
+	    
+	    else {
 		                $famids = array();
 		                $families = $this->indi->getSpouseFamilies();
 		                foreach($families as $famid=>$family) {
@@ -1704,6 +1739,8 @@ class IndividualControllerRoot extends BaseController {
             print "<table><tr><td id=\"no_tab7\" colspan=\"2\"></td></tr></table>\n";
 		                }
 				}
+	}
+	
 }
 // -- end of class
 //-- load a user extended class if one exists

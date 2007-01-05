@@ -59,13 +59,31 @@ if ($action=="login") {
 		  else if (isset($HTTP_SESSION_VARS['CLANGUAGE'])) $HTTP_SESSION_VARS['CLANGUAGE'] = $MyUser["language"];
 		}
 		session_write_close();
+		
+		
+		if (!isset($ged)) $ged = $GEDCOM;
+		
+		//-- section added based on UI feedback
+		if ($url == "individual.php") {
+			$pid = "";
+			foreach($users as $gedname=>$value) {
+				if (!empty($value)) {
+					$pid = $value;
+					$ged = $gedname;
+					break;
+				}
+			}
+			if (!empty($pid)) $url = "individual.php?pid=".$pid;
+			//-- user does not have a pid?  Go to mygedview portal
+			else $url = "index.php?command=user";
+		}
+		
 		$urlnew = $SERVER_URL;
 		if (substr($urlnew,-1,1)!="/") $urlnew .= "/";
 		$url = preg_replace("/logout=1/", "", $url);
 		$url = $urlnew . $url;
 		if ($remember=="yes") setcookie("pgv_rem", $username, time()+60*60*24*7);
 		else setcookie("pgv_rem", "", time()-60*60*24*7);
-		if (!isset($ged)) $ged = $GEDCOM;
 
 		$url .= "&ged=".$ged; 
 		$url = str_replace(array(".php&amp;", ".php&"), ".php?", $url);
@@ -90,7 +108,10 @@ else {
 				if (stristr($url,$SERVER_URL)!==false) $url = $SERVER_URL;
 			}
 			//else $url = $SERVER_URL;
+			/* - commented out based on UI feedback	
 			else $url = "index.php?command=user";
+			*/
+			else $url = "individual.php";
 		}
 	}
 	else if (stristr($url, "index.php")&&!stristr($url, "command=")) {
@@ -187,7 +208,10 @@ else {
 		        }
 		    ?>
 		      <input type="submit" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["login"]; ?>" />&nbsp;
+		      <?php
+		      	/* - commented out based on UI feedback		      	  
 		      <input type="submit" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["admin"]; ?>" onclick="document.loginform.url.value='admin.php';" />
+				*/ ?>
 		    </td>
 		  </tr>
 		</table>

@@ -256,8 +256,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 				$url = '<a href="module.php?mod=research_assistant">';
 
 			// Finish up the links    
-			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.$url.'<img src="modules/research_assistant/images/folder_blue_icon.gif" alt="Up Folder" border="0"></img><br />Up Folder</a></td>';
-			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=editfolder&amp;folderid='.$folderid.'"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="Edit Folder" border="0" /><br />'.$pgv_lang["edit_folder"].'</a></td>';
+			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.$url.'<img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["up_folder"].'" border="0"></img><br />'.$pgv_lang["up_folder"].'</a></td>';
+			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=editfolder&amp;folderid='.$folderid.'"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["edit_folder"].'" border="0" /><br />'.$pgv_lang["edit_folder"].'</a></td>';
 		}
 
 		// Close up
@@ -735,14 +735,18 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$out .= "<tr><th class=\"descriptionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=".$folderId."&amp;orderby=t_title&amp;type=".$_REQUEST["type"]."\">".$pgv_lang["Task_Name"]."</a></th>
 					<th class=\"descriptionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=".$folderId."&amp;orderby=t_startdate&amp;type=".$_REQUEST["type"]."\">".$pgv_lang["Start_Date"]."</a></th>\n
 					<th class=\"descriptionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=".$folderId."&amp;orderby=t_enddate&amp;type=".$_REQUEST["type"]."\">".$pgv_lang["completed"]."</a></th>\n
-					<th class='\"descriptionbox\">".$pgv_lang["edit"]."</th><th class=\"descriptionbox\">".$pgv_lang["delete"]."</th></tr>";
+					<th class=\"descriptionbox\">".$pgv_lang["edit"]."</th><th class=\"descriptionbox\">".$pgv_lang["delete"]."</th></tr>\n";
 
 		}
 
 		// Loop through the database results and print each task
 		while ($task = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$task = db_cleanup($task);
-			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td><td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a></td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'&amp;folder='.$folderId.'" class="link">'.$pgv_lang["delete"].'</a></td></tr>';
+			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td>';
+			$out .= '<td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td>';
+			$out .= '<td class="optionbox" align="center">'.$this->checkComplete($task).'</td>';
+			$out .= '<td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a></td>';
+			$out .= '<td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'&amp;folder='.$folderId.'" class="link">'.$pgv_lang["delete"].'</a></td></tr>';
 		}
 		$out .= '</table>';
 

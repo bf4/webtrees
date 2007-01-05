@@ -72,12 +72,14 @@ $menubar = new MenuBar();
 			<?php 
 			} 
 
+			/* - commented out based on UI feedback 
 			$menu = $menubar->getSearchMenu(); 
 			if($menu->link != "") {
 				print "\t<td width=\"7%\" valign=\"top\">\n";
 				$menu->printMenu(); 
 				print "\t\t\t</td>\n";
 			}	
+			*/
 
 			$menus = $menubar->getModuleMenus(); foreach($menus as $m=>$menu) { ?> 
 			<td width="7%" valign="top"><?php $menu->printMenu(); ?></td>

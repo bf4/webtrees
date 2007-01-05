@@ -49,6 +49,8 @@ function SetCookie(cookieName,cookieValue,nDays)
 						<input type="hidden" name="topsearch" value="yes" />
 						<input type="text" name="query" accesskey="<?php print $pgv_lang["accesskey_search"]?>" size="12" value="<?php print $pgv_lang['search']?>" onfocus="if (this.value == '<?php print $pgv_lang['search']?>') this.value=''; focusHandler();" onblur="if (this.value == '') this.value='<?php print $pgv_lang['search']?>';" />
 						<input type="submit" name="search" value="&gt;" />
+						<br /><a href="search.php?action=general"><?php print $pgv_lang['search_general']; ?></a> | <a href="search.php?action=soundex"><?php print $pgv_lang['search_soundex']; ?></a>
+						<br /><br />
 					</form>
 				<?php } ?>
 					<?php print_favorite_selector(); ?>
