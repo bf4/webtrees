@@ -650,7 +650,7 @@ function build_indiv_map($indifacts, $famids) {
                         }
                         print "    GEvent.addListener(".$marker["name"][$j].", \"click\", function() {\n";
                         print "        ".$marker["name"][$j].".openInfoWindowHtml(\"";
-                        print $mapdata["fact"][$j].":<br/>";
+                        print PrintReady($mapdata["fact"][$j]).":<br/>";
                         if ($mapdata["name"][$j] != "") {
                             if (displayDetailsById($mapdata["name"][$j])||showLivingNameById($mapdata["name"][$j]))
                                 print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($mapdata["name"][$j])));
@@ -698,7 +698,7 @@ function build_indiv_map($indifacts, $famids) {
                         $marker["index"][$j] = $indexcounter;
                         $marker["tabindex"][$j] = $tabcounter;
                         $tabcounter = $tabcounter + 1;
-                        print "       new GInfoWindowTab(\"".$mapdata["fact"][$j]."\", \"<div style='width:360px'>".$mapdata["fact"][$j].":<br/>";
+                        print "       new GInfoWindowTab(\"".$mapdata["fact"][$j]."\", \"<div style='width:360px'>".PrintReady($mapdata["fact"][$j]).":<br/>";
                         if ($mapdata["name"][$j] != "") {
                             print "<a href=\\\"individual.php?pid=".$mapdata["name"][$j]."&amp;ged=$GEDCOM\\\">";
                             if (displayDetailsById($mapdata["name"][$j])||showLivingNameById($mapdata["name"][$j]))
