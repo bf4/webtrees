@@ -36,7 +36,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_EditTask.php")) {
 // Require the database functions
 require_once("includes/functions_db.php");
 require_once("includes/person_class.php");
-global $pgv_lang, $TBLPREFIX, $DBCONN;
+global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
  
  	/**
 	 * GETS the DATES of the task with the given taskid
@@ -176,9 +176,6 @@ global $pgv_lang, $TBLPREFIX, $DBCONN;
 
 <!--JAVASCRIPT-->
 <script language="JavaScript" type="text/javascript"><!--
-	function showchanges() {
-		window.location = 'module.php?mod=research_assistant&action=edittask&taskid=<?php print $_REQUEST['taskid']; ?>';
-	}
   	function editcomment(commentid) {
   		window.open('editcomment.php?taskid=<?php print $_REQUEST['taskid']; ?>&commentid='+commentid, '', 'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1');
   	}
@@ -277,7 +274,9 @@ global $pgv_lang, $TBLPREFIX, $DBCONN;
 		lastId = value;
 	}
 	function pastename(name) {
-		nameElement.innerHTML = nameElement.innerHTML + '<a id="link_'+lastId+'" href="source.php?sid='+pastefield.value+'">'+name+'</a> <a id="rem_'+lastId+'" href="#" onclick="clearname(\''+pastefield.id+'\', \'link_'+lastId+'\', \''+lastId+'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>\n';
+		if (lastId.substring(0,1) == '<?php print $SOURCE_ID_PREFIX?>')
+			nameElement.innerHTML = nameElement.innerHTML + '<a id="link_'+lastId+'" href="source.php?sid='+lastId+'">'+name+'</a> <a id="rem_'+lastId+'" href="#" onclick="clearname(\''+pastefield.value+'\', \'link_'+lastId+'\', \''+lastId+'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>\n';
+		else nameElement.innerHTML = nameElement.innerHTML + '<a id="link_'+lastId+'" href="individual.php?pid='+lastId+'">'+name+'</a> <a id="rem_'+lastId+'" href="#" onclick="clearname(\''+pastefield.value+'\', \'link_'+lastId+'\', \''+lastId+'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>\n';
 	}
 	function clearname(hiddenName, name, id) {
 		pastefield = document.getElementById(hiddenName);
