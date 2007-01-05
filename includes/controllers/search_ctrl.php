@@ -133,20 +133,20 @@ class SearchControllerRoot extends BaseController {
 			} else {
 				$this->query = stripslashes($_REQUEST["query"]);
 				$this->myquery = $this->query;
-				
+
 			}
 		}
 		if (isset ($_REQUEST["replace"])) {
 			$this->replace = $_REQUEST["replace"];
-			
+
 			if(isset($_REQUEST["replaceNames"]))
-				$this->replaceNames = true;
-			
+			$this->replaceNames = true;
+
 			if(isset($_REQUEST["replacePlaces"]))
-				$this->replacePlaces = true;
-				
+			$this->replacePlaces = true;
+
 			if(isset($_REQUEST["replaceAll"]))
-				$this->replaceAll = true;	
+			$this->replaceAll = true;
 		}
 
 		// Aquire all the variables values from the $_REQUEST
@@ -182,9 +182,9 @@ class SearchControllerRoot extends BaseController {
 				}
 			}
 		}
-		 else
-			$this->sgeds[] = $GEDCOM;
-			
+		else
+		$this->sgeds[] = $GEDCOM;
+
 		// Retrieve the sites that can be searched
 		$this->Sites = get_server_list();
 
@@ -277,8 +277,8 @@ class SearchControllerRoot extends BaseController {
 		//		print "gedNames: ";
 		//		print_r($this->gedNames);
 		
-		$this->inputFieldNames[] = "action"; 
-		$this->inputFieldNames[] = "isPostBack"; 
+		$this->inputFieldNames[] = "action";
+		$this->inputFieldNames[] = "isPostBack";
 		$this->inputFieldNames[] = "resultsPerPage";
 		$this->inputFieldNames[] = "query";
 		$this->inputFieldNames[] = "srindi";
@@ -300,7 +300,7 @@ class SearchControllerRoot extends BaseController {
 		$this->inputFieldNames[] = "deathplace";
 		$this->inputFieldNames[] = "gender";
 		$this->inputFieldNames[] = "tagfilter";
-	
+
 		// Get the search results based on the action
 		if (isset ($this->topsearch)) $this->TopSearch();
 		// If we want to show associated persons, build the list
@@ -309,6 +309,14 @@ class SearchControllerRoot extends BaseController {
 		else if ($this->action == "soundex") $this->SoundexSearch();
 		else if ($this->action == "replace") $this->SearchAndReplace();
 		else if ($this->action == "multisite") $this->MultiSiteSearch();
+	}
+	
+	function getPageTitle() {
+		global $pgv_lang;
+		if ($this->action == "general") return $pgv_lang["search_general"];
+		else if ($this->action == "soundex") return $pgv_lang["search_soundex"];
+		else if ($this->action == "replace") return $pgv_lang["search_replace"];
+		else if ($this->action == "multisite") return $pgv_lang["multi_site_search"];
 	}
 
 	/**
@@ -323,12 +331,12 @@ class SearchControllerRoot extends BaseController {
 			if (isset ($_REQUEST[$varName]))
 			{
 				if($varName == "action")
-					if($_REQUEST[$varName] == "replace")
-						if(!userCanEdit(getUserName()))
-						{
-							$this->action = "general";
-							continue;
-						}
+				if($_REQUEST[$varName] == "replace")
+				if(!userCanEdit(getUserName()))
+				{
+					$this->action = "general";
+					continue;
+				}
 				$this-> $varName = $_REQUEST[$varName];
 			}
 		}
@@ -387,7 +395,7 @@ class SearchControllerRoot extends BaseController {
 					exit;
 				}
 			}
-		
+				
 				// see if it's a repository ID. If it's found and privacy allows it, JUMP!!!!
 			if ($SHOW_SOURCES >= getUserAccessLevel(getUserName())) {
 				if (find_repo_record($this->query)) {
@@ -423,9 +431,9 @@ class SearchControllerRoot extends BaseController {
 				// Note: when more than one word is entered, this will return results where one word
 				// is in one subrecord, another in another subrecord. Theze results are filtered later.
 				if (strlen($this->query) == 1)
-					$this->query = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $this->query);
+				$this->query = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $this->query);
 				if ($REGEXP_DB)
-					$this->query = preg_replace(array ("/\(/", "/\)/", "/\//", "/\]/", "/\[/", "/\s+/"), array ('\(', '\)', '\/', '\]', '\[', '.*'), $this->query);
+				$this->query = preg_replace(array ("/\(/", "/\)/", "/\//", "/\]/", "/\[/", "/\s+/"), array ('\(', '\)', '\/', '\]', '\[', '.*'), $this->query);
 				else {
 					$this->query = "%".preg_replace("/\s+/", "%", $this->query)."%";
 				}
@@ -442,7 +450,7 @@ class SearchControllerRoot extends BaseController {
 					// This way we include hits on family names.
 					// If indi's are not searched yet, we have to search them first
 					if (!isset ($this->srindi))
-						$this->myindilist = search_indis($this->query, $this->sgeds);
+					$this->myindilist = search_indis($this->query, $this->sgeds);
 					$famquery = array ();
 					$cntgeds = count($this->sgeds);
 					if ($cntgeds==1) $ged = $GEDCOMS[$this->sgeds[0]]["id"];
@@ -460,17 +468,17 @@ class SearchControllerRoot extends BaseController {
 					}
 					// Get the famrecs with hits on names from the family table
 					if (!empty ($famquery))
-						$this->myfamlist = search_fams_names($famquery, "OR", true, $cntgeds);
+					$this->myfamlist = search_fams_names($famquery, "OR", true, $cntgeds);
 					// Get the famrecs with hits in the gedcom record from the family table
 					if (!empty ($this->query))
-						$this->myfamlist2 = search_fams($this->query, $this->sgeds, "OR", true);
+					$this->myfamlist2 = search_fams($this->query, $this->sgeds, "OR", true);
 					$this->myfamlist = pgv_array_merge($this->myfamlist, $this->myfamlist2);
 				}
 
 				// Search the sources
 				if ((isset ($this->srsour)) && (count($this->sgeds) > 0)) {
 					if (!empty ($this->query))
-						$this->mysourcelist = search_sources($this->query, $this->sgeds);
+					$this->mysourcelist = search_sources($this->query, $this->sgeds);
 				}
 
 				//-- if only 1 item is returned, automatically forward to that item
@@ -557,19 +565,19 @@ class SearchControllerRoot extends BaseController {
 	function SearchAndReplace()
 	{
 		global $GEDCOM, $pgv_changes, $manual_save;
-	
+
 		$this->sgeds = array($GEDCOM);
 		$this->srindi = "yes";
 		$oldquery = $this->query;
 		$this->GeneralSearch();
-		
+
 		//-- don't try to make any changes if nothing was found
-		if (count($this->myindilist)==0 && count($this->myfamlist)==0 && count($this->mysourcelist)==0) return; 
+		if (count($this->myindilist)==0 && count($this->myfamlist)==0 && count($this->mysourcelist)==0) return;
 
 		$manual_save = true;
 		// Include edit functions.
 		include_once("includes/functions_edit.php");
-		
+
 		// These contain the search query and the replace string
 		// $this->replace;
 		// $this->query;
@@ -579,37 +587,37 @@ class SearchControllerRoot extends BaseController {
 		//$this->myindilist;
 		foreach($this->myindilist as $id => $individual)
 		{
-			if (isset($pgv_changes[$id."_".$GEDCOM])) 
-				$individual["gedcom"] = find_updated_record($id);
+			if (isset($pgv_changes[$id."_".$GEDCOM]))
+			$individual["gedcom"] = find_updated_record($id);
 
 			$currentRecord = $individual["gedcom"];
 			$newRecord = $individual["gedcom"];
-			
+
 			if($this->replaceAll) {
 				$newRecord = preg_replace("/".$oldquery."/i",
-											$this->replace,
-											$currentRecord);
+				$this->replace,
+				$currentRecord);
 //				print $id." ";
 			}
 			else {
 				if($this->replaceNames) {
 					$newRecord = preg_replace("/(\d) NAME (.*)".$oldquery."(.*)/i",
 												"$1 NAME $2".$this->replace."$3",
-												$currentRecord);
+					$currentRecord);
 //					print $id;
 				}
-												
+				
 				if($this->replacePlaces)
 				{
 					$myRecord = "";
 					if($newRecord != $currentRecord)
-						$myRecord = $newRecord;
+					$myRecord = $newRecord;
 					else
-						$myRecord = $currentRecord;
-								
+					$myRecord = $currentRecord;
+
 					$newRecord = preg_replace("/(\d) PLAC (.*)".$oldquery."(.*)/i",
 												"$1 PLAC $2".$this->replace."$3",
-												$myRecord);
+					$myRecord);
 				}
 			}
 			//print "[$newRecord]{".$currentRecord."}";						
@@ -621,40 +629,40 @@ class SearchControllerRoot extends BaseController {
 		
 		foreach($this->myfamlist as $id => $family)
 		{
-			if (isset($pgv_changes[$id."_".$GEDCOM])) 
-				$family["gedcom"] = find_updated_record($id);
+			if (isset($pgv_changes[$id."_".$GEDCOM]))
+			$family["gedcom"] = find_updated_record($id);
 
 			$oldrecord = $family["gedcom"];
 			$newrecord = $family["gedcom"];
 
 			if($this->replacePlaces || $this->replaceAll)
-				$newrecord = preg_replace("/(\d) PLAC (.*)".$oldquery."(.*)/", 
+			$newrecord = preg_replace("/(\d) PLAC (.*)".$oldquery."(.*)/",
 											"$1 PLAC $2".$this->replace."$3", 
-											$oldrecord);
-			
+			$oldrecord);
+
 			if($newrecord != $oldrecord)
-				replace_gedrec($id, $newrecord);
+			replace_gedrec($id, $newrecord);
 		}
 
 		foreach($this->mysourcelist as $id => $source)
 		{
-			if (isset($pgv_changes[$id."_".$GEDCOM])) 
-				$source["gedcom"] = find_updated_record($id);
+			if (isset($pgv_changes[$id."_".$GEDCOM]))
+			$source["gedcom"] = find_updated_record($id);
 
 			$oldrecord = $source["gedcom"];
 			$newrecord = $source["gedcom"];
-			
+
 			if($this->replacePlaces || $this->replaceAll)
-				$newrecord = preg_replace("/(\d) PLAC (.*)".$oldquery."(.*)/", 
+			$newrecord = preg_replace("/(\d) PLAC (.*)".$oldquery."(.*)/",
 											"$1 PLAC $2".$this->replace."$3", 
-											$oldrecord);
-			
+			$oldrecord);
+
 			if($newrecord != $oldrecord)
-				replace_gedrec($id, $newrecord);
+			replace_gedrec($id, $newrecord);
 		}
 		
 		write_changes();
-		
+
 //		//Stores results in printname[]
 //					$this->printname = array();
 //					//while($row = $res->fetchRow())
@@ -674,44 +682,44 @@ class SearchControllerRoot extends BaseController {
 		global $TBLPREFIX, $GEDCOM, $GEDCOMS, $DBQUERY;
 		$sql = "SELECT i.i_id, i.i_file, i.i_name FROM ".$TBLPREFIX."places JOIN ".$TBLPREFIX."placelinks ON p_id = pl_p_id JOIN ".$TBLPREFIX."individuals as i ON pl_gid = i_id WHERE p_file = ".$GEDCOMS[$GEDCOM]['id']." AND i_file = p_file AND (";
 
-					$place_sdx = "";
-					
-					$placearr = explode(",", $this->place);
-					
+		$place_sdx = "";
+		
+		$placearr = explode(",", $this->place);
+		
 					//Determines type of soundex and performs it
-					foreach($placearr as $place)
-					{
-						if($this->soundex == "DaitchM")
-						{
-							$place_sdx = DMSoundex($place);
-							
-							foreach($place_sdx as $key=>$val)
-							{
-								
-									$sql .= "p_dm_soundex like '%".$place_sdx[$key]."%' OR ";
-							}
-						}
+		foreach($placearr as $place)
+		{
+			if($this->soundex == "DaitchM")
+			{
+				$place_sdx = DMSoundex($place);
+
+				foreach($place_sdx as $key=>$val)
+				{
 						
-						if($this->soundex == "Russell")
-						{
-							$place_sdx = soundex($place);
-							
-							$sql .= "p_std_soundex = '".$place_sdx."' OR ";
-						}
-					}
-					
+					$sql .= "p_dm_soundex like '%".$place_sdx[$key]."%' OR ";
+				}
+			}
+				
+			if($this->soundex == "Russell")
+			{
+				$place_sdx = soundex($place);
+
+				$sql .= "p_std_soundex = '".$place_sdx."' OR ";
+			}
+		}
+			
 					// Strip the extra 'OR' at the end of the sql query
-					$sql = substr($sql, 0, strlen($sql) - 3);
-					$sql .= ")";
+		$sql = substr($sql, 0, strlen($sql) - 3);
+		$sql .= ")";
 //					echo $sql; // debug
-					$res = dbquery($sql);
-					
+		$res = dbquery($sql);
+		
 					//Stores results in printname[]
-					$this->printname = array();
-					while($row = $res->fetchRow())
-					{	
-						$this->printname[] = array (sortable_name_from_name($row[2]), $row[0], get_gedcom_from_id($row[1]), "");
-					}
+		$this->printname = array();
+		while($row = $res->fetchRow())
+		{
+			$this->printname[] = array (sortable_name_from_name($row[2]), $row[0], get_gedcom_from_id($row[1]), "");
+		}
 	}
 
 	/**
@@ -719,8 +727,8 @@ class SearchControllerRoot extends BaseController {
 	 *
 	 *  TODO
 	 *  ====
-	 *  Does not search on the selected gedcoms, searches on all the gedcoms
-	 *  Does not work on first names, instead of the code, value array is used in the search 
+	 *    Does not search on the selected gedcoms, searches on all the gedcoms
+	 *    Does not work on first names, instead of the code, value array is used in the search 
 	 *  Returns all the names even when Names with hit selected
 	 *  Does not sort results by first name
 	 *  Does not work on separate double word surnames 
@@ -742,21 +750,21 @@ class SearchControllerRoot extends BaseController {
 		if (((!empty ($this->lastname)) || (!empty ($this->firstname)) || (!empty ($this->place))) && (count($this->sgeds) > 0)) {
 			$logstring = "Type: Soundex<br />";
 			if (!empty ($this->lastname))
-				$logstring .= "Last name: ".$this->lastname."<br />";
+			$logstring .= "Last name: ".$this->lastname."<br />";
 			if (!empty ($this->firstname))
-				$logstring .= "First name: ".$this->firstname."<br />";
+			$logstring .= "First name: ".$this->firstname."<br />";
 			if (!empty ($this->place))
-				$logstring .= "Place: ".$this->place."<br />";
+			$logstring .= "Place: ".$this->place."<br />";
 			if (!empty ($this->year))
-				$logstring .= "Year: ".$this->year."<br />";
+			$logstring .= "Year: ".$this->year."<br />";
 			AddToSearchlog($logstring, $this->sgeds);
 
 			// Adjust the search criteria
 			if (isset ($this->firstname)) {
 				if (strlen($this->firstname) == 1)
-					$this->firstname = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $this->firstname);
+				$this->firstname = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $this->firstname);
 				if ($REGEXP_DB)
-					$this->firstname = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $this->firstname);
+				$this->firstname = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $this->firstname);
 				else {
 					$this->firstname = "%".preg_replace("/\s+/", "%", $this->firstname)."%";
 				}
@@ -778,27 +786,27 @@ class SearchControllerRoot extends BaseController {
 					}
 				}
 				if (strlen($this->lastname) == 1)
-					$this->lastname = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $this->lastname);
+				$this->lastname = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $this->lastname);
 				if ($REGEXP_DB)
-					$this->lastname = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $this->lastname);
+				$this->lastname = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $this->lastname);
 				else {
 					$this->lastname = "%".preg_replace("/\s+/", "%", $this->lastname)."%";
 				}
 			}
 			if (isset ($this->place)) {
 				if (strlen($this->place) == 1)
-					$this->place = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $this->place);
+				$this->place = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $this->place);
 				if ($REGEXP_DB)
-					$this->place = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $this->place);
+				$this->place = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $this->place);
 				else {
 					$this->place = "%".preg_replace("/\s+/", "%", $this->place)."%";
 				}
 			}
 			if (isset ($this->year)) {
 				if (strlen($this->year) == 1)
-					$this->year = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $this->year);
+				$this->year = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $this->year);
 				if ($REGEXP_DB)
-					$this->year = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $this->year);
+				$this->year = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\[/", "/\]/"), array (".*", '\(', '\)', '\[', '\]'), $this->year);
 				else {
 					$this->year = "%".preg_replace("/\s+/", "%", $this->year)."%";
 				}
@@ -807,7 +815,7 @@ class SearchControllerRoot extends BaseController {
 			if (count($this->sgeds) > 0) {
 
 				if ($this->soundex == "DaitchM")
-					DMsoundex("", "opencache");
+				DMsoundex("", "opencache");
 
 				// Do some preliminary stuff: determine the soundex codes for the search criteria
 				if ((!empty ($this->lastname)) && ($this->soundex == "DaitchM"))
@@ -818,19 +826,19 @@ class SearchControllerRoot extends BaseController {
 				{
 					$arr2 = array(soundex($this->lastname));
 				}
-			
+					
 				$farr = array ();
 				if (!empty ($this->firstname)) {
 					$firstnames = preg_split("/\s/", trim($this->firstname));
 					for ($j = 0; $j < count($firstnames); $j ++) {
 						if ($this->soundex == "Russell")
-							$farr[$j] = array(soundex($firstnames[$j]));
+						$farr[$j] = array(soundex($firstnames[$j]));
 						if ($this->soundex == "DaitchM")
-							$farr[$j] = DMsoundex($firstnames[$j]);
+						$farr[$j] = DMsoundex($firstnames[$j]);
 					}
 				}
 				if ((!empty ($this->place)) && ($this->soundex == "DaitchM"))
-					$parr = DMsoundex($this->place);
+				$parr = DMsoundex($this->place);
 				if ((!empty ($this->place)) && ($this->soundex == "Russell"))
 				$parr = array(soundex(trim($this->place)));
 
@@ -838,11 +846,11 @@ class SearchControllerRoot extends BaseController {
 				//$oldged = $GEDCOM;
 				$this->printname = array ();
 				$this->printfamname = array ();
-				
+
 				$firstName = "";
 				$lastName = "";
-				
-				
+
+
 				if(!empty($this->place) && empty($this->firstname) && empty($this->lastname))
 				{
 					$this->Place_Search();
@@ -850,21 +858,21 @@ class SearchControllerRoot extends BaseController {
 				}
 				else
 				{
-				$firstName = "";
-				foreach($farr as $name)
-				{
+					$firstName = "";
+					foreach($farr as $name)
+					{
 					//$firstName .= "%" . $name;
-					foreach($name as $name1)
+						foreach($name as $name1)
 						$firstName .= "%" . $name1;
-				}
-				if (!empty($arr2))
-				{
-				foreach($arr2 as $name);
-				{
-					$lastName .= "%" . $name;
-				}
-				}
-				
+					}
+					if (!empty($arr2))
+					{
+						foreach($arr2 as $name);
+						{
+							$lastName .= "%" . $name;
+						}
+					}
+					
 					$places = "";
 					if(!empty($this->place))
 					{
@@ -875,11 +883,11 @@ class SearchControllerRoot extends BaseController {
 					}
 					
 
-				
-				$firstName .= "%";
-				$lastName .= "%";
+						
+					$firstName .= "%";
+					$lastName .= "%";
 					$places .= "%";
-				
+
 					$sql = "SELECT i_id, i_gedcom, sx_n_id, i_file FROM ".$TBLPREFIX."soundex, ".$TBLPREFIX."individuals";
 					if (!empty($this->place)) {
 						$sql .= ", ".$TBLPREFIX."placelinks, ".$TBLPREFIX."places";
@@ -888,206 +896,206 @@ class SearchControllerRoot extends BaseController {
 					if (!empty($this->place)) {
 						$sql .= "pl_file = i_file AND i_file = p_file AND pl_gid = i_id AND pl_p_id = p_id AND ";
 					}
-				
-				if ((is_array($this->sgeds)) && (count($this->sgeds) != 0)) {
-					$sql .= " (";
-					for ($i=0; $i<count($this->sgeds); $i++) {
-						$sql .= "i_file='".$DBCONN->escapeSimple($GEDCOMS[$this->sgeds[$i]]["id"])."'";
-						if ($i < count($this->sgeds)-1) $sql .= " OR ";
+
+					if ((is_array($this->sgeds)) && (count($this->sgeds) != 0)) {
+						$sql .= " (";
+						for ($i=0; $i<count($this->sgeds); $i++) {
+							$sql .= "i_file='".$DBCONN->escapeSimple($GEDCOMS[$this->sgeds[$i]]["id"])."'";
+							if ($i < count($this->sgeds)-1) $sql .= " OR ";
+						}
+						$sql .= ") AND ";
 					}
-					$sql .= ") AND ";
-				}
-				
-				if($this->soundex == "DaitchM")
-				{
-					$x = 0;
-				
-					$where = "";
-				
-					if(!empty($firstName))
-					{ 
-							$where = "sx_fn_dm_code LIKE '".$DBCONN->escapeSimple($firstName)."' ";
-						$x++;
-					}
-					
-					if(!empty($lastName))
+						
+					if($this->soundex == "DaitchM")
 					{
-						if($x > 0)
-							$where .= "AND ";
+						$x = 0;
+
+						$where = "";
+				
+						if(!empty($firstName))
+						{
+							$where = "sx_fn_dm_code LIKE '".$DBCONN->escapeSimple($firstName)."' ";
+							$x++;
+						}
 							
-						$where .= "sx_ln_dm_code LIKE '".$DBCONN->escapeSimple($lastName)."' ";
-					}
+						if(!empty($lastName))
+						{
+							if($x > 0)
+							$where .= "AND ";
+
+							$where .= "sx_ln_dm_code LIKE '".$DBCONN->escapeSimple($lastName)."' ";
+						}
 						if (!empty($this->place)) {
 							$where .= "AND p_dm_soundex LIKE '".$DBCONN->escapeSimple($places)."' "; 
 						}
-				}
-				
-				if ($this->soundex == "Russell")
-				{
-					$x = 0;
-				
-					$where = "";
-					
-					if(!empty($firstName))
-					{ 
-							$where = "sx_fn_std_code LIKE '".$DBCONN->escapeSimple($firstName)."' ";
-						$x++;
 					}
-					
-					if(!empty($lastName))
+						
+					if ($this->soundex == "Russell")
 					{
-						if($x > 0)
-							$where .= "AND ";
+						$x = 0;
+
+						$where = "";
+		
+						if(!empty($firstName))
+						{
+							$where = "sx_fn_std_code LIKE '".$DBCONN->escapeSimple($firstName)."' ";
+							$x++;
+						}
 							
-						$where .= "sx_ln_std_code LIKE '".$DBCONN->escapeSimple($lastName)."' ";
-					}
+						if(!empty($lastName))
+						{
+							if($x > 0)
+							$where .= "AND ";
+
+							$where .= "sx_ln_std_code LIKE '".$DBCONN->escapeSimple($lastName)."' ";
+						}
 						if (!empty($this->place)) {
 							$where .= "AND p_std_soundex LIKE '".$DBCONN->escapeSimple($places)."' "; 
 						}
-				}
-				
-				$sql .= $where;
+					}
+						
+					$sql .= $where;
 					//--group by
 					$sql .= "GROUP BY i_id";
-				
-                // echo "<br />sql= ".$sql;	//debug			
-				
-				$res = dbquery($sql);
-				
-				
-				
-				
-				while($row = $res->fetchRow()) {
-					$namearray = get_indi_names($row[1]);
-					$save = true;
-								if ((!empty ($this->place)) || (!empty ($this->year))) {
-									$indirec = find_person_record($row[0]);
-									if ((!empty ($this->place)) &&  empty ($this->lastname) && empty ($this->firstname)) {
-										$savep = false;
-										$pt = preg_match_all("/\d PLAC (.*)/i", $indirec, $match, PREG_PATTERN_ORDER);
-										if ($pt > 0) {
-											$places = array ();
-											for ($pp = 0; $pp < count($match[1]); $pp ++) {
-												$places[$pp] = preg_split("/,\s/", trim($match[1][$pp]));
+
+              // echo "<br />sql= ".$sql;	//debug			
+						
+					$res = dbquery($sql);
+
+
+
+
+					while($row = $res->fetchRow()) {
+						$namearray = get_indi_names($row[1]);
+						$save = true;
+						if ((!empty ($this->place)) || (!empty ($this->year))) {
+							$indirec = find_person_record($row[0]);
+							if ((!empty ($this->place)) &&  empty ($this->lastname) && empty ($this->firstname)) {
+								$savep = false;
+								$pt = preg_match_all("/\d PLAC (.*)/i", $indirec, $match, PREG_PATTERN_ORDER);
+								if ($pt > 0) {
+									$places = array ();
+									for ($pp = 0; $pp < count($match[1]); $pp ++) {
+										$places[$pp] = preg_split("/,\s/", trim($match[1][$pp]));
+									}
+									$cp = count($places);
+									$p = 0;
+									while ($p < $cp && $savep == false) {
+										$pp = 0;
+										while ($pp < count($places[$p]) && $savep == false) {
+											if ($this->soundex == "Russell") {
+												if (soundex(trim($places[$p][$pp])) == $parr)
+												$savep = true;
 											}
-											$cp = count($places);
-											$p = 0;
-											while ($p < $cp && $savep == false) {
-												$pp = 0;
-												while ($pp < count($places[$p]) && $savep == false) {
-													if ($this->soundex == "Russell") {
-														if (soundex(trim($places[$p][$pp])) == $parr)
-															$savep = true;
-													}
-													if ($this->soundex == "DaitchM") {
-														$arr1 = DMsoundex(trim($places[$p][$pp]));
-														$y = 0;
-														while ($y < count($arr1) && $savep == false) {
-															$z = 0;
-															while ($z < count($parr) && $savep == false) {
-																if ($arr1[$y] == $parr[$z])
-																	$savep = true;
+											if ($this->soundex == "DaitchM") {
+												$arr1 = DMsoundex(trim($places[$p][$pp]));
+												$y = 0;
+												while ($y < count($arr1) && $savep == false) {
+													$z = 0;
+													while ($z < count($parr) && $savep == false) {
+														if ($arr1[$y] == $parr[$z])
+														$savep = true;
 																//															if ($savep == true) print $key."  Search pl: ".$places[$p][$pp]." (".$arr1[$y]."), hit on ".$this->place." (".$parr[$z].")<br />"; //--- debug
-																$z ++;
-															}
-															$y ++;
-														}
+														$z ++;
 													}
-													$pp ++;
+													$y ++;
 												}
-												$p ++;
 											}
+											$pp ++;
 										}
-										if (empty ($this->lastname) && empty ($this->firstname) && $savep == true)
-											$save = true;
-										else
-											$save = false;
-									}
-									if (!empty ($this->year) && $save == true) {
-										$yt = preg_match("/\d DATE (.*$this->year.*)/i", $indirec, $match);
-										if ($yt == 0)
-											$save = false;
+										$p ++;
 									}
 								}
-								if ($save === true) {
-									//								print "Added ".sortable_name_from_name($namearray[0]);
-									$this->printname[] = array (sortable_name_from_name($namearray[$row[2]][0]), $row[0], get_gedcom_from_id($row[3]), "");
-									//								break; // leave out if we want all names from one indi shown
-								}
+								if (empty ($this->lastname) && empty ($this->firstname) && $savep == true)
+								$save = true;
+								else
+								$save = false;
 							}
-							
-				}
+							if (!empty ($this->year) && $save == true) {
+								$yt = preg_match("/\d DATE (.*$this->year.*)/i", $indirec, $match);
+								if ($yt == 0)
+								$save = false;
+							}
 						}
+						if ($save === true) {
+									//								print "Added ".sortable_name_from_name($namearray[0]);
+							$this->printname[] = array (sortable_name_from_name($namearray[$row[2]][0]), $row[0], get_gedcom_from_id($row[3]), "");
+									//								break; // leave out if we want all names from one indi shown
+						}
+					}
+					
 				}
+			}
+		}
 				//$GEDCOM = $oldged;
 
 			// check the result on required characters
-			if (isset ($barr)) {
-				foreach ($this->printname as $pkey => $pname) {
-					$print = true;
-					foreach ($barr as $key => $checkchar) {
-						if (str2upper(substr($pname[0], $checkchar[1], $checkchar[2])) != str2upper($checkchar[0])) {
-							$print = false;
-							break;
-						}
-					}
-					if ($print == false) {
-						unset ($this->printname[$pkey]);
+		if (isset ($barr)) {
+			foreach ($this->printname as $pkey => $pname) {
+				$print = true;
+				foreach ($barr as $key => $checkchar) {
+					if (str2upper(substr($pname[0], $checkchar[1], $checkchar[2])) != str2upper($checkchar[0])) {
+						$print = false;
+						break;
 					}
 				}
+				if ($print == false) {
+					unset ($this->printname[$pkey]);
+				}
 			}
+		}
 			// Now we have the final list of indi's to be printed.
 			// We may add the assos at this point.
 
-			if ($this->showasso == "on") {
-				foreach ($this->printname as $key => $pname) {
-					$apid = $pname[1]."[".$pname[2]."]";
+		if ($this->showasso == "on") {
+			foreach ($this->printname as $key => $pname) {
+				$apid = $pname[1]."[".$pname[2]."]";
 					// Check if associates exist
-					if (isset ($assolist[$apid])) {
+				if (isset ($assolist[$apid])) {
 						// if so, print all indi's where the indi is associated to
-						foreach ($assolist[$apid] as $indexval => $asso) {
-							if ($asso["type"] == "indi") {
-								$indi_printed[$indexval] = "1";
+					foreach ($assolist[$apid] as $indexval => $asso) {
+						if ($asso["type"] == "indi") {
+							$indi_printed[$indexval] = "1";
 								// print all names
-								foreach ($asso["name"] as $nkey => $assoname) {
-									$key = splitkey($indexval, "id");
-									$this->printname[] = array (sortable_name_from_name($assoname[0]), $key, get_gedcom_from_id($asso["gedfile"]), $apid);
-								}
-							} else
-								if ($asso["type"] == "fam") {
-									$fam_printed[$indexval] = "1";
+							foreach ($asso["name"] as $nkey => $assoname) {
+								$key = splitkey($indexval, "id");
+								$this->printname[] = array (sortable_name_from_name($assoname[0]), $key, get_gedcom_from_id($asso["gedfile"]), $apid);
+							}
+						} else
+						if ($asso["type"] == "fam") {
+							$fam_printed[$indexval] = "1";
 									// print all names
-									foreach ($asso["name"] as $nkey => $assoname) {
-										$assosplit = preg_split("/(\s\+\s)/", trim($assoname));
+							foreach ($asso["name"] as $nkey => $assoname) {
+								$assosplit = preg_split("/(\s\+\s)/", trim($assoname));
 										// Both names have to have the same direction
-										if (hasRTLText($assosplit[0]) == hasRTLText($assosplit[1])) {
-											$apid2 = splitkey($indexval, "id");
-											$this->printfamname[] = array (check_NN($assoname), $apid2, get_gedcom_from_id($asso["gedfile"]), $apid);
-										}
-									}
+								if (hasRTLText($assosplit[0]) == hasRTLText($assosplit[1])) {
+									$apid2 = splitkey($indexval, "id");
+									$this->printfamname[] = array (check_NN($assoname), $apid2, get_gedcom_from_id($asso["gedfile"]), $apid);
 								}
+							}
 						}
-						unset ($assolist[$apid]);
 					}
+					unset ($assolist[$apid]);
 				}
 			}
+		}
 
 			//-- if only 1 item is returned, automatically forward to that item
-			if (count($this->printname) == 1) {
-				$oldged = $GEDCOM;
-				$GEDCOM = $this->printname[0][2];
+		if (count($this->printname) == 1) {
+			$oldged = $GEDCOM;
+			$GEDCOM = $this->printname[0][2];
+			include (get_privacy_file());
+			if (showLivingNameByID($this->printname[0][1]) || displayDetailsByID($this->printname[0][1])) {
+				header("Location: individual.php?pid=".$this->printname[0][1]."&ged=".$this->printname[0][2]);
+				exit;
+			} else {
+				$GEDCOM = $oldged;
 				include (get_privacy_file());
-				if (showLivingNameByID($this->printname[0][1]) || displayDetailsByID($this->printname[0][1])) {
-					header("Location: individual.php?pid=".$this->printname[0][1]."&ged=".$this->printname[0][2]);
-					exit;
-				} else {
-					$GEDCOM = $oldged;
-					include (get_privacy_file());
-				}
 			}
-			uasort($this->printname, "itemsort");
-			reset($this->printname);
 		}
+		uasort($this->printname, "itemsort");
+		reset($this->printname);
+	}
 	//}
 
 	/**
@@ -1110,9 +1118,9 @@ class SearchControllerRoot extends BaseController {
 					if (trim($my_query) != "") {
 						// Cleanup the querystring so it can be used in a database query
 						if (strlen($my_query) == 1)
-							$my_query = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $my_query);
+						$my_query = preg_replace(array ("/\?/", "/\|/", "/\*/"), array ("\\\?", "\\\|", "\\\\\*"), $my_query);
 						if ($REGEXP_DB)
-							$my_query = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\//", "/\]/", "/\[/"), array (".*", '\(', '\)', '\/', '\]', '\['), $my_query);
+						$my_query = preg_replace(array ("/\s+/", "/\(/", "/\)/", "/\//", "/\]/", "/\[/"), array (".*", '\(', '\)', '\/', '\]', '\['), $my_query);
 						else {
 							$my_query = "%".preg_replace("/\s+/", "%", $my_query)."%";
 						}
@@ -1120,45 +1128,45 @@ class SearchControllerRoot extends BaseController {
 				}
 
 			} else
-				if (($this->subaction == "advanced") && (!empty ($this->myname) || !empty ($this->mybirthdate) || !empty ($this->mybirthplace) || !empty ($this->deathdate) || !empty ($this->mydeathplace) || !empty ($this->mygender))) {
+			if (($this->subaction == "advanced") && (!empty ($this->myname) || !empty ($this->mybirthdate) || !empty ($this->mybirthplace) || !empty ($this->deathdate) || !empty ($this->mydeathplace) || !empty ($this->mygender))) {
 					//					AddToLog('Advanced query');
 					//Building the query string up
-					$my_query = '';
-					if (!empty ($this->myname)) {
-						$my_query .= "NAME=".$this->myname;
+				$my_query = '';
+				if (!empty ($this->myname)) {
+					$my_query .= "NAME=".$this->myname;
 						//						AddToLog('NAME: '.$this->myname);
-					}
-					if (!empty ($this->mybirthdate)) {
-						if ($my_query != '')
-							$my_query .= '&';
-						$my_query .= "BIRTHDATE=".$this->mybirthdate;
-						//						AddToLog('BIRTHDATE: '.$this->mybirthdate);
-					}
-					if (!empty ($this->mybirthplace)) {
-						if ($my_query != '')
-							$my_query .= '&';
-						$my_query .= "BIRTHPLACE=".$this->mybirthplace;
-						//						AddToLog('BIRTHPLACE: '.$this->mybirthplace);
-					}
-					if (!empty ($this->deathdate)) {
-						if ($my_query != '')
-							$my_query .= '&';
-						$my_query .= "DEATHDATE=".$this->deathdate;
-						//						AddToLog('DEATHDATE: '.$this->deathdate);
-					}
-					if (!empty ($this->mydeathplace)) {
-						if ($my_query != '')
-							$my_query .= '&';
-						$my_query."DEATHPLACE=".$this->mydeathplace;
-						//						AddToLog('DEATHPLACE: '.$this->mydeathplace);
-					}
-					if (!empty ($this->mygender)) {
-						if ($my_query != '')
-							$my_query .= '&';
-						$my_query .= "GENDER=".$this->mygender;
-						//						AddToLog('GENDER: '.$this->mygender);
-					}
 				}
+				if (!empty ($this->mybirthdate)) {
+					if ($my_query != '')
+					$my_query .= '&';
+					$my_query .= "BIRTHDATE=".$this->mybirthdate;
+						//						AddToLog('BIRTHDATE: '.$this->mybirthdate);
+				}
+				if (!empty ($this->mybirthplace)) {
+					if ($my_query != '')
+					$my_query .= '&';
+					$my_query .= "BIRTHPLACE=".$this->mybirthplace;
+						//						AddToLog('BIRTHPLACE: '.$this->mybirthplace);
+				}
+				if (!empty ($this->deathdate)) {
+					if ($my_query != '')
+					$my_query .= '&';
+					$my_query .= "DEATHDATE=".$this->deathdate;
+						//						AddToLog('DEATHDATE: '.$this->deathdate);
+				}
+				if (!empty ($this->mydeathplace)) {
+					if ($my_query != '')
+					$my_query .= '&';
+					$my_query."DEATHPLACE=".$this->mydeathplace;
+						//						AddToLog('DEATHPLACE: '.$this->mydeathplace);
+				}
+				if (!empty ($this->mygender)) {
+					if ($my_query != '')
+					$my_query .= '&';
+					$my_query .= "GENDER=".$this->mygender;
+						//						AddToLog('GENDER: '.$this->mygender);
+				}
+			}
 
 			if (!empty ($my_query)) {
 				//				AddToLog("Query: ".$my_query);
@@ -1204,7 +1212,7 @@ class SearchControllerRoot extends BaseController {
 
 				// Add the optional tags
 				if ($this->tagfilter == "on") $skiptags .= ", _PGVU, FILE, FORM, TYPE, CHAN, SUBM, REFN";
-				
+
 				$userlevel = GetUserAccessLevel();
 
 				// Keep track of what indis are already printed to keep a reliable counter
@@ -1221,7 +1229,7 @@ class SearchControllerRoot extends BaseController {
 
 				// remove the % added for the like comparision of non-regex databases
 				if(!$REGEXP_DB)
-					$this->query = str_replace('%', '.*', substr($this->query, 1, strlen($this->query) - 2));
+				$this->query = str_replace('%', '.*', substr($this->query, 1, strlen($this->query) - 2));
 
 				$cti = count($this->myindilist);
 				if (($cti > 0) && (isset ($this->srindi))) {
@@ -1233,7 +1241,7 @@ class SearchControllerRoot extends BaseController {
 					foreach ($global_facts as $gfact => $gvalue) {
 						if (isset ($gvalue["show"])) {
 							if (($gvalue["show"] < $userlevel))
-								$skiptagsged .= ", ".$gfact;
+							$skiptagsged .= ", ".$gfact;
 						}
 					}
 
@@ -1249,7 +1257,7 @@ class SearchControllerRoot extends BaseController {
 								foreach ($global_facts as $gfact => $gvalue) {
 									if (isset ($gvalue["show"])) {
 										if (($gvalue["show"] < $userlevel))
-											$skiptagsged .= ", ".$gfact;
+										$skiptagsged .= ", ".$gfact;
 									}
 								}
 							}
@@ -1272,7 +1280,7 @@ class SearchControllerRoot extends BaseController {
 							// First check if the hit is in the key!
 							if ($this->tagfilter == "off") {
 								if (strpos(str2upper($key), str2upper($this->query)) !== false)
-									$found = true;
+								$found = true;
 							}
 							if ($found == false) {
 								$recs = get_all_subrecords($value["gedcom"], "", false, false, false);
@@ -1302,10 +1310,10 @@ class SearchControllerRoot extends BaseController {
 											}
 										}
 										if ($found == true)
-											break;
+										break;
 									}
 									if ($found == true)
-										break;
+									break;
 								}
 							}
 						}
@@ -1332,24 +1340,24 @@ class SearchControllerRoot extends BaseController {
 												$printindiname[] = array (sortable_name_from_name($assoname[0]), $key, get_gedcom_from_id($asso["gedfile"]), $apid);
 											}
 										} else
-											if ($asso["type"] == "fam") {
-												$fam_printed[$indexval] = "1";
+										if ($asso["type"] == "fam") {
+											$fam_printed[$indexval] = "1";
 												// print all names
-												foreach ($asso["name"] as $nkey => $assoname) {
-													$assosplit = preg_split("/(\s\+\s)/", trim($assoname));
+											foreach ($asso["name"] as $nkey => $assoname) {
+												$assosplit = preg_split("/(\s\+\s)/", trim($assoname));
 													// Both names have to have the same direction
-													if (hasRTLText($assosplit[0]) == hasRTLText($assosplit[1])) {
-														$apid2 = splitkey($indexval, "id");
-														$printfamname[] = array (check_NN($assoname), $apid2, get_gedcom_from_id($asso["gedfile"]), $apid);
-													}
+												if (hasRTLText($assosplit[0]) == hasRTLText($assosplit[1])) {
+													$apid2 = splitkey($indexval, "id");
+													$printfamname[] = array (check_NN($assoname), $apid2, get_gedcom_from_id($asso["gedfile"]), $apid);
 												}
 											}
+										}
 									}
 								}
 							}
 						} else
-							if ($hit == true)
-								$this->indi_hide[$key."[".get_gedcom_from_id($value["gedfile"])."]"] = 1;
+						if ($hit == true)
+						$this->indi_hide[$key."[".get_gedcom_from_id($value["gedfile"])."]"] = 1;
 					}
 					$GEDCOM = $oldged;
 				}
@@ -1364,7 +1372,7 @@ class SearchControllerRoot extends BaseController {
 					foreach ($global_facts as $gfact => $gvalue) {
 						if (isset ($gvalue["show"])) {
 							if (($gvalue["show"] < $userlevel))
-								$skiptagsged .= ", ".$gfact;
+							$skiptagsged .= ", ".$gfact;
 						}
 					}
 
@@ -1380,7 +1388,7 @@ class SearchControllerRoot extends BaseController {
 								foreach ($global_facts as $gfact => $gvalue) {
 									if (isset ($gvalue["show"])) {
 										if (($gvalue["show"] < $userlevel))
-											$skiptagsged .= ", ".$gfact;
+										$skiptagsged .= ", ".$gfact;
 									}
 								}
 							}
@@ -1432,10 +1440,10 @@ class SearchControllerRoot extends BaseController {
 										}
 									}
 									if ($found == true)
-										break;
+									break;
 								}
 								if ($found == true)
-									break;
+								break;
 							}
 						}
 						if ($found == true) {
@@ -1451,8 +1459,8 @@ class SearchControllerRoot extends BaseController {
 							}
 							$fam_printed[$key."[".$GEDCOM."]"] = "1";
 						} else
-							if ($hit == true)
-								$this->fam_hide[$key."[".get_gedcom_from_id($value["gedfile"])."]"] = 1;
+						if ($hit == true)
+						$this->fam_hide[$key."[".get_gedcom_from_id($value["gedfile"])."]"] = 1;
 					}
 					uasort($printfamname, "itemsort");
 					$GEDCOM = $oldged;
@@ -1468,10 +1476,10 @@ class SearchControllerRoot extends BaseController {
 					foreach ($global_facts as $gfact => $gvalue) {
 						if (isset ($gvalue["show"])) {
 							if (($gvalue["show"] < $userlevel))
-								$skiptagsged .= ", ".$gfact;
+							$skiptagsged .= ", ".$gfact;
 						}
 					}
-		
+						
 					foreach ($this->mysourcelist as $key => $value) {
 						if (count($this->sgeds) > 1) {
 							$GEDCOM = splitkey($key, "ged");
@@ -1484,7 +1492,7 @@ class SearchControllerRoot extends BaseController {
 								foreach ($global_facts as $gfact => $gvalue) {
 									if (isset ($gvalue["show"])) {
 										if (($gvalue["show"] < $userlevel))
-											$skiptagsged .= ", ".$gfact;
+										$skiptagsged .= ", ".$gfact;
 									}
 								}
 							}
@@ -1526,24 +1534,24 @@ class SearchControllerRoot extends BaseController {
 										}
 									}
 									if ($found == true)
-										break;
+									break;
 								}
 								if ($found == true)
-									break;
+								break;
 							}
 						}
 						if ($found == true)
-							$actualsourcelist[$key] = $value;
+						$actualsourcelist[$key] = $value;
 						else
-							if ($hit == true)
-								$this->source_hide[$key."[".get_gedcom_from_id($value["gedfile"])."]"] = 1;
+						if ($hit == true)
+						$this->source_hide[$key."[".get_gedcom_from_id($value["gedfile"])."]"] = 1;
 					}
 					$GEDCOM = $oldged;
 				}
 				// Start output here, because from the indi's we may have printed some fams which need the column header.
 				print "<br />";
 				print "\n\t<div class=\"center\">\n";
-				
+
 				//-- [start] new code for sortable tables
 				global $GEDCOMS;
 				$oldged = $GEDCOM;
@@ -1564,26 +1572,26 @@ class SearchControllerRoot extends BaseController {
 				}
 				$GEDCOM = $oldged;
 				//-- [end] new code for sortable tables
-
+/*
 				$totalIndiResults = count($printindiname);
 				$this->totalGeneralResults = $totalIndiResults;
 				$totalFamResults = count($printfamname);
 				if ($totalFamResults > $this->totalGeneralResults)
-					$this->totalGeneralResults = $totalFamResults;
+				$this->totalGeneralResults = $totalFamResults;
 				$totalSrcResults = count($actualsourcelist);
 				if ($totalSrcResults > $this->totalGeneralResults)
-						$this->totalGeneralResults = $totalSrcResults;
+				$this->totalGeneralResults = $totalSrcResults;
 				// Prints the Paged Results: << 1 2 3 4 >> links if there are more than $this->resultsPerPage results
 				if ($this->resultsPerPage >= 1 && $this->totalGeneralResults > $this->resultsPerPage) {
 					$this->printPageResultsLinks($this->inputFieldNames, $this->totalGeneralResults, $this->resultsPerPage);
 				}
 				print "<table class=\"list_table $TEXT_DIRECTION\">\n\t\t<tr>";
 				if ((count($printindiname) > 0) && (isset ($this->srindi)))
-					print "<td class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["people"]."</td>";
+				print "<td class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["people"]."</td>";
 				if ((count($this->myfamlist) > 0) || (count($printfamname) > 0))
-					print "<td class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sfamily"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["families"]."</td>";
+				print "<td class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sfamily"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["families"]."</td>";
 				if (count($this->mysourcelist) > 0)
-					print "<td class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["sources"]."</td>";
+				print "<td class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["sources"]."</td>";
 				print "</tr>\n\t\t<tr>";
 				$oldged = $GEDCOM;
 				$curged = $GEDCOM;
@@ -1592,7 +1600,7 @@ class SearchControllerRoot extends BaseController {
 					uasort($printindiname, "itemsort");
 					print "<td class=\"list_value_wrap\"><ul>";
 
-					/***************************************************** PAGING HERE **********************************************************************/
+					/***************************************************** PAGING HERE **********************************************************************
 					//set the total results and only get the results for this page
 					$printindiname = $this->getPagedResults($printindiname, $this->resultsPerPage);
 					$this->indiResultsPrinted = count($printindiname);
@@ -1613,7 +1621,7 @@ class SearchControllerRoot extends BaseController {
 					}
 				}
 
-					/***************************************************** PAGING HERE **********************************************************************/
+				/***************************************************** PAGING HERE **********************************************************************
 				if (count($printfamname)>0) {
 					//set the total results and only get the results for this page
 					$printfamname = $this->getPagedResults($printfamname, $this->resultsPerPage);
@@ -1636,7 +1644,7 @@ class SearchControllerRoot extends BaseController {
 					}
 				}
 
-					/***************************************************** PAGING HERE **********************************************************************/
+				/***************************************************** PAGING HERE **********************************************************************
 				if (count($actualsourcelist)>0) {
 					print "\n\t\t<td class=\"list_value_wrap\"><ul>";
 					//set the total results and only get the results for this page
@@ -1653,76 +1661,78 @@ class SearchControllerRoot extends BaseController {
 					}
 				}
 				$GEDCOM = $oldged;
-				
+
 				print "</tr><tr>\n\t";
 				if ($this->indiResultsPrinted > 0 || $this->famResultsPrinted > 0 || $this->srcResultsPrinted > 0) {
 					if (($this->indiResultsPrinted > 0) && (isset ($this->srindi))) {
 						print "<td>".$pgv_lang["total_indis"]." ";
 						if ($this->resultsPerPage >= $totalIndiResults)
-							print $totalIndiResults;
+						print $totalIndiResults;
 						else
-							if ($totalIndiResults > 0) {
-								print (($this->resultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ";
-								print (($this->resultsPerPage * $this->resultsPageNum) + $this->indiResultsPrinted)." ".$pgv_lang["of"]." ".$totalIndiResults;
-							}
+						if ($totalIndiResults > 0) {
+							print (($this->resultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ";
+							print (($this->resultsPerPage * $this->resultsPageNum) + $this->indiResultsPrinted)." ".$pgv_lang["of"]." ".$totalIndiResults;
+						}
 						if (count($this->indi_private) > 0)
-							print "  (".$pgv_lang["private"]." ".count($this->indi_private).")";
+						print "  (".$pgv_lang["private"]." ".count($this->indi_private).")";
 						if (count($this->indi_hide) > 0)
-							print "  --  ".$pgv_lang["hidden"]." ".count($this->indi_hide);
+						print "  --  ".$pgv_lang["hidden"]." ".count($this->indi_hide);
 						if (count($this->indi_private) > 0 || count($this->indi_hide) > 0)
-							print_help_link("privacy_error_help", "qm");
+						print_help_link("privacy_error_help", "qm");
 						print "</td>";
 					}
 
 					if ($this->famResultsPrinted > 0 && isset ($this->srfams)) {
 						print "<td>".$pgv_lang["total_fams"]." ";
 						if ($this->resultsPerPage >= $totalFamResults)
-							print $totalFamResults;
+						print $totalFamResults;
 						else
-							if ($totalFamResults > 0) {
-								print (($this->resultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ";
-								print (($this->resultsPerPage * $this->resultsPageNum) + $this->famResultsPrinted)." ".$pgv_lang["of"]." ".$totalFamResults;
-							}
+						if ($totalFamResults > 0) {
+							print (($this->resultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ";
+							print (($this->resultsPerPage * $this->resultsPageNum) + $this->famResultsPrinted)." ".$pgv_lang["of"]." ".$totalFamResults;
+						}
 						if (count($this->fam_private) > 0)
-							print "  (".$pgv_lang["private"]." ".count($this->fam_private).")";
+						print "  (".$pgv_lang["private"]." ".count($this->fam_private).")";
 						if (count($this->fam_hide) > 0)
-							print "  --  ".$pgv_lang["hidden"]." ".count($this->fam_hide);
+						print "  --  ".$pgv_lang["hidden"]." ".count($this->fam_hide);
 						if (count($this->fam_private) > 0 || count($this->fam_hide) > 0)
-							print_help_link("privacy_error_help", "qm");
+						print_help_link("privacy_error_help", "qm");
 						print "</td>";
 					}
 
 					if ($this->srcResultsPrinted > 0 && isset ($this->srsour)) {
 						print "<td>".$pgv_lang["total_sources"]." ";
 						if ($this->resultsPerPage >= $totalSrcResults)
-							print $totalSrcResults;
+						print $totalSrcResults;
 						else
-							if ($totalSrcResults > 0) {
-								print (($this->resultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ";
-								print (($this->resultsPerPage * $this->resultsPageNum) + $this->srcResultsPrinted)." ".$pgv_lang["of"]." ".$totalSrcResults;
-							}
+						if ($totalSrcResults > 0) {
+							print (($this->resultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ";
+							print (($this->resultsPerPage * $this->resultsPageNum) + $this->srcResultsPrinted)." ".$pgv_lang["of"]." ".$totalSrcResults;
+						}
 						if (count($this->source_hide) > 0)
-							print "  --  ".$pgv_lang["hidden"]." ".count($this->source_hide);
+						print "  --  ".$pgv_lang["hidden"]." ".count($this->source_hide);
 						print "</td>";
 					}
 
 					if ($this->indiResultsPrinted > 0 || $this->famResultsPrinted > 0 || $this->srcResultsPrinted > 0)
-						print "</tr>\n\t";
+					print "</tr>\n\t";
 				} else
-					if (isset ($this->query)) {
-						print "<td class=\"warning\" style=\" text-align: center;\"><i>".$pgv_lang["no_results"]."</i><br /></td></tr>\n\t\t";
-						if (!isset ($this->srindi) && !isset ($this->srfams) && !isset ($this->srsour)) {
-							print "<tr><td class=\"warning\" style=\" text-align: center;\"><i>".$pgv_lang["no_search_for"]."</i><br /></div>\n\t\t";
-						}
-					}
-				print "</table></div>";
-			} else
 				if (isset ($this->query)) {
-					print "<br /><div class=\"warning\" style=\" text-align: center;\"><i>".$pgv_lang["no_results"]."</i><br />\n\t\t";
+					print "<td class=\"warning\" style=\" text-align: center;\"><i>".$pgv_lang["no_results"]."</i><br /></td></tr>\n\t\t";
 					if (!isset ($this->srindi) && !isset ($this->srfams) && !isset ($this->srsour)) {
-						print "<i>".$pgv_lang["no_search_for"]."</i><br /></div>\n\t\t";
+						print "<tr><td class=\"warning\" style=\" text-align: center;\"><i>".$pgv_lang["no_search_for"]."</i><br /></div>\n\t\t";
 					}
 				}
+				print "</table>";
+				*/
+				print "</div>";
+			} else
+			if (isset ($this->query)) {
+				print "<br /><div class=\"warning\" style=\" text-align: center;\"><i>".$pgv_lang["no_results"]."</i><br />\n\t\t";
+				if (!isset ($this->srindi) && !isset ($this->srfams) && !isset ($this->srsour)) {
+					print "<i>".$pgv_lang["no_search_for"]."</i><br /></div>\n\t\t";
+				}
+			}
 			// Prints the Paged Results: << 1 2 3 4 >> links if there are more than $this->resultsPerPage results
 			if ($this->resultsPerPage >= 1 && $this->totalGeneralResults > $this->resultsPerPage) {
 				$this->printPageResultsLinks($this->inputFieldNames, $this->totalGeneralResults, $this->resultsPerPage);
@@ -1732,7 +1742,7 @@ class SearchControllerRoot extends BaseController {
 		//----- section to search and display results for a Soundex Search
 		if ($this->action == "soundex") {
 			if ($this->soundex == "DaitchM")
-				DMsoundex("", "closecache");
+			DMsoundex("", "closecache");
 			// 	$this->query = "";	// Stop function PrintReady from doing strange things to accented names
 			
 			if (((!empty ($this->lastname)) || (!empty ($this->firstname)) || (!empty ($this->place))) && (isset ($this->printname))) {
@@ -1740,7 +1750,7 @@ class SearchControllerRoot extends BaseController {
 				//set the total results and only get the results for this page
 				$totalIndiResults = count($this->printname);
 				$this->totalResults = $totalIndiResults;
-				
+
 				// Prints the Paged Results: << 1 2 3 4 >> links if there are more than $this->resultsPerPage results
 				if ($this->resultsPerPage >= 1 && $this->totalResults > $this->resultsPerPage) {
 					$this->printPageResultsLinks($this->inputFieldNames, $this->totalResults, $this->resultsPerPage);
@@ -1754,12 +1764,12 @@ class SearchControllerRoot extends BaseController {
 					$curged = $GEDCOM;
 					$extrafams = false;
 					if (count($this->printfamname) > 0)
-						$extrafams = true;
+					$extrafams = true;
 					if ($extrafams) {
 						print "<td class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["people"]."</td>";
 						print "<td class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sfamily"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["families"]."</td>";
 					} else
-						print "<td colspan=\"2\" class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["people"]."</td>";
+					print "<td colspan=\"2\" class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["people"]."</td>";
 					print "</tr><tr>\n\t\t<td class=\"list_value_wrap\"><ul>";
 
 					/***************************************************** PAGING HERE **********************************************************************/
@@ -1778,7 +1788,7 @@ class SearchControllerRoot extends BaseController {
 						if (!$extrafams) {
 							$i++;
 							if ($i == floor($this->indiResultsPrinted / 2) && $this->indiResultsPrinted > 9)
-								print "\n\t\t</ul></td>\n\t\t<td class=\"list_value_wrap\"><ul>";
+							print "\n\t\t</ul></td>\n\t\t<td class=\"list_value_wrap\"><ul>";
 						}
 					}
 					$GEDCOM = $oldged;
@@ -1793,16 +1803,16 @@ class SearchControllerRoot extends BaseController {
 						uasort($this->printfamname, "itemsort");
 						print "\n\t\t<td class=\"list_value_wrap\"><ul>";
 						if (isset ($this->printfamname))
-							$famCount = count($this->printfamname);
+						$famCount = count($this->printfamname);
 						else
-							$famCount = 0;
+						$famCount = 0;
 
 						/***************************************************** PAGING HERE **********************************************************************/
 
 						//set the total results and only get the results for this page
 						$totalFamResults = count($this->printfamname);
 						if ($totalFamResults > $this->totalResults)
-							$this->totalResults = $totalFamResults;
+						$this->totalResults = $totalFamResults;
 						$this->printfamname = $this->getPagedResults($this->printfamname, $this->resultsPerPage);
 						$this->famResultsPrinted = count($this->printfamname);
 						foreach ($this->printfamname as $pkey => $pvalue) {
@@ -1827,46 +1837,46 @@ class SearchControllerRoot extends BaseController {
 					if ($this->totalResults > 0) {
 						print "<tr><td ";
 						if ((!$extrafams) && ($ct > 9))
-							print "colspan=\"2\">";
+						print "colspan=\"2\">";
 						else
-							print ">";
+						print ">";
 						print $pgv_lang["total_names"]." ";
 						if ($this->resultsPerPage >= $totalIndiResults)
-							print $totalIndiResults;
+						print $totalIndiResults;
 						else
-							if ($totalIndiResults > 0) {
-								print (($this->resultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ";
-								print (($this->resultsPerPage * $this->resultsPageNum) + $this->indiResultsPrinted)." ".$pgv_lang["of"]." ".$totalIndiResults;
-							}
+						if ($totalIndiResults > 0) {
+							print (($this->resultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ";
+							print (($this->resultsPerPage * $this->resultsPageNum) + $this->indiResultsPrinted)." ".$pgv_lang["of"]." ".$totalIndiResults;
+						}
 						if (count($this->indi_private) > 0)
-							print "  (".$pgv_lang["private"]." ".count($this->indi_private).")";
+						print "  (".$pgv_lang["private"]." ".count($this->indi_private).")";
 						if (count($this->indi_hide) > 0)
-							print "  --  ".$pgv_lang["hidden"]." ".count($this->indi_hide);
+						print "  --  ".$pgv_lang["hidden"]." ".count($this->indi_hide);
 						if (count($this->indi_private) > 0 || count($this->indi_hide) > 0)
-							print_help_link("privacy_error_help", "qm");
+						print_help_link("privacy_error_help", "qm");
 						print "</td>";
 						if ($extrafams) {
 							print "<td>".$pgv_lang["total_fams"]." ";
 							if ($this->resultsPerPage >= $totalFamResults)
-								print $totalFamResults;
+							print $totalFamResults;
 							else
-								if ($this->resultsPerPage >= $totalFamResults) {
-									print (($this->resultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ";
-									print (($this->resultsPerPage * $this->resultsPageNum) + $this->famResultsPrinted)." ".$pgv_lang["of"]." ".$totalFamResults;
-								}
+							if ($this->resultsPerPage >= $totalFamResults) {
+								print (($this->resultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ";
+								print (($this->resultsPerPage * $this->resultsPageNum) + $this->famResultsPrinted)." ".$pgv_lang["of"]." ".$totalFamResults;
+							}
 							if (count($this->fam_private) > 0)
-								print "  (".$pgv_lang["private"]." ".count($this->fam_private).")";
+							print "  (".$pgv_lang["private"]." ".count($this->fam_private).")";
 							if (count($this->fam_hide) > 0)
-								print "  --  ".$pgv_lang["hidden"]." ".count($this->fam_hide);
+							print "  --  ".$pgv_lang["hidden"]." ".count($this->fam_hide);
 							if (count($this->fam_private) > 0 || count($this->fam_hide) > 0)
-								print_help_link("privacy_error_help", "qm");
+							print_help_link("privacy_error_help", "qm");
 							print "</td>";
 						}
 						print "</tr>";
 					}
 
 				} else
-					print "<td class=\"warning\" style=\" text-align: center;\"><i>".$pgv_lang["no_results"]."</i></td></tr>\n\t\t";
+				print "<td class=\"warning\" style=\" text-align: center;\"><i>".$pgv_lang["no_results"]."</i></td></tr>\n\t\t";
 				print "</table></div>";
 			}
 
@@ -1884,7 +1894,7 @@ class SearchControllerRoot extends BaseController {
 			foreach ($this->Sites as $server) {
 				$siteName = "server".$i;
 				if (isset ($_REQUEST["$siteName"]))
-					$sitesChecked ++;
+				$sitesChecked ++;
 				$i ++;
 			}
 			if ($sitesChecked >= 1) {
@@ -1916,7 +1926,7 @@ class SearchControllerRoot extends BaseController {
 								//set the total results and only get the results for this page
 								$this->multiTotalResults += count($personlist);
 								if ($this->totalResults < $this->multiTotalResults)
-									$this->totalResults = $this->multiTotalResults;
+								$this->totalResults = $this->multiTotalResults;
 								$personlist = $this->getPagedResults($personlist, $this->multiResultsPerPage);
 								$pageResultsNum = 0;
 								foreach ($personlist as $index => $person) {
@@ -1971,7 +1981,7 @@ class SearchControllerRoot extends BaseController {
 								print " ".$pgv_lang["of"]." ". ($this->multiTotalResults)."</td></tr></table>";
 								$this->multiTotalResults = 0;
 							} else
-								print "</tr></table>";
+							print "</tr></table>";
 						}
 						print "</table></div>";
 					}
@@ -1981,9 +1991,9 @@ class SearchControllerRoot extends BaseController {
 					}
 				}
 			} else
-				if ($sitesChecked < 1 && $this->isPostBack) {
-					print "<table align=\"center\" \><tr><td class=\"warning\" style=\" text-align: center;\"><font color=\"red\"><b><i>".$pgv_lang["no_search_site"]."</i></b></font><br /></td></tr></table>";
-				}
+			if ($sitesChecked < 1 && $this->isPostBack) {
+				print "<table align=\"center\" \><tr><td class=\"warning\" style=\" text-align: center;\"><font color=\"red\"><b><i>".$pgv_lang["no_search_site"]."</i></b></font><br /></td></tr></table>";
+			}
 
 			print "</table>";
 			// Prints the Paged Results: << 1 2 3 4 >> links if there are more than $this->resultsPerPage results
@@ -2018,10 +2028,10 @@ class SearchControllerRoot extends BaseController {
 		if (isset ($results) && $len > 0) {
 			foreach ($results as $key => $value) {
 				if ($i >= $startPosition)
-					$pagedResults[$key] = $value;
+				$pagedResults[$key] = $value;
 				$i ++;
 				if ($i >= $endPosition)
-					break;
+				break;
 			}
 			return $pagedResults;
 		}
@@ -2055,7 +2065,7 @@ class SearchControllerRoot extends BaseController {
 				$this->printQueryString($inputFieldNames, ($i -1));
 				print "'>".$i."</a>";
 			} else
-				print " <b>".$i."</b>";
+			print " <b>".$i."</b>";
 		}
 
 		// Prints the '>>' linking to the next page if it's not on the last page
@@ -2089,7 +2099,7 @@ class SearchControllerRoot extends BaseController {
 					print "?";
 					$first = false;
 				} else
-					print "&amp;";
+				print "&amp;";
 				print "$value=".$controllerVar;
 			}
 		}
@@ -2106,7 +2116,7 @@ class SearchControllerRoot extends BaseController {
 			$value = $this-> $varName;
 			return $value;
 		} else
-			return "";
+		return "";
 	}
 }
 // -- end of class

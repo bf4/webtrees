@@ -37,7 +37,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_AddTask.php")) {
  require_once("includes/functions_db.php");
 
     // Grab the global vars we need
- 	global $pgv_lang, $TBLPREFIX;
+ 	global $pgv_lang, $TBLPREFIX, $SOURCE_ID_PREFIX;
  
 	/**
 	 * GETS all available FOLDERS and creates a combo box with the folders listed.
@@ -161,11 +161,13 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_AddTask.php")) {
 	var nameElement;
 	var lastId;
 	function paste_id(value) {
-		pastefield.value = pastefield.value + ";" + value;
 		lastId = value;
+		pastefield.value =  pastefield.value + ';' + value;
 	}
 	function pastename(name) {
-		nameElement.innerHTML = nameElement.innerHTML + '<a id="link_'+lastId+'" href="source.php?sid='+pastefield.value+'">'+name+'</a> <a id="rem_'+lastId+'" href="#" onclick="clearname(\''+pastefield.id+'\', \'link_'+lastId+'\', \''+lastId+'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>\n';
+		if (lastId.substring(0,1) == '<?php print $SOURCE_ID_PREFIX?>')
+			nameElement.innerHTML = nameElement.innerHTML + '<a id="link_'+lastId+'" href="source.php?sid='+lastId+'">'+name+'</a> <a id="rem_'+lastId+'" href="#" onclick="clearname(\''+pastefield.value+'\', \'link_'+lastId+'\', \''+lastId+'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>\n';
+		else nameElement.innerHTML = nameElement.innerHTML + '<a id="link_'+lastId+'" href="individual.php?pid='+lastId+'">'+name+'</a> <a id="rem_'+lastId+'" href="#" onclick="clearname(\''+pastefield.value+'\', \'link_'+lastId+'\', \''+lastId+'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>\n';
 	}
 	function clearname(hiddenName, name, id) {
 		pastefield = document.getElementById(hiddenName);

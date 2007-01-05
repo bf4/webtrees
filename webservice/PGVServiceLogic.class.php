@@ -24,7 +24,7 @@
  * @version $Id$
  */
  
-require_once('genealogyService.php');
+require_once('webservice/genealogyService.php');
 require_once("includes/functions_edit.php");
 require_once('includes/GEWebService.php');
 
@@ -94,17 +94,19 @@ class PGVServiceLogic extends GenealogyService
 	 **/
 	function default_gedcom($gedcom_id='')
 	{
-		global $GEDCOMS;
+		global $GEDCOMS, $GEDCOM;
 
 		if (is_array($GEDCOMS)) {
 			foreach($GEDCOMS as $ged=>$gedarray)
 			{
-				if($gedcom_id === $ged)
+				if($gedcom_id === $ged) {
+					
 					return $ged;
+				}
 			}
 		}
 		//return the first gedcom on the list if no gedcom was matched
-		return $ged;
+		return $GEDCOM;
 	}
 
 	/**
@@ -127,7 +129,7 @@ class PGVServiceLogic extends GenealogyService
 		$compress_method = $this->setCompression($compression);
 		$sid = session_id();
 		//guest auth
-		if(empty($username))
+		if(empty($username) && !$REQUIRE_AUTHENTICATION)
 		{
 			$_SESSION["GEDCOM"] = $GEDCOM;
 			$_SESSION["compression"] = $compress_method;
@@ -180,7 +182,7 @@ class PGVServiceLogic extends GenealogyService
 		//addDebugLog("in getServiceInfo ".$GEDCOMS);
 		$return['compression'] = $this->getCompressionLibs();
 		$return['apiVersion'] = $this->service_version;
-		$return['server'] = 'PHPGedView ' . $VERSION . ' ' . $VERSION_RELEASE;
+		$return['server'] = 'PhpGedView ' . $VERSION . ' ' . $VERSION_RELEASE;
 		
 		$gedcomlist = array();
 		$i = 0;

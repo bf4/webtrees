@@ -1205,6 +1205,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 		//-- parent families
 		foreach($families as $famid=>$family) {
+			/*
 			?>
 			<table>
 				<tr>
@@ -1338,6 +1339,7 @@ class IndividualControllerRoot extends BaseController {
 				?>
 			</table>
 		<?php
+			*/
 			/* -- following added based on feedback from UI discussion */
 			print print_family_parents($famid);
 			print_family_children($famid);
@@ -1462,6 +1464,7 @@ class IndividualControllerRoot extends BaseController {
 		//-- spouses and children
 		$families = $this->indi->getSpouseFamilies();
 		foreach($families as $famid=>$family) {
+			/*
 			?>
 			<table>
 				<tr>
@@ -1597,9 +1600,11 @@ class IndividualControllerRoot extends BaseController {
 				?>
 			</table>
 		<?php
+			*/
 			/* -- following added based on feedback from UI discussion */
 			print print_family_parents($famid);
 			print_family_children($famid);
+			$personcount++;
 		}
 		if ($personcount==0) print "<table><tr><td id=\"no_tab5\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab5"]."</td></tr></table>\n";
 		?>

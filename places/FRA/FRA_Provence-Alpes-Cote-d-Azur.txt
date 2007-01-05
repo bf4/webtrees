@@ -1,9 +1,5 @@
 <!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
-<<<<<<< .working
-<!-- $Id$ -->
-=======
 <!-- @version $Id$ -->
->>>>>>> .merge-right.r684
 Alpes-de-Haute-Provence
 Alpes-Maritimes
 Bouches-du-Rhône
