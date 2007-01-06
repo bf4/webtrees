@@ -129,8 +129,7 @@ switch ($action) {
 					$mail_body .= $SERVER_URL;
 				}
 
-				$host = preg_replace("/^www\./i", "", $_SERVER["SERVER_NAME"]);
-  			  $headers = "From: phpgedview-noreply@".$host;
+  			  $headers = "From: ".$PHPGEDVIEW_EMAIL;
   			  require_once('includes/functions_mail.php');
   			  pgvMail($newuser["email"], str_replace("#SERVER_NAME#", $SERVER_URL, $pgv_lang["mail04_subject"]), $mail_body, $headers);
 
@@ -448,8 +447,7 @@ switch ($action) {
 					  $mail_body .= $pgv_lang["comments"].": " . $user_comments . "\r\n\r\n";
 					  $mail_body .= $pgv_lang["mail01_line05"] . "\r\n";
 					  $mail_body .= $pgv_lang["mail01_line06"] . "\r\n";
-					  $host = preg_replace("/^www\./i", "", $_SERVER["SERVER_NAME"]);
-					  $headers = "From: phpgedview-noreply@".$host;
+					  $headers = "From: ".$PHPGEDVIEW_EMAIL;
 					  require_once('includes/functions_mail.php');
 					  pgvMail($user_email, str_replace("#SERVER_NAME#", $SERVER_URL, $pgv_lang["mail01_subject"]), $mail_body, $headers);
 	
@@ -471,8 +469,7 @@ switch ($action) {
 					 } else {
 						$mail_body .= $pgv_lang["mail02_line04a"] . "\r\n";
 					 }
-					  $host = preg_replace("/^www\./i", "", $_SERVER["SERVER_NAME"]);
-					  $headers = "From: phpgedview-noreply@".$host;
+					    $headers = "From: ".$PHPGEDVIEW_EMAIL;
 						$message = array();
 						$message["to"]=$WEBMASTER_EMAIL;
 						$message["from"]=$user_email;
@@ -579,11 +576,10 @@ switch ($action) {
   			      }
   			      $path = substr($SCRIPT_NAME, 0, strrpos($SCRIPT_NAME, "/"));
   			      $mail_body .= "http://".$_SERVER['SERVER_NAME'] . $path."/useradmin.php?action=edituser&username=" . urlencode($newuser["username"]) . "\r\n";
-					$host = preg_replace("/^www\./i", "", $_SERVER["SERVER_NAME"]);
-					$headers = "From: phpgedview-noreply@".$host;
+					$headers = "From: ".$PHPGEDVIEW_EMAIL;
 		  			$message = array();
 					$message["to"]=$WEBMASTER_EMAIL;
-					$message["from"]="phpgedview-noreply@".$host;
+					$message["from"]=$PHPGEDVIEW_EMAIL;
 					$message["subject"] = str_replace("#SERVER_NAME#", $SERVER_URL, $pgv_lang["mail03_subject"]);
 					$message["body"] = $mail_body;
 					$message["created"] = $time;

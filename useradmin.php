@@ -332,8 +332,7 @@ if ($action=="edituser2") {
 
 				$message = array();
 				$message["to"] = $newuser["username"];
-				$host = preg_replace("/^www\./i", "", $_SERVER["SERVER_NAME"]);
-				$headers = "From: phpgedview-noreply@".$host;
+				$headers = "From: ".$PHPGEDVIEW_EMAIL;
 				$message["from"] = getUserName();
 				if (substr($SERVER_URL, -1) == "/"){
 					$message["subject"] = str_replace("#SERVER_NAME#", substr($SERVER_URL,0, (strlen($SERVER_URL)-1)), $pgv_lang["admin_approved"]);
