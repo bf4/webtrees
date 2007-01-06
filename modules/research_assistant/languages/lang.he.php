@@ -258,7 +258,7 @@ $pgv_lang["autosearch_plugin_name_gen"] 	= "חיבור Genealogy.com";
 $pgv_lang["autosearch_plugin_name_fs"] 		= "חיבור FamilySearch.org"; 
 $pgv_lang["autosearch_plugin_name_werelate"]   	= "חיבור Werelate.org";
 $pgv_lang["autosearch_search"]           		= "חפש"; 
-$pgv_lang["autosearch_keywords"] 		= "##Keywords:";
+$pgv_lang["autosearch_keywords"] 		= "##Keywords:"; //@@
 
 //Folder deletion error messages
 $pgv_lang["has_tasks"]                 ="התיקייה מכילה משימות ולא ניתן למחוק אותה"; 
