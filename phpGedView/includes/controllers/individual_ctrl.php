@@ -971,6 +971,7 @@ class IndividualControllerRoot extends BaseController {
 	
 	function print_facts_tab() {
 		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
+		global $n_chil, $n_gchi;
 		$indifacts = $this->getIndiFacts();
 		?>
 		<table class="facts_table">
@@ -997,7 +998,7 @@ class IndividualControllerRoot extends BaseController {
 				if (preg_match("/1 _PGVFS @(.*)@/", $value[1], $match)>0) {
 					// do not show family events after death
 					if (!$yetdied) {
-						print_fact($value[1],trim($match[1]),$value[0], $this->indi->getGedcomRecord()); ?><?php
+						print_fact($value[1],trim($match[1]),$value[0], $this->indi->getGedcomRecord());
 					}
 				}
 				else print_fact($value[1],$this->pid,$value[0], $this->indi->getGedcomRecord());
