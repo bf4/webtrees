@@ -1203,6 +1203,7 @@ function AddToChangeLog($LogString, $ged="") {
 function addMessage($message) {
 	global $TBLPREFIX, $CONTACT_METHOD, $pgv_lang,$CHARACTER_SET, $LANGUAGE, $PGV_STORE_MESSAGES, $SERVER_URL, $pgv_language, $PGV_SIMPLE_MAIL, $WEBMASTER_EMAIL, $DBCONN;
 	global $TEXT_DIRECTION, $TEXT_DIRECTION_array, $DATE_FORMAT, $DATE_FORMAT_array, $TIME_FORMAT, $TIME_FORMAT_array, $WEEK_START, $WEEK_START_array, $NAME_REVERSE, $NAME_REVERSE_array;
+	global $PHPGEDVIEW_EMAIL;
 
 	//-- do not allow users to send a message to themselves
 	if ($message["from"]==$message["to"]) return false;
@@ -1276,8 +1277,7 @@ function addMessage($message) {
 			else $to = $tuser["email"];
 		}
 		if (!$fuser) {
-			$host = preg_replace("/^www\./i", "", $_SERVER["SERVER_NAME"]);
-			$header2 = "From: phpgedview-noreply@".$host;
+			$header2 = "From: ".$PHPGEDVIEW_EMAIL;
 		} else {
 			$header2 = "From: ".$to;
 		}
@@ -1290,7 +1290,7 @@ function addMessage($message) {
 	}
 	if ($message["method"]!="messaging") {
 		if (!isset($message["no_from"])) {
-			if (stristr($from, "phpgedview-noreply@")){
+			if (stristr($from, $PHPGEDVIEW_EMAIL)){
 				$admuser = getuser($WEBMASTER_EMAIL);
 				$from = $admuser["email"];
 			}

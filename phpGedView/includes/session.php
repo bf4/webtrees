@@ -631,8 +631,14 @@ $_SESSION["GEDCOM"] = $GEDCOM;
 $INDILIST_RETRIEVED = false;
 $FAMLIST_RETRIEVED = false;
 
+/**
+ * Load GEDCOM configuration
+ */
 require_once("config_gedcom.php");
 require_once(get_config_file());
+if (empty($PHPGEDVIEW_EMAIL)) {
+	$PHPGEDVIEW_EMAIL = "phpgedview-noreply@".preg_replace("/^www\./i", "", $_SERVER["SERVER_NAME"]);
+}
 
 //-- make sure that the time limit is the true time limit
 //-- commented out for now because PHP does not seem to be reporting it correctly on Linux
