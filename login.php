@@ -66,7 +66,7 @@ if ($action=="login") {
 		//-- section added based on UI feedback
 		if ($url == "individual.php") {
 			$pid = "";
-			foreach($users as $gedname=>$value) {
+			foreach($MyUser['gedcomid'] as $gedname=>$value) {
 				if (!empty($value)) {
 					$pid = $value;
 					$ged = $gedname;

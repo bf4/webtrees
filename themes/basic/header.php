@@ -25,7 +25,7 @@
 				<input type="text" name="query" accesskey="<?php print $pgv_lang["accesskey_search"]?>" size="12" value="<?php print $pgv_lang['search']?>" onfocus="if (this.value == '<?php print $pgv_lang['search']?>') this.value=''; focusHandler();" onblur="if (this.value == '') this.value='<?php print $pgv_lang['search']?>';" />
 				<input type="submit" name="search" value="&gt;" />
 			</form>
-			<a href="search.php?action=general"><?php print $pgv_lang['search_general']; ?></a>
+			<a href="search.php?action=general">Advanced Search</a>
 		<?php } ?>
 	</div>
 
