@@ -29,9 +29,9 @@
  * For further commenting see ancestry.php
  */
 require_once("includes/person_class.php");
-require("modules/research_assistant/languages/lang.en.php");
-global $lang_short_cut, $LANGUAGE;
-if (file_exists("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php")) require("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php");
+//require("modules/research_assistant/languages/lang.en.php");
+//global $lang_short_cut, $LANGUAGE;
+//if (file_exists("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php")) require("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php");
 
 function autosearch_options()
 {
@@ -64,7 +64,7 @@ function autosearch_options()
 									</tr>
 									<tr><td class='optionbox'>
 					 					".$pgv_lang["autosearch_keywords"]."</td>
-											<td class='optionbox'> <input type='text' name='keywords'/></td>
+											<td class='optionbox'> <input type='text' name='keywords' /></td>
 									</tr>
 					 				<tr><td class='optionbox' colspan=2 align='center'>
 										".$pgv_lang["autosearch_plugin_name_werelate"]."</td></tr>

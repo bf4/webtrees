@@ -95,7 +95,7 @@ $pgv_lang["Task_Name"]                	= "שם משימה";
 $pgv_lang["Folder_Name"]                	= "שם תיקייה";
 $pgv_lang["Folder_View"]                	= "מבט תיקייות"; /////
 $pgv_lang["Task_View"]                  	= "מבט משימות";
-$pgv_lang["page_header"]		= "##Research Assistant Folders";
+$pgv_lang["page_header"]		= "תיקיות עוזר מחקר"; //@@@
 $pgv_lang["folder_new"]		= "##Create New Folder";
 $pgv_lang["folder_delete_check"]	= "##Are you sure you want to delete this folder?";
 $pgv_lang["no_folder_name"]             	= "יש למלא את שם התיקייה.";
@@ -258,7 +258,7 @@ $pgv_lang["autosearch_plugin_name_gen"] 	= "חיבור Genealogy.com";
 $pgv_lang["autosearch_plugin_name_fs"] 		= "חיבור FamilySearch.org"; 
 $pgv_lang["autosearch_plugin_name_werelate"]   	= "חיבור Werelate.org";
 $pgv_lang["autosearch_search"]           		= "חפש"; 
-$pgv_lang["autosearch_keywords"] 		= "##Keywords:"; //@@
+$pgv_lang["autosearch_keywords"] 		= "מילות מפתח:";
 
 //Folder deletion error messages
 $pgv_lang["has_tasks"]                 ="התיקייה מכילה משימות ולא ניתן למחוק אותה"; 
