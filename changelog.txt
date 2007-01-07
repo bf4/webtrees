@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Changed Make "From" in automatically created emails a GEDCOM "Contacts" option (canajun2eh)
  - Fixed [ 1593602 ] [Research assistant] multiple persons linked to a task (beakerboy)
  - Fixed [ 1628280 ] WSDL for SOAP API has incorrect types (yalnifj)
  - Fixed [ 1621342 ] GEDFILE Error in adding DAU to FAM (opus27)

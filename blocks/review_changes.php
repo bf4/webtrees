@@ -40,7 +40,8 @@ $PGV_BLOCKS["review_changes_block"]["config"] = array("days"=>1, "sendmail"=>"ye
 function review_changes_block($block = true, $config="", $side, $index) {
 	global $pgv_lang, $GEDCOM, $GEDCOMS, $command, $SCRIPT_NAME, $QUERY_STRING, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $pgv_changes, $LAST_CHANGE_EMAIL, $ALLOW_EDIT_GEDCOM, $SERVER_URL, $TEXT_DIRECTION, $SHOW_SOURCES, $TIME_FORMAT, $PGV_BLOCKS;
-
+	global $PHPGEDVIEW_EMAIL;
+	
 	if (!$ALLOW_EDIT_GEDCOM) return;
 
 	if (empty($config)) $config = $PGV_BLOCKS["review_changes_block"]["config"];
@@ -58,8 +59,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 						//-- send message
 						$message = array();
 						$message["to"]=$username;
-						$host = preg_replace("/^www\./i", "", $_SERVER["SERVER_NAME"]);
-						$message["from"] = "phpgedview-noreply@".$host;
+						$message["from"] = $PHPGEDVIEW_EMAIL;
 						$message["subject"] = $pgv_lang["review_changes_subject"];
 						$message["body"] = $pgv_lang["review_changes_body"];
 						$message["method"] = $user["contactmethod"];

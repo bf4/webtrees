@@ -1092,7 +1092,12 @@ function print_favorite_selector($option=0) {
 	    return; // show no favorites, because they taint every page that is indexed.
 	}
 
-	print "<div class=\"favorites_form\">\n";
+	if ($option == 2) {
+		$option = 1;
+		$returnmenu = true;
+	}
+
+	if (!isset($returnmenu)) print "<div class=\"favorites_form\">\n";
 	switch($option) {
 		case 1:
 			$menu = array();
@@ -1250,8 +1255,11 @@ function print_favorite_selector($option=0) {
 				}
 				$pid = $mypid;
 				$GEDCOM = $mygedcom;
-				print_menu($menu);
 		  	}
+		  	if (isset($returnmenu)) {
+		  		return $menu;
+		  	}
+		  	else print_menu($menu);
 			break;
 		default:
 			   print "<form name=\"favoriteform\" action=\"$SCRIPT_NAME";
@@ -1738,54 +1746,7 @@ function print_help_index($help){
  */
 function print_menu($menu, $parentmenu="") {
 	include_once 'includes/menu.php';
-	$conv = array(
-		'label'=>'label',
-		'labelpos'=>'labelpos',
-		'icon'=>'icon',
-		'hovericon'=>'hovericon',
-		'link'=>'link',
-		'accesskey'=>'accesskey',
-		'class'=>'class',
-		'hoverclass'=>'hoverclass',
-		'flyout'=>'flyout',
-		'submenuclass'=>'submenuclass',
-		'onclick'=>'onclick'
-	);
-	$obj = new Menu();
-	if ($menu == 'separator') {
-		$obj->isSeperator();
-		$obj->printMenu();
-		return;
-	}
-	$items = false;
-	foreach ($menu as $k=>$v) {
-		if ($k == 'items' && is_array($v) && count($v) > 0) $items = $v;
-		else {
-			if (isset($conv[$k])){
-				if ($v != '') {
-					$obj->$conv[$k] = $v;
-				}
-			}
-		}
-	}
-	if ($items !== false) {
-		foreach ($items as $sub) {
-			$sobj = new Menu();
-			if ($sub == 'separator') {
-				$sobj->isSeperator();
-				$obj->addSubmenu($sobj);
-				continue;
-			}
-			foreach ($sub as $k2=>$v2) {
-				if (isset($conv[$k2])) {
-					if ($v2 != '') {
-						$sobj->$conv[$k2] = $v2;
-					}
-				}
-			}
-			$obj->addSubmenu($sobj);
-		}
-	}
+	$obj = Menu::convertMenu($menu);
 	$obj->printMenu();
 }
 
