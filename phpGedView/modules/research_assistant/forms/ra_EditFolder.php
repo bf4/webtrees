@@ -131,7 +131,7 @@ class ra_editfolder extends ra_form {
 				else{
 					$errormsg = $pgv_lang["has_tasks"];
 				}
-				$out.='<input type="reset" value="Reset"/>';
+				$out.='<input type="reset" value="'.$pgv_lang["reset"].'">';
 				$out.='<span class="error">'.$errormsg.'</span>';
 				$out.='</td></tr></table></form>';
 		return $out;

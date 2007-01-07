@@ -127,7 +127,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_AddTask.php")) {
     <!-- ASSIGN TASK -->
     		<tr>
     			<td class="descriptionbox">
-    				<?php print "Assign Task"; ?>
+    				<?php print $pgv_lang["assign_task"]; ?>
     			</td>
     			<td class="optionbox" colspan=3> 
     			<select name="Users"> <option value=""></option>

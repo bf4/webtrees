@@ -254,11 +254,13 @@ function getTitle(){
     		</th>
     	</tr>
     	<tr>
+<!----- todo: print RTL title, description, people and source right justified ----->
 <!--TITLE-->
 			<th class="descriptionbox">
       			<?php print $pgv_lang["title"]; ?>
       		</th>
-      		<th class="optionbox" colspan="3" align="left">
+      		<th class="optionbox" colspan="3" align="left"> 
+      		  		
       			<?php
       				// get title, given taskid
       				print PrintReady(getTitle());
@@ -270,7 +272,7 @@ function getTitle(){
 			<th class="descriptionbox">
       			<?php print $pgv_lang["description"]; ?>
       		</th>
-	      	<td class="optionbox" colspan="3" >
+	      	<td class="optionbox" colspan="3" align="left">  
 	      		<?php
 	      			print PrintReady(nl2br(getDescription()));
 	      		?>
@@ -281,7 +283,7 @@ function getTitle(){
 			<th class="descriptionbox">
                     <?php print $pgv_lang["people"]; ?>
             </th>
-            <td class="optionbox" colspan="3">
+            <td class="optionbox" colspan="3" align="left">  
       			<?php
       				// Get people, given taskid
       				print getPeople();
@@ -293,7 +295,7 @@ function getTitle(){
 			<th class="descriptionbox">
       			<?php print $pgv_lang["source"]; ?>
       		</th>
-			<td class="optionbox" colspan="3">
+			<td class="optionbox" colspan="3" align="left">  
       		<?php
        			$sources = getSources();
        			$sval = '';
