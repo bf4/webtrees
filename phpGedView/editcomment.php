@@ -207,7 +207,7 @@
 ***********************************************************************************************************/
  	
  	// Refreshes the opener window, which then displays any edited changes or new comments.
- 	print "<center><br /><br /><a href=\"#\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">close window</a><br /></center>";
+ 	print "<center><br /><br /><a href=\"#\" onclick=\"if (window.opener.showchanges) window.opener.showchanges(); window.close();\">".$pgv_lang["close_window"]."</a><br /></center>";
  	
 	print_simple_footer();
 	
