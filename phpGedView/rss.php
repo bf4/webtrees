@@ -82,7 +82,7 @@ $image->descriptionHtmlSyndicated = true;
 $feed->image = $image;
 
 if($ENABLE_RSS) {
-	/* basic auth is broken in all apps besides browsers, so I am disabling it for now.
+	// basic auth is broken in all apps besides browsers, so I am disabling it for now.
 	/*if (empty($auth) || $auth != "basic"){
 		$username = getUserName();
 		if(empty($username)){ //not logged in.
