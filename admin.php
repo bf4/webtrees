@@ -104,8 +104,8 @@ foreach($users as $indexval => $user) {
 require_once("js/dhtmlXTabbar.js.htm");
 ?>
 <h4>!!! This is an Admin TabBar demo. Scroll down for previous version !!!</h4>
-<div id="admin_tabbar" class="dhtmlxTabBar" imgpath="js/scbr.com/dhtmlXTabbar/imgs/" style="width:640px; height:480px;" zzskinColors="#FCFBFC,#F4F3EE" zztabstyle="winScarf" >
-	<div id="admin_tab_info" name="<?php echo $pgv_lang["admin_info"]?>" class="indent" zzwidth="auto" >
+<div id="admin_tabbar" class="dhtmlxTabBar" imgpath="js/scbr.com/dhtmlXTabbar/imgs/" width="100%" >
+	<div id="admin_tab_info" name="<?php echo $pgv_lang["admin_info"]?>" class="indent" >
 		<fieldset>
 			<legend> PhpGedView
 			</legend>
