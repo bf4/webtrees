@@ -51,11 +51,11 @@ function print_RSS_block($block = true, $config="", $side, $index) {
 		print "<form method=\"post\" action=\"\" name=\"rssform\">\n";
 		print "<br />";
 		print "\n\t<select name=\"rssStyle\" class=\"header_select\" onchange=\"javascript:document.getElementById('rss_button').href = 'rss.php?ged=" . $GEDCOM . "&amp;lang=" . $LANGUAGE . "' + (document.rssform.module.value==''? '' : '&amp;module=' + document.rssform.module.value) + (document.rssform.rssStyle.value==''? '' : '&amp;rssStyle=' + document.rssform.rssStyle.value) + (document.rssform.auth.value==''? '' : '&amp;auth=' + document.rssform.auth.value);\">";
-		print "\n\t\t<option value=\"RSS0.91\">RSS 0.91</option>";
-		print "\n\t\t<option value=\"RSS1.0\" selected=\"selected\">RSS 1.0</option>";
+		print "\n\t\t<option value=\"ATOM\" selected=\"selected\">ATOM 1.0</option>";
 		print "\n\t\t<option value=\"RSS2.0\">RSS 2.0</option>";
-		print "\n\t\t<option value=\"ATOM\">ATOM 1.0</option>";
+		print "\n\t\t<option value=\"RSS1.0\">RSS 1.0</option>";
 		print "\n\t\t<option value=\"ATOM0.3\">ATOM 0.3</option>";
+		print "\n\t\t<option value=\"RSS0.91\">RSS 0.91</option>";
 		print "\n\t\t<option value=\"HTML\">HTML</option>";
 		print "\n\t\t<option value=\"JS\">JavaScript</option>";
 		print "\n\t</select>";

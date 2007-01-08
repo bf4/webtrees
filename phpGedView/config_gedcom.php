@@ -183,7 +183,7 @@ $FAM_FACTS_ADD = "CENS,MARR,RESI,SLGS,MARR_CIVIL,MARR_RELIGIOUS,MARR_PARTNERS";
 $GENERATE_UIDS = false;		//-- automatically generate _UID fields for records that do not already have them
 
 $ENABLE_RSS = true;
-$RSS_FORMAT = "RSS1.0"; //-- format of RSS to use.
+$RSS_FORMAT = "ATOM"; //-- default feed format.
 // -- amount of time to execute before quitting in seconds
 // -- set this to 0 to remove all time limits
 $TIME_LIMIT = "60";

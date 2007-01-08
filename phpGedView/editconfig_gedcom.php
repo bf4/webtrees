@@ -1676,11 +1676,11 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["meta_conf"]."\" onclick=\"expand
 	<tr>
 		<td class="descriptionbox wrap"><?php print_help_link("RSS_FORMAT_help", "qm", "RSS_FORMAT"); print $pgv_lang["RSS_FORMAT"];?></td>
 		<td class="optionbox"><select name="NEW_RSS_FORMAT" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('RSS_FORMAT_help');">
-				<option value="RSS0.91" <?php if ($RSS_FORMAT=="RSS0.91") print "selected=\"selected\""; ?>>RSS 0.91</option>
-				<option value="RSS1.0" <?php if ($RSS_FORMAT=="RSS1.0") print "selected=\"selected\""; ?>>RSS 1.0</option>
-				<option value="RSS2.0" <?php if ($RSS_FORMAT=="RSS2.0") print "selected=\"selected\""; ?>>RSS 2.0</option>
 				<option value="ATOM" <?php if ($RSS_FORMAT=="ATOM") print "selected=\"selected\""; ?>>ATOM 1.0</option>
-				<option value="ATOM0.3" <?php if ($RSS_FORMAT=='"ATOM0.3') print "selected=\"selected\""; ?>>ATOM 0.3</option>
+				<!--option value="ATOM0.3" <?php if ($RSS_FORMAT=="ATOM0.3") print "selected=\"selected\""; ?>>ATOM 0.3</option-->
+				<option value="RSS2.0" <?php if ($RSS_FORMAT=="RSS2.0") print "selected=\"selected\""; ?>>RSS 2.0</option>
+				<!--option value="RSS0.91" <?php if ($RSS_FORMAT=="RSS0.91") print "selected=\"selected\""; ?>>RSS 0.91</option-->
+				<option value="RSS1.0" <?php if ($RSS_FORMAT=="RSS1.0") print "selected=\"selected\""; ?>>RSS 1.0</option>
 			</select>
 		</td>
 	</tr>
