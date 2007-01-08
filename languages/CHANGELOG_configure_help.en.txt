@@ -44,6 +44,7 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
+*$pgv_lang["RSS_FORMAT_help"]						7 Jan 2007				w
 +$pgv_lang["PHPGEDVIEW_EMAIL"]						6 Jan 2007				A
 +$pgv_lang["PHPGEDVIEW_EMAIL_help"]					6 Jan 2007				A
 *$pgv_lang["enter_db_pass"]							6 Nov 2006				w
