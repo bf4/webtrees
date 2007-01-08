@@ -271,6 +271,11 @@ table.center {
 	font: bold 10px tahoma, arial, helvetica, sans-serif;
 }
 
+.name1Hover {
+	color: red;
+	font: bold 10px tahoma, arial, helvetica, sans-serif;
+}
+
 .namered {
 	border: solid red 1px;
 }
@@ -285,6 +290,11 @@ table.center {
 
 .name2 {
 	color: #333333;
+	font: bold 12px tahoma, arial, helvetica, sans-serif;
+}
+
+.name2Hover {
+	color: red;
 	font: bold 12px tahoma, arial, helvetica, sans-serif;
 }
 
