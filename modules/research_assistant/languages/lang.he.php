@@ -95,7 +95,7 @@ $pgv_lang["Task_Name"]                	= "שם משימה";
 $pgv_lang["Folder_Name"]                	= "שם תיקייה";
 $pgv_lang["Folder_View"]                	= "מבט תיקייות"; /////
 $pgv_lang["Task_View"]                  	= "מבט משימות";
-$pgv_lang["page_header"]		= "##Research Assistant Folders";
+$pgv_lang["page_header"]		= "תיקיות עוזר מחקר"; //@@@
 $pgv_lang["folder_new"]		= "##Create New Folder";
 $pgv_lang["folder_delete_check"]	= "##Are you sure you want to delete this folder?";
 $pgv_lang["no_folder_name"]             	= "יש למלא את שם התיקייה.";
@@ -113,7 +113,7 @@ $pgv_lang["folder_problem"]             	= "התגלת תקלה בהוספת ה�
 $temp_out_missinginfo 		= "האזור מציג מידע חסר על הרשומה.";
 $temp_out_missinginfo 		.= " סמן תיבת סימון ותיקייה ולחץ 'הוסף משימה' עבור הנתון החסר.";  
 $temp_out_missinginfo 		.= " המשימות שכבר נוצרו יוצגו עם 'התבונן' במקום עם תיבת סימון <br />";
-$temp_out_missinginfo 		.= " <a href=\"javascript:void(0);\" onClick=\"fullScreen('helpvids/MissingInformationUserHelp.htm');\">לחץ כאן כדי לפתוח הדרכה עצמית למשתמש (Tutorial) בחלון מלא</a>";
+//$temp_out_missinginfo 		.= " <a href=\"javascript:void(0);\" onClick=\"fullScreen('helpvids/MissingInformationUserHelp.htm');\">לחץ כאן כדי לפתוח הדרכה עצמית למשתמש (Tutorial) בחלון מלא</a>";
 $pgv_lang["ra_missing_info_help"] 	= $temp_out_missinginfo;
 
 // -- RA_EDITFOLDER MESSAGES	
@@ -163,11 +163,11 @@ $pgv_lang["no_folder"]		= "##No folder exists yet. Please create a new folder fi
 $pgv_lang["help_rs_folders.php"]	= "##Research Assistant Folders<br /> #pgv_lang[sorry]#";
 $pgv_lang["help_rs_editfolder.php"]	= "##Research Assistant Edit Folders<br />#pgv_lang[sorry]#";
 $pgv_lang["help_rs_editlog.php"]	= "##Research Assistant Edit Log<br />#pgv_lang[sorry]#";
-$pgv_lang["ra_fold_name_help"]	= "<H2><B>מבט תיקייות:</B></H2><ul><li><B>שם תיקייה:</B> העמוד הזה כולל את השמות של כל התיקיות שיצרת.</li><li><B>תאור:</B> העמוד הזה כולל את התאור של התיקיות.</li></ul><br /><br /><a href=\"helpvids/ResearchAssistantUserHelp.htm\">הדרכה עצמית לעוזר מחקר (Tutorial)</a>"; 
+$pgv_lang["ra_fold_name_help"]	= "<H2><B>מבט תיקייות:</B></H2><ul><li><B>שם תיקייה:</B> העמוד הזה כולל את השמות של כל התיקיות שיצרת.</li><li><B>תאור:</B> העמוד הזה כולל את התאור של התיקיות.</li></ul>"; 
 $pgv_lang["ra_add_task_help"]		= "<H2><B>הוסף משימה:</B></H2></H2><ul><li><B>כותרת:</B> כאן תמלא את הכותרת של המשימה שאותה אתה מוסיף.</li><li><B>תיקייה:</B> בשדה זה ניתן להקצות את התיקייה שבה יש לשים את המשימה החדשה.</li><li><B>תאור:</B> הכנס את תאור המשימה שאותה אתה מוסיף.</li><li><B>מקורות:</B>  הקצה מקורות למשימה.</li><li><B>אנשים:</B> הקצה אנשים הקשורים למשימה החדשה.</li></ul>";
-$pgv_lang["ra_edit_folder_help"]	= "<H2><B>ערוך תיקייה:</B></H2><ul><li><B>שם התיקייה:</B> כאן תמלא את הכותרת של המשימה שאותה אתה עורך.</B></li><li><B>תיקיית הורה:</B> תוכל להקצות תיקיית הורה לתיקייה שאתה עורך.</B></li><li><B>תאור התיקייה:</B> תאור המשימה שאותה אתה עורך.</B></li><ul>"; 
-$pgv_lang["ra_add_folder_help"]	= "<H2><B>הוסף תיקייה:</B></H2><ul><li><B>שם תיקייה:</B> כאן תמלא את הכותרת של התיקייה שאותה אתה מוסיף.</B></li><li><B>תיקיית הורה:</B> תוכל להקצות תיקיית הורה לתיקייה שאתה מוסיף.</B></li><li><B>תאור התיקייה:</B> כאן תרשום את תאור התיקייה שאתה מוסיף.</B></li><ul>"; 
-$pgv_lang["ra_view_task_help"]	= "<H2><B>מבט משימות:</B></H2><ul><li><B>שם משימה:</B> העמודה כוללת את השם של המשימות שלך.</B></li><li><B>תאור:</B> העמוד הזה כולל את התאור של המשימות.</li><li><B>תאריך התחלה:</B> כאן רשומים תאריכי ההתחלה של המשימות.</li><li><B>סיום:</B> כאן תראה אם המשימה הסתיימה.</li><li><B>פרוט:</B> כאן מראים את פירוט המשימה.</li><li><B>מחק:</B> מחיקת המשימה.</li><ul><br /><a href=\"helpvids/MissingInformationUserHelp.htm\">הדרכה עצמית למשתמש (Tutorial)</a>"; 
+$pgv_lang["ra_edit_folder_help"]	= "<H2><B>ערוך תיקייה:</B></H2><ul><li><B>שם התיקייה:</B> כאן תמלא את הכותרת של המשימה שאותה אתה עורך.</B></li><li><B>תיקיית הורה:</B> תוכל להקצות תיקיית הורה לתיקייה שאתה עורך.</B></li><li><B>תאור התיקייה:</B> תאור המשימה שאותה אתה עורך.</B></li></ul>"; 
+$pgv_lang["ra_add_folder_help"]	= "<H2><B>הוסף תיקייה:</B></H2><ul><li><B>שם תיקייה:</B> כאן תמלא את הכותרת של התיקייה שאותה אתה מוסיף.</B></li><li><B>תיקיית הורה:</B> תוכל להקצות תיקיית הורה לתיקייה שאתה מוסיף.</B></li><li><B>תאור התיקייה:</B> כאן תרשום את תאור התיקייה שאתה מוסיף.</B></li></ul>"; 
+$pgv_lang["ra_view_task_help"]	= "<H2><B>מבט משימות:</B></H2><ul><li><B>שם משימה:</B> העמודה כוללת את השם של המשימות שלך.</B></li><li><B>תאור:</B> העמוד הזה כולל את התאור של המשימות.</li><li><B>תאריך התחלה:</B> כאן רשומים תאריכי ההתחלה של המשימות.</li><li><B>סיום:</B> כאן תראה אם המשימה הסתיימה.</li><li><B>פרוט:</B> כאן מראים את פירוט המשימה.</li><li><B>מחק:</B> מחיקת המשימה.</li></ul>"; 
 $pgv_lang["ra_task_view_help"]	= "<H2><B>התבונן במשימה:</B></H2><ul><li><B>כותרת:</B> כאן תמלא את הכותרת של המשימה שאותה אתה מוסיף.</li><li><B>אנשים:</B> הקצה אנשים הקשורים למשימה החדשה.</li><li><B>תאור:</B> הכנס את תאור המשימה שאותה אתה מוסיף.</li><li><B>מקורות:</B> הקצה מקורות למשימה.</li><li>לחץ על כפתור 'ערוך משימה' כדי לערוך את הפרטים של המשימה.</li></ul>"; 
 $pgv_lang["ra_comments_help"]	= "<H2><B>הערות:</B></H2><ul><li>כאן תוסיף הערות הקשורות למשימה. לחץ על כפתור 'הוסף הערה חדשה' כדי להוסיף הערות.</li></ul>"; 
 $pgv_lang["ra_GenerateTasks_help"]	= "<H2><B>צור משימות:</B></H2><p> הטופס הזה יוצר משימות מתגי _TODO בקובץ ה-GEDCOM שלך.</p><ul><li><B>צור:</B> סמן כל משימה שברצונך ליצור כאשר תלחץ על הכפתור צור.</li><li><B>שם המשימה:</B> השם שהמשימה תקבל.  ברירת המחדל היא הטכסט בתג _TODO, ללא תגי CONT</li><li><B>תאור המשימה:</B> התאור שהמשימה תקבל.  התאור נוצר מהטכסט בתג _TODO ביחד עם תגי CONT הקשורים.  </li><li><B>ערוך:</B> לחץ על הקישור כדי לערוך את המשימה.</li><li><B>בחר תיקייה:</B> בחר תיקייה עבור המשימות הנוצרות.</li><li><B>צור:</B> יוצר את המשימות שסומנו.</li><li><B>סיום:</B> מעביר אותך לדף התבונן בתיקיות.</li></ul>"; 
@@ -258,7 +258,7 @@ $pgv_lang["autosearch_plugin_name_gen"] 	= "חיבור Genealogy.com";
 $pgv_lang["autosearch_plugin_name_fs"] 		= "חיבור FamilySearch.org"; 
 $pgv_lang["autosearch_plugin_name_werelate"]   	= "חיבור Werelate.org";
 $pgv_lang["autosearch_search"]           		= "חפש"; 
-$pgv_lang["autosearch_keywords"] 		= "##Keywords:"; //@@
+$pgv_lang["autosearch_keywords"] 		= "מילות מפתח:";
 
 //Folder deletion error messages
 $pgv_lang["has_tasks"]                 ="התיקייה מכילה משימות ולא ניתן למחוק אותה"; 

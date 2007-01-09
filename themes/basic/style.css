@@ -501,7 +501,7 @@ table.center {
 	padding: 1px;
 }
 
-.menuitem:hover, .menuitem_rtl:hover {
+.menuitem_hover, .menuitem_hover_rtl {
 	color: black;
 	text-decoration: none;
 	font: 11px tahoma, arial, helvetica, sans-serif;
@@ -511,7 +511,6 @@ table.center {
 .submenu, .submenu_rtl {
 	position: absolute;
 	visibility: hidden; 
-	z-index: 100;
 	color: black;
 	text-decoration: none;
 	font: 11px tahoma, arial, helvetica, sans-serif;
@@ -519,32 +518,7 @@ table.center {
 	background-color: #d6e0ea;
 	border: solid #9ca3d4 1px;
 	white-space: nowrap;
-	FILTER: Alpha(Opacity=100, FinishOpacity=100, Style=2);
-   -moz-opacity: 1.0;
-   -khtml-opacity: 1.0;
-}
-
-.subsubmenu, .subsubmenu_rtl {
-	position: absolute;
-	visibility: hidden; 
-	z-index: 100;
-	color: black;
-	text-decoration: none;
-	font: 11px tahoma, arial, helvetica, sans-serif;
-	text-align: center;
-	background-color: #d6e0ea;
-	border: solid #9ca3d4 1px;
-	white-space: nowrap;
-	FILTER: Alpha(Opacity=95, FinishOpacity=95, Style=2);
-   -moz-opacity: .95;
-   -khtml-opacity: .95;
-}
-
-.menuitem:hover .submenu, .menuitem_rtl:hover .submenu_rtl{
-	visibility: visible;
-}
-.submenuitem:hover .submenu, .submenuitem_rtl:hover .submenu_rtl, .submenuitem:hover .subsubmenu, .submenuitem_rtl:hover .subsubmenu_rtl{
-	visibility: visible;
+   overflow: visible;
 }
 
 .submenuitem, .submenuitem_rtl {
@@ -554,31 +528,31 @@ table.center {
 	background-color: #d6e0ea;
 	white-space: nowrap;
 	padding: 1px;
+	overflow: visible;
 }
 
 .submenuitem, .submenuitem_hover {
 	text-align: left;
+	color: black;
+	text-decoration: none;
+	font: 11px tahoma, arial, helvetica, sans-serif;
+	padding: 1px;
 }
 
 .submenuitem_rtl, .submenuitem_hover_rtl {
 	text-align: right;
-}
-
-.submenuitem A:hover, .submenuitem_rtl A:hover {
 	color: black;
-	text-decoration: underline;
+	text-decoration: none;
 	font: 11px tahoma, arial, helvetica, sans-serif;
-	background-color: #e6f0fa;
-	white-space: nowrap;
 	padding: 1px;
-	FILTER: Alpha(Opacity=100, FinishOpacity=100, Style=2);
-   -moz-opacity: 1.0;
-   -khtml-opacity: 1.0;
 }
 
 .familylinks {
 	left: 225px;
 	top: 15px;
+	width: 150px;
+	background: transparent;
+	border: none;
 }
 
 .news_box {
@@ -629,8 +603,15 @@ table.center {
 	color: black;
 }
 
+#header {
+	position: relative;
+	z-index: 100;
+}
+
 #content {
+	position: relative;
 	margin-left: 1px;
+	z-index: 1;
 }
 
 #footer {
@@ -1188,7 +1169,6 @@ h4 {
 }
 
 #titlediv {
-	width: 33%;
 	position: relative;
 	height: 30px;
 }

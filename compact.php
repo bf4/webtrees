@@ -300,6 +300,13 @@ function print_td_person($n) {
 
 	$text = "";
 	$pid = $treeid[$n];
+	
+	if ($TEXT_DIRECTION=="ltr") {
+		$title = $pgv_lang["indi_info"].": ".$pid;
+	} else {
+		$title = $pid." :".$pgv_lang["indi_info"];
+	}
+
 	if ($pid) {
 		$indirec=find_person_record($pid);
 		if (!$indirec) $indirec = find_updated_record($pid);
@@ -329,7 +336,7 @@ function print_td_person($n) {
 				else $text .= " />\n";
 			}
 		}
-		$text .= "<a class=\"name1\" href=\"individual.php?pid=".$pid."\"> ";
+		$text .= "<a class=\"name1\" href=\"individual.php?pid=$pid\" alt=\"$title\" title=\"$title\"> ";
 		$text .= PrintReady($name);
 		if ($addname) $text .= "<br />" . PrintReady($addname);
 		$text .= "</a>";

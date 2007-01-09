@@ -30,9 +30,9 @@
  */
  
 require_once("includes/person_class.php");
-require("modules/research_assistant/languages/lang.en.php");
-global $lang_short_cut, $LANGUAGE;
-if (file_exists("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php")) require("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php");
+//require("modules/research_assistant/languages/lang.en.php");
+//global $lang_short_cut, $LANGUAGE;
+//if (file_exists("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php")) require("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php");
 
 function autosearch_options()
 {

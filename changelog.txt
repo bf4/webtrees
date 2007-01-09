@@ -9,6 +9,8 @@
 =====================================================================
 
 Version 4.1
+ - Fixed Links in chart boxes should show a title when mouse hovers over them (canajun2eh)
+ - Fixed Links in chart boxes don't change colour when mouse hovers over them (canajun2eh)
  - Changed Make "From" in automatically created emails a GEDCOM "Contacts" option (canajun2eh)
  - Fixed [ 1593602 ] [Research assistant] multiple persons linked to a task (beakerboy)
  - Fixed [ 1628280 ] WSDL for SOAP API has incorrect types (yalnifj)

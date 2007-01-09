@@ -49,6 +49,9 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 global $chart_style, $box_width, $generations, $show_spouse, $show_full;
 	 global $CHART_BOX_TAGS, $SHOW_LDS_AT_GLANCE;
 	 global $SEARCH_SPIDER;
+	 
+	 if ($style != 2) $style=1;
+	
 	 flush();
 	 if (!isset($OLD_PGENS)) $OLD_PGENS = $DEFAULT_PEDIGREE_GENERATIONS;
 	 if (!isset($talloffset)) $talloffset = $PEDIGREE_LAYOUT;
@@ -69,81 +72,58 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 if (preg_match("/1 SEX F/", $indirec)>0) $isF="F";
 	 else if (preg_match("/1 SEX M/", $indirec)>0) $isF="";
 	 $disp = displayDetailsByID($pid, "INDI");
+	 $boxID = $pid.".".$personcount.".".$count;
+	 $mouseAction1 = "onmouseover=\"clear_family_box_timeout('".$boxID."');\" onmouseout=\"family_box_timeout('".$boxID."');\"";
+	 $mouseAction2 = " onmouseover=\"expandbox('".$boxID."', $style); return false;\" onmouseout=\"restorebox('".$boxID."', $style); return false;\"";
+	 $mouseAction3 = " onmousedown=\"expandbox('".$boxID."', $style); return false;\" onmouseup=\"restorebox('".$boxID."', $style); return false;\"";
+	 $mouseAction4 = " onclick=\"expandbox('".$boxID."', $style); return false;\"";
 	 if ($disp || showLivingNameByID($pid)) {
 		  if ($show_famlink && (empty($SEARCH_SPIDER))) {
-			   // NOTE: Start div out-$pid.$personcount.$count
-			   print "\n\t\t\t<div id=\"out-$pid.$personcount.$count\"";
-			   if ($style==1) print " class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; overflow:hidden; padding: 2px; z-index:'-1';\"";
-			   else print " style=\"padding: 2px;\"";
-			   // NOTE: Zoom
-			   if (($ZOOM_BOXES!="disabled")&&(!$show_full)) {
-					if ($ZOOM_BOXES=="mouseover") print " onmouseover=\"expandbox('".$pid.".".$personcount.".".$count."', $style); return false;\" onmouseout=\"restorebox('".$pid.".".$personcount.".".$count."', $style); return false;\"";
-					if ($ZOOM_BOXES=="mousedown") print " onmousedown=\"expandbox('".$pid.".".$personcount.".".$count."', $style);\" onmouseup=\"restorebox('".$pid.".".$personcount.".".$count."', $style);\"";
-					if (($ZOOM_BOXES=="click")&&($view!="preview")) print " onclick=\"expandbox('".$pid.".".$personcount.".".$count."', $style);\"";
-			   }
-			   print "><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\"><tr><td valign=\"top\">";
-			   //-- links and zoom icons
-			   // NOTE: Start div icons-$personcount.$pid.$count
-			   if ($TEXT_DIRECTION == "rtl") {
-					print "<div id=\"icons-$pid.$personcount.$count\" style=\"float:left; width: 25px; height: 50px;";
-			   }
-			   else {
-					print "<div id=\"icons-$pid.$personcount.$count\" style=\"float:right; width: 25px; height: 50px;";
-			   }
-			   if (!$show_full) print " display: none;";
-			   print "\">";
-			   // NOTE: Zoom
-			   if (($ZOOM_BOXES!="disabled")&&($show_full)) {
-					print "<a href=\"javascript:;\"";
-					if ($ZOOM_BOXES=="mouseover") print " onmouseover=\"expandbox('".$pid.".".$personcount.".".$count."', $style);\" onmouseout=\"restorebox('".$pid.".".$personcount.".".$count."', $style);\" onclick=\"return false;\"";
-					if ($ZOOM_BOXES=="mousedown") print " onmousedown=\"expandbox('".$pid.".".$personcount.".".$count."', $style);\" onmouseup=\"restorebox('".$pid.".".$personcount.".".$count."', $style);\" onclick=\"return false;\"";
-					if ($ZOOM_BOXES=="click") print " onclick=\"expandbox('".$pid.".".$personcount.".".$count."', $style); return false;\"";
-					print "><img id=\"iconz-$pid.$personcount.$count\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomin"]["other"]."\" width=\"25\" height=\"25\" border=\"0\" alt=\"".$pgv_lang["zoom_box"]."\" title=\"".$pgv_lang["zoom_box"]."\" /></a>";
-			   }
 			   if ($LINK_ICONS!="disabled") {
-					$click_link="javascript:;";
-					if (preg_match("/pedigree.php/", $SCRIPT_NAME)>0) $click_link="pedigree.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;talloffset=$talloffset&amp;ged=$GEDCOM";
-					if (preg_match("/hourglass.php/", $SCRIPT_NAME)>0) $click_link="hourglass.php?pid=$pid&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM";
-					if (preg_match("/ancestry.php/", $SCRIPT_NAME)>0) $click_link="ancestry.php?rootid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM";
-					if (preg_match("/descendancy.php/", $SCRIPT_NAME)>0) $click_link="descendancy.php?pid=$pid&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM";
-					if ((preg_match("/family.php/", $SCRIPT_NAME)>0)&&!empty($famid)) $click_link="family.php?famid=$famid&amp;ged=$GEDCOM";
-					if (preg_match("/individual.php/", $SCRIPT_NAME)>0) $click_link="individual.php?pid=$pid&amp;ged=$GEDCOM";
-					if ($LINK_ICONS!="click") print "\n<div class=\"menuitem\">";
-					print "<a href=\"$click_link\" ";
-					// NOTE: Zoom
-					//if ($LINK_ICONS=="mouseover") print "onmouseover=\"show_family_box('".$pid.".".$personcount.".".$count."', '";
-					if ($LINK_ICONS=="click") print "onclick=\"toggle_family_box('".$pid.".".$personcount.".".$count."', '";
-					//if ($style==1) print "box$pid";
-					//else print "relatives";
-					//print "');";
-					//print " return false;\" ";
-					// NOTE: Zoom
-					//print "onmouseout=\"family_box_timeout('".$pid.".".$personcount.".".$count."');";
-					//print " return false;\"";
-					if (($click_link=="#")&&($LINK_ICONS!="click")) print "onclick=\"return false;\"";
-					print "><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]."\" width=\"25\" border=\"0\" vspace=\"0\" hspace=\"0\" alt=\"".$pgv_lang["person_links"]."\" title=\"".$pgv_lang["person_links"]."\" /></a>\n";				/***/
 					//-- draw a box for the family popup
 					// NOTE: Start div I.$pid.$personcount.$count.links
-					print "\n\t\t<div id=\"I".$pid.".".$personcount.".".$count."links\" class=\"submenu familylinks\"";
-					if ($TEXT_DIRECTION=="rtl") print " style=\"text-align: right\"";
-					else print " style=\"text-align: left\"";
-					print ">";
+					print "\n\t\t<div id=\"I".$boxID."links\" style=\"position:absolute; ";
+					print "left: 0px; top:0px; width: ".($lbwidth)."px; visibility:hidden; z-index:'100';\">";
 					print "\n\t\t\t<table class=\"person_box$isF\"><tr><td class=\"details1\">";
 					// NOTE: Zoom
-					print "<a href=\"pedigree.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;talloffset=$talloffset&amp;ged=$GEDCOM\"><b>".$pgv_lang["index_header"]."</b></a>\n";
-					print "<br /><a href=\"descendancy.php?pid=$pid&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM\"><b>".$pgv_lang["descend_chart"]."</b></a><br />\n";
+	 				if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["pedigree_chart"].": ".$pid;
+	 				else $title = $pid." :".$pgv_lang["pedigree_chart"];
+					print "<a href=\"pedigree.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;talloffset=$talloffset&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" $mouseAction1><b>".$pgv_lang["index_header"]."</b></a>\n";
+
+	 				if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["descend_chart"].": ".$pid;
+	 				else $title = $pid." :".$pgv_lang["descend_chart"];
+					print "<br /><a href=\"descendancy.php?pid=$pid&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" $mouseAction1><b>".$pgv_lang["descend_chart"]."</b></a><br />\n";
+
 					$username = getUserName();
 					if (!empty($username)) {
 						 $tuser=getUser($username);
 						 if (!empty($tuser["gedcomid"][$GEDCOM])) {
-							  print "<a href=\"relationship.php?pid1=".$tuser["gedcomid"][$GEDCOM]."&amp;pid2=".$pid."&amp;ged=$GEDCOM\"><b>".$pgv_lang["relationship_to_me"]."</b></a><br />\n";
+	 						  if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["relationship_chart"].": ".$pid;
+	 						  else $title = $pid." :".$pgv_lang["relationship_chart"];
+							  print "<a href=\"relationship.php?pid1=".$tuser["gedcomid"][$GEDCOM]."&amp;pid2=".$pid."&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["relationship_to_me"]."</b></a><br />\n";
 						 }
 					}
 					// NOTE: Zoom
-					if (file_exists("ancestry.php")) print "<a href=\"ancestry.php?rootid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM\"><b>".$pgv_lang["ancestry_chart"]."</b></a><br />\n";
-					if (file_exists("compact.php"))  print "<a href=\"compact.php?rootid=$pid&amp;ged=$GEDCOM\"><b>".$pgv_lang["compact_chart"]."</b></a><br />\n";
-					if (file_exists("fanchart.php") and defined("IMG_ARC_PIE") and function_exists("imagettftext"))  print "<a href=\"fanchart.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;ged=$GEDCOM\"><b>".$pgv_lang["fan_chart"]."</b></a><br />\n";
-					if (file_exists("hourglass.php")) print "<a href=\"hourglass.php?pid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM&amp;show_spouse=$show_spouse&amp;show_full=$show_full\"><b>".$pgv_lang["hourglass_chart"]."</b></a><br />\n";
+					if (file_exists("ancestry.php")) {
+	 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["ancestry_chart"].": ".$pid;
+	 					else $title = $pid." :".$pgv_lang["ancestry_chart"];
+						print "<a href=\"ancestry.php?rootid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["ancestry_chart"]."</b></a><br />\n";
+					}
+					if (file_exists("compact.php")) {
+	 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["compact_chart"].": ".$pid;
+	 					else $title = $pid." :".$pgv_lang["compact_chart"];
+						print "<a href=\"compact.php?rootid=$pid&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["compact_chart"]."</b></a><br />\n";
+					}
+					if (file_exists("fanchart.php") and defined("IMG_ARC_PIE") and function_exists("imagettftext")) {
+	 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["fan_chart"].": ".$pid;
+	 					else $title = $pid." :".$pgv_lang["fan_chart"];
+						print "<a href=\"fanchart.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fan_chart"]."</b></a><br />\n";
+					}
+					if (file_exists("hourglass.php")) {
+	 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["hourglass_chart"].": ".$pid;
+	 					else $title = $pid." :".$pgv_lang["hourglass_chart"];
+						print "<a href=\"hourglass.php?pid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM&amp;show_spouse=$show_spouse&amp;show_full=$show_full\" alt=\"$title\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["hourglass_chart"]."</b></a><br />\n";
+					}
 					$ct = preg_match_all("/1\s*FAMS\s*@(.*)@/", $indirec, $match, PREG_SET_ORDER);
 					for ($i=0; $i<$ct; $i++) {
 						 $famid = $match[$i][1];
@@ -155,9 +135,13 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 							  if ($pid==$parents["WIFE"]) $spouse=$parents["HUSB"];
 							  $num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
 							  if ((!empty($spouse))||($num>0)) {
-								   print "<a href=\"family.php?famid=$famid&amp;ged=$GEDCOM\"><b>".$pgv_lang["fam_spouse"]."</b></a><br /> \n";
+	 							 if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["familybook_chart"].": ".$famid;
+	 							 else $title = $famid." :".$pgv_lang["familybook_chart"];
+								 print "<a href=\"family.php?famid=$famid&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fam_spouse"]."</b></a><br /> \n";
 								if (!empty($spouse)) {
-									print "<a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\">";
+	 								if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$spouse;
+	 								else $title = $spouse." :".$pgv_lang["indi_info"];
+									print "<a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" $mouseAction1>";
  									   if (($SHOW_LIVING_NAMES>=$PRIV_PUBLIC) || (displayDetailsByID($spouse))||(showLivingNameByID($spouse))) print PrintReady(get_person_name($spouse));
 									   else print $pgv_lang["private"];
 									   print "</a><br />\n";
@@ -165,17 +149,104 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 							  }
 							  for($j=0; $j<$num; $j++) {
 								   $cpid = $smatch[$j][1];
-								   print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"individual.php?pid=$cpid&amp;ged=$GEDCOM\">";
+	 							   if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$cpid;
+	 							   else $title = $cpid." :".$pgv_lang["indi_info"];
+								   print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"individual.php?pid=$cpid&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" $mouseAction1>";
  								   if (($SHOW_LIVING_NAMES>=$PRIV_PUBLIC) || (displayDetailsByID($cpid))||(showLivingNameByID($cpid))) print PrintReady(get_person_name($cpid));
 								   else print $pgv_lang["private"];
 								   print "<br /></a>";
 							  }
 						 }
 					}
-					print "</td></tr></table>\n";
-					print "</div>";
-			   /***/
-					print "</div>";
+					print "</td></tr></table>\n\t\t</div>";
+			   }
+			   // NOTE: Start div out-$pid.$personcount.$count
+			   print "\n\t\t\t<div id=\"out-$boxID\"";
+			   if ($style==1) print " class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden; z-index:'-1';\"";
+			   else print " style=\"padding: 2px;\"";
+			   // NOTE: Zoom
+			   if (($ZOOM_BOXES!="disabled")&&(!$show_full)) {
+					if ($ZOOM_BOXES=="mouseover") print $mouseAction2;
+					if ($ZOOM_BOXES=="mousedown") print $mouseAction3;
+					if (($ZOOM_BOXES=="click")&&($view!="preview")) print $mouseAction4;
+			   }
+			   print "><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\"><tr><td valign=\"top\">";
+			   //-- links and zoom icons
+			   // NOTE: Start div icons-$personcount.$pid.$count
+			   if ($TEXT_DIRECTION == "rtl") {
+					print "<div id=\"icons-$boxID\" style=\"float:left; width: 25px; height: 50px;";
+			   }
+			   else {
+					print "<div id=\"icons-$boxID\" style=\"float:right; width: 25px; height: 50px;";
+			   }
+			   if ($show_full) print " display: block;";
+			   else print " display: none;";
+			   print "\">";
+			   // NOTE: Zoom
+			   if (($ZOOM_BOXES!="disabled")&&($show_full)) {
+					print "<a href=\"javascript:;\"";
+					if ($ZOOM_BOXES=="mouseover") print $mouseAction2;
+					if ($ZOOM_BOXES=="mousedown") print $mouseAction3;
+					if ($ZOOM_BOXES=="click") print $mouseAction4;
+					print "><img id=\"iconz-$boxID\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["zoomin"]["other"]."\" width=\"25\" height=\"25\" border=\"0\" alt=\"".$pgv_lang["zoom_box"]."\" title=\"".$pgv_lang["zoom_box"]."\" /></a>";
+			   }
+			   if ($LINK_ICONS!="disabled") {
+					$click_link="javascript:;";
+					$whichChart="";
+					if (preg_match("/pedigree.php/", $SCRIPT_NAME)>0) {
+						$click_link="pedigree.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;talloffset=$talloffset&amp;ged=$GEDCOM";
+						$whichChart="pedigree_chart";
+						$whichID=$pid;
+					}
+
+					if (preg_match("/hourglass.php/", $SCRIPT_NAME)>0) {
+						$click_link="hourglass.php?pid=$pid&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM";
+						$whichChart="hourglass_chart";
+						$whichID=$pid;
+					}
+
+					if (preg_match("/ancestry.php/", $SCRIPT_NAME)>0) {
+						$click_link="ancestry.php?rootid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM";
+						$whichChart="ancestry_chart";
+						$whichID=$pid;
+					}
+
+					if (preg_match("/descendancy.php/", $SCRIPT_NAME)>0) {
+						$click_link="descendancy.php?pid=$pid&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM";
+						$whichChart="descend_chart";
+						$whichID=$pid;
+					}
+
+					if ((preg_match("/family.php/", $SCRIPT_NAME)>0)&&!empty($famid)) {
+						$click_link="family.php?famid=$famid&amp;ged=$GEDCOM";
+						$whichChart="familybook_chart";
+						$whichID=$famid;
+					}
+
+					if (preg_match("/individual.php/", $SCRIPT_NAME)>0) {
+						$click_link="individual.php?pid=$pid&amp;ged=$GEDCOM";
+						$whichChart="indi_info";
+						$whichID=$pid;
+					}
+
+					if (empty($whichChart)) $title="";
+					else {
+	 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang[$whichChart].": ".$whichID;
+	 					else $title = $whichID." :".$pgv_lang[$whichChart];
+ 					}
+					print "<a href=\"$click_link\" alt=\"$title\" title=\"$title\"";
+					// NOTE: Zoom
+					if ($LINK_ICONS=="mouseover") print "onmouseover=\"show_family_box('".$boxID."', '";
+					if ($LINK_ICONS=="click") print "onclick=\"toggle_family_box('".$boxID."', '";
+					if ($style==1) print "box$pid";
+					else print "relatives";
+					print "');";
+					print " return false;\" ";
+					// NOTE: Zoom
+					print "onmouseout=\"family_box_timeout('".$boxID."');";
+					print " return false;\"";
+					if (($click_link=="#")&&($LINK_ICONS!="click")) print "onclick=\"return false;\"";
+					print "><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]."\" width=\"25\" border=\"0\" vspace=\"0\" hspace=\"0\" alt=\"".$pgv_lang["person_links"]."\" title=\"".$pgv_lang["person_links"]."\" /></a>";
 			   }
 			   // NOTE: Close div icons-$personcount.$pid.$count
 			   print "</div>\n";
@@ -183,24 +254,24 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 		  // NOTE: Start div out-$personcount.$pid.$count
 		  else {
 			   if ($style==1) {
-					print "\n\t\t\t<div id=\"out-$pid.$personcount.$count\" class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden;\"";
+					print "\n\t\t\t<div id=\"out-$boxID\" class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden;\"";
 			   }
 			   else {
-					print "\n\t\t\t<div id=\"out-$pid.$personcount.$count\" class=\"person_box$isF\" style=\"padding: 2px; overflow: hidden;\"";
+					print "\n\t\t\t<div id=\"out-$boxID\" class=\"person_box$isF\" style=\"padding: 2px; overflow: hidden;\"";
 			   }
 			   // NOTE: Zoom
 			   if (($ZOOM_BOXES!="disabled")&&(empty($SEARCH_SPIDER))) {
-					if ($ZOOM_BOXES=="mouseover") print " onmouseover=\"expandbox('".$pid.".".$personcount.".".$count."', $style); return false;\" onmouseout=\"restorebox('".$pid.".".$personcount.".".$count."', $style); return false;\"";
-					if ($ZOOM_BOXES=="mousedown") print " onmousedown=\"expandbox('".$pid.".".$personcount.".".$count."', $style);\" onmouseup=\"restorebox('".$pid.".".$personcount.".".$count."', $style);\"";
-					if (($ZOOM_BOXES=="click")&&($view!="preview")) print " onclick=\"expandbox('".$pid.".".$personcount.".".$count."', $style);\"";
+					if ($ZOOM_BOXES=="mouseover") print $mouseAction2;
+					if ($ZOOM_BOXES=="mousedown") print $mouseAction3;
+					if (($ZOOM_BOXES=="click")&&($view!="preview")) print $mouseAction4;
 			   }
 			   print "><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\"><tr><td valign=\"top\">";
 		  }
 	 }
 	 // NOTE: Start div out-$personcount.$pid.$count
 	 else {
-		  if ($style==1) print "\n\t\t\t<div id=\"out-$pid.$personcount.$count\" class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden;\"><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\"><tr><td valign=\"top\">";
-		  else print "\n\t\t\t<div id=\"out-$pid.$personcount.$count\" class=\"person_box$isF\" style=\"padding: 2px; overflow: hidden;\"><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\"><tr><td valign=\"top\">";
+		  if ($style==1) print "\n\t\t\t<div id=\"out-$boxID\" class=\"person_box$isF\" style=\"width: ".$bwidth."px; height: ".$bheight."px; padding: 2px; overflow: hidden;\"><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\"><tr><td valign=\"top\">";
+		  else print "\n\t\t\t<div id=\"out-$boxID\" class=\"person_box$isF\" style=\"padding: 2px; overflow: hidden;\"><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\"><tr><td valign=\"top\">";
 	 }
 	 //-- find the name
 	 $name = get_person_name($pid);
@@ -219,7 +290,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				if (!empty($object['mid']) && $USE_MEDIA_VIEWER) print "<a href=\"mediaviewer.php?mid=".$object['mid']."\" >";
 				else print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
 
-			   print "<img id=\"box-$pid.$personcount.$count-thumb\" src=\"".$object["thumb"]."\" vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"\" ";
+			   print "<img id=\"box-$boxID-thumb\" src=\"".$object["thumb"]."\" vspace=\"0\" hspace=\"0\" class=\"$class\" alt =\"\" title=\"\" ";
 			   if (!$show_full) print " style=\"display: none;\"";
 			   if ($imgsize) print " /></a>\n";
 			   else print " />\n";
@@ -231,13 +302,12 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 if (!$disp) {
 		  if (showLivingName($indirec)) {
 			   // NOTE: Start span namedef-$personcount.$pid.$count
-			   print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\"><span id=\"namedef-$pid.$personcount.$count\" ";
-			   if (hasRTLText($name) && $style=="1")
-					print "class=\"name2\">";
-			   else print "class=\"name$style\">";
+			   if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$pid;
+			   else $title = $pid." :".$pgv_lang["indi_info"];
+			   print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" onmouseover=\"change_class('namedef-$boxID','name".$style."Hover'); return false;\" onmouseout=\"change_class('namedef-$boxID','name$style'); return false;\"><span id=\"namedef-$boxID\" class=\"name$style\">";
  			   print PrintReady($name);
 			   // NOTE: IMG ID
-			   print "<img id=\"box-$pid.$personcount.$count-sex\" src=\"$PGV_IMAGE_DIR/";
+			   print "<img id=\"box-$boxID-sex\" src=\"$PGV_IMAGE_DIR/";
 			   if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
 			   else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
 			   else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
@@ -253,8 +323,8 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				   print "<br />";
 				   // NOTE: Start span addnamedef-$personcount.$pid.$count
 				   // NOTE: Close span addnamedef-$personcount.$pid.$count
-				   if (hasRTLText($addname) && $style=="1") print "<span id=\"addnamedef-$pid.$personcount.$count\" class=\"name2\"> ";
-				   else print "<span id=\"addnamedef-$pid.$personcount.$count\" class=\"name$style\"> ";
+				   if (hasRTLText($addname) && $style=="1") print "<span id=\"addnamedef-$boxID\" class=\"name2\"> ";
+				   else print "<span id=\"addnamedef-$boxID\" class=\"name$style\"> ";
  				   print PrintReady($addname)."</span><br />";
 			 }
 		     print "</a>";
@@ -271,7 +341,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 				// NOTE: Close span namedef-$pid.$personcount.$count
 				print "return false;\">";
 			}
-			print "<span id=\"namedef-$pid.$personcount.$count\" class=\"name$style\">".$pgv_lang["private"]."</span>";
+			print "<span id=\"namedef-$boxID\" class=\"name$style\">".$pgv_lang["private"]."</span>";
 			if(empty($SEARCH_SPIDER)) {
 				print "</a>\n";
 			}
@@ -279,7 +349,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 		  if ($show_full && (empty($SEARCH_SPIDER))) {
 			  // NOTE: Start span fontdef-$pid.$personcount.$count
 			  // NOTE: Close span fontdef-$pid.$personcount.$count
-			   print "<br /><span id=\"fontdef-$pid.$personcount.$count\" class=\"details$style\">";
+			   print "<br /><span id=\"fontdef-$boxID\" class=\"details$style\">";
 			   print $pgv_lang["private"];
 			   print "</span>";
 		  }
@@ -287,15 +357,16 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 		  print "\n\t\t\t</td></tr></table></div>";
 		  return;
 	 }
-	 print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\"";
+	 if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$pid;
+	 else $title = $pid." :".$pgv_lang["indi_info"];
+	 print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" onmouseover=\"change_class('namedef-$boxID','name".$style."Hover'); return false;\" onmouseout=\"change_class('namedef-$boxID','name$style'); return false;\"";
 	 if (!$show_full) {
 		  //not needed or wanted for mouseover //if ($ZOOM_BOXES=="mouseover") print " onmouseover=\"event.cancelBubble = true;\"";
 		  if ($ZOOM_BOXES=="mousedown") print "onmousedown=\"event.cancelBubble = true;\"";
 		  if ($ZOOM_BOXES=="click") print "onclick=\"event.cancelBubble = true;\"";
 	 }
 	 // NOTE: Start span namedef-$pid.$personcount.$count
-	 if (hasRTLText($name) && $style=="1") print "><span id=\"namedef-$pid.$personcount.$count\" class=\"name2";
-	 else print "><span id=\"namedef-$pid.$personcount.$count\" class=\"name$style";
+	 print "><span id=\"namedef-$boxID\" class=\"name$style";
 	 // add optional CSS style for each fact
 	 $cssfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","CAST","DSCR","EDUC","IDNO",
 	 "NATI","NCHI","NMR","OCCU","PROP","RELI","RESI","SSN","TITL","BAPL","CONL","ENDL","SLGC","_MILI");
@@ -309,7 +380,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 print "</span>";
 	 print "<span class=\"name$style\">";
 	 // NOTE: IMG ID
-	 print "<img id=\"box-$pid.$personcount.$count-sex\" src=\"$PGV_IMAGE_DIR/";
+	 print "<img id=\"box-$boxID-sex\" src=\"$PGV_IMAGE_DIR/";
 	 if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
 	 else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
 	 else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
@@ -332,15 +403,15 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 print "</a>";
     if(empty($SEARCH_SPIDER)) {
 	 // NOTE: Start div inout-$pid.$personcount.$count
-	 //if (!$show_full) print "\n<div id=\"inout-$pid.$personcount.$count\" style=\"display: none;\">\n";
+	 //if (!$show_full) print "\n<div id=\"inout-$boxID\" style=\"display: none;\">\n";
 	 // NOTE: Start div fontdev-$pid.$personcount.$count
-	 print "<div id=\"fontdef-$pid.$personcount.$count\" class=\"details$style\">";
+	 print "<div id=\"fontdef-$boxID\" class=\"details$style\">";
 
 	 // NOTE: Start div inout2-$pid.$personcount.$count
-//	 if ($show_full) print "\n<div id=\"inout2-$pid.$personcount.$count\" style=\"display: block;\">\n";
+//	 if ($show_full) print "\n<div id=\"inout2-$boxID\" style=\"display: block;\">\n";
 if ($show_full)
 {
-	 print "\n<div id=\"inout2-$pid.$personcount.$count\" ";
+	 print "\n<div id=\"inout2-$boxID\" ";
 	  print " style=\"display: block;\">\n";
 	 $birttag = "BIRT";
 	 $bpos1 = strpos($indirec, "1 BIRT");
@@ -396,8 +467,8 @@ if ($show_full)
 
 //   --All code to load information has been moved to expand_view.php
     if(empty($SEARCH_SPIDER)) {
-	  print "\n<div id=\"inout-$pid.$personcount.$count\" style=\"display: none;\">\n";
-	  print "<div id=\"LOADING-inout-$pid.$personcount.$count\">";
+	  print "\n<div id=\"inout-$boxID\" style=\"display: none;\">\n";
+	  print "<div id=\"LOADING-inout-$boxID\">";
 	  print $pgv_lang['loading'];
  	  print "</div></div>";
     }// SEARCH_SPIDER
@@ -2311,8 +2382,8 @@ function print_fact_place($factrec, $anchor=false, $sub=false, $lds=false) {
 				print " <span class=\"label\">".$factarray["LONG"].": </span>".$map_long;
 			}
 			if ($map_lati and $map_long) {
-				$map_lati=trim(strtr($map_lati,"NSEW,ï¿½"," - -. ")); // S5,6789 ==> -5.6789
-				$map_long=trim(strtr($map_long,"NSEW,ï¿½"," - -. ")); // E3.456ï¿½ ==> 3.456
+				$map_lati=trim(strtr($map_lati,"NSEW,°"," - -. ")); // S5,6789 ==> -5.6789
+				$map_long=trim(strtr($map_long,"NSEW,°"," - -. ")); // E3.456° ==> 3.456
 				print " <a target=\"_BLANK\" href=\"http://www.mapquest.com/maps/map.adp?searchtype=address&formtype=latlong&latlongtype=decimal&latitude=".$map_lati."&longitude=".$map_long."\"><img src=\"images/mapq.gif\" border=\"0\" alt=\"Mapquest &copy;\" title=\"Mapquest &copy;\" /></a>";
 				print " <a target=\"_BLANK\" href=\"http://maps.google.com/maps?q=".$map_lati.",".$map_long."\"><img src=\"images/bubble.gif\" border=\"0\" alt=\"Google Maps &copy;\" title=\"Google Maps &copy;\" /></a>";
 				print " <a target=\"_BLANK\" href=\"http://www.multimap.com/map/browse.cgi?lat=".$map_lati."&lon=".$map_long."&scale=&icon=x\"><img src=\"images/multim.gif\" border=\"0\" alt=\"Multimap &copy;\" title=\"Multimap &copy;\" /></a>";

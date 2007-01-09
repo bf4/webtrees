@@ -145,9 +145,9 @@ class Menu
 		$c = count($this->submenus);
 		$output = "<div id=\"menu{$id}\" class=\"{$this->class}\">\n";
 		if ($this->link=="#") $this->link = "javascript:;";
-		$link = "<a href=\"{$this->link}\" class=\"{$this->class}\" onmouseover=\""
+		$link = "<a href=\"{$this->link}\" onmouseover=\""
 		;
-		/* if ($c >= 0)
+		if ($c >= 0)
 		{
 			$link .= "show_submenu('menu{$id}_subs', 'menu{$id}', '{$this->flyout}'); ";
 		}
@@ -172,7 +172,6 @@ class Menu
 		{
 			$link .= "change_icon('menu{$id}_icon', '{$this->icon}'); ";
 		}
-		*/
 		if ($this->onclick !== null)
 		{
 			$link .= "\" onclick=\"{$this->onclick}";
@@ -202,7 +201,7 @@ class Menu
 				$output .= "<td align=\"";
 				if ($TEXT_DIRECTION=="rtl") $output .= "right";
 				else $output .= "left";
-				$output .= "\" valign=\"middle\" style=\"white-space: nowrap;\">";
+				$output .= "\" valign=\"middle\">";
 				$output .= $link;
 				$output .= $this->label;
 				$output .= "</a></td>";
@@ -214,7 +213,7 @@ class Menu
 				$output .= "<td align=\"";
 				if ($TEXT_DIRECTION=="rtl") $output .= "left";
 				else $output .= "right";
-				$output .= "\" valign=\"middle\" style=\"white-space: nowrap;\">";
+				$output .= "\" valign=\"middle\">";
 				$output .= $link;
 				$output .= $this->label;
 				$output .= "</a></td>";
@@ -258,26 +257,25 @@ class Menu
 			$submenuid = "menu{$id}_subs";
 			if ($TEXT_DIRECTION == 'ltr')
 			{
-				$output .= '<div style="position: absolute; text-align: left;">';
+				$output .= '<div style="text-align: left; overflow: visible;">';
 			}
 			else
 			{
-				$output .= '<div style="position: absolute; text-align: right;">';
+				$output .= '<div style="text-align: right; overflow: visible;">';
 			}
 			$output .= "<div id=\"menu{$id}_subs\" class=\"{$this->submenuclass}\" ";
 			if ($this->flyout == 'right')
 			{
 				if ($TEXT_DIRECTION == 'ltr')
 				{
-					$output .= ' style="left: 80px; top: -20px;"';
+					$output .= ' style=\"left: 80px; overflow: visible;\"';
 				}
 				else
 				{
-					$output .= ' style="right: 50px; top: -20px;"';
+					$output .= ' style=\"right: 50px; overflow: visible;\"';
 				}
 				}
-			//$output .= "\" onmouseover=\"show_submenu('{$this->parentmenu}'); show_submenu('{$submenuid}');\" onmouseout=\"timeout_submenu('menu{$id}_subs');\">\n";
-			$output .= ">\n";
+			$output .= "\" onmouseover=\"show_submenu('{$this->parentmenu}'); show_submenu('{$submenuid}');\" onmouseout=\"timeout_submenu('menu{$id}_subs');\">\n";
 			foreach($this->submenus as $submenu)
 			{
 				$submenu->parentmenu = $submenuid;
@@ -451,9 +449,8 @@ class MenuBar
 				
 				$charts = $this->getChartsMenu($PEDIGREE_ROOT_ID,$user['gedcomid'][$GEDCOM]);
 				$charts->labelpos = 'right';
-				$charts->addClass('submenuitem');
+				$charts->addClass('submenuitem', 'submenuitem_hover', 'submenu');
 				$charts->addFlyout('right');
-				$charts->submenuclass = 'subsubmenu';
 				$charts->label = "My ".$pgv_lang['charts']." &nbsp;<strong>&gt;&gt;</strong>";
 				$menu->addSubMenu($charts);
 				
@@ -522,6 +519,7 @@ class MenuBar
 			}
 			$menu->addSeperator();
 			$sub = new Menu($pgv_lang['logout'], 'index.php?logout=1');
+			$sub->addClass('submenuitem', 'submenuitem_hover');
 			$sub->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES['mygedview']['small']);
 			$menu->addSubMenu($sub);
 		}

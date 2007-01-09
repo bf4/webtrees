@@ -1,6 +1,6 @@
 <?php
 /**
- * Outputs an RSS feed of information, mostly based on the information available
+ * Outputs an ATOM or RSS feed of information, mostly based on the information available
  * in the index page.
  *
  * phpGedView: Genealogy Viewer
@@ -49,22 +49,24 @@ if (!isset($_SERVER['QUERY_STRING'])) $_SERVER['QUERY_STRING'] = "lang=".$LANGUA
 $user=getUser($CONTACT_EMAIL);
 $author =$user["firstname"]." ".$user["lastname"];
 
-$rss = new UniversalFeedCreator();
-$rss->title = $GEDCOMS[$GEDCOM]["title"];
+$feed = new UniversalFeedCreator();
+$feed->title = $GEDCOMS[$GEDCOM]["title"];
 
 
 //optional
-$rss->descriptionTruncSize = 500;
-$rss->descriptionHtmlSyndicated = true;
+$feed->descriptionTruncSize = 500;
+$feed->descriptionHtmlSyndicated = true;
 //end optional
 
-$rss->link = $SERVER_URL;
+$feed->link = $SERVER_URL;
 $syndURL = $SERVER_URL."rss.php?".$_SERVER['QUERY_STRING'];
 $syndURL = preg_replace("/&/", "&amp;", $syndURL);
-$rss->syndicationURL = $syndURL;
+$feed->syndicationURL = $syndURL;
 
-$rssDesc = str_replace("#GEDCOM_TITLE#", $GEDCOMS[$GEDCOM]["title"], $pgv_lang["rss_descr"]);
-$rss->description = $rssDesc;
+$feedDesc = str_replace("#GEDCOM_TITLE#", $GEDCOMS[$GEDCOM]["title"], $pgv_lang["rss_descr"]);
+$feed->description = $feedDesc;
+$feed->copyright = $author . " (c) " . date("Y");
+$feed->category="genealogy";
 
 $image = new FeedImage();
 $image->title = $pgv_lang["rss_logo_descr"];
@@ -76,26 +78,29 @@ $image->description = $pgv_lang["rss_logo_descr"];
 $image->descriptionTruncSize = 500;
 $image->descriptionHtmlSyndicated = true;
 
-$rss->image = $image;
+
+$feed->image = $image;
 
 if($ENABLE_RSS) {
-
-	if (empty($auth) || $auth != "basic"){
+	// basic auth is broken in all apps besides browsers, so I am disabling it for now.
+	/*if (empty($auth) || $auth != "basic"){
 		$username = getUserName();
 		if(empty($username)){ //not logged in.
 			$item = new FeedItem();
 			$item->title = $pgv_lang["login"];
 			$authURL= $syndURL . "&auth=basic";
 			$item->link = $authURL;
+			//$item->guid = $item->link;
 			$authDesc = str_replace("#AUTH_URL#", $authURL, $pgv_lang["feed_login"]);
 			$item->description = $authDesc;
 			$item->descriptionHtmlSyndicated = true; //optional
 			$item->date = time();
 			$item->source = $SERVER_URL;
 			$item->author = $author;
-			$rss->addItem($item);
+			$item->authorURL = $feed->link;
+			$feed->addItem($item);
 		}
-	}
+	}*/
 
 	// determine if to show parts of feed based on their exsistance in the blocks on index.php
 	$printTodays = false;
@@ -184,7 +189,8 @@ if($ENABLE_RSS) {
 			$item->date = $todaysEvents[1];
 			$item->source = $SERVER_URL;
 			$item->author = $author;
-			$rss->addItem($item);
+			$item->authorURL = $feed->link;
+			$feed->addItem($item);
 		}
 	}
 
@@ -203,8 +209,8 @@ if($ENABLE_RSS) {
 			$item->date = $upcomingEvent[1];
 			$item->source = $SERVER_URL;
 			$item->author = $author;
-
-			$rss->addItem($item);
+			$item->authorURL = $feed->link;
+			$feed->addItem($item);
 		}
 	}
 
@@ -225,8 +231,9 @@ if($ENABLE_RSS) {
 			}
 			$item->source = $SERVER_URL;
 			$item->author = $author;
+			$item->authorURL = $feed->link;
 
-			$rss->addItem($item);
+			$feed->addItem($item);
 		}
 	}
 
@@ -247,8 +254,9 @@ if($ENABLE_RSS) {
 			}
 			$item->source = $SERVER_URL;
 			$item->author = $author;
+			$item->authorURL = $feed->link;
 
-			$rss->addItem($item);
+			$feed->addItem($item);
 		}
 	}
 
@@ -271,7 +279,8 @@ if($ENABLE_RSS) {
 				$item->date = $newsItem[1];
 				$item->source = $SERVER_URL ;
 				$item->author = $author;
-				$rss->addItem($item);
+				$item->authorURL = $feed->link;
+				$feed->addItem($item);
 			}
 		}
 	}
@@ -293,8 +302,9 @@ if($ENABLE_RSS) {
 			}
 			$item->source = $SERVER_URL;
 			$item->author = $author;
+			$item->authorURL = $feed->link;
 
-			$rss->addItem($item);
+			$feed->addItem($item);
 		}
 	}
 } else {
@@ -305,13 +315,14 @@ if($ENABLE_RSS) {
 	$item->date = time();
 	$item->source = $SERVER_URL;
 	$item->author = $author;
-	$rss->addItem($item);
+	$item->authorURL = $feed->link;
+	$feed->addItem($item);
 }
 
 // valid format strings are: RSS0.91, RSS1.0, RSS2.0, MBOX, OPML, ATOM, ATOM1.0, ATOM0.3, HTML, JS
-if (empty($rssStyle)) $rssStyle = "RSS1.0"; //default to RDF - rss 1.0
+if (empty($rssStyle)) $rssStyle = "ATOM"; //default to ATOM1.0
 
-$rss->outputFeed($rssStyle);
+$feed->outputFeed($rssStyle);
 
  //-- preserve the old language by storing it back in the session
 $_SESSION['CLANGUAGE'] = $oldlang;

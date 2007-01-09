@@ -9,6 +9,7 @@
 		<div id="gedcommenu">
 			<?php 		
 				$menu = $menubar->getGedcomMenu(); 
+				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES['gedcom']['small']);
 				$menu->label="";
 				if($menu->link != "") {
 					$menu->printMenu(); 
@@ -25,7 +26,7 @@
 				<input type="text" name="query" accesskey="<?php print $pgv_lang["accesskey_search"]?>" size="12" value="<?php print $pgv_lang['search']?>" onfocus="if (this.value == '<?php print $pgv_lang['search']?>') this.value=''; focusHandler();" onblur="if (this.value == '') this.value='<?php print $pgv_lang['search']?>';" />
 				<input type="submit" name="search" value="&gt;" />
 			</form>
-			<a href="search.php?action=general">Advanced Search</a>
+			<a href="search.php?action=general"><?php print $pgv_lang['search_general']; ?></a>
 		<?php } ?>
 	</div>
 
@@ -36,10 +37,10 @@
 		<?php if(empty($SEARCH_SPIDER)) { print_theme_dropdown(); } ?>
 	</div>
 	<div id="navmenus">
-		<table>
+		<table border="0">
 		<tr>
-		<td>
-			<div id="navmenu" class="center">
+		<td class="center">
+			<div id="navmenu">
 				<?php
 				$menu = new Menu('Navigate', 'index.php?command=gedcom', 'right');
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES['gedcom']['small']);
@@ -49,26 +50,26 @@
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES['place']['small']);
 				$submenu->addFlyout('right');
 				$submenu->labelpos = 'right';
-				$submenu->addClass('submenuitem', 'submenuitem_hover', 'subsubmenu');
+				$submenu->addClass('submenuitem', 'submenuitem_hover', 'submenu');
 				$menu->addSubMenu($submenu);
 				
 				$submenu = $menubar->getListsMenu();
 				$submenu->addLabel($submenu->label." &nbsp;<strong>&gt;&gt;</strong>");
 				$submenu->addFlyout('right');
-				$submenu->addClass('submenuitem', 'submenuitem_hover', 'subsubmenu');
+				$submenu->addClass('submenuitem', 'submenuitem_hover', 'submenu');
 				$menu->addSubMenu($submenu);
 				
 				$submenu = $menubar->getCalendarMenu();
 				$submenu->addLabel($submenu->label." &nbsp;<strong>&gt;&gt;</strong>");
 				$submenu->addFlyout('right');
-				$submenu->addClass('submenuitem', 'submenuitem_hover', 'subsubmenu');
+				$submenu->addClass('submenuitem', 'submenuitem_hover', 'submenu');
 				$menu->addSubMenu($submenu);
 				
 				$submenu = $menubar->getClippingsMenu(); 
 				if ((!is_null($menu)) && ($menu->link != "") && $submenu->subCount()>0) {
 					$submenu->addLabel($submenu->label." &nbsp;<strong>&gt;&gt;</strong>");
 					$submenu->addFlyout('right');
-					$submenu->addClass('submenuitem', 'submenuitem_hover', 'subsubmenu');
+					$submenu->addClass('submenuitem', 'submenuitem_hover', 'submenu');
 					$menu->addSubMenu($submenu);
 				} 
 				
@@ -76,7 +77,7 @@
 				if ((!is_null($menu)) && ($menu->link != "") && $submenu->subCount()>0) {
 					$submenu->addLabel($submenu->label." &nbsp;<strong>&gt;&gt;</strong>");
 					$submenu->addFlyout('right');
-					$submenu->addClass('submenuitem', 'submenuitem_hover', 'subsubmenu');
+					$submenu->addClass('submenuitem', 'submenuitem_hover', 'submenu');
 					$menu->addSubMenu($submenu);
 				} 
 				
@@ -86,7 +87,7 @@
 				foreach($menus as $m=>$submenu) { 
 					$submenu->addLabel($submenu->label." &nbsp;<strong>&gt;&gt;</strong>");
 					$submenu->addFlyout('right');
-					$submenu->addClass('submenuitem', 'submenuitem_hover', 'subsubmenu');
+					$submenu->addClass('submenuitem', 'submenuitem_hover', 'submenu');
 					$menu->addSubMenu($submenu);
 				}
 				
@@ -94,8 +95,8 @@
 				?>
 			</div>
 		</td>
-		<td>
-			<div id="mygedviewmenu" class="center">
+		<td class="center">
+			<div id="mygedviewmenu">
 				<?php
 					$menu = $menubar->getMygedviewMenu(); 
 					if($menu->link != "") {
@@ -128,6 +129,7 @@
 		<td class="center">
 			<?php 
 				$menu = $menubar->getHelpMenu();
+				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES['help']['small']);
 				$menu->labelpos = 'right';
 				if($menu->link != "") {
 					$menu->printMenu();

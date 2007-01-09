@@ -309,6 +309,12 @@ table.center {
 	font: bold 10px tahoma, arial, helvetica, sans-serif; 
 }
 
+.name1Hover {
+	color: white;
+	font: bold 10px tahoma, arial, helvetica, sans-serif; 
+	text-decoration: underline;
+}
+
 .namered {
 	border: solid red 1px; }
 
@@ -324,6 +330,12 @@ table.center {
 .name2 {
 	color: white;
 	font: bold 12px tahoma, arial, helvetica, sans-serif; 
+}
+
+.name2Hover {
+	color: white;
+	font: bold 12px tahoma, arial, helvetica, sans-serif; 
+	text-decoration: underline;
 }
 
 .details2 {
@@ -570,6 +582,9 @@ table.center {
 }
 
 .submenu, .submenu_rtl {
+	visibility: hidden;
+	position: absolute;
+	z-index: 100;
 	color: black;
 	/* background-image: url("images/greenwhitegradiant2.gif"); */
 	background-repeat: repeat-x;

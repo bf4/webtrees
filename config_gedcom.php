@@ -75,7 +75,7 @@ $PEDIGREE_FULL_DETAILS = true;			// -- Show the birth and death details of an in
 $PEDIGREE_LAYOUT = true;					// -- Set to true for Landscape mode, false for portrait mode
 $SHOW_EMPTY_BOXES = true;				// -- Show empty boxes on charts if the person is unknown
 $ZOOM_BOXES = "click";				// -- When should pedigree boxes zoom.  Values are "disabled", "mouseover", "click"
-$LINK_ICONS = "mouseover";				// -- When should pedigree box extra links show up.  Values are "disabled", "mouseover", "click"
+$LINK_ICONS = "click";				// -- When should pedigree box extra links show up.  Values are "disabled", "mouseover", "click"
 $ABBREVIATE_CHART_LABELS = false;		//-- should chart labels like "Birth" be abbreviated as "B"
 $SHOW_PARENTS_AGE = true;				// -- show age of parents on charts next to the birth date
 
@@ -183,7 +183,7 @@ $FAM_FACTS_ADD = "CENS,MARR,RESI,SLGS,MARR_CIVIL,MARR_RELIGIOUS,MARR_PARTNERS";
 $GENERATE_UIDS = false;		//-- automatically generate _UID fields for records that do not already have them
 
 $ENABLE_RSS = true;
-$RSS_FORMAT = "RSS1.0"; //-- format of RSS to use.
+$RSS_FORMAT = "ATOM"; //-- default feed format.
 // -- amount of time to execute before quitting in seconds
 // -- set this to 0 to remove all time limits
 $TIME_LIMIT = "60";

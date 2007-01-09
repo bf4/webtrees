@@ -224,7 +224,7 @@ var show = false;
 
 	var timeouts = new Array();
 	function family_box_timeout(boxid) {
-		tout = setTimeout("hide_family_box('"+boxid+"')", 2500);
+		tout = setTimeout("hide_family_box('"+boxid+"')", 250);
 		timeouts[boxid] = tout;
 	}
 
@@ -793,29 +793,23 @@ function show_submenu(elementid, parentid, dir) {
 	var pagewidth = document.body.scrollWidth+document.documentElement.scrollLeft;
 	var element = document.getElementById(elementid);
 	if (element && element.style) {
-		element.style.visibility='visible';
+				if (document.all) {
+					pagewidth = document.body.offsetWidth;
+					if (textDirection=="rtl") element.style.left = (element.offsetLeft-70)+'px';
+				}
+				else {
+					pagewidth = document.body.scrollWidth+document.documentElement.scrollLeft-70;
+					if (textDirection=="rtl") {
+						boxright = element.offsetLeft+element.offsetWidth+10;
+					}
+				}
 		if (dir=="down") {
 			var pelement = document.getElementById(parentid);
 			if (pelement) {
 				element.style.left=pelement.style.left;
-//				element.style.right=pelement.style.right;
 				var boxright = element.offsetLeft+element.offsetWidth+10;
-				if (document.all) {
-					pagewidth = document.body.offsetWidth;
-//					var pomoc = 15;
-					if (textDirection=="rtl") element.style.left = (element.offsetLeft-70)+'px';
-				}
-				else {
-//					var pomoc = 70;
-					pagewidth = document.body.scrollWidth+document.documentElement.scrollLeft-70;
-					if (textDirection=="rtl") {
-//						element.style.width = "220px";
-						boxright = element.offsetLeft+element.offsetWidth+10;
-					}
-				}
 				if (boxright > pagewidth) {
 					var menuleft = pagewidth-element.offsetWidth;
-//					var menuleft = menuleft-pomoc;
 					element.style.left = menuleft + "px";
 				}
 			}
@@ -823,7 +817,15 @@ function show_submenu(elementid, parentid, dir) {
 		if (dir=="right") {
 			var pelement = document.getElementById(parentid);
 			if (pelement) {
-				element.style.left=(pelement.offsetLeft+pelement.offsetWidth-40)+"px";
+				var boxleft = pelement.offsetLeft+pelement.offsetWidth-40;
+				var boxright = boxleft+element.offsetWidth+10;
+				if (boxright > pagewidth) {
+					element.style.right = pelement.offsetLeft + "px";
+				}
+				else {
+					element.style.left=boxleft+"px";
+				}
+				element.style.top = pelement.offsetTop+"px";
 			}
 		}
 
@@ -841,6 +843,7 @@ function show_submenu(elementid, parentid, dir) {
 		}
 
 		currentmenu = elementid;
+		element.style.visibility='visible';
 	}
 	clearTimeout(menutimeouts[elementid]);
 	menutimeouts[elementid] = null;
@@ -853,12 +856,14 @@ function show_submenu(elementid, parentid, dir) {
  * @param string elementid the id for the dom element you want to hide
  */
 function hide_submenu(elementid) {
+if (menutimeouts[elementid] != null) {
 	element = document.getElementById(elementid);
 	if (element && element.style) {
 		element.style.visibility='hidden';
 	}
 	clearTimeout(menutimeouts[elementid]);
 	menutimeouts[elementid] = null;
+}
 }
 
 /**
@@ -868,27 +873,12 @@ function hide_submenu(elementid) {
  * @param string elementid the id for the dom element you want to hide
  */
 function timeout_submenu(elementid) {
+	//hide_submenu(elementid);
 	if (menutimeouts[elementid] == null) {
 		tout = setTimeout("hide_submenu('"+elementid+"')", 100);
 		menutimeouts[elementid] = tout;
 	}
 }
-/*
-var language_filter, magnify, pastefield;
-language_filter = "";
-magnify = "";
-function findSpecialChar(field) {
-	pastefield = field;
-	window.open('find.php?type=specialchar&language_filter='+language_filter+'&magnify='+magnify, '_blank', 'top=55,left=55,width=200,height=500,scrollbars=1,resizeable=1');
-	return false;
-}
-
-function paste_char(value,lang,mag) {
-	pastefield.value += value;
-	language_filter = lang;
-	magnify = mag;
-}
-*/
 function checkKeyPressed(e) {
 	if (IE) key = window.event.keyCode;
 	else key = e.which;

@@ -280,6 +280,11 @@ th {
 	font: bold 10px tahoma, arial, helvetica, sans-serif;
 }
 
+.name1Hover {
+	color: red;
+	font: bold 10px tahoma, arial, helvetica, sans-serif;
+}
+
 .namered {
 	border: solid red 1px;
 }
@@ -296,6 +301,11 @@ th {
 
 .name2 {
 	color: #000066;
+	font: bold 11px tahoma, arial, helvetica, sans-serif;
+}
+
+.name2Hover {
+	color: red;
 	font: bold 11px tahoma, arial, helvetica, sans-serif;
 }
 
@@ -605,6 +615,9 @@ th {
 }
 
 .submenu, .submenu_rtl {
+	visibility: hidden;
+	position: absolute;
+	z-index: 100;
 	color: black;
 	text-decoration: none;
 	font: 11px tahoma, arial, helvetica, sans-serif;

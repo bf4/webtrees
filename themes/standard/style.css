@@ -271,6 +271,11 @@ table.center {
 	font: bold 10px tahoma, arial, helvetica, sans-serif;
 }
 
+.name1Hover {
+	color: red;
+	font: bold 10px tahoma, arial, helvetica, sans-serif;
+}
+
 .namered {
 	border: solid red 1px;
 }
@@ -285,6 +290,11 @@ table.center {
 
 .name2 {
 	color: #333333;
+	font: bold 12px tahoma, arial, helvetica, sans-serif;
+}
+
+.name2Hover {
+	color: red;
 	font: bold 12px tahoma, arial, helvetica, sans-serif;
 }
 
@@ -502,7 +512,7 @@ table.center {
 	padding: 1px;
 }
 
-.menuitem:hover, .menuitem_rtl:hover {
+.menuitem_hover, .menuitem_hover_rtl {
 	color: black;
 	text-decoration: none;
 	font: 11px tahoma, arial, helvetica, sans-serif;
@@ -511,9 +521,6 @@ table.center {
 }
 
 .submenu, .submenu_rtl {
-	position: absolute;
-	visibility: hidden; 
-	z-index: 100;
 	color: black;
 	text-decoration: none;
 	font: 11px tahoma, arial, helvetica, sans-serif;
@@ -521,16 +528,8 @@ table.center {
 	background-color: #d6e0ea;
 	border: solid #9ca3d4 1px;
 	white-space: nowrap;
-	FILTER: Alpha(Opacity=90, FinishOpacity=90, Style=2);
-   -moz-opacity: .90;
-   -khtml-opacity: .90;
-}
-
-.menuitem:hover .submenu, .menuitem_rtl:hover .submenu_rtl{
-	visibility: visible;
-}
-.submenuitem:hover .submenu, .submenuitem_rtl:hover .submenu_rtl{
-	visibility: visible;
+	visibility: hidden;
+	position: absolute;
 }
 
 .submenuitem, .submenuitem_rtl {
@@ -550,21 +549,13 @@ table.center {
 	text-align: right;
 }
 
-.submenuitem A:hover, .submenuitem_rtl A:hover {
+.submenuitem_hover, .submenuitem_hover_rtl {
 	color: black;
 	text-decoration: underline;
 	font: 11px tahoma, arial, helvetica, sans-serif;
 	background-color: #e6f0fa;
 	white-space: nowrap;
 	padding: 1px;
-	FILTER: Alpha(Opacity=100, FinishOpacity=100, Style=2);
-   -moz-opacity: 1.0;
-   -khtml-opacity: 1.0;
-}
-
-.familylinks {
-	left: 225px;
-	top: 15px;
 }
 
 .news_box {
