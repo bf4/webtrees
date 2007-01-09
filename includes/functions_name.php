@@ -104,76 +104,65 @@ function get_common_surnames($min) {
 }
 
 /**
- * Get the name from the raw gedcom record
+ * Get the name from the raw gedcom record.  Use the level 2 XXXX parts in
+ * preference to the 1 NAME.  Replace missing GIVN/SURN with "unknown"
+ * placeholders.
  *
  * @param string $indirec the raw gedcom record to get the name from
  */
 function get_name_in_record($indirec) {
-	$name = "";
-
-	$nt = preg_match("/1 NAME (.*)/", $indirec, $ntmatch);
-	if ($nt>0) {
-		$name = trim($ntmatch[1]);
-		$name = preg_replace(array("/__+/", "/\.\.+/", "/^\?+/"), array("", "", ""), $name);
-
-		//-- check for a surname
-		$ct = preg_match("~/(.*)/~", $name, $match);
-		if ($ct > 0) {
-			$surname = trim($match[1]);
-			$surname = preg_replace(array("/__+/", "/\.\.+/", "/^\?+/"), array("", "", ""), $surname);
-			if (empty($surname)) $name = preg_replace("~/(.*)/~", "/@N.N./", $name);
-		}
-		else {
-			//-- check for the surname SURN tag
-			$ct = preg_match("/2 SURN (.*)/", $indirec, $match);
-			if ($ct>0) {
-				$pt = preg_match("/2 SPFX (.*)/", $indirec, $pmatch);
-				if ($pt>0) $name .=" ".trim($pmatch[1]);
-				$surname = trim($match[1]);
-				$surname = preg_replace(array("/__+/", "/\.\.+/", "/^\?+/"), array("", "", ""), $surname);
-				if (empty($surname)) $name .= " /@N.N./";
-				else $name .= " /".$surname."/";
-			}
-			else $name .= " /@N.N./";
-		}
-		
-		$givens = trim(preg_replace("~/.*/~", "", $name));
-		
-		if (empty($givens)) $name = "@P.N. ".$name;
+	// NPFX
+	if (preg_match('/2 NPFX (.*)/', $indirec, $match))
+		$npfx=$match[1];
+	else
+		$npfx='';
+	// GIVN
+	if (preg_match('/2 GIVN (.*)/', $indirec, $match))
+		$givn=preg_replace('/[, ]+/', ' ', $match[1]);
+	else
+		if (preg_match('/1 NAME ([^\/\r\n]*)/', $indirec, $match))
+			$givn=preg_replace("/^$npfx /i", '',	$match[1]);
+		else
+			$givn='';
+	$givn=preg_replace('/^ *[._?]+ *$/', '', $givn);
+	if (empty($givn))
+		$givn= '@P.N.';
+	// NICK
+	if (preg_match('/2 NICK (.*)/', $indirec, $match))
+		$nick=trim($match[1]);
+	else
+		$nick='';
+	// SPFX
+	if (preg_match('/2 SPFX (.*)/', $indirec, $match))
+		$spfx=trim($match[1]);
+	else
+		$spfx='';
+	// SURN
+	if (preg_match('/2 SURN (.*)/', $indirec, $match))
+		$surn=trim($match[1]);
+	else
+		if (preg_match('/1 NAME [^\/\r\n]*\/([^\/\r\n]*)/', $indirec, $match))
+			$surn=preg_replace("/^$spfx /i", '',	$match[1]);
+		else
+			$surn='';
+	$surn=preg_replace('/^ *[._?]+ *$/', '', $surn);
+	if (empty($surn)) {
+		$surn='@N.N.';
+		$spfx='';
 	}
-	else {
-		/*-- this is all extraneous to the 1 NAME tag and according to the gedcom spec
-		-- the 1 NAME tag should take preference
-		*/
-		$name = "";
-		//-- check for the given names
-		$gt = preg_match("/2 GIVN (.*)/", $indirec, $gmatch);
-		if ($gt>0) $name .= trim($gmatch[1]);
-		else $name .= "@P.N.";
-
-		//-- check for the surname
-		$ct = preg_match("/2 SURN (.*)/", $indirec, $match);
-		if ($ct>0) {
-			$pt = preg_match("/2 SPFX (.*)/", $indirec, $pmatch);
-			if ($pt>0) $name .=" ".trim($pmatch[1]);
-			$surname = trim($match[1]);
-			if (empty($surname)) $name .= " /@N.N./";
-			else $name .= " /".$surname."/";
-		}
-		if (empty($name)) $name = "@P.N. /@N.N./";
-
-		$st = preg_match("/2 NSFX (.*)/", $indirec, $smatch);
-		if ($st>0) $name.=" ".trim($smatch[1]);
-//		$pt = preg_match("/2 SPFX (.*)/", $indirec, $pmatch);
-//		if ($pt>0) $name =strtolower(trim($pmatch[1]))." ".$name;
-	}
-	// handle PAF extra NPFX [ 961860 ]
-	$ct = preg_match("/2 NPFX (.*)/", $indirec, $match);
-	if ($ct>0) {
-		$npfx = trim($match[1]);
-		if (strpos($name, $npfx)===false) $name = $npfx." ".$name;
-	}
-	return $name;
+	// NSFX
+	if (preg_match('/2 NSFX (.*)/', $indirec, $match))
+		$nsfx=trim($match[1]);
+	else
+		if (preg_match('/1 NAME .*\/.*\/(.*)/', $indirec, $match))
+			$nsfx=trim($match[1]);
+		else
+			$nsfx='';
+	// Combine the components into a full name
+	if (false && !empty($nick))
+		return trim(trim($npfx.' '.$givn.' "'.$nick.'"').' /'.trim($spfx.' '.$surn).'/ '.$nsfx);
+	else
+		return trim(trim($npfx.' '.$givn).' /'.trim($spfx.' '.$surn).'/ '.$nsfx);
 }
 
 /**
