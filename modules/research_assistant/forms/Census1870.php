@@ -136,7 +136,7 @@ return false;}return true;}
         
         $out .= '<table>
  <tr>
-  <td class="descriptionbox">Dwelling - houses numbered in the order of visitation</td>';
+  <td class="descriptionbox">Dwelling Number</td>';
   for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
   	$value = "";
   	if (isset($citation['ts_array']['rows'][$i]['Dwelling'])) $value = $citation['ts_array']['rows'][$i]['Dwelling'];
@@ -144,7 +144,7 @@ return false;}return true;}
   }
   $out .='</tr>
  <tr>
-  <td class="descriptionbox">Families Numbered in the order of visitation</td>';
+  <td class="descriptionbox">Family Number</td>';
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
   		if (isset($citation['ts_array']['rows'][$i]['Families'])) $value = $citation['ts_array']['rows'][$i]['Families'];
@@ -152,7 +152,7 @@ return false;}return true;}
 	}
 	$out .='</tr>
  <tr>
-  <td class="descriptionbox">The name of every Person whose usual place of <br /> abode on the first day of June, 1870, was in this family</td>';
+  <td class="descriptionbox">Name</td>';
   		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
   			$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['NameOfPeople'])) $value = $citation['ts_array']['rows'][$i]['NameOfPeople'];
@@ -160,7 +160,7 @@ return false;}return true;}
   		}
  $out .='</tr>
 <tr>
-  <td class="descriptionbox">Age at last birthday. If under 1 year, give months in fractions, thus 3/12 </td>';
+  <td class="descriptionbox">Age</td>';
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['Age'])) $value = $citation['ts_array']['rows'][$i]['Age'];
@@ -192,7 +192,7 @@ return false;}return true;}
   </td>';}
 $out .= '</tr>
 <tr>
-  <td class="descriptionbox">Profession, Occupation, or Trade <br /> of each Male person over 15 years of age
+  <td class="descriptionbox">Profession, Occupation, or Trade
    </td>';
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
@@ -537,63 +537,7 @@ $out .= '</tr>
 				$inferredFacts[] = $inferredFact;
 			}
 			}
-			if($rows[$number]["Single"] == "Widowed")
-			{
-				
-				$spouseFams = $person->getSpouseFamilies();
-				foreach($spouseFams as $sFamKey => $sFamValue)
-				{
-					$spouse = $sFamValue->getSpouse($person);
-					$deathYear = $spouse->getDeathYear();
-					if($spouse->getDeathYear())	$diff = $deathYear - 1870;
-						if($diff)
-						{
-							if($diff > 1 || $diff < 0)
-							{
-								$tempArray = array();
-								$inferredFact["Person"] = $spouse->getName();								
-								$inferredFact["PersonID"] = $spouse->getXref();
-								$inferredFact["Reason"] = "A death Date can be inferred!";
-								$inferredFact["Fact"] = "1 DEAT \r\n2 DATE BEF 1870";
-								$inferredFact["factType"] = 'DEAT';
-								$inferredFact["date"] = 'BEF 1870';
-								$inferredFact["factPeople"] = "indi";
-								$inferredFacts[] = $inferredFact;
-							}
-						}
-					
-				}
 			
-			}
-			
-			if($rows[$number]["Single"] == "Married")
-			{
-				
-				$spouseFams = $person->getSpouseFamilies();
-				foreach($spouseFams as $sFamKey => $sFamValue)
-				{
-					$marriage = $sFamValue->getMarriageRecord();
-					if(!$marriage)
-					{
-						if(!is_null($sFamValue))
-						{
-							$tempArray = array();
-							$inferredFact["Person"] = $sFamValue->getSortableName();								
-							$inferredFact["PersonID"] = $sFamValue->getXref();
-							$inferredFact["Reason"] = "A Marriage Date can be inferred!";
-							$inferredFact["Fact"] = "1 MARR \r\n2 DATE BEF 1870";
-							$inferredFact["factType"] = 'MARR';
-							$inferredFact["date"] = 'BEF 1870';
-							$inferredFact["factPeople"] = "fam";
-							$tempArray[] = $inferredFact;
-							$people[$sFamValue->getXref()] = $tempArray;
-						}
-					}
-				}
-			
-			}
-			
-		
 			if(!empty($bdate))
 			{
 				 $bDiff = $birthDate - $bdate;

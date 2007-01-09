@@ -25,14 +25,14 @@
  * @author Christopher Stolworthy
  */
  //-- security check, only allow access from module.php
-if (strstr($_SERVER["SCRIPT_NAME"],"WW1DraftB.php")) {
+if (strstr($_SERVER["SCRIPT_NAME"],"WW1DraftC.php")) {
 	print "Now, why would you want to do that.  You're not hacking are you?";
 	exit;
 }
 require_once "ra_form.php";
 require_once "includes/functions_edit.php";
 
-class WW1DraftB extends ra_form {
+class WW1DraftC extends ra_form {
 
 	function header($action, $tableAlign, $heading, $showchoose = false) {
 		global $pgv_lang;
@@ -42,7 +42,7 @@ class WW1DraftB extends ra_form {
 			$out = '<form action="module.php" method="post">';
 			$out .= '<input type="hidden" name="mod" value="research_assistant" />' .
 	    			'<input type="hidden" name="action" value="printform" />' .
-	    			'<input type="hidden" name="formname" value="WW1DraftB" />' .
+	    			'<input type="hidden" name="formname" value="WW1DraftC" />' .
 	    			'<input type="hidden" name="taskid" value="'.$_REQUEST['taskid'].'" />';
 			if (!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = count($this->getPeople());
 			if ($_REQUEST['numOfRows']<1) $_REQUEST['numOfRows']=1;
@@ -67,7 +67,7 @@ return false;}return true;}
 		foreach ($params as $key => $value) {
 			$out .= '<input type="hidden" name="' . $key . '" value="' . $value . '">';
 		}
-		$out .= '<table id="WW1DraftB" class="list_table" align="' . $tableAlign . '">';
+		$out .= '<table id="WW1DraftC" class="list_table" align="' . $tableAlign . '">';
 		$out .= '<tr>';
 		$out .= '<th colspan="6" align="right"class="topbottombar"><h2>' . $heading . '</h2></th>';
 		$out .= '</tr>';
@@ -380,7 +380,7 @@ return false;}return true;}
 	}
 
 	function display_form() {
-		$out = $this->header("module.php?mod=research_assistant&form=WW1DraftB&action=func&func=step2&taskid=$_REQUEST[taskid]", "center", "World War 1 Draft Card B", true);
+		$out = $this->header("module.php?mod=research_assistant&form=WW1DraftC&action=func&func=step2&taskid=$_REQUEST[taskid]", "center", "World War 1 Draft Card B", true);
 		$out .= $this->sourceCitationForm(5, false);
         //$out .= $this->content();
 		$out .= $this->footer();
@@ -402,7 +402,7 @@ return false;}return true;}
 		$_REQUEST['personid'] = $personid;
 		$return = $this->processSourceCitation();
 
-			$out = $this->header("module.php?mod=research_assistant&form=WW1DraftB&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "World War 1 Draft Card B");
+			$out = $this->header("module.php?mod=research_assistant&form=WW1DraftC&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "World War 1 Draft Card B");
 			$out .= $this->editFactsForm(true);
 			$out .= $this->footer();
 			return $out;

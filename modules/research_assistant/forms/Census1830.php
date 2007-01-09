@@ -357,7 +357,7 @@ class Census1830 extends ra_form {
 	        $out .= '<td class="optionbox"><input name="Deaf25andUpSlaves'.$i.'" type="text" size="16" value="'.htmlentities($value).'"></td>';
 	        $value = "";
         	if (isset($row['BlindSlaves'])) $value = $row['BlindSlaves'];
-	        $out .= '<td class="optionbox"><input name="BlindSlaves" type="text" size="10" value="'.htmlentities($value).'"></td>';
+	        $out .= '<td class="optionbox"><input name="BlindSlaves'.$i.'" type="text" size="10" value="'.htmlentities($value).'"></td>';
 	        
         }
         $out .= '</table></td></tr>';
