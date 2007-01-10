@@ -98,6 +98,7 @@ if($ENABLE_RSS) {
 			$item->source = $SERVER_URL;
 			$item->author = $author;
 			$item->authorURL = $feed->link;
+			$item->category="genealogy";
 			$feed->addItem($item);
 		}
 	}*/
@@ -109,6 +110,7 @@ if($ENABLE_RSS) {
 	$printGedcomNews = false;
 	$printTop10Surnames = false;
 	$printRecentChanges = false;
+	$printRandomMedia = false;
 
 
 	$blocks=  getBlocks($GEDCOM);
@@ -127,7 +129,10 @@ if($ENABLE_RSS) {
 			$printTop10Surnames = true;
 		} else if($module == "recentChanges"){
 			$printRecentChanges = true;
+		} else if($module == "randomMedia"){
+			$printRandomMedia = true;
 		}
+
 
 	} else {
 		if (count($main)==0) {
@@ -148,6 +153,8 @@ if($ENABLE_RSS) {
 					$printTop10Surnames = true;
 				} else if($value[0] == "print_recent_changes"){
 					$printRecentChanges = true;
+				} else if($value[0] == "print_random_media"){
+					$printRandomMedia = true;
 				}
 			}
 		}
@@ -169,6 +176,8 @@ if($ENABLE_RSS) {
 					$printTop10Surnames = true;
 				} else if($value[0] == "print_recent_changes"){
 					$printRecentChanges = true;
+				} else if($value[0] == "print_random_media"){
+					$printRandomMedia = true;
 				}
 			}
 		}
@@ -182,7 +191,6 @@ if($ENABLE_RSS) {
 			$item->link = $SERVER_URL. "calendar.php?action=today";
 			$item->description = $todaysEvents[2];
 
-			//optional
 			$item->descriptionTruncSize = 500;
 			$item->descriptionHtmlSyndicated = true;
 
@@ -190,6 +198,7 @@ if($ENABLE_RSS) {
 			$item->source = $SERVER_URL;
 			$item->author = $author;
 			$item->authorURL = $feed->link;
+			$item->category = $pgv_lang["genealogy"];
 			$feed->addItem($item);
 		}
 	}
@@ -202,7 +211,6 @@ if($ENABLE_RSS) {
 			$item->link = $SERVER_URL. "calendar.php?action=calendar";
 			$item->description = $upcomingEvent[2];
 
-			//optional
 			$item->descriptionTruncSize = 500;
 			$item->descriptionHtmlSyndicated = true;
 
@@ -210,6 +218,7 @@ if($ENABLE_RSS) {
 			$item->source = $SERVER_URL;
 			$item->author = $author;
 			$item->authorURL = $feed->link;
+			$item->category = $pgv_lang["genealogy"];
 			$feed->addItem($item);
 		}
 	}
@@ -222,7 +231,6 @@ if($ENABLE_RSS) {
 			$item->link = $SERVER_URL. "index.php?command=gedcom#gedcom_stats";
 			$item->description = $gedcomStats[2];
 
-			//optional
 			$item->descriptionTruncSize = 500;
 			$item->descriptionHtmlSyndicated = true;
 
@@ -232,7 +240,7 @@ if($ENABLE_RSS) {
 			$item->source = $SERVER_URL;
 			$item->author = $author;
 			$item->authorURL = $feed->link;
-
+			$item->category = $pgv_lang["genealogy"];
 			$feed->addItem($item);
 		}
 	}
@@ -255,7 +263,7 @@ if($ENABLE_RSS) {
 			$item->source = $SERVER_URL;
 			$item->author = $author;
 			$item->authorURL = $feed->link;
-
+			$item->category = $pgv_lang["genealogy"];
 			$feed->addItem($item);
 		}
 	}
@@ -272,7 +280,6 @@ if($ENABLE_RSS) {
 				$item->link = $SERVER_URL . "index.php?command=gedcom#" . $newsItem[3];
 				$item->description = $newsItem[2];
 
-				//optional
 				$item->descriptionTruncSize = 500;
 				$item->descriptionHtmlSyndicated = true;
 
@@ -280,6 +287,7 @@ if($ENABLE_RSS) {
 				$item->source = $SERVER_URL ;
 				$item->author = $author;
 				$item->authorURL = $feed->link;
+				$item->category="genealogy";
 				$feed->addItem($item);
 			}
 		}
@@ -303,6 +311,34 @@ if($ENABLE_RSS) {
 			$item->source = $SERVER_URL;
 			$item->author = $author;
 			$item->authorURL = $feed->link;
+			$item->category = $pgv_lang["genealogy"];
+			$feed->addItem($item);
+		}
+	}
+
+	if($printRandomMedia){
+		$randomMedia= getRandomMedia();
+		if (! empty($randomMedia[2])) {
+			$item = new FeedItem();
+			$item->title = $randomMedia[0];
+			$item->link = $SERVER_URL. "medialist.php";
+			$item->description = $randomMedia[2];
+
+			$item->descriptionTruncSize = 500;
+			$item->descriptionHtmlSyndicated = true;
+
+			if (! empty($randomMedia[1])) {
+				$item->date = $randomMedia[1];
+			}
+			$item->source = $SERVER_URL;
+			$item->author = $author;
+			$item->authorURL = $feed->link;
+			$item->category = $pgv_lang["genealogy"];
+			$item->enclosure = new EnclosureItem();
+			$item->enclosure->url=$SERVER_URL . $randomMedia[3];
+			$item->enclosure->type=$randomMedia[4];
+			$item->enclosure->length= $randomMedia[5];
+			//$item->enclosure->title = $dataArray[6]; //not yet supported by feed creator, but part of the ATOM spec
 
 			$feed->addItem($item);
 		}
@@ -316,6 +352,7 @@ if($ENABLE_RSS) {
 	$item->source = $SERVER_URL;
 	$item->author = $author;
 	$item->authorURL = $feed->link;
+	$item->category = $pgv_lang["genealogy"];
 	$feed->addItem($item);
 }
 
