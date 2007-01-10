@@ -915,5 +915,146 @@ function getRecentChanges() {
 	return $dataArray;
 }
 
+/**
+ * Returns a random media for the RSS feed
+ *
+ * @return the array with random media data. the format is $dataArray[0] = title, $dataArray[1] = date,
+ * 				$dataArray[2] = data, $dataArray[3] = file path, $dataArray[4] = mime type,
+ *				$dataArray[5] = file size, $dataArray[5] = media title
+ */
+function getRandomMedia() {
+	global $pgv_lang, $GEDCOM, $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES, $GEDCOM_ID_PREFIX, $FAM_ID_PREFIX, $SOURCE_ID_PREFIX;
+	global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $DEBUG;
+	global $PGV_BLOCKS, $command, $action;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+	if (empty($config)) $config = $PGV_BLOCKS["print_random_media"]["config"];
+	if (isset($config["filter"])) $filter = $config["filter"];  // indi, event, or all
+	else $filter = "all";
+
+	$dataArray[0] = $pgv_lang["random_picture"];
+	$dataArray[1] = time();//FIXME - get most recent change time
+
+	$randomMedia = "";
+
+
+	if (!$MULTI_MEDIA) return;
+	$medialist = array();
+	$foundlist = array();
+
+	$medialist = get_medialist(false, '', true, true);
+	$ct = count($medialist);
+	if ($ct>0) {
+		$i=0;
+		$disp = false;
+		//-- try up to 40 times to get a media to display
+		while($i<40) {
+			$error = false;
+			$value = array_rand($medialist);
+			//if (isset($DEBUG)&&($DEBUG==true)) {
+			//	print "Trying ".$medialist[$value]["XREF"]."<br />\n";
+			//}
+			$links = $medialist[$value]["LINKS"];
+			$disp = $medialist[$value]["EXISTS"] && $medialist[$value]["LINKED"] && $medialist[$value]["CHANGE"]!="delete" ;
+			//if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." File does not exist, or is not linked to anyone, or is marked for deletion.</span><br />\n";}
+
+			$disp &= displayDetailsByID($value["XREF"], "OBJE");
+			$disp &= !FactViewRestricted($value["XREF"], $value["GEDCOM"]);
+
+			//if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." Failed to pass privacy</span><br />\n";}
+
+			$isExternal = strstr($medialist[$value]["FILE"], "://");
+
+			if (!$isExternal) $disp &= file_exists($medialist[$value]["THUMB"]);
+			//if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." thumbnail file could not be found</span><br />\n";}
+
+			if ($disp && count($links) != 0){
+				foreach($links as $key=>$type) {
+					$gedrec = find_gedcom_record($key);
+					$disp &= !empty($gedrec);
+					//-- source privacy is now available through the display details by id method
+					// $disp &= $type!="SOUR";
+					$disp &= displayDetailsById($key, $type);
+				}
+				//if (isset($DEBUG)&&($DEBUG==true)&&!$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed link privacy</span><br />\n";}
+				if ($disp && $filter!="all") {
+					// Apply filter criteria
+					$ct = preg_match("/0\s(@.*@)\sOBJE/", $medialist[$value]["GEDCOM"], $match);
+					$objectID = $match[1];
+					$ct2 = preg_match("/(\d)\sOBJE\s{$objectID}/", $gedrec, $match2);
+					if ($ct2>0) {
+						$objectRefLevel = $match2[1];
+						if ($filter=="indi" && $objectRefLevel!="1") $disp = false;
+						if ($filter=="event" && $objectRefLevel=="1") $disp = false;
+						//if (isset($DEBUG)&&($DEBUG==true)&&!$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed to pass config filter</span><br />\n";}
+					}
+					else $disp = false;
+				}
+			}
+			//-- leave the loop if we find an image that works
+			if ($disp) {
+				break;
+			}
+			//-- otherwise remove the private media item from the list
+			else {
+				//if (isset($DEBUG)&&($DEBUG==true)) print "<span class=\"error\">".$medialist[$value]["XREF"]." Will not be shown</span><br />\n";
+				unset($medialist[$value]);
+			}
+			//-- if there are no more media items, then try to get some more
+			if (count($medialist)==0) $medialist = get_medialist(false, '', true, true);
+			$i++;
+		}
+		if (!$disp) return false;
+
+		$imgsize = findImageSize($medialist[$value]["FILE"]);
+		$imgwidth = $imgsize[0]+40;
+		$imgheight = $imgsize[1]+150;
+
+		$mediaid = $medialist[$value]["XREF"];
+		$randomMedia .= "<a href=\"mediaviewer.php?mid=".$mediaid."\">";
+		$mediaTitle = "";
+		if (!empty($medialist[$value]["TITL"])) {
+			$mediaTitle = PrintReady($medialist[$value]["TITL"]);
+		} else {
+			$mediaTitle = basename($medialist[$value]["FILE"]);
+		}
+		//if ($block) {
+			$randomMedia .= "<img src=\"".$medialist[$value]["THUMB"]."\" border=\"0\" class=\"thumbnail\"";
+			if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
+			$randomMedia .= " alt=\"" . $mediaTitle . "\" title=\"" . $mediaTitle . "\" />";
+		/*} else {
+			print "<img src=\"".$medialist[$value]["FILE"]."\" border=\"0\" class=\"thumbnail\" ";
+			$imgsize = findImageSize($medialist[$value]["FILE"]);
+			if ($imgsize[0] > 175) print "width=\"175\" ";
+			print " alt=\"" . $mediaTitle . "\" title=\"" . $mediaTitle . "\" />";
+		}*/
+		$randomMedia .= "</a>\n";
+		$randomMedia .= "<br />";
+		$randomMedia .= "<a href=\"mediaviewer.php?mid=".$mediaid."\">";
+		$randomMedia .= "<b>". $mediaTitle ."</b>";
+		$randomMedia .= "</a>";
+
+		$dataArray[2] = $randomMedia;
+		$dataArray[3] = $medialist[$value]["FILE"];
+		$dataArray[4] = image_type_to_mime_type($imgsize[2]);
+		if ($dataArray[4] == false){
+			$dataArray[4] ="";
+			$parts = pathinfo($filename);
+			if (isset ($parts["extension"])) {
+				$ext = strtolower($parts["extension"]);
+			} else {
+				$ext="";
+			}
+			if($ext == "pdf"){
+				$dataArray[4] = "application/pdf";
+			}
+		}
+		$dataArray[5] = filesize($medialist[$value]["FILE"]);
+		$dataArray[6] = $mediaTitle;
+		//$dataArray[7] = $medialist[$value]["XREF"];
+	}
+	return $dataArray;
+}
+
 
 ?>
