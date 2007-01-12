@@ -28,7 +28,7 @@
  * for more info on format="flowed" see: http://www.joeclark.org/ffaq.html
  * for deatiled info on MIME (RFC 1521) email see: http://www.freesoft.org/CIE/RFC/1521/index.htm
  */
-function pgvMail($to, $subject, $message, $extraHeaders){
+function pgvMail($to, $from, $subject, $message) {
 	global $pgv_lang, $CHARACTER_SET, $LANGUAGE, $PGV_STORE_MESSAGES, $TEXT_DIRECTION;
 	$mailFormat = "plain";
 	//$mailFormat = "html";
@@ -39,32 +39,32 @@ function pgvMail($to, $subject, $message, $extraHeaders){
 	$boundry = "PGV-123454321-PGV"; //unique identifier for multipart
 	$boundry2 = "PGV-123454321-PGV2";
 
-	if($TEXT_DIRECTION == "rtl") { // needed for rtl but we can change this to a global config
+	if ($TEXT_DIRECTION == "rtl") { // needed for rtl but we can change this to a global config
 		$mailFormat = "html";
 	}
 
-	if($mailFormat == "html"){
+	if ($mailFormat == "html") {
 		$mailFormatText = "text/html";
-	} else if($mailFormat == "multipart") {
+	} else if ($mailFormat == "multipart") {
 		$mailFormatText = "multipart/related; \r\n\tboundary=\"$boundry\""; //for double display use:multipart/mixed
 	} else {
 		$mailFormatText = "text/plain";
 	}
 
-	$defaultExtraHeaders = "\r\nContent-type: " . $mailFormatText . ";\r\n";
+	$extraHeaders = "From: $from\r\nContent-type: $mailFormatText;\r\n";
 
-	if($mailFormat != "multipart"){
-		$defaultExtraHeaders .= "\tcharset=\"$CHARACTER_SET\";\r\n\tformat=\"flowed\"\r\nContent-Transfer-Encoding: 8bit\r\n";
+	if ($mailFormat != "multipart") {
+		$extraHeaders .= "\tcharset=\"$CHARACTER_SET\";\r\n\tformat=\"flowed\"\r\nContent-Transfer-Encoding: 8bit\r\n";
 	}
 
-	if($mailFormat == "html" || $mailFormat == "multipart"){
-		$defaultExtraHeaders .= "Mime-Version: 1.0\r\n";
+	if ($mailFormat == "html" || $mailFormat == "multipart") {
+		$extraHeaders .= "Mime-Version: 1.0\r\n";
 	}
 
-	$extraHeaders .= $defaultExtraHeaders; //add custom extra header
+	$extraHeaders .= $extraHeaders; //add custom extra header
 
 
-	if($mailFormat == "html") {
+	if ($mailFormat == "html") {
 		//wrap message in html
 		$htmlMessage = "";
 		$htmlMessage .= "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">";
@@ -77,7 +77,7 @@ function pgvMail($to, $subject, $message, $extraHeaders){
 		$htmlMessage .= "</pre></body>";
 		$htmlMessage .= "</html>";
 		$message = $htmlMessage;
-	} else if($mailFormat == "multipart"){
+	} else if ($mailFormat == "multipart") {
 		//wrap message in html
 		$htmlMessage = "--$boundry\r\n";
 		$htmlMessage .= "Content-Type: multipart/alternative; \r\n\tboundry=--$boundry2\r\n\r\n";
@@ -106,7 +106,7 @@ function pgvMail($to, $subject, $message, $extraHeaders){
 	mail($to, hex4email($subject,$CHARACTER_SET), $message, $extraHeaders);
 }
 
-function getPgvMailLogo(){
+function getPgvMailLogo() {
 // the following is a base64 encoded PGV logo for use in html formatted email.
 	$pgvLogo =
 "Content-Type: image/gif;
@@ -211,8 +211,8 @@ function hex4email ($string,$charset) {
 }
 
 
-function RFC2047Encode($string, $charset){
-	if(preg_match('/[^a-z ]/i', $string)){
+function RFC2047Encode($string, $charset) {
+	if (preg_match('/[^a-z ]/i', $string)) {
 		$string = preg_replace('/([^a-z ])/ie', 'sprintf("=%02x", ord(StripSlashes("\\1")))', $string);
 		$string = str_replace(' ', '_', $string);
 		return "=?$charset?Q?$string?=";

@@ -47,6 +47,7 @@ if ($action=="login") {
 	else $remember = "no";
 	$auth = authenticateUser($username, $password);
 	if ($auth) {
+		if (!empty($_POST["useradmin"])) $_SESSION["useradmin"] = $_POST["useradmin"];
 		if (!empty($_POST["usertime"])) {
 			$_SESSION["usertime"]=@strtotime($_POST["usertime"]);
 		}
@@ -69,7 +70,12 @@ if ($action=="login") {
 
 		$url .= "&ged=".$ged; 
 		$url = str_replace(array(".php&amp;", ".php&"), ".php?", $url);
-
+		
+		// Special handling for link to useradmin.php from e-mail to admin
+		if (!empty($_POST["useradmin"])) {
+			$url .= "&action=edituser&username=".$_POST["useradmin"];
+		}
+		
 		header("Location: ".$url);
 		exit;
 	}
@@ -147,16 +153,19 @@ else {
 		print "</td></tr></table><br /><br />\n";
 	}
 }
+$i = 0;		// initialize tab index
 	?>
 	<form name="loginform" method="post" action="<?php print $LOGIN_URL; ?>" onsubmit="t = new Date(); document.loginform.usertime.value=t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate()+' '+t.getHours()+':'+t.getMinutes()+':'+t.getSeconds(); return true;">
-		<?php $i = 0;?>
 		<input type="hidden" name="action" value="login" />
 		<input type="hidden" name="url" value="<?php print $url; ?>" />
 		<input type="hidden" name="ged" value="<?php if (isset($ged)) print $ged; else print $GEDCOM; ?>" />
 		<input type="hidden" name="pid" value="<?php if (isset($pid)) print $pid; ?>" />
 		<input type="hidden" name="type" value="<?php print $type; ?>" />
 		<input type="hidden" name="usertime" value="" />
-		<span class="error"><b><?php print $message?></b></span>
+		<?php
+		if (!empty($useradmin)) print "<input type='hidden' name='useradmin' value='$useradmin' />\r\n";
+		if (!empty($message)) print "<span class='error'><br /><b>$message</b><br /><br /></span>\r\n";
+		?>
 		<!--table-->
 		<table class="center facts_table width20">
 		  <tr><td class="topbottombar" colspan="2"><?php print $pgv_lang["login"]?></td></tr>

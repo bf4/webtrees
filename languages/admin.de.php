@@ -81,7 +81,6 @@ $pgv_lang["add_gedcom"]                        = "GEDCOM-Datei hinzufügen";
 $pgv_lang["add_new_gedcom"]                = "Neue GEDCOM-Datei erstellen";
 $pgv_lang["add_new_language"]			= "Dateien und Einstellungen für eine neue Sprache hinzufügen";
 $pgv_lang["add_user"]					= "Neuen Benutzer hinzufügen";
-$pgv_lang["admin_approved"]                = "Ihr Zugang für #SERVER_NAME# wurde erlaubt";
 $pgv_lang["admin_gedcom"]				= "GEDCOM verwalten";
 $pgv_lang["admin_gedcoms"]				= "Hier klicken, um GEDCOMs zu verwalten.";
 $pgv_lang["admin_geds"]				= "Daten- und GEDCOM-Verwaltung";
@@ -283,7 +282,8 @@ $pgv_lang["warn_users"]							= "Verwarnte Benutzer";
 $pgv_lang["weekly"]								= "Wöchentlich";
 $pgv_lang["welcome_new"]						= "Willkommen auf Ihrer neuen PhpGedView-Website.";
 $pgv_lang["yearly"]								= "Jährlich";
-$pgv_lang["you_may_login"]                = " vom Verwalter dieser Seite. Mit dem folgenden Link können Sie sich jetzt auf der PhpGedView Seite anmelden:";
+$pgv_lang["admin_OK_subject"]					= "Zugangserlaubnis bei #SERVER_NAME#";
+$pgv_lang["admin_OK_message"]					= "Der Verwalter von PhpGedView bei #SERVER_NAME# hat Ihren Zugangsantrag erlaubt.  Sie können sich jetzt mit dem folgenden Link anmelden:\r\n\r\n#SERVER_NAME#\r\n";
 
 $pgv_lang["ip_address"]				= "IP Adresse";
 $pgv_lang["date_time"]				= "Datum und Uhrzeit";
