@@ -1210,7 +1210,14 @@ function addMessage($message) {
 
 	require_once('includes/functions_mail.php');
 
-	//-- setup the message body for the from user
+	$fUser = getUser($message["from"]);
+	$tUser = getUser($message["to"]);
+	
+	// Switch to the "from" user's language
+	$oldLanguage = $LANGUAGE;
+	if ($fUser && $LANGUAGE!=$fUser["language"]) loadLanguage($fUser["language"]);
+
+	//-- setup the message body for the "from" user
 	$email2 = stripslashes($message["body"]);
 	if (isset($message["from_name"])) $email2 = $pgv_lang["message_from_name"]." ".$message["from_name"]."\r\n".$pgv_lang["message_from"]." ".$message["from_email"]."\r\n\r\n".$email2;
 	if (!empty($message["url"])) $email2 .= "\r\n\r\n--------------------------------------\r\n\r\n".$pgv_lang["viewing_url"]."\r\n".$SERVER_URL.$message["url"]."\r\n";
@@ -1219,27 +1226,23 @@ function addMessage($message) {
 	$email2 .= "LANGUAGE: $LANGUAGE\r\n";
 	$subject2 = "[".$pgv_lang["phpgedview_message"]."] ".stripslashes($message["subject"]);
 	$from ="";
-	$fuser = getUser($message["from"]);
-	if (!$fuser) {
+	if (!$fUser) {
 		$from = $message["from"];
 		$email2 = $pgv_lang["message_email3"]."\r\n\r\n".stripslashes($email2);
+		$fromFullName = $message["from"];
 	}
 	else {
-		//FIXME should the hex4email be removed?
-		// removed unneeded single quotes. If anyone thinks that they are needed, reverse my changes. KJ
-		//if (!$PGV_SIMPLE_MAIL) $from = "'".hex4email(stripslashes($fuser["firstname"]." ".$fuser["lastname"]),$CHARACTER_SET). "' <".$fuser["email"].">";
-		if (!$PGV_SIMPLE_MAIL) $from = hex4email(stripslashes($fuser["firstname"]." ".$fuser["lastname"]),$CHARACTER_SET). " <".$fuser["email"].">";
-		else $from = $fuser["email"];
+		if ($NAME_REVERSE) $fromFullName = $fUser["lastname"]." ".$fUser["firstname"];
+		else $fromFullName = $fUser["firstname"]." ".$fUser["lastname"];
+		if (!$PGV_SIMPLE_MAIL) $from = hex4email(stripslashes($fromFullName),$CHARACTER_SET). " <".$fUser["email"].">";
+		else $from = $fUser["email"];
 		$email2 = $pgv_lang["message_email2"]."\r\n\r\n".stripslashes($email2);
 
 	}
 
-	//-- get the to users language
-	$tuser = getUser($message["to"]);
-	$oldlanguage = $LANGUAGE;
-	if (($tuser)&&(!empty($tuser["language"]))) {
-		loadLanguage($tuser["language"]);		// Load the "to" user's language
-	}
+	//-- Load the "to" users language
+	if ($tUser && $LANGUAGE!=$tUser["language"]) loadLanguage($tUser["language"]);
+
 	if (isset($message["from_name"])) $message["body"] = $pgv_lang["message_from_name"]." ".$message["from_name"]."\r\n".$pgv_lang["message_from"]." ".$message["from_email"]."\r\n\r\n".$message["body"];
 	//-- [ phpgedview-Feature Requests-1588353 ] Supress admin IP address in Outgoing PGV Email
 	if (!userIsAdmin($message["from"])) {
@@ -1257,36 +1260,28 @@ function addMessage($message) {
 	}
 	if ($message["method"]!="messaging") {
 		$subject1 = "[".$pgv_lang["phpgedview_message"]."] ".stripslashes($message["subject"]);
-		if (!$fuser) {
+		if (!$fUser) {
 			$email1 = $pgv_lang["message_email1"];
 			if (!empty($message["from_name"])) $email1 .= $message["from_name"]."\r\n\r\n".stripslashes($message["body"]);
 			else $email1 .= $from."\r\n\r\n".stripslashes($message["body"]);
 		}
 		else {
 			$email1 = $pgv_lang["message_email1"];
-			$email1 .= stripslashes($fuser["firstname"]." ".$fuser["lastname"])."\r\n\r\n".stripslashes($message["body"]);
+			$email1 .= stripslashes($fromFullName)."\r\n\r\n".stripslashes($message["body"]);
 		}
-		$tuser = getUser($message["to"]);
-		if (!$tuser) {
+		if (!$tUser) {
 			//-- the to user must be a valid user in the system before it will send any mails
 			return false;
 		} else {
-			//if (!$PGV_SIMPLE_MAIL) $to = "'".hex4email(stripslashes($tuser["firstname"]." ".$tuser["lastname"]),$CHARACTER_SET). "' <".$tuser["email"].">";
-			// removed unneeded single quotes. If anyone thinks that they are needed, reverse my changes. KJ
-			if (!$PGV_SIMPLE_MAIL) $to = hex4email(stripslashes($tuser["firstname"]." ".$tuser["lastname"]),$CHARACTER_SET). " <".$tuser["email"].">";
-			else $to = $tuser["email"];
+			if ($LANGUAGE!=$tUser["language"]) loadLanguage($tUser["language"]);
+			if ($NAME_REVERSE) $toFullName = $tUser["lastname"]." ".$tUser["firstname"];
+			else $toFullName = $tUser["firstname"]." ".$tUser["lastname"];
+			if (!$PGV_SIMPLE_MAIL) $to = hex4email(stripslashes($toFullName),$CHARACTER_SET). " <".$tUser["email"].">";
+			else $to = $tUser["email"];
 		}
-		if (!$fuser) {
-			$header2 = "From: ".$PHPGEDVIEW_EMAIL;
-		} else {
-			$header2 = "From: ".$to;
-		}
-		if (!empty($tuser["email"])) {
-			pgvMail($to, $subject1, $email1, "From: ".$from);
-		}
-	}
-	if (($tuser)&&(!empty($LANGUAGE))) {
-		loadLanguage($oldlanguage);			// restore language settings if needed
+		if (!$fUser) $header2 = $PHPGEDVIEW_EMAIL;
+		else $header2 = $to;
+		if (!empty($tUser["email"])) pgvMail($to, $from, $subject1, $email1);
 	}
 	if ($message["method"]!="messaging") {
 		if (!isset($message["no_from"])) {
@@ -1294,9 +1289,12 @@ function addMessage($message) {
 				$admuser = getuser($WEBMASTER_EMAIL);
 				$from = $admuser["email"];
 			}
-			pgvMail($from, $subject2, $email2, $header2);
+			pgvMail($from, $header2, $subject2, $email2);
 		}
 	}
+
+	if ($LANGUAGE!=$oldLanguage) loadLanguage($oldLanguage);			// restore language settings if needed
+
 	return true;
 }
 

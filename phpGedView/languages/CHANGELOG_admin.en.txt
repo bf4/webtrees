@@ -42,6 +42,10 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+-$pgv_lang["admin_approved"]						12 Jan 2007				D			Don't build sentences
+-$pgv_lang["you_may_login"]							12 Jan 2007				D			from fragments!
++$pgv_lang["admin_OK_subject"]						12 Jan 2007				A
++$pgv_lang["admin_OK_message"]						12 Jan 2007				A
 +$pgv_lang["noref"]									14 Nov 2006				A
 +$pgv_lang["see"]									14 Nov 2006				A
 +$pgv_lang["ged_check"]								8 Nov 2006				A
