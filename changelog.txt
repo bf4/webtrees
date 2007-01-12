@@ -8,6 +8,9 @@
 	# $Id$
 =====================================================================
 
+Version 4.2
+ - Adding a "never married" icon on ancestry booklet when NMR=0 (opus27)
+
 Version 4.1
  - Fixed Links in chart boxes should show a title when mouse hovers over them (canajun2eh)
  - Fixed Links in chart boxes don't change colour when mouse hovers over them (canajun2eh)

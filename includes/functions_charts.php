@@ -261,7 +261,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
  * @param string $label optional indi label (descendancy booklet)
  */
 function print_family_children($famid, $childid = "", $sosa = 0, $label="", $personcount="1") {
-	global $pgv_lang, $pbwidth, $pbheight, $view, $show_famlink, $show_cousins;
+	global $pgv_lang, $factarray, $pbwidth, $pbheight, $view, $show_famlink, $show_cousins;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $show_changes, $pgv_changes, $GEDCOM, $SHOW_ID_NUMBERS, $TEXT_DIRECTION;
 
 	$children = get_children_ids($famid);
@@ -366,6 +366,21 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 						if ($show_cousins) {
 							print_cousins($famid, $personcount);
 							$personcount++;
+						}
+					}
+					if ($maxfam<0) {
+						if (isset($pgv_changes[$chil."_".$GEDCOM])) $indirec = find_updated_record($chil);
+						else $indirec = find_person_record($chil);
+						$ct = preg_match("/1 NMR (\w+)/", $indirec, $match);
+						if ($ct>0) $nmr = $match[1];
+						else $nmr = "";
+						if ($nmr=="0") echo "<td>&nbsp;<img src=\"images/small/empty.png\" alt=\"".$factarray["_NMR"]."\" title=\"".$factarray["_NMR"]."\" /></td>";
+						else echo "<td></td>";
+						if ($show_cousins) {
+							$ct = preg_match("/1 NCHI (\w+)/", $indirec, $match);
+							if ($ct>0) $nchi = $match[1];
+							else $nchi = "";
+							if ($nchi=="0") echo "<td></td><td>&nbsp;<img src=\"images/small/childless.gif\" alt=\"".$pgv_lang["childless_family"]."\" title=\"".$pgv_lang["childless_family"]."\" /></td>";
 						}
 					}
 				}
