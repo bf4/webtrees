@@ -6,7 +6,7 @@
  * used on the indilist, famlist, find, and search pages.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -501,6 +501,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo $pgv_lang["total_names"]." : ".$n;
 	if ($hidden) echo "<br />".$pgv_lang["hidden"]." : ".$hidden;
 	echo "</td>";
+	if ($option=="sosa") echo "<td></td>";
 	echo "<td></td>";
 	echo "<td></td>";
 	echo "<td></td>";
