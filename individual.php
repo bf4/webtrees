@@ -5,7 +5,7 @@
  * Display all of the information about an individual
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -351,6 +351,12 @@ function resize_content_div(i) {
 </script>
 <script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
 <?php
+function loading_message() {
+	global $pgv_lang;
+	echo "<p style='margin: 20px 20px 20px 20px'>";
+	echo "<img src='images/loading.gif' alt='".$pgv_lang["loading"]."' title='".$pgv_lang["loading"]."' />";
+	echo "</p>";
+}
 if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
 ?>
 <div class="door">
@@ -383,7 +389,7 @@ else
 	print "<div id=\"facts\" class=\"tab_page\" style=\"display:block;\" >\n";
 print "<span class=\"subheaders\">".$pgv_lang["personal_facts"]."</span><div id=\"facts_content\">";
 if (($controller->default_tab==0)||(!empty($SEARCH_SPIDER))) $controller->getTab(0);
-else print $pgv_lang['loading'];
+else loading_message();
 ?>
 </div>
 </div>
@@ -404,7 +410,7 @@ else
 print "<span class=\"subheaders\">".$pgv_lang["notes"]."</span><div id=\"notes_content\">";
 if (($controller->default_tab==1)||(!empty($SEARCH_SPIDER))) $controller->getTab(1);
 else {
-	if ($controller->get_note_count()>0) print "<br /><br />".$pgv_lang['loading'];
+	if ($controller->get_note_count()>0) loading_message();
 	else print "<span id=\"no_tab2\">".$pgv_lang["no_tab2"]."</span>";
 	}
 ?>
@@ -420,7 +426,7 @@ if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) {
 	print "<span class=\"subheaders\">".$pgv_lang["ssourcess"]."</span><div id=\"sources_content\">";
 	if (($controller->default_tab==2)||(!empty($SEARCH_SPIDER))) $controller->getTab(2);
 	else {
-		if ($controller->get_source_count()>0) print "<br /><br />".$pgv_lang['loading'];
+		if ($controller->get_source_count()>0) loading_message();
 		else print "<span id=\"no_tab3\">".$pgv_lang["no_tab3"]."</span>";
 	}
 	print "</div>\n";
@@ -439,7 +445,7 @@ else
 <?php
 	if ($MULTI_MEDIA && ($controller->get_media_count()>0 || userCanEdit(getUserName()))) {
 		if (($controller->default_tab==3)||(!empty($SEARCH_SPIDER))) $controller->getTab(3);
-		else print "<br /><br />".$pgv_lang['loading'];
+		else loading_message();
    		}
 	else print "<table class=\"facts_table\"><tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr></table>\n";
 ?>
@@ -455,7 +461,7 @@ else
 <div id="relatives_content">
 <?php
 	if (($controller->default_tab==4)||(!empty($SEARCH_SPIDER))) $controller->getTab(4);
-	else print "<br /><br />".$pgv_lang['loading'];
+	else loading_message();
 ?>
 </div>
 </div>
@@ -470,7 +476,7 @@ if(empty($SEARCH_SPIDER)) {
 
 	if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel())) {
 		if ($controller->default_tab==5) $controller->getTab(5);
-		else print "<br /><br />".$pgv_lang['loading'];
+		else loading_message();
 	}
 	else {
 		print "<table class=\"facts_table\"><tr><td id=\"no_tab6\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab6"]."</td></tr></table>\n";
@@ -555,7 +561,7 @@ if(empty($SEARCH_SPIDER)) {
 				        if ($controller->default_tab==6) {
 				        	$controller->getTab(6);
 				        }
-		else print "<br /><br />".$pgv_lang['loading'];
+		else loading_message();
 		print "</div>\n";
 						print "</td></tr></table>\n";
 				}
