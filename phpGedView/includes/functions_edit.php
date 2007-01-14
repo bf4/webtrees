@@ -437,47 +437,47 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 
 	print "<table class=\"facts_table\">";
 
-	// preset child/father SURN
+	// preset child/father NAME/SPFX/SURN
+	$name = "";
+	$spfx = "";
 	$surn = "";
-	if (empty($namerec)) {
-		$indirec = "";
-		if ($famtag=="CHIL" and $nextaction=="addchildaction") {
-			if (isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_updated_record($famid);
-			else $famrec = find_family_record($famid);
-			if (empty($famrec)) $famrec = find_record_in_file($famid);
-			$parents = find_parents_in_record($famrec);
-			$indirec = find_person_record($parents["HUSB"]);
-		}
-		if ($famtag=="HUSB" and $nextaction=="addnewparentaction") {
-			$indirec = find_person_record($pid);
-		}
-		$nt = preg_match("/\d SURN (.*)/", $indirec, $ntmatch);
-		if ($nt) $surn = $ntmatch[1];
-		else {
-			$nt = preg_match("/1 NAME (.*)[\/](.*)[\/]/", $indirec, $ntmatch);
-			if ($nt) $surn = $ntmatch[2];
-		}
-		if ($surn) $namerec = "1 NAME  /".trim($surn,"\r\n")."/";
+	$patronym_rec = "";
+	if ($famtag=="CHIL" and $nextaction=="addchildaction") {
+		if (isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_updated_record($famid);
+		else $famrec = find_family_record($famid);
+		if (empty($famrec)) $famrec = find_record_in_file($famid);
+		$parents = find_parents_in_record($famrec);
+		$patronym_rec = find_person_record($parents["HUSB"]);
 	}
+	if ($famtag=="HUSB" and $nextaction=="addnewparentaction") {
+		$patronym_rec = find_person_record($pid);
+	}
+	if (!empty($patronym_rec)) {
+		preg_match('/(\/.*\/)/', get_name_in_record($patronym_rec), $match); // Will *always* match
+		$name=$match[1];
+		$spfx=get_gedcom_value('SPFX', 0, $patronym_rec);
+		$surn=get_gedcom_value('SURN', 0, $patronym_rec);
+	}
+
 	// TODO make these tags a configuration setting
-	$default_name_fields = array("NPFX"=>"","NAME"=>"","GIVN"=>"","SPFX"=>"","SURN"=>"","NSFX"=>"");
+	$default_name_fields = array("NAME"=>$name,"NPFX"=>"","GIVN"=>"","SPFX"=>$spfx,"SURN"=>$surn,"NSFX"=>"");
 	$advanced_name_fields = array("NICK"=>"", "_MARNM"=>"", "ROMN"=>"");
 	//-- if they are using an RTL language then they probably want _HEB by default
 	if ($TEXT_DIRECTION=="rtl")  $default_name_fields["_HEB"] = "";
 	else $advanced_name_fields["_HEB"] = "";
 	
 	//-- iterate over the name tags and find the values from the name record.
-	foreach($default_name_fields as $tag=>$value) {
-		$value = get_gedcom_value($tag, 0, $namerec);
-	// handle PAF extra NPFX [ 961860 ]
-		if ($tag=="NAME") {
-	// 1 NAME = NPFX GIVN /SURN/ NSFX
-			if (!empty($default_name_fields["NPFX"]) && strpos($value, $default_name_fields["NPFX"])===false) 
-					$value = $default_name_fields["NPFX"]." ".$value;
-		}
-		$default_name_fields[$tag]= $value;
-		add_simple_tag("0 ".$tag." ".$value);
+	if (!empty($namerec)) {
+		foreach($default_name_fields as $tag=>$value)
+			$default_name_fields[$tag] = get_gedcom_value($tag, 0, $namerec);
+		// handle PAF extra NPFX [ 961860 ]
+		if (!empty($default_name_fields["NPFX"]) && strpos($default_name_fields["NAME"], $default_name_fields["NPFX"])===false) 
+			$default_name_fields["NAME"] = $default_name_fields["NPFX"]." ".$default_name_fields["NAME"];
 	}
+	
+	foreach($default_name_fields as $tag=>$value)
+		add_simple_tag("0 ".$tag." ".$value);
+
 	//-- advanced name fields
 	print "<tr id=\"advanced_name\"><td class=\"descriptionbox\" colspan=\"2\">";
 	print "<a href=\"javascript:;\" onclick=\"toggleAdvancedName(); return false;\"><img id=\"advanced_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$pgv_lang["advanced_name_fields"]."</a>";
@@ -486,8 +486,6 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		$value = get_gedcom_value($tag, 0, $namerec);
 		add_simple_tag("0 ".$tag." ".$value, "", "", "", "", false);
 	}
-
-	if ($surn) $namerec = ""; // reset if modified
 
 	if (empty($namerec)) {
 		// 2 _MARNM -- handled by advanced name fields
