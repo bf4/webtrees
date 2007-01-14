@@ -473,7 +473,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		if ($tag=="NAME") {
 	// 1 NAME = NPFX GIVN /SURN/ NSFX
 			if (!empty($default_name_fields["NPFX"]) && strpos($value, $default_name_fields["NPFX"])===false) 
-					$value = $default_name_fields." ".$value;
+					$value = $default_name_fields["NPFX"]." ".$value;
 		}
 		$default_name_fields[$tag]= $value;
 		add_simple_tag("0 ".$tag." ".$value);
@@ -484,7 +484,6 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	print "</td></tr>\n";
 	foreach($advanced_name_fields as $tag=>$value) {
 		$value = get_gedcom_value($tag, 0, $namerec);
-		$default_name_fields[$tag]= $value;
 		add_simple_tag("0 ".$tag." ".$value, "", "", "", "", false);
 	}
 
