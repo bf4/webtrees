@@ -1393,7 +1393,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
 		print_help_link("upload_media_file_help", "qm");
 		print $pgv_lang["media_file"] . "</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"mediafile\"";
-		//print " onchange=\"updateFormat(this.value);\"";
+		print " onchange=\"updateFormat(this.value);\"";
 		print " size=\"40\"><br /><sub>" . $pgv_lang["use_browse_advice"] . "</sub></td></tr>";
 		// Check for thumbnail generation support
 		$ThumbSupport = "";
@@ -1629,14 +1629,18 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	print "</table>\n";
 ?>
 		<script language="JavaScript" type="text/javascript">
-		<!--
-			var formid = '$formid';
+			var formid = '<?php print $formid; ?>';
 			function updateFormat(filename) {
-				ext = filename.substr(filename.lastIndexOf(".")+1);
+				var extsearch=/\.([a-zA-Z]{3,4})$/;
+				ext='';
+				if (extsearch.exec(filename)) {
+					ext = RegExp.$1;
+					if (ext=='jpg') ext='jpeg';
+					if (ext=='tif') ext='tiff';
+				}
 				formfield = document.getElementById(formid);
 				formfield.value = ext;
 			} 
-		//-->
 		</script>
 <?php
 
