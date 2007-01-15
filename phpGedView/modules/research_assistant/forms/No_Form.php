@@ -96,7 +96,8 @@ class No_Form extends ra_form {
      * @return mixed
 	 */
 	function footer() {
-		$out = '<tr><td class="descriptionbox" align="center" colspan="2"><input type="submit" value="Submit"></td></tr>';
+		global $pgv_lang;
+		$out = '<tr><td class="descriptionbox" align="center" colspan="2"><input type="submit" value='.$pgv_lang["ra_submit"].'></td></tr>';
 		$out .= '</table></form>';
 		return $out;
 	}
@@ -113,7 +114,8 @@ class No_Form extends ra_form {
      * return mixed
 	 */
 	function display_form() {
-		$out = $this->header("module.php?mod=research_assistant&form=No_Form&action=func&func=save&taskid=" . $_REQUEST['taskid'], "center", "Enter Results");
+		global $pgv_lang;		
+		$out = $this->header("module.php?mod=research_assistant&form=No_Form&action=func&func=save&taskid=" . $_REQUEST['taskid'], "center", $pgv_lang['EnterResults']);
 		$out .= $this->content();
 		$out .= $this->footer();
 		return $out;

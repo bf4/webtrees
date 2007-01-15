@@ -31,7 +31,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"module.php")===false) {
 }
 // Require our base class
 require_once'ra_form.php';
-require_once 'modules/research_assistant/forms/GeneratedTask.php';
+require_once 'modules/research_assistant/forms/ra_GeneratedTask.php';
 class ra_EditGeneratedTask extends ra_form 
 {
 	var $task;
@@ -54,6 +54,7 @@ class ra_EditGeneratedTask extends ra_form
  	
  	function print_header()
  	{
+	 	global $pgv_lang;
  		$out = '<form name="editGenTask" action="module.php" method="post">' .
  		'<input type="hidden" name="mod" value="research_assistant" />' .
         '<input type="hidden" name="action" value="savegentask" />' .
@@ -61,7 +62,7 @@ class ra_EditGeneratedTask extends ra_form
 				'<table class="list_table" align="center" border="0" width="40%">' .
 		  		'<tr>' .
 		    		'<th colspan="4" align="right" class="topbottombar">' .
-		    			'<h2>Edit Generated Task' .
+		    			'<h2>'.$pgv_lang["Edit_Gen_Task"] .
 		    			print_help_link("ra_EditGenerateTasks_help", "qm", '', false, true) .
 		    			'</h2>' .
 		    		'</th>' .
@@ -95,16 +96,17 @@ class ra_EditGeneratedTask extends ra_form
  	
  	function print_Content()
  	{
+	 	global $pgv_lang;
  		$out = '<tr>' .
 					'<th class="descriptionbox">' .
-		      			'Task Name:' .
+		      			$pgv_lang["Task_Name"].':' .
 		      		'</th>' .
 		      		'<th class="optionbox" align="left">' .
 		      			'<input type="text" name="title" value="' . $this->task->getName() . '"size="50"/>' .
 		      		'</th>' .
 		      	'<tr>' .
 					'<th class="descriptionbox">' .
-		      			'Task Description:' .
+		      			$pgv_lang["TaskDescription"].':' .
 		      		'</th>' .
 		      		'<th class="optionbox" align="left">' .
 		      			'<textarea name="description" cols=25 rows=5 wrap=soft>' . $this->task->getDescription() . '</textarea>' .
@@ -112,7 +114,7 @@ class ra_EditGeneratedTask extends ra_form
 		      	'</tr>' .
 		      	'<tr>' .
 					'<th class="descriptionbox">' .
-		            	'people:' .
+		            	$pgv_lang["people"].':' .
 		            '</th>' .
 		            '<th id="peoplecell" class="optionbox" align="left">' .
 		            	'<input type="hidden" id="personid" name="personid" size="3" value="' . $this->task->getPersonId() . '" />' .
@@ -125,7 +127,7 @@ class ra_EditGeneratedTask extends ra_form
 		        '</tr>' .
 		        '<tr>' .
 		        	'<th class="descriptionbox">' .
-		            	'sources:' .
+		            	$pgv_lang["sources"].':' .
 		            '</th>' .
 		        	'<th id="sourcecell" class="optionbox" align="left">' .
 		        		'<input type="hidden" id="sourceid" name="sourceid" size="3" value="" />' .
@@ -137,11 +139,12 @@ class ra_EditGeneratedTask extends ra_form
 		return $out;
  	}
  	
- 	function print_footer()
+ 	function print_footer() 
  	{
+	 	global $pgv_lang;
  		$onclick = "window.location='module.php?mod=research_assistant&action=genTasks';";
  		return '<th colspan=2 class="topbottombar">' .
-		            	'<input type=submit value="Save"><input type=button value="Cancel" onclick="' . $onclick . '">' .
+		            	'<input type=submit value='.$pgv_lang["save"].'><input type=button value='.$pgv_lang["cancel"].' onclick="' . $onclick . '">' .
 		        '</th></table></form>';
  	}
 

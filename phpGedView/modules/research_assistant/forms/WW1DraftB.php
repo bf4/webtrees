@@ -118,14 +118,14 @@ return false;}return true;}
 		$out .= print_findmedia_link("OBJE", true, '', true);
 		$out .= '<br /><a href="javascript:;" onclick="pastefield=document.getElementById(\'OBJE\'); window.open(\'addmedia.php?action=showmediaform\', \'\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["add_media"].'</a>';
 		$out .= '</td></tr>';
-		$out .= '<tr><td class="descriptionbox">Registration Number:</td><td class="optionbox"><input type="text" name="page" value="'.htmlentities($page).'"/></td></tr>';
-		$out .= '<tr><td class="descriptionbox">Serial No.:</td><td class="optionbox"><input type="text" name="CallNumberURL" value="'.htmlentities($callno).'" /></td></tr>';
+		$out .= '<tr><td class="descriptionbox">'.$pgv_lang["registration_no"].'</td><td class="optionbox"><input type="text" name="page" value="'.htmlentities($page).'"/></td></tr>';
+		$out .= '<tr><td class="descriptionbox">'.$pgv_lang["serial_no"].'</td><td class="optionbox"><input type="text" name="CallNumberURL" value="'.htmlentities($callno).'" /></td></tr>';
 
 //        Next Table
 		$out .= '<tr><td colspan="6">';
 
 
-		$out .= '<table>
+		$out .= '<table  align="left" dir="ltr">
  <tr>
   <td class="descriptionbox">Name in Full</td>';
 		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
@@ -404,8 +404,8 @@ return false;}return true;}
 	
 	function editFactsForm($printButton = true)
 	{
-		global $factarray;
-
+		global $factarray, $pgv_lang;
+		
 		$facts = $this->getFactData();
 		$citation = $this->getSourceCitationData();
 		$out = parent::editFactsForm(false);
@@ -415,8 +415,8 @@ return false;}return true;}
 		if(!empty($inferFacts))
 		{
 				
-			$out .= '<tr><td colspan="2" id="inferData"><table class="list_table"><tbody><tr><td colspan="4" class="topbottombar">Inferred Facts</td></tr>
-<tr><td class="descriptionbox">Fact</td><td class="descriptionbox">Person</td><td class="descriptionbox">Reason</td><td class="descriptionbox">Add</td></tr>';
+		$out .= '<tr><td colspan="2" id="inferData"><table class="list_table"><tbody><tr><td colspan="4" class="topbottombar">'.$pgv_lang["ra_inferred_facts"].'</td></tr>
+<tr><td class="descriptionbox">'.$pgv_lang["ra_fact"].'</td><td class="descriptionbox">'.$pgv_lang["ra_person"].'</td><td class="descriptionbox">'.$pgv_lang["ra_reason"].'</td><td class="descriptionbox">'.$pgv_lang["add"].'</td></tr>'; 
 			$completeFact = true;
 			$occufact = true;
 			foreach($inferFacts as $key=>$inferredFacts) {
@@ -445,12 +445,12 @@ return false;}return true;}
 					
 				}
 			}
-			$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value="Complete"></td></tr>';
+		    $out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value='.$pgv_lang["complete"].'></td></tr>'; 
 			return $out;
 		}
 		else 
 		{
-		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value="Complete"></td></tr>';
+		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value='.$pgv_lang["complete"].'></td></tr>'; 
 		return $out;
 		}
 	}
@@ -464,7 +464,7 @@ return false;}return true;}
 		ra_functions::completeTask($_REQUEST['taskid'], $_REQUEST['form']);
 		// Tell the user their form submitted successfully.
 		$out .= ra_functions::print_menu();
-		$out .= ra_functions::printMessage("Success!",true);
+		$out .= ra_functions::printMessage($pgv_lang["success"],true);
 
 		// Return it to the buffer.
 		return $out;

@@ -167,6 +167,7 @@ class ra_GenerateTasks extends ra_form
  	
  	function print_header()
  	{
+	 	global $pgv_lang;
  		$retval = '<form action="module.php?mod=research_assistant&action=genTasks" method="post">
     			   <input type="hidden" name="mod" value="research_assistant" />
     			   <input type="hidden" name="action" value="generatetask" />';
@@ -174,26 +175,26 @@ class ra_GenerateTasks extends ra_form
   		$retval .= '<tr>';
   		$retval .= '<th colspan="5" align="right" class="topbottombar">';
     	$retval .= '<h2>';
-    	$retval .= 'Generated Tasks from TODO\'s' .
+    	$retval .= $pgv_lang["ra_generate_tasks"] .   
     			print_help_link("ra_GenerateTasks_help", "qm", '', false, true);
     	$retval .= '</h2>';
     	$retval .= '</th>';
     	$retval .= '</tr>';
     	$retval .= '<tr>';
     	$retval .= '<th class="descriptionbox">';
-    	$retval .= 'Generate';
+    	$retval .= $pgv_lang["ra_generate"];
     	$retval .= '</th>';
     	$retval .= '<th class="descriptionbox">';
-    	$retval .= '<a href="module.php?mod=research_assistant&amp;action=genTasks&amp;orderby=name">Task Name</a>';
+    	$retval .= '<a href="module.php?mod=research_assistant&amp;action=genTasks&amp;orderby=name">'.$pgv_lang["Task_Name"].'</a>';
     	$retval .= '</th>';
     	$retval .= '<th class="descriptionbox">';
-    	$retval .= '<a href="module.php?mod=research_assistant&amp;action=genTasks&amp;orderby=desc">Task Description</a>';
+    	$retval .= '<a href="module.php?mod=research_assistant&amp;action=genTasks&amp;orderby=desc">'.$pgv_lang["TaskDescription"].'</a>';
     	$retval .= '</th>';
 //    	$retval .= '<th class="descriptionbox">';
 //    	$retval .= 'Details';
 //    	$retval .= '</th>';
     	$retval .= '<th class="descriptionbox">';
-    	$retval .= 'Edit Task';
+    	$retval .= $pgv_lang["edit_task"];
     	$retval .= '</th>';
     	
     	return $retval;
@@ -201,22 +202,24 @@ class ra_GenerateTasks extends ra_form
  	
  	function print_footer()
  	{
+	 	global $pgv_lang;
  		$onclick = "window.location='module.php?mod=research_assistant';";
  		return  '<tr>'  .
  				'<td align=right class="descriptionbox" colspan="4">&nbsp;&nbsp;' .
- 				'Select Folder:&nbsp;&nbsp;<select name=folder>' .
+ 				$pgv_lang["SelectFolder"].'&nbsp;&nbsp;<select name=folder>' .
  				$this->getFolders() .
  				'</select>' .
  				'</td></tr>' .
 				'<tr>' .
  				'<td class="topbottombar" colspan="4">' .
- 				'&nbsp;&nbsp;<input type=submit value="Generate">' .
- 				'&nbsp;&nbsp;<input type=button value="Done" onclick="' . $onclick . '">' .
+ 				'&nbsp;&nbsp;<input type=submit value='.$pgv_lang["ra_generate"].'>' .
+ 				'&nbsp;&nbsp;<input type=button value='.$pgv_lang["ra_done"].' onclick="' . $onclick . '">' .
  				'</td></tr></table></form>';
  	}
  	
  	function print_item($task)
  	{
+	 	global $pgv_lang;
  		$retval = '<tr><TD class="optionbox" align="left">';
  		$retval .= '<input type="checkbox" id="' . $task->getID() . '" name="checkedtasks[]" value=' . $task->getID();
  		$retval .= '</td>';
@@ -227,7 +230,7 @@ class ra_GenerateTasks extends ra_form
  		$retval .= $task->getDescriptionForHTML();
  		$retval .= '</td>';
  		$retval .= '<TD align="right" class="optionbox">';
- 		$retval .= '<a name="edit" href="module.php?mod=research_assistant&amp;action=editgenTasks&amp;genTaskId=' . $task->getID() . '">edit</a>';
+ 		$retval .= '<a name="edit" href="module.php?mod=research_assistant&amp;action=editgenTasks&amp;genTaskId=' . $task->getID() . '">'.$pgv_lang["edit"].'</a>';
  		$retval .= '</td></tr>';
  		
  		return $retval;
