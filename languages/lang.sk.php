@@ -1191,7 +1191,6 @@ $pgv_lang["review_changes_email"]	= "Odoslať pripomínacie e-maily?";
 $pgv_lang["review_changes_email_freq"]	= "Frekvencia pripomínacích e-mailov (v dňoch)";
 $pgv_lang["review_changes_subject"]	= "PhpGedView - prehľad zmien";
 $pgv_lang["review_changes_body"]	= "Boli urobené online zmeny v genealogickej databáze. Tieto zmeny musia byť skontrolované a potvrdené predtým, než se zobrazia všetkým uživateľom. Prosím použite URL dole ku vstupu do PhpGedView stráky a prihláseniu do systému k revízii zmien.";
-if (file_exists( "languages/lang.sk.extra.php")) require  "languages/lang.sk.extra.php";
 $pgv_lang["server_folder"]				= "Meno adresára na servere";
 $pgv_lang["descend_report"]				= "Zoznam potomkov";
 $pgv_lang["descendancy_header"]		= "Zoznam potomkov pre";
