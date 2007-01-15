@@ -114,7 +114,7 @@ class Census1810 extends ra_form {
         $out .= '<td class="descriptionbox">'.$pgv_lang["city"].'</td><td class="optionbox"><input name="city" type="text" size="27" value="'.htmlentities($city).'"></td>';
         $out .=	'<td class="descriptionbox">'.$pgv_lang["page"].'</td><td class="optionbox"><input name="page" type="text" size="5" value="'.htmlentities($page).'"></td></tr>';
 //        Next Table
-        $out .= '<tr><td colspan="6"><table align="center" id="inputTable">';
+        $out .= '<tr><td colspan="6"><table align="center" id="inputTable" dir="ltr">';
         $out .= '<td class="descriptionbox" align="center" rowspan="2">Names of heads of families</td>';
         $out .= '<td colspan="5" class="descriptionbox" align="center">Free White Males</td>';
         $out .= '<td colspan="5" class="descriptionbox" align="center">Free White Females</td>';
@@ -211,7 +211,7 @@ class Census1810 extends ra_form {
 		ra_functions::completeTask($_REQUEST['taskid'], $_REQUEST['form']);
 		// Tell the user their form submitted successfully.
 		$out .= ra_functions::print_menu();
-		$out .= ra_functions::printMessage("Success!",true);
+		$out .= ra_functions::printMessage($pgv_lang["success"],true);
 
 		// Return it to the buffer.
 		return $out;

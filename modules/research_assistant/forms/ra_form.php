@@ -382,7 +382,7 @@ class ra_form {
 			<td class="optionbox">{$task['t_title']}</td>
 		</tr>
 		<tr>
-			<td class="descriptionbox">Associate Individual Facts</td>
+			<td class="descriptionbox">{$pgv_lang['AssIndiFacts']}</td>
 			<td class="optionbox"><select id="newfact" name="newfact">
 END_OUT;
 			
@@ -647,16 +647,18 @@ END_OUT;
 			}
 			
 			function build_table() {
+				global $pgv_lang;
 				var tempdata = document.getElementById('tempdata');
 				if (!tempdata) return;
 				if (facts.length==0) {
 					tempdata.innerHTML = "";
 					return;
 				}
-				out = '<table class="facts_table"><tr><td colspan="3" class="topbottombar">Facts</td></tr>';
-				out += '<tr><td class="descriptionbox">Fact</td><td class="descriptionbox">People</td><td class="descriptionbox">remove</td></tr>';
-				for(i=0; i<facts.length; i++) {
-					//alert(facts[i]);
+		
+					out = '<table class="facts_table"><tr><td colspan="3" class="topbottombar">${pgv_lang["ra_facts"]}</td></tr>';
+					out += '<tr><td class="descriptionbox">${pgv_lang["ra_fact"]}</td><td class="descriptionbox">${pgv_lang["people"]}</td><td class="descriptionbox">${pgv_lang["ra_remove"]}</td></tr>';
+	 				
+	 				//alert(facts[i]);
 					out += '<tr><td id="factname'+i+'" class="optionbox">'+factnames[i];
 					out += '<br />';
 					pos1 = facts[i].indexOf('2 DATE ');
@@ -701,7 +703,7 @@ END_OUT;
 			</td>
 		</tr>
 		<tr>
-		<td class="descriptionbox">Associate Family Facts</td>
+		<td class="descriptionbox">{$pgv_lang['AssFamFacts']}</td>
 			<td class="optionbox"><select id="newfamfact" name="newfamfact">
 END_OUT;
 			
@@ -728,7 +730,7 @@ END_OUT;
 END_OUT;
 		if($printButton)
 		{
-		$out .= '<tr><td class="descriptionbox" align="center" colspan="2"><input type="submit" value="Complete"></td></tr>';
+		$out .= '<tr><td class="descriptionbox" align="center" colspan="2"><input type="submit" value='.$pgv_lang["complete"].'></td></tr>';
 		}
 		
 		return $out;

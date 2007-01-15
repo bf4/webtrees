@@ -39,7 +39,7 @@ $pgv_lang["task_list"]		= "משימות";
 $pgv_lang["task_list_text"]		= "האזור מציג משימות שיצרת, לחץ על 'התבונן' כדי לראות משימות";
 
 // -- HELP COMMENTS
-$temp_out_comments 		= "This section is to add comments to the person for other people to see and add feedback";
+$temp_out_comments 		= "##This section is to add comments to the person for other people to see and add feedback";
 $pgv_lang["help_comments"] 		= $temp_out_comments;
 
 // -- MENU ITEM MESSAGES
@@ -76,26 +76,39 @@ $pgv_lang["Fields"]			= "מספר השדות";
 $pgv_lang["FieldName"]		= "שם השדה";  
 $pgv_lang["InputType"]		= "סוג הקלט";  
 $pgv_lang["Values"]			= "ערכים"; 
+$pgv_lang["FormBuilder"]		= "בונה טופס"; 
 $pgv_lang["FormName"]		= "הכנס את שם הטופס";  
 $pgv_lang["MultiplePeople"]		= "האם הטופס משמש מספר אנשים?"; 
 $pgv_lang["EnterGEDCOMExtension"]	= "נא הכנס את סיומת ה-GEDCOM לסוג העובדה של הטופס"; 
 $pgv_lang['FormDesciption']		= "נא הכנס תאור לטופס"; 
 $pgv_lang["FormGeneration"]		= "יצירת הטופס הסתיימה!"; 
-$pgv_lang["CustomField"]		= "שם שדה פרטי"; 
+$pgv_lang["CustomField"]		= "שם שדה פרטי";
+$pgv_lang["txt"]			= "טכסט";
+$pgv_lang["checkbox"]		= "תיבת בחירה";
+$pgv_lang["radiobutton"]		= "כפתור רדיו"; 
+$pgv_lang["EnterResults"]		= "הכנס תוצאות"; 
+$pgv_lang["ra_submit"]		= "הגש";
+$pgv_lang["ra_generate_tasks"]	= "יצירת משימות מ-TODO-ים";
+$pgv_lang["TaskDescription"]		= "תאור משימה";
+$pgv_lang["SelectFolder"]                       = "בחר תיקייה:";
+$pgv_lang["ra_done"]		= "עשוי";  
+$pgv_lang["ra_generate"]		= "צור"; 
 
 // -- RA EXPLANATION
+$pgv_lang["DataCorrelations"]		= "התאמת נתונים";  
 $pgv_lang["ViewProbExplanation"]	= "דף זה מנתח את נתוני קובץ ה-GEDCOM הפעיל ומראה את היחס בין הנתונים השונים. לדוגמא, תתכן קורלציה של 95% ששם משפחה ברשומה זהה לשם משפחה ברשומה של האב. משמעות הדבר של95% של האנשים בקובץ ה-GEDCOM הזה יש את אותו שם משפחה כמו לאביהם. בגירסה הזו של עוזר המחקר, החישובים הללו אינם משמשים בחלקים אחרים של התוכנה ומחשבים אותם רק כדי לעזור לך במחקרך. בעתיד אנחנו מתכננים להשתמש בנתונים האלו כדי להציע לך היכן כדאי להתרכז במחקרך העתידי."; 
 
 // -- RA_FOLDER MESSAGES
 $pgv_lang["Folder"]                             	= "##Folder:";
 $pgv_lang["Edit_Task"]                 	= "##ערוך משימה"; //@@@ where used
+$pgv_lang["Edit_Gen_Task"]                 	= "ערוך משימה שנוצרה";
 $pgv_lang["End_Date"]                 	= "##End Date";
 $pgv_lang["Start_Date"]                 	= "תאריך התחלה";
 $pgv_lang["Task_Name"]                	= "שם משימה";
 $pgv_lang["Folder_Name"]                	= "שם תיקייה";
 $pgv_lang["Folder_View"]                	= "מבט תיקייות"; /////
 $pgv_lang["Task_View"]                  	= "מבט משימות";
-$pgv_lang["page_header"]		= "תיקיות עוזר מחקר"; //@@@
+$pgv_lang["page_header"]		= "תיקיות עוזר מחקר"; 
 $pgv_lang["folder_new"]		= "##Create New Folder";
 $pgv_lang["folder_delete_check"]	= "##Are you sure you want to delete this folder?";
 $pgv_lang["no_folder_name"]             	= "יש למלא את שם התיקייה.";
@@ -170,8 +183,8 @@ $pgv_lang["ra_add_folder_help"]	= "<H2><B>הוסף תיקייה:</B></H2><ul><li
 $pgv_lang["ra_view_task_help"]	= "<H2><B>מבט משימות:</B></H2><ul><li><B>שם משימה:</B> העמודה כוללת את השם של המשימות שלך.</B></li><li><B>תאור:</B> העמוד הזה כולל את התאור של המשימות.</li><li><B>תאריך התחלה:</B> כאן רשומים תאריכי ההתחלה של המשימות.</li><li><B>סיום:</B> כאן תראה אם המשימה הסתיימה.</li><li><B>פרוט:</B> כאן מראים את פירוט המשימה.</li><li><B>מחק:</B> מחיקת המשימה.</li></ul>"; 
 $pgv_lang["ra_task_view_help"]	= "<H2><B>התבונן במשימה:</B></H2><ul><li><B>כותרת:</B> כאן תמלא את הכותרת של המשימה שאותה אתה מוסיף.</li><li><B>אנשים:</B> הקצה אנשים הקשורים למשימה החדשה.</li><li><B>תאור:</B> הכנס את תאור המשימה שאותה אתה מוסיף.</li><li><B>מקורות:</B> הקצה מקורות למשימה.</li><li>לחץ על כפתור 'ערוך משימה' כדי לערוך את הפרטים של המשימה.</li></ul>"; 
 $pgv_lang["ra_comments_help"]	= "<H2><B>הערות:</B></H2><ul><li>כאן תוסיף הערות הקשורות למשימה. לחץ על כפתור 'הוסף הערה חדשה' כדי להוסיף הערות.</li></ul>"; 
-$pgv_lang["ra_GenerateTasks_help"]	= "<H2><B>צור משימות:</B></H2><p> הטופס הזה יוצר משימות מתגי _TODO בקובץ ה-GEDCOM שלך.</p><ul><li><B>צור:</B> סמן כל משימה שברצונך ליצור כאשר תלחץ על הכפתור צור.</li><li><B>שם המשימה:</B> השם שהמשימה תקבל.  ברירת המחדל היא הטכסט בתג _TODO, ללא תגי CONT</li><li><B>תאור המשימה:</B> התאור שהמשימה תקבל.  התאור נוצר מהטכסט בתג _TODO ביחד עם תגי CONT הקשורים.  </li><li><B>ערוך:</B> לחץ על הקישור כדי לערוך את המשימה.</li><li><B>בחר תיקייה:</B> בחר תיקייה עבור המשימות הנוצרות.</li><li><B>צור:</B> יוצר את המשימות שסומנו.</li><li><B>סיום:</B> מעביר אותך לדף התבונן בתיקיות.</li></ul>"; 
-$pgv_lang["ra_EditGenerateTasks_help"] 	= "<H2><B>##Edit Generated Task:</B></H2><p>This form allows you to edit the tasks generated from _TODO tags in your GEDCOM file.</p><ul><li><B>Task Name:</B> This is the name the task will be given.  </li><li><B>Task Description:</B> The description the task will be given. </li><li><B>People:</B> click the link to select the person to associate the task with.</li><li><B>Source:</B> click the link to select the source to associate the task with.</li><li><B>Save:</B> saves all your changes and redirects you to the Generate tasks page.</li><li><B>Cancel:</B> disregards all your changes and redirects you to the Generate tasks page.</li></ul>";
+$pgv_lang["ra_GenerateTasks_help"]	= "<H2><B>צור משימות:</B></H2><p> הטופס הזה יוצר משימות מתגי <span dir=\"ltr\">_TODO</span> בקובץ ה-GEDCOM שלך.</p><ul><li><B>צור:</B> סמן כל משימה שברצונך ליצור כאשר תלחץ על הכפתור צור.</li><li><B>שם המשימה:</B> השם שהמשימה תקבל.  ברירת המחדל היא הטכסט בתג <span dir=\"ltr\">_TODO</span>, ללא תגי CONT</li><li><B>תאור המשימה:</B> התאור שהמשימה תקבל.  התאור נוצר מהטכסט בתג <span dir=\"ltr\">_TODO</span> ביחד עם תגי CONT הקשורים.  </li><li><B>ערוך:</B> לחץ על הקישור כדי לערוך את המשימה.</li><li><B>בחר תיקייה:</B> בחר תיקייה עבור המשימות הנוצרות.</li><li><B>צור:</B> יוצר את המשימות שסומנו.</li><li><B>סיום:</B> מעביר אותך לדף התבונן בתיקיות.</li></ul>"; 
+$pgv_lang["ra_EditGenerateTasks_help"] 	= "<H2><B>ערוך משימה שנוצרה:</B></H2><p>הטופס מאפשר עריכת משימה שנוצרה מתגי <span dir=\"ltr\">_TODO</span> בקובץ ה-GEDCOM שלך.</p><ul><li><B>שם המשימה:</B> השם שניתן למשימה.  </li><li><B>תאור המשימה:</B> התאור שניתן למשימה. </li><li><B>אנשים:</B> לחץ על הקישור כדי לבחור את האדם הקשור למשימה.</li><li><B>מקור:</B> לחץ על הקישור כדי לבחור מקור הקשור למשימה.</li><li><B>שמור:</B> שומר את כל השינויים ומעביר לדף יצירת משימות.</li><li><B>בטל:</B> מבטל את כל השינויים ומעביר לדף יצירת משימות.</li></ul>"; 
 $pgv_lang["ra_configure_privacy_help"]	= "<H2><B>עצב פרטיות:</B></H2></H2><ul><li><B>הראה לכלל:</B> גורם לכך שמשימות ספציפיות תהיינה זמינות לכולם.</li><li><B>הראה רק למשתמשים מאושרים:</B> גורם לכך שמשימות ספציפיות תהיינה זמינות למשתמשים מאושרים בלבד.</li><li><B> הראה למשתמשים שהם מינהלנים:</B> גורם לכך שמשימות ספציפיות תהיינה זמינות למשתמשים מנהלנים בלבד.</li><li><B> הסתר אפילו ממשתמשים שהם מינהלנים:</B> גורם לכך שמשימות ספציפיות לא תהיינה זמינות לאף אחד.</li></ul>";
 $pgv_lang["ra_edit_task_help"]		= "<H2><B>ערוך משימה:</B></H2></H2><ul><li><B>כותרת:</B> כאן תמלא את הכותרת של המשימה שאותה אתה עורך.</li><li><B>תיקייה:</B> בשדה זה ניתן להקצות את התיקייה שבה יש לשים את המשימה החדשה.</li><li><B>תאור:</B> הכנס תאור למשימה שאותה אתה עורך.</li><li><B>מקורות:</B> הקצה או ערוך מקורות למשימה.</li><li><B>אנשים:</B> הקצה או ערוך אנשים הקשורים למשימה.</li></ul>"; 
 
@@ -225,6 +238,21 @@ $pgv_lang["folio"]                   		= "פוליו";
 $pgv_lang["uk_county"]		= "מחוז";
 $pgv_lang["uk_boro"]		= "עיר"; 
 $pgv_lang["uk_place"]		= "מקום"; 
+
+$pgv_lang["AssIndiFacts"]		= "קשר עובדות אישיות"; 
+$pgv_lang["AssFamFacts"]		= "קשר עובדות משפחתיות";
+$pgv_lang["ra_facts"]		= "עובדות";
+$pgv_lang["ra_fact"]			= "עובדה"; 
+$pgv_lang["ra_remove"]		= "הורד"; 
+$pgv_lang["ra_inferred_facts"]		= "עובדות שהוסקו"; 
+$pgv_lang["ra_person"]		= "אנשים";
+$pgv_lang["ra_reason"]		= "סיבה";
+$pgv_lang["success"]		= "הצלחה!"; 
+
+$pgv_lang["registration_no"]		= "מספר רישום"; 
+$pgv_lang["serial_no"]		= "מספר סידורי"; 
+$pgv_lang["ra_no"]			= "מספר"; 
+$pgv_lang["order_no"]		= "מספר הזמנה"; 
 
 //-- MY TASK BLOCK 
 $pgv_lang["mytasks_block_descr"]	= "אזור המשימות שלי מראה משימות של המשתמש הנוכחי וניתן לעצב אותן כך שניתן לראות משימות שהסתיימו או משימות שטרם  הוקצו."; 

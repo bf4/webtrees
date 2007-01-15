@@ -51,12 +51,11 @@ $pgv_lang["up_folder"]						= "Ylempi hakemsitotaso";
 $pgv_lang["edit_folder"]					= "Lisää/editoi hakemisto(a)";
 $pgv_lang["gen_tasks"]						= "Luo automaattisesti tehtäviä";
 
-
 // -- RA GENERAL MESSAGES
 $pgv_lang["edit_task"]						= "Editoi tehtävää";
 $pgv_lang["completed"]						= "Valmis";
-$pgv_lang["complete"]							= "Lopeta";
-$pgv_lang["incomplete"]							= "Kesken";
+$pgv_lang["complete"]						= "Lopeta";
+$pgv_lang["incomplete"]						= "Kesken";
 $pgv_lang["comres"]							= "Kommentit/tulokset";
 $pgv_lang["description"]					= "Kuvaus";
 $pgv_lang["created"]						= "Luotu";
@@ -65,30 +64,43 @@ $pgv_lang["folder_list"]					= "Hakemistoluettelo";
 $pgv_lang["details"]						= "Yksityiskohdat";
 $pgv_lang["result"]                     	= "Tulos";
 $pgv_lang["okay"]                           = "OK";
-$pgv_lang["editform"]							= "Editoi lomaketietoa";
-$pgv_lang["FilterBy"]							= "Suodata";
-$pgv_lang["Recalculate"]						= "Laske uudelleen";
-$pgv_lang["LocalData"]							= "Paikallinen tieto";
-$pgv_lang["RelatedRecord"]						= "Asiaan liittyvä tietue";
-$pgv_lang["RelatedData"]						= "Asiaan liittyvä tieto";
-$pgv_lang["Percent"]							= "Prosenttia";
-$pgv_lang["Fields"]								= "Kenttien lukumäärä";
-$pgv_lang["FieldName"]							= "Kentän nimi";
-$pgv_lang["InputType"]							= "Syötteen tyyppi";
-$pgv_lang["Values"]								= "Arvot";
-$pgv_lang["FormName"]							= "Anna lomakkeen nimi";
-$pgv_lang["MultiplePeople"]						= "Koskeeko lomake ueampaa henkilöä?";
-$pgv_lang["EnterGEDCOMExtension"]				= "Anna GEDCOM-tiedoston tunniste lomakkeen tietotyypin mukaisesti";
-$pgv_lang['FormDesciption']						= "Anna lomakkeen kuvaus";
-$pgv_lang["FormGeneration"]						= "Lomakkeen luonti valmis!";
-$pgv_lang["CustomField"]						= "Mukautettu kentän nimi";
+$pgv_lang["editform"]						= "Editoi lomaketietoa";
+$pgv_lang["FilterBy"]						= "Suodata";
+$pgv_lang["Recalculate"]					= "Laske uudelleen";
+$pgv_lang["LocalData"]						= "Paikallinen tieto";
+$pgv_lang["RelatedRecord"]					= "Asiaan liittyvä tietue";
+$pgv_lang["RelatedData"]					= "Asiaan liittyvä tieto";
+$pgv_lang["Percent"]						= "Prosenttia";
+$pgv_lang["Fields"]							= "Kenttien lukumäärä";
+$pgv_lang["FieldName"]						= "Kentän nimi";
+$pgv_lang["InputType"]						= "Syötteen tyyppi";
+$pgv_lang["Values"]							= "Arvot";
+$pgv_lang["FormBuilder"]					= "Lomakkeen luontity?kalu"; 
+$pgv_lang["FormName"]						= "Anna lomakkeen nimi";
+$pgv_lang["MultiplePeople"]					= "Koskeeko lomake ueampaa henkilöä?";
+$pgv_lang["EnterGEDCOMExtension"]			= "Anna GEDCOM-tiedoston tunniste lomakkeen tietotyypin mukaisesti";
+$pgv_lang['FormDesciption']					= "Anna lomakkeen kuvaus";
+$pgv_lang["FormGeneration"]					= "Lomakkeen luonti valmis!";
+$pgv_lang["CustomField"]					= "Mukautettu kentän nimi";
+$pgv_lang["txt"]							= "Teksti"; 
+$pgv_lang["checkbox"]						= "Valintaruutu"; 
+$pgv_lang["radiobutton"]					= "Valintapainike";
+$pgv_lang["EnterResults"]					= "Lisä tulokset"; 
+$pgv_lang["ra_submit"]						= "Lähetä"; 
+$pgv_lang["ra_generate_tasks"]				= "Luo tehtävät TODOsista"; 
+$pgv_lang["TaskDescription"]				= "Tehtäväkuvaus"; 
+$pgv_lang["SelectFolder"]                   = "Valitse hakemisto:"; 
+$pgv_lang["ra_done"]						= "Valmis"; 
+$pgv_lang["ra_generate"]					= "Luo"; 
 
 // -- RA EXPLANATION
-$pgv_lang["ViewProbExplanation"]					= "Tällä sivulla analysoidaan aktiivisen GEDCOM-tiedoston datajoukkoa ja näytetään eri muuttujien välisiä yhteyksiä. Esimerkiksi paikallisen tietueen ja isän tietueen sukunimien välillä voi olla 95 prosentin korrelaatio. Se voi merkitä, että 95 prosentilla tässä GEDCOM tietojoukossa olevilla henkilöillä on sama sukunimi kuin heidän isällään. Tässä tutkimusavustajan versiossa näitä laskelmia ei käytetä ohjelman muissa osissa ja ne ovat vain avustamassa omaa tutkimustasi. Tulevaisuudessa suunnittelemme tämän tiedon käyttämistä osoittamaan mihin suuntaan sinun kannattaisi keskittää tulevia tutkimuksia.";
+$pgv_lang["DataCorrelations"]				= "Tietojen Yhteydet";  //@@
+$pgv_lang["ViewProbExplanation"]			= "Tällä sivulla analysoidaan aktiivisen GEDCOM-tiedoston datajoukkoa ja näytetään eri muuttujien välisiä yhteyksiä. Esimerkiksi paikallisen tietueen ja isän tietueen sukunimien välillä voi olla 95 prosentin korrelaatio. Se voi merkitä, että 95 prosentilla tässä GEDCOM tietojoukossa olevilla henkilöillä on sama sukunimi kuin heidän isällään. Tässä tutkimusavustajan versiossa näitä laskelmia ei käytetä ohjelman muissa osissa ja ne ovat vain avustamassa omaa tutkimustasi. Tulevaisuudessa suunnittelemme tämän tiedon käyttämistä osoittamaan mihin suuntaan sinun kannattaisi keskittää tulevia tutkimuksia.";
 
 // -- RA_FOLDER MESSAGES
-$pgv_lang["Folder"]                             = "Hakemisto:";
+$pgv_lang["Folder"]                         = "Hakemisto:";
 $pgv_lang["Edit_Task"]                 		= "Editoi tehtävää";
+$pgv_lang["Edit_Gen_Task"]                 	= "Editoi luotu tehtävä"; //@@ 
 $pgv_lang["End_Date"]                 		= "Loppetuspäivämäärä";
 $pgv_lang["Start_Date"]                 	= "Aloituspäivämäärä";
 $pgv_lang["Task_Name"]                		= "Tehtävän nimi";
@@ -181,7 +193,7 @@ $pgv_lang["add_new_comment"]				= "Lisää uusi kommentti";
 $pgv_lang["no_sources"]						= "Tähän tehtävään ei ole liitetty lähteitä.";
 $pgv_lang["no_people"]						= "Tähän tehtävään ei ole liitetty henkilöitä.";
 $pgv_lang["no_indi_tasks"]					= "Tähän tehtävään ei ole liitetty yhtään henkilöä.";
-$pgv_lang["no_sour_tasks"]						= "No tasks associated with this ssource.";
+$pgv_lang["no_sour_tasks"]					= "No tasks associated with this ssource.";
 $pgv_lang["edit_comment"]					= "Editoi kommenttia";
 $pgv_lang["comment_success"]				= "Kommenttisi on lisätty.";
 $pgv_lang['comment_body']					= 'Kommentti';
@@ -192,9 +204,9 @@ $pgv_lang["comment_delete_check"]			= "Haluatko varmasti poistaa tämän komment
 //-- RA_ADDTASK MESSAGES
 $pgv_lang["add_new_task"]					= "Lisää uusi tehtävä";
 $pgv_lang["submit"]							= "Lähetä";
-$pgv_lang["save_and_complete"]         			= "Tallenna ja lopeta";
-$pgv_lang["assign_task"]						= "Luovuta tehtävä"; //@@@
-$pgv_lang["AddTask"]							= "Lisää tehtävä";
+$pgv_lang["save_and_complete"]         		= "Tallenna ja lopeta";
+$pgv_lang["assign_task"]					= "Luovuta tehtävä"; //@@@
+$pgv_lang["AddTask"]						= "Lisää tehtävä";
 
 //-- RA_CONFIGURE PRIVACY MESSAGES
 $pgv_lang["configure_privacy"]		    	= "Konfiguroi yksityisyysasetuksia";
@@ -217,14 +229,29 @@ $pgv_lang["call/url"]                   	= "Soita numeroon/URL:ään";
 $pgv_lang["enumDate"]                   	= "Numerointipäiväys";
 $pgv_lang["county"]                     	= "Maa";
 $pgv_lang["city"]                       	= "Kaupunki";
-$pgv_lang["complete_title"]						= "Viimeistele tehtävä";
-$pgv_lang["select_form"]						= "Valitse lomake";
-$pgv_lang['choose_form_label']					= "Valitse yleinen tutkimuslomake:";
-$pgv_lang["book"]                 				= "Kirja";
-$pgv_lang["folio"]                   			= "Folio"; //@@@
-$pgv_lang["uk_county"]							= "Maakunta";
-$pgv_lang["uk_boro"]							= "Kaupunki tai kunta";
-$pgv_lang["uk_place"]							= "Paikka";
+$pgv_lang["complete_title"]					= "Viimeistele tehtävä";
+$pgv_lang["select_form"]					= "Valitse lomake";
+$pgv_lang['choose_form_label']				= "Valitse yleinen tutkimuslomake:";
+$pgv_lang["book"]                 			= "Kirja";
+$pgv_lang["folio"]                   		= "Folio"; //@@@
+$pgv_lang["uk_county"]						= "Maakunta";
+$pgv_lang["uk_boro"]						= "Kaupunki tai kunta";
+$pgv_lang["uk_place"]						= "Paikka";
+
+$pgv_lang["AssIndiFacts"]				= "Liitä henkilön tiedot"; 
+$pgv_lang["AssFamFacts"]				= "Liitä perheen tiedot"; 
+$pgv_lang["ra_facts"]					= "Tiedot";   
+$pgv_lang["ra_fact"]					= "Tieto";   
+$pgv_lang["ra_remove"]					= "poista";  
+$pgv_lang["ra_inferred_facts"]			= "Päätellyt tiedot"; 
+$pgv_lang["ra_person"]					= "Henkilö";
+$pgv_lang["ra_reason"]					= "Syy"; 
+$pgv_lang["success"]					= "Onnistui!"; 
+
+$pgv_lang["registration_no"]			= "Rekisteröintinumero:"; 
+$pgv_lang["serial_no"]					= "Sarjanumero:"; 
+$pgv_lang["ra_no"]						= "Numero:"; 
+$pgv_lang["order_no"]					= "Tilausnumero:"; 
 
 //-- MY TASK BLOCK
 $pgv_lang["mytasks_block_descr"]				= "Omat tehtävät alue osoittaa nykyisen käyttäjän tehtävän ja voidaan konfiguroida näyttämään valmiit tehtävät tai tehtävät joita toistaiseksi ei ole luovutettu"; //@@@ 
@@ -244,7 +271,7 @@ $pgv_lang["autosearch_bloc"]		    		= "Lisää syntymäpaikka:";
 $pgv_lang["autosearch_dyear"]		    		= "Lisää kuolinvuosi:"; 
 $pgv_lang["autosearch_dloc"]		    		= "Lisää kuolinpaikka:";
 $pgv_lang["autosearch_gender"]          		= "Lisää sukupuoli:";
-$pgv_lang["autosearch_plugin_name"]     	= "";  
+$pgv_lang["autosearch_plugin_name"]     		= "";  
 $pgv_lang["autosearch_fsurname"]				= "Lisää isän sukunimi:";
 $pgv_lang["autosearch_fgivennames"]				= "Lisää isän etunimet:";
 $pgv_lang["autosearch_msurname"]				= "Lisää äidin sukunimi:";

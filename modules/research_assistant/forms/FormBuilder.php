@@ -116,12 +116,13 @@ class FormBuilder extends ra_form {
 		return $value;
 	}
 	
-	function getSelectBox($i)
-	{
+	function getSelectBox($i) {
+		global $pgv_lang;
+		
 		$out = '<select name="inputType'.$i.'" id="'.$i.'" onchange="checkShowField(this)">';
-		$out .= '<option value="Text">Text</option>';
-		$out .= '<option value="ChkBox">CheckBox</option>';
-		$out .= '<option value="RdoButton">Radio Button</option>';
+		$out .= '<option value="Text">'.$pgv_lang["txt"].'</option>';
+		$out .= '<option value="ChkBox">'.$pgv_lang["checkbox"].'</option>';
+		$out .= '<option value="RdoButton">'.$pgv_lang["radiobutton"].'</option>';
 		$out .= '</select>';
 
 		return $out;
@@ -136,11 +137,11 @@ class FormBuilder extends ra_form {
 		//        Next Table
 		$out = '<tr><td colspan="6">';
 
-		$out .= '<table>';
+        $out .= '<table align="left" dir="ltr">
 		$out .= '<tr><td class="optionbox">'.$pgv_lang["FormName"].'</td><td class="optionbox"><input type="text" name="formName"/></td></tr>';
 		$out .= '<tr><td class="optionbox">'.$pgv_lang["MultiplePeople"].'</td>';
-		$out .= '<td class="optionbox">Yes<input type="radio" value="Y" name="MultiPeople" checked="checked" />';
-		$out .= 'No<input type="radio" value="N" name="MultiPeople" /></td></tr>';
+		$out .= '<td class="optionbox">'.$pgv_lang["yes"].'<input type="radio" value="Y" name="MultiPeople" checked="checked" />';
+		$out .= $pgv_lang["no"].'<input type="radio" value="N" name="MultiPeople" /></td></tr>';
 		$out .= '<tr><td class="optionbox">'.$pgv_lang['EnterGEDCOMExtension'].'</td><td class="optionbox"><input type="text" name="factType" /></td>';
 		$out .= '<tr><td class="optionbox">'.$pgv_lang['FormDesciption'].'</td><td class="optionbox"><input type="text" name="formDescription"/></tr>';
 		$out .= '<tr><td class="descriptionbox">'.$pgv_lang["FieldName"].'</td>';
@@ -200,7 +201,8 @@ class FormBuilder extends ra_form {
 	}
 
 	function display_form() {
-		$out = $this->header("module.php?mod=research_assistant&form=FormBuilder&action=func&func=step2", "center", "FormBuilder", true);
+		global $pgv_lang;		
+		$out = $this->header("module.php?mod=research_assistant&form=FormBuilder&action=func&func=step2", "center", $pgv_lang["FormBuilder"], true);
 		$out .=	$this->simpleCitationForm();
 		$out .= $this->footer();
 		return $out;
@@ -462,8 +464,7 @@ class FormBuilder extends ra_form {
 		$out = parent::editFactsForm(false);
 		$rows = $citation[\'ts_array\'][\'rows\'];
 		
-		
-		$out .= \'<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value="Complete"></td></tr>\';
+		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value='.$pgv_lang["complete"].'></td></tr>'; 
 		return $out;
 	}
 	
@@ -477,7 +478,7 @@ class FormBuilder extends ra_form {
 		ra_functions::completeTask($_REQUEST[\'taskid\'], $_REQUEST[\'form\']);
 		// Tell the user their form submitted successfully.
 		$out .= ra_functions::print_menu();
-		$out .= ra_functions::printMessage("Success!",true);
+		$out .= ra_functions::printMessage($pgv_lang["success"],true);		
 
 		// Return it to the buffer.
 		return $out;

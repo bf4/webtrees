@@ -134,55 +134,55 @@ return false;}return true;}
 //        Next Table
         $out .= '<tr><td colspan="6">';
         
-        $out .= '<table>
+        $out .= '<table align="left" dir="ltr">
  <tr>
-  <td class="descriptionbox">Dwelling Number</td>';
+  <td class="descriptionbox" align="left">Dwelling Number</td>';
   for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
   	$value = "";
   	if (isset($citation['ts_array']['rows'][$i]['Dwelling'])) $value = $citation['ts_array']['rows'][$i]['Dwelling'];
-  	$out.='<td class="optionbox"><INPUT tabindex="'.($i*100+15).'" TYPE="TEXT" SIZE="22" name="Dwelling'.$i.'" value="'.htmlentities($value).'" /></td>';
+  	$out.='<td class="optionbox" align="left"><INPUT tabindex="'.($i*100+15).'" TYPE="TEXT" SIZE="22" name="Dwelling'.$i.'" value="'.htmlentities($value).'" /></td>';
   }
   $out .='</tr>
  <tr>
-  <td class="descriptionbox">Family Number</td>';
+  <td class="descriptionbox" align="left">Family Number</td>';
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
   		if (isset($citation['ts_array']['rows'][$i]['Families'])) $value = $citation['ts_array']['rows'][$i]['Families'];
-		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+16).'" TYPE="TEXT" SIZE="22" name="Families'.$i.'" value="'.htmlentities($value).'" /></td>';
+		$out .= '<td class="optionbox" align="left"><INPUT tabindex="'.($i*100+16).'" TYPE="TEXT" SIZE="22" name="Families'.$i.'" value="'.htmlentities($value).'" /></td>';
 	}
 	$out .='</tr>
  <tr>
-  <td class="descriptionbox">Name</td>';
+  <td class="descriptionbox" align="left">Name</td>';
   		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
   			$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['NameOfPeople'])) $value = $citation['ts_array']['rows'][$i]['NameOfPeople'];
-  			$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+17).'"  TYPE="TEXT" SIZE="23" name = "NameOfPeople'.$i.'" value="'.htmlentities($value).'" /></td>'; 
+  			$out .= '<td class="optionbox" align="left"><INPUT tabindex="'.($i*100+17).'"  TYPE="TEXT" SIZE="23" name = "NameOfPeople'.$i.'" value="'.htmlentities($value).'" /></td>'; 
   		}
  $out .='</tr>
 <tr>
-  <td class="descriptionbox">Age</td>';
+  <td class="descriptionbox" align="left">Age</td>';
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['Age'])) $value = $citation['ts_array']['rows'][$i]['Age'];
-  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+18).'"  TYPE="TEXT" SIZE="22" name = "Age'.$i.'" value="'.htmlentities($value).'" /></td>';
+  		$out .= '<td class="optionbox" align="left"><INPUT tabindex="'.($i*100+18).'"  TYPE="TEXT" SIZE="22" name = "Age'.$i.'" value="'.htmlentities($value).'" /></td>';
 		}
  		$out .='</tr>
 <tr>
-  <td class="descriptionbox">Sex</td>';
+  <td class="descriptionbox" align="left">Sex</td>';
   		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
   			$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['Sex'])) $value = $citation['ts_array']['rows'][$i]['Sex'];
-  				$out .= '<td class="optionbox">
+  				$out .= '<td class="optionbox" align="left">
  				Male:<INPUT tabindex="'.($i*100+19).'"  TYPE="RADIO" value="M" name="Sex'.$i.'"'.($value=='M'?' checked="checked"':'').' /> 
 				Female:<INPUT tabindex="'.($i*100+20).'"  TYPE="RADIO" value="F" name="Sex'.$i.'"'.($value=='F'?' checked="checked"':'').' /></td>';
 	}
 	$out .='</tr>
  <tr>
-  <td class="descriptionbox">Color</td>';
+  <td class="descriptionbox" align="left">Color</td>';
   		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
   			$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['Race'])) $value = $citation['ts_array']['rows'][$i]['Race'];
-  				$out .= '<td class="optionbox"><select name="Race'.$i.'" tabindex="'.($i*100+21).'">
+  				$out .= '<td class="optionbox" align="left"><select name="Race'.$i.'" tabindex="'.($i*100+21).'">
 		<option value="W"'.($value=='W'?' selected="selected"':'').'>White</option>
 		<option value="B"'.($value=='B'?' selected="selected"':'').'>Black</option>
 		<option value="MU"'.($value=='MU'?' selected="selected"':'').'>Mulatto</option>
@@ -192,135 +192,135 @@ return false;}return true;}
   </td>';}
 $out .= '</tr>
 <tr>
-  <td class="descriptionbox">Profession, Occupation, or Trade
+  <td class="descriptionbox" align="left">Profession, Occupation, or Trade
    </td>';
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['Trade'])) $value = $citation['ts_array']['rows'][$i]['Trade'];
-  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+22).'"  TYPE="TEXT" SIZE="22" name = "Trade'.$i.'" value="'.htmlentities($value).'" /></td>';
+  		$out .= '<td class="optionbox" align="left"><INPUT tabindex="'.($i*100+22).'"  TYPE="TEXT" SIZE="22" name = "Trade'.$i.'" value="'.htmlentities($value).'" /></td>';
 		}
  		$out .='</tr>';
   				
   
   $out .= '</tr>
  <tr>
-  <td class="descriptionbox">Value of Real estate</td>';
+  <td class="descriptionbox" align="left">Value of Real estate</td>';
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['realestate'])) $value = $citation['ts_array']['rows'][$i]['realestate'];
-  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+23).'"  TYPE="TEXT" SIZE="22" name = "realestate'.$i.'" value="'.htmlentities($value).'" /></td>';
+  		$out .= '<td class="optionbox" align="left"><INPUT tabindex="'.($i*100+23).'"  TYPE="TEXT" SIZE="22" name = "realestate'.$i.'" value="'.htmlentities($value).'" /></td>';
 		}
  		$out .='</tr>
 <tr>
-  <td class="descriptionbox">Value of Personal estate</td>';
+  <td class="descriptionbox" align="left">Value of Personal estate</td>';
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['personalestate'])) $value = $citation['ts_array']['rows'][$i]['personalestate'];
-  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+24).'"  TYPE="TEXT" SIZE="22" name = "personalestate'.$i.'" value="'.htmlentities($value).'" /></td>';
+  		$out .= '<td class="optionbox" align="left"><INPUT tabindex="'.($i*100+24).'"  TYPE="TEXT" SIZE="22" name = "personalestate'.$i.'" value="'.htmlentities($value).'" /></td>';
 		}
  		$out .='</tr>
  <tr>
-  <td class="descriptionbox">Place of Birth Naming the State, Territory, or Country</td>';
+  <td class="descriptionbox" align="left">Place of Birth Naming the State, Territory, or Country</td>';
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['PofB'])) $value = $citation['ts_array']['rows'][$i]['PofB'];
-  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+25).'"  TYPE="TEXT" SIZE="22" name = "PofB'.$i.'" value="'.htmlentities($value).'" /></td>';
+  		$out .= '<td class="optionbox" align="left"><INPUT tabindex="'.($i*100+25).'"  TYPE="TEXT" SIZE="22" name = "PofB'.$i.'" value="'.htmlentities($value).'" /></td>';
 		}
  		$out .='</tr>
  
  <tr>
-  <td class="descriptionbox">Father of foreign born
+  <td class="descriptionbox" align="left">Father of foreign born
    </td>';
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['fatherborn'])) $value = $citation['ts_array']['rows'][$i]['fatherborn'];
-  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+26).'"  TYPE="TEXT" SIZE="22" name = "fatherborn'.$i.'" value="'.htmlentities($value).'" /></td>';
+  		$out .= '<td class="optionbox" align="left"><INPUT tabindex="'.($i*100+26).'"  TYPE="TEXT" SIZE="22" name = "fatherborn'.$i.'" value="'.htmlentities($value).'" /></td>';
 		}
  		$out .='</tr>
  <tr>
-  <td class="descriptionbox">Mother of foreign born
+  <td class="descriptionbox" align="left">Mother of foreign born
    </td>';
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['motherborn'])) $value = $citation['ts_array']['rows'][$i]['motherborn'];
-  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+27).'"  TYPE="TEXT" SIZE="22" name = "motherborn'.$i.'" value="'.htmlentities($value).'" /></td>';
+  		$out .= '<td class="optionbox" align="left"><INPUT tabindex="'.($i*100+27).'"  TYPE="TEXT" SIZE="22" name = "motherborn'.$i.'" value="'.htmlentities($value).'" /></td>';
 		}
  		$out .='</tr>
  		<tr>
-  <td class="descriptionbox">If born within the year, state month (Jan, & c.)
+  <td class="descriptionbox" align="left">If born within the year, state month (Jan, & c.)
    </td>';
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['borninyear'])) $value = $citation['ts_array']['rows'][$i]['borninyear'];
-  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+28).'"  TYPE="TEXT" SIZE="22" name = "borninyear'.$i.'" value="'.htmlentities($value).'" /></td>';
+  		$out .= '<td class="optionbox" align="left"><INPUT tabindex="'.($i*100+28).'"  TYPE="TEXT" SIZE="22" name = "borninyear'.$i.'" value="'.htmlentities($value).'" /></td>';
 		}
  		$out .='</tr>
 	<tr>
-  <td class="descriptionbox">If Married within the year, state month (Jan, & c.)
+  <td class="descriptionbox" align="left">If Married within the year, state month (Jan, & c.)
    </td>';
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['marriedinyear'])) $value = $citation['ts_array']['rows'][$i]['marriedinyear'];
-  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+29).'"  TYPE="TEXT" SIZE="22" name = "marriedinyear'.$i.'" value="'.htmlentities($value).'" /></td>';
+  		$out .= '<td class="optionbox" align="left"><INPUT tabindex="'.($i*100+29).'"  TYPE="TEXT" SIZE="22" name = "marriedinyear'.$i.'" value="'.htmlentities($value).'" /></td>';
 		}
  		$out .='</tr>
 <tr>
-  <td class="descriptionbox">Attended school within the year
+  <td class="descriptionbox" align="left">Attended school within the year
    </td>';
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['schoolinyear'])) $value = $citation['ts_array']['rows'][$i]['schoolinyear'];
-  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+30).'"  TYPE="TEXT" SIZE="22" name = "schoolinyear'.$i.'" value="'.htmlentities($value).'" /></td>';
+  		$out .= '<td class="optionbox" align="left"><INPUT tabindex="'.($i*100+30).'"  TYPE="TEXT" SIZE="22" name = "schoolinyear'.$i.'" value="'.htmlentities($value).'" /></td>';
 		}
  		$out .='</tr>
 <tr>
-  <td class="descriptionbox">Cannot read</td>';
+  <td class="descriptionbox" align="left">Cannot read</td>';
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['cannotread'])) $value = $citation['ts_array']['rows'][$i]['cannotread'];
-  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+31).'"  TYPE="CHECKBOX" value="cannotread" name="cannotread'.$i.'" '.($value=='cannotread'?' checked="checked"':'').' /></td>';
+  		$out .= '<td class="optionbox" align="left"><INPUT tabindex="'.($i*100+31).'"  TYPE="CHECKBOX" value="cannotread" name="cannotread'.$i.'" '.($value=='cannotread'?' checked="checked"':'').' /></td>';
 		}
  		$out .='</tr>
 <tr>
-  <td class="descriptionbox">Cannot write</td>';
+  <td class="descriptionbox" align="left">Cannot write</td>';
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['cannotwrite'])) $value = $citation['ts_array']['rows'][$i]['cannotwrite'];
-  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+32).'"  TYPE="CHECKBOX" value="cannotwrite" name="cannotwrite'.$i.'" '.($value=='cannotwrite'?' checked="checked"':'').' /></td>';
+  		$out .= '<td class="optionbox" align="left"><INPUT tabindex="'.($i*100+32).'"  TYPE="CHECKBOX" value="cannotwrite" name="cannotwrite'.$i.'" '.($value=='cannotwrite'?' checked="checked"':'').' /></td>';
 		}
  		$out .='</tr>
 <tr>
-  <td class="descriptionbox">Whether deaf and dumb, blind, insane, idiotic, pauper, or convict
+  <td class="descriptionbox" align="left">Whether deaf and dumb, blind, insane, idiotic, pauper, or convict
    </td>';
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['Disablity'])) $value = $citation['ts_array']['rows'][$i]['Disablity'];
-  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+33).'"  TYPE="TEXT" SIZE="22" name = "Disablity'.$i.'" value="'.htmlentities($value).'" /></td>';
+  		$out .= '<td class="optionbox" align="left"><INPUT tabindex="'.($i*100+33).'"  TYPE="TEXT" SIZE="22" name = "Disablity'.$i.'" value="'.htmlentities($value).'" /></td>';
 		}
  		$out .='</tr>
 <tr>
-  <td class="descriptionbox">Male citizens of U.S. of 21 years of age and upwards
+  <td class="descriptionbox" align="left">Male citizens of U.S. of 21 years of age and upwards
    </td>';
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['21andup'])) $value = $citation['ts_array']['rows'][$i]['21andup'];
-  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+34).'"  TYPE="TEXT" SIZE="22" name = "21andup'.$i.'" value="'.htmlentities($value).'" /></td>';
+  		$out .= '<td class="optionbox" align="left"><INPUT tabindex="'.($i*100+34).'"  TYPE="TEXT" SIZE="22" name = "21andup'.$i.'" value="'.htmlentities($value).'" /></td>';
 		}
  		$out .='</tr>
 
 <tr>
-  <td class="descriptionbox">Male citizens of U.S. of 21 years of age and upwards where rights<br /> to vote is denied on other grounds than rebellion or other crime
+  <td class="descriptionbox" align="left">Male citizens of U.S. of 21 years of age and upwards where rights<br /> to vote is denied on other grounds than rebellion or other crime
    </td>';
 	for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 		$value = "";
 	  		if (isset($citation['ts_array']['rows'][$i]['21andupbanned'])) $value = $citation['ts_array']['rows'][$i]['21andupbanned'];
-  		$out .= '<td class="optionbox"><INPUT tabindex="'.($i*100+35).'"  TYPE="TEXT" SIZE="22" name = "21andupbanned'.$i.'" value="'.htmlentities($value).'" /></td>';
+  		$out .= '<td class="optionbox" align="left"><INPUT tabindex="'.($i*100+35).'"  TYPE="TEXT" SIZE="22" name = "21andupbanned'.$i.'" value="'.htmlentities($value).'" /></td>';
 		}
  		$out .='</tr>'
  		;
         $out .= 
 '<tr>
-  <td class="descriptionbox">Person
+  <td class="descriptionbox" align="left">Person
   </td>';
   $people = $this->getPeople();
   $persons = array_values($people);
@@ -431,7 +431,7 @@ $out .= '</tr>
 	
 	function editFactsForm($printButton = true)
 	{
-		global $factarray;
+		global $factarray, $pgv_lang;
 		
 		$facts = $this->getFactData();
 		$citation = $this->getSourceCitationData();
@@ -441,9 +441,9 @@ $out .= '</tr>
 		
 		if(!empty($inferFacts))
 		{
-			
-		$out .= '<tr><td colspan="2" id="inferData"><table class="list_table"><tbody><tr><td colspan="4" class="topbottombar">Inferred Facts</td></tr>
-<tr><td class="descriptionbox">Fact</td><td class="descriptionbox">Person</td><td class="descriptionbox">Reason</td><td class="descriptionbox">Add</td></tr>';
+
+		$out .= '<tr><td colspan="2" id="inferData"><table class="list_table"><tbody><tr><td colspan="4" class="topbottombar">'.$pgv_lang["ra_inferred_facts"].'</td></tr>
+<tr><td class="descriptionbox">'.$pgv_lang["ra_fact"].'</td><td class="descriptionbox">'.$pgv_lang["ra_person"].'</td><td class="descriptionbox">'.$pgv_lang["ra_reason"].'</td><td class="descriptionbox">'.$pgv_lang["add"].'</td></tr>'; 
 		$completeFact = true;
 		$occufact = true;
 		foreach($inferFacts as $key=>$inferredFacts) {
@@ -476,8 +476,7 @@ $out .= '</tr>
 				
 			
 		
-		
-		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><INPUT tabindex="30"  type="submit" value="Complete"></td></tr>';
+		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><INPUT tabindex="30" type="submit" value='.$pgv_lang["complete"].'></td></tr>'; 
 		return $out;
 	}
 	}
@@ -491,8 +490,8 @@ $out .= '</tr>
 		ra_functions::completeTask($_REQUEST['taskid'], $_REQUEST['form']);
 		// Tell the user their form submitted successfully.
 		$out .= ra_functions::print_menu();
-		$out .= ra_functions::printMessage("Success!",true);
-
+		$out .= ra_functions::printMessage($pgv_lang["success"],true);
+		
 		// Return it to the buffer.
 		return $out;
 	}
@@ -536,7 +535,6 @@ $out .= '</tr>
 				$inferredFact["date"] = '';
 				$inferredFacts[] = $inferredFact;
 			}
-			}
 			
 			if(!empty($bdate))
 			{
@@ -574,6 +572,7 @@ $out .= '</tr>
 			}
 		
 			$people[$person->getXref()] = $inferredFacts;
+			}			
 		}
 		return $people;
 		
