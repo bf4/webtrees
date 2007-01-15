@@ -14,7 +14,7 @@ This version of Software is free for using under GPL. For other purposes please 
 
  var w=new dhtmlXTabBar(id,n.getAttribute("mode")||"top",n.getAttribute("tabheight")||20);
 
- w.setImagePath(n.getAttribute("imgpath"));
+ w.setImagePath(n.getAttribute("imgpath")||"js/scbr.com/dhtmlXTabbar/imgs/"); // PGV
 
  var acs=n.getAttribute("margin");
  if(acs!=null)w._margin=acs;
@@ -39,7 +39,7 @@ This version of Software is free for using under GPL. For other purposes please 
  for(var j=0;j<k.length;j++)
 {
  var m=k[j];
- w.addTab(m.id,m.getAttribute("name"),m.getAttribute("width"),null,m.getAttribute("row"));
+ w.addTab(m.id,m.getAttribute("name"),m.getAttribute("width")||(m.getAttribute("name").length*6)+14,null,m.getAttribute("row")); // PGV
  var href=m.getAttribute("href");
  if(href)w.setContentHref(m.id,href);
  else w.setContent(m.id,m);
