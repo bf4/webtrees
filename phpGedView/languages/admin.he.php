@@ -108,7 +108,6 @@ $pgv_lang["add_gedcom"]		= "הוסף GEDCOM";
 $pgv_lang["add_new_gedcom"]	= "בנה GEDCOM חדש";
 $pgv_lang["add_new_language"]	= "הוסף קבצים והגדרות לשפה חדשה";
 $pgv_lang["add_user"]		= "הוסף משתמש חדש";
-$pgv_lang["admin_approved"]		= "מנהלן האתר על #SERVER_NAME# אישר את המשתמש שלך. ";
 $pgv_lang["admin_gedcom"]		= "ניהול GEDCOM";
 $pgv_lang["admin_gedcoms"]		= "הקש כאן כדי לנהל GEDCOM-ים.";
 $pgv_lang["admin_geds"]		= "ניהול מידע ו-GEDCOM-ים";
@@ -311,7 +310,10 @@ $pgv_lang["warn_users"]		= "משתמשים עם התראות";
 $pgv_lang["weekly"]			= "שבועי";
 $pgv_lang["welcome_new"]		= "ברוך הבא לאתר האינטרנט החדש PhpGedView שלך.";
 $pgv_lang["yearly"]			= "שנתי";
-$pgv_lang["you_may_login"]		= "הקישור מתחת מביא אותך לאתר ה-PhpGedView:";
+//$pgv_lang["admin_approved"]	= "מנהלן האתר על #SERVER_NAME# אישר את המשתמש שלך. ";
+//$pgv_lang["you_may_login"]		= "הקישור מתחת מביא אותך לאתר ה-PhpGedView:";
+$pgv_lang["admin_OK_subject"]	= "אישור משתמש על #SERVER_NAME#"; 
+$pgv_lang["admin_OK_message"]	= "המנהלן של אתר PhpGedView #SERVER_NAME# אישר את הבקשה שלך לקוד משתמש. תוכל עכשיו להשתמש באתר ע\"י הקישור הבא: \r\n\r\n#SERVER_NAME#\r\n"; 
 
 // Text for the Gedcom Checker
 $pgv_lang["gedcheck"]    	= "בדיקת Gedcom"; 	     // Module title
