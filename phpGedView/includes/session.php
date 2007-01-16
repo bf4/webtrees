@@ -411,7 +411,8 @@ while (true) {
 	break;
 }
 
-unset($CONFIG_VARS);	// Not needed any more
+//-- CONFIG_VARS is still needed by the web services
+//unset($CONFIG_VARS);
 
 //-- check if they are trying to hack
 if ($configOverride) {
@@ -1007,3 +1008,4 @@ if ($Languages_Default) {					// If Languages not yet configured
 	$language_settings["english"]["pgv_lang_use"] = false;
 	$language_settings["$LANGUAGE"]["pgv_lang_use"] = true;
 }
+?>

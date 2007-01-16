@@ -217,17 +217,17 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 		else $xref = $gid;
 		$gedrec = preg_replace("/0 @(.*)@/", "0 @$xref@", $gedrec);
 		
-			$change = array();
-			$change["gid"] = $xref;
-			$change["gedcom"] = $GEDCOM;
-			$change["type"] = "append";
-			$change["status"] = "submitted";
-			$change["user"] = getUserName();
-			$change["time"] = time();
-			if (!empty($linkpid)) $change["linkpid"] = $linkpid;
-			$change["undo"] = $gedrec;
-			if (!isset($pgv_changes[$xref."_".$GEDCOM])) $pgv_changes[$xref."_".$GEDCOM] = array();
-			$pgv_changes[$xref."_".$GEDCOM][] = $change;
+		$change = array();
+		$change["gid"] = $xref;
+		$change["gedcom"] = $GEDCOM;
+		$change["type"] = "append";
+		$change["status"] = "submitted";
+		$change["user"] = getUserName();
+		$change["time"] = time();
+		if (!empty($linkpid)) $change["linkpid"] = $linkpid;
+		$change["undo"] = $gedrec;
+		if (!isset($pgv_changes[$xref."_".$GEDCOM])) $pgv_changes[$xref."_".$GEDCOM] = array();
+		$pgv_changes[$xref."_".$GEDCOM][] = $change;
 		
 		if (userAutoAccept()) {
 			require_once("includes/functions_import.php");
