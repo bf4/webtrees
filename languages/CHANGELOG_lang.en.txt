@@ -43,6 +43,7 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["advanced_options"]						16 Jan 2007				S
 *$pgv_lang["mail01_line02"]							12 Jan 2007				fw
 *$pgv_lang["mail01_line04"]							12 Jan 2007				w
 *$pgv_lang["mail02_line02"]							12 Jan 2007				fw
