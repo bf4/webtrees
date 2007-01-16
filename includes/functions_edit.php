@@ -454,7 +454,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	}
 	if (!empty($patronym_rec)) {
 		preg_match('/(\/.*\/)/', get_name_in_record($patronym_rec), $match); // Will *always* match
-		$name=$match[1];
+		$name=str_replace('@N.N.', '', $match[1]);
 		$spfx=get_gedcom_value('SPFX', 0, $patronym_rec);
 		$surn=get_gedcom_value('SURN', 0, $patronym_rec);
 	}
