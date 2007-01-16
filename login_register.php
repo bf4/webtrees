@@ -140,6 +140,7 @@ switch ($action) {
 		break;
 
 	case "register" :
+  			$_SESSION["good_to_send"] = true;
 		if (!$USE_REGISTRATION_MODULE) {
 			header("Location: index.php");
 			exit;
@@ -327,6 +328,21 @@ switch ($action) {
 			print "Go Away!";
 			exit;
 		}
+  			
+			//-- check referer for possible spam attack
+			if (!isset($_SERVER['HTTP_REFERER']) || stristr($_SERVER['HTTP_REFERER'],"login_register.php")===false) {
+				print "<center><br /><span class=\"error\">Invalid page referer.</span>\n";
+		        print "<br /><br /></center>";
+		        AddToLog('Invalid page referer while trying to register a user.  Possible spam attack.');
+		        exit;
+			}
+			
+			if ((!isset($_SESSION["good_to_send"]))||($_SESSION["good_to_send"]!==true)) {
+				AddToLog('Invalid session reference while trying to register a user.  Possible spam attack.');
+		        exit;
+			}
+			$_SESSION["good_to_send"] = false;
+			
 		$QUERY_STRING = "";
 		if (isset($user_name)) {
 		print_header("PhpGedView - " . $pgv_lang["registernew"]);
