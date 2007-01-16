@@ -461,7 +461,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 
 	// TODO make these tags a configuration setting
 	$default_name_fields = array("NAME"=>$name,"NPFX"=>"","GIVN"=>"","SPFX"=>$spfx,"SURN"=>$surn,"NSFX"=>"");
-	$advanced_name_fields = array("NICK"=>"", "_MARNM"=>"", "ROMN"=>"");
+	$advanced_name_fields = array("NICK"=>"", "ROMN"=>"");
 	//-- if they are using an RTL language then they probably want _HEB by default
 	if ($TEXT_DIRECTION=="rtl")  $default_name_fields["_HEB"] = "";
 	else $advanced_name_fields["_HEB"] = "";
@@ -488,8 +488,8 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	}
 
 	if (empty($namerec)) {
-		// 2 _MARNM -- handled by advanced name fields
-		// add_simple_tag("0 _MARNM");
+		// 2 _MARNM
+		add_simple_tag("0 _MARNM");
 		// 1 SEX
 		if ($famtag=="HUSB" or $sextag=="M") add_simple_tag("0 SEX M");
 		else if ($famtag=="WIFE" or $sextag=="F") add_simple_tag("0 SEX F");
@@ -554,7 +554,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			$level1type = $type;
 			$tags=array();
 			$i = 0;
-			$namefacts = array("NPFX", "GIVN", "NICK", "SPFX", "SURN", "NSFX", "NAME", "_HEB", "ROMN", "_MARNM");
+			$namefacts = array("NPFX", "GIVN", "NICK", "SPFX", "SURN", "NSFX", "NAME", "_HEB", "ROMN");
 			do {
 				if (!in_array($type, $namefacts)) {
 					$text = "";
@@ -582,7 +582,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			} while (($level>$glevel)&&($i<count($gedlines)));
 		}
 		// 2 _MARNM
-//		add_simple_tag("0 _MARNM");
+		add_simple_tag("0 _MARNM");
 		print "</tr>\n";
 		print "</table>\n";
 		print_add_layer("SOUR");
