@@ -114,7 +114,7 @@ class Census1830 extends ra_form {
         $out .= '<td class="descriptionbox">'.$pgv_lang["city"].'</td><td class="optionbox"><input name="city" type="text" size="27" value="'.htmlentities($city).'"></td>';
         $out .=	'<td class="descriptionbox">'.$pgv_lang["page"].'</td><td class="optionbox"><input name="page" type="text" size="5" value="'.htmlentities($page).'"></td></tr>';
 //        Next Table
-        $out .= '<tr><td colspan="6"><table align="center" id="inputTable">';
+        $out .= '<tr><td colspan="6"><table align="center" id="inputTable" dir="ltr">';
         $out .= '<td class="descriptionbox" align="center" rowspan="2">Names of heads of families</td>';
         $out .= '<td colspan="13" class="descriptionbox" align="center">Free White Males</td>';
         $out .= '<td colspan="13" class="descriptionbox" align="center">Free White Females</td>';
@@ -357,7 +357,7 @@ class Census1830 extends ra_form {
 	        $out .= '<td class="optionbox"><input name="Deaf25andUpSlaves'.$i.'" type="text" size="16" value="'.htmlentities($value).'"></td>';
 	        $value = "";
         	if (isset($row['BlindSlaves'])) $value = $row['BlindSlaves'];
-	        $out .= '<td class="optionbox"><input name="BlindSlaves" type="text" size="10" value="'.htmlentities($value).'"></td>';
+	        $out .= '<td class="optionbox"><input name="BlindSlaves'.$i.'" type="text" size="10" value="'.htmlentities($value).'"></td>';
 	        
         }
         $out .= '</table></td></tr>';
@@ -397,7 +397,7 @@ class Census1830 extends ra_form {
 		ra_functions::completeTask($_REQUEST['taskid'], $_REQUEST['form']);
 		// Tell the user their form submitted successfully.
 		$out .= ra_functions::print_menu();
-		$out .= ra_functions::printMessage("Success!",true);
+		$out .= ra_functions::printMessage($pgv_lang["success"],true);		
 
 		// Return it to the buffer.
 		return $out;

@@ -67,6 +67,7 @@ function print_RSS_block($block = true, $config="", $side, $index) {
 		print "\n\t\t<option value=\"gedcomNews\">" . $pgv_lang["gedcom_news"] . "</option>";
 		print "\n\t\t<option value=\"top10Surnames\">" . $pgv_lang["block_top10"] . "</option>";
 		print "\n\t\t<option value=\"recentChanges\">" . $pgv_lang["recent_changes"] . "</option>";
+		print "\n\t\t<option value=\"randomMedia\">" . $pgv_lang["random_picture"] . "</option>";
 		print "\n\t</select>";
 		print "\n\t<select name=\"auth\" class=\"header_select\" onchange=\"javascript:document.getElementById('rss_button').href = 'rss.php?ged=" . $GEDCOM . "&amp;lang=" . $LANGUAGE . "' + (document.rssform.module.value==''? '' : '&amp;module=' + document.rssform.module.value) + (document.rssform.rssStyle.value==''? '' : '&amp;rssStyle=' + document.rssform.rssStyle.value) + (document.rssform.auth.value==''? '' : '&amp;auth=' + document.rssform.auth.value);\">";
 		print "\n\t\t<option value=\"\">" . $pgv_lang["no_auth_needed"] . "</option>";

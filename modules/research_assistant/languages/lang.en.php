@@ -76,19 +76,32 @@ $pgv_lang["Fields"]								= "Number of Fields";
 $pgv_lang["FieldName"]							= "Field Name";
 $pgv_lang["InputType"]							= "Input Type";
 $pgv_lang["Values"]								= "Values";
+$pgv_lang["FormBuilder"]						= "FormBuilder"; 
 $pgv_lang["FormName"]							= "Enter the form name";
 $pgv_lang["MultiplePeople"]						= "Does the form apply to multiple people?";
 $pgv_lang["EnterGEDCOMExtension"]				= "Please enter the GEDCOM extension for the form's fact type";
 $pgv_lang['FormDesciption']						= "Please enter a description for the form";
 $pgv_lang["FormGeneration"]						= "Form Generation Complete!";
 $pgv_lang["CustomField"]						= "Custom Field Name";
+$pgv_lang["txt"]								= "Text";
+$pgv_lang["checkbox"]							= "Check Box";
+$pgv_lang["radiobutton"]						= "Radio Button";
+$pgv_lang["EnterResults"]						= "Enter Results"; 
+$pgv_lang["ra_submit"]							= "Submit";
+$pgv_lang["ra_generate_tasks"]					= "Generated Tasks from TODO's";
+$pgv_lang["TaskDescription"]					= "Task Description";
+$pgv_lang["SelectFolder"]                       = "Select Folder:";
+$pgv_lang["ra_done"]							= "Done";
+$pgv_lang["ra_generate"]						= "Generate"; 
 
 // -- RA EXPLANATION
-$pgv_lang["ViewProbExplanation"]					= "This page analyzes the data for the active GEDCOM dataset and shows the correlations between different data elements. For example, there could be a 95% correlation that the surname in a local record is the same as the surname in the father's record.  This would mean that 95% of the people in this GEDCOM dataset share the same surname as their father. In this version of the Research Assistant, these calculations are not being used in other areas of the program and are only provided as a help to you in your research.  In the future we plan to use this data to help provide you with meaningful suggestions of where you should focus some of your future research. ";
+$pgv_lang["DataCorrelations"]					= "Data Correlations";
+$pgv_lang["ViewProbExplanation"]				= "This page analyzes the data for the active GEDCOM dataset and shows the correlations between different data elements. For example, there could be a 95% correlation that the surname in a local record is the same as the surname in the father's record.  This would mean that 95% of the people in this GEDCOM dataset share the same surname as their father. In this version of the Research Assistant, these calculations are not being used in other areas of the program and are only provided as a help to you in your research.  In the future we plan to use this data to help provide you with meaningful suggestions of where you should focus some of your future research. ";
 
 // -- RA_FOLDER MESSAGES
 $pgv_lang["Folder"]                             = "Folder:";
 $pgv_lang["Edit_Task"]                 			= "Edit Task";
+$pgv_lang["Edit_Gen_Task"]                 		= "Edit Generated Task";
 $pgv_lang["End_Date"]                 			= "End Date";
 $pgv_lang["Start_Date"]                 		= "Start Date";
 $pgv_lang["Task_Name"]                			= "Task Name";
@@ -227,6 +240,21 @@ $pgv_lang["folio"]                   	= "Folio";
 $pgv_lang["uk_county"]					= "County";
 $pgv_lang["uk_boro"]						= "City or Borough";
 $pgv_lang["uk_place"]					= "Place";
+
+$pgv_lang["AssIndiFacts"]				= "Associate Individual Facts"; 
+$pgv_lang["AssFamFacts"]				= "Associate Family Facts";  
+$pgv_lang["ra_facts"]					= "Facts"; 	
+$pgv_lang["ra_fact"]					= "Fact"; 
+$pgv_lang["ra_remove"]					= "remove";   
+$pgv_lang["ra_inferred_facts"]			= "Inferred Facts"; 
+$pgv_lang["ra_person"]					= "Person"; 
+$pgv_lang["ra_reason"]					= "Reason"; 
+$pgv_lang["success"]					= "Success!"; 
+
+$pgv_lang["registration_no"]			= "Registration Number:"; //@@
+$pgv_lang["serial_no"]					= "Serial No.:"; //@@
+$pgv_lang["ra_no"]						= "Number:"; //@@
+$pgv_lang["order_no"]					= "Order Number:"; //@@
 
 //-- MY TASK BLOCK
 $pgv_lang["mytasks_block_descr"]		= "The My Task Block shows the task for the current user and can be configured to show completed tasks or to show task that are currently unassigned";

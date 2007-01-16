@@ -1,6 +1,6 @@
 <?php
 /**
- * phpGedView Research Assistant Tool - World War 1 Draft Card B
+ * phpGedView Research Assistant Tool - World War 1 Draft Card C
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2005  John Finlay and Others
@@ -118,15 +118,15 @@ return false;}return true;}
 		$out .= print_findmedia_link("OBJE", true, '', true);
 		$out .= '<br /><a href="javascript:;" onclick="pastefield=document.getElementById(\'OBJE\'); window.open(\'addmedia.php?action=showmediaform\', \'\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["add_media"].'</a>';
 		$out .= '</td></tr>';
-		$out .= '<tr><td class="descriptionbox">Order Number:</td><td class="optionbox"><input type="text" name="page" value="'.htmlentities($page).'"/></td></tr>';
-		$out .= '<tr><td class="descriptionbox">Serial No.:</td><td class="optionbox"><input type="text" name="CallNumberURL" value="'.htmlentities($callno).'" /></td></tr>';
+		$out .= '<tr><td class="descriptionbox">'.$pgv_lang["order_no"].'</td><td class="optionbox"><input type="text" name="page" value="'.htmlentities($page).'"/></td></tr>';
+		$out .= '<tr><td class="descriptionbox">'.$pgv_lang["serial_no"].'</td><td class="optionbox"><input type="text" name="CallNumberURL" value="'.htmlentities($callno).'" /></td></tr>';
 
 //        Next Table
 		$out .= '<tr><td colspan="6">';
 
 
-		$out .= '<table>
- <tr>
+        $out .= '<table  align="left" dir="ltr">
+  <tr>
   <td class="descriptionbox">First Name</td>';
 		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
 			$value = "";
@@ -380,7 +380,7 @@ return false;}return true;}
 	}
 
 	function display_form() {
-		$out = $this->header("module.php?mod=research_assistant&form=WW1DraftC&action=func&func=step2&taskid=$_REQUEST[taskid]", "center", "World War 1 Draft Card B", true);
+		$out = $this->header("module.php?mod=research_assistant&form=WW1DraftC&action=func&func=step2&taskid=$_REQUEST[taskid]", "center", "World War 1 Draft Card C", true);
 		$out .= $this->sourceCitationForm(5, false);
         //$out .= $this->content();
 		$out .= $this->footer();
@@ -402,7 +402,7 @@ return false;}return true;}
 		$_REQUEST['personid'] = $personid;
 		$return = $this->processSourceCitation();
 
-			$out = $this->header("module.php?mod=research_assistant&form=WW1DraftC&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "World War 1 Draft Card B");
+			$out = $this->header("module.php?mod=research_assistant&form=WW1DraftC&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "World War 1 Draft Card C");
 			$out .= $this->editFactsForm(true);
 			$out .= $this->footer();
 			return $out;
@@ -420,7 +420,7 @@ return false;}return true;}
 	
 	function editFactsForm($printButton = true)
 	{
-		global $factarray;
+		global $factarray, $pgv_lang;
 
 		$facts = $this->getFactData();
 		$citation = $this->getSourceCitationData();
@@ -430,9 +430,9 @@ return false;}return true;}
 
 		if(!empty($inferFacts))
 		{
-				
-			$out .= '<tr><td colspan="2" id="inferData"><table class="list_table"><tbody><tr><td colspan="4" class="topbottombar">Inferred Facts</td></tr>
-<tr><td class="descriptionbox">Fact</td><td class="descriptionbox">Person</td><td class="descriptionbox">Reason</td><td class="descriptionbox">Add</td></tr>';
+			
+			$out .= '<tr><td colspan="2" id="inferData"><table class="list_table"><tbody><tr><td colspan="4" class="topbottombar">'.$pgv_lang["ra_inferred_facts"].'</td></tr>
+<tr><td class="descriptionbox">'.$pgv_lang["ra_fact"].'</td><td class="descriptionbox">'.$pgv_lang["ra_person"].'</td><td class="descriptionbox">'.$pgv_lang["ra_reason"].'</td><td class="descriptionbox">'.$pgv_lang["add"].'</td></tr>'; 
 			$completeFact = true;
 			$occufact = true;
 			foreach($inferFacts as $key=>$inferredFacts) {
@@ -461,12 +461,12 @@ return false;}return true;}
 					
 				}
 			}
-			$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value="Complete"></td></tr>';
+			$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value='.$pgv_lang["complete"].'></td></tr>'; 
 			return $out;
 		}
 		else 
 		{
-		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value="Complete"></td></tr>';
+		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value='.$pgv_lang["complete"].'></td></tr>'; 
 		return $out;
 		}
 	}
@@ -480,7 +480,7 @@ return false;}return true;}
 		ra_functions::completeTask($_REQUEST['taskid'], $_REQUEST['form']);
 		// Tell the user their form submitted successfully.
 		$out .= ra_functions::print_menu();
-		$out .= ra_functions::printMessage("Success!",true);
+		$out .= ra_functions::printMessage($pgv_lang["success"],true);
 
 		// Return it to the buffer.
 		return $out;
@@ -526,7 +526,7 @@ return false;}return true;}
 		$res = dbquery($sql);
 
 		$rows = array();
-		$text = $_POST['city0'].", ".$_POST['state0'].", World War 1 Draft Card B";
+		$text = $_POST['city0'].", ".$_POST['state0'].", World War 1 Draft Card C";
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
 			if (!isset($_POST["FName".$number])) $_POST["FName".$number]="";

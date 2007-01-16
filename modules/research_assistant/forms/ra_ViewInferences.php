@@ -76,7 +76,7 @@ class ra_ViewInferences extends ra_form {
  		global $LANGUAGE, $factarray, $pgv_lang;
 				 		
  		$out = "<table class=\"width80\" align=\"center\"><tr><td><p>".$pgv_lang["ViewProbExplanation"]."</p></td></tr></table>";
- 		$out .= "<table align='center'><tr><td class='topbottombar' colspan='4'><b>Data Correlations</b></td></tr>";
+ 		$out .= "<table align='center'><tr><td class='topbottombar' colspan='4'><b>".$pgv_lang["DataCorrelations"]."</b></td></tr>";
  		$out .= "<tr><td class=\"descriptionbox\">".$pgv_lang["LocalData"]."</td><td class=\"descriptionbox\">".$pgv_lang["RelatedRecord"]."</td><td class=\"descriptionbox\">".$pgv_lang["RelatedData"]."</td><td  class=\"descriptionbox\">".$pgv_lang["Percent"]."</td></tr>";
  		
  		$sql = "select * from ".$TBLPREFIX."probabilities where pr_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY (pr_matches / pr_count) DESC";

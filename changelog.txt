@@ -12,6 +12,7 @@ Version 4.2
  - Adding a "never married" icon on ancestry booklet when NMR=0 (opus27)
 
 Version 4.1
+ - Fixed Various language issues on Request Access and Request Password pages (canajun2eh)
  - Fixed Links in chart boxes should show a title when mouse hovers over them (canajun2eh)
  - Fixed Links in chart boxes don't change colour when mouse hovers over them (canajun2eh)
  - Changed Make "From" in automatically created emails a GEDCOM "Contacts" option (canajun2eh)

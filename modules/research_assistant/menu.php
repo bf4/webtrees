@@ -42,8 +42,8 @@ class research_assistant_ModuleMenu {
 		if (!file_exists("modules/research_assistant.php")) return null;
 		if ($SHOW_RESEARCH_ASSISTANT<getUserAccessLevel()) return null;
 
-		require( $pgv_language["english"]);
-		if (file_exists( $pgv_language[$LANGUAGE])) require  $pgv_language[$LANGUAGE];
+		// require( $pgv_language["english"]);
+		// if (file_exists( $pgv_language[$LANGUAGE])) require  $pgv_language[$LANGUAGE];
 		if (!file_exists('modules/research_assistant/languages/lang.en.php')) return null;
 		require_once 'modules/research_assistant/languages/lang.en.php';
 		if (file_exists("modules/research_assistant/".$pgv_language[$LANGUAGE])) require_once("modules/research_assistant/".$pgv_language[$LANGUAGE]);

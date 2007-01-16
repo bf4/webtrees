@@ -48,11 +48,14 @@ if (!isset($usrlang)) $usrlang="";
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
 if (!userIsAdmin(getUserName())) {
-	header("Location: login.php?url=useradmin.php");
+	if ($action=="edituser" && !empty($username)) header("Location: login.php?url=useradmin.php&useradmin=$username");
+	else {
+		$loginURL = "$LOGIN_URL?url=".urlencode(basename($SCRIPT_NAME)."?".$QUERY_STRING);
+		header("Location: $loginURL");
+	}
 	exit;
 }
 print_header("PhpGedView ".$pgv_lang["user_admin"]);
-
 // Javascript for edit form
 ?>
 <script language="JavaScript" type="text/javascript">
@@ -97,13 +100,13 @@ if ($action=="createuser") {
 	$i = 1;
 	$pass = TRUE;
 	while (strlen($uusername) > $i) {
-		if (stristr($alphabet, $uusername{$i}) != TRUE){
+		if (stristr($alphabet, $uusername{$i}) != TRUE) {
 			$pass = FALSE;
 			break;
 		}
 		$i++;
 	}
-	if ($pass == TRUE){
+	if ($pass == TRUE) {
 		if (getUser($uusername)!==false) {
 			print "<span class=\"error\">".$pgv_lang["duplicate_username"]."</span><br />";
 		}
@@ -218,13 +221,13 @@ if ($action=="edituser2") {
 	$i = 1;
 	$pass = TRUE;
 	while (strlen($uusername) > $i) {
-		if (stristr($alphabet, $uusername{$i}) != TRUE){
+		if (stristr($alphabet, $uusername{$i}) != TRUE) {
 			$pass = FALSE;
 			break;
 		}
 		$i++;
 	}
-	if ($pass == TRUE){
+	if ($pass == TRUE) {
 		if (($uusername!=$oldusername)&&(getUser($uusername)!==false)) {
 			print "<span class=\"error\">".$pgv_lang["duplicate_username"]."</span><br />";
 			$action="edituser";
@@ -320,40 +323,25 @@ if ($action=="edituser2") {
 			//-- if the user was just verified by the admin, then send the user a message
 			if (($olduser["verified_by_admin"]!=$newuser["verified_by_admin"])&&(!empty($newuser["verified_by_admin"]))) {
 
-				// Switch to the users language
-				$oldlanguage = $LANGUAGE;
-				$LANGUAGE = $newuser["language"];
-				if (isset($pgv_language[$LANGUAGE]) && (file_exists( $pgv_language[$LANGUAGE]))) require( $pgv_language[$LANGUAGE]);	//-- load language file
-				$TEXT_DIRECTION = $TEXT_DIRECTION_array[$LANGUAGE];
-				$DATE_FORMAT	= $DATE_FORMAT_array[$LANGUAGE];
-				$TIME_FORMAT	= $TIME_FORMAT_array[$LANGUAGE];
-				$WEEK_START	= $WEEK_START_array[$LANGUAGE];
-				$NAME_REVERSE	= $NAME_REVERSE_array[$LANGUAGE];
+				// Switch to the user's language
+				$oldLanguage = $LANGUAGE;
+				if ($LANGUAGE != $newuser["language"]) loadLanguage($newuser["language"]);
+
+				if (substr($SERVER_URL, -1) == "/") $serverURL = substr($SERVER_URL,0,-1);
+				else $serverURL = $SERVER_URL;
 
 				$message = array();
 				$message["to"] = $newuser["username"];
 				$headers = "From: ".$PHPGEDVIEW_EMAIL;
 				$message["from"] = getUserName();
-				if (substr($SERVER_URL, -1) == "/"){
-					$message["subject"] = str_replace("#SERVER_NAME#", substr($SERVER_URL,0, (strlen($SERVER_URL)-1)), $pgv_lang["admin_approved"]);
-					$message["body"] = str_replace("#SERVER_NAME#", $SERVER_URL, $pgv_lang["admin_approved"]).$pgv_lang["you_may_login"]."\r\n\r\n".substr($SERVER_URL,0, (strlen($SERVER_URL)-1))."/index.php?command=user\r\n";
-				}
-				else {
-					$message["subject"] = str_replace("#SERVER_NAME#", $SERVER_URL, $pgv_lang["admin_approved"]);
-					$message["body"] = str_replace("#SERVER_NAME#", $SERVER_URL, $pgv_lang["admin_approved"]).$pgv_lang["you_may_login"]."\r\n\r\n".$SERVER_URL."/index.php?command=user\r\n";
-				}
+				$message["subject"] = str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["admin_OK_subject"]);
+				$message["body"] = str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["admin_OK_message"]);
 				$message["created"] = "";
 				$message["method"] = "messaging2";
 				addMessage($message);
 
 				// Switch back to the page language
-				$LANGUAGE = $oldlanguage;
-				if (isset($pgv_language[$LANGUAGE]) && (file_exists( $pgv_language[$LANGUAGE]))) require( $pgv_language[$LANGUAGE]);	//-- load language file
-				$TEXT_DIRECTION = $TEXT_DIRECTION_array[$LANGUAGE];
-				$DATE_FORMAT	= $DATE_FORMAT_array[$LANGUAGE];
-				$TIME_FORMAT	= $TIME_FORMAT_array[$LANGUAGE];
-				$WEEK_START	= $WEEK_START_array[$LANGUAGE];
-				$NAME_REVERSE	= $NAME_REVERSE_array[$LANGUAGE];
+				if ($LANGUAGE != $oldLanguage) loadLanguage($oldLanguage);
 			}
 		}
 		else {
@@ -610,7 +598,7 @@ if (($action == "listusers") || ($action == "edituser2") || ($action == "deleteu
 	if ($view != "preview") $showprivs = false;
 	else $showprivs = true;
 
-	switch ($sort){
+	switch ($sort) {
 		case "sortfname":
 			$users = getUsers("firstname","asc", "lastname");
 			break;

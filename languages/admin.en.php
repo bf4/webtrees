@@ -105,7 +105,6 @@ $pgv_lang["add_gedcom"] 				= "Add GEDCOM";
 $pgv_lang["add_new_gedcom"] 			= "Create a new GEDCOM";
 $pgv_lang["add_new_language"]			= "Add files and settings for a new language";
 $pgv_lang["add_user"]					= "Add a new user";
-$pgv_lang["admin_approved"] 			= "Your account at #SERVER_NAME# has been approved";
 $pgv_lang["admin_gedcom"]				= "Admin GEDCOM";
 $pgv_lang["admin_gedcoms"]				= "Click here to administer GEDCOMs";
 $pgv_lang["admin_geds"]					= "Data and GEDCOM administration";
@@ -311,7 +310,8 @@ $pgv_lang["warn_users"]							= "Users with warnings";
 $pgv_lang["weekly"]								= "Weekly";
 $pgv_lang["welcome_new"]						= "Welcome to your new PhpGedView website.";
 $pgv_lang["yearly"]								= "Yearly";
-$pgv_lang["you_may_login"]						= " by the site administrator.  You may now login to the PhpGedView site by accessing the link below:";
+$pgv_lang["admin_OK_subject"]					= "Approval of account at #SERVER_NAME#";
+$pgv_lang["admin_OK_message"]					= "The administrator at the PhpGedView site #SERVER_NAME# has approved your application for an account.  You may now login by accessing the following link:\r\n\r\n#SERVER_NAME#\r\n";
 
 // Text for the Gedcom Checker
 $pgv_lang["gedcheck"]     = "Gedcom checker";          // Module title

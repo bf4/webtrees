@@ -30,6 +30,7 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["genealogy"]					= "genealogy";
 $pgv_lang["activate"]					= "Activate";
 $pgv_lang["deactivate"]					= "Deactivate";
 $pgv_lang["play"]					= "Play";
@@ -693,7 +694,7 @@ $pgv_lang["step_daughter"]	    	= "step daughter";
 $pgv_lang["bosa_brothers_offspring_2"] 				= "nephew";             // brother's son
 $pgv_lang["bosa_brothers_offspring_3"] 				= "niece";              // brother's daughter
 // 2nd generation
-$pgv_lang["bosa_brothers_offspring_4"] 				= "great nephew";       // brother's son's son 
+$pgv_lang["bosa_brothers_offspring_4"] 				= "great nephew";       // brother's son's son
 $pgv_lang["bosa_brothers_offspring_5"] 				= "great niece";        // brother's son's daughter
 $pgv_lang["bosa_brothers_offspring_6"] 				= "great nephew";       // brother's daughter's son
 $pgv_lang["bosa_brothers_offspring_7"] 				= "great niece";        // brother's daughter's daughter
@@ -709,7 +710,7 @@ $pgv_lang["n_x_brothers_daughter"] = "%2\$d x great niece";
 $pgv_lang["bosa_sisters_offspring_2"] 				= "nephew";             // sister's son
 $pgv_lang["bosa_sisters_offspring_3"] 				= "niece";              // sister's daughter
 // 2nd generation
-$pgv_lang["bosa_sisters_offspring_4"] 				= "great nephew";       // sister's son's son 
+$pgv_lang["bosa_sisters_offspring_4"] 				= "great nephew";       // sister's son's son
 $pgv_lang["bosa_sisters_offspring_5"] 				= "great niece";        // sister's son's daughter
 $pgv_lang["bosa_sisters_offspring_6"] 				= "great nephew";       // sister's daughter's son
 $pgv_lang["bosa_sisters_offspring_7"] 				= "great niece";        // sister's daughter's daughter
@@ -726,16 +727,16 @@ $pgv_lang["n_x_sisters_daughter"] = "%2\$d x great niece";
 $pgv_lang["bosa_2"] 				= $pgv_lang["son"];                   // son
 $pgv_lang["bosa_3"] 				= $pgv_lang["daughter"];              // daughter
 // 2nd generation
-$pgv_lang["bosa_4"] 				= $pgv_lang["grandson"];              // son's son 
+$pgv_lang["bosa_4"] 				= $pgv_lang["grandson"];              // son's son
 $pgv_lang["bosa_5"] 				= $pgv_lang["granddaughter"];         // son's daughter
 $pgv_lang["bosa_6"] 				= $pgv_lang["grandson"];              // daughter's son
 $pgv_lang["bosa_7"] 				= $pgv_lang["granddaughter"];         // daughter's daughter
 // 3rd generation
-$pgv_lang["bosa_8"] 				= "great grandson";        // son's son's son   
+$pgv_lang["bosa_8"] 				= "great grandson";        // son's son's son
 $pgv_lang["bosa_9"] 				= "great granddaughter";   // son's son's daughter
 $pgv_lang["bosa_10"] 				= "great grandson";		   // son's daughter's son
 $pgv_lang["bosa_11"] 				= "great granddaughter";   // son's daughter's daughter
-$pgv_lang["bosa_12"] 				= "great grandson";        // daughter's son's son 
+$pgv_lang["bosa_12"] 				= "great grandson";        // daughter's son's son
 $pgv_lang["bosa_13"] 				= "great granddaughter";   // daughter's son's daughter
 $pgv_lang["bosa_14"] 				= "great grandson";		   // daughter's daughter's son
 $pgv_lang["bosa_15"] 				= "great granddaughter";   // daughter's daughter's daughter
@@ -756,7 +757,7 @@ $pgv_lang["n_x_granddaughter_from_daughter"] = "%3\$d x great granddaughter";
 $pgv_lang["sosa_uncle_2"] 				= $pgv_lang["uncle"];            // father's brother
 $pgv_lang["sosa_uncle_3"] 				= $pgv_lang["uncle"];            // mother's brother
 // 2nd generation
-$pgv_lang["sosa_uncle_4"] 				= "great uncle";      // fathers's father's brother 
+$pgv_lang["sosa_uncle_4"] 				= "great uncle";      // fathers's father's brother
 $pgv_lang["sosa_uncle_5"] 				= "great uncle";      // father's mother's brother
 $pgv_lang["sosa_uncle_6"] 				= "great uncle";      // mother's father's brother
 $pgv_lang["sosa_uncle_7"] 				= "great uncle";      // mother's mother's brother
@@ -775,7 +776,7 @@ $pgv_lang["n_x_maternal_uncle"]	    = "%2\$d x great uncle";
 $pgv_lang["sosa_aunt_2"] 				= $pgv_lang["aunt"];            // father's sister
 $pgv_lang["sosa_aunt_3"] 				= $pgv_lang["aunt"];            // mother's sister
 // 2nd generation
-$pgv_lang["sosa_aunt_4"] 				= "great aunt";      // fathers's father's sister 
+$pgv_lang["sosa_aunt_4"] 				= "great aunt";      // fathers's father's sister
 $pgv_lang["sosa_aunt_5"] 				= "great aunt";      // father's mother's sister
 $pgv_lang["sosa_aunt_6"] 				= "great aunt";      // mother's father's sister
 $pgv_lang["sosa_aunt_7"] 				= "great aunt";      // mother's mother's sister
@@ -932,37 +933,37 @@ $pgv_lang["requestaccount"] 		= "Request new user account";
 $pgv_lang["emailadress"]			= "Email Address";
 $pgv_lang["mandatory"] 			= "Fields marked with * are mandatory.";
 $pgv_lang["mail01_line01"]			= "Hello #user_fullname# ...";
-$pgv_lang["mail01_line02"]			= "A request was received at ( #SERVER_NAME# ) to create an account with your email address ( #user_email# ).";
+$pgv_lang["mail01_line02"]			= "A request was received at #SERVER_NAME# to create a PhpGedView account with your email address #user_email#.";
 $pgv_lang["mail01_line03"]			= "Information about the request is shown under the link below.";
-$pgv_lang["mail01_line04"]			= "Please click on the following link and fill in the requested data to verify your account and email address.";
+$pgv_lang["mail01_line04"]			= "Please click on the following link and fill in the requested data to confirm your request and email address.";
 $pgv_lang["mail01_line05"]			= "If you didn't request an account, you can just delete this message.";
 $pgv_lang["mail01_line06"]			= "You won't get any more email from this site, because the account request will be deleted automatically after seven days.";
 $pgv_lang["mail01_subject"] 		= "Your registration at #SERVER_NAME#";
 
 $pgv_lang["mail02_line01"]			= "Hello Administrator ...";
-$pgv_lang["mail02_line02"]			= "A prospective user registered himself at ( #SERVER_NAME# ).";
-$pgv_lang["mail02_line03"]			= "The user received an email with the information necessary to verify his account.";
-$pgv_lang["mail02_line04"]			= "You will be informed by email when this prospective user has verified himself.  You can then complete the process by activating the user name.  The new user will not be able to login until you activate the account.";
-$pgv_lang["mail02_line04a"]			= "You will be informed by email when this prospective user has verified himself.  After verification, the user will be able to login without any action on your part.";
+$pgv_lang["mail02_line02"]			= "A prospective user registered himself with PhpGedView at #SERVER_NAME#.";
+$pgv_lang["mail02_line03"]			= "The user received an email with the information necessary to confirm his access request.";
+$pgv_lang["mail02_line04"]			= "You will be informed by email when this prospective user has confirmed his request.  You can then complete the process by activating the user name.  The new user will not be able to login until you activate the account.";
+$pgv_lang["mail02_line04a"]			= "You will be informed by email when this prospective user has confirmed his request.  After this, the user will be able to login without any action on your part.";
 $pgv_lang["mail02_subject"] 		= "New registration at #SERVER_NAME#";
 
 $pgv_lang["hashcode"]				= "Verification code:";
-$pgv_lang["thankyou"]				= "Hello #user_fullname# ...<br />Thank you for your registration";
-$pgv_lang["pls_note06"] 			= "We will now send a confirmation email to the address ( #user_email# ). You must verify your account request by following instructions in the confirmation email. If you do not verify your account request within seven days, your application for an account will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, the administrator still has to approve your request before your account can be used.<br /><br />To login to this site, you will need to know your user name and password.<br /><br />";
-$pgv_lang["pls_note06a"] 			= "We will now send a confirmation email to the address ( #user_email# ). You must verify your account request by following instructions in the confirmation email. If you do not verify your account request within seven days, your application for an account will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, you can login.  To login to this site, you will need to know your user name and password.<br /><br />";
+$pgv_lang["thankyou"]				= "Hello #user_fullname# ...<br />Thank you for your registration.";
+$pgv_lang["pls_note06"] 			= "We will now send a confirmation email to the address <b>#user_email#</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, the administrator still has to approve your request before your account can be used.<br /><br />To login to this site, you will need to know your user name and password.<br /><br />";
+$pgv_lang["pls_note06a"] 			= "We will now send a confirmation email to the address <b>#user_email#</b>. You must verify your account request by following instructions in the confirmation email. If you do not confirm your account request within seven days, your application will be rejected automatically.  You will have to apply again.<br /><br />After you have followed the instructions in the confirmation email, you can login.  To login to this site, you will need to know your user name and password.<br /><br />";
 
 $pgv_lang["registernew"]			= "New Account confirmation";
 $pgv_lang["user_verify"]			= "User verification";
 $pgv_lang["send"]					= "Send";
 
-$pgv_lang["pls_note07"] 			= "~#pgv_lang[user_verify]#~<br /><br />To verify your account request, please type in your user name, your password, and the verification code you received by email.";
-$pgv_lang["pls_note08"] 			= "The data for the user #user_name# was checked.";
+$pgv_lang["pls_note07"] 			= "~#pgv_lang[user_verify]#~<br /><br />To confirm your account request, please type in your user name, your password, and the verification code you received by email.";
+$pgv_lang["pls_note08"] 			= "The data for the user <b>#user_name#</b> was checked.";
 
 $pgv_lang["mail03_line01"]			= "Hello Administrator ...";
-$pgv_lang["mail03_line02"]			= "User #newuser[username]# ( #newuser[fullname]# ) has verified his registration data.";
+$pgv_lang["mail03_line02"]			= "User #newuser[username]# (#newuser[fullname]#) has confirmed his request for an account.";
 $pgv_lang["mail03_line03"]			= "Please click on the link below to login to your site.  You must Edit the user to activate the account so that he can login to your site.";
 $pgv_lang["mail03_line03a"]			= "You do not have to take any action; the user can now login.";
-$pgv_lang["mail03_subject"] 		= "New verification at #SERVER_NAME#";
+$pgv_lang["mail03_subject"] 		= "New user at #SERVER_NAME#";
 
 $pgv_lang["pls_note09"] 			= "You have confirmed your request to become a registered user.";
 $pgv_lang["pls_note10"] 			= "The Administrator has been informed.  As soon as he gives you permission to login, you can login with your user name and password.";
@@ -977,10 +978,10 @@ $pgv_lang["mail04_line01"]			= "Hello #user_fullname# ...";
 $pgv_lang["mail04_line02"]			= "A new password was requested for your user name.";
 $pgv_lang["mail04_line03"]			= "Recommendation:";
 $pgv_lang["mail04_line04"]			= "Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure.";
-$pgv_lang["mail04_line05"]			= "After you have logged in, select the '#pgv_lang[myuserdata]#' link under the '#pgv_lang[mygedview]#' menu and fill in the password fields to change your password.";
+$pgv_lang["mail04_line05"]			= "After you have logged in, select the «#pgv_lang[editowndata]#» link under the «#pgv_lang[mygedview]#» menu and fill in the password fields to change your password.";
 $pgv_lang["mail04_subject"] 		= "Data request at #SERVER_NAME#";
 
-$pgv_lang["pwreqinfo"]				= "Hello...<br /><br />An email with your new password was sent to the address (#user[email]#).<br /><br />Please check your email account; you should receive our message soon.<br /><br />Recommendation:<br />You should login to this site with your new password as soon as possible, and you should change your password to maintain your data's security.";
+$pgv_lang["pwreqinfo"]				= "Hello...<br /><br />An email with your new password was sent to the address we have on file for <b>#user[email]#</b>.<br /><br />Please check your email account; you should receive our message soon.<br /><br />Recommendation:<br />You should login to this site with your new password as soon as possible, and you should change your password to maintain your data's security.";
 
 $pgv_lang["myuserdata"] 			= "My Account";
 $pgv_lang["user_theme"] 			= "My Theme";
@@ -1537,7 +1538,7 @@ $pgv_lang["button_reset"] = "Reset to the list defaults.";
 $pgv_lang["button_SEX_F"] = "Show only females.";
 $pgv_lang["button_SEX_M"] = "Show only males.";
 $pgv_lang["button_SEX_U"] = "Show only persons of whom the gender is not known.";
-$pgv_lang["button_TREE_L"] = "Show &laquo;leaves&raquo; couples or individuals.  These are individuals who are alive but have no children recorded in the database.";
-$pgv_lang["button_TREE_R"] = "Show &laquo;roots&raquo; couples or individuals.  These people may also be called &laquo;patriarchs&raquo;.  They are individuals who have no parents recorded in the database.";
+$pgv_lang["button_TREE_L"] = "Show «leaves» couples or individuals.  These are individuals who are alive but have no children recorded in the database.";
+$pgv_lang["button_TREE_R"] = "Show «roots» couples or individuals.  These people may also be called «patriarchs».  They are individuals who have no parents recorded in the database.";
 $pgv_lang["sort_column"] = "Sort by this column.";
 ?>

@@ -158,6 +158,4 @@ $factarray["ADOP"]	= "Įvaikinimas";
 $factarray["AGE"]	= "Amžius";
 $factarray["AUTH"]	= "Autorius";
 
-if (file_exists("languages/facts.lt.extra.php")) require "languages/facts.lt.extra.php";
-
 ?>
