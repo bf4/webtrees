@@ -978,7 +978,7 @@ $pgv_lang["mail04_line01"]			= "Hello #user_fullname# ...";
 $pgv_lang["mail04_line02"]			= "A new password was requested for your user name.";
 $pgv_lang["mail04_line03"]			= "Recommendation:";
 $pgv_lang["mail04_line04"]			= "Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure.";
-$pgv_lang["mail04_line05"]			= "After you have logged in, select the «#pgv_lang[editowndata]#» link under the «#pgv_lang[mygedview]#» menu and fill in the password fields to change your password.";
+$pgv_lang["mail04_line05"]			= "After you have logged in, select the Â«#pgv_lang[editowndata]#Â» link under the Â«#pgv_lang[mygedview]#Â» menu and fill in the password fields to change your password.";
 $pgv_lang["mail04_subject"] 		= "Data request at #SERVER_NAME#";
 
 $pgv_lang["pwreqinfo"]				= "Hello...<br /><br />An email with your new password was sent to the address we have on file for <b>#user[email]#</b>.<br /><br />Please check your email account; you should receive our message soon.<br /><br />Recommendation:<br />You should login to this site with your new password as soon as possible, and you should change your password to maintain your data's security.";
@@ -1538,7 +1538,7 @@ $pgv_lang["button_reset"] = "Reset to the list defaults.";
 $pgv_lang["button_SEX_F"] = "Show only females.";
 $pgv_lang["button_SEX_M"] = "Show only males.";
 $pgv_lang["button_SEX_U"] = "Show only persons of whom the gender is not known.";
-$pgv_lang["button_TREE_L"] = "Show «leaves» couples or individuals.  These are individuals who are alive but have no children recorded in the database.";
-$pgv_lang["button_TREE_R"] = "Show «roots» couples or individuals.  These people may also be called «patriarchs».  They are individuals who have no parents recorded in the database.";
+$pgv_lang["button_TREE_L"] = "Show Â«leavesÂ» couples or individuals.  These are individuals who are alive but have no children recorded in the database.";
+$pgv_lang["button_TREE_R"] = "Show Â«rootsÂ» couples or individuals.  These people may also be called Â«patriarchsÂ».  They are individuals who have no parents recorded in the database.";
 $pgv_lang["sort_column"] = "Sort by this column.";
 ?>
