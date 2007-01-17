@@ -8,7 +8,7 @@ print "\n\t<br />";
 print_help_link("preview_help", "qm");
 print "<a href=\"$SCRIPT_NAME?view=preview&amp;".get_query_string()."\">".$pgv_lang["print_preview"]."</a>";
 print "<br />";
-if ($SHOW_STATS) print_execution_stats();
+if ($SHOW_STATS || (isset($DEBUG) && ($DEBUG==true))) print_execution_stats();
 if ($buildindex) print " ".$pgv_lang["build_error"]."  <a href=\"editgedcoms.php\">".$pgv_lang["rebuild_indexes"]."</a>\n";
 if ((count($pgv_changes) > 0) and (userCanAccept(getUserName())))
 {
