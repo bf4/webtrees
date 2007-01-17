@@ -1436,7 +1436,7 @@ $pgv_lang["definitions"]			= "Definitionen";
 //-- Index_edit
 $pgv_lang["description"]			= "Beschreibung";
 $pgv_lang["block_desc"]				= "Block Beschreibungen";
-$pgv_lang["click_here"]				= "Weiter";
+$pgv_lang["click_here"]				= "Fortsetzen";
 $pgv_lang["click_here_help"]		= "~#pgv_lang[click_here]#~<br /><br />Klicken Sie diesen Button, um die zuvor gespeicherten Änderungen zu verwenden.<br /><br />Sie werden zu der #pgv_lang[welcome]# oder #pgv_lang[mygedview]# Seite zurückgenommen, aber es kann sein, dass Ihre Änderungen nicht angezeigt werden. Sie können dann die «Seite Erneuern» Funktion Ihres Browsers benutzen um Ihre Änderungen richtig zu sehen.";
 $pgv_lang["block_summaries"]		= "~#pgv_lang[block_desc]#~<br /><br />Hier finden Sie eine kurze Beschreibung aller Blöcke, die Sie auf die #pgv_lang[welcome]# oder #pgv_lang[mygedview]# Seite stellen können.<br /><table border='1' align='center'><tr><td class='list_value'><b>#pgv_lang[name]#</b></td><td class='list_value'><b>#pgv_lang[description]#</b></td></tr>#pgv_lang[block_summary_table]#</table><br /><br />";
 $pgv_lang["block_summary_table"]	= "&nbsp;";
