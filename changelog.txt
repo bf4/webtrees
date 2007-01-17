@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Improved performance of Event Blocks (yalnifj)
  - Added [ phpgedview-Patches-1636119 ] customize welcom page: problems with files in blocks folder (yalnifj)
  - Added session and referrer check to login_register to help prevent scripting/spamming/hacking (yalnifj)
  - Fixed Various language issues on Request Access and Request Password pages (canajun2eh)
