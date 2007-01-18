@@ -27,6 +27,7 @@ if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
   exit;
 }
 
+$pgv_lang["clear_cache_help"]		= "~#pgv_lang[clear_cache]#~<br /><br />In order to improve performance, several of the blocks on the welcome page are cached in files in the index directory.  The cache for most blocks get refreshed once per day, but there may be times when you want to manually refresh the cache.<br /><br />This button allows you to manually clear the cache files.";
 $pgv_lang["import_options_help"] 	= "You can choose additional options to be used when importing the GEDCOM.";
 $pgv_lang["verify_gedcom_help"]	= "Here you can choose to either continue with the upload and import of this GEDCOM file or to abort the upload and import.";
 $pgv_lang["add_gedcom_instructions"]= "Enter a file name for this new GEDCOM.  The new GEDCOM file will be created in the Index directory: #INDEX_DIRECTORY#";
