@@ -113,7 +113,16 @@ function clearCache() {
 	
 	foreach($lang_short_cut as $key=>$value) {
 		$fname = $INDEX_DIRECTORY."/cache/".$value."/".$GEDCOM;
-		if (file_exists($fname)) unlink($fname);
+		if (file_exists($fname)) {
+			$dir = dir($fname);
+			while (false !== ($entry = $dir->read())) {
+			   if ($entry!="." && $entry!="..") unlink($fname."/".$entry);
+			}
+		}
+	}
+	
+	if (file_exists($INDEX_DIRECTORY."/".$GEDCOM."_upcoming.php")) {
+		unlink($INDEX_DIRECTORY."/".$GEDCOM."_upcoming.php");
 	}
 }
 ?>
