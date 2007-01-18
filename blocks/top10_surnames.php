@@ -29,6 +29,7 @@
 $PGV_BLOCKS["print_block_name_top10"]["name"]           = $pgv_lang["block_top10"];
 $PGV_BLOCKS["print_block_name_top10"]["descr"]          = "block_top10_descr";
 $PGV_BLOCKS["print_block_name_top10"]["canconfig"]        = true;
+$PGV_BLOCKS["print_block_name_top10"]["cache"]   		= 7;
 $PGV_BLOCKS["print_block_name_top10"]["config"] = array("num"=>10, "count_placement"=>"left");
 
 function print_block_name_top10($block=true, $config="", $side, $index) {

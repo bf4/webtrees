@@ -219,6 +219,7 @@ if ($action=="updateconfig") {
 	}
 	print $pgv_lang["config_update_ok"]."<br />\n";
 	if (isset($_POST["nextaction"])) $action = $_POST["nextaction"];
+	$_SESSION['clearcache'] = true;
 }
 
 if ($action=="update") {

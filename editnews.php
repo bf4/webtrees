@@ -114,11 +114,11 @@ else if ($action=="save") {
 	$message = array();
 	if (!empty($news_id)) $message["id"]=$news_id;
 	$message["username"] = $username;
+	if ($username==$GEDCOM) $_SESSION['clearcache'] = true;
 	$message["date"]=$date;
 	$message["title"] = $title;
 	$message["text"] = $text;
 	if (addNews($message)) {
-//		if (isset($pgv_language[$LANGUAGE]) && (file_exists( $pgv_language[$LANGUAGE]))) require( $pgv_language[$LANGUAGE]);
 		print $pgv_lang["news_saved"];
 	}
 }

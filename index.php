@@ -26,6 +26,7 @@
  */
 
 require_once("config.php");
+require_once("includes/index_cache.php");
 
 if (!isset($CONFIGURED)) {
 	print "Unable to include the config.php file.  Make sure that . is in your PHP include path in the php.ini file.";
@@ -145,7 +146,10 @@ if (!empty($uname)) {
 				if ($command=="user") $favtype = "user";
 				else $favtype = "gedcom";
 			}
-			if ($favtype=="gedcom") $favtype = $GEDCOM;
+			if ($favtype=="gedcom") {
+				$favtype = $GEDCOM;
+				$_SESSION['clearcache'] = true;
+			}
 			else $favtype=$uname;
 			$favorite["username"] = $favtype;
 			$favorite["gid"] = $gid;
@@ -165,7 +169,10 @@ if (!empty($uname)) {
 			if ($command=="user") $favtype = "user";
 			else $favtype = "gedcom";
 		}
-		if ($favtype=="gedcom") $favtype = $GEDCOM;
+		if ($favtype=="gedcom") {
+			$favtype = $GEDCOM;
+			$_SESSION['clearcache'] = true;
+		}
 		else $favtype=$uname;
 		$favorite["username"] = $favtype;
 		$favorite["gid"] = "";
@@ -178,6 +185,7 @@ if (!empty($uname)) {
 	}
 	if (($action=="deletefav")&&(isset($fv_id))) {
 		deleteFavorite($fv_id);
+		if ($command=="gedcom") $_SESSION['clearcache'] = true;
 	}
 	else if ($action=="deletemessage") {
 		if (isset($message_id)) {
@@ -187,17 +195,19 @@ if (!empty($uname)) {
 					if (isset($mid)) deleteMessage($mid);
 				}
 			}
+			if ($command=="gedcom") $_SESSION['clearcache'] = true;
 		}
 	}
 	else if (($action=="deletenews")&&(isset($news_id))) {
 		deleteNews($news_id);
+		if ($command=="gedcom") $_SESSION['clearcache'] = true;
 	}
 }
 
 //-- get the blocks list
 if ($command=="user") {
 	$ublocks = getBlocks($uname);
-	if ((count($ublocks["main"])==0) and (count($ublocks["right"])==0)) {
+	if ((count($ublocks["main"])==0) && (count($ublocks["right"])==0)) {
 		$ublocks["main"][] = array("print_todays_events", "");
 		$ublocks["main"][] = array("print_user_messages", "");
 		$ublocks["main"][] = array("print_user_favorites", "");
@@ -210,7 +220,7 @@ if ($command=="user") {
 }
 else {
 	$ublocks = getBlocks($GEDCOM);
-	if ((count($ublocks["main"])==0) and (count($ublocks["right"])==0)) {
+	if ((count($ublocks["main"])==0) && (count($ublocks["right"])==0)) {
 		$ublocks["main"][] = array("print_gedcom_stats", "");
 		$ublocks["main"][] = array("print_gedcom_news", "");
 		$ublocks["main"][] = array("print_gedcom_favorites", "");
@@ -241,6 +251,12 @@ foreach($ublocks["main"] as $block) {
 	if ($block[0]=="print_login_block") $login_block_present = true;
 }
 
+//-- clear the GEDCOM cache files
+if (!empty($_SESSION['clearcache'])) {
+	$_SESSION['clearcache'] = false;
+	clearCache();
+}
+
 //-- handle block AJAX calls
 /**
  * In order for a block to make an AJAX call the following request parameters must be set
@@ -265,7 +281,13 @@ if ($action=="ajax") {
 			if ($blockval[0]==$block && function_exists($blockval[0])) {
 				if ($side=="main") $param1 = "false";
 				else $param1 = "true";
+				if (function_exists($blockval[0]) && !loadCachedBlock($blockval[0], $side.$_REQUEST['bindex'])) {
+					ob_start();
 				eval($blockval[0]."($param1, \$blockval[1], \"$side\", ".$_REQUEST['bindex'].");");
+					$content = ob_get_contents();
+					saveCachedBlock($blockval[0], $side.$_REQUEST['bindex'], $content);
+					ob_end_flush();
+				}
 				exit;
 			}
 		}
@@ -358,7 +380,13 @@ if (count($ublocks["main"])!=0) {
 
 	foreach($ublocks["main"] as $bindex=>$block) {
 		if (isset($DEBUG)&&($DEBUG==true)) print_execution_stats();
-		if (function_exists($block[0])) eval($block[0]."(false, \$block[1], \"main\", $bindex);");
+		if (function_exists($block[0]) && !loadCachedBlock($block[0], "main".$bindex)) {
+			ob_start();
+			eval($block[0]."(false, \$block[1], \"main\", $bindex);");
+			$content = ob_get_contents();
+			saveCachedBlock($block[0], "main".$bindex, $content);
+			ob_end_flush();
+		}
 	}
 	print "</div>\n";
 }
@@ -373,7 +401,13 @@ if (count($ublocks["right"])!=0) {
 	}
 	foreach($ublocks["right"] as $bindex=>$block) {
 		if (isset($DEBUG)&&($DEBUG==true)) print_execution_stats();
-		if (function_exists($block[0])) eval($block[0]."(true, \$block[1], \"right\", $bindex);");
+		if (function_exists($block[0]) && !loadCachedBlock($block[0], "right".$bindex)) {
+			ob_start();
+			eval($block[0]."(true, \$block[1], \"right\", $bindex);");
+			$content = ob_get_contents();
+			saveCachedBlock($block[0], "right".$bindex, $content);
+			ob_end_flush();
+		}
 	}
 	print "\t</div>\n";
 }
