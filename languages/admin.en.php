@@ -30,6 +30,8 @@ if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["clear_cache_succes"]		= "The cache files have been removed.";
+$pgv_lang["clear_cache"]			= "Clear Cache Files";
 $pgv_lang["sanity_err0"]			= "Errors:";
 $pgv_lang["sanity_err1"]			= "You need to have PHP version 4.3 or higher.";
 $pgv_lang["sanity_err2"]			= "The file or directory <i>#GLOBALS[whichFile]#</i> does not exist. Please verify that the file or directory exists, was not mis-named, and Read permissions are set correctly.";

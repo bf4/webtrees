@@ -28,6 +28,7 @@
  */
 
 require("config.php");
+require_once("includes/index_cache.php");
 
 /**
  * Block definition array
@@ -219,7 +220,7 @@ if ($action=="updateconfig") {
 	}
 	print $pgv_lang["config_update_ok"]."<br />\n";
 	if (isset($_POST["nextaction"])) $action = $_POST["nextaction"];
-	$_SESSION['clearcache'] = true;
+	if ($command!="user") $_SESSION['clearcache'] = true;
 }
 
 if ($action=="update") {
@@ -260,6 +261,11 @@ if ($action=="update") {
 	setBlocks($name, $ublocks, $setdefault);
 	if (isset($_POST["nextaction"])) $action = $_POST["nextaction"];
 	?><script language="JavaScript" type="text/javascript">parentrefresh();</script><?php
+}
+
+if ($action=="clearcache") {
+	clearCache();
+	print "<span class=\"warning\">".$pgv_lang["clear_cache_succes"]."</span>";
 }
 
 if ($action=="configure" && isset($ublocks[$side][$index])) {
@@ -550,6 +556,11 @@ else {
 	print "&nbsp;&nbsp;";
 	print_help_link("click_here_help", "qm");
 	print "<input type=\"button\" value=\"".$pgv_lang["click_here"]."\" onclick=\"select_options(); save_form();\" />\n";
+	if (userGedcomAdmin(getUserName())) {
+		print "&nbsp;&nbsp;";
+		print_help_link("clear_cache_help", "qm");
+		print "<input type =\"button\" value=\"".$pgv_lang["clear_cache"]."\" onclick=\"window.location='index_edit.php?command=$command&amp;action=clearcache&amp;name=".preg_replace("/'/", "\'", $name)."';\" />";
+	}
 	print "&nbsp;&nbsp;";
 	print "<input type =\"button\" value=\"".$pgv_lang["cancel"]."\" onclick=\"window.close()\" />";
 	print "</td></tr></table>";
