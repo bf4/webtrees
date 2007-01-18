@@ -31,6 +31,7 @@ $PGV_BLOCKS["print_upcoming_events"]["descr"]		= "upcoming_events_descr";
 $PGV_BLOCKS["print_upcoming_events"]["infoStyle"]	= "style2";
 $PGV_BLOCKS["print_todays_events"]["allowDownload"]	= "yes";
 $PGV_BLOCKS["print_upcoming_events"]["canconfig"]	= true;
+$PGV_BLOCKS["print_upcoming_events"]["cache"]   = 1;
 $PGV_BLOCKS["print_upcoming_events"]["config"] = array("days"=>30, "filter"=>"all", "onlyBDM"=>"no", "infoStyle"=>"style2", "allowDownload"=>"yes");
 
 //-- upcoming events block
