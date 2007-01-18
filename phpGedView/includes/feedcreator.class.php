@@ -56,7 +56,7 @@ define("TIME_ZONE","");
  * Version string.
  **/
 
-define("FEEDCREATOR_VERSION", "FeedCreator 1.8.0-dev (info@mypapit.net)");
+define("FEEDCREATOR_VERSION", "FeedCreator 1.8.0-dev");
 
 
 
@@ -93,7 +93,7 @@ class FeedItem extends HtmlDescribable {
 	var $date;
 
 	/**
-	 * Add <enclosure> element tag RSS 2.0
+	 * Add <enclosure> element tag RSS 2.0, supported by ATOM 1.0 too
 	 * modified by : Mohammad Hafiz bin Ismail (mypapit@gmail.com)
 	 *
 	 *
@@ -124,15 +124,23 @@ class EnclosureItem extends HtmlDescribable {
 	*
 	**/
 	var $url,$length,$type;
-
+	
+	/*
+	*
+	* supported by ATOM 1.0 only
+	*
+	*/
+	
+	var $language, $title;
 	/*
 	* For use with another extension like Yahoo mRSS
 	* Warning :
 	* These variables might not show up in
 	* later release / not finalize yet!
 	*
+	*
+	* var $width, $height, $title, $description, $keywords, $thumburl;
 	*/
-	var $width, $height, $title, $description, $keywords, $thumburl;
 
 	var $additionalElements = Array();
 
@@ -453,9 +461,17 @@ class FeedCreator extends HtmlDescribable {
 	/**
 	 * This feed's character encoding.
 	 * @since 1.6.1
-	 **/
-	//var $encoding = "ISO-8859-1"; //original :p
+	 *
+	 * var $encoding = "ISO-8859-1"; //original :p
+	 */
 	var $encoding = "utf-8";
+	
+	/*
+	 * Generator string
+	 *
+	 */
+	 
+	 var $generator = "info@mypapit.net";
 
 
 	/**
@@ -479,7 +495,16 @@ class FeedCreator extends HtmlDescribable {
 		$this->items[] = $item;
 	}
 
-
+	/**
+	 *
+	 *
+	 *
+	 **/
+	 function version() {
+	 
+	 	return FEEDCREATOR_VERSION." (".$this->generator.")";	
+	 }
+	
 	/**
 	 * Truncates a string to a certain length at the most sensible point.
 	 * First, if there's a '.' character near the end of the string, the string is truncated after this character.
@@ -526,7 +551,7 @@ class FeedCreator extends HtmlDescribable {
 	 * Syndic8.com.
 	 */
 	function _createGeneratorComment() {
-		return "<!-- generator=\"".FEEDCREATOR_VERSION."\" -->\n";
+		return "<!-- generator=\"".$this->version()."\" -->\n";
 	}
 
 
@@ -897,7 +922,7 @@ class RSSCreator091 extends FeedCreator {
 		$feed.= "        <link>".$this->link."</link>\n";
 		$now = new FeedDate();
 		$feed.= "        <lastBuildDate>".htmlspecialchars($now->rfc822())."</lastBuildDate>\n";
-		$feed.= "        <generator>".FEEDCREATOR_VERSION."</generator>\n";
+		$feed.= "        <generator>". $this->version()."</generator>\n";
 
 		if ($this->image!=null) {
 			$feed.= "        <image>\n";
@@ -980,6 +1005,8 @@ class RSSCreator091 extends FeedCreator {
 			$itemDate = new FeedDate($this->items[$i]->date);
 				$feed.= "            <pubDate>".htmlspecialchars($itemDate->rfc822())."</pubDate>\n";
 			}
+			
+			$feed.= "            <guid isPermaLink=\"false\">".htmlspecialchars($this->items[$i]->link)."</guid>\n";
 			if ($this->items[$i]->guid!="") {
 				$feed.= "            <guid isPermaLink=\"false\">".htmlspecialchars($this->items[$i]->guid)."</guid>\n";
 			}
@@ -1127,7 +1154,7 @@ class PIECreator01 extends FeedCreator {
 		if ($this->copyright!="") {
 					$feed.= "        <rights>".FeedCreator::iTrunc(htmlspecialchars($this->copyright),100)."</rights>\n";
 		}
-		$feed.= "    <generator>".FEEDCREATOR_VERSION."</generator>\n";
+		$feed.= "    <generator>".$this->version()."</generator>\n";
 		
 		
 		$feed.= "<link rel=\"self\" type=\"application/atom+xml\" href=\"". htmlspecialchars($this->syndicationURL). "\" />\n";
@@ -1173,9 +1200,9 @@ class PIECreator01 extends FeedCreator {
 				
 			
 			/* 
-			 * ATOM should have content and summary tags, however this implementation may be inaccurate
+			 * ATOM should have at least summary tag, however this implementation may be inaccurate
 			 */
-			 	$tempdesc = htmlspecialchars( trim(strip_tags($this->items[$i]->description)));
+			 	$tempdesc = $this->items[$i]->getDescription();
 			 	$temptype="";
 				
 				if ($this->items[$i]->descriptionHtmlSyndicated){
@@ -1184,7 +1211,9 @@ class PIECreator01 extends FeedCreator {
 					
 				}
 				
-				$feed.= "        <content". $temptype . ">". $tempdesc ."</content>\n";
+				if (empty($this->items[$i]->descriptionTruncSize)) {
+					$feed.= "        <content". $temptype . ">". $tempdesc ."</content>\n";
+				}
 				
 				$feed.= "        <summary". $temptype . ">". $tempdesc ."</summary>\n";
 			} else {
@@ -1194,7 +1223,20 @@ class PIECreator01 extends FeedCreator {
 			}
 
 			if ($this->items[$i]->enclosure != NULL) {
-			$feed.="        <link rel=\"enclosure\" href=\"". $this->items[$i]->enclosure->url ."\" type=\"". $this->items[$i]->enclosure->type."\"  length=\"". $this->items[$i]->enclosure->length . "\" />\n";
+				$feed.="        <link rel=\"enclosure\" href=\"". $this->items[$i]->enclosure->url ."\" type=\"". $this->items[$i]->enclosure->type."\"  length=\"". $this->items[$i]->enclosure->length ."\"";
+				
+				if ($this->items[$i]->enclosure->language != ""){
+					 $feed .=" xml:lang=\"". $this->items[$i]->enclosure->language . "\" ";
+				}
+				
+				if ($this->items[$i]->enclosure->title != ""){
+					 $feed .=" title=\"". $this->items[$i]->enclosure->title . "\" ";
+				}
+				
+				$feed .=" /> \n";
+
+			
+				
 			}
 			$feed.= "    </entry>\n";
 		}
@@ -1252,7 +1294,7 @@ class AtomCreator03 extends FeedCreator {
 			}
 			$feed.= "    </author>\n";
 		}
-		$feed.= "    <generator>".FEEDCREATOR_VERSION."</generator>\n";
+		$feed.= "    <generator>".$this->version()."</generator>\n";
 		$feed.= $this->_createAdditionalElements($this->additionalElements, "    ");
 		for ($i=0;$i<count($this->items);$i++) {
 			$feed.= "    <entry>\n";
@@ -1388,7 +1430,7 @@ class OPMLCreator extends FeedCreator {
 		$feed = "<?xml version=\"1.0\" encoding=\"".$this->encoding."\"?>\n";
 		$feed.= $this->_createGeneratorComment();
 		$feed.= $this->_createStylesheetReferences();
-		$feed.= "<opml xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n";
+		$feed.= "<opml xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.0\">\n";
 		$feed.= "    <head>\n";
 		$feed.= "        <title>".htmlspecialchars($this->title)."</title>\n";
 		if ($this->pubDate!="") {
@@ -1414,7 +1456,12 @@ class OPMLCreator extends FeedCreator {
 			$feed.= " text=\"".$title."\"";
 			//$feed.= " description=\"".htmlspecialchars($this->items[$i]->description)."\"";
 			$feed.= " url=\"".htmlspecialchars($this->items[$i]->link)."\"";
-			$feed.= "/>\n";
+			
+			if ($this->items[$i]->syndicationURL !="") {
+				$feed.= " xmlUrl=\"" . $this->items[$i]->syndicationURL . "\"";
+			}
+			
+			$feed.= " />\n";
 		}
 		$feed.= "    </body>\n";
 		$feed.= "</opml>\n";
