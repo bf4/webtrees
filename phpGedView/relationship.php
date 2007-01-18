@@ -134,7 +134,7 @@ function getRelationshipSentence($node, $pid1, $pid2)
     if (preg_match("/1 SEX M/", $person2, $smatch)>0) $mf="M";
 
     // now look to see if we can find some text to describe the relationship
-    //check if relationship is parent or grandparent
+    //check if relationship is parent
     if ($numberOfSpouses == 1 && $numberOfSiblings == 0 && $generationsOlder == 0 && $generationsYounger == 0)
     {
         // check for spouse
@@ -256,7 +256,7 @@ function getRelationshipSentence($node, $pid1, $pid2)
 		}
     }
 	// check for step siblings
-	else if($numberOfSpouses == 1 && $generationsYounger == 1 && $generationsOlder == 1 && !$firstRelationshipIsSpouse && !$lastRelationshipIsSpouse )
+	else if($numberOfSpouses == 1 && $generationsYounger == 1 && $generationsOlder == 1 && !$firstRelationshipIsSpouse && !$lastRelationshipIsSpouse && $numberOfSiblings == 0)
 	{
 	        if (isset($pgv_lang["stepsister"]) &&$mf=="F")
 	        {

@@ -1,4 +1,4 @@
-=====================================================================
+﻿=====================================================================
 	Change Log
 	phpGedView
 
@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed false reporting of step sibling in relationship.php (cozensweb)
  - Added block caching system for not-logged-in visitors (yalnifj)
  - Improved performance of Event Blocks (yalnifj)
  - Added [ phpgedview-Patches-1636119 ] customize welcom page: problems with files in blocks folder (yalnifj)
