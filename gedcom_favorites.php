@@ -28,6 +28,7 @@
 
 $PGV_BLOCKS["print_gedcom_favorites"]["name"]        = $pgv_lang["gedcom_favorites_block"];
 $PGV_BLOCKS["print_gedcom_favorites"]["descr"]        = "gedcom_favorites_descr";
+$PGV_BLOCKS["print_gedcom_favorites"]["cache"]   		= 7;
 $PGV_BLOCKS["print_gedcom_favorites"]["canconfig"]   = false;
 
 //-- print gedcom favorites

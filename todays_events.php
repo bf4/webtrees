@@ -31,6 +31,7 @@ $PGV_BLOCKS["print_todays_events"]["descr"]			= "todays_events_descr";
 $PGV_BLOCKS["print_todays_events"]["infoStyle"]		= "style2";
 $PGV_BLOCKS["print_todays_events"]["allowDownload"]	= "yes";
 $PGV_BLOCKS["print_todays_events"]["canconfig"]		= true;
+$PGV_BLOCKS["print_todays_events"]["cache"]   = 1;
 $PGV_BLOCKS["print_todays_events"]["config"] = array("filter"=>"all", "onlyBDM"=>"no", "infoStyle"=>"style2", "allowDownload"=>"yes");
 
 //-- today's events block
