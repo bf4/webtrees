@@ -2839,10 +2839,13 @@ function get_event_list() {
 						$hebrew_date = parse_date(trim($match[1]));
 						$date = jewishGedcomDateToCurrentGregorian($hebrew_date);
 					}
-				} else {
+				} 
+				
+				if ($date==0) {
 				  	$ct = preg_match("/2 DATE (.+)/", $factrec, $match);
 				  	if ($ct>0) $date = parse_date(trim($match[1]));
 				}
+				
 				if ($date != 0) {
 					$startSecond = 1;
 					if ($date[0]["day"]=="") {
@@ -2871,7 +2874,8 @@ function get_event_list() {
 						$hebrew_date = parse_date(trim($match[1]));
 						$date = jewishGedcomDateToCurrentGregorian($hebrew_date);
 					}
-				} else {
+				} 
+				if ($date==0) {
 					$ct = preg_match("/2 DATE (.+)/", $factrec, $match);
 					if ($ct>0) $date = parse_date(trim($match[1]));
 				}
