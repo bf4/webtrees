@@ -37,7 +37,7 @@ function loadCachedBlock($bloc, $index) {
 	if (isset($DEBUG) && $DEBUG==true) return false;
 	
 	//-- ignore 0 level caching
-	if (!isset($PGV_BLOCKS[$bloc]['cache']) || $PGV_BLOCKS[$bloc]['cache']<1) return false;
+	if (isset($PGV_BLOCKS[$bloc]['cache']) && $PGV_BLOCKS[$bloc]['cache']<1) return false;
 	
 	//-- ignore caching for logged in users 
 	$uname = getUserName();
@@ -61,9 +61,13 @@ function loadCachedBlock($bloc, $index) {
 		$modtime = filemtime($fname);
 		//-- time should start at the beginning of the day
 		$modtime = $modtime - (date("G",$modtime)*60*60 + date("i",$modtime)*60 + date("s",$modtime));
-		$modtime = $modtime+($PGV_BLOCKS[$bloc]['cache']*24*60*60);
+		if (isset($PGV_BLOCKS[$bloc]['cache'])) $checktime = ($PGV_BLOCKS[$bloc]['cache']*24*60*60);
+		else $checktime = 24*60*60; //-- default to 1 day
+		$modtime = $modtime+$checktime;
 		if ($modtime<time()) return false;		
-		include($fname);
+		$fp = fopen($fname, "rb");
+		fpassthru($fp);
+		fclose($fp);
 		return true;
 	}
 }
@@ -82,7 +86,7 @@ function saveCachedBlock($bloc, $index, $content) {
 	if (isset($DEBUG) && $DEBUG==true) return false;
 	
 	//-- ignore 0 level caching
-	if (!isset($PGV_BLOCKS[$bloc]['cache']) || $PGV_BLOCKS[$bloc]['cache']<1) return false;
+	if (isset($PGV_BLOCKS[$bloc]['cache']) && $PGV_BLOCKS[$bloc]['cache']<1) return false;
 	
 	//-- ignore caching for logged in users 
 	$uname = getUserName();
