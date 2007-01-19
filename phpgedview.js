@@ -803,6 +803,18 @@ function show_submenu(elementid, parentid, dir) {
 						boxright = element.offsetLeft+element.offsetWidth+10;
 					}
 				}
+		
+		//-- make sure the submenu is the size of the largest child
+		var maxwidth = 0;
+		var count = element.childNodes.length;
+		for(var i=0; i<count; i++) {
+			var child = element.childNodes[i];
+			if (child.offsetWidth > maxwidth+5) maxwidth = child.offsetWidth;
+		}
+		if (element.offsetWidth <  maxwidth) {
+			element.style.width = maxwidth+"px";
+		}
+		
 		if (dir=="down") {
 			var pelement = document.getElementById(parentid);
 			if (pelement) {
@@ -817,6 +829,7 @@ function show_submenu(elementid, parentid, dir) {
 		if (dir=="right") {
 			var pelement = document.getElementById(parentid);
 			if (pelement) {
+				if (textDirection=="ltr") {
 				var boxleft = pelement.offsetLeft+pelement.offsetWidth-40;
 				var boxright = boxleft+element.offsetWidth+10;
 				if (boxright > pagewidth) {
@@ -825,22 +838,17 @@ function show_submenu(elementid, parentid, dir) {
 				else {
 					element.style.left=boxleft+"px";
 				}
+				}
+				else {
+//					element.style.right = pelement.offsetLeft+"px";
+					element.style.left = (pelement.offsetLeft-element.offsetWidth)+"px";
+//					alert(element.style.left);
+				}
 				element.style.top = pelement.offsetTop+"px";
 			}
 		}
 
 		if (element.offsetLeft < 0) element.style.left = "0px";
-
-		//-- make sure the submenu is the size of the largest child
-		var maxwidth = 0;
-		var count = element.childNodes.length;
-		for(var i=0; i<count; i++) {
-			var child = element.childNodes[i];
-			if (child.offsetWidth > maxwidth+5) maxwidth = child.offsetWidth;
-		}
-		if (element.offsetWidth <  maxwidth) {
-			element.style.width = maxwidth+"px";
-		}
 
 		currentmenu = elementid;
 		element.style.visibility='visible';
@@ -873,7 +881,6 @@ if (menutimeouts[elementid] != null) {
  * @param string elementid the id for the dom element you want to hide
  */
 function timeout_submenu(elementid) {
-	//hide_submenu(elementid);
 	if (menutimeouts[elementid] == null) {
 		tout = setTimeout("hide_submenu('"+elementid+"')", 100);
 		menutimeouts[elementid] = tout;

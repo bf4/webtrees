@@ -29,6 +29,7 @@
 $PGV_BLOCKS["print_block_theme_select"]["name"]         = $pgv_lang["theme_select_block"];
 $PGV_BLOCKS["print_block_theme_select"]["descr"]        = "theme_select_descr";
 $PGV_BLOCKS["print_block_theme_select"]["type"]        = "gedcom";
+$PGV_BLOCKS["print_block_theme_select"]["cache"]   		= 30;
 $PGV_BLOCKS["print_block_theme_select"]["canconfig"]   = false;
 
 function print_block_theme_select($style=0, $config="", $side, $index) {

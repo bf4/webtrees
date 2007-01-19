@@ -201,6 +201,7 @@ $factarray["ROMN"] = "Romanisiert";
 // PAF related facts
 $factarray["_NAME"] = "Name";
 $factarray["URL"] = "Internet URL";
+$factarray["_URL"] = "Internet-Adresse";
 $factarray["_HEB"] = "Hebräisch";
 $factarray["_SCBK"] = "Sammelalbum";
 $factarray["_TYPE"] = "Multimedia-Typ";

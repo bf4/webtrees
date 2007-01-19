@@ -411,7 +411,8 @@ while (true) {
 	break;
 }
 
-unset($CONFIG_VARS);	// Not needed any more
+//-- CONFIG_VARS is still needed by the web services
+//unset($CONFIG_VARS);
 
 //-- check if they are trying to hack
 if ($configOverride) {

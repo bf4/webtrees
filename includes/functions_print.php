@@ -49,9 +49,9 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 global $chart_style, $box_width, $generations, $show_spouse, $show_full;
 	 global $CHART_BOX_TAGS, $SHOW_LDS_AT_GLANCE;
 	 global $SEARCH_SPIDER;
-	 
+
 	 if ($style != 2) $style=1;
-	
+
 	 flush();
 	 if (!isset($OLD_PGENS)) $OLD_PGENS = $DEFAULT_PEDIGREE_GENERATIONS;
 	 if (!isset($talloffset)) $talloffset = $PEDIGREE_LAYOUT;
@@ -286,7 +286,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			   $imgsize = findImageSize($object["file"]);
 			   $imgwidth = $imgsize[0]+50;
 			   $imgheight = $imgsize[1]+150;
-			   
+
 				if (!empty($object['mid']) && $USE_MEDIA_VIEWER) print "<a href=\"mediaviewer.php?mid=".$object['mid']."\" >";
 				else print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($object["file"])."',$imgwidth, $imgheight);\">";
 
@@ -873,7 +873,7 @@ function message(username, method, url, subject) {
 function print_footer() {
 	 global $without_close, $pgv_lang, $view, $buildindex, $pgv_changes, $VERSION_RELEASE, $DBTYPE;
 	 global $VERSION, $SHOW_STATS, $SCRIPT_NAME, $QUERY_STRING, $footerfile, $print_footerfile, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $printlink;
-	 global $PGV_IMAGE_DIR, $theme_name, $PGV_IMAGES, $TEXT_DIRECTION, $footer_count;
+	 global $PGV_IMAGE_DIR, $theme_name, $PGV_IMAGES, $TEXT_DIRECTION, $footer_count, $DEBUG;
 
 	 if (!isset($footer_count)) $footer_count = 1;
 	 else $footer_count++;
@@ -910,7 +910,7 @@ function print_simple_footer() {
 	 print "\n\t<br /><br /><div align=\"center\" style=\"width: 99%;\">";
 	 print_contact_links();
 	 print "\n\t<a href=\"http://www.phpgedview.net\" target=\"_blank\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedview"]["other"]."\" border=\"0\" alt=\"PhpGedView Version $VERSION\" title=\"PhpGedView Version $VERSION\" /></a><br />";
-	 if ($SHOW_STATS) print_execution_stats();
+	 if ($SHOW_STATS || (isset($DEBUG) && ($DEBUG==true))) print_execution_stats();
 	 print "</div>";
 	 print "\n\t</body>\n</html>";
 }
@@ -1861,14 +1861,14 @@ function print_theme_dropdown($style=0) {
 		  isset($_SERVER["QUERY_STRING"]) == true?$tqstring = "?".$_SERVER["QUERY_STRING"]:$tqstring = "";
 		  $frompage = $_SERVER["SCRIPT_NAME"].$tqstring;
 		  if(isset($_REQUEST['mod'])){
-		  	if(!strstr("?", $frompage)) 
+		  	if(!strstr("?", $frompage))
 		  	{
 		  		if(!strstr("%3F", $frompage)) ;
 		  		else $frompage.="?";
 		  	}
 		  	if(!strstr("&mod",$frompage))$frompage.="&mod=".$_REQUEST['mod'];
 		  }
-		  
+
 		  $themes = get_theme_names();
 		  print "<div class=\"theme_form\">\n";
 		  $module = "";
@@ -2421,7 +2421,7 @@ function print_fact_place($factrec, $anchor=false, $sub=false, $lds=false) {
  */
 function print_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM", "DEAT", "BURI", "BAPL", "ADOP")) {
 	global $pgv_lang, $factarray, $LANGUAGE, $TEXT_DIRECTION;
-	
+
 	$indirec = find_person_record($key);
 	if (!$indirec) $indirec = find_family_record($key);
 	foreach ($majorfacts as $indexval => $fact) {

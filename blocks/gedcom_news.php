@@ -30,6 +30,7 @@ $PGV_BLOCKS['print_gedcom_news']['name']		= $pgv_lang['gedcom_news_block'];
 $PGV_BLOCKS['print_gedcom_news']['descr']		= 'gedcom_news_descr';
 $PGV_BLOCKS['print_gedcom_news']['type']		= 'gedcom';
 $PGV_BLOCKS['print_gedcom_news']['canconfig']	= true;
+$PGV_BLOCKS["print_gedcom_news"]["cache"]   = 7;
 $PGV_BLOCKS['print_gedcom_news']['config']		= array(
 	'limit' => 'nolimit',
 	'flag' => 0

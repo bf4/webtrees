@@ -43,6 +43,17 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["bosa_2"]								17 Jan 2007				S		}  Removed reference to     
+*$pgv_lang["bosa_3"]								17 Jan 2007				S		}  other $pgv_lang variables
+*$pgv_lang["bosa_4"]								17 Jan 2007				S		}  in the value declarations
+*$pgv_lang["bosa_5"]								17 Jan 2007				S		}  and used their real      
+*$pgv_lang["bosa_6"]								17 Jan 2007				S		}  string values instead.   
+*$pgv_lang["bosa_7"]								17 Jan 2007				S		}  
+*$pgv_lang["sosa_uncle_2"]							17 Jan 2007				S		}  The Translator Tool didn't  
+*$pgv_lang["sosa_uncle_3"]							17 Jan 2007				S		}  like the references to the
+*$pgv_lang["sosa_aunt_2"]							17 Jan 2007				S		}  $pgv_lang variables.
+*$pgv_lang["sosa_aunt_3"]							17 Jan 2007				S		}  
+*$pgv_lang["advanced_options"]						16 Jan 2007				S
 *$pgv_lang["mail01_line02"]							12 Jan 2007				fw
 *$pgv_lang["mail01_line04"]							12 Jan 2007				w
 *$pgv_lang["mail02_line02"]							12 Jan 2007				fw

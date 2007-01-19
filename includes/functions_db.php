@@ -2832,9 +2832,9 @@ function get_event_list() {
 			$facts = get_all_subrecords($indi["gedcom"], $skipfacts, false, false, false);
 			foreach($facts as $key=>$factrec) {
 				$date = 0; //--- MA @@@
-				$hct = preg_match("/2 DATE.*(@#DHEBREW@)/", $factrec, $match);
-				if ($hct>0) {
-					if ($USE_RTL_FUNCTIONS) {
+				if ($USE_RTL_FUNCTIONS) {
+					$hct = preg_match("/2 DATE.*(@#DHEBREW@)/", $factrec, $match);
+					if ($hct>0) {
 						$dct = preg_match("/2 DATE (.+)/", $factrec, $match);
 						$hebrew_date = parse_date(trim($match[1]));
 						$date = jewishGedcomDateToCurrentGregorian($hebrew_date);
@@ -2864,9 +2864,9 @@ function get_event_list() {
 			$facts = get_all_subrecords($fam["gedcom"], $skipfacts, false, false, false);
 			foreach($facts as $key=>$factrec) {
 				$date = 0; //--- MA @@@
-				$hct = preg_match("/2 DATE.*(@#DHEBREW@)/", $factrec, $match);
-				if ($hct>0) {
-					if ($USE_RTL_FUNCTIONS) {
+				if ($USE_RTL_FUNCTIONS) {
+					$hct = preg_match("/2 DATE.*(@#DHEBREW@)/", $factrec, $match);
+					if ($hct>0) {
 						$dct = preg_match("/2 DATE (.+)/", $factrec, $match);
 						$hebrew_date = parse_date(trim($match[1]));
 						$date = jewishGedcomDateToCurrentGregorian($hebrew_date);

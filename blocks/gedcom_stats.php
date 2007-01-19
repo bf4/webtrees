@@ -32,6 +32,7 @@ require_once("includes/functions_print_lists.php");
 $PGV_BLOCKS["print_gedcom_stats"]["name"]        = $pgv_lang["gedcom_stats_block"];
 $PGV_BLOCKS["print_gedcom_stats"]["descr"]        = "gedcom_stats_descr";
 $PGV_BLOCKS["print_gedcom_stats"]["canconfig"]   = true;
+$PGV_BLOCKS["print_gedcom_stats"]["cache"]   = 1;
 $PGV_BLOCKS["print_gedcom_stats"]["config"] = array("show_common_surnames"=>"yes"
 	,"stat_indi"=>"yes"
 	,"stat_fam"=>"yes"

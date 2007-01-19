@@ -1241,21 +1241,8 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 	$hidden = 0;
 	$n = 0;
 	foreach($datalist as $key => $value) {
-		//-- get gedcom record
-		$record = GedcomRecord::getInstance($value[0]);
-		if (is_null($record)) continue;
-		//-- only living people ?
-		if (strpos($option, "living")) {
-			if ($record->type=="INDI" and $record->isDead()) continue;
-			if ($record->type=="FAM") {
-				$husb = $record->getHusband();
-				if (is_null($husb)) continue;
-				if ($husb->isDead()) continue;
-				$wife = $record->getWife();
-				if (is_null($wife)) continue;
-				if ($wife->isDead()) continue;
-			}
-		}
+		
+		//-- check if we actually need to load up the record from the DB first
 		//-- Event name
 		$exp = explode("\n", $value[1]);
 		$exp = explode(" ", $exp[0]);
@@ -1279,6 +1266,23 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 		if ($nextdays>0 and date("Ymd") == date("Ymd", $anniv)) continue;
 		// sorting by MM-DD-YYYY
 		$sortkey = sprintf("%02d-%02d-%04d", $pdate[0]["mon"], $pdate[0]["day"], $pdate[0]["year"]);
+		
+		//-- get gedcom record
+		$record = GedcomRecord::getInstance($value[0]);
+		if (is_null($record)) continue;
+		//-- only living people ?
+		if (strpos($option, "living")) {
+			if ($record->type=="INDI" and $record->isDead()) continue;
+			if ($record->type=="FAM") {
+				$husb = $record->getHusband();
+				if (is_null($husb)) continue;
+				if ($husb->isDead()) continue;
+				$wife = $record->getWife();
+				if (is_null($wife)) continue;
+				if ($wife->isDead()) continue;
+			}
+		}
+		
 		// Privacy
 		if (!$record->canDisplayDetails()) {
 			$hidden++;

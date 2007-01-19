@@ -32,6 +32,7 @@ if (strstr($_SERVER["SCRIPT_NAME"], "functions")) {
 require_once('includes/media_class.php');
 include_once('includes/functions_lang.php');
 require_once('includes/mutex_class.php');
+require_once('includes/index_cache.php');
 
 /**
  * import record into database
@@ -1387,6 +1388,9 @@ function empty_database($FILE, $keepmedia=false) {
 	
 	$sql = "DELETE FROM ".$TBLPREFIX."soundex WHERE sx_file='$FILE'";
 	$res = dbquery($sql);
+	
+	//-- clear all of the cache files for this gedcom
+	clearCache();
 }
 
 /**

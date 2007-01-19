@@ -50,8 +50,9 @@ $user=getUser($CONTACT_EMAIL);
 $author =$user["firstname"]." ".$user["lastname"];
 
 $feed = new UniversalFeedCreator();
+$feed->generator = "http://www.phpgedview.net v" . $VERSION . " " . $VERSION_RELEASE;
 $feed->title = $GEDCOMS[$GEDCOM]["title"];
-
+$feed->language=$lang_short_cut[$LANGUAGE]; //$lang_langcode[$LANGUAGE];
 
 //optional
 $feed->descriptionTruncSize = 500;
@@ -98,7 +99,7 @@ if($ENABLE_RSS) {
 			$item->source = $SERVER_URL;
 			$item->author = $author;
 			$item->authorURL = $feed->link;
-			$item->category="genealogy";
+			$item->category = $pgv_lang["genealogy"];
 			$feed->addItem($item);
 		}
 	}*/
@@ -335,10 +336,10 @@ if($ENABLE_RSS) {
 			$item->authorURL = $feed->link;
 			$item->category = $pgv_lang["genealogy"];
 			$item->enclosure = new EnclosureItem();
-			$item->enclosure->url=$SERVER_URL . $randomMedia[3];
-			$item->enclosure->type=$randomMedia[4];
-			$item->enclosure->length= $randomMedia[5];
-			//$item->enclosure->title = $dataArray[6]; //not yet supported by feed creator, but part of the ATOM spec
+			$item->enclosure->url = $SERVER_URL . $randomMedia[3];
+			$item->enclosure->type = $randomMedia[4];
+			$item->enclosure->length = $randomMedia[5];
+			$item->enclosure->title = $randomMedia[6];
 
 			$feed->addItem($item);
 		}

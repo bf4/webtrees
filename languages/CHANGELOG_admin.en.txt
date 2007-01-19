@@ -42,6 +42,9 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["clear_cache_succes"]					18 Jan 2007				A
++$pgv_lang["clear_cache"]							18 Jan 2007				A
+*$pgv_lang["sanity_warn5"]							17 Jan 2007				w			Correct URL
 -$pgv_lang["admin_approved"]						12 Jan 2007				D			Don't build sentences
 -$pgv_lang["you_may_login"]							12 Jan 2007				D			from fragments!
 +$pgv_lang["admin_OK_subject"]						12 Jan 2007				A

@@ -87,7 +87,7 @@ $pgv_lang["clear_chart"]			= "Clear Chart";
 $pgv_lang["file_information"]		= "File Information";
 $pgv_lang["choose_file_type"]		= "Choose File Type";
 $pgv_lang["add_individual_by_id"]		= "Add Individual By ID";
-$pgv_lang["advanced_options"]		= "Advaced Options";
+$pgv_lang["advanced_options"]		= "Advanced Options";
 $pgv_lang["zip_files"]				= "Zip File(s)";
 $pgv_lang["include_media"]			= "Include Media (automatically zips files)";
 $pgv_lang["roman_surn"]				= "Romanized Surname";
@@ -724,13 +724,13 @@ $pgv_lang["n_x_sisters_daughter"] = "%2\$d x great niece";
 // the bosa name is used for offspring - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
-$pgv_lang["bosa_2"] 				= $pgv_lang["son"];                   // son
-$pgv_lang["bosa_3"] 				= $pgv_lang["daughter"];              // daughter
+$pgv_lang["bosa_2"] 				= "son";                   // son
+$pgv_lang["bosa_3"] 				= "daughter";              // daughter
 // 2nd generation
-$pgv_lang["bosa_4"] 				= $pgv_lang["grandson"];              // son's son
-$pgv_lang["bosa_5"] 				= $pgv_lang["granddaughter"];         // son's daughter
-$pgv_lang["bosa_6"] 				= $pgv_lang["grandson"];              // daughter's son
-$pgv_lang["bosa_7"] 				= $pgv_lang["granddaughter"];         // daughter's daughter
+$pgv_lang["bosa_4"] 				= "grandson";              // son's son
+$pgv_lang["bosa_5"] 				= "granddaughter";         // son's daughter
+$pgv_lang["bosa_6"] 				= "grandson";              // daughter's son
+$pgv_lang["bosa_7"] 				= "granddaughter";         // daughter's daughter
 // 3rd generation
 $pgv_lang["bosa_8"] 				= "great grandson";        // son's son's son
 $pgv_lang["bosa_9"] 				= "great granddaughter";   // son's son's daughter
@@ -754,8 +754,8 @@ $pgv_lang["n_x_granddaughter_from_daughter"] = "%3\$d x great granddaughter";
 // to allow fo language variations we specify different relationships for paternal and maternal
 // aunts and uncles
 // 1st generation
-$pgv_lang["sosa_uncle_2"] 				= $pgv_lang["uncle"];            // father's brother
-$pgv_lang["sosa_uncle_3"] 				= $pgv_lang["uncle"];            // mother's brother
+$pgv_lang["sosa_uncle_2"] 				= "uncle";            // father's brother
+$pgv_lang["sosa_uncle_3"] 				= "uncle";            // mother's brother
 // 2nd generation
 $pgv_lang["sosa_uncle_4"] 				= "great uncle";      // fathers's father's brother
 $pgv_lang["sosa_uncle_5"] 				= "great uncle";      // father's mother's brother
@@ -773,8 +773,8 @@ $pgv_lang["n_x_maternal_uncle"]	    = "%2\$d x great uncle";
 // to allow fo language variations we specify different relationships for paternal and maternal
 // aunts and aunts
 // 1st generation
-$pgv_lang["sosa_aunt_2"] 				= $pgv_lang["aunt"];            // father's sister
-$pgv_lang["sosa_aunt_3"] 				= $pgv_lang["aunt"];            // mother's sister
+$pgv_lang["sosa_aunt_2"] 				= "aunt";            // father's sister
+$pgv_lang["sosa_aunt_3"] 				= "aunt";            // mother's sister
 // 2nd generation
 $pgv_lang["sosa_aunt_4"] 				= "great aunt";      // fathers's father's sister
 $pgv_lang["sosa_aunt_5"] 				= "great aunt";      // father's mother's sister
@@ -978,7 +978,7 @@ $pgv_lang["mail04_line01"]			= "Hello #user_fullname# ...";
 $pgv_lang["mail04_line02"]			= "A new password was requested for your user name.";
 $pgv_lang["mail04_line03"]			= "Recommendation:";
 $pgv_lang["mail04_line04"]			= "Please click on the link below or paste it into your browser, login with the new password, and change it immediately to keep the integrity of your data secure.";
-$pgv_lang["mail04_line05"]			= "After you have logged in, select the «#pgv_lang[editowndata]#» link under the «#pgv_lang[mygedview]#» menu and fill in the password fields to change your password.";
+$pgv_lang["mail04_line05"]			= "After you have logged in, select the Â«#pgv_lang[editowndata]#Â» link under the Â«#pgv_lang[mygedview]#Â» menu and fill in the password fields to change your password.";
 $pgv_lang["mail04_subject"] 		= "Data request at #SERVER_NAME#";
 
 $pgv_lang["pwreqinfo"]				= "Hello...<br /><br />An email with your new password was sent to the address we have on file for <b>#user[email]#</b>.<br /><br />Please check your email account; you should receive our message soon.<br /><br />Recommendation:<br />You should login to this site with your new password as soon as possible, and you should change your password to maintain your data's security.";
@@ -1538,7 +1538,7 @@ $pgv_lang["button_reset"] = "Reset to the list defaults.";
 $pgv_lang["button_SEX_F"] = "Show only females.";
 $pgv_lang["button_SEX_M"] = "Show only males.";
 $pgv_lang["button_SEX_U"] = "Show only persons of whom the gender is not known.";
-$pgv_lang["button_TREE_L"] = "Show «leaves» couples or individuals.  These are individuals who are alive but have no children recorded in the database.";
-$pgv_lang["button_TREE_R"] = "Show «roots» couples or individuals.  These people may also be called «patriarchs».  They are individuals who have no parents recorded in the database.";
+$pgv_lang["button_TREE_L"] = "Show Â«leavesÂ» couples or individuals.  These are individuals who are alive but have no children recorded in the database.";
+$pgv_lang["button_TREE_R"] = "Show Â«rootsÂ» couples or individuals.  These people may also be called Â«patriarchsÂ».  They are individuals who have no parents recorded in the database.";
 $pgv_lang["sort_column"] = "Sort by this column.";
 ?>

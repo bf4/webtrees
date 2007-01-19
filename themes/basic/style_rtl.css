@@ -17,3 +17,16 @@ body {
 .door dd {
 	float: right;
 }
+
+#searchform {
+	width: 140px;
+	float: left;
+	position: relative;
+	top: -25px;
+}
+
+#gedcommenu {
+	width: 25px;
+	float: right;
+	margin-right: 5px;
+}
