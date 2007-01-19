@@ -411,6 +411,11 @@ if ($action=="update") {
 			else $$key=$value;
 		}
 	}
+	
+	//-- delete the cache files for the welcome page blocks
+	include_once("includes/index_cache.php");
+	clearCache();
+	
 	$logline = AddToLog("Gedcom configuration ".$INDEX_DIRECTORY.$FILE."_conf.php"." updated by >".getUserName()."<", $FILE);
  	$gedcomconfname = $FILE."_conf.php";
  	if (!empty($COMMIT_COMMAND)) check_in($logline, $gedcomconfname, $INDEX_DIRECTORY);

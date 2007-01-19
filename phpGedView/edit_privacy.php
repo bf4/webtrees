@@ -295,8 +295,11 @@ if ($action=="update") {
 	$logline = AddToLog("Privacy file $PRIVACY_MODULE updated by >".getUserName()."<");
  	$gedcomprivname = $GEDCOM."_priv.php";
  	if (!empty($COMMIT_COMMAND)) check_in($logline, $gedcomprivname, $INDEX_DIRECTORY);	
-}
 
+ 	//-- delete the cache files for the welcome page blocks
+	include_once("includes/index_cache.php");
+	clearCache();
+}
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
