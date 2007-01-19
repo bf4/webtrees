@@ -1049,7 +1049,7 @@ function getRandomMedia() {
 				$dataArray[4] = "application/pdf";
 			}
 		}
-		$dataArray[5] = filesize($medialist[$value]["FILE"]);
+		$dataArray[5] = @filesize($medialist[$value]["FILE"]);
 		$dataArray[6] = $mediaTitle;
 		//$dataArray[7] = $medialist[$value]["XREF"];
 	}
