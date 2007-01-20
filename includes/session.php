@@ -285,7 +285,7 @@ if (!isset($_SERVER['REQUEST_URI'])) $_SERVER['REQUEST_URI'] = "";
 
 //-- version of phpgedview
 $VERSION = "4.1";
-$VERSION_RELEASE = "beta 3";
+$VERSION_RELEASE = "beta 4";
 $REQUIRED_PRIVACY_VERSION = "3.1";
 
 //-- list of critical configuration variables
