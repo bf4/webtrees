@@ -161,7 +161,7 @@ $factarray["_PGVU"]	= "Zuletzt geändert von";
 $factarray["SERV"] = "Fremder Server";
 $factarray["_GEDF"] = "GEDCOM Datei";
 $factarray["_PRIM"]	= "Bevorzugtes Bild";
-$factarray["_THUM"]	= "Dieses Bild als Miniaturansicht verwenden?";
+$factarray["_THUM"]	= "Dieses Bild auch als Miniaturbild verwenden?";
 
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"]	= "Medizinische Information";
