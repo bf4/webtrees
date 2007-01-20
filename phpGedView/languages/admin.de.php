@@ -26,11 +26,11 @@
  * @version $Id$
  */
 $pgv_lang["user"]					= "Benutzer bestätigt";
-$pgv_lang["thumbnail_deleted"]		= "Miniaturansichtsdatei wurde gelöscht.";
-$pgv_lang["thumbnail_not_deleted"]	= "Miniaturansichtsdatei konnte nicht gelöscht werden.";
+$pgv_lang["thumbnail_deleted"]		= "Miniaturbild wurde gelöscht.";
+$pgv_lang["thumbnail_not_deleted"]	= "Miniaturbild konnte nicht gelöscht werden.";
 $pgv_lang["step2"]                        = "Schritt 2 von 4:";
 $pgv_lang["refresh"]				= "Erneuern";
-$pgv_lang["move_file_success"]		= "Medien- und Miniaturansichtsdateien wurden entfernt.";
+$pgv_lang["move_file_success"]		= "Medien- und Miniaturbild-Dateien wurden entfernt.";
 $pgv_lang["media_folder_corrupt"]	= "Das Medienverzeichnis ist defekt.";
 $pgv_lang["media_file_not_deleted"]	= "Mediendatei konnte nicht gelöscht werden.";
 $pgv_lang["gedcom_deleted"]                = "GEDCOM [#GED#] wurde gelöscht.";
@@ -63,7 +63,7 @@ $pgv_lang["created_placelinks"] 	= "Die <i>Place links</i> Tabelle wurde erstell
 $pgv_lang["created_placelinks_fail"]	= "Die <i>Place links</i> Tabelle konnte nicht erstellt werden.";
 $pgv_lang["created_media_fail"]	= "Die <i>Media</i> Tabelle konnte nicht erstellt werden.";
 $pgv_lang["created_media_mapping_fail"]	= "Die <i>Media mappings</i> Tabelle konnte nicht erstellt werden.";
-$pgv_lang["no_thumb_dir"]			= "Das Miniaturansichtenverzeichnis existiert nicht und konnte auch nicht erstellt werden.";
+$pgv_lang["no_thumb_dir"]			= "Das Miniaturbild-Verzeichnis existiert nicht und konnte auch nicht erstellt werden.";
 $pgv_lang["move_to"]				= "Verschieben nach";
 $pgv_lang["folder_created"]			= "Verzeichnis erstellt";
 $pgv_lang["folder_no_create"]		= "Verzeichnis konnte nicht erstellt werden";
@@ -323,11 +323,13 @@ $pgv_lang["sanity_err4"]			= "Die Datei <i>config.php</i> enthält Fehler.";
 $pgv_lang["sanity_err5"]			= "Die Datei <i>config.php</i> kann nicht geschrieben werden.";
 $pgv_lang["sanity_err6"]			= "Das Verzeichnis <i>#GLOBALS[INDEX_DIRECTORY]#</i> hat falsche Schreib-Rechte.";
 $pgv_lang["sanity_warn0"]			= "Warnungen:";
-$pgv_lang["sanity_warn1"]			= "Das Medien-Verzeichnis <i>#GLOBALS[MEDIA_DIRECTORY]#</i> hat falsche Schreib-Rechte. Sie können durch PhpGedView keine Medien-Dateien hochladen oder Miniaturansichen erstellen.";
-$pgv_lang["sanity_warn2"]			= "Das Miniaturansichten-Verzeichnis <i>#GLOBALS[MEDIA_DIRECTORY]#thumbs</i> hat falsche Schreib-Rechte. Sie können durch PhpGedView keine Miniaturansichten hochladen oder erstellen.";
-$pgv_lang["sanity_warn3"]			= "Tools zur Bearbeitung von Bildern (GD Library) sind nicht vorhanden. PhpGedView funktioniert, aber einige Teile, zB Miniaturansichten-Erstellung und Kreisdiagramm, benötigen die GD Library. Bitte besuchen Sie <a href='http://www.php.net/manual/de/ref.image.php'>http://www.php.net/manual/de/ref.image.php</a> um ausführlichere Auskunft zu bekommen.";
+$pgv_lang["sanity_warn1"]			= "Das Medien-Verzeichnis <i>#GLOBALS[MEDIA_DIRECTORY]#</i> hat falsche Schreib-Rechte. Sie können durch PhpGedView keine Medien-Dateien hochladen oder Miniaturbilder erstellen.";
+$pgv_lang["sanity_warn2"]			= "Das Miniaturbild-Verzeichnis <i>#GLOBALS[MEDIA_DIRECTORY]#thumbs</i> hat falsche Schreib-Rechte. Sie können durch PhpGedView keine Miniaturbilder hochladen oder erstellen.";
+$pgv_lang["sanity_warn3"]			= "Tools zur Bearbeitung von Bildern (GD Library) sind nicht vorhanden. PhpGedView funktioniert, aber einige Teile, zB Miniaturbild-Erstellung und Kreisdiagramm, benötigen die GD Library. Bitte besuchen Sie <a href='http://www.php.net/manual/de/ref.image.php'>http://www.php.net/manual/de/ref.image.php</a> um ausführlichere Auskunft zu bekommen.";
 $pgv_lang["sanity_warn4"]			= "Tools zur Bearbeitung von XML-Dateien (XML Parser) sind nicht vorhanden.  PhpGedView funktioniert, aber einige Teile, zb Erstellung von Berichten und Verbindungen zu anderen PhpGedView Seiten, benötigen die XML Parser Tools. Bitte besuchen Sie <a href='http://www.php.net/manual/de/ref.xml.php'>http://www.php.net/manual/de/ref.xml.php</a> um ausführlichere Auskunft zu bekommen.";
 $pgv_lang["sanity_warn5"]			= "Tools zur Bearbeitung von XML-Dateien (DOM XML Library) sind nicht vorhanden. PhpGedView funktioniert, aber einige Teile, zB Gramps Export des Sammelbehälters, herunterladen, und Verbindungen zu anderen PhpGedView Seiten, benötigen die DOM XML Library. Bitte besuchen Sie <a href='http://www.php.net/manual/de/ref.domxml.php'>http://www.php.net/manual/de/ref.domxml.php</a> um ausführlichere Auskunft zu bekommen.";
 $pgv_lang["sanity_warn6"]			= "Tools zur Sonderbearbeitung von Daten (Calendar Library) sind nicht vorhanden. PhpGedView funktioniert, aber einige Teile, zB Bearbeitung von Hebräischen oder Französischen Daten, benötigen die Calendar Library. Die Calendar Library ist oft für das richtige Ablaufen von PhpGedView nicht notwendig. Bitte besuchen Sie <a href='http://www.php.net/manual/de/ref.calendar.php'>http://www.php.net/manual/de/ref.calendar.php</a> um ausführlichere Auskunft zu bekommen.";
+$pgv_lang["clear_cache_succes"]		= "Die Cache-Dateien sind gelöscht.";
+$pgv_lang["clear_cache"]			= "Cache-Dateien löschen";
 
 ?>
