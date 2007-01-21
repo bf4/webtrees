@@ -550,7 +550,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		if(! $REQUIRE_AUTHENTICATION){
 			print "<link href=\"" . $SERVER_URL . "rss.php?ged=$GEDCOM\" rel=\"alternate\" type=\"$applicationType\" title=\"$gedcomTitle\" />\n\t";
 		}
-		print "<link href=\"" . $SERVER_URL . "rss.php?ged=$GEDCOM&amp;auth=basic\" rel=\"alternate\" type=\"$applicationType\" title=\"$gedcomTitle - " . $pgv_lang["authenticated_feed"] . "\" />\n\t";
+		//print "<link href=\"" . $SERVER_URL . "rss.php?ged=$GEDCOM&amp;auth=basic\" rel=\"alternate\" type=\"$applicationType\" title=\"$gedcomTitle - " . $pgv_lang["authenticated_feed"] . "\" />\n\t";
 	}
 	print "<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\" media=\"all\"></link>\n\t";
 	if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\"></link>\n\t";
