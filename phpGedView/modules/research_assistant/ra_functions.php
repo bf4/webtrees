@@ -1266,9 +1266,6 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		if (isset ($_REQUEST['action']) && $_REQUEST['action'] == 'ra_addtask')
 			$this->auto_add_task($person, $_POST['folder']);
 
-		//$probabilities = $this->inferences();
-
-		if ($VERSION<4.1) print "<script src=\"compat.js\" language\"JavaScript\" type=\"text/javascript\"></script>\n";
 		// gets task id from the database
 		$sql = "SELECT * FROM ".$TBLPREFIX."individualtask WHERE it_i_id = '".$DBCONN->escapeSimple($person->getXref())."' AND it_i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id'])."'";		
 		$res = dbquery($sql);
@@ -1403,10 +1400,6 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$out .= '<form action="" onsubmit="return false;">
 				<input type="button" value="'.$pgv_lang["add_new_comment"].'" onclick="window.open(\'editcomment.php?pid='.$person->getXref().'\', \'\',\'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1\');"></form>';
 		$out .= '</td></tr></table>';
-		
-		//Beginning of our JavaScript
-		$out .= "
- <script type=\"text/javascript\" src=\"modules/research_assistant/research_assistant.js\"></script>";
 		$out .= "\n\t<br /><br />";
 		// Return the goods.		 	
 		return $out;
