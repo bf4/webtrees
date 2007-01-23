@@ -37,7 +37,7 @@ function loadCachedBlock($bloc, $index) {
 	if (isset($DEBUG) && $DEBUG==true) return false;
 	
 	//-- ignore 0 level caching
-	if (isset($PGV_BLOCKS[$bloc]['cache']) && $PGV_BLOCKS[$bloc]['cache']<1) return false;
+	if (isset($PGV_BLOCKS[$bloc]) && (!isset($PGV_BLOCKS[$bloc]['cache']) || $PGV_BLOCKS[$bloc]['cache']<1)) return false;
 	
 	//-- ignore caching for logged in users 
 	$uname = getUserName();
@@ -86,7 +86,7 @@ function saveCachedBlock($bloc, $index, $content) {
 	if (isset($DEBUG) && $DEBUG==true) return false;
 	
 	//-- ignore 0 level caching
-	if (isset($PGV_BLOCKS[$bloc]['cache']) && $PGV_BLOCKS[$bloc]['cache']<1) return false;
+	if (isset($PGV_BLOCKS[$bloc]) && (!isset($PGV_BLOCKS[$bloc]['cache']) || $PGV_BLOCKS[$bloc]['cache']<1)) return false;
 	
 	//-- ignore caching for logged in users 
 	$uname = getUserName();
