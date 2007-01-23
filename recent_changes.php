@@ -29,7 +29,7 @@
 $PGV_BLOCKS["print_recent_changes"]["name"]        = $pgv_lang["recent_changes_block"];
 $PGV_BLOCKS["print_recent_changes"]["descr"]        = "recent_changes_descr";
 $PGV_BLOCKS["print_recent_changes"]["canconfig"]        = true;
-$PGV_BLOCKS["print_recent_changes"]["cache"]   		= 1;
+$PGV_BLOCKS["print_recent_changes"]["cache"]   		= 0;
 $PGV_BLOCKS["print_recent_changes"]["config"] = array("days"=>30, "hide_empty"=>"no");
 
 //-- Recent Changes block
