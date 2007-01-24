@@ -24,6 +24,11 @@
  * @author Tymoteusz Motylewski www.motylewscy.com
  * @version $Id$
  */
+if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+  print "You cannot access a language file directly.";
+  exit;
+}
+
 //-- GENERAL 
 $pgv_lang["help_header"]			= "Informacje o:";
 $pgv_lang["privacy_error_help"]		= "|<b>PRYWATNE DANE</b><br /><br />Jest kilka przyczyn pojawienia się takiego komunikatu:<br /><br /><b>1. Informacje o żyjących osobach ustawiono na \"Prywatne\"</b><br/> Niezajerestrowani użytkownicy którzy nie są zalogowani mają dostęp tylko do wszystkich danych osób zmarłych. Jeżeli pozwala administrator, możesz zarejestrować się wysyłając prośbę o nowe konto klikając na przycisk Zaloguj, a następnie na link #pgv_lang[requestpassword]#.<br /><br /><b>2. Masz już konto (nazwe użytkownika i hasło)......</b><br /> Ale nie jesteś zalogowany lub nieaktywny przez jakiś czas i twoja sesja wygasła.<br /><br /><b>3. Z powodu ochorony danych osobowych</b><br /> Każda osoba ma prawo poprosić administratora aby nie udostępniał ich danych osobowych innym (pojawia się \"Prywatne\") lub wogóle ukrył dane.<br/> Prywatność może być ustawiona dla:<br />a) #pgv_lang[PRIV_USER]#<br />b) #pgv_lang[PRIV_NONE]#<br />c) #pgv_lang[PRIV_HIDE]#<br /><br /><b> 4. Brak pokrewieństwa\"</b><br />Nawet jeżeli jesteś zarejestrowanym użytkownikiem <b>i</b> jesteś zalogowany, może pojawić się ten komunikat. Próbujesz przeglądać dane osoby z którą nie jesteś spokrewniony w określonej długości ścieżki pokrewieństwa określonej przez administratora.<br />Przykład:<br />";

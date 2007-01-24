@@ -26,8 +26,8 @@
  * @version $Id$
  */
 if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-  print "You cannot access a language file directly.";
-  exit;
+	print "L'accès direct aux fichiers de langue est interdit.";
+	exit;
 }
 $pgv_lang["import_options_help"]        = "Vous pouvez sélectionner des options additionelles pour l'importation de ce fichier GEDCOM.";
 $pgv_lang["verify_gedcom_help"]         = "Vous pouvez continuer le téléchargement et importation de ce fichier GEDCOM ou les annuler.";

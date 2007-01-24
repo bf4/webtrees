@@ -27,8 +27,8 @@
  * @version $Id$
  */
 if (preg_match("/facts\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-        print "You cannot access a language file directly.";
-        exit;
+	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
+	exit;
 }
 // -- Define a fact array to map GEDCOM tags with their German values
 $factarray["ABBR"]	= "Abkürzung";

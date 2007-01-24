@@ -27,7 +27,6 @@
  */
 if (preg_match("/lang\...\.php$/", $_SERVER["PHP_SELF"])>0) {
 	print "Du har ikke direkte adgang til en sprogfil.";
-	
 	exit;
 }
 $pgv_lang["record_not_found"]			= "Den søgte GEDCOM-post kunne ikke findes.  Dette kan skyldes et link til en ugyldig person eller en fejl i GEDCOM-filen.";

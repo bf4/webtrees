@@ -25,6 +25,11 @@
  * @subpackage Languages
  * @version $Id$
  */
+if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
+	exit;
+}
+
 $pgv_lang["user"]					= "Benutzer bestätigt";
 $pgv_lang["thumbnail_deleted"]		= "Miniaturbild wurde gelöscht.";
 $pgv_lang["thumbnail_not_deleted"]	= "Miniaturbild konnte nicht gelöscht werden.";

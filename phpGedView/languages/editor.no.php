@@ -25,6 +25,11 @@
  * @subpackage Languages
  * @version $Id$
  */
+if (preg_match("/editor\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "You cannot access a language file directly.";
+	exit;
+}
+
 $pgv_lang["accept_changes"]		= "Godta / Avvis endring(ene)";
 $pgv_lang["replace"]			= "Erstatt oppføring";
 $pgv_lang["append"]				= "Legg til en ny oppføring";

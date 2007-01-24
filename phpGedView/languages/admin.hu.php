@@ -25,6 +25,11 @@
  * @subpackage Languages
  * @version $Id$
  */
+if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "You cannot access a language file directly.";
+	exit;
+}
+
 $pgv_lang["user"]					= "Autentikus felhasználó";
 $pgv_lang["thumbnail_deleted"]		= "Elönézet állomány sikeresen törölve.";
 $pgv_lang["thumbnail_not_deleted"]	= "Elönézet állományt nem lehetett kitörölni.";

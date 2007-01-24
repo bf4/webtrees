@@ -25,8 +25,8 @@
  * @version $Id$
  */
 if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-        print "You cannot access a language file directly.";
-        exit;
+	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
+	exit;
 }
 //-- CONFIGURE FILE MESSAGES
 $pgv_lang["configure"]			= "PhpGedView konfigurieren";
@@ -392,7 +392,7 @@ $pgv_lang["CHECK_MARRIAGE_RELATIONS_help"]	= "Verwandtschaft anhand von Eheschli
 $pgv_lang["SHOW_DEAD_PEOPLE_help"]		= "Verstorbene Personen anzeigen<br /><br />Setzt die Datenschutz-Einstellungen für alle verstorbenen Personen.";
 $pgv_lang["select_privacyfile_button"]		= "Datenschutzdatei auswählen";
 $pgv_lang["PRIVACY_BY_YEAR"]		= "Datenschutz mittels Alter eines Ereignisses begrenzen";
-$pgv_lang["PRIVACY_BY_YEAR_help"]	= "Wenn Sie den Datenschutz mittels des Alters eines Ereignisses begrenzen, werden Details von Personen angezeigt oder verborgen in Abhängigkeit davon, wie alt die Person zum Zeitpunkt des Ereinisses war (unabhängig davon, ob die Person noch lebt oder inzwischen verstorben ist). Verwenden Sie diese Einstellung in Verbindung mit «Alter, ab dem angenommen wird, dass eine Person verstorben ist». Wenn Sie z.B. den Alters-Wert auf 100 einstellen und die eben genannte Option auf «Ja», werden alle Personen (lebend oder verstorben), die vor weniger als 100 Jahren geboren wurden, als privat behandelt. Personen, die vor weniger als 85 Jahren geheiratet haben und Personen, die vor weniger als 75 Jahren verstorben sind, werden ebenfalls als privat behandelt. Beachten Sie bitte, dass diese Option den Seitenaufbau etwas verlangsamt.<br /><br />Diese Einstellung verändert die Variable \$PRIVACY_BY_YEAR in der Datenschutzdatei.";
+$pgv_lang["PRIVACY_BY_YEAR_help"]	= "Wenn Sie den Datenschutz mittels des Alters eines Ereignisses begrenzen, werden Details von Personen angezeigt oder verborgen in Abhängigkeit davon, wie alt die Person zum Zeitpunkt des Ereignisses war (unabhängig davon, ob die Person noch lebt oder inzwischen verstorben ist). Verwenden Sie diese Einstellung in Verbindung mit «Alter, ab dem angenommen wird, dass eine Person verstorben ist». Wenn Sie z.B. den Alters-Wert auf 100 einstellen und die eben genannte Option auf «Ja», werden alle Personen (lebend oder verstorben), die vor weniger als 100 Jahren geboren wurden, als privat behandelt. Personen, die vor weniger als 85 Jahren geheiratet haben und Personen, die vor weniger als 75 Jahren verstorben sind, werden ebenfalls als privat behandelt. Beachten Sie bitte, dass diese Option den Seitenaufbau etwas verlangsamt.<br /><br />Diese Einstellung verändert die Variable \$PRIVACY_BY_YEAR in der Datenschutzdatei.";
 $pgv_lang["enable_disable_lang"]	= "Einstellungen für unterstützte Sprachen";
 $pgv_lang["translator_tools"]	= "Übersetzertool";
 

@@ -25,6 +25,11 @@
  * @subpackage Languages
  * @version $Id$
  */
+if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "You cannot access a language file directly.";
+	exit;
+}
+
 $pgv_lang["step2"]								= "Βήμα 2 από 4:";
 $pgv_lang["gedcom_deleted"]						= "GEDCOM [#GED#] succesfully deleted.";
 $pgv_lang["full_name"]							= "Ονοματεπώνυμο";

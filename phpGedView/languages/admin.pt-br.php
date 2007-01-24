@@ -25,6 +25,11 @@
  * @subpackage Languages
  * @version $Id$
  */
+if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "You cannot access a language file directly.";
+	exit;
+}
+
 $pgv_lang["user"]="Usuário Autenticado";
 $pgv_lang["thumbnail_deleted"]="Miniatura excluída com sucesso.";
 $pgv_lang["thumbnail_not_deleted"]="Não foi possível excluir a Miniatura.";

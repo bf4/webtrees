@@ -25,6 +25,11 @@
  * @subpackage Languages
  * @version $Id$
  */
+if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "You cannot access a language file directly.";
+	exit;
+}
+
 $pgv_lang["user"]					= "Pasisveikinęs vartotojas";
 $pgv_lang["step2"]					= "Žingsnis 2 iš 4:";
 $pgv_lang["gedadmin"]				= "GEDCOM administratorius";

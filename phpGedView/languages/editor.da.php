@@ -25,6 +25,11 @@
  * @subpackage Languages
  * @version $Id$
  */
+if (preg_match("/editor\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "Du har ikke direkte adgang til en sprogfil.";
+	exit;
+}
+
 $pgv_lang["accept_changes"]		= "Godkend / Afvis ændring(er)";
 $pgv_lang["replace"]			= "Erstat Post";
 $pgv_lang["append"]				= "Tilføj Post";

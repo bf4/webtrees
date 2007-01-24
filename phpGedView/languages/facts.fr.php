@@ -26,7 +26,7 @@
  * @version $Id$
  */
 if (preg_match("/facts\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-	print "You cannot access a language file directly.";
+	print "L'accès direct aux fichiers de langue est interdit.";
 	exit;
 }
 // -- Define a fact array to map GEDCOM tags with their English values

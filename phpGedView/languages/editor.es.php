@@ -25,6 +25,11 @@
  * @subpackage Languages
  * @version $Id$
  */
+if (preg_match("/editor\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "Usted no puede acceder a este archivo de idioma directamente.";
+	exit;
+}
+
 $pgv_lang["accept_changes"]		    = "Aceptar / Rechazar Cambios";
 $pgv_lang["review_changes"]		    = "Reseña de los cambios en el GEDCOM";
 $pgv_lang["add_unlinked_person"]    = "Agregar una nueva persona sin enlazar";

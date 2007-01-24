@@ -25,6 +25,11 @@
  * @subpackage Languages
  * @version $Id$
  */
+if (preg_match("/editor\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "You cannot access a language file directly.";
+	exit;
+}
+
 $pgv_lang["advanced_name_fields"]	= "Lisänimiä (lempinimi, avionimi, jne.)"; 
 $pgv_lang["accept_changes"]		= "Hyväksy/Hylkää muutokset";
 $pgv_lang["replace"]		= "Vaihda tietue";

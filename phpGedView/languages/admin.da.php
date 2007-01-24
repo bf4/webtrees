@@ -25,6 +25,11 @@
  * @subpackage Languages
  * @version $Id$
  */
+if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "Du har ikke direkte adgang til en sprogfil.";
+	exit;
+}
+
 $pgv_lang["thumbnail_deleted"]		= "Miniaturebilledet blev slettet.";
 $pgv_lang["thumbnail_not_deleted"]	= "Miniaturebilledet kunne ikke slettes.";
 $pgv_lang["step2"]					= "Del 2 af 4:";

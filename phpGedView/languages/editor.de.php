@@ -25,6 +25,11 @@
  * @subpackage Languages
  * @version $Id$
  */
+if (preg_match("/editor\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
+	exit;
+}
+
 $pgv_lang["advanced_name_fields"]	= "Weitere Namen (Spitzname, Ehename, usw.)";
 $pgv_lang["accept_changes"]                = "Änderungen übernehmen / verwerfen";
 $pgv_lang["replace"]                        = "Datensatz ersetzen";
