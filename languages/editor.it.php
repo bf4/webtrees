@@ -25,6 +25,11 @@
  * @subpackage Languages
  * @version $Id$
  */
+if (preg_match("/editor\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "You cannot access a language file directly.";
+	exit;
+}
+
 $pgv_lang["accept_changes"]		= "Accetta/Rifiuta le modifiche";
 $pgv_lang["review_changes"]		= "Rivedi le modifiche al file GEDCOM";
 $pgv_lang["edit_fam"]				= "Modifica famiglia";

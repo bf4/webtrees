@@ -25,6 +25,11 @@
  * @subpackage Languages
  * @version $Id$
  */
+if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "You cannot access a language file directly.";
+	exit;
+}
+
 $pgv_lang["step2"]					= "Passo 2 di 4:";
 $pgv_lang["full_name"]				= "Nome completo";
 $pgv_lang["error_header"]   = "Il file GEDCOM, <b>#GEDCOM#</b>, non esiste nella posizione specificata.";

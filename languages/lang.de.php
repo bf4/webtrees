@@ -27,8 +27,8 @@
  * @version $Id$
  */
 if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-        print "You cannot access a language file directly.";
-        exit;
+	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
+	exit;
 }
 $pgv_lang["genealogy"]				= "Ahnenforschung";
 $pgv_lang["roman_surn"]				= "Romanisierter Nachname";

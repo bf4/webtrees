@@ -25,6 +25,11 @@
  * @subpackage Languages
  * @version $Id$
  */
+if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "You cannot access a language file directly.";
+	exit;
+}
+
 $pgv_lang["full_name"]			= "全名";
 $pgv_lang["error_header"] 		= "GEDCOM 文件, [#GEDCOM#], 不存在在被指定的地點。";
 $pgv_lang["manage_gedcoms"]		= "處理GEDCOMs";

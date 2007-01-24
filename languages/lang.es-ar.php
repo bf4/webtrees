@@ -24,10 +24,11 @@
  * @author Eduardo Cociña
  * @version $Id$
  */
-//-- Spanish Date Format
-$DATE_FORMAT = "D M Y";
-//-- Day that a week starts
-//-- 0 = Sunday, 6 = Saturday
+if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "You cannot access a language file directly.";
+	exit;
+}
+
 $pgv_lang["qm"]	= "?";
 $pgv_lang["page_help"]	= "Ayuda";
 $pgv_lang["help_for_this_page"]	= "Ayuda con ésta página";

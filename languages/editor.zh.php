@@ -25,6 +25,11 @@
  * @subpackage Languages
  * @version $Id$
  */
+if (preg_match("/editor\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "You cannot access a language file directly.";
+	exit;
+}
+
 $pgv_lang["accept_changes"]		= "接受更改";
 $pgv_lang["review_changes"]		= "覆核GEDCOM 更改s";
 $pgv_lang["accept_gedcom"]		= "解開更改, 點擊解開連結在它旁邊。  接受所有更改為GEDCOM, 再導入GEDCOM 文件。";

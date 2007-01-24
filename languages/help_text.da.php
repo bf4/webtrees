@@ -23,8 +23,8 @@
  * @version $Id$
  */
 if (preg_match("/help_text\...\.php$/", $_SERVER["PHP_SELF"])>0) {
-print "Du har ikke direkte adgang til sprogfilen.";
-exit;
+	print "Du har ikke direkte adgang til en sprogfil.";
+	exit;
 }
 
 $pgv_lang["link_person_id_help"]	= "~#pgv_lang[label_local_id]#~<br /><br />I dette felt angiver du ID på den person du linker til (fx I100).";
