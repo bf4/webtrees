@@ -289,6 +289,8 @@ $pgv_lang["warn_users"]			= "Användare med varning";
 $pgv_lang["weekly"]				= "Veckovis";
 $pgv_lang["welcome_new"]		= "Välkommen till din nya PhpGedView sajt.";
 $pgv_lang["yearly"]				= "Årlig";
+$pgv_lang["admin_OK_subject"]					= "Godkännande av konto på #SERVER_NAME#";
+$pgv_lang["admin_OK_message"]					= "Administratören på PhpGedViewsajten #SERVER_NAME# har godkänt din ansökan om ett konto. Du kan nu logga in genom att följande link:\r\n\r\n#SERVER_NAME#\r\n";
 $pgv_lang["you_may_login"]		= " av sajt administratören. Du kan nu logga in på PhpGedView sajten genom att följa länken nedan:";
 $pgv_lang["gedcheck"]     = "GEDCOM kontroll";
 
@@ -335,5 +337,7 @@ $pgv_lang["sanity_warn3"]			= "GD bildbiblioteket finns inte. PhpGedView kommer 
 $pgv_lang["sanity_warn4"]			= "XML parsningsbiblioteket finns inte. PhpGedView kommer fortfarande att fungera men vissa funktioner som rapportgenerering och web service kommer inte fungera. Läs <a href=\"http://www.php.net/manual/en/ref.xml.php\">http://www.php.net/manual/en/ref.xml.php</a> för mer information.";
 $pgv_lang["sanity_warn5"]			= "DOM XML biblioteket finns inte. PhpGedView kommer fortfarande att fungera men vissa funktioner som GRAMPS export urklippskorgen, nerladdning och web service kommer inte fungera. Läs <a href=\"http://www.php.net/manual/en/ref.dom.php\">http://www.php.net/manual/en/ref.dom.php</a> för mer information.";
 $pgv_lang["sanity_warn6"]			= "Kalender biblioteket finns inte. PhpGedView kommer fortfarande att fungera men vissa funktioner som Konverteringar till andra kalendrar som hebreisk och fransk inte fungera. Läs <a href=\"http://www.php.net/manual/en/ref.calendar.php\">http://www.php.net/manual/en/ref.calendar.php</a> för mer information.";
+$pgv_lang["clear_cache_succes"]		= "Cache-filerna har tagits bort.";
+$pgv_lang["clear_cache"]			= "Töm cache-filerna";
 
 ?>
