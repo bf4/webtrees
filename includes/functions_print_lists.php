@@ -844,7 +844,8 @@ function print_sour_table($datalist, $legend="") {
 	echo "<th class=\"list_label\">".$factarray["TITL"]."</th>";
 	$t2 = false; echo "<td class=\"list_label t2\">".$factarray["TITL"]."2</td>";
 	echo "<th class=\"list_label\">".$factarray["AUTH"]."</th>";
-	$show_details = (get_list_size("indilist")<4000);
+	//-- only show the count of linked records if the DB is sufficiently small to handle the load
+	$show_details = (get_list_size("indilist")<1000);
 	if ($show_details) {
 		echo "<th class=\"list_label\">".$pgv_lang["individuals"]."</th>";
 		echo "<th class=\"list_label\">".$pgv_lang["families"]."</th>";

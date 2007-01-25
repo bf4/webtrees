@@ -1823,6 +1823,7 @@ function get_media_relations($mid){
 		}
 	}
 	if (isset($media)){
+		$medialist[$keyMediaList]['LINKS'] = $media;
 		return $media;
 	}
 }
