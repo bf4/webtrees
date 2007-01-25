@@ -552,9 +552,9 @@ function displayDetailsByID($pid, $type = "INDI") {
     }
     if ($type=="OBJE") {
     	//-- for media privacy check all of the links to the media
-	    $links = get_media_links($pid);
+	    $links = get_media_relations($pid);
 	    $disp = true;
-	    foreach($links as $ind=>$gid) {
+	    foreach($links as $gid=>$type) {
 	    	$disp = $disp && displayDetailsById($gid, id_type($gid));
 	    	if (!$disp) return false;
 	    }
