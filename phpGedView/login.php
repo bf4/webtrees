@@ -47,6 +47,7 @@ if ($action=="login") {
 	else $remember = "no";
 	$auth = authenticateUser($username, $password);
 	if ($auth) {
+		if (!empty($_POST["useradmin"])) $_SESSION["useradmin"] = $_POST["useradmin"];
 		if (!empty($_POST["usertime"])) {
 			$_SESSION["usertime"]=@strtotime($_POST["usertime"]);
 		}
@@ -88,6 +89,11 @@ if ($action=="login") {
 		$url .= "&ged=".$ged; 
 		$url = str_replace(array(".php&amp;", ".php&"), ".php?", $url);
 		
+		// Special handling for link to useradmin.php from e-mail to admin
+		if (!empty($_POST["useradmin"])) {
+			$url .= "&action=edituser&username=".$_POST["useradmin"];
+		}
+		
 		header("Location: ".$url);
 		exit;
 	}
@@ -108,7 +114,10 @@ else {
 				if (stristr($url,$SERVER_URL)!==false) $url = $SERVER_URL;
 			}
 			//else $url = $SERVER_URL;
+			/* - commented out based on UI feedback	
 			else $url = "index.php?command=user";
+			*/
+			else $url = "individual.php";
 		}
 	}
 	else if (stristr($url, "index.php")&&!stristr($url, "command=")) {
@@ -175,6 +184,7 @@ $i = 0;		// initialize tab index
 		<input type="hidden" name="type" value="<?php print $type; ?>" />
 		<input type="hidden" name="usertime" value="" />
 		<?php
+		if (!empty($useradmin)) print "<input type='hidden' name='useradmin' value='$useradmin' />\r\n";
 		if (!empty($message)) print "<span class='error'><br /><b>$message</b><br /><br /></span>\r\n";
 		?>
 		<!--table-->
@@ -207,7 +217,10 @@ $i = 0;		// initialize tab index
 		        }
 		    ?>
 		      <input type="submit" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["login"]; ?>" />&nbsp;
+		      <?php
+		      	/* - commented out based on UI feedback		      	  
 		      <input type="submit" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["admin"]; ?>" onclick="document.loginform.url.value='admin.php';" />
+				*/ ?>
 		    </td>
 		  </tr>
 		</table>

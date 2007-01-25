@@ -25,6 +25,9 @@
  */
 require("config.php");
 require_once("includes/functions_print_lists.php");
+
+print_header($pgv_lang["source_list"]);
+
 $addsourcelist = get_source_add_title_list();  //-- array of additional source titlesadd
 $sourcelist = get_source_list();               //-- array of regular source titles
 
@@ -32,9 +35,9 @@ uasort($sourcelist, "itemsort");
 uasort($addsourcelist, "itemsort");
 
 $ca = count($addsourcelist);
-$cs = get_list_size("sourcelist");
+$cs = count($sourcelist);
 $ctot = $ca + $cs;
-print_header($pgv_lang["source_list"]);
+
 print "<div class=\"center\">";
 print "<h2>".$pgv_lang["source_list"]."</h2>\n\t";
 
