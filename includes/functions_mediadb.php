@@ -1815,6 +1815,8 @@ function get_media_relations($mid){
 		return $medialist[$keyMediaList]['LINKS'];
 	}
 	
+	$media = array();
+	
 	$dbq = "SELECT mm_gid FROM ".$TBLPREFIX."media_mapping WHERE mm_media='".$mid."' AND mm_gedfile='".$GEDCOMS[$GEDCOM]['id']."'";
 	$dbr = dbquery($dbq);
 	while($row = $dbr->fetchRow()) {
@@ -1822,10 +1824,8 @@ function get_media_relations($mid){
 			$media[$row[0]] = id_type($row[0]);
 		}
 	}
-	if (isset($media)){
 		$medialist[$keyMediaList]['LINKS'] = $media;
 		return $media;
-	}
 }
 //Basically calls the get_media_relations method but it uses a file name rather than a media id.
 function get_media_relations_with_file_name($filename){
