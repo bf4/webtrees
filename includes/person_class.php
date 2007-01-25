@@ -72,6 +72,7 @@ class Person extends GedcomRecord {
 	/**
 	 * Static function used to get an instance of a person object
 	 * @param string $pid	the ID of the person to retrieve
+	 * @return Person	returns an instance of a person object
 	 */
 	function &getInstance($pid, $simple=true) {
 		global $indilist, $GEDCOM, $GEDCOMS, $pgv_changes;
