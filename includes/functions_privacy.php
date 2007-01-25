@@ -333,7 +333,6 @@ function displayDetailsByID($pid, $type = "INDI") {
 
 	$username = getUserName();
 	if (!empty($username)) {
-//		$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 		if (isset($user_privacy[$username]["all"])) {
 			if ($user_privacy[$username]["all"] >= getUserAccessLevel($username)) {
 				if ($cache_privacy) $indilist[$pid]['privacy'] = true;

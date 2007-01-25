@@ -135,7 +135,9 @@ class FormBuilder extends ra_form {
 		global $pgv_lang;
 
 		//        Next Table
-		$out = '<tr><td colspan="6">';
+		$out = '<tr>';
+		if($_POST["errorMsg"]) $out .='<td><h3>'.$_POST["errorMsg"].'</h3></td>';		
+		$out .= '<td colspan="6">';
 
         $out .= '<table align="left" dir="ltr">
 		$out .= '<tr><td class="optionbox">'.$pgv_lang["FormName"].'</td><td class="optionbox"><input type="text" name="formName"/></td></tr>';
@@ -449,8 +451,14 @@ class FormBuilder extends ra_form {
 		
 		return $citation;
     }} ?>';
-
-		$this->WriteFile($out,"modules/research_assistant/forms/".$formName.".php");
+		if(strstr($formName,'\\') || strstr($formName,'/'))
+		{
+			
+		}
+		else
+		{
+			$this->WriteFile($out,"modules/research_assistant/forms/".$formName.".php");
+		}
 	}
 	
 	function getEditFactsFormAndStep3()
