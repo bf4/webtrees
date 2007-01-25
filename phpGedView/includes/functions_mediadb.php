@@ -705,19 +705,20 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	// Search the database for the applicable cross-references
 	// and fill in the Links part of the medialist
 	if ($ct > 0) {
-		$sql = "SELECT * FROM " . $TBLPREFIX . "media_mapping WHERE mm_gedfile='" . $GEDCOMS[$GEDCOM]["id"] . "' AND (";
+		$sql = "SELECT * FROM " . $TBLPREFIX . "media_mapping WHERE mm_gedfile='" . $GEDCOMS[$GEDCOM]["id"] . "' AND mm_media IN (";
 		$i = 0;
 		foreach ($medialist as $key => $media) {
 			$i++;
-			$sql .= "mm_media='" . $media["XREF"] . "'";
+			$sql .= "'" . $media["XREF"] . "'";
 			if ($i < $ct)
-				$sql .= " OR ";
+				$sql .= ", ";
 			else
 				$sql .= ")";
 		}
 		$sql .= " ORDER BY mm_gid";
 		//print "sql: ".$sql."<br />";
 		$res = dbquery($sql);
+		$peopleIds = array();
 		while ($row = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 			//print_r($row); print "<br />";
 			// Build the key for the medialist
@@ -736,8 +737,15 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 				$medialist[$keyMediaList]["LINKS"][stripslashes($row["mm_gid"])] = id_type(stripslashes($row["mm_gid"]));
 				$medialist[$keyMediaList]["LINKED"] = true;
 			}
+			
+			//-- store all of the ids in an array so that we can load up all of the people at once
+			$peopleIds[] = stripslashes($row["mm_gid"]);
 		}
 		$res->free();
+		
+		//-- load up all of the related people into the cache
+		load_people($peopleIds);
+		load_families($peopleIds);
 	}
 
 	// Search the list of GEDCOM changes pending approval.  There may be some new
@@ -1024,7 +1032,6 @@ function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
 	// NOTE: Lets get the file details
 	if (strstr($filename, "://"))
 		return $filename;
-	$media_id_number = get_media_id_from_file($filename);
 	
 	$filename = check_media_depth($filename, "NOTRUNC");
 	
@@ -1038,6 +1045,7 @@ function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
 		$thumbExt = "";
 
 	if (!empty($pid)) {
+		$media_id_number = get_media_id_from_file($filename);
 		// run the clip method foreach person associated with the picture
 		$thumbnail = picture_clip($pid, $media_id_number, $filename, $thumbDir);
 		if (!empty($thumbnail)) return $thumbnail;
@@ -1650,19 +1658,6 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	print "</form>\n";
 }
 
-function get_media_links($m_media) {
-	global $DBCONN, $TBLPREFIX, $GEDCOMS, $GEDCOM;
-
-	$sql = "SELECT mm_gid FROM " . $TBLPREFIX . "media_mapping WHERE mm_media='" . $DBCONN->escapeSimple($m_media) . "' AND mm_gedfile='" . $GEDCOMS[$GEDCOM]['id'] . "'";
-	$res = dbquery($sql);
-	$links = array ();
-	while ($row = & $res->fetchRow()) {
-		$links[] = $row[0];
-	}
-	$res->free();
-	return $links;
-}
-
 function findImageSize($file) {
 	if (strtolower(substr($file, 0, 7)) == "http://")
 		$file = "http://" . rawurlencode(substr($file, 7));
@@ -1806,7 +1801,20 @@ function get_media_id_from_file($filename){
 }
 //returns an array of rows from the database containing the Person ID's for the people associated with this picture
 function get_media_relations($mid){
-	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS, $GEDCOM;
+	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS, $GEDCOM, $medialist;
+	
+	//-- check in the medialist cache first
+	$firstChar = substr($mid, 0, 1);
+	$restChar = substr($mid, 1);
+	if (is_numeric($firstChar)) {
+		$firstChar = "";
+		$restChar = $mid;
+	}
+	$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . $GEDCOMS[$GEDCOM]['id'];
+	if (isset ($medialist[$keyMediaList])) {
+		return $medialist[$keyMediaList]['LINKS'];
+	}
+	
 	$dbq = "SELECT mm_gid FROM ".$TBLPREFIX."media_mapping WHERE mm_media='".$mid."' AND mm_gedfile='".$GEDCOMS[$GEDCOM]['id']."'";
 	$dbr = dbquery($dbq);
 	while($row = $dbr->fetchRow()) {
