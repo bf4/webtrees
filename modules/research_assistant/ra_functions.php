@@ -43,6 +43,8 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_functions.php")) {
 require_once('modules/research_assistant/languages/lang.en.php'); 
 @include_once("modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php");
 include_once("modules/research_assistant/forms/ra_privacy.php");
+include_once("modules/research_assistant/forms/ra_RSFunction.php");
+require_once("modules/research_assistant/forms/ra_RSSingleFactClass.php");
 
 if (file_exists($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php")) include_once($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php");
 define("BASEPATH", 'modules/research_assistant/');
@@ -866,28 +868,40 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	function getMissinginfo(& $person) {
 		global $factarray, $templefacts, $nondatefacts, $nonplacfacts;
 
+		$perId = $person->getXref();
+	
 		$MissingReturn = array (); //Local var for the return string
 		if ($person->sex == "U") //check for missing sex info
 			{
 			$MissingReturn[] = array("Sex", "All");
+		
 		}
-		if ($person->brec != "") //check for missing birth info
+		/*@var $person Person */
+		if ($person->getBirthRecord(false) != "") //check for missing birth info
 			{
 
 		} else {
-			$MissingReturn[] = array("BIRT", "All");
+			$probFacts = singleInference($perId,"BIRT");
+			$MissingReturn[] = array("BIRT", "All",$probFacts);
+
 		}
-		if ($person->drec != "") //check for missing death info
+		if ($person->getDeathRecord(false) != "") //check for missing death info
 			{
 
 		} else {
-			$MissingReturn[] = array("DEAT", "All");
+			$probFacts = singleInference($perId,"DEAT");
+			$MissingReturn[] = array("DEAT", "All", $probFacts);
+	
 		}
 		if ($person->getGivenNames() == "unknown") {
-			$MissingReturn[] = "Given Name";
+			$probFacts = singleInference($perId,"GIVN");
+			$MissingReturn[] = array("Given Name","",$probFacts);
+			
 		}
-		if ($person->getSurname() == "unknown") {
-			$MissingReturn[] = "Surname";
+		if ($person->getSurname() == "@N.N.") {
+			$probFacts = singleInference($perId,"SURN");
+			$MissingReturn[] = array("SURN","",$probFacts);
+			
 		}
 
 		$indifacts = get_all_subrecords($person->gedrec, "FAMS,FAMC,NOTE,OBJE,SEX,NAME,SOUR,REFN,CHAN,AFN,_UID,_COMM", false);
@@ -921,7 +935,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 				}
 				else {
 					if (!in_array($fact, $nonplacfacts)) {
-						$MissingReturn[] = array ($fact, "PLAC");
+						$probFacts = singleInference($perId,"$fact:PLAC");
+						$MissingReturn[] = array ($fact, "PLAC",$probFacts);
 					}
 				}
 			}
@@ -1057,6 +1072,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$gender = get_gedcom_value("SEX", 1, $indi['gedcom'], '', false);
 			$locals = array();
 			foreach($inferences as $pr_id=>$value) {
+				//-- get the local value from the the individual record
 				if (!isset($locals[$value['local']])) {
 					if ($value['local']=='SURN') $locals['SURN'] = $indi['names'][0][2];
 					else if ($value['local']=='GIVN'){
@@ -1068,6 +1084,9 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 					}
 				}
 				
+				//-- load up the gedcom record we want to compare the data from
+				//-- record defaults to the indis record, after this section runs it will be 
+				//-- set to the record from the inferences table that we want to compare the value to
 				$record = $indi['gedcom'];
 				if ($value['record']!='') {
 					$rec_tags = preg_split("/:/", $value['record']);
@@ -1200,11 +1219,11 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 * Get Tasks for Source
 	 */
 	function getSourceTasks($sId) {
-		global $pgv_lang, $TBLPREFIX, $GEDCOMS, $GEDCOM;
+		global $pgv_lang, $TBLPREFIX, $GEDCOMS, $GEDCOM, $DBCONN;
 		global $indilist;
 		global $factarray;
         	
-		$sql = "SELECT * FROM ".$TBLPREFIX."tasks join ".$TBLPREFIX."tasksource on t_id = ts_t_id join ".$TBLPREFIX."sources on s_id = ts_s_id where s_id ='".$sId."' AND s_file=".$GEDCOMS[$GEDCOM]['id'];
+		$sql = "SELECT * FROM ".$TBLPREFIX."tasks join ".$TBLPREFIX."tasksource on t_id = ts_t_id join ".$TBLPREFIX."sources on s_id = ts_s_id where s_id ='".$DBCONN->escapeSimple($sId)."' AND s_file=".$GEDCOMS[$GEDCOM]['id'];
 		$res = dbquery($sql);
 	
 		$out = "\n\t<table class=\"list_table\">";
@@ -1215,11 +1234,11 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			// Loop through all the task ID's and pull the info we need on them,
 			// then format them nicely to show the user.
 			while ($taskid = $res->fetchrow(DB_FETCHMODE_ASSOC)) {
-				$sql = "SELECT * FROM ".$TBLPREFIX."tasks WHERE t_id = '".$taskid['ts_t_id']."'";
-				$result = dbquery($sql);
-				$task = $result->fetchrow(DB_FETCHMODE_ASSOC);
-     			$task = db_cleanup($task);
-				$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'" class="link">'.PrintReady($pgv_lang['details']).'</a></td><td class="list_label">'.PrintReady($task['t_title']).'</td><td class="list_label">'.$this->checkComplete($task).'</td><td class="list_label">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td></tr>';
+//				$sql = "SELECT * FROM ".$TBLPREFIX."tasks WHERE t_id = '".$taskid['ts_t_id']."'";
+//				$result = dbquery($sql);
+//				$task = $result->fetchrow(DB_FETCHMODE_ASSOC);
+//     			$task = db_cleanup($task);
+				$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$taskid['t_id'].'" class="link">'.PrintReady($pgv_lang['details']).'</a></td><td class="list_label">'.PrintReady($taskid['t_title']).'</td><td class="list_label">'.$this->checkComplete($taskid).'</td><td class="list_label">'.get_changed_date(date("d M Y", $taskid["t_startdate"])).'</td></tr>';
 			}
 		}
 		return $out;
@@ -1292,9 +1311,10 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 				$result->free();
 			}
 		}
+		
 		//This is where the missing info check will happen
 		$Missing = $this->getMissinginfo($person);
-
+//		print_r($Missing);
 		$out .= "<tr><td class=\"topbottombar\" colspan=\"4\"><a href=\"module.php?mod=research_assistant&amp;action=addtask&amp;pid=".$person->getXref()."\">".$pgv_lang["task_entry"]."</a></td></tr></table>\n";
 				
 				//beginning of the missing information table, which gets populated with missing information for that individual and allows the user to "autoadd" tasks
@@ -1308,12 +1328,17 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 										<td align="center" colspan="2" class="topbottombar">'.print_help_link("ra_missing_info_help", "qm", '', false, true).'<b>'.$pgv_lang['missing_info'].
 										'</td>
 									</tr>';
+										
 										foreach ($Missing as $key => $val) //every missing item gets a checkbox , so you check check it and make a task out of it
 										{
+											$highest = 0;
+											$factsExist = false;
+											$compiled = "";
 											$tasktitle = "";
 											if (isset($factarray[$val[0]])) $tasktitle .= $factarray[$val[0]]." ";
 											else if (isset($pgv_lang[$val[0]])) $tasktitle .= $pgv_lang[$val[0]]." ";
 											else $tasktitle .= $val[0]." ";
+											//print_r($factarray);
 											if (isset($factarray[$val[1]])) $tasktitle .= $factarray[$val[1]];
 											else if (isset($pgv_lang[$val[1]])) $tasktitle .= $pgv_lang[$val[1]];
 											else $tasktitle .= $val[1];
@@ -1321,7 +1346,31 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 											if (!$taskid) // if the task_check passes, create a check box
 												{
 												$out .= "<tr><td width=\"20\" class=\"optionbox\"><input type=\"checkbox\" name=\"missingName[]\" value=\"".$tasktitle."\" /></td><td class=\"optionbox\">\n";
-												$out .= $tasktitle."</td></tr>";
+												$out .= "<span class=\"fact_label\">".$tasktitle."</span><br />";
+												if(isset($val[2])){	
+													foreach($val[2] as $inferKey=>$inferenceObj)
+													{
+														
+															if($val[1] === "All" || empty($val[1]))
+															{
+															
+																if(strstr($inferenceObj->getFactTag(),$val[0]) && $inferenceObj->getAverage() > 0)
+																{
+																	if($highest < $inferenceObj->getAverage() && $inferenceObj->getFactValue() != "")
+																	{
+																		$highest = $inferenceObj->getAverage();
+																		//TODO: You are here
+																		$compiled = $this->decideInferSentence($inferenceObj->getAverage(),$inferenceObj->getFactTag());
+																		$compiled .= " <i>".$inferenceObj->getFactValue()."</i>";
+																	}
+																
+																}
+															}														
+													}
+													$out .= $compiled;
+												}
+												
+												$out .= "</td></tr>";
 											} else // if not allow user to view the already created task
 								
 												$out .= "<tr><td width=\"20\" class=\"optionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtask&amp;taskid=$taskid\">View</a></td><td class=\"optionbox\">".$tasktitle."</td></tr>\n";
@@ -1404,6 +1453,42 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		// Return the goods.		 	
 		return $out;
 	}
+	
+	function decideInferSentence($percentage,$fact)
+	{
+		global $pgv_lang;
+		if($fact == "BIRT:PLAC")
+		{	$percentage = sprintf("%.2f%%",$percentage);
+			$tempOut = $pgv_lang["InferIndvBirthPlac"];
+			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
+			return $tempOut;
+		}
+		if($fact == "DEAT:PLAC")
+		{	$percentage = sprintf("%.2f%%",$percentage);
+			$tempOut = $pgv_lang["InferIndvDeathPlac"];
+			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
+			return $tempOut;
+		}
+		if($fact == "SURN")
+		{	$percentage = sprintf("%.2f%%",$percentage);
+			$tempOut = $pgv_lang["InferIndvSurn"];
+			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
+			return $tempOut;
+		}
+		if($fact == "MARR:PLAC")
+		{	$percentage = sprintf("%.2f%%",$percentage);
+			$tempOut = $pgv_lang["InferIndvMarriagePlace"];
+			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
+			return $tempOut;
+		}
+		if($fact == "GIVN")
+		{	$percentage = sprintf("%.2f%%",$percentage);
+			$tempOut = $pgv_lang["InferIndvGivn"];
+			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
+			return $tempOut;
+		}
+	}
+	
 	
 	/**
 	 * function to handle fact edits/updates for task completion forms

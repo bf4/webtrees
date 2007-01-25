@@ -12,6 +12,12 @@ file to view the english text for these changes.
 
 --------------------------------------------------------------
 
++ $pgv_lang["NotEnoughData"]				// January 25, 2007
++ $pgv_lang["InferIndvBirthPlac"]			// January 25, 2007
++ $pgv_lang["InferIndvDeathPlac"]			// January 25, 2007
++ $pgv_lang["InferIndvSurn"]				// January 25, 2007
++ $pgv_lang["InferIndvMarriagePlace"]		// January 25, 2007
++ $pgv_lang["InferIndvGivn"]  				// January 25, 2007
 - $pgv_lang["all"]                         // November 7, 2006
 + $pgv_lang["page"]                         // December 13, 2005
 + $pgv_lang["city"]                         // December 13, 2005 

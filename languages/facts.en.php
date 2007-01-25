@@ -155,6 +155,30 @@ $factarray["_TODO"]	= "To Do Item";
 $factarray["_UID"]	= "Universal Identifier";
 $factarray["_PRIM"]	= "Highlighted Image";
 
+//These facts are compounds for the view probabilities page
+$factarray["FAMC:HUSB:SURN"] = "Father's Surname";
+$factarray["FAMC:WIFE:SURN"] = "Mother's Surname";
+$factarray["FAMC:HUSB:BIRT:PLAC"] = "Father's Birthplace";
+$factarray["FAMC:WIFE:BIRT:PLAC"] = "Mother's Birthplace";
+$factarray["FAMC:MARR:PLAC"] = "Parent's Marriage Place";
+$factarray["FAMC:HUSB:OCCU"] = "Father's Occupation";
+$factarray[":BIRT:PLAC"] = "Birthplace";
+$factarray["FAMS:MARR:PLAC"] = "Marriage Place";
+$factarray["FAMS:SPOUSE:DEAT:PLAC"] = "Spouse's Death Place";
+$factarray["FAMC:HUSB:GIVN"] = "Father's Given Name";
+$factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Spouse's Birth Place";
+$factarray["FAMC:WIFE:GIVN"] = "Mother's Given Name";
+$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Grandfather's Given Name";
+$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Grandmother's Given Name";
+
+
+// These facts are all colon delimited
+$factarray["BIRT:PLAC"] = "Birth Place";
+$factarray["DEAT:PLAC"] = "Death Place";
+$factarray["CHR:PLAC"] = "Christening Place";
+$factarray["BAPM:PLAC"] = "Baptism Place";
+$factarray["BURI:PLAC"] = "Burial Place";
+
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"]	= "Medical";
 $factarray["_DEG"]	= "Degree";
