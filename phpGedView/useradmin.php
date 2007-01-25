@@ -48,8 +48,11 @@ if (!isset($usrlang)) $usrlang="";
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
 if (!userIsAdmin(getUserName())) {
-	$loginURL = "$LOGIN_URL?url=".urlencode(basename($SCRIPT_NAME)."?".$QUERY_STRING);
-	header("Location: $loginURL");
+	if ($action=="edituser" && !empty($username)) header("Location: login.php?url=useradmin.php&useradmin=$username");
+	else {
+		$loginURL = "$LOGIN_URL?url=".urlencode(basename($SCRIPT_NAME)."?".$QUERY_STRING);
+		header("Location: $loginURL");
+	}
 	exit;
 }
 print_header("PhpGedView ".$pgv_lang["user_admin"]);
