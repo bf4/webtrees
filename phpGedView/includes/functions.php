@@ -443,7 +443,7 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
 		$ct = preg_match_all($searchTarget, $gedrec, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
 		if ($ct==0) return "";
 	}
-	if (count($match)<$num) return "";
+	if ($ct<$num) return "";
 	$pos1 = $match[$num-1][0][1];
 	$pos2 = strpos($gedrec, "\n$level", $pos1+1);
 	if (!$pos2) $pos2 = strpos($gedrec, "\n1", $pos1+1);
@@ -490,7 +490,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $Ap
 	$ct = preg_match_all("/\n1 (\w+)(.*)/", $gedrec, $match, PREG_SET_ORDER);
 	for($i=0; $i<$ct; $i++) {
 		$fact = trim($match[$i][1]);
-		if (strpos($ignore, $fact)===false) {
+		if (empty($ignore) || strpos($ignore, $fact)===false) {
 			if (!$ApplyPriv || (showFact($fact, $id)&& showFactDetails($fact,$id))) {
 				if (isset($prev_tags[$fact])) $prev_tags[$fact]++;
 				else $prev_tags[$fact] = 1;
@@ -523,7 +523,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $Ap
 			$ct = preg_match_all("/\n1 (\w+)(.*)/", $famrec, $match, PREG_SET_ORDER);
 			for($i=0; $i<$ct; $i++) {
 				$fact = trim($match[$i][1]);
-				if (strpos($ignore, $fact)===false) {
+				if (empty($ignore) || strpos($ignore, $fact)===false) {
 					if (!$ApplyPriv || (showFact($fact, $id)&&showFactDetails($fact,$id))) {
 						if (isset($prev_tags[$fact])) $prev_tags[$fact]++;
 						else $prev_tags[$fact] = 1;
@@ -3302,6 +3302,9 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $unknownNN, $unknownPN;
 
 	if (!isset($pgv_language[$desiredLanguage])) $desiredLanguage = "english";
+	$username = getUserName();
+	$user = getUser($username);
+	if (!$user) $user['canadmin'] = false;
 	$result = false;
 	if ($forceLoad) {
 		$LANGUAGE = "english";
@@ -3323,14 +3326,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load admin lang keys
 		$file = "./languages/admin.".$lang_short_cut[$LANGUAGE].".php";
 		if (file_exists($file)) {
-			if (!$goodDB || !adminUserExists() || userGedcomAdmin(getUserName()) || !$CONFIGURED) {
+			if (!$goodDB || !adminUserExists() || userGedcomAdmin($username) || $user['canadmin'] || !$CONFIGURED) {
 				include($file);
 			}
 		}
 		// load the edit lang keys
 		$file = "./languages/editor.".$lang_short_cut[$LANGUAGE].".php";
 		if (file_exists($file)) {
-			if (!$goodDB || !adminUserExists() || userGedcomAdmin(getUserName()) || userCanEdit(getUserName())) {
+			if (!$goodDB || !adminUserExists() || userGedcomAdmin($username) || userCanEdit($username)) {
 				include($file);
 			}
 		}
@@ -3374,14 +3377,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load admin lang keys
 		$file = "./languages/admin.".$lang_short_cut[$LANGUAGE].".php";
 		if (file_exists($file)) {
-			if ((!$goodDB || !adminUserExists() || userGedcomAdmin(getUserName()) || !$CONFIGURED)) {
+			if ((!$goodDB || !adminUserExists() || userGedcomAdmin($username) || $user['canadmin'] || !$CONFIGURED)) {
 					include($file);
 			}
 		}
 		// load the edit lang keys
 		$file = "./languages/editor.".$lang_short_cut[$LANGUAGE].".php";
 		if (file_exists($file)) {
-			if ((!$goodDB || !adminUserExists() || userGedcomAdmin(getUserName()) || userCanEdit(getUserName()))) {
+			if ((!$goodDB || !adminUserExists() || userGedcomAdmin($username) || userCanEdit($username))) {
 				include($file);
 			}
 		}
