@@ -353,8 +353,8 @@ function resize_content_div(i) {
 <?php
 function loading_message() {
 	global $pgv_lang;
-	echo "<p style='margin: 20px 20px 20px 20px'>";
-	echo "<img src='images/loading.gif' alt='".$pgv_lang["loading"]."' title='".$pgv_lang["loading"]."' />";
+	echo "<p style=\"margin: 20px 20px 20px 20px\">";
+	echo "<img src=\"images/loading.gif\" alt=\"".$pgv_lang["loading"]."\" title=\"".$pgv_lang["loading"]."\" />";
 	echo "</p>";
 }
 if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {

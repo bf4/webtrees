@@ -26,7 +26,7 @@
  * @version $Id$
  */
 if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
+	print "You cannot access a language file directly.";
 	exit;
 }
 
