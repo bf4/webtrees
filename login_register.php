@@ -364,9 +364,8 @@ switch ($action) {
 				AddToLog("User registration requested for: ".$user_name);
 				
 				if (getUser($user_name)!== false) {
-				  print "<span class=\"warning\">";
-				  print_text("duplicate_username");
-				  print "</span><br /><br />";
+					print "<span class=\"warning\">".print_text("duplicate_username",0,1)."</span><br /><br />";
+					print "<a href=\"javascript:history.back()\">".$pgv_lang["back"]."</a><br />";
 				}
 				else if ($user_password01 == $user_password02) {
 					$user = array();
@@ -413,14 +412,12 @@ switch ($action) {
 					if ($au) {
 						$user_created_ok = true;
 					} else {
-						print "<span class=\"warning\">";
-						print_text("user_create_error");
-						print "<br /></span>";
+						print "<span class=\"warning\">".print_text("user_create_error",0,1)."<br /></span>";
+						print "<a href=\"javascript:history.back()\">".$pgv_lang["back"]."</a><br />";
 					}
 				} else {
-					print "<span class=\"warning\">";
-					print_text("password_mismatch");
-					print "</span><br />";
+					print "<span class=\"warning\">".print_text("password_mismatch",0,1)."</span><br />";
+					print "<a href=\"javascript:history.back()\">".$pgv_lang["back"]."</a><br />";
 				}
 				if ($user_created_ok) {
 					// switch to the user's language
@@ -487,7 +484,7 @@ switch ($action) {
 				}
 				print "</div>";
 			} else {
-				print "<span class=\"error\">".$pgv_lang["invalid_username"]."</span><br />";
+				print "<span class=\"error\">".print_text("invalid_username",0,1)."</span><br />";
 				print "<a href=\"javascript:history.back()\">".$pgv_lang["back"]."</a><br />";
 			}
 		} else {

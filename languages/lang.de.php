@@ -30,6 +30,7 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
 	exit;
 }
+$pgv_lang["duplicate_username"]        = "Doppelter Benutzername. Ein Benutzer mit dem gewählten Namen existiert bereits. Bitte wählen Sie einen anderen Benutzernamen.";
 $pgv_lang["cache_life"]				= "Cache-Datei Lebensdauer";
 $pgv_lang["genealogy"]				= "Ahnenforschung";
 $pgv_lang["roman_surn"]				= "Romanisierter Nachname";

@@ -137,7 +137,6 @@ $pgv_lang["download_file"]						= "Datei herunterladen";
 $pgv_lang["download_gedcom"]            = "GEDCOM-Datei von Ihrem Server herunterladen (download)";
 $pgv_lang["download_here"]						= "Hier klicken um Datei herunterzuladen";
 $pgv_lang["download_note"]                = "ANMERKUNG: Große GEDCOM-Dateien benötigen vor dem Herunterladen u.U. eine längere Berechnungszeit. Wenn ein PHP-Timeout auftritt bevor das Herunterladen fertig ist, ist die Datei vermutlich nicht komplett.<br /><br />Prüfen Sie, ob die heruntergeladene Datei in der letzten Zeile <b>0&nbsp;TRLR</b> enthält, um das korrekte Herunterladen sicherzustellen. GEDCOM-Dateien sind Textdateien, die mit einem einfachen Texteditor geöffnet werden können, aber achten Sie darauf, die Datei nach dem Ansehen <u>nicht</u> zu speichern.<br /><br />Üblicherweise benötigt das Herunterladen etwa so lang wie der Import-Vorgang.";
-$pgv_lang["duplicate_username"]         = "Doppelter Benutzername. Ein Benutzer mit dem gewählten Namen existiert bereits. Bitte wählen Sie einen anderen Benutzernamen.";
 $pgv_lang["editaccount"]				= "Benutzer darf seine eigenen Benutzerdaten ändern";
 $pgv_lang["empty_dataset"]                        = "Möchten Sie den alten Datensatz löschen und durch diese neue Daten ersetzen?";
 $pgv_lang["empty_lines_detected"]        = "In der GEDCOM-Datei wurden Leerzeilen entdeckt. Beim Korrigieren werden diese Zeilen entfernt.";
