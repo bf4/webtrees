@@ -329,14 +329,21 @@ function load_people($ids, $gedfile='') {
 	if (empty($gedfile)) $gedfile = $GEDCOM;
 	if (!is_int($gedfile)) $gedfile = get_gedcom_from_id($gedfile);
 	
-	$sql = "SELECT i_gedcom, i_name, i_isdead, i_file, i_id FROM ".$TBLPREFIX."individuals WHERE i_id IN (";
+	$sql = "SELECT i_gedcom, i_name, i_isdead, i_file, i_id FROM ".$TBLPREFIX."individuals WHERE ";
+	$listID = false;
+
 	//-- don't load up people who are already loaded
 	foreach($ids as $k=>$id) {
-		if ((!isset($indilist[$id]["gedcom"])) || ($indilist[$id]["gedfile"]!=$GEDCOMS[$gedfile]["id"])) 
+		if ((!isset($indilist[$id]["gedcom"])) || ($indilist[$id]["gedfile"]!=$GEDCOMS[$gedfile]["id"])) {
+			if (!$listID) {
+				$sql .= "i_id IN (";
+				$listID = true;
+			}
 			$sql .= "'".$DBCONN->escapeSimple($id)."',";
+		}
 	}
-	$sql = rtrim($sql,',');
-	$sql .= ") AND i_file='".$DBCONN->escapeSimple($GEDCOMS[$gedfile]["id"])."'";
+	if ($listID) $sql = rtrim($sql,',').") AND ";
+	$sql .= "i_file='".$DBCONN->escapeSimple($GEDCOMS[$gedfile]["id"])."'";
 	
 	$res = dbquery($sql);
 
