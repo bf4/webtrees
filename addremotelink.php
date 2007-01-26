@@ -99,6 +99,8 @@ if ($action=="addlink") {
 			$gedcom_string.= "1 _DBID ".$gedcom_id."\r\n";
 			$gedcom_string.= "2 _USER ".$username."\r\n";
 			$gedcom_string.= "2 _PASS ".$password."\r\n";
+			//-- only allow admin users to see password
+			$gedcom_string.= "2 RESN Confidential\r\n";
 			$service = new ServiceClient($gedcom_string);
 			$sid = $service->authenticate();
 			if (PEAR::isError($sid)) {
