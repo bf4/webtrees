@@ -30,6 +30,7 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["cache_life"]				= "Cache file life";
 $pgv_lang["genealogy"]					= "genealogy";
 $pgv_lang["activate"]					= "Activate";
 $pgv_lang["deactivate"]					= "Deactivate";
