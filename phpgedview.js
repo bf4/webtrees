@@ -224,7 +224,7 @@ var show = false;
 
 	var timeouts = new Array();
 	function family_box_timeout(boxid) {
-		tout = setTimeout("hide_family_box('"+boxid+"')", 250);
+		tout = setTimeout("hide_family_box('"+boxid+"')", 2500);
 		timeouts[boxid] = tout;
 	}
 
