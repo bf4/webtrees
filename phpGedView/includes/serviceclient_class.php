@@ -136,8 +136,11 @@ if ($this->DEBUG) print "In getRemoteRecord($remoteid)<br />";
 		if (!is_object($this->soapClient)) $this->authenticate();
 		if (!is_object($this->soapClient)||$this->isError($this->soapClient)) return false;
 		$rec = $this->soapClient->getGedcomRecord($this->SID, $remoteid);
-		$rec = preg_replace("/@(.*)@/", "@".$this->xref.":$1@", $rec);
-		return $rec;
+		if (is_string($rec)) {
+			$rec = preg_replace("/@(.*)@/", "@".$this->xref.":$1@", $rec);
+			return $rec;
+		}
+		else return "";
 	}
 
 	/**
@@ -281,7 +284,7 @@ if ($this->DEBUG) print "In UpdateFamily()<br />";
 			}
 		}
 		
-		//-- remove all family records so that we can add them back in if we need to
+		//-- remove all remote family links added in _merge() so that we can add them back in if we need to
 		$record1 = preg_replace("/\d FAM[SC] @".$this->xref.":[\w\d]+@\r?\n/", "", $record1);
 //		print "[<pre>$record1</pre>]";
 		
@@ -362,18 +365,20 @@ if ($this->DEBUG) print "In UpdateFamily()<br />";
 		// This Adds any new familys to the person.
 		if(count($FamilyListChild)>0){
 			for($i=0;$i<count($FamilyListChild);$i++){
-				if (!empty($FamilyChildrenList[$i])){
-					$record1.="\r\n1 FAMC @".$this->xref.":".$FamilyListChild[$i]."@";
-//					replace_gedrec($personId1, $record1);
-				}
+//				if (!empty($FamilyChildrenList[$i])){
+					$record1.="\r\n1 FAMS @";
+					if (strpos($FamilyListChild[$i], $this->xref)!==0) $record1 .= $this->xref.":";
+					$record1 .= $FamilyListChild[$i]."@";
+//				}
 			}
 		}
 		if(count($FamilyListSpouse)>0){
 			for($i=0;$i<count($FamilyListSpouse);$i++){
-				if (!empty($FamilyChildrenList[$i])){
-					$record1.="\r\n1 FAMS @".$this->xref.":".$FamilyListSpouse[$i]."@";
-//					replace_gedrec($personId1, $record1);
-				}
+//				if (!empty($FamilyChildrenList[$i])){
+					$record1.="\r\n1 FAMS @";
+					if (strpos($FamilyListSpouse[$i], $this->xref)!==0) $record1 .= $this->xref.":";
+					$record1 .= $FamilyListSpouse[$i]."@";
+//				}
 			}
 		}
 		return $record1;
@@ -800,6 +805,7 @@ if ($this->DEBUG) print "In mergeGedcomRecord($xref)<br />";
 			$localrec = $this->_merge($localrec, $gedrec);
 			//print "why<pre>".$localrec."</pre>Whynot?";
 			include_once("includes/functions_edit.php");
+			if ($this->DEBUG) print $localrec."<b>$gedrec</b>";
 			$localrec = $this->UpdateFamily($localrec,$gedrec);
 			$ct=preg_match("/0 @(.*)@/", $localrec, $match);
 			if ($ct>0)

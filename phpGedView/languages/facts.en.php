@@ -154,6 +154,7 @@ $factarray["EMAIL"]	= "Email Address";
 $factarray["_TODO"]	= "To Do Item";
 $factarray["_UID"]	= "Universal Identifier";
 $factarray["_PRIM"]	= "Highlighted Image";
+$factarray["_DBID"] = "Linked database id";
 
 //These facts are compounds for the view probabilities page
 $factarray["FAMC:HUSB:SURN"] = "Father's Surname";

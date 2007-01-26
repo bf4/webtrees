@@ -566,7 +566,7 @@ if (phpversion() >= '4.2.2') {
 	//-- prevent sql and code injection
 	foreach($_REQUEST as $key=>$value) {
 		if (!is_array($value)) {
-			if (preg_match("/((DELETE)|(INSERT)|(UPDATE)|(ALTER)|(CREATE)|( TABLE)|(DROP))\s[A-Za-z0-9 ]{0,200}(\s(FROM)|(INTO)|(TABLE)\s)/i", $value, $imatch)>0) {
+			if (preg_match("/((DELETE)|(INSERT)|(UPDATE)|(ALTER)|(CREATE)|( TABLE)|(DROP))\s[A-Za-z0-9 ]{0,20}(\s(FROM)|(INTO)|(TABLE)\s)/i", $value, $imatch)>0) {
 				print "Possible SQL injection detected: $key=>$value.  <b>$imatch[0]</b> Script terminated.";
 				require_once("includes/authentication.php");      // -- load the authentication system
 				AddToLog("Possible SQL injection detected: $key=>$value. <b>$imatch[0]</b> Script terminated.");
@@ -578,7 +578,7 @@ if (phpversion() >= '4.2.2') {
 		else {
 			foreach($value as $key1=>$val) {
 				if (!is_array($val)) {
-					if (preg_match("/((DELETE)|(INSERT)|(UPDATE)|(ALTER)|(CREATE)|( TABLE)|(DROP))\s[A-Za-z0-9 ]{0,200}(\s(FROM)|(INTO)|(TABLE)\s)/i", $val, $imatch)>0) {
+					if (preg_match("/((DELETE)|(INSERT)|(UPDATE)|(ALTER)|(CREATE)|( TABLE)|(DROP))\s[A-Za-z0-9 ]{0,20}(\s(FROM)|(INTO)|(TABLE)\s)/i", $val, $imatch)>0) {
 						print "Possible SQL injection detected: $key=>$val <b>$imatch[0]</b>.  Script terminated.";
 						require_once("includes/authentication.php");      // -- load the authentication system
 						AddToLog("Possible SQL injection detected: $key=>$val <b>$imatch[0]</b>.  Script terminated.");

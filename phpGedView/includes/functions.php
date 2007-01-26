@@ -35,6 +35,7 @@ if (strstr($_SERVER["PHP_SELF"],"functions.php")) {
 }
 
 require_once('includes/mutex_class.php');
+require_once('includes/media_class.php');
 
 /**
  * The level of error reporting
@@ -966,6 +967,14 @@ function find_highlighted_object($pid, $indirec) {
 			if (!is_null($client)) {
 				$mt = preg_match_all("/\d OBJE @(.*)@/", $indirec, $matches, PREG_SET_ORDER);
 				for($i=0; $i<$mt; $i++) {
+					$mediaObj = Media::getInstance($matches[$i][1]);
+					$mrec = $mediaObj->getGedcomRecord();
+						if (!empty($mrec)) {
+							$file = get_gedcom_value("FILE", 1, $mrec);
+							$row = array($matches[$i][1], $file, $mrec, $matches[$i][0]);
+							$media[] = $row;
+						}
+					/*
 					$parts = preg_split("/:/", $matches[$i][1]);
 					if (isset($parts[1])) {
 						$mrec = $client->getRemoteRecord($parts[1]);
@@ -974,7 +983,7 @@ function find_highlighted_object($pid, $indirec) {
 							$row = array($matches[$i][1], $file, $mrec, $matches[$i][0]);
 							$media[] = $row;
 						}
-					}
+					} */
 				}
 			}
 		}
