@@ -161,6 +161,26 @@ $factarray["_PGVU"]	= "Zuletzt geändert von";
 $factarray["SERV"] = "Fremder Server";
 $factarray["_GEDF"] = "GEDCOM Datei";
 $factarray["_PRIM"]	= "Bevorzugtes Bild";
+$factarray["FAMC:HUSB:SURN"] = "Nachname des Vaters";
+$factarray["FAMC:WIFE:SURN"] = "Nachname der Mutter";
+$factarray["FAMC:HUSB:BIRT:PLAC"] = "Geburtsort des Vaters";
+$factarray["FAMC:WIFE:BIRT:PLAC"] = "Geburtsort der Mutter";
+$factarray["FAMC:MARR:PLAC"] = "Eheort der Eltern";
+$factarray["FAMC:HUSB:OCCU"] = "Beruf des Vaters";
+$factarray[":BIRT:PLAC"] = "Geburtsort";
+$factarray["FAMS:MARR:PLAC"] = "Eheort";
+$factarray["FAMS:SPOUSE:DEAT:PLAC"] = "Todesort des Gattes oder der Gattin";
+$factarray["FAMC:HUSB:GIVN"] = "Vornamen des Vaters";
+$factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Geburtsort des Gattes oder der Gattin";
+$factarray["FAMC:WIFE:GIVN"] = "Vornamen der Mutter";
+$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Vornamen des Großvaters";
+$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Vornamen der Großmutter";
+$factarray["BIRT:PLAC"] = "Geburtsort";
+$factarray["DEAT:PLAC"] = "Todesort";
+$factarray["CHR:PLAC"] = "Taufort";
+$factarray["BAPM:PLAC"] = "Taufort";
+$factarray["BURI:PLAC"] = "Beerdigungsort";
+$factarray["FAMC:MARR:PLAC"] = "";
 $factarray["_THUM"]	= "Dieses Bild auch als Miniaturbild verwenden?";
 
 // These facts are specific to GEDCOM exports from Family Tree Maker

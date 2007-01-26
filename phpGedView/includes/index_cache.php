@@ -36,8 +36,9 @@ function loadCachedBlock($bloc, $index) {
 	//-- ignore caching when DEBUG is set
 	if (isset($DEBUG) && $DEBUG==true) return false;
 	
-	//-- ignore 0 level caching
-	if (isset($PGV_BLOCKS[$bloc]) && (!isset($PGV_BLOCKS[$bloc]['cache']) || $PGV_BLOCKS[$bloc]['cache']<1)) return false;
+	//-- ignore cache when its life is not configured or when its life is zero
+	if (!isset($PGV_BLOCKS[$bloc])) return false;
+	if (!isset($PGV_BLOCKS[$bloc]['cache']) || $PGV_BLOCKS[$bloc]['cache']==0) return false;
 	
 	//-- ignore caching for logged in users 
 	$uname = getUserName();
@@ -58,18 +59,21 @@ function loadCachedBlock($bloc, $index) {
 	}
 	$fname = $INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]."/".$GEDCOM."/".$index."_".$bloc;
 	if (file_exists($fname)) {
-		$modtime = filemtime($fname);
-		//-- time should start at the beginning of the day
-		$modtime = $modtime - (date("G",$modtime)*60*60 + date("i",$modtime)*60 + date("s",$modtime));
-		if (isset($PGV_BLOCKS[$bloc]['cache'])) $checktime = ($PGV_BLOCKS[$bloc]['cache']*24*60*60);
-		else $checktime = 24*60*60; //-- default to 1 day
-		$modtime = $modtime+$checktime;
-		if ($modtime<time()) return false;		
+		// Check for expired cache (<0: no expiry), 0: immediate, >0: expires in x days)  Zero already checked
+		if ($PGV_BLOCKS[$bloc]['cache'] > 0) {
+			$modtime = filemtime($fname);
+			//-- time should start at the beginning of the day
+			$modtime = $modtime - (date("G",$modtime)*60*60 + date("i",$modtime)*60 + date("s",$modtime));
+			$checktime = ($PGV_BLOCKS[$bloc]['cache']*24*60*60);
+			$modtime = $modtime+$checktime;
+			if ($modtime<time()) return false;
+		}		
 		$fp = fopen($fname, "rb");
 		fpassthru($fp);
 		fclose($fp);
 		return true;
 	}
+	return false;
 }
 
 /**
