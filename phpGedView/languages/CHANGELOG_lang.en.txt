@@ -43,7 +43,8 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
-$pgv_lang["cache_life"]								25 Jan 2007				A
++$pgv_lang["duplicate_username"]					26 Jan 2007				M		Moved from admin.en.php
++$pgv_lang["cache_life"]							25 Jan 2007				A
 *$pgv_lang["bosa_2"]								17 Jan 2007				S		}  Removed reference to     
 *$pgv_lang["bosa_3"]								17 Jan 2007				S		}  other $pgv_lang variables
 *$pgv_lang["bosa_4"]								17 Jan 2007				S		}  in the value declarations

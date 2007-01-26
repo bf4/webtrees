@@ -158,7 +158,6 @@ $pgv_lang["download_file"]						= "Download File";
 $pgv_lang["download_gedcom"]					= "Download GEDCOM";
 $pgv_lang["download_here"]						= "Click here to download file.";
 $pgv_lang["download_note"]						= "NOTE: Large GEDCOMs can take a long time to process before downloading.  If PHP times out before the download is complete, you may not get a complete download.<br /><br />To make sure that the GEDCOM file was downloaded correctly, check that its last line is <b>0&nbsp;TRLR</b>.  GEDCOM files are text; you can use any suitable text editor, but be sure to <u>not</u> save the downloaded GEDCOM file after you have inspected it.<br /><br />In general, it could take as much time to download as it took to import your GEDCOM file.";
-$pgv_lang["duplicate_username"] 				= "Duplicate user name.  A user with that user name already exists.  Please choose another user name.";
 $pgv_lang["editaccount"]						= "Allow this user to edit his account information";
 $pgv_lang["empty_dataset"]						= "Do you want to erase the old data and replace it with this new data?";
 $pgv_lang["empty_lines_detected"]				= "Empty lines were detected in your GEDCOM file.	On cleanup, these empty lines will be removed.";
