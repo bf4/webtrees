@@ -34,11 +34,12 @@ $PGV_BLOCKS['print_htmlplus_block']['name']			= $pgv_lang['htmlplus_block_name']
 $PGV_BLOCKS['print_htmlplus_block']['descr']		= 'htmlplus_block_descr';
 $PGV_BLOCKS['print_htmlplus_block']['canconfig']	= true;
 $PGV_BLOCKS['print_htmlplus_block']['config']		= array(
+	'cache'=>0,
 	'title'=>'',
 	'html'=>"{$pgv_lang['html_block_sample_part1']} <img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" alt=\"{$pgv_lang['config_block']}\" /> {$pgv_lang['html_block_sample_part2']}",
 	'gedcom'=>'__current__',
 	'compat'=>1
-);
+	);
 
 function print_htmlplus_block($block=true, $config='', $side, $index)
 {
@@ -97,7 +98,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 	$config['html'] = str_replace($new_tags, $new_values, $config['html']);
 
 	/*
-	 * Secend Pass.
+	 * Second Pass.
 	 * Catches language sub-strings.
 	 */
 	list($new_tags, $new_values) = $stats->getTags("{$config['title']} {$config['html']}");
@@ -188,6 +189,7 @@ function print_htmlplus_block_config($config)
 {
 	global
 		$pgv_lang,
+		$command,
 		$PGV_BLOCKS,
 		$TEXT_DIRECTION,
 		$LANGUAGE,
@@ -222,13 +224,13 @@ function print_htmlplus_block_config($config)
 	if(empty($config)){$config = $PGV_BLOCKS['print_htmlplus_block']['config'];}else{foreach($PGV_BLOCKS['print_htmlplus_block']['config'] as $k=>$v){if(!isset($config[$k])){$config[$k] = $v;}}}
 	// title
 	$config['title'] = htmlentities($config['title'], ENT_COMPAT, 'UTF-8');
-	print "<tr>\n\t<td class=\"descriptionbox width20\">"
+	print "<tr>\n\t<td class=\"descriptionbox wrap width33\">"
 		.print_help_link('index_htmlplus_title_help', 'qm_ah', '', false, true)
 		."{$pgv_lang['title']}</td>\n"
 		."\t<td class=\"optionbox\"><input type=\"text\" name=\"title\" size=\"30\" value=\"{$config['title']}\" /></td>\n</tr>\n"
 	;
 	// templates
-	print "<tr>\n\t<td class=\"descriptionbox width20\">"
+	print "<tr>\n\t<td class=\"descriptionbox wrap width33\">"
 		.print_help_link('index_htmlplus_template_help', 'qm_ah', '', false, true)
 		."{$pgv_lang['htmlplus_block_templates']}</td>\n"
 		."\t<td class=\"optionbox\">\n"
@@ -245,7 +247,7 @@ function print_htmlplus_block_config($config)
 	// gedcom
 	if($config['gedcom'] == '__current__'){$sel_current = ' selected="selected"';}else{$sel_current = '';}
 	if($config['gedcom'] == '__default__'){$sel_default = ' selected="selected"';}else{$sel_default = '';}
-	print "<tr>\n\t<td class=\"descriptionbox width20\">"
+	print "<tr>\n\t<td class=\"descriptionbox wrap width33\">"
 		.print_help_link('index_htmlplus_gedcom_help', 'qm_ah', '', false, true)
 		."{$pgv_lang['htmlplus_block_gedcom']}</td>\n"
 		."\t<td class=\"optionbox\">\n"
@@ -261,7 +263,7 @@ function print_htmlplus_block_config($config)
 	print "\t\t</select>\n"
 		."\t</td>\n</tr>\n"
 	// html
-		."<tr>\n\t<td class=\"descriptionbox width20\">"
+		."<tr>\n\t<td class=\"descriptionbox wrap width33\">"
 		.print_help_link('index_htmlplus_content_help', 'qm_ah', '', false, true)
 		."{$pgv_lang['htmlplus_block_content']}<br />\n<br />\n"
 		."\t\t<input type =\"button\" value=\"{$pgv_lang['htmlplus_block_taglist']}\" onclick=\"window.open('stats_tag_list.php', '_blank', 'top=50,left=10,width=600,height=600,scrollbars=1,resizable=1');\" />\n"
@@ -270,12 +272,21 @@ function print_htmlplus_block_config($config)
 		."\t\t<textarea name=\"html\" rows=\"10\" cols=\"80\">{$config['html']}</textarea>\n"
 		."\t</td>\n</tr>\n"
 	;
-	// compatability mode
+	// compatibility mode
 	if($config['compat'] == 1){$compat = ' checked="CHECKED"';}else{$compat = '';}
-	print "<tr>\n\t<td class=\"descriptionbox width20\">"
+	print "<tr>\n\t<td class=\"descriptionbox wrap width33\">"
 		.print_help_link('index_htmlplus_compat_help', 'qm_ah', '', false, true)
 		."{$pgv_lang['htmlplus_block_compat']}</td>\n"
 		."\t<td class=\"optionbox\"><input type=\"checkbox\" name=\"compat\" value=\"1\"{$compat} /></td>\n</tr>\n"
 	;
+	// Cache file life
+	if ($command=="gedcom") {
+  		print "<tr><td class=\"descriptionbox wrap width33\">";
+			print_help_link("cache_life_help", "qm");
+			print $pgv_lang["cache_life"];
+		print "</td><td class=\"optionbox\">";
+			print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
+		print "</td></tr>";
+	}
 }
 ?>
