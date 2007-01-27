@@ -1145,6 +1145,14 @@ class stats
 
 	function serverTimezone(){return date('T');}
 
+	function browserDate(){return get_changed_date(date('j', time()-$_SESSION["timediff"]).' '.strtoupper(date('M', time()-$_SESSION["timediff"])).' '.date('Y', time()-$_SESSION["timediff"]));}
+
+	function browserTime(){return date('g:i a', time()-$_SESSION["timediff"]);}
+
+	function browserTime24(){return date('G:i', time()-$_SESSION["timediff"]);}
+
+	function browserTimezone(){return date('T', time()-$_SESSION["timediff"]);}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Misc.                                                                     //
 ///////////////////////////////////////////////////////////////////////////////
