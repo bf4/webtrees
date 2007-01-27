@@ -26,9 +26,10 @@
  * @subpackage Blocks
  */
 
-$PGV_BLOCKS["print_logged_in_users"]["name"] = $pgv_lang["logged_in_users_block"];
-$PGV_BLOCKS["print_logged_in_users"]["descr"] = "logged_in_users_descr";
-$PGV_BLOCKS["print_logged_in_users"]["canconfig"] = false;
+$PGV_BLOCKS["print_logged_in_users"]["name"]		= $pgv_lang["logged_in_users_block"];
+$PGV_BLOCKS["print_logged_in_users"]["descr"]		= "logged_in_users_descr";
+$PGV_BLOCKS["print_logged_in_users"]["canconfig"]	= false;
+$PGV_BLOCKS["print_logged_in_users"]["config"]		= array("cache"=>0);
 
 /**
  * logged in users

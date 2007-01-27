@@ -29,27 +29,28 @@
 
 require_once("includes/functions_print_lists.php");
 
-$PGV_BLOCKS["print_gedcom_stats"]["name"]        = $pgv_lang["gedcom_stats_block"];
-$PGV_BLOCKS["print_gedcom_stats"]["descr"]        = "gedcom_stats_descr";
-$PGV_BLOCKS["print_gedcom_stats"]["canconfig"]   = true;
-$PGV_BLOCKS["print_gedcom_stats"]["cache"]   = 1;
-$PGV_BLOCKS["print_gedcom_stats"]["config"] = array("show_common_surnames"=>"yes"
-	,"stat_indi"=>"yes"
-	,"stat_fam"=>"yes"
-	,"stat_sour"=>"yes"
-	,"stat_other"=>"yes"
-	,"stat_media"=>"yes"
-	,"stat_surname"=>"yes"
-	,"stat_events"=>"yes"
-	,"stat_users"=>"yes"
-	,"stat_first_birth"=>"yes"
-	,"stat_last_birth"=>"yes"
-	,"stat_first_death"=>"yes"
-	,"stat_last_death"=>"yes"
-	,"stat_long_life"=>"yes"
-	,"stat_avg_life"=>"yes"
-	,"stat_most_chil"=>"yes"
-	,"stat_avg_chil"=>"yes"
+$PGV_BLOCKS["print_gedcom_stats"]["name"]		= $pgv_lang["gedcom_stats_block"];
+$PGV_BLOCKS["print_gedcom_stats"]["descr"]		= "gedcom_stats_descr";
+$PGV_BLOCKS["print_gedcom_stats"]["canconfig"]	= true;
+$PGV_BLOCKS["print_gedcom_stats"]["config"]		= array(
+	"cache"=>1,
+	"show_common_surnames"=>"yes",
+	"stat_indi"=>"yes",
+	"stat_fam"=>"yes",
+	"stat_sour"=>"yes",
+	"stat_other"=>"yes",
+	"stat_media"=>"yes",
+	"stat_surname"=>"yes",
+	"stat_events"=>"yes",
+	"stat_users"=>"yes",
+	"stat_first_birth"=>"yes",
+	"stat_last_birth"=>"yes",
+	"stat_first_death"=>"yes",
+	"stat_last_death"=>"yes",
+	"stat_long_life"=>"yes",
+	"stat_avg_life"=>"yes",
+	"stat_most_chil"=>"yes",
+	"stat_avg_chil"=>"yes"
 	);
 
 //-- function to print the gedcom statistics block
@@ -465,11 +466,12 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 }
 
 function print_gedcom_stats_config($config) {
-	global $pgv_lang, $PGV_BLOCKS, $TEXT_DIRECTION;
+	global $pgv_lang, $command, $PGV_BLOCKS, $TEXT_DIRECTION;
 	if (empty($config)) $config = $PGV_BLOCKS["print_gedcom_stats"]["config"];
-	if (!isset($config['stat_indi'])) $config = $PGV_BLOCKS["print_gedcom_stats"]["config"];
+	if (!isset($config["stat_indi"])) $config = $PGV_BLOCKS["print_gedcom_stats"]["config"];
+	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_gedcom_stats"]["config"]["cache"];
 
-	print "<tr><td class=\"descriptionbox width20\">".$pgv_lang["gedcom_stats_show_surnames"]."</td>";?>
+	print "<tr><td class=\"descriptionbox wrap width33\">".$pgv_lang["gedcom_stats_show_surnames"]."</td>";?>
 	<td class="optionbox">
 		<select name="show_common_surnames">
 			<option value="yes"<?php if ($config["show_common_surnames"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
@@ -477,7 +479,7 @@ function print_gedcom_stats_config($config) {
 		</select>
 	</td></tr>
 	<tr>
-		<td class="descriptionbox width20"><?php print $pgv_lang["stats_to_show"]; ?></td>
+		<td class="descriptionbox wrap width33"><?php print $pgv_lang["stats_to_show"]; ?></td>
 		<td class="optionbox">
 			<table>
 				<tr>
@@ -515,6 +517,16 @@ function print_gedcom_stats_config($config) {
 			</table>
 		</td>
 	</tr>
-	<?php
+  	<?php
+
+	// Cache file life
+	if ($command=="gedcom") {
+  		print "<tr><td class=\"descriptionbox wrap width33\">";
+			print_help_link("cache_life_help", "qm");
+			print $pgv_lang["cache_life"];
+		print "</td><td class=\"optionbox\">";
+			print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
+		print "</td></tr>";
+	}
 }
 ?>

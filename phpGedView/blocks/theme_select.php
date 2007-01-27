@@ -26,11 +26,11 @@
  * @subpackage Blocks
  */
 
-$PGV_BLOCKS["print_block_theme_select"]["name"]         = $pgv_lang["theme_select_block"];
-$PGV_BLOCKS["print_block_theme_select"]["descr"]        = "theme_select_descr";
-$PGV_BLOCKS["print_block_theme_select"]["type"]        = "gedcom";
-$PGV_BLOCKS["print_block_theme_select"]["cache"]   		= 99;
-$PGV_BLOCKS["print_block_theme_select"]["canconfig"]   = false;
+$PGV_BLOCKS["print_block_theme_select"]["name"]			= $pgv_lang["theme_select_block"];
+$PGV_BLOCKS["print_block_theme_select"]["descr"]		= "theme_select_descr";
+$PGV_BLOCKS["print_block_theme_select"]["type"]			= "gedcom";
+$PGV_BLOCKS["print_block_theme_select"]["canconfig"]	= false;
+$PGV_BLOCKS["print_block_theme_select"]["config"]		= array("cache"=>-1);
 
 function print_block_theme_select($style=0, $config="", $side, $index) {
 	global $pgv_lang;

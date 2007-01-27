@@ -26,10 +26,11 @@
  * @subpackage Blocks
  */
 require_once("includes/functions_print_lists.php");
-$PGV_BLOCKS["print_user_favorites"]["name"]        = $pgv_lang["user_favorites_block"];
-$PGV_BLOCKS["print_user_favorites"]["descr"]        = "user_favorites_descr";
-$PGV_BLOCKS["print_user_favorites"]["type"]        = "user";
-$PGV_BLOCKS["print_user_favorites"]["canconfig"]        = false;
+$PGV_BLOCKS["print_user_favorites"]["name"]			= $pgv_lang["user_favorites_block"];
+$PGV_BLOCKS["print_user_favorites"]["descr"]		= "user_favorites_descr";
+$PGV_BLOCKS["print_user_favorites"]["type"]			= "user";
+$PGV_BLOCKS["print_user_favorites"]["canconfig"]	= false;
+$PGV_BLOCKS["print_user_favorites"]["config"]		= array("cache"=>0);
 
 //-- print user favorites
 function print_user_favorites($block=true, $config="", $side, $index) {

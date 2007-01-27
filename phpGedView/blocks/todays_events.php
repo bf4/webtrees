@@ -26,13 +26,17 @@
  * @version $Id$
  */
 
-$PGV_BLOCKS["print_todays_events"]["name"]			= $pgv_lang["todays_events_block"];
-$PGV_BLOCKS["print_todays_events"]["descr"]			= "todays_events_descr";
-$PGV_BLOCKS["print_todays_events"]["infoStyle"]		= "style2";
-$PGV_BLOCKS["print_todays_events"]["allowDownload"]	= "yes";
-$PGV_BLOCKS["print_todays_events"]["canconfig"]		= true;
-$PGV_BLOCKS["print_todays_events"]["cache"]   = 1;
-$PGV_BLOCKS["print_todays_events"]["config"] = array("filter"=>"all", "onlyBDM"=>"no", "infoStyle"=>"style2", "allowDownload"=>"yes");
+$PGV_BLOCKS["print_todays_events"]["name"]		= $pgv_lang["todays_events_block"];
+$PGV_BLOCKS["print_todays_events"]["descr"]		= "todays_events_descr";
+$PGV_BLOCKS["print_todays_events"]["infoStyle"]	= "style2";
+$PGV_BLOCKS["print_todays_events"]["canconfig"]	= true;
+$PGV_BLOCKS["print_todays_events"]["config"]	= array(
+	"cache"=>1,
+	"filter"=>"all", 
+	"onlyBDM"=>"no", 
+	"infoStyle"=>"style2", 
+	"allowDownload"=>"yes"
+	);
 
 //-- today's events block
 //-- this block prints a list of today's upcoming events of living people in your gedcom
@@ -287,5 +291,8 @@ function print_todays_events_config($config) {
   	</select>
   	</td></tr>
   <?php
+
+	// Cache file life is not configurable by user:  anything other than 1 day doesn't make sense
+	print "<input type=\"hidden\" name=\"cache\" value=\"1\" />";
 }
 ?>

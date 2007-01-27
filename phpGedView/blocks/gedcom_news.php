@@ -30,11 +30,11 @@ $PGV_BLOCKS['print_gedcom_news']['name']		= $pgv_lang['gedcom_news_block'];
 $PGV_BLOCKS['print_gedcom_news']['descr']		= 'gedcom_news_descr';
 $PGV_BLOCKS['print_gedcom_news']['type']		= 'gedcom';
 $PGV_BLOCKS['print_gedcom_news']['canconfig']	= true;
-$PGV_BLOCKS["print_gedcom_news"]["cache"]   = 7;
 $PGV_BLOCKS['print_gedcom_news']['config']		= array(
+	'cache'=>7,
 	'limit' => 'nolimit',
 	'flag' => 0
-);
+	);
 
 /**
  * Prints a gedcom news/journal
@@ -199,22 +199,14 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 
 function print_gedcom_news_config($config)
 {
-	global $pgv_lang, $PGV_BLOCKS;
-	if (empty ($config))
-	{
-		$config = $PGV_BLOCKS['print_gedcom_news']['config'];
-	}
-	if (!isset ($config['limit']))
-	{
-		$config['limit'] = 'nolimit';
-	}
-	if (!isset ($config['flag']))
-	{
-		$config['flag'] = 0;
-	}
+	global $pgv_lang, $command, $PGV_BLOCKS;
+	if (empty ($config)) $config = $PGV_BLOCKS["print_gedcom_news"]["config"];
+	if (!isset ($config["limit"])) $config["limit"] = "nolimit";
+	if (!isset ($config["flag"])) $config["flag"] = 0;
+	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_gedcom_news"]["config"]["cache"];
 
 	// Limit Type
-	print '<tr><td class="descriptionbox width20">';
+	print '<tr><td class="descriptionbox wrap width33">';
 	print_help_link("gedcom_news_limit_help", "qm");
 	print $pgv_lang['gedcom_news_limit'].'</td>';
 	$output = '<td class="optionbox">'
@@ -227,7 +219,7 @@ function print_gedcom_news_config($config)
 	print $output;
 
 	// Flag to look for
-	print '<tr><td class="descriptionbox width20">';
+	print '<tr><td class="descriptionbox wrap width33">';
 	print_help_link("gedcom_news_flag_help", "qm");
 	print $pgv_lang['gedcom_news_flag'].'</td>';
 	$output = '<td class="optionbox"><input type="text" name="flag" size="4" maxlength="4" value="' 
@@ -235,5 +227,15 @@ function print_gedcom_news_config($config)
 		.'"></td></tr>'
 	;
 	print $output;
+	
+	// Cache file life
+	if ($command=="gedcom") {
+  		print "<tr><td class=\"descriptionbox wrap width33\">";
+			print_help_link("cache_life_help", "qm");
+			print $pgv_lang["cache_life"];
+		print "</td><td class=\"optionbox\">";
+			print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
+		print "</td></tr>";
+	}
 }
 ?>

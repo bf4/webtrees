@@ -29,10 +29,15 @@
 $PGV_BLOCKS["print_upcoming_events"]["name"]		= $pgv_lang["upcoming_events_block"];
 $PGV_BLOCKS["print_upcoming_events"]["descr"]		= "upcoming_events_descr";
 $PGV_BLOCKS["print_upcoming_events"]["infoStyle"]	= "style2";
-$PGV_BLOCKS["print_todays_events"]["allowDownload"]	= "yes";
 $PGV_BLOCKS["print_upcoming_events"]["canconfig"]	= true;
-$PGV_BLOCKS["print_upcoming_events"]["cache"]   = 1;
-$PGV_BLOCKS["print_upcoming_events"]["config"] = array("days"=>30, "filter"=>"all", "onlyBDM"=>"no", "infoStyle"=>"style2", "allowDownload"=>"yes");
+$PGV_BLOCKS["print_upcoming_events"]["config"]		= array(
+	"cache"=>1,
+	"days"=>30, 
+	"filter"=>"all", 
+	"onlyBDM"=>"no", 
+	"infoStyle"=>"style2", 
+	"allowDownload"=>"yes"
+	);
 
 //-- upcoming events block
 //-- this block prints a list of upcoming events of people in your gedcom
@@ -313,5 +318,8 @@ function print_upcoming_events_config($config) {
   	</select>
   	</td></tr>
   <?php
+
+	// Cache file life is not configurable by user:  anything other than 1 day doesn't make sense
+	print "<input type=\"hidden\" name=\"cache\" value=\"1\" />";
 }
 ?>

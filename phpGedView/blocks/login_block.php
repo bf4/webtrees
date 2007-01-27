@@ -26,11 +26,11 @@
  * @subpackage Blocks
  */
 
-$PGV_BLOCKS["print_login_block"]["name"]        = $pgv_lang["login_block"];
-$PGV_BLOCKS["print_login_block"]["descr"]        = "login_descr";
-$PGV_BLOCKS["print_login_block"]["type"]        = "gedcom";
-$PGV_BLOCKS["print_login_block"]["cache"]   = 99;
-$PGV_BLOCKS["print_login_block"]["canconfig"]        = false;
+$PGV_BLOCKS["print_login_block"]["name"]		= $pgv_lang["login_block"];
+$PGV_BLOCKS["print_login_block"]["descr"]		= "login_descr";
+$PGV_BLOCKS["print_login_block"]["type"]		= "gedcom";
+$PGV_BLOCKS["print_login_block"]["canconfig"]	= false;
+$PGV_BLOCKS["print_login_block"]["config"]		= array("cache"=>-1);
 
 /**
  * Print Login Block
