@@ -161,6 +161,7 @@ $factarray["_PGVU"]	= "Zuletzt geändert von";
 $factarray["SERV"] = "Fremder Server";
 $factarray["_GEDF"] = "GEDCOM Datei";
 $factarray["_PRIM"]	= "Bevorzugtes Bild";
+$factarray["_DBID"] = "ID der fremden Datenbank";
 $factarray["FAMC:HUSB:SURN"] = "Nachname des Vaters";
 $factarray["FAMC:WIFE:SURN"] = "Nachname der Mutter";
 $factarray["FAMC:HUSB:BIRT:PLAC"] = "Geburtsort des Vaters";
