@@ -36,6 +36,7 @@ if(!defined('PGV_GALLERY2_INIT'))
 $PGV_BLOCKS['print_g2_random_media']['name']		= 'Random Media 2';
 $PGV_BLOCKS['print_g2_random_media']['descr']		= 'random_media_descr';
 $PGV_BLOCKS['print_g2_random_media']['canconfig']	= false;
+$PGV_BLOCKS['print_g2_random_media']['config']		= array('cache'=>0);
 
 
 //-- function to display a random picture from the gedcom

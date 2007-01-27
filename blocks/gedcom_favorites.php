@@ -26,10 +26,10 @@
  * @subpackage Blocks
  */
 
-$PGV_BLOCKS["print_gedcom_favorites"]["name"]        = $pgv_lang["gedcom_favorites_block"];
-$PGV_BLOCKS["print_gedcom_favorites"]["descr"]        = "gedcom_favorites_descr";
-$PGV_BLOCKS["print_gedcom_favorites"]["cache"]   		= 7;
-$PGV_BLOCKS["print_gedcom_favorites"]["canconfig"]   = false;
+$PGV_BLOCKS["print_gedcom_favorites"]["name"]		= $pgv_lang["gedcom_favorites_block"];
+$PGV_BLOCKS["print_gedcom_favorites"]["descr"]		= "gedcom_favorites_descr";
+$PGV_BLOCKS["print_gedcom_favorites"]["canconfig"]	= false;
+$PGV_BLOCKS["print_gedcom_favorites"]["config"]		= array("cache"=>7);
 
 //-- print gedcom favorites
 function print_gedcom_favorites($block = true, $config="", $side, $index) {

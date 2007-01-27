@@ -26,11 +26,14 @@
  * @subpackage Blocks
  */
 
-$PGV_BLOCKS["print_block_name_top10"]["name"]           = $pgv_lang["block_top10"];
-$PGV_BLOCKS["print_block_name_top10"]["descr"]          = "block_top10_descr";
-$PGV_BLOCKS["print_block_name_top10"]["canconfig"]        = true;
-$PGV_BLOCKS["print_block_name_top10"]["cache"]   		= 7;
-$PGV_BLOCKS["print_block_name_top10"]["config"] = array("num"=>10, "count_placement"=>"left");
+$PGV_BLOCKS["print_block_name_top10"]["name"]		= $pgv_lang["block_top10"];
+$PGV_BLOCKS["print_block_name_top10"]["descr"]		= "block_top10_descr";
+$PGV_BLOCKS["print_block_name_top10"]["canconfig"]	= true;
+$PGV_BLOCKS["print_block_name_top10"]["config"]		= array(
+	"cache"=>7,
+	"num"=>10, 
+	"count_placement"=>"left"
+	);
 
 function print_block_name_top10($block=true, $config="", $side, $index) {
 	global $pgv_lang, $GEDCOM, $DEBUG, $TEXT_DIRECTION;
@@ -141,16 +144,18 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 }
 
 function print_block_name_top10_config($config) {
-	global $pgv_lang, $PGV_BLOCKS, $TEXT_DIRECTION;
+	global $pgv_lang, $command, $PGV_BLOCKS, $TEXT_DIRECTION;
 	if (empty($config)) $config = $PGV_BLOCKS["print_block_name_top10"]["config"];
+	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_block_name_top10"]["config"]["cache"];
 
-	print "<tr><td class=\"descriptionbox width20\">".$pgv_lang["num_to_show"]."</td>";?>
+	print "<tr><td class=\"descriptionbox wrap width33\">".$pgv_lang["num_to_show"]."</td>";?>
 	<td class="optionbox">
 		<input type="text" name="num" size="2" value="<?php print $config["num"]; ?>" />
 	</td></tr>
 
 	<?php
-  	print "<tr><td class=\"descriptionbox width20\">".$pgv_lang["before_or_after"]."</td>";?>
+	/** DEPRECATED
+  	print "<tr><td class=\"descriptionbox wrap width33\">".$pgv_lang["before_or_after"]."</td>";?>
 	<td class="optionbox">
 	<select name="count_placement">
 		<option value="left"<?php if ($config["count_placement"]=="left") print " selected=\"selected\"";?>><?php print $pgv_lang["before"]; ?></option>
@@ -158,5 +163,16 @@ function print_block_name_top10_config($config) {
 	</select>
 	</td></tr>
 	<?php
+	**/
+
+	// Cache file life
+	if ($command=="gedcom") {
+  		print "<tr><td class=\"descriptionbox wrap width33\">";
+			print_help_link("cache_life_help", "qm");
+			print $pgv_lang["cache_life"];
+		print "</td><td class=\"optionbox\">";
+			print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
+		print "</td></tr>";
+	}
 }
 ?>

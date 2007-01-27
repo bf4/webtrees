@@ -26,10 +26,11 @@
  * @subpackage Blocks
  */
 
-$PGV_BLOCKS["print_gedcom_block"]["name"]        = $pgv_lang["gedcom_block"];
-$PGV_BLOCKS["print_gedcom_block"]["descr"]       = "gedcom_descr";
-$PGV_BLOCKS["print_gedcom_block"]["type"]        = "gedcom";
-$PGV_BLOCKS["print_gedcom_block"]["canconfig"]   = false;
+$PGV_BLOCKS["print_gedcom_block"]["name"]		= $pgv_lang["gedcom_block"];
+$PGV_BLOCKS["print_gedcom_block"]["descr"]		= "gedcom_descr";
+$PGV_BLOCKS["print_gedcom_block"]["type"]		= "gedcom";
+$PGV_BLOCKS["print_gedcom_block"]["canconfig"]	= false;
+$PGV_BLOCKS["print_gedcom_block"]["config"]		= array("cache"=>0);
 
 //-- function to print the gedcom block
 function print_gedcom_block($block = true, $config="", $side, $index) {

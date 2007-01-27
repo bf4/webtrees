@@ -23,7 +23,7 @@
  * $Id$
  * @package PhpGedView
  * @subpackage RSS
- * @TODO add Basic HTTP authentication to allow RSS agrigators to "log on"
+ * @TODO add Basic HTTP authentication to allow RSS aggregators to "log on"
  */
 
 if (isset($_SESSION["CLANGUAGE"])) $oldlang = $_SESSION["CLANGUAGE"];
@@ -38,16 +38,17 @@ require("config.php");
 require("includes/index_cache.php");
 
 $feedCacheName = "fullFeed";
-$useCache = true;
 
 /*if (!empty($auth)){
 	if($auth=="basic"){
 		basicHTTPAuthenticateUser();
 	}
 }*/
+
+// valid format strings are: RSS0.91, RSS1.0, RSS2.0, MBOX, OPML, ATOM, ATOM1.0, ATOM0.3, HTML, JS
 if (empty($rssStyle)){
-	$rssStyle=$RSS_FORMAT;
-	$useCache = false; //do not cache non standard feed type. TODO: cache all flavors independantly as loaded.
+	if (!empty($RSS_FORMAT)) $rssStyle = $RSS_FORMAT;
+	else $rssStyle = "ATOM";	// Unless configured otherwise, default to ATOM 
 }
 
 if (!isset($_SERVER['QUERY_STRING'])){
@@ -81,9 +82,15 @@ if(!empty($module)){
 	}
 }
 
-if(!loadCachedBlock($feedCacheName, "0")){
+// Build the array to control caching
+$cacheControl = array();
+$cacheControl[0] = $feedCacheName;
+$cacheControl[1] = array("cache"=>1);
+if ($module=="randomMedia") $cacheControl[1]["cache"] = 0;
+
+if(!loadCachedBlock($cacheControl, $rssStyle)){
 	$user = getUser($CONTACT_EMAIL);
-	$author =$user["firstname"]." ".$user["lastname"];
+	$author = $user["firstname"]." ".$user["lastname"];
 
 	$feed = new UniversalFeedCreator();
 	$feed->generator = "http://www.phpgedview.net v" . $VERSION . " " . $VERSION_RELEASE;
@@ -339,15 +346,12 @@ if(!loadCachedBlock($feedCacheName, "0")){
 		$feed->addItem($item);
 	}
 
-	// valid format strings are: RSS0.91, RSS1.0, RSS2.0, MBOX, OPML, ATOM, ATOM1.0, ATOM0.3, HTML, JS
-	if (empty($rssStyle)) $rssStyle = "ATOM"; //default to ATOM1.0
-
 	//$feed->outputFeed($rssStyle);
 
 	ob_start();
 	$feed->outputFeed($rssStyle);
 	$content = ob_get_contents();
-	saveCachedBlock($feedCacheName, 0, $content);
+	saveCachedBlock($cacheControl, $rssStyle, $content);
 	ob_end_flush();
 }
  //-- preserve the old language by storing it back in the session

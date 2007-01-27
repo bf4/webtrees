@@ -27,10 +27,14 @@
  * @todo add a time configuration option
  */
 
-$PGV_BLOCKS["review_changes_block"]["name"]        = $pgv_lang["review_changes_block"];
-$PGV_BLOCKS["review_changes_block"]["descr"]       = "review_changes_descr";
-$PGV_BLOCKS["review_changes_block"]["canconfig"]        = false;
-$PGV_BLOCKS["review_changes_block"]["config"] = array("days"=>1, "sendmail"=>"yes");
+$PGV_BLOCKS["review_changes_block"]["name"]			= $pgv_lang["review_changes_block"];
+$PGV_BLOCKS["review_changes_block"]["descr"]		= "review_changes_descr";
+$PGV_BLOCKS["review_changes_block"]["canconfig"]	= false;
+$PGV_BLOCKS["review_changes_block"]["config"]		= array(
+	"cache"=>0,
+	"days"=>1, 
+	"sendmail"=>"yes"
+	);
 
 /**
  * Print Review Changes Block
@@ -163,6 +167,17 @@ function review_changes_block_config($config) {
 		print ">".$pgv_lang["no"]."</option>";
 	print "</select><br /><br />";
 	print $pgv_lang["review_changes_email_freq"]."&nbsp;<input type='text' name='days' value='".$config["days"]."' size='2' />";
+	// Cache file life
+	if ($command=="gedcom") {
+  		print "<tr><td class=\"descriptionbox wrap width33\">";
+			print_help_link("cache_life_help", "qm");
+			print $pgv_lang["cache_life"];
+		print "</td><td class=\"optionbox\">";
+			print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
+		print "</td></tr>";
+	}
+	// Cache file life is not configurable by user:  anything other than "no cache" doesn't make sense
+	print "<input type=\"hidden\" name=\"cache\" value=\"0\" />";
 }
 
 ?>

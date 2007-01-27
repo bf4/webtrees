@@ -26,10 +26,11 @@
  * @subpackage Blocks
  */
 
-$PGV_BLOCKS["print_user_messages"]["name"]        = $pgv_lang["user_messages_block"];
-$PGV_BLOCKS["print_user_messages"]["descr"]        = "user_messages_descr";
-$PGV_BLOCKS["print_user_messages"]["type"]        = "user";
-$PGV_BLOCKS["print_user_messages"]["canconfig"]        = false;
+$PGV_BLOCKS["print_user_messages"]["name"]		= $pgv_lang["user_messages_block"];
+$PGV_BLOCKS["print_user_messages"]["descr"]		= "user_messages_descr";
+$PGV_BLOCKS["print_user_messages"]["type"]		= "user";
+$PGV_BLOCKS["print_user_messages"]["canconfig"]	= false;
+$PGV_BLOCKS["print_user_messages"]["config"]	= array("cache"=>0);
 
 //-- print user messages
 function print_user_messages($block=true, $config="", $side, $index) {
