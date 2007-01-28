@@ -48,7 +48,7 @@ $feedCacheName = "fullFeed";
 // valid format strings are: RSS0.91, RSS1.0, RSS2.0, MBOX, OPML, ATOM, ATOM1.0, ATOM0.3, HTML, JS
 if (empty($rssStyle)){
 	if (!empty($RSS_FORMAT)) $rssStyle = $RSS_FORMAT;
-	else $rssStyle = "ATOM";	// Unless configured otherwise, default to ATOM 
+	else $rssStyle = "ATOM";	// Unless configured otherwise, default to ATOM
 }
 
 if (!isset($_SERVER['QUERY_STRING'])){
@@ -86,7 +86,7 @@ if(!empty($module)){
 $cacheControl = array();
 $cacheControl[0] = $feedCacheName;
 $cacheControl[1] = array("cache"=>1);
-if ($module=="randomMedia") $cacheControl[1]["cache"] = 0;
+if (!empty($module) && $module=="randomMedia") $cacheControl[1]["cache"] = 0;
 
 if(!loadCachedBlock($cacheControl, $rssStyle)){
 	$user = getUser($CONTACT_EMAIL);
