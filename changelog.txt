@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1646192 ] Log File - pageview count posting error (canajun2eh)
  - Fixed false reporting of step sibling in relationship.php (cozensweb)
  - Added block caching system for not-logged-in visitors (yalnifj)
  - Improved performance of Event Blocks (yalnifj)
@@ -371,7 +372,7 @@ Version 4.0 2006-06-13
  - Fixed [ 1280222 ] Missing language variable [edit_ROMN_help] (yalnifj)
  - Added [ 1279188 ] auto-accept all changes (yalnifj)
  - Fixed [ 1267621 ] Site & User language settings ignored (yalnifj)
- - Fixed [ 1257510 ] MultiMedia List want show all JPEG�� (roland-d)
+ - Fixed [ 1257510 ] MultiMedia List want show all JPEG?? (roland-d)
  - Fixed [ 1267800 ] Gedcom - Automatic Change (yalnifj)
  - Fixed user language does not switch when user logs in part of [ 1267621 ] (yalnifj)
  - Added cookie warning to login page (yalnifj)

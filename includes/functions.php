@@ -3099,32 +3099,26 @@ function add_descendancy($pid, $parents=false, $generations=-1) {
 }
 
 /**
- * check if the maximum number of page views per hour for a session has been exeeded.
+ * check if the page view rate for a session has been exeeded.
  */
 function CheckPageViews() {
-	global $MAX_VIEWS, $MAX_VIEW_TIME, $pgv_lang;
+	global $SEARCH_SPIDER, $MAX_VIEWS, $MAX_VIEW_TIME;
 
-	if ($MAX_VIEW_TIME == 0) return;
-
-	if ((!isset($_SESSION["pageviews"])) || (time() - $_SESSION["pageviews"]["time"] > $MAX_VIEW_TIME)) {
-		if (isset($_SESSION["pageviews"])) {
-			$str = "Max pageview counter reset: max reached was ".$_SESSION["pageviews"]["number"];
-			AddToLog($str);
+	if ($MAX_VIEW_TIME == 0 || $MAX_VIEWS == 0 || !empty($SEARCH_SPIDER)) return;
+	
+	if (!empty($_SESSION["pageviews"]["time"]) && !empty($_SESSION["pageviews"]["number"])) {
+		$_SESSION["pageviews"]["number"] ++;
+		if ($_SESSION["pageviews"]["number"] < $MAX_VIEWS) return;
+		$sleepTime = $MAX_VIEW_TIME - time() + $_SESSION["pageviews"]["time"];
+		if ($sleepTime > 0) {
+			// The configured page view rate has been exceeded
+			// - Log a message and then sleep to slow things down
+			$text = print_text("maxviews_exceeded", 0, 1);
+			AddToLog($text);
+			sleep($sleepTime);
 		}
-		$_SESSION["pageviews"]["time"] = time();
-		$_SESSION["pageviews"]["number"] = 0;
 	}
-
-	$_SESSION["pageviews"]["number"]++;
-
-	if ($_SESSION["pageviews"]["number"] > $MAX_VIEWS) {
-		$time = time() - $_SESSION["pageviews"]["time"];
-		print $pgv_lang["maxviews_exceeded"];
-		$str = "Maximum number of pageviews exceeded after ".$time." seconds.";
-		AddToLog($str);
-		exit;
-	}
-	return;
+	$_SESSION["pageviews"] = array("time"=>time(), "number"=>1);
 }
 
 /**
