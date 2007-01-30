@@ -34,6 +34,10 @@ if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
 if (isset($user_firstname)) $user_firstname = stripslashes($user_firstname);
 if (isset($user_lastname)) $user_lastname = stripslashes($user_lastname);
 
+// Remove trailing slash from server URL
+if (substr($SERVER_URL, -1) == "/") $serverURL = substr($SERVER_URL,0, -1);
+else $serverURL = $SERVER_URL;
+
 $message="";
 if (!isset($action)) $action = "";
 if (!isset($url)) $url = "index.php";
@@ -61,9 +65,9 @@ switch ($action) {
 			<input type="hidden" name="time" value="" />
 			<input type="hidden" name="action" value="requestpw" />
 			<span class="warning"><?php print $message?></span>
-			<table class="center facts_table width20">
+			<table class="center facts_table width25">
 				<tr><td class="topbottombar" colspan="2"><?php print_help_link("pls_note11", "qm", "lost_pw_reset"); print $pgv_lang["lost_pw_reset"];?></td></tr>
-				<tr><td class="descriptionbox ltr"><?php print $pgv_lang["username"]?></td><td class="optionbox ltr"><input type="text" name="user_name" value="" /></td></tr>
+				<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print $pgv_lang["username"]?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" name="user_name" value="" /></td></tr>
 				<tr><td class="topbottombar" colspan="2"><input type="submit" value="<?php print $pgv_lang["lost_pw_reset"]; ?>" /></td></tr>
 			</table>
 			</form>
@@ -120,15 +124,15 @@ switch ($action) {
 			$mail_body .= $pgv_lang["mail04_line04"] . "\r\n\r\n";
 			$mail_body .= print_text("mail04_line05", 0, 1) . "\r\n\r\n";
 			
-			if (substr($SERVER_URL, -1) == "/") $mail_body .= substr($SERVER_URL,0, (strlen($SERVER_URL)-1));
-			else $mail_body .= $SERVER_URL;
+			if ($TEXT_DIRECTION=="rtl") $mail_body .= "<a href=\"".$serverURL."\">".$serverURL."</a>";
+			else $mail_body .= $serverURL;
 			
 			require_once('includes/functions_mail.php');
-			pgvMail($newuser["email"], $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", $SERVER_URL, $pgv_lang["mail04_subject"]), $mail_body);
+			pgvMail($newuser["email"], $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail04_subject"]), $mail_body);
 			
 			?>
 			<table class="center facts_table">
-			<tr><td class="ltr"><?php print str_replace("#user[email]#", $newuser["username"], $pgv_lang["pwreqinfo"]);?></td></tr>
+			<tr><td class="wrap <?php print $TEXT_DIRECTION; ?>"><?php print str_replace("#user[email]#", $newuser["username"], $pgv_lang["pwreqinfo"]);?></td></tr>
 			</table>
 			<?php
 			AddToLog("Password request was sent to user: ".$user_name);
@@ -275,20 +279,20 @@ switch ($action) {
 				<form name="registerform" method="post" action="login_register.php" onsubmit="t = new Date(); document.registerform.time.value=t.toUTCString(); return checkform(this);">
 					<input type="hidden" name="action" value="register" />
 					<input type="hidden" name="time" value="" />
-					<table class="center facts_table width20">
+					<table class="center facts_table width50">
 					<?php $i = 1;?>
 						<tr><td class="topbottombar" colspan="2"><?php print_help_link("register_info_0".$WELCOME_TEXT_AUTH_MODE."", "qm", "requestaccount"); print $pgv_lang["requestaccount"];?><?php if (strlen($message) > 0) print $message; ?></td></tr>
-						<tr><td class="descriptionbox nowrap ltr"><?php print_help_link("username_help", "qm", "username"); print $pgv_lang["username"];?></td><td class="optionbox ltr"><input type="text" name="user_name" value="<?php if (!$user_name_false) print $user_name;?>" tabindex="<?php print $i;?>" /> *</td></tr>
-						<tr><td class="descriptionbox nowrap ltr"><?php print_help_link("edituser_password_help", "qm", "password"); print $pgv_lang["password"];?></td><td class="optionbox ltr"><input type="password" name="user_password01" value="" tabindex="<?php print $i++;?>" /> *</td></tr>
-						<tr><td class="descriptionbox nowrap ltr"><?php print_help_link("edituser_conf_password_help", "qm", "confirm");print $pgv_lang["confirm"];?></td><td class="optionbox ltr"><input type="password" name="user_password02" value="" tabindex="<?php print $i++;?>" /> *</td></tr>
-						<tr><td class="descriptionbox nowrap ltr"><?php print_help_link("new_user_firstname_help", "qm", "firstname");print $pgv_lang["firstname"];?></td><td class="optionbox ltr"><input type="text" name="user_firstname" value="<?php if (!$user_firstname_false) print $user_firstname;?>" tabindex="<?php print $i++;?>" /> *</td></tr>
-						<tr><td class="descriptionbox nowrap ltr"><?php print_help_link("new_user_lastname_help", "qm", "lastname");print $pgv_lang["lastname"];?></td><td class="optionbox ltr"><input type="text" name="user_lastname" value="<?php if (!$user_lastname_false) print $user_lastname;?>" tabindex="<?php print $i++;?>" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print_help_link("username_help", "qm", "username"); print $pgv_lang["username"];?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" name="user_name" value="<?php if (!$user_name_false) print $user_name;?>" tabindex="<?php print $i;?>" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print_help_link("edituser_password_help", "qm", "password"); print $pgv_lang["password"];?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="password" name="user_password01" value="" tabindex="<?php print $i++;?>" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print_help_link("edituser_conf_password_help", "qm", "confirm");print $pgv_lang["confirm"];?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="password" name="user_password02" value="" tabindex="<?php print $i++;?>" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print_help_link("new_user_firstname_help", "qm", "firstname");print $pgv_lang["firstname"];?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" name="user_firstname" value="<?php if (!$user_firstname_false) print $user_firstname;?>" tabindex="<?php print $i++;?>" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print_help_link("new_user_lastname_help", "qm", "lastname");print $pgv_lang["lastname"];?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" name="user_lastname" value="<?php if (!$user_lastname_false) print $user_lastname;?>" tabindex="<?php print $i++;?>" /> *</td></tr>
 						<?php
 						if ($ENABLE_MULTI_LANGUAGE) {
-							print "<tr><td class=\"descriptionbox ltr\">";
+							print "<tr><td class=\"descriptionbox wrap ".$TEXT_DIRECTION."\">";
 							print_help_link("edituser_change_lang_help", "qm", "change_lang");
 							print $pgv_lang["change_lang"];
-							print "</td><td class=\"optionbox ltr\"><select name=\"user_language\" tabindex=\"".($i++)."\">";
+							print "</td><td class=\"optionbox ".$TEXT_DIRECTION."\"><select name=\"user_language\" tabindex=\"".($i++)."\">";
 							foreach ($pgv_language as $key => $value) {
 								if ($language_settings[$key]["pgv_lang_use"]) {
 									print "\n\t\t\t<option value=\"$key\"";
@@ -301,11 +305,11 @@ switch ($action) {
 							print "</td></tr>\n";
 						} else print "<input type=\"hidden\" name=\"user_language\" value=\"".$LANGUAGE."\" />";
 						?>
-						<tr><td class="descriptionbox nowrap ltr"><?php print_help_link("edituser_email_help", "qm", "emailadress");print $pgv_lang["emailadress"];?></td><td class="optionbox ltr"><input type="text" size="30" name="user_email" value="<?php if (!$user_email_false) print $user_email;?>" tabindex="<?php print $i++;?>" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print_help_link("edituser_email_help", "qm", "emailadress");print $pgv_lang["emailadress"];?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" size="30" name="user_email" value="<?php if (!$user_email_false) print $user_email;?>" tabindex="<?php print $i++;?>" /> *</td></tr>
 						<?php if ($REQUIRE_AUTHENTICATION && $SHOW_LIVING_NAMES>=$PRIV_PUBLIC) { ?>
-						<tr><td class="descriptionbox nowrap ltr"><?php print_help_link("register_gedcomid_help", "qm", "gedcomid");print $pgv_lang["gedcomid"];?></td><td class="optionbox ltr" valign="top" ><input type="text" size="10" name="user_gedcomid" id="user_gedcomid" value="" tabindex="<?php print $i++;?>" /><?php print_findindi_link("user_gedcomid",""); ?></td></tr>
+						<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print_help_link("register_gedcomid_help", "qm", "gedcomid");print $pgv_lang["gedcomid"];?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>" valign="top" ><input type="text" size="10" name="user_gedcomid" id="user_gedcomid" value="" tabindex="<?php print $i++;?>" /><?php print_findindi_link("user_gedcomid",""); ?></td></tr>
 						<?php } ?>
-						<tr><td class="descriptionbox nowrap ltr"><?php print_help_link("register_comments_help", "qm", "comments");print $pgv_lang["comments"];?></td><td class="optionbox ltr" valign="top" ><textarea cols="50" rows="5" name="user_comments" tabindex="<?php print $i++;?>"><?php if (!$user_comments_false) print $user_comments;?></textarea> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print_help_link("register_comments_help", "qm", "comments");print $pgv_lang["comments"];?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>" valign="top" ><textarea cols="50" rows="5" name="user_comments" tabindex="<?php print $i++;?>"><?php if (!$user_comments_false) print $user_comments;?></textarea> *</td></tr>
 						<tr><td class="topbottombar" colspan="2"><input type="submit" value="<?php print $pgv_lang["requestaccount"]; ?>" tabindex="<?php print $i++;?>" /></td></tr>
 						<tr><td align="left" colspan="2" ><?php print $pgv_lang["mandatory"];?></td></tr>
 					</table>
@@ -429,19 +433,23 @@ switch ($action) {
 
 					$mail_body = "";
 					$mail_body .= str_replace("#user_fullname#", $fullName, $pgv_lang["mail01_line01"]) . "\r\n\r\n";
-					$mail_body .= str_replace("#user_email#", $user_email, str_replace("#SERVER_NAME#", $SERVER_URL, $pgv_lang["mail01_line02"])) . "  ";
+					$mail_body .= str_replace("#user_email#", $user_email, str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail01_line02"])) . "  ";
 					$mail_body .= $pgv_lang["mail01_line03"] . "\r\n\r\n";
 					$mail_body .= $pgv_lang["mail01_line04"] . "\r\n\r\n";
-					if (substr($SERVER_URL, -1) == "/") $serverURL = substr($SERVER_URL,0,-1);
-					else $serverURL = $SERVER_URL;
-					$mail_body .= $serverURL . "/login_register.php?action=userverify&user_name=".urlencode($user_name)."&user_hashcode=".urlencode($user["reg_hashcode"]) . "\r\n";
+					if ($TEXT_DIRECTION=="rtl") {
+						$mail_body .= "<a href=\"";
+						$mail_body .= $serverURL . "/login_register.php?action=userverify&user_name=".urlencode($user_name)."&user_hashcode=".urlencode($user["reg_hashcode"]) . "\">";
+					}
+					$mail_body .= $serverURL . "/login_register.php?action=userverify&user_name=".urlencode($user_name)."&user_hashcode=".urlencode($user["reg_hashcode"]);
+					if ($TEXT_DIRECTION=="rtl") $mail_body .= "</a>";
+					$mail_body .= "\r\n";
 					$mail_body .= $pgv_lang["username"] . " " . $user_name . "\r\n";
 					$mail_body .= $pgv_lang["hashcode"] . " " . $user["reg_hashcode"] . "\r\n\r\n";
 					$mail_body .= $pgv_lang["comments"].": " . $user_comments . "\r\n\r\n";
 					$mail_body .= $pgv_lang["mail01_line05"] . "  ";
 					$mail_body .= $pgv_lang["mail01_line06"] . "\r\n";
 					require_once('includes/functions_mail.php');
-					pgvMail($user_email, $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", $SERVER_URL, $pgv_lang["mail01_subject"]), $mail_body);
+					pgvMail($user_email, $PHPGEDVIEW_EMAIL, str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail01_subject"]), $mail_body);
 					
 					// switch language to webmaster settings
 					$admuser = getuser($WEBMASTER_EMAIL);
@@ -449,7 +457,7 @@ switch ($action) {
 					
 					$mail_body = "";
 					$mail_body .= $pgv_lang["mail02_line01"] . "\r\n\r\n";
-					$mail_body .= str_replace("#SERVER_NAME#", $SERVER_URL, $pgv_lang["mail02_line02"]) . "\r\n\r\n";
+					$mail_body .= str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail02_line02"]) . "\r\n\r\n";
 					$mail_body .= $pgv_lang["username"] . " " . $user_name . "\r\n";
 					$mail_body .= $pgv_lang["firstname"] . " " . $user_firstname . "\r\n";
 					$mail_body .= $pgv_lang["lastname"] . " " . $user_lastname . "\r\n\r\n";
@@ -461,7 +469,7 @@ switch ($action) {
 					$message = array();
 					$message["to"]=$WEBMASTER_EMAIL;
 					$message["from"]=$user_email;
-					$message["subject"] = str_replace("#SERVER_NAME#", $SERVER_URL, str_replace("#user_email#", $user_email, $pgv_lang["mail02_subject"]));
+					$message["subject"] = str_replace("#SERVER_NAME#", $serverURL, str_replace("#user_email#", $user_email, $pgv_lang["mail02_subject"]));
 					$message["body"] = $mail_body;
 					$message["created"] = $time;
 					$message["method"] = $SUPPORT_METHOD;
@@ -472,7 +480,7 @@ switch ($action) {
 					if ($LANGUAGE != $user_language) loadLanguage($user_language);
 					?>
 					<table class="center facts_table">
-						<tr><td class="ltr"><?php print str_replace("#user_fullname#", $user_firstname." ".$user_lastname, $pgv_lang["thankyou"]);?><br /><br />
+						<tr><td class="wrap <?php print $TEXT_DIRECTION; ?>"><?php print str_replace("#user_fullname#", $user_firstname." ".$user_lastname, $pgv_lang["thankyou"]);?><br /><br />
 						<?php
 						if ($REQUIRE_ADMIN_AUTH_REGISTRATION) print str_replace("#user_email#", $user_email, $pgv_lang["pls_note06"]);
 						else print str_replace("#user_email#", $user_email, $pgv_lang["pls_note06a"]);
@@ -511,11 +519,11 @@ switch ($action) {
 		<form name="verifyform" method="post" action="" onsubmit="t = new Date(); document.verifyform.time.value=t.toUTCString();">
 			<input type="hidden" name="action" value="verify_hash" />
 			<input type="hidden" name="time" value="" />
-			<table class="center facts_table width20">
+			<table class="center facts_table width25">
 				<tr><td class="topbottombar" colspan="2"><?php print_help_link("pls_note07", "qm", "user_verify"); print $pgv_lang["user_verify"];?></td></tr>
-				<tr><td class="descriptionbox ltr"><?php print $pgv_lang["username"]; ?></td><td class="optionbox ltr"><input type="text" name="user_name" value="<?php print $user_name; ?>" /></td></tr>
-				<tr><td class="descriptionbox ltr"><?php print $pgv_lang["password"]; ?></td><td class="optionbox ltr"><input type="password" name="user_password" value="" /></td></tr>
-				<tr><td class="descriptionbox ltr"><?php print $pgv_lang["hashcode"]; ?></td><td class="facts_value ltr"><input type="text" name="user_hashcode" value="<?php print $user_hashcode; ?>" /></td></tr>
+				<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print $pgv_lang["username"]; ?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" name="user_name" value="<?php print $user_name; ?>" /></td></tr>
+				<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print $pgv_lang["password"]; ?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="password" name="user_password" value="" /></td></tr>
+				<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print $pgv_lang["hashcode"]; ?></td><td class="facts_value <?php print $TEXT_DIRECTION; ?>"><input type="text" name="user_hashcode" value="<?php print $user_hashcode; ?>" /></td></tr>
 				<tr><td class="topbottombar" colspan="2"><input type="submit" value="<?php print $pgv_lang["send"]; ?>" /></td></tr>
 			</table>
 		</form>
@@ -541,7 +549,7 @@ switch ($action) {
 
 		print_header("PhpGedView - " . $pgv_lang["user_verify"]);# <-- better verification of authentication code
 		print "<div class=\"center\">";
-		print "<table class=\"center facts_table ltr\">";
+		print "<table class=\"center facts_table wrap ".$TEXT_DIRECTION."\">";
 		print "<tr><td class=\"topbottombar\">".$pgv_lang["user_verify"]."</td></tr>";
 		print "<tr><td class=\"optionbox\">";
 		print str_replace("#user_name#", $user_name, $pgv_lang["pls_note08"]);
@@ -577,12 +585,18 @@ switch ($action) {
 				else $mail_body .= $pgv_lang["mail03_line03a"] . "\r\n";
 				
 				$path = substr($SCRIPT_NAME, 0, strrpos($SCRIPT_NAME, "/"));
-				$mail_body .= "http://".$_SERVER['SERVER_NAME'] . $path."/useradmin.php?action=edituser&username=" . urlencode($newuser["username"]) . "\r\n";
+				if ($TEXT_DIRECTION=="rtl") {
+					$mail_body .= "<a href=\"";
+					$mail_body .= "http://".$_SERVER['SERVER_NAME'] . $path."/useradmin.php?action=edituser&username=" . urlencode($newuser["username"]) . "\">";
+				}
+				$mail_body .= "http://".$_SERVER['SERVER_NAME'] . $path."/useradmin.php?action=edituser&username=" . urlencode($newuser["username"]);
+				if ($TEXT_DIRECTION=="rtl") $mail_body .= "</a>";
+				$mail_body .= "\r\n";
 
 				$message = array();
 				$message["to"]=$WEBMASTER_EMAIL;
 				$message["from"]=$PHPGEDVIEW_EMAIL;
-				$message["subject"] = str_replace("#SERVER_NAME#", $SERVER_URL, $pgv_lang["mail03_subject"]);
+				$message["subject"] = str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail03_subject"]);
 				$message["body"] = $mail_body;
 				$message["created"] = $time;
 				$message["method"] = $SUPPORT_METHOD;

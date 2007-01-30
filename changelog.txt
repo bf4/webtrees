@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1635406 ] RTL mails and new user registration pages (canajun2eh)
  - Fixed [ 1646192 ] Log File - pageview count posting error (canajun2eh)
  - Fixed false reporting of step sibling in relationship.php (cozensweb)
  - Added block caching system for not-logged-in visitors (yalnifj)
