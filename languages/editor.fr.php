@@ -25,8 +25,8 @@
  * @author Julien Damon
  * @version $Id$
  */
- if (preg_match("/editor\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-	print "You cannot access a language file directly.";
+if (preg_match("/editor\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "L'accès direct aux fichiers de langue est interdit.";
 	exit;
 }
 

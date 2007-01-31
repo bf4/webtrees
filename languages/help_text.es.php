@@ -25,8 +25,8 @@
  * @version $Id$
  */
 if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-print "Usted no puede acceder a este archivo de idioma directamente.";
-exit;
+	print "Usted no puede acceder a este archivo de idioma directamente.";
+	exit;
 }
 
 //-- GENERAL HELP HEADER

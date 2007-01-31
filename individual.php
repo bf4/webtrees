@@ -353,8 +353,8 @@ function resize_content_div(i) {
 <?php
 function loading_message() {
 	global $pgv_lang;
-	echo "<p style='margin: 20px 20px 20px 20px'>";
-	echo "<img src='images/loading.gif' alt='".$pgv_lang["loading"]."' title='".$pgv_lang["loading"]."' />";
+	echo "<p style=\"margin: 20px 20px 20px 20px\">";
+	echo "<img src=\"images/loading.gif\" alt=\"".$pgv_lang["loading"]."\" title=\"".$pgv_lang["loading"]."\" />";
 	echo "</p>";
 }
 if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
@@ -475,6 +475,8 @@ if(empty($SEARCH_SPIDER)) {
 	print "<div id=\"researchlog_content\">\n";
 
 	if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel())) {
+		if ($VERSION<4.1) print "<script src=\"compat.js\" language\"JavaScript\" type=\"text/javascript\"></script>\n";
+		print "<script type=\"text/javascript\" src=\"modules/research_assistant/research_assistant.js\"></script>";
 		if ($controller->default_tab==5) $controller->getTab(5);
 		else loading_message();
 	}

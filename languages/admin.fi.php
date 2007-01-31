@@ -25,6 +25,11 @@
  * @subpackage Languages
  * @version $Id$
  */
+if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "You cannot access a language file directly.";
+	exit;
+}
+
 $pgv_lang["user"]			= "Autentikoitu käyttäjä";
 $pgv_lang["thumbnail_deleted"]	= "Pienoiskuvatiedosto poistettu.";
 $pgv_lang["thumbnail_not_deleted"]	= "Pienoiskuvatiedostoa ei voitu poistaa.";

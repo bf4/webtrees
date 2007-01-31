@@ -27,9 +27,11 @@
  * @version $Id$
  */
 if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-        print "You cannot access a language file directly.";
-        exit;
+	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
+	exit;
 }
+$pgv_lang["duplicate_username"]        = "Doppelter Benutzername. Ein Benutzer mit dem gewählten Namen existiert bereits. Bitte wählen Sie einen anderen Benutzernamen.";
+$pgv_lang["cache_life"]				= "Cache-Datei Lebensdauer";
 $pgv_lang["genealogy"]				= "Ahnenforschung";
 $pgv_lang["roman_surn"]				= "Romanisierter Nachname";
 $pgv_lang["roman_givn"]				= "Romanisierte Vornamen";
@@ -1459,7 +1461,7 @@ $pgv_lang["ex-wife"] = "Ex-Ehefrau";
 $pgv_lang["ex-husband"] = "Ex-Ehemann";
 $pgv_lang["noemail"] 				= "Adressen ohne Mails";
 $pgv_lang["onlyemail"] 				= "Nur Adressen mit Mails";
-$pgv_lang["maxviews_exceeded"]		= "Seitenansichtstempo zu hoch, bitte versuchen Sie es später erneut.";
+$pgv_lang["maxviews_exceeded"]		= "Erlaubtes Seitenansichtstempo von #GLOBALS[MAX_VIEWS]# pro #GLOBALS[MAX_VIEW_TIME]# Sek. überschritten.";
 $pgv_lang["broadcast_not_logged_6mo"]	= "Nachrichten an Benutzer senden, die sich innerhalb der letzten 6 Monate nicht angemeldet haben";
 $pgv_lang["broadcast_never_logged_in"]	= "Nachrichten an Benutzer senden, die sich noch nie angemeldet haben.";
 $pgv_lang["stats_to_show"]			= "Bitte wählen Sie Statistiken für diesen Block, die Sie sehen möchten";

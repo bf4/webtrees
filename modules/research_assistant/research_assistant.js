@@ -10,12 +10,21 @@
 
 		var oXmlHttp = createXMLHttp();		
 		oXmlHttp.open('get', 'module.php?mod=research_assistant&action=load_search_plugin&plugin='+ frm.cbosite.options[frm.cbosite.selectedIndex].value + '&pid='+pid, true);
+		//-- set loading message
+		inbox = document.getElementById('searchdiv');
+		if (inbox) {
+			inbox.style.width = inbox.offsetWidth + "px";
+			inbox.style.height = inbox.offsetHeight + "px";
+			inbox.innerHTML = "<p style=\"margin: 20px 20px 20px 20px\"><img src=\"images/loading.gif\" alt=\"\" title=\"\" /></p>";
+		}
 		oXmlHttp.onreadystatechange=function()
 		{
   			if (oXmlHttp.readyState==4)
   			{
 				inbox = document.getElementById('searchdiv');
    				inbox.innerHTML = oXmlHttp.responseText;
+   				inbox.style.width = "auto";
+				inbox.style.height = "auto";
    			}
   		};
   		oXmlHttp.send(null);

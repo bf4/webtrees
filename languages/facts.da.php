@@ -25,7 +25,7 @@
  */
 
 if (preg_match("/facts\...\.php$/", $_SERVER["PHP_SELF"])>0) {
-	print "Du kan ikke få adgang til en sprogfil direkte.";
+	print "Du har ikke direkte adgang til en sprogfil.";
 	exit;
 }
 // -- Define a fact array to map GEDCOM tags with their danish values

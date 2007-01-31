@@ -29,6 +29,7 @@ $PGV_BLOCKS["print_RSS_block"]["name"]			= $pgv_lang["rss_feeds"];
 $PGV_BLOCKS["print_RSS_block"]["descr"]			= "rss_descr";
 $PGV_BLOCKS["print_RSS_block"]["type"]			= "gedcom";
 $PGV_BLOCKS["print_RSS_block"]["canconfig"]		= false;
+$PGV_BLOCKS["print_RSS_block"]["config"]		= array("cache"=>0);
 /**
  * Print RSS Block
  *

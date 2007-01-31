@@ -92,7 +92,17 @@ $pgv_lang["ra_generate_tasks"]					= "Generated Tasks from TODO's";
 $pgv_lang["TaskDescription"]					= "Task Description";
 $pgv_lang["SelectFolder"]                       = "Select Folder:";
 $pgv_lang["ra_done"]							= "Done";
-$pgv_lang["ra_generate"]						= "Generate"; 
+$pgv_lang["ra_generate"]						= "Generate";
+$pgv_lang["LocalPercent"]						= "Local Percentage";
+$pgv_lang["GlobalPercent"]						= "Global Percentage";
+$pgv_lang["Average"]							= "Average";
+$pgv_lang["NoData"]								= "No Data!";
+$pgv_lang["NotEnoughData"]						= "Not Enough Data!";
+$pgv_lang["InferIndvBirthPlac"]					= "There is a %PERCENT% chance that the birth place is:";
+$pgv_lang["InferIndvDeathPlac"]					= "There is a %PERCENT% chance that the death place is:";
+$pgv_lang["InferIndvSurn"]						= "There is a %PERCENT% chance that the Surname is:";
+$pgv_lang["InferIndvMarriagePlace"]				= "There is a %PERCENT% chance that the marriage place is:";
+$pgv_lang["InferIndvGivn"]						= "There is a %PERCENT% chance that the given name is:";
 
 // -- RA EXPLANATION
 $pgv_lang["DataCorrelations"]					= "Data Correlations";

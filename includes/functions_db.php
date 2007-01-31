@@ -143,7 +143,7 @@ function db_prep($item) {
 		return $item;
 	}
 	else {
-		if (DB::isError($DBCONN)) return $item;
+		if (DB::isError($DBCONN) || empty($DBCONN)) return $item;
 		if (is_object($DBCONN)) return $DBCONN->escapeSimple($item);
 		//-- use the following commented line to convert between character sets
 		//return $DBCONN->escapeSimple(iconv("iso-8859-1", "UTF-8", $item));
@@ -232,6 +232,52 @@ function find_family_record($famid, $gedfile="") {
 }
 
 /**
+ * Load up a group of families into the cache by their ids from an array
+ * This function is useful for optimizing pages that need to reference large
+ * sets of families without loading them up individually 
+ * @param array $ids	an array of ids to load up
+ */
+function load_families($ids, $gedfile='') {
+	global $pgv_lang;
+	global $TBLPREFIX;
+	global $GEDCOM, $GEDCOMS;
+	global $BUILDING_INDEX, $famlist, $DBCONN;
+	
+	if (empty($gedfile)) $gedfile = $GEDCOM;
+	if (!is_int($gedfile)) $gedfile = get_gedcom_from_id($gedfile);
+	
+	$sql = "SELECT f_gedcom, f_file, f_husb, f_wife, f_id FROM ".$TBLPREFIX."families WHERE f_id IN (";
+	//-- don't load up families who are already loaded
+	$isadded = false;
+	foreach($ids as $k=>$id) {
+		if ((!isset($famlist[$id]["gedcom"])) || ($famlist[$id]["gedfile"]!=$GEDCOMS[$gedfile]["id"])) {
+			$sql .= "'".$DBCONN->escapeSimple($id)."',";
+			$idsadded = true;
+		}
+	}
+	if (!$idsadded) return;
+	$sql = rtrim($sql,',');
+	$sql .= ") AND f_file='".$DBCONN->escapeSimple($GEDCOMS[$gedfile]["id"])."'";
+	
+	$res = dbquery($sql);
+
+	if (!DB::isError($res)) {
+		if ($res->numRows()==0) {
+			return false;
+		}
+		while($row =& $res->fetchRow()) {
+			$famlist[$row[4]]["gedcom"] = $row[0];
+			$famlist[$row[4]]["gedfile"] = $row[1];
+			$famlist[$row[4]]["husb"] = $row[2];
+			$famlist[$row[4]]["wife"] = $row[3];
+			find_person_record($row[2]);
+			find_person_record($row[3]);
+		}
+		$res->free();
+	}
+}
+
+/**
  * find the gedcom record for an individual
  *
  * This function first checks the <var>$indilist</var> cache to see if the individual has already
@@ -250,12 +296,12 @@ function find_person_record($pid, $gedfile="") {
 	if (empty($pid)) return false;
 	if (empty($gedfile)) $gedfile = $GEDCOM;
 
-	if ($gedfile>=1) $gedfile = get_gedcom_from_id($gedfile);
+	if (!is_int($gedfile)) $gedfile = get_gedcom_from_id($gedfile);
 	//-- first check the indilist cache
 	// cache is unreliable for use with different gedcoms in user favorites (sjouke)
 	if ((isset($indilist[$pid]["gedcom"]))&&($indilist[$pid]["gedfile"]==$GEDCOMS[$gedfile]["id"])) return $indilist[$pid]["gedcom"];
 
-	$sql = "SELECT i_gedcom, i_name, i_isdead, i_file, i_letter, i_surname FROM ".$TBLPREFIX."individuals WHERE i_id LIKE '".$DBCONN->escapeSimple($pid)."' AND i_file='".$DBCONN->escapeSimple($GEDCOMS[$gedfile]["id"])."'";
+	$sql = "SELECT i_gedcom, i_name, i_isdead, i_file FROM ".$TBLPREFIX."individuals WHERE i_id LIKE '".$DBCONN->escapeSimple($pid)."' AND i_file='".$DBCONN->escapeSimple($GEDCOMS[$gedfile]["id"])."'";
 	$res = dbquery($sql);
 
 	if (!DB::isError($res)) {
@@ -269,6 +315,52 @@ function find_person_record($pid, $gedfile="") {
 		$indilist[$pid]["gedfile"] = $row[3];
 		$res->free();
 		return $row[0];
+	}
+}
+
+/**
+ * Load up a group of people into the cache by their ids from an array
+ * This function is useful for optimizing pages that need to reference large
+ * sets of people without loading them up individually 
+ * @param array $ids	an array of ids to load up
+ */
+function load_people($ids, $gedfile='') {
+	global $pgv_lang;
+	global $TBLPREFIX;
+	global $GEDCOM, $GEDCOMS;
+	global $BUILDING_INDEX, $indilist, $DBCONN;
+	
+	if (count($ids)==0) return false;
+	
+	if (empty($gedfile)) $gedfile = $GEDCOM;
+	if (!is_int($gedfile)) $gedfile = get_gedcom_from_id($gedfile);
+	
+	$sql = "SELECT i_gedcom, i_name, i_isdead, i_file, i_id FROM ".$TBLPREFIX."individuals WHERE i_id IN (";
+	//-- don't load up people who are already loaded
+	$idsadded = false;
+	foreach($ids as $k=>$id) {
+		if ((!isset($indilist[$id]["gedcom"])) || ($indilist[$id]["gedfile"]!=$GEDCOMS[$gedfile]["id"])) {
+			$sql .= "'".$DBCONN->escapeSimple($id)."',";
+			$idsadded = true;
+		}
+	}
+	if (!$idsadded) return;
+	$sql = rtrim($sql,',');
+	$sql .= ") AND i_file='".$DBCONN->escapeSimple($GEDCOMS[$gedfile]["id"])."'";
+	
+	$res = dbquery($sql);
+
+	if (!DB::isError($res)) {
+		if ($res->numRows()==0) {
+			return false;
+		}
+		while($row =& $res->fetchRow()) {
+			$indilist[$row[4]]["gedcom"] = $row[0];
+			$indilist[$row[4]]["names"] = get_indi_names($row[0]);
+			$indilist[$row[4]]["isdead"] = $row[2];
+			$indilist[$row[4]]["gedfile"] = $row[3];
+		}
+		$res->free();
 	}
 }
 
@@ -2839,10 +2931,13 @@ function get_event_list() {
 						$hebrew_date = parse_date(trim($match[1]));
 						$date = jewishGedcomDateToCurrentGregorian($hebrew_date);
 					}
-				} else {
+				} 
+				
+				if ($date==0) {
 				  	$ct = preg_match("/2 DATE (.+)/", $factrec, $match);
 				  	if ($ct>0) $date = parse_date(trim($match[1]));
 				}
+				
 				if ($date != 0) {
 					$startSecond = 1;
 					if ($date[0]["day"]=="") {
@@ -2871,7 +2966,8 @@ function get_event_list() {
 						$hebrew_date = parse_date(trim($match[1]));
 						$date = jewishGedcomDateToCurrentGregorian($hebrew_date);
 					}
-				} else {
+				} 
+				if ($date==0) {
 					$ct = preg_match("/2 DATE (.+)/", $factrec, $match);
 					if ($ct>0) $date = parse_date(trim($match[1]));
 				}

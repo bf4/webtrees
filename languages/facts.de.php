@@ -27,8 +27,8 @@
  * @version $Id$
  */
 if (preg_match("/facts\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-        print "You cannot access a language file directly.";
-        exit;
+	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
+	exit;
 }
 // -- Define a fact array to map GEDCOM tags with their German values
 $factarray["ABBR"]	= "Abkürzung";
@@ -161,7 +161,28 @@ $factarray["_PGVU"]	= "Zuletzt geändert von";
 $factarray["SERV"] = "Fremder Server";
 $factarray["_GEDF"] = "GEDCOM Datei";
 $factarray["_PRIM"]	= "Bevorzugtes Bild";
-$factarray["_THUM"]	= "Dieses Bild als Miniaturansicht verwenden?";
+$factarray["_DBID"] = "ID der fremden Datenbank";
+$factarray["FAMC:HUSB:SURN"] = "Nachname des Vaters";
+$factarray["FAMC:WIFE:SURN"] = "Nachname der Mutter";
+$factarray["FAMC:HUSB:BIRT:PLAC"] = "Geburtsort des Vaters";
+$factarray["FAMC:WIFE:BIRT:PLAC"] = "Geburtsort der Mutter";
+$factarray["FAMC:MARR:PLAC"] = "Eheort der Eltern";
+$factarray["FAMC:HUSB:OCCU"] = "Beruf des Vaters";
+$factarray[":BIRT:PLAC"] = "Geburtsort";
+$factarray["FAMS:MARR:PLAC"] = "Eheort";
+$factarray["FAMS:SPOUSE:DEAT:PLAC"] = "Todesort des Ehepartners";
+$factarray["FAMC:HUSB:GIVN"] = "Vornamen des Vaters";
+$factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Geburtsort des Ehepartners";
+$factarray["FAMC:WIFE:GIVN"] = "Vornamen der Mutter";
+$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Vornamen des Großvaters";
+$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Vornamen der Großmutter";
+$factarray["BIRT:PLAC"] = "Geburtsort";
+$factarray["DEAT:PLAC"] = "Todesort";
+$factarray["CHR:PLAC"] = "Taufort";
+$factarray["BAPM:PLAC"] = "Taufort";
+$factarray["BURI:PLAC"] = "Beerdigungsort";
+$factarray["FAMC:MARR:PLAC"] = "";
+$factarray["_THUM"]	= "Dieses Bild auch als Miniaturbild verwenden?";
 
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"]	= "Medizinische Information";

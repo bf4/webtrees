@@ -26,23 +26,28 @@
 
 /**
  * load a cached block from a file
- * @param string $block	the function name of the block to load
+ * @param array $block	[0]:name of the block to load, [1]:block's configuration
  * @param int $index	An id for this block in the case of multiple instances of the same block on the page
  * @return boolean  returns false if the block could not be loaded from cache
  */
-function loadCachedBlock($bloc, $index) {
+function loadCachedBlock($block, $index) {
 	global $PGV_BLOCKS, $INDEX_DIRECTORY, $DEBUG, $lang_short_cut, $LANGUAGE, $GEDCOMS, $GEDCOM;
 	
 	//-- ignore caching when DEBUG is set
 	if (isset($DEBUG) && $DEBUG==true) return false;
-	
-	//-- ignore 0 level caching
-	if (!isset($PGV_BLOCKS[$bloc]['cache']) || $PGV_BLOCKS[$bloc]['cache']<1) return false;
-	
+
+	//-- ignore cache when its life is not configured or when its life is zero
+	$cacheLife = 0;
+	if (isset($block[1]['cache'])) $cacheLife = $block[1]['cache'];
+	else {
+		if (isset($PGV_BLOCKS[$block[0]]['config']['cache'])) $cacheLife = $PGV_BLOCKS[$block[0]]['config']['cache'];
+	}
+	if ($cacheLife==0) return false;
+
 	//-- ignore caching for logged in users 
 	$uname = getUserName();
 	if (!empty($uname)) return false;
-	
+
 	//-- check for cache file
 	if (!file_exists($INDEX_DIRECTORY."/cache")) {
 		mkdir($INDEX_DIRECTORY."/cache");
@@ -56,38 +61,48 @@ function loadCachedBlock($bloc, $index) {
 		mkdir($INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]."/".$GEDCOM);
 		return false;
 	}
-	$fname = $INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]."/".$GEDCOM."/".$index."_".$bloc;
+	$fname = $INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]."/".$GEDCOM."/".$index."_".$block[0];
 	if (file_exists($fname)) {
-		$modtime = filemtime($fname);
-		//-- time should start at the beginning of the day
-		$modtime = $modtime - (date("G",$modtime)*60*60 + date("i",$modtime)*60 + date("s",$modtime));
-		$modtime = $modtime+($PGV_BLOCKS[$bloc]['cache']*24*60*60);
-		if ($modtime<time()) return false;		
-		include($fname);
+		// Check for expired cache (<0: no expiry), 0: immediate, >0: expires in x days)  Zero already checked
+		if ($cacheLife > 0) {
+			$modtime = filemtime($fname);
+			//-- time should start at the beginning of the day
+			$modtime = $modtime - (date("G",$modtime)*60*60 + date("i",$modtime)*60 + date("s",$modtime));
+			$checktime = ($cacheLife*24*60*60);
+			$modtime = $modtime+$checktime;
+			if ($modtime<time()) return false;
+		}		
+		$fp = fopen($fname, "rb");
+		fpassthru($fp);
+		fclose($fp);
 		return true;
 	}
+	return false;
 }
 
 /**
  * Save a block's content to the cache file
- * @param string $block	the function name of the block to load
+ * @param array $block	[0]:name of the block to save, [1]:block's configuration
  * @param int $index	An id for this block in the case of multiple instances of the same block on the page
  * @param string $content	the actual content to save in the cache
  * @return boolean  returns false if the block could not be loaded from cache
  */
-function saveCachedBlock($bloc, $index, $content) {
+function saveCachedBlock($block, $index, $content) {
 	global $PGV_BLOCKS, $INDEX_DIRECTORY, $DEBUG, $lang_short_cut, $LANGUAGE, $GEDCOMS, $GEDCOM;
 	
 	//-- ignore caching when DEBUG is set
 	if (isset($DEBUG) && $DEBUG==true) return false;
-	
-	//-- ignore 0 level caching
-	if (!isset($PGV_BLOCKS[$bloc]['cache']) || $PGV_BLOCKS[$bloc]['cache']<1) return false;
-	
+
+	//-- ignore cache when its life is not configured or when its life is zero
+	$cacheLife = 0;
+	if (isset($block[1]['cache'])) $cacheLife = $block[1]['cache'];
+	else if (isset($PGV_BLOCKS[$block[0]]['config']['cache'])) $cacheLife = $PGV_BLOCKS[$block[0]]['config']['cache'];
+	if ($cacheLife==0) return false;
+
 	//-- ignore caching for logged in users 
 	$uname = getUserName();
 	if (!empty($uname)) return false;
-	
+
 	//-- check for cache file
 	if (!file_exists($INDEX_DIRECTORY."/cache")) {
 		mkdir($INDEX_DIRECTORY."/cache");
@@ -98,7 +113,7 @@ function saveCachedBlock($bloc, $index, $content) {
 	if (!file_exists($INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]."/".$GEDCOM)) {
 		mkdir($INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]."/".$GEDCOM);
 	}
-	$fname = $INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]."/".$GEDCOM."/".$index."_".$bloc;
+	$fname = $INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]."/".$GEDCOM."/".$index."_".$block[0];
 	$fp = fopen($fname, "wb");
 	fwrite($fp, $content);
 	fclose($fp);

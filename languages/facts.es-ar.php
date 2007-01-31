@@ -24,6 +24,11 @@
  * @author Eduardo Cociña
  * @version $Id$
  */
+if (preg_match("/facts\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "Usted no puede acceder a este archivo de idioma directamente.";
+	exit;
+}
+
 // -- Define a fact array to map GEDCOM tags with their Spanish values
 $factarray["ABBR"] = "Abreviatura";
 $factarray["ADDR"] = "Dirección";

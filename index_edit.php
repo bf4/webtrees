@@ -543,7 +543,7 @@ else {
 	print "<tr><td class=\"topbottombar\" colspan=\"7\">";
 
 	if ((userIsAdmin($uname))&&($command=='user')) {
-		print $pgv_lang["use_blocks_for_default"]."<input type=\"checkbox\" name=\"setdefault\" value=\"1\" /><br />\n";
+		print $pgv_lang["use_blocks_for_default"]."<input type=\"checkbox\" name=\"setdefault\" value=\"1\" /><br /><br />\n";
 	}
 
 	if ($command=='user') {
@@ -556,13 +556,13 @@ else {
 	print "&nbsp;&nbsp;";
 	print_help_link("click_here_help", "qm");
 	print "<input type=\"button\" value=\"".$pgv_lang["click_here"]."\" onclick=\"select_options(); save_form();\" />\n";
-	if (userGedcomAdmin(getUserName())) {
-		print "&nbsp;&nbsp;";
+	print "&nbsp;&nbsp;";
+	print "<input type =\"button\" value=\"".$pgv_lang["cancel"]."\" onclick=\"window.close()\" />";
+	if (userGedcomAdmin(getUserName()) && $command!="user") {
+		print "<br />";
 		print_help_link("clear_cache_help", "qm");
 		print "<input type =\"button\" value=\"".$pgv_lang["clear_cache"]."\" onclick=\"window.location='index_edit.php?command=$command&amp;action=clearcache&amp;name=".preg_replace("/'/", "\'", $name)."';\" />";
 	}
-	print "&nbsp;&nbsp;";
-	print "<input type =\"button\" value=\"".$pgv_lang["cancel"]."\" onclick=\"window.close()\" />";
 	print "</td></tr></table>";
 	print "</form>\n";
 

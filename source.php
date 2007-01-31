@@ -132,6 +132,7 @@ if ((!$controller->isPrintPreview())&&($controller->userCanEdit())) {
 if (file_exists("modules/research_assistant/research_assistant.php") && ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel())) {
  include_once('modules/research_assistant/research_assistant.php');
  $mod = new ra_functions();
+	$mod->Init();
  $out = $mod->getSourceTasks($controller->sid);
  print $out;
 	echo "</td></tr>";

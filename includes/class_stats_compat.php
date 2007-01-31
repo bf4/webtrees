@@ -145,6 +145,10 @@ class stats_compat extends stats
 	function SERVER_TIME(){return $this->serverTime();}
 	function SERVER_TIME_24(){return $this->serverTime24();}
 	function SERVER_TIMEZONE(){return $this->serverTimezone();}
+	function LOCAL_DATE(){return $this->browserDate();}
+	function LOCAL_TIME(){return $this->browserTime();}
+	function LOCAL_TIME_24(){return $this->browserTime24();}
+	function LOCAL_TIMEZONE(){return $this->browserTimezone();}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Misc.                                                                     //

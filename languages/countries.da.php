@@ -40,8 +40,8 @@
  * @version $Id$
  */
 if (preg_match("/lang\...\.php$/", $_SERVER["PHP_SELF"])>0) {
-		print "Du kan ikke få adgang til en sprog fil direkte.";
-		exit;
+	print "Du har ikke direkte adgang til en sprogfil.";
+	exit;
 }
 
 $countries["ABW"]="Aruba";

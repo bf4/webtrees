@@ -26,10 +26,13 @@
  * @subpackage Blocks
  */
 
-$PGV_BLOCKS["print_html_block"]["name"]        = $pgv_lang["html_block_name"];
-$PGV_BLOCKS["print_html_block"]["descr"]       = "html_block_descr";
-$PGV_BLOCKS["print_html_block"]["canconfig"]   = true;
-$PGV_BLOCKS["print_html_block"]["config"]      = array("html"=>$pgv_lang["html_block_sample_part1"]." <img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["admin"]["small"]."\" alt=\"".$pgv_lang["config_block"]."\" /> ".$pgv_lang["html_block_sample_part2"]);
+$PGV_BLOCKS["print_html_block"]["name"]			= $pgv_lang["html_block_name"];
+$PGV_BLOCKS["print_html_block"]["descr"]		= "html_block_descr";
+$PGV_BLOCKS["print_html_block"]["canconfig"]	= true;
+$PGV_BLOCKS["print_html_block"]["config"]		= array(
+	"cache"=>1,
+	"html"=>$pgv_lang["html_block_sample_part1"]." <img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["admin"]["small"]."\" alt=\"".$pgv_lang["config_block"]."\" /> ".$pgv_lang["html_block_sample_part2"]
+	);
 
 function print_html_block($block=true, $config="", $side, $index) {
 	global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_IMAGES, $HTML_BLOCK_COUNT, $PGV_BLOCKS, $command, $GEDCOM;
@@ -71,14 +74,15 @@ function print_html_block($block=true, $config="", $side, $index) {
 }
 
 function print_html_block_config($config) {
-	global $pgv_lang, $PGV_BLOCKS, $TEXT_DIRECTION, $LANGUAGE, $language_settings;
+	global $pgv_lang, $command, $PGV_BLOCKS, $TEXT_DIRECTION, $LANGUAGE, $language_settings;
 	$useFCK = file_exists("./modules/FCKeditor/fckeditor.php");
 	if($useFCK){
 		include("./modules/FCKeditor/fckeditor.php");
 	}
 	if (empty($config)) $config = $PGV_BLOCKS["print_html_block"]["config"];
+	if (empty($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_html_block"]["config"]["cache"];
 	?>
-	<tr><td class="optionbox">
+	<tr><td class="optionbox" colspan="2">
 	<?php
 		if ($useFCK) { // use FCKeditor module
 			$oFCKeditor = new FCKeditor('html') ;
@@ -95,5 +99,14 @@ function print_html_block_config($config) {
 	?>
 	</td></tr>
 	<?php
+	// Cache file life
+	if ($command=="gedcom") {
+  		print "<tr><td class=\"descriptionbox wrap width33\">";
+			print_help_link("cache_life_help", "qm");
+			print $pgv_lang["cache_life"];
+		print "</td><td class=\"optionbox\">";
+			print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
+		print "</td></tr>";
+	}
 }
 ?>

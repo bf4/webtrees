@@ -525,5 +525,6 @@ $pgv_lang["edit_add_unlinked_source_help"]	= "~#pgv_lang[add_unlinked_source]#~<
 $pgv_lang["import_options_help"] 	= "Du kan välja extra inställningsmöjlighter att avändas vid import av GEDCOM-fil";
 $pgv_lang["verify_gedcom_help"]	= "Här kan du välja att antingen fortsätta eller avbryta uppladdning och import av GEDCOM-filen.";
 $pgv_lang["add_gedcom_instructions"]= "Ange ett filnamn för den nya GEDCOM-filen. Den nya GEDCON-filen kommer att skapas i Indexkatalogen: #INDEX_DIRECTORY#";
+$pgv_lang["clear_cache_help"]		= "~#pgv_lang[clear_cache]#~<br /><br />För att förbättra prestandan är flera av blocken på PhpGedViews välkomstsida sparade som cache-filer i indexmappen. Cache-filerna för de flesta blocken uppdateras en gång varje dag men de finns tillfälle där man vill uppdatera dem manuellt.<br /><br />Denna knapp låter dig uppdatera cache-filerna när du vill.";
 
 ?>

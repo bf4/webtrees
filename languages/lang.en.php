@@ -30,6 +30,8 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["duplicate_username"] 	= "Duplicate user name.  A user with that user name already exists.  Please choose another user name.";
+$pgv_lang["cache_life"]				= "Cache file life";
 $pgv_lang["genealogy"]					= "genealogy";
 $pgv_lang["activate"]					= "Activate";
 $pgv_lang["deactivate"]					= "Deactivate";
@@ -117,7 +119,7 @@ $pgv_lang["ex-wife"] = "Ex-Wife";
 $pgv_lang["ex-husband"] = "Ex-Husband";
 $pgv_lang["noemail"] 				= "Addresses without emails";
 $pgv_lang["onlyemail"] 				= "Only addresses with emails";
-$pgv_lang["maxviews_exceeded"]		= "Page view rate exceeded, try again later.";
+$pgv_lang["maxviews_exceeded"]		= "Permitted page view rate of #GLOBALS[MAX_VIEWS]# per #GLOBALS[MAX_VIEW_TIME]# seconds exceeded.";
 $pgv_lang["broadcast_not_logged_6mo"]	= "Send message to users who have not logged in for 6 months";
 $pgv_lang["broadcast_never_logged_in"]	= "Send message to users who have never logged in";
 $pgv_lang["stats_to_show"]			= "Select the stats to show in this block";

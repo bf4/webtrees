@@ -26,10 +26,11 @@
  * @subpackage Blocks
  */
 
-$PGV_BLOCKS["print_user_news"]["name"]        = $pgv_lang["user_news_block"];
-$PGV_BLOCKS["print_user_news"]["descr"]        = "user_news_descr";
-$PGV_BLOCKS["print_user_news"]["type"]        = "user";
-$PGV_BLOCKS["print_user_news"]["canconfig"]        = false;
+$PGV_BLOCKS["print_user_news"]["name"]		= $pgv_lang["user_news_block"];
+$PGV_BLOCKS["print_user_news"]["descr"]		= "user_news_descr";
+$PGV_BLOCKS["print_user_news"]["type"]		= "user";
+$PGV_BLOCKS["print_user_news"]["canconfig"]	= false;
+$PGV_BLOCKS["print_user_news"]["config"]	= array("cache"=>0);
 
 /**
  * Prints a user news/journal

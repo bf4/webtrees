@@ -338,30 +338,67 @@ else if ($action=='getxref') {
 		print "ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER\n";
 		exit;
 	}
-	$myindilist = array();
-	if ($type!="OTHER") {
-		$ct = preg_match_all("/0 @(.*)@ $type/", $fcontents, $match, PREG_SET_ORDER);
-		for($i=0; $i<$ct; $i++) {
-			$xref1 = trim($match[$i][1]);
-			$myindilist[$xref1] = $xref1;
-		}
-	}
-	else {
-		$ct = preg_match_all("/0 @(.*)@ (.*)/", $fcontents, $match, PREG_SET_ORDER);
-		for($i=0; $i<$ct; $i++) {
-			$xref1 = trim($match[$i][1]);
-			$xtype = trim($match[$i][2]);
-			if (($xtype!="INDI")&&($xtype!="FAM")&&($xtype!="SOUR")) $myindilist[$xref1] = $xref1;
-		}
-	}
-	reset($myindilist);
+	
 	if ($position=='first') {
-		$xref = current($myindilist);
+		switch($type) {
+			case "INDI":
+				$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(i_id,2)";
+				break;
+			case "FAM":
+				$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(f_id,2)";
+				break;
+			case "SOUR":
+				$sql = "SELECT s_id FROM ".$TBLPREFIX."sources WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(s_id,2)";
+				break;
+			case "REPO":
+				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='REPO' ORDER BY 0+SUBSTRING(o_id,2)";
+				break;
+			case "NOTE":
+				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='NOTE' ORDER BY 0+SUBSTRING(o_id,2)";
+				break;
+			case "OBJE":
+				$sql = "SELECT m_media FROM ".$TBLPREFIX."media WHERE m_gedfile=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(m_media,2)";
+				break;
+			case "OTHER":
+				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(o_id,2)";
+				break;
+		}
+		$res = dbquery($sql, true, 1);
+		$row = $res->fetchRow();
+		$res->free();
+		$xref = $row[0];
 		addDebugLog($action." type=$type position=$position SUCCESS\n$xref");
 		print "SUCCESS\n$xref\n";
 	}
 	else if ($position=='last') {
-		$xref = end($myindilist);
+		switch($type) {
+			case "INDI":
+				$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(i_id,2)";
+				break;
+			case "FAM":
+				$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(f_id,2)";
+				break;
+			case "SOUR":
+				$sql = "SELECT s_id FROM ".$TBLPREFIX."sources WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(s_id,2)";
+				break;
+			case "REPO":
+				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='REPO' ORDER BY 0+SUBSTRING(o_id,2)";
+				break;
+			case "NOTE":
+				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='NOTE' ORDER BY 0+SUBSTRING(o_id,2)";
+				break;
+			case "OBJE":
+				$sql = "SELECT m_media FROM ".$TBLPREFIX."media WHERE m_gedfile=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(m_media,2)";
+				break;
+			case "OTHER":
+				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(o_id,2)";
+				break;
+		}
+		$sql .= " DESC";
+		$res = dbquery($sql, true, 1);
+		$row = $res->fetchRow();
+		$res->free();
+		$xref = $row[0];
 		addDebugLog($action." type=$type position=$position SUCCESS\n$xref");
 		print "SUCCESS\n$xref\n";
 	}
@@ -393,17 +430,42 @@ else if ($action=='getxref') {
 	}
 	else if ($position=='all') {
 		$msg_out = "SUCCESS\n";
-		foreach($myindilist as $key=>$value) {
-			$msg_out .= "$key\n";
+		switch($type) {
+			case "INDI":
+				$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(i_id,2)";
+				break;
+			case "FAM":
+				$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(f_id,2)";
+				break;
+			case "SOUR":
+				$sql = "SELECT s_id FROM ".$TBLPREFIX."sources WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(s_id,2)";
+				break;
+			case "REPO":
+				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='REPO' ORDER BY 0+SUBSTRING(o_id,2)";
+				break;
+			case "NOTE":
+				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='NOTE' ORDER BY 0+SUBSTRING(o_id,2)";
+				break;
+			case "OBJE":
+				$sql = "SELECT m_media FROM ".$TBLPREFIX."media WHERE m_gedfile=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(m_media,2)";
+				break;
+			case "OTHER":
+				$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." ORDER BY 0+SUBSTRING(o_id,2)";
+				break;
 		}
+		$res = dbquery($sql);
+		while ($row = $res->fetchRow()) {		
+			$msg_out .= "$row[0]\n";
+		}
+		$res->free();
 		addDebugLog($action." type=$type position=$position ".$msg_out);
 		print $msg_out;
 	}
 	else if ($position=='new') {
 		if ((empty($_SESSION['readonly']))&&(userCanEdit($pgv_user))) {
-			if ((empty($type))||(!in_array($type, array("INDI","FAM","SOUR","REPO","NOTE","OBJE","OTHER")))) {
-				addDebugLog($action." type=$type position=$position ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER");
-				print "ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE, or OTHER\n";
+			if ((empty($type))||(!in_array($type, array("INDI","FAM","SOUR","REPO","NOTE","OBJE")))) {
+				addDebugLog($action." type=$type position=$position ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE");
+				print "ERROR 18: Invalid \$type specification.  Valid types are INDI, FAM, SOUR, REPO, NOTE, OBJE\n";
 				exit;
 			}
 			$gedrec = "0 @REF@ $type";

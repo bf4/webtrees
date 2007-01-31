@@ -74,6 +74,32 @@ return false;}return true;}
 		return $out;
 	}
 	
+	 function createPerson($i)
+    	{
+    	$indiFact = "0 @new@ INDI\r\n";
+    	$indiFact .= "1 NAME ".$_POST["NameOfPeople".$i]."\r\n";
+    	
+    	if(!empty($_POST["Age".$i]))
+    	{
+    		$age = 1930 - $_POST["Age".$i];
+    		$indiFact .= "1 BIRT\r\n";
+    		$indiFact .= "2 DATE ABT ".$age;
+    	}
+    	
+    	if(!empty($_POST["PlaceOfBirth".$i]))
+    	{
+    		$indiFact .= "2 PLAC ".$_POST["PlaceOfBirth"];
+    	}
+    	
+    	if(!empty($_POST["Sex".$i]))
+    	{
+    		$indiFact .= "1 SEX ".$_POST["Sex".$i];
+    	}
+    	
+    	return $indiFact;
+    	
+    }
+	
 	function getFieldValue($j, $lines) {
 		$value = "";
 		if (empty($lines[$j])) return $value;
@@ -414,6 +440,7 @@ return false;}return true;}
 			if(isset($citation['ts_array']['rows'][$i]['Name'])) $searchName = $citation['ts_array']['rows'][$i]['Name'];
 			else $searchName = '';
 			$out .= print_findindi_link("personid".$i, "peoplelink".$i, true,false,'',$searchName);
+            $out .= "<br />Create New Person: <input type=\"checkbox\" value=\"newPerson\"/>";
 			$out .= '<br /></td>';
 	    
 		}
@@ -443,6 +470,12 @@ return false;}return true;}
 		$personid = "";
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
+			if(!empty($_POST["newPerson".$number]))
+			{
+				$tempPerson = $this->createPerson($number);
+				$_POST["personid".$number] = append_gedrec($tempPerson,true,'');
+			}
+			
 			if (!isset($_POST["personid".$number])) $_POST["personid".$number]="";
 			$personid .= $_POST["personid".$number].";";
 			$_POST["personid".$number] = trim($_POST["personid".$number], '; \r\n\t');

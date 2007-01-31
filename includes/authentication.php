@@ -1224,7 +1224,7 @@ function addMessage($message) {
 	$email2 .= "\r\n=--------------------------------------=\r\nIP ADDRESS: ".$_SERVER['REMOTE_ADDR']."\r\n";
 	$email2 .= "DNS LOOKUP: ".gethostbyaddr($_SERVER['REMOTE_ADDR'])."\r\n";
 	$email2 .= "LANGUAGE: $LANGUAGE\r\n";
-	$subject2 = "[".$pgv_lang["phpgedview_message"]."] ".stripslashes($message["subject"]);
+	$subject2 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").stripslashes($message["subject"]);
 	$from ="";
 	if (!$fUser) {
 		$from = $message["from"];
@@ -1259,7 +1259,7 @@ function addMessage($message) {
 
 	}
 	if ($message["method"]!="messaging") {
-		$subject1 = "[".$pgv_lang["phpgedview_message"]."] ".stripslashes($message["subject"]);
+		$subject1 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").stripslashes($message["subject"]);
 		if (!$fUser) {
 			$email1 = $pgv_lang["message_email1"];
 			if (!empty($message["from_name"])) $email1 .= $message["from_name"]."\r\n\r\n".stripslashes($message["body"]);

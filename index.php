@@ -281,11 +281,11 @@ if ($action=="ajax") {
 			if ($blockval[0]==$block && function_exists($blockval[0])) {
 				if ($side=="main") $param1 = "false";
 				else $param1 = "true";
-				if (function_exists($blockval[0]) && !loadCachedBlock($blockval[0], $side.$_REQUEST['bindex'])) {
+				if (function_exists($blockval[0]) && !loadCachedBlock($blockval, $side.$_REQUEST['bindex'])) {
 					ob_start();
-				eval($blockval[0]."($param1, \$blockval[1], \"$side\", ".$_REQUEST['bindex'].");");
+					eval($blockval[0]."($param1, \$blockval[1], \"$side\", ".$_REQUEST['bindex'].");");
 					$content = ob_get_contents();
-					saveCachedBlock($blockval[0], $side.$_REQUEST['bindex'], $content);
+					saveCachedBlock($blockval, $side.$_REQUEST['bindex'], $content);
 					ob_end_flush();
 				}
 				exit;
@@ -380,11 +380,11 @@ if (count($ublocks["main"])!=0) {
 
 	foreach($ublocks["main"] as $bindex=>$block) {
 		if (isset($DEBUG)&&($DEBUG==true)) print_execution_stats();
-		if (function_exists($block[0]) && !loadCachedBlock($block[0], "main".$bindex)) {
+		if (function_exists($block[0]) && !loadCachedBlock($block, "main".$bindex)) {
 			ob_start();
 			eval($block[0]."(false, \$block[1], \"main\", $bindex);");
 			$content = ob_get_contents();
-			saveCachedBlock($block[0], "main".$bindex, $content);
+			saveCachedBlock($block, "main".$bindex, $content);
 			ob_end_flush();
 		}
 	}
@@ -401,11 +401,11 @@ if (count($ublocks["right"])!=0) {
 	}
 	foreach($ublocks["right"] as $bindex=>$block) {
 		if (isset($DEBUG)&&($DEBUG==true)) print_execution_stats();
-		if (function_exists($block[0]) && !loadCachedBlock($block[0], "right".$bindex)) {
+		if (function_exists($block[0]) && !loadCachedBlock($block, "right".$bindex)) {
 			ob_start();
 			eval($block[0]."(true, \$block[1], \"right\", $bindex);");
 			$content = ob_get_contents();
-			saveCachedBlock($block[0], "right".$bindex, $content);
+			saveCachedBlock($block, "right".$bindex, $content);
 			ob_end_flush();
 		}
 	}

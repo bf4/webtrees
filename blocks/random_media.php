@@ -28,10 +28,15 @@
 
 //-- only enable this block if multi media has been enabled
 if ($MULTI_MEDIA) {
-	$PGV_BLOCKS["print_random_media"]["name"]        = $pgv_lang["random_media_block"];
-	$PGV_BLOCKS["print_random_media"]["descr"]        = "random_media_descr";
-	$PGV_BLOCKS["print_random_media"]["canconfig"]        = true;
-	$PGV_BLOCKS["print_random_media"]["config"] = array("filter"=>"all","controls"=>"yes","start"=>"no");
+	$PGV_BLOCKS["print_random_media"]["name"]		= $pgv_lang["random_media_block"];
+	$PGV_BLOCKS["print_random_media"]["descr"]		= "random_media_descr";
+	$PGV_BLOCKS["print_random_media"]["canconfig"]	= true;
+	$PGV_BLOCKS["print_random_media"]["config"]		= array(
+		"cache"=>0,
+		"filter"=>"all",
+		"controls"=>"yes",
+		"start"=>"no"
+		);
 
 	require_once 'includes/functions_print_facts.php';
 
@@ -245,11 +250,13 @@ if ($MULTI_MEDIA) {
 
 	function print_random_media_config($config) {
 		global $pgv_lang, $PGV_BLOCKS, $TEXT_DIRECTION;
+
 		if (empty($config)) $config = $PGV_BLOCKS["print_random_media"]["config"];
 		if (!isset($config["filter"])) $config["filter"] = "all";
 		if (!isset($config["controls"])) $config["controls"] = "yes";
 		if (!isset($config["start"])) $config["start"] = "no";
-		print "<tr><td class=\"descriptionbox width20\">";
+
+		print "<tr><td class=\"descriptionbox wrap width33\">";
  			print_help_link("random_media_persons_or_all_help", "qm");
 			print $pgv_lang["random_media_persons_or_all"];
 		print "</td>";?>
@@ -260,13 +267,13 @@ if ($MULTI_MEDIA) {
 	    	<option value="all"<?php if ($config["filter"]=="all") print " selected=\"selected\"";?>><?php print $pgv_lang["all"]; ?></option>
 	  	</select>
 	  	</td></tr>
-	  	<tr><td class="descriptionbox"><?php print_help_link("random_media_ajax_controls_help", "qm"); print $pgv_lang["random_media_ajax_controls"]; ?></td>
+	  	<tr><td class="descriptionbox wrap width33"><?php print_help_link("random_media_ajax_controls_help", "qm"); print $pgv_lang["random_media_ajax_controls"]; ?></td>
 	  	<td class="optionbox"><select name="controls">
 			<option value="yes" <?php if ($config["controls"]=="yes") print " selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
 			<option value="no" <?php if ($config["controls"]=="no") print " selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
 		</select>
 		</td></tr>
-		<tr><td class="descriptionbox"><?php print_help_link("random_media_start_slide_help", "qm"); print $pgv_lang["random_media_start_slide"]; ?></td>
+		<tr><td class="descriptionbox wrap width33"><?php print_help_link("random_media_start_slide_help", "qm"); print $pgv_lang["random_media_start_slide"]; ?></td>
 	  	<td class="optionbox"><select name="start">
 			<option value="yes" <?php if ($config["start"]=="yes") print " selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
 			<option value="no" <?php if ($config["start"]=="no") print " selected=\"selected\""; ?>><?php print $pgv_lang["no"]; ?></option>
@@ -274,6 +281,8 @@ if ($MULTI_MEDIA) {
 		</td></tr>
 
 	  	<?php
+		// Cache file life is not configurable by user:  anything other "no cache" doesn't make sense
+		print "<input type=\"hidden\" name=\"cache\" value=\"0\" />";
 	}
 
 }

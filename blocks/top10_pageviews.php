@@ -26,10 +26,14 @@
  * @subpackage Blocks
  */
 
-$PGV_BLOCKS["top10_pageviews"]["name"]           = $pgv_lang["top10_pageviews"];
-$PGV_BLOCKS["top10_pageviews"]["descr"]          = "top10_pageviews_descr";
-$PGV_BLOCKS["top10_pageviews"]["canconfig"]        = true;
-$PGV_BLOCKS["top10_pageviews"]["config"] = array("num"=>10, "count_placement"=>"left");
+$PGV_BLOCKS["top10_pageviews"]["name"]		= $pgv_lang["top10_pageviews"];
+$PGV_BLOCKS["top10_pageviews"]["descr"]		= "top10_pageviews_descr";
+$PGV_BLOCKS["top10_pageviews"]["canconfig"]	= true;
+$PGV_BLOCKS["top10_pageviews"]["config"]	= array(
+	"cache"=>1,
+	"num"=>10,
+	"count_placement"=>"left"
+	);
 
 function top10_pageviews($block=true, $config="", $side, $index) {
 	global $pgv_lang, $GEDCOM, $INDEX_DIRECTORY, $PGV_BLOCKS, $command, $PGV_IMAGES, $PGV_IMAGE_DIR, $SHOW_SOURCES, $TEXT_DIRECTION;
@@ -199,16 +203,41 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 }
 
 function top10_pageviews_config($config) {
-	global $pgv_lang, $PGV_BLOCKS;
+	global $pgv_lang, $command, $PGV_BLOCKS;
 	if (empty($config)) $config = $PGV_BLOCKS["top10_pageviews"]["config"];
-	?>
-	<?php print $pgv_lang["num_to_show"]; ?> <input type="text" name="num" size="2" value="<?php print $config["num"]; ?>" />
-	<br /><br />
-	<?php print $pgv_lang["before_or_after"];?>&nbsp;<select name="count_placement">
-		<option value="left"<?php if ($config["count_placement"]=="left") print " selected=\"selected\"";?>><?php print $pgv_lang["before"]; ?></option>
-		<option value="right"<?php if ($config["count_placement"]=="right") print " selected=\"selected\"";?>><?php print $pgv_lang["after"]; ?></option>
-	</select>
+	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["top10_pageviews"]["config"]["cache"];
 
-	<?php
+	// Number of items to show
+  	print "<tr><td class=\"descriptionbox wrap width33\">";
+		// print_help_link("num_to_show_help", "qm");
+		print $pgv_lang["num_to_show"];
+	print "</td><td class=\"optionbox\">";
+		print "<input type=\"text\" name=\"num\" size=\"2\" value=\"".$config["num"]."\" />";
+	print "</td></tr>";
+	
+	// Count position
+  	print "<tr><td class=\"descriptionbox wrap width33\">";
+		// print_help_link("before_or_after_help", "qm");
+		print $pgv_lang["before_or_after"];
+	print "</td><td class=\"optionbox\">";
+		print "<select name=\"count_placement\">";
+			print "<option value=\"left\"";
+			if ($config["count_placement"]=="left") print " selected=\"selected\"";
+			print ">".$pgv_lang["before"]."</option>";
+			print "<option value=\"right\"";
+			if ($config["count_placement"]=="right") print " selected=\"selected\"";
+			print ">".$pgv_lang["after"]."</option>";
+		print "</select>";
+	print "</td></tr>";
+
+	// Cache file life
+	if ($command=="gedcom") {
+  		print "<tr><td class=\"descriptionbox wrap width33\">";
+			print_help_link("cache_life_help", "qm");
+			print $pgv_lang["cache_life"];
+		print "</td><td class=\"optionbox\">";
+			print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
+		print "</td></tr>";
+	}
 }
 ?>

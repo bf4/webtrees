@@ -566,7 +566,7 @@ if (phpversion() >= '4.2.2') {
 	//-- prevent sql and code injection
 	foreach($_REQUEST as $key=>$value) {
 		if (!is_array($value)) {
-			if (preg_match("/((DELETE)|(INSERT)|(UPDATE)|(ALTER)|(CREATE)|( TABLE)|(DROP))\s[A-Za-z0-9 ]{0,200}(\s(FROM)|(INTO)|(TABLE)\s)/i", $value, $imatch)>0) {
+			if (preg_match("/((DELETE)|(INSERT)|(UPDATE)|(ALTER)|(CREATE)|( TABLE)|(DROP))\s[A-Za-z0-9 ]{0,20}(\s(FROM)|(INTO)|(TABLE)\s)/i", $value, $imatch)>0) {
 				print "Possible SQL injection detected: $key=>$value.  <b>$imatch[0]</b> Script terminated.";
 				require_once("includes/authentication.php");      // -- load the authentication system
 				AddToLog("Possible SQL injection detected: $key=>$value. <b>$imatch[0]</b> Script terminated.");
@@ -578,7 +578,7 @@ if (phpversion() >= '4.2.2') {
 		else {
 			foreach($value as $key1=>$val) {
 				if (!is_array($val)) {
-					if (preg_match("/((DELETE)|(INSERT)|(UPDATE)|(ALTER)|(CREATE)|( TABLE)|(DROP))\s[A-Za-z0-9 ]{0,200}(\s(FROM)|(INTO)|(TABLE)\s)/i", $val, $imatch)>0) {
+					if (preg_match("/((DELETE)|(INSERT)|(UPDATE)|(ALTER)|(CREATE)|( TABLE)|(DROP))\s[A-Za-z0-9 ]{0,20}(\s(FROM)|(INTO)|(TABLE)\s)/i", $val, $imatch)>0) {
 						print "Possible SQL injection detected: $key=>$val <b>$imatch[0]</b>.  Script terminated.";
 						require_once("includes/authentication.php");      // -- load the authentication system
 						AddToLog("Possible SQL injection detected: $key=>$val <b>$imatch[0]</b>.  Script terminated.");
@@ -604,6 +604,9 @@ if (file_exists($INDEX_DIRECTORY."gedcoms.php")) {
 }
 else $GEDCOMS=array();
 
+//-- connect to the database
+check_db();
+
 if (isset($_REQUEST["GEDCOM"])){
    $_REQUEST["GEDCOM"] = trim($_REQUEST["GEDCOM"]);
 }
@@ -613,7 +616,6 @@ if (empty($_REQUEST["GEDCOM"])) {
    else {
       if ((empty($GEDCOM))||(empty($GEDCOMS[$GEDCOM]))) $GEDCOM=$DEFAULT_GEDCOM;
       else if ((empty($GEDCOM))&&(count($GEDCOMS)>0)) {
-	      check_db();
          foreach($GEDCOMS as $ged_file=>$ged_array) {
 	         $GEDCOM = $ged_file;
 	         if (check_for_import($ged_file)) break;
@@ -672,7 +674,7 @@ require_once("includes/authentication.php");      // -- load the authentication 
 		if (preg_match('/^'.$ipRegEx.'/', $_SERVER['REMOTE_ADDR'])) {
 			//adds a message to the log and exits with an Access Denied header
  			AddToLog("genservice.php blocked IP Address: ".$_SERVER['REMOTE_ADDR']." by regex: ".$ipRegEx);
- 			header("HTTP/1.1 403 Access Deniced");
+ 			header("HTTP/1.1 403 Access Denied");
  			exit;
  		}
 	}
@@ -816,7 +818,7 @@ loadLanguage($LANGUAGE, true);
 // Check for page views exceeding the limit
 CheckPageViews();
 
-require_once( "includes/templecodes.php");		//-- load in the LDS temple code translations
+require_once("includes/templecodes.php");		//-- load in the LDS temple code translations
 
 require_once("privacy.php");
 //-- load the privacy file

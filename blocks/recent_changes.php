@@ -26,11 +26,14 @@
  * @subpackage Blocks
  */
 
-$PGV_BLOCKS["print_recent_changes"]["name"]        = $pgv_lang["recent_changes_block"];
-$PGV_BLOCKS["print_recent_changes"]["descr"]        = "recent_changes_descr";
-$PGV_BLOCKS["print_recent_changes"]["canconfig"]        = true;
-$PGV_BLOCKS["print_recent_changes"]["cache"]   		= 1;
-$PGV_BLOCKS["print_recent_changes"]["config"] = array("days"=>30, "hide_empty"=>"no");
+$PGV_BLOCKS["print_recent_changes"]["name"]			= $pgv_lang["recent_changes_block"];
+$PGV_BLOCKS["print_recent_changes"]["descr"]		= "recent_changes_descr";
+$PGV_BLOCKS["print_recent_changes"]["canconfig"]	= true;
+$PGV_BLOCKS["print_recent_changes"]["config"]		= array(
+	"cache"=>1,
+	"days"=>30, 
+	"hide_empty"=>"no"
+	);
 
 //-- Recent Changes block
 //-- this block prints a list of changes that have occurred recently in your gedcom
@@ -147,16 +150,17 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 }
 
 function print_recent_changes_config($config) {
-	global $pgv_lang, $PGV_BLOCKS, $TEXT_DIRECTION;
+	global $pgv_lang, $command, $PGV_BLOCKS, $TEXT_DIRECTION;
 	if (empty($config)) $config = $PGV_BLOCKS["print_recent_changes"]["config"];
+	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_recent_changes"]["config"]["cache"];
 
-	print "<tr><td width=\"20%\" class=\"descriptionbox\">".$pgv_lang["days_to_show"]."</td>";?>
+	print "<tr><td class=\"descriptionbox wrap width33\">".$pgv_lang["days_to_show"]."</td>";?>
 	<td class="optionbox">
 		<input type="text" name="days" size="2" value="<?php print $config["days"]; ?>" />
 	</td></tr>
 
 	<?php
-  	print "<tr><td width=\"20%\" class=\"descriptionbox\">".$pgv_lang["show_empty_block"]."</td>";?>
+  	print "<tr><td class=\"descriptionbox wrap width33\">".$pgv_lang["show_empty_block"]."</td>";?>
 	<td class="optionbox">
 	<select name="hide_empty">
 		<option value="no"<?php if ($config["hide_empty"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
@@ -167,5 +171,15 @@ function print_recent_changes_config($config) {
 		<span class="error"><?php print $pgv_lang["hide_block_warn"]; ?></span>
 	</td></tr>
 	<?php
+
+	// Cache file life
+	if ($command=="gedcom") {
+  		print "<tr><td class=\"descriptionbox wrap width33\">";
+			print_help_link("cache_life_help", "qm");
+			print $pgv_lang["cache_life"];
+		print "</td><td class=\"optionbox\">";
+			print "<input type=\"text\" name=\"cache\" size=\"2\" value=\"".$config["cache"]."\" />";
+		print "</td></tr>";
+	}
 }
 ?>

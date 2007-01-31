@@ -35,6 +35,7 @@ if (strstr($_SERVER["PHP_SELF"],"functions.php")) {
 }
 
 require_once('includes/mutex_class.php');
+require_once('includes/media_class.php');
 
 /**
  * The level of error reporting
@@ -443,7 +444,7 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
 		$ct = preg_match_all($searchTarget, $gedrec, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
 		if ($ct==0) return "";
 	}
-	if (count($match)<$num) return "";
+	if ($ct<$num) return "";
 	$pos1 = $match[$num-1][0][1];
 	$pos2 = strpos($gedrec, "\n$level", $pos1+1);
 	if (!$pos2) $pos2 = strpos($gedrec, "\n1", $pos1+1);
@@ -490,7 +491,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $Ap
 	$ct = preg_match_all("/\n1 (\w+)(.*)/", $gedrec, $match, PREG_SET_ORDER);
 	for($i=0; $i<$ct; $i++) {
 		$fact = trim($match[$i][1]);
-		if (strpos($ignore, $fact)===false) {
+		if (empty($ignore) || strpos($ignore, $fact)===false) {
 			if (!$ApplyPriv || (showFact($fact, $id)&& showFactDetails($fact,$id))) {
 				if (isset($prev_tags[$fact])) $prev_tags[$fact]++;
 				else $prev_tags[$fact] = 1;
@@ -523,7 +524,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $Ap
 			$ct = preg_match_all("/\n1 (\w+)(.*)/", $famrec, $match, PREG_SET_ORDER);
 			for($i=0; $i<$ct; $i++) {
 				$fact = trim($match[$i][1]);
-				if (strpos($ignore, $fact)===false) {
+				if (empty($ignore) || strpos($ignore, $fact)===false) {
 					if (!$ApplyPriv || (showFact($fact, $id)&&showFactDetails($fact,$id))) {
 						if (isset($prev_tags[$fact])) $prev_tags[$fact]++;
 						else $prev_tags[$fact] = 1;
@@ -966,6 +967,14 @@ function find_highlighted_object($pid, $indirec) {
 			if (!is_null($client)) {
 				$mt = preg_match_all("/\d OBJE @(.*)@/", $indirec, $matches, PREG_SET_ORDER);
 				for($i=0; $i<$mt; $i++) {
+					$mediaObj = Media::getInstance($matches[$i][1]);
+					$mrec = $mediaObj->getGedcomRecord();
+						if (!empty($mrec)) {
+							$file = get_gedcom_value("FILE", 1, $mrec);
+							$row = array($matches[$i][1], $file, $mrec, $matches[$i][0]);
+							$media[] = $row;
+						}
+					/*
 					$parts = preg_split("/:/", $matches[$i][1]);
 					if (isset($parts[1])) {
 						$mrec = $client->getRemoteRecord($parts[1]);
@@ -974,7 +983,7 @@ function find_highlighted_object($pid, $indirec) {
 							$row = array($matches[$i][1], $file, $mrec, $matches[$i][0]);
 							$media[] = $row;
 						}
-					}
+					} */
 				}
 			}
 		}
@@ -3090,32 +3099,26 @@ function add_descendancy($pid, $parents=false, $generations=-1) {
 }
 
 /**
- * check if the maximum number of page views per hour for a session has been exeeded.
+ * check if the page view rate for a session has been exeeded.
  */
 function CheckPageViews() {
-	global $MAX_VIEWS, $MAX_VIEW_TIME, $pgv_lang;
+	global $SEARCH_SPIDER, $MAX_VIEWS, $MAX_VIEW_TIME;
 
-	if ($MAX_VIEW_TIME == 0) return;
-
-	if ((!isset($_SESSION["pageviews"])) || (time() - $_SESSION["pageviews"]["time"] > $MAX_VIEW_TIME)) {
-		if (isset($_SESSION["pageviews"])) {
-			$str = "Max pageview counter reset: max reached was ".$_SESSION["pageviews"]["number"];
-			AddToLog($str);
+	if ($MAX_VIEW_TIME == 0 || $MAX_VIEWS == 0 || !empty($SEARCH_SPIDER)) return;
+	
+	if (!empty($_SESSION["pageviews"]["time"]) && !empty($_SESSION["pageviews"]["number"])) {
+		$_SESSION["pageviews"]["number"] ++;
+		if ($_SESSION["pageviews"]["number"] < $MAX_VIEWS) return;
+		$sleepTime = $MAX_VIEW_TIME - time() + $_SESSION["pageviews"]["time"];
+		if ($sleepTime > 0) {
+			// The configured page view rate has been exceeded
+			// - Log a message and then sleep to slow things down
+			$text = print_text("maxviews_exceeded", 0, 1);
+			AddToLog($text);
+			sleep($sleepTime);
 		}
-		$_SESSION["pageviews"]["time"] = time();
-		$_SESSION["pageviews"]["number"] = 0;
 	}
-
-	$_SESSION["pageviews"]["number"]++;
-
-	if ($_SESSION["pageviews"]["number"] > $MAX_VIEWS) {
-		$time = time() - $_SESSION["pageviews"]["time"];
-		print $pgv_lang["maxviews_exceeded"];
-		$str = "Maximum number of pageviews exceeded after ".$time." seconds.";
-		AddToLog($str);
-		exit;
-	}
-	return;
+	$_SESSION["pageviews"] = array("time"=>time(), "number"=>1);
 }
 
 /**
@@ -3302,6 +3305,9 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $unknownNN, $unknownPN;
 
 	if (!isset($pgv_language[$desiredLanguage])) $desiredLanguage = "english";
+	$username = getUserName();
+	$user = getUser($username);
+	if (!$user) $user['canadmin'] = false;
 	$result = false;
 	if ($forceLoad) {
 		$LANGUAGE = "english";
@@ -3323,14 +3329,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load admin lang keys
 		$file = "./languages/admin.".$lang_short_cut[$LANGUAGE].".php";
 		if (file_exists($file)) {
-			if (!$goodDB || !adminUserExists() || userGedcomAdmin(getUserName()) || !$CONFIGURED) {
+			if (!$goodDB || !adminUserExists() || userGedcomAdmin($username) || $user['canadmin'] || !$CONFIGURED) {
 				include($file);
 			}
 		}
 		// load the edit lang keys
 		$file = "./languages/editor.".$lang_short_cut[$LANGUAGE].".php";
 		if (file_exists($file)) {
-			if (!$goodDB || !adminUserExists() || userGedcomAdmin(getUserName()) || userCanEdit(getUserName())) {
+			if (!$goodDB || !adminUserExists() || userGedcomAdmin($username) || userCanEdit($username)) {
 				include($file);
 			}
 		}
@@ -3374,14 +3380,14 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		// load admin lang keys
 		$file = "./languages/admin.".$lang_short_cut[$LANGUAGE].".php";
 		if (file_exists($file)) {
-			if ((!$goodDB || !adminUserExists() || userGedcomAdmin(getUserName()) || !$CONFIGURED)) {
+			if ((!$goodDB || !adminUserExists() || userGedcomAdmin($username) || $user['canadmin'] || !$CONFIGURED)) {
 					include($file);
 			}
 		}
 		// load the edit lang keys
 		$file = "./languages/editor.".$lang_short_cut[$LANGUAGE].".php";
 		if (file_exists($file)) {
-			if ((!$goodDB || !adminUserExists() || userGedcomAdmin(getUserName()) || userCanEdit(getUserName()))) {
+			if ((!$goodDB || !adminUserExists() || userGedcomAdmin($username) || userCanEdit($username))) {
 				include($file);
 			}
 		}

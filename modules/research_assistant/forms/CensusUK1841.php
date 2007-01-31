@@ -139,7 +139,7 @@ return false;}return true;}
 //        Next Table
         $out .= '<tr><td colspan="6">';
         
-        $out .= '<table  align="left" dir="ltr">
+	$out .= '<table>
  <tr>
   <td class="descriptionbox">Name</td>';
   		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
@@ -237,25 +237,62 @@ $out .= ' <tr>
         return $out;
     }
     
+    function createPerson($i)
+    {
+    	$indiFact = "0 @new@ INDI\r\n";
+    	$indiFact .= "1 NAME ".$_POST["NameOfPeople".$i]."\r\n";
+    	
+    	if(!empty($_POST["Age".$i]))
+    	{
+    		$age = 1861 - $_POST["Age".$i];
+    		$indiFact .= "1 BIRT\r\n";
+    		$indiFact .= "2 DATE ABT ".$age;
+    	}
+    	
+    	if(!empty($_POST["PlaceOfBirth".$i]))
+    	{
+    		$indiFact .= "2 PLAC ".$_POST["PlaceOfBirth"];
+    	}
+    	
+    	if(!empty($_POST["Sex".$i]))
+    	{
+    		$indiFact .= "1 SEX ".$_POST["Sex".$i];
+    	}
+    	
+    	return $indiFact;
+    	
+    }
+    
     function step2() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
 		global $INDI_FACTS_ADD;
 		
+		$people = array();
+		$pids = array();
+		$positions = array();
 			
 		$personid = "";
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
+			if(!empty($_POST["newPerson".$number]))
+			{
+				$tempPerson = $this->createPerson($number);
+				$_POST["personid".$number] = append_gedrec($tempPerson,true,'');
+			}
+			
 			if (!isset($_POST["personid".$number])) $_POST["personid".$number]="";
 			$personid .= $_POST["personid".$number].";";
 			$_POST["personid".$number] = trim($_POST["personid".$number], '; \r\n\t');
+			
+			
 		}
-		$_REQUEST['personid'] = $personid;
 		
+		$_REQUEST['personid'] = $personid;
 		$return = $this->processSourceCitation();
-
+		
 		if(empty($return))
 		{
-		$out = $this->header("module.php?mod=research_assistant&form=CensusUK1841&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1880 United States Federal Census");
+		$out = $this->header("module.php?mod=research_assistant&form=CensusUK1841&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1841 UK Census");
 		$out .= $this->editFactsForm(false);
 		$out .= $this->footer();
 		return $out;
@@ -268,7 +305,7 @@ $out .= ' <tr>
 	
 	function editFactsForm($printButton = true)
 	{
-		global $factarray, $pgv_lang;
+		global $factarray;
 		
 		$facts = $this->getFactData();
 		$citation = $this->getSourceCitationData();
@@ -279,8 +316,8 @@ $out .= ' <tr>
 		if(!empty($inferFacts))
 		{
 			
-		$out .= '<tr><td colspan="2" id="inferData"><table class="list_table"><tbody><tr><td colspan="4" class="topbottombar">'.$pgv_lang["ra_inferred_facts"].'</td></tr>
-<tr><td class="descriptionbox">'.$pgv_lang["ra_fact"].'</td><td class="descriptionbox">'.$pgv_lang["ra_person"].'</td><td class="descriptionbox">'.$pgv_lang["ra_reason"].'</td><td class="descriptionbox">'.$pgv_lang["add"].'</td></tr>'; 
+		$out .= '<tr><td colspan="2" id="inferData"><table class="list_table"><tbody><tr><td colspan="4" class="topbottombar">Inferred Facts</td></tr>
+<tr><td class="descriptionbox">Fact</td><td class="descriptionbox">Person</td><td class="descriptionbox">Reason</td><td class="descriptionbox">Add</td></tr>';
 		$completeFact = true;
 		$occufact = true;
 		foreach($inferFacts as $key=>$inferredFacts) {
@@ -290,7 +327,7 @@ $out .= ' <tr>
 					{
 						$ct = preg_match("/1 (\w+)/", $factValues['tf_factrec'], $match);						
 						$factname = trim($match[1]);
-					
+						
 						if($factValues["tf_people"] == $key  && $factname == $value["factType"])	
 						{
 							$completeFact = false;
@@ -300,24 +337,12 @@ $out .= ' <tr>
 					
 					if($completeFact)
 					{
-						if(!$value["factType"] == "newp")
-						{
-							$out .='<tr>';
-							$out .="<td class=\"optionbox\">".$factarray[$value['factType']]." ".$value['date']."</td>";
-							$out .="<td class=\"optionbox\">".$value["Person"]."</td>";
-							$out .="<td class=\"optionbox\">".$value["Reason"]."</td>";
-							$out .="<td class=\"optionbox\">".'<input type="Checkbox" id="'.$value['PersonID'].$value['factType'].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["Fact"]).'\',\''.$value['PersonID'].'\',\''.$value['factType'].'\',\''.htmlentities($value["Person"]).'\',\''.$value["factPeople"].'\')"></td>'."\n";
-							$out .="</tr>";
-						}
-						else						
-						{
-							$out .='<tr>';
-							$out .="<td class=\"optionbox\">".$factarray[$value['factType']]." ".$value['date']."</td>";
-							$out .="<td class=\"optionbox\">".$value["Person"]."</td>";
-							$out .="<td class=\"optionbox\">Adding INDI fact</td>";
-							$out .="<td class=\"optionbox\">".'<input type="Checkbox" id="'.$value['PersonID'].$value['factType'].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["Fact"]).'\',\''.$value['PersonID'].'\',\''.$value['factType'].'\',\''.htmlentities($value["Person"]).'\',\''.$value["factPeople"].'\')"></td>'."\n";
-							$out .="</tr>";
-						}
+						$out .='<tr>';
+						$out .="<td class=\"optionbox\">".$factarray[$value['factType']]." ".$value['date']."</td>";
+						$out .="<td class=\"optionbox\">".$value["Person"]."</td>";
+						$out .="<td class=\"optionbox\">".$value["Reason"]."</td>";
+						$out .="<td class=\"optionbox\">".'<input type="Checkbox" id="'.$value['PersonID'].$value['factType'].'" onclick="add_ra_fact_inferred(this,\''.preg_replace("/\r?\n/", "\\r\\n",$value["Fact"]).'\',\''.$value['PersonID'].'\',\''.$value['factType'].'\',\''.htmlentities($value["Person"]).'\',\''.$value["factPeople"].'\')"></td>'."\n";
+						$out .="</tr>";
 					}
 				
 				}
@@ -325,7 +350,8 @@ $out .= ' <tr>
 				
 			
 		
-		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value='.$pgv_lang["complete"].'></td></tr>'; 
+		
+		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value="Complete"></td></tr>';
 		return $out;
 	}
 	}
@@ -339,12 +365,12 @@ $out .= ' <tr>
 		ra_functions::completeTask($_REQUEST['taskid'], $_REQUEST['form']);
 		// Tell the user their form submitted successfully.
 		$out .= ra_functions::print_menu();
-		$out .= ra_functions::printMessage($pgv_lang["success"],true);		
+		$out .= ra_functions::printMessage("Success!",true);
 
 		// Return it to the buffer.
 		return $out;
 	}
-	
+
 	function getOccupation($gedcomRecord)
 	{
 		$occupation = get_gedcom_value("OCCU", 1, $gedcomRecord);
@@ -369,6 +395,7 @@ $out .= ' <tr>
 			{
 				$bdate = $person->getBirthYear();
 				$occupation = $this->getOccupation($person->getGedcomRecord());
+			
 			$censusAge = $rows[$number]["Age"];
 			$birthDate = 1841 - $censusAge;
 				
@@ -384,61 +411,6 @@ $out .= ' <tr>
 				$inferredFacts[] = $inferredFact;
 			}
 			
-			if($rows[$number]["Single"] == "Widowed")
-			{
-				
-				$spouseFams = $person->getSpouseFamilies();
-				foreach($spouseFams as $sFamKey => $sFamValue)
-				{
-					$spouse = $sFamValue->getSpouse($person);
-					$deathYear = $spouse->getDeathYear();
-					if($spouse->getDeathYear())	$diff = $deathYear - 1841;
-						if($diff)
-						{
-							if($diff > 1 || $diff < 0)
-							{
-								$tempArray = array();
-								$inferredFact["Person"] = $spouse->getName();								
-								$inferredFact["PersonID"] = $spouse->getXref();
-								$inferredFact["Reason"] = "A death Date can be inferred!";
-								$inferredFact["Fact"] = "1 DEAT \r\n2 DATE BEF 1841";
-								$inferredFact["factType"] = 'DEAT';
-								$inferredFact["date"] = 'BEF 1841';
-								$inferredFact["factPeople"] = "indi";
-								$inferredFacts[] = $inferredFact;
-							}
-						}
-					
-				}
-			
-			}
-			
-			if($rows[$number]["Single"] == "Married")
-			{
-				
-				$spouseFams = $person->getSpouseFamilies();
-				foreach($spouseFams as $sFamKey => $sFamValue)
-				{
-					$marriage = $sFamValue->getMarriageRecord();
-					if(!$marriage)
-					{
-						if(!is_null($sFamValue))
-						{
-							$tempArray = array();
-							$inferredFact["Person"] = $sFamValue->getSortableName();								
-							$inferredFact["PersonID"] = $sFamValue->getXref();
-							$inferredFact["Reason"] = "A Marriage Date can be inferred!";
-							$inferredFact["Fact"] = "1 MARR \r\n2 DATE BEF 1841";
-							$inferredFact["factType"] = 'MARR';
-							$inferredFact["date"] = 'BEF 1841';
-							$inferredFact["factPeople"] = "fam";
-							$tempArray[] = $inferredFact;
-							$people[$sFamValue->getXref()] = $tempArray;
-						}
-					}
-				}
-			
-			}
 			
 			if(!empty($bdate))
 			{
@@ -474,16 +446,8 @@ $out .= ' <tr>
 				 }
 			}
 			}
-			
-			if(empty($rows[$number]["personid"]))
-			{
-					$inferredFact["PersonName"] = $rows[$number]["NameOfPeople"];	
-			 		$inferredFact["Sex"] = $rows[$number]["Sex"];
-					$inferredFacts[] = $inferredFact;
-			}
 		
 			$people[$person->getXref()] = $inferredFacts;
-			}
 		}
 		return $people;
 		
@@ -519,88 +483,32 @@ $out .= ' <tr>
 		$text = $_POST['city'].", ".$_POST['county'].", ".$_POST['state'].", 1841 UK Census";
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
-			if (!isset($_POST["House".$number])) $_POST["House".$number]="";
-			if (!isset($_POST["Families".$number])) $_POST["Families".$number]="";
+
 			if (!isset($_POST["NameOfPeople".$number])) $_POST["NameOfPeople".$number]="";
-			if (!isset($_POST["Race".$number])) $_POST["Race".$number]="";
 			if (!isset($_POST["Sex".$number])) $_POST["Sex".$number]="";
 			if (!isset($_POST["Age".$number])) $_POST["Age".$number]="";
-			if (!isset($_POST["Month".$number])) $_POST["Month".$number]="";
-			if (!isset($_POST["Relationship".$number])) $_POST["Relationship".$number]="";
-			if (!isset($_POST["Single".$number])) $_POST["Single".$number]="";
-			if (!isset($_POST["Married".$number])) $_POST["Married".$number]="";
-			if (!isset($_POST["WidowedDivorced".$number])) $_POST["WidowedDivorced".$number]="";
 			if (!isset($_POST["Trade".$number])) $_POST["Trade".$number]="";
-			if (!isset($_POST["TimeEmployed".$number])) $_POST["TimeEmployed".$number]="";
-			if (!isset($_POST["Disablity".$number])) $_POST["Disablity".$number]="";
-			if (!isset($_POST["Blind".$number])) $_POST["Blind".$number]="";
-			if (!isset($_POST["Deaf".$number])) $_POST["Deaf".$number]="";
-			if (!isset($_POST["Idiotic".$number])) $_POST["Idiotic".$number]="";
-			if (!isset($_POST["Insane".$number])) $_POST["Insane".$number]="";
-			if (!isset($_POST["Maimed".$number])) $_POST["Maimed".$number]="";
-			if (!isset($_POST["School".$number])) $_POST["School".$number]="";
-			if (!isset($_POST["Read".$number])) $_POST["Read".$number]="";
-			if (!isset($_POST["Write".$number])) $_POST["Write".$number]="";
 			if (!isset($_POST["ThisCounty".$number])) $_POST["ThisCounty".$number]="";
 			if (!isset($_POST["OtherPlace".$number])) $_POST["OtherPlace".$number]="";
-			if (!isset($_POST["MothersPlaceOfBirth".$number])) $_POST["MothersPlaceOfBirth".$number]="";
 			if (!isset($_POST["personid".$number])) $_POST["personid".$number]="";
 			
 			$rows[$number] = array(
-			'House'=>$_POST["House".$number],
-			'Families'=>$_POST["Families".$number],
 			"NameOfPeople"=>$_POST["NameOfPeople".$number],
-			"Race"=>$_POST["Race".$number],
 			"Sex"=>$_POST["Sex".$number],
 			"Age"=>$_POST["Age".$number],
-			"Month"=>$_POST["Month".$number],
-			"Relationship"=>$_POST["Relationship".$number],
-			"Single"=>$_POST["Single".$number],
-			"Married"=>$_POST["Married".$number],
-			"WidowedDivorced"=>$_POST["WidowedDivorced".$number],
 			"Trade"=>$_POST["Trade".$number],
-			"TimeEmployed"=>$_POST["TimeEmployed".$number],
-			"Disablity"=>$_POST["Disablity".$number],
-			"Blind"=>$_POST["Blind".$number],
-			"Deaf"=>$_POST["Deaf".$number],
-			"Idiotic"=>$_POST["Idiotic".$number],
-			"Insane"=>$_POST["Insane".$number],
-			"Maimed"=>$_POST["Maimed".$number],
-			"School"=>$_POST["School".$number],
-			"Read"=>$_POST["Read".$number],
-			"Write"=>$_POST["Write".$number],
 			"ThisCounty"=>$_POST["ThisCounty".$number],
 			"OtherPlace"=>$_POST["OtherPlace".$number],
-			"MothersPlaceOfBirth"=>$_POST["MothersPlaceOfBirth".$number],
 			"personid"=>$_POST["personid".$number]
 			);
 			
 			$text .= "\r\n";
-			if (!empty($_POST["House".$number])) $text .= "Dwelling number: ".$_POST["House".$number];
-			if (!empty($_POST["Families".$number])) $text .= " Family number: ".$_POST["Families".$number];
 			if (!empty($_POST["NameOfPeople".$number])) $text .= " Name: ".$_POST["NameOfPeople".$number];
-			if (!empty($_POST["Race".$number])) $text .= ", Color: ".$_POST["Race".$number];
 			if (!empty($_POST["Sex".$number])) $text .= ", Sex: ".$_POST["Sex".$number];
 			if (!empty($_POST["Age".$number])) $text .= ", Age: ".$_POST["Age".$number];
-			if (!empty($_POST["Month".$number])) $text .= ", Month: ".$_POST["Month".$number];
-			if (!empty($_POST["Relationship".$number])) $text .= ", Relationship: ".$_POST["Relationship".$number];
-			if (!empty($_POST["Single".$number])) $text .= ", ".$_POST["Single".$number];
-			if (!empty($_POST["Married".$number])) $text .= ", ".$_POST["Married".$number];
-			if (!empty($_POST["WidowedDivorced".$number])) $text .= ", ".$_POST["WidowedDivorced".$number];
 			if (!empty($_POST["Trade".$number])) $text .= ", Profession: ".$_POST["Trade".$number];
-			if (!empty($_POST["TimeEmployed".$number])) $text .= ", Number of months employed: ".$_POST["TimeEmployed".$number];
-			if (!empty($_POST["Disablity".$number])) $text .= ", ".$_POST["Disablity".$number];
-			if (!empty($_POST["Blind".$number])) $text .= ", ".$_POST["Blind".$number];
-			if (!empty($_POST["Deaf".$number])) $text .= ", ".$_POST["Deaf".$number];
-			if (!empty($_POST["Idiotic".$number])) $text .= ", ".$_POST["Idiotic".$number];
-			if (!empty($_POST["Insane".$number])) $text .= ", ".$_POST["Insane".$number];
-			if (!empty($_POST["Maimed".$number])) $text .= ", ".$_POST["Maimed".$number];
-			if (!empty($_POST["School".$number])) $text .= ", ".$_POST["School".$number];
-			if (!empty($_POST["Read".$number])) $text .= ", ".$_POST["Read".$number];
-			if (!empty($_POST["Write".$number])) $text .= ", ".$_POST["Write".$number];
 			if (!empty($_POST["ThisCounty".$number])) $text .= ", Born in same County: ".$_POST["ThisCounty".$number];
 			if (!empty($_POST["OtherPlace".$number])) $text .= ", Born Elsewhere: ".$_POST["OtherPlace".$number];
-			if (!empty($_POST["MothersPlaceOfBirth".$number])) $text .= ", Mother's Place of birth: ".$_POST["MothersPlaceOfBirth".$number];
 			
 		}
 

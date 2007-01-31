@@ -93,21 +93,38 @@ function newConnection() {
 //-- gets the next person in the gedcom, if we reach the end then
 //-- returns false
 function get_next_xref($gid, $type='INDI') {
-	global $GEDCOM, $myindilist, $pgv_changes;
+	global $GEDCOM, $GEDCOMS, $TBLPREFIX, $pgv_changes, $DBCONN;
 
-	if (!isset($myindilist[$gid])) {
-		print "ERROR 4: Could not find gedcom record with xref:$gid\n";
-		AddToChangeLog("ERROR 4: Could not find gedcom record with xref:$gid ->" . getUserName() ."<-");
-		return false;
-	}
-	$found = false;
-	foreach($myindilist as $key=>$value) {
-		if ($found) {
-			return $key;
+	switch($type) {
+		case "INDI":
+			$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(i_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(i_id,2)";
+			break;
+		case "FAM":
+			$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(f_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(f_id,2)";
+			break;
+		case "SOUR":
+			$sql = "SELECT s_id FROM ".$TBLPREFIX."sources WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(s_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(s_id,2)";
+			break;
+		case "REPO":
+			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='REPO' AND 0+SUBSTRING(o_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2)";
+			break;
+		case "NOTE":
+			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='NOTE' AND 0+SUBSTRING(o_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2)";
+			break;
+		case "OBJE":
+			$sql = "SELECT m_media FROM ".$TBLPREFIX."media WHERE m_gedfile=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(m_media,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(m_media,2)";
+			break;
+		case "OTHER":
+			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(o_id,2)>0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2)";
+			break;
 		}
-		if ($key==$gid) $found=true;
+	$res = dbquery($sql, true, 1);
+	if ($res->numRows()>0) {
+		$row = $res->fetchRow();
+		$res->free();
+		$xref = $row[0];
+		return $xref;
 	}
-	//print "ERROR 14: Reached the end of the list\n";
 	return "";
 }
 
@@ -115,30 +132,38 @@ function get_next_xref($gid, $type='INDI') {
 //-- gets the previous person in the gedcom, if we reach the start then
 //-- returns the last record
 function get_prev_xref($gid, $type='INDI') {
-	global $GEDCOM, $myindilist, $pgv_changes;
+	global $GEDCOM, $GEDCOMS, $TBLPREFIX, $pgv_changes, $DBCONN;
 
-	if (!isset($myindilist[$gid])) {
-		print "ERROR 4: Could not find gedcom record with xref:$gid\n";
-		AddToChangeLog("ERROR 4: Could not find gedcom record with xref:$gid ->" . getUserName() ."<-");
-		return false;
-	}
-	$found = false;
-	$prevkey = "";
-	foreach($myindilist as $key=>$value) {
-		if ($key==$gid) $found=true;
-		if ($found) {
-			if (isset($prev)) {
-				return $prevkey;
-			}
-			else {
-				//print "ERROR 15: Reached the beginning of the list\n";
-				return "";
-			}
+	switch($type) {
+		case "INDI":
+			$sql = "SELECT i_id FROM ".$TBLPREFIX."individuals WHERE i_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(i_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(i_id,2) DESC";
+			break;
+		case "FAM":
+			$sql = "SELECT f_id FROM ".$TBLPREFIX."families WHERE f_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(f_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(f_id,2) DESC";
+			break;
+		case "SOUR":
+			$sql = "SELECT s_id FROM ".$TBLPREFIX."sources WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(s_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(s_id,2) DESC";
+			break;
+		case "REPO":
+			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='REPO' AND 0+SUBSTRING(o_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2) DESC";
+			break;
+		case "NOTE":
+			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_type='NOTE' AND 0+SUBSTRING(o_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2) DESC";
+			break;
+		case "OBJE":
+			$sql = "SELECT m_media FROM ".$TBLPREFIX."media WHERE m_gedfile=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(m_media,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(m_media,2) DESC";
+			break;
+		case "OTHER":
+			$sql = "SELECT o_id FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND 0+SUBSTRING(o_id,2)<0+SUBSTRING('".$DBCONN->escapeSimple($gid)."',2) ORDER BY 0+SUBSTRING(o_id,2) DESC";
+			break;
 		}
-		$prev = $value;
-		$prevkey = $key;
+	$res = dbquery($sql, true, 1);
+	if ($res->numRows()>0) {
+		$row = $res->fetchRow();
+		$res->free();
+		$xref = $row[0];
+		return $xref;
 	}
-	//print "ERROR 14: Reached the end of the list\n";
 	return "";
 }
 

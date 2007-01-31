@@ -313,7 +313,7 @@ $pgv_lang["yearly"]			= "שנתי";
 //$pgv_lang["admin_approved"]	= "מנהלן האתר על #SERVER_NAME# אישר את המשתמש שלך. ";
 //$pgv_lang["you_may_login"]		= "הקישור מתחת מביא אותך לאתר ה-PhpGedView:";
 $pgv_lang["admin_OK_subject"]	= "אישור משתמש על #SERVER_NAME#"; 
-$pgv_lang["admin_OK_message"]	= "המנהלן של אתר PhpGedView #SERVER_NAME# אישר את הבקשה שלך לקוד משתמש. תוכל עכשיו להשתמש באתר ע\"י הקישור הבא: \r\n\r\n#SERVER_NAME#\r\n"; 
+$pgv_lang["admin_OK_message"]	= "המנהלן של אתר PhpGedView #SERVER_NAME# אישר את הבקשה שלך לקוד משתמש. תוכל עכשיו להשתמש באתר ע\"י הקישור הבא: \r\n\r\n<a href=\"#SERVER_NAME#\">#SERVER_NAME#</a>\r\n"; 
 
 // Text for the Gedcom Checker
 $pgv_lang["gedcheck"]    	= "בדיקת Gedcom"; 	     // Module title

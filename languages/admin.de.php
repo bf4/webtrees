@@ -25,12 +25,17 @@
  * @subpackage Languages
  * @version $Id$
  */
+if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
+	exit;
+}
+
 $pgv_lang["user"]					= "Benutzer bestätigt";
-$pgv_lang["thumbnail_deleted"]		= "Miniaturansichtsdatei wurde gelöscht.";
-$pgv_lang["thumbnail_not_deleted"]	= "Miniaturansichtsdatei konnte nicht gelöscht werden.";
+$pgv_lang["thumbnail_deleted"]		= "Miniaturbild wurde gelöscht.";
+$pgv_lang["thumbnail_not_deleted"]	= "Miniaturbild konnte nicht gelöscht werden.";
 $pgv_lang["step2"]                        = "Schritt 2 von 4:";
 $pgv_lang["refresh"]				= "Erneuern";
-$pgv_lang["move_file_success"]		= "Medien- und Miniaturansichtsdateien wurden entfernt.";
+$pgv_lang["move_file_success"]		= "Medien- und Miniaturbild-Dateien wurden entfernt.";
 $pgv_lang["media_folder_corrupt"]	= "Das Medienverzeichnis ist defekt.";
 $pgv_lang["media_file_not_deleted"]	= "Mediendatei konnte nicht gelöscht werden.";
 $pgv_lang["gedcom_deleted"]                = "GEDCOM [#GED#] wurde gelöscht.";
@@ -63,7 +68,7 @@ $pgv_lang["created_placelinks"] 	= "Die <i>Place links</i> Tabelle wurde erstell
 $pgv_lang["created_placelinks_fail"]	= "Die <i>Place links</i> Tabelle konnte nicht erstellt werden.";
 $pgv_lang["created_media_fail"]	= "Die <i>Media</i> Tabelle konnte nicht erstellt werden.";
 $pgv_lang["created_media_mapping_fail"]	= "Die <i>Media mappings</i> Tabelle konnte nicht erstellt werden.";
-$pgv_lang["no_thumb_dir"]			= "Das Miniaturansichtenverzeichnis existiert nicht und konnte auch nicht erstellt werden.";
+$pgv_lang["no_thumb_dir"]			= "Das Miniaturbild-Verzeichnis existiert nicht und konnte auch nicht erstellt werden.";
 $pgv_lang["move_to"]				= "Verschieben nach";
 $pgv_lang["folder_created"]			= "Verzeichnis erstellt";
 $pgv_lang["folder_no_create"]		= "Verzeichnis konnte nicht erstellt werden";
@@ -132,7 +137,6 @@ $pgv_lang["download_file"]						= "Datei herunterladen";
 $pgv_lang["download_gedcom"]            = "GEDCOM-Datei von Ihrem Server herunterladen (download)";
 $pgv_lang["download_here"]						= "Hier klicken um Datei herunterzuladen";
 $pgv_lang["download_note"]                = "ANMERKUNG: Große GEDCOM-Dateien benötigen vor dem Herunterladen u.U. eine längere Berechnungszeit. Wenn ein PHP-Timeout auftritt bevor das Herunterladen fertig ist, ist die Datei vermutlich nicht komplett.<br /><br />Prüfen Sie, ob die heruntergeladene Datei in der letzten Zeile <b>0&nbsp;TRLR</b> enthält, um das korrekte Herunterladen sicherzustellen. GEDCOM-Dateien sind Textdateien, die mit einem einfachen Texteditor geöffnet werden können, aber achten Sie darauf, die Datei nach dem Ansehen <u>nicht</u> zu speichern.<br /><br />Üblicherweise benötigt das Herunterladen etwa so lang wie der Import-Vorgang.";
-$pgv_lang["duplicate_username"]         = "Doppelter Benutzername. Ein Benutzer mit dem gewählten Namen existiert bereits. Bitte wählen Sie einen anderen Benutzernamen.";
 $pgv_lang["editaccount"]				= "Benutzer darf seine eigenen Benutzerdaten ändern";
 $pgv_lang["empty_dataset"]                        = "Möchten Sie den alten Datensatz löschen und durch diese neue Daten ersetzen?";
 $pgv_lang["empty_lines_detected"]        = "In der GEDCOM-Datei wurden Leerzeilen entdeckt. Beim Korrigieren werden diese Zeilen entfernt.";
@@ -186,7 +190,7 @@ $pgv_lang["label_view_remote"]      = "Ferne Informationen dieser Person anzeige
 $pgv_lang["LANG_SELECTION"] 					= "Unterstützte Sprachen";
 $pgv_lang["LANGUAGE_DEFAULT"]					= "Sie haben noch nicht die Liste der bei Ihrer Seite unterstützten Sprachen konfiguriert.  PhpGedView benutzt deshalb die Standard-Liste.";
 $pgv_lang["last_login"]							= "Letzte Anmeldung";
-$pgv_lang["lasttab"]							= "Zuletzt benutzter Reiter auf der Personendetails-Seite";
+$pgv_lang["lasttab"]							= "Zuletzt benutztes Register auf der Personendetails-Seite";
 $pgv_lang["leave_blank"]						= "Passwort leer lassen, um das aktuelle Passwort beizubehalten.";
 $pgv_lang["link_manage_servers"]    = "Internetseiten verwalten";
 $pgv_lang["logfile_content"]        = "Inhalt der Logdatei";
@@ -253,7 +257,7 @@ $pgv_lang["user_auto_accept"]		= "Alle Änderungen dieses Benutzers automatisch 
 $pgv_lang["user_contact_method"]        = "Bevorzugte Kontaktaufnahme";
 $pgv_lang["user_create_error"]                = "Der Benutzer konnte nicht angelegt werden. Bitte nochmal versuchen.";
 $pgv_lang["user_created"]                = "Benutzer wurde angelegt.";
-$pgv_lang["user_default_tab"]		= "Defaultreiter der Personen-Informationsseite";
+$pgv_lang["user_default_tab"]		= "Defaultregister der Personen-Informationsseite";
 $pgv_lang["user_path_length"]					= "Max. Länge des Pfads der Datenschutzermittlung";
 $pgv_lang["user_relationship_priv"]				= "Zugang nur Verwandten erlauben";
 $pgv_lang["users_admin"]						= "Verwalter der Seite";
@@ -288,8 +292,8 @@ $pgv_lang["admin_OK_message"]					= "Der Verwalter von PhpGedView bei #SERVER_NA
 $pgv_lang["gedcheck"]     = "GEDCOM Verifizierungs-Modul";
 $pgv_lang["gedcheck_text"]= "Dieses Modul verifiziert GEDCOM Dateien gegen den <a href='http://phpgedview.sourceforge.net/ged551-5.pdf'>GEDCOM 5.5.1 Standard</a>.  Es sucht auch nach oft vorkommenden Fehlern.<br /><br />Bitte beachten Sie, dass viele Programme den GEDCOM 5.5.1 Standard erweitert haben.  Deshalb sollten Sie sich zuerst nur mit «kritischen» Fehlern befassen.  Den Grund der meisten Fehlermeldungen können Sie durch gündliches Lesen des Standards ermitteln.  Wenn absolut notwending, können Sie auch Ihre Fragen im <a href='https://sourceforge.net/forum/forum.php?forum_id=185166'>Help-Forum</a> stellen.";
 $pgv_lang["info"]         = "Information";
-$pgv_lang["same_win"]     = "selben Fenster/Reiter";
-$pgv_lang["new_win"]      = "neuen Fenster/Reiter";
+$pgv_lang["same_win"]     = "selbes Fenster/Register";
+$pgv_lang["new_win"]      = "neues Fenster/Register";
 $pgv_lang["all_rec"]      = "Alle Datensätze";
 $pgv_lang["err_rec"]      = "Fehlerhafte Datensätze";
 $pgv_lang["missing"]      = "fehlend";
@@ -323,11 +327,13 @@ $pgv_lang["sanity_err4"]			= "Die Datei <i>config.php</i> enthält Fehler.";
 $pgv_lang["sanity_err5"]			= "Die Datei <i>config.php</i> kann nicht geschrieben werden.";
 $pgv_lang["sanity_err6"]			= "Das Verzeichnis <i>#GLOBALS[INDEX_DIRECTORY]#</i> hat falsche Schreib-Rechte.";
 $pgv_lang["sanity_warn0"]			= "Warnungen:";
-$pgv_lang["sanity_warn1"]			= "Das Medien-Verzeichnis <i>#GLOBALS[MEDIA_DIRECTORY]#</i> hat falsche Schreib-Rechte. Sie können durch PhpGedView keine Medien-Dateien hochladen oder Miniaturansichen erstellen.";
-$pgv_lang["sanity_warn2"]			= "Das Miniaturansichten-Verzeichnis <i>#GLOBALS[MEDIA_DIRECTORY]#thumbs</i> hat falsche Schreib-Rechte. Sie können durch PhpGedView keine Miniaturansichten hochladen oder erstellen.";
-$pgv_lang["sanity_warn3"]			= "Tools zur Bearbeitung von Bildern (GD Library) sind nicht vorhanden. PhpGedView funktioniert, aber einige Teile, zB Miniaturansichten-Erstellung und Kreisdiagramm, benötigen die GD Library. Bitte besuchen Sie <a href='http://www.php.net/manual/de/ref.image.php'>http://www.php.net/manual/de/ref.image.php</a> um ausführlichere Auskunft zu bekommen.";
+$pgv_lang["sanity_warn1"]			= "Das Medien-Verzeichnis <i>#GLOBALS[MEDIA_DIRECTORY]#</i> hat falsche Schreib-Rechte. Sie können durch PhpGedView keine Medien-Dateien hochladen oder Miniaturbilder erstellen.";
+$pgv_lang["sanity_warn2"]			= "Das Miniaturbild-Verzeichnis <i>#GLOBALS[MEDIA_DIRECTORY]#thumbs</i> hat falsche Schreib-Rechte. Sie können durch PhpGedView keine Miniaturbilder hochladen oder erstellen.";
+$pgv_lang["sanity_warn3"]			= "Tools zur Bearbeitung von Bildern (GD Library) sind nicht vorhanden. PhpGedView funktioniert, aber einige Teile, zB Miniaturbild-Erstellung und Kreisdiagramm, benötigen die GD Library. Bitte besuchen Sie <a href='http://www.php.net/manual/de/ref.image.php'>http://www.php.net/manual/de/ref.image.php</a> um ausführlichere Auskunft zu bekommen.";
 $pgv_lang["sanity_warn4"]			= "Tools zur Bearbeitung von XML-Dateien (XML Parser) sind nicht vorhanden.  PhpGedView funktioniert, aber einige Teile, zb Erstellung von Berichten und Verbindungen zu anderen PhpGedView Seiten, benötigen die XML Parser Tools. Bitte besuchen Sie <a href='http://www.php.net/manual/de/ref.xml.php'>http://www.php.net/manual/de/ref.xml.php</a> um ausführlichere Auskunft zu bekommen.";
 $pgv_lang["sanity_warn5"]			= "Tools zur Bearbeitung von XML-Dateien (DOM XML Library) sind nicht vorhanden. PhpGedView funktioniert, aber einige Teile, zB Gramps Export des Sammelbehälters, herunterladen, und Verbindungen zu anderen PhpGedView Seiten, benötigen die DOM XML Library. Bitte besuchen Sie <a href='http://www.php.net/manual/de/ref.domxml.php'>http://www.php.net/manual/de/ref.domxml.php</a> um ausführlichere Auskunft zu bekommen.";
 $pgv_lang["sanity_warn6"]			= "Tools zur Sonderbearbeitung von Daten (Calendar Library) sind nicht vorhanden. PhpGedView funktioniert, aber einige Teile, zB Bearbeitung von Hebräischen oder Französischen Daten, benötigen die Calendar Library. Die Calendar Library ist oft für das richtige Ablaufen von PhpGedView nicht notwendig. Bitte besuchen Sie <a href='http://www.php.net/manual/de/ref.calendar.php'>http://www.php.net/manual/de/ref.calendar.php</a> um ausführlichere Auskunft zu bekommen.";
+$pgv_lang["clear_cache_succes"]		= "Die Cache-Dateien sind gelöscht.";
+$pgv_lang["clear_cache"]			= "Cache-Dateien löschen";
 
 ?>

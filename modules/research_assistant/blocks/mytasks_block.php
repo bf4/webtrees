@@ -32,11 +32,14 @@ if (file_exists("modules/research_assistant/languages/lang.en.php")) require_onc
 if (file_exists("modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php")) require_once("modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php");
 if (file_exists('modules/research_assistant/research_assistant.php')) include_once('modules/research_assistant/research_assistant.php');
 
-$PGV_BLOCKS["print_mytasks"]["name"]        = $pgv_lang["mytasks_block"];
-$PGV_BLOCKS["print_mytasks"]["descr"]        = $pgv_lang["mytasks_block_descr"];
-$PGV_BLOCKS["print_mytasks"]["canconfig"]        = true;
-$PGV_BLOCKS["print_mytasks"]['config']		= array("unassigned" => "no", 
-"completed" => "no");
+$PGV_BLOCKS["print_mytasks"]["name"]		= $pgv_lang["mytasks_block"];
+$PGV_BLOCKS["print_mytasks"]["descr"]		= $pgv_lang["mytasks_block_descr"];
+$PGV_BLOCKS["print_mytasks"]["canconfig"]	= true;
+$PGV_BLOCKS["print_mytasks"]['config']		= array(
+	"cache"=>0,
+	"unassigned"=>"no", 
+	"completed" => "no"
+	);
 
 //-- print user messages
 function print_mytasks($block=true, $config="", $side, $index) {
@@ -139,7 +142,7 @@ function print_mytasks_config($config) {
 	if (!isset($config["unassigned"])) $config["unassigned"] = "no";
 	if (!isset($config["completed"])) $config["completed"] = "no";
 
-	print "<tr><td class=\"descriptionbox width20\">".$pgv_lang["mytask_show_tasks"]."</td>";?>
+	print "<tr><td class=\"descriptionbox wrap width33\">".$pgv_lang["mytask_show_tasks"]."</td>";?>
 	<td class="optionbox">
    	<select name="unassigned">
     	<option value="no"<?php if ($config["unassigned"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
@@ -148,7 +151,7 @@ function print_mytasks_config($config) {
   	</td></tr>
 
   	<?php
-  	print "<tr><td class=\"descriptionbox width20\">".$pgv_lang["mytask_show_completed"]."</td>";?>
+  	print "<tr><td class=\"descriptionbox wrap width33\">".$pgv_lang["mytask_show_completed"]."</td>";?>
   	<td class="optionbox">
   	<select name="completed">
     	<option value="no"<?php if ($config["completed"]=="no") print " selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
@@ -156,6 +159,8 @@ function print_mytasks_config($config) {
   	</select>
   	</td></tr>
   <?php
+	// Cache file life is not configurable by user:  we'll use "no cache" until we figure out what's right
+	print "<input type=\"hidden\" name=\"cache\" value=\"0\" />";
 }
 
 ?>
