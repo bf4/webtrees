@@ -795,7 +795,7 @@ function show_submenu(elementid, parentid, dir) {
 	if (element && element.style) {
 				if (document.all) {
 					pagewidth = document.body.offsetWidth;
-					if (textDirection=="rtl") element.style.left = (element.offsetLeft-70)+'px';
+					//if (textDirection=="rtl") element.style.left = (element.offsetLeft-70)+'px';
 				}
 				else {
 					pagewidth = document.body.scrollWidth+document.documentElement.scrollLeft-70;
