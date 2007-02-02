@@ -136,10 +136,10 @@ class FormBuilder extends ra_form {
 
 		//        Next Table
 		$out = '<tr>';
-		if($_POST["errorMsg"]) $out .='<td><h3>'.$_POST["errorMsg"].'</h3></td>';		
+		if(isset($_POST["errorMsg"])) $out .='<td><h3>'.$_POST["errorMsg"].'</h3></td>';		
 		$out .= '<td colspan="6">';
 
-        $out .= '<table align="left" dir="ltr">
+        $out .= '<table align="left" dir="ltr">';
 		$out .= '<tr><td class="optionbox">'.$pgv_lang["FormName"].'</td><td class="optionbox"><input type="text" name="formName"/></td></tr>';
 		$out .= '<tr><td class="optionbox">'.$pgv_lang["MultiplePeople"].'</td>';
 		$out .= '<td class="optionbox">'.$pgv_lang["yes"].'<input type="radio" value="Y" name="MultiPeople" checked="checked" />';
@@ -472,7 +472,7 @@ class FormBuilder extends ra_form {
 		$out = parent::editFactsForm(false);
 		$rows = $citation[\'ts_array\'][\'rows\'];
 		
-		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value='.$pgv_lang["complete"].'></td></tr>'; 
+		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value=\'.$pgv_lang["complete"].\'></td></tr>\'; 
 		return $out;
 	}
 	

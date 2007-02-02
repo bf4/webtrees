@@ -8,15 +8,21 @@
  	function search_selector(pid){
 		frm = document.selector;
 
+		if (!pid) return false;
+		plugin = frm.cbosite.options[frm.cbosite.selectedIndex].value;
+		if (plugin=="") return false;
 		var oXmlHttp = createXMLHttp();		
-		oXmlHttp.open('get', 'module.php?mod=research_assistant&action=load_search_plugin&plugin='+ frm.cbosite.options[frm.cbosite.selectedIndex].value + '&pid='+pid, true);
+		oXmlHttp.open('get', 'module.php?mod=research_assistant&action=load_search_plugin&plugin='+ plugin + '&pid='+pid, true);
 		//-- set loading message
 		inbox = document.getElementById('searchdiv');
 		if (inbox) {
 			inbox.style.width = inbox.offsetWidth + "px";
-			inbox.style.height = inbox.offsetHeight + "px";
+			height = inbox.offsetHeight;
+			if (height<25) height = 25;
+			inbox.style.height = height + "px";
 			inbox.innerHTML = "<p style=\"margin: 20px 20px 20px 20px\"><img src=\"images/loading.gif\" alt=\"\" title=\"\" /></p>";
 		}
+		else return false;
 		oXmlHttp.onreadystatechange=function()
 		{
   			if (oXmlHttp.readyState==4)

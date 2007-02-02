@@ -270,6 +270,7 @@ require_once("includes/person_class.php");
 		//create an array to hold our data to put it in the actual array
 		$tempFullArray = array();
 		//iterate over the facts that were returned
+		
 		foreach($tempArray as $tempKey=>$localValue)
 		{
 			
@@ -366,22 +367,20 @@ require_once("includes/person_class.php");
 		//Get the probability
 		$prob = computeProb($value['count'],$value['value']);
 		//add our information to the array
-		$tempArray[0] = getPartsTranslation($value['local']);
-		$tempArray[1] = getPartsTranslation($value['record']);
-		$tempArray[2] = getPartsTranslation($value['comp']);
+		$tempArray[0] = $value['local'];
+		$tempArray[1] = $value['record'];
+		$tempArray[2] = $value['comp'];
+		$tempArray['LocalCount'] = $value['count'];
 		$tempArray["Prob"] = $prob * 100;
 
 		if($globalInf != false)
 		{
 		foreach($globalInf as $tempKey=>$tempVal)
 		{
-			foreach($tempVal as $actKey=>$actVal)
-			{
-			
-				if($actVal['value'] === $value['value'] && $actVal['local'] === $value['local'] && $actVal['record'] === $value['record'])
+				if(($tempVal[1] == $value['record']) && ($tempVal[0] == $value['local']) && ($tempVal[2] == $value['comp']))
 				{
-					$tempArray["GlobalProb"] = $value['value'];
-				}
+					$tempArray["GlobalProb"] = $tempVal['GlobalProb'];
+					$tempArray["GlobalCount"] = $tempVal['GlobalCount'];
 			}
 		}
 		}
@@ -426,13 +425,16 @@ require_once("includes/person_class.php");
 	 					$tempArray[] = $row['pr_f_lvl'];
 	 					$tempArray[] = $row['pr_s_lvl'];
 	 					$tempArray[] = $row['pr_rel'];
-	 					if($row['pr_matches'] !== 0 && $row['pr_count'] !== 0)
+	 					if($row['pr_matches'] != 0 && $row['pr_count'] != 0)
 	 					{
 	 					$tempArray["GlobalProb"] = $row['pr_matches'] / $row['pr_count'];
+		 					$tempArray["GlobalCount"] = $row['pr_matches'];
+		 				
 	 					}
 	 					else
 	 					{
 	 					$tempArray["GlobalProb"] = 0;
+	 					$tempArray["GlobalCount"] = 0;
 	 					}
 	 					$inferenceArray[] = $tempArray;			
 	 				}
@@ -456,10 +458,4 @@ require_once("includes/person_class.php");
 		return $out;
 	}
 	
-	function estimateDates($pid,$factForDate)
-	{
-		/*@var $person Person*/
-		$person = Person::getInstance($pid);
-		
-	}
 	

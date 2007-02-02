@@ -143,7 +143,7 @@ class ra_ViewInferences extends ra_form {
  							
  							if($actKey === "GlobalProb")
  							{
- 								$globalAvg = $niceData;
+ 								$globalAvg = $niceData * 100;
  							}
  							
  							if($myVal['LocalCount'] == 0 && $actKey === "Prob")
@@ -166,6 +166,7 @@ class ra_ViewInferences extends ra_form {
  							{
  								if($actKey === "GlobalProb")
  								{
+ 									$niceData = $niceData *100;
 	 							$out .= sprintf("%.2f%%",$niceData);
  								}
  							}
@@ -221,8 +222,14 @@ class ra_ViewInferences extends ra_form {
  					{
  						$compoundFact = trim($compoundFact, ":");
  					}
- 					
+ 					if(!empty($tempVar))
+ 					{
  					$out .=  "<td class=\"optionbox\"><b>".$factarray[$compoundFact].":</b> ".$tempVar."</td>";
+ 					}
+ 					else
+ 					{
+ 						$out .= "<td class=\"optionbox\"></td>";
+ 					}
  				}
  				else
  				{

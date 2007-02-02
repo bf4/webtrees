@@ -77,6 +77,7 @@ if (!function_exists("find_updated_record")) {
  */
 class ra_functions {
 
+	var $sites = array();
 	function Init() {
 		$this->createDatabase();
 	}
@@ -220,6 +221,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$out = '<table class="list_table" width="100%" cellpadding="2">';
 		$out .= '<tr>';
 		$out .= '<td align="left"'.$percent.'class="optionbox wrap">'.ra_functions :: print_top_folder($folderid).'</td>';
+		$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["research_assistant"].'" border="0"></img><br />'.$pgv_lang["research_assistant"].'</a></td>';
 		//button 'My Tasks'
 		if (getUserAccessLevel(getUserName())<=$SHOW_MY_TASKS)
 			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=mytasks"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["my_tasks"].'" border="0"></img><br />'.$pgv_lang["my_tasks"].'</a></td>';
@@ -227,23 +229,23 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		if (getUserAccessLevel(getUserName())<=$SHOW_ADD_TASK)
 			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=addtask&amp;folderid='.$folderid.'"><img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["add_task"].'" border="0"></img><br />'.$pgv_lang["add_task"].'</a></td>';
 		//button 'Auto Generate Tasks'
-		if (getUserAccessLevel(getUserName())<=$SHOW_AUTO_GEN_TASK)
-			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=genTasks"><img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["gen_tasks"].'" border="0"></img><br />'.$pgv_lang["gen_tasks"].'</a></td>';
+//		if (getUserAccessLevel(getUserName())<=$SHOW_AUTO_GEN_TASK)
+//			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=genTasks"><img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["gen_tasks"].'" border="0"></img><br />'.$pgv_lang["gen_tasks"].'</a></td>';
 		//button 'View Folders'
 		if (getUserAccessLevel(getUserName())<=$SHOW_VIEW_FOLDERS)
-			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["view_folders"].'" border="0"></img><br />'.$pgv_lang["view_folders"].'</a></td>';
+			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=view_folders"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["view_folders"].'" border="0"></img><br />'.$pgv_lang["view_folders"].'</a></td>';
 		//button 'Add Folder'
 		if (getUserAccessLevel(getUserName())<=$SHOW_ADD_FOLDER )
 			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=addfolder"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["add_folder"].'" border="0"></img><br />'.$pgv_lang["add_folder"].'</a></td>';
 		//button 'Add Unlinked Source'
-		if (getUserAccessLevel(getUserName())<=$SHOW_ADD_UNLINKED_SOURCE && userCanEdit(getUserName()) && empty ($folderid))
-			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="javascript: '.$pgv_lang["add_unlinked_source"].'" onclick="addnewsource(\'\'); return false;"><img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["add_unlinked_source"].'"border=0"></img><br />'.$pgv_lang["add_unlinked_source"].'</a></td>';
+//		if (getUserAccessLevel(getUserName())<=$SHOW_ADD_UNLINKED_SOURCE && userCanEdit(getUserName()) && empty ($folderid))
+//			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="javascript: '.$pgv_lang["add_unlinked_source"].'" onclick="addnewsource(\'\'); return false;"><img src="modules/research_assistant/images/add_task.gif" alt="'.$pgv_lang["add_unlinked_source"].'"border=0"></img><br />'.$pgv_lang["add_unlinked_source"].'</a></td>';
 		//button 'View Probabilities'
-		if (getUserAccessLevel(getUserName())<=$SHOW_VIEW_PROBABILITIES && empty ($folderid))
-			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=viewProbabilities"><img src="modules/research_assistant/images/view_inferences.gif" alt="'.$pgv_lang["view_probabilities"].'" border="0"></img><br />'.$pgv_lang["view_probabilities"].'</a></td>';
+//		if (getUserAccessLevel(getUserName())<=$SHOW_VIEW_PROBABILITIES && empty ($folderid))
+//			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=viewProbabilities"><img src="modules/research_assistant/images/view_inferences.gif" alt="'.$pgv_lang["view_probabilities"].'" border="0"></img><br />'.$pgv_lang["view_probabilities"].'</a></td>';
 		//button 'Configure Privacy' for ADMIN ONLY
-		if(userIsAdmin(getUserName()) && empty ($folderid))
-			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=configurePrivacy"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["configure_privacy"].'" border="0"></img><br />'.$pgv_lang["configure_privacy"].'</a></td>';
+//		if(userIsAdmin(getUserName()) && empty ($folderid))
+//			$out .= '<td align="center" class="optionbox" width="'.$width.'"><a href="module.php?mod=research_assistant&amp;action=configurePrivacy"><img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["configure_privacy"].'" border="0"></img><br />'.$pgv_lang["configure_privacy"].'</a></td>';
 		// Below here is "in folder" relevant information. These are only shown when the user is inside a folder.
 		if (!empty ($folderid)) {
 			// Lets check to see if we can go up a folder.
@@ -255,7 +257,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			if (!empty ($folderinfo['fr_parentid']))
 				$url = '<a href="module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid='.$folderinfo['fr_parentid'].'">';
 			else
-				$url = '<a href="module.php?mod=research_assistant">';
+				$url = '<a href="module.php?mod=research_assistant&amp;action=view_folders">';
 
 			// Finish up the links    
 			$out .= '<td align="center" class="optionbox" width="'.$width.'">'.$url.'<img src="modules/research_assistant/images/folder_blue_icon.gif" alt="'.$pgv_lang["up_folder"].'" border="0"></img><br />'.$pgv_lang["up_folder"].'</a></td>';
@@ -426,14 +428,32 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 	global $res, $pgv_lang, $folderId;
 		global $TBLPREFIX;
 		$sql = 	"Select * From " .$TBLPREFIX. "tasks where t_username ='".$userName."'";
-		
-		while ($task = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$res = dbquery($sql);
+		while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$task = db_cleanup($task);
-//			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.$task["t_title"].'</a></td><td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a></td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'&amp;folder='.$folderId.'" class="link">'.$pgv_lang["delete"].'</a></td></tr>';
 			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td><td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a></td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'&amp;folder='.$folderId.'" class="link">'.$pgv_lang["delete"].'</a></td></tr>';
 		}
 		$out .= '</table>';
 		
+	 }
+
+	/**
+	 * Gets a list of assigned users tasks
+	 * 
+	 * 
+	 */
+	 function get_user_tasks($userName)
+	 {
+	 	global $res, $pgv_lang, $folderId;
+		global $TBLPREFIX;
+		$sql = 	"Select * From " .$TBLPREFIX. "tasks where t_username ='".$userName."' AND t_enddate IS NULL";
+		$res = dbquery($sql);
+		$tasks = array();
+		while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+			$task = db_cleanup($task);
+			$tasks[] = $task;
+		}
+		return $tasks;		
 	 }
 
 	/**
@@ -491,7 +511,10 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 	
 	 	$out .= "<table id=\"Tasks\" class=\"list_table\" align=\"center\" width=\"700\" border=\"0\">";
 		$out .= "<tr><th colspan=\"7\" class=\"topbottombar\"><h2>".$pgv_lang["Task_View"].print_help_link("ra_view_task_help", "qm", '', false, true)."</h2>";
-		$out .= "<form name=\"mytasks\" method=\"GET\" action=\"module.php\"><input type=\"hidden\" name=\"mod\" value=\"research_assistant\" /><input type=\"hidden\" name=\"action\" value=\"mytasks\" /><p>".$pgv_lang["FilterBy"].": <select name=\"Filter\" onchange=\"document.mytasks.submit()\">";
+		$out .= "<form name=\"mytasks\" method=\"GET\" action=\"module.php\">\n";
+		$out .= "<input type=\"hidden\" name=\"mod\" value=\"research_assistant\" />\n";
+		$out .= "<input type=\"hidden\" name=\"action\" value=\"mytasks\" />\n";
+		$out .= "<p>".$pgv_lang["FilterBy"].": <select name=\"Filter\" onchange=\"document.mytasks.submit()\">";
 		
 		$out .= "<option ";
 		if ($filter == "All") $out .= "selected=\"selected\" ";
@@ -507,7 +530,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
         
 		$out .= "</select></form></th></tr>";
 		$out .= "<tr><th class=\"descriptionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=&amp;orderby=t_title&amp;type=\">".$pgv_lang["Task_Name"]."</a></th><th class=\"descriptionbox\">
-				<a href='module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=&amp;orderby=t_startdate&amp;type=\">".$pgv_lang["Start_Date"]."</a></th>"."<th class=\"descriptionbox\">
+				<a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=&amp;orderby=t_startdate&amp;type=\">".$pgv_lang["Start_Date"]."</a></th>"."<th class=\"descriptionbox\">
 				<a href=\"module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid=&amp;orderby=t_enddate&amp;type=\">".$pgv_lang["completed"]."</a></th><th class=\"descriptionbox\">".$pgv_lang["edit"]."</th><th class=\"descriptionbox\">".$pgv_lang["delete"]."</th>\n
 				<th class=\"descriptionbox\">".$pgv_lang["complete"]."</tr>";
 		
@@ -517,7 +540,10 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		if (empty ($task['t_enddate']))
 			{
 				$completeLink = "<a href=\"module.php?mod=research_assistant&amp;action=completeTask&amp;taskid=".$task["t_id"]."\" class=\"link\">".$pgv_lang["complete"]."</a>";
-				$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td><td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a></td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["delete"].'</a></td><td class="optionbox">'.$completeLink.'</td></tr>';
+				$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td><td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td>
+						<td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a></td>
+						<td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["delete"].'</a></td>
+						<td class="optionbox">'.$completeLink.'</td></tr>';
 			}
 		else
 			{
@@ -857,7 +883,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	* @param taskid for the task to be completed
 	*/
 	function completeTask($taskid, $form='') {
-		global $TBLPREFIX, $DBCONN;
+		global $TBLPREFIX, $DBCONN, $pgv_lang;
 		$sql = "UPDATE ".$TBLPREFIX."tasks SET t_enddate='".time()."', t_form='".$DBCONN->escapeSimple($form)."' WHERE t_id='".$DBCONN->escapeSimple($taskid)."'";
 		dbquery($sql);
 	}
@@ -866,23 +892,22 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 * @return mixed
 	 */
 	function getMissinginfo(& $person) {
-		global $factarray, $templefacts, $nondatefacts, $nonplacfacts;
+		global $factarray, $templefacts, $nondatefacts, $nonplacfacts, $pgv_lang;
 
 		$perId = $person->getXref();
 	
 		$MissingReturn = array (); //Local var for the return string
 		if ($person->sex == "U") //check for missing sex info
 			{
-			$MissingReturn[] = array("Sex", "All");
+			$MissingReturn[] = array("Sex", $pgv_lang["All"]);
 		
 		}
-		/*@var $person Person */
 		if ($person->getBirthRecord(false) != "") //check for missing birth info
 			{
 
 		} else {
 			$probFacts = singleInference($perId,"BIRT");
-			$MissingReturn[] = array("BIRT", "All",$probFacts);
+			$MissingReturn[] = array("BIRT", $pgv_lang["All"],$probFacts);
 
 		}
 		if ($person->getDeathRecord(false) != "") //check for missing death info
@@ -890,12 +915,12 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 
 		} else {
 			$probFacts = singleInference($perId,"DEAT");
-			$MissingReturn[] = array("DEAT", "All", $probFacts);
+			$MissingReturn[] = array("DEAT", $pgv_lang["All"], $probFacts);
 	
 		}
 		if ($person->getGivenNames() == "unknown") {
 			$probFacts = singleInference($perId,"GIVN");
-			$MissingReturn[] = array("Given Name","",$probFacts);
+			$MissingReturn[] = array("GIVN","",$probFacts);
 			
 		}
 		if ($person->getSurname() == "@N.N.") {
@@ -1245,6 +1270,29 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	
 	}
 
+	function autoSearchFormOptions() {
+		//Load up off site search names here
+		//Auto Search Plugin: To load up a new plugin follow the format for the two entries shown below
+		// ex $sites["myplugin.php"] = "mywebsite.com";
+		$this->sites = array();
+		$this->sites["ancestry.php"] = "Ancestry.com";
+		$this->sites["ancestrycouk.php"] = "Ancestry.co.uk";
+		$this->sites["familysearch.php"] = "FamilySearch.org";	
+		$this->sites["genealogy.php"] = "Genealogy.com";	
+		$this->sites["ellisisland.php"] = "EllisIslandRecords.org";	
+		$this->sites["geneanet.php"] = "GeneaNet.org";
+		$this->sites["werelate.php"] = "Werelate.org";
+		$opts = "";
+		$optCount = 1;
+			//load up the options into the html
+			foreach($this->sites as $key=>$value) 
+			{
+			    $opts .=	"<option value=\"".$key."\" class=\"".$optCount."\">".$value."</option>\n";
+			    $optCount+=1;
+			}
+		return $opts;
+	}
+
 	/**
 	 * tab is the function that builds the display for the different screens.
 	 * These screens are identified by a tab
@@ -1256,25 +1304,6 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		global $factarray;
 		global $VERSION;
 		
-		//Load up off site search names here
-		//Auto Search Plugin: To load up a new plugin follow the format for the two entries shown below
-		// ex $sites["myplugin.php"] = "mywebsite.com";
-		$sites = array();
-		$sites["ancestry.php"] = "Ancestry.com";
-		$sites["ancestrycouk.php"] = "Ancestry.co.uk";
-		$sites["familysearch.php"] = "FamilySearch.org";	
-		$sites["genealogy.php"] = "Genealogy.com";	
-		$sites["ellisisland.php"] = "EllisIslandRecords.org";	
-		$sites["geneanet.php"] = "GeneaNet.org";
-		$sites["werelate.php"] = "Werelate.org";
-		$opts = "";
-		$optCount = 1;
-			//load up the options into the html
-			foreach($sites as $key=>$value) 
-			{
-			    $opts .=	"<option value=\"".$key."\" class=\"".$optCount."\">".$value."</option>\n";
-			    $optCount+=1;
-			}
 		
 		if (!is_object($person)) return "";
 		$givennames = $person->getGivenNames();
@@ -1314,9 +1343,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		
 		//This is where the missing info check will happen
 		$Missing = $this->getMissinginfo($person);
-//		print_r($Missing);
 		$out .= "<tr><td class=\"topbottombar\" colspan=\"4\"><a href=\"module.php?mod=research_assistant&amp;action=addtask&amp;pid=".$person->getXref()."\">".$pgv_lang["task_entry"]."</a></td></tr></table>\n";
-				
 				//beginning of the missing information table, which gets populated with missing information for that individual and allows the user to "autoadd" tasks
 				//a checkbox to view link conversion is included if a piece of missing information is already auto tasked
 		$out .='<table align="center"><tr><td valign="top">
@@ -1331,6 +1358,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 										
 										foreach ($Missing as $key => $val) //every missing item gets a checkbox , so you check check it and make a task out of it
 										{
+											$additionalInfer = array();
 											$highest = 0;
 											$factsExist = false;
 											$compiled = "";
@@ -1339,6 +1367,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 											else if (isset($pgv_lang[$val[0]])) $tasktitle .= $pgv_lang[$val[0]]." ";
 											else $tasktitle .= $val[0]." ";
 											//print_r($factarray);
+											
 											if (isset($factarray[$val[1]])) $tasktitle .= $factarray[$val[1]];
 											else if (isset($pgv_lang[$val[1]])) $tasktitle .= $pgv_lang[$val[1]];
 											else $tasktitle .= $val[1];
@@ -1351,23 +1380,49 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 													foreach($val[2] as $inferKey=>$inferenceObj)
 													{
 														
-															if($val[1] === "All" || empty($val[1]))
+															if($val[1] === $pgv_lang['All'] || empty($val[1]))
 															{
 															
 																if(strstr($inferenceObj->getFactTag(),$val[0]) && $inferenceObj->getAverage() > 0)
 																{
 																	if($highest < $inferenceObj->getAverage() && $inferenceObj->getFactValue() != "")
 																	{
+																		$compiled = array();
 																		$highest = $inferenceObj->getAverage();
-																		//TODO: You are here
-																		$compiled = $this->decideInferSentence($inferenceObj->getAverage(),$inferenceObj->getFactTag());
-																		$compiled .= " <i>".$inferenceObj->getFactValue()."</i>";
+																		$additionalInfer[] = $inferenceObj;
+																		$compiled[0] = $this->decideInferSentence($inferenceObj->getAverage(),$inferenceObj->getFactTag());
+																		$compiled[0] .= " <i>".$inferenceObj->getFactValue()."</i>";
+																		$compiled[1] = $inferenceObj->getFactTag();
+																		$compiled[2] = $inferenceObj->getAverage();
+																		$compiled[3] = $inferenceObj->getFactValue();
 																	}
 																
 																}
 															}														
 													}
-													$out .= $compiled;
+													if(isset($compiled[0]))
+													{
+													$out .= $compiled[0];
+													}
+													if(!empty($additionalInfer))
+													{
+														$additionalFacts = false;
+														$tempAdditional = "";
+														foreach($additionalInfer as $addKey=>$addVal)
+														{
+															if($addVal->getFactValue() !== $compiled[3])
+															{
+																$additionalFacts = true;
+																$tempAdditional .= '<br /><a href="" class="showitTwo">'.$pgv_lang["More"].'<span>'.$this->decideInferSentence($addVal->getAverage(),$addVal->getFactTag());
+																$tempAdditional .= ' <i>'.$addVal->getFactValue().'</i><br />';
+															}
+														}
+														if($additionalFacts)
+														{
+															$out .= $tempAdditional;
+														}
+													}
+													
 												}
 												
 												$out .= "</td></tr>";
@@ -1396,7 +1451,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 									<td class=\"topbottombar\">
 										<form name=\"selector\" action=\"\" method=\"post\" onsubmit=\"return false;\">
 					 					<select name=\"cbosite\" onchange=\"search_selector('".$person->getXref()."');\">
-										" .$opts.														
+										" .$this->autoSearchFormOptions().														
 										"</select> 
 										</form>
 									</td>
@@ -1404,7 +1459,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 							<tr><td>\n
 							
 							<div id=\"searchdiv\">";
-							foreach($sites as $file=>$value) break;
+							foreach($this->sites as $file=>$value) break;
 							include_once("modules/research_assistant/search_plugin/".$file);
 							$out .=  autosearch_options();
 							$out .= "</div>

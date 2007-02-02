@@ -53,6 +53,8 @@ class Person extends GedcomRecord {
 	var $label = "";
 	var $highlightedimage = null;
 	var $file = "";
+	var $age = null;
+	
 	/**
 	 * Constructor for person object
 	 * @param string $gedrec	the raw individual gedcom record
@@ -428,12 +430,18 @@ class Person extends GedcomRecord {
 	 * @return string the age
 	 */
 	function getAge($birtrec="", $when="") {
+		if (empty($birtrec) && empty($when)) {
+			if (!is_null($this->age)) return $this->age;
+			else $keepage = true;
+		}
 		if (empty($birtrec)) $birtrec=$this->gedrec;
 		if (empty($when)) {
 			if ($this->isDead()) $when = $this->ddate; // age at death
 			else $when = date("d M Y"); // today
 		}
-		return get_age($birtrec, $when, 0);
+		$age = get_age($birtrec, $when, 0);
+		if (isset($keepage)) $this->age = $age;
+		return $age;
 	}
 
 	/**
@@ -510,10 +518,18 @@ class Person extends GedcomRecord {
 	 * @return int 	the number of children
 	 */
 	function getNumberOfChildren() {
+		global $indilist, $GEDCOMS, $GEDCOM;
+		
+		//-- first check for the value in the gedcom record
 		$nchi = get_gedcom_value("NCHI", 1, $this->gedrec);
 		if ($nchi!="") return $nchi.".";
+		
+		//-- check if the value was stored in the cache 
+		if (isset($indilist[$this->xref])
+				&& $indilist[$this->xref]["gedfile"] == $GEDCOMS[$GEDCOM]['id'] 
+				&& isset($indilist[$this->xref]["numchil"])) return $indilist[$this->xref]["numchil"];
 		$nchi=0;
-		foreach ($this->getSpouseFamilies() as $family) $nchi+=$family->getNumberOfChildren();
+		foreach ($this->getSpouseFamilies() as $famid=>$family) $nchi+=$family->getNumberOfChildren();
 		return $nchi;
 	}
 	/**

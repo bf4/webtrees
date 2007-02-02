@@ -11,7 +11,24 @@ file to view the english text for these changes.
 * $pgv_lang["text"] / text was changed
 
 --------------------------------------------------------------
-
++$pgv_lang["add_task_inst"]					February 1, 2007
++$pgv_lang["complete_task_inst"]
++$pgv_lang["enter_results"]
++$pgv_lang["auto_gen_inst"]
++$pgv_lang["choose_search_site"]
++$pgv_lang["pid_search_for"]
++$pgv_lang["manage_research_inst"]
++$pgv_lang["manage_research"]
++$pgv_lang["manage_sources"]
++$pgv_lang["part_of"]
++$pgv_lang["search_fhl"]
++$pgv_lang["determine_sources"]
++$pgv_lang["analyze_database"]
++$pgv_lang["pid_know_more"]
++$pgv_lang["analyze_people"]				February 1, 2007
++$pgv_lang["analyze_data"]					// February 1, 2007
++$pgv_lang["More"]							// February 1, 2007
++$pgv_lang["All"]							// February 1, 2007
 + $pgv_lang["NotEnoughData"]				// January 25, 2007
 + $pgv_lang["InferIndvBirthPlac"]			// January 25, 2007
 + $pgv_lang["InferIndvDeathPlac"]			// January 25, 2007

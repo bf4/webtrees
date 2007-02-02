@@ -248,7 +248,7 @@ function load_families($ids, $gedfile='') {
 	
 	$sql = "SELECT f_gedcom, f_file, f_husb, f_wife, f_id FROM ".$TBLPREFIX."families WHERE f_id IN (";
 	//-- don't load up families who are already loaded
-	$isadded = false;
+	$idsadded = false;
 	foreach($ids as $k=>$id) {
 		if ((!isset($famlist[$id]["gedcom"])) || ($famlist[$id]["gedfile"]!=$GEDCOMS[$gedfile]["id"])) {
 			$sql .= "'".$DBCONN->escapeSimple($id)."',";
@@ -2294,8 +2294,10 @@ function get_surname_indis($surname) {
 	global $TBLPREFIX, $GEDCOM, $LANGUAGE, $indilist, $SHOW_MARRIED_NAMES, $DBCONN, $GEDCOMS;
 
 	$tindilist = array();
-	$sql = "SELECT * FROM ".$TBLPREFIX."individuals WHERE i_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
+	$sql = "SELECT i_id, i_isdead, i_file, i_gedcom, i_name, i_letter, i_surname, SUM(f_numchil) as numchil FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."families WHERE i_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
+	$sql .= "AND f_file=i_file AND (f_husb = i_id OR f_wife = i_id) ";
 	$sql .= "AND i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+	$sql .= " GROUP BY i_id";
 	$res = dbquery($sql);
 
 	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
@@ -2305,6 +2307,7 @@ function get_surname_indis($surname) {
 		$indi["isdead"] = $row["i_isdead"];
 		$indi["gedcom"] = $row["i_gedcom"];
 		$indi["gedfile"] = $row["i_file"];
+		$indi["numchil"] = $row["numchil"];
 		$indilist[$row["i_id"]] = $indi;
 		$tindilist[$row["i_id"]] = $indilist[$row["i_id"]];
 	}

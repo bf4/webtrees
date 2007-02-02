@@ -331,6 +331,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	//-- table body
 	$hidden = 0;
 	$n = 0;
+	$dateY = date("Y");
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
 			$person = Person::getInstance($key); // from placelist
@@ -344,6 +345,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 			if (isset($value["gedcom"])) $person = new Person($value["gedcom"]); // from source.php
 			else $person = Person::getInstance($gid);
 		}
+		/* @var $person Person */
 		if (is_null($person)) continue;
 		if (!$person->canDisplayName()) {
 			$hidden++;
@@ -358,7 +360,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 			echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$person->xref."</a></td>";
 		}
 		//-- Indi name(s)
-		if (isset($value["name"]) and $person->canDisplayName()) $name = $value["name"];
+		if (isset($value["name"]) && $person->canDisplayName()) $name = $value["name"];
 		else $name = $person->getSortableName();
 		if (isset($value[4])) $name = $person->getSortableName($value[0]); // from indilist ALL
 		if ($person->isDead()) echo "<td class=\"list_value_wrap\"";
@@ -474,13 +476,13 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "</td>";
 		//-- Sorting by birth date
 		echo "<td style=\"display:none\">";
-		if (!$person->disp or $person->getBirthYear()>=date('Y')-100) echo "Y100";
+		if (!$person->disp || $person->getBirthYear()>=$dateY-100) echo "Y100";
 		else echo "YES";
 		echo "</td>";
 		//-- Sorting by death date
 		echo "<td style=\"display:none\">";
 		if ($person->isDead()) {
-			if ($person->getDeathYear()>=date('Y')-100) echo "Y100";
+			if ($person->getDeathYear()>=$dateY-100) echo "Y100";
 			else echo "YES";
 		}
 		else echo "N";
@@ -1241,6 +1243,7 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 	//-- table body
 	$hidden = 0;
 	$n = 0;
+	$dateY = date("Y");
 	foreach($datalist as $key => $value) {
 		
 		//-- check if we actually need to load up the record from the DB first
@@ -1257,11 +1260,11 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 		$timestamp = get_changed_date($edate, true);
 		$pdate = parse_date($edate);
 		if ($pdate[0]["day"] == "") continue;
-		$anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], date("Y"));
+		$anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], $dateY);
 		// add 1 year if anniversary before today
-		if (date("Ymd", $anniv) < date("Ymd")) $anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], date("Y")+1);
+		if (date("Ymd", $anniv) < date("Ymd")) $anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], $dateY+1);
 		// max anniversary date
-		$datemax = mktime(0, 0, 0, date("m"), date("d")+$nextdays, date("Y"));
+		$datemax = mktime(0, 0, 0, date("m"), date("d")+$nextdays, $dateY);
 		if ($datemax < $anniv) continue;
 		// upcoming events starting tomorrow
 		if ($nextdays>0 and date("Ymd") == date("Ymd", $anniv)) continue;
