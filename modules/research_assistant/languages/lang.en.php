@@ -30,6 +30,23 @@ if (preg_match("/ra_lang\...\.php$/", $_SERVER["PHP_SELF"])>0) {
 	print "You cannot access a language file directly.";
 	exit;
 }
+
+$pgv_lang["add_task_inst"]		= "If a task for your research results has not been created yet, you should create the task first then choose the option to save and complete the task.";
+$pgv_lang["complete_task_inst"]	= "Choose a task from the list of your tasks below to complete the task and enter your results:";
+$pgv_lang["enter_results"]		= "Enter Results";
+$pgv_lang["auto_gen_inst"]		= "Some programs allow you to enter research tasks as TODO items in your GEDCOM file.  This option will search through your GEDCOM file and automatically convert any TODO item into research tasks.";
+$pgv_lang["choose_search_site"]	= "Choose a search site";
+$pgv_lang["pid_search_for"]		= "Who do you want to search for?";
+$pgv_lang["manage_research_inst"]	= "These items will help you to manage your research tasks.  Research tasks help you to keep track of your research and collaborate with other researchers.";
+$pgv_lang["manage_research"]	= "Manage Research";
+$pgv_lang["manage_sources"]		= "Manage Sources";
+$pgv_lang["part_of"]			= "Part of (optional)";
+$pgv_lang["search_fhl"]			= "Search Family History Library Catalog"; 
+$pgv_lang["determine_sources"]	= "Determine Possible Sources";
+$pgv_lang["analyze_database"]	= "Analyze Database";
+$pgv_lang["pid_know_more"]		= "Who do you want to learn more about?";
+$pgv_lang["analyze_people"]		= "Analyze People";
+$pgv_lang["analyze_data"]		= "Analyze My Data";
 $pgv_lang["missing_info"] 		= "Missing Information";
 $temp_out_autosearch = 	"This feature will automatically search Ancestry and FamilySearch, ";
 $temp_out_autosearch .= "you may choose to search by name, and birth/death date <br />";
@@ -103,6 +120,8 @@ $pgv_lang["InferIndvDeathPlac"]					= "There is a %PERCENT% chance that the deat
 $pgv_lang["InferIndvSurn"]						= "There is a %PERCENT% chance that the Surname is:";
 $pgv_lang["InferIndvMarriagePlace"]				= "There is a %PERCENT% chance that the marriage place is:";
 $pgv_lang["InferIndvGivn"]						= "There is a %PERCENT% chance that the given name is:";
+$pgv_lang["All"]								= "All";
+$pgv_lang["More"]								= "More";
 
 // -- RA EXPLANATION
 $pgv_lang["DataCorrelations"]					= "Data Correlations";
@@ -242,7 +261,7 @@ $pgv_lang["call/url"]                   = "Call Number/URL";
 $pgv_lang["enumDate"]                   = "Enumeration Date";
 $pgv_lang["county"]                     = "County";
 $pgv_lang["city"]                       = "City";
-$pgv_lang["complete_title"]				= "Complete the Task";
+$pgv_lang["complete_title"]				= "Complete A Task";
 $pgv_lang["select_form"]				= "Select Form";
 $pgv_lang['choose_form_label']			= "Choose a common research form:";
 $pgv_lang["book"]                 		= "Book";

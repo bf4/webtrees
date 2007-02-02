@@ -44,6 +44,8 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["select_events"]							30 January 2007			A
++$pgv_lang["source_events"]							30 January 2007			A
 *$pgv_lang["advanced_name_fields"]					04 November 2006		W
 +$pgv_lang["advanced_name_fields"]					03 November 2006		A
 *$pgv_lang["label_location"]						29 October, 2006		w	(deleted duplicate entry)

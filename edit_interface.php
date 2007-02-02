@@ -612,6 +612,35 @@ else if ($action=="addnewsource") {
 			<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_CALN_help", "qm"); print $factarray["CALN"]; ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php print $tabkey; ?>" type="text" name="CALN" id="CALN" value="" /></td></tr>
 		</table>
+			<?php print_help_link("edit_SOUR_EVEN_help", "qm"); ?><a href="#"  onclick="return expand_layer('events');"><img id="events_img" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"];?>" border="0" width="11" height="11" alt="" title="" /> 
+			<?php print $pgv_lang["source_events"]; ?></a>
+			<div id="events" style="display: none;">
+			<table class="facts_table">
+			<tr>
+				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_SOUR_EVEN_help", "qm"); print $pgv_lang['select_events']; ?></td>
+				<td class="optionbox wrap"><select name="EVEN[]" mulitple="multiple" size="5">
+					<?php
+					$parts = preg_split("/,/", $INDI_FACTS_ADD);
+					foreach($parts as $p=>$key) {
+						?><option value="<?php print $key; ?>"><?php print $factarray[$key]. " ($key)"; ?></option>
+					<?
+					}
+					$parts = preg_split("/,/", $FAM_FACTS_ADD);
+					foreach($parts as $p=>$key) {
+						?><option value="<?php print $key; ?>"><?php print $factarray[$key]. " ($key)"; ?></option>
+					<?
+					}
+					?>
+				</select></td>
+			</tr>
+			<?php
+			add_simple_tag("0 DATE", "EVEN");
+			add_simple_tag("0 PLAC", "EVEN");
+			add_simple_tag("0 AGNC");
+			?>
+			</table>
+			</div>
+		<br/><br/>
 		<input type="submit" value="<?php print $pgv_lang["create_source"]; ?>" />
 	</form>
 	<?php
@@ -621,6 +650,13 @@ else if ($action=="addnewsource") {
 else if ($action=="addsourceaction") {
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	$newgedrec = "0 @XREF@ SOUR\r\n";
+	if (!empty($EVEN) && count($EVEN)>0) {
+		$newgedrec .= "1 DATA\r\n";
+		$newgedrec .= "2 EVEN ".implode(",", $EVEN)."\r\n";
+		if (!empty($EVEN_DATE)) $newgedrec .= "3 DATE ".check_input_date($EVEN_DATE)."\r\n";
+		if (!empty($EVEN_PLAC)) $newgedrec .= "3 PLAC ".$EVEN_PLAC."\r\n";
+		if (!empty($AGNC))	$newgedrec .= "2 AGNC ".$AGNC."\r\n";
+	}
 	if (!empty($ABBR)) $newgedrec .= "1 ABBR $ABBR\r\n";
 	if (!empty($TITL)) {
 		$newgedrec .= "1 TITL $TITL\r\n";

@@ -231,13 +231,17 @@ function togglerow(label) {
 	if (disp=="none") {
 		disp="table-row";
 		if (document.all && !window.opera) disp = "inline"; // IE
-		document.getElementById('rela_plus').style.display="none";
-		document.getElementById('rela_minus').style.display="inline";
+		rela_plus = document.getElementById('rela_plus');
+		if (rela_plus) rela_plus.style.display="none";
+		rela_minus = document.getElementById('rela_minus');
+		if (rela_minus) rela_minus.style.display="inline";
 	}
 	else {
 		disp="none";
-		document.getElementById('rela_plus').style.display="inline";
-		document.getElementById('rela_minus').style.display="none";
+		rela_plus = document.getElementById('rela_plus');
+		if (rela_plus) rela_plus.style.display="inline";
+		rela_minus = document.getElementById('rela_minus');
+		if (rela_minus) rela_minus.style.display="none";
 	}
 	for (i=0; i<ebn.length; i++) ebn[i].style.display=disp;
 }
@@ -397,7 +401,8 @@ else loading_message();
 <!--
 	// hide button if list is empty
 	ebn = document.getElementsByName('row_rela');
-	if (ebn.length==0) document.getElementById('row_top').style.display="none";
+	row_top = document.getElementById('row_top');
+	if (ebn.length==0 && row_top) row_top.style.display="none";
 	<?php if (!$EXPAND_RELATIVES_EVENTS) print "togglerow('row_rela');\n"; ?>
 //-->
 </script>

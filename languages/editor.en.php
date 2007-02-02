@@ -30,6 +30,8 @@ if (preg_match("/editor\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["select_events"]			= "Select Events";
+$pgv_lang["source_events"]			= "Associate events with this source";
 $pgv_lang["advanced_name_fields"]	= "Additional names (nickname, married name, etc.)";
 $pgv_lang["accept_changes"] 		= "Accept / Reject Changes";
 $pgv_lang["replace"]				= "Replace record";
