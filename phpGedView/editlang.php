@@ -266,8 +266,8 @@ switch ($action) {
 					$dummy_output .= "</td>\n";
 					$dummy_output .= "<td class=\"facts_value wrap\">";
 				  	$dummy_output .= "\n<a name=\"a1_".$z."\"></a>\n";
-//				  	$temp = stripslashes(mask_all($english_language_array[$z][1]));
-				  	$temp = mask_all($english_language_array[$z][1]);
+				  	$temp = stripslashes(mask_all($english_language_array[$z][1]));
+//				  	$temp = mask_all($english_language_array[$z][1]);
 				  	if ($temp == "") {
 				    	$dummy_output .= "<strong style=\"color: #FF0000\">" . str_replace("#LANGUAGE_FILE#", $pgv_language[$language1], $pgv_lang["message_empty_warning"]) . "</strong>";
 				  	}
@@ -283,8 +283,8 @@ switch ($action) {
 				      		if ($new_language_array[$y][0] == $english_language_array[$z][0]) {
 				        		$dDummy =  $new_language_array[$y][1];
 				        		$dummy_output_02 .= "<a href=\"javascript:;\" onclick=\"return helpPopup00('" . "ls01=" . $z . "&amp;ls02=" . $y . "&amp;language2=" . $language2 . "&amp;file_type=" . $file_type . "&amp;" . session_name() . "=" . session_id() . "&amp;anchor=a1_" . $z . "');\">";
-//				        		$temp = stripslashes(mask_all($dDummy));
-				        		$temp = mask_all($dDummy);
+				        		$temp = stripslashes(mask_all($dDummy));
+//				        		$temp = mask_all($dDummy);
 				        		$dummy_output_02 .= $temp;
 				        		if ($temp == "") {
 				          			$dummy_output_02 .= "<strong style=\"color: #FF0000\">" . str_replace("#LANGUAGE_FILE#", $pgv_language[$language2], $pgv_lang["message_empty_warning"]) . "</strong>";
@@ -302,8 +302,8 @@ switch ($action) {
 				  		if (!$found) {
 				    		print "<a style=\"color: #FF0000\" href=\"javascript:;\" onclick=\"return helpPopup00('" . "ls01=" . $z . "&amp;ls02=" . (0 - intval($lastfound) - 1) . "&amp;language2=" . $language2 . "&amp;file_type=" . $file_type . "&amp;anchor=a1_" . $z . "');\">";
 				    		print "<i>";
-//				    		$temp = stripslashes(mask_all($english_language_array[$z][1]));
-				    		$temp = mask_all($english_language_array[$z][1]);
+				    		$temp = stripslashes(mask_all($english_language_array[$z][1]));
+//				    		$temp = mask_all($english_language_array[$z][1]);
 				    		if ($temp == "") print "&nbsp;";
 				    		else print $temp;
 				    		print "</i>";
