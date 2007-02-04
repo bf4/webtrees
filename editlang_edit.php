@@ -104,8 +104,8 @@ if ($action != "save")
         print "</tr>";
         print "<tr>";
           print "<td class=\"facts_value\" style=\"text-align:center; color: #0000FF\" >";
-//            print "<strong style=\"color: red\">|</strong>" . stripslashes(mask_all(find_in_file($ls01, $lang_filename_orig))) . "<strong style=\"color: red\">|</strong>";
-            print "<strong style=\"color: red\">|</strong>" . mask_all(find_in_file($ls01, $lang_filename_orig)) . "<strong style=\"color: red\">|</strong>";
+            print "<strong style=\"color: red\">|</strong>" . stripslashes(mask_all(find_in_file($ls01, $lang_filename_orig))) . "<strong style=\"color: red\">|</strong>";
+//            print "<strong style=\"color: red\">|</strong>" . mask_all(find_in_file($ls01, $lang_filename_orig)) . "<strong style=\"color: red\">|</strong>";
           print "</td>";
         print "</tr>";
       print "</table>";
@@ -119,8 +119,8 @@ if ($action != "save")
         print "<tr>";
           print "<td class=\"facts_value\" style=\"text-align:center; \" >";
             print "<textarea rows=\"10\" name=\"new_message\" cols=\"75\" style=\"color: #FF0000\" >";
-//              if ($ls02>0) print stripslashes(mask_all(find_in_file($ls02, $lang_filename)));
-              if ($ls02>0) print mask_all(find_in_file($ls02, $lang_filename));
+              if ($ls02>0) print stripslashes(mask_all(find_in_file($ls02, $lang_filename)));
+//              if ($ls02>0) print mask_all(find_in_file($ls02, $lang_filename));
             print "</textarea>";
           print "</td>";
         print "</tr>";
@@ -208,7 +208,8 @@ if ($action == "save")
 
 //  $new_message = add_backslash_before_dollarsign($new_message);
 //  $new_message = preg_replace(array("/&amp;/","/&lt;/","/&gt;/"), array("&","<",">"), $new_message);
-  $new_message = unmask_all(stripslashes($new_message));
+//  $new_message = unmask_all(stripslashes($new_message));
+  $new_message = unmask_all(addslashes($new_message));
   $new_message_line = (-1);
   if (isset($new_language_array[$ls02])) $dummyArray = $new_language_array[$ls02];
   else $dummyArray = array();
@@ -288,8 +289,8 @@ if ($action == "save")
 
       print "<tr>";
         print "<td class=\"facts_value\" style=\"text-align:center; color: #0000FF\" >";
-//          print "<strong style=\"color: red; \">|</strong>" . stripslashes(mask_all($new_message)) . "<strong style=\"color: red\">|</strong>";
-          print "<strong style=\"color: red; \">|</strong>" . mask_all($new_message) . "<strong style=\"color: red\">|</strong>";
+          print "<strong style=\"color: red; \">|</strong>" . stripslashes(mask_all($new_message)) . "<strong style=\"color: red\">|</strong>";
+//          print "<strong style=\"color: red; \">|</strong>" . mask_all($new_message) . "<strong style=\"color: red\">|</strong>";
         print "</td>";
       print "</tr>";
     print "</table>";
