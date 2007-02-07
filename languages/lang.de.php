@@ -767,6 +767,42 @@ $pgv_lang["sosa_aunt_7"] 				= "Großtante";
 //              %3\$d is replaced with the number of generations - 2
 $pgv_lang["n_x_paternal_aunt"]		= "%2\$d x Großtante";
 $pgv_lang["n_x_maternal_aunt"]	    = "%2\$d x Großtante";
+// the sosa_uncle_bm name is used for uncles (by marriage)- the names below can be extended to any number
+// of generations just by adding more translations.
+// to allow fo language variations we specify different relationships for paternal and maternal
+// aunts and uncles
+// 1st generation
+$pgv_lang["sosa_uncle_bm_2"] 				= "Onkel";
+$pgv_lang["sosa_uncle_bm_3"] 				= "Onkel";
+// 2nd generation
+$pgv_lang["sosa_uncle_bm_4"] 				= "Großonkel";
+$pgv_lang["sosa_uncle_bm_5"] 				= "Großonkel";
+$pgv_lang["sosa_uncle_bm_6"] 				= "Großonkel";
+$pgv_lang["sosa_uncle_bm_7"] 				= "Großonkel";
+// for the general case of uncles of the nth degree use the text below
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_uncle_bm"]		= "%2\$d x Großonkel";
+$pgv_lang["n_x_maternal_uncle_bm"]	    = "%2\$d x Großonkel";
+// the sosa_aunt_bm name is used for aunts (by marriage)- the names below can be extended to any number
+// of generations just by adding more translations.
+// to allow fo language variations we specify different relationships for paternal and maternal
+// aunts and aunts
+// 1st generation
+$pgv_lang["sosa_aunt_bm_2"] 				= "Tante";
+$pgv_lang["sosa_aunt_bm_3"] 				= "Tante";
+// 2nd generation
+$pgv_lang["sosa_aunt_bm_4"] 				= "Großtante";
+$pgv_lang["sosa_aunt_bm_5"] 				= "Großtante";
+$pgv_lang["sosa_aunt_bm_6"] 				= "Großtante";
+$pgv_lang["sosa_aunt_bm_7"] 				= "Großtante";
+// for the general case of aunts of the nth degree use the text below
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_aunt_bm"]		= "%2\$d x Großtante";
+$pgv_lang["n_x_maternal_aunt_bm"]	    = "%2\$d x Großtante";
 // if a specific cousin relationship cannot be represented in a language translate as "";
 $pgv_lang["male_cousin_1"]              = "Cousin";
 $pgv_lang["male_cousin_2"]              = "Cousin 2. Grades";

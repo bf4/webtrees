@@ -595,6 +595,42 @@ $pgv_lang["sosa_aunt_7"] 				= "oud-tante";      // mother's mother's sister
 //              %3\$d is replaced with the number of generations - 2
 $pgv_lang["n_x_paternal_aunt"]		= "%2\$d x oud-tante";
 $pgv_lang["n_x_maternal_aunt"]	    = "%2\$d x oud-tante";
+// the sosa_uncle_bm name is used for uncles (by marriage)- the names below can be extended to any number
+// of generations just by adding more translations.
+// to allow fo language variations we specify different relationships for paternal and maternal
+// aunts and uncles
+// 1st generation
+$pgv_lang["sosa_uncle_bm_2"] 				= $pgv_lang["uncle"];            // father's brother
+$pgv_lang["sosa_uncle_bm_3"] 				= $pgv_lang["uncle"];            // mother's brother
+// 2nd generation
+$pgv_lang["sosa_uncle_bm_4"] 				= "oud-oom";      // fathers's father's brother
+$pgv_lang["sosa_uncle_bm_5"] 				= "oud-oom";      // father's mother's brother
+$pgv_lang["sosa_uncle_bm_6"] 				= "oud-oom";      // mother's father's brother
+$pgv_lang["sosa_uncle_bm_7"] 				= "oud-oom";      // mother's mother's brother
+// for the general case of uncles of the nth degree use the text below
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_uncle_bm"]		= "%2\$d x oud-oom";
+$pgv_lang["n_x_maternal_uncle_bm"]	    = "%2\$d x oud-oom";
+// the sosa_aunt_bm name is used for aunts (by marriage)- the names below can be extended to any number
+// of generations just by adding more translations.
+// to allow fo language variations we specify different relationships for paternal and maternal
+// aunts and aunts
+// 1st generation
+$pgv_lang["sosa_aunt_bm_2"] 				= $pgv_lang["aunt"];            // father's sister
+$pgv_lang["sosa_aunt_bm_3"] 				= $pgv_lang["aunt"];            // mother's sister
+// 2nd generation
+$pgv_lang["sosa_aunt_bm_4"] 				= "oud-tante";      // fathers's father's sister
+$pgv_lang["sosa_aunt_bm_5"] 				= "oud-tante";      // father's mother's sister
+$pgv_lang["sosa_aunt_bm_6"] 				= "oud-tante";      // mother's father's sister
+$pgv_lang["sosa_aunt_bm_7"] 				= "oud-tante";      // mother's mother's sister
+// for the general case of aunts of the nth degree use the text below
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_aunt_bm"]		= "%2\$d x oud-tante";
+$pgv_lang["n_x_maternal_aunt_bm"]	    = "%2\$d x oud-tante";
 // if a specific cousin relationship cannot be represented in a language translate as "";
 $pgv_lang["male_cousin_1"]              = "neef";
 $pgv_lang["male_cousin_2"]              = "volle achterneef";
