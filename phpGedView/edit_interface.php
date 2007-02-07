@@ -916,7 +916,11 @@ else if ($action=="addchildaction") {
 		}
 	}
 	else if (!empty($DEAT)) $gedrec .= "1 DEAT Y\r\n";
-	if (!empty($famid)) $gedrec .= "1 FAMC @$famid@\r\n";
+	if (!empty($famid)) {
+		$gedrec.="1 FAMC @$famid@\r\n";
+		if (!empty($PEDI))
+			$gedrec.="2 PEDI $PEDI";
+	}
 
 	$gedrec = handle_updates($gedrec);
 

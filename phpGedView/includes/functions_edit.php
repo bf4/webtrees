@@ -462,6 +462,10 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 
 	print "<table class=\"facts_table\">";
 
+	// When adding a new child, specify the pedigree
+	if ($nextaction=='addchildaction')
+		add_simple_tag("0 PEDI birth");
+
 	// preset child/father NAME/SPFX/SURN
 	$name = "";
 	$spfx = "";
@@ -1008,6 +1012,20 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		               "WIFE"=>$factarray["WIFE"]) as $k=>$v) {
 			print "<option value='$k'";
 			if ($value==$k)
+				print " selected";
+			print ">$v</option>";
+		}
+		print "</select>\n";
+	}
+	else if ($fact=="PEDI") {
+		print "<select tabindex=\"".$tabkey."\" name=\"".$element_name."\" >";
+		foreach (array(""       =>$pgv_lang["unknown"],
+		               "birth"  =>$factarray["BIRT"],
+		               "adopted"=>$pgv_lang["adopted"],
+		               "foster" =>$pgv_lang["foster"],
+									 "sealing"=>$pgv_lang["sealing"]) as $k=>$v) {
+			print "<option value='$k'";
+			if (str2lower($value)==$k)
 				print " selected";
 			print ">$v</option>";
 		}
