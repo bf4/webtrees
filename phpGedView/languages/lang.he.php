@@ -785,6 +785,44 @@ $pgv_lang["sosa_aunt_7"] 				= "דודה סבה";      // mothers mothers sister
 //              %3\$d is replaced with the number of generations - 2
 $pgv_lang["n_x_paternal_aunt"]		= "דודה מדרגה %1\$d";
 $pgv_lang["n_x_maternal_aunt"]	    	= "דודה מדרגה %1\$d";
+// the sosa_uncle_bm name is used for uncles (by marriage) - the names below can be extended to any number
+// of generations just by adding more translations.
+// to allow fo language variations we specify different relationships for paternal and maternal
+// aunts and uncles
+// 1st generation
+$pgv_lang["sosa_uncle_bm_2"] 				= $pgv_lang["uncle"];            // fathers brother
+$pgv_lang["sosa_uncle_bm_3"] 				= $pgv_lang["uncle"];            // mothers brother
+// 2nd generation
+$pgv_lang["sosa_uncle_bm_4"] 				= "דוד סב";      // fathers's fathers brother 
+$pgv_lang["sosa_uncle_bm_5"] 				= "דוד סב";      // fathers mothers brother
+$pgv_lang["sosa_uncle_bm_6"] 				= "דוד סב";      // mothers fathers brother
+$pgv_lang["sosa_uncle_bm_7"] 				= "דוד סב";      // mothers mothers brother
+
+// for the general case of uncles of the nth degree use the text below
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_uncle_bm"]		= "דוד מדרגה %1\$d";
+$pgv_lang["n_x_maternal_uncle_bm"]	    	= "דוד מדרגה %1\$d";
+// the sosa_aunt_bm name is used for aunt (by marriage) - the names below can be extended to any number
+// of generations just by adding more translations.
+// to allow fo language variations we specify different relationships for paternal and maternal
+// aunts and aunts
+// 1st generation
+$pgv_lang["sosa_aunt_bm_2"] 				= $pgv_lang["aunt"];            // fathers sister
+$pgv_lang["sosa_aunt_bm_3"] 				= $pgv_lang["aunt"];            // mothers sister
+// 2nd generation
+$pgv_lang["sosa_aunt_bm_4"] 				= "דודה סבה";      // fathers's fathers sister 
+$pgv_lang["sosa_aunt_bm_5"] 				= "דודה סבה";      // fathers mothers sister
+$pgv_lang["sosa_aunt_bm_6"] 				= "דודה סבה";      // mothers fathers sister
+$pgv_lang["sosa_aunt_bm_7"] 				= "דודה סבה";      // mothers mothers sister
+
+// for the general case of aunts of the nth degree use the text below
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_aunt_bm"]		= "דודה מדרגה %1\$d";
+$pgv_lang["n_x_maternal_aunt_bm"]	    	= "דודה מדרגה %1\$d";
 
 // if a specific cousin relationship cannot be represented in a language translate as "";
 $pgv_lang["male_cousin_1"]              	= "דודן";
