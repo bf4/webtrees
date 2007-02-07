@@ -23,7 +23,7 @@
  * @author Greg Roach
  * @package PhpGedView
  * @subpackage Admin
- * @version $Id:$
+ * @version $Id$
  */
 require("config.php");
 
@@ -93,7 +93,8 @@ $XREF_LINK=array(
   'ASSO'=>'INDI',
   'ALIA'=>'INDI',
   'ANCI'=>'INDI',
-  'DESI'=>'INDI'
+	'DESI'=>'INDI',
+	'AUTH'=>'INDI'  // This is not valid gedcom, but it is not an error if used.
 );
 
 // Use the global settings for these (if they exist)
