@@ -23,7 +23,7 @@
  * @author Greg Roach
  * @package PhpGedView
  * @subpackage Admin
- * @version $Id$
+ * @version $Id:$
  */
 require("config.php");
 
@@ -734,8 +734,8 @@ function check_indi($id)
   $ged=$indi_list[$id]["gedcom"];
   $errors="";
 
-  if (isset($indi_list[$id]["name"]))
-    $name=$indi_list[$id]["name"];
+  if (isset($indi_list[$id]["names"][0][0]))
+    $name=$indi_list[$id]["names"][0][0];
   else
     $name="???";
 
@@ -763,11 +763,14 @@ function check_indi($id)
       $todo[]=$link[1];
       break;
     case "FAMC":
-      // TODO: multiple FAMC entries are not an error if they relate to adoption, etc.
-      // See email from meliza for examples of how this may be recorded.
-      if ($level>=$critical)
+      // Multiple FAMC entries are not an error if they relate to adoption, etc.
+			if (preg_match("/2 PEDI (\w+)/", $subged, $p))
+				$pedigree=$p[1];
+			else
+				$pedigree="birth";
+      if ($level>=$critical && $pedigree=="birth")
         if (isset($famc))
-          $errors=multiple("FAMC(".$famc.")");
+          $errors=multiple("FAMC (".$famc.",".$link[1].")");
         else
           $famc=$link[1];
       $todo[]=$link[1];
@@ -918,7 +921,7 @@ foreach ($gedfile as $num=>$text) {
       $err=missing($pgv_lang['level']);
     elseif (preg_match('/^(@[^#@]+@)$/', $tag_data, $match)) {
       if (!isset($all_xrefs[$match[1].$linked_rec]))
-        $err=missing('0 '.$match[1].$linked_rec);
+        $err=missing('0 '.$match[1].' '.$linked_rec);
       elseif ($tag_level=='1' &&
               (($tag=='FAMS'                ) && !isset($xref_links[$tag_data.'HUSB'][$curr_xref]) &&
                                                  !isset($xref_links[$tag_data.'WIFE'][$curr_xref]) ||
