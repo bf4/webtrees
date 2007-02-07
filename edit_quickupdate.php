@@ -1414,8 +1414,8 @@ function checkform(frm) {
 <tr><td class="topbottombar" colspan="4"><?php print_help_link("quick_update_fact_help", "qm"); print $pgv_lang["update_fact"]; ?></td></tr>
 <tr>
 	<td class="descriptionbox">&nbsp;</td>
-	<td class="descriptionbox"><?php print $factarray["DATE"]; ?></td>
-	<td class="descriptionbox"><?php print $factarray["PLAC"]; ?></td>
+	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["DATE"]; ?></td>
+	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"]; ?></td>
 	<td class="descriptionbox"><?php print $pgv_lang["delete"]; ?></td>
 </tr>
 <?php
@@ -1765,8 +1765,8 @@ for($i=1; $i<=count($sfams); $i++) {
 <tr><td class="topbottombar" colspan="4"><?php print_help_link("quick_update_fact_help", "qm"); print $pgv_lang["update_fact"]; ?></td></tr>
 <tr>
 	<td class="descriptionbox">&nbsp;</td>
-	<td class="descriptionbox"><?php print $factarray["DATE"]; ?></td>
-	<td class="descriptionbox"><?php print $factarray["PLAC"]; ?></td>
+	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["DATE"]; ?></td>
+	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"]; ?></td>
 	<td class="descriptionbox"><?php print $pgv_lang["delete"]; ?></td>
 	</tr>
 <?php
@@ -1864,7 +1864,7 @@ $chil = find_children_in_record($famrec);
 	<tr>
 			<input type="hidden" name="F<?php echo $i; ?>CDEL" value="" />
 					<td class="descriptionbox"><?php print $pgv_lang["name"]; ?></td>
-					<td class="descriptionbox"><?php print $factarray["SEX"]; ?></td>
+					<td class="descriptionbox center"><?php print $factarray["SEX"]; ?></td>
 					<td class="descriptionbox"><?php print $factarray["BIRT"]; ?></td>
 					<td class="descriptionbox"><?php print $pgv_lang["remove"]; ?></td>
 	</tr>
@@ -1888,7 +1888,7 @@ $chil = find_children_in_record($famrec);
 					}
 					print "</td>\n<td class=\"optionbox\">";
 					if ($disp) {
-						$birtrec = get_sub_record(1, "BIRT", $childrec);
+						$birtrec = get_sub_record(1, "1 BIRT", $childrec);
 						if (!empty($birtrec)) {
 							if (showFact("BIRT", $child) && !FactViewRestricted($child, $birtrec)) {
 								print get_gedcom_value("DATE", 2, $birtrec);
@@ -1899,7 +1899,7 @@ $chil = find_children_in_record($famrec);
 					}
 					print "</td>\n";
 					?>
-					<td class="optionbox center" colspan="3">
+					<td class="optionbox center">
 						<a href="javascript: <?php print $pgv_lang["remove_child"]; ?>" onclick="if (confirm('<?php print $pgv_lang["confirm_remove"]; ?>')) { document.quickupdate.closewin.value='0'; document.quickupdate.F<?php echo $i; ?>CDEL.value='<?php echo $child; ?>'; document.quickupdate.submit(); } return false;">
 							<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php print $pgv_lang["remove_child"]; ?>" />
 						</a>
@@ -2394,8 +2394,8 @@ for($j=1; $j<=count($cfams); $j++) {
 <tr><td class="topbottombar" colspan="4"><?php print_help_link("quick_update_fact_help", "qm"); print $pgv_lang["update_fact"]; ?></td></tr>
 <tr>
 	<td class="descriptionbox">&nbsp;</td>
-	<td class="descriptionbox"><?php print $factarray["DATE"]; ?></td>
-	<td class="descriptionbox"><?php print $factarray["PLAC"]; ?></td>
+	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["DATE"]; ?></td>
+	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"]; ?></td>
 	<td class="descriptionbox"><?php print $pgv_lang["delete"]; ?></td>
 <?php
 foreach($famfacts as $f=>$fact) {
@@ -2496,7 +2496,7 @@ $chil = find_children_in_record($famrec, $pid);
 	<tr>
 		<input type="hidden" name="F<?php echo $i; ?>CDEL" value="" />
 					<td class="descriptionbox"><?php print $pgv_lang["name"]; ?></td>
-					<td class="descriptionbox"><?php print $factarray["SEX"]; ?></td>
+					<td class="descriptionbox center"><?php print $factarray["SEX"]; ?></td>
 					<td class="descriptionbox"><?php print $factarray["BIRT"]; ?></td>
 					<td class="descriptionbox"><?php print $pgv_lang["remove"]; ?></td>
 				</tr>
@@ -2520,7 +2520,7 @@ $chil = find_children_in_record($famrec, $pid);
 					}
 					print "</td>\n<td class=\"optionbox\">";
 					if ($disp) {
-						$birtrec = get_sub_record(1, "BIRT", $childrec);
+						$birtrec = get_sub_record(1, "1 BIRT", $childrec);
 						if (!empty($birtrec)) {
 							if (showFact("BIRT", $child) && !FactViewRestricted($child, $birtrec)) {
 								print get_gedcom_value("DATE", 2, $birtrec);
@@ -2531,7 +2531,7 @@ $chil = find_children_in_record($famrec, $pid);
 					}
 					print "</td>\n";
 					?>
-					<td class="optionbox center" colspan="3">
+					<td class="optionbox center">
 						<a href="javascript: <?php print $pgv_lang["remove_child"]; ?>" onclick="document.quickupdate.closewin.value='0'; document.quickupdate.F<?php echo $i; ?>CDEL.value='<?php echo $child; ?>'; document.quickupdate.submit(); return false;">
 							<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php print $pgv_lang["remove_child"]; ?>" />
 						</a>
@@ -2566,6 +2566,8 @@ $chil = find_children_in_record($famrec, $pid);
 	<td class="descriptionbox"><?php print_help_link("edit_given_name_help", "qm"); print $pgv_lang["hebrew_givn"];?></td>
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="HC<?php echo $i; ?>GIVN" /></td>
 	<?php $tabkey++; ?>
+</tr>
+<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); print $pgv_lang["hebrew_surn"];?></td>
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="HC<?php echo $i; ?>SURN" /></td>
 	<?php $tabkey++; ?>
@@ -2574,6 +2576,8 @@ $chil = find_children_in_record($famrec, $pid);
 	<td class="descriptionbox"><?php print_help_link("edit_given_name_help", "qm"); print $pgv_lang["roman_givn"];?></td>
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="RC<?php echo $i; ?>GIVN" /></td>
 	<?php $tabkey++; ?>
+</tr>
+<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); print $pgv_lang["roman_surn"];?></td>
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="RC<?php echo $i; ?>SURN" /></td>
 	<?php $tabkey++; ?>
