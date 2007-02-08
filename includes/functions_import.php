@@ -4,7 +4,7 @@
  * Import specific functions
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -785,7 +785,7 @@ function setup_database() {
 
 	$data = $DBCONN->getListOf('tables');
 	foreach ($data as $indexval => $table) {
-		if (strpos($table, $TBLPREFIX) === 0) {
+		if (empty($TBLPREFIX) || strpos($table, $TBLPREFIX) === 0) {
 			switch (substr($table, strlen($TBLPREFIX))) {
 				case "individuals" :
 					$has_individuals = true;
