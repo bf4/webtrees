@@ -43,6 +43,22 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["sosa_uncle_bm_2"]						8 Feb 2007				A
++$pgv_lang["sosa_uncle_bm_3"]						8 Feb 2007				A
++$pgv_lang["sosa_uncle_bm_4"]						8 Feb 2007				A
++$pgv_lang["sosa_uncle_bm_5"]						8 Feb 2007				A
++$pgv_lang["sosa_uncle_bm_6"]						8 Feb 2007				A
++$pgv_lang["sosa_uncle_bm_7"]						8 Feb 2007				A
++$pgv_lang["n_x_paternal_uncle_bm"]					8 Feb 2007				A
++$pgv_lang["n_x_maternal_uncle_bm"]					8 Feb 2007				A
++$pgv_lang["sosa_aunt_bm_2"]						8 Feb 2007				A
++$pgv_lang["sosa_aunt_bm_3"]						8 Feb 2007				A
++$pgv_lang["sosa_aunt_bm_4"]						8 Feb 2007				A
++$pgv_lang["sosa_aunt_bm_5"]						8 Feb 2007				A
++$pgv_lang["sosa_aunt_bm_6"]						8 Feb 2007				A
++$pgv_lang["sosa_aunt_bm_7"]						8 Feb 2007				A
++$pgv_lang["n_x_paternal_aunt_bm"]					8 Feb 2007				A
++$pgv_lang["n_x_maternal_aunt_bm"]					8 Feb 2007				A
 *$pgv_lang["maxviews_exceeded"]						28 Jan 2007				W
 +$pgv_lang["duplicate_username"]					26 Jan 2007				M		Moved from admin.en.php
 +$pgv_lang["cache_life"]							25 Jan 2007				A
