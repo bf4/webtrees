@@ -531,7 +531,6 @@ $pgv_lang["warn_users"]				= "Verwarnte Benutzer";
 $pgv_lang["users_gedadmin"]			= "GEDCOM Verwalter";
 $pgv_lang["cleanup_users"]			= "Benutzerliste bearbeiten";
 $pgv_lang["usr_no_cleanup"]			= "Nichts zum Bearbeiten gefunden";
-$pgv_lang["del_proceed"]			= "Weiter";
 $pgv_lang["usr_deleted"]			= "Gelöschter Benutzer:";
 $pgv_lang["configured_languages"]	= "Benutzte Sprachen";
 $pgv_lang["message_to_all"]			= "Allen Benutzern eine Nachricht senden";
