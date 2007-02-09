@@ -395,9 +395,9 @@ return false;}return true;}
 			$out .= '
 	            <td id="peoplecell" class="optionbox" align="left">
 	                   <div id="peoplelink'.$i.'">';
-	                   		if (!is_null($person)) $out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+	                   		if (!is_null($person)) $out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid'.$i.'\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
 	                   $out .= '</div>
-	                   <input type="hidden" id="personid'.$i.'" name="personid'.$i.'" size="3" value="'.$pid.'" />';
+	                   <input type="hidden" id="personid'.$i.'" name="personid'.$i.'" size="3" value=";'.$pid.'" />';
 	                   if(isset($citation['ts_array']['rows'][$i]['NameOfPeople'])) $searchName = $citation['ts_array']['rows'][$i]['NameOfPeople'];
 						else $searchName = '';
 	                   $out .= print_findindi_link("personid".$i, "peoplelink".$i, true,false,'',$searchName);

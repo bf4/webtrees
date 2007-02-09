@@ -101,20 +101,31 @@ require_once("includes/person_class.php");
 			//get the children in the family of the person, and it will also
 			//get his siblings since we merged the arrays earlier
 			$children = $family->getChildren();
+			
+			if(!empty($myHusb))
+			{
 			//Load the husbands details into $myindilist
 			$myindilist[$myHusb->getXref()] = $indilist[$myHusb->getXref()];
+			}
+			
+			if(!empty($myWife))
+			{
 			//Load the wife's details into $myindilist
 			$myindilist[$myWife->getXref()] = $indilist[$myWife->getXref()];			
+			}
 			//Copy the family data into the $myfamlist for later use
 			$myfamlist[] = $family;
 			//foreach over the array of children and siblings
-			foreach($children as $chKey=>$child)
+			if(!empty($children))
 			{
-				//copy the persons details into $myindilist
-				//these people may already exist and their detials will just be
-				//added again.  If we didn't do this, things might get lost 
-				//in the mix
-				$myindilist[$child->getXref()] = $indilist[$child->getXref()];
+				foreach($children as $chKey=>$child)
+				{
+					//copy the persons details into $myindilist
+					//these people may already exist and their detials will just be
+					//added again.  If we didn't do this, things might get lost 
+					//in the mix
+					$myindilist[$child->getXref()] = $indilist[$child->getXref()];
+				}
 			}
 		}
 		
@@ -273,7 +284,7 @@ require_once("includes/person_class.php");
 		
 		foreach($tempArray as $tempKey=>$localValue)
 		{
-			
+		
 			if(strstr($localValue['local'],$factType))
 			{
 			
@@ -358,6 +369,7 @@ require_once("includes/person_class.php");
 		$tempResult = personalinferences($pid);
 		//Get the global inferences
 		$globalInf = getGlobalinferences();
+
 		//Init an array for us to return that is nicely formatted
 		$niceData = array();
 		//iterate over the results of the inferences
@@ -381,7 +393,7 @@ require_once("includes/person_class.php");
 				{
 					$tempArray["GlobalProb"] = $tempVal['GlobalProb'];
 					$tempArray["GlobalCount"] = $tempVal['GlobalCount'];
-			}
+				}
 		}
 		}
 		//Add our array to our nice data array
@@ -427,7 +439,7 @@ require_once("includes/person_class.php");
 	 					$tempArray[] = $row['pr_rel'];
 	 					if($row['pr_matches'] != 0 && $row['pr_count'] != 0)
 	 					{
-	 					$tempArray["GlobalProb"] = $row['pr_matches'] / $row['pr_count'];
+		 					$tempArray["GlobalProb"] = $row['pr_matches'] / $row['pr_count'];
 		 					$tempArray["GlobalCount"] = $row['pr_matches'];
 		 				
 	 					}
