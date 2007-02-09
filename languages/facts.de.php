@@ -261,19 +261,19 @@ $factarray["_STAT"] = "Familienstand";
 $factarray["COMM"]	= "Bemerkung";
 
 // Aldfaer related facts
-$factarray["MARR_CIVIL"] = "standesamtliche Hochzeit";
-$factarray["MARR_RELIGIOUS"] = "kirchliche Hochzeit";
+$factarray["MARR_CIVIL"] = "standesamtliche Ehe";
+$factarray["MARR_RELIGIOUS"] = "kirchliche Ehe";
 $factarray["MARR_PARTNERS"] = "eingetragene Lebensgemeinschaft";
-$factarray["MARR_UNKNOWN"] = "Art der Hochzeit unbekannt";
+$factarray["MARR_UNKNOWN"] = "Art der Ehe unbekannt";
 $factarray["_HNM"] = "Hebräischer Name";
 $factarray["_DEAT_SPOU"] = "Tod von Ehegatte";
 $factarray["_BIRT_CHIL"] = "Geburt eines Kindes";
-$factarray["_MARR_CHIL"] = "Hochzeit eines Kindes";
+$factarray["_MARR_CHIL"] = "Ehe eines Kindes";
 $factarray["_DEAT_CHIL"] = "Tod eines Kindes";
 $factarray["_BIRT_GCHI"] = "Geburt eines Enkelkindes";
-$factarray["_MARR_GCHI"] = "Hochzeit eines Enkelkindes";
+$factarray["_MARR_GCHI"] = "Ehe eines Enkelkindes";
 $factarray["_DEAT_GCHI"] = "Tod eines Enkelkindes";
-$factarray["_MARR_FATH"] = "Hochzeit des Vaters";
+$factarray["_MARR_FATH"] = "Ehe des Vaters";
 $factarray["_DEAT_FATH"] = "Tod des Vaters";
 $factarray["_MARR_MOTH"] = "Ehe der Mutter";
 $factarray["_DEAT_MOTH"] = "Tod der Mutter";
