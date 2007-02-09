@@ -603,6 +603,7 @@ class Person extends GedcomRecord {
 		$this->parseFacts();
 		return $this->indifacts;
 	}
+	
 	/**
 	 * get other facts
 	 * @return array
@@ -781,7 +782,7 @@ class Person extends GedcomRecord {
 	/**
 	 * add facts from the family record
 	 */
-	function add_family_facts() {
+	function add_family_facts($otherfacts = true) {
 		global $GEDCOM, $nonfacts, $nonfamfacts;
 
 		if (!$this->canDisplayDetails()) return;
@@ -828,13 +829,18 @@ class Person extends GedcomRecord {
 				}
 				else $factrec .= "\n".$line;
 			}
-			$this->add_spouse_facts($spouse, $famrec);
-			$this->add_children_facts($famid);
+			if($otherfacts){
+				$this->add_spouse_facts($spouse, $famrec);
+				$this->add_children_facts($famid);
+			}
 		}
 		//$sosamax=7;
-		$this->add_parents_facts($this->xref);
-		$this->add_historical_facts();
-		$this->add_asso_facts($this->xref);
+		if($otherfacts){
+			$this->add_parents_facts($this->xref);
+			$this->add_historical_facts();
+			$this->add_asso_facts($this->xref);
+		}
+	
 	}
 	/**
 	 * add parents events to individual facts array

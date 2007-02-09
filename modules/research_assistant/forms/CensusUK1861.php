@@ -75,7 +75,7 @@ return false;}return true;}
         foreach ($params as $key => $value) {
             $out .= '<input type="hidden" name="' . $key . '" value="' . $value . '">';
         }
-        $out .= '<table id="CensusUK1861" class="list_table" align="' . $tableAlign . '">';
+        $out .= '<table id="CensusUK1861" class="list_table" dir="ltr" align="' . $tableAlign . '">';
         $out .= '<tr>';
         $out .= '<th colspan="6" align="right"class="topbottombar"><h2>' . $heading . '</h2></th>';
         $out .= '</tr>';
