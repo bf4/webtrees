@@ -3,7 +3,7 @@
  * PopUp Window to provide editing features.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -919,7 +919,7 @@ else if ($action=="addchildaction") {
 	if (!empty($famid)) {
 		$gedrec.="1 FAMC @$famid@\r\n";
 		if (!empty($PEDI))
-			$gedrec.="2 PEDI $PEDI";
+			$gedrec.="2 PEDI $PEDI\r\n";
 	}
 
 	$gedrec = handle_updates($gedrec);
