@@ -5,7 +5,7 @@
  * This block will print a list of recent changes
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -138,7 +138,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 		print_text("recent_changes_some");
 
 	// sortable table
-	require_once("functions_print_lists.php");
+	require_once("includes/functions_print_lists.php");
 	print_changes_table($found_facts);
 
 			}
