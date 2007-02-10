@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  Christophe Bx, Julien Damon
+ * Copyright (C) 2002 to 2007  Christophe Bx, Julien Damon
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
  * @version $Id$
  */
 if (preg_match("/facts\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-	print "L'accès direct aux fichiers de langue est interdit.";
+	print "You cannot access a language file directly.";
 	exit;
 }
 // -- Define a fact array to map GEDCOM tags with their English values
@@ -157,6 +157,28 @@ $factarray["EMAIL"]                     = "Adresse courriel";
 $factarray["_TODO"]                     = "Note";
 $factarray["_UID"]                      = "Identificateur universel (UID)";
 $factarray["_PRIM"]                     = "Image principale";
+$factarray["_DBID"]                     = "Bases liées";
+//These facts are compounds for the view probabilities page
+$factarray["FAMC:HUSB:SURN"]            = "Prénom du père";
+$factarray["FAMC:WIFE:SURN"]            = "Prénom de la mère";
+$factarray["FAMC:HUSB:BIRT:PLAC"]       = "Lieu de naissance du père";
+$factarray["FAMC:WIFE:BIRT:PLAC"]       = "Lieu de naissance de la mère";
+$factarray["FAMC:MARR:PLAC"]            = "Lieu de mariage des parents";
+$factarray["FAMC:HUSB:OCCU"]            = "Métier du père";
+$factarray[":BIRT:PLAC"]                = "Lieu de naissance";
+$factarray["FAMS:MARR:PLAC"]            = "Lieu de mariage";
+$factarray["FAMS:SPOUSE:DEAT:PLAC"]     = "Lieu de décès du conjoint";
+$factarray["FAMC:HUSB:GIVN"]            = "Nom de famille du père";
+$factarray["FAMS:SPOUSE:BIRT:PLAC"]     = "Lieu de naissance du conjoint";
+$factarray["FAMC:WIFE:GIVN"]            = "Nom de famille de la mère";
+$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"]  = "Nom de famille du grand-père";
+$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"]  = "Nom de famille de la grand-mère";
+// These facts are all colon delimited
+$factarray["BIRT:PLAC"]                 = "Lieu de naissance";
+$factarray["DEAT:PLAC"]                 = "Lieu de décès";
+$factarray["CHR:PLAC"]                  = "Lieu de baptême";
+$factarray["BAPM:PLAC"]                 = "Lieu de baptême";
+$factarray["BURI:PLAC"]                 = "Lieu de sépulture";
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"]                     = "Médical";
 $factarray["_DEG"]                      = "Diplôme";

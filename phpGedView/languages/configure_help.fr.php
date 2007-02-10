@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  Christophe Bx, Julien Damon
+ * Copyright (C) 2002 to 2007  Christophe Bx, Julien Damon
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
  * @version $Id$
  */
 if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-	print "L'accès direct aux fichiers de langue est interdit.";
+	print "You cannot access a language file directly.";
 	exit;
 }
 
@@ -114,19 +114,19 @@ $pgv_lang["CHART_BOX_TAGS_help"]        = "Liste de codes GEDCOM, séparés par 
 
 
 //-- CONFIGURE FILE MESSAGES
-$pgv_lang["gedcom_conf"]                = "Configuration GEDCOM";
+$pgv_lang["gedcom_conf"]                = "GEDCOM";
 $pgv_lang["media_conf"]                 = "Objets Multimedia";
 $pgv_lang["accpriv_conf"]               = "Restrictions d'accès";
-$pgv_lang["displ_conf"]                 = "Options d'affichage";
-$pgv_lang["displ_names_conf"]           = "Affichage des noms";
-$pgv_lang["displ_comsurn_conf"]         = "Affichage des noms fréquents";
+$pgv_lang["displ_conf"]                 = "Affichage";
+$pgv_lang["displ_names_conf"]           = "Noms";
+$pgv_lang["displ_comsurn_conf"]         = "Noms fréquents";
 $pgv_lang["displ_layout_conf"]          = "Affichage";
 $pgv_lang["displ_hide_conf"]            = "Cacher/Montrer";
-$pgv_lang["editopt_conf"]               = "Options d'édition";
-$pgv_lang["useropt_conf"]               = "Options de l'utilisateur";
+$pgv_lang["editopt_conf"]               = "Edition";
+$pgv_lang["useropt_conf"]               = "Utilisateurs";
 $pgv_lang["contact_conf"]               = "Contact";
-$pgv_lang["meta_conf"]                  = "Options de configuration des balises META";
-$pgv_lang["gedconf_head"]               = "Configuration GEDCOM";
+$pgv_lang["meta_conf"]                  = "Balises META";
+$pgv_lang["gedconf_head"]               = "GEDCOM";
 $pgv_lang["other_theme"]                = "ou entrer une autre valeur";
 $pgv_lang["performing_update"]          = "Mise à jour en cours.";
 $pgv_lang["config_file_read"]           = "Fichier de configuration lu.";
@@ -304,6 +304,8 @@ $pgv_lang["CONTACT_EMAIL"]              = "Adresse courriel du contact Généalo
 $pgv_lang["CONTACT_EMAIL_help"]         = "L'adresse que les visiteurs doivent utiliser pour contacter la personne responsable des données généalogiques de ce site.";
 $pgv_lang["CONTACT_METHOD"]             = "Préférence du contact Généalogie";
 $pgv_lang["CONTACT_METHOD_help"]        = "Méthode à utiliser sur le lien contact Généalogie.";
+#pgv_lang["PHPGEDVIEW_EMAIL"]           = "PhpGedView reply address";
+#pgv_lang["PHPGEDVIEW_EMAIL_help"]      = "~#pgv_lang[PHPGEDVIEW_EMAIL]#~<br /><br />E-mail address to be used in the &laquo;From:&raquo; field of e-mails that PhpGedView creates automatically.<br /><br />PhpGedView can automatically create e-mails to notify administrators of changes that need to be reviewed.  PhpGedView also sends notification e-mails to users who have requested an account.<br /><br />Usually, the &laquo;From:&raquo; field of these automatically created e-mails is something like <i>From: phpgedview-noreply@yoursite</i> to show that no response to the e-mail is required.  To guard against spam or other e-mail abuse, some e-mail systems require each message's &laquo;From:&raquo; field to reflect a valid e-mail account and will not accept messages that are apparently from account <i>phpgedview-noreply</i>.<br />";
 $pgv_lang["WEBMASTER_EMAIL"]            = "Adresse courriel de l'administrateur";
 $pgv_lang["WEBMASTER_EMAIL_help"]       = "L'adresse que les visiteurs doivent utiliser pour les questions techniques ou les erreurs qu'ils peuvent rencontrer sur votre site.";
 $pgv_lang["SUPPORT_METHOD"]             = "Préférence de l'administrateur";
@@ -377,9 +379,9 @@ $pgv_lang["META_TITLE"]                 = "Complément balise TITLE";
 $pgv_lang["META_TITLE_help"]            =	"Texte à ajouter au titre de chaque page HTML.<br />Variable \$META_TITLE du fichier config.php.";
 
 $pgv_lang["ENABLE_RSS"]                 = "Activer RSS";
-#pgv_lang["ENABLE_RSS_help"]            = "~#pgv_lang[ENABLE_RSS]#~<br /><br />This option lets you disable the RSS feature.<br /><br />RSS lets users monitor your site for changes to the Index page without actually visiting your site periodically.  If too many users make use of this feature or if the refresh frequency set by these users is too high, RSS can use up too much bandwidth or server capacity.<br />";
+#pgv_lang["ENABLE_RSS_help"]            = "~#pgv_lang[ENABLE_RSS]#~<br /><br />This option lets you disable the RSS feature.<br /><br />RSS lets users monitor your site for changes to the Index page without actually visiting your site periodically.  If too many users make use of this feature or if the refresh frequency set by these users is too high, RSS can use up too much bandwidth or server capacity.<br /><br />This <a href='http://en.wikipedia.org/wiki/RSS_(file_format)' target='_blank' alt='Wikipedia article' title='Wikipedia article'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats.<br />";
 $pgv_lang["RSS_FORMAT"]                 = "Format RSS";
-#pgv_lang["RSS_FORMAT_help"]            = "~#pgv_lang[RSS_FORMAT]#~<br /><br />The format of RSS to be used as the default RSS feed format for the site. The numeric suffixes <u>do not</u> indicate version, they identify formats.  For example, RSS 2.0 is not newer than RSS 1.0, but a different format. Feed readers should be able to read any format. There is currently no difference between ATOM and ATOM 0.3. Both use the ATOM 0.3 draft specification.<br />";
+#pgv_lang["RSS_FORMAT_help"]            = "~#pgv_lang[RSS_FORMAT]#~<br /><br />The format to be used as the default feed format for the site. The numeric suffixes <u>do not</u> indicate version: they identify formats.  For example, RSS 2.0 is not newer than RSS 1.0, but a different format. Feed readers should be able to read any format.<br /><br />This <a href='http://en.wikipedia.org/wiki/RSS_(file_format)' target='_blank' alt='Wikipedia article' title='Wikipedia article'><b>Wikipedia article</b></a> contains comprehensive information and links about RSS and the various RSS formats.<br />";
 #pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE"]= "Check if GEDCOM files are downloadable";
 #pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE_help"] = "~#pgv_lang[SECURITY_CHECK_GEDCOM_DOWNLOADABLE]#~<br /><br />For security reasons, GEDCOM files should not be in a location where they can be directly downloaded, thus bypassing privacy checks. Clicking this link will check if your GEDCOM files can be downloaded over the network.<br /><br />On some systems this check has been known to take a really long time or not even complete.  If that is the case for you, then you should try to point your browser directly at your GEDCOM to see if it can be downloaded.<br />";
 #pgv_lang["gedcom_download_secure"]     = "#GEDCOM# cannot be downloaded.";
@@ -409,13 +411,13 @@ $pgv_lang["edit_exist_global_facts_settings"]= "Modifier les règles sur les év
 $pgv_lang["edit_exist_person_facts_settings"]= "Modifier les paramètres";
 $pgv_lang["general_privacy"]            = "Restrictions d'accès";
 $pgv_lang["general_privacy_help"]       = "<b>#pgv_lang[general_settings]#.</b><br />Paramètre par défaut pour ce fichier GEDCOM.<br /><br />Si vous avez chargé plusieurs fichiers GEDCOM sur votre site, chacun peut avoir ses propres paramètres.<br /><br />Certains paramètres sont modifiables sur la page #pgv_lang[edit_privacy_title]#.<br />#pgv_lang[more_config_help]#";
-$pgv_lang["person_privacy"]             = "Restriction d'accès selon l'individu";
+$pgv_lang["person_privacy"]             = "selon l'enregistrement";
 $pgv_lang["person_privacy_help"]        = "<b>#pgv_lang[person_privacy_settings]#.</b><br />Permet à l'administrateur de forcer une règle de confidentialité pour un <b>individu</b> particulier. Pour un enfant mort par exemple. Par défaut, les détails le concernant sont visibles par tous, puisqu'il s'agit d'une personne décédée. Pour masquer ces informations sans supprimer l'enregistrement du décès, il suffit d'ajouter une règle.<br /><br />Variable \$person_privacy du fichier de confidentialité.";
-$pgv_lang["user_privacy"]               = "Restriction d'accès selon l'utilisateur";
+$pgv_lang["user_privacy"]               = "selon l'utilisateur";
 $pgv_lang["user_privacy_help"]          = "<b>#pgv_lang[user_privacy_settings]#.</b><br />Permet à l'administrateur de forcer une règle de confidentialité pour un <b>utilisateur</b> particulier.<br /><br />Variable \$user_privacy du fichier de confidentialité.";
-$pgv_lang["global_facts"]               = "Restriction d'accès selon l'évènement";
+$pgv_lang["global_facts"]               = "selon l'évènement";
 $pgv_lang["global_facts_help"]          = "<b>#pgv_lang[global_facts_settings]#.</b><br />Permet à l'administrateur de forcer une règle de confidentialité pour un <b>évènement</b> particulier.<br /><br />Variable \$global_facts du fichier de confidentialité.";
-$pgv_lang["person_facts"]               = "Restriction d'accès selon l'évènement et l'individu";
+$pgv_lang["person_facts"]               = "selon l'évènement et l'enregistrement";
 $pgv_lang["person_facts_help"]          = "<b>#pgv_lang[person_facts_settings]#.</b><br />Permet à l'administrateur de forcer une règle de confidentialité pour un <b>évènement et un individu</b> particuliers.<br /><br />Variable \$person_facts du fichier de confidentialité.";
 $pgv_lang["accessible_by"]              = "Montrer à qui ?";
 $pgv_lang["hide"]                       = "Cacher";
