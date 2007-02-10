@@ -113,7 +113,7 @@ function get_common_surnames($min) {
 function get_name_in_record($indirec) {
 	// NPFX
 	if (preg_match('/2 NPFX (.*)/', $indirec, $match))
-		$npfx=$match[1];
+		$npfx=trim($match[1]);
 	else
 		$npfx='';
 	// GIVN
@@ -124,7 +124,7 @@ function get_name_in_record($indirec) {
 			$givn=preg_replace("/^$npfx /i", '',	$match[1]);
 		else
 			$givn='';
-	$givn=preg_replace('/^ *[._?]+ *$/', '', $givn);
+	$givn=preg_replace('/^[._?]+$/', '', trim($givn));
 	if (empty($givn))
 		$givn= '@P.N.';
 	// NICK
@@ -139,13 +139,13 @@ function get_name_in_record($indirec) {
 		$spfx='';
 	// SURN
 	if (preg_match('/2 SURN (.*)/', $indirec, $match))
-		$surn=trim($match[1]);
+		$surn=$match[1];
 	else
 		if (preg_match('/1 NAME [^\/\r\n]*\/([^\/\r\n]*)/', $indirec, $match))
 			$surn=preg_replace("/^$spfx /i", '',	$match[1]);
 		else
 			$surn='';
-	$surn=preg_replace('/^ *[._?]+ *$/', '', $surn);
+	$surn=preg_replace('/^[._?]+$/', '', trim($surn));
 	if (empty($surn)) {
 		$surn='@N.N.';
 		$spfx='';
