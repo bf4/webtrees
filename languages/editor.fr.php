@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  Christophe Bx, Julien Damon
+ * Copyright (C) 2002 to 2007  Christophe Bx, Julien Damon
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,10 +26,12 @@
  * @version $Id$
  */
 if (preg_match("/editor\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-	print "L'accès direct aux fichiers de langue est interdit.";
+	print "You cannot access a language file directly.";
 	exit;
 }
 
+$pgv_lang["select_events"]              = "Choisir un évènement";
+$pgv_lang["source_events"]              = "Evènements associés à cette source";
 $pgv_lang["advanced_name_fields"]       = "Variantes du nom";
 $pgv_lang["accept_changes"]             = "Accepter/Rejeter les modifications";
 $pgv_lang["replace"]                    = "Modifier un enregistrement";
@@ -210,7 +212,7 @@ $pgv_lang["update_successful"]          = "Mise à jour réussie";
 $pgv_lang["upload"]                     = "Téléchargement";
 $pgv_lang["upload_error"]               = "Erreur lors du chargement de votre fichier GEDCOM sur le serveur.";
 $pgv_lang["upload_media"]               = "Charger des objets MultiMedia";
-#pgv_lang["upload_media_help"]          = "~#pgv_lang[upload_media]#~<br /><br />Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>#MEDIA_DIRECTORY#</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to #MEDIA_DIRECTORY#. For example, #MEDIA_DIRECTORY#myfamily. If the thumbnail directory does not exist, it is created automatically.";
+$pgv_lang["upload_media_help"]          = "~#pgv_lang[upload_media]#~<br /><br />Choisir un fichier sur votre ordinateur. Il sera copié sur le serveur dans le dossier <b>#MEDIA_DIRECTORY#</b> ou un de ses sous-dossiers.<br /><br />Le nom du dossier sera ajouté à #MEDIA_DIRECTORY#. Par exemple, #MEDIA_DIRECTORY#famille. Si le dossier de vignettes n'existe pas, il sera créé automatiquement.";
 $pgv_lang["upload_successful"]          = "Téléchargement réussi";
 $pgv_lang["view_change_diff"]           = "Voir les différences";
 
