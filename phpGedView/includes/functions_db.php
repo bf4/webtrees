@@ -8,7 +8,7 @@
  * cache arrays are checked first before querying the database.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -2294,8 +2294,7 @@ function get_surname_indis($surname) {
 	global $TBLPREFIX, $GEDCOM, $LANGUAGE, $indilist, $SHOW_MARRIED_NAMES, $DBCONN, $GEDCOMS;
 
 	$tindilist = array();
-	$sql = "SELECT i_id, i_isdead, i_file, i_gedcom, i_name, i_letter, i_surname, SUM(f_numchil) as numchil FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."families WHERE i_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
-	$sql .= "AND f_file=i_file AND (f_husb = i_id OR f_wife = i_id) ";
+	$sql = "SELECT i_id, i_isdead, i_file, i_gedcom, i_name, i_letter, i_surname FROM ".$TBLPREFIX."individuals WHERE i_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
 	$sql .= "AND i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
 	$sql .= " GROUP BY i_id";
 	$res = dbquery($sql);
@@ -2307,11 +2306,24 @@ function get_surname_indis($surname) {
 		$indi["isdead"] = $row["i_isdead"];
 		$indi["gedcom"] = $row["i_gedcom"];
 		$indi["gedfile"] = $row["i_file"];
-		$indi["numchil"] = $row["numchil"];
+		$indi["numchil"] = "";
 		$indilist[$row["i_id"]] = $indi;
 		$tindilist[$row["i_id"]] = $indilist[$row["i_id"]];
 	}
 	$res->free();
+	
+	// Get the number of children for each individual
+	foreach($tindilist as $gid => $indi) {
+		$sql = "SELECT SUM(f_numchil) as numchil FROM ".$TBLPREFIX."families WHERE (f_husb = '".$gid."' OR f_wife = '".$gid."') ";
+		$sql .= "AND f_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+		$res = dbquery($sql);
+
+		while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
+			$indilist[$gid]["numchil"] = $row["numchil"];
+			$tindilist[$gid]["numchil"] = $row["numchil"];
+		}
+		$res->free();
+	}
 
 	$sql = "SELECT i_id, i_name, i_file, i_isdead, i_gedcom, i_letter, i_surname, n_letter, n_name, n_surname, n_letter, n_type FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND n_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
 	if (!$SHOW_MARRIED_NAMES) $sql .= "AND n_type!='C' ";
