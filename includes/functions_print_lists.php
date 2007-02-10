@@ -415,7 +415,9 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "&nbsp;</td>";
 		//-- Number of children
 		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$person->getNumberOfChildren()."</a>";
+		if ($person->disp) {
+			echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$person->getNumberOfChildren()."</a>";
+		}
 		echo "</td>";
 		//-- Death date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";

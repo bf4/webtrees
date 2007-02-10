@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1656671 ] Indis missing from Indi list (canajun2eh)
  - Fixed reporting of aunt/uncle by marriage relationship descriptions (cozensweb)
  - Fixed [ 1635406 ] RTL mails and new user registration pages (canajun2eh)
  - Fixed [ 1646192 ] Log File - pageview count posting error (canajun2eh)
