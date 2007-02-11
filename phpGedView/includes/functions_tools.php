@@ -5,7 +5,7 @@
  * $Id$
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,40 @@ if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
 }
 
 /**
+ * check if Gedcom needs BOM cleanup
+ *
+ * If the first 3 bytes of the GECOM are a Byte Order Mark, the file is UTF-8
+ * and the BOM needs to be stripped.
+ * @return boolean	returns true if we need to cleanup the head, false if we don't
+ * @see BOM_cleanup()
+ */
+function need_BOM_cleanup() {
+	global $fcontents;
+
+	$BOM = chr(0xEF).chr(0xBB).chr(0xBF);
+	if (substr($fcontents,0,3)==$BOM) return true;
+	else return false;
+}
+
+/**
+ * cleanup the BOM
+ *
+ * Removes the BOM from the front of the file.
+ * @return boolean	whether or not the cleanup was successful
+ * @see need_BOM_cleanup()
+ */
+function BOM_cleanup() {
+	global $fcontents;
+
+	$BOM = chr(0xEF).chr(0xBB).chr(0xBF);
+	if (substr($fcontents,0,3)==$BOM) {
+		$fcontents = substr($fcontents, 3);
+		return true;
+	}
+	return false;
+}
+
+/**
  * check if Gedcom needs HEAD cleanup
  *
  * Find where position of the 0 HEAD gedcom start element, if one does not exist then complain
@@ -42,10 +76,12 @@ if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
 function need_head_cleanup() {
 	global $fcontents;
 
+	$BOM = chr(0xEF).chr(0xBB).chr(0xBF);
 	$pos1 = strpos($fcontents, "0 HEAD");
-	//-- don't force BOM cleanup
-	if ($pos1>3) return true;
-	else return false;
+	if ($pos1==0) return false;
+	// Don't report BOM as data preceding 0 HEAD
+	if ($pos1==3 && substr($fcontents,0,3)==$BOM) return false;
+	else return true;
 }
 
 /**

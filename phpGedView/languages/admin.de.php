@@ -3,7 +3,7 @@
  * German texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -102,7 +102,7 @@ $pgv_lang["ansi_to_utf8"]                = "Soll diese ANSI-codierte GEDCOM-Date
 $pgv_lang["apply_privacy"]			= "Datenschutz Einstellungen verwenden?";
 $pgv_lang["back_useradmin"]				= "Zurück zur Benutzerverwaltung";
 $pgv_lang["bytes_read"]                                = "Gelesene Bytes:";
-$pgv_lang["calc_marr_names"]		= "Heiratsnamen Ermittlung in Gang";
+$pgv_lang["calc_marr_names"]		= "Ehenamen Ermittlung in Gang";
 $pgv_lang["can_admin"]					= "darf verwalten";
 $pgv_lang["can_edit"]					= "Zugriffsrechte";
 $pgv_lang["change_id"]                        = "Persönliche ID ändern in:";
@@ -163,15 +163,16 @@ $pgv_lang["ibase"]								= "InterBase";
 $pgv_lang["ifx"]								= "Informix";
 $pgv_lang["img_admin_settings"]                = "Bild-Veränderungs-Konfiguration bearbeiten";
 $pgv_lang["import_complete"]                        = "Import beendet";
-$pgv_lang["import_marr_names"]		= "Heiratsnamen einführen";
-$pgv_lang["import_options"]		= "Import Optionen";
+$pgv_lang["import_marr_names"]		= "Ehenamen einführen";
+$pgv_lang["import_options"]			= "Import Optionen";
 $pgv_lang["import_progress"]        = "Import Fortschritt...";
-$pgv_lang["import_statistics"]	= "Import Statistiken";
+$pgv_lang["import_statistics"]		= "Import Statistiken";
 $pgv_lang["import_time_exceeded"]	= "Die maximale Ausführungszeit wurde erreicht. Drücken Sie unten den <b>Fortsetzen</b> Button zur Wiederaufnahme der Einfuhr der GEDCOM-Datei.";
 $pgv_lang["inc_languages"]			= " Sprachen";
-$pgv_lang["INDEX_DIRECTORY"]					= "Verzeichnis der Index-Dateien";
-$pgv_lang["invalid_dates"]                = "Ungültige Datums Formate entdeckt. Diese werden bei der Korrektur in das von GEDCOM 5.5 erforderliche Format DD MMM YYYY (z.B. 1 JAN 2004) geändert.";
-$pgv_lang["invalid_header"]                = "In der Datei wurden Zeilen vor dem GEDCOM-Header <b>0&nbsp;HEAD</b> entdeckt. Beim Korrigieren werden diese Zeilen gelöscht.";
+$pgv_lang["INDEX_DIRECTORY"]		= "Verzeichnis der Index-Dateien";
+$pgv_lang["invalid_dates"]			= "Ungültige Datums Formate entdeckt. Diese werden bei der Korrektur in das von GEDCOM 5.5 erforderliche Format DD MMM YYYY (z.B. 1 JAN 2004) geändert.";
+$pgv_lang["BOM_detected"] 			= "Byte Order Mark (BOM-Zeichen) am Anfang der Datei entdeckt.  Bei der Korrektur wird das besondere Zeichen entfernt.";
+$pgv_lang["invalid_header"]			= "In der Datei wurden Zeilen vor dem GEDCOM-Header <b>0&nbsp;HEAD</b> entdeckt. Beim Korrigieren werden diese Zeilen gelöscht.";
 $pgv_lang["label_added_servers"]	= "Ferne Server hinzugefügt";
 $pgv_lang["label_banned_servers"]   = "Internetseiten entsprechend deren Adressen abweisen";
 $pgv_lang["label_families"]         = "Familien";

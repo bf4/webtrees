@@ -3,7 +3,7 @@
  * English texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -99,7 +99,7 @@ $pgv_lang["label_add_search_server"]	= "Add IP";
 $pgv_lang["label_add_server"]      		= "Add";
 $pgv_lang["label_ban_server"]			= "Submit";
 $pgv_lang["label_delete"]           	= "Delete";
-$pgv_lang["progress_bars_info"]			= "The status bars below will let you know how the import is progressing.  If the time limit runs out the import will be stopped and you will be asked to press a continue button.  If you don't see a continue button, please go back and enter a smaller time limit value.";
+$pgv_lang["progress_bars_info"]			= "The status bars below will let you know how the Import is progressing.  If the time limit runs out the Import will be stopped and you will be asked to press a <b>Continue</b> button.  If you don't see the <b>Continue</b> button, you must restart the Import with a smaller time limit value.";
 $pgv_lang["upload_replacement"]			= "Upload Replacement";
 $pgv_lang["about_user"]					= "You must first create your main administrative user.  This user will have privileges to update the configuration files, view private data, and create other users.";
 $pgv_lang["access"]						= "Access";
@@ -192,6 +192,7 @@ $pgv_lang["import_time_exceeded"]				= "The execution time limit was reached.  C
 $pgv_lang["inc_languages"]						= " Languages";
 $pgv_lang["INDEX_DIRECTORY"]					= "Index file directory";
 $pgv_lang["invalid_dates"]						= "Detected invalid date formats, on cleanup these will be changed to format of DD MMM YYYY (eg. 1 JAN 2004).";
+$pgv_lang["BOM_detected"] 						= "A Byte Order Mark (BOM) was detected at the beginning of the file. On cleanup, this special code will be removed.";
 $pgv_lang["invalid_header"] 					= "Detected lines before the GEDCOM header <b>0&nbsp;HEAD</b>.  On cleanup, these lines will be removed.";
 $pgv_lang["label_add_server"]  					= "Add";
 $pgv_lang["label_add_search_server"]			= "Add IP";
