@@ -335,6 +335,7 @@ function import_record($indirec, $update = false) {
 								$indirec .= "\r\n1 DATE " . date("d") . " " . date("M") . " " . date("Y");
 							}
 						}
+						if ($gid=="") $gid = $type;
 						$sql = "INSERT INTO " . $TBLPREFIX . "other VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($type) . "','" . $DBCONN->escapeSimple($indirec) . "')";
 						$res = dbquery($sql);
 

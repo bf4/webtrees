@@ -213,6 +213,7 @@ if ($cleanup_needed == "cleanup_needed" && $continue == $pgv_lang["del_proceed"]
 
 	$filechanged = false;
 	if (file_is_writeable($GEDCOMS[$GEDFILENAME]["path"]) && (file_exists($GEDCOMS[$GEDFILENAME]["path"]))) {
+		$l_BOMcleanup = false;
 		$l_headcleanup = false;
 		$l_macfilecleanup = false;
 		$l_lineendingscleanup = false;
@@ -235,6 +236,11 @@ if ($cleanup_needed == "cleanup_needed" && $continue == $pgv_lang["del_proceed"]
 			while ((!feof($fp)) && ($byte != $lineend)) {
 				$byte = fread($fp, 1);
 				$fcontents .= $byte;
+			}
+
+			if (!$l_BOMcleanup && need_BOM_cleanup()) {
+				BOM_cleanup();
+				$l_BOMcleanup = true;
 			}
 
 			if (!$l_headcleanup && need_head_cleanup()) {
@@ -561,6 +567,7 @@ if ($verify == "validate_form") {
 				unlink($bakfile);
 			$bakfile = false;
 		}
+		$l_BOMcleanup = false;
 		$l_headcleanup = false;
 		$l_macfilecleanup = false;
 		$l_lineendingscleanup = false;
@@ -571,6 +578,8 @@ if ($verify == "validate_form") {
 		//-- read the gedcom and test it in 8KB chunks
 		while (!feof($fp)) {
 			$fcontents = fread($fp, 1024 * 8);
+			if (!$l_BOMcleanup && need_BOM_cleanup())
+				$l_BOMcleanup = true;
 			if (!$l_headcleanup && need_head_cleanup())
 				$l_headcleanup = true;
 			if (!$l_macfilecleanup && need_macfile_cleanup())
@@ -588,7 +597,7 @@ if ($verify == "validate_form") {
 
 		if (!isset ($cleanup_needed))
 			$cleanup_needed = false;
-		if (!$l_datecleanup && !$l_isansi && !$l_headcleanup && !$l_macfilecleanup && !$l_placecleanup && !$l_lineendingscleanup) {
+		if (!$l_datecleanup && !$l_isansi && !$l_BOMcleanup && !$l_headcleanup && !$l_macfilecleanup && !$l_placecleanup && !$l_lineendingscleanup) {
 			print $pgv_lang["valid_gedcom"];
 			print "</td></tr>";
 			$import = true;
@@ -599,7 +608,14 @@ if ($verify == "validate_form") {
 				print "<span class=\"error\">".str_replace("#GEDCOM#", $GEDCOM, $pgv_lang["error_header_write"])."</span>\n";
 				print "</td></tr>";
 			}
-			// NOTE: Check for head cleanu
+			// NOTE: Check for BOM cleanup
+			if ($l_BOMcleanup) {
+				print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
+				print_help_link("BOM_detected_help", "qm", "BOM_detected");
+				print "<span class=\"error\">".$pgv_lang["BOM_detected"]."</span>\n";
+				print "</td></tr>";
+			}
+			// NOTE: Check for head cleanup
 			if ($l_headcleanup) {
 				print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
 				print_help_link("invalid_header_help", "qm", "invalid_header");
@@ -738,14 +754,15 @@ if ($import == true) {
 		print "<option value=\"no\" selected=\"selected\">".$pgv_lang["no"]."</option>\n</select>";
 	}
 	print "</td></tr>";
+	if (empty($keepmedia)) $keepmedia = false;
 	?>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php print_help_link("keep_media_help", "qm", "keep_media"); print $pgv_lang["keep_media"];?></td>
 		<td class="optionbox">
 			<select name="keepmedia">
-				<option value="no"><?php print $pgv_lang["no"]; ?></option>
-				<option value="yes"><?php print $pgv_lang["yes"]; ?></option>
+				<option value="yes" <?php if ($keepmedia) print "selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
+				<option value="no" <?php if (!$keepmedia) print "selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
 			</select>
 		</td>
 	</tr>
