@@ -1067,6 +1067,10 @@ function create_families_table() {
 	$res = dbquery($sql);
 	$sql = "CREATE INDEX fam_file ON " . $TBLPREFIX . "families (f_file)";
 	$res = dbquery($sql);
+	$sql = "CREATE INDEX fam_husb ON " . $TBLPREFIX . "families (f_husb)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX fam_wife ON " . $TBLPREFIX . "families (f_wife)";
+	$res = dbquery($sql);
 
 	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_fams"] . "<br />\n";
 }
