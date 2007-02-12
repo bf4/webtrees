@@ -623,12 +623,12 @@ else if ($action=="addnewsource") {
 					$parts = preg_split("/,/", $INDI_FACTS_ADD);
 					foreach($parts as $p=>$key) {
 						?><option value="<?php print $key; ?>"><?php print $factarray[$key]. " ($key)"; ?></option>
-					<?
+					<?php
 					}
 					$parts = preg_split("/,/", $FAM_FACTS_ADD);
 					foreach($parts as $p=>$key) {
 						?><option value="<?php print $key; ?>"><?php print $factarray[$key]. " ($key)"; ?></option>
-					<?
+					<?php
 					}
 					?>
 				</select></td>
