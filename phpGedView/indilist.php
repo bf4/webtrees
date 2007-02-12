@@ -58,8 +58,7 @@ else {
 if (empty($show_all)) $show_all = "no";
 if (empty($show_all_firstnames)) $show_all_firstnames = "no";
 
-$minNamesPerColumn = 8;		// Number of names required before list switches to two columns
-$sublistTrigger = 500;		// Number of names required before list starts sub-listing by first name
+$sublistTrigger = 200;		// Number of names required before list starts sub-listing by first name
 
 // Remove slashes
 $lrm = chr(0xE2).chr(0x80).chr(0x8E);
@@ -364,7 +363,7 @@ else {
 						}
 					}
 				}
-				if ($trueHit && $firstname_alpha) {
+				if ($trueHit && $firstname_alpha && $show_all_firstnames=="no") {
 					// Make sure we only display true "hits" on the first name
 					$trueHit = false;
 					$firstLetter = get_first_letter($name[0]);

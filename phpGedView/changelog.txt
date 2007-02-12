@@ -9,6 +9,8 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1657883 ] 4.1b4 (SVN 839): Indi list "all" option doesn't work (canajun2eh)
+ - Fixed [ 1657189 ] 4.1 B4 (837) Inefficient database query on Indi list (canajun2eh)
  - Fixed [ 1655947 ] 4.1 b4 (SVN 833): Import does not skip BOM (canajun2eh)
  - Fixed [ 1656671 ] Indis missing from Indi list (canajun2eh)
  - Fixed reporting of aunt/uncle by marriage relationship descriptions (cozensweb)
