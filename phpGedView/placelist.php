@@ -3,7 +3,7 @@
  * Displays a place hierachy
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -268,7 +268,6 @@ if ($display=="hierarchy") {
 			print "</td></tr><tr><td class=\"list_value\"><ul>\n\t\t\t";
 		}
 
-//		print "<li ";
 		if (begRTLText($value))
 			 print "<li class=\"rtl\" dir=\"rtl\"";
 		else print "<li class=\"ltr\" dir=\"ltr\"";
@@ -340,127 +339,10 @@ if ($level > 0) {
 			}
 		}
 
-		/** DEPRECATED
-		print "\n\t<br /><br /><table class=\"list_table $TEXT_DIRECTION\">\n\t\t<tr>";
-		$ci = count($myindilist);
-		$cs = count($mysourcelist);
-		$cf = count($myfamlist);
-		if ($ci>0) print "<td class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["individuals"]."</td>";
-		if ($cs>0) print "<td class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["sources"]."</td>";
-		if ($cf>0) print "<td class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sfamily"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["families"]."</td>";
-		$i=0;
-//		$pass = FALSE;
-		$indisurnames = array();
-		foreach($myindilist as $gid=>$indi) {
-//			if (showLivingNameByID($gid)||displayDetailsByID($gid)) {
-				$name = trim($indi);
-				$names = preg_split("/,/", $name);
-				$indi = check_NN($names);
-				$indisurnames[$gid] = array();
-				$indisurnames[$gid]["name"] = $indi;
-				$indisurnames[$gid]["gid"] = $gid;
-//			}
-//			else {
-//				$pass = TRUE;
-//			}
-		}
-		print "</tr><tr>";
-		if ($ci>0) {
-			uasort($indisurnames, "itemsort");
-			print "\n\t\t<td class=\"list_value_wrap\">";
-			print "\n<ul>";
-			foreach ($indisurnames as $indexval => $value) {
-	    		print_list_person($value["gid"], array($value["name"], $GEDCOM));
-				$i++;
-			}
-			print "\n</ul>";
-			print "\n\t\t</td>\n\t\t";
-		}
-		if ($cs>0) {
-			print "<td class=\"list_value_wrap\">";
-			print "\n<ul>";
-			asort($mysourcelist);
-			$i=0;
-			foreach ($mysourcelist as $key => $value) {
-			    print "\n\t\t\t";
-//			    print "<li ";
-			    if (begRTLText($value))
-			         print "<li class=\"rtl\" dir=\"rtl\"";
-		        else print "<li class=\"ltr\" dir=\"ltr\"";
-			    print "type=\"circle\"><a href=\"source.php?sid=$key\"><span class=\"list_item\">".PrintReady($value)."</span></a></li>\n";
-			    $i++;
-			}
-			print "\n</ul>";
-			print "<br />\n\t\t</td>\n\t\t";
-		}
-		$surnames = array();
-		foreach($myfamlist as $gid=>$fam) {
-			// Added space to regexp after z to also remove prefixes
-			$name = preg_replace(array("/ [jJsS][rR]\.?,/", "/ I+,/", "/^[a-z. ]* /"), array(",",",",""), $fam);
-			$name = trim($name);
-			$names = preg_split("/[,+]/", $name);
-			$surname = $names[0];
-			$firstname = "";
-			if (isset($names[1])) $firstname = trim($names[1]);
-			else $surname = "";
-			$surname = str2upper(trim($surname));
-			if (!isset($surnames[$surname.$firstname.$gid])) {
-				$surnames[$surname.$firstname.$gid] = array();
-				// Convert names again to include prefixes for displaying
-				$name = preg_replace(array("/ [jJsS][rR]\.?,/", "/ I+,/"), array(",",","), $fam);
-				$names = preg_split("/[,+]/", $name);
-				$fam = check_NN($names);
-				$surnames[$surname.$firstname.$gid]["name"] = $fam;
-				$surnames[$surname.$firstname.$gid]["gid"] = $gid;
-			}
-		}
-		$i=0;
-		if (isset($surnames)) $ct=count($surnames);
-		if ($ct>0) {
-			uasort($surnames, "itemsort");
-			reset($surnames);
-			print "<td class=\"list_value_wrap\">";
-			print "\n<ul>";
-			foreach ($surnames as $indexval => $value) {
-				print_list_family($value["gid"], array($value["name"], $GEDCOM));
-				$i++;
-			}
-			print "</ul></td>";
-		}
-		print "\n\t\t</tr><tr>";
-		if ($ci>0) {
-			print "<td>";
-			print $pgv_lang["total_indis"]." ".$ci;
-			if ($indi_private>0) print "&nbsp;(".$pgv_lang["private"]." ".count($indi_private).")";
-			if ($indi_hide>0) {
-				print "&nbsp;--&nbsp;";
-				print $pgv_lang["hidden"]." ".count($indi_hide);
-				print_help_link("privacy_error_help", "qm");
-			}
-			print "</td>\n";
-		}
-		if ($cs>0) {
-			print "<td>";
-			print $pgv_lang["total_sources"]." ".$cs;
-			print "</td>\n";
-		}
-		if ($cf>0) {
-			print "<td>";
-			print $pgv_lang["total_fams"]." ".$cf;
-			if ($fam_private>0) print "&nbsp;(".$pgv_lang["private"]." ".count($fam_private).")";
-			if ($fam_hide>0) {
-				print "&nbsp;--&nbsp;";
-				print $pgv_lang["hidden"]." ".count($fam_hide);
-				print_help_link("privacy_error_help", "qm");
-			}
-			print "</td>\n";
-		}
-		print "</tr>\n\t</table>";
-		print_help_link("ppp_name_list_help", "qm");
-		**/
 		print "<br />";
 
 		$title = ""; foreach ($parent as $k=>$v) $title = $v.", ".$title;
+		$title = substr($title, 0, -2)." ";
 		print_indi_table($myindilist, $pgv_lang["individuals"]." @ ".$title);
 		print_fam_table($myfamlist, $pgv_lang["families"]." @ ".$title);
 		print_sour_table($mysourcelist, $pgv_lang["sources"]." @ ".$title);
@@ -502,7 +384,6 @@ if ($display=="list") {
 				if ($place=="") $revplace .= $pgv_lang["unknown"];
 				else $revplace .= $place;
 			}
-//			print "<li";
 			if (begRTLText($revplace))
 			     print "<li class=\"rtl\" dir=\"rtl\"";
 		    else print "<li class=\"ltr\" dir=\"ltr\"";
