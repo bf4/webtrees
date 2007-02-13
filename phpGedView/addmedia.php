@@ -559,6 +559,7 @@ if ($action=="showmedia") {
 if ($action=="showmediaform") {
 	if (!isset($pid)) $pid = "";
 	if (empty($level)) $level = 1;
+	if (!isset($linktoid)) $linktoid = "";
 	show_media_form($pid, "newentry", $filename, $linktoid, $level);
 }
 

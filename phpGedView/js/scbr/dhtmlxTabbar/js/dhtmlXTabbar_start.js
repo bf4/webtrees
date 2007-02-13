@@ -14,7 +14,7 @@ This version of Software is free for using under GPL. For other purposes please 
 
  var w=new dhtmlXTabBar(id,n.getAttribute("mode")||"top",n.getAttribute("tabheight")||20);
 
- w.setImagePath(n.getAttribute("imgpath")||"js/scbr.com/dhtmlXTabbar/imgs/"); // PGV
+ w.setImagePath(n.getAttribute("imgpath")||"js/scbr/dhtmlXTabbar/imgs/"); // PGV
 
  var acs=n.getAttribute("margin");
  if(acs!=null)w._margin=acs;

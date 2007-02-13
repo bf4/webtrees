@@ -1380,7 +1380,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 													foreach($val[2] as $inferKey=>$inferenceObj)
 													{
 														
-															if($val[1] === $pgv_lang['All'] || empty($val[1]))
+															if($val[1] === $pgv_lang['All'] || empty($val[1]) || $val[1] === "PLAC")
 															{
 															
 																if(strstr($inferenceObj->getFactTag(),$val[0]) && $inferenceObj->getAverage() > 0)
@@ -1513,31 +1513,31 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	{
 		global $pgv_lang;
 		if($fact == "BIRT:PLAC")
-		{	$percentage = sprintf("%.2f%%",$percentage);
+		{	$percentage = sprintf("%.2f%%",$percentage * 100);
 			$tempOut = $pgv_lang["InferIndvBirthPlac"];
 			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
 			return $tempOut;
 		}
 		if($fact == "DEAT:PLAC")
-		{	$percentage = sprintf("%.2f%%",$percentage);
+		{	$percentage = sprintf("%.2f%%",$percentage * 100);
 			$tempOut = $pgv_lang["InferIndvDeathPlac"];
 			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
 			return $tempOut;
 		}
 		if($fact == "SURN")
-		{	$percentage = sprintf("%.2f%%",$percentage);
+		{	$percentage = sprintf("%.2f%%",$percentage * 100);
 			$tempOut = $pgv_lang["InferIndvSurn"];
 			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
 			return $tempOut;
 		}
 		if($fact == "MARR:PLAC")
-		{	$percentage = sprintf("%.2f%%",$percentage);
+		{	$percentage = sprintf("%.2f%%",$percentage * 100);
 			$tempOut = $pgv_lang["InferIndvMarriagePlace"];
 			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
 			return $tempOut;
 		}
 		if($fact == "GIVN")
-		{	$percentage = sprintf("%.2f%%",$percentage);
+		{	$percentage = sprintf("%.2f%%",$percentage * 100);
 			$tempOut = $pgv_lang["InferIndvGivn"];
 			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
 			return $tempOut;

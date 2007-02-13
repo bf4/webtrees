@@ -647,7 +647,6 @@ END_OUT;
 			}
 			
 			function build_table() {
-				global $pgv_lang;
 				var tempdata = document.getElementById('tempdata');
 				if (!tempdata) return;
 				if (facts.length==0) {
@@ -657,7 +656,7 @@ END_OUT;
 		
 					out = '<table class="facts_table"><tr><td colspan="3" class="topbottombar">${pgv_lang["ra_facts"]}</td></tr>';
 					out += '<tr><td class="descriptionbox">${pgv_lang["ra_fact"]}</td><td class="descriptionbox">${pgv_lang["people"]}</td><td class="descriptionbox">${pgv_lang["ra_remove"]}</td></tr>';
-	 				
+	 			for(i=0; i<facts.length; i++) {	
 	 				//alert(facts[i]);
 					out += '<tr><td id="factname'+i+'" class="optionbox">'+factnames[i];
 					out += '<br />';
