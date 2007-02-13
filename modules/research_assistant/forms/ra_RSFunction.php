@@ -345,7 +345,7 @@ require_once("includes/person_class.php");
 						{
 							if($row['pr_count'] != 0)
 							{
-								$tempAvg = $row['pr_count'] / $row['pr_matches'];
+								$tempAvg = $row['pr_matches'] / $row['pr_count'];
 							}
 							else
 							{

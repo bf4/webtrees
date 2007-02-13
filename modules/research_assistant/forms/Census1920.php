@@ -460,6 +460,7 @@ return false;}return true;}
 		$personid = "";
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
+			
 			if(!empty($_POST["newPerson".$number]))
 			{
 				$tempPerson = $this->createPerson($number);
@@ -481,24 +482,25 @@ return false;}return true;}
 		$out = $this->header("module.php?mod=research_assistant&form=Census1920&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1920 United States Federal Census");
 		$out .= $this->editFactsForm(false);
 		$out .= $this->footer();
+			$citation = $this->getSourceCitationData();
 		return $out;
 		}
 		else
 		{
-			
 		}
 	}
 	
 		function editFactsForm($printButton = true)
 	{
 		global $factarray, $pgv_lang;
-		
 		$facts = $this->getFactData();
 		$citation = $this->getSourceCitationData();
 		$out = parent::editFactsForm(false);
 		$rows = $citation['ts_array']['rows'];
-		$inferFacts = $this->inferFacts($rows);
 		
+		$inferFacts = $this->inferFacts($rows);
+		if(isset($inferFacts))
+		{
 		if(!empty($inferFacts))
 		{
 			
@@ -533,9 +535,12 @@ return false;}return true;}
 				
 				}
 		}
-				
-			
-		
+		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value='.$pgv_lang["complete"].'></td></tr>'; 
+		return $out;
+	}
+		}
+	else
+		{
 		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value='.$pgv_lang["complete"].'></td></tr>'; 
 		return $out;
 	}
@@ -573,7 +578,14 @@ return false;}return true;}
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
 			$inferredFacts = array();
+			if(isset($rows[$number]["personid"]))
+			{
 			$person = Person::getInstance($rows[$number]["personid"]);
+			}
+			else
+			{
+			 	$person = "";
+			}
 			if(!empty($person))
 			{
 				$bdate = $person->getBirthYear();
@@ -687,7 +699,14 @@ return false;}return true;}
 			$people[$person->getXref()] = $inferredFacts;
 			}
 		}
+		if(count($people) > 0)
+		{
 		return $people;
+		}
+		else
+		{
+		return null;
+		}
 		
 		
 	}
