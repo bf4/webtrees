@@ -44,6 +44,14 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
++$pgv_lang["INDI_FACTS_QUICK"]        14 Feb        2007    A
++$pgv_lang["INDI_FACTS_QUICK_help"]	  14 Feb        2007    A
++$pgv_lang["FAM_FACTS_QUICK"]         14 Feb        2007    A
++$pgv_lang["FAM_FACTS_QUICK_help"]	  14 Feb        2007    A
++$pgv_lang["SOUR_FACTS_QUICK"]        14 Feb        2007    A
++$pgv_lang["SOUR_FACTS_QUICK_help"]	  14 Feb        2007    A
++$pgv_lang["REPO_FACTS_QUICK"]        14 Feb        2007    A
++$pgv_lang["REPO_FACTS_QUICK_help"]	  14 Feb        2007    A
 *$pgv_lang["ENABLE_RSS_help"]						8 Jan 2007				W
 *$pgv_lang["RSS_FORMAT_help"]						8 Jan 2007				W
 *$pgv_lang["RSS_FORMAT_help"]						7 Jan 2007				w
