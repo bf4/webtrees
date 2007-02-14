@@ -1385,11 +1385,15 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 															
 																if(strstr($inferenceObj->getFactTag(),$val[0]) && $inferenceObj->getAverage() > 0)
 																{
+																	if($inferenceObj->getFactValue() != "")
+																	{
+																		$additionalInfer[] = $inferenceObj;
+																	}
+																	
 																	if($highest < $inferenceObj->getAverage() && $inferenceObj->getFactValue() != "")
 																	{
 																		$compiled = array();
 																		$highest = $inferenceObj->getAverage();
-																		$additionalInfer[] = $inferenceObj;
 																		$compiled[0] = $this->decideInferSentence($inferenceObj->getAverage(),$inferenceObj->getFactTag());
 																		$compiled[0] .= " <i>".$inferenceObj->getFactValue()."</i>";
 																		$compiled[1] = $inferenceObj->getFactTag();
@@ -1408,17 +1412,20 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 													{
 														$additionalFacts = false;
 														$tempAdditional = "";
+		
 														foreach($additionalInfer as $addKey=>$addVal)
 														{
+															
 															if($addVal->getFactValue() !== $compiled[3])
 															{
 																$additionalFacts = true;
-																$tempAdditional .= '<br /><a href="" class="showitTwo">'.$pgv_lang["More"].'<span>'.$this->decideInferSentence($addVal->getAverage(),$addVal->getFactTag());
+																$tempAdditional .= $this->decideInferSentence($addVal->getAverage(),$addVal->getFactTag());
 																$tempAdditional .= ' <i>'.$addVal->getFactValue().'</i><br />';
 															}
 														}
 														if($additionalFacts)
 														{
+															$out .= '<br /><a href="" class="showit">'.$pgv_lang["More"].'<span>';
 															$out .= $tempAdditional;
 														}
 													}
