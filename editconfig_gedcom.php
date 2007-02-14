@@ -289,6 +289,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$EXPAND_RELATIVES_EVENTS\s*=\s*.*;/', "\$EXPAND_RELATIVES_EVENTS = ".$boolarray[$_POST["NEW_EXPAND_RELATIVES_EVENTS"]].";", $configtext);
 	$configtext = preg_replace('/\$EXPAND_SOURCES\s*=\s*.*;/', "\$EXPAND_SOURCES = ".$boolarray[$_POST["NEW_EXPAND_SOURCES"]].";", $configtext);
 	$configtext = preg_replace('/\$FAM_FACTS_ADD\s*=\s*".*";/', "\$FAM_FACTS_ADD = \"".$_POST["NEW_FAM_FACTS_ADD"]."\";", $configtext);
+	$configtext = preg_replace('/\$FAM_FACTS_QUICK\s*=\s*".*";/', "\$FAM_FACTS_QUICK = \"".$_POST["NEW_FAM_FACTS_QUICK"]."\";", $configtext);
 	$configtext = preg_replace('/\$FAM_FACTS_UNIQUE\s*=\s*".*";/', "\$FAM_FACTS_UNIQUE = \"".$_POST["NEW_FAM_FACTS_UNIQUE"]."\";", $configtext);
 	$configtext = preg_replace('/\$FAM_ID_PREFIX\s*=\s*".*";/', "\$FAM_ID_PREFIX = \"".$_POST["NEW_FAM_ID_PREFIX"]."\";", $configtext);
 	$configtext = preg_replace('/\$FAVICON\s*=\s*".*";/', "\$FAVICON = \"".$_POST["NEW_FAVICON"]."\";", $configtext);
@@ -300,6 +301,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$HOME_SITE_TEXT\s*=\s*".*";/', "\$HOME_SITE_TEXT = \"".$_POST["NEW_HOME_SITE_TEXT"]."\";", $configtext);
 	$configtext = preg_replace('/\$HOME_SITE_URL\s*=\s*".*";/', "\$HOME_SITE_URL = \"".$_POST["NEW_HOME_SITE_URL"]."\";", $configtext);
 	$configtext = preg_replace('/\$INDI_FACTS_ADD\s*=\s*".*";/', "\$INDI_FACTS_ADD = \"".$_POST["NEW_INDI_FACTS_ADD"]."\";", $configtext);
+	$configtext = preg_replace('/\$INDI_FACTS_QUICK\s*=\s*".*";/', "\$INDI_FACTS_QUICK = \"".$_POST["NEW_INDI_FACTS_QUICK"]."\";", $configtext);
 	$configtext = preg_replace('/\$INDI_FACTS_UNIQUE\s*=\s*".*";/', "\$INDI_FACTS_UNIQUE = \"".$_POST["NEW_INDI_FACTS_UNIQUE"]."\";", $configtext);
 	$configtext = preg_replace('/\$JEWISH_ASHKENAZ_PRONUNCIATION\s*=\s*.*;/', "\$JEWISH_ASHKENAZ_PRONUNCIATION = ".$boolarray[$_POST["NEW_JEWISH_ASHKENAZ_PRONUNCIATION"]].";", $configtext);
 	$configtext = preg_replace('/\$LANGUAGE\s*=\s*".*";/', "\$LANGUAGE = \"".$_POST["GEDCOMLANG"]."\";", $configtext);
@@ -333,6 +335,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$QUICK_REQUIRED_FACTS\s*=\s*".*";/', "\$QUICK_REQUIRED_FACTS = \"".$_POST["NEW_QUICK_REQUIRED_FACTS"]."\";", $configtext);
 	$configtext = preg_replace('/\$QUICK_REQUIRED_FAMFACTS\s*=\s*".*";/', "\$QUICK_REQUIRED_FAMFACTS = \"".$_POST["NEW_QUICK_REQUIRED_FAMFACTS"]."\";", $configtext);
 	$configtext = preg_replace('/\$REPO_FACTS_ADD\s*=\s*".*";/', "\$REPO_FACTS_ADD = \"".$_POST["NEW_REPO_FACTS_ADD"]."\";", $configtext);
+	$configtext = preg_replace('/\$REPO_FACTS_QUICK\s*=\s*".*";/', "\$REPO_FACTS_QUICK = \"".$_POST["NEW_REPO_FACTS_QUICK"]."\";", $configtext);
 	$configtext = preg_replace('/\$REPO_FACTS_UNIQUE\s*=\s*".*";/', "\$REPO_FACTS_UNIQUE = \"".$_POST["NEW_REPO_FACTS_UNIQUE"]."\";", $configtext);
 	$configtext = preg_replace('/\$REPO_ID_PREFIX\s*=\s*".*";/', "\$REPO_ID_PREFIX = \"".$_POST["NEW_REPO_ID_PREFIX"]."\";", $configtext);
 	$configtext = preg_replace('/\$REQUIRE_AUTHENTICATION\s*=\s*.*;/', "\$REQUIRE_AUTHENTICATION = ".$boolarray[$_POST["NEW_REQUIRE_AUTHENTICATION"]].";", $configtext);
@@ -355,6 +358,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$SHOW_SPIDER_TAGLINE\s*=\s*.*;/', "\$SHOW_SPIDER_TAGLINE = ".$boolarray[$_POST["NEW_SHOW_SPIDER_TAGLINE"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_STATS\s*=\s*.*;/', "\$SHOW_STATS = ".$boolarray[$_POST["NEW_SHOW_STATS"]].";", $configtext);
 	$configtext = preg_replace('/\$SOUR_FACTS_ADD\s*=\s*".*";/', "\$SOUR_FACTS_ADD = \"".$_POST["NEW_SOUR_FACTS_ADD"]."\";", $configtext);
+	$configtext = preg_replace('/\$SOUR_FACTS_QUICK\s*=\s*".*";/', "\$SOUR_FACTS_QUICK = \"".$_POST["NEW_SOUR_FACTS_QUICK"]."\";", $configtext);
 	$configtext = preg_replace('/\$SOUR_FACTS_UNIQUE\s*=\s*".*";/', "\$SOUR_FACTS_UNIQUE = \"".$_POST["NEW_SOUR_FACTS_UNIQUE"]."\";", $configtext);
 	$configtext = preg_replace('/\$SOURCE_ID_PREFIX\s*=\s*".*";/', "\$SOURCE_ID_PREFIX = \"".$_POST["NEW_SOURCE_ID_PREFIX"]."\";", $configtext);
 	$configtext = preg_replace('/\$SPLIT_PLACES\s*=\s*.*;/', "\$SPLIT_PLACES = ".$boolarray[$_POST["NEW_SPLIT_PLACES"]].";", $configtext);
@@ -1346,12 +1350,20 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["editopt_conf"]."\" onclick=\"exp
 		<td class="optionbox"><input type="text" name="NEW_INDI_FACTS_UNIQUE" value="<?php print $INDI_FACTS_UNIQUE; ?>" size="80" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('INDI_FACTS_UNIQUE_help');" /></td>
 	</tr>
 	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("INDI_FACTS_QUICK_help", "qm", "INDI_FACTS_QUICK"); print $pgv_lang["INDI_FACTS_QUICK"];?></td>
+		<td class="optionbox"><input type="text" name="NEW_INDI_FACTS_QUICK" value="<?php print $INDI_FACTS_QUICK; ?>" size="80" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('INDI_FACTS_QUICK_help');" /></td>
+	</tr>
+	<tr>
 		<td class="descriptionbox wrap"><?php print_help_link("FAM_FACTS_ADD_help", "qm", "FAM_FACTS_ADD"); print $pgv_lang["FAM_FACTS_ADD"];?></td>
 		<td class="optionbox"><input type="text" name="NEW_FAM_FACTS_ADD" value="<?php print $FAM_FACTS_ADD; ?>" size="80" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('FAM_FACTS_ADD_help');" /></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap"><?php print_help_link("FAM_FACTS_UNIQUE_help", "qm", "FAM_FACTS_UNIQUE"); print $pgv_lang["FAM_FACTS_UNIQUE"];?></td>
 		<td class="optionbox"><input type="text" name="NEW_FAM_FACTS_UNIQUE" value="<?php print $FAM_FACTS_UNIQUE; ?>" size="80" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('FAM_FACTS_UNIQUE_help');" /></td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("FAM_FACTS_QUICK_help", "qm", "FAM_FACTS_QUICK"); print $pgv_lang["FAM_FACTS_QUICK"];?></td>
+		<td class="optionbox"><input type="text" name="NEW_FAM_FACTS_QUICK" value="<?php print $FAM_FACTS_QUICK; ?>" size="80" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('FAM_FACTS_QUICK_help');" /></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap"><?php print_help_link("SOUR_FACTS_ADD_help", "qm", "SOUR_FACTS_ADD"); print $pgv_lang["SOUR_FACTS_ADD"];?></td>
@@ -1362,12 +1374,20 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["editopt_conf"]."\" onclick=\"exp
 		<td class="optionbox"><input type="text" name="NEW_SOUR_FACTS_UNIQUE" value="<?php print $SOUR_FACTS_UNIQUE; ?>" size="80" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SOUR_FACTS_UNIQUE_help');" /></td>
 	</tr>
 	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("SOUR_FACTS_QUICK_help", "qm", "SOUR_FACTS_QUICK"); print $pgv_lang["SOUR_FACTS_QUICK"];?></td>
+		<td class="optionbox"><input type="text" name="NEW_SOUR_FACTS_QUICK" value="<?php print $SOUR_FACTS_QUICK; ?>" size="80" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SOUR_FACTS_QUICK_help');" /></td>
+	</tr>
+	<tr>
 		<td class="descriptionbox wrap"><?php print_help_link("REPO_FACTS_ADD_help", "qm", "REPO_FACTS_ADD"); print $pgv_lang["REPO_FACTS_ADD"];?></td>
 		<td class="optionbox"><input type="text" name="NEW_REPO_FACTS_ADD" value="<?php print $REPO_FACTS_ADD; ?>" size="80" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('REPO_FACTS_ADD_help');" /></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap"><?php print_help_link("REPO_FACTS_UNIQUE_help", "qm", "REPO_FACTS_UNIQUE"); print $pgv_lang["REPO_FACTS_UNIQUE"];?></td>
 		<td class="optionbox"><input type="text" name="NEW_REPO_FACTS_UNIQUE" value="<?php print $REPO_FACTS_UNIQUE; ?>" size="80" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('REPO_FACTS_UNIQUE_help');" /></td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("REPO_FACTS_QUICK_help", "qm", "REPO_FACTS_QUICK"); print $pgv_lang["REPO_FACTS_QUICK"];?></td>
+		<td class="optionbox"><input type="text" name="NEW_REPO_FACTS_QUICK" value="<?php print $REPO_FACTS_QUICK; ?>" size="80" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('REPO_FACTS_QUICK_help');" /></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap"><?php print_help_link("EDIT_AUTOCLOSE_help", "qm", "EDIT_AUTOCLOSE"); print $pgv_lang["EDIT_AUTOCLOSE"];?></td>
