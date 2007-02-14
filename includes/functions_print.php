@@ -5,7 +5,7 @@
  * Various printing functions used by all scripts and included by the functions.php file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1995,95 +1995,100 @@ function PrintReady($text, $InHeaders=false) {
     //		argument search, in which the second or later arguments can be found in the
     //		<span> or </span> strings.
     if ($HighlightOK) {
-	    if (isset($query)) {
-			$queries = explode(" ", $query);
-	    	$newtext = $text;
-	    	$hasallhits = true;
-		    foreach($queries as $index=>$query1) {
-			    if (preg_match("/(".$query1.")/i", $text)) {
-		    		$newtext = preg_replace("/(".$query1.")/i", "\x01$1\x02", $newtext);
-	    		}
-			else if (preg_match("/(".str2upper($query1).")/", str2upper($text))) {
-				$nlen = strlen($query1);
-				$npos = strpos(str2upper($text), str2upper($query1));
-	    		$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
-	    		$newtext = substr_replace($newtext, "\x01", $npos, 0);
-    		}
-	    		else $hasallhits = false;
-	    	}
-	    	if ($hasallhits) $text = $newtext;
-    	}
-    	if (isset($action) && ($action === "soundex")) {
-	    	if (isset($firstname)) {
-	    		$queries = explode(" ", $firstname);
-	    		$newtext = $text;
-	    		$hasallhits = true;
-		    	foreach($queries as $index=>$query1) {
-			    	if (preg_match("/(".$query1.")/i", $text)) {
-		    			$newtext = preg_replace("/(".$query1.")/i", "\x01$1\x02", $newtext);
-	    			}
-					else if (preg_match("/(".str2upper($query1).")/", str2upper($text))) {
+			if (isset($query)) {
+				$queries = explode(" ", $query);
+				$newtext = $text;
+				$hasallhits = true;
+				foreach($queries as $index=>$query1) {
+					$query1esc=addcslashes($query1, '/');
+					if (preg_match("/(".$query1esc.")/i", $text)) {
+						$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
+					}
+					else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
 						$nlen = strlen($query1);
 						$npos = strpos(str2upper($text), str2upper($query1));
-			    		$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
-			    		$newtext = substr_replace($newtext, "\x01", $npos, 0);
-		    		}
-	    			else $hasallhits = false;
-	    		}
-	    		if ($hasallhits) $text = $newtext;
-    		}
-    		if (isset($lastname)) {
-	    		$queries = explode(" ", $lastname);
-	    		$newtext = $text;
-	    		$hasallhits = true;
-		    	foreach($queries as $index=>$query1) {
-			    	if (preg_match("/(".$query1.")/i", $text)) {
-		    			$newtext = preg_replace("/(".$query1.")/i", "\x01$1\x02", $newtext);
-	    			}
-					else if (preg_match("/(".str2upper($query1).")/", str2upper($text))) {
-						$nlen = strlen($query1);
-						$npos = strpos(str2upper($text), str2upper($query1));
-			    		$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
-			    		$newtext = substr_replace($newtext, "\x01", $npos, 0);
-		    		}
-	    			else $hasallhits = false;
-	    		}
-	    		if ($hasallhits) $text = $newtext;
-    		}
-    		if (isset($place)) {
-	    		$queries = explode(" ", $place);
-	    		$newtext = $text;
-	    		$hasallhits = true;
-		    	foreach($queries as $index=>$query1) {
-			    	if (preg_match("/(".$query1.")/i", $text)) {
-		    			$newtext = preg_replace("/(".$query1.")/i", "\x01$1\x02", $newtext);
-	    			}
-					else if (preg_match("/(".str2upper($query1).")/", str2upper($text))) {
-						$nlen = strlen($query1);
-						$npos = strpos(str2upper($text), str2upper($query1));
-			    		$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
-			    		$newtext = substr_replace($newtext, "\x01", $npos, 0);
-		    		}
-	    			else $hasallhits = false;
-	    		}
-	    		if ($hasallhits) $text = $newtext;
-    		}
-    		if (isset($year)) {
-	    		$queries = explode(" ", $year);
-	    		$newtext = $text;
-	    		$hasallhits = true;
-		    	foreach($queries as $index=>$query1) {
-			    	if (preg_match("/(".$query1.")/i", $text)) {
-		    			$newtext = preg_replace("/(".$query1.")/i", "\x01$1\x02", $newtext);
-	    			}
-	    			else $hasallhits = false;
-	    		}
-	    		if ($hasallhits) $text = $newtext;
-    		}
-    	}
-    	// All the "Highlight start" and "Highlight end" flags are set:
-    	//		Delay the final clean-up and insertion of proper <span> and </span>
-    	//		until parentheses, braces, and brackets have been processed
+						$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
+						$newtext = substr_replace($newtext, "\x01", $npos, 0);
+					}
+					else $hasallhits = false;
+				}
+				if ($hasallhits) $text = $newtext;
+			}
+			if (isset($action) && ($action === "soundex")) {
+				if (isset($firstname)) {
+					$queries = explode(" ", $firstname);
+					$newtext = $text;
+					$hasallhits = true;
+					foreach($queries as $index=>$query1) {
+						$query1esc=addcslashes($query1, '/');
+						if (preg_match("/(".$query1esc.")/i", $text)) {
+							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
+						}
+						else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
+							$nlen = strlen($query1);
+							$npos = strpos(str2upper($text), str2upper($query1));
+							$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
+							$newtext = substr_replace($newtext, "\x01", $npos, 0);
+						}
+						else $hasallhits = false;
+					}
+					if ($hasallhits) $text = $newtext;
+				}
+				if (isset($lastname)) {
+					$queries = explode(" ", $lastname);
+					$newtext = $text;
+					$hasallhits = true;
+					foreach($queries as $index=>$query1) {
+						$query1esc=addcslashes($query1, '/');
+						if (preg_match("/(".$query1esc.")/i", $text)) {
+							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
+						}
+						else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
+							$nlen = strlen($query1);
+							$npos = strpos(str2upper($text), str2upper($query1));
+							$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
+							$newtext = substr_replace($newtext, "\x01", $npos, 0);
+						}
+						else $hasallhits = false;
+					}
+					if ($hasallhits) $text = $newtext;
+				}
+				if (isset($place)) {
+					$queries = explode(" ", $place);
+					$newtext = $text;
+					$hasallhits = true;
+					foreach($queries as $index=>$query1) {
+						$query1esc=addcslashes($query1, '/');
+						if (preg_match("/(".$query1esc.")/i", $text)) {
+							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
+						}
+						else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
+							$nlen = strlen($query1);
+							$npos = strpos(str2upper($text), str2upper($query1));
+							$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
+							$newtext = substr_replace($newtext, "\x01", $npos, 0);
+						}
+						else $hasallhits = false;
+					}
+					if ($hasallhits) $text = $newtext;
+				}
+				if (isset($year)) {
+					$queries = explode(" ", $year);
+					$newtext = $text;
+					$hasallhits = true;
+					foreach($queries as $index=>$query1) {
+						$query1=addcslashes($query1, '/');
+						if (preg_match("/(".$query1.")/i", $text)) {
+							$newtext = preg_replace("/(".$query1.")/i", "\x01$1\x02", $newtext);
+						}
+						else $hasallhits = false;
+					}
+					if ($hasallhits) $text = $newtext;
+				}
+			}
+			// All the "Highlight start" and "Highlight end" flags are set:
+			//		Delay the final clean-up and insertion of proper <span> and </span>
+			//		until parentheses, braces, and brackets have been processed
     }
 
 	// Look for strings enclosed in parentheses, braces, or brackets.
