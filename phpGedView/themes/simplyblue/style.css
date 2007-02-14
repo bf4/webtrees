@@ -39,6 +39,7 @@ body {
 
 fieldset {
 	margin: 8px 8px 4px 8px;
+
 }
 
 legend {
@@ -1152,7 +1153,7 @@ h4 {
 a.showit {
 	position: relative;
 	z-index: 24;
-	color: black;
+	color: Red;
 	text-decoration: none;
 }
 
