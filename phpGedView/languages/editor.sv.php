@@ -214,5 +214,7 @@ $pgv_lang["upload_successful"]	= "Uppladdning lyckades";
 $pgv_lang["view_change_diff"]	= "Visa förändringar";
 
 $pgv_lang["advanced_name_fields"]	= "Övriga namn (smeknamn, vigselnamn etc.)";
+$pgv_lang["select_events"]			= "Välj händelse";
+$pgv_lang["source_events"]			= "Associera händelse med denna källa";
 
 ?>
