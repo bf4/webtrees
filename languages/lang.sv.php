@@ -1321,5 +1321,8 @@ $pgv_lang["play"]					= "Spela";
 $pgv_lang["stop"]					= "Stopp";
 $pgv_lang["random_media_start_slide"]	= "Starta bildspel när sidan laddas?";
 $pgv_lang["random_media_ajax_controls"]	= "Visa AJAX-kontroller?";
+$pgv_lang["duplicate_username"] 	= "En avändare med detta användarnamn finns redan. Välj ett annat användarnamn.";
+$pgv_lang["cache_life"]				= "Cachefils livslängd";
+$pgv_lang["genealogy"]					= "genealogi";
 $pgv_lang["view_img_details"]		= "Visa bilddetaljer";
 ?>
