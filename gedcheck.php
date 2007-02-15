@@ -160,10 +160,10 @@ $PGV_LINK=array(
 $target=($openinnew==1 ? " target='_new'" : '');
 function pgv_href($tag, $xref, $name="")
 {
-	global $PGV_LINK, $target;
+	global $PGV_LINK, $target, $thisged, $GEDCOMS;
 	$text=($name=="" ? "$tag $xref" : "$name ($xref)");
-	if (isset($PGV_LINK[$tag]))
-		return '<a href='.$PGV_LINK[$tag].str_replace('@','',$xref)."$target>$text</a>";
+	if (isset($PGV_LINK[$tag]) && isset($GEDCOMS[$thisged]))
+		return '<a href='.$PGV_LINK[$tag].str_replace('@','',$xref)."&ged=$thisged"."$target>$text</a>";
 	else
 		return "$tag $xref";
 }
