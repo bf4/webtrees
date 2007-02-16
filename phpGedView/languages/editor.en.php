@@ -155,7 +155,6 @@ $pgv_lang["hebrew_surn"]			= "Hebrew Surname";
 $pgv_lang["hide_changes"]			= "Click here to hide changes.";
 $pgv_lang["highlighted"]			= "Highlighted Image";
 $pgv_lang["illegal_chars"]			= "Blank name or illegal characters in name";
-$pgv_lang["invalid_search_input"] 	= "Please enter a Given name, Last name, or Place in addition to Year";
 $pgv_lang["invalid_search_multisite_input"] = "Please enter one of the following:  Name, Birth Date, Birth Place, Death Date, Death Place, and Sex ";
 $pgv_lang["invalid_search_multisite_input_gender"] = "Please search again with more information than just sex";
 $pgv_lang["label_diff_server"]      = "Different Site";

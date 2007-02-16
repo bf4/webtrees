@@ -112,12 +112,14 @@ print_header($pgv_lang["search"]);
 					message = false;
 				if(message)
 				{
+					<?php if ($SHOW_MULTISITE_SEARCH >= getUserAccessLevel()) { ?>
 					if(sex.length < 1)
 					{
 						alert("<?php print $pgv_lang["invalid_search_multisite_input"]?>");
 						return false;
 					}
 					alert("<?php print $pgv_lang["invalid_search_multisite_input_gender"]?>");
+					<?php } ?>
 					return false;
 				}
 			}
@@ -133,7 +135,8 @@ print_header($pgv_lang["search"]);
 //-->
 </script>
 
-<h2 class="center"><?php print $pgv_lang["search_gedcom"]; ?></h2>
+<h2 class="center"><?php print $controller->getPageTitle(); ?></h2>
+<?php $controller->printResults(); ?>
 <!--	/*************************************************** Search Form Outer Table **************************************************/ -->
 <form method="post" name="searchform" onsubmit="return checknames(this);" action="search.php">
 <input type="hidden" name="action" value="<?php print $controller->action; ?>" />
@@ -580,7 +583,7 @@ else
 </form>
 <br />
 <?php
-$controller->printResults();
+
 echo "<br /><br /><br />";
 print_footer();
 ?>

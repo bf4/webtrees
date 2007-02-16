@@ -106,10 +106,19 @@ switch ($type) {
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
-	function pasteid(id, name) {
+	function pasteid(id, name,thumb) {
+	
+	if(thumb)
+	{
+	window.opener.<?php print $callback; ?>(id,name,thumb);
+		<?php if (!$multiple) print "window.close();"; ?>
+	}
+	else
+	{
 		window.opener.<?php print $callback; ?>(id);
 		if (window.opener.pastename) window.opener.pastename(name);
 		<?php if (!$multiple) print "window.close();"; ?>
+	}
 	}
 
 	var language_filter;
@@ -599,7 +608,7 @@ if ($action=="filter") {
 						if (!$embed){
 							print "<a href=\"javascript:;\" onclick=\"pasteid('".addslashes($media["FILE"])."');\"><span dir=\"ltr\">".$media["FILE"]."</span></a> -- ";
 						}
-						else print "<a href=\"javascript:;\" onclick=\"pasteid('".$media["XREF"]."');\"><span dir=\"ltr\">".$media["FILE"]."</span></a> -- ";
+						else print "<a href=\"javascript:;\" onclick=\"pasteid('".$media["XREF"]."','".$media["TITL"]."','".$media["THUMB"]."');\"><span dir=\"ltr\">".$media["FILE"]."</span></a> -- ";
 						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">".$pgv_lang["view"]."</a><br />";
 						if (!file_exists($media["FILE"]) && !stristr($media["FILE"], "://")) print $media["FILE"]."<br /><span class=\"error\">".$pgv_lang["file_not_exists"]."</span><br />";
 						else if (!stristr($media["FILE"], "://") && !empty($imgsize[0])) {

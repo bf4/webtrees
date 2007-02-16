@@ -103,7 +103,28 @@ class Census1830 extends ra_form {
 //        Start of Table
 		$out = '<tr>
 			<td class="descriptionbox">'.print_help_link("edit_media_help", "qm",'',false,true).$factarray['OBJE'].'</td>
-			<td class="optionbox" colspan="5"><input type="text" name="OBJE" id="OBJE" size="5" value="'.$citation['ts_obje'].'"/>';
+			<td class="optionbox" colspan="5"><input type="hidden" name="OBJE" id="OBJE" value="'.$citation['ts_obje'].'"/>';
+			$out .= "<div id=\"censusPicDiv\" style=\"display";
+			if(!empty($citation['ts_obje']))
+			{
+				$out .= ":block\">";
+				/*@var $picture Media*/
+				$picture = Media::getInstance($citation['ts_obje']);
+				if(!is_null($picture))
+				{	
+					$out .= "<span id=\"censusImgSpan\">".$picture->getTitle().'</span><br/><img id="censusImage" src="'.$picture->getThumbnail().'" />';
+				}
+				else
+				{
+					$out .= "<span id=\"censusImgSpan\"></span><br /><img id=\"censusImage\" src=\"\" />";
+				}
+			}
+			else
+			{
+				$out .= ":none\">";
+				$out .= "<span id=\"censusImgSpan\"></span><br /><img id=\"censusImage\" src=\"\" />";
+			}
+			$out .="</div>";
 		$out .= print_findmedia_link("OBJE", true, '', true);
 		$out .= '<br /><a href="javascript:;" onclick="pastefield=document.getElementById(\'OBJE\'); window.open(\'addmedia.php?action=showmediaform\', \'\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["add_media"].'</a>';
 		$out .= '</td></tr>';
@@ -118,7 +139,7 @@ class Census1830 extends ra_form {
         $out .= '<td class="descriptionbox" align="center" rowspan="2">Names of heads of families</td>';
         $out .= '<td colspan="13" class="descriptionbox" align="center">Free White Males</td>';
         $out .= '<td colspan="13" class="descriptionbox" align="center">Free White Females</td>';
-        
+       
 //		  Next row of description cells
         $out .=	'<tr><td class="descriptionbox">under 5</td><td class="descriptionbox">5 to 10</td>';
         $out .= '<td class="descriptionbox">10 to 15</td><td class="descriptionbox">15 to 20</td><td class="descriptionbox">20 to 30</td>';
@@ -241,7 +262,7 @@ class Census1830 extends ra_form {
         $out .=	'<td class="descriptionbox">36 to 55</td><td class="descriptionbox">55 to 100</td>';
         $out .= '<td class="descriptionbox">100 & C.</td></tr><tr>';
         
-
+        
 	//  	  Other Persons and Slaves input boxes
 	        $value = "";
         	if (isset($row['slavesUnder10M'])) $value = $row['slavesUnder10M'];
@@ -331,8 +352,8 @@ class Census1830 extends ra_form {
         $out .= '<td class="descriptionbox" colspan="2">Who are Deaf & Dumb,<br> of the age of 14 and under 25</td>';
         $out .= '<td class="descriptionbox" colspan="2">Who are Deaf 25 and up</td>';
         $out .= '<td class="descriptionbox" colspan="2">Who are Blind</td></tr><tr>';
-	       
-	       //Other inputs
+        
+         //Other inputs
          	
 	        $value = "";
         	if (isset($row['Total'])) $value = $row['Total'];

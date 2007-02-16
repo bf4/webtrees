@@ -472,7 +472,7 @@ class FormBuilder extends ra_form {
 		$out = parent::editFactsForm(false);
 		$rows = $citation[\'ts_array\'][\'rows\'];
 		
-		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value=\'.$pgv_lang["complete"].\'></td></tr>\'; 
+		$out .= \'<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value=\'.$pgv_lang["complete"].\'></td></tr>\'; 
 		return $out;
 	}
 	
