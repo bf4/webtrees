@@ -3,7 +3,7 @@
  * German Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  Kurt Norgaz and Peter Pluntke
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ $pgv_lang["media_conf"]			= "Multimedia";
 $pgv_lang["accpriv_conf"]		= "Zugang und Privatsphäre";
 $pgv_lang["displ_conf"]			= "Bildschirm und Layout";
 $pgv_lang["displ_names_conf"]	= "Namen";
-$pgv_lang["displ_comsurn_conf"] = "Gemeinsamer Familienname";
+$pgv_lang["displ_comsurn_conf"] = "Häufigste Familiennamen";
 $pgv_lang["displ_layout_conf"]	= "Layout<br />";
 $pgv_lang["displ_hide_conf"]	= "Verbergen und Zeigen";
 $pgv_lang["editopt_conf"]		= "Bearbeitungsoptionen";
@@ -234,13 +234,13 @@ $pgv_lang["WORD_WRAPPED_NOTES_help"]	= "Manche Genealogie-Programme kappen die N
 $pgv_lang["SHOW_CONTEXT_HELP"]		= "«?»-Hilfe-Links standardmäßig anzeigen";
 $pgv_lang["SHOW_CONTEXT_HELP_help"]	= "Diese Option aktiviert Fragezeichen als Hilfe-Links auf den Seiten, auf die die Besucher klicken können, um einen Hilfe-Text für die jeweilige Funktion angezeigt zu bekommen.";
 $pgv_lang["COMMON_NAMES_THRESHOLD"]	= "Mindestanzahl eines Nachnamens, der in der Liste der häufigsten Nachnamen erscheinen soll";
-$pgv_lang["COMMON_NAMES_THRESHOLD_help"]	= "Dies ist die Anzahl, wie oft ein Nachname vorkommen muss, damit er in der Liste der häufigsten Nachnamen auf der Wilkommens-Seite genannt wird.";
+$pgv_lang["COMMON_NAMES_THRESHOLD_help"]	= "Dies ist die Anzahl, wie oft ein Nachname vorkommen muss, damit er in der Liste der häufigsten Nachnamen auf der Hauptseite genannt wird.";
 $pgv_lang["COMMON_NAMES_ADD"]	= "Namen, die zu der Liste der häufigsten Nachnamen hinzugefügt werden sollen (durch Komma getrennt)";
-$pgv_lang["COMMON_NAMES_ADD_help"]	= "Wenn ein Name nicht genügend oft vorkommt, erscheint er nicht in der Liste der häufigsten Nachnamen. Hier können solche Namen manuell zur Liste hinzufügen. Wenn Sie mehrere Namen angeben, trennen Sie diese jeweils durch ein Komma. Groß- und Kleinschreibung bitte beachten.";
-$pgv_lang["COMMON_NAMES_REMOVE"]	= "Namen, die aus der Liste der häufigsten Nachnamen entfernt werden sollen (durch Komma getrennt)";
+$pgv_lang["COMMON_NAMES_ADD_help"]	= "Wenn ein Name nicht genügend oft vorkommt, erscheint er nicht in der Liste der häufigsten Nachnamen. Hier können Sie solche Namen manuell zur Liste hinzufügen. Wenn Sie mehrere Namen angeben, trennen Sie diese jeweils durch ein Komma. Groß- und Kleinschreibung bitte beachten.";
+$pgv_lang["COMMON_NAMES_REMOVE"]	= "Namen, die aus der Liste der häufigsten Nachnamen entfernt werden sollen";
 $pgv_lang["COMMON_NAMES_REMOVE_help"]	= "Wenn Sie einen Nachnamen aus der Liste der häufigsten Nachnamen entfernen möchten, ohne den Grenzwert für die Anzahl des Vorkommens verändern zu wollen, können Sie den Namen hier eingeben. Wenn Sie mehrere Namen angeben, trennen Sie diese jeweils durch ein Komma. Groß- und Kleinschreibung bitte beachten.";
 $pgv_lang["HOME_SITE_URL"]		= "URL der Hauptseite der WebSite";
-$pgv_lang["HOME_SITE_URL_help"]		= "Eine URL die in den Header des gewählten Darstellungsthemas hinzugefügt wird, um eine Verknüpfung zur Starseite Ihrer Homepage zu erstellen.";
+$pgv_lang["HOME_SITE_URL_help"]		= "Eine URL die in den Kopfbereich des gewählten Darstellungsthemas hinzugefügt wird, um eine Verknüpfung zur Startseite Ihrer Homepage zu erstellen.";
 $pgv_lang["HOME_SITE_TEXT"]		= "Text für Hauptseite der WebSite";
 $pgv_lang["HOME_SITE_TEXT_help"]	= "Textausgabe für die Verknüpfung, die zur Startseite Ihrer Homepage verweist.";
 $pgv_lang["CONTACT_EMAIL"]		= "Ihre Kontakt-Emailadresse für genealogische Fragen";
@@ -589,18 +589,36 @@ $pgv_lang["um_index_sql2"] = "Diese Dateien können als SQL-Befehle für Ihre Da
 $pgv_lang["um_query_not_created"] = "Abfragen nicht erstellt.";
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Breite des erstellten Miniaturbildes";
 $pgv_lang["SHOW_SOURCES"]			= "Zeige Quellen";
-$pgv_lang["SPLIT_PLACES"]		= "Teile Orte im Bearbeitungsmodus";
-$pgv_lang["UNDERLINE_NAME_QUOTES"]		= "Unterstreiche Namen zwischen Anführungszeichen";
-$pgv_lang["SHOW_MARRIED_NAMES"]			= "Zeigt Ehenamen in der Personen Liste";
+$pgv_lang["SPLIT_PLACES"]			= "Teile Orte im Bearbeitungsmodus";
+$pgv_lang["UNDERLINE_NAME_QUOTES"]	= "Unterstreiche Namen zwischen Anführungszeichen";
+$pgv_lang["SHOW_MARRIED_NAMES"]		= "Zeige Ehenamen in der Personen Liste";
 $pgv_lang["FAM_FACTS_ADD"] 			= "Familien Ereignis hinzufügen";
-$pgv_lang["FAM_FACTS_UNIQUE"] 			= "Einzigartiges Familien Ereignis";
-$pgv_lang["SOUR_FACTS_ADD"] 			= "Quellen Ereignis hinzufügen";
-$pgv_lang["SOUR_FACTS_UNIQUE"] 			= "Einzigartiges Quellen Ereignis";
-$pgv_lang["REPO_FACTS_ADD"] 			= "Archiv Ereignis hinzufügen";
-$pgv_lang["REPO_FACTS_UNIQUE"] 			= "Einzigartiges Archiv Ereignis";
-$pgv_lang["AUTO_GENERATE_THUMBS"]			= "Automatisch Miniaturbilder erstellen";
-$pgv_lang["INDI_FACTS_ADD"] 			= "Personen Ereignis hinzufügen";
-$pgv_lang["INDI_FACTS_UNIQUE"] 			= "Einzigartiges Personen Ereignis";
-$pgv_lang["DBPERSIST"]					= "Benutze konstante Datenbank Verbindung";
+$pgv_lang["FAM_FACTS_ADD_help"]		= "~#pgv_lang[FAM_FACTS_ADD]#~<br /><br />Diese Liste enthält alle Ereignisse die diesem Familien-Datensatz hinzugefügt werden können.  Sie können diese Liste durch Entfernen oder Hinzufügen von Ereignis-Codes nach Ihren Wünschen ändern.  Ereignis-Codes dieser Liste dürfen <u>nicht</u> in der <i>#pgv_lang[FAM_FACTS_UNIQUE]#</i> Liste vorkommen.  D.h., jedes Ereignis-Code darf in nur einer Liste vorkommen.<br />";
+$pgv_lang["FAM_FACTS_UNIQUE"] 		= "Einzeln vorkommende Familien Ereignisse";
+$pgv_lang["FAM_FACTS_UNIQUE_help"]	= "~#pgv_lang[FAM_FACTS_UNIQUE]#~<br /><br />Diese Liste enthält alle Ereignisse die im Familien-Datensatz nur <u>einmal</u> vorkommen dürfen.  Z.B., wenn DATE hier eingegeben ist, darf jeder Familien-Datensatz nur eine DATE Zeile enthalten. Ereignis-Codes dieser Liste dürfen <u>nicht</u> in der <i>#pgv_lang[FAM_FACTS_ADD]#</i> Liste vorkommen.  D.h., jedes Ereignis-Code darf in nur einer Liste vorkommen.<br />";
+$pgv_lang["FAM_FACTS_QUICK"] 		= "Schnell hinzugefügte Familien Ereignisse";
+$pgv_lang["FAM_FACTS_QUICK_help"]	= "~#pgv_lang[FAM_FACTS_QUICK]#~<br /><br />Diese Liste, die neben der kompletten Ereignisliste gezeigt wird, bestimmt welche Ereignisse durch klicken des jeweiligen Links leicht zu dieser Familie hinzugefügt werden können.<br />";
+$pgv_lang["SOUR_FACTS_ADD"] 		= "Quellen Ereignis hinzufügen";
+$pgv_lang["SOUR_FACTS_ADD_help"]	= "~#pgv_lang[SOUR_FACTS_ADD]#~<br /><br />Diese Liste enthält alle Ereignisse die diesem Quellen-Datensatz hinzugefügt werden können.  Sie können diese Liste durch Entfernen oder Hinzufügen von Ereignis-Codes nach Ihren Wünschen ändern.  Ereignis-Codes dieser Liste dürfen <u>nicht</u> in der <i>#pgv_lang[SOUR_FACTS_UNIQUE]#</i> Liste vorkommen.  D.h., jedes Ereignis-Code darf in nur einer Liste vorkommen.<br />";
+$pgv_lang["SOUR_FACTS_UNIQUE"] 		= "Einzeln vorkommende Quellen Ereignisse";
+$pgv_lang["SOUR_FACTS_UNIQUE_help"]	= "~#pgv_lang[SOUR_FACTS_UNIQUE]#~<br /><br />Diese Liste enthält alle Ereignisse die im Quellen-Datensatz nur <u>einmal</u> vorkommen dürfen.  Z.B., wenn DATE hier eingegeben ist, darf jeder Quellen-Datensatz nur eine DATE Zeile enthalten. Ereignis-Codes dieser Liste dürfen <u>nicht</u> in der <i>#pgv_lang[SOUR_FACTS_ADD]#</i> Liste vorkommen.  D.h., jedes Ereignis-Code darf in nur einer Liste vorkommen.<br />";
+$pgv_lang["SOUR_FACTS_QUICK"] 		= "Schnell hinzugefügte Quellen Ereignisse";
+$pgv_lang["SOUR_FACTS_QUICK_help"]	= "~#pgv_lang[SOUR_FACTS_QUICK]#~<br /><br />Diese Liste, die neben der kompletten Ereignisliste gezeigt wird, bestimmt welche Ereignisse durch klicken des jeweiligen Links leicht zu dieser Quelle hinzugefügt werden können.<br />";
+$pgv_lang["REPO_FACTS_ADD"] 		= "Archiv Ereignis hinzufügen";
+$pgv_lang["REPO_FACTS_ADD_help"]	= "~#pgv_lang[REPO_FACTS_ADD]#~<br /><br />Diese Liste enthält alle Ereignisse die diesem Archiv-Datensatz hinzugefügt werden können.  Sie können diese Liste durch Entfernen oder Hinzufügen von Ereignis-Codes nach Ihren Wünschen ändern.  Ereignis-Codes dieser Liste dürfen <u>nicht</u> in der <i>#pgv_lang[REPO_FACTS_UNIQUE]#</i> Liste vorkommen.  D.h., jedes Ereignis-Code darf in nur einer Liste vorkommen.<br />";
+$pgv_lang["REPO_FACTS_UNIQUE"] 		= "Einzeln vorkommende Archiv Ereignisse";
+$pgv_lang["REPO_FACTS_UNIQUE_help"]	= "~#pgv_lang[REPO_FACTS_UNIQUE]#~<br /><br />Diese Liste enthält alle Ereignisse die im Archiv-Datensatz nur <u>einmal</u> vorkommen dürfen.  Z.B., wenn DATE hier eingegeben ist, darf jeder Archiv-Datensatz nur eine DATE Zeile enthalten. Ereignis-Codes dieser Liste dürfen <u>nicht</u> in der <i>#pgv_lang[REPO_FACTS_ADD]#</i> Liste vorkommen.  D.h., jedes Ereignis-Code darf in nur einer Liste vorkommen.<br />";
+$pgv_lang["REPO_FACTS_QUICK"] 		= "Schnell hinzugefügte Archiv Ereignisse";
+$pgv_lang["REPO_FACTS_QUICK_help"]	= "~#pgv_lang[REPO_FACTS_QUICK]#~<br /><br />Diese Liste, die neben der kompletten Ereignisliste gezeigt wird, bestimmt welche Ereignisse durch klicken des jeweiligen Links leicht zu diesem Archiv hinzugefügt werden können.<br />";
+$pgv_lang["INDI_FACTS_ADD"] 		= "Personen Ereignis hinzufügen";
+$pgv_lang["INDI_FACTS_ADD_help"]	= "~#pgv_lang[INDI_FACTS_ADD]#~<br /><br />Diese Liste enthält alle Ereignisse die diesem Personen-Datensatz hinzugefügt werden können.  Sie können diese Liste durch Entfernen oder Hinzufügen von Ereignis-Codes nach Ihren Wünschen ändern.  Ereignis-Codes dieser Liste dürfen <u>nicht</u> in der <i>#pgv_lang[INDI_FACTS_UNIQUE]#</i> Liste vorkommen.  D.h., jedes Ereignis-Code darf in nur einer Liste vorkommen.<br />";
+$pgv_lang["INDI_FACTS_UNIQUE"] 		= "Einzeln vorkommende Personen Ereignisse";
+$pgv_lang["INDI_FACTS_UNIQUE_help"]	= "~#pgv_lang[INDI_FACTS_UNIQUE]#~<br /><br />Diese Liste enthält alle Ereignisse die im Personen-Datensatz nur <u>einmal</u> vorkommen dürfen.  Z.B., wenn DATE hier eingegeben ist, darf jeder Personen-Datensatz nur eine DATE Zeile enthalten. Ereignis-Codes dieser Liste dürfen <u>nicht</u> in der <i>#pgv_lang[INDI_FACTS_ADD]#</i> Liste vorkommen.  D.h., jedes Ereignis-Code darf in nur einer Liste vorkommen.<br />";
+$pgv_lang["INDI_FACTS_QUICK"] 		= "Schnell hinzugefügte Personen Ereignisse";
+$pgv_lang["INDI_FACTS_QUICK_help"]	= "~#pgv_lang[INDI_FACTS_QUICK]#~<br /><br />Diese Liste, die neben der kompletten Ereignisliste gezeigt wird, bestimmt welche Ereignisse durch klicken des jeweiligen Links leicht zu dieser Person hinzugefügt werden können.<br />";
+$pgv_lang["DBPERSIST"]				= "Benutze konstante Datenbank Verbindung";
+$pgv_lang["DBPERSIST_help"]			= "~#pgv_lang[DBPERSIST]#~<br /><br />Bestimmt ob PhpGedView dauerhafte Datenbank-Verbindungen benutzen soll oder nicht.<br /><br />Falls auf <b>#pgv_lang[yes]#</b> gestellt, darf PhpGedView momentan unbenutzte Datenbank-Verbindungen erneut benutzen.  Das kann den ersten Zugriff zur Datenbank beschleunigen.  Falls die maximale Anzahl der Datenbank-Verbindungen im Host zu niedrig ist, kann diese Option Fehler verursachen.  Wenn Sie sich nicht über die richtige Konfiguration des Hosts sicher sind, sollten Sie <b>#pgv_lang[no]#</b> wählen.<br />";
+$pgv_lang["AUTO_GENERATE_THUMBS"]	= "Automatisch Miniaturbilder erstellen";
+$pgv_lang["AUTO_GENERATE_THUMBS_help"]		= "~#pgv_lang[AUTO_GENERATE_THUMBS]#~<br /><br />Bestimmt ob PhpgedView automatisch fehlende Miniaturbilder erstellen soll oder nicht.  Es ist aber möglich dass Ihr PHP-Betriebsystem die Miniaturbilder-Erstellung nicht unterstützt.<br />";
 
 ?>

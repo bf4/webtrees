@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * German texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -155,7 +155,6 @@ $pgv_lang["hebrew_surn"]			= "Hebräischer Nachname";
 $pgv_lang["hide_changes"]                = "Hier klicken, um die Änderungen zu verbergen.";
 $pgv_lang["highlighted"]                = "Hervorgehobenes Bild";
 $pgv_lang["illegal_chars"]			= "Leerer Name oder unzulässige Zeichen im Namen";
-$pgv_lang["invalid_search_input"] 	= "Bitte geben Sie einen Namen oder einen Ort zusätzlich zur Jahresangabe an";
 $pgv_lang["invalid_search_multisite_input"] = "Bitte geben Sie eins der folgenden ein: Name, Geburtsdatum, Geburtsort, Sterbedatum, Sterbeort, oder Geschlecht";
 $pgv_lang["invalid_search_multisite_input_gender"] = "Bitte nochmals suchen, aber mit mehr Informationen als nur das Geschlecht";
 $pgv_lang["label_diff_server"]      = "Andere Internetseite";

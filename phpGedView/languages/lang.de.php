@@ -3,7 +3,7 @@
  * German Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  Jürgen Bach, Kurt Norgaz, and Peter Pluntke
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
 	exit;
 }
+$pgv_lang["invalid_search_input"] 	= "Bitte geben Sie einen Namen oder einen Ort zusätzlich zur Jahresangabe ein";
 $pgv_lang["duplicate_username"]        = "Doppelter Benutzername. Ein Benutzer mit dem gewählten Namen existiert bereits. Bitte wählen Sie einen anderen Benutzernamen.";
 $pgv_lang["cache_life"]				= "Cache-Datei Lebensdauer";
 $pgv_lang["genealogy"]				= "Ahnenforschung";
@@ -1237,8 +1238,8 @@ $pgv_lang["marrplace"]				= "Heiratsort enthält";
 $pgv_lang["marrdate2"]				= "Heiratsdatenbereich Ende";
 $pgv_lang["marrdate1"]				= "Heiratsdatenbereich Anfang";
 $pgv_lang["sort_by"]				= "Sortieren nach";
-$pgv_lang["cleanup"]                        = "Korrigieren";
-//-- CONFIGURE (extra) messgaes for programs patriarch, slklist and statistics
+$pgv_lang["cleanup"]				= "Korrigieren";
+//-- CONFIGURE (extra) messages for programs patriarch, slklist and statistics
 $pgv_lang["dynasty_list"]                = "Übersicht der Familien";
 $pgv_lang["make_slklist"]                = "EXCEL (SLK) Liste erstellen";
 $pgv_lang["excel_list"] 			= "Ausgabe im Excel (SLK) Format für die folgenden Dateien.  Sie müssen zuerst die Spitzenahnen Liste benutzen.";
