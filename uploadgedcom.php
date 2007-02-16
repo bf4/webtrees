@@ -1338,8 +1338,13 @@ if ($startimport == "true") {
 <tr><td class="topbottombar" colspan="2">
 <?php
 
-if ($startimport != "true")
-	print "<input type=\"submit\" name=\"continue\" value=\"".$pgv_lang["del_proceed"]."\" />&nbsp;";
+if ($startimport != "true") {
+	if (!$cleanup_needed) {
+		print "<input type=\"submit\" name=\"continue\" value=\"".$pgv_lang["del_proceed"]."\" />&nbsp;";
+	} else {
+		print "<input type=\"submit\" name=\"continue\" value=\"".$pgv_lang["cleanup"]."\" />&nbsp;";
+	}
+}
 if ($cleanup_needed && $skip_cleanup != $pgv_lang["skip_cleanup"]) {
 	print_help_link("skip_cleanup_help", "qm", "skip_cleanup");
 	print "<input type=\"submit\" name=\"skip_cleanup\" value=\"".$pgv_lang["skip_cleanup"]."\" />&nbsp;\n";
