@@ -311,6 +311,14 @@ class SearchControllerRoot extends BaseController {
 		else if ($this->action == "multisite") $this->MultiSiteSearch();
 	}
 
+	function getPageTitle() {
+		global $pgv_lang;
+		if ($this->action == "general") return $pgv_lang["search_general"];
+		else if ($this->action == "soundex") return $pgv_lang["search_soundex"];
+		else if ($this->action == "replace") return $pgv_lang["search_replace"];
+		else if ($this->action == "multisite") return $pgv_lang["multi_site_search"];
+	}
+
 	/**
 	 * setRequestValues - Checks if the variable names ($varNames) are in
 	 * 					  the $_REQUEST and if so assigns their values to
@@ -1564,7 +1572,7 @@ class SearchControllerRoot extends BaseController {
 				}
 				$GEDCOM = $oldged;
 				//-- [end] new code for sortable tables
-
+/*
 				$totalIndiResults = count($printindiname);
 				$this->totalGeneralResults = $totalIndiResults;
 				$totalFamResults = count($printfamname);
@@ -1592,7 +1600,7 @@ class SearchControllerRoot extends BaseController {
 					uasort($printindiname, "itemsort");
 					print "<td class=\"list_value_wrap\"><ul>";
 
-					/***************************************************** PAGING HERE **********************************************************************/
+					/***************************************************** PAGING HERE **********************************************************************
 					//set the total results and only get the results for this page
 					$printindiname = $this->getPagedResults($printindiname, $this->resultsPerPage);
 					$this->indiResultsPrinted = count($printindiname);
@@ -1613,7 +1621,7 @@ class SearchControllerRoot extends BaseController {
 					}
 				}
 
-					/***************************************************** PAGING HERE **********************************************************************/
+				/***************************************************** PAGING HERE **********************************************************************
 				if (count($printfamname)>0) {
 					//set the total results and only get the results for this page
 					$printfamname = $this->getPagedResults($printfamname, $this->resultsPerPage);
@@ -1636,7 +1644,7 @@ class SearchControllerRoot extends BaseController {
 					}
 				}
 
-					/***************************************************** PAGING HERE **********************************************************************/
+				/***************************************************** PAGING HERE **********************************************************************
 				if (count($actualsourcelist)>0) {
 					print "\n\t\t<td class=\"list_value_wrap\"><ul>";
 					//set the total results and only get the results for this page
@@ -1715,7 +1723,9 @@ class SearchControllerRoot extends BaseController {
 							print "<tr><td class=\"warning\" style=\" text-align: center;\"><i>".$pgv_lang["no_search_for"]."</i><br /></div>\n\t\t";
 						}
 					}
-				print "</table></div>";
+				print "</table>";
+				*/
+				print "</div>";
 			} else
 				if (isset ($this->query)) {
 					print "<br /><div class=\"warning\" style=\" text-align: center;\"><i>".$pgv_lang["no_results"]."</i><br />\n\t\t";

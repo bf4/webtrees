@@ -43,6 +43,7 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["invalid_search_input"]					15 Feb 2007				M	Moved from editor.en.php
 +$pgv_lang["sosa_uncle_bm_2"]						8 Feb 2007				A
 +$pgv_lang["sosa_uncle_bm_3"]						8 Feb 2007				A
 +$pgv_lang["sosa_uncle_bm_4"]						8 Feb 2007				A

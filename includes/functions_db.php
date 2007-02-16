@@ -187,7 +187,7 @@ function check_for_import($ged) {
 		$sql = "SELECT count(i_id) FROM ".$TBLPREFIX."individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$ged]["id"])."'";
 		$res = dbquery($sql, false);
 
-		if (!DB::isError($res)) {
+		if (!empty($res) && !DB::isError($res) && is_object($res)) {
 			$row =& $res->fetchRow();
 			$res->free();
 			if ($row[0]>0) return true;

@@ -227,10 +227,33 @@ class ra_form {
 	var nameElement;
 	var lastId;
 	var findtype = "source";
-	function paste_id(value) {
+
+	function paste_id(value,title, thumb) {
+		
+
+		if(title)
+		{
+			pastefield.value = value;
+			UpdatePicture(thumb,title);
+		}
+		else{
 		lastId = value;
 		pastefield.value = pastefield.value + ";" + value;
 	}
+
+	}
+
+	function UpdatePicture(thumb,title)
+	{
+
+		myDiv = document.getElementById("censusPicDiv");
+		myDiv.style.display = "block";
+		myImg = document.getElementById("censusImage");
+		myImg.src = thumb;
+		mySpan = document.getElementById("censusImgSpan");
+		mySpan.innerHTML = title;
+	}
+	
 	function pastename(name) {
 		if (findtype=="source") nameElement.innerHTML = nameElement.innerHTML + \'<a id="link_\'+lastId+\'" href="source.php?sid=\'+lastId+\'">\'+name+\'</a> <a id="rem_\'+lastId+\'" href="#" onclick="clearname(\\\'\'+pastefield.id+\'\\\', \\\'link_\'+lastId+\'\\\', \\\'\'+lastId+\'\\\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>\n\';
 		else nameElement.innerHTML = nameElement.innerHTML + \'<a id="link_\'+lastId+\'" href="individual.php?pid=\'+lastId+\'">\'+name+\'</a> <a id="rem_\'+lastId+\'" href="#" onclick="clearname(\\\'\'+pastefield.id+\'\\\', \\\'link_\'+lastId+\'\\\', \\\'\'+lastId+\'\\\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>\n\';
@@ -466,6 +489,12 @@ END_OUT;
 			}
 			
 			$out .= <<<END_OUT
+			
+			function ResetImage(imgTag){
+				image = document.getElementById(censusImage);
+				alert("Yeppper"); 
+			}
+			
 			function add_ra_fact(fact, type) {
 				factfield = document.getElementById(fact);
 				if (factfield) {
@@ -752,7 +781,7 @@ END_OUT;
 				if (!empty($citation['ts_text'])) $citationTxt .= "4 TEXT ".breakConts($citation['ts_text'], 5)."\r\n";
 			}
 			if (!empty($citation['ts_quay'])) $citationTxt .= "3 QUAY ".$citation['ts_quay']."\r\n";
-			if (!empty($citation['ts_obje'])) $citationTxt .= "3 OBJE ".$citation['ts_obje']."\r\n";
+			if (!empty($citation['ts_obje'])) $citationTxt .= "3 OBJE @".$citation['ts_obje']."@\r\n";
 		}
 		// Set our output to nothing, this supresses a warning that we would otherwise get.
 		$out = "";
