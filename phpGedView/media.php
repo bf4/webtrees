@@ -171,7 +171,7 @@ print_header($pgv_lang["manage_media"]);
 	}
 
 	function showchanges() {
-		window.location = '<?php print $SCRIPT_NAME."?show_changes=yes&directory=".$directory; ?>';
+		window.location = '<?php print $SCRIPT_NAME."?show_changes=yes&directory=".$directory."&level=".$level; ?>';
 	}
 
 //-->
