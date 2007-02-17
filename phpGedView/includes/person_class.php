@@ -163,8 +163,8 @@ class Person extends GedcomRecord {
 			$givn = preg_replace("/([^ ]+)\*/", "<span class=\"starredname\">$1</span>", $givn);
 		}
 		if ($nsfx) $surn .= " ".trim($nsfx);
-		if ($NAME_REVERSE) return trim($givn.", ".$surn);
-		else return trim($surn.", ".$givn);
+//		if ($NAME_REVERSE) return trim($givn.", ".$surn);
+		return trim($surn.", ".$givn);
 	}
 
 	/**
