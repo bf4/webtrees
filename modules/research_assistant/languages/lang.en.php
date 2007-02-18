@@ -31,13 +31,13 @@ if (preg_match("/ra_lang\...\.php$/", $_SERVER["PHP_SELF"])>0) {
 	exit;
 }
 
-$pgv_lang["add_task_inst"]		= "If a task for your research results has not been created yet, you should create the task first then choose the option to save and complete the task.";
+$pgv_lang["add_task_inst"]		= "If a task for your research results has not yet been created, you should create the task first and then choose the option to save and complete the task.";
 $pgv_lang["complete_task_inst"]	= "Choose a task from the list of your tasks below to complete the task and enter your results:";
 $pgv_lang["enter_results"]		= "Enter Results";
-$pgv_lang["auto_gen_inst"]		= "Some programs allow you to enter research tasks as TODO items in your GEDCOM file.  This option will search through your GEDCOM file and automatically convert any TODO item into research tasks.";
+$pgv_lang["auto_gen_inst"]		= "Some programs allow you to enter research tasks as TODO items in your GEDCOM file.  This option will search through your GEDCOM file and automatically convert any TODO item into a research task.";
 $pgv_lang["choose_search_site"]	= "Choose a search site";
 $pgv_lang["pid_search_for"]		= "Who do you want to search for?";
-$pgv_lang["manage_research_inst"]	= "These items will help you to manage your research tasks.  Research tasks help you to keep track of your research and collaborate with other researchers.";
+$pgv_lang["manage_research_inst"]	= "These items will help you to manage your research tasks.  Research tasks help you keep track of your research and collaborate with other researchers.";
 $pgv_lang["manage_research"]	= "Manage Research";
 $pgv_lang["manage_sources"]		= "Manage Sources";
 $pgv_lang["part_of"]			= "Part of (optional)";
@@ -48,19 +48,16 @@ $pgv_lang["pid_know_more"]		= "Who do you want to learn more about?";
 $pgv_lang["analyze_people"]		= "Analyze People";
 $pgv_lang["analyze_data"]		= "Analyze My Data";
 $pgv_lang["missing_info"] 		= "Missing Information";
-$temp_out_autosearch = 	"This feature will automatically search Ancestry and FamilySearch, ";
-$temp_out_autosearch .= "you may choose to search by name, and birth/death date <br />";
-$pgv_lang["auto_search"]		= $temp_out_autosearch;
+$pgv_lang["auto_search"]		= "This feature will automatically search Ancestry and FamilySearch. You may choose to search by name, and birth/death date.<br />";
 $pgv_lang["auto_search_text"]	= "Auto Search";
 $pgv_lang["task_list"]			= "Tasks";
-$pgv_lang["task_list_text"]		= "This area displays tasks you have created, click on VIEW to see the task";
+$pgv_lang["task_list_text"]		= "This area displays tasks you have created. Click <b>View</b> to see the tasks.";
 
 // -- HELP COMMENTS
-$temp_out_comments = "This section is to add comments to the person for other people to see and add feedback";
-$pgv_lang["help_comments"] = $temp_out_comments;
+$pgv_lang["help_comments"] = "Here you can add comments. Other people can see them and add their own comments.";
 
 // -- MENU ITEM MESSAGES
-$pgv_lang["my_tasks"]							= "My Tasks";
+$pgv_lang["my_tasks"]							= "Research Assistant";
 $pgv_lang["add_task"]							= "Add Task";
 $pgv_lang["view_folders"]						= "View Folders";
 $pgv_lang["view_probabilities"]					= "View Probabilities";
@@ -105,7 +102,7 @@ $pgv_lang["checkbox"]							= "Check Box";
 $pgv_lang["radiobutton"]						= "Radio Button";
 $pgv_lang["EnterResults"]						= "Enter Results"; 
 $pgv_lang["ra_submit"]							= "Submit";
-$pgv_lang["ra_generate_tasks"]					= "Generated Tasks from TODO's";
+$pgv_lang["ra_generate_tasks"]					= "Generate Tasks from TODO";
 $pgv_lang["TaskDescription"]					= "Task Description";
 $pgv_lang["SelectFolder"]                       = "Select Folder:";
 $pgv_lang["ra_done"]							= "Done";
@@ -152,11 +149,8 @@ $pgv_lang["folder_submitted"]          			= "Your folder has been submitted";
 $pgv_lang["folder_problem"]             		= "There has a been problem with adding your folder, please try again";
 
 // -- Missing Information Help 
-$temp_out_missinginfo = "This area displays missing information about the record.";
-$temp_out_missinginfo .= " Select a checkbox and folder, and press add task to create a task for the missing item.";  
-$temp_out_missinginfo .= " Tasks already created will display 'view' instead of a checkbox <br />";
-//$temp_out_missinginfo .= " <a href=\"javascript:void(0);\" onClick=\"fullScreen('helpvids/MissingInformationUserHelp.htm');\">Click here to Open User Tutorial in Full Screen Window</a>";
-$pgv_lang["ra_missing_info_help"] = $temp_out_missinginfo;
+//$pgv_lang["ra_missing_info_help"] = "This area displays missing information about the record. Select a checkbox and folder, and click <b>Add Task</b> to create a task for the missing item. Existing tasks will show <b>View</b> instead of a checkbox.<br /> <a href=\"javascript:void(0);\" onClick=\"fullScreen('helpvids/MissingInformationUserHelp.htm');\">Click here to launch a Tutorial.</a>";
+$pgv_lang["ra_missing_info_help"] = "This area displays missing information about the record. Select a checkbox and folder and click <b>Add Task</b> to create a task for the missing item. Existing tasks will show <b>View</b> instead of a checkbox.<br />";
 
 // -- RA_EDITFOLDER MESSAGES	
 $pgv_lang["edit_research_folder"]			= "Edit Research Folder";
@@ -205,19 +199,19 @@ $pgv_lang["no_folder"]						= "No folder exists yet. Please create a new folder 
 $pgv_lang["help_rs_folders.php"]			= "Research Assistant Folders<br /> #pgv_lang[sorry]#";
 $pgv_lang["help_rs_editfolder.php"]			= "Research Assistant Edit Folders<br />#pgv_lang[sorry]#";
 $pgv_lang["help_rs_editlog.php"]			= "Research Assistant Edit Log<br />#pgv_lang[sorry]#";
-//$pgv_lang["ra_fold_name_help"]			= "<H2><B>Folder View:</B></H2><ul><li><B>Folder Name:</B> This column contains the names of all of the folders you have created.</li><li><B>Description:</B> This column contains the description of the folders.</li></ul><br /><br /><a href=\"helpvids/ResearchAssistantUserHelp.htm\">Research Assistant Tutorial</a>";
-$pgv_lang["ra_fold_name_help"]				= "<H2><B>Folder View:</B></H2><ul><li><B>Folder Name:</B> This column contains the names of all of the folders you have created.</li><li><B>Description:</B> This column contains the description of the folders.</li></ul>";
-$pgv_lang["ra_add_task_help"]				= "<H2><B>Add New Task:</B></H2></H2><ul><li><B>Title:</B> This should contain the title of the task that you are adding.</li><li><B>Folder:</B> In this field you can assign which folder you want your new task to go to.</li><li><B>Description:</B> Enter a description of the task you want to add.</li><li><B>Sources:</B> Assign any sources that you have for the task.</li><li><B>People:</B> Assign any people associated for the new task.</li></ul>";
-$pgv_lang["ra_edit_folder_help"]			= "<H2><B>Edit Folder:</B></H2><ul><li><B>Folder Name:</B> This is where you should add the title of the folder that you are editing.</B></li><li><B>Parent folder:</B> You can assign the parent folder, if any, of the folder you are editing.</B></li><li><B>Folder description:</B> This is the description of the folder you are editing.</B></li></ul>";
-$pgv_lang["ra_add_folder_help"]				= "<H2><B>Add Folder:</B></H2><ul><li><B>Folder Name:</B> This is where you should add the title of the folder that you are adding.</B></li><li><B>Parent folder:</B> You can assign the parent folder, if any, of the folder you are adding.</B></li><li><B>Folder description:</B> This is the description of the folder you are adding.</B></li></ul>";
-//$pgv_lang["ra_view_task_help"]			= "<H2><B>Task View:</B></H2><ul><li><B>Task Name:</B> This column contains the name of all of the tasks you.</B></li><li><B>Description:</B> This column contains the description of the tasks.</li><li><B>Start Date:</B> This will contain the start dates of all the tasks.</li><li><B>Completed:</B> This will show whether or not a task is completed.</li><li><B>Details:</B> This will show all the details of a task.</li><li><B>Delete:</B> This will delete the task.</li><ul><br /><a href=\"helpvids/MissingInformationUserHelp.htm\">User Tutorial</a>";
-$pgv_lang["ra_view_task_help"]				= "<H2><B>Task View:</B></H2><ul><li><B>Task Name:</B> This column contains the name of all of the tasks you.</B></li><li><B>Description:</B> This column contains the description of the tasks.</li><li><B>Start Date:</B> This will contain the start dates of all the tasks.</li><li><B>Completed:</B> This will show whether or not a task is completed.</li><li><B>Details:</B> This will show all the details of a task.</li><li><B>Delete:</B> This will delete the task.</li></ul>";
-$pgv_lang["ra_task_view_help"]				= "<H2><B>View Task:</B></H2><ul><li><B>Title:</B> This should contain the title of the task that you are adding.</li><li><B>People:</B> Assign any people associated for the new task.</li><li><B>Description:</B> Enter a description of the task you want to add.</li><li><B>Sources:</B> Assign any sources that you have for the task.</li><li>Click the 'Edit Task' button to edit the details of the task.</li></ul>";
-$pgv_lang["ra_comments_help"]				= "<H2><B>Comments:</B></H2><ul><li>This will contain any comments related to the task. Click the 'Add New Comment' button to add any comments.</li></ul>";
-$pgv_lang["ra_GenerateTasks_help"]			= "<H2><B>Generate Tasks:</B></H2><p>This form generates tasks from the _TODO tags in your GEDCOM file.</p><ul><li><B>Generate:</B> check each task to generate when you press the Generate button.</li><li><B>Task Name:</B> This is the name the task will be given.  This defaults to the text in the actual _TODO tag, excluding any CONT tag&quot;s</li><li><B>Task Description:</B> The description the task will be given.  This is generated from the text in the _TODO tag plus all of the associated CONT tag&quots.  </li><li><B>Edit:</B> click the link to edit that task.</li><li><B>Select Folder:</B> select the folder to put the generated tasks in.</li><li><B>Generate:</B> generates the tasks that have been checked.</li><li><B>Done:</B> redirects you to the Folder View page.</li></ul>";
-$pgv_lang["ra_EditGenerateTasks_help"]		= "<H2><B>Edit Generated Task:</B></H2><p>This form allows you to edit the tasks generated from _TODO tags in your GEDCOM file.</p><ul><li><B>Task Name:</B> This is the name the task will be given.  </li><li><B>Task Description:</B> The description the task will be given. </li><li><B>People:</B> click the link to select the person to associate the task with.</li><li><B>Source:</B> click the link to select the source to associate the task with.</li><li><B>Save:</B> saves all your changes and redirects you to the Generate tasks page.</li><li><B>Cancel:</B> disregards all your changes and redirects you to the Generate tasks page.</li></ul>";
-$pgv_lang["ra_configure_privacy_help"]		= "<H2><B>Configure Privacy:</B></H2></H2><ul><li><B>Show To Public:</B> Makes specified task available to everyone.</li><li><B>Show Only To Authenticated Users:</B> Makes specified task available to authenticated users only.</li><li><B> Show To Admin Users:</B> Makes specified task available to admin users only.</li><li><B> Hide Even From Admin Users:</B> Makes specified task not available to anyone.</li></ul>";
-$pgv_lang["ra_edit_task_help"]				= "<H2><B>Edit Task:</B></H2></H2><ul><li><B>Title:</B> This should contain the title of the task that you are editing.</li><li><B>Folder:</B> In this field you can assign which folder you want your new task to go to.</li><li><B>Description:</B> Enter a description of the task you want to edit.</li><li><B>Sources:</B> Assign or edit any sources that you have for the task.</li><li><B>People:</B> Assign or edit any people associated for the task.</li></ul>";
+//$pgv_lang["ra_fold_name_help"]			= "~Folder View~<ul><li><b>Folder Name:</b> This column contains the names of all of the folders you have created.</li><li><b>Description:</b> This column contains the description of the folders.</li></ul><br /><br /><a href=\"helpvids/ResearchAssistantUserHelp.htm\">Research Assistant Tutorial</a>";
+$pgv_lang["ra_fold_name_help"]				= "~Folder View~<ul><li><b>Folder Name:</b> This column contains the names of all of the folders you have created.</li><li><b>Description:</b> This column contains the description of the folders.</li></ul>";
+$pgv_lang["ra_add_task_help"]				= "~Add New Task~<ul><li><b>Title:</b> This should contain the title of the task that you are adding.</li><li><b>Folder:</b> In this field you can assign which folder you want your new task to go to.</li><li><b>Description:</b> Enter a description of the task you want to add.</li><li><b>Sources:</b> Assign any sources that you have for the task.</li><li><b>People:</b> Assign any people associated for the new task.</li></ul>";
+$pgv_lang["ra_edit_folder_help"]			= "~Edit Folder~<ul><li><b>Folder Name:</b> This is where you should add the title of the folder that you are editing.</b></li><li><b>Parent folder:</b> You can assign the parent folder, if any, of the folder you are editing.</b></li><li><b>Folder description:</b> This is the description of the folder you are editing.</b></li></ul>";
+$pgv_lang["ra_add_folder_help"]				= "~Add Folder~<ul><li><b>Folder Name:</b> This is where you should add the title of the folder that you are adding.</b></li><li><b>Parent folder:</b> You can assign the parent folder, if any, of the folder you are adding.</b></li><li><b>Folder description:</b> This is the description of the folder you are adding.</b></li></ul>";
+//$pgv_lang["ra_view_task_help"]			= "~Task View~<ul><li><b>Task Name:</b> This column contains the name of each task.</b></li><li><b>Description:</b> This column contains the description of the tasks.</li><li><b>Start Date:</b> This will contain the start dates of all the tasks.</li><li><b>Completed:</b> This will show whether or not a task is completed.</li><li><b>Details:</b> This will show all the details of a task.</li><li><b>Delete:</b> This will delete the task.</li><ul><br /><a href=\"helpvids/MissingInformationUserHelp.htm\">User Tutorial</a>";
+$pgv_lang["ra_view_task_help"]				= "~Task View~<ul><li><b>Task Name:</b> This column contains the name of each task.</b></li><li><b>Description:</b> This column contains the description of the tasks.</li><li><b>Start Date:</b> This will contain the start dates of all the tasks.</li><li><b>Completed:</b> This will show whether or not a task is completed.</li><li><b>Details:</b> This will show all the details of a task.</li><li><b>Delete:</b> This will delete the task.</li></ul>";
+$pgv_lang["ra_task_view_help"]				= "~View Task~<ul><li><b>Title:</b> This should contain the title of the task that you are adding.</li><li><b>People:</b> Assign any people associated for the new task.</li><li><b>Description:</b> Enter a description of the task you want to add.</li><li><b>Sources:</b> Assign any sources that you have for the task.</li><li>Click <b>Edit Task</b> to edit the details of the task.</li></ul>";
+$pgv_lang["ra_comments_help"]				= "~Comments~<ul><li>This will contain any comments related to the task. Click <b>Add New Comment</b> to add any comments.</li></ul>";
+$pgv_lang["ra_GenerateTasks_help"]			= "~Generate Tasks~<p>This form generates tasks from the _TODO tags in your GEDCOM file.</p><ul><li><b>Generate:</b> check each task to generate when you click <b>Generate</b>.</li><li><b>Task Name:</b> This is the name the task will be given.  This defaults to the text in the actual _TODO tag, excluding any CONT tags</li><li><b>Task Description:</b> The description the task will be given.  This is generated from the text in the _TODO tag plus all of the associated CONT tags.  </li><li><b>Edit:</b> click the link to edit that task.</li><li><b>Select Folder:</b> select the folder to put the generated tasks in.</li><li><b>Generate:</b> generates the tasks that have been checked.</li><li><b>Done:</b> redirects you to the Folder View page.</li></ul>";
+$pgv_lang["ra_EditGenerateTasks_help"]		= "~Edit Generated Task~<p>This form allows you to edit the tasks generated from _TODO tags in your GEDCOM file.</p><ul><li><b>Task Name:</b> This is the name the task will be given.  </li><li><b>Task Description:</b> The description the task will be given. </li><li><b>People:</b> click the link to select the person to associate the task with.</li><li><b>Source:</b> click the link to select the source to associate the task with.</li><li><b>Save:</b> saves all your changes and redirects you to the Generate tasks page.</li><li><b>Cancel:</b> disregards all your changes and redirects you to the Generate tasks page.</li></ul>";
+$pgv_lang["ra_configure_privacy_help"]		= "~Configure Privacy~<ul><li><b>#pgv_lang[PRIV_PUBLIC]#:</b> The specified task is available to everyone.</li><li><b>#pgv_lang[PRIV_USER]#:</b> The specified task is available only to authenticated users.</li><li><b>#pgv_lang[PRIV_NONE]#</b> The specified task is available only to users with Admin rights.</li><li><b>#pgv_lang[PRIV_HIDE]#:</b> The specified task is not available to anyone.</li></ul>";
+$pgv_lang["ra_edit_task_help"]				= "~Edit Task~<ul><li><b>Title:</b> This should contain the title of the task that you are editing.</li><li><b>Folder:</b> In this field you can assign which folder you want your new task to go to.</li><li><b>Description:</b> Enter a description of the task you want to edit.</li><li><b>Sources:</b> Assign or edit any sources that you have for the task.</li><li><b>People:</b> Assign or edit any people associated for the task.</li></ul>";
 
 //-- RA_VIEWTASK MESSAGES
 $pgv_lang["view_task"]						= "View Task";
@@ -286,12 +280,12 @@ $pgv_lang["ra_no"]						= "Number:"; //@@
 $pgv_lang["order_no"]					= "Order Number:"; //@@
 
 //-- MY TASK BLOCK
-$pgv_lang["mytasks_block_descr"]		= "The My Task Block shows the task for the current user and can be configured to show completed tasks or to show task that are currently unassigned";
-$pgv_lang["mytasks_block"] 				= "MyTasks Block";
+$pgv_lang["mytasks_block_descr"]		= "The #pgv_lang[my_tasks]# block shows tasks for the current user. It can be configured to show completed tasks or to show tasks that are currently unassigned.";
+$pgv_lang["mytasks_block"] 				= "Research Assistant";
 $pgv_lang["mytasks_edit"]               = "Edit";
 $pgv_lang["mytasks_unassigned"]			= "Unassigned";
 $pgv_lang["mytasks_takeOn"]				= "TakeOn";
-$pgv_lang["mytasks_help"]				= "~MY TASK BLOCK~<br /><br />The My Task Block shows the task for the current user<br />and can be configured to show completed tasks or to show<br />task that are currently unassigned";
+$pgv_lang["mytasks_help"]				= "~#pgv_lang[my_tasks]#~<br /><br />#pgv_lang[mytasks_block_descr]#";
 $pgv_lang["mytask_show_tasks"]   		= "Show unassigned tasks?";
 $pgv_lang["mytask_show_completed"]		= "Show completed tasks?";
 
