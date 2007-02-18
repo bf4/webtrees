@@ -44,6 +44,9 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
+*$pgv_lang["SHOW_RESEARCH_ASSISTANT"]				18 Feb 2007				C
+*$pgv_lang["SHOW_RESEARCH_ASSISTANT_help"]			18 Feb 2007				C
+*$pgv_lang["SYNC_GEDCOM_FILE_help"]					18 Feb 2007				S
 +$pgv_lang["INDI_FACTS_QUICK"]        				14 Feb 2007				A
 +$pgv_lang["INDI_FACTS_QUICK_help"]	  				14 Feb 2007				A
 +$pgv_lang["FAM_FACTS_QUICK"]         				14 Feb 2007				A
