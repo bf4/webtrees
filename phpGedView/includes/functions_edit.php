@@ -3,7 +3,7 @@
  * Various functions used by the Edit interface
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1115,7 +1115,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		asort($type);
 		array_flip($type);
 		//-- Build the selector for the Media "TYPE" Fact
-		print "<select name=\"text[]\">";
+		print "<select tabindex=\"".$tabkey."\" name=\"text[]\">";
 		print "<option selected=\"selected\" value=\"\"> ".$pgv_lang["choose"]." </option>";
 		$selectedValue = strtolower($value);
 		foreach ($type as $typeName => $typeValue) {
