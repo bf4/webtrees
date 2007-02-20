@@ -402,6 +402,7 @@ $pgv_lang["parent"] 				= "Parent";
 $pgv_lang["relatives"]				= "Close Relatives";
 $pgv_lang["relatives_events"]		= "Events of close relatives";
 $pgv_lang["spouse"] 				= "Spouse";
+$pgv_lang["spouses"] 				= "Spouses";
 $pgv_lang["surnames"]				= "Surnames";
 $pgv_lang["adopted"]				= "Adopted";
 $pgv_lang["foster"] 				= "Foster";
