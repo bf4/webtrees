@@ -1241,12 +1241,7 @@ $pgv_lang["sort_by"]					= "Sortieren nach";
 $pgv_lang["cleanup"]					= "Korrigieren";
 //-- CONFIGURE (extra) messages for programs patriarch, slklist and statistics
 $pgv_lang["dynasty_list"]				= "Übersicht der Familien";
-$pgv_lang["make_slklist"]				= "EXCEL (SLK) Liste erstellen";
-$pgv_lang["excel_list"]					= "Ausgabe im Excel (SLK) Format für die folgenden Dateien.  Sie müssen zuerst die Spitzenahnen Liste benutzen.";
-$pgv_lang["excel_tab"]					= "Blatt:";
-$pgv_lang["excel_create"]				= " wird erstellt in Datei:";
 $pgv_lang["patriarch_list"]				= "Spitzenahnen Liste";
-$pgv_lang["slk_list"]					= "EXCEL SLK Liste";
 $pgv_lang["statistics"]					= "Statistiken";
 //-- Merge Records
 $pgv_lang["merge_same"]					= "Die Datensätze sind nicht vom gleichen Typ und können daher nicht zusammengefügt werden.";

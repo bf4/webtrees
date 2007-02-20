@@ -2561,9 +2561,7 @@ function get_surname_fams($surname) {
 				$wname = get_sortable_name($row["f_wife"]);
 				if (empty($hname)) $hname = "@N.N., @P.N.";
 				if (empty($wname)) $wname = "@N.N., @P.N.";
-				if (empty($row["f_husb"])) $name = $hname." + ".$wname;
-				else $name = $wname." + ".$hname;
-				$fam["name"] = $name;
+				$fam["name"] = $hname." + ".$wname;
 				$fam["HUSB"] = $row["f_husb"];
 				$fam["WIFE"] = $row["f_wife"];
 				$fam["CHIL"] = $row["f_chil"];
