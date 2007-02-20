@@ -537,7 +537,8 @@ function print_surn_table($datalist, $target="INDI") {
 	echo "<td></td>";
 	echo "<th class=\"list_label\">".$factarray["SURN"]."</th>";
 	echo "<th class=\"list_label\">";
-	if ($target=="FAM") echo $pgv_lang["families"]; else echo $pgv_lang["individuals"];
+//	if ($target=="FAM") echo $pgv_lang["families"]; else echo $pgv_lang["individuals"];
+	if ($target=="FAM") echo $pgv_lang["spouses"]; else echo $pgv_lang["individuals"];
 	echo "</th>";
 	echo "</tr>\n";
 	//-- table body

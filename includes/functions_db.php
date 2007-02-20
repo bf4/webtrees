@@ -2445,6 +2445,7 @@ function get_alpha_fams($letter) {
 					if (isset($indilist[$WIFE])) {
 						foreach($indilist[$WIFE]["names"] as $n=>$namearray) {
 							if (hasRTLText($namearray[0])) {
+								$surnames[str2upper($namearray[2])] = $namearray[2];
 								$wname = sortable_name_from_name($namearray[0]);
 								break;
 							}
@@ -2455,7 +2456,8 @@ function get_alpha_fams($letter) {
 				if ($famlist[$famid]["wife"]==$gid) $name = $wname ." + ". $hname; // force husb first
 				$famlist[$famid]["name"] = $name;
 				if (!isset($famlist[$famid]["surnames"])||count($famlist[$famid]["surnames"])==0) $famlist[$famid]["surnames"] = $surnames;
-				else pgv_array_merge($famlist[$famid]["surnames"], $surnames);
+//				else pgv_array_merge($famlist[$famid]["surnames"], $surnames);
+				else $famlist[$famid]["surnames"] += $surnames;
 				$tfamlist[$famid] = $famlist[$famid];
 			}
 		}
