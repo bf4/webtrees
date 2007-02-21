@@ -144,24 +144,16 @@ if (count($famalpha) > 0) {
 
 print "<br /><br />";
 
-if ($alpha != "@") {
-	if ($surname_sublist=="yes") print_help_link("skip_sublist_help", "qm", "skip_surnames");
-	else print_help_link("skip_sublist_help", "qm", "show_surnames");
-}
-if ($show_all=="yes" && $alpha != "@"){
-	if ($surname_sublist=="yes") print "<a href=\"?show_all=yes&amp;surname_sublist=no\">".$pgv_lang["skip_surnames"]."</a>";
- 	else print "<a href=\"?show_all=yes&amp;surname_sublist=yes\">".$pgv_lang["show_surnames"]."</a>";
-}
-else if (empty($alpha)) {
-	if ($surname_sublist=="yes") print "<a href=\"?show_all=yes&amp;surname_sublist=no\">".$pgv_lang["skip_surnames"]."</a>";
-	else print "<a href=\"?show_all=yes&amp;surname_sublist=yes\">".$pgv_lang["show_surnames"]."</a>\n";
-}
-else if ($alpha != "@" && is_array(isset($surname))) {
-	print "<a href=\"?alpha=$alpha&amp;surname_sublist=yes\">".$pgv_lang["show_surnames"]."</a>";
-}
-else if ($alpha != "@") {
-	if ($surname_sublist=="yes") print "<a href=\"?alpha=$alpha&amp;surname_sublist=no\">".$pgv_lang["skip_surnames"]."</a>";
-	else print "<a href=\"?alpha=$alpha&amp;surname_sublist=yes\">".$pgv_lang["show_surnames"]."</a>";
+if(empty($SEARCH_SPIDER)) {
+	if ($alpha != "@") {
+		if ($surname_sublist=="yes") {
+			print_help_link("skip_sublist_help", "qm", "skip_surnames");
+			print "<a href=\"?alpha=$alpha&amp;surname_sublist=no&amp;show_all=$show_all\">".$pgv_lang["skip_surnames"]."</a>";
+		} else {
+			print_help_link("skip_sublist_help", "qm", "show_surnames");
+			print "<a href=\"?alpha=$alpha&amp;surname_sublist=yes&amp;show_all=$show_all\">".$pgv_lang["show_surnames"]."</a>";
+		}
+	}
 }
 
 print "<br /><br />";

@@ -44,6 +44,9 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["alpha_help"]							21 Feb 2007				w
+*$pgv_lang["name_list_help"]						21 Feb 2007				w
+*$pgv_lang["skip_sublist_help"]						21 Feb 2007				w
 +$pgv_lang["BOM_detected_help"]						11 Feb 2007				A
 *$pgv_lang["index_htmlplus_help"]					6 Feb 2007				w
 *$pgv_lang["index_htmlplus_title_help"]				6 Feb 2007				w

@@ -172,7 +172,23 @@ $expalpha = $alpha;
 if ($expalpha=="(" || $expalpha=="[" || $expalpha=="?" || $expalpha=="/" || $expalpha=="*" || $expalpha=="+" || $expalpha==')') $expalpha = "\\".$expalpha;
 
 print "<br /><br />";
+
+if(empty($SEARCH_SPIDER)) {
+	if ($alpha != "@") {
+		if ($surname_sublist=="yes") {
+			print_help_link("skip_sublist_help", "qm", "skip_surnames");
+			print "<a href=\"?alpha=$alpha&amp;surname_sublist=no&amp;show_all=$show_all\">".$pgv_lang["skip_surnames"]."</a>";
+		} else {
+			print_help_link("skip_sublist_help", "qm", "show_surnames");
+			print "<a href=\"?alpha=$alpha&amp;surname_sublist=yes&amp;show_all=$show_all\">".$pgv_lang["show_surnames"]."</a>";
+		}
+	}
+}
+
+print "<br /><br />";
 print_help_link("name_list_help", "qm");
+print "<br /><br />";
+
 print "<table class=\"list_table $TEXT_DIRECTION\"><tr>";
 
 $TableTitle = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" title=\"".$pgv_lang["individuals"]."\" alt=\"".$pgv_lang["individuals"]."\" />&nbsp;&nbsp;";
@@ -397,17 +413,6 @@ else {
 	}
 }
 print "</tr></table>";
-
-print "<br />";
-if(empty($SEARCH_SPIDER)) {
-	if ($alpha != "@") {
-		if ($surname_sublist=="yes") print_help_link("skip_sublist_help", "qm", "skip_surnames");
-		else print_help_link("skip_sublist_help", "qm", "show_surnames");
-		if ($surname_sublist=="yes") print "<a href=\"?alpha=$alpha&amp;surname_sublist=no&amp;show_all=$show_all\">".$pgv_lang["skip_surnames"]."</a>";
-		else print "<a href=\"?alpha=$alpha&amp;surname_sublist=yes&amp;show_all=$show_all\">".$pgv_lang["show_surnames"]."</a>";
-	}
-}
-print "<br /><br />\n";
 
 if ($show_all=="yes") unset($alpha);
 if (!empty($surname) && $surname_sublist=="yes") $legend = str_replace("#surname#", check_NN($surname), $pgv_lang["indis_with_surname"]);
