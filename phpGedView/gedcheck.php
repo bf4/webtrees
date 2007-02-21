@@ -43,12 +43,16 @@ while ($file=readdir($dir))
 	if (!is_dir($INDEX_DIRECTORY.$file) && is_readable($INDEX_DIRECTORY.$file)) {
 		$h=fopen($INDEX_DIRECTORY.$file, 'r');
 		if (preg_match('/0.*HEAD/i', fgets($h)))
-			$all_geds[]=$file;
+			$all_geds[]=$INDEX_DIRECTORY.$file;
 		fclose($h);
 	}
 closedir($dir);
 if (count($all_geds)==0)
 	$all_geds[]='-';
+// Don't forget gedcoms with an absolute path
+foreach ($GEDCOMS as $key=>$value)
+	if (!in_array($value["path"], $all_geds))
+		$all_geds[]=$value["path"];
 
 ////////////////////////////////////////////////////////////////////////////////
 // User parameters
@@ -882,7 +886,7 @@ function check_fam($id)
 ////////////////////////////////////////////////////////////////////////////////
 // Check the file at a syntactic level, line-by-line
 ////////////////////////////////////////////////////////////////////////////////
-$gedfile=preg_split("/${EOL}/", file_get_contents($INDEX_DIRECTORY.$thisged), -1, PREG_SPLIT_NO_EMPTY);
+$gedfile=preg_split("/${EOL}/", file_get_contents($thisged), -1, PREG_SPLIT_NO_EMPTY);
 
 // Quickly scan the file for XREFs and build arrays of links
 $curr_xref='HEAD'; $all_xrefs=array(); $used_xrefs=array(); $xref_links=array();
@@ -1055,22 +1059,23 @@ if (isset($last_err_num)) {
 ////////////////////////////////////////////////////////////////////////////////
 // If the gedcom has been imported, do semantic checks with the PGV API
 ////////////////////////////////////////////////////////////////////////////////
-if (isset($GEDCOMS[$thisged])) {
-	$GEDCOM=$thisged;
-	$indi_list=get_indi_list();
-	$fam_list =get_fam_list();
-	foreach ($indi_list as $k => $v) {
-		if (!isset($indi_list[$k]["checked"])) {
-			print "<hr/>\n";
-			check_indi($k);
+foreach ($GEDCOMS as $key=>$value)
+	if ($value["path"]==$thisged) {
+		$GEDCOM=$key;
+		$indi_list=get_indi_list();
+		$fam_list =get_fam_list();
+		foreach ($indi_list as $k => $v) {
+			if (!isset($indi_list[$k]["checked"])) {
+				print "<hr/>\n";
+				check_indi($k);
+			}
 		}
-	}
-	foreach ($fam_list as $k => $v) {
-		if (!isset($fam_list[$k]["checked"])) {
-			print "<hr>\n";
-			check_fam($k);
+		foreach ($fam_list as $k => $v) {
+			if (!isset($fam_list[$k]["checked"])) {
+				print "<hr>\n";
+				check_fam($k);
+			}
 		}
-	}
 }
 
 print "<hr />\n";
