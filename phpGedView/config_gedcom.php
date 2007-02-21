@@ -8,7 +8,7 @@
  * names gedcom.ged_conf.php.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2007  PGV Development Teacm
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,9 +54,6 @@ $CHARACTER_SET = "UTF-8";				//-- This is the character set of your gedcom file.
 										//-- almost all sites.  If you export your gedcom using ibm windows encoding, then you should put
 										//-- WINDOWS here.
 										//-- NOTE: PHP does NOT support UNICODE so don't try it :-)
-
-$CREATE_GENDEX = false;					//-- whether or not to create a gendex file when importing your gedcom.  The gendex file will be placed in
-										//-- the index directory
 
 $ENABLE_MULTI_LANGUAGE = true;			//-- set to true to give users the option of selecting a different language from
 										//-- a dropdown list in the footer and default to the language they have set in their browser settings

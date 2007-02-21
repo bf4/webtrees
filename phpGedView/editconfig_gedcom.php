@@ -501,8 +501,8 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
     <td colspan="2" class="facts_label"><?php
     		print "<h2>".$pgv_lang["gedconf_head"]." - ";
 		if (isset($ged)) {
-			if ($TEXT_DIRECTION=="rtl") print "&rlm;(".$GEDCOMS[$ged]["id"].")&nbsp;&rlm;";
-			else print "&nbsp;&lrm;(".$GEDCOMS[$ged]["id"].")&lrm;";
+//			if ($TEXT_DIRECTION=="rtl") print "&rlm;(".$GEDCOMS[$ged]["id"].")&nbsp;&rlm;";
+//			else print "&nbsp;&lrm;(".$GEDCOMS[$ged]["id"].")&lrm;";
 			print $GEDCOMS[$ged]["title"];
 		}
 		else if ($source == "add_form") print $pgv_lang["add_gedcom"];
