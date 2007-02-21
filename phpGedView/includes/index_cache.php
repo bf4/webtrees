@@ -72,10 +72,7 @@ function loadCachedBlock($block, $index) {
 			$modtime = $modtime+$checktime;
 			if ($modtime<time()) return false;
 		}		
-		$fp = fopen($fname, "rb");
-		fpassthru($fp);
-		fclose($fp);
-		return true;
+		return @readfile($fname);
 	}
 	return false;
 }

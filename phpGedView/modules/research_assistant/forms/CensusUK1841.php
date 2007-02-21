@@ -284,6 +284,89 @@ $out .= ' <tr>
     	
     }
     
+     function processSimpleCitation() {
+    	global $TBLPREFIX, $DBCONN;
+    	//-- delete any old census records
+    	$sql = "DELETE FROM ".$TBLPREFIX."taskfacts WHERE tf_t_id='".$DBCONN->escapeSimple($_REQUEST['taskid'])."' AND tf_factrec LIKE '1 CENS%'";
+    	$res = dbquery($sql);
+    	
+		// Set our output to nothing, this supresses a warning that we would otherwise get.
+		$out = "";
+		$factrec = "1 CENS";
+		$factrec .= "\r\n2 DATE 30 MAR 1841";
+		//-- $factrec .=!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"30 MAR 1841";
+		$factrec .= "\r\n2 PLAC ".$_POST['city'].", ".$_POST['county'].", ".$_POST['state'].", England";
+		
+		$people = $this->getPeople();
+		$pids = array_keys($people);
+		//-- store the fact associations in the database
+		$sql = "INSERT INTO ".$TBLPREFIX."taskfacts VALUES('".get_next_id("taskfacts", "tf_id")."'," .
+			"'".$DBCONN->escapeSimple($_REQUEST['taskid'])."'," .
+			"'".$DBCONN->escapeSimple($factrec)."'," .
+			"'".$DBCONN->escapeSimple(implode(";", $pids))."', 'Y', 'indi')";
+		$res = dbquery($sql);
+		
+		$rows = array();
+		$text = $_POST['city'].", ".$_POST['county'].", ".$_POST['state'].", 1841 UK Census";
+		for($number = 0; $number < $_POST['numOfRows']; $number++)
+		{
+
+			if (!isset($_POST["NameOfPeople".$number])) $_POST["NameOfPeople".$number]="";
+			if (!isset($_POST["Relationship".$number])) $_POST["Relationship".$number]="";
+			if (!isset($_POST["Single".$number])) $_POST["Single".$number]="";
+			if (!isset($_POST["Married".$number])) $_POST["Married".$number]="";
+			if (!isset($_POST["WidowedDivorced".$number])) $_POST["WidowedDivorced".$number]="";
+			if (!isset($_POST["Sex".$number])) $_POST["Sex".$number]="";
+			if (!isset($_POST["Age".$number])) $_POST["Age".$number]="";
+			if (!isset($_POST["Trade".$number])) $_POST["Trade".$number]="";
+			if (!isset($_POST["PlaceOfBirth".$number])) $_POST["PlaceOfBirth".$number]="";
+			if (!isset($_POST["Disablity".$number])) $_POST["Disablity".$number]="";
+			if (!isset($_POST["personid".$number])) $_POST["personid".$number]="";
+			
+			$rows[$number] = array(
+			"NameOfPeople"=>$_POST["NameOfPeople".$number],
+			"Relationship"=>$_POST["Relationship".$number],
+			"Single"=>$_POST["Single".$number],
+			"Married"=>$_POST["Married".$number],
+			"WidowedDivorced"=>$_POST["WidowedDivorced".$number],
+			"Sex"=>$_POST["Sex".$number],
+			"Age"=>$_POST["Age".$number],
+			"Trade"=>$_POST["Trade".$number],
+			"PlaceOfBirth"=>$_POST["PlaceOfBirth".$number],
+			"Disablity"=>$_POST["Disablity".$number],
+			"personid"=>$_POST["personid".$number]
+			);
+			
+			$text .= "\r\n";
+			if (!empty($_POST["NameOfPeople".$number])) $text .= " Name: ".$_POST["NameOfPeople".$number];
+			if (!empty($_POST["Relationship".$number])) $text .= ", Relationship: ".$_POST["Relationship".$number];
+			if (!empty($_POST["Single".$number])) $text .= ", ".$_POST["Single".$number];
+			if (!empty($_POST["Married".$number])) $text .= ", ".$_POST["Married".$number];
+			if (!empty($_POST["WidowedDivorced".$number])) $text .= ", ".$_POST["WidowedDivorced".$number];
+			if (!empty($_POST["Sex".$number])) $text .= ", Sex: ".$_POST["Sex".$number];
+			if (!empty($_POST["Age".$number])) $text .= ", Age: ".$_POST["Age".$number];
+			if (!empty($_POST["Trade".$number])) $text .= ", Profession: ".$_POST["Trade".$number];
+			if (!empty($_POST["PlaceOfBirth".$number])) $text .= ", Place of birth: ".$_POST["PlaceOfBirth".$number];
+			if (!empty($_POST["Disablity".$number])) $text .= ", ".$_POST["Disablity".$number];
+			
+		}
+
+		$citation = array(
+			"PAGE"=>"Ref: HO107, Book:".$_POST['CallNumberURL'].", Folio:".$_POST['folio'].", Page: ".$_POST['page'], 
+			"QUAY"=>'', 
+    		"DATE"=>!empty($_POST['EnumerationDate'])?$_POST['EnumerationDate']:"30 MAR 1841", 
+			"TEXT"=>$text, 
+			"OBJE"=>$_POST['OBJE'],
+			"array"=>array(
+			'city'=>$_POST['city'],
+			'county'=>$_POST['county'],
+			'state'=>$_POST['state'],
+			'rows'=>$rows));
+		
+		return $citation;
+    }
+    
+    
     function step2() {
 		global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN, $factarray, $pgv_lang;
 		global $INDI_FACTS_ADD;
