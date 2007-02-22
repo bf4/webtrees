@@ -3,7 +3,7 @@
  * Media List Slide Show module for phpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,9 +19,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ * @version $Id$
  * @package PhpGedView
- * @subpackage Module
- * @version $Id: googlemap.php,v$
+ * @subpackage Module - Slideshow
  * @author John Finlay / Neumont students
  */
 
@@ -78,7 +78,7 @@ border:0px solid #7777aa;
   </div>
   </td>
   <td style="cursor:hand" align="right">
-  <a style="text-decoration:none" href="#" onClick="btnPauseClick(); hideMe(); return false;"><font color="#ffffff" size="4" face="arial"><b>X</b> </font></a>
+  <a href="#" onClick="btnPauseClick(); hideMe(); return false;"><img src="modules/slideshow/images/quit.gif"></font></a>
   </td>
   </tr>
   <tr>
