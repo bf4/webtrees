@@ -530,6 +530,12 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 		//-- get the old id
 		$old_m_media = $match[1];
 		$objref = $objrec;
+		/**
+		 * Hiding some code in order to fix a very annoying bug
+		 * [ 1579889 ] Upgrading breaks Media links
+		 *
+		 * Don't understand the logic of renumbering media objects ??
+		 *
 		//-- if this is an import not an update get the updated ID
 		if (!$update) {
 			if (isset ($found_ids[$old_m_media])) {
@@ -542,8 +548,10 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 		}
 		//-- an update so the ID won't change
 		else $new_m_media = $old_m_media;
+		**/
+		$new_m_media = $old_m_media;
 		$m_media = $new_m_media;
-//		print "LINK: old $old_m_media new $new_m_media $objref<br />";
+		//print "LINK: old $old_m_media new $new_m_media $objref<br />";
 		if ($m_media != $old_m_media) $objref = preg_replace("/@$old_m_media@/", "@$m_media@", $objref);
 	}
 	//-- handle embedded OBJE records
@@ -621,6 +629,12 @@ function update_media($gid, $indirec, $update = false) {
 	if ($ct > 0) {
 		$old_m_media = $match[1];
 		$m_id = get_next_id("media", "m_id");
+		/**
+		 * Hiding some code in order to fix a very annoying bug
+		 * [ 1579889 ] Upgrading breaks Media links
+		 *
+		 * Don't understand the logic of renumbering media objects ??
+		 *
 		if ($update) {
 			$new_m_media = $old_m_media;
 		} else {
@@ -632,7 +646,9 @@ function update_media($gid, $indirec, $update = false) {
 				$found_ids[$old_m_media]["new_id"] = $new_m_media;
 			}
 		}
-//		print "RECORD: old $old_m_media new $new_m_media $objref<br />";
+		**/
+		$new_m_media = $old_m_media;
+		//print "RECORD: old $old_m_media new $new_m_media<br />";
 		$indirec = preg_replace("/@" . $old_m_media . "@/", "@" . $new_m_media . "@", $indirec);
 		$media = new Media($indirec);
 		//--check if we already have a similar object
