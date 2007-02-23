@@ -804,32 +804,32 @@ switch ($action) {
 			</td>
 		</tr>
 		<tr>
-			<td class="facts_value"><?php
+			<td class="facts_value width50"><?php
 				print_help_link("bom_check_help", "qm");
 				print "<a href=\"editlang.php?action=bom\">".$pgv_lang["bom_check"]."</a>";
 	    	?></td>
-	      	<td class="facts_value"><?php
+	      	<td class="facts_value width50"><?php
 				print_help_link("edit_lang_utility_help", "qm");
 	      		print "<a href=\"editlang.php?action=edit\">".$pgv_lang["edit_lang_utility"]."</a>";
 	    	?></td>
 	    </tr>
 	    <tr>
-	    	<td class="facts_value"><?php
+	    	<td class="facts_value width50"><?php
 	    		print_help_link("lang_debug_help", "qm");
 	        	print "<a href=\"editlang.php?action=debug\">".$pgv_lang["lang_debug"]."</a>";
 	    	?></td>
-		  	<td class="facts_value"><?php
+		  	<td class="facts_value width50"><?php
 				print_help_link("export_lang_utility_help", "qm");
 		  		print "<a href=\"editlang.php?action=export\">".$pgv_lang["export_lang_utility"]."</a>";
 			?></td>
 		</tr>
 		<tr>
-			<td class="facts_value"><?php
+			<td class="facts_value width50"><?php
 				print_help_link("translation_forum_desc", "qm"); ?>
 				<a href="http://sourceforge.net/forum/forum.php?forum_id=294245" target="_blank" ><?php
 				print $pgv_lang["translation_forum"];
 	      	?></td>
-		  	<td class="facts_value"><?php
+		  	<td class="facts_value width50"><?php
 				print_help_link("compare_lang_utility_help", "qm");
 	      		print "<a href=\"editlang.php?action=compare\">".$pgv_lang["compare_lang_utility"]."</a>";
 		  	?></td>
