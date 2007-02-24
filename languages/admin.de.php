@@ -69,7 +69,6 @@ $pgv_lang["created_placelinks_fail"]	= "Die <i>Place links</i> Tabelle konnte ni
 $pgv_lang["created_media_fail"]			= "Die <i>Media</i> Tabelle konnte nicht erstellt werden.";
 $pgv_lang["created_media_mapping_fail"]	= "Die <i>Media mappings</i> Tabelle konnte nicht erstellt werden.";
 $pgv_lang["no_thumb_dir"]				= "Das Miniaturbild-Verzeichnis existiert nicht und konnte auch nicht erstellt werden.";
-$pgv_lang["move_to"]					= "Verschieben nach";
 $pgv_lang["folder_created"]				= "Verzeichnis erstellt";
 $pgv_lang["folder_no_create"]			= "Verzeichnis konnte nicht erstellt werden";
 $pgv_lang["security_no_create"]			= "Sicherheits-Hinweis: Die Datei <b><i>index.php</i></b> konnte nicht erstellt werden im Verzeichnis ";

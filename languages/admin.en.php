@@ -90,7 +90,6 @@ $pgv_lang["created_placelinks_fail"]	= "Unable to create <i>Place links</i> tabl
 $pgv_lang["created_media_fail"]	= "Unable to create <i>Media</i> table.";
 $pgv_lang["created_media_mapping_fail"]	= "Unable to create <i>Media mappings</i> table.";
 $pgv_lang["no_thumb_dir"]			= " thumbnail directory does not exist and it could not be created.";
-$pgv_lang["move_to"]				= "Move To";
 $pgv_lang["folder_created"]			= "Directory created";
 $pgv_lang["folder_no_create"]		= "Directory could not be created";
 $pgv_lang["security_no_create"]		= "Security Warning: Could not create file <b><i>index.php</i></b> in ";
