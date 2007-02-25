@@ -225,7 +225,7 @@ function showchanges() {
 // The option to use getElementsByName is used in connection with code from
 // the functions_print.php file.
 function togglerow(label) {
-	ebn = document.getElementsByName(label);
+	var ebn = document.getElementsByName(label);
 	if (ebn.length) disp = ebn[0].style.display;
 	else disp="";
 	if (disp=="none") {
@@ -238,9 +238,9 @@ function togglerow(label) {
 	}
 	else {
 		disp="none";
-		rela_plus = document.getElementById('rela_plus');
+		var rela_plus = document.getElementById('rela_plus');
 		if (rela_plus) rela_plus.style.display="inline";
-		rela_minus = document.getElementById('rela_minus');
+		var rela_minus = document.getElementById('rela_minus');
 		if (rela_minus) rela_minus.style.display="none";
 	}
 	for (i=0; i<ebn.length; i++) ebn[i].style.display=disp;
@@ -400,8 +400,8 @@ else loading_message();
 <script language="JavaScript" type="text/javascript">
 <!--
 	// hide button if list is empty
-	ebn = document.getElementsByName('row_rela');
-	row_top = document.getElementById('row_top');
+	var ebn = document.getElementsByName('row_rela');
+	var row_top = document.getElementById('row_top');
 	if (ebn.length==0 && row_top) row_top.style.display="none";
 	<?php if (!$EXPAND_RELATIVES_EVENTS) print "togglerow('row_rela');\n"; ?>
 //-->
