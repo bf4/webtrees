@@ -3,7 +3,7 @@
  * Startup and session logic
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -899,6 +899,7 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
    &&(strstr($SCRIPT_NAME, "client.php")===false)
    &&(strstr($SCRIPT_NAME, "edit_privacy.php")===false)
    &&(strstr($SCRIPT_NAME, "upgrade33-40.php")===false)
+   &&(strstr($SCRIPT_NAME, "gedcheck.php")===false)
    &&(strstr($SCRIPT_NAME, "useradmin.php")===false)) {
    	if ((count($GEDCOMS)==0)||(!check_for_import($GEDCOM))) {
 		header("Location: editgedcoms.php");

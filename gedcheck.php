@@ -25,6 +25,7 @@
  * @subpackage Admin
  * @version $Id$
  */
+
 require("config.php");
 
 // Must be an admin user to use this module
@@ -35,24 +36,26 @@ if (!userGedcomAdmin(getUserName())) {
 print_header($pgv_lang["gedcheck"].' - '.$GEDCOM);
 
 ////////////////////////////////////////////////////////////////////////////////
-// Scan the index directory for gedcom files
+// Scan all the gedcom directories for gedcom files
 ////////////////////////////////////////////////////////////////////////////////
+$all_dirs=array($INDEX_DIRECTORY=>"");
+foreach ($GEDCOMS as $value)
+	$all_dirs[dirname($value["path"])."/"]="";
+
 $all_geds=array();
-$dir=opendir($INDEX_DIRECTORY);
-while ($file=readdir($dir))
-	if (!is_dir($INDEX_DIRECTORY.$file) && is_readable($INDEX_DIRECTORY.$file)) {
-		$h=fopen($INDEX_DIRECTORY.$file, 'r');
-		if (preg_match('/0.*HEAD/i', fgets($h)))
-			$all_geds[]=$INDEX_DIRECTORY.$file;
-		fclose($h);
-	}
-closedir($dir);
+foreach ($all_dirs as $key=>$value) {
+	$dir=opendir($key);
+	while ($file=readdir($dir))
+		if (!is_dir($key.$file) && is_readable($key.$file)) {
+			$h=fopen($key.$file, 'r');
+			if (preg_match('/0.*HEAD/i', fgets($h,255)))
+				$all_geds[$file]=$key.$file;
+			fclose($h);
+		}
+	closedir($dir);
+}
 if (count($all_geds)==0)
 	$all_geds[]='-';
-// Don't forget gedcoms with an absolute path
-foreach ($GEDCOMS as $key=>$value)
-	if (!in_array($value["path"], $all_geds))
-		$all_geds[]=$value["path"];
 
 ////////////////////////////////////////////////////////////////////////////////
 // User parameters
@@ -66,11 +69,13 @@ $levels=array(
 );
 
 // Default values
-if (!isset($thisged))
+if (!isset($ged))
 	if (isset($GEDCOM) && in_array($GEDCOM, $all_geds))
-		$thisged=$GEDCOM;                              // Current gedcom
-	else
-		$thisged=$all_geds[0];                         // First gedcom in directory
+		$ged=$GEDCOM;                                  // Current gedcom
+	else {
+		$tmp=array_keys($all_geds);
+		$ged=$tmp[0];                                  // First gedcom in directory
+	}
 if (!isset($err_level))     $err_level=$error;     // Higher numbers are more picky.
 if (!isset($openinnew))     $openinnew=0;          // Open links in same/new tab/window
 if (!isset($context_lines)) $context_lines=2;      // Lines of context to display
@@ -79,9 +84,9 @@ if (!isset($showall))       $showall=0;            // Show details of records wi
 print "<form method='post' name='gedcheck' action='gedcheck.php'>\n";
 print "<table class='list_table, $TEXT_DIRECTION'>\n";
 print "<tr><td class='list_label'>{$pgv_lang["gedcom_file"]}</td>\n";
-print "<td class='optionbox'><select name='thisged'>\n";
-foreach ($all_geds as $value)
-	print "<option value='$value'".($value==$thisged?" selected='selected'":"").">$value</option>\n";
+print "<td class='optionbox'><select name='ged'>\n";
+foreach ($all_geds as $key=>$value)
+	print "<option value='$key'".($key==$ged?" selected='selected'":"").">$key</option>\n";
 print "</select></td></tr>";
 print "<tr><td class='list_label'>&nbsp; {$pgv_lang["level"]} &nbsp;</td>\n";
 print "<td class='optionbox'><select name='err_level'>\n";
@@ -164,10 +169,10 @@ $PGV_LINK=array(
 $target=($openinnew==1 ? " target='_new'" : '');
 function pgv_href($tag, $xref, $name="")
 {
-	global $PGV_LINK, $target, $thisged, $GEDCOMS;
+	global $PGV_LINK, $target, $ged, $GEDCOMS;
 	$text=($name=="" ? "$tag $xref" : "$name ($xref)");
-	if (isset($PGV_LINK[$tag]) && isset($GEDCOMS[$thisged]))
-		return '<a href='.$PGV_LINK[$tag].str_replace('@','',$xref)."&ged=$thisged"."$target>$text</a>";
+	if (isset($PGV_LINK[$tag]) && isset($GEDCOMS[$ged]))
+		return '<a href='.$PGV_LINK[$tag].str_replace('@','',$xref)."&ged=$ged"."$target>$text</a>";
 	else
 		return "$tag $xref";
 }
@@ -762,7 +767,7 @@ function check_indi($id)
 		return;
 	}
 	$indi_list[$id]["checked"]=true;
-	$ged=$indi_list[$id]["gedcom"];
+	$gedrec=$indi_list[$id]["gedcom"];
 	$errors="";
 
 	if (isset($indi_list[$id]["names"][0][0]))
@@ -772,12 +777,12 @@ function check_indi($id)
 
 	if ($level>=$error)
 		foreach ($indi_facts_unique as $fact)
-			if (get_sub_record(1, "1 $fact", $ged, 2)!="")
+			if (get_sub_record(1, "1 $fact", $gedrec, 2)!="")
 				$errors.=multiple($fact);
 
 	unset ($famc, $fams); $foundf=false; $patok=false; $todo=array();
 
-	$facts=get_all_subrecords($ged, "CHAN OBJE", false, false, false);
+	$facts=get_all_subrecords($gedrec, "CHAN OBJE", false, false, false);
 	foreach ($facts as $subged) {
 		preg_match("/^1\s(\S*)/", $subged, $fact);
 		preg_match("/^1\s{$fact[1]} @(.*)@{$EOL}/", $subged, $link);
@@ -826,7 +831,7 @@ function check_fam($id)
 		return;
 	}
 	$fam_list[$id]["checked"]=true;
-	$ged=$fam_list[$id]["gedcom"];
+	$gedrec=$fam_list[$id]["gedcom"];
 	$errors="";
 	if (isset($fam_list[$id]["name"]))
 		$name=$fam_list[$id]["name"];
@@ -835,11 +840,11 @@ function check_fam($id)
 
 	if ($level>=$error)
 		foreach ($fam_facts_unique as $fact)
-			if (get_sub_record(1, "1 $fact", $ged, 2)!="")
+			if (get_sub_record(1, "1 $fact", $gedrec, 2)!="")
 				$errors.=multiple($fact);
 
 	unset ($chil, $husb, $wife); $todo=array();
-	$facts=get_all_subrecords($ged, "CHAN OBJE", true, false, true);
+	$facts=get_all_subrecords($gedrec, "CHAN OBJE", true, false, true);
 	foreach ($facts as $subged) 
 		if (preg_match("/^1/", $subged)) { # Sometimes get_all_subrecords() gives just a CR
 			preg_match("/^1\s*(\S*)/", $subged, $fact);
@@ -886,7 +891,7 @@ function check_fam($id)
 ////////////////////////////////////////////////////////////////////////////////
 // Check the file at a syntactic level, line-by-line
 ////////////////////////////////////////////////////////////////////////////////
-$gedfile=preg_split("/${EOL}/", file_get_contents($thisged), -1, PREG_SPLIT_NO_EMPTY);
+$gedfile=preg_split("/${EOL}/", file_get_contents($all_geds[$ged]), -1, PREG_SPLIT_NO_EMPTY);
 
 // Quickly scan the file for XREFs and build arrays of links
 $curr_xref='HEAD'; $all_xrefs=array(); $used_xrefs=array(); $xref_links=array();
@@ -1059,23 +1064,22 @@ if (isset($last_err_num)) {
 ////////////////////////////////////////////////////////////////////////////////
 // If the gedcom has been imported, do semantic checks with the PGV API
 ////////////////////////////////////////////////////////////////////////////////
-foreach ($GEDCOMS as $key=>$value)
-	if ($value["path"]==$thisged) {
-		$GEDCOM=$key;
-		$indi_list=get_indi_list();
-		$fam_list =get_fam_list();
-		foreach ($indi_list as $k => $v) {
-			if (!isset($indi_list[$k]["checked"])) {
-				print "<hr/>\n";
-				check_indi($k);
-			}
+if (isset($GEDCOMS[$ged])) {
+	$GEDCOM=$ged;
+	$indi_list=get_indi_list();
+	$fam_list =get_fam_list();
+	foreach ($indi_list as $k => $v) {
+		if (!isset($indi_list[$k]["checked"])) {
+			print "<hr/>\n";
+			check_indi($k);
 		}
-		foreach ($fam_list as $k => $v) {
-			if (!isset($fam_list[$k]["checked"])) {
-				print "<hr>\n";
-				check_fam($k);
-			}
+	}
+	foreach ($fam_list as $k => $v) {
+		if (!isset($fam_list[$k]["checked"])) {
+			print "<hr>\n";
+			check_fam($k);
 		}
+	}
 }
 
 print "<hr />\n";
