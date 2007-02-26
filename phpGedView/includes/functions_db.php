@@ -1973,6 +1973,8 @@ function get_indi_alpha() {
 	$danishex = array("OE", "AE", "AA");
 	$danishFrom = array("AA", "AE", "OE");
 	$danishTo = array("Å", "Æ", "Ø");
+	// Force danish letters in the top list [ 1579889 ]
+	if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian") foreach ($danishTo as $k=>$v) $indialpha[$v] = $v;
 
 	$sql = "SELECT DISTINCT i_letter AS alpha FROM ".$TBLPREFIX."individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."' ORDER BY alpha";
 	$res = dbquery($sql);
@@ -2044,6 +2046,8 @@ function get_fam_alpha() {
 	$danishex = array("OE", "AE", "AA");
 	$danishFrom = array("AA", "AE", "OE");
 	$danishTo = array("Å", "Æ", "Ø");
+	// Force danish letters in the top list [ 1579889 ]
+	if ($LANGUAGE=="danish" || $LANGUAGE=="norwegian") foreach ($danishTo as $k=>$v) $famalpha[$v] = $v;
 
 	$sql = "SELECT DISTINCT i_letter AS alpha FROM ".$TBLPREFIX."individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."' AND i_gedcom LIKE '%1 FAMS%' ORDER BY alpha";
 	$res = dbquery($sql);
@@ -2136,7 +2140,9 @@ function get_alpha_indis($letter) {
 		if ($letter == "Ø") $text = "OE";
 		else if ($letter == "Æ") $text = "AE";
 		else if ($letter == "Å") $text = "AA";
-		if (isset($text)) $sql .= "(i_letter = '".$DBCONN->escapeSimple($letter)."' OR i_letter = '".$DBCONN->escapeSimple($text)."') ";
+//	[ 1579889 ]
+//	if (isset($text)) $sql .= "(i_letter = '".$DBCONN->escapeSimple($letter)."' OR i_letter = '".$DBCONN->escapeSimple($text)."') ";
+		if (isset($text)) $sql .= "(i_letter = '".$DBCONN->escapeSimple($letter)."' OR i_name LIKE '%/".$DBCONN->escapeSimple($text)."%') ";
 		else if ($letter=="A") $sql .= "i_letter LIKE '".$DBCONN->escapeSimple($letter)."' ";
 		else $sql .= "i_letter LIKE '".$DBCONN->escapeSimple($letter)."%' ";
 		$checkDictSort = false;
@@ -2432,7 +2438,9 @@ function get_alpha_fams($letter) {
 							}
 						}
 					}
-					if ((preg_match("/^$letter/", $namearray[1])>0)||(!empty($text)&&preg_match("/^$text/", $namearray[1])>0)) {
+//				[ 1579889 ]
+//				if ((preg_match("/^$letter/", $namearray[1])>0)||(!empty($text)&&preg_match("/^$text/", $namearray[1])>0)) {
+					if ((preg_match("/^$letter/", $namearray[1])>0)||(!empty($text)&&preg_match("/^$text/i", $namearray[2])>0)) {
 						$surnames[str2upper($namearray[2])] = $namearray[2];
 						$hname = sortable_name_from_name($namearray[0]);
 					}
