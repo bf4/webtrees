@@ -1,4 +1,4 @@
-﻿=====================================================================
+=====================================================================
 	Change Log
 	phpGedView
 
@@ -9,6 +9,8 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1510463 ] Indilist and Famlist - Danish (opus27)
+ - Fixed [ 1579889 ] Upgrading breaks Media links (opus27)
  - Fixed [ 1635413 ] mismatch between numbers on famlist index and rows of table (canajun2eh)
  - Fixed [ 1661570 ] 4.1B3: Indi list and "Surname first" (canajun2eh)
  - Fixed [ 1657883 ] 4.1b4 (SVN 839): Indi list "all" option doesn't work (canajun2eh)
