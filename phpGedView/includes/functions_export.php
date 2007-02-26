@@ -3,7 +3,7 @@
  * Functions for exporting data
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,63 @@
  * @version $Id: downloadgedcom.php 87 2006-06-13 19:23:14Z yalnifj $
  */
 
+/*
+ * Create a header for a (newly-created or already-imported) gedcom file.
+ */
+function gedcom_header($gedfile)
+{
+	global $CHARACTER_SET, $GEDCOMS, $VERSION, $VERSION_RELEASE, $pgv_lang, $TBLPREFIX;
+
+	// Default values for a new header
+	$SOUR="1 SOUR PhpGedView\r\n2 NAME PhpGedView Online Genealogy\r\n2 VERS $VERSION $VERSION_RELEASE\r\n";
+	$DEST="1 DEST DISKETTE\r\n";
+	$DATE="1 DATE ".strtoupper(date("d M Y"))."\r\n2 TIME ".date("H:i:s")."\r\n";
+	$GEDC="1 GEDC\r\n2 VERS 5.5.1\r\n2 FORM Lineage-Linked\r\n";
+	$CHAR="1 CHAR $CHARACTER_SET\r\n";
+	$FILE="1 FILE $gedfile\r\n";
+	$LANG="";
+	$PLAC="1 PLAC\r\n2 FORM ".$pgv_lang["default_form"]."\r\n";
+	$COPR="";
+	$SUBN="";
+	$SUBM="1 SUBM @SUBM@\r\n0 @SUBM@ SUBM\r\n1 NAME ".getUserName()."\r\n"; // The SUBM record is mandatory
+
+	// Preserve some values from the original header
+	if (isset($GEDCOMS[$gedfile])) {
+		$head=find_gedcom_record("HEAD");
+		if (preg_match("/(1 CHAR [^\r\n]+)/", $head, $match))
+			$CHAR=$match[1]."\r\n";
+		if (preg_match("/1 PLAC[\r\n]+2 FORM ([^\r\n]+)/", $head, $match))
+			$PLAC="1 PLAC\r\n2 FORM ".$match[1]."\r\n";
+		if (preg_match("/(1 LANG [^\r\n]+)/", $head, $match))
+			$LANG=$match[1]."\r\n";
+		if (preg_match("/(1 SUBN [^\r\n]+)/", $head, $match))
+			$SUBN=$match[1]."\r\n";
+		if (preg_match("/(1 COPR [^\r\n]+)/", $head, $match))
+			$COPR=$match[1]."\r\n";
+		// Link to SUBM/SUBN records, if they exist
+		$sql="SELECT o_id FROM ${TBLPREFIX}other WHERE o_type='SUBN' AND o_file=".$GEDCOMS[$gedfile]["id"];
+		$res=dbquery($sql);
+		if ($res!==false && !DB::isError($res)) {
+			if ($res->numRows()>0) {
+				$row=$res->fetchRow();
+				$SUBN="1 SUBN @".$row[0]."@\r\n";
+			}
+			$res->free();
+		}
+		$sql="SELECT o_id FROM ${TBLPREFIX}other WHERE o_type='SUBM' AND o_file=".$GEDCOMS[$gedfile]["id"];
+		$res=dbquery($sql);
+		if ($res!==false && !DB::isError($res)) {
+			if ($res->numRows()>0) {
+				$row=$res->fetchRow();
+				$SUBM="1 SUBM @".$row[0]."@\r\n";
+			}
+			$res->free();
+		}
+	}
+
+	return "0 HEAD\r\n".$SOUR.$DEST.$DATE.$GEDC.$CHAR.$FILE.$COPR.$LANG.$PLAC.$SUBN.$SUBM;
+}
+
 function print_gedcom($privatize_export='', $privatize_export_level='', $convert='', $remove='', $zip='', $gedout='') {
 		global $GEDCOMS, $GEDCOM, $ged, $VERSION, $VERSION_RELEASE, $pgv_lang, $CHARACTER_SET;
 		global $TBLPREFIX, $GEDCOM_ID_PREFIX, $SOURCE_ID_PREFIX, $FAM_ID_PREFIX, $REPO_ID_PREFIX, $MEDIA_ID_PREFIX;
@@ -42,51 +99,12 @@ function print_gedcom($privatize_export='', $privatize_export_level='', $convert
 
 		$GEDCOM = $ged;
 
-		$head = find_gedcom_record("HEAD");
-		if (!empty ($head)) {
-			$pos1 = strpos($head, "1 SOUR");
-			if ($pos1 !== false) {
-				$pos2 = strpos($head, "\n1", $pos1 +1);
-				if ($pos2 === false)
-					$pos2 = strlen($head);
-				$newhead = substr($head, 0, $pos1);
-				$newhead .= substr($head, $pos2 +1);
-				$head = $newhead;
-			}
-			$pos1 = strpos($head, "1 DATE ");
-			if ($pos1 != false) {
-				$pos2 = strpos($head, "\n1", $pos1 +1);
-				if ($pos2 === false) {
-					$head = substr($head, 0, $pos1);
-				} else {
-					$head = substr($head, 0, $pos1) . substr($head, $pos2 +1);
-				}
-			}
-			$head = trim($head);
-			$head .= "\r\n1 SOUR PhpGedView\r\n2 NAME PhpGedView Online Genealogy\r\n2 VERS $VERSION $VERSION_RELEASE\r\n";
-			$head .= "1 DATE " . date("j M Y") . "\r\n";
-			$head .= "2 TIME " . date("H:i:s") . "\r\n";
-			if (strstr($head, "1 PLAC") === false) {
-				$head .= "1 PLAC\r\n2 FORM " . $pgv_lang["default_form"] . "\r\n";
-			}
-		} else {
-			$head = "0 HEAD\r\n1 SOUR PhpGedView\r\n2 NAME PhpGedView Online Genealogy\r\n2 VERS $VERSION $VERSION_RELEASE\r\n1 DEST DISKETTE\r\n1 DATE " . date("j M Y") . "\r\n2 TIME " . date("H:i:s") . "\r\n";
-			$head .= "1 GEDC\r\n2 VERS 5.5\r\n2 FORM LINEAGE-LINKED\r\n1 CHAR $CHARACTER_SET\r\n1 PLAC\r\n2 FORM " . $pgv_lang["default_form"] . "\r\n";
-		}
+		$head=gedcom_header($ged);
 		if ($convert == "yes") {
 			$head = preg_replace("/UTF-8/", "ANSI", $head);
 			$head = utf8_decode($head);
 		}
 		$head = remove_custom_tags($head, $remove);
-		$head = preg_replace(array (
-			"/(\r\n)+/",
-			"/\r+/",
-			"/\n+/"
-		), array (
-			"\r\n",
-			"\r",
-			"\n"
-		), $head);
 		if ($zip == "yes")
 			fwrite($gedout, $head);
 		else
