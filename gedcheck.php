@@ -424,7 +424,7 @@ function add_structure($prefix, $min, $max, $structure)
 		}
 		add_element  ($prefix.'MARR',			$min,	$max,	'Y?');
 		add_structure($prefix.'MARR:',			0,	1,	'<<FAMILY_EVENT_DETAIL>>');
-		add_element  ($prefix.'EVEN',			$min,	$max,	$TAG['EVENT_DESCRIPTOR']);
+		add_element  ($prefix.'EVEN',			$min,	$max,	"(".$TAG['EVENT_DESCRIPTOR'].")?");
 		add_structure($prefix.'EVEN:',			0,	1,	'<<FAMILY_EVENT_DETAIL>>');
 		break;
 	case '<<HEADER>>':
