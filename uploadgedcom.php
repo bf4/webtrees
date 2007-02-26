@@ -7,7 +7,7 @@
  * file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,7 @@
 ini_set('register_globals', 'Off');
 require "config.php";
 require_once "includes/functions_import.php";
+require_once "includes/functions_export.php";
 require $confighelpfile["english"];
 if (file_exists($confighelpfile[$LANGUAGE]))
 	require $confighelpfile[$LANGUAGE];
@@ -121,13 +122,7 @@ else
 				else
 					$fp = fopen($INDEX_DIRECTORY.$GEDFILENAME, "wb");
 				if ($fp) {
-					$newgedcom = "0 HEAD\r\n" .
-							"1 SOUR PhpGedView\r\n" .
-							"2 VERS $VERSION $VERSION_RELEASE\r\n" .
-							"1 DEST ANSTFILE\r\n" .
-							"1 GEDC\r\n2 VERS 5.5\r\n" .
-							"2 FORM Lineage-Linked\r\n" .
-							"1 CHAR UTF-8\r\n" .
+					$newgedcom = gedcom_header($GEDFILENAME).
 							"0 @I1@ INDI\r\n" .
 							"1 NAME Given Names /Surname/\r\n" .
 							"1 SEX M\r\n" .
@@ -159,13 +154,7 @@ else
 				else
 					$fp = fopen($INDEX_DIRECTORY.$GEDFILENAME.".bak", "wb");
 				if ($fp) {
-					$newgedcom = "0 HEAD\r\n" .
-							"1 SOUR PhpGedView\r\n" .
-							"2 VERS $VERSION $VERSION_RELEASE\r\n" .
-							"1 DEST ANSTFILE\r\n" .
-							"1 GEDC\r\n2 VERS 5.5\r\n" .
-							"2 FORM Lineage-Linked\r\n" .
-							"1 CHAR UTF-8\r\n" .
+					$newgedcom = gedcom_header($GEDFILENAME).
 							"0 @I1@ INDI\r\n" .
 							"1 NAME Given Names /Surname/\r\n" .
 							"1 SEX M\r\n" .
