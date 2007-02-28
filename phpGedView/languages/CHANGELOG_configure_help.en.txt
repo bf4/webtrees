@@ -44,6 +44,8 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
+*$pgv_lang["EXPAND_RELATIVES_EVENTS"]				27 Feb 2007				w
+*$pgv_lang["SHOW_PRIVATE_RELATIONSHIPS_help"]		27 Feb 2007				w
 *$pgv_lang["SHOW_RESEARCH_ASSISTANT"]				18 Feb 2007				C
 *$pgv_lang["SHOW_RESEARCH_ASSISTANT_help"]			18 Feb 2007				C
 *$pgv_lang["SYNC_GEDCOM_FILE_help"]					18 Feb 2007				S
