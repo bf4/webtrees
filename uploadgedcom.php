@@ -960,7 +960,7 @@ if ($startimport == "true") {
 		$fpged = fopen($GEDCOM_FILE, "rb");
 		//-- open handle to write changed file
 		$fpnewged = fopen($INDEX_DIRECTORY.basename($GEDCOM_FILE).".new", "ab");
-		$BLOCK_SIZE = 1024 * 2; //-- 4k bytes per read
+		$BLOCK_SIZE = 1024 * 4; //-- 4k bytes per read (4kb is usually the page size of a virtual memory system)
 		//-- resume a halted import from the session
 		if (!empty ($_SESSION["resumed"])) {
 			$place_count = $_SESSION["place_count"];
@@ -972,6 +972,9 @@ if ($startimport == "true") {
 			$media_count = $_SESSION["media_count"];
 			$found_ids = $_SESSION["found_ids"];
 			$MAX_IDS = $_SESSION["MAX_IDS"];
+			$show_type = $_SESSION["show_type"];
+			$i_start = $_SESSION["i_start"];
+			$type_BYTES = $_SESSION["type_BYTES"];
 			$i = $_SESSION["i"];
 			fseek($fpged, $TOTAL_BYTES);
 		} else {
@@ -985,15 +988,17 @@ if ($startimport == "true") {
 			$_SESSION["resumed"] = 1;
 		}
 		while (!feof($fpged)) {
-			$fcontents .= fread($fpged, $BLOCK_SIZE);
-			$TOTAL_BYTES += $BLOCK_SIZE;
+			$temp = fread($fpged, $BLOCK_SIZE);
+			$fcontents .= $temp;
+			$TOTAL_BYTES += strlen($temp);
 			$pos1 = 0;
 			while ($pos1 !== false) {
 				//-- find the start of the next record
 				$pos2 = strpos($fcontents, "\n0", $pos1 +1);
 				while ((!$pos2) && (!feof($fpged))) {
-					$fcontents .= fread($fpged, $BLOCK_SIZE);
-					$TOTAL_BYTES += $BLOCK_SIZE;
+					$temp = fread($fpged, $BLOCK_SIZE);
+					$fcontents .= $temp;
+					$TOTAL_BYTES += strlen($temp);
 					$pos2 = strpos($fcontents, "\n0", $pos1 +1);
 				}
 
@@ -1035,6 +1040,7 @@ if ($startimport == "true") {
 						$listtype[$show_type]["exectime"] = $show_exectime;
 						$listtype[$show_type]["bytes"] = $type_BYTES;
 						$listtype[$show_type]["i"] = $show_i;
+						$listtype[$show_type]["i_start"] = $i_start;
 						$listtype[$show_type]["type"] = $show_type;
 					} else {
 						$listtype[$show_type]["exectime"] += $show_exectime;
@@ -1077,6 +1083,9 @@ if ($startimport == "true") {
 						$_SESSION["MAX_IDS"] = $MAX_IDS;
 						$_SESSION["i"] = $i;
 						$_SESSION["found_ids"] = $found_ids;
+						$_SESSION["show_type"] = $show_type;
+						$_SESSION["i_start"] = $i_start;
+						$_SESSION["type_BYTES"] = $type_BYTES;
 
 						//-- close the file connection
 						fclose($fpged);

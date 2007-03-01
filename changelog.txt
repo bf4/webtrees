@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1389034 ] 4.0B8 Import statistic has wrong figures (yalnifj)
  - Fixed [ 1388702 ] 4.0 B2 Password validation (yalnifj)
  - Fixed [ 1373302 ] 4.0b2 Search Help Text (yalnifj)
  - Fixed [ 1346063 ] Missing New Line with 2 Source Citation Images (yalnifj)
