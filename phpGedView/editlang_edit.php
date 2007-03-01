@@ -51,26 +51,43 @@ print "<script language=\"JavaScript\" type=\"text/javascript\">";
   print "self.focus();";
 print "</script>\n";
 
+$fromEscapedChars	= array("\\\"", "&",     "<",    ">");
+$toPlainChars		= array("\"",   "&amp;", "&lt;", "&gt;");
+
+$fromPlainChars		= array("&gt;", "&lt;", "&amp;", "\"");
+$toEscapedChars		= array(">",    "<",    "&",     "\\\"");
+
 switch ($file_type)
 {
-  case "lang"		: $lang_filename = $pgv_language[$language2];
-  			  $lang_filename_orig = $pgv_language["english"];
-  			  break;
-  case "facts"		: $lang_filename = $factsfile[$language2];
-  			  $lang_filename_orig = $factsfile["english"];
-  			  break;
-  case "configure_help"	: $lang_filename = $confighelpfile[$language2];
-  			  $lang_filename_orig = $confighelpfile["english"];
-  			  break;
-  case "help_text"	: $lang_filename = $helptextfile[$language2];
-  			  $lang_filename_orig = $helptextfile["english"];
-  			  break;
-  case "admin"	: $lang_filename = $adminfile[$language2];
-  			  $lang_filename_orig = $adminfile["english"];
-  			  break;
-  case "editor"	: $lang_filename = $editorfile[$language2];
-  			  $lang_filename_orig = $editorfile["english"];
-  			  break;
+  case "facts": 
+	$lang_filename = $factsfile[$language2];
+  	$lang_filename_orig = $factsfile["english"];
+  	break;
+  case "configure_help": 
+	$lang_filename = $confighelpfile[$language2];
+  	$lang_filename_orig = $confighelpfile["english"];
+  	break;
+  case "help_text": 
+	$lang_filename = $helptextfile[$language2];
+  	$lang_filename_orig = $helptextfile["english"];
+  	break;
+  case "admin": 
+	$lang_filename = $adminfile[$language2];
+  	$lang_filename_orig = $adminfile["english"];
+  	break;
+  case "editor": 
+	$lang_filename = $editorfile[$language2];
+  	$lang_filename_orig = $editorfile["english"];
+  	break;
+  case "countries": 
+	$lang_filename = $countryfile[$language2];
+  	$lang_filename_orig = $countryfile["english"];
+  	break;
+  case "lang":
+  default: 
+  	$lang_filename = $pgv_language[$language2];
+  	$lang_filename_orig = $pgv_language["english"];
+  	break;
 }
 
 if ($action != "save")
@@ -104,8 +121,7 @@ if ($action != "save")
         print "</tr>";
         print "<tr>";
           print "<td class=\"facts_value\" style=\"text-align:center; color: #0000FF\" >";
-            print "<strong style=\"color: red\">|</strong>" . stripslashes(mask_all(find_in_file($ls01, $lang_filename_orig))) . "<strong style=\"color: red\">|</strong>";
-//            print "<strong style=\"color: red\">|</strong>" . mask_all(find_in_file($ls01, $lang_filename_orig)) . "<strong style=\"color: red\">|</strong>";
+            print "<strong style=\"color: red\">|</strong>" . str_replace($fromEscapedChars, $toPlainChars, find_in_file($ls01, $lang_filename_orig)) . "<strong style=\"color: red\">|</strong>";
           print "</td>";
         print "</tr>";
       print "</table>";
@@ -119,8 +135,7 @@ if ($action != "save")
         print "<tr>";
           print "<td class=\"facts_value\" style=\"text-align:center; \" >";
             print "<textarea rows=\"10\" name=\"new_message\" cols=\"75\" style=\"color: #FF0000\" >";
-              if ($ls02>0) print stripslashes(mask_all(find_in_file($ls02, $lang_filename)));
-//              if ($ls02>0) print mask_all(find_in_file($ls02, $lang_filename));
+              if ($ls02>0) print str_replace($fromEscapedChars, $toPlainChars, find_in_file($ls02, $lang_filename));
             print "</textarea>";
           print "</td>";
         print "</tr>";
@@ -156,60 +171,73 @@ if ($action == "save")
 
   switch ($file_type)
   {
-    case "lang"			: // read the english lang.en.php file into array
-        			  $english_language_array = array();
-        			  $english_language_array = read_complete_file_into_array($pgv_language["english"], "pgv_lang[");
-        			  // read the chosen lang.xx.php file into array
-        			  $new_language_array = array();
-        			  $new_language_file =  $pgv_language[$language2];
-        			  $new_language_array = read_complete_file_into_array($new_language_file, "pgv_lang[");
-        			  break;
-    case "facts"		: // read the english lang.en.php file into array
+    case "facts": 
+        			  // read facts.en.php file into array
         			  $english_language_array = array();
         			  $english_language_array = read_complete_file_into_array($factsfile["english"], "factarray[");
-        			  // read the chosen lang.xx.php file into array
+        			  // read facts.xx.php file into array
         			  $new_language_array = array();
         			  $new_language_file =  $factsfile[$language2];
         			  $new_language_array = read_complete_file_into_array($new_language_file, "factarray[");
         			  break;
-    case "configure_help"	: // read the english lang.en.php file into array
+    case "configure_help": 
+        			  // read configure_help.en.php file into array
         			  $english_language_array = array();
         			  $english_language_array = read_complete_file_into_array($confighelpfile["english"], "pgv_lang[");
-        			  // read the chosen lang.xx.php file into array
+        			  // read configure_help.xx.php file into array
         			  $new_language_array = array();
         			  $new_language_file =  $confighelpfile[$language2];
         			  $new_language_array = read_complete_file_into_array($new_language_file, "pgv_lang[");
         			  break;
-    case "help_text"	: // read the english lang.en.php file into array
+    case "help_text": 
+        			  // read help_text.en.php file into array
         			  $english_language_array = array();
         			  $english_language_array = read_complete_file_into_array($helptextfile["english"], "pgv_lang[");
-        			  // read the chosen lang.xx.php file into array
+        			  // read help_text.xx.php file into array
         			  $new_language_array = array();
         			  $new_language_file =  $helptextfile[$language2];
         			  $new_language_array = read_complete_file_into_array($new_language_file, "pgv_lang[");
         			  break;
-    case "admin"	: // read the english lang.en.php file into array
+    case "admin": 
+        			  // read admin.en.php file into array
         			  $english_language_array = array();
         			  $english_language_array = read_complete_file_into_array($adminfile["english"], "pgv_lang[");
-        			  // read the chosen lang.xx.php file into array
+        			  // read admin.xx.php file into array
         			  $new_language_array = array();
         			  $new_language_file =  $adminfile[$language2];
         			  $new_language_array = read_complete_file_into_array($new_language_file, "pgv_lang[");
         			  break;
-    case "editor"	: // read the english lang.en.php file into array
+    case "editor": 
+        			  // read editor.en.php file into array
         			  $english_language_array = array();
         			  $english_language_array = read_complete_file_into_array($editorfile["english"], "pgv_lang[");
-        			  // read the chosen lang.xx.php file into array
+        			  // read editor.xx.php file into array
         			  $new_language_array = array();
         			  $new_language_file =  $editorfile[$language2];
         			  $new_language_array = read_complete_file_into_array($new_language_file, "pgv_lang[");
         			  break;
+    case "countries": 
+        			  // read countries.en.php file into array
+        			  $english_language_array = array();
+        			  $english_language_array = read_complete_file_into_array($countryfile["english"], "countries[");
+        			  // read countries.xx.php file into array
+        			  $new_language_array = array();
+        			  $new_language_file =  $countryfile[$language2];
+        			  $new_language_array = read_complete_file_into_array($new_language_file, "countries[");
+        			  break;
+    case "lang": 
+    default:
+        			  // read lang.en.php file into array
+        			  $english_language_array = array();
+        			  $english_language_array = read_complete_file_into_array($pgv_language["english"], "pgv_lang[");
+        			  // read lang.xx.php file into array
+        			  $new_language_array = array();
+        			  $new_language_file =  $pgv_language[$language2];
+        			  $new_language_array = read_complete_file_into_array($new_language_file, "pgv_lang[");
+        			  break;
   }
 
-//  $new_message = add_backslash_before_dollarsign($new_message);
-//  $new_message = preg_replace(array("/&amp;/","/&lt;/","/&gt;/"), array("&","<",">"), $new_message);
-//  $new_message = unmask_all(stripslashes($new_message));
-  $new_message = unmask_all(addslashes($new_message));
+  $new_message = str_replace($fromPlainChars, $toEscapedChars, $new_message);
   $new_message_line = (-1);
   if (isset($new_language_array[$ls02])) $dummyArray = $new_language_array[$ls02];
   else $dummyArray = array();
@@ -269,8 +297,7 @@ if ($action == "save")
       {
       print "<tr>";
         print "<td class=\"facts_value\" style=\"text-align:center; color: #0000FF\" >";
-//          print "<strong style=\"color: red\">|</strong>".stripslashes(mask_all(find_in_file($ls01, $lang_filename_orig)))."<strong style=\"color: red\">|</strong>";
-          print "<strong style=\"color: red\">|</strong>".mask_all(find_in_file($ls01, $lang_filename_orig))."<strong style=\"color: red\">|</strong>";
+          print "<strong style=\"color: red\">|</strong>".str_replace($fromEscapedChars, $toPlainChars, find_in_file($ls01, $lang_filename_orig))."<strong style=\"color: red\">|</strong>";
         print "</td>";
       print "</tr>";
       }
@@ -289,8 +316,7 @@ if ($action == "save")
 
       print "<tr>";
         print "<td class=\"facts_value\" style=\"text-align:center; color: #0000FF\" >";
-          print "<strong style=\"color: red; \">|</strong>" . stripslashes(mask_all($new_message)) . "<strong style=\"color: red\">|</strong>";
-//          print "<strong style=\"color: red; \">|</strong>" . mask_all($new_message) . "<strong style=\"color: red\">|</strong>";
+          print "<strong style=\"color: red; \">|</strong>" . str_replace($fromEscapedChars, $toPlainChars, $new_message) . "<strong style=\"color: red\">|</strong>";
         print "</td>";
       print "</tr>";
     print "</table>";

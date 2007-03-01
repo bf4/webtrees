@@ -48,14 +48,14 @@ function crlf_lf_to_br($dstring)
 //-----------------------------------------------------------------
 function mask_all($dstring)
 {
-  $dummy = str_replace(array('&', '<', '>', '"'), array('&amp;', '&lt;', '&gt;', '&quot;'), $dstring);
+  $dummy = str_replace(array('&', '<', '>'), array('&amp;', '&lt;', '&gt;'), $dstring);
   return $dummy;
 }
 
 //-----------------------------------------------------------------
 function unmask_all($dstring)
 {
-  $dummy = str_replace(array('&lt;', '&gt;', '&quot;', '&amp;'), array('<', '>', '"', '&'), $dstring);
+  $dummy = str_replace(array('&lt;', '&gt;', '&amp;'), array('<', '>', '&'), $dstring);
   return $dummy;
 }
 
@@ -98,20 +98,26 @@ function read_complete_file_into_array($dFileName, $string_needle)
     switch ($file_type)
     {
       case "lang":
-        $comment1 = $Language2 ." Language file for PhpGedView";
-        $comment2 = "//-- GENERAL HELP MESSAGES";
+      case "admin":
+      case "editor":
+        $comment1 = $Language2 ." Language file for PhpGedView.";
+        $comment2 = "// -- Define" . $Language2 . " texts for use on various pages";
         break;
       case "facts":
-        $comment1 = "Defines an array of GEDCOM codes and the " . $Language2 . " name facts that they represent.";
+        $comment1 = $Language2 ." Language file for PhpGedView.";
         $comment2 = "// -- Define a fact array to map GEDCOM tags with their " . $Language2 . " values";
         break;
       case "configure_help":
-        $comment1 = $Language2 . " language Configure Help file for PhpGedView";
-        $comment2 = "//-- CONFIGURE FILE MESSAGES";
+        $comment1 = $Language2 ." Language file for PhpGedView.";
+        $comment2 = "//-- Define " . $Language2 . "Help texts for use on Configuration pages";
         break;
       case "help_text":
-        $comment1 = $Language2 . " Help file for PhpGedView";
-        $comment2 = "//-- GENERAL HELP HEADER";
+        $comment1 = $Language2 ." Language file for PhpGedView.";
+        $comment2 = "//-- Define " . $Language2 . "Help texts for use on various pages";
+        break;
+      case "countries":
+        $comment1 = $Language2 ." Language file for PhpGedView.";
+        $comment2 = "//-- Define " . $Language2 . "name equivalents for Chapman country codes";
         break;
       case "rs_lang":
         $comment1 = $Language2 . " Language file for PhpGedView Researchlog";
@@ -129,7 +135,7 @@ function read_complete_file_into_array($dFileName, $string_needle)
     fwrite($fp, " * " . $comment1 . "\r\n");
     fwrite($fp, " *" . "\r\n");
     fwrite($fp, " * PhpGedView: Genealogy Viewer" . "\r\n");
-    fwrite($fp, " * Copyright (C) 2002 to 2005  PGV Development Team" . "\r\n");
+    fwrite($fp, " * Copyright (C) 2002 to 2007  PGV Development Team" . "\r\n");
     fwrite($fp, " *" . "\r\n");
     fwrite($fp, " * This program is free software; you can redistribute it and/or modify" . "\r\n");
     fwrite($fp, " * it under the terms of the GNU General Public License as published by" . "\r\n");
@@ -359,103 +365,39 @@ function get_last_string($hay, $need){
 function check_bom(){
 	global $language_settings, $pgv_lang;
 	$check = false;
+	$BOM = chr(239).chr(187).chr(191);
+	$fileList = array("pgv_language", "confighelpfile", "helptextfile", "factsfile", "adminfile", "editorfile", "countryfile");
+
 	foreach ($language_settings as $key => $language) {
 		// Check if language is active
 		if ($language["pgv_lang_use"] == true) {
-			// Check language file
-			if (file_exists($language["pgv_language"])) $str = file_get_contents($language["pgv_language"]);
-			else {
-				print "<span class=\"warning\">";
-				print str_replace("#lang_filename#", substr($language["pgv_language"], 10), $pgv_lang["no_open"]) . "<br /><br />";
-				print "</span>";
-			}
-			if (ord($str{0}) == 239 && ord($str{1}) == 187 && ord($str{2}) == 191) {
-				$check = true;
-				print "<span class=\"warning\">".$pgv_lang["bom_found"].substr($language["pgv_language"], 10).".</span>";
-				print "<br />";
-				$writetext = htmlentities(substr($str,3, strlen($str)));
-				if (!$handle = @fopen($language["pgv_language"], "w")){
+			// Check each language file
+			foreach ($fileList as $key2 => $fileName) {
+				if (!file_exists($language[$fileName])) {
 					print "<span class=\"warning\">";
-					print str_replace("#lang_filename#", substr($language["pgv_language"], 10), $pgv_lang["no_open"]) . "<br /><br />";
+					print str_replace("#lang_filename#", substr($language[$fileName], 10), $pgv_lang["no_open"]) . "<br /><br />";
 					print "</span>";
+				} else {
+					$str = file_get_contents($language[$fileName]);
+					if (strlen($str)>3 && substr($str,0,3) == $BOM) {
+						$check = true;
+						print "<span class=\"warning\">".$pgv_lang["bom_found"].substr($language[$fileName], 10).".</span>";
+						print "<br />";
+						$writetext = substr($str,3);
+						if (!$handle = @fopen($language[$fileName], "w")){
+							print "<span class=\"warning\">";
+							print str_replace("#lang_filename#", substr($language[$fileName], 10), $pgv_lang["no_open"]) . "<br /><br />";
+							print "</span>";
+						} else {
+							if (@fwrite($handle,$writetext) === false) {
+	       						print "<span class=\"warning\">";
+	        		  			print str_replace("#lang_filename#", substr($language[$fileName], 10), $pgv_lang["lang_file_write_error"]) . "<br /><br />";
+	        		  			print "</span>";
+	   						}
+	   						@fclose($handle);
+   						}
+					}
 				}
-				if (@fwrite($handle,html_entity_decode($writetext)) === FALSE) {
-	       			print "<span class=\"warning\">";
-	          		print str_replace("#lang_filename#", substr($language["pgv_language"], 10), $pgv_lang["lang_file_write_error"]) . "<br /><br />";
-	          		print "</span>";
-	   			}
-			}
-
-			// Check configuration file
-			if (file_exists($language["confighelpfile"])) $str = file_get_contents($language["confighelpfile"]);
-			else {
-				print "<span class=\"warning\">";
-				print str_replace("#lang_filename#", substr($language["confighelpfile"], 10), $pgv_lang["no_open"]) . "<br /><br />";
-				print "</span>";
-			}
-			if (ord($str{0}) == 239 && ord($str{1}) == 187 && ord($str{2}) == 191) {
-				$check = true;
-				print "<span class=\"warning\">".$pgv_lang["bom_found"].substr($language["confighelpfile"], 10).".</span>";
-				print "<br />";
-				$writetext = htmlentities(substr($str,3, strlen($str)));
-				if (!$handle = @fopen($language["confighelpfile"], "w")){
-					print "<span class=\"warning\">";
-					print str_replace("#lang_filename#", substr($language["confighelpfile"], 10), $pgv_lang["no_open"]) . "<br /><br />";
-					print "</span>";
-				}
-				if (@fwrite($handle,html_entity_decode($writetext)) === FALSE) {
-	       			print "<span class=\"warning\">";
-	          		print str_replace("#lang_filename#", substr($language["confighelpfile"], 10), $pgv_lang["lang_file_write_error"]) . "<br /><br />";
-	          		print "</span>";
-	   			}
-			}
-
-			// Check help file
-			if (file_exists($language["helptextfile"])) $str = file_get_contents($language["helptextfile"]);
-			else {
-				print "<span class=\"warning\">";
-				print str_replace("#lang_filename#", substr($language["helptextfile"], 10), $pgv_lang["no_open"]) . "<br /><br />";
-				print "</span>";
-			}
-			if (ord($str{0}) == 239 && ord($str{1}) == 187 && ord($str{2}) == 191) {
-				$check = true;
-				print "<span class=\"warning\">".$pgv_lang["bom_found"].substr($language["helptextfile"], 10).".</span>";
-				print "<br />";
-				$writetext = htmlentities(substr($str,3, strlen($str)));
-				if (!$handle = @fopen($language["helptextfile"], "w")){
-					print "<span class=\"warning\">";
-					print str_replace("#lang_filename#", substr($language["helptextfile"], 10), $pgv_lang["no_open"]) . "<br /><br />";
-					print "</span>";
-				}
-				if (@fwrite($handle,html_entity_decode($writetext)) === FALSE) {
-	       			print "<span class=\"warning\">";
-	          		print str_replace("#lang_filename#", substr($language["helptextfile"], 10), $pgv_lang["lang_file_write_error"]) . "<br /><br />";
-	          		print "</span>";
-	   			}
-			}
-
-			// Check facts file
-			if (file_exists($language["factsfile"])) $str = file_get_contents($language["factsfile"]);
-			else {
-				print "<span class=\"warning\">";
-				print str_replace("#lang_filename#", substr($language["factsfile"], 10), $pgv_lang["no_open"]) . "<br /><br />";
-				print "</span>";
-			}
-			if (ord($str{0}) == 239 && ord($str{1}) == 187 && ord($str{2}) == 191) {
-				$check = true;
-				print "<span class=\"warning\">".$pgv_lang["bom_found"].substr($language["factsfile"], 10).".</span>";
-				print "<br />";
-				$writetext = htmlentities(substr($str,3, strlen($str)));
-				if (!$handle = @fopen($language["factsfile"], "w")){
-					print "<span class=\"warning\">";
-					print str_replace("#lang_filename#", substr($language["factsfile"], 10), $pgv_lang["no_open"]) . "<br /><br />";
-					print "</span>";
-				}
-				if (@fwrite($handle,html_entity_decode($writetext)) === FALSE) {
-	       			print "<span class=\"warning\">";
-	          		print str_replace("#lang_filename#", substr($language["factsfile"], 10), $pgv_lang["lang_file_write_error"]) . "<br /><br />";
-	          		print "</span>";
-	   			}
 			}
 		}
 	}
