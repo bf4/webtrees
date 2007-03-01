@@ -637,9 +637,11 @@ function hidePrint() {
 	 }
 }
 function showBack() {
-	 var backlink = document.getElementById('backlink');
-	 if (backlink) {
-		  backlink.style.display='block';
+	 var printlink = document.getElementById('printlink');
+	 var printlinktwo = document.getElementById('printlinktwo');
+	 if (printlink) {
+		  printlink.style.display='inline';
+		  printlinktwo.style.display='inline';
 	 }
 }
 //-->
@@ -703,7 +705,7 @@ function message(username, method, url, subject) {
 	 window.open('message.php?to='+username+'&method='+method+'&url='+url+'&subject='+subject+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
 	 return false;
 }
-var whichhelp = 'help_<?php print basename($SCRIPT_NAME)."&amp;action=".$action; ?>';
+var whichhelp = 'help_<?php print basename($SCRIPT_NAME)."&action=".$action; ?>';
 //-->
 </script>
 <script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
@@ -711,13 +713,12 @@ var whichhelp = 'help_<?php print basename($SCRIPT_NAME)."&amp;action=".$action;
 	 print $head;
 	 print "</head>\n\t<body id=\"body\"";
 	 if ($view=="preview") print " onbeforeprint=\"hidePrint();\" onafterprint=\"showBack();\"";
-	 if ($TEXT_DIRECTION=="rtl" || !empty($ONLOADFUNCTION)) {
-		 print " onload=\"$ONLOADFUNCTION";
-	 	if ($TEXT_DIRECTION=="rtl") print " maxscroll = document.documentElement.scrollLeft;";
-	 	print " loadHandler();";
-	 	print "\"";
+	 print " onload=\"";
+	 if (!empty($ONLOADFUNCTION)) print $ONLOADFUNCTION;
+	 if ($TEXT_DIRECTION=="rtl") {
+		print " maxscroll = document.documentElement.scrollLeft;";
  	}
- 	else print " onload=\"loadHandler();\"";
+ 	 print "\"";
 	 print ">\n\t";
 	 print "<!-- begin header section -->\n";
 	 if ($view!="preview") {
@@ -890,7 +891,6 @@ function print_footer() {
 			   print "\n\t <a id=\"printlinktwo\"	  href=\"javascript:;\" onclick=\"window.location='".$backlink."'; return false;\">".$pgv_lang["cancel_preview"]."</a><br />";
 		  }
 		  $printlink = true;
-		  print "\n\t<a id=\"backlink\" style=\"display: none;\" href=\"javascript:;\" onclick=\"window.location='".$backlink."'; return false;\">".$pgv_lang["cancel_preview"]."</a><br />";
 		  print "</div>";
 	 }
 	 if (function_exists("load_behaviour")) load_behaviour();  // @see function_print_lists.php

@@ -23,6 +23,7 @@
  * @subpackage Research_Assistant
  * @version $Id: Birth_Information.php 200 2005-11-09 20:37:48Z jporter $
  * @author Brandon Gagnon
+ * @author Christopher Stolworthy
  */
  //-- security check, only allow access from module.php
 if (strstr($_SERVER["SCRIPT_NAME"],"Census1920.php")) {
