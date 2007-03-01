@@ -848,11 +848,13 @@ else if ($action=="update") {
 	if (!empty($SPFX)) $newged .= "2 SPFX $SPFX\r\n";
 	if (!empty($SURN)) $newged .= "2 SURN $SURN\r\n";
 	if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\r\n";
+
+	//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
+	$newged = handle_updates($newged);
+	
 	if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\r\n";
 	if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\r\n";
 	if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\r\n";
-
-	$newged = handle_updates($newged);
 
 	while($i<count($gedlines)) {
 		$newged .= trim($gedlines[$i])."\r\n";
