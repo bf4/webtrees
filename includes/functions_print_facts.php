@@ -612,8 +612,8 @@ function print_media_links($factrec, $level,$pid='') {
 			$imgwidth = $imgsize[0]+40;
 			$imgheight = $imgsize[1]+150;
 			if (showFactDetails("OBJE", $pid)) {
-				if ($objectNum > 0) print "<br clear=all />";
-				print "<div>";
+				if ($objectNum > 0) print "<br clear=\"all\" />";
+				print "<table><tr><td>";
 				if ($isExternal ||file_exists(filename_decode($thumbnail))) {
 					if ($USE_MEDIA_VIEWER) print "<a href=\"mediaviewer.php?mid=".$media_id."\">";
 					else print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
@@ -621,6 +621,7 @@ function print_media_links($factrec, $level,$pid='') {
 					if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
 					print " alt=\"". PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\" /></a>";
 				}
+				print "</td><td>";
 				if(empty($SEARCH_SPIDER)) {
 					print "<a href=\"mediaviewer.php?mid=".$media_id."\">";
 				}
@@ -674,7 +675,7 @@ function print_media_links($factrec, $level,$pid='') {
 				print "<br />\n";
 				print_fact_notes($row["m_gedrec"], $nlevel);
 				print_fact_sources($row["m_gedrec"], $nlevel);
-				print "</div>";
+				print "</td></tr></table>\n";
 			}
 		}
 		$objectNum ++;

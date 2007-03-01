@@ -9,6 +9,8 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1346063 ] Missing New Line with 2 Source Citation Images (yalnifj)
+ - Fixed [ 1329644 ] Add Married Name - Wrong Sequence (yalnifj)
  - Fixed [ 1510463 ] Indilist and Famlist - Danish (opus27)
  - Fixed [ 1579889 ] Upgrading breaks Media links (opus27)
  - Fixed [ 1635413 ] mismatch between numbers on famlist index and rows of table (canajun2eh)
