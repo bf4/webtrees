@@ -1192,8 +1192,7 @@ a.showit:hover span {
 }
 
 .lifespan_people span:first-letter {
-	color: red;
-	font: bold 20px tahoma, arial, helvetica, sans-serif;
+   font: bold 16px tahoma, arial, helvetica, sans-serif;
 	font-variant: small-caps;
 	padding: 1px;
 }

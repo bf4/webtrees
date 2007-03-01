@@ -37,6 +37,7 @@
 	$yz = 0;
 	$numImages = 0;
 	foreach($medialist as $mid=>$media) {
+		// privacy has already been checked by medialist.php
 		// Check to see if the item is a real image
 		$imgsize = @getimagesize($media['FILE']);
 		if($imgsize != false){		
