@@ -165,6 +165,20 @@ if ($action=="edituser2") {
 			frm.user_email.focus();
 			return false;
 		}
+		if (frm.pass1.value != frm.pass2.value) {
+	      alert("<?php print $pgv_lang["password_mismatch"]; ?>");
+	      frm.pass1.value = "";
+	      frm.pass2.value = "";
+	      frm.pass1.focus();
+	      return false;
+	    }
+	    if (frm.pass1.value.length < 6) {
+	      alert("<?php print $pgv_lang["passwordlength"]; ?>");
+	      frm.pass1.value = "";
+	      frm.pass2.value = "";
+	      frm.pass1.focus();
+	      return false;
+	    }
 		return true;
 	}
 	var pastefield;

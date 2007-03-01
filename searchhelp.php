@@ -3,7 +3,7 @@
  * Search in help files 
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 
 require "config.php";
 
-print_simple_header("Search help");
+print_simple_header($pgv_lang["hs_title"]);
 
 // On first entry, initially check the boxes
 if (!isset($action)) {
@@ -44,8 +44,23 @@ if (!isset($searchtext)) $searchtext = "";
 if (!isset($searchuser)) $searchuser = "no";
 if (!isset($searchconfig)) $searchconfig = "no";
 $found = 0;
+
+?>
+<script type="text/javascript">
+<!--
+function checkfrm(frm) {
+	if (frm.searchtext.value.length<2) {
+		alert("<?php print $pgv_lang["search_more_chars"]?>");
+		frm.searchtext.focus();
+		return false;
+	}
+	return true;
+}
+//-->
+</script>
+<?php
 // Print the form for input
-print "<form name=\"entersearch\" action=\"$SCRIPT_NAME\" method=\"post\" >";
+print "<form name=\"entersearch\" action=\"$SCRIPT_NAME\" method=\"post\" onsubmit=\"return checkfrm(this);\">";
 print "<input name=\"action\" type=\"hidden\" value=\"search\" />";
 print "<table class=\"facts_table $TEXT_DIRECTION\">";
 print "<tr><td colspan=\"2\" class=\"topbottombar\">";
@@ -123,7 +138,7 @@ if ((!empty($searchtext)) && (($searchuser == "yes") || ($searchconfig == "yes")
 	// Find all helpvars, so we know what vars to check after the lang.xx file has been reloaded
 	foreach ($pgv_lang as $text => $value) {
 		if ($searchintext == "all") $helpvarnames[] = $text;
-		else if ((substr($text, -5) == "_help") || (substr($text, -4) == ".php")) $helpvarnames[] = $text;
+		else if ((substr($text, -5) == "_help" && $value{0}!="_") || (substr($text, -4) == ".php")) $helpvarnames[] = $text;
 	}
 
 	// Reload lang.xx file
