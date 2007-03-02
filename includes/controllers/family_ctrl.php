@@ -173,6 +173,12 @@ class FamilyRoot extends BaseController
 					$this->show_changes = 'no';
 					$this->accept_success = true;
 					unset($famlist[$_REQUEST['famid']]);
+					//-- check if we just deleted the record and redirect to index
+					$famrec = find_family_record($_REQUEST['famid']);
+					if (empty($famrec)) {
+						header("Location: index.php?command=gedcom");
+						exit;
+					}
 					$this->parents = find_parents($_REQUEST['famid']);
 				}
 			}

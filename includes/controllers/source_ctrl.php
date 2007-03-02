@@ -138,7 +138,12 @@ class SourceControllerRoot extends BaseController {
 		if (accept_changes($this->sid."_".$GEDCOM)) {
 			$this->show_changes="no";
 			$this->accept_success=true;
-			$indirec = find_updated_record($this->sid);
+			$indirec = find_source_record($this->sid);
+			//-- check if we just deleted the record and redirect to index
+			if (empty($indirec)) {
+				header("Location: index.php?command=gedcom");
+				exit;
+			}
 			$this->source = new Source($indirec);
 		}
 	}

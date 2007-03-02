@@ -1196,3 +1196,10 @@ function findSpecialChar(field) {
 	window.open('find.php?type=specialchar', '_blank', 'top=55,left=55,width=400,height=450,scrollbars=1,resizeable=1');
 	return false;
 }
+
+/**
+ * default show changes which just reloads the page.
+ */
+function showchanges() {
+	window.location.reload();
+}
