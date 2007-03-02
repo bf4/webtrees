@@ -96,13 +96,74 @@ class ra_functions {
 		// If the Table is not in the array
 		if (!in_array($TBLPREFIX.'factlookup', $data)) {
 			//Then create Table
-			$sql = 'create table '.$TBLPREFIX.'FactLookup (id INT AUTO_INCREMENT,Description VARCHAR(255) not null,StartDate INT not null, EndDate INT not null, Gedcom_fact VARCHAR(10),PL_LV1 VARCHAR(255), PL_LV2 VARCHAR(255), PL_LV3 VARCHAR(255), PL_LV4 VARCHAR(255), PL_LV5 VARCHAR(255), SOUR_ID VARCHAR(255),Comment VARCHAR(255),PRIMARY KEY(id))';
+			$sql = 'create table '.$TBLPREFIX.'factlookup (id INT AUTO_INCREMENT,Description VARCHAR(255) not null,StartDate INT not null, EndDate INT not null, Gedcom_fact VARCHAR(10),PL_LV1 VARCHAR(255), PL_LV2 VARCHAR(255), PL_LV3 VARCHAR(255), PL_LV4 VARCHAR(255), PL_LV5 VARCHAR(255), SOUR_ID VARCHAR(255),Comment VARCHAR(255),PRIMARY KEY(id))';
 			$res = dbquery($sql);
 			$this->insertInitialFacts();
 		}
 		
 		
 	}
+	
+	/*
+	 * Gets events from within the date range supplied
+	 * 
+	 * @startDate the Starting date you want to look from, in the format yyyymmdd
+	 * @endDate the Ending date for the range you want to look, in the format yyyymmdd
+	 * @factLookingFor optional fact to narrow to a specific GEDCOM facttype
+	 * @place the place you want to narrow your search to.  Comma delimited. I.E(USA,IDAHO,BOISE) Up to 5 total criteria
+	 * 
+	 * @return A multi-dimensional array of the valid dates
+	 */
+	function getEventsForDates($startDate,$endDate,$factLookingFor = "",$place = "")
+	{
+		global $DBCONN, $TBLPREFIX;
+		$parts = preg_split("/,/",$place);
+		if(empty($endDate))
+		{
+			//Add a ten year difference if no end date was sent in
+			$endDate = $startDate + 00100000;
+		}
+		for($i = 0;$i < count($parts);$i++)
+		{
+			$parts[$i] = trim($parts[$i]);
+		}
+		
+		if(empty($factLookingFor))
+		{
+			$sql = 'Select * from '.$TBLPREFIX.'factlookup WHERE StartDate <= '.$endDate.' AND EndDate >= '.$startDate;
+		}
+		else
+		{
+			$sql = 'Select * from '.$TBLPREFIX.'factlookup WHERE StartDate <= '.$endDate.' AND EndDate >= '.$startDate.' AND Gedcom_fact like \'%'.$factLookingFor.'%\'';
+		}
+		
+		if(count($parts) > 0)
+		{
+			$numOfParts = count($parts) -1;
+			if(count($parts) == 1)
+			{
+				$sql .= ' AND PL_LV'.(1).' LIKE \'%'.$DBCONN->escapeSimple($parts[0]).'%\'';
+			}
+			else
+			{
+				for($i = 0;$i < count($parts) ;$i++)
+				{
+			
+					$sql .= ' AND PL_LV'.($i+1).' LIKE \'%'.$DBCONN->escapeSimple($parts[$numOfParts]).'%\'';
+					$numOfParts--;
+				}
+			}
+		}
+		$sql .=';';
+		$res = dbquery($sql);
+		$rows = array();
+		while($row = $res->fetchRow(DB_FETCHMODE_ASSOC)){
+			$rows[] = $row;
+		}
+		
+		return $rows;
+	}
+	
 	
 	function insertInitialFacts()
 	{
@@ -1448,7 +1509,27 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 										<td align="center" colspan="2" class="topbottombar">'.print_help_link("ra_missing_info_help", "qm", '', false, true).'<b>'.$pgv_lang['missing_info'].
 										'</td>
 									</tr>';
-										
+										/*@var $person Person*/
+										//get a birthdate in yyyymmdd format
+										$bdate = $person->getSortableBirthDate();
+										//take out the dashes
+										$bdate = preg_replace("/-/","",$bdate);
+										//check to see if the date was estimated
+										if(strstr($bdate," estimated"))
+										{
+											$bdate = preg_replace("/estimated/","",$bdate);
+										}
+										//get a deathdate in yyyymmdd format
+										$ddate = $person->getSortableDeathDate();
+										//take out the dashes
+										$ddate = preg_replace("/-/","",$ddate);
+										//check to see if the date was estimated
+										if(strstr($ddate," estimated"))
+										{
+											$ddate = preg_replace("/estimated/","",$ddate);
+										}
+										$sourcesInferred = array();
+										$sourcesPrinted = array();
 										foreach ($Missing as $key => $val) //every missing item gets a checkbox , so you check check it and make a task out of it
 										{
 											$additionalInfer = array();
@@ -1456,6 +1537,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 											$factsExist = false;
 											$compiled = "";
 											$tasktitle = "";
+											
 											if (isset($factarray[$val[0]])) $tasktitle .= $factarray[$val[0]]." ";
 											else if (isset($pgv_lang[$val[0]])) $tasktitle .= $pgv_lang[$val[0]]." ";
 											else $tasktitle .= $val[0]." ";
@@ -1469,6 +1551,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 												{
 												$out .= "<tr><td width=\"20\" class=\"optionbox\"><input type=\"checkbox\" name=\"missingName[]\" value=\"".$tasktitle."\" /></td><td class=\"optionbox\">\n";
 												$out .= "<span class=\"fact_label\">".$tasktitle."</span><br />";
+												
 												if(isset($val[2])){	
 													foreach($val[2] as $inferKey=>$inferenceObj)
 													{
@@ -1485,13 +1568,49 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 																	
 																	if($highest < $inferenceObj->getAverage() && $inferenceObj->getFactValue() != "")
 																	{
+																		
 																		$compiled = array();
 																		$highest = $inferenceObj->getAverage();
 																		$compiled[0] = $this->decideInferSentence($inferenceObj->getAverage(),$inferenceObj->getFactTag());
 																		$compiled[0] .= " <i>".$inferenceObj->getFactValue()."</i>";
+																		$compiled[0] .= "<br />";
+																		
+																		if($inferenceObj->getFactTag() === "DEAT")
+																		{
+																			$posSources = $this->getEventsForDates($ddate - 10,$ddate+10,"",$inferenceObj->getFactValue());
+																		}
+																		else
+																		{
+																			if($inferenceObj->getFactTag() === "BIRT")
+																			{
+																				$posSources = $this->getEventsForDates($bdate-10,$bdate+10,"",$inferenceObj->getFactValue());
+																			}
+																			else
+																			{
+																				$posSources = $this->getEventsForDates($bdate,$ddate,"",$inferenceObj->getFactValue());
+																			}
+																		}
+																																				
+																		if(count($posSources) > 0)
+																		{
+																			
+																			$compiled[0] .= $pgv_lang["ThereIsChance"]." ";
+																			foreach($posSources as $sKey=>$sVal)
+																			{
+																				if(!in_array($sVal["id"],$sourcesInferred))
+																				{
+																					$sourcesInferred[$sVal["id"]] = $sVal;
+																				}
+																				
+																				
+																				$compiled[0] .= $sVal["description"]."<br />";
+																			}
+																		}
+															
 																		$compiled[1] = $inferenceObj->getFactTag();
 																		$compiled[2] = $inferenceObj->getAverage();
 																		$compiled[3] = $inferenceObj->getFactValue();
+																		
 																	}
 																
 																}
@@ -1511,9 +1630,42 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 															
 															if($addVal->getFactValue() !== $compiled[3])
 															{
+															
+																		if($addVal->getFactTag() === "DEAT")
+																		{
+																			$posSources = $this->getEventsForDates($ddate - 10,$ddate+10,"",$addVal->getFactValue());
+																		}
+																		else
+																		{
+																			if($inferenceObj->getFactTag() === "BIRT")
+																			{
+																				$posSources = $this->getEventsForDates($bdate-10,$bdate+10,"",$addVal->getFactValue());
+																			}
+																			else
+																			{
+																				$posSources = $this->getEventsForDates($bdate,$ddate,"",$addVal->getFactValue());
+																			}
+																		}
+																		if(count($posSources) > 0)
+																		{
+																			
+																			$compiledSources = "";
+																			$compiledSources .= $pgv_lang["ThereIsChance"]." ";
+																			foreach($posSources as $sKey=>$sVal)
+																			{
+																				
+																				if(!in_array($sVal["id"],$sourcesInferred))
+																				{
+																					
+																					$sourcesInferred[$sVal["id"]] = $sVal;
+																				}
+																				$compiledSources .= $sVal["description"]."<br />";
+																			}
+																		}
 																$additionalFacts = true;
 																$tempAdditional .= $this->decideInferSentence($addVal->getAverage(),$addVal->getFactTag());
 																$tempAdditional .= ' <i>'.$addVal->getFactValue().'</i><br />';
+																if(!empty($compiledSources)) $tempAdditional .= $compiledSources;
 															}
 														}
 														if($additionalFacts)
@@ -1526,10 +1678,65 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 												}
 												
 												$out .= "</td></tr>";
+												
+												
+												
+												
 											} else // if not allow user to view the already created task
 								
 												$out .= "<tr><td width=\"20\" class=\"optionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtask&amp;taskid=$taskid\">View</a></td><td class=\"optionbox\">".$tasktitle."</td></tr>\n";
 										}
+										$factLookups = $this->getPlacesFromPerson($person);
+										
+										foreach($sourcesInferred as $sKey=>$sVal)
+										{
+												$sourcesPrinted[$sVal["id"]] = $sVal;
+												$out .= "<tr ><td width=\"20\" class=\"optionbox\">";
+												$out .= "<input type=\"checkbox\" name=\"missingName[]\" value=\"".htmlentities($sVal["description"])."\" />";
+												$out .= "<td class=\"optionbox\">".$sVal["description"]."</td>";											
+												$out .= "</tr>";
+											
+										}
+										
+										
+										foreach($factLookups as $factLKey=>$factLValue)
+										{
+											$tempVal = trim($factLValue);
+												//print($tempVal."||");
+												$events = $this->getEventsForDates($bdate,$ddate,"",$tempVal);
+											if(count($events) > 0)
+											{
+												foreach($events as $eventKey=>$eventVal)
+												{
+													if(!isset($sourcesInferred[$eventVal["id"]]))
+													{
+														$sourcesPrinted[$eventVal["id"]] = $eventVal;
+														$out .= "<tr ><td width=\"20\" class=\"optionbox\">";
+														$out .= "<input type=\"checkbox\" name=\"missingName[]\" value=\"".htmlentities($eventVal["description"])."\" />";
+														$out .= "<td class=\"optionbox\">".$eventVal["description"]."</td>";
+														$out .= "</tr>";											
+													}
+													
+												}
+												
+											}
+										
+										}
+										
+										$genericEvents = $this->getEventsForDates($bdate,$ddate);
+										
+										foreach($genericEvents as $gKey=>$gVal)
+										{
+											if(!isset($sourcesPrinted[$gVal["id"]]))
+											{
+														$out .= "<tr ><td width=\"20\" class=\"optionbox\">";
+														$out .= "<input type=\"checkbox\" name=\"missingName[]\" value=\"".htmlentities($gVal["description"])."\" />";
+														$out .= "<td class=\"optionbox\">".$gVal["description"]."</td>";
+														$out .= "</tr>";	
+											}
+										}
+									
+									
 										// Create the selection box and add all the folder names and values
 										$out .= "<tr><td class=\"optionbox\" colspan=\"2\" align=\"center\"><h5>".$pgv_lang['folder']."&nbsp;&nbsp;</h><select name=\"folder\">";
 										$out .= $this->folder_search();
@@ -1607,6 +1814,65 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$out .= "\n\t<br /><br />";
 		// Return the goods.		 	
 		return $out;
+	}
+	
+	function parseMonthsToInt($month)
+	{
+		switch($month){
+			case "JAN": return 01;
+			break;
+			case "FEB": return 02;
+			break;
+			case "MAR": return 03;
+			break;
+			case "APR": return 04;
+			break;
+			case "MAY": return 05;
+			break;
+			case "JUN": return 06;
+			break;
+			case "JUL": return 07;
+			break;
+			case "AUG": return 08;
+			break;
+			case "SEP": return 09;
+			break;
+			case "OCT": return 10;
+			break;
+			case "NOV": return 11;
+			break;
+			case "DEC": return 12;
+			break;
+			default: return 00;
+			break;
+			
+		}
+	}
+	
+	/*
+	 * This will return an array of comma delimited lists of all the PLAC facts for a person
+	 * 
+	 * @person The object for the person you are looking for.
+	 * 
+	 * @return An array containing comma delimited lists of all the PLAC facts found in the GEDCOM for this person.
+	 */
+	function getPlacesFromPerson($person){
+		/*@var $person Person*/
+		//Get the GEDCOM for the person
+		$personGedcom = $person->getGedcomRecord();
+		//Get all the Places for that person
+		preg_match_all("/2 PLAC (.*)/",$personGedcom,$places,PREG_SET_ORDER);
+		
+		$returnPlaces = array();
+		for($i = 0; $i < count($places);$i++)
+		{
+			if(!in_array($places[$i][1],$returnPlaces))
+			{
+				$returnPlaces[] = $places[$i][1];
+			}
+		}
+		
+		return $returnPlaces;
 	}
 	
 	function decideInferSentence($percentage,$fact)
