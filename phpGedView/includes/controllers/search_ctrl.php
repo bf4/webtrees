@@ -128,12 +128,11 @@ class SearchControllerRoot extends BaseController {
 		// Get the query and remove slashes
 		if (isset ($_REQUEST["query"])) {
 			// Reset the "Search" text from the page header
-			if ($_REQUEST["query"] == $pgv_lang["search"]) {
+			if ($_REQUEST["query"] == $pgv_lang["search"] || strlen($_REQUEST["query"])<2 || preg_match("/^\.+$/", $_REQUEST["query"])>0) {
 				unset ($this->query);
 			} else {
 				$this->query = stripslashes($_REQUEST["query"]);
 				$this->myquery = $this->query;
-				
 			}
 		}
 		if (isset ($_REQUEST["replace"])) {
