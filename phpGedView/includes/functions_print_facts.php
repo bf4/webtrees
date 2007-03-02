@@ -539,8 +539,10 @@ function print_fact_sources($factrec, $level) {
 				if ($cs>0) print "\n\t\t\t<br /><span class=\"label\">".$factarray["DATE"].": </span><span class=\"field\">".get_changed_date($cmatch[1])."</span>";
 				$tt = preg_match_all("/".($nlevel+1)." TEXT (.*)/", $srec, $tmatch, PREG_SET_ORDER);
 				for($k=0; $k<$tt; $k++) {
-					print "<br /><span class=\"label\">".$pgv_lang["text"]." </span><span class=\"field\">".PrintReady($tmatch[$k][1]);
-					print PrintReady(get_cont($nlevel+2, $srec));
+					print "<br /><span class=\"label\">".$pgv_lang["text"]." </span><span class=\"field\">";
+					$text = $tmatch[$k][1];
+					$text .= get_cont($nlevel+2, $srec);
+					print PrintReady($text);
 					print "</span>";
 				}
 			}
@@ -550,8 +552,9 @@ function print_fact_sources($factrec, $level) {
 			if ($cs>0) print "<br /><span class=\"label\">".$factarray["QUAY"]." </span><span class=\"field\">".$cmatch[1]."</span>";
 			$cs = preg_match_all("/$nlevel TEXT (.*)/", $srec, $tmatch, PREG_SET_ORDER);
 			for($k=0; $k<$cs; $k++) {
-				print "<br /><span class=\"label\">".$pgv_lang["text"]." </span><span class=\"field\">".$tmatch[$k][1];
-				$text = get_cont($nlevel+1, $srec);
+				print "<br /><span class=\"label\">".$pgv_lang["text"]." </span><span class=\"field\">";
+				$text = $tmatch[$k][1];
+				$text .= get_cont($nlevel+1, $srec);
 				$text = preg_replace("'(https?://[\w\./\-&=?~%#]*)'", "<a href=\"$1\" target=\"blank\">$1</a>", $text);
 				print PrintReady($text);
 				print "</span>";

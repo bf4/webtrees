@@ -9,6 +9,9 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1403653 ] Accept / Reject Changes (yalnifj)
+ - Fixed [ 1403615 ] 4.0b3 Accept/Reject Changes (yalnifj)
+ - Fixed [ 1391206 ] 4.0b3 space omitted in CONC after TEXT (yalnifj)
  - Fixed [ 1389205 ] 4.0B3 - family doubled after quick update (yalnifj)
  - Fixed [ 1389034 ] 4.0B8 Import statistic has wrong figures (yalnifj)
  - Fixed [ 1388702 ] 4.0 B2 Password validation (yalnifj)
