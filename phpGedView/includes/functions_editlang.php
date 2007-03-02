@@ -109,15 +109,15 @@ function read_complete_file_into_array($dFileName, $string_needle)
         break;
       case "configure_help":
         $comment1 = $Language2 ." Language file for PhpGedView.";
-        $comment2 = "//-- Define " . $Language2 . "Help texts for use on Configuration pages";
+        $comment2 = "//-- Define " . $Language2 . " Help texts for use on Configuration pages";
         break;
       case "help_text":
         $comment1 = $Language2 ." Language file for PhpGedView.";
-        $comment2 = "//-- Define " . $Language2 . "Help texts for use on various pages";
+        $comment2 = "//-- Define " . $Language2 . " Help texts for use on various pages";
         break;
       case "countries":
         $comment1 = $Language2 ." Language file for PhpGedView.";
-        $comment2 = "//-- Define " . $Language2 . "name equivalents for Chapman country codes";
+        $comment2 = "//-- Define " . $Language2 . " name equivalents for Chapman country codes";
         break;
       case "rs_lang":
         $comment1 = $Language2 . " Language file for PhpGedView Researchlog";
