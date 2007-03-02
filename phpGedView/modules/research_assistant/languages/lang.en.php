@@ -119,6 +119,7 @@ $pgv_lang["InferIndvMarriagePlace"]				= "There is a %PERCENT% chance that the m
 $pgv_lang["InferIndvGivn"]						= "There is a %PERCENT% chance that the given name is:";
 $pgv_lang["All"]								= "All";
 $pgv_lang["More"]								= "More";
+$pgv_lang["ThereIsChance"]						= "Possible Sources may include:";
 
 // -- RA EXPLANATION
 $pgv_lang["DataCorrelations"]					= "Data Correlations";

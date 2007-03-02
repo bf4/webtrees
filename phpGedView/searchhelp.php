@@ -118,7 +118,7 @@ print "<input type=\"button\" value=\"".$pgv_lang["hs_close"]."\" onclick='self.
 print "</td></tr>";
 
 // Perform the search
-if ((!empty($searchtext)) && (($searchuser == "yes") || ($searchconfig == "yes")))  {
+if ((!empty($searchtext)) && strlen($searchtext)>1 && (($searchuser == "yes") || ($searchconfig == "yes")))  {
 
 	$helpvarnames = array();
 	unset($pgv_lang);
@@ -183,6 +183,8 @@ if ((!empty($searchtext)) && (($searchuser == "yes") || ($searchconfig == "yes")
 		(($searchhow == "sentence") && ($cfound >= 1))) {
 			print "<tr><td colspan=\"2\" class=\"descriptionbox wrap $TEXT_DIRECTION\">".$helptxt."</td></tr>";
 			$found++;
+			//-- if there is more than 100 the user should refine their search
+			if ($found>100) break;
 		}
 	}
 }

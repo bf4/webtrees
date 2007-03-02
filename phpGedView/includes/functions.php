@@ -931,6 +931,9 @@ function find_updated_record($gid, $gedfile="") {
 
 	if (empty($gedfile)) $gedfile = $GEDCOM;
 
+	//-- if auto accept is on, the record is probably in the DB
+	if (userAutoAccept()) return find_gedcom_record($gid);
+	
 	if (isset($pgv_changes[$gid."_".$gedfile])) {
 		$change = end($pgv_changes[$gid."_".$gedfile]);
 		return $change['undo'];
