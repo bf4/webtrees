@@ -128,14 +128,14 @@ function read_complete_file_into_array($dFileName, $string_needle)
         $comment2 = '';
         break;
     }
-        
+
     $dFound = ($fp = @fopen($Filename, "w"));
     fwrite($fp, "<?php\r\n");
     fwrite($fp, "/**" . "\r\n");
     fwrite($fp, " * " . $comment1 . "\r\n");
     fwrite($fp, " *" . "\r\n");
     fwrite($fp, " * PhpGedView: Genealogy Viewer" . "\r\n");
-    fwrite($fp, " * Copyright (C) 2002 to 2007  PGV Development Team" . "\r\n");
+    fwrite($fp, " * Copyright (C) 2002 to " . date("Y") . "  PGV Development Team" . "\r\n");
     fwrite($fp, " *" . "\r\n");
     fwrite($fp, " * This program is free software; you can redistribute it and/or modify" . "\r\n");
     fwrite($fp, " * it under the terms of the GNU General Public License as published by" . "\r\n");
