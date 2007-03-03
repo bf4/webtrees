@@ -45,6 +45,11 @@ if (isset($text)){
 //$DEBUG=1;
 if (!isset($action)) $action="";
 if (!isset($linenum)) $linenum="";
+if ((isset($_POST["preserve_last_changed"])) && ($_POST["preserve_last_changed"] == "on"))
+	$update_CHAN = false;
+else
+	$update_CHAN = true;
+
 $uploaded_files = array();
 
 // items for ASSO RELA selector :
@@ -372,6 +377,17 @@ else if ($action=="editraw") {
 		print_specialchar_link("newgedrec",true);
 		print "<br />\n";
 		print "<textarea name=\"newgedrec\" id=\"newgedrec\" rows=\"20\" cols=\"60\" dir=\"ltr\">".$gedrec."</textarea>\n<br />";
+		if (UserIsAdmin(GetUserName())) {
+			print "<table class=\"facts_table\">\n";
+			print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+			print_help_link("no_update_CHAN_help", "qm");
+			print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
+			print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+			print $pgv_lang["no_update_CHAN"]."<br />\n";
+			print "</td></tr>\n";
+			print "</table>";
+		}
+
 		print "<input id=\"savebutton\" type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
 		print "</form>\n";
 		print "<script language=\"JavaScript\" type=\"text/javascript\">\n<!--\ntextbox = document.getElementById('newgedrec');\n";
@@ -393,6 +409,14 @@ else if ($action=="edit") {
 
 	print "<table class=\"facts_table\">";
 	$level1type = create_edit_form($gedrec, $linenum, $level0type);
+	if (UserIsAdmin(GetUserName())) {
+		print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+		print_help_link("no_update_CHAN_help", "qm");
+		print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
+		print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+		print $pgv_lang["no_update_CHAN"]."<br />\n";
+		print "</td></tr>\n";
+		}
 	print "</table>";
 	if ($level0type=="SOUR" || $level0type=="REPO" || $level0type=="OBJE") {
 		if ($level1type!="NOTE") print_add_layer("NOTE");
@@ -424,6 +448,14 @@ else if ($action=="add") {
 
 	create_add_form($fact);
 
+	if (UserIsAdmin(GetUserName())) {
+		print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+		print_help_link("no_update_CHAN_help", "qm");
+		print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
+		print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+		print $pgv_lang["no_update_CHAN"]."<br />\n";
+		print "</td></tr>\n";
+	}
 	print "</table>";
 
 	if ($level0type=="SOUR" || $level0type=="REPO") {
@@ -789,7 +821,7 @@ else if ($action=="updateraw") {
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
 	$newgedrec = trim($newgedrec);
-	$success = (!empty($newgedrec)&&(replace_gedrec($pid, $newgedrec)));
+	$success = (!empty($newgedrec)&&(replace_gedrec($pid, $newgedrec, $update_CHAN)));
 	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
 }
 //------------------------------------------------------------------------------
@@ -861,7 +893,7 @@ else if ($action=="update") {
 		$i++;
 	}
 	if ($GLOBALS["DEBUG"]) print "<pre>$newged</pre>";
-	$success = (replace_gedrec($pid, $newged));
+	$success = (replace_gedrec($pid, $newged, $update_CHAN));
 	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
 }
 //------------------------------------------------------------------------------

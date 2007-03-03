@@ -613,6 +613,14 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		// 2 _MARNM
 		add_simple_tag("0 _MARNM");
 		print "</tr>\n";
+		if (UserIsAdmin(GetUserName())) {
+			print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+			print_help_link("no_update_CHAN_help", "qm");
+			print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
+			print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+			print $pgv_lang["no_update_CHAN"]."<br />\n";
+			print "</td></tr>\n";
+		}
 		print "</table>\n";
 		print_add_layer("SOUR");
 		print_add_layer("NOTE");
