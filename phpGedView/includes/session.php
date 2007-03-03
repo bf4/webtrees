@@ -902,6 +902,9 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
    &&(strstr($SCRIPT_NAME, "edit_privacy.php")===false)
    &&(strstr($SCRIPT_NAME, "upgrade33-40.php")===false)
    &&(strstr($SCRIPT_NAME, "gedcheck.php")===false)
+   &&(strstr($SCRIPT_NAME, "printlog.php")===false)
+   &&(strstr($SCRIPT_NAME, "editlang.php")===false)
+   &&(strstr($SCRIPT_NAME, "editlang_edit.php")===false)
    &&(strstr($SCRIPT_NAME, "useradmin.php")===false)) {
    	if ((count($GEDCOMS)==0)||(!check_for_import($GEDCOM))) {
 		header("Location: editgedcoms.php");
