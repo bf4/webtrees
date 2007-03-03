@@ -1430,11 +1430,17 @@ function print_fact_icon($fact, $factrec, $label, $pid) {
 	if ($SHOW_FACT_ICONS) {
 		$fact_image = "";
 		$factdate = parse_date($factrec);
+		$joe = Person::getInstance($pid);
+		$sexcheck = "";
+		if (!is_null($joe)) {
+			$sex = $joe->getSex();
+			if(($sex == "F") || ($sex == "M") || ($sex == "U"))
+				$sexcheck = "_".$sex;
+		}
 		// If the date is not on the fact, fall back to birth if available
 		// Does not catch the date if it is attached to the source of the fact
 		// (ratid entered OCCU) or if the fact comes from a family record. (MARR)
 		if($factdate[0]["year"] == 0) {
-			$joe = Person::getInstance($pid);
 			if (!is_null($joe)) {
 				$fallback = $joe->getBirthYear();
 				if(!empty($fallback)) 
@@ -1471,6 +1477,11 @@ function print_fact_icon($fact, $factrec, $label, $pid) {
 			if(file_exists($fact_image."_".$subtype.".gif"))
 				$fact_image = $fact_image."_".$subtype;
 			}
+		// Append _M, _F, or _U if available
+		if($sexcheck != "") {
+			if(file_exists($fact_image.$sexcheck.".gif"))
+				$fact_image = $fact_image.$sexcheck;
+			}
 
 		if(!empty($fact_image))
 			print "<img src=\"".$fact_image.".gif\" alt=\"".$label."\" title=\"".$label."\" align=\"middle\" /> ";
@@ -1478,3 +1489,4 @@ function print_fact_icon($fact, $factrec, $label, $pid) {
 	return;
 }
 ?>
+
