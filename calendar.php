@@ -457,7 +457,9 @@ if ($view!="preview") {
 		print "</select>\n";
 	}
 	else {
-		print "<td class=\"descriptionbox vmiddle\">".$pgv_lang["showcal"]."</td>\n";
+		print "<td class=\"descriptionbox vmiddle\">";
+		print_help_link("annivers_show_help", "qm", "show");
+		print $pgv_lang["show"].":&nbsp;</td>\n";
 		print "<td colspan=\"5\" class=\"optionbox vmiddle\">";
 		if ($filterof=="all") print "<span class=\"error\">".$pgv_lang["all_people"]. "</span> | ";
 		else {
