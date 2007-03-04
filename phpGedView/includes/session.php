@@ -23,6 +23,12 @@
  * @subpackage Reports
  * @version $Id$
  */
+
+//-- version of phpgedview  (Let's keep this in an obvious place -- not buried in code)
+$VERSION = "4.1";
+$VERSION_RELEASE = "beta 4";
+$REQUIRED_PRIVACY_VERSION = "3.1";
+
 if (strstr($_SERVER["PHP_SELF"],"session")) {
 	print "Now, why would you want to do that.  You're not hacking are you?";
 	exit;
@@ -282,11 +288,6 @@ if (file_exists($INDEX_DIRECTORY."search_engines.php")) {
 
 //-- required for running PHP in CGI Mode on Windows
 if (!isset($_SERVER['REQUEST_URI'])) $_SERVER['REQUEST_URI'] = "";
-
-//-- version of phpgedview
-$VERSION = "4.1";
-$VERSION_RELEASE = "beta 4";
-$REQUIRED_PRIVACY_VERSION = "3.1";
 
 //-- list of critical configuration variables
 $CONFIG_VARS = array(
@@ -880,37 +881,27 @@ if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='yes') $_SESSION["show_con
 if (isset($SHOW_CONTEXT_HELP) && $show_context_help==='no') $_SESSION["show_context_help"] = false;
 if (!isset($USE_THUMBS_MAIN)) $USE_THUMBS_MAIN = false;
 if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
-   &&(strstr($SCRIPT_NAME, "editconfig_help.php")===false)) {
-   if ((!check_db())||(!adminUserExists())) {
-      header("Location: editconfig.php");
-      exit;
-   }
-
-   if ((strstr($SCRIPT_NAME, "editconfig_gedcom.php")===false)
-   &&(strstr($SCRIPT_NAME, "help_text.php")===false)
-   &&(strstr($SCRIPT_NAME, "editconfig_help.php")===false)
-   &&(strstr($SCRIPT_NAME, "editgedcoms.php")===false)
-   &&(strstr($SCRIPT_NAME, "uploadgedcom.php")===false)
-   &&(strstr($SCRIPT_NAME, "login.php")===false)
-   &&(strstr($SCRIPT_NAME, "admin.php")===false)
-   &&(strstr($SCRIPT_NAME, "config_download.php")===false)
-   &&(strstr($SCRIPT_NAME, "addnewgedcom.php")===false)
-   &&(strstr($SCRIPT_NAME, "validategedcom.php")===false)
-   &&(strstr($SCRIPT_NAME, "addmedia.php")===false)
-   &&(strstr($SCRIPT_NAME, "importgedcom.php")===false)
-   &&(strstr($SCRIPT_NAME, "client.php")===false)
-   &&(strstr($SCRIPT_NAME, "edit_privacy.php")===false)
-   &&(strstr($SCRIPT_NAME, "upgrade33-40.php")===false)
-   &&(strstr($SCRIPT_NAME, "gedcheck.php")===false)
-   &&(strstr($SCRIPT_NAME, "printlog.php")===false)
-   &&(strstr($SCRIPT_NAME, "editlang.php")===false)
-   &&(strstr($SCRIPT_NAME, "editlang_edit.php")===false)
-   &&(strstr($SCRIPT_NAME, "useradmin.php")===false)) {
-   	if ((count($GEDCOMS)==0)||(!check_for_import($GEDCOM))) {
-		header("Location: editgedcoms.php");
+	&&(strstr($SCRIPT_NAME, "editconfig_help.php")===false)) {
+	if ((!check_db())||(!adminUserExists())) {
+		header("Location: editconfig.php");
 		exit;
-   	}
-   }
+	}
+	
+	if ((count($GEDCOMS)==0)||(!check_for_import($GEDCOM))) {
+		$scriptList = array("editconfig_gedcom.php", "help_text.php", "editconfig_help.php", "editgedcoms.php", "uploadgedcom.php", "login.php", "admin.php", "config_download.php", "addnewgedcom.php", "validategedcom.php", "addmedia.php", "importgedcom.php", "client.php", "edit_privacy.php", "upgrade33-40.php", "gedcheck.php", "printlog.php", "editlang.php", "editlang_edit.php" ,"useradmin.php");
+		$inList = false;
+		foreach ($scriptList as $key => $listEntry) {
+			if (strstr($SCRIPT_NAME, $listEntry)) {
+				$inList = true;
+				break;
+			}
+		}
+		if (!$inList) {
+			header("Location: editgedcoms.php");
+			exit;
+		}
+		unset($scriptList);
+	}
 
 	//-----------------------------------
 	//-- if user wishes to logout this is where we will do it
