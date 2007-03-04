@@ -30,6 +30,8 @@ if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["clear_cache_succes"]		= "קיבצי cache הוסרו."; 
+$pgv_lang["clear_cache"]			= "cache נקה קיבצי"; 
 $pgv_lang["sanity_err0"]			= "Errors:"; //@@
 $pgv_lang["sanity_err1"]			= "You need to have PHP version 4.3 or higher."; //@@
 $pgv_lang["sanity_err2"]			= "The file or directory <i>#GLOBALS[whichFile]#</i> does not exist. Please verify that the file or directory exists, was not mis-named, and Read permissions are set correctly."; //@@
@@ -42,7 +44,7 @@ $pgv_lang["sanity_warn1"]			= "The <i>#GLOBALS[MEDIA_DIRECTORY]#</i> directory i
 $pgv_lang["sanity_warn2"]			= "The <i>#GLOBALS[MEDIA_DIRECTORY]#thumbs</i> directory is not writable.  You will not be able to upload thumbnails or generate thumbnails in PhpGedView."; //@@
 $pgv_lang["sanity_warn3"]			= "The GD imaging library does not exist. PhpGedView will still function, but some of the features, such as thumbnail generation and the circle diagram, will not work without the GD library.  Please see <a href='http://www.php.net/manual/en/ref.image.php'>http://www.php.net/manual/en/ref.image.php</a> for more information."; //@@
 $pgv_lang["sanity_warn4"]			= "The XML Parser library does not exist. PhpGedView will still function, but some of the features, such as report generation and web services, will not work without the XML Parser library. Please see <a href='http://www.php.net/manual/en/ref.xml.php'>http://www.php.net/manual/en/ref.xml.php</a> for more information."; //@@
-$pgv_lang["sanity_warn5"]			= "The DOM XML library does not exist. PhpGedView will still function, but some of the features, such as Gramps Export features in the clippings cart, download, and web services, will not work. Please see <a href='http://www.php.net/manual/en/ref.dom.php'>http://www.php.net/manual/en/ref.dom.php</a> for more information."; //@@
+$pgv_lang["sanity_warn5"]			= "The DOM XML library does not exist. PhpGedView will still function, but some of the features, such as Gramps Export features in the clippings cart, download, and web services, will not work. Please see <a href='http://www.php.net/manual/en/ref.domxml.php'>http://www.php.net/manual/en/ref.domxml.php</a> for more information."; //@@
 $pgv_lang["sanity_warn6"]			= "The Calendar library does not exist. PhpGedView will still function, but some of the features, such as conversion to other calendars such as Hebrew or French, will not work.  It is not essential for running PhpGedView. Please see <a href='http://www.php.net/manual/en/ref.calendar.php'>http://www.php.net/manual/en/ref.calendar.php</a> for more information."; //@@
 
 $pgv_lang["ip_address"]		= "כתובת IP";
@@ -91,7 +93,7 @@ $pgv_lang["created_placelinks_fail"]	= "לא ניתן ליצור טבלת <i>ק�
 $pgv_lang["created_media_fail"]	= "לא ניתן ליצור את טבלת ה<i>מדיה</i>.";
 $pgv_lang["created_media_mapping_fail"]  = "לא ניתן ליצור את טבלת ה <i>מיפוי של המדיה</i>.";
 $pgv_lang["no_thumb_dir"]		= " תיקיית התמונות המזעריות לא קיימת ולא ניתן ליצור אותה עבורך";
-$pgv_lang["move_to"]		= "העבר אל";
+//$pgv_lang["move_to"]		= "העבר אל";
 $pgv_lang["folder_created"]		= "תיקייה נוצרה";
 $pgv_lang["folder_no_create"]		= "לא ניתן ליצור תיקייה";
 $pgv_lang["security_no_create"]	= "התרעת ביטחון: לא ניתן ליצור <b><i>index.php</i></b> בתוך ";
@@ -100,7 +102,7 @@ $pgv_lang["label_add_search_server"]	= "הוסף IP";
 $pgv_lang["label_add_server"]      	= "הוסף";
 $pgv_lang["label_ban_server"]		= "הגש";
 $pgv_lang["label_delete"]           	= "מחק";
-$pgv_lang["progress_bars_info"]	= "סרגל הסטטוס שלמטה מאפשר לך לדעת את מצב הייבוא. אם תחום הזמן נגמר הייבוא נעצר ותתבקש ללחוץ על כפתור המשך. אם אינך רואה כפתור המשך, חזור אחורה והכנס תחום זמן קטן יותר.";
+$pgv_lang["progress_bars_info"]	= "סרגל הסטטוס שלמטה מאפשר לך לדעת את התקדמות הייבוא. אם תחום הזמן נגמר הייבוא נעצר ותתבקש ללחוץ על כפתור <b>המשך</b>. אם אינך רואה כפתור <b>המשך</b>, חזור אחורה התחל מחדש את היבוא והכנס תחום זמן קטן יותר."; 
 $pgv_lang["upload_replacement"]	="העלה החלפה";
 $pgv_lang["about_user"]		= "עליך ליצור קודם כל משתמש מנהלתי ראשי. למשתמש זה יהיו זכויות לעדכן קבצי תצורה, לראות נתונים אישיים וליצור משתמשים אחרים.";
 $pgv_lang["access"]			= "גישה";
@@ -159,7 +161,7 @@ $pgv_lang["download_file"]		= "הורד קובץ";
 $pgv_lang["download_gedcom"]	= "הורד GEDCOM";
 $pgv_lang["download_here"]		= "לחץ כאן כדי להוריד את הקובץ.";
 $pgv_lang["download_note"]		= "הערה: יתכן שזמן העיבוד להורדת קובצי GEDCOM גדולים לוקח זמן רב. אם משך הזמן להורדה אינו מספיק, יתכן וההורדה לא תהייה שלמה.<br /><br />תוכל לבדוק ב-GEDCOM שהורד יש שורת <b>0&nbsp;TRLR</b> בסוף הקובץ, כדי לוודא שהוא הורד בצורה נכונה. קובצי ה-GEDCOM הם קובצי טכסט; ניתן להשתמש בתוכנת עריכה מתאימה של טכסטים , אבל <u>אין</u> לשמור את קובץ ה-GEDCOM שהורד אחרי שבדקת אותו.<br /><br />בד\"כ ההורדה עורכת משך זמן דומה למשך ייבוא ה-GEDCOM שלך.";
-$pgv_lang["duplicate_username"]	= "קוד משתמש כפול. משתמש עם קוד זה מוגדר כבר. נא בחר קוד משתמש אחר.";
+//$pgv_lang["duplicate_username"]	= "קוד משתמש כפול. משתמש עם קוד זה מוגדר כבר. נא בחר קוד משתמש אחר.";
 $pgv_lang["editaccount"]		= "הרשאה למשתמש זה לערוך את נתוני המשתמש שלו";
 $pgv_lang["empty_dataset"]		= "האם ברצונך לרוקן את מסד הנתונים ולהחליף אותו בנתונים החדשים הללו?";
 $pgv_lang["empty_lines_detected"]	= "שורות ריקות התגלו בקובץ ה-GEDCOM שלך. הניקיון ימחוק את השורות הריקות הללו.";
@@ -194,6 +196,7 @@ $pgv_lang["import_time_exceeded"]	= "עברת את גבול זמן העיבוד.
 $pgv_lang["inc_languages"]		= " שפות";
 $pgv_lang["INDEX_DIRECTORY"]	= "תיקיית קובץ אינדקסים";
 $pgv_lang["invalid_dates"]		= "התגלו מבני תאריך לא חוקיים, הניקיון ישנה אותם למבנה DD MMM YYYY (כלומר 01 JAN 2004).";
+$pgv_lang["BOM_detected"] 		= "Byte Order Mark (BOM) התגלה בתחילת הקובץ. הקוד המיוחד הזה יוסר כחלק מהניקוי."; 
 $pgv_lang["invalid_header"]		= "התגלו שורות לפני כותרת ה-GEDCOM <b>0&nbsp;HEAD</b>. הניקיון ימחק את השורות הללו.";
 $pgv_lang["label_added_servers"]	= "שרתים מרוחקים שהוספו"; 
 $pgv_lang["label_banned_servers"]   	= "אסור אתרים לפי IP";

@@ -50,6 +50,8 @@ $pgv_lang["PRIV_USER"]                                               = "Näytä 
 $pgv_lang["PRIV_NONE"]                                               = "Näytä vain ylläpitäjille";
 $pgv_lang["PRIV_HIDE"]                                                 = "Piiloita myös ylläpitäjiltä";
 $pgv_lang["manage_gedcoms"]	= "GEDCOM-tiedostojen hallinta";
+$pgv_lang["keep_media"]				= "Säilytä medialinkit";
+$pgv_lang["files_in_backup"]		= "Tämän varmuuskopion sisältämät tiedostot";
 $pgv_lang["created_remotelinks"]	= "<i>Etälinkki</i>taulukon luonti onnistui.";
 $pgv_lang["created_remotelinks_fail"] 	= "<i>Etälinkki</i>taulukon luonti epäonnistui.";
 $pgv_lang["created_indis"]		= "<i>Henkilöt</i> taulun luonti onnistui.";
@@ -67,7 +69,7 @@ $pgv_lang["created_placelinks_fail"]	= "<i>Paikkalinkit</i>-taulua ei voitu luod
 $pgv_lang["created_media_fail"]	= "<i>Media</i>-taulua ei voitu luoda.";
 $pgv_lang["created_media_mapping_fail"] = "<i>Mediamuodostustaulua</i> ei voi luoda.";
 $pgv_lang["no_thumb_dir"]		= " pienoiskuvahakemistoa ei ole enkä voinut sitä luoda";
-$pgv_lang["move_to"]		= "Siirrä hakemistoon -->";
+//$pgv_lang["move_to"]		= "Siirrä hakemistoon -->";
 $pgv_lang["folder_created"]		= "Hakemisto luotu";
 $pgv_lang["folder_no_create"]		= "Hakemistoa ei voitu luoda";
 $pgv_lang["security_no_create"]	= "Turvallisuusvaroitus tiedostoa index.php ei ole hakemistossa ";
@@ -76,6 +78,7 @@ $pgv_lang["label_add_search_server"]	= "Lisää IP";
 $pgv_lang["label_add_server"]       	= "Lisää";
 $pgv_lang["label_ban_server"]       	= "Hylkää>>";
 $pgv_lang["label_delete"]           	= "Poista";
+$pgv_lang["progress_bars_info"]			= "Alla olevat tilarivit osoittavat kuinka tuonti etenee. Mikäli aikarajoitus ylittyy, tuonti loppuu ja sinua pyydetään näpäyttämään \"Jatka\"-painiketta. Mikäli \"Jatka\"-painiketta ei näy, palaa takaisin ja anna pienempi aikaraja.";
 $pgv_lang["upload_replacement"]		="Lataa korvaus";
 $pgv_lang["add_gedcom"]		= "Lisää uusi GEDCOM tiedostoon";
 $pgv_lang["add_new_gedcom"]	= "Luo uusi GEDCOM-tiedosto";
@@ -190,29 +193,50 @@ $pgv_lang["visitor"]			= "Vierailija";
 $pgv_lang["you_may_login"]		= " Voit kirjautua PhpGedView verkkopaikkaan alla olevan linkin avulla.";
 
 // Text for the Gedcom Checker
-$pgv_lang["gedcheck"]     = "Gedcom-tarkastaja";          // Module title
+$pgv_lang["gedcheck"]     = "Gedcom-tarkastaja";
 $pgv_lang["gedcheck_text"]= "Tässä moduulissa tarkastetaan GEDCOM-tiedoston formaatti verrattuna <a href=\"http://phpgedview.sourceforge.net/ged551-5.pdf\">5.5.1 GEDCOM-määrittelyyn</a>. Siinä tarkastetaan myös tiedostossasi mehdollisesti esiintyviä yleisiä virheitä. Huomaa, että määrittelyllä on useita versioita ja laajennuksia, joten ota huomioon vain ne, jotka on merkitty \"Kriittinen\". Selitykset kaikkiin rivikohtaisiin virheisiin löytyvät määrittelystä, joten tarkista ensin sieltä ennenkuin pyydät apua.";
-$pgv_lang["level"]        = "Taso";                   // Levels of checking
+$pgv_lang["level"]        = "Taso";
 $pgv_lang["critical"]     = "Kriittinen";
 $pgv_lang["error"]        = "Virhe";
 $pgv_lang["warning"]      = "Varoitus";
 $pgv_lang["info"]         = "Info";
-$pgv_lang["open_link"]    = "Avaa linkit osoitteessa:";           // Where to open links
+$pgv_lang["open_link"]    = "Avaa linkit osoitteessa:";
 $pgv_lang["same_win"]     = "Sama välilehti/ikkuna";
 $pgv_lang["new_win"]      = "Uusi välilehti/ikkuna";
-$pgv_lang["context_lines"]= "GEDCOM kontekstin rivejä "; // Number of lines either side of error
-$pgv_lang["all_rec"]      = "Kaikki tietueet";             // What to show
+$pgv_lang["context_lines"]= "GEDCOM kontekstin rivejä ";
+$pgv_lang["all_rec"]      = "Kaikki tietueet";
 $pgv_lang["err_rec"]      = "Virheelliset tietueet";
-$pgv_lang["missing"]      = "puuttuu";                 // General error messages
+$pgv_lang["missing"]      = "puuttuu";
 $pgv_lang["multiple"]     = "useita samoja";
 $pgv_lang["invalid"]      = "epäkelpo";
 $pgv_lang["too_many"]     = "liian monta";
 $pgv_lang["too_few"]      = "liian vähän";
 $pgv_lang["no_link"]      = "ei linkity takaisin";
-$pgv_lang["data"]         = "data";                    // Specific errors (used with general errors)
+$pgv_lang["data"]         = "data";
 $pgv_lang["level"]        = "taso";
 $pgv_lang["tag"]          = "merkitsin";
 $pgv_lang["spacing"]      = "välistys";
 //$pgv_lang["before"]       = "ennen";                  // More specific errors, for stage 2
+$pgv_lang["clear_cache_succes"]		= "Tiedostot välimuistista on poistettu.";
+$pgv_lang["clear_cache"]			= "Poista tiedostot välimuistista.";
+$pgv_lang["sanity_err0"]			= "Virheet:";
+$pgv_lang["sanity_err1"]			= "Tarvitaan PHP versio 4.3 tai uudempi.";
+$pgv_lang["sanity_err2"]			= "Tiedosto tai hakemisto <i>#GLOBALS[whichFile]#</i> ei ole olemassa. Tarkista, että tiedosto tai hakemisto on olemassa,, sitä ei ole nimetty väärin ja että lukuoikeudet on asetettu oikein.";
+$pgv_lang["sanity_err3"]			= "Tiedosto <i>#GLOBALS[whichFile]#</i> ei latautunut oikein. Yritä ladata se uudestaan.";
+$pgv_lang["sanity_err4"]			= "Tiedosto <i>config.php</i> on viallinen.";
+$pgv_lang["sanity_err5"]			= "Tiedostoa <i>config.php</i> ei voi muuttaa.";
+$pgv_lang["sanity_err6"]			= "Hakemistoon <i>#GLOBALS[INDEX_DIRECTORY]#</i> ei voi tehdä muutoksia.";
+$pgv_lang["sanity_warn0"]			= "Varoitukset:";
+$pgv_lang["sanity_warn1"]			= "Hakemistoa <i>#GLOBALS[MEDIA_DIRECTORY]#</i> ei voi muuttaa. PhpGedView:ssä ei voi ladata mediatiedostoja tai pienoiskuvakkeita.";
+$pgv_lang["sanity_warn2"]			= "Hakemistoa <i>#GLOBALS[MEDIA_DIRECTORY]#thumbs</i> ei voi muuttaa. PhpGedView:ssä ei voi ladata tai luoda pienoiskuvakkeita.";
+$pgv_lang["sanity_warn3"]			= "GD kuvantamiskirjastoa ei ole. PhpGedView toimii, mutta jotkut toiminnot, kuten pienoiskuvakkeiden luonti ja ympyrädiagrammi eivät toimi ilman GD kirjastoa. Lisätietoa osoitteesta href='http://www.php.net/manual/en/ref.image.php'>http://www.php.net/manual/en/ref.image.php</a>.";
+$pgv_lang["sanity_warn4"]			= "XML jäsenninkirjastoa ei ole. PhpGedView toimii kylläkin, mutta jotkut toiminnot, kuten raporttien luonti ja verkkopalvelut eivät toimi ilman XML jäsenninkirjastoa. Lisätietoa osoitteesta <a href='http://www.php.net/manual/en/ref.xml.php'>http://www.php.net/manual/en/ref.xml.php</a>.";
+$pgv_lang["sanity_warn5"]			= "DOM XLM kirjastoa ei ole. PhpGedView toimii kylläkin, mutta jotkut toiminnot, kuten Gramps vientiominaisuus leikekorissa, lataus ja verkkopalvelut, eivät toimi. Lisätietoa osoitteessa <a href='http://www.php.net/manual/en/ref.domxml.php'>http://www.php.net/manual/en/ref.domxml.php</a>.";
+$pgv_lang["sanity_warn6"]			= "Kalenterikirjastoa ei ole. PhpGedView toimii tosin, mutta jotkut toiminnot, kuten muuntaminen toisiin kalenterimuotoihin (esimerkiksi heprealaiseen tai ranskalaiseen), ei toimi. Lisätietoa osoitteessa <a href='http://www.php.net/manual/en/ref.calendar.php'>http://www.php.net/manual/en/ref.calendar.php</a>";
+$pgv_lang["ip_address"]				= "IP-osoite";
+$pgv_lang["date_time"]				= "Päivämäärä ja aika";
+$pgv_lang["log_message"]			= "Lokitiedote";
+$pgv_lang["searchtype"]				= "Hakumenetelmä";
+$pgv_lang["query"]					= "Kysely";
 
 ?>

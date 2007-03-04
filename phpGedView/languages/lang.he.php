@@ -29,6 +29,9 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "אין לך גישה לתיקיית קובצי השפות.";
 	exit;
 }
+$pgv_lang["invalid_search_input"] 		= "הכנס בבקשה שם פרטי, שם משפחה או מקום בנוסף לשנה";
+$pgv_lang["duplicate_username"]		= "קוד משתמש כפול. משתמש עם קוד זה מוגדר כבר. נא בחר קוד משתמש אחר.";
+$pgv_lang["cache_life"]			= "חיי קובץ ה-Cache"; 
 $pgv_lang["genealogy"]			= "חקר שושלות יוחסין"; 
 $pgv_lang["activate"]			= "הפעל"; 
 $pgv_lang["deactivate"]			= "נטרל"; 
@@ -83,7 +86,7 @@ $pgv_lang["ex-wife"] 			= "אישה לשעבר";
 $pgv_lang["ex-husband"] 			= "בעל לשעבר";
 $pgv_lang["noemail"] 			= "כתובות ללא דואר אלקטרוני";
 $pgv_lang["onlyemail"] 			= "רק כתובות עם דואר אלקטרוני";
-$pgv_lang["maxviews_exceeded"]		= "הגעת לחסם של מספר דפים, נסה שוב מאוחר יותר.";
+$pgv_lang["maxviews_exceeded"]		= "עברת את קצב הצפייה המותר #GLOBALS[MAX_VIEWS]# במשך #GLOBALS[MAX_VIEW_TIME]# שניות."; 
 $pgv_lang["broadcast_not_logged_6mo"]		= "שלח הודעה למשתמשים שלא התחברו למערכת ב-6  החודשים האחרונים";
 $pgv_lang["broadcast_never_logged_in"]		= "שלח הודעה למשתמשים שעדיין לא התחברו למערכת ";
 $pgv_lang["stats_to_show"]			= "בחר את הנתונים הסטטיסטיים שיוצגו באזור זה";
@@ -360,7 +363,7 @@ $pgv_lang["name"]			= "שם";
 $pgv_lang["given_name"]		= "שם פרטי:";
 $pgv_lang["surname"]		= "שם משפחה:";
 $pgv_lang["suffix"]			= "סיומת:";
-$pgv_lang["sex"]			= "מין";
+$pgv_lang["sex"]			= "מגדר";
 $pgv_lang["personal_facts"]		= "עובדות אישיות בפרוט";
 $pgv_lang["type"]			= "סוג";
 $pgv_lang["parents"] 		= "הורים:";
@@ -372,6 +375,7 @@ $pgv_lang["relatives"]		= "קרובי משפחה";
 $pgv_lang["relatives_events"]		= "אירועים של קרובי משפחה";
 $pgv_lang["child"]			= "ילד/ה";
 $pgv_lang["spouse"]			= "בן/בת זוג";
+$pgv_lang["spouses"] 		= "בני זוג";
 $pgv_lang["surnames"]		= "שמות משפחה";
 $pgv_lang["adopted"]		= "מאומץ";
 $pgv_lang["foster"]			= "אומנת";
@@ -721,13 +725,15 @@ $pgv_lang["n_x_sisters_daughter"] = "נכדנית מדרגה %1\$d";
 // the bosa name is used for offspring - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
-$pgv_lang["bosa_2"] 				= $pgv_lang["son"];                   // son
-$pgv_lang["bosa_3"] 				= $pgv_lang["daughter"];              // daughter
+$pgv_lang["bosa_2"] 				= "בן";                   // son 
+$pgv_lang["bosa_3"] 				= "בת";              // daughter 
+
 // 2nd generation
-$pgv_lang["bosa_4"] 				= $pgv_lang["grandson"];              // son's son 
-$pgv_lang["bosa_5"] 				= $pgv_lang["granddaughter"];         // son's daughter
-$pgv_lang["bosa_6"] 				= $pgv_lang["grandson"];              // daughter's son
-$pgv_lang["bosa_7"] 				= $pgv_lang["granddaughter"];         // daughter's daughter
+$pgv_lang["bosa_4"] 				= "נכד";              // son's son 
+$pgv_lang["bosa_5"] 				= "נכדה";         // son's daughter 
+$pgv_lang["bosa_6"] 				= "נכד";              // daughter's son 
+$pgv_lang["bosa_7"] 				= "נכדה";         // daughter's daughter 
+
 // 3rd generation
 $pgv_lang["bosa_8"] 				= "שלש";     // son's son's son   
 $pgv_lang["bosa_9"] 				= "שלשה";   // son's son's daughter
@@ -752,13 +758,14 @@ $pgv_lang["n_x_granddaughter_from_daughter"] = "נכדה מדרגה %2\$d";
 // to allow fo language variations we specify different relationships for paternal and maternal
 // aunts and uncles
 // 1st generation
-$pgv_lang["sosa_uncle_2"] 				= $pgv_lang["uncle"];            // fathers brother
-$pgv_lang["sosa_uncle_3"] 				= $pgv_lang["uncle"];            // mothers brother
+$pgv_lang["sosa_uncle_2"] 				= "דוד";            // father's brother
+$pgv_lang["sosa_uncle_3"] 				= "דוד";            // mother's brother
+
 // 2nd generation
-$pgv_lang["sosa_uncle_4"] 				= "דוד סב";      // fathers's fathers brother 
-$pgv_lang["sosa_uncle_5"] 				= "דוד סב";      // fathers mothers brother
-$pgv_lang["sosa_uncle_6"] 				= "דוד סב";      // mothers fathers brother
-$pgv_lang["sosa_uncle_7"] 				= "דוד סב";      // mothers mothers brother
+$pgv_lang["sosa_uncle_4"] 				= "דוד סב";      // father's fathers brother 
+$pgv_lang["sosa_uncle_5"] 				= "דוד סב";      // father's mothers brother
+$pgv_lang["sosa_uncle_6"] 				= "דוד סב";      // mother's fathers brother
+$pgv_lang["sosa_uncle_7"] 				= "דוד סב";      // mother's mothers brother
 
 // for the general case of uncles of the nth degree use the text below
 // in this text %1\$d is replaced with the number of generations
@@ -771,13 +778,14 @@ $pgv_lang["n_x_maternal_uncle"]	    	= "דוד מדרגה %1\$d";
 // to allow fo language variations we specify different relationships for paternal and maternal
 // aunts and aunts
 // 1st generation
-$pgv_lang["sosa_aunt_2"] 				= $pgv_lang["aunt"];            // fathers sister
-$pgv_lang["sosa_aunt_3"] 				= $pgv_lang["aunt"];            // mothers sister
+$pgv_lang["sosa_aunt_2"] 				= "דודה";            // father's sister
+$pgv_lang["sosa_aunt_3"] 				= "דודה";            // mother's sister
+
 // 2nd generation
-$pgv_lang["sosa_aunt_4"] 				= "דודה סבה";      // fathers's fathers sister 
-$pgv_lang["sosa_aunt_5"] 				= "דודה סבה";      // fathers mothers sister
-$pgv_lang["sosa_aunt_6"] 				= "דודה סבה";      // mothers fathers sister
-$pgv_lang["sosa_aunt_7"] 				= "דודה סבה";      // mothers mothers sister
+$pgv_lang["sosa_aunt_4"] 				= "דודה סבה";      // father's fathers sister 
+$pgv_lang["sosa_aunt_5"] 				= "דודה סבה";      // father's mothers sister
+$pgv_lang["sosa_aunt_6"] 				= "דודה סבה";      // mother's fathers sister
+$pgv_lang["sosa_aunt_7"] 				= "דודה סבה";      // mother's mothers sister
 
 // for the general case of aunts of the nth degree use the text below
 // in this text %1\$d is replaced with the number of generations
@@ -785,13 +793,14 @@ $pgv_lang["sosa_aunt_7"] 				= "דודה סבה";      // mothers mothers sister
 //              %3\$d is replaced with the number of generations - 2
 $pgv_lang["n_x_paternal_aunt"]		= "דודה מדרגה %1\$d";
 $pgv_lang["n_x_maternal_aunt"]	    	= "דודה מדרגה %1\$d";
+
 // the sosa_uncle_bm name is used for uncles (by marriage) - the names below can be extended to any number
 // of generations just by adding more translations.
 // to allow fo language variations we specify different relationships for paternal and maternal
 // aunts and uncles
 // 1st generation
-$pgv_lang["sosa_uncle_bm_2"] 				= $pgv_lang["uncle"];            // fathers brother
-$pgv_lang["sosa_uncle_bm_3"] 				= $pgv_lang["uncle"];            // mothers brother
+$pgv_lang["sosa_uncle_bm_2"] 				= "דוד";            // fathers brother 
+$pgv_lang["sosa_uncle_bm_3"] 				= "דוד";            // mothers brother 
 // 2nd generation
 $pgv_lang["sosa_uncle_bm_4"] 				= "דוד סב";      // fathers's fathers brother 
 $pgv_lang["sosa_uncle_bm_5"] 				= "דוד סב";      // fathers mothers brother
@@ -809,8 +818,8 @@ $pgv_lang["n_x_maternal_uncle_bm"]	    	= "דוד מדרגה %1\$d";
 // to allow fo language variations we specify different relationships for paternal and maternal
 // aunts and aunts
 // 1st generation
-$pgv_lang["sosa_aunt_bm_2"] 				= $pgv_lang["aunt"];            // fathers sister
-$pgv_lang["sosa_aunt_bm_3"] 				= $pgv_lang["aunt"];            // mothers sister
+$pgv_lang["sosa_aunt_bm_2"] 				= "דודה";            // fathers sister  
+$pgv_lang["sosa_aunt_bm_3"] 				= "דודה";            // mothers sister  
 // 2nd generation
 $pgv_lang["sosa_aunt_bm_4"] 				= "דודה סבה";      // fathers's fathers sister 
 $pgv_lang["sosa_aunt_bm_5"] 				= "דודה סבה";      // fathers mothers sister
@@ -822,7 +831,7 @@ $pgv_lang["sosa_aunt_bm_7"] 				= "דודה סבה";      // mothers mothers sis
 //              %2\$d is replaced with the number of generations - 1
 //              %3\$d is replaced with the number of generations - 2
 $pgv_lang["n_x_paternal_aunt_bm"]		= "דודה מדרגה %1\$d";
-$pgv_lang["n_x_maternal_aunt_bm"]	    	= "דודה מדרגה %1\$d";
+$pgv_lang["n_x_maternal_aunt_bm"]	    = "דודה מדרגה %1\$d";
 
 // if a specific cousin relationship cannot be represented in a language translate as "";
 $pgv_lang["male_cousin_1"]              	= "דודן";
@@ -845,7 +854,7 @@ $pgv_lang["male_cousin_17"]             	= "דודן מדרגה 17";
 $pgv_lang["male_cousin_18"]             	= "דודן מדרגה 18";
 $pgv_lang["male_cousin_19"]             	= "דודן מדרגה 19";
 $pgv_lang["male_cousin_20"]             	= "דודן מדרגה 20";
-$pgv_lang["male_cousin_n"]             	= "דודן מדרגה %d";
+$pgv_lang["male_cousin_n"]             		= "דודן מדרגה %d";
 $pgv_lang["female_cousin_1"]            	= "דודנית";
 $pgv_lang["female_cousin_2"]            	= "דודנית משנה";
 $pgv_lang["female_cousin_3"]            	= "דודנית שילשה";
@@ -866,7 +875,7 @@ $pgv_lang["female_cousin_17"]           	= "דודנית מדרגה 17";
 $pgv_lang["female_cousin_18"]           	= "דודנית מדרגה 18";
 $pgv_lang["female_cousin_19"]           	= "דודנית מדרגה 19";
 $pgv_lang["female_cousin_20"]           	= "דודנית מדרגה 20";
-$pgv_lang["female_cousin_n"]           	= "דודנית מדרגה %d";
+$pgv_lang["female_cousin_n"]           		= "דודנית מדרגה %d";
 // Only referenced from english specific functions
 //@@ SEE http://www.weinel.com/family/relations.html - ASCENDING?
 // N/A
@@ -1244,10 +1253,10 @@ $pgv_lang["death_report"]		= "דו\"ח תאריך ומקום פטירה";
 $pgv_lang["deathplace"]		= "מקום הפטירה כולל";
 $pgv_lang["deathdate1"]		= "תחילת תחום תאריך פטירה";
 $pgv_lang["deathdate2"]		= "סוף תחום תאריך פטירה";
-$pgv_lang["marr_report"]		= "דו\"ח תאריך ומקום נישואים";
-$pgv_lang["marrplace"]		= "מקום הנישואים מכיל";
-$pgv_lang["marrdate1"]		= "התחלת תחום תאריכי נישואים";
-$pgv_lang["marrdate2"]		= "סיום תחום תאריכי נישואים";
+$pgv_lang["marr_report"]		= "דו\"ח תאריך ומקום נישואין";
+$pgv_lang["marrplace"]		= "מקום הנישואין מכיל";
+$pgv_lang["marrdate1"]		= "התחלת תחום תאריכי נישואין";
+$pgv_lang["marrdate2"]		= "סיום תחום תאריכי נישואין";
 $pgv_lang["sort_by"]		= "מיין לפי";
 $pgv_lang["cleanup"]		= "ניקיון";
 
@@ -1423,7 +1432,7 @@ $pgv_lang["stpljpgraphno"]	 	= "מודולי JPgraph אינם קיימים בת�
 $pgv_lang["stplinfo"]			= "נתוני תרשים:";
 $pgv_lang["stpltype"]		= "סוג:";
 $pgv_lang["stplnoim"]		= "לא מיושם:";
-$pgv_lang["stplmf"]			= " / מין";
+$pgv_lang["stplmf"]			= " / מגדר";
 $pgv_lang["stplipot"]			= " / תקופת זמן";
 $pgv_lang["stplgzas"]		= "גבולות ציר z:";
 $pgv_lang["stplmonth"]		= "חודש";
