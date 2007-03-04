@@ -754,6 +754,18 @@ add_element  ('TRLR', 1, 1,      $TAG['NULL']);
 
 unset($TAG); // Save memory.
 
+// Min/Max numbers of years between different events
+$FACT_AGES=array(
+	array('BIRT', 'DEAT', 0, 100),
+	array('BIRT', 'BURI', 0, 100),
+	array('BIRT', 'CREM', 0, 100),
+	array('BIRT', 'CHR',  0, 5),
+	array('BIRT', 'CHRA', 18, 100),
+	array('BIRT', 'MARR', 16, 60),
+	array('DEAT', 'BURI', 0, 1),
+	array('DEAT', 'CREM', 0, 1)
+);
+
 ////////////////////////////////////////////////////////////////////////////////
 // Main program starts here.
 ////////////////////////////////////////////////////////////////////////////////
@@ -762,8 +774,8 @@ function check_indi($id)
 {
 	global $pgv_lang;
 	global $indi_list, $fam_list, $EOL, $indi_facts_unique;
-	global $level, $critical, $error, $warning, $info;
-	global $showall;
+	global $err_level, $critical, $error, $warning, $info;
+	global $showall, $FACT_AGES;
 
 	if (isset($indi_list[$id]["checked"]) || !isset($indi_list[$id]["gedcom"])) {
 		return;
@@ -777,23 +789,26 @@ function check_indi($id)
 	else
 		$name="???";
 
-	if ($level>=$error)
+	if ($err_level>=$error)
 		foreach ($indi_facts_unique as $fact)
 			if (get_sub_record(1, "1 $fact", $gedrec, 2)!="")
 				$errors.=multiple($fact);
 
 	unset ($famc, $fams); $foundf=false; $patok=false; $todo=array();
 
-	$facts=get_all_subrecords($gedrec, "CHAN OBJE", false, false, false);
+	$facts=get_all_subrecords($gedrec, "CHAN OBJE NOTE SOUR", true, false, false);
+	$min_fact_date=array();
+	$max_fact_date=array();
 	foreach ($facts as $subged) {
 		preg_match("/^1\s(\S*)/", $subged, $fact);
-		preg_match("/^1\s{$fact[1]} @(.*)@{$EOL}/", $subged, $link);
-		if ($level >= $warning && preg_match("/^1 {$fact[1]}{$EOL}/", $subged) && !preg_match("/^1 {$fact[1]}${EOL}2 /", $subged)) {
-			$errors.=missing($fact[1].":data");
+		$ifact=$fact[1];
+		preg_match("/^1\s$ifact @(.*)@{$EOL}/", $subged, $link);
+		if ($err_level >= $warning && preg_match("/^1 $ifact{$EOL}/", $subged) && !preg_match("/^1 $ifact${EOL}2 /", $subged)) {
+			$errors.=missing("$ifact:data");
 		}
-		switch ($fact[1]) {
+		switch ($ifact) {
 		case "FAMS":
-			if ($level>=$critical)
+			if ($err_level>=$critical)
 				if (isset($fams[$link[1]]))
 					$errors.=multiple("FAMS(".$link[1].")");
 				else
@@ -806,18 +821,47 @@ function check_indi($id)
 				$pedigree=$p[1];
 			else
 				$pedigree="birth";
-			if ($level>=$critical && $pedigree=="birth")
+			if ($err_level>=$critical && $pedigree=="birth")
 				if (isset($famc))
 					$errors=multiple("FAMC (".$famc.",".$link[1].")");
 				else
 					$famc=$link[1];
 			$todo[]=$link[1];
 			break;
+		default:
+			if ($err_level>=$warning) {
+				if (preg_match('/2 DATE .*(\d{4}).*(\d{4})?/', $subged, $m)) {  // Can this be improved?
+					$min=$m[1];
+					if (empty($m[2]))
+						$max=$min;
+					else
+						$max=$m[2];
+					if (!isset($min_fact_date[$ifact]))
+						$min_fact_date[$ifact]=$min;
+					else
+						$min_fact_date[$ifact]=min($min_fact_date[$ifact], $min);
+					if (!isset($max_fact_date[$ifact]))
+						$max_fact_date[$ifact]=$max;
+					else
+						$max_fact_date[$ifact]=max($max_fact_date[$ifact], $max);
+				}
+			}
 		}
 	}
+	if ($err_level>=$warning && $errors=='')
+		foreach ($FACT_AGES as $value) {
+			if (isset($max_fact_date[$value[0]]) && isset($min_fact_date[$value[1]])) {
+				if ($min_fact_date[$value[1]]-$max_fact_date[$value[0]] < $value[2])
+					$errors=$value[0].':'.$max_fact_date[$value[0]].'-'.$value[1].':'.$min_fact_date[$value[1]];
+				if ($max_fact_date[$value[1]]-$min_fact_date[$value[0]] > $value[3])
+					$errors=$value[0].':'.$min_fact_date[$value[0]].'-'.$value[1].':'.$max_fact_date[$value[1]];
+			}
+		}
 
 	if (!empty($errors) || $showall==1)
 		print "<p>".pgv_href("INDI", $id, $name)."> $errors</p>\n";
+ 	if (!empty($errors))
+		flush();
 
 	foreach ($todo as $famid)
 		check_fam($famid);
@@ -826,7 +870,7 @@ function check_indi($id)
 function check_fam($id)
 {
 	global $indi_list, $fam_list, $EOL, $fam_facts_unique;
-	global $level, $critical, $error, $warning, $info;
+	global $err_level, $critical, $error, $warning, $info;
 	global $showall;
 
 	if (isset($fam_list[$id]["checked"]) || !isset($fam_list[$id]["gedcom"])) {
@@ -840,7 +884,7 @@ function check_fam($id)
 	else
 		$name="???";
 
-	if ($level>=$error)
+	if ($err_level>=$error)
 		foreach ($fam_facts_unique as $fact)
 			if (get_sub_record(1, "1 $fact", $gedrec, 2)!="")
 				$errors.=multiple($fact);
@@ -851,12 +895,12 @@ function check_fam($id)
 		if (preg_match("/^1/", $subged)) { # Sometimes get_all_subrecords() gives just a CR
 			preg_match("/^1\s*(\S*)/", $subged, $fact);
 			preg_match("/^1\s*{$fact[1]}\s*@(.*)@{$EOL}/", $subged, $link);
-			if ($level >= $warning && preg_match("/^1 {$fact[1]}{$EOL}/", $subged) && !preg_match("/^1 {$fact[1]}${EOL}2 /", $subged)) {
+			if ($err_level >= $warning && preg_match("/^1 {$fact[1]}{$EOL}/", $subged) && !preg_match("/^1 {$fact[1]}${EOL}2 /", $subged)) {
 				$errors.=invalid($fact[1]);
 			}
 			switch ($fact[1]) {
 			case "HUSB":
-				if ($level>=$critical)
+				if ($err_level>=$critical)
 					if (isset($husb))
 						$errors.=multiple("HUSB");
 					else
@@ -864,7 +908,7 @@ function check_fam($id)
 				$todo[]=$husb;
 				break;
 			case "WIFE":
-				if ($level>=$critical) {
+				if ($err_level>=$critical) {
 					if (isset($wife))
 						$errors.=multiple("WIFE");
 					else
@@ -873,7 +917,7 @@ function check_fam($id)
 				$todo[]=$wife;
 				break;
 			case "CHIL":
-				if ($level>=$critical)
+				if ($err_level>=$critical)
 					if (isset($chil[$link[1]]))
 						$errors.=multiple("CHIL(".$link[1].")");
 					else
@@ -951,7 +995,7 @@ foreach ($gedfile as $num=>$value) {
 			$err=missing($pgv_lang['tag']);
 		elseif ($tag_level=='')
 			$err=missing($pgv_lang['level']);
-		elseif (preg_match('/^(@[^#@]+@)$/', $tag_data)) {
+		elseif (preg_match('/^(@[^#@:!]+@)$/', $tag_data)) { // exclude external/internal XREfs with :/!
 			if (!isset($all_xrefs[$tag_data.$linked_rec]))
 				$err=missing("0 $tag_data $linked_rec");
 			elseif ($tag_level=='1' &&
@@ -1040,6 +1084,7 @@ foreach ($gedfile as $num=>$value) {
 				printf("%07d  %s\n", $i+1, $gedfile[$i]);
 		}
 		printf("<b><font color='red'>%07d[[</font><b>%s</b><font color='red'>]]  %s; {$pgv_lang["see"]} %s</font></b>\n", $num+1, $gedfile[$num], $err, pgv_href($curr_l0tag, $curr_xref));
+		flush();
 		$last_err_num=$num;
 	} else
 		if (isset($last_err_num) && $num-$last_err_num<=$context_lines)
@@ -1047,8 +1092,10 @@ foreach ($gedfile as $num=>$value) {
 
 }
 
-if (isset($last_err_num))
+if (isset($last_err_num)) {
 	print "</pre>";
+	flush();
+}
 
 // Free unused memory
 unset($CONTEXT); unset ($CONTEXT_MIN); unset($CONTEXT_MAX); unset($CONTEXT_SUB);
@@ -1064,12 +1111,14 @@ if (isset($GEDCOMS[$ged])) {
 	foreach ($indi_list as $k => $v) {
 		if (!isset($indi_list[$k]["checked"])) {
 			print "<hr/>\n";
+			flush();
 			check_indi($k);
 		}
 	}
 	foreach ($fam_list as $k => $v) {
 		if (!isset($fam_list[$k]["checked"])) {
 			print "<hr>\n";
+			flush();
 			check_fam($k);
 		}
 	}
