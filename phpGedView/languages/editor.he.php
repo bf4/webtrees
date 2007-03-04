@@ -30,8 +30,8 @@ if (preg_match("/editor\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
-$pgv_lang["admin_override"]		= " אופצית מנהלן";  //@@
-$pgv_lang["no_update_CHAN"]	= "אין לעדכן רשומת שינוי אחרון (CHAN);"; 
+$pgv_lang["admin_override"]		= " אופצית מנהלן";
+$pgv_lang["no_update_CHAN"]	= "אין לעדכן רשומת שינוי אחרון (CHAN)."; 
 $pgv_lang["select_events"]		= "בחר מאורעות"; 
 $pgv_lang["source_events"]		= "קשר מאורעות למקור זה";
 $pgv_lang["advanced_name_fields"]	= "שמות נוספים (שם כינוי, שם נישואין, וכו')"; 
