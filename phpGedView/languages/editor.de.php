@@ -215,5 +215,7 @@ $pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />Wählen
 $pgv_lang["upload_successful"]                = "Hochladen erfolgreich.";
 $pgv_lang["view_change_diff"]                = "Änderungen ansehen";
 
+$pgv_lang["no_update_CHAN"]			= "CHAN (letzte Änderung) Datensatz nicht ändern";
+$pgv_lang["admin_override"]			= "Verwalter Option";
 
 ?>
