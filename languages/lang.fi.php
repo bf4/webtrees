@@ -1615,5 +1615,6 @@ $pgv_lang["play"]					= "Käynnistä";
 $pgv_lang["stop"]					= "Pysäytä";
 $pgv_lang["activate"]					= "Aktivoi";
 $pgv_lang["deactivate"]					= "Deaktivoi";
+$pgv_lang["genealogy"]					= "sukututkimus";
 
 ?>

@@ -150,7 +150,6 @@ $pgv_lang["folder_submitted"]          			= "Your folder has been submitted";
 $pgv_lang["folder_problem"]             		= "There has a been problem with adding your folder, please try again";
 
 // -- Missing Information Help 
-//$pgv_lang["ra_missing_info_help"] = "This area displays missing information about the record. Select a checkbox and folder, and click <b>Add Task</b> to create a task for the missing item. Existing tasks will show <b>View</b> instead of a checkbox.<br /> <a href=\"javascript:void(0);\" onClick=\"fullScreen('helpvids/MissingInformationUserHelp.htm');\">Click here to launch a Tutorial.</a>";
 $pgv_lang["ra_missing_info_help"] = "This area displays missing information about the record. Select a checkbox and folder and click <b>Add Task</b> to create a task for the missing item. Existing tasks will show <b>View</b> instead of a checkbox.<br />";
 
 // -- RA_EDITFOLDER MESSAGES	
@@ -200,12 +199,10 @@ $pgv_lang["no_folder"]						= "No folder exists yet. Please create a new folder 
 $pgv_lang["help_rs_folders.php"]			= "Research Assistant Folders<br /> #pgv_lang[sorry]#";
 $pgv_lang["help_rs_editfolder.php"]			= "Research Assistant Edit Folders<br />#pgv_lang[sorry]#";
 $pgv_lang["help_rs_editlog.php"]			= "Research Assistant Edit Log<br />#pgv_lang[sorry]#";
-//$pgv_lang["ra_fold_name_help"]			= "~Folder View~<ul><li><b>Folder Name:</b> This column contains the names of all of the folders you have created.</li><li><b>Description:</b> This column contains the description of the folders.</li></ul><br /><br /><a href=\"helpvids/ResearchAssistantUserHelp.htm\">Research Assistant Tutorial</a>";
 $pgv_lang["ra_fold_name_help"]				= "~Folder View~<ul><li><b>Folder Name:</b> This column contains the names of all of the folders you have created.</li><li><b>Description:</b> This column contains the description of the folders.</li></ul>";
 $pgv_lang["ra_add_task_help"]				= "~Add New Task~<ul><li><b>Title:</b> This should contain the title of the task that you are adding.</li><li><b>Folder:</b> In this field you can assign which folder you want your new task to go to.</li><li><b>Description:</b> Enter a description of the task you want to add.</li><li><b>Sources:</b> Assign any sources that you have for the task.</li><li><b>People:</b> Assign any people associated for the new task.</li></ul>";
 $pgv_lang["ra_edit_folder_help"]			= "~Edit Folder~<ul><li><b>Folder Name:</b> This is where you should add the title of the folder that you are editing.</b></li><li><b>Parent folder:</b> You can assign the parent folder, if any, of the folder you are editing.</b></li><li><b>Folder description:</b> This is the description of the folder you are editing.</b></li></ul>";
 $pgv_lang["ra_add_folder_help"]				= "~Add Folder~<ul><li><b>Folder Name:</b> This is where you should add the title of the folder that you are adding.</b></li><li><b>Parent folder:</b> You can assign the parent folder, if any, of the folder you are adding.</b></li><li><b>Folder description:</b> This is the description of the folder you are adding.</b></li></ul>";
-//$pgv_lang["ra_view_task_help"]			= "~Task View~<ul><li><b>Task Name:</b> This column contains the name of each task.</b></li><li><b>Description:</b> This column contains the description of the tasks.</li><li><b>Start Date:</b> This will contain the start dates of all the tasks.</li><li><b>Completed:</b> This will show whether or not a task is completed.</li><li><b>Details:</b> This will show all the details of a task.</li><li><b>Delete:</b> This will delete the task.</li><ul><br /><a href=\"helpvids/MissingInformationUserHelp.htm\">User Tutorial</a>";
 $pgv_lang["ra_view_task_help"]				= "~Task View~<ul><li><b>Task Name:</b> This column contains the name of each task.</b></li><li><b>Description:</b> This column contains the description of the tasks.</li><li><b>Start Date:</b> This will contain the start dates of all the tasks.</li><li><b>Completed:</b> This will show whether or not a task is completed.</li><li><b>Details:</b> This will show all the details of a task.</li><li><b>Delete:</b> This will delete the task.</li></ul>";
 $pgv_lang["ra_task_view_help"]				= "~View Task~<ul><li><b>Title:</b> This should contain the title of the task that you are adding.</li><li><b>People:</b> Assign any people associated for the new task.</li><li><b>Description:</b> Enter a description of the task you want to add.</li><li><b>Sources:</b> Assign any sources that you have for the task.</li><li>Click <b>Edit Task</b> to edit the details of the task.</li></ul>";
 $pgv_lang["ra_comments_help"]				= "~Comments~<ul><li>This will contain any comments related to the task. Click <b>Add New Comment</b> to add any comments.</li></ul>";
@@ -275,10 +272,10 @@ $pgv_lang["ra_person"]					= "Person";
 $pgv_lang["ra_reason"]					= "Reason"; 
 $pgv_lang["success"]					= "Success!"; 
 
-$pgv_lang["registration_no"]			= "Registration Number:"; //@@
-$pgv_lang["serial_no"]					= "Serial No.:"; //@@
-$pgv_lang["ra_no"]						= "Number:"; //@@
-$pgv_lang["order_no"]					= "Order Number:"; //@@
+$pgv_lang["registration_no"]			= "Registration Number:";
+$pgv_lang["serial_no"]					= "Serial No.:";
+$pgv_lang["ra_no"]						= "Number:";
+$pgv_lang["order_no"]					= "Order Number:";
 
 //-- MY TASK BLOCK
 $pgv_lang["mytasks_block_descr"]		= "The #pgv_lang[my_tasks]# block shows tasks for the current user. It can be configured to show completed tasks or to show tasks that are currently unassigned.";

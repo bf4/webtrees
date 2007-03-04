@@ -78,7 +78,7 @@ $factarray["DESC"]	= "צאצאים";
 $factarray["DESI"]	= "עניין הצאצאים";
 $factarray["DEST"]	= "יעד";
 $factarray["DIV"]	= "גירושין";
-$factarray["DIVF"]	= "הגשת בקשה לגירושים";
+$factarray["DIVF"]	= "הגשת בקשה לגירושין";
 $factarray["EDUC"]	= "השכלה";
 $factarray["DSCR"] 	= "תיאור";
 $factarray["EMIG"] 	= "הגירה";
@@ -144,7 +144,7 @@ $factarray["_EMAIL"]= "כתובת דואר אלקטרוני";
 $factarray["EMAIL"] = "כתובת דואר אלקטרוני";
 $factarray["_TODO"]= "משימות";
 $factarray["_UID"]	= "מזהה כללי";
-$factarray["SEX"] 	= "מין";
+$factarray["SEX"] 	= "מגדר";
 $factarray["NAME"] = "שם";
 $factarray["MARS"]	= "הסדר נישואין";
 $factarray["NATI"] 	= "לאום";
@@ -160,11 +160,35 @@ $factarray["NPFX"]	= "צירוף ראשי";
 $factarray["OBJE"] 	= "מולטימדיה";
 $factarray["PEDI"] 	= "יחוס";
 $factarray["_PRIM"]	= "תמונה מודגשת";
+$factarray["_DBID"] = "קוד זיהוי של מאגר נתונים מקושר"; 
+
+//These facts are compounds for the view probabilities page
+$factarray["FAMC:HUSB:SURN"] = "שם המשפחה של האב";
+$factarray["FAMC:WIFE:SURN"] = "שם המשפחה של האם";
+$factarray["FAMC:HUSB:BIRT:PLAC"] = "מקום הלידה של האב";
+$factarray["FAMC:WIFE:BIRT:PLAC"] = "מקום הלידה של האם";
+$factarray["FAMC:MARR:PLAC"] = "מקום הנישואין של ההורים";
+$factarray["FAMC:HUSB:OCCU"] = "המקצוע של האב";
+$factarray[":BIRT:PLAC"] = "מקום הלידה";
+$factarray["FAMS:MARR:PLAC"] = "מקום הנישואין";
+$factarray["FAMS:SPOUSE:DEAT:PLAC"] = "מקום הפטירה של בן/בת הזוג";
+$factarray["FAMC:HUSB:GIVN"] = "שם פרטי של האב";
+$factarray["FAMS:SPOUSE:BIRT:PLAC"] = "מקום הלידה של בן/בת הזוג";
+$factarray["FAMC:WIFE:GIVN"] = "שם פרטי של האם";
+$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "שם פרטי של הסב";
+$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "שם פרטי של הסבתא";
+
+// These facts are all colon delimited
+$factarray["BIRT:PLAC"] = "מקום לידה";
+$factarray["DEAT:PLAC"] = "מקום פטירה";
+$factarray["CHR:PLAC"] = "מקום טבילה";
+$factarray["BAPM:PLAC"] = "מקום הטבלה";
+$factarray["BURI:PLAC"] = "מקום קבורה";
 
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"] = "רפואי";
 $factarray["_DEG"]	= "דרגה";
-$factarray["_MILT"] = "שרות צבא";
+$factarray["_MILT"] = "שרות צבאי";
 $factarray["_SEPR"]	= "פרוד";
 $factarray["_DETS"]	= "מוות של אחד מבני הזוג";
 $factarray["CITN"]	= "אזרחות";
@@ -183,8 +207,8 @@ $factarray["_FA12"] = "עובדה 12";
 $factarray["_FA13"] = "עובדה 13";
 $factarray["_MREL"] = "קשר אל אמא";
 $factarray["_FREL"] = "קשר אל אבא";
-$factarray["_MSTAT"] = "מעמד תחילת נישואים";
-$factarray["_MEND"]  = "מעמד סיום נישואים";
+$factarray["_MSTAT"] = "מעמד תחילת נישואין";
+$factarray["_MEND"]  = "מעמד סיום נישואין";
 
 // GEDCOM 5.5.1 related facts
 $factarray["FAX"] 	= "פקס";
@@ -225,8 +249,8 @@ $factarray["_HAIR"]	= "צבע שיער";
 $factarray["_HEIG"]	= "גובה";
 $factarray["_HOL"] 	= "שואה";
 $factarray["_INTE"]	= "קבור";
-$factarray["_MARI"] = "כוונת נישואים";
-$factarray["_MBON"] = "קשר נישואים";
+$factarray["_MARI"] = "כוונת נישואין";
+$factarray["_MBON"] = "קשר נישואין";
 $factarray["_MEDC"] = "מצב רפואי";
 $factarray["_MILI"] 	= "צבא";
 $factarray["_NMR"]	= "לא נשוי";

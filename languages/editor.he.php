@@ -30,7 +30,11 @@ if (preg_match("/editor\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
-$pgv_lang["advanced_name_fields"]	= "שמות נוספים (שם כינוי, שם נישואים, וכו')"; 
+$pgv_lang["admin_override"]		= " אופצית מנהלן";  //@@
+$pgv_lang["no_update_CHAN"]	= "אין לעדכן רשומת שינוי אחרון (CHAN);"; 
+$pgv_lang["select_events"]		= "בחר מאורעות"; 
+$pgv_lang["source_events"]		= "קשר מאורעות למקור זה";
+$pgv_lang["advanced_name_fields"]	= "שמות נוספים (שם כינוי, שם נישואין, וכו')"; 
 $pgv_lang["accept_changes"]		= "קבל/דחה את השינויים";
 $pgv_lang["replace"]			= "החלפת רשומה";
 $pgv_lang["append"]			= "הוספת רשומה בסוף";
@@ -79,7 +83,7 @@ $pgv_lang["thumb_media_fail1"]	= "שם קובץ המדיה המזערי לא נ�
 $pgv_lang["thumb_media_fail2"]	= "לא ניתן להעביר את קובץ המדיה המזערי <b>#GLOBALS[oldMediaName]#</b> מ-<b><span dir=\"ltr\">#GLOBALS[oldThumbFolder]#</span></b> ל-<b><span dir=\"ltr\">#GLOBALS[newThumbFolder]#</span></b>.";
 $pgv_lang["thumb_media_fail3"]	= "לא ניתן לשנות את שמו של קובץ המדיה המזערי מ-<b><span dir=\"ltr\">#GLOBALS[oldThumbFolder]#</span>#GLOBALS[oldMediaName]#</b> ל-<b><span dir=\"ltr\">#GLOBALS[newThumbFolder]#</span>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["add_asso"]		= "הוסף שותף חדש";
-$pgv_lang["edit_sex"]		= "ערוך מין";
+$pgv_lang["edit_sex"]		= "ערוך מגדר";
 $pgv_lang["add_obje"]		= "הוסף ישות מולטימדיה חדשה";
 $pgv_lang["add_name"]		= "הוסף שם";
 $pgv_lang["edit_raw"]		= "ערוך את רשומת ה-GEDCOM הלא מעובדת";
@@ -146,16 +150,16 @@ $pgv_lang["gedcom_editing_disabled"]	= "אפשרות העריכה של ה-GEDCOM
 $pgv_lang["gedcomid"]		= " קוד זיהוי של המשתמש הזה בקובץ ה-GEDCOM";
 $pgv_lang["gedrec_deleted"]		= "רשומת ה-GEDCOM נמחקה בהצלחה.";
 $pgv_lang["gen_thumb"]		= "צור תמונה מזערית";
-$pgv_lang["gender_search"]		= "מין: ";
+$pgv_lang["gender_search"]		= "מגדר: ";
 $pgv_lang["generate_thumbnail"]	= "צור תמונה מזערית אוטומטית מ-";
 $pgv_lang["hebrew_givn"]		= "שמות פרטיים עבריים";
 $pgv_lang["hebrew_surn"]		= "שם משפחה עברי";
 $pgv_lang["hide_changes"]		= "לחץ כאן כדי להסתיר את השינויים.";
 $pgv_lang["highlighted"]		= "תמונה בהדגשה";
 $pgv_lang["illegal_chars"]		= "שם ריק או אותיות לא חוקיות בשם";  
-$pgv_lang["invalid_search_input"] 	= "הכנס בבקשה שם פרטי, שם משפחה או מקום בנוסף לשנה";
-$pgv_lang["invalid_search_multisite_input"]  = "הכנס אחד מהפרטים הבאים: שם, תאריך לידה, מקום לידה, תאריך פטירה, מקום פטירה ומין ";
-$pgv_lang["invalid_search_multisite_input_gender"] 	= "אנא חפש שנית עם יותר נתונים, לא רק מין";
+//$pgv_lang["invalid_search_input"] 	= "הכנס בבקשה שם פרטי, שם משפחה או מקום בנוסף לשנה";
+$pgv_lang["invalid_search_multisite_input"]  = "הכנס אחד מהפרטים הבאים: שם, תאריך לידה, מקום לידה, תאריך פטירה, מקום פטירה ומגדר ";
+$pgv_lang["invalid_search_multisite_input_gender"] 	= "אנא חפש שנית עם יותר נתונים, לא רק מגדר";
 $pgv_lang["label_diff_server"]      	= "אתר אחר";
 $pgv_lang["label_location"]         	= "מיקום האתר"; 
 $pgv_lang["label_password_id2"]	= "סיסמא: ";
