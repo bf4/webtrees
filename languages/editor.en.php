@@ -30,8 +30,8 @@ if (preg_match("/editor\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
-$pgv_lang["admin_override"]			= "Admin Override";
-$pgv_lang["no_update_CHAN"]			= "Do not update the (CHAN) &quot;Last Change&quot; record";
+$pgv_lang["admin_override"]			= "Admin Option";
+$pgv_lang["no_update_CHAN"]			= "Do not update the CHAN (Last Change) record";
 $pgv_lang["select_events"]			= "Select Events";
 $pgv_lang["source_events"]			= "Associate events with this source";
 $pgv_lang["advanced_name_fields"]	= "Additional names (nickname, married name, etc.)";

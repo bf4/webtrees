@@ -44,8 +44,10 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-+$pgv_lang["admin_override"]						03 March 2007				A
-+$pgv_lang["no_update_CHAN"]						03 March 2007				A
++$pgv_lang["admin_override"]						04 March 2007			w
+*$pgv_lang["no_update_CHAN"]						04 March 2007			w
++$pgv_lang["admin_override"]						03 March 2007			A
++$pgv_lang["no_update_CHAN"]						03 March 2007			A
 -$pgv_lang["invalid_search_input"]					15 Feb 2007				D	Moved to lang.xx.php file
 +$pgv_lang["select_events"]							30 January 2007			A
 +$pgv_lang["source_events"]							30 January 2007			A
