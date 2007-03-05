@@ -5,7 +5,7 @@
  * Provides links for administrators to get to other administrative areas of the site
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * This Page Is Valid XHTML 1.0 Transitional! > 01 September 2005
  *
  * @package PhpGedView
  * @subpackage Admin
@@ -103,6 +101,15 @@ foreach($users as $indexval => $user) {
 	if (($verify_msg) && ($warn_msg)) break;
 }
 
+?>
+<script type="text/javascript">
+<!--
+function showchanges() {
+	window.location.reload();
+}
+//-->
+</script>
+<?php
 ?>
   <table class="center <?php print $TEXT_DIRECTION ?> width90">
     <tr>
