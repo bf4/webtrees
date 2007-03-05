@@ -543,10 +543,7 @@ function print_fact_sources($factrec, $level) {
 			if ($cs>0) {
 				print "\n\t\t\t<span class=\"label\">".$factarray["PAGE"].": </span><span class=\"field\">";
 				$text = $cmatch[1];
-				$text = expand_urls($text);
-				print PrintReady($text);
-				$pagerec = get_sub_record($nlevel, $cmatch[0], $srec);
-				$text = get_cont($nlevel+1, $pagerec);
+				$text.= get_cont($nlevel+1, $srec);
 				$text = expand_urls($text);
 				print PrintReady($text);
 				print "</span>";
