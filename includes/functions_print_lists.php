@@ -31,6 +31,8 @@ if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
 	 exit;
 }
 
+require_once("includes/person_class.php");
+
 /**
  * print a person in a list
  *
@@ -54,14 +56,15 @@ function print_list_person($key, $value, $findid=false, $asso="", $useli=true) {
 	if (!isset($indi_total)) $indi_total=array();
 	$indi_total[$key."[".$GEDCOM."]"] = 1;
 
-	$disp = displayDetailsByID($key);
-	if (showLivingNameByID($key)||$disp) {
+	$person = Person::getInstance($key);
+	$disp = $person->canDisplayDetails();
+	if ($person->canDisplayName()) {
 		if (begRTLText($value[0])) $listDir = "rtl";
 		else $listDir = "ltr";
 		$tag = "span";
 		if ($useli) $tag = "li";
 		print "<".$tag." class=\"".$listDir."\" dir=\"".$listDir."\">";
-		if ($findid == true) print "<a href=\"javascript:;\" onclick=\"pasteid('".$key."', '".preg_replace("/(['\"])/", "\\$1", PrintReady($value[0]))."'); return false;\" class=\"list_item\"><b>".$value[0]."</b>";
+		if ($findid == true) print "<a href=\"javascript:;\" onclick=\"pasteid('".$key."', '".preg_replace("/(['\"])/", "\\$1", PrintReady($value[0]." - ".$person->getBirthYear()))."'); return false;\" class=\"list_item\"><b>".$value[0]."</b>";
 		else print "<a href=\"individual.php?pid=$key&amp;ged=$value[1]\" class=\"list_item\"><b>".PrintReady($value[0])."</b>";
 		if ($SHOW_ID_NUMBERS){
 			print "&nbsp;&nbsp;";
