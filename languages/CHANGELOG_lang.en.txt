@@ -43,6 +43,8 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["choose_username"]         05 Mar 2007           A
++$pgv_lang["choose_password"]         05 Mar 2007           A
 +$pgv_lang["spouses"]								19 Feb 2007				A
 +$pgv_lang["invalid_search_input"]					15 Feb 2007				M	Moved from editor.en.php
 +$pgv_lang["sosa_uncle_bm_2"]						8 Feb 2007				A
