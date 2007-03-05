@@ -282,11 +282,12 @@ switch ($action) {
 					<table class="center facts_table width50">
 					<?php $i = 1;?>
 						<tr><td class="topbottombar" colspan="2"><?php print_help_link("register_info_0".$WELCOME_TEXT_AUTH_MODE."", "qm", "requestaccount"); print $pgv_lang["requestaccount"];?><?php if (strlen($message) > 0) print $message; ?></td></tr>
-						<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print_help_link("username_help", "qm", "username"); print $pgv_lang["username"];?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" name="user_name" value="<?php if (!$user_name_false) print $user_name;?>" tabindex="<?php print $i;?>" /> *</td></tr>
-						<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print_help_link("edituser_password_help", "qm", "password"); print $pgv_lang["password"];?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="password" name="user_password01" value="" tabindex="<?php print $i++;?>" /> *</td></tr>
-						<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print_help_link("edituser_conf_password_help", "qm", "confirm");print $pgv_lang["confirm"];?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="password" name="user_password02" value="" tabindex="<?php print $i++;?>" /> *</td></tr>
 						<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print_help_link("new_user_firstname_help", "qm", "firstname");print $pgv_lang["firstname"];?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" name="user_firstname" value="<?php if (!$user_firstname_false) print $user_firstname;?>" tabindex="<?php print $i++;?>" /> *</td></tr>
 						<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print_help_link("new_user_lastname_help", "qm", "lastname");print $pgv_lang["lastname"];?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" name="user_lastname" value="<?php if (!$user_lastname_false) print $user_lastname;?>" tabindex="<?php print $i++;?>" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print_help_link("edituser_email_help", "qm", "emailadress");print $pgv_lang["emailadress"];?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" size="30" name="user_email" value="<?php if (!$user_email_false) print $user_email;?>" tabindex="<?php print $i++;?>" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print_help_link("username_help", "qm", "username"); print $pgv_lang["choose_username"];?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" name="user_name" value="<?php if (!$user_name_false) print $user_name;?>" tabindex="<?php print $i;?>" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print_help_link("edituser_password_help", "qm", "password"); print $pgv_lang["choose_password"];?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="password" name="user_password01" value="" tabindex="<?php print $i++;?>" /> *</td></tr>
+						<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print_help_link("edituser_conf_password_help", "qm", "confirm");print $pgv_lang["confirm"];?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="password" name="user_password02" value="" tabindex="<?php print $i++;?>" /> *</td></tr>
 						<?php
 						if ($ENABLE_MULTI_LANGUAGE) {
 							print "<tr><td class=\"descriptionbox wrap ".$TEXT_DIRECTION."\">";
@@ -305,7 +306,6 @@ switch ($action) {
 							print "</td></tr>\n";
 						} else print "<input type=\"hidden\" name=\"user_language\" value=\"".$LANGUAGE."\" />";
 						?>
-						<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print_help_link("edituser_email_help", "qm", "emailadress");print $pgv_lang["emailadress"];?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>"><input type="text" size="30" name="user_email" value="<?php if (!$user_email_false) print $user_email;?>" tabindex="<?php print $i++;?>" /> *</td></tr>
 						<?php if ($REQUIRE_AUTHENTICATION && $SHOW_LIVING_NAMES>=$PRIV_PUBLIC) { ?>
 						<tr><td class="descriptionbox wrap <?php print $TEXT_DIRECTION; ?>"><?php print_help_link("register_gedcomid_help", "qm", "gedcomid");print $pgv_lang["gedcomid"];?></td><td class="optionbox <?php print $TEXT_DIRECTION; ?>" valign="top" ><input type="text" size="10" name="user_gedcomid" id="user_gedcomid" value="" tabindex="<?php print $i++;?>" /><?php print_findindi_link("user_gedcomid",""); ?></td></tr>
 						<?php } ?>
