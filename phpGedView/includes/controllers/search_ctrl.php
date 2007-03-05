@@ -4,7 +4,7 @@
  * Controller for the Search Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005	John Finlay and Others
+ * Copyright (C) 2002 to 2007	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1571,7 +1571,7 @@ class SearchControllerRoot extends BaseController {
 				}
 				$GEDCOM = $oldged;
 				//-- [end] new code for sortable tables
-/*
+				/*** DEPRECATED
 				$totalIndiResults = count($printindiname);
 				$this->totalGeneralResults = $totalIndiResults;
 				$totalFamResults = count($printfamname);
@@ -1723,7 +1723,7 @@ class SearchControllerRoot extends BaseController {
 						}
 					}
 				print "</table>";
-				*/
+				***/
 				print "</div>";
 			} else
 				if (isset ($this->query)) {
@@ -1743,7 +1743,26 @@ class SearchControllerRoot extends BaseController {
 			if ($this->soundex == "DaitchM")
 				DMsoundex("", "closecache");
 			// 	$this->query = "";	// Stop function PrintReady from doing strange things to accented names
-			
+				//-- [start] new code for sortable tables
+				print "<br />";
+				print "\n\t<div class=\"center\">\n";
+				global $GEDCOMS;
+				$oldged = $GEDCOM;
+				$this->myquery = trim($this->mylastname." ".$this->myfirstname." ".$this->myplace." ".$this->myyear);
+				foreach ($this->sgeds as $key=>$GEDCOM) {
+					$datalist = array();
+					foreach ($this->printname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[]=$v[1];
+					print_indi_table(array_unique($datalist), $pgv_lang["individuals"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
+				}
+				foreach ($this->sgeds as $key=>$GEDCOM) {
+					$datalist = array();
+					foreach ($this->printfamname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[]=$v[1];
+					print_fam_table(array_unique($datalist), $pgv_lang["families"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
+				}
+				$GEDCOM = $oldged;
+				print "</div>";
+				//-- [end] new code for sortable tables
+			/** DEPRECATED
 			if (((!empty ($this->lastname)) || (!empty ($this->firstname)) || (!empty ($this->place))) && (isset ($this->printname))) {
 				print "<div class=\"center\"><br />";
 				//set the total results and only get the results for this page
@@ -1771,7 +1790,7 @@ class SearchControllerRoot extends BaseController {
 						print "<td colspan=\"2\" class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["people"]."</td>";
 					print "</tr><tr>\n\t\t<td class=\"list_value_wrap\"><ul>";
 
-					/***************************************************** PAGING HERE **********************************************************************/
+					///***************************************************** PAGING HERE **********************************************************************
 
 					$this->printname = $this->getPagedResults($this->printname, $this->resultsPerPage);
 					$this->indiResultsPrinted = count($this->printname);
@@ -1806,7 +1825,7 @@ class SearchControllerRoot extends BaseController {
 						else
 							$famCount = 0;
 
-						/***************************************************** PAGING HERE **********************************************************************/
+						//***************************************************** PAGING HERE **********************************************************************
 
 						//set the total results and only get the results for this page
 						$totalFamResults = count($this->printfamname);
@@ -1878,6 +1897,7 @@ class SearchControllerRoot extends BaseController {
 					print "<td class=\"warning\" style=\" text-align: center;\"><i>".$pgv_lang["no_results"]."</i></td></tr>\n\t\t";
 				print "</table></div>";
 			}
+			**/
 
 			// Prints the Paged Results: << 1 2 3 4 >> links if there are more than $this->resultsPerPage results
 			if ($this->resultsPerPage >= 1 && $this->totalResults > $this->resultsPerPage) {
