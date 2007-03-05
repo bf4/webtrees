@@ -130,7 +130,8 @@ else {
 				if ($ct>0) $type = trim($match[2]);
 				else $type = "INDI";
 				if ($type=="INDI") {
-					$names = get_indi_names($gedrec);
+					if ($change['type']=='delete') $names = get_indi_names(find_person_record($change['gid'])); 
+					else $names = get_indi_names($gedrec);
 					$output .= "<b>".PrintReady(check_NN($names[0][0]))."</b> &lrm;(".$change["gid"].")&lrm;<br />\n";
 				}
 				else if ($type=="FAM") $output .= "<b>".PrintReady(get_family_descriptor($change["gid"]))."</b> &lrm;(".$change["gid"].")&lrm;<br />\n";

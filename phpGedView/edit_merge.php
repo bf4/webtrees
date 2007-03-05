@@ -155,8 +155,62 @@ if ($action!="choose") {
 				else if ($action=="merge") {
 					$manual_save = true;
 					print "<h2>".$pgv_lang["merge_step3"]."</h2>\n";
-					print "Performing Record Merge<br />\n";
-					if ($GEDCOM==$ged2) delete_gedrec($gid2);
+					if ($GEDCOM==$ged2) {
+						$success = delete_gedrec($gid2);
+						if ($success) print "<br />".$pgv_lang["gedrec_deleted"]."<br />\n";
+						
+						//-- replace all the records that link to gid2
+						$sql = "SELECT i_id, i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file=".$GEDCOMS[$GEDCOM]['id']." AND i_gedcom LIKE '%@$gid2@%'";
+						$res = dbquery($sql);
+						while($row = $res->fetchRow()) {
+							$record = $row[1];
+							$gid = $row[0];
+							if ($gid!=$gid2) {
+								if (isset($pgv_changes[$gid."_".$GEDCOM])) $record = find_updated_record($gid);
+								print $pgv_lang["updating_linked"]." $gid<br />\n";
+								$newrec = preg_replace("/@$gid2@/", "@$gid1@", $record);
+								replace_gedrec($gid, $newrec);
+							}
+						}
+						$sql = "SELECT f_id, f_gedcom FROM ".$TBLPREFIX."families WHERE f_file=".$GEDCOMS[$GEDCOM]['id']." AND f_gedcom LIKE '%@$gid2@%'";
+						$res = dbquery($sql);
+						while($row = $res->fetchRow()) {
+							$record = $row[1];
+							$gid = $row[0];
+							if (isset($pgv_changes[$gid."_".$GEDCOM])) $record = find_updated_record($gid);
+							print $pgv_lang["updating_linked"]." $gid<br />\n";
+							$newrec = preg_replace("/@$gid2@/", "@$gid1@", $record);
+							//-- prevent the merge from adding duplicate children to the family
+							$ct = preg_match_all("/1 CHIL @$gid1@/", $newrec, $matches);
+							if ($ct>1) {
+								$pos1 = strpos($newrec, "1 CHIL @$gid1@");
+								$pos2 = strpos($newrec, "\n1", $pos1+1);
+								if ($pos2===false) $pos2 = strlen($newrec);
+								$newrec = substr($newrec, 0, $pos1).substr($newrec, $pos2);
+							}
+							replace_gedrec($gid, $newrec);
+						}
+						$sql = "SELECT s_id, s_gedcom FROM ".$TBLPREFIX."sources WHERE s_file=".$GEDCOMS[$GEDCOM]['id']." AND s_gedcom LIKE '%@$gid2@%'";
+						$res = dbquery($sql);
+						while($row = $res->fetchRow()) {
+							$record = $row[1];
+							$gid = $row[0];
+							if (isset($pgv_changes[$gid."_".$GEDCOM])) $record = find_updated_record($gid);
+							print $pgv_lang["updating_linked"]." $gid<br />\n";
+							$newrec = preg_replace("/@$gid2@/", "@$gid1@", $record);
+							replace_gedrec($gid, $newrec);
+						}
+						$sql = "SELECT o_id, o_gedcom FROM ".$TBLPREFIX."other WHERE o_file=".$GEDCOMS[$GEDCOM]['id']." AND o_gedcom LIKE '%@$gid2@%'";
+						$res = dbquery($sql);
+						while($row = $res->fetchRow()) {
+							$record = $row[1];
+							$gid = $row[0];
+							if (isset($pgv_changes[$gid."_".$GEDCOM])) $record = find_updated_record($gid);
+							print $pgv_lang["updating_linked"]." $gid<br />\n";
+							$newrec = preg_replace("/@$gid2@/", "@$gid1@", $record);
+							replace_gedrec($gid, $newrec);
+						}
+					}
 					$newgedrec = "0 @$gid1@ $type1\r\n";
 					for($i=0; ($i<count($facts1) || $i<count($facts2)); $i++) {
 						if (isset($facts1[$i])) {
@@ -172,31 +226,7 @@ if ($action!="choose") {
 							}
 						}
 					}
-					//-- replace all the records that link to gid2
-					$records = preg_split("/\n0/", $fcontents);
-					foreach($records as $indexval => $record) {
-						$ct = preg_match("/ @(.+)@ (.*)/", $record, $match);
-						if ($ct>0) {
-							$gid = trim($match[1]);
-							$type = trim($match[2]);
-						}
-						if (strstr($record, "@$gid2@")!==false) {
-							print $pgv_lang["updating_linked"]." $gid<br />\n";
-							$newrec = "0".$record;
-							$newrec = preg_replace("/@$gid2@/", "@$gid1@", $newrec);
-							if ($type=="FAM") {
-								//-- preven the merge from adding duplicate children to the family
-								$ct = preg_match_all("/1 CHIL @$gid1@/", $newrec, $matches);
-								if ($ct>1) {
-									$pos1 = strpos($newrec, "1 CHIL @$gid1@");
-									$pos2 = strpos($newrec, "\n", $pos1+1);
-									if ($pos2===false) $pos2 = strlen($newrec);
-									$newrec = substr($newrec, 0, $pos1).substr($newrec, $pos2);
-								}
-							}
-							replace_gedrec($gid, $newrec);
-						}
-					}
+					
 					replace_gedrec($gid1, $newgedrec);
 					write_changes();
 					print "<br /><a href=\"edit_merge.php?action=choose\">".$pgv_lang["merge_more"]."</a><br />\n";

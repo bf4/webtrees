@@ -1353,51 +1353,7 @@ else if ($action=="deleteperson") {
 		if (!empty($famid)) print "<br />".$pgv_lang["privacy_not_granted"]." famid $famid.";
 	}
 	else {
-		if (!empty($gedrec)) {
-			$success = true;
-			$ct = preg_match_all("/1 FAM. @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
-			for($i=0; $i<$ct; $i++) {
-				$famid = $match[$i][1];
-				if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_gedcom_record($famid);
-				else $famrec = find_updated_record($famid);
-				if (!empty($famrec)) {
-					$lines = preg_split("/\n/", $famrec);
-					$newfamrec = "";
-					$lastlevel = -1;
-					foreach($lines as $indexval => $line) {
-						$ct = preg_match("/^(\d+)/", $line, $levelmatch);
-						if ($ct>0) $level = $levelmatch[1];
-						else $level = 1;
-						//-- make sure we don't add any sublevel records
-						if ($level<=$lastlevel) $lastlevel = -1;
-						if ((preg_match("/@$pid@/", $line)==0) && ($lastlevel==-1)) $newfamrec .= $line."\n";
-						else {
-							$lastlevel=$level;
-						}
-					}
-					//-- if there is not at least two people in a family then the family is deleted
-					$pt = preg_match_all("/1 .{4} @(.*)@/", $newfamrec, $pmatch, PREG_SET_ORDER);
-					if ($pt<2) {
-						for ($j=0; $j<$pt; $j++) {
-							$xref = $pmatch[$j][1];
-							if($xref!=$pid) {
-								if (!isset($pgv_changes[$xref."_".$GEDCOM])) $indirec = find_gedcom_record($xref);
-								else $indirec = find_updated_record($xref);
-								$indirec = preg_replace("/1.*@$famid@.*/", "", $indirec);
-								if ($GLOBALS["DEBUG"]) print "<pre>$indirec</pre>";
-								replace_gedrec($xref, $indirec);
-							}
-						}
-						$success = $success && delete_gedrec($famid);
-					}
-					else $success = $success && replace_gedrec($famid, $newfamrec);
-				}
-			}
-			if ($success) {
-				$success = $success && delete_gedrec($pid);
-			}
-			if ($success) print "<br /><br />".$pgv_lang["gedrec_deleted"];
-		}
+		if (delete_person($pid, $gedrec)) print "<br /><br />".$pgv_lang["gedrec_deleted"];
 	}
 }
 //------------------------------------------------------------------------------
@@ -1411,38 +1367,7 @@ else if ($action=="deletefamily") {
 	}
 	else
 	{
-		if (!empty($gedrec)) {
-			$success = true;
-			$ct = preg_match_all("/1 (\w+) @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
-			for($i=0; $i<$ct; $i++) {
-				$type = $match[$i][1];
-				$id = $match[$i][2];
-				if ($GLOBALS["DEBUG"]) print $type." ".$id." ";
-				if (!isset($pgv_changes[$id."_".$GEDCOM])) $indirec = find_gedcom_record($id);
-				else $indirec = find_updated_record($id);
-				if (!empty($indirec)) {
-					$lines = preg_split("/\n/", $indirec);
-					$newindirec = "";
-					$lastlevel = -1;
-					foreach($lines as $indexval => $line) {
-						$lct = preg_match("/^(\d+)/", $line, $levelmatch);
-						if ($lct>0) $level = $levelmatch[1];
-						else $level = 1;
-						//-- make sure we don't add any sublevel records
-						if ($level<=$lastlevel) $lastlevel = -1;
-						if ((preg_match("/@$famid@/", $line)==0) && ($lastlevel==-1)) $newindirec .= $line."\n";
-						else {
-							$lastlevel=$level;
-						}
-					}
-					$success = $success && replace_gedrec($id, $newindirec);
-				}
-			}
-			if ($success) {
-				$success = $success && delete_gedrec($famid);
-			}
-			if ($success) print "<br /><br />".$pgv_lang["gedrec_deleted"];
-		}
+		if (delete_family($pid, $gedrec)) print "<br /><br />".$pgv_lang["gedrec_deleted"];
 	}
 }
 //------------------------------------------------------------------------------
