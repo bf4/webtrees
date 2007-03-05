@@ -34,7 +34,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"module.php")===false) {
 	exit;
 }
 // Require the database functions
-require_once("includes/functions_db.php");
+require_once("includes/person_class.php");
 global $pgv_lang;
  
  	/**
@@ -117,7 +117,8 @@ function getTitle(){
 
 		$out = "";
 		while($people =& $res->fetchRow()){
-			$out .= '<a href="individual.php?pid='.$people[0].'">'.get_person_name($people[0]) . '</a><br />';
+			$person = Person::getInstance($people[0]);
+			if (!is_null($person)) $out .= '<a href="individual.php?pid='.$people[0].'">'.PrintReady($person->getName()." - ".$person->getBirthYear()) . '</a><br />';
 		}
 
 		return $out;
@@ -234,7 +235,7 @@ function getTitle(){
   	}
   	function confirm_prompt(text, commentid) {
     	if (confirm(text)) {
-      		window.location = 'module.php?mod=research_assistant&action=edittask&folder'+<?php $_REQUEST['folder']?>+'&delete='+commentid+'&taskid=<?php print $_REQUEST['taskid']; ?>';
+      		window.location = 'module.php?mod=research_assistant&action=viewtask&delete='+commentid+'&taskid=<?php print $_REQUEST['taskid']; ?>';
     	}
     }
     //-->
