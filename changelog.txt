@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1629684 ] Soundex Search Results Do Not Use the New Format (opus27)
  - Added [ Help - 4015858 ] Admins can edit without updating CHAN record (coloredpixels)
  - Fixed [ 1429244 ] Calendar "Show events of" select missing for Non Logged In (yalnifj)
  - Fixed [ 1427611 ] 4.0 B5: editgedcoms.php shows insted of the log file (yalnifj)
