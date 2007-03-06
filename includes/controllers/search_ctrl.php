@@ -830,10 +830,8 @@ class SearchControllerRoot extends BaseController {
 				if (!empty ($this->firstname)) {
 					$firstnames = preg_split("/\s/", trim($this->firstname));
 					for ($j = 0; $j < count($firstnames); $j ++) {
-						if ($this->soundex == "Russell")
-							$farr[$j] = array(soundex($firstnames[$j]));
-						if ($this->soundex == "DaitchM")
-							$farr[$j] = DMsoundex($firstnames[$j]);
+						if ($this->soundex == "Russell") $farr[$j] = array(soundex($firstnames[$j]));
+						if ($this->soundex == "DaitchM") $farr[$j] = DMsoundex($firstnames[$j]);
 					}
 				}
 				if ((!empty ($this->place)) && ($this->soundex == "DaitchM"))
@@ -846,10 +844,6 @@ class SearchControllerRoot extends BaseController {
 				$this->printname = array ();
 				$this->printfamname = array ();
 				
-				$firstName = "";
-				$lastName = "";
-				
-				
 				if(!empty($this->place) && empty($this->firstname) && empty($this->lastname))
 				{
 					$this->Place_Search();
@@ -857,35 +851,12 @@ class SearchControllerRoot extends BaseController {
 				}
 				else
 				{
-				$firstName = "";
-				foreach($farr as $name)
-				{
-					//$firstName .= "%" . $name;
-					foreach($name as $name1)
-						$firstName .= "%" . $name1;
-				}
-				if (!empty($arr2))
-				{
-				foreach($arr2 as $name);
-				{
-					$lastName .= "%" . $name;
-				}
-				}
-				
 					$places = "";
 					if(!empty($this->place))
 					{
-						foreach ($parr as $place)
-						{
-							$places .= "%" . $place;
-						}
+						foreach ($parr as $place) $places .= "%" . $place;
+						$places .= "%";
 					}
-					
-
-				
-				$firstName .= "%";
-				$lastName .= "%";
-					$places .= "%";
 				
 					$sql = "SELECT i_id, i_gedcom, sx_n_id, i_file FROM ".$TBLPREFIX."soundex, ".$TBLPREFIX."individuals";
 					if (!empty($this->place)) {
@@ -902,28 +873,42 @@ class SearchControllerRoot extends BaseController {
 						$sql .= "i_file='".$DBCONN->escapeSimple($GEDCOMS[$this->sgeds[$i]]["id"])."'";
 						if ($i < count($this->sgeds)-1) $sql .= " OR ";
 					}
-					$sql .= ") AND ";
+						$sql .= ") ";
 				}
 				
-				if($this->soundex == "DaitchM")
-				{
 					$x = 0;
 				
-					$where = "";
-				
-					if(!empty($firstName))
-					{ 
-							$where = "sx_fn_dm_code LIKE '".$DBCONN->escapeSimple($firstName)."' ";
-						$x++;
+						if (count($farr)>0) {
+							$sql .= "AND (";
+							$fnc = 0;
+							if($this->soundex == "DaitchM") $field = "sx_fn_dm_code";
+							else $field = "sx_fn_std_code";
+							foreach($farr as $name)
+							{
+								foreach($name as $name1) {
+									if ($fnc>0) $sql .= " OR ";
+									$fnc++;
+									$sql .= $field." LIKE '%".$DBCONN->escapeSimple($name1)."%'";
 					}
-					
-					if(!empty($lastName))
+							}
+							$sql .= ") ";
+						}
+						if (!empty($arr2) && count($arr2)>0) 
 					{
-						if($x > 0)
-							$where .= "AND ";
-							
-						$where .= "sx_ln_dm_code LIKE '".$DBCONN->escapeSimple($lastName)."' ";
+							$sql .= "AND (";
+							$lnc = 0;
+							if($this->soundex == "DaitchM") $field = "sx_ln_dm_code";
+							else $field = "sx_ln_std_code";
+							foreach($arr2 as $name) {
+								if ($lnc>0) $sql .= " OR ";
+								$lnc++;
+								$sql .= $field." LIKE '%".$DBCONN->escapeSimple($name)."%'";
+							}
+							$sql .= ") ";
 					}
+						
+					$where = "";	
+					if($this->soundex == "DaitchM") {
 						if (!empty($this->place)) {
 							$where .= "AND p_dm_soundex LIKE '".$DBCONN->escapeSimple($places)."' "; 
 						}
@@ -931,38 +916,16 @@ class SearchControllerRoot extends BaseController {
 				
 				if ($this->soundex == "Russell")
 				{
-					$x = 0;
-				
-					$where = "";
-					
-					if(!empty($firstName))
-					{ 
-							$where = "sx_fn_std_code LIKE '".$DBCONN->escapeSimple($firstName)."' ";
-						$x++;
-					}
-					
-					if(!empty($lastName))
-					{
-						if($x > 0)
-							$where .= "AND ";
-							
-						$where .= "sx_ln_std_code LIKE '".$DBCONN->escapeSimple($lastName)."' ";
-					}
 						if (!empty($this->place)) {
 							$where .= "AND p_std_soundex LIKE '".$DBCONN->escapeSimple($places)."' "; 
 						}
 				}
-				
 				$sql .= $where;
 					//--group by
 					$sql .= "GROUP BY i_id";
 				
-                // echo "<br />sql= ".$sql;	//debug			
-				
+//               echo "<br />sql= ".$sql;	//debug			
 				$res = dbquery($sql);
-				
-				
-				
 				
 				while($row = $res->fetchRow()) {
 					$namearray = get_indi_names($row[1]);
