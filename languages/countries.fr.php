@@ -23,7 +23,7 @@
  * @subpackage Languages
  * @version $Id$
  */
-if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+if (preg_match("/countries\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "L'accès direct aux fichiers de langue est interdit.";
 	exit;
 }

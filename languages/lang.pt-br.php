@@ -24,7 +24,7 @@
  * @author Anderson Wilson and Clovis Bombardelli
  * @version $Id$
  */
-if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+if (preg_match("/lang\......\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "You cannot access a language file directly.";
 	exit;
 }
