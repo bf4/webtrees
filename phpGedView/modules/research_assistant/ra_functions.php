@@ -1447,6 +1447,47 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		return $opts;
 	}
 
+	function determineClosest(&$currentDate, $dateToCompare, $dateCompareAgainst )
+	{
+		$compareDiff;
+		if($dateCompareAgainst > $dateToCompare)
+		{
+//			print($dateCompareAgainst."Is greater than $dateToCompare <br/>");
+			$compareDiff = $dateCompareAgainst - $dateToCompare;
+//			print("The difference is ".$compareDiff." 1<br/>");
+		}
+		else
+		{
+//			print($dateCompareAgainst."Is less than $dateToCompare <br/>");
+			$compareDiff = $dateToCompare - $dateCompareAgainst;
+//			print("The difference is ".$compareDiff." 2<br/>");
+		}
+		$currentDiff;
+		if($dateCompareAgainst > $currentDate)
+		{
+//			print($dateCompareAgainst."Is greater than $currentDate <br/>");
+			$currentDiff = $dateCompareAgainst - $currentDate;
+//			print("The difference is ".$currentDiff." 3<br/>");
+		}
+		else
+		{
+//			print($dateCompareAgainst."Is less than $currentDate <br/>");
+			$currentDiff = $currentDate - $dateCompareAgainst;
+//			print("The difference is ".$currentDiff." 4<br/>");
+		}
+		
+		if($compareDiff < $currentDiff)
+		{
+//			print($dateToCompare."Was better <br/><br/>");
+			return $dateToCompare;
+		}
+		else
+		{
+//			print($currentDate."Was Greater <br/><br/>");
+			return $currentDate;
+		}
+	}
+
 	/**
 	 * tab is the function that builds the display for the different screens.
 	 * These screens are identified by a tab
@@ -1687,15 +1728,27 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 												$out .= "<tr><td width=\"20\" class=\"optionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtask&amp;taskid=$taskid\">View</a></td><td class=\"optionbox\">".$tasktitle."</td></tr>\n";
 										}
 										$factLookups = $this->getPlacesFromPerson($person);
+										$tempDates = $person->getIndiFacts();
 										
 										foreach($sourcesInferred as $sKey=>$sVal)
 										{
 												$sourcesPrinted[$sVal["id"]] = $sVal;
 												$out .= "<tr ><td width=\"20\" class=\"optionbox\">";
 												$out .= "<input type=\"checkbox\" name=\"missingName[]\" value=\"".htmlentities($sVal["description"])."\" />";
-												$out .= "<td class=\"optionbox\">".$sVal["description"]."</td>";											
-												$out .= "</tr>";
+												$out .= "<td class=\"optionbox\">".$sVal["description"];	
+												
+												foreach($tempDates as $tKey=>$tVal)
+												{
+													
+													if(empty($greatest))
+													{
 											
+														$tempGreatest = get_gedcom_value("DATE",2,$tVal[1]);
+														print($tempGreatest);
+													}
+												}
+												
+												$out .= "</td></tr>";
 										}
 										
 										
@@ -1713,8 +1766,17 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 														$sourcesPrinted[$eventVal["id"]] = $eventVal;
 														$out .= "<tr ><td width=\"20\" class=\"optionbox\">";
 														$out .= "<input type=\"checkbox\" name=\"missingName[]\" value=\"".htmlentities($eventVal["description"])."\" />";
-														$out .= "<td class=\"optionbox\">".$eventVal["description"]."</td>";
-														$out .= "</tr>";											
+														$out .= "<td class=\"optionbox\">".$eventVal["description"];
+													foreach($tempDates as $tKey=>$tVal)
+													{
+														
+														if(empty($greatest))
+														{
+															$tempGreatest = get_gedcom_value("DATE",2,$tVal[1]);
+															print($tempGreatest);
+														}
+													}
+														$out .= "</td></tr>";											
 													}
 													
 												}
@@ -1724,15 +1786,56 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 										}
 										
 										$genericEvents = $this->getEventsForDates($bdate,$ddate);
-										
+										$lastPlace;
 										foreach($genericEvents as $gKey=>$gVal)
 										{
+											
 											if(!isset($sourcesPrinted[$gVal["id"]]))
 											{
 														$out .= "<tr ><td width=\"20\" class=\"optionbox\">";
 														$out .= "<input type=\"checkbox\" name=\"missingName[]\" value=\"".htmlentities($gVal["description"])."\" />";
-														$out .= "<td class=\"optionbox\">".$gVal["description"]."</td>";
-														$out .= "</tr>";	
+														$out .= "<td class=\"optionbox\">".$gVal["description"];
+														$closest = null;
+														$offset = null;
+														$place = null;
+														
+											foreach($tempDates as $tKey=>$tVal)
+												{
+														$tempDate = get_gedcom_value("DATE",2,$tVal[1]);
+														$tempPlace = get_gedcom_value("PLAC",2,$tVal[1]);
+														$parsedDates = parse_date($tempDate);
+														$place = trim($place);
+														
+													if(empty($closest))
+													{
+														$closest = preg_replace("/-/","",$parsedDates[0]["sort"]);
+														$place = $tempPlace;
+														$lastPlace = $place;														
+													}
+													else
+													{
+														$temp = $closest;
+														$closest = $this->determineClosest($closest,preg_replace("/-/","",$parsedDates[0]["sort"]),$gVal["startdate"]);
+														
+														if($closest != $temp  && empty($place))
+														{
+															
+															$place = $tempPlace;
+															$lastPlace = $place;	
+														}
+																											
+													}
+												}
+												if(empty($place))
+												{
+													
+													$out .= "<br/>".$pgv_lang["TheMostLikely"]." <i>".$lastPlace."</i>";
+												}
+												else
+												{
+														$out .= "<br/>".$pgv_lang["TheMostLikely"]." <i>".$place."</i>";
+												}
+														$out .= "</td></tr>";	
 											}
 										}
 									

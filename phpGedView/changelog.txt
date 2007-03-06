@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1442229 ] Import Married Names Unknown Dupe (yalnifj)
  - Fixed [ 1434050 ] Merge Siblings (yalnifj)
  - Fixed [ 1629684 ] Soundex Search Results Do Not Use the New Format (opus27)
  - Added [ Help - 4015858 ] Admins can edit without updating CHAN record (coloredpixels)

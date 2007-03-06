@@ -1189,6 +1189,7 @@ if ($startimport == "true") {
 										$spid = $parents["WIFE"];
 									if (isset ($indilist[$spid])) {
 										$surname = $indilist[$spid]["names"][0][2];
+										if (!empty($surname) && $surname!="@N.N.") {
 										$letter = $indilist[$spid]["names"][0][1];
 										//-- uncomment the next line to put the maiden name in the given name area
 										//$newname = preg_replace("~/(.*)/~", " $1 /".$surname."/", $indi["names"][0][0]);
@@ -1209,6 +1210,7 @@ if ($startimport == "true") {
 												$fcontents = substr($fcontents, 0, $pos1).trim($indi["gedcom"])."\r\n".substr($fcontents, $pos2);
 												add_new_name($gid, $newname, $letter, $surname, $indi["gedcom"]);
 												$names_added ++;
+												}
 											}
 										}
 									}
