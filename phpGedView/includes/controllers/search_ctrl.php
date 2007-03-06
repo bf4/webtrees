@@ -851,13 +851,6 @@ class SearchControllerRoot extends BaseController {
 				}
 				else
 				{
-					$places = "";
-					if(!empty($this->place))
-					{
-						foreach ($parr as $place) $places .= "%" . $place;
-						$places .= "%";
-					}
-				
 					$sql = "SELECT i_id, i_gedcom, sx_n_id, i_file FROM ".$TBLPREFIX."soundex, ".$TBLPREFIX."individuals";
 					if (!empty($this->place)) {
 						$sql .= ", ".$TBLPREFIX."placelinks, ".$TBLPREFIX."places";
@@ -907,20 +900,19 @@ class SearchControllerRoot extends BaseController {
 							$sql .= ") ";
 					}
 						
-					$where = "";	
-					if($this->soundex == "DaitchM") {
-						if (!empty($this->place)) {
-							$where .= "AND p_dm_soundex LIKE '".$DBCONN->escapeSimple($places)."' "; 
+					if(!empty($this->place))
+					{
+						if($this->soundex == "DaitchM") $field = "p_dm_soundex";
+						if ($this->soundex == "Russell") $field = "p_std_soundex";
+						$sql .= "AND (";
+						$pc = 0;
+						foreach ($parr as $place) {
+							if ($pc>0) $sql .= " OR ";
+							$pc++;
+							$sql .= $field." LIKE '%".$DBCONN->escapeSimple($place)."%'";
 						}
+						$sql .= ") ";
 				}
-				
-				if ($this->soundex == "Russell")
-				{
-						if (!empty($this->place)) {
-							$where .= "AND p_std_soundex LIKE '".$DBCONN->escapeSimple($places)."' "; 
-						}
-				}
-				$sql .= $where;
 					//--group by
 					$sql .= "GROUP BY i_id";
 				
