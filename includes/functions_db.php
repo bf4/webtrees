@@ -2329,27 +2329,31 @@ function get_surname_indis($surname) {
 	// Because of same-sex partnerships, we can't depend on male persons being recorded 
 	// as the "father" in the family.  
 	// We'll do separate "father" and "mother" searches to allow better use of indexes.
-	$sql = "SELECT f_husb, f_wife, f_numchil FROM ".$TBLPREFIX."families WHERE (";
-	$sql .= substr($sqlHusb, 0, -4);		// get rid of final " OR "
-	$sql .= ") AND f_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
-	$res = dbquery($sql);
-	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$gid = $row["f_husb"];
-		$indilist[$gid]["numchil"] += $row["f_numchil"];
-		$tindilist[$gid]["numchil"] += $row["f_numchil"];
+	if ($sqlHusb) {
+		$sql = "SELECT f_husb, f_wife, f_numchil FROM ".$TBLPREFIX."families WHERE (";
+		$sql .= substr($sqlHusb, 0, -4);		// get rid of final " OR "
+		$sql .= ") AND f_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+		$res = dbquery($sql);
+		while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+			$gid = $row["f_husb"];
+			$indilist[$gid]["numchil"] += $row["f_numchil"];
+			$tindilist[$gid]["numchil"] += $row["f_numchil"];
+		}
+		$res->free();
 	}
-	$res->free();
 	// And now the same thing for partner #2 in a family.
-	$sql = "SELECT f_husb, f_wife, f_numchil FROM ".$TBLPREFIX."families WHERE (";
-	$sql .= substr($sqlWife, 0, -4);		// get rid of final " OR "
-	$sql .= ") AND f_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
-	$res = dbquery($sql);
-	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$gid = $row["f_wife"];
-		$indilist[$gid]["numchil"] += $row["f_numchil"];
-		$tindilist[$gid]["numchil"] += $row["f_numchil"];
+	if ($sqlWife) {
+		$sql = "SELECT f_husb, f_wife, f_numchil FROM ".$TBLPREFIX."families WHERE (";
+		$sql .= substr($sqlWife, 0, -4);		// get rid of final " OR "
+		$sql .= ") AND f_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+		$res = dbquery($sql);
+		while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+			$gid = $row["f_wife"];
+			$indilist[$gid]["numchil"] += $row["f_numchil"];
+			$tindilist[$gid]["numchil"] += $row["f_numchil"];
+		}
+		$res->free();
 	}
-	$res->free();
 
 	$sql = "SELECT i_id, i_name, i_file, i_isdead, i_gedcom, i_letter, i_surname, n_letter, n_name, n_surname, n_letter, n_type FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."names WHERE i_id=n_gid AND i_file=n_file AND n_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
 	if (!$SHOW_MARRIED_NAMES) $sql .= "AND n_type!='C' ";
