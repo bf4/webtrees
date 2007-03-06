@@ -44,6 +44,7 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["accesskey_viewing_advice_help"]			05 Mar 2007				w
 *$pgv_lang["no_update_CHAN_help"]					04 Mar 2007				W
 +$pgv_lang["no_update_CHAN_help"]					03 Mar 2007				A
 *$pgv_lang["manage_media_help"]						24 Feb 2007				W
