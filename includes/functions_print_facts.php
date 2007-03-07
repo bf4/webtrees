@@ -30,6 +30,8 @@ if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
 	exit;
 }
 
+require_once 'includes/person_class.php';
+
 /**
  * Turn URLs in text into HTML links.  Insert breaks into long URLs
  * so that the browser can word-wrap.
@@ -985,7 +987,7 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
  * @param boolean $noedit	Whether or not to allow this fact to be edited
  */
 function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
-	global $pgv_lang;
+	global $pgv_lang, $pgv_changes, $GEDCOM;
 	global $factarray, $view;
 	global $WORD_WRAPPED_NOTES, $PGV_IMAGE_DIR;
 	global $PGV_IMAGES;
@@ -1003,8 +1005,17 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 		if (!$spos2) $spos2 = strlen($factrec);
 		$nrec = substr($factrec, $spos1, $spos2-$spos1);
 		if (!showFact("NOTE", $pid)||FactViewRestricted($pid, $factrec)) return false;
+		$nt = preg_match("/\d NOTE @(.*)@/", $match[$j][0], $nmatch);
+		if ($nt>0) {
+			$nid = $nmatch[1];
+			if (isset($pgv_changes[$nid."_".$GEDCOM]) && empty($styleadd)) {
+				$styleadd = "change_old";
+				$newfactrec = $factrec.="\r\nPGV_NEW";
+				print_main_notes($factrec, $level, $pid, $linenum, $noedit);
+			}
+		}
 		print "\n\t\t<tr><td valign=\"top\" class=\"descriptionbox $styleadd center width20\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\" alt=\"\" /><br />".$factarray["NOTE"];
-		if (!$noedit && userCanEdit(getUserName())&&(!FactEditRestricted($pid, $factrec))&&($styleadd!="red")&&($view!="preview")) {
+		if (!$noedit && userCanEdit(getUserName())&&(!FactEditRestricted($pid, $factrec))&&($styleadd!="change_old")&&($view!="preview")) {
 			$menu = array();
 			$menu["label"] = $pgv_lang["edit"];
 			$menu["labelpos"] = "right";
@@ -1047,7 +1058,6 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			print_menu($menu);
 			print "</div>";
 		}
-		$nt = preg_match("/\d NOTE @(.*)@/", $match[$j][0], $nmatch);
 		if ($nt==0) {
 			//-- print embedded note records
 			$text = preg_replace("/~~/", "<br />", trim($match[$j][1]));
@@ -1057,8 +1067,10 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 		}
 		else {
 			//-- print linked note records
-			$noterec = find_gedcom_record($nmatch[1]);
-			$nt = preg_match("/0 @$nmatch[1]@ NOTE (.*)/", $noterec, $n1match);
+			if (isset($pgv_changes[$nid."_".$GEDCOM]) && $styleadd=="change_new") $noterec = find_updated_record($nid); 
+			else $noterec = find_gedcom_record($nid);
+			
+			$nt = preg_match("/0 @$nid@ NOTE (.*)/", $noterec, $n1match);
 			$text ="";
 			if ($nt>0) $text = preg_replace("/~~/", "<br />", trim($n1match[1]));
 			$text .= get_cont(1, $noterec);
@@ -1119,8 +1131,10 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	else $regexp = "/OBJE @(.*)@/";
 	$ct = preg_match_all($regexp, $gedrec, $match, PREG_SET_ORDER);
 	for($i=0; $i<$ct; $i++) {
-		$current_objes[$match[$i][1]] = true;
-		$obje_links[$match[$i][1]] = $match[$i][0];
+		if (!isset($current_objes[$match[$i][1]])) {
+			$current_objes[$match[$i][1]] = true;
+			$obje_links[$match[$i][1]] = $match[$i][0];
+		}
 	}
 
 	$media_found = false;
@@ -1440,8 +1454,6 @@ function print_main_media_row($rtype, $rowm, $pid) {
  * @param string $label		The fact type described and possibly translated
  * @param string $pid		The gedcom id record the fact orginiated from
  */
-require_once 'includes/gedcomrecord.php';
-require_once 'includes/person_class.php';
 function print_fact_icon($fact, $factrec, $label, $pid) {
 	global $SHOW_FACT_ICONS, $PGV_IMAGE_DIR;
 	global $factarray;

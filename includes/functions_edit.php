@@ -793,7 +793,7 @@ function print_addnewsource_link($element_id) {
  */
 function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose="", $rowDisplay=true) {
 	global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES;
-	global $assorela, $tags, $emptyfacts, $TEXT_DIRECTION, $confighelpfile;
+	global $assorela, $tags, $emptyfacts, $TEXT_DIRECTION, $confighelpfile, $pgv_changes, $GEDCOM;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
 	global $tabkey, $STATUS_CODES, $REPO_ID_PREFIX, $SPLIT_PLACES, $pid, $linkToID;
 	global $bdm;
@@ -945,7 +945,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	if ($fact=="NOTE" and $islink) {
 		$noteid = $value;
 		print "<input type=\"hidden\" name=\"text[]\" value=\"".$noteid."\" />\n";
-		$noterec = find_gedcom_record($noteid);
+		if (!isset($pgv_changes[$noteid."_".$GEDCOM])) $noterec = find_gedcom_record($noteid);
+		else $noterec = find_updated_record($noteid);
 		$n1match = array();
 		$nt = preg_match("/0 @$value@ NOTE (.*)/", $noterec, $n1match);
 		if ($nt!==false) $value=trim(strip_tags(@$n1match[1].get_cont(1, $noterec)));

@@ -1215,26 +1215,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	function inferences() {
 		global $DBCONN, $TBLPREFIX, $GEDCOMS, $GEDCOM;
 		
-		$inferences[] = array('local'=>'SURN', 'record'=>'FAMC:HUSB', 'comp'=>'SURN', 'value'=>0, 'count'=>0);
-		$inferences[] = array('local'=>'SURN', 'record'=>'FAMC:WIFE', 'comp'=>'SURN', 'value'=>0, 'count'=>0);
-		$inferences[] = array('local'=>'BIRT:PLAC', 'record'=>'FAMC:HUSB', 'comp'=>'BIRT:PLAC', 'value'=>0, 'count'=>0);
-		$inferences[] = array('local'=>'BIRT:PLAC', 'record'=>'FAMC:WIFE', 'comp'=>'BIRT:PLAC', 'value'=>0, 'count'=>0);
-		$inferences[] = array('local'=>'BIRT:PLAC', 'record'=>'FAMC', 'comp'=>'MARR:PLAC', 'value'=>0, 'count'=>0);
-		$inferences[] = array('local'=>'OCCU', 'record'=>'FAMC:HUSB', 'comp'=>'OCCU', 'value'=>0, 'count'=>0);
-		$inferences[] = array('local'=>'OCCU', 'record'=>'FAMC:WIFE', 'comp'=>'OCCU', 'value'=>0, 'count'=>0);
-		$inferences[] = array('local'=>'DEAT:PLAC', 'record'=>'', 'comp'=>'BIRT:PLAC', 'value'=>0, 'count'=>0);
-		$inferences[] = array('local'=>'DEAT:PLAC', 'record'=>'FAMS', 'comp'=>'MARR:PLAC', 'value'=>0, 'count'=>0);
-		$inferences[] = array('local'=>'BIRT:PLAC', 'record'=>'FAMS', 'comp'=>'MARR:PLAC', 'value'=>0, 'count'=>0);
-		$inferences[] = array('local'=>'DEAT:PLAC', 'record'=>'FAMS:SPOUSE', 'comp'=>'DEAT:PLAC', 'value'=>0, 'count'=>0);
-		$inferences[] = array('local'=>'BIRT:PLAC', 'record'=>'FAMS:SPOUSE', 'comp'=>'BIRT:PLAC', 'value'=>0, 'count'=>0);
-		$inferences[] = array('local'=>'CHR:PLAC', 'record'=>'', 'comp'=>'BIRT:PLAC', 'value'=>0, 'count'=>0);
-		$inferences[] = array('local'=>'BAPM:PLAC', 'record'=>'', 'comp'=>'BIRT:PLAC', 'value'=>0, 'count'=>0);
-		$inferences[] = array('local'=>'BURI:PLAC', 'record'=>'', 'comp'=>'DEAT:PLAC', 'value'=>0, 'count'=>0);
-		$inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:HUSB', 'comp'=>'GIVN', 'value'=>0, 'count'=>0);
-		$inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:WIFE', 'comp'=>'GIVN', 'value'=>0, 'count'=>0);
-		$inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:HUSB:FAMC:HUSB', 'comp'=>'GIVN', 'value'=>0, 'count'=>0);
-		$inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:WIFE:FAMC:WIFE', 'comp'=>'GIVN', 'value'=>0, 'count'=>0);
-		
+		require_once("modules/research_assistant/ra_ViewInferencesArray.php");
 		$indilist = get_indi_list();
 		$famlist = get_fam_list();
 
