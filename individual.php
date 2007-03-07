@@ -132,7 +132,7 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 		{
 			?><br />
 			<?php print $pgv_lang["indi_is_remote"]; ?><!--<br />--><!--take this out if you want break the remote site and the fact that it was remote into two separate lines-->
-			<a href="<?php print $controller->indi->getLinkUrl(); ?>"><?php print $controller->indi->getLinkUrl(); ?></a>
+			<a href="<?php print $controller->indi->getLinkUrl(); ?>"><?php print $controller->indi->getLinkTitle(); ?></a>
 			<?php
 		}
 		// if indivual is not a remote individual
@@ -225,19 +225,23 @@ function showchanges() {
 // The option to use getElementsByName is used in connection with code from
 // the functions_print.php file.
 function togglerow(label) {
-	ebn = document.getElementsByName(label);
+	var ebn = document.getElementsByName(label);
 	if (ebn.length) disp = ebn[0].style.display;
 	else disp="";
 	if (disp=="none") {
 		disp="table-row";
 		if (document.all && !window.opera) disp = "inline"; // IE
-		document.getElementById('rela_plus').style.display="none";
-		document.getElementById('rela_minus').style.display="inline";
+		rela_plus = document.getElementById('rela_plus');
+		if (rela_plus) rela_plus.style.display="none";
+		rela_minus = document.getElementById('rela_minus');
+		if (rela_minus) rela_minus.style.display="inline";
 	}
 	else {
 		disp="none";
-		document.getElementById('rela_plus').style.display="inline";
-		document.getElementById('rela_minus').style.display="none";
+		var rela_plus = document.getElementById('rela_plus');
+		if (rela_plus) rela_plus.style.display="inline";
+		var rela_minus = document.getElementById('rela_minus');
+		if (rela_minus) rela_minus.style.display="none";
 	}
 	for (i=0; i<ebn.length; i++) ebn[i].style.display=disp;
 }
@@ -396,8 +400,9 @@ else loading_message();
 <script language="JavaScript" type="text/javascript">
 <!--
 	// hide button if list is empty
-	ebn = document.getElementsByName('row_rela');
-	if (ebn.length==0) document.getElementById('row_top').style.display="none";
+	var ebn = document.getElementsByName('row_rela');
+	var row_top = document.getElementById('row_top');
+	if (ebn.length==0 && row_top) row_top.style.display="none";
 	<?php if (!$EXPAND_RELATIVES_EVENTS) print "togglerow('row_rela');\n"; ?>
 //-->
 </script>

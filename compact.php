@@ -33,7 +33,9 @@ $rootid = check_rootid($rootid);
 if (!isset($showids)) $showids = 0;
 if (!isset($showthumbs)) $showthumbs = 0;
 
-if ((DisplayDetailsByID($rootid)) || (showLivingNameByID($rootid))) {
+$person = Person::getInstance($rootid);
+
+if ($person->canDisplayName()) {
 	$name = get_person_name($rootid);
 	$addname = get_add_person_name($rootid);
 }

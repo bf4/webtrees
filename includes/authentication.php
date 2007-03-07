@@ -12,7 +12,7 @@
  * $Id$
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003	John Finlay and Others
+ * Copyright (C) 2002 to 2007	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -465,7 +465,7 @@ function checkTableExists() {
 	if (DB::isError($DBCONN)) return false;
 	$data = $DBCONN->getListOf('tables');
 	foreach($data as $indexval => $table) {
-		if (strpos($table, $TBLPREFIX) === 0) {
+		if (empty($TBLPREFIX) || strpos($table, $TBLPREFIX) === 0) {
 			switch(substr($table, strlen($TBLPREFIX))) {
 				case "users":
 					$has_users = true;
@@ -1109,10 +1109,10 @@ function AddToLog($LogString, $savelangerror=false) {
 	else if ($argc>1) $REMOTE_ADDR = "cli";
 	if ($LOGFILE_CREATE !== "none" && $savelangerror === false) {
 		if (empty($LOGFILE_CREATE)) $LOGFILE_CREATE="daily";
-		if ($LOGFILE_CREATE=="daily") $logfile = $INDEX_DIRECTORY."/pgv-" . date("Ymd") . ".log";
-		if ($LOGFILE_CREATE=="weekly") $logfile = $INDEX_DIRECTORY."/pgv-" . date("Ym") . "-week" . date("W") . ".log";
-		if ($LOGFILE_CREATE=="monthly") $logfile = $INDEX_DIRECTORY."/pgv-" . date("Ym") . ".log";
-		if ($LOGFILE_CREATE=="yearly") $logfile = $INDEX_DIRECTORY."/pgv-" . date("Y") . ".log";
+		if ($LOGFILE_CREATE=="daily") $logfile = $INDEX_DIRECTORY."pgv-" . date("Ymd") . ".log";
+		if ($LOGFILE_CREATE=="weekly") $logfile = $INDEX_DIRECTORY."pgv-" . date("Ym") . "-week" . date("W") . ".log";
+		if ($LOGFILE_CREATE=="monthly") $logfile = $INDEX_DIRECTORY."pgv-" . date("Ym") . ".log";
+		if ($LOGFILE_CREATE=="yearly") $logfile = $INDEX_DIRECTORY."pgv-" . date("Y") . ".log";
 		if (is_writable($INDEX_DIRECTORY)) {
 			$logline = date("d.m.Y H:i:s") . " - " . $REMOTE_ADDR . " - " . $LogString . "\r\n";
 			$fp = fopen($logfile, "a");
@@ -1145,10 +1145,10 @@ function AddToSearchLog($LogString, $allgeds) {
 		if ($SEARCHLOG_CREATE != "none") {
 			$REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
 			if (empty($SEARCHLOG_CREATE)) $SEARCHLOG_CREATE="daily";
-			if ($SEARCHLOG_CREATE=="daily") $logfile = $INDEX_DIRECTORY."/srch-" . $GEDCOM . date("Ymd") . ".log";
-			if ($SEARCHLOG_CREATE=="weekly") $logfile = $INDEX_DIRECTORY."/srch-" . $GEDCOM . date("Ym") . "-week" . date("W") . ".log";
-			if ($SEARCHLOG_CREATE=="monthly") $logfile = $INDEX_DIRECTORY."/srch-" . $GEDCOM . date("Ym") . ".log";
-			if ($SEARCHLOG_CREATE=="yearly") $logfile = $INDEX_DIRECTORY."/srch-" . $GEDCOM . date("Y") . ".log";
+			if ($SEARCHLOG_CREATE=="daily") $logfile = $INDEX_DIRECTORY."srch-" . $GEDCOM . date("Ymd") . ".log";
+			if ($SEARCHLOG_CREATE=="weekly") $logfile = $INDEX_DIRECTORY."srch-" . $GEDCOM . date("Ym") . "-week" . date("W") . ".log";
+			if ($SEARCHLOG_CREATE=="monthly") $logfile = $INDEX_DIRECTORY."srch-" . $GEDCOM . date("Ym") . ".log";
+			if ($SEARCHLOG_CREATE=="yearly") $logfile = $INDEX_DIRECTORY."srch-" . $GEDCOM . date("Y") . ".log";
 			if (is_writable($INDEX_DIRECTORY)) {
 				$logline = "Date / Time: ".date("d.m.Y H:i:s") . " - IP: " . $REMOTE_ADDR . " - User: " .  getUserName() . "<br />";
 				if (count($allgeds) == count($GEDCOMS)) $logline .= "Searchtype: Global<br />"; else $logline .= "Searchtype: Gedcom<br />";

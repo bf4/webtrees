@@ -3,7 +3,7 @@
  * PopUp Window to provide editing features.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,6 +45,11 @@ if (isset($text)){
 //$DEBUG=1;
 if (!isset($action)) $action="";
 if (!isset($linenum)) $linenum="";
+if ((isset($_POST["preserve_last_changed"])) && ($_POST["preserve_last_changed"] == "on"))
+	$update_CHAN = false;
+else
+	$update_CHAN = true;
+
 $uploaded_files = array();
 
 // items for ASSO RELA selector :
@@ -372,6 +377,17 @@ else if ($action=="editraw") {
 		print_specialchar_link("newgedrec",true);
 		print "<br />\n";
 		print "<textarea name=\"newgedrec\" id=\"newgedrec\" rows=\"20\" cols=\"60\" dir=\"ltr\">".$gedrec."</textarea>\n<br />";
+		if (UserIsAdmin(GetUserName())) {
+			print "<table class=\"facts_table\">\n";
+			print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+			print_help_link("no_update_CHAN_help", "qm");
+			print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
+			print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+			print $pgv_lang["no_update_CHAN"]."<br />\n";
+			print "</td></tr>\n";
+			print "</table>";
+		}
+
 		print "<input id=\"savebutton\" type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
 		print "</form>\n";
 		print "<script language=\"JavaScript\" type=\"text/javascript\">\n<!--\ntextbox = document.getElementById('newgedrec');\n";
@@ -393,6 +409,14 @@ else if ($action=="edit") {
 
 	print "<table class=\"facts_table\">";
 	$level1type = create_edit_form($gedrec, $linenum, $level0type);
+	if (UserIsAdmin(GetUserName())) {
+		print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+		print_help_link("no_update_CHAN_help", "qm");
+		print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
+		print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+		print $pgv_lang["no_update_CHAN"]."<br />\n";
+		print "</td></tr>\n";
+		}
 	print "</table>";
 	if ($level0type=="SOUR" || $level0type=="REPO" || $level0type=="OBJE") {
 		if ($level1type!="NOTE") print_add_layer("NOTE");
@@ -424,6 +448,14 @@ else if ($action=="add") {
 
 	create_add_form($fact);
 
+	if (UserIsAdmin(GetUserName())) {
+		print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+		print_help_link("no_update_CHAN_help", "qm");
+		print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
+		print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+		print $pgv_lang["no_update_CHAN"]."<br />\n";
+		print "</td></tr>\n";
+	}
 	print "</table>";
 
 	if ($level0type=="SOUR" || $level0type=="REPO") {
@@ -612,6 +644,35 @@ else if ($action=="addnewsource") {
 			<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_CALN_help", "qm"); print $factarray["CALN"]; ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php print $tabkey; ?>" type="text" name="CALN" id="CALN" value="" /></td></tr>
 		</table>
+			<?php print_help_link("edit_SOUR_EVEN_help", "qm"); ?><a href="#"  onclick="return expand_layer('events');"><img id="events_img" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"];?>" border="0" width="11" height="11" alt="" title="" /> 
+			<?php print $pgv_lang["source_events"]; ?></a>
+			<div id="events" style="display: none;">
+			<table class="facts_table">
+			<tr>
+				<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_SOUR_EVEN_help", "qm"); print $pgv_lang['select_events']; ?></td>
+				<td class="optionbox wrap"><select name="EVEN[]" mulitple="multiple" size="5">
+					<?php
+					$parts = preg_split("/,/", $INDI_FACTS_ADD);
+					foreach($parts as $p=>$key) {
+						?><option value="<?php print $key; ?>"><?php print $factarray[$key]. " ($key)"; ?></option>
+					<?php
+					}
+					$parts = preg_split("/,/", $FAM_FACTS_ADD);
+					foreach($parts as $p=>$key) {
+						?><option value="<?php print $key; ?>"><?php print $factarray[$key]. " ($key)"; ?></option>
+					<?php
+					}
+					?>
+				</select></td>
+			</tr>
+			<?php
+			add_simple_tag("0 DATE", "EVEN");
+			add_simple_tag("0 PLAC", "EVEN");
+			add_simple_tag("0 AGNC");
+			?>
+			</table>
+			</div>
+		<br/><br/>
 		<input type="submit" value="<?php print $pgv_lang["create_source"]; ?>" />
 	</form>
 	<?php
@@ -621,6 +682,13 @@ else if ($action=="addnewsource") {
 else if ($action=="addsourceaction") {
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	$newgedrec = "0 @XREF@ SOUR\r\n";
+	if (!empty($EVEN) && count($EVEN)>0) {
+		$newgedrec .= "1 DATA\r\n";
+		$newgedrec .= "2 EVEN ".implode(",", $EVEN)."\r\n";
+		if (!empty($EVEN_DATE)) $newgedrec .= "3 DATE ".check_input_date($EVEN_DATE)."\r\n";
+		if (!empty($EVEN_PLAC)) $newgedrec .= "3 PLAC ".$EVEN_PLAC."\r\n";
+		if (!empty($AGNC))	$newgedrec .= "2 AGNC ".$AGNC."\r\n";
+	}
 	if (!empty($ABBR)) $newgedrec .= "1 ABBR $ABBR\r\n";
 	if (!empty($TITL)) {
 		$newgedrec .= "1 TITL $TITL\r\n";
@@ -753,7 +821,7 @@ else if ($action=="updateraw") {
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
 	$newgedrec = trim($newgedrec);
-	$success = (!empty($newgedrec)&&(replace_gedrec($pid, $newgedrec)));
+	$success = (!empty($newgedrec)&&(replace_gedrec($pid, $newgedrec, $update_CHAN)));
 	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
 }
 //------------------------------------------------------------------------------
@@ -812,18 +880,20 @@ else if ($action=="update") {
 	if (!empty($SPFX)) $newged .= "2 SPFX $SPFX\r\n";
 	if (!empty($SURN)) $newged .= "2 SURN $SURN\r\n";
 	if (!empty($NSFX)) $newged .= "2 NSFX $NSFX\r\n";
+
+	//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
+	$newged = handle_updates($newged);
+	
 	if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\r\n";
 	if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\r\n";
 	if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\r\n";
-
-	$newged = handle_updates($newged);
 
 	while($i<count($gedlines)) {
 		$newged .= trim($gedlines[$i])."\r\n";
 		$i++;
 	}
 	if ($GLOBALS["DEBUG"]) print "<pre>$newged</pre>";
-	$success = (replace_gedrec($pid, $newged));
+	$success = (replace_gedrec($pid, $newged, $update_CHAN));
 	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
 }
 //------------------------------------------------------------------------------
@@ -880,7 +950,11 @@ else if ($action=="addchildaction") {
 		}
 	}
 	else if (!empty($DEAT)) $gedrec .= "1 DEAT Y\r\n";
-	if (!empty($famid)) $gedrec .= "1 FAMC @$famid@\r\n";
+	if (!empty($famid)) {
+		$gedrec.="1 FAMC @$famid@\r\n";
+		if (!empty($PEDI))
+			$gedrec.="2 PEDI $PEDI\r\n";
+	}
 
 	$gedrec = handle_updates($gedrec);
 
@@ -1279,51 +1353,7 @@ else if ($action=="deleteperson") {
 		if (!empty($famid)) print "<br />".$pgv_lang["privacy_not_granted"]." famid $famid.";
 	}
 	else {
-		if (!empty($gedrec)) {
-			$success = true;
-			$ct = preg_match_all("/1 FAM. @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
-			for($i=0; $i<$ct; $i++) {
-				$famid = $match[$i][1];
-				if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_gedcom_record($famid);
-				else $famrec = find_updated_record($famid);
-				if (!empty($famrec)) {
-					$lines = preg_split("/\n/", $famrec);
-					$newfamrec = "";
-					$lastlevel = -1;
-					foreach($lines as $indexval => $line) {
-						$ct = preg_match("/^(\d+)/", $line, $levelmatch);
-						if ($ct>0) $level = $levelmatch[1];
-						else $level = 1;
-						//-- make sure we don't add any sublevel records
-						if ($level<=$lastlevel) $lastlevel = -1;
-						if ((preg_match("/@$pid@/", $line)==0) && ($lastlevel==-1)) $newfamrec .= $line."\n";
-						else {
-							$lastlevel=$level;
-						}
-					}
-					//-- if there is not at least two people in a family then the family is deleted
-					$pt = preg_match_all("/1 .{4} @(.*)@/", $newfamrec, $pmatch, PREG_SET_ORDER);
-					if ($pt<2) {
-						for ($j=0; $j<$pt; $j++) {
-							$xref = $pmatch[$j][1];
-							if($xref!=$pid) {
-								if (!isset($pgv_changes[$xref."_".$GEDCOM])) $indirec = find_gedcom_record($xref);
-								else $indirec = find_updated_record($xref);
-								$indirec = preg_replace("/1.*@$famid@.*/", "", $indirec);
-								if ($GLOBALS["DEBUG"]) print "<pre>$indirec</pre>";
-								replace_gedrec($xref, $indirec);
-							}
-						}
-						$success = $success && delete_gedrec($famid);
-					}
-					else $success = $success && replace_gedrec($famid, $newfamrec);
-				}
-			}
-			if ($success) {
-				$success = $success && delete_gedrec($pid);
-			}
-			if ($success) print "<br /><br />".$pgv_lang["gedrec_deleted"];
-		}
+		if (delete_person($pid, $gedrec)) print "<br /><br />".$pgv_lang["gedrec_deleted"];
 	}
 }
 //------------------------------------------------------------------------------
@@ -1337,38 +1367,7 @@ else if ($action=="deletefamily") {
 	}
 	else
 	{
-		if (!empty($gedrec)) {
-			$success = true;
-			$ct = preg_match_all("/1 (\w+) @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
-			for($i=0; $i<$ct; $i++) {
-				$type = $match[$i][1];
-				$id = $match[$i][2];
-				if ($GLOBALS["DEBUG"]) print $type." ".$id." ";
-				if (!isset($pgv_changes[$id."_".$GEDCOM])) $indirec = find_gedcom_record($id);
-				else $indirec = find_updated_record($id);
-				if (!empty($indirec)) {
-					$lines = preg_split("/\n/", $indirec);
-					$newindirec = "";
-					$lastlevel = -1;
-					foreach($lines as $indexval => $line) {
-						$lct = preg_match("/^(\d+)/", $line, $levelmatch);
-						if ($lct>0) $level = $levelmatch[1];
-						else $level = 1;
-						//-- make sure we don't add any sublevel records
-						if ($level<=$lastlevel) $lastlevel = -1;
-						if ((preg_match("/@$famid@/", $line)==0) && ($lastlevel==-1)) $newindirec .= $line."\n";
-						else {
-							$lastlevel=$level;
-						}
-					}
-					$success = $success && replace_gedrec($id, $newindirec);
-				}
-			}
-			if ($success) {
-				$success = $success && delete_gedrec($famid);
-			}
-			if ($success) print "<br /><br />".$pgv_lang["gedrec_deleted"];
-		}
+		if (delete_family($pid, $gedrec)) print "<br /><br />".$pgv_lang["gedrec_deleted"];
 	}
 }
 //------------------------------------------------------------------------------

@@ -3,7 +3,7 @@
  * Popup window that will allow a user to search for a media
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -171,7 +171,7 @@ print_header($pgv_lang["manage_media"]);
 	}
 
 	function showchanges() {
-		window.location = '<?php print $SCRIPT_NAME."?show_changes=yes&directory=".$directory; ?>';
+		window.location = '<?php print $SCRIPT_NAME."?show_changes=yes&directory=".$directory."&level=".$level; ?>';
 	}
 
 //-->
@@ -1099,64 +1099,6 @@ if (check_media_structure()) {
 		print_menu($menu);
 	}
 
-	/**
-	 * Generate Move To flyout menu
-	 *
-	 * Access control to directories are in this routine
-	 *
-	 * @param mixed $dirlist array() list of subdirectories
-	 * @param string $directory string current working directory
-	 * @param sring $filename filename to generate this menu and links for
-	 */
-	function print_move_to_menu($dirlist,$directory, $filename, $xref) {
-		global $level, $MEDIA_DIRECTORY_LEVELS, $pgv_lang, $thumbget;
-		global $TEXT_DIRECTION, $MEDIA_DIRECTORY, $MEDIA_EXTERNAL;
-
-		if ($MEDIA_EXTERNAL && stristr($filename, "://")) return false;
-
-		$classSuffix = "";
-		if ($TEXT_DIRECTION=="rtl") $classSuffix = "_rtl";
-
-		$filename = basename($filename);
-
-		// main link displayed on page
-		$menu = array();
-		$menu["label"] = $pgv_lang["move_to"];
-		$menu["link"] = "#";
-		$menu["class"] = "";
-//		$menu["hoverclass"] = "thememenuitem_hover";
-		$menu["hoverclass"] = "";
-		$menu["submenuclass"] = "submenu";
-		$menu["flyout"] = "left";
-		$menu["items"] = array();
-
-		// add option to move file up a level
-		// Sanity check 2 Don't allow file move above the main media directory
-		if ($level>0) {
-			$submenu = array();
-			$submenu["label"] = "<b>&nbsp;&nbsp;&nbsp;<--&nbsp;&nbsp;&nbsp;</b>";
-			$submenu["link"] = "media.php?action=moveto&amp;level=$level&amp;directory=".rawurlencode($directory)."&amp;movetodir=..&amp;movefile=".rawurlencode($filename)."&amp;xref=$xref".$thumbget;
-			$submenu["class"] = "submenuitem".$classSuffix;
-			$submenu["hoverclass"] = "submenuitem_hover".$classSuffix;
-			$menu["items"][] = $submenu;
-
-		}
-		// Add lower level directories
-		// Sanity check 3 Don't list directories which are at a lower level
-		//                than configured in the xxxxx_conf.php
-		if ($level < $MEDIA_DIRECTORY_LEVELS) {
-			foreach ($dirlist as $indexval => $dir) {
-				$submenu = array();
-				$submenu["label"] = $dir;
-				$submenu["link"] = "media.php?action=moveto&amp;level=$level&amp;directory=".rawurlencode($directory)."&amp;movetodir=".rawurlencode($dir)."&amp;movefile=".rawurlencode($filename)."&amp;xref=$xref".$thumbget;
-				$submenu["class"] = "submenuitem".$classSuffix;
-				$submenu["hoverclass"] = "submenuitem_hover".$classSuffix;
-				$menu["items"][] = $submenu;
-			}
-		}
-		if (count($menu["items"])>0) print_menu($menu);
-	}
-
 	if ($action == "filter") {
 		if (empty($directory)) $directory = $MEDIA_DIRECTORY;
 		$medialist = get_medialist(true, $directory);
@@ -1353,11 +1295,6 @@ if (check_media_structure()) {
 									if (!empty($filter)) print "filter=".rawurlencode($filter)."&amp;";
 									print "action=thumbnail&amp;all=0&amp;level=$level&amp;directory=".rawurlencode($directory)."&amp;filename=".rawurlencode($media["FILE"])."$thumbget\">".$pgv_lang["gen_thumb"]."</a>";
 								}
-							}
-
-							// Move To menu -- Not really needed any more.  (leave in for now)
-							if (!$isExternal && $MEDIA_DIRECTORY_LEVELS && $fileaccess && count($pgv_changes)==0) {
-								// print_move_to_menu($dirs,$directory,$media["FILE"], $media["XREF"]);
 							}
 
 						}

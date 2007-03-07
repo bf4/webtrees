@@ -3,7 +3,7 @@
  * Various functions used by the Edit interface
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
  */
 $DEBUG = false;
 
-$NPFX_accept = array("Adm", "Amb", "Brig", "Can", "Capt", "Chan", "Chapln", "Cmdr", "Col", "Cpl", "Cpt", "Dr", "Gen", "Gov", "Hon", "Lady", "Lt", "Mr", "Mrs", "Ms", "Msgr", "Pfc", "Pres", "Prof", "Pvt", "Rep", "Rev", "Sen", "Sgt", "Sir", "Sr", "Sra", "Srta", "Ven");
+$NPFX_accept = array("Adm", "Amb", "Brig", "Can", "Capt", "Chan", "Chapln", "Cmdr", "Col", "Cpl", "Cpt", "Dr", "Gen", "Gov", "Hon", "Lady", "Lt", "Mr", "Mrs", "Ms", "Msgr", "Pfc", "Pres", "Prof", "Pvt", "Rabbi", "Rep", "Rev", "Sen", "Sgt", "Sir", "Sr", "Sra", "Srta", "Ven");
 $SPFX_accept = array("al", "da", "de", "den", "dem", "der", "di", "du", "el", "la", "van", "von");
 $NSFX_accept = array("Jr", "Sr", "I", "II", "III", "IV", "MD", "PhD");
 $FILE_FORM_accept = array("avi", "bmp", "gif", "jpeg", "mp3", "ole", "pcx", "png", "tiff", "wav");
@@ -67,8 +67,8 @@ $level2_tags=array( // The order of the $keys is significant
 	"CAUS" =>array("DEAT"),
 	"CALN" =>array("REPO"),
 	"CEME" =>array("BURI"), // CEME is NOT a valid 5.5.1 tag; use _CEME ??
-	"DATE" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN"),
-	"PLAC" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN"),
+	"DATE" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN","BAPL","ENDL","SLGC","SLGS"),
+	"PLAC" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN","BAPL"),
 	"ADDR" =>array("BIRT","CHR","CHRA","DEAT","CREM","BURI","MARR","CENS","EDUC","GRAD","OCCU","PROP","ORDN","RESI","EVEN"),
 	"PHON" =>array("OCCU","RESI"),
 	"FAX"  =>array("OCCU","RESI"),
@@ -381,47 +381,7 @@ function undo_change($cid, $index) {
 		if ($GEDCOM != $change["gedcom"]) {
 			$GEDCOM = $change["gedcom"];
 		}
-		/*
-		if ($change["type"]=="delete") {
-			$pos1 = strrpos($fcontents, "0");
-			$fcontents = substr($fcontents, 0, $pos1).trim($change["undo"])."\r\n".substr($fcontents, $pos1);
-		}
-		else if ($change["type"]=="append") {
-			$pos1 = strpos($fcontents, "0 @".$change["gid"]."@");
-			if ($pos1===false) {
-				print "ERROR 4: Could not find gedcom record with gid:".$change["gid"]."\n";
-				AddToChangeLog("ERROR 4: Could not find gedcom record with gid:".$change["gid"]." ->" . getUserName() ."<-");
-				return false;
-			}
-			$pos2 = strpos($fcontents, "\n0", $pos1+1);
-			if ($pos2===false) $pos2=strpos($fcontents, "0 TRLR", $pos1+1);
-			else $pos2++;
-			if ($pos2!==false) $fcontents = substr($fcontents, 0,$pos1).substr($fcontents, $pos2);
-		}
-		else if ($change["type"]=="replace") {
-			$pos1 = strpos($fcontents, "0 @".$change["gid"]."@");
-			if ($pos1===false) {
-				$ct = preg_match("/0 @(.*)@/", $change["undo"], $match);
-				if ($ct>0) {
-					$gid = trim($match[1]);
-					$pos1 = strpos($fcontents, "0 @".$gid."@");
-				}
-			}
-			if ($pos1===false) {
-				//print "ERROR 4: Could not find gedcom record with gid:".$change["gid"]."\n";
-				//return false;
-				if (!empty($change["undo"])) {
-					$fcontents .= "\r\n".$change["undo"];
-				}
-			}
-			else {
-				$pos2 = strpos($fcontents, "\n0", $pos1+1);
-				if ($pos2===false) $pos2=strpos($fcontents, "0 TRLR", $pos1+1);
-				else $pos2++;
-				$fcontents = substr($fcontents, 0,$pos1).trim($change["undo"])."\r\n".substr($fcontents, $pos2);
-			}
-		}
-		*/
+		
 		if ($index==0) unset($pgv_changes[$cid]);
 		else {
 			for($i=$index; $i<count($pgv_changes[$cid]); $i++) {
@@ -461,6 +421,10 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
 
 	print "<table class=\"facts_table\">";
+
+	// When adding a new child, specify the pedigree
+	if ($nextaction=='addchildaction')
+		add_simple_tag("0 PEDI birth");
 
 	// preset child/father NAME/SPFX/SURN
 	$name = "";
@@ -609,6 +573,14 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		// 2 _MARNM
 		add_simple_tag("0 _MARNM");
 		print "</tr>\n";
+		if (UserIsAdmin(GetUserName())) {
+			print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap width25\">";
+			print_help_link("no_update_CHAN_help", "qm");
+			print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
+			print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+			print $pgv_lang["no_update_CHAN"]."<br />\n";
+			print "</td></tr>\n";
+		}
 		print "</table>\n";
 		print_add_layer("SOUR");
 		print_add_layer("NOTE");
@@ -1013,6 +985,20 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		}
 		print "</select>\n";
 	}
+	else if ($fact=="PEDI") {
+		print "<select tabindex=\"".$tabkey."\" name=\"".$element_name."\" >";
+		foreach (array(""       =>$pgv_lang["unknown"],
+		               "birth"  =>$factarray["BIRT"],
+		               "adopted"=>$pgv_lang["adopted"],
+		               "foster" =>$pgv_lang["foster"],
+									 "sealing"=>$pgv_lang["sealing"]) as $k=>$v) {
+			print "<option value='$k'";
+			if (str2lower($value)==$k)
+				print " selected";
+			print ">$v</option>";
+		}
+		print "</select>\n";
+	}
 	else if ($fact=="STAT") {
 		print "<select tabindex=\"".$tabkey."\" name=\"".$element_name."\" >\n";
 		print "<option value=''>No special status</option>\n";
@@ -1097,7 +1083,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		asort($type);
 		array_flip($type);
 		//-- Build the selector for the Media "TYPE" Fact
-		print "<select name=\"text[]\">";
+		print "<select tabindex=\"".$tabkey."\" name=\"text[]\">";
 		print "<option selected=\"selected\" value=\"\"> ".$pgv_lang["choose"]." </option>";
 		$selectedValue = strtolower($value);
 		foreach ($type as $typeName => $typeValue) {
@@ -1721,7 +1707,8 @@ function insert_missing_subtags($level1tag)
 					add_simple_tag("3 FORM");
 					break;
 				case "STAT":
-					add_simple_tag("3 DATE");
+					//-- TODO currently confusing to have 2 date fields next to each other
+					//add_simple_tag("3 DATE");
 					break;
 				case "DATE":
 					if (in_array($level1tag, $date_and_time))
@@ -1746,5 +1733,109 @@ function insert_missing_subtags($level1tag)
 		add_simple_tag("2 TYPE");
 		add_simple_tag("2 AGE");
 	}
+}
+
+/**
+ * Delete a person and update all records that link to that person
+ * @param string $pid	the id of the person to delete
+ * @param string $gedrec	the gedcom record of the person to delete
+ * @return boolean	true or false based on the successful completion of the deletion
+ */
+function delete_person($pid, $gedrec='') {
+	global $pgv_lang, $GEDCOM;
+	if ($GLOBALS["DEBUG"]) phpinfo(32);
+	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
+	
+	if (empty($gedrec)) $gedrec = find_person_record($pid);
+	if (!empty($gedrec)) {
+		$success = true;
+		$ct = preg_match_all("/1 FAM. @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
+		for($i=0; $i<$ct; $i++) {
+			$famid = $match[$i][1];
+			if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_gedcom_record($famid);
+			else $famrec = find_updated_record($famid);
+			if (!empty($famrec)) {
+				$lines = preg_split("/\n/", $famrec);
+				$newfamrec = "";
+				$lastlevel = -1;
+				foreach($lines as $indexval => $line) {
+					$ct = preg_match("/^(\d+)/", $line, $levelmatch);
+					if ($ct>0) $level = $levelmatch[1];
+					else $level = 1;
+					//-- make sure we don't add any sublevel records
+					if ($level<=$lastlevel) $lastlevel = -1;
+					if ((preg_match("/@$pid@/", $line)==0) && ($lastlevel==-1)) $newfamrec .= $line."\n";
+					else {
+						$lastlevel=$level;
+					}
+				}
+				//-- if there is not at least two people in a family then the family is deleted
+				$pt = preg_match_all("/1 .{4} @(.*)@/", $newfamrec, $pmatch, PREG_SET_ORDER);
+				if ($pt<2) {
+					for ($j=0; $j<$pt; $j++) {
+						$xref = $pmatch[$j][1];
+						if($xref!=$pid) {
+							if (!isset($pgv_changes[$xref."_".$GEDCOM])) $indirec = find_gedcom_record($xref);
+							else $indirec = find_updated_record($xref);
+							$indirec = preg_replace("/1.*@$famid@.*/", "", $indirec);
+							if ($GLOBALS["DEBUG"]) print "<pre>$indirec</pre>";
+							replace_gedrec($xref, $indirec);
+						}
+					}
+					$success = $success && delete_gedrec($famid);
+				}
+				else $success = $success && replace_gedrec($famid, $newfamrec);
+			}
+		}
+		if ($success) {
+			$success = $success && delete_gedrec($pid);
+		}
+		return $success;
+	}
+	return false;
+}
+
+/**
+ * Delete a person and update all records that link to that person
+ * @param string $pid	the id of the person to delete
+ * @param string $gedrec	the gedcom record of the person to delete
+ * @return boolean	true or false based on the successful completion of the deletion
+ */
+function delete_family($pid, $gedrec='') {
+	global $GEDCOM, $pgv_lang;
+	if (empty($gedrec)) $gedrec = find_family_record($pid);
+	if (!empty($gedrec)) {
+		$success = true;
+		$ct = preg_match_all("/1 (\w+) @(.*)@/", $gedrec, $match, PREG_SET_ORDER);
+		for($i=0; $i<$ct; $i++) {
+			$type = $match[$i][1];
+			$id = $match[$i][2];
+			if ($GLOBALS["DEBUG"]) print $type." ".$id." ";
+			if (!isset($pgv_changes[$id."_".$GEDCOM])) $indirec = find_gedcom_record($id);
+			else $indirec = find_updated_record($id);
+			if (!empty($indirec)) {
+				$lines = preg_split("/\n/", $indirec);
+				$newindirec = "";
+				$lastlevel = -1;
+				foreach($lines as $indexval => $line) {
+					$lct = preg_match("/^(\d+)/", $line, $levelmatch);
+					if ($lct>0) $level = $levelmatch[1];
+					else $level = 1;
+					//-- make sure we don't add any sublevel records
+					if ($level<=$lastlevel) $lastlevel = -1;
+					if ((preg_match("/@$famid@/", $line)==0) && ($lastlevel==-1)) $newindirec .= $line."\n";
+					else {
+						$lastlevel=$level;
+					}
+				}
+				$success = $success && replace_gedrec($id, $newindirec);
+			}
+		}
+		if ($success) {
+			$success = $success && delete_gedrec($famid);
+		}
+		return $success;
+	}
+	return false;
 }
 ?>

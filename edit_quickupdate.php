@@ -381,7 +381,7 @@ if ($action=="update") {
 			$objrec .= "1 FILE ".$filename."\r\n";
 			if (!empty($TITL)) $objrec .= "2 TITL $TITL\r\n";
 			$objid = append_gedrec($objrec);
-
+			
 			$factrec = "1 OBJE @".$objid."@\r\n1 _PRIM Y\r\n";
 			if (empty($replace)) $gedrec .= "\r\n".$factrec;
 			else {
@@ -1270,7 +1270,7 @@ if ($action=="choosepid") {
 	$tabkey = 1;
 	$name = PrintReady(get_person_name($pid));
 	print "<b>".$name;
-	if ($SHOW_ID_NUMBERS) print "&nbsp;&nbsp;(".$pid.")";
+	if ($SHOW_ID_NUMBERS) print PrintReady("&nbsp;&nbsp;(".$pid.")");
 	print "</b><br />";
 ?>
 <script language="JavaScript" type="text/javascript">
@@ -1414,8 +1414,8 @@ function checkform(frm) {
 <tr><td class="topbottombar" colspan="4"><?php print_help_link("quick_update_fact_help", "qm"); print $pgv_lang["update_fact"]; ?></td></tr>
 <tr>
 	<td class="descriptionbox">&nbsp;</td>
-	<td class="descriptionbox"><?php print $factarray["DATE"]; ?></td>
-	<td class="descriptionbox"><?php print $factarray["PLAC"]; ?></td>
+	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["DATE"]; ?></td>
+	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"]; ?></td>
 	<td class="descriptionbox"><?php print $pgv_lang["delete"]; ?></td>
 </tr>
 <?php
@@ -1438,7 +1438,7 @@ foreach($indifacts as $f=>$fact) {
 	</td>
 	<?php if (!in_array($fact_tag, $emptyfacts)) { ?>
 	<td class="optionbox" colspan="2">
-		<input type="text" name="DESCS[]" size="40" value="<?php print htmlspecialchars($desc); ?>" />
+		<input type="text" name="DESCS[]" size="40" value="<?php print PrintReady(htmlspecialchars($desc)); ?>" />
 		<input type="hidden" name="DATES[]" value="<?php print htmlspecialchars($date); ?>" />
 		<input type="hidden" name="PLACS[]" value="<?php print htmlspecialchars($plac); ?>" />
 		<input type="hidden" name="TEMPS[]" value="<?php print htmlspecialchars($temp); ?>" />
@@ -1447,7 +1447,7 @@ foreach($indifacts as $f=>$fact) {
 		if (!in_array($fact_tag, $nondatefacts)) { ?>
 			<td class="optionbox">
 				<input type="hidden" name="DESCS[]" value="<?php print htmlspecialchars($desc); ?>" />
-				<input type="text" tabindex="<?php print $tabkey; $tabkey++;?>" size="15" name="DATES[]" id="DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo htmlspecialchars($date); ?>" />&nbsp;<?php print_calendar_popup("DATE$f");?>
+				<input type="text" dir="ltr" tabindex="<?php print $tabkey; $tabkey++;?>" size="15" name="DATES[]" id="DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo PrintReady(htmlspecialchars($date)); ?>" />&nbsp;<?php print_calendar_popup("DATE$f");?>
 			</td>
 		<?php }
 		if (empty($temp) && (!in_array($fact_tag, $nonplacfacts))) { ?>
@@ -1538,7 +1538,7 @@ if (count($addfacts)>0) { ?>
 			<?php print $pgv_lang["description"]; ?><input type="text" size="35" name="DESC" />
 		</div>
 	</td>
-	<td class="optionbox"><input type="text" tabindex="<?php print $tabkey; ?>" size="15" name="DATE" id="DATE" onblur="valid_date(this);" />&nbsp;<?php print_calendar_popup("DATE");?></td>
+	<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="DATE" id="DATE" onblur="valid_date(this);" />&nbsp;<?php print_calendar_popup("DATE");?></td>
 	<?php $tabkey++; ?>
 	<td class="optionbox"><input type="text" tabindex="<?php print $tabkey; ?>" name="PLAC" id="place" />
 	<?php print_findplace_link("place"); ?>
@@ -1592,13 +1592,15 @@ if (!is_dead_id($pid) || !empty($ADDR) || !empty($PHON) || !empty($FAX) || !empt
 	</td>
 	<td class="optionbox" colspan="3">
 		<?php if (!empty($CITY)&&!empty($POST)) { ?>
-			<?php if (!empty($_NAME)) { ?><?php print $factarray["NAME"]; ?><input type="text" name="_NAME" size="35" value="<?php print PrintReady(strip_tags($_NAME)); ?>" /><br /><?php } ?>
-			<?php print $factarray["ADR1"]; ?><input type="text" name="ADR1" size="35" value="<?php print PrintReady(strip_tags($ADR1)); ?>" /><br />
-			<?php print $factarray["ADR2"]; ?><input type="text" name="ADR2" size="35" value="<?php print PrintReady(strip_tags($ADR2)); ?>" /><br />
-			<?php print $factarray["CITY"]; ?><input type="text" name="CITY" value="<?php print PrintReady(strip_tags($CITY)); ?>" />
-			<?php print $factarray["STAE"]; ?><input type="text" name="STAE" value="<?php print PrintReady(strip_tags($STAE)); ?>" /><br />
-			<?php print $factarray["POST"]; ?><input type="text" name="POST" value="<?php print PrintReady(strip_tags($POST)); ?>" /><br />
-			<?php print $factarray["CTRY"]; ?><input type="text" name="CTRY" value="<?php print PrintReady(strip_tags($CTRY)); ?>" />
+			<table>
+			<?php if (!empty($_NAME)) { ?><tr><td><?php print $factarray["NAME"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($_NAME)) print "dir=\"ltr\""; ?> name="_NAME" size="35" value="<?php print PrintReady(strip_tags($_NAME)); ?>" /></td></tr><?php } ?>
+			<tr><td><?php print $factarray["ADR1"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR1)) print "dir=\"ltr\""; ?> name="ADR1" size="35" value="<?php print PrintReady(strip_tags($ADR1)); ?>" /></td></tr>
+			<tr><td><?php print $factarray["ADR2"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($ADR2)) print "dir=\"ltr\""; ?> name="ADR2" size="35" value="<?php print PrintReady(strip_tags($ADR2)); ?>" /></td></tr>
+			<tr><td><?php print $factarray["CITY"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($CITY)) print "dir=\"ltr\""; ?> name="CITY" value="<?php print PrintReady(strip_tags($CITY)); ?>" /> 
+			 <?php print $factarray["STAE"]; ?> <input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($STAE)) print "dir=\"ltr\""; ?> name="STAE" value="<?php print PrintReady(strip_tags($STAE)); ?>" /></td></tr>
+			<tr><td><?php print $factarray["POST"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($POST)) print "dir=\"ltr\""; ?> name="POST" value="<?php print PrintReady(strip_tags($POST)); ?>" /></td></tr>
+			<tr><td><?php print $factarray["CTRY"]; ?></td><td><input type="text" <?php if ($TEXT_DIRECTION=="rtl" && !hasRTLText($CTRY)) print "dir=\"ltr\""; ?> name="CTRY" value="<?php print PrintReady(strip_tags($CTRY)); ?>" /></td></tr>
+			</table>
 			<input type="hidden" name="ADDR" value="<?php print PrintReady(strip_tags($ADDR)); ?>" />
 		<?php } else { ?>
 		<textarea name="ADDR" tabindex="<?php print $tabkey; ?>" cols="35" rows="4"><?php print PrintReady(strip_tags($ADDR)); ?></textarea>
@@ -1611,7 +1613,7 @@ if (!is_dead_id($pid) || !empty($ADDR) || !empty($PHON) || !empty($FAX) || !empt
 		<?php print $factarray["PHON"]; ?>
 	</td>
 	<td class="optionbox" colspan="3">
-		<input type="text" tabindex="<?php print $tabkey; $tabkey++; ?>" name="PHON" size="20" value="<?php print PrintReady($PHON); ?>" />
+		<input type="text" dir="ltr" tabindex="<?php print $tabkey; $tabkey++; ?>" name="PHON" size="20" value="<?php print PrintReady($PHON); ?>" />
 	</td>
 </tr>
 <tr>
@@ -1619,7 +1621,7 @@ if (!is_dead_id($pid) || !empty($ADDR) || !empty($PHON) || !empty($FAX) || !empt
 				<?php print $factarray["FAX"]; ?>
 		</td>
 		<td class="optionbox" colspan="3">
-				<input type="text" tabindex="<?php print $tabkey; $tabkey++; ?>" name="FAX" size="20" value="<?php print PrintReady($FAX); ?>" />
+				<input type="text" dir="ltr" tabindex="<?php print $tabkey; $tabkey++; ?>" name="FAX" size="20" value="<?php print PrintReady($FAX); ?>" />
 	</td>
 </tr>
 <tr>
@@ -1627,7 +1629,7 @@ if (!is_dead_id($pid) || !empty($ADDR) || !empty($PHON) || !empty($FAX) || !empt
 		<?php print $factarray["EMAIL"]; ?>
 	</td>
 	<td class="optionbox" colspan="3">
-		<input type="text" tabindex="<?php print $tabkey; ?>" name="EMAIL" size="40" value="<?php print PrintReady($EMAIL); ?>" />
+		<input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" name="EMAIL" size="40" value="<?php print PrintReady($EMAIL); ?>" />
 	</td>
 	<?php $tabkey++; ?>
 </tr>
@@ -1748,7 +1750,7 @@ for($i=1; $i<=count($sfams); $i++) {
 </tr>
 <tr>
 	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["BIRT"]; ?><?php print $factarray["DATE"];?></td>
-	<td class="optionbox" colspan="3"><input type="text" tabindex="<?php print $tabkey; ?>" size="15" name="BDATE<?php echo $i; ?>" id="BDATE<?php echo $i; ?>" onblur="valid_date(this);" /><?php print_calendar_popup("BDATE$i");?></td>
+	<td class="optionbox" colspan="3"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="BDATE<?php echo $i; ?>" id="BDATE<?php echo $i; ?>" onblur="valid_date(this);" /><?php print_calendar_popup("BDATE$i");?></td>
 	</tr>
 	<?php $tabkey++; ?>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
@@ -1765,8 +1767,8 @@ for($i=1; $i<=count($sfams); $i++) {
 <tr><td class="topbottombar" colspan="4"><?php print_help_link("quick_update_fact_help", "qm"); print $pgv_lang["update_fact"]; ?></td></tr>
 <tr>
 	<td class="descriptionbox">&nbsp;</td>
-	<td class="descriptionbox"><?php print $factarray["DATE"]; ?></td>
-	<td class="descriptionbox"><?php print $factarray["PLAC"]; ?></td>
+	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["DATE"]; ?></td>
+	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"]; ?></td>
 	<td class="descriptionbox"><?php print $pgv_lang["delete"]; ?></td>
 	</tr>
 <?php
@@ -1784,7 +1786,7 @@ foreach($famfacts as $f=>$fact) {
 				?>
 					<input type="hidden" name="F<?php echo $i; ?>TAGS[]" value="<?php echo $fact_tag; ?>" />
 				</td>
-				<td class="optionbox"><input type="text" tabindex="<?php print $tabkey; $tabkey++;?>" size="15" name="F<?php echo $i; ?>DATES[]" id="F<?php echo $i; ?>DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo htmlspecialchars($date); ?>" /><?php print_calendar_popup("F{$i}DATE{$f}");?></td>
+				<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php print $tabkey; $tabkey++;?>" size="15" name="F<?php echo $i; ?>DATES[]" id="F<?php echo $i; ?>DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo PrintReady(htmlspecialchars($date)); ?>" /><?php print_calendar_popup("F{$i}DATE{$f}");?></td>
 				<?php if (empty($temp) && (!in_array($fact_tag, $nonplacfacts))) { ?>
 					<td class="optionbox"><input type="text" size="30" tabindex="<?php print $tabkey; $tabkey++; ?>" name="F<?php echo $i; ?>PLACS[]" id="F<?php echo $i; ?>place<?php echo $f; ?>" value="<?php print PrintReady(htmlspecialchars($plac)); ?>" />
                                         <?php print_findplace_link("F{$i}place{$f}"); ?>
@@ -1844,7 +1846,7 @@ if (count($famaddfacts)>0) { ?>
 	?>
 		</select>
 	</td>
-	<td class="optionbox"><input type="text" tabindex="<?php print $tabkey; ?>" size="15" name="F<?php echo $i; ?>DATE" id="F<?php echo $i; ?>DATE" onblur="valid_date(this);" /><?php print_calendar_popup("F".$i."DATE");?></td>
+	<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="F<?php echo $i; ?>DATE" id="F<?php echo $i; ?>DATE" onblur="valid_date(this);" /><?php print_calendar_popup("F".$i."DATE");?></td>
 	<?php $tabkey++; ?>
 	<td class="optionbox"><input type="text" tabindex="<?php print $tabkey; ?>" name="F<?php echo $i; ?>PLAC" id="F<?php echo $i; ?>place" />
 	<?php print_findplace_link("F'.$i.'place"); ?>
@@ -1864,7 +1866,7 @@ $chil = find_children_in_record($famrec);
 	<tr>
 			<input type="hidden" name="F<?php echo $i; ?>CDEL" value="" />
 					<td class="descriptionbox"><?php print $pgv_lang["name"]; ?></td>
-					<td class="descriptionbox"><?php print $factarray["SEX"]; ?></td>
+					<td class="descriptionbox center"><?php print $factarray["SEX"]; ?></td>
 					<td class="descriptionbox"><?php print $factarray["BIRT"]; ?></td>
 					<td class="descriptionbox"><?php print $pgv_lang["remove"]; ?></td>
 	</tr>
@@ -1888,7 +1890,7 @@ $chil = find_children_in_record($famrec);
 					}
 					print "</td>\n<td class=\"optionbox\">";
 					if ($disp) {
-						$birtrec = get_sub_record(1, "BIRT", $childrec);
+						$birtrec = get_sub_record(1, "1 BIRT", $childrec);
 						if (!empty($birtrec)) {
 							if (showFact("BIRT", $child) && !FactViewRestricted($child, $birtrec)) {
 								print get_gedcom_value("DATE", 2, $birtrec);
@@ -1899,7 +1901,7 @@ $chil = find_children_in_record($famrec);
 					}
 					print "</td>\n";
 					?>
-					<td class="optionbox center" colspan="3">
+					<td class="optionbox center">
 						<a href="javascript: <?php print $pgv_lang["remove_child"]; ?>" onclick="if (confirm('<?php print $pgv_lang["confirm_remove"]; ?>')) { document.quickupdate.closewin.value='0'; document.quickupdate.F<?php echo $i; ?>CDEL.value='<?php echo $child; ?>'; document.quickupdate.submit(); } return false;">
 							<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php print $pgv_lang["remove_child"]; ?>" />
 						</a>
@@ -1966,7 +1968,7 @@ if (empty($child_surname)) $child_surname = "";
 	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["BIRT"]; ?>
 		<?php print $factarray["DATE"];?>
 	</td>
-	<td class="optionbox" colspan="3"><input type="text" tabindex="<?php print $tabkey; ?>" size="15" name="C<?php echo $i; ?>DATE" id="C<?php echo $i; ?>DATE" onblur="valid_date(this);" /><?php print_calendar_popup("C{$i}DATE");?></td>
+	<td class="optionbox" colspan="3"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="C<?php echo $i; ?>DATE" id="C<?php echo $i; ?>DATE" onblur="valid_date(this);" /><?php print_calendar_popup("C{$i}DATE");?></td>
 	<?php $tabkey++; ?>
 	</tr>
 	<tr>
@@ -2037,7 +2039,7 @@ if (empty($child_surname)) $child_surname = "";
 	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["BIRT"]; ?>
 		<?php print $factarray["DATE"];?>
 	</td>
-	<td class="optionbox" colspan="3"><input type="text" tabindex="<?php print $tabkey; ?>" size="15" name="BDATE" id="BDATE" onblur="valid_date(this);" /><?php print_calendar_popup("BDATE");?></td>
+	<td class="optionbox" colspan="3"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="BDATE" id="BDATE" onblur="valid_date(this);" /><?php print_calendar_popup("BDATE");?></td>
 	</tr>
 	<?php $tabkey++; ?>
 	<tr>
@@ -2058,7 +2060,7 @@ if (empty($child_surname)) $child_surname = "";
 <tr><td class="descriptionbox">
 		<?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["DATE"];?>
 	</td>
-	<td class="optionbox" colspan="3"><input type="text" tabindex="<?php print $tabkey; ?>" size="15" name="MDATE" id="MDATE" onblur="valid_date(this);" /><?php print_calendar_popup("MDATE");?></td>
+	<td class="optionbox" colspan="3"><input type="text" date="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="MDATE" id="MDATE" onblur="valid_date(this);" /><?php print_calendar_popup("MDATE");?></td>
 	</tr>
 	<?php $tabkey++; ?>
 	<tr>
@@ -2121,7 +2123,7 @@ if (empty($child_surname)) $child_surname = "";
 	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["BIRT"]; ?>
 		<?php print $factarray["DATE"];?>
 	</td>
-	<td class="optionbox" colspan="3"><input type="text" tabindex="<?php print $tabkey; ?>" size="15" name="CDATE" id="CDATE" onblur="valid_date(this);" /><?php print_calendar_popup("CDATE");?></td>
+	<td class="optionbox" colspan="3"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="CDATE" id="CDATE" onblur="valid_date(this);" /><?php print_calendar_popup("CDATE");?></td>
 	</tr>
 	<?php $tabkey++; ?>
 	<tr>
@@ -2257,7 +2259,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["BIRT"]; ?>
 		<?php print $factarray["DATE"];?>
 	</td>
-	<td class="optionbox" colspan="3"><input type="text" tabindex="<?php print $tabkey; ?>" size="15" name="FBDATE<?php echo $i; ?>" id="FBDATE<?php echo $i; ?>" onblur="valid_date(this);" /><?php print_calendar_popup("FBDATE$i");?></td>
+	<td class="optionbox" colspan="3"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="FBDATE<?php echo $i; ?>" id="FBDATE<?php echo $i; ?>" onblur="valid_date(this);" /><?php print_calendar_popup("FBDATE$i");?></td>
 	</tr>
 	<?php $tabkey++; ?>
 	<tr>
@@ -2272,7 +2274,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["DEAT"]; ?>
 		<?php print $factarray["DATE"];?>
 	</td>
-	<td class="optionbox" colspan="3"><input type="text" tabindex="<?php print $tabkey; ?>" size="15" name="FDDATE<?php echo $i; ?>" id="FDDATE<?php echo $i; ?>" onblur="valid_date(this);" /><?php print_calendar_popup("FDDATE$i");?></td>
+	<td class="optionbox" colspan="3"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="FDDATE<?php echo $i; ?>" id="FDDATE<?php echo $i; ?>" onblur="valid_date(this);" /><?php print_calendar_popup("FDDATE$i");?></td>
 	</tr>
 	<?php $tabkey++; ?>
 	<tr>
@@ -2361,7 +2363,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["BIRT"]; ?>
 		<?php print $factarray["DATE"];?>
 	</td>
-	<td class="optionbox" colspan="3"><input type="text" tabindex="<?php print $tabkey; ?>" size="15" name="MBDATE<?php echo $i; ?>" id="MBDATE<?php echo $i; ?>" onblur="valid_date(this);" /><?php print_calendar_popup("MBDATE$i");?></td>
+	<td class="optionbox" colspan="3"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="MBDATE<?php echo $i; ?>" id="MBDATE<?php echo $i; ?>" onblur="valid_date(this);" /><?php print_calendar_popup("MBDATE$i");?></td>
 	</tr>
 	<?php $tabkey++; ?>
 	<tr>
@@ -2376,7 +2378,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["DEAT"]; ?>
 		<?php print $factarray["DATE"];?>
 	</td>
-	<td class="optionbox" colspan="3"><input type="text" tabindex="<?php print $tabkey; ?>" size="15" name="MDDATE<?php echo $i; ?>" id="MDDATE<?php echo $i; ?>" onblur="valid_date(this);" /><?php print_calendar_popup("MDDATE$i");?></td>
+	<td class="optionbox" colspan="3"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="MDDATE<?php echo $i; ?>" id="MDDATE<?php echo $i; ?>" onblur="valid_date(this);" /><?php print_calendar_popup("MDDATE$i");?></td>
 	</tr>
 	<?php $tabkey++; ?>
 	<tr>
@@ -2394,8 +2396,8 @@ for($j=1; $j<=count($cfams); $j++) {
 <tr><td class="topbottombar" colspan="4"><?php print_help_link("quick_update_fact_help", "qm"); print $pgv_lang["update_fact"]; ?></td></tr>
 <tr>
 	<td class="descriptionbox">&nbsp;</td>
-	<td class="descriptionbox"><?php print $factarray["DATE"]; ?></td>
-	<td class="descriptionbox"><?php print $factarray["PLAC"]; ?></td>
+	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["DATE"]; ?></td>
+	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"]; ?></td>
 	<td class="descriptionbox"><?php print $pgv_lang["delete"]; ?></td>
 <?php
 foreach($famfacts as $f=>$fact) {
@@ -2412,7 +2414,7 @@ foreach($famfacts as $f=>$fact) {
 				?>
 					<input type="hidden" name="F<?php echo $i; ?>TAGS[]" value="<?php echo $fact_tag; ?>" />
 				</td>
-				<td class="optionbox"><input type="text" tabindex="<?php print $tabkey; $tabkey++;?>" size="15" name="F<?php echo $i; ?>DATES[]" id="F<?php echo $i; ?>DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo htmlspecialchars($date); ?>" /><?php print_calendar_popup("F{$i}DATE$f");?></td>
+				<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php print $tabkey; $tabkey++;?>" size="15" name="F<?php echo $i; ?>DATES[]" id="F<?php echo $i; ?>DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo PrintReady(htmlspecialchars($date)); ?>" /><?php print_calendar_popup("F{$i}DATE$f");?></td>
 				<?php if (empty($temp) && (!in_array($fact_tag, $nonplacfacts))) { ?>
 					<td class="optionbox"><input size="30" type="text" tabindex="<?php print $tabkey; $tabkey++; ?>" name="F<?php echo $i; ?>PLACS[]" id="F<?php echo $i; ?>place<?php echo $f; ?>" value="<?php print PrintReady(htmlspecialchars($plac)); ?>" />
 					<?php print_findplace_link("F'.$i.'place$f"); ?>
@@ -2476,7 +2478,7 @@ foreach($famfacts as $f=>$fact) {
 		?>
 			</select>
 		</td>
-		<td class="optionbox"><input type="text" tabindex="<?php print $tabkey; ?>" size="15" name="F<?php echo $i; ?>DATE" id="F<?php echo $i; ?>DATE" onblur="valid_date(this);" /><?php print_calendar_popup("F".$i."DATE");?></td>
+		<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="F<?php echo $i; ?>DATE" id="F<?php echo $i; ?>DATE" onblur="valid_date(this);" /><?php print_calendar_popup("F".$i."DATE");?></td>
 		<?php $tabkey++; ?>
 		<td class="optionbox"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="F<?php echo $i; ?>PLAC" id="F<?php echo $i; ?>place" />
 		<?php print_findplace_link("F'.$i.'place"); ?>
@@ -2496,7 +2498,7 @@ $chil = find_children_in_record($famrec, $pid);
 	<tr>
 		<input type="hidden" name="F<?php echo $i; ?>CDEL" value="" />
 					<td class="descriptionbox"><?php print $pgv_lang["name"]; ?></td>
-					<td class="descriptionbox"><?php print $factarray["SEX"]; ?></td>
+					<td class="descriptionbox center"><?php print $factarray["SEX"]; ?></td>
 					<td class="descriptionbox"><?php print $factarray["BIRT"]; ?></td>
 					<td class="descriptionbox"><?php print $pgv_lang["remove"]; ?></td>
 				</tr>
@@ -2520,7 +2522,7 @@ $chil = find_children_in_record($famrec, $pid);
 					}
 					print "</td>\n<td class=\"optionbox\">";
 					if ($disp) {
-						$birtrec = get_sub_record(1, "BIRT", $childrec);
+						$birtrec = get_sub_record(1, "1 BIRT", $childrec);
 						if (!empty($birtrec)) {
 							if (showFact("BIRT", $child) && !FactViewRestricted($child, $birtrec)) {
 								print get_gedcom_value("DATE", 2, $birtrec);
@@ -2531,7 +2533,7 @@ $chil = find_children_in_record($famrec, $pid);
 					}
 					print "</td>\n";
 					?>
-					<td class="optionbox center" colspan="3">
+					<td class="optionbox center">
 						<a href="javascript: <?php print $pgv_lang["remove_child"]; ?>" onclick="document.quickupdate.closewin.value='0'; document.quickupdate.F<?php echo $i; ?>CDEL.value='<?php echo $child; ?>'; document.quickupdate.submit(); return false;">
 							<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]; ?>" border="0" alt="<?php print $pgv_lang["remove_child"]; ?>" />
 						</a>
@@ -2566,6 +2568,8 @@ $chil = find_children_in_record($famrec, $pid);
 	<td class="descriptionbox"><?php print_help_link("edit_given_name_help", "qm"); print $pgv_lang["hebrew_givn"];?></td>
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="HC<?php echo $i; ?>GIVN" /></td>
 	<?php $tabkey++; ?>
+</tr>
+<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); print $pgv_lang["hebrew_surn"];?></td>
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="HC<?php echo $i; ?>SURN" /></td>
 	<?php $tabkey++; ?>
@@ -2574,6 +2578,8 @@ $chil = find_children_in_record($famrec, $pid);
 	<td class="descriptionbox"><?php print_help_link("edit_given_name_help", "qm"); print $pgv_lang["roman_givn"];?></td>
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="RC<?php echo $i; ?>GIVN" /></td>
 	<?php $tabkey++; ?>
+</tr>
+<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_surname_help", "qm"); print $pgv_lang["roman_surn"];?></td>
 	<td class="optionbox" colspan="3"><input size="50" type="text" tabindex="<?php print $tabkey; ?>" name="RC<?php echo $i; ?>SURN" /></td>
 	<?php $tabkey++; ?>
@@ -2593,7 +2599,7 @@ $chil = find_children_in_record($famrec, $pid);
 	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["BIRT"]; ?>
 		<?php print $factarray["DATE"];?>
 	</td>
-	<td class="optionbox" colspan="3"><input type="text" tabindex="<?php print $tabkey; ?>" size="15" name="C<?php echo $i; ?>DATE" id="C<?php echo $i; ?>DATE" onblur="valid_date(this);" /><?php print_calendar_popup("C{$i}DATE");?></td>
+	<td class="optionbox" colspan="3"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="C<?php echo $i; ?>DATE" id="C<?php echo $i; ?>DATE" onblur="valid_date(this);" /><?php print_calendar_popup("C{$i}DATE");?></td>
 	</tr>
 	<?php $tabkey++; ?>
 	<tr>

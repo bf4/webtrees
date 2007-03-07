@@ -45,6 +45,12 @@ if (empty($uname)) {
 	exit;
 }
 
+$fromEscapedChars	= array("\\\"", "&",     "<",    ">");
+$toPlainChars		= array("\"",   "&amp;", "&lt;", "&gt;");
+
+$fromPlainChars		= array("&gt;", "&lt;", "&amp;", "\"");
+$toEscapedChars		= array(">",    "<",    "&",     "\\\"");
+
 switch ($action){
   case "edit"	: print_header($pgv_lang["edit_lang_utility"]); break;
   case "export"	: print_header($pgv_lang["export_lang_utility"]); break;
@@ -125,29 +131,34 @@ switch ($action) {
 		print_help_link("file_to_edit_help", "qm");
 		print "<br />";
 		print "<select name=\"file_type\">";
-		print "\n\t\t\t<option value=\"lang\"";
-		if ($file_type == "lang") print " selected=\"selected\"";
-		print ">"."lang.xx.php"."</option>";
+
+		print "\n\t\t\t<option value=\"admin\"";
+		if ($file_type == "admin") print " selected=\"selected\"";
+		print ">" . "admin.xx.php" . "</option>";
+
+		print "\n\t\t\t<option value=\"configure_help\"";
+		if ($file_type == "configure_help") print " selected=\"selected\"";
+		print ">" . "configure_help.xx.php" . "</option>";
+		
+		print "\n\t\t\t<option value=\"countries\"";
+		if ($file_type == "countries") print " selected=\"selected\"";
+		print ">" . "countries.xx.php" . "</option>";
+		
+		print "\n\t\t\t<option value=\"editor\"";
+		if ($file_type == "editor") print " selected=\"selected\"";
+		print ">" . "editor.xx.php" . "</option>";
 
 		print "\n\t\t\t<option value=\"facts\"";
 		if ($file_type == "facts") print " selected=\"selected\"";
 		print ">" . "facts.xx.php" . "</option>";
 
-		print "\n\t\t\t<option value=\"configure_help\"";
-		if ($file_type == "configure_help") print " selected=\"selected\"";
-		print ">" . "configure_help.xx.php" . "</option>";
-
 		print "\n\t\t\t<option value=\"help_text\"";
 		if ($file_type == "help_text") print " selected=\"selected\"";
 		print ">" . "help_text.xx.php" . "</option>";
 		
-		print "\n\t\t\t<option value=\"admin\"";
-		if ($file_type == "admin") print " selected=\"selected\"";
-		print ">" . "admin.xx.php" . "</option>";
-		
-		print "\n\t\t\t<option value=\"editor\"";
-		if ($file_type == "editor") print " selected=\"selected\"";
-		print ">" . "editor.xx.php" . "</option>";
+		print "\n\t\t\t<option value=\"lang\"";
+		if ($file_type == "lang") print " selected=\"selected\"";
+		print ">"."lang.xx.php"."</option>";
 
 		print "</select>";
 		print "</td>";
@@ -184,77 +195,48 @@ switch ($action) {
 		print "</table>";
 		print "</form>";
 		if (isset($execute)) {
-			print "<table class=\"facts_table $TEXT_DIRECTION\" style=\"width:70%; \">";
-		    print "<tr><td class=\"facts_value center\" colspan=\"2\"><span class=\"subheaders\">" . $pgv_lang["listing"] . ": \"";
 		    switch ($file_type) {
-		      case "lang"		:
-					print $pgv_lang["lang_name_english"] . "\" ";
-					print $pgv_lang["and"] . " \"";
-					print $pgv_lang["lang_name_".$language2];
-					// read the english lang.en.php file into array
-					$english_language_array = array();
-					$english_language_array = read_complete_file_into_array($pgv_language["english"], "pgv_lang[");
-					// read the chosen lang.xx.php file into array
-					$new_language_array = array();
-					$new_language_array = read_complete_file_into_array($pgv_language[$language2], "pgv_lang[");
-					break;
-		      case "facts"		:
-		      		print $factsfile["english"]."\" ";
-					print $pgv_lang["and"] . " \"";
-					print $factsfile[$language2];
-					// read the english lang.en.php file into array
-					$english_language_array = array();
-					$english_language_array = read_complete_file_into_array($factsfile["english"], "factarray[");
-					// read the chosen lang.xx.php file into array
-					$new_language_array = array();
-					$new_language_array = read_complete_file_into_array($factsfile[$language2], "factarray[");
-					break;
-		      case "configure_help"	:
-		      		print $confighelpfile["english"]."\" ";
-					print $pgv_lang["and"] . " \"";
-					print $confighelpfile[$language2];
-					// read the english lang.en.php file into array
-					$english_language_array = array();
-					$english_language_array = read_complete_file_into_array($confighelpfile["english"], "pgv_lang[");
-					// read the chosen lang.xx.php file into array
-					$new_language_array = array();
-					$new_language_array = read_complete_file_into_array($confighelpfile[$language2], "pgv_lang[");
-					break;
-		      case "help_text" 		:
-		      		print $helptextfile["english"]."\" ";
-					print $pgv_lang["and"] . " \"";
-					print $helptextfile[$language2];
-					// read the english lang.en.php file into array
-					$english_language_array = array();
-					$english_language_array = read_complete_file_into_array($helptextfile["english"], "pgv_lang[");
-					// read the chosen lang.xx.php file into array
-					$new_language_array = array();
-					$new_language_array = read_complete_file_into_array($helptextfile[$language2], "pgv_lang[");
-					break;
-				case "admin" 		:
-		      		print $adminfile["english"]."\" ";
-					print $pgv_lang["and"] . " \"";
-					print $adminfile[$language2];
-					// read the english lang.en.php file into array
-					$english_language_array = array();
-					$english_language_array = read_complete_file_into_array($adminfile["english"], "pgv_lang[");
-					// read the chosen lang.xx.php file into array
-					$new_language_array = array();
-					$new_language_array = read_complete_file_into_array($adminfile[$language2], "pgv_lang[");
-					break;
-				case "editor" 		:
-		      		print $editorfile["english"]."\" ";
-					print $pgv_lang["and"] . " \"";
-					print $editorfile[$language2];
-					// read the english lang.en.php file into array
-					$english_language_array = array();
-					$english_language_array = read_complete_file_into_array($editorfile["english"], "pgv_lang[");
-					// read the chosen lang.xx.php file into array
-					$new_language_array = array();
-					$new_language_array = read_complete_file_into_array($editorfile[$language2], "pgv_lang[");
-					break;
+		      case "facts":
+		        $whichFile = $factsfile;
+		        $whichVars = "factarray[";
+		        break;
+		      case "configure_help":
+		        $whichFile = $confighelpfile;
+		        $whichVars = "pgv_lang[";
+		        break;
+		      case "help_text":
+		        $whichFile = $helptextfile;
+		        $whichVars = "pgv_lang[";
+		        break;
+		      case "admin":
+		        $whichFile = $adminfile;
+		        $whichVars = "pgv_lang[";
+		        break;
+		      case "editor":
+		        $whichFile = $editorfile;
+		        $whichVars = "pgv_lang[";
+		        break;
+		      case "countries":
+		        $whichFile = $countryfile;
+		        $whichVars = "countries[";
+		        break;
+		      case "lang":
+		      default:
+		        $whichFile = $pgv_language;
+		        $whichVars = "pgv_lang[";
+		        break;
 		    }
-		    print "\"</span><br /><br />\n";
+			// read the english language file into array
+			$english_language_array = array();
+			$english_language_array = read_complete_file_into_array($whichFile["english"], $whichVars);
+			// read the chosen language file into array
+			$new_language_array = array();
+			$new_language_array = read_complete_file_into_array($whichFile[$language2], $whichVars);
+
+			print "<table class=\"facts_table $TEXT_DIRECTION\" style=\"width:70%; \">";
+		    print "<tr><td class=\"facts_value center\" colspan=\"2\"><span class=\"subheaders\">".$pgv_lang["listing"].":&nbsp;&nbsp;&nbsp;";
+		    print substr($whichFile["english"],10)."&nbsp;&nbsp;&nbsp;".$pgv_lang["and"]."&nbsp;&nbsp;&nbsp;".substr($whichFile[$language2],10);
+		    print "</span><br /><br />\n";
 		    print "<span class=\"subheaders\">" . $pgv_lang["contents"] . ":</span></td></tr>";
 			$lastfound = (-1);
 			for ($z = 0; $z < sizeof($english_language_array); $z++) {
@@ -266,8 +248,7 @@ switch ($action) {
 					$dummy_output .= "</td>\n";
 					$dummy_output .= "<td class=\"facts_value wrap\">";
 				  	$dummy_output .= "\n<a name=\"a1_".$z."\"></a>\n";
-//				  	$temp = stripslashes(mask_all($english_language_array[$z][1]));
-				  	$temp = mask_all($english_language_array[$z][1]);
+				  	$temp = str_replace($fromEscapedChars, $toPlainChars, $english_language_array[$z][1]);
 				  	if ($temp == "") {
 				    	$dummy_output .= "<strong style=\"color: #FF0000\">" . str_replace("#LANGUAGE_FILE#", $pgv_language[$language1], $pgv_lang["message_empty_warning"]) . "</strong>";
 				  	}
@@ -283,8 +264,7 @@ switch ($action) {
 				      		if ($new_language_array[$y][0] == $english_language_array[$z][0]) {
 				        		$dDummy =  $new_language_array[$y][1];
 				        		$dummy_output_02 .= "<a href=\"javascript:;\" onclick=\"return helpPopup00('" . "ls01=" . $z . "&amp;ls02=" . $y . "&amp;language2=" . $language2 . "&amp;file_type=" . $file_type . "&amp;" . session_name() . "=" . session_id() . "&amp;anchor=a1_" . $z . "');\">";
-//				        		$temp = stripslashes(mask_all($dDummy));
-				        		$temp = mask_all($dDummy);
+				        		$temp = str_replace($fromEscapedChars, $toPlainChars, $dDummy);
 				        		$dummy_output_02 .= $temp;
 				        		if ($temp == "") {
 				          			$dummy_output_02 .= "<strong style=\"color: #FF0000\">" . str_replace("#LANGUAGE_FILE#", $pgv_language[$language2], $pgv_lang["message_empty_warning"]) . "</strong>";
@@ -302,8 +282,7 @@ switch ($action) {
 				  		if (!$found) {
 				    		print "<a style=\"color: #FF0000\" href=\"javascript:;\" onclick=\"return helpPopup00('" . "ls01=" . $z . "&amp;ls02=" . (0 - intval($lastfound) - 1) . "&amp;language2=" . $language2 . "&amp;file_type=" . $file_type . "&amp;anchor=a1_" . $z . "');\">";
 				    		print "<i>";
-//				    		$temp = stripslashes(mask_all($english_language_array[$z][1]));
-				    		$temp = mask_all($english_language_array[$z][1]);
+				    		$temp = str_replace($fromEscapedChars, $toPlainChars, $english_language_array[$z][1]);
 				    		if ($temp == "") print "&nbsp;";
 				    		else print $temp;
 				    		print "</i>";
@@ -445,6 +424,10 @@ switch ($action) {
 		    //   so that function print_text will substitute text in the correct language
 			require  $pgv_language["english"];		// Load English first
 			require  $pgv_language[$language2];	//   then output lang.
+			require  $adminfile["english"];
+			require  $adminfile[$language2];
+			require  $editorfile["english"];
+			require  $editorfile[$language2];
 			require  $factsfile["english"];
 			require  $factsfile[$language2];
 			require  $helptextfile["english"];
@@ -465,6 +448,10 @@ switch ($action) {
 			if ($language2 != $LANGUAGE) {			// Only necessary when languages differ
 				require  $pgv_language["english"];		// Load English first
 				require  $pgv_language[$LANGUAGE];		//   then active lang.
+				require  $adminfile["english"];
+				require  $adminfile[$LANGUAGE];
+				require  $editorfile["english"];
+				require  $editorfile[$LANGUAGE];
 				require  $factsfile["english"];
 				require  $factsfile[$LANGUAGE];
 				require  $helptextfile["english"];
@@ -535,91 +522,105 @@ switch ($action) {
 		    $d_pgv_lang["subtractions"] = $pgv_lang["subtractions"];
 		    $d_pgv_lang["no_subtractions"] = $pgv_lang["no_subtractions"];
 
-		    print "<br /><span class=\"subheaders\">".$d_pgv_lang["comparing"]."<br />\"".$pgv_language[$language1]."\" <---> \"".$pgv_language[$language2]."\"</span><br /><br />\n";
-		    $pgv_lang=array();
-		    require $pgv_language[$language1];
-		    $lang1 = $pgv_lang;
-		    print "<span class=\"subheaders\">".$d_pgv_lang["additions"].":</span><table class=\"facts_table $TEXT_DIRECTION\">\n";
-		    $pgv_lang=array();
-		    if (file_exists($pgv_language[$language2])) require $pgv_language[$language2];
-		    $count=0;
-		    foreach($lang1 as $key=>$value)
-		    {
-		      if (!array_key_exists($key, $pgv_lang))
-		      {
-		      	print "<tr><td class=\"facts_label\">\$pgv_lang[\"$key\"]</td>\n";
-		      	print "<td class=\"facts_value\">\"$value\";</td></tr>\n";
-		      	$count++;
-		      }
-		    }
-		    if ($count==0)
-		    {
-		      print "<tr><td colspan=\"2\" class=\"facts_value\">".$d_pgv_lang["no_additions"]."</td></tr>\n";
-		    }
-		    print "</table><br /><br />\n";
-		    print "<span class=\"subheaders\">".$d_pgv_lang["subtractions"].":</span><table class=\"facts_table $TEXT_DIRECTION\">\n";
-		    $count=0;
-		    foreach($pgv_lang as $key=>$value)
-		    {
-		      if (!array_key_exists($key, $lang1))
-		      {
-		      	print "<tr><td class=\"facts_label\">\$pgv_lang[\"$key\"]</td>\n";
-		      	print "<td class=\"facts_value\">\"$value\";</td></tr>\n";
-		      	$count++;
-		      }
-		    }
-		    if ($count==0)
-		    {
-		      print "<tr><td colspan=\"2\" class=\"facts_value\">".$d_pgv_lang["no_subtractions"]."</td></tr>\n";
-		    }
-		    print "</table><br /><br />\n";
 
-		    print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"100%\" height=\"6\" alt=\"\" /><br />\n";
-		    print "<span class=\"subheaders\">".$d_pgv_lang["comparing"]."<br />\"".$factsfile[$language1]."\" <---> \"".$factsfile[$language2]."\"<br /><br /></span>\n";
-		    $factsarray=array();
-		    require $factsfile[$language1];
-		    $lang1 = $factarray;
-		    $factarray=array();
-		    if (file_exists($factsfile[$language2])) require $factsfile[$language2];
-		    print "<span class=\"subheaders\">".$d_pgv_lang["additions"].":</span><table class=\"facts_table $TEXT_DIRECTION\">\n";
-		    $count=0;
-		    foreach($lang1 as $key=>$value)
+		    // -------------- Comparing lang.xx.php ----------------------
+		    if (file_exists($pgv_language[$language1]) || file_exists($pgv_language[$language2]))
 		    {
-		      if (!array_key_exists($key, $factarray))
-		      {
-		      	print "<tr><td class=\"facts_label\">\$factarray[\"$key\"]</td>\n";
-		      	print "<td class=\"facts_value\">\"$value\";</td></tr>\n";
-		      	$count++;
-		      }
-		    }
-		    if ($count==0)
-		    {
-		      print "<tr><td colspan=\"2\" class=\"facts_value\">".$d_pgv_lang["no_additions"]."</td></tr>\n";
-		    }
-		    print "</table><br /><br />\n";
-		    print "<span class=\"subheaders\">".$d_pgv_lang["subtractions"].":</span><table class=\"facts_table $TEXT_DIRECTION\">\n";
-		    $count=0;
-		    foreach($factarray as $key=>$value)
-		    {
-		      if (!array_key_exists($key, $lang1))
-		      {
-		      	print "<tr><td class=\"facts_label\">\$pgv_lang[\"$key\"]</td>\n";
-		      	print "<td class=\"facts_value\">\"$value\";</td></tr>\n";
-		      	$count++;
-		      }
-		    }
-		    if ($count==0)
-		    {
-		      print "<tr><td colspan=\"2\" class=\"facts_value\">".$d_pgv_lang["no_subtractions"]."</td></tr>\n";
-		    }
-		    print "</table><br /><br />\n";
-
-		    if (file_exists($confighelpfile[$language2]))
-		    {
-		      print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"100%\" height=\"6\" alt=\"\" /><br />\n";
-		      print "<span class=\"subheaders\">".$d_pgv_lang["comparing"]."<br />\"".$confighelpfile[$language1]."\" <---> \"".$confighelpfile[$language2]."\"</span><br /><br />\n";
+		      print "<br /><span class=\"subheaders\">".$d_pgv_lang["comparing"]."<br />".substr($pgv_language[$language1],10)."&nbsp;&nbsp;&nbsp;<--->&nbsp;&nbsp;&nbsp;".substr($pgv_language[$language2],10)."</span><br /><br />\n";
 		      $pgv_lang=array();
-		      require $confighelpfile[$language1];
+		      if (file_exists($pgv_language[$language2])) require $pgv_language[$language1];
+		      $lang1 = $pgv_lang;
+		      print "<span class=\"subheaders\">".$d_pgv_lang["additions"].":</span><table class=\"facts_table $TEXT_DIRECTION\">\n";
+		      $pgv_lang=array();
+		      if (file_exists($pgv_language[$language2])) require $pgv_language[$language2];
+		      $count=0;
+		      foreach($lang1 as $key=>$value)
+		      {
+		        if (!array_key_exists($key, $pgv_lang))
+		        {
+		        	print "<tr><td class=\"facts_label\">\$pgv_lang[\"$key\"]</td>\n";
+		        	print "<td class=\"facts_value\">".str_replace($fromEscapedChars, $toPlainChars, $value)."</td></tr>\n";
+		        	$count++;
+		        }
+		      }
+		      if ($count==0)
+		      {
+		        print "<tr><td colspan=\"2\" class=\"facts_value\">".$d_pgv_lang["no_additions"]."</td></tr>\n";
+		      }
+		      print "</table><br /><br />\n";
+		      print "<span class=\"subheaders\">".$d_pgv_lang["subtractions"].":</span><table class=\"facts_table $TEXT_DIRECTION\">\n";
+		      $count=0;
+		      foreach($pgv_lang as $key=>$value)
+		      {
+		        if (!array_key_exists($key, $lang1))
+		        {
+		        	print "<tr><td class=\"facts_label\">\$pgv_lang[\"$key\"]</td>\n";
+		        	print "<td class=\"facts_value\">".str_replace($fromEscapedChars, $toPlainChars, $value)."</td></tr>\n";
+		        	$count++;
+		        }
+		      }
+		      if ($count==0)
+		      {
+		        print "<tr><td colspan=\"2\" class=\"facts_value\">".$d_pgv_lang["no_subtractions"]."</td></tr>\n";
+		      }
+		      print "</table><br /><br />\n";
+              
+		      print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"100%\" height=\"6\" alt=\"\" /><br />\n";
+	        }
+
+
+		    // -------------- Comparing facts.xx.php ----------------------
+		    if (file_exists($factsfile[$language1]) || file_exists($factsfile[$language2]))
+		    {
+		      print "<span class=\"subheaders\">".$d_pgv_lang["comparing"]."<br />".substr($factsfile[$language1],10)."&nbsp;&nbsp;&nbsp;<--->&nbsp;&nbsp;&nbsp;".substr($factsfile[$language2],10)."<br /><br /></span>\n";
+		      $factsarray=array();
+		      if (file_exists($factsfile[$language1])) require $factsfile[$language1];
+		      $lang1 = $factarray;
+		      $factarray=array();
+		      if (file_exists($factsfile[$language2])) require $factsfile[$language2];
+		      print "<span class=\"subheaders\">".$d_pgv_lang["additions"].":</span><table class=\"facts_table $TEXT_DIRECTION\">\n";
+		      $count=0;
+		      foreach($lang1 as $key=>$value)
+		      {
+		        if (!array_key_exists($key, $factarray))
+		        {
+		        	print "<tr><td class=\"facts_label\">\$factarray[\"$key\"]</td>\n";
+		        	print "<td class=\"facts_value\">".str_replace($fromEscapedChars, $toPlainChars, $value)."</td></tr>\n";
+		        	$count++;
+		        }
+		      }
+		      if ($count==0)
+		      {
+		        print "<tr><td colspan=\"2\" class=\"facts_value\">".$d_pgv_lang["no_additions"]."</td></tr>\n";
+		      }
+		      print "</table><br /><br />\n";
+		      print "<span class=\"subheaders\">".$d_pgv_lang["subtractions"].":</span><table class=\"facts_table $TEXT_DIRECTION\">\n";
+		      $count=0;
+		      foreach($factarray as $key=>$value)
+		      {
+		        if (!array_key_exists($key, $lang1))
+		        {
+		        	print "<tr><td class=\"facts_label\">\$pgv_lang[\"$key\"]</td>\n";
+		        	print "<td class=\"facts_value\">".str_replace($fromEscapedChars, $toPlainChars, $value)."</td></tr>\n";
+		        	$count++;
+		        }
+		      }
+		      if ($count==0)
+		      {
+		        print "<tr><td colspan=\"2\" class=\"facts_value\">".$d_pgv_lang["no_subtractions"]."</td></tr>\n";
+		      }
+		      print "</table><br /><br />\n";
+              
+		      print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"100%\" height=\"6\" alt=\"\" /><br />\n";
+	        }
+
+
+		    // -------------- Comparing configure_help.xx.php ----------------------
+		    if (file_exists($confighelpfile[$language1]) || file_exists($confighelpfile[$language2]))
+		    {
+		      print "<span class=\"subheaders\">".$d_pgv_lang["comparing"]."<br />".substr($confighelpfile[$language1],10)."&nbsp;&nbsp;&nbsp;<--->&nbsp;&nbsp;&nbsp;".substr($confighelpfile[$language2],10)."</span><br /><br />\n";
+		      $pgv_lang=array();
+		      if (file_exists($confighelpfile[$language1])) require $confighelpfile[$language1];
 		      $lang1 = $pgv_lang;
 		      $pgv_lang=array();
 		      if (file_exists($confighelpfile[$language2])) require $confighelpfile[$language2];
@@ -630,7 +631,7 @@ switch ($action) {
 		      	if (!array_key_exists($key, $pgv_lang))
 		      	{
 		      	  print "<tr><td class=\"facts_label\">\$pgv_lang[\"$key\"]</td>\n";
-		      	  print "<td class=\"facts_value\">\"$value\";</td></tr>\n";
+		      	  print "<td class=\"facts_value\">".str_replace($fromEscapedChars, $toPlainChars, $value)."</td></tr>\n";
 		      	  $count++;
 		      	}
 		      }
@@ -647,7 +648,7 @@ switch ($action) {
 		      	if (!array_key_exists($key, $lang1))
 		      	{
 		      	  print "<tr><td class=\"facts_label\">\$pgv_lang[\"$key\"]</td>\n";
-		      	  print "<td class=\"facts_value\">\"$value\";</td></tr>\n";
+		      	  print "<td class=\"facts_value\">".str_replace($fromEscapedChars, $toPlainChars, $value)."</td></tr>\n";
 		      	  $count++;
 		      	}
 		      }
@@ -656,16 +657,19 @@ switch ($action) {
 		      	print "<tr><td colspan=\"2\" class=\"facts_value\">".$d_pgv_lang["no_subtractions"]."</td></tr>\n";
 		      }
 		      print "</table><br /><br />\n";
+              
+		      print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"100%\" height=\"6\" alt=\"\" /><br />\n";
 		    }
 		    require $pgv_language[$language1];
 		    require $pgv_language[$language2];
 
-		    if (file_exists($helptextfile[$language2]))
+
+		    // -------------- Comparing help_text.xx.php ----------------------
+		    if (file_exists($helptextfile[$language1]) || file_exists($helptextfile[$language2]))
 		    {
-		      print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"100%\" height=\"6\" alt=\"\" /><br />\n";
-		      print "<span class=\"subheaders\">".$d_pgv_lang["comparing"]."<br />\"".$helptextfile[$language1]."\" <---> \"".$helptextfile[$language2]."\"</span><br /><br />\n";
+		      print "<span class=\"subheaders\">".$d_pgv_lang["comparing"]."<br />".substr($helptextfile[$language1],10)."&nbsp;&nbsp;&nbsp;<--->&nbsp;&nbsp;&nbsp;".substr($helptextfile[$language2],10)."</span><br /><br />\n";
 		      $pgv_lang=array();
-		      require $helptextfile[$language1];
+		      if (file_exists($helptextfile[$language1])) require $helptextfile[$language1];
 		      $lang1 = $pgv_lang;
 		      $pgv_lang=array();
 		      if (file_exists($helptextfile[$language2])) require $helptextfile[$language2];
@@ -676,7 +680,7 @@ switch ($action) {
 		      	if (!array_key_exists($key, $pgv_lang))
 		      	{
 		      	  print "<tr><td class=\"facts_label\">\$pgv_lang[\"$key\"]</td>\n";
-		      	  print "<td class=\"facts_value\">\"$value\";</td></tr>\n";
+		      	  print "<td class=\"facts_value\">".str_replace($fromEscapedChars, $toPlainChars, $value)."</td></tr>\n";
 		      	  $count++;
 		      	}
 		      }
@@ -693,7 +697,7 @@ switch ($action) {
 		      	if (!array_key_exists($key, $lang1))
 		      	{
 		      	  print "<tr><td class=\"facts_label\">\$pgv_lang[\"$key\"]</td>\n";
-		      	  print "<td class=\"facts_value\">\"$value\";</td></tr>\n";
+		      	  print "<td class=\"facts_value\">".str_replace($fromEscapedChars, $toPlainChars, $value)."</td></tr>\n";
 		      	  $count++;
 		      	}
 		      }
@@ -702,13 +706,17 @@ switch ($action) {
 		      	print "<tr><td colspan=\"2\" class=\"facts_value\">".$d_pgv_lang["no_subtractions"]."</td></tr>\n";
 		      }
 		      print "</table>\n";
-		    }
-		    if (file_exists($adminfile[$language2]))
-		    {
+              
 		      print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"100%\" height=\"6\" alt=\"\" /><br />\n";
-		      print "<span class=\"subheaders\">".$d_pgv_lang["comparing"]."<br />\"".$adminfile[$language1]."\" <---> \"".$adminfile[$language2]."\"</span><br /><br />\n";
+		    }
+
+
+		    // -------------- Comparing admin.xx.php ----------------------
+		    if (file_exists($adminfile[$language1]) || file_exists($adminfile[$language2]))
+		    {
+		      print "<span class=\"subheaders\">".$d_pgv_lang["comparing"]."<br />".substr($adminfile[$language1],10)."&nbsp;&nbsp;&nbsp;<--->&nbsp;&nbsp;&nbsp;".substr($adminfile[$language2],10)."</span><br /><br />\n";
 		      $pgv_lang=array();
-		      require $adminfile[$language1];
+		      if (file_exists($adminfile[$language1])) require $adminfile[$language1];
 		      $lang1 = $pgv_lang;
 		      $pgv_lang=array();
 		      if (file_exists($adminfile[$language2])) require $adminfile[$language2];
@@ -719,7 +727,7 @@ switch ($action) {
 		      	if (!array_key_exists($key, $pgv_lang))
 		      	{
 		      	  print "<tr><td class=\"facts_label\">\$pgv_lang[\"$key\"]</td>\n";
-		      	  print "<td class=\"facts_value\">\"$value\";</td></tr>\n";
+		      	  print "<td class=\"facts_value\">".str_replace($fromEscapedChars, $toPlainChars, $value)."</td></tr>\n";
 		      	  $count++;
 		      	}
 		      }
@@ -736,7 +744,7 @@ switch ($action) {
 		      	if (!array_key_exists($key, $lang1))
 		      	{
 		      	  print "<tr><td class=\"facts_label\">\$pgv_lang[\"$key\"]</td>\n";
-		      	  print "<td class=\"facts_value\">\"$value\";</td></tr>\n";
+		      	  print "<td class=\"facts_value\">".str_replace($fromEscapedChars, $toPlainChars, $value)."</td></tr>\n";
 		      	  $count++;
 		      	}
 		      }
@@ -745,13 +753,17 @@ switch ($action) {
 		      	print "<tr><td colspan=\"2\" class=\"facts_value\">".$d_pgv_lang["no_subtractions"]."</td></tr>\n";
 		      }
 		      print "</table>\n";
-		    }
-		     if (file_exists($editorfile[$language2]))
-		    {
+              
 		      print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"100%\" height=\"6\" alt=\"\" /><br />\n";
-		      print "<span class=\"subheaders\">".$d_pgv_lang["comparing"]."<br />\"".$editorfile[$language1]."\" <---> \"".$editorfile[$language2]."\"</span><br /><br />\n";
+		    }
+
+
+		    // -------------- Comparing editor.xx.php ----------------------
+		    if (file_exists($editorfile[$language1]) || file_exists($editorfile[$language2]))
+		    {
+		      print "<span class=\"subheaders\">".$d_pgv_lang["comparing"]."<br />".substr($editorfile[$language1],10)."&nbsp;&nbsp;&nbsp;<--->&nbsp;&nbsp;&nbsp;".substr($editorfile[$language2],10)."</span><br /><br />\n";
 		      $pgv_lang=array();
-		      require $editorfile[$language1];
+		      if (file_exists($editorfile[$language1])) require $editorfile[$language1];
 		      $lang1 = $pgv_lang;
 		      $pgv_lang=array();
 		      if (file_exists($editorfile[$language2])) require $editorfile[$language2];
@@ -762,7 +774,7 @@ switch ($action) {
 		      	if (!array_key_exists($key, $pgv_lang))
 		      	{
 		      	  print "<tr><td class=\"facts_label\">\$pgv_lang[\"$key\"]</td>\n";
-		      	  print "<td class=\"facts_value\">\"$value\";</td></tr>\n";
+		      	  print "<td class=\"facts_value\">".str_replace($fromEscapedChars, $toPlainChars, $value)."</td></tr>\n";
 		      	  $count++;
 		      	}
 		      }
@@ -779,7 +791,7 @@ switch ($action) {
 		      	if (!array_key_exists($key, $lang1))
 		      	{
 		      	  print "<tr><td class=\"facts_label\">\$pgv_lang[\"$key\"]</td>\n";
-		      	  print "<td class=\"facts_value\">\"$value\";</td></tr>\n";
+		      	  print "<td class=\"facts_value\">".str_replace($fromEscapedChars, $toPlainChars, $value)."</td></tr>\n";
 		      	  $count++;
 		      	}
 		      }
@@ -788,6 +800,55 @@ switch ($action) {
 		      	print "<tr><td colspan=\"2\" class=\"facts_value\">".$d_pgv_lang["no_subtractions"]."</td></tr>\n";
 		      }
 		      print "</table>\n";
+              
+		      print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"100%\" height=\"6\" alt=\"\" /><br />\n";
+		    }
+
+
+		    // -------------- Comparing countries.xx.php ----------------------
+		    if (file_exists($countryfile[$language1]) || file_exists($countryfile[$language2]))
+		    {
+		      print "<span class=\"subheaders\">".$d_pgv_lang["comparing"]."<br />".substr($countryfile[$language1],10)."&nbsp;&nbsp;&nbsp;<--->&nbsp;&nbsp;&nbsp;".substr($countryfile[$language2],10)."</span><br /><br />\n";
+		      $countries=array();
+		      if (file_exists($countryfile[$language1])) require $countryfile[$language1];
+		      $lang1 = $countries;
+		      $countries=array();
+		      if (file_exists($countryfile[$language2])) require $countryfile[$language2];
+		      print "<span class=\"subheaders\">".$d_pgv_lang["additions"].":</span><table class=\"facts_table $TEXT_DIRECTION\">\n";
+		      $count=0;
+		      foreach($lang1 as $key=>$value)
+		      {
+		      	if (!array_key_exists($key, $countries))
+		      	{
+		      	  print "<tr><td class=\"facts_label\">\$countries[\"$key\"]</td>\n";
+		      	  print "<td class=\"facts_value\">".str_replace($fromEscapedChars, $toPlainChars, $value)."</td></tr>\n";
+		      	  $count++;
+		      	}
+		      }
+		      if ($count==0)
+		      {
+		        print "<tr><td colspan=\"2\" class=\"facts_value\">".$d_pgv_lang["no_additions"]."</td></tr>\n";
+		      }
+
+		      print "</table><br /><br />\n";
+		      print "<span class=\"subheaders\">".$d_pgv_lang["subtractions"].":</span><table class=\"facts_table $TEXT_DIRECTION\">\n";
+		      $count=0;
+		      foreach($countries as $key=>$value)
+		      {
+		      	if (!array_key_exists($key, $lang1))
+		      	{
+		      	  print "<tr><td class=\"facts_label\">\$countries[\"$key\"]</td>\n";
+		      	  print "<td class=\"facts_value\">".str_replace($fromEscapedChars, $toPlainChars, $value)."</td></tr>\n";
+		      	  $count++;
+		      	}
+		      }
+		      if ($count==0)
+		      {
+		      	print "<tr><td colspan=\"2\" class=\"facts_value\">".$d_pgv_lang["no_subtractions"]."</td></tr>\n";
+		      }
+		      print "</table>\n";
+              
+		      print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"100%\" height=\"6\" alt=\"\" /><br />\n";
 		    }
 		    require $pgv_language[$language1];
 		    require $pgv_language[$language2];
@@ -804,32 +865,32 @@ switch ($action) {
 			</td>
 		</tr>
 		<tr>
-			<td class="facts_value"><?php
+			<td class="facts_value width50"><?php
 				print_help_link("bom_check_help", "qm");
 				print "<a href=\"editlang.php?action=bom\">".$pgv_lang["bom_check"]."</a>";
 	    	?></td>
-	      	<td class="facts_value"><?php
+	      	<td class="facts_value width50"><?php
 				print_help_link("edit_lang_utility_help", "qm");
 	      		print "<a href=\"editlang.php?action=edit\">".$pgv_lang["edit_lang_utility"]."</a>";
 	    	?></td>
 	    </tr>
 	    <tr>
-	    	<td class="facts_value"><?php
+	    	<td class="facts_value width50"><?php
 	    		print_help_link("lang_debug_help", "qm");
 	        	print "<a href=\"editlang.php?action=debug\">".$pgv_lang["lang_debug"]."</a>";
 	    	?></td>
-		  	<td class="facts_value"><?php
+		  	<td class="facts_value width50"><?php
 				print_help_link("export_lang_utility_help", "qm");
 		  		print "<a href=\"editlang.php?action=export\">".$pgv_lang["export_lang_utility"]."</a>";
 			?></td>
 		</tr>
 		<tr>
-			<td class="facts_value"><?php
+			<td class="facts_value width50"><?php
 				print_help_link("translation_forum_desc", "qm"); ?>
 				<a href="http://sourceforge.net/forum/forum.php?forum_id=294245" target="_blank" ><?php
 				print $pgv_lang["translation_forum"];
 	      	?></td>
-		  	<td class="facts_value"><?php
+		  	<td class="facts_value width50"><?php
 				print_help_link("compare_lang_utility_help", "qm");
 	      		print "<a href=\"editlang.php?action=compare\">".$pgv_lang["compare_lang_utility"]."</a>";
 		  	?></td>

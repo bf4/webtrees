@@ -101,20 +101,31 @@ require_once("includes/person_class.php");
 			//get the children in the family of the person, and it will also
 			//get his siblings since we merged the arrays earlier
 			$children = $family->getChildren();
+			
+			if(!empty($myHusb))
+			{
 			//Load the husbands details into $myindilist
 			$myindilist[$myHusb->getXref()] = $indilist[$myHusb->getXref()];
+			}
+			
+			if(!empty($myWife))
+			{
 			//Load the wife's details into $myindilist
 			$myindilist[$myWife->getXref()] = $indilist[$myWife->getXref()];			
+			}
 			//Copy the family data into the $myfamlist for later use
 			$myfamlist[] = $family;
 			//foreach over the array of children and siblings
-			foreach($children as $chKey=>$child)
+			if(!empty($children))
 			{
-				//copy the persons details into $myindilist
-				//these people may already exist and their detials will just be
-				//added again.  If we didn't do this, things might get lost 
-				//in the mix
-				$myindilist[$child->getXref()] = $indilist[$child->getXref()];
+				foreach($children as $chKey=>$child)
+				{
+					//copy the persons details into $myindilist
+					//these people may already exist and their detials will just be
+					//added again.  If we didn't do this, things might get lost 
+					//in the mix
+					$myindilist[$child->getXref()] = $indilist[$child->getXref()];
+				}
 			}
 		}
 		
@@ -270,9 +281,10 @@ require_once("includes/person_class.php");
 		//create an array to hold our data to put it in the actual array
 		$tempFullArray = array();
 		//iterate over the facts that were returned
+		
 		foreach($tempArray as $tempKey=>$localValue)
 		{
-			
+		
 			if(strstr($localValue['local'],$factType))
 			{
 			
@@ -333,7 +345,7 @@ require_once("includes/person_class.php");
 						{
 							if($row['pr_count'] != 0)
 							{
-								$tempAvg = $row['pr_count'] / $row['pr_matches'];
+								$tempAvg = $row['pr_matches'] / $row['pr_count'];
 							}
 							else
 							{
@@ -357,6 +369,7 @@ require_once("includes/person_class.php");
 		$tempResult = personalinferences($pid);
 		//Get the global inferences
 		$globalInf = getGlobalinferences();
+
 		//Init an array for us to return that is nicely formatted
 		$niceData = array();
 		//iterate over the results of the inferences
@@ -366,23 +379,21 @@ require_once("includes/person_class.php");
 		//Get the probability
 		$prob = computeProb($value['count'],$value['value']);
 		//add our information to the array
-		$tempArray[0] = getPartsTranslation($value['local']);
-		$tempArray[1] = getPartsTranslation($value['record']);
-		$tempArray[2] = getPartsTranslation($value['comp']);
+		$tempArray[0] = $value['local'];
+		$tempArray[1] = $value['record'];
+		$tempArray[2] = $value['comp'];
+		$tempArray['LocalCount'] = $value['count'];
 		$tempArray["Prob"] = $prob * 100;
 
 		if($globalInf != false)
 		{
 		foreach($globalInf as $tempKey=>$tempVal)
 		{
-			foreach($tempVal as $actKey=>$actVal)
-			{
-			
-				if($actVal['value'] === $value['value'] && $actVal['local'] === $value['local'] && $actVal['record'] === $value['record'])
+				if(($tempVal[1] == $value['record']) && ($tempVal[0] == $value['local']) && ($tempVal[2] == $value['comp']))
 				{
-					$tempArray["GlobalProb"] = $value['value'];
+					$tempArray["GlobalProb"] = $tempVal['GlobalProb'];
+					$tempArray["GlobalCount"] = $tempVal['GlobalCount'];
 				}
-			}
 		}
 		}
 		//Add our array to our nice data array
@@ -426,13 +437,16 @@ require_once("includes/person_class.php");
 	 					$tempArray[] = $row['pr_f_lvl'];
 	 					$tempArray[] = $row['pr_s_lvl'];
 	 					$tempArray[] = $row['pr_rel'];
-	 					if($row['pr_matches'] !== 0 && $row['pr_count'] !== 0)
+	 					if($row['pr_matches'] != 0 && $row['pr_count'] != 0)
 	 					{
-	 					$tempArray["GlobalProb"] = $row['pr_matches'] / $row['pr_count'];
+		 					$tempArray["GlobalProb"] = $row['pr_matches'] / $row['pr_count'];
+		 					$tempArray["GlobalCount"] = $row['pr_matches'];
+		 				
 	 					}
 	 					else
 	 					{
 	 					$tempArray["GlobalProb"] = 0;
+	 					$tempArray["GlobalCount"] = 0;
 	 					}
 	 					$inferenceArray[] = $tempArray;			
 	 				}
@@ -456,10 +470,4 @@ require_once("includes/person_class.php");
 		return $out;
 	}
 	
-	function estimateDates($pid,$factForDate)
-	{
-		/*@var $person Person*/
-		$person = Person::getInstance($pid);
-		
-	}
 	

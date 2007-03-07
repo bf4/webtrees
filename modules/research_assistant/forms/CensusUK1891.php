@@ -75,7 +75,7 @@ return false;}return true;}
         foreach ($params as $key => $value) {
             $out .= '<input type="hidden" name="' . $key . '" value="' . $value . '">';
         }
-        $out .= '<table id="CensusUK1891" class="list_table" align="' . $tableAlign . '">';
+        $out .= '<table id="CensusUK1891" class="list_table" dir="ltr" align="' . $tableAlign . '">';
         $out .= '<tr>';
         $out .= '<th colspan="6" align="right"class="topbottombar"><h2>' . $heading . '</h2></th>';
         $out .= '</tr>';
@@ -127,7 +127,28 @@ return false;}return true;}
 //        Start of Table
 		$out = '<tr>
 			<td class="descriptionbox">'.print_help_link("edit_media_help", "qm",'',false,true).$factarray['OBJE'].'</td>
-			<td class="optionbox" colspan="5"><input type="text" name="OBJE" id="OBJE" size="5" value="'.$citation['ts_obje'].'"/>';
+			<td class="optionbox" colspan="5"><input type="hidden" name="OBJE" id="OBJE" value="'.$citation['ts_obje'].'"/>';
+			$out .= "<div id=\"censusPicDiv\" style=\"display";
+			if(!empty($citation['ts_obje']))
+			{
+				$out .= ":block\">";
+				/*@var $picture Media*/
+				$picture = Media::getInstance($citation['ts_obje']);
+				if(!is_null($picture))
+				{	
+					$out .= "<span id=\"censusImgSpan\">".$picture->getTitle().'</span><br/><img id="censusImage" src="'.$picture->getThumbnail().'" />';
+				}
+				else
+				{
+					$out .= "<span id=\"censusImgSpan\"></span><br /><img id=\"censusImage\" src=\"\" />";
+				}
+			}
+			else
+			{
+				$out .= ":none\">";
+				$out .= "<span id=\"censusImgSpan\"></span><br /><img id=\"censusImage\" src=\"\" />";
+			}
+			$out .="</div>";
 		$out .= print_findmedia_link("OBJE", true, '', true);
 		$out .= '<br /><a href="javascript:;" onclick="pastefield=document.getElementById(\'OBJE\'); window.open(\'addmedia.php?action=showmediaform\', \'\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["add_media"].'</a>';
 		$out .= '</td></tr>';

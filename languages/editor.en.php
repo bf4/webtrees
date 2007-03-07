@@ -30,6 +30,10 @@ if (preg_match("/editor\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["admin_override"]			= "Admin Option";
+$pgv_lang["no_update_CHAN"]			= "Do not update the CHAN (Last Change) record";
+$pgv_lang["select_events"]			= "Select Events";
+$pgv_lang["source_events"]			= "Associate events with this source";
 $pgv_lang["advanced_name_fields"]	= "Additional names (nickname, married name, etc.)";
 $pgv_lang["accept_changes"] 		= "Accept / Reject Changes";
 $pgv_lang["replace"]				= "Replace record";
@@ -153,7 +157,6 @@ $pgv_lang["hebrew_surn"]			= "Hebrew Surname";
 $pgv_lang["hide_changes"]			= "Click here to hide changes.";
 $pgv_lang["highlighted"]			= "Highlighted Image";
 $pgv_lang["illegal_chars"]			= "Blank name or illegal characters in name";
-$pgv_lang["invalid_search_input"] 	= "Please enter a Given name, Last name, or Place in addition to Year";
 $pgv_lang["invalid_search_multisite_input"] = "Please enter one of the following:  Name, Birth Date, Birth Place, Death Date, Death Place, and Sex ";
 $pgv_lang["invalid_search_multisite_input_gender"] = "Please search again with more information than just sex";
 $pgv_lang["label_diff_server"]      = "Different Site";

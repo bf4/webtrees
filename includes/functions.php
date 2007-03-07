@@ -931,6 +931,9 @@ function find_updated_record($gid, $gedfile="") {
 
 	if (empty($gedfile)) $gedfile = $GEDCOM;
 
+	//-- if auto accept is on, the record is probably in the DB
+	if (userAutoAccept()) return find_gedcom_record($gid);
+	
 	if (isset($pgv_changes[$gid."_".$gedfile])) {
 		$change = end($pgv_changes[$gid."_".$gedfile]);
 		return $change['undo'];
@@ -3127,7 +3130,7 @@ function CheckPageViews() {
  * @param string $type	the type of record, defaults to 'INDI'
  * @return string
  */
-function get_new_xref($type='INDI') {
+function get_new_xref($type='INDI', $use_cache=false) {
 	global $fcontents, $SOURCE_ID_PREFIX, $REPO_ID_PREFIX, $pgv_changes, $GEDCOM, $TBLPREFIX, $GEDCOMS;
 	global $MEDIA_ID_PREFIX, $FAM_ID_PREFIX, $GEDCOM_ID_PREFIX, $FILE, $DBCONN, $MAX_IDS;
 
@@ -3141,7 +3144,7 @@ function get_new_xref($type='INDI') {
 	$num = null;
 	//-- check if an id is stored in MAX_IDS used mainly during the import
 	//-- the number stored in the max_id is the next number to use... no need to increment it
-	if (!empty($MAX_IDS)&& isset($MAX_IDS[$type])) {
+	if ($use_cache && !empty($MAX_IDS)&& isset($MAX_IDS[$type])) {
 		$num = 1;
 		$num = $MAX_IDS[$type];
 		$MAX_IDS[$type] = $num+1;
@@ -3187,14 +3190,16 @@ function get_new_xref($type='INDI') {
 	//-- the key is the prefix and the number
 	$key = $prefix.$num;
 
-	//-- during the import we won't update the database at this time so return now
-	if (isset($MAX_IDS[$type])) return $key;
-
 	//-- make sure this number has not already been used by an
 	//- item awaiting approval
 	while(isset($pgv_changes[$key."_".$GEDCOM])) {
 		$num++;
 		$key = $prefix.$num;
+	}
+	
+	//-- during the import we won't update the database at this time so return now
+	if ($use_cache && isset($MAX_IDS[$type])) {
+		return $key;
 	}
 	$num++;
 	//-- update the next id number in the DB table

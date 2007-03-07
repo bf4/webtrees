@@ -754,20 +754,12 @@ function ancestry_array($rootid, $maxgen=0) {
 		$treeid[($i * 2)] = false; // -- father
 		$treeid[($i * 2) + 1] = false; // -- mother
 		if (!empty($treeid[$i])) {
-			print " ";
-			$famids = find_family_ids($treeid[$i]);
-			if (count($famids) > 0) {
-				$parents = false;
-				$j = 0;
-				while ((!$parents) && ($j < count($famids))) {
-					$parents = find_parents($famids[$j]);
-					$j++;
-				}
-
-				if ($parents) {
-					$treeid[($i * 2)] = $parents["HUSB"]; // -- set father id
-					$treeid[($i * 2) + 1] = $parents["WIFE"]; // -- set mother id
-				}
+			$person = Person::getInstance($treeid[$i]);
+			$families = $person->getChildFamilies();
+			foreach($families as $famid=>$family) {
+				/*@var $family Family */
+				if (empty($treeid[($i * 2)])) $treeid[($i * 2)] = $family->getHusbId(); // -- set father id
+				if (empty($treeid[($i * 2) + 1])) $treeid[($i * 2) + 1] = $family->getWifeId(); // -- set mother id
 			}
 		}
 	}
@@ -789,57 +781,12 @@ function ancestry_array($rootid, $maxgen=0) {
  */
 function pedigree_array($rootid) {
 	global $PEDIGREE_GENERATIONS, $SHOW_EMPTY_BOXES;
-	// -- maximum size of the id array is 2^$PEDIGREE_GENERATIONS - 1
-	$treesize = pow(2, (int)($PEDIGREE_GENERATIONS))-1;
 
-	$treeid = array();
-	$treeid[0] = $rootid;
-	// -- fill in the id array
-	for($i = 0; $i < ($treesize / 2); $i++) {
-		if (!empty($treeid[$i])) {
-			//print " ";
-			$person = Person::getInstance($treeid[$i], false);
-			if (!is_null($person)) {
-				$famids = $person->getChildFamilies();
-				//$famids = find_family_ids($treeid[$i]);
-				if (count($famids) > 0) {
-					$parents = false;
-					$j = 0;
-					$wife = null;
-					$husb = null;
-					foreach($famids as $famid=>$family) {
-						if (!is_null($family)) {
-							$wife = $family->getWife();
-							$husb = $family->getHusband();
-							if (!is_null($wife) || !is_null($husb)) {
-								$parents = true;
-								break;
-							}
-						}
-						//$parents = find_parents($famids[$j]);
-						$j++;
-					}
+	$treeid = ancestry_array($rootid);
+	$treesize = count($treeid)-1;
+	//-- ancestry_array puts everyone at $i+1
+	for($i=0; $i<$treesize-1; $i++) $treeid[$i] = $treeid[$i+1]; 
 
-					if ($parents) {
-						if (!is_null($husb)) $treeid[($i * 2) + 1] = $husb->getXref(); // -- set father id
-						else $treeid[($i * 2) + 1] = false;
-						if (!is_null($wife)) $treeid[($i * 2) + 2] = $wife->getXref(); // -- set mother id
-						else $treeid[($i * 2) + 2] = false;
-					}
-				} else {
-					$treeid[($i * 2) + 1] = false; // -- father not found
-					$treeid[($i * 2) + 2] = false; // -- mother not found
-				}
-			}
-			else {
-				$treeid[($i * 2) + 1] = false; // -- father not found
-				$treeid[($i * 2) + 2] = false; // -- mother not found
-			}
-		} else {
-			$treeid[($i * 2) + 1] = false; // -- father not found
-			$treeid[($i * 2) + 2] = false; // -- mother not found
-		}
-	}
 	// -- detect the highest generation that actually has a person in it and use it for the pedigree generations
 	if (!$SHOW_EMPTY_BOXES) {
 		for($i = ($treesize-1); empty($treeid[$i]); $i--);

@@ -42,6 +42,9 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+-$pgv_lang["move_to"]								24 Feb 2007				D
+*$pgv_lang["progress_bars_info"]					11 Feb 2007				wf
++$pgv_lang["BOM_detected"]							11 Feb 2007				A
 -$pgv_lang["duplicate_username"]					26 Jan 2007				M			Moved to lang.en.php
 +$pgv_lang["clear_cache_succes"]					18 Jan 2007				A
 +$pgv_lang["clear_cache"]							18 Jan 2007				A

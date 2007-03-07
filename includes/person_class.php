@@ -53,6 +53,8 @@ class Person extends GedcomRecord {
 	var $label = "";
 	var $highlightedimage = null;
 	var $file = "";
+	var $age = null;
+	
 	/**
 	 * Constructor for person object
 	 * @param string $gedrec	the raw individual gedcom record
@@ -161,8 +163,8 @@ class Person extends GedcomRecord {
 			$givn = preg_replace("/([^ ]+)\*/", "<span class=\"starredname\">$1</span>", $givn);
 		}
 		if ($nsfx) $surn .= " ".trim($nsfx);
-		if ($NAME_REVERSE) return trim($givn.", ".$surn);
-		else return trim($surn.", ".$givn);
+//		if ($NAME_REVERSE) return trim($givn.", ".$surn);
+		return trim($surn.", ".$givn);
 	}
 
 	/**
@@ -428,12 +430,18 @@ class Person extends GedcomRecord {
 	 * @return string the age
 	 */
 	function getAge($birtrec="", $when="") {
+		if (empty($birtrec) && empty($when)) {
+			if (!is_null($this->age)) return $this->age;
+			else $keepage = true;
+		}
 		if (empty($birtrec)) $birtrec=$this->gedrec;
 		if (empty($when)) {
 			if ($this->isDead()) $when = $this->ddate; // age at death
 			else $when = date("d M Y"); // today
 		}
-		return get_age($birtrec, $when, 0);
+		$age = get_age($birtrec, $when, 0);
+		if (isset($keepage)) $this->age = $age;
+		return $age;
 	}
 
 	/**
@@ -510,10 +518,18 @@ class Person extends GedcomRecord {
 	 * @return int 	the number of children
 	 */
 	function getNumberOfChildren() {
+		global $indilist, $GEDCOMS, $GEDCOM;
+		
+		//-- first check for the value in the gedcom record
 		$nchi = get_gedcom_value("NCHI", 1, $this->gedrec);
 		if ($nchi!="") return $nchi.".";
+		
+		//-- check if the value was stored in the cache 
+		if (isset($indilist[$this->xref])
+				&& $indilist[$this->xref]["gedfile"] == $GEDCOMS[$GEDCOM]['id'] 
+				&& isset($indilist[$this->xref]["numchil"])) return $indilist[$this->xref]["numchil"];
 		$nchi=0;
-		foreach ($this->getSpouseFamilies() as $family) $nchi+=$family->getNumberOfChildren();
+		foreach ($this->getSpouseFamilies() as $famid=>$family) $nchi+=$family->getNumberOfChildren();
 		return $nchi;
 	}
 	/**
@@ -587,6 +603,7 @@ class Person extends GedcomRecord {
 		$this->parseFacts();
 		return $this->indifacts;
 	}
+	
 	/**
 	 * get other facts
 	 * @return array
@@ -765,7 +782,7 @@ class Person extends GedcomRecord {
 	/**
 	 * add facts from the family record
 	 */
-	function add_family_facts() {
+	function add_family_facts($otherfacts = true) {
 		global $GEDCOM, $nonfacts, $nonfamfacts;
 
 		if (!$this->canDisplayDetails()) return;
@@ -812,13 +829,18 @@ class Person extends GedcomRecord {
 				}
 				else $factrec .= "\n".$line;
 			}
-			$this->add_spouse_facts($spouse, $famrec);
-			$this->add_children_facts($famid);
+			if($otherfacts){
+				$this->add_spouse_facts($spouse, $famrec);
+				$this->add_children_facts($famid);
+			}
 		}
 		//$sosamax=7;
-		$this->add_parents_facts($this->xref);
-		$this->add_historical_facts();
-		$this->add_asso_facts($this->xref);
+		if($otherfacts){
+			$this->add_parents_facts($this->xref);
+			$this->add_historical_facts();
+			$this->add_asso_facts($this->xref);
+		}
+	
 	}
 	/**
 	 * add parents events to individual facts array

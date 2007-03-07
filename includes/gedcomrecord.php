@@ -251,6 +251,30 @@ class GedcomRecord {
 		}
 		return $url;
 	}
+	
+	/**
+	 * Get the title that should be used in the link
+	 * @return string
+	 */
+	function getLinkTitle() {
+		global $GEDCOM, $GEDCOMS;
+
+		$title = $GEDCOMS[$GEDCOM]['title'];
+		if ($this->isRemote()) {
+			$parts = preg_split("/:/", $this->rfn);
+			if (count($parts)==2) {
+				$servid = $parts[0];
+				$aliaid = $parts[1];
+				if (!empty($servid)&&!empty($aliaid)) {
+					$serviceClient = ServiceClient::getInstance($servid);
+					if (!empty($serviceClient)) {
+						$title = $serviceClient->getTitle();
+					}
+				}
+			}
+		}
+		return $title;
+	}
 
 	/**
 	 * return an absolute url for linking to this record from another site

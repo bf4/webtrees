@@ -142,7 +142,7 @@ class IndividualControllerRoot extends BaseController {
 			$this->default_tab = $_REQUEST['tab'];
 		}
 		
-		if ($this->default_tab<0 || $this->default_tab>7) $this->default_tab=0;
+		if ($this->default_tab<-2 || $this->default_tab>7) $this->default_tab=0;
 
 		$this->indi = new Person($indirec, false);
 
@@ -282,6 +282,11 @@ class IndividualControllerRoot extends BaseController {
 			//-- delete the record from the cache and refresh it
 			if (isset($indilist[$this->pid])) unset($indilist[$this->pid]);
 			$indirec = find_person_record($this->pid);
+			//-- check if we just deleted the record and redirect to index
+			if (empty($indirec)) {
+				header("Location: index.php?command=gedcom");
+				exit;
+			}
 			$this->indi = new Person($indirec);
 		}
 	}

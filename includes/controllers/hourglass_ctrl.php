@@ -3,7 +3,7 @@
  * Controller for the Hourglass Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006	John Finlay and Others
+ * Copyright (C) 2002 to 2007	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,8 @@
  * @version $Id$
  */
 require_once("config.php");
-require_once 'includes/controllers/basecontrol.php';
-require_once 'includes/person_class.php';
+require_once("includes/controllers/basecontrol.php");
+require_once("includes/person_class.php");
 require_once("includes/functions_charts.php");
 
 $indifacts = array();			 // -- array to store the fact records in for sorting and displaying

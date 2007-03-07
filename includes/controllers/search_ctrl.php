@@ -4,7 +4,7 @@
  * Controller for the Search Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005	John Finlay and Others
+ * Copyright (C) 2002 to 2007	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -128,12 +128,11 @@ class SearchControllerRoot extends BaseController {
 		// Get the query and remove slashes
 		if (isset ($_REQUEST["query"])) {
 			// Reset the "Search" text from the page header
-			if ($_REQUEST["query"] == $pgv_lang["search"]) {
+			if ($_REQUEST["query"] == $pgv_lang["search"] || strlen($_REQUEST["query"])<2 || preg_match("/^\.+$/", $_REQUEST["query"])>0) {
 				unset ($this->query);
 			} else {
 				$this->query = stripslashes($_REQUEST["query"]);
 				$this->myquery = $this->query;
-
 			}
 		}
 		if (isset ($_REQUEST["replace"])) {
@@ -831,10 +830,8 @@ class SearchControllerRoot extends BaseController {
 				if (!empty ($this->firstname)) {
 					$firstnames = preg_split("/\s/", trim($this->firstname));
 					for ($j = 0; $j < count($firstnames); $j ++) {
-						if ($this->soundex == "Russell")
-						$farr[$j] = array(soundex($firstnames[$j]));
-						if ($this->soundex == "DaitchM")
-						$farr[$j] = DMsoundex($firstnames[$j]);
+						if ($this->soundex == "Russell") $farr[$j] = array(soundex($firstnames[$j]));
+						if ($this->soundex == "DaitchM") $farr[$j] = DMsoundex($firstnames[$j]);
 					}
 				}
 				if ((!empty ($this->place)) && ($this->soundex == "DaitchM"))
@@ -847,10 +844,6 @@ class SearchControllerRoot extends BaseController {
 				$this->printname = array ();
 				$this->printfamname = array ();
 
-				$firstName = "";
-				$lastName = "";
-
-
 				if(!empty($this->place) && empty($this->firstname) && empty($this->lastname))
 				{
 					$this->Place_Search();
@@ -858,36 +851,6 @@ class SearchControllerRoot extends BaseController {
 				}
 				else
 				{
-					$firstName = "";
-					foreach($farr as $name)
-					{
-					//$firstName .= "%" . $name;
-						foreach($name as $name1)
-						$firstName .= "%" . $name1;
-					}
-					if (!empty($arr2))
-					{
-						foreach($arr2 as $name);
-						{
-							$lastName .= "%" . $name;
-						}
-					}
-					
-					$places = "";
-					if(!empty($this->place))
-					{
-						foreach ($parr as $place)
-						{
-							$places .= "%" . $place;
-						}
-					}
-					
-
-						
-					$firstName .= "%";
-					$lastName .= "%";
-					$places .= "%";
-
 					$sql = "SELECT i_id, i_gedcom, sx_n_id, i_file FROM ".$TBLPREFIX."soundex, ".$TBLPREFIX."individuals";
 					if (!empty($this->place)) {
 						$sql .= ", ".$TBLPREFIX."placelinks, ".$TBLPREFIX."places";
@@ -903,67 +866,58 @@ class SearchControllerRoot extends BaseController {
 							$sql .= "i_file='".$DBCONN->escapeSimple($GEDCOMS[$this->sgeds[$i]]["id"])."'";
 							if ($i < count($this->sgeds)-1) $sql .= " OR ";
 						}
-						$sql .= ") AND ";
+						$sql .= ") ";
 					}
 						
-					if($this->soundex == "DaitchM")
-					{
 						$x = 0;
-
-						$where = "";
-				
-						if(!empty($firstName))
-						{
-							$where = "sx_fn_dm_code LIKE '".$DBCONN->escapeSimple($firstName)."' ";
-							$x++;
-						}
-							
-						if(!empty($lastName))
-						{
-							if($x > 0)
-							$where .= "AND ";
-
-							$where .= "sx_ln_dm_code LIKE '".$DBCONN->escapeSimple($lastName)."' ";
-						}
-						if (!empty($this->place)) {
-							$where .= "AND p_dm_soundex LIKE '".$DBCONN->escapeSimple($places)."' "; 
-						}
-					}
 						
-					if ($this->soundex == "Russell")
+						if (count($farr)>0) {
+							$sql .= "AND (";
+							$fnc = 0;
+							if($this->soundex == "DaitchM") $field = "sx_fn_dm_code";
+							else $field = "sx_fn_std_code";
+							foreach($farr as $name)
+							{
+								foreach($name as $name1) {
+									if ($fnc>0) $sql .= " OR ";
+									$fnc++;
+									$sql .= $field." LIKE '%".$DBCONN->escapeSimple($name1)."%'";
+								}
+							}
+							$sql .= ") ";
+						}
+						if (!empty($arr2) && count($arr2)>0) 
+						{
+							$sql .= "AND (";
+							$lnc = 0;
+							if($this->soundex == "DaitchM") $field = "sx_ln_dm_code";
+							else $field = "sx_ln_std_code";
+							foreach($arr2 as $name) {
+								if ($lnc>0) $sql .= " OR ";
+								$lnc++;
+								$sql .= $field." LIKE '%".$DBCONN->escapeSimple($name)."%'";
+							}
+							$sql .= ") ";
+						}
+						
+					if(!empty($this->place))
 					{
-						$x = 0;
-
-						$where = "";
-		
-						if(!empty($firstName))
-						{
-							$where = "sx_fn_std_code LIKE '".$DBCONN->escapeSimple($firstName)."' ";
-							$x++;
+						if($this->soundex == "DaitchM") $field = "p_dm_soundex";
+						if ($this->soundex == "Russell") $field = "p_std_soundex";
+						$sql .= "AND (";
+						$pc = 0;
+						foreach ($parr as $place) {
+							if ($pc>0) $sql .= " OR ";
+							$pc++;
+							$sql .= $field." LIKE '%".$DBCONN->escapeSimple($place)."%'";
 						}
-							
-						if(!empty($lastName))
-						{
-							if($x > 0)
-							$where .= "AND ";
-
-							$where .= "sx_ln_std_code LIKE '".$DBCONN->escapeSimple($lastName)."' ";
-						}
-						if (!empty($this->place)) {
-							$where .= "AND p_std_soundex LIKE '".$DBCONN->escapeSimple($places)."' "; 
-						}
+						$sql .= ") ";
 					}
-						
-					$sql .= $where;
 					//--group by
 					$sql .= "GROUP BY i_id";
 
-              // echo "<br />sql= ".$sql;	//debug			
-						
+//               echo "<br />sql= ".$sql;	//debug			
 					$res = dbquery($sql);
-
-
-
 
 					while($row = $res->fetchRow()) {
 						$namearray = get_indi_names($row[1]);
@@ -1572,7 +1526,7 @@ class SearchControllerRoot extends BaseController {
 				}
 				$GEDCOM = $oldged;
 				//-- [end] new code for sortable tables
-/*
+				/*** DEPRECATED
 				$totalIndiResults = count($printindiname);
 				$this->totalGeneralResults = $totalIndiResults;
 				$totalFamResults = count($printfamname);
@@ -1724,7 +1678,7 @@ class SearchControllerRoot extends BaseController {
 					}
 				}
 				print "</table>";
-				*/
+				***/
 				print "</div>";
 			} else
 			if (isset ($this->query)) {
@@ -1744,7 +1698,26 @@ class SearchControllerRoot extends BaseController {
 			if ($this->soundex == "DaitchM")
 			DMsoundex("", "closecache");
 			// 	$this->query = "";	// Stop function PrintReady from doing strange things to accented names
-			
+				//-- [start] new code for sortable tables
+				print "<br />";
+				print "\n\t<div class=\"center\">\n";
+				global $GEDCOMS;
+				$oldged = $GEDCOM;
+				$this->myquery = trim($this->mylastname." ".$this->myfirstname." ".$this->myplace." ".$this->myyear);
+				foreach ($this->sgeds as $key=>$GEDCOM) {
+					$datalist = array();
+					foreach ($this->printname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[]=$v[1];
+					print_indi_table(array_unique($datalist), $pgv_lang["individuals"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
+				}
+				foreach ($this->sgeds as $key=>$GEDCOM) {
+					$datalist = array();
+					foreach ($this->printfamname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[]=$v[1];
+					print_fam_table(array_unique($datalist), $pgv_lang["families"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
+				}
+				$GEDCOM = $oldged;
+				print "</div>";
+				//-- [end] new code for sortable tables
+			/** DEPRECATED
 			if (((!empty ($this->lastname)) || (!empty ($this->firstname)) || (!empty ($this->place))) && (isset ($this->printname))) {
 				print "<div class=\"center\"><br />";
 				//set the total results and only get the results for this page
@@ -1772,7 +1745,7 @@ class SearchControllerRoot extends BaseController {
 					print "<td colspan=\"2\" class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["people"]."</td>";
 					print "</tr><tr>\n\t\t<td class=\"list_value_wrap\"><ul>";
 
-					/***************************************************** PAGING HERE **********************************************************************/
+					///***************************************************** PAGING HERE **********************************************************************
 
 					$this->printname = $this->getPagedResults($this->printname, $this->resultsPerPage);
 					$this->indiResultsPrinted = count($this->printname);
@@ -1807,7 +1780,7 @@ class SearchControllerRoot extends BaseController {
 						else
 						$famCount = 0;
 
-						/***************************************************** PAGING HERE **********************************************************************/
+						//***************************************************** PAGING HERE **********************************************************************
 
 						//set the total results and only get the results for this page
 						$totalFamResults = count($this->printfamname);
@@ -1879,6 +1852,7 @@ class SearchControllerRoot extends BaseController {
 				print "<td class=\"warning\" style=\" text-align: center;\"><i>".$pgv_lang["no_results"]."</i></td></tr>\n\t\t";
 				print "</table></div>";
 			}
+			**/
 
 			// Prints the Paged Results: << 1 2 3 4 >> links if there are more than $this->resultsPerPage results
 			if ($this->resultsPerPage >= 1 && $this->totalResults > $this->resultsPerPage) {

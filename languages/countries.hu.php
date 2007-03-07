@@ -38,7 +38,7 @@
  * @package PhpGedView
  * @subpackage Languages
  */
-if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+if (preg_match("/countries\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	print "A nyelvi fájl közvetlenül nem érhető el.";
 	exit;
 }

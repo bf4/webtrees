@@ -7,7 +7,7 @@
  * file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,7 @@
 ini_set('register_globals', 'Off');
 require "config.php";
 require_once "includes/functions_import.php";
+require_once "includes/functions_export.php";
 require $confighelpfile["english"];
 if (file_exists($confighelpfile[$LANGUAGE]))
 	require $confighelpfile[$LANGUAGE];
@@ -121,13 +122,7 @@ else
 				else
 					$fp = fopen($INDEX_DIRECTORY.$GEDFILENAME, "wb");
 				if ($fp) {
-					$newgedcom = "0 HEAD\r\n" .
-							"1 SOUR PhpGedView\r\n" .
-							"2 VERS $VERSION $VERSION_RELEASE\r\n" .
-							"1 DEST ANSTFILE\r\n" .
-							"1 GEDC\r\n2 VERS 5.5\r\n" .
-							"2 FORM Lineage-Linked\r\n" .
-							"1 CHAR UTF-8\r\n" .
+					$newgedcom = gedcom_header($GEDFILENAME).
 							"0 @I1@ INDI\r\n" .
 							"1 NAME Given Names /Surname/\r\n" .
 							"1 SEX M\r\n" .
@@ -159,13 +154,7 @@ else
 				else
 					$fp = fopen($INDEX_DIRECTORY.$GEDFILENAME.".bak", "wb");
 				if ($fp) {
-					$newgedcom = "0 HEAD\r\n" .
-							"1 SOUR PhpGedView\r\n" .
-							"2 VERS $VERSION $VERSION_RELEASE\r\n" .
-							"1 DEST ANSTFILE\r\n" .
-							"1 GEDC\r\n2 VERS 5.5\r\n" .
-							"2 FORM Lineage-Linked\r\n" .
-							"1 CHAR UTF-8\r\n" .
+					$newgedcom = gedcom_header($GEDFILENAME).
 							"0 @I1@ INDI\r\n" .
 							"1 NAME Given Names /Surname/\r\n" .
 							"1 SEX M\r\n" .
@@ -213,6 +202,7 @@ if ($cleanup_needed == "cleanup_needed" && $continue == $pgv_lang["del_proceed"]
 
 	$filechanged = false;
 	if (file_is_writeable($GEDCOMS[$GEDFILENAME]["path"]) && (file_exists($GEDCOMS[$GEDFILENAME]["path"]))) {
+		$l_BOMcleanup = false;
 		$l_headcleanup = false;
 		$l_macfilecleanup = false;
 		$l_lineendingscleanup = false;
@@ -235,6 +225,11 @@ if ($cleanup_needed == "cleanup_needed" && $continue == $pgv_lang["del_proceed"]
 			while ((!feof($fp)) && ($byte != $lineend)) {
 				$byte = fread($fp, 1);
 				$fcontents .= $byte;
+			}
+
+			if (!$l_BOMcleanup && need_BOM_cleanup()) {
+				BOM_cleanup();
+				$l_BOMcleanup = true;
 			}
 
 			if (!$l_headcleanup && need_head_cleanup()) {
@@ -561,6 +556,7 @@ if ($verify == "validate_form") {
 				unlink($bakfile);
 			$bakfile = false;
 		}
+		$l_BOMcleanup = false;
 		$l_headcleanup = false;
 		$l_macfilecleanup = false;
 		$l_lineendingscleanup = false;
@@ -571,6 +567,8 @@ if ($verify == "validate_form") {
 		//-- read the gedcom and test it in 8KB chunks
 		while (!feof($fp)) {
 			$fcontents = fread($fp, 1024 * 8);
+			if (!$l_BOMcleanup && need_BOM_cleanup())
+				$l_BOMcleanup = true;
 			if (!$l_headcleanup && need_head_cleanup())
 				$l_headcleanup = true;
 			if (!$l_macfilecleanup && need_macfile_cleanup())
@@ -588,7 +586,7 @@ if ($verify == "validate_form") {
 
 		if (!isset ($cleanup_needed))
 			$cleanup_needed = false;
-		if (!$l_datecleanup && !$l_isansi && !$l_headcleanup && !$l_macfilecleanup && !$l_placecleanup && !$l_lineendingscleanup) {
+		if (!$l_datecleanup && !$l_isansi && !$l_BOMcleanup && !$l_headcleanup && !$l_macfilecleanup && !$l_placecleanup && !$l_lineendingscleanup) {
 			print $pgv_lang["valid_gedcom"];
 			print "</td></tr>";
 			$import = true;
@@ -599,7 +597,14 @@ if ($verify == "validate_form") {
 				print "<span class=\"error\">".str_replace("#GEDCOM#", $GEDCOM, $pgv_lang["error_header_write"])."</span>\n";
 				print "</td></tr>";
 			}
-			// NOTE: Check for head cleanu
+			// NOTE: Check for BOM cleanup
+			if ($l_BOMcleanup) {
+				print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
+				print_help_link("BOM_detected_help", "qm", "BOM_detected");
+				print "<span class=\"error\">".$pgv_lang["BOM_detected"]."</span>\n";
+				print "</td></tr>";
+			}
+			// NOTE: Check for head cleanup
 			if ($l_headcleanup) {
 				print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
 				print_help_link("invalid_header_help", "qm", "invalid_header");
@@ -738,14 +743,15 @@ if ($import == true) {
 		print "<option value=\"no\" selected=\"selected\">".$pgv_lang["no"]."</option>\n</select>";
 	}
 	print "</td></tr>";
+	if (empty($keepmedia)) $keepmedia = false;
 	?>
 	<tr>
 		<td class="descriptionbox wrap width20">
 			<?php print_help_link("keep_media_help", "qm", "keep_media"); print $pgv_lang["keep_media"];?></td>
 		<td class="optionbox">
 			<select name="keepmedia">
-				<option value="no"><?php print $pgv_lang["no"]; ?></option>
-				<option value="yes"><?php print $pgv_lang["yes"]; ?></option>
+				<option value="yes" <?php if ($keepmedia) print "selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
+				<option value="no" <?php if (!$keepmedia) print "selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
 			</select>
 		</td>
 	</tr>
@@ -954,7 +960,7 @@ if ($startimport == "true") {
 		$fpged = fopen($GEDCOM_FILE, "rb");
 		//-- open handle to write changed file
 		$fpnewged = fopen($INDEX_DIRECTORY.basename($GEDCOM_FILE).".new", "ab");
-		$BLOCK_SIZE = 1024 * 2; //-- 4k bytes per read
+		$BLOCK_SIZE = 1024 * 4; //-- 4k bytes per read (4kb is usually the page size of a virtual memory system)
 		//-- resume a halted import from the session
 		if (!empty ($_SESSION["resumed"])) {
 			$place_count = $_SESSION["place_count"];
@@ -966,6 +972,9 @@ if ($startimport == "true") {
 			$media_count = $_SESSION["media_count"];
 			$found_ids = $_SESSION["found_ids"];
 			$MAX_IDS = $_SESSION["MAX_IDS"];
+			$show_type = $_SESSION["show_type"];
+			$i_start = $_SESSION["i_start"];
+			$type_BYTES = $_SESSION["type_BYTES"];
 			$i = $_SESSION["i"];
 			fseek($fpged, $TOTAL_BYTES);
 		} else {
@@ -979,15 +988,17 @@ if ($startimport == "true") {
 			$_SESSION["resumed"] = 1;
 		}
 		while (!feof($fpged)) {
-			$fcontents .= fread($fpged, $BLOCK_SIZE);
-			$TOTAL_BYTES += $BLOCK_SIZE;
+			$temp = fread($fpged, $BLOCK_SIZE);
+			$fcontents .= $temp;
+			$TOTAL_BYTES += strlen($temp);
 			$pos1 = 0;
 			while ($pos1 !== false) {
 				//-- find the start of the next record
 				$pos2 = strpos($fcontents, "\n0", $pos1 +1);
 				while ((!$pos2) && (!feof($fpged))) {
-					$fcontents .= fread($fpged, $BLOCK_SIZE);
-					$TOTAL_BYTES += $BLOCK_SIZE;
+					$temp = fread($fpged, $BLOCK_SIZE);
+					$fcontents .= $temp;
+					$TOTAL_BYTES += strlen($temp);
 					$pos2 = strpos($fcontents, "\n0", $pos1 +1);
 				}
 
@@ -1029,6 +1040,7 @@ if ($startimport == "true") {
 						$listtype[$show_type]["exectime"] = $show_exectime;
 						$listtype[$show_type]["bytes"] = $type_BYTES;
 						$listtype[$show_type]["i"] = $show_i;
+						$listtype[$show_type]["i_start"] = $i_start;
 						$listtype[$show_type]["type"] = $show_type;
 					} else {
 						$listtype[$show_type]["exectime"] += $show_exectime;
@@ -1071,6 +1083,9 @@ if ($startimport == "true") {
 						$_SESSION["MAX_IDS"] = $MAX_IDS;
 						$_SESSION["i"] = $i;
 						$_SESSION["found_ids"] = $found_ids;
+						$_SESSION["show_type"] = $show_type;
+						$_SESSION["i_start"] = $i_start;
+						$_SESSION["type_BYTES"] = $type_BYTES;
 
 						//-- close the file connection
 						fclose($fpged);
@@ -1174,6 +1189,7 @@ if ($startimport == "true") {
 										$spid = $parents["WIFE"];
 									if (isset ($indilist[$spid])) {
 										$surname = $indilist[$spid]["names"][0][2];
+										if (!empty($surname) && $surname!="@N.N.") {
 										$letter = $indilist[$spid]["names"][0][1];
 										//-- uncomment the next line to put the maiden name in the given name area
 										//$newname = preg_replace("~/(.*)/~", " $1 /".$surname."/", $indi["names"][0][0]);
@@ -1194,6 +1210,7 @@ if ($startimport == "true") {
 												$fcontents = substr($fcontents, 0, $pos1).trim($indi["gedcom"])."\r\n".substr($fcontents, $pos2);
 												add_new_name($gid, $newname, $letter, $surname, $indi["gedcom"]);
 												$names_added ++;
+												}
 											}
 										}
 									}

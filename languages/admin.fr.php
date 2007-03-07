@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  Christophe Bx, Julien Damon
+ * Copyright (C) 2002 to 2007  Christophe Bx, Julien Damon
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,10 +26,12 @@
  * @version $Id$
  */
 if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-	print "L'accès direct aux fichiers de langue est interdit.";
+	print "You cannot access a language file directly.";
 	exit;
 }
 
+$pgv_lang["clear_cache_succes"]         = "Fichiers supprimés du cache.";
+$pgv_lang["clear_cache"]                = "Vider le cache";
 $pgv_lang["sanity_err0"]                = "Erreurs:";
 $pgv_lang["sanity_err1"]                = "Ce programme nécessite PHP version 4.3 ou supérieure.";
 $pgv_lang["sanity_err2"]                = "Fichier ou répertoire non trouvé : <i>#GLOBALS[whichFile]#</i>. Vérifier son existence et ses droits d'accès.";
@@ -97,7 +99,7 @@ $pgv_lang["label_add_search_server"]    = "Ajouter IP";
 $pgv_lang["label_add_server"]           = "Ajouter";
 $pgv_lang["label_ban_server"]           = "Soumettre";
 $pgv_lang["label_delete"]               = "Supprimer";
-$pgv_lang['progress_bars_info']         = "La barre d'état ci-dessous vous indique l'avancement du téléchargement. Si le temps-limite est dépassé, le téléchargement sera arrêté et vous devrez cliquer sur le bouton pour continuer. Si le bouton ne s'affichait pas, relancer le chargement en entrant un temps-limite plus petit.";
+$pgv_lang["progress_bars_info"]         = "La barre d'état vous indique la progression du chargement. En cas de dépassement du temps-limite, cliquer sur 'Continuer'. Si le bouton 'Continuer' n'apparait pas, recommencer l'opération avec un temps-limite plus petit.";
 $pgv_lang["upload_replacement"]         = "Ecraser le fichier";
 $pgv_lang["about_user"]                 = "Vous devez d'abord créer un <b>administrateur principal</b>. Cet utilisateur pourra mettre à jour les fichiers de configuration, consulter les données privées et accorder des droits à d'autres utilisateurs.";
 $pgv_lang["access"]                     = "Droits pour Consulter";
@@ -105,7 +107,6 @@ $pgv_lang["add_gedcom"]                 = "Paramètrer un GEDCOM déjà envoyé 
 $pgv_lang["add_new_gedcom"]             = "Créer un nouveau GEDCOM vide";
 $pgv_lang["add_new_language"]           = "Ajouter fichiers et paramètres pour une nouvelle langue";
 $pgv_lang["add_user"]                   = "Ajouter un nouvel utilisateur";
-$pgv_lang["admin_approved"]             = "Votre compte sur #SERVER_NAME#";
 $pgv_lang["admin_gedcom"]               = "Administrateur GEDCOM";
 $pgv_lang["admin_gedcoms"]              = "Gérer les fichiers GEDCOM.";
 $pgv_lang["admin_geds"]                 = "Fichiers et données GEDCOM";
@@ -157,7 +158,6 @@ $pgv_lang["download_file"]              = "Télécharger le fichier sur votre sy
 $pgv_lang["download_gedcom"]            = "Recevoir le fichier GEDCOM sur votre système (download)";
 $pgv_lang["download_here"]              = "Charger le fichier sur votre système (<i>Download</i>).";
 $pgv_lang["download_note"]              = "Note: un gros fichier GEDCOM risque d'être long à charger. Si PHP stoppe avant la fin du chargement, votre fichier sera incomplet. Vérifier la présence de la ligne '0 TRLR' à la fin du fichier. Généralement, les temps d'envoi (upload)  ou de réception (download) du fichier GEDCOM sont équivalents.";
-$pgv_lang["duplicate_username"]         = "Utilisateur déjà existant.  Un utilisateur existe déjà sous ce nom.  Veuillez retourner à la page précédente et choisir un autre nom.";
 $pgv_lang["editaccount"]                = "Utilisateur autorisé à modifier le compte";
 $pgv_lang["empty_dataset"]              = "Voulez-vous vider le fichier ?";
 $pgv_lang["empty_lines_detected"]       = "Lignes vides trouvées dans le fichier GEDCOM. Au chargement, elles seront supprimées.";
@@ -311,7 +311,8 @@ $pgv_lang["warn_users"]                 = "Utilisateurs en anomalie";
 $pgv_lang["weekly"]                     = "Hebdo";
 $pgv_lang["welcome_new"]                = "Bienvenue sur votre site PhpGedView. L'affichage de cette page signifie que PhpGedView a été correctement installé sur votre serveur. Vous pouvez lancer la configuration.<br />";
 $pgv_lang["yearly"]                     = "Annuel";
-$pgv_lang["you_may_login"]              = " a été approuvé par l'administrateur du site. Vous pouvez maintenant vous connecter au site PhpGedView par ce lien";
+#pgv_lang["admin_OK_subject"]           = "Approval of account at #SERVER_NAME#";
+#pgv_lang["admin_OK_message"]           = "The administrator at the PhpGedView site #SERVER_NAME# has approved your application for an account.  You may now login by accessing the following link:\r\n\r\n#SERVER_NAME#\r\n";
 
 // Text for the Gedcom Checker
 $pgv_lang["gedcheck"]                   = "Vérificateur Gedcom";          // Module title

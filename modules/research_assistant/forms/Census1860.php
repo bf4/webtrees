@@ -24,7 +24,7 @@
  * @version $Id: Birth_Information.php 200 2005-11-09 20:37:48Z jporter $
  * @author Brandon Gagnon
  */
-//-- security check, only allow access from module.php
+ //-- security check, only allow access from module.php
 if (strstr($_SERVER["SCRIPT_NAME"],"Census1860.php")) {
 	print "Now, why would you want to do that.  You're not hacking are you?";
 	exit;
@@ -118,10 +118,31 @@ return false;}return true;}
 		if (!empty($citation['ts_array']['county'])) $county = $citation['ts_array']['county'];
 		if (!empty($citation['ts_array']['state'])) $state = $citation['ts_array']['state'];
   
-		//        Start of Table
+//        Start of Table
 		$out = '<tr>
 			<td class="descriptionbox">'.print_help_link("edit_media_help", "qm",'',false,true).$factarray['OBJE'].'</td>
-			<td class="optionbox" colspan="5"><INPUT tabindex="8"  type="text" name="OBJE" id="OBJE" size="5" value="'.$citation['ts_obje'].'"/>';
+			<td class="optionbox" colspan="5"><input type="hidden" name="OBJE" id="OBJE" value="'.$citation['ts_obje'].'"/>';
+			$out .= "<div id=\"censusPicDiv\" style=\"display";
+			if(!empty($citation['ts_obje']))
+			{
+				$out .= ":block\">";
+				/*@var $picture Media*/
+				$picture = Media::getInstance($citation['ts_obje']);
+				if(!is_null($picture))
+				{	
+					$out .= "<span id=\"censusImgSpan\">".$picture->getTitle().'</span><br/><img id="censusImage" src="'.$picture->getThumbnail().'" />';
+				}
+				else
+				{
+					$out .= "<span id=\"censusImgSpan\"></span><br /><img id=\"censusImage\" src=\"\" />";
+				}
+			}
+			else
+			{
+				$out .= ":none\">";
+				$out .= "<span id=\"censusImgSpan\"></span><br /><img id=\"censusImage\" src=\"\" />";
+			}
+			$out .="</div>";
 		$out .= print_findmedia_link("OBJE", true, '', true);
 		$out .= '<br /><a href="javascript:;" onclick="pastefield=document.getElementById(\'OBJE\'); window.open(\'addmedia.php?action=showmediaform\', \'\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["add_media"].'</a>';
 		$out .= '</td></tr>';
@@ -131,7 +152,7 @@ return false;}return true;}
 		$out .= '<tr><td class="descriptionbox">'.$pgv_lang["county"].'</td><td class="optionbox"><INPUT tabindex="12"  name="county" type="text" size="27" value="'.htmlentities($county).'"></td>';
 		$out .= '<td class="descriptionbox">'.$pgv_lang["city"].'</td><td class="optionbox"><INPUT tabindex="13"  name="city" type="text" size="27" value="'.htmlentities($city).'"></td>';
 		$out .=	'<td class="descriptionbox">'.$pgv_lang["page"].'</td><td class="optionbox"><INPUT tabindex="14"  name="page" type="text" size="5" value="'.htmlentities($page).'"></td></tr>';
-		//        Next Table
+//        Next Table
 		$out .= '<tr><td colspan="6">';
 
 		$out .= '<table align="left" dir="ltr">
@@ -188,7 +209,7 @@ return false;}return true;}
 		<option value="MU"'.($value=='MU'?' selected="selected"':'').'>Mulatto</option>
 	</select>
   </td>';}
-			$out .= '</tr>
+$out .= '</tr>
 <tr>
   <td class="descriptionbox" align="left">Profession, Occupation, or Trade</td>';
 			for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
@@ -517,6 +538,8 @@ return false;}return true;}
 			}
 		}
 		return $people;
+		
+		
 	}
 
 	/**

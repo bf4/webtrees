@@ -8,7 +8,7 @@
  * names gedcom.ged_conf.php.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2007  PGV Development Teacm
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,9 +54,6 @@ $CHARACTER_SET = "UTF-8";				//-- This is the character set of your gedcom file.
 										//-- almost all sites.  If you export your gedcom using ibm windows encoding, then you should put
 										//-- WINDOWS here.
 										//-- NOTE: PHP does NOT support UNICODE so don't try it :-)
-
-$CREATE_GENDEX = false;					//-- whether or not to create a gendex file when importing your gedcom.  The gendex file will be placed in
-										//-- the index directory
 
 $ENABLE_MULTI_LANGUAGE = true;			//-- set to true to give users the option of selecting a different language from
 										//-- a dropdown list in the footer and default to the language they have set in their browser settings
@@ -174,12 +171,16 @@ $EXPAND_SOURCES = false;
 $EDIT_AUTOCLOSE = false; //-- autoclose edit window when update successful
 $SOUR_FACTS_UNIQUE = "AUTH,ABBR,TITL,PUBL,TEXT";
 $SOUR_FACTS_ADD = "NOTE,OBJE,REPO";
+$SOUR_FACTS_QUICK = "";
 $REPO_FACTS_UNIQUE = "NAME,ADDR";
 $REPO_FACTS_ADD = "PHON,EMAIL,FAX,WWW,NOTE";
+$REPO_FACTS_QUICK = "";
 $INDI_FACTS_UNIQUE = "";
 $INDI_FACTS_ADD = "ADDR,AFN,BIRT,CHR,DEAT,BURI,CREM,ADOP,BAPM,BARM,BASM,BLES,CHRA,CONF,_EMAIL,FAX,FCOM,ORDN,NATU,EMIG,IMMI,CENS,PROB,WILL,GRAD,RETI,CAST,DSCR,EDUC,IDNO,NATI,NCHI,NMR,OCCU,PROP,RELI,RESI,SSN,TITL,BAPL,CONL,ENDL,SLGC,_MILI";
+$INDI_FACTS_QUICK = "BIRT,ADDR,RESI,OCCU,DEAT";
 $FAM_FACTS_UNIQUE = "NCHI,MARL,DIV,ANUL,DIVF,ENGA,MARB,MARC,MARS";
 $FAM_FACTS_ADD = "CENS,MARR,RESI,SLGS,MARR_CIVIL,MARR_RELIGIOUS,MARR_PARTNERS";
+$FAM_FACTS_QUICK = "MARR,DIV";
 $GENERATE_UIDS = false;		//-- automatically generate _UID fields for records that do not already have them
 
 $ENABLE_RSS = true;

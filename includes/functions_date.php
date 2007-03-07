@@ -812,14 +812,20 @@ function get_age($indirec, $datestr, $style=1) {
 					if (empty($d2)) $d2=$d1;
 					if (empty($d1)) $d1=$d2;
 					if ($y2>$y1) $m2 +=($y2-$y1)*12;
+					else if ($y2<$y1) $m2 -= ($y1-$y2)*12;
 					$age = $m2-$m1;
 					if ($d2<$d1) $age--;
 					// age in days if < 1 month
-					if ($age<1) {
+					if ($age<1 && $age>=-1) {
 						if ($m2>$m1) {
 							if ($m1==2) $d2+=28;
 							else if ($m1==4 or $m1==6 or $m1==9 or $m1==11) $d2+=30;
 							else $d2+=31;
+						}
+						else if ($m2<$m1) {
+							if ($m1==2) $d2-=28;
+							else if ($m1==4 or $m1==6 or $m1==9 or $m1==11) $d2-=30;
+							else $d2-=31;
 						}
 						$age = $d2-$d1;
 						$realbirthdt .= " ".$age." ";

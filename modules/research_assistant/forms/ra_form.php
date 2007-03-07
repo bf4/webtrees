@@ -60,6 +60,7 @@ class ra_form {
 		return $people;
 	}
 	
+	
 	/**
 	 * GETS all SOURCES associated with the task given taskid
 	 * 
@@ -227,10 +228,33 @@ class ra_form {
 	var nameElement;
 	var lastId;
 	var findtype = "source";
-	function paste_id(value) {
+
+	function paste_id(value,title, thumb) {
+		
+
+		if(title)
+		{
+			pastefield.value = value;
+			UpdatePicture(thumb,title);
+		}
+		else{
 		lastId = value;
 		pastefield.value = pastefield.value + ";" + value;
+		}
+
 	}
+
+	function UpdatePicture(thumb,title)
+	{
+
+		myDiv = document.getElementById("censusPicDiv");
+		myDiv.style.display = "block";
+		myImg = document.getElementById("censusImage");
+		myImg.src = thumb;
+		mySpan = document.getElementById("censusImgSpan");
+		mySpan.innerHTML = title;
+	}
+	
 	function pastename(name) {
 		if (findtype=="source") nameElement.innerHTML = nameElement.innerHTML + \'<a id="link_\'+lastId+\'" href="source.php?sid=\'+lastId+\'">\'+name+\'</a> <a id="rem_\'+lastId+\'" href="#" onclick="clearname(\\\'\'+pastefield.id+\'\\\', \\\'link_\'+lastId+\'\\\', \\\'\'+lastId+\'\\\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>\n\';
 		else nameElement.innerHTML = nameElement.innerHTML + \'<a id="link_\'+lastId+\'" href="individual.php?pid=\'+lastId+\'">\'+name+\'</a> <a id="rem_\'+lastId+\'" href="#" onclick="clearname(\\\'\'+pastefield.id+\'\\\', \\\'link_\'+lastId+\'\\\', \\\'\'+lastId+\'\\\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>\n\';
@@ -304,6 +328,7 @@ class ra_form {
     	if (empty($_REQUEST['sourceid'])) {
 			return "You must select a source.";
 		}
+		
 
 		// UPDATE PEOPLE
 		$oldpeople = $this->getPeople();
@@ -311,7 +336,7 @@ class ra_form {
 		//  -Delete old people
 		$sql = "DELETE FROM ".$TBLPREFIX."individualtask WHERE it_t_id='".$_REQUEST["taskid"]."'";
 		$res = dbquery($sql);
-
+		
 		if (isset ($_REQUEST['personid'])) {
 			$people = preg_split("/;/", $_REQUEST['personid']);
 			//-- delete any existing facts from old people
@@ -466,6 +491,12 @@ END_OUT;
 			}
 			
 			$out .= <<<END_OUT
+			
+			function ResetImage(imgTag){
+				image = document.getElementById(censusImage);
+				alert("Yeppper"); 
+			}
+			
 			function add_ra_fact(fact, type) {
 				factfield = document.getElementById(fact);
 				if (factfield) {
@@ -647,7 +678,6 @@ END_OUT;
 			}
 			
 			function build_table() {
-				global $pgv_lang;
 				var tempdata = document.getElementById('tempdata');
 				if (!tempdata) return;
 				if (facts.length==0) {
@@ -655,9 +685,9 @@ END_OUT;
 					return;
 				}
 		
-					out = '<table class="facts_table"><tr><td colspan="3" class="topbottombar">${pgv_lang["ra_facts"]}</td></tr>';
-					out += '<tr><td class="descriptionbox">${pgv_lang["ra_fact"]}</td><td class="descriptionbox">${pgv_lang["people"]}</td><td class="descriptionbox">${pgv_lang["ra_remove"]}</td></tr>';
-	 				
+				out = '<table class="facts_table"><tr><td colspan="3" class="topbottombar">${pgv_lang["ra_facts"]}</td></tr>';
+				out += '<tr><td class="descriptionbox">${pgv_lang["ra_fact"]}</td><td class="descriptionbox">${pgv_lang["people"]}</td><td class="descriptionbox">${pgv_lang["ra_remove"]}</td></tr>';
+	 			for(i=0; i<facts.length; i++) {	
 	 				//alert(facts[i]);
 					out += '<tr><td id="factname'+i+'" class="optionbox">'+factnames[i];
 					out += '<br />';
@@ -753,7 +783,7 @@ END_OUT;
 				if (!empty($citation['ts_text'])) $citationTxt .= "4 TEXT ".breakConts($citation['ts_text'], 5)."\r\n";
 			}
 			if (!empty($citation['ts_quay'])) $citationTxt .= "3 QUAY ".$citation['ts_quay']."\r\n";
-			if (!empty($citation['ts_obje'])) $citationTxt .= "3 OBJE ".$citation['ts_obje']."\r\n";
+			if (!empty($citation['ts_obje'])) $citationTxt .= "3 OBJE @".$citation['ts_obje']."@\r\n";
 		}
 		// Set our output to nothing, this supresses a warning that we would otherwise get.
 		$out = "";

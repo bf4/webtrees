@@ -3,7 +3,7 @@
  * Name Specific Functions
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -113,7 +113,7 @@ function get_common_surnames($min) {
 function get_name_in_record($indirec) {
 	// NPFX
 	if (preg_match('/2 NPFX (.*)/', $indirec, $match))
-		$npfx=$match[1];
+		$npfx=trim($match[1]);
 	else
 		$npfx='';
 	// GIVN
@@ -121,10 +121,10 @@ function get_name_in_record($indirec) {
 		$givn=preg_replace('/[, ]+/', ' ', $match[1]);
 	else
 		if (preg_match('/1 NAME ([^\/\r\n]*)/', $indirec, $match))
-			$givn=preg_replace("/^$npfx /i", '',	$match[1]);
+			$givn=preg_replace('/^'.addcslashes($npfx, '/').' /i', '', $match[1]);
 		else
 			$givn='';
-	$givn=preg_replace('/^ *[._?]+ *$/', '', $givn);
+	$givn=preg_replace('/^[._?]+$/', '', trim($givn));
 	if (empty($givn))
 		$givn= '@P.N.';
 	// NICK
@@ -139,13 +139,13 @@ function get_name_in_record($indirec) {
 		$spfx='';
 	// SURN
 	if (preg_match('/2 SURN (.*)/', $indirec, $match))
-		$surn=trim($match[1]);
+		$surn=$match[1];
 	else
 		if (preg_match('/1 NAME [^\/\r\n]*\/([^\/\r\n]*)/', $indirec, $match))
-			$surn=preg_replace("/^$spfx /i", '',	$match[1]);
+			$surn=preg_replace('/^'.addcslashes($spfx, '/').' /i', '', $match[1]);
 		else
 			$surn='';
-	$surn=preg_replace('/^ *[._?]+ *$/', '', $surn);
+	$surn=preg_replace('/^[._?]+$/', '', trim($surn));
 	if (empty($surn)) {
 		$surn='@N.N.';
 		$spfx='';
@@ -408,10 +408,10 @@ function get_add_source_descriptor($sid) {
 	$gedrec = find_source_record($sid);
 	if (!empty($gedrec)) {
 		$ct = preg_match("/\d ROMN (.*)/", $gedrec, $match);
- 		if ($ct>0) return($match[1]);
+		if ($ct>0) return($match[1]);
 		$ct = preg_match("/\d _HEB (.*)/", $gedrec, $match);
- 		if ($ct>0) return($match[1]);
- 	}
+		if ($ct>0) return($match[1]);
+	}
 	return false;
 }
 
@@ -430,10 +430,10 @@ function get_add_repo_descriptor($rid) {
 	$gedrec = find_repo_record($rid);
 	if (!empty($gedrec)) {
 		$ct = preg_match("/\d ROMN (.*)/", $gedrec, $match);
- 		if ($ct>0) return($match[1]);
+		if ($ct>0) return($match[1]);
 		$ct = preg_match("/\d _HEB (.*)/", $gedrec, $match);
- 		if ($ct>0) return($match[1]);
- 	}
+		if ($ct>0) return($match[1]);
+	}
 	return false;
 }
 
@@ -561,7 +561,7 @@ function get_sortable_add_name($pid) {
 	// Check for ROMN name
 	$romn = preg_match("/(2 ROMN (.*)|2 _HEB (.*))/", $name_record, $romn_match);
 	if ($romn > 0){
-    	$names = preg_split("/\//", $romn_match[count($romn_match)-1]);
+		$names = preg_split("/\//", $romn_match[count($romn_match)-1]);
 		if ($names[0] == "") $names[0] = "@P.N.";	//-- MA
 		if (empty($names[1])) $names[1] = "@N.N.";	//-- MA
 		if (count($names)>1) {
@@ -672,7 +672,7 @@ function get_first_letter($text, $import=false) {
 	global $MULTI_LETTER_ALPHABET, $digraph, $trigraph, $quadgraph, $digraphAll, $trigraphAll, $quadgraphAll;
 
 	$danishFrom = array("AA", "Aa", "AE", "Ae", "OE", "Oe", "aa", "ae", "oe");
-	$danishTo 	= array("Å", "Å", "Æ", "Æ", "Ø", "Ø", "å", "æ", "ø");
+	$danishTo   = array("Å", "Å", "Æ", "Æ", "Ø", "Ø", "å", "æ", "ø");
 
 	$text=trim(str2upper($text));
 	if (!$import) {
@@ -759,8 +759,8 @@ function check_NN($names) {
 				$names[$i] = preg_replace("/@N.N.?/", $unknownNN[$lang], trim($names[$i]));
 			}
             if (stristr($names[$i], "@P.N")) $names[$i] = $unknownPN[$lang];
- 			if ($i==1 && $unknown && count($names)==3) $fullname .= ", ";
- 			else if ($i==2 && $unknown && count($names)==3) $fullname .= " + ";
+			if ($i==1 && $unknown && count($names)==3) $fullname .= ", ";
+			else if ($i==2 && $unknown && count($names)==3) $fullname .= " + ";
 				else if ($i==2 && stristr($names[2], "Individual ") && count($names) == 3) $fullname .= " + ";
 			else if ($i==2 && count($names)>3) $fullname .= " + ";
 				else $fullname .= ", ";
@@ -1020,7 +1020,6 @@ function DMSoundex($name, $option = "") {
 			return;
 		}
 		else {
- 			
 			$dmsoundexlist = array();
 			// clean up old cache
 			$handle = opendir($INDEX_DIRECTORY);
@@ -1170,7 +1169,7 @@ function DMSoundex($name, $option = "") {
 
 	// Store in cache and return
 	$dmsoundexlist[$name] = $result;
-	return $result;			
+	return $result;
 }
 
 ?>

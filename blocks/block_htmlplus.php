@@ -38,7 +38,7 @@ $PGV_BLOCKS['print_htmlplus_block']['config']		= array(
 	'title'=>'',
 	'html'=>"{$pgv_lang['html_block_sample_part1']} <img src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" alt=\"{$pgv_lang['config_block']}\" /> {$pgv_lang['html_block_sample_part2']}",
 	'gedcom'=>'__current__',
-	'compat'=>1
+	'compat'=>0
 	);
 
 function print_htmlplus_block($block=true, $config='', $side, $index)
@@ -71,6 +71,7 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 	switch($config['gedcom'])
 	{
 		case '__current__':{break;}
+		case '':{break;}
 		case '__default__':{if($DEFAULT_GEDCOM == ''){foreach($GEDCOMS as $gedid=>$ged){$GEDCOM = $gedid;break;}}else{$GEDCOM = $DEFAULT_GEDCOM;}break;}
 		default:{if(check_for_import($config['gedcom'])){$GEDCOM = $config['gedcom'];}break;}
 	}
@@ -90,16 +91,17 @@ function print_htmlplus_block($block=true, $config='', $side, $index)
 
 	/*
 	 * First Pass.
+	 * Handle embedded language, fact, global, etc. references
+	 *   This needs to be done first because the language variables could themselves
+	 *   contain embedded keywords.
 	 */
-	list($new_tags, $new_values) = $stats->getTags("{$config['title']} {$config['html']}");
 	// Title
-	if(strstr($config['title'], '#')){$config['title'] = str_replace($new_tags, $new_values, $config['title']);}
+	$config['title'] = print_text($config['title'],0,2);
 	// Content
-	$config['html'] = str_replace($new_tags, $new_values, $config['html']);
+	$config['html'] = print_text($config['html'],0,2);
 
 	/*
 	 * Second Pass.
-	 * Catches language sub-strings.
 	 */
 	list($new_tags, $new_values) = $stats->getTags("{$config['title']} {$config['html']}");
 	// Title
@@ -189,6 +191,7 @@ function print_htmlplus_block_config($config)
 {
 	global
 		$pgv_lang,
+		$factarray,
 		$command,
 		$PGV_BLOCKS,
 		$TEXT_DIRECTION,
@@ -226,7 +229,7 @@ function print_htmlplus_block_config($config)
 	$config['title'] = htmlentities($config['title'], ENT_COMPAT, 'UTF-8');
 	print "<tr>\n\t<td class=\"descriptionbox wrap width33\">"
 		.print_help_link('index_htmlplus_title_help', 'qm_ah', '', false, true)
-		."{$pgv_lang['title']}</td>\n"
+		."{$factarray['TITL']}</td>\n"
 		."\t<td class=\"optionbox\"><input type=\"text\" name=\"title\" size=\"30\" value=\"{$config['title']}\" /></td>\n</tr>\n"
 	;
 	// templates
@@ -245,28 +248,31 @@ function print_htmlplus_block_config($config)
 		."\t</td>\n</tr>\n"
 	;
 	// gedcom
-	if($config['gedcom'] == '__current__'){$sel_current = ' selected="selected"';}else{$sel_current = '';}
-	if($config['gedcom'] == '__default__'){$sel_default = ' selected="selected"';}else{$sel_default = '';}
-	print "<tr>\n\t<td class=\"descriptionbox wrap width33\">"
-		.print_help_link('index_htmlplus_gedcom_help', 'qm_ah', '', false, true)
-		."{$pgv_lang['htmlplus_block_gedcom']}</td>\n"
-		."\t<td class=\"optionbox\">\n"
-		."\t\t<select name=\"gedcom\">\n"
-		."\t\t\t<option value=\"__current__\"{$sel_current}>{$pgv_lang['htmlplus_block_current']}</option>\n"
-		."\t\t\t<option value=\"__default__\"{$sel_default}>{$pgv_lang['htmlplus_block_default']}</option>\n"
-	;
-	foreach($GEDCOMS as $ged)
-	{
-		if($ged['gedcom'] == $config['gedcom']){$sel = ' selected="selected"';}else{$sel = '';}
-		print "\t\t\t<option value=\"{$ged['gedcom']}\"{$sel}>{$ged['title']}</option>\n";
+	if (count($GEDCOMS) > 1) {
+		if($config['gedcom'] == '__current__'){$sel_current = ' selected="selected"';}else{$sel_current = '';}
+		if($config['gedcom'] == '__default__'){$sel_default = ' selected="selected"';}else{$sel_default = '';}
+		print "<tr>\n\t<td class=\"descriptionbox wrap width33\">"
+			.print_help_link('index_htmlplus_gedcom_help', 'qm_ah', '', false, true)
+			."{$pgv_lang['htmlplus_block_gedcom']}</td>\n"
+			."\t<td class=\"optionbox\">\n"
+			."\t\t<select name=\"gedcom\">\n"
+			."\t\t\t<option value=\"__current__\"{$sel_current}>{$pgv_lang['htmlplus_block_current']}</option>\n"
+			."\t\t\t<option value=\"__default__\"{$sel_default}>{$pgv_lang['htmlplus_block_default']}</option>\n"
+		;
+		foreach($GEDCOMS as $ged)
+		{
+			if($ged['gedcom'] == $config['gedcom']){$sel = ' selected="selected"';}else{$sel = '';}
+			print "\t\t\t<option value=\"{$ged['gedcom']}\"{$sel}>{$ged['title']}</option>\n";
+		}
+		print "\t\t</select>\n"
+			."\t</td>\n</tr>\n"
+		;
 	}
-	print "\t\t</select>\n"
-		."\t</td>\n</tr>\n"
 	// html
-		."<tr>\n\t<td class=\"descriptionbox wrap width33\">"
+	print "<tr>\n\t<td class=\"descriptionbox wrap width33\">"
 		.print_help_link('index_htmlplus_content_help', 'qm_ah', '', false, true)
 		."{$pgv_lang['htmlplus_block_content']}<br />\n<br />\n"
-		."\t\t<input type =\"button\" value=\"{$pgv_lang['htmlplus_block_taglist']}\" onclick=\"window.open('stats_tag_list.php', '_blank', 'top=50,left=10,width=600,height=600,scrollbars=1,resizable=1');\" />\n"
+//		."\t\t<input type =\"button\" value=\"{$pgv_lang['htmlplus_block_taglist']}\" onclick=\"window.open('stats_tag_list.php', '_blank', 'top=50,left=10,width=600,height=600,scrollbars=1,resizable=1');\" />\n"
 		."\t</td>\n"
 		."\t<td class=\"optionbox\">"
 		."\t\t<textarea name=\"html\" rows=\"10\" cols=\"80\">{$config['html']}</textarea>\n"

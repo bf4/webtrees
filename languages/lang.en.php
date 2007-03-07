@@ -30,6 +30,7 @@ if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["invalid_search_input"] 	= "Please enter a Given name, Last name, or Place in addition to Year";
 $pgv_lang["duplicate_username"] 	= "Duplicate user name.  A user with that user name already exists.  Please choose another user name.";
 $pgv_lang["cache_life"]				= "Cache file life";
 $pgv_lang["genealogy"]					= "genealogy";
@@ -305,10 +306,12 @@ $pgv_lang["for_support"]			= "For technical support and information contact";
 $pgv_lang["for_contact"]			= "For help with genealogy questions contact";
 $pgv_lang["for_all_contact"]		= "For technical support or genealogy questions, please contact";
 $pgv_lang["build_error"]			= "GEDCOM file has been updated.";
+$pgv_lang["choose_username"]		= "Desired user name";
 $pgv_lang["username"]				= "User name";
 $pgv_lang["invalid_username"]		= "User name contains invalid characters";
 $pgv_lang["firstname"]				= "First Name";
 $pgv_lang["lastname"]				= "Last Name";
+$pgv_lang["choose_password"]		= "Desired password";
 $pgv_lang["password"]				= "Password";
 $pgv_lang["confirm"]				= "Confirm Password";
 $pgv_lang["login"]					= "Login";
@@ -401,6 +404,7 @@ $pgv_lang["parent"] 				= "Parent";
 $pgv_lang["relatives"]				= "Close Relatives";
 $pgv_lang["relatives_events"]		= "Events of close relatives";
 $pgv_lang["spouse"] 				= "Spouse";
+$pgv_lang["spouses"] 				= "Spouses";
 $pgv_lang["surnames"]				= "Surnames";
 $pgv_lang["adopted"]				= "Adopted";
 $pgv_lang["foster"] 				= "Foster";
@@ -788,6 +792,45 @@ $pgv_lang["sosa_aunt_7"] 				= "great aunt";      // mother's mother's sister
 //              %3\$d is replaced with the number of generations - 2
 $pgv_lang["n_x_paternal_aunt"]		= "%2\$d x great aunt";
 $pgv_lang["n_x_maternal_aunt"]	    = "%2\$d x great aunt";
+
+// the sosa_uncle name is used for uncles(by marriage) - the names below can be extended to any number
+// of generations just by adding more translations.
+// to allow fo language variations we specify different relationships for paternal and maternal
+// aunts and uncles
+// 1st generation
+$pgv_lang["sosa_uncle_bm_2"] 				= "uncle";            // father's brother
+$pgv_lang["sosa_uncle_bm_3"] 				= "uncle";            // mother's brother
+// 2nd generation
+$pgv_lang["sosa_uncle_bm_4"] 				= "great uncle";      // fathers's father's brother
+$pgv_lang["sosa_uncle_bm_5"] 				= "great uncle";      // father's mother's brother
+$pgv_lang["sosa_uncle_bm_6"] 				= "great uncle";      // mother's father's brother
+$pgv_lang["sosa_uncle_bm_7"] 				= "great uncle";      // mother's mother's brother
+// for the general case of uncles of the nth degree use the text below
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_uncle_bm"]		= "%2\$d x great uncle";
+$pgv_lang["n_x_maternal_uncle_bm"]	    = "%2\$d x great uncle";
+
+// the sosa_aunt name is used for aunts (by marriage)- the names below can be extended to any number
+// of generations just by adding more translations.
+// to allow fo language variations we specify different relationships for paternal and maternal
+// aunts and aunts
+// 1st generation
+$pgv_lang["sosa_aunt_bm_2"] 				= "aunt";            // father's sister
+$pgv_lang["sosa_aunt_bm_3"] 				= "aunt";            // mother's sister
+// 2nd generation
+$pgv_lang["sosa_aunt_bm_4"] 				= "great aunt";      // fathers's father's sister
+$pgv_lang["sosa_aunt_bm_5"] 				= "great aunt";      // father's mother's sister
+$pgv_lang["sosa_aunt_bm_6"] 				= "great aunt";      // mother's father's sister
+$pgv_lang["sosa_aunt_bm_7"] 				= "great aunt";      // mother's mother's sister
+// for the general case of aunts of the nth degree use the text below
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_aunt_bm"]		= "%2\$d x great aunt";
+$pgv_lang["n_x_maternal_aunt_bm"]	    = "%2\$d x great aunt";
+
 
 // if a specific cousin relationship cannot be represented in a language translate as "";
 $pgv_lang["male_cousin_1"]              = "first cousin";

@@ -76,9 +76,11 @@ class research_assistant extends ra_functions {
 		
 		// PGV modules use the mod_print_header function to print out the default PGV full header
 		// above their main content. There is also a pgv_print_simple_header which prints out an empty header.
-		$out = mod_print_header($pgv_lang["page_header"]);
+		$out = mod_print_header($pgv_lang["research_assistant"]);
 		// We need to intialize our module to make sure we dont need to install some DB scripts.
 		$out .= $this->Init();
+		$out .= "<script type=\"text/javascript\" src=\"modules/research_assistant/research_assistant.js\"></script>\n";
+		
 		if (empty ($_REQUEST['action']))
 			$_REQUEST['action'] = "none";
 		
@@ -455,10 +457,14 @@ class research_assistant extends ra_functions {
 			}
 		}
 		// Default
-		else {
+		else if ($_REQUEST['action']=='view_folders') {
 			// Since there is nothing here to do, we should just show folders.
 			$out .= $this->print_menu();
 			$out .= $this->print_folder_view();
+		}
+		else {
+			//$out .= $this->print_menu();
+			$out .= $this->print_form('ra_guide');
 		}
 
 		// PGV modules use the mod_print_footer function to print out the default PGV footer.

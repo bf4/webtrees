@@ -112,12 +112,14 @@ print_header($pgv_lang["search"]);
 					message = false;
 				if(message)
 				{
+					<?php if ($SHOW_MULTISITE_SEARCH >= getUserAccessLevel()) { ?>
 					if(sex.length < 1)
 					{
 						alert("<?php print $pgv_lang["invalid_search_multisite_input"]?>");
 						return false;
 					}
 					alert("<?php print $pgv_lang["invalid_search_multisite_input_gender"]?>");
+					<?php } ?>
 					return false;
 				}
 			}

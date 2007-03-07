@@ -4,7 +4,7 @@
  * Import specific functions
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ require_once('includes/index_cache.php');
  */
 function import_record($indirec, $update = false) {
 	global $DBCONN, $gid, $type, $indilist, $famlist, $sourcelist, $otherlist, $TOTAL_QUERIES, $prepared_statement;
-	global $TBLPREFIX, $GEDCOM_FILE, $FILE, $pgv_lang, $USE_RIN, $CREATE_GENDEX, $gdfp, $placecache;
+	global $TBLPREFIX, $GEDCOM_FILE, $FILE, $pgv_lang, $USE_RIN, $gdfp, $placecache;
 	global $ALPHABET_upper, $ALPHABET_lower, $place_id, $WORD_WRAPPED_NOTES, $GEDCOMS;
 	global $MAX_IDS, $fpnewged, $GEDCOM, $USE_RTL_FUNCTIONS, $GENERATE_UIDS;
 
@@ -335,6 +335,7 @@ function import_record($indirec, $update = false) {
 								$indirec .= "\r\n1 DATE " . date("d") . " " . date("M") . " " . date("Y");
 							}
 						}
+						if ($gid=="") $gid = $type;
 						$sql = "INSERT INTO " . $TBLPREFIX . "other VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "','" . $DBCONN->escapeSimple($type) . "','" . $DBCONN->escapeSimple($indirec) . "')";
 						$res = dbquery($sql);
 
@@ -529,6 +530,12 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 		//-- get the old id
 		$old_m_media = $match[1];
 		$objref = $objrec;
+		/**
+		 * Hiding some code in order to fix a very annoying bug
+		 * [ 1579889 ] Upgrading breaks Media links
+		 *
+		 * Don't understand the logic of renumbering media objects ??
+		 *
 		//-- if this is an import not an update get the updated ID
 		if (!$update) {
 			if (isset ($found_ids[$old_m_media])) {
@@ -541,13 +548,15 @@ function insert_media($objrec, $objlevel, $update, $gid, $count) {
 		}
 		//-- an update so the ID won't change
 		else $new_m_media = $old_m_media;
+		**/
+		$new_m_media = $old_m_media;
 		$m_media = $new_m_media;
-//		print "LINK: old $old_m_media new $new_m_media $objref<br />";
+		//print "LINK: old $old_m_media new $new_m_media $objref<br />";
 		if ($m_media != $old_m_media) $objref = preg_replace("/@$old_m_media@/", "@$m_media@", $objref);
 	}
 	//-- handle embedded OBJE records
 	else {
-		$m_media = get_new_xref("OBJE");
+		$m_media = get_new_xref("OBJE", true);
 		$objref = subrecord_createobjectref($objrec, $objlevel, $m_media);
 
 		//-- restructure the record to be a linked record
@@ -620,6 +629,12 @@ function update_media($gid, $indirec, $update = false) {
 	if ($ct > 0) {
 		$old_m_media = $match[1];
 		$m_id = get_next_id("media", "m_id");
+		/**
+		 * Hiding some code in order to fix a very annoying bug
+		 * [ 1579889 ] Upgrading breaks Media links
+		 *
+		 * Don't understand the logic of renumbering media objects ??
+		 *
 		if ($update) {
 			$new_m_media = $old_m_media;
 		} else {
@@ -631,7 +646,9 @@ function update_media($gid, $indirec, $update = false) {
 				$found_ids[$old_m_media]["new_id"] = $new_m_media;
 			}
 		}
-//		print "RECORD: old $old_m_media new $new_m_media $objref<br />";
+		**/
+		$new_m_media = $old_m_media;
+		//print "RECORD: old $old_m_media new $new_m_media<br />";
 		$indirec = preg_replace("/@" . $old_m_media . "@/", "@" . $new_m_media . "@", $indirec);
 		$media = new Media($indirec);
 		//--check if we already have a similar object
@@ -785,7 +802,7 @@ function setup_database() {
 
 	$data = $DBCONN->getListOf('tables');
 	foreach ($data as $indexval => $table) {
-		if (strpos($table, $TBLPREFIX) === 0) {
+		if (empty($TBLPREFIX) || strpos($table, $TBLPREFIX) === 0) {
 			switch (substr($table, strlen($TBLPREFIX))) {
 				case "individuals" :
 					$has_individuals = true;
@@ -1065,6 +1082,10 @@ function create_families_table() {
 	$sql = "CREATE INDEX fam_id ON " . $TBLPREFIX . "families (f_id)";
 	$res = dbquery($sql);
 	$sql = "CREATE INDEX fam_file ON " . $TBLPREFIX . "families (f_file)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX fam_husb ON " . $TBLPREFIX . "families (f_husb)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX fam_wife ON " . $TBLPREFIX . "families (f_wife)";
 	$res = dbquery($sql);
 
 	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_fams"] . "<br />\n";

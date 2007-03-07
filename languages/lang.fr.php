@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,10 +26,13 @@
  * @version $Id$
  */
 if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-	print "L'accès direct aux fichiers de langue est interdit.";
+	print "You cannot access a language file directly.";
 	exit;
 }
 
+$pgv_lang["duplicate_username"]         = "Utilisateur déjà existant.  Un utilisateur existe déjà sous ce nom.  Veuillez retourner à la page précédente et choisir un autre nom.";
+#pgv_lang["cache_life"]                 = "Cache file life";
+$pgv_lang["genealogy"]                  = "Généalogie";
 $pgv_lang["activate"]                   = "Activer";
 $pgv_lang["deactivate"]                 = "Désactiver";
 $pgv_lang["play"]                       = "Démarrer";
@@ -88,7 +91,7 @@ $pgv_lang["choose_file_type"]           = "Type du fichier";
 $pgv_lang["add_individual_by_id"]       = "Ajout d'individus par leur code";
 $pgv_lang["advanced_options"]           = "Options avancées";
 $pgv_lang["zip_files"]                  = "Fichiers compressés";
-#pgv_lang["include_media"]              = "Include Media (automatically zips files)";
+$pgv_lang["include_media"]              = "Inclure les objets MultiMedia (compressés Zip)";
 $pgv_lang["roman_surn"]                 = "Nom 'Romanisé'";
 $pgv_lang["roman_givn"]                 = "Prénom 'Romanisé'";
 $pgv_lang["include"]                    = "Comprenant:";
@@ -109,7 +112,7 @@ $pgv_lang["site_list"]                  = "Site: ";
 #pgv_lang["site_had"]                   = " contained the following";
 $pgv_lang["indi_is_remote"]             = "Les informations de cette personne proviennent d'un autre site.";
 $pgv_lang["link_remote"]                = "Lier à une personne d'un autre site";
-#pgv_lang["label_search_engine_detected"]= "Search Engine Spider Detected";
+$pgv_lang["label_search_engine_detected"]= "Robot détecté";
 
 $pgv_lang["ex-spouse"]                  = "Ex-conjoint";
 $pgv_lang["ex-wife"]                    = "Ex-épouse";
@@ -442,6 +445,9 @@ $pgv_lang["person_ancestors"]           = "Ajouter cette personne et ses ascenda
 $pgv_lang["person_ancestor_fams"]       = "Ajouter cette personne, ses ascendants et leurs familles.";
 $pgv_lang["person_spouse"]              = "Ajouter cette personne, son conjoint et les enfants.";
 $pgv_lang["person_desc"]                = "Ajouter cette personne, son conjoint et toute leur descendance.";
+$pgv_lang["which_s_links"]              = "Quels enregistrements liés à cette source voulez-vous ajouter ?";
+$pgv_lang["just_source"]                = "Ajouter seulement cette source.";
+$pgv_lang["linked_source"]              = "Ajouter cette source et les individus/familles qui y sont liés.";
 $pgv_lang["person_private"]             = "Respect de la vie privée : les détails personnels sur cet individu ne seront pas inclus.";
 $pgv_lang["family_private"]             = "Respect de la vie privée : les détails personnels sur cette famille ne seront pas inclus.";
 $pgv_lang["download"]                   = "Faire un clic-droit (ctrl-clic sur Macintoch) sur le lien ci-dessous et sélectionnez «Enregistrer la cible sous...» pour télécharger le fichier.";
@@ -451,6 +457,7 @@ $pgv_lang["name_description"]           = "Nom / Description";
 $pgv_lang["remove"]                     = "Retirer";
 $pgv_lang["empty_cart"]                 = "Vider la sélection";
 $pgv_lang["download_now"]               = "Télécharger maintenant";
+$pgv_lang["download_file"]              = "Télécharger le fichier sur votre système (<i>Download</i>)";
 $pgv_lang["indi_downloaded_from"]       = "Provenance de cet individu";
 $pgv_lang["family_downloaded_from"]     = "Provenance de cette famille";
 $pgv_lang["source_downloaded_from"]     = "Provenance de cette source";
@@ -782,10 +789,49 @@ $pgv_lang["sosa_aunt_7"]                = "grand-tante";      // mothers mothers
 $pgv_lang["n_x_paternal_aunt"]          = "%2\$d x ";
 $pgv_lang["n_x_maternal_aunt"]          = "%2\$d x ";
 
+// the sosa_uncle name is used for uncles(by marriage) - the names below can be extended to any number
+// of generations just by adding more translations.
+// to allow fo language variations we specify different relationships for paternal and maternal
+// aunts and uncles
+// 1st generation
+$pgv_lang["sosa_uncle_bm_2"]            = "oncle"; // fathers brother
+$pgv_lang["sosa_uncle_bm_3"]            = "oncle"; // mothers brother
+// 2nd generation
+$pgv_lang["sosa_uncle_bm_4"]            = "grand-oncle";      // fathers's fathers brother 
+$pgv_lang["sosa_uncle_bm_5"]            = "grand-oncle";      // fathers mothers brother
+$pgv_lang["sosa_uncle_bm_6"]            = "grand-oncle";      // mothers fathers brother
+$pgv_lang["sosa_uncle_bm_7"]            = "grand-oncle";      // mothers mothers brother
+// for the general case of uncles of the nth degree use the text below
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_uncle_bm"]      = "%2\$d x arrière grand-oncle";
+$pgv_lang["n_x_maternal_uncle_bm"]      = "%2\$d x arrière grand-oncle";
+
+// the sosa_aunt name is used for aunts (by marriage)- the names below can be extended to any number
+// of generations just by adding more translations.
+// to allow fo language variations we specify different relationships for paternal and maternal
+// aunts and aunts
+// 1st generation
+$pgv_lang["sosa_aunt_bm_2"]             = "tante";  // fathers sister
+$pgv_lang["sosa_aunt_bm_3"]             = "tante";  // mothers sister
+// 2nd generation
+$pgv_lang["sosa_aunt_bm_4"]             = "grand-tante";      // fathers's fathers sister 
+$pgv_lang["sosa_aunt_bm_5"]             = "grand-tante";      // fathers mothers sister
+$pgv_lang["sosa_aunt_bm_6"]             = "grand-tante";      // mothers fathers sister
+$pgv_lang["sosa_aunt_bm_7"]             = "grand-tante";      // mothers mothers sister
+// for the general case of aunts of the nth degree use the text below
+// in this text %1\$d is replaced with the number of generations
+//              %2\$d is replaced with the number of generations - 1
+//              %3\$d is replaced with the number of generations - 2
+$pgv_lang["n_x_paternal_aunt_bm"]       = "%2\$d x ";
+$pgv_lang["n_x_maternal_aunt_bm"]       = "%2\$d x ";
+
+
 // if a specific cousin relationship cannot be represented in a language translate as "";
 $pgv_lang["male_cousin_1"]              = "cousin germain";
-$pgv_lang["male_cousin_2"]              = "cousin issus de germain";
-$pgv_lang["male_cousin_3"]              = "cousin issus d'issus germain";
+$pgv_lang["male_cousin_2"]              = "cousin issu de germain";
+$pgv_lang["male_cousin_3"]              = "cousin issu d'issu de germain";
 $pgv_lang["male_cousin_4"]              = "";
 $pgv_lang["male_cousin_5"]              = "";
 $pgv_lang["male_cousin_6"]              = "";
@@ -805,8 +851,8 @@ $pgv_lang["male_cousin_19"]             = "";
 $pgv_lang["male_cousin_20"]             = "";
 $pgv_lang["male_cousin_n"]              = "";
 $pgv_lang["female_cousin_1"]            = "cousine germaine";
-$pgv_lang["female_cousin_2"]            = "cousine issus de germaine";
-$pgv_lang["female_cousin_3"]            = "cousine issus d'issus germaine";
+$pgv_lang["female_cousin_2"]            = "cousine issue de germaine";
+$pgv_lang["female_cousin_3"]            = "cousine issue d'issue de germaine";
 $pgv_lang["female_cousin_4"]            = "";
 $pgv_lang["female_cousin_5"]            = "";
 $pgv_lang["female_cousin_6"]            = "";
@@ -1315,7 +1361,7 @@ $pgv_lang["no_feed"]                    = "Aucun flux RSS trouvé pour ce site P
 //-- ASSOciates RELAtionship
 // After any change in the following list, please check $assokeys in edit_interface.php
 $pgv_lang["attendant"]                  = "Préposé";
-$pgv_lang["attending"]                  = "Présent";
+$pgv_lang["attending"]                  = "Présent(e)";
 $pgv_lang["best_man"]                   = "Garçon d'honneur";
 $pgv_lang["bridesmaid"]                 = "Demoiselle d'honneur";
 $pgv_lang["buyer"]                      = "Acheteur";
@@ -1325,7 +1371,7 @@ $pgv_lang["friend"]                     = "Ami(e)";
 $pgv_lang["godfather"]                  = "Parrain";
 $pgv_lang["godmother"]                  = "Marraine";
 $pgv_lang["godparent"]                  = "Parrain/marraine";
-$pgv_lang["informant"]                  = "Déclarant";
+$pgv_lang["informant"]                  = "Déclarant(e)";
 $pgv_lang["lodger"]                     = "Locataire";
 $pgv_lang["nurse"]                      = "Nourrice";
 $pgv_lang["priest"]                     = "Prêtre";

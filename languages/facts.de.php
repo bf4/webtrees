@@ -3,7 +3,7 @@
  * German Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  Jürgen Bach, Kurt Norgaz , and Peter Pluntke
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,7 +100,7 @@ $factarray["LEGA"]	= "Erbe";
 $factarray["MARB"]	= "Eheaufgebot";
 $factarray["MARC"]	= "Ehevertrag";
 $factarray["MARL"]	= "Ehegenehmigung";
-$factarray["MARR"]	= "Heirat";
+$factarray["MARR"]	= "Ehe";
 $factarray["MARS"]	= "Ehevertrag";
 $factarray["MEDI"]	= "Multimedia Typ";
 $factarray["NAME"]	= "Name";
@@ -246,7 +246,7 @@ $factarray["_HAIR"]	= "Haarfarbe";
 $factarray["_HEIG"]	= "Größe";
 $factarray["_HOL"]  = "Holocaust";
 $factarray["_INTE"]	= "Begraben";
-$factarray["_MARI"]	= "Heiratsabsicht";
+$factarray["_MARI"]	= "Eheabsicht";
 $factarray["_MBON"]	= "Verlobung";
 $factarray["_MEDC"]	= "Gesundheitszustand";
 $factarray["_MILI"]	= "Militär";
@@ -261,19 +261,19 @@ $factarray["_STAT"] = "Familienstand";
 $factarray["COMM"]	= "Bemerkung";
 
 // Aldfaer related facts
-$factarray["MARR_CIVIL"] = "standesamtliche Hochzeit";
-$factarray["MARR_RELIGIOUS"] = "kirchliche Hochzeit";
+$factarray["MARR_CIVIL"] = "standesamtliche Ehe";
+$factarray["MARR_RELIGIOUS"] = "kirchliche Ehe";
 $factarray["MARR_PARTNERS"] = "eingetragene Lebensgemeinschaft";
-$factarray["MARR_UNKNOWN"] = "Art der Hochzeit unbekannt";
+$factarray["MARR_UNKNOWN"] = "Art der Ehe unbekannt";
 $factarray["_HNM"] = "Hebräischer Name";
 $factarray["_DEAT_SPOU"] = "Tod von Ehegatte";
 $factarray["_BIRT_CHIL"] = "Geburt eines Kindes";
-$factarray["_MARR_CHIL"] = "Hochzeit eines Kindes";
+$factarray["_MARR_CHIL"] = "Ehe eines Kindes";
 $factarray["_DEAT_CHIL"] = "Tod eines Kindes";
 $factarray["_BIRT_GCHI"] = "Geburt eines Enkelkindes";
-$factarray["_MARR_GCHI"] = "Hochzeit eines Enkelkindes";
+$factarray["_MARR_GCHI"] = "Ehe eines Enkelkindes";
 $factarray["_DEAT_GCHI"] = "Tod eines Enkelkindes";
-$factarray["_MARR_FATH"] = "Hochzeit des Vaters";
+$factarray["_MARR_FATH"] = "Ehe des Vaters";
 $factarray["_DEAT_FATH"] = "Tod des Vaters";
 $factarray["_MARR_MOTH"] = "Ehe der Mutter";
 $factarray["_DEAT_MOTH"] = "Tod der Mutter";

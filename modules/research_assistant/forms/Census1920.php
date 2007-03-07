@@ -23,6 +23,7 @@
  * @subpackage Research_Assistant
  * @version $Id: Birth_Information.php 200 2005-11-09 20:37:48Z jporter $
  * @author Brandon Gagnon
+ * @author Christopher Stolworthy
  */
  //-- security check, only allow access from module.php
 if (strstr($_SERVER["SCRIPT_NAME"],"Census1920.php")) {
@@ -121,7 +122,28 @@ return false;}return true;}
 //        Start of Table
 		$out = '<tr>
 			<td class="descriptionbox">'.print_help_link("edit_media_help", "qm",'',false,true).$factarray['OBJE'].'</td>
-			<td class="optionbox" colspan="5"><input type="text" name="OBJE" id="OBJE" size="5" value="'.$citation['ts_obje'].'"/>';
+			<td class="optionbox" colspan="5"><input type="hidden" name="OBJE" id="OBJE" value="'.$citation['ts_obje'].'"/>';
+			$out .= "<div id=\"censusPicDiv\" style=\"display";
+			if(!empty($citation['ts_obje']))
+			{
+				$out .= ":block\">";
+				/*@var $picture Media*/
+				$picture = Media::getInstance($citation['ts_obje']);
+				if(!is_null($picture))
+				{	
+					$out .= "<span id=\"censusImgSpan\">".$picture->getTitle().'</span><br/><img id="censusImage" src="'.$picture->getThumbnail().'" />';
+				}
+				else
+				{
+					$out .= "<span id=\"censusImgSpan\"></span><br /><img id=\"censusImage\" src=\"\" />";
+				}
+			}
+			else
+			{
+				$out .= ":none\">";
+				$out .= "<span id=\"censusImgSpan\"></span><br /><img id=\"censusImage\" src=\"\" />";
+			}
+			$out .="</div>";
 		$out .= print_findmedia_link("OBJE", true, '', true);
 		$out .= '<br /><a href="javascript:;" onclick="pastefield=document.getElementById(\'OBJE\'); window.open(\'addmedia.php?action=showmediaform\', \'\', \'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1\'); return false;">'.$pgv_lang["add_media"].'</a>';
 		$out .= '</td></tr>';
@@ -395,9 +417,9 @@ return false;}return true;}
 			$out .= '
 	            <td id="peoplecell" class="optionbox" align="left">
 	                   <div id="peoplelink'.$i.'">';
-	                   		if (!is_null($person)) $out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
+	                   		if (!is_null($person)) $out .= '<a id="link_'.$pid.'" href="individual.php?pid='.$pid.'">'.$person->getName().'</a> <a id="rem_'.$pid.'" href="#" onclick="clearname(\'personid'.$i.'\', \'link_'.$pid.'\', \''.$pid.'\'); return false;" ><img src="images/remove.gif" border="0" alt="" /><br /></a>';
 	                   $out .= '</div>
-	                   <input type="hidden" id="personid'.$i.'" name="personid'.$i.'" size="3" value="'.$pid.'" />';
+	                   <input type="hidden" id="personid'.$i.'" name="personid'.$i.'" size="3" value=";'.$pid.'" />';
 	                   if(isset($citation['ts_array']['rows'][$i]['NameOfPeople'])) $searchName = $citation['ts_array']['rows'][$i]['NameOfPeople'];
 						else $searchName = '';
 	                   $out .= print_findindi_link("personid".$i, "peoplelink".$i, true,false,'',$searchName);
@@ -460,6 +482,7 @@ return false;}return true;}
 		$personid = "";
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
+			
 			if(!empty($_POST["newPerson".$number]))
 			{
 				$tempPerson = $this->createPerson($number);
@@ -478,30 +501,31 @@ return false;}return true;}
 		
 		if(empty($return))
 		{
-		$out = $this->header("module.php?mod=research_assistant&form=Census1920&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1920 United States Federal Census");
-		$out .= $this->editFactsForm(false);
-		$out .= $this->footer();
-		return $out;
+			$out = $this->header("module.php?mod=research_assistant&form=Census1920&action=func&func=step3&taskid=" . $_REQUEST['taskid'], "center", "1920 United States Federal Census");
+			$out .= $this->editFactsForm(false);
+			$out .= $this->footer();
+			$citation = $this->getSourceCitationData();
+			return $out;
 		}
 		else
 		{
-			
 		}
 	}
 	
 		function editFactsForm($printButton = true)
 	{
 		global $factarray, $pgv_lang;
-		
 		$facts = $this->getFactData();
 		$citation = $this->getSourceCitationData();
 		$out = parent::editFactsForm(false);
 		$rows = $citation['ts_array']['rows'];
-		$inferFacts = $this->inferFacts($rows);
 		
+		$inferFacts = $this->inferFacts($rows);
+		if(isset($inferFacts))
+		{
 		if(!empty($inferFacts))
 		{
-			
+		
 		$out .= '<tr><td colspan="2" id="inferData"><table class="list_table"><tbody><tr><td colspan="4" class="topbottombar">'.$pgv_lang["ra_inferred_facts"].'</td></tr>
 <tr><td class="descriptionbox">'.$pgv_lang["ra_fact"].'</td><td class="descriptionbox">'.$pgv_lang["ra_person"].'</td><td class="descriptionbox">'.$pgv_lang["ra_reason"].'</td><td class="descriptionbox">'.$pgv_lang["add"].'</td></tr>'; 
 		$completeFact = true;
@@ -533,12 +557,15 @@ return false;}return true;}
 				
 				}
 		}
-				
-			
-		
 		$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value='.$pgv_lang["complete"].'></td></tr>'; 
 		return $out;
 	}
+		}
+	else
+		{
+			$out .= '<tr><td class="descriptionbox" align="center" colspan="4"><input type="submit" value='.$pgv_lang["complete"].'></td></tr>'; 
+			return $out;
+		}	
 	}
 	
 	function step3() {
@@ -573,7 +600,14 @@ return false;}return true;}
 		for($number = 0; $number < $_POST['numOfRows']; $number++)
 		{
 			$inferredFacts = array();
-			$person = Person::getInstance($rows[$number]["personid"]);
+			if(isset($rows[$number]["personid"]))
+			{
+				$person = Person::getInstance($rows[$number]["personid"]);
+			}
+			else
+			{
+			 	$person = "";
+			}
 			if(!empty($person))
 			{
 				$bdate = $person->getBirthYear();
@@ -687,7 +721,14 @@ return false;}return true;}
 			$people[$person->getXref()] = $inferredFacts;
 			}
 		}
+		if(count($people) > 0)
+		{
 		return $people;
+		}
+		else
+		{
+		return null;
+		}
 		
 		
 	}

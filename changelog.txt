@@ -1,4 +1,4 @@
-﻿=====================================================================
+=====================================================================
 	Change Log
 	phpGedView
 
@@ -12,6 +12,33 @@ Version 4.2
  - Adding a "never married" icon on ancestry booklet when NMR=0 (opus27)
 
 Version 4.1
+ - Fixed [ 1444232 ] Quick Update - RtL (yalnifj)
+ - Fixed [ 1669437 ] SQL Error in Individual List (opus27)
+ - Fixed [ 1442229 ] Import Married Names Unknown Dupe (yalnifj)
+ - Fixed [ 1434050 ] Merge Siblings (yalnifj)
+ - Fixed [ 1629684 ] Soundex Search Results Do Not Use the New Format (opus27)
+ - Added [ Help - 4015858 ] Admins can edit without updating CHAN record (coloredpixels)
+ - Fixed [ 1429244 ] Calendar "Show events of" select missing for Non Logged In (yalnifj)
+ - Fixed [ 1427611 ] 4.0 B5: editgedcoms.php shows insted of the log file (yalnifj)
+ - Fixed [ 1405933 ] Age Calculation - Birth after event (yalnifj)
+ - Fixed [ 1403653 ] Accept / Reject Changes (yalnifj)
+ - Fixed [ 1403615 ] 4.0b3 Accept/Reject Changes (yalnifj)
+ - Fixed [ 1391206 ] 4.0b3 space omitted in CONC after TEXT (yalnifj)
+ - Fixed [ 1389205 ] 4.0B3 - family doubled after quick update (yalnifj)
+ - Fixed [ 1389034 ] 4.0B8 Import statistic has wrong figures (yalnifj)
+ - Fixed [ 1388702 ] 4.0 B2 Password validation (yalnifj)
+ - Fixed [ 1373302 ] 4.0b2 Search Help Text (yalnifj)
+ - Fixed [ 1346063 ] Missing New Line with 2 Source Citation Images (yalnifj)
+ - Fixed [ 1329644 ] Add Married Name - Wrong Sequence (yalnifj)
+ - Fixed [ 1510463 ] Indilist and Famlist - Danish (opus27)
+ - Fixed [ 1579889 ] Upgrading breaks Media links (opus27)
+ - Fixed [ 1635413 ] mismatch between numbers on famlist index and rows of table (canajun2eh)
+ - Fixed [ 1661570 ] 4.1B3: Indi list and "Surname first" (canajun2eh)
+ - Fixed [ 1657883 ] 4.1b4 (SVN 839): Indi list "all" option doesn't work (canajun2eh)
+ - Fixed [ 1657189 ] 4.1 B4 (837) Inefficient database query on Indi list (canajun2eh)
+ - Fixed [ 1655947 ] 4.1 b4 (SVN 833): Import does not skip BOM (canajun2eh)
+ - Fixed [ 1656671 ] Indis missing from Indi list (canajun2eh)
+ - Fixed reporting of aunt/uncle by marriage relationship descriptions (cozensweb)
  - Fixed [ 1635406 ] RTL mails and new user registration pages (canajun2eh)
  - Fixed [ 1646192 ] Log File - pageview count posting error (canajun2eh)
  - Fixed false reporting of step sibling in relationship.php (cozensweb)

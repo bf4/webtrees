@@ -5,7 +5,7 @@
  * Various printing functions used by all scripts and included by the functions.php file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -637,9 +637,11 @@ function hidePrint() {
 	 }
 }
 function showBack() {
-	 var backlink = document.getElementById('backlink');
-	 if (backlink) {
-		  backlink.style.display='block';
+	 var printlink = document.getElementById('printlink');
+	 var printlinktwo = document.getElementById('printlinktwo');
+	 if (printlink) {
+		  printlink.style.display='inline';
+		  printlinktwo.style.display='inline';
 	 }
 }
 //-->
@@ -703,7 +705,7 @@ function message(username, method, url, subject) {
 	 window.open('message.php?to='+username+'&method='+method+'&url='+url+'&subject='+subject+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
 	 return false;
 }
-var whichhelp = 'help_<?php print basename($SCRIPT_NAME)."&amp;action=".$action; ?>';
+var whichhelp = 'help_<?php print basename($SCRIPT_NAME)."&action=".$action; ?>';
 //-->
 </script>
 <script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
@@ -711,13 +713,12 @@ var whichhelp = 'help_<?php print basename($SCRIPT_NAME)."&amp;action=".$action;
 	 print $head;
 	 print "</head>\n\t<body id=\"body\"";
 	 if ($view=="preview") print " onbeforeprint=\"hidePrint();\" onafterprint=\"showBack();\"";
-	 if ($TEXT_DIRECTION=="rtl" || !empty($ONLOADFUNCTION)) {
-		 print " onload=\"$ONLOADFUNCTION";
-	 	if ($TEXT_DIRECTION=="rtl") print " maxscroll = document.documentElement.scrollLeft;";
-	 	print " loadHandler();";
-	 	print "\"";
+	 print " onload=\"";
+	 if (!empty($ONLOADFUNCTION)) print $ONLOADFUNCTION;
+	 if ($TEXT_DIRECTION=="rtl") {
+		print " maxscroll = document.documentElement.scrollLeft;";
  	}
- 	else print " onload=\"loadHandler();\"";
+ 	 print "\"";
 	 print ">\n\t";
 	 print "<!-- begin header section -->\n";
 	 if ($view!="preview") {
@@ -890,7 +891,6 @@ function print_footer() {
 			   print "\n\t <a id=\"printlinktwo\"	  href=\"javascript:;\" onclick=\"window.location='".$backlink."'; return false;\">".$pgv_lang["cancel_preview"]."</a><br />";
 		  }
 		  $printlink = true;
-		  print "\n\t<a id=\"backlink\" style=\"display: none;\" href=\"javascript:;\" onclick=\"window.location='".$backlink."'; return false;\">".$pgv_lang["cancel_preview"]."</a><br />";
 		  print "</div>";
 	 }
 	 if (function_exists("load_behaviour")) load_behaviour();  // @see function_print_lists.php
@@ -1956,95 +1956,100 @@ function PrintReady($text, $InHeaders=false) {
     //		argument search, in which the second or later arguments can be found in the
     //		<span> or </span> strings.
     if ($HighlightOK) {
-	    if (isset($query)) {
-			$queries = explode(" ", $query);
-	    	$newtext = $text;
-	    	$hasallhits = true;
-		    foreach($queries as $index=>$query1) {
-			    if (preg_match("/(".$query1.")/i", $text)) {
-		    		$newtext = preg_replace("/(".$query1.")/i", "\x01$1\x02", $newtext);
-	    		}
-			else if (preg_match("/(".str2upper($query1).")/", str2upper($text))) {
-				$nlen = strlen($query1);
-				$npos = strpos(str2upper($text), str2upper($query1));
-	    		$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
-	    		$newtext = substr_replace($newtext, "\x01", $npos, 0);
-    		}
-	    		else $hasallhits = false;
-	    	}
-	    	if ($hasallhits) $text = $newtext;
-    	}
-    	if (isset($action) && ($action === "soundex")) {
-	    	if (isset($firstname)) {
-	    		$queries = explode(" ", $firstname);
-	    		$newtext = $text;
-	    		$hasallhits = true;
-		    	foreach($queries as $index=>$query1) {
-			    	if (preg_match("/(".$query1.")/i", $text)) {
-		    			$newtext = preg_replace("/(".$query1.")/i", "\x01$1\x02", $newtext);
-	    			}
-					else if (preg_match("/(".str2upper($query1).")/", str2upper($text))) {
+			if (isset($query)) {
+				$queries = explode(" ", $query);
+				$newtext = $text;
+				$hasallhits = true;
+				foreach($queries as $index=>$query1) {
+					$query1esc=addcslashes($query1, '/');
+					if (preg_match("/(".$query1esc.")/i", $text)) {
+						$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
+					}
+					else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
 						$nlen = strlen($query1);
 						$npos = strpos(str2upper($text), str2upper($query1));
-			    		$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
-			    		$newtext = substr_replace($newtext, "\x01", $npos, 0);
-		    		}
-	    			else $hasallhits = false;
-	    		}
-	    		if ($hasallhits) $text = $newtext;
-    		}
-    		if (isset($lastname)) {
-	    		$queries = explode(" ", $lastname);
-	    		$newtext = $text;
-	    		$hasallhits = true;
-		    	foreach($queries as $index=>$query1) {
-			    	if (preg_match("/(".$query1.")/i", $text)) {
-		    			$newtext = preg_replace("/(".$query1.")/i", "\x01$1\x02", $newtext);
-	    			}
-					else if (preg_match("/(".str2upper($query1).")/", str2upper($text))) {
-						$nlen = strlen($query1);
-						$npos = strpos(str2upper($text), str2upper($query1));
-			    		$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
-			    		$newtext = substr_replace($newtext, "\x01", $npos, 0);
-		    		}
-	    			else $hasallhits = false;
-	    		}
-	    		if ($hasallhits) $text = $newtext;
-    		}
-    		if (isset($place)) {
-	    		$queries = explode(" ", $place);
-	    		$newtext = $text;
-	    		$hasallhits = true;
-		    	foreach($queries as $index=>$query1) {
-			    	if (preg_match("/(".$query1.")/i", $text)) {
-		    			$newtext = preg_replace("/(".$query1.")/i", "\x01$1\x02", $newtext);
-	    			}
-					else if (preg_match("/(".str2upper($query1).")/", str2upper($text))) {
-						$nlen = strlen($query1);
-						$npos = strpos(str2upper($text), str2upper($query1));
-			    		$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
-			    		$newtext = substr_replace($newtext, "\x01", $npos, 0);
-		    		}
-	    			else $hasallhits = false;
-	    		}
-	    		if ($hasallhits) $text = $newtext;
-    		}
-    		if (isset($year)) {
-	    		$queries = explode(" ", $year);
-	    		$newtext = $text;
-	    		$hasallhits = true;
-		    	foreach($queries as $index=>$query1) {
-			    	if (preg_match("/(".$query1.")/i", $text)) {
-		    			$newtext = preg_replace("/(".$query1.")/i", "\x01$1\x02", $newtext);
-	    			}
-	    			else $hasallhits = false;
-	    		}
-	    		if ($hasallhits) $text = $newtext;
-    		}
-    	}
-    	// All the "Highlight start" and "Highlight end" flags are set:
-    	//		Delay the final clean-up and insertion of proper <span> and </span>
-    	//		until parentheses, braces, and brackets have been processed
+						$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
+						$newtext = substr_replace($newtext, "\x01", $npos, 0);
+					}
+					else $hasallhits = false;
+				}
+				if ($hasallhits) $text = $newtext;
+			}
+			if (isset($action) && ($action === "soundex")) {
+				if (isset($firstname)) {
+					$queries = explode(" ", $firstname);
+					$newtext = $text;
+					$hasallhits = true;
+					foreach($queries as $index=>$query1) {
+						$query1esc=addcslashes($query1, '/');
+						if (preg_match("/(".$query1esc.")/i", $text)) {
+							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
+						}
+						else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
+							$nlen = strlen($query1);
+							$npos = strpos(str2upper($text), str2upper($query1));
+							$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
+							$newtext = substr_replace($newtext, "\x01", $npos, 0);
+						}
+						else $hasallhits = false;
+					}
+					if ($hasallhits) $text = $newtext;
+				}
+				if (isset($lastname)) {
+					$queries = explode(" ", $lastname);
+					$newtext = $text;
+					$hasallhits = true;
+					foreach($queries as $index=>$query1) {
+						$query1esc=addcslashes($query1, '/');
+						if (preg_match("/(".$query1esc.")/i", $text)) {
+							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
+						}
+						else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
+							$nlen = strlen($query1);
+							$npos = strpos(str2upper($text), str2upper($query1));
+							$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
+							$newtext = substr_replace($newtext, "\x01", $npos, 0);
+						}
+						else $hasallhits = false;
+					}
+					if ($hasallhits) $text = $newtext;
+				}
+				if (isset($place)) {
+					$queries = explode(" ", $place);
+					$newtext = $text;
+					$hasallhits = true;
+					foreach($queries as $index=>$query1) {
+						$query1esc=addcslashes($query1, '/');
+						if (preg_match("/(".$query1esc.")/i", $text)) {
+							$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
+						}
+						else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
+							$nlen = strlen($query1);
+							$npos = strpos(str2upper($text), str2upper($query1));
+							$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
+							$newtext = substr_replace($newtext, "\x01", $npos, 0);
+						}
+						else $hasallhits = false;
+					}
+					if ($hasallhits) $text = $newtext;
+				}
+				if (isset($year)) {
+					$queries = explode(" ", $year);
+					$newtext = $text;
+					$hasallhits = true;
+					foreach($queries as $index=>$query1) {
+						$query1=addcslashes($query1, '/');
+						if (preg_match("/(".$query1.")/i", $text)) {
+							$newtext = preg_replace("/(".$query1.")/i", "\x01$1\x02", $newtext);
+						}
+						else $hasallhits = false;
+					}
+					if ($hasallhits) $text = $newtext;
+				}
+			}
+			// All the "Highlight start" and "Highlight end" flags are set:
+			//		Delay the final clean-up and insertion of proper <span> and </span>
+			//		until parentheses, braces, and brackets have been processed
     }
 
 	// Look for strings enclosed in parentheses, braces, or brackets.
@@ -2471,14 +2476,36 @@ function CheckFactUnique($uniquefacts, $recfacts, $type) {
  */
 function print_add_new_fact($id, $usedfacts, $type) {
 	global $factarray, $pgv_lang;
-	global $SOUR_FACTS_ADD, $SOUR_FACTS_UNIQUE, $INDI_FACTS_ADD, $INDI_FACTS_UNIQUE;
-	global $FAM_FACTS_ADD, $FAM_FACTS_UNIQUE, $REPO_FACTS_ADD, $REPO_FACTS_UNIQUE;
+	global $INDI_FACTS_ADD,    $FAM_FACTS_ADD,    $SOUR_FACTS_ADD,    $REPO_FACTS_ADD;
+	global $INDI_FACTS_UNIQUE, $FAM_FACTS_UNIQUE, $SOUR_FACTS_UNIQUE, $REPO_FACTS_UNIQUE;
+	global $INDI_FACTS_QUICK,  $FAM_FACTS_QUICK,  $SOUR_FACTS_QUICK,  $REPO_FACTS_QUICK;
 
-	if ($type == "SOUR") $addfacts = array_merge(CheckFactUnique(preg_split("/[, ;:]+/", $SOUR_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY), $usedfacts, "SOUR"), preg_split("/[, ;:]+/", $SOUR_FACTS_ADD, -1, PREG_SPLIT_NO_EMPTY));
-	else if ($type == "REPO") $addfacts = array_merge(CheckFactUnique(preg_split("/[, ;:]+/", $REPO_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY), $usedfacts, "REPO"), preg_split("/[, ;:]+/", $REPO_FACTS_ADD, -1, PREG_SPLIT_NO_EMPTY));
-	else if ($type == "INDI") $addfacts = array_merge(CheckFactUnique(preg_split("/[, ;:]+/", $INDI_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY), $usedfacts, "INDI"), preg_split("/[, ;:]+/", $INDI_FACTS_ADD, -1, PREG_SPLIT_NO_EMPTY));
-	else if($type == "FAM") $addfacts = array_merge(CheckFactUnique(preg_split("/[, ;:]+/", $FAM_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY), $usedfacts, "FAM"), preg_split("/[, ;:]+/", $FAM_FACTS_ADD, -1, PREG_SPLIT_NO_EMPTY));
-	else return;
+	switch ($type) {
+	case "INDI":
+		$addfacts   =preg_split("/[, ;:]+/", $INDI_FACTS_ADD,    -1, PREG_SPLIT_NO_EMPTY);
+		$uniquefacts=preg_split("/[, ;:]+/", $INDI_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY);
+		$quickfacts =preg_split("/[, ;:]+/", $INDI_FACTS_QUICK,  -1, PREG_SPLIT_NO_EMPTY);
+		break;
+	case "FAM":
+		$addfacts   =preg_split("/[, ;:]+/", $FAM_FACTS_ADD,     -1, PREG_SPLIT_NO_EMPTY);
+		$uniquefacts=preg_split("/[, ;:]+/", $FAM_FACTS_UNIQUE,  -1, PREG_SPLIT_NO_EMPTY);
+		$quickfacts =preg_split("/[, ;:]+/", $FAM_FACTS_QUICK,   -1, PREG_SPLIT_NO_EMPTY);
+		break;
+	case "SOUR":
+		$addfacts   =preg_split("/[, ;:]+/", $SOUR_FACTS_ADD,    -1, PREG_SPLIT_NO_EMPTY);
+		$uniquefacts=preg_split("/[, ;:]+/", $SOUR_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY);
+		$quickfacts =preg_split("/[, ;:]+/", $SOUR_FACTS_QUICK,  -1, PREG_SPLIT_NO_EMPTY);
+		break;
+	case "REPO":
+		$addfacts   =preg_split("/[, ;:]+/", $REPO_FACTS_ADD,    -1, PREG_SPLIT_NO_EMPTY);
+		$uniquefacts=preg_split("/[, ;:]+/", $REPO_FACTS_UNIQUE, -1, PREG_SPLIT_NO_EMPTY);
+		$quickfacts =preg_split("/[, ;:]+/", $REPO_FACTS_QUICK,  -1, PREG_SPLIT_NO_EMPTY);
+		break;
+	default:
+		return;
+	}
+	$addfacts=array_merge(CheckFactUnique($uniquefacts, $usedfacts, $type), $addfacts);
+	$quickfacts=array_intersect($quickfacts, $addfacts);
 
 	usort($addfacts, "factsort");
 	print "<tr><td class=\"descriptionbox\">";
@@ -2500,10 +2527,6 @@ function print_add_new_fact($id, $usedfacts, $type) {
 	}
 	print "</select>";
 	print "<input type=\"button\" value=\"".$pgv_lang["add"]."\" onclick=\"add_record('$id', 'newfact');\" />\n";
-	$quickfacts = array();
-	if ($type == "INDI") $quickfacts = array("BIRT","ADDR","RESI","OCCU","DEAT");
-	if ($type == "FAM") $quickfacts = array("MARR","DIV");
-	$quickfacts = array_intersect($quickfacts,$addfacts);
 	foreach($quickfacts as $k=>$v) echo "&nbsp;<small><a href='javascript://$v' onclick=\"add_new_record('$id', '$v');return false;\">".$factarray["$v"]."</a></small>&nbsp;";
 	print "</form>\n";
 	print "</td></tr>\n";

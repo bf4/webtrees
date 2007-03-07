@@ -45,6 +45,8 @@ function getRelationshipSentence($node, $pid1, $pid2)
 	$bosa = 1;
     $numberOfSpouses = 0;
     $lastRelationshipIsSpouse = false;
+    $lastRelationshipIsSibling = false;
+    $lastRelationshipButOneIsSibling = false;
     $checkFirstRelationship = false;
     $firstRelationshipIsSpouse = false;
     $siblingIsSister = false;
@@ -67,6 +69,8 @@ function getRelationshipSentence($node, $pid1, $pid2)
         if($started)
         {
             $lastRelationshipIsSpouse = false;
+		    $lastRelationshipButOneIsSibling = $lastRelationshipIsSibling;
+		    $lastRelationshipIsSibling = false;
             // look to see if we can find a relationship
             switch( $node["relations"][$index])
             {
@@ -77,6 +81,7 @@ function getRelationshipSentence($node, $pid1, $pid2)
 				    $siblingIsSister = true;
                 case "brother":
                     $numberOfSiblings++;
+				    $lastRelationshipIsSibling = true;
                     break;
 
                 case "mother":
@@ -267,9 +272,47 @@ function getRelationshipSentence($node, $pid1, $pid2)
 	            $relationshipDescription = $pgv_lang["stepbrother"];
 	        }
 	}
+    //checks for aunt/uncle relationship by marriage
+    else if (($numberOfSiblings == 1) && ($generationsYounger == 0) && ($generationsOlder >= 1) && ($numberOfSpouses == 1) && $lastRelationshipIsSpouse && $lastRelationshipButOneIsSibling )
+    {
+		if ($mf=="F" && isset($pgv_lang["sosa_aunt_bm_$sosa"]))
+		{
+			$relationshipDescription = $pgv_lang["sosa_aunt_bm_$sosa"];
+		}
+		else if (isset($pgv_lang["sosa_uncle_bm_$sosa"]))
+		{
+			$relationshipDescription = $pgv_lang["sosa_uncle_bm_$sosa"];
+		}
+		else
+		{
+			// if line is through father
+            if(floor($sosa/pow(2,$generationsOlder-1)) == 2)
+			{
+	            if ($mf=="F" && isset($pgv_lang["n_x_paternal_aunt_bm"]))
+				{
+				    $relationshipDescription = sprintf($pgv_lang["n_x_paternal_aunt_bm"], $generationsOlder, $generationsOlder-1, $generationsOlder-2);
+			    }
+				else if(isset($pgv_lang["n_x_paternal_uncle_bm"]))
+				{
+				    $relationshipDescription = sprintf($pgv_lang["n_x_paternal_uncle_bm"], $generationsOlder, $generationsOlder-1, $generationsOlder-2);
+				}
+			}
+			else
+			{
+	            if ($mf=="F" && isset($pgv_lang["n_x_maternal_aunt_bm"]))
+				{
+				    $relationshipDescription = sprintf($pgv_lang["n_x_maternal_aunt_bm"], $generationsOlder, $generationsOlder-1, $generationsOlder-2);
+			    }
+				else if(isset($pgv_lang["n_x_maternal_uncle_bm"]))
+				{
+				    $relationshipDescription = sprintf($pgv_lang["n_x_maternal_uncle_bm"], $generationsOlder, $generationsOlder-1, $generationsOlder-2);
+				}
+			}
+		}
+    }
+	// from here on only check for blood relatives
     else if($numberOfSpouses > 0)
     {
-        // we don't handle more than one spouse
     }
     //check if relationship is parent or grandparent
     else if ($numberOfSiblings == 0 && $generationsOlder > 0 && $generationsYounger == 0)
@@ -342,8 +385,8 @@ function getRelationshipSentence($node, $pid1, $pid2)
             }
         }
     }
-    //checks for aunt/uncle relationship
-    else if (($numberOfSiblings == 1 && $generationsYounger == 0 && $generationsOlder >= 1) && (($numberOfSpouses == 0) || (($numberOfSpouses == 1) && $lastRelationshipIsSpouse )))
+    //checks for blood aunt/uncle relationship
+    else if (($numberOfSiblings == 1 && $generationsYounger == 0 && $generationsOlder >= 1) && $lastRelationshipIsSibling )
     {
 		if ($mf=="F" && isset($pgv_lang["sosa_aunt_$sosa"]))
 		{
@@ -457,7 +500,7 @@ function getRelationshipSentence($node, $pid1, $pid2)
         $pid2Name = get_person_name($pid2);
     }
 
-    if($relationshipDescription != false) // we have a description - so lets form a sentence
+    if($relationshipDescription != false)
     {
         if(($mf=="F") && isset($pgv_lang["relationship_female_1_is_the_2_of_3"]))
         {

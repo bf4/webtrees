@@ -3,7 +3,7 @@
  * Media List Slide Show module for phpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,9 +19,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ * @version $Id$
  * @package PhpGedView
- * @subpackage Module
- * @version $Id: googlemap.php,v$
+ * @subpackage Module - Slideshow
  * @author John Finlay / Neumont students
  */
 
@@ -37,6 +37,7 @@
 	$yz = 0;
 	$numImages = 0;
 	foreach($medialist as $mid=>$media) {
+		// privacy has already been checked by medialist.php
 		// Check to see if the item is a real image
 		$imgsize = @getimagesize($media['FILE']);
 		if($imgsize != false){		
@@ -67,22 +68,21 @@ border:0px solid #7777aa;
 <div id="theLayer" style="position:absolute;left:0;top:0;visibility:hidden;z-index:	100;">
   <table border="0" cellspacing="0" cellpadding="3" class="person_box">
   <tr>
-  <td id="titleBar" style="cursor:move" align="middle">
+  <td id="titleBar" style="cursor:move" align="left">
   <div onSelectStart="return false">
-  <div onMouseover="isHot=true;if (isN4) ddN4(theLayer)" onMouseout="isHot=false" dir="rtl">
+  <div onMouseover="isHot=true;if (isN4) ddN4(theLayer)" onMouseout="isHot=false" dir="ltr">
 <input type="image" src="modules/slideshow/images/previous.gif" onclick="btnPreviousClick()" style="cursor:pointer">
 <input type="image" src="modules/slideshow/images/pause.gif" onclick="btnPauseClick()" style="cursor:pointer">
 <input type="image" src="modules/slideshow/images/play.gif" onclick="btnStartClick()" style="cursor:pointer">
 <input type="image" src="modules/slideshow/images/next.gif" onclick="btnNextClick()" style="cursor:pointer">
+<img src="modules/slideshow/images/spacer.gif" width="64px" height="32px">
+  <a href="#" onClick="btnPauseClick(); hideMe(); return false;"><img src="modules/slideshow/images/quit.gif"></a>
   </div>
   </div>
-  </td>
-  <td style="cursor:hand" align="right">
-  <a style="text-decoration:none" href="#" onClick="btnPauseClick(); hideMe(); return false;"><font color="#ffffff" size="4" face="arial"><b>X</b> </font></a>
   </td>
   </tr>
   <tr>
-  <td style="padding:0px" colspan="2" >
+  <td style="padding:0px">
 <table border="0" cellpadding="0" cellspacing="0" >
 <tr>
 <td id="VU">
@@ -92,7 +92,7 @@ border:0px solid #7777aa;
 </tr>
 </table>
   </td>
-  <tr><td colspan="2">
+  <tr><td>
   <form id="myForm">
     <!--  <input id="cbx" name="cb1" type="checkbox" value="ON">Automatically restart slideshow 
     <br />

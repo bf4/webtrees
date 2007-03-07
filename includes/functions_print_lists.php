@@ -31,6 +31,8 @@ if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
 	 exit;
 }
 
+require_once("includes/person_class.php");
+
 /**
  * print a person in a list
  *
@@ -54,14 +56,15 @@ function print_list_person($key, $value, $findid=false, $asso="", $useli=true) {
 	if (!isset($indi_total)) $indi_total=array();
 	$indi_total[$key."[".$GEDCOM."]"] = 1;
 
-	$disp = displayDetailsByID($key);
-	if (showLivingNameByID($key)||$disp) {
+	$person = Person::getInstance($key);
+	$disp = $person->canDisplayDetails();
+	if ($person->canDisplayName()) {
 		if (begRTLText($value[0])) $listDir = "rtl";
 		else $listDir = "ltr";
 		$tag = "span";
 		if ($useli) $tag = "li";
 		print "<".$tag." class=\"".$listDir."\" dir=\"".$listDir."\">";
-		if ($findid == true) print "<a href=\"javascript:;\" onclick=\"pasteid('".$key."', '".preg_replace("/(['\"])/", "\\$1", PrintReady($value[0]))."'); return false;\" class=\"list_item\"><b>".$value[0]."</b>";
+		if ($findid == true) print "<a href=\"javascript:;\" onclick=\"pasteid('".$key."', '".preg_replace("/(['\"])/", "\\$1", PrintReady($value[0]." - ".$person->getBirthYear()))."'); return false;\" class=\"list_item\"><b>".$value[0]."</b>";
 		else print "<a href=\"individual.php?pid=$key&amp;ged=$value[1]\" class=\"list_item\"><b>".PrintReady($value[0])."</b>";
 		if ($SHOW_ID_NUMBERS){
 			print "&nbsp;&nbsp;";
@@ -331,6 +334,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	//-- table body
 	$hidden = 0;
 	$n = 0;
+	$dateY = date("Y");
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
 			$person = Person::getInstance($key); // from placelist
@@ -344,6 +348,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 			if (isset($value["gedcom"])) $person = new Person($value["gedcom"]); // from source.php
 			else $person = Person::getInstance($gid);
 		}
+		/* @var $person Person */
 		if (is_null($person)) continue;
 		if (!$person->canDisplayName()) {
 			$hidden++;
@@ -358,7 +363,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 			echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$person->xref."</a></td>";
 		}
 		//-- Indi name(s)
-		if (isset($value["name"]) and $person->canDisplayName()) $name = $value["name"];
+		if (isset($value["name"]) && $person->canDisplayName()) $name = $value["name"];
 		else $name = $person->getSortableName();
 		if (isset($value[4])) $name = $person->getSortableName($value[0]); // from indilist ALL
 		if ($person->isDead()) echo "<td class=\"list_value_wrap\"";
@@ -413,7 +418,9 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "&nbsp;</td>";
 		//-- Number of children
 		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$person->getNumberOfChildren()."</a>";
+		if ($person->disp) {
+			echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$person->getNumberOfChildren()."</a>";
+		}
 		echo "</td>";
 		//-- Death date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
@@ -474,13 +481,13 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "</td>";
 		//-- Sorting by birth date
 		echo "<td style=\"display:none\">";
-		if (!$person->disp or $person->getBirthYear()>=date('Y')-100) echo "Y100";
+		if (!$person->disp || $person->getBirthYear()>=$dateY-100) echo "Y100";
 		else echo "YES";
 		echo "</td>";
 		//-- Sorting by death date
 		echo "<td style=\"display:none\">";
 		if ($person->isDead()) {
-			if ($person->getDeathYear()>=date('Y')-100) echo "Y100";
+			if ($person->getDeathYear()>=$dateY-100) echo "Y100";
 			else echo "YES";
 		}
 		else echo "N";
@@ -533,7 +540,8 @@ function print_surn_table($datalist, $target="INDI") {
 	echo "<td></td>";
 	echo "<th class=\"list_label\">".$factarray["SURN"]."</th>";
 	echo "<th class=\"list_label\">";
-	if ($target=="FAM") echo $pgv_lang["families"]; else echo $pgv_lang["individuals"];
+//	if ($target=="FAM") echo $pgv_lang["families"]; else echo $pgv_lang["individuals"];
+	if ($target=="FAM") echo $pgv_lang["spouses"]; else echo $pgv_lang["individuals"];
 	echo "</th>";
 	echo "</tr>\n";
 	//-- table body
@@ -1241,6 +1249,7 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 	//-- table body
 	$hidden = 0;
 	$n = 0;
+	$dateY = date("Y");
 	foreach($datalist as $key => $value) {
 		
 		//-- check if we actually need to load up the record from the DB first
@@ -1257,11 +1266,11 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 		$timestamp = get_changed_date($edate, true);
 		$pdate = parse_date($edate);
 		if ($pdate[0]["day"] == "") continue;
-		$anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], date("Y"));
+		$anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], $dateY);
 		// add 1 year if anniversary before today
-		if (date("Ymd", $anniv) < date("Ymd")) $anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], date("Y")+1);
+		if (date("Ymd", $anniv) < date("Ymd")) $anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], $dateY+1);
 		// max anniversary date
-		$datemax = mktime(0, 0, 0, date("m"), date("d")+$nextdays, date("Y"));
+		$datemax = mktime(0, 0, 0, date("m"), date("d")+$nextdays, $dateY);
 		if ($datemax < $anniv) continue;
 		// upcoming events starting tomorrow
 		if ($nextdays>0 and date("Ymd") == date("Ymd", $anniv)) continue;
