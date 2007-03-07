@@ -467,7 +467,7 @@ function getRelationshipSentence($node, $pid1, $pid2)
 
 	if($relationshipDescription != false)
 	{
-	    $relationshipDescription = mb_strtolower($relationshipDescription, "UTF-8");
+	    $relationshipDescription = str2lower($relationshipDescription, "UTF-8");
 	}
 
 	$langStr = str_replace("-", "_", $lang_short_cut[$LANGUAGE]);

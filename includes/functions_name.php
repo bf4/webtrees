@@ -592,7 +592,7 @@ function get_sortable_add_name($pid) {
  * @return string	The updated name
  */
 function strip_prefix($lastname){
-	$name = preg_replace(array("/ [jJsS][rR]\.?,/", "/ I+,/", "/^([a-z]{1,4}[\. ])+/"), array(",",",",""), $lastname);
+	$name = preg_replace(array("/ [jJsS][rR]\.?,/", "/ I+,/", "/^([a-z]{1,4}[\. -])+/"), array(",",",",""), $lastname);
 	$name = trim($name);
 	if ($name=="") return $lastname;
 	return $name;
