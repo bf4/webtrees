@@ -344,7 +344,7 @@ else {
 				$findilist = array();
 				$ids = preg_split("/,/", $firstalpha[$falpha]["ids"]);
 				foreach($ids as $indexval => $id) {
-					$findilist[$id] = $indilist[$id];
+					if (isset($indilist[$id])) $findilist[$id] = $indilist[$id];
 				}
 				$tindilist = $findilist;
 			}
