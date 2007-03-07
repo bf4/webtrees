@@ -291,6 +291,10 @@ $factarray["_BIRT_HSIB"] = "Birth of a half-sibling";
 $factarray["_MARR_HSIB"] = "Marriage of a half-sibling";
 $factarray["_DEAT_HSIB"] = "Death of a half-sibling";
 
+$factarray["_BIRT_NEPH"] = "Birth of a nephew/niece";
+$factarray["_MARR_NEPH"] = "Marriage of a nephew/niece";
+$factarray["_DEAT_NEPH"] = "Death of a nephew/niece";
+
 $factarray["_DEAT_GPAR"] = "Death of a grand-parent";
 
 $factarray["_BIRT_FSIB"] = "Birth of a father's sibling";
@@ -304,6 +308,9 @@ $factarray["_DEAT_MSIB"] = "Death of a mother's sibling";
 $factarray["_BIRT_COUS"] = "Birth of a first cousin";
 $factarray["_MARR_COUS"] = "Marriage of a first cousin";
 $factarray["_DEAT_COUS"] = "Death of a first cousin";
+
+$factarray["_FAMC_EMIG"] = "Emigration of parents";
+$factarray["_FAMC_RESI"] = "Residence of parents";
 
 //-- PGV Only facts
 $factarray["_THUM"]	= "Use this image as the thumbnail?";

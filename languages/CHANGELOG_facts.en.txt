@@ -40,6 +40,17 @@ For massive changes, the variable names should be listed in the order in which t
 occur in the respective language files.
 
 
+VERSION 4.2
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+-------------------------------------------------------------------------------------------
++$factarray["_BIRT_NEPH"]							7 Mar 2007        A   [ 1671286 ]
++$factarray["_MARR_NEPH"]							7 Mar 2007        A   [ 1671286 ]
++$factarray["_DEAT_NEPH"]							7 Mar 2007        A   [ 1671286 ]
++$factarray["_FAMC_EMIG"]							7 Mar 2007        A   [ 1671286 ]
++$factarray["_FAMC_RESI"]							7 Mar 2007        A   [ 1671286 ]
+
+
 VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
