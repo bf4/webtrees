@@ -1131,10 +1131,9 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	else $regexp = "/OBJE @(.*)@/";
 	$ct = preg_match_all($regexp, $gedrec, $match, PREG_SET_ORDER);
 	for($i=0; $i<$ct; $i++) {
-		if (!isset($current_objes[$match[$i][1]])) {
-			$current_objes[$match[$i][1]] = true;
-			$obje_links[$match[$i][1]] = $match[$i][0];
-		}
+		if (!isset($current_objes[$match[$i][1]])) $current_objes[$match[$i][1]] = 1;
+		else $current_objes[$match[$i][1]]++;
+		$obje_links[$match[$i][1]][] = $match[$i][0];
 	}
 
 	$media_found = false;
@@ -1194,13 +1193,13 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 			$row['mm_gedrec'] = $rowm["mm_gedrec"];
 			$rows['new'] = $row;
 			$rows['old'] = $rowm;
-			unset($current_objes[$rowm['m_media']]);
+			$current_objes[$rowm['m_media']]--;
 		}
 		else {
 			if (!isset($current_objes[$rowm['m_media']]) && ($rowm['mm_gid']==$pid)) $rows['old'] = $rowm;
 			else {
 				$rows['normal'] = $rowm;
-				if (isset($current_objes[$rowm['m_media']])) unset($current_objes[$rowm['m_media']]);
+				if (isset($current_objes[$rowm['m_media']])) $current_objes[$rowm['m_media']]--;
 			}
 		}
 		foreach($rows as $rtype => $rowm) {
@@ -1214,6 +1213,8 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 	//-- any objects left in the list are new objects recently added to the gedcom
 	//-- but not yet accepted into the database.  We will print them too.
 	foreach($current_objes as $media_id=>$value) {
+		while($value>0) {
+			$objSubrec = array_pop($obje_links[$media_id]);
 		//-- check if we need to get the object from a remote location
 		$ct = preg_match("/(.*):(.*)/", $media_id, $match);
 		if ($ct>0) {
@@ -1230,7 +1231,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 				if ($et>0) $ext = substr(trim($ematch[1]),1);
 				$row['m_ext'] = $ext;
 				$row['mm_gid'] = $pid;
-				$row['mm_gedrec'] = get_sub_record($obje_links[$media_id]{0}, $obje_links[$media_id], $gedrec);
+					$row['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
 				$res = print_main_media_row('normal', $row, $pid);
 				$media_found = $media_found || $res;
 			}
@@ -1249,9 +1250,11 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 			if ($et>0) $ext = substr(trim($ematch[1]),1);
 			$row['m_ext'] = $ext;
 			$row['mm_gid'] = $pid;
-			$row['mm_gedrec'] = get_sub_record($obje_links[$media_id]{0}, $obje_links[$media_id], $gedrec);
+				$row['mm_gedrec'] = get_sub_record($objSubrec{0}, $objSubrec, $gedrec);
 			$res = print_main_media_row('new', $row, $pid);
 			$media_found = $media_found || $res;
+		}
+			$value--;
 		}
 	}
 	if ($media_found) return true;
