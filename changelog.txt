@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1673134 ] 4.1 B4 (889) Edits to 1-level Notes objects not shown (yalnifj)
  - Fixed [ 1470107 ] 4.0b7 ... famlist ... surnames starting with - (yalnifj)
  - Fixed [ 1444232 ] Quick Update - RtL (yalnifj)
  - Fixed [ 1669437 ] SQL Error in Individual List (opus27)

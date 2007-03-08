@@ -174,13 +174,14 @@ $factarray["FAMS:SPOUSE:DEAT:PLAC"] = "Todesort des Ehepartners";
 $factarray["FAMC:HUSB:GIVN"] = "Vornamen des Vaters";
 $factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Geburtsort des Ehepartners";
 $factarray["FAMC:WIFE:GIVN"] = "Vornamen der Mutter";
-$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Vornamen des Großvaters";
-$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Vornamen der Großmutter";
+$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Vornamen des väterlichen Großvaters";
+$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Vornamen der mütterlichen Großmutter";
 $factarray["BIRT:PLAC"] = "Geburtsort";
 $factarray["DEAT:PLAC"] = "Todesort";
 $factarray["CHR:PLAC"] = "Taufort";
 $factarray["BAPM:PLAC"] = "Taufort";
 $factarray["BURI:PLAC"] = "Beerdigungsort";
+$factarray["MARR:PLAC"] = "Eheort";
 $factarray["FAMC:MARR:PLAC"] = "";
 $factarray["_THUM"]	= "Dieses Bild auch als Miniaturbild verwenden?";
 
