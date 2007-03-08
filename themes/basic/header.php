@@ -20,7 +20,19 @@
 	</div>
 	<div id="searchform">
 		<?php if(empty($SEARCH_SPIDER)) { ?>
-			<form action="search.php" method="get">
+			<script type="text/javascript">
+			<!--
+			function checkfrm(frm) {
+				if (frm.query.value.length<2) {
+					alert("<?php print $pgv_lang["search_more_chars"]?>");
+					frm.query.focus();
+					return false;
+				}
+				return true;
+			}
+			//-->
+			</script>
+			<form action="search.php" method="get" onsubmit="return checkfrm(this);">
 				<input type="hidden" name="action" value="general" />
 				<input type="hidden" name="topsearch" value="yes" />
 				<input type="text" name="query" accesskey="<?php print $pgv_lang["accesskey_search"]?>" size="12" value="<?php print $pgv_lang['search']?>" onfocus="if (this.value == '<?php print $pgv_lang['search']?>') this.value=''; focusHandler();" onblur="if (this.value == '') this.value='<?php print $pgv_lang['search']?>';" />

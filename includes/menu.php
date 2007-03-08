@@ -359,6 +359,79 @@ class Menu
 
 class MenuBar
 {
+	/**
+	 * Look up and create a menu from the custom menu database
+	 */
+	function getMenu($index) {
+		global $GEDCOM, $TBLPREFIX, $DBCONN, $PGV_IMAGES, $PGV_IMAGE_DIR;
+		//-- check db
+		$uname = getUserName();
+		if (empty($uname)) $uname = $GEDCOM;
+		$sql = "SELECT mn_id, mn_label, mn_icon, mn_url FROM ".$TBLPREFIX." WHERE mn_username='".$DBCONN->escapeSimple($uname)."' AND mn_parent=0 AND mn_order=".$index;
+		$res = dbquery($sql, false);
+		if (!DB::isError($res)) {
+			$row = $res->fetchRow();
+			$res->free();
+			$menu = new Menu($row[1]);
+			if (!empty($row[2])) {
+				if (isset($PGV_IMAGES[$row[2]])) $menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES[$row[2]]['large']);
+				else $menu->addIcon($row[2]);
+			}
+			$menu->addOnclick($row[3]);
+			
+			$sqls = "SELECT mn_id, mn_label, mn_icon, mn_url FROM ".$TBLPREFIX." WHERE mn_parent=".$row[0]." ORDER BY mn_order";
+			$ress = dbquery($sqls);
+			if (!DB::isError($res)) {
+				while($row = $res->fetchRow()) {
+					if ($row[1]!='seperator') {
+						$submenu = new Menu($row[1]);
+						if (!empty($row[2])) {
+							if (isset($PGV_IMAGES[$row[2]])) $submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES[$row[2]]['large']);
+							else $submenu->addIcon($row[2]);
+						}
+						$submenu->addOnclick($row[3]);
+						$menu->addSubMenu($submenu);
+					}
+					else $menu->addSeperator();
+				}
+			}
+		}
+		//-- default menus
+		if (empty($menu)) {
+			switch ($index) {
+				case 0:
+					return $this->getHomeMenu();
+					break;
+				case 1:
+					return $this->getGedcomMenu();
+					break;
+				case 2:
+					return $this->getMygedviewMenu();
+					break;
+				case 3:
+					return $this->getChartsMenu();
+					break;
+				case 4:
+					return $this->getListsMenu();
+					break;
+				case 5:
+					return $this->getCalendarMenu();
+					break;
+				case 6:
+					return $this->getReportsMenu();
+					break;
+				case 7:
+					return $this->getClippingsMenu();
+					break;
+				case 8:
+					return $this->getSearchMenu();
+					break;
+				case 9:
+					return $this->getHelpMenu();
+			}
+		}
+		return $menu;
+	}
 
 	/**
 	 * get the home menu
@@ -477,7 +550,7 @@ class MenuBar
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
-			if ((userIsAdmin($username)) || (userGedcomAdmin($username, $GEDCOM))){
+			if ($user["canadmin"] || (userGedcomAdmin($username, $GEDCOM))){
 				$menu->addSeperator();
 				//-- admin submenu
 				$submenu = new Menu($pgv_lang["admin"], "admin.php");
@@ -636,7 +709,7 @@ class MenuBar
 		//-- timeline chart submenu
 		if (file_exists("lifespan.php")) {
 			$link = "lifespan.php";
-			if ($default_id) $link .= "?pids[]=".$rootid."&amp;addFamily=1";
+			if ($default_id) $link .= "?newpid=".$default_id."&amp;addFamily=1";
 			$submenu = new Menu($pgv_lang["lifespan_chart"], $link);
 			if (!empty($PGV_IMAGES["timeline"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["timeline"]["small"]);

@@ -647,6 +647,7 @@ $pgv_lang["research_assistant"]		= "Research Assistant";
 $pgv_lang["utf8_to_ansi"]			= "Convert from UTF-8 to ANSI (ISO-8859-1)";
 $pgv_lang["media_linked"]			= "This media object is linked to the following:";
 $pgv_lang["media_not_linked"]		= "This media object is not linked to any GEDCOM record.";
+$pgv_lang["deleted_files"]          = "Deleted Files:";
 
 //-- Relationship chart messages
 $pgv_lang["relationship_great"]		= "Great";

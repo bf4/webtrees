@@ -462,7 +462,9 @@ function valid_date(datefield) {
 	var z = datefield.value.substr(5);
 	if (c5=="-" && z!="") datefield.value = "BET "+y+" AND "+z; // 1850-1860 => BET 1850 AND 1860
 	// other format
-	date = new Date(datefield.value);
+	datestr = datefield.value;
+	datestr = datestr.replace(/-/g, "/");
+	date = new Date(datestr);
 	if (date && date.toString()!="NaN" && date.getDate().toString()!="NaN") {
 		day = date.getDate();
 		if (day<10) day = "0"+day;

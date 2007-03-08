@@ -459,13 +459,14 @@ function checkTableExists() {
 	$has_fav_note = false;
 	$has_auto_accept = false;
 	$has_mutex = false;
+	$has_menu = false;
 
 	$sqlite = ($DBTYPE == 'sqlite');
 
 	if (DB::isError($DBCONN)) return false;
 	$data = $DBCONN->getListOf('tables');
 	foreach($data as $indexval => $table) {
-		if (empty($TBLPREFIX) || strpos($table, $TBLPREFIX) === 0) {
+		if (strpos($table, $TBLPREFIX) === 0) {
 			switch(substr($table, strlen($TBLPREFIX))) {
 				case "users":
 					$has_users = true;
@@ -544,6 +545,9 @@ function checkTableExists() {
 					break;
 				case "mutex":
 					$has_mutex = true;
+					break;
+				case "menu":
+					$has_menu = true;
 					break;
 			}
 		}
@@ -707,6 +711,14 @@ function checkTableExists() {
 		$sql = "create table ".$TBLPREFIX."mutex (mx_id INT NOT NULL, mx_name VARCHAR(255), mx_thread VARCHAR(255), mx_time INT, PRIMARY KEY (mx_id))";
 		$res = dbquery($sql);
 		$sql = "CREATE INDEX mutex_name ON ".$TBLPREFIX."mutex (mx_name)";
+		$res = dbquery($sql);
+	}
+	if (!$has_menu) {
+		$sql = "DROP TABLE ".$TBLPREFIX."menu";
+		$res = dbquery($sql, false);
+		$sql = "CREATE TABLE ".$TBLPREFIX."menu (mn_id INT NOT NULL, mn_username VARCHAR(100), mn_parent INT NOT NULL, mn_order INT NOT NULL, mn_label VARCHAR(255), mn_icon VARCHAR(100), mn_url VARCHAR(255), PRIMARY KEY (mn_id))";
+		$res = dbquery($sql);
+		$sql = "CREATE INDEX menu_username ON ".$TBLPREFIX."menu (mn_username)";
 		$res = dbquery($sql);
 	}
 	return true;

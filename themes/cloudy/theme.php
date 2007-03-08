@@ -154,6 +154,11 @@ $PGV_IMAGES["vline"]["other"] = "vline.gif";
 $PGV_IMAGES["zoomin"]["other"] = "zoomin.gif";
 $PGV_IMAGES["zoomout"]["other"] = "zoomout.gif";
 $PGV_IMAGES["stop"]["other"] = "stop.gif";
+// - lifespan chart arrows
+$PGV_IMAGES["lsltarrow"]["other"] = "lsltarrow.gif";
+$PGV_IMAGES["lsrtarrow"]["other"] = "lsrtarrow.gif";
+$PGV_IMAGES["lsdnarrow"]["other"] = "lsdnarrow.gif";
+$PGV_IMAGES["lsuparrow"]["other"] = "lsuparrow.gif";
 
 //- digits
 $PGV_IMAGES["0"]["digit"] = "small/0.jpg";
@@ -166,6 +171,9 @@ $PGV_IMAGES["6"]["digit"] = "small/6.jpg";
 $PGV_IMAGES["7"]["digit"] = "small/7.jpg";
 $PGV_IMAGES["8"]["digit"] = "small/8.jpg";
 $PGV_IMAGES["9"]["digit"] = "small/9.jpg";
+
+// Edit index ajax
+$PGV_IMAGES["trashcan"]["medium"] = "trashcan.gif";
 
 
 //-- This section defines variables for the pedigree chart
@@ -188,6 +196,8 @@ $Dindent = 15;		// -- width to indent descendancy boxes
 $Darrowwidth = 30;	// -- additional width to include for the up arrows
 
 $CHARTS_CLOSE_HTML = true;                //-- should the charts, pedigree, descendacy, etc clost the HTML on the page
+
+$ONLOADFUNCTION = "loadHandler();";		//-- function that should be called in the <body onload="
 
 // Arrow symbol or icon for up-page links on Help pages
 $ImgSrc = $PGV_IMAGE_DIR."/uarrow3.gif";

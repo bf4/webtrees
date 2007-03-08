@@ -1184,14 +1184,6 @@ class IndividualControllerRoot extends BaseController {
 	
 	function print_relatives_tab() {
 		global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
-		
-		/* -- following added based on feedback from UI discussion */
-		include_once("includes/functions_charts.php");
-		global $show_full, $bheight, $pbheight;
-		$show_full = false;
-		$bheight = 25;
-		$pbheight = $bheight + 14;
-		
 		$personcount=0;
 		$families = $this->indi->getChildFamilies();
 		if (count($families)==0) {
@@ -1211,7 +1203,6 @@ class IndividualControllerRoot extends BaseController {
 		}
 		//-- parent families
 		foreach($families as $famid=>$family) {
-			/*
 			?>
 			<table>
 				<tr>
@@ -1345,10 +1336,6 @@ class IndividualControllerRoot extends BaseController {
 				?>
 			</table>
 		<?php
-			*/
-			/* -- following added based on feedback from UI discussion */
-			print print_family_parents($famid);
-			print_family_children($famid);
 		}
 		
 		//-- step families
@@ -1470,7 +1457,6 @@ class IndividualControllerRoot extends BaseController {
 		//-- spouses and children
 		$families = $this->indi->getSpouseFamilies();
 		foreach($families as $famid=>$family) {
-			/*
 			?>
 			<table>
 				<tr>
@@ -1606,11 +1592,6 @@ class IndividualControllerRoot extends BaseController {
 				?>
 			</table>
 		<?php
-			*/
-			/* -- following added based on feedback from UI discussion */
-			print print_family_parents($famid);
-			print_family_children($famid);
-			$personcount++;
 		}
 		if ($personcount==0) print "<table><tr><td id=\"no_tab5\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab5"]."</td></tr></table>\n";
 		?>
