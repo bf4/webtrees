@@ -1342,7 +1342,7 @@ function get_media_folders() {
 function show_media_form($pid, $action = "newentry", $filename = "", $linktoid = "", $level = 1, $line = 0) {
 	global $GEDCOM, $pgv_lang, $TEXT_DIRECTION, $MEDIA_ID_PREFIX, $GEDCOMS, $WORD_WRAPPED_NOTES;
 	global $pgv_changes, $MEDIA_DIRECTORY_LEVELS, $MEDIA_DIRECTORY;
-	global $AUTO_GENERATE_THUMBS;
+	global $AUTO_GENERATE_THUMBS, $THUMBNAIL_WIDTH;
 
 	// NOTE: add a table and form to easily add new values to the table
 	print "<form method=\"post\" name=\"newmedia\" action=\"addmedia.php\" enctype=\"multipart/form-data\">\n";
@@ -1359,7 +1359,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	else
 		print $pgv_lang["edit_media"];
 	print "</td></tr>";
-	print "<tr><td><input type=\"submit\" value=\"" . $pgv_lang["save"] . "\" /></td></tr>";
+	print "<tr><td colspan=\"2\" class=\"descriptionbox\"><input type=\"submit\" value=\"" . $pgv_lang["save"] . "\" /></td></tr>";
 	if ($linktoid == "new" || ($linktoid == "" && $action != "update")) {
 		print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
 		print_help_link("add_media_linkid", "qm");
@@ -1404,6 +1404,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print " onchange=\"updateFormat(this.value);\"";
 		print " size=\"40\"><br /><sub>" . $pgv_lang["use_browse_advice"] . "</sub></td></tr>";
 		// Check for thumbnail generation support
+		if (userGedcomAdmin(getUserName())) {
 		$ThumbSupport = "";
 		if (function_exists("imagecreatefromjpeg") and function_exists("imagejpeg"))
 			$ThumbSupport .= ", JPG";
@@ -1428,12 +1429,16 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print_help_link("upload_thumbnail_file_help", "qm");
 		print $pgv_lang["thumbnail"] . "</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"thumbnail\" size=\"40\"><br /><sub>" . $pgv_lang["use_browse_advice"] . "</sub></td></tr>";
 	}
+		else print "<input type=\"hidden\" name=\"genthumb\" value=\"yes\" />"; 
+	}
 	// File name on server
 	$isExternal = strstr($gedfile, "://");
 	if ($gedfile == "FILE") {
+		if (userGedcomAdmin(getUserName())) {
 		add_simple_tag("1 $gedfile", "", $pgv_lang["server_file"], "", "NOCLOSE");
 		print "<br /><sub>" . $pgv_lang["server_file_advice"];
 		print "<br />" . $pgv_lang["server_file_advice2"] . "</sub></td></tr>";
+		}
 		$fileName = "";
 		$folder = "";
 	} else {
@@ -1445,19 +1450,32 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			$fileName = $parts["basename"];
 			$folder = $parts["dirname"] . "/";
 		}
+		
 		print "<tr>";
 		print "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
 		print_help_link("upload_server_file_help", "qm", "upload_media");
 		print $pgv_lang["server_file"];
 		print "</td>";
 		print "<td class=\"optionbox wrap $TEXT_DIRECTION wrap\">";
-		print "<input name=\"filename\" type=\"text\" value=\"" . addslashes($fileName) . "\" size=\"40\"";
+			if (userGedcomAdmin(getUserName())) {
+				print "<input name=\"filename\" type=\"text\" value=\"" . htmlentities($fileName) . "\" size=\"40\"";
 		if ($isExternal)
 			print " />";
 		else
 			print " /><br /><sub>" . $pgv_lang["server_file_advice"] . "</sub>";
+			}
+			else {
+				$thumbnail = thumbnail_file($fileName, true, false, $pid);
+				if (!empty($thumbnail)) {
+					print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
+					if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
+					print " alt=\"\" title=\"\" />";
+				}
+				print $fileName;
+			}
 		print "</td>";
 		print "</tr>";
+		
 	}
 	print "<input name=\"oldFilename\" type=\"hidden\" value=\"" . addslashes($fileName) . "\" />";
 
