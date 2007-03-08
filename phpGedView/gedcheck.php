@@ -219,7 +219,7 @@ $TAG['ADDRESS_POSTAL_CODE']           ='.{1,10}';
 $TAG['ADDRESS_STATE']                 ='.{1,60}';
 $TAG['ADDRESS_WEB_PAGE']              ='.{5,120}';
 $TAG['ADOPTED_BY_WHICH_PARENT']       ='(HUSB|WIFE|BOTH)';
-$TAG['AGE_AT_EVENT']                  ='(CHILD|INFANT|STILLBORN|([<>]?)([0-9]+y?)?\s*([0-9]+m)?\s*([0-9]+d)?)';
+$TAG['AGE_AT_EVENT']                  ='([<>]?)(CHILD|INFANT|STILLBORN|([0-9]+y?)?\s*([0-9]+m)?\s*([0-9]+d)?)';
 $TAG['ANCESTRAL_FILE_NUMBER']         ='.{1,12}';
 $TAG['APPROVED_SYSTEM_ID']            ='.{1,20}';
 $TAG['ATTRIBUTE_DESCRIPTOR']          ='.{1,90}';
@@ -1083,7 +1083,7 @@ foreach ($gedfile as $num=>$value) {
 			for ($i=max(0,$num-$context_lines); $i<$num; ++$i)
 				printf("%07d  %s\n", $i+1, $gedfile[$i]);
 		}
-		printf("<b><font color='red'>%07d[[</font><b>%s</b><font color='red'>]]  %s; {$pgv_lang["see"]} %s</font></b>\n", $num+1, $gedfile[$num], $err, pgv_href($curr_l0tag, $curr_xref));
+		printf("<b><font color='red'>%07d[[</font><b>%s</b><font color='red'>]]  %s; {$pgv_lang["see"]} %s</font></b>\n", $num+1, htmlentities($gedfile[$num]), $err, pgv_href($curr_l0tag, $curr_xref));
 		flush();
 		$last_err_num=$num;
 	} else
