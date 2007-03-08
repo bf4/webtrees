@@ -1250,6 +1250,8 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 	$hidden = 0;
 	$n = 0;
 	$dateY = date("Y");
+	// max anniversary date
+	$datemax = mktime(0, 0, 0, date("m"), date("d")+$nextdays, $dateY);
 	foreach($datalist as $key => $value) {
 		
 		//-- check if we actually need to load up the record from the DB first
@@ -1265,12 +1267,12 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 		if (empty($edate)) continue;
 		$timestamp = get_changed_date($edate, true);
 		$pdate = parse_date($edate);
+		if (strpos($edate, "@#DHEBREW")!==false) $pdate = jewishGedcomDateToGregorian($pdate);
 		if ($pdate[0]["day"] == "") continue;
 		$anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], $dateY);
 		// add 1 year if anniversary before today
 		if (date("Ymd", $anniv) < date("Ymd")) $anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], $dateY+1);
-		// max anniversary date
-		$datemax = mktime(0, 0, 0, date("m"), date("d")+$nextdays, $dateY);
+		
 		if ($datemax < $anniv) continue;
 		// upcoming events starting tomorrow
 		if ($nextdays>0 and date("Ymd") == date("Ymd", $anniv)) continue;

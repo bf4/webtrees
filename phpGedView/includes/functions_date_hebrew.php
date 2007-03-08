@@ -307,7 +307,9 @@ function jewishGedcomDateToGregorian($datearray){
 			$julianDate =  jewishtojd ( $date["mon"], $date["day"], $date["year"] );
 			$gregdate = jdtogregorian ( $julianDate );
 			$pieces = preg_split("~/~", $gregdate);
-			$dates[] = array("mon"=>$pieces[0], "day"=>$pieces[1], "year"=>$pieces[2], "month"=>array_search($pieces[0], $monthtonum), "ext"=>"converted jewish");
+			$sort = "";
+			if (isset($date['sort'])) $sort = $date['sort'];
+			$dates[] = array("mon"=>$pieces[0], "day"=>$pieces[1], "year"=>$pieces[2], "month"=>array_search($pieces[0], $monthtonum), "ext"=>"converted jewish", "sort"=>$sort);
 		}
 	}
 	return $dates;

@@ -349,12 +349,12 @@ class LifespanControllerRoot extends BaseController {
 		$timelineTick = $totalYears / $yearSpan; //calculates the length of the timeline
 
 		for ($i = 0; $i < $timelineTick; $i ++) { //prints the timeline
-			echo "<div style='position: absolute; top: ".$top."px;left: ".$leftPosition."px; width: ".$tickDistance."px;'>$newStartYear<img src=\"images/timelineChunk.gif\" alt=\"\" /></div>";
+			echo "<div class=\"sublinks_cell\" style='position: absolute; top: ".$top."px; left: ".$leftPosition."px; width: ".$tickDistance."px;'>$newStartYear<img src=\"images/timelineChunk.gif\"  alt=\"\" /></div>";  //onclick="zoomToggle('100px','100px','200px','200px',this);"
 			$leftPosition += $tickDistance;
 			$newStartYear += $yearSpan;
 
 		}
-		echo "<div style='position: absolute; top: ".$top."px;left: ".$leftPosition."px; width: ".$tickDistance."px;'>$newStartYear</div>";
+		echo "<div style='position: absolute; top: ".$top."px; left: ".$leftPosition."px; width: ".$tickDistance."px;'>$newStartYear</div>";
 	}
 	//method used to place the person boxes onto the timeline
 	function fillTL($ar, $int, $Y) {
@@ -373,8 +373,8 @@ class LifespanControllerRoot extends BaseController {
 
 		foreach ($ar as $key => $value) {
 			//set start position and size of person-box according to zoomfactor
+			/* @var $value Person */
 			if ($value->getBirthYear() > $int -1) {
-				
 				
 				$birthYear = $value->getBirthYear();
 				$deathYear = $value->getDeathYear();
@@ -424,7 +424,7 @@ class LifespanControllerRoot extends BaseController {
 					} else {						
 						echo "\n<div style='position: absolute;top:".$Y."px; left:".$startPos."px;width:".$width."px; height:20px;" .
 							" background-color:".$this->color."; border: solid blue 1px; z-index:$zindex;'>" .
-									"<a class='showit' href=\"individual.php?pid=".$value->getXref()."\"><b>B</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".get_changed_date($value->getBirthDate())." ".$value->getBirthPlace()."<br/>".$pgv_lang["death"]." ".get_changed_date($value->getDeathDate())." ".$value->getBirthPlace()."</span></a></a></div>";
+									"<a class='showit' href=\"individual.php?pid=".$value->getXref()."\"><b>".get_first_letter($pgv_lang["birth"])."</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".get_changed_date($value->getBirthDate())." ".$value->getBirthPlace()."<br/>".$pgv_lang["death"]." ".get_changed_date($value->getDeathDate())." ".$value->getBirthPlace()."</span></a></a></div>";
 											
 					}
 				}

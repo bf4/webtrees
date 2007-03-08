@@ -1155,7 +1155,12 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 
 	$sqlmm .= "ORDER BY mm_gid DESC";
 	$resmm = dbquery($sqlmm);
+	$foundObjs = array();
 	while($rowm = $resmm->fetchRow(DB_FETCHMODE_ASSOC)) {
+		if (isset($foundObjs[$rowm['m_media']])) {
+			if (isset($current_objes[$rowm['m_media']])) $current_objes[$rowm['m_media']]--;
+			continue;
+		}
 		// NOTE: Determine the size of the mediafile
 		$imgwidth = 300+40;
 		$imgheight = 300+150;
@@ -1205,6 +1210,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 		foreach($rows as $rtype => $rowm) {
 			$res = print_main_media_row($rtype, $rowm, $pid);
 			$media_found = $media_found || $res;
+			$foundObjs[$rowm['m_media']]=true;
 		}
 		//$media_found = true;
 	}
