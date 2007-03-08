@@ -494,10 +494,11 @@ class LifespanControllerRoot extends BaseController {
 						if ($fact=="EVEN") {
 							$fact = get_gedcom_value("TYPE",2,$val[1]);
 						}
+						$place = get_gedcom_value("PLAC", 2, $val[1]);
 						$trans = $fact;
 						if (isset($factarray[$fact])) $trans = $factarray[$fact];
 						else if (isset($pgv_lang[$fact])) $trans = $pgv_lang[$fact];  
-						$eventinformation[$evntwdth]= $trans."\n".$date;
+						$eventinformation[$evntwdth]= $trans."\n".$date."\n".$place;
 						//$eventspacing[$eventwidth][$date];
 					}
 						
