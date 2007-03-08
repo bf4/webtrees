@@ -403,10 +403,8 @@ var oldMx = 0;
     </tr>
     <tr>
        <td><a href="#" onclick="return false;" onmousedown="startScroll('right')" onmouseup="stopScroll()"><img src="<?php print $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["lsltarrow"]["other"]; ?>" border="0" alt="" /></a></td>
-			<!-- zoom not ready yet
   		<td align="center"><a href="#" onclick="return false;" onmousedown="startZoom('increase')"><img src="<?php print $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["zoomin"]["other"]; ?>" border="0" alt="" /></a></td>
   		<td align="center"><a href="#" onclick="return false;" onmousedown="startZoom('decrease')"><img src="<?php print $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["zoomout"]["other"]; ?>" border="0" alt="" /></a></td>
-			-->
       <td><a href="#" onclick="return false;" onmousedown="startScroll('left')" onmouseup="stopScroll()"><img src="<?php print $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["lsrtarrow"]["other"]; ?>" border="0" alt="" /></a></td>
     </tr>
     <tr>
