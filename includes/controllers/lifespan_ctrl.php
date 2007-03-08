@@ -368,12 +368,12 @@ class LifespanControllerRoot extends BaseController {
 		$timelineTick = $totalYears / $yearSpan; //calculates the length of the timeline
 
 		for ($i = 0; $i < $timelineTick; $i ++) { //prints the timeline
-			echo "<div class=\"sublinks_cell\" style='position: absolute; top: ".$top."px; left: ".$leftPosition."px; width: ".$tickDistance."px;'>$newStartYear<img src=\"images/timelineChunk.gif\"  alt=\"\" /></div>";  //onclick="zoomToggle('100px','100px','200px','200px',this);"
+			echo "<div dir=\"ltr\" class=\"sublinks_cell\" style=\"position: absolute; top: ".$top."px; left: ".$leftPosition."px; width: ".$tickDistance."px;\">$newStartYear<img src=\"images/timelineChunk.gif\"  alt=\"\" /></div>";  //onclick="zoomToggle('100px','100px','200px','200px',this);"
 			$leftPosition += $tickDistance;
 			$newStartYear += $yearSpan;
 
 		}
-		echo "<div style='position: absolute; top: ".$top."px; left: ".$leftPosition."px; width: ".$tickDistance."px;'>$newStartYear</div>";
+		echo "<div style=\"position: absolute; top: ".$top."px; left: ".$leftPosition."px; width: ".$tickDistance."px;\">$newStartYear</div>";
 	}
 	//method used to place the person boxes onto the timeline
 	function fillTL($ar, $int, $Y) {
@@ -516,13 +516,13 @@ class LifespanControllerRoot extends BaseController {
 
 				// different display values in the box based on the size of the person-box
 				if ($width > ($minlength +110)) {
-					echo "\n<div id=\"bar_".$value->getXref()."\" style='position: absolute;top:".$Y."px; left:".$startPos."px;width:".$width."px; height:".$height."px;" .
+					echo "\n<div dir=\"ltr\" id=\"bar_".$value->getXref()."\" style='position: absolute;top:".$Y."px; left:".$startPos."px;width:".$width."px; height:".$height."px;" .
 					" background-color:".$this->color."; border: solid blue 1px; z-index:$zindex;'>";
 					foreach($eventinformation as $evtwidth=>$val){
 						print "<div style=\"position:absolute;left:".$evtwidth." \"><a class=\"showit\" href='#'style=\"color:White; top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".$val." \n </span></a></div>";
 					}
 					print "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".get_changed_date($value->getBirthDate())." ".$value->getBirthPlace()."</span></a></td>" .
-					"\n\t\t<td width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getName().":  $lifespan </a></td>" .
+					"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getName().":  $lifespan </a></td>" .
 					"\n\t\t<td width=\"15\">";
 					if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getName()."<br/>".$pgv_lang["death"]." ".get_changed_date($value->getDeathDate())."</span></a>";
 					print "</td></tr></table>";

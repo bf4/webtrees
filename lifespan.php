@@ -43,6 +43,15 @@ $zoomfactor = 10;
 
 print_header($pgv_lang["lifespan_chart"]);
 ?>
+	<script language="JavaScript" type="text/javascript">
+	<!--
+	var pastefield;
+	function paste_id(value) {
+		pastefield.value=value;
+	}
+	//-->
+	</script>
+
 <h2><?php print $pgv_lang["lifespan_chart"]; ?></h2>
 <table><tr><td>
 <form name="people" action="lifespan.php">
@@ -383,8 +392,8 @@ var oldMx = 0;
 </form>
 <?php } ?>
 </td></tr></table>
-<div id="outerDiv" class="lifespan_outer">
-	<div id="topInner"  class="lifespan_timeline" onmousedown="pandiv(); return false;">		
+<div dir="ltr" id="outerDiv" class="lifespan_outer">
+	<div dir="ltr" id="topInner"  class="lifespan_timeline" onmousedown="pandiv(); return false;">		
 	<?php $controller->PrintTimeline($controller->timelineMinYear,$controller->timelineMaxYear); ?>
 	</div>
 		<div id="inner" class="lifespan_people" onmousedown="pandiv(); return false;">
