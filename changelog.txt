@@ -14,6 +14,9 @@ Version 4.2
  - Adding a "never married" icon on ancestry booklet when NMR=0 (opus27)
 
 Version 4.1
+ - Limiting what Edit users can do with media (yalnifj)
+ - Fixed [ 1673134 ] 4.1 B4 (889) Edits to 1-level Notes objects not shown (yalnifj)
+ - Fixed [ 1470107 ] 4.0b7 ... famlist ... surnames starting with - (yalnifj)
  - Fixed [ 1444232 ] Quick Update - RtL (yalnifj)
  - Fixed [ 1669437 ] SQL Error in Individual List (opus27)
  - Fixed [ 1442229 ] Import Married Names Unknown Dupe (yalnifj)

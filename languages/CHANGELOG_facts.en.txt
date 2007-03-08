@@ -55,6 +55,9 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
+*$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"]				7 Mar 2007				W
+*$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"]				7 Mar 2007				W
++$factarray["MARR:PLAC"]							7 Mar 2007				A
 *$factarray["_DBID"]								27 Jan 2007				C
 +$factarray["_DBID"]								26 Jan 2007				A
 *$factarray["FAMC:MARR:PLAC"]						25 Jan 2007				S

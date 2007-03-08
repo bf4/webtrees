@@ -44,19 +44,34 @@ include_once("ra_RSFunction.php");
 
 class ra_ViewInferences extends ra_form {
 	
-	function getPartsTranslation($input) {
+	function getPartsTranslation($input,$otherFact = "") {
 		global $factarray, $pgv_lang;
-		if ($input=="FAMC:HUSB") $input = "father";
-		if ($input=="FAMC:WIFE") $input = "mother";
-		if ($input=="FAMS:SPOUSE") $input = "spouse";
+	
+		if ($input=="FAMC:HUSB") $input = $pgv_lang["father"];
+		if ($input=="FAMC:WIFE") $input = $pgv_lang["mother"];
+		if ($input=="FAMS:SPOUSE") $input = $pgv_lang["spouse"];
 		$parts = preg_split("/:/", $input);
 		$out = "";
-		foreach($parts as $part) {
-			if (isset($factarray[$part])) $out .= $factarray[$part];
-			else if (isset($pgv_lang[$part])) $out .= $pgv_lang[$part];
-			else $out .= $part;
+		
+			if(!empty($otherFact) && !empty($input))
+			{
+				if (isset($factarray[$input.":".$otherFact])) $out .= $factarray[$input.":".$otherFact];
+				else if (isset($pgv_lang[$input])) $out .= $pgv_lang[$input];
+				else $out .= $input;
 			$out .= " ";
 		}
+			else
+			{
+				if (isset($factarray[$input])) $out .= $factarray[$input];
+				else if (isset($pgv_lang[$input])) $out .= $pgv_lang[$input];
+				else $out .= $input;
+				if(empty($input))
+				{
+					$out .= "Self";
+				}
+				$out .= " ";
+			}
+		
 		return $out;
 	}
     /**
@@ -106,7 +121,7 @@ class ra_ViewInferences extends ra_form {
 	 					$out .= "<tr><td class='optionbox'>";
 	 					$out .= $this->getPartsTranslation($row['pr_f_lvl']);
 						$out .= "</td>"; 
-	 					$out .= "<td class='optionbox'>".$this->getPartsTranslation($row['pr_s_lvl'])."</td>"; 
+	 					$out .= "<td class='optionbox'>".$this->getPartsTranslation($row['pr_s_lvl'],$row['pr_rel'])."</td>"; 
 	 					$out .= "<td class='optionbox'>".$this->getPartsTranslation($row['pr_rel'])."</td>";
 	 					if ($row['pr_count']==0) $row['pr_per'] = 0;
 	 					else $row['pr_per'] = 100*($row['pr_matches']/$row['pr_count']); 

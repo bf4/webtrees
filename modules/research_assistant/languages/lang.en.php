@@ -57,7 +57,7 @@ $pgv_lang["task_list_text"]		= "This area displays tasks you have created. Click
 $pgv_lang["help_comments"] = "Here you can add comments. Other people can see them and add their own comments.";
 
 // -- MENU ITEM MESSAGES
-$pgv_lang["my_tasks"]							= "Research Assistant";
+$pgv_lang["my_tasks"]							= "My Tasks";
 $pgv_lang["add_task"]							= "Add Task";
 $pgv_lang["view_folders"]						= "View Folders";
 $pgv_lang["view_probabilities"]					= "View Probabilities";
@@ -141,7 +141,6 @@ $pgv_lang["folder_new"]							= "Create New Folder";
 $pgv_lang["folder_delete_check"]				= "Are you sure you want to delete this folder?";
 $pgv_lang["no_folder_name"]             		= "Folder name field must be filled in.";
 $pgv_lang["add_folder"]                 		= "Add Folder";
-$pgv_lang["edit_folder"]                		= "Edit Folder";
 $pgv_lang["folder_name"]                		= "Folder Name:";
 $pgv_lang["Parent_Folder:"]             		= "Parent Folder:";
 $pgv_lang["No_Parent"]                  		= "No Parent";
@@ -204,7 +203,7 @@ $pgv_lang["ra_fold_name_help"]				= "~Folder View~<ul><li><b>Folder Name:</b> Th
 $pgv_lang["ra_add_task_help"]				= "~Add New Task~<ul><li><b>Title:</b> This should contain the title of the task that you are adding.</li><li><b>Folder:</b> In this field you can assign which folder you want your new task to go to.</li><li><b>Description:</b> Enter a description of the task you want to add.</li><li><b>Sources:</b> Assign any sources that you have for the task.</li><li><b>People:</b> Assign any people associated for the new task.</li></ul>";
 $pgv_lang["ra_edit_folder_help"]			= "~Edit Folder~<ul><li><b>Folder Name:</b> This is where you should add the title of the folder that you are editing.</b></li><li><b>Parent folder:</b> You can assign the parent folder, if any, of the folder you are editing.</b></li><li><b>Folder description:</b> This is the description of the folder you are editing.</b></li></ul>";
 $pgv_lang["ra_add_folder_help"]				= "~Add Folder~<ul><li><b>Folder Name:</b> This is where you should add the title of the folder that you are adding.</b></li><li><b>Parent folder:</b> You can assign the parent folder, if any, of the folder you are adding.</b></li><li><b>Folder description:</b> This is the description of the folder you are adding.</b></li></ul>";
-$pgv_lang["ra_view_task_help"]				= "~Task View~<ul><li><b>Task Name:</b> This column contains the name of each task.</b></li><li><b>Description:</b> This column contains the description of the tasks.</li><li><b>Start Date:</b> This will contain the start dates of all the tasks.</li><li><b>Completed:</b> This will show whether or not a task is completed.</li><li><b>Details:</b> This will show all the details of a task.</li><li><b>Delete:</b> This will delete the task.</li></ul>";
+$pgv_lang["ra_view_task_help"]				= "~Task View~<ul><li><b>Task Name:</b> This column contains the name of each task.</b></li><li><b>Start Date:</b> This will contain the start dates of all the tasks.</li><li><b>Completed:</b> This will show whether or not a task is completed.</li><li><b>Edit:</b> This will take you to edit the task</li><li><b>Delete:</b> This will delete the task.</li><li><b>Complete:</b> This will take you immediately to choose the form and edit the task</li></ul>";
 $pgv_lang["ra_task_view_help"]				= "~View Task~<ul><li><b>Title:</b> This should contain the title of the task that you are adding.</li><li><b>People:</b> Assign any people associated for the new task.</li><li><b>Description:</b> Enter a description of the task you want to add.</li><li><b>Sources:</b> Assign any sources that you have for the task.</li><li>Click <b>Edit Task</b> to edit the details of the task.</li></ul>";
 $pgv_lang["ra_comments_help"]				= "~Comments~<ul><li>This will contain any comments related to the task. Click <b>Add New Comment</b> to add any comments.</li></ul>";
 $pgv_lang["ra_GenerateTasks_help"]			= "~Generate Tasks~<p>This form generates tasks from the _TODO tags in your GEDCOM file.</p><ul><li><b>Generate:</b> check each task to generate when you click <b>Generate</b>.</li><li><b>Task Name:</b> This is the name the task will be given.  This defaults to the text in the actual _TODO tag, excluding any CONT tags</li><li><b>Task Description:</b> The description the task will be given.  This is generated from the text in the _TODO tag plus all of the associated CONT tags.  </li><li><b>Edit:</b> click the link to edit that task.</li><li><b>Select Folder:</b> select the folder to put the generated tasks in.</li><li><b>Generate:</b> generates the tasks that have been checked.</li><li><b>Done:</b> redirects you to the Folder View page.</li></ul>";
