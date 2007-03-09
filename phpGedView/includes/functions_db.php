@@ -313,6 +313,7 @@ function find_person_record($pid, $gedfile="") {
 		$indilist[$pid]["names"] = get_indi_names($row[0]);
 		$indilist[$pid]["isdead"] = $row[2];
 		$indilist[$pid]["gedfile"] = $row[3];
+		if (isset($indilist[$pid]['privacy'])) unset($indilist[$pid]['privacy']);
 		$res->free();
 		return $row[0];
 	}
@@ -359,6 +360,7 @@ function load_people($ids, $gedfile='') {
 			$indilist[$row[4]]["names"] = get_indi_names($row[0]);
 			$indilist[$row[4]]["isdead"] = $row[2];
 			$indilist[$row[4]]["gedfile"] = $row[3];
+			if (isset($indilist[$row[4]]['privacy'])) unset($indilist[$row[4]]['privacy']);
 		}
 		$res->free();
 	}
@@ -924,32 +926,7 @@ function get_other_list() {
 	$res->free();
 	return $otherlist;
 }
-/*
-//-- get the otherlist from the datastore
-function get_media_list() {
-	global $medialist, $GEDCOM, $DBCONN, $GEDCOMS;
-	global $TBLPREFIX;
 
-	$medialist = array();
-
-	$sql = "SELECT * FROM ".$TBLPREFIX."media WHERE m_gedfile='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
-	$res = dbquery($sql);
-
-	$ct = $res->numRows();
-	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
-		$source = array();
-		$source["gedcom"] = $row["m_gedrec"];
-		$row = db_cleanup($row);
-		$source["ext"] = $row["m_ext"];
-		$source["titl"] = $row["m_titl"];
-		$source["file"] = $row["m_file"];
-		$source["gedfile"] = $row["m_gedfile"];
-		$medialist[$row["m_media"]]= $source;
-	}
-	$res->free();
-	return $medialist;
-}
-*/
 //-- search through the gedcom records for individuals
 /**
  * Search the database for individuals that match the query
@@ -1008,14 +985,20 @@ function search_indis($query, $allgeds=false, $ANDOR="AND") {
 				$myindilist[$row[0]."[".$row[2]."]"]["gedfile"] = $row[2];
 				$myindilist[$row[0]."[".$row[2]."]"]["gedcom"] = $row[3];
 				$myindilist[$row[0]."[".$row[2]."]"]["isdead"] = $row[4];
-				if ($myindilist[$row[0]."[".$row[2]."]"]["gedfile"] == $GEDCOM) $indilist[$row[0]] = $myindilist[$row[0]."[".$row[2]."]"];
+				if ($myindilist[$row[0]."[".$row[2]."]"]["gedfile"] == $GEDCOM) {
+					$indilist[$row[0]] = $myindilist[$row[0]."[".$row[2]."]"];
+					if (isset($indilist[$row[0]]['privacy'])) unset($indilist[$row[0]]['privacy']);
+				}
 			}
 			else {
 				$myindilist[$row[0]]["names"] = get_indi_names($row[3]);
 				$myindilist[$row[0]]["gedfile"] = $row[2];
 				$myindilist[$row[0]]["gedcom"] = $row[3];
 				$myindilist[$row[0]]["isdead"] = $row[4];
-				if ($myindilist[$row[0]]["gedfile"] == $GEDCOM) $indilist[$row[0]] = $myindilist[$row[0]];
+				if ($myindilist[$row[0]]["gedfile"] == $GEDCOM) {
+					$indilist[$row[0]] = $myindilist[$row[0]];
+					if (isset($indilist[$row[0]]['privacy'])) unset($indilist[$row[0]]['privacy']);
+				}
 			}
 		}
 		$res->free();
@@ -1039,6 +1022,7 @@ function search_indis_fam($add2myindilist) {
 			$myindilist[$row[0]]["gedcom"] = $row[3].$add2my_fam;
 			$myindilist[$row[0]]["isdead"] = $row[4];
 			$indilist[$row[0]] = $myindilist[$row[0]];
+			if (isset($indilist[$row[0]]['privacy'])) unset($indilist[$row[0]]['privacy']);
 		}
 	}
 	$res->free();

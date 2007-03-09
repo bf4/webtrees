@@ -105,6 +105,7 @@ class FactInference{
 	function getAverage()
 	{
 		global $pgv_lang;
+		
 		if($this->globalFactPercentage != 0 && $this->localFactPercentage != 0)
 		{
 			return (($this->globalFactPercentage + $this->localFactPercentage) /2);
@@ -124,7 +125,7 @@ class FactInference{
 				{
 					if($this->globalFactCount != 0 || $this->localFactCount != 0)
 					{
-					return 0;
+					 return 0;
 					}
 					else
 					{

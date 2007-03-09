@@ -270,7 +270,7 @@ function print_list_repository($key, $value, $useli=true) {
  * @param string $legend optional legend of the fieldset
  */
 function print_indi_table($datalist, $legend="", $option="") {
-	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION, $GEDCOM_ID_PREFIX, $GEDCOM;
 	if (count($datalist)<1) return;
 	$name_subtags = array("", "_HEB", "ROMN", "_AKA");
 	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
@@ -337,9 +337,10 @@ function print_indi_table($datalist, $legend="", $option="") {
 	$dateY = date("Y");
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
-			$person = Person::getInstance($key); // from placelist
-			if (is_null($person)) $person = Person::getInstance($value); // from ancestry chart
-			unset ($value);
+			$person = null;
+			if (strpos($key, $GEDCOM_ID_PREFIX)!==false) $person = Person::getInstance($key); // from placelist
+			if (is_null($person)) $person = Person::getInstance($value); // from ancestry chart and search
+			$name = $person->getSortableName(); //-- for search results
 		}
 		else {
 			$gid = "";
@@ -347,6 +348,9 @@ function print_indi_table($datalist, $legend="", $option="") {
 			if (isset($value[4])) $gid = $value[4]; // from indilist ALL
 			if (isset($value["gedcom"])) $person = new Person($value["gedcom"]); // from source.php
 			else $person = Person::getInstance($gid);
+			if (isset($value["name"]) && $person->canDisplayName()) $name = $value["name"];
+			else $name = $person->getSortableName();
+			if (isset($value[4])) $name = $person->getSortableName($value[0]); // from indilist ALL
 		}
 		/* @var $person Person */
 		if (is_null($person)) continue;
@@ -363,9 +367,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 			echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$person->xref."</a></td>";
 		}
 		//-- Indi name(s)
-		if (isset($value["name"]) && $person->canDisplayName()) $name = $value["name"];
-		else $name = $person->getSortableName();
-		if (isset($value[4])) $name = $person->getSortableName($value[0]); // from indilist ALL
 		if ($person->isDead()) echo "<td class=\"list_value_wrap\"";
 		else echo "<td class=\"list_value_wrap alive\"";
 		echo " align=\"".get_align($name)."\">";
