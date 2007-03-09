@@ -152,11 +152,13 @@ class MediaControllerRoot extends IndividualController{
 			$menu->addSubmenu($submenu);
 			
 			//- remove object option
-			$submenu = new Menu($pgv_lang["remove_object"]);
-			$submenu->addLink("media.php?action=removeobject&amp;xref=".$this->pid);
-			$submenu->addOnclick("return confirm('".$pgv_lang["confirm_remove_object"]."')");
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-			$menu->addSubmenu($submenu);
+			if (userGedcomAdmin(getUserName())) {
+				$submenu = new Menu($pgv_lang["remove_object"]);
+				$submenu->addLink("media.php?action=removeobject&amp;xref=".$this->pid);
+				$submenu->addOnclick("return confirm('".$pgv_lang["confirm_remove_object"]."')");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$menu->addSubmenu($submenu);
+			}
 			
 			// main link displayed on page
 			$submenu = new Menu($pgv_lang["set_link"]." >");
