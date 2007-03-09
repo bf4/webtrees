@@ -265,6 +265,7 @@ if ($action=="update") {
 	if ($_POST["NEW_DAYS_TO_SHOW_LIMIT"] > 30) $_POST["NEW_DAYS_TO_SHOW_LIMIT"] = 30;
 
 	$configtext = preg_replace('/\$ABBREVIATE_CHART_LABELS\s*=\s*.*;/', "\$ABBREVIATE_CHART_LABELS = ".$boolarray[$_POST["NEW_ABBREVIATE_CHART_LABELS"]].";", $configtext);
+	$configtext = preg_replace('/\$ADVANCED_NAME_FACTS\s*=\s*.*;/', "\$ADVANCED_NAME_FACTS = \"".$_POST["NEW_ADVANCED_NAME_FACTS"]."\";", $configtext);
 	$configtext = preg_replace('/\$ALLOW_EDIT_GEDCOM\s*=\s*.*;/', "\$ALLOW_EDIT_GEDCOM = ".$boolarray[$_POST["NEW_ALLOW_EDIT_GEDCOM"]].";", $configtext);
 	$configtext = preg_replace('/\$ALLOW_THEME_DROPDOWN\s*=\s*.*;/', "\$ALLOW_THEME_DROPDOWN = ".$boolarray[$_POST["NEW_ALLOW_THEME_DROPDOWN"]].";", $configtext);
 	$configtext = preg_replace('/\$ALPHA_INDEX_LISTS\s*=\s*.*;/', "\$ALPHA_INDEX_LISTS = ".$boolarray[$_POST["NEW_ALPHA_INDEX_LISTS"]].";", $configtext);
@@ -363,6 +364,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$SOURCE_ID_PREFIX\s*=\s*".*";/', "\$SOURCE_ID_PREFIX = \"".$_POST["NEW_SOURCE_ID_PREFIX"]."\";", $configtext);
 	$configtext = preg_replace('/\$SPLIT_PLACES\s*=\s*.*;/', "\$SPLIT_PLACES = ".$boolarray[$_POST["NEW_SPLIT_PLACES"]].";", $configtext);
 	$configtext = preg_replace('/\$SUPPORT_METHOD\s*=\s*".*";/', "\$SUPPORT_METHOD = \"".$_POST["NEW_SUPPORT_METHOD"]."\";", $configtext);
+	$configtext = preg_replace('/\$SURNAME_TRADITION\s*=\s*.*;/', "\$SURNAME_TRADITION = \"".$_POST["NEW_SURNAME_TRADITION"]."\";", $configtext);
 	$configtext = preg_replace('/\$SYNC_GEDCOM_FILE\s*=\s*.*;/', "\$SYNC_GEDCOM_FILE = ".$boolarray[$_POST["NEW_SYNC_GEDCOM_FILE"]].";", $configtext);
 	$configtext = preg_replace('/\$THUMBNAIL_WIDTH\s*=\s*".*";/', "\$THUMBNAIL_WIDTH = \"".$_POST["NEW_THUMBNAIL_WIDTH"]."\";", $configtext);
 	$configtext = preg_replace('/\$UNDERLINE_NAME_QUOTES\s*=\s*.*;/', "\$UNDERLINE_NAME_QUOTES = ".$boolarray[$_POST["NEW_UNDERLINE_NAME_QUOTES"]].";", $configtext);
@@ -1436,6 +1438,23 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["editopt_conf"]."\" onclick=\"exp
 	<tr>
 		<td class="descriptionbox wrap"><?php print_help_link("QUICK_REQUIRED_FAMFACTS_help", "qm", "QUICK_REQUIRED_FAMFACTS"); print $pgv_lang["QUICK_REQUIRED_FAMFACTS"];?></td>
 		<td class="optionbox"><input type="text" name="NEW_QUICK_REQUIRED_FAMFACTS" value="<?php print $QUICK_REQUIRED_FAMFACTS?>" size="40" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('QUICK_REQUIRED_FAMFACTS_help');" /></td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("SURNAME_TRADITION_help", "qm", "SURNAME_TRADITION"); print $pgv_lang["SURNAME_TRADITION"];?></td>
+		<td class="optionbox"><select name="NEW_SURNAME_TRADITION" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SURNAME_TRADITION_help');">
+			<?php
+				foreach (array('paternal', 'spanish', 'portuguese', 'icelandic', 'none') as $value) {
+					print '<option value="'.$value.'"';
+					if ($SURNAME_TRADITION==$value) print ' selected="selected"';
+					print '>'.$pgv_lang[$value].'</option>';
+				}
+			?>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("ADVANCED_NAME_FACTS_help", "qm", "ADVANCED_NAME_FACTS"); print $pgv_lang["ADVANCED_NAME_FACTS"];?></td>
+		<td class="optionbox"><input type="text" name="NEW_ADVANCED_NAME_FACTS" value="<?php print $ADVANCED_NAME_FACTS?>" size="40" dir="ltr" tabindex="<?php $i++; print $i?>" onfocus="getHelp('ADVANCED_NAME_FACTS_help');" /></td>
 	</tr>
 </table>
 <table class="facts_table" border="0">
