@@ -42,12 +42,12 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-+$pgv_lang["SURNAME_TRADITION"]       09 Mar 2007           A
-+$pgv_lang["ADVANCED_NAME_FACTS"]     09 Mar 2007           A
-+$pgv_lang["spanish"]                 09 Mar 2007           A
-+$pgv_lang["portuguese"]              09 Mar 2007           A
-+$pgv_lang["icelandic"]               09 Mar 2007           A
-+$pgv_lang["paternal"]                09 Mar 2007           A
++$pgv_lang["SURNAME_TRADITION"]						09 Mar 2007				A
++$pgv_lang["ADVANCED_NAME_FACTS"]					09 Mar 2007				A
++$pgv_lang["spanish"]								09 Mar 2007				A
++$pgv_lang["portuguese"]							09 Mar 2007				A
++$pgv_lang["icelandic"]								09 Mar 2007				A
++$pgv_lang["paternal"]								09 Mar 2007				A
 -$pgv_lang["move_to"]								24 Feb 2007				D
 *$pgv_lang["progress_bars_info"]					11 Feb 2007				wf
 +$pgv_lang["BOM_detected"]							11 Feb 2007				A

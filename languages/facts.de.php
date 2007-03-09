@@ -258,6 +258,7 @@ $factarray["_PRMN"]	= "permanente Nummer";
 $factarray["_WEIG"]	= "Gewicht";
 $factarray["_YART"]	= "Yartzeit";
 $factarray["_MARNM"]	= "Ehename";
+$factarray["_MARNM_SURN"] = "Nachname nach der Ehe";
 $factarray["_STAT"] = "Familienstand";
 $factarray["COMM"]	= "Bemerkung";
 
