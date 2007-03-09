@@ -435,13 +435,18 @@ function displayDetailsByID($pid, $type = "INDI") {
 	}
 	//-- check the person privacy array for an exception
 	if (isset($person_privacy[$pid])) {
-		$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 		if ($person_privacy[$pid]>=getUserAccessLevel($username)) {
-			if ($cache_privacy) $indilist[$pid]['privacy'] = true;
+			if ($cache_privacy) {
+				$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
+				$indilist[$pid]['privacy'] = true;
+			}
 			return true;
 		}
 		else {
-			if ($cache_privacy) $indilist[$pid]['privacy'] = false;
+			if ($cache_privacy) {
+				$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
+				$indilist[$pid]['privacy'] = false;
+			}
 			return false;
 		}
 	}
@@ -471,8 +476,10 @@ function displayDetailsByID($pid, $type = "INDI") {
 			if ($ct>0) {
 				$dyear = $match[1];
 				if (($cyear-$dyear) <= $MAX_ALIVE_AGE-25) {
+					if ($cache_privacy) {
+						$indilist[$pid]['privacy'] = false;
 					$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
-					if ($cache_privacy) $indilist[$pid]['privacy'] = false;
+					}
 					return false;
 				}
 			}
@@ -487,8 +494,10 @@ function displayDetailsByID($pid, $type = "INDI") {
 				if ($ct>0) {
 					$myear = $match[1];
 					if (($cyear-$myear) <= $MAX_ALIVE_AGE-15) {
+						if ($cache_privacy) {
+							$indilist[$pid]['privacy'] = false;
 						$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
-						if ($cache_privacy) $indilist[$pid]['privacy'] = false;
+						}
 						return false;
 					}
 				}
@@ -500,35 +509,52 @@ function displayDetailsByID($pid, $type = "INDI") {
 			if ($ct>0) {
 				$byear = $match[1];
 				if (($cyear-$byear) <= $MAX_ALIVE_AGE) {
+					if ($cache_privacy) {
+						$indilist[$pid]['privacy'] = false;
 					$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
-					if ($cache_privacy) $indilist[$pid]['privacy'] = false;
+					}
 					return false;
 				}
 			}
 		}
+		
 		$disp = is_dead_id($pid);
 		if ($disp) {
 			if ($SHOW_DEAD_PEOPLE>=getUserAccessLevel($username)) {
+				if ($cache_privacy) {
+					$indilist[$pid]['privacy'] = true;
 				$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
-				if ($cache_privacy) $indilist[$pid]['privacy'] = true;
+				}
 				return true;
 			}
 			else {
+				if ($cache_privacy) {
+					$indilist[$pid]['privacy'] = false;
 				$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
-				if ($cache_privacy) $indilist[$pid]['privacy'] = false;
+				}
 				return false;
 			}
 		}
 		else {
-			if (empty($username)) return false;
+			if (empty($username)) {
+				if ($cache_privacy) {
+					$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
+					$indilist[$pid]['privacy'] = false;
+				}
+				return false;
+			}
 			if ($SHOW_LIVING_NAMES>getUserAccessLevel($username)) {
+				if ($cache_privacy) {
+					$indilist[$pid]['privacy'] = true;
 				$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
-				if ($cache_privacy) $indilist[$pid]['privacy'] = true;
+				}
 				return true;
 			}
 			else {
+				if ($cache_privacy) {
+					$indilist[$pid]['privacy'] = false;
 				$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
-				if ($cache_privacy) $indilist[$pid]['privacy'] = false;
+				}
 				return false;
 			}
 		}

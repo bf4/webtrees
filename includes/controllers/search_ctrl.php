@@ -1153,6 +1153,10 @@ class SearchControllerRoot extends BaseController {
 	function printResults() {
 		include_once ("includes/functions_print_lists.php");
 		global $GEDCOM, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $global_facts, $REGEXP_DB;
+		//-- all privacy settings must be global if we are going to load up privacy files
+		global $SHOW_DEAD_PEOPLE,$SHOW_LIVING_NAMES,$SHOW_SOURCES,$MAX_ALIVE_AGE,$USE_RELATIONSHIP_PRIVACY,$MAX_RELATION_PATH_LENGTH;
+		global $CHECK_MARRIAGE_RELATIONS,$PRIVACY_BY_YEAR,$PRIVACY_BY_RESN,$SHOW_PRIVATE_RELATIONSHIPS,$person_privacy,$user_privacy;
+		global $global_facts,$person_facts;
 		// ---- section to search and display results on a general keyword search
 		if ($this->action == "general" || $this->action=="replace") {
 			if ((isset ($this->query)) && ($this->query != "")) {
@@ -1201,7 +1205,7 @@ class SearchControllerRoot extends BaseController {
 
 					foreach ($this->myindilist as $key => $value) {
 						if (count($this->sgeds) > 1) {
-							$GEDCOM = splitkey($key, "ged");
+							$GEDCOM = get_gedcom_from_id(splitkey($key, "ged"));
 							$key = splitkey($key, "id");
 							if ($GEDCOM != $curged) {
 								include (get_privacy_file());
@@ -1510,175 +1514,26 @@ class SearchControllerRoot extends BaseController {
 				global $GEDCOMS;
 				$oldged = $GEDCOM;
 				foreach ($this->sgeds as $key=>$GEDCOM) {
+					require(get_privacy_file());
 					$datalist = array();
-					foreach ($printindiname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[]=$v[1];
-					print_indi_table(array_unique($datalist), $pgv_lang["individuals"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
+					foreach ($printindiname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[$v[1]]=array("gid"=>$v[1], "name"=>$v[0]);
+					print_indi_table($datalist, $pgv_lang["individuals"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
 				}
 				foreach ($this->sgeds as $key=>$GEDCOM) {
+					require(get_privacy_file());
 					$datalist = array();
 					foreach ($printfamname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[]=$v[1];
 					print_fam_table(array_unique($datalist), $pgv_lang["families"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
 				}
 				foreach ($this->sgeds as $key=>$GEDCOM) {
+					require(get_privacy_file());
 					$datalist = array();
 					foreach ($actualsourcelist as $k=>$v) if ($v["gedfile"]==$GEDCOMS[$GEDCOM]["id"]) $datalist[]=$k;
 					print_sour_table(array_unique($datalist), $pgv_lang["sources"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
 				}
 				$GEDCOM = $oldged;
+				require(get_privacy_file());
 				//-- [end] new code for sortable tables
-				/*** DEPRECATED
-				$totalIndiResults = count($printindiname);
-				$this->totalGeneralResults = $totalIndiResults;
-				$totalFamResults = count($printfamname);
-				if ($totalFamResults > $this->totalGeneralResults)
-					$this->totalGeneralResults = $totalFamResults;
-				$totalSrcResults = count($actualsourcelist);
-				if ($totalSrcResults > $this->totalGeneralResults)
-						$this->totalGeneralResults = $totalSrcResults;
-				// Prints the Paged Results: << 1 2 3 4 >> links if there are more than $this->resultsPerPage results
-				if ($this->resultsPerPage >= 1 && $this->totalGeneralResults > $this->resultsPerPage) {
-					$this->printPageResultsLinks($this->inputFieldNames, $this->totalGeneralResults, $this->resultsPerPage);
-				}
-				print "<table class=\"list_table $TEXT_DIRECTION\">\n\t\t<tr>";
-				if ((count($printindiname) > 0) && (isset ($this->srindi)))
-					print "<td class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["people"]."</td>";
-				if ((count($this->myfamlist) > 0) || (count($printfamname) > 0))
-					print "<td class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sfamily"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["families"]."</td>";
-				if (count($this->mysourcelist) > 0)
-					print "<td class=\"list_label\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" border=\"0\" alt=\"\" /> ".$pgv_lang["sources"]."</td>";
-				print "</tr>\n\t\t<tr>";
-				$oldged = $GEDCOM;
-				$curged = $GEDCOM;
-				// Print the indis
-				if (count($printindiname) > 0) {
-					uasort($printindiname, "itemsort");
-					print "<td class=\"list_value_wrap\"><ul>";
-
-					/***************************************************** PAGING HERE **********************************************************************
-					//set the total results and only get the results for this page
-					$printindiname = $this->getPagedResults($printindiname, $this->resultsPerPage);
-					$this->indiResultsPrinted = count($printindiname);
-					foreach ($printindiname as $pkey => $pvalue) {
-						$GEDCOM = $pvalue[2];
-						if ($GEDCOM != $curged) {
-							include (get_privacy_file());
-							$curged = $GEDCOM;
-						}
-						print_list_person($pvalue[1], array (check_NN($pvalue[0]), $pvalue[2]), "", $pvalue[3]);
-						print "\n";
-					}
-					print "\n\t\t</ul>&nbsp;</td>";
-					$GEDCOM = $oldged;
-					if ($GEDCOM != $curged) {
-						include (get_privacy_file());
-						$curged = $GEDCOM;
-					}
-				}
-
-				/***************************************************** PAGING HERE **********************************************************************
-				if (count($printfamname)>0) {
-					//set the total results and only get the results for this page
-					$printfamname = $this->getPagedResults($printfamname, $this->resultsPerPage);
-					$this->famResultsPrinted = count($printfamname);
-					print "\n\t\t<td class=\"list_value_wrap\"><ul>";
-					foreach ($printfamname as $pkey => $pvalue) {
-						$GEDCOM = $pvalue[2];
-						if ($GEDCOM != $curged) {
-							include (get_privacy_file());
-							$curged = $GEDCOM;
-						}
-						print_list_family($pvalue[1], array ($pvalue[0], $pvalue[2]), "", $pvalue[3]);
-						print "\n";
-					}
-					print "\n\t\t</ul>&nbsp;</td>";
-					$GEDCOM = $oldged;
-					if ($GEDCOM != $curged) {
-						include (get_privacy_file());
-						$curged = $GEDCOM;
-					}
-				}
-
-				/***************************************************** PAGING HERE **********************************************************************
-				if (count($actualsourcelist)>0) {
-					print "\n\t\t<td class=\"list_value_wrap\"><ul>";
-					//set the total results and only get the results for this page
-					$actualsourcelist = $this->getPagedResults($actualsourcelist, $this->resultsPerPage);
-					$this->srcResultsPrinted = count($actualsourcelist);
-					foreach ($actualsourcelist as $key => $value) {
-						print_list_source($key, $value);
-					}
-					print "\n\t\t</ul>&nbsp;</td>";
-					$GEDCOM = $oldged;
-					if ($GEDCOM != $curged) {
-						include (get_privacy_file());
-						$curged = $GEDCOM;
-					}
-				}
-				$GEDCOM = $oldged;
-				
-				print "</tr><tr>\n\t";
-				if ($this->indiResultsPrinted > 0 || $this->famResultsPrinted > 0 || $this->srcResultsPrinted > 0) {
-					if (($this->indiResultsPrinted > 0) && (isset ($this->srindi))) {
-						print "<td>".$pgv_lang["total_indis"]." ";
-						if ($this->resultsPerPage >= $totalIndiResults)
-							print $totalIndiResults;
-						else
-							if ($totalIndiResults > 0) {
-								print (($this->resultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ";
-								print (($this->resultsPerPage * $this->resultsPageNum) + $this->indiResultsPrinted)." ".$pgv_lang["of"]." ".$totalIndiResults;
-							}
-						if (count($this->indi_private) > 0)
-							print "  (".$pgv_lang["private"]." ".count($this->indi_private).")";
-						if (count($this->indi_hide) > 0)
-							print "  --  ".$pgv_lang["hidden"]." ".count($this->indi_hide);
-						if (count($this->indi_private) > 0 || count($this->indi_hide) > 0)
-							print_help_link("privacy_error_help", "qm");
-						print "</td>";
-					}
-
-					if ($this->famResultsPrinted > 0 && isset ($this->srfams)) {
-						print "<td>".$pgv_lang["total_fams"]." ";
-						if ($this->resultsPerPage >= $totalFamResults)
-							print $totalFamResults;
-						else
-							if ($totalFamResults > 0) {
-								print (($this->resultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ";
-								print (($this->resultsPerPage * $this->resultsPageNum) + $this->famResultsPrinted)." ".$pgv_lang["of"]." ".$totalFamResults;
-							}
-						if (count($this->fam_private) > 0)
-							print "  (".$pgv_lang["private"]." ".count($this->fam_private).")";
-						if (count($this->fam_hide) > 0)
-							print "  --  ".$pgv_lang["hidden"]." ".count($this->fam_hide);
-						if (count($this->fam_private) > 0 || count($this->fam_hide) > 0)
-							print_help_link("privacy_error_help", "qm");
-						print "</td>";
-					}
-
-					if ($this->srcResultsPrinted > 0 && isset ($this->srsour)) {
-						print "<td>".$pgv_lang["total_sources"]." ";
-						if ($this->resultsPerPage >= $totalSrcResults)
-							print $totalSrcResults;
-						else
-							if ($totalSrcResults > 0) {
-								print (($this->resultsPerPage * $this->resultsPageNum) + 1)." ".$pgv_lang["search_to"]." ";
-								print (($this->resultsPerPage * $this->resultsPageNum) + $this->srcResultsPrinted)." ".$pgv_lang["of"]." ".$totalSrcResults;
-							}
-						if (count($this->source_hide) > 0)
-							print "  --  ".$pgv_lang["hidden"]." ".count($this->source_hide);
-						print "</td>";
-					}
-
-					if ($this->indiResultsPrinted > 0 || $this->famResultsPrinted > 0 || $this->srcResultsPrinted > 0)
-						print "</tr>\n\t";
-				} else
-					if (isset ($this->query)) {
-						print "<td class=\"warning\" style=\" text-align: center;\"><i>".$pgv_lang["no_results"]."</i><br /></td></tr>\n\t\t";
-						if (!isset ($this->srindi) && !isset ($this->srfams) && !isset ($this->srsour)) {
-							print "<tr><td class=\"warning\" style=\" text-align: center;\"><i>".$pgv_lang["no_search_for"]."</i><br /></div>\n\t\t";
-						}
-					}
-				print "</table>";
-				***/
 				print "</div>";
 			} else
 				if (isset ($this->query)) {
@@ -1705,11 +1560,13 @@ class SearchControllerRoot extends BaseController {
 				$oldged = $GEDCOM;
 				$this->myquery = trim($this->mylastname." ".$this->myfirstname." ".$this->myplace." ".$this->myyear);
 				foreach ($this->sgeds as $key=>$GEDCOM) {
+					require(get_privacy_file());
 					$datalist = array();
 					foreach ($this->printname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[]=$v[1];
 					print_indi_table(array_unique($datalist), $pgv_lang["individuals"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
 				}
 				foreach ($this->sgeds as $key=>$GEDCOM) {
+					require(get_privacy_file());
 					$datalist = array();
 					foreach ($this->printfamname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[]=$v[1];
 					print_fam_table(array_unique($datalist), $pgv_lang["families"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);

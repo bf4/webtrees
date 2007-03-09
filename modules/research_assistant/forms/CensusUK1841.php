@@ -48,7 +48,7 @@ class CensusUK1841 extends ra_form {
 	    			'<input type="hidden" name="taskid" value="'.$_REQUEST['taskid'].'" />';
 	    	if (!isset($_REQUEST['numOfRows'])) $_REQUEST['numOfRows'] = count($this->getPeople());
 	    	if ($_REQUEST['numOfRows']<1) $_REQUEST['numOfRows']=1;
-	    	$out .= '<table align="center"><tr><td class="descriptionbox">'.$pgv_lang["rows"].'</td><td class="optionbox"><select name="numOfRows">';
+	    	$out .= '<table align="center" dir="ltr"><tr><td class="descriptionbox">'.$pgv_lang["rows"].'</td><td class="optionbox"><select name="numOfRows">';
 	    	for($i = 1; $i <= 20; $i++){
 	    		$out .= '<option value="'.$i.'"';
 	    		if ($_REQUEST['numOfRows']==$i) $out .= " selected=\"selected\"";
@@ -160,7 +160,7 @@ return false;}return true;}
 //        Next Table
         $out .= '<tr><td colspan="6">';
         
-	$out .= '<table>
+	$out .= '<table dir="ltr">
  <tr>
   <td class="descriptionbox">Name</td>';
   		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
@@ -420,7 +420,7 @@ $out .= ' <tr>
 		if(!empty($inferFacts))
 		{
 			
-		$out .= '<tr><td colspan="2" id="inferData"><table class="list_table"><tbody><tr><td colspan="4" class="topbottombar">Inferred Facts</td></tr>
+		$out .= '<tr><td colspan="2" id="inferData"><table class="list_table" dir="ltr"><tbody><tr><td colspan="4" class="topbottombar">Inferred Facts</td></tr>
 <tr><td class="descriptionbox">Fact</td><td class="descriptionbox">Person</td><td class="descriptionbox">Reason</td><td class="descriptionbox">Add</td></tr>';
 		$completeFact = true;
 		$occufact = true;
