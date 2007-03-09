@@ -35,6 +35,10 @@ if ($_SESSION["cookie_login"]) {
 	header("Location: login.php?type=simple&url=edit_interface.php");
 	exit;
 }
+if ((isset($_POST["preserve_last_changed"])) && ($_POST["preserve_last_changed"] == "on"))
+	$update_CHAN = false;
+else
+	$update_CHAN = true;
 
 //-- @TODO make list a configurable list
 $addfacts = preg_split("/[,; ]/", $QUICK_ADD_FACTS);
@@ -589,7 +593,7 @@ if ($action=="update") {
 			else $childrec = find_updated_record($CHIL[$i]);
 			if (preg_match("/1 FAMC @$famid@/", $childrec)==0) {
 				$childrec = "\r\n1 FAMC @$famid@";
-				replace_gedrec($CHIL[$i], $childrec);
+				replace_gedrec($CHIL[$i], $childrec, $update_CHAN);
 			}
 		}
 		
@@ -654,7 +658,7 @@ if ($action=="update") {
 //			print "sfamupdate7";
 		}
 		
-		if ($famupdate && ($famrec!=$oldfamrec)) replace_gedrec($famid, $famrec);
+		if ($famupdate && ($famrec!=$oldfamrec)) replace_gedrec($famid, $famrec, $update_CHAN);
 	}
 
 	//--add new spouse name, birth, marriage
@@ -682,7 +686,7 @@ if ($action=="update") {
 		//-- add the new family id to the new spouse record
 		$spouserec = find_updated_record($xref);
 		$spouserec .= "\r\n1 FAMS @$newfamid@\r\n";
-		replace_gedrec($xref, $spouserec);
+		replace_gedrec($xref, $spouserec, $update_CHAN);
 		
 		//-- last add the new family id to the persons record
 		$gedrec .= "\r\n1 FAMS @$newfamid@\r\n";
@@ -737,7 +741,7 @@ if ($action=="update") {
 			//-- add the new family to the new child
 			$childrec = find_updated_record($cxref);
 			$childrec .= "\r\n1 FAMC @$newfamid@\r\n";
-			replace_gedrec($cxref, $childrec);
+			replace_gedrec($cxref, $childrec, $update_CHAN);
 			
 			//-- add the new family to the original person
 			$gedrec .= "\r\n1 FAMS @$newfamid@";
@@ -749,13 +753,13 @@ if ($action=="update") {
 			//-- add the family to the new child
 			$childrec = find_updated_record($cxref);
 			$childrec .= "\r\n1 FAMC @$newfamid@\r\n";
-			replace_gedrec($cxref, $childrec);
+			replace_gedrec($cxref, $childrec, $update_CHAN);
 		}
 		print $pgv_lang["update_successful"]."<br />\n";;
 	}
 	if (!empty($newfamid)) {
 		$famrec = preg_replace("/0 @(.*)@/", "0 @".$newfamid."@", $famrec);
-		replace_gedrec($newfamid, $famrec);
+		replace_gedrec($newfamid, $famrec, $update_CHAN);
 	}
 	
 	//------------------------------------------- updates for family with parents
@@ -844,7 +848,7 @@ if ($action=="update") {
 			if (empty($oldfamrec)) {
 				$spouserec = find_updated_record($FATHER[$i]);
 				$spouserec .= "\r\n1 FAMS @$famid@";
-				replace_gedrec($FATHER[$i], $spouserec);
+				replace_gedrec($FATHER[$i], $spouserec, $update_CHAN);
 			}
 		}
 		
@@ -923,7 +927,7 @@ if ($action=="update") {
 			if (empty($oldfamrec)) {
 				$spouserec = find_updated_record($MOTHER[$i]);
 				$spouserec .= "\r\n1 FAMS @$famid@";
-				replace_gedrec($MOTHER[$i], $spouserec);
+				replace_gedrec($MOTHER[$i], $spouserec, $update_CHAN);
 			}
 		}
 		if (!empty($MOTHER[$i]) && $parents['WIFE']!=$MOTHER[$i]) {
@@ -990,7 +994,7 @@ if ($action=="update") {
 			else $childrec = find_updated_record($CHIL[$i]);
 			if (preg_match("/1 FAMC @$famid@/", $childrec)==0) {
 				$childrec = "\r\n1 FAMC @$famid@";
-				replace_gedrec($CHIL[$i], $childrec);
+				replace_gedrec($CHIL[$i], $childrec, $update_CHAN);
 			}
 			$famupdate = true;
 //			print "famupdate6";
@@ -1059,7 +1063,7 @@ if ($action=="update") {
 		if ($famupdate &&($oldfamrec!=$famrec)) {
 			$famrec = preg_replace("/0 @(.*)@/", "0 @".$famid."@", $famrec);
 //			print $famrec;
-			replace_gedrec($famid, $famrec);
+			replace_gedrec($famid, $famrec, $update_CHAN);
 		}
 		$i++;
 	}
@@ -1068,7 +1072,7 @@ if ($action=="update") {
 		print $pgv_lang["update_successful"]."<br />";
 		AddToChangeLog("Quick update for $pid by >".getUserName()."<");
 		//print "<pre>$gedrec</pre>";
-		if ($oldgedrec!=$gedrec) replace_gedrec($pid, $gedrec);
+		if ($oldgedrec!=$gedrec) replace_gedrec($pid, $gedrec, $update_CHAN);
 	}
 	if (!empty($error)) {
 		print "<span class=\"error\">".$error."</span>";
@@ -2614,6 +2618,16 @@ $chil = find_children_in_record($famrec, $pid);
 </div>
 	<?php
 	$i++;
+}
+if (UserIsAdmin(GetUserName())) {
+	print "<table class=\"facts_table width80\">\n";
+	print "<tr><td class=\"descriptionbox ".$TEXT_DIRECTION." wrap>";
+	print_help_link("no_update_CHAN_help", "qm");
+	print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
+	print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
+	print $pgv_lang["no_update_CHAN"]."<br />\n";
+	print "</td></tr>\n";
+	print "</table>";
 }
 ?>
 <input type="submit" value="<?php print $pgv_lang["save"]; ?>" />
