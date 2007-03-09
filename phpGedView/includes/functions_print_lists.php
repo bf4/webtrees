@@ -340,7 +340,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 			$person = null;
 			if (strpos($key, $GEDCOM_ID_PREFIX)!==false) $person = Person::getInstance($key); // from placelist
 			if (is_null($person)) $person = Person::getInstance($value); // from ancestry chart and search
-			$name = $person->getSortableName(); //-- for search results
+			if (!is_null($person)) $name = $person->getSortableName(); //-- for search results
 		}
 		else {
 			$gid = "";
@@ -415,7 +415,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "</td>";
 		//-- Birth place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($person->getBirthPlace())."\">";
-		echo "<a href=\"".$person->getPlaceUrl($person->getBirthPlace())."\" class=\"list_item\">".PrintReady($person->getPlaceShort($person->getBirthPlace()))."</a>";
+		echo "<a href=\"".$person->getPlaceUrl($person->getBirthPlace())."\" class=\"list_item\" alt=\"".$person->getBirthPlace()."\" title=\"".$person->getBirthPlace()."\">"
+		.PrintReady($person->getPlaceShort($person->getBirthPlace()))."</a>";
 		echo "&nbsp;</td>";
 		//-- Number of children
 		echo "<td class=\"list_value_wrap\">";
@@ -465,7 +466,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "</td>";
 		//-- Death place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($person->getDeathPlace())."\">";
-		echo "<a href=\"".$person->getPlaceUrl($person->getDeathPlace())."\" class=\"list_item\">".PrintReady($person->getPlaceShort($person->getDeathPlace()))."</a>";
+		echo "<a href=\"".$person->getPlaceUrl($person->getDeathPlace())."\" class=\"list_item\" alt=\"".$person->getDeathPlace()."\" title=\"".$person->getDeathPlace()."\">"
+		.PrintReady($person->getPlaceShort($person->getDeathPlace()))."</a>";
 		echo "&nbsp;</td>";
 		//-- Last change
 		if ($SHOW_LAST_CHANGE) {
@@ -764,7 +766,8 @@ function print_fam_table($datalist, $legend="") {
 		echo "</td>";
 		//-- Marriage place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($family->getMarriagePlace())."\">";
-		echo "<a href=\"".$family->getPlaceUrl($family->getMarriagePlace())."\" class=\"list_item\">".PrintReady($family->getPlaceShort($family->getMarriagePlace()))."</a>";
+		echo "<a href=\"".$family->getPlaceUrl($family->getMarriagePlace())."\" class=\"list_item\" alt=\"".$family->getMarriagePlace()."\" title=\"".$family->getMarriagePlace()."\">"
+		.PrintReady($family->getPlaceShort($family->getMarriagePlace()))."</a>";
 		echo "&nbsp;</td>";
 		//-- Number of children
 		echo "<td class=\"list_value_wrap\">";
