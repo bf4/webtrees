@@ -728,6 +728,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			return false;
 		}
 		// Blank out temporary _MARNM_SURN fields
+		var ip=document.getElementsByTagName('input');
 		for (var i=0; i<ip.length; i++)
 				if (ip[i].id.indexOf("_MARNM_SURN")==0)
 					ip[i].value='';
