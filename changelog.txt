@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ phpgedview-Bugs-1665673 ] SOAP doSearch method doesn't work with keyword searches (yalnifj)
  - Added [ 1675436 ] Show Full Location name in alt of List Place Links (opus27)
  - Fixed [ 1610026 ] search results show details of living people (yalnifj)
  - Fixed [ 1488550 ] Family/Individual Media Duplications (yalnifj)
