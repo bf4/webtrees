@@ -30,6 +30,8 @@ if (preg_match("/editor\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
 	exit;
 }
 
+$pgv_lang["admin_override"]             = "Option administrateur";
+$pgv_lang["no_update_CHAN"]             = "Conserver la précédente date de mise à jour (CHAN)";
 $pgv_lang["select_events"]              = "Choisir un évènement";
 $pgv_lang["source_events"]              = "Evènements associés à cette source";
 $pgv_lang["advanced_name_fields"]       = "Variantes du nom";
@@ -155,7 +157,6 @@ $pgv_lang["hebrew_surn"]                = "Nom Hébreu";
 $pgv_lang["hide_changes"]               = "Masquer les modifications.";
 $pgv_lang["highlighted"]                = "Surbrillance";
 $pgv_lang["illegal_chars"]              = "Présence de caractères interdits";
-$pgv_lang["invalid_search_input"]       = "Entrez un nom de personne ou de lieu en complément de l'année";
 #pgv_lang["invalid_search_multisite_input"]= "Please enter one of the following:  Name, Birth Date, Birth Place, Death Date, Death Place, and Sex ";
 #pgv_lang["invalid_search_multisite_input_gender"]= "Please search again with more information than just sex";
 $pgv_lang["label_diff_server"]          = "Un autre site";
