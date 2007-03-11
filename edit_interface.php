@@ -887,6 +887,7 @@ else if ($action=="update") {
 	if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\r\n";
 	if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\r\n";
 	if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\r\n";
+	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\r\n";
 
 	while($i<count($gedlines)) {
 		$newged .= trim($gedlines[$i])."\r\n";
@@ -909,6 +910,7 @@ else if ($action=="addchildaction") {
 	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
 	if (!empty($ROMN)) $gedrec .= "2 ROMN $ROMN\r\n";
+	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
 	if ((!empty($BIRT_DATE))||(!empty($BIRT_PLAC))) {
 		$gedrec .= "1 BIRT\r\n";
@@ -989,6 +991,7 @@ else if ($action=="addspouseaction") {
 	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
 	if (!empty($ROMN)) $gedrec .= "2 ROMN $ROMN\r\n";
+	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
 	if ((!empty($BIRT_DATE))||(!empty($BIRT_PLAC))) {
 		$gedrec .= "1 BIRT\r\n";
@@ -1202,6 +1205,7 @@ else if ($action=="addnewparentaction") {
 	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
 	if (!empty($ROMN)) $gedrec .= "2 ROMN $ROMN\r\n";
+	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
 	if ((!empty($BIRT_DATE))||(!empty($BIRT_PLAC))) {
 		$gedrec .= "1 BIRT\r\n";

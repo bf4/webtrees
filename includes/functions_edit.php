@@ -440,7 +440,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		if (isset($pgv_changes[$pid."_".$GEDCOM]))
 			$prec=find_updated_record($pid);
 		else
-			$prec=find_family_record($pid);
+			$prec=find_person_record($pid);
 		if (empty($prec))
 			$prec = find_record_in_file($pid);
 		$indi_name=get_gedcom_value('NAME', 0, $prec);
@@ -524,18 +524,13 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		}
 	}
 
-	// Populate the advanced name fields (NB _MARNM is not an advanced name field)
-	foreach (preg_split('/[, :;]/', $ADVANCED_NAME_FACTS, null, PREG_SPLIT_NO_EMPTY) as $tag)
-		if ($tag!="_MARNM")
-			$name_fields[$tag] = get_gedcom_value($tag, 0, $namerec);
-
 	// Populate any missing 2 XXXX fields from the 1 NAME field
 	$npfx_accept=implode('|', $NPFX_accept);
 	if (preg_match ("/((($npfx_accept)\.?\s+)*)([^\r\n\/\"]*)(\"(.*)\")?\s*\/(([a-z]{2,3}\s+)*)(.*)\/\s*([^\r\n]*)/i", $name_fields['NAME'], $name_bits)) {
 		if (empty($name_fields['NPFX'])) $name_fields['NPFX']=$name_bits[1];
 		if (empty($name_fields['GIVN'])) $name_fields['GIVN']=$name_bits[4];
 		if (empty($name_fields['SPFX']) && empty($name_fields['SURN'])) {
-		 	$name_fields['SPFX']=trim($name_bits[7]);
+			$name_fields['SPFX']=trim($name_bits[7]);
 			$name_fields['SURN']=$name_bits[9];
 		}
 		if (empty($name_fields['NSFX'])) $name_fields['NSFX']=$name_bits[10];
@@ -548,17 +543,34 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	foreach($name_fields as $tag=>$value)
 		add_simple_tag("0 $tag $value");
 
-	// _MARNM is a special case; extract the surname into a temporary sub-field
-	if (preg_match_all('/2 _MARNM .*\/(.+)\//', $namerec, $match))
-		foreach ($match[1] as $value) {
-			add_simple_tag("2 _MARNM");
-			add_simple_tag("2 _MARNM_SURN $value");
-		}
+	// Get the advanced name fields
+	$adv_name_fields=array();
+	if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_NAME_FACTS, $match))
+		foreach ($match[1] as $tag)
+			$adv_name_fields[$tag]='';
+	// This is a custom tag, but PGV uses it extensively.
+	if ($SURNAME_TRADITION=='paternal' || preg_match('/2 _MARNM/', $namerec))
+		$adv_name_fields['_MARNM']='';
 
-	// Allow a new married name to be entered.
-	if ($SURNAME_TRADITION=='paternal') {
-		add_simple_tag("0 _MARNM");
-		add_simple_tag("0 _MARNM_SURN $new_marnm");
+	foreach ($adv_name_fields as $tag=>$dummy) {
+		// Edit existing tags
+		if (preg_match_all("/2 $tag (.+)/", $namerec, $match))
+			foreach ($match[1] as $value) {
+				if ($tag=='_MARNM') {
+					preg_match('/\/(.+)\//', $value, $match2);
+					add_simple_tag("2 _MARNM");
+					add_simple_tag("2 _MARNM_SURN ".$match2[1]);
+				} else {
+					add_simple_tag("2 $tag $value");
+				}
+			}
+		// Allow a new row to be entered if there was no row provided or it is a custom tag
+		if (count($match[1])==0 || substr($tag, 0, 1)=='_')
+			if ($tag=='_MARNM') {
+				add_simple_tag("0 _MARNM");
+				add_simple_tag("0 _MARNM_SURN $new_marnm");
+			} else
+				add_simple_tag("0 $tag");
 	}
 
 	// Handle any other NAME subfields that aren't included above (SOUR, NOTE, _CUSTOM, etc)
@@ -572,7 +584,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		$tags=array();
 		$i = 0;
 		do {
-			if (empty($name_fields[$type]) && $type!='_MARNM') {
+			if (!isset($name_fields[$type]) && !isset($adv_name_fields[$type])) {
 				$text = "";
 				for($j=2; $j<count($fields); $j++) {
 					if ($j>2) $text .= " ";
@@ -684,6 +696,8 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		var nsfx=frm.NSFX.value;
 		frm.NAME.value=trim(npfx+" "+givn+" /"+trim(spfx+" "+surn)+"/ "+nsfx);
 		document.getElementById('NAME_display').innerHTML=frm.NAME.value;
+		// Married names inherit some NSFX values, but not these
+		nsfx=nsfx.replace(/^(I|II|III|IV|V|VI|Junior|Jr\.?|Senior|Sr\.?)$/i, '');
 		// Update _MARNM field from _MARNM_SURN field and display it 
 		// Be careful of mixing latin/hebrew/etc. character sets.
 		var ip=document.getElementsByTagName('input');
