@@ -1619,7 +1619,7 @@ function accept_changes($cid) {
 			unset ($_SESSION["recent_changes"]["gedcom"][$GEDCOM]);
 		$logline = AddToLog("Accepted change $cid " . $change["type"] . " into database ->" . getUserName() . "<-");
 		if (!empty ($COMMIT_COMMAND))
-			check_in($logline, $GEDCOM, dirname($GEDCOMS[$GEDCOMS]['path']));
+			check_in($logline, $GEDCOM, dirname($GEDCOMS[$GEDCOM]['path']));
 		if (isset ($change["linkpid"]))
 			accept_changes($change["linkpid"] . "_" . $GEDCOM);
 		return true;
