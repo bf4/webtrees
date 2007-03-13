@@ -24,9 +24,9 @@
  * @version $Id$
  */
 
-//-- version of phpgedview  (Let's keep this in an obvious place -- not buried in code)
+//-- version of PhpGedView  (Let's keep this in an obvious place -- not buried in code)
 $VERSION = "4.1";
-$VERSION_RELEASE = "beta 4";
+$VERSION_RELEASE = "beta 5";
 $REQUIRED_PRIVACY_VERSION = "3.1";
 
 if (strstr($_SERVER["PHP_SELF"],"session")) {
