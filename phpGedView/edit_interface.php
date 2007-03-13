@@ -314,7 +314,8 @@ else {
 	if (isset($factarray[$type])) print "<b>".$factarray[$type]."</b>";
 }
 //------------------------------------------------------------------------------
-if ($action=="delete") {
+switch ($action) {
+case 'delete':
 	global $MEDIA_ID_PREFIX;
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if (!empty($linenum)) {
@@ -357,10 +358,10 @@ if ($action=="delete") {
 			if ($success) print "<br /><br />".$pgv_lang["gedrec_deleted"];
 		}
 	}
-}
+	break;
 //------------------------------------------------------------------------------
 //-- print a form to edit the raw gedcom record in a large textarea
-else if ($action=="editraw") {
+case 'editraw':
 	if (!$factedit) {
 		print "<br />".$pgv_lang["privacy_prevented_editing"];
 		if (!empty($pid)) print "<br />".$pgv_lang["privacy_not_granted"]." pid $pid.";
@@ -396,10 +397,10 @@ else if ($action=="editraw") {
 		print "window.resizeTo(x,y);\n}\n";
 		print "\n//-->\n</script>\n";
 	}
-}
+	break;
 //------------------------------------------------------------------------------
 //-- edit a fact record in a form
-else if ($action=="edit") {
+case 'edit':
 	init_calendar_popup();
 	print "<form method=\"post\" action=\"edit_interface.php\" enctype=\"multipart/form-data\">\n";
 	print "<input type=\"hidden\" name=\"action\" value=\"update\" />\n";
@@ -431,9 +432,9 @@ else if ($action=="edit") {
 
 	print "<br /><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
 	print "</form>\n";
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="add") {
+case 'add':
 	//
 	// Start of add section...
 	//
@@ -471,22 +472,21 @@ else if ($action=="add") {
 
 	print "<br /><input type=\"submit\" value=\"".$pgv_lang["add"]."\" /><br />\n";
 	print "</form>\n";
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="addchild") {
-//	print_indi_form("addchildaction", $famid);
+case 'addchild':
 	print_indi_form("addchildaction", $famid, "", "", "CHIL", @$_REQUEST["sex"]);
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="addspouse") {
+case 'addspouse':
 	print_indi_form("addspouseaction", $famid, "", "", $famtag);
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="addnewparent") {
+case 'addnewparent':
 	print_indi_form("addnewparentaction", $famid, "", "", $famtag);
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="addfamlink") {
+case 'addfamlink':
 	print "<form method=\"post\" name=\"addchildform\" action=\"edit_interface.php\">\n";
 	print "<input type=\"hidden\" name=\"action\" value=\"linkfamaction\" />\n";
 	print "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
@@ -509,9 +509,9 @@ else if ($action=="addfamlink") {
 	print "</table>\n";
 	print "<input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /><br />\n";
 	print "</form>\n";
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="linkspouse") {
+case 'linkspouse':
 	init_calendar_popup();
 	print "<form method=\"post\" name=\"addchildform\" action=\"edit_interface.php\">\n";
 	print "<input type=\"hidden\" name=\"action\" value=\"linkspouseaction\" />\n";
@@ -532,9 +532,9 @@ else if ($action=="linkspouse") {
 	print "</table>\n";
 	print "<input type=\"submit\" value=\"".$pgv_lang["set_link"]."\" /><br />\n";
 	print "</form>\n";
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="linkfamaction") {
+case 'linkfamaction':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if (!isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_gedcom_record($famid);
 	else $famrec = find_updated_record($famid);
@@ -596,10 +596,10 @@ else if ($action=="linkfamaction") {
 		}
 	}
 	else print "Family record not found";
-}
+	break;
 //------------------------------------------------------------------------------
 //-- add new source
-else if ($action=="addnewsource") {
+case 'addnewsource':
 	?>
 	<script type="text/javascript">
 	<!--
@@ -676,10 +676,10 @@ else if ($action=="addnewsource") {
 		<input type="submit" value="<?php print $pgv_lang["create_source"]; ?>" />
 	</form>
 	<?php
-}
+	break;
 //------------------------------------------------------------------------------
 //-- create a source record from the incoming variables
-else if ($action=="addsourceaction") {
+case 'addsourceaction':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	$newgedrec = "0 @XREF@ SOUR\r\n";
 	if (!empty($EVEN) && count($EVEN)>0) {
@@ -724,10 +724,10 @@ else if ($action=="addsourceaction") {
 		print "<br /><br />\n".$pgv_lang["new_source_created"]."<br /><br />";
 		print "<a href=\"javascript:// SOUR $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
 	}
-}
+	break;
 //------------------------------------------------------------------------------
 //-- add new repository
-else if ($action=="addnewrepository") {
+case 'addnewrepository':
 	?>
 	<script type="text/javascript">
 	<!--
@@ -775,10 +775,10 @@ else if ($action=="addnewrepository") {
 		<input type="submit" value="<?php print $pgv_lang["create_repository"]; ?>" />
 	</form>
 	<?php
-}
+	break;
 //------------------------------------------------------------------------------
 //-- create a repository record from the incoming variables
-else if ($action=="addrepoaction") {
+case 'addrepoaction':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	$newgedrec = "0 @XREF@ REPO\r\n";
 	if (!empty($NAME)) {
@@ -814,19 +814,19 @@ else if ($action=="addrepoaction") {
 		print "<br /><br />\n".$pgv_lang["new_repo_created"]."<br /><br />";
 		print "<a href=\"javascript:// REPO $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_rid_into_field"]." <b>$xref</b></a>\n";
 	}
-}
+	break;
 //------------------------------------------------------------------------------
 //-- get the new incoming raw gedcom record and store it in the file
-else if ($action=="updateraw") {
+case 'updateraw':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
 	$newgedrec = trim($newgedrec);
 	$success = (!empty($newgedrec)&&(replace_gedrec($pid, $newgedrec, $update_CHAN)));
 	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
-}
+	break;
 //------------------------------------------------------------------------------
 //-- reconstruct the gedcom from the incoming fields and store it in the file
-else if ($action=="update") {
+case 'update':
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	// add or remove Y
@@ -873,7 +873,8 @@ else if ($action=="update") {
 		while(($i<count($gedlines))&&($gedlines[$i]{0}>$glevel)) $i++;
 	}
 	if (!isset($glevels)) $glevels = array();
-	if (!empty($NAME)) $newged .= "1 NAME ".trim($NAME)."\r\n";
+	if (!empty($NAME)) $newged .= "1 NAME $NAME\r\n";
+	if (!empty($TYPE)) $newged .= "2 TYPE $TYPE\r\n";
 	if (!empty($NPFX)) $newged .= "2 NPFX $NPFX\r\n";
 	if (!empty($GIVN)) $newged .= "2 GIVN $GIVN\r\n";
 	if (!empty($NICK)) $newged .= "2 NICK $NICK\r\n";
@@ -884,10 +885,11 @@ else if ($action=="update") {
 	//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
 	$newged = handle_updates($newged);
 	
-	if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\r\n";
-	if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\r\n";
 	if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\r\n";
+	if (!empty($FONE)) $newged .= "2 FONE $FONE\r\n";
 	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\r\n";
+	if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\r\n";
+	if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\r\n";
 
 	while($i<count($gedlines)) {
 		$newged .= trim($gedlines[$i])."\r\n";
@@ -896,21 +898,23 @@ else if ($action=="update") {
 	if ($GLOBALS["DEBUG"]) print "<pre>$newged</pre>";
 	$success = (replace_gedrec($pid, $newged, $update_CHAN));
 	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="addchildaction") {
+case 'addchildaction':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
-	$gedrec = "0 @REF@ INDI\r\n1 NAME ".trim($NAME)."\r\n";
+	$gedrec = "0 @REF@ INDI\r\n1 NAME $NAME\r\n";
+	if (!empty($TYPE)) $gedrec .= "2 TYPE $TYPE\r\n";
 	if (!empty($NPFX)) $gedrec .= "2 NPFX $NPFX\r\n";
 	if (!empty($GIVN)) $gedrec .= "2 GIVN $GIVN\r\n";
 	if (!empty($NICK)) $gedrec .= "2 NICK $NICK\r\n";
 	if (!empty($SPFX)) $gedrec .= "2 SPFX $SPFX\r\n";
 	if (!empty($SURN)) $gedrec .= "2 SURN $SURN\r\n";
 	if (!empty($NSFX)) $gedrec .= "2 NSFX $NSFX\r\n";
-	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
-	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
 	if (!empty($ROMN)) $gedrec .= "2 ROMN $ROMN\r\n";
+	if (!empty($FONE)) $gedrec .= "2 FONE $FONE\r\n";
 	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\r\n";
+	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
+	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
 	if ((!empty($BIRT_DATE))||(!empty($BIRT_PLAC))) {
 		$gedrec .= "1 BIRT\r\n";
@@ -920,6 +924,9 @@ else if ($action=="addchildaction") {
 		}
 		if (!empty($BIRT_PLAC)) {
 			$gedrec .= "2 PLAC $BIRT_PLAC\r\n";
+			if (!empty($BIRT_ROMN)) $gedrec .= "3 ROMN $BIRT_ROMN\r\n";
+			if (!empty($BIRT_FONE)) $gedrec .= "3 FONE $BIRT_FONE\r\n";
+			if (!empty($BIRT__HEB)) $gedrec .= "3 _HEB $BIRT__HEB\r\n";
 			if ((!empty($BIRT_LATI))||(!empty($BIRT_LONG))) {
 				$gedrec .= "3 MAP\r\n";
 				$gedrec .= "4 LATI $BIRT_LATI\r\n";
@@ -940,6 +947,9 @@ else if ($action=="addchildaction") {
 		}
 		if (!empty($DEAT_PLAC)) {
 			$gedrec .= "2 PLAC $DEAT_PLAC\r\n";
+			if (!empty($DEAT_ROMN)) $gedrec .= "3 ROMN $DEAT_ROMN\r\n";
+			if (!empty($DEAT_FONE)) $gedrec .= "3 FONE $DEAT_FONE\r\n";
+			if (!empty($DEAT__HEB)) $gedrec .= "3 _HEB $DEAT__HEB\r\n";
 			if ((!empty($DEAT_LATI))||(!empty($DEAT_LONG))) {
 				$gedrec .= "3 MAP\r\n";
 				$gedrec .= "4 LATI $DEAT_LATI\r\n";
@@ -977,21 +987,23 @@ else if ($action=="addchildaction") {
 		}
 		$success = true;
 	}
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="addspouseaction") {
+case 'addspouseaction':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
-	$gedrec = "0 @REF@ INDI\r\n1 NAME ".trim($NAME)."\r\n";
+	$gedrec = "0 @REF@ INDI\r\n1 NAME $NAME\r\n";
+	if (!empty($TYPE)) $gedrec .= "2 TYPE $TYPE\r\n";
 	if (!empty($NPFX)) $gedrec .= "2 NPFX $NPFX\r\n";
 	if (!empty($GIVN)) $gedrec .= "2 GIVN $GIVN\r\n";
 	if (!empty($NICK)) $gedrec .= "2 NICK $NICK\r\n";
 	if (!empty($SPFX)) $gedrec .= "2 SPFX $SPFX\r\n";
 	if (!empty($SURN)) $gedrec .= "2 SURN $SURN\r\n";
 	if (!empty($NSFX)) $gedrec .= "2 NSFX $NSFX\r\n";
-	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
-	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
 	if (!empty($ROMN)) $gedrec .= "2 ROMN $ROMN\r\n";
+	if (!empty($FONE)) $gedrec .= "2 FONE $FONE\r\n";
 	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\r\n";
+	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
+	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
 	if ((!empty($BIRT_DATE))||(!empty($BIRT_PLAC))) {
 		$gedrec .= "1 BIRT\r\n";
@@ -1001,6 +1013,9 @@ else if ($action=="addspouseaction") {
 		}
 		if (!empty($BIRT_PLAC)) {
 			$gedrec .= "2 PLAC $BIRT_PLAC\r\n";
+			if (!empty($BIRT_ROMN)) $gedrec .= "3 ROMN $BIRT_ROMN\r\n";
+			if (!empty($BIRT_FONE)) $gedrec .= "3 FONE $BIRT_FONE\r\n";
+			if (!empty($BIRT__HEB)) $gedrec .= "3 _HEB $BIRT__HEB\r\n";
 			if ((!empty($BIRT_LATI))||(!empty($BIRT_LONG))) {
 				$gedrec .= "3 MAP\r\n";
 				$gedrec .= "4 LATI $BIRT_LATI\r\n";
@@ -1021,6 +1036,9 @@ else if ($action=="addspouseaction") {
 		}
 		if (!empty($DEAT_PLAC)) {
 			$gedrec .= "2 PLAC $DEAT_PLAC\r\n";
+			if (!empty($DEAT_ROMN)) $gedrec .= "3 ROMN $DEAT_ROMN\r\n";
+			if (!empty($DEAT_FONE)) $gedrec .= "3 FONE $DEAT_FONE\r\n";
+			if (!empty($DEAT__HEB)) $gedrec .= "3 _HEB $DEAT__HEB\r\n";
 			if ((!empty($DEAT_LATI))||(!empty($DEAT_LONG))) {
 				$gedrec .= "3 MAP\r\n";
 				$gedrec .= "4 LATI $DEAT_LATI\r\n";
@@ -1060,6 +1078,9 @@ else if ($action=="addspouseaction") {
 			}
 			if (!empty($MARR_PLAC)) {
 				$famrec .= "2 PLAC $MARR_PLAC\r\n";
+				if (!empty($MARR_ROMN)) $famrec .= "3 ROMN $MARR_ROMN\r\n";
+				if (!empty($MARR_FONE)) $famrec .= "3 FONE $MARR_FONE\r\n";
+				if (!empty($MARR__HEB)) $famrec .= "3 _HEB $MARR__HEB\r\n";
 				if ((!empty($MARR_LATI))||(!empty($MARR_LONG))) {
 					$famrec .= "3 MAP\r\n";
 					$famrec .= "4 LATI $MARR_LATI\r\n";
@@ -1090,6 +1111,9 @@ else if ($action=="addspouseaction") {
 				}
 				if (!empty($MARR_PLAC)) {
 					$famrec .= "2 PLAC $MARR_PLAC\r\n";
+					if (!empty($MARR_ROMN)) $famrec .= "3 ROMN $MARR_ROMN\r\n";
+					if (!empty($MARR_FONE)) $famrec .= "3 FONE $MARR_FONE\r\n";
+					if (!empty($MARR__HEB)) $famrec .= "3 _HEB $MARR__HEB\r\n";
 					if ((!empty($MARR_LATI))||(!empty($MARR_LONG))) {
 						$famrec .= "3 MAP\r\n";
 						$famrec .= "4 LATI $MARR_LATI\r\n";
@@ -1128,9 +1152,9 @@ else if ($action=="addspouseaction") {
 			replace_gedrec($pid, $indirec);
 		}
 	}
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="linkspouseaction") {
+case 'linkspouseaction':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if (!empty($spid)) {
 		if (isset($pgv_changes[$spid.'_'.$GEDCOM])) $gedrec = find_updated_record($spid);
@@ -1158,6 +1182,9 @@ else if ($action=="linkspouseaction") {
 					}
 					if (!empty($MARR_PLAC)) {
 						$famrec .= "2 PLAC $MARR_PLAC\r\n";
+						if (!empty($MARR_ROMN)) $famrec .= "3 ROMN $MARR_ROMN\r\n";
+						if (!empty($MARR_FONE)) $famrec .= "3 FONE $MARR_FONE\r\n";
+						if (!empty($MARR__HEB)) $famrec .= "3 _HEB $MARR__HEB\r\n";
 						if ((!empty($MARR_LATI))||(!empty($MARR_LONG))) {
 							$famrec .= "3 MAP\r\n";
 							$famrec .= "4 LATI $MARR_LATI\r\n";
@@ -1191,21 +1218,23 @@ else if ($action=="linkspouseaction") {
 			}
 		}
 	}
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="addnewparentaction") {
+case 'addnewparentaction':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
-	$gedrec = "0 @REF@ INDI\r\n1 NAME ".trim($NAME)."\r\n";
+	$gedrec = "0 @REF@ INDI\r\n1 NAME $NAME\r\n";
+	if (!empty($TYPE)) $gedrec .= "2 TYPE $TYPE\r\n";
 	if (!empty($NPFX)) $gedrec .= "2 NPFX $NPFX\r\n";
 	if (!empty($GIVN)) $gedrec .= "2 GIVN $GIVN\r\n";
 	if (!empty($NICK)) $gedrec .= "2 NICK $NICK\r\n";
 	if (!empty($SPFX)) $gedrec .= "2 SPFX $SPFX\r\n";
 	if (!empty($SURN)) $gedrec .= "2 SURN $SURN\r\n";
 	if (!empty($NSFX)) $gedrec .= "2 NSFX $NSFX\r\n";
-	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
-	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
 	if (!empty($ROMN)) $gedrec .= "2 ROMN $ROMN\r\n";
+	if (!empty($FONE)) $gedrec .= "2 FONE $FONE\r\n";
 	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\r\n";
+	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
+	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
 	if ((!empty($BIRT_DATE))||(!empty($BIRT_PLAC))) {
 		$gedrec .= "1 BIRT\r\n";
@@ -1215,6 +1244,9 @@ else if ($action=="addnewparentaction") {
 		}
 		if (!empty($BIRT_PLAC)) {
 			$gedrec .= "2 PLAC $BIRT_PLAC\r\n";
+			if (!empty($BIRT_ROMN)) $gedrec .= "3 ROMN $BIRT_ROMN\r\n";
+			if (!empty($BIRT_FONE)) $gedrec .= "3 FONE $BIRT_FONE\r\n";
+			if (!empty($BIRT__HEB)) $gedrec .= "3 _HEB $BIRT__HEB\r\n";
 			if ((!empty($BIRT_LATI))||(!empty($BIRT_LONG))) {
 				$gedrec .= "3 MAP\r\n";
 				$gedrec .= "4 LATI $BIRT_LATI\r\n";
@@ -1235,6 +1267,9 @@ else if ($action=="addnewparentaction") {
 		}
 		if (!empty($DEAT_PLAC)) {
 			$gedrec .= "2 PLAC $DEAT_PLAC\r\n";
+			if (!empty($DEAT_ROMN)) $gedrec .= "3 ROMN $DEAT_ROMN\r\n";
+			if (!empty($DEAT_FONE)) $gedrec .= "3 FONE $DEAT_FONE\r\n";
+			if (!empty($DEAT__HEB)) $gedrec .= "3 _HEB $DEAT__HEB\r\n";
 			if ((!empty($DEAT_LATI))||(!empty($DEAT_LONG))) {
 				$gedrec .= "3 MAP\r\n";
 				$gedrec .= "4 LATI $DEAT_LATI\r\n";
@@ -1272,6 +1307,9 @@ else if ($action=="addnewparentaction") {
 			}
 			if (!empty($MARR_PLAC)) {
 				$famrec .= "2 PLAC $MARR_PLAC\r\n";
+				if (!empty($MARR_ROMN)) $famrec .= "3 ROMN $MARR_ROMN\r\n";
+				if (!empty($MARR_FONE)) $famrec .= "3 FONE $MARR_FONE\r\n";
+				if (!empty($MARR__HEB)) $famrec .= "3 _HEB $MARR__HEB\r\n";
 				if ((!empty($MARR_LATI))||(!empty($MARR_LONG))) {
 					$famrec .= "3 MAP\r\n";
 					$famrec .= "4 LATI $MARR_LATI\r\n";
@@ -1303,6 +1341,9 @@ else if ($action=="addnewparentaction") {
 				}
 				if (!empty($MARR_PLAC)) {
 					$famrec .= "2 PLAC $MARR_PLAC\r\n";
+					if (!empty($MARR_ROMN)) $famrec .= "3 ROMN $MARR_ROMN\r\n";
+					if (!empty($MARR_FONE)) $famrec .= "3 FONE $MARR_FONE\r\n";
+					if (!empty($MARR__HEB)) $famrec .= "3 _HEB $MARR__HEB\r\n";
 					if ((!empty($MARR_LATI))||(!empty($MARR_LONG))) {
 						$famrec .= "3 MAP\r\n";
 						$famrec .= "4 LATI $MARR_LATI\r\n";
@@ -1346,9 +1387,9 @@ else if ($action=="addnewparentaction") {
 			}
 		}
 	}
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="deleteperson") {
+case 'deleteperson':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	if (!$factedit) {
@@ -1359,9 +1400,9 @@ else if ($action=="deleteperson") {
 	else {
 		if (delete_person($pid, $gedrec)) print "<br /><br />".$pgv_lang["gedrec_deleted"];
 	}
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="deletefamily") {
+case 'deletefamily':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	if (!$factedit) {
@@ -1373,9 +1414,9 @@ else if ($action=="deletefamily") {
 	{
 		if (delete_family($pid, $gedrec)) print "<br /><br />".$pgv_lang["gedrec_deleted"];
 	}
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="deletesource") {
+case 'deletesource':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	if (!empty($gedrec)) {
@@ -1442,9 +1483,9 @@ else if ($action=="deletesource") {
 		}
 		if ($success) print "<br /><br />".$pgv_lang["gedrec_deleted"];
 	}
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="deleterepo") {
+case 'deleterepo':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	if (!empty($gedrec)) {
@@ -1484,9 +1525,9 @@ else if ($action=="deleterepo") {
 		}
 		if ($success) print "<br /><br />".$pgv_lang["gedrec_deleted"];
 	}
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="editname") {
+case 'editname':
 	$gedlines = preg_split("/\n/", trim($gedrec));
 	$fields = preg_split("/\s/", $gedlines[$linenum]);
 	$glevel = $fields[0];
@@ -1497,13 +1538,13 @@ else if ($action=="editname") {
 		$i++;
 	}
 	print_indi_form("update", "", $linenum, $namerec);
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="addname") {
+case 'addname':
 	print_indi_form("update", "", "new", "NEW");
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="copy") {
+case 'copy:':
 	//-- handle media differently now :P
 	if ($linenum=='media') {
 		$factrec = "1 OBJE @".$pid."@";
@@ -1534,17 +1575,17 @@ else if ($action=="copy") {
 		print "<b>".$pgv_lang["record_copied"]."</b>\n";
 		$success = true;
 	}
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="paste") {
+case 'paste':
 	$gedrec .= "\r\n".$_SESSION["clipboard"][$fact]["factrec"];
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	$success = replace_gedrec($pid, $gedrec);
 	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="reorder_children") {
+case 'reorder_children':
 	require_once("js/prototype.js.htm");
 	require_once("js/scriptaculous.js.htm");
 	print "<br /><b>".$pgv_lang["reorder_children"]."</b>";
@@ -1597,9 +1638,9 @@ else if ($action=="reorder_children") {
 		<button type="submit" onclick="window.close();"><?php print $pgv_lang["cancel"];?></button>
 	</form>
 	<?php
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="changefamily") {
+case 'changefamily':
 	require_once 'includes/family_class.php';
 	$family = new Family($gedrec);
 	$father = $family->getHusband();
@@ -1728,9 +1769,9 @@ else if ($action=="changefamily") {
 		<input type="submit" value="<?php print $pgv_lang["save"]; ?>" /><input type="button" value="<?php print $pgv_lang["cancel"]; ?>" onclick="window.close();" />
 	</form>
 	<?php
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="changefamily_update") {
+case 'changefamily_update':
 	require_once 'includes/family_class.php';
 	$family = new Family($gedrec);
 	$father = $family->getHusband();
@@ -1867,9 +1908,9 @@ else if ($action=="changefamily_update") {
 		$success = replace_gedrec($famid, $gedrec);
 		if ($success) print "<br /><br />".$pgv_lang["update_successful"];
 	}
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="reorder_update") {
+case 'reorder_update':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	asort($order);
 	reset($order);
@@ -1885,9 +1926,9 @@ else if ($action=="reorder_update") {
 	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
 	$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="reorder_fams") {
+case 'reorder_fams':
 	require_once("js/prototype.js.htm");
 	require_once("js/scriptaculous.js.htm");
 	print "<br /><b>".$pgv_lang["reorder_families"]."</b>";
@@ -1940,9 +1981,9 @@ else if ($action=="reorder_fams") {
 		<button type="submit" onclick="window.close();"><?php print $pgv_lang["cancel"];?></button>
 	</form>
 	<?php
-}
+	break;
 //------------------------------------------------------------------------------
-else if ($action=="reorder_fams_update") {
+case 'reorder_fams_update':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	asort($order);
 	reset($order);
@@ -1957,16 +1998,17 @@ else if ($action=="reorder_fams_update") {
 	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
 	$success = (replace_gedrec($pid, $newgedrec));
 	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
-}
+	break;
 //------------------------------------------------------------------------------
 //-- the following section provides a hook for modules
 //-- for reuse of editing functions from forms
-else if ($action=="mod_edit_fact") {
+case 'mod_edit_fact':
 	include_once('modules/'.$mod.'/'.$mod.'.php');
-   $module = new $mod();
-   if (method_exists($module, "edit_fact")) {
-   		$module->edit_fact();
-   }
+	$module = new $mod();
+	if (method_exists($module, "edit_fact")) {
+		$module->edit_fact();
+	}
+	break;
 }
 //------------------------------------------------------------------------------
 // autoclose window when update successful

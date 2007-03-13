@@ -42,6 +42,7 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["ADVANCED_PLAC_FACTS"]					13 Mar 2007				A
 +$pgv_lang["SURNAME_TRADITION"]						09 Mar 2007				A
 +$pgv_lang["ADVANCED_NAME_FACTS"]					09 Mar 2007				A
 +$pgv_lang["spanish"]								09 Mar 2007				A

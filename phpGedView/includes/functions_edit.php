@@ -401,7 +401,7 @@ function undo_change($cid, $index) {
 function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag="CHIL", $sextag="") {
 	global $pgv_lang, $factarray, $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $monthtonum, $WORD_WRAPPED_NOTES;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $USE_RTL_FUNCTIONS, $GEDCOM;
-	global $bdm, $TEXT_DIRECTION, $ADVANCED_NAME_FACTS, $SURNAME_TRADITION;
+	global $bdm, $TEXT_DIRECTION, $ADVANCED_NAME_FACTS, $ADVANCED_PLAC_FACTS, $SURNAME_TRADITION;
 
 	$bdm = ""; // used to copy '1 SOUR' to '2 SOUR' for BIRT DEAT MARR
 	init_calendar_popup();
@@ -564,13 +564,12 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 					add_simple_tag("2 $tag $value");
 				}
 			}
-		// Allow a new row to be entered if there was no row provided or it is a custom tag
-		if (count($match[1])==0 || substr($tag, 0, 1)=='_')
-			if ($tag=='_MARNM') {
-				add_simple_tag("0 _MARNM");
-				add_simple_tag("0 _MARNM_SURN $new_marnm");
-			} else
-				add_simple_tag("0 $tag");
+		// Allow a new row to be entered
+		if ($tag=='_MARNM') {
+			add_simple_tag("0 _MARNM");
+			add_simple_tag("0 _MARNM_SURN $new_marnm");
+		} else
+			add_simple_tag("0 $tag");
 	}
 
 	// Handle any other NAME subfields that aren't included above (SOUR, NOTE, _CUSTOM, etc)
@@ -621,6 +620,9 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		add_simple_tag("0 BIRT");
 		add_simple_tag("0 DATE", "BIRT");
 		add_simple_tag("0 PLAC", "BIRT");
+		if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
+			foreach ($match[1] as $tag)
+				add_simple_tag("0 $tag", 'BIRT');
 		add_simple_tag("0 MAP", "BIRT");
 		add_simple_tag("0 LATI", "BIRT");
 		add_simple_tag("0 LONG", "BIRT");
@@ -630,6 +632,9 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			add_simple_tag("0 MARR");
 			add_simple_tag("0 DATE", "MARR");
 			add_simple_tag("0 PLAC", "MARR");
+			if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
+				foreach ($match[1] as $tag)
+					add_simple_tag("0 $tag", 'MARR');
 			add_simple_tag("0 MAP", "MARR");
 			add_simple_tag("0 LATI", "MARR");
 			add_simple_tag("0 LONG", "MARR");
@@ -637,6 +642,9 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		add_simple_tag("0 DEAT");
 		add_simple_tag("0 DATE", "DEAT");
 		add_simple_tag("0 PLAC", "DEAT");
+		if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
+			foreach ($match[1] as $tag)
+				add_simple_tag("3 $tag", 'DEAT');
 		add_simple_tag("0 MAP", "DEAT");
 		add_simple_tag("0 LATI", "DEAT");
 		add_simple_tag("0 LONG", "DEAT");
@@ -1632,7 +1640,7 @@ function create_add_form($fact) {
  */
 function create_edit_form($gedrec, $linenum, $level0type) {
 	global $WORD_WRAPPED_NOTES, $pgv_lang;
-	global $tags;
+	global $tags, $ADVANCED_PLAC_FACTS;
 
 	$gedlines = split("\n", $gedrec);	// -- find the number of lines in the record
 	$fields = preg_split("/\s/", $gedlines[$linenum]);
@@ -1649,6 +1657,20 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	$i = $linenum;
 	$inSource = false;
 	$levelSource = 0;
+	// List of tags we would expect at the next level
+	// NB add_missing_subtags() already takes care of the simple cases
+	// where a level 1 tag is missing a level 2 tag.  Here we only need to
+	// handle the more complicated cases.
+	$expected_subtags=array(
+		// Can't use this logic for SOUR, as it gets the order of subfields wrong.
+		//'SOUR'=>array('PAGE', 'QUAY'),
+		//'PAGE'=>array('TEXT', 'DATE'),
+		'PLAC'=>array('MAP'),
+		'MAP' =>array('LATI', 'LONG')
+	);
+	if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
+		$expected_subtags['PLAC']=array_merge($match[1], $expected_subtags['PLAC']);
+
 	// Loop on existing tags :
 	while (true) {
 		$text = "";
@@ -1680,6 +1702,22 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 			$haveSourceDate = false;
 			$haveSourceQuay = false;
 		}
+
+		// Get a list of tags present at the next level
+		$subtags=array();
+		for ($ii=$i+1; isset($gedlines[$ii]) && preg_match('/^\s*(\d+)\s+(\S+)/', $gedlines[$ii], $mm) && $mm[1]>$level; ++$ii)
+			if ($mm[1]==$level+1)
+				$subtags[]=$mm[2];
+
+		// Insert missing tags
+		if (!empty($expected_subtags[$type]))
+			foreach ($expected_subtags[$type] as $subtag)
+				if (!in_array($subtag, $subtags)) {
+					add_simple_tag(($level+1).' '.$subtag);
+					if (!empty($expected_subtags[$subtag]))
+						foreach ($expected_subtags[$subtag] as $subsubtag)
+							add_simple_tag(($level+2).' '.$subsubtag);
+				}
 
 		$i++;
 		if (isset($gedlines[$i])) {
@@ -1737,7 +1775,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
  */
 function insert_missing_subtags($level1tag)
 {
-	global $tags, $date_and_time, $level2_tags;
+	global $tags, $date_and_time, $level2_tags, $ADVANCED_PLAC_FACTS;
 
 	// handle  MARRiage TYPE
 	$type_val = "";
@@ -1752,6 +1790,9 @@ function insert_missing_subtags($level1tag)
 			else add_simple_tag("2 ".$key);
 			switch ($key) { // Add level 3/4 tags as appropriate
 				case "PLAC":
+					if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
+						foreach ($match[1] as $tag)
+							add_simple_tag("3 $tag");
 					add_simple_tag("3 MAP");
 					add_simple_tag("4 LATI");
 					add_simple_tag("4 LONG");
@@ -1781,6 +1822,12 @@ function insert_missing_subtags($level1tag)
 	if (substr($level1tag, 0, 1)=='_' && $level1tag!='_UID' && count($tags)==1) {
 		add_simple_tag("2 DATE");
 		add_simple_tag("2 PLAC");
+		if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
+			foreach ($match[1] as $tag)
+				add_simple_tag("3 $tag");
+		add_simple_tag("3 MAP");
+		add_simple_tag("4 LATI");
+		add_simple_tag("4 LONG");
 		add_simple_tag("2 ADDR");
 		add_simple_tag("2 AGNC");
 		add_simple_tag("2 TYPE");

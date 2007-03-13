@@ -340,6 +340,7 @@ $pgv_lang["noref"]        = "Nothing references this record";
 $pgv_lang["tag"]          = "tag";
 $pgv_lang["spacing"]      = "spacing";
 $pgv_lang["ADVANCED_NAME_FACTS"] = "Advanced name facts";
+$pgv_lang["ADVANCED_PLAC_FACTS"] = "Advanced place-name facts";
 $pgv_lang["SURNAME_TRADITION"] = "Surname tradition"; // Default surname inheritance
 $pgv_lang["spanish"]           = "Spanish";
 $pgv_lang["portuguese"]        = "Portuguese";
