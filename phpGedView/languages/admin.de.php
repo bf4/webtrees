@@ -308,6 +308,7 @@ $pgv_lang["noref"]						= "Dieser Datensatz ist nirgends verbunden -- er ist eig
 $pgv_lang["tag"]						= "GEDCOM-Tag";
 $pgv_lang["spacing"]					= "Abstand";
 $pgv_lang["ADVANCED_NAME_FACTS"] = "Besondere Namens-Fakten";
+$pgv_lang["ADVANCED_PLAC_FACTS"] = "Besondere Ortsnamen-Fakten";
 $pgv_lang["SURNAME_TRADITION"] = "Nachnamens-Tradition";
 $pgv_lang["spanish"]           = "spanisch";
 $pgv_lang["portuguese"]        = "portugiesisch";
