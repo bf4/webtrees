@@ -114,12 +114,12 @@ class FactInference{
 		{
 			if($this->globalFactPercentage != 0)
 			{
-				return $this->globalFactPercentage /2;
+				return $this->globalFactPercentage;
 			}
 			else {
 				if($this->localFactPercentage != 0)
 				{
-					return $this->localFactPercentage / 2;
+					return $this->localFactPercentage;
 				}
 				else
 				{

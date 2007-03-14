@@ -291,7 +291,7 @@ require_once("includes/person_class.php");
 				if($localValue['count'] != 0 && $localValue['value'] != 0)
 				{
 					//calculate the probability
-					$localProb = ($localValue['count'] + $localValue['value']) /2;
+					$localProb = $localValue['value'] /$localValue['count'];
 				}
 				else
 				{

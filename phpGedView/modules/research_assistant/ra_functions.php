@@ -1595,6 +1595,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 																		
 																		$compiled = array();
 																		$highest = $inferenceObj->getAverage();
+																		print($highest."<br/>");
 																		$compiled[0] = $this->decideInferSentence($inferenceObj->getAverage(),$inferenceObj->getFactTag());
 																		$compiled[0] .= " <i>".$inferenceObj->getFactValue()."</i>";
 																		$compiled[0] .= "<br />";
@@ -1711,6 +1712,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 												$out .= "<tr><td width=\"20\" class=\"optionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtask&amp;taskid=$taskid\">View</a></td><td class=\"optionbox\">".$tasktitle."</td></tr>\n";
 										}
 										$factLookups = $this->getPlacesFromPerson($person);
+										$person->add_family_facts(false);
 										$tempDates = $person->getIndiFacts();
 										
 										foreach($sourcesInferred as $sKey=>$sVal)
@@ -1800,9 +1802,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 														$temp = $closest;
 														$closest = $this->determineClosest($closest,preg_replace("/-/","",$parsedDates[0]["sort"]),$gVal["startdate"]);
 														
-														if($closest != $temp  && empty($place))
+														if($closest != $temp && !empty($tempPlace))
 														{
-															
 															$place = $tempPlace;
 															$lastPlace = $place;	
 														}
@@ -1968,70 +1969,44 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		global $pgv_lang;
 		if($fact == "BIRT:PLAC")
 		{
-			if($percentage <= 1)
-			{
+			
 			$percentage = sprintf("%.2f%%",$percentage * 100);
-			}
-			else
-			{
-			$percentage = sprintf("%.2f%%",$percentage);
-			}
+			
 			$tempOut = $pgv_lang["InferIndvBirthPlac"];
 			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
 			return $tempOut;
 		}
 		if($fact == "DEAT:PLAC")
 		{	
-			if($percentage <= 1)
-			{
+			
 			$percentage = sprintf("%.2f%%",$percentage * 100);
-			}
-			else
-			{
-				$percentage = sprintf("%.2f%%",$percentage);
-			}
+			
 			$tempOut = $pgv_lang["InferIndvDeathPlac"];
 			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
 			return $tempOut;
 		}
 		if($fact == "SURN")
 		{	
-			if($percentage <= 1)
-			{
 			$percentage = sprintf("%.2f%%",$percentage * 100);
-			}
-			else
-			{
-				$percentage = sprintf("%.2f%%",$percentage);
-			}
+			
 			$tempOut = $pgv_lang["InferIndvSurn"];
 			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
 			return $tempOut;
 		}
 		if($fact == "MARR:PLAC")
 		{	
-			if($percentage <= 1)
-			{
+			
 			$percentage = sprintf("%.2f%%",$percentage * 100);
-			}
-			else			
-			{
-			$percentage = sprintf("%.2f%%",$percentage);
-			}
+			
 			$tempOut = $pgv_lang["InferIndvMarriagePlace"];
 			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
 			return $tempOut;
 		}
 		if($fact == "GIVN")
 		{	
-			if($percentage <= 1)
-			{
+			
 			$percentage = sprintf("%.2f%%",$percentage * 100);
-			}
-			else
-			{
-				$percentage = sprintf("%.2f%%",$percentage);
-			}
+			
 			$tempOut = $pgv_lang["InferIndvGivn"];
 			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
 			return $tempOut;

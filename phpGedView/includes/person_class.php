@@ -781,6 +781,7 @@ class Person extends GedcomRecord {
 	}
 	/**
 	 * add facts from the family record
+	 * @param boolean $otherfacts	whether or not to add other related facts such as parents facts, associated people facts, and historical facts
 	 */
 	function add_family_facts($otherfacts = true) {
 		global $GEDCOM, $nonfacts, $nonfamfacts;
