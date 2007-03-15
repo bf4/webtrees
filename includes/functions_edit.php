@@ -46,7 +46,7 @@ $NSFX_accept = array("Jr", "Sr", "I", "II", "III", "IV", "MD", "PhD");
 $FILE_FORM_accept = array("avi", "bmp", "gif", "jpeg", "mp3", "ole", "pcx", "png", "tiff", "wav");
 $emptyfacts = array("_HOL", "_NMR", "_SEPR", "ADOP", "ANUL", "BAPL", "BAPM", "BARM", "BASM",
 "BIRT", "BLES", "BURI", "CENS", "CHAN", "CHR", "CHRA", "CONF", "CONL", "CREM",
-"DATA", "DEAT", "DIV", "DIVF", "EMIG", "ENDL", "ENGA", "EVEN", "FCOM", "GRAD",
+"DATA", "DEAT", "DIV", "DIVF", "EMIG", "ENDL", "ENGA", "FCOM", "GRAD",
 "HUSB", "IMMI", "MAP", "MARB", "MARC", "MARL", "MARR", "MARS", "NATU", "ORDN",
 "PROB", "RESI", "RETI", "SLGC", "SLGS", "WIFE", "WILL");
 $templefacts = array("SLGC","SLGS","BAPL","ENDL","CONL");
@@ -62,7 +62,7 @@ $level2_tags=array( // The order of the $keys is significant
 	"STAT" =>array("BAPL","CONL","ENDL","SLGC","SLGS"),
 	"_HEB" =>array("NAME","TITL"),
 	"ROMN" =>array("NAME","TITL"),
-	"TYPE" =>array("GRAD","EVEN","FACT","IDNO","MARR","ORDN"),
+	"TYPE" =>array("GRAD","EVEN","FACT","IDNO","MARR","ORDN","SSN"),
 	"AGNC" =>array("EDUC","GRAD","OCCU","RETI","ORDN"),
 	"CAUS" =>array("DEAT"),
 	"CALN" =>array("REPO"),
@@ -564,12 +564,13 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 					add_simple_tag("2 $tag $value");
 				}
 			}
-		// Allow a new row to be entered
-		if ($tag=='_MARNM') {
-			add_simple_tag("0 _MARNM");
-			add_simple_tag("0 _MARNM_SURN $new_marnm");
-		} else
-			add_simple_tag("0 $tag");
+		// Allow a new row to be entered if there was no row provided
+		if (count($match[1])==0 || $tag!='_HEB' && $tag!='NICK')
+			if ($tag=='_MARNM') {
+				add_simple_tag("0 _MARNM");
+				add_simple_tag("0 _MARNM_SURN $new_marnm");
+			} else
+				add_simple_tag("0 $tag");
 	}
 
 	// Handle any other NAME subfields that aren't included above (SOUR, NOTE, _CUSTOM, etc)
@@ -658,9 +659,9 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		print "</td></tr>\n";
 	}
 	print "</table>\n";
-	if ($nextaction!='update') { // GEDCOM 5.5.1 spec says NAME doesn't get a SOUR/NOTE/OBJE
-		print_add_layer("SOUR", 1);
-		print_add_layer("NOTE", 1);
+	print_add_layer("SOUR", 1);
+	print_add_layer("NOTE", 1);
+	if ($nextaction!='update') { // GEDCOM 5.5.1 spec says NAME doesn't get a OBJE
 		print_add_layer("OBJE", 1);
 	}
 	print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
@@ -740,26 +741,29 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	}
 
 	function checkform() {
-		frm = document.addchildform;
-		var fname=frm.NAME.value;
-		fname=fname.replace(/ /g,'');
-		fname=fname.replace(/\//g,'');
-		if (fname=="") {
+		// Make sure we have entered at least something for the name
+		if (document.addchildform.NAME.value=="") {
 			alert('<?php print $pgv_lang["must_provide"]; print " ".$factarray["NAME"]; ?>');
-			frm.NAME.focus();
+			document.addchildform.NAME.focus();
 			return false;
 		}
-		// Blank out temporary _MARNM_SURN fields
+
 		var ip=document.getElementsByTagName('input');
-		for (var i=0; i<ip.length; i++)
-				if (ip[i].id.indexOf("_MARNM_SURN")==0)
+		for (var i=0; i<ip.length; i++) {
+			// ADD slashes to _HEB and _AKA names
+			if (ip[i].id.indexOf('_AKA')==0 || ip[i].id.indexOf('_HEB')==0)
+				if (ip[i].value.indexOf('/')<0 && ip[i].value!='')
+					ip[i].value=ip[i].value.replace(/([^\s]+)\s*$/, "/$1/");
+			// Blank out temporary _MARNM_SURN and empty name fields
+			if (ip[i].id.indexOf("_MARNM_SURN")==0 || ip[i].value=='//')
 					ip[i].value='';
+		}
 		return true;
 	}
 	//-->
 	</script>
 	<?php
-	// Force the 1 NAME record to be rebuild from the 2 XXXX parts
+	// Force the 1 NAME record to be rebuilt from the 2 XXXX parts
 	// This tidies up whitespace and removes "nicknames".
 	print "<script type='text/javascript'>updatewholename();</script>";
 }
