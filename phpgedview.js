@@ -418,7 +418,7 @@ function addnewsource(field) {
 }
 
 function valid_date(datefield) {
-	months = new Array("JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC");
+	var months = new Array("JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC");
 
 	//-- don't try to validate empty dates for Safari/opera
 	if (datefield.value=="") return;
@@ -440,15 +440,26 @@ function valid_date(datefield) {
 	 	m = (q-1)*3;
 		if (0<q && q<5) datefield.value = "BET "+months[m]+" "+y+" AND "+months[(m+2)]+" "+y;
 	}
-	// e.g. 17.11.1860
-	var qsearch = /^(\d\d).(\d\d).(\d\d\d\d)$/i;
- 	var found = qsearch.exec(datefield.value);
- 	if (found) {
-	 	d = RegExp.$1;
-	 	m = RegExp.$2;
-	 	y = RegExp.$3;
-		datefield.value = d+" "+months[(m-1)]+" "+y;
+	// e.g. 17.11.1860 or 1999-12-31.  Use locale settings where DMY order is ambiguous.
+	var qsearch = /^(\d+)[^\d](\d+)[^\d](\d+)$/i;
+ 	if (qsearch.exec(datefield.value)) {
+		var f1=parseInt(RegExp.$1);
+		var f2=parseInt(RegExp.$2);
+		var f3=parseInt(RegExp.$3);
+		var dmy='DMY';
+		if (typeof(locale_date_format)!='undefined')
+			dmy=locale_date_format;
+		var yyyy=new Date().getFullYear();
+		var yy=yyyy % 100;
+		var cc=yyyy - yy;
+	 	if (dmy=='DMY' && f1<=31 && f2<=12 || f1>13 && f1<=31 && f2<=12 && f3>31)
+			datefield.value=f1+" "+months[f2-1]+" "+(f3>=100?f3:(f3<=yy?f3+cc:f3+cc-100));
+		else if (dmy=='MDY' && f1<=12 && f2<=31 || f2>13 && f2<=31 && f1<=12 && f3>31)
+			datefield.value=f2+" "+months[f1-1]+" "+(f3>=100?f3:(f3<=yy?f3+cc:f3+cc-100));
+		else if (dmy=='YMD' && f2<=12 && f3<=31 || f3>13 && f3<=31 && f2<=12 && f1>31)
+			datefield.value=f3+" "+months[f2-1]+" "+(f1>=100?f1:(f1<=yy?f1+cc:f1+cc-100));
 	}
+
 	// date modifier
 	var c1 = datefield.value.substr(0,1);
 	var y = datefield.value.substr(1);

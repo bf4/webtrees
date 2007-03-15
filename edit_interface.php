@@ -91,6 +91,8 @@ print_simple_header("Edit Interface $VERSION");
 ?>
 <script type="text/javascript">
 <!--
+	var locale_date_format='<?php print preg_replace('/[^DMY]/', '', $DATE_FORMAT); ?>';
+
 	function findIndi(field, indiname) {
 		pastefield = field;
 		findwin = window.open('find.php?type=indi', '_blank', 'left=50,top=50,width=600,height=500,resizable=1,scrollbars=1');
