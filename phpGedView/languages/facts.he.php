@@ -70,7 +70,7 @@ $factarray["CONL"]	= "ברית המורמונים";
 $factarray["COPR"] 	= "זכויות יוצרים";
 $factarray["CORP"]	= "חברה";
 $factarray["CREM"]	= "שריפת גופה";
-$factarray["CTRY"] 	= "מדינה";
+$factarray["CTRY"] 	= "ארץ"; 
 $factarray["DATA"] 	= "נתונים";
 $factarray["DATE"] 	= "תאריך";
 $factarray["DEAT"] 	= "פטירה";
@@ -175,8 +175,10 @@ $factarray["FAMS:SPOUSE:DEAT:PLAC"] = "מקום הפטירה של בן/בת הז
 $factarray["FAMC:HUSB:GIVN"] = "שם פרטי של האב";
 $factarray["FAMS:SPOUSE:BIRT:PLAC"] = "מקום הלידה של בן/בת הזוג";
 $factarray["FAMC:WIFE:GIVN"] = "שם פרטי של האם";
-$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "שם פרטי של הסב";
-$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "שם פרטי של הסבתא";
+$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "שם פרטי של הסב מצד האב";
+$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "שם פרטי של הסבתא מצד האם";
+//@@$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Paternal Grandfather's Given Name";
+//@@$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Maternal Grandmother's Given Name";
 
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "מקום לידה";
@@ -184,6 +186,7 @@ $factarray["DEAT:PLAC"] = "מקום פטירה";
 $factarray["CHR:PLAC"] = "מקום טבילה";
 $factarray["BAPM:PLAC"] = "מקום הטבלה";
 $factarray["BURI:PLAC"] = "מקום קבורה";
+$factarray["MARR:PLAC"] = "מקום נשואין"; 
 
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"] = "רפואי";
@@ -260,6 +263,7 @@ $factarray["_PRMN"] = "מספר קבוע";
 $factarray["_WEIG"] = "משקל";
 $factarray["_YART"] = "יום השנה";
 $factarray["_MARNM"]  = "שם נישואין";
+$factarray["_MARNM_SURN"] = "שם משפחה  לאחר הנישואין"; 
 $factarray["_STAT"] = "מעמד נישואין";
 $factarray["COMM"] = "הערה";
 

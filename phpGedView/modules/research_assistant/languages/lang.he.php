@@ -33,7 +33,7 @@ if (preg_match("/ra_lang\...\.php$/", $_SERVER["PHP_SELF"])>0) {
 
 $pgv_lang["add_task_inst"]		= "אם משימה לתוצאות המחקר שלך עדיין לא נוצרה, עלך ליצור קודם כל את המשימה ואח\"כ לבחור את האופציה של שמירת וסיום המשימה."; 
 $pgv_lang["complete_task_inst"]	= "בחר משימה מרשימת המשימות שלך שלמטה כדי לסים את המשימה ולהכניס את תוצאותיך:";  
-$pgv_lang["enter_results"]		= "##Enter Results";
+$pgv_lang["enter_results"]		= "מלא את התוצאות"; 
 $pgv_lang["auto_gen_inst"]		= "תוכניות אחדות מאפשרות למלא משימות מחקר כישויות TODO בקובץ ה-GEDCOM שלך. האופציה הזו סורקת את קובץ ה-GEDCOM שלך ומסבה בצורה אוטומטית ישויות TODO למשימות מחקר."; 
 $pgv_lang["choose_search_site"]	= "בחר אתר חיפוש";  
 $pgv_lang["pid_search_for"]		= "את מי אתה רוצה לחפש?"; 
@@ -46,7 +46,7 @@ $pgv_lang["determine_sources"]	= "קבע מקורות אפשריים";
 $pgv_lang["analyze_database"]		= "נתח את מאגר הנתונים"; 
 $pgv_lang["pid_know_more"]		= "על מי אתה רוצה ללמוד יותר?";
 $pgv_lang["analyze_people"]		= "נתח אנשים";
-$pgv_lang["analyze_data"]		= "##Analyze My Data";
+$pgv_lang["analyze_data"]		= "נתח את הנתונים שלי"; 
 $pgv_lang["missing_info"] 		= "חסר מידע";
 $pgv_lang["auto_search"]		= "המאפין הזה מחפש בצורה אוטומטית ב-Ancestry וב-FamilySearch. ניתן לחפש לפי שם ולפי תאריך לידה/פטירה<br />"; 
 $pgv_lang["auto_search_text"]		= "חיפוש אוטומטי";
@@ -62,7 +62,7 @@ $pgv_lang["add_task"]		= "הוסף משימה";
 $pgv_lang["view_folders"]		= "התבונן בתיקיות"; ///////
 $pgv_lang["view_probabilities"]		= "התבונן בהסתברויות";
 $pgv_lang["up_folder"]		= "עלה תיקייה";
-$pgv_lang["edit_folder"]		= "##Add/Edit Folder";
+$pgv_lang["edit_folder"]		= "הוסף/עדכן תיקייה"; 
 $pgv_lang["gen_tasks"]		= "צור משימות אוטומטית";
 
 
@@ -119,7 +119,8 @@ $pgv_lang["InferIndvMarriagePlace"]	= "יש %PERCENT% סיכוי שמקום הנ
 $pgv_lang["InferIndvGivn"]		= "יש %PERCENT% סיכוי שהשם הפרטי הוא:";
 $pgv_lang["All"]			= "של כולם"; 
 $pgv_lang["More"]			= " עוד"; 
-$pgv_lang["ThereIsChance"]		= "מקורות אפשריים יכולים לכלול:"; 
+$pgv_lang["ThereIsChance"]		= "מקורות אפשריים יכולים לכלול:";
+$pgv_lang["TheMostLikely"]		= "המקום הסביר ביותר למקור זה הוא:"; 
 
 // -- RA EXPLANATION
 $pgv_lang["DataCorrelations"]		= "התאמת נתונים";  
@@ -140,7 +141,6 @@ $pgv_lang["folder_new"]		= "##Create New Folder";
 $pgv_lang["folder_delete_check"]	= "##Are you sure you want to delete this folder?";
 $pgv_lang["no_folder_name"]             	= "יש למלא את שם התיקייה.";
 $pgv_lang["add_folder"]                 	= "הוסף תיקייה";
-$pgv_lang["edit_folder"]                	= "ערוך תיקייה";
 $pgv_lang["folder_name"]                	= "שם תיקייה:";
 $pgv_lang["Parent_Folder:"]             	= "תיקיית הורה:";
 $pgv_lang["No_Parent"]                  	= "אין הורה";
@@ -199,12 +199,11 @@ $pgv_lang["no_folder"]		= "##No folder exists yet. Please create a new folder fi
 $pgv_lang["help_rs_folders.php"]	= "##Research Assistant Folders<br /> #pgv_lang[sorry]#";
 $pgv_lang["help_rs_editfolder.php"]	= "##Research Assistant Edit Folders<br />#pgv_lang[sorry]#";
 $pgv_lang["help_rs_editlog.php"]	= "##Research Assistant Edit Log<br />#pgv_lang[sorry]#";
-//
 $pgv_lang["ra_fold_name_help"]	= "~מבט תיקייות~<ul><li><b>שם תיקייה:</b> העמוד הזה כולל את השמות של כל התיקיות שיצרת.</li><li><b>תאור:</b> העמוד הזה כולל את התאור של התיקיות.</li></ul>"; 
 $pgv_lang["ra_add_task_help"]		= "~הוסף משימה~<ul><li><b>כותרת:</b> כאן תמלא את הכותרת של המשימה שאותה אתה מוסיף.</li><li><b>תיקייה:</b> בשדה זה ניתן להקצות את התיקייה שבה יש לשים את המשימה החדשה.</li><li><b>תאור:</b> הכנס את תאור המשימה שאותה אתה מוסיף.</li><li><b>מקורות:</b>  הקצה מקורות למשימה.</li><li><b>אנשים:</b> הקצה אנשים הקשורים למשימה החדשה.</li></ul>";
 $pgv_lang["ra_edit_folder_help"]	= "~ערוך תיקייה~<ul><li><b>שם התיקייה:</b> כאן תמלא את הכותרת של המשימה שאותה אתה עורך.</li><li><b>תיקיית הורה:</b> תוכל להקצות תיקיית הורה לתיקייה שאתה עורך.</li><li><b>תאור התיקייה:</b> תאור המשימה שאותה אתה עורך.</li></ul>"; 
 $pgv_lang["ra_add_folder_help"]	= "~הוסף תיקייה~<ul><li><b>שם תיקייה:</b> כאן תמלא את הכותרת של התיקייה שאותה אתה מוסיף.</li><li><b>תיקיית הורה:</b> תוכל להקצות תיקיית הורה לתיקייה שאתה מוסיף.</li><li><b>תאור התיקייה:</b> כאן תרשום את תאור התיקייה שאתה מוסיף.</li></ul>"; 
-$pgv_lang["ra_view_task_help"]	= "~מבט משימות~<ul><li><b>שם משימה:</b> העמודה כוללת את השם של המשימות שלך.</li><li><b>תאור:</b> העמוד הזה כולל את התאור של המשימות.</li><li><b>תאריך התחלה:</b> כאן רשומים תאריכי ההתחלה של המשימות.</li><li><b>סיום:</b> כאן תראה אם המשימה הסתיימה.</li><li><b>פרוט:</b> כאן מראים את פירוט המשימה.</li><li><b>מחק:</b> מחיקת המשימה.</li></ul>"; 
+$pgv_lang["ra_view_task_help"]	= "~מבט משימות~<ul><li><b>שם משימה:</b> העמודה כוללת את השמות של המשימות שלך.</li><li><b>תאריך התחלה:</b> כאן רשומים תאריכי ההתחלה של המשימות.</li><li><b>סיום:</b> כאן תראה אם המשימה הסתיימה.</li><li><b>ערוך:</b> מעביר אותך לעריכת המשימה</li><li><b>מחק:</b> מחיקת המשימה.</li>><li><b>סיים:</b> מעביר אותך מידית לבחירת טופס ועריכת משימה</li></ul>"; 
 $pgv_lang["ra_task_view_help"]	= "~התבונן במשימה~<ul><li><b>כותרת:</b> כאן תמלא את הכותרת של המשימה שאותה אתה מוסיף.</li><li><b>אנשים:</b> הקצה אנשים הקשורים למשימה החדשה.</li><li><b>תאור:</b> הכנס את תאור המשימה שאותה אתה מוסיף.</li><li><b>מקורות:</b> הקצה מקורות למשימה.</li><li>לחץ על כפתור <b>ערוך משימה</b> כדי לערוך את הפרטים של המשימה.</li></ul>"; 
 $pgv_lang["ra_comments_help"]	= "~הערות~<ul><li>כאן תוסיף הערות הקשורות למשימה. לחץ על כפתור <b>הוסף הערה חדשה</b> כדי להוסיף הערות.</li></ul>"; 
 $pgv_lang["ra_GenerateTasks_help"]	= "~צור משימות~<p> הטופס הזה יוצר משימות מתגי <span dir=\"ltr\">_TODO</span> בקובץ ה-GEDCOM שלך.</p><ul><li><b>צור:</b> סמן כל משימה שברצונך ליצור כאשר תלחץ על הכפתור צור.</li><li><b>שם המשימה:</b> השם שהמשימה תקבל.  ברירת המחדל היא הטכסט בתג <span dir=\"ltr\">_TODO</span>, ללא תגי CONT</li><li><b>תאור המשימה:</b> התאור שהמשימה תקבל.  התאור נוצר מהטכסט בתג <span dir=\"ltr\">_TODO</span> ביחד עם תגי CONT הקשורים.</li><li><b>ערוך:</b> לחץ על הקישור כדי לערוך את המשימה.</li><li><b>בחר תיקייה:</b> בחר תיקייה עבור המשימות הנוצרות.</li><li><b>צור:</b> יוצר את המשימות שסומנו.</li><li><b>סיום:</b> מעביר אותך לדף התבונן בתיקיות.</li></ul>"; 
