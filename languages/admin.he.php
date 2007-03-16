@@ -345,5 +345,12 @@ $pgv_lang["noref"]        	= "אין התיחסות לרשומה זו";
 $pgv_lang["tag"]          	= "תג";
 $pgv_lang["spacing"]      	= "רווחים";
 //$pgv_lang["before"]       	= "לפני";              // More specific errors, for stage 2
+$pgv_lang["ADVANCED_NAME_FACTS"] 	= "עובדות מתקדמות של שם"; 
+$pgv_lang["ADVANCED_PLAC_FACTS"] 	= "עובדות מתקדמות של שם מקום"; 
+$pgv_lang["SURNAME_TRADITION"]		= "מסורת שם משפחה"; // Default surname inheritance 
+$pgv_lang["spanish"]           	= "ספרדי"; 
+$pgv_lang["portuguese"]        	= "פורטוגזי"; 
+$pgv_lang["icelandic"]         	= "איסלנדי"; 
+$pgv_lang["paternal"]          	= "לפי אב";
 
 ?>
