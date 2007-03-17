@@ -424,13 +424,18 @@ function build_indiv_map($indifacts, $famids) {
                 }
                 if (($ctla>0) && ($ctlo>0) && ($useThisItem==true)) {
                     $i = $i + 1;
-                    if($fact == "EVEN") {
-                        $eventrec = get_sub_record(1, "2 TYPE", $value[1]);
-                        $ctpe = preg_match("/\d TYPE (.*)/", $eventrec, $match3);
-                        $mapdata["fact"][$i] = $match3[1];
-                    } else {
-                        $mapdata["fact"][$i] = $factarray[$fact];
-                    }
+										if ($fact == "EVEN" || $fact=="FACT") {
+											$eventrec = get_sub_record(1, "2 TYPE", $value[1]);
+											if (preg_match("/\d TYPE (.*)/", $eventrec, $match3))
+												if (isset($factarray[$match3[1]]))
+													$mapdata["fact"][$i]=$factarray[$match3[1]];
+												else
+													$mapdata["fact"][$i]=$match3[1];
+											else
+												$mapdata["fact"][$i]=$factarray[$fact];
+										} else {
+											$mapdata["fact"][$i]=$factarray[$fact];
+										}
                     $mapdata["show"][$i] = "yes";
                     $marker["name"][$i] = "Marker".$i;
                     $marker["placed"][$i] = "no";
@@ -466,13 +471,18 @@ function build_indiv_map($indifacts, $famids) {
                         }
                         if ((count($latlongval) != 0) && ($latlongval["lati"] != NULL) && ($latlongval["long"] != NULL)) {
                             $i = $i + 1;
-                            if($fact == "EVEN") {
-                                $eventrec = get_sub_record(1, "2 TYPE", $value[1]);
-                                $ctpe = preg_match("/\d TYPE (.*)/", $eventrec, $match3);
-                                $mapdata["fact"][$i] = $match3[1];
-                            } else {
-                                $mapdata["fact"][$i] = $factarray[$fact];
-                            }
+														if ($fact == "EVEN" || $fact=="FACT") {
+															$eventrec = get_sub_record(1, "2 TYPE", $value[1]);
+															if (preg_match("/\d TYPE (.*)/", $eventrec, $match3))
+																if (isset($factarray[$match3[1]]))
+																	$mapdata["fact"][$i]=$factarray[$match3[1]];
+																else
+																	$mapdata["fact"][$i]=$match3[1];
+															else
+																$mapdata["fact"][$i]=$factarray[$fact];
+														} else {
+															$mapdata["fact"][$i]=$factarray[$fact];
+														}
                             $mapdata["show"][$i] = "yes";
                             $marker["name"][$i] = "Marker".$i;
                             $marker["placed"][$i] = "no";
