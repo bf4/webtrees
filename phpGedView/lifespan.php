@@ -329,8 +329,8 @@ var oldMx = 0;
 	</div>
 	<?php if (!$controller->isPrintPreview()) { ?>
 	<!--  Floating div controls START -->
-<div dir="ltr" style="position:relative; margin-top: 10%; z-index: 100; filter: alpha(opacity=67); -moz-opacity: 0.67;  opacity: 0.67; width:160px;">
-  	<table style="margin-left: 20px" dir="ltr">
+<div dir="ltr" style="position:relative; z-index: 100; filter: alpha(opacity=67); -moz-opacity: 0.67;  opacity: 0.67; width:180px; top: 80px;">
+  	<table style="margin-left: 20px" dir="ltr" colspan="0" border="0" cellpadding="0">
   	<tr>
   	  <td></td>
       <td colspan="2" align="center"><a href="#" onclick="return false;" onmousedown="startScroll('up')" onmouseup="stopScroll()"><img src="<?php print $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["lsuparrow"]["other"]; ?>" border="0" alt="" /></a></td>
