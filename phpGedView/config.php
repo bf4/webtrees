@@ -65,5 +65,5 @@ $CONFIG_VERSION = "4.0";						//-- the version this config file goes to
 $DIRECTORY_MODE = "ldap";						//-- User info stored in db or ldap directory
 $COMMIT_COMMAND = "";						//-- Choices are empty string, cvs or svn
 
-$CONFIGURED = false;
+$CONFIGURED = true;
 require_once("includes/session.php");
