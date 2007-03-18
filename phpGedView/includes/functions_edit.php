@@ -68,7 +68,7 @@ $level2_tags=array( // The order of the $keys is significant
 	"CALN" =>array("REPO"),
 	"CEME" =>array("BURI"), // CEME is NOT a valid 5.5.1 tag; use _CEME ??
 	"DATE" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN","BAPL","ENDL","SLGC","SLGS"),
-	"PLAC" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN","BAPL"),
+	"PLAC" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN","BAPL","SSN"),
 	"ADDR" =>array("BIRT","CHR","CHRA","DEAT","CREM","BURI","MARR","CENS","EDUC","GRAD","OCCU","PROP","ORDN","RESI","EVEN"),
 	"PHON" =>array("OCCU","RESI"),
 	"FAX"  =>array("OCCU","RESI"),
@@ -565,7 +565,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 				}
 			}
 		// Allow a new row to be entered if there was no row provided
-		if (count($match[1])==0 || $tag!='_HEB' && $tag!='_HNM' && $tag!='NICK')
+		if (count($match[1])==0 || $tag!='_HEB' && $tag!='NICK')
 			if ($tag=='_MARNM') {
 				add_simple_tag("0 _MARNM");
 				add_simple_tag("0 _MARNM_SURN $new_marnm");
@@ -742,7 +742,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 
 	function checkform() {
 		// Make sure we have entered at least something for the name
-		if (document.addchildform.NAME.value=="") {
+		if (document.addchildform.NAME.value=="//") {
 			alert('<?php print $pgv_lang["must_provide"]; print " ".$factarray["NAME"]; ?>');
 			document.addchildform.NAME.focus();
 			return false;
@@ -751,7 +751,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		var ip=document.getElementsByTagName('input');
 		for (var i=0; i<ip.length; i++) {
 			// ADD slashes to _HEB and _AKA names
-			if (ip[i].id.indexOf('_AKA')==0 || ip[i].id.indexOf('_HEB')==0 || ip[i].id.indexOf('_HNM')==0)
+			if (ip[i].id.indexOf('_AKA')==0 || ip[i].id.indexOf('_HEB')==0 || ip[i].id.indexOf('ROMN')==0)
 				if (ip[i].value.indexOf('/')<0 && ip[i].value!='')
 					ip[i].value=ip[i].value.replace(/([^\s]+)\s*$/, "/$1/");
 			// Blank out temporary _MARNM_SURN and empty name fields
