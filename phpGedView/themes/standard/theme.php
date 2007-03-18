@@ -143,6 +143,11 @@ $PGV_IMAGES["vline"]["other"] = "vline.gif";
 $PGV_IMAGES["zoomin"]["other"] = "zoomin.gif";
 $PGV_IMAGES["zoomout"]["other"] = "zoomout.gif";
 $PGV_IMAGES["stop"]["other"] = "stop.gif";
+// - lifespan chart arrows
+$PGV_IMAGES["lsltarrow"]["other"] = "lsltarrow.gif";
+$PGV_IMAGES["lsrtarrow"]["other"] = "lsrtarrow.gif";
+$PGV_IMAGES["lsdnarrow"]["other"] = "lsdnarrow.gif";
+$PGV_IMAGES["lsuparrow"]["other"] = "lsuparrow.gif";
 
 //- digits
 $PGV_IMAGES["0"]["digit"] = "0.jpg";
@@ -176,6 +181,7 @@ $Dindent = 15;			// -- width to indent descendancy boxes
 $Darrowwidth = 15;		// -- additional width to include for the up arrows
 
 $CHARTS_CLOSE_HTML = true;		//-- should the charts, pedigree, descendacy, etc clost the HTML on the page
+$PGV_DXHTMLTAB_COLORS = "#d6e0ea,white";
 
 // Arrow symbol or icon for up-page links on Help pages
 $ImgSrc = $PGV_IMAGE_DIR."/uarrow3.gif";

@@ -141,6 +141,11 @@ $PGV_IMAGES["vline"]["other"] = "vline.gif";
 $PGV_IMAGES["zoomin"]["other"] = "zoomin.gif";
 $PGV_IMAGES["zoomout"]["other"] = "zoomout.gif";
 $PGV_IMAGES["stop"]["other"] = "stop.gif";
+// - lifespan chart arrows
+$PGV_IMAGES["lsltarrow"]["other"] = "lsltarrow.gif";
+$PGV_IMAGES["lsrtarrow"]["other"] = "lsrtarrow.gif";
+$PGV_IMAGES["lsdnarrow"]["other"] = "lsdnarrow.gif";
+$PGV_IMAGES["lsuparrow"]["other"] = "lsuparrow.gif";
 
 //- digits
 $PGV_IMAGES["0"]["digit"] = "0.jpg";
@@ -175,6 +180,8 @@ $Darrowwidth = 15;	// -- additional width to include for the up arrows
 
 $PEDIGREE_LAYOUT = false;		//-- default this theme to the portrait mode of the pedigree chart
 $CHARTS_CLOSE_HTML = false;		//-- should the charts, pedigree, descendacy, etc clost the HTML on the page
+$PGV_DXHTMLTAB_COLORS = "#c7974d,#eae0d4";
+
 
 $ONLOADFUNCTION = "onloadfunction();";		//-- function that should be called in the <body onload="
 

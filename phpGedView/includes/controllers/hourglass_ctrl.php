@@ -163,8 +163,7 @@ class HourglassControllerRoot extends BaseController {
 			$this->hourPerson->undoChange();
 			break;
 	}
-
-	}
+}
 
 /**
  * Prints pedigree of the person passed in. Which is the descendancy 

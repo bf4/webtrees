@@ -977,7 +977,6 @@ class IndividualControllerRoot extends BaseController {
 	function print_facts_tab() {
 		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
 		global $n_chil, $n_gchi;
-		$indifacts = $this->getIndiFacts();
 		?>
 		<table class="facts_table">
 		<?php if (!$this->indi->canDisplayDetails()) {
@@ -987,6 +986,7 @@ class IndividualControllerRoot extends BaseController {
 			print "</td></tr>";
 		}
 		else {
+			$indifacts = $this->getIndiFacts();
 			if (count($indifacts)==0) print "<tr><td id=\"no_tab1\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab1"]."</td></tr>\n";
 			print "<tr id=\"row_top\"><td></td><td class=\"descriptionbox rela\">";
 			print "<a href=\"javascript:;\" onclick=\"togglerow('row_rela'); return false;\">";

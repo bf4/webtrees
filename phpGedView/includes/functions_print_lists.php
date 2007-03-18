@@ -1435,7 +1435,9 @@ function load_behaviour() {
 				this.style.opacity = 0.67;
 			}
 			element.onclick = function() { // apply filter
-				var table = this.parentNode.getElementsByTagName("table")[0].id;
+				var temp = this.parentNode.getElementsByTagName("table")[0];
+				if (!temp) return true;
+				var table = temp.id;
 				var args = this.className.split('_'); // eg: BIRT_YES
 				if (args[0]=="alive") return table_filter_alive(table);
 				if (args[0]=="reset") return table_filter(table, "", "");

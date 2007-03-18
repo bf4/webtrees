@@ -209,9 +209,17 @@ class research_assistant extends ra_functions {
 				if (isset ($_POST['sourceid'])) {
 					$this->add_sources($_REQUEST["taskid"],$_POST['sourceid']);
 				}
-				$out .= $this->print_menu($_POST['folder']);
-				$out .= $this->print_folder_view($_POST['folder']);
-				$out .= $this->print_list($_POST['folder']);
+				if (!empty($_REQUEST['complete'])) {
+					$out .= $this->print_menu();
+	                $task = $this->getTask($_REQUEST['taskid']);
+					if (!empty($task['t_form'])&&!isset($_POST['commonFrm'])) $_POST['commonFrm'] = $task['t_form'];
+	                $out .= $this->print_form('ra_CompleteTask');
+				}
+				else {
+					$out .= $this->print_menu($_POST['folder']);
+					$out .= $this->print_folder_view($_POST['folder']);
+					$out .= $this->print_list($_POST['folder']);
+				}
 			}
 
 		// Edit task
