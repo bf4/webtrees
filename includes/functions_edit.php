@@ -565,7 +565,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 				}
 			}
 		// Allow a new row to be entered if there was no row provided
-		if (count($match[1])==0 || $tag!='_HEB' && $tag!='NICK')
+		if (count($match[1])==0 || $tag!='_HEB' && $tag!='_HNM' && $tag!='NICK')
 			if ($tag=='_MARNM') {
 				add_simple_tag("0 _MARNM");
 				add_simple_tag("0 _MARNM_SURN $new_marnm");
@@ -751,7 +751,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		var ip=document.getElementsByTagName('input');
 		for (var i=0; i<ip.length; i++) {
 			// ADD slashes to _HEB and _AKA names
-			if (ip[i].id.indexOf('_AKA')==0 || ip[i].id.indexOf('_HEB')==0)
+			if (ip[i].id.indexOf('_AKA')==0 || ip[i].id.indexOf('_HEB')==0 || ip[i].id.indexOf('_HNM')==0)
 				if (ip[i].value.indexOf('/')<0 && ip[i].value!='')
 					ip[i].value=ip[i].value.replace(/([^\s]+)\s*$/, "/$1/");
 			// Blank out temporary _MARNM_SURN and empty name fields

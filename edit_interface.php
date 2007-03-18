@@ -891,6 +891,7 @@ case 'update':
 	if (!empty($FONE)) $newged .= "2 FONE $FONE\r\n";
 	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\r\n";
 	if (!empty($_HEB)) $newged .= "2 _HEB $_HEB\r\n";
+	if (!empty($_HNM)) $newged .= "2 _HNM $_HNM\r\n";
 	if (!empty($_MARNM)) $newged .= "2 _MARNM $_MARNM\r\n";
 
 	while($i<count($gedlines)) {
@@ -914,8 +915,9 @@ case 'addchildaction':
 	if (!empty($NSFX)) $gedrec .= "2 NSFX $NSFX\r\n";
 	if (!empty($ROMN)) $gedrec .= "2 ROMN $ROMN\r\n";
 	if (!empty($FONE)) $gedrec .= "2 FONE $FONE\r\n";
-	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\r\n";
+	if (!empty($_AKA)) $gedrec .= "2 _AKA $_AKA\r\n";
 	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
+	if (!empty($_HNM)) $gedrec .= "2 _HNM $_HNM\r\n";
 	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
 	if ((!empty($BIRT_DATE))||(!empty($BIRT_PLAC))) {
@@ -1003,8 +1005,9 @@ case 'addspouseaction':
 	if (!empty($NSFX)) $gedrec .= "2 NSFX $NSFX\r\n";
 	if (!empty($ROMN)) $gedrec .= "2 ROMN $ROMN\r\n";
 	if (!empty($FONE)) $gedrec .= "2 FONE $FONE\r\n";
-	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\r\n";
+	if (!empty($_AKA)) $gedrec .= "2 _AKA $_AKA\r\n";
 	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
+	if (!empty($_HNM)) $gedrec .= "2 _HNM $_HNM\r\n";
 	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
 	if ((!empty($BIRT_DATE))||(!empty($BIRT_PLAC))) {
@@ -1234,8 +1237,9 @@ case 'addnewparentaction':
 	if (!empty($NSFX)) $gedrec .= "2 NSFX $NSFX\r\n";
 	if (!empty($ROMN)) $gedrec .= "2 ROMN $ROMN\r\n";
 	if (!empty($FONE)) $gedrec .= "2 FONE $FONE\r\n";
-	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\r\n";
+	if (!empty($_AKA)) $gedrec .= "2 _AKA $_AKA\r\n";
 	if (!empty($_HEB)) $gedrec .= "2 _HEB $_HEB\r\n";
+	if (!empty($_HNM)) $gedrec .= "2 _HNM $_HNM\r\n";
 	if (!empty($_MARNM)) $gedrec .= "2 _MARNM $_MARNM\r\n";
 	$gedrec .= "1 SEX $SEX\r\n";
 	if ((!empty($BIRT_DATE))||(!empty($BIRT_PLAC))) {
