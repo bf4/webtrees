@@ -105,6 +105,15 @@ class Person extends GedcomRecord {
 		if (empty($indirec)) return null;
 		$person = new Person($indirec, $simple);
 		if (!empty($fromfile)) $person->setChanged(true);
+		//-- update the cache
+		if ($person->isRemote()) {
+			global $indilist, $GEDCOM, $GEDCOMS;
+			$indilist[$pid]['gedcom'] = $person->gedrec;
+			$indilist[$pid]['names'] = get_indi_names($person->gedrec);
+			$indilist[$pid]["isdead"] = is_dead($person->gedrec);
+			$indilist[$pid]["gedfile"] = $GEDCOMS[$GEDCOM]['id'];
+			if (isset($indilist[$pid]['privacy'])) unset($indilist[$pid]['privacy']);
+		}
 		$indilist[$pid]['object'] = &$person;
 		return $person;
 	}

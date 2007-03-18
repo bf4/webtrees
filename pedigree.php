@@ -181,7 +181,8 @@ for($i=($controller->treesize-1); $i>=0; $i--) {
 		else print "<tr><td width=\"100%\">";
 		$mfstyle = "";
 		if (!empty($controller->treeid[$i])) {
-			$indirec = find_person_record($controller->treeid[$i]);
+			$person = Person::getInstance($controller->treeid[$i]);
+			$indirec = $person->getGedcomRecord();
 			$ct = preg_match("/1 SEX F/", $indirec);
 			if ($ct>0) $mfstyle="F";
 		}

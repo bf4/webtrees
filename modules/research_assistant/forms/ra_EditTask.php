@@ -356,7 +356,7 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 	<tr class="topbottombar">
     		<td colspan="4">
     		<input type="submit" value="<?php print $pgv_lang["save"]; ?>" />
-    		<input type="button" value="<?php print $pgv_lang["complete"];?>" name="complete" onclick="window.location='module.php?mod=research_assistant&amp;action=completeTask&amp;taskid=<?php print $_REQUEST['taskid'] ?>'" />
+    		<input type="submit" value="<?php print $pgv_lang["complete"];?>" name="complete" />
     		</td>
    	</tr>
 				

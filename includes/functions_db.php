@@ -309,11 +309,14 @@ function find_person_record($pid, $gedfile="") {
 			return false;
 		}
 		$row =& $res->fetchRow();
-		$indilist[$pid]["gedcom"] = $row[0];
-		$indilist[$pid]["names"] = get_indi_names($row[0]);
-		$indilist[$pid]["isdead"] = $row[2];
-		$indilist[$pid]["gedfile"] = $row[3];
-		if (isset($indilist[$pid]['privacy'])) unset($indilist[$pid]['privacy']);
+		//-- don't cache records from other gedcoms
+		if (!isset($indilist[$pid]) || $indilist[$pid]['gedfile']==$gedfile) {
+			$indilist[$pid]["gedcom"] = $row[0];
+			$indilist[$pid]["names"] = get_indi_names($row[0]);
+			$indilist[$pid]["isdead"] = $row[2];
+			$indilist[$pid]["gedfile"] = $row[3];
+			if (isset($indilist[$pid]['privacy'])) unset($indilist[$pid]['privacy']);
+		}
 		$res->free();
 		return $row[0];
 	}

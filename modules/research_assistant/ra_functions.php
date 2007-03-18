@@ -1595,7 +1595,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 																		
 																		$compiled = array();
 																		$highest = $inferenceObj->getAverage();
-																		print($highest."<br/>");
+																		//print($highest."<br/>");
 																		$compiled[0] = $this->decideInferSentence($inferenceObj->getAverage(),$inferenceObj->getFactTag());
 																		$compiled[0] .= " <i>".$inferenceObj->getFactValue()."</i>";
 																		$compiled[0] .= "<br />";
@@ -1777,9 +1777,6 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 											
 											if(!isset($sourcesPrinted[$gVal["id"]]))
 											{
-														$out .= "<tr ><td width=\"20\" class=\"optionbox\">";
-														$out .= "<input type=\"checkbox\" name=\"missingName[]\" value=\"".htmlentities($gVal["description"])."\" />";
-														$out .= "<td class=\"optionbox\">".$gVal["description"];
 														$closest = null;
 														$offset = null;
 														$place = null;
@@ -1810,6 +1807,10 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 																											
 													}
 												}
+												
+												$out .= "<tr ><td width=\"20\" class=\"optionbox\">";
+												$out .= "<input type=\"checkbox\" name=\"missingName[]\" value=\"".htmlentities($gVal["description"])." ".$place."\" />";
+												$out .= "<td class=\"optionbox\">".$gVal["description"];
 												if(empty($place))
 												{
 													if(!empty($lastPlace))
