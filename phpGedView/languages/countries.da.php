@@ -35,6 +35,7 @@
  *		HOL		Holland						Official name is NLD "Netherlands"
  *		ESM		Western Samoa				Official name is WSM "Samoa"
  *											
+ * @author hbc1971
  * @package PhpGedView
  * @subpackage Languages
  * @version $Id$

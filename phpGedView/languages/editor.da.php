@@ -175,5 +175,6 @@ $pgv_lang["upload_media"]			= "Upload mediefiler";
 $pgv_lang["upload_successful"]		= "Upload fuldført.";
 $pgv_lang["view_change_diff"]	= "Vis ændring, forskelle";
 
+$pgv_lang["no_update_CHAN"]			= "";
 
 ?>
