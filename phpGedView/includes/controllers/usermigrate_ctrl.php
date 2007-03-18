@@ -247,7 +247,7 @@ class UserMigrateControllerRoot extends BaseController {
 	 *
 	 */
 	function import() {
-		global $INDEX_DIRECTORY;
+		global $INDEX_DIRECTORY, $TBLPREFIX, $pgv_lang, $DBCONN;
 		
 		if ((file_exists($INDEX_DIRECTORY."authenticate.php")) == false) {
 			$this->impSuccess = false;
