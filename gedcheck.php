@@ -943,7 +943,6 @@ $handle=fopen($all_geds[$ged], 'r');
 while (($value=fgets($handle))!==false) {
 	$value=preg_replace('/[\r\n]+/', '', $value);
 	if (preg_match('/^\s*(\d*)\s*(@[^@#]+@)?\s*(\S*)\s*(.*)/', $value, $match)) {
-if (function_exists('memory_get_usage') && memory_get_usage()>33550000) print "<P>".count($gedfile).':'.memory_get_usage()."</P>";
 		$gedfile[]=$value;
 		if ($match[1]=='0') {
 			$curr_xref=$match[2];
@@ -965,6 +964,8 @@ fclose($handle);
 // Check the file at a syntactic level, line-by-line
 ////////////////////////////////////////////////////////////////////////////////
 $num_lines=count($gedfile);
+// Ignore the Byte-Order-Mark on UTF files
+if ($num_lines>0) $gedfile[0]=preg_replace('/^\xEF\xBB\xBF/', '', $gedfile[0]);
 $context=array('GEDCOM'); $curr_xref="";
 foreach ($gedfile as $num=>$value) {
 	preg_match('/^(\s*)(\d*)(\s*)(@[^@#]+@)?(\s*)(\S*)(\s*)(.*)/', $value, $match);
