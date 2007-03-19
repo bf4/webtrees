@@ -356,6 +356,7 @@ function check_gedcom($gedrec, $chan=true) {
 		if (!empty($line)) $newrec .= $line."\r\n";
 	}
 
+	$newrec = html_entity_decode($newrec);
 	return $newrec;
 }
 
