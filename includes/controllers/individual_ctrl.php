@@ -408,7 +408,8 @@ class IndividualControllerRoot extends BaseController {
 		if (preg_match("/PGV_OLD/", $factrec)>0) print " class=\"namered\"";
 		if (preg_match("/PGV_NEW/", $factrec)>0) print " class=\"nameblue\"";
 		print ">";
-		if ($this->name_count>1) print "\n\t\t<span class=\"label\">".$pgv_lang["aka"]." </span><br />\n";
+		// Second/third names are *NOT* necessarily AKA names.
+		//if ($this->name_count>1) print "\n\t\t<span class=\"label\">".$pgv_lang["aka"]." </span><br />\n";
 		$ct = preg_match_all("/2 (SURN)|(GIVN) (.*)/", $factrec, $nmatch, PREG_SET_ORDER);
 		if ($ct==0) {
 			$nt = preg_match("/1 NAME (.*)/", $factrec, $nmatch);
@@ -507,7 +508,7 @@ class IndividualControllerRoot extends BaseController {
 	 * @return Menu
 	 */
 	function &getEditMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $TOTAL_NAMES;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 		global $NAME_LINENUM, $SEX_LINENUM, $pgv_lang, $pgv_changes, $USE_QUICK_UPDATE;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
@@ -542,7 +543,7 @@ class IndividualControllerRoot extends BaseController {
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 			$menu->addSeperator();
-			if ($TOTAL_NAMES<2) {
+			if ($this->total_names<2) {
 				$submenu = new Menu($pgv_lang["edit_name"]);
 				$submenu->addOnclick("return edit_name('".$this->pid."', $NAME_LINENUM);");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
@@ -667,7 +668,7 @@ class IndividualControllerRoot extends BaseController {
 				$this->total_names++;
 				$NAME_LINENUM = $value[0];
 			}
-		}
+			}
 		return $globalfacts;
 	}
 	/**
