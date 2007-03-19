@@ -257,7 +257,6 @@ $countries["QAT"]="Qatar";
 
 $countries["REU"]="Reunion";
 $countries["ROM"]="Rumänien";
-$countries["ROU"]="Uruguay";
 $countries["RUS"]="Ryssland";
 $countries["RWA"]="Rwanda";
 
