@@ -204,6 +204,20 @@ class PGVServiceLogic extends GenealogyService
 		return $return;
 	}
 	
+	/**
+	* Switches GEDCOM
+	* @param string gedcom id of the gedcom to use
+	* @return string	returns the id of the currently active gedcom
+	*/
+	function postChangeGedcom($gedcom)
+	{
+		global $GEDCOM;
+		$gedcom = $this->default_gedcom($gedcom);
+		$GEDCOM = $gedcom;
+		$_SESSION['GEDCOM'] = $gedcom;
+		return $gedcom;
+	}
+	
 	/***
 	* Get's a variables value
 	* 

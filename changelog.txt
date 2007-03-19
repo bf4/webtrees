@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Added changeGedcom method to web service (yalnifj)
  - Fixed missing RESN on add/edit fact forms (yalnifj)
  - Fixed [ 1676782 ] < and > stored in gedcom as &lt; and &gt; (yalnifj)
  - Fixed  [ phpgedview-Version 4.1 Bugs (SVN)-1612613 ] 4.1B2-B4: User Migration (yalnifj)
