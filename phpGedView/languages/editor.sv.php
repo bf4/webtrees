@@ -152,7 +152,6 @@ $pgv_lang["hebrew_surn"]			= "Hebreiskt efternamn";
 $pgv_lang["hide_changes"]		= "Klicka här för att dölja ändringar.";
 $pgv_lang["highlighted"]			= "Framhäv bild";
 $pgv_lang["illegal_chars"]		= "Otillåtna tecken i namnet";
-$pgv_lang["invalid_search_input"] 	= "Var vänlig och skriv in ett förnamn, efternamn eller ort tillsammans med ett årtal";
 $pgv_lang["invalid_search_multisite_input"] = "Var vänlig skriv in ett av följande: namn, födelsedatum, födelseort, dödsdatum, dödsort eller kön ";
 $pgv_lang["invalid_search_multisite_input_gender"] = "Var vänlig sök igen med mer information än kön";
 $pgv_lang["label_diff_server"]      = "Annan sajt";
@@ -216,5 +215,7 @@ $pgv_lang["view_change_diff"]	= "Visa förändringar";
 $pgv_lang["advanced_name_fields"]	= "Övriga namn (smeknamn, vigselnamn etc.)";
 $pgv_lang["select_events"]			= "Välj händelse";
 $pgv_lang["source_events"]			= "Associera händelse med denna källa";
+$pgv_lang["admin_override"]			= "Administratörsinställningar";
+$pgv_lang["no_update_CHAN"]			= "Uppdatera inte CHAN (Senast ändrade) posten";
 
 ?>
