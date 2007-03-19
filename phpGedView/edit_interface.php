@@ -429,6 +429,8 @@ case 'edit':
 			if ($level1type!="SOUR" && $level1type!="REPO") print_add_layer("SOUR");
 			if ($level1type!="NOTE") print_add_layer("NOTE");
 			if ($level1type!="OBJE" && $level1type!="REPO" && $level1type!="NOTE" && $MULTI_MEDIA) print_add_layer("OBJE");
+			//-- RESN missing in new structure, RESN can be added to all level 1 tags
+			if (!in_array("RESN", $tags)) print_add_layer("RESN");
 		}
 	}
 
@@ -471,6 +473,8 @@ case 'add':
 			if ($fact!="REPO") print_add_layer("OBJE");
 		}
 	}
+	//-- RESN missing in new structure, RESN can be added to all level 1 tags
+	if (!in_array("RESN", $tags)) print_add_layer("RESN");
 
 	print "<br /><input type=\"submit\" value=\"".$pgv_lang["add"]."\" /><br />\n";
 	print "</form>\n";

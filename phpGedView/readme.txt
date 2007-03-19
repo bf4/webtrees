@@ -300,30 +300,25 @@ If you need help or support visit  http://www.PhpGedView.net/support.php
 -------------------------------------------------------
 UPGRADING
 
-Use the following steps to upgrade to v4.0.  These steps assume that you 
+Use the following steps to upgrade to v4.1.  These steps assume that you 
 are familiar with PhpGedView and have successfully installed it before.
 
-Version 4.0 no longer includes support for index files.  If you do not have 
+Version 4.x no longer includes support for index files.  If you do not have 
 PHP 5 with built-in SQLite support or a database account then you should not 
-upgrade to PhpGedView 4.0.  Maintenance releases will continue for the 3.3.x 
+upgrade to PhpGedView 4.x.  Maintenance releases will continue for the 3.3.x 
 version.
 
 **Note to SQLite users: Unfortunately SQLite does not support the ALTER TABLE
   SQL command.  This means that we must first drop the tables and recrate
   them.  It is highly reccomended that you run the backup before upgrading.
 
-1.  Upload the new 4.0 files to your server replacing the old files with the 
+1.  Upload the new 4.1 files to your server replacing the old files with the 
 	new files.  Do not replace the config.php file or the index directory.
-2.  Go to upgrade33-40.php in your browser.
-3.  In order to create the data required for the new version, you will
+2.  In order to create the data required for the new version, you will
     have to re-import your GEDCOM. Please see the section on UPDATING
     GEDCOMS below.
-4.  You can now use your upgraded site.  One change with this version splits
-    user's full names into first and last name fields.  If you have users
-    who only entered a single name then their first and last name will be the
-    same and it will appear doubled on some screens.  You may want to review 
-    your user list and check your user's names.
-5.  If you are using a customized theme you will need to update your theme
+3.  You can now use your upgraded site.
+4.  If you are using a customized theme you will need to update your theme
     with new stylesheets and variables.  An excellent tool that can help 
     you to merge themes is the WinMerge project 
     http://winmerge.sourceforge.net/

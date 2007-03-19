@@ -1357,6 +1357,19 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		add_simple_tag($level." OBJE @@");
 		print "</table></div>";
 	}
+	if ($tag=="RESN") {
+		//-- Retrieve existing note or add new note to fact
+		$text = "";
+		print "<a href=\"javascript:;\" onclick=\"return expand_layer('newresn');\"><img id=\"newresn_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$factarray["RESN"]."</a>";
+		print_help_link("RESN_help", "qm");
+		print "<br />\n";
+		print "<div id=\"newresn\" style=\"display: none;\">\n";
+		if ($printSaveButton) print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
+		print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
+		// 2 NOTE
+		add_simple_tag(($level)." RESN ".$text);
+		print "</table></div>";
+	}
 }
 /**
  * Add Debug Log
