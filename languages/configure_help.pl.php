@@ -23,10 +23,12 @@
  * @author Tymoteusz Motylewski www.motylewscy.com
  * @version $Id$
  */
-if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
+
 //-- CONFIGURE FILE MESSAGES
 $pgv_lang["configure"]			= "Konfiguracja PhpGedView";
 $pgv_lang["gedconf_head"]		= "Konfiguracja GEDCOM";

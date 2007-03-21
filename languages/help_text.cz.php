@@ -23,9 +23,10 @@
  * @author Jan Hapala
  * @version $Id$
  */
-if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-print "Nemáte přímý přístup k souboru s češtinou.";
-exit;
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "Nemáte přímý přístup k souboru s češtinou.";
+	exit;
 }
 
 //-- GENERAL

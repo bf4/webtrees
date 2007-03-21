@@ -47,7 +47,7 @@ class ra_guide extends ra_form {
  	{
  		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
  		// Obtain the global vars needed
- 		global $pgv_lang, $factarray;
+ 		global $pgv_lang, $factarray, $PGV_DXHTMLTAB_COLORS;
 		$out = '';
 		ob_start();
 		require_once("js/dhtmlXTabbar.js.htm");
@@ -62,7 +62,7 @@ class ra_guide extends ra_form {
 		</script>
 		<div align="center">
 		<h2><?php print $pgv_lang['research_assistant']; ?></h2>
-		<div id="guide_tabbar" class="dhtmlxTabBar" <?php if($TEXT_DIRECTION=="rtl") echo ' align="right"'; else echo ' align="left"';?> style="width: 65%; margin-left: 25px;">
+		<div id="guide_tabbar" class="dhtmlxTabBar" <?php if($TEXT_DIRECTION=="rtl") echo ' align="right"'; else echo ' align="left"';?> skinColors="<?php print $PGV_DXHTMLTAB_COLORS; ?>" style="width: 65%; margin-left: 25px;">
 			<div id="guide_analyze" name="<?php print $pgv_lang['analyze_data'];?>" class="indent" >
 				<fieldset>
 					<legend> <?php print $pgv_lang["analyze_people"]; ?></legend>

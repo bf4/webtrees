@@ -24,6 +24,11 @@
  * @version $Id$
  */
 
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 require_once('includes/person_class.php');
 require_once('includes/family_class.php');
 require_once('includes/source_class.php');

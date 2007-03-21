@@ -196,6 +196,7 @@ $Dindent = 15;		// -- width to indent descendancy boxes
 $Darrowwidth = 30;	// -- additional width to include for the up arrows
 
 $CHARTS_CLOSE_HTML = true;                //-- should the charts, pedigree, descendacy, etc clost the HTML on the page
+$PGV_DXHTMLTAB_COLORS = "#f0f9ff,#c8e7ff";
 
 $ONLOADFUNCTION = "loadHandler();";		//-- function that should be called in the <body onload="
 

@@ -11,9 +11,9 @@
 ===================================================*/
 # $Id$
 
-if (preg_match("/help_text\...\.php$/", $_SERVER["PHP_SELF"])>0) {
-print "Nemáte priamy prístup k súboru so slovenčinou.";
-exit;
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "Nemáte priamy prístup k súboru so slovenčinou.";
+	exit;
 }
 
 //-- GENERAL

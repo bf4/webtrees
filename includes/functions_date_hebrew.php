@@ -26,11 +26,8 @@
  * @version $Id$
  */
 
-/**
- * security check to prevent hackers from directly accessing this file
- */
-if (strstr($_SERVER["SCRIPT_NAME"],"functions_date_hebrew.php")) {
-	print "Why do you want to do that?";
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
 	exit;
 }
 
@@ -307,7 +304,9 @@ function jewishGedcomDateToGregorian($datearray){
 			$julianDate =  jewishtojd ( $date["mon"], $date["day"], $date["year"] );
 			$gregdate = jdtogregorian ( $julianDate );
 			$pieces = preg_split("~/~", $gregdate);
-			$dates[] = array("mon"=>$pieces[0], "day"=>$pieces[1], "year"=>$pieces[2], "month"=>array_search($pieces[0], $monthtonum), "ext"=>"converted jewish");
+			$sort = "";
+			if (isset($date['sort'])) $sort = $date['sort'];
+			$dates[] = array("mon"=>$pieces[0], "day"=>$pieces[1], "year"=>$pieces[2], "month"=>array_search($pieces[0], $monthtonum), "ext"=>"converted jewish", "sort"=>$sort);
 		}
 	}
 	return $dates;

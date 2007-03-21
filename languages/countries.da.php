@@ -35,14 +35,17 @@
  *		HOL		Holland						Official name is NLD "Netherlands"
  *		ESM		Western Samoa				Official name is WSM "Samoa"
  *											
+ * @author hbc1971
  * @package PhpGedView
  * @subpackage Languages
  * @version $Id$
  */
-if (preg_match("/countries\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-		print "Du kan ikke hente sprogfiler direkte.";
-		exit;
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "Du kan ikke hente sprogfiler direkte.";
+	exit;
 }
+
 $countries["ABW"]="Aruba";
 $countries["ACA"]="Acadia";
 $countries["AFG"]="Afghanistan";

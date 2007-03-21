@@ -56,7 +56,7 @@ class GenealogyService
 	var $__dispatch_map = array();
 	var $__typeref = array();
 	var $__namespace = 'Genealogy';
-	var $service_version = '1.0';
+	var $service_version = '1.1';
 	var $varNames = array();
 
 	function GenealogyService() 
@@ -92,6 +92,19 @@ class GenealogyService
 			),
 			'out' => array(
 				'result' => '{urn:' . $this->__namespace . '}authResult'//declared below
+			)
+		);
+		
+		/**
+		* Authenticate
+		*/
+		$this->__dispatch_map['changeGedcom'] = 
+		array(
+			'in' => array(
+				'gedcom' => 'string'
+			),
+			'out' => array(
+				'result' => 'string'
 			)
 		);
 		
@@ -493,6 +506,36 @@ class GenealogyService
 	* Method to override
 	*/
 	function postAuthenticate($username, $password, $gedcom_id, $compression, $data_type="GEDCOM")
+	{
+		return false;
+	}
+	
+	/**
+	* Switches GEDCOM
+	* @param string gedcom id of the gedcom to use
+	* @return string	returns the id of the currently active gedcom
+	*/
+	function changeGedcom($gedcom)
+	{
+		$result = $this->postChangeGedcom($gedcom);
+		if($result !== false)
+		{
+			//if everything worked set the session value to true
+			if (!PEAR::isError($result)) 
+				$_SESSION["SOAP_CONNECTED"] = true;
+			return $result;
+		}
+		
+		return new SOAP_Fault('Unable to change gedcom',
+							'Server',
+							'',
+							null);
+	}
+	
+	/**
+	* Method to override
+	*/
+	function postChangeGedcom($gedcom)
 	{
 		return false;
 	}

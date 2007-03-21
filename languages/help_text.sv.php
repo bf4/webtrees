@@ -23,9 +23,10 @@
  * @author Patrik Hansson
  * @version $Id$
  */
-if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-print "You cannot access a language file directly.";
-exit;
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access a language file directly.";
+	exit;
 }
 
 //-- GENERAL
@@ -530,5 +531,6 @@ $pgv_lang["add_gedcom_instructions"]= "Ange ett filnamn för den nya GEDCOM-file
 $pgv_lang["clear_cache_help"]		= "~#pgv_lang[clear_cache]#~<br /><br />För att förbättra prestandan är flera av blocken på PhpGedViews välkomstsida sparade som cache-filer i indexmappen. Cache-filerna för de flesta blocken uppdateras en gång varje dag men de finns tillfälle där man vill uppdatera dem manuellt.<br /><br />Denna knapp låter dig uppdatera cache-filerna när du vill.";
 $pgv_lang["edit_SOUR_EVEN_help"]	= "~#pgv_lang[source_events]#~<br /><br />Varje källa beskriver specifika händelser, vanligen för ett speciellt datum intervall för en orts juridiction. T.ex en folkräkning anger folkräkningshändelser och kyrkböcker anger födelse, vigsel och dödshändelser.<br /><br />Välj de händelser som är registrerade av denna källa från listan. Datumen ska anges i intervall format som <i>FRÅN 1900 TILL 1910</i>. Orten anges till den lägsta juridiska nivån för området. T.ex anges församling för kyrkböckerna och härad eller rådhusrätt för bouppteckningar eller domböcker.<br /><br />";
 $pgv_lang["cache_life_help"]		= "~#pgv_lang[cache_life]#~<br /><br />För att förbättra prestandan sparas PhpGedViews välkomstområde som en cachefil. Du kan kontrollera hur ofta denna cachefil uppdateras.<br /><br /><ul><li><b>-1</b>betyder att cachefilen aldrig uppdateras automatiskt. För att få en uppdaterad cachefilen måste du radera alla cachefiler. Du kan göra detta via ändra välkomstsidan.</li><li><b>0</b>(noll)betyder att området aldrig cachas och varje gång området visas på välkomstsidan så ser du en ny kopia. Denna inställning används automatiskt för områden som ändras ofta som #pgv_lang[logged_in_users_block]# och #pgv_lang[random_media_block]# området.</li><li><b>1</b> (ett) betyder att en ny kopia skapas varje dag, <b>2</b>betyder att en ny kopia skapas varannan dag, <b>7</b> betyder att en ny kopia skapas varje vecka, osv.</li></ul><br /><br />";
+$pgv_lang["no_update_CHAN_help"] 	= "~#pgv_lang[no_update_CHAN]#~<br />Administratörer behöver ibland rensa och rätta data inskickade av användarna. T.ex. behövs kanske PLAC orten rättas för att innehålla landet. När administratörer gör sådana ändringar så ändras informationen om den ursprungliga ändringen. Detta är kanske inte önskvärt.<br /><br />När detta val är satt kommer PhpGedView att behålla den ursprungliga ändringen istället för att ersätta den med den nuvarande. När detta val är satt  har administratören också möjlighet att ändra eller radera informationen i den ursprungliga CHAN posten.<br /><br />";
 
 ?>

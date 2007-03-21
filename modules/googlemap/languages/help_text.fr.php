@@ -3,7 +3,7 @@
  * French Language file for Google map module
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,12 +23,12 @@
  * @subpackage GoogleMap
  * @version $Id$
  */
-if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
   print "You cannot access a language file directly.";
   exit;
 }
 
-$pgv_lang["GOOGLEMAP_ENABLE"]           = "Activer GoogleMap";
+$pgv_lang["GOOGLEMAP_ENABLE"]           = "Activer Googlemap";
 $pgv_lang["GOOGLEMAP_ENABLE_help"]      = "~#pgv_lang[GOOGLEMAP_ENABLE]#~<br /><br />Option pour activer ou désactiver GoogleMap.<br/>L'onglet reste visible sur la page 'individu' mais il est vide quand l'option est déactivée. Le lien de configuration pour l'administrateur reste disponible.";
 
 $pgv_lang["GOOGLEMAP_API_KEY"]          = "Clé API Google Maps";
@@ -49,16 +49,16 @@ $pgv_lang["GOOGLEMAP_PRECISION_help"]   = "~#pgv_lang[GOOGLEMAP_PRECISION]#~<br 
 #pgv_lang["GM_DEFAULT_LEVEL_0"]         = "Default value for top-level";
 #pgv_lang["GM_DEFAULT_LEVEL_0_help"]    = "~#pgv_lang[GM_DEFAULT_LEVEL_0]#~<br /><br />Here the default level for the highest level in the place-hierarchy can be defined. If a place cannot be found this name is added as the highest level (country) and the database is searched again.";
 
-#pgv_lang["GM_NOF_LEVELS"]              = "This indicates the number of levels used within Googlemap";
+$pgv_lang["GM_NOF_LEVELS"]              = "Nombre de niveaux";
 #pgv_lang["GM_NOF_LEVELS_help"]         = "~#pgv_lang[GM_NOF_LEVELS]#~<br /><br />This field indicates the number of levels in the places-hierarchy that is being used by the Googlemap modules.<br/>The default value is 4 (Country, State, County, Place), which is usually good enough. If you want to add an extra level (for example to add specific location like cemeteries or schools) change this value. If you want to remove a level (for example county) you can also change this value, but keep in mind that the files containing the place-locations contain a 4-level structure.";
 
-#pgv_lang["GM_NAME_PREFIX"]             = "Prefix for names used on this level";
+$pgv_lang["GM_NAME_PREFIX"]             = "Préfixe";
 #pgv_lang["GM_NAME_PREFIX_help"]        = "~#pgv_lang[GM_NAME_PREFIX]#~<br /><br />This value will be added to the front of the names on this level. Multiple values can be used, seperated by semicolons";
 
-#pgv_lang["GM_NAME_POSTFIX"]            = "Postfix for names used on this level";
+$pgv_lang["GM_NAME_POSTFIX"]            = "Suffixe";
 #pgv_lang["GM_NAME_POSTFIX_help"]       = "~#pgv_lang[GM_NAME_POSTFIX]#~<br /><br />This value will be added to the back of the names on this level. Multiple values can be used, seperated by semilcolons";
 
-#pgv_lang["GM_NAME_PRE_POST"]           = "Order of the pre/postfix to use.";
+$pgv_lang["GM_NAME_PRE_POST"]           = "Ordre préfixe/suffixe";
 #pgv_lang["GM_NAME_PRE_POST_help"]      = "~#pgv_lang[GM_NAME_PRE_POST]#~<br /><br />This field indicates the order in which names are tried using the prefix and postfix. The possible values are:<br/><ul><li>No pre/postfix</li><li>Normal name, Prefix, Postfix, both</li><li>Normal name, Postfix, Prefix, both</li><li>Prefix, Postfix, both, Normal name</li><li>Postfix, Prefix, both, Normal name</li><li>Prefix, Postfix, Normal name, both</li><li>Postfix, Prefix, Normal name, both</li></ul>";
 
 $pgv_lang["PL_EDIT_LOCATION"]           = "Éditer ou effacer un lieu";
@@ -67,19 +67,19 @@ $pgv_lang["PL_EDIT_LOCATION_help"]      = "Permet d'éditer ou de supprimer un l
 $pgv_lang["PL_ADD_LOCATION"]            = "Ajouter un lieu";
 $pgv_lang["PL_ADD_LOCATION_help"]       = "Utiliser cette fonction pour ajouter une entrée à la table qui contient tous les lieux.";
 
-$pgv_lang["pl_import_gedcom"]           = "Importer depuis le GEDCOM en cours";
+$pgv_lang["PL_IMPORT_GEDCOM"]           = "Importer depuis le GEDCOM en cours";
 $pgv_lang["PL_IMPORT_GEDCOM_help"]      = "Permet d'importer des lieux depuis le GEDCOM en cours. Le GEDCOM en cours est parcouru et tous les lieux rencontrés sont ajoutées à la table de la base de données. Si une latitude et une longitude sont trouvées, celles-ci sont aussi importées.";
 
-$pgv_lang["pl_import_all_gedcom"]       = "Importer depuis tous les GEDCOMs";
+$pgv_lang["PL_IMPORT_ALL_GEDCOM"]       = "Importer depuis tous les GEDCOMs";
 $pgv_lang["PL_IMPORT_ALL_GEDCOM_help"]  = "Permet d'importer des lieux depuis tous les GEDCOMs. Tous les GEDCOMs sont parcourus et tous les lieux trouvés sont ajoutés à la table de la base de données. Si une latitude et une longitude sont trouvées, celles-ci sont aussi importées.";
 
-$pgv_lang["pl_import_file"]             = "Importer depuis un fichier";
+$pgv_lang["PL_IMPORT_FILE"]             = "Importer depuis un fichier";
 $pgv_lang["PL_IMPORT_FILE_help"]        = "Permet d'importer des lieux depuis un fichier. Ce fichier doit être au format CSV et être hébergé sur l'ordinateur local. Le séparateur de champs est le point-virgule.";
 
-$pgv_lang["pl_export_file"]             = "Exporter la vue courante vers un fichier";
+$pgv_lang["PL_EXPORT_FILE"]             = "Exporter la vue courante vers un fichier";
 $pgv_lang["PL_EXPORT_FILE_help"]        = "Permet d'exporter les lieux vers un fichier. Cette option enregistre les données de la vue en cours, ainsi que toutes les données qui en dépendent. Par exemple, si la France choisie en tant que pays et que les régions sont visibles, cette option sauvera les données de ces régions et de leurs départements, ainsi que les communes de ces départements";
 
-$pgv_lang["pl_export_all_file"]         = "Exporter tous les lieux vers un fichier";
+$pgv_lang["PL_EXPORT_ALL_FILE"]         = "Exporter tous les lieux vers un fichier";
 $pgv_lang["PL_EXPORT_ALL_FILE_help"]    = "Permet d'exporter tous les lieux vers un fichier et de le transférer vers l'ordinateur local.";
 
 // Help texts for places_edit.php

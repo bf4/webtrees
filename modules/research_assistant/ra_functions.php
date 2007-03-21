@@ -46,6 +46,7 @@ include_once("modules/research_assistant/forms/ra_privacy.php");
 include_once("modules/research_assistant/forms/ra_RSFunction.php");
 require_once("modules/research_assistant/forms/ra_RSSingleFactClass.php");
 
+
 if (file_exists($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php")) include_once($INDEX_DIRECTORY.$GEDCOM."_ra_priv.php");
 define("BASEPATH", 'modules/research_assistant/');
 $emptyfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","BAPL","CONL","ENDL","SLGC","EVEN","MARR","SLGS","MARL","ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARS","CHAN","_SEPR","RESI", "DATA", "MAP");
@@ -234,7 +235,7 @@ class ra_functions {
 			//End War Facts
 		}
 	}
-
+		
 	
 	/**
 	 * This function will make the database for the research assistant on first access.
@@ -590,7 +591,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$out .= '</table>';
 		
 	 }
-
+	 
 	/**
 	 * Gets a list of assigned users tasks
 	 * 
@@ -691,7 +692,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$task = db_cleanup($task);
 //			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.$task["t_title"].'</a></td><td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a></td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["delete"].'</a></td></tr>';
-		if (empty ($task['t_enddate']))
+			if (empty ($task['t_enddate']))
 			{
 				$completeLink = "<a href=\"module.php?mod=research_assistant&amp;action=completeTask&amp;taskid=".$task["t_id"]."\" class=\"link\">".$pgv_lang["complete"]."</a>";
 				$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td><td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td>
@@ -699,7 +700,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 						<td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["delete"].'</a></td>
 						<td class="optionbox">'.$completeLink.'</td></tr>';
 			}
-		else
+			else
 			{
 				$completeLink = '<a href="module.php?mod=research_assistant&amp;action=completeTask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["editform"].'</a>';
 				$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td><td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a></td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["delete"].'</a></td><td class="optionbox">'.$completeLink.'</td></tr>';
@@ -1047,7 +1048,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	 */
 	function getMissinginfo(& $person) {
 		global $factarray, $templefacts, $nondatefacts, $nonplacfacts, $pgv_lang;
-
+		
 		$perId = $person->getXref();
 	
 		$MissingReturn = array (); //Local var for the return string
@@ -1362,11 +1363,12 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$row = $res->fetchRow();
 		return $row[0];
 	}
-
+	
 	// call the already created get_folder() function and for each one found create a new option tag to insert into the 
 	// select tag
 	function folder_search() {
 		global $DBCONN, $TBLPREFIX, $pgv_lang;
+		//TODO: Figure out how to display folder Heiarchies correctly
 		$res = $this->get_folder("");
 		$out = "";
 		while ($row = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -1404,7 +1406,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		return $out;
 	
 	}
-
+	
 	function autoSearchFormOptions() {
 		//Load up off site search names here
 		//Auto Search Plugin: To load up a new plugin follow the format for the two entries shown below
@@ -1427,7 +1429,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			}
 		return $opts;
 	}
-
+	
 	function determineClosest(&$currentDate, $dateToCompare, $dateCompareAgainst )
 	{
 		$compareDiff;
@@ -1593,6 +1595,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 																		
 																		$compiled = array();
 																		$highest = $inferenceObj->getAverage();
+																		//print($highest."<br/>");
 																		$compiled[0] = $this->decideInferSentence($inferenceObj->getAverage(),$inferenceObj->getFactTag());
 																		$compiled[0] .= " <i>".$inferenceObj->getFactValue()."</i>";
 																		$compiled[0] .= "<br />";
@@ -1709,6 +1712,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 												$out .= "<tr><td width=\"20\" class=\"optionbox\"><a href=\"module.php?mod=research_assistant&amp;action=viewtask&amp;taskid=$taskid\">View</a></td><td class=\"optionbox\">".$tasktitle."</td></tr>\n";
 										}
 										$factLookups = $this->getPlacesFromPerson($person);
+										$person->add_family_facts(false);
 										$tempDates = $person->getIndiFacts();
 										
 										foreach($sourcesInferred as $sKey=>$sVal)
@@ -1723,7 +1727,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 													
 													if(empty($greatest))
 													{
-											
+														
 														$tempGreatest = get_gedcom_value("DATE",2,$tVal[1]);
 														print($tempGreatest);
 													}
@@ -1767,15 +1771,12 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 										}
 										
 										$genericEvents = $this->getEventsForDates($bdate,$ddate);
-										$lastPlace;
+										$lastPlace = null;
 										foreach($genericEvents as $gKey=>$gVal)
 										{
 											
 											if(!isset($sourcesPrinted[$gVal["id"]]))
 											{
-														$out .= "<tr ><td width=\"20\" class=\"optionbox\">";
-														$out .= "<input type=\"checkbox\" name=\"missingName[]\" value=\"".htmlentities($gVal["description"])."\" />";
-														$out .= "<td class=\"optionbox\">".$gVal["description"];
 														$closest = null;
 														$offset = null;
 														$place = null;
@@ -1798,19 +1799,24 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 														$temp = $closest;
 														$closest = $this->determineClosest($closest,preg_replace("/-/","",$parsedDates[0]["sort"]),$gVal["startdate"]);
 														
-														if($closest != $temp  && empty($place))
+														if($closest != $temp && !empty($tempPlace))
 														{
-															
 															$place = $tempPlace;
 															$lastPlace = $place;	
 														}
 																											
 													}
 												}
+												
+												$out .= "<tr ><td width=\"20\" class=\"optionbox\">";
+												$out .= "<input type=\"checkbox\" name=\"missingName[]\" value=\"".htmlentities($gVal["description"])." ".$place."\" />";
+												$out .= "<td class=\"optionbox\">".$gVal["description"];
 												if(empty($place))
 												{
-													
-													$out .= "<br/>".$pgv_lang["TheMostLikely"]." <i>".$lastPlace."</i>";
+													if(!empty($lastPlace))
+													{													
+														$out .= "<br/>".$pgv_lang["TheMostLikely"]." <i>".$lastPlace."</i>";
+													}
 												}
 												else
 												{
@@ -1822,7 +1828,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 									
 									
 										// Create the selection box and add all the folder names and values
-										$out .= "<tr><td class=\"optionbox\" colspan=\"2\" align=\"center\"><h5>".$pgv_lang['folder']."&nbsp;&nbsp;</h><select name=\"folder\">";
+										$out .= "<tr><td class=\"optionbox\" colspan=\"2\" align=\"center\"><h5>".$pgv_lang['Folder']."&nbsp;&nbsp;</h><select name=\"folder\">";
 										$out .= $this->folder_search();
 										$out .= "</select></td></tr>";
 										$out .= "<tr><td colspan=\"2\" class=\"topbottombar\"><input type=\"submit\" value=\"".$pgv_lang["AddTask"]."\" /></td></tr>
@@ -1894,7 +1900,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$out .= '</td></tr><tr><td class="topbottombar">';
 		$out .= '<form action="" onsubmit="return false;">
 				<input type="button" value="'.$pgv_lang["add_new_comment"].'" onclick="window.open(\'editcomment.php?pid='.$person->getXref().'\', \'\',\'top=50,left=50,width=600,height=400,resizable=1,scrollbars=1\');"></form>';
-		$out .= '</td></tr></table>';
+		$out .= '</td></tr></table>';		
 		$out .= "\n\t<br /><br />";
 		// Return the goods.		 	
 		return $out;
@@ -1963,31 +1969,45 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	{
 		global $pgv_lang;
 		if($fact == "BIRT:PLAC")
-		{	$percentage = sprintf("%.2f%%",$percentage * 100);
+		{
+			
+			$percentage = sprintf("%.2f%%",$percentage * 100);
+			
 			$tempOut = $pgv_lang["InferIndvBirthPlac"];
 			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
 			return $tempOut;
 		}
 		if($fact == "DEAT:PLAC")
-		{	$percentage = sprintf("%.2f%%",$percentage * 100);
+		{	
+			
+			$percentage = sprintf("%.2f%%",$percentage * 100);
+			
 			$tempOut = $pgv_lang["InferIndvDeathPlac"];
 			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
 			return $tempOut;
 		}
 		if($fact == "SURN")
-		{	$percentage = sprintf("%.2f%%",$percentage * 100);
+		{	
+			$percentage = sprintf("%.2f%%",$percentage * 100);
+			
 			$tempOut = $pgv_lang["InferIndvSurn"];
 			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
 			return $tempOut;
 		}
 		if($fact == "MARR:PLAC")
-		{	$percentage = sprintf("%.2f%%",$percentage * 100);
+		{	
+			
+			$percentage = sprintf("%.2f%%",$percentage * 100);
+			
 			$tempOut = $pgv_lang["InferIndvMarriagePlace"];
 			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
 			return $tempOut;
 		}
 		if($fact == "GIVN")
-		{	$percentage = sprintf("%.2f%%",$percentage * 100);
+		{	
+			
+			$percentage = sprintf("%.2f%%",$percentage * 100);
+			
 			$tempOut = $pgv_lang["InferIndvGivn"];
 			$tempOut = preg_replace("/%PERCENT%/",$percentage,$tempOut);
 			return $tempOut;

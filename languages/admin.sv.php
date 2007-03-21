@@ -25,7 +25,8 @@
  * @subpackage Languages
  * @version $Id$
  */
-if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
@@ -69,7 +70,6 @@ $pgv_lang["created_placelinks_fail"]	= "Kan inte skapa <i>ortlänkstabellen</i>.
 $pgv_lang["created_media_fail"]	= "Kan inte skapa <i>Mediatabell</i>.";
 $pgv_lang["created_media_mapping_fail"]	= "Kan inte skapa <i>Mediamappningstabellen.</i>";
 $pgv_lang["no_thumb_dir"]		= "miniatyrbildsmappen existerar inte och det gick inte att skapa en.";
-$pgv_lang["move_to"]			= "Flytta till";
 $pgv_lang["folder_created"]		= "Skapad mapp";
 $pgv_lang["folder_no_create"]		= "Kan inte skapa mapp";
 $pgv_lang["security_no_create"]	= "Säkerhetsvarning: Filen <b><i>index.php</i></b> finns inte i ";
@@ -296,6 +296,13 @@ $pgv_lang["gedcheck_text"]= 	"Denna modul kontrollera formatet i GEDCOM-filen mo
 $pgv_lang["level"]        = "Nivå";
 $pgv_lang["tag"]          = "tag";
 $pgv_lang["spacing"]      = "mellanrum";
+$pgv_lang["ADVANCED_NAME_FACTS"] = "Avancerade namnfakta";
+$pgv_lang["ADVANCED_PLAC_FACTS"] = "Avancerade ortsnamnfakta";
+$pgv_lang["SURNAME_TRADITION"] = "Efternamnstradition";
+$pgv_lang["spanish"]           = "Spanska";
+$pgv_lang["portuguese"]        = "Portugisiska";
+$pgv_lang["icelandic"]         = "Isländska";
+$pgv_lang["paternal"]          = "Faders";
 $pgv_lang["critical"]     = "Kritiskt";
 $pgv_lang["error"]        = "Fel";
 $pgv_lang["warning"]      = "Varning";

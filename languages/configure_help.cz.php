@@ -23,10 +23,12 @@
  * @author Jan Hapala
  * @version $Id$
  */
-if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Nemáte přímý přístup k souboru s češtinou.";
 	exit;
 }
+
 //-- ZPRÁVY KONFIGURAČNÍHO SOUBORU
 $pgv_lang["configure"]			= "Konfigurace PhpGedView";
 $pgv_lang["standard_conf"]		= "Standardní nastavení";

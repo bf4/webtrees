@@ -24,10 +24,12 @@
  * @author Ricardo Lago
  * @version $Id$
  */
-if (preg_match("/facts\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Usted no puede acceder a este archivo de idioma directamente.";
 	exit;
 }
+
 // -- Define a fact array to map GEDCOM tags with their argentinian spanish values
 $factarray["ABBR"] = "Abreviatura";
 $factarray["ADDR"] = "Dirección";

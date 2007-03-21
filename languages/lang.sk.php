@@ -9,10 +9,12 @@
    Change Log:	See LANG_CHANGELOG.txt
 ===================================================*/
 # $Id$
-if (preg_match("/lang\...\.php$/", $_SERVER["PHP_SELF"])>0) {
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Nemáte priamy prístup k súboru so slovenčinou.";
 	exit;
 }
+
 //-- GENERAL HELP MESSAGES
 $pgv_lang["qm"]				= "?";
 $pgv_lang["qm_ah"]			= "?";

@@ -585,5 +585,7 @@ else
 <?php
 
 echo "<br /><br /><br />";
+//-- somewhere the session gedcom gets changed, so we will change it back
+$_SESSION['GEDCOM'] = $GEDCOM;
 print_footer();
 ?>

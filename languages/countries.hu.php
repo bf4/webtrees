@@ -38,10 +38,12 @@
  * @package PhpGedView
  * @subpackage Languages
  */
-if (preg_match("/countries\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "A nyelvi fájl közvetlenül nem érhető el.";
 	exit;
 }
+
 $countries["ABW"]="Aruba";
 	$countries["ACA"]="Acadia";
 $countries["AFG"]="Afganisztán";

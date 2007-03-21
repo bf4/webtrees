@@ -23,6 +23,12 @@
  * @subpackage DataModel
  * @version $Id$
  */
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 require_once 'includes/gedcomrecord.php';
 require_once 'includes/family_class.php';
 
@@ -105,6 +111,15 @@ class Person extends GedcomRecord {
 		if (empty($indirec)) return null;
 		$person = new Person($indirec, $simple);
 		if (!empty($fromfile)) $person->setChanged(true);
+		//-- update the cache
+		if ($person->isRemote()) {
+			global $indilist, $GEDCOM, $GEDCOMS;
+			$indilist[$pid]['gedcom'] = $person->gedrec;
+			$indilist[$pid]['names'] = get_indi_names($person->gedrec);
+			$indilist[$pid]["isdead"] = is_dead($person->gedrec);
+			$indilist[$pid]["gedfile"] = $GEDCOMS[$GEDCOM]['id'];
+			if (isset($indilist[$pid]['privacy'])) unset($indilist[$pid]['privacy']);
+		}
 		$indilist[$pid]['object'] = &$person;
 		return $person;
 	}
@@ -781,6 +796,7 @@ class Person extends GedcomRecord {
 	}
 	/**
 	 * add facts from the family record
+	 * @param boolean $otherfacts	whether or not to add other related facts such as parents facts, associated people facts, and historical facts
 	 */
 	function add_family_facts($otherfacts = true) {
 		global $GEDCOM, $nonfacts, $nonfamfacts;

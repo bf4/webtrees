@@ -23,10 +23,12 @@
  * @author Kurt Norgaz
  * @version $Id$
  */
-if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
+
 $pgv_lang["continue_import2"]		= "Tarih verilerini okumaya devam et";
 $pgv_lang["importing_dates"]		= "Tarih verileri okunuyor";
 $pgv_lang["changelog"]			= "v#VERSION# sürümündeki değişiklikler";

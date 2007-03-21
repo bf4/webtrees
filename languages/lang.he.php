@@ -25,10 +25,12 @@
  * @subpackage Languages
  * @version $Id$
  */
-if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "אין לך גישה לתיקיית קובצי השפות.";
 	exit;
 }
+
 $pgv_lang["invalid_search_input"] 		= "הכנס בבקשה שם פרטי, שם משפחה או מקום בנוסף לשנה";
 $pgv_lang["duplicate_username"]		= "קוד משתמש כפול. משתמש עם קוד זה מוגדר כבר. נא בחר קוד משתמש אחר.";
 $pgv_lang["cache_life"]			= "חיי קובץ ה-Cache"; 
@@ -267,10 +269,12 @@ $pgv_lang["for_support"]		= " לעזרה טכנית נא להתקשר אל";
 $pgv_lang["for_contact"]		= "לשאלות בקשר לשושלת יוחסין נא להתקשר אל";
 $pgv_lang["for_all_contact"]		= "לעזרה טכנית או שאלות בקשר לשושלת יוחסין נא להתקשר אל";
 $pgv_lang["build_error"]		= "קובץ ה-GEDCOM עודכן.";
+$pgv_lang["choose_username"]		= "קוד משתמש רצוי"; 
 $pgv_lang["username"]		= "קוד משתמש";
 $pgv_lang["invalid_username"]		= "קוד המשתמש מכיל סימנים לא חוקיים";
 $pgv_lang["firstname"]		= "שם פרטי";
 $pgv_lang["lastname"]		= "שם משפחה";
+$pgv_lang["choose_password"]	= "סיסמא רצוייה"; 
 $pgv_lang["password"]		= "סיסמא";
 $pgv_lang["confirm"]			= "אשר סיסמא";
 $pgv_lang["login"]			= "התחבר";

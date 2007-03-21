@@ -24,7 +24,12 @@
  * @version $Id$
  */
 
-//-- version of phpgedview  (Let's keep this in an obvious place -- not buried in code)
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
+//-- version of PhpGedView  (Let's keep this in an obvious place -- not buried in code)
 $VERSION = "4.2";
 $VERSION_RELEASE = "alpha";
 $REQUIRED_PRIVACY_VERSION = "3.1";

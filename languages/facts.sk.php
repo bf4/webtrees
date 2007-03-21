@@ -9,10 +9,12 @@
    Change Log:	8/5/02 - File Created
 ===================================================*/
 # $Id$
-if (preg_match("/facts\...\.php$/", $_SERVER["PHP_SELF"])>0) {
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Nemáte priamy prístup k súboru so slovenčinou.";
 	exit;
 }
+
 // -- Priraďte údaju v poli (Gedcom kódu) jeho slovenský význam
 $factarray["ABBR"]	= "Skratka";
 $factarray["ADDR"]	= "Adresa";

@@ -23,10 +23,12 @@
  * @author Patrik Hansson
  * @version $Id$
  */
-if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
+
 //-- GENERAL HELP MESSAGES
 $pgv_lang["qm"]					= "?";
 $pgv_lang["qm_ah"]				= "?";
@@ -48,10 +50,12 @@ $pgv_lang["for_support"]		= "För teknisk support och information kontakta";
 $pgv_lang["for_contact"]		= "För hjälp med släktfrågor kontakta";
 $pgv_lang["for_all_contact"]	= "För teknisk support eller släktfrågor kontakta";
 $pgv_lang["build_error"]		= "GEDCOM-filen har blivit uppdaterad.";
+$pgv_lang["choose_username"]		= "Önskat användarnamn";
 $pgv_lang["username"]			= "Användarnamn";
 $pgv_lang["invalid_username"]	= "Användarnamn innehåller ogiltiga tecken";
 $pgv_lang["firstname"]				= "Förnamn";
 $pgv_lang["lastname"]				= "Efternamn";
+$pgv_lang["choose_password"]		= "Önskat lösenord";
 $pgv_lang["password"]			= "Lösenord";
 $pgv_lang["confirm"]            = "Bekräfta lösenord";
 $pgv_lang["login"]				= "Logga in";
@@ -1325,4 +1329,5 @@ $pgv_lang["duplicate_username"] 	= "En avändare med detta användarnamn finns r
 $pgv_lang["cache_life"]				= "Cachefils livslängd";
 $pgv_lang["genealogy"]					= "genealogi";
 $pgv_lang["view_img_details"]		= "Visa bilddetaljer";
+$pgv_lang["invalid_search_input"] 	= "Var vänlig och skriv in ett förnamn, efternamn eller ort tillsammans med ett årtal";
 ?>

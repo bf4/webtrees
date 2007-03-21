@@ -23,6 +23,11 @@
  * @version $Id$
  */
 
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 class Menu
 {
 	var $seperator = false;

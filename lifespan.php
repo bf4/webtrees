@@ -28,15 +28,6 @@
  * @version $Id$
  */
 
-/**
- * to get data out of a GEDCOM record
- * $record = "1 BIRT
- * 2 DATE 1900
- * 2 PLAC Someplace";
- * 
- * $birtdate = get_gedcom_value("DATE", 2, $record);
- * $place = get_gedcom_value("PLAC", 2, $record);
- */
 require_once("includes/controllers/lifespan_ctrl.php");
 $zoomfactor = 10;
 //if peeps !null then pass new array for zooming
@@ -134,30 +125,7 @@ function zoom(move){
 		increase = zoomfactor + 10;
 		numOfIncrease += 1;
 		
-//		zoomTimeLine = document.getElementById("topInner");
-//		widthLine = zoomTimeLine.offsetWidth;
-//		heightLine = zoomTimeLine.offsetHeight;
-//		
-//		widthLine = widthLine * 1.1;
-//		heightLine = heightLine * 1.1;
-		
-		
 		temp = document.getElementById("inner");
-//		temp2 = document.getElementById("topInner");
-//		
-//		for(i=0; i<temp2.childNodes.length; i++){
-//		
-//			if(temp2.childNodes[i].tagName=="DIV"){
-//				left = temp2.childNodes[i].offsetLeft;
-//				
-//				left = left += 10;
-//			}
-//			
-//			temp2.childNodes[i].style.left = left+'px';
-//		}
-//		
-//		width = temp2.offsetWidth;
-//		width = width * 1.1;
 		
 		for(i=0; i<temp.childNodes.length; i++) {
 		
@@ -191,30 +159,6 @@ function zoom(move){
 		decrease = zoomfactor - 10;
 		numOfIncrease -= 1;
 		
-//		zoomTimeLine = document.getElementById("topInner");
-//		widthLine = zoomTimeLine.offsetWidth;
-//		heightLine = zoomTimeLine.offsetHeight;
-//		
-//		widthLine = widthLine * 0.9;
-//		heightLine = heightLine * 0.9;
-		
-//		temp = document.getElementById("inner");
-//		temp2 = document.getElementById("topInner");
-//		
-//		for(j=0; j<temp2.childNodes.length; j++){
-
-//			if(temp2.childNodes[j].tagName=="DIV"){
-//				left = temp2.childNodes[j].offsetLeft;
-//				
-//				left = left -= 10;
-//			}
-//			
-//			temp2.childNodes[j].style.left = left+'px';
-//		}
-		
-//		width = temp2.offsetWidth;
-//		width = width * 0.9;
-		
 		for(i=0; i<temp.childNodes.length; i++) {
 			 if(temp.childNodes[i].tagName=="DIV") {
 			 	width = temp.childNodes[i].offsetWidth;
@@ -243,8 +187,6 @@ function zoom(move){
 		}
 	}
 }
-//Nicole NOTE: this should reset the zoom values to start again from the beginning
-//this isn't being used right now. I don't think we'll actually need this
 function reset(){
 	if(numOfIncrease >= 5){
 	temp = document.getElementById("inner");
@@ -277,23 +219,6 @@ function reset(){
 		zoomfactor = 10;
 	}
 }
-
-//this is just me playing around to see if i can find a way to increase the images for the timeline
-//var nW,nH,oH,oW;
-//
-//function zoomToggle(iWideSmall,iHighSmall,iWideLarge,iHighLarge,whichImage){
-//	
-//	oW=whichImage.style.width;oH=whichImage.style.height;
-//	
-//	if((oW==iWideLarge)||(oH==iHighLarge)){
-//		nW=iWideSmall;nH=iHighSmall;
-//	
-//		else{
-//		nW=iWideLarge;nH=iHighLarge;
-//	}
-//	
-//	whichImage.style.width=nW;whichImage.style.height=nH;
-//}
 
 //method used to stop scrolling
 function stopScroll()
@@ -392,7 +317,7 @@ var oldMx = 0;
 </form>
 <?php } ?>
 </td></tr></table>
-<div dir="ltr" id="outerDiv" class="lifespan_outer">
+<div dir="ltr" id="outerDiv" class="lifespan_outer" <?php if ($controller->isPrintPreview()) { ?>style="overflow: visible; border: none;"<?php } ?>>
 	<div dir="ltr" id="topInner"  class="lifespan_timeline" onmousedown="pandiv(); return false;">		
 	<?php $controller->PrintTimeline($controller->timelineMinYear,$controller->timelineMaxYear); ?>
 	</div>
@@ -401,10 +326,11 @@ var oldMx = 0;
 	<?php 	
 	?>
 	
-	</div>
+	</div> 
+	<?php if (!$controller->isPrintPreview()) { ?>
 	<!--  Floating div controls START -->
-<div dir="ltr" style="position:relative; margin-top: 10%; z-index: 100; filter: alpha(opacity=67); -moz-opacity: 0.67;  opacity: 0.67; width:160px;">
-  	<table style="margin-left: 20px" dir="ltr">
+<div dir="ltr" style="position:relative; z-index: 100; filter: alpha(opacity=67); -moz-opacity: 0.67;  opacity: 0.67; width:180px; top: 80px;">
+  	<table style="margin-left: 20px" dir="ltr" colspan="0" border="0" cellpadding="0">
   	<tr>
   	  <td></td>
       <td colspan="2" align="center"><a href="#" onclick="return false;" onmousedown="startScroll('up')" onmouseup="stopScroll()"><img src="<?php print $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["lsuparrow"]["other"]; ?>" border="0" alt="" /></a></td>
@@ -412,8 +338,8 @@ var oldMx = 0;
     </tr>
     <tr>
        <td><a href="#" onclick="return false;" onmousedown="startScroll('right')" onmouseup="stopScroll()"><img src="<?php print $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["lsltarrow"]["other"]; ?>" border="0" alt="" /></a></td>
-  		<td align="center"><a href="#" onclick="return false;" onmousedown="startZoom('increase')"><img src="<?php print $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["zoomin"]["other"]; ?>" border="0" alt="" /></a></td>
-  		<td align="center"><a href="#" onclick="return false;" onmousedown="startZoom('decrease')"><img src="<?php print $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["zoomout"]["other"]; ?>" border="0" alt="" /></a></td>
+  		<td align="center"><!-- <a href="#" onclick="return false;" onmousedown="startZoom('increase')"><img src="<?php print $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["zoomin"]["other"]; ?>" border="0" alt="" /></a> --></td>
+  		<td align="center"><!-- <a href="#" onclick="return false;" onmousedown="startZoom('decrease')"><img src="<?php print $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["zoomout"]["other"]; ?>" border="0" alt="" /></a> --></td>
       <td><a href="#" onclick="return false;" onmousedown="startScroll('left')" onmouseup="stopScroll()"><img src="<?php print $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["lsrtarrow"]["other"]; ?>" border="0" alt="" /></a></td>
     </tr>
     <tr>
@@ -424,6 +350,7 @@ var oldMx = 0;
 	</table>
 </div>
 	<!--  Floating div controls END-->
+	<?php } ?>
 </div>
 <script language="JavaScript" type="text/javascript">
 <!--
@@ -432,5 +359,5 @@ var maxX = <?php if(!isset($maxX)) $maxX = 0; print $maxX; ?>;  // Sets the boun
 
 //-->
 </script>
-
+	
 <?php print_footer(); ?>

@@ -27,6 +27,12 @@
  * @package PhpGedView
  * @subpackage Lists
  */
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 require_once 'includes/functions_print_lists.php';
 class stats
 {

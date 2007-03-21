@@ -172,7 +172,7 @@ if ($action=="edituser2") {
 	      frm.pass1.focus();
 	      return false;
 	    }
-	    if (frm.pass1.value.length < 6) {
+	    if (frm.pass1.value.length > 0 && frm.pass1.value.length < 6) {
 	      alert("<?php print $pgv_lang["passwordlength"]; ?>");
 	      frm.pass1.value = "";
 	      frm.pass2.value = "";

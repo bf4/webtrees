@@ -25,7 +25,7 @@
  * @author Julien Damon
  * @version $Id$
  */
-if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
@@ -90,7 +90,6 @@ $pgv_lang["created_placelinks_fail"]    = "Impossible de créer la table <i>Plac
 $pgv_lang["created_media_fail"]         = "Impossible de créer la table <i>Media</i>";
 $pgv_lang["created_media_mapping_fail"] = "Impossible de créer la table <i>Media mappings</i>";
 $pgv_lang["no_thumb_dir"]               = " impossible de créer le dossier vignettes";
-$pgv_lang["move_to"]                    = "Déplacer vers --&gt;";
 $pgv_lang["folder_created"]             = "Dossier créé";
 $pgv_lang["folder_no_create"]           = "Impossible de créer le dossier";
 $pgv_lang["security_no_create"]         = "Avertissement concernant la sécurité : fichier index.php absent du dossier ";
@@ -151,8 +150,8 @@ $pgv_lang["DEFAULT_GEDCOM"]             = "Fichier GEDCOM par défaut";
 $pgv_lang["default_user"]               = "Création de l'administrateur par défaut.";
 #pgv_lang["del_gedrights"]              = "GEDCOM no longer active, remove user references.";
 $pgv_lang["del_proceed"]                = "Continuer";
-$pgv_lang["del_unvera"]                 = "Compte non vérifié par un deadministrateur.";
-#pgv_lang["del_unveru"]                 = "User didn't verify within 7 days.";
+$pgv_lang["del_unvera"]                 = "Compte non vérifié par un administrateur.";
+$pgv_lang["del_unveru"]                 = "Compte non vérifié sous 7 jours.";
 $pgv_lang["do_not_change"]              = "Ne pas modifier";
 $pgv_lang["download_file"]              = "Télécharger le fichier sur votre système (<i>Download</i>)";
 $pgv_lang["download_gedcom"]            = "Recevoir le fichier GEDCOM sur votre système (download)";
@@ -191,7 +190,8 @@ $pgv_lang["import_statistics"]          = "Statistiques d'importation";
 $pgv_lang["import_time_exceeded"]       = "Dépassement de la limite de temps d'exécution.";
 $pgv_lang["inc_languages"]              = " Langues";
 $pgv_lang["INDEX_DIRECTORY"]            = "Répertoire des fichiers d'index";
-$pgv_lang["invalid_dates"]              = "Les dates de mauvais format seront transformés en JJ MMM AAAA (ie. 1 JAN 2004).";
+$pgv_lang["invalid_dates"]              = "Les dates de mauvais format seront transformées en JJ MMM AAAA (ie. 1 JAN 2004).";
+$pgv_lang["BOM_detected"]               = "Marqueur Byte Order Mark (BOM) trouvé en début de fichier. Il sera supprimé.";
 $pgv_lang["invalid_header"]             = "Lignes trouvées avant le premier marqueur GEDCOM (0 HEAD). Au chargement, elles seront supprimées.";
 $pgv_lang["label_add_server"]           = "Ajouter";
 $pgv_lang["label_add_search_server"]    = "Ajouter IP";
@@ -339,4 +339,12 @@ $pgv_lang["see"]                        = "voir";
 $pgv_lang["noref"]                      = "aucun lien vers cet enregistrement";
 $pgv_lang["tag"]                        = "balise";
 $pgv_lang["spacing"]                    = "espacement";
+$pgv_lang["ADVANCED_NAME_FACTS"]        = "Options avancées pour le nom de famille";
+$pgv_lang["ADVANCED_PLAC_FACTS"]        = "Options avancées pour le lieu";
+$pgv_lang["SURNAME_TRADITION"]          = "Mode de transmission du nom"; // Default surname inheritance
+$pgv_lang["spanish"]                    = "Façon Espagnole";
+$pgv_lang["portuguese"]                 = "Façon Portugaise";
+$pgv_lang["icelandic"]                  = "Façon Islandaise";
+$pgv_lang["paternal"]                   = "Nom du père (défaut)";
+
 ?>

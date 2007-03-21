@@ -25,7 +25,7 @@
  * @version $Id$
  */
 
-if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.<br /><br />";
 	exit;
 }

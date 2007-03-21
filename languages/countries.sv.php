@@ -39,10 +39,12 @@
  * @subpackage Languages
  * @version $Id$
  */
-if (preg_match("/countries\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-		print "You cannot access a language file directly.";
-		exit;
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access a language file directly.";
+	exit;
 }
+
 $countries["ABW"]="Aruba";
 $countries["ACA"]="Acadia";
 $countries["AFG"]="Afghanistan";
@@ -257,7 +259,6 @@ $countries["QAT"]="Qatar";
 
 $countries["REU"]="Reunion";
 $countries["ROM"]="Rumänien";
-$countries["ROU"]="Uruguay";
 $countries["RUS"]="Ryssland";
 $countries["RWA"]="Rwanda";
 

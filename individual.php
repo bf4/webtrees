@@ -67,41 +67,40 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 		<?php if ($controller->indi->canDisplayDetails()) { ?>
 		<table><tr>
 		<?php
-			$i=0;
-			$maxi=0;
-			$globalfacts = $controller->getGlobalFacts();
-			foreach ($globalfacts as $key => $value) {
-				$ft = preg_match("/\d\s(\w+)(.*)/", $value[1], $match);
-				if ($ft>0) $fact = $match[1];
-				else $fact="";
-				$fact = trim($fact);
-				if ($fact=="SEX") $controller->print_sex_record($value[1], $value[0]);
-				if ($fact=="NAME") $controller->print_name_record($value[1], $value[0]);
-				$FACT_COUNT++;
-				print "<td width=\"10\"><br /></td>\n";
-				$i++;
-				$maxi++;
-				if ($i>3) {
-					print "</tr><tr>";
-					$i=0;
-				}
-			}
+			$col=0; $maxcols=7;	// 4 with data and 3 spacers
+			$globalfacts=$controller->getGlobalFacts();
+			foreach (array('NAME','SEX') as $fact)
+				foreach ($globalfacts as $value)
+			 		if (preg_match("/^1\s+$fact\s/", $value[1])) {
+						if ($col>0) {
+							print "<td width=\"10\"><br /></td>\n";
+							++$col;
+						}
+						if ($fact=="SEX") $controller->print_sex_record($value[1], $value[0]);
+						if ($fact=="NAME") $controller->print_name_record($value[1], $value[0]);
+						++$col;
+						$FACT_COUNT++;
+						if ($col==$maxcols) {
+							print "</tr><tr>";
+							$col=0;
+						}
+					}
 			//-- - put the birth info in this section
 			$birthrec = $controller->indi->getBirthRecord(false);
 			$deathrec = $controller->indi->getDeathRecord(false);
 			if ((!empty($birthrec)) || (!empty($deathrec)) || $SHOW_LDS_AT_GLANCE) {
-				$colspan = 0;
-				if ($i<$maxi) $colspan = $maxi-$i;
-			?>
-			<td valign="top" colspan="<?php print $colspan; ?>">
-			<?php if (!empty($birthrec)) { ?>
-				<span class="label"><?php print $factarray["BIRT"].":"; ?></span>
-				<span class="field">
-					<?php print_fact_date($birthrec); ?>
-					<?php print_fact_place($birthrec); ?>
-				</span><br />
-			<?php } ?>
-			<?php
+				print "<td width=\"10\"><br /></td>\n";
+				++$col;
+				?>
+				<td valign="top" colspan="<?php print $maxcols-$col; ?>">
+				<?php if (!empty($birthrec)) { ?>
+					<span class="label"><?php print $factarray["BIRT"].":"; ?></span>
+					<span class="field">
+						<?php print_fact_date($birthrec); ?>
+						<?php print_fact_place($birthrec); ?>
+					</span><br />
+				<?php } ?>
+				<?php
 				// RFE [ 1229233 ] "DEAT" vs "DEAT Y"
 				// The check $deathrec != "1 DEAT" will not show any records that only have 1 DEAT in them
 				if ((!empty($deathrec)) && (trim($deathrec) != "1 DEAT")) {

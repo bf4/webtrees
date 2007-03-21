@@ -24,10 +24,12 @@
  * @author Daniel Melander
  * @version $Id$
  */
-if (preg_match("/facts\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
+
 // -- Define a fact array to map GEDCOM tags with their swedish values
 $factarray["ABBR"] = "Förkortning";
 $factarray["ADDR"] = "Adress";
@@ -179,6 +181,7 @@ $factarray["DEAT:PLAC"] = "Dödsort";
 $factarray["CHR:PLAC"] = "Doport";
 $factarray["BAPM:PLAC"] = "Doport";
 $factarray["BURI:PLAC"] = "Begravnigsort";
+$factarray["MARR:PLAC"] = "Vigselort";
 $factarray["_THUM"]	= "Använd denna bild som miniatyr?";
 
 // These facts are specific to GEDCOM exports from Family Tree Maker
@@ -239,6 +242,7 @@ $factarray["_HOL"]  = "Judeförintelsen";
 $factarray["_WEIG"] = "Vikt";
 $factarray["_YART"] = "Yartzeit";
 $factarray["_MARNM"]	= "Vigselnamn";
+$factarray["_MARNM_SURN"] = "Efternamn som vigd";
 $factarray["_STAT"]	= "Vigselstatus";
 $factarray["COMM"]	= "Kommentar";
 $factarray["MARR_CIVIL"] = "Borglig vigsel";

@@ -23,10 +23,12 @@
  * @author Arturas Sleinius
  * @version $Id$
  */
-if (preg_match("/lang\...\.php$/", $_SERVER["PHP_SELF"])>0) {
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
+
 //-- GENERAL HELP MESSAGES
 $pgv_lang["password"]				= "Slaptažodis";
 $pgv_lang["confirm"]				= "Patvirtinkite slaptažodį";

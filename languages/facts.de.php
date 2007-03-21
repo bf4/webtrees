@@ -26,10 +26,12 @@
  * @author Peter Pluntke
  * @version $Id$
  */
-if (preg_match("/facts\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
 	exit;
 }
+
 // -- Define a fact array to map GEDCOM tags with their German values
 $factarray["ABBR"]	= "Abkürzung";
 $factarray["ADDR"]	= "Adresse";
@@ -258,6 +260,7 @@ $factarray["_PRMN"]	= "permanente Nummer";
 $factarray["_WEIG"]	= "Gewicht";
 $factarray["_YART"]	= "Yartzeit";
 $factarray["_MARNM"]	= "Ehename";
+$factarray["_MARNM_SURN"] = "Nachname nach der Ehe";
 $factarray["_STAT"] = "Familienstand";
 $factarray["COMM"]	= "Bemerkung";
 

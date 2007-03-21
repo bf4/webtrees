@@ -23,10 +23,12 @@
  * @author Nicholas G. Antimisiaris
  * @version $Id$
  */
-if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-   print "You cannot access a language file directly.";
-   exit;
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access a language file directly.";
+	exit;
 }
+
 //-- CONFIGURE FILE MESSAGES
 $pgv_lang["configure"]					= "Διαμόρφωση PhpGedView";
 $pgv_lang["standard_conf"]				= "Βασικές Επιλογές Διαμόρφωσης";

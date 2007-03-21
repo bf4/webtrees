@@ -24,10 +24,17 @@
  * @subpackage Charts
  * @version $Id$
  */
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 require_once ("config.php");
 require_once ("includes/functions_charts.php");
 require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/person_class.php';
+
 function compare_people($a, $b) {
 	return ($a->getBirthYear() - $b->getBirthYear());
 }
@@ -49,7 +56,7 @@ class LifespanControllerRoot extends BaseController {
 
 	// The following colours are deliberately omitted from the $colors list:
 	// Blue, Red, Black, White, Green
-	var $colors = array ('Aliceblue', ' Antiquewhite', 'Aqua', ' Aquamarine', ' Azure', ' Beige', ' Bisque', ' Blanchedalmond', ' Blueviolet', ' Brown', ' Burlywood', ' Cadetblue', ' Chartreuse', ' Chocolate', ' Coral', ' Cornflowerblue', ' Cornsilk', ' Crimson', ' Cyan', ' Darkcyan', ' Darkgoldenrod', ' Darkgray', ' Darkgreen', ' Darkkhaki', ' Darkmagenta', ' Darkolivegreen', ' Darkorange', ' Darkorchid', ' Darkred', ' Darksalmon', ' Darkseagreen', ' Darkslateblue', ' Darkturquoise', ' Darkviolet', ' Deeppink', ' Deepskyblue', ' Dimgray', ' Dodgerblue', ' Firebrick', ' Floralwhite', ' Forestgreen', ' Fuchsia', ' Gainsboro', ' Ghostwhite', ' Gold', ' Goldenrod', ' Gray', ' Greenyellow', ' Honeydew', ' Hotpink', ' Indianred', ' Ivory', ' Khaki', ' Lavender', ' Lavenderblush', ' Lawngreen', ' Lemonchiffon', ' Lightblue', ' Lightcoral', ' Lightcyan', ' Lightgoldenrodyellow', ' Lightgreen', ' Lightgrey', ' Lightpink', ' Lightsalmon', ' Lightseagreen', ' Lightskyblue', ' Lightslategray', ' Lightsteelblue', ' Lightyellow', ' Lime', ' Limegreen', ' Linen', ' Magenta', ' Maroon', ' Mediumaqamarine�', '� Mediumblue�', '� Mediumorchid�', '� Mediumpurple�', '� Mediumseagreen', ' Mediumslateblue', ' Mediumspringgreen', ' Mediumturquoise', ' Mediumvioletred', 'Mintcream', ' Mistyrose', ' Moccasin', ' Navajowhite', ' Oldlace', ' Olive', ' Olivedrab', ' Orange', ' Orangered', ' Orchid', ' Palegoldenrod', ' Palegreen', ' Paleturquoise', ' Palevioletred', ' Papayawhip', ' Peachpuff', ' Peru', ' Pink', ' Plum', ' Powderblue', ' Purple', ' Rosybrown', ' Royalblue', ' Saddlebrown', ' Salmon', ' Sandybrown', ' Seagreen', ' Seashell', ' Sienna', ' Silver', ' Skyblue', ' Slateblue', ' Slategray', ' Snow', ' Springgreen', ' Steelblue', ' Tan', ' Teal', ' Thistle', ' Tomato', ' Turquoise', ' Violet', ' Wheat', ' Whitesmoke', ' Yellow', ' YellowGreen');
+	var $colors = array ('Aliceblue', ' Antiquewhite', 'Aqua', ' Aquamarine', '	Azure', ' Beige', ' Bisque', ' Blanchedalmond', ' Blueviolet', ' Brown', ' Burlywood', ' Cadetblue', ' Chartreuse', ' Chocolate', ' Coral', ' Cornflowerblue', ' Cornsilk', ' Crimson', ' Cyan', ' Darkcyan', ' Darkgoldenrod', ' Darkgray', ' Darkgreen', ' Darkkhaki', ' Darkmagenta', ' Darkolivegreen', ' Darkorange', ' Darkorchid', ' Darkred', ' Darksalmon', ' Darkseagreen', ' Darkslateblue', ' Darkturquoise', ' Darkviolet', ' Deeppink', ' Deepskyblue', ' Dimgray', ' Dodgerblue', ' Firebrick', ' Floralwhite', ' Forestgreen', ' Fuchsia', ' Gainsboro', ' Ghostwhite', ' Gold', ' Goldenrod', ' Gray', ' Greenyellow', ' Honeydew', ' Hotpink', ' Indianred', ' Ivory', ' Khaki', ' Lavender', ' Lavenderblush', ' Lawngreen', ' Lemonchiffon', ' Lightblue', ' Lightcoral', ' Lightcyan', ' Lightgoldenrodyellow', ' Lightgreen', ' Lightgrey', ' Lightpink', ' Lightsalmon', ' Lightseagreen', ' Lightskyblue', ' Lightslategray', ' Lightsteelblue', ' Lightyellow', ' Lime', ' Limegreen', ' Linen', ' Magenta', ' Maroon', ' Mediumaqamarine�', '� Mediumblue�', '� Mediumorchid�', '� Mediumpurple�', '� Mediumseagreen', ' Mediumslateblue', ' Mediumspringgreen', ' Mediumturquoise', ' Mediumvioletred', 'Mintcream', ' Mistyrose', ' Moccasin', ' Navajowhite', ' Oldlace', ' Olive', ' Olivedrab', ' Orange', ' Orangered', ' Orchid', ' Palegoldenrod', ' Palegreen', ' Paleturquoise', ' Palevioletred', ' Papayawhip', ' Peachpuff', ' Peru', ' Pink', ' Plum', ' Powderblue', ' Purple', ' Rosybrown', ' Royalblue', ' Saddlebrown', ' Salmon', ' Sandybrown', ' Seagreen', ' Seashell', ' Sienna', ' Silver', ' Skyblue', ' Slateblue', ' Slategray', ' Snow', ' Springgreen', ' Steelblue', ' Tan', ' Teal', ' Thistle', ' Tomato', ' Turquoise', ' Violet', ' Wheat', ' Whitesmoke', ' Yellow', ' YellowGreen');
 	var $malecolorR = array('000', ' 010', ' 020', ' 030', ' 040', ' 050', ' 060', ' 070', ' 080', ' 090', ' 100', ' 110', ' 120', ' 130', ' 140', ' 150', ' 160', ' 170', ' 180', ' 190', ' 200', ' 210', ' 220', ' 230', ' 240', ' 250');
 	var $malecolorG = array('000', ' 010', ' 020', ' 030', ' 040', ' 050', ' 060', ' 070', ' 080', ' 090', ' 100', ' 110', ' 120', ' 130', ' 140', ' 150', ' 160', ' 170', ' 180', ' 190', ' 200', ' 210', ' 220', ' 230', ' 240', ' 250');
 	var $malecolorB = 255;
@@ -77,7 +84,7 @@ class LifespanControllerRoot extends BaseController {
 	function TimelineRootController() {
 		parent :: BaseController();
 	}
-
+	
 	/**
 	 * Search for individuals who had dates within the given year ranges
 	 * @param int $startyear	the starting year
@@ -86,11 +93,11 @@ class LifespanControllerRoot extends BaseController {
 	 */
 	function search_indis_year_range($startyear, $endyear) {
 		global $TBLPREFIX, $GEDCOM, $indilist, $DBCONN, $REGEXP_DB, $DBTYPE, $GEDCOMS;
-
+	
 		if (stristr($DBTYPE, "mysql")!==false) $term = "REGEXP";
 		else if (stristr($DBTYPE, "pgsql")!==false) $term = "~*";
 		else $term='LIKE';
-
+	
 		$myindilist = array();
 		//select dategroups.d_gid, i_name, dategroups.birth, dategroups.death FROM pgv_individuals,
 		//(select d_gid, d_file, MIN(d_datestamp) as birth, MAX(d_datestamp) as death from pgv_dates WHERE d_fact NOT IN ('CHAN','ENDL','SLGC','SLGS','BAPL') GROUP BY d_gid) as dategroups
@@ -100,19 +107,19 @@ class LifespanControllerRoot extends BaseController {
 		$sql .= "(select d_gid, d_file, MIN(d_datestamp) as birth, MAX(d_datestamp) as death from ".$TBLPREFIX."dates WHERE d_fact NOT IN ('CHAN','ENDL','SLGC','SLGS','BAPL') AND d_file='".$GEDCOMS[$GEDCOM]['id']."' GROUP BY d_gid) as dategroups ";
 		$sql .= "WHERE dategroups.death >= ".$startyear."0000 AND dategroups.birth<=".$endyear."0000 AND i_file=dategroups.d_file AND i_id=dategroups.d_gid";
 		/*
-		 $i=$startyear;
-		 while($i <= $endyear) {
+		$i=$startyear;
+		while($i <= $endyear) {
 			if ($i > $startyear) $sql .= " OR ";
 			if ($REGEXP_DB) $sql .= "i_gedcom $term '".$DBCONN->escapeSimple("2 DATE[^\n]* ".$i)."'";
 			else $sql .= "i_gedcom LIKE '".$DBCONN->escapeSimple("%2 DATE%".$i)."%'";
 			$i++;
-			}
-			$sql .= ")";
-			*/
+		}
+		$sql .= ")";
+		*/
 		$sql .= " AND i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
 		//		print $sql;
 		$res = dbquery($sql);
-
+	
 		while($row =& $res->fetchRow()){
 			$row = db_cleanup($row);
 			$myindilist[$row[0]]["names"] = get_indi_names($row[3]);
@@ -124,7 +131,7 @@ class LifespanControllerRoot extends BaseController {
 		$res->free();
 		return $myindilist;
 	}
-
+	
 	/**
 	 * Initialization function
 	 */
@@ -138,7 +145,7 @@ class LifespanControllerRoot extends BaseController {
 		$this->currentYear = date("Y");
 		$this->deathMod = 0;
 		$this->endDate = $this->currentYear;
-
+		
 
 		//--new pid
 		if (isset ($_REQUEST['newpid'])) {
@@ -154,135 +161,133 @@ class LifespanControllerRoot extends BaseController {
 			//-- make sure we have the id from the gedcom record
 			else $newpid = $person->getXref();
 			if (!empty ($newpid))
-			$this->pids[] = $newpid;
+				$this->pids[] = $newpid;
 		}
-
-
+		
 		if (isset($_REQUEST['clear'])) unset($_SESSION['timeline_pids']);
 		else {
-			if (isset($_SESSION['timeline_pids'])) $this->pids = $_SESSION['timeline_pids'];
-
-			//-- pids array
-			if (isset ($_REQUEST['pids'])) {
-				$this->pids = $_REQUEST['pids'];
-				if (!empty ($newpid))
+		if (isset($_SESSION['timeline_pids'])) $this->pids = $_SESSION['timeline_pids'];
+		
+		//-- pids array
+		if (isset ($_REQUEST['pids'])) {
+			$this->pids = $_REQUEST['pids'];
+			if (!empty ($newpid))
 				$this->pids[] = $newpid;
-			}
+		}
 
-			//-- gets the immediate family for the individual being added if the include immediate family checkbox is checked.
-			if(isset ($_REQUEST['addFamily'])){
-				if (isset($newpid)) $this->addFamily($newpid);
-			}
-
-			$remove = "";
-			if (!empty ($_REQUEST['remove']))
+		//-- gets the immediate family for the individual being added if the include immediate family checkbox is checked.
+		if(isset ($_REQUEST['addFamily'])){
+			if (isset($newpid)) $this->addFamily($newpid);
+		}
+		
+		$remove = "";
+		if (!empty ($_REQUEST['remove']))
 			$remove = $_REQUEST['remove'];
-
-			//-- always start with someone on the chart
-			if (count($this->pids)==0) {
-				$this->pids[] = $this->addFamily(check_rootid(""));
-			}
-
-			//-- limit to a certain place
-			if (!empty($_REQUEST['place'])) {
-				$place_pids = get_place_positions($_REQUEST['place']);
-				if (count($place_pids)>0) {
-					$this->pids = $place_pids;
-				}
-			}
-
-			//-- store the people in the session
-			$_SESSION['timeline_pids'] = $this->pids;
-
-			if (empty ($_REQUEST['beginYear']) || empty ($_REQUEST['endYear'])) {
-				//-- cleanup user input
-				$this->pids = array_unique($this->pids);  //removes duplicates
-				foreach ($this->pids as $key => $value) {
-					if ($value != $remove) {
-						$value = clean_input($value);
-						$this->pids[$key] = $value;
-						$person = Person::getInstance($value);
-							
-						if (!is_null($person)) {
-							$byear = $person->getBirthYear();
-							$dyear = $person->getDeathYear();
-								
-							//--Checks to see if the details of that person can be viewed
-							if (!empty ($byear) && $byear!="0000" && !empty($dyear) && $dyear!="0000" && $person->canDisplayDetails()) {
-								$this->people[] = $person;
-							}
-						}
-					}
-				}
-			}
-
-
-			//--Finds if the begin year and end year textboxes are not empty
-			else {
-				//-- reset the people array when doing a year range search
-				$this->people = array();
-				//Takes the begining year and end year passed by the postback and modifies them and uses them to populate
-				//the time line
-
-				//$byear = $this->ModifyYear($_REQUEST["beginYear"],1);
-				//$dyear = $this->ModifyYear($_REQUEST["endYear"],2);
-				$byear = $_REQUEST["beginYear"];
-				$dyear = $_REQUEST["endYear"];
-				//Variables to restrict the person boxes to the year searched.
-				//--Searches for individuals who had an even between the year begin and end years
-				$indis = $this->search_indis_year_range($byear, $dyear);
-				//			print "after query";
-				//			print_execution_stats();
-				//--Populates an array of people that had an event within those years
-					
-				foreach ($indis as $pid => $indi) {
-					if (empty($_REQUEST['place']) || in_array($pid, $this->pids)) {
-						$person = Person::getInstance($pid);
-						if (!is_null($person)) {
-							$byear = $person->getBirthYear();
-							$dyear = $person->getDeathYear();
-
-							//--Checks to see if the details of that person can be viewed
-							if (!empty ($byear) && $byear!="0000" && !empty($dyear) && $dyear!="0000" && $person->canDisplayDetails()) {
-								$this->people[] = $person;
-							}
-						}
-					}
-				}
-				unset($_SESSION['timeline_pids']);
-				//			print "after objects";
-				//			print_execution_stats();
-			}
-
-			//--Sort the arrar in order of being year
-			uasort($this->people, "compare_people");
-			//		print "after sort";
-			//		print_execution_stats();
-			//If there is people in the array posted back this if occurs
-			if (isset ($this->people[0])) {
-				//Find the maximum Death year and mimimum Birth year for each individual returned in the array.
-				$this->timelineMaxYear = $this->people[0]->getDeathYear();
-				$this->timelineMinYear = $this->people[0]->getBirthYear();
-				foreach ($this->people as $key => $value) {
-					if ($this->timelineMaxYear < $value->getDeathYear())
-					$this->timelineMaxYear = $value->getDeathYear();
-					if ($this->timelineMinYear > $value->getBirthYear())
-					$this->timelineMinYear = $value->getBirthYear();
-				}
-					
-				if($this->timelineMaxYear > $this->currentYear){
-					$this->timelineMaxYear = $this->currentYear;
-				}
-
-			}
-			else {
-				// Sets the default timeline length
-				$this->timelineMinYear = date("Y") - 101;
-				$this->timelineMaxYear = date("Y");
+		
+		//-- always start with someone on the chart
+		if (count($this->pids)==0) {
+			$this->pids[] = $this->addFamily(check_rootid(""));
+		}
+		
+		//-- limit to a certain place
+		if (!empty($_REQUEST['place'])) {
+			$place_pids = get_place_positions($_REQUEST['place']);
+			if (count($place_pids)>0) {
+				$this->pids = $place_pids;
 			}
 		}
-	}
+		
+		//-- store the people in the session	
+		$_SESSION['timeline_pids'] = $this->pids;
+		
+		if (empty ($_REQUEST['beginYear']) || empty ($_REQUEST['endYear'])) {
+		//-- cleanup user input
+		$this->pids = array_unique($this->pids);  //removes duplicates
+			foreach ($this->pids as $key => $value) {
+				if ($value != $remove) {
+					$value = clean_input($value);
+					$this->pids[$key] = $value;
+					$person = Person::getInstance($value);
+							
+					if (!is_null($person)) {
+						$byear = $person->getBirthYear();
+						$dyear = $person->getDeathYear();
+							
+						//--Checks to see if the details of that person can be viewed
+						if (!empty ($byear) && $byear!="0000" && !empty($dyear) && $dyear!="0000" && $person->canDisplayDetails()) {
+							$this->people[] = $person;
+						}
+					}
+				}
+			}
+		}
+		
 
+		//--Finds if the begin year and end year textboxes are not empty
+		else {
+			//-- reset the people array when doing a year range search
+			$this->people = array();
+			//Takes the begining year and end year passed by the postback and modifies them and uses them to populate
+			//the time line
+
+			//$byear = $this->ModifyYear($_REQUEST["beginYear"],1);
+			//$dyear = $this->ModifyYear($_REQUEST["endYear"],2);
+			$byear = $_REQUEST["beginYear"];
+			$dyear = $_REQUEST["endYear"];
+			//Variables to restrict the person boxes to the year searched.
+			//--Searches for individuals who had an even between the year begin and end years
+			$indis = $this->search_indis_year_range($byear, $dyear);
+				//			print "after query";
+				//			print_execution_stats();
+			//--Populates an array of people that had an event within those years
+					
+			foreach ($indis as $pid => $indi) {
+				if (empty($_REQUEST['place']) || in_array($pid, $this->pids)) {
+					$person = Person::getInstance($pid);
+					if (!is_null($person)) {
+						$byear = $person->getBirthYear();
+						$dyear = $person->getDeathYear();
+						//--Checks to see if the details of that person can be viewed
+						if (!empty ($byear) && $byear!="0000" && !empty($dyear) && $dyear!="0000" && $person->canDisplayDetails()) {
+							$this->people[] = $person;
+						}
+					}
+				}
+			}
+			unset($_SESSION['timeline_pids']);
+				//			print "after objects";
+				//			print_execution_stats();
+		}
+		
+		//--Sort the arrar in order of being year
+		uasort($this->people, "compare_people");
+			//		print "after sort";
+			//		print_execution_stats();
+		//If there is people in the array posted back this if occurs
+		if (isset ($this->people[0])) {
+			//Find the maximum Death year and mimimum Birth year for each individual returned in the array.
+			$this->timelineMaxYear = $this->people[0]->getDeathYear();
+			$this->timelineMinYear = $this->people[0]->getBirthYear();
+			foreach ($this->people as $key => $value) {
+				if ($this->timelineMaxYear < $value->getDeathYear())
+					$this->timelineMaxYear = $value->getDeathYear();
+				if ($this->timelineMinYear > $value->getBirthYear())
+					$this->timelineMinYear = $value->getBirthYear();
+			}
+			
+			if($this->timelineMaxYear > $this->currentYear){
+				$this->timelineMaxYear = $this->currentYear;	
+			}
+
+		} 
+		else {
+			// Sets the default timeline length
+			$this->timelineMinYear = date("Y") - 101;
+			$this->timelineMaxYear = date("Y");
+		}
+		}
+	}
+	
 	/**
 	 * Add a person and his or her immediate family members to
 	 * the pids array
@@ -292,10 +297,10 @@ class LifespanControllerRoot extends BaseController {
 		if (!empty ($newpid)) {
 			$person = Person::getInstance($newpid);
 			if (is_null($person)) return;
-			$this->pids[] = $newpid;
+			$this->pids[] = $newpid; 
 			$families = $person->getSpouseFamilies();
 			//-- foreach gets the spouse and children of the individual.
-			foreach($families as $famID => $family){
+			foreach($families as $famID => $family){ 
 				if($newpid != $family->getHusbId()) {
 					if ($gen>0) $this->pids[] = addFamily($family->getHusbId(), $gen-1);
 					else $this->pids[] = $family->getHusbId();
@@ -308,7 +313,7 @@ class LifespanControllerRoot extends BaseController {
 				foreach($children as $childID => $child){
 					if ($gen>0) $this->pids[] = addFamily($child->getXref(), $gen-1);
 					else $this->pids[] = $child->getXref();
-				}
+				}					
 			}
 			$families = $person->getChildFamilies();
 			//-- foreach gets the father, mother and sibblings of the individual.
@@ -323,11 +328,11 @@ class LifespanControllerRoot extends BaseController {
 						if ($gen>0) $this->pids[] = addFamily($child->getXref(), $gen-1);
 						else $this->pids[] = $child->getXref();
 					}
-				}
+				}					
 			}
 		}
 	}
-
+	
 	// sets the start year and end year to a factor of 5
 	function ModifyYear($year, $key) {
 		$temp = $year;
@@ -336,7 +341,7 @@ class LifespanControllerRoot extends BaseController {
 				$this->birthMod = ($year % 5);
 				$year = $year - ($this->birthMod);
 				if($temp == $year){
-					$this->modTest = 0;
+					$this->modTest = 0;	
 				}
 				else $this->modTest = 1;
 				break;
@@ -344,10 +349,10 @@ class LifespanControllerRoot extends BaseController {
 				$this->deathMod = ($year % 5);
 				//Only executed if the year needs to be modified
 				if($this->deathMod > 0) {
-					$this->endMod = (5 - ($this->deathMod));
+					$this->endMod = (5 - ($this->deathMod));		
 				}
 				else {
-					$this->endMod = 0;
+					$this->endMod = 0;	
 				}
 				$year = $year + ($this->endMod);
 				break;
@@ -363,32 +368,35 @@ class LifespanControllerRoot extends BaseController {
 		$top = 65; //top starting position
 		$yearSpan = 5; //default zoom level
 		$newStartYear = $this->ModifyYear($startYear, 1); //starting date for timeline
+		$this->timelineMinYear = $newStartYear;
 		$newEndYear = $this->ModifyYear($endYear, 2); //ending date for timeline
 		$totalYears = $newEndYear - $newStartYear; //length of timeline
 		$timelineTick = $totalYears / $yearSpan; //calculates the length of the timeline
 
 		for ($i = 0; $i < $timelineTick; $i ++) { //prints the timeline
-			echo "<div dir=\"ltr\" class=\"sublinks_cell\" style=\"position: absolute; top: ".$top."px; left: ".$leftPosition."px; width: ".$tickDistance."px;\">$newStartYear<img src=\"images/timelineChunk.gif\"  alt=\"\" /></div>";  //onclick="zoomToggle('100px','100px','200px','200px',this);"
+			echo "<div class=\"sublinks_cell\" style=\"text-align: left; position: absolute; top: ".$top."px; left: ".$leftPosition."px; width: ".$tickDistance."px;\">$newStartYear<img src=\"images/timelineChunk.gif\"  alt=\"\" /></div>";  //onclick="zoomToggle('100px','100px','200px','200px',this);"
 			$leftPosition += $tickDistance;
 			$newStartYear += $yearSpan;
 
 		}
-		echo "<div style=\"position: absolute; top: ".$top."px; left: ".$leftPosition."px; width: ".$tickDistance."px;\">$newStartYear</div>";
+		echo "<div class=\"sublinks_cell\" style=\"text-align: left; position: absolute; top: ".$top."px; left: ".$leftPosition."px; width: ".$tickDistance."px;\">$newStartYear</div>";
 	}
+	
+	
 	//method used to place the person boxes onto the timeline
 	function fillTL($ar, $int, $Y) {
 		global $maxX, $zindex, $pgv_lang, $factarray;
-
+		
 		if (empty($zindex)) $zindex = count($ar);
-
+		
 		$modFix = 0;
 		if($this->modTest == 1){
 			$modFix = (9 * $this->birthMod);
 		}
 		//base case
 		if (count($ar) == 0)
-		return $Y;
-
+			return $Y;
+		
 
 		foreach ($ar as $key => $value) {
 				
@@ -421,40 +429,37 @@ class LifespanControllerRoot extends BaseController {
 			//set start position and size of person-box according to zoomfactor
 			/* @var $value Person */
 			if ($value->getBirthYear() > $int -1) {
-
+				
 				$birthYear = $value->getBirthYear();
 				$deathYear = $value->getDeathYear();
 				if($deathYear > date("Y")){
-					$deathYear = date("Y");
+					$deathYear = date("Y");	
 				}
 
 				$width = ($deathYear - $birthYear) * $this->zoomfactor;
 				$height = 2 * $this->zoomfactor;
-
+				
 				//				$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 14 + $modFix;
 				$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 14 + $modFix;
 				$minlength = strlen($value->getName()) * $this->zoomfactor;
 				$zindex--;
-
 				if ($startPos > 15) {
 					$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 15 + $modFix;
 					$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 15;
 					$width = (($deathYear - $birthYear) * $this->zoomfactor) - 2;
 				}
-
 				//set start position to deathyear
 				$int = $deathYear;
-
 				//set minimum width for single year lifespans
 				if ($width < 10)
 				{
 					$width = 10;
 					$int = $birthYear+1;
 				}
-
+				
 				$lifespan = $birthYear."-".$deathYear;
 				$lifespannumeral = $deathYear - $birthYear;
-
+				
 				//Need to calculate each event and the spacing between them
 				// event1 distance will be event - birthyear   that will be the distance. then each distance will chain off that
 
@@ -462,6 +467,7 @@ class LifespanControllerRoot extends BaseController {
 				//$value->add_historical_facts();
 				$value->add_family_facts(false);
 				$unparsedEvents = $value->getIndiFacts();
+				sort_facts($unparsedEvents);
 				//print_r($unparsedEvents);
 
 				$eventinformation = Array();
@@ -498,28 +504,23 @@ class LifespanControllerRoot extends BaseController {
 						$trans = $fact;
 						if (isset($factarray[$fact])) $trans = $factarray[$fact];
 						else if (isset($pgv_lang[$fact])) $trans = $pgv_lang[$fact];  
-						$eventinformation[$evntwdth]= $trans."\n".$date."\n".$place;
+						if (isset($eventinformation[$evntwdth])) $eventinformation[$evntwdth] .= "<br />\n".$trans."<br />\n".$date." ".$place;
+						else $eventinformation[$evntwdth]= $trans."<br />\n".$date." ".$place;
 						//$eventspacing[$eventwidth][$date];
 					}
 						
 				}
 				//sort by event width
 
-
+					
 				$out = ""; // this is the string we are going to build
-				//foreach($events as $evnt=>$val)
-				//{
-				//	$out .= "<td><td width=\"15\"><a class=\"showit\" href=\"#\"><b>"|"</b><span>".$value->getName()."<br/>".$pgv_lang["death"]." ".get_changed_date($value->getDeathDate())."</span></a></td>";
-				//}
 				//what we are going to do now that we have the facts array is we are going to pass it into a function then parse all the data and print from that function
-
-
 				// different display values in the box based on the size of the person-box
 				if ($width > ($minlength +110)) {
-					echo "\n<div dir=\"ltr\" id=\"bar_".$value->getXref()."\" style='position: absolute;top:".$Y."px; left:".$startPos."px;width:".$width."px; height:".$height."px;" .
-					" background-color:".$this->color."; border: solid blue 1px; z-index:$zindex;'>";
+					echo "\n<div id=\"bar_".$value->getXref()."\" style=\"position: absolute;top:".$Y."px; left:".$startPos."px; width:".$width."px; height:".$height."px;" .
+					" background-color:".$this->color."; border: solid blue 1px; z-index:$zindex;\">";
 					foreach($eventinformation as $evtwidth=>$val){
-						print "<div style=\"position:absolute;left:".$evtwidth." \"><a class=\"showit\" href='#'style=\"color:White; top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".$val." \n </span></a></div>";
+						print "<div style=\"position:absolute;left:".$evtwidth." \"><a class=\"showit\" href='#'style=\"color:White; top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".$val."</span></a></div>";
 					}
 					print "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".get_changed_date($value->getBirthDate())." ".$value->getBirthPlace()."</span></a></td>" .
 					"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getName().":  $lifespan </a></td>" .
@@ -530,20 +531,20 @@ class LifespanControllerRoot extends BaseController {
 
 				} else {
 					if ($width > $minlength +5) {
-						echo "\n<div style='position: absolute; top:".$Y."px; left:".$startPos."px;width:".$width."px; height:".$height."px;" .
-						"  background-color:".$this->color."; border: solid blue 1px; z-index:$zindex;'>";
+						echo "\n<div style=\"text-align: left; position: absolute; top:".$Y."px; left:".$startPos."px; width:".$width."px; height:".$height."px;" .
+						"  background-color:".$this->color."; border: solid blue 1px; z-index:$zindex;\">";
 						foreach($eventinformation as $evtwidth=>$val){
-							print 	"<div style=\"position:absolute;left:".$evtwidth." \"><a class=\"showit\" href='#'style=\"color:White; top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".$val." \n </span></a></div>";
+							print "<div style=\"position:absolute;left:".$evtwidth." \"><a class=\"showit\" href='#'style=\"color:White; top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".$val."</span></a></div>";
 						}
-						print "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".get_changed_date($value->getBirthDate())." ".$value->getBirthPlace()."</span></a></td>" .
-						"\n\t\t<td width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getName()."</a></td>" .
+						print "\n\t<table dir=\"ltr\"><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".get_changed_date($value->getBirthDate())." ".$value->getBirthPlace()."</span></a></td>" .
+						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getName()."</a></td>" .
 						"\n\t\t<td width=\"15\">";
 						if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getName()."<br/>".$pgv_lang["death"]." ".get_changed_date($value->getDeathDate())." ".$value->getDeathPlace()."</span></a>";
 						print "</td></tr></table>";
 						echo '</div>';
-					} else {
-						echo "\n<div style='position: absolute;top:".$Y."px; left:".$startPos."px;width:".$width."px; height:".$height."px;" .
-						" background-color:".$this->color."; border: solid blue 1px; z-index:$zindex;'>" ;
+					} else {						
+						echo "\n<div style=\"text-align: left; position: absolute;top:".$Y."px; left:".$startPos."px;width:".$width."px; height:".$height."px;" .
+						" background-color:".$this->color."; border: solid blue 1px; z-index:$zindex;\">" ;
 							
 						print"<a class=\"showit\" href=\"individual.php?pid=".$value->getXref()."\"><b>".get_first_letter($pgv_lang["birth"])."</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".get_changed_date($value->getBirthDate())." ".$value->getBirthPlace()."<br/>";
 						foreach($eventinformation as $evtwidth=>$val){
@@ -552,14 +553,13 @@ class LifespanControllerRoot extends BaseController {
 						if ($value->isDead()) print $pgv_lang["death"]." ".get_changed_date($value->getDeathDate())." ".$value->getBirthPlace();
 						print "</span></a>";
 						echo '</div>';
-							
+											
 					}
 				}
-
-
+				
+				
 				//remove used person from the working array
 				unset ($ar[$key]);
-
 				//change color
 				if ($this->colorindex < count($this->colorindex) - 1 && $this->Mcolorindex < count($this->Mcolorindex)-1 && $this->Fcolorindex < count($this->Fcolorindex)-1) {
 					//					do nothing
@@ -570,7 +570,7 @@ class LifespanControllerRoot extends BaseController {
 				}
 
 				if ($maxX < $startPos + $width)
-				$maxX = $startPos + $width;
+					$maxX = $startPos + $width;
 			}
 		}
 		//move down 25 pixels
@@ -578,7 +578,7 @@ class LifespanControllerRoot extends BaseController {
 			$Y += 25 + $this->zoomfactor;
 		}
 		else{
-			$Y += 25;
+		$Y += 25;
 		}
 
 		//NOTE: this is where we'd implement the spacemanagement.
@@ -601,13 +601,14 @@ class LifespanControllerRoot extends BaseController {
 					print "<br />";
 					$printed = true;
 				} else
-				if (!$printed) {
-					print_privacy_error($CONTACT_EMAIL);
-					print "<br />";
-				}
+					if (!$printed) {
+						print_privacy_error($CONTACT_EMAIL);
+						print "<br />";
+					}
 			}
 		}
 	}
+
 }
 // -- end of class
 //-- load a user extended class if one exists

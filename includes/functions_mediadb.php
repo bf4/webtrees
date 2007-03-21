@@ -25,8 +25,8 @@
  * @version $Id$
  */
 
-if (strstr($_SERVER["SCRIPT_NAME"], "functions")) {
-	print "Now, why would you want to do that.  You're not hacking are you?";
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
 	exit;
 }
 
@@ -1480,7 +1480,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	print "<input name=\"oldFilename\" type=\"hidden\" value=\"" . addslashes($fileName) . "\" />";
 
 	// Box for user to choose the folder to store the image
-	if (!$isExternal && $MEDIA_DIRECTORY_LEVELS > 0) {
+	if (!$isExternal && $MEDIA_DIRECTORY_LEVELS > 0 && userGedcomAdmin(getUserName())) {
 		print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
 		print_help_link("upload_server_folder_help", "qm");
 		if (empty ($folder)) {
@@ -1500,12 +1500,9 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 				print ">$f</option>\n";
 			}
 		}
-		if (userGedcomAdmin(getUserName()))
 			print "<option value=\"other\">" . $pgv_lang["add_media_other_folder"] . "</option>\n";
 		print "</select></span>\n";
-		if (userGedcomAdmin(getUserName()))
 			print "<span dir=\"ltr\"><input type=\"text\" name=\"folder\" size=\"30\" value=\"" . $folder . "\"></span>";
-		else print "<span dir=\"ltr\"><input type=\"hidden\" name=\"folder\" size=\"30\" value=\"" . $folder . "\"></span>";
 		if ($gedfile == "FILE") {
 			print "<br /><sub>" . $pgv_lang["server_folder_advice2"] . "</sub></td></tr>";
 		}

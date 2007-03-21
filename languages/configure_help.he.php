@@ -25,7 +25,8 @@
  * @subpackage Languages
  * @version $Id$
  */
-if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "אין לך גישה לתיקית קבצי השפות.";
 	exit;
 }
@@ -85,6 +86,9 @@ $pgv_lang["QUICK_REQUIRED_FACTS"]		= "הראה תמיד עובדות בעדכו�
 $pgv_lang["QUICK_REQUIRED_FACTS_help"]		= "~#pgv_lang[QUICK_REQUIRED_FACTS]#~<br /><br />This is a comma separated list of GEDCOM fact tags that will always be shown on the Quick Update form whether or not they already exist in the individual's record.  For example, if BIRT is in the list, fields for birth date and birth place will always be shown on the form.<br />";
 $pgv_lang["QUICK_ADD_FACTS"]			= "הראה עובדות בעדכון מהיר";
 $pgv_lang["QUICK_ADD_FACTS_help"]		= "~#pgv_lang[QUICK_ADD_FACTS]#~<br /><br />This is a comma separated list of GEDCOM fact tags that will be shown on the Quick Update form.  Only the facts in this list will be shown on the form or made available for selection in the area where you add new facts on the form.<br />";
+$pgv_lang["SURNAME_TRADITION_help"] = "~#pgv_lang[SURNAME_TRADITION]#~<br /><br />When you add new members to a family, PhpGedView can supply default values for surnames according to regional custom.<br /><br /><ul><li>In the <b>Paternal</b> tradition, all family members share the father's surname.</li><li>In the <b>Spanish</b> and <b>Portuguese</b> tradition, children receive a surname from each parent.</li><li>In the <b>Icelandic</b> tradition, children receive their male parent's given name as a surname, with a suffix that denotes gender.</li></ul><br />";
+$pgv_lang["ADVANCED_NAME_FACTS_help"] = "~#pgv_lang[ADVANCED_NAME_FACTS]#~<br /><br />This is a comma separated list of GEDCOM fact tags that will be shown on the add/edit name form.  If you use non-Latin alphabets such as Hebrew, Greek, Cyrillic or Arabic, you may want to add tags such as _HEB, ROMN, FONE, etc. to allow you to store names in several different alphabets.<br />";
+$pgv_lang["ADVANCED_PLAC_FACTS_help"] = "~#pgv_lang[ADVANCED_PLAC_FACTS]#~<br /><br />This is a comma separated list of GEDCOM fact tags that will be shown when you add or edit place names.  If you use non-Latin alphabets such as Hebrew, Greek, Cyrillic or Arabic, you may want to add tags such as _HEB, ROMN, FONE, etc. to allow you to store place names in several different alphabets.<br />";
 $pgv_lang["AUTO_GENERATE_THUMBS"]		= "תמונות מזעריות שנוצרו בצורה אוטומטית";
 $pgv_lang["AUTO_GENERATE_THUMBS_help"]		= "~#pgv_lang[AUTO_GENERATE_THUMBS]#~<br /><br />Should the system automatically generate thumbnails for images that do not have them.  Your PHP installation might not support this functionality.<br />";
 $pgv_lang["phpinfo_help"]				= "~#pgv_lang[phpinfo]#~<br /><br />This page provides extensive information about the server on which PhpGedView is being hosted.  Many configuration details about the server's software, as it relates to PHP and PhpGedView, can be viewed.<br />";
@@ -639,6 +643,7 @@ $pgv_lang["um_nofiles"] 			= "לא נמצאו קבצים לגיבוי.";
 $pgv_lang["um_files_exist"] 			= "קובץ אחד או יותר קיימים כבר. האם אתה רוצה לעלות עליהם?";
 $pgv_lang["um_results"]			= "תוצאות";
 $pgv_lang["preview_faq_item"] 		= "הצגה מוקדמת של כל ישויות FAQ";
+//@@@ 
 $pgv_lang["preview_faq_item_help"] 		= "~#pgv_lang[preview_faq_item]#~<br />This option lets an admin user view the FAQ page without all the editing options and links.<br /><br /> Except for a single <b>Edit</b> link above the first FAQ item, the appearance of the FAQ page will be identical to what an ordinary user would see. This special <b>Edit</b> link will restore full Edit functionality to the FAQ page.<br />";
 $pgv_lang["restore_faq_edits"] 			= "שחזר פונקציונליות של עריכת FAQ";
 $pgv_lang["restore_faq_edits_help"] 		= "~#pgv_lang[restore_faq_edits]#~<br />This option restores the FAQ page to what an admin user normally sees, so that individual FAQ items may be edited.<br />";
@@ -655,6 +660,7 @@ $pgv_lang["movedown_faq_item_help"]		= "~#pgv_lang[movedown_faq_item]#~<br />Thi
 $pgv_lang["add_faq_header_help"] 		= "~כותרת FAQ~<br />This is the title or subject of the FAQ item.<br /><br />What you enter here can be formatted; HTML tags such as &lt;b&gt; and &lt;br&gt; are allowed, as are HTML entities such as &amp;amp; and &amp;nbsp;.  There is no way to enter HTML tags so that they will be interpreted as text.<br />";
 $pgv_lang["add_faq_body_help"] 		= "~גוף ה-FAQ~<br />The text of the FAQ item is entered here.<br /><br />The text can be formatted; HTML tags such as &lt;b&gt; and &lt;br&gt; are allowed, as are HTML entities such as &amp;amp; and &amp;nbsp;.  There is no way to enter HTML tags so that they will be interpreted as text.<br />";
 $pgv_lang["add_faq_order_help"] 		= "~מיקום FAQ~<br />This field controls the order in which the FAQ items are displayed.<br /><br />You do not have to enter the numbers sequentially.  If you leave holes in the numbering scheme, you can insert other items later.  For example, if you use the numbers 1, 6, 11, 16, you can later insert items with the missing sequence numbers.  Negative numbers and zero are allowed, and can be used to insert items in front of the first one.<br /><br />When more than one FAQ item has the same position number, only one of these items will be visible.<br />";
+//@@@
 $pgv_lang["time_limit_help"]			= "~#pgv_lang[time_limit]#~<br /><br />The maximum time the import is allowed to run for processing the GEDCOM file.";
 
 // Media items

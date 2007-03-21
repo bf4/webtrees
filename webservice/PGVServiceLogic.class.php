@@ -204,6 +204,20 @@ class PGVServiceLogic extends GenealogyService
 		return $return;
 	}
 	
+	/**
+	* Switches GEDCOM
+	* @param string gedcom id of the gedcom to use
+	* @return string	returns the id of the currently active gedcom
+	*/
+	function postChangeGedcom($gedcom)
+	{
+		global $GEDCOM;
+		$gedcom = $this->default_gedcom($gedcom);
+		$GEDCOM = $gedcom;
+		$_SESSION['GEDCOM'] = $gedcom;
+		return $gedcom;
+	}
+	
 	/***
 	* Get's a variables value
 	* 
@@ -844,38 +858,37 @@ class PGVServiceLogic extends GenealogyService
 				// need to check to see if all the values asked for in the query are still there after the privatizing
 				$all_crit_exist_in_gedcom = true;
 				$search_result_element = $this->createPerson($gid, $indi['gedcom'], "item", false);
-				
-				if(!empty($array_querys['NAME']) && (stristr($search_result_element['gedcomName'], $array_querys['NAME']) === false))
+				if(!empty($array_querys['NAME']) && (stristr($search_result_element->value['gedcomName'], $array_querys['NAME']) === false))
 				{
 					$all_crit_exist_in_gedcom = false;
 	//				AddToLog('Name did not match '. $search_result_element['gedcomName']. ' != '. $array_querys['NAME']);
 				}
 				
-				if(!empty($array_querys['BIRTHDATE']) && (stristr($search_result_element['birthDate'], $array_querys['BIRTHDATE']) === false))
+				if(!empty($array_querys['BIRTHDATE']) && (stristr($search_result_element->value['birthDate'], $array_querys['BIRTHDATE']) === false))
 				{
 					$all_crit_exist_in_gedcom = false;
 	//				AddToLog('Birth date did not match for '.$gid.' '. $search_result_element['birthDate']. ' != '. $array_querys['BIRTHDATE']);
 				}
 				
-				if(!empty($array_querys['BIRTHPLACE']) && (stristr($search_result_element['birthPlace'], $array_querys['BIRTHPLACE']) === false))
+				if(!empty($array_querys['BIRTHPLACE']) && (stristr($search_result_element->value['birthPlace'], $array_querys['BIRTHPLACE']) === false))
 				{
 					$all_crit_exist_in_gedcom = false;
 	//				AddToLog('Birth place did not match '. $search_result_element['birthPlace']. ' != '. $array_querys['BIRTHPLACE']);
 				}
 				
-				if(!empty($array_querys['DEATHDATE']) && (stristr($search_result_element['deathDate'], $array_querys['DEATHDATE']) === false))
+				if(!empty($array_querys['DEATHDATE']) && (stristr($search_result_element->value['deathDate'], $array_querys['DEATHDATE']) === false))
 				{
 					$all_crit_exist_in_gedcom = false;
 	//				AddToLog('Death date did not match '. $search_result_element['deathDate']. ' != '. $array_querys['DEATHDATE']);
 				}
 				
-				if(!empty($array_querys['DEATHPLACE']) && (stristr($search_result_element['deathPlace'], $array_querys['DEATHPLACE']) === false))
+				if(!empty($array_querys['DEATHPLACE']) && (stristr($search_result_element->value['deathPlace'], $array_querys['DEATHPLACE']) === false))
 				{
 					$all_crit_exist_in_gedcom = false;
 	//				AddToLog('Death place did not match '. $search_result_element['deathPlace']. ' != '. $array_querys['DEATHPLACE']);
 				}
 				
-				if(!empty($array_querys['GENDER']) && $search_result_element['gender'] != $array_querys['GENDER'] )
+				if(!empty($array_querys['GENDER']) && $search_result_element->value['gender'] != $array_querys['GENDER'] )
 				{
 					$all_crit_exist_in_gedcom = false;
 	//				AddToLog('Gender did not match '.$search_result_element['gender'].' != ' .$array_querys['GENDER']);

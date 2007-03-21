@@ -182,6 +182,9 @@ $FAM_FACTS_UNIQUE = "NCHI,MARL,DIV,ANUL,DIVF,ENGA,MARB,MARC,MARS";
 $FAM_FACTS_ADD = "CENS,MARR,RESI,SLGS,MARR_CIVIL,MARR_RELIGIOUS,MARR_PARTNERS";
 $FAM_FACTS_QUICK = "MARR,DIV";
 $GENERATE_UIDS = false;		//-- automatically generate _UID fields for records that do not already have them
+$ADVANCED_NAME_FACTS = "NICK,_HEB,ROMN";
+$ADVANCED_PLAC_FACTS = "";
+$SURNAME_TRADITION = "paternal";
 
 $ENABLE_RSS = true;
 $RSS_FORMAT = "ATOM"; //-- default feed format.

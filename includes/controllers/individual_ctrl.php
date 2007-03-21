@@ -23,6 +23,12 @@
  * @subpackage Charts
  * @version $Id$
  */
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 require_once("config.php");
 require_once 'includes/functions_print_facts.php';
 require_once 'includes/controllers/basecontrol.php';
@@ -408,7 +414,8 @@ class IndividualControllerRoot extends BaseController {
 		if (preg_match("/PGV_OLD/", $factrec)>0) print " class=\"namered\"";
 		if (preg_match("/PGV_NEW/", $factrec)>0) print " class=\"nameblue\"";
 		print ">";
-		if ($this->name_count>1) print "\n\t\t<span class=\"label\">".$pgv_lang["aka"]." </span><br />\n";
+		// Second/third names are *NOT* necessarily AKA names.
+		//if ($this->name_count>1) print "\n\t\t<span class=\"label\">".$pgv_lang["aka"]." </span><br />\n";
 		$ct = preg_match_all("/2 (SURN)|(GIVN) (.*)/", $factrec, $nmatch, PREG_SET_ORDER);
 		if ($ct==0) {
 			$nt = preg_match("/1 NAME (.*)/", $factrec, $nmatch);
@@ -507,7 +514,7 @@ class IndividualControllerRoot extends BaseController {
 	 * @return Menu
 	 */
 	function &getEditMenu() {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $TOTAL_NAMES;
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 		global $NAME_LINENUM, $SEX_LINENUM, $pgv_lang, $pgv_changes, $USE_QUICK_UPDATE;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
@@ -542,7 +549,7 @@ class IndividualControllerRoot extends BaseController {
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 			$menu->addSeperator();
-			if ($TOTAL_NAMES<2) {
+			if ($this->total_names<2) {
 				$submenu = new Menu($pgv_lang["edit_name"]);
 				$submenu->addOnclick("return edit_name('".$this->pid."', $NAME_LINENUM);");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
@@ -667,7 +674,7 @@ class IndividualControllerRoot extends BaseController {
 				$this->total_names++;
 				$NAME_LINENUM = $value[0];
 			}
-		}
+			}
 		return $globalfacts;
 	}
 	/**
@@ -977,7 +984,6 @@ class IndividualControllerRoot extends BaseController {
 	function print_facts_tab() {
 		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
 		global $n_chil, $n_gchi;
-		$indifacts = $this->getIndiFacts();
 		?>
 		<table class="facts_table">
 		<?php if (!$this->indi->canDisplayDetails()) {
@@ -987,6 +993,7 @@ class IndividualControllerRoot extends BaseController {
 			print "</td></tr>";
 		}
 		else {
+			$indifacts = $this->getIndiFacts();
 			if (count($indifacts)==0) print "<tr><td id=\"no_tab1\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab1"]."</td></tr>\n";
 			print "<tr id=\"row_top\"><td></td><td class=\"descriptionbox rela\">";
 			print "<a href=\"javascript:;\" onclick=\"togglerow('row_rela'); return false;\">";

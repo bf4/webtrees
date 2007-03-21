@@ -23,11 +23,8 @@
  * @version $Id$
  */
 
-/**
- * security check to prevent hackers from directly accessing this file
- */
-if (strstr($_SERVER["SCRIPT_NAME"],"functions_name.php")) {
-	print "Why do you want to do that?";
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
 	exit;
 }
 
@@ -72,7 +69,7 @@ function get_common_surnames($min) {
 	$i=0;
 	foreach($surnames as $indexval => $surname) {
 		$surname["name"] = trim($surname["name"]);
-		if (!empty($surname["name"]) 
+		if (!empty($surname["name"])
 				&& stristr($surname["name"], "@N.N")===false
 				&& stristr($surname["name"], $HNN)===false
 				&& stristr($surname["name"], $ANN.",")===false
@@ -296,7 +293,7 @@ function get_person_name($pid, $checkUnknown=true) {
 	}
 
 	if ($NAME_REVERSE) $name = reverse_name($name);
-	
+
 	if ($checkUnknown) $name = check_NN($name);
 	return $name;
 }
@@ -324,7 +321,7 @@ function reverse_name($name) {
 		$name .= " ".$givenname;
 		if (!empty($othername)) $name .= " ".$othername;
 	}
-	
+
 	return $name;
 }
 
@@ -456,7 +453,7 @@ function get_sortable_family_descriptor($fid) {
 	if (!empty($hname) && !empty($wname)) $result = check_NN($hname)." + ".check_NN($wname);
 	else if (!empty($hname) && empty($wname)) $result = check_NN($hname);
 	else if (empty($hname) && !empty($wname)) $result = check_NN($wname);
-	
+
 	return $result;
 }
 
@@ -495,21 +492,21 @@ function get_family_add_descriptor($fid) {
 		else $hname = $pgv_lang["private"];
 	}
 	else $hname = "";
-	// handle the additional name of a non existing spouse the same way as of 
-	// a spouse who does not have an additional name 
-	
+	// handle the additional name of a non existing spouse the same way as of
+	// a spouse who does not have an additional name
+
 	if ($parents["WIFE"]) {
 		if (displayDetailsById($parents["WIFE"]) || showLivingNameById($parents["WIFE"]))
 			$wname = get_add_person_name($parents["WIFE"]);
 		else $wname = $pgv_lang["private"];
 	}
 	else $wname = "";
-		
+
 	if (!empty($hname) && !empty($wname)) $result = check_NN($hname) . " + " . check_NN($wname);
 	else if (!empty($hname) && empty($wname)) $result = check_NN($hname);
 	else if (empty($hname) && !empty($wname)) $result = check_NN($wname);
 	else $result = "";
-	
+
 	return $result;
 }
 
@@ -541,10 +538,10 @@ function get_add_person_name_in_record($name_record, $keep_slash=false) {
 				$name = trim($names[0])." ".trim($names[1]);
 			}
 		}
-	    else $name = trim($names[0]);
+		else $name = trim($names[0]);
 	}
 	else $name = "";
-	
+
 	if ($NAME_REVERSE) $name = reverse_name($name);
 	return $name;
 }
@@ -689,7 +686,7 @@ function get_first_letter($text, $import=false) {
 	} else {
 		if (isset($quadgraph[$letter])) $multiByte = true;
 	}
-	
+
 	if (!$multiByte) {
 		// 4-byte combination isn't listed: try 3-byte combination
 		$letter = substr($text, 0, 3);
@@ -699,7 +696,7 @@ function get_first_letter($text, $import=false) {
 			if (isset($trigraph[$letter])) $multiByte = true;
 		}
 	}
-	
+
 	if (!$multiByte) {
 		// 3-byte combination isn't listed: try 2-byte combination
 		$letter = substr($text, 0, 2);
@@ -709,7 +706,7 @@ function get_first_letter($text, $import=false) {
 			if (isset($digraph[$letter])) $multiByte = true;
 		}
 	}
-	
+
 	if (!$multiByte) {
 		// All lists failed: try for a UTF8 character
 		$charLen = 1;
@@ -758,7 +755,7 @@ function check_NN($names) {
 				$unknown = true;
 				$names[$i] = preg_replace("/@N.N.?/", $unknownNN[$lang], trim($names[$i]));
 			}
-            if (stristr($names[$i], "@P.N")) $names[$i] = $unknownPN[$lang];
+			if (stristr($names[$i], "@P.N")) $names[$i] = $unknownPN[$lang];
 			if ($i==1 && $unknown && count($names)==3) $fullname .= ", ";
 			else if ($i==2 && $unknown && count($names)==3) $fullname .= " + ";
 				else if ($i==2 && stristr($names[2], "Individual ") && count($names) == 3) $fullname .= " + ";
@@ -820,7 +817,7 @@ function str2lower($value) {
 		if ((ord($letter) & 0xF8) == 0xF0) $charLen = 4;		// 4-byte sequence
 		$letter = substr($value, $i, $charLen);
 		$i += ($charLen - 1);		// advance to end of UTF8 multi-byte string
-		
+
 		$pos = strpos($all_ALPHABET_upper, $letter);
 		if ($pos!==false) $letter = substr($all_ALPHABET_lower, $pos, $charLen);
 		$value_lower .= $letter;
@@ -873,7 +870,7 @@ function str2upper($value) {
 		if ((ord($letter) & 0xF8) == 0xF0) $charLen = 4;		// 4-byte sequence
 		$letter = substr($value, $i, $charLen);
 		$i += ($charLen - 1);		// advance to end of UTF8 multi-byte string
-		
+
 		$pos = strpos($all_ALPHABET_lower, $letter);
 		if ($pos!==false) $letter = substr($all_ALPHABET_upper, $pos, $charLen);
 		$value_upper .= $letter;
@@ -894,30 +891,30 @@ function str2upper($value) {
  */
 function smart_utf8_decode($in_str)
 {
-  $new_str = html_entity_decode(htmlentities($in_str, ENT_COMPAT, 'UTF-8'));
-  $new_str = str_replace("&oelig;", "\x9c", $new_str);
-  $new_str = str_replace("&OElig;", "\x8c", $new_str);
-  return $new_str;
+	$new_str = html_entity_decode(htmlentities($in_str, ENT_COMPAT, 'UTF-8'));
+	$new_str = str_replace("&oelig;", "\x9c", $new_str);
+	$new_str = str_replace("&OElig;", "\x8c", $new_str);
+	return $new_str;
 	/**
-   // Replace ? with a unique string
-   $new_str = str_replace("?", "q0u0e0s0t0i0o0n", $in_str);
+	// Replace ? with a unique string
+	$new_str = str_replace("?", "q0u0e0s0t0i0o0n", $in_str);
 
-   // Try the utf8_decode
-   $new_str=utf8_decode($new_str);
+	// Try the utf8_decode
+	$new_str=utf8_decode($new_str);
 
-   // if it contains ? marks
-   if (strpos($new_str,"?") !== false)
-   {
-       // Something went wrong, set new_str to the original string.
-       $new_str=$in_str;
-   }
-   else
-   {
-       // If not then all is well, put the ?-marks back where is belongs
-       $new_str = str_replace("q0u0e0s0t0i0o0n", "?", $new_str);
-   }
-   return $new_str;
-   **/
+	// if it contains ? marks
+	if (strpos($new_str,"?") !== false)
+	{
+	// Something went wrong, set new_str to the original string.
+	$new_str=$in_str;
+	}
+	else
+	{
+	// If not then all is well, put the ?-marks back where is belongs
+	$new_str = str_replace("q0u0e0s0t0i0o0n", "?", $new_str);
+	}
+	return $new_str;
+	**/
 }
 
 /**
@@ -999,15 +996,15 @@ function get_indi_names($indirec, $import=false) {
 
 function DMSoundex($name, $option = "") {
 	global $PGV_BASEDIRECTORY, $dmsoundexlist, $dmcoding, $maxchar, $INDEX_DIRECTORY, $cachecount, $cachename;
-	
+
 	// If the code tables are not loaded, reload! Keep them global!
 	if (!isset($dmcoding)) {
 		$fname = $PGV_BASEDIRECTORY."includes/dmarray.full.utf-8.php";
 		require($fname);
 	}
-	
+
 	// Load the previously saved cachefile and return. Keep the cache global!
-	
+
 	if ($option == "opencache") {
 		$cachename = $INDEX_DIRECTORY."DM".date("mdHis", filemtime($fname)).".dat";
 		if (file_exists($cachename)) {
@@ -1030,7 +1027,7 @@ function DMSoundex($name, $option = "") {
 			return;
 		}
 	}
-	
+
 	// Write the cache to disk after use. If nothing is added, just return.
 	if ($option == "closecache") {
 		if (count($dmsoundexlist) == $cachecount) return;
@@ -1053,10 +1050,10 @@ function DMSoundex($name, $option = "") {
 	$rescount = 1;
 	$nlen = strlen($name);
 	$npos = 0;
-	
-	
+
+
 	// Loop here through the characters of the name
-	while($npos < $nlen) { 
+	while($npos < $nlen) {
 		// Check, per length of characterstring, if it exists in the array.
 		// Start from max to length of 1 character
 		$code = array();
@@ -1141,12 +1138,12 @@ function DMSoundex($name, $option = "") {
 		// and check every code in the result.
 		// codes are stored separately in array elements, to keep
 		// distinction between 6 and 66.
-		
+
 		while($j<count($result[$i])) {
-	
+
 //  Zeroes to remain in the Soundex result
 			if ((($result[$i][$j-1] != $result[$i][$j]) && ($result[$i][$j] != -1)) || $result[$i][$j] == 0) {
-		
+
 				$res .= $result[$i][$j];
 			}
 			$j++;
@@ -1154,18 +1151,9 @@ function DMSoundex($name, $option = "") {
 		// Fill up to 6 digits and store back in the array
 		$result[$i] = substr($res."000000", 0, 6);
 	}
-			
+
 	// Kill the double results in the array
-	if (count($result)>1) {
-		sort($result);
-		for ($i=0; $i<count($result)-1; $i++) {
-			while ((isset($result[$i+1])) && ($result[$i] == $result[$i+1])) {
-				unset($result[$i+1]);
-				sort($result);
-			}
-		}
-			
-	}
+	$result=array_flip(array_flip($result));
 
 	// Store in cache and return
 	$dmsoundexlist[$name] = $result;

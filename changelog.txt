@@ -16,6 +16,15 @@ Version 4.2
  - Adding a "never married" icon on ancestry booklet when NMR=0 (opus27)
 
 Version 4.1
+ - Added changeGedcom method to web service (yalnifj)
+ - Fixed missing RESN on add/edit fact forms (yalnifj)
+ - Fixed [ 1676782 ] < and > stored in gedcom as &lt; and &gt; (yalnifj)
+ - Fixed  [ phpgedview-Version 4.1 Bugs (SVN)-1612613 ] 4.1B2-B4: User Migration (yalnifj)
+ - Fixed [ phpgedview-Bugs-1665673 ] SOAP doSearch method doesn't work with keyword searches (yalnifj)
+ - Added [ 1675436 ] Show Full Location name in alt of List Place Links (opus27)
+ - Fixed [ 1610026 ] search results show details of living people (yalnifj)
+ - Fixed [ 1488550 ] Family/Individual Media Duplications (yalnifj)
+ - Fixed [ 1599544 ] Hebrew dates in sortable tables (yalnifj)
  - Limiting what Edit users can do with media (yalnifj)
  - Fixed [ 1673134 ] 4.1 B4 (889) Edits to 1-level Notes objects not shown (yalnifj)
  - Fixed [ 1470107 ] 4.0b7 ... famlist ... surnames starting with - (yalnifj)

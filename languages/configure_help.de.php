@@ -24,10 +24,12 @@
  * @author Peter Pluntke
  * @version $Id$
  */
-if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
 	exit;
 }
+
 //-- CONFIGURE FILE MESSAGES
 $pgv_lang["gedcom_conf"]		= "GEDCOM Grundlagen";
 $pgv_lang["media_conf"]			= "Multimedia";
@@ -560,6 +562,9 @@ $pgv_lang["QUICK_REQUIRED_FAMFACTS"]			= "Immer im Schnell-Edit Formular zu zeig
 $pgv_lang["QUICK_ADD_FAMFACTS"]			= "Im Schnell-Edit Formular zu zeigende Familienereignisse";
 $pgv_lang["QUICK_REQUIRED_FACTS"]			= "Immer im Schnell-Edit Formular zu zeigende Ereignisse";
 $pgv_lang["QUICK_ADD_FACTS"]			= "Im Schnell-Edit Formular zu zeigende Ereignisse";
+$pgv_lang["SURNAME_TRADITION_help"] = "~#pgv_lang[SURNAME_TRADITION]#~<br />Wenn Sie neue Familienmitglieder hinzufügen, kann PhpGedView je nach der gewählten Nachnamenstradition den Nachnamen der neuen Person automatisch ermitteln.<br /><br /><ul><li>Nach der <b>väterlichen</b> Tradition, erhalten alle Kinder den Nachnamen des Vaters</li><li>Nach den <b>spanischen</b> und <b>portugiesischen</b> Traditionen, erhalten Kinder einen doppelten Nachnamen von beiden Eltern</li><li>Nach der <b>islandischen</b> Tradition, erhalten Kinder den väterlichen Vornamen als Nachname, mit Suffix der das Geschlecht des Kindes andeutet.</li></ul><br />";
+$pgv_lang["ADVANCED_NAME_FACTS_help"] = "~#pgv_lang[ADVANCED_NAME_FACTS]#~<br />Dies ist eine, durch Komma getrennte, Liste von GEDCOM Tags die in dem Bearbeitungsformular für Namen gezeigt werden.  Wenn Sie Alphabete benutzen, die nicht vom lateinischen Alphabet stammen, z.B., die hebräischen, griechischen, russischen, oder arabischen Alphabete, möchten Sie wahrscheinlich Tags wie _HEB, ROM, FONE, usw. dem Formular hinzufügen.  Solche Tags ermöglichen es Ihnen, Namen in verschiedenen Alphabeten zu speichern.<br />";
+$pgv_lang["ADVANCED_PLAC_FACTS_help"] = "~#pgv_lang[ADVANCED_PLAC_FACTS]#~<br />Dies ist eine, durch Komma getrennte, Liste von GEDCOM Tags die in dem Bearbeitungsformular für Ortsnamen gezeigt werden.  Wenn Sie Alphabete benutzen, die nicht vom lateinischen Alphabet stammen, z.B., die hebräischen, griechischen, russischen, oder arabischen Alphabete, möchten Sie wahrscheinlich Tags wie _HEB, ROM, FONE, usw. dem Formular hinzufügen.  Solche Tags ermöglichen es Ihnen, Ortsnamen in verschiedenen Alphabeten zu speichern.<br />";
 $pgv_lang["INDI_FACTS_ADD"] 		= "Personenereignisse hinzufügen";
 $pgv_lang["INDI_FACTS_ADD_help"]	= "~#pgv_lang[INDI_FACTS_ADD]#~<br />Diese Liste enthält alle Ereignisse die diesem Personen-Datensatz hinzugefügt werden können.  Sie können diese Liste durch Entfernen oder Hinzufügen von Ereignis-Codes nach Ihren Wünschen ändern.  Ereignis-Codes dieser Liste dürfen <u>nicht</u> in der <i>#pgv_lang[INDI_FACTS_UNIQUE]#</i> Liste vorkommen.  D.h., jedes Ereignis-Code darf in nur einer Liste vorkommen.<br /><br />";
 $pgv_lang["INDI_FACTS_UNIQUE"] 		= "Einmal vorkommende Personenereignisse";

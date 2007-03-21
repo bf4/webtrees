@@ -26,9 +26,10 @@
  * @subpackage Display
  * @version $Id$
  */
-if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
-	 print "Now, why would you want to do that. You're not hacking are you?";
-	 exit;
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
 }
 
 require_once("includes/person_class.php");
@@ -270,7 +271,7 @@ function print_list_repository($key, $value, $useli=true) {
  * @param string $legend optional legend of the fieldset
  */
 function print_indi_table($datalist, $legend="", $option="") {
-	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION, $GEDCOM_ID_PREFIX, $GEDCOM;
 	if (count($datalist)<1) return;
 	$name_subtags = array("", "_HEB", "ROMN", "_AKA");
 	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
@@ -337,9 +338,10 @@ function print_indi_table($datalist, $legend="", $option="") {
 	$dateY = date("Y");
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
-			$person = Person::getInstance($key); // from placelist
-			if (is_null($person)) $person = Person::getInstance($value); // from ancestry chart
-			unset ($value);
+			$person = null;
+			if (strpos($key, $GEDCOM_ID_PREFIX)!==false) $person = Person::getInstance($key); // from placelist
+			if (is_null($person)) $person = Person::getInstance($value); // from ancestry chart and search
+			if (!is_null($person)) $name = $person->getSortableName(); //-- for search results
 		}
 		else {
 			$gid = "";
@@ -347,6 +349,9 @@ function print_indi_table($datalist, $legend="", $option="") {
 			if (isset($value[4])) $gid = $value[4]; // from indilist ALL
 			if (isset($value["gedcom"])) $person = new Person($value["gedcom"]); // from source.php
 			else $person = Person::getInstance($gid);
+			if (isset($value["name"]) && $person->canDisplayName()) $name = $value["name"];
+			else $name = $person->getSortableName();
+			if (isset($value[4])) $name = $person->getSortableName($value[0]); // from indilist ALL
 		}
 		/* @var $person Person */
 		if (is_null($person)) continue;
@@ -363,9 +368,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 			echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$person->xref."</a></td>";
 		}
 		//-- Indi name(s)
-		if (isset($value["name"]) && $person->canDisplayName()) $name = $value["name"];
-		else $name = $person->getSortableName();
-		if (isset($value[4])) $name = $person->getSortableName($value[0]); // from indilist ALL
 		if ($person->isDead()) echo "<td class=\"list_value_wrap\"";
 		else echo "<td class=\"list_value_wrap alive\"";
 		echo " align=\"".get_align($name)."\">";
@@ -414,7 +416,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "</td>";
 		//-- Birth place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($person->getBirthPlace())."\">";
-		echo "<a href=\"".$person->getPlaceUrl($person->getBirthPlace())."\" class=\"list_item\">".PrintReady($person->getPlaceShort($person->getBirthPlace()))."</a>";
+		echo "<a href=\"".$person->getPlaceUrl($person->getBirthPlace())."\" class=\"list_item\" alt=\"".$person->getBirthPlace()."\" title=\"".$person->getBirthPlace()."\">"
+		.PrintReady($person->getPlaceShort($person->getBirthPlace()))."</a>";
 		echo "&nbsp;</td>";
 		//-- Number of children
 		echo "<td class=\"list_value_wrap\">";
@@ -464,7 +467,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "</td>";
 		//-- Death place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($person->getDeathPlace())."\">";
-		echo "<a href=\"".$person->getPlaceUrl($person->getDeathPlace())."\" class=\"list_item\">".PrintReady($person->getPlaceShort($person->getDeathPlace()))."</a>";
+		echo "<a href=\"".$person->getPlaceUrl($person->getDeathPlace())."\" class=\"list_item\" alt=\"".$person->getDeathPlace()."\" title=\"".$person->getDeathPlace()."\">"
+		.PrintReady($person->getPlaceShort($person->getDeathPlace()))."</a>";
 		echo "&nbsp;</td>";
 		//-- Last change
 		if ($SHOW_LAST_CHANGE) {
@@ -763,7 +767,8 @@ function print_fam_table($datalist, $legend="") {
 		echo "</td>";
 		//-- Marriage place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($family->getMarriagePlace())."\">";
-		echo "<a href=\"".$family->getPlaceUrl($family->getMarriagePlace())."\" class=\"list_item\">".PrintReady($family->getPlaceShort($family->getMarriagePlace()))."</a>";
+		echo "<a href=\"".$family->getPlaceUrl($family->getMarriagePlace())."\" class=\"list_item\" alt=\"".$family->getMarriagePlace()."\" title=\"".$family->getMarriagePlace()."\">"
+		.PrintReady($family->getPlaceShort($family->getMarriagePlace()))."</a>";
 		echo "&nbsp;</td>";
 		//-- Number of children
 		echo "<td class=\"list_value_wrap\">";
@@ -1250,6 +1255,8 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 	$hidden = 0;
 	$n = 0;
 	$dateY = date("Y");
+	// max anniversary date
+	$datemax = mktime(0, 0, 0, date("m"), date("d")+$nextdays, $dateY);
 	foreach($datalist as $key => $value) {
 		
 		//-- check if we actually need to load up the record from the DB first
@@ -1265,12 +1272,12 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 		if (empty($edate)) continue;
 		$timestamp = get_changed_date($edate, true);
 		$pdate = parse_date($edate);
+		if (strpos($edate, "@#DHEBREW")!==false) $pdate = jewishGedcomDateToGregorian($pdate);
 		if ($pdate[0]["day"] == "") continue;
 		$anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], $dateY);
 		// add 1 year if anniversary before today
 		if (date("Ymd", $anniv) < date("Ymd")) $anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], $dateY+1);
-		// max anniversary date
-		$datemax = mktime(0, 0, 0, date("m"), date("d")+$nextdays, $dateY);
+		
 		if ($datemax < $anniv) continue;
 		// upcoming events starting tomorrow
 		if ($nextdays>0 and date("Ymd") == date("Ymd", $anniv)) continue;
@@ -1429,7 +1436,9 @@ function load_behaviour() {
 				this.style.opacity = 0.67;
 			}
 			element.onclick = function() { // apply filter
-				var table = this.parentNode.getElementsByTagName("table")[0].id;
+				var temp = this.parentNode.getElementsByTagName("table")[0];
+				if (!temp) return true;
+				var table = temp.id;
 				var args = this.className.split('_'); // eg: BIRT_YES
 				if (args[0]=="alive") return table_filter_alive(table);
 				if (args[0]=="reset") return table_filter(table, "", "");

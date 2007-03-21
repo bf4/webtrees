@@ -24,10 +24,12 @@
  * @author Anderson Wilson and Clovis Bombardelli
  * @version $Id$
  */
-if (preg_match("/lang\......\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
+
 $pgv_lang["roman_surn"]="Sobrenome Románico";
 $pgv_lang["roman_givn"]="Nomes Románicos";
 $pgv_lang["include"]="Incluir:";

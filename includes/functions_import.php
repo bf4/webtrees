@@ -24,8 +24,9 @@
  * @package PhpGedView
  * @subpackage DB
  */
-if (strstr($_SERVER["SCRIPT_NAME"], "functions")) {
-	print "Now, why would you want to do that.	You're not hacking are you?";
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
 	exit;
 }
 
@@ -1619,7 +1620,7 @@ function accept_changes($cid) {
 			unset ($_SESSION["recent_changes"]["gedcom"][$GEDCOM]);
 		$logline = AddToLog("Accepted change $cid " . $change["type"] . " into database ->" . getUserName() . "<-");
 		if (!empty ($COMMIT_COMMAND))
-			check_in($logline, $GEDCOM, dirname($GEDCOMS[$GEDCOMS]['path']));
+			check_in($logline, $GEDCOM, dirname($GEDCOMS[$GEDCOM]['path']));
 		if (isset ($change["linkpid"]))
 			accept_changes($change["linkpid"] . "_" . $GEDCOM);
 		return true;

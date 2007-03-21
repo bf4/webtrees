@@ -25,9 +25,10 @@
  * @subpackage Display
  * @version $Id$
  */
-if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
-	 print "Now, why would you want to do that. You're not hacking are you?";
-	 exit;
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
 }
 
 require_once 'includes/functions_charts.php';

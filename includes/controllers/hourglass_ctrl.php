@@ -23,6 +23,12 @@
  * @subpackage Charts
  * @version $Id$
  */
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 require_once("config.php");
 require_once("includes/controllers/basecontrol.php");
 require_once("includes/person_class.php");
@@ -163,8 +169,7 @@ class HourglassControllerRoot extends BaseController {
 			$this->hourPerson->undoChange();
 			break;
 	}
-
-	}
+}
 
 /**
  * Prints pedigree of the person passed in. Which is the descendancy 

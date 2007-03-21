@@ -25,7 +25,7 @@
  * @author Julien Damon
  * @version $Id$
  */
-if (preg_match("/facts\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
@@ -179,6 +179,7 @@ $factarray["DEAT:PLAC"]                 = "Lieu de décès";
 $factarray["CHR:PLAC"]                  = "Lieu de baptême";
 $factarray["BAPM:PLAC"]                 = "Lieu de baptême";
 $factarray["BURI:PLAC"]                 = "Lieu de sépulture";
+$factarray["MARR:PLAC"]                 = "Lieu de mariage";
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"]                     = "Médical";
 $factarray["_DEG"]                      = "Diplôme";
@@ -248,7 +249,8 @@ $factarray["_NMAR"]                     = "Jamais marié(e)";
 $factarray["_PRMN"]                     = "Numéro permanent";
 $factarray["_WEIG"]                     = "Poids";
 $factarray["_YART"]                     = "Yartzeit";
-$factarray["_MARNM"]                    = "Nom de mariage";
+$factarray["_MARNM"]                    = "Nom après mariage";
+$factarray["_MARNM_SURN"]               = "Nom de famille après mariage";
 $factarray["_STAT"]                     = "Statut Mariage";
 $factarray["COMM"]                      = "Commentaire";
 // Aldfaer related facts

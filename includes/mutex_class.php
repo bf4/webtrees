@@ -26,6 +26,11 @@
  * @package PhpGedView
  */
 
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 class Mutex {
 	var $name; 	//-- the name of the mutex
 	var $waitCount;	//-- the number of cycles it we waited while trying to acquire the mutex

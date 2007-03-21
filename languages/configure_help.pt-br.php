@@ -24,10 +24,12 @@
  * @author Anderson Wilson
  * @version $Id$
  */
-if (preg_match("/configure_help\......\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
+
 //-- CONFIGURE FILE MESSAGES
 $pgv_lang["COMMIT_COMMAND_help"]="~#pgv_lang[COMMIT_COMMAND]#~<br /><br />Deixe em branco caso não queira utilizar um sistema de controle de versão tal como o CVS para salvar as alterações e configurações do seu GEDCOM, caso contrário as opções são <b>cvs</b> e <b>svn</b>.<br />";
 $pgv_lang["SHOW_MULTISITE_SEARCH_help"]="~#pgv_lang[SHOW_MULTISITE_SEARCH]#~<br /><br />Esta opção restringe ou não o uso da pesquisa Multi-Site aos usuários identificados. A pesquisa Multi-Site procura a informação nos sites cadastrados em \"Gerenciar Sites\" e nos sites remotos.<br />";

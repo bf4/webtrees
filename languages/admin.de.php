@@ -25,7 +25,8 @@
  * @subpackage Languages
  * @version $Id$
  */
-if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
 	exit;
 }
@@ -307,12 +308,19 @@ $pgv_lang["see"]						= "zeigen";
 $pgv_lang["noref"]						= "Dieser Datensatz ist nirgends verbunden -- er ist eigenständig.";
 $pgv_lang["tag"]						= "GEDCOM-Tag";
 $pgv_lang["spacing"]					= "Abstand";
+$pgv_lang["ADVANCED_NAME_FACTS"] = "Besondere Namens-Fakten";
+$pgv_lang["ADVANCED_PLAC_FACTS"] = "Besondere Ortsnamen-Fakten";
+$pgv_lang["SURNAME_TRADITION"] = "Nachnamens-Tradition";
+$pgv_lang["spanish"]           = "spanisch";
+$pgv_lang["portuguese"]        = "portugiesisch";
+$pgv_lang["icelandic"]         = "islandisch";
+$pgv_lang["paternal"]          = "väterlich";
 $pgv_lang["context_lines"]				= "Zusammenhang in der GEDCOM-Datei";
 $pgv_lang["open_link"]					= "Links öffnen im ...";
 $pgv_lang["warning"]					= "Warnung";
 $pgv_lang["error"]						= "Fehler";
 $pgv_lang["critical"]					= "Kritisch";
-$pgv_lang["level"]						= "Level";				   // Niveau
+$pgv_lang["level"]						= "Level";
 
 $pgv_lang["ip_address"]					= "IP Adresse";
 $pgv_lang["date_time"]					= "Datum und Uhrzeit";

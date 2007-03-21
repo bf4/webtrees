@@ -26,6 +26,12 @@
  * @subpackage Charts
  * @version $Id: media_ctrl.php 87 2006-06-13 19:23:14Z yalnifj $
  */
+
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 require_once('includes/controllers/individual_ctrl.php');
 require_once("includes/media_class.php");
 
@@ -145,18 +151,19 @@ class MediaControllerRoot extends IndividualController{
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 			//- end plain edit option
-			
+			if (userGedcomAdmin(getUserName())) {
 			$submenu = new Menu($pgv_lang["edit_raw"]);
 			$submenu->addOnclick("return edit_raw('".$this->pid."');");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 			
 			//- remove object option
-			$submenu = new Menu($pgv_lang["remove_object"]);
-			$submenu->addLink("media.php?action=removeobject&amp;xref=".$this->pid);
-			$submenu->addOnclick("return confirm('".$pgv_lang["confirm_remove_object"]."')");
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-			$menu->addSubmenu($submenu);
+				$submenu = new Menu($pgv_lang["remove_object"]);
+				$submenu->addLink("media.php?action=removeobject&amp;xref=".$this->pid);
+				$submenu->addOnclick("return confirm('".$pgv_lang["confirm_remove_object"]."')");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$menu->addSubmenu($submenu);
+			}
 			
 			// main link displayed on page
 			$submenu = new Menu($pgv_lang["set_link"]." >");
