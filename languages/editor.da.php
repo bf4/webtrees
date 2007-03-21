@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * Danish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,10 +31,13 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["advanced_name_fields"]	= "Yderligere navne (�vn, giftenavn, osv.)";
 $pgv_lang["accept_changes"]		= "Godkend / Afvis ændring(er)";
 $pgv_lang["replace"]			= "Erstat Post";
 $pgv_lang["append"]				= "Tilføj Post";
 $pgv_lang["review_changes"]		= "Vis ændringer i slægtsdatabasen en gang til";
+$pgv_lang["remove_object"]			= "Fjern objekt";
+$pgv_lang["remove_links"]			= "Fjern links";
 $pgv_lang["media_not_deleted"]		= "Folderen med mediefiler blev ikke fjernet.";
 $pgv_lang["thumbs_not_deleted"]		= "Folder med miniaturebilleder ikke fjernet.";
 $pgv_lang["thumbs_deleted"]			= "Folder med miniaturebilleder blev fjernet.";
@@ -51,6 +54,31 @@ $pgv_lang["reorder_children"]		= "Vis børn i anden rækkefølge";
 $pgv_lang["add_from_clipboard"]		= "Tilføj fra udklipsholderen";
 $pgv_lang["record_copied"]			= "Posten er kopieret til udklipsholderen";
 $pgv_lang["add_unlinked_person"]	= "Tilføj en person som ikke er knyttet til en familie";
+$pgv_lang["add_unlinked_source"]	= "Tilføj en kilde der ikke er tilknyttet";
+$pgv_lang["server_file"]				= "Filnavn på server";
+$pgv_lang["server_file_advice"]			= "Lad være med at ændre for at beholde det originale filnavn.";
+$pgv_lang["server_file_advice2"]		= "You may enter a URL, beginning with &laquo;http://&raquo;.";
+$pgv_lang["server_folder_advice"]		= "You can enter up to #GLOBALS[MEDIA_DIRECTORY_LEVELS]# folder names to follow the default &laquo;#GLOBALS[MEDIA_DIRECTORY]#&raquo;.<br />Do not enter the &laquo;#GLOBALS[MEDIA_DIRECTORY]#&raquo; part of the destination folder name.";
+$pgv_lang["server_folder_advice2"]		= "This entry is ignored if you have entered a URL into the file name field.";
+$pgv_lang["add_linkid_advice"]			= "Enter or search for the ID of the person, family, or source to which this media item should be linked.";
+$pgv_lang["use_browse_advice"]			= "Use the &laquo;Browse&raquo; button to search your local computer for the desired file.";
+$pgv_lang["add_media_other_folder"]		= "Other folder... please type in";
+$pgv_lang["add_media_file"]				= "Existing Media file on server";
+$pgv_lang["date_of_entry"]				= "Date of entry in original source";
+$pgv_lang["main_media_ok1"]				= "Main media file <b>#GLOBALS[oldMediaName]#</b> successfully renamed to <b>#GLOBALS[newMediaName]#</b>.";
+$pgv_lang["main_media_ok2"]				= "Main media file <b>#GLOBALS[oldMediaName]#</b> successfully moved from <b>#GLOBALS[oldMediaFolder]#</b> to <b>#GLOBALS[newMediaFolder]#</b>.";
+$pgv_lang["main_media_ok3"]				= "Main media file successfully moved and renamed from <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> to <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";
+$pgv_lang["main_media_fail0"]			= "Main media file <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> does not exist.";
+$pgv_lang["main_media_fail1"]			= "Main media file <b>#GLOBALS[oldMediaName]#</b> could not be renamed to <b>#GLOBALS[newMediaName]#</b>.";
+$pgv_lang["main_media_fail2"]			= "Main media file <b>#GLOBALS[oldMediaName]#</b> could not be moved from <b>#GLOBALS[oldMediaFolder]#</b> to <b>#GLOBALS[newMediaFolder]#</b>.";
+$pgv_lang["main_media_fail3"]			= "Main media file could not be moved and renamed from <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> to <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";
+$pgv_lang["thumb_media_ok1"]			= "Miniaturefilen <b>#GLOBALS[oldMediaName]#</b> er korrekt omdøbt til <b>#GLOBALS[newMediaName]#</b>.";
+$pgv_lang["thumb_media_ok2"]			= "Miniaturefilen <b>#GLOBALS[oldMediaName]#</b> er korrekt flyttet fra <b>#GLOBALS[oldThumbFolder]#</b> til <b>#GLOBALS[newThumbFolder]#</b>.";
+$pgv_lang["thumb_media_ok3"]			= "Miniaturefilen er korrekt flyttet og omdøbt fra <b>#GLOBALS[oldThumbFolder]##GLOBALS[oldMediaName]#</b> til <b>#GLOBALS[newThumbFolder]##GLOBALS[newMediaName]#</b>.";
+$pgv_lang["thumb_media_fail0"]			= "Miniaturefilen <b>#GLOBALS[oldThumbFolder]##GLOBALS[oldMediaName]#</b> does not exist.";
+$pgv_lang["thumb_media_fail1"]			= "Miniaturefilen <b>#GLOBALS[oldMediaName]#</b> kunne ikke omdøbes til <b>#GLOBALS[newMediaName]#</b>.";
+$pgv_lang["thumb_media_fail2"]			= "Miniaturefilen <b>#GLOBALS[oldMediaName]#</b> kunne ikke flyttes fra <b>#GLOBALS[oldThumbFolder]#</b> til <b>#GLOBALS[newThumbFolder]#</b>.";
+$pgv_lang["thumb_media_fail3"]			= "Miniaturefilen kunne ikke flyttes og omdøbes fra <b>#GLOBALS[oldThumbFolder]##GLOBALS[oldMediaName]#</b> til <b>#GLOBALS[newThumbFolder]##GLOBALS[newMediaName]#</b>.";
 $pgv_lang["add_asso"]			= "Tilføj en ny tilknyttet person";
 $pgv_lang["edit_sex"]				= "Ret køn";
 $pgv_lang["add_obje"]			= "Tilføj et nyt billede eller mediefil";
@@ -84,15 +112,17 @@ $pgv_lang["add_source_lbl"]		= "Tilføj kildehenvisning";
 $pgv_lang["add_wife"]			= "Tilføj hustru";
 $pgv_lang["add_wife_to_family"]	= "Tilføj en hustru/mor til denne familie";
 $pgv_lang["advanced_search_discription"] = "Avanceret søgning";
+$pgv_lang["auto_thumbnail"]			= "Automatisk miniature";
 $pgv_lang["basic_search"]			= "Enkel søgning";
 $pgv_lang["basic_search_discription"] = "Enkel søgning";
 $pgv_lang["birthdate_search"]		= "Fødselsdato: ";
 $pgv_lang["birthplace_search"]		= "Fødested: ";
-$pgv_lang["change"]					= "Change";
+$pgv_lang["change"]					= "Tilpas";
 $pgv_lang["change_family_instr"]	= "Brug denne side til at redigere eller fjerne familiemedlemmer.<br /><br />For hver medlem af familien kan du bruge linket: Rediger for at udskifte en person med en anden.  Du kan også bruge linket: Fjern til at fjerne personen fra familien.<br /><br />Klik på knappen: Gem, når du er færdig med at redigere familiemedlemmerne.<br />";
 $pgv_lang["change_family_members"]	= "Rediger familiemedlemmer";
 $pgv_lang["changes_occurred"]	= "Følgende ændringer er udført for denne person:";
 $pgv_lang["confirm_remove"]			= "Er du sikker på at du vil fjerne denne person fra familien?";
+$pgv_lang["confirm_remove_object"]	= "Er du sikker på at du ønsker at fjerne dette objekt fra databasen?";
 $pgv_lang["create_repository"]		= "Opret nyt opbevaringssted";
 $pgv_lang["create_source"]		= "Opret en ny kilde";
 $pgv_lang["current_person"]         = "Samme som den aktuelle";
@@ -106,18 +136,21 @@ $pgv_lang["directory_not_empty"]	= "Folderen er ikke tom.";
 $pgv_lang["directory_not_exist"]	= "Folderen findes ikke.";
 $pgv_lang["error_remote"]           = "Du har valgt en ekstern site.";
 $pgv_lang["error_same"]             = "Du har valgt den samme site.";
+$pgv_lang["external_file"]			= "Dette medieobjekt findes ikke som en fil på denne server.  Det kan ikke slettes, flyttes eller omdøbes.";
 $pgv_lang["family"]				= "Familie";
 $pgv_lang["file_missing"]			= "Der blev ikke modtaget nogen fil. Hent filen igen.";
 $pgv_lang["file_partial"]			= "Filen blev kun uploadet delvist, forsøg igen";
 $pgv_lang["file_success"]			= "Filen er uploadet";
 $pgv_lang["file_too_big"]			= "Den uploadede fil overskrider den tilladte størrelse";
-$pgv_lang["folder"]		 			= "Folder";
+$pgv_lang["folder"]		 			= "Mappe på server";
 $pgv_lang["gedcom_editing_disabled"]	= "Muligheden for at ændre denne slægtsdatabase (GEDCOM) er blevet deaktiveret af system-administratoren.";
 $pgv_lang["gedcomid"]				= "Bruger ID";
 $pgv_lang["gedrec_deleted"]		= "GEDCOM-post er nu slettet.";
 $pgv_lang["gen_thumb"]				= "Opret miniaturebilleder";
 $pgv_lang["gender_search"]			= "Køn: ";
-$pgv_lang["generate_thumbnail"]		= "Opret miniaturebillede automatisk fra ";
+$pgv_lang["generate_thumbnail"]		= "Opret miniature automatisk fra ";
+$pgv_lang["hebrew_givn"]			= "Hebræiske fornavne";
+$pgv_lang["hebrew_surn"]			= "Hebræisk efternavn";
 $pgv_lang["hide_changes"]		= "Klik her for at skjule ændringer.";
 $pgv_lang["highlighted"]			= "Anvende som hovedbillede";
 $pgv_lang["illegal_chars"]			= "Ikke tilladte karakterer i navn";
@@ -129,23 +162,27 @@ $pgv_lang["label_location"]         = "Placering";
 $pgv_lang["label_password_id2"]		  = "Adgangskode: ";
 $pgv_lang["label_rel_to_current"]   = "Relation til aktuel person";
 $pgv_lang["label_remote_id"]        = "Ekstern Person-ID";
-$pgv_lang["label_same_server"]      = "Samme site";
-$pgv_lang["label_site"]             = "Site";
+$pgv_lang["label_same_server"]      = "Samme websted";
+$pgv_lang["label_site"]             = "Websted";
 $pgv_lang["label_site_url"]         = "URL-adresse";
 $pgv_lang["label_username_id2"]		  = "Brugernavn ";
 $pgv_lang["lbl_server_list"]        = "Brug en eksisterende site.";
-$pgv_lang["lbl_type_server"]        = "Indtast en ny site.";
+$pgv_lang["lbl_type_server"]        = "Indtast et ny websted.";
 $pgv_lang["link_as_child"]		= "Knyt denne person til en familie som et barn";
 $pgv_lang["link_as_husband"]		= "Knyt denne person til en eksisterende familie som en ægtemand";
 $pgv_lang["link_success"]		         = "Link blev tilføjet";
+$pgv_lang["link_to_existing_media"]		= "Link til et eksisterende medieemne";
 $pgv_lang["max_media_depth"]		= "Du kan kun gå #MEDIA_DIRECTORY_LEVELS# foldere ned";
 $pgv_lang["max_upload_size"]		= "Maks størrelse for uploading: ";
 $pgv_lang["media_deleted"]			= "Folderen med mediefiler blev fjernet.";
 $pgv_lang["media_exists"]			= "Mediefilen findes allerede.";
 $pgv_lang["media_file"] 			= "Mediefil";
 $pgv_lang["media_file_deleted"]		= "Mediefil blev slettet.";
+$pgv_lang["media_file_not_moved"]	= "Mediefilen kunne ikke flyttes.";
+$pgv_lang["media_file_not_renamed"]	= "Mediefilen kunne ikke flyttes eller omd�";
 $pgv_lang["media_thumb_exists"]		= "Miniaturebillede findes allerede.";
 $pgv_lang["multi_site_search"] 		= "Søgning på flere sites";
+$pgv_lang["multiple_gedcoms"]		= "This file is linked to another genealogical database on this server.  It cannot be deleted, moved, or renamed until these links have been removed.";
 $pgv_lang["must_provide"]		= "Du skal sørge for et ";
 $pgv_lang["name_search"]			= "Navn: ";
 $pgv_lang["new_repo_created"]		= "Nyt opbevaringssted er oprettet";
@@ -160,6 +197,7 @@ $pgv_lang["photo_replace"] 			= "Ønsker du at erstatte et ældre billede med de
 $pgv_lang["privacy_not_granted"]	= "Du har ikke adgang til";
 $pgv_lang["privacy_prevented_editing"]	= "Af hensyn til beskyttelse af privatlivet, kan du ikke ændre oplysningerne.";
 $pgv_lang["record_marked_deleted"]		= "Denne post er afmærket til at blive slettet efter admin har godkendt det.";
+$pgv_lang["replace_with"]			= "Erstat med";
 $pgv_lang["show_changes"]		= "Denne post er blevet opdateret. Klik her for at se ændringerne.";
 $pgv_lang["thumb_genned"]			= "Miniaturebillede #thumbnail# blev oprettet automatisk.";
 $pgv_lang["thumbgen_error"]			= "Miniaturebillede #thumbnail# kunne ikke oprettes automatisk.";
@@ -173,9 +211,8 @@ $pgv_lang["update_successful"]	= "Opdatering er udført";
 $pgv_lang["upload"]					= "Upload";
 $pgv_lang["upload_error"]			= "Der opstod en FEJL under uploading af din fil.";
 $pgv_lang["upload_media"]			= "Upload mediefiler";
+$pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />Select files from your local computer to upload to your server.  All files will be uploaded to the directory <b>#MEDIA_DIRECTORY#</b> or to one of its sub-directories.<br /><br />Folder names you specify will be appended to #MEDIA_DIRECTORY#. For example, #MEDIA_DIRECTORY#myfamily. If the thumbnail directory does not exist, it is created automatically.";
 $pgv_lang["upload_successful"]		= "Upload fuldført.";
 $pgv_lang["view_change_diff"]	= "Vis ændring, forskelle";
-
-$pgv_lang["no_update_CHAN"]			= "";
 
 ?>
