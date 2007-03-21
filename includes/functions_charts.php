@@ -23,11 +23,13 @@
  * @subpackage Charts
  * @version $Id$
  */
-require_once("includes/person_class.php");
-if (strstr($_SERVER["SCRIPT_NAME"], "functions")) {
-	print "Now, why would you want to do that.	You're not hacking are you?";
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
 	exit;
 }
+
+require_once("includes/person_class.php");
 
 /**
  * print a table cell with sosa number

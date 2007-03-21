@@ -24,10 +24,12 @@
  * @author Daniel Melander
  * @version $Id$
  */
-if (preg_match("/facts\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
+
 // -- Define a fact array to map GEDCOM tags with their swedish values
 $factarray["ABBR"] = "Förkortning";
 $factarray["ADDR"] = "Adress";

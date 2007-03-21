@@ -1,4 +1,10 @@
 <?php
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 	$maxchar = 7;
 	$dmcoding = array();
 	$dmcoding["A"] = array(0, -1, -1);

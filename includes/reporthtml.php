@@ -6,7 +6,12 @@
  * @package PhpGedView
  * @subpackage Reports
  */
- 
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 /**
  * element handlers array
  *

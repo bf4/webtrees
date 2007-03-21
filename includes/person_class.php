@@ -23,6 +23,12 @@
  * @subpackage DataModel
  * @version $Id$
  */
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 require_once 'includes/gedcomrecord.php';
 require_once 'includes/family_class.php';
 

@@ -34,6 +34,11 @@
  *
  */
 
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 $lng_codes["aa"]    = array("Afar", "Ethiopia");
 $lng_codes["ab"]    = array("Abkhazian", "Georgia");
 $lng_codes["af"]    = array("Afrikaans", "South Africa");

@@ -23,10 +23,12 @@
  * @author Kurt Norgaz
  * @version $Id$
  */
-if (preg_match("/facts\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
+
 // -- Define a fact array to map Gedcom tags with their Turkish values
 $factarray["ABBR"]	= "Kısaltma";
 $factarray["ADDR"]	= "Adres";

@@ -23,11 +23,8 @@
  * @version $Id$
  */
 
-/**
- * security check to prevent hackers from directly accessing this file
- */
-if (strstr($_SERVER["SCRIPT_NAME"],"functions_name.php")) {
-	print "Why do you want to do that?";
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
 	exit;
 }
 

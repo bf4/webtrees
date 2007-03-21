@@ -25,10 +25,11 @@
  * @version $Id$
  */
 
-if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Usted no puede acceder a este archivo de idioma directamente.";
 	exit;
 }
+
 //-- CONFIGURE FILE MESSAGES
 $pgv_lang["configure"]			    = "Configurar PhpGedView";
 $pgv_lang["default_user"]		    = "Cree el usuario de administración por defecto.";

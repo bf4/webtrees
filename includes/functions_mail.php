@@ -23,6 +23,11 @@
  * @version $Id$
  */
 
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 /**
  * this function is a wrapper to the php mail() function so that we can change settings globally
  * for more info on format="flowed" see: http://www.joeclark.org/ffaq.html

@@ -26,10 +26,12 @@
  * @package PhpGedView
  * @subpackage Languages
  */
-if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Du har ikke direkte tilgang til en språkfil.<br />You cannot access a language file directly.";
 	exit;
 }
+
 $pgv_lang["file_information"]		= "Fil-informasjon";
 $pgv_lang["choose_file_type"]		= "Velg filtype";
 $pgv_lang["add_individual_by_id"]	= "Legg til person ved hjelp av ID";

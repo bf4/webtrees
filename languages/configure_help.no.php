@@ -27,7 +27,7 @@
  * @subpackage Languages
  */
 
-if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Du har ikke direkte tilgang til en språkfil.";
 	exit;
 }

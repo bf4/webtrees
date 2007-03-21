@@ -25,9 +25,10 @@
  * @author Matti Valve
  * @version $Id$
  */
-if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-print "You cannot access a language file directly.";
-exit;
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access a language file directly.";
+	exit;
 }
 
 $pgv_lang["utf8_ansi_help"]		= "~MUUNNA UTF-8 MERKISTÖSTÄ ANSI MERKISTÖÖN~<b /><br />Jotta sivut näkyisivät oikein internetissä PhpGedView käyttää UTF-8 merkistöä. Jotkut ohjelmat, kuten Family Tree Maker, eivät tue UTF-8-koodattujen GEDCOM-tiedostojen tuontia. Rastittamalla tämän valintaruudun muunnetaan tiedosto <b>UTF-8</b>-muodosta <b>ANSI</b>-muotoon (ISO-8859-1).</b><br /> Riippuu ohjelmasta, missä muodossa koneellesi lataama GEDCOM-tiedoston on oltava.</b>Tarkista ohjelman tiedoista, missä muodossa tiedoston on oltava.<br /><br />Huomaa, että jotta tietyt erikoismerkit pysyisivät muuttumattomina, tiedosto on ladattava  UTF-8-muodossa ja muunnettava ohjelmasi käyttämään muotoon jollakin muulla tavalla. Tiedustele asiaa ohjelman valmistajalta tai tekijältä.<br /><br />";
