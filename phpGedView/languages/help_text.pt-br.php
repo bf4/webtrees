@@ -24,10 +24,12 @@
  * @author Anderson Wilson
  * @version $Id$
  */
-if (preg_match("/help_text\......\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-  print "You cannot access a language file directly.";
-  exit;
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access a language file directly.";
+	exit;
 }
+
 $pgv_lang["edit_add_unlinked_source_help"]="~#pgv_lang[add_unlinked_source]#~<br /><br />Use este link para adicionar uma nova Fonte ao banco de dados, sem contudo criar uma referência a ela. Enquanto não for referenciada, a nova Fonte somente aparecerá na Lista de Fontes.";
 $pgv_lang["link_person_id_help"]="~#pgv_lang[label_local_id]#~<br /><br />Este campo deve conter a ID da pessoa referenciada (ex.: I100).";
 $pgv_lang["link_gedcom_id_help"]="~#pgv_lang[label_gedcom_id]#~<br /><br />Use esta seção para selecionar a identificação alternativa do banco de dados que faça referência a pessoa desejada.";

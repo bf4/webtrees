@@ -24,9 +24,10 @@
  * @author Lan Nguyen
  * @version $Id$
  */
-if (preg_match("/help_text\...\.php$/", $_SERVER["PHP_SELF"])>0) {
-print "Bạn không thể vào thẳng nhu liệu ngôn ngữ được.";
-exit;
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "Bạn không thể vào thẳng nhu liệu ngôn ngữ được.";
+	exit;
 }
 
 

@@ -24,10 +24,12 @@
  * @author Peter Pluntke
  * @version $Id$
  */
-if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
 	exit;
 }
+
 //-- CONFIGURE FILE MESSAGES
 $pgv_lang["gedcom_conf"]		= "GEDCOM Grundlagen";
 $pgv_lang["media_conf"]			= "Multimedia";

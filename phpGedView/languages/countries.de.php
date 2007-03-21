@@ -7,10 +7,12 @@
  * @subpackage Languages
  * @version $Id$
  */
-if (preg_match("/countries\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
 	exit;
 }
+
 $countries["ABW"]="Aruba";
 $countries["ACA"]="Akadien";
 $countries["AFG"]="Afghanistan";

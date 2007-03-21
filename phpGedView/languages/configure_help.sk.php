@@ -9,10 +9,12 @@
    Change Log:	5/1/03 - File Created
 ===================================================*/
 # $Id$
-if (preg_match("/configure_help\...\.php$/", $_SERVER["PHP_SELF"])>0) {
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Nemáte priamy prístup k súboru so slovenčinou.";
 	exit;
 }
+
 //-- SPRÁVY KONFIGURAČNÉHO SÚBORU
 $pgv_lang["configure"]			= "Konfigurácia PhpGedView";
 $pgv_lang["standard_conf"]		= "Štandardné nastavenie";

@@ -25,7 +25,8 @@
  * @subpackage Languages
  * @version $Id$
  */
-if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Usted no puede acceder a este archivo de idioma directamente.";
 	exit;
 }

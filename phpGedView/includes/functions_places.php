@@ -23,10 +23,12 @@
  * @subpackage Edit
  * @version $Id$
  */
-if (strstr($_SERVER["SCRIPT_NAME"],"functions")) {
-	print "Now, why would you want to do that.  You're not hacking are you?";
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
 	exit;
 }
+
 ?>
 <link rel="stylesheet" type="text/css" href="places/dropdown.css" />
 <div id='mapdata' name='mapdata'></div>

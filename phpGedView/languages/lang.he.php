@@ -25,10 +25,12 @@
  * @subpackage Languages
  * @version $Id$
  */
-if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "אין לך גישה לתיקיית קובצי השפות.";
 	exit;
 }
+
 $pgv_lang["invalid_search_input"] 		= "הכנס בבקשה שם פרטי, שם משפחה או מקום בנוסף לשנה";
 $pgv_lang["duplicate_username"]		= "קוד משתמש כפול. משתמש עם קוד זה מוגדר כבר. נא בחר קוד משתמש אחר.";
 $pgv_lang["cache_life"]			= "חיי קובץ ה-Cache"; 

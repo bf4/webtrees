@@ -1,17 +1,23 @@
 <?php
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 require_once("includes/GrampsExport.php");
 class GEDownloadGedcom extends GrampsExport
 {
-	/**
-	  * Creates the Person element and all of it's child elements, and appends it to the
-	  * 	People element.  Given the link for certain LDS events to a family, if the Family 
-	  * 	has not been previously created, create_family is called to create the family. 
-	  * 	The family relations in the LDS events and in the person element are only created
-	  * 	if the family they have a relation with are also included in the clippings cart   
-	  * 
-	  * @param string $personRec - the full INDI GEDCOM record of the person to be created
-	  * @param string $personID - the ID (I1, I2, I3) of the person the is being created 
-	  */
+/**
+  * Creates the Person element and all of it's child elements, and appends it to the
+  * 	People element.  Given the link for certain LDS events to a family, if the Family 
+  * 	has not been previously created, create_family is called to create the family. 
+  * 	The family relations in the LDS events and in the person element are only created
+  * 	if the family they have a relation with are also included in the clippings cart   
+  * 
+  * @param string $personRec - the full INDI GEDCOM record of the person to be created
+  * @param string $personID - the ID (I1, I2, I3) of the person the is being created 
+  */
 	function create_person($personRec = "", $personID = "") {
 		global $pgv_lang;
 		$check = $this->query_dom("./people/person[@id=\"$personID\"]");

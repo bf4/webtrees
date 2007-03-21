@@ -27,6 +27,11 @@
 * Main controller class for the Clippings page.
 */
 
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 require_once ("includes/GrampsExport.php");
 require_once ("includes/person_class.php");
 require_once ("includes/functions.php");

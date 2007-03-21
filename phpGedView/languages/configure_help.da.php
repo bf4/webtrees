@@ -23,7 +23,8 @@
  * @author Jørgen Hansen
  * @version $Id$
  */
-if (preg_match("/configure_help\...\.php$/", $_SERVER["PHP_SELF"])>0) {
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Du har ikke direkte adgang til en sprogfil.";
 	exit;
 }

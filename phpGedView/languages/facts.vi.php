@@ -24,10 +24,12 @@
  * @author Lan Nguyen
  * @version $Id$
  */
-if (preg_match("/facts\...\.php$/", $_SERVER["PHP_SELF"])>0) {
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Bạn không thể vào thẳng nhu-liệu ngôn ngữ được.";
 	exit;
 }
+
 // -- Define a fact array to map GEDCOM tags with their English values
 $factarray["ABBR"]	= "Viết Tắt";
 $factarray["ADDR"]	= "Địa Chỉ";

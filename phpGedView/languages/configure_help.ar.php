@@ -24,7 +24,7 @@
  * @version $Id$
  */
 
-if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }

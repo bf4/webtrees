@@ -23,10 +23,12 @@
  * @author Anton Luu
  * @version $Id$
  */
-if (preg_match("/configure_help\...\.php$/", $_SERVER["PHP_SELF"])>0) {
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
+
 //-- CONFIGURE FILE MESSAGES
 $pgv_lang["um_header"] = "Biến đổi tài khoản thành viên Kiểu SQL <-> Kiểu Index";
 $pgv_lang["um_imp_users"] = "Lấy thành viên vào";

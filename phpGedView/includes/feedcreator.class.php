@@ -46,6 +46,11 @@ Please refer to to /example directory
 *          A little setup                                                 *
 **************************************************************************/
 
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 // your local timezone, set to "" to disable or for GMT
 define("TIME_ZONE","");
 

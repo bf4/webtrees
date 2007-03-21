@@ -25,7 +25,8 @@
  * @subpackage Languages
  * @version $Id$
  */
-if (preg_match("/editor\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Du har ikke direkte adgang til en sprogfil.";
 	exit;
 }

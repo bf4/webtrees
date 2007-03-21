@@ -23,6 +23,12 @@
  * @subpackage Charts
  * @version $Id$
  */
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 require_once("config.php");
 require_once 'includes/controllers/basecontrol.php';
 require_once("includes/functions_charts.php");

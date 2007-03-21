@@ -24,9 +24,10 @@
  * @created 2006-07-27
  * $Id$
  */
-if (preg_match("/facts\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-        print "You cannot access a language file directly.";
-        exit;
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access a language file directly.";
+	exit;
 }
 
 // -- Define a fact array to map GEDCOM tags with their Estonian values

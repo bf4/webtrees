@@ -1,18 +1,24 @@
 <?php
+
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 require_once("includes/GrampsExport.php");
 class GEClippings extends GrampsExport {
-	/**
-	 * This function creates a family relation for a person and appends the relation
-	 * to the person element.
-	 * 
-	 * It searches through the DOMDocument first to see if the person is created,
-	 * if they are not, the person is created and then the DOMDocument is queried
-	 * and the persons HLINK is retrieved.
-	 * 
-	 * @param DOMElement $eParent - the parent XML element the date element should be appended to
-	 * @param GEDCOM record $personRec - the full INDI GEDCOM record of the person that the relation is being created
-	 * @param int $tag -  the name of the GEDCOM tag (FAMC, FAMS). This is used to allow the same function to work with childin and parent_in_family relations
-	 */
+/**
+ * This function creates a family relation for a person and appends the relation
+ * to the person element.
+ * 
+ * It searches through the DOMDocument first to see if the person is created,
+ * if they are not, the person is created and then the DOMDocument is queried
+ * and the persons HLINK is retrieved.
+ * 
+ * @param DOMElement $eParent - the parent XML element the date element should be appended to
+ * @param GEDCOM record $personRec - the full INDI GEDCOM record of the person that the relation is being created
+ * @param int $tag -  the name of the GEDCOM tag (FAMC, FAMS). This is used to allow the same function to work with childin and parent_in_family relations
+ */
 	function create_fam_relation($eParent, $personRec, $tag) {
 		global $pgv_lang;
 		$famid = get_gedcom_value($tag, 1, $personRec);

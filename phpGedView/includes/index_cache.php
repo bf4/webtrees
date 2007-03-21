@@ -24,6 +24,11 @@
  * @version $Id: index.php 226 2006-07-07 19:54:29Z yalnifj $
  */
 
+if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
 /**
  * load a cached block from a file
  * @param array $block	[0]:name of the block to load, [1]:block's configuration
