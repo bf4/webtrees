@@ -443,12 +443,13 @@ function valid_date(datefield) {
 	// e.g. 17.11.1860 or 1999-12-31.  Use locale settings where DMY order is ambiguous.
 	var qsearch = /^(\d+)[^\d](\d+)[^\d](\d+)$/i;
  	if (qsearch.exec(datefield.value)) {
-		var f1=parseInt(RegExp.$1);
-		var f2=parseInt(RegExp.$2);
-		var f3=parseInt(RegExp.$3);
+		var f1=parseInt(RegExp.$1, 10);
+		var f2=parseInt(RegExp.$2, 10);
+		var f3=parseInt(RegExp.$3, 10);
 		var dmy='DMY';
 		if (typeof(locale_date_format)!='undefined')
-			dmy=locale_date_format;
+			if (locale_date_format=='MDY' || locale_date_format=='YMD')
+				dmy=locale_date_format;
 		var yyyy=new Date().getFullYear();
 		var yy=yyyy % 100;
 		var cc=yyyy - yy;
