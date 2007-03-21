@@ -11,7 +11,7 @@
 ===================================================*/
 # $Id$
 
-if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Nemáte priamy prístup k súboru so slovenčinou.";
 	exit;
 }

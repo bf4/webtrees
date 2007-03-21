@@ -26,7 +26,7 @@
  * @version $Id$
  */
 
-if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "אין לך גישה לתיקיית קובצי השפות.";
 	exit;
 }

@@ -39,7 +39,7 @@
  * @subpackage Languages
  */
 
-if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "A nyelvi fájl közvetlenül nem érhető el.";
 	exit;
 }
