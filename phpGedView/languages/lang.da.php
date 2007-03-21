@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author PGV Developers
+ * @author hbc1971
  * @package PhpGedView
  * @subpackage Languages
  * @version $Id$
@@ -106,7 +106,7 @@ $pgv_lang["wiki_users_guide"]			= "Wiki brugervejledning";
 $pgv_lang["wiki_admin_guide"]			= "Wiki administrators vejledning";
 $pgv_lang["no_search_for"]			= "Vær sikker på at angive et valg, der skal søges efter.";
 $pgv_lang["no_search_site"]			= "Vær sikker på at vælge mindst en ekstern site.";
-$pgv_lang["search_sites"] 			= "Websteder der skal søges efter";
+$pgv_lang["search_sites"] 			= "Søg i disse hjemmesider";
 $pgv_lang["site_list"]				= "Websted: ";
 $pgv_lang["site_had"]				= " indeholdt følgende";
 $pgv_lang["indi_is_remote"]	      	= "Informationen om denne person blev linket til fra en ekstern site.";
@@ -225,7 +225,7 @@ $pgv_lang["total_living"]			= "Antal levende:";
 $pgv_lang["total_dead"]				= "Antal døde:";
 $pgv_lang["total_not_born"]			= "Antal ikke fødte endnu:";
 $pgv_lang["remove_custom_tags"]		= "Fjern brugerdefinerede PGV tags? (f.eks. _PGVU, _THUM)";
-$pgv_lang["cookie_login_help"]		= "Websiten kan se, at du har logget dig ind før.  Dette betyder, at du nu har adgang til private informationer og andre brugerrelaterede funktioner. <br/>- Men for at kunne ændre eller administrere websitet, er det nødvendigt af sikkerhedsmæssige hensyn at logge ind igen.";
+$pgv_lang["cookie_login_help"]		= "Hjemmesiden kan huske dig fra sidste gan du loggede ind. Det betyder at du har adgang til beskyttede data og andre specielle funktioner. Dog skal du af sikkerhedshensyn logge dig på igen før du har adgang til at rette i data eller lave om på indstillingerne for hjemmesiden.";
 $pgv_lang["remember_me"]			= "Husk mig?";
 $pgv_lang["fams_with_surname"]		= "Familier med efternavnet #surname#";
 $pgv_lang["support_contact"]		= "Teknisk hjælp";
@@ -503,7 +503,6 @@ $pgv_lang["search_tagfoff"]			= "Fra";
 $pgv_lang["associate"]				= "tilknyt";
 $pgv_lang["search_record"]			= "Hele posten";
 $pgv_lang["search_to"]				= "til";
-
 //-- SOURCELIST FILE MESSAGES
 $pgv_lang["titles_found"]		= "Titler";
 $pgv_lang["find_source"]		= "Find kilde";
@@ -700,22 +699,22 @@ $pgv_lang["n_x_sisters_daughter"] = "%2\$d x grandniece";
 // the bosa name is used for offspring - the names below can be extended to any number
 // of generations just by adding more translations.
 // 1st generation
-$pgv_lang["bosa_2"] 				= "søn";                   // son
-$pgv_lang["bosa_3"] 				= "datter";              // daughter
+$pgv_lang["bosa_2"] 				= "søn";
+$pgv_lang["bosa_3"] 				= "datter";
 // 2nd generation
 $pgv_lang["bosa_4"] 				= "sønnesøn";
-$pgv_lang["bosa_5"] 				= "barnebarn";         // son's daughter
+$pgv_lang["bosa_5"] 				= "barnebarn";
 $pgv_lang["bosa_6"] 				= "dattersøn";
-$pgv_lang["bosa_7"] 				= "barnebarn";         // daughter's daughter
+$pgv_lang["bosa_7"] 				= "barnebarn";
 // 3rd generation
-$pgv_lang["bosa_8"] 				= "tipoldebarn";
-$pgv_lang["bosa_9"] 				= "tipoldebarn";
-$pgv_lang["bosa_10"] 				= "tipoldebarn";
-$pgv_lang["bosa_11"] 				= "tipoldebarn";
-$pgv_lang["bosa_12"] 				= "tipoldebarn";
-$pgv_lang["bosa_13"] 				= "tipoldebarn";
-$pgv_lang["bosa_14"] 				= "tipoldebarn";
-$pgv_lang["bosa_15"] 				= "tipoldebarn";
+$pgv_lang["bosa_8"] 				= "oldebarn";
+$pgv_lang["bosa_9"] 				= "oldebarn";
+$pgv_lang["bosa_10"] 				= "oldebarn";
+$pgv_lang["bosa_11"] 				= "oldebarn";
+$pgv_lang["bosa_12"] 				= "oldebarn";
+$pgv_lang["bosa_13"] 				= "oldebarn";
+$pgv_lang["bosa_14"] 				= "oldebarn";
+$pgv_lang["bosa_15"] 				= "oldebarn";
 // for the general case of offspring of the nth generation use the text below
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
@@ -770,7 +769,13 @@ $pgv_lang["n_x_maternal_aunt"]	    = "%2\$d x grandtante";
 // 1st generation
 $pgv_lang["sosa_uncle_bm_2"] 				= "onkel";
 $pgv_lang["sosa_uncle_bm_3"] 				= "onkel";
+$pgv_lang["sosa_uncle_bm_4"] 				= "grandonkel";
+$pgv_lang["sosa_uncle_bm_5"] 				= "grandonkel";
+$pgv_lang["sosa_uncle_bm_6"] 				= "grandonkel";
+$pgv_lang["sosa_uncle_bm_7"] 				= "grandonkel";
 
+$pgv_lang["n_x_paternal_uncle_bm"]  = "%2\$d x grandonkel";
+$pgv_lang["n_x_maternal_uncle_bm"]  = "%2\$d x grandonkel";
 // the sosa_aunt_bm name is used for aunts (by marriage)- the names below can be extended to any number
 // of generations just by adding more translations.
 // to allow fo language variations we specify different relationships for paternal and maternal
@@ -778,6 +783,12 @@ $pgv_lang["sosa_uncle_bm_3"] 				= "onkel";
 // 1st generation
 $pgv_lang["sosa_aunt_bm_2"] 				= "tante";
 $pgv_lang["sosa_aunt_bm_3"] 				= "tante";
+$pgv_lang["sosa_aunt_bm_4"] 				= "grandtante";
+$pgv_lang["sosa_aunt_bm_5"] 				= "grandtante";
+$pgv_lang["sosa_aunt_bm_6"] 				= "grandtante";
+$pgv_lang["sosa_aunt_bm_7"] 				= "grandtante";
+$pgv_lang["n_x_paternal_aunt_bm"]  = "%2\$d x grandtante";
+$pgv_lang["n_x_maternal_aunt_bm"]  = "%2\$d x grandtante";
 
 
 // if a specific cousin relationship cannot be represented in a language translate as "";
@@ -869,17 +880,17 @@ $pgv_lang["removed_descending_20"] = "";
 
 //-- GEDCOM edit utility
 $pgv_lang["check_delete"]		= "Er du sikker på at du vil slette disse slægtsdata?";
-$pgv_lang["access_denied"]		= "<h3><b>Ingen adgang!</b></h3><br />Du har ikke adgang til denne del.";
+$pgv_lang["access_denied"]		= "<b>Ingen adgang!</b><br />Du har ikke adgang til denne del.";
 $pgv_lang["changes_exist"]		= "Der er foretaget ændringer i denne slægtsdatabase.";
-$pgv_lang["find_place"]			= "<u>Find stednavn</u >";
+$pgv_lang["find_place"]			= "Find stednavn";
 $pgv_lang["close_window"]		= "Luk vinduet";
-$pgv_lang["close_window_without_refresh"]	= "Luk vinduet uden at opdatere skærmen";
+$pgv_lang["close_window_without_refresh"]	= "Luk vinduet uden at opdatere listen";
 $pgv_lang["place_contains"]		= "Stednavn indeholder:";
 $pgv_lang["add"]				= "Tilføj";
 $pgv_lang["custom_event"]		= "Egen defineret begivenhed";
 $pgv_lang["delete_person"]		= "Slet denne person";
 $pgv_lang["confirm_delete_person"]	= "Er du sikker på at du vil slette denne person fra slægtsdatabasen?";
-$pgv_lang["find_media"]			= "Find billeder- og medier";
+$pgv_lang["find_media"]			= "Find billeder og andre medier";
 $pgv_lang["set_link"]			= "Sæt link";
 $pgv_lang["delete_source"]		= "Slet denne kilde";
 $pgv_lang["confirm_delete_source"]	= "Er du sikker på, at du vil slette denne kilde fra slægtsdatabasen?";
@@ -888,19 +899,19 @@ $pgv_lang["find_fam_list"]		= "Find familieliste";
 $pgv_lang["edit_name"]			= "Ret navn";
 $pgv_lang["delete_name"]		= "Slet navn";
 $pgv_lang["select_date"]		= "Vælg en dato";
-$pgv_lang["user_cannot_edit"]		= "Dette brugernavn har ikke rettigheder til at ændre denne slægtsdatabase (GEDCOM).";
-$pgv_lang["ged_noshow"]				= "Denne side er fjernet af administratoren af websiten.";
+$pgv_lang["user_cannot_edit"]		= "Denne bruger har ikke rettigheder til at ændre i slægtsdatabasen (GEDCOM).";
+$pgv_lang["ged_noshow"]				= "Denne side er slået fra af administratoren af hjemmesiden.";
 //-- calendar.php messages
 $pgv_lang["bdm"]					= "Fødsler, Dødsfald, Vielser";
-$pgv_lang["on_this_day"]			= "På denne dag i din slægtshistorie...";
-$pgv_lang["in_this_month"]		= "I denne måned i din slægtshistorie...";
-$pgv_lang["in_this_year"]		= "I dette år i din slægtshistorie...";
+$pgv_lang["on_this_day"]			= "På denne dag...";
+$pgv_lang["in_this_month"]		= "I denne måned...";
+$pgv_lang["in_this_year"]		= "I dette år...";
 $pgv_lang["year_anniversary"]	= "#year_var#. årsdag";
 $pgv_lang["today"]				= "I dag";
-$pgv_lang["day"]				= "Dag";
-$pgv_lang["month"]				= "Måned";
+$pgv_lang["day"]				= "Dag:";
+$pgv_lang["month"]				= "Måned:";
 $pgv_lang["showcal"]			= "Vis begivenheder for";
-$pgv_lang["anniversary"]			= "Mærkedag";
+$pgv_lang["anniversary"]			= "Å";
 $pgv_lang["anniversary_calendar"] = "Mærkedage";
 $pgv_lang["sunday"] 				= "søndag";
 $pgv_lang["monday"]				= "mandag";
@@ -919,27 +930,27 @@ $pgv_lang["day_not_set"]		= "Dag ikke angivet";
 //-- user self registration module
 $pgv_lang["lost_password"]		= "Har du glemt din adgangskode?";
 $pgv_lang["requestpassword"]	= "Bestil en ny adgangskode";
-$pgv_lang["no_account_yet"]		= "Har du ikke <b>egen</b> konto endnu?";
-$pgv_lang["requestaccount"]		= "Bestil en brugerkonto";
+$pgv_lang["no_account_yet"]		= "Har du ikke en konto endnu?";
+$pgv_lang["requestaccount"]		= "Ansøg om brugerkonto";
 $pgv_lang["emailadress"]		= "E-mail-adresse";
 $pgv_lang["mandatory"] 			= "Felter markeret med * skal udfyldes.";
 $pgv_lang["mail01_line01"]		= "Hej #user_fullname# ...";
-$pgv_lang["mail01_line02"]		= "Der er anmodet ( #SERVER_NAME# ) om at få en brugerkonto med din e-mail-adresse ( #user_email# ).";
-$pgv_lang["mail01_line03"]		= "Oplysningerne om dig bliver givet ved forespørgsel om brugerkonto.";
+$pgv_lang["mail01_line02"]		= "Der er anmodet (på #SERVER_NAME# ) om at få en brugerkonto med din e-mail-adresse ( #user_email# ).";
+$pgv_lang["mail01_line03"]		= "Oplysninger om anmodningen findes under linket nedenfor.";
 $pgv_lang["mail01_line04"]		= "Klik venligst på linket nedenfor og udfyld de korrekte data for at bekræfte din konto og e-mail-adresse.";
-$pgv_lang["mail01_line05"]		= "Hvis du ikke har bedt om at få en konto, kan du bare slette denne e-mail.";
-$pgv_lang["mail01_line06"]		= "Du vil ikke få tilsendt flere e-mails herfra, fordi kontoen vil blive slettet efter 7 dage hvis den ikke bliver bekræftet.";
-$pgv_lang["mail01_subject"]		= "Din registrering hos #SERVER_NAME#";
+$pgv_lang["mail01_line05"]		= "Hvis det ikke er dig, der har bedt om at få en konto, kan du bare ignorere denne e-mail.";
+$pgv_lang["mail01_line06"]		= "Du vil ikke få tilsendt flere e-mails herfra, fordi anmodningen vil blive slettet efter 7 dage, hvis den ikke bliver bekræftet.";
+$pgv_lang["mail01_subject"]		= "Din registrering på #SERVER_NAME#";
 $pgv_lang["mail02_line01"]		= "Hej administrator ...";
-$pgv_lang["mail02_line02"]		= "En ny bruger har registreret sig hos ( #SERVER_NAME# ).";
-$pgv_lang["mail02_line03"]		= "Brugeren har fået tilsendt en e-mail med de nødvendige data for at bekræfte ønsket om en konto.";
-$pgv_lang["mail02_line04"]		= "Du vil blive informeret via email, når denne mulige bruger har bekræftet sin forespørgel. Du kan færdigøre processen ved at aktivere brugernavnet. Den nye bruger vil ikke kunne logge på før du har aktiveret kontoen.";
-$pgv_lang["mail02_line04a"]		= "Du vil blive informeret via emauk, når denne mulige bruger har bekræftet sin forespørgsel. Efter dette vil brugeren kunne logge ind uden din indblanding.";
+$pgv_lang["mail02_line02"]		= "En ny bruger har anmodet om at få en konto på #SERVER_NAME#.";
+$pgv_lang["mail02_line03"]		= "Brugeren har fået tilsendt en e-mail med de nødvendige data for at bekræfte anmodningen om en konto.";
+$pgv_lang["mail02_line04"]		= "Du vil blive informeret via email, når den nye bruger har bekræftet sin forespørgel. Derefter skal du som administrator godkende kontoen på hjemmesiden #SERVER_NAME# før brugeren kan logge ind første gang.";
+$pgv_lang["mail02_line04a"]		= "Du vil blive informeret via e-mail, når nye bruger har bekræftet sin anmodning. Efter dette vil brugeren kunne logge ind uden din indblanding.";
 $pgv_lang["mail02_subject"]		= "Ny registrering på #SERVER_NAME#";
 $pgv_lang["hashcode"]			= "Kontrolkode:";
 $pgv_lang["thankyou"]			= "Hej #user_fullname# og tak for din ansøgning om at få en brugerkonto.";
-$pgv_lang["pls_note06"]			= "Vil vil nu sende en bekræftelse via email til emailadressen <b>#user_email#</b>. Du skal godkende din kontoforespørgsel ved at følge vejledningen i emailen. Hvis du ikke bekræfter din tilmelding inden for 7 dage, vil forespørgsel automatisk blive afvist. Du skal derefter ansøge igen.<br /><br />Efter du har fulgt vejledningen i emailen, skal en administrator godkende din ansøgning før din konto kan bruges.<br /><br />For at logge ind på dette websted skal du kende dit brugernavn og adgangskode<br /><br />";
-$pgv_lang["pls_note06a"] 		= "Vi vil nu sende en bekræftelse pr. e-mail til adressen <b>#user_email#</b>. Du skal bekræfte dit ønske om at få en konto ved at følge instruktionerne i e-mailen. Hvis du ikke bekræfter ønsket om at få en konto inden 7 dage, vil ønsket om en konto blive afslået automatisk.  Hvis du senere ønsker at få en konto, skal du søge om det igen.<br /><br />Efter at du har fulgt instruktionerne i bekræftelses-e-mailen, kan du logge dig ind.  For at logge dig ind på dette website, kræves det at du opgiver dit brugernavn og adgangskode.<br /><br />";
+$pgv_lang["pls_note06"]			= "Der vil nu blive sendt en bekræftelse via e-mail til adressen <b>#user_email#</b>. Du skal bekræfte din ansøgning om en konto ved at følge vejledningen i e-mailen. Hvis du ikke bekræfter din tilmelding inden for 7 dage, vil ansøgningen automatisk blive afvist, og du skal derefter ansøge igen.<br /><br />Efter du har fulgt vejledningen i emailen, skal en administrator også godkende din ansøgning før din konto kan bruges.<br /><br />For at logge ind på dette websted skal du huske dit brugernavn og adgangskode.<br /><br />";
+$pgv_lang["pls_note06a"] 		= "Vil vil nu sende en bekræftelse via email til emailadressen <b>#user_email#</b>. Du skal godkende din kontoforespørgsel ved at følge vejledningen i emailen. Hvis du ikke bekræfter din tilmelding inden for 7 dage, vil forespørgsel automatisk blive afvist. Du skal derefter ansøge igen.<br /><br />Efter du har fulgt vejledningen i emailen, kan du logge ind.<br /><br />For at logge ind på dette websted skal du huske dit brugernavn og adgangskode<br /><br />";
 $pgv_lang["registernew"]		= "Bekræftelse af ny konto";
 $pgv_lang["user_verify"]		= "Brugergodkendelse";
 $pgv_lang["send"]				= "Send";
@@ -947,32 +958,32 @@ $pgv_lang["pls_note07"]			= "Opgiv det brugernavn, adgangskode og kontrolkode du
 $pgv_lang["pls_note08"]			= "Informationen om brugeren <b>#user_name#</b> er checket.";
 $pgv_lang["mail03_line01"]		= "Hej administrator ...";
 $pgv_lang["mail03_line02"]		= "#newuser[username]# ( #newuser[fullname]# ) har bekræftet ønsket om at få en brugerkonto.";
-$pgv_lang["mail03_line03"]		= "Klik på linket \"Admin\" på siden \"Login\" på PhpGedView for at godkende den nye bruger på dit website.";
+$pgv_lang["mail03_line03"]		= "Tryk på linket nedenunder for at logge ind på hjemmesiden. Brugerkontoen bliver ikke aktiv før du går ind i indstillingerne for brugerens konto og godkender vedkommende. Først da kan han/hun logge ind.";
 $pgv_lang["mail03_line03a"]		= "Du behøver ikke at foretage dig noget; brugeren kan nu logge sig ind.";
-$pgv_lang["mail03_subject"]		= "Ny bekræftelse fra #SERVER_NAME#";
-$pgv_lang["pls_note09"]			= "Du er genkendt som en ansøger til dette website.";
-$pgv_lang["pls_note10"]			= "Administratoren af websitet har fået besked om ansøgningen.<br />Såsnart vedkommende har godkendt din konto,<br />kan du logge dig ind med dit brugernavn og adgangskode.";
+$pgv_lang["mail03_subject"]		= "Ny bruger på #SERVER_NAME#";
+$pgv_lang["pls_note09"]			= "Du har bekræftet din anmodning om at få en konto på hjemmesiden.";
+$pgv_lang["pls_note10"]			= "Administratoren af hjemmesiden har fået besked om din anmodning om en brugerkonto. Så snart vedkommende har godkendt din konto, kan du logge dig ind med dit brugernavn og adgangskode.";
 $pgv_lang["pls_note10a"]		= "Du kan nu logge dig ind med dit brugernavn og adgangskode.";
-$pgv_lang["data_incorrect"]		= "Data var ugyldige!<br />- Prøv igen!";
-$pgv_lang["user_not_found"]		= "Kunne ikke genkende oplysningerne du opgav! Gå tilbage og prøv igen.";
+$pgv_lang["data_incorrect"]		= "Data var ugyldige! Vær venlig at prøve igen.";
+$pgv_lang["user_not_found"]		= "Kunne ikke genkende dig ud fra de oplysninger, du gav. Vær venlig at prøve igen eller kontant hjemmesidens administrator for at får hjælp eller yderligere information.";
 $pgv_lang["lost_pw_reset"]		= "Bestil en ny adgangskode";
-$pgv_lang["pls_note11"]			= "For at få en ny adgangskode, skal du opgive dit brugernavn og e-mail-adresse til brugerkontoen. <br /><br />Vi vil derefter sende dig en e-mail med en speciel internetadresse, som indeholder en bekræftelseskode på din konto.<br />På denne internetside vil du kunne ændre adgangskoden for at få adgang til din brugerside igen.<br />Af sikkerhedsmæssige grunde, bør du ikke vise denne bekræftelseskode til nogen, inklusiv administratoren for denne site (vi vil heller ikke spørge efter den).<br /><br />Hvis du ønsker at få mere hjælp vedrørende dette, så kontakt administrator.";
+$pgv_lang["pls_note11"]			= "For at få en ny adgangskode, skal du opgive dit brugernavn. <br /><br />Vi vil derefter sende dig en e-mail med en speciel internetadresse, som indeholder en bekræftelseskode på din konto.<br />På denne måde kan du ændre adgangskoden for at få adgang til din konto igen.<br />Af sikkerhedsmæssige grunde, bør du ikke vise denne bekræftelseskode til nogen, inklusiv administratoren for denne site (vi vil heller ikke spørge efter den).<br /><br />Hvis du ønsker at få mere hjælp vedrørende dette, så kontakt administrator via linket for neden på siden.";
 $pgv_lang["mail04_line01"]		= "Hej #user_fullname# ...";
 $pgv_lang["mail04_line02"]		= "Der bliver bestilt en ny adgangskode til dit brugernavn!";
 $pgv_lang["mail04_line03"]		= "Anbefaling:";
-$pgv_lang["mail04_line04"]		= "Klik venligst på linket nedenfor. Log dig ind med den nye adgangskode. Du bør så angive en ny adgangskode for at beskytte dine data.";
-$pgv_lang["mail04_line05"]			= "Efter at du har logget ind, så vælg linket '#pgv_lang[myuserdata]#' under '#pgv_lang[mygedview]#' menuen og udfyld feltet til adgangskoden for at ændre din adgangskode.";
+$pgv_lang["mail04_line04"]		= "Klik venligst på linket nedenfor og log dig ind med den nye adgangskode. Af sikkerhedshensyn skal du ændre kodeord med det samme, for at andre  ikke kan opsnappe det og bruge det i stedet for dig selv.";
+$pgv_lang["mail04_line05"]			= "Efter at du har logget ind, så vælg linket '#pgv_lang[myuserdata]#' under '#pgv_lang[mygedview]#' menuen og udfyld feltet med adgangskoden for at ændre din adgangskode.";
 $pgv_lang["mail04_subject"]		= "Data anmodning fra #SERVER_NAME#";
-$pgv_lang["pwreqinfo"]			= "Hej...<br /><br />En e-mail med den nye adgangskode blev sendt til e-mail-adressen (#user[email]#).<br /><br />Check venligst din e-mail om få minutter.<br /><br />Anbefaling:<br /><br />Efter at du har modtaget e-mailen, bør du logge dig ind på dette website med din ny adgangskode og ændre det. Dette bør gøres af hensyn til sikkerheden for dine data.";
+$pgv_lang["pwreqinfo"]			= "Hej...<br /><br />En e-mail med den nye adgangskode blev sendt til e-mail-adressen (#user[email]#).<br /><br />Check venligst din e-mail om et øjeblik.<br /><br />Anbefaling:<br /><br />Efter at du har modtaget e-mailen, bør du logge dig ind på denne hjemmeside med din midlertidige adgangskode og ændre den. Dette bør gøres af hensyn til sikkerheden for dine data.";
 $pgv_lang["myuserdata"]			= "Min konto";
 $pgv_lang["user_theme"]			= "Mit tema";
-$pgv_lang["mgv"]				= "Min GedView Portal";
-$pgv_lang["mygedview"]			= "Min GedView Portal";
+$pgv_lang["mgv"]				= "Min forside";
+$pgv_lang["mygedview"]			= "Mine sider";
 $pgv_lang["passwordlength"]		= "Adgangskoden skal indeholde mindst 6 tegn.";
-$pgv_lang["welcome_text_auth_mode_1"]	= "<center><h3><b>Velkommen til disse slægtssider !</b></h3>PS! - <i>Siderne er tilgængelig for <b>alle</b> besøgende, der har en brugerkonto.</i><br />Har du en brugerkonto, kan du logge dig ind herunder.<br /><br />Hvis du ikke har en brugerkonto endnu, kan du søge om at få en<br />ved at klikke på linket \"[Bestil en ny brugerkonto]\".<br />Efter at have checket informationerne i din ansøgnning, vil administratoren af websitet aktivere din konto.<br />Du vil modtage en e-mail når den er godkendt.</center>";
-$pgv_lang["welcome_text_auth_mode_2"]	= "<center><h3><b>Velkommen til disse slægtssider !</b></h3>PS! - <i>Siderne er <b>kun</b> tilgængelig for <b>registrerede</b> brugere!</i><br />Har du en brugerkonto, kan du logge dig ind herunder.<br /><br />Hvis du ikke har en konto endnu, kan søge om at få oprettet en konto<br />ved at klikke på linket \"[Bestil en ny brugerkonto]\".<br />Efter at have checket informationerne i din ansøgning,<br />kan administratoren af websitet enten godkende eller afslå den.<br />Du vil modtage en e-mail med besked, hvis din ansøgning bliver accepteret.</center>";
-$pgv_lang["welcome_text_auth_mode_3"]	= "<center><h3><b>Velkommen til disse slægtssider !</b></h3>PS! - <i>Siderne er <b>kun</b> tilgængelig for <b>medlemmer af familien</b>.</i><br />Har du en brugerkonto, kan du logge dig ind herunder.<br /><br />Hvis du ikke har en konto endnu, kan søge om at få oprettet en konto<br />ved at klikke på linket \"[Bestil en ny brugerkonto]\".<br />Efter at have checket informationerne i din ansøgning,<br />kan administratoren af websitet enten godkende eller afslå den.<br />Du vil modtage en e-mail, hvis den bliver godkendt.</center>";
-$pgv_lang["welcome_text_cust_head"]		= "<center><h3><b>Velkommen til disse slægtssider !</b></h3>PS! - <i>Siderne er <b>kun</b> tilgængelig for brugere som har <b>gyldigt</b> brugernavn og adgangskode.</i></center><br />";
+$pgv_lang["welcome_text_auth_mode_1"]	= "<center><b>Velkommen til disse slægtssider !</b><br />Siderne er kun tilgængelig for besøgende med en brugerkonto.<br />Har du en brugerkonto, kan du logge dig ind herunder.<br /><br />Hvis du ikke har en brugerkonto endnu, kan du søge om at få en<br />ved at klikke på linket <i>#pgv_lang[requestaccount]#</i> neden for.<br />Efter at have godkendt din ansøgning, vil administratoren af hjemmesiden aktivere din konto.<br />Du vil modtage en e-mail når du kan komme ind på siden med dit brugernavn og kodeord.</center>";
+$pgv_lang["welcome_text_auth_mode_2"]	= "<center><b>Velkommen til disse slægtssider !</b><br />Siderne er kun tilgængelig for <i>registrerede</i> brugere med en konto.<br />Har du en brugerkonto, kan du logge dig ind herunder.<br /><br />Hvis du ikke har en brugerkonto endnu, kan du søge om at få en<br />ved at klikke på linket #pgv_lang[requestaccount]#.<br />Efter at have godkendt din ansøgning, vil administratoren af hjemmesiden aktivere din konto.<br />Du vil modtage en e-mail når du kan komme ind på siden med dit brugernavn og kodeord.</center>";
+$pgv_lang["welcome_text_auth_mode_3"]	= "<center><b>Velkommen til disse slægtssider !</b><br />Siderne er kun tilgængelig for <i>familliemedlemmer</i>.<br />Har du en brugerkonto, kan du logge dig ind herunder.<br /><br />Hvis du ikke har en brugerkonto endnu, kan du søge om at få en<br />ved at klikke på linket #pgv_lang[requestaccount]#.<br />Efter at have godkendt din ansøgning, vil administratoren af hjemmesiden aktivere din konto.<br />Du vil modtage en e-mail når du kan komme ind på siden med dit brugernavn og kodeord.</center>";
+$pgv_lang["welcome_text_cust_head"]		= "<center><b>Velkommen til disse slægtssider !</b><br />Siderne er <i>kun</i> tilgængelig for brugere som har gyldigt brugernavn og adgangskode.</center><br />";
 //-- mygedview page
 $pgv_lang["upcoming_events"]	= "Begivenheder";
 $pgv_lang["living_or_all"]			= "Vis kun begivenheder for nulevende personer?";
@@ -980,9 +991,10 @@ $pgv_lang["basic_or_all"]			= "Vis kun fødsler, dødsfald og vielser?";
 $pgv_lang["style"]					= "Præsentations stil";
 $pgv_lang["style1"]					= "Tekst";
 $pgv_lang["style2"]					= "Tabel";
-$pgv_lang["cal_download"]			= "Tillad download af kalender begivenheder?";
-$pgv_lang["no_events_living"]		= "Der findes ingen begivenheder for nulevende personer for de næste #pgv_lang[global_num1]# dage.";
-$pgv_lang["no_events_living1"]		= "Der findes ingen begivenheder for nulevende personer for imorgen.";
+$pgv_lang["cal_download"]			= "Tillad bruge at hente fil med begivenheder fra kalenderen?";
+$pgv_lang["no_events_living"]		= "Der findes ingen begivenheder for nulevende personer de næste #pgv_lang[global_num1]# dage.";
+// XXX HERTIL
+$pgv_lang["no_events_living1"]		= "Der findes ingen begivenheder for nulevende personer for i morgen.";
 $pgv_lang["no_events_all"]			= "Der findes ingen begivenheder for de næste #pgv_lang[global_num1]# dage.";
 $pgv_lang["no_events_all1"]			= "Der findes ingen begivenheder for imorgen.";
 $pgv_lang["no_events_privacy"]		= "Der findes begivenheder for de næste #pgv_lang[global_num1]# dage, men restriktioner aht. privatlivet forhindrer dig i at se dem.";
@@ -1237,22 +1249,22 @@ $pgv_lang["sosa_13"]				= "Oldemor";
 $pgv_lang["sosa_14"]				= "Oldefar";
 $pgv_lang["sosa_15"]				= "Oldemor";
 // 4th generation
-$pgv_lang["sosa_16"]				= "Tip-tip-oldefar";
-$pgv_lang["sosa_17"]				= "Tip-tip-oldemor";
-$pgv_lang["sosa_18"]				= "Tip-tip-oldefar";
-$pgv_lang["sosa_19"]				= "Tip-tip-oldemor";
-$pgv_lang["sosa_20"]				= "Tip-tip-oldefar";
-$pgv_lang["sosa_21"]				= "Tip-tip-oldemor";
-$pgv_lang["sosa_22"]				= "Tip-tip-oldefar";
-$pgv_lang["sosa_23"]				= "Tip-tip-oldemor";
-$pgv_lang["sosa_24"]				= "Tip-tip-oldefar";
-$pgv_lang["sosa_25"]				= "Tip-tip-oldemor";
-$pgv_lang["sosa_26"]				= "Tip-tip-oldefar";
-$pgv_lang["sosa_27"]				= "Tip-tip-oldemor";
-$pgv_lang["sosa_28"]				= "Tip-tip-oldefar";
-$pgv_lang["sosa_29"]				= "Tip-tip-oldemor";
-$pgv_lang["sosa_30"]				= "Tip-tip-oldefar";
-$pgv_lang["sosa_31"]				= "Tip-tip-oldemor";
+$pgv_lang["sosa_16"]				= "Tip-oldefar";
+$pgv_lang["sosa_17"]				= "Tip-oldemor";
+$pgv_lang["sosa_18"]				= "Tip-oldefar";
+$pgv_lang["sosa_19"]				= "Tip-oldemor";
+$pgv_lang["sosa_20"]				= "Tip-oldefar";
+$pgv_lang["sosa_21"]				= "Tip-oldemor";
+$pgv_lang["sosa_22"]				= "Tip-oldefar";
+$pgv_lang["sosa_23"]				= "Tip-oldemor";
+$pgv_lang["sosa_24"]				= "Tip-oldefar";
+$pgv_lang["sosa_25"]				= "Tip-oldemor";
+$pgv_lang["sosa_26"]				= "Tip-oldefar";
+$pgv_lang["sosa_27"]				= "Tip-oldemor";
+$pgv_lang["sosa_28"]				= "Tip-oldefar";
+$pgv_lang["sosa_29"]				= "Tip-oldemor";
+$pgv_lang["sosa_30"]				= "Tip-oldefar";
+$pgv_lang["sosa_31"]				= "Tip-oldemor";
 
 // for the general case of ancestors of the nth generation use the text below
 // in this text %1\$d is replaced with the number of generations
@@ -1268,8 +1280,8 @@ $pgv_lang["compact_chart"]			= "Kompakt anetræ";
 $pgv_lang["fan_chart"]			= "Anehjul";
 $pgv_lang["gen_fan_chart"]		= "Anehjul - #PEDIGREE_GENERATIONS# slægtsled";
 $pgv_lang["fan_width"]			= "Hjulbredde";
-$pgv_lang["gd_library"]			= "Ugyldig konfiguration af PHP server: Biblioteket GD 2.x er nødvendig for billedfunktionen.";
-$pgv_lang["gd_freetype"]		= "Ugyldig konfiguration af PHP server: Biblioteket Freetype er nødvendig for TrueType skrifttyper.";
+$pgv_lang["gd_library"]			= "Ugyldig konfiguration af PHP server: Programpakken GD 2.x er nødvendig for billedfunktionen.";
+$pgv_lang["gd_freetype"]		= "Ugyldig konfiguration af PHP server: Programpakken Freetype er nødvendig for TrueType skrifttyper.";
 $pgv_lang["gd_helplink"]		= "http://www.php.net/gd";
 $pgv_lang["fontfile_error"]		= "Fandt ikke nødvendige filer med skrifttyper på PHP serveren";
 $pgv_lang["fanchart_IE"]		= "Dette anehjul kan ikke skrives direkte ud fra din browser. Brug højreklik og vælg så Gem billede. Så skal du åbne billedet i et andet program for så at printe det ud derfra.";
@@ -1349,7 +1361,7 @@ $pgv_lang["statsubmit"]			= "Vis diagram";
 //-- statisticsplot utility
 $pgv_lang["statistiek_list"]	= "Statistikliste";
 $pgv_lang["stpl"]			 	= "...";
-$pgv_lang["stplGDno"]			= "Grafisk visningsbibliotek (GD) er ikke tilgængelig i PHP 4. Kontakt venligst værten for din webserver";
+$pgv_lang["stplGDno"]			= "Grafisk programpakke (GD) er ikke tilgængelig i PHP 4. Kontakt venligst værten for din webserver";
 $pgv_lang["stpljpgraphno"]		= "JPgraph moduler Findes ikke i folderen <i>phpgedview/jpgraph/</i>.  Hent dem venligst hos http://www.aditus.nu/jpgraph/jpdownload.php<br> <h3>Installer først JPgraph i folderen <i>phpgedview/jpgraph/</i></h3><br>";
 $pgv_lang["stplinfo"]			= "diagraminformation:";
 $pgv_lang["stpltype"]			= "type:";
