@@ -25,7 +25,7 @@
  * @author Julien Damon
  * @version $Id$
  */
-if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
@@ -598,7 +598,7 @@ $pgv_lang["zoom_out"]                   = "Zoom arrière";
 $pgv_lang["timeline_beginYear"]         = "Année début";
 $pgv_lang["timeline_endYear"]           = "Année fin";
 $pgv_lang["timeline_scrollSpeed"]       = "Vitesse";
-#pgv_lang["timeline_controls"]          = "Timeline Controls";
+$pgv_lang["timeline_controls"]          = "Actions";
 $pgv_lang["include_family"]             = "Inclure la proche famille";
 $pgv_lang["lifespan_chart"]             = "Ligne de temps";
 

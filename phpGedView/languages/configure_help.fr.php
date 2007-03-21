@@ -25,7 +25,7 @@
  * @author Julien Damon
  * @version $Id$
  */
-if (preg_match("/configure_help\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
@@ -85,7 +85,8 @@ $pgv_lang["QUICK_REQUIRED_FACTS"]       = "Evènements à toujours afficher en m
 $pgv_lang["QUICK_ADD_FACTS"]            = "Evènements à ajouter en mode <i>Quick Update</i>";
 #pgv_lang["QUICK_ADD_FACTS_help"]       = "~#pgv_lang[QUICK_ADD_FACTS]#~<br /><br />This is a comma separated list of GEDCOM fact tags that will be shown on the Quick Update form.  Only the facts in this list will be shown on the form or made available for selection in the area where you add new facts on the form.<br />";
 #pgv_lang["SURNAME_TRADITION_help"]     = "~#pgv_lang[SURNAME_TRADITION]#~<br /><br />When you add new members to a family, PhpGedView can supply default values for surnames according to regional custom.<br /><br /><ul><li>In the <b>Paternal</b> tradition, all family members share the father's surname.</li><li>In the <b>Spanish</b> and <b>Portuguese</b> tradition, children receive a surname from each parent.</li><li>In the <b>Icelandic</b> tradition, children receive their male parent's given name as a surname, with a suffix that denotes gender.</li></ul><br />";
-#pgv_lang["ADVANCED_NAME_FACTS_help"]   = "~#pgv_lang[ADVANCED_NAME_FACTS]#~<br /><br />This is a comma separated list of GEDCOM fact tags that will be shown on the add/edit name form.  If you use non-Latin alphabets such as Hebrew or Arabic, you may want to add tags such as _HEB, ROMN, FONE, etc. to allow you to store names in both the Latin and local alphabet.<br />";
+#pgv_lang["ADVANCED_NAME_FACTS_help"]   = "~#pgv_lang[ADVANCED_NAME_FACTS]#~<br /><br />This is a comma separated list of GEDCOM fact tags that will be shown on the add/edit name form.  If you use non-Latin alphabets such as Hebrew, Greek, Cyrillic or Arabic, you may want to add tags such as _HEB, ROMN, FONE, etc. to allow you to store names in several different alphabets.<br />";
+#pgv_lang["ADVANCED_PLAC_FACTS_help"]   = "~#pgv_lang[ADVANCED_PLAC_FACTS]#~<br /><br />This is a comma separated list of GEDCOM fact tags that will be shown when you add or edit place names.  If you use non-Latin alphabets such as Hebrew, Greek, Cyrillic or Arabic, you may want to add tags such as _HEB, ROMN, FONE, etc. to allow you to store place names in several different alphabets.<br />";
 $pgv_lang["AUTO_GENERATE_THUMBS"]       = "Créer automatiquement les vignettes";
 #pgv_lang["AUTO_GENERATE_THUMBS_help"]  = "~#pgv_lang[AUTO_GENERATE_THUMBS]#~<br /><br />Should the system automatically generate thumbnails for images that do not have them.  Your PHP installation might not support this functionality.<br />";
 #pgv_lang["phpinfo_help"]               = "~#pgv_lang[phpinfo]#~<br /><br />This page provides extensive information about the server on which PhpGedView is being hosted.  Many configuration details about the server's software, as it relates to PHP and PhpGedView, can be viewed.<br />";
@@ -212,7 +213,7 @@ $pgv_lang["MAX_DESCENDANCY_GENERATIONS"]= "Nombre maximum de générations de l'
 $pgv_lang["MAX_DESCENDANCY_GENERATIONS_help"]= " Fixe le nombre maximun de générations à afficher pour les arbres de <b>descendance</b>.";
 $pgv_lang["USE_RIN"]                    = "Utiliser le numéro RIN au lieu de la clé GEDCOM";
 $pgv_lang["USE_RIN_help"]               = "Option pour utiliser le numéro RIN au lieu de l'identifiant GEDCOM comme code des individus dans les fichiers de configuration, dans les fichiers de préférences et les arbres. Ceci est utile avec les programmes de généalogie qui exportent les données GEDCOM en utilisant le RIN.";
-#pgv_lang["GENERATE_GUID"]              = "Automatically create globally unique IDs";
+$pgv_lang["GENERATE_GUID"]              = "Création automatique d'un identifiant unique";
 #pgv_lang["GENERATE_GUID_help"]         = "~#pgv_lang[GENERATE_GUID]#~<br /><br /><b>GUID</b> in this context is an acronym for «Globally Unique ID».<br /><br />GUIDs are intended to help identify each individual in a manner that is repeatable, so that central organizations such as the Family History Center of the LDS Church in Salt Lake City, or even compatible programs running on your own server, can determine whether they are dealing with the same person no matter where the GEDCOM originates.  The goal of the Family History Center is to have a central repository of genealogical data and expose it through web services. This will enable any program to access the data and update their data within it.<br /><br />If you do not intend to share this GEDCOM with anyone else, you do not need to let PhpGedView create these GUIDs; however, doing so will do no harm other than increasing the size of your GEDCOM.<br />";
 $pgv_lang["PEDIGREE_ROOT_ID"]           = "Individu par défaut pour les arbres d'ascendance et de descendance";
 $pgv_lang["PEDIGREE_ROOT_ID_help"]      = "Indique l'identificateur de la personne à afficher par défaut pour les arbres d'ascendance et de descendance.";
@@ -314,7 +315,7 @@ $pgv_lang["CONTACT_EMAIL"]              = "Adresse courriel du contact Généalo
 $pgv_lang["CONTACT_EMAIL_help"]         = "L'adresse que les visiteurs doivent utiliser pour contacter la personne responsable des données généalogiques de ce site.";
 $pgv_lang["CONTACT_METHOD"]             = "Préférence du contact Généalogie";
 $pgv_lang["CONTACT_METHOD_help"]        = "Méthode à utiliser sur le lien contact Généalogie.";
-#pgv_lang["PHPGEDVIEW_EMAIL"]           = "PhpGedView reply address";
+$pgv_lang["PHPGEDVIEW_EMAIL"]           = "Adresse courriel de réponse";
 #pgv_lang["PHPGEDVIEW_EMAIL_help"]      = "~#pgv_lang[PHPGEDVIEW_EMAIL]#~<br /><br />E-mail address to be used in the &laquo;From:&raquo; field of e-mails that PhpGedView creates automatically.<br /><br />PhpGedView can automatically create e-mails to notify administrators of changes that need to be reviewed.  PhpGedView also sends notification e-mails to users who have requested an account.<br /><br />Usually, the &laquo;From:&raquo; field of these automatically created e-mails is something like <i>From: phpgedview-noreply@yoursite</i> to show that no response to the e-mail is required.  To guard against spam or other e-mail abuse, some e-mail systems require each message's &laquo;From:&raquo; field to reflect a valid e-mail account and will not accept messages that are apparently from account <i>phpgedview-noreply</i>.<br />";
 $pgv_lang["WEBMASTER_EMAIL"]            = "Adresse courriel de l'administrateur";
 $pgv_lang["WEBMASTER_EMAIL_help"]       = "L'adresse que les visiteurs doivent utiliser pour les questions techniques ou les erreurs qu'ils peuvent rencontrer sur votre site.";
@@ -576,7 +577,7 @@ $pgv_lang["alphabet_upper"]             = "Alphabet des majuscules";
 $pgv_lang["alphabet_upper_help"]        = "Alphabet des majuscules dans cette langue. Utilisé pour le tri des noms en majuscules.";
 $pgv_lang["alphabet_lower"]             = "Alphabet des minuscules";
 $pgv_lang["alphabet_lower_help"]        = "Alphabet des minuscules dans cette langue. Utilisé pour le tri des noms en minuscules.";
-#pgv_lang["multi_letter_alphabet"]      = "Multi-letter alphabet";
+$pgv_lang["multi_letter_alphabet"]      = "Alphabet multi-lettres ";
 #pgv_lang["multi_letter_alphabet_help"] = "~#pgv_lang[multi_letter_alphabet]#~<br /><br />Multi-letter combinations that are to be treated as a single distinct letter when sorting lists of names and titles in this language.<br /><br />Some languages, Hungarian and Slovak for example, consider certain combinations of letters to be distinct letters in their own right.  The order in which you specify these letter combinations determines the order in which they are inserted into the normal alphabet during sorting.  This is important when several multi-letter combinations have the same first letter.  Except for <b>ch</b>, these letter combinations are inserted into the normal alphabet according to their first letter.  <b>ch</b> is always inserted after <b>h</b>.<br />";
 $pgv_lang["dictionary_sort"]            = "Tri dans l'ordre du dictionnaire";
 #pgv_lang["dictionary_sort_help"]       = "~#pgv_lang[dictionary_sort]#~<br /><br />This option controls how characters with diacritic marks are handled when sorting lists of names and titles.<br /><br />When set to <b>#pgv_lang[yes]#</b>, all characters with diacritic marks are treated as if they did not have any marks.  Diacritic marks are considered only when the two words being considered are otherwise identical.  When set to <b>#pgv_lang[no]#</b>, all letters are distinct, regardless of the presence or absence of diacritic marks.<br />";
@@ -635,7 +636,7 @@ $pgv_lang["um_bu_gedcoms"]              = "Fichiers GEDCOM";
 $pgv_lang["um_bu_gedsets"]              = "Fichiers de configuration";
 $pgv_lang["um_bu_logs"]                 = "Journaux et compteurs";
 $pgv_lang["um_bu_usinfo"]               = "Blocs, favoris, messages";
-#pgv_lang["um_bu_media"]                = "Media files";
+$pgv_lang["um_bu_media"]                = "Fichiers MultiMedia";
 $pgv_lang["um_mk_bu"]                   = "Lancer la sauvegarde";
 $pgv_lang["um_nofiles"]                 = "Aucun fichier à sauvegarder.";
 $pgv_lang["um_files_exist"]             = "Un fichier existe déjà. Voulez-vous l'écraser ?";

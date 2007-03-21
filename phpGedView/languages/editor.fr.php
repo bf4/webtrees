@@ -25,13 +25,13 @@
  * @author Julien Damon
  * @version $Id$
  */
-if (preg_match("/editor\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
 
 $pgv_lang["admin_override"]             = "Option administrateur";
-$pgv_lang["no_update_CHAN"]             = "Conserver la précédente date de mise à jour (CHAN)";
+$pgv_lang["no_update_CHAN"]             = "Conserver la date de mise à jour (CHAN)";
 $pgv_lang["select_events"]              = "Choisir un évènement";
 $pgv_lang["source_events"]              = "Evènements associés à cette source";
 $pgv_lang["advanced_name_fields"]       = "Variantes du nom";
