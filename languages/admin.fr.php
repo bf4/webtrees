@@ -25,7 +25,7 @@
  * @author Julien Damon
  * @version $Id$
  */
-if (preg_match("/admin\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
@@ -150,8 +150,8 @@ $pgv_lang["DEFAULT_GEDCOM"]             = "Fichier GEDCOM par défaut";
 $pgv_lang["default_user"]               = "Création de l'administrateur par défaut.";
 #pgv_lang["del_gedrights"]              = "GEDCOM no longer active, remove user references.";
 $pgv_lang["del_proceed"]                = "Continuer";
-$pgv_lang["del_unvera"]                 = "Compte non vérifié par un deadministrateur.";
-#pgv_lang["del_unveru"]                 = "User didn't verify within 7 days.";
+$pgv_lang["del_unvera"]                 = "Compte non vérifié par un administrateur.";
+$pgv_lang["del_unveru"]                 = "Compte non vérifié sous 7 jours.";
 $pgv_lang["do_not_change"]              = "Ne pas modifier";
 $pgv_lang["download_file"]              = "Télécharger le fichier sur votre système (<i>Download</i>)";
 $pgv_lang["download_gedcom"]            = "Recevoir le fichier GEDCOM sur votre système (download)";
@@ -340,6 +340,7 @@ $pgv_lang["noref"]                      = "aucun lien vers cet enregistrement";
 $pgv_lang["tag"]                        = "balise";
 $pgv_lang["spacing"]                    = "espacement";
 $pgv_lang["ADVANCED_NAME_FACTS"]        = "Options avancées pour le nom de famille";
+$pgv_lang["ADVANCED_PLAC_FACTS"]        = "Options avancées pour le lieu";
 $pgv_lang["SURNAME_TRADITION"]          = "Mode de transmission du nom"; // Default surname inheritance
 $pgv_lang["spanish"]                    = "Façon Espagnole";
 $pgv_lang["portuguese"]                 = "Façon Portugaise";

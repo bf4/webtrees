@@ -3,7 +3,7 @@
  * French Language file for Google map module
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,9 +23,9 @@
  * @subpackage GoogleMap
  * @version $Id$
  */
-if (preg_match("/lang\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-	print "You cannot access a language file directly.";
-	exit;
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+  print "You cannot access a language file directly.";
+  exit;
 }
 
 $pgv_lang["googlemap"]                  = "Cartographie";
