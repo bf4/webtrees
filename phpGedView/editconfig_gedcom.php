@@ -3,7 +3,7 @@
  * UI for online updating of the gedcom config file.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * This Page Is Valid XHTML 1.0 Transitional! > 22 August 2005
  *
  * @author PGV Development Team
  * @package PhpGedView
@@ -1172,8 +1170,8 @@ $previous="_DEAT_";
 print "<table>";
 foreach ($factarray as $factkey=>$factlabel) {
 	$f6=substr($factkey,0,6);
-	if ($f6=="_BIRT_" or $f6=="_MARR_" or $f6=="_DEAT_") {
-		if ($f6=="_BIRT_") print "<tr>";
+	if ($f6=="_BIRT_" or $f6=="_MARR_" or $f6=="_DEAT_" or $f6=="_FAMC_") {
+		if ($f6=="_BIRT_" or $f6=="_FAMC_") print "<tr>";
 		if ($f6=="_MARR_" and $previous!="_BIRT_") print "<tr><td>&nbsp;</td>";
 		if ($f6=="_DEAT_" and $previous=="_DEAT_") print "<tr><td>&nbsp;</td>";
 		if ($f6=="_DEAT_" and $previous!="_MARR_") print "<td>&nbsp;</td>";

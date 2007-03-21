@@ -362,7 +362,7 @@ cAutocomplete.prototype.createList = function()
 			hListItemLink.realText = sArrEl
 			hListItem.appendChild( hListItemLink )
 			hList.appendChild( hListItem )
-			this.aSearchData[ nI++ ] = sArrEl.toLowerCase()
+			this.aSearchData[ nI++ ] = sArrEl.toString().toLowerCase()
 		}
 	}
 	else if( hInput.type.toLowerCase() == 'select-one' )
@@ -379,7 +379,7 @@ cAutocomplete.prototype.createList = function()
 			hListItemLink.realText = sArrEl
 			hListItem.appendChild( hListItemLink )
 			hList.appendChild( hListItem )
-			this.aSearchData[ nI ] = sArrEl.toLowerCase()
+			this.aSearchData[ nI ] = sArrEl.toString().toLowerCase()
 		}
 	}
 
