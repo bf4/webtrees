@@ -29,7 +29,7 @@
  * @subpackage DB
  */
 
-if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access an include file directly.";
 	exit;
 }

@@ -25,7 +25,7 @@
  * @version $Id$
  */
 
-if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Usted no puede acceder a este archivo de idioma directamente.";
 	exit;
 }

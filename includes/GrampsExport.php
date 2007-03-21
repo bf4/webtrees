@@ -28,7 +28,7 @@
  * 
  */
 
-if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access an include file directly.";
 	exit;
 }
@@ -151,7 +151,7 @@ class GrampsExport {
 		$dateParsed = parse_date($date);
 
 		//checks to see if there's is a 2nd date value and creates the daterange element
-		if (stripos($date, "/") != false || empty($dateParsed[1]["year"]) || empty($dateParsed[1]["mon"]) || empty($dateParsed[1]["day"])) {
+		if (stristr($date, "/") !== false || empty($dateParsed[1]["year"]) || empty($dateParsed[1]["mon"]) || empty($dateParsed[1]["day"])) {
 			$eDateRange = $this->dom->createElement("daterange");
 			$eDateRange = $eParent->appendChild($eDateRange);
 

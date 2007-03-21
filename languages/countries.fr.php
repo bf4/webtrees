@@ -24,7 +24,7 @@
  * @version $Id$
  */
 
-if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "L'accès direct aux fichiers de langue est interdit.";
 	exit;
 }

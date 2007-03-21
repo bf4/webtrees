@@ -27,7 +27,7 @@
  * @version $Id: usermigrate.php 237 2006-07-10 15:31:36Z yalnifj $
  */
 
-if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access an include file directly.";
 	exit;
 }

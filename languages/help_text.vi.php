@@ -25,7 +25,7 @@
  * @version $Id$
  */
 
-if (stripos($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Bạn không thể vào thẳng nhu liệu ngôn ngữ được.";
 	exit;
 }
