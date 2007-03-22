@@ -58,17 +58,17 @@ $typefacts = array();	//-- special facts that go on 2 TYPE lines
 // Next two vars used by insert_missing_subtags()
 $date_and_time=array("BIRT","DEAT"); // Tags with date and time
 $level2_tags=array( // The order of the $keys is significant
-	"TEMP" =>array("BAPL","CONL","ENDL","SLGC","SLGS"),
-	"STAT" =>array("BAPL","CONL","ENDL","SLGC","SLGS"),
 	"_HEB" =>array("NAME","TITL"),
 	"ROMN" =>array("NAME","TITL"),
 	"TYPE" =>array("GRAD","EVEN","FACT","IDNO","MARR","ORDN","SSN"),
 	"AGNC" =>array("EDUC","GRAD","OCCU","RETI","ORDN"),
 	"CAUS" =>array("DEAT"),
 	"CALN" =>array("REPO"),
-	"CEME" =>array("BURI"), // CEME is NOT a valid 5.5.1 tag; use _CEME ??
-	"DATE" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN","BAPL","ENDL","SLGC","SLGS"),
-	"PLAC" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN","BAPL","SSN"),
+	"CEME" =>array("BURI"), // CEME is NOT a valid 5.5.1 tag
+	"DATE" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN","BAPL","CONL","ENDL","SLGC","SLGS"),
+	"TEMP" =>array("BAPL","CONL","ENDL","SLGC","SLGS"),
+	"PLAC" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN","BAPL","CONL","ENDL","SLGC","SLGS","SSN"),
+	"STAT" =>array("BAPL","CONL","ENDL","SLGC","SLGS"),
 	"ADDR" =>array("BIRT","CHR","CHRA","DEAT","CREM","BURI","MARR","CENS","EDUC","GRAD","OCCU","PROP","ORDN","RESI","EVEN"),
 	"PHON" =>array("OCCU","RESI"),
 	"FAX"  =>array("OCCU","RESI"),
@@ -77,7 +77,7 @@ $level2_tags=array( // The order of the $keys is significant
 	"AGE"  =>array("CENS","DEAT"),
 	"HUSB" =>array("MARR"),
 	"WIFE" =>array("MARR"),
-	"FAMC" =>array("ADOP"),
+	"FAMC" =>array("ADOP","SLGC"),
 	"FILE" =>array("OBJE"),
 	"_PRIM"=>array("OBJE"),
 );
@@ -1820,19 +1820,20 @@ function insert_missing_subtags($level1tag)
 					add_simple_tag("3 FORM");
 					break;
 				case "STAT":
-					//-- TODO currently confusing to have 2 date fields next to each other
+					// TODO currently confusing to have both LDS_ORD_DATE and status CHANGE_DATE
 					//add_simple_tag("3 DATE");
 					break;
 				case "DATE":
 					if (in_array($level1tag, $date_and_time))
-						add_simple_tag("3 TIME"); // TIME is NOT a valid 5.5.1 tag; use _TIME ??
+						add_simple_tag("3 TIME"); // TIME is NOT a valid 5.5.1 tag
 					break;
 				case "HUSB":
 				case "WIFE":
 					add_simple_tag("3 AGE");
 					break;
 				case "FAMC":
-					add_simple_tag("3 ADOP BOTH");
+					if ($level1tag=='ADOP')
+						add_simple_tag("3 ADOP BOTH");
 					break;
 			}
 		}
