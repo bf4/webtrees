@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1684519 ] 4.1 (SVN 977) Fatal error: ra_functions.php on line 161 (yalnifj)
  - Added changeGedcom method to web service (yalnifj)
  - Fixed missing RESN on add/edit fact forms (yalnifj)
  - Fixed [ 1676782 ] < and > stored in gedcom as &lt; and &gt; (yalnifj)

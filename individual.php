@@ -69,8 +69,8 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 		<?php
 			$col=0; $maxcols=7;	// 4 with data and 3 spacers
 			$globalfacts=$controller->getGlobalFacts();
-			foreach (array('NAME','SEX') as $fact)
-				foreach ($globalfacts as $value)
+			foreach (array('NAME','SEX') as $fi=>$fact)
+				foreach ($globalfacts as $key=>$value)
 			 		if (preg_match("/^1\s+$fact\s/", $value[1])) {
 						if ($col>0) {
 							print "<td width=\"10\"><br /></td>\n";
