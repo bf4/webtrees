@@ -22,7 +22,7 @@
 		<PGVRSetVar name="width1" value="0" />
 		<PGVRSetVar name="width2" value="0" />
 		<PGVRSetVar name="dwidth" value="200" />
-		<PGVRSetVar name="pwidth" value="510" />
+		<PGVRSetVar name="pwidth" value="505" />
 		<!-- change the widths for pictures -->
 		<PGVRif condition="$photos==1">
 			<PGVRSetVar name="width" value="470" />
@@ -64,7 +64,7 @@
 				</PGVRif>
 
 				<!-- print the person's facts -->
-				<PGVRTextBox border="1" left="24" width="$width" height="16" top="70" newline="1" fill="#DDDDDD">
+				<PGVRTextBox border="1" width="$width" height="16" newline="1" fill="#DDDDDD">
 					<PGVRText style="label1"><PGVRvar var="pgv_lang[personal_facts]" />   </PGVRText>
 				</PGVRTextBox>
 				<PGVRFacts ignore="$ignore" families="1">

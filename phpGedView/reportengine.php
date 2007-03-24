@@ -164,12 +164,7 @@ function paste_id(value) {
 		print "<input type=\"hidden\" name=\"report\" value=\"$report\" />\n";
 		print "<input type=\"hidden\" name=\"download\" value=\"\" />\n";
 		print "<input type=\"hidden\" name=\"output\" value=\"PDF\" />\n";
-		/* -- this will allow user to select future output formats
-		print "<select name=\"output\">\n";
-		print "<option value=\"HTML\">HTML</option>\n";
-		print "<option value=\"PDF\">PDF</option>\n";
-		print "</select><br />\n";
-		*/
+				
 		print "<table class=\"facts_table width50 center $TEXT_DIRECTION\">";
 		print "<tr><td class=\"topbottombar\" colspan=\"2\">".$pgv_lang["enter_report_values"]."</td></tr>";
 		print "<tr><td class=\"descriptionbox width30 wrap\">".$pgv_lang["selected_report"]."</td><td class=\"optionbox\">".$report_array["title"]."</td></tr>\n";
@@ -249,6 +244,12 @@ function paste_id(value) {
 				}
 			}
 		}
+		/* -- this will allow user to select future output formats */
+//		print "<tr><td class=\"descriptionbox width30 wrap\">Output Format</td><td class=\"optionbox\">";
+//		print "<select name=\"output\">\n";
+//		print "<option value=\"PDF\" selected=\"selected\">PDF</option>\n";
+//		print "<option value=\"HTML\">HTML</option>\n";
+//		print "</select></td></tr>\n";
 		print "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["download_report"]."\" onclick=\"document.setupreport.elements['download'].value='1';\"/></td></tr>\n";
 		print "</table>\n";
 		print "</form>\n";
