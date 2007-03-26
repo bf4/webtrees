@@ -384,13 +384,13 @@ if ($view=="preview") {
 
 <script language="JavaScript" type="text/javascript">
 <!--
-	var pasteto;
+	var pastefield;
 	function open_find(textbox) {
-		pasteto = textbox;
+		pastefield = textbox;
 		findwin = window.open('find.php?type=indi', '_blank', 'left=50,top=50,width=600,height=500,resizable=1,scrollbars=1');
 	}
 	function paste_id(value) {
-		pasteto.value=value;
+		pastefield.value=value;
 	}
 //-->
 </script>
