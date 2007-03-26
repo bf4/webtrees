@@ -89,7 +89,7 @@ $factarray["FILE"] = "Ekstern fil";
 $factarray["FORM"] = "Filformat";
 $factarray["GIVN"] = "Fornavn";
 $factarray["GRAD"] = "Eksamen";
-$factarray["HUSB"]  = "Ægtemand";
+$factarray["HUSB"] = "Ægtemand";
 $factarray["IDNO"] = "Person ID";
 $factarray["IMMI"] = "Indvandret";
 $factarray["LEGA"] = "Arving";
@@ -305,7 +305,7 @@ $factarray["_DEAT_COUS"] = "En kusines eller fætters dødsfald";
 //-- PGV Only facts
 $factarray["_THUM"]	= "Brug dette billede som miniaturebillede?";
 $factarray["_PGVU"]	= "Sidst opdateret af";
-$factarray["SERV"] = "Remote server";
+$factarray["SERV"] = "Ekstern server";
 $factarray["_GEDF"] = "GEDCOM-fil";
 
 ?>
