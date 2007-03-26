@@ -1421,7 +1421,7 @@ case 'deletefamily':
 	}
 	else
 	{
-		if (delete_family($pid, $gedrec)) print "<br /><br />".$pgv_lang["gedrec_deleted"];
+		if (delete_family($famid, $gedrec)) print "<br /><br />".$pgv_lang["gedrec_deleted"];
 	}
 	break;
 //------------------------------------------------------------------------------
