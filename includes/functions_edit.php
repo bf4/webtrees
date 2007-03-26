@@ -1943,7 +1943,7 @@ function delete_family($pid, $gedrec='') {
 					else $level = 1;
 					//-- make sure we don't add any sublevel records
 					if ($level<=$lastlevel) $lastlevel = -1;
-					if ((preg_match("/@$famid@/", $line)==0) && ($lastlevel==-1)) $newindirec .= $line."\n";
+					if ((preg_match("/@$pid@/", $line)==0) && ($lastlevel==-1)) $newindirec .= $line."\n";
 					else {
 						$lastlevel=$level;
 					}
@@ -1952,7 +1952,7 @@ function delete_family($pid, $gedrec='') {
 			}
 		}
 		if ($success) {
-			$success = $success && delete_gedrec($famid);
+			$success = $success && delete_gedrec($pid);
 		}
 		return $success;
 	}
