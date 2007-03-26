@@ -154,6 +154,28 @@ $factarray["_EMAIL"] = "E-mail adresse";
 $factarray["_TODO"] = "Udestående gøremål";
 $factarray["_UID"] = "Universal ID";
 $factarray["_PRIM"]	= "Markeret som hovedbillede";
+$factarray["_DBID"] = "Link Database ID";
+$factarray["FAMC:WIFE:GIVN"] = "Moders Navn";
+$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Bedstefar\'s Navn";
+$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Bedstemor\'s navn";
+$factarray["MARR:PLAC"] = "Bryllups sted";
+$factarray["BURI:PLAC"] = "Begravelse Sted";
+$factarray["BAPM:PLAC"] = "Konfimation sted";
+$factarray["BIRT:PLAC"] = "Fødsels sted";
+$factarray["DEAT:PLAC"] = "Gravsted";
+$factarray["CHR:PLAC"] = "";
+$factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Ægtefælle navn";
+$factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Moders Navn";
+$factarray["FAMC:HUSB:GIVN"] = "Faders Navn";
+$factarray["FAMS:SPOUSE:DEAT:PLAC"] = "Ægtefælle Gravplads";
+$factarray["FAMS:MARR:PLAC"] = "Bryllups sted";
+$factarray[":BIRT:PLAC"] = "Fødsels sted";
+$factarray["FAMC:HUSB:OCCU"] = "Faders beskæftigelse";
+$factarray["FAMC:MARR:PLAC"] = "Forældres bryllups sted";
+$factarray["FAMC:WIFE:BIRT:PLAC"] = "Moders fødsels sted";
+$factarray["FAMC:HUSB:BIRT:PLAC"] = "Faders fødsels sted";
+$factarray["FAMC:WIFE:SURN"] = "Moders Efternavn";
+$factarray["FAMC:HUSB:SURN"] = "Faders Efternavn";
 
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"] = "Helbredsoplysninger";
@@ -230,6 +252,7 @@ $factarray["_PRMN"] = "Permanent nummer";
 $factarray["_WEIG"] = "Vægt";
 $factarray["_YART"] = "Yartzeit (Jødisk fødselsdag)";
 $factarray["_MARNM"] = "Vielsesnavn";
+$factarray["_MARNM_SURN"] = "Gift\'s efternavn";
 $factarray["_STAT"]	= "Civil status";
 $factarray["COMM"]	= "Kommentar";
 

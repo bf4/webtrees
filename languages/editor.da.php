@@ -215,4 +215,8 @@ $pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />Select 
 $pgv_lang["upload_successful"]		= "Upload fuldført.";
 $pgv_lang["view_change_diff"]	= "Vis ændring, forskelle";
 
+$pgv_lang["admin_override"]			= "Admin indstillinger";
+$pgv_lang["no_update_CHAN"]			= "Updater ikke den sidste ændret data";
+$pgv_lang["select_events"]			= "Vælg en begivenhed";
+$pgv_lang["source_events"]			= "Associer begivenhed med kilde";
 ?>
