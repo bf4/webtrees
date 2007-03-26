@@ -1106,7 +1106,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		//-->
 		</script>
 		<?php
-		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" />\n";
+		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".$value."\" />\n";
 		print "<table><tr valign=\"top\">\n";
 		foreach (array("none", "locked", "privacy", "confidential") as $resn_index => $resn_val) {
 			if ($resn_val=="none") $resnv=""; else $resnv=$resn_val;
