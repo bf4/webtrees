@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage GoogleMap
- * @version $Id: help_text.da.php 1 2007-03-13 04:07:55Z hylle $
+ * @version $Id$
  */
 if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
   print "Du kan ikke tilgå en sprogfil direkte.";
