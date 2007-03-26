@@ -31,10 +31,10 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-$pgv_lang["advanced_name_fields"]	= "Yderligere navne (�vn, giftenavn, osv.)";
+$pgv_lang["advanced_name_fields"]	= "Yderligere navne (kaldenavn, giftenavn, osv.)";
 $pgv_lang["accept_changes"]		= "Godkend / Afvis ændring(er)";
-$pgv_lang["replace"]			= "Erstat Post";
-$pgv_lang["append"]				= "Tilføj Post";
+$pgv_lang["replace"]			= "Erstat post";
+$pgv_lang["append"]				= "Tilføj post";
 $pgv_lang["review_changes"]		= "Vis ændringer i slægtsdatabasen en gang til";
 $pgv_lang["remove_object"]			= "Fjern objekt";
 $pgv_lang["remove_links"]			= "Fjern links";
@@ -49,7 +49,7 @@ $pgv_lang["to_source"]				= "Til kilde";
 $pgv_lang["edit_fam"]				= "Ret familie";
 $pgv_lang["copy"]					= "Kopier";
 $pgv_lang["cut"]					= "Klip ud";
-$pgv_lang["sort_by_birth"]			= "Sorter på fødselsdato";
+$pgv_lang["sort_by_birth"]			= "Sortér efter fødselsdato";
 $pgv_lang["reorder_children"]		= "Vis børn i anden rækkefølge";
 $pgv_lang["add_from_clipboard"]		= "Tilføj fra udklipsholderen";
 $pgv_lang["record_copied"]			= "Posten er kopieret til udklipsholderen";
@@ -57,7 +57,7 @@ $pgv_lang["add_unlinked_person"]	= "Tilføj en person som ikke er knyttet til en
 $pgv_lang["add_unlinked_source"]	= "Tilføj en kilde der ikke er tilknyttet";
 $pgv_lang["server_file"]				= "Filnavn på server";
 $pgv_lang["server_file_advice"]			= "Lad være med at ændre for at beholde det originale filnavn.";
-$pgv_lang["server_file_advice2"]		= "You may enter a URL, beginning with &laquo;http://&raquo;.";
+$pgv_lang["server_file_advice2"]		= "Du kan indtaste en URL der starter med &laquo;http://&raquo;.";
 $pgv_lang["server_folder_advice"]		= "You can enter up to #GLOBALS[MEDIA_DIRECTORY_LEVELS]# folder names to follow the default &laquo;#GLOBALS[MEDIA_DIRECTORY]#&raquo;.<br />Do not enter the &laquo;#GLOBALS[MEDIA_DIRECTORY]#&raquo; part of the destination folder name.";
 $pgv_lang["server_folder_advice2"]		= "This entry is ignored if you have entered a URL into the file name field.";
 $pgv_lang["add_linkid_advice"]			= "Enter or search for the ID of the person, family, or source to which this media item should be linked.";
@@ -215,8 +215,8 @@ $pgv_lang["upload_media_help"]		= "~#pgv_lang[upload_media]#~<br /><br />Select 
 $pgv_lang["upload_successful"]		= "Upload fuldført.";
 $pgv_lang["view_change_diff"]	= "Vis ændring, forskelle";
 
-$pgv_lang["admin_override"]			= "Admin indstillinger";
-$pgv_lang["no_update_CHAN"]			= "Updater ikke den sidste ændret data";
-$pgv_lang["select_events"]			= "Vælg en begivenhed";
-$pgv_lang["source_events"]			= "Associer begivenhed med kilde";
+$pgv_lang["admin_override"]			= "Admin indstilling";
+$pgv_lang["no_update_CHAN"]			= "Opdatér ikke CHAN (sidst ændret) posten";
+$pgv_lang["select_events"]			= "Vælg hændelser";
+$pgv_lang["source_events"]			= "Tilknyt hændelser med denne kilde";
 ?>

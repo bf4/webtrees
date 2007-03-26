@@ -32,8 +32,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 $pgv_lang["genealogy"]					= "slægtsforskning";
-$pgv_lang["activate"]					= "Aktiver";
-$pgv_lang["deactivate"]					= "Deaktiver";
+$pgv_lang["activate"]					= "Aktivér";
+$pgv_lang["deactivate"]					= "Deaktivér";
 $pgv_lang["play"]					= "Afspil";
 $pgv_lang["stop"]					= "Stop";
 $pgv_lang["random_media_start_slide"]	= "Start fremvisning automatisk når siden er læst ind?";
@@ -300,7 +300,7 @@ $pgv_lang["choose_username"]		= "Ønsket brugernavn";
 $pgv_lang["username"]			= "Brugernavn";
 $pgv_lang["invalid_username"]	= "Brugernavnet indeholder ugyldige tegn";
 $pgv_lang["firstname"]			= "Fornavn";
-$pgv_lang["choose_password"]		= "Ønsket Adgangskode";
+$pgv_lang["choose_password"]		= "Ønsket adgangskode";
 $pgv_lang["lastname"]			= "Efternavn";
 $pgv_lang["password"]			= "Adgangskode:";
 $pgv_lang["confirm"]			= "Bekræft adgangskode";
@@ -1200,7 +1200,7 @@ $pgv_lang["death_report"]			= "Udskrift over dødsdato og sted";
 $pgv_lang["deathplace"]				= "Dødsstedet indeholder";
 $pgv_lang["deathdate1"]				= "Dødsdato interval start";
 $pgv_lang["deathdate2"]				= "Dødsdato interval slut";
-$pgv_lang["marr_report"]			= "Udskrift over ægteskabsdato og sted";
+$pgv_lang["marr_report"]			= "Udskrift over ægteskabsdato og sted";
 $pgv_lang["marrplace"]				= "Ægteskabssted indeholder";
 $pgv_lang["marrdate1"]				= "Ægteskabsdato område start";
 $pgv_lang["marrdate2"]				= "Ægteskabsdato område slut";
@@ -1481,30 +1481,30 @@ $pgv_lang["TYPE__video"] = "Video";
 $pgv_lang["download_image"]			= "Download filen";
 $pgv_lang["no_media"]				= "Ingen medier fundet";
 $pgv_lang["relations_heading"]		= "Billedet relatere til:";
-$pgv_lang["module_error_unknown_type"] = "Ukendt module type.";
-$pgv_lang["module_error_unknown_action_v2"] = "Ukendt handlig: [Handling].";
+$pgv_lang["module_error_unknown_type"] = "Ukendt modultype.";
+$pgv_lang["module_error_unknown_action_v2"] = "Ukendt handling: [Handling].";
 $pgv_lang["file_size"]				= "Filstørrelse";
 $pgv_lang["img_size"]				= "Billedstørrelse";
 
 //-- Modules
-$pgv_lang["button_DEAT_N"] = "Vis personer som er i live eller par hvor begge partner er i live.";
-$pgv_lang["button_reset"] = "Gendan til list standard.";
-$pgv_lang["button_MARR_U"] = "Vis par med en ukendt gift dato.";
-$pgv_lang["button_MARR_YES"] = "Vis par som er gift for mere ind 100 år siden.";
-$pgv_lang["button_MARR_YES"] = "Vis par som er gift i mere ind 100 år.";
-$pgv_lang["button_MARR_Y100"] = "Vis par som er gift inden for de sidst 100 år";
-$pgv_lang["button_MARR_DIV"] = "Vis skilt par.";
-$pgv_lang["button_DEAT_YES"] = "Vis personer som er død for mere ind 100 år siden.";
-$pgv_lang["button_DEAT_Y100"] = "Vis person som døde inden for de sidste 100 år.";
-$pgv_lang["button_DEAT_Y"] = "Vis personer eller par hvor begge partner, er døde";
-$pgv_lang["button_DEAT_W"] = "Vis par, hvor kun kvinden er død.";
-$pgv_lang["button_DEAT_H"] = "Vis par, hvor kun manden er død.";
-$pgv_lang["button_BIRT_YES"] = "Vis person født mere id 100 år siden.";
+$pgv_lang["button_DEAT_N"] = "Vis personer som er i live eller par hvor begge partnere er i live.";
+$pgv_lang["button_reset"] = "Nultil til listens standard.";
+$pgv_lang["button_MARR_U"] = "Vis par med en ukendt bryllupsdato.";
+$pgv_lang["button_MARR_YES"] = "Vis par som blev gift for mere end 100 år siden.";
+$pgv_lang["button_MARR_Y100"] = "Vis par som er blevet gift inden for de sidst 100 år.";
+$pgv_lang["button_MARR_DIV"] = "Vis skilte par.";
+$pgv_lang["button_DEAT_YES"] = "Vis personer som døde for mere end 100 år siden.";
+$pgv_lang["button_DEAT_Y100"] = "Vis personer som er døde inden for de sidste 100 år.";
+$pgv_lang["button_DEAT_Y"] = "Vis personer der er døde eller par hvor begge partnere er døde.";
+$pgv_lang["button_DEAT_W"] = "Vis par hvor kun den kvindelige partner er død.";
+$pgv_lang["button_DEAT_H"] = "Vis par hvor kun den mandlige partner er død.";
+$pgv_lang["button_BIRT_YES"] = "Vis personer der er født for mere end 100 år siden.";
 
 //-- sortable tables buttons
 $pgv_lang["button_alive_in_year"] = "Vis personer i live, i det valgte år.";
 $pgv_lang["button_BIRT_Y100"] = "Vis personer født i de sidste 100 år.";
-$pgv_lang["button_TREE_L"] = "Vise <<leaves>> par eller person. Disse personer som lever men som ikke har nogle børn fra databasen.";
+$pgv_lang["button_TREE_L"] = "Vis <<blade>> par eller personer. Dette er personer der er i live, men som ikke har nogen børn der er registreret i databasen.";
+$pgv_lang["button_TREE_R"] = "Vis <<Rod>> par eller personer. Disse personer kan også kaldes <<patriarker>>. De er personer der ikke har nogen forældre registreret i databasen.";
 $pgv_lang["button_SEX_F"] = "Vis kun kvinder.";
 $pgv_lang["button_SEX_M"] = "Vis kun mænd.";
 $pgv_lang["button_SEX_U"] = "Vis kun personer med ukendt køn.";
