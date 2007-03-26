@@ -106,7 +106,7 @@ class PGVReport extends PGVReportBase {
 			if ($style['font']=='') $style['font'] = 'Arial';
 			else if ($style['font']=='LucidaSansUnicode') $style['font'] = 'Arial';
 			print ".".$class." {\n";
-			print "font-size: ".($style['size']+1)."pt;\n";
+			print "font-size: ".($style['size'])."pt;\n";
 			print "font-family: ".$style['font'].";\n";
 			print $styleAdd."\n";
 			print "}\n";
@@ -766,7 +766,10 @@ class PGVRLineHTML extends PGVRLine {
 		if ($this->x2==".") $this->x2=$pdf->GetX();
 		if ($this->y2==".") $this->y2=$pdf->GetY();
 		//$pdf->Line($this->x1, $this->y1, $this->x2, $this->y2);
-		// TODO
+		// TODO Non verticle or horizontal lines can use a series of divs absolutely positioned
+		if ($this->x1 == $this->x2 || $this->y1==$this->y2) {
+			print "<div style=\"position: absolute; overflow: hidden; border: solid black 1px; left: ".($this->x1-1)."pt; top: ".($this->y1+1)."pt; width: ".($this->x2-$this->x1)."pt; height: ".($this->y2-$this->y1)."pt;\">&nbsp;</div>";
+		}
 	}
 } //-- END PGVRLine
 

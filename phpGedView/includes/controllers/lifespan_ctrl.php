@@ -160,13 +160,13 @@ class LifespanControllerRoot extends BaseController {
 			}
 			//-- make sure we have the id from the gedcom record
 			else $newpid = $person->getXref();
-			if (!empty ($newpid))
-				$this->pids[] = $newpid;
 		}
 		
 		if (isset($_REQUEST['clear'])) unset($_SESSION['timeline_pids']);
 		else {
 		if (isset($_SESSION['timeline_pids'])) $this->pids = $_SESSION['timeline_pids'];
+			if (!empty ($newpid))
+				$this->pids[] = $newpid;
 		
 		//-- pids array
 		if (isset ($_REQUEST['pids'])) {

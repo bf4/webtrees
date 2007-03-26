@@ -1540,7 +1540,7 @@ function PGVRImageSHandler($attrs) {
 }
 
 function PGVRLineSHandler($attrs) {
-	global $pgvreport;
+	global $pgvreport,$PGVReportRoot;
 
 	$x1 = 0;
 	$y1 = 0;
@@ -1551,7 +1551,7 @@ function PGVRLineSHandler($attrs) {
 	if (isset($attrs["x2"])) $x2 = $attrs["x2"];
 	if (isset($attrs["y2"])) $y2 = $attrs["y2"];
 
-	$line = new PGVRLine($x1, $y1, $x2, $y2);
+	$line = $PGVReportRoot->createLine($x1, $y1, $x2, $y2);
 	$pgvreport->addElement($line);
 }
 
