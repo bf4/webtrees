@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1682347 ] Chart Rootperson ID not filled from Find list (yalnifj)
  - Fixed [ 1682895 ] 41b4 edit family->delete family error 8 (yalnifj)
  - Fixed [ 1684519 ] 4.1 (SVN 977) Fatal error: ra_functions.php on line 161 (yalnifj)
  - Added changeGedcom method to web service (yalnifj)
