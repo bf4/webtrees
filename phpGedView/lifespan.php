@@ -46,13 +46,14 @@ print_header($pgv_lang["lifespan_chart"]);
 <h2><?php print $pgv_lang["lifespan_chart"]; ?></h2>
 <table><tr><td>
 <form name="people" action="lifespan.php">
-<table>
+
 <?php
 //This is the box that adds one person at a time.  Not sure if we want to keep this functionality.
 if (!$controller->isPrintPreview()) {
 		if (!isset($col)) $col = 0;
 		?>
-		<td class="person<?php print $col; ?>" style="padding: 5px" valign="top">
+	<table>
+		<tr><td class="person<?php print $col; ?>" style="padding: 5px" valign="top">
 			<?php print_help_link("add_person_help", "qm"); ?>
 			<?php print $pgv_lang["add_another"];?>&nbsp;
 			<input class="pedigree_form" type="text" size="5" id="newpid" name="newpid" />&nbsp;
@@ -61,9 +62,10 @@ if (!$controller->isPrintPreview()) {
 			<div style="text-align: center"><input type="checkbox" checked="checked" value="yes" name="addFamily"/><?php print $pgv_lang["include_family"];?></div>
 			<br />
 			<div style="text-align: center"><input type="submit" value="<?php print $pgv_lang["show"]; ?>" /></div>			
-		</td>
+		</td></tr>
+	</table>
 	<?php }?>
-</table>
+
 </form>
 <script type="text/javascript">
 <!--
@@ -330,7 +332,7 @@ var oldMx = 0;
 	<?php if (!$controller->isPrintPreview()) { ?>
 	<!--  Floating div controls START -->
 <div dir="ltr" style="position:relative; z-index: 100; filter: alpha(opacity=67); -moz-opacity: 0.67;  opacity: 0.67; width:180px; top: 80px;">
-  	<table style="margin-left: 20px" dir="ltr" colspan="0" border="0" cellpadding="0">
+  	<table style="margin-left: 20px" dir="ltr" border="0" cellpadding="0">
   	<tr>
   	  <td></td>
       <td colspan="2" align="center"><a href="#" onclick="return false;" onmousedown="startScroll('up')" onmouseup="stopScroll()"><img src="<?php print $PGV_IMAGE_DIR.'/'.$PGV_IMAGES["lsuparrow"]["other"]; ?>" border="0" alt="" /></a></td>

@@ -416,7 +416,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "</td>";
 		//-- Birth place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($person->getBirthPlace())."\">";
-		echo "<a href=\"".$person->getPlaceUrl($person->getBirthPlace())."\" class=\"list_item\" alt=\"".$person->getBirthPlace()."\" title=\"".$person->getBirthPlace()."\">"
+		echo "<a href=\"".$person->getPlaceUrl($person->getBirthPlace())."\" class=\"list_item\" title=\"".$person->getBirthPlace()."\">"
 		.PrintReady($person->getPlaceShort($person->getBirthPlace()))."</a>";
 		echo "&nbsp;</td>";
 		//-- Number of children
@@ -467,7 +467,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "</td>";
 		//-- Death place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($person->getDeathPlace())."\">";
-		echo "<a href=\"".$person->getPlaceUrl($person->getDeathPlace())."\" class=\"list_item\" alt=\"".$person->getDeathPlace()."\" title=\"".$person->getDeathPlace()."\">"
+		echo "<a href=\"".$person->getPlaceUrl($person->getDeathPlace())."\" class=\"list_item\" title=\"".$person->getDeathPlace()."\">"
 		.PrintReady($person->getPlaceShort($person->getDeathPlace()))."</a>";
 		echo "&nbsp;</td>";
 		//-- Last change
@@ -767,7 +767,7 @@ function print_fam_table($datalist, $legend="") {
 		echo "</td>";
 		//-- Marriage place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($family->getMarriagePlace())."\">";
-		echo "<a href=\"".$family->getPlaceUrl($family->getMarriagePlace())."\" class=\"list_item\" alt=\"".$family->getMarriagePlace()."\" title=\"".$family->getMarriagePlace()."\">"
+		echo "<a href=\"".$family->getPlaceUrl($family->getMarriagePlace())."\" class=\"list_item\" title=\"".$family->getMarriagePlace()."\">"
 		.PrintReady($family->getPlaceShort($family->getMarriagePlace()))."</a>";
 		echo "&nbsp;</td>";
 		//-- Number of children
@@ -1258,7 +1258,7 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 	// max anniversary date
 	$datemax = mktime(0, 0, 0, date("m"), date("d")+$nextdays, $dateY);
 	foreach($datalist as $key => $value) {
-		
+
 		//-- check if we actually need to load up the record from the DB first
 		//-- Event name
 		$exp = explode("\n", $value[1]);
@@ -1277,13 +1277,13 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 		$anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], $dateY);
 		// add 1 year if anniversary before today
 		if (date("Ymd", $anniv) < date("Ymd")) $anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], $dateY+1);
-		
+
 		if ($datemax < $anniv) continue;
 		// upcoming events starting tomorrow
 		if ($nextdays>0 and date("Ymd") == date("Ymd", $anniv)) continue;
 		// sorting by MM-DD-YYYY
 		$sortkey = sprintf("%02d-%02d-%04d", $pdate[0]["mon"], $pdate[0]["day"], $pdate[0]["year"]);
-		
+
 		//-- get gedcom record
 		$record = GedcomRecord::getInstance($value[0]);
 		if (is_null($record)) continue;
@@ -1299,7 +1299,7 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 				if ($wife->isDead()) continue;
 			}
 		}
-		
+
 		// Privacy
 		if (!$record->canDisplayDetails()) {
 			$hidden++;

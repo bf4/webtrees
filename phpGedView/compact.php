@@ -302,7 +302,7 @@ function print_td_person($n) {
 
 	$text = "";
 	$pid = $treeid[$n];
-	
+
 	if ($TEXT_DIRECTION=="ltr") {
 		$title = $pgv_lang["indi_info"].": ".$pid;
 	} else {
@@ -338,7 +338,7 @@ function print_td_person($n) {
 				else $text .= " />\n";
 			}
 		}
-		$text .= "<a class=\"name1\" href=\"individual.php?pid=$pid\" alt=\"$title\" title=\"$title\"> ";
+		$text .= "<a class=\"name1\" href=\"individual.php?pid=$pid\" title=\"$title\"> ";
 		$text .= PrintReady($name);
 		if ($addname) $text .= "<br />" . PrintReady($addname);
 		$text .= "</a>";
