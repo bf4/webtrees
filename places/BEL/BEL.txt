@@ -1,4 +1,0 @@
-<!-- @version $Id$ -->
-Bruxelles-Capitale (BXL)
-Flandre (FLD)
-Wallonie (WAL)
