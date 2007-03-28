@@ -893,6 +893,8 @@ class Person extends GedcomRecord {
 					if (!showFact("DEAT", $spouse)) $factrec .= "\n2 RESN privacy";
 					$factrec .= "\n2 ASSO @".$spouse."@";
 					$factrec .= "\n3 RELA sosa_".($sosa*2);
+					// recorded as ASSOciate ?
+					$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 					$this->indifacts[]=array(0, $factrec);
 				}
 			}
@@ -912,6 +914,8 @@ class Person extends GedcomRecord {
 					if (!showFact("DEAT", $spouse)) $factrec .= "\n2 RESN privacy";
 					$factrec .= "\n2 ASSO @".$spouse."@";
 					$factrec .= "\n3 RELA sosa_".($sosa*2+1);
+					// recorded as ASSOciate ?
+					$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 					$this->indifacts[]=array(0, $factrec);
 				}
 			}
@@ -952,6 +956,8 @@ class Person extends GedcomRecord {
 								$factrec .= "\n3 RELA ".$rela2;
 								//$factrec .= "\n2 ASSO @".$sfamid."@";
 								//$factrec .= "\n3 RELA family";
+								// recorded as ASSOciate ?
+								$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 								$this->indifacts[]=array(0, $factrec);
 							}
 						}
@@ -1055,6 +1061,8 @@ class Person extends GedcomRecord {
 							//$factrec .= "\n2 ASSO @".$famid."@";
 							//$factrec .= "\n3 RELA family";
 						}
+						// recorded as ASSOciate ?
+						$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 						$this->indifacts[]=array(0, $factrec);
 					}
 				}
@@ -1071,6 +1079,8 @@ class Person extends GedcomRecord {
 						if (!showFact("DEAT", $spid)) $factrec .= "\n2 RESN privacy";
 						$factrec .= "\n2 ASSO @".$spid."@";
 						$factrec .= "\n3 RELA ".$rela;
+						// recorded as ASSOciate ?
+						$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 						$this->indifacts[]=array(0, $factrec);
 					}
 				}
@@ -1103,8 +1113,9 @@ class Person extends GedcomRecord {
 							$factrec .= "\n3 RELA ".$rela2;
 							//$factrec .= "\n2 ASSO @".$sfamid."@";
 							//$factrec .= "\n3 RELA family";
-							$arec = get_sub_record(2, "2 ASSO @".$spid."@", $srec);
-							if ($arec) $factrec .= "\n".$arec;
+							$factrec .= "\n". get_sub_record(2, "2 ASSO @".$spid."@", $srec);
+							// recorded as ASSOciate ?
+							$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 							$this->indifacts[]=array(0, $factrec);
 						}
 					}
@@ -1162,6 +1173,8 @@ class Person extends GedcomRecord {
 				if (!showFact("DEAT", $spouse)) $factrec .= "\n2 RESN privacy";
 				$factrec .= "\n2 ASSO @".$spouse."@";
 				$factrec .= "\n3 RELA spouse";
+				// recorded as ASSOciate ?
+				$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 				$this->indifacts[]=array(0, $factrec);
 			}
 		}
@@ -1265,8 +1278,16 @@ class Person extends GedcomRecord {
 						else $factrec .= "\n2 ASSO @".$rid."@\n3 RELA ".$label;
 						//$factrec .= "\n3 NOTE ".$rela;
 						$factrec .= "\n2 ASSO @".$pid."@\n3 RELA ".$rela;
-
-						$this->indifacts[] = array(0, $factrec);
+						// check if this fact already exists in the list
+						$found = false;
+						foreach($this->indifacts as $k=>$v) {
+							if (strpos($v[1], trim($sdate))
+							and strpos($v[1], "2 ASSO @".$pid."@")) {
+								$found = true;
+								break;
+							}
+						}
+						if (!$found) $this->indifacts[] = array(0, $factrec);
 					}
 				}
 			}

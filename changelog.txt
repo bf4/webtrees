@@ -9,6 +9,8 @@
 =====================================================================
 
 Version 4.2
+ - Added [ 1690092 ] Events of close relatives : remove duplicates (opus27)
+ - Added [ 1564752 ] Shared facts for whole family (opus27)
  - Added index directory cleanup tool (yalnifj, neumont)
  - Updated Lifespan chart (yalnifj, neumont)
  - Added [ 1671286 ] Events of close relatives : add nephew/niece (opus27)
