@@ -1038,7 +1038,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		foreach($TEMPLE_CODES as $code=>$temple) {
 			print "<option value=\"$code\"";
 			if ($code==$value) print " selected=\"selected\"";
-			print ">$temple</option>\n";
+			print ">$temple ($code)</option>\n";
 		}
 		print "</select>\n";
 	}
