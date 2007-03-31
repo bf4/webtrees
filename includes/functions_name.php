@@ -293,7 +293,7 @@ function get_person_name($pid, $checkUnknown=true) {
 	}
 
 	if ($NAME_REVERSE) $name = reverse_name($name);
-
+	
 	if ($checkUnknown) $name = check_NN($name);
 	return $name;
 }
@@ -389,7 +389,6 @@ function get_repo_descriptor($rid) {
 	return false;
 }
 
-//==== MA
 /**
  * get the additional descriptive title of the source
  *
@@ -502,9 +501,9 @@ function get_family_add_descriptor($fid) {
 	}
 	else $wname = "";
 
-	if (!empty($hname) && !empty($wname)) $result = check_NN($hname) . " + " . check_NN($wname);
-	else if (!empty($hname) && empty($wname)) $result = check_NN($hname);
-	else if (empty($hname) && !empty($wname)) $result = check_NN($wname);
+	if (!empty($hname) && !empty($wname)) $result = $hname . " + " . $wname;
+	else if (!empty($hname) && empty($wname)) $result = $hname;
+	else if (empty($hname) && !empty($wname)) $result = $wname;
 	else $result = "";
 
 	return $result;
@@ -518,6 +517,8 @@ function get_add_person_name($pid) {
 	$record = find_person_record($pid);
 	$name_record = get_sub_record(1, "1 NAME", $record);
 	$name = get_add_person_name_in_record($name_record);
+	$name = check_NN($name); 
+		
 	return $name;
 }
 
