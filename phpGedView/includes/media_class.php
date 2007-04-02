@@ -63,7 +63,7 @@ class Media extends GedcomRecord {
 	function &getInstance($pid, $simple=true) {
 		global $objectlist, $GEDCOM, $GEDCOMS, $pgv_changes;
 
-		if (isset($objectlist[$pid]) && $objectlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
+		if (isset($objectlist[$pid]['gedfile']) && $objectlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
 			if (isset($objectlist[$pid]['object'])) return $objectlist[$pid]['object'];
 		}
 
