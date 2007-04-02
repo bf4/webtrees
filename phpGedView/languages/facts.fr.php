@@ -29,7 +29,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
-// -- Define a fact array to map GEDCOM tags with their English values
+// -- Define a fact array to map GEDCOM tags with their french values
 $factarray["ABBR"]                      = "Abréviation";
 $factarray["ADDR"]                      = "Adresse";
 $factarray["ADR1"]                      = "Adresse 1";
@@ -115,7 +115,7 @@ $factarray["OBJE"]                      = "Objet MultiMedia";
 $factarray["OCCU"]                      = "Profession";
 $factarray["ORDI"]                      = "Cérémonie (LDS)";
 $factarray["ORDN"]                      = "Ordination";
-$factarray["PAGE"]                      = "Page";
+$factarray["PAGE"]                      = "Cote";
 $factarray["PEDI"]                      = "Ascendance";
 $factarray["PLAC"]                      = "Lieu";
 $factarray["PHON"]                      = "Téléphone";

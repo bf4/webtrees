@@ -3,7 +3,7 @@
  * French Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  Christophe Bx, Julien Damon
+ * Copyright (C) 2002 to 2007  Christophe Bx, Julien Damon
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,9 +23,8 @@
  * @subpackage Languages
  * @version $Id$
  */
-
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "L'accès direct aux fichiers de langue est interdit.";
+	print "You cannot access a language file directly.";
 	exit;
 }
 
