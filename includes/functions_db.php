@@ -184,17 +184,21 @@ function db_cleanup($item) {
 function check_for_import($ged) {
 	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS;
 
-	if (!DB::isError($DBCONN)) {
-		$sql = "SELECT count(i_id) FROM ".$TBLPREFIX."individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$ged]["id"])."'";
-		$res = dbquery($sql, false);
-
-		if (!empty($res) && !DB::isError($res) && is_object($res)) {
-			$row =& $res->fetchRow();
-			$res->free();
-			if ($row[0]>0) return true;
+	if (!isset($GEDCOMS[$ged]["imported"])) {
+		if (!DB::isError($DBCONN)) {
+			$sql = "SELECT count(i_id) FROM ".$TBLPREFIX."individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$ged]["id"])."'";
+			$res = dbquery($sql, false);
+	
+			if (!empty($res) && !DB::isError($res) && is_object($res)) {
+				$row =& $res->fetchRow();
+				$res->free();
+				if ($row[0]>0) $GEDCOMS[$ged]["imported"] = true;
+			}
 		}
+		$GEDCOMS[$ged]["imported"] = false;
+		store_gedcoms();
 	}
-	return false;
+	return $GEDCOMS[$ged]["imported"];
 }
 
 /**

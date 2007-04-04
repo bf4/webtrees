@@ -520,12 +520,12 @@ class LifespanControllerRoot extends BaseController {
 					echo "\n<div id=\"bar_".$value->getXref()."\" style=\"position: absolute;top:".$Y."px; left:".$startPos."px; width:".$width."px; height:".$height."px;" .
 					" background-color:".$this->color."; border: solid blue 1px; z-index:$zindex;\">";
 					foreach($eventinformation as $evtwidth=>$val){
-						print "<div style=\"position:absolute;left:".$evtwidth." \"><a class=\"showit\" href='#'style=\"color:White; top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".$val."</span></a></div>";
+						print "<div style=\"position:absolute;left:".$evtwidth." \"><a class=\"showit\" href='#'style=\"color:White; top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
 					}
-					print "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".get_changed_date($value->getBirthDate())." ".$value->getBirthPlace()."</span></a></td>" .
+					print "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".PrintReady(get_changed_date($value->getBirthDate()))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
 					"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getName().":  $lifespan </a></td>" .
 					"\n\t\t<td width=\"15\">";
-					if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getName()."<br/>".$pgv_lang["death"]." ".get_changed_date($value->getDeathDate())."</span></a>";
+					if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".PrintReady($value->getName())."<br/>".$pgv_lang["death"]." ".PrintReady(get_changed_date($value->getDeathDate()))."</span></a>";
 					print "</td></tr></table>";
 					echo '</div>';
 
@@ -534,23 +534,23 @@ class LifespanControllerRoot extends BaseController {
 						echo "\n<div style=\"text-align: left; position: absolute; top:".$Y."px; left:".$startPos."px; width:".$width."px; height:".$height."px;" .
 						"  background-color:".$this->color."; border: solid blue 1px; z-index:$zindex;\">";
 						foreach($eventinformation as $evtwidth=>$val){
-							print "<div style=\"position:absolute;left:".$evtwidth." \"><a class=\"showit\" href='#'style=\"color:White; top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".$val."</span></a></div>";
+							print "<div style=\"position:absolute;left:".$evtwidth." \"><a class=\"showit\" href='#'style=\"color:White; top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
 						}
-						print "\n\t<table dir=\"ltr\"><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".get_changed_date($value->getBirthDate())." ".$value->getBirthPlace()."</span></a></td>" .
+						print "\n\t<table dir=\"ltr\"><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".PrintReady(get_changed_date($value->getBirthDate()))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
 						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getName()."</a></td>" .
 						"\n\t\t<td width=\"15\">";
-						if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getName()."<br/>".$pgv_lang["death"]." ".get_changed_date($value->getDeathDate())." ".$value->getDeathPlace()."</span></a>";
+						if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".PrintReady($value->getName())."<br/>".$pgv_lang["death"]." ".PrintReady(get_changed_date($value->getDeathDate()))." ".PrintReady($value->getDeathPlace())."</span></a>";
 						print "</td></tr></table>";
 						echo '</div>';
 					} else {						
 						echo "\n<div style=\"text-align: left; position: absolute;top:".$Y."px; left:".$startPos."px;width:".$width."px; height:".$height."px;" .
 						" background-color:".$this->color."; border: solid blue 1px; z-index:$zindex;\">" ;
 							
-						print"<a class=\"showit\" href=\"individual.php?pid=".$value->getXref()."\"><b>".get_first_letter($pgv_lang["birth"])."</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".get_changed_date($value->getBirthDate())." ".$value->getBirthPlace()."<br/>";
+						print"<a class=\"showit\" href=\"individual.php?pid=".$value->getXref()."\"><b>".get_first_letter($pgv_lang["birth"])."</b><span>".PrintReady($value->getName())."<br/>".$pgv_lang["birth"]." ".PrintReady(get_changed_date($value->getBirthDate()))." ".PrintReady($value->getBirthPlace())."<br/>";
 						foreach($eventinformation as $evtwidth=>$val){
 							print $val."<br />\n";
 						}
-						if ($value->isDead()) print $pgv_lang["death"]." ".get_changed_date($value->getDeathDate())." ".$value->getBirthPlace();
+						if ($value->isDead()) print $pgv_lang["death"]." ".PrintReady(get_changed_date($value->getDeathDate()))." ".PrintReady($value->getBirthPlace());
 						print "</span></a>";
 						echo '</div>';
 											
