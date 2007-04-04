@@ -115,7 +115,7 @@ function print_gedcom($privatize_export='', $privatize_export_level='', $convert
 		else
 			print $head;
 
-		$sql = "SELECT i_gedcom FROM " . $TBLPREFIX . "individuals WHERE i_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY CAST(REPLACE(i_id,'$GEDCOM_ID_PREFIX','') AS UNSIGNED INTEGER)";
+		$sql = "SELECT i_gedcom, REPLACE(i_id,'$GEDCOM_ID_PREFIX','')+0 as id FROM " . $TBLPREFIX . "individuals WHERE i_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY id";
 		$res = dbquery($sql);
 		while ($row = $res->fetchRow()) {
 			$rec = trim($row[0]) . "\r\n";
@@ -131,7 +131,7 @@ function print_gedcom($privatize_export='', $privatize_export_level='', $convert
 		}
 		$res->free();
 
-		$sql = "SELECT f_gedcom FROM " . $TBLPREFIX . "families WHERE f_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY CAST(REPLACE(f_id,'$FAM_ID_PREFIX','') AS UNSIGNED INTEGER)";
+		$sql = "SELECT f_gedcom, REPLACE(f_id,'$FAM_ID_PREFIX','')+0 as id FROM " . $TBLPREFIX . "families WHERE f_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY id";
 		$res = dbquery($sql);
 		while ($row = $res->fetchRow()) {
 			$rec = trim($row[0]) . "\r\n";
@@ -147,7 +147,7 @@ function print_gedcom($privatize_export='', $privatize_export_level='', $convert
 		}
 		$res->free();
 
-		$sql = "SELECT s_gedcom FROM " . $TBLPREFIX . "sources WHERE s_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY CAST(REPLACE(s_id,'$SOURCE_ID_PREFIX','') AS UNSIGNED INTEGER)";
+		$sql = "SELECT s_gedcom, REPLACE(s_id,'$SOURCE_ID_PREFIX','')+0 as id FROM " . $TBLPREFIX . "sources WHERE s_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY id";
 		$res = dbquery($sql);
 		while ($row = $res->fetchRow()) {
 			$rec = trim($row[0]) . "\r\n";
@@ -163,7 +163,7 @@ function print_gedcom($privatize_export='', $privatize_export_level='', $convert
 		}
 		$res->free();
 
-		$sql = "SELECT o_gedcom, o_type FROM " . $TBLPREFIX . "other WHERE o_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY CAST(REPLACE(o_id,'$REPO_ID_PREFIX','') AS UNSIGNED INTEGER)";
+		$sql = "SELECT o_gedcom, o_type, REPLACE(o_id,'$REPO_ID_PREFIX','')+0 as id FROM " . $TBLPREFIX . "other WHERE o_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY id";
 		$res = dbquery($sql);
 		while ($row = $res->fetchRow()) {
 			$rec = trim($row[0]) . "\r\n";
@@ -182,7 +182,7 @@ function print_gedcom($privatize_export='', $privatize_export_level='', $convert
 		}
 		$res->free();
 
-		$sql = "SELECT m_gedrec FROM " . $TBLPREFIX . "media WHERE m_gedfile=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY CAST(REPLACE(m_media,'$MEDIA_ID_PREFIX','') AS UNSIGNED INTEGER)";
+		$sql = "SELECT m_gedrec, REPLACE(m_media,'$MEDIA_ID_PREFIX','')+0 as id FROM " . $TBLPREFIX . "media WHERE m_gedfile=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY id";
 		$res = dbquery($sql);
 		while ($row = $res->fetchRow()) {
 			$rec = trim($row[0]) . "\r\n";
