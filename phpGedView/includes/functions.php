@@ -206,6 +206,7 @@ function store_gedcoms() {
 	global $COMMIT_COMMAND;
 
 	if (!$CONFIGURED) return false;
+	
 	uasort($GEDCOMS, "gedcomsort");
 	$gedcomtext = "<?php\n//--START GEDCOM CONFIGURATIONS\n";
 	$gedcomtext .= "\$GEDCOMS = array();\n";
@@ -221,12 +222,14 @@ function store_gedcoms() {
 		$GED["path"] = str_replace($INDEX_DIRECTORY, "\${INDEX_DIRECTORY}", $GED["path"]);
 		$GED["title"] = stripslashes($GED["title"]);
 		$GED["title"] = preg_replace("/\"/", "\\\"", $GED["title"]);
+		if (!isset($GED["imported"])) $GED["imported"] = check_for_import($indexval);
 		$gedcomtext .= "\$gedarray = array();\n";
 		$gedcomtext .= "\$gedarray[\"gedcom\"] = \"".$GED["gedcom"]."\";\n";
 		$gedcomtext .= "\$gedarray[\"config\"] = \"".$GED["config"]."\";\n";
 		$gedcomtext .= "\$gedarray[\"privacy\"] = \"".$GED["privacy"]."\";\n";
 		$gedcomtext .= "\$gedarray[\"title\"] = \"".$GED["title"]."\";\n";
 		$gedcomtext .= "\$gedarray[\"path\"] = \"".$GED["path"]."\";\n";
+		$gedcomtext .= "\$gedarray[\"imported\"] = ".($GED["imported"]==false?'false':'true').";\n";
 		// TODO: Commonsurnames from an old gedcom are used
 		// TODO: Default GEDCOM is changed to last uploaded GEDCOM
 
