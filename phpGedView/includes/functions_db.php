@@ -192,7 +192,11 @@ function check_for_import($ged) {
 			if (!empty($res) && !DB::isError($res) && is_object($res)) {
 				$row =& $res->fetchRow();
 				$res->free();
-				if ($row[0]>0) $GEDCOMS[$ged]["imported"] = true;
+				if ($row[0]>0) {
+					$GEDCOMS[$ged]["imported"] = true;
+					store_gedcoms();
+					return true;
+				}
 			}
 		}
 		$GEDCOMS[$ged]["imported"] = false;
