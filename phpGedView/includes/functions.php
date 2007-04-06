@@ -206,7 +206,8 @@ function store_gedcoms() {
 	global $COMMIT_COMMAND;
 
 	if (!$CONFIGURED) return false;
-	
+	$mutex = new Mutex("gedcoms.php");
+	$mutex->Wait();
 	uasort($GEDCOMS, "gedcomsort");
 	$gedcomtext = "<?php\n//--START GEDCOM CONFIGURATIONS\n";
 	$gedcomtext .= "\$GEDCOMS = array();\n";
@@ -215,6 +216,7 @@ function store_gedcoms() {
 		if (isset($details["id"]) && $details["id"] > $maxid) $maxid = $details["id"];
 	}
 	if ($maxid !=0) $maxid++;
+	reset($GEDCOMS);
 	foreach($GEDCOMS as $indexval => $GED) {
 		$GED["config"] = str_replace($INDEX_DIRECTORY, "\${INDEX_DIRECTORY}", $GED["config"]);
 		if (isset($GED["privacy"])) $GED["privacy"] = str_replace($INDEX_DIRECTORY, "\${INDEX_DIRECTORY}", $GED["privacy"]);
@@ -222,14 +224,14 @@ function store_gedcoms() {
 		$GED["path"] = str_replace($INDEX_DIRECTORY, "\${INDEX_DIRECTORY}", $GED["path"]);
 		$GED["title"] = stripslashes($GED["title"]);
 		$GED["title"] = preg_replace("/\"/", "\\\"", $GED["title"]);
-		if (!isset($GED["imported"])) $GED["imported"] = check_for_import($indexval);
+		//if (!isset($GED["imported"])) $GED["imported"] = check_for_import($indexval);
 		$gedcomtext .= "\$gedarray = array();\n";
 		$gedcomtext .= "\$gedarray[\"gedcom\"] = \"".$GED["gedcom"]."\";\n";
 		$gedcomtext .= "\$gedarray[\"config\"] = \"".$GED["config"]."\";\n";
 		$gedcomtext .= "\$gedarray[\"privacy\"] = \"".$GED["privacy"]."\";\n";
 		$gedcomtext .= "\$gedarray[\"title\"] = \"".$GED["title"]."\";\n";
 		$gedcomtext .= "\$gedarray[\"path\"] = \"".$GED["path"]."\";\n";
-		$gedcomtext .= "\$gedarray[\"imported\"] = ".($GED["imported"]==false?'false':'true').";\n";
+		if (isset($GED["imported"])) $gedcomtext .= "\$gedarray[\"imported\"] = ".($GED["imported"]==false?'false':'true').";\n";
 		// TODO: Commonsurnames from an old gedcom are used
 		// TODO: Default GEDCOM is changed to last uploaded GEDCOM
 
@@ -267,6 +269,7 @@ function store_gedcoms() {
 		fclose($fp);
 		if (!empty($COMMIT_COMMAND)) check_in("store_gedcoms() ->" . getUserName() ."<-", "gedcoms.php", $INDEX_DIRECTORY, true);
 	}
+	$mutex->Release();
 }
 
 /**
