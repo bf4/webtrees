@@ -500,6 +500,7 @@ if (!empty($PGV_SESSION_SAVE_PATH)) session_save_path($PGV_SESSION_SAVE_PATH);
 if (isset($MANUAL_SESSION_START) && !empty($SID)) session_id($SID);
 
 @session_start();
+#$_SESSION['pgv_user']='nkelsey';
 
 if((empty($SEARCH_SPIDER)) && (!empty($_SESSION['last_spider_name']))) { // user following a search engine listing in,
 	if (phpversion() >= '4.3.2') {			// so we want to give them the full page.
