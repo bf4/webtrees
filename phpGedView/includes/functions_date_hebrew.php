@@ -301,8 +301,9 @@ function jewishGedcomDateToGregorian($datearray){
 		if (isset($date["year"])) {
 			if (empty($date["mon"])) $date["mon"] = 1;
 			if (empty($date["day"])) $date["day"] = 1;
-			$julianDate =  jewishtojd ( $date["mon"], $date["day"], $date["year"] );
-			$gregdate = jdtogregorian ( $julianDate );
+			
+ 			$julianDate =  jewishtojd ( $date["mon"], trim($date["day"]), $date["year"] );
+ 			$gregdate = jdtogregorian ( $julianDate );
 			$pieces = preg_split("~/~", $gregdate);
 			$sort = "";
 			if (isset($date['sort'])) $sort = $date['sort'];
@@ -370,7 +371,7 @@ function jewishGedcomDateToCurrentGregorian($datearray){
  * @param  $datearray		The Gregorian date
  * @return array
  *
- * @TODO Improve !!
+ * @TODO Improve 
  */
 function gregorianToJewishGedcomDate($datearray){
 	global $monthtonum;
@@ -381,7 +382,7 @@ function gregorianToJewishGedcomDate($datearray){
 			if (empty($date["day"])) $date["day"] = 1;
 			if (empty($date["mon"])) $date["mon"] = 1;
 		}
-	
+			
 		$jd = gregoriantojd($date["mon"], $date["day"], $date["year"]);
 		$hebrewDate = jdtojewish($jd);
 		list ($hMon, $hDay, $hYear) = split ('/', $hebrewDate);
