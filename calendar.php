@@ -35,6 +35,10 @@ require("config.php");
 require_once("includes/functions_print_lists.php");
 require("includes/adodb-time.inc.php");
 
+if (!isset($year)) $year = adodb_date("Y");
+if (empty($day)) $day = adodb_date("j");
+if (empty($month)) $month = adodb_date("M");
+
 $pattern="[-| |bet|abt|bef|aft]";
 $a=preg_split($pattern, str2lower($year)); 
 
@@ -47,10 +51,6 @@ else if (isset($a[2]) && empty($a[0]) && empty($a[1])){
         }
 }
 	        
-if (empty($day)) $day = adodb_date("j");
-if (empty($month)) $month = adodb_date("M");
-if (empty($year)) $year = adodb_date("Y");
-
 if ($USE_RTL_FUNCTIONS) {
 	//-------> Today's Hebrew Day with Gedcom Month
 
