@@ -1273,9 +1273,8 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 		$timestamp = get_changed_date($edate, true);
 		$pdate = parse_date($edate);
 		
-		if (strpos($edate, "@#DHEBREW")!==false) $pdate = jewishGedcomDateToGregorian($pdate);
-		
-		// ===>  We should use $pdate = jewishGedcomDateToCurrentGregorian($pdate); for the blocks  - Meliza <====
+//		if (strpos($edate, "@#DHEBREW")!==false) $pdate = jewishGedcomDateToGregorian($pdate);
+		if (strpos($edate, "@#DHEBREW")!==false) $pdate = jewishGedcomDateToCurrentGregorian($pdate);
 		
 		if ($pdate[0]["day"] == "") continue;
 		$anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], $dateY);
