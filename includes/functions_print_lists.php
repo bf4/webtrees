@@ -1272,7 +1272,11 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 		if (empty($edate)) continue;
 		$timestamp = get_changed_date($edate, true);
 		$pdate = parse_date($edate);
+		
 		if (strpos($edate, "@#DHEBREW")!==false) $pdate = jewishGedcomDateToGregorian($pdate);
+		
+		// ===>  We should use $pdate = jewishGedcomDateToCurrentGregorian($pdate); for the blocks  - Meliza <====
+		
 		if ($pdate[0]["day"] == "") continue;
 		$anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], $dateY);
 		// add 1 year if anniversary before today
