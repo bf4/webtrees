@@ -395,24 +395,26 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				print "<img src=\"images/RESN_".$resn_value.".gif\" alt=\"".$pgv_lang[$resn_value]."\" title=\"".$pgv_lang[$resn_value]."\" />\n";
 				print_help_link("RESN_help", "qm");
 			}
-			if ($fact=="ADOP" && preg_match("/[\r\n]2 FAMC @(.+)@/", $factrec, $match)) {
+			if (preg_match("/[\r\n]2 FAMC @(.+)@/", $factrec, $match)) {
 				print "<br/><span class=\"label\">".$factarray["FAMC"].":</span> ";
 				print "<a href=\"family.php?famid=".$match[1]."&amp;ged=$GEDCOM\">";
 				print get_family_descriptor($match[1]);
 				print "</a>";
-				if (preg_match("/[\r\n]3 ADOP (HUSB|WIFE|BOTH)/", $factrec, $match)) {
-					print "<br/><span class=\"label\">".$factarray["ADOP"].":</span> ";
+				if (preg_match("/[\r\n]3 ADOP (HUSB|WIFE|BOTH)/", str2upper($factrec), $match)) {
+					print '<br/><span class="indent"><span class="label">'.$factarray['ADOP'].':</span> ';
+					print '<span class="field">';
 					switch ($match[1]) {
 					case 'HUSB':
 					case 'WIFE':
-						print "<span class=\"field\">".$factarray[$match[1]]."</span> ";
+						print $factarray[$match[1]];
 						break;
 					case 'BOTH':
-						print "<span class=\"field\">".$factarray['HUSB']."+".$factarray['WIFE']."</span> ";
+						print $factarray['HUSB'].'+'.$factarray['WIFE'];
 						break;
 					}
+					print '</span></span>';
 				}
-			} else
+			}
 			if ($fact!="ADDR") {
 				//-- catch all other facts that could be here
 				$special_facts = array("ADDR","ALIA","ASSO","CEME","CONC","CONT","DATE","DESC","EMAIL",

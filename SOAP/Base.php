@@ -52,7 +52,7 @@ require_once 'SOAP/Type/hexBinary.php';
 $GLOBALS['SOAP_options'] = array();
 
 @include_once 'SOAP/Mail/mimePart.php';
-@include_once 'SOAPMail/mimeDecode.php';
+@include_once 'SOAP/Mail/mimeDecode.php';
 if (class_exists('Mail_mimePart')) {
     $GLOBALS['SOAP_options']['Mime'] = 1;
     define('MAIL_MIMEPART_CRLF', "\r\n");

@@ -58,17 +58,17 @@ $typefacts = array();	//-- special facts that go on 2 TYPE lines
 // Next two vars used by insert_missing_subtags()
 $date_and_time=array("BIRT","DEAT"); // Tags with date and time
 $level2_tags=array( // The order of the $keys is significant
-	"TEMP" =>array("BAPL","CONL","ENDL","SLGC","SLGS"),
-	"STAT" =>array("BAPL","CONL","ENDL","SLGC","SLGS"),
 	"_HEB" =>array("NAME","TITL"),
 	"ROMN" =>array("NAME","TITL"),
 	"TYPE" =>array("GRAD","EVEN","FACT","IDNO","MARR","ORDN","SSN"),
 	"AGNC" =>array("EDUC","GRAD","OCCU","RETI","ORDN"),
 	"CAUS" =>array("DEAT"),
 	"CALN" =>array("REPO"),
-	"CEME" =>array("BURI"), // CEME is NOT a valid 5.5.1 tag; use _CEME ??
-	"DATE" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN","BAPL","ENDL","SLGC","SLGS"),
-	"PLAC" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN","BAPL","SSN"),
+	"CEME" =>array("BURI"), // CEME is NOT a valid 5.5.1 tag
+	"DATE" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN","BAPL","CONL","ENDL","SLGC","SLGS"),
+	"TEMP" =>array("BAPL","CONL","ENDL","SLGC","SLGS"),
+	"PLAC" =>array("ANUL","CENS","DIV","DIVF","ENGA","MARB","MARC","MARR","MARL", "MARS","RESI","EVEN","EDUC","OCCU","PROP","RELI","RESI","BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","EVEN","BAPL","CONL","ENDL","SLGC","SLGS","SSN"),
+	"STAT" =>array("BAPL","CONL","ENDL","SLGC","SLGS"),
 	"ADDR" =>array("BIRT","CHR","CHRA","DEAT","CREM","BURI","MARR","CENS","EDUC","GRAD","OCCU","PROP","ORDN","RESI","EVEN"),
 	"PHON" =>array("OCCU","RESI"),
 	"FAX"  =>array("OCCU","RESI"),
@@ -77,7 +77,7 @@ $level2_tags=array( // The order of the $keys is significant
 	"AGE"  =>array("CENS","DEAT"),
 	"HUSB" =>array("MARR"),
 	"WIFE" =>array("MARR"),
-	"FAMC" =>array("ADOP"),
+	"FAMC" =>array("ADOP","SLGC"),
 	"FILE" =>array("OBJE"),
 	"_PRIM"=>array("OBJE"),
 );
@@ -657,6 +657,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
 		print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 		print $pgv_lang["no_update_CHAN"]."<br />\n";
+		if (isset($famrec)) print_fact_date(get_sub_record(1, "1 CHAN", $famrec), false, true);
 		print "</td></tr>\n";
 	}
 	print "</table>\n";
@@ -1037,7 +1038,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		foreach($TEMPLE_CODES as $code=>$temple) {
 			print "<option value=\"$code\"";
 			if ($code==$value) print " selected=\"selected\"";
-			print ">$temple</option>\n";
+			print ">$temple ($code)</option>\n";
 		}
 		print "</select>\n";
 	}
@@ -1105,7 +1106,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		//-->
 		</script>
 		<?php
-		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" />\n";
+		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".$value."\" />\n";
 		print "<table><tr valign=\"top\">\n";
 		foreach (array("none", "locked", "privacy", "confidential") as $resn_index => $resn_val) {
 			if ($resn_val=="none") $resnv=""; else $resnv=$resn_val;
@@ -1819,19 +1820,20 @@ function insert_missing_subtags($level1tag)
 					add_simple_tag("3 FORM");
 					break;
 				case "STAT":
-					//-- TODO currently confusing to have 2 date fields next to each other
+					// TODO currently confusing to have both LDS_ORD_DATE and status CHANGE_DATE
 					//add_simple_tag("3 DATE");
 					break;
 				case "DATE":
 					if (in_array($level1tag, $date_and_time))
-						add_simple_tag("3 TIME"); // TIME is NOT a valid 5.5.1 tag; use _TIME ??
+						add_simple_tag("3 TIME"); // TIME is NOT a valid 5.5.1 tag
 					break;
 				case "HUSB":
 				case "WIFE":
 					add_simple_tag("3 AGE");
 					break;
 				case "FAMC":
-					add_simple_tag("3 ADOP BOTH");
+					if ($level1tag=='ADOP')
+						add_simple_tag("3 ADOP BOTH");
 					break;
 			}
 		}
@@ -1941,7 +1943,7 @@ function delete_family($pid, $gedrec='') {
 					else $level = 1;
 					//-- make sure we don't add any sublevel records
 					if ($level<=$lastlevel) $lastlevel = -1;
-					if ((preg_match("/@$famid@/", $line)==0) && ($lastlevel==-1)) $newindirec .= $line."\n";
+					if ((preg_match("/@$pid@/", $line)==0) && ($lastlevel==-1)) $newindirec .= $line."\n";
 					else {
 						$lastlevel=$level;
 					}
@@ -1950,7 +1952,7 @@ function delete_family($pid, $gedrec='') {
 			}
 		}
 		if ($success) {
-			$success = $success && delete_gedrec($famid);
+			$success = $success && delete_gedrec($pid);
 		}
 		return $success;
 	}

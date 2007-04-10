@@ -328,12 +328,16 @@ class Person extends GedcomRecord {
 	 * get sortable birth date
 	 * @return string the birth date in sortable format YYYY-MM-DD HH:MM
 	 */
-	function getSortableBirthDate() {
+	function getSortableBirthDate($est = true) {
 		global $pgv_lang;
 		if (!$this->disp) return "0000-00-00";
 		if (empty($this->bdate)) $this->_parseBirthDeath();
 		$pdate = parse_date($this->bdate);
-		if ($this->best) return $pdate[0]["sort"]." ".$pgv_lang["est"];
+		if ($this->best) {
+			if ($est) return $pdate[0]["sort"]." ".$pgv_lang["est"];
+			else return $pdate[0]["sort"];
+		}
+		if (!$est) return $pdate[0]["sort"];
 		$hms = get_gedcom_value("DATE:TIME", 2, $this->brec);
 		return $pdate[0]["sort"]." ".$hms;
 	}
@@ -392,13 +396,17 @@ class Person extends GedcomRecord {
 	 * get sortable death date
 	 * @return string the death date in sortable format YYYY-MM-DD HH:MM
 	 */
-	function getSortableDeathDate() {
+	function getSortableDeathDate($est = true) {
 		global $pgv_lang;
 		if (!$this->disp) return "0000-00-00";
 		if (empty($this->ddate)) $this->_parseBirthDeath();
 		//if ($this->isDead() and $this->dest) return "0000-00-01";
 		$pdate = parse_date($this->ddate);
-		if ($this->isDead() and $this->dest) return $pdate[0]["sort"]." ".$pgv_lang["est"];
+		if ($this->isDead() and $this->dest) {
+			if ($est) return $pdate[0]["sort"]." ".$pgv_lang["est"];
+			else return $pdate[0]["sort"];
+		}
+		if (!$est) return $pdate[0]["sort"];
 		$hms = get_gedcom_value("DATE:TIME", 2, $this->drec);
 		return $pdate[0]["sort"]." ".$hms;
 	}

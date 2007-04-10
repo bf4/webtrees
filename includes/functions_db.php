@@ -184,17 +184,23 @@ function db_cleanup($item) {
 function check_for_import($ged) {
 	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS;
 
-	if (!DB::isError($DBCONN)) {
-		$sql = "SELECT count(i_id) FROM ".$TBLPREFIX."individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$ged]["id"])."'";
-		$res = dbquery($sql, false);
-
-		if (!empty($res) && !DB::isError($res) && is_object($res)) {
-			$row =& $res->fetchRow();
-			$res->free();
-			if ($row[0]>0) return true;
+	if (!isset($GEDCOMS[$ged]["imported"])) {
+		$GEDCOMS[$ged]["imported"] = false;
+		if (!DB::isError($DBCONN)) {
+			$sql = "SELECT count(i_id) FROM ".$TBLPREFIX."individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$ged]["id"])."'";
+			$res = dbquery($sql, false);
+	
+			if (!empty($res) && !DB::isError($res) && is_object($res)) {
+				$row =& $res->fetchRow();
+				$res->free();
+				if ($row[0]>0) {
+					$GEDCOMS[$ged]["imported"] = true;
+				}
+			}
 		}
+		store_gedcoms();
 	}
-	return false;
+	return $GEDCOMS[$ged]["imported"];
 }
 
 /**
@@ -1211,11 +1217,12 @@ function search_indis_dates($day="", $month="", $year="", $fact="", $allgeds=fal
 	if (stristr($DBTYPE, "mysql")!==false) $term = "REGEXP";
 	else if (stristr($DBTYPE, "pgsql")!==false) $term = "~*";
 	else $term='LIKE';
-
+	
 	$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname, d_gid, d_fact FROM ".$TBLPREFIX."dates, ".$TBLPREFIX."individuals WHERE i_id=d_gid AND i_file=d_file ";
 	if (!empty($day)) $sql .= "AND d_day='".$DBCONN->escapeSimple($day)."' ";
 	if (!empty($month)) $sql .= "AND d_month='".$DBCONN->escapeSimple(str2upper($month))."' ";
-	if (!empty($year)) $sql .= "AND d_year='".$DBCONN->escapeSimple($year)."' ";
+	if (!empty($year)) $sql .= "AND (d_year='".$DBCONN->escapeSimple($year)."' or i_gedcom like '%".$DBCONN->escapeSimple($year)."%') ";
+	
 	if (!empty($fact)) {
 		$sql .= "AND (";
 		$facts = preg_split("/[,:; ]/", $fact);
@@ -1236,7 +1243,7 @@ function search_indis_dates($day="", $month="", $year="", $fact="", $allgeds=fal
 	}
 	if (!$allgeds) $sql .= "AND d_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."' ";
 	$sql .= "ORDER BY d_year DESC, d_mon DESC, d_day DESC";
-//	print $sql;
+//  print $sql; 
 	$res = dbquery($sql);
 
 	if (!DB::isError($res)) {
@@ -2950,27 +2957,30 @@ function get_event_list() {
 		}
 		if ($mmon2!=$mmon3) {
 			$dayfamlist2 = search_fams_dates("", $mmon3);
-			$dayfamlist = pgv_array_merge($dayfamlist, $dayfamlist2);
+			$dayfamlist = pgv_array_merge($dayfamlist, $dayfamlist2);			
 		}
-
+		
 // Apply filter criteria and perform other transformations on the raw data
 		$found_facts = array();
 		foreach($dayindilist as $gid=>$indi) {
 			$facts = get_all_subrecords($indi["gedcom"], $skipfacts, false, false, false);
 			foreach($facts as $key=>$factrec) {
-				$date = 0; //--- MA @@@
+				$date = 0; 
 				if ($USE_RTL_FUNCTIONS) {
 					$hct = preg_match("/2 DATE.*(@#DHEBREW@)/", $factrec, $match);
 					if ($hct>0) {
 						$dct = preg_match("/2 DATE (.+)/", $factrec, $match);
 						$hebrew_date = parse_date(trim($match[1]));
+						
 						$date = jewishGedcomDateToCurrentGregorian($hebrew_date);
+						
 					}
 				} 
 				
 				if ($date==0) {
 				  	$ct = preg_match("/2 DATE (.+)/", $factrec, $match);
 				  	if ($ct>0) $date = parse_date(trim($match[1]));
+			  	
 				}
 				
 				if ($date != 0) {
@@ -2993,7 +3003,7 @@ function get_event_list() {
 		foreach($dayfamlist as $gid=>$fam) {
 			$facts = get_all_subrecords($fam["gedcom"], $skipfacts, false, false, false);
 			foreach($facts as $key=>$factrec) {
-				$date = 0; //--- MA @@@
+				$date = 0;
 				if ($USE_RTL_FUNCTIONS) {
 					$hct = preg_match("/2 DATE.*(@#DHEBREW@)/", $factrec, $match);
 					if ($hct>0) {

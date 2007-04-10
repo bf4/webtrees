@@ -3,7 +3,7 @@
  * GET data from a server file to populate a contextual place list
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,12 +51,21 @@ $data .= @file_get_contents($filename);
 $filename=$ctry."/".$ctry.".htm";
 $data .= @file_get_contents($filename);
 // remove HTML comments
-if (empty($data)) return;
 $data = str_replace("\r", "",$data);
 $data = preg_replace("/<!--.*?-->\n/is", "", $data);
 // search <map id="..." ...>...</map>
 $p = strpos($data, "<map id=\"".$mapname."\"");
-if ($p === false) return;
+// map not found : use txt file
+if ($p === false) {
+	$filename=$ctry."/".$mapname.".txt";
+	$data = @file_get_contents($filename);
+	$data = str_replace("\r", "",$data);
+	$data = preg_replace("/<!--.*?-->\n/is", "", $data);
+	$data = str_replace("\n", "|",$data);
+	$data = trim($data,"|");
+	print $data;
+	exit;
+}
 $data = substr($data, $p);
 $p = strpos($data, "</map>");
 if ($p === false) return;

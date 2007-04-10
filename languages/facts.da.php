@@ -89,7 +89,7 @@ $factarray["FILE"] = "Ekstern fil";
 $factarray["FORM"] = "Filformat";
 $factarray["GIVN"] = "Fornavn";
 $factarray["GRAD"] = "Eksamen";
-$factarray["HUSB"]  = "Ægtemand";
+$factarray["HUSB"] = "Ægtemand";
 $factarray["IDNO"] = "Person ID";
 $factarray["IMMI"] = "Indvandret";
 $factarray["LEGA"] = "Arving";
@@ -154,6 +154,27 @@ $factarray["_EMAIL"] = "E-mail adresse";
 $factarray["_TODO"] = "Udestående gøremål";
 $factarray["_UID"] = "Universal ID";
 $factarray["_PRIM"]	= "Markeret som hovedbillede";
+$factarray["_DBID"] = "Linket database ID";
+$factarray["FAMC:WIFE:GIVN"] = "Mors pigenavn";
+$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Bedstefars efternavn";
+$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Bedstemors pigenavn";
+$factarray["MARR:PLAC"] = "Bryllupssted";
+$factarray["BURI:PLAC"] = "Begravelsessted";
+$factarray["BAPM:PLAC"] = "Dåbssted";
+$factarray["BIRT:PLAC"] = "Fødselssted";
+$factarray["DEAT:PLAC"] = "Dødssted";
+$factarray["CHR:PLAC"] = "Dåbssted";
+$factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Ægtefælles fødselssted";
+$factarray["FAMC:HUSB:GIVN"] = "Fars efternavn";
+$factarray["FAMS:SPOUSE:DEAT:PLAC"] = "Ægtefælles dødssted";
+$factarray["FAMS:MARR:PLAC"] = "Bryllupssted";
+$factarray[":BIRT:PLAC"] = "Fødselssted";
+$factarray["FAMC:HUSB:OCCU"] = "Fars erhverv";
+$factarray["FAMC:MARR:PLAC"] = "Forældres bryllupssted";
+$factarray["FAMC:WIFE:BIRT:PLAC"] = "Mors fødselssted";
+$factarray["FAMC:HUSB:BIRT:PLAC"] = "Fars fødselssted";
+$factarray["FAMC:WIFE:SURN"] = "Mors efternavn";
+$factarray["FAMC:HUSB:SURN"] = "Fars efternavn";
 
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"] = "Helbredsoplysninger";
@@ -230,13 +251,14 @@ $factarray["_PRMN"] = "Permanent nummer";
 $factarray["_WEIG"] = "Vægt";
 $factarray["_YART"] = "Yartzeit (Jødisk fødselsdag)";
 $factarray["_MARNM"] = "Vielsesnavn";
+$factarray["_MARNM_SURN"] = "Tilgiftet efternavn";
 $factarray["_STAT"]	= "Civil status";
 $factarray["COMM"]	= "Kommentar";
 
 // Aldfaer related facts
 $factarray["MARR_CIVIL"] = "Borgerlig vielse";
 $factarray["MARR_PARTNERS"] = "Registreret partnerskab";
-$factarray["MARR_RELIGIOUS"] = "Kirkelig vielse";
+$factarray["MARR_RELIGIOUS"] = "Religiøs vielse";
 $factarray["MARR_UNKNOWN"] = "Ukendt form for ægteskab";
 
 $factarray["_HNM"] = "Hebræisk navn";
@@ -283,7 +305,7 @@ $factarray["_DEAT_COUS"] = "En kusines eller fætters dødsfald";
 //-- PGV Only facts
 $factarray["_THUM"]	= "Brug dette billede som miniaturebillede?";
 $factarray["_PGVU"]	= "Sidst opdateret af";
-$factarray["SERV"] = "Remote server";
+$factarray["SERV"] = "Ekstern server";
 $factarray["_GEDF"] = "GEDCOM-fil";
 
 ?>

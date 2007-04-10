@@ -89,11 +89,11 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 					// NOTE: Zoom
 	 				if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["pedigree_chart"].": ".$pid;
 	 				else $title = $pid." :".$pgv_lang["pedigree_chart"];
-					print "<a href=\"pedigree.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;talloffset=$talloffset&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" $mouseAction1><b>".$pgv_lang["index_header"]."</b></a>\n";
+					print "<a href=\"pedigree.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;talloffset=$talloffset&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1><b>".$pgv_lang["index_header"]."</b></a>\n";
 
 	 				if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["descend_chart"].": ".$pid;
 	 				else $title = $pid." :".$pgv_lang["descend_chart"];
-					print "<br /><a href=\"descendancy.php?pid=$pid&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" $mouseAction1><b>".$pgv_lang["descend_chart"]."</b></a><br />\n";
+					print "<br /><a href=\"descendancy.php?pid=$pid&amp;show_full=$show_full&amp;generations=$generations&amp;box_width=$box_width&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1><b>".$pgv_lang["descend_chart"]."</b></a><br />\n";
 
 					$username = getUserName();
 					if (!empty($username)) {
@@ -101,29 +101,29 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 						 if (!empty($tuser["gedcomid"][$GEDCOM])) {
 	 						  if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["relationship_chart"].": ".$pid;
 	 						  else $title = $pid." :".$pgv_lang["relationship_chart"];
-							  print "<a href=\"relationship.php?pid1=".$tuser["gedcomid"][$GEDCOM]."&amp;pid2=".$pid."&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["relationship_to_me"]."</b></a><br />\n";
+							  print "<a href=\"relationship.php?pid1=".$tuser["gedcomid"][$GEDCOM]."&amp;pid2=".$pid."&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["relationship_to_me"]."</b></a><br />\n";
 						 }
 					}
 					// NOTE: Zoom
 					if (file_exists("ancestry.php")) {
 	 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["ancestry_chart"].": ".$pid;
 	 					else $title = $pid." :".$pgv_lang["ancestry_chart"];
-						print "<a href=\"ancestry.php?rootid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["ancestry_chart"]."</b></a><br />\n";
+						print "<a href=\"ancestry.php?rootid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["ancestry_chart"]."</b></a><br />\n";
 					}
 					if (file_exists("compact.php")) {
 	 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["compact_chart"].": ".$pid;
 	 					else $title = $pid." :".$pgv_lang["compact_chart"];
-						print "<a href=\"compact.php?rootid=$pid&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["compact_chart"]."</b></a><br />\n";
+						print "<a href=\"compact.php?rootid=$pid&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["compact_chart"]."</b></a><br />\n";
 					}
 					if (file_exists("fanchart.php") and defined("IMG_ARC_PIE") and function_exists("imagettftext")) {
 	 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["fan_chart"].": ".$pid;
 	 					else $title = $pid." :".$pgv_lang["fan_chart"];
-						print "<a href=\"fanchart.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fan_chart"]."</b></a><br />\n";
+						print "<a href=\"fanchart.php?rootid=$pid&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fan_chart"]."</b></a><br />\n";
 					}
 					if (file_exists("hourglass.php")) {
 	 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["hourglass_chart"].": ".$pid;
 	 					else $title = $pid." :".$pgv_lang["hourglass_chart"];
-						print "<a href=\"hourglass.php?pid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM&amp;show_spouse=$show_spouse&amp;show_full=$show_full\" alt=\"$title\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["hourglass_chart"]."</b></a><br />\n";
+						print "<a href=\"hourglass.php?pid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM&amp;show_spouse=$show_spouse&amp;show_full=$show_full\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["hourglass_chart"]."</b></a><br />\n";
 					}
 					$ct = preg_match_all("/1\s*FAMS\s*@(.*)@/", $indirec, $match, PREG_SET_ORDER);
 					for ($i=0; $i<$ct; $i++) {
@@ -138,11 +138,11 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 							  if ((!empty($spouse))||($num>0)) {
 	 							 if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["familybook_chart"].": ".$famid;
 	 							 else $title = $famid." :".$pgv_lang["familybook_chart"];
-								 print "<a href=\"family.php?famid=$famid&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fam_spouse"]."</b></a><br /> \n";
+								 print "<a href=\"family.php?famid=$famid&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fam_spouse"]."</b></a><br /> \n";
 								if (!empty($spouse)) {
 	 								if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$spouse;
 	 								else $title = $spouse." :".$pgv_lang["indi_info"];
-									print "<a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" $mouseAction1>";
+									print "<a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1>";
  									   if (($SHOW_LIVING_NAMES>=$PRIV_PUBLIC) || (displayDetailsByID($spouse))||(showLivingNameByID($spouse))) print PrintReady(get_person_name($spouse));
 									   else print $pgv_lang["private"];
 									   print "</a><br />\n";
@@ -152,7 +152,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 								   $cpid = $smatch[$j][1];
 	 							   if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$cpid;
 	 							   else $title = $cpid." :".$pgv_lang["indi_info"];
-								   print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"individual.php?pid=$cpid&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" $mouseAction1>";
+								   print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"individual.php?pid=$cpid&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1>";
  								   if (($SHOW_LIVING_NAMES>=$PRIV_PUBLIC) || (displayDetailsByID($cpid))||(showLivingNameByID($cpid))) print PrintReady(get_person_name($cpid));
 								   else print $pgv_lang["private"];
 								   print "<br /></a>";
@@ -235,7 +235,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 					if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang[$whichChart].": ".$whichID;
 	 					else $title = $whichID." :".$pgv_lang[$whichChart];
  					}
-					print "<a href=\"$click_link\" alt=\"$title\" title=\"$title\"";
+					print "<a href=\"$click_link\" title=\"$title\"";
 					// NOTE: Zoom
 					if ($LINK_ICONS=="mouseover") print "onmouseover=\"show_family_box('".$boxID."', '";
 					if ($LINK_ICONS=="click") print "onclick=\"toggle_family_box('".$boxID."', '";
@@ -305,7 +305,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			   // NOTE: Start span namedef-$personcount.$pid.$count
 			   if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$pid;
 			   else $title = $pid." :".$pgv_lang["indi_info"];
-			   print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" onmouseover=\"change_class('namedef-$boxID','name".$style."Hover'); return false;\" onmouseout=\"change_class('namedef-$boxID','name$style'); return false;\"><span id=\"namedef-$boxID\" class=\"name$style\">";
+			   print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\" title=\"$title\" onmouseover=\"change_class('namedef-$boxID','name".$style."Hover'); return false;\" onmouseout=\"change_class('namedef-$boxID','name$style'); return false;\"><span id=\"namedef-$boxID\" class=\"name$style\">";
  			   print PrintReady($name);
 			   // NOTE: IMG ID
 			   print "<img id=\"box-$boxID-sex\" src=\"$PGV_IMAGE_DIR/";
@@ -360,7 +360,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 }
 	 if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$pid;
 	 else $title = $pid." :".$pgv_lang["indi_info"];
-	 print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\" alt=\"$title\" title=\"$title\" onmouseover=\"change_class('namedef-$boxID','name".$style."Hover'); return false;\" onmouseout=\"change_class('namedef-$boxID','name$style'); return false;\"";
+	 print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\" title=\"$title\" onmouseover=\"change_class('namedef-$boxID','name".$style."Hover'); return false;\" onmouseout=\"change_class('namedef-$boxID','name$style'); return false;\"";
 	 if (!$show_full) {
 		  //not needed or wanted for mouseover //if ($ZOOM_BOXES=="mouseover") print " onmouseover=\"event.cancelBubble = true;\"";
 		  if ($ZOOM_BOXES=="mousedown") print "onmousedown=\"event.cancelBubble = true;\"";

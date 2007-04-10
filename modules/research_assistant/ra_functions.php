@@ -161,6 +161,7 @@ class ra_functions {
 		while($row = $res->fetchRow(DB_FETCHMODE_ASSOC)){
 			$rows[] = $row;
 		}
+		$res->free();
 		
 		return $rows;
 	}
@@ -1535,23 +1536,14 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 									</tr>';
 										/*@var $person Person*/
 										//get a birthdate in yyyymmdd format
-										$bdate = $person->getSortableBirthDate();
+										$bdate = $person->getSortableBirthDate(false);
 										//take out the dashes
 										$bdate = preg_replace("/-/","",$bdate);
-										//check to see if the date was estimated
-										if(strstr($bdate," estimated"))
-										{
-											$bdate = preg_replace("/estimated/","",$bdate);
-										}
 										//get a deathdate in yyyymmdd format
-										$ddate = $person->getSortableDeathDate();
+										$ddate = $person->getSortableDeathDate(false);
 										//take out the dashes
 										$ddate = preg_replace("/-/","",$ddate);
-										//check to see if the date was estimated
-										if(strstr($ddate," estimated"))
-										{
-											$ddate = preg_replace("/estimated/","",$ddate);
-										}
+										
 										$sourcesInferred = array();
 										$sourcesPrinted = array();
 										foreach ($Missing as $key => $val) //every missing item gets a checkbox , so you check check it and make a task out of it
@@ -1602,13 +1594,13 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 																		
 																		if($inferenceObj->getFactTag() === "DEAT")
 																		{
-																			$posSources = $this->getEventsForDates($ddate - 10,$ddate+10,"",$inferenceObj->getFactValue());
+																			$posSources = $this->getEventsForDates($ddate - 5,$ddate+5,"",$inferenceObj->getFactValue());
 																		}
 																		else
 																		{
 																			if($inferenceObj->getFactTag() === "BIRT")
 																			{
-																				$posSources = $this->getEventsForDates($bdate-10,$bdate+10,"",$inferenceObj->getFactValue());
+																				$posSources = $this->getEventsForDates($bdate-5,$bdate+5,"",$inferenceObj->getFactValue());
 																			}
 																			else
 																			{
@@ -1658,13 +1650,13 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 															
 																		if($addVal->getFactTag() === "DEAT")
 																		{
-																			$posSources = $this->getEventsForDates($ddate - 10,$ddate+10,"",$addVal->getFactValue());
+																			$posSources = $this->getEventsForDates($ddate - 5,$ddate+5,"",$addVal->getFactValue());
 																		}
 																		else
 																		{
 																			if($inferenceObj->getFactTag() === "BIRT")
 																			{
-																				$posSources = $this->getEventsForDates($bdate-10,$bdate+10,"",$addVal->getFactValue());
+																				$posSources = $this->getEventsForDates($bdate-5,$bdate+5,"",$addVal->getFactValue());
 																			}
 																			else
 																			{
