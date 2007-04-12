@@ -489,7 +489,23 @@ if ($verify == "verify_gedcom") {
 			if ($override != "yes")
 			print "selected=\"selected\"";
 			print ">".$pgv_lang["no"]."</option>";
-			print "</select></td></tr><tr><td class=\"optionbox wrap\" colspan=\"2\">";
+			print "</select></td></tr>";
+			if (empty($keepmedia)) $keepmedia = true;
+			?>
+			<tr>
+			<td class="descriptionbox wrap width20">
+			<?php print_help_link("keep_media_help", "qm", "keep_media"); print $pgv_lang["keep_media"];?></td>
+			<td class="optionbox">
+			<select name="keepmedia">
+			<option value="yes" <?php if ($keepmedia) print "selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
+			<option value="no" <?php if (!$keepmedia) print "selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
+			</select>
+			</td>
+			</tr>
+			<?php
+			print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
+		} else {
+			if (empty($keepmedia)) $keepmedia = false;
 		}
 		print "</td></tr></table>";
 	} else	$verify = "validate_form";
@@ -712,19 +728,6 @@ if ($import == true) {
 		print "<option value=\"no\" selected=\"selected\">".$pgv_lang["no"]."</option>\n</select>";
 	}
 	print "</td></tr>";
-	if (empty($keepmedia)) $keepmedia = false;
-	?>
-	<tr>
-	<td class="descriptionbox wrap width20">
-	<?php print_help_link("keep_media_help", "qm", "keep_media"); print $pgv_lang["keep_media"];?></td>
-	<td class="optionbox">
-	<select name="keepmedia">
-	<option value="yes" <?php if ($keepmedia) print "selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
-	<option value="no" <?php if (!$keepmedia) print "selected=\"selected\"";?>><?php print $pgv_lang["no"]; ?></option>
-	</select>
-	</td>
-	</tr>
-	<?php
 	
 	// NOTE: change XREF to RIN, REFN, or Don't change
 	print "<tr><td class=\"descriptionbox wrap\">";
