@@ -1221,8 +1221,7 @@ function search_indis_dates($day="", $month="", $year="", $fact="", $allgeds=fal
 	$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname, d_gid, d_fact FROM ".$TBLPREFIX."dates, ".$TBLPREFIX."individuals WHERE i_id=d_gid AND i_file=d_file ";
 	if (!empty($day)) $sql .= "AND d_day='".$DBCONN->escapeSimple($day)."' ";
 	if (!empty($month)) $sql .= "AND d_month='".$DBCONN->escapeSimple(str2upper($month))."' ";
-	if (!empty($year)) $sql .= "AND (d_year='".$DBCONN->escapeSimple($year)."' or i_gedcom like '%".$DBCONN->escapeSimple($year)."%') ";
-	
+	if (!empty($year)) $sql .= "AND d_year='".$DBCONN->escapeSimple($year)."' ";
 	if (!empty($fact)) {
 		$sql .= "AND (";
 		$facts = preg_split("/[,:; ]/", $fact);
@@ -2297,7 +2296,7 @@ function get_surname_indis($surname) {
 	$tindilist = array();
 	$sql = "SELECT i_id, i_isdead, i_file, i_gedcom, i_name, i_letter, i_surname FROM ".$TBLPREFIX."individuals WHERE i_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
 	$sql .= "AND i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
-	$sql .= " GROUP BY i_id";
+	$sql .= " ORDER BY i_surname";
 	$res = dbquery($sql);
 
 	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
