@@ -490,7 +490,7 @@ if ($verify == "verify_gedcom") {
 			print "selected=\"selected\"";
 			print ">".$pgv_lang["no"]."</option>";
 			print "</select></td></tr>";
-			if (empty($keepmedia)) $keepmedia = true;
+			if (empty($keepmedia)) $keepmedia = false;
 			?>
 			<tr>
 			<td class="descriptionbox wrap width20">
