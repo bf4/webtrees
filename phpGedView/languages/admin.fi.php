@@ -83,7 +83,7 @@ $pgv_lang["progress_bars_info"]			= "Alla olevat tilarivit osoittavat kuinka tuo
 $pgv_lang["upload_replacement"]		="Lataa korvaus";
 $pgv_lang["add_gedcom"]		= "Lisää uusi GEDCOM tiedostoon";
 $pgv_lang["add_new_gedcom"]	= "Luo uusi GEDCOM-tiedosto";
-$pgv_lang["admin_approved"]		= "Hallinnointija on vahvistanut tilisi palvelimella #SERVER_NAME#.";
+//$pgv_lang["admin_approved"]		= "Hallinnointija on vahvistanut tilisi palvelimella #SERVER_NAME#.";
 $pgv_lang["admin_gedcom"]		= "Ylläpito";
 $pgv_lang["admin_geds"]		= "Data- ja GEDCOM-ylläpito";
 $pgv_lang["admin_info"]		= "Tiedoksi";
@@ -108,7 +108,7 @@ $pgv_lang["day_before_month"]	= "Päivä ennen kuukautta (DD MM YYYY)";
 $pgv_lang["do_not_change"]		= "Älä muuta";
 $pgv_lang["download_gedcom"]	= "Lataa koneesta GEDCOM-tiedosto";
 $pgv_lang["download_note"]		= "HUOMAA: Suurten GEDCOM-tiedostojen käsittely saattaa viedä pikän ajan ennen niiden latausta. Jos PHP ilmoittaa ajan loppuneen ennenkuin lataus on viety loppuun saattaa olla, että lataus ei ole täydellinen.<br /><br />Voit tarkastaa ladatun GEDCOM-tiedoston etsimällä rivi <b>0&nbsp;TRLR</b> tiedoston lopusta varmistaaksesi latauksen onnistumisen.<br /><br />Yleensä latausaika saattaa olla yhtä pitkä kuin tuontiaika GEDCOM-tiedostollesi.";
-$pgv_lang["duplicate_username"] 	= "Tämä käyttäjätunnus on jo olemassa. Palaa ja valitse toinen käyttäjätunnus.";
+//$pgv_lang["duplicate_username"] 	= "Tämä käyttäjätunnus on jo olemassa. Palaa ja valitse toinen käyttäjätunnus.";
 $pgv_lang["editaccount"]		= "Salli tämän käyttäjän editoida käyttäjätiliään.";
 $pgv_lang["empty_dataset"]		= "Haluatko poistaa vanhat tiedot ja korvata ne näillä uusilla?";
 $pgv_lang["empty_lines_detected"]	= "GEDCOM-tiedostostasi löytyi tyhjiä rivejä. Nämä poistetaan siivouksen yhteydessä.";
@@ -191,7 +191,7 @@ $pgv_lang["view_logs"]		= "Näytä lokitiedot";
 $pgv_lang["view_readme"]		= "Näytä readme.txt-tiedosto";
 $pgv_lang["visibleonline"]		= "Näkyvissä muille käyttäjille online-tilassa.";
 $pgv_lang["visitor"]			= "Vierailija";
-$pgv_lang["you_may_login"]		= " Voit kirjautua PhpGedView verkkopaikkaan alla olevan linkin avulla.";
+//$pgv_lang["you_may_login"]		= " Voit kirjautua PhpGedView verkkopaikkaan alla olevan linkin avulla.";
 
 // Text for the Gedcom Checker
 $pgv_lang["gedcheck"]     = "Gedcom-tarkastaja";

@@ -31,7 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-$pgv_lang["advanced_name_fields"]	= "Lisänimiä (lempinimi, avionimi, jne.)"; 
+$pgv_lang["advanced_name_fields"]	= "Lisänimiä (lempinimi, avionimi, jne.)";
 $pgv_lang["accept_changes"]		= "Hyväksy/Hylkää muutokset";
 $pgv_lang["replace"]		= "Vaihda tietue";
 $pgv_lang["append"]		= "Lisää tietue";
@@ -154,7 +154,7 @@ $pgv_lang["hebrew_surn"]			= "Heprealainen sukunimi";
 $pgv_lang["hide_changes"]		= "Klikkaa jos haluat kätkeä muutokset.";
 $pgv_lang["highlighted"]		= "Korostettu kuva";
 $pgv_lang["illegal_chars"]		= "Vääriä merkkejä nimessä";
-$pgv_lang["invalid_search_input"] 	= "Anna etunimi, sukunimi tai paikka \\n\\t vuosiluvun lisäksi";
+//$pgv_lang["invalid_search_input"] 	= "Anna etunimi, sukunimi tai paikka \\n\\t vuosiluvun lisäksi";
 $pgv_lang["invalid_search_multisite_input"] = "Anna joku seuraavista: nimi, syntymäaika, syntymäpaikka, kuolinaika, kuolinpaikka ja sukupuoli";
 $pgv_lang["invalid_search_multisite_input_gender"] = "Hae uudestaan, mutta anna enemmän tietoja pelkästään sukupuolen lisäksi.";
 $pgv_lang["label_diff_server"]      	= "Eri palvelin";
@@ -215,4 +215,8 @@ $pgv_lang["upload_media_help"]	= "Valitse ne tiedostot omalta tietokoneeltasi, j
 $pgv_lang["upload_successful"]	= "Koneelle lataaminen onnistui";
 $pgv_lang["view_change_diff"]		= "Näytä muutokset";
 
+$pgv_lang["admin_override"]			= "Ylläpitäjävalinta";
+$pgv_lang["no_update_CHAN"]			= "Älä päivitä CHAN (viimeinen muutos) tietuetta";
+$pgv_lang["select_events"]			= "Valitse tapahtumat";
+$pgv_lang["source_events"]			= "Kytke tapahtumat tähän lähteeseen";
 ?>
