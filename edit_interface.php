@@ -1553,7 +1553,7 @@ case 'addname':
 	print_indi_form("update", "", "new", "NEW");
 	break;
 //------------------------------------------------------------------------------
-case 'copy:':
+case 'copy':
 	//-- handle media differently now :P
 	if ($linenum=='media') {
 		$factrec = "1 OBJE @".$pid."@";
