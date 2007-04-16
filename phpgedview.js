@@ -464,6 +464,7 @@ function valid_date(datefield) {
 	// date modifier
 	var c1 = datefield.value.substr(0,1);
 	var y = datefield.value.substr(1);
+	if (c1=="=") datefield.value = eval(y); // =1872-39 => 1833
 	if (c1=="/") datefield.value = "BEF "+y; // /1860 => BEF 1860
 	if (c1=="-") datefield.value = "BEF "+y; // -1860 => BEF 1860
 	if (c1=="*") datefield.value = "ABT "+y; // *1860 => ABT 1860
