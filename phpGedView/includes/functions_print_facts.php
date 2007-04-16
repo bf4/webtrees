@@ -125,7 +125,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			if (!showFact($factref, $pid)) return false;
 			if ($styleadd=="") $rowID = "row_".floor(microtime()*1000000);
 			else $rowID = "row_".$styleadd;
-			print "\n\t\t<tr id=\"".$rowID."\" name=\"".$rowID."\">";
+			print "\n\t\t<tr id=\"".$rowID."\">";
 			print "\n\t\t\t<td class=\"descriptionbox $styleadd center width20\">";
 			$label = $factref;
 			if (isset($factarray["$factref"])) $label = $factarray[$factref];
@@ -200,7 +200,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			if (!showFact($factref, $pid)) return false;
 			if ($styleadd=="") $rowID = "row_".floor(microtime()*1000000);
 			else $rowID = "row_".$styleadd;
-			print "\n\t\t<tr id=\"".$rowID."\" name=\"".$rowID."\">";
+			print "\n\t\t<tr id=\"".$rowID."\">";
 			$label = $factref;
 			if (isset($factarray["$factref"])) $label = $factarray[$factref];
 			if (isset($pgv_lang[$factref])) $label = $pgv_lang[$factref];
@@ -1070,9 +1070,9 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 		}
 		else {
 			//-- print linked note records
-			if (isset($pgv_changes[$nid."_".$GEDCOM]) && $styleadd=="change_new") $noterec = find_updated_record($nid); 
+			if (isset($pgv_changes[$nid."_".$GEDCOM]) && $styleadd=="change_new") $noterec = find_updated_record($nid);
 			else $noterec = find_gedcom_record($nid);
-			
+
 			$nt = preg_match("/0 @$nid@ NOTE (.*)/", $noterec, $n1match);
 			$text ="";
 			if ($nt>0) $text = preg_replace("/~~/", "<br />", trim($n1match[1]));
