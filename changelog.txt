@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.2
+ - Added [ 1689500 ] ADDR : add a maps.google link (opus27)
  - Added [ 1690092 ] Events of close relatives : remove duplicates (opus27)
  - Added [ 1564752 ] Shared facts for whole family (opus27)
  - Added index directory cleanup tool (yalnifj, neumont)

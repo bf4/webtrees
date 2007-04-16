@@ -734,7 +734,6 @@ function print_address_structure($factrec, $level) {
 	for($i=0; $i<$ct; $i++) {
 		$arec = get_sub_record($level, "$level ADDR", $factrec, $i+1);
 		$resultText = "";
-		if ($level>1) $resultText .= "\n\t\t<span class=\"label\">".$factarray["ADDR"].": </span><br /><div class=\"indent\">";
 		$cn = preg_match("/$nlevel _NAME (.*)/", $arec, $cmatch);
 		if ($cn>0) $resultText .= str_replace("/", "", $cmatch[1])."<br />\n";
 		$resultText .= PrintReady(trim($omatch[$i][1]));
@@ -793,10 +792,11 @@ function print_address_structure($factrec, $level) {
 				$resultText .= "<br />".PrintReady($cmatch[1]);
 			}
 		}
-		if ($level>1) $resultText .= "</div>\n";
-		$resultText .= "<br />";
 		// Here we can examine the resultant text and remove empty tags
-		print $resultText;
+		if ($level>1) echo "\n\t\t<span class=\"label\">".$factarray["ADDR"].": </span><br /><div class=\"indent\">";
+		echo "<a href=\"http://maps.google.com/maps?q=".urlencode(str_replace("<br />\n", ",", $resultText))."\">$resultText</a>";
+		if ($level>1) echo "</div>\n";
+		echo "<br />";
 	}
 	$resultText = "";
 	$resultText .= "<table>";
@@ -1070,9 +1070,9 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 		}
 		else {
 			//-- print linked note records
-			if (isset($pgv_changes[$nid."_".$GEDCOM]) && $styleadd=="change_new") $noterec = find_updated_record($nid); 
+			if (isset($pgv_changes[$nid."_".$GEDCOM]) && $styleadd=="change_new") $noterec = find_updated_record($nid);
 			else $noterec = find_gedcom_record($nid);
-			
+
 			$nt = preg_match("/0 @$nid@ NOTE (.*)/", $noterec, $n1match);
 			$text ="";
 			if ($nt>0) $text = preg_replace("/~~/", "<br />", trim($n1match[1]));
