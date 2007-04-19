@@ -365,7 +365,8 @@ if ($action=="newentry") {
 		$media_id = get_new_xref("OBJE");
 		$newged = "0 @".$media_id."@ OBJE\r\n";
 		//-- set the FILE text to the correct file location
-		$text[0] = $folderName.$mediaFile;
+		if (userGedcomAdmin(getUserName())) $text[0] = $folderName.$mediaFile;
+		else $newged .= "1 FILE ".$folderName.$mediaFile."\r\n";
     	
 		$newged = handle_updates($newged);
 		
