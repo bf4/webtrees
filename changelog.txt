@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1703774 ] Error uploading media files (yalnifj)
  - Fixed [ 1688956 ] 41b4 Family List SQL error (yalnifj)
  - Fixed [ 1603035 ] Hebrew dates in blocks (meliza)
  - Fixed [1668424 & 1599544] Calendar related issues (meliza)

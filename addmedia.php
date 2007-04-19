@@ -138,7 +138,7 @@ if ($action=="newentry") {
 		$error = "";
 		
 		// Determine file name on server
-		if (!empty($text[0])) {
+		if (userGedcomAdmin(getUserName()) && !empty($text[0])) {
 			$parts = pathinfo($text[0]);
 			$mediaFile = $parts["basename"];
 			if (empty($parts["extension"]) || !in_array(strtolower($parts["extension"]), $MEDIATYPE)) {
