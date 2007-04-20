@@ -442,7 +442,7 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("DBPASS_help", "qm", "DBPASS"); print $pgv_lang["DBPASS"];?></td>
-		<td class="optionbox"><input type="password" name="NEW_DBPASS" value="" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBPASS_help');" /><br /><span style="color: red;"><?php print_text("enter_db_pass");?></span></td>
+		<td class="optionbox"><input type="password" name="NEW_DBPASS" value="<?php print $DBPASS?>" tabindex="<?php $i++; print $i?>" onfocus="getHelp('DBPASS_help');" /><br /><span style="color: red;"><?php print_text("enter_db_pass");?></span></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox"><?php print_help_link("DBNAME_help", "qm", "DBNAME"); print $pgv_lang["DBNAME"];?></td>
