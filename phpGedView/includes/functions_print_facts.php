@@ -1364,22 +1364,22 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			}
 			print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 			if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
-			print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\" />";
+			print " alt=\"" . PrintReady(htmlspecialchars($mediaTitle)) . "\" title=\"" . PrintReady(htmlspecialchars($mediaTitle)) . "\" />";
 			if ($mainFileExists) print "</a>";
 		}
 		if(empty($SEARCH_SPIDER)) {
 			print "<a href=\"mediaviewer.php?mid=".$rowm["m_media"]."\">";
 		}
-		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>&lrm;".PrintReady($mediaTitle);
-		else print "<i>".PrintReady($mediaTitle);
+		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>&lrm;".PrintReady(htmlspecialchars($mediaTitle));
+		else print "<i>".PrintReady(htmlspecialchars($mediaTitle));
 		$addtitle = get_gedcom_value("TITL:_HEB", 2, $rowm["mm_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:_HEB", 2, $rowm["m_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:_HEB", 1, $rowm["m_gedrec"]);
-		if (!empty($addtitle)) print "<br />\n".PrintReady($addtitle);
+		if (!empty($addtitle)) print "<br />\n".PrintReady(htmlspecialchars($addtitle));
 		$addtitle = get_gedcom_value("TITL:ROMN", 2, $rowm["mm_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:ROMN", 2, $rowm["m_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:ROMN", 1, $rowm["m_gedrec"]);
-		if (!empty($addtitle)) print "<br />\n".PrintReady($addtitle);
+		if (!empty($addtitle)) print "<br />\n".PrintReady(htmlspecialchars($addtitle));
 		print "</i>";
 		if(empty($SEARCH_SPIDER)) {
 			print "</a>";
