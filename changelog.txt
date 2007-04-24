@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.2
+ - Added [ 1675203 ] Geo-Names ajax address autocomplete (opus27)
  - Added [ 1689500 ] ADDR : add a maps.google link (opus27)
  - Added [ 1690092 ] Events of close relatives : remove duplicates (opus27)
  - Added [ 1564752 ] Shared facts for whole family (opus27)

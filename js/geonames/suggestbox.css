@@ -1,0 +1,34 @@
+.suggestBoxDiv {
+	position: relative;
+}
+.suggestBoxElement {
+	position: absolute;
+	top: 20px;
+	left: 0px;
+	z-index:234;
+	visibility: hidden;
+	border: 1px solid #8FABFF;
+	text-align: left;
+	white-space: nowrap;
+	background-color: #eeeeee;
+}
+.suggestions {
+	background-color: #eeeeee;
+	color: grey;
+	cursor: auto;
+	margin: 1px 2px 1px 2px;
+}
+.suggestionMouseOver {
+	font-size: 14;
+	background: #3333ff;
+	color: white;
+	cursor: pointer;
+	margin: 1px 2px 1px 2px;
+}
+.credits {
+	background-color: #eeeeee;
+	color: darkgrey;
+	cursor: auto;
+	margin: 1px 2px 1px 2px;
+	text-align: center;
+}

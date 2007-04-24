@@ -788,7 +788,7 @@ function print_calendar_popup($id, $asString=false) {
 	$out .= "<a href=\"javascript: ".$text."\" onclick=\"cal_toggleDate('caldiv".$id."', '".$id."'); return false;\">";
 	$out .= $Link;
 	$out .= "</a>\n";
-	$out .= "<div id=\"caldiv".$id."\" style=\"position:absolute;visibility:hidden;background-color:white;layer-background-color:white;\"></div>\n";
+	$out .= "<div id=\"caldiv".$id."\" style=\"z-index:222;position:absolute;visibility:hidden;background-color:white;layer-background-color:white;\"></div>\n";
 	if ($asString) return $out;
 	else print $out;
 }
@@ -840,7 +840,7 @@ function print_addnewsource_link($element_id) {
  * @param boolean $rowDisplay	True to have the row displayed by default, false to hide it by default
  */
 function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose="", $rowDisplay=true) {
-	global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES;
+	global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES, $lang_short_cut, $LANGUAGE;
 	global $assorela, $tags, $emptyfacts, $TEXT_DIRECTION, $confighelpfile, $pgv_changes, $GEDCOM;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
 	global $tabkey, $STATUS_CODES, $REPO_ID_PREFIX, $SPLIT_PLACES, $pid, $linkToID;
@@ -1170,30 +1170,41 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		// textarea
 		if ($rows>1) print "<textarea tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\" rows=\"".$rows."\" cols=\"".$cols."\">".PrintReady(htmlspecialchars($value))."</textarea><br />\n";
 		else {
-			// text
-			print "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value))."\" size=\"".$cols."\" dir=\"ltr\"";
-			if ($fact=="NPFX") print " onkeyup=\"wactjavascript_autoComplete(npfx_accept,this,event)\" autocomplete=\"off\" ";
-			// onKeyUp should suffice.  Why the others?
-			if (in_array($fact, $subnamefacts)) print " onBlur=\"updatewholename();\" onMouseOut=\"updatewholename();\" onKeyUp=\"updatewholename();\"";
-			if ($fact=="DATE") print " onblur=\"valid_date(this);\" onmouseout=\"valid_date(this);\"";
-			if ($fact=="LATI") print " onblur=\"valid_lati_long(this, 'N', 'S');\" onmouseout=\"valid_lati_long(this, 'N', 'S');\"";
-			if ($fact=="LONG") print " onblur=\"valid_lati_long(this, 'E', 'W');\" onmouseout=\"valid_lati_long(this, 'E', 'W');\"";
-			//if ($fact=="FILE") print " onchange=\"if (updateFormat) updateFormat(this.value);\"";
-			print " ".$readOnly." />\n";
-		}
-		// split PLAC
-		if ($fact=="PLAC" && $readOnly=="") {
-			print "<div id=\"".$element_id."_pop\" style=\"display: inline;\">\n";
-			print_specialchar_link($element_id, false);
-			print_findplace_link($element_id);
-			print "</div>\n";
-			print "<a href=\"javascript:;\" onclick=\"toggle_lati_long();\"><img src=\"images/buttons/target.gif\" border=\"0\" align=\"middle\" alt=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" title=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" /></a>";
-			if ($SPLIT_PLACES) {
-				if (!function_exists("print_place_subfields")) require("includes/functions_places.php");
-				print_place_subfields($element_id);
+			if ($fact=="PLAC") {
+				// geonames autocompletion
+				echo "<span class=\"suggestBoxDiv\">";
+				echo "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value))."\" size=\"".$cols."\" dir=\"ltr\"";
+				echo " onFocus=\"closeSuggestBox()\"";
+				echo " ".$readOnly." />\n";
+				echo "<span id=\"".$element_id."_suggestBox\" class=\"suggestBoxElement\"></span>";
+				echo "</span>";
+				echo "<input type=\"hidden\" id=\"".$element_id."_suggestBoxLang\" value=\"".$lang_short_cut[$LANGUAGE]."\" >";
+				print "<div id=\"".$element_id."_pop\" style=\"display: inline;\">\n";
+				print_specialchar_link($element_id, false);
+				require_once("js/geonames.js.htm");
+				echo "<a href=\"javascript:;\" onclick=\"geoLookup('".$element_id."');\"><img src=\"images/wizard.gif\" border=\"0\" alt=\"geonames.org\" title=\"geonames.org\" /></a>";
+				print_findplace_link($element_id);
+				print "</div>\n";
+				print "<a href=\"javascript:;\" onclick=\"toggle_lati_long();\"><img src=\"images/buttons/target.gif\" border=\"0\" align=\"middle\" alt=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" title=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" /></a>";
+				if ($SPLIT_PLACES) {
+					if (!function_exists("print_place_subfields")) require("includes/functions_places.php");
+					print_place_subfields($element_id);
+				}
+			}
+			else {
+				// text
+				print "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value))."\" size=\"".$cols."\" dir=\"ltr\"";
+				if ($fact=="NPFX") print " onkeyup=\"wactjavascript_autoComplete(npfx_accept,this,event)\" autocomplete=\"off\" ";
+				// onKeyUp should suffice.  Why the others?
+				if (in_array($fact, $subnamefacts)) print " onBlur=\"updatewholename();\" onMouseOut=\"updatewholename();\" onKeyUp=\"updatewholename();\"";
+				if ($fact=="DATE") print " onblur=\"valid_date(this);\" onmouseout=\"valid_date(this);\"";
+				if ($fact=="LATI") print " onblur=\"valid_lati_long(this, 'N', 'S');\" onmouseout=\"valid_lati_long(this, 'N', 'S');\"";
+				if ($fact=="LONG") print " onblur=\"valid_lati_long(this, 'E', 'W');\" onmouseout=\"valid_lati_long(this, 'E', 'W');\"";
+				//if ($fact=="FILE") print " onchange=\"if (updateFormat) updateFormat(this.value);\"";
+				print " ".$readOnly." />\n";
+				if ($cols>20 && $readOnly=="") print_specialchar_link($element_id, false);
 			}
 		}
-		else if (($cols>20 || $fact=="NPFX") && $readOnly=="") print_specialchar_link($element_id, false);
 	}
 	// MARRiage TYPE : hide text field and show a selection list
 	if ($fact=="TYPE" and $tags[0]=="MARR") {
