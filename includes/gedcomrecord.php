@@ -170,12 +170,14 @@ class GedcomRecord {
 
 	/**
 	 * get the xref
+	 * @return string	returns the person ID
 	 */
 	function getXref() {
 		return $this->xref;
 	}
 	/**
 	 * get the object type
+	 * @return string	returns the type of this object "INDI","FAM", etc.
 	 */
 	function getType() {
 		return $this->type;
