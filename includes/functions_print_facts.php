@@ -125,7 +125,8 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			if (!showFact($factref, $pid)) return false;
 			if ($styleadd=="") $rowID = "row_".floor(microtime()*1000000);
 			else $rowID = "row_".$styleadd;
-			print "\n\t\t<tr id=\"".$rowID."\" name=\"".$rowID."\">";
+			//print "\n\t\t<tr id=\"".$rowID."\">";
+			print "\n\t\t<tr id=\"".$rowID."\" name=\"".$rowID."\">"; //invalid, but Events of close relatives broken in firefox without name attribute (bug # [ 1701278 ] )
 			print "\n\t\t\t<td class=\"descriptionbox $styleadd center width20\">";
 			$label = $factref;
 			if (isset($factarray["$factref"])) $label = $factarray[$factref];
@@ -200,7 +201,8 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			if (!showFact($factref, $pid)) return false;
 			if ($styleadd=="") $rowID = "row_".floor(microtime()*1000000);
 			else $rowID = "row_".$styleadd;
-			print "\n\t\t<tr id=\"".$rowID."\" name=\"".$rowID."\">";
+			//print "\n\t\t<tr id=\"".$rowID."\">";
+			print "\n\t\t<tr id=\"".$rowID."\" name=\"".$rowID."\">"; //invalid, but Events of close relatives broken in firefox without name attribute (bug # [ 1701278 ] )
 			$label = $factref;
 			if (isset($factarray["$factref"])) $label = $factarray[$factref];
 			if (isset($pgv_lang[$factref])) $label = $pgv_lang[$factref];
@@ -1362,22 +1364,22 @@ function print_main_media_row($rtype, $rowm, $pid) {
 			}
 			print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 			if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
-			print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\" />";
+			print " alt=\"" . PrintReady(htmlspecialchars($mediaTitle)) . "\" title=\"" . PrintReady(htmlspecialchars($mediaTitle)) . "\" />";
 			if ($mainFileExists) print "</a>";
 		}
 		if(empty($SEARCH_SPIDER)) {
 			print "<a href=\"mediaviewer.php?mid=".$rowm["m_media"]."\">";
 		}
-		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>&lrm;".PrintReady($mediaTitle);
-		else print "<i>".PrintReady($mediaTitle);
+		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>&lrm;".PrintReady(htmlspecialchars($mediaTitle));
+		else print "<i>".PrintReady(htmlspecialchars($mediaTitle));
 		$addtitle = get_gedcom_value("TITL:_HEB", 2, $rowm["mm_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:_HEB", 2, $rowm["m_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:_HEB", 1, $rowm["m_gedrec"]);
-		if (!empty($addtitle)) print "<br />\n".PrintReady($addtitle);
+		if (!empty($addtitle)) print "<br />\n".PrintReady(htmlspecialchars($addtitle));
 		$addtitle = get_gedcom_value("TITL:ROMN", 2, $rowm["mm_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:ROMN", 2, $rowm["m_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:ROMN", 1, $rowm["m_gedrec"]);
-		if (!empty($addtitle)) print "<br />\n".PrintReady($addtitle);
+		if (!empty($addtitle)) print "<br />\n".PrintReady(htmlspecialchars($addtitle));
 		print "</i>";
 		if(empty($SEARCH_SPIDER)) {
 			print "</a>";

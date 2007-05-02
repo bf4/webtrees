@@ -142,6 +142,9 @@ class PGVServiceLogic extends GenealogyService
 			$return['compressionMethod'] = $compress_method;
 			$return['gedcom_id'] = $GEDCOM;
 			$return = new SOAP_Value('result', '{urn:'.$this->__namespace.'}authResult', $return);
+			$msg = "Guest Web Service Authenticate ";
+			if (!empty($_SERVER['HTTP_USER_AGENT'])) $msg .= $_SERVER['HTTP_USER_AGENT'];
+			AddToLog($msg);
 			return $return;
 		}
 
@@ -159,6 +162,9 @@ class PGVServiceLogic extends GenealogyService
 			$return['compressionMethod'] = $compress_method;
 			$return['gedcom_id'] = $GEDCOM;
 			$return = new SOAP_Value('result', '{urn:'.$this->__namespace.'}authResult', $return);
+			$msg = "$username Web Service Authenticate ";
+			if (!empty($_SERVER['HTTP_USER_AGENT'])) $msg .= $_SERVER['HTTP_USER_AGENT'];
+			AddToLog($msg);
 			return $return;
 
 		}
@@ -429,6 +435,9 @@ class PGVServiceLogic extends GenealogyService
 						$type = trim($match[2]);
 												
 						$result = $this->createPerson($PID, $gedrec, "result");
+						$msg = "Person record $PID access through Web Service ";
+						if (!empty($_SERVER['HTTP_USER_AGENT'])) $msg .= $_SERVER['HTTP_USER_AGENT'];
+						AddToLog($msg);
 						return $result;
 					}
 					else 
@@ -632,6 +641,9 @@ class PGVServiceLogic extends GenealogyService
 						//-- do not have full access to this record, so privatize it
 						$gedrec = privatize_gedcom($gedrec);
 						$gedrecords = $gedrecords . "\n".trim($gedrec);
+						$msg = "GEDCOM record $xref1 accessed through Web Service ";
+						if (!empty($_SERVER['HTTP_USER_AGENT'])) $msg .= $_SERVER['HTTP_USER_AGENT'];
+						AddToLog($msg);
 					}
 					else 
 					{

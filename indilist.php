@@ -189,7 +189,7 @@ print "<br /><br />";
 print_help_link("name_list_help", "qm");
 print "<br /><br />";
 
-print "<table class=\"list_table $TEXT_DIRECTION\"><tr>";
+//print "<table class=\"list_table $TEXT_DIRECTION\"><tr>";
 
 $TableTitle = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" title=\"".$pgv_lang["individuals"]."\" alt=\"".$pgv_lang["individuals"]."\" />&nbsp;&nbsp;";
 
@@ -412,7 +412,7 @@ else {
 		uasort($names, "itemsort");
 	}
 }
-print "</tr></table>";
+//print "</tr></table>";
 
 if ($show_all=="yes") unset($alpha);
 if (!empty($surname) && $surname_sublist=="yes") $legend = str_replace("#surname#", check_NN($surname), $pgv_lang["indis_with_surname"]);

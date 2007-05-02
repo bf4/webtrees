@@ -160,7 +160,7 @@ print "<br /><br />";
 print_help_link("name_list_help", "qm", "name_list");
 print "<br /><br />";
 
-print "<table class=\"list_table $TEXT_DIRECTION\"><tr>";
+//print "<table class=\"list_table $TEXT_DIRECTION\"><tr>";
 if (($surname_sublist=="yes")&&($show_all=="yes")) {
 	get_fam_list();
 	if (!isset($alpha)) $alpha="";
@@ -294,7 +294,7 @@ else {
 		uasort($tfamlist, "itemsort");
 	}
 }
-print "</tr></table>";
+//print "</tr></table>";
 
 if ($show_all=="yes") unset($alpha);
 if (!empty($surname) && $surname_sublist=="yes") $legend = str_replace("#surname#", check_NN($surname), $pgv_lang["fams_with_surname"]);
@@ -304,7 +304,7 @@ if ($show_all_firstnames=="yes") $falpha = "@";
 if (isset($falpha) and $falpha!="@") $legend .= " ".$falpha.".";
 $legend = PrintReady($legend);
 
-if (!empty($surname) or $surname_sublist=="no") { 
+if (!empty($surname) or $surname_sublist=="no") {
 	print_fam_table($tfamlist, $legend);
 }
 

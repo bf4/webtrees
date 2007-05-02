@@ -708,6 +708,8 @@ function check_rootid($rootid) {
 	global $user, $GEDCOM, $GEDCOM_ID_PREFIX, $PEDIGREE_ROOT_ID, $USE_RIN;
 	// -- if the $rootid is not already there then find the first person in the file and make him the root
 	if (empty($rootid)) {
+		if (!empty($_SESSION['navRoot'])) $rootid = $_SESSION['navRoot'];
+		else {
 		$user = getUser(getUserName());
 		if ((!empty($user["rootid"][$GEDCOM])) && (find_person_record($user["rootid"][$GEDCOM]))) $rootid = $user["rootid"][$GEDCOM];
 		else if ((!empty($user["gedcomid"][$GEDCOM])) && (find_person_record($user["gedcomid"][$GEDCOM]))) $rootid = $user["gedcomid"][$GEDCOM];
@@ -716,6 +718,7 @@ function check_rootid($rootid) {
 			$PEDIGREE_ROOT_ID = trim($PEDIGREE_ROOT_ID);
 			if ((!empty($PEDIGREE_ROOT_ID)) && (find_person_record($PEDIGREE_ROOT_ID))) $rootid = $PEDIGREE_ROOT_ID;
 			else $rootid = find_first_person();
+			}
 		}
 	}
 

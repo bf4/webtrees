@@ -58,7 +58,7 @@ if (!function_exists("is_dead")) {
  * 5. A marriage record with a date greater than <var>$MAX_ALIVE_AGE</var>-10
  * 6. A date in the spouse record greater than <var>$MAX_ALIVE_AGE</var>
  * 7. A date in the children's record that is greater than <var>$MAX_ALIVE_AGE</var>-10
- * 8. A date in the grand childnren's record that is greater than <var>$MAX_ALIVE_AGE</var>-30
+ * 8. A date in the grand children's record that is greater than <var>$MAX_ALIVE_AGE</var>-30
  *
  * This function should only be called once per individual.  In index mode this is called during
  * the Gedcom import.  In MySQL mode this is called the first time the individual is accessed

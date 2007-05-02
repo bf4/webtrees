@@ -204,7 +204,7 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 	<td valign="bottom" colspan="5">
 	<?php if ($controller->indi->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 <script language="JavaScript" type="text/javascript">
-<!--
+// <![CDATA[
 function open_link_remote(pid){
 	window.open("addremotelink.php?pid="+pid, "_blank", "top=50,left=50,width=600,height=500,scrollbars=1,scrollable=1,resizable=1");
 	return false;
@@ -251,7 +251,7 @@ var tabid = new Array('0', 'facts','notes','sources','media','relatives','resear
 var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog','googlemap');
 <?php }?>
 var loadedTabs = new Array(false,false,false,false,false,false,false,false);
-loadedTabs[<?php print ($controller->default_tab+1); ?>] = true; 
+loadedTabs[<?php print ($controller->default_tab+1); ?>] = true;
 
 function tempObj(tab, oXmlHttp) {
 	this.processFunc = function()
@@ -294,7 +294,7 @@ function tabswitch(n) {
 	// current tab area
 	if (n>0) {
 		document.getElementById(tabid[n]).style.display='block';
-		//-- load ajax
+		// -- load ajax
 		if (!loadedTabs[n]) {
 			target = document.getElementById(tabid[n]+'_content');
 			if (target) {
@@ -350,7 +350,7 @@ function resize_content_div(i) {
 		}
 	}
 }
-//-->
+ //]]>
 </script>
 <script src="phpgedview.js" language="JavaScript" type="text/javascript"></script>
 <?php
@@ -386,7 +386,7 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
 
 <!-- ======================== Start 1st tab individual page ============ Personal Facts and Details -->
 <?php
-if(empty($SEARCH_SPIDER)) 
+if(empty($SEARCH_SPIDER))
 	print "<div id=\"facts\" class=\"tab_page\" style=\"display:none;\" >\n";
 else
 	print "<div id=\"facts\" class=\"tab_page\" style=\"display:block;\" >\n";
@@ -407,7 +407,7 @@ else loading_message();
 </script>
 <!-- ======================== Start 2nd tab individual page ==== Notes ======= -->
 <?php
-if(empty($SEARCH_SPIDER)) 
+if(empty($SEARCH_SPIDER))
 	print "<div id=\"notes\" class=\"tab_page\" style=\"display:none;\" >\n";
 else
 	print "<div id=\"notes\" class=\"tab_page\" style=\"display:block;\" >\n";
@@ -422,7 +422,7 @@ else {
 </div>
 <!-- =========================== Start 3rd tab individual page === Sources -->
 <?php
-if(empty($SEARCH_SPIDER)) 
+if(empty($SEARCH_SPIDER))
 	print "<div id=\"sources\" class=\"tab_page\" style=\"display:none;\" >\n";
 else
 	print "<div id=\"sources\" class=\"tab_page\" style=\"display:block;\" >\n";
@@ -439,7 +439,7 @@ if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) {
 </div>
 <!-- ==================== Start 4th tab individual page ==== Media -->
 <?php
-if(empty($SEARCH_SPIDER)) 
+if(empty($SEARCH_SPIDER))
 	print "<div id=\"media\" class=\"tab_page\" style=\"display:none;\" >\n";
 else
 	print "<div id=\"media\" class=\"tab_page\" style=\"display:block;\" >\n";
@@ -457,7 +457,7 @@ else
 </div>
 <!-- ============================= Start 5th tab individual page ==== Close relatives -->
 <?php
-if(empty($SEARCH_SPIDER)) 
+if(empty($SEARCH_SPIDER))
 	print "<div id=\"relatives\" class=\"tab_page\" style=\"display:none;\" >\n";
 else
 	print "<div id=\"relatives\" class=\"tab_page\" style=\"display:block;\" >\n";

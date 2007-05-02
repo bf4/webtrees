@@ -371,7 +371,7 @@ if ($this->DEBUG) print "In UpdateFamily()<br />";
 		if(count($FamilyListChild)>0){
 			for($i=0;$i<count($FamilyListChild);$i++){
 //				if (!empty($FamilyChildrenList[$i])){
-					$record1.="\r\n1 FAMS @";
+					$record1.="\r\n1 FAMC @";
 					if (strpos($FamilyListChild[$i], $this->xref)!==0) $record1 .= $this->xref.":";
 					$record1 .= $FamilyListChild[$i]."@";
 //				}
@@ -808,10 +808,10 @@ if ($this->DEBUG) print "In mergeGedcomRecord($xref)<br />";
 			$gedrec = preg_replace("/@(.*)@/", "@".$this->xref.":$1@", $gedrec);
 			$gedrec = $this->checkIds($gedrec);
 			$localrec = $this->_merge($localrec, $gedrec);
-			//print "why<pre>".$localrec."</pre>Whynot?";
 			include_once("includes/functions_edit.php");
 			if ($this->DEBUG) print $localrec."<b>$gedrec</b>";
 			$localrec = $this->UpdateFamily($localrec,$gedrec);
+		if ($this->DEBUG) print "post updatefamily<pre>".$localrec."</pre>Whynot?";	
 			$ct=preg_match("/0 @(.*)@/", $localrec, $match);
 			if ($ct>0)
 			{

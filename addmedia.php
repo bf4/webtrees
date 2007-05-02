@@ -138,7 +138,7 @@ if ($action=="newentry") {
 		$error = "";
 		
 		// Determine file name on server
-		if (!empty($text[0])) {
+		if (userGedcomAdmin(getUserName()) && !empty($text[0])) {
 			$parts = pathinfo($text[0]);
 			$mediaFile = $parts["basename"];
 			if (empty($parts["extension"]) || !in_array(strtolower($parts["extension"]), $MEDIATYPE)) {
@@ -365,7 +365,8 @@ if ($action=="newentry") {
 		$media_id = get_new_xref("OBJE");
 		$newged = "0 @".$media_id."@ OBJE\r\n";
 		//-- set the FILE text to the correct file location
-		$text[0] = $folderName.$mediaFile;
+		if (userGedcomAdmin(getUserName())) $text[0] = $folderName.$mediaFile;
+		else $newged .= "1 FILE ".$folderName.$mediaFile."\r\n";
     	
 		$newged = handle_updates($newged);
 		

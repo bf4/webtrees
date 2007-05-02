@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.2
+ - Added new NavTree chart (yalnifj)
  - Added [ 1675203 ] Geo-Names ajax address autocomplete (opus27)
  - Added [ 1689500 ] ADDR : add a maps.google link (opus27)
  - Added [ 1690092 ] Events of close relatives : remove duplicates (opus27)
@@ -20,6 +21,8 @@ Version 4.2
  - Adding a "never married" icon on ancestry booklet when NMR=0 (opus27)
 
 Version 4.1
+ - Fixed [ 1703774 ] Error uploading media files (yalnifj)
+ - Fixed [ 1688956 ] 41b4 Family List SQL error (yalnifj)
  - Fixed [ 1603035 ] Hebrew dates in blocks (meliza)
  - Fixed [1668424 & 1599544] Calendar related issues (meliza)
  - Prevent users from accessing a GEDCOM being imported (yalnifj)

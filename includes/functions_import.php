@@ -473,23 +473,24 @@ function update_dates($gid, $indirec) {
 		$pt = preg_match_all("/2 DATE (.*)/", $factrec, $match, PREG_SET_ORDER);
 		for ($i = 0; $i < $pt; $i++) {
 			$datestr = trim($match[$i][1]);
-			$date = parse_date($datestr);
-			if (empty ($date[0]["day"]))
-				$date[0]["day"] = 0;
-			if (empty ($date[0]["mon"]))
-				$date[0]["mon"] = 0;
-			if (empty ($date[0]["year"]))
-				$date[0]["year"] = 0;
-			$datestamp = $date[0]['year'];
-			if ($date[0]['mon'] < 10)
+			$dates = parse_date($datestr);
+			foreach($dates as $di=>$date) {
+				if (empty ($date["day"]))
+					$date["day"] = 0;
+				if (empty ($date["mon"]))
+					$date["mon"] = 0;
+				if (empty ($date["year"]))
+					$date["year"] = 0;
+				$datestamp = $date['year'];
+				if ($date['mon'] < 10)
 				$datestamp .= '0';
-			$datestamp .= (int) $date[0]['mon'];
-			if ($date[0]['day'] < 10)
+				$datestamp .= (int) $date['mon'];
+				if ($date['day'] < 10)
 				$datestamp .= '0';
-			$datestamp .= (int) $date[0]['day'];
-			$sql = 'INSERT INTO ' . $TBLPREFIX . 'dates VALUES(\'' . $DBCONN->escapeSimple($date[0]["day"]) . '\',\'' . $DBCONN->escapeSimple(str2upper($date[0]["month"])) . "','" . $DBCONN->escapeSimple($date[0]["mon"]) . "','" . $DBCONN->escapeSimple($date[0]["year"]) . "','" . $DBCONN->escapeSimple($datestamp) . "','" . $DBCONN->escapeSimple($fact) . "','" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "',";
-			if (isset ($date[0]["ext"])) {
-				preg_match("/@#D(.*)@/", $date[0]["ext"], $extract_type);
+				$datestamp .= (int) $date['day'];
+				$sql = 'INSERT INTO ' . $TBLPREFIX . 'dates VALUES(\'' . $DBCONN->escapeSimple($date["day"]) . '\',\'' . $DBCONN->escapeSimple(str2upper($date["month"])) . "','" . $DBCONN->escapeSimple($date["mon"]) . "','" . $DBCONN->escapeSimple($date["year"]) . "','" . $DBCONN->escapeSimple($datestamp) . "','" . $DBCONN->escapeSimple($fact) . "','" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "',";
+				if (isset ($date["ext"])) {
+					preg_match("/@#D(.*)@/", $date["ext"], $extract_type);
 				$date_types = array (
 					"@#DGREGORIAN@",
 					"@#DJULIAN@",
@@ -507,6 +508,7 @@ function update_dates($gid, $indirec) {
 			$res = dbquery($sql);
 
 			$count++;
+			}
 		}
 	}
 	return $count;
