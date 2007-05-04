@@ -88,7 +88,7 @@ function get_place_parent_id_loc($parent, $level) {
 
 	$parent_id=0;
 	for($i=0; $i<$level; $i++) {
-		$escparent=ltrim(rtrim(preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($parent[$i]))));
+		$escparent=trim(preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($parent[$i])));
 		$psql = "SELECT pl_id FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$parent_id AND pl_place LIKE '".$escparent."' ORDER BY pl_place";
 		$res = dbquery($psql);
 		$row =& $res->fetchRow();
@@ -217,32 +217,27 @@ if ($action=="ImportGedcom") {
 	while ($row =& $res->fetchRow()) {
 		$i = 1;
 		$placerec = get_sub_record(2, "2 PLAC", $row[0], $i);
-		while (($placerec != "") && ($i < 10))
-		{
+		while (!empty($placerec)) {
 			$placelist[$j] = array();
-			$ct = preg_match_all("/\d PLAC (.*)/", $placerec, $match, PREG_SET_ORDER);
-			$placelist[$j]["place"] = rtrim(ltrim($match[0][1]));
-			$ct = preg_match_all("/\d LATI (.*)/", $placerec, $match, PREG_SET_ORDER);
-			if ($ct > 0) {
-				$placelist[$j]["lati"] = rtrim(ltrim($match[0][1]));
+			preg_match("/2 PLAC (.*)/", $placerec, $match);
+			$placelist[$j]["place"] = trim($match[1]);
+			if (preg_match("/4 LATI (.*)/", $placerec, $match)) {
+				$placelist[$j]["lati"] = trim($match[1]);
 				if (($placelist[$j]["lati"][0] != "N") && ($placelist[$j]["lati"][0] != "S")) {
 					if ($placelist[$j]["lati"] < 0) {
 						$placelist[$j]["lati"][0] = "S";
-					}
-					else {
+					} else {
 						$placelist[$j]["lati"] = "N".$placelist[$j]["lati"];
 					}
 				}
 			}
 			else $placelist[$j]["lati"] = "0";
-			$ct = preg_match_all("/\d LONG (.*)/", $placerec, $match, PREG_SET_ORDER);
-			if ($ct > 0) {
-				$placelist[$j]["long"] = rtrim(ltrim($match[0][1]));
+			if (preg_match("/4 LONG (.*)/", $placerec, $match)) {
+				$placelist[$j]["long"] = trim($match[1]);
 				if (($placelist[$j]["long"][0] != "E") && ($placelist[$j]["long"][0] != "W")) {
 					if ($placelist[$j]["long"] < 0) {
 						$placelist[$j]["long"][0] = "W";
-					}
-					else {
+					} else {
 						$placelist[$j]["long"] = "E".$placelist[$j]["long"];
 					}
 				}
@@ -270,32 +265,27 @@ if ($action=="ImportGedcom") {
 	while ($row =& $res->fetchRow()) {
 		$i = 1;
 		$placerec = get_sub_record(2, "2 PLAC", $row[0], $i);
-		while (($placerec != "") && ($i < 10))
-		{
+		while (!empty($placerec)) {
 			$placelist[$j] = array();
-			$ct = preg_match_all("/\d PLAC (.*)/", $placerec, $match, PREG_SET_ORDER);
-			$placelist[$j]["place"] = rtrim(ltrim($match[0][1]));
-			$ct = preg_match_all("/\d LATI (.*)/", $placerec, $match, PREG_SET_ORDER);
-			if ($ct > 0) {
-				$placelist[$j]["lati"] = rtrim(ltrim($match[0][1]));
+			preg_match("/2 PLAC (.*)/", $placerec, $match);
+			$placelist[$j]["place"] = trim($match[1]);
+			if (preg_match("/4 LATI (.*)/", $placerec, $match)) {
+				$placelist[$j]["lati"] = trim($match[1]);
 				if (($placelist[$j]["lati"][0] != "N") && ($placelist[$j]["lati"][0] != "S")) {
 					if ($placelist[$j]["lati"] < 0) {
 						$placelist[$j]["lati"][0] = "S";
-					}
-					else {
+					} else {
 						$placelist[$j]["lati"] = "N".$placelist[$j]["lati"];
 					}
 				}
 			}
 			else $placelist[$j]["lati"] = "0";
-			$ct = preg_match_all("/\d LONG (.*)/", $placerec, $match, PREG_SET_ORDER);
-			if ($ct > 0) {
-				$placelist[$j]["long"] = rtrim(ltrim($match[0][1]));
+			if (preg_match("/4 LONG (.*)/", $placerec, $match)) {
+				$placelist[$j]["long"] = trim($match[1]);
 				if (($placelist[$j]["long"][0] != "E") && ($placelist[$j]["long"][0] != "W")) {
 					if ($placelist[$j]["long"] < 0) {
 						$placelist[$j]["long"][0] = "W";
-					}
-					else {
+					} else {
 						$placelist[$j]["long"] = "E".$placelist[$j]["long"];
 					}
 				}
@@ -466,7 +456,7 @@ if ($action=="ImportFile2") {
 			$placelist[$j]["long"] = $fieldrec[5];
 			$placelist[$j]["lati"] = $fieldrec[6];
 			$placelist[$j]["zoom"] = $fieldrec[7];
-			$placelist[$j]["icon"] = ltrim(rtrim($fieldrec[8]));
+			$placelist[$j]["icon"] = trim($fieldrec[8]);
 			$j = $j + 1;
 		}
 	}
@@ -512,7 +502,7 @@ if ($action=="ImportFile2") {
 		$parent_long = 0;
 		$parent_lati = 0;
 		for($i=0; $i<count($parent); $i++) {
-			$escparent=ltrim(rtrim(preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($parent[$i]))));
+			$escparent=trim(preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($parent[$i])));
 			if ($escparent == "") {
 				$escparent = "Unknown";
 			}
