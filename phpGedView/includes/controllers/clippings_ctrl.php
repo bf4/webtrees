@@ -159,7 +159,7 @@ class ClippingsControllerRoot extends BaseController {
 							$this->add_family_members($id);
 						} else
 							if ($others == "descendants") {
-								add_family_descendancy($id);
+								$this->add_family_descendancy($id);
 							}
 				} else
 					if ($type == 'indi') {
