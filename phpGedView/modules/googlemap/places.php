@@ -363,7 +363,7 @@ if ($action=="ImportGedcom") {
 			}
 			else {
 				$parent_id = $row[0];
-				if (($row[1] == "0") && ($row[2] == "0")) {
+				if (empty($row[1]) && empty($row[2]) && $place['lati']!="0" && $place['long']!="0") {
 					$sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati='".$place["lati"]."',pl_long='".$place["long"]."' where pl_id=$parent_id";
 					print $sql."<br/>";
 					if (userIsAdmin(getUserName())) {
