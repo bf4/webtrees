@@ -435,6 +435,8 @@ if ($action=="ImportFile2") {
 		$res = dbquery($sql);
 	}
 	$lines = file($_FILES["placesfile"]["tmp_name"]);
+	// Strip BYTE-ORDER-MARK, if present
+	if (!empty($lines[0]) && substr($lines[0],0,3)==chr(239).chr(187).chr(191)) $lines[0]=substr($lines[0],3);
 	asort($lines);
 	$highestIndex = getHighestIndex();
 	$placelist = array();
@@ -445,9 +447,9 @@ if ($action=="ImportFile2") {
 		if($fieldrec[0] > $maxLevel) $maxLevel = $fieldrec[0];
 	}
 	foreach ($lines as $p => $placerec){
-		$placelist[$j] = array();
 		$fieldrec = preg_split ("/;/", $placerec);
 		if (($fieldrec[0] == "0") || ($fieldrec[0] == "1") || ($fieldrec[0] == "2") || ($fieldrec[0] == "3")) {
+			$placelist[$j] = array();
 			$placelist[$j]["place"] = "";
 			if ($fieldrec[0] > 2) $placelist[$j]["place"]  = $fieldrec[4].", ";
 			if ($fieldrec[0] > 1) $placelist[$j]["place"] .= $fieldrec[3].", ";
