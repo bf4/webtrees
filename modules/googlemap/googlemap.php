@@ -314,9 +314,10 @@ function setup_map() {
 		return;
 	}
     ?>
-    <script src="http://maps.google.com/maps?file=api&v=2&key=<?php print $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<?php print $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
     <script src="modules/googlemap/pgvGoogleMap.js" type="text/javascript"></script>
     <script type="text/javascript">
+    // <![CDATA[
         if (window.attachEvent) {
             window.attachEvent("onload", function() {
                 loadMap(<?php print $GOOGLEMAP_MAP_TYPE;?>);      // Internet Explorer
@@ -337,6 +338,7 @@ function setup_map() {
     var minZoomLevel = <?php print $GOOGLEMAP_MIN_ZOOM;?>;
     var maxZoomLevel = <?php print $GOOGLEMAP_MAX_ZOOM;?>;
     var startZoomLevel = <?php print $GOOGLEMAP_MAX_ZOOM;?>;
+     //]]>
     </script>
     <?php
 }
