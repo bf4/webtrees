@@ -677,7 +677,7 @@ function build_indiv_map($indifacts, $famids) {
                             print "<br/>";
                         }
                         if ($mapdata["date"][$j] != "") {
-                            print get_changed_date($mapdata["date"][$j]);
+                            print addslashes(get_changed_date($mapdata["date"][$j]));
                         }
                         print "\");\n";
                         print "    });\n";
@@ -726,7 +726,7 @@ function build_indiv_map($indifacts, $famids) {
                             print "<br/>";
                         }
                         if ($mapdata["date"][$j] != "") {
-                            print get_changed_date($mapdata["date"][$j]);
+                            print addslashes(get_changed_date($mapdata["date"][$j]));
                         }
                         print "\")";
                     }
@@ -785,7 +785,7 @@ function build_indiv_map($indifacts, $famids) {
                                     print "<br/>";
                                 }
                                 if ($mapdata["date"][$j] != "") {
-                                    print get_changed_date($mapdata["date"][$k]);
+                                    print addslashes(get_changed_date($mapdata["date"][$k]));
                                 }
                                 print "\")";
                             }
