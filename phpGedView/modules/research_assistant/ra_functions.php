@@ -1433,41 +1433,29 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	
 	function determineClosest(&$currentDate, $dateToCompare, $dateCompareAgainst )
 	{
-		$compareDiff;
 		if($dateCompareAgainst > $dateToCompare)
 		{
-//			print($dateCompareAgainst."Is greater than $dateToCompare <br/>");
 			$compareDiff = $dateCompareAgainst - $dateToCompare;
-//			print("The difference is ".$compareDiff." 1<br/>");
 		}
 		else
 		{
-//			print($dateCompareAgainst."Is less than $dateToCompare <br/>");
 			$compareDiff = $dateToCompare - $dateCompareAgainst;
-//			print("The difference is ".$compareDiff." 2<br/>");
 		}
-		$currentDiff;
 		if($dateCompareAgainst > $currentDate)
 		{
-//			print($dateCompareAgainst."Is greater than $currentDate <br/>");
 			$currentDiff = $dateCompareAgainst - $currentDate;
-//			print("The difference is ".$currentDiff." 3<br/>");
 		}
 		else
 		{
-//			print($dateCompareAgainst."Is less than $currentDate <br/>");
 			$currentDiff = $currentDate - $dateCompareAgainst;
-//			print("The difference is ".$currentDiff." 4<br/>");
 		}
 		
 		if($compareDiff < $currentDiff)
 		{
-//			print($dateToCompare."Was better <br/><br/>");
 			return $dateToCompare;
 		}
 		else
 		{
-//			print($currentDate."Was Greater <br/><br/>");
 			return $currentDate;
 		}
 	}
