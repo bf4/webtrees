@@ -647,7 +647,7 @@ class Person extends GedcomRecord {
 			$ft = preg_match("/2 PEDI (.*)/", $famlink, $fmatch);
 			if ($ft>0) {
 				$temp = trim($fmatch[1]);
-				if (isset($pgv_lang[$temp])) return $pgv_lang[$temp]." ";
+				if ($temp!="birth" && isset($pgv_lang[$temp])) return $pgv_lang[$temp]." ";
 			}
 		}
 		return $pgv_lang["as_child"];
