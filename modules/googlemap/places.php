@@ -198,67 +198,19 @@ if (!in_array($TBLPREFIX."placelocation", $tables)) {
 	print "<br/><br/><br/>\n";
 }
 
-if ($action=="ImportGedcom") {
+if ($action=="ImportGedcom" && userIsAdmin(getUserName())) {
 	$placelist = array();
 	$j = 0;
 	if ($mode == "all") {
-		$sql = "SELECT i_gedcom FROM ".$TBLPREFIX."individuals WHERE 1";
+		$sql = "SELECT i_gedcom FROM ${TBLPREFIX}individuals UNION ALL SELECT f_gedcom FROM ${TBLPREFIX}families";
 	}
 	else {
 		if (isset($GEDCOMS[$GEDCOM]["id"])) {
 			// Needed for PGV 4.0
-			$sql = "SELECT i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+			$sql = "SELECT i_gedcom FROM ${TBLPREFIX}individuals WHERE i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." UNION ALL SELECT f_gedcom FROM ${TBLPREFIX}families WHERE f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]);
 		} else {
 			// Needed for PGV 3.3.8
-			$sql = "SELECT i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["gedcom"])."'";
-		}
-	}
-	$res = dbquery($sql);
-	while ($row =& $res->fetchRow()) {
-		$i = 1;
-		$placerec = get_sub_record(2, "2 PLAC", $row[0], $i);
-		while (!empty($placerec)) {
-			$placelist[$j] = array();
-			preg_match("/2 PLAC (.*)/", $placerec, $match);
-			$placelist[$j]["place"] = trim($match[1]);
-			if (preg_match("/4 LATI (.*)/", $placerec, $match)) {
-				$placelist[$j]["lati"] = trim($match[1]);
-				if (($placelist[$j]["lati"][0] != "N") && ($placelist[$j]["lati"][0] != "S")) {
-					if ($placelist[$j]["lati"] < 0) {
-						$placelist[$j]["lati"][0] = "S";
-					} else {
-						$placelist[$j]["lati"] = "N".$placelist[$j]["lati"];
-					}
-				}
-			}
-			else $placelist[$j]["lati"] = "0";
-			if (preg_match("/4 LONG (.*)/", $placerec, $match)) {
-				$placelist[$j]["long"] = trim($match[1]);
-				if (($placelist[$j]["long"][0] != "E") && ($placelist[$j]["long"][0] != "W")) {
-					if ($placelist[$j]["long"] < 0) {
-						$placelist[$j]["long"][0] = "W";
-					} else {
-						$placelist[$j]["long"] = "E".$placelist[$j]["long"];
-					}
-				}
-			}
-			else $placelist[$j]["long"] = "0";
-			$i = $i + 1;
-			$j = $j + 1;
-			$placerec = get_sub_record(2, "2 PLAC", $row[0], $i);
-		}
-	}
-	$res->free();
-	if ($mode == "all") {
-		$sql = "SELECT f_gedcom FROM ".$TBLPREFIX."families WHERE 1";
-	}
-	else {
-		if (isset($GEDCOMS[$GEDCOM]["id"])) {
-			// Needed for PGV 4.0
-			$sql = "SELECT f_gedcom FROM ".$TBLPREFIX."families WHERE f_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
-		} else {
-			// Needed for PGV 3.3.8
-			$sql = "SELECT f_gedcom FROM ".$TBLPREFIX."families WHERE f_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["gedcom"])."'";
+			$sql = "SELECT i_gedcom FROM ${TBLPREFIX}individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["gedcom"])."' UNION ALL SELECT f_gedcom FROM ${TBLPREFIX}families WHERE f_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["gedcom"])."'";
 		}
 	}
 	$res = dbquery($sql);
@@ -326,18 +278,14 @@ if ($action=="ImportGedcom") {
 
 	$highestIndex = getHighestIndex();
 
-	$default_zoom_level = array();
-	$default_zoom_level[0] = 4;
-	$default_zoom_level[1] = 7;
-	$default_zoom_level[2] = 10;
-	$default_zoom_level[3] = 12;
+	$default_zoom_level=array(4,7,10,12);
 	foreach ($placelistUniq as $k=>$place) {
-		$parent = preg_split ("/,/", $place["place"]);
-		$parent = array_reverse($parent);
+		$parent=preg_split ("/,/", $place["place"]);
+		$parent=array_reverse($parent);
 		$parent_id=0;
-		$parent_long = 0;
-		$parent_lati = 0;
 		for($i=0; $i<count($parent); $i++) {
+			if (!isset($default_zoom_level[$i]))
+				$default_zoom_level[$i]=$default_zoom_level[$i-1];
 			$escparent=trim($DBCONN->escapeSimple($parent[$i]));
 			if ($escparent == "") {
 				$escparent = "Unknown";
@@ -346,34 +294,30 @@ if ($action=="ImportGedcom") {
 			$res = dbquery($psql);
 			$row =& $res->fetchRow();
 			$res->free();
-			if (empty($row[0])) {       // this name does not yet exist: create entry
-				$highestIndex = $highestIndex + 1;
-				if (!isset($default_zoom_level[$i])) $default_zoom_level[$i] = $default_zoom_level[$i-1];
-				if (($place["lati"] == "0") || ($place["long"] == "0") || (($i+1) < count($parent))) {
-					$sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', NULL, NULL, ".$default_zoom_level[$i].", NULL);";
+			if ($i < count($parent)-1) {
+				$sql="";
+				// Create higher-level places, if necessary
+				if (empty($row[0])) {
+					$highestIndex++;
+					$sql="INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', NULL, NULL, ".$default_zoom_level[$i].", NULL);";
+					$parent_id=$highestIndex;
+				} else {
+					$parent_id=$row[0];
 				}
-				else {
-					$sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', '".$place["long"]."' , '".$place["lati"]."', ".$default_zoom_level[$i].", NULL);";
-				}
-				$parent_id = $highestIndex;
-				print $sql."<br/>";
-				if (userIsAdmin(getUserName())) {
-					$res = dbquery($sql);
-				}
-			}
-			else {
-				$parent_id = $row[0];
-				if (empty($row[1]) && empty($row[2]) && $place['lati']!="0" && $place['long']!="0") {
-					$sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati='".$place["lati"]."',pl_long='".$place["long"]."' where pl_id=$parent_id";
-					print $sql."<br/>";
-					if (userIsAdmin(getUserName())) {
-						$res = dbquery($sql, true, 1);
+			} else {
+				// Create lowest-level place, if necessary
+				if (empty($row[0])) {
+					$highestIndex++;
+					$sql="INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', '".$place["lati"]."', '".$place["long"]."', ".$default_zoom_level[$i].", NULL);";
+				} else {
+					if (empty($row[1]) && empty($row[2]) && $place['lati']!="0" && $place['long']!="0") {
+						$sql="UPDATE ".$TBLPREFIX."placelocation SET pl_lati='".$place["lati"]."',pl_long='".$place["long"]."' where pl_id=".$row[0];
 					}
 				}
-				else {
-					$parent_long = $row[1];
-					$parent_lati = $row[2];
-				}
+			}
+			if (!empty($sql)) {
+				print "$sql<br/>";
+				$res=dbquery($sql);
 			}
 		}
 	}
@@ -501,8 +445,6 @@ if ($action=="ImportFile2") {
 		$parent = preg_split ("/,/", $place["place"]);
 		$parent = array_reverse($parent);
 		$parent_id=0;
-		$parent_long = 0;
-		$parent_lati = 0;
 		for($i=0; $i<count($parent); $i++) {
 			$escparent=trim(preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($parent[$i])));
 			if ($escparent == "") {
@@ -547,10 +489,6 @@ if ($action=="ImportFile2") {
 						if (userIsAdmin(getUserName())) {
 							$res = dbquery($sql, true, 1);
 						}
-					}
-					else {
-						$parent_long = $row[1];
-						$parent_lati = $row[2];
 					}
 					if (($row[4] == "") || ($row[4] == null)) {
 						$sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_icon='".$place["icon"]."',pl_long='".$place["long"]."' where pl_id=$parent_id";
