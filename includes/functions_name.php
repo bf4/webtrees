@@ -198,18 +198,17 @@ function get_sortable_name($pid, $alpha="", $surname="", $allnames=false) {
 		//-- and get the name from the cache again
 		$gedrec = find_person_record($pid);
 		if (empty($gedrec)) $gedrec = find_updated_record($pid);
-		if (!empty($gedrec)) {
+		if (!empty($indilist[$pid]["names"])) {
 			$names = $indilist[$pid]["names"];
 		}
 		else {
-			if ($allnames == true) {
-				$mynames[] = "@N.N., @P.N.";
-				return $mynames;
-			}
-			else return "@N.N., @P.N.";
+			if ($allnames)
+				return array("@N.N., @P.N.");
+			else
+				return "@N.N., @P.N.";
 		}
 	}
-	if ($allnames == true) {
+	if ($allnames) {
 		$mynames = array();
 		foreach ($names as $key => $name) {
 			$mynames[] = sortable_name_from_name($name[0]);
