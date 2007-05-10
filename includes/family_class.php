@@ -37,6 +37,7 @@ class Family extends GedcomRecord {
 	var $husb = null;
 	var $wife = null;
 	var $children = array();
+	var $childrenIds = array();
 	var $disp = true;
 	var $marr_rec = null;
 	var $marr_date = null;
@@ -180,10 +181,16 @@ class Family extends GedcomRecord {
 	 */
 	function loadChildren() {
 		if ($this->children_loaded) return;
+		$this->childrenIds = array();
 		$this->numChildren = preg_match_all("/1\s*CHIL\s*@(.*)@/", $this->gedrec, $smatch, PREG_SET_ORDER);
 		for($i=0; $i<$this->numChildren; $i++) {
 			//-- get the childs ids
 			$chil = trim($smatch[$i][1]);
+			$this->childrenIds[] = $chil;
+		}
+		//-- load the children with one query
+		load_people($this->childrenIds);
+		foreach($this->childrenIds as $t=>$chil) {
 			$child = Person::getInstance($chil);
 			if ( !is_null($child)) $this->children[] = $child;
 		}
