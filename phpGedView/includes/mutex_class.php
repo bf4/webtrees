@@ -35,6 +35,14 @@ class Mutex {
 	var $name; 	//-- the name of the mutex
 	var $waitCount;	//-- the number of cycles it we waited while trying to acquire the mutex
 	
+	function checkDBCONN() {
+		global $DBCONN, $CONFIGURED;
+		
+		if (!isset($DBCONN) || DB::isError($DBCONN)) 
+			if ($CONFIGURED) die("Cannot use mutex without database");
+			else return false;
+		return true;
+	}
 	/**
 	 * Create a mutex for enforcing mutual exclusion
 	 *
@@ -45,7 +53,7 @@ class Mutex {
 	function Mutex($name, $acquire=false) {
 		global $DBCONN, $TBLPREFIX;
 		
-		if (!isset($DBCONN) || DB::isError($DBCONN)) die("Cannot use mutex without database");
+		if (!Mutex::checkDBCONN()) return false;
 		$this->name = $name;
 		//-- check if this mutex already exists
 		$sql = "SELECT * FROM ".$TBLPREFIX."mutex WHERE mx_name='".$DBCONN->escapeSimple($name)."'";
@@ -68,8 +76,7 @@ class Mutex {
 	function Wait($time=-1) {
 		global $DBCONN, $TBLPREFIX;
 		
-//		print "Waiting for mutex ".$this->name;
-		if (!isset($DBCONN) || DB::isError($DBCONN)) die("Cannot use mutex without database");
+		if (!Mutex::checkDBCONN()) return false;
 		//-- check if mutex is available
 		$available = false;
 		while(!$available) {
@@ -102,7 +109,7 @@ class Mutex {
 	function Release() {
 		global $DBCONN, $TBLPREFIX;
 		
-		if (!isset($DBCONN) || DB::isError($DBCONN)) die("Cannot use mutex without database");
+		if (!Mutex::checkDBCONN()) return false;
 		
 		$sql = "UPDATE ".$TBLPREFIX."mutex SET mx_time=0, mx_thread='0' WHERE mx_name='".$DBCONN->escapeSimple($this->name)."' AND mx_thread='".session_id()."'";
 		$res = dbquery($sql);
