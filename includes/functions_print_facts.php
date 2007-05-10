@@ -451,7 +451,8 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 	else {
 		// -- catch all unknown codes here
 		$body = $pgv_lang["unrecognized_code"]." ".$fact;
-		if (!$HIDE_GEDCOM_ERRORS) print "\n\t\t<tr><td class=\"descriptionbox $styleadd\"><span class=\"error\">".$pgv_lang["unrecognized_code"].": $fact</span></td><td class=\"optionbox\">$event<br />".$pgv_lang["unrecognized_code_msg"]." <a href=\"javascript:;\" onclick=\"message('$CONTACT_EMAIL','', '', '$body'); return false;\">".$CONTACT_EMAIL."</a>.</td></tr>";
+		$user=getUser($CONTACT_EMAIL);
+		if (!$HIDE_GEDCOM_ERRORS) print "\n\t\t<tr><td class=\"descriptionbox $styleadd\"><span class=\"error\">".$pgv_lang["unrecognized_code"].": $fact</span></td><td class=\"optionbox\">$event<br />".$pgv_lang["unrecognized_code_msg"]." <a href=\"javascript:;\" onclick=\"message('$CONTACT_EMAIL','', '', '$body'); return false;\">".$user["firstname"]." ".$user["lastname"]."</a>.</td></tr>";
 	}
 }
 //------------------- end print fact function
