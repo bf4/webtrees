@@ -87,7 +87,7 @@ class IndividualControllerRoot extends BaseController {
 	 * Initialization function
 	 */
 	function init() {
-		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang;
+		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $CHARACTER_SET;
 
 		$this->sexarray["M"] = $pgv_lang["male"];
 		$this->sexarray["F"] = $pgv_lang["female"];
@@ -246,6 +246,7 @@ class IndividualControllerRoot extends BaseController {
 		if ($this->action=="ajax") {
 			$tab = 0;
 			if (isset($_REQUEST['tab'])) $tab = $_REQUEST['tab']-1;
+			header("Content-Type: text/html; charset=$CHARACTER_SET");//AJAX calls do not have the meta tag headers and need this set
 			$this->getTab($tab);
 			//-- only get the requested tab and then exit
 			exit;
@@ -951,8 +952,6 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	function getTab($tab) {
-		global $CHARACTER_SET;
-		header("Content-Type: text/html; charset=$CHARACTER_SET");//AJAX calls do not have the meta tag headers and need this set
 		//var $tabarray = array("facts","notes","sources","media","relatives","research","map");
 		$tabType = $this->tabarray[$tab];
 		switch($tabType) {
