@@ -604,11 +604,12 @@ function find_first_person() {
 function update_isdead($gid, $indi) {
 	global $TBLPREFIX, $USE_RIN, $indilist, $DBCONN;
 	$isdead = 0;
-	$isdead = is_dead($indi["gedcom"]);
-	if (empty($isdead)) $isdead = 0;
-	$sql = "UPDATE ".$TBLPREFIX."individuals SET i_isdead=$isdead WHERE i_id LIKE '".$DBCONN->escapeSimple($gid)."' AND i_file='".$DBCONN->escapeSimple($indi["gedfile"])."'";
-	$res = dbquery($sql);
-
+	if (isset($indi["gedcom"])) {
+		$isdead = is_dead($indi["gedcom"]);
+		if (empty($isdead)) $isdead = 0;
+		$sql = "UPDATE ".$TBLPREFIX."individuals SET i_isdead=$isdead WHERE i_id LIKE '".$DBCONN->escapeSimple($gid)."' AND i_file='".$DBCONN->escapeSimple($indi["gedfile"])."'";
+		$res = dbquery($sql);
+	}
 	if (isset($indilist[$gid])) $indilist[$gid]["isdead"] = $isdead;
 	return $isdead;
 }
