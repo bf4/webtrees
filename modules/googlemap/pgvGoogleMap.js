@@ -137,7 +137,7 @@
  	
  	function GLoadMapsScript() {
  		if (GBrowserIsCompatible()) {
- 			GScript("http://maps.google.com/mapfiles/maps2.69.api.js");
+ 			GScript("http://maps.google.com/mapfiles/maps2.78.api.js");
  		}
  	}
  	
