@@ -87,7 +87,7 @@ class IndividualControllerRoot extends BaseController {
 	 * Initialization function
 	 */
 	function init() {
-		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang;
+		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $CHARACTER_SET;
 
 		$this->sexarray["M"] = $pgv_lang["male"];
 		$this->sexarray["F"] = $pgv_lang["female"];
@@ -142,12 +142,12 @@ class IndividualControllerRoot extends BaseController {
 
 		//-- if the action is a research assistant action then default to the RA tab
 		if (strstr($this->action, 'ra_')!==false) $this->default_tab = 5;
-		
+
 		//-- set the default tab from a request parameter
 		if (isset($_REQUEST['tab'])) {
 			$this->default_tab = $_REQUEST['tab'];
 		}
-		
+
 		if ($this->default_tab<-2 || $this->default_tab>7) $this->default_tab=0;
 
 		$this->indi = new Person($indirec, false);
@@ -241,11 +241,12 @@ class IndividualControllerRoot extends BaseController {
 				}
 			}
 		}
-		
+
 		//-- handle ajax calls
 		if ($this->action=="ajax") {
 			$tab = 0;
 			if (isset($_REQUEST['tab'])) $tab = $_REQUEST['tab']-1;
+			header("Content-Type: text/html; charset=$CHARACTER_SET");//AJAX calls do not have the meta tag headers and need this set
 			$this->getTab($tab);
 			//-- only get the requested tab and then exit
 			exit;
@@ -381,7 +382,7 @@ class IndividualControllerRoot extends BaseController {
 					$imgheight = $imgsize[1]+150;
 					//Gets the Media View Link Information and Concatinate
 					$mid = $firstmediarec['mid'];
-					
+
 					if (!$USE_MEDIA_VIEWER && $imgsize) $result .= "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($firstmediarec["file"])."',$imgwidth, $imgheight);\">";
 					else {
 						$mediaviewlink = "mediaviewer.php?mid=".$mid;
@@ -949,7 +950,7 @@ class IndividualControllerRoot extends BaseController {
 		$people['delchildren'] = $delchildren;
 		return $people;
 	}
-	
+
 	function getTab($tab) {
 		//var $tabarray = array("facts","notes","sources","media","relatives","research","map");
 		$tabType = $this->tabarray[$tab];
@@ -980,7 +981,7 @@ class IndividualControllerRoot extends BaseController {
 				break;
 		}
 	}
-	
+
 	function print_facts_tab() {
 		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
 		global $n_chil, $n_gchi;
@@ -1027,7 +1028,7 @@ class IndividualControllerRoot extends BaseController {
 		<br />
 		<?php
 	}
-	
+
 	function get_note_count() {
 		$notecount=0;
 		$otherfacts = $this->getOtherFacts();
@@ -1042,7 +1043,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 		return $notecount;
 	}
-	
+
 	function print_notes_tab() {
 		global $pgv_lang, $CONTACT_EMAIL, $FACT_COUNT;
 		?>
@@ -1084,7 +1085,7 @@ class IndividualControllerRoot extends BaseController {
 		<br />
 		<?php
 	}
-	
+
 	function get_source_count() {
 		$sourcecount = 0;
 		$otheritems = $this->getOtherFacts();
@@ -1099,7 +1100,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 		return $sourcecount;
 	}
-	
+
 	function print_sources_tab() {
 		global $CONTACT_EMAIL, $pgv_lang, $FACT_COUNT;
 		?>
@@ -1142,7 +1143,7 @@ class IndividualControllerRoot extends BaseController {
 		<br />
 		<?php
 	}
-	
+
 	/**
 	 * get the number of media items for this person
 	 * @return int
@@ -1151,13 +1152,13 @@ class IndividualControllerRoot extends BaseController {
 		$ct = preg_match("/\d OBJE/", $this->indi->getGedcomRecord());
 		return $ct;
 	}
-	
+
 	/**
 	 * print the media tab
 	 */
 	function print_media_tab() {
 		global $CONTACT_EMAIL, $pgv_lang, $MULTI_MEDIA;
-		
+
 		?>
 		<table class="facts_table">
 		<?php
@@ -1170,7 +1171,7 @@ class IndividualControllerRoot extends BaseController {
 		else {
 			$media_found = print_main_media($this->pid, 0, true);
 			if (!$media_found) print "<tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr>\n";
-		
+
 			//-- New Media link
 			if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
 		   	?>
@@ -1188,7 +1189,7 @@ class IndividualControllerRoot extends BaseController {
 		</table>
 		<?php
 	}
-	
+
 	function print_relatives_tab() {
 		global $pgv_lang, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		$personcount=0;
@@ -1344,7 +1345,7 @@ class IndividualControllerRoot extends BaseController {
 			</table>
 		<?php
 		}
-		
+
 		//-- step families
 		$stepfams = $this->indi->getStepFamilies();
 		foreach($stepfams as $famid=>$family) {
@@ -1460,7 +1461,7 @@ class IndividualControllerRoot extends BaseController {
 			</table>
 		<?php
 		}
-		
+
 		//-- spouses and children
 		$families = $this->indi->getSpouseFamilies();
 		foreach($families as $famid=>$family) {
@@ -1673,7 +1674,7 @@ class IndividualControllerRoot extends BaseController {
 		<br />
 		<?php
 	}
-	
+
 	function print_research_tab() {
 		global $pgv_lang, $SHOW_RESEARCH_ASSISTANT, $CONTACT_EMAIL, $GEDCOM, $INDEX_DIRECTORY, $factarray, $templefacts, $nondatefacts, $nonplacfacts;
 		global $LANGUAGE, $lang_short_cut;
@@ -1697,7 +1698,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 		else print "<table class=\"facts_table\"><tr><td id=\"no_tab6\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab6"]."</td></tr></table>\n";
 	}
-	
+
 	function print_map_tab() {
 		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $pgv_lang, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_language;
 		global $LANGUAGE;
@@ -1707,7 +1708,7 @@ class IndividualControllerRoot extends BaseController {
 	    global $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE;
 
 			            include_once('modules/googlemap/googlemap.php');
-	    
+
 		if ($GOOGLEMAP_ENABLED == "false") {
 	        print "<table class=\"facts_table\">\n";
 	        print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script></td></tr>\n";
@@ -1727,7 +1728,7 @@ class IndividualControllerRoot extends BaseController {
 	        <?php
 	        return;
 	    }
-	    
+
 	    else {
 		                $famids = array();
 		                $families = $this->indi->getSpouseFamilies();
@@ -1739,7 +1740,7 @@ class IndividualControllerRoot extends BaseController {
 		                }
 				}
 	}
-	
+
 }
 // -- end of class
 //-- load a user extended class if one exists

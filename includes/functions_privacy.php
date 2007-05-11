@@ -310,61 +310,71 @@ function displayDetailsByID($pid, $type = "INDI") {
 	global $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE, $USE_RELATIONSHIP_PRIVACY, $CHECK_MARRIAGE_RELATIONS, $MAX_RELATION_PATH_LENGTH;
 	global $global_facts, $person_privacy, $user_privacy, $HIDE_LIVE_PEOPLE, $GEDCOM, $SHOW_DEAD_PEOPLE, $MAX_ALIVE_AGE, $PRIVACY_BY_YEAR;
 	global $PRIVACY_CHECKS, $PRIVACY_BY_RESN, $SHOW_SOURCES, $SHOW_LIVING_NAMES;
-	global $indilist, $GEDCOMS;
+	global $indilist, $GEDCOMS, $SQL_LOG, $INDEX_DIRECTORY, $privacy_cache;
+	
+	if (!isset($privacy_cache)) $privacy_cache = array();
 
 	if (!$HIDE_LIVE_PEOPLE) return true;
 	if (empty($pid)) return true;
 
+	$pkey = $GEDCOMS[$GEDCOM]['id'].$pid;
 	//-- check if the privacy has been cached and use it
-	if ($type=="INDI" && isset($indilist[$pid]['privacy'])
-			&& isset($indilist[$pid]['gedfile'])
-			&& ($indilist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id'])) {
-		return $indilist[$pid]['privacy'];
+	if (isset($privacy_cache[$pkey])) {
+		return $privacy_cache[$pkey];
 	}
 
 	//-- keep a count of how many times we have checked for privacy
 	if (!isset($PRIVACY_CHECKS)) $PRIVACY_CHECKS = 1;
 	else $PRIVACY_CHECKS++;
 
+	if (!empty($SQL_LOG)) {
+		$fp = fopen($INDEX_DIRECTORY."/sql_log.txt", "a");
+		$backtrace = debug_backtrace();
+		$temp = basename($backtrace[0]["file"])." at line ".$backtrace[0]["line"];
+		fwrite($fp, date("Y-m-d h:i:s")."\t".$_SERVER["SCRIPT_NAME"]."\t".$temp."\t".$PRIVACY_CHECKS."- checking privacy for ".$type." ".$pid."\r\n");
+		fclose($fp);
+	}
+
 	//print "checking privacy for $pid<br />";
-	if ($type=="INDI" && isset($indilist[$pid]['gedfile']) 
-		&& $indilist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) $cache_privacy = true;
-	else $cache_privacy = false;
+//	if ($type=="INDI" && isset($indilist[$pid]['gedfile']) 
+//		&& $indilist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) $cache_privacy = true;
+//	else $cache_privacy = false;
+	$cache_privacy = true;
 
 	$username = getUserName();
 	if (!empty($username)) {
 		if (isset($user_privacy[$username]["all"])) {
 			if ($user_privacy[$username]["all"] >= getUserAccessLevel($username)) {
-				if ($cache_privacy) $indilist[$pid]['privacy'] = true;
+				if ($cache_privacy) $privacy_cache[$pkey] = true;
 				return true;
 			}
 			else {
-				if ($cache_privacy) $indilist[$pid]['privacy'] = false;
+				if ($cache_privacy) $privacy_cache[$pkey] = false;
 				return false;
 			}
 		}
 		if (isset($user_privacy[$username][$pid])) {
 			if ($user_privacy[$username][$pid] >= getUserAccessLevel($username)) {
-				if ($cache_privacy) $indilist[$pid]['privacy'] = true;
+				if ($cache_privacy) $privacy_cache[$pkey] = true;
 				return true;
 			}
 			else {
-				if ($cache_privacy) $indilist[$pid]['privacy'] = false;
+				if ($cache_privacy) $privacy_cache[$pkey] = false;
 				return false;
 			}
 		}
 		if (isset($person_privacy[$pid])) {
 			if ($person_privacy[$pid]>=getUserAccessLevel($username)) {
-				if ($cache_privacy) $indilist[$pid]['privacy'] = true;
+				if ($cache_privacy) $privacy_cache[$pkey] = true;
 				return true;
 			}
 			else {
-				if ($cache_privacy) $indilist[$pid]['privacy'] = false;
+				if ($cache_privacy) $privacy_cache[$pkey] = false;
 				return false;
 			}
 		}
 		if (userGedcomAdmin($username)) {
-			if ($cache_privacy) $indilist[$pid]['privacy'] = true;
+			if ($cache_privacy) $privacy_cache[$pkey] = true;
 			return true;
 		}
 		if (userCanAccess($username)) {
@@ -373,27 +383,27 @@ function displayDetailsByID($pid, $type = "INDI") {
 				$isdead = is_dead_id($pid);
 				if ($USE_RELATIONSHIP_PRIVACY || $user["relationship_privacy"]=="Y") {
 					if ($isdead) {
-						if ($cache_privacy) $indilist[$pid]['privacy'] = true;
+						if ($cache_privacy) $privacy_cache[$pkey] = true;
 						return true;
 					}
 					else {
 						if (empty($user["gedcomid"][$GEDCOM])) {
-							if ($cache_privacy) $indilist[$pid]['privacy'] = false;
+							if ($cache_privacy) $privacy_cache[$pkey] = false;
 							return false;
 						}
 						if ($user["gedcomid"][$GEDCOM]==$pid) {
-							if ($cache_privacy) $indilist[$pid]['privacy'] = true;
+							if ($cache_privacy) $privacy_cache[$pkey] = true;
 							return true;
 						}
 						$path_length = $MAX_RELATION_PATH_LENGTH;
 						if ($user["max_relation_path"]>0) $path_length = $user["max_relation_path"];
 						$relationship = get_relationship($user["gedcomid"][$GEDCOM], $pid, $CHECK_MARRIAGE_RELATIONS, $path_length);
 						if ($relationship!==false) {
-							if ($cache_privacy) $indilist[$pid]['privacy'] = true;
+							if ($cache_privacy) $privacy_cache[$pkey] = true;
 							return true;
 						}
 						else {
-							if ($cache_privacy) $indilist[$pid]['privacy'] = false;
+							if ($cache_privacy) $privacy_cache[$pkey] = false;
 							return false;
 						}
 					}
@@ -401,21 +411,21 @@ function displayDetailsByID($pid, $type = "INDI") {
 				else {
 					if ($isdead) {
 						if ($SHOW_DEAD_PEOPLE>=getUserAccessLevel($username)) {
-							if ($cache_privacy) $indilist[$pid]['privacy'] = true;
+							if ($cache_privacy) $privacy_cache[$pkey] = true;
 							return true;
 						}
 						else {
-							if ($cache_privacy) $indilist[$pid]['privacy'] = false;
+							if ($cache_privacy) $privacy_cache[$pkey] = false;
 							return false;
 						}
 					}
 					else {
 						if ($SHOW_LIVING_NAMES>=getUserAccessLevel($username)) {
-							if ($cache_privacy) $indilist[$pid]['privacy'] = true;
+							if ($cache_privacy) $privacy_cache[$pkey] = true;
 							return true;
 						}
 						else {
-							if ($cache_privacy) $indilist[$pid]['privacy'] = false;
+							if ($cache_privacy) $privacy_cache[$pkey] = false;
 							return false;
 						}
 					}
@@ -428,7 +438,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 				if (($resn == "confidential") && (!userGedcomAdmin($username))) $ret = false;
 				else if (($resn == "privacy") && (($user["gedcomid"][$GEDCOM] != $pid) || (!userGedcomAdmin($username)))) $ret = false;
 				else $ret = true;
-				if ($cache_privacy) $indilist[$pid]['privacy'] = $ret;
+				if ($cache_privacy) $privacy_cache[$pkey] = $ret;
 				return $ret;
 			}
 		}
@@ -438,14 +448,14 @@ function displayDetailsByID($pid, $type = "INDI") {
 		if ($person_privacy[$pid]>=getUserAccessLevel($username)) {
 			if ($cache_privacy) {
 				$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
-				$indilist[$pid]['privacy'] = true;
+				$privacy_cache[$pkey] = true;
 			}
 			return true;
 		}
 		else {
 			if ($cache_privacy) {
 				$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
-				$indilist[$pid]['privacy'] = false;
+				$privacy_cache[$pkey] = false;
 			}
 			return false;
 		}
@@ -456,11 +466,11 @@ function displayDetailsByID($pid, $type = "INDI") {
 		$gedrec = find_gedcom_record($pid);
 		$resn = get_gedcom_value("RESN", 1, $gedrec);
 		if ($resn == "none") {
-			if ($cache_privacy) $indilist[$pid]['privacy'] = true;
+			if ($cache_privacy) $privacy_cache[$pkey] = true;
 			return true;
 		}
 		else if (!empty($resn)) {
-			if ($cache_privacy) $indilist[$pid]['privacy'] = false;
+			if ($cache_privacy) $privacy_cache[$pkey] = false;
 			return false;
 		}
 	}
@@ -477,7 +487,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 				$dyear = $match[1];
 				if (($cyear-$dyear) <= $MAX_ALIVE_AGE-25) {
 					if ($cache_privacy) {
-						$indilist[$pid]['privacy'] = false;
+						$privacy_cache[$pkey] = false;
 					$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 					}
 					return false;
@@ -495,7 +505,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 					$myear = $match[1];
 					if (($cyear-$myear) <= $MAX_ALIVE_AGE-15) {
 						if ($cache_privacy) {
-							$indilist[$pid]['privacy'] = false;
+							$privacy_cache[$pkey] = false;
 						$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 						}
 						return false;
@@ -510,7 +520,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 				$byear = $match[1];
 				if (($cyear-$byear) <= $MAX_ALIVE_AGE) {
 					if ($cache_privacy) {
-						$indilist[$pid]['privacy'] = false;
+						$privacy_cache[$pkey] = false;
 					$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 					}
 					return false;
@@ -522,14 +532,14 @@ function displayDetailsByID($pid, $type = "INDI") {
 		if ($disp) {
 			if ($SHOW_DEAD_PEOPLE>=getUserAccessLevel($username)) {
 				if ($cache_privacy) {
-					$indilist[$pid]['privacy'] = true;
+					$privacy_cache[$pkey] = true;
 				$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 				}
 				return true;
 			}
 			else {
 				if ($cache_privacy) {
-					$indilist[$pid]['privacy'] = false;
+					$privacy_cache[$pkey] = false;
 				$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 				}
 				return false;
@@ -539,20 +549,20 @@ function displayDetailsByID($pid, $type = "INDI") {
 			if (empty($username)) {
 				if ($cache_privacy) {
 					$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
-					$indilist[$pid]['privacy'] = false;
+					$privacy_cache[$pkey] = false;
 				}
 				return false;
 			}
 			if ($SHOW_LIVING_NAMES>getUserAccessLevel($username)) {
 				if ($cache_privacy) {
-					$indilist[$pid]['privacy'] = true;
+					$privacy_cache[$pkey] = true;
 				$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 				}
 				return true;
 			}
 			else {
 				if ($cache_privacy) {
-					$indilist[$pid]['privacy'] = false;
+					$privacy_cache[$pkey] = false;
 				$indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 				}
 				return false;
@@ -566,15 +576,28 @@ function displayDetailsByID($pid, $type = "INDI") {
 		if ($display) {
 			$display = displayDetailsByID($parents["WIFE"]);
 		}
+		$privacy_cache[$pkey] = $display;
 		return $display;
     }
     if ($type=="SOUR") {
-	    if ($SHOW_SOURCES>=getUserAccessLevel($username)) return true;
-		else return false;
+	    if ($SHOW_SOURCES>=getUserAccessLevel($username)) {
+	    	$privacy_cache[$pkey] = true;
+	    	return true;
+	    }
+		else {
+			$privacy_cache[$pkey] = false;
+			return false;
+		}
     }
     if ($type=="REPO") {
-	    if ($SHOW_SOURCES>=getUserAccessLevel($username)) return true;
-		else return false;
+	    if ($SHOW_SOURCES>=getUserAccessLevel($username)) {
+	    	$privacy_cache[$pkey] = true;
+	    	return true;
+	    }
+		else {
+			$privacy_cache[$pkey] = false;
+			return false;
+		}
     }
     if ($type=="OBJE") {
     	//-- for media privacy check all of the links to the media
@@ -582,10 +605,15 @@ function displayDetailsByID($pid, $type = "INDI") {
 	    $disp = true;
 	    foreach($links as $gid=>$type) {
 	    	$disp = $disp && displayDetailsById($gid, id_type($gid));
-	    	if (!$disp) return false;
+	    	if (!$disp) {
+	    		$privacy_cache[$pkey] = false;
+	    		return false;
 	    }
+	    }
+	    $privacy_cache[$pkey] = $disp;
 	    return $disp;
     }
+    $privacy_cache[$pkey] = true;
     return true;
 }
 }

@@ -1211,3 +1211,36 @@ function findSpecialChar(field) {
 	window.open('find.php?type=specialchar', '_blank', 'top=55,left=55,width=400,height=450,scrollbars=1,resizeable=1');
 	return false;
 }
+
+  function findPosX(obj)
+  {
+    var curleft = 0;
+    if(obj.offsetParent)
+        while(1) 
+        {
+          curleft += obj.offsetLeft;
+          if(!obj.offsetParent)
+            break;
+          obj = obj.offsetParent;
+        }
+    else if(obj.x)
+        curleft += obj.x;
+    return curleft;
+  }
+
+  function findPosY(obj)
+  {
+    var curtop = 0;
+    if(obj.offsetParent)
+        while(1)
+        {
+        	if (obj.style.position=="relative") break;
+          curtop += obj.offsetTop;
+          if(!obj.offsetParent)
+            break;
+          obj = obj.offsetParent;
+        }
+    else if(obj.y)
+        curtop += obj.y;
+    return curtop;
+  }

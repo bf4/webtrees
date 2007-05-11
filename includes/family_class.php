@@ -37,6 +37,7 @@ class Family extends GedcomRecord {
 	var $husb = null;
 	var $wife = null;
 	var $children = array();
+	var $childrenIds = array();
 	var $disp = true;
 	var $marr_rec = null;
 	var $marr_date = null;
@@ -45,6 +46,8 @@ class Family extends GedcomRecord {
 	var $div_rec = null;
 	var $marr_rec2 = null;
 	var $marr_date2 = null;
+	var $children_loaded = false;
+	var $numChildren = false;
 
 	/**
 	 * constructor
@@ -66,13 +69,6 @@ class Family extends GedcomRecord {
 			//-- get the wifes ids
 			$wife = get_gedcom_value("WIFE", 1, $wiferec);
 			$this->wife = Person::getInstance($wife, $simple);
-		}
-		$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $gedrec, $smatch, PREG_SET_ORDER);
-		for($i=0; $i<$num; $i++) {
-			//-- get the childs ids
-			$chil = trim($smatch[$i][1]);
-			$child = Person::getInstance($chil, $simple);
-			if ( !is_null($child)) $this->children[] = $child;
 		}
 	}
 
@@ -173,7 +169,32 @@ class Family extends GedcomRecord {
 	 * @return array 	array of children Persons
 	 */
 	function getChildren() {
+		if (!$this->children_loaded) $this->loadChildren();
 		return $this->children;
+	}
+
+	/**
+	 * Load the children from the database
+	 * We used to load the children when the family was created, but that has performance issues
+	 * because we often don't need all the children
+	 * now, children are only loaded as needed
+	 */
+	function loadChildren() {
+		if ($this->children_loaded) return;
+		$this->childrenIds = array();
+		$this->numChildren = preg_match_all("/1\s*CHIL\s*@(.*)@/", $this->gedrec, $smatch, PREG_SET_ORDER);
+		for($i=0; $i<$this->numChildren; $i++) {
+			//-- get the childs ids
+			$chil = trim($smatch[$i][1]);
+			$this->childrenIds[] = $chil;
+		}
+		//-- load the children with one query
+		load_people($this->childrenIds);
+		foreach($this->childrenIds as $t=>$chil) {
+			$child = Person::getInstance($chil);
+			if ( !is_null($child)) $this->children[] = $child;
+		}
+		$this->children_loaded = true;
 	}
 
 	/**
@@ -183,7 +204,8 @@ class Family extends GedcomRecord {
 	function getNumberOfChildren() {
 		$nchi = get_gedcom_value("NCHI", 1, $this->gedrec);
 		if ($nchi!="") return $nchi.".";
-		return count($this->children);
+		if ($this->numChildren===false) $this->numChildren = preg_match_all("/1\s*CHIL\s*@(.*)@/", $this->gedrec, $smatch);
+		return $this->numChildren;
 	}
 
 	/**
@@ -253,6 +275,7 @@ class Family extends GedcomRecord {
 	 */
 	function hasChild(&$person) {
 		if (is_null($person)) return false;
+		$this->loadChildren();
 		foreach($this->children as $key=>$child) {
 			if ($person->equals($child)) return true;
 		}

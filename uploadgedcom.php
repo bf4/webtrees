@@ -1168,18 +1168,19 @@ if ($stage == 1) {
 								if (isset ($indilist[$spid])) {
 									$surname = $indilist[$spid]["names"][0][2];
 									if (!empty($surname) && $surname!="@N.N.") {
-										$letter = $indilist[$spid]["names"][0][1];
-										//-- uncomment the next line to put the maiden name in the given name area
-										//$newname = preg_replace("~/(.*)/~", " $1 /".$surname."/", $indi["names"][0][0]);
-										$newname = preg_replace("~/(.*)/~", "/".$surname."/", $indi["names"][0][0]);
-										if (strpos($indi["gedcom"], "_MARNM $newname") === false) {
+										if (!preg_match("/2 _MARNM .*\/$surname\//", $indi["gedcom"])) {
+											$letter = $indilist[$spid]["names"][0][1];
+											//-- uncomment the next line to put the maiden name in the given name area
+											//$newname = preg_replace("~/(.*)/~", " $1 /".$surname."/", $indi["names"][0][0]);
+											$newname = preg_replace("~/.*/~", "/$surname/", $indi["names"][0][0]);
+											$nopnname= str_replace('@P.N. ', '', $newname);
 											$pos1 = strpos($indi["gedcom"], "1 NAME");
 											if ($pos1 !== false) {
 												$pos1 = strpos($indi["gedcom"], "\n1", $pos1 +1);
 												if ($pos1 !== false)
-												$indi["gedcom"] = substr($indi["gedcom"], 0, $pos1)."\n2 _MARNM $newname\r\n".substr($indi["gedcom"], $pos1 +1);
+													$indi["gedcom"] = substr($indi["gedcom"], 0, $pos1)."\n2 _MARNM $nopnname\r\n".substr($indi["gedcom"], $pos1 +1);
 												else
-												$indi["gedcom"] = trim($indi["gedcom"])."\r\n2 _MARNM $newname\r\n";
+													$indi["gedcom"] = trim($indi["gedcom"])."\r\n2 _MARNM $nopnname\r\n";
 												$indi["gedcom"] = check_gedcom($indi["gedcom"], false);
 												$pos1 = strpos($fcontents, "0 @$gid@");
 												$pos2 = strpos($fcontents, "0 @", $pos1 +1);

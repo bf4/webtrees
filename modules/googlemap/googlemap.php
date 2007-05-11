@@ -276,25 +276,29 @@ function get_lati_long_placelocation ($place) {
     $place_id = 0;
     for($i=0; $i<count($parent); $i++) {
         $parent[$i] = rtrim(ltrim($parent[$i]));
-        if($parent[$i] != "") {
-            $placelist = create_possible_place_names($parent[$i], $i+1);
-            foreach ($placelist as $key => $placename) {
-                $escparent=preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($placename));
-                $psql = "SELECT pl_id FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$place_id AND pl_place LIKE '".$escparent."' ORDER BY pl_place";
-                $res = dbquery($psql);
-                $row =& $res->fetchRow();
-                $res->free();
-                if (!empty($row[0])) break;
-            }
-            if (empty($row[0])) break;
-            $place_id = $row[0];
-        } else {
+        //if($parent[$i] != "") { //removed to allow display of places with an unknown place such as  "Montreal, , Quebec, Canada"
+        if($parent[$i] == "") $parent[$i]="unknown";// GoogleMap module uses "unknown" while GEDCOM uses , ,
+		$placelist = create_possible_place_names($parent[$i], $i+1);
+		foreach ($placelist as $key => $placename) {
+			$escparent=preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($placename));
+			$psql = "SELECT pl_id FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$place_id AND pl_place LIKE '".$escparent."' ORDER BY pl_place";
+			$res = dbquery($psql);
+			$row =& $res->fetchRow();
+			$res->free();
+			if (!empty($row[0])) break;
+		}
+		if (empty($row[0])) break;
+        $place_id = $row[0];
+        /*} else {
             break;
-        }
+        }*/
     }
 
     $retval = array();
     if ($place_id > 0) {
+    	if ($place_id > 0) {
+
+    	}
         $psql = "SELECT pl_lati,pl_long,pl_zoom,pl_icon,pl_level FROM ".$TBLPREFIX."placelocation WHERE pl_id=$place_id ORDER BY pl_place";
         $res = dbquery($psql);
         $row =& $res->fetchRow();
@@ -314,9 +318,10 @@ function setup_map() {
 		return;
 	}
     ?>
-    <script src="http://maps.google.com/maps?file=api&v=2&key=<?php print $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<?php print $GOOGLEMAP_API_KEY; ?>" type="text/javascript"></script>
     <script src="modules/googlemap/pgvGoogleMap.js" type="text/javascript"></script>
     <script type="text/javascript">
+    // <![CDATA[
         if (window.attachEvent) {
             window.attachEvent("onload", function() {
                 loadMap(<?php print $GOOGLEMAP_MAP_TYPE;?>);      // Internet Explorer
@@ -337,6 +342,7 @@ function setup_map() {
     var minZoomLevel = <?php print $GOOGLEMAP_MIN_ZOOM;?>;
     var maxZoomLevel = <?php print $GOOGLEMAP_MAX_ZOOM;?>;
     var startZoomLevel = <?php print $GOOGLEMAP_MAX_ZOOM;?>;
+     //]]>
     </script>
     <?php
 }
@@ -675,7 +681,7 @@ function build_indiv_map($indifacts, $famids) {
                             print "<br/>";
                         }
                         if ($mapdata["date"][$j] != "") {
-                            print get_changed_date($mapdata["date"][$j]);
+                            print addslashes(get_changed_date($mapdata["date"][$j]));
                         }
                         print "\");\n";
                         print "    });\n";
@@ -724,7 +730,7 @@ function build_indiv_map($indifacts, $famids) {
                             print "<br/>";
                         }
                         if ($mapdata["date"][$j] != "") {
-                            print get_changed_date($mapdata["date"][$j]);
+                            print addslashes(get_changed_date($mapdata["date"][$j]));
                         }
                         print "\")";
                     }
@@ -783,7 +789,7 @@ function build_indiv_map($indifacts, $famids) {
                                     print "<br/>";
                                 }
                                 if ($mapdata["date"][$j] != "") {
-                                    print get_changed_date($mapdata["date"][$k]);
+                                    print addslashes(get_changed_date($mapdata["date"][$k]));
                                 }
                                 print "\")";
                             }

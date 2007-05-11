@@ -225,8 +225,8 @@ function showchanges() {
 // the functions_print.php file.
 function togglerow(label) {
 	var ebn = document.getElementsByName(label);
-	if (ebn.length) disp = ebn[0].style.display;
-	else disp="";
+	if (ebn.length) var disp = ebn[0].style.display;
+	else var disp="";
 	if (disp=="none") {
 		disp="table-row";
 		if (document.all && !window.opera) disp = "inline"; // IE
@@ -516,11 +516,11 @@ if(empty($SEARCH_SPIDER)) {
 	    	$tNew = preg_replace("/&HIDE_GOOGLEMAP=true/", "", $_SERVER["REQUEST_URI"]);
 	    	$tNew = preg_replace("/&HIDE_GOOGLEMAP=false/", "", $tNew);
 	    	if($SESSION_HIDE_GOOGLEMAP == "true") {
-			    print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"http://".$_SERVER["SERVER_NAME"].$tNew."&HIDE_GOOGLEMAP=false\">";
+			    print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"http://".$_SERVER["SERVER_NAME"].$tNew."&amp;HIDE_GOOGLEMAP=false\">";
 			    print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["activate"]."\" title=\"".$pgv_lang["activate"]."\" />";
 			    print " ".$pgv_lang["activate"]."</a></span>\n";
 		    	} else {
-			    print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"http://".$_SERVER["SERVER_NAME"].$tNew."&HIDE_GOOGLEMAP=true\">";
+			    print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"http://".$_SERVER["SERVER_NAME"].$tNew."&amp;HIDE_GOOGLEMAP=true\">";
 			    print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["deactivate"]."\" title=\"".$pgv_lang["deactivate"]."\" />";
 			    print " ".$pgv_lang["deactivate"]."</a></span>\n";
 			}

@@ -277,7 +277,7 @@ class Menu
 				}
 				else
 				{
-					$output .= ' style=\"right: 50px; overflow: visible;\"';
+					$output .= ' style=\"right: -50px; overflow: visible;\"';
 				}
 				}
 			$output .= "\" onmouseover=\"show_submenu('{$this->parentmenu}'); show_submenu('{$submenuid}');\" onmouseout=\"timeout_submenu('menu{$id}_subs');\">\n";
@@ -434,6 +434,10 @@ class MenuBar
 				case 9:
 					return $this->getHelpMenu();
 			}
+			$menus = $this->getModuleMenus();
+			$index = $index-9;
+			if ($index<count($menus)) return $menus[$index];
+			else return false;
 		}
 		return $menu;
 	}
@@ -1087,8 +1091,9 @@ class MenuBar
 	 * @return array
 	 */
 	function getModuleMenus() {
-		$menus = array();
-		if (!file_exists("modules")) return $menus;
+		if (!empty($this->modules)) return $this->modules;
+		$this->modules = array();
+		if (!file_exists("modules")) return $this->modules;
 		$d = dir("modules");
 		while (false !== ($entry = $d->read())) {
 			if ($entry{0}!="." && $entry!="CVS" && is_dir("modules/$entry")) {
@@ -1098,14 +1103,14 @@ class MenuBar
 					$obj = new $menu_class();
 					if (method_exists($obj, "getMenu")) {
 						$menu = $obj->getMenu();
-						if (is_object($menu)) $menus[] = $menu;
+						if (is_object($menu)) $this->modules[] = $menu;
 					}
 				}
 			}
 		}
 		$d->close();
 
-		return $menus;
+		return $this->modules;
 	}
 
 	/**

@@ -317,10 +317,11 @@ class Person extends GedcomRecord {
 	 * get birth date
 	 * @return string the birth date in the GEDCOM format of '1 JAN 2006'
 	 */
-	function getBirthDate() {
+	function getBirthDate($estimate = true) {
 		global $pgv_lang;
 		if (!$this->disp) return $pgv_lang["private"];
 		if (empty($this->bdate)) $this->_parseBirthDeath();
+		if (!$estimate && $this->best) return '';
 		return $this->bdate;
 	}
 
@@ -385,10 +386,11 @@ class Person extends GedcomRecord {
 	 * get death date
 	 * @return string the death date in the GEDCOM format of '1 JAN 2006'
 	 */
-	function getDeathDate() {
+	function getDeathDate($estimate = true) {
 		global $pgv_lang;
 		if (!$this->disp) return $pgv_lang["private"];
 		if (empty($this->ddate)) $this->_parseBirthDeath();
+		if (!$estimate && $this->dest) return '';
 		return $this->ddate;
 	}
 
@@ -663,7 +665,7 @@ class Person extends GedcomRecord {
 			$ft = preg_match("/2 PEDI (.*)/", $famlink, $fmatch);
 			if ($ft>0) {
 				$temp = trim($fmatch[1]);
-				if (isset($pgv_lang[$temp])) return $pgv_lang[$temp]." ";
+				if ($temp!="birth" && isset($pgv_lang[$temp])) return $pgv_lang[$temp]." ";
 			}
 		}
 		return $pgv_lang["as_child"];
