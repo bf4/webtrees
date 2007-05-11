@@ -118,7 +118,10 @@ function &dbquery($sql, $show_error=true, $count=0) {
 	if (!empty($SQL_LOG)) {
 		$fp = fopen($INDEX_DIRECTORY."/sql_log.txt", "a");
 		$backtrace = debug_backtrace();
-		$temp = basename($backtrace[0]["file"])." at line ".$backtrace[0]["line"];
+		$temp = "";
+		if (isset($backtrace[2])) $temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
+		if (isset($backtrace[1])) $temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
+		$temp .= basename($backtrace[0]["file"])." (".$backtrace[0]["line"].")";
 		fwrite($fp, date("Y-m-d h:i:s")."\t".$_SERVER["SCRIPT_NAME"]."\t".$temp."\t".$TOTAL_QUERIES."-".$sql."\r\n");
 		fclose($fp);
 	}
@@ -226,7 +229,10 @@ function find_family_record($famid, $gedfile="") {
 
 	$sql = "SELECT f_gedcom, f_file, f_husb, f_wife FROM ".$TBLPREFIX."families WHERE f_id LIKE '".$DBCONN->escapeSimple($famid)."' AND f_file='".$DBCONN->escapeSimple($GEDCOMS[$gedfile]["id"])."'";
 	$res = dbquery($sql);
-
+	if ($res->numRows()==0) {
+		//debug_print_backtrace();
+		return false;
+	}
 	$row =& $res->fetchRow();
 
 	$famlist[$famid]["gedcom"] = $row[0];
@@ -273,15 +279,19 @@ function load_families($ids, $gedfile='') {
 		if ($res->numRows()==0) {
 			return false;
 		}
+		$parents = array();
 		while($row =& $res->fetchRow()) {
 			$famlist[$row[4]]["gedcom"] = $row[0];
 			$famlist[$row[4]]["gedfile"] = $row[1];
 			$famlist[$row[4]]["husb"] = $row[2];
 			$famlist[$row[4]]["wife"] = $row[3];
-			find_person_record($row[2]);
-			find_person_record($row[3]);
+			$parents[] = $row[2];
+			$parents[] = $row[3];
+//			find_person_record($row[2]);
+//			find_person_record($row[3]);
 		}
 		$res->free();
+		load_people($parents);
 	}
 }
 
@@ -808,7 +818,7 @@ function get_indi_list() {
 
 
 //-- get the assolist from the datastore
-function get_asso_list($type = "all") {
+function get_asso_list($type = "all", $ipid='') {
 	global $assolist, $GEDCOM, $DBCONN, $GEDCOMS;
 	global $TBLPREFIX, $ASSOLIST_RETRIEVED;
 
@@ -817,7 +827,9 @@ function get_asso_list($type = "all") {
 
 	$oldged = $GEDCOM;
 	if (($type == "all") || ($type == "fam")) {
-		$sql = "SELECT f_id, f_file, f_gedcom, f_husb, f_wife FROM ".$TBLPREFIX."families WHERE f_gedcom LIKE '% ASSO %'";
+		$sql = "SELECT f_id, f_file, f_gedcom, f_husb, f_wife FROM ".$TBLPREFIX."families WHERE f_gedcom ";
+		if (!empty($pid)) $sql .= "LIKE '% ASSO @$ipid@%'";
+		else $sql .= "LIKE '% ASSO %'";
 		$res = dbquery($sql);
 
 		$ct = $res->numRows();
@@ -852,7 +864,9 @@ function get_asso_list($type = "all") {
 	}
 
 	if (($type == "all") || ($type == "indi")) {
-		$sql = "SELECT i_id, i_file, i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_gedcom LIKE '% ASSO %'";
+		$sql = "SELECT i_id, i_file, i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_gedcom ";
+		if (!empty($pid)) $sql .= "LIKE '% ASSO @$ipid@%'";
+		else $sql .= "LIKE '% ASSO %'";
 		$res = dbquery($sql);
 
 		$ct = $res->numRows();
@@ -2124,6 +2138,9 @@ function get_alpha_indis($letter) {
 
 	$tindilist = array();
 
+	if ($letter=='_') $letter='\_';
+	if ($letter=='%') $letter='\%';
+
 	$danishex = array("OE", "AE", "AA");
 	$danishFrom = array("AA", "AE", "OE");
 	$danishTo = array("Å", "Æ", "Ø");
@@ -2517,11 +2534,22 @@ function get_surname_fams($surname) {
 	$SHOW_MARRIED_NAMES = false;
 	$myindilist = get_surname_indis($surname);
 	$SHOW_MARRIED_NAMES = $temp;
+	$famids = array();
+	//-- load up the families with 1 query
 	foreach($myindilist as $gid=>$indi) {
 		$ct = preg_match_all("/1 FAMS @(.*)@/", $indi["gedcom"], $match, PREG_SET_ORDER);
 		for($i=0; $i<$ct; $i++) {
 			$famid = $match[$i][1];
-			$famrec = find_family_record($famid);
+			$famids[] = $famid;
+		}
+	}
+	load_families($famids);
+	
+	foreach($myindilist as $gid=>$indi) {
+		$ct = preg_match_all("/1 FAMS @(.*)@/", $indi["gedcom"], $match, PREG_SET_ORDER);
+		for($i=0; $i<$ct; $i++) {
+			$famid = $match[$i][1];
+			//$famrec = find_family_record($famid);
 			if ($famlist[$famid]["husb"]==$gid) {
 				$HUSB = $famlist[$famid]["husb"];
 				$WIFE = $famlist[$famid]["wife"];

@@ -225,8 +225,8 @@ function showchanges() {
 // the functions_print.php file.
 function togglerow(label) {
 	var ebn = document.getElementsByName(label);
-	if (ebn.length) disp = ebn[0].style.display;
-	else disp="";
+	if (ebn.length) var disp = ebn[0].style.display;
+	else var disp="";
 	if (disp=="none") {
 		disp="table-row";
 		if (document.all && !window.opera) disp = "inline"; // IE
@@ -261,12 +261,16 @@ function tempObj(tab, oXmlHttp) {
  				target = document.getElementById(tabid[tab]+'_content');
   				evalAjaxJavascript(oXmlHttp.responseText, target);
   				target.style.height = 'auto';
-  				loadedTabs[tab] = true;
   				if (tab==7) {
+  					if (!loadedTabs[7]) {
+  						loadMap();
+  						map.setMapType(GOOGLEMAP_MAP_TYPE);
+  					}
   					SetMarkersAndBounds();
   					ResizeMap();
   					ResizeMap();
   				}
+  				loadedTabs[tab] = true;
   			}
  		};
 }

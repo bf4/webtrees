@@ -225,7 +225,7 @@ else if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&(empty($surname))&&
 			foreach($indi["names"] as $name) {
                 // Make sure we only display true "hits"
 				$trueHit = false;
-				$firstLetter = get_first_letter(strip_prefix($name[2]));
+				$firstLetter = $name[1];
 				if ($alpha==$firstLetter) $trueHit = true;
 
 				if (!$trueHit && $DICTIONARY_SORT[$LANGUAGE]) {
@@ -299,7 +299,7 @@ else {
 				$firstalpha = array();
 				foreach($tindilist as $gid=>$indi) {
 					foreach($indi["names"] as $indexval => $namearray) {
-						$letter = str2upper(get_first_letter($namearray[0]));
+						$letter = $namearray[1];
 						if (!isset($firstalpha[$letter])) {
 							$firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
 						}
@@ -358,7 +358,7 @@ else {
 				if (!empty($surname)) {
 					if (strcasecmp(strip_prefix($surname), strip_prefix($name[2]))==0) $trueHit = true;
 				} else {
-					$firstLetter = get_first_letter(strip_prefix($name[2]));
+					$firstLetter = $name[1];
 					if (strcasecmp($alpha, $firstLetter)==0) $trueHit = true;
 
 					if (!$trueHit && $DICTIONARY_SORT[$LANGUAGE]) {
