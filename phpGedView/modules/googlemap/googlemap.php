@@ -276,25 +276,29 @@ function get_lati_long_placelocation ($place) {
     $place_id = 0;
     for($i=0; $i<count($parent); $i++) {
         $parent[$i] = rtrim(ltrim($parent[$i]));
-        if($parent[$i] != "") {
-            $placelist = create_possible_place_names($parent[$i], $i+1);
-            foreach ($placelist as $key => $placename) {
-                $escparent=preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($placename));
-                $psql = "SELECT pl_id FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$place_id AND pl_place LIKE '".$escparent."' ORDER BY pl_place";
-                $res = dbquery($psql);
-                $row =& $res->fetchRow();
-                $res->free();
-                if (!empty($row[0])) break;
-            }
-            if (empty($row[0])) break;
-            $place_id = $row[0];
-        } else {
+        //if($parent[$i] != "") { //removed to allow display of places with an unknown place such as  "Montreal, , Quebec, Canada"
+        if($parent[$i] == "") $parent[$i]="unknown";// GoogleMap module uses "unknown" while GEDCOM uses , ,
+		$placelist = create_possible_place_names($parent[$i], $i+1);
+		foreach ($placelist as $key => $placename) {
+			$escparent=preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($placename));
+			$psql = "SELECT pl_id FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$place_id AND pl_place LIKE '".$escparent."' ORDER BY pl_place";
+			$res = dbquery($psql);
+			$row =& $res->fetchRow();
+			$res->free();
+			if (!empty($row[0])) break;
+		}
+		if (empty($row[0])) break;
+        $place_id = $row[0];
+        /*} else {
             break;
-        }
+        }*/
     }
 
     $retval = array();
     if ($place_id > 0) {
+    	if ($place_id > 0) {
+
+    	}
         $psql = "SELECT pl_lati,pl_long,pl_zoom,pl_icon,pl_level FROM ".$TBLPREFIX."placelocation WHERE pl_id=$place_id ORDER BY pl_place";
         $res = dbquery($psql);
         $row =& $res->fetchRow();
