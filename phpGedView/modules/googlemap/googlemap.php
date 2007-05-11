@@ -323,22 +323,23 @@ function setup_map() {
     <script type="text/javascript">
     // <![CDATA[
         if (window.attachEvent) {
-            window.attachEvent("onload", function() {
-                loadMap(<?php print $GOOGLEMAP_MAP_TYPE;?>);      // Internet Explorer
-                if (loadedTabs[7]) SetMarkersAndBounds();
-            });
+//            window.attachEvent("onload", function() {
+//                loadMap(<?php print $GOOGLEMAP_MAP_TYPE;?>);      // Internet Explorer
+//                if (loadedTabs[7]) SetMarkersAndBounds();
+//            });
             window.attachEvent("onunload", function() {
                 GUnload();      // Internet Explorer
             });
         } else {
-            window.addEventListener("load", function() {
-                loadMap(<?php print $GOOGLEMAP_MAP_TYPE;?>);      // Firefox and standard browsers
-                if (loadedTabs[7]) SetMarkersAndBounds();
-            }, false);
+//            window.addEventListener("load", function() {
+//                loadMap(<?php print $GOOGLEMAP_MAP_TYPE;?>);      // Firefox and standard browsers
+//                if (loadedTabs[7]) SetMarkersAndBounds();
+//            }, false);
             window.addEventListener("unload", function() {
                 GUnload(); // Firefox and standard browsers
             }, false);
         }
+    var GOOGLEMAP_MAP_TYPE =<?php print $GOOGLEMAP_MAP_TYPE;?>;
     var minZoomLevel = <?php print $GOOGLEMAP_MIN_ZOOM;?>;
     var maxZoomLevel = <?php print $GOOGLEMAP_MAX_ZOOM;?>;
     var startZoomLevel = <?php print $GOOGLEMAP_MAX_ZOOM;?>;

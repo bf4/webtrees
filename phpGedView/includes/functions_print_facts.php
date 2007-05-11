@@ -388,7 +388,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				print_address_structure($factrec, 1);
 			}
 			// -- Enhanced ASSOciates > RELAtionship
-			print_asso_rela_record($pid, $factrec,true);
+			print_asso_rela_record($pid, $factrec, true, id_type($pid));
 			// -- find _PGVU field
 			$ct = preg_match("/2 _PGVU (.*)/", $factrec, $match);
 			if ($ct>0) print $factarray["_PGVU"].": ".$match[1];

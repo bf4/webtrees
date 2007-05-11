@@ -591,7 +591,7 @@ function get_sortable_add_name($pid) {
  * @return string	The updated name
  */
 function strip_prefix($lastname){
-	$name = preg_replace(array("/ [jJsS][rR]\.?,/", "/ I+,/", "/^([a-z]{1,4}[\. -])+/"), array(",",",",""), $lastname);
+	$name = preg_replace(array("/ [jJsS][rR]\.?,/", "/ I+,/", "/^([a-z]{1,4}[\. \_\-\(\[])+/"), array(",",",",""), $lastname);
 	$name = trim($name);
 	if ($name=="") return $lastname;
 	return $name;
@@ -935,7 +935,7 @@ function get_indi_names($indirec, $import=false) {
 			$name = get_name_in_record($namerec);
 			$surname = extract_surname($name, false);
 			if (empty($surname)) $surname = "@N.N.";
-			$lname = preg_replace("/^[a-z0-9 \.\-]+/", "", $surname);
+			$lname = preg_replace("/^[a-z0-9 \.\-\_\(\[]+/", "", $surname);
 			if (empty($lname)) $lname = $surname;
 			$letter = get_first_letter($lname, $import);
 			$letter = str2upper($letter);
