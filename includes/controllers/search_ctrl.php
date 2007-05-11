@@ -1284,7 +1284,7 @@ class SearchControllerRoot extends BaseController {
 
 							// print all names from the indi found
 							foreach ($value["names"] as $indexval => $namearray) {
-								$printindiname[] = array (sortable_name_from_name($namearray[0]), $key, get_gedcom_from_id($value["gedfile"]), "");
+								$printindiname[] = array (check_NN(sortable_name_from_name($namearray[0])), $key, get_gedcom_from_id($value["gedfile"]), "");
 							}
 							$indi_printed[$key."[".$GEDCOM."]"] = "1";
 
