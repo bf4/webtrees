@@ -77,6 +77,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 				$ct = preg_match("/0 @.*@ (\w*)/", $gedrec, $match);
 				if ($ct>0) $type = trim($match[1]);
 				$disp = true;
+			  /** DEPRECATED : privacy is checked later in print_changes_table() [ 1704080 ]
 				switch($type) {
 					case 'INDI':
 						if (($filter=="living")&&(is_dead_id($gid)==1)) $disp = false;
@@ -97,7 +98,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 					default:
 						$disp = displayDetailsByID($gid, $type);
 						break;
-				}
+				}**/
 				if ($disp) {
 					$factrec = get_sub_record(1, "1 CHAN", $gedrec);
 					$found_facts[] = array($gid, $factrec, $type);
