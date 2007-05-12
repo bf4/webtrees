@@ -967,15 +967,12 @@ class Person extends GedcomRecord {
 								if (!showFact("MARR", $sfamid)) $factrec .= "\n2 RESN privacy";
 								$factrec .= "\n2 ASSO @".$spid."@";
 								$factrec .= "\n3 RELA ".$rela;
-								$sparents = find_parents($sfamid);
 								$spouse = $sfamily->getSpouse($parent);
 								if ($rela=="father") $rela2="stepmom";
 								else $rela2="stepdad";
 								if ($sfamid==$famid) $rela2="mother";
 								$factrec .= "\n2 ASSO @".$spouse->getXref()."@";
 								$factrec .= "\n3 RELA ".$rela2;
-								$factrec .= "\n2 ASSO @".$sfamid."@";
-								$factrec .= "\n3 RELA family";
 								$this->indifacts[]=array(0, $factrec);
 							}
 						}
@@ -1098,8 +1095,8 @@ class Person extends GedcomRecord {
 				if ($option=="3") $fact = "_MARR_MSIB";
 				if (strstr($SHOW_RELATIVES_EVENTS, $fact)) {
 					$sfams = $child->getSpouseFamilies();
-					foreach($sfams as $famid=>$family) {
-						$childrec = $family->getGedcomRecord();
+					foreach($sfams as $sfamid=>$sfamily) {
+						$childrec = $sfamily->getGedcomRecord();
 						$srec = get_sub_record(1, "1 MARR", $childrec);
 						$sdate = get_sub_record(2, "2 DATE", $srec);
 						if (compare_facts($this->getGedcomBirthDate(), $sdate)<0 && compare_facts($sdate, $this->getGedcomDeathDate())<0) {
@@ -1108,9 +1105,6 @@ class Person extends GedcomRecord {
 							if (!showFact("MARR", $sfamid)) $factrec .= "\n2 RESN privacy";
 							$factrec .= "\n2 ASSO @".$spid."@";
 							$factrec .= "\n3 RELA ".$rela;
-							$parents = find_parents($sfamid);
-							$spouse = $parents["HUSB"];
-							if ($spouse==$spid) $spouse = $parents["WIFE"];
 							if ($rela=="son") $rela2="daughter-in-law";
 							else if ($rela=="daughter") $rela2="son-in-law";
 							else if ($rela=="brother" or $rela=="halfbrother") $rela2="sister-in-law";
@@ -1119,10 +1113,8 @@ class Person extends GedcomRecord {
 							else if ($rela=="aunt") $rela2="uncle";
 							else if (strstr($rela, "cousin")) $rela2="cousin-in-law";
 							else $rela2="spouse";
-							$factrec .= "\n2 ASSO @".$spouse."@";
+							$factrec .= "\n2 ASSO @".$sfamily->getSpouseId($spid)."@";
 							$factrec .= "\n3 RELA ".$rela2;
-							$factrec .= "\n2 ASSO @".$sfamid."@";
-							$factrec .= "\n3 RELA family";
 							$arec = get_sub_record(2, "2 ASSO @".$spid."@", $srec);
 							if ($arec) $factrec .= "\n".$arec;
 							$this->indifacts[]=array(0, $factrec);
@@ -1131,16 +1123,14 @@ class Person extends GedcomRecord {
 				}
 				// add grand-children
 				if ($option=="") {
-					$sfams = $child->getSpouseFamilies();
-					foreach($sfams as $famid=>$family) {
-						$this->add_children_facts($family, "grand");
+					foreach($child->getSpouseFamilies() as $sfamid=>$sfamily) {
+						$this->add_children_facts($sfamily, "grand");
 					}
 				}
 				// first cousins
 				if ($option=="2" or $option=="3") {
-					$sfams = $child->getSpouseFamilies();
-					foreach($sfams as $famid=>$family) {
-						$this->add_children_facts($family, "first");
+					foreach($child->getSpouseFamilies() as $sfamid=>$sfamily) {
+						$this->add_children_facts($sfamily, "first");
 					}
 				}
 			}
@@ -1172,7 +1162,7 @@ class Person extends GedcomRecord {
 				$factrec = "1 ".$fact;
 				if (strstr($srec, "1 BURI")) $factrec .= " ".$factarray["BURI"];
 				$factrec .= "\n".trim($sdate);
-				if (!showFact("DEAT", $spouse)) $factrec .= "\n2 RESN privacy";
+				if (!showFact("DEAT", $spouse->getXref())) $factrec .= "\n2 RESN privacy";
 				$factrec .= "\n2 ASSO @".$spouse."@";
 				$factrec .= "\n3 RELA spouse";
 				$this->indifacts[]=array(0, $factrec);
@@ -1248,7 +1238,7 @@ class Person extends GedcomRecord {
 				for ($i=1; ; $i++) {
 					$srec = get_sub_record(1, "1 ", $asso["gedcom"], $i);
 					if (empty($srec)) break;
-					$arec = get_sub_record(2, "2 ASSO @".$pid."@", $srec);
+					$arec = get_sub_record(2, "2 ASSO @".$person->getXref()."@", $srec);
 					if ($arec) {
 						$fact = trim(substr($srec, 2, 5));
 						if (isset($factarray[$fact])) $label = strip_tags($factarray[$fact]);
@@ -1269,7 +1259,7 @@ class Person extends GedcomRecord {
 						$factrec .= "\n".trim($sdate);
 						if (!showFact($fact, $rid)) $factrec .= "\n2 RESN privacy";
 						if ($typ=='FAM') {
-						$famrec = find_family_record($rid);
+							$famrec = find_family_record($rid);
 							if ($famrec) {
 								$parents = find_parents_in_record($famrec);
 								if ($parents["HUSB"]) $factrec .= "\n2 ASSO @".$parents["HUSB"]."@"; //\n3 RELA ".$factarray[$fact];
