@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.2
+ - Added [ 1714274 ] MARR date on Close Relative tab (opus27)
  - Added new NavTree chart (yalnifj)
  - Added [ 1675203 ] Geo-Names ajax address autocomplete (opus27)
  - Added [ 1689500 ] ADDR : add a maps.google link (opus27)
