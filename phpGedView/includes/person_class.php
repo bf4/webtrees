@@ -41,7 +41,6 @@ class Person extends GedcomRecord {
 	var $globalfacts = array();
 	var $mediafacts = array();
 	var $facts_parsed = false;
-	var $sosamax = 7;
 	var $bdate = "";
 	var $ddate = "";
 	var $brec = "";
@@ -871,7 +870,6 @@ class Person extends GedcomRecord {
 				$this->add_children_facts($family);
 			}
 		}
-		//$sosamax=7;
 		if($otherfacts){
 			$this->add_parents_facts($this);
 			$this->add_historical_facts();
@@ -882,7 +880,6 @@ class Person extends GedcomRecord {
 	/**
 	 * add parents events to individual facts array
 	 *
-	 * sosamax = sosa max for recursive call
 	 * bdate = indi birth date record
 	 * ddate = indi death date record
 	 *
@@ -895,7 +892,7 @@ class Person extends GedcomRecord {
 
 		if (is_null($person)) return;
 		if (!$SHOW_RELATIVES_EVENTS) return;
-		if ($sosa>$this->sosamax) return;
+		if ($sosa>7) return; //sosa max for recursive call
 		if (empty($this->brec)) $this->_parseBirthDeath();
 		
 		//-- find family as child
@@ -949,7 +946,7 @@ class Person extends GedcomRecord {
 					$rela="mother";
 				}
 				if (strstr($SHOW_RELATIVES_EVENTS, $fact)) {
-					foreach ($spouse->getSpouseFamilies() as $sfamid=>$sfamily) {
+					foreach ($parent->getSpouseFamilies() as $sfamid=>$sfamily) {
 						if ($sfamid==$famid && $rela=="mother") continue; // show current family marriage only for father
 						$srec = $sfamily->getMarriageRecord();
 						$sdate = get_sub_record(2, "2 DATE", $srec);
@@ -957,13 +954,12 @@ class Person extends GedcomRecord {
 							$factrec = "1 ".$fact;
 							$factrec .= "\n".trim($sdate);
 							if (!showFact("MARR", $sfamid)) $factrec .= "\n2 RESN privacy";
-							$factrec .= "\n2 ASSO @".$spid."@";
+							$factrec .= "\n2 ASSO @".$parent->getXref()."@";
 							$factrec .= "\n3 RELA ".$rela;
-							$spouse = $sfamily->getSpouse($parent);
 							if ($rela=="father") $rela2="stepmom";
 							else $rela2="stepdad";
 							if ($sfamid==$famid) $rela2="mother";
-							$factrec .= "\n2 ASSO @".$spouse->getXref()."@";
+							$factrec .= "\n2 ASSO @".$sfamily->getSpouseId($parent->getXref())."@";
 							$factrec .= "\n3 RELA ".$rela2;
 							$this->indifacts[]=array(0, $factrec);
 						}
