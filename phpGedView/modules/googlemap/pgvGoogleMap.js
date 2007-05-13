@@ -194,7 +194,7 @@
             map = new GMap2(document.getElementById("map_pane"));
             map.addControl(new GSmallMapControl());
             map.addControl(new GScaleControl()) ;
-            map.setCenter(new GLatLng( 0.0, 0.0), 1, maptype );
+            map.setCenter(new GLatLng( 0.0, 0.0), 0, maptype );
             mapready = 1;
             ResizeMap();
             // Our info window content
