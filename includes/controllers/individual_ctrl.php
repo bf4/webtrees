@@ -1187,7 +1187,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 		?>
 		</table>
-		<?php
+	<?php
 	}
 
 	function print_relatives_tab() {
@@ -1219,6 +1219,7 @@ class IndividualControllerRoot extends BaseController {
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
 					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
 				<?php } ?>
+				<?php if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate());?>
 					</td>
 				</tr>
 			</table>
@@ -1357,6 +1358,7 @@ class IndividualControllerRoot extends BaseController {
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
 					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
 				<?php } ?>
+				<?php if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate());?>
 					</td>
 				</tr>
 			</table>
@@ -1473,6 +1475,7 @@ class IndividualControllerRoot extends BaseController {
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
 					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
 				<?php } ?>
+				<?php if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate());?>
 					</td>
 				</tr>
 			</table>
