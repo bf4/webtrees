@@ -668,6 +668,7 @@ function build_indiv_map($indifacts, $famids) {
                         print "        ".$marker["name"][$j].".openInfoWindowHtml(\"";
                         print PrintReady($mapdata["fact"][$j]).":<br/>";
                         if ($mapdata["name"][$j] != "") {
+                        	print "<a href=\\\"individual.php?pid=".$mapdata["name"][$j]."&amp;ged=$GEDCOM\\\">";
                             if (displayDetailsById($mapdata["name"][$j])||showLivingNameById($mapdata["name"][$j]))
                                 print PrintReady(preg_replace("/\"/", "\\\"", get_person_name($mapdata["name"][$j])));
                             else
