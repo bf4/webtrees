@@ -67,7 +67,7 @@ if (!function_exists("is_dead")) {
  * @param string $indirec the raw gedcom record
  * @return bool true if dead false if alive
  */
-function is_dead($indirec, $cyear="") {
+function is_dead($indirec, $cyear="", $import=false) {
 	global $CHECK_CHILD_DATES;
 	global $MAX_ALIVE_AGE;
 	global $HIDE_LIVE_PEOPLE;
@@ -117,6 +117,9 @@ function is_dead($indirec, $cyear="") {
 			}
 		}
 	}
+
+	//-- during import we can't check child dates
+	if ($import) return -1;
 
 	// If no death record than check all dates; the oldest one is the DOB
 	$ct = preg_match_all("/\d DATE.*\s(\d{3,4})\s/", $indirec, $match, PREG_SET_ORDER);

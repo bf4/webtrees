@@ -1020,6 +1020,13 @@ function parse_date($datestr) {
 				}
 			}
 			else {
+				//-- [ 1717918 ] convert 1910/11 to 1910/1911 before parsing the date
+				if ($index>0 && isset($dates[$index-1]["year"])) {
+					if (strlen($strs[$i])<3) {
+						$strs[$i] = substr($dates[$index-1]["year"],0,strlen($dates[$index-1]["year"])-strlen($strs[$i])).$strs[$i];
+					}
+				}
+				
 				$dates[$index]["year"] = (int)$strs[$i];
 				$index++;
 				//-- don't add another date array unless there is more info
