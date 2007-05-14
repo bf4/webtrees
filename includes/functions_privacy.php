@@ -118,9 +118,6 @@ function is_dead($indirec, $cyear="", $import=false) {
 		}
 	}
 
-	//-- during import we can't check child dates
-	if ($import) return -1;
-
 	// If no death record than check all dates; the oldest one is the DOB
 	$ct = preg_match_all("/\d DATE.*\s(\d{3,4})\s/", $indirec, $match, PREG_SET_ORDER);
 	for($i=0; $i<$ct; $i++) {
@@ -133,6 +130,9 @@ function is_dead($indirec, $cyear="", $import=false) {
 			}
 		}
 	}
+
+	//-- during import we can't check child dates
+	if ($import) return -1;
 
 	// If we found no dates then check the dates of close relatives.
 	if($CHECK_CHILD_DATES ) {
