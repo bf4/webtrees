@@ -221,7 +221,6 @@ class IndividualControllerRoot extends BaseController {
 			$this->indi->diffMerge($this->diffindi);
 		}
 
-		$this->indi->add_family_facts();
 		//-- only allow editors or users who are editing their own individual or their immediate relatives
 		if ($this->indi->canDisplayDetails()) {
 			$this->canedit = userCanEdit($this->uname);
@@ -985,6 +984,9 @@ class IndividualControllerRoot extends BaseController {
 	function print_facts_tab() {
 		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
 		global $n_chil, $n_gchi;
+		
+		//-- only need to add family facts on this tab
+		$this->indi->add_family_facts();
 		?>
 		<table class="facts_table">
 		<?php if (!$this->indi->canDisplayDetails()) {
