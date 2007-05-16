@@ -158,6 +158,9 @@ $factarray["_UID"]	= "Universal Identifier";
 $factarray["_PRIM"]	= "Highlighted Image";
 $factarray["_DBID"] = "Linked database ID";
 
+// These facts are used in specific contexts
+$factarray["STAT:DATE"] = "Status Change Date";
+
 //These facts are compounds for the view probabilities page
 $factarray["FAMC:HUSB:SURN"] = "Father's Surname";
 $factarray["FAMC:WIFE:SURN"] = "Mother's Surname";

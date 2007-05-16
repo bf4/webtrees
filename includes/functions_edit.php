@@ -1658,8 +1658,8 @@ function create_add_form($fact) {
  * @param string $level0type	the type of the level 0 gedcom record
  */
 function create_edit_form($gedrec, $linenum, $level0type) {
-	global $WORD_WRAPPED_NOTES, $pgv_lang;
-	global $tags, $ADVANCED_PLAC_FACTS, $date_and_time;
+	global $WORD_WRAPPED_NOTES, $pgv_lang, $factarray;
+	global $tags, $ADVANCED_PLAC_FACTS, $date_and_time, $templefacts;
 
 	$gedlines = split("\n", $gedrec);	// -- find the number of lines in the record
 	$fields = preg_split("/\s/", $gedlines[$linenum]);
@@ -1738,9 +1738,11 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 							add_simple_tag(($level+2).' '.$subsubtag);
 				}
 
-		// Awkward special case
+		// Awkward special cases
 		if ($level==2 && $type=='DATE' && in_array($level1type, $date_and_time) && !in_array('TIME', $subtags))
 			add_simple_tag("3 TIME"); // TIME is NOT a valid 5.5.1 tag
+		if ($level==2 && $type=='STAT' && in_array($level1type, $templefacts) && !in_array('DATE', $subtags))
+			add_simple_tag("3 DATE", "", $factarray['STAT:DATE']);
 
 		$i++;
 		if (isset($gedlines[$i])) {
@@ -1798,7 +1800,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
  */
 function insert_missing_subtags($level1tag)
 {
-	global $tags, $date_and_time, $level2_tags, $ADVANCED_PLAC_FACTS;
+	global $tags, $date_and_time, $templefacts, $level2_tags, $ADVANCED_PLAC_FACTS, $factarray;
 
 	// handle  MARRiage TYPE
 	$type_val = "";
@@ -1824,8 +1826,8 @@ function insert_missing_subtags($level1tag)
 					add_simple_tag("3 FORM");
 					break;
 				case "STAT":
-					// TODO currently confusing to have both LDS_ORD_DATE and status CHANGE_DATE
-					//add_simple_tag("3 DATE");
+					if (in_array($level1tag, $templefacts))
+						add_simple_tag("3 DATE", "", $factarray['STAT:DATE']);
 					break;
 				case "DATE":
 					if (in_array($level1tag, $date_and_time))
