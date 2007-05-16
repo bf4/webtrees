@@ -1659,7 +1659,7 @@ function create_add_form($fact) {
  */
 function create_edit_form($gedrec, $linenum, $level0type) {
 	global $WORD_WRAPPED_NOTES, $pgv_lang;
-	global $tags, $ADVANCED_PLAC_FACTS;
+	global $tags, $ADVANCED_PLAC_FACTS, $date_and_time;
 
 	$gedlines = split("\n", $gedrec);	// -- find the number of lines in the record
 	$fields = preg_split("/\s/", $gedlines[$linenum]);
@@ -1737,6 +1737,10 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 						foreach ($expected_subtags[$subtag] as $subsubtag)
 							add_simple_tag(($level+2).' '.$subsubtag);
 				}
+
+		// Awkward special case
+		if ($level==2 && $type=='DATE' && in_array($level1type, $date_and_time) && !in_array('TIME', $subtags))
+			add_simple_tag("3 TIME"); // TIME is NOT a valid 5.5.1 tag
 
 		$i++;
 		if (isset($gedlines[$i])) {
