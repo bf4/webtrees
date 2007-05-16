@@ -490,8 +490,8 @@ if ($action=="ImportFile2") {
 							$res = dbquery($sql, true, 1);
 						}
 					}
-					if (($row[4] == "") || ($row[4] == null)) {
-						$sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_icon='".$place["icon"]."',pl_long='".$place["long"]."' where pl_id=$parent_id";
+					if (empty($row[4]) && !empty($place['icon'])) {
+						$sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_icon='".$place["icon"]."' where pl_id=$parent_id";
 						if (userIsAdmin(getUserName())) {
 							$res = dbquery($sql, true, 1);
 						}
