@@ -2444,17 +2444,16 @@ function print_fact_place($factrec, $anchor=false, $sub=false, $lds=false) {
 		$ct = preg_match("/2 TEMP (.*)/", $factrec, $match);
 		if ($ct>0) {
 			$tcode = trim($match[1]);
-			if (array_key_exists($tcode, $TEMPLE_CODES)) {
-				print $pgv_lang["temple"].": ".$TEMPLE_CODES[$tcode];
-			}
-			else {
-				print $pgv_lang["temple_code"].$tcode;
-			}
+			if (array_key_exists($tcode, $TEMPLE_CODES))
+				print "<br/>".$pgv_lang["temple"].": ".$TEMPLE_CODES[$tcode];
+			else
+				print "<br/>".$pgv_lang["temple_code"].$tcode;
 		}
 		$ct = preg_match("/2 STAT (.*)/", $factrec, $match);
 		if ($ct>0) {
-			print "<br />".$pgv_lang["status"].": ";
-			print trim($match[1]);
+			print "<br />".$pgv_lang["status"].": ".trim($match[1]);
+			if (preg_match("/3 DATE (.*)/", $factrec, $match))
+				print ", ".$factarray["STAT:DATE"].": ".get_date_url($match[1]);
 		}
 	}
 }
