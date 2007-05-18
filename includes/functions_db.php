@@ -437,6 +437,7 @@ function find_gedcom_record($pid, $gedfile = "") {
 	if (empty($gedrec)) {
 		$sql = "SELECT o_gedcom, o_file FROM ".$TBLPREFIX."other WHERE o_id LIKE '".$DBCONN->escapeSimple($pid)."' AND o_file='".$DBCONN->escapeSimple($GEDCOMS[$gedfile]["id"])."'";
 		$res =& dbquery($sql);
+		if (DB::isError($res)) return "";
 		if ($res->numRows()!=0) {
 			$row =& $res->fetchRow();
 			$res->free();
