@@ -28,7 +28,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 // -- Define a fact array to map GEDCOM tags with their danish values
 $factarray["ABBR"] = "Forkortelse";
-$factarray["ADDR"] = "Adresse:&nbsp;";
+$factarray["ADDR"] = "Adresse";
 $factarray["ADR1"] = "Adresse 1";
 $factarray["ADR2"] = "Adresse 2";
 $factarray["ADOP"] = "Adoption";
@@ -155,6 +155,7 @@ $factarray["_TODO"] = "Udestående gøremål";
 $factarray["_UID"] = "Universal ID";
 $factarray["_PRIM"]	= "Markeret som hovedbillede";
 $factarray["_DBID"] = "Linket database ID";
+$factarray["STAT:DATE"] = "Ændringsdato for status";
 $factarray["FAMC:WIFE:GIVN"] = "Mors pigenavn";
 $factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Bedstefars efternavn";
 $factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Bedstemors pigenavn";
