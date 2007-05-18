@@ -1521,7 +1521,9 @@ class SearchControllerRoot extends BaseController {
 				foreach ($this->sgeds as $key=>$GEDCOM) {
 					require(get_privacy_file());
 					$datalist = array();
-					foreach ($printindiname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[$v[1]]=array("gid"=>$v[1], "name"=>$v[0]);
+					foreach ($printindiname as $k=>$v) if ($v[2]==$GEDCOM) $datalist[$v[1]]=array("gid"=>$v[1]);
+					// I removed the "name"=>$v[0] from the $datalist[$v[1]]=array("gid"=>$v[1], "name"=>$v[0]); 
+					// array because it contained an alternate name instead of the expected main name
 					print_indi_table($datalist, $pgv_lang["individuals"]." : &laquo;".$this->myquery."&raquo; @ ".$GEDCOMS[$GEDCOM]["title"]);
 				}
 				foreach ($this->sgeds as $key=>$GEDCOM) {
