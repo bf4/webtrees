@@ -47,6 +47,8 @@ $pgv_lang["gm_pp_pr_po_b_n"]        = "Prefix, postfix, both, normal";
 $pgv_lang["gm_pp_po_pr_b_n"]        = "Postfix, prefix, both, normal";
 $pgv_lang["gm_pp_pr_po_n_b"]        = "Prefix, postfix, normal, both";
 $pgv_lang["gm_pp_po_pr_n_b"]        = "Postfix, prefix, normal, both";
+$pgv_lang["googlemap_coord"]        = "Display Map Co-ordinates";
+
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Edit geographic place locations";
@@ -85,4 +87,5 @@ $pgv_lang["pl_remove_flag"]         = "Remove flag";
 
 $pgv_lang["pl_remove_location"]     = "Remove this location?";
 $pgv_lang["pl_delete_error"]        = "Location not removed: this location contains sub-locations";
+$pgv_lang["list_inactive"]        	= "Click here to show inactive places";
 ?>

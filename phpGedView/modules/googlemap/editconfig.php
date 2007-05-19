@@ -128,6 +128,7 @@ if ($action=="update" && !isset($security_user)) {
     $configtext = preg_replace('/\$GOOGLEMAP_PRECISION_5\s*=\s*".*";/', "\$GOOGLEMAP_PRECISION_5 = \"".$_POST["NEW_GOOGLEMAP_PRECISION_5"]."\";", $configtext);
     $configtext = preg_replace('/\$GM_DEFAULT_TOP_VALUE\s*=\s*".*";/', "\$GM_DEFAULT_TOP_VALUE = \"".$_POST["NEW_DEFAULT_TOP_LEVEL"]."\";", $configtext);
     $configtext = preg_replace('/\$GM_MAX_NOF_LEVELS\s*=\s*".*";/', "\$GM_MAX_NOF_LEVELS = \"".$_POST["NEW_LEVEL_COUNT"]."\";", $configtext);
+    $configtext = preg_replace('/\$GOOGLEMAP_COORD\s*=\s*".*";/', "\$GOOGLEMAP_COORD = \"".$_POST["NEW_GOOGLEMAP_COORD"]."\";", $configtext);
 
     for($i = 1; $i <= 9; $i++) {
         $configtext = preg_replace('/\$GM_PREFIX\['.$i.'\]\s*=\s*".*";/', '\$GM_PREFIX['.$i.'] = "'.$_POST["NEW_NAME_PREFIX_".$i].'";', $configtext);
@@ -264,6 +265,13 @@ $i = 0;
             <?php print $pgv_lang["gm_map_size_y"]; ?>
             <input type="text" name="NEW_GOOGLEMAP_YSIZE" value="<?php print $GOOGLEMAP_YSIZE;?>" size="10" tabindex="<?php $i++; print $i?>" onfocus="getHelp('GOOGLEMAP_MAP_SIZE_help');" />
         </td>
+    </tr>
+        <tr>
+        <td class="descriptionbox"><?php print_help_link("GOOGLEMAP_COORD_help", "qm", "GOOGLEMAP_COORD"); print $pgv_lang["googlemap_coord"];?></td>
+        <td class="optionbox"><select name="NEW_GOOGLEMAP_COORD" tabindex="<?php $i++; print $i?>" onfocus="getHelp('GOOGLEMAP_COORD_help');">
+                <option value="false" <?php if ($GOOGLEMAP_COORD=="false") print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+                <option value="true" <?php if ($GOOGLEMAP_COORD=="true") print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+            </select>
     </tr>
     <tr>
         <td class="descriptionbox"><?php print_help_link("GOOGLEMAP_MAP_ZOOM_help", "qm", "GOOGLEMAP_MAP_ZOOM"); print $pgv_lang["gm_map_zoom"];?></td>

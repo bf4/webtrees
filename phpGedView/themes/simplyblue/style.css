@@ -1228,6 +1228,14 @@ a.showit:hover span {
 	top: -60px; 
 	z-index: 1;
 }
+.iwstyle {
+	width:360px;
+	/*background-color: #FFFFFF;*/
+} 
+.iwstyle a {
+} 
+.iwstyle a:hover {
+}
 
 /* Because the CSS file is only read once, the following two overriding classes MUST
    appear at the end of the entire CSS file.

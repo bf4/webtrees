@@ -34,6 +34,7 @@ require_once 'includes/functions_print_facts.php';
 require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/menu.php';
 require_once 'includes/person_class.php';
+require_once 'includes/family_class.php';
 
 $indifacts = array();			 // -- array to store the fact records in for sorting and displaying
 $globalfacts = array();
@@ -1220,7 +1221,7 @@ class IndividualControllerRoot extends BaseController {
 					<td><span class="subheaders"><?php print PrintReady($this->indi->getChildFamilyLabel($family)); ?></span>
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
 					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
-				<?php } ?>
+				<?php }?>
 					</td>
 				</tr>
 			</table>
@@ -1706,7 +1707,7 @@ class IndividualControllerRoot extends BaseController {
 		global $LANGUAGE;
 		global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
 	    global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
-	    global $GOOGLEMAP_ENABLED, $TBLPREFIX, $DBCONN, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE;
+	    global $GOOGLEMAP_ENABLED, $TBLPREFIX, $DBCONN, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD;
 
 			            include_once('modules/googlemap/googlemap.php');
 
@@ -1741,7 +1742,6 @@ class IndividualControllerRoot extends BaseController {
 		                }
 				}
 	}
-
 }
 // -- end of class
 //-- load a user extended class if one exists
