@@ -211,7 +211,7 @@ else {
 		$surname = trim($surname);
 		$tfamlist = get_surname_fams($surname);
 		//-- split up long surname lists by first letter of first name
-		if (count($tfamlist)>$sublistTrigger) $firstname_alpha = true;
+		if (count($tfamlist)>$sublistTrigger) $firstname_alpha = true;  
 	}
 
 	if (($surname_sublist=="no")&&(!empty($alpha))&&($show_all=="no")) {
@@ -229,26 +229,27 @@ else {
 			if (!isset($_SESSION[$surname."_firstalphafams"])||$DEBUG) {
 				$firstalpha = array();
 				foreach($tfamlist as $gid=>$fam) {
-					$names = preg_split("/[,+] ?/", $fam["name"]);
+					$names = preg_split("/[,+] ?/", $fam["name"]);  
 					$letter = str2upper(get_first_letter(trim($names[1])));
 					if (!isset($firstalpha[$letter])) {
-						$firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
+						if (isset($names[0])&&isset($names[1])&&$names[0]==$surname) $firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
 					}
-					else $firstalpha[$letter]["ids"] .= ",".$gid;
+					else if ($names[0]==$surname) $firstalpha[$letter]["ids"] .= ",".$gid;
 					if (isset($names[2])&&isset($names[3])) {
 						$letter = str2upper(get_first_letter(trim($names[2])));
 						if ($letter==$alpha) {
 							$letter = str2upper(get_first_letter(trim($names[3])));
-							if (!isset($firstalpha[$letter])) {
-								$firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
-							}
-							else $firstalpha[$letter]["ids"] .= ",".$gid;
+								if (!isset($firstalpha[$letter])) {
+									$firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
+								}
+								else $firstalpha[$letter]["ids"] .= ",".$gid;
 						}
 					}
 				}
+				
 				uasort($firstalpha, "lettersort");
 				//-- put the list in the session so that we don't have to calculate this the next time
-				$_SESSION[$surname."_firstalphafams"] = $firstalpha;
+ 				$_SESSION[$surname."_firstalphafams"] = $firstalpha;
 			}
 			else $firstalpha = $_SESSION[$surname."_firstalphafams"];
 			print "<td class=\"list_label\" style=\"padding: 0pt 5pt 0pt 5pt; \" colspan=\"2\">";
