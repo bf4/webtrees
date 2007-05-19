@@ -563,7 +563,7 @@ if ($level > 0) {
 }
 print "<a href=\"module.php?mod=googlemap&pgvaction=places&level=0\">".$pgv_lang["top_level"]."</a><br /><br />";
 
-//LIMIT DISPLAY TO ACTIVE PLACES ONLY
+//LIMIT DISPLAY TO ACTIVE PLACES ONLY.
 if ($level > 0) {
 	for($i = $level; $i > 0 ; $i--) {
 		print "<form name=\"active\" method=\"post\" action=\"module.php?mod=googlemap&pgvaction=places&level=$level";
