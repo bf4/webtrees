@@ -82,6 +82,9 @@ $pgv_lang["PL_EXPORT_FILE_help"]        = "Export location data to a file. This 
 $pgv_lang["PL_EXPORT_ALL_FILE"]         = "Export all locations to file";
 $pgv_lang["PL_EXPORT_ALL_FILE_help"]    = "Export all location data to a file. This option will save all location data and transfer it to the local computer.";
 
+$pgv_lang["GOOGLEMAP_COORD"]           = "Display Map Coordinates";
+$pgv_lang["GOOGLEMAP_COORD_help"]      = "~#pgv_lang[GOOGLEMAP_COORD]#~<br /><br />This options sets whether Latitude and Longitude are displayed on the pop-up window attached to map markers";
+
 // Help texts for places_edit.php
 
 $pgv_lang["PLE_PLACES"]                 = "Enter place name";
@@ -113,5 +116,8 @@ $pgv_lang["PLIF_UPDATE_help"]           = "Only update existing records.<br/>Whe
 
 $pgv_lang["PLIF_OVERWRITE"]             = "Overwrite location data";
 $pgv_lang["PLIF_OVERWRITE_help"]        = "Overwrite location data in the database with data from the file.<br/>When this option is selected, the location data in the database (latitude, longitude, zoomlevel and flag) are overwritten with the data in the file, if available. If the record is not already in the database a new record will be created, unless the Update-only  option is also selected.";
+
+$pgv_lang["PLE_ACTIVE"]             = "List inactive places";
+$pgv_lang["PLE_ACTIVE_help"]        = "<strong>List places in the GoogleMaps table that are not used by any current GEDCOM(s).</strong><br/><br/>The display is set, by default, to only display for editing here those places that exist on BOTH your GEDCOM files and your GoogleMap tables.<br/><br/>When this option is checked, and \"View\" clicked, the list of places will display ALL places at this level.<br/><br/>This is designed to speed up the display of the list when large place lists have been imported, but not all used.<br/><br/>NOTE - if the option is checked the full list may take a few minutes to display";
 
 ?>
