@@ -82,6 +82,9 @@ $pgv_lang["PL_EXPORT_FILE_help"]        = "Eksporter sted-data til en fil. Denne
 $pgv_lang["PL_EXPORT_ALL_FILE"]         = "Eksporter alle steder til fil";
 $pgv_lang["PL_EXPORT_ALL_FILE_help"]    = "Eksporter alle sted-data til en fil. Denne funktion vil gemme alle sted-data og overføre det til den lokale computer.";
 
+$pgv_lang["GOOGLEMAP_COORD"]           = "Vis kort koordinater";
+$pgv_lang["GOOGLEMAP_COORD_help"]      = "~#pgv_lang[GOOGLEMAP_COORD]#~<br /><br />Denne indstilling afgør om der vises længde- og breddegrad på det popup vindue der er tilknyttet kortmarkører";
+
 // Help texts for places_edit.php
 
 $pgv_lang["PLE_PLACES"]                 = "Indtast stednavn";
@@ -113,5 +116,8 @@ $pgv_lang["PLIF_UPDATE_help"]           = "Opdater kun eksisterende poster.<br/>
 
 $pgv_lang["PLIF_OVERWRITE"]             = "Overskriv sted-data";
 $pgv_lang["PLIF_OVERWRITE_help"]        = "Overskriv sted-data i databasen med data fra filen.<br/>Når denne funktion vælges, vil sted-data i databasen (breddegrad, længdegrad, zoomniveau og flag) blive overskrevet med data fra filen, hvis disse findes. Hvis posten ikke allerede findes i databasen, vil en ny post blive oprettet, medmindre opdaterings funktionen også er valgt.";
+
+$pgv_lang["PLE_ACTIVE"]             = "Vis inaktive steder";
+$pgv_lang["PLE_ACTIVE_help"]        = "<strong>Vis steder i GoogleMaps tabellen der ikke bruges af nogen aktuel GEDCOM.</strong><br/><br/>Denne visning er som standard sat til kun at vise de steder der findes både i dine GEDCOM filer og i dine GoogleMap tabeller.<br/><br/>Når denne indstilling er valgt, og der klikkes på \"Vis\", vil listen over steder vise ALLE steder på dette niveau.<br/><br/>Dette er gjort for at øge hastigheden på listen, når der er importeret store stedlister, men hvor ikke alle bruges.<br/><br/>BEMÆRK - hvis denne indstilling er valgt, kan det tage et par minutter at vise den komplette liste";
 
 ?>
