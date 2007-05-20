@@ -1729,18 +1729,14 @@ class IndividualControllerRoot extends BaseController {
 	        </script>
 	        <?php
 	        return;
-	    }
-
-	    else {
+	    } else {
 		                $famids = array();
 		                $families = $this->indi->getSpouseFamilies();
 		                foreach($families as $famid=>$family) {
 		                    $famids[] = $family->getXref();
 		                }
-		                if (build_indiv_map($this->getIndiFacts(), $famids) == 0) {
-            print "<table><tr><td id=\"no_tab7\" colspan=\"2\"></td></tr></table>\n";
-		                }
-				}
+		                build_indiv_map($this->getIndiFacts(), $famids);
+			}
 	}
 }
 // -- end of class
