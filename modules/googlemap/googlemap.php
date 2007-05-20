@@ -640,7 +640,18 @@ function build_indiv_map($indifacts, $famids) {
 
         $indexcounter = 0;
         for($j=1; $j<=$i; $j++) {
-          $tooltip = $mapdata["fact"][$j]." - ".addslashes(get_changed_date($mapdata["date"][$j]));
+			$tooltip = $mapdata["fact"][$j]." - ".addslashes(get_changed_date($mapdata["date"][$j]));
+			if(useRTLFunctions()){
+				$tooltip = strip_tags($tooltip);
+
+				//the code below does not work
+				//$lrm = chr(0xE2).chr(0x80).chr(0x8E);
+				//$rlm = chr(0xE2).chr(0x80).chr(0x8F);
+				//strip off &rlm; and &lrm;
+				//$tooltip = str_replace(array("&lrm;", "&rlm;"), array($lrm , $rlm), $tooltip);
+				//just remove them for now
+				$tooltip = str_replace(array("&lrm;", "&rlm;"), array("", ""), $tooltip);
+			}
             if($marker["placed"][$j] == "no") {
                 $multimarker = -1;
                 // Count nr of locations where the long/lati is identical
@@ -760,6 +771,17 @@ function build_indiv_map($indifacts, $famids) {
                             if ($mapdata["show"][$k] == "yes") {
                                 if ($tabcounter == 4) {
 	                                $tooltip = $mapdata["fact"][$k]." - ".addslashes(get_changed_date($mapdata["date"][$k]));
+	                                if(useRTLFunctions()){
+	                                	$tooltip = strip_tags($tooltip);
+
+	                                	//the code below does not work
+										//$lrm = chr(0xE2).chr(0x80).chr(0x8E);
+										//$rlm = chr(0xE2).chr(0x80).chr(0x8F);
+										//strip off &rlm; and &lrm;
+										//$tooltip = str_replace(array("&lrm;", "&rlm;"), array($lrm , $rlm), $tooltip);
+										//just remove them for now
+										$tooltip = str_replace(array("&lrm;", "&rlm;"), array("", ""), $tooltip);
+	                                }
                                     print "\n";
                                     print "    ];\n";
                                     print "    GEvent.addListener(".$marker["name"][$j]."_".$markerindex.", \"click\", function(tabToSelect) {\n";
@@ -772,7 +794,7 @@ function build_indiv_map($indifacts, $famids) {
                                     $markerindex = $markerindex + 1;
 
                                     if ($marker["icon"][$j] == "") {
-                                        print "    var ".$marker["name"][$j]."_".$markerindex." = new GMarker(new GLatLng(".($mapdata["lati"][$j]-(0.0015*$markerindex)).", ".($mapdata["lng"][$j]+(0.0025*$markerindex))."), {title:\"".$tooltip."\"});\n";
+                                        print "    var ".$marker["name"][$j]."_".$markerindex." = new GMarker(new GLatLng(".($mapdata["lati"][$j]-(0.0015*$markerindex)).", ".($mapdata["lng"][$j]+(0.0025*$markerindex))."), {title:\"".$tooltip ."\"});\n";
                                     }
                                     else {
                                         print "    var ".$marker["name"][$j]."_".$markerindex."_flag = new GIcon();\n";
@@ -782,7 +804,7 @@ function build_indiv_map($indifacts, $famids) {
                                         print "    ".$marker["name"][$j]."_".$markerindex."_flag.shadowSize = new GSize(35, 45);\n";
                                         print "    ".$marker["name"][$j]."_".$markerindex."_flag.iconAnchor = new GPoint(1, 45);\n";
                                         print "    ".$marker["name"][$j]."_".$markerindex."_flag.infoWindowAnchor = new GPoint(5, 1);\n";
-                                        print "    var ".$marker["name"][$j]."_".$markerindex." = new GMarker(new GLatLng(".($mapdata["lati"][$j]-(0.0015*$markerindex)).", ".($mapdata["lng"][$j]+(0.0025*$markerindex))."), {icon:".$marker["name"][$j]."_".$markerindex."_flag, title:\"".$tooltip."\"});\n";
+                                        print "    var ".$marker["name"][$j]."_".$markerindex." = new GMarker(new GLatLng(".($mapdata["lati"][$j]-(0.0015*$markerindex)).", ".($mapdata["lng"][$j]+(0.0025*$markerindex))."), {icon:".$marker["name"][$j]."_".$markerindex."_flag, title:\"".$tooltip ."\"});\n";
                                     }
                                     print "    var ".$marker["name"][$j]."_".$markerindex."Info = [\n";
                                 }
@@ -819,7 +841,7 @@ function build_indiv_map($indifacts, $famids) {
 			                    	print ", Long: ";
 			                    	if ($mapdata["lng"][$j]>='0'){print "E".$mapdata["lng"][$j];}else{ print str_replace('-', 'W', $mapdata["lng"][$j]);}
 			                    	print "\")";
-		                    	}                                
+		                    	}
                             }
                         }
                     }
@@ -839,7 +861,7 @@ function build_indiv_map($indifacts, $famids) {
         print "\t<div style=\"overflow-x: hidden; overflow-y: auto; height:".$GOOGLEMAP_YSIZE.";\"><table class=\"facts_table\">";
 
         }
-    
+
     if ($i>0) {
         for($j=1; $j<=$i; $j++) {
             if ($mapdata["show"][$j] == "yes") {
@@ -854,7 +876,7 @@ function build_indiv_map($indifacts, $famids) {
                 }
                 print "\" colspan=\"2\">\n";
                 if ($mapdata["name"][$j] != "") {
-                    print "<a href=\"individual.php?pid=".$mapdata["name"][$j]."&amp;ged=$GEDCOM\">\n";                 
+                    print "<a href=\"individual.php?pid=".$mapdata["name"][$j]."&amp;ged=$GEDCOM\">\n";
                     if (displayDetailsById($mapdata["name"][$j])||showLivingNameById($mapdata["name"][$j])) print PrintReady(get_person_name($mapdata["name"][$j]));
                     else print $pgv_lang["private"];
                     print "</a><br/>\n";
