@@ -47,6 +47,7 @@ $pgv_lang["gm_pp_pr_po_b_n"]        = "Præfiks, postfiks, begge, normal";
 $pgv_lang["gm_pp_po_pr_b_n"]        = "Postfiks, præfiks, begge, normal";
 $pgv_lang["gm_pp_pr_po_n_b"]        = "Præfiks, postfiks, normal, begge";
 $pgv_lang["gm_pp_po_pr_n_b"]        = "Postfiks, præfiks, normal, begge";
+$pgv_lang["googlemap_coord"]        = "Vis kort koordinater";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Rediger geografiske sted placeringer";
@@ -85,4 +86,5 @@ $pgv_lang["pl_remove_flag"]         = "Fjern flag";
 
 $pgv_lang["pl_remove_location"]     = "Fjern dette sted?";
 $pgv_lang["pl_delete_error"]        = "Stedet ikke fjernet: dette sted indeholder under-steder";
+$pgv_lang["list_inactive"]              = "Klik her for at vise inaktive steder";
 ?>
