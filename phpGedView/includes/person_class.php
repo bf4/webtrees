@@ -59,6 +59,7 @@ class Person extends GedcomRecord {
 	var $highlightedimage = null;
 	var $file = "";
 	var $age = null;
+	var $isdead = -1;
 	
 	/**
 	 * Constructor for person object
@@ -120,6 +121,7 @@ class Person extends GedcomRecord {
 			if (isset($indilist[$pid]['privacy'])) unset($indilist[$pid]['privacy']);
 		}
 		$indilist[$pid]['object'] = &$person;
+		if (!isset($indilist[$pid]['gedfile'])) $indilist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 		return $person;
 	}
 
@@ -136,6 +138,18 @@ class Person extends GedcomRecord {
 	}
 
 	/**
+	 * gets the number of names this individual has
+	 * @return int 	the number of names in this individual
+	 */
+	function getNameCount() {
+		global $indilist;
+		
+		if (isset($indilist[$this->getXref()]['names'])) return count($indilist[$this->getXref()]['names']);
+		$names = get_indi_names($this->gedrec);
+		return count($names);
+	}
+
+	/**
 	 * get the sortable name
 	 * @param string $subtag optional subtag _AKA _HEB etc...
 	 * @param int $num which matching subtag to get
@@ -144,7 +158,7 @@ class Person extends GedcomRecord {
 	 */
 	function getSortableName($subtag="", $num=1, $starred=true) {
 		global $pgv_lang, $NAME_REVERSE, $UNDERLINE_NAME_QUOTES;
-		global $unknownNN, $unknownPN;
+		global $unknownNN, $unknownPN, $indilist;
 		if (!$this->canDisplayName()) {
 			if (empty($subtag)) return $pgv_lang["private"];
 			else return "";
@@ -153,8 +167,10 @@ class Person extends GedcomRecord {
 		// else we get name from gedcom record
 		if (stristr($subtag, "/")) $name = $subtag;
 		else if (empty($subtag)) {
-			$namerec = get_sub_record(1, "1 NAME", $this->gedrec, $num);
-			$name = get_gedcom_value("NAME", 1, $namerec, '', false);
+//			$namerec = get_sub_record(1, "1 NAME", $this->gedrec, $num);
+//			$name = get_gedcom_value("NAME", 1, $namerec, '', false);
+			//-- names are stored in the $indilist cache [names] element
+			if (isset($indilist[$this->getXref()]['names'][$num-1])) $name = $indilist[$this->getXref()]['names'][$num-1][0];
 		}
 		else {
 			$namerec = get_sub_record(2, "2 ".$subtag, $this->gedrec, $num);
@@ -236,7 +252,8 @@ class Person extends GedcomRecord {
 	 * @return boolean	true if dead, false if alive
 	 */
 	function isDead() {
-		return is_dead_id($this->getXref());
+		if ($this->isdead==-1) $this->isdead = is_dead_id($this->getXref());
+		return $this->isdead;
 	}
 
 	/**

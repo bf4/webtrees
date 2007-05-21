@@ -203,9 +203,12 @@ function getmicrotime(){
  */
 function store_gedcoms() {
 	global $GEDCOMS, $pgv_lang, $INDEX_DIRECTORY, $DEFAULT_GEDCOM, $COMMON_NAMES_THRESHOLD, $GEDCOM, $CONFIGURED;
-	global $COMMIT_COMMAND;
+	global $COMMIT_COMMAND, $IN_STORE_GEDCOMS;
 
 	if (!$CONFIGURED) return false;
+	//-- do not allow recursion into this function
+	if (isset($IN_STORE_GEDCOMS) && $IN_STORE_GEDCOMS==true) return false;
+	$IN_STORE_GEDCOMS = true;
 	$mutex = new Mutex("gedcoms.php");
 	$mutex->Wait();
 	uasort($GEDCOMS, "gedcomsort");
@@ -217,7 +220,9 @@ function store_gedcoms() {
 	}
 	if ($maxid !=0) $maxid++;
 	reset($GEDCOMS);
-	foreach($GEDCOMS as $indexval => $GED) {
+	//-- keep a local copy in case another function tries to change $GEDCOMS
+	$geds = $GEDCOMS;
+	foreach($geds as $indexval => $GED) {
 		$GED["config"] = str_replace($INDEX_DIRECTORY, "\${INDEX_DIRECTORY}", $GED["config"]);
 		if (isset($GED["privacy"])) $GED["privacy"] = str_replace($INDEX_DIRECTORY, "\${INDEX_DIRECTORY}", $GED["privacy"]);
 		else $GED["privacy"] = "privacy.php";
@@ -252,10 +257,11 @@ function store_gedcoms() {
 			}
 			else $GED["commonsurnames"]="";
 		}
-		$GEDCOMS[$GED["gedcom"]]["commonsurnames"] = $GED["commonsurnames"];
+		$geds[$GED["gedcom"]]["commonsurnames"] = $GED["commonsurnames"];
 		$gedcomtext .= "\$gedarray[\"commonsurnames\"] = \"".addslashes($GED["commonsurnames"])."\";\n";
 		$gedcomtext .= "\$GEDCOMS[\"".$GED["gedcom"]."\"] = \$gedarray;\n";
 	}
+	$GEDCOMS = $geds;
 	$gedcomtext .= "\n\$DEFAULT_GEDCOM = \"$DEFAULT_GEDCOM\";\n";
 	$gedcomtext .= "\n?".">";
 	$fp = @fopen($INDEX_DIRECTORY."gedcoms.php", "wb");
@@ -270,6 +276,8 @@ function store_gedcoms() {
 		if (!empty($COMMIT_COMMAND)) check_in("store_gedcoms() ->" . getUserName() ."<-", "gedcoms.php", $INDEX_DIRECTORY, true);
 	}
 	$mutex->Release();
+	$IN_STORE_GEDCOMS = false;
+	return true;
 }
 
 /**
@@ -490,16 +498,22 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $Ap
 	if ($gt > 0) {
 		$id = $gmatch[1];
 	}
+	
+	$hasResn = strstr($gedrec, " RESN ");
 	$prev_tags = array();
-	$ct = preg_match_all("/\n1 (\w+)(.*)/", $gedrec, $match, PREG_SET_ORDER);
+	$ct = preg_match_all("/\n1 (\w+)(.*)/", $gedrec, $match, PREG_SET_ORDER|PREG_OFFSET_CAPTURE);
 	for($i=0; $i<$ct; $i++) {
-		$fact = trim($match[$i][1]);
+		$fact = trim($match[$i][1][0]);
+		$pos1 = $match[$i][0][1];
+		if ($i<$ct-1) $pos2 = $match[$i+1][0][1];
+		else $pos2 = strlen($gedrec);
 		if (empty($ignore) || strpos($ignore, $fact)===false) {
 			if (!$ApplyPriv || (showFact($fact, $id)&& showFactDetails($fact,$id))) {
 				if (isset($prev_tags[$fact])) $prev_tags[$fact]++;
 				else $prev_tags[$fact] = 1;
-				$subrec = get_sub_record(1, "1 $fact", $gedrec, $prev_tags[$fact]);
-				if (!$ApplyPriv || !FactViewRestricted($id, $subrec)) {
+				//$subrec = get_sub_record(1, "1 $fact", $gedrec, $prev_tags[$fact]);
+				$subrec = substr($gedrec, $pos1, $pos2-$pos1);
+				if (!$ApplyPriv || !$hasResn || !FactViewRestricted($id, $subrec)) {
 					if ($fact=="EVEN") {
 						$tt = preg_match("/2 TYPE (.*)/", $subrec, $tmatch);
 						if ($tt>0) {
