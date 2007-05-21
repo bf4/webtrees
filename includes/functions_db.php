@@ -108,6 +108,7 @@ function &dbquery($sql, $show_error=true, $count=0) {
 		pgv_error_handler(2,"<span class=\"error\">Incompatible SQL syntax.  Use 'AND' instead of '&&'.  Use 'OR' instead of '||'.: $sql</span><br>","","");
 	}
 	
+	if (!empty($SQL_LOG)) $start_time2 = getmicrotime();
 	if ($count == 0)
 		$res =& $DBCONN->query($sql);
 	else
@@ -116,13 +117,19 @@ function &dbquery($sql, $show_error=true, $count=0) {
 	$LAST_QUERY = $sql;
 	$TOTAL_QUERIES++;
 	if (!empty($SQL_LOG)) {
+		global $start_time;
+		$end_time = getmicrotime();
+		$exectime = $end_time - $start_time;
+		$exectime2 = $end_time - $start_time2;
+		
 		$fp = fopen($INDEX_DIRECTORY."/sql_log.txt", "a");
 		$backtrace = debug_backtrace();
 		$temp = "";
+		if (isset($backtrace[3])) $temp .= basename($backtrace[3]["file"])." (".$backtrace[3]["line"].")";
 		if (isset($backtrace[2])) $temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
 		if (isset($backtrace[1])) $temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
 		$temp .= basename($backtrace[0]["file"])." (".$backtrace[0]["line"].")";
-		fwrite($fp, date("Y-m-d h:i:s")."\t".$_SERVER["SCRIPT_NAME"]."\t".$temp."\t".$TOTAL_QUERIES."-".$sql."\r\n");
+		fwrite($fp, date("Y-m-d h:i:s")."\t".sprintf(" %.4f %.4f sec", $exectime, $exectime2).$_SERVER["SCRIPT_NAME"]."\t".$temp."\t".$TOTAL_QUERIES."-".$sql."\r\n");
 		fclose($fp);
 	}
 	if (DB::isError($res)) {
@@ -281,12 +288,14 @@ function load_families($ids, $gedfile='') {
 		}
 		$parents = array();
 		while($row =& $res->fetchRow()) {
+			if (!isset($famlist[$row[4]])) {
 			$famlist[$row[4]]["gedcom"] = $row[0];
 			$famlist[$row[4]]["gedfile"] = $row[1];
 			$famlist[$row[4]]["husb"] = $row[2];
 			$famlist[$row[4]]["wife"] = $row[3];
 			$parents[] = $row[2];
 			$parents[] = $row[3];
+			}
 //			find_person_record($row[2]);
 //			find_person_record($row[3]);
 		}
@@ -377,11 +386,12 @@ function load_people($ids, $gedfile='') {
 			return false;
 		}
 		while($row =& $res->fetchRow()) {
+			if (!isset($indilist[$row[4]])) {
 			$indilist[$row[4]]["gedcom"] = $row[0];
 			$indilist[$row[4]]["names"] = get_indi_names($row[0]);
 			$indilist[$row[4]]["isdead"] = $row[2];
 			$indilist[$row[4]]["gedfile"] = $row[3];
-			if (isset($indilist[$row[4]]['privacy'])) unset($indilist[$row[4]]['privacy']);
+			}
 		}
 		$res->free();
 	}
@@ -1004,6 +1014,7 @@ function search_indis($query, $allgeds=false, $ANDOR="AND") {
 	//print $sql;
 	$res = dbquery($sql);
 
+	$gedold = $GEDCOM;
 	if (!DB::isError($res)) {
 		while($row =& $res->fetchRow()){
 			$row = db_cleanup($row);
@@ -1012,20 +1023,14 @@ function search_indis($query, $allgeds=false, $ANDOR="AND") {
 				$myindilist[$row[0]."[".$row[2]."]"]["gedfile"] = $row[2];
 				$myindilist[$row[0]."[".$row[2]."]"]["gedcom"] = $row[3];
 				$myindilist[$row[0]."[".$row[2]."]"]["isdead"] = $row[4];
-				if ($myindilist[$row[0]."[".$row[2]."]"]["gedfile"] == $GEDCOM) {
-					$indilist[$row[0]] = $myindilist[$row[0]."[".$row[2]."]"];
-					if (isset($indilist[$row[0]]['privacy'])) unset($indilist[$row[0]]['privacy']);
-				}
+				if (!isset($indilist[$row[0]]) && $row[2]==$GEDCOMS[$gedold]['id']) $indilist[$row[0]] = $myindilist[$row[0]."[".$row[2]."]"];
 			}
 			else {
 				$myindilist[$row[0]]["names"] = get_indi_names($row[3]);
 				$myindilist[$row[0]]["gedfile"] = $row[2];
 				$myindilist[$row[0]]["gedcom"] = $row[3];
 				$myindilist[$row[0]]["isdead"] = $row[4];
-				if ($myindilist[$row[0]]["gedfile"] == $GEDCOM) {
-					$indilist[$row[0]] = $myindilist[$row[0]];
-					if (isset($indilist[$row[0]]['privacy'])) unset($indilist[$row[0]]['privacy']);
-				}
+				if (!isset($indilist[$row[0]]) && $row[2]==$GEDCOMS[$gedold]['id']) $indilist[$row[0]] = $myindilist[$row[0]];
 			}
 		}
 		$res->free();
@@ -1345,13 +1350,13 @@ function search_fams($query, $allgeds=false, $ANDOR="AND", $allnames=false) {
 			$myfamlist[$row[0]."[".$row[3]."]"]["name"] = $name;
 			$myfamlist[$row[0]."[".$row[3]."]"]["gedfile"] = $row[3];
 			$myfamlist[$row[0]."[".$row[3]."]"]["gedcom"] = $row[4];
-			$famlist[$row[0]] = $myfamlist[$row[0]."[".$row[3]."]"];
+			if (!isset($famlist[$row[0]]) && $row[3]==$GEDCOMS[$gedold]['id']) $famlist[$row[0]] = $myfamlist[$row[0]."[".$row[3]."]"];
 		}
 		else {
 			$myfamlist[$row[0]]["name"] = $name;
 			$myfamlist[$row[0]]["gedfile"] = $row[3];
 			$myfamlist[$row[0]]["gedcom"] = $row[4];
-			$famlist[$row[0]] = $myfamlist[$row[0]];
+			if (!isset($famlist[$row[0]]) && $row[3]==$GEDCOMS[$gedold]['id']) $famlist[$row[0]] = $myfamlist[$row[0]];
 		}
 	}
 	$GEDCOM = $gedold;

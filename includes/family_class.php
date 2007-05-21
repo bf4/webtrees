@@ -104,6 +104,7 @@ class Family extends GedcomRecord {
 		$family = new Family($indirec, $simple);
 		if (!empty($fromfile)) $family->setChanged(true);
 		$famlist[$pid]['object'] = &$family;
+		if (!isset($famlist[$pid]['gedfile'])) $famlist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 		return $family;
 	}
 

@@ -501,6 +501,7 @@ if ($controller->action == "general" || $controller->action == "soundex") {
 	}
 }
 ?>
+<!--  not currently used
 	<tr>
 		<td class="list_label" style="padding: 5px;" >
 			<?php print $pgv_lang["results_per_page"]; ?>
@@ -515,6 +516,7 @@ if ($controller->action == "general" || $controller->action == "soundex") {
 			</select>
 		</td>
 	</tr>
+	-->
 	<tr>
 		<td class="list_label" style="padding: 5px;" >
 			<?php print $pgv_lang["other_searches"]; ?>

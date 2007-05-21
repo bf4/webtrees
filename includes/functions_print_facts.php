@@ -1477,7 +1477,8 @@ function print_fact_icon($fact, $factrec, $label, $pid) {
 	if ($SHOW_FACT_ICONS) {
 		$fact_image = "";
 		$factdate = parse_date($factrec);
-		$joe = Person::getInstance($pid);
+		$joe = null;
+		if (id_type($pid)=='INDI') $joe = Person::getInstance($pid);
 		$sexcheck = "";
 		if (!is_null($joe)) {
 			$sex = $joe->getSex();
