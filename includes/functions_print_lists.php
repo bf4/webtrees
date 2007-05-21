@@ -1201,7 +1201,7 @@ function print_changes_table($datalist) {
 			echo $record->getSexImage();
 			for($ni=2; $ni<=$record->getNameCount(); $ni++) {
 				$addname = $record->getSortableName('', $ni);
-				if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+				if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 			}
 //			$name_subtags = array("", "_HEB", "ROMN", "_AKA");
 //			if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
