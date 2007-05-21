@@ -79,7 +79,7 @@ class Family extends GedcomRecord {
 	function &getInstance($pid, $simple=true) {
 		global $famlist, $GEDCOM, $GEDCOMS, $pgv_changes;
 
-		if (isset($famlist[$pid]) && $famlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
+		if (isset($famlist[$pid]['gedfile']) && $famlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
 			if (isset($famlist[$pid]['object'])) return $famlist[$pid]['object'];
 		}
 

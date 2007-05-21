@@ -344,13 +344,10 @@ function print_indi_table($datalist, $legend="", $option="") {
 			if (!is_null($person)) $name = $person->getSortableName(); //-- for search results
 		}
 		else {
-			$gid = "";
+			$gid = $key;
 			if (isset($value["gid"])) $gid = $value["gid"]; // from indilist
 			if (isset($value[4])) $gid = $value[4]; // from indilist ALL
-			if (isset($value["gedcom"])) {
-				$person = Person::getInstance($key);
-				$gid = $key;
-			}
+			$person = Person::getInstance($gid);
 			if (isset($value["name"]) && $person->canDisplayName()) $name = $value["name"];
 			else $name = $person->getSortableName();
 			if (isset($value[4])) $name = $person->getSortableName($value[0]); // from indilist ALL
