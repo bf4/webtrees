@@ -697,8 +697,8 @@ function build_indiv_map($indifacts, $famids) {
 							$markers[$k]["tabindex"] = $tabcounter;
 							$tabcounter = $tabcounter + 1;
 							print "new GInfoWindowTab(\"".$markers[$k]["fact"]."\", \"<div class='iwstyle'>".$markers[$k]["fact"];
-							if (!empty($markers[$j]['info']))
-								print ": {$markers[$j]['info']}";
+							if (!empty($markers[$k]['info']))
+								print ": {$markers[$k]['info']}";
 							if (!empty($markers[$k]["name"])) {
 								print ": <a href=\\\"individual.php?pid=".$markers[$k]["name"]."&amp;ged=$GEDCOM\\\">";
 								if (displayDetailsById($markers[$k]["name"])||showLivingNameById($markers[$k]["name"]))
