@@ -973,7 +973,7 @@ function get_age_at_event($agestring) {
 function parse_date($datestr) {
 	global $monthtonum, $pgv_lang;
 
-	$datestr = trim($datestr);
+	$datestr = trim(str2lower($datestr));
 	$dates = array();
 	$dates[0]["day"] = ""; //1;
 	$dates[0]["month"] = ""; //"JAN";
@@ -982,6 +982,8 @@ function parse_date($datestr) {
 	$dates[0]["ext"] = "";
 	$strs = preg_split("/[\s\.,\-\\/\(\)\[\]\+'<>]+/", $datestr, -1, PREG_SPLIT_NO_EMPTY);
 	$index = 0;
+	static $longmonth=NULL;
+	if (empty($longmonth))
 	$longmonth = array(str2lower($pgv_lang["jan"])=>"jan", str2lower($pgv_lang["feb"])=>"feb", str2lower($pgv_lang["mar"])=>"mar",
 	str2lower($pgv_lang["apr"])=>"apr", str2lower($pgv_lang["may"])=>"may", str2lower($pgv_lang["jun"])=>"jun",
 	str2lower($pgv_lang["jul"])=>"jul", str2lower($pgv_lang["aug"])=>"aug", str2lower($pgv_lang["sep"])=>"sep",
@@ -997,8 +999,8 @@ function parse_date($datestr) {
 	);
 
 	for($i=0; $i<count($strs); $i++) {
-		if (isset($longmonth[str2lower($strs[$i])])) {
-			$strs[$i] = $longmonth[str2lower($strs[$i])];
+		if (isset($longmonth[$strs[$i]])) {
+			$strs[$i] = $longmonth[$strs[$i]];
 		}
 	}
 	if (count($strs)==3) {
@@ -1040,9 +1042,9 @@ function parse_date($datestr) {
 			}
 		}
 		else {
-			if (isset($monthtonum[str2lower($strs[$i])])) {
+			if (isset($monthtonum[$strs[$i]])) {
 				$dates[$index]["month"] = $strs[$i];
-				$dates[$index]["mon"] = $monthtonum[str2lower($strs[$i])];
+				$dates[$index]["mon"] = $monthtonum[$strs[$i]];
 			}
 			else {
 				if (!isset($dates[$index]["ext"])) $dates[$index]["ext"] = "";
