@@ -448,7 +448,8 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
 	$subrec = "";
 	$tag = trim($tag);
 	//$searchTarget = "/".preg_replace("~/~","\\/",$tag)."[\W]/"; // see [ 1492470 ] and [ 1507176 ]
-	$searchTarget = "/[\r\n]".preg_replace("~/~","\\/",$tag)."[\s\r\n]/";
+	//$searchTarget = "/[\r\n]".preg_replace("~/~","\\/",$tag)."[\s\r\n]/";
+	$searchTarget = "~[\r\n]".$tag."[\s]~";
 	$ct = preg_match_all($searchTarget, $gedrec, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
 	if ($ct==0) {
 		$tag = preg_replace("/(\w+)/", "_$1", $tag);
@@ -1257,7 +1258,9 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 	$bParts = preg_split("/(\d+)/", $bName, -1, PREG_SPLIT_DELIM_CAPTURE);
 
 	//-- loop through the arrays of strings and numbers
-	for($j=0; ($j<count($aParts) && $j<count($bParts)); $j++) {
+	$ac = count($aParts);
+	$bc = count($bParts);
+	for($j=0; ($j<$ac && $j<$bc); $j++) {
 		$aName = $aParts[$j];
 		$bName = $bParts[$j];
 

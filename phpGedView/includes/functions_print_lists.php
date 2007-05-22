@@ -82,23 +82,6 @@ function print_list_person($key, $value, $findid=false, $asso="", $useli=true) {
 		else {
 			print_first_major_fact($key, array("BIRT", "CHR", "BAPM", "BAPL", "ADOP"));
 			print_first_major_fact($key, array("DEAT", "BURI"));
-			/**
-			$fact = print_first_major_fact($key);
-			if (isset($SHOW_DEATH_LISTS) && $SHOW_DEATH_LISTS==true) {
-				if ($fact!="DEAT") {
-					$indirec = find_person_record($key);
-					$factrec = get_sub_record(1, "1 DEAT", $indirec);
-					if (strlen($factrec)>7 && showFact("DEAT", $key) && !FactViewRestricted($key, $factrec)) {
-						print " -- <i>";
-						print $factarray["DEAT"];
-						print " ";
-						print_fact_date($factrec);
-						print_fact_place($factrec);
-						print "</i>";
-					}
-				}
-			}
-			**/
 		}
 		print "</a>";
 		if (($asso != "") && ($disp)) {
@@ -373,8 +356,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		echo $person->getSexImage();
 // Do we really want to show all of a person's names? 
-		// start at 2 because the 1 is already stored in $name
-		for($ni=2; $ni<=$person->getNameCount(); $ni++) {
+		for($ni=1; $ni<=$person->getNameCount(); $ni++) {
 			$addname = $person->getSortableName('', $ni);
 			if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 		}
@@ -701,7 +683,7 @@ function print_fam_table($datalist, $legend="") {
 		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($husb->xref) echo $husb->getSexImage();
 		
-		for($ni=2; $ni<=$husb->getNameCount(); $ni++) {
+		for($ni=1; $ni<=$husb->getNameCount(); $ni++) {
 			$addname = $husb->getSortableName('', $ni);
 			if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 		}
@@ -728,7 +710,7 @@ function print_fam_table($datalist, $legend="") {
 		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($wife->xref) echo $wife->getSexImage();
 		
-		for($ni=2; $ni<=$wife->getNameCount(); $ni++) {
+		for($ni=1; $ni<=$wife->getNameCount(); $ni++) {
 			$addname = $wife->getSortableName('', $ni);
 			if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 		}
@@ -1199,7 +1181,7 @@ function print_changes_table($datalist) {
 		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($record->type=="INDI") {
 			echo $record->getSexImage();
-			for($ni=2; $ni<=$record->getNameCount(); $ni++) {
+			for($ni=1; $ni<=$record->getNameCount(); $ni++) {
 				$addname = $record->getSortableName('', $ni);
 				if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 			}
