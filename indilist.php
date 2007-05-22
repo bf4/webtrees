@@ -58,7 +58,9 @@ else {
 if (empty($show_all)) $show_all = "no";
 if (empty($show_all_firstnames)) $show_all_firstnames = "no";
 
+//$sublistTrigger = 50;		// Number of names required before list starts sub-listing by first name 
 $sublistTrigger = 200;		// Number of names required before list starts sub-listing by first name
+
 
 // Remove slashes
 $lrm = chr(0xE2).chr(0x80).chr(0x8E);
@@ -226,6 +228,7 @@ else if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&(empty($surname))&&
                 // Make sure we only display true "hits"
 				$trueHit = false;
 				$firstLetter = $name[1];
+	
 				if ($alpha==$firstLetter) $trueHit = true;
 
 				if (!$trueHit && $DICTIONARY_SORT[$LANGUAGE]) {
@@ -299,7 +302,8 @@ else {
 				$firstalpha = array();
 				foreach($tindilist as $gid=>$indi) {
 					foreach($indi["names"] as $indexval => $namearray) {
-						$letter = $namearray[1];
+ 						//$letter = $namearray[1]; we need the first letter of the first name, not of the surname
+                        $letter = str2upper(get_first_letter($namearray[0]));	//@@ MA					
 						if (!isset($firstalpha[$letter])) {
 							$firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
 						}
@@ -317,7 +321,7 @@ else {
 			print "<td style=\"text-align:center;\" colspan=\"2\">";
 			print $pgv_lang["first_letter_fname"]."<br />\n";
 			foreach($firstalpha as $letter=>$list) {
-				$PASS = false;
+				$pass = false;
 				if ($letter != "@") {
 					if (!isset($fstartalpha) && !isset($falpha)) {
 						$fstartalpha = $letter;
@@ -359,6 +363,7 @@ else {
 					if (strcasecmp(strip_prefix($surname), strip_prefix($name[2]))==0) $trueHit = true;
 				} else {
 					$firstLetter = $name[1];
+			
 					if (strcasecmp($alpha, $firstLetter)==0) $trueHit = true;
 
 					if (!$trueHit && $DICTIONARY_SORT[$LANGUAGE]) {
