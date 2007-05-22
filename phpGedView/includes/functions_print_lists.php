@@ -703,7 +703,7 @@ function print_fam_table($datalist, $legend="") {
 		
 		for($ni=2; $ni<=$husb->getNameCount(); $ni++) {
 			$addname = $husb->getSortableName('', $ni);
-			if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+			if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 		}
 //		foreach ($name_subtags as $k=>$subtag) {
 //			for ($num=1; $num<9; $num++) {
@@ -730,7 +730,7 @@ function print_fam_table($datalist, $legend="") {
 		
 		for($ni=2; $ni<=$wife->getNameCount(); $ni++) {
 			$addname = $wife->getSortableName('', $ni);
-			if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+			if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 		}
 //		foreach ($name_subtags as $k=>$subtag) {
 //			for ($num=1; $num<9; $num++) {
