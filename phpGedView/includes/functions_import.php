@@ -287,7 +287,7 @@ function import_record($indirec, $update = false) {
 			for ($j = 0; $j < $ct; $j++) {
 				$chil .= $match[$j][1] . ";";
 			}
-			$nchi = get_gedcom_value("NCHI", 1, $this->gedrec);
+			$nchi = get_gedcom_value("NCHI", 1, $indirec);
 			if ($nchi!=$ct) $ct = $nchi;
 			$fam = array ();
 			$fam["HUSB"] = $parents["HUSB"];
