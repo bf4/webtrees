@@ -47,6 +47,8 @@ $pgv_lang["gm_pp_pr_po_b_n"]        	= "תחילית, סיומת, שניהם, נ
 $pgv_lang["gm_pp_po_pr_b_n"]        	= "סיומת, תחילית, שניהם, נורמלי";
 $pgv_lang["gm_pp_pr_po_n_b"]        	= "תחילית, סיומת, נורמלי, שניהם";
 $pgv_lang["gm_pp_po_pr_n_b"]        	= "סיומת, תחילית, נורמלי, שניהם";
+$pgv_lang["googlemap_coord"]        	= "הצג קוארדינטות של המפה";  
+
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   	= "ערוך מיקומים גיאוגרפיים";
@@ -85,4 +87,5 @@ $pgv_lang["pl_remove_flag"]         	= "הסר דגל";
 
 $pgv_lang["pl_remove_location"]     	= "?הסר המיקום";
 $pgv_lang["pl_delete_error"]        	= "המיקום לא הורד: המיקום כולל תתי מיקומים";
+$pgv_lang["list_inactive"]        		= "לחץ כאן כדי להראות מקומות שאינם בשימוש"; 
 ?>
