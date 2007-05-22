@@ -288,7 +288,7 @@ function import_record($indirec, $update = false) {
 				$chil .= $match[$j][1] . ";";
 			}
 			$nchi = get_gedcom_value("NCHI", 1, $indirec);
-			if ($nchi!=$ct) $ct = $nchi;
+			if (!empty($nchi)) $ct = $nchi;
 			$fam = array ();
 			$fam["HUSB"] = $parents["HUSB"];
 			$fam["WIFE"] = $parents["WIFE"];
