@@ -126,7 +126,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 		}
 		if ($config["stat_surname"]=="yes") {
 			//-- total unique surnames
-			$sql = "SELECT COUNT(i_surname) FROM ".$TBLPREFIX."individuals WHERE i_file='".$GEDCOMS[$GEDCOM]["id"]."' GROUP BY i_surname";
+			$sql = "SELECT i_surname FROM ".$TBLPREFIX."individuals WHERE i_file='".$GEDCOMS[$GEDCOM]["id"]."' GROUP BY i_surname";
 			$tempsql = dbquery($sql);
 			$res =& $tempsql;
 			$surname_count = $res->numRows();
@@ -200,7 +200,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 		}
 		if ($config["stat_events"]=="yes") {
 			//-- total events
-			$sql = "SELECT COUNT(d_gid) FROM ".$TBLPREFIX."dates WHERE d_file='".$GEDCOMS[$GEDCOM]["id"]."'";
+			$sql = "SELECT COUNT(d_file) FROM ".$TBLPREFIX."dates WHERE d_file='".$GEDCOMS[$GEDCOM]["id"]."'";
 			$tempsql = dbquery($sql);
 			$res =& $tempsql;
 			$row =& $res->fetchRow();
@@ -238,7 +238,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 			// NOTE: Get earliest birth year
 			$sql = "select d_gid, d_year as year from ".$TBLPREFIX."dates where d_file = '".$GEDCOMS[$GEDCOM]["id"]."' and d_fact = 'BIRT' and d_year != '0' and d_type is null ORDER BY d_year ASC, d_mon ASC, d_day ASC";
 			//print $sql;
-			$tempsql = dbquery($sql);
+			$tempsql = dbquery($sql, true, 1);
 			$res =& $tempsql;
 			$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
 			$ct = $res->numRows();
@@ -261,9 +261,9 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 		}
 		if ($config["stat_last_birth"]=="yes") {
 			// NOTE: Get the latest birth year
-			$sql = "select d_gid, d_year as year from ".$TBLPREFIX."dates where d_file = '".$GEDCOMS[$GEDCOM]["id"]."' and d_fact = 'BIRT' and d_year != '0' and d_type is null ORDER BY d_year DESC, d_mon DESC , d_day DESC";
+			$sql = "select d_gid, d_year as year from ".$TBLPREFIX."dates where d_file = '".$GEDCOMS[$GEDCOM]["id"]."' and d_fact = 'BIRT' and d_year != '0' and d_type is null ORDER BY d_year DESC, d_mon DESC, d_day DESC";
 			//print $sql;
-			$tempsql = dbquery($sql);
+			$tempsql = dbquery($sql, true, 1);
 			$res =& $tempsql;
 			$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
 			$ct = $res->numRows();
@@ -288,7 +288,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 			// NOTE: Get earliest death year
 			$sql = "select d_gid, d_year as year from ".$TBLPREFIX."dates where d_file = '".$GEDCOMS[$GEDCOM]["id"]."' and d_fact = 'DEAT' and d_year != '0' and d_type is null ORDER BY d_year ASC, d_mon ASC, d_day ASC";
 			//print $sql;
-			$tempsql = dbquery($sql);
+			$tempsql = dbquery($sql, true, 1);
 			$res =& $tempsql;
 			$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
 			$ct = $res->numRows();
@@ -313,7 +313,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 			// NOTE: Get the latest death year
 			$sql = "select d_gid, d_year as year from ".$TBLPREFIX."dates where d_file = '".$GEDCOMS[$GEDCOM]["id"]."' and d_fact = 'DEAT' and d_year != '0' and d_type is null ORDER BY d_year DESC, d_mon DESC , d_day DESC";
 			//print $sql;
-			$tempsql = dbquery($sql);
+			$tempsql = dbquery($sql, true, 1);
 			$res =& $tempsql;
 			$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
 			$ct = $res->numRows();
