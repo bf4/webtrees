@@ -935,6 +935,8 @@ function get_indi_names($indirec, $import=false) {
 			$name = get_name_in_record($namerec);
 			$surname = extract_surname($name, false);
 			if (empty($surname)) $surname = "@N.N.";
+			//-- all ____ names get changed to @N.N.
+			if (preg_match("/^_+$/", $surname)>0) $surname="@N.N.";
 			$lname = preg_replace("/^[a-z0-9 \.\-\_\(\[]+/", "", $surname);
 			if (empty($lname)) $lname = $surname;
 			$letter = get_first_letter($lname, $import);

@@ -122,6 +122,8 @@ function &dbquery($sql, $show_error=true, $count=0) {
 		$exectime = $end_time - $start_time;
 		$exectime2 = $end_time - $start_time2;
 		
+		if ($count>0) $sql = $DBCONN->modifyLimitQuery($sql, 0, $count);
+		
 		$fp = fopen($INDEX_DIRECTORY."/sql_log.txt", "a");
 		$backtrace = debug_backtrace();
 		$temp = "";
@@ -234,7 +236,7 @@ function find_family_record($famid, $gedfile="") {
 
 	if (isset($famlist[$famid]["gedcom"])&&($famlist[$famid]["gedfile"]==$GEDCOMS[$gedfile]["id"])) return $famlist[$famid]["gedcom"];
 
-	$sql = "SELECT f_gedcom, f_file, f_husb, f_wife FROM ".$TBLPREFIX."families WHERE f_id LIKE '".$DBCONN->escapeSimple($famid)."' AND f_file='".$DBCONN->escapeSimple($GEDCOMS[$gedfile]["id"])."'";
+	$sql = "SELECT f_gedcom, f_file, f_husb, f_wife, f_numchil FROM ".$TBLPREFIX."families WHERE f_id LIKE '".$DBCONN->escapeSimple($famid)."' AND f_file='".$DBCONN->escapeSimple($GEDCOMS[$gedfile]["id"])."'";
 	$res = dbquery($sql);
 	if ($res->numRows()==0) {
 		//debug_print_backtrace();
@@ -246,6 +248,7 @@ function find_family_record($famid, $gedfile="") {
 	$famlist[$famid]["gedfile"] = $row[1];
 	$famlist[$famid]["husb"] = $row[2];
 	$famlist[$famid]["wife"] = $row[3];
+	$famlist[$famid]["numchil"] = $row[4];
 	find_person_record($row[2]);
 	find_person_record($row[3]);
 	$res->free();
@@ -267,7 +270,7 @@ function load_families($ids, $gedfile='') {
 	if (empty($gedfile)) $gedfile = $GEDCOM;
 	if (!is_int($gedfile)) $gedfile = get_gedcom_from_id($gedfile);
 	
-	$sql = "SELECT f_gedcom, f_file, f_husb, f_wife, f_id FROM ".$TBLPREFIX."families WHERE f_id IN (";
+	$sql = "SELECT f_gedcom, f_file, f_husb, f_wife, f_id, f_numchil FROM ".$TBLPREFIX."families WHERE f_id IN (";
 	//-- don't load up families who are already loaded
 	$idsadded = false;
 	foreach($ids as $k=>$id) {
@@ -293,6 +296,7 @@ function load_families($ids, $gedfile='') {
 			$famlist[$row[4]]["gedfile"] = $row[1];
 			$famlist[$row[4]]["husb"] = $row[2];
 			$famlist[$row[4]]["wife"] = $row[3];
+				$famlist[$row[4]]["numchil"] = $row[5];
 			$parents[] = $row[2];
 			$parents[] = $row[3];
 			}
@@ -934,6 +938,7 @@ function get_fam_list() {
 		$fam["WIFE"] = $row["f_wife"];
 		$fam["CHIL"] = $row["f_chil"];
 		$fam["gedfile"] = $row["f_file"];
+		$fam["numchil"] = $row["f_numchil"];
 		$famlist[$row["f_id"]] = $fam;
 	}
 	$res->free();
@@ -1297,9 +1302,9 @@ function search_fams($query, $allgeds=false, $ANDOR="AND", $allnames=false) {
 	else if (stristr($DBTYPE, "pgsql")!==false) $term = "~*";
 	else $term='LIKE';
 	$myfamlist = array();
-	if (!is_array($query)) $sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom FROM ".$TBLPREFIX."families WHERE (f_gedcom $term '".$DBCONN->escapeSimple($query)."')";
+	if (!is_array($query)) $sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom, f_numchil FROM ".$TBLPREFIX."families WHERE (f_gedcom $term '".$DBCONN->escapeSimple($query)."')";
 	else {
-		$sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom FROM ".$TBLPREFIX."families WHERE (";
+		$sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom, f_numchil FROM ".$TBLPREFIX."families WHERE (";
 		$i=0;
 		foreach($query as $indexval => $q) {
 			if ($i>0) $sql .= " $ANDOR ";
@@ -1350,12 +1355,14 @@ function search_fams($query, $allgeds=false, $ANDOR="AND", $allnames=false) {
 			$myfamlist[$row[0]."[".$row[3]."]"]["name"] = $name;
 			$myfamlist[$row[0]."[".$row[3]."]"]["gedfile"] = $row[3];
 			$myfamlist[$row[0]."[".$row[3]."]"]["gedcom"] = $row[4];
+			$myfamlist[$row[0]."[".$row[3]."]"]["numchil"] = $row[5];
 			if (!isset($famlist[$row[0]]) && $row[3]==$GEDCOMS[$gedold]['id']) $famlist[$row[0]] = $myfamlist[$row[0]."[".$row[3]."]"];
 		}
 		else {
 			$myfamlist[$row[0]]["name"] = $name;
 			$myfamlist[$row[0]]["gedfile"] = $row[3];
 			$myfamlist[$row[0]]["gedcom"] = $row[4];
+			$myfamlist[$row[0]]["gedcom"] = $row[5];
 			if (!isset($famlist[$row[0]]) && $row[3]==$GEDCOMS[$gedold]['id']) $famlist[$row[0]] = $myfamlist[$row[0]];
 		}
 	}
@@ -1370,7 +1377,7 @@ function search_fams_names($query, $ANDOR="AND", $allnames=false, $gedcnt=1) {
 	//if ($REGEXP_DB) $term = "REGEXP";
 	//else $term = "LIKE";
 	$myfamlist = array();
-	$sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom FROM ".$TBLPREFIX."families WHERE (";
+	$sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom, f_numchil FROM ".$TBLPREFIX."families WHERE (";
 	$i=0;
 	foreach($query as $indexval => $q) {
 		if ($i>0) $sql .= " $ANDOR ";
@@ -1409,12 +1416,14 @@ function search_fams_names($query, $ANDOR="AND", $allnames=false, $gedcnt=1) {
 			$myfamlist[$row[0]."[".$row[3]."]"]["name"] = $name;
 			$myfamlist[$row[0]."[".$row[3]."]"]["gedfile"] = $row[3];
 			$myfamlist[$row[0]."[".$row[3]."]"]["gedcom"] = $row[4];
+			$myfamlist[$row[0]."[".$row[3]."]"]["numchil"] = $row[5];
 			$famlist[$row[0]] = $myfamlist[$row[0]."[".$row[3]."]"];
 		}
 		else {
 			$myfamlist[$row[0]]["name"] = $name;
 			$myfamlist[$row[0]]["gedfile"] = $row[3];
 			$myfamlist[$row[0]]["gedcom"] = $row[4];
+			$myfamlist[$row[0]]["numchil"] = $row[5];
 			$famlist[$row[0]] = $myfamlist[$row[0]];
 		}
 	}
@@ -2147,6 +2156,7 @@ function get_alpha_indis($letter) {
 
 	if ($letter=='_') $letter='\_';
 	if ($letter=='%') $letter='\%';
+	if ($letter=='') $letter='@';
 
 	$danishex = array("OE", "AE", "AA");
 	$danishFrom = array("AA", "AE", "OE");
@@ -2707,21 +2717,21 @@ function get_list_size($list, $filter="") {
 
 	switch($list) {
 		case "indilist":
-			$sql = "SELECT count(i_id) FROM ".$TBLPREFIX."individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+			$sql = "SELECT count(i_file) FROM ".$TBLPREFIX."individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
 			if ($filter) $sql .= " AND i_gedcom $term '$filter'";
 			$res = dbquery($sql);
 
 			while($row =& $res->fetchRow()) return $row[0];
 		break;
 		case "famlist":
-			$sql = "SELECT count(f_id) FROM ".$TBLPREFIX."families WHERE f_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+			$sql = "SELECT count(f_file) FROM ".$TBLPREFIX."families WHERE f_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
 			if ($filter) $sql .= " AND f_gedcom $term '$filter'";
 			$res = dbquery($sql);
 
 			while($row =& $res->fetchRow()) return $row[0];
 		break;
 		case "sourcelist":
-			$sql = "SELECT count(s_id) FROM ".$TBLPREFIX."sources WHERE s_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+			$sql = "SELECT count(s_file) FROM ".$TBLPREFIX."sources WHERE s_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
 			if ($filter) $sql .= " AND s_gedcom $term '$filter'";
 			$res = dbquery($sql);
 
@@ -2735,7 +2745,7 @@ function get_list_size($list, $filter="") {
 			while($row =& $res->fetchRow()) return $row[0];
 		break;
 		case "otherlist": // REPO
-			$sql = "SELECT count(o_id) FROM ".$TBLPREFIX."other WHERE o_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+			$sql = "SELECT count(o_file) FROM ".$TBLPREFIX."other WHERE o_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
 			if ($filter) $sql .= " AND o_gedcom $term '$filter'";
 			$res = dbquery($sql);
 
