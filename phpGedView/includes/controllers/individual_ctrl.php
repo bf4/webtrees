@@ -1735,6 +1735,7 @@ class IndividualControllerRoot extends BaseController {
 		                foreach($families as $famid=>$family) {
 		                    $famids[] = $family->getXref();
 		                }
+										$this->indi->add_family_facts(false);
 		                build_indiv_map($this->getIndiFacts(), $famids);
 			}
 	}
