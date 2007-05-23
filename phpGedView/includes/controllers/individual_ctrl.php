@@ -152,6 +152,7 @@ class IndividualControllerRoot extends BaseController {
 		if ($this->default_tab<-2 || $this->default_tab>7) $this->default_tab=0;
 
 		$this->indi = new Person($indirec, false);
+		$_SESSION['navRoot'] = $this->indi->getXref();
 
 		//-- if the person is from another gedcom then forward to the correct site
 		/*
@@ -685,8 +686,8 @@ class IndividualControllerRoot extends BaseController {
 	function getIndiFacts() {
 		$indifacts = $this->indi->getIndiFacts();
 		//-- sort the facts
-		//usort($indifacts, "compare_facts");
-		sort_facts($indifacts);
+		usort($indifacts, "compare_facts");
+		//sort_facts($indifacts);
 		//-- remove duplicate facts
 		foreach ($indifacts as $key => $value) $indifacts[$key] = serialize($value);
 		$indifacts = array_unique($indifacts);
