@@ -1663,14 +1663,14 @@ function compare_fact_type($afact, $bfact) {
 		if (!isset($factsort[$afact])) {
 			if (preg_match("/ASSO/", $afact)>0) $factsort[$afact] = 52;
 			else {
-				if ($DEBUG) print " bdeat aft";
+				if ($DEBUG) print " ASSO aft";
 				return $aft;
 			}
 		}
 		if (!isset($factsort[$bfact])) {
 			if (preg_match("/ASSO/", $bfact)>0) $factsort[$bfact] = 52;
 			else {
-				if ($DEBUG) print " adeat bef";
+				if ($DEBUG) print " ASSO bef";
 				return $bef;
 			}
 		}
@@ -1713,9 +1713,6 @@ function compare_facts($a, $b) {
 	if (!isset($IGNORE_YEAR)) $IGNORE_YEAR = 0;
 	if (!isset($IGNORE_FACTS)) $IGNORE_FACTS = 0;
 
-	$adate=0;
-	$bdate=0;
-
 	$bef = -1;
 	$aft = 1;
 	if ($ASC) {
@@ -1729,55 +1726,6 @@ function compare_facts($a, $b) {
 	else $brec = $b;
 	if ($DEBUG) print "\n<br />".substr($arec,0,8)."==".substr($brec,0,8)." ";
 
-	// Float birth to the very top
-	if ((preg_match("/1 BIRT/", $arec)>0) && (!preg_match("/1 BIRT/", $brec)>0)) {
-		if ($DEBUG) print "birt bef";
-		return $bef;
-	}
-	if ((preg_match("/1 BIRT/", $brec)>0) && (!preg_match("/1 BIRT/", $arec)>0)) {
-		if ($DEBUG) print "birt aft";
-		return $aft;
-	}
-	// Sinking "changed" to the very bottom
-	if (preg_match("/1 CHAN/", $arec)>0) {
-		if ($DEBUG) print "chan aft";
-		return $aft;
-	}
-	if (preg_match("/1 CHAN/", $brec)>0) {
-		if ($DEBUG) print "chan bef";
-		return $bef;
-	}
-	// Putting Death before burial or cremation.
-	if ((preg_match("/1 DEAT/", $arec)>0) && ((preg_match("/1 BURI/", $brec)>0) || (preg_match("/1 CREM/", $brec)>0))) {
-		if ($DEBUG) print "deat bef buri";
-		return $bef;
-	}
-	if ((preg_match("/1 DEAT/", $brec)>0) && ((preg_match("/1 BURI/", $arec)>0) || (preg_match("/1 CREM/", $arec)>0))) {
-		if ($DEBUG) print "buri aft deat";
-		return $aft;
-	}
-	// cremation then burial is possible, reverse is not logical.
-	if ((preg_match("/1 CREM/", $arec)>0) && (preg_match("/1 BURI/", $brec)>0)) {
-		if ($DEBUG) print "crem bef buri";
-		return $bef;
-	}
-	if ((preg_match("/1 CREM/", $brec)>0) && (preg_match("/1 BURI/", $arec)>0)) {
-		if ($DEBUG) print "crem aft deat";
-		return $aft;
-	}
-
-	// Sink Death, burial and cremation to the bottom of the list.
-	// Oops.  We want to place some data after death. AFN, etc.
-//	if ((preg_match("/1 DEAT/", $arec)>0) && ((stristr($arec, "UNKNOWN")) ||
-//	    (stristr($arec, "DATE Y")) || (!stristr($arec, "DATE")))) {
-//		if ($DEBUG) print "deat aft";
-//		return $aft;
-//	}
-
-	$cta = preg_match("/2 DATE (.*)/", $arec, $match);
-	if ($cta>0) $adate = parse_date(trim($match[1]));
-	$ctb = preg_match("/2 DATE (.*)/", $brec, $match);
-	if ($ctb>0) $bdate = parse_date(trim($match[1]));
 	$ft = preg_match("/1\s(\w+)(.*)/", $arec, $match);
 	if ($ft>0) $afact = $match[1];
 	else $afact="";
@@ -1796,38 +1744,84 @@ function compare_facts($a, $b) {
 		if ($bfact=="EVEN" || $bfact=="FACT") {
 			$ft = preg_match("/2 TYPE (.*)/", $brec, $match);
 			if ($ft>0) $bfact = trim($match[1]);
-		}
+	}
+	}
+	
+	// Sinking "changed" to the very bottom
+	if ($afact=='CHAN') {
+		if ($DEBUG) print "chan aft";
+		return $aft;
+	}
+	if ($bfact=='CHAN') {
+		if ($DEBUG) print "chan bef";
+		return $bef;
+	}
+	
+	//-- dates should always take priority
+	$cfd = compare_facts_date($arec, $brec);
+	if ($cfd!=0) {
+		if ($DEBUG) print "date ".$cfd;
+		return $cfd;
 	}
 
-	//-- if the date of one fact is missing, or it is missing a year, then sort
-	//-- based on fact label
-	if ($cta==0 || $ctb==0 || empty($adate[0]["year"]) || empty($bdate[0]["year"])) {
+	// Float birth to the very top
+	if ($afact=='BIRT' && $bfact!='BIRT') {
+		if ($DEBUG) print "birt bef";
+		return $bef;
+	}
+	if ($afact!='BIRT' && $bfact=='BIRT') {
+		if ($DEBUG) print "birt aft";
+		return $aft;
+	}
+	
+	// Putting Death before burial or cremation.
+	if ($afact=='DEAT' && ($bfact=='BURI' || $bfact=='CREM')) {
+		if ($DEBUG) print "deat bef buri";
+		return $bef;
+	}
+	if ($bfact=='DEAT' && ($afact=='BURI' || $afact=='CREM')) {
+		if ($DEBUG) print "buri aft deat";
+		return $aft;
+	}
+	// cremation then burial is possible, reverse is not logical.
+	if ($afact=='CREM' && $bfact=='BURI') {
+		if ($DEBUG) print "crem bef buri";
+		return $bef;
+	}
+	if ($bfact=='CREM' && $afact=='BURI') {
+		if ($DEBUG) print "crem aft deat";
+		return $aft;
+	}
+
 		if (!$IGNORE_FACTS) {
 			$res = compare_fact_type($afact, $bfact);
 			if ($res!==false) return $res;
 		}
-
-		//-- check if both had a date
-		if($cta<$ctb) {
-			if ($DEBUG) print "daft";
-			return $aft;
-		}
-		if($cta>$ctb) {
-			if ($DEBUG) print "dbef";
-			return $bef;
-		}
-		//-- neither had a date so sort by fact name
-		if(($cta==0)&&($ctb==0)) {
+	//-- sort by fact name
 			if (isset($factarray[$afact])) $afact = $factarray[$afact];
 			else if (isset($pgv_lang[$afact])) $afact = $pgv_lang[$afact];
 			if (isset($factarray[$bfact])) $bfact = $factarray[$bfact];
 			else if (isset($pgv_lang[$bfact])) $bfact = $pgv_lang[$bfact];
 			$c = stringsort($afact, $bfact);
 			if ($DEBUG==1) {
-				if ($c<0) print "bef"; else print "aft";
+		if ($c<0) print "string bef"; else print "string aft";
 			}
 			return $c;
-		}
+}
+
+function compare_facts_date($arec, $brec) {
+	global $factarray, $pgv_lang, $ASC, $IGNORE_YEAR, $IGNORE_FACTS, $DEBUG, $USE_RTL_FUNCTIONS;
+	$cta = preg_match("/2 DATE (.*)/", $arec, $amatch);
+	$ctb = preg_match("/2 DATE (.*)/", $brec, $bmatch);
+	if ($cta==0 || $ctb==0) return 0;
+	$adate = parse_date(trim($amatch[1]));
+	$bdate = parse_date(trim($bmatch[1]));
+	
+	$bef = -1;
+	$aft = 1;
+	if ($ASC) {
+		$bef = 1;
+		$aft = -1;
 	}
 
 	if ($IGNORE_YEAR) {
@@ -1862,15 +1856,15 @@ function compare_facts($a, $b) {
 				if($cta>$ctb) return $bef;
 				//-- neither had a time
 				if(($cta==0)&&($ctb==0)) {
-					$res = compare_fact_type($afact, $bfact);
-					if ($res!==false) return $res;
+				//	$res = compare_fact_type($afact, $bfact);
+				//	if ($res!==false) return $res;
 					return 0;
 				}
 				$atime = trim($amatch[1]);
 				$btime = trim($bmatch[1]);
 				$astamp = strtotime($newa." ".$atime);
 				$bstamp = strtotime($newb." ".$btime);
-				if ($astamp==$bstamp) return compare_fact_type($afact, $bfact);
+				if ($astamp==$bstamp) return 0;//compare_fact_type($afact, $bfact);
 			}
 			if ($DEBUG) print ($astamp < $bstamp) ? "bef".$bef : "aft".$aft;
 			return ($astamp < $bstamp) ? $bef : $aft;
@@ -1888,7 +1882,7 @@ function compare_facts($a, $b) {
  * which works better with the way that facts are sorted.
  * New twist: Run the sort twice, first on dated material, then undated,
  * inserting at the last position that matches sort order.
- * @param $array $factlist	the array of facts to sort
+ * @param array $factlist	the array of facts to sort
  */
 function sort_facts(&$factlist) {
 	global $DEBUG;
