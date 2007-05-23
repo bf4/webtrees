@@ -786,8 +786,8 @@ function check_NN($names) {
  * @todo look at function performance as it is much slower than strtolower
  */
 function str2lower($value) {
-	global $language_settings,$LANGUAGE, $ALPHABET_upper, $ALPHABET_lower;
-	global $all_ALPHABET_upper, $all_ALPHABET_lower;
+	global $ALPHABET_upper, $ALPHABET_lower;
+	static $all_ALPHABET_upper, $all_ALPHABET_lower;
 
 	//-- get all of the upper and lower alphabets as a string
 	if (!isset($all_ALPHABET_upper)) {
@@ -804,27 +804,48 @@ function str2lower($value) {
 		}
 	}
 
-	$value_lower = "";
-	$len = strlen($value);
-
-	//-- loop through all of the letters in the value and find their position in the
-	//-- upper case alphabet.  Then use that position to get the correct letter from the
-	//-- lower case alphabet.
-	for($i=0; $i<$len; $i++) {
-		// Look for UTF8 multi-byte strings
-		$charLen = 1;
-		$letter = substr($value, $i, 1);
-		if ((ord($letter) & 0xE0) == 0xC0) $charLen = 2;		// 2-byte sequence
-		if ((ord($letter) & 0xF0) == 0xE0) $charLen = 3;		// 3-byte sequence
-		if ((ord($letter) & 0xF8) == 0xF0) $charLen = 4;		// 4-byte sequence
-		$letter = substr($value, $i, $charLen);
-		$i += ($charLen - 1);		// advance to end of UTF8 multi-byte string
-
-		$pos = strpos($all_ALPHABET_upper, $letter);
-		if ($pos!==false) $letter = substr($all_ALPHABET_lower, $pos, $charLen);
-		$value_lower .= $letter;
+	$len=strlen($value);
+	for ($i=0; $i<$len;) {
+		$letter=ord($value[$i]);
+		if ($letter < 0x80) { // 7 bit ASCII
+			$value[$i]=strtolower($value[$i]);
+			$i++;
+		} else if ($letter < 0xC0) { // 8 bit ASCII
+			$pos=strpos($all_ALPHABET_upper, $value[$i]);
+			if ($pos===false)
+				$i++;
+			else
+				$value[$i++]=$all_ALPHABET_lower[$pos];
+		} else if ($letter < 0xE0) { // 2 byte UNICODE
+			$pos=strpos($all_ALPHABET_upper, $value[$i].$value[$i+1]);
+			if ($pos===false)
+				$i+=2;
+			else {
+				$value[$i++]=$all_ALPHABET_lower[$pos++];
+				$value[$i++]=$all_ALPHABET_lower[$pos  ];
+			}
+		} else if ($letter < 0xF0) { // 3 byte UNICODE
+			$pos=strpos($all_ALPHABET_upper, $value[$i].$value[$i+1].$value[$i+2]);
+			if ($pos===false)
+				$i+=3;
+			else {
+				$value[$i++]=$all_ALPHABET_lower[$pos++];
+				$value[$i++]=$all_ALPHABET_lower[$pos++];
+				$value[$i++]=$all_ALPHABET_lower[$pos  ];
+			}
+		}	else { // 4 byte UNICODE
+			$pos=strpos($all_ALPHABET_upper, $value[$i].$value[$i+1].$value[$i+2].$value[$i+3]);
+			if ($pos===false)
+				$i+=4;
+			else	{
+				$value[$i++]=$all_ALPHABET_lower[$pos++];
+				$value[$i++]=$all_ALPHABET_lower[$pos++];
+				$value[$i++]=$all_ALPHABET_lower[$pos++];
+				$value[$i++]=$all_ALPHABET_lower[$pos  ];
+			}
+		}
 	}
-	return $value_lower;
+	return $value;
 }
 // END function str2lower
 
@@ -839,8 +860,8 @@ function str2lower($value) {
  * @todo look at function performance as it is much slower than strtoupper
  */
 function str2upper($value) {
-	global $language_settings,$LANGUAGE, $ALPHABET_upper, $ALPHABET_lower;
-	global $all_ALPHABET_upper, $all_ALPHABET_lower;
+	global $ALPHABET_upper, $ALPHABET_lower;
+	static $all_ALPHABET_upper, $all_ALPHABET_lower;
 
 	//-- get all of the upper and lower alphabets as a string
 	if (!isset($all_ALPHABET_upper)) {
@@ -857,27 +878,46 @@ function str2upper($value) {
 		}
 	}
 
-	$value_upper = "";
-	$len = strlen($value);
-
-	//-- loop through all of the letters in the value and find their position in the
-	//-- lower case alphabet.  Then use that position to get the correct letter from the
-	//-- upper case alphabet.
-	for($i=0; $i<$len; $i++) {
-		// Look for UTF8 multi-byte strings
-		$charLen = 1;
-		$letter = substr($value, $i, 1);
-		if ((ord($letter) & 0xE0) == 0xC0) $charLen = 2;		// 2-byte sequence
-		if ((ord($letter) & 0xF0) == 0xE0) $charLen = 3;		// 3-byte sequence
-		if ((ord($letter) & 0xF8) == 0xF0) $charLen = 4;		// 4-byte sequence
-		$letter = substr($value, $i, $charLen);
-		$i += ($charLen - 1);		// advance to end of UTF8 multi-byte string
-
-		$pos = strpos($all_ALPHABET_lower, $letter);
-		if ($pos!==false) $letter = substr($all_ALPHABET_upper, $pos, $charLen);
-		$value_upper .= $letter;
+	$len=strlen($value);
+	for ($i=0; $i<$len;) {
+		$letter=ord($value[$i]);
+		if ($letter < 0x80) { // 7 bit ASCII
+			$value[$i]=strtoupper($value[$i]);
+			$i++;
+		} else if ($letter < 0xC0) { // 8 bit ASCII
+			$pos=strpos($all_ALPHABET_lower, $value[$i]);
+			if ($pos===false)
+				$i++;
+			else
+				$value[$i++]=$all_ALPHABET_upper[$pos];
+		} else if ($letter < 0xE0) { // 2 byte UNICODE
+			$pos=strpos($all_ALPHABET_lower, $value[$i].$value[$i+1]);
+			if ($pos===false)
+		 		$i+=2;
+			else {
+				$value[$i++]=$all_ALPHABET_upper[$pos++];
+				$value[$i++]=$all_ALPHABET_upper[$pos  ];
+			}
+		} else if ($letter < 0xF0) { // 3 byte UNICODE
+			$pos=strpos($all_ALPHABET_lower, $value[$i].$value[$i+1].$value[$i+2]);
+			if ($pos!==false) {
+				$value[$i++]=$all_ALPHABET_upper[$pos++];
+				$value[$i++]=$all_ALPHABET_upper[$pos++];
+				$value[$i++]=$all_ALPHABET_upper[$pos  ];
+			} else
+				$i+=3;
+		}	else { // 4 byte UNICODE
+			$pos=strpos($all_ALPHABET_lower, $value[$i].$value[$i+1].$value[$i+2].$value[$i+3]);
+			if ($pos!==false) {
+				$value[$i++]=$all_ALPHABET_upper[$pos++];
+				$value[$i++]=$all_ALPHABET_upper[$pos++];
+				$value[$i++]=$all_ALPHABET_upper[$pos++];
+				$value[$i++]=$all_ALPHABET_upper[$pos  ];
+			} else
+				$i+=4;
+		}
 	}
-	return $value_upper;
+	return $value;
 }
 // END function str2upper
 
