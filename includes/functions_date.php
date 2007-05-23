@@ -998,14 +998,14 @@ function parse_date($datestr) {
 	str2lower($pgv_lang["october_1st"])=>"oct",str2lower($pgv_lang["november_1st"])=>"nov",str2lower($pgv_lang["december_1st"])=>"dec"
 	);
 
-	$ct = count($strs);
-	for($i=0; $i<$ct; $i++) {
+	$ctstrs = count($strs);
+	for($i=0; $i<$ctstrs; $i++) {
 		if (isset($longmonth[$strs[$i]])) {
 			$strs[$i] = $longmonth[$strs[$i]];
 		}
 	}
 	
-	if ($ct==3) {
+	if ($ctstrs==3) {
 		//-- this section will convert a date like 2005.10.10 to 10 oct 2005
 		if ($strs[0]>31 && $strs[2]<32) {
 			$strs[1] = array_search($strs[1], $monthtonum);
@@ -1013,7 +1013,7 @@ function parse_date($datestr) {
 		}
 	}
 
-	for($i=0; $i<$ct; $i++) {
+	for($i=0; $i<$ctstrs; $i++) {
 		$ct = preg_match("/^\d+$/", $strs[$i]);
 		if ($ct>0) {
 			if (isset($strs[$i+1]) && ($strs[$i]<32)) {
