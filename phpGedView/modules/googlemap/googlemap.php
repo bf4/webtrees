@@ -564,12 +564,12 @@ function build_indiv_map($indifacts, $famids) {
 						print "var Marker{$j} = new GMarker(new GLatLng({$markers[$j]["lati"]}, {$markers[$j]["lng"]}), {title:\"{$tooltip}\"});\n";
 					} else {
 						print "var Marker{$j}_flag = new GIcon();\n";
-						print "var Marker{$j}_flag.image = \"".$markers[$j]["icon"]."\";\n";
-						print "var Marker{$j}_flag.shadow = \"modules/googlemap/flag_shadow.png\";\n";
-						print "var Marker{$j}_flag.iconSize = new GSize(25, 15);\n";
-						print "var Marker{$j}_flag.shadowSize = new GSize(35, 45);\n";
-						print "var Marker{$j}_flag.iconAnchor = new GPoint(1, 45);\n";
-						print "var Marker{$j}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
+						print "    Marker{$j}_flag.image = \"".$markers[$j]["icon"]."\";\n";
+						print "    Marker{$j}_flag.shadow = \"modules/googlemap/flag_shadow.png\";\n";
+						print "    Marker{$j}_flag.iconSize = new GSize(25, 15);\n";
+						print "    Marker{$j}_flag.shadowSize = new GSize(35, 45);\n";
+						print "    Marker{$j}_flag.iconAnchor = new GPoint(1, 45);\n";
+						print "    Marker{$j}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
 						print "var Marker{$j} = new GMarker(new GLatLng(".$markers[$j]["lati"].", ".$markers[$j]["lng"]."), {icon:Marker{$j}_flag, title:\"".$tooltip."\"});\n";
 					}
 					print "GEvent.addListener(Marker{$j}, \"click\", function() {\n";
@@ -617,12 +617,12 @@ function build_indiv_map($indifacts, $famids) {
 						print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".$markers[$j]["lati"].", ".$markers[$j]["lng"]."), {title:\"{$tooltip}\"});\n";
 					} else {
 						print "var Marker{$j}_{$markersindex}_flag = new GIcon();\n";
-						print "var Marker{$j}_{$markersindex}_flag.image = \"".$markers[$j]["icon"]."\";\n";
-						print "var Marker{$j}_{$markersindex}_flag.shadow = \"modules/googlemap/flag_shadow.png\";\n";
-						print "var Marker{$j}_{$markersindex}_flag.iconSize = new GSize(25, 15);\n";
-						print "var Marker{$j}_{$markersindex}_flag.shadowSize = new GSize(35, 45);\n";
-						print "var Marker{$j}_{$markersindex}_flag.iconAnchor = new GPoint(1, 45);\n";
-						print "var Marker{$j}_{$markersindex}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
+						print "    Marker{$j}_{$markersindex}_flag.image = \"".$markers[$j]["icon"]."\";\n";
+						print "    Marker{$j}_{$markersindex}_flag.shadow = \"modules/googlemap/flag_shadow.png\";\n";
+						print "    Marker{$j}_{$markersindex}_flag.iconSize = new GSize(25, 15);\n";
+						print "    Marker{$j}_{$markersindex}_flag.shadowSize = new GSize(35, 45);\n";
+						print "    Marker{$j}_{$markersindex}_flag.iconAnchor = new GPoint(1, 45);\n";
+						print "    Marker{$j}_{$markersindex}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
 						print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".$markers[$j]["lati"].", ".$markers[$j]["lng"]."), {icon:Marker{$j}_{$markersindex}_flag, title:\"{$tooltip}\"});\n";
 					}
 					print "var Marker{$j}_{$markersindex}Info = [\n";
@@ -681,12 +681,12 @@ function build_indiv_map($indifacts, $famids) {
 									print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".($markers[$j]["lati"]-(0.0015*$markersindex)).", ".($markers[$j]["lng"]+(0.0025*$markersindex))."), {title:\"{$tooltip}\"});\n";
 								} else {
 									print "var Marker{$j}_{$markersindex}_flag = new GIcon();\n";
-									print "var Marker{$j}_{$markersindex}_flag.image = \"".$markers[$j]["icon"]."\";\n";
-									print "var Marker{$j}_{$markersindex}_flag.shadow = \"modules/googlemap/flag_shadow.png\";\n";
-									print "var Marker{$j}_{$markersindex}_flag.iconSize = new GSize(25, 15);\n";
-									print "var Marker{$j}_{$markersindex}_flag.shadowSize = new GSize(35, 45);\n";
-									print "var Marker{$j}_{$markersindex}_flag.iconAnchor = new GPoint(1, 45);\n";
-									print "var Marker{$j}_{$markersindex}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
+									print "    Marker{$j}_{$markersindex}_flag.image = \"".$markers[$j]["icon"]."\";\n";
+									print "    Marker{$j}_{$markersindex}_flag.shadow = \"modules/googlemap/flag_shadow.png\";\n";
+									print "    Marker{$j}_{$markersindex}_flag.iconSize = new GSize(25, 15);\n";
+									print "    Marker{$j}_{$markersindex}_flag.shadowSize = new GSize(35, 45);\n";
+									print "    Marker{$j}_{$markersindex}_flag.iconAnchor = new GPoint(1, 45);\n";
+									print "    Marker{$j}_{$markersindex}_flag.infoWindowAnchor = new GPoint(5, 1);\n";
 									print "var Marker{$j}_{$markersindex} = new GMarker(new GLatLng(".($markers[$j]["lati"]-(0.0015*$markersindex)).", ".($markers[$j]["lng"]+(0.0025*$markersindex))."), {icon:Marker{$j}_{$markersindex}_flag, title:\"{$tooltip}\"});\n";
 								}
 								print "var Marker{$j}_{$markersindex}Info = [\n";
