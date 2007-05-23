@@ -1401,7 +1401,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 //				$result = dbquery($sql);
 //				$task = $result->fetchrow(DB_FETCHMODE_ASSOC);
 //     			$task = db_cleanup($task);
-				$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$taskid['t_id'].'" class="link">'.PrintReady($pgv_lang['details']).'</a></td><td class="list_label">'.PrintReady($taskid['t_title']).'</td><td class="list_label">'.$this->checkComplete($taskid).'</td><td class="list_label">'.get_changed_date(date("d M Y", $taskid["t_startdate"])).'</td></tr>';
+//				$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$taskid['t_id'].'" class="link">'.PrintReady($pgv_lang['details']).'</a></td><td class="list_label">'.PrintReady($taskid['t_title']).'</td><td class="list_label">'.$this->checkComplete($taskid).'</td><td class="list_label">'.get_changed_date(date("d M Y", $taskid["t_startdate"])).'</td></tr>';
+				$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$taskid['t_id'].'">'.PrintReady($pgv_lang['details']).'</a></td><td class="list_label">'.PrintReady($taskid['t_title']).'</td><td class="list_label">'.$this->checkComplete($taskid).'</td><td class="list_label">'.get_changed_date(date("d M Y", $taskid["t_startdate"])).'</td></tr>';
 			}
 		}
 		return $out;
@@ -1502,7 +1503,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 				if ($result->numRows()>0) {
 					$task = $result->fetchrow(DB_FETCHMODE_ASSOC);
 					$task = db_cleanup($task);
-					$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'" class="link">'.$pgv_lang['details'].'</a></td><td class="list_label">'.PrintReady($task['t_title']).'</td><td class="list_label">'.$this->checkComplete($task).'</td><td class="list_label">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td></tr>';
+//					$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'" class="link">'.$pgv_lang['details'].'</a></td><td class="list_label">'.PrintReady($task['t_title']).'</td><td class="list_label">'.$this->checkComplete($task).'</td><td class="list_label">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td></tr>';
+					$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'">'.$pgv_lang['details'].'</a></td><td class="list_label">'.PrintReady($task['t_title']).'</td><td class="list_label">'.$this->checkComplete($task).'</td><td class="list_label">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td></tr>';
 				}
 				$result->free();
 			}
