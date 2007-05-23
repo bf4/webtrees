@@ -202,6 +202,7 @@ class Source extends GedcomRecord {
 		uasort($this->indilist, "itemsort");
 		
 		//-- load up the families with 1 query
+		$famids = array();
 		foreach($this->indilist as $gid=>$indi) {
 			$ct = preg_match_all("/1 FAMS @(.*)@/", $indi["gedcom"], $match, PREG_SET_ORDER);
 			for($i=0; $i<$ct; $i++) {
