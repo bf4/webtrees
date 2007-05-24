@@ -197,6 +197,7 @@ function check_for_import($ged) {
 	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS;
 
 	if (DB::isError($DBCONN)) return false;
+	if (count($GEDCOMS)==0) return false;
 	
 	if (!isset($GEDCOMS[$ged]["imported"])) {
 		$GEDCOMS[$ged]["imported"] = false;
