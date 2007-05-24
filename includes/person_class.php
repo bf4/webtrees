@@ -170,10 +170,11 @@ class Person extends GedcomRecord {
 		// else we get name from gedcom record
 		if (stristr($subtag, "/")) $name = $subtag;
 		else if (empty($subtag)) {
-//			$namerec = get_sub_record(1, "1 NAME", $this->gedrec, $num);
-//			$name = get_gedcom_value("NAME", 1, $namerec, '', false);
+			//we need only the 1 NAME main names, not all the individual names
+			$namerec = get_sub_record(1, "1 NAME", $this->gedrec, $num);
+			$name = get_gedcom_value("NAME", 1, $namerec, '', false);
 			//-- names are stored in the $indilist cache [names] element
-			if (isset($indilist[$this->getXref()]['names'][$num-1])) $name = $indilist[$this->getXref()]['names'][$num-1][0];
+//			if (isset($indilist[$this->getXref()]['names'][$num-1])) $name = $indilist[$this->getXref()]['names'][$num-1][0];
 		}
 		else {
 			$namerec = get_sub_record(2, "2 ".$subtag, $this->gedrec, $num);

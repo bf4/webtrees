@@ -255,9 +255,14 @@ function print_list_repository($key, $value, $useli=true) {
  */
 function print_indi_table($datalist, $legend="", $option="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION, $GEDCOM_ID_PREFIX, $GEDCOM;
+	
 	if (count($datalist)<1) return;
 //	$name_subtags = array("", "_HEB", "ROMN", "_AKA");
 //	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
+
+	$name_subtags = array("", "_AKA", "_HEB", "ROMN");     //added back
+	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";   //added back
+
 	require_once("js/sorttable.js.htm");
 	require_once("includes/person_class.php");
 	if (empty($legend)) $legend=$pgv_lang["individuals"];
@@ -355,20 +360,25 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo " align=\"".get_align($name)."\">";
 		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		echo $person->getSexImage();
-// Do we really want to show all of a person's names? 
-		for($ni=1; $ni<=$person->getNameCount(); $ni++) {
-			$addname = $person->getSortableName('', $ni);
-			if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-		}
-// this code could iterate over an indi record up to 50 times
-// adds about 2 secs to a list of 128 people
-//		foreach ($name_subtags as $k=>$subtag) {
-//			for ($num=1; $num<9; $num++) {
-//				$addname = $person->getSortableName($subtag, $num);
-//				if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$person->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-//				if (empty($addname)) break;
-//			}
+		
+// Do we really want to show all of a person's names? Perhaps this could be optional in the lists 
+//		for($ni=1; $ni<=$person->getNameCount(); $ni++) {
+//			$addname = $person->getSortableName('', $ni);
+//			if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 //		}
+// this code could iterate over an indi record up to 50 times
+// adds about 2 secs to a list of 128 people  
+// need a better solution - for now returned the code
+// removing the code causes us not to see alternate names in the list as expected		
+
+		foreach ($name_subtags as $k=>$subtag) {
+			for ($num=1; $num<9; $num++) {
+				$addname = $person->getSortableName($subtag, $num);
+				if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$person->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+				if (empty($addname)) break;
+			}
+		}
+
 		echo "</td>";
 		//-- SOSA
 		if ($option=="sosa") {
@@ -1323,11 +1333,13 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 		//-- Record name(s)
 		if ($record->type=="FAM") $name = $record->getSortableName(true);
 		else $name = $record->getSortableName();
+		
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
 		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($record->type=="INDI") {
 			echo $record->getSexImage();
-			$name_subtags = array("", "_HEB", "ROMN", "_AKA");
+//  			$name_subtags = array("", "_HEB", "ROMN", "_AKA");
+ 			$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 			if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 			foreach ($name_subtags as $k=>$subtag) {
 				for ($num=1; $num<9; $num++) {
