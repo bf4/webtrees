@@ -1070,9 +1070,9 @@ function parse_date($datestr) {
 	if (strpos($e, "#")) {
 		if ($m=="") $m=1;
 		if ($d=="") $d=1;
-		if (strpos($e, "#DHEBREW")) list($m, $d, $y) = explode("/", JDToGregorian(JewishToJD($m, $d, $y)));
-		if (strpos($e, "#DFRENCH")) list($m, $d, $y) = explode("/", JDToGregorian(FrenchToJD($m, $d, $y)));
-		if (strpos($e, "#DJULIAN")) list($m, $d, $y) = explode("/", JDToGregorian(JulianToJD($m, $d, $y)));
+		if ($e=="#dhebrew") list($m, $d, $y) = explode("/", JDToGregorian(JewishToJD($m, $d, $y)));
+		if ($e=="#dfrench r") list($m, $d, $y) = explode("/", JDToGregorian(FrenchToJD($m, $d, $y)));
+		if ($e=="#djulian") list($m, $d, $y) = explode("/", JDToGregorian(JulianToJD($m, $d, $y)));
 	} else {
 		if ($m=="") $m=0;
 		if ($d=="") $d=0;
