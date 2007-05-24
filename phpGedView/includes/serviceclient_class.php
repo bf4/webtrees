@@ -823,11 +823,11 @@ if ($this->DEBUG) print "In mergeGedcomRecord($xref)<br />";
 		//-- get the last change date of the record
 		$change_date = get_gedcom_value("CHAN:DATE", 1, $localrec, '', false);
 		if (empty($change_date)) {
-			//print $xref." no change<br />";
+if ($this->DEBUG) print $xref." no change date<br />";
 			$this->authenticate();
 			if (!is_object($this->soapClient) || $this->isError($this->soapClient)) return false;
 			$result = $this->soapClient->getGedcomRecord($this->SID, $xref);
-			//print_r($result);
+if ($this->DEBUG) print_r($result);
 			if (PEAR::isError($result) || isset($result->faultcode) || get_class($result)=='SOAP_Fault' || is_object($result)) {
 				if (isset($result->faultstring)) {
 					AddToLog($result->faultstring);
@@ -868,6 +868,7 @@ if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
 			// Time Clock (determines how often a record is checked)
 			if ($change_time < time()-(60*60*24*14)) // if the last update (to the remote individual) was made more than 14 days ago
 			{
+if ($this->DEBUG) print __LINE__."Old change date... check for updates";
 				//$change_date= "1 JAN 2000";
 				$this->authenticate();
 				if (!is_object($this->soapClient) || $this->isError($this->soapClient)) return false;

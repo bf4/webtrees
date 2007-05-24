@@ -1884,6 +1884,7 @@ function compare_facts_date($arec, $brec) {
  * inserting at the last position that matches sort order.
  * @param array $factlist	the array of facts to sort
  */
+/*-- this function is depricated for poor performance
 function sort_facts(&$factlist) {
 	global $DEBUG;
 	$count = count($factlist);
@@ -1974,7 +1975,7 @@ function sort_facts(&$factlist) {
 	}
 	$factlist = $newfacts;
 }
-
+*/
 /**
  * fact date sort
  *
