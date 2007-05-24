@@ -460,7 +460,6 @@ function update_places($gid, $indirec, $update = false) {
  */
 function update_dates($gid, $indirec) {
 	global $FILE, $TBLPREFIX, $DBCONN, $GEDCOMS;
-
 	$count = 0;
 	$pt = preg_match("/\d DATE (.*)/", $indirec, $match);
 	if ($pt == 0)
@@ -493,24 +492,24 @@ function update_dates($gid, $indirec) {
 				$datestamp .= (int) $date['day'];
 				$sql = 'INSERT INTO ' . $TBLPREFIX . 'dates VALUES(\'' . $DBCONN->escapeSimple($date["day"]) . '\',\'' . $DBCONN->escapeSimple(str2upper($date["month"])) . "','" . $DBCONN->escapeSimple($date["mon"]) . "','" . $DBCONN->escapeSimple($date["year"]) . "','" . $DBCONN->escapeSimple($datestamp) . "','" . $DBCONN->escapeSimple($fact) . "','" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "',";
 				if (isset ($date["ext"])) {
-					preg_match("/@#D(.*)@/", $date["ext"], $extract_type);
-				$date_types = array (
-					"@#DGREGORIAN@",
-					"@#DJULIAN@",
-					"@#DHEBREW@",
-					"@#DFRENCH R@",
-					"@#DROMAN@",
-					"@#DUNKNOWN@"
-				);
-				if (isset ($extract_type[0]) && in_array($extract_type[0], $date_types))
-					$sql .= "'" . $extract_type[0] . "')";
-				else
+					preg_match("/@#D(.*)@/", str2upper($date["ext"]), $extract_type);
+					$date_types = array (
+						"@#DGREGORIAN@",
+						"@#DJULIAN@",
+						"@#DHEBREW@",
+						"@#DFRENCH R@",
+						"@#DROMAN@",
+						"@#DUNKNOWN@"
+					);
+					if (isset ($extract_type[0]) && in_array($extract_type[0], $date_types))
+						$sql .= "'" . $extract_type[0] . "')";
+					else
+						$sql .= "NULL)";
+				} else
 					$sql .= "NULL)";
-			} else
-				$sql .= "NULL)";
-			$res = dbquery($sql);
+				$res = dbquery($sql);
 
-			$count++;
+				$count++;
 			}
 		}
 	}
