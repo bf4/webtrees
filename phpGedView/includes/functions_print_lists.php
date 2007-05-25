@@ -257,9 +257,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION, $GEDCOM_ID_PREFIX, $GEDCOM;
 	
 	if (count($datalist)<1) return;
-//	$name_subtags = array("", "_HEB", "ROMN", "_AKA");
-//	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
-
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");     //added back
 	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";   //added back
 
@@ -589,8 +586,8 @@ function print_surn_table($datalist, $target="INDI") {
 function print_fam_table($datalist, $legend="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
-	//$name_subtags = array("", "_HEB", "ROMN", "_AKA");
-	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
+	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
+ 	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM"; 
 	require_once("js/sorttable.js.htm");
 	require_once("includes/family_class.php");
 	if (empty($legend)) $legend=$pgv_lang["families"];
@@ -693,17 +690,17 @@ function print_fam_table($datalist, $legend="") {
 		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($husb->xref) echo $husb->getSexImage();
 		
-		for($ni=1; $ni<=$husb->getNameCount(); $ni++) {
-			$addname = $husb->getSortableName('', $ni);
-			if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-		}
-//		foreach ($name_subtags as $k=>$subtag) {
-//			for ($num=1; $num<9; $num++) {
-//				$addname = $husb->getSortableName($subtag, $num);
-//				if (!empty($addname) and $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-//				if (empty($addname)) break;
-//			}
+//		for($ni=1; $ni<=$husb->getNameCount(); $ni++) {
+//			$addname = $husb->getSortableName('', $ni);
+//			if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 //		}
+ 		foreach ($name_subtags as $k=>$subtag) {
+ 			for ($num=1; $num<9; $num++) {
+ 				$addname = $husb->getSortableName($subtag, $num);
+ 				if (!empty($addname) and $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+ 				if (empty($addname)) break;
+ 			}
+ 		}
 		echo "</td>";
 		//-- Wife ID
 		if ($SHOW_ID_NUMBERS) {
@@ -720,17 +717,17 @@ function print_fam_table($datalist, $legend="") {
 		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($wife->xref) echo $wife->getSexImage();
 		
-		for($ni=1; $ni<=$wife->getNameCount(); $ni++) {
-			$addname = $wife->getSortableName('', $ni);
-			if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-		}
-//		foreach ($name_subtags as $k=>$subtag) {
-//			for ($num=1; $num<9; $num++) {
-//				$addname = $wife->getSortableName($subtag, $num);
-//				if (!empty($addname) and $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-//				if (empty($addname)) break;
-//			}
+//		for($ni=1; $ni<=$wife->getNameCount(); $ni++) {
+//			$addname = $wife->getSortableName('', $ni);
+//			if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 //		}
+ 		foreach ($name_subtags as $k=>$subtag) {
+ 			for ($num=1; $num<9; $num++) {
+ 				$addname = $wife->getSortableName($subtag, $num);
+ 				if (!empty($addname) and $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+ 				if (empty($addname)) break;
+ 			}
+ 		}
 		echo "</td>";
 		//-- Marriage date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
@@ -1191,19 +1188,19 @@ function print_changes_table($datalist) {
 		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($record->type=="INDI") {
 			echo $record->getSexImage();
-			for($ni=1; $ni<=$record->getNameCount(); $ni++) {
-				$addname = $record->getSortableName('', $ni);
-				if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-			}
-//			$name_subtags = array("", "_HEB", "ROMN", "_AKA");
-//			if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
-//			foreach ($name_subtags as $k=>$subtag) {
-//				for ($num=1; $num<9; $num++) {
-//					$addname = $record->getSortableName($subtag, $num);
-//					if (!empty($addname) and $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-//					if (empty($addname)) break;
-//				}
+//			for($ni=1; $ni<=$record->getNameCount(); $ni++) {
+//				$addname = $record->getSortableName('', $ni);
+//				if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 //			}
+			$name_subtags = array("", "_AKA", "_HEB", "ROMN");
+			if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
+ 			foreach ($name_subtags as $k=>$subtag) {
+ 				for ($num=1; $num<9; $num++) {
+ 					$addname = $record->getSortableName($subtag, $num);
+ 					if (!empty($addname) and $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+ 					if (empty($addname)) break;
+ 				}
+ 			}
 		}
 		if ($record->type=="SOUR" or $record->type=="REPO") {
 			$name_subtags = array("_HEB", "ROMN");
@@ -1338,7 +1335,6 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($record->type=="INDI") {
 			echo $record->getSexImage();
-//  			$name_subtags = array("", "_HEB", "ROMN", "_AKA");
  			$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 			if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 			foreach ($name_subtags as $k=>$subtag) {

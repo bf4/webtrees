@@ -718,6 +718,8 @@ function get_first_letter($text, $import=false) {
 		if ((ord($letter) & 0xF8) == 0xF0) $charLen = 4;		// 4-byte sequence
 		$letter = substr($text, 0, $charLen);
 	}
+        if ($letter=="/") $letter="@"; //where has @P.N. vanished from names with a null firstname?
+	
 	return $letter;
 }
 

@@ -307,8 +307,9 @@ function tool_tip_text($marker) {
 	if (!empty($marker['name']) && (displayDetailsById($marker['name']) || showLivingNameById($marker['name'])))
 		$tool_tip.=": ".PrintReady(get_person_name($marker['name']));
 	if (!empty($marker['date']))
-		$tool_tip.=" - ".get_changed_date($marker['date']);
+		$tool_tip.=" - ".get_changed_date($marker['date']); 
 	return $tool_tip;
+// dates & RTL is not OK - adding PrintReady does not solve it
 }
 
 function build_indiv_map($indifacts, $famids) {
