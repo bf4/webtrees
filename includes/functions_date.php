@@ -800,119 +800,99 @@ function get_age($indirec, $datestr, $style=1) {
 	$realbirthdt="";
 	$bdatestr = "";
 
-	//-- get birth date for age calculations
-	$btag = "1 BIRT";
-	if (strpos($indirec, $btag)===false) $btag = "1 CHR";
-	if (strpos($indirec, $btag)) {
-		$index = 1;
+	$min_birt_jd=0; $max_birt_jd=0; // Earliest/latest dates for the birth.
+	$min_even_jd=0; $max_even_jd=0; // Earliest/latest dates for the event.
+	$approx=false;
+
+	// If the person has no birth, try a christening/baptism date instead.
+	$btag='1 BIRT';
+	if (strpos($indirec, $btag)===false) $btag='1 CHR';
+	if (strpos($indirec, $btag)===false) $btag='1 BAPM';
+	if (strpos($indirec, $btag)===false) return '';
+
+	$index = 1;
+	$birthrec = get_sub_record(1, $btag, $indirec, $index);
+	while(!empty($birthrec)) {
+		if (preg_match("/2 DATE (.+)/", $birthrec, $match)) {
+			$date=parse_date(trim($match[1]));
+			if (!empty($date[0]) && $date[0]['jd']>0) {
+				if ($date[0]['ext']!='')
+					$approx=true;
+				if ($min_birt_jd==0)
+					$min_birt_jd=$date[0]['jd'];
+				else
+					$min_birt_jd=min($min_birt_jd, $date[0]['jd']);
+			}
+			if (!empty($date[1]) && $date[1]['jd']>0) {
+				if ($date[1]['ext']!='')
+					$approx=true;
+				$max_birt_jd=max($max_birt_jd, $date[1]['jd']);
+			}
+		}
+		$index++;
 		$birthrec = get_sub_record(1, $btag, $indirec, $index);
-		while(!empty($birthrec)) {
-			$hct = preg_match("/2 DATE.*(@#DHEBREW@)/", $birthrec, $match);
-			if ($hct>0) {
-				$dct = preg_match("/2 DATE (.+)/", $birthrec, $match);
-				$hebrew_birthdate = parse_date(trim($match[1]));
-				if ($USE_RTL_FUNCTIONS && $index==1) $birthdate = jewishGedcomDateToGregorian($hebrew_birthdate);
-			}
-			else {
-				$dct = preg_match("/2 DATE (.+)/", $birthrec, $match);
-				if ($dct>0) $birthdate = parse_date(trim($match[1]));
-			}
-			$index++;
-			$birthrec = get_sub_record(1, $btag, $indirec, $index);
-		}
 	}
-	$convert_hebrew = false;
-	//-- check if it is a hebrew date
-	$hct = preg_match("/@#DHEBREW@/", $datestr, $match);
-	if ($USE_RTL_FUNCTIONS && $hct>0) {
-		if (isset($hebrew_birthdate)) $birthdate = $hebrew_birthdate;
-		else $convert_hebrew = true;
+	if ($min_birt_jd==0)
+		return;
+	if ($max_birt_jd==0)
+		$max_birt_jd=$min_birt_jd;
+
+	$date=parse_date($datestr);
+	if (!empty($date[0]) && $date[0]['jd']>0) {
+		if ($date[0]['ext']!='')
+			$approx=true;
+		$min_even_jd=$date[0]['jd'];
 	}
-	if ((strtoupper(trim($datestr))!="UNKNOWN")&&(!empty($birthdate[0]["year"]))) {
-		$bt = preg_match("/(\d\d\d\d).*(\d\d\d\d)/", $datestr, $bmatch);
-		if ($bt>0) {
-			$date = parse_date($datestr);
-			if ($convert_hebrew) $date = jewishGedcomDateToGregorian($date);
-			$age1 = $date[0]["year"]-$birthdate[0]["year"];
-			$age2 = $date[1]["year"]-$birthdate[0]["year"];
-			if ($style) $realbirthdt = " <span class=\"age\">(".$pgv_lang["age"]." ";
-			$realbirthdt .= $pgv_lang["apx"]." ".$age1;
-			if ($age2 > $age1) $realbirthdt .= "-".$age2;
-			if ($style) $realbirthdt .= ")</span>";
-		}
-		else {
-			$date = parse_date($datestr);
-			if ($convert_hebrew) $date = jewishGedcomDateToGregorian($date);
-			if (!empty($date[0]["year"])) {
-				$age = $date[0]["year"]-$birthdate[0]["year"];
-				if (!empty($birthdate[0]["mon"])) {
-					if (!empty($date[0]["mon"])) {
-						if ($date[0]["mon"]<$birthdate[0]["mon"]) $age--;
-						else if (($date[0]["mon"]==$birthdate[0]["mon"])&&(!empty($birthdate[0]["day"]))) {
-							if (!empty($date[0]["day"])) {
-								if ($date[0]["day"]<$birthdate[0]["day"]) $age--;
-							}
-						}
-					}
-				}
-				if ($style) $realbirthdt = " <span class=\"age\">(".$pgv_lang["age"];
-				$at = preg_match("/([a-zA-Z]{3})\.?/", $birthdate[0]["ext"], $amatch);
-				if ($at==0) $at = preg_match("/([a-zA-Z]{3})\.?/", $datestr, $amatch);
-				if ($at>0) {
-					if ($amatch[1]!='ABT' && in_array(strtolower($amatch[1]), $estimates)) {
-						$realbirthdt .= " ".$pgv_lang["apx"];
-					}
-				}
-				// age in months if < 2 years
-				if ($age<2) {
-					$y1 = $birthdate[0]["year"];
-					$y2 = $date[0]["year"];
-					$m1 = $birthdate[0]["mon"];
-					$m2 = $date[0]["mon"];
-					$d1 = $birthdate[0]["day"];
-					$d2 = $date[0]["day"];
-					$apx = (empty($m2) || empty($m1) || empty($d2) || empty($d1)); // approx
-					if ($apx) $realbirthdt .= " ".$pgv_lang["apx"];
-					if (empty($m2)) $m2=$m1;
-					if (empty($m1)) $m1=$m2;
-					if (empty($d2)) $d2=$d1;
-					if (empty($d1)) $d1=$d2;
-					if ($y2>$y1) $m2 +=($y2-$y1)*12;
-					else if ($y2<$y1) $m2 -= ($y1-$y2)*12;
-					$age = $m2-$m1;
-					if ($d2<$d1) $age--;
-					// age in days if < 1 month
-					if ($age<1 && $age>=-1) {
-						if ($m2>$m1) {
-							if ($m1==2) $d2+=28;
-							else if ($m1==4 or $m1==6 or $m1==9 or $m1==11) $d2+=30;
-							else $d2+=31;
-						}
-						else if ($m2<$m1) {
-							if ($m1==2) $d2-=28;
-							else if ($m1==4 or $m1==6 or $m1==9 or $m1==11) $d2-=30;
-							else $d2-=31;
-						}
-						$age = $d2-$d1;
-						$realbirthdt .= " ".$age." ";
-						if ($age < 2) $realbirthdt .= $pgv_lang["day1"];
-						else $realbirthdt .= $pgv_lang["days"];
-					} else if ($age==12 and $apx) {
-						$realbirthdt .= " 1 ".$pgv_lang["year1"]; // approx 1 year
-					} else {
-						$realbirthdt .= " ".$age." ";
-						if ($age < 2) $realbirthdt .= $pgv_lang["month1"];
-						else $realbirthdt .= $pgv_lang["months"];
-					}
-				}
-				else $realbirthdt .= " ".$age;
-				if ($style) $realbirthdt .= ")</span>";
-				if ($age == 0) $realbirthdt = ""; // empty age
-			}
-		}
+	if (!empty($date[1]) && $date[1]['jd']>0) {
+		if ($date[1]['ext']!='')
+			$approx=true;
+		$max_even_jd=$date[1]['jd'];
 	}
-	if ($style) return $realbirthdt;
-	else return trim($realbirthdt);
+
+	if ($min_even_jd==0)
+		return;
+	if ($max_even_jd==0)
+		$max_even_jd=$min_even_jd;
+
+	// We now have earliest/latest possible dates for both the birth and the event.
+  $min_age=$min_even_jd - $max_birt_jd;
+	$max_age=$max_even_jd - $min_birt_jd;
+
+	// Convert to days/months/years/etc.  NB - this is not perfect, as
+	// the birth/event dates may be in different calendars.
+	if (abs($max_age)<60) { // show in days
+		if ($min_age==$max_age)
+			if ($max_age-$min_age==1)
+				$age="1 {$pgv_lang['day1']}";
+			else
+				$age="$max_age {$pgv_lang['days']}";
+		else
+			$age="$min_age - $max_age {$pgv_lang['days']}";
+	} else if (abs($max_age)<731) { // show in months
+		$min_age=floor($min_age/30);
+		$max_age=floor($max_age/30);
+		if ($min_age==$max_age)
+			if ($max_age-$min_age==1)
+				$age="1 {$pgv_lang['month1']}";
+			else
+				$age="$max_age {$pgv_lang['months']}";
+		else
+			$age="$min_age - $max_age {$pgv_lang['months']}";
+	} else { // show in years
+		$min_age=floor($min_age/365.25);
+		$max_age=floor($max_age/365.25);
+		if ($min_age==$max_age)
+			if ($max_age-$min_age==1)
+				$age="1 {$pgv_lang['year1']}";
+			else
+				$age="$max_age {$pgv_lang['years']}";
+		else
+			$age="$min_age - $max_age {$pgv_lang['years']}";
+	}
+
+	if ($approx) $age.=" {$pgv_lang['apx']}";
+	if ($style)  $age="<span class=\"age\">({$pgv_lang['age']} {$age})</span>";
+	return $age;
 }
 
 /**
