@@ -1296,6 +1296,79 @@ function search_indis_dates($day="", $month="", $year="", $fact="", $allgeds=fal
 	return $myindilist;
 }
 
+/**
+ * Search the dates table for individuals that had events in the given range
+ *
+ * @author	yalnifj
+ * @param	int $day the day of the month to search for, leave empty to include all
+ * @param	string $month the 3 letter abbr. of the month to search for, leave empty to include all
+ * @param	int $year the year to search for, leave empty to include all
+ * @param	string $fact the facts to include (use a comma seperated list to include multiple facts)
+ * 				prepend the fact with a ! to not include that fact
+ * @param	boolean $allgeds setting if all gedcoms should be searched, default is false
+ * @return	array $myindilist array with all individuals that matched the query
+ */
+function search_indis_daterange($start, $end, $fact='', $allgeds=false, $ANDOR="AND") {
+	global $TBLPREFIX, $GEDCOM, $indilist, $DBCONN, $REGEXP_DB, $DBTYPE, $GEDCOMS;
+	$myindilist = array();
+	if (stristr($DBTYPE, "mysql")!==false) $term = "REGEXP";
+	else if (stristr($DBTYPE, "pgsql")!==false) $term = "~*";
+	else $term='LIKE';
+	
+	$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname, d_gid, d_fact FROM ".$TBLPREFIX."dates, ".$TBLPREFIX."individuals WHERE i_id=d_gid AND i_file=d_file AND d_type is null ";
+//	if (!empty($day)) $sql .= "AND d_day='".$DBCONN->escapeSimple($day)."' ";
+//	if (!empty($month)) $sql .= "AND d_month='".$DBCONN->escapeSimple(str2upper($month))."' ";
+//	if (!empty($year)) $sql .= "AND d_year='".$DBCONN->escapeSimple($year)."' ";
+	$mod = 1;
+	for($i = strlen($start); $i>0; $i--) $mod=$mod*10;
+	if ($mod==100000000) $sql .= "AND d_datestamp>=".$start." AND d_datestamp<=".$end." ";
+	else $sql .= "AND mod(d_datestamp, $mod)>=".$start." AND mod(d_datestamp, $mod)<=".$end." ";
+	if (!empty($fact)) {
+		$sql .= "AND (";
+		$facts = preg_split("/[,:; ]/", $fact);
+		$i=0;
+		foreach($facts as $fact) {
+			if ($i!=0) $sql .= " OR ";
+			$ct = preg_match("/!(\w+)/", $fact, $match);
+			if ($ct > 0) {
+				$fact = $match[1];
+				$sql .= "d_fact!='".$DBCONN->escapeSimple(str2upper($fact))."'";
+			}
+			else {
+				$sql .= "d_fact='".$DBCONN->escapeSimple(str2upper($fact))."'";
+			}
+			$i++;
+		}
+		$sql .= ") ";
+	}
+	if (!$allgeds) $sql .= "AND d_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."' ";
+	$sql .= "ORDER BY d_year DESC, d_mon DESC, d_day DESC";
+//	print $sql;
+	$res = dbquery($sql);
+
+	if (!DB::isError($res)) {
+		while($row =& $res->fetchRow()){
+			$row = db_cleanup($row);
+			if ($allgeds) {
+				$myindilist[$row[0]."[".$row[2]."]"]["names"] = get_indi_names($row[3]);
+				$myindilist[$row[0]."[".$row[2]."]"]["gedfile"] = $row[2];
+				$myindilist[$row[0]."[".$row[2]."]"]["gedcom"] = $row[3];
+				$myindilist[$row[0]."[".$row[2]."]"]["isdead"] = $row[4];
+				if ($myindilist[$row[0]."[".$row[2]."]"]["gedfile"] == $GEDCOMS[$GEDCOM]['id']) $indilist[$row[0]] = $myindilist[$row[0]."[".$row[2]."]"];
+			}
+			else {
+				$myindilist[$row[0]]["names"] = get_indi_names($row[3]);
+				$myindilist[$row[0]]["gedfile"] = $row[2];
+				$myindilist[$row[0]]["gedcom"] = $row[3];
+				$myindilist[$row[0]]["isdead"] = $row[4];
+				if ($myindilist[$row[0]]["gedfile"] == $GEDCOMS[$GEDCOM]['id']) $indilist[$row[0]] = $myindilist[$row[0]];
+			}
+		}
+		$res->free();
+	}
+	return $myindilist;
+}
+
 //-- search through the gedcom records for families
 function search_fams($query, $allgeds=false, $ANDOR="AND", $allnames=false) {
 	global $TBLPREFIX, $GEDCOM, $famlist, $DBCONN, $REGEXP_DB, $DBTYPE, $GEDCOMS;
@@ -1623,6 +1696,87 @@ function search_fams_dates($day="", $month="", $year="", $fact="", $allgeds=fals
 	}
 	$GEDCOM = $gedold;
 	$res->free();
+	return $myfamlist;
+}
+
+/**
+ * Search the dates table for families that had events in the date range
+ *
+ * @author	yalnifj
+ * @param	int $day the day of the month to search for, leave empty to include all
+ * @param	string $month the 3 letter abbr. of the month to search for, leave empty to include all
+ * @param	int $year the year to search for, leave empty to include all
+ * @param	string $fact the facts to include (use a comma seperated list to include multiple facts)
+ * 				prepend the fact with a ! to not include that fact
+ * @param	boolean $allgeds setting if all gedcoms should be searched, default is false
+ * @return	array $myfamlist array with all individuals that matched the query
+ */
+function search_fams_daterange($start, $end, $fact="", $allgeds=false) {
+	global $TBLPREFIX, $GEDCOM, $famlist, $DBCONN, $REGEXP_DB, $DBTYPE, $GEDCOM, $GEDCOMS;
+	$myfamlist = array();
+	if (stristr($DBTYPE, "mysql")!==false) $term = "REGEXP";
+	else if (stristr($DBTYPE, "pgsql")!==false) $term = "~*";
+	else $term='LIKE';
+
+	$sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom, d_gid, d_fact FROM ".$TBLPREFIX."dates, ".$TBLPREFIX."families WHERE f_id=d_gid AND f_file=d_file ";
+//	if (!empty($day)) $sql .= "AND d_day='".$DBCONN->escapeSimple($day)."' ";
+//	if (!empty($month)) $sql .= "AND d_month='".$DBCONN->escapeSimple(str2upper($month))."' ";
+//	if (!empty($year)) $sql .= "AND d_year='".$DBCONN->escapeSimple($year)."' ";
+	$mod = 1;
+	for($i = strlen($start); $i>0; $i--) $mod=$mod*10;
+	if ($mod==100000000) $sql .= "AND d_datestamp>=".$start." AND d_datestamp<=".$end." ";
+	else $sql .= "AND mod(d_datestamp, $mod)>=".$start." AND mod(d_datestamp, $mod)<=".$end." ";
+	if (!empty($fact)) {
+		$sql .= "AND (";
+		$facts = preg_split("/[,:; ]/", $fact);
+		$i=0;
+		foreach($facts as $fact) {
+			if ($i!=0) $sql .= " OR ";
+			$ct = preg_match("/!(\w+)/", $fact, $match);
+			if ($ct > 0) {
+				$fact = $match[1];
+				$sql .= "d_fact!='".$DBCONN->escapeSimple(str2upper($fact))."'";
+			}
+			else {
+				$sql .= "d_fact='".$DBCONN->escapeSimple(str2upper($fact))."'";
+			}
+			$i++;
+		}
+		$sql .= ") ";
+	}
+	if (!$allgeds) $sql .= "AND d_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."' ";
+	$sql .= "ORDER BY d_year, d_month, d_day DESC";
+
+	$res = dbquery($sql);
+
+	$people = array();
+	$gedold = $GEDCOM;
+	while($row =& $res->fetchRow()){
+		$row = db_cleanup($row);
+		$GEDCOM = get_gedcom_from_id($row[3]);
+//		$hname = get_sortable_name($row[1]);
+//		$wname = get_sortable_name($row[2]);
+//		if (empty($hname)) $hname = "@N.N.";
+//		if (empty($wname)) $wname = "@N.N.";
+//		$name = $hname." + ".$wname;
+		if ($allgeds) {
+//			$myfamlist[$row[0]."[".$row[3]."]"]["name"] = $name;
+			$myfamlist[$row[0]."[".$row[3]."]"]["gedfile"] = $row[3];
+			$myfamlist[$row[0]."[".$row[3]."]"]["gedcom"] = $row[4];
+			$famlist[$row[0]] = $myfamlist[$row[0]."[".$row[3]."]"];
+		}
+		else {
+//			$myfamlist[$row[0]]["name"] = $name;
+			$people[] = $row[1];
+			$people[] = $row[2];
+			$myfamlist[$row[0]]["gedfile"] = $row[3];
+			$myfamlist[$row[0]]["gedcom"] = $row[4];
+			$famlist[$row[0]] = $myfamlist[$row[0]];
+		}
+	}
+	$GEDCOM = $gedold;
+	$res->free();
+	load_people($people);
 	return $myfamlist;
 }
 
@@ -2834,7 +2988,8 @@ function get_server_list(){
 
 	if (isset($GEDCOMS[$GEDCOM]) && check_for_import($GEDCOM)) {
 		$sql = "SELECT * FROM ".$TBLPREFIX."sources WHERE s_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."' AND s_gedcom LIKE '%1 _DBID%' ORDER BY s_name";
-		$res = dbquery($sql);
+		$res = dbquery($sql, false);
+		if (DB::isError($res)) return $sitelist;
 
 		$ct = $res->numRows();
 		while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
@@ -2977,6 +3132,8 @@ function get_event_list() {
 		$nmonth = $monthtonum[strtolower($month)];
 		$dateRangeStart = mktime(0,0,0,$nmonth,$day,$year);
 		$dateRangeEnd = $dateRangeStart+(60*60*24*$DAYS_TO_SHOW_LIMIT)-1;
+		$startstamp = date("md", $dateRangeStart);
+		$endstamp = date("md", $dateRangeEnd);
 		$mmon = strtolower(date("M", $dateRangeStart));
 		$mmon3 = strtolower(date("M", $dateRangeEnd));
 		$mmon2 = $mmon3;
@@ -2984,27 +3141,30 @@ function get_event_list() {
 
 		// Search database for raw Indi data if no cache was found
 		$dayindilist = array();
-		$dayindilist = search_indis_dates("", $mmon);
-		if ($mmon!=$mmon2) {
-			$dayindilist2 = search_indis_dates("", $mmon2);
-			$dayindilist = pgv_array_merge($dayindilist, $dayindilist2);
-		}
-		if ($mmon2!=$mmon3) {
-		  	$dayindilist2 = search_indis_dates("", $mmon3);
-		  	$dayindilist = pgv_array_merge($dayindilist, $dayindilist2);
-		}
+		$dayindilist = search_indis_daterange($startstamp, $endstamp, "!CHAN");
+		
+//		$dayindilist = search_indis_dates("", $mmon);
+//		if ($mmon!=$mmon2) {
+//			$dayindilist2 = search_indis_dates("", $mmon2);
+//			$dayindilist = pgv_array_merge($dayindilist, $dayindilist2);
+//		}
+//		if ($mmon2!=$mmon3) {
+//		  	$dayindilist2 = search_indis_dates("", $mmon3);
+//		  	$dayindilist = pgv_array_merge($dayindilist, $dayindilist2);
+//		}
 
 		// Search database for raw Family data if no cache was found
 		$dayfamlist = array();
-		$dayfamlist = search_fams_dates("", $mmon);
-		if ($mmon!=$mmon2) {
-			$dayfamlist2 = search_fams_dates("", $mmon2);
-			$dayfamlist = pgv_array_merge($dayfamlist, $dayfamlist2);
-		}
-		if ($mmon2!=$mmon3) {
-			$dayfamlist2 = search_fams_dates("", $mmon3);
-			$dayfamlist = pgv_array_merge($dayfamlist, $dayfamlist2);			
-		}
+		$dayfamlist = search_fams_daterange($startstamp, $endstamp, "!CHAN");
+//		$dayfamlist = search_fams_dates("", $mmon);
+//		if ($mmon!=$mmon2) {
+//			$dayfamlist2 = search_fams_dates("", $mmon2);
+//			$dayfamlist = pgv_array_merge($dayfamlist, $dayfamlist2);
+//		}
+//		if ($mmon2!=$mmon3) {
+//			$dayfamlist2 = search_fams_dates("", $mmon3);
+//			$dayfamlist = pgv_array_merge($dayfamlist, $dayfamlist2);
+//		}
 		
 // Apply filter criteria and perform other transformations on the raw data
 		$found_facts = array();
