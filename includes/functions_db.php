@@ -127,6 +127,7 @@ function &dbquery($sql, $show_error=true, $count=0) {
 		$fp = fopen($INDEX_DIRECTORY."/sql_log.txt", "a");
 		$backtrace = debug_backtrace();
 		$temp = "";
+		if (!DB::isError($res) && is_object($res)) $temp .= "\t".$res->numRows()."\t";
 		if (isset($backtrace[3])) $temp .= basename($backtrace[3]["file"])." (".$backtrace[3]["line"].")";
 		if (isset($backtrace[2])) $temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
 		if (isset($backtrace[1])) $temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
@@ -1350,18 +1351,22 @@ function search_indis_daterange($start, $end, $fact='', $allgeds=false, $ANDOR="
 		while($row =& $res->fetchRow()){
 			$row = db_cleanup($row);
 			if ($allgeds) {
-				$myindilist[$row[0]."[".$row[2]."]"]["names"] = get_indi_names($row[3]);
-				$myindilist[$row[0]."[".$row[2]."]"]["gedfile"] = $row[2];
-				$myindilist[$row[0]."[".$row[2]."]"]["gedcom"] = $row[3];
-				$myindilist[$row[0]."[".$row[2]."]"]["isdead"] = $row[4];
-				if ($myindilist[$row[0]."[".$row[2]."]"]["gedfile"] == $GEDCOMS[$GEDCOM]['id']) $indilist[$row[0]] = $myindilist[$row[0]."[".$row[2]."]"];
+				if (!isset($myindilist[$row[0]."[".$row[2]."]"])) {
+					$myindilist[$row[0]."[".$row[2]."]"]["names"] = get_indi_names($row[3]);
+					$myindilist[$row[0]."[".$row[2]."]"]["gedfile"] = $row[2];
+					$myindilist[$row[0]."[".$row[2]."]"]["gedcom"] = $row[3];
+					$myindilist[$row[0]."[".$row[2]."]"]["isdead"] = $row[4];
+					if ($myindilist[$row[0]."[".$row[2]."]"]["gedfile"] == $GEDCOMS[$GEDCOM]['id']) $indilist[$row[0]] = $myindilist[$row[0]."[".$row[2]."]"];
+				}
 			}
 			else {
-				$myindilist[$row[0]]["names"] = get_indi_names($row[3]);
-				$myindilist[$row[0]]["gedfile"] = $row[2];
-				$myindilist[$row[0]]["gedcom"] = $row[3];
-				$myindilist[$row[0]]["isdead"] = $row[4];
-				if ($myindilist[$row[0]]["gedfile"] == $GEDCOMS[$GEDCOM]['id']) $indilist[$row[0]] = $myindilist[$row[0]];
+				if (!isset($myindilist[$row[0]])) {
+					$myindilist[$row[0]]["names"] = get_indi_names($row[3]);
+					$myindilist[$row[0]]["gedfile"] = $row[2];
+					$myindilist[$row[0]]["gedcom"] = $row[3];
+					$myindilist[$row[0]]["isdead"] = $row[4];
+					if ($myindilist[$row[0]]["gedfile"] == $GEDCOMS[$GEDCOM]['id']) $indilist[$row[0]] = $myindilist[$row[0]];
+				}
 			}
 		}
 		$res->free();
@@ -2920,7 +2925,7 @@ function get_top_surnames($num) {
 
 	$surnames = array();
 	$sql = "SELECT COUNT(i_surname) AS count, i_surname FROM ".$TBLPREFIX."individuals WHERE i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."' GROUP BY i_surname ORDER BY count DESC";
-	$res = dbquery($sql);
+	$res = dbquery($sql, true, $num+1);
 
 	if (!DB::isError($res)) {
 		while($row =& $res->fetchRow()) {
@@ -2933,7 +2938,7 @@ function get_top_surnames($num) {
 		$res->free();
 	}
 	$sql = "SELECT COUNT(n_surname) AS count, n_surname FROM ".$TBLPREFIX."names WHERE n_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."' AND n_type!='C' GROUP BY n_surname ORDER BY count DESC";
-	$res = dbquery($sql);
+	$res = dbquery($sql, true, $num+1);
 
 	if (!DB::isError($res)) {
 		while($row =& $res->fetchRow()) {
@@ -3165,31 +3170,16 @@ function get_event_list() {
 //			$dayfamlist2 = search_fams_dates("", $mmon3);
 //			$dayfamlist = pgv_array_merge($dayfamlist, $dayfamlist2);
 //		}
-		
 // Apply filter criteria and perform other transformations on the raw data
 		$found_facts = array();
 		foreach($dayindilist as $gid=>$indi) {
 			$facts = get_all_subrecords($indi["gedcom"], $skipfacts, false, false, false);
 			foreach($facts as $key=>$factrec) {
 				$date = 0; 
-				if ($USE_RTL_FUNCTIONS) {
-					$hct = preg_match("/2 DATE.*(@#DHEBREW@)/", $factrec, $match);
-					if ($hct>0) {
-						$dct = preg_match("/2 DATE (.+)/", $factrec, $match);
-						$hebrew_date = parse_date(trim($match[1]));
-						
-						$date = jewishGedcomDateToCurrentGregorian($hebrew_date);
-						
-					}
-				} 
-				
-				if ($date==0) {
 				  	$ct = preg_match("/2 DATE (.+)/", $factrec, $match);
 				  	if ($ct>0) $date = parse_date(trim($match[1]));
 			  	
-				}
-				
-				if ($date != 0) {
+				if ($date !== 0) {
 					$startSecond = 1;
 					if ($date[0]["day"]=="") {
 						$startSecond = 0;
@@ -3210,19 +3200,10 @@ function get_event_list() {
 			$facts = get_all_subrecords($fam["gedcom"], $skipfacts, false, false, false);
 			foreach($facts as $key=>$factrec) {
 				$date = 0;
-				if ($USE_RTL_FUNCTIONS) {
-					$hct = preg_match("/2 DATE.*(@#DHEBREW@)/", $factrec, $match);
-					if ($hct>0) {
-						$dct = preg_match("/2 DATE (.+)/", $factrec, $match);
-						$hebrew_date = parse_date(trim($match[1]));
-						$date = jewishGedcomDateToCurrentGregorian($hebrew_date);
-					}
-				} 
-				if ($date==0) {
 					$ct = preg_match("/2 DATE (.+)/", $factrec, $match);
 					if ($ct>0) $date = parse_date(trim($match[1]));
-				}
-				if ($date != 0) {
+				
+				if ($date !== 0) {
 					$startSecond = 1;
 					if ($date[0]["day"]=="") {
 						$startSecond = 0;
