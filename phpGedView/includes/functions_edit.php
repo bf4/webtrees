@@ -1550,14 +1550,29 @@ function breakConts($newline, $level) {
  * @return string	the converted date string
  */
 function check_input_date($datestr) {
-	$date = parse_date($datestr);
-	//-- if there was no change to the date then return the original
-	if (preg_match("/^".$date[0]['day']." ".$date[0]['month']." ".$date[0]['year']."$/i", $datestr)>0) return $datestr;
-	//-- reconstruct using the GEDCOM standards
-	if ((count($date)==1 || implode("",$date[1])=="")&&empty($date[0]['ext'])&&!empty($date[0]['month'])&&!empty($date[0]['year'])) {
-		$datestr = strtoupper($date[0]['day']." ".$date[0]['month']." ".$date[0]['year']);
+	$dates = parse_date($datestr);
+	// If we couldn't parse the date, leave it alone.
+	foreach ($dates as $date)
+		if ($date['jd']==0)
+			return $datestr;
+
+	// Text in brackets is special
+	if (preg_match('/(\s*\(.*)/', $datestr, $match))
+		$text=$match[1];
+	else
+		$text='';
+
+	$datestr='';
+	foreach ($dates as $date) {
+		if (!empty($date['ext'])) $datestr.="{$date['ext']} ";
+		if (!empty($date['cal'])) $datestr.="{$date['cal']} ";
+		if ($date['day']!=0)      $datestr.="{$date['day']} ";
+		if ($date['mon']!=0)      $datestr.="{$date['month']} ";
+		if ($date['year']>0)      $datestr.="{$date['year']} ";
+		else                      $datestr.=(1-$date['year'])."B.C. ";
 	}
-	return $datestr;
+	$datestr.=$text;
+	return trim($datestr);
 }
 
 function print_quick_resn($name) {
