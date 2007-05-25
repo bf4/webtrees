@@ -1810,69 +1810,18 @@ function compare_facts($a, $b) {
 }
 
 function compare_facts_date($arec, $brec) {
-	global $factarray, $pgv_lang, $ASC, $IGNORE_YEAR, $IGNORE_FACTS, $DEBUG, $USE_RTL_FUNCTIONS;
 	$cta = preg_match("/2 DATE (.*)/", $arec, $amatch);
+	if ($cta==0) return 0;
 	$ctb = preg_match("/2 DATE (.*)/", $brec, $bmatch);
-	if ($cta==0 || $ctb==0) return 0;
-	$adate = parse_date(trim($amatch[1]));
-	$bdate = parse_date(trim($bmatch[1]));
-	
-	$bef = -1;
-	$aft = 1;
-	if ($ASC) {
-		$bef = 1;
-		$aft = -1;
-	}
-
-	if ($IGNORE_YEAR) {
-    // Calculate Current year Gregorian date for Hebrew date
-        if ($USE_RTL_FUNCTIONS && isset($adate[0]["ext"]) && strstr($adate[0]["ext"], "#DHEBREW")!==false) $adate = jewishGedcomDateToCurrentGregorian($adate);
-		if ($USE_RTL_FUNCTIONS && isset($bdate[0]["ext"]) && strstr($bdate[0]["ext"], "#DHEBREW")!==false) $bdate = jewishGedcomDateToCurrentGregorian($bdate);
-	}
-	else {
-    // Calculate Original year Gregorian date for Hebrew date
-    	if ($USE_RTL_FUNCTIONS && isset($adate[0]["ext"]) && strstr($adate[0]["ext"], "#DHEBREW")!==false) $adate = jewishGedcomDateToGregorian($adate);
-    	if ($USE_RTL_FUNCTIONS && isset($bdate[0]["ext"]) && strstr($bdate[0]["ext"], "#DHEBREW")!==false) $bdate = jewishGedcomDateToGregorian($bdate);
-    }
-
-	if ($DEBUG) print $adate[0]["year"]."==".$bdate[0]["year"]." ";
-	if ($adate[0]["year"]==$bdate[0]["year"] || $IGNORE_YEAR) {
-		// Check month
-		$montha = $adate[0]["mon"];
-		$monthb = $bdate[0]["mon"];
-
-		if ($montha == $monthb) {
-		// Check day
-			$newa = $adate[0]["day"]." ".$adate[0]["month"]." ".date("Y");
-			$newb = $bdate[0]["day"]." ".$bdate[0]["month"]." ".date("Y");
-			$astamp = strtotime($newa);
-			$bstamp = strtotime($newb);
-			if ($astamp==$bstamp) {
-				if ($IGNORE_YEAR && ($adate[0]["year"]!=$bdate[0]["year"])) return ($adate[0]["year"] < $bdate[0]["year"]) ? $aft : $bef;
-				$cta = preg_match("/[2-3] TIME (.*)/", $arec, $amatch);
-				$ctb = preg_match("/[2-3] TIME (.*)/", $brec, $bmatch);
-				//-- check if both had a time
-				if($cta<$ctb) return $aft;
-				if($cta>$ctb) return $bef;
-				//-- neither had a time
-				if(($cta==0)&&($ctb==0)) {
-				//	$res = compare_fact_type($afact, $bfact);
-				//	if ($res!==false) return $res;
-					return 0;
-				}
-				$atime = trim($amatch[1]);
-				$btime = trim($bmatch[1]);
-				$astamp = strtotime($newa." ".$atime);
-				$bstamp = strtotime($newb." ".$btime);
-				if ($astamp==$bstamp) return 0;//compare_fact_type($afact, $bfact);
-			}
-			if ($DEBUG) print ($astamp < $bstamp) ? "bef".$bef : "aft".$aft;
-			return ($astamp < $bstamp) ? $bef : $aft;
-		}
-		else return ($montha < $monthb) ? $bef : $aft;
-	}
-	if ($DEBUG) print (($adate[0]["year"] < $bdate[0]["year"]) ? "bef".$bef : "aft".$aft)." ";
-	return ($adate[0]["year"] < $bdate[0]["year"]) ? $bef : $aft;
+	if ($ctb==0) return 0;
+	$adate = parse_date($amatch[1]);
+	$bdate = parse_date($bmatch[1]);
+	if ($adate[0]['jd'] < $bdate[0]['jd'])
+		return -1;
+	else if ($adate[0]['jd'] > $bdate[0]['jd'])
+		return 1;
+	else
+		return 0;
 }
 
 /**
