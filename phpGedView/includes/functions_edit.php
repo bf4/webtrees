@@ -1569,7 +1569,7 @@ function check_input_date($datestr) {
 		if ($date['day']!=0)      $datestr.="{$date['day']} ";
 		if ($date['mon']!=0)      $datestr.="{$date['month']} ";
 		if ($date['year']>0)      $datestr.="{$date['year']} ";
-		else                      $datestr.=(1-$date['year'])."B.C. ";
+		else                      $datestr.=(1-$date['year'])." B.C. ";
 	}
 	$datestr.=$text;
 	return trim($datestr);
