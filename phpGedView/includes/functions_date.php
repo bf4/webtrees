@@ -42,6 +42,29 @@ if ((stristr($CALENDAR_FORMAT, "hebrew")!==false) || (stristr($CALENDAR_FORMAT, 
 	require_once("includes/functions_date_hebrew.php");
 }
 
+// The PHP date functions are not always available.
+// The Gregorian function doesn't work with BC dates.
+// The Julian function tries to be too clever with BC dates.
+// The French function doesn't work for dates after year 14 (which were used).
+// Hence we write our own.
+// See http://en.wikipedia.org/wiki/Julian_day
+// See http://en.wikipedia.org/wiki/French_Republican_Calendar
+function MyGregorianToJD($month, $day, $year) {
+	$a=floor((14-$month)/12); $y=$year+4800-$a; $m=$month+12*$a-3;
+	return $day+floor((153*$m+2)/5)+365*$y+floor($y/4)-floor($y/100)+floor($y/400)-32045;
+}
+function MyJulianToJD($month, $day, $year) { // From http://en.wikipedia.org/wiki/Julian_day
+	$a=floor((14-$month)/12); $y=$year+4800-$a; $m=$month+12*$a-3;
+	return $day+floor((153*$m+2)/5)+365*$y+floor($y/4)-32083;
+}
+function MyFrenchToJD($month, $day, $year) {
+	return 2375474+$day+($month-1)*30+$year*365+floor($year/4);
+}
+// TODO: This one is a bit harder!
+//function MyJewishToJD($month, $day, $year) {
+//}
+
+
 /**
  * convert a date to other languages or formats
  *
@@ -1020,10 +1043,10 @@ function parse_single_gedcom_date($date)
 		switch ($parsed['cal']) {
 		case '':
 		case '@#DGREGORIAN@':
-			$parsed['jd']=GregorianToJD($parsed['mon']==0 ? 1 : $parsed['mon'], $parsed['day']==0 ? 1 : $parsed['day'], $parsed['year']);
+			$parsed['jd']=MyGregorianToJD($parsed['mon']==0 ? 1 : $parsed['mon'], $parsed['day']==0 ? 1 : $parsed['day'], $parsed['year']);
 			break;
 		case '@#DJULIAN@':
-			$parsed['jd']=JulianToJD($parsed['mon']==0 ? 1 : $parsed['mon'], $parsed['day']==0 ? 1 : $parsed['day'], $parsed['year']);
+			$parsed['jd']=MyJulianToJD($parsed['mon']==0 ? 1 : $parsed['mon'], $parsed['day']==0 ? 1 : $parsed['day'], $parsed['year']);
 			break;
 		case '@#DHEBREW@':
 			$parsed['jd']=JewishToJD($parsed['mon']==0 ? 1 : $parsed['mon'], $parsed['day']==0 ? 1 : $parsed['day'], $parsed['year']);
@@ -1036,7 +1059,7 @@ function parse_single_gedcom_date($date)
 				if (!empty($roman[$match['FYEAR']]))
 					$parsed['year']=$roman[$match['FYEAR']];
 			}
-			$parsed['jd']=FrenchToJD($parsed['mon']==0 ? 1 : $parsed['mon'], $parsed['day']==0 ? 1 : $parsed['day'], $parsed['year']);
+			$parsed['jd']=MyFrenchToJD($parsed['mon']==0 ? 1 : $parsed['mon'], $parsed['day']==0 ? 1 : $parsed['day'], $parsed['year']);
 			break;
 		}
 	} else { // Not a valid date (e.g. "14 MAR").  Pick out any bits we can.
