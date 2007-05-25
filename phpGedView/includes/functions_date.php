@@ -787,8 +787,6 @@ function get_date_url($datestr){
 
 /**
  * get an individuals age at the given date
- *
- * get an individuals age at the given date
  * @param string $indirec the individual record so that we can get the birth date
  * @param string $datestr the date string (everything after DATE) to calculate the age for
  * @param string $style optional style (default 1=HTML style)
@@ -996,12 +994,15 @@ function parse_single_gedcom_date($date)
 		);
 
 	// Extract components from a well-formed date
+	// :TODO: Do we need the french "an XIII" format? It is converted by the GUI.
 	if (preg_match('/^ ?((?P<EXT>FROM|TO|BET|AND|AFT|BEF|EST|INT|CAL|ABT|APX|EST|CIR) ?)?((?P<CAL>@#D[A-Z ]+@) ?)?((((?P<DAY>\d{1,2}) ?)?(?P<MONTH>\w+) ?)?(?P<YEAR>\b(\d{1,4}|(an +)?(?P<FYEAR>[XVI]+)))(?P<BC> ?B ?C)?)(.*$)/i', $date, $match)) {
+		$match['EXT']=strtoupper($match['EXT']);
+		$match['MONTH']=strtoupper($match['MONTH']);
 		$parsed=array(
 			'cal'=>$match['CAL'],
 			'ext'=>$match['EXT'],
 			'day'=>($match['DAY']=='') ? 0 : $match['DAY'],  // FEB 2000 => 1 FEB 2000
-			'month'=>strtoupper($match['MONTH']),
+			'month'=>$match['MONTH'],
 			'mon'=>(empty($months[$match['MONTH']])) ? 0 : $months[$match['MONTH']],  // FEB => 2
 			'year'=>($match['BC']=='') ? $match['YEAR'] : 1-$match['YEAR'],  // 1BC=0, 2BC=-1, 3BC=-2, etc.
 			'jd'=>0
