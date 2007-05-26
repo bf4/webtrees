@@ -1441,7 +1441,8 @@ function search_fams($query, $allgeds=false, $ANDOR="AND", $allnames=false) {
 			$myfamlist[$row[0]]["name"] = $name;
 			$myfamlist[$row[0]]["gedfile"] = $row[3];
 			$myfamlist[$row[0]]["gedcom"] = $row[4];
-			$myfamlist[$row[0]]["gedcom"] = $row[5];
+//			$myfamlist[$row[0]]["gedcom"] = $row[5];
+			$myfamlist[$row[0]]["numchil"] = $row[5];
 			if (!isset($famlist[$row[0]]) && $row[3]==$GEDCOMS[$gedold]['id']) $famlist[$row[0]] = $myfamlist[$row[0]];
 		}
 	}
