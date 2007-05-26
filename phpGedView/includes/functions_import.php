@@ -474,41 +474,14 @@ function update_dates($gid, $indirec) {
 		}
 		$pt = preg_match_all("/2 DATE (.*)/", $factrec, $match, PREG_SET_ORDER);
 		for ($i = 0; $i < $pt; $i++) {
-			$datestr = trim($match[$i][1]);
-			$dates = parse_date($datestr);
-			foreach($dates as $di=>$date) {
-				if (empty ($date["day"]))
-					$date["day"] = 0;
-				if (empty ($date["mon"]))
-					$date["mon"] = 0;
-				if (empty ($date["year"]))
-					$date["year"] = 0;
-				$datestamp = $date['year'];
-				if ($date['mon'] < 10)
-				$datestamp .= '0';
-				$datestamp .= (int) $date['mon'];
-				if ($date['day'] < 10)
-				$datestamp .= '0';
-				$datestamp .= (int) $date['day'];
-				$sql = 'INSERT INTO ' . $TBLPREFIX . 'dates VALUES(\'' . $DBCONN->escapeSimple($date["day"]) . '\',\'' . $DBCONN->escapeSimple(str2upper($date["month"])) . "','" . $DBCONN->escapeSimple($date["mon"]) . "','" . $DBCONN->escapeSimple($date["year"]) . "','" . $DBCONN->escapeSimple($datestamp) . "','" . $DBCONN->escapeSimple($fact) . "','" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "',";
-				if (isset ($date["ext"])) {
-					preg_match("/@#D(.*)@/", str2upper($date["ext"]), $extract_type);
-					$date_types = array (
-						"@#DGREGORIAN@",
-						"@#DJULIAN@",
-						"@#DHEBREW@",
-						"@#DFRENCH R@",
-						"@#DROMAN@",
-						"@#DUNKNOWN@"
-					);
-					if (isset ($extract_type[0]) && in_array($extract_type[0], $date_types))
-						$sql .= "'" . $extract_type[0] . "')";
-					else
-						$sql .= "NULL)";
-				} else
-					$sql .= "NULL)";
-				$res = dbquery($sql);
-
+			$dates = parse_date($match[$i][1]);
+			foreach($dates as $date) {
+				if ($date['year']>0)
+					$datestamp=$date['year']*10000+$date['mon']*100+$date['day'];
+				else
+					$datestamp=-1*((1-$date['year'])*10000+$date['mon']*100+$date['day']);
+				$sql = "INSERT INTO {$TBLPREFIX}dates(d_day,d_month,d_mon,d_year,d_datestamp,d_julianday,d_fact,d_gid,d_file,d_type)VALUES({$date['day']},'".$DBCONN->escapeSimple(str2upper($date["month"]))."',".  "{$date['mon']},{$date['year']},{$datestamp},'".$DBCONN->escapeSimple($fact)."','".$DBCONN->escapeSimple($gid)."',{$GEDCOMS[$FILE]['id']},".(empty($date['cal'])?'NULL':"'{$date['cal']}'").")";
+				$res=dbquery($sql);
 				$count++;
 			}
 		}
@@ -795,6 +768,7 @@ function setup_database() {
 	$has_dates = false;
 	$has_dates_mon = false;
 	$has_dates_datestamp = false;
+	$has_dates_julianday = false;
 	$has_media = false;
 	$has_media_mapping = false;
 	$has_nextid = false;
@@ -885,6 +859,9 @@ function setup_database() {
 								break;
 							case "d_datestamp" :
 								$has_dates_datestamp = true;
+								break;
+							case "d_julianday" :
+								$has_dates_julianday = true;
 								break;
 						}
 					}
@@ -1001,10 +978,20 @@ function setup_database() {
 		if (!$has_dates_mon) {
 			$sql = "ALTER TABLE " . $TBLPREFIX . "dates ADD d_mon INT AFTER d_month";
 			$res = dbquery($sql); //print "d_mon added<br/>\n";
+			$sql = "CREATE INDEX date_mon ON " . $TBLPREFIX . "dates (d_mon)";
+			$res = dbquery($sql);
 		}
 		if (!$has_dates_datestamp) {
 			$sql = "ALTER TABLE " . $TBLPREFIX . "dates ADD d_datestamp INT AFTER d_year";
 			$res = dbquery($sql); //print "d_datestamp added<br/>\n";
+			$sql = "CREATE INDEX date_datestamp ON " . $TBLPREFIX . "dates (d_datestamp)";
+			$res = dbquery($sql);
+		}
+		if (!$has_dates_julianday) {
+			$sql = "ALTER TABLE " . $TBLPREFIX . "dates ADD d_julianday INT AFTER d_datestamp";
+			$res = dbquery($sql); //print "d_julianday added<br/>\n";
+			$sql = "CREATE INDEX date_julianday ON " . $TBLPREFIX . "dates (d_julianday)";
+			$res = dbquery($sql);
 		}
 	}
 	if (!$has_media) {
@@ -1284,7 +1271,7 @@ function create_dates_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "dates";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "dates (d_day INT, d_month VARCHAR(5), d_mon INT, d_year INT, d_datestamp INT, d_fact VARCHAR(10), d_gid VARCHAR(255), d_file INT, d_type VARCHAR(13) NULL)";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "dates (d_day INT, d_month VARCHAR(5), d_mon INT, d_year INT, d_datestamp INT, d_julianday INT, d_fact VARCHAR(10), d_gid VARCHAR(255), d_file INT, d_type VARCHAR(13) NULL)";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
