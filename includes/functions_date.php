@@ -53,7 +53,7 @@ function MyGregorianToJD($month, $day, $year) {
 	$a=floor((14-$month)/12); $y=$year+4800-$a; $m=$month+12*$a-3;
 	return $day+floor((153*$m+2)/5)+365*$y+floor($y/4)-floor($y/100)+floor($y/400)-32045;
 }
-function MyJulianToJD($month, $day, $year) { // From http://en.wikipedia.org/wiki/Julian_day
+function MyJulianToJD($month, $day, $year) {
 	$a=floor((14-$month)/12); $y=$year+4800-$a; $m=$month+12*$a-3;
 	return $day+floor((153*$m+2)/5)+365*$y+floor($y/4)-32083;
 }
@@ -831,24 +831,25 @@ function get_age($indirec, $datestr, $style=1) {
 	if (strpos($indirec, $btag)===false) $btag='1 BAPM';
 	if (strpos($indirec, $btag)===false) return '';
 
+	// A Gedcom date can indicate a range (JAN => 1 JAN-31 JAN and 2000 => 1 JAN-31-DEC
+	// It can also be an explicit range (JUN-JUL => 1 JUN-31-JUL)
+	// Multiple dates may also be present.
 	$index = 1;
 	$birthrec = get_sub_record(1, $btag, $indirec, $index);
 	while(!empty($birthrec)) {
 		if (preg_match("/2 DATE (.+)/", $birthrec, $match)) {
-			$date=parse_date(trim($match[1]));
-			if (!empty($date[0]) && $date[0]['jd']>0) {
-				if ($date[0]['ext']!='')
+			$date=parse_date($match[1]);
+			if ($date[0]['jd1']>0) {
+				if (!empty($date[0]['ext']) && empty($date[1])) // A date range is not an approximation
 					$approx=true;
 				if ($min_birt_jd==0)
-					$min_birt_jd=$date[0]['jd'];
+					$min_birt_jd=$date[0]['jd1'];
 				else
-					$min_birt_jd=min($min_birt_jd, $date[0]['jd']);
+					$min_birt_jd=min($min_birt_jd, $date[0]['jd1']);
+				$max_birt_jd=max($max_birt_jd, $date[0]['jd2']);
 			}
-			if (!empty($date[1]) && $date[1]['jd']>0) {
-				if ($date[1]['ext']!='')
-					$approx=true;
-				$max_birt_jd=max($max_birt_jd, $date[1]['jd']);
-			}
+			if (!empty($date[1]))
+				$max_birt_jd=max($max_birt_jd, $date[1]['jd2']);
 		}
 		$index++;
 		$birthrec = get_sub_record(1, $btag, $indirec, $index);
@@ -859,16 +860,14 @@ function get_age($indirec, $datestr, $style=1) {
 		$max_birt_jd=$min_birt_jd;
 
 	$date=parse_date($datestr);
-	if (!empty($date[0]) && $date[0]['jd']>0) {
-		if ($date[0]['ext']!='')
+	if ($date[0]['jd1']>0) {
+		if (!empty($date[0]['ext']) && empty($date[1])) // A date range is not an approximation
 			$approx=true;
-		$min_even_jd=$date[0]['jd'];
+		$min_even_jd=$date[0]['jd1'];
+		$max_even_jd=$date[0]['jd2'];
 	}
-	if (!empty($date[1]) && $date[1]['jd']>0) {
-		if ($date[1]['ext']!='')
-			$approx=true;
-		$max_even_jd=$date[1]['jd'];
-	}
+	if (!empty($date[1]))
+		$max_even_jd=max($max_even_jd, $date[1]['jd2']);
 
 	if ($min_even_jd==0)
 		return;
@@ -881,7 +880,7 @@ function get_age($indirec, $datestr, $style=1) {
 
 	// Convert to days/months/years/etc.  NB - this is not perfect, as
 	// the birth/event dates may be in different calendars.
-	if (abs($max_age)<60) { // show in days
+	if (abs($max_age)<28) { // show in days
 		if ($min_age==$max_age)
 			if ($max_age-$min_age==1)
 				$age="1 {$pgv_lang['day1']}";
@@ -890,8 +889,8 @@ function get_age($indirec, $datestr, $style=1) {
 		else
 			$age="$min_age - $max_age {$pgv_lang['days']}";
 	} else if (abs($max_age)<731) { // show in months
-		$min_age=floor($min_age/30);
-		$max_age=floor($max_age/30);
+		$min_age=floor($min_age/28);
+		$max_age=floor($max_age/28);
 		if ($min_age==$max_age)
 			if ($max_age-$min_age==1)
 				$age="1 {$pgv_lang['month1']}";
@@ -912,7 +911,7 @@ function get_age($indirec, $datestr, $style=1) {
 	}
 
 	if ($approx) $age.=" {$pgv_lang['apx']}";
-	if ($style)  $age="<span class=\"age\">({$pgv_lang['age']} {$age})</span>";
+	if ($style)  $age=" <span class=\"age\">({$pgv_lang['age']} {$age})</span>";
 	return $age;
 }
 
@@ -1024,11 +1023,12 @@ function parse_single_gedcom_date($date)
 		$parsed=array(
 			'cal'=>$match['CAL'],
 			'ext'=>$match['EXT'],
-			'day'=>($match['DAY']=='') ? 0 : $match['DAY'],  // FEB 2000 => 1 FEB 2000
+			'day'=>($match['DAY']=='') ? 0 : (int)$match['DAY'],
 			'month'=>$match['MONTH'],
-			'mon'=>(empty($months[$match['MONTH']])) ? 0 : $months[$match['MONTH']],  // FEB => 2
-			'year'=>($match['BC']=='') ? $match['YEAR'] : 1-$match['YEAR'],  // 1BC=0, 2BC=-1, 3BC=-2, etc.
-			'jd'=>0
+			'mon'=>(empty($months[$match['MONTH']])) ? 0 : (int)$months[$match['MONTH']],  // FEB => 2
+			'year'=>($match['BC']=='') ? (int)$match['YEAR'] : 1-$match['YEAR'],  // 1BC=0, 2BC=-1, 3BC=-2, etc.
+			'jd1'=>0,
+			'jd2'=>0
 		);
 
 		// Guess at calendar, if not specified
@@ -1038,20 +1038,7 @@ function parse_single_gedcom_date($date)
 			else if (empty($match['MONTH']) && $match['YEAR']>3000 || preg_match('/^(TSH|CSH|KSL|TVT|SHV|ADR|ADS|NSN|IYR|SVN|TMZ|AAV|ELL)$/', $parsed['month']))
 				$parsed['cal']='@#DHEBREW@';
 		// TODO? else if year < 1582 then @#DJULIAN@
- 
-		// Calculate Julian Day for ease of date sorting.
-		switch ($parsed['cal']) {
-		case '':
-		case '@#DGREGORIAN@':
-			$parsed['jd']=MyGregorianToJD($parsed['mon']==0 ? 1 : $parsed['mon'], $parsed['day']==0 ? 1 : $parsed['day'], $parsed['year']);
-			break;
-		case '@#DJULIAN@':
-			$parsed['jd']=MyJulianToJD($parsed['mon']==0 ? 1 : $parsed['mon'], $parsed['day']==0 ? 1 : $parsed['day'], $parsed['year']);
-			break;
-		case '@#DHEBREW@':
-			$parsed['jd']=JewishToJD($parsed['mon']==0 ? 1 : $parsed['mon'], $parsed['day']==0 ? 1 : $parsed['day'], $parsed['year']);
-			break;
-		case '@#DFRENCH R@':
+
 			if (!empty($match['FYEAR'])) {
 				static $roman=NULL;
 				if ($roman==NULL)
@@ -1059,11 +1046,71 @@ function parse_single_gedcom_date($date)
 				if (!empty($roman[$match['FYEAR']]))
 					$parsed['year']=$roman[$match['FYEAR']];
 			}
-			$parsed['jd']=MyFrenchToJD($parsed['mon']==0 ? 1 : $parsed['mon'], $parsed['day']==0 ? 1 : $parsed['day'], $parsed['year']);
+ 
+		// Calculate Julian Day for ease of date sorting.  Single dates can be ranges.
+		// i.e. JAN2000 => 1JAN2000-31JAN2000
+		$y1=$parsed['year'];
+		$m1=$parsed['mon']==0 ? 1 : $parsed['mon'];
+		$d1=$parsed['day']==0 ? 1 : $parsed['day'];
+		switch ($parsed['cal']) {
+		case '':
+		case '@#DGREGORIAN@':
+			$parsed['jd1']=MyGregorianToJD($m1, $d1, $y1);
+			if ($parsed['mon']==0)
+				$parsed['jd2']=MyGregorianToJD($m1, $d1, $y1+1)-1;
+			else
+				if ($parsed['day']==0) {
+					if ($d1<12)
+						$parsed['jd2']=MyGregorianToJD($m1, $d1+1, $y1)-1;
+					else
+						$parsed['jd2']=MyGregorianToJD($m1, 1, $y1+1)-1;
+				} else
+					$parsed['jd2']=$parsed['jd1'];
+			break;
+		case '@#DJULIAN@':
+			$parsed['jd1']=MyJulianToJD($m1, $d1, $y1);
+			if ($parsed['mon']==0)
+				$parsed['jd2']=MyJulianToJD($m1, $d1, $y1+1)-1;
+			else
+				if ($parsed['day']==0) {
+					if ($d1<12)
+						$parsed['jd2']=MyJulianToJD($m1, $d1+1, $y1)-1;
+					else
+						$parsed['jd2']=MyJulianToJD($m1, 1, $y1+1)-1;
+				} else
+					$parsed['jd2']=$parsed['jd1'];
+			break;
+		case '@#DFRENCH R@':
+			$parsed['jd1']=MyFrenchToJD($m1, $d1, $y1);
+			if ($parsed['mon']==0)
+				$parsed['jd2']=MyFrenchToJD($m1, $d1, $y1+1)-1;
+			else
+				if ($parsed['day']==0) {
+					if ($d1<12)
+						$parsed['jd2']=MyFrenchToJD($m1, $d1+1, $y1)-1;
+					else
+						$parsed['jd2']=MyFrenchToJD($m1, 1, $y1+1)-1;
+				} else
+					$parsed['jd2']=$parsed['jd1'];
+			break;
+		case '@#DHEBREW@':
+			// TODO: Is it more complicated than this, especially w.r.t. leap years?
+			$parsed['jd1']=JewishToJD($m1, $d1, $y1);
+			if ($parsed['mon']==0)
+			$parsed['jd2']=JewishToJD($m1, $d1, $y1+1)-1;
+			else
+				if ($parsed['day']==0) {
+					if ($d1<13)
+						$parsed['jd2']=JewishToJD($m1, $d1+1, $y1)-1;
+					else
+						$parsed['jd2']=JewishToJD($m1, 1, $y1+1)-1;
+				} else
+					$parsed['jd2']=$parsed['jd1'];
+;
 			break;
 		}
 	} else { // Not a valid date (e.g. "14 MAR").  Pick out any bits we can.
-		$parsed=array('ext'=>'', 'cal'=>'', 'day'=>0, 'mon'=>0, 'month'=>'', 'year'=>0, 'jd'=>0);
+		$parsed=array('ext'=>'', 'cal'=>'', 'day'=>0, 'mon'=>0, 'month'=>'', 'year'=>0, 'jd1'=>0, 'jd2'=>0);
 		if (preg_match('/(\d\d\d\d)/', $date, $m)) $parsed['year' ]=$m[1];
 		if (preg_match('/(\b\d\d?\b)/', $date, $m)) $parsed['day'  ]=$m[1];
 		if (preg_match('/(\w+)/',      $date, $m)) {

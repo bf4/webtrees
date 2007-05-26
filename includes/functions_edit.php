@@ -1553,7 +1553,7 @@ function check_input_date($datestr) {
 	$dates = parse_date($datestr);
 	// If we couldn't parse the date, leave it alone.
 	foreach ($dates as $date)
-		if ($date['jd']==0)
+		if ($date['jd1']==0)
 			return $datestr;
 
 	// Text in brackets is special
