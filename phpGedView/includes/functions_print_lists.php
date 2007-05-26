@@ -390,7 +390,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		//-- Birth date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		$filterkey = $person->getSortableBirthDate();
-		$sortkey = parse_date($person->getBirthDate()); $sortkey=$sortkey[0]['jd'];
+		$sortkey = parse_date($person->getBirthDate()); $sortkey=$sortkey[0]['jd1'];
 		$txt = get_changed_date($person->getBirthDate(), true);
 		//if (empty($txt)) $txt = $pgv_lang["yes"];
 		echo "&nbsp;<a href=\"".$person->getDateUrl($person->bdate)."\"".
@@ -426,7 +426,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		//-- Death date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		$filterkey = $person->getSortableDeathDate();
-		$sortkey = parse_date($person->getDeathDate()); $sortkey=$sortkey[0]['jd'];
+		$sortkey = parse_date($person->getDeathDate()); $sortkey=$sortkey[0]['jd1'];
 		$txt = get_changed_date($person->getDeathDate(), true);
 		if ($person->dest) $txt = $pgv_lang["yes"];
 		if (!$person->isDead()) $txt = "";
@@ -736,7 +736,7 @@ function print_fam_table($datalist, $legend="") {
 		//-- Marriage date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		$filterkey = $family->getSortableMarriageDate();
-		$sortkey = parse_date($family->getMarriageDate()); $sortkey=$sortkey[0]['jd'];
+		$sortkey = parse_date($family->getMarriageDate()); $sortkey=$sortkey[0]['jd1'];
 		if (!$family->marr_est) $txt = get_changed_date($family->getMarriageDate(), true);
 		if (empty($txt) and !empty($family->marr_rec)) $txt = $pgv_lang["yes"];
 		echo "&nbsp;<a href=\"".$family->getDateUrl($family->marr_date)."\"".

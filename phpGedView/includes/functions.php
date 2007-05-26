@@ -1809,6 +1809,7 @@ function compare_facts($a, $b) {
 			return $c;
 }
 
+// Helper function to sort facts.
 function compare_facts_date($arec, $brec) {
 	$cta = preg_match("/2 DATE (.*)/", $arec, $amatch);
 	if ($cta==0) return 0;
@@ -1816,9 +1817,25 @@ function compare_facts_date($arec, $brec) {
 	if ($ctb==0) return 0;
 	$adate = parse_date($amatch[1]);
 	$bdate = parse_date($bmatch[1]);
-	if ($adate[0]['jd'] < $bdate[0]['jd'])
+	// If either date can't be parsed, don't sort.
+	if ($adate[0]['jd1']==0 || $bdate[0]['jd1']==0)
+		return 0;
+
+	// Remember that dates can be ranges and overlapping ranges sort equally.
+  $amin=$adate[0]['jd1'];
+  $bmin=$bdate[0]['jd1'];
+	if (empty($adate[1]))
+		$amax=$adate[0]['jd2'];
+	else
+		$amax=$adate[1]['jd2'];
+	if (empty($bdate[1]))
+		$bmax=$bdate[0]['jd2'];
+	else
+		$bmax=$bdate[1]['jd2'];
+
+	if ($amax < $bmin)
 		return -1;
-	else if ($adate[0]['jd'] > $bdate[0]['jd'])
+	else if ($amin > $bmax)
 		return 1;
 	else
 		return 0;
