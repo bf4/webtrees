@@ -112,7 +112,7 @@ $factarray["NCHI"]	= "Anzahl der Kinder";
 $factarray["NICK"]	= "Spitzname";
 $factarray["NMR"]	= "Anzahl der Ehen";
 $factarray["NOTE"]	= "Anmerkung";
-$factarray["NPFX"]	= "Titel / Präfix";
+$factarray["NPFX"]	= "Präfix";
 $factarray["NSFX"]	= "Namenszusatz";
 $factarray["OBJE"]	= "Multimedia Objekt";
 $factarray["OCCU"]	= "Beruf";
@@ -128,8 +128,8 @@ $factarray["PROP"]	= "Besitz";
 $factarray["PUBL"]	= "Veröffentlichung";
 $factarray["QUAY"]	= "Qualität der Daten";
 $factarray["REPO"]	= "Lagerort";
-$factarray["REFN"]	= "Referenz Nummer";
-$factarray["RELA"]	= "Verwandtschaft ";
+$factarray["REFN"]	= "Referenz-Nummer";
+$factarray["RELA"]	= "Verwandtschaft";
 $factarray["RELI"]	= "Religion";
 $factarray["RESI"]	= "Wohnort";
 $factarray["RESN"]	= "Beschränkung";
@@ -150,7 +150,7 @@ $factarray["SUBN"]	= "Übermittlung";
 $factarray["SURN"]	= "Nachname";
 $factarray["TEMP"]	= "Tempel";
 $factarray["TEXT"]	= "Text";
-$factarray["TIME"]	= "Zeit";
+$factarray["TIME"]	= "Uhrzeit";
 $factarray["TITL"]	= "Titel";
 $factarray["TYPE"]	= "Typ";
 $factarray["WIFE"]  = "Ehefrau";
@@ -159,11 +159,13 @@ $factarray["_EMAIL"]	= "Mail-Adresse";
 $factarray["EMAIL"]	= "Mail-Adresse";
 $factarray["_TODO"]	= "Unerledigt";
 $factarray["_UID"]	= "Universelle Identifikationsnummer (UID)";
-$factarray["_PGVU"]	= "Zuletzt geändert von";
-$factarray["SERV"] = "Fremder Server";
-$factarray["_GEDF"] = "GEDCOM Datei";
 $factarray["_PRIM"]	= "Bevorzugtes Bild";
 $factarray["_DBID"] = "ID der fremden Datenbank";
+
+// These facts are used in specific contexts
+$factarray["STAT:DATE"] = "Datum der Statusänderung";
+
+//These facts are compounds for the view probabilities page
 $factarray["FAMC:HUSB:SURN"] = "Nachname des Vaters";
 $factarray["FAMC:WIFE:SURN"] = "Nachname der Mutter";
 $factarray["FAMC:HUSB:BIRT:PLAC"] = "Geburtsort des Vaters";
@@ -178,14 +180,15 @@ $factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Geburtsort des Ehepartners";
 $factarray["FAMC:WIFE:GIVN"] = "Vornamen der Mutter";
 $factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Vornamen des väterlichen Großvaters";
 $factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Vornamen der mütterlichen Großmutter";
+
+
+// These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "Geburtsort";
 $factarray["DEAT:PLAC"] = "Todesort";
 $factarray["CHR:PLAC"] = "Taufort";
 $factarray["BAPM:PLAC"] = "Taufort";
 $factarray["BURI:PLAC"] = "Beerdigungsort";
 $factarray["MARR:PLAC"] = "Eheort";
-$factarray["FAMC:MARR:PLAC"] = "";
-$factarray["_THUM"]	= "Dieses Bild auch als Miniaturbild verwenden?";
 
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"]	= "Medizinische Information";
@@ -224,16 +227,18 @@ $factarray["ROMN"] = "Romanisiert";
 
 // PAF related facts
 $factarray["_NAME"] = "Name";
-$factarray["URL"] = "Internet URL";
+$factarray["URL"] = "Internet-Adresse";
 $factarray["_URL"] = "Internet-Adresse";
 $factarray["_HEB"] = "Hebräisch";
 $factarray["_SCBK"] = "Sammelalbum";
 $factarray["_TYPE"] = "Multimedia-Typ";
-$factarray["_SSHOW"] = "Diashow";
+$factarray["_SSHOW"] = "Diavortrag";
 
 // Rootsmagic
 $factarray["_SUBQ"]= "Kurzfassung";
 $factarray["_BIBL"] = "Bibliographie";
+
+// Reunion
 $factarray["EMAL"]	= "E-Mail Adresse";
 
 // Other common customized facts
@@ -261,7 +266,7 @@ $factarray["_WEIG"]	= "Gewicht";
 $factarray["_YART"]	= "Yartzeit";
 $factarray["_MARNM"]	= "Ehename";
 $factarray["_MARNM_SURN"] = "Nachname nach der Ehe";
-$factarray["_STAT"] = "Familienstand";
+$factarray["_STAT"] = "Ehestand";
 $factarray["COMM"]	= "Bemerkung";
 
 // Aldfaer related facts
@@ -269,33 +274,52 @@ $factarray["MARR_CIVIL"] = "standesamtliche Ehe";
 $factarray["MARR_RELIGIOUS"] = "kirchliche Ehe";
 $factarray["MARR_PARTNERS"] = "eingetragene Lebensgemeinschaft";
 $factarray["MARR_UNKNOWN"] = "Art der Ehe unbekannt";
+
 $factarray["_HNM"] = "Hebräischer Name";
-$factarray["_DEAT_SPOU"] = "Tod von Ehegatte";
+
+// Pseudo-facts for relatives
+$factarray["_DEAT_SPOU"] = "Tod des Ehegattens";
+
 $factarray["_BIRT_CHIL"] = "Geburt eines Kindes";
 $factarray["_MARR_CHIL"] = "Ehe eines Kindes";
 $factarray["_DEAT_CHIL"] = "Tod eines Kindes";
+
 $factarray["_BIRT_GCHI"] = "Geburt eines Enkelkindes";
 $factarray["_MARR_GCHI"] = "Ehe eines Enkelkindes";
 $factarray["_DEAT_GCHI"] = "Tod eines Enkelkindes";
+
 $factarray["_MARR_FATH"] = "Ehe des Vaters";
 $factarray["_DEAT_FATH"] = "Tod des Vaters";
+
 $factarray["_MARR_MOTH"] = "Ehe der Mutter";
 $factarray["_DEAT_MOTH"] = "Tod der Mutter";
+
 $factarray["_BIRT_SIBL"] = "Geburt eines Geschwisters";
 $factarray["_MARR_SIBL"] = "Ehe von Geschwister";
 $factarray["_DEAT_SIBL"] = "Tod von Geschwister";
+
 $factarray["_BIRT_HSIB"] = "Geburt von Halbgeschwister";
 $factarray["_MARR_HSIB"] = "Ehe von Halbgeschwister";
 $factarray["_DEAT_HSIB"] = "Tod von Halbgeschwister";
+
 $factarray["_DEAT_GPAR"] = "Tod von Großeltern";
+
 $factarray["_BIRT_FSIB"] = "Geburt von Vaters Geschwister";
 $factarray["_MARR_FSIB"] = "Ehe von Vaters Geschwister";
 $factarray["_DEAT_FSIB"] = "Tod von Vaters Geschwister";
+
 $factarray["_BIRT_MSIB"] = "Geburt von Mutters Geschwister";
 $factarray["_MARR_MSIB"] = "Ehe von Mutters Geschwister";
 $factarray["_DEAT_MSIB"] = "Tod von Mutters Geschwister";
+
 $factarray["_BIRT_COUS"] = "Geburt eines Cousins";
 $factarray["_MARR_COUS"] = "Ehe eines Cousins";
 $factarray["_DEAT_COUS"] = "Tod eines Cousins";
+
+//-- PGV Only facts
+$factarray["_THUM"]	= "Dieses Bild auch als Miniaturbild verwenden?";
+$factarray["_PGVU"]	= "von"; // Zuletzt geändert von
+$factarray["SERV"] = "Fremder Server";
+$factarray["_GEDF"] = "GEDCOM Datei";
 
 ?>
