@@ -2467,8 +2467,12 @@ function get_alpha_indis($letter) {
 				$tindilist[$row["i_id"]] = $indilist[$row["i_id"]];
 			}
 			else {
-				$indilist[$row["i_id"]]["names"][] = array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]);
-				$tindilist[$row["i_id"]] = $indilist[$row["i_id"]];
+				// do not add to the array an indi name that already exists in it
+				if (!in_array(array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]), $indilist[$row["i_id"]]["names"])) 
+				{
+				    $indilist[$row["i_id"]]["names"][] = array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]);
+					$tindilist[$row["i_id"]] = $indilist[$row["i_id"]];
+				}
 			}
 		//}
 	}
@@ -2553,12 +2557,18 @@ function get_surname_indis($surname) {
 	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
 		if (isset($indilist[$row["i_id"]])) {
-			$indilist[$row["i_id"]]["names"][] = array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]);
-			$tindilist[$row["i_id"]] = $indilist[$row["i_id"]];
+			// do not add to the array an indi name that already exists in it
+			if (!in_array(array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]), $indilist[$row["i_id"]]["names"]))
+			{
+			    $indilist[$row["i_id"]]["names"][] = array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]);
+				$tindilist[$row["i_id"]] = $indilist[$row["i_id"]];
+			}
 		}
 		else {
 			$indi = array();
-			$indi["names"] = array(array($row["i_name"], $row["i_letter"], $row["i_surname"], "P"), array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]));
+			//do not add main name first name beginning letter for alternate names
+//			$indi["names"] = array(array($row["i_name"], $row["i_letter"], $row["i_surname"], "P"), array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]));
+			$indi["names"] = array(array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]));
 			$indi["isdead"] = $row["i_isdead"];
 			$indi["gedcom"] = $row["i_gedcom"];
 			$indi["gedfile"] = $row["i_file"];
