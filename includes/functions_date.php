@@ -971,7 +971,7 @@ function parse_date($date)
 {
 	$date=preg_replace('/\(.*/',         '',  $date); // Bracketed text at end of CAL type dates
 	$date=preg_replace('/[^\d\w\s#@]+/', ' ', $date); // Punctuation and multiple spaces
-	$date=preg_replace('/(^ | $)/',      '',  $date); // Leading/trailing whitespace
+	$date=preg_replace('/(^ |\r| $)/',   '',  $date); // Leading/trailing whitespace
 
 	// Some applications wrongly prefix the entire date string with a calendar escape, rather
 	// than prefixing each individual date.
@@ -1017,7 +1017,7 @@ function parse_single_gedcom_date($date)
 
 	// Extract components from a well-formed date
 	// :TODO: Do we need the french "an XIII" format? It is converted by the GUI.
-	if (preg_match('/^ ?((?P<EXT>FROM|TO|BET|AND|AFT|BEF|EST|INT|CAL|ABT|APX|EST|CIR) ?)?((?P<CAL>@#D[A-Z ]+@) ?)?((((?P<DAY>\d{1,2}) ?)?(?P<MONTH>\w+) ?)?(?P<YEAR>\b(\d{1,4}|(an +)?(?P<FYEAR>[XVI]+)))(?P<BC> ?B ?C)?)(.*$)/i', $date, $match)) {
+	if (preg_match('/^ ?((?P<EXT>FROM|TO|BET|AND|AFT|BEF|EST|INT|CAL|ABT|APX|EST|CIR) ?)?((?P<CAL>@#D[A-Z ]+@) ?)?((((?P<DAY>\d{1,2}) ?)?(?P<MONTH>\w+) ?)?(?P<YEAR>\b(\d{1,4}|(an +)?(?P<FYEAR>[XVI]+)))(?P<BC> ?B ?C)?)($)/i', $date, $match)) {
 		$match['EXT']=strtoupper($match['EXT']);
 		$match['MONTH']=strtoupper($match['MONTH']);
 		$parsed=array(
@@ -1060,10 +1060,10 @@ function parse_single_gedcom_date($date)
 				$parsed['jd2']=MyGregorianToJD($m1, $d1, $y1+1)-1;
 			else
 				if ($parsed['day']==0) {
-					if ($d1<12)
-						$parsed['jd2']=MyGregorianToJD($m1, $d1+1, $y1)-1;
+					if ($m1<12)
+						$parsed['jd2']=MyGregorianToJD($m1+1, 1, $y1)-1;
 					else
-						$parsed['jd2']=MyGregorianToJD($m1, 1, $y1+1)-1;
+						$parsed['jd2']=MyGregorianToJD(1, 1, $y1+1)-1;
 				} else
 					$parsed['jd2']=$parsed['jd1'];
 			break;
@@ -1073,10 +1073,10 @@ function parse_single_gedcom_date($date)
 				$parsed['jd2']=MyJulianToJD($m1, $d1, $y1+1)-1;
 			else
 				if ($parsed['day']==0) {
-					if ($d1<12)
-						$parsed['jd2']=MyJulianToJD($m1, $d1+1, $y1)-1;
+					if ($m1<12)
+						$parsed['jd2']=MyJulianToJD($m1+1, 1, $y1)-1;
 					else
-						$parsed['jd2']=MyJulianToJD($m1, 1, $y1+1)-1;
+						$parsed['jd2']=MyJulianToJD(1, 1, $y1+1)-1;
 				} else
 					$parsed['jd2']=$parsed['jd1'];
 			break;
@@ -1086,24 +1086,23 @@ function parse_single_gedcom_date($date)
 				$parsed['jd2']=MyFrenchToJD($m1, $d1, $y1+1)-1;
 			else
 				if ($parsed['day']==0) {
-					if ($d1<12)
-						$parsed['jd2']=MyFrenchToJD($m1, $d1+1, $y1)-1;
+					if ($m1<12)
+						$parsed['jd2']=MyFrenchToJD($m1+1, 1, $y1)-1;
 					else
-						$parsed['jd2']=MyFrenchToJD($m1, 1, $y1+1)-1;
+						$parsed['jd2']=MyFrenchToJD(1, 1, $y1+1)-1;
 				} else
 					$parsed['jd2']=$parsed['jd1'];
 			break;
 		case '@#DHEBREW@':
-			// TODO: Is it more complicated than this, especially w.r.t. leap years?
 			$parsed['jd1']=JewishToJD($m1, $d1, $y1);
 			if ($parsed['mon']==0)
 			$parsed['jd2']=JewishToJD($m1, $d1, $y1+1)-1;
 			else
 				if ($parsed['day']==0) {
-					if ($d1<13)
-						$parsed['jd2']=JewishToJD($m1, $d1+1, $y1)-1;
+					if ($m1<13)
+						$parsed['jd2']=JewishToJD($m1+1, 1, $y1)-1;
 					else
-						$parsed['jd2']=JewishToJD($m1, 1, $y1+1)-1;
+						$parsed['jd2']=JewishToJD(1, 1, $y1+1)-1;
 				} else
 					$parsed['jd2']=$parsed['jd1'];
 ;
@@ -1112,7 +1111,6 @@ function parse_single_gedcom_date($date)
 	} else { // Not a valid date (e.g. "14 MAR").  Pick out any bits we can.
 		$parsed=array('ext'=>'', 'cal'=>'', 'day'=>0, 'mon'=>0, 'month'=>'', 'year'=>0, 'jd1'=>0, 'jd2'=>0);
 		if (preg_match('/(\d\d\d\d)/', $date, $m)) $parsed['year' ]=$m[1];
-		if (preg_match('/(\b\d\d?\b)/', $date, $m)) $parsed['day'  ]=$m[1];
 		if (preg_match('/(\w+)/',      $date, $m)) {
 			$parsed['month']=$m[1];
 			if (!empty($months[$parsed['month']]))
