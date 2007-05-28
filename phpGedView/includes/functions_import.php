@@ -480,7 +480,7 @@ function update_dates($gid, $indirec) {
 					$datestamp=$date['year']*10000+$date['mon']*100+$date['day'];
 				else
 					$datestamp=-1*((1-$date['year'])*10000+$date['mon']*100+$date['day']);
-				$sql = "INSERT INTO {$TBLPREFIX}dates(d_day,d_month,d_mon,d_year,d_datestamp,d_fact,d_gid,d_file,d_type)VALUES({$date['day']},'".$DBCONN->escapeSimple(str2upper($date["month"]))."',".  "{$date['mon']},{$date['year']},{$datestamp},'".$DBCONN->escapeSimple($fact)."','".$DBCONN->escapeSimple($gid)."',{$GEDCOMS[$FILE]['id']},".(empty($date['cal'])?'NULL':"'{$date['cal']}'").")";
+				$sql = "INSERT INTO {$TBLPREFIX}dates(d_day,d_month,d_mon,d_year,d_datestamp,d_fact,d_gid,d_file,d_type)VALUES({$date['day']},'{$date['month']}',{$date['mon']},{$date['year']},{$datestamp},'".$DBCONN->escapeSimple($fact)."','".$DBCONN->escapeSimple($gid)."',{$GEDCOMS[$FILE]['id']},".(empty($date['cal'])?'NULL':"'{$date['cal']}'").")";
 				$res=dbquery($sql);
 				$count++;
 			}
