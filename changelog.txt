@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.2
+ - Added [ 1712181 ] Show Sources Linked to Events in the Source Tab (opus27)
  - Added [ 1714274 ] MARR date on Close Relative tab (opus27)
  - Added new NavTree chart (yalnifj)
  - Added [ 1675203 ] Geo-Names ajax address autocomplete (opus27)

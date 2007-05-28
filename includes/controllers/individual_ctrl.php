@@ -3,7 +3,7 @@
  * Controller for the Individual Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006	John Finlay and Others
+ * Copyright (C) 2002 to 2007	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1087,6 +1087,8 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	function get_source_count() {
+		return preg_match_all("/\d SOUR @(.*)@/", $this->indi->gedrec, $match, PREG_SET_ORDER);
+		/**
 		$sourcecount = 0;
 		$otheritems = $this->getOtherFacts();
 		foreach ($otheritems as $key => $factrec) {
@@ -1099,6 +1101,7 @@ class IndividualControllerRoot extends BaseController {
 			}
 		}
 		return $sourcecount;
+		**/
 	}
 
 	function print_sources_tab() {
@@ -1111,20 +1114,15 @@ class IndividualControllerRoot extends BaseController {
 				print "</td></tr>";
 			}
 			else {
-				$sourcecount = 0;
-				$otheritems = $this->getOtherFacts();
-				foreach ($otheritems as $key => $factrec) {
-					$ft = preg_match("/\d\s(\w+)(.*)/", $factrec[1], $match);
-					if ($ft>0) $fact = $match[1];
-					else $fact="";
-					$fact = trim($fact);
-					if ($fact=="SOUR") {
-						$sourcecount++;
-						print_main_sources($factrec[1], 1, $this->pid, $factrec[0]);
-					}
+				foreach ($this->getOtherFacts() as $key => $factrec) {
+					print_main_sources($factrec[1], 1, $this->pid, $factrec[0]);
 					$FACT_COUNT++;
 				}
-			   if ($sourcecount==0) print "<tr><td id=\"no_tab3\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab3"]."</td></tr>\n";
+				// 2nd level sources [ 1712181 ]
+				foreach ($this->getIndiFacts() as $key => $factrec) {
+					print_main_sources($factrec[1], 2, $this->pid, $factrec[0], true);
+				}
+				if ($this->get_source_count()==0) print "<tr><td id=\"no_tab3\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab3"]."</td></tr>\n";
 				//-- New Source Link
 				if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
 				?>
@@ -1219,7 +1217,7 @@ class IndividualControllerRoot extends BaseController {
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
 					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
 				<?php } ?>
-				<?php if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate());?>
+				<?php if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate())." -- ".$family->getPlaceShort($family->getMarriagePlace());?>
 					</td>
 				</tr>
 			</table>
@@ -1358,7 +1356,7 @@ class IndividualControllerRoot extends BaseController {
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
 					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
 				<?php } ?>
-				<?php if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate());?>
+				<?php if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate())." -- ".$family->getPlaceShort($family->getMarriagePlace());?>
 					</td>
 				</tr>
 			</table>
@@ -1475,7 +1473,7 @@ class IndividualControllerRoot extends BaseController {
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
 					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
 				<?php } ?>
-				<?php if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate());?>
+				<?php if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate())." -- ".$family->getPlaceShort($family->getMarriagePlace());?>
 					</td>
 				</tr>
 			</table>
