@@ -970,62 +970,57 @@ function get_age_at_event($agestring) {
 function parse_date($date)
 {
 	$date=preg_replace('/\(.*/',         '',  $date); // Bracketed text at end of CAL type dates
-	$date=preg_replace('/[^\d\w\s#@]+/', ' ', $date); // Punctuation and multiple spaces
+	$date=preg_replace('/[^\d\w\s#@]+/', ' ', $date); // Punctuation
+	$date=preg_replace('/\s+/',          ' ', $date); // Multiple spaces
 	$date=preg_replace('/(^ |\r| $)/',   '',  $date); // Leading/trailing whitespace
-
+	$date=str2upper($date);
 	// Some applications wrongly prefix the entire date string with a calendar escape, rather
 	// than prefixing each individual date.
 	// e.g. "@#DJULIAN@ BET 1520 AND 1530" instead of "BET @#DJULIAN@ 1520 AND @#DJULIAN@ 1530"
-	if (preg_match('/^(@#D[A-Z ]+@) (FROM|BET) ([^@]+) (AND|TO) ([^@]+)/i', $date, $match))
+	if (preg_match('/^(@#D[A-Z ]+@) (FROM|BET) (.+) (AND|TO) (.+)/', $date, $match))
 		return array(parse_single_gedcom_date("{$match[2]} {$match[1]} {$match[3]}"), parse_single_gedcom_date("{$match[4]} {$match[1]} {$match[5]}"));
-	else if (preg_match('/^(@#D[A-Z ]+@) (FROM|BET|TO|AND|BEF|AFT|CAL|EST|INT) ([^@]+)/i', $date, $match))
+	else if (preg_match('/^(@#D[A-Z ]+@) (FROM|BET|TO|AND|BEF|AFT|CAL|EST|INT|ABT|APX|EST|CIR) (.+)/', $date, $match))
 		return array(parse_single_gedcom_date("{$match[2]} {$match[1]} {$match[3]}"));
-	else if (preg_match('/^((FROM|BET) .+) ((AND|TO) .+)/i', $date, $match))
+	else if (preg_match('/^((FROM|BET) .+) ((AND|TO) .+)/', $date, $match))
 		return array(parse_single_gedcom_date($match[1]), parse_single_gedcom_date($match[3]));
 	else
 		return array(parse_single_gedcom_date($date));
 }
 
-// TODO Instead of a single julian day, we ought to get two (min_jd and max_jd)
-// so that "JUN 2000" or "2001" can correctly represent a range.  This will
-// allow more intelligent date sorting of overlapping dates (e.g. a DIV in 2000
-// should not come before a MARR in JUN 2000)
+// This function should only be called by parse_date().
 function parse_single_gedcom_date($date)
 {
-	global $pgv_lang;
-	static $months=NULL;
-	if ($months==NULL)
-		$months=array(
-			'1'=>1, '2'=>2, '3'=>3, '4'=>4, '5'=>5, '6'=>6, '7'=>7, '8'=>8, '9'=>9,
-			'10'=>10, '11'=>11, '12'=>12, 'JAN'=>1, 'FEB'=>2, 'MAR'=>3, 'APR'=>4,
-			'MAY'=>5, 'JUN'=>6, 'JUL'=>7, 'AUG'=>8, 'SEP'=>9, 'OCT'=>10, 'NOV'=>11,
-			'DEC'=>12, 'VEND'=>1, 'BRUM'=>2, 'FRIM'=>3, 'NIVO'=>4, 'PLUV'=>5,
-			'VENT'=>6, 'GERM'=>7, 'FLOR'=>8, 'PRAI'=>9, 'MESS'=>10, 'THER'=>11,
-			'FRUC'=>12, 'COMP'=>13, 'TSH'=>1, 'CSH'=>2, 'KSL'=>3, 'TVT'=>4, 'SHV'=>5,
-			'ADR'=>6, 'ADS'=>7, 'NSN'=>8, 'IYR'=>9, 'SVN'=>10, 'TMZ'=>11, 'AAV'=>12,
-			'ELL'=>13
-			// Month abbreviations for the current language.  These are a nasty hack and
-			// only work if the viewer is using the same language as the gedcom author.
-			// It would be better to convert them in the editor/gui.
-			,str2upper($pgv_lang["january_1st"])=>1,  str2upper($pgv_lang["february_1st"])=>2
-			,str2upper($pgv_lang["march_1st"])=>1, 	  str2upper($pgv_lang["april_1st"])=>4
-			,str2upper($pgv_lang["may_1st"])=>5,      str2upper($pgv_lang["june_1st"])=>6
-			,str2upper($pgv_lang["july_1st"])=>7,     str2upper($pgv_lang["august_1st"])=>8
-			,str2upper($pgv_lang["september_1st"])=>9,str2upper($pgv_lang["october_1st"])=>10
-			,str2upper($pgv_lang["november_1st"])=>11,str2upper($pgv_lang["december_1st"])=>12
+	// Lookup tables - only contruct once.
+	static $month_to_num=NULL;
+	static $gregorian_months=NULL;
+	static $french_months=NULL;
+	static $hebrew_months=NULL;
+	if ($month_to_num==NULL) {
+		$month_to_num=array(
+			''=>0, '1'=>1, '2'=>2, '3'=>3, '4'=>4, '5'=>5, '6'=>6, '7'=>7, '8'=>8,
+			'9'=>9, '10'=>10, '11'=>11, '12'=>12, 'JAN'=>1, 'JANUARY'=>1, 'FEB'=>2,
+			'FEBRUARY'=>2, 'MAR'=>3, 'MARCH'=>3, 'APR'=>4, 'APRIL'=>4, 'MAY'=>5,
+			'JUN'=>6, 'JUNE'=>6, 'JUL'=>7, 'JULY'=>7, 'AUG'=>8, 'AUGUST'=>8, 'SEP'=>9,
+			'SEPT'=>9, 'SEPTEMBER'=>9, 'OCT'=>10, 'OCTOBER'=>10, 'NOV'=>11,
+			'NOVEMBER'=>11, 'DEC'=>12, 'DECEMBER'=>12, 'VEND'=>1, 'BRUM'=>2,
+			'FRIM'=>3, 'NIVO'=>4, 'PLUV'=>5, 'VENT'=>6, 'GERM'=>7, 'FLOR'=>8,
+			'PRAI'=>9, 'MESS'=>10, 'THER'=>11, 'FRUC'=>12, 'COMP'=>13, 'TSH'=>1,
+			'CSH'=>2, 'KSL'=>3, 'TVT'=>4, 'SHV'=>5, 'ADR'=>6, 'ADS'=>7, 'NSN'=>8,
+			'IYR'=>9, 'SVN'=>10, 'TMZ'=>11, 'AAV'=>12, 'ELL'=>13
 		);
+		$gregorian_months=array('','JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC');
+		$french_months=array('','VEND','BRUM','FRIM','NIVO','PLUV','VENT','GERM','FLOR','PRAI','MESS','THER','FRUC','COMP');
+		$hebrew_months=array('','TSH','CSH','KSL','TVT','SHV','ADR','ADS','NSN','IYR','SVN','TMZ','AAV','ELL');
+	}
 
-	// Extract components from a well-formed date
-	// :TODO: Do we need the french "an XIII" format? It is converted by the GUI.
-	if (preg_match('/^ ?((?P<EXT>FROM|TO|BET|AND|AFT|BEF|EST|INT|CAL|ABT|APX|EST|CIR) ?)?((?P<CAL>@#D[A-Z ]+@) ?)?((((?P<DAY>\d{1,2}) ?)?(?P<MONTH>\w+) ?)?(?P<YEAR>\b(\d{1,4}|(an +)?(?P<FYEAR>[XVI]+)))(?P<BC> ?B ?C)?)($)/i', $date, $match)) {
-		$match['EXT']=strtoupper($match['EXT']);
-		$match['MONTH']=strtoupper($match['MONTH']);
+	// Extract components from a reasonably well-formed date
+	if (preg_match('/^ ?((?P<EXT>FROM|TO|BET|AND|AFT|BEF|EST|INT|CAL|ABT|APX|EST|CIR) ?)?((?P<CAL>@#D[A-Z ]+@) ?)?((((?P<DAY>\d{1,2}) ?)?(?P<MONTH>\w+) ?)?(?P<YEAR>\b(\d{1,4}|(?P<FYEAR>(AN )?[XVI]+)))(?P<GYEAR>( \d\d)?)(?P<BC> ?B ?C)?)( ?$)/', $date, $match) && isset($month_to_num[$match['MONTH']])) {
 		$parsed=array(
 			'cal'=>$match['CAL'],
 			'ext'=>$match['EXT'],
 			'day'=>($match['DAY']=='') ? 0 : (int)$match['DAY'],
 			'month'=>$match['MONTH'],
-			'mon'=>(empty($months[$match['MONTH']])) ? 0 : (int)$months[$match['MONTH']],  // FEB => 2
+			'mon'=>$month_to_num[$match['MONTH']],  // FEB => 2
 			'year'=>($match['BC']=='') ? (int)$match['YEAR'] : 1-$match['YEAR'],  // 1BC=0, 2BC=-1, 3BC=-2, etc.
 			'jd1'=>0,
 			'jd2'=>0
@@ -1033,16 +1028,16 @@ function parse_single_gedcom_date($date)
 
 		// Guess at calendar, if not specified
 		if ($match['CAL']=='')
-			if (preg_match('/^(VEND|BRUM|FRIM|NIVO|PLUV|VENT|GERM|FLOR|PRAI|MESS|THER|FRUC|COMP)$/', $parsed['month']))
+			if (preg_match('/^(VEND|BRUM|FRIM|NIVO|PLUV|VENT|GERM|FLOR|PRAI|MESS|THER|FRUC|COMP)$/', $match['MONTH']))
 				$parsed['cal']='@#DFRENCH R@';
-			else if (empty($match['MONTH']) && $match['YEAR']>3000 || preg_match('/^(TSH|CSH|KSL|TVT|SHV|ADR|ADS|NSN|IYR|SVN|TMZ|AAV|ELL)$/', $parsed['month']))
+			else if (empty($match['MONTH']) && $match['YEAR']>3000 || preg_match('/^(TSH|CSH|KSL|TVT|SHV|ADR|ADS|NSN|IYR|SVN|TMZ|AAV|ELL)$/', $match['MONTH']))
 				$parsed['cal']='@#DHEBREW@';
-		// TODO? else if year < 1582 then @#DJULIAN@
+		// TODO? else if year <1582 (or <1?) then @#DJULIAN@
 
 			if (!empty($match['FYEAR'])) {
 				static $roman=NULL;
 				if ($roman==NULL)
-					$roman=array('I'=>1, 'i'=>1, 'II'=>2, 'ii'=>2, 'III'=>3, 'iii'=>3, 'IV'=>4, 'iv'=>4, 'V'=>5, 'v'=>5, 'VI'=>6, 'vi'=>6, 'VII'=>7, 'vii'=>7, 'VIII'=>8, 'viii'=>8, 'IX'=>9, 'ix'=>9, 'X'=>10, 'x'=>10, 'XI'=>11, 'xi'=>11, 'XII'=>12, 'xii'=>12, 'XIII'=>13, 'xiii'=>13, 'XIV'=>14, 'xiv'=>14);
+					$roman=array('I'=>1, 'II'=>2, 'III'=>3, 'IV'=>4, 'V'=>5, 'VI'=>6, 'VII'=>7, 'VIII'=>8, 'IX'=>9, 'X'=>10, 'XI'=>11, 'XII'=>12, 'XIII'=>13, 'XIV'=>14, 'AN I'=>1, 'AN II'=>2, 'AN III'=>3, 'AN IV'=>4, 'AN V'=>5, 'AN VI'=>6, 'AN VII'=>7, 'AN VIII'=>8, 'AN IX'=>9, 'AN X'=>10, 'AN XI'=>11, 'AN XII'=>12, 'AN XIII'=>13, 'AN XIV'=>14);
 				if (!empty($roman[$match['FYEAR']]))
 					$parsed['year']=$roman[$match['FYEAR']];
 			}
@@ -1105,21 +1100,40 @@ function parse_single_gedcom_date($date)
 						$parsed['jd2']=JewishToJD(1, 1, $y1+1)-1;
 				} else
 					$parsed['jd2']=$parsed['jd1'];
-;
 			break;
 		}
-	} else { // Not a valid date (e.g. "14 MAR").  Pick out any bits we can.
-		$parsed=array('ext'=>'', 'cal'=>'', 'day'=>0, 'mon'=>0, 'month'=>'', 'year'=>0, 'jd1'=>0, 'jd2'=>0);
-		if (preg_match('/(\d\d\d\d)/', $date, $m)) $parsed['year' ]=$m[1];
-		if (preg_match('/(\w+)/',      $date, $m)) {
-			$parsed['month']=$m[1];
-			if (!empty($months[$parsed['month']]))
-				$parsed['mon']=$months[$parsed['month']];
+	} else { // Not a valid date (e.g. "14 MAR").  Pick out any bits we can for linking to the calendar.
+		$parsed=array('ext'=>'', 'cal'=>'', 'day'=>0, 'mon'=>0, 'month'=>'', 'year'=>0, 'jd1'=>0, 'jd2'=>0, 'text'=>$date);
+		if (preg_match('/(@#.+@)/',    $date, $m)) $parsed['cal' ]=$m[1];
+		if (preg_match('/(\d\d\d\d)/', $date, $m)) $parsed['year']=$m[1];
+		if (preg_match('/((\d{1,2}) )?([A-Z]+)$/', $date, $m) && !empty($month_to_num[$m[3]])) {
+			$parsed['day']=(int)$m[1];
+			$parsed['mon']=$month_to_num[$m[3]];
+			if (preg_match('/^(VEND|BRUM|FRIM|NIVO|PLUV|VENT|GERM|FLOR|PRAI|MESS|THER|FRUC|COMP)$/', $m[3]))
+				$parsed['cal']='@#DFRENCH R@';
+			if (preg_match('/^(TSH|CSH|KSL|TVT|SHV|ADR|ADS|NSN|IYR|SVN|TMZ|AAV|ELL)$/', $m[3]))
+				$parsed['cal']='@#DHEBREW@';
 		}
 	}
 
-	// Do we really need this "sortable" date?  Can't we use julian days for calculations?
-	$parsed['sort']=sprintf("%04d-%02d-%02d", $parsed['year'], empty($match['MONTH'])?0:$parsed['mon'], empty($match['DAY'])?0:$parsed['day']);
+	// Convert month numbers to a properly formatted month abbreviation
+	// TODO: Do we really need these?  Migrate away from them?
+	switch ($parsed['cal']) {
+		case '':
+		case '@#DGREGORIAN@':
+		case '@#DJULIAN@':
+			$parsed['month']=$gregorian_months[$parsed['mon']];
+			break;
+		case '@#DFRENCH R@':
+			$parsed['month']=$french_months[$parsed['mon']];
+			break;
+		case '@#DHEBREW@':
+			$parsed['month']=$hebrew_months[$parsed['mon']];
+			break;
+	}
+
+	// Dispite the name, this is used for filtering, rather than sorting.
+	$parsed['sort']=sprintf("%04d-%02d-%02d", $parsed['year'], $parsed['mon'], $parsed['day']);
 
 	return $parsed;
 }
