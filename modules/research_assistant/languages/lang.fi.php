@@ -30,17 +30,31 @@ if (preg_match("/ra_lang\...\.php$/", $_SERVER["PHP_SELF"])>0) {
 	print "Et pääse suoraan kielitiedostoon.";
 	exit;
 }
+$pgv_lang["add_task_inst"]		= "Mikäli tutkimustuloksiasi varten ei vielä ole luotu tehtävää, sinun tulisi ensin luoda tehtävä ja sitten valita vaihtoehto tallentaa ja suorittaa tehtävä loppuun."; 
+$pgv_lang["complete_task_inst"]	= "Valitse tehtävä allaolevasta tehtäväluettelosta suorittaaksesi sen lopuun ja lisää tulokset:";
+$pgv_lang["enter_results"]		= "Lisää tulokset";
+$pgv_lang["auto_gen_inst"]		= "Jotkin ohjelmat sallivat tutkimustehtävien lisäyksen TODO-obekteina GEDCOM-tiedostoosi. Tämä vaihtoehto käy läpi GEDCOM-tiedostosi ja muuttaa automaattisesti TODO-objektin tutkimustehtäväksi.";
+$pgv_lang["choose_search_site"]	= "Valitse hakusivusto"; 
+$pgv_lang["pid_search_for"]		= "Ketä haluat hakea?"; 
+$pgv_lang["manage_research_inst"]	= "Nämä objektit auttavat hallitsemaan tutkimustehtäviäsi. Tutkimustehtävät auttavat sinua seuraamaan tutkimustasi sekä yhteistyössä muiden tutkijoiden kanssa.";
+$pgv_lang["manage_research"]	= "Hallitse tutkimusta"; 
+$pgv_lang["manage_sources"]		= "Hallitse lähteitä"; 
+$pgv_lang["part_of"]			= "Osa (vaihtoehtoinen)"; 
+$pgv_lang["search_fhl"]			= "Hae perhehistoriakirjastoluettelosta"; 
+$pgv_lang["determine_sources"]	= "Päättele mahdolliset lähteet"; 
+$pgv_lang["analyze_database"]	= "Analysoi tietokantaa"; 
+$pgv_lang["pid_know_more"]		= "Kenestä haluat enemmän tietoja?"; 
+$pgv_lang["analyze_people"]		= "Analysoi henkilöitä"; 
+$pgv_lang["analyze_data"]		= "Analysoi tietojani"; 
+
 $pgv_lang["missing_info"] 		= "Puuttuva tieto";
-$temp_out_autosearch 			= "Tämä ominaisuus suorittaa automaattisen esipolvihaun ja perhehaun, ";
-$temp_out_autosearch 			.= "voit hakea nimen ja syntymä-/kuolinpäivän mukaan<br />";
-$pgv_lang["auto_search"]		= $temp_out_autosearch;
+$pgv_lang["auto_search"]		= "Tämä ominaisuus suorittaa automaattisen esipolvihaun ja perhehaun, voit hakea nimen ja syntymä-/kuolinpäivän mukaan<br />";
 $pgv_lang["auto_search_text"]	= "Automaattihaku";
 $pgv_lang["task_list"]			= "Tehtävät";
 $pgv_lang["task_list_text"]		= "Tällä alueella näytetään luomasi tehtävät. Näpäytä nähdäksesi tehtävän";
 
 // -- HELP COMMENTS
-$temp_out_comments 				= "Tähän voidaan lisätä henkilöitä koskevia kommentteja muille käyttäjille näytettäväksi ja palautteen antamiseksi";
-$pgv_lang["help_comments"] 		= $temp_out_comments;
+$pgv_lang["help_comments"] 		= "Tähän voidaan lisätä henkilöitä koskevia kommentteja muille käyttäjille näytettäväksi ja palautteen antamiseksi";
 
 // -- MENU ITEM MESSAGES
 $pgv_lang["my_tasks"]						= "Tehtäväni";
@@ -93,14 +107,29 @@ $pgv_lang["SelectFolder"]                   = "Valitse hakemisto:";
 $pgv_lang["ra_done"]						= "Valmis"; 
 $pgv_lang["ra_generate"]					= "Luo"; 
 
+$pgv_lang["LocalPercent"]						= "Paikallinen prosenttiosuus";
+$pgv_lang["GlobalPercent"]						= "Globaali prosenttiosuus"; 
+$pgv_lang["Average"]							= "Keksiarvo"; 
+$pgv_lang["NoData"]								= "Tieto puuttuu!"; 
+$pgv_lang["NotEnoughData"]						= "Ei riittävästi tietoa!"; 
+$pgv_lang["InferIndvBirthPlac"]					= "%PERCENT% prosentin todennköisyydellä syntymäpaikka on:";
+$pgv_lang["InferIndvDeathPlac"]					= "%PERCENT% prosentin todennköisyydellä kuolinpaikka on:"; 
+$pgv_lang["InferIndvSurn"]						= "%PERCENT% prosentin todennköisyydellä sukunimi on:"; 
+$pgv_lang["InferIndvMarriagePlace"]				= "%PERCENT% prosentin todennköisyydellä vihkimispaikka on:"; 
+$pgv_lang["InferIndvGivn"]						= "%PERCENT% prosentin todennköisyydellä etunimi on:"; 
+$pgv_lang["All"]								= "Kaikki"; 
+$pgv_lang["More"]								= "Lisää"; 
+$pgv_lang["ThereIsChance"]						= "Mahdolliset lähteet saattavat sisältää:"; 
+$pgv_lang["TheMostLikely"]						= "Tämän lähteen todennäköisin paikka on:"; 
+
 // -- RA EXPLANATION
-$pgv_lang["DataCorrelations"]				= "Tietojen Yhteydet";  //@@
+$pgv_lang["DataCorrelations"]				= "Tietojen Yhteydet";  
 $pgv_lang["ViewProbExplanation"]			= "Tällä sivulla analysoidaan aktiivisen GEDCOM-tiedoston datajoukkoa ja näytetään eri muuttujien välisiä yhteyksiä. Esimerkiksi paikallisen tietueen ja isän tietueen sukunimien välillä voi olla 95 prosentin korrelaatio. Se voi merkitä, että 95 prosentilla tässä GEDCOM tietojoukossa olevilla henkilöillä on sama sukunimi kuin heidän isällään. Tässä tutkimusavustajan versiossa näitä laskelmia ei käytetä ohjelman muissa osissa ja ne ovat vain avustamassa omaa tutkimustasi. Tulevaisuudessa suunnittelemme tämän tiedon käyttämistä osoittamaan mihin suuntaan sinun kannattaisi keskittää tulevia tutkimuksia.";
 
 // -- RA_FOLDER MESSAGES
 $pgv_lang["Folder"]                         = "Hakemisto:";
 $pgv_lang["Edit_Task"]                 		= "Editoi tehtävää";
-$pgv_lang["Edit_Gen_Task"]                 	= "Editoi luotu tehtävä"; //@@ 
+$pgv_lang["Edit_Gen_Task"]                 	= "Editoi luotu tehtävä"; 
 $pgv_lang["End_Date"]                 		= "Loppetuspäivämäärä";
 $pgv_lang["Start_Date"]                 	= "Aloituspäivämäärä";
 $pgv_lang["Task_Name"]                		= "Tehtävän nimi";
@@ -122,11 +151,7 @@ $pgv_lang["folder_submitted"]          		= "Hakemistosi on lähetetty";
 $pgv_lang["folder_problem"]             	= "Hakemistosi lisääminen ei onnistunut, yritä uudelleen";
 
 // -- Missing Information Help
-$temp_out_missinginfo 						= "Tällä alueella näytetään mitkä tiedot puuttuvat tietueesta .";
-$temp_out_missinginfo 						.= "Valitse valintaruutu ja ja hakemisto ja paina Lisää tehtävä luodaksesi tehtävän puuttuvalle kohteelle.";
-$temp_out_missinginfo 						.= "Jo luodut tehtävät näyttävät 'näytä' valintaruudun asemesta <br />";
-//$temp_out_missinginfo 					.= " <a href=\"javascript:void(0);\" onClick=\"fullScreen('helpvids/MissingInformationUserHelp.htm');\">Näpäytä tästä avataksesi Käyttäjän ohjeet kokoruutunäkymässä</a>";
-$pgv_lang["ra_missing_info_help"] 			= $temp_out_missinginfo;
+$pgv_lang["ra_missing_info_help"]			= "Tällä alueella näytetään mitkä tiedot puuttuvat tietueesta . Valitse valintaruutu ja ja hakemisto ja paina Lisää tehtävä luodaksesi tehtävän puuttuvalle kohteelle. Jo luodut tehtävät näyttävät 'näytä' valintaruudun asemesta <br />";
 
 // -- RA_EDITFOLDER MESSAGES
 $pgv_lang["edit_research_folder"]			= "Editoi tutkimushakemistoa";
@@ -205,7 +230,7 @@ $pgv_lang["comment_delete_check"]			= "Haluatko varmasti poistaa tämän komment
 $pgv_lang["add_new_task"]					= "Lisää uusi tehtävä";
 $pgv_lang["submit"]							= "Lähetä";
 $pgv_lang["save_and_complete"]         		= "Tallenna ja lopeta";
-$pgv_lang["assign_task"]					= "Luovuta tehtävä"; //@@@
+$pgv_lang["assign_task"]					= "Luovuta tehtävä"; 
 $pgv_lang["AddTask"]						= "Lisää tehtävä";
 
 //-- RA_CONFIGURE PRIVACY MESSAGES
@@ -219,7 +244,7 @@ $pgv_lang["show_add_unlinked_source"]   	= "Näytä Lisää linkittämätön lä
 $pgv_lang["show_view_probabilities"]		= "Näytä Näytä todennäköisyydet";
 
 //-- COMMENT HELP
-$pgv_lang["comment_title_help"]				= "Kommentin otsikon aputeksti tähän."; //@@@
+$pgv_lang["comment_title_help"]				= "Kommentin otsikon aputeksti tähän."; 
 $pgv_lang["comment_help"]					= "Näpäytä tästä saadaksesi ohjeita.";
 
 //-- Census Forms
@@ -233,7 +258,7 @@ $pgv_lang["complete_title"]					= "Viimeistele tehtävä";
 $pgv_lang["select_form"]					= "Valitse lomake";
 $pgv_lang['choose_form_label']				= "Valitse yleinen tutkimuslomake:";
 $pgv_lang["book"]                 			= "Kirja";
-$pgv_lang["folio"]                   		= "Folio"; //@@@
+$pgv_lang["folio"]                   		= "Folio"; 
 $pgv_lang["uk_county"]						= "Maakunta";
 $pgv_lang["uk_boro"]						= "Kaupunki tai kunta";
 $pgv_lang["uk_place"]						= "Paikka";
@@ -254,11 +279,11 @@ $pgv_lang["ra_no"]						= "Numero:";
 $pgv_lang["order_no"]					= "Tilausnumero:"; 
 
 //-- MY TASK BLOCK
-$pgv_lang["mytasks_block_descr"]				= "Omat tehtävät alue osoittaa nykyisen käyttäjän tehtävän ja voidaan konfiguroida näyttämään valmiit tehtävät tai tehtävät joita toistaiseksi ei ole luovutettu"; //@@@ 
+$pgv_lang["mytasks_block_descr"]				= "Omat tehtävät alue osoittaa nykyisen käyttäjän tehtävän ja voidaan konfiguroida näyttämään valmiit tehtävät tai tehtävät joita toistaiseksi ei ole luovutettu"; 
 $pgv_lang["mytasks_block"] 						= "Omat tehtävät alue";
 $pgv_lang["mytasks_edit"]               		= "Editoi";
 $pgv_lang["mytasks_unassigned"]					= "Ei osoitettu"; 
-$pgv_lang["mytasks_takeOn"]						= "Omaksu";  //@@@
+$pgv_lang["mytasks_takeOn"]						= "Omaksu";  
 $pgv_lang["mytasks_help"]						= "~OMA TEHTÄVÄ ALUE~<br /><br />Oma tehtävä alue näyttää nykyisen käyttäjän tehtävän ja voidaan konfiguroida näyttämään valmiit<br />tehtävät tai tehtävät joita toistaiseksi ei ole osoitettu";
 $pgv_lang["mytask_show_tasks"]   				= "Näytetäänkö osoittamattomat tehtävät?"; 
 $pgv_lang["mytask_show_completed"]				= "Näytetäänkö valmiit tehtävät?";
