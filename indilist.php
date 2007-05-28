@@ -58,7 +58,7 @@ else {
 if (empty($show_all)) $show_all = "no";
 if (empty($show_all_firstnames)) $show_all_firstnames = "no";
 
-//$sublistTrigger = 50;		// Number of names required before list starts sub-listing by first name 
+//$sublistTrigger = 25;		// Number of names required before list starts sub-listing by first name 
 $sublistTrigger = 200;		// Number of names required before list starts sub-listing by first name
 
 
@@ -227,7 +227,9 @@ else if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&(empty($surname))&&
 			foreach($indi["names"] as $name) {
                 // Make sure we only display true "hits"
 				$trueHit = false;
-				$firstLetter = $name[1];
+ 				//$firstLetter = $name[1];
+ 				// caused us not to see names that start by Sz or Dsz on English pages and/or Aa, Ae and Oe names on Norwegian and Danish pages
+				$firstLetter = get_first_letter(strip_prefix($name[2]));
 	
 				if ($alpha==$firstLetter) $trueHit = true;
 
@@ -302,12 +304,14 @@ else {
 				$firstalpha = array();
 				foreach($tindilist as $gid=>$indi) {
 					foreach($indi["names"] as $indexval => $namearray) {
- 						//$letter = $namearray[1]; we need the first letter of the first name, not of the surname
-                        $letter = str2upper(get_first_letter($namearray[0]));	//@@ MA					
-						if (!isset($firstalpha[$letter])) {
-							$firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
+ 						//$letter = $namearray[1]; we need the first letter of the first name (of our surname), not the 1st letter of the surname or other indi names 
+						if ($namearray[2]==$surname) {
+ 							$letter = str2upper(get_first_letter($namearray[0]));	
+							if (!isset($firstalpha[$letter])) {
+								$firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
+							}
+							else $firstalpha[$letter]["ids"] .= ",".$gid;
 						}
-						else $firstalpha[$letter]["ids"] .= ",".$gid;
 					}
 				}
 				uasort($firstalpha, "lettersort");
@@ -362,8 +366,9 @@ else {
 				if (!empty($surname)) {
 					if (strcasecmp(strip_prefix($surname), strip_prefix($name[2]))==0) $trueHit = true;
 				} else {
-					$firstLetter = $name[1];
-			
+ 					//$firstLetter = $name[1]; 
+ 					// caused us not to see names that start by Sz or Dsz on English pages and/or Aa, Ae and Oe names on Norwegian and Danish pages
+                    $firstLetter = get_first_letter(strip_prefix($name[2]));			
 					if (strcasecmp($alpha, $firstLetter)==0) $trueHit = true;
 
 					if (!$trueHit && $DICTIONARY_SORT[$LANGUAGE]) {
