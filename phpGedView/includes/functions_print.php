@@ -2581,11 +2581,9 @@ function init_calendar_popup() {
 	print "<script language=\"JavaScript\" type='text/javascript'>\n<!--\n";
 	// month names
 	print "cal_setMonthNames(";
-	foreach($monthtonum as $mon=>$num) {
-		if (isset($pgv_lang[$mon])) {
-			if ($num>1) print ",";
-			print "\"".$pgv_lang[$mon]."\"";
-		}
+	foreach(array('jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec') as $mon) {
+		if ($monthtonum[$mon]>1) print ",";
+		print "\"".$pgv_lang[$mon]."\"";
 	}
 	print ");\n";
 	// day headers
