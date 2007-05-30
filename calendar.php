@@ -463,15 +463,15 @@ if ($view!="preview") {
 	print_help_link("annivers_month_select_help", "qm", "month");
 	print $pgv_lang["month"]."</td>\n";
 	print "<td colspan=\"7\" class=\"optionbox\">";
-	foreach($monthtonum as $mon=>$num) {
-		if (isset($pgv_lang[$mon])) {
-			if (empty($mm)) $mm=strtolower($month);
-			print "<a href=\"calendar.php?day=$dd&amp;month=$mon&amp;year=$year&amp;filterev=$filterev&amp;filterof=$filterof&amp;filtersx=$filtersx&amp;action=".($action=="year"?"calendar":"$action")."\">";
-			$monthstr = $pgv_lang[$mon];
-			if ($mon==$mm) print "<span class=\"error\">".$monthstr."</span>";
-			else print $monthstr;
-			print "</a> | ";
-		}
+
+	if (empty($mm)) $mm=strtolower($month);
+	$monthlist=array('jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec');
+	foreach($monthlist as $mon) {
+		print "<a href=\"calendar.php?day=$dd&amp;month=$mon&amp;year=$year&amp;filterev=$filterev&amp;filterof=$filterof&amp;filtersx=$filtersx&amp;action=".($action=="year"?"calendar":"$action")."\">";
+		$monthstr = $pgv_lang[$mon];
+		if ($mon==$mm) print "<span class=\"error\">".$monthstr."</span>";
+		else print $monthstr;
+		print "</a> | ";
 	}
 
 	print "<a href=\"calendar.php?month=".strtolower(adodb_date("M"))."&amp;action=calendar&amp;filterev=$filterev&amp;filterof=$filterof&amp;filtersx=$filtersx\"><b>".$pgv_lang[strtolower(adodb_date("M"))]." ".strtolower(adodb_date("Y"))."</b></a> | ";
