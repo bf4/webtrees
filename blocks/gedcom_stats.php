@@ -236,8 +236,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 		}
 		if ($config["stat_first_birth"]=="yes") {
 			// NOTE: Get earliest birth year
-			$sql = "select d_gid, d_year as year from ".$TBLPREFIX."dates where d_file = '".$GEDCOMS[$GEDCOM]["id"]."' and d_fact = 'BIRT' and d_year != '0' and d_type is null ORDER BY d_year ASC, d_mon ASC, d_day ASC";
-			//print $sql;
+			$sql="SELECT d_gid, d_year AS year FROM {$TBLPREFIX}dates WHERE d_file={$GEDCOMS[$GEDCOM]['id']} AND d_fact='BIRT' AND d_julianday1!=0 ORDER BY d_julianday1 ASC";
 			$tempsql = dbquery($sql, true, 1);
 			$res =& $tempsql;
 			$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
@@ -261,8 +260,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 		}
 		if ($config["stat_last_birth"]=="yes") {
 			// NOTE: Get the latest birth year
-			$sql = "select d_gid, d_year as year from ".$TBLPREFIX."dates where d_file = '".$GEDCOMS[$GEDCOM]["id"]."' and d_fact = 'BIRT' and d_year != '0' and d_type is null ORDER BY d_year DESC, d_mon DESC, d_day DESC";
-			//print $sql;
+			$sql="SELECT d_gid, d_year AS year FROM {$TBLPREFIX}dates WHERE d_file={$GEDCOMS[$GEDCOM]['id']} AND d_fact='BIRT' AND d_julianday2!=0 ORDER BY d_julianday2 DESC";
 			$tempsql = dbquery($sql, true, 1);
 			$res =& $tempsql;
 			$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
@@ -286,8 +284,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 		}
 		if ($config["stat_first_death"]=="yes") {
 			// NOTE: Get earliest death year
-			$sql = "select d_gid, d_year as year from ".$TBLPREFIX."dates where d_file = '".$GEDCOMS[$GEDCOM]["id"]."' and d_fact = 'DEAT' and d_year != '0' and d_type is null ORDER BY d_year ASC, d_mon ASC, d_day ASC";
-			//print $sql;
+			$sql="SELECT d_gid, d_year AS year FROM {$TBLPREFIX}dates WHERE d_file={$GEDCOMS[$GEDCOM]['id']} AND d_fact='DEAT' AND d_julianday1!=0 ORDER BY d_julianday1 ASC";
 			$tempsql = dbquery($sql, true, 1);
 			$res =& $tempsql;
 			$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
@@ -311,8 +308,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 		}
 		if ($config["stat_last_death"]=="yes") {
 			// NOTE: Get the latest death year
-			$sql = "select d_gid, d_year as year from ".$TBLPREFIX."dates where d_file = '".$GEDCOMS[$GEDCOM]["id"]."' and d_fact = 'DEAT' and d_year != '0' and d_type is null ORDER BY d_year DESC, d_mon DESC , d_day DESC";
-			//print $sql;
+			$sql="SELECT d_gid, d_year AS year FROM {$TBLPREFIX}dates WHERE d_file={$GEDCOMS[$GEDCOM]['id']} AND d_fact='DEAT' AND d_julianday2!=0 ORDER BY d_julianday2 DESC";
 			$tempsql = dbquery($sql, true, 1);
 			$res =& $tempsql;
 			$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
@@ -336,7 +332,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 		}
 		if ($config["stat_long_life"]=="yes") {
 			//-- get the person who lived the longest
-			$sql = "select death.d_year-birth.d_year as age, death.d_gid from ".$TBLPREFIX."dates as death, ".$TBLPREFIX."dates as birth where birth.d_gid=death.d_gid AND death.d_file='".$GEDCOMS[$GEDCOM]["id"]."' and birth.d_file=death.d_file AND birth.d_fact='BIRT' and death.d_fact='DEAT' AND birth.d_year>0 and death.d_year>0 and birth.d_type is null and death.d_type is null ORDER BY age DESC";
+			$sql="SELECT death.d_julianday2-birth.d_julianday1 AS age, death.d_gid FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth WHERE birth.d_gid=death.d_gid AND death.d_file={$GEDCOMS[$GEDCOM]['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_year!=0 ORDER BY age DESC";
 			$tempsql = dbquery($sql, true, 1);
 			$res =& $tempsql;
 			$row =& $res->fetchRow();
@@ -349,7 +345,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 					<?php echo $pgv_lang["stat_longest_life"]?>
 				</td>
 				<td class="facts_value"><div dir="rtl">
-					<?php echo $row[0]?>
+					<?php echo floor($row[0]/365.25)?>
 				</div></td>
 				<td  class="facts_value">
 					<?php if (!$block && displayDetailsById($row[1])) print_list_person($row[1], array(get_person_name($row[1]), $GEDCOM), false, "", false)?>
@@ -360,7 +356,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 		}
 		if ($config["stat_avg_life"]=="yes") {
 			//-- avg age at death
-			$sql = "select avg(death.d_year-birth.d_year) as age from ".$TBLPREFIX."dates as death, ".$TBLPREFIX."dates as birth where birth.d_gid=death.d_gid AND death.d_file='".$GEDCOMS[$GEDCOM]["id"]."' and birth.d_file=death.d_file AND birth.d_fact='BIRT' and death.d_fact='DEAT' AND birth.d_year>0 and death.d_year>0 and birth.d_type is null and death.d_type is null";
+			$sql="SELECT AVG(death.d_julianday1-birth.d_julianday1) AS AGE FROM {$TBLPREFIX}dates AS death, {$TBLPREFIX}dates AS birth WHERE birth.d_gid=death.d_gid AND death.d_file={$GEDCOMS[$GEDCOM]['id']} AND birth.d_file=death.d_file AND birth.d_fact='BIRT' AND death.d_fact='DEAT' AND birth.d_julianday1!=0 AND death.d_julianday1!=0";
 			$tempsql = dbquery($sql, false);
 			if (!DB::isError($tempsql)) {
 				$res =& $tempsql;
@@ -374,7 +370,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 						<?php echo $pgv_lang["stat_avg_age_at_death"]?>
 					</td>
 					<td class="facts_value"><div dir="rtl">
-						<?php	printf("%d", $row[0])?>
+						<?php	printf("%d", floor($row[0]/365.25))?>
 					</div></td>
 				<?php if (!$block) { ?>
 					<td  class="facts_value">
