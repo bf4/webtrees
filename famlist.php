@@ -50,6 +50,7 @@ print "\n\t<h2>".$pgv_lang["family_list"]."</h2>";
 if (empty($surname_sublist)) $surname_sublist = "yes";
 if (empty($show_all)) $show_all = "no";
 
+//$sublistTrigger = 25;		// Number of names required before list starts sub-listing by first name 
 $sublistTrigger = 200;		// Number of names required before list starts sub-listing by first name
 
 // Remove slashes
@@ -229,21 +230,19 @@ else {
 			if (!isset($_SESSION[$surname."_firstalphafams"])||$DEBUG) {
 				$firstalpha = array();
 				foreach($tfamlist as $gid=>$fam) {
-					$names = preg_split("/[,+] ?/", $fam["name"]);  
+					$names = preg_split("/[,+] ?/", $fam["name"]);
 					$letter = str2upper(get_first_letter(trim($names[1])));
 					if (!isset($firstalpha[$letter])) {
 						if (isset($names[0])&&isset($names[1])&&$names[0]==$surname) $firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
 					}
 					else if ($names[0]==$surname) $firstalpha[$letter]["ids"] .= ",".$gid;
 					if (isset($names[2])&&isset($names[3])) {
-						$letter = str2upper(get_first_letter(trim($names[2])));
-						if ($letter==$alpha) {
-							$letter = str2upper(get_first_letter(trim($names[3])));
-								if (!isset($firstalpha[$letter])) {
-									$firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
-								}
-								else $firstalpha[$letter]["ids"] .= ",".$gid;
+						$letter = str2upper(get_first_letter(trim($names[3])));
+						if (!isset($firstalpha[$letter])) {
+							if ($names[2]==$surname) $firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
 						}
+						else if ($names[2]==$surname) $firstalpha[$letter]["ids"] .= ",".$gid;
+// Make sure that the same gid is not already defined for the letter
 					}
 				}
 				

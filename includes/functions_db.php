@@ -2491,7 +2491,6 @@ function get_alpha_indis($letter) {
  */
 function get_surname_indis($surname) {
 	global $TBLPREFIX, $GEDCOM, $LANGUAGE, $indilist, $SHOW_MARRIED_NAMES, $DBCONN, $GEDCOMS;
-
 	$tindilist = array();
 	$sql = "SELECT i_id, i_isdead, i_file, i_gedcom, i_name, i_letter, i_surname FROM ".$TBLPREFIX."individuals WHERE i_surname LIKE '".$DBCONN->escapeSimple($surname)."' ";
 	$sql .= "AND i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
@@ -2566,7 +2565,6 @@ function get_surname_indis($surname) {
 			$indi = array();
 			//do not add main name first name beginning letter for alternate names
 			$indi["names"] = array(array($row["i_name"], $row["i_letter"], $row["i_surname"], "P"), array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]));
-//			$indi["names"] = array(array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]));
 			$indi["isdead"] = $row["i_isdead"];
 			$indi["gedcom"] = $row["i_gedcom"];
 			$indi["gedfile"] = $row["i_file"];
@@ -2746,7 +2744,13 @@ function get_surname_fams($surname) {
 			}
 			$hname = "";
 			foreach($indi["names"] as $indexval => $namearray) {
-				if (stristr($namearray[2], $surname)!==false) $hname = sortable_name_from_name($namearray[0]);
+				if (stristr($namearray[2], $surname)!==false) {
+					$hname = sortable_name_from_name($namearray[0]);
+					break; 
+					// we should show also at least the _HEB and ROMN first names of our family parent surname in the list
+					// currently only one name is processed - without the break it is the last name
+					// now we stop at the first name
+				}
 			}
 			if (!empty($hname)) {
 				$wname = get_sortable_name($WIFE);
@@ -2770,7 +2774,7 @@ function get_surname_fams($surname) {
 	}
 
 	//-- handle the special case for @N.N. when families don't have any husb or wife
-	//-- SHOULD WE SHOW THE UNDEFINED? MA
+	//-- SHOULD WE SHOW THE UNDEFINED? 
 	if ($surname=="@N.N.") {
 		$sql = "SELECT * FROM ".$TBLPREFIX."families WHERE (f_husb='' OR f_wife='') AND f_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
 		$res = dbquery($sql);
