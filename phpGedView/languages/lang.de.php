@@ -497,6 +497,37 @@ $pgv_lang["sep"]						= "September";
 $pgv_lang["oct"]						= "Oktober";
 $pgv_lang["nov"]						= "November";
 $pgv_lang["dec"]						= "Dezember";
+
+$pgv_lang["vend"]         				= "Vendémiaire";
+$pgv_lang["brum"]         				= "Brumaire";
+$pgv_lang["frim"]         				= "Frimaire";
+$pgv_lang["nivo"]         				= "Nivôse";
+$pgv_lang["pluv"]         				= "Pluviôse";
+$pgv_lang["vent"]         				= "Ventôse";
+$pgv_lang["germ"]         				= "Germinal";
+$pgv_lang["flor"]         				= "Floréal";
+$pgv_lang["prai"]         				= "Prairial";
+$pgv_lang["mess"]         				= "Messidor";
+$pgv_lang["ther"]         				= "Thermidor";
+$pgv_lang["fruc"]         				= "Fructidor";
+$pgv_lang["comp"]         				= "jours complémentaires";
+
+$pgv_lang["tsh"]          				= "Tishri";
+$pgv_lang["csh"]          				= "Cheshvan";
+$pgv_lang["ksl"]          				= "Kislev";
+$pgv_lang["tvt"]          				= "Tevet";
+$pgv_lang["shv"]          				= "Shevat";
+$pgv_lang["adr"]          				= "Adar";
+$pgv_lang["ads"]          				= "Adar Sheni";
+$pgv_lang["nsn"]          				= "Nisan";
+$pgv_lang["iyr"]          				= "Iyar";
+$pgv_lang["svn"]          				= "Sivan";
+$pgv_lang["tmz"]          				= "Tammuz";
+$pgv_lang["aav"]          				= "Av";
+$pgv_lang["ell"]          				= "Elul";
+
+$pgv_lang["b.c."]         				= "v. Chr.";
+
 $pgv_lang["abt"]						= "um";
 $pgv_lang["aft"]						= "nach";
 $pgv_lang["and"]						= "und";
