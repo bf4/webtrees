@@ -87,8 +87,10 @@ $SHOW_GEDCOM_RECORD = true;				// -- a true value will provide a link on detail 
 $ALLOW_EDIT_GEDCOM = true;				//-- allow users with canEdit privileges to edit the gedcom
 $SYNC_GEDCOM_FILE = true;				//-- synchronize the gedcom file with online edits.  when set to false no changes will be written to the gedcom file
 $POSTAL_CODE = true;              //-- allow users to choose where to print the postal code. True is after the city name, false is before the city name
-$ALPHA_INDEX_LISTS = true;				// -- for very long individual and family lists, set this to true to split the list into
-										// -- pages by the first letter of their last name.
+$SUBLIST_TRIGGER_I = "200";				// -- Number of names required before Individual lists start sub-listing by first name
+										// -- Set to zero to disable sub-lists
+$SUBLIST_TRIGGER_F = "200";				// -- Number of names required before Family lists start sub-listing by first name
+										// -- Set to zero to disable sub-lists
 
 $NAME_FROM_GEDCOM = false;				// -- By default phpGedView uses the name stored in the indexes to get a person's name
 										// -- With some gedcom formats the sortable name stored in the indexes does not get

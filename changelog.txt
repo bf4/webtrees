@@ -9,6 +9,8 @@
 =====================================================================
 
 Version 4.1
+ - Added Make Indi and Fam List Sub-List trigger configurable (canajun2eh)
+ - Fixed [ 1722308 ] Indi/Fam List Sub-List Help (canajun2eh)
  - Fixed [ 1703774 ] Error uploading media files (yalnifj)
  - Fixed [ 1688956 ] 41b4 Family List SQL error (yalnifj)
  - Fixed [ 1603035 ] Hebrew dates in blocks (meliza)

@@ -267,7 +267,6 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$ADVANCED_PLAC_FACTS\s*=\s*.*;/', "\$ADVANCED_PLAC_FACTS = \"".$_POST["NEW_ADVANCED_PLAC_FACTS"]."\";", $configtext);
 	$configtext = preg_replace('/\$ALLOW_EDIT_GEDCOM\s*=\s*.*;/', "\$ALLOW_EDIT_GEDCOM = ".$boolarray[$_POST["NEW_ALLOW_EDIT_GEDCOM"]].";", $configtext);
 	$configtext = preg_replace('/\$ALLOW_THEME_DROPDOWN\s*=\s*.*;/', "\$ALLOW_THEME_DROPDOWN = ".$boolarray[$_POST["NEW_ALLOW_THEME_DROPDOWN"]].";", $configtext);
-	$configtext = preg_replace('/\$ALPHA_INDEX_LISTS\s*=\s*.*;/', "\$ALPHA_INDEX_LISTS = ".$boolarray[$_POST["NEW_ALPHA_INDEX_LISTS"]].";", $configtext);
 	$configtext = preg_replace('/\$AUTO_GENERATE_THUMBS\s*=\s*.*;/', "\$AUTO_GENERATE_THUMBS = ".$boolarray[$_POST["NEW_AUTO_GENERATE_THUMBS"]].";", $configtext);
 	$configtext = preg_replace('/\$CALENDAR_FORMAT\s*=\s*".*";/', "\$CALENDAR_FORMAT = \"".$_POST["NEW_CALENDAR_FORMAT"]."\";", $configtext);
 	$configtext = preg_replace('/\$CHANGELOG_CREATE\s*=\s*".*";/', "\$CHANGELOG_CREATE = \"".$_POST["NEW_CHANGELOG_CREATE"]."\";", $configtext);
@@ -362,6 +361,8 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$SOUR_FACTS_UNIQUE\s*=\s*".*";/', "\$SOUR_FACTS_UNIQUE = \"".$_POST["NEW_SOUR_FACTS_UNIQUE"]."\";", $configtext);
 	$configtext = preg_replace('/\$SOURCE_ID_PREFIX\s*=\s*".*";/', "\$SOURCE_ID_PREFIX = \"".$_POST["NEW_SOURCE_ID_PREFIX"]."\";", $configtext);
 	$configtext = preg_replace('/\$SPLIT_PLACES\s*=\s*.*;/', "\$SPLIT_PLACES = ".$boolarray[$_POST["NEW_SPLIT_PLACES"]].";", $configtext);
+	$configtext = preg_replace('/\$SUBLIST_TRIGGER_I\s*=\s*.*;/', "\$SUBLIST_TRIGGER_I = \"".$_POST["NEW_SUBLIST_TRIGGER_I"]."\";", $configtext);
+	$configtext = preg_replace('/\$SUBLIST_TRIGGER_F\s*=\s*.*;/', "\$SUBLIST_TRIGGER_F = \"".$_POST["NEW_SUBLIST_TRIGGER_F"]."\";", $configtext);
 	$configtext = preg_replace('/\$SUPPORT_METHOD\s*=\s*".*";/', "\$SUPPORT_METHOD = \"".$_POST["NEW_SUPPORT_METHOD"]."\";", $configtext);
 	$configtext = preg_replace('/\$SURNAME_TRADITION\s*=\s*.*;/', "\$SURNAME_TRADITION = \"".$_POST["NEW_SURNAME_TRADITION"]."\";", $configtext);
 	$configtext = preg_replace('/\$SYNC_GEDCOM_FILE\s*=\s*.*;/', "\$SYNC_GEDCOM_FILE = ".$boolarray[$_POST["NEW_SYNC_GEDCOM_FILE"]].";", $configtext);
@@ -1207,12 +1208,12 @@ print "</tr>";
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap"><?php print_help_link("ALPHA_INDEX_LISTS_help", "qm", "ALPHA_INDEX_LISTS"); print $pgv_lang["ALPHA_INDEX_LISTS"];?></td>
-		<td class="optionbox"><select name="NEW_ALPHA_INDEX_LISTS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('ALPHA_INDEX_LISTS_help');">
-				<option value="yes" <?php if ($ALPHA_INDEX_LISTS) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$ALPHA_INDEX_LISTS) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
-			</select>
-		</td>
+		<td class="descriptionbox wrap"><?php print_help_link("SUBLIST_TRIGGER_I_help", "qm", "SUBLIST_TRIGGER_I"); print $pgv_lang["SUBLIST_TRIGGER_I"];?></td>
+		<td class="optionbox"><input type="text" name="NEW_SUBLIST_TRIGGER_I" value="<?php print $SUBLIST_TRIGGER_I?>" size="5" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SUBLIST_TRIGGER_I_help');" /></td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("SUBLIST_TRIGGER_F_help", "qm", "SUBLIST_TRIGGER_F"); print $pgv_lang["SUBLIST_TRIGGER_F"];?></td>
+		<td class="optionbox"><input type="text" name="NEW_SUBLIST_TRIGGER_F" value="<?php print $SUBLIST_TRIGGER_F?>" size="5" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SUBLIST_TRIGGER_F_help');" /></td>
 	</tr>
 </table>
 </div>
