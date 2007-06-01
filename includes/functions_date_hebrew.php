@@ -42,7 +42,7 @@ function convert_hdate($dstr_beg, $dstr_end, $day, $month, $year) {
 		else $hebrewMonthName = "";
 		$datestr = $dstr_beg . $day . " " . $hebrewMonthName . " " . $year . " " . $dstr_end;
 	}
-	else {																	  //-- Hebrew page
+	else { //-- Hebrew page
 		$newdate = getHebrewJewishDates($year, $month, $day);
 		$datestr = $dstr_beg . $newdate . $dstr_end;
 	} 
@@ -53,9 +53,9 @@ function convert_hdate($dstr_beg, $dstr_end, $day, $month, $year) {
 //-- functions to take a Jewish date and display it in Hebrew.
 //-- provided by: KosherJava
 function getFullHebrewJewishDates($year, $month="", $day="", $altYear="", $altMonth="") {
-	global $DISPLAY_JEWISH_GERESHAYIM, $TEXT_DIRECTION;
+	global $TEXT_DIRECTION;
 	$USE_FULL_PARTIAL_JEWISH_DATES = true;
-	$sb = "<span lang=\"he-IL\" dir=\"rtl\">";
+	$sb = "";//<span lang=\"he-IL\" dir=\"rtl\">";
 	if($day != "") {
 		$sb .= getHebrewJewishDay($day);
 		$sb .= " ";
@@ -91,19 +91,26 @@ function getFullHebrewJewishDates($year, $month="", $day="", $altYear="", $altMo
 		$sb .= getHebrewJewishYear($year);
 	}
 
-	$sb .= "</span>";
+	//$sb .= "</span>";
 	if($TEXT_DIRECTION == "ltr") { //only do this for ltr languages
 		$sb.= "&lrm;"; //add entity to return to left to right direction
 	}
+	return removeGereshGershayim($sb);
+}
+
+function removeGereshGershayim($date){
+	global $DISPLAY_JEWISH_GERESHAYIM;
 	if($DISPLAY_JEWISH_GERESHAYIM == false) {
-		$sb = preg_replace(array("/\"/", "/'/"), array("",""), $sb);
+		$gershayim = chr(0xD7).chr(0xB4);
+		$gersh = chr(0xD7).chr(0xB3);
+		$date = str_replace(array($gershayim, $gersh), "", $date);
 	}
-	return $sb;
+	return $date;
 }
 
 function getHebrewJewishDates($year, $month="", $day="", $altYear="", $altMonth="") {
-	global $DISPLAY_JEWISH_GERESHAYIM, $TEXT_DIRECTION;
-	$sb = "<span lang=\"he-IL\" dir=\"rtl\">";
+	global $TEXT_DIRECTION;
+	$sb = ""; //<span lang=\"he-IL\" dir=\"rtl\">";
 	if($day != "") {
 		$sb .= getHebrewJewishDay($day);
 		$sb .= " ";
@@ -120,49 +127,48 @@ function getHebrewJewishDates($year, $month="", $day="", $altYear="", $altMonth=
 	if($year != "") {
 		$sb .= getHebrewJewishYear($year);
 	}
-	$sb .= "</span>";
+	//$sb .= "</span>";
 	if($TEXT_DIRECTION == "ltr") { //only do this for ltr languages
 		$sb.= "&lrm;"; //add entity to return to left to right direction
 	}
 
-	if($DISPLAY_JEWISH_GERESHAYIM == false) {
-			$sb = preg_replace(array("/\"/", "/'/"), array("",""), $sb);
-	}
-	return $sb;
+	return removeGereshGershayim($sb);
 }
 
 function getHebrewJewishYear($year) {
 	global $DISPLAY_JEWISH_THOUSANDS;
+	$gershayim = chr(0xD7).chr(0xB4);
+	$gersh = chr(0xD7).chr(0xB3);
 
 	$jAlafim = "אלפים";                       //word ALAFIM in Hebrew for display on years evenly divisable by 1000
 	$jHundreds = array("", "ק", "ר", "ש", "ת", "תק", "תר","תש", "תת", "תתק");
 	$jTens = array("", "י", "כ", "ל", "מ", "נ", "ס", "ע", "פ", "צ");
 	$jTenEnds = array("", "י", "ך", "ל", "ם", "ן", "ס", "ע", "ף", "ץ");
-	$tavTaz = array("ט\"ו", "ט\"ז");
+	$tavTaz = array("ט". $gershayim . "ו", "ט" . $gershayim . "ז");
 	$jOnes = array("", "א", "ב", "ג", "ד", "ה", "ו", "ז", "ח", "ט");
 
 	$singleDigitYear = isSingleDigitJeiwshYear($year);
-	$thousands = $year / 1000;                                   //get # thousands
+	$thousands = $year / 1000; //get # thousands
 
 	$sb = "";	
 	//append thousands to String
-	if($year % 1000 == 0) {                                      // in year is 5000, 4000 etc
+	if($year % 1000 == 0) { // in year is 5000, 4000 etc
 		$sb .= $jOnes[$thousands];
-		$sb .= "'";
+		$sb .= $gersh;
 		$sb .= " ";
-		$sb .= $jAlafim;                                         //add # of thousands plus word thousand (overide alafim boolean)
-	} else if($DISPLAY_JEWISH_THOUSANDS) {                       // if alafim boolean display thousands
+		$sb .= $jAlafim; //add # of thousands plus word thousand (overide alafim boolean)
+	} else if($DISPLAY_JEWISH_THOUSANDS) { // if alafim boolean display thousands
 		$sb .= $jOnes[$thousands];
-		$sb .= "'";                                              //append thousands quote
+		$sb .= $gersh; //append thousands quote
 		$sb .= " ";
 	}
-	$year = $year % 1000;                                        //remove 1000s
-	$hundreds = $year / 100;                                     // # of hundreds
-	$sb .= $jHundreds[$hundreds];                                //add hundreds to String
-	$year = $year % 100;                                         //remove 100s
-	if($year == 15) {                                            //special case 15
+	$year = $year % 1000; //remove 1000s
+	$hundreds = $year / 100; // # of hundreds
+	$sb .= $jHundreds[$hundreds]; //add hundreds to String
+	$year = $year % 100; //remove 100s
+	if($year == 15) { //special case 15
 		$sb .= $tavTaz[0];
-	} else if($year == 16) {                                     //special case 16
+	} else if($year == 16) { //special case 16
 		$sb .= $tavTaz[1];
 	} else {
 		$tens = $year / 10;
@@ -180,23 +186,24 @@ function getHebrewJewishYear($year) {
 	}
 
 	if($singleDigitYear == true) {
-		$sb .= "'"; //append single quote
+		$sb .= $gersh; //append single quote
 	} else { // append double quote before last digit
         $pos1 = strlen($sb)-2;
- 		$sb = substr($sb, 0, $pos1) . "\"" . substr($sb, $pos1);
-		$sb = preg_replace("/\"\"/", "\"", $sb);
+ 		$sb = substr($sb, 0, $pos1) . $gershayim . substr($sb, $pos1);
+		$sb = str_replace($gershayim . $gershayim, $gershayim, $sb);//replace double gershayim with single instance
 	}
 	return $sb;
 }
 
 function getHebrewJewishMonth($month, $year) {
+	$gersh = chr(0xD7).chr(0xB3);
 	$jMonths = array("תשרי",
 			"חשון",
 			"כסלו",
 			"טבת",
 			"שבט",
-			"אדר א'",
-			"אדר ב'",
+			"אדר א" . $gersh,
+			"אדר ב" . $gersh,
 			"ניסן",
 			"אייר",
 			"סיון",
@@ -218,16 +225,18 @@ function getHebrewJewishMonth($month, $year) {
 }
 
 function getHebrewJewishDay($day) {
+	$gershayim = chr(0xD7).chr(0xB4);
+	$gersh = chr(0xD7).chr(0xB3);
 	$jTens = array("", "י", "כ", "ל", "מ", "נ", "ס", "ע", "פ", "צ");
 	$jTenEnds = array("", "י", "ך", "ל", "ם", "ן", "ס", "ע", "ף", "ץ");
-	$tavTaz = array("ט\"ו", "ט\"ז");
+	$tavTaz = array("ט" . $gershayim . "ו", "ט" . $gershayim . "ז");
 	$jOnes = array("", "א", "ב", "ג", "ד", "ה", "ו", "ז", "ח", "ט");
 
 	if (empty($day)) return "";
 	$sb = "";
 	if($day < 10) { //single digit days get single quote appended
 		$sb .= $jOnes[$day];
-		$sb .= "'";
+		$sb .= $gersh;
 	} else if($day == 15) { //special case 15
 		$sb .= $tavTaz[0];
 	} else if($day == 16) { //special case 16
@@ -236,9 +245,9 @@ function getHebrewJewishDay($day) {
 		$tens = $day / 10;
 		$sb .= $jTens[$tens];
 		if($day % 10 == 0) { // 10 or 20 single digit append single quote
-			$sb .= "'";
+			$sb .= $gersh;
 		} else if($day > 10) { // >10 display " between 10s and 1s
-			$sb .= "\"";
+			$sb .= $gershayim;
 		}
 		$day = $day % 10; //discard 10s
 		$sb .= $jOnes[$day];
@@ -325,33 +334,33 @@ function jewishGedcomDateToCurrentGregorian($datearray){
 	global $monthtonum, $month, $year, $hMonth, $hYear; 
 	$dates = array();
 	//debug_print_backtrace();
-     if (empty($hYear)) {
-	    if (isset($_SESSION["timediff"])) $time = time()-$_SESSION["timediff"];
-        else $time = time();
- 	    if (empty($day)) 	$day           = date("j", $time);
-	    if (empty($month)) $month          = date("M", $time);
-	    if (empty($year)) 	$year          = date("Y", $time);
-	    $dtarray = array();
- 	 	$dtarray[0]["day"]   = $day;
- 		$dtarray[0]["mon"]   = $monthtonum[str2lower(trim($month))];	
- 		$dtarray[0]["year"]  = $year;
- 		$dtarray[0]["month"] = $month;
-    	$date   = gregorianToJewishGedcomDate($dtarray);
-    	$hDay   = $date[0]["day"];
-    	$hMonth = $date[0]["month"];
-    	$hYear	= $date[0]["year"];
-     }
-     
-     if (!empty($hMonth) && !empty($month) && $monthtonum[$hMonth]>$monthtonum[str2lower($month)]) $altyr = 1;
-     else $altyr = -1; 
-     
+	if (empty($hYear)) {
+		if (isset($_SESSION["timediff"])) $time = time()-$_SESSION["timediff"];
+		else $time = time();
+		if (empty($day)) 	$day           = date("j", $time);
+		if (empty($month)) $month          = date("M", $time);
+		if (empty($year)) 	$year          = date("Y", $time);
+		$dtarray = array();
+		$dtarray[0]["day"]   = $day;
+		$dtarray[0]["mon"]   = $monthtonum[str2lower(trim($month))];	
+		$dtarray[0]["year"]  = $year;
+		$dtarray[0]["month"] = $month;
+		$date   = gregorianToJewishGedcomDate($dtarray);
+		$hDay   = $date[0]["day"];
+		$hMonth = $date[0]["month"];
+		$hYear	= $date[0]["year"];
+	}
+
+	if (!empty($hMonth) && !empty($month) && $monthtonum[$hMonth]>$monthtonum[str2lower($month)]) $altyr = 1;
+	else $altyr = -1; 
+
 	foreach($datearray as $date) {
 			if (empty($date["mon"])) $date["mon"] = 13;
 			if (empty($date["day"])) $date["day"] = 30;
 			$date["day"] = trim($date["day"]);
 //print $date["mon"].", ".$date["day"].", ".$hYear;
- 			$julianDate1 = jewishtojd ( $date["mon"], $date["day"], $hYear );
- 			$gregdate1   = jdtogregorian ( $julianDate1 );
+			$julianDate1 = jewishtojd ( $date["mon"], $date["day"], $hYear );
+			$gregdate1   = jdtogregorian ( $julianDate1 );
 			$pieces1     = preg_split("~/~", $gregdate1);
 			$julianDate2 = jewishtojd ( $date["mon"], $date["day"], $hYear+$altyr );
 			$gregdate2   = jdtogregorian ( $julianDate2 );
@@ -391,12 +400,12 @@ function gregorianToJewishGedcomDate($datearray){
 		
 		foreach($monthtonum as $hMonth=>$num) {
 			$i++;
-   	     	if (($i>12 && $num == $hMon)) {
-		        break;
-       		}
-    	}
-        $dates[] = array("mon"=>trim($hMon), "day"=>trim($hDay), "year"=>trim($hYear), "month"=>trim($hMonth), "ext"=>"converted gregorian");
-    }
+			if (($i>12 && $num == $hMon)) {
+				break;
+			}
+		}
+		$dates[] = array("mon"=>trim($hMon), "day"=>trim($hDay), "year"=>trim($hYear), "month"=>trim($hMonth), "ext"=>"converted gregorian");
+	}
 
 	return $dates;
 }
@@ -413,73 +422,81 @@ function get_date_url_hebrew($datestr) {
 	$dateheb = array();
 
 	    //from date
-	    if (isset($match_bet[5][3]) && $match_bet[5][3]!="") $date[0]["day"]   = $match_bet[5][3];
-	    else if (trim($match_bet[5][0])==trim($match_bet[5][4]) && trim($match_bet[11][0])==trim($match_bet[11][4]))
-	    							$date[0]["day"]   = '30';
-	    else               			$date[0]["day"]   = '01';
-	    if ($match_bet[5][4]!="" && isset($monthtonum[str2lower($match_bet[5][4])]))   $date[0]["mon"]   = $monthtonum[str2lower($match_bet[5][4])];
-		else               			$date[0]["mon"]   = '01';
+		if (isset($match_bet[5][3]) && $match_bet[5][3]!="") $date[0]["day"]   = $match_bet[5][3];
+		else if (trim($match_bet[5][0])==trim($match_bet[5][4]) && trim($match_bet[11][0])==trim($match_bet[11][4]))
+			$date[0]["day"]   = '30';
+		else
+			$date[0]["day"]   = '01';
+		if ($match_bet[5][4]!="" && isset($monthtonum[str2lower($match_bet[5][4])]))
+			$date[0]["mon"]   = $monthtonum[str2lower($match_bet[5][4])];
+		else
+			$date[0]["mon"]   = '01';
 		if (isset($match_bet[5][5]) && $match_bet[5][5]!="") $date[0]["year"]  = $match_bet[5][5];
 		$date[0]["month"] = "";
 
-	    if (isset($match_bet[12][3]) && $match_bet[12][3]!="")
-	         $date[1]["day"]   = $match_bet[12][3];
-	    else if (isset($match_bet[11][3]) && $match_bet[11][3]!="")
-	         $date[1]["day"]   = $match_bet[11][3];
-	    else $date[1]["day"]   = '30';
-	    if (isset($match_bet[12][4]) && $match_bet[12][4]!="rew" && $match_bet[12][4]!="")
-	         $date[1]["mon"]   = $monthtonum[str2lower($match_bet[12][4])];
-	    else if (isset($match_bet[11][4]) && $match_bet[11][4]!="rew" && $match_bet[11][4]!="")
-	         $date[1]["mon"]   = $monthtonum[str2lower($match_bet[11][4])];
+		if (isset($match_bet[12][3]) && $match_bet[12][3]!="")
+			$date[1]["day"]   = $match_bet[12][3];
+		else if (isset($match_bet[11][3]) && $match_bet[11][3]!="")
+			$date[1]["day"]   = $match_bet[11][3];
+		else $date[1]["day"]   = '30';
+		if (isset($match_bet[12][4]) && $match_bet[12][4]!="rew" && $match_bet[12][4]!="")
+			$date[1]["mon"]   = $monthtonum[str2lower($match_bet[12][4])];
+		else if (isset($match_bet[11][4]) && $match_bet[11][4]!="rew" && $match_bet[11][4]!="")
+			$date[1]["mon"]   = $monthtonum[str2lower($match_bet[11][4])];
 		else $date[1]["mon"]   = '13';
 		if (isset($match_bet[12][5]) && $match_bet[12][5]!="")
-		     $date[1]["year"]  = $match_bet[12][5];
+			$date[1]["year"]  = $match_bet[12][5];
 		else if (isset($match_bet[11][5]) && $match_bet[11][5]!="")
-		     $date[1]["year"]  = $match_bet[11][5];
+			$date[1]["year"]  = $match_bet[11][5];
 		$date[1]["month"] = "";
 		if (isset($date[1]["year"]) && $date[1]["year"] !="" && !isset($date[0]["year"]))
-		     $date[0]["year"] = $date[1]["year"];
+			$date[0]["year"] = $date[1]["year"];
 		if (isset($date[0]["year"]) && $date[0]["year"] !="" && !isset($date[1]["year"]))
-		     $date[1]["year"] = $date[0]["year"];
+			$date[1]["year"] = $date[0]["year"];
 
 		if ((isset($match_bet[5][5]) && isset($match_bet[12][5]) && $match_bet[5][5]>$match_bet[12][5]) ||
-		    (isset($match_bet[5][5]) && isset($match_bet[11][5]) && $match_bet[5][5]>$match_bet[11][5])) {
+			(isset($match_bet[5][5]) && isset($match_bet[11][5]) && $match_bet[5][5]>$match_bet[11][5])) {
 			$date[2] = $date[0];
 			$date[0] = $date[1];
 			$date[1] = $date[2];
 		}
 
 		if (!empty($date[0]["year"]) && !empty($date[1]["year"])) {
-                            		$dateheb = jewishGedcomDateToGregorian($date);
-                            		$action = "year";
-        }
-        else {
-        							$dateheb = jewishGedcomDateToCurrentGregorian($date);
-                            		$action = "today";
-             }
-        if (trim($match_bet[5][0])==trim($match_bet[5][4]) && trim($match_bet[11][0])==trim($match_bet[11][4])) {
-				  $action = "calendar";
+			$dateheb = jewishGedcomDateToGregorian($date);
+			$action = "year";
+		}
+		else {
+			$dateheb = jewishGedcomDateToCurrentGregorian($date);
+			$action = "today";
+		}
+		if (trim($match_bet[5][0])==trim($match_bet[5][4]) && trim($match_bet[11][0])==trim($match_bet[11][4])) {
+			$action = "calendar";
 		}
 
 		if (!empty($dateheb[0]["day"]))
-									$start_day 		= $dateheb[0]["day"];
-		else                        $start_day     	= "";
+			$start_day 		= $dateheb[0]["day"];
+		else
+			$start_day = "";
 		if (!empty($dateheb[0]["month"]))
-									$start_month   	= $dateheb[0]["month"];
-		else                        $start_month   	= "";
+			$start_month = $dateheb[0]["month"];
+		else 
+			$start_month = "";
 		if (!empty($dateheb[0]["year"]))
-									$start_year    	= $dateheb[0]["year"];
-		else                        $start_year    	= "";
+			$start_year = $dateheb[0]["year"];
+		else
+			$start_year = "";
 
 		if (!empty($dateheb[1]["day"]))
-									$end_day 		= $dateheb[1]["day"];
-		else                        $end_day     	= "";
+			$end_day = $dateheb[1]["day"];
+		else
+			$end_day = "";
 		if (!empty($dateheb[1]["month"]))
-									$end_month   	= $dateheb[1]["month"];
-		else                        $end_month   	= "";
+			$end_month = $dateheb[1]["month"];
+		else $end_month = "";
 		if (!empty($dateheb[1]["year"]))
-									$end_year    	= $dateheb[1]["year"];
-		else                        $end_year    	= "";
+			$end_year = $dateheb[1]["year"];
+		else
+			$end_year = "";
 		
 		return array("action"=>$action, "start_day"=>$start_day, "end_day"=>$end_day, 
 			"start_month"=>$start_month, "end_month"=>$end_month, "start_year"=>$start_year,

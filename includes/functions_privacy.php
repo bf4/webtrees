@@ -67,7 +67,7 @@ if (!function_exists("is_dead")) {
  * @param string $indirec the raw gedcom record
  * @return bool true if dead false if alive
  */
-function is_dead($indirec, $cyear="") {
+function is_dead($indirec, $cyear="", $import=false) {
 	global $CHECK_CHILD_DATES;
 	global $MAX_ALIVE_AGE;
 	global $HIDE_LIVE_PEOPLE;
@@ -130,6 +130,9 @@ function is_dead($indirec, $cyear="") {
 			}
 		}
 	}
+
+	//-- during import we can't check child dates
+	if ($import) return -1;
 
 	// If we found no dates then check the dates of close relatives.
 	if($CHECK_CHILD_DATES ) {
@@ -330,15 +333,14 @@ function displayDetailsByID($pid, $type = "INDI") {
 	if (!empty($SQL_LOG)) {
 		$fp = fopen($INDEX_DIRECTORY."/sql_log.txt", "a");
 		$backtrace = debug_backtrace();
-		$temp = basename($backtrace[0]["file"])." at line ".$backtrace[0]["line"];
+		$temp = "";
+		if (isset($backtrace[2])) $temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
+		if (isset($backtrace[1])) $temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
+		$temp .= basename($backtrace[0]["file"])." (".$backtrace[0]["line"].")";
 		fwrite($fp, date("Y-m-d h:i:s")."\t".$_SERVER["SCRIPT_NAME"]."\t".$temp."\t".$PRIVACY_CHECKS."- checking privacy for ".$type." ".$pid."\r\n");
 		fclose($fp);
 	}
-
-	//print "checking privacy for $pid<br />";
-//	if ($type=="INDI" && isset($indilist[$pid]['gedfile']) 
-//		&& $indilist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) $cache_privacy = true;
-//	else $cache_privacy = false;
+	
 	$cache_privacy = true;
 
 	$username = getUserName();

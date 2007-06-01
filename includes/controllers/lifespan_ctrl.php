@@ -439,9 +439,10 @@ class LifespanControllerRoot extends BaseController {
 				$width = ($deathYear - $birthYear) * $this->zoomfactor;
 				$height = 2 * $this->zoomfactor;
 				
-				//				$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 14 + $modFix;
 				$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 14 + $modFix;
-				$minlength = strlen($value->getName()) * $this->zoomfactor;
+				if (stristr($value->getName(), "starredname"))
+						$minlength = (strlen($value->getName())-34) * $this->zoomfactor;
+				else	$minlength = strlen($value->getName()) * $this->zoomfactor;
 				$zindex--;
 				if ($startPos > 15) {
 					$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 15 + $modFix;
@@ -457,7 +458,8 @@ class LifespanControllerRoot extends BaseController {
 					$int = $birthYear+1;
 				}
 				
-				$lifespan = $birthYear."-".$deathYear;
+				$lifespan = $birthYear."-";
+				if ($value->isDead()) $lifespan .= $deathYear; 
 				$lifespannumeral = $deathYear - $birthYear;
 				
 				//Need to calculate each event and the spacing between them
@@ -467,7 +469,8 @@ class LifespanControllerRoot extends BaseController {
 				//$value->add_historical_facts();
 				$value->add_family_facts(false);
 				$unparsedEvents = $value->getIndiFacts();
-				sort_facts($unparsedEvents);
+				//sort_facts($unparsedEvents);
+				usort($unparsedEvents, "compare_facts");
 				//print_r($unparsedEvents);
 
 				$eventinformation = Array();
@@ -516,6 +519,11 @@ class LifespanControllerRoot extends BaseController {
 				$out = ""; // this is the string we are going to build
 				//what we are going to do now that we have the facts array is we are going to pass it into a function then parse all the data and print from that function
 				// different display values in the box based on the size of the person-box
+				
+				//TODO 
+				//We need to get starred $value->getName() names within <span class=\"starredname\"> and </span> to print in the 'zoom-box' (<span> ...</span> below) on the same line as the rest of the name. 
+				//How?   Now these names print on other data on the next line.
+				
 				if ($width > ($minlength +110)) {
 					echo "\n<div id=\"bar_".$value->getXref()."\" style=\"position: absolute;top:".$Y."px; left:".$startPos."px; width:".$width."px; height:".$height."px;" .
 					" background-color:".$this->color."; border: solid blue 1px; z-index:$zindex;\">";
@@ -525,7 +533,7 @@ class LifespanControllerRoot extends BaseController {
 					print "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".PrintReady(get_changed_date($value->getBirthDate()))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
 					"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getName().":  $lifespan </a></td>" .
 					"\n\t\t<td width=\"15\">";
-					if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".PrintReady($value->getName())."<br/>".$pgv_lang["death"]." ".PrintReady(get_changed_date($value->getDeathDate()))."</span></a>";
+					if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getName()."<br/>".$pgv_lang["death"]." ".PrintReady(get_changed_date($value->getDeathDate()))." ".PrintReady($value->getDeathPlace())."</span></a>";
 					print "</td></tr></table>";
 					echo '</div>';
 
@@ -539,18 +547,18 @@ class LifespanControllerRoot extends BaseController {
 						print "\n\t<table dir=\"ltr\"><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".PrintReady(get_changed_date($value->getBirthDate()))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
 						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getName()."</a></td>" .
 						"\n\t\t<td width=\"15\">";
-						if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".PrintReady($value->getName())."<br/>".$pgv_lang["death"]." ".PrintReady(get_changed_date($value->getDeathDate()))." ".PrintReady($value->getDeathPlace())."</span></a>";
+						if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getName()."<br/>".$pgv_lang["death"]." ".PrintReady(get_changed_date($value->getDeathDate()))." ".PrintReady($value->getDeathPlace())."</span></a>";
 						print "</td></tr></table>";
 						echo '</div>';
-					} else {						
+					} else {
 						echo "\n<div style=\"text-align: left; position: absolute;top:".$Y."px; left:".$startPos."px;width:".$width."px; height:".$height."px;" .
 						" background-color:".$this->color."; border: solid blue 1px; z-index:$zindex;\">" ;
 							
-						print"<a class=\"showit\" href=\"individual.php?pid=".$value->getXref()."\"><b>".get_first_letter($pgv_lang["birth"])."</b><span>".PrintReady($value->getName())."<br/>".$pgv_lang["birth"]." ".PrintReady(get_changed_date($value->getBirthDate()))." ".PrintReady($value->getBirthPlace())."<br/>";
+						print"<a class=\"showit\" href=\"individual.php?pid=".$value->getXref()."\"><b>".get_first_letter($pgv_lang["birth"])."</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".PrintReady(get_changed_date($value->getBirthDate()))." ".PrintReady($value->getBirthPlace())."<br/>";
 						foreach($eventinformation as $evtwidth=>$val){
 							print $val."<br />\n";
 						}
-						if ($value->isDead()) print $pgv_lang["death"]." ".PrintReady(get_changed_date($value->getDeathDate()))." ".PrintReady($value->getBirthPlace());
+						if ($value->isDead()) print $pgv_lang["death"]." ".PrintReady(get_changed_date($value->getDeathDate()))." ".PrintReady($value->getDeathPlace());
 						print "</span></a>";
 						echo '</div>';
 											

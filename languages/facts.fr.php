@@ -158,6 +158,8 @@ $factarray["_TODO"]                     = "Note";
 $factarray["_UID"]                      = "Identificateur universel (UID)";
 $factarray["_PRIM"]                     = "Image principale";
 $factarray["_DBID"]                     = "Bases liées";
+// These facts are used in specific contexts
+$factarray["STAT:DATE"]                 = "Date de modification du statut";
 //These facts are compounds for the view probabilities page
 $factarray["FAMC:HUSB:SURN"]            = "Prénom du père";
 $factarray["FAMC:WIFE:SURN"]            = "Prénom de la mère";

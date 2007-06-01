@@ -127,7 +127,7 @@ class TimelineControllerRoot extends BaseController {
 							$datestr = trim($match[1]);
 							$date = parse_date($datestr);
 							//-- do not print hebrew dates
-							if ((stristr($date[0]["ext"], "hebrew")===false)&&($date[0]["year"]!=0)) {
+							if ((stristr($date[0]["cal"], "hebrew")===false)&&($date[0]["year"]!=0)) {
 								if ($date[0]["year"]<$this->baseyear) $this->baseyear=$date[0]["year"];
 								if ($date[0]["year"]>$this->topyear) $this->topyear=$date[0]["year"];
 								if (!is_dead_id($indi->getXref())) {
@@ -228,7 +228,7 @@ class TimelineControllerRoot extends BaseController {
 				$xoffset += abs($tyoffset);
 				$placements[$place] = $yoffset;
 				//-- do not print hebrew dates
-				if (($date[0]["year"]!=0)&&(stristr($date[0]["ext"], "hebrew")===false)) {
+				if (($date[0]["year"]!=0)&&(stristr($date[0]["cal"], "hebrew")===false)) {
 					print "\n\t\t<div id=\"fact$factcount\" style=\"position:absolute; ".($TEXT_DIRECTION =="ltr"?"left: ".($xoffset):"right: ".($xoffset))."px; top:".($yoffset)."px; font-size: 8pt; height: ".($this->bheight)."px; \" onmousedown=\"factMD(this, '".$factcount."', ".($yoffset-$tyoffset).");\">\n";
 					print "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"cursor: hand;\"><tr><td>\n";
 					print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" name=\"boxline$factcount\" id=\"boxline$factcount\" height=\"3\" align=\"left\" hspace=\"0\" width=\"10\" vspace=\"0\" alt=\"\" style=\"padding-";

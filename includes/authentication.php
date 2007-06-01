@@ -436,7 +436,7 @@ function checkTableExists() {
 	global $TBLPREFIX, $DBCONN, $DBTYPE, $PGV_CHECKED_TABLES;
 
 	//-- make sure we only run this function once
-	if (!empty($PGV_CHECKED_TABLES) && $PGV_CHECKED_TABLES) return true;
+	if (isset($PGV_CHECKED_TABLES) && $PGV_CHECKED_TABLES) return true;
 	$PGV_CHECKED_TABLES = true;
 
 	$has_users = false;

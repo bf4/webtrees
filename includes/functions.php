@@ -203,9 +203,12 @@ function getmicrotime(){
  */
 function store_gedcoms() {
 	global $GEDCOMS, $pgv_lang, $INDEX_DIRECTORY, $DEFAULT_GEDCOM, $COMMON_NAMES_THRESHOLD, $GEDCOM, $CONFIGURED;
-	global $COMMIT_COMMAND;
+	global $COMMIT_COMMAND, $IN_STORE_GEDCOMS;
 
 	if (!$CONFIGURED) return false;
+	//-- do not allow recursion into this function
+	if (isset($IN_STORE_GEDCOMS) && $IN_STORE_GEDCOMS==true) return false;
+	$IN_STORE_GEDCOMS = true;
 	$mutex = new Mutex("gedcoms.php");
 	$mutex->Wait();
 	uasort($GEDCOMS, "gedcomsort");
@@ -217,7 +220,9 @@ function store_gedcoms() {
 	}
 	if ($maxid !=0) $maxid++;
 	reset($GEDCOMS);
-	foreach($GEDCOMS as $indexval => $GED) {
+	//-- keep a local copy in case another function tries to change $GEDCOMS
+	$geds = $GEDCOMS;
+	foreach($geds as $indexval => $GED) {
 		$GED["config"] = str_replace($INDEX_DIRECTORY, "\${INDEX_DIRECTORY}", $GED["config"]);
 		if (isset($GED["privacy"])) $GED["privacy"] = str_replace($INDEX_DIRECTORY, "\${INDEX_DIRECTORY}", $GED["privacy"]);
 		else $GED["privacy"] = "privacy.php";
@@ -252,10 +257,11 @@ function store_gedcoms() {
 			}
 			else $GED["commonsurnames"]="";
 		}
-		$GEDCOMS[$GED["gedcom"]]["commonsurnames"] = $GED["commonsurnames"];
+		$geds[$GED["gedcom"]]["commonsurnames"] = $GED["commonsurnames"];
 		$gedcomtext .= "\$gedarray[\"commonsurnames\"] = \"".addslashes($GED["commonsurnames"])."\";\n";
 		$gedcomtext .= "\$GEDCOMS[\"".$GED["gedcom"]."\"] = \$gedarray;\n";
 	}
+	$GEDCOMS = $geds;
 	$gedcomtext .= "\n\$DEFAULT_GEDCOM = \"$DEFAULT_GEDCOM\";\n";
 	$gedcomtext .= "\n?".">";
 	$fp = @fopen($INDEX_DIRECTORY."gedcoms.php", "wb");
@@ -270,6 +276,8 @@ function store_gedcoms() {
 		if (!empty($COMMIT_COMMAND)) check_in("store_gedcoms() ->" . getUserName() ."<-", "gedcoms.php", $INDEX_DIRECTORY, true);
 	}
 	$mutex->Release();
+	$IN_STORE_GEDCOMS = false;
+	return true;
 }
 
 /**
@@ -440,7 +448,8 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
 	$subrec = "";
 	$tag = trim($tag);
 	//$searchTarget = "/".preg_replace("~/~","\\/",$tag)."[\W]/"; // see [ 1492470 ] and [ 1507176 ]
-	$searchTarget = "/[\r\n]".preg_replace("~/~","\\/",$tag)."[\s\r\n]/";
+	//$searchTarget = "/[\r\n]".preg_replace("~/~","\\/",$tag)."[\s\r\n]/";
+	$searchTarget = "~[\r\n]".$tag."[\s]~";
 	$ct = preg_match_all($searchTarget, $gedrec, $match, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
 	if ($ct==0) {
 		$tag = preg_replace("/(\w+)/", "_$1", $tag);
@@ -490,16 +499,22 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $Ap
 	if ($gt > 0) {
 		$id = $gmatch[1];
 	}
+	
+	$hasResn = strstr($gedrec, " RESN ");
 	$prev_tags = array();
-	$ct = preg_match_all("/\n1 (\w+)(.*)/", $gedrec, $match, PREG_SET_ORDER);
+	$ct = preg_match_all("/\n1 (\w+)(.*)/", $gedrec, $match, PREG_SET_ORDER|PREG_OFFSET_CAPTURE);
 	for($i=0; $i<$ct; $i++) {
-		$fact = trim($match[$i][1]);
+		$fact = trim($match[$i][1][0]);
+		$pos1 = $match[$i][0][1];
+		if ($i<$ct-1) $pos2 = $match[$i+1][0][1];
+		else $pos2 = strlen($gedrec);
 		if (empty($ignore) || strpos($ignore, $fact)===false) {
 			if (!$ApplyPriv || (showFact($fact, $id)&& showFactDetails($fact,$id))) {
 				if (isset($prev_tags[$fact])) $prev_tags[$fact]++;
 				else $prev_tags[$fact] = 1;
-				$subrec = get_sub_record(1, "1 $fact", $gedrec, $prev_tags[$fact]);
-				if (!$ApplyPriv || !FactViewRestricted($id, $subrec)) {
+				//$subrec = get_sub_record(1, "1 $fact", $gedrec, $prev_tags[$fact]);
+				$subrec = substr($gedrec, $pos1, $pos2-$pos1);
+				if (!$ApplyPriv || !$hasResn || !FactViewRestricted($id, $subrec)) {
 					if ($fact=="EVEN") {
 						$tt = preg_match("/2 TYPE (.*)/", $subrec, $tmatch);
 						if ($tt>0) {
@@ -1243,7 +1258,9 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 	$bParts = preg_split("/(\d+)/", $bName, -1, PREG_SPLIT_DELIM_CAPTURE);
 
 	//-- loop through the arrays of strings and numbers
-	for($j=0; ($j<count($aParts) && $j<count($bParts)); $j++) {
+	$ac = count($aParts);
+	$bc = count($bParts);
+	for($j=0; ($j<$ac && $j<$bc); $j++) {
 		$aName = $aParts[$j];
 		$bName = $bParts[$j];
 
@@ -1646,14 +1663,14 @@ function compare_fact_type($afact, $bfact) {
 		if (!isset($factsort[$afact])) {
 			if (preg_match("/ASSO/", $afact)>0) $factsort[$afact] = 52;
 			else {
-				if ($DEBUG) print " bdeat aft";
+				if ($DEBUG) print " ASSO aft";
 				return $aft;
 			}
 		}
 		if (!isset($factsort[$bfact])) {
 			if (preg_match("/ASSO/", $bfact)>0) $factsort[$bfact] = 52;
 			else {
-				if ($DEBUG) print " adeat bef";
+				if ($DEBUG) print " ASSO bef";
 				return $bef;
 			}
 		}
@@ -1696,9 +1713,6 @@ function compare_facts($a, $b) {
 	if (!isset($IGNORE_YEAR)) $IGNORE_YEAR = 0;
 	if (!isset($IGNORE_FACTS)) $IGNORE_FACTS = 0;
 
-	$adate=0;
-	$bdate=0;
-
 	$bef = -1;
 	$aft = 1;
 	if ($ASC) {
@@ -1712,55 +1726,6 @@ function compare_facts($a, $b) {
 	else $brec = $b;
 	if ($DEBUG) print "\n<br />".substr($arec,0,8)."==".substr($brec,0,8)." ";
 
-	// Float birth to the very top
-	if ((preg_match("/1 BIRT/", $arec)>0) && (!preg_match("/1 BIRT/", $brec)>0)) {
-		if ($DEBUG) print "birt bef";
-		return $bef;
-	}
-	if ((preg_match("/1 BIRT/", $brec)>0) && (!preg_match("/1 BIRT/", $arec)>0)) {
-		if ($DEBUG) print "birt aft";
-		return $aft;
-	}
-	// Sinking "changed" to the very bottom
-	if (preg_match("/1 CHAN/", $arec)>0) {
-		if ($DEBUG) print "chan aft";
-		return $aft;
-	}
-	if (preg_match("/1 CHAN/", $brec)>0) {
-		if ($DEBUG) print "chan bef";
-		return $bef;
-	}
-	// Putting Death before burial or cremation.
-	if ((preg_match("/1 DEAT/", $arec)>0) && ((preg_match("/1 BURI/", $brec)>0) || (preg_match("/1 CREM/", $brec)>0))) {
-		if ($DEBUG) print "deat bef buri";
-		return $bef;
-	}
-	if ((preg_match("/1 DEAT/", $brec)>0) && ((preg_match("/1 BURI/", $arec)>0) || (preg_match("/1 CREM/", $arec)>0))) {
-		if ($DEBUG) print "buri aft deat";
-		return $aft;
-	}
-	// cremation then burial is possible, reverse is not logical.
-	if ((preg_match("/1 CREM/", $arec)>0) && (preg_match("/1 BURI/", $brec)>0)) {
-		if ($DEBUG) print "crem bef buri";
-		return $bef;
-	}
-	if ((preg_match("/1 CREM/", $brec)>0) && (preg_match("/1 BURI/", $arec)>0)) {
-		if ($DEBUG) print "crem aft deat";
-		return $aft;
-	}
-
-	// Sink Death, burial and cremation to the bottom of the list.
-	// Oops.  We want to place some data after death. AFN, etc.
-//	if ((preg_match("/1 DEAT/", $arec)>0) && ((stristr($arec, "UNKNOWN")) ||
-//	    (stristr($arec, "DATE Y")) || (!stristr($arec, "DATE")))) {
-//		if ($DEBUG) print "deat aft";
-//		return $aft;
-//	}
-
-	$cta = preg_match("/2 DATE (.*)/", $arec, $match);
-	if ($cta>0) $adate = parse_date(trim($match[1]));
-	$ctb = preg_match("/2 DATE (.*)/", $brec, $match);
-	if ($ctb>0) $bdate = parse_date(trim($match[1]));
 	$ft = preg_match("/1\s(\w+)(.*)/", $arec, $match);
 	if ($ft>0) $afact = $match[1];
 	else $afact="";
@@ -1779,89 +1744,101 @@ function compare_facts($a, $b) {
 		if ($bfact=="EVEN" || $bfact=="FACT") {
 			$ft = preg_match("/2 TYPE (.*)/", $brec, $match);
 			if ($ft>0) $bfact = trim($match[1]);
-		}
+	}
+	}
+	
+	// Sinking "changed" to the very bottom
+	if ($afact=='CHAN') {
+		if ($DEBUG) print "chan aft";
+		return $aft;
+	}
+	if ($bfact=='CHAN') {
+		if ($DEBUG) print "chan bef";
+		return $bef;
+	}
+	
+	//-- dates should always take priority
+	$cfd = compare_facts_date($arec, $brec);
+	if ($cfd!=0) {
+		if ($DEBUG) print "date ".$cfd;
+		return $cfd;
 	}
 
-	//-- if the date of one fact is missing, or it is missing a year, then sort
-	//-- based on fact label
-	if ($cta==0 || $ctb==0 || empty($adate[0]["year"]) || empty($bdate[0]["year"])) {
+	// Float birth to the very top
+	if ($afact=='BIRT' && $bfact!='BIRT') {
+		if ($DEBUG) print "birt bef";
+		return $bef;
+	}
+	if ($afact!='BIRT' && $bfact=='BIRT') {
+		if ($DEBUG) print "birt aft";
+		return $aft;
+	}
+	
+	// Putting Death before burial or cremation.
+	if ($afact=='DEAT' && ($bfact=='BURI' || $bfact=='CREM')) {
+		if ($DEBUG) print "deat bef buri";
+		return $bef;
+	}
+	if ($bfact=='DEAT' && ($afact=='BURI' || $afact=='CREM')) {
+		if ($DEBUG) print "buri aft deat";
+		return $aft;
+	}
+	// cremation then burial is possible, reverse is not logical.
+	if ($afact=='CREM' && $bfact=='BURI') {
+		if ($DEBUG) print "crem bef buri";
+		return $bef;
+	}
+	if ($bfact=='CREM' && $afact=='BURI') {
+		if ($DEBUG) print "crem aft deat";
+		return $aft;
+	}
+
 		if (!$IGNORE_FACTS) {
 			$res = compare_fact_type($afact, $bfact);
 			if ($res!==false) return $res;
 		}
-
-		//-- check if both had a date
-		if($cta<$ctb) {
-			if ($DEBUG) print "daft";
-			return $aft;
-		}
-		if($cta>$ctb) {
-			if ($DEBUG) print "dbef";
-			return $bef;
-		}
-		//-- neither had a date so sort by fact name
-		if(($cta==0)&&($ctb==0)) {
+	//-- sort by fact name
 			if (isset($factarray[$afact])) $afact = $factarray[$afact];
 			else if (isset($pgv_lang[$afact])) $afact = $pgv_lang[$afact];
 			if (isset($factarray[$bfact])) $bfact = $factarray[$bfact];
 			else if (isset($pgv_lang[$bfact])) $bfact = $pgv_lang[$bfact];
 			$c = stringsort($afact, $bfact);
 			if ($DEBUG==1) {
-				if ($c<0) print "bef"; else print "aft";
+		if ($c<0) print "string bef"; else print "string aft";
 			}
 			return $c;
-		}
-	}
+}
 
-	if ($IGNORE_YEAR) {
-    // Calculate Current year Gregorian date for Hebrew date
-        if ($USE_RTL_FUNCTIONS && isset($adate[0]["ext"]) && strstr($adate[0]["ext"], "#DHEBREW")!==false) $adate = jewishGedcomDateToCurrentGregorian($adate);
-		if ($USE_RTL_FUNCTIONS && isset($bdate[0]["ext"]) && strstr($bdate[0]["ext"], "#DHEBREW")!==false) $bdate = jewishGedcomDateToCurrentGregorian($bdate);
-	}
-	else {
-    // Calculate Original year Gregorian date for Hebrew date
-    	if ($USE_RTL_FUNCTIONS && isset($adate[0]["ext"]) && strstr($adate[0]["ext"], "#DHEBREW")!==false) $adate = jewishGedcomDateToGregorian($adate);
-    	if ($USE_RTL_FUNCTIONS && isset($bdate[0]["ext"]) && strstr($bdate[0]["ext"], "#DHEBREW")!==false) $bdate = jewishGedcomDateToGregorian($bdate);
-    }
+// Helper function to sort facts.
+function compare_facts_date($arec, $brec) {
+	$cta = preg_match("/2 DATE (.*)/", $arec, $amatch);
+	if ($cta==0) return 0;
+	$ctb = preg_match("/2 DATE (.*)/", $brec, $bmatch);
+	if ($ctb==0) return 0;
+	$adate = parse_date($amatch[1]);
+	$bdate = parse_date($bmatch[1]);
+	// If either date can't be parsed, don't sort.
+	if ($adate[0]['jd1']==0 || $bdate[0]['jd1']==0)
+		return 0;
 
-	if ($DEBUG) print $adate[0]["year"]."==".$bdate[0]["year"]." ";
-	if ($adate[0]["year"]==$bdate[0]["year"] || $IGNORE_YEAR) {
-		// Check month
-		$montha = $adate[0]["mon"];
-		$monthb = $bdate[0]["mon"];
+	// Remember that dates can be ranges and overlapping ranges sort equally.
+  $amin=$adate[0]['jd1'];
+  $bmin=$bdate[0]['jd1'];
+	if (empty($adate[1]))
+		$amax=$adate[0]['jd2'];
+	else
+		$amax=$adate[1]['jd2'];
+	if (empty($bdate[1]))
+		$bmax=$bdate[0]['jd2'];
+	else
+		$bmax=$bdate[1]['jd2'];
 
-		if ($montha == $monthb) {
-		// Check day
-			$newa = $adate[0]["day"]." ".$adate[0]["month"]." ".date("Y");
-			$newb = $bdate[0]["day"]." ".$bdate[0]["month"]." ".date("Y");
-			$astamp = strtotime($newa);
-			$bstamp = strtotime($newb);
-			if ($astamp==$bstamp) {
-				if ($IGNORE_YEAR && ($adate[0]["year"]!=$bdate[0]["year"])) return ($adate[0]["year"] < $bdate[0]["year"]) ? $aft : $bef;
-				$cta = preg_match("/[2-3] TIME (.*)/", $arec, $amatch);
-				$ctb = preg_match("/[2-3] TIME (.*)/", $brec, $bmatch);
-				//-- check if both had a time
-				if($cta<$ctb) return $aft;
-				if($cta>$ctb) return $bef;
-				//-- neither had a time
-				if(($cta==0)&&($ctb==0)) {
-					$res = compare_fact_type($afact, $bfact);
-					if ($res!==false) return $res;
-					return 0;
-				}
-				$atime = trim($amatch[1]);
-				$btime = trim($bmatch[1]);
-				$astamp = strtotime($newa." ".$atime);
-				$bstamp = strtotime($newb." ".$btime);
-				if ($astamp==$bstamp) return compare_fact_type($afact, $bfact);
-			}
-			if ($DEBUG) print ($astamp < $bstamp) ? "bef".$bef : "aft".$aft;
-			return ($astamp < $bstamp) ? $bef : $aft;
-		}
-		else return ($montha < $monthb) ? $bef : $aft;
-	}
-	if ($DEBUG) print (($adate[0]["year"] < $bdate[0]["year"]) ? "bef".$bef : "aft".$aft)." ";
-	return ($adate[0]["year"] < $bdate[0]["year"]) ? $bef : $aft;
+	if ($amax < $bmin)
+		return -1;
+	else if ($amin > $bmax)
+		return 1;
+	else
+		return 0;
 }
 
 /**
@@ -1871,8 +1848,9 @@ function compare_facts($a, $b) {
  * which works better with the way that facts are sorted.
  * New twist: Run the sort twice, first on dated material, then undated,
  * inserting at the last position that matches sort order.
- * @param $array $factlist	the array of facts to sort
+ * @param array $factlist	the array of facts to sort
  */
+/*-- this function is depricated for poor performance
 function sort_facts(&$factlist) {
 	global $DEBUG;
 	$count = count($factlist);
@@ -1963,7 +1941,7 @@ function sort_facts(&$factlist) {
 	}
 	$factlist = $newfacts;
 }
-
+*/
 /**
  * fact date sort
  *

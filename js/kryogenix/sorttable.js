@@ -8,7 +8,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: sorttable.js 826 2007-02-08 08:38:16Z opus27 $
+ * @version $Id$
  */
 
 addEvent(window, "load", sortables_init);
@@ -201,13 +201,15 @@ function ts_sort_caseinsensitive(a,b) {
 
 	// PGV: get "title" sortkey if exists
 	akey = a.cells[SORT_COLUMN_INDEX].getElementsByTagName("a");
-	if (akey.length && akey[0].title) aa = akey[0].title;
 	bkey = b.cells[SORT_COLUMN_INDEX].getElementsByTagName("a");
+	if (akey.length && akey[0].title) aa = akey[0].title;
 	if (bkey.length && bkey[0].title) bb = bkey[0].title;
-
 	// PGV: clean UTF8 special chars before sorting
 	aa = strclean(aa);
 	bb = strclean(bb);
+	// PGV: get "name" sortkey if exists
+	if (akey.length && akey[0].name) aa = parseInt(akey[0].name);
+	if (bkey.length && bkey[0].name) bb = parseInt(bkey[0].name);
 
 	// PGV: when aa==bb keep previous order (=row index)
 	if (aa<bb) return -1;

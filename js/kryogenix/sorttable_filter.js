@@ -22,7 +22,7 @@
  * @see sorttable.js
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: sorttable_filter.js 826 2007-02-08 08:38:16Z opus27 $
+ * @version $Id$
  */
 
 function table_filter(id, keyword, filter) {
@@ -93,10 +93,15 @@ function table_filter_alive(id) {
 	// apply filter
 	for (var r=1;r<table.rows.length;r++) {
 		var row = table.rows[r];
+		// don't do sortbottom last rows
+		if (row.className && (row.className.indexOf('sortbottom') != -1)) break;
+		// get birth year
 		key = row.cells[BCOL].getElementsByTagName("a");
 		byear = key[0].title.substring(0,4);
+		// get death year
 		key = row.cells[DCOL].getElementsByTagName("a");
 		dyear = key[0].title.substring(0,4);
+		// hide/show
 		var disp = "";
 		if (byear>0 && dyear>0 && (year<byear || dyear<year)) disp="none";
 		else {

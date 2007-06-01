@@ -34,6 +34,7 @@ require_once 'includes/functions_print_facts.php';
 require_once 'includes/controllers/basecontrol.php';
 require_once 'includes/menu.php';
 require_once 'includes/person_class.php';
+require_once 'includes/family_class.php';
 
 $indifacts = array();			 // -- array to store the fact records in for sorting and displaying
 $globalfacts = array();
@@ -151,6 +152,7 @@ class IndividualControllerRoot extends BaseController {
 		if ($this->default_tab<-2 || $this->default_tab>7) $this->default_tab=0;
 
 		$this->indi = new Person($indirec, false);
+		$_SESSION['navRoot'] = $this->indi->getXref();
 
 		//-- if the person is from another gedcom then forward to the correct site
 		/*
@@ -221,7 +223,6 @@ class IndividualControllerRoot extends BaseController {
 			$this->indi->diffMerge($this->diffindi);
 		}
 
-		$this->indi->add_family_facts();
 		//-- only allow editors or users who are editing their own individual or their immediate relatives
 		if ($this->indi->canDisplayDetails()) {
 			$this->canedit = userCanEdit($this->uname);
@@ -685,8 +686,8 @@ class IndividualControllerRoot extends BaseController {
 	function getIndiFacts() {
 		$indifacts = $this->indi->getIndiFacts();
 		//-- sort the facts
-		//usort($indifacts, "compare_facts");
-		sort_facts($indifacts);
+		usort($indifacts, "compare_facts");
+		//sort_facts($indifacts);
 		//-- remove duplicate facts
 		foreach ($indifacts as $key => $value) $indifacts[$key] = serialize($value);
 		$indifacts = array_unique($indifacts);
@@ -985,6 +986,9 @@ class IndividualControllerRoot extends BaseController {
 	function print_facts_tab() {
 		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
 		global $n_chil, $n_gchi;
+		
+		//-- only need to add family facts on this tab
+		$this->indi->add_family_facts();
 		?>
 		<table class="facts_table">
 		<?php if (!$this->indi->canDisplayDetails()) {
@@ -995,6 +999,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 		else {
 			$indifacts = $this->getIndiFacts();
+			usort($indifacts, 'compare_facts');
 			if (count($indifacts)==0) print "<tr><td id=\"no_tab1\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab1"]."</td></tr>\n";
 			print "<tr id=\"row_top\"><td></td><td class=\"descriptionbox rela\">";
 			print "<a href=\"javascript:;\" onclick=\"togglerow('row_rela'); return false;\">";
@@ -1216,7 +1221,8 @@ class IndividualControllerRoot extends BaseController {
 					<td><span class="subheaders"><?php print PrintReady($this->indi->getChildFamilyLabel($family)); ?></span>
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
 					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
-				<?php } ?>
+				<?php }?>
+				<?php if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate());?>
 				<?php if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate())." -- ".$family->getPlaceShort($family->getMarriagePlace());?>
 					</td>
 				</tr>
@@ -1703,10 +1709,9 @@ class IndividualControllerRoot extends BaseController {
 	function print_map_tab() {
 		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $pgv_lang, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_language;
 		global $LANGUAGE;
-		global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOON, $GOOGLEMAP_MAX_ZOON, $GEDCOM;
+		global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
 	    global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
-	    global $GOOGLEMAP_MAX_ZOOM, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_ENABLED, $TBLPREFIX, $DBCONN;
-	    global $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE;
+	    global $GOOGLEMAP_ENABLED, $TBLPREFIX, $DBCONN, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD;
 
 			            include_once('modules/googlemap/googlemap.php');
 
@@ -1728,20 +1733,16 @@ class IndividualControllerRoot extends BaseController {
 	        </script>
 	        <?php
 	        return;
-	    }
-
-	    else {
+	    } else {
 		                $famids = array();
 		                $families = $this->indi->getSpouseFamilies();
 		                foreach($families as $famid=>$family) {
 		                    $famids[] = $family->getXref();
 		                }
-		                if (build_indiv_map($this->getIndiFacts(), $famids) == 0) {
-            print "<table><tr><td id=\"no_tab7\" colspan=\"2\"></td></tr></table>\n";
-		                }
-				}
+										$this->indi->add_family_facts(false);
+		                build_indiv_map($this->getIndiFacts(), $famids);
+			}
 	}
-
 }
 // -- end of class
 //-- load a user extended class if one exists

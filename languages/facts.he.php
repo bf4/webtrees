@@ -162,6 +162,9 @@ $factarray["PEDI"] 	= "יחוס";
 $factarray["_PRIM"]	= "תמונה מודגשת";
 $factarray["_DBID"] = "קוד זיהוי של מאגר נתונים מקושר"; 
 
+// These facts are used in specific contexts
+$factarray["STAT:DATE"] = "תאריך שינוי הסטטוס";
+
 //These facts are compounds for the view probabilities page
 $factarray["FAMC:HUSB:SURN"] = "שם המשפחה של האב";
 $factarray["FAMC:WIFE:SURN"] = "שם המשפחה של האם";

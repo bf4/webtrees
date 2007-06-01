@@ -31,6 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["search_place_word"]		= "Whole words only";
 $pgv_lang["invalid_search_input"] 	= "Please enter a Given name, Last name, or Place in addition to Year";
 $pgv_lang["duplicate_username"] 	= "Duplicate user name.  A user with that user name already exists.  Please choose another user name.";
 $pgv_lang["cache_life"]				= "Cache file life";
@@ -66,7 +67,7 @@ $pgv_lang["search_DM"]				= "Daitch-Mokotoff";
 $pgv_lang["search_fams"]			= "Families";
 $pgv_lang["search_gedcom"]			= "Search databases";
 $pgv_lang["search_geds"]			= "Databases to search in";
-$pgv_lang["search_indis"]			= "Individuals";
+$pgv_lang["search_indis"]			= "Individual Names";
 $pgv_lang["search_inrecs"]			= "Search for";
 $pgv_lang["search_prtall"]			= "All names";
 $pgv_lang["search_prthit"]			= "Names with hit";
@@ -616,6 +617,37 @@ $pgv_lang["sep"]					= "September";
 $pgv_lang["oct"]					= "October";
 $pgv_lang["nov"]					= "November";
 $pgv_lang["dec"]					= "December";
+
+$pgv_lang["vend"]         = "Vendémiaire";
+$pgv_lang["brum"]         = "Brumaire";
+$pgv_lang["frim"]         = "Frimaire";
+$pgv_lang["nivo"]         = "Nivôse";
+$pgv_lang["pluv"]         = "Pluviôse";
+$pgv_lang["vent"]         = "Ventôse";
+$pgv_lang["germ"]         = "Germinal";
+$pgv_lang["flor"]         = "Floréal";
+$pgv_lang["prai"]         = "Prairial";
+$pgv_lang["mess"]         = "Messidor";
+$pgv_lang["ther"]         = "Thermidor";
+$pgv_lang["fruc"]         = "Fructidor";
+$pgv_lang["comp"]         = "jours complémentaires";
+
+$pgv_lang["tsh"]          = "Tishrei";
+$pgv_lang["csh"]          = "Heshvan";
+$pgv_lang["ksl"]          = "Kislev";
+$pgv_lang["tvt"]          = "Tevet";
+$pgv_lang["shv"]          = "Shvat";
+$pgv_lang["adr"]          = "Adar";
+$pgv_lang["ads"]          = "Adar II";
+$pgv_lang["nsn"]          = "Nissan";
+$pgv_lang["iyr"]          = "Iyar";
+$pgv_lang["svn"]          = "Sivan";
+$pgv_lang["tmz"]          = "Tamuz";
+$pgv_lang["aav"]          = "Av";
+$pgv_lang["ell"]          = "Elul";
+
+$pgv_lang["b.c."]         = "B.C.";
+
 $pgv_lang["abt"]					= "about";
 $pgv_lang["aft"]					= "after";
 $pgv_lang["and"]					= "and";

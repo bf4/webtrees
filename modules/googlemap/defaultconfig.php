@@ -46,6 +46,8 @@ $GOOGLEMAP_PRECISION_5 = "9";           // Max prcision level
 $GM_MAX_NOF_LEVELS = "4";               // Max nr of levels to use in Googlemap
 $GM_DEFAULT_TOP_VALUE = "";             // Default value, inserted when no location can be found
 
+$GOOGLEMAP_COORD = "false";          	// Enable or disable Display Map Co-ordinates
+
 // Configuration-options per location-level
 $GM_MARKER_COLOR[1] = "Red";            // Marker to be used
 $GM_MARKER_SIZE[1] = "Large";           // "Small" or "Large"

@@ -215,6 +215,8 @@ class GedcomRecord {
 	 */
 	function isRemote() {
 		if (is_null($this->rfn)) $this->rfn = get_gedcom_value("RFN", 1, $this->gedrec);
+		if (empty($this->rfn) || $this->xref!=$this->rfn) return false;
+		
 		$parts = preg_split("/:/", $this->rfn);
 		if (count($parts)==2) {
 			return true;
@@ -337,15 +339,15 @@ class GedcomRecord {
 	 */
 	function getDateUrl($gedcom_date) {
 		global $GEDCOM;
-		$ged_months = array("", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC");
 		$pdate = parse_date($gedcom_date);
-		list($y, $m, $d) = explode("-", $pdate[0]["sort"]);
-		$d+=0; $m+=0; $y+=0; // convert to num
+		$y=$pdate[0]['year'];
+		$m=$pdate[0]['mon'];
+		$d=$pdate[0]['day'];
+		$month=$pdate[0]['month'];
 		if ($y<1) $y = date('Y');
-		if ($m<1 or $m>12) $url = "calendar.php?action=year&amp;year=".$y."&amp;ged=".$GEDCOM;
-		else if ($d<1 or $d>31) $url = "calendar.php?action=calendar&amp;month=".$ged_months[$m+0]."&amp;year=".$y."&amp;ged=".$GEDCOM;
-		else $url = "calendar.php?action=today&amp;day=".$d."&amp;month=".$ged_months[$m+0]."&amp;year=".$y."&amp;ged=".$GEDCOM;
-		return $url;
+		if ($m<1 or $m>12) return "calendar.php?action=year&amp;year={$y}&amp;ged={$GEDCOM}";
+		else if ($d<1 or $d>31) return "calendar.php?action=calendar&amp;month={$month}&amp;year={$y}&amp;ged={$GEDCOM}";
+		else return "calendar.php?action=today&amp;day={$d}&amp;month={$month}&amp;year={$y}&amp;ged={$GEDCOM}";
 	}
 	
 	/**

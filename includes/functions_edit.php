@@ -81,6 +81,7 @@ $level2_tags=array( // The order of the $keys is significant
 	"FILE" =>array("OBJE"),
 	"_PRIM"=>array("OBJE"),
 );
+$STANDARD_NAME_FACTS = array('NAME', 'NPFX', 'GIVN', 'SPFX', 'SURN', 'NSFX');
 
 //-- this function creates a new unique connection
 //-- and adds it to the connections file
@@ -402,7 +403,7 @@ function undo_change($cid, $index) {
 function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag="CHIL", $sextag="") {
 	global $pgv_lang, $factarray, $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $monthtonum, $WORD_WRAPPED_NOTES;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $USE_RTL_FUNCTIONS, $GEDCOM;
-	global $bdm, $TEXT_DIRECTION, $ADVANCED_NAME_FACTS, $ADVANCED_PLAC_FACTS, $SURNAME_TRADITION;
+	global $bdm, $TEXT_DIRECTION, $STANDARD_NAME_FACTS, $ADVANCED_NAME_FACTS, $ADVANCED_PLAC_FACTS, $SURNAME_TRADITION;
 
 	$bdm = ""; // used to copy '1 SOUR' to '2 SOUR' for BIRT DEAT MARR
 	init_calendar_popup();
@@ -421,7 +422,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 
 	// Populate the standard NAME field and subfields
 	$name_fields=array();
-	foreach (array('NAME', /*'TYPE',*/ 'NPFX', 'GIVN', 'SPFX', 'SURN', 'NSFX') as $tag)
+	foreach ($STANDARD_NAME_FACTS as $tag)
 		$name_fields[$tag]=get_gedcom_value($tag, 0, $namerec);
 
 	$new_marnm='';
@@ -558,9 +559,11 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		if (preg_match_all("/2 $tag (.+)/", $namerec, $match))
 			foreach ($match[1] as $value) {
 				if ($tag=='_MARNM') {
-					preg_match('/\/(.+)\//', $value, $match2);
+					$mnsct = preg_match('/\/(.+)\//', $value, $match2);
+					$marnm_surn = "";
+					if ($mnsct>0) $marnm_surn = $match2[1];
 					add_simple_tag("2 _MARNM");
-					add_simple_tag("2 _MARNM_SURN ".$match2[1]);
+					add_simple_tag("2 _MARNM_SURN ".$marnm_surn);
 				} else {
 					add_simple_tag("2 $tag $value");
 				}
@@ -1561,14 +1564,29 @@ function breakConts($newline, $level) {
  * @return string	the converted date string
  */
 function check_input_date($datestr) {
-	$date = parse_date($datestr);
-	//-- if there was no change to the date then return the original
-	if (preg_match("/^".$date[0]['day']." ".$date[0]['month']." ".$date[0]['year']."$/i", $datestr)>0) return $datestr;
-	//-- reconstruct using the GEDCOM standards
-	if ((count($date)==1 || implode("",$date[1])=="")&&empty($date[0]['ext'])&&!empty($date[0]['month'])&&!empty($date[0]['year'])) {
-		$datestr = strtoupper($date[0]['day']." ".$date[0]['month']." ".$date[0]['year']);
+	$dates = parse_date($datestr);
+	// If we couldn't parse the date, leave it alone.
+	foreach ($dates as $date)
+		if ($date['jd1']==0)
+			return $datestr;
+
+	// Text in brackets is special
+	if (preg_match('/(\s*\(.*)/', $datestr, $match))
+		$text=$match[1];
+	else
+		$text='';
+
+	$datestr='';
+	foreach ($dates as $date) {
+		if (!empty($date['ext'])) $datestr.="{$date['ext']} ";
+		if (!empty($date['cal'])) $datestr.="{$date['cal']} ";
+		if ($date['day']!=0)      $datestr.="{$date['day']} ";
+		if ($date['mon']!=0)      $datestr.="{$date['month']} ";
+		if ($date['year']>0)      $datestr.="{$date['year']} ";
+		else                      $datestr.=(1-$date['year'])." B.C. ";
 	}
-	return $datestr;
+	$datestr.=$text;
+	return trim($datestr);
 }
 
 function print_quick_resn($name) {
@@ -1669,8 +1687,8 @@ function create_add_form($fact) {
  * @param string $level0type	the type of the level 0 gedcom record
  */
 function create_edit_form($gedrec, $linenum, $level0type) {
-	global $WORD_WRAPPED_NOTES, $pgv_lang;
-	global $tags, $ADVANCED_PLAC_FACTS;
+	global $WORD_WRAPPED_NOTES, $pgv_lang, $factarray;
+	global $tags, $ADVANCED_PLAC_FACTS, $date_and_time, $templefacts;
 
 	$gedlines = split("\n", $gedrec);	// -- find the number of lines in the record
 	$fields = preg_split("/\s/", $gedlines[$linenum]);
@@ -1749,6 +1767,12 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 							add_simple_tag(($level+2).' '.$subsubtag);
 				}
 
+		// Awkward special cases
+		if ($level==2 && $type=='DATE' && in_array($level1type, $date_and_time) && !in_array('TIME', $subtags))
+			add_simple_tag("3 TIME"); // TIME is NOT a valid 5.5.1 tag
+		if ($level==2 && $type=='STAT' && in_array($level1type, $templefacts) && !in_array('DATE', $subtags))
+			add_simple_tag("3 DATE", "", $factarray['STAT:DATE']);
+
 		$i++;
 		if (isset($gedlines[$i])) {
 			$fields = preg_split("/\s/", $gedlines[$i]);
@@ -1805,7 +1829,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
  */
 function insert_missing_subtags($level1tag)
 {
-	global $tags, $date_and_time, $level2_tags, $ADVANCED_PLAC_FACTS;
+	global $tags, $date_and_time, $templefacts, $level2_tags, $ADVANCED_PLAC_FACTS, $factarray;
 
 	// handle  MARRiage TYPE
 	$type_val = "";
@@ -1831,8 +1855,8 @@ function insert_missing_subtags($level1tag)
 					add_simple_tag("3 FORM");
 					break;
 				case "STAT":
-					// TODO currently confusing to have both LDS_ORD_DATE and status CHANGE_DATE
-					//add_simple_tag("3 DATE");
+					if (in_array($level1tag, $templefacts))
+						add_simple_tag("3 DATE", "", $factarray['STAT:DATE']);
 					break;
 				case "DATE":
 					if (in_array($level1tag, $date_and_time))

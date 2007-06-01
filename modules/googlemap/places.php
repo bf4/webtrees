@@ -106,16 +106,24 @@ function get_place_parent_id_loc($parent, $level) {
  * we want to get.  The level holds the level in the hierarchy that
  * we are at.
  */
-function get_place_list_loc() {
-	global $level, $parent, $found;
-	global $TBLPREFIX, $placelist, $positions, $DBCONN;
 
-	// --- find all of the place in the file
-	if ($level==0) $sql = "SELECT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation WHERE pl_level=0 ORDER BY pl_place";
+function get_place_list_loc() {
+	global $display, $level, $parent, $found;
+	global $TBLPREFIX, $placelist, $positions, $DBCONN;
+// --- find all of the place in the file
+	if ($display == "inactive")
+		if ($level==0) $sql = "SELECT DISTINCT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation WHERE pl_level=0 ORDER BY pl_place";
+			else {
+		$parent_id = get_place_parent_id_loc($parent, $level);
+		$sql = "SELECT DISTINCT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation WHERE pl_level=$level AND pl_parent_id=$parent_id ORDER BY pl_place";
+			}
+ else {
+	if ($level==0) $sql = "SELECT DISTINCT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation INNER JOIN ".$TBLPREFIX."places ON ".$TBLPREFIX."placelocation.pl_place=".$TBLPREFIX."places.p_place AND ".$TBLPREFIX."placelocation.pl_level=".$TBLPREFIX."places.p_level WHERE pl_level=0 ORDER BY pl_place";
 	else {
 		$parent_id = get_place_parent_id_loc($parent, $level);
-		$sql = "SELECT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation WHERE pl_level=$level AND pl_parent_id=$parent_id ORDER BY pl_place";
+		$sql = "SELECT DISTINCT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation INNER JOIN ".$TBLPREFIX."places ON ".$TBLPREFIX."placelocation.pl_place=".$TBLPREFIX."places.p_place AND ".$TBLPREFIX."placelocation.pl_level=".$TBLPREFIX."places.p_level WHERE pl_level=$level AND pl_parent_id=$parent_id ORDER BY pl_place";
 	}
+ }
 	$res = dbquery($sql);
 
 	$i = 0;
@@ -329,7 +337,7 @@ if ($action=="ImportGedcom" && userIsAdmin(getUserName())) {
 <!--
 var helpWin;
 function helpPopup(which) {
-	if ((!helpWin)||(helpWin.closed)) helpWin = window.open('module.php?mod=googlemap&pgvaction=editconfig_help&help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
+	if ((!helpWin)||(helpWin.closed)) helpWin = window.open('module.php?mod=googlemap&pgvaction=editconfig_help&help='+which,'_blank','left=50,top=50,width=500,height=400,resizable=1,scrollbars=1');
 	else helpWin.location = 'modules/googlemap/editconfig_help.php?help='+which;
 	return false;
 }
@@ -490,8 +498,8 @@ if ($action=="ImportFile2") {
 							$res = dbquery($sql, true, 1);
 						}
 					}
-					if (($row[4] == "") || ($row[4] == null)) {
-						$sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_icon='".$place["icon"]."',pl_long='".$place["long"]."' where pl_id=$parent_id";
+					if (empty($row[4]) && !empty($place['icon'])) {
+						$sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_icon='".$place["icon"]."' where pl_id=$parent_id";
 						if (userIsAdmin(getUserName())) {
 							$res = dbquery($sql, true, 1);
 						}
@@ -554,6 +562,25 @@ if ($level > 0) {
 	}
 }
 print "<a href=\"module.php?mod=googlemap&pgvaction=places&level=0\">".$pgv_lang["top_level"]."</a><br /><br />";
+
+//LIMIT DISPLAY TO ACTIVE PLACES ONLY.
+if ($level > 0) {
+	for($i = $level; $i > 0 ; $i--) {
+		print "<form name=\"active\" method=\"post\" action=\"module.php?mod=googlemap&pgvaction=places&level=$level";
+		for($j = 0; $j < $i; $j++) {
+			print "&parent[$j]=".$parent[$j];
+		}
+		print "\">";
+	}
+}
+print "<form name=\"active\" method=\"post\" action=\"module.php?mod=googlemap&pgvaction=places&level=$level\">";
+print "<table><tr><td class=\"optionbox\">".$pgv_lang["list_inactive"]."  - <input type=\"checkbox\" name=\"display\" value=\"inactive\"";
+if (isset($display)) print " checked=\"checked\"";
+print ">";
+print "   <input type=\"submit\" value=\"".$pgv_lang["view"]."\"   >";
+print_help_link("PLE_ACTIVE_help", "qm", "PLE_ACTIVE");
+print "</td></tr></table>";
+print "</form>";
 
 $placelist = array();
 $positions = array();

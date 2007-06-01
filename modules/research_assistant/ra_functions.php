@@ -587,7 +587,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$res = dbquery($sql);
 		while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$task = db_cleanup($task);
-			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td><td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a></td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'&amp;folder='.$folderId.'" class="link">'.$pgv_lang["delete"].'</a></td></tr>';
+			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td><td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a></td><td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'&amp;folder='.$folderId.'">'.$pgv_lang["delete"].'</a></td></tr>';
 		}
 		$out .= '</table>';
 		
@@ -695,16 +695,16 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 //			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.$task["t_title"].'</a></td><td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a></td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["delete"].'</a></td></tr>';
 			if (empty ($task['t_enddate']))
 			{
-				$completeLink = "<a href=\"module.php?mod=research_assistant&amp;action=completeTask&amp;taskid=".$task["t_id"]."\" class=\"link\">".$pgv_lang["complete"]."</a>";
+				$completeLink = "<a href=\"module.php?mod=research_assistant&amp;action=completeTask&amp;taskid=".$task["t_id"]."\">".$pgv_lang["complete"]."</a>";
 				$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td><td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td>
-						<td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a></td>
-						<td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["delete"].'</a></td>
-						<td class="optionbox">'.$completeLink.'</td></tr>';
+						<td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a></td>
+						<td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["delete"].'</a></td>
+						<td class="optionbox" align="center">'.$completeLink.'</td></tr>';
 			}
 			else
 			{
-				$completeLink = '<a href="module.php?mod=research_assistant&amp;action=completeTask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["editform"].'</a>';
-				$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td><td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a></td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["delete"].'</a></td><td class="optionbox">'.$completeLink.'</td></tr>';
+				$completeLink = '<a href="module.php?mod=research_assistant&amp;action=completeTask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["editform"].'</a>';
+				$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td><td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td><td class="optionbox" align="center">'.$this->checkComplete($task).'</td><td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a></td><td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["delete"].'</a></td><td class="optionbox" align="center">'.$completeLink.'</td></tr>';
 			}
 		}
 		$out .= '</table>';
@@ -888,7 +888,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		}
 
 		while ($folders = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
- 			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid='.$folders["fr_id"].'"><img src="modules/research_assistant/images/folder_blue_icon.gif" border="0" alt="Folder"></img>'.PrintReady($folders["fr_name"]).'</a></td><td class="optionbox wrap"><br />'.nl2br(PrintReady(stripslashes($folders["fr_description"]))).'</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=editfolder&amp;folderid='.$folders["fr_id"].'">'.$pgv_lang["edit"].'</a></td></tr>';
+ 			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtasks&amp;folderid='.$folders["fr_id"].'"><img src="modules/research_assistant/images/folder_blue_icon.gif" border="0" alt="Folder"></img>'.PrintReady($folders["fr_name"]).'</a></td><td class="optionbox wrap"><br />'.nl2br(PrintReady(stripslashes($folders["fr_description"]))).'</td><td class="optionbox"  align="center"><a href="module.php?mod=research_assistant&amp;action=editfolder&amp;folderid='.$folders["fr_id"].'">'.$pgv_lang["edit"].'</a></td></tr>';
 		}
 		$out .= '</table>';
 		return $out;
@@ -929,8 +929,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			$out .= '<tr><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task["t_id"].'">'.PrintReady($task["t_title"]).'</a></td>';
 			$out .= '<td class="optionbox">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td>';
 			$out .= '<td class="optionbox" align="center">'.$this->checkComplete($task).'</td>';
-			$out .= '<td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a></td>';
-			$out .= '<td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'&amp;folder='.$folderId.'" class="link">'.$pgv_lang["delete"].'</a></td></tr>';
+			$out .= '<td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a></td>';
+			$out .= '<td class="optionbox" align="center"><a href="module.php?mod=research_assistant&amp;action=deletetask&amp;taskid='.$task["t_id"].'&amp;folder='.$folderId.'">'.$pgv_lang["delete"].'</a></td></tr>';
 		}
 		$out .= '</table>';
 
@@ -1401,7 +1401,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 //				$result = dbquery($sql);
 //				$task = $result->fetchrow(DB_FETCHMODE_ASSOC);
 //     			$task = db_cleanup($task);
-				$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$taskid['t_id'].'" class="link">'.PrintReady($pgv_lang['details']).'</a></td><td class="list_label">'.PrintReady($taskid['t_title']).'</td><td class="list_label">'.$this->checkComplete($taskid).'</td><td class="list_label">'.get_changed_date(date("d M Y", $taskid["t_startdate"])).'</td></tr>';
+//				$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$taskid['t_id'].'" class="link">'.PrintReady($pgv_lang['details']).'</a></td><td class="list_label">'.PrintReady($taskid['t_title']).'</td><td class="list_label">'.$this->checkComplete($taskid).'</td><td class="list_label">'.get_changed_date(date("d M Y", $taskid["t_startdate"])).'</td></tr>';
+				$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$taskid['t_id'].'">'.PrintReady($pgv_lang['details']).'</a></td><td class="list_label">'.PrintReady($taskid['t_title']).'</td><td class="list_label">'.$this->checkComplete($taskid).'</td><td class="list_label">'.get_changed_date(date("d M Y", $taskid["t_startdate"])).'</td></tr>';
 			}
 		}
 		return $out;
@@ -1502,7 +1503,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 				if ($result->numRows()>0) {
 					$task = $result->fetchrow(DB_FETCHMODE_ASSOC);
 					$task = db_cleanup($task);
-					$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'" class="link">'.$pgv_lang['details'].'</a></td><td class="list_label">'.PrintReady($task['t_title']).'</td><td class="list_label">'.$this->checkComplete($task).'</td><td class="list_label">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td></tr>';
+//					$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'" class="link">'.$pgv_lang['details'].'</a></td><td class="list_label">'.PrintReady($task['t_title']).'</td><td class="list_label">'.$this->checkComplete($task).'</td><td class="list_label">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td></tr>';
+					$out .= '<tr><td class="list_label"><a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'">'.$pgv_lang['details'].'</a></td><td class="list_label">'.PrintReady($task['t_title']).'</td><td class="list_label">'.$this->checkComplete($task).'</td><td class="list_label">'.get_changed_date(date("d M Y", $task["t_startdate"])).'</td></tr>';
 				}
 				$result->free();
 			}

@@ -2113,7 +2113,7 @@ function PrintReady($text, $InHeaders=false) {
  * @param string $factrec	the raw gedcom record to print
  * @param string $linebr 	optional linebreak
  */
-function print_asso_rela_record($pid, $factrec, $linebr=false) {
+function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 	global $GEDCOM, $SHOW_ID_NUMBERS, $TEXT_DIRECTION, $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $view;
 	// get ASSOciate(s) ID(s)
 	$ct = preg_match_all("/\d ASSO @(.*)@/", $factrec, $match, PREG_SET_ORDER);
@@ -2147,8 +2147,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false) {
 
 		// ASSOciate ID link
 		$gedrec = find_gedcom_record($pid2);
-		if (strstr($gedrec, "@ INDI")!==false
-		or  strstr($gedrec, "@ SUBM")!==false) {
+		if (strstr($gedrec, "@ INDI")!==false || strstr($gedrec, "@ SUBM")!==false) {
 			// ID name
 			if ((DisplayDetailsByID($pid2))||(showLivingNameByID($pid2))) {
 				$name = get_person_name($pid2);
@@ -2174,7 +2173,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false) {
 				if ($dct>0) print " <span class=\"age\">".get_age($gedrec, $dmatch[1])."</span>";
 			//}
 			// RELAtionship calculation : for a family print relationship to both spouses
-			if ($view!="preview") {
+			if ($view!="preview" && $type=='FAM') {
 				$famrec = find_family_record($pid);
 				if ($famrec) {
 					$parents = find_parents_in_record($famrec);
@@ -2406,17 +2405,16 @@ function print_fact_place($factrec, $anchor=false, $sub=false, $lds=false) {
 		$ct = preg_match("/2 TEMP (.*)/", $factrec, $match);
 		if ($ct>0) {
 			$tcode = trim($match[1]);
-			if (array_key_exists($tcode, $TEMPLE_CODES)) {
-				print $pgv_lang["temple"].": ".$TEMPLE_CODES[$tcode];
-			}
-			else {
-				print $pgv_lang["temple_code"].$tcode;
-			}
+			if (array_key_exists($tcode, $TEMPLE_CODES))
+				print "<br/>".$pgv_lang["temple"].": ".$TEMPLE_CODES[$tcode];
+			else
+				print "<br/>".$pgv_lang["temple_code"].$tcode;
 		}
 		$ct = preg_match("/2 STAT (.*)/", $factrec, $match);
 		if ($ct>0) {
-			print "<br />".$pgv_lang["status"].": ";
-			print trim($match[1]);
+			print "<br />".$pgv_lang["status"].": ".trim($match[1]);
+			if (preg_match("/3 DATE (.*)/", $factrec, $match))
+				print ", ".$factarray["STAT:DATE"].": ".get_date_url($match[1]);
 		}
 	}
 }
@@ -2544,11 +2542,9 @@ function init_calendar_popup() {
 	print "<script language=\"JavaScript\" type='text/javascript'>\n<!--\n";
 	// month names
 	print "cal_setMonthNames(";
-	foreach($monthtonum as $mon=>$num) {
-		if (isset($pgv_lang[$mon])) {
-			if ($num>1) print ",";
-			print "\"".$pgv_lang[$mon]."\"";
-		}
+	foreach(array('jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec') as $mon) {
+		if ($monthtonum[$mon]>1) print ",";
+		print "\"".$pgv_lang[$mon]."\"";
 	}
 	print ");\n";
 	// day headers

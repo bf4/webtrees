@@ -61,14 +61,13 @@ if ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel()) {
 			//USERS CURRENT TASKS
 			$sql =	"Select * From " .$TBLPREFIX. "tasks where t_username ='".$userName."' AND t_enddate IS NULL";
 			$res = dbquery($sql);
-			$out = "<table><tr><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["edit"]."</th></tr>";
+			$out = "<table class='list_table'><tr><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["edit"]."</th></tr>";
 			while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 				$task = db_cleanup($task);
 				
 				$tasktitle = '<a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'">'.$task['t_title'].'</a>';
-				//$out .= '<tr><td>'.$tasktitle.'</td><td>'.date("d M Y",$task["t_startdate"]);
 				$out .= '<tr><td>'.PrintReady($tasktitle).'</td><td>'.get_changed_date(date("d M Y",$task["t_startdate"]));
-				$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a>';
+				$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a>';
 				$out .= '</td></tr>';
 				}
 			$out .= '</table>';
@@ -78,12 +77,12 @@ if ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel()) {
 			if($completed =="yes"){
 			$sql = "Select * From " .$TBLPREFIX. "tasks where t_username ='".$userName."' and t_enddate is NOT NULL";
 			$res = dbquery($sql);
-			$out .= "<b>".$pgv_lang["completed"]."</b><br/><table><tr><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["edit"]."</th></tr>";
+			$out .= "<b><p style='text-align: center;'>".$pgv_lang["completed"]."</p></b><br/><table class='list_table'><tr><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["edit"]."</th></tr>";
 			while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 				$task = db_cleanup($task);
 				$tasktitle = '<a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'">'.$task['t_title'].'</a>';
 				$out .= '<tr><td>'.PrintReady($tasktitle).'</td><td>'.get_changed_date(date("d M Y",$task["t_startdate"]));
-				$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a>';
+				$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a>';
 				$out .= '</td></tr>';
 				}
 			$out .= '</table>';
@@ -95,13 +94,13 @@ if ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel()) {
 			{
 				$sql = "Select * From " .$TBLPREFIX. "tasks where t_username =''";
 				$res = dbquery($sql);
-				$out .= "<b>".$pgv_lang["mytasks_unassigned"]."</b><br/><table><tr><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["mytasks_edit"]."</th><th class='descriptionbox'>".$pgv_lang["mytasks_takeOn"]."</th></tr>";
+				$out .= "<b><p style='text-align: center;'>".$pgv_lang["mytasks_unassigned"]."</p></b><br/><table class='list_table'><tr><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["mytasks_edit"]."</th><th class='descriptionbox'>".$pgv_lang["mytasks_takeOn"]."</th></tr>";
 				while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 					$task = db_cleanup($task);
 					$tasktitle = '<a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'">'.$task['t_title'].'</a>';
 					$out .= '<tr><td>'.PrintReady($tasktitle).'</td><td>'.get_changed_date(date("d M Y",$task["t_startdate"]));
-					$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'" class="link">'.$pgv_lang["edit"].'</a>';
-					$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=assignUser&amp;t_id='.$task["t_id"].'&amp;t_username='.$userName.'" class="link">'.$pgv_lang["mytasks_takeOn"].'</a></td></tr>';
+					$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a>';
+					$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=assignUser&amp;t_id='.$task["t_id"].'&amp;t_username='.$userName.'">'.$pgv_lang["mytasks_takeOn"].'</a></td></tr>';
 					}
 				$out .= '</table>';
 				$res->numRows();

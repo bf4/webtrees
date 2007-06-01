@@ -41,7 +41,7 @@
 // NOTE: $cleanup = If set to yes, the GEDCOM contains invalid tags
 // NOTE: $no_upload = When the user cancelled, we want to restore the original settings
 // NOTE: $path = The path to the GEDCOM file
-// NOTE: $contine = When the user decided to move on to the next step
+// NOTE: $continue = When the user decided to move on to the next step
 // NOTE: $import_existing = See if we are just importing an existing GEDCOM
 // NOTE: $replace_gedcom = When uploading a GEDCOM, user will be asked to replace an existing one. If yes, overwrite
 // NOTE: $bakfile = Name and path of the backupfile, this file is created if a file with the same name exists
@@ -460,7 +460,6 @@ if ($verify == "verify_gedcom") {
 		?>
 		<input type="hidden" name="no_upload" value="" />
 		<input type="hidden" name="check" value="" />
-		<!--<input type="hidden" name="override" value="<?php if (isset($override)) print $override; ?>" />-->
 		<input type="hidden" name="verify" value="validate_form" />
 		<input type="hidden" name="GEDFILENAME" value="<?php if (isset($GEDFILENAME)) print $GEDFILENAME; ?>" />
 		<input type="hidden" name="bakfile" value="<?php if (isset($bakfile)) print $bakfile; ?>" />
@@ -490,7 +489,6 @@ if ($verify == "verify_gedcom") {
 			print "selected=\"selected\"";
 			print ">".$pgv_lang["no"]."</option>";
 			print "</select></td></tr>";
-			if (empty($keepmedia)) $keepmedia = false;
 			?>
 			<tr>
 			<td class="descriptionbox wrap width20">
@@ -504,8 +502,6 @@ if ($verify == "verify_gedcom") {
 			</tr>
 			<?php
 			print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
-		} else {
-			if (empty($keepmedia)) $keepmedia = false;
 		}
 		print "</td></tr></table>";
 	} else	$verify = "validate_form";
@@ -677,6 +673,7 @@ if ($verify == "validate_form") {
 	<input type = "hidden" name="no_upload" value="<?php if (isset($no_upload)) print $no_upload; ?>" />
 	<input type = "hidden" name="override" value="<?php if (isset($override)) print $override; ?>" />
 	<input type = "hidden" name="ok" value="<?php if (isset($ok)) print $ok; ?>" />
+	<input type = "hidden" name="keepmedia" value="<?php print $keepmedia?'yes':'no'; ?>" />
 	</table>
 	</div>
 	</td></tr>

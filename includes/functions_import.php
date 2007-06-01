@@ -256,7 +256,8 @@ function import_record($indirec, $update = false) {
 		} else
 			$indi["rin"] = $gid;
 
-		$sql = "INSERT INTO " . $TBLPREFIX . "individuals VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($indi["gedfile"]) . "','" . $DBCONN->escapeSimple($indi["rin"]) . "','" . $DBCONN->escapeSimple($names[0][0]) . "',-1,'" . $DBCONN->escapeSimple($indi["gedcom"]) . "','" . $DBCONN->escapeSimple($names[0][1]) . "','" . $DBCONN->escapeSimple($names[0][2]) . "')";
+		$isdead = (int)is_dead($indirec, '', true);
+		$sql = "INSERT INTO " . $TBLPREFIX . "individuals VALUES ('" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($indi["gedfile"]) . "','" . $DBCONN->escapeSimple($indi["rin"]) . "','" . $DBCONN->escapeSimple($names[0][0]) . "',".$DBCONN->escapeSimple($isdead).",'" . $DBCONN->escapeSimple($indi["gedcom"]) . "','" . $DBCONN->escapeSimple($names[0][1]) . "','" . $DBCONN->escapeSimple($names[0][2]) . "')";
 		$res = dbquery($sql);
 
 		//-- PEAR supports prepared statements in mysqli we will use this code instead of the code above
@@ -286,6 +287,8 @@ function import_record($indirec, $update = false) {
 			for ($j = 0; $j < $ct; $j++) {
 				$chil .= $match[$j][1] . ";";
 			}
+			$nchi = get_gedcom_value("NCHI", 1, $indirec);
+			if (!empty($nchi)) $ct = $nchi;
 			$fam = array ();
 			$fam["HUSB"] = $parents["HUSB"];
 			$fam["WIFE"] = $parents["WIFE"];
@@ -457,7 +460,6 @@ function update_places($gid, $indirec, $update = false) {
  */
 function update_dates($gid, $indirec) {
 	global $FILE, $TBLPREFIX, $DBCONN, $GEDCOMS;
-
 	$count = 0;
 	$pt = preg_match("/\d DATE (.*)/", $indirec, $match);
 	if ($pt == 0)
@@ -472,42 +474,15 @@ function update_dates($gid, $indirec) {
 		}
 		$pt = preg_match_all("/2 DATE (.*)/", $factrec, $match, PREG_SET_ORDER);
 		for ($i = 0; $i < $pt; $i++) {
-			$datestr = trim($match[$i][1]);
-			$dates = parse_date($datestr);
-			foreach($dates as $di=>$date) {
-				if (empty ($date["day"]))
-					$date["day"] = 0;
-				if (empty ($date["mon"]))
-					$date["mon"] = 0;
-				if (empty ($date["year"]))
-					$date["year"] = 0;
-				$datestamp = $date['year'];
-				if ($date['mon'] < 10)
-				$datestamp .= '0';
-				$datestamp .= (int) $date['mon'];
-				if ($date['day'] < 10)
-				$datestamp .= '0';
-				$datestamp .= (int) $date['day'];
-				$sql = 'INSERT INTO ' . $TBLPREFIX . 'dates VALUES(\'' . $DBCONN->escapeSimple($date["day"]) . '\',\'' . $DBCONN->escapeSimple(str2upper($date["month"])) . "','" . $DBCONN->escapeSimple($date["mon"]) . "','" . $DBCONN->escapeSimple($date["year"]) . "','" . $DBCONN->escapeSimple($datestamp) . "','" . $DBCONN->escapeSimple($fact) . "','" . $DBCONN->escapeSimple($gid) . "','" . $DBCONN->escapeSimple($GEDCOMS[$FILE]["id"]) . "',";
-				if (isset ($date["ext"])) {
-					preg_match("/@#D(.*)@/", $date["ext"], $extract_type);
-				$date_types = array (
-					"@#DGREGORIAN@",
-					"@#DJULIAN@",
-					"@#DHEBREW@",
-					"@#DFRENCH R@",
-					"@#DROMAN@",
-					"@#DUNKNOWN@"
-				);
-				if (isset ($extract_type[0]) && in_array($extract_type[0], $date_types))
-					$sql .= "'" . $extract_type[0] . "')";
+			$dates = parse_date($match[$i][1]);
+			foreach($dates as $date) {
+				if ($date['year']>0)
+					$datestamp=$date['year']*10000+$date['mon']*100+$date['day'];
 				else
-					$sql .= "NULL)";
-			} else
-				$sql .= "NULL)";
-			$res = dbquery($sql);
-
-			$count++;
+					$datestamp=-1*((1-$date['year'])*10000+$date['mon']*100+$date['day']);
+				$sql = "INSERT INTO {$TBLPREFIX}dates(d_day,d_month,d_mon,d_year,d_datestamp,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type)VALUES({$date['day']},'{$date['month']}',{$date['mon']},{$date['year']},{$datestamp},{$date['jd1']},{$date['jd2']},'".$DBCONN->escapeSimple($fact)."','".$DBCONN->escapeSimple($gid)."',{$GEDCOMS[$FILE]['id']},".(empty($date['cal'])?'NULL':"'{$date['cal']}'").")";
+				$res=dbquery($sql);
+				$count++;
 			}
 		}
 	}
@@ -793,6 +768,7 @@ function setup_database() {
 	$has_dates = false;
 	$has_dates_mon = false;
 	$has_dates_datestamp = false;
+	$has_dates_juliandays = false;
 	$has_media = false;
 	$has_media_mapping = false;
 	$has_nextid = false;
@@ -883,6 +859,9 @@ function setup_database() {
 								break;
 							case "d_datestamp" :
 								$has_dates_datestamp = true;
+								break;
+							case "d_julianday1" : // d_julianday1 and d_julianday2 added together
+								$has_dates_juliandays = true;
 								break;
 						}
 					}
@@ -993,16 +972,30 @@ function setup_database() {
 		}
 	}
 	if (!$has_dates || stristr($DBTYPE, "mysql") === false && // AFTER keyword only in mysql
-	 (!$has_dates_mon || !$has_dates_datestamp)) {
+	 (!$has_dates_mon || !$has_dates_datestamp || !$has_dates_juliandays)) {
 		create_dates_table();
 	} else { // check columns in the table
 		if (!$has_dates_mon) {
 			$sql = "ALTER TABLE " . $TBLPREFIX . "dates ADD d_mon INT AFTER d_month";
 			$res = dbquery($sql); //print "d_mon added<br/>\n";
+			$sql = "CREATE INDEX date_mon ON " . $TBLPREFIX . "dates (d_mon)";
+			$res = dbquery($sql);
 		}
 		if (!$has_dates_datestamp) {
 			$sql = "ALTER TABLE " . $TBLPREFIX . "dates ADD d_datestamp INT AFTER d_year";
 			$res = dbquery($sql); //print "d_datestamp added<br/>\n";
+			$sql = "CREATE INDEX date_datestamp ON " . $TBLPREFIX . "dates (d_datestamp)";
+			$res = dbquery($sql);
+		}
+		if (!$has_dates_juliandays) {
+			$sql = "ALTER TABLE " . $TBLPREFIX . "dates ADD d_julianday1 INT AFTER d_datestamp";
+			$res = dbquery($sql);
+			$sql = "ALTER TABLE " . $TBLPREFIX . "dates ADD d_julianday2 INT AFTER d_julianday1";
+			$res = dbquery($sql);
+			$sql = "CREATE INDEX date_julianday1 ON " . $TBLPREFIX . "dates (d_julianday1)";
+			$res = dbquery($sql);
+			$sql = "CREATE INDEX date_julianday2 ON " . $TBLPREFIX . "dates (d_julianday2)";
+			$res = dbquery($sql);
 		}
 	}
 	if (!$has_media) {
@@ -1282,7 +1275,7 @@ function create_dates_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "dates";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "dates (d_day INT, d_month VARCHAR(5), d_mon INT, d_year INT, d_datestamp INT, d_fact VARCHAR(10), d_gid VARCHAR(255), d_file INT, d_type VARCHAR(13) NULL)";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "dates (d_day INT, d_month VARCHAR(5), d_mon INT, d_year INT, d_datestamp INT, d_julianday1 INT, d_julianday2 INT, d_fact VARCHAR(10), d_gid VARCHAR(255), d_file INT, d_type VARCHAR(13) NULL)";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
@@ -1298,7 +1291,9 @@ function create_dates_table() {
 	$res = dbquery($sql);
 	$sql = "CREATE INDEX date_datestamp ON " . $TBLPREFIX . "dates (d_datestamp)";
 	$res = dbquery($sql);
-	$sql = "CREATE INDEX date_fact ON " . $TBLPREFIX . "dates (d_fact)";
+	$sql = "CREATE INDEX date_julianday1 ON " . $TBLPREFIX . "dates (d_julianday1)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX date_julianday2 ON " . $TBLPREFIX . "dates (d_julianday2)";
 	$res = dbquery($sql);
 	$sql = "CREATE INDEX date_gid ON " . $TBLPREFIX . "dates (d_gid)";
 	$res = dbquery($sql);

@@ -349,7 +349,8 @@ class MediaControllerRoot extends IndividualController{
 			
 		}
 		
-		sort_facts($facts);
+		usort($facts, "compare_facts");
+		//sort_facts($facts);
 		return $facts;
 	}
 

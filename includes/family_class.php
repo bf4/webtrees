@@ -79,7 +79,7 @@ class Family extends GedcomRecord {
 	function &getInstance($pid, $simple=true) {
 		global $famlist, $GEDCOM, $GEDCOMS, $pgv_changes;
 
-		if (isset($famlist[$pid]) && $famlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
+		if (isset($famlist[$pid]['gedfile']) && $famlist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
 			if (isset($famlist[$pid]['object'])) return $famlist[$pid]['object'];
 		}
 
@@ -104,6 +104,7 @@ class Family extends GedcomRecord {
 		$family = new Family($indirec, $simple);
 		if (!empty($fromfile)) $family->setChanged(true);
 		$famlist[$pid]['object'] = &$family;
+		if (!isset($famlist[$pid]['gedfile'])) $famlist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
 		return $family;
 	}
 
@@ -202,9 +203,17 @@ class Family extends GedcomRecord {
 	 * @return int 	the number of children
 	 */
 	function getNumberOfChildren() {
-		$nchi = get_gedcom_value("NCHI", 1, $this->gedrec);
-		if ($nchi!="") return $nchi.".";
-		if ($this->numChildren===false) $this->numChildren = preg_match_all("/1\s*CHIL\s*@(.*)@/", $this->gedrec, $smatch);
+		global $famlist;
+		
+		if ($this->numChildren!==false) return $this->numChildren;
+		if (isset($famlist[$this->xref]['numchil'])) {
+			$this->numChildren = $famlist[$this->xref]['numchil'];
+			return $this->numChildren; 
+		}
+		
+		$this->numChildren = get_gedcom_value("NCHI", 1, $this->gedrec);
+		if ($this->numChildren!="") return $this->numChildren.".";
+		$this->numChildren = preg_match_all("/1\s*CHIL\s*@(.*)@/", $this->gedrec, $smatch);
 		return $this->numChildren;
 	}
 

@@ -200,6 +200,17 @@ class Source extends GedcomRecord {
 
 		$this->indilist = search_indis($query);
 		uasort($this->indilist, "itemsort");
+		
+		//-- load up the families with 1 query
+		$famids = array();
+		foreach($this->indilist as $gid=>$indi) {
+			$ct = preg_match_all("/1 FAMS @(.*)@/", $indi["gedcom"], $match, PREG_SET_ORDER);
+			for($i=0; $i<$ct; $i++) {
+				$famid = $match[$i][1];
+				$famids[] = $famid;
+			}
+		}
+		load_families($famids);
 		return $this->indilist;
 	}
 

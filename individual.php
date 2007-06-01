@@ -261,12 +261,16 @@ function tempObj(tab, oXmlHttp) {
  				target = document.getElementById(tabid[tab]+'_content');
   				evalAjaxJavascript(oXmlHttp.responseText, target);
   				target.style.height = 'auto';
-  				loadedTabs[tab] = true;
   				if (tab==7) {
+  					if (!loadedTabs[7]) {
+  						loadMap();
+  						map.setMapType(GOOGLEMAP_MAP_TYPE);
+  					}
   					SetMarkersAndBounds();
   					ResizeMap();
   					ResizeMap();
   				}
+  				loadedTabs[tab] = true;
   			}
  		};
 }
