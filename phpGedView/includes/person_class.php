@@ -101,8 +101,10 @@ class Person extends GedcomRecord {
 				$servid = trim($match[1]);
 				$remoteid = trim($match[2]);
 				$service = ServiceClient::getInstance($servid);
-				$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$pid."@ INDI\r\n1 RFN ".$pid, false);
-				$indirec = $newrec;
+				if (!empty($service)) {
+					$newrec= $service->mergeGedcomRecord($remoteid, "0 @".$pid."@ INDI\r\n1 RFN ".$pid, false);
+					$indirec = $newrec;
+				}
 			}
 		}
 		if (empty($indirec)) {

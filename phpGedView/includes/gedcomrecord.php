@@ -215,7 +215,7 @@ class GedcomRecord {
 	 */
 	function isRemote() {
 		if (is_null($this->rfn)) $this->rfn = get_gedcom_value("RFN", 1, $this->gedrec);
-		if (empty($this->rfn)) return false;
+		if (empty($this->rfn) || $this->xref!=$this->rfn) return false;
 		
 		$parts = preg_split("/:/", $this->rfn);
 		if (count($parts)==2) {
