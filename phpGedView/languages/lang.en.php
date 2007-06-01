@@ -631,17 +631,17 @@ $pgv_lang["ther"]         = "Thermidor";
 $pgv_lang["fruc"]         = "Fructidor";
 $pgv_lang["comp"]         = "jours complémentaires";
 
-$pgv_lang["tsh"]          = "Tishri";
-$pgv_lang["csh"]          = "Cheshvan";
+$pgv_lang["tsh"]          = "Tishrei";
+$pgv_lang["csh"]          = "Heshvan";
 $pgv_lang["ksl"]          = "Kislev";
 $pgv_lang["tvt"]          = "Tevet";
-$pgv_lang["shv"]          = "Shevat";
+$pgv_lang["shv"]          = "Shvat";
 $pgv_lang["adr"]          = "Adar";
-$pgv_lang["ads"]          = "Adar Sheni";
-$pgv_lang["nsn"]          = "Nisan";
+$pgv_lang["ads"]          = "Adar II";
+$pgv_lang["nsn"]          = "Nissan";
 $pgv_lang["iyr"]          = "Iyar";
 $pgv_lang["svn"]          = "Sivan";
-$pgv_lang["tmz"]          = "Tammuz";
+$pgv_lang["tmz"]          = "Tamuz";
 $pgv_lang["aav"]          = "Av";
 $pgv_lang["ell"]          = "Elul";
 

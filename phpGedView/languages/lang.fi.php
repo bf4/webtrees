@@ -555,6 +555,37 @@ $pgv_lang["sep"]			= "syyskuu";
 $pgv_lang["oct"]			= "lokakuu";
 $pgv_lang["nov"]			= "marraskuu";
 $pgv_lang["dec"]			= "joulukuu";
+
+$pgv_lang["vend"]         = "Vendémiaire";
+$pgv_lang["brum"]         = "Brumaire";
+$pgv_lang["frim"]         = "Frimaire";
+$pgv_lang["nivo"]         = "Nivôse";
+$pgv_lang["pluv"]         = "Pluviôse";
+$pgv_lang["vent"]         = "Ventôse";
+$pgv_lang["germ"]         = "Germinal";
+$pgv_lang["flor"]         = "Floréal";
+$pgv_lang["prai"]         = "Prairial";
+$pgv_lang["mess"]         = "Messidor";
+$pgv_lang["ther"]         = "Thermidor";
+$pgv_lang["fruc"]         = "Fructidor";
+$pgv_lang["comp"]         = "jours complémentaires";
+
+$pgv_lang["tsh"]          = "tisrei";
+$pgv_lang["csh"]          = "hesvan";
+$pgv_lang["ksl"]          = "kislev";
+$pgv_lang["tvt"]          = "tevet";
+$pgv_lang["shv"]          = "sevat";
+$pgv_lang["adr"]          = "adar";
+$pgv_lang["ads"]          = "adar II";
+$pgv_lang["nsn"]          = "nisan";
+$pgv_lang["iyr"]          = "ijar";
+$pgv_lang["svn"]          = "sivan";
+$pgv_lang["tmz"]          = "tamus";
+$pgv_lang["aav"]          = "av";
+$pgv_lang["ell"]          = "elul";
+
+$pgv_lang["b.c."]         = "e. Kr.";
+
 $pgv_lang["abt"]			= "noin";
 $pgv_lang["aft"]			= "jälkeen";
 $pgv_lang["and"]			= "-";
