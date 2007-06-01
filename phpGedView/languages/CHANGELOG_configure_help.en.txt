@@ -44,6 +44,12 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
+-$pgv_lang["ALPHA_INDEX_LISTS"]						1 Jun 2007				D
+-$pgv_lang["ALPHA_INDEX_LISTS_help"]				1 Jun 2007				D
++$pgv_lang["SUBLIST_TRIGGER_I"]						1 Jun 2007				A
++$pgv_lang["SUBLIST_TRIGGER_I_help"]				1 Jun 2007				A
++$pgv_lang["SUBLIST_TRIGGER_F"]						1 Jun 2007				A
++$pgv_lang["SUBLIST_TRIGGER_F_help"]				1 Jun 2007				A
 *$pgv_lang["ADVANCED_NAME_FACTS_help"]				14 Mar 2007				w
 *$pgv_lang["ADVANCED_PLAC_FACTS_help"]				14 Mar 2007				wp
 +$pgv_lang["ADVANCED_PLAC_FACTS_help"]				13 Mar 2007				A

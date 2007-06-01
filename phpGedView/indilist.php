@@ -58,10 +58,6 @@ else {
 if (empty($show_all)) $show_all = "no";
 if (empty($show_all_firstnames)) $show_all_firstnames = "no";
 
-//$sublistTrigger = 25;		// Number of names required before list starts sub-listing by first name 
-$sublistTrigger = 200;		// Number of names required before list starts sub-listing by first name
-
-
 // Remove slashes
 $lrm = chr(0xE2).chr(0x80).chr(0x8E);
 $rlm = chr(0xE2).chr(0x80).chr(0x8F);
@@ -188,10 +184,8 @@ if(empty($SEARCH_SPIDER)) {
 }
 
 print "<br /><br />";
-print_help_link("name_list_help", "qm");
-print "<br /><br />";
 
-//print "<table class=\"list_table $TEXT_DIRECTION\"><tr>";
+print "<table class=\"list_table $TEXT_DIRECTION\"><tr>";
 
 $TableTitle = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" title=\"".$pgv_lang["individuals"]."\" alt=\"".$pgv_lang["individuals"]."\" />&nbsp;&nbsp;";
 
@@ -227,8 +221,6 @@ else if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&(empty($surname))&&
 			foreach($indi["names"] as $name) {
                 // Make sure we only display true "hits"
 				$trueHit = false;
- 				//$firstLetter = $name[1];
- 				// caused us not to see names that start by Sz or Dsz on English pages and/or Aa, Ae and Oe names on Norwegian and Danish pages
 				$firstLetter = get_first_letter(strip_prefix($name[2]));
 	
 				if ($alpha==$firstLetter) $trueHit = true;
@@ -273,7 +265,7 @@ else {
 		$surname = trim($surname);
 		$tindilist = get_surname_indis($surname);
 		//-- split up long surname lists by first letter of first name
-		if (count($tindilist)>$sublistTrigger) $firstname_alpha = true;
+		if ($SUBLIST_TRIGGER_I>0 && count($tindilist)>$SUBLIST_TRIGGER_I) $firstname_alpha = true;
 	}
 
 	if (($surname_sublist=="no")&&(!empty($alpha))&&($show_all=="no")) {
@@ -304,9 +296,8 @@ else {
 				$firstalpha = array();
 				foreach($tindilist as $gid=>$indi) {
 					foreach($indi["names"] as $indexval => $namearray) {
- 						//$letter = $namearray[1]; we need the first letter of the first name (of our surname), not the 1st letter of the surname or other indi names 
 						if ($namearray[2]==$surname) {
- 							$letter = str2upper(get_first_letter($namearray[0]));	
+ 							$letter = str2upper(get_first_letter($namearray[0]));
 							if (!isset($firstalpha[$letter])) {
 								$firstalpha[$letter] = array("letter"=>$letter, "ids"=>$gid);
 							}
@@ -324,6 +315,7 @@ else {
 			print "</td></tr><tr>\n";
 			print "<td style=\"text-align:center;\" colspan=\"2\">";
 			print $pgv_lang["first_letter_fname"]."<br />\n";
+			print_help_link("firstname_i_help", "qm");
 			foreach($firstalpha as $letter=>$list) {
 				$pass = false;
 				if ($letter != "@") {
@@ -346,7 +338,6 @@ else {
 			}
 			if ($show_all_firstnames=="yes") print "<a href=\"?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;show_all_firstnames=no\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";
 			else print "<a href=\"?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;show_all_firstnames=yes\">".$pgv_lang["all"]."</a>\n";
-			print_help_link("firstname_alpha_help", "qm");
 			if (isset($fstartalpha)) $falpha = $fstartalpha;
 			if ($show_all_firstnames=="no") {
 				$findilist = array();
@@ -366,9 +357,7 @@ else {
 				if (!empty($surname)) {
 					if (strcasecmp(strip_prefix($surname), strip_prefix($name[2]))==0) $trueHit = true;
 				} else {
- 					//$firstLetter = $name[1]; 
- 					// caused us not to see names that start by Sz or Dsz on English pages and/or Aa, Ae and Oe names on Norwegian and Danish pages
-                    $firstLetter = get_first_letter(strip_prefix($name[2]));			
+ 			        $firstLetter = get_first_letter(strip_prefix($name[2]));
 					if (strcasecmp($alpha, $firstLetter)==0) $trueHit = true;
 
 					if (!$trueHit && $DICTIONARY_SORT[$LANGUAGE]) {
@@ -422,14 +411,14 @@ else {
 		uasort($names, "itemsort");
 	}
 }
-//print "</tr></table>";
+print "</tr></table>";
 
 if ($show_all=="yes") unset($alpha);
 if (!empty($surname) && $surname_sublist=="yes") $legend = str_replace("#surname#", check_NN($surname), $pgv_lang["indis_with_surname"]);
 else if (isset($alpha)) $legend = str_replace("#surname#", $alpha.".", $pgv_lang["indis_with_surname"]);
 else $legend = $pgv_lang["individuals"];
 if ($show_all_firstnames=="yes") $falpha = "@";
-if (isset($falpha) and $falpha!="@") $legend .= " ".$falpha.".";
+if (isset($falpha) and $falpha!="@") $legend .= ", ".$falpha.".";
 $legend = PrintReady($legend);
 if (isset($names)) print_indi_table($names, $legend);
 

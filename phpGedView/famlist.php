@@ -50,9 +50,6 @@ print "\n\t<h2>".$pgv_lang["family_list"]."</h2>";
 if (empty($surname_sublist)) $surname_sublist = "yes";
 if (empty($show_all)) $show_all = "no";
 
-//$sublistTrigger = 25;		// Number of names required before list starts sub-listing by first name 
-$sublistTrigger = 200;		// Number of names required before list starts sub-listing by first name
-
 // Remove slashes
 $lrm = chr(0xE2).chr(0x80).chr(0x8E);
 $rlm = chr(0xE2).chr(0x80).chr(0x8F);
@@ -109,8 +106,6 @@ uasort($famalpha, "stringsort");
 
 if (isset($alpha) && !isset($famalpha["$alpha"])) unset($alpha);
 
-$TableTitle = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sfamily"]["small"]."\" border=\"0\" title=\"".$pgv_lang["families"]."\" alt=\"".$pgv_lang["families"]."\" />&nbsp;&nbsp;";
-
 if (count($famalpha) > 0) {
 	print_help_link("alpha_help", "qm", "alpha_index");
 	foreach($famalpha as $letter=>$list) {
@@ -158,10 +153,8 @@ if(empty($SEARCH_SPIDER)) {
 }
 
 print "<br /><br />";
-print_help_link("name_list_help", "qm", "name_list");
-print "<br /><br />";
 
-//print "<table class=\"list_table $TEXT_DIRECTION\"><tr>";
+print "<table class=\"list_table $TEXT_DIRECTION\"><tr>";
 if (($surname_sublist=="yes")&&($show_all=="yes")) {
 	get_fam_list();
 	if (!isset($alpha)) $alpha="";
@@ -212,7 +205,7 @@ else {
 		$surname = trim($surname);
 		$tfamlist = get_surname_fams($surname);
 		//-- split up long surname lists by first letter of first name
-		if (count($tfamlist)>$sublistTrigger) $firstname_alpha = true;  
+		if ($SUBLIST_TRIGGER_F>0 && count($tfamlist)>$SUBLIST_TRIGGER_F) $firstname_alpha = true;
 	}
 
 	if (($surname_sublist=="no")&&(!empty($alpha))&&($show_all=="no")) {
@@ -245,18 +238,18 @@ else {
 // Make sure that the same gid is not already defined for the letter
 					}
 				}
-				
+
 				uasort($firstalpha, "lettersort");
 				//-- put the list in the session so that we don't have to calculate this the next time
- 				$_SESSION[$surname."_firstalphafams"] = $firstalpha;
+				$_SESSION[$surname."_firstalphafams"] = $firstalpha;
 			}
 			else $firstalpha = $_SESSION[$surname."_firstalphafams"];
 			print "<td class=\"list_label\" style=\"padding: 0pt 5pt 0pt 5pt; \" colspan=\"2\">";
-			print $TableTitle;
 			print PrintReady(str_replace("#surname#", check_NN($surname), $pgv_lang["fams_with_surname"]));
 			print "</td></tr><tr>\n";
 			print "<td style=\"text-align:center;\" colspan=\"2\">";
 			print $pgv_lang["first_letter_fname"]."<br />\n";
+			print_help_link("firstname_f_help", "qm", "firstname_alpha_index");
 			foreach($firstalpha as $letter=>$list) {
 				$pass = false;
 				if ($letter != "@") {
@@ -277,7 +270,6 @@ else {
 				print " | \n";
 				$pass = false;
 			}
-			print_help_link("firstname_alpha_help", "qm", "firstname_alpha_index");
 			if ($show_all_firstnames=="yes") print "<a href=\"?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;show_all_firstnames=no\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";
 			else print "<a href=\"?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;show_all_firstnames=yes\">".$pgv_lang["all"]."</a>\n";
 			if (isset($fstartalpha)) $falpha = $fstartalpha;
@@ -294,14 +286,14 @@ else {
 		uasort($tfamlist, "itemsort");
 	}
 }
-//print "</tr></table>";
+print "</tr></table>";
 
 if ($show_all=="yes") unset($alpha);
 if (!empty($surname) && $surname_sublist=="yes") $legend = str_replace("#surname#", check_NN($surname), $pgv_lang["fams_with_surname"]);
 else if (isset($alpha) and $show_all=="no") $legend = str_replace("#surname#", $alpha.".", $pgv_lang["fams_with_surname"]);
 else $legend = $pgv_lang["families"];
 if ($show_all_firstnames=="yes") $falpha = "@";
-if (isset($falpha) and $falpha!="@") $legend .= " ".$falpha.".";
+if (isset($falpha) and $falpha!="@") $legend .= ", ".$falpha.".";
 $legend = PrintReady($legend);
 
 if (!empty($surname) or $surname_sublist=="no") {
