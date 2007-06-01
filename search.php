@@ -253,12 +253,31 @@ if($controller->action == "replace")
 	<tr>
 		<td class="list_label" style="padding: 5px;"><?php print $pgv_lang["search_inrecs"]; ?></td>
 		<td class="list_value" style="padding: 5px;">
-			<input checked="checked" value="yes" name="replaceNames" type="checkbox"/><?php print $pgv_lang["search_indis"]; ?>
+			<script type="text/javascript">
+			<!--
+				function checkAll(box) {
+					if (!box.checked) {
+						box.form.replaceNames.disabled = false;
+						box.form.replacePlaces.disabled = false;
+						box.form.replacePlacesWord.disabled = false;
+					}
+					else {
+						box.form.replaceNames.disabled = true;
+						box.form.replacePlaces.disabled = true;
+						box.form.replacePlacesWord.disabled = true;
+					}
+				}
+			//-->
+			</script>
+			<input checked="checked" onclick="checkAll(this);" value="yes" name="replaceAll" type="checkbox"/><?php print $pgv_lang["search_record"]; ?>
 			<br/>
-			<input checked="checked" value="yes" name="replacePlaces" type="checkbox"/><?php print $pgv_lang["search_place"]; ?>
+			<hr />
+			<input checked="checked" disabled="disabled" value="yes" name="replaceNames" type="checkbox"/><?php print $pgv_lang["search_indis"]; ?>
 			<br/>
-			<input checked="checked" value="yes" name="replaceAll" type="checkbox"/><?php print $pgv_lang["search_record"]; ?>
+			<input checked="checked" disabled="disabled" value="yes" name="replacePlaces" type="checkbox"/><?php print $pgv_lang["search_place"]; ?>
+			<input checked="checked" disabled="disabled" value="yes" name="replacePlacesWord" type="checkbox"/><?php print $pgv_lang["search_place_word"]; ?>
 			<br/>
+			
 		</td>
 	</tr>
 <?php

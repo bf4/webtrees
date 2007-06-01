@@ -81,6 +81,7 @@ $level2_tags=array( // The order of the $keys is significant
 	"FILE" =>array("OBJE"),
 	"_PRIM"=>array("OBJE"),
 );
+$STANDARD_NAME_FACTS = array('NAME', 'NPFX', 'GIVN', 'SPFX', 'SURN', 'NSFX');
 
 //-- this function creates a new unique connection
 //-- and adds it to the connections file
@@ -402,7 +403,7 @@ function undo_change($cid, $index) {
 function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag="CHIL", $sextag="") {
 	global $pgv_lang, $factarray, $pid, $PGV_IMAGE_DIR, $PGV_IMAGES, $monthtonum, $WORD_WRAPPED_NOTES;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $USE_RTL_FUNCTIONS, $GEDCOM;
-	global $bdm, $TEXT_DIRECTION, $ADVANCED_NAME_FACTS, $ADVANCED_PLAC_FACTS, $SURNAME_TRADITION;
+	global $bdm, $TEXT_DIRECTION, $STANDARD_NAME_FACTS, $ADVANCED_NAME_FACTS, $ADVANCED_PLAC_FACTS, $SURNAME_TRADITION;
 
 	$bdm = ""; // used to copy '1 SOUR' to '2 SOUR' for BIRT DEAT MARR
 	init_calendar_popup();
@@ -421,7 +422,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 
 	// Populate the standard NAME field and subfields
 	$name_fields=array();
-	foreach (array('NAME', /*'TYPE',*/ 'NPFX', 'GIVN', 'SPFX', 'SURN', 'NSFX') as $tag)
+	foreach ($STANDARD_NAME_FACTS as $tag)
 		$name_fields[$tag]=get_gedcom_value($tag, 0, $namerec);
 
 	$new_marnm='';

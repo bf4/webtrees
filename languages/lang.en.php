@@ -31,6 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["search_place_word"]		= "Whole words only";
 $pgv_lang["invalid_search_input"] 	= "Please enter a Given name, Last name, or Place in addition to Year";
 $pgv_lang["duplicate_username"] 	= "Duplicate user name.  A user with that user name already exists.  Please choose another user name.";
 $pgv_lang["cache_life"]				= "Cache file life";
@@ -66,7 +67,7 @@ $pgv_lang["search_DM"]				= "Daitch-Mokotoff";
 $pgv_lang["search_fams"]			= "Families";
 $pgv_lang["search_gedcom"]			= "Search databases";
 $pgv_lang["search_geds"]			= "Databases to search in";
-$pgv_lang["search_indis"]			= "Individuals";
+$pgv_lang["search_indis"]			= "Individual Names";
 $pgv_lang["search_inrecs"]			= "Search for";
 $pgv_lang["search_prtall"]			= "All names";
 $pgv_lang["search_prthit"]			= "Names with hit";
