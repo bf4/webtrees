@@ -32,6 +32,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["search_place_word"]			= "Ganze Worte";
 $pgv_lang["invalid_search_input"]		= "Bitte geben Sie einen Namen oder einen Ort zusätzlich zur Jahresangabe ein";
 $pgv_lang["duplicate_username"]			= "Doppelter Benutzername. Ein Benutzer mit dem gewählten Namen existiert bereits. Bitte wählen Sie einen anderen Benutzernamen.";
 $pgv_lang["cache_life"]					= "Cache-Datei Lebensdauer";
@@ -392,8 +393,8 @@ $pgv_lang["clear_chart"]				= "Diagramm löschen";
 $pgv_lang["search_soundex"]				= "Soundex Suche";
 $pgv_lang["search_replace"]				= "Suchen und ändern";
 $pgv_lang["search_inrecs"]				= "Suchen nach";
-$pgv_lang["search_fams"]				= "Familien";
-$pgv_lang["search_indis"]				= "Personen";
+$pgv_lang["search_fams"]				= "Familiennamen";
+$pgv_lang["search_indis"]				= "Personennamen";
 $pgv_lang["search_sources"]				= "Quellen";
 $pgv_lang["search_more_chars"]			= "Bitte mehr als einen Buchstaben eingeben";
 $pgv_lang["search_soundextype"]			= "Soundex Variante:";

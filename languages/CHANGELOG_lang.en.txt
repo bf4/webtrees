@@ -43,35 +43,36 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
-+$pgv_lang["search_place_word"]			1 Jun 2007			A
-*$pgv_lang["search_indis"]				1 Jun 2007			w
-+pgv_lang["vend"]                       30 May 2007         A French Republican month names
-+pgv_lang["brum"]                       30 May 2007         A Translations available at www.geonames.de/months2.html
-+pgv_lang["frim"]                       30 May 2007         A
-+pgv_lang["nivo"]                       30 May 2007         A
-+pgv_lang["pluv"]                       30 May 2007         A
-+pgv_lang["vent"]                       30 May 2007         A
-+pgv_lang["germ"]                       30 May 2007         A
-+pgv_lang["flor"]                       30 May 2007         A
-+pgv_lang["prai"]                       30 May 2007         A
-+pgv_lang["mess"]                       30 May 2007         A
-+pgv_lang["ther"]                       30 May 2007         A
-+pgv_lang["fruc"]                       30 May 2007         A
-+pgv_lang["comp"]                       30 May 2007         A
-+pgv_lang["tsh"]                        30 May 2007         A Jewish month names
-+pgv_lang["csh"]                        30 May 2007         A Translations available at www.geonames.de/months2.html
-+pgv_lang["ksl"]                        30 May 2007         A
-+pgv_lang["tvt"]                        30 May 2007         A
-+pgv_lang["shv"]                        30 May 2007         A
-+pgv_lang["adr"]                        30 May 2007         A
-+pgv_lang["ads"]                        30 May 2007         A
-+pgv_lang["nsn"]                        30 May 2007         A
-+pgv_lang["iyr"]                        30 May 2007         A
-+pgv_lang["svn"]                        30 May 2007         A
-+pgv_lang["tmz"]                        30 May 2007         A
-+pgv_lang["aav"]                        30 May 2007         A
-+pgv_lang["ell"]                        30 May 2007         A
-+pgv_lang["b.c."]                       30 May 2007         A Abbreviation for Before Christ
+*$pgv_lang["search_fams"]							1 Jun 2007				w
++$pgv_lang["search_place_word"]						1 Jun 2007				A
+*$pgv_lang["search_indis"]							1 Jun 2007				w
++pgv_lang["vend"]                       			30 May 2007         	A French Republican month names
++pgv_lang["brum"]                       			30 May 2007         	A Translations available at www.geonames.de/months2.html
++pgv_lang["frim"]                       			30 May 2007         	A
++pgv_lang["nivo"]                       			30 May 2007         	A
++pgv_lang["pluv"]                       			30 May 2007         	A
++pgv_lang["vent"]                       			30 May 2007         	A
++pgv_lang["germ"]                       			30 May 2007         	A
++pgv_lang["flor"]                       			30 May 2007         	A
++pgv_lang["prai"]                       			30 May 2007         	A
++pgv_lang["mess"]                       			30 May 2007         	A
++pgv_lang["ther"]                       			30 May 2007         	A
++pgv_lang["fruc"]                       			30 May 2007         	A
++pgv_lang["comp"]                       			30 May 2007         	A
++pgv_lang["tsh"]                        			30 May 2007         	A Jewish month names
++pgv_lang["csh"]                        			30 May 2007         	A Translations available at www.geonames.de/months2.html
++pgv_lang["ksl"]                        			30 May 2007         	A
++pgv_lang["tvt"]                        			30 May 2007         	A
++pgv_lang["shv"]                        			30 May 2007         	A
++pgv_lang["adr"]                        			30 May 2007         	A
++pgv_lang["ads"]                        			30 May 2007         	A
++pgv_lang["nsn"]                        			30 May 2007         	A
++pgv_lang["iyr"]                        			30 May 2007         	A
++pgv_lang["svn"]                        			30 May 2007         	A
++pgv_lang["tmz"]                        			30 May 2007         	A
++pgv_lang["aav"]                        			30 May 2007         	A
++pgv_lang["ell"]                        			30 May 2007         	A
++pgv_lang["b.c."]                       			30 May 2007         	A Abbreviation for Before Christ
 *$pgv_lang["choose_username"]						05 Mar 2007				w
 *$pgv_lang["choose_password"]						05 Mar 2007				w
 +$pgv_lang["choose_username"]						05 Mar 2007				A
