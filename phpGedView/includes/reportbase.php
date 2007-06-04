@@ -1871,18 +1871,18 @@ function PGVRRelativesSHandler($attrs) {
 				foreach($famids as $indexval => $famid) {
 					$parents = find_parents($famid);
 					if (!empty($parents["HUSB"])) {
-						find_person_record($parents["HUSB"]);
-						$list[$parents["HUSB"]] = $indilist[$parents["HUSB"]];
+						$temp = find_person_record($parents["HUSB"]);
+						if (!empty($temp)) $list[$parents["HUSB"]] = $indilist[$parents["HUSB"]];
 					}
 					if (!empty($parents["WIFE"])) {
-						find_person_record($parents["WIFE"]);
-						$list[$parents["WIFE"]] = $indilist[$parents["WIFE"]];
+						$temp = find_person_record($parents["WIFE"]);
+						if (!empty($temp)) $list[$parents["WIFE"]] = $indilist[$parents["WIFE"]];
 					}
 					$famrec = find_family_record($famid);
 					$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
 					for($i=0; $i<$num; $i++) {
-						find_person_record($smatch[$i][1]);
-						$list[$smatch[$i][1]] = $indilist[$smatch[$i][1]];
+						$temp = find_person_record($smatch[$i][1]);
+						if (!empty($temp)) $list[$smatch[$i][1]] = $indilist[$smatch[$i][1]];
 					}
 				}
 				break;
@@ -1890,15 +1890,15 @@ function PGVRRelativesSHandler($attrs) {
 				$famids = find_sfamily_ids($id);
 				foreach($famids as $indexval => $famid) {
 					$parents = find_parents($famid);
-					find_person_record($parents["HUSB"]);
-					find_person_record($parents["WIFE"]);
-					$list[$parents["HUSB"]] = $indilist[$parents["HUSB"]];
-					$list[$parents["WIFE"]] = $indilist[$parents["WIFE"]];
+					$temp = find_person_record($parents["HUSB"]);
+					if (!empty($temp)) $list[$parents["HUSB"]] = $indilist[$parents["HUSB"]];
+					$temp = find_person_record($parents["WIFE"]);
+					if (!empty($temp)) $list[$parents["WIFE"]] = $indilist[$parents["WIFE"]];
 					$famrec = find_family_record($famid);
 					$num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
 					for($i=0; $i<$num; $i++) {
-						find_person_record($smatch[$i][1]);
-						$list[$smatch[$i][1]] = $indilist[$smatch[$i][1]];
+						$temp = find_person_record($smatch[$i][1]);
+						if (!empty($temp)) $list[$smatch[$i][1]] = $indilist[$smatch[$i][1]];
 					}
 				}
 				break;
