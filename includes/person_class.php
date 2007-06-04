@@ -588,19 +588,6 @@ class Person extends GedcomRecord {
 	}
 
 	/**
-	 * get the current spouse of this person
-	 * The current spouse is defined as the spouse from the latest family.
-	 * The latest family is defined as the last family in the GEDCOM record
-	 * @return Person  this person's spouse
-	 */
-	function getCurrentSpouse() {
-		$fams = $this->getSpouseFamilies();
-		$family = end($fams);
-		if (empty($family)) return null;
-		return $family->getSpouse($this);
-	}
-
-	/**
 	 * get the number of children for this person
 	 * @return int 	the number of children
 	 */
