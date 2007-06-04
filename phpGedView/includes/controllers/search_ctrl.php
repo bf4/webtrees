@@ -1022,7 +1022,7 @@ class SearchControllerRoot extends BaseController {
 			}
 
 			//-- if only 1 item is returned, automatically forward to that item
-			if (count($this->printname) == 1) {
+			if (count($this->printname) == 1 && $this->action!="replace") {
 				$oldged = $GEDCOM;
 				$GEDCOM = $this->printname[0][2];
 				include (get_privacy_file());
