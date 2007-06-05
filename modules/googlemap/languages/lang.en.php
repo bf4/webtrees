@@ -88,4 +88,7 @@ $pgv_lang["pl_remove_flag"]         = "Remove flag";
 $pgv_lang["pl_remove_location"]     = "Remove this location?";
 $pgv_lang["pl_delete_error"]        = "Location not removed: this location contains sub-locations";
 $pgv_lang["list_inactive"]        	= "Click here to show inactive places";
+
+$pgv_lang["placecheck"]				= "Place Check";
+$pgv_lang['placecheck_text']		= "This will list all the places from the selected gedcom file";
 ?>

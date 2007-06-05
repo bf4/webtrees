@@ -43,6 +43,11 @@ if (userIsAdmin(getUserName())) { ?>
       <td class="optionbox"><a href="module.php?mod=googlemap&pgvaction=places"><?php print $pgv_lang["edit_place_locations"];?></a>
 	  </td>
    </tr>
+   <tr>
+      <td class="optionbox"><a href="module.php?mod=googlemap&pgvaction=placecheck"><?php print $pgv_lang["placecheck"];?></a>
+	  </td>
+      <td class="optionbox">&nbsp;
+	  </td>
+   </tr>
 <?php }
-
 ?>
