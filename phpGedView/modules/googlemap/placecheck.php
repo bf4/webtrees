@@ -22,7 +22,7 @@
  *
  * @author Nigel Osborne 26 Mar 2007
  * @package PhpGedView
- * @version $Id$ 2.0
+ * @version $Id$ 2.6
  */
 
 require("config.php");
@@ -76,18 +76,28 @@ if (!isset($ged))
 		$tmp=array_keys($all_geds);
 		$ged=$tmp[0];                                  // First gedcom in directory
 	}
-if (!isset($openinnew))     $openinnew=0;          // Open links in same/new tab/window
 
+if (!isset($openinnew)) $openinnew=0;				  // Open links in same/new tab/window
+
+    
 if (!isset($state)){
 	$state='XYZ';}
-	
+//Start of User Defined options	
+$target=($openinnew==1 ? " target='_blank'" : '');
 //Option box to select gedcom 
-print "<form method='post' name='placecheck' action='placecheck.php'>\n";
+print "<form method='post' name='placecheck' action='module.php?mod=googlemap&pgvaction=placecheck'>\n";
 print "<table class='list_table, $TEXT_DIRECTION'>\n";
 print "<tr><td class='list_label'>{$pgv_lang["gedcom_file"]}</td>\n";
 print "<td class='optionbox'><select name='ged'>\n";
 foreach ($all_geds as $key=>$value)
 	print "<option value='$key'".($key==$ged?" selected='selected'":"").">$key</option>\n";
+print "</select></td></tr>";
+
+//Option box for 'Open in new window' 
+print "<tr><td class='list_label'>&nbsp; {$pgv_lang["open_link"]} &nbsp;</td>\n";
+print "<td class='optionbox'><select name='openinnew'>\n";
+print "<option value='0' ".($openinnew==0?" selected='selected'":"")."/>{$pgv_lang["same_win"]}</option>\n";
+print "<option value='1' ".($openinnew==1?" selected='selected'":"")."/>{$pgv_lang["new_win"]}</option>\n";
 print "</select></td></tr>";
 
 //Option box to select top level place within Gedcom
@@ -160,6 +170,18 @@ $place_list=array_unique($place_list);
 sort($place_list);
 $i=count($place_list);
 $x=0;
+?>
+<script language="JavaScript" type="text/javascript">
+<!--
+function edit_place_location(placeid) {
+	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=update&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+	return false;
+}
+//-->
+</script>
+
+<?php
+// To increase the number of levels displayed to 5, un-comment rows 194 and 201; and change '15' in row 187 to '18'
 print "<table border='0' cellspacing='5' width = '100%'><tr>";
 print "<td align = 'center'><strong>Gedcom Place Data (2 PLAC tag)</strong><hr></td>";
 print "<td colspan = '15' align = 'center'><strong>GoogleMap Places Table Data</strong><hr></td></tr>";
@@ -177,7 +199,6 @@ print "<td align = 'center'><strong>Place</strong><hr></td><td align = 'center'>
 print "<td align = 'center'><strong>Place</strong><hr></td><td align = 'center'><strong>Long</strong><hr></td><td align = 'center'><strong>Lat</strong><hr></td>";
 print "<td align = 'center'><strong>Place</strong><hr></td><td align = 'center'><strong>Long</strong><hr></td><td align = 'center'><strong>Lat</strong><hr></td>";
 //print "<td align = 'center'><strong>Place</strong><hr></td><td align = 'center'><strong>Long</strong><hr></td><td align = 'center'><strong>Lat</strong><hr></td></tr>";
-// To increase the number of levels displayed to 5, un-comment rows 130 and 137; and change 15 in row 123 to 18
 while ($x < $i){
 	$placestr = "";
 	$levels=explode(",", $place_list[$x]);
@@ -195,9 +216,10 @@ while ($x < $i){
 	$z=0;
 	$id=0;
 	$level=0;
-	$mapstr1 = "<a href=\"module.php?mod=googlemap&pgvaction=places_edit&action=update&placeid=";
+	
+	$mapstr1 = "<a href=\"javascript:;\" onclick=\"edit_place_location('";
 	$mapstr2 = "";
-	$mapstr3 = "\", target='_blank'>";
+	$mapstr3 = "')\">";
 	$mapstr4 = "</a>";
 	while ($z < $parts){		
 		if ($id==0){
