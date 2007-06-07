@@ -183,10 +183,10 @@ function edit_place_location(placeid) {
 <?php
 // To increase the number of levels displayed to 5, un-comment rows 194 and 201; and change '15' in row 187 to '18'
 print "<table border='0' cellspacing='5' width = '100%'><tr>";
-print "<td align = 'center'><strong>Gedcom Place Data (2 PLAC tag)</strong><hr></td>";
+print "<td align = 'center'><strong>".PrintReady('Gedcom Place Data (2 PLAC tag)')."</strong><hr></td>";
 print "<td colspan = '15' align = 'center'><strong>GoogleMap Places Table Data</strong><hr></td></tr>";
 print "<tr><td>&nbsp;</td>";
-print "<td colspan = '3' align = 'center'><strong>Top Level (0)</strong><hr></td>";
+print "<td colspan = '3' align = 'center'><strong>".PrintReady('Top Level (0)')."</strong><hr></td>";
 print "<td colspan = '3' align = 'center'><strong>Level One</strong><hr></td>";
 print "<td colspan = '3' align = 'center'><strong>Level Two</strong><hr></td>";
 print "<td colspan = '3' align = 'center'><strong>Level Three</strong><hr></td>";
