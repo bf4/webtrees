@@ -24,7 +24,7 @@
  * @author Boudewijn Sjouke	sjouke@users.sourceforge.net
  * @package PhpGedView
  * @subpackage Admin
- * @version $Id: usermigrate.php 237 2006-07-10 15:31:36Z yalnifj $
+ * @version $Id$
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {

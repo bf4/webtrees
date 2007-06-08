@@ -24,7 +24,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: media_ctrl.php 87 2006-06-13 19:23:14Z yalnifj $
+ * @version $Id$
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
