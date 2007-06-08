@@ -36,7 +36,7 @@
 1;USA;New York;;;W74.9384;N42.1497;7;places/USA/flags/NY.gif
 1;USA;North Carolina;;;W79.8431;N35.6411;7;places/USA/flags/NC.gif
 1;USA;North Dakota;;;W99.793;N47.5362;7;places/USA/flags/ND.gif
-1;USA;Northern Mariana Islands;;;145.7;N15.2;9;places/USA/flags/MP.gif
+1;USA;Northern Mariana Islands;;;E145.7;N15.2;9;places/USA/flags/MP.gif
 1;USA;Ohio;;;W82.7755;N40.3736;7;places/USA/flags/OH.gif
 1;USA;Oklahoma;;;W96.9247;N35.5376;7;places/USA/flags/OK.gif
 1;USA;Oregon;;;W122.1269;N44.5672;7;places/USA/flags/OR.gif
