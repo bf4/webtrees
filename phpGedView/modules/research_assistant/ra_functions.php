@@ -124,7 +124,7 @@ class ra_functions {
 			//Add a ten year difference if no end date was sent in
 			$endDate = $startDate + 00100000;
 		}
-		for($i = 0;$i < count($parts);$i++)
+		for($i = 0; $i < count($parts); $i++)
 		{
 			$parts[$i] = trim($parts[$i]);
 		}
@@ -143,13 +143,12 @@ class ra_functions {
 			$numOfParts = count($parts) -1;
 			if(count($parts) == 1)
 			{
-				$sql .= ' AND PL_LV'.(1).' LIKE \'%'.$DBCONN->escapeSimple($parts[0]).'%\'';
+				$sql .= ' AND PL_LV1 LIKE \'%'.$DBCONN->escapeSimple($parts[0]).'%\'';
 			}
 			else
 			{
-				for($i = 0;$i < count($parts) ;$i++)
+				for($i = 0; ($i < count($parts) && $i<6); $i++)
 				{
-			
 					$sql .= ' AND PL_LV'.($i+1).' LIKE \'%'.$DBCONN->escapeSimple($parts[$numOfParts]).'%\'';
 					$numOfParts--;
 				}

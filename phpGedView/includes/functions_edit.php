@@ -210,6 +210,18 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 			if (!empty($linkpid)) $change["linkpid"] = $linkpid;
 			$change["undo"] = $gedrec;
 			if (!isset($pgv_changes[$gid."_".$GEDCOM])) $pgv_changes[$gid."_".$GEDCOM] = array();
+			else {
+				$lastchange = end($pgv_changes[$gid."_".$GEDCOM]);
+				if (!empty($lastchange)) {
+					//-- append recods should continue to be marked as append
+					if ($lastchange["type"]=="append") $change["type"] = "append";
+					//-- delete records will be added back in when they are accepted
+					//-- but we should add a warning to the log
+					else if ($lastchange["type"]=="delete") {
+						AddToLog("Possible GEDCOM corruption: Attempting to replace GEDCOM record $gid which has already been marked for deletion.");
+					}
+				}
+			}
 			$pgv_changes[$gid."_".$GEDCOM][] = $change;
 		
 		if (userAutoAccept()) {
