@@ -103,4 +103,6 @@ $pgv_lang['placecheck_head']		= "Place list for gedcom file";
 $pgv_lang['placecheck_gedheader']	= "Gedcom File Place Data<br/>(2 PLAC tag)";
 $pgv_lang['placecheck_gm_header']	= "GoogleMap Places Table Data";
 $pgv_lang['placecheck_unique']		= "Total unique places";
+$pgv_lang["placecheck_zoom"]         = "Zoom=";
+
 ?>

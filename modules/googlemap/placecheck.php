@@ -250,7 +250,7 @@ while ($x < $i){
 		$row = @mysql_fetch_array($result);
 		if ($row['pl_id'] != '') {$id = $row['pl_id'];}
 		if ($row['pl_place'] != ''){
-			$placestr2 = $mapstr1.$id."&amp;level=".$level.$mapstr3.$mapstr5.$pgv_lang["pl_zoom_factor"]." :".$row['pl_zoom'].$mapstr6.$row['pl_place'].$mapstr8;
+			$placestr2 = $mapstr1.$id."&amp;level=".$level.$mapstr3.$mapstr5.$pgv_lang["placecheck_zoom"].$row['pl_zoom'].$mapstr6.$row['pl_place'].$mapstr8;
 		} else {
 			$placestr2 = $mapstr2.$id."&amp;level=".$level.$mapstr3.$mapstr7."<font color='#FF0000'>".rtrim(ltrim($levels[$z]))."</font>".$mapstr8;}
 		$plac = "<td class='facts_value'>".$placestr2."</td>";
