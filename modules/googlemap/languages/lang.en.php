@@ -89,6 +89,18 @@ $pgv_lang["pl_remove_location"]     = "Remove this location?";
 $pgv_lang["pl_delete_error"]        = "Location not removed: this location contains sub-locations";
 $pgv_lang["list_inactive"]        	= "Click here to show inactive places";
 
+//Placecheck specific text
 $pgv_lang["placecheck"]				= "Place Check";
 $pgv_lang['placecheck_text']		= "This will list all the places from the selected gedcom file";
+$pgv_lang['placecheck_top']			= "Top Level Place";
+$pgv_lang['placecheck_one']			= "Level One Place";
+$pgv_lang['placecheck_select1']		= "Select Top Level...";
+$pgv_lang['placecheck_select2']		= "Select Next Level...";
+$pgv_lang['placecheck_key']			= "Key to colors used below";
+$pgv_lang['placecheck_key1']		= "this place and its coordinates do not exist in the googlemap tables";
+$pgv_lang['placecheck_key2']		= "this place exists in the googlemap tables, but it has no coordinates";
+$pgv_lang['placecheck_head']		= "Place list for gedcom file";
+$pgv_lang['placecheck_gedheader']	= "Gedcom File Place Data<br/>(2 PLAC tag)";
+$pgv_lang['placecheck_gm_header']	= "GoogleMap Places Table Data";
+$pgv_lang['placecheck_unique']		= "Total unique places";
 ?>
