@@ -258,7 +258,7 @@ $TAG['LDS_CHILD_SEALING_DATE_STATUS'] ='(BIC|COMPLETED|EXCLUDED|DNS|PRE-1970|STI
 $TAG['LDS_ENDOWMENT_DATE_STATUS']     ='(CHILD|COMPLETED|EXCLUDED|PRE-1970|STILLBORN|SUBMITTED|UNCLEARED)';
 $TAG['LDS_SPOUSE_SEALING_DATE_STATUS']='(CANCELED|COMPLETED|EXCLUDED|DNS\/CAN|PRE-1970|SUBMITTED|UNCLEARED)';
 $TAG['MULTIMEDIA_FILE_REFN']          ='.{1,30}';
-$TAG['MULTIMEDIA_FORMAT']             ='(bmp|gif|jpg|ole|pcx|tif|wav)';
+$TAG['MULTIMEDIA_FORMAT']             ='(bmp|gif|jpeg|ole|pcx|tif|wav)';
 $TAG['NAME_OF_BUSINESS']              ='.{1,90}';
 $TAG['NAME_OF_FAMILY_FILE']           ='.{1,120}';
 $TAG['NAME_OF_PRODUCT']               ='.{1,90}';
@@ -863,6 +863,23 @@ function check_indi($id)
  	if (!empty($errors))
 		flush();
 
+	// families order
+	if (isset($fams)) {
+		$elder=0;
+		foreach ($fams as $k=>$v) {
+			$gedrec=$fam_list[$k]["gedcom"];
+			$subged=get_sub_record(1, "1 MARR", $gedrec);
+			if (empty($subged)) $subged=get_sub_record(1, "1 ENGA", $gedrec);
+			if (preg_match('/2 DATE .*(\d{4}).*(\d{4})?/', $subged, $m)==false) continue;
+			$year=$m[1];
+			if ($year<$elder) {
+				echo "<p>".pgv_href("INDI", $id, $name)."> Wrong families order</p>\n";
+				break;
+			}
+			$elder=$year;
+		}
+	}
+
 	foreach ($todo as $famid)
 		check_fam($famid);
 }
@@ -929,6 +946,23 @@ function check_fam($id)
 
 	if (!empty($errors) || $showall==1)
 		print "<p>".pgv_href("FAM", $id, $name)."> $errors</p>\n";
+
+	// children order
+	if (isset($chil)) {
+		$elder=0;
+		foreach ($chil as $k=>$v) {
+			$gedrec=$indi_list[$k]["gedcom"];
+			$subged=get_sub_record(1, "1 BIRT", $gedrec);
+			if (empty($subged)) $subged=get_sub_record(1, "1 CHR", $gedrec);
+			if (preg_match('/2 DATE .*(\d{4}).*(\d{4})?/', $subged, $m)==false) continue;
+			$year=$m[1];
+			if ($year<$elder) {
+				echo "<p>".pgv_href("FAM", $id, $name)."> Wrong children order</p>\n";
+				break;
+			}
+			$elder=$year;
+		}
+	}
 
 	foreach ($todo as $id)
 		check_indi($id);
