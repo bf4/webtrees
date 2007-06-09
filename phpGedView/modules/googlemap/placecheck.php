@@ -207,7 +207,7 @@ print "<td rowspan='3' class='descriptionbox' align = 'center'><strong>".$pgv_la
 print "<td class='descriptionbox' colspan = '".$span."' align = 'center'><strong>".$pgv_lang['placecheck_gm_header']."</strong></td></tr>";
 print "<tr>";
 while ($cols < $max){
-print "<td class='descriptionbox' colspan = '3' align = 'center'><strong>".PrintReady('Level')."&nbsp;".$cols."</strong></td>";
+print "<td class='descriptionbox' colspan = '3' align = 'center'><strong>".PrintReady($pgv_lang['gm_level'])."&nbsp;".$cols."</strong></td>";
 $cols++;}
 print "</tr><tr>";
 $cols=0;
