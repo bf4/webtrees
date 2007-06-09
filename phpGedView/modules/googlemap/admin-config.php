@@ -33,18 +33,38 @@ require("modules/googlemap/".$helptextfile["english"]);
 if (file_exists("modules/googlemap/".$pgv_language[$LANGUAGE])) require("modules/googlemap/".$pgv_language[$LANGUAGE]);
 if (file_exists("modules/googlemap/".$helptextfile[$LANGUAGE])) require("modules/googlemap/".$helptextfile[$LANGUAGE]);
 
+?>
+<script language="JavaScript" type="text/javascript">
+<!--
+	var helpWin;
+	function helpPopup(which) {
+		if ((!helpWin)||(helpWin.closed)) helpWin = window.open('module.php?mod=googlemap&pgvaction=editconfig_help&help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
+		else helpWin.location = 'modules/googlemap/editconfig_help.php?help='+which;
+		return false;
+	}
+	function getHelp(which) {
+		if ((helpWin)&&(!helpWin.closed)) helpWin.location='module.php?mod=googlemap&pgvaction=editconfig_help&help='+which;
+	}
+
+	function closeHelp() {
+		if (helpWin) helpWin.close();
+	}
+	//-->
+</script>
+<?php
+
 if (userIsAdmin(getUserName())) { ?>
    <tr>
 	  <td colspan="2" class="topbottombar" style="text-align:center; "><?php print $pgv_lang["configure_googlemap"]; ?></td>
    </tr>
    <tr>
-      <td class="optionbox"><a href="module.php?mod=googlemap&pgvaction=editconfig"><?php print $pgv_lang["gm_manage"];?></a>
+      <td class="optionbox"><?php print_help_link("GOOGLEMAP_CONFIG_help", "qm", "GOOGLEMAP_CONFIG");?><a href="module.php?mod=googlemap&pgvaction=editconfig"><?php print $pgv_lang["gm_manage"];?></a>
 	  </td>
-      <td class="optionbox"><a href="module.php?mod=googlemap&pgvaction=places"><?php print $pgv_lang["edit_place_locations"];?></a>
+      <td class="optionbox"><?php print_help_link("PLE_EDIT_help", "qm", "PLE_EDIT");?><a href="module.php?mod=googlemap&pgvaction=places"><?php print $pgv_lang["edit_place_locations"];?></a>
 	  </td>
    </tr>
    <tr>
-      <td class="optionbox"><a href="module.php?mod=googlemap&pgvaction=placecheck"><?php print $pgv_lang["placecheck"];?></a>
+      <td class="optionbox"><?php print_help_link("GOOGLEMAP_PLACECHECK_help", "qm", "GOOGLEMAP_PLACECHECK");?><a href="module.php?mod=googlemap&pgvaction=placecheck"><?php print $pgv_lang["placecheck"];?></a>
 	  </td>
       <td class="optionbox">&nbsp;
 	  </td>
