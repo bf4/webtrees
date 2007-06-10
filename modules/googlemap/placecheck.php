@@ -70,20 +70,20 @@ if (!isset($ged))
 if (!isset($openinnew)) $openinnew=0;				  // Open links in same/new tab/window
 if (!isset($state)){
 	$state='XYZ';}
-	
-//Start of User Defined options	
+
+//Start of User Defined options
 print "<table border='0' width='100%'><tr><td>";
 $target=($openinnew==1 ? " target='_blank'" : '');
-//Option box to select gedcom 
+//Option box to select gedcom
 print "<form method='post' name='placecheck' action='module.php?mod=googlemap&amp;pgvaction=placecheck'>\n";
-print "<table class='list_table, $TEXT_DIRECTION'>\n";
+print "<table class='list_table $TEXT_DIRECTION'>\n";
 print "<tr><td class='list_label'>{$pgv_lang["gedcom_file"]}</td>\n";
 print "<td class='optionbox'><select name='ged'>\n";
 foreach ($all_geds as $key=>$value)
 	print "<option value='$key'".($key==$ged?" selected='selected'":"").">$key</option>\n";
 print "</select></td></tr>";
 
-//Option box for 'Open in new window' 
+//Option box for 'Open in new window'
 print "<tr><td class='list_label'>&nbsp; {$pgv_lang["open_link"]} &nbsp;</td>\n";
 print "<td class='optionbox'><select name='openinnew'>\n";
 print "<option value='0' ".($openinnew==0?" selected='selected'":"").">{$pgv_lang["same_win"]}</option>\n";
@@ -118,16 +118,16 @@ print "<option value='$row2[0]'".($row2[0]==$state?" selected='selected'":"").">
 print "</select></td></tr>";
 }
 
-print "</table><input type='hidden' name='action' value='go'></form>\n";
+print "</table><input type='hidden' name='action' value='go' /></form>\n";
 
 //Show Key table
-print "<td>";
-print "<table align='right' class='list_table' $TEXT_DIRECTION'>\n";
+print "</td><td>";
+print "<table align='right' class='list_table $TEXT_DIRECTION'>\n";
 print "<tr><td colspan='4' align='center' class='descriptionbox'><strong>".$pgv_lang['placecheck_key']."</strong></td></tr>";
 print "<tr><td class='facts_value'><font color='#FF0000'>".$factarray["PLAC"]."</font></td><td class='facts_value' align='center'><strong><font color='#FF0000'>X</font></strong></td><td align='center' class='facts_value'><strong><font color='#FF0000'>X</font></strong></td><td class='facts_value'>".$pgv_lang['placecheck_key1']."</td></tr>";
-print "<tr><td class='facts_value'><a href>".$factarray["PLAC"]."</a></td><td class='facts_value' align='center'><strong><font color='#FF0000'>X</font></strong></td><td align='center' class='facts_value'><strong><font color='#FF0000'>X</font></strong></td><td class='facts_value'>".$pgv_lang['placecheck_key2']."</td></tr>";
+print "<tr><td class='facts_value'><a>".$factarray["PLAC"]."</a></td><td class='facts_value' align='center'><strong><font color='#FF0000'>X</font></strong></td><td align='center' class='facts_value'><strong><font color='#FF0000'>X</font></strong></td><td class='facts_value'>".$pgv_lang['placecheck_key2']."</td></tr>";
 print "</table>";
-Print "</tr></table><hr />";
+Print "</td></tr></table><hr />";
 
 // Do not run until user selects a level, as default page may take a while to load.
 // Instead, show some useful help info.
@@ -236,11 +236,11 @@ while ($x < $i){
 	$mapstr2 = "<a href=\"javascript:;\" onclick=\"add_place_location('";
 	$mapstr3 = "";
 	$mapstr4 = "";
-	$mapstr5 = "')\" title=";
-	$mapstr6 = " >";
+	$mapstr5 = "')\" title='";
+	$mapstr6 = "' >";
 	$mapstr7 = "')\">";
 	$mapstr8 = "</a>";
-	while ($z < $parts){		
+	while ($z < $parts){
 		if ($id==0){
 			$query   = " SELECT * FROM ".$TBLPREFIX."placelocation WHERE pl_level = '$z' AND pl_place LIKE '".rtrim(ltrim($levels[$z]))."'";
 			} else {
@@ -265,8 +265,7 @@ while ($x < $i){
 	$z++;}
 $x++;
 print "</tr>";}
-print "</tr></table><br/><br/>";
-print "<strong>".$pgv_lang['placecheck_unique']." : </strong>".$i;
+print "<tr><td colspan=\"2\" class=\"list_label\">".$pgv_lang['placecheck_unique'].": " . $i . "</td></tr></table><br/><br/>";
 
 //Close the gedcom file
 fclose($handle);
