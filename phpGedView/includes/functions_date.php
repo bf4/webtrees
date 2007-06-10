@@ -1153,4 +1153,34 @@ function parse_time($timestr)
 	return $time;
 }
 
+// This pair of functions converts between the internal gedcom date and the
+// text that the user sees when editing a date on a form.
+// They can be overridden by the presence of gedcom_to_edit_date_XX() in
+// includes/extras/functions.XX.php
+function default_gedcom_to_edit_date($datestr)
+{
+	// Don't do too much here - it will annoy experienced PGV users.
+	// Maybe just remove calendar escapes, which we will be able to automatically
+	// recreate?
+	return $datestr;
+}
+
+function default_edit_to_gedcom_date($datestr)
+{
+	global $pgv_lang;
+
+	foreach (array('jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec','vend','brum','frim','nivo','pluv','vent','germ','flor','prai','mess','ther','fruc','comp','tsh','csh','ksl','tvt','shv','adr','ads','nsn','iyr','svn','tmz','aav','ell','abt','aft','and','apx','bef','bet','cal','cir','est','from','int','to','b.c.') as $keyword)
+		$datestr=preg_replace("/\b{$pgv_lang[$keyword]}\b/i", $keyword, $datestr);
+
+	foreach (array('january_1st','february_1st','march_1st','april_1st','may_1st','june_1st','july_1st','august_1st','september_1st','october_1st','november_1st','december_1st') as $keyword)
+		$datestr=preg_replace("/\b{$pgv_lang[$keyword]}\b/i", substr($keyword,0,3), $datestr);
+
+	// APX and CIR are not gedcom 5.5.1 keywords
+	foreach (array('apx','cir') as $keyword)
+		$datestr=preg_replace("/\b{$keyword}\b/i", 'ABT', $datestr);
+
+	return $datestr;
+}
+
+
 ?>
