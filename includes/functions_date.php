@@ -895,7 +895,7 @@ function get_age($indirec, $datestr, $style=1) {
 		$max_even_jd=$min_even_jd;
 
 	// We now have earliest/latest possible dates for both the birth and the event.
-  $min_age=$min_even_jd - $max_birt_jd;
+  $min_age=max(0,$min_even_jd - $max_birt_jd);
 	$max_age=$max_even_jd - $min_birt_jd;
 
 	// Convert to days/months/years/etc.  NB - this is not perfect, as
