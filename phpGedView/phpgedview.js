@@ -1099,7 +1099,7 @@ var monthLabels = new Array();
   	var day = tdate.getDay();
   	day = day - weekStart;
   	var daymilli = (1000*60*60*24);
-  	tdate = tdate.getTime() - (day*daymilli);
+  	tdate = tdate.getTime() - (day*daymilli) + (daymilli/2);
   	tdate = new Date(tdate);
 
   	for(j=0; j<6; j++) {
