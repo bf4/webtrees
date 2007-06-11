@@ -1124,6 +1124,7 @@ class IndividualControllerRoot extends BaseController {
 					$FACT_COUNT++;
 				}
 				// 2nd level sources [ 1712181 ]
+				//$this->indi->add_family_facts(false);
 				foreach ($this->getIndiFacts() as $key => $factrec) {
 					print_main_sources($factrec[1], 2, $this->pid, $factrec[0], true);
 				}
@@ -1222,8 +1223,7 @@ class IndividualControllerRoot extends BaseController {
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
 					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
 				<?php }?>
-				<?php if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate());?>
-				<?php if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate())." -- ".$family->getPlaceShort($family->getMarriagePlace());?>
+				<?php //if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate())." -- ".$family->getPlaceShort($family->getMarriagePlace());?>
 					</td>
 				</tr>
 			</table>
@@ -1293,6 +1293,11 @@ class IndividualControllerRoot extends BaseController {
 						<?php
 					}
 				}
+				?>
+				<tr><td></td><td>
+				<?php if ($family->getMarriageDate()) echo "<span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate())." -- ".$family->getPlaceShort($family->getMarriagePlace());?>
+				</td></tr>
+				<?php
 				$styleadd = "blue";
 				if (isset($people["newchildren"])) {
 					foreach($people["newchildren"] as $key=>$child) {
@@ -1308,15 +1313,17 @@ class IndividualControllerRoot extends BaseController {
 				}
 				$styleadd = "";
 				if (isset($people["children"])) {
+					$elderdate = $family->getMarriageDate();
 					foreach($people["children"] as $key=>$child) {
 					?>
 					<tr>
-						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel($elderdate); ?></td>
 						<td class="<?php print $this->getPersonStyle($child); ?>">
 						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
 						</td>
 					</tr>
 					<?php
+					$elderdate = $child->getBirthDate();
 					}
 				}
 				$styleadd = "red";
@@ -1362,7 +1369,7 @@ class IndividualControllerRoot extends BaseController {
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
 					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
 				<?php } ?>
-				<?php if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate())." -- ".$family->getPlaceShort($family->getMarriagePlace());?>
+				<?php //if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate())." -- ".$family->getPlaceShort($family->getMarriagePlace());?>
 					</td>
 				</tr>
 			</table>
@@ -1414,6 +1421,11 @@ class IndividualControllerRoot extends BaseController {
 					</tr>
 					<?php
 				}
+				?>
+				<tr><td></td><td>
+				<?php if ($family->getMarriageDate()) echo "<span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate())." -- ".$family->getPlaceShort($family->getMarriagePlace());?>
+				</td></tr>
+				<?php
 				$styleadd = "blue";
 				if (isset($people["newchildren"])) {
 					foreach($people["newchildren"] as $key=>$child) {
@@ -1429,15 +1441,17 @@ class IndividualControllerRoot extends BaseController {
 				}
 				$styleadd = "";
 				if (isset($people["children"])) {
+					$elderdate = $family->getMarriageDate();
 					foreach($people["children"] as $key=>$child) {
 					?>
 					<tr>
-						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel($elderdate); ?></td>
 						<td class="<?php print $this->getPersonStyle($child); ?>">
 						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
 						</td>
 					</tr>
 					<?php
+					$elderdate = $child->getBirthDate();
 					}
 				}
 				$styleadd = "red";
@@ -1479,7 +1493,7 @@ class IndividualControllerRoot extends BaseController {
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
 					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
 				<?php } ?>
-				<?php if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate())." -- ".$family->getPlaceShort($family->getMarriagePlace());?>
+				<?php //if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate())." -- ".$family->getPlaceShort($family->getMarriagePlace());?>
 					</td>
 				</tr>
 			</table>
@@ -1551,6 +1565,11 @@ class IndividualControllerRoot extends BaseController {
 						<?php
 					}
 				}
+				?>
+				<tr><td></td><td>
+				<?php if ($family->getMarriageDate()) echo "<span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate())." -- ".$family->getPlaceShort($family->getMarriagePlace());?>
+				</td></tr>
+				<?php
 				$styleadd = "blue";
 				if (isset($people["newchildren"])) {
 					foreach($people["newchildren"] as $key=>$child) {
@@ -1566,15 +1585,17 @@ class IndividualControllerRoot extends BaseController {
 				}
 				$styleadd = "";
 				if (isset($people["children"])) {
+					$elderdate = $family->getMarriageDate();
 					foreach($people["children"] as $key=>$child) {
 					?>
 					<tr>
-						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel(); ?></td>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $child->getLabel($elderdate); ?></td>
 						<td class="<?php print $this->getPersonStyle($child); ?>">
 						<?php print_pedigree_person($child->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
 						</td>
 					</tr>
 					<?php
+					$elderdate = $child->getBirthDate();
 					}
 				}
 				$styleadd = "red";

@@ -541,9 +541,18 @@ class Person extends GedcomRecord {
 	 * The label can be used when building a list of people
 	 * to display the relationship between this person
 	 * and the person listed on the page
+	 * @param string $elderdate optional elder sibling birthdate to calculate gap
 	 * @return string
 	 */
-	function getLabel() {
+	function getLabel($elderdate="") {
+		global $pgv_lang, $TEXT_DIRECTION;
+		if ($elderdate) {
+			$p1 = parse_date($elderdate);
+			$p2 = parse_date($this->getBirthDate());
+			$gap = $p2[0]["jd1"]-$p1[0]["jd2"]; // days
+			$gap = round($gap*12/365); // months
+			if ($gap>0) return "<p class=\"age $TEXT_DIRECTION\">+".$gap." ".$pgv_lang["months"]."</p>".$this->label;
+		}
 		return $this->label;
 	}
 	/**
