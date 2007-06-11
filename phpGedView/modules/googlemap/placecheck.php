@@ -70,13 +70,17 @@ if (!isset($ged))
 if (!isset($openinnew)) $openinnew=0;				  // Open links in same/new tab/window
 if (!isset($state)){
 	$state='XYZ';}
+if (!isset($country)){
+	$country='XYZ';}
+	
+//Start of User Defined options	
 
 //Start of User Defined options
 print "<table border='0' width='100%'><tr><td>";
 $target=($openinnew==1 ? " target='_blank'" : '');
 //Option box to select gedcom
 print "<form method='post' name='placecheck' action='module.php?mod=googlemap&amp;pgvaction=placecheck'>\n";
-print "<table class='list_table $TEXT_DIRECTION'>\n";
+print "<table align='left'  class='list_table $TEXT_DIRECTION'>\n";
 print "<tr><td class='list_label'>{$pgv_lang["gedcom_file"]}</td>\n";
 print "<td class='optionbox'><select name='ged'>\n";
 foreach ($all_geds as $key=>$value)
@@ -102,7 +106,7 @@ while ($row = mysql_fetch_array($result, MYSQL_NUM))
 print "</select></td></tr>";
 
 //Option box to select level one place within the selected top level
-if (isset($country)) {
+if ($country !='XYZ') {
 $query1   = "SELECT * FROM ".$TBLPREFIX."placelocation WHERE pl_place LIKE '$country' ";
 $result1 = mysql_query($query1);
 $row1 = mysql_fetch_array($result1);
@@ -126,6 +130,7 @@ print "<table align='right' class='list_table $TEXT_DIRECTION'>\n";
 print "<tr><td colspan='4' align='center' class='descriptionbox'><strong>".$pgv_lang['placecheck_key']."</strong></td></tr>";
 print "<tr><td class='facts_value'><font color='#FF0000'>".$factarray["PLAC"]."</font></td><td class='facts_value' align='center'><strong><font color='#FF0000'>X</font></strong></td><td align='center' class='facts_value'><strong><font color='#FF0000'>X</font></strong></td><td class='facts_value'>".$pgv_lang['placecheck_key1']."</td></tr>";
 print "<tr><td class='facts_value'><a>".$factarray["PLAC"]."</a></td><td class='facts_value' align='center'><strong><font color='#FF0000'>X</font></strong></td><td align='center' class='facts_value'><strong><font color='#FF0000'>X</font></strong></td><td class='facts_value'>".$pgv_lang['placecheck_key2']."</td></tr>";
+print "<tr><td class='facts_value'><font color='#00FF00'><strong>Unknown</strong></font></td><td class='facts_value' align='center'><strong><font color='#FF0000'>X</font></strong></td><td align='center' class='facts_value'><strong><font color='#FF0000'>X</font></strong></td><td class='facts_value'>".$pgv_lang['placecheck_key3']."</td></tr>";
 print "</table>";
 Print "</td></tr></table><hr />";
 
@@ -252,7 +257,10 @@ while ($x < $i){
 		if ($row['pl_place'] != ''){
 			$placestr2 = $mapstr1.$id."&amp;level=".$level.$mapstr3.$mapstr5.$pgv_lang["placecheck_zoom"].$row['pl_zoom'].$mapstr6.$row['pl_place'].$mapstr8;
 		} else {
-			$placestr2 = $mapstr2.$id."&amp;level=".$level.$mapstr3.$mapstr7."<font color='#FF0000'>".rtrim(ltrim($levels[$z]))."</font>".$mapstr8;}
+			if (rtrim(ltrim($levels[$z])) != ''){
+			$placestr2 = $mapstr2.$id."&amp;level=".$level.$mapstr3.$mapstr7."<font color='#FF0000'>".rtrim(ltrim($levels[$z]))."</font>".$mapstr8;
+		} else {
+			$placestr2 = $mapstr2.$id."&amp;level=".$level.$mapstr3.$mapstr7."<font color='#00FF00'><strong>Unknown</strong></font>".$mapstr8;}}
 		$plac = "<td class='facts_value'>".$placestr2."</td>";
 		if ($row['pl_long']  != ''){$long = "<td class='facts_value'>".$row['pl_long']."</td>";}  else {$long = "<td class='facts_value' align = 'center'><strong><font color='#FF0000'>X</font></strong></td>";}
 		if ($row['pl_lati']  != ''){$lati = "<td class='facts_value'>".$row['pl_lati']."</td>";}  else {$lati = "<td class='facts_value' align = 'center'><strong><font color='#FF0000'>X</font></strong></td>";}
