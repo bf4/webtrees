@@ -316,4 +316,3 @@ $pgv_lang["autosearch_keywords"] 			= "Schlüsselwörter:";
 $pgv_lang["has_tasks"]					="Der Ordner enthält noch Aufgaben und kann daher nicht gelöscht werden.";
 $pgv_lang["has_folders"]				="Der Ordner enthält noch untergeordnete Ordner und kann daher nicht gelöscht werden.";
 ?>
- 	  	 
