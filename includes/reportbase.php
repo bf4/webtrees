@@ -952,7 +952,11 @@ function PGVRGetPersonNameSHandler($attrs) {
 		else {
 			$name = trim(get_person_name($id));
 			$addname = trim(get_add_person_name($id));
-			if (!empty($addname)) $name .= " ".$addname;
+			if (hasRTLText($addname)) {
+				$addname .= " ".$name;
+				$name = $addname;
+			}
+			else if (!empty($addname)) $name .= " ".$addname;
 			if (!empty($attrs["truncate"])) {
 				if (strlen($name)>$attrs["truncate"]) {
 					$name = preg_replace("/\(.*\) ?/", "", $name);
