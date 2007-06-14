@@ -542,18 +542,27 @@ class Person extends GedcomRecord {
 	 * to display the relationship between this person
 	 * and the person listed on the page
 	 * @param string $elderdate optional elder sibling birthdate to calculate gap
+	 * @param int $counter optional children counter
 	 * @return string
 	 */
-	function getLabel($elderdate="") {
+	function getLabel($elderdate="", $counter=0) {
 		global $pgv_lang, $TEXT_DIRECTION;
+		$label = "";
 		if ($elderdate) {
 			$p1 = parse_date($elderdate);
 			$p2 = parse_date($this->getBirthDate());
-			$gap = $p2[0]["jd1"]-$p1[0]["jd2"]; // days
-			$gap = round($gap*12/365); // months
-			if ($gap>0) return "<p class=\"age $TEXT_DIRECTION\">+".$gap." ".$pgv_lang["months"]."</p>".$this->label;
+			if ($p1[0]["jd1"] && $p2[0]["jd1"]) {
+				$gap = $p2[0]["jd1"]-$p1[0]["jd1"]; // days
+				$gap = round($gap*12/365.25); // months
+				$label .= "<div class=\"age $TEXT_DIRECTION\">";
+				if ($gap<0) $label .= "<img alt=\"\" src=\"images/warning.gif\" /> ";
+				if ($gap!=0) $label .= $gap." ".$pgv_lang["months"];
+				$label .= "</div>";
+			}
 		}
-		return $this->label;
+		if ($counter) $label .= "<div class=\"".strrev($TEXT_DIRECTION)."\">".$pgv_lang["number_sign"].$counter."</div>";
+		$label .= $this->label;
+		return $label;
 	}
 	/**
 	 * get family with spouse ids
@@ -1259,7 +1268,7 @@ class Person extends GedcomRecord {
 		foreach ($histo as $indexval=>$hrec) {
 			$sdate = get_sub_record(2, "2 DATE", $hrec);
 			if (compare_facts($this->getGedcomBirthDate(), $sdate)<0 and compare_facts($sdate, $this->getGedcomDeathDate())<0) {
-				$this->indifacts[]=array(0, $hrec);
+				$this->indifacts[]=array(-1, $hrec);
 			}
 		}
 	}

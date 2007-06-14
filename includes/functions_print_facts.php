@@ -104,6 +104,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 	if ($ct>0) $styleadd="change_old";
 	if (($linenum<1) && (!empty($SEARCH_SPIDER)))  return; // don't add relatives for spiders.
 	if ($linenum<1) $styleadd="rela"; // not editable
+	if ($linenum==-1) $styleadd="histo"; // historical facts
 	// -- avoid known non facts
 	if (in_array($fact, $nonfacts)) return;
 	//-- do not print empty facts
@@ -125,8 +126,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			if (!showFact($factref, $pid)) return false;
 			if ($styleadd=="") $rowID = "row_".floor(microtime()*1000000);
 			else $rowID = "row_".$styleadd;
-			//print "\n\t\t<tr id=\"".$rowID."\">";
-			print "\n\t\t<tr id=\"".$rowID."\" name=\"".$rowID."\">"; //invalid, but Events of close relatives broken in firefox without name attribute (bug # [ 1701278 ] )
+			print "\n\t\t<tr id=\"".$rowID."\" class=\"".$rowID."\">";
 			print "\n\t\t\t<td class=\"descriptionbox $styleadd center width20\">";
 			$label = $factref;
 			if (isset($factarray["$factref"])) $label = $factarray[$factref];
@@ -201,8 +201,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			if (!showFact($factref, $pid)) return false;
 			if ($styleadd=="") $rowID = "row_".floor(microtime()*1000000);
 			else $rowID = "row_".$styleadd;
-			//print "\n\t\t<tr id=\"".$rowID."\">";
-			print "\n\t\t<tr id=\"".$rowID."\" name=\"".$rowID."\">"; //invalid, but Events of close relatives broken in firefox without name attribute (bug # [ 1701278 ] )
+			print "\n\t\t<tr id=\"".$rowID."\" class=\"".$rowID."\">";
 			$label = $factref;
 			if (isset($factarray["$factref"])) $label = $factarray[$factref];
 			if (isset($pgv_lang[$factref])) $label = $pgv_lang[$factref];
