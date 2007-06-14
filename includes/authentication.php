@@ -467,7 +467,7 @@ function checkTableExists() {
 	if (DB::isError($DBCONN)) return false;
 	$data = $DBCONN->getListOf('tables');
 	foreach($data as $indexval => $table) {
-		if (strpos($table, $TBLPREFIX) === 0) {
+		if (empty($TBLPREFIX) || strpos($table, $TBLPREFIX) === 0) {
 			switch(substr($table, strlen($TBLPREFIX))) {
 				case "users":
 					$has_users = true;

@@ -245,11 +245,11 @@ function paste_id(value) {
 			}
 		}
 		/* -- this will allow user to select future output formats */
-//		print "<tr><td class=\"descriptionbox width30 wrap\">Output Format</td><td class=\"optionbox\">";
-//		print "<select name=\"output\">\n";
-//		print "<option value=\"PDF\" selected=\"selected\">PDF</option>\n";
-//		print "<option value=\"HTML\">HTML</option>\n";
-//		print "</select></td></tr>\n";
+		print "<tr><td class=\"descriptionbox width30 wrap\">Output Format</td><td class=\"optionbox\">";
+		print "<select name=\"output\">\n";
+		print "<option value=\"PDF\" selected=\"selected\">PDF</option>\n";
+		print "<option value=\"HTML\">HTML</option>\n";
+		print "</select></td></tr>\n";
 		print "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["download_report"]."\" onclick=\"document.setupreport.elements['download'].value='1';\"/></td></tr>\n";
 		print "</table>\n";
 		print "</form>\n";

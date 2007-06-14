@@ -803,7 +803,7 @@ function print_calendar_popup($id, $asString=false) {
 	$out .= "<a href=\"javascript: ".$text."\" onclick=\"cal_toggleDate('caldiv".$id."', '".$id."'); return false;\">";
 	$out .= $Link;
 	$out .= "</a>\n";
-	$out .= "<div id=\"caldiv".$id."\" style=\"z-index:222;position:absolute;visibility:hidden;background-color:white;layer-background-color:white;\"></div>\n";
+	$out .= "<div id=\"caldiv".$id."\" style=\"position:absolute;visibility:hidden;background-color:white;layer-background-color:white;\"></div>\n";
 	if ($asString) return $out;
 	else print $out;
 }

@@ -2555,16 +2555,17 @@ function get_surname_indis($surname) {
 	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
 		if (isset($indilist[$row["i_id"]])) {
+			$namearray = array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]);
 			// do not add to the array an indi name that already exists in it
-			if (!in_array(array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]), $indilist[$row["i_id"]]["names"])) {
-			    $indilist[$row["i_id"]]["names"][] = array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]);
+			if (!in_array($namearray, $indilist[$row["i_id"]]["names"])) {
+				$indilist[$row["i_id"]]["names"][] = $namearray;
 		    }
 			$tindilist[$row["i_id"]] = $indilist[$row["i_id"]];
 		}
 		else {
 			$indi = array();
 			//do not add main name first name beginning letter for alternate names
-			$indi["names"] = array(array($row["i_name"], $row["i_letter"], $row["i_surname"], "P"), array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]));
+			$indi["names"] = array(array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]),array($row["i_name"], $row["i_letter"], $row["i_surname"], "P"));
 			$indi["isdead"] = $row["i_isdead"];
 			$indi["gedcom"] = $row["i_gedcom"];
 			$indi["gedfile"] = $row["i_file"];
@@ -3189,8 +3190,19 @@ function get_event_list() {
 			$facts = get_all_subrecords($indi["gedcom"], $skipfacts, false, false, false);
 			foreach($facts as $key=>$factrec) {
 				$date = 0; 
+				if ($USE_RTL_FUNCTIONS) {
+					$hct = preg_match("/2 DATE.*(@#DHEBREW@)/", $factrec, $match);
+					if ($hct>0) {
+						$dct = preg_match("/2 DATE (.+)/", $factrec, $match);
+						$hebrew_date = parse_date(trim($match[1]));
+						$date = jewishGedcomDateToCurrentGregorian($hebrew_date);
+					}
+				} 
+				
+				if ($date===0) {
 				  	$ct = preg_match("/2 DATE (.+)/", $factrec, $match);
 				  	if ($ct>0) $date = parse_date(trim($match[1]));
+				}
 			  	
 				if ($date !== 0) {
 					$startSecond = 1;
@@ -3213,8 +3225,18 @@ function get_event_list() {
 			$facts = get_all_subrecords($fam["gedcom"], $skipfacts, false, false, false);
 			foreach($facts as $key=>$factrec) {
 				$date = 0;
+				if ($USE_RTL_FUNCTIONS) {
+					$hct = preg_match("/2 DATE.*(@#DHEBREW@)/", $factrec, $match);
+					if ($hct>0) {
+						$dct = preg_match("/2 DATE (.+)/", $factrec, $match);
+						$hebrew_date = parse_date(trim($match[1]));
+						$date = jewishGedcomDateToCurrentGregorian($hebrew_date);
+					}
+				} 
+				if ($date===0) {
 					$ct = preg_match("/2 DATE (.+)/", $factrec, $match);
 					if ($ct>0) $date = parse_date(trim($match[1]));
+				}
 				
 				if ($date !== 0) {
 					$startSecond = 1;

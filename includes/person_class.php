@@ -351,7 +351,6 @@ class Person extends GedcomRecord {
 		if (!$this->disp) return $pgv_lang["private"];
 		$this->_parseBirthDeath();
 		if (!$estimate && $this->best) return '';
-		if (!$estimate && $this->best) return '';
 		return $this->bdate;
 	}
 
@@ -422,7 +421,6 @@ class Person extends GedcomRecord {
 		if (!$this->disp) return $pgv_lang["private"];
 		$this->_parseBirthDeath();
 		if (!$estimate && $this->dest) return '';
-		if (!$estimate && $this->dest) return '';
 		return $this->ddate;
 	}
 
@@ -436,7 +434,7 @@ class Person extends GedcomRecord {
 		$this->_parseBirthDeath();
 		//if ($this->isDead() and $this->dest) return "0000-00-01";
 		$pdate = parse_date($this->ddate);
-		if ($this->isDead() and $this->dest) {
+		if ($this->isDead() && $this->dest) {
 			if ($est) return $pdate[0]["sort"]." ".$pgv_lang["est"];
 			else return $pdate[0]["sort"];
 		}
@@ -477,8 +475,8 @@ class Person extends GedcomRecord {
 	 * get the death year
 	 * @return string the year of death
 	 */
-	function getDeathYear() {
-		return substr($this->getSortableDeathDate(),0,4);
+	function getDeathYear($est = true) {
+		return substr($this->getSortableDeathDate($est),0,4);
 	}
 
 	/**
@@ -581,8 +579,9 @@ class Person extends GedcomRecord {
 	function getSpouseFamilies() {
 		global $pgv_lang;
 		if (!is_null($this->spouseFamilies)) return $this->spouseFamilies;
+		$fams = $this->getSpouseFamilyIds();
 		$families = array();
-		foreach($this->getSpouseFamilyIds() as $key=>$famid) {
+		foreach($fams as $key=>$famid) {
 			if (!empty($famid)) {
 				$family = Family::getInstance($famid);
 				if (!is_null($family)) $families[$famid] = $family;
@@ -641,8 +640,9 @@ class Person extends GedcomRecord {
 	function getChildFamilies() {
 		global $pgv_lang;
 		if (!is_null($this->childFamilies)) return $this->childFamilies;
+		$fams = $this->getChildFamilyIds();
 		$families = array();
-		foreach($this->getChildFamilyIds() as $key=>$famid) {
+		foreach($fams as $key=>$famid) {
 			if (!empty($famid)) {
 				$family = Family::getInstance($famid);
 				if (!is_null($family)) $families[$famid] = $family;
@@ -663,13 +663,15 @@ class Person extends GedcomRecord {
 			if (!is_null($family)) {
 				$father = $family->getHusband();
 				if (!is_null($father)) {
-					foreach($father->getSpouseFamilies() as $key1=>$fam) {
+					$pfams = $father->getSpouseFamilies();
+					foreach($pfams as $key1=>$fam) {
 						if (!is_null($fam) && !isset($fams[$key1]) && ($fam->getNumberOfChildren() > 0)) $families[$key1] = $fam;
 					}
 				}
 				$mother = $family->getWife();
 				if (!is_null($mother)) {
-					foreach($mother->getSpouseFamilies() as $key1=>$fam) {
+					$pfams = $mother->getSpouseFamilies();
+					foreach($pfams as $key1=>$fam) {
 						if (!is_null($fam) && !isset($fams[$key1]) && ($fam->getNumberOfChildren() > 0)) $families[$key1] = $fam;
 					}
 				}
@@ -728,9 +730,10 @@ class Person extends GedcomRecord {
 		global $pgv_lang;
 		$label = "Unknown Family";
 		if (is_null($family)) return $label;
+		$childfams = $this->getChildFamilies();
 		$mother = $family->getWife();
 		$father = $family->getHusband();
-		foreach($this->getChildFamilies() as $key=>$fam) {
+		foreach($childfams as $key=>$fam) {
 			if (!$fam->equals($family)) {
 				$wife = $fam->getWife();
 				$husb = $fam->getHusband();
@@ -1435,13 +1438,15 @@ class Person extends GedcomRecord {
 				$this->globalfacts[]=$newfact;
 			}
 		}
+		$newfamids = $diff->getChildFamilyIds();
 		if (is_null($this->famc)) $this->getChildFamilyIds();
-		foreach($diff->getChildFamilyIds() as $key=>$id) {
+		foreach($newfamids as $key=>$id) {
 			if (!in_array($id, $this->famc)) $this->famc[]=$id;
 		}
 
+		$newfamids = $diff->getSpouseFamilyIds();
 		if (is_null($this->fams)) $this->getSpouseFamilyIds();
-		foreach($diff->getSpouseFamilyIds() as $key=>$id) {
+		foreach($newfamids as $key=>$id) {
 			if (!in_array($id, $this->fams)) $this->fams[]=$id;
 		}
 	}

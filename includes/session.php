@@ -997,10 +997,10 @@ if (isset($_SESSION["theme_dir"]))
 	}
 }
 
-if (empty($THEME_DIR)) $THEME_DIR="basic/";
+if (empty($THEME_DIR)) $THEME_DIR="navigator/";
 if (file_exists($THEME_DIR."theme.php")) require_once($THEME_DIR."theme.php");
 else {
-	$THEME_DIR = "themes/basic/";
+	$THEME_DIR = "themes/navigator/";
 	require_once($THEME_DIR."theme.php");
 }
 

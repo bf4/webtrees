@@ -29,6 +29,7 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["no_sour_tasks"]           02 June       2007    S
 +$pgv_lang["TheMostLikely"]							01 March 2007			A
 *$pgv_lang["add_task_inst"]							18 Feb 2007				w  Correct grammar
 *$pgv_lang["auto_gen_inst"]							18 Feb 2007				w  Correct grammar

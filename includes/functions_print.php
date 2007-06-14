@@ -2579,6 +2579,15 @@ function print_findindi_link($element_id, $indiname, $asString=false, $multiple=
 	$out = " <a href=\"javascript:;\" onclick=\"findIndi(document.getElementById('".$element_id."'), document.getElementById('".$indiname."'), '".$multiple."', '".$ged."', '".$filter."'); findtype='individual'; return false;\">";
 	$out .= $Link;
 	$out .= "</a>";
+	$out .= '<script type="text/javascript">
+	<!--
+	if (window.Droppables) {
+		var target = document.getElementById("'.$element_id.'");
+		if (target && target.type && target.type=="text") Droppables.add("'.$element_id.'",{hoverclass: "dropHover", onDrop: function(element) { $("'.$element_id.'").value=element.alt; $("'.$element_id.'").form.submit(); }});
+	}
+	//-->
+	</script>';
+
 	if ($asString) return $out;
 	print $out;
 }

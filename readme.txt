@@ -7,6 +7,9 @@
     This and other information can be found online at
     http://www.PhpGedView.net
 
+    The installation instructions can also be found in the wiki at:
+	http://wiki.phpgedview.net/en/index.php/Installation_Guide
+
     # $Id$
 =======================================================
 
@@ -35,7 +38,7 @@ CONTENTS
 LICENSE
 
 PhpGedView: Genealogy Viewer
-Copyright (C) 2002 to 2004  John Finlay and Others
+Copyright (C) 2002 to 2007  John Finlay and Others
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -102,51 +105,60 @@ http://www.phpgedview.net/faq.php for more information about large GEDCOMs.
 -------------------------------------------------------
 QUICK INSTALLATION
 
+These instructions can also be found in the wiki at:
+http://wiki.phpgedview.net/en/index.php/Installation_Guide
+
 Follow the instructions in this section to install PhpGedView if you are
 already familiar with the program or are familiar with installing other PHP 
 web applications.
 
  1.  Upload the files to your web server.
- 2.  Set Write permissions on config.php and the "index" directory.  For 
+ 2.  Copy config.dist to config.php
+ 3.  Set Write permissions on config.php and the "index" directory.  For 
      optimal security, you should move the "index" directory to a location 
      where it is not accessible from the Internet.
- 3.  Point your browser to the directory where you uploaded your PhpGedView 
+ 4.  Point your browser to the directory where you uploaded your PhpGedView 
      files (for example, http://www.yourserver.com/PhpGedView/).
- 4.  Enter your configuration settings.  If you moved the index directory, 
+ 5.  Enter your configuration settings.  If you moved the index directory, 
      be sure to specify the correct location to it on this page.  Save the 
      configuration parameters.
- 5.  Enter the default administrator user.
- 6.  Login as this user and upload your GEDCOM file.
- 7.  Save the GEDCOM configuration settings.
- 8.  Import the GEDCOM.
+ 6.  Enter the default administrator user.
+ 7.  Login as this user and upload your GEDCOM file.
+ 8.  Save the GEDCOM configuration settings.
+ 9.  Import the GEDCOM.
 
 Optional Steps
- 9.  If you want to use the language editing features you will need to set 
+10. If you want to use the language editing features you will need to set 
      Write permissions for all of the files in the ./languages folder.
-10.  If you want to upload media files using the Upload Media section of 
+11.  If you want to upload media files using the Upload Media section of 
      the Admin menu then you need to set Write permissions for your ./media 
      and ./media/thumbs directories.
-11.  If you want to edit your GEDCOM file online, the GEDCOM file must have
+12.  If you want to edit your GEDCOM file online, the GEDCOM file must have
      Write permissions set for the PHP user.
-12.  If you want to use the Backup feature of the Upgrade utility in 
+13.  If you want to use the Backup feature of the Upgrade utility in 
      PhpGedView you will need to either set Write permission on the 
      PhpGedView folder itself or create a folder named "backup" with Write 
      permissions.  Write permissions for the PhpGedView folder can be 
      removed as soon as the backup folder is in place and has the 
      appropriate permissions.
-13.  For security you should set the permissions back to Read-only when you 
+14.  For security you should set the permissions back to Read-only when you 
      are done editing or uploading files.
 
 -------------------------------------------------------
 INSTALLATION
+
+These instructions can also be found in the wiki at:
+http://wiki.phpgedview.net/en/index.php/Installation_Guide
 
 Follow these instructions if you are not familiar with PhpGedView or 
 installing PHP applications.
 
 *A.  Upload Program Files:
 To install PhpGedView, unzip the compressed package and upload the files to 
-a directory on your web server.  If you have limited space on your server, 
-you can save space in the following ways:
+a directory on your web server.  Copy config.dist to config.php.
+
+If you have limited space on your server, you can save space in the following 
+ways:
 1.  Delete the themes from the themes folder that you do not plan to use.
 2.  Delete some of the language files that you do not want.  English files 
     are named configure_help.en.php, countries.en.php, facts.en.php, 

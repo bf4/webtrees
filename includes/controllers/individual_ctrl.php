@@ -522,7 +522,7 @@ class IndividualControllerRoot extends BaseController {
 		else $ff="";
 		//-- main edit menu
 		$menu = new Menu($pgv_lang["edit"]);
-		if ($USE_QUICK_UPDATE) $link = "return quickEdit('".$this->pid."');";
+		if ($USE_QUICK_UPDATE) $link = "return quickEdit('".$this->pid."','','".$GEDCOM."');";
 		else $link = "return edit_raw('".$this->pid."');";
 		$menu->addOnclick($link);
 		if (!empty($PGV_IMAGES["edit_indi"]["small"]))
@@ -531,7 +531,7 @@ class IndividualControllerRoot extends BaseController {
 		//-- quickedit sub menu
 		if ($USE_QUICK_UPDATE) {
 			$submenu = new Menu($pgv_lang["quick_update_title"]);
-			$submenu->addOnclick("return quickEdit('".$this->pid."');");
+			$submenu->addOnclick("return quickEdit('".$this->pid."','','".$GEDCOM."');");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
@@ -1812,7 +1812,9 @@ class IndividualControllerRoot extends BaseController {
 
 		if ($GOOGLEMAP_ENABLED == "false") {
 			print "<table class=\"facts_table\">\n";
-			print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
+	        print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script></td></tr>\n";
+	        print "<script type=\"text/javascript\">\n";
+	        print "function ResizeMap ()\n{\n}\nfunction SetMarkersAndBounds ()\n{\n}\n</script>\n";
 			if (userIsAdmin(getUserName())) {
 				print "<tr><td align=\"center\" colspan=\"2\">\n";
 				print "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
@@ -1820,15 +1822,9 @@ class IndividualControllerRoot extends BaseController {
 			}
 			print "\n\t</table>\n<br />";
 			?>
-			<script language="JavaScript" type="text/javascript">
-			<!--
-				tabstyles[5]='tab_cell_inactive_empty';
-				document.getElementById('pagetab5').className='tab_cell_inactive_empty';
+	        <script type="text/javascript">
 				document.getElementById("googlemap_left").innerHTML = document.getElementById("googlemap_content").innerHTML;
 				document.getElementById("googlemap_content").innerHTML = "";
-				function ResizeMap () {}
-				function SetMarkersAndBounds () {}
-			//-->
 			</script>
 			<?php
 			return;

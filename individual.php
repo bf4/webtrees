@@ -220,6 +220,31 @@ function show_gedcom_record(shownew) {
 function showchanges() {
 	window.location = 'individual.php?pid=<?php print $controller->pid; ?>&show_changes=yes';
 }
+// The function below does not go well with validation.
+// The option to use getElementsByName is used in connection with code from
+// the functions_print.php file.
+function togglerow(label) {
+	var ebn = document.getElementsByName(label);
+	if (ebn.length) var disp = ebn[0].style.display;
+	else var disp="";
+	if (disp=="none") {
+		disp="table-row";
+		if (document.all && !window.opera) disp = "inline"; // IE
+		rela_plus = document.getElementById('rela_plus');
+		if (rela_plus) rela_plus.style.display="none";
+		rela_minus = document.getElementById('rela_minus');
+		if (rela_minus) rela_minus.style.display="inline";
+	}
+	else {
+		disp="none";
+		var rela_plus = document.getElementById('rela_plus');
+		if (rela_plus) rela_plus.style.display="inline";
+		var rela_minus = document.getElementById('rela_minus');
+		if (rela_minus) rela_minus.style.display="none";
+	}
+	for (i=0; i<ebn.length; i++) ebn[i].style.display=disp;
+}
+
 
 var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog');
 <?php if (file_exists("modules/googlemap/defaultconfig.php")) {?>
@@ -375,6 +400,15 @@ else loading_message();
 ?>
 </div>
 </div>
+<script language="JavaScript" type="text/javascript">
+<!--
+	// hide button if list is empty
+	var ebn = document.getElementsByName('row_rela');
+	var row_top = document.getElementById('row_top');
+	if (ebn.length==0 && row_top) row_top.style.display="none";
+	<?php if (!$EXPAND_RELATIVES_EVENTS) print "togglerow('row_rela');\n"; ?>
+//-->
+</script>
 <!-- ======================== Start 2nd tab individual page ==== Notes ======= -->
 <?php
 if(empty($SEARCH_SPIDER))
@@ -471,21 +505,15 @@ if(empty($SEARCH_SPIDER)) {
     	include_once('modules/googlemap/googlemap.php');
 		if ($GOOGLEMAP_ENABLED == "false") {
 	        print "<table class=\"facts_table\">\n";
-	        print "<tr><td id=\"no_tab7\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
+	        print "<tr><td id=\"no_tab7\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</script></td></tr>\n";
+	        print "<script type=\"text/javascript\">\n";
+	        print "function ResizeMap ()\n{\n}\nfunction SetMarkersAndBounds ()\n{\n}\n</script>\n";
 	        if (userIsAdmin(getUserName())) {
 	            print "<tr><td align=\"center\" colspan=\"2\">\n";
 	            print "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
 	            print "</td></tr>\n";
 	        }
 	        print "\n\t</table>\n<br />";
-			?>
-			<script language="JavaScript" type="text/javascript">
-			<!--
-				function ResizeMap () {}
-				function SetMarkersAndBounds () {}
-			//-->
-			</script>
-			<?php
 	    }
 	    else {
     	if(empty($SEARCH_SPIDER)) {

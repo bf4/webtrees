@@ -1663,7 +1663,7 @@ for($i=1; $i<=count($sfams); $i++) {
 	}
 	if (!empty($spid)) {
 		if (displayDetailsById($spid) && showLivingNameById($spid)) {
-			print "<a href=\"#\" onclick=\"return quickEdit('".$spid."');\">";
+			print "<a href=\"#\" onclick=\"return quickEdit('".$spid."','','".$GEDCOM."');\">";
 			$name = PrintReady(get_person_name($spid));
 			if ($SHOW_ID_NUMBERS) $name .= " (".$spid.")";
 			$name .= " [".$pgv_lang["edit"]."]";
