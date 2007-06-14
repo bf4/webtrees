@@ -24,7 +24,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: media_ctrl.php 87 2006-06-13 19:23:14Z yalnifj $
+ * @version $Id$
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
@@ -128,8 +128,6 @@ class MediaControllerRoot extends IndividualController{
 		else $ff="";
 		//-- main edit menu
 		$menu = new Menu($pgv_lang["edit"]);
-		//if ($USE_QUICK_UPDATE) $link = "return quickEdit('".$this->pid."');";
-		//else $link = "return edit_raw('".$this->pid."');";
 		$click_link = "";
 		$click_link .= "window.open('addmedia.php?action=";
 		$click_link .= "editmedia&amp;pid=".$this->pid;

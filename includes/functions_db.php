@@ -1323,7 +1323,7 @@ function search_indis_daterange($start, $end, $fact='', $allgeds=false, $ANDOR="
 	$mod = 1;
 	for($i = strlen($start); $i>0; $i--) $mod=$mod*10;
 	if ($mod==100000000) $sql .= "AND d_datestamp>=".$start." AND d_datestamp<=".$end." ";
-	else $sql .= "AND mod(d_datestamp, $mod)>=".$start." AND mod(d_datestamp, $mod)<=".$end." ";
+	else $sql .= "AND (d_datestamp%$mod)>=".$start." AND (d_datestamp%$mod)<=".$end." ";
 	if (!empty($fact)) {
 		$sql .= "AND (";
 		$facts = preg_split("/[,:; ]/", $fact);
@@ -1731,7 +1731,7 @@ function search_fams_daterange($start, $end, $fact="", $allgeds=false) {
 	$mod = 1;
 	for($i = strlen($start); $i>0; $i--) $mod=$mod*10;
 	if ($mod==100000000) $sql .= "AND d_datestamp>=".$start." AND d_datestamp<=".$end." ";
-	else $sql .= "AND mod(d_datestamp, $mod)>=".$start." AND mod(d_datestamp, $mod)<=".$end." ";
+	else $sql .= "AND (d_datestamp%$mod)>=".$start." AND (d_datestamp%$mod)<=".$end." ";
 	if (!empty($fact)) {
 		$sql .= "AND (";
 		$facts = preg_split("/[,:; ]/", $fact);

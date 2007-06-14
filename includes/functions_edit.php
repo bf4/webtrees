@@ -210,6 +210,18 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 			if (!empty($linkpid)) $change["linkpid"] = $linkpid;
 			$change["undo"] = $gedrec;
 			if (!isset($pgv_changes[$gid."_".$GEDCOM])) $pgv_changes[$gid."_".$GEDCOM] = array();
+			else {
+				$lastchange = end($pgv_changes[$gid."_".$GEDCOM]);
+				if (!empty($lastchange)) {
+					//-- append recods should continue to be marked as append
+					if ($lastchange["type"]=="append") $change["type"] = "append";
+					//-- delete records will be added back in when they are accepted
+					//-- but we should add a warning to the log
+					else if ($lastchange["type"]=="delete") {
+						AddToLog("Possible GEDCOM corruption: Attempting to replace GEDCOM record $gid which has already been marked for deletion.");
+					}
+				}
+			}
 			$pgv_changes[$gid."_".$GEDCOM][] = $change;
 		
 		if (userAutoAccept()) {
@@ -1564,6 +1576,14 @@ function breakConts($newline, $level) {
  * @return string	the converted date string
  */
 function check_input_date($datestr) {
+	global $lang_short_cut, $LANGUAGE;
+	// Convert from natural language to gedcom format
+	$conversion_function="edit_to_gedcom_date_{$lang_short_cut[$LANGUAGE]}";
+	if (function_exists($conversion_function))
+		$datestr=$conversion_function($datestr);
+	else
+		$datestr=default_edit_to_gedcom_date($datestr);
+
 	$dates = parse_date($datestr);
 	// If we couldn't parse the date, leave it alone.
 	foreach ($dates as $date)
@@ -1689,6 +1709,7 @@ function create_add_form($fact) {
 function create_edit_form($gedrec, $linenum, $level0type) {
 	global $WORD_WRAPPED_NOTES, $pgv_lang, $factarray;
 	global $tags, $ADVANCED_PLAC_FACTS, $date_and_time, $templefacts;
+	global $lang_short_cut, $LANGUAGE;
 
 	$gedlines = split("\n", $gedrec);	// -- find the number of lines in the record
 	$fields = preg_split("/\s/", $gedlines[$linenum]);
@@ -1737,6 +1758,14 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 
 		if ($type!="DATA" && $type!="CONC" && $type!="CONT") {
 			$tags[]=$type;
+			if ($type=='DATE') {
+				// Allow the user to edit the date in his/her own natural language
+				$conversion_function="gedcom_to_edit_date_{$lang_short_cut[$LANGUAGE]}";
+				if (function_exists($conversion_function))
+					$text=$conversion_function($text);
+				else
+					$text=default_gedcom_to_edit_date($text);
+			}
 			$subrecord = $level." ".$type." ".$text;
 			if ($inSource && $type=="DATE") add_simple_tag($subrecord, "", $pgv_lang["date_of_entry"]);
 			else add_simple_tag($subrecord, $level0type);

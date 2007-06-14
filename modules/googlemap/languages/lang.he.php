@@ -10,7 +10,7 @@
 
 $pgv_lang["googlemap"]              	= "מפה";
 $pgv_lang["no_gmtab"]               	= "אין נתוני מפה עבור אדם זה";
-$pgv_lang["gm_disabled"]            	= "מודול Googlemap נוטרל"; 
+$pgv_lang["gm_disabled"]            	= "מודול GoogleMap נוטרל"; 
 
 $pgv_lang['gm_redraw_map']          	= "צייר מפה מחדש";
 $pgv_lang["gm_map"]                 	= "מפה";
@@ -18,13 +18,13 @@ $pgv_lang["gm_satellite"]           	= "לויין";
 $pgv_lang["gm_hybrid"]              	= "מעורב";
 
 // Configuration texts
-$pgv_lang["gm_manage"]              	= "נהל תצורת Googlemap";
-$pgv_lang["configure_googlemap"]    	= "תצורת Googlemap";
+$pgv_lang["gm_manage"]              	= "נהל תצורת GoogleMap";
+$pgv_lang["configure_googlemap"]    	= "תצורת GoogleMap";
 $pgv_lang["gm_admin_error"]         	= "דף רק של מנהלנים";
 $pgv_lang["gm_db_error"]            	= "טבלת מיקום לא נימצאה במאגר הנתונים";
 $pgv_lang["gm_table_created"]       	= "טבלת מיקום נוצרה";
-$pgv_lang["googlemap_enable"]       	= "אפשר Googlemap";
-$pgv_lang["googlemapkey"]           	= "מפתח API של Google Map";
+$pgv_lang["googlemap_enable"]       	= "אפשר GoogleMap";
+$pgv_lang["googlemapkey"]           	= "מפתח API של GoogleMap";
 $pgv_lang["gm_map_type"]            	= "ברירת מחדל של סוג המפה";
 $pgv_lang["gm_map_size"]            	= "גודל המפה (בפיקסלים)";
 $pgv_lang["gm_map_size_x"]          	= "רוחב";
@@ -79,7 +79,7 @@ $pgv_lang["pl_city"]                		= "עיר";
 $pgv_lang["pl_neighborhood"]        	= "שכונה";
 $pgv_lang["pl_house"]               	= "בית";
 $pgv_lang["pl_max"]                 	= "מכסימלי";
-
+$pgv_lang["pl_delete"]              	= "מחק מקום גיאוגרפי"; 
 $pgv_lang["pl_flag"]                		= "דגל";
 $pgv_lang["flags_edit"]             		= "בחר דגל";
 $pgv_lang["pl_change_flag"]         	= "החלף דגל";
@@ -88,4 +88,22 @@ $pgv_lang["pl_remove_flag"]         	= "הסר דגל";
 $pgv_lang["pl_remove_location"]     	= "?הסר המיקום";
 $pgv_lang["pl_delete_error"]        	= "המיקום לא הורד: המיקום כולל תתי מיקומים";
 $pgv_lang["list_inactive"]        		= "לחץ כאן כדי להראות מקומות שאינם בשימוש"; 
+
+//Placecheck specific text
+$pgv_lang["placecheck"]		= "בדיקת מקום";
+$pgv_lang['placecheck_text']		= "רישום כל המקומות מקובץ GEDCOM נבחר"; 
+$pgv_lang['placecheck_top']		= "מקום של רמה עליונה"; 
+$pgv_lang['placecheck_one']		= "מקום של רמה ראשונה";
+$pgv_lang['placecheck_select1']	= "בחר את הרמה העליונה...";
+$pgv_lang['placecheck_select2']	= "בחר את הרמה הבאה...";
+$pgv_lang['placecheck_key']		= "מפתח לצבעים שבשימוש למטה"; 
+$pgv_lang['placecheck_key1']		= "<font size=\"-2\">מקום זה והקואורדינטות שלו אינן קיימות בטבלאות ה-GoogleMap</font>";
+$pgv_lang['placecheck_key2']		= "<font size=\"-2\">מקום זה קיים בטבלאות GoogleMap, אבל ללא קואורדינטות</font>";
+$pgv_lang['placecheck_key3']		= "<font size=\"-2\">רמת מקום זו ריקה בקובץ ה-Gedcom שלך. יש להוסיף אותו <br/>למקומות GoogleMap כ\"בלתי ידוע\" עם הקואורדינטות של רמת ההורה שלו<br/>לפני שמוסיפים מקום ברמה הבאה</font>";
+$pgv_lang['placecheck_head']		= "רשימת המקומות של קובץ GEDCOM";
+$pgv_lang['placecheck_gedheader']	= "נתוני המקומות של קובץ GEDCOM<br/>2 PLAC";
+$pgv_lang['placecheck_gm_header']	= "נתוני טבלת המקומות של GoogleMap";
+$pgv_lang['placecheck_unique']	= "סה\"כ מקומות יחודיים"; 
+$pgv_lang["placecheck_zoom"]         	= "זום=";
+
 ?>

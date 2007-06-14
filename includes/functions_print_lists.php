@@ -364,7 +364,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 //			if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 //		}
 // this code could iterate over an indi record up to 50 times
-// adds about 2 secs to a list of 128 people  
+// adds about 2 secs to a list of 128 people
 // need a better solution - for now returned the code
 // removing the code causes us not to see alternate names in the list as expected		
 
@@ -389,19 +389,24 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		//-- Birth date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		$filterkey = $person->getSortableBirthDate();
-		$sortkey = parse_date($person->getBirthDate()); $sortkey=$sortkey[0]['jd1'];
-		$txt = get_changed_date($person->getBirthDate(), true);
+		$filterkey = $person->getSortableBirthDate(false);
+		$sortkey = parse_date($person->getBirthDate(false)); 
+		$sortkey=$sortkey[0]['jd1'];
+		$txt = get_changed_date($person->getBirthDate(false), true);
 		//if (empty($txt)) $txt = $pgv_lang["yes"];
-		echo "&nbsp;<a href=\"".$person->getDateUrl($person->bdate)."\"".
-		" title=\"".$filterkey."\"".
-		" name=\"{$sortkey}\"".
-		" class=\"list_item\">".$txt."</a>";
+		if (!empty($txt)) {
+			echo "&nbsp;<a href=\"".$person->getDateUrl($person->getBirthDate(false))."\"".
+			" title=\"".$filterkey."\"".
+			" name=\"{$sortkey}\"".
+			" class=\"list_item\">".$txt."</a>";
+		}
 		//-- Birth 2nd date ?
-		$txt = get_changed_date($person->bdate2, true);
-		if ($txt) echo "<br /><a href=\"".$person->getDateUrl($person->bdate2)."\"".
-		" title=\"".$person->getSortableBirthDate2()."\"".
-		" class=\"list_item\">".$txt."</a>";
+		if (!empty($person->bdate2)) {
+			$txt = get_changed_date($person->bdate2, true);
+			if ($txt) echo "<br /><a href=\"".$person->getDateUrl($person->bdate2)."\"".
+			" title=\"".$person->getSortableBirthDate2()."\"".
+			" class=\"list_item\">".$txt."</a>";
+		}
 		echo "</td>";
 		//-- Birth anniversary
 		echo "<td class=\"list_value_wrap rela\">";
@@ -425,21 +430,26 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "</td>";
 		//-- Death date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		$filterkey = $person->getSortableDeathDate();
-		$sortkey = parse_date($person->getDeathDate()); $sortkey=$sortkey[0]['jd1'];
-		$txt = get_changed_date($person->getDeathDate(), true);
+		$filterkey = $person->getSortableDeathDate(false);
+		$sortkey = parse_date($person->getDeathDate(false)); 
+		$sortkey=$sortkey[0]['jd1'];
+		$txt = get_changed_date($person->getDeathDate(false), true);
 		if ($person->dest) $txt = $pgv_lang["yes"];
 		if (!$person->isDead()) $txt = "";
 		//else if (get_sub_record(1, "1 DEAT", $person->gedrec)=="") $txt .= "***";
-		echo "&nbsp;<a href=\"".$person->getDateUrl($person->ddate)."\"".
-		" title=\"".$filterkey."\"".
-		" name=\"".$sortkey."\"".
-		" class=\"list_item\">".$txt."</a>";
+		if (!empty($txt)) {
+			echo "&nbsp;<a href=\"".$person->getDateUrl($person->getDeathDate(false))."\"".
+			" title=\"".$filterkey."\"".
+			" name=\"".$sortkey."\"".
+			" class=\"list_item\">".$txt."</a>";
+		}
 		//-- Death 2nd date ?
-		$txt = get_changed_date($person->ddate2, true);
-		if ($txt) echo "<br /><a href=\"".$person->getDateUrl($person->ddate2)."\"".
-		" title=\"".$person->getSortableDeathDate2()."\"".
-		" class=\"list_item\">".$txt."</a>";
+		if (!empty($person->ddate2)) {
+			$txt = get_changed_date($person->ddate2, true);
+			if ($txt) echo "<br /><a href=\"".$person->getDateUrl($person->ddate2)."\"".
+			" title=\"".$person->getSortableDeathDate2()."\"".
+			" class=\"list_item\">".$txt."</a>";
+		}
 		echo "</td>";
 		//-- Death anniversary
 		echo "<td class=\"list_value_wrap rela\">";
@@ -591,7 +601,7 @@ function print_fam_table($datalist, $legend="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
- 	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM"; 
+	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 	require_once("js/sorttable.js.htm");
 	require_once("includes/family_class.php");
 	if (empty($legend)) $legend=$pgv_lang["families"];
@@ -1274,7 +1284,7 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 	// max anniversary date
 	$datemax = mktime(0, 0, 0, date("m"), date("d")+$nextdays, $dateY);
 	foreach($datalist as $key => $value) {
-
+		
 		//-- check if we actually need to load up the record from the DB first
 		//-- Event name
 		$exp = explode("\n", $value[1]);
@@ -1296,13 +1306,13 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 		$anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], $dateY);
 		// add 1 year if anniversary before today
 		if (date("Ymd", $anniv) < date("Ymd")) $anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], $dateY+1);
-
+		
 		if ($datemax < $anniv) continue;
 		// upcoming events starting tomorrow
 		if ($nextdays>0 and date("Ymd") == date("Ymd", $anniv)) continue;
 		// sorting by MM-DD-YYYY
 		$sortkey = sprintf("%02d-%02d-%04d", $pdate[0]["mon"], $pdate[0]["day"], $pdate[0]["year"]);
-
+		
 		//-- get gedcom record
 		$record = GedcomRecord::getInstance($value[0]);
 		if (is_null($record)) continue;
@@ -1318,7 +1328,7 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 				if ($wife->isDead()) continue;
 			}
 		}
-
+		
 		// Privacy
 		if (!$record->canDisplayDetails()) {
 			$hidden++;

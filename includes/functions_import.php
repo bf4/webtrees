@@ -1576,6 +1576,13 @@ function accept_changes($cid) {
 					}
 					else $fcontents = substr($fcontents, 0, $pos1+1).trim($indirec)."\r\n".substr($fcontents, $pos2+1);
 				}
+				else {
+					//-- attempted to replace a record that doesn't exist
+					AddToLog("Corruption found in GEDCOM $GEDCOM Attempted to correct.  Replaced gedcom record $gid was not found in the gedcom file.");
+					$pos1 = strpos($fcontents, "\n0 TRLR");
+					$fcontents = substr($fcontents, 0, $pos1+1).trim($indirec)."\r\n0 TRLR";
+					AddToLog("Gedcom record $gid was appended back to the GEDCOM file.");
+				}
 			}
 			if (!isset($manual_save) || $manual_save==false) {
 				write_file();

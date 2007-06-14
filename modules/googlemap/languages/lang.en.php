@@ -79,6 +79,7 @@ $pgv_lang["pl_city"]                = "City";
 $pgv_lang["pl_neighborhood"]        = "Neighborhood";
 $pgv_lang["pl_house"]               = "House";
 $pgv_lang["pl_max"]                 = "Max";
+$pgv_lang["pl_delete"]              = "Delete geographic location";
 
 $pgv_lang["pl_flag"]                = "Flag";
 $pgv_lang["flags_edit"]             = "Select flag";
@@ -88,4 +89,23 @@ $pgv_lang["pl_remove_flag"]         = "Remove flag";
 $pgv_lang["pl_remove_location"]     = "Remove this location?";
 $pgv_lang["pl_delete_error"]        = "Location not removed: this location contains sub-locations";
 $pgv_lang["list_inactive"]        	= "Click here to show inactive places";
+
+//Placecheck specific text
+$pgv_lang["placecheck"]				= "Place Check";
+$pgv_lang['placecheck_text']		= "This will list all the places from the selected gedcom file";
+$pgv_lang['placecheck_top']			= "Top Level Place";
+$pgv_lang['placecheck_one']			= "Level One Place";
+$pgv_lang['placecheck_select1']		= "Select Top Level...";
+$pgv_lang['placecheck_select2']		= "Select Next Level...";
+$pgv_lang['placecheck_key']			= "Key to colors used below";
+$pgv_lang['placecheck_key1']		= "<font size=\"-2\">this place and its coordinates do not exist in the googlemap tables</font>";
+$pgv_lang['placecheck_key2']		= "<font size=\"-2\">this place exists in the googlemap tables, but has no coordinates</font>";
+$pgv_lang['placecheck_key3']		= "<font size=\"-2\">this place level is blank in your gedcom file. It should be added to<br/>googlemap places as \"unknown\" with coordinates from its parent<br/>level before you add any place to the next level</font>";
+$pgv_lang['placecheck_head']		= "Place list for gedcom file";
+$pgv_lang['placecheck_key4']		= "<font size=\"-2\">this place level is blank in your gedcom file, but exists as 'unknown'<br/>in the googlemap places table with coordinates. No action required<br/>until the missing level can be entered</font>";
+$pgv_lang['placecheck_gedheader']	= "Gedcom File Place Data<br/>(2 PLAC tag)";
+$pgv_lang['placecheck_gm_header']	= "GoogleMap Places Table Data";
+$pgv_lang['placecheck_unique']		= "Total unique places";
+$pgv_lang["placecheck_zoom"]         = "Zoom=";
+
 ?>

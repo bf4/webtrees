@@ -118,7 +118,6 @@ class Person extends GedcomRecord {
 		if (!empty($fromfile)) $person->setChanged(true);
 		//-- update the cache
 		if ($person->isRemote()) {
-			global $indilist, $GEDCOM, $GEDCOMS;
 			$indilist[$pid]['gedcom'] = $person->gedrec;
 			$indilist[$pid]['names'] = get_indi_names($person->gedrec);
 			$indilist[$pid]["isdead"] = is_dead($person->gedrec);
@@ -493,6 +492,8 @@ class Person extends GedcomRecord {
 			if (!is_null($this->age)) return $this->age;
 			else $keepage = true;
 		}
+		//-- don't calculate a birth age when no birth record
+		if (empty($birtrec) && (empty($this->brec) || $this->best)) return "";
 		if (empty($birtrec)) $birtrec=$this->gedrec;
 		if (empty($when)) {
 			if ($this->isDead()) $when = $this->ddate; // age at death

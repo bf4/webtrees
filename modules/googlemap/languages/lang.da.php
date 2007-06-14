@@ -49,6 +49,7 @@ $pgv_lang["gm_pp_pr_po_n_b"]        = "Præfiks, postfiks, normal, begge";
 $pgv_lang["gm_pp_po_pr_n_b"]        = "Postfiks, præfiks, normal, begge";
 $pgv_lang["googlemap_coord"]        = "Vis kort koordinater";
 
+
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Rediger geografiske sted placeringer";
 $pgv_lang["pl_no_places_found"]     = "Ingen steder fundet";
@@ -78,6 +79,7 @@ $pgv_lang["pl_city"]                = "By";
 $pgv_lang["pl_neighborhood"]        = "Kvarter";
 $pgv_lang["pl_house"]               = "Hus";
 $pgv_lang["pl_max"]                 = "Maks.";
+$pgv_lang["pl_delete"]              = "Slet geografisk sted";
 
 $pgv_lang["pl_flag"]                = "Flag";
 $pgv_lang["flags_edit"]             = "Vælg flag";
@@ -87,4 +89,23 @@ $pgv_lang["pl_remove_flag"]         = "Fjern flag";
 $pgv_lang["pl_remove_location"]     = "Fjern dette sted?";
 $pgv_lang["pl_delete_error"]        = "Stedet ikke fjernet: dette sted indeholder under-steder";
 $pgv_lang["list_inactive"]              = "Klik her for at vise inaktive steder";
+
+//Placecheck specific text
+$pgv_lang["placecheck"]                         = "Kontroller steder";
+$pgv_lang['placecheck_text']            = "Dette vil vise alle stederne fra den valgte gedcom fil";
+$pgv_lang['placecheck_top']                     = "Topniveau sted";
+$pgv_lang['placecheck_one']                     = "Niveau ét sted";
+$pgv_lang['placecheck_select1']         = "Vælg topniveau...";
+$pgv_lang['placecheck_select2']         = "Vælg næste niveau...";
+$pgv_lang['placecheck_key']                     = "Oversigt over nedenfor brugte farver";
+$pgv_lang['placecheck_key1']            = "<font size=\"-2\">dette sted og dets koordinater findes ikke i googlemap tabellerne</font>";
+$pgv_lang['placecheck_key2']            = "<font size=\"-2\">dette sted findes i googlemap tabellerne, men har ingen koordinater</font>";
+$pgv_lang['placecheck_key3']            = "<font size=\"-2\">dette stedniveau er blankt i din gedcomfil. Det bør tilføjes til googlemap<br/>steder som \"unknown\" med koordinater fra dens forældre niveau<br/>før du tilføjer noget sted til det næste niveau</font>";
+$pgv_lang['placecheck_head']            = "Stedliste for gedcom-fil";
+$pgv_lang['placecheck_key4']            = "<font size=\"-2\">dette stedniveau er blankt i din gedcomfil, men eksistere som 'unknown'<br/>i googlemap stedtabllen med koordinater. Der kræves ikke nogen<br/>handling før det manglende niveau kan indtastes</font>";
+$pgv_lang['placecheck_gedheader']       = "Gedcom-fil steddata<br/>(2 PLAC mærke)";
+$pgv_lang['placecheck_gm_header']       = "GoogleMap steder tabeldata";
+$pgv_lang['placecheck_unique']          = "Totalt antal unikke steder";
+$pgv_lang["placecheck_zoom"]         = "Zoom=";
+
 ?>

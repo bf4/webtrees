@@ -603,7 +603,7 @@ class SearchControllerRoot extends BaseController {
 					}
 				}
 				if($this->replacePlaces) {
-					if ($this->replacePlacesWord) $newRecord = preg_replace("~(\d) PLAC (.*)(\W)".$oldquery."(\W)~i",	"$1 PLAC $2$3".$this->replace."$4",$newRecord);
+					if ($this->replacePlacesWord) $newRecord = preg_replace("~(\d) PLAC (.*)([,\W\s])".$oldquery."([,\W\s])~i",	"$1 PLAC $2$3".$this->replace."$4",$newRecord);
 					else $newRecord = preg_replace("~(\d) PLAC (.*)".$oldquery."(.*)~i",	"$1 PLAC $2".$this->replace."$3",$newRecord);
 				}
 			}
@@ -623,7 +623,7 @@ class SearchControllerRoot extends BaseController {
 			}
 			else {
 				if($this->replacePlaces) {
-					if ($this->replacePlacesWord) $newRecord = preg_replace("~(\d) PLAC (.*)(\W)".$oldquery."(\W)~i",	"$1 PLAC $2$3".$this->replace."$4",$newRecord);
+					if ($this->replacePlacesWord) $newRecord = preg_replace("~(\d) PLAC (.*)([,\W\s])".$oldquery."([,\W\s])~i",	"$1 PLAC $2$3".$this->replace."$4",$newRecord);
 					else $newRecord = preg_replace("~(\d) PLAC (.*)".$oldquery."(.*)~i",	"$1 PLAC $2".$this->replace."$3",$newRecord);
 				}
 			}
@@ -647,7 +647,7 @@ class SearchControllerRoot extends BaseController {
 					$newRecord = preg_replace("~(\d) ABBR (.*)".$oldquery."(.*)~i",	"$1 ABBR $2".$this->replace."$3", $newRecord);
 				}
 				if($this->replacePlaces) {
-					if ($this->replacePlacesWord) $newRecord = preg_replace("~(\d) PLAC (.*)(\W)".$oldquery."(\W)~i",	"$1 PLAC $2$3".$this->replace."$4",$newRecord);
+					if ($this->replacePlacesWord) $newRecord = preg_replace("~(\d) PLAC (.*)([,\W\s])".$oldquery."([,\W\s])~i",	"$1 PLAC $2$3".$this->replace."$4",$newRecord);
 					else $newRecord = preg_replace("~(\d) PLAC (.*)".$oldquery."(.*)~i",	"$1 PLAC $2".$this->replace."$3",$newRecord);
 				}
 			}
@@ -1022,7 +1022,7 @@ class SearchControllerRoot extends BaseController {
 		}
 
 			//-- if only 1 item is returned, automatically forward to that item
-		if (count($this->printname) == 1) {
+		if (count($this->printname) == 1 && $this->action!="replace") {
 			$oldged = $GEDCOM;
 			$GEDCOM = $this->printname[0][2];
 			include (get_privacy_file());

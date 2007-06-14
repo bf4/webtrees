@@ -332,22 +332,46 @@ class GedcomRecord {
 	function canDisplayDetails() {
 		return displayDetails($this->gedrec, $this->type);
 	}
-
+	
 	/**
 	 * get the URL to link to a date
 	 * @string a url that can be used to link to calendar
 	 */
 	function getDateUrl($gedcom_date) {
-		global $GEDCOM;
+		global $GEDCOM, $USE_RTL_FUNCTIONS;
 		$pdate = parse_date($gedcom_date);
-		$y=$pdate[0]['year'];
-		$m=$pdate[0]['mon'];
 		$d=$pdate[0]['day'];
+		$m=$pdate[0]['mon'];
+		
+		if ($pdate[0]['cal']=="@#DHEBREW@" && $USE_RTL_FUNCTIONS)
+			if ($pdate[0]['jd1'] != 0)  
+			{
+				$gregdate = jdtogregorian ( $pdate[0]['jd1'] );
+				$pieces = preg_split("~/~", $gregdate);
+				if ($d==0) $pieces[1]=0; //Hebrew date without a day
+				if ($m==0) $pieces[0]=0; //Hebrew date without a month
+				$pdate = parse_date($pieces[1]."/".$pieces[0]."/".$pieces[2]); 
+				$d=$pdate[0]['day']; 
+				$m=$pdate[0]['mon']; 
+			}
+			else //Hebrew date without a year -> 
+			{
+				$dateheb = jewishGedcomDateToCurrentGregorian($pdate);
+				if ($d==0) $dateheb[0]['day']=0; //Hebrew date without a day
+				$pdate = parse_date($dateheb[0]['day']."/".$dateheb[0]['mon']."/".$dateheb[0]['year']); 
+				$d=$pdate[0]['day']; 
+				$m=$pdate[0]['mon']; 
+			}
+		
+		$y=$pdate[0]['year'];
 		$month=$pdate[0]['month'];
 		if ($y<1) $y = date('Y');
 		if ($m<1 or $m>12) return "calendar.php?action=year&amp;year={$y}&amp;ged={$GEDCOM}";
 		else if ($d<1 or $d>31) return "calendar.php?action=calendar&amp;month={$month}&amp;year={$y}&amp;ged={$GEDCOM}";
 		else return "calendar.php?action=today&amp;day={$d}&amp;month={$month}&amp;year={$y}&amp;ged={$GEDCOM}";
+		
+// 30 FEB should return calendar, not today	- and if today of MAR, then we should see our event there, too
+// CAL FROM ... TO ... / CAL ABT ...	- used to work - define new values like CAB
 	}
 	
 	/**
