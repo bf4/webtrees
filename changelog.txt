@@ -9,6 +9,8 @@
 =====================================================================
 
 Version 4.2
+ - Added [ 1649660 ] Place Hierarchy of Birth only places etc. (opus27)
+ - Fixed [ 1701278 ] "Events of close.." Broken in Firefox if Valid xhtml used (opus27)
  - Added Navigator Theme (yalnifj)
  - Added [ 1712181 ] Show Sources Linked to Events in the Source Tab (opus27)
  - Added [ 1714274 ] MARR date on Close Relative tab (opus27)

@@ -252,17 +252,25 @@ function print_list_repository($key, $value, $useli=true) {
  *
  * @param array $datalist contain individuals that were extracted from the database.
  * @param string $legend optional legend of the fieldset
+ * @param string $option optional filtering option
  */
 function print_indi_table($datalist, $legend="", $option="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION, $GEDCOM_ID_PREFIX, $GEDCOM;
 	
 	if (count($datalist)<1) return;
-	$name_subtags = array("", "_AKA", "_HEB", "ROMN");     //added back
-	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";   //added back
+	if ($option=="MARR_PLAC") return;
+	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
+	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 
 	require_once("js/sorttable.js.htm");
 	require_once("includes/person_class.php");
-	if (empty($legend)) $legend=$pgv_lang["individuals"];
+	// legend
+	if ($option=="BIRT_PLAC" or $option=="DEAT_PLAC") {
+		$filter=$legend;
+		$legend=$factarray[substr($option,0,4)]." @ ".$legend;
+	}
+	else if (empty($legend)) $legend=$pgv_lang["individuals"];
+	else $legend=$pgv_lang["individuals"]." @ ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- filter buttons
@@ -343,6 +351,9 @@ function print_indi_table($datalist, $legend="", $option="") {
 			$hidden++;
 			continue;
 		}
+		//-- place filtering
+		if ($option=="BIRT_PLAC" and strstr($person->getBirthPlace(), $filter)===false) continue;
+		if ($option=="DEAT_PLAC" and strstr($person->getDeathPlace(), $filter)===false) continue;
 		//-- Counter
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
@@ -596,15 +607,23 @@ function print_surn_table($datalist, $target="INDI") {
  *
  * @param array $datalist contain families that were extracted from the database.
  * @param string $legend optional legend of the fieldset
+ * @param string $option optional filtering option
  */
-function print_fam_table($datalist, $legend="") {
+function print_fam_table($datalist, $legend="", $option="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
+	if ($option=="BIRT_PLAC" or $option=="DEAT_PLAC") return;
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 	require_once("js/sorttable.js.htm");
 	require_once("includes/family_class.php");
-	if (empty($legend)) $legend=$pgv_lang["families"];
+	// legend
+	if ($option=="MARR_PLAC") {
+		$filter=$legend;
+		$legend=$factarray["MARR"]." @ ".$legend;
+	}
+	else if (empty($legend)) $legend=$pgv_lang["families"];
+	else $legend=$pgv_lang["families"]." @ ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- filter buttons
@@ -677,6 +696,8 @@ function print_fam_table($datalist, $legend="") {
 			$hidden++;
 			continue;
 		}
+		//-- place filtering
+		if ($option=="MARR_PLAC" and strstr($family->getMarriagePlace(), $filter)===false) continue;
 		//-- Counter
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
@@ -1260,6 +1281,8 @@ function print_changes_table($datalist) {
  * @see http://microformats.org/
  *
  * @param array $datalist contain records that were extracted from the database.
+ * @param int $nextdays optional days count
+ * @param string $option optional filtering option
  */
 function print_events_table($datalist, $nextdays=0, $option="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;

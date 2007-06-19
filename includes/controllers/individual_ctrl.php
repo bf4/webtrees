@@ -1010,9 +1010,9 @@ class IndividualControllerRoot extends BaseController {
 			<tr id="row_top">
 				<td></td>
 				<td class="descriptionbox rela">
-					<input id="checkbox_rela" type="checkbox" <?php if ($EXPAND_RELATIVES_EVENTS) echo " checked=\"checked\""?> onchange="togglerow('row_rela'); return false;" /><?php echo $pgv_lang["relatives_events"]?>
+					<input id="checkbox_rela" type="checkbox" <?php if ($EXPAND_RELATIVES_EVENTS) echo " checked=\"checked\""?> onclick="togglerow('row_rela');" /><?php echo $pgv_lang["relatives_events"]?>
 					<?php if (file_exists("languages/histo.".$lang_short_cut[$LANGUAGE].".php")) {?>
-						<input id="checkbox_histo" type="checkbox" onchange="togglerow('row_histo'); return false;" /><?php echo $pgv_lang["historical_facts"]?>
+						<input id="checkbox_histo" type="checkbox" onclick="togglerow('row_histo');" /><?php echo $pgv_lang["historical_facts"]?>
 					<?php }?>
 				</td>
 			</tr>
@@ -1057,10 +1057,6 @@ class IndividualControllerRoot extends BaseController {
 				}
 			}
 		}
-		// hide button if list is empty
-		//var ebn = document.getElementsByName('row_rela');
-		//var row_top = document.getElementById('row_top');
-		//if (ebn.length==0 && row_top) row_top.style.display="none";
 		<?php
 		if (!$EXPAND_RELATIVES_EVENTS) print "togglerow('row_rela');\n";
 		print "togglerow('row_histo');\n";
@@ -1261,7 +1257,6 @@ class IndividualControllerRoot extends BaseController {
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
 					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
 				<?php }?>
-				<?php if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate())." -- ".$family->getPlaceShort($family->getMarriagePlace());?>
 					</td>
 				</tr>
 			</table>
@@ -1419,7 +1414,6 @@ class IndividualControllerRoot extends BaseController {
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
 					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
 				<?php } ?>
-				<?php if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate())." -- ".$family->getPlaceShort($family->getMarriagePlace());?>
 					</td>
 				</tr>
 			</table>
@@ -1544,8 +1538,7 @@ class IndividualControllerRoot extends BaseController {
 		}
 
 		//-- spouses and children
-		$families = $this->indi->getSpouseFamilies();
-		foreach($families as $famid=>$family) {
+		foreach($this->indi->getSpouseFamilies() as $famid=>$family) {
 			$label = $this->indi->getSpouseFamilyLabel($family);
 			$people = $this->buildFamilyList($family, "spouse");
 			?>
@@ -1556,7 +1549,6 @@ class IndividualControllerRoot extends BaseController {
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
 					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
 				<?php } ?>
-				<?php if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate())." -- ".$family->getPlaceShort($family->getMarriagePlace());?>
 					</td>
 				</tr>
 			</table>
@@ -1812,9 +1804,7 @@ class IndividualControllerRoot extends BaseController {
 
 		if ($GOOGLEMAP_ENABLED == "false") {
 			print "<table class=\"facts_table\">\n";
-	        print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."<script language=\"JavaScript\" type=\"text/javascript\">tabstyles[5]='tab_cell_inactive_empty'; document.getElementById('pagetab5').className='tab_cell_inactive_empty';</script></td></tr>\n";
-	        print "<script type=\"text/javascript\">\n";
-	        print "function ResizeMap ()\n{\n}\nfunction SetMarkersAndBounds ()\n{\n}\n</script>\n";
+			print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
 			if (userIsAdmin(getUserName())) {
 				print "<tr><td align=\"center\" colspan=\"2\">\n";
 				print "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
@@ -1822,9 +1812,15 @@ class IndividualControllerRoot extends BaseController {
 			}
 			print "\n\t</table>\n<br />";
 			?>
-	        <script type="text/javascript">
+			<script language="JavaScript" type="text/javascript">
+			<!--
+				tabstyles[5]='tab_cell_inactive_empty';
+				document.getElementById('pagetab5').className='tab_cell_inactive_empty';
 				document.getElementById("googlemap_left").innerHTML = document.getElementById("googlemap_content").innerHTML;
 				document.getElementById("googlemap_content").innerHTML = "";
+				function ResizeMap () {}
+				function SetMarkersAndBounds () {}
+			//-->
 			</script>
 			<?php
 			return;

@@ -25,6 +25,7 @@
  */
 
 require("config.php");
+require_once("includes/gedcomrecord.php");
 require_once("includes/functions_print_lists.php");
 function case_in_array($value, $array) {
 	foreach($array as $key=>$val) {
@@ -315,37 +316,41 @@ if ($display=="hierarchy") {
 
 if ($level > 0) {
 	if ($action=="show") {
-		// -- array of names
-		$myindilist = array();
-		$mysourcelist = array();
-		$myfamlist = array();
-
-		$positions = get_place_positions($parent, $level);
-		for($i=0; $i<count($positions); $i++) {
-			$gid = $positions[$i];
-			$indirec=find_gedcom_record($gid);
-			$ct = preg_match("/0 @(.*)@ (.*)/", $indirec, $match);
-			if ($ct>0) {
-				$type = trim($match[2]);
-				if ($type == "INDI") {
-					$myindilist["$gid"] = get_sortable_name($gid);
-				}
-				else if ($type == "FAM") {
-					$myfamlist["$gid"] = get_sortable_family_descriptor($gid);
-				}
-				else if ($type == "SOUR") {
-					$mysourcelist["$gid"] = get_source_descriptor($gid);
-				}
-			}
+		//-- place filtering
+		echo "<div>";
+		echo "<form action=\"?\">";
+		foreach ($_GET as $k=>$v) {
+			if ($k=="filter") continue;
+			if (is_array($v)) foreach ($v as $k2=>$v2) echo "<input type=\"hidden\" name=\"".$k."[{$k2}]\" value=\"".$v2."\" />";
+			else echo "<input type=\"hidden\" name=\"".$k."\" value=\"".$v."\" />";
 		}
-
-		print "<br />";
-
+		if (!isset($_GET["filter"])) $_GET["filter"]="all";
+		foreach (array("BIRT", "MARR", "DEAT", "all") as $k=>$v) {
+			echo "&nbsp;&nbsp;<input type=\"radio\" name=\"filter\" onclick=\"submit()\"";
+			if ($_GET["filter"]==$v) echo " checked=\"checked\"";
+			echo " value=\"".$v."\" />";
+			if ($v=="all") echo $pgv_lang[$v];
+			else echo $factarray[$v];
+		}
+		echo "</form>";
+		echo "</div>";
+		if ($_GET["filter"]=="all") $option="";
+		else $option=$_GET["filter"]."_PLAC";
 		$title = ""; foreach ($parent as $k=>$v) $title = $v.", ".$title;
-		$title = substr($title, 0, -2)." ";
-		print_indi_table($myindilist, $pgv_lang["individuals"]." @ ".$title);
-		print_fam_table($myfamlist, $pgv_lang["families"]." @ ".$title);
-		print_sour_table($mysourcelist, $pgv_lang["sources"]." @ ".$title);
+		$title = substr($title, 0, -2);
+		$positions = get_place_positions($parent, $level);
+		sort($positions);
+		print_indi_table($positions, $title, $option);
+		print_fam_table($positions, $title, $option);
+		//-- page title
+		if ($_GET["filter"]!="all") $title = $factarray[$_GET["filter"]]." @ ".$title;
+		?>
+		<script language="JavaScript" type="text/javascript">
+		<!--
+			document.title = "<?php print $title; ?>";
+		//-->
+		</script>
+		<?php
 	}
 }
 
@@ -425,5 +430,4 @@ else {
 
 print "<br /><br /></div>";
 print_footer();
-
 ?>
