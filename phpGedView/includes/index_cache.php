@@ -55,15 +55,15 @@ function loadCachedBlock($block, $index) {
 
 	//-- check for cache file
 	if (!file_exists($INDEX_DIRECTORY."/cache")) {
-		mkdir($INDEX_DIRECTORY."/cache");
+		@mkdir($INDEX_DIRECTORY."/cache");
 		return false;
 	}
 	if (!file_exists($INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE])) {
-		mkdir($INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]);
+		@mkdir($INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]);
 		return false;
 	}
 	if (!file_exists($INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]."/".$GEDCOM)) {
-		mkdir($INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]."/".$GEDCOM);
+		@mkdir($INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]."/".$GEDCOM);
 		return false;
 	}
 	$fname = $INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]."/".$GEDCOM."/".$index."_".$block[0];
