@@ -52,7 +52,7 @@ class TreeNav {
 			else if (!empty($_REQUEST['newroot'])) {
 				$_SESSION['navRoot'] = $this->rootPerson->getXref();
 				if (!empty($_REQUEST['drawport'])) $this->drawViewport('', "", "150px"); 
-				else $this->drawPerson();
+				else $this->drawPerson($this->rootPerson);
 			}
 			else if (!empty($_REQUEST['parent'])) {
 				$person = $this->rootPerson;
@@ -108,7 +108,7 @@ class TreeNav {
 		
 		<div id="out_<?php print $this->name; ?>" style="position: relative; <?php print $widthS.$heightS; ?>text-align: center; overflow: hidden;">
 			<div id="in_<?php print $this->name; ?>" style="position: relative; left: -20px; width: auto; cursor: move;" onmousedown="dragStart(event, 'in_<?php print $this->name; ?>', <?php print $this->name; ?>);" onmouseup="dragStop(event);">
-			<?php $this->drawPerson(); ?>
+			<?php $this->drawPerson($this->rootPerson); ?>
 			</div>
 			<div id="controls" style="position: absolute; left: 0px; top: 0px; z-index: 100; background-color: #EEEEEE">
 			<table>
@@ -271,8 +271,9 @@ class TreeNav {
 	 * @param Person $person		The Person object to draw the box for
 	 * @param int $gen				The number of generations up or down to print
 	 * @param int $state			Whether we are going up or down the tree, -1 for descendents +1 for ancestors
+	 * @param Family $pfamily
 	 */
-	function drawPerson(&$person='', $gen=4, $state=0, &$pfamily='') {
+	function drawPerson(&$person, $gen=4, $state=0, &$pfamily) {
 		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		
 		if ($gen<0) {
