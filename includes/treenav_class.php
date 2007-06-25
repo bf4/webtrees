@@ -47,7 +47,7 @@ class TreeNav {
 		//-- handle AJAX requests
 		if (!empty($_REQUEST['navAjax'])) {
 			if (!empty($_REQUEST['details'])) {
-				$this->getDetails();
+				$this->getDetails($this->rootPerson);
 			}
 			else if (!empty($_REQUEST['newroot'])) {
 				$_SESSION['navRoot'] = $this->rootPerson->getXref();
@@ -186,7 +186,7 @@ class TreeNav {
 	 * Get the details for a person and their spouse
 	 * @param Person $person	the person to print the details for
 	 */
-	function getDetails(&$person = '') {
+	function getDetails(&$person) {
 		global $factarray, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM;
 		
 		if (empty($person)) $person = $this->rootPerson;

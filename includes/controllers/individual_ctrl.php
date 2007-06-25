@@ -152,6 +152,7 @@ class IndividualControllerRoot extends BaseController {
 		if ($this->default_tab<-2 || $this->default_tab>7) $this->default_tab=0;
 
 		$this->indi = new Person($indirec, false);
+		$_SESSION['navRoot'] = $this->indi->getXref();
 
 		//-- if the person is from another gedcom then forward to the correct site
 		/*
@@ -1537,7 +1538,8 @@ class IndividualControllerRoot extends BaseController {
 		}
 
 		//-- spouses and children
-		foreach($this->indi->getSpouseFamilies() as $famid=>$family) {
+		$families = $this->indi->getSpouseFamilies();
+		foreach($families as $famid=>$family) {
 			$label = $this->indi->getSpouseFamilyLabel($family);
 			$people = $this->buildFamilyList($family, "spouse");
 			?>

@@ -70,7 +70,7 @@ class NavMenuBar extends MenuBar {
 		}
 		print "</ul>";
 		print $pgv_lang["hidden"].": ".$hidden;
-		print " Total: ".count($myindis);
+		print " ".$pgv_lang["total_indis"].": ".count($myindis);
 	}
 	
 	function loadSurnames($letter) {
@@ -94,7 +94,7 @@ class NavMenuBar extends MenuBar {
 			
 		}
 		uasort($surnames, "itemsort");
-		print "<ul class=\"navlist\">";
+		print "<ul id=\"surnameList\" class=\"navlist\">";
 		foreach($surnames as $surname=>$scount) {
 			print "<li><a href=\"#\" onclick=\"loadSurnamePeople('".htmlentities($surname)."'); return false;\">".PrintReady(check_NN($scount["name"]))." [".$scount["count"]."]</a>";
 			//print "<div id=\"".htmlentities($surname)."\" style=\"display: none;\"></div>";
@@ -102,7 +102,7 @@ class NavMenuBar extends MenuBar {
 		}
 		print "</ul>\n";
 		print $pgv_lang["hidden"].": ".$hidden;
-		print " Total: ".count($myindis);
+		print " ".$pgv_lang["total_indis"].": ".count($myindis);
 	}
 	
 	function surnameContent() {
@@ -117,7 +117,8 @@ class NavMenuBar extends MenuBar {
 
 		?>
 		<form method="post" action="">
-			<input type="text" name="nameSearch" /><input type="button" onclick="" value="<?php print $pgv_lang["search"];?>" />
+			<input type="text" id="nameSearch" name="nameSearch" />
+			<input type="button" onclick="" value="<?php print $pgv_lang["search"];?>" />
 		</form>
 		<div id="surnameList" style="font-size: 10px;">
 		</div>

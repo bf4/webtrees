@@ -94,3 +94,10 @@ function loadSurnamePeople(surname) {
 		oXmlHttp.send(null);
 	}
 }
+
+function filterSurnames() {
+	value = document.getElementById("nameSearch").value;
+	if (value.length>1) {
+		
+	}
+}
