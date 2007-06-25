@@ -377,7 +377,7 @@ class MenuBar
 			if (empty($uname)) $uname = $GEDCOM;
 			$sql = "SELECT mn_id, mn_label, mn_icon, mn_url FROM ".$TBLPREFIX."menu WHERE mn_username='".$DBCONN->escapeSimple($uname)."' AND mn_parent=0 AND mn_order=".$index;
 			$res = dbquery($sql, false);
-			if (!DB::isError($res) && $res->numRows()>0) {
+			if (!empty($res) && !DB::isError($res) && is_object($res) && $res->numRows()>0) {
 				$row = $res->fetchRow();
 				$res->free();
 				$menu = new Menu($row[1]);
