@@ -273,7 +273,7 @@ class TreeNav {
 	 * @param int $state			Whether we are going up or down the tree, -1 for descendents +1 for ancestors
 	 * @param Family $pfamily
 	 */
-	function drawPerson(&$person, $gen=4, $state=0, &$pfamily) {
+	function drawPerson(&$person, $gen=4, $state=0, $pfamily=null) {
 		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		
 		if ($gen<0) {
@@ -356,13 +356,13 @@ class TreeNav {
 								<tr>
 									<?php /* there is a IE JavaScript bug where the "id" has to be the same as the "name" in order to use the document.getElementsByName() function */ ?>
 									<td <?php if ($gen==0 && !empty($father)) print 'id="pload" name="pload" onclick="'.$this->name.'.loadParent(this, \''.$person->getXref().'\', \'f\');"'; ?>>
-										<?php if (!empty($father)) $this->drawPerson($father, $gen-1, 1, $cfamily); else print "<br />\n";?>
+										<?php if (!empty($father)) $this->drawPerson($father, $gen-1, 1, &$cfamily); else print "<br />\n";?>
 									</td>
 								</tr>
 								<tr>
 								<?php /* print the mother */ ?>
 									<td <?php if ($gen==0 && !empty($mother)) print 'id="pload" name="pload" onclick="'.$this->name.'.loadParent(this, \''.$person->getXref().'\', \'m\');"'; ?>>
-										<?php if (!empty($mother)) $this->drawPerson($mother, $gen-1, 1, $mcfamily); else print"<br />\n";?>
+										<?php if (!empty($mother)) $this->drawPerson($mother, $gen-1, 1, &$mcfamily); else print"<br />\n";?>
 									</td>
 								</tr>
 							</tbody>
