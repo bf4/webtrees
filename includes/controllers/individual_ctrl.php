@@ -152,7 +152,6 @@ class IndividualControllerRoot extends BaseController {
 		if ($this->default_tab<-2 || $this->default_tab>7) $this->default_tab=0;
 
 		$this->indi = new Person($indirec, false);
-		$_SESSION['navRoot'] = $this->indi->getXref();
 
 		//-- if the person is from another gedcom then forward to the correct site
 		/*
