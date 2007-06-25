@@ -279,7 +279,7 @@ class Menu
 				{
 					$output .= ' style=\"right: -50px; overflow: visible;\"';
 				}
-				}
+			}
 			$output .= "\" onmouseover=\"show_submenu('{$this->parentmenu}'); show_submenu('{$submenuid}');\" onmouseout=\"timeout_submenu('menu{$id}_subs');\">\n";
 			foreach($this->submenus as $submenu)
 			{
@@ -372,34 +372,36 @@ class MenuBar
 	function getMenu($index) {
 		global $GEDCOM, $TBLPREFIX, $DBCONN, $PGV_IMAGES, $PGV_IMAGE_DIR;
 		//-- check db
-		$uname = getUserName();
-		if (empty($uname)) $uname = $GEDCOM;
-		$sql = "SELECT mn_id, mn_label, mn_icon, mn_url FROM ".$TBLPREFIX."menu WHERE mn_username='".$DBCONN->escapeSimple($uname)."' AND mn_parent=0 AND mn_order=".$index;
-		$res = dbquery($sql, false);
-		if (!DB::isError($res) && $res->numRows()>0) {
-			$row = $res->fetchRow();
-			$res->free();
-			$menu = new Menu($row[1]);
-			if (!empty($row[2])) {
-				if (isset($PGV_IMAGES[$row[2]])) $menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES[$row[2]]['large']);
-				else $menu->addIcon($row[2]);
-			}
-			$menu->addOnclick($row[3]);
-			
-			$sqls = "SELECT mn_id, mn_label, mn_icon, mn_url FROM ".$TBLPREFIX."menu WHERE mn_parent=".$row[0]." ORDER BY mn_order";
-			$ress = dbquery($sqls);
-			if (!DB::isError($res)) {
-				while($row = $res->fetchRow()) {
-					if ($row[1]!='seperator') {
-						$submenu = new Menu($row[1]);
-						if (!empty($row[2])) {
-							if (isset($PGV_IMAGES[$row[2]])) $submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES[$row[2]]['large']);
-							else $submenu->addIcon($row[2]);
+		if (!empty($DBCONN) && !DB::isError($DBCONN)) {
+			$uname = getUserName();
+			if (empty($uname)) $uname = $GEDCOM;
+			$sql = "SELECT mn_id, mn_label, mn_icon, mn_url FROM ".$TBLPREFIX."menu WHERE mn_username='".$DBCONN->escapeSimple($uname)."' AND mn_parent=0 AND mn_order=".$index;
+			$res = dbquery($sql, false);
+			if (!DB::isError($res) && $res->numRows()>0) {
+				$row = $res->fetchRow();
+				$res->free();
+				$menu = new Menu($row[1]);
+				if (!empty($row[2])) {
+					if (isset($PGV_IMAGES[$row[2]])) $menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES[$row[2]]['large']);
+					else $menu->addIcon($row[2]);
+				}
+				$menu->addOnclick($row[3]);
+				
+				$sqls = "SELECT mn_id, mn_label, mn_icon, mn_url FROM ".$TBLPREFIX."menu WHERE mn_parent=".$row[0]." ORDER BY mn_order";
+				$ress = dbquery($sqls);
+				if (!DB::isError($res)) {
+					while($row = $res->fetchRow()) {
+						if ($row[1]!='seperator') {
+							$submenu = new Menu($row[1]);
+							if (!empty($row[2])) {
+								if (isset($PGV_IMAGES[$row[2]])) $submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES[$row[2]]['large']);
+								else $submenu->addIcon($row[2]);
+							}
+							$submenu->addOnclick($row[3]);
+							$menu->addSubMenu($submenu);
 						}
-						$submenu->addOnclick($row[3]);
-						$menu->addSubMenu($submenu);
+						else $menu->addSeperator();
 					}
-					else $menu->addSeperator();
 				}
 			}
 		}
@@ -416,7 +418,7 @@ class MenuBar
 		}
 		return $menu;
 	}
-
+	
 	/**
 	 * get the home menu
 	 * @return Menu 	the menu item
@@ -524,8 +526,8 @@ class MenuBar
 			$submenu = new Menu($pgv_lang["mgv"], "index.php?command=user");
 			if (!empty($PGV_IMAGES["mygedview"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["small"]);
-				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-				$menu->addSubmenu($submenu);
+			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+			$menu->addSubmenu($submenu);
 			//-- editaccount submenu
 			if ($user["editaccount"]) {
 				$submenu = new Menu($pgv_lang["editowndata"], "edituser.php");
@@ -594,7 +596,7 @@ class MenuBar
 			$menu = new Menu("", "", "");
 			$menu->print_menu = null;
 			return $menu;
-			}
+		}
 		$default_id = $myid;
 		if (empty($default_id)) $default_id = $rootid;
 		
