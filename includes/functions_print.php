@@ -1514,7 +1514,7 @@ function print_note_record($text, $nlevel, $nrec) {
 	$elementID = "N-".floor(microtime()*1000000);
 	$text = preg_replace("/~~/", "<br />", trim($text));
 	$text .= get_cont($nlevel, $nrec);
-	$text = preg_replace("'(https?://[\w\./\-&=?~%#]*)'", "<a href=\"$1\" target=\"blank\">URL</a>", $text);
+	$text=expand_urls($text);
 	$text = trim($text);
 	if (!empty($text)) {
 		$text = PrintReady($text);
