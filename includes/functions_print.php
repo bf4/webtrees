@@ -2002,10 +2002,10 @@ function PrintReady($text, $InHeaders=false) {
 				$hasallhits = true;
 				foreach($queries as $index=>$query1) {
 					$query1esc=addcslashes($query1, '/');
-					if (preg_match("/(".$query1esc.")/i", $text)) {
+					if (@preg_match("/(".$query1esc.")/i", $text)) { // Use @ as user-supplied query might be invalid.
 						$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 					}
-					else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
+					else if (@preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
 						$nlen = strlen($query1);
 						$npos = strpos(str2upper($text), str2upper($query1));
 						$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
