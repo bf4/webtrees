@@ -471,8 +471,8 @@ function valid_date(datefield) {
 	if (c1=="+") datefield.value = "AFT "+y; // +1860 => AFT 1860
 	var c5 = datefield.value.substr(4,1);
 	var y = datefield.value.substr(0,4);
-	if (c5=="/") datefield.value = "AFT "+y; // 1860/ => AFT 1860
 	var z = datefield.value.substr(5);
+	if (c5=="/" && z=="") datefield.value = "AFT "+y; // 1860/ => AFT 1860
 	if (c5=="-" && z!="") datefield.value = "BET "+y+" AND "+z; // 1850-1860 => BET 1850 AND 1860
 	// other format
 	datestr = datefield.value;
