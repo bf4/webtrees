@@ -1579,8 +1579,8 @@ function check_input_date($datestr) {
 		if ($date['jd1']==0)
 			return $datestr;
 
-	// Text in brackets is special
-	if (preg_match('/(\s*\(.*)/', $datestr, $match))
+	// Trailing text (OS/NS years or details of CAL) needs to be retained.
+	if (preg_match('/(\/\d\d|\s*\(.*)/', $datestr, $match))
 		$text=$match[1];
 	else
 		$text='';
@@ -1592,8 +1592,8 @@ function check_input_date($datestr) {
 		if ($date['day']>9)       $datestr.="{$date['day']} ";
 		else if ($date['day']>0)  $datestr.="0{$date['day']} ";
 		if ($date['mon']!=0)      $datestr.="{$date['month']} ";
-		if ($date['year']>0)      $datestr.="{$date['year']} ";
-		else                      $datestr.=(1-$date['year'])." B.C. ";
+		if ($date['year']>0)      $datestr.="{$date['year']}";
+		else                      $datestr.=(1-$date['year'])." B.C.";
 	}
 	$datestr.=$text;
 	return trim($datestr);
