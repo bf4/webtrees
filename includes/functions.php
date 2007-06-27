@@ -1833,6 +1833,24 @@ function compare_facts_date($arec, $brec) {
 	else
 		$bmax=$bdate[1]['jd2'];
 
+	// BEF/AFT XXX sort as the day before/after XXX
+	if ($adate[0]['ext']=='BEF') {
+		$amin=$amin-1;
+		$amax=$amin;
+	}
+	if ($adate[0]['ext']=='AFT') {
+		$amax=$amax+1;
+		$amin=$amax;
+	}
+	if ($bdate[0]['ext']=='BEF') {
+		$bmin=$bmin-1;
+		$bmax=$bmin;
+	}
+	if ($bdate[0]['ext']=='AFT') {
+		$bmax=$bmax+1;
+		$bmin=$bmax;
+	}
+
 	if ($amax < $bmin)
 		return -1;
 	else if ($amin > $bmax)
