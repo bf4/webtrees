@@ -1613,6 +1613,7 @@ function compare_fact_type($afact, $bfact) {
 			//"ADDR"=>42,	// Changed to sort near bottom.
 			"PROP"=>43,
 			"CHRA"=>50,
+			"FACT"=>55, "EVEN"=>55,
 			"RETI"=>51, 
 			"_NMR"=>61, "_NMAR"=>61,
 			"NMR"=>62,
@@ -1726,26 +1727,17 @@ function compare_facts($a, $b) {
 	else $brec = $b;
 	if ($DEBUG) print "\n<br />".substr($arec,0,8)."==".substr($brec,0,8)." ";
 
-	$ft = preg_match("/1\s(\w+)(.*)/", $arec, $match);
-	if ($ft>0) $afact = $match[1];
-	else $afact="";
-	$afact = trim($afact);
-	if (isset($afact)) {
-		if ($afact=="EVEN" || $afact=="FACT") {
-			$ft = preg_match("/2 TYPE (.*)/", $arec, $match);
-			if ($ft>0) $afact = trim($match[1]);
-		}
-	}
-	$ft = preg_match("/1\s(\w+)(.*)/", $brec, $match);
-	if ($ft>0) $bfact = $match[1];
-	else $bfact="";
-	$bfact = trim($bfact);
-	if (isset($bfact)) {
-		if ($bfact=="EVEN" || $bfact=="FACT") {
-			$ft = preg_match("/2 TYPE (.*)/", $brec, $match);
-			if ($ft>0) $bfact = trim($match[1]);
-	}
-	}
+	if (preg_match("/1\s+(\w+)/", $arec, $match)==0)
+		return 0;
+	$afact = $match[1];
+	if (($afact=="EVEN" || $afact=="FACT") && preg_match("/2\s+TYPE\s+(\w+)/", $arec, $match) && isset($factarray[$match[1]]))
+		$afact=$match[1];
+
+	if (preg_match("/1\s+(\w+)/", $brec, $match)==0)
+		return 0;
+	$bfact = $match[1];
+	if (($bfact=="EVEN" || $bfact=="FACT") && preg_match("/2\s+TYPE\s+(\w+)/", $brec, $match) && isset($factarray[$match[1]]))
+		$bfact=$match[1];
 	
 	// Sinking "changed" to the very bottom
 	if ($afact=='CHAN') {
