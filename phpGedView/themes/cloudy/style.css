@@ -52,11 +52,6 @@ legend {
 	font-weight: bold;
 }
 
-body,ul,div,p,form,span,tr,td,table,br,hr,br,span,li,tr,td,table,p,form,div {
-	margin: 0px;
-	padding: 0px;
-}
-
 ul {
 	list-style: url(images/li.gif);
 }
