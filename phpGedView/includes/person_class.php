@@ -434,7 +434,7 @@ class Person extends GedcomRecord {
 		$this->_parseBirthDeath();
 		//if ($this->isDead() and $this->dest) return "0000-00-01";
 		$pdate = parse_date($this->ddate);
-		if ($this->isDead() and $this->dest) {
+		if ($this->isDead() && $this->dest) {
 			if ($est) return $pdate[0]["sort"]." ".$pgv_lang["est"];
 			else return $pdate[0]["sort"];
 		}
@@ -475,8 +475,8 @@ class Person extends GedcomRecord {
 	 * get the death year
 	 * @return string the year of death
 	 */
-	function getDeathYear() {
-		return substr($this->getSortableDeathDate(),0,4);
+	function getDeathYear($est = true) {
+		return substr($this->getSortableDeathDate($est),0,4);
 	}
 
 	/**

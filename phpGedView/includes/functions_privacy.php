@@ -341,10 +341,6 @@ function displayDetailsByID($pid, $type = "INDI") {
 		fclose($fp);
 	}
 
-	//print "checking privacy for $pid<br />";
-//	if ($type=="INDI" && isset($indilist[$pid]['gedfile']) 
-//		&& $indilist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) $cache_privacy = true;
-//	else $cache_privacy = false;
 	$cache_privacy = true;
 
 	$username = getUserName();
