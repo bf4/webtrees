@@ -670,12 +670,12 @@ class HTTP_Request
 
         // 4.3.0 supports SSL connections using OpenSSL. The function test determines
         // we running on at least 4.3.0
-        //if (strcasecmp($this->_url->protocol, 'https') == 0 AND function_exists('file_get_contents') AND extension_loaded('openssl')) {
-       //     if (isset($this->_proxy_host)) {
-        //        return PEAR::raiseError('HTTPS proxies are not supported.');
-        //    }
+        if (strcasecmp($this->_url->protocol, 'https') == 0 AND function_exists('file_get_contents') AND extension_loaded('openssl')) {
+            if (isset($this->_proxy_host)) {
+                return PEAR::raiseError('HTTPS proxies are not supported.');
+            }
             $host = 'ssl://' . $host;
-        //}
+        }
 
         // magic quotes may fuck up file uploads and chunked response processing
         $magicQuotes = ini_get('magic_quotes_runtime');
