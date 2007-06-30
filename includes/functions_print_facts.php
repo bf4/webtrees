@@ -269,11 +269,13 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			print "</td>";
 		}
 		$align = "";
+/*	Did not look good	
 		$ct = preg_match("/2 DATE (.+)/", $factrec, $match);
 		if (!empty($event) && $ct==0) {
 			if ($TEXT_DIRECTION=="rtl" && !hasRTLText($event) && hasLTRText($event) && $event!="N" && $event!="Y") $align=" align=\"left\"";
 			if ($TEXT_DIRECTION=="ltr" && $USE_RTL_FUNCTIONS && !hasLTRText($event) && hasRTLText($event)) $align=" align=\"right\"";
-		}
+		}   
+*/
 		print "<td class=\"optionbox $styleadd wrap\" $align>";
 		//print "<td class=\"facts_value facts_value$styleadd\">";
 		$user = getUser(getUserName());
@@ -1081,7 +1083,7 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			if ($nt>0) $text = preg_replace("/~~/", "<br />", trim($n1match[1]));
 			$text .= get_cont(1, $noterec);
 			$text = expand_urls($text);
-			$text = PrintReady($text)."<br />\n";
+			$text = PrintReady($text)." <br />\n";
 		}
 		$align = "";
 		if (!empty($text)) {
