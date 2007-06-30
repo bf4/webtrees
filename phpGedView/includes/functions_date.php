@@ -1179,10 +1179,10 @@ function default_edit_to_gedcom_date($datestr)
 {
 	global $pgv_lang;
 
-	foreach (array('jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec','vend','brum','frim','nivo','pluv','vent','germ','flor','prai','mess','ther','fruc','comp','tsh','csh','ksl','tvt','shv','adr','ads','nsn','iyr','svn','tmz','aav','ell','abt','aft','and','apx','bef','bet','cal','cir','est','from','int','to','b.c.') as $keyword)
+	foreach (array('jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec','vend','brum','frim','nivo','pluv','vent','germ','flor','prai','mess','ther','fruc','comp','tsh','csh','ksl','tvt','shv','nsn','iyr','svn','tmz','aav','ell','abt','aft','and','apx','bef','bet','cal','cir','est','from','int','to','b.c.') as $keyword)
 		$datestr=preg_replace("/\b".str_replace('.','[.]?',$pgv_lang[$keyword])."\b/i", $keyword, $datestr);
 
-	foreach (array('january_1st','february_1st','march_1st','april_1st','may_1st','june_1st','july_1st','august_1st','september_1st','october_1st','november_1st','december_1st') as $keyword)
+	foreach (array('ads','adr_leap_year','adr','january_1st','february_1st','march_1st','april_1st','may_1st','june_1st','july_1st','august_1st','september_1st','october_1st','november_1st','december_1st') as $keyword)
 		$datestr=preg_replace("/\b".str_replace('.','[.]?',$pgv_lang[$keyword])."\b/i", substr($keyword,0,3), $datestr);
 
 	// APX and CIR are not gedcom 5.5.1 keywords
