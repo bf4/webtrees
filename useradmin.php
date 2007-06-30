@@ -412,7 +412,7 @@ if ($action=="edituser") {
 			if (isset($user['gedcomid'][$file])) {
 				$sged = $GEDCOM;
 				$GEDCOM = $file;
-				print "\n<span class=\"list_item\"> ".get_person_name($user['gedcomid'][$file]);
+				print "\n<span class=\"list_item\"><a href=\"individual.php?pid={$user['gedcomid'][$file]}&ged={$file}\">".get_person_name($user['gedcomid'][$file])."</a>";
 				print_first_major_fact($user['gedcomid'][$file]);
 				$GEDCOM = $sged;
 				print "</span>\n";
