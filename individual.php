@@ -60,6 +60,12 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 			print "&nbsp;&nbsp;";
 			if ($TEXT_DIRECTION=="rtl") print "&rlm;";
 			print "(".$controller->pid.")";
+			if (userIsAdmin(getUserName())) {
+				$pgvuser=getUserByGedcomId($controller->pid, $GEDCOM);
+				if ($pgvuser!==false) {
+					print " (<a href=\"useradmin.php?action=edituser&username={$pgvuser['username']}\">{$pgvuser['username']}</a>)";
+				}
+			}
 			if ($TEXT_DIRECTION=="rtl") print "&rlm;";
 		?>
 		</span><br />
