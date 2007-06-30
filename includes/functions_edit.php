@@ -1592,8 +1592,8 @@ function check_input_date($datestr) {
 		if ($date['day']>9)       $datestr.="{$date['day']} ";
 		else if ($date['day']>0)  $datestr.="0{$date['day']} ";
 		if ($date['mon']!=0)      $datestr.="{$date['month']} ";
-		if ($date['year']>0)      $datestr.="{$date['year']}";
-		else                      $datestr.=(1-$date['year'])." B.C.";
+		if ($date['year']>0)      $datestr.="{$date['year']} ";
+		else                      $datestr.=(1-$date['year'])." B.C. ";
 	}
 	$datestr.=$text;
 	return trim($datestr);
