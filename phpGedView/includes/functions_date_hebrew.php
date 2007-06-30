@@ -275,24 +275,10 @@ function isSingleDigitJeiwshYear($year) {
 }
 
 function getJewishMonthName($month, $year) {
-	global $JEWISH_ASHKENAZ_PRONUNCIATION;
-	$ashkenazMonths = array("Tishrei", "Cheshvan", "Kislev", "Teves", "Shevat", "Adar I", "Adar II", "Nisan", "Iyar", "Sivan", "Tamuz", "Av", "Elul", "Adar");
-	$sefardMonths = array("Tishrei", "Heshvan", "Kislev", "Tevet", "Shevat", "Adar I", "Adar II", "Nisan", "Iyar", "Sivan", "Tamuz", "Av", "Elul", "Adar");
-	$monthNames = $ashkenazMonths;
-	if($JEWISH_ASHKENAZ_PRONUNCIATION != true) {
-		$monthNames = $sefardMonths;
-	}
-	if($month == 6) { // if Adar check for leap year
-		if(isJewishLeapYear($year)) {
-			return $monthNames[5];
-		} else {
-			return $monthNames[13];
-		}
-	} else {
-		if (isset($monthNames[$month - 1])) return $monthNames[$month - 1];
-		else return $monthNames[$month];
-	}
-
+	global $pgv_lang;
+	$months=array('','tvt','csh','ksl','tvt','shv',(isJewishLeapYear($year)?'adr_leap_year':'adr'),
+	              'ads','nsn','iyr','svn','tmz','aav','ell');
+	return $pgv_lang[$months[$month]];
 }
 
 /**
