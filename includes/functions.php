@@ -3299,6 +3299,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $MULTI_LETTER_ALPHABET, $digraph, $trigraph, $quadgraph, $digraphAll, $trigraphAll, $quadgraphAll;
 	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $UCDiacritOrder, $LCDiacritWhole, $LCDiacritStrip, $LCDiacritOrder;
 	global $unknownNN, $unknownPN;
+	global $JEWISH_ASHKENAZ_PRONUNCIATION;
 
 	if (!isset($pgv_language[$desiredLanguage])) $desiredLanguage = "english";
 	$username = getUserName();
@@ -3395,7 +3396,17 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		if (file_exists($file)) {
 			include($file);
 		}
+
 		$result = true;
+	}
+
+	// Modify certain spellings if Ashkenazi pronounciations are in use.
+	if ($JEWISH_ASHKENAZ_PRONUNCIATION)
+		switch($lang_short_cut[$LANGUAGE]) {
+		case 'en':
+			$pgv_lang['csh']='Cheshvan';
+			$pgv_lang['tvt']='Teves';
+			break;
 	}
 
 /**
