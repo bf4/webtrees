@@ -186,7 +186,7 @@ function autosearch_process() {
 		if(isset($_REQUEST['fsurname'])){
 		$url.= "&fathers_last_name=".urlencode($_REQUEST['fsurname']);
 		}
-		if(isset($_REQUEST['mgivenname'])){
+		if(isset($_REQUEST['mgivennames'])){
 		$url.= "&mothers_first_name=".urlencode($_REQUEST['mgivennames']);
 		}
 		
