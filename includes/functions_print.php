@@ -2207,10 +2207,8 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			}
 			print "</a>";
 			// ID age
-			if (!strstr($factrec, "_BIRT_")) {
-				$dct = preg_match("/2 DATE (.*)/", $factrec, $dmatch);
-				if ($dct>0) print " <span class=\"age\">".get_age($gedrec, $dmatch[1])."</span>";
-			}
+			if (!strstr($factrec, "_BIRT_") && preg_match("/2 DATE (.*)/", $factrec, $dmatch))
+				print get_age($gedrec, $dmatch[1]);
 			// RELAtionship calculation : for a family print relationship to both spouses
 			if ($view!="preview" && $type=='FAM') {
 				$famrec = find_family_record($pid);
