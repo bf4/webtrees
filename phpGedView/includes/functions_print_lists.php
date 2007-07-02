@@ -410,7 +410,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "<td class=\"list_value_wrap rela\">";
 		$age=$person->getAge("", date("d M Y"));
 		if ($age)
-			echo "<a href=\"".$person->getDateUrl($person->bdate)."\" class=\"list_item\">".preg_replace('/[^0-9-]/', '', $age)."</a>";
+			echo "<a href=\"".$person->getDateUrl($person->bdate)."\" class=\"list_item\">".$age."</a>";
 		else
 			echo "&nbsp;";
 		echo "</td>";
@@ -453,7 +453,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		if ($person->isDead() && !$person->dest) {
 			$age=$person->getAge("\n1 BIRT\n2 DATE ".$person->ddate."\n", date("d M Y"));
 			if ($age)
-				echo "<a href=\"".$person->getDateUrl($person->ddate)."\" class=\"list_item\">".preg_replace('/[^0-9-]/', '', $age)."</a>";
+				echo "<a href=\"".$person->getDateUrl($person->ddate)."\" class=\"list_item\">".$age."</a>";
 		} else
 			echo "&nbsp;";
 		echo "</td>";
@@ -463,7 +463,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 		$sortkey = 0;
 		if ($person->isDead() && !$person->dest) {
 			$age = $person->getAge();
-			$age=preg_replace('/[^0-9-]/', '', $age);
 			// estimation in days for sorting
 			if (strpos($age, $pgv_lang["months"]) || strpos($age, $pgv_lang["month1"])) $sortkey = $age*29;
 			else if (strpos($age, $pgv_lang["days"]) || strpos($age, $pgv_lang["day1"])) $sortkey = $age*1;
@@ -717,7 +716,6 @@ function print_fam_table($datalist, $legend="") {
 		$age = "";
 		if ($family->getMarriageDate() && !$family->marr_est) {
 			$age=$husb->getAge("", $family->getMarriageDate());
-			$age=preg_replace('/[^0-9-]/', '', $age);
 		}
 		echo "<a href=\"".$husb->getLinkUrl()."\" title=\"".sprintf("%02d",$age)."\" class=\"list_item\">".$age."</a>";
 		echo "</td>";
@@ -753,7 +751,6 @@ function print_fam_table($datalist, $legend="") {
 		$age = "";
 		if ($family->getMarriageDate() && !$family->marr_est) {
 			$age=$wife->getAge("", $family->getMarriageDate());
-			$age=preg_replace('/[^0-9-]/', '', $age);
 		}
 		echo "<a href=\"".$wife->getLinkUrl()."\" title=\"".sprintf("%02d",$age)."\" class=\"list_item\">".$age."</a>";
 		echo "</td>";
@@ -777,7 +774,6 @@ function print_fam_table($datalist, $legend="") {
 		echo "<td class=\"list_value_wrap rela\">";
 		$age = "";
 		if (!$family->marr_est) $age = $husb->getAge("\n1 BIRT\n2 DATE ".$family->marr_date."\n", date("d M Y"));
-		$age=preg_replace('/[^0-9-]/', '', $age);
 		if ($age)
 			echo "<a href=\"".$family->getDateUrl($family->marr_date)."\" class=\"list_item\">".$age."</a>";
 		else echo "&nbsp;";
@@ -1374,7 +1370,6 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 		echo "<td class=\"list_value_wrap rela\">";
 		$person = new Person("");
 		$age = $person->getAge("\n1 BIRT\n2 DATE ".$edate."\n", date("d M Y", $anniv));
-		$age=preg_replace('/[^0-9-]/', '', $age);
 		echo "<a href=\"".$record->getDateUrl($edate)."\"".
 		//" title=\"".strip_tags(get_changed_date(date("d M Y", $anniv)))."\"".
 		" title=\"".date("m-d-Y", $anniv)."\"".
