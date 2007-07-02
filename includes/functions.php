@@ -1752,8 +1752,8 @@ function compare_facts_date($arec, $brec) {
 // We need stability to keep fam1 events separate from fam2
 // :TODO: Insertion sort is also stable and would be quicker.
 function stable_usort(&$arr, $cmp) {
-	for ($i=0; $i<count($arr); ++$i)
-		for ($j=$i+1; $j<count($arr)-1; ++$j)
+	for ($i=0; $i<count($arr)-1; ++$i)
+		for ($j=$i+1; $j<count($arr); ++$j)
 			if ($cmp($arr[$i],$arr[$j])>0) {
 				$tmp=$arr[$i];
 				$arr[$i]=$arr[$j];
