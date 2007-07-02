@@ -364,7 +364,7 @@ if (count($controller->people)>0) {
 	print "\n\t\t<div id=\"scale{$controller->topyear}\" style=\"font-family: Arial; position:absolute; ".($TEXT_DIRECTION =="ltr"?"left: $basexoffset":"right: $basexoffset")."px; top:".floor($baseyoffset+(($controller->topyear-$controller->baseyear)*$controller->scale))."px; font-size: 7pt; text-align:".($TEXT_DIRECTION =="ltr"?"left":"right").";\">\n";
 	print $controller->topyear."--";
 	print "</div>";
-	usort($controller->indifacts, "compare_facts");
+	stable_usort($controller->indifacts, "compare_facts");
 	$factcount=0;
 	foreach($controller->indifacts as $indexval => $fact) {
 		$controller->print_time_fact($fact);
