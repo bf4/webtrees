@@ -902,12 +902,14 @@ function get_age($indirec, $datestr, $style=1) {
 	// the birth/event dates may be in different calendars.
 	if (abs($max_age)<28) { // show in days
 		if ($min_age==$max_age)
-			if ($max_age-$min_age==1)
+			if ($max_age==0)
+				$age=""; // do not print "Age: 0 days"
+			else if ($max_age==1)
 				$age="1 {$pgv_lang['day1']}";
 			else
-				$age="$max_age {$pgv_lang['days']}";
+				$age=$max_age." {$pgv_lang['days']}";
 		else
-			$age="$min_age - $max_age {$pgv_lang['days']}";
+			$age=$min_age."-".$max_age." {$pgv_lang['days']}";
 	} else if (abs($max_age)<731) { // show in months
 		$min_age=floor($min_age/28);
 		$max_age=floor($max_age/28);
@@ -915,9 +917,9 @@ function get_age($indirec, $datestr, $style=1) {
 			if ($max_age-$min_age==1)
 				$age="1 {$pgv_lang['month1']}";
 			else
-				$age="$max_age {$pgv_lang['months']}";
+				$age=$max_age." {$pgv_lang['months']}";
 		else
-			$age="$min_age - $max_age {$pgv_lang['months']}";
+			$age=$min_age."-".$max_age." {$pgv_lang['months']}";
 	} else { // show in years
 		$min_age=floor($min_age/365.25);
 		$max_age=floor($max_age/365.25);
@@ -925,12 +927,12 @@ function get_age($indirec, $datestr, $style=1) {
 			if ($max_age-$min_age==1)
 				$age="1 {$pgv_lang['year1']}";
 			else
-				$age="$max_age {$pgv_lang['years']}";
+				$age=$max_age; //"$max_age {$pgv_lang['years']}";
 		else
-			$age="$min_age - $max_age {$pgv_lang['years']}";
+			$age=$min_age."-".$max_age; // {$pgv_lang['years']}";
 	}
 
-	if ($approx) $age.=" {$pgv_lang['apx']}";
+	if ($approx && !strpos($age, "-")) $age.=" {$pgv_lang['apx']}";
 	if ($style)  $age=" <span class=\"age\">({$pgv_lang['age']} {$age})</span>";
 	return $age;
 }
