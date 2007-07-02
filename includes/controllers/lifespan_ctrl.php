@@ -470,7 +470,7 @@ class LifespanControllerRoot extends BaseController {
 				$value->add_family_facts(false);
 				$unparsedEvents = $value->getIndiFacts();
 				//sort_facts($unparsedEvents);
-				usort($unparsedEvents, "compare_facts");
+				stable_usort($unparsedEvents, "compare_facts");
 				//print_r($unparsedEvents);
 
 				$eventinformation = Array();

@@ -1571,234 +1571,131 @@ function lettersort($a, $b) {
 }
 
 function compare_fact_type($afact, $bfact) {
-	global $factarray, $pgv_lang, $ASC, $IGNORE_YEAR, $IGNORE_FACTS, $DEBUG, $USE_RTL_FUNCTIONS;
+	global $factarray, $pgv_lang;
+	static $factsort;
 
-	$bef = -1;
-	$aft = 1;
-	if ($ASC) {
-		$bef = 1;
-		$aft = -1;
-	}
+	// _BIRT_????, etc. all sort together.
+	if (preg_match('/(_\w+_)/', $afact, $match)) $afact=$match[1];
+	if (preg_match('/(_\w+_)/', $bfact, $match)) $bfact=$match[1];
 
-	//-- array for sorting facts in the correct order
-	// original $factsort = array("BIRT"=>1, "FCOM"=>2, "CHR"=>3, "ADOP"=>4, "BAPM"=>5, "BARM"=>6, "BASM"=>6, "NATU"=>8, "EMIG"=>8, "IMMI"=>8, "MARR"=>7, "DIV"=>8, "RESI"=>8, "OCCU"=>8, "RETI"=>9, "DEAT"=>10, "BURI"=>11, "CREM"=>12, "BAPL"=>51, "ENDL"=>52, "SLGC"=>50, "SLGS"=>53, "CHAN"=>100);
+	if (!is_array($factsort))
+		$factsort = array_flip(array(
+			"BIRT", 
+			"_HNM",
+			"ALIA", "_AKA", "_AKAN", 
+			"ADOP", "_ADPF", "_ADPF",
+			"_BRTM",
+			"CHR", "BAPM", 
+			"FCOM",
+			"CONF",
+			"BARM", "BASM",  
+			"EDUC",
+			"GRAD",
+			"_DEG",
+			"EMIG", "IMMI", 
+			"NATU", 
+			"_MILI", "_MILT",
+			"ENGA",
+			"MARB", "MARC", "MARL", "_MARI", "_MBON",
+			"MARR", "MARR_CIVIL", "MARR_RELIGIOUS", "MARR_PARTNERS", "MARR_UNKNOWN", "_COML",
+			"_STAT",
+			"_SEPR",
+			"DIVF",
+			"MARS",
+			"DIV", "ANUL", 
+			"_BIRT_", "_MARR_", "_DEAT_",
+			"CENS",
+			"OCCU", 
+			"RESI", 
+			"PROP",
+			"CHRA",
+			"RETI", 
+			"FACT", "EVEN",
+			"_NMR", "_NMAR", "NMR",
+			"NCHI",
+			"WILL",
+			"_HOL",
+			"DEAT", "CAUS",
+			"_FNRL", "BURI", "CREM", "_INTE", "CEME",
+			"_YART",
+			"_NLIV",
+			"PROB",
+			"TITL",
+			"COMM",
+			"NATI",
+			"CITN",
+			"CAST",
+			"RELI",
+			"SSN", "IDNO",
+			"TEMP",
+			"SLGC", "BAPL", "CONL", "ENDL", "SLGS", 
+			"AFN", "REFN", "_PRMN", "REF", "RIN",
+			"ADDR", "PHON", "EMAIL", "_EMAIL", "EMAL", "FAX", "WWW", "URL", "_URL",
+			"CHAN"
+		));
 
-	$factsort = array("BIRT"=>1, 
-			"_HNM"=>2,
-			"ALIA"=>3, "_AKA"=>3, "_AKAN"=>3, 
-			"ADOP"=>4, "_ADPF"=>4, "_ADPF"=>4,
-			"_BRTM"=>5,
-			"CHR"=>6, "BAPM"=>6, 
-			"FCOM"=>7,
-			"CONF"=>8,
-			"BARM"=>9, "BASM"=>9,  
-			"EDUC"=>10,
-			"GRAD"=>11,
-			"_DEG"=>12,
-			"EMIG"=>15, "IMMI"=>15, 
-			"NATU"=>16, 
-			"_MILI"=>20, "_MILT"=>20,
-			"ENGA"=>30,
-			"MARB"=>31, "MARC"=>31, "MARL"=>31, "_MARI"=>31, "_MBON"=>31,
-			"MARR"=>32, "MARR_CIVIL"=>32, "MARR_RELIGIOUS"=>32, 
-			            "MARR_PARTNERS"=>32, "MARR_UNKNOWN"=>32, "_COML"=>32,
-			"_STAT"=>33,
-			"_SEPR"=>34,
-			"DIVF"=>35,
-			"MARS"=>36,
-			"DIV"=>37, "ANUL"=>37, 
-			"CENS"=>39,
-			"OCCU"=>40, 
-			"RESI"=>41, 
-			//"ADDR"=>42,	// Changed to sort near bottom.
-			"PROP"=>43,
-			"CHRA"=>50,
-			"RETI"=>51, 
-			"FACT"=>55, "EVEN"=>55,
-			"_NMR"=>61, "_NMAR"=>61,
-			"NMR"=>62,
-			"NCHI"=>63,
-			"WILL"=>68,
-			"_HOL"=>69,
-			"DEAT"=>70, 
-			"CAUS"=>71,
-			"_FNRL"=>72,
-			"BURI"=>73, "CREM"=>73, "_INTE"=>73,
-			"CEME"=>74,
-			"_YART"=>75,
-			"_NLIV"=>79,
-			"PROB"=>81,
-			"TITL"=>90,
-			"COMM"=>91,
-			"NATI"=>92,
-			"CITN"=>93,
-			"CAST"=>94,
-			"RELI"=>95,
-			"SSN"=>96,
-			"IDNO"=>97,
-			"TEMP"=>100,
-			"SLGC"=>101, 
-			"BAPL"=>102, 
-			"CONL"=>103, 
-			"ENDL"=>104, 
-			"SLGS"=>105, 
-			"AFN"=>110,
-			"REFN"=>112,
-			"_PRMN"=>113,
-			"REF"=>114,
-			"RIN"=>115,
-			"CHAN"=>120);
-
-	// This short circuits the _DEAT_GPAR from interfering with sorting order.
-	// Any FACT not set in the table above will cause the sort to stop.
-	if ((!isset($factsort[$afact])) && ((substr($afact, 0, 5) == "_BIRT") ||
-             (substr($afact, 0, 5) == "_DEAT") || (substr($afact, 0, 5) == "_MARR") )) {
-		$factsort[$afact] = 0; 
-	}
-	if ((!isset($factsort[$bfact])) && ((substr($bfact, 0, 5) == "_BIRT") ||
-             (substr($bfact, 0, 5) == "_DEAT") || (substr($bfact, 0, 5) == "_MARR") )) {
-		$factsort[$bfact] = 0;
-	}
-
-	if (isset($factsort[$afact]) || isset($factsort[$bfact])) {
-		if (!isset($factsort[$afact])) {
-			if (preg_match("/ASSO/", $afact)>0) $factsort[$afact] = 52;
-			else {
-				if ($DEBUG) print " ASSO aft";
-				return $aft;
-			}
-		}
-		if (!isset($factsort[$bfact])) {
-			if (preg_match("/ASSO/", $bfact)>0) $factsort[$bfact] = 52;
-			else {
-				if ($DEBUG) print " ASSO bef";
-				return $bef;
-			}
-		}
-		if ($DEBUG) print "factsort ".($factsort[$afact]-$factsort[$bfact]);
+	if (isset($factsort[$afact]) && isset($factsort[$bfact]))
 		return $factsort[$afact]-$factsort[$bfact];
-	}
-
-	//-- group address related data together
-	$addr_group = array("ADDR"=>1,"PHON"=>2,"EMAIL"=>3,"_EMAIL"=>4,"EMAL"=>5,"FAX"=>6,"WWW"=>7,"URL"=>8,"_URL"=>9);
-	if (isset($addr_group[$afact]) && isset($addr_group[$bfact])) {
-		if ($DEBUG) print ($addr_group[$afact]-$addr_group[$bfact]);
-		return $addr_group[$afact]-$addr_group[$bfact];
-	}
-	if (isset($addr_group[$afact]) && !isset($addr_group[$bfact])) {
-		if ($DEBUG) print "aft";
-		return $aft;
-	}
-	if (!isset($addr_group[$afact]) && isset($addr_group[$bfact])) {
-		if ($DEBUG) print "bef";
-		return $bef;
-	}
-
-	return false;
+	else
+		return 0;
 }
 
 /**
  * compare two fact records by date
  *
- * Compare facts function is used by the usort PHP function to sort fact baseds on date
- * it parses out the year and if the year is the same, it creates a timestamp based on
- * the current year and the month and day information of the fact
+ * Compare facts function is used by the usort PHP function to sort fact baseds on date, family and type
  * @param mixed $a an array with the fact record at index 1 or just a string with the factrecord
  * @param mixed $b an array with the fact record at index 1 or just a string with the factrecord
- * @return int -1 if $a should be sorted first, 0 if they are the same, 1 if $b should be sorted first
+ * @return int <0 if $a should be sorted first, 0 if they should stay in order, >0 if $b should be sorted first
  */
 function compare_facts($a, $b) {
-	global $factarray, $pgv_lang, $ASC, $IGNORE_YEAR, $IGNORE_FACTS, $DEBUG, $USE_RTL_FUNCTIONS;
+	global $factarray, $pgv_lang;
 
-	if (!isset($ASC)) $ASC = 0;
-	if (!isset($IGNORE_YEAR)) $IGNORE_YEAR = 0;
-	if (!isset($IGNORE_FACTS)) $IGNORE_FACTS = 0;
-
-	$bef = -1;
-	$aft = 1;
-	if ($ASC) {
-		$bef = 1;
-		$aft = -1;
-	}
-
-	if (is_array($a)) $arec = $a[1];
-	else $arec = $a;
-	if (is_array($b)) $brec = $b[1];
-	else $brec = $b;
-	if ($DEBUG) print "\n<br />".substr($arec,0,8)."==".substr($brec,0,8)." ";
-
-	if (preg_match("/1\s+(\w+)/", $arec, $match)==0)
+	if (is_array($a))
+		$arec = $a[1];
+	else
+		$arec = $a;
+	if (is_array($b))
+		$brec = $b[1];
+	else
+		$brec = $b;
+	
+	if (!preg_match("/1\s+(\w+)/", $arec, $matcha) || !preg_match("/1\s+(\w+)/", $brec, $matchb))
 		return 0;
-	$afact = $match[1];
+
+	// 1: If both facts have dates, sort by them
+	$cfd=compare_facts_date($arec, $brec);
+	if ($cfd!=0)
+		return $cfd;
+
+	// 2: Facts from different families stay retain their original order
+	if (preg_match('/_PGVFS @(\w+)@/', $arec, $match1) && preg_match('/_PGVFS @(\w+)@/', $brec, $match2) && $match1[1]!=$match2[1])
+		return 0;
+
+	$afact=$matcha[1];
+	$bfact=$matchb[1];
 	if (($afact=="EVEN" || $afact=="FACT") && preg_match("/2\s+TYPE\s+(\w+)/", $arec, $match) && isset($factarray[$match[1]]))
 		$afact=$match[1];
-
-	if (preg_match("/1\s+(\w+)/", $brec, $match)==0)
-		return 0;
-	$bfact = $match[1];
 	if (($bfact=="EVEN" || $bfact=="FACT") && preg_match("/2\s+TYPE\s+(\w+)/", $brec, $match) && isset($factarray[$match[1]]))
 		$bfact=$match[1];
 	
-	// Sinking "changed" to the very bottom
-	if ($afact=='CHAN') {
-		if ($DEBUG) print "chan aft";
-		return $aft;
-	}
-	if ($bfact=='CHAN') {
-		if ($DEBUG) print "chan bef";
-		return $bef;
-	}
-	
-	//-- dates should always take priority
-	$cfd = compare_facts_date($arec, $brec);
-	if ($cfd!=0) {
-		if ($DEBUG) print "date ".$cfd;
-		return $cfd;
-	}
+	// 3: Compare by fact type
+	$cft=compare_fact_type($afact, $bfact);
+	if ($cft!=0)
+	 	return $cft;
 
-	// Float birth to the very top
-	if ($afact=='BIRT' && $bfact!='BIRT') {
-		if ($DEBUG) print "birt bef";
-		return $bef;
-	}
-	if ($afact!='BIRT' && $bfact=='BIRT') {
-		if ($DEBUG) print "birt aft";
-		return $aft;
-	}
-	
-	// Putting Death before burial or cremation.
-	if ($afact=='DEAT' && ($bfact=='BURI' || $bfact=='CREM')) {
-		if ($DEBUG) print "deat bef buri";
-		return $bef;
-	}
-	if ($bfact=='DEAT' && ($afact=='BURI' || $afact=='CREM')) {
-		if ($DEBUG) print "buri aft deat";
-		return $aft;
-	}
-	// cremation then burial is possible, reverse is not logical.
-	if ($afact=='CREM' && $bfact=='BURI') {
-		if ($DEBUG) print "crem bef buri";
-		return $bef;
-	}
-	if ($bfact=='CREM' && $afact=='BURI') {
-		if ($DEBUG) print "crem aft deat";
-		return $aft;
-	}
-
-		if (!$IGNORE_FACTS) {
-			$res = compare_fact_type($afact, $bfact);
-			if ($res!==false) return $res;
-		}
-	//-- sort by fact name
-			if (isset($factarray[$afact])) $afact = $factarray[$afact];
-			else if (isset($pgv_lang[$afact])) $afact = $pgv_lang[$afact];
-			if (isset($factarray[$bfact])) $bfact = $factarray[$bfact];
-			else if (isset($pgv_lang[$bfact])) $bfact = $pgv_lang[$bfact];
-			$c = stringsort($afact, $bfact);
-			if ($DEBUG==1) {
-		if ($c<0) print "string bef"; else print "string aft";
-			}
-			return $c;
+	// 4: sort by fact name
+	if (isset($factarray[$afact]))
+		$afact = $factarray[$afact];
+	else
+		if (isset($pgv_lang[$afact]))
+			$afact = $pgv_lang[$afact];
+	if (isset($factarray[$bfact]))
+		$bfact = $factarray[$bfact];
+	else
+		if (isset($pgv_lang[$bfact]))
+			$bfact = $pgv_lang[$bfact];
+	return stringsort($afact, $bfact);
 }
 
 // Helper function to sort facts.
@@ -1843,115 +1740,27 @@ function compare_facts_date($arec, $brec) {
 		$bmin=$bmax;
 	}
 
-	if ($amax < $bmin)
+	if ($amax<$bmin)
 		return -1;
-	else if ($amin > $bmax)
+	else if ($amin>$bmax)
 		return 1;
 	else
 		return 0;
 }
 
-/**
- * This function will sort a list of facts
- * It uses an insertion sort algorithm which is a slower algorithm
- * but it insures that all of the items get checked against each other
- * which works better with the way that facts are sorted.
- * New twist: Run the sort twice, first on dated material, then undated,
- * inserting at the last position that matches sort order.
- * @param array $factlist	the array of facts to sort
- */
-/*-- this function is depricated for poor performance
-function sort_facts(&$factlist) {
-	global $DEBUG;
-	$count = count($factlist);
-	if ($DEBUG==1) {
-		for($i=0; $i<$count; $i++) {
-			if (is_array($factlist[$i])) print "[".$i."=>".substr($factlist[$i][1], 0, 6)."]";
-			else print "[".$i."=>".substr($factlist[$i], 0, 6)."]";
-		}
-	}
-	$newfacts = array();
-	if ($count==0) return;
-	$newfacts[]=$factlist[0];
-	//-- insertion sort algorithm
-	for($i=1; $i<$count; $i++) {
-		if ($DEBUG==1) print "<br /><br />";
-		$countj = count($newfacts);
-
-		if(strstr(substr($factlist[$i][1], 0, 100), "2 DATE ")) {
-			$small = 0;
-			for($j=0; $j<$countj; $j++) {
-				$c = compare_facts($factlist[$i], $newfacts[$j]);
-				if ($c<0) break;
-				else $small = $j;
+// Since PHP 4.1.0, the usort() function is no longer stable.
+// We need stability to keep fam1 events separate from fam2
+// :TODO: Insertion sort is also stable and would be quicker.
+function stable_usort(&$arr, $cmp) {
+	for ($i=0; $i<count($arr); ++$i)
+		for ($j=$i+1; $j<count($arr)-1; ++$j)
+			if ($cmp($arr[$i],$arr[$j])>0) {
+				$tmp=$arr[$i];
+				$arr[$i]=$arr[$j];
+				$arr[$j]=$tmp;
 			}
-
-			if ($small==0 && $j<1) array_unshift($newfacts, $factlist[$i]);
-			else if ($c>0) array_push($newfacts, $factlist[$i]);
-			else array_splice($newfacts, $small+1, 0, array($factlist[$i]));
-
-			if ($DEBUG==1) {
-				print "<br />Small=".$small." C=$c";
-				for($k=0; $k<$countj+1; $k++) {
-					if (is_array($factlist[$k])) print "[".$k."=>".substr($newfacts[$k][1], 0, 6)."]";
-					else print "[".$k."=>".substr($newfacts[$k], 0, 6)."]";
-				}
-			}
-		}
-	}
-	$count = count($factlist);
-	for($i=1; $i<$count; $i++) {
-		if ($DEBUG==1) print "<br /><br />";
-		$countj = count($newfacts);
-		if(!strstr(substr($factlist[$i][1], 0, 100), "2 DATE ")) {
-			$small = 0;
-			for($j=0; $j<$countj; $j++) {
-				$c = compare_facts($factlist[$i], $newfacts[$j]);
-				// Ignore the _DEAT_GPAR type records 
-				if (($c>=0) && (substr($newfacts[$j][1], 2, 5) != "_BIRT") &&
-					       (substr($newfacts[$j][1], 2, 5) != "_DEAT") &&
-					       (substr($newfacts[$j][1], 2, 5) != "_MARR") ) {
-					// Insert into the last position that would be in fact order.
-				   	$small = $j;
-				}
-				if((substr($factlist[$i][1], 2, 3) == "DIV") &&
-				   (substr($newfacts[$j][1], 2, 4) == "MARR")) {
-					$act = preg_match("/ _PGVFS @.*@/", $factlist[$i][1], $famAmatch);
-					$bct = preg_match("/ _PGVFS @.*@/", $newfacts[$j][1], $famBmatch);
-					if((($act) && ($bct)) && ($famAmatch == $famBmatch)) {
-				   		$small = $j;
-						break;  // Perfect match, pair together.
-					}
-				}
-				if((substr($factlist[$i][1], 2, 4) == "MARR") &&
-				   (substr($newfacts[$j][1], 2, 3) == "DIV")) {
-					$act = preg_match("/ _PGVFS @.*@/", $factlist[$i][1], $famAmatch);
-					$bct = preg_match("/ _PGVFS @.*@/", $newfacts[$j][1], $famBmatch);
-					if((($act) && ($bct)) && ($famAmatch != $famBmatch)) {
-				   		$small = $j; 
-						// Go past this divorce before starting new marriage.
-					}
-				}
-
-			}
-
-			if ($small==0 && $j<1) array_unshift($newfacts, $factlist[$i]);
-			else if (($small+1) >= $countj) array_push($newfacts, $factlist[$i]);
-			else array_splice($newfacts, $small+1, 0, array($factlist[$i]));
-
-			if ($DEBUG==1) {
-				print "<br />Small=".$small." C=$c";
-				for($k=0; $k<$countj+1; $k++) {
-					if (is_array($factlist[$k])) print "[".$k."=>".substr($newfacts[$k][1], 0, 6)."]";
-					else print "[".$k."=>".substr($newfacts[$k], 0, 6)."]";
-				}
-			}
-		}
-
-	}
-	$factlist = $newfacts;
 }
-*/
+
 /**
  * fact date sort
  *
