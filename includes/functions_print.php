@@ -2311,7 +2311,7 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 				if (!$indirec) $indirec=find_person_record($pid);
 				// do not print age after death
 				$deatrec=get_sub_record(1, "1 DEAT", $indirec);
-				if (empty($deatrec)||(compare_facts($factrec, $deatrec)!=1)||(strstr($factrec, "1 DEAT"))) {
+				if (empty($deatrec)||(compare_facts_date($factrec, $deatrec)<=0)||(strstr($factrec, "1 DEAT"))) {
 					print get_age($indirec,$match[1]);
 				}
 			}
