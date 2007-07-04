@@ -900,7 +900,7 @@ function get_age($indirec, $datestr, $style=1) {
 
 	// Convert to days/months/years/etc.  NB - this is not perfect, as
 	// the birth/event dates may be in different calendars.
-	if (abs($max_age)<28) { // show in days
+	if (abs($max_age)<30) { // show in days
 		if ($min_age==$max_age)
 			if ($max_age==0)
 				$age=""; // do not print "Age: 0 days"
@@ -911,8 +911,8 @@ function get_age($indirec, $datestr, $style=1) {
 		else
 			$age=$min_age."-".$max_age." {$pgv_lang['days']}";
 	} else if (abs($max_age)<731) { // show in months
-		$min_age=floor($min_age/28);
-		$max_age=floor($max_age/28);
+		$min_age=floor($min_age/30.4);
+		$max_age=floor($max_age/30.4);
 		if ($min_age==$max_age)
 			if ($max_age-$min_age==1)
 				$age="1 {$pgv_lang['month1']}";

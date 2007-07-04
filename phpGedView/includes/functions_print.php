@@ -2210,14 +2210,16 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			if (!strstr($factrec, "_BIRT_") && preg_match("/2 DATE (.*)/", $factrec, $dmatch))
 				print get_age($gedrec, $dmatch[1]);
 			// RELAtionship calculation : for a family print relationship to both spouses
-			if ($view!="preview" && $type=='FAM') {
-				$famrec = find_family_record($pid);
-				if ($famrec) {
-					$parents = find_parents_in_record($famrec);
-					$pid1 = $parents["HUSB"];
-					if ($pid1 and $pid1!=$pid2) print " - <a href=\"relationship.php?pid1=$pid1&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["husband"] . "\" alt=\"" . $pgv_lang["husband"] . "\" class=\"sex_image\" />]</a>";
-					$pid1 = $parents["WIFE"];
-					if ($pid1 and $pid1!=$pid2) print " - <a href=\"relationship.php?pid1=$pid1&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["wife"] . "\" alt=\"" . $pgv_lang["wife"] . "\" class=\"sex_image\" />]</a>";
+			if ($view!="preview") {
+				if ($type=='FAM') {
+					$famrec = find_family_record($pid);
+					if ($famrec) {
+						$parents = find_parents_in_record($famrec);
+						$pid1 = $parents["HUSB"];
+						if ($pid1 and $pid1!=$pid2) print " - <a href=\"relationship.php?pid1=$pid1&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["husband"] . "\" alt=\"" . $pgv_lang["husband"] . "\" class=\"sex_image\" />]</a>";
+						$pid1 = $parents["WIFE"];
+						if ($pid1 and $pid1!=$pid2) print " - <a href=\"relationship.php?pid1=$pid1&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["wife"] . "\" alt=\"" . $pgv_lang["wife"] . "\" class=\"sex_image\" />]</a>";
+					}
 				}
 				else if ($pid!=$pid2) print " - <a href=\"relationship.php?pid1=$pid&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "]</a>";
 			}
