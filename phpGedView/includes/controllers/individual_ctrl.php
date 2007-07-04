@@ -684,12 +684,7 @@ class IndividualControllerRoot extends BaseController {
 	 */
 	function getIndiFacts() {
 		$indifacts = $this->indi->getIndiFacts();
-		//-- sort the facts
 		stable_usort($indifacts, "compare_facts");
-		//-- remove duplicate facts
-		foreach ($indifacts as $key => $value) $indifacts[$key] = serialize($value);
-		$indifacts = array_unique($indifacts);
-		foreach ($indifacts as $key => $value) $indifacts[$key] = unserialize($value);
 		return $indifacts;
 	}
 	/**
@@ -997,7 +992,6 @@ class IndividualControllerRoot extends BaseController {
 		}
 		else {
 			$indifacts = $this->getIndiFacts();
-			stable_usort($indifacts, 'compare_facts');
 			if (count($indifacts)==0) print "<tr><td id=\"no_tab1\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab1"]."</td></tr>\n";
 			print "<tr id=\"row_top\"><td></td><td class=\"descriptionbox rela\">";
 			print "<a href=\"javascript:;\" onclick=\"togglerow('row_rela'); return false;\">";
