@@ -292,15 +292,11 @@ class Person extends GedcomRecord {
 		$this->bdate2 = get_gedcom_value("DATE", 2, $this->brec2, '', false);
 		$this->ddate2 = get_gedcom_value("DATE", 2, $this->drec2, '', false);
 		//-- if no birthdate look for christening
-		if (empty($this->bdate)) {
-			$this->bdate = get_gedcom_value("CHR:DATE", 1, $this->gedrec, '', false);
-			$this->bplace = get_gedcom_value("CHR:PLAC", 1, $this->gedrec, '', false);
-		}
+		if (empty($this->bdate)) $this->bdate = get_gedcom_value("CHR:DATE", 1, $this->gedrec, '', false);
+		if (empty($this->bplace)) $this->bplace = get_gedcom_value("CHR:PLAC", 1, $this->gedrec, '', false);
 		//-- if no death look for burial
-		if (empty($this->ddate)) {
-			$this->ddate = get_gedcom_value("BURI:DATE", 1, $this->gedrec, '', false);
-			$this->dplace = get_gedcom_value("BURI:PLAC", 1, $this->gedrec, '', false);
-		}
+		if (empty($this->ddate)) $this->ddate = get_gedcom_value("BURI:DATE", 1, $this->gedrec, '', false);
+		if (empty($this->dplace)) $this->dplace = get_gedcom_value("BURI:PLAC", 1, $this->gedrec, '', false);
 		//-- if no death estimate from birth
 		if (empty($this->ddate) && !empty($this->bdate)) {
 			$pdate=parse_date($this->bdate);
