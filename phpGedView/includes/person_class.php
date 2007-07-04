@@ -946,7 +946,7 @@ class Person extends GedcomRecord {
 			if ($spouse && strstr($SHOW_RELATIVES_EVENTS, $fact)) {
 				$srec = $spouse->getDeathRecord(false);
 				$sdate = get_sub_record(2, "2 DATE", $srec);
-				if (compare_facts($this->getGedcomBirthDate(), $sdate)<0 && compare_facts($sdate, $this->getGedcomDeathDate())<0) {
+				if (compare_facts_date($this->getGedcomBirthDate(), $sdate)<0 && compare_facts_date($sdate, $this->getGedcomDeathDate())<0) {
 					$factrec = "1 ".$fact;
 					if (strstr($srec, "1 BURI")) $factrec .= " ".$factarray["BURI"];
 					$factrec .= "\n".trim($sdate);
@@ -964,7 +964,7 @@ class Person extends GedcomRecord {
 			if ($spouse and strstr($SHOW_RELATIVES_EVENTS, $fact)) {
 				$srec = $spouse->getDeathRecord(false);
 				$sdate = get_sub_record(2, "2 DATE", $srec);
-				if (compare_facts($this->getGedcomBirthDate(), $sdate)<0 && compare_facts($sdate, $this->getGedcomDeathDate())<0) {
+				if (compare_facts_date($this->getGedcomBirthDate(), $sdate)<0 && compare_facts_date($sdate, $this->getGedcomDeathDate())<0) {
 					$factrec = "1 ".$fact;
 					if (strstr($srec, "1 BURI")) $factrec .= " ".$factarray["BURI"];
 					$factrec .= "\n".trim($sdate);
@@ -996,7 +996,7 @@ class Person extends GedcomRecord {
 						if ($sfamid==$famid && $rela=="mother") continue; // show current family marriage only for father
 						$srec = $sfamily->getMarriageRecord();
 						$sdate = get_sub_record(2, "2 DATE", $srec);
-						if (compare_facts($this->getGedcomBirthDate(), $sdate)<0 && compare_facts($sdate, $this->getGedcomDeathDate())<0) {
+						if (compare_facts_date($this->getGedcomBirthDate(), $sdate)<0 && compare_facts_date($sdate, $this->getGedcomDeathDate())<0) {
 							$factrec = "1 ".$fact;
 							$factrec .= "\n".trim($sdate);
 							if (!showFact("MARR", $sfamid)) $factrec .= "\n2 RESN privacy";
@@ -1086,7 +1086,7 @@ class Person extends GedcomRecord {
 					if (!$srec) $srec = get_sub_record(1, "1 CHR", $childrec);
 					$sdate = get_sub_record(2, "2 DATE", $srec);
 					if ($fact=="_BIRT_CHIL" or // always print child's birth event
-						(compare_facts($this->getGedcomBirthDate(), $sdate)<0 and compare_facts($sdate, $this->getGedcomDeathDate())<0)
+						(compare_facts_date($this->getGedcomBirthDate(), $sdate)<0 && compare_facts_date($sdate, $this->getGedcomDeathDate())<0)
 						) {
 						$factrec = "1 ".$fact;
 						if (strstr($srec, "1 CHR")) $factrec .= " ".$factarray["CHR"];
@@ -1109,7 +1109,7 @@ class Person extends GedcomRecord {
 					$srec = get_sub_record(1, "1 DEAT", $childrec);
 					if (!$srec) $srec = get_sub_record(1, "1 BURI", $childrec);
 					$sdate = get_sub_record(2, "2 DATE", $srec);
-					if (compare_facts($this->getGedcomBirthDate(), $sdate)<0 and compare_facts($sdate, $this->getGedcomDeathDate())<0) {
+					if (compare_facts_date($this->getGedcomBirthDate(), $sdate)<0 && compare_facts_date($sdate, $this->getGedcomDeathDate())<0) {
 						$factrec = "1 ".$fact;
 						if (strstr($srec, "1 BURI")) $factrec .= " ".$factarray["BURI"];
 						$factrec .= "\n".trim($sdate);
@@ -1132,7 +1132,7 @@ class Person extends GedcomRecord {
 						$childrec = $sfamily->getGedcomRecord();
 						$srec = get_sub_record(1, "1 MARR", $childrec);
 						$sdate = get_sub_record(2, "2 DATE", $srec);
-						if (compare_facts($this->getGedcomBirthDate(), $sdate)<0 && compare_facts($sdate, $this->getGedcomDeathDate())<0) {
+						if (compare_facts_date($this->getGedcomBirthDate(), $sdate)<0 && compare_facts_date($sdate, $this->getGedcomDeathDate())<0) {
 							$factrec = "1 ".$fact;
 							$factrec .= "\n".trim($sdate);
 							if (!showFact("MARR", $sfamid)) $factrec .= "\n2 RESN privacy";
@@ -1191,7 +1191,7 @@ class Person extends GedcomRecord {
 			$srec = $spouse->getDeathRecord(false);
 			if (!$srec) $srec = get_sub_record(1, "1 BURI", $spouse->getGedcomRecord());
 			$sdate=get_sub_record(2, "2 DATE", $srec);
-			if (compare_facts($this->getGedcomBirthDate(), $sdate)<0 && compare_facts($sdate, $this->getGedcomDeathDate())<0) {
+			if (compare_facts_date($this->getGedcomBirthDate(), $sdate)<0 && compare_facts_date($sdate, $this->getGedcomDeathDate())<0) {
 				$factrec = "1 ".$fact;
 				if (strstr($srec, "1 BURI")) $factrec .= " ".$factarray["BURI"];
 				$factrec .= "\n".trim($sdate);
@@ -1242,7 +1242,7 @@ class Person extends GedcomRecord {
 		}
 		foreach ($histo as $indexval=>$hrec) {
 			$sdate = get_sub_record(2, "2 DATE", $hrec);
-			if (compare_facts($this->getGedcomBirthDate(), $sdate)<0 and compare_facts($sdate, $this->getGedcomDeathDate())<0) {
+			if (compare_facts_date($this->getGedcomBirthDate(), $sdate)<0 && compare_facts_date($sdate, $this->getGedcomDeathDate())<0) {
 				$this->indifacts[]=array(0, $hrec);
 			}
 		}
