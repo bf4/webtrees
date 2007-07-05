@@ -3226,8 +3226,9 @@ function get_event_list() {
 			}
 		}
 
-// Sort the Facts data just found by anniversary date
-		uasort($found_facts, "compare_foundFacts_datestamp");
+		// Unlike elsewhere in the code, we don't need a stable sort as we don't
+		// need to preserve the order of undated facts.
+		uasort($found_facts, "compare_facts");
 		reset($found_facts);
 
 // Cache the Facts data just found
@@ -3243,11 +3244,4 @@ function get_event_list() {
 	return $found_facts;
 }
 
-/**
- * Helper function for sorting the $found_facts array
- */
-function compare_foundFacts_datestamp($a, $b) {
-	if ($a[3] == $b[3]) return 0;
-	return ($a[3] < $b[3]) ? -1 : 1;
-}
 ?>
