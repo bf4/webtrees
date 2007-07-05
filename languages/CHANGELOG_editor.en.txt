@@ -44,6 +44,7 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+-$pgv_lang["family"]                    05 July 2007      M moved to lang.xx.php for [1736907]
 +$pgv_lang["admin_override"]						04 March 2007			w
 *$pgv_lang["no_update_CHAN"]						04 March 2007			w
 +$pgv_lang["admin_override"]						03 March 2007			A
