@@ -69,16 +69,14 @@ function expand_urls($text) {
  */
 function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 	global $factarray;
-	global $nonfacts, $birthyear, $birthmonth, $birthdate;
-	global $hebrew_birthyear, $hebrew_birthmonth, $hebrew_birthdate;
-	global $BOXFILLCOLOR, $PGV_IMAGE_DIR;
+	global $nonfacts;
+	global $PGV_IMAGE_DIR;
 	global $pgv_lang, $GEDCOM;
 	global $WORD_WRAPPED_NOTES;
 	global $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
 	global $HIDE_GEDCOM_ERRORS, $SHOW_ID_NUMBERS;
-	global $CONTACT_EMAIL, $view, $FACT_COUNT, $monthtonum;
+	global $CONTACT_EMAIL, $view, $FACT_COUNT;
 	global $SHOW_FACT_ICONS;
-	global $dHebrew;
 	global $n_chil, $n_gchi;
 	global $SEARCH_SPIDER;
 	$FACT_COUNT++;
@@ -482,7 +480,7 @@ function print_submitter_info($sid) {
  * @param string $sid  the Gedcom Xref ID of the repository to print
  */
 function print_repository_record($sid) {
-	global $TEXT_DIRECTION, $pgv_lang;
+	global $TEXT_DIRECTION;
 	if (displayDetailsById($sid, "REPO")) {
 		$source = find_repo_record($sid);
 		$ct = preg_match("/1 NAME (.*)/", $source, $match);
@@ -511,7 +509,7 @@ function print_repository_record($sid) {
 function print_fact_sources($factrec, $level) {
 	global $pgv_lang;
 	global $factarray;
-	global $WORD_WRAPPED_NOTES, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_SOURCES, $EXPAND_SOURCES;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_SOURCES, $EXPAND_SOURCES;
 	$nlevel = $level+1;
 	if ($SHOW_SOURCES<getUserAccessLevel(getUserName())) return;
 	// -- Systems not using source records [ 1046971 ]
@@ -608,10 +606,9 @@ function print_fact_sources($factrec, $level) {
 
 //-- Print the links to multi-media objects
 function print_media_links($factrec, $level,$pid='') {
-	global $MULTI_MEDIA, $TEXT_DIRECTION, $TBLPREFIX, $GEDCOMS, $MEDIATYPE;
+	global $MULTI_MEDIA, $TEXT_DIRECTION, $TBLPREFIX, $GEDCOMS;
 	global $pgv_lang, $factarray, $SEARCH_SPIDER, $view;
-	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $MEDIA_EXTERNAL, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $GEDCOM, $SHOW_ID_NUMBERS;
 	if (!$MULTI_MEDIA) return;
 	$nlevel = $level+1;
@@ -723,9 +720,7 @@ function print_media_links($factrec, $level,$pid='') {
  * @param int $level		The gedcom line level of the main ADDR record
  */
 function print_address_structure($factrec, $level) {
-	global $pgv_lang;
 	global $factarray;
-	global $WORD_WRAPPED_NOTES;
 	global $POSTAL_CODE;
 
 	//   $POSTAL_CODE = 'false' - before city, 'true' - after city and/or state
@@ -848,7 +843,7 @@ function print_address_structure($factrec, $level) {
 function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $pgv_lang;
 	global $factarray, $view;
-	global $WORD_WRAPPED_NOTES, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_SOURCES;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_SOURCES;
 	if ($SHOW_SOURCES<getUserAccessLevel(getUserName())) return;
 	$nlevel = $level+1;
 	$styleadd="";
@@ -997,7 +992,7 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $pgv_lang, $pgv_changes, $GEDCOM;
 	global $factarray, $view;
-	global $WORD_WRAPPED_NOTES, $PGV_IMAGE_DIR;
+	global $PGV_IMAGE_DIR;
 	global $PGV_IMAGES;
 	global $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
 	$styleadd="";
@@ -1116,10 +1111,9 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
  * @param boolean $related	Whether or not to grab media from related records
  */
 function print_main_media($pid, $level=1, $related=false, $noedit=false) {
-	global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
-	global $pgv_lang, $pgv_changes, $factarray, $view;
-	global $GEDCOMS, $GEDCOM, $MEDIATYPE, $pgv_changes, $DBCONN, $DBTYPE;
-	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
+	global $TBLPREFIX;
+	global $pgv_changes;
+	global $GEDCOMS, $GEDCOM, $MEDIATYPE, $pgv_changes, $DBCONN;
 
 	if (!showFact("OBJE", $pid)) return false;
 	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
@@ -1282,7 +1276,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
  * @param string $pid	The record id this media item was attached to
  */
 function print_main_media_row($rtype, $rowm, $pid) {
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $MEDIA_DIRECTORY, $TEXT_DIRECTION;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $TEXT_DIRECTION;
 	global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $SEARCH_SPIDER;
 
@@ -1473,12 +1467,13 @@ function print_main_media_row($rtype, $rowm, $pid) {
  */
 function print_fact_icon($fact, $factrec, $label, $pid) {
 	global $SHOW_FACT_ICONS, $PGV_IMAGE_DIR;
-	global $factarray;
-	global $birthyear;
 
 	if ($SHOW_FACT_ICONS) {
 		$fact_image = "";
-		$factdate = parse_date($factrec);
+		if (preg_match('/2 DATE (.+)/', $factrec, $match))
+			$factdate = parse_date($match[1]);
+		else
+			$factdate[0]['year']=0;
 		$joe = null;
 		if (id_type($pid)=='INDI') $joe = Person::getInstance($pid);
 		$sexcheck = "";
