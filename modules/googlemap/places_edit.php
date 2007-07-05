@@ -662,7 +662,7 @@ function paste_char(value,lang,mag) {
     </tr>
     <tr>
         <td class="descriptionbox"><?php print_help_link("PLE_PLACES_help", "qm", "PLE_PLACES");?><?php print $factarray["PLAC"];?></td>
-        <td class="optionbox"><input type="text" name="NEW_PLACE_NAME" value="<?php print htmlentities(PrintReady($place_name));?>" size="20" tabindex="<?php $i++; print $i?>" onchange="updateSearchLink(); return false" />
+        <td class="optionbox"><input type="text" name="NEW_PLACE_NAME" value="<?php print htmlspecialchars(PrintReady($place_name));?>" size="20" tabindex="<?php $i++; print $i?>" onchange="updateSearchLink(); return false" />
         <div id="INDI_PLAC_pop" style="display: inline;">
         <?php print_specialchar_link("NEW_PLACE_NAME", false);?></div>
 
