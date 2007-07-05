@@ -50,133 +50,9 @@ require( "modules/googlemap/".$helptextfile["english"]);
 if (file_exists("modules/googlemap/".$helptextfile[$LANGUAGE])) require "modules/googlemap/".$helptextfile[$LANGUAGE];
 
 if (!isset($action)) $action="";
+if (!isset($parent)) $parent=0;
 
-if (($action=="ExportFile") && (userIsAdmin(getUserName()))) {
-	if (!isset($parent)) $parent=array();
-	if (!isset($level)) $level=0;
-	$outputLevelStr = "\"Level\";\"Country\";\"State\";\"County\";\"Place\";\"Longitude\";\"Latitude\";\"ZoomLevel\";\"Icon\"\r\n";
-	$outputFileName = "places";
-	for ($i = 0; $i < $level; $i++) $outputFileName .= "-".$parent[$i];
-	$outputFileName .= ".csv";
-	outputLevel($parent, $level, 3);
-	header("Content-Type: application/octet-stream");
-	header("Content-Disposition: attachment; filename=".$outputFileName);
-	print_r ($outputLevelStr);
-	exit;
-}
-
-print_header($pgv_lang["edit_place_locations"]);
-
-print "<span class=\"subheaders\">".$pgv_lang["edit_place_locations"]."</span><br/><br/>";
-if (!userIsAdmin(getUserName())) {
-	print "<table class=\"facts_table\">\n";
-	print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_admin_error"];
-	print "</td></tr></table>\n";
-	print "<br/><br/><br/>\n";
-	print_footer();
-	exit;
-}
-
-/**
- * get place parent ID
- * @param array $parent
- * @param int $level
- * @return int
- */
-function get_place_parent_id_loc($parent, $level) {
-	global $DBCONN, $TBLPREFIX;
-
-	$parent_id=0;
-	for($i=0; $i<$level; $i++) {
-		$escparent=trim(preg_replace("/\?/","\\\\\\?", $DBCONN->escapeSimple($parent[$i])));
-		$psql = "SELECT pl_id FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$parent_id AND pl_place LIKE '".$escparent."' ORDER BY pl_place";
-		$res = dbquery($psql);
-		$row =& $res->fetchRow();
-		$res->free();
-		if (empty($row[0])) break;
-		$parent_id = $row[0];
-	}
-	return $parent_id;
-}
-
-
-/**
- * find all of the places in the hierarchy
- * The $parent array holds the parent hierarchy of the places
- * we want to get.  The level holds the level in the hierarchy that
- * we are at.
- */
-
-function get_place_list_loc() {
-	global $display, $level, $parent, $found;
-	global $TBLPREFIX, $placelist, $positions, $DBCONN;
-// --- find all of the place in the file
-	if ($display == "inactive")
-		if ($level==0) $sql = "SELECT DISTINCT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation WHERE pl_level=0 ORDER BY pl_place";
-			else {
-		$parent_id = get_place_parent_id_loc($parent, $level);
-		$sql = "SELECT DISTINCT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation WHERE pl_level=$level AND pl_parent_id=$parent_id ORDER BY pl_place";
-			}
- else {
-	if ($level==0) $sql = "SELECT DISTINCT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation INNER JOIN ".$TBLPREFIX."places ON ".$TBLPREFIX."placelocation.pl_place=".$TBLPREFIX."places.p_place AND ".$TBLPREFIX."placelocation.pl_level=".$TBLPREFIX."places.p_level WHERE pl_level=0 ORDER BY pl_place";
-	else {
-		$parent_id = get_place_parent_id_loc($parent, $level);
-		$sql = "SELECT DISTINCT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation INNER JOIN ".$TBLPREFIX."places ON ".$TBLPREFIX."placelocation.pl_place=".$TBLPREFIX."places.p_place AND ".$TBLPREFIX."placelocation.pl_level=".$TBLPREFIX."places.p_level WHERE pl_level=$level AND pl_parent_id=$parent_id ORDER BY pl_place";
-	}
- }
-	$res = dbquery($sql);
-
-	$i = 0;
-	while ($row =& $res->fetchRow()) {
-		$placeloc = array();
-		$placeloc["place_id"] = $row[0];
-		$placeloc["place"] = $row[1];
-		$placeloc["lati"] = $row[2];
-		$placeloc["long"] = $row[3];
-		$placeloc["zoom"] = $row[4];
-		$placeloc["icon"] = $row[5];
-		$placelist[$i] = $placeloc;
-		$i = $i + 1;
-	}
-	$res->free();
-}
-
-function getHighestIndex() {
-	global $TBLPREFIX;
-	$sql = "SELECT pl_id FROM ".$TBLPREFIX."placelocation WHERE 1";
-	$res = dbquery($sql);
-	$i = 0;
-	while ($row =& $res->fetchRow()) {
-		if ($row[0] > $i) $i  = $row[0];
-	}
-	$res->free();
-	return $i;
-}
-
-function outputLevel($parent, $level, $nofLevels) {
-	global $TBLPREFIX, $outputLevelStr;
-	if ($level == 0) {
-		$sql = "SELECT pl_id,pl_parent_id,pl_level,pl_place,pl_long,pl_lati,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation WHERE pl_level=0 ORDER BY pl_place ASC";
-	}
-	else {
-		$parent_id = get_place_parent_id_loc($parent, $level);
-		$sql = "SELECT pl_id,pl_parent_id,pl_level,pl_place,pl_long,pl_lati,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation WHERE pl_level=$level AND pl_parent_id=$parent_id ORDER BY pl_place ASC";
-	}
-	$res = dbquery($sql);
-	$parent_prefix = "";
-	for($i=0; $i < $level; $i++) $parent_prefix = $parent_prefix.$parent[$i].";";
-	$parent_postfix = ";";
-	for($i=$nofLevels; $i > $level; $i--) $parent_postfix = $parent_postfix.";";
-	while ($row =& $res->fetchRow()) {
-		$outputLevelStr .= $row[2].";".$parent_prefix.$row[3].$parent_postfix.$row[4].";".$row[5].";".$row[6].";".$row[7]."\r\n";
-		if($level < 3) {
-			$parent[$level] = $row[3];
-			outputLevel($parent, $level+1, $nofLevels);
-		}
-	}
-	$res->free();
-}
-
+// Create GM tables, if not already present
 $tables = $DBCONN->getListOf('tables');
 if (!in_array($TBLPREFIX."placelocation", $tables)) {
 	$sql = "CREATE TABLE ".$TBLPREFIX."placelocation (pl_id int NOT NULL, pl_parent_id int default NULL, pl_level int default NULL, pl_place varchar(255) default NULL, pl_long varchar(30) default NULL, pl_lati varchar(30) default NULL, pl_zoom int default NULL, pl_icon varchar(255) default NULL, PRIMARY KEY (pl_id));";
@@ -206,7 +82,100 @@ if (!in_array($TBLPREFIX."placelocation", $tables)) {
 	print "<br/><br/><br/>\n";
 }
 
-if ($action=="ImportGedcom" && userIsAdmin(getUserName())) {
+// Take a place id and find its place in the hierarchy
+// Input: place ID
+// Output: ordered array of id=>name values, starting with the Top Level
+// e.g. array(0=>"Top Level", 16=>"England", 19=>"London", 217=>"Westminster");
+// NB This function exists in both places.php and places_edit.php
+function place_id_to_hierarchy($id) {
+	global $DBCONN, $TBLPREFIX, $pgv_lang;
+	$arr=array();
+	while ($id!=0) {
+		$sql="SELECT pl_parent_id, pl_place FROM {$TBLPREFIX}placelocation WHERE pl_id=".$DBCONN->escapeSimple($id);
+		$res=dbquery($sql);
+		$row=&$res->fetchRow();
+		$res->free();
+		$arr=array($id=>$row[1])+$arr;
+		$id=$row[0];
+	}
+	return $arr;
+}
+
+// NB This function exists in both places.php and places_edit.php
+function getHighestIndex() {
+	global $TBLPREFIX;
+	$sql="SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation WHERE 1";
+	$res=dbquery($sql);
+	$row=&$res->fetchRow();
+	$res->free();
+	if (empty($row[0]))
+		return 0;
+ 	else
+		return $row[0];
+}
+
+/**
+ * Find all of the places in the hierarchy
+ */
+function get_place_list_loc($parent_id) {
+	global $display, $TBLPREFIX, $DBCONN;
+	if ($display=="inactive")
+		$sql="SELECT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=".$DBCONN->escapeSimple($parent_id)." ORDER BY pl_place";
+	else
+		// :TODO:
+		// This method of filtering fails to distinguish "Newport, Hampshire, England" from "Newport, Gwent, Wales".
+		// Fortunately it provides too many results, rather than too few.
+		$sql="SELECT DISTINCT pl_id,pl_place,pl_lati,pl_long,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation INNER JOIN {$TBLPREFIX}places ON {$TBLPREFIX}placelocation.pl_place={$TBLPREFIX}places.p_place AND {$TBLPREFIX}placelocation.pl_level=".$TBLPREFIX."places.p_level WHERE pl_parent_id=".$DBCONN->escapeSimple($parent_id)." ORDER BY pl_place";
+	$res=dbquery($sql);
+
+	$placelist=array();
+	while ($row=&$res->fetchRow())
+		$placelist[]=array("place_id"=>$row[0], "place"=>$row[1], "lati"=>$row[2], "long"=>$row[3], "zoom"=>$row[4], "icon"=>$row[5]);
+	$res->free();
+	return $placelist;
+}
+
+function outputLevel($parent_id) {
+	global $TBLPREFIX, $DBCONN;
+	$tmp=place_id_to_hierarchy($parent_id);
+	$prefix=implode(';', $tmp);
+	$postfix=str_repeat(';', 3-count($tmp));
+	$level=count($tmp)-1;
+
+	$sql="SELECT pl_id, pl_place,pl_long,pl_lati,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=".$DBCONN->escapeSimple($parent_id)." ORDER BY pl_place";
+	$res=dbquery($sql);
+	while ($row=&$res->fetchRow()) {
+		print "{$level};{$prefix};{$row[1]}{$postfix};{$row[2]};{$row[3]};{$row[4]};{$row[5]}\r\n";
+		if ($level < 2)
+			outputLevel($row[0]);
+	}
+	$res->free();
+}
+
+if (($action=="ExportFile") && (userIsAdmin(getUserName()))) {
+	$tmp=place_id_to_hierarchy($parent);
+	$tmp[0]="places";
+	$outputFileName=preg_replace('/[:;\/\\\(\)\{\}\[\] $]/', '_', implode('-', $tmp)).'.csv';
+	header("Content-Type: application/octet-stream");
+	header("Content-Disposition: attachment; filename={$outputFileName}");
+	print "\"Level\";\"Country\";\"State\";\"County\";\"Place\";\"Longitude\";\"Latitude\";\"ZoomLevel\";\"Icon\"\r\n";
+	outputLevel($parent);
+	exit;
+}
+
+print_header($pgv_lang["edit_place_locations"]);
+
+if (!userIsAdmin(getUserName())) {
+	print "<span class=\"subheaders\">{$pgv_lang['edit_place_locations']}</span><br /><br />";
+	print "<table class=\"facts_table\">\n";
+	print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_admin_error"];
+	print "</td></tr></table>\n";
+	print "<br/><br/><br/>\n";
+	print_footer();
+	exit;
+}
+
+if ($action=="ImportGedcom") {
 	$placelist = array();
 	$j = 0;
 	if ($mode == "all") {
@@ -228,6 +197,8 @@ if ($action=="ImportGedcom" && userIsAdmin(getUserName())) {
 		while (!empty($placerec)) {
 			$placelist[$j] = array();
 			preg_match("/2 PLAC (.*)/", $placerec, $match);
+			if (preg_match("/2 PLAC (.*)/", $placerec, $match)==0)
+				var_dump($placerec);
 			$placelist[$j]["place"] = trim($match[1]);
 			if (preg_match("/4 LATI (.*)/", $placerec, $match)) {
 				$placelist[$j]["lati"] = trim($match[1]);
@@ -329,29 +300,9 @@ if ($action=="ImportGedcom" && userIsAdmin(getUserName())) {
 			}
 		}
 	}
-	$parent=array();
-	$level = 0;
-}
-?>
-<script language="JavaScript" type="text/javascript">
-<!--
-var helpWin;
-function helpPopup(which) {
-	if ((!helpWin)||(helpWin.closed)) helpWin = window.open('module.php?mod=googlemap&pgvaction=editconfig_help&help='+which,'_blank','left=50,top=50,width=500,height=400,resizable=1,scrollbars=1');
-	else helpWin.location = 'modules/googlemap/editconfig_help.php?help='+which;
-	return false;
+	$parent=0;
 }
 
-function getHelp(which) {
-	if ((helpWin)&&(!helpWin.closed)) helpWin.location='module.php?mod=googlemap&pgvaction=editconfig_help&help='+which;
-}
-
-function showchanges() {
-	window.location = '<?php print $_SERVER["REQUEST_URI"]; ?>&show_changes=yes';
-}
-//-->
-</script>
-<?php
 if ($action=="ImportFile") {
 ?>
 <form method="post" enctype="multipart/form-data" id="importfile" name="importfile" action="module.php?mod=googlemap&pgvaction=places">
@@ -508,117 +459,46 @@ if ($action=="ImportFile2") {
 			}
 		}
 	}
-	$parent=array();
-	$level = 0;
-
+	$parent=0;
 }
 
 if ($action=="DeleteRecord") {
-	$sql = "SELECT pl_id, pl_place FROM ".$TBLPREFIX."placelocation WHERE pl_parent_id=".$deleteRecord." ORDER BY pl_place";
-	$res = dbquery($sql);
-	if ($res->numRows() == 0) {
+	$sql="SELECT 1 FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=".$DBCONN->escapeSimple($deleteRecord);
+	$res=dbquery($sql);
+	if ($res->numRows()==0) {
 		$res->free();
-		$sql = "DELETE FROM ".$TBLPREFIX."placelocation WHERE pl_id=".$deleteRecord;
-		$res = dbquery($sql, true, 1);
+		$sql="DELETE FROM {$TBLPREFIX}placelocation WHERE pl_id=".$DBCONN->escapeSimple($deleteRecord);
+		$res=dbquery($sql, true, 1);
+	} else {
+		print "<table class=\"facts_table\"><tr><td class=\"optionbox\">{$pgv_lang['pl_delete_error']}</td></tr></table>";
 	}
-	else { ?>
-	<table class="facts_table">
-		<tr>
-			<td class="optionbox" ><?php print $pgv_lang["pl_delete_error"];?></a></td>
-		</tr>
-	</table>
-<?php }
-}
-
-if (!isset($parent)) $parent=array();
-else {
-	if (!is_array($parent)) $parent = array();
-	else $parent = array_values($parent);
-}
-// Remove slashes
-$lrm = chr(0xE2).chr(0x80).chr(0x8E);
-$rlm = chr(0xE2).chr(0x80).chr(0x8F);
-foreach ($parent as $p => $child){
-	$child = stripslashes($child);
-	$parent[$p] = str_replace(array($lrm, $rlm), "", $child);
-}
-
-//-- extract the place form encoded in the gedcom
-$header = find_gedcom_record("HEAD");
-$hasplaceform = strpos($header, "1 PLAC");
-if (!isset($level)) {
-	$level=0;
-}
-if ($level>count($parent)) $level = count($parent);
-if ($level<count($parent)) $level = 0;
-
-if ($level > 0) {
-	for($i = $level; $i > 0 ; $i--) {
-		print "<a href=\"module.php?mod=googlemap&pgvaction=places&level=$level";
-		for($j = 0; $j < $i; $j++) {
-			print "&parent[$j]=".$parent[$j];
-		}
-		print "\">".$parent[$i-1]."</a> - ";
-	}
-}
-print "<a href=\"module.php?mod=googlemap&pgvaction=places&level=0\">".$pgv_lang["top_level"]."</a><br /><br />";
-
-//LIMIT DISPLAY TO ACTIVE PLACES ONLY.
-if ($level > 0) {
-	for($i = $level; $i > 0 ; $i--) {
-		print "<form name=\"active\" method=\"post\" action=\"module.php?mod=googlemap&pgvaction=places&level=$level";
-		for($j = 0; $j < $i; $j++) {
-			print "&parent[$j]=".$parent[$j];
-		}
-		print "\">";
-	}
-}
-print "<form name=\"active\" method=\"post\" action=\"module.php?mod=googlemap&pgvaction=places&level=$level\">";
-print "<table><tr><td class=\"optionbox\">".$pgv_lang["list_inactive"]."  - <input type=\"checkbox\" name=\"display\" value=\"inactive\"";
-if (isset($display)) print " checked=\"checked\"";
-print ">";
-print "   <input type=\"submit\" value=\"".$pgv_lang["view"]."\"   >";
-print_help_link("PLE_ACTIVE_help", "qm", "PLE_ACTIVE");
-print "</td></tr></table>";
-print "</form>";
-
-$placelist = array();
-$positions = array();
-$numfound = 0;
-get_place_list_loc();
-// -- sort the array
-
-if (count($placelist) == 0) {
-	print "<table class=\"facts_table\">\n";
-	print "<tr><td colspan=\"2\" class=\"facts_value\">".$pgv_lang["pl_no_places_found"];
-	print "</td></tr></table>\n";
-	print "<br/><br/><br/>\n";
 }
 
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
+var helpWin;
+function helpPopup(which) {
+	if ((!helpWin)||(helpWin.closed)) helpWin = window.open('module.php?mod=googlemap&pgvaction=editconfig_help&help='+which,'_blank','left=50,top=50,width=500,height=400,resizable=1,scrollbars=1');
+	else helpWin.location = 'modules/googlemap/editconfig_help.php?help='+which;
+	return false;
+}
+
+function getHelp(which) {
+	if ((helpWin)&&(!helpWin.closed)) helpWin.location='module.php?mod=googlemap&pgvaction=editconfig_help&help='+which;
+}
+
+function showchanges() {
+	window.location = '<?php print $_SERVER["REQUEST_URI"]; ?>&show_changes=yes';
+}
+
 function edit_place_location(placeid) {
-	var placelink = "<?php
-		$placelink = "&level=".$level;
-		for($j = 0; $j < count($parent); $j++) {
-			$placelink .= "&parent[$j]=".$parent[$j];
-		}
-		print $placelink;
-	?>";
-	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=update&placeid='+placeid+"&"+sessionname+"="+sessionid+placelink, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=update&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
 	return false;
 }
 
 function add_place_location(placeid) {
-	var placelink = "<?php
-		$placelink = "&level=".$level;
-		for($j = 0; $j < count($parent); $j++) {
-			$placelink .= "&parent[$j]=".$parent[$j];
-		}
-		print $placelink;
-	?>";
-	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=add&placeid='+placeid+"&"+sessionname+"="+sessionid+placelink, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+	window.open('module.php?mod=googlemap&pgvaction=places_edit&action=add&placeid='+placeid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
 	return false;
 }
 
@@ -631,86 +511,97 @@ function delete_place(placeid) {
 
 //-->
 </script>
-
 <?php
-if (count($placelist) <> 0) {
-?>
-	<table class="facts_table">
-		<tr>
-			<td class="descriptionbox"><?php print $factarray["PLAC"];?></td>
-			<td class="descriptionbox"><?php print $factarray["LATI"];?></td>
-			<td class="descriptionbox"><?php print $factarray["LONG"];?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["pl_zoom_factor"];?></td>
-			<td class="descriptionbox"><?php print $pgv_lang["pl_place_icon"];?></td>
-			<td class="descriptionbox" colspan="2"><?php print_help_link("PL_EDIT_LOCATION_help", "qm", "PL_EDIT_LOCATION");?><?php print $pgv_lang["pl_edit"];?></td>
-		</tr>
-	<?php
-	for($i = 0; $i < count($placelist); $i++)
-	{
-		$placelink = "&level=".($level+1);
-		for($j = 0; $j < count($parent); $j++) {
-			$placelink .= "&parent[$j]=".$parent[$j];
-		}
-		$placelink .= "&parent[$level]=".$placelist[$i]["place"];
-		?>
-		<tr>
-			<?php
-			print "<td class=\"optionbox\"><a href=\"module.php?mod=googlemap&pgvaction=places".$placelink."\">".PrintReady($placelist[$i]["place"])."</a></td>\n";
-			?>
 
-			<td class="optionbox"><?php print $placelist[$i]["lati"];?></td>
-			<td class="optionbox"><?php print $placelist[$i]["long"];?></td>
-			<td class="optionbox"><?php print $placelist[$i]["zoom"];?></td>
-			<td class="optionbox">
-<?php       if (($placelist[$i]["icon"] == NULL) || ($placelist[$i]["icon"] == "")) {
-				print "&nbsp;";
-				print "<img src=\"http://labs.google.com/ridefinder/images/mm_20_red.png\">";
-			}
-			else {
-				print "<img src=\"".$placelist[$i]["icon"]." \"width=\"25\" height=\"15\">";
-			} ?>
-			</td>
-			<td class="optionbox"><a href="javascript:;" onclick="edit_place_location(<?php print $placelist[$i]["place_id"].");return false;\">".$pgv_lang["edit"];?></a></td>
-<?php
-			$psql = "SELECT pl_id FROM ".$TBLPREFIX."placelocation WHERE pl_parent_id=".$placelist[$i]["place_id"];
-			$res = dbquery($psql);
-			$noRows =& $res->numRows();
-			$res->free();
-			if ($noRows == 0) { ?>
-			<td class="optionbox"><a href="javascript:;" onclick="delete_place(<?php print $placelist[$i]["place_id"].");return false;\">";?><img src="images/remove.gif" border="0" alt="<?php print $pgv_lang["remove"];?>" /></a></td>
+print "<span class=\"subheaders\">{$pgv_lang['edit_place_locations']}: </span>";
+$where_am_i=place_id_to_hierarchy($parent);
+foreach (array_reverse($where_am_i, true) as $id=>$place) {
+	if ($id==$parent)
+		print PrintReady($place);
+	else
+		print "<a href=\"module.php?mod=googlemap&pgvaction=places&parent={$id}\">".PrintReady($place)."</a>";
+	print " - ";
+}
+print "<a href=\"module.php?mod=googlemap&pgvaction=places&parent=0\">{$pgv_lang['top_level']}</a>";
+
+print "<br /><br /><form name=\"active\" method=\"post\" action=\"module.php?mod=googlemap&pgvaction=places&parent=$parent\">";
+print "<table><tr><td class=\"optionbox\">".$pgv_lang["list_inactive"]."  - <input type=\"checkbox\" name=\"display\" value=\"inactive\"";
+if (isset($display)) print " checked=\"checked\"";
+print ">";
+print "   <input type=\"submit\" value=\"".$pgv_lang["view"]."\"   >";
+print_help_link("PLE_ACTIVE_help", "qm", "PLE_ACTIVE");
+print "</td></tr></table>";
+print "</form>";
+
+$placelist=get_place_list_loc($parent);
+
+print "<table class=\"facts_table\"><tr>";
+print "<th class=\"descriptionbox\">{$factarray['PLAC']}</th>";
+print "<th class=\"descriptionbox\">{$factarray['LATI']}</th>";
+print "<th class=\"descriptionbox\">{$factarray['LONG']}</th>";
+print "<th class=\"descriptionbox\">{$pgv_lang['pl_zoom_factor']}</th>";
+print "<th class=\"descriptionbox\">{$pgv_lang['pl_place_icon']}</th>";
+print "<th class=\"descriptionbox\" colspan=\"2\">";
+print_help_link('PL_EDIT_LOCATION_help', 'qm', 'PL_EDIT_LOCATION'); 
+print "{$pgv_lang['pl_edit']}</th></tr>";
+if (count($placelist) == 0)
+	print "<tr><td colspan=\"7\" class=\"facts_value\">{$pgv_lang['pl_no_places_found']}</td></tr>";
+foreach ($placelist as $place) {
+	print "<tr><td class=\"optionbox\"><a href=\"module.php?mod=googlemap&pgvaction=places&parent={$place['place_id']}\">".PrintReady($place["place"])."</a></td>";
+	print "<td class=\"optionbox\">{$place['lati']}</td>";
+	print "<td class=\"optionbox\">{$place['long']}</td>";
+	print "<td class=\"optionbox\">{$place['zoom']}</td>";
+	print "<td class=\"optionbox\">";
+	if (($place["icon"] == NULL) || ($place["icon"] == "")) {
+		print "&nbsp;";
+		print "<img src=\"http://labs.google.com/ridefinder/images/mm_20_red.png\">";
+	} else {
+		print "<img src=\"".$place["icon"]." \"width=\"25\" height=\"15\">";
+	}
+	print "</td>";
+	print "<td class=\"optionbox\"><a href=\"javascript:;\" onclick=\"edit_place_location({$place['place_id']});return false;\">{$pgv_lang["edit"]}</a></td>";
+	$psql = "SELECT pl_id FROM ".$TBLPREFIX."placelocation WHERE pl_parent_id=".$place["place_id"];
+	$res = dbquery($psql);
+	$noRows =& $res->numRows();
+	$res->free();
+	if ($noRows == 0) { ?>
+	<td class="optionbox"><a href="javascript:;" onclick="delete_place(<?php print $place["place_id"].");return false;\">";?><img src="images/remove.gif" border="0" alt="<?php print $pgv_lang["remove"];?>" /></a></td>
 <?php       } else { ?>
-			<td class="optionbox"><img src="images/remove-dis.png" border="0" alt="" /> </td>
+		<td class="optionbox"><img src="images/remove-dis.png" border="0" alt="" /> </td>
 <?php       } ?>
-		</tr>
-		<?php
-	}
-	$placelink = "";
-	for($j = 0; $j < count($parent); $j++) {
-		$placelink .= "&parent[$j]=".$parent[$j];
-	}
-	?>
-	</table>
-<?php
+	</tr>
+	<?php
 }
 ?>
+</table>
+<?php
+?>
 	<table class="facts_table">
 		<tr>
-			<td class="optionbox" colspan="2"><?php print_help_link("PL_ADD_LOCATION_help", "qm", "PL_ADD_LOCATION");?><a href="javascript:;" onclick="add_place_location(<?php print get_place_parent_id_loc($parent, $level);?>);return false;"><?php print $pgv_lang["pl_add_place"];?></a></td>
+			<td class="optionbox" colspan="2"><?php print_help_link("PL_ADD_LOCATION_help", "qm", "PL_ADD_LOCATION");?><a href="javascript:;" onclick="add_place_location(<?php print $parent;?>);return false;"><?php print $pgv_lang["pl_add_place"];?></a></td>
 		</tr>
 		<tr>
-			<td class="optionbox"><?php print_help_link("PL_IMPORT_GEDCOM_help", "qm", "PL_IMPORT_GEDCOM");?><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=curr&level=<?php print $level.$placelink;?>"><?php print $pgv_lang["pl_import_gedcom"];?></a></td>
-			<td class="optionbox"><?php print_help_link("PL_IMPORT_ALL_GEDCOM_help", "qm", "PL_IMPORT_ALL_GEDCOM");?><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=all&level=<?php print $level.$placelink;?>"><?php print $pgv_lang["pl_import_all_gedcom"];?></a></td>
+			<td class="optionbox"><?php print_help_link("PL_IMPORT_GEDCOM_help", "qm", "PL_IMPORT_GEDCOM");?><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=curr"><?php print $pgv_lang["pl_import_gedcom"];?></a></td>
+			<td class="optionbox"><?php print_help_link("PL_IMPORT_ALL_GEDCOM_help", "qm", "PL_IMPORT_ALL_GEDCOM");?><a href="module.php?mod=googlemap&pgvaction=places&action=ImportGedcom&mode=all"><?php print $pgv_lang["pl_import_all_gedcom"];?></a></td>
 		</tr>
 		<tr>
 			<td class="optionbox" colspan="2"><?php print_help_link("PL_IMPORT_FILE_help", "qm", "PL_IMPORT_FILE");?><a href="module.php?mod=googlemap&pgvaction=places&action=ImportFile&mode=add"><?php print $pgv_lang["pl_import_file"];?></a></td>
 		</tr>
 		<tr>
-			<td class="optionbox"><?php print_help_link("PL_EXPORT_FILE_help", "qm", "PL_EXPORT_FILE");?><a href="module.php?mod=googlemap&pgvaction=places&action=ExportFile&level=<?php print $level.$placelink;?>"><?php print $pgv_lang["pl_export_file"];?></a></td>
-			<td class="optionbox"><?php print_help_link("PL_EXPORT_ALL_FILE_help", "qm", "PL_EXPORT_ALL_FILE");?><a href="module.php?mod=googlemap&pgvaction=places&action=ExportFile&level=0"><?php print $pgv_lang["pl_export_all_file"];?></a></td>
-		</tr>
-	</table><br/>
-
-	<?php
+			<td class="optionbox">
+<?php
+	if (count($where_am_i)<=4) {
+		print_help_link("PL_EXPORT_FILE_help", "qm", "PL_EXPORT_FILE");
+		print "<a href=\"module.php?mod=googlemap&pgvaction=places&action=ExportFile&parent={$parent}\">";
+		print "{$pgv_lang['pl_export_file']}</a>";
+	} else {
+		print "&nbsp;";
+	}
+	print "</td><td class=\"optionbox\">";
+	print_help_link("PL_EXPORT_ALL_FILE_help", "qm", "PL_EXPORT_ALL_FILE");
+	print "<a href=\"module.php?mod=googlemap&pgvaction=places&action=ExportFile&parent=0\">";
+	print "{$pgv_lang['pl_export_all_file']}</a>";
+	print "</td></tr></table><br/>";
 if(empty($SEARCH_SPIDER))
 	print_footer();
 else {
