@@ -55,6 +55,7 @@ $pgv_lang["enter_fullname"] 					= "You must enter a first and last name.";
 $pgv_lang["name"]					= "Name";
 $pgv_lang["children"]				= "Children";
 $pgv_lang["child"]					= "Child";
+$pgv_lang["family"] 				= "Family";
 $pgv_lang["as_child"]				= "Family with Parents";
 $pgv_lang["source_menu"]			= "Options for source";
 $pgv_lang["other_records"]			= "Records that link to this Source:";

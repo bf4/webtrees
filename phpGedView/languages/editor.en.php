@@ -141,7 +141,6 @@ $pgv_lang["directory_not_exist"]	= "Directory does not exist.";
 $pgv_lang["error_remote"]           = "You have selected a remote site.";
 $pgv_lang["error_same"]             = "You have selected the same site.";
 $pgv_lang["external_file"]			= "This media object does not exist as a file on this server.  It cannot be deleted, moved, or renamed.";
-$pgv_lang["family"] 				= "Family";
 $pgv_lang["file_missing"]			= "No file was received. Please upload again.";
 $pgv_lang["file_partial"]			= "File was only partially uploaded, please try again";
 $pgv_lang["file_success"]			= "File successfully uploaded";
