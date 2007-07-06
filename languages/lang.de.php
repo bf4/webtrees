@@ -276,6 +276,7 @@ $pgv_lang["parent"]						= "Eltern";
 $pgv_lang["relatives"]					= "Direkte Verwandschaft";
 $pgv_lang["relatives_events"]			= "Verwandtschafts-Ereignisse";
 $pgv_lang["child"]						= "Kind";
+$pgv_lang["family"]						= "Familie";
 $pgv_lang["spouse"]						= "Ehepartner";
 $pgv_lang["spouses"]					= "Ehepartner";
 $pgv_lang["surnames"]					= "Nachnamen";
