@@ -9,6 +9,8 @@
 =====================================================================
 
 Version 4.1
+ - Added patch [ 1747975 ] Pedigree charts missing pageSize (opus27)
+ - Added patch [ 1747974 ] bdmlist.xml error (opus27)
  - Added patch [ 1745922 ] making SQL_LOG=true propagate on ajax calls (opus27)
  - Fixed [ 1747209 ] Birth Location Not Shown on Indi List if Birth Date Missing (opus27)
  - Fixed [ 1736909 ] Birth Date and Place Report - pgv_lang['date'] (canajun2eh)

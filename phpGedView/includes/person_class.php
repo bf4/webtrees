@@ -599,7 +599,7 @@ class Person extends GedcomRecord {
 		//-- check if the value was stored in the cache 
 		if (isset($indilist[$this->xref])
 				&& $indilist[$this->xref]["gedfile"] == $GEDCOMS[$GEDCOM]['id'] 
-				&& isset($indilist[$this->xref]["numchil"])) return $indilist[$this->xref]["numchil"];
+				&& isset($indilist[$this->xref]["numchil"])) return ($indilist[$this->xref]["numchil"]+0);
 		$nchi=0;
 		foreach ($this->getSpouseFamilies() as $famid=>$family) $nchi+=$family->getNumberOfChildren();
 		return $nchi;
