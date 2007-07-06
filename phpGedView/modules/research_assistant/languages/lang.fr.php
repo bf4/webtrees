@@ -24,8 +24,8 @@
  * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-  print "You cannot access a language file directly.";
-  exit;
+	print "You cannot access a language file directly.";
+	exit;
 }
 
 #pgv_lang["add_task_inst"]              = "If a task for your research results has not yet been created, you should create the task first and then choose the option to save and complete the task.";
@@ -214,7 +214,7 @@ $pgv_lang["log_modified_by"]            = "par";
 #pgv_lang["no_sources"]                 = "There are no sources associated with this task.";
 #pgv_lang["no_people"]                  = "There are no people associated with this task.";
 #pgv_lang["no_indi_tasks"]              = "No tasks associated with this individual.";
-#pgv_lang["no_sour_tasks"]              = "No tasks associated with this ssource.";
+#pgv_lang["no_sour_tasks"]              = "No tasks associated with this source.";
 #pgv_lang["edit_comment"]               = "Edit Comment";
 #pgv_lang["comment_success"]            = "Your comment was successfully added.";
 #pgv_lang['comment_body']               = 'Comment';
