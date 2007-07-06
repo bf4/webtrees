@@ -139,7 +139,6 @@ $pgv_lang["directory_not_exist"]	= "Verzeichnis existiert nicht.";
 $pgv_lang["error_remote"]           = "Sie haben eine ferne Seite gewählt.";
 $pgv_lang["error_same"]             = "Sie haben die gleiche Seite gewählt.";
 $pgv_lang["external_file"]			= "Diese Medien-Datei existiert nicht auf diesem Server.  Sie kann nicht gelöscht, verlegt, oder umbenannt werden.";
-$pgv_lang["family"]                        = "Familie";
 $pgv_lang["file_missing"]               = "Es kam keine Datei auf Ihrem Server an. Bitte erneut hochladen.";
 $pgv_lang["file_partial"]               = "Die Datei wurde nur teilweise hochgeladen. Bitte versuchen Sie es erneut.";
 $pgv_lang["file_success"]               = "Datei wurde erfolgreich auf Ihren Server hochgeladen";
