@@ -9,7 +9,8 @@
 	<PGVRStyle name="name1" font="LucidaSansUnicode" size="14" style="" />
 	<PGVRStyle name="text" font="LucidaSansUnicode" size="9" style="" />
 	<PGVRInput name="pid" lookup="INDI" type="text" default=""><PGVRvar var="pgv_lang[enter_pid]" />:</PGVRInput>
-	<PGVRDoc pageSize="A4" orientation="L" margin="24">
+	<PGVRInput name="pageSize" type="select" options="letter,A4,A3,A5,legal"><PGVRvar var="pgv_lang[page_size]" /></PGVRInput>
+	<PGVRDoc pageSize="$pageSize" orientation="L" margin="24">
 		<PGVRHeader>
 			<PGVRCell width="0" height="10" align="right" style="pagenum"><PGVRvar var="pgv_lang[page]" /> <PGVRPageNum /> <PGVRvar var="pgv_lang[of]" /> <PGVRTotalPages /></PGVRCell>
 			<PGVRCell width="0" height="20" align="left" style="header"><PGVRvar var="pgv_lang[pedigree_chart]" /></PGVRCell>
