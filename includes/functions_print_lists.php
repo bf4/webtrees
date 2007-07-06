@@ -388,16 +388,14 @@ function print_indi_table($datalist, $legend="", $option="") {
 		//-- Birth date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		$filterkey = $person->getSortableBirthDate(false);
-		$sortkey = parse_date($person->getBirthDate(false)); 
-		$sortkey=$sortkey[0]['jd1'];
+		$bsortkey = parse_date($person->getBirthDate(false));
+		$bsortkey = $bsortkey[0]['jd1'];
 		$txt = get_changed_date($person->getBirthDate(false), true);
-		//if (empty($txt)) $txt = $pgv_lang["yes"];
-		if (!empty($txt)) {
-			echo "&nbsp;<a href=\"".$person->getDateUrl($person->getBirthDate(false))."\"".
-			" title=\"".$filterkey."\"".
-			" name=\"{$sortkey}\"".
-			" class=\"list_item\">".$txt."</a>";
-		}
+		if (empty($txt)) $txt = "&nbsp;";
+		echo "<a href=\"".$person->getDateUrl($person->getBirthDate(false))."\"".
+		" title=\"".$filterkey."\"".
+		" name=\"".$bsortkey."\"".
+		" class=\"list_item\">".$txt."</a>";
 		//-- Birth 2nd date ?
 		if (!empty($person->bdate2)) {
 			$txt = get_changed_date($person->bdate2, true);
@@ -409,10 +407,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 		//-- Birth anniversary
 		echo "<td class=\"list_value_wrap rela\">";
 		$age=$person->getAge("", date("d M Y"));
-		if ($age)
-			echo "<a href=\"".$person->getDateUrl($person->bdate)."\" class=\"list_item\">".$age."</a>";
-		else
-			echo "&nbsp;";
+		if ($age) echo "<a href=\"".$person->getDateUrl($person->bdate)."\" class=\"list_item\">".$age."</a>";
+		else echo "&nbsp;";
 		echo "</td>";
 		//-- Birth place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($person->getBirthPlace())."\">";
@@ -421,25 +417,20 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "&nbsp;</td>";
 		//-- Number of children
 		echo "<td class=\"list_value_wrap\">";
-		if ($person->disp) {
-			echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$person->getNumberOfChildren()."</a>";
-		}
+		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$person->getNumberOfChildren()."</a>";
 		echo "</td>";
 		//-- Death date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		$filterkey = $person->getSortableDeathDate(false);
-		$sortkey = parse_date($person->getDeathDate(false)); 
-		$sortkey=$sortkey[0]['jd1'];
+		$dsortkey = parse_date($person->getDeathDate(false));
+		$dsortkey = $dsortkey[0]['jd1'];
 		$txt = get_changed_date($person->getDeathDate(false), true);
 		if ($person->dest) $txt = $pgv_lang["yes"];
-		if (!$person->isDead()) $txt = "";
-		//else if (get_sub_record(1, "1 DEAT", $person->gedrec)=="") $txt .= "***";
-		if (!empty($txt)) {
-			echo "&nbsp;<a href=\"".$person->getDateUrl($person->getDeathDate(false))."\"".
-			" title=\"".$filterkey."\"".
-			" name=\"".$sortkey."\"".
-			" class=\"list_item\">".$txt."</a>";
-		}
+		if (!$person->isDead()) $txt = "&nbsp;";
+		echo "<a href=\"".$person->getDateUrl($person->getDeathDate(false))."\"".
+		" title=\"".$filterkey."\"".
+		" name=\"".$dsortkey."\"".
+		" class=\"list_item\">".$txt."</a>";
 		//-- Death 2nd date ?
 		if (!empty($person->ddate2)) {
 			$txt = get_changed_date($person->ddate2, true);
@@ -450,25 +441,17 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "</td>";
 		//-- Death anniversary
 		echo "<td class=\"list_value_wrap rela\">";
-		if ($person->isDead() && !$person->dest) {
-			$age=$person->getAge("\n1 BIRT\n2 DATE ".$person->ddate."\n", date("d M Y"));
-			if ($age)
-				echo "<a href=\"".$person->getDateUrl($person->ddate)."\" class=\"list_item\">".$age."</a>";
-		} else
-			echo "&nbsp;";
+		if ($person->isDead() && !$person->dest) $age = $person->getAge("\n1 BIRT\n2 DATE ".$person->ddate."\n", date("d M Y"));
+		else $age = "";
+		if ($age) echo "<a href=\"".$person->getDateUrl($person->ddate)."\" class=\"list_item\">".$age."</a>";
+		else echo "&nbsp;";
 		echo "</td>";
 		//-- Age at death
 		echo "<td class=\"list_value_wrap\">";
-		$age = "";
-		$sortkey = 0;
-		if ($person->isDead() && !$person->dest) {
-			$age = $person->getAge();
-			// estimation in days for sorting
-			if (strpos($age, $pgv_lang["months"]) || strpos($age, $pgv_lang["month1"])) $sortkey = $age*29;
-			else if (strpos($age, $pgv_lang["days"]) || strpos($age, $pgv_lang["day1"])) $sortkey = $age*1;
-			else $sortkey = $age*365;
-		}
-		echo "<a href=\"".$person->getLinkUrl()."\" title=\"".sprintf("%05d",$sortkey)."\" class=\"list_item\">&nbsp;".$age."</a>";
+		$sortkey = $dsortkey-$bsortkey; // age in days for sorting
+		if ($person->isDead() && !$person->dest) $age = $person->getAge();
+		else $age = "";
+		echo "<a href=\"".$person->getLinkUrl()."\" title=\"".sprintf("%07d",$sortkey)."\" class=\"list_item\">&nbsp;".$age."</a>";
 		echo "</td>";
 		//-- Death place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($person->getDeathPlace())."\">";
@@ -757,7 +740,8 @@ function print_fam_table($datalist, $legend="") {
 		//-- Marriage date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		$filterkey = $family->getSortableMarriageDate();
-		$sortkey = parse_date($family->getMarriageDate()); $sortkey=$sortkey[0]['jd1'];
+		$sortkey = parse_date($family->getMarriageDate());
+		$sortkey = $sortkey[0]['jd1'];
 		if (!$family->marr_est) $txt = get_changed_date($family->getMarriageDate(), true);
 		if (empty($txt) && !empty($family->marr_rec)) $txt = $pgv_lang["yes"];
 		echo "&nbsp;<a href=\"".$family->getDateUrl($family->marr_date)."\"".
