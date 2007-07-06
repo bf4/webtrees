@@ -24,11 +24,14 @@
  * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-  print "You cannot access a language file directly.";
-  exit;
+	print "You cannot access a language file directly.";
+	exit;
 }
 
-$pgv_lang["GOOGLEMAP_ENABLE"]           = "Activer Googlemap";
+$pgv_lang["GOOGLEMAP_CONFIG"]           = "Configurer GoogleMap";
+$pgv_lang["GOOGLEMAP_CONFIG_help"]      = "~#pgv_lang[GOOGLEMAP_CONFIG]#~<br /><br />Configurer les paramètres généraux du module GoogleMap.";
+
+$pgv_lang["GOOGLEMAP_ENABLE"]           = "Activer GoogleMap";
 $pgv_lang["GOOGLEMAP_ENABLE_help"]      = "~#pgv_lang[GOOGLEMAP_ENABLE]#~<br /><br />Option pour activer ou désactiver GoogleMap.<br/>L'onglet reste visible sur la page 'individu' mais il est vide quand l'option est déactivée. Le lien de configuration pour l'administrateur reste disponible.";
 
 $pgv_lang["GOOGLEMAP_API_KEY"]          = "Clé API Google Maps";
@@ -46,7 +49,7 @@ $pgv_lang["GOOGLEMAP_MAP_ZOOM_help"]    = "~#pgv_lang[GOOGLEMAP_MAP_ZOOM]#~<br /
 $pgv_lang["GOOGLEMAP_PRECISION"]        = "Précision de la latitude et de la longitude";
 $pgv_lang["GOOGLEMAP_PRECISION_help"]   = "~#pgv_lang[GOOGLEMAP_PRECISION]#~<br /><br />Ceci précise le degré de précision des coordonnées. Par exemple, un pays entier sera spécifié avec une précision 0 (i.e. 0 chiffres après la virgule), alors qu'une ville a besoin de trois ou quatre chiffres.";
 
-#pgv_lang["GM_DEFAULT_LEVEL_0"]         = "Default value for top-level";
+$pgv_lang["GM_DEFAULT_LEVEL_0"]         = "Valeur par défaut pour le premier niveau";
 #pgv_lang["GM_DEFAULT_LEVEL_0_help"]    = "~#pgv_lang[GM_DEFAULT_LEVEL_0]#~<br /><br />Here the default level for the highest level in the place-hierarchy can be defined. If a place cannot be found this name is added as the highest level (country) and the database is searched again.";
 
 $pgv_lang["GM_NOF_LEVELS"]              = "Nombre de niveaux";
@@ -82,7 +85,12 @@ $pgv_lang["PL_EXPORT_FILE_help"]        = "Permet d'exporter les lieux vers un f
 $pgv_lang["PL_EXPORT_ALL_FILE"]         = "Exporter tous les lieux vers un fichier";
 $pgv_lang["PL_EXPORT_ALL_FILE_help"]    = "Permet d'exporter tous les lieux vers un fichier et de le transférer vers l'ordinateur local.";
 
+$pgv_lang["GOOGLEMAP_COORD"]            = "Afficher les coordonnées";
+#pgv_lang["GOOGLEMAP_COORD_help"]       = "~#pgv_lang[GOOGLEMAP_COORD]#~<br /><br />This options sets whether Latitude and Longitude are displayed on the pop-up window attached to map markers";
+
 // Help texts for places_edit.php
+$pgv_lang["PLE_EDIT"]                   = "Mettre à jour les lieux";
+#pgv_lang["PLE_EDIT_help"]              = "Here you can add, edit or delete Google Map place details.";
 
 $pgv_lang["PLE_PLACES"]                 = "Nom du lieu";
 $pgv_lang["PLE_PLACES_help"]            = "Permet de définir ou de modifier le nom du lieu.";
@@ -102,10 +110,10 @@ $pgv_lang["PLE_ICON_help"]              = "Permet de choisir ou de supprimer une
 $pgv_lang["PLE_FLAGS"]                  = "Drapeau";
 $pgv_lang["PLE_FLAGS_help"]             = "Ce menu déroulant permet de choisir un pays et de sélectionner son drapeau. Si aucun drapeau n'est défini pour ce pays aucun drapeau n'est montré.";
 
-#pgv_lang["PLIF_FILENAME"]              = "Enter filename";
+$pgv_lang["PLIF_FILENAME"]              = "Nom du fichier";
 #pgv_lang["PLIF_FILENAME_help"]         = "Enter the name of the file containing the place locations in CSV format.";
 
-#pgv_lang["PLIF_CLEAN"]                 = "Clean placelocation database";
+$pgv_lang["PLIF_CLEAN"]                 = "Vider la table placelocation";
 #pgv_lang["PLIF_CLEAN_help"]            = "When this option is selected the placelocation database will be cleared. This means that only the location stored in this table will be deleted. This will not change anything in the GEDCOM.";
 
 #pgv_lang["PLIF_UPDATE"]                = "Update existing records";
@@ -113,5 +121,12 @@ $pgv_lang["PLE_FLAGS_help"]             = "Ce menu déroulant permet de choisir 
 
 #pgv_lang["PLIF_OVERWRITE"]             = "Overwrite location data";
 #pgv_lang["PLIF_OVERWRITE_help"]        = "Overwrite location data in the database with data from the file.<br/>When this option is selected, the location data in the database (latitude, longitude, zoomlevel and flag) are overwritten with the data in the file, if available. If the record is not already in the database a new record will be created, unless the Update-only  option is also selected.";
+
+$pgv_lang["PLE_ACTIVE"]                 = "Liste des lieux inutilisés";
+#pgv_lang["PLE_ACTIVE_help"]            = "<strong>List places in the GoogleMaps table that are not used by any current GEDCOM(s).</strong><br/><br/>The display is set, by default, to only display for editing here those places that exist on BOTH your GEDCOM files and your GoogleMap tables.<br/><br/>When this option is checked, and \"View\" clicked, the list of places will display ALL places at this level.<br/><br/>This is designed to speed up the display of the list when large place lists have been imported, but not all used.<br/><br/>NOTE - if the option is checked the full list may take a few minutes to display";
+
+// Help text for placecheck.php
+$pgv_lang["GOOGLEMAP_PLACECHECK"]       = "Outil de vérification des lieux";
+#pgv_lang["GOOGLEMAP_PLACECHECK_help"]  = "~#pgv_lang[GOOGLEMAP_PLACECHECK]#~<br /><br /><strong>This tool</strong> provides a way to compare places in your gedcom file with the matching entries in the googlemaps 'placelocations' table.<BR/><BR/><strong>The display</strong> can be structured for a specific gedcom file; for a specific country within that file; and for a particular area (e.g. state or county) within that country.<BR/><BR/><strong>Places</strong>are listed alphabetically so that minor spelling differences can be easily spotted, and corrected.<BR/><BR/><strong>From</strong> the results of the comparison you can click on place names for one of these three options:<BR/><BR/><strong>1 - </strong>For gedcom file places you will be taken to the Place Heirarchy view. Here you will see all records that are linked to that place.<BR/><BR/><strong>2 - </strong>For places that exist in the gedcom file, but not in the googlemap table (highlighted in red), you will get the googlemap \"Add place\" screen.<BR/><BR/><strong>3 - </strong>For places that exist in both the gedcom file and the googlemap table (perhaps without coordinates) you will get the googlemap \"edit place\" screen. Here you can edit any aspect of the place record for the googlemap display.<BR/><BR/><strong>Hovering</strong> over any place in the googlemap table columns will display the zoom level curently set for that place.";
 
 ?>
