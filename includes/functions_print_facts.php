@@ -537,7 +537,8 @@ function print_fact_sources($factrec, $level) {
 			if ($j > 0) print "<br />";
 			print "\n\t\t<span class=\"label\">";
 			$elementID = $sid."-".floor(microtime()*1000000);
-			if ($lt>0) print "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
+			if ($EXPAND_SOURCES) $plusminus="minus"; else $plusminus="plus";
+			if ($lt>0) print "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
 			print $pgv_lang["source"].":</span> <span class=\"field\">";
 			print "<a href=\"source.php?sid=".$sid."\">";
 			print PrintReady(get_source_descriptor($sid));
@@ -546,7 +547,9 @@ function print_fact_sources($factrec, $level) {
 			if ($add_descriptor) print " - ".PrintReady($add_descriptor);
 			print "</a>";
 			print "</span>";
-			print "<div id=\"$elementID\" class=\"source_citations\">";
+			print "<div id=\"$elementID\"";
+			if ($EXPAND_SOURCES) print " style=\"display:block\"";
+			print " class=\"source_citations\">";
 			$cs = preg_match("/$nlevel PAGE (.*)/", $srec, $cmatch);
 			if ($cs>0) {
 				print "\n\t\t\t<span class=\"label\">".$factarray["PAGE"].": </span><span class=\"field\">";
@@ -593,13 +596,6 @@ function print_fact_sources($factrec, $level) {
 			print_fact_notes($srec, $nlevel);
 			print "</div>";
 			print "</div>";
-			if ($lt>0 and $EXPAND_SOURCES) {
-				print "\r\n<script language='JavaScript' type='text/javascript'>\r\n";
-				print "<!--\r\n";
-				print "expand_layer('$elementID');\r\n";
-				print "//-->\r\n";
-				print "</script>\r\n";
-			}
 		}
 	}
 }
