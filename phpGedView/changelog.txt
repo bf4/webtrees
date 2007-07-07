@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1737256 ] 4.1 IE7 bug when default tab is not the first one (opus27)
  - Added patch [ 1747975 ] Pedigree charts missing pageSize (opus27)
  - Added patch [ 1747974 ] bdmlist.xml error (opus27)
  - Added patch [ 1745922 ] making SQL_LOG=true propagate on ajax calls (opus27)

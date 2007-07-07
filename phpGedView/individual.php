@@ -389,15 +389,6 @@ else loading_message();
 ?>
 </div>
 </div>
-<script language="JavaScript" type="text/javascript">
-<!--
-	// hide button if list is empty
-	var ebn = document.getElementsByName('row_rela');
-	var row_top = document.getElementById('row_top');
-	if (ebn.length==0 && row_top) row_top.style.display="none";
-	<?php if (!$EXPAND_RELATIVES_EVENTS) print "togglerow('row_rela');\n"; ?>
-//-->
-</script>
 <!-- ======================== Start 2nd tab individual page ==== Notes ======= -->
 <?php
 if(empty($SEARCH_SPIDER))

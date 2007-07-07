@@ -694,6 +694,7 @@ function evalAjaxJavascript(text, parentElement) {
 			if (jscode.length>0) {
 				ttext = document.createTextNode(jscode);
 				//-- add the JS code to the <script> element as a text node
+				jscode=jscode.replace(/<!--/g, ''); // remove html comment [ 1737256 ]
 				jscode=jscode.replace(/function ([^( ]*)/g,'window.$1 = function');
 				eval(jscode);
 			}

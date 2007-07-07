@@ -977,7 +977,7 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	function print_facts_tab() {
-		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
+		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $EXPAND_RELATIVES_EVENTS;
 		global $n_chil, $n_gchi;
 		
 		//-- only need to add family facts on this tab
@@ -1023,6 +1023,15 @@ class IndividualControllerRoot extends BaseController {
 		?>
 		</table>
 		<br />
+<script language="JavaScript" type="text/javascript">
+<!--
+	// hide button if list is empty
+	var ebn = document.getElementsByName('row_rela');
+	var row_top = document.getElementById('row_top');
+	if (ebn.length==0 && row_top) row_top.style.display="none";
+	<?php if (!$EXPAND_RELATIVES_EVENTS) print "togglerow('row_rela');\n"; ?>
+//-->
+</script>
 		<?php
 	}
 
