@@ -3226,9 +3226,7 @@ function get_event_list() {
 			}
 		}
 
-		// Unlike elsewhere in the code, we don't need a stable sort as we don't
-		// need to preserve the order of undated facts.
-		uasort($found_facts, "compare_facts");
+		uasort($found_facts, "compare_found_facts");
 		reset($found_facts);
 
 // Cache the Facts data just found
@@ -3242,6 +3240,17 @@ function get_event_list() {
 	}
 
 	return $found_facts;
+}
+
+function compare_found_facts($a, $b) {
+	// Sort by date
+	if ($a[3]!=$b[3])
+		return $a[3]-$b[3];
+	// :TODO: Sort by name
+	// Sort by fact type
+	if (preg_match('/1 (\w+)/', $a[1], $matcha) && preg_match('/1 (\w+)/', $b[1], $matchb))
+		return compare_fact_type($matcha[1], $matchb[1]);
+	return 0;
 }
 
 ?>
