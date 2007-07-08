@@ -299,6 +299,7 @@ $pgv_lang["parent"] 			= "Vanhempi";
 $pgv_lang["relatives"]		= "Lähisukulaisia";
 $pgv_lang["relatives_events"]		= "Lähisukulaisten tapahtumia";
 $pgv_lang["child"]			= "Lapsi";
+$pgv_lang["family"]			= "Perhe";
 $pgv_lang["spouse"]		= "Puolisona";
 $pgv_lang["spouses"] 				= "Puolisot";
 $pgv_lang["surnames"]		= "Sukunimi";
@@ -576,6 +577,7 @@ $pgv_lang["ksl"]          = "kislev";
 $pgv_lang["tvt"]          = "tevet";
 $pgv_lang["shv"]          = "sevat";
 $pgv_lang["adr"]          = "adar";
+$pgv_lang["adr_leap_year"]= "adar I";
 $pgv_lang["ads"]          = "adar II";
 $pgv_lang["nsn"]          = "nisan";
 $pgv_lang["iyr"]          = "ijar";
@@ -584,7 +586,7 @@ $pgv_lang["tmz"]          = "tamus";
 $pgv_lang["aav"]          = "av";
 $pgv_lang["ell"]          = "elul";
 
-$pgv_lang["b.c."]         = "e. Kr.";
+$pgv_lang["b.c."]         = "e.Kr.";
 
 $pgv_lang["abt"]			= "noin";
 $pgv_lang["aft"]			= "jälkeen";

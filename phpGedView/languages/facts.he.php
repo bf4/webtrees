@@ -245,8 +245,8 @@ $factarray["EMAL"]	= "כתובת דואר אלקטרוני";
 // Other common customized facts
 $factarray["_ADPF"] = "אמוץ ע\"י אבא";
 $factarray["_ADPM"] = "אמוץ ע\"י אמא";
-$factarray["_AKAN"] = "ידוע בשם";
-$factarray["_AKA"] 	= "ידוע בשם";
+$factarray["_AKAN"] = "מכונה";  
+$factarray["_AKA"] 	= "מכונה"; 
 $factarray["_BRTM"] = "ברית מילה";
 $factarray["_COML"] = "ידוע בציבור";
 $factarray["_EYEC"] = "צבע עיניים";
