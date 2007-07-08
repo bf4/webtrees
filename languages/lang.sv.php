@@ -355,6 +355,7 @@ $pgv_lang["timeline_endYear"] = "Slutår";
 $pgv_lang["timeline_scrollSpeed"] = "Hastighet";
 $pgv_lang["timeline_controls"] = "Tidslinjekontroll";
 $pgv_lang["include_family"] = "Inkludera nära familjemedlemmar";
+$pgv_lang["family"]				= "Familj";
 $pgv_lang["lifespan_chart"] = "Livslinjetavla";
 $pgv_lang["zoom_in"]			= "Zooma in";
 //-- MONTH NAMES
@@ -921,7 +922,7 @@ $pgv_lang["fanchart_IE"]		= "Solfjäderstavlan kan inte skrivas ut direkt av din
 //-- RSS Feed
 $pgv_lang["rss_descr"]			= "Nyheter och länkar från #GEDCOM_TITLE#-sajten";
 $pgv_lang["rss_logo_descr"]		= "RSS-flöde skapat med PhpGedView";
-$pgv_lang["rss_feeds"]			= "RSS fl�den";
+$pgv_lang["rss_feeds"]			= "RSS flöden";
 $pgv_lang["no_feed_title"]		= "Matningen är inte tillgänglig";
 $pgv_lang["no_feed"]			= "Det finns ingen RSS-matning tillgänglig för denna PhpGedViewsajt";
 $pgv_lang["feed_login"]			= "Om du haer ett konto på denna PhpGedViewsajt då kan du <a href=\"#AUTH_URL#\">logga in</a> på servern med normal HTTP autenticiering för att se personlig inforamtion.";

@@ -136,7 +136,6 @@ $pgv_lang["directory_not_exist"]	= "Mappen existerar inte.";
 $pgv_lang["error_remote"]           = "Du har valt en sajt från en annan plats.";
 $pgv_lang["error_same"]             = "Du har valt samma sajt.";
 $pgv_lang["external_file"]			= "Detta mediaobjekt finns inte som file på denna server. Den kan inte flyttas, raderas eller döpas om.";
-$pgv_lang["family"]				= "Familj";
 $pgv_lang["file_missing"]		= "Ingen fil mottogs. Ladda upp filen igen.";
 $pgv_lang["file_partial"]		= "Filen blev endast delvis uppladdad, var god försök igen";
 $pgv_lang["file_success"]		= "Filen laddades upp utan problem";
