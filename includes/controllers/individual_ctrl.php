@@ -1714,8 +1714,8 @@ class IndividualControllerRoot extends BaseController {
 		global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
 	    global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
 	    global $GOOGLEMAP_ENABLED, $TBLPREFIX, $DBCONN, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD;
-
-			            include_once('modules/googlemap/googlemap.php');
+		global $GM_MARKER_COLOR, $GM_MARKER_SIZE, $GM_PREFIX, $GM_POSTFIX, $GM_PRE_POST_MODE;
+		include_once('modules/googlemap/googlemap.php');
 
 		if ($GOOGLEMAP_ENABLED == "false") {
 	        print "<table class=\"facts_table\">\n";
