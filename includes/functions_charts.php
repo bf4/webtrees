@@ -180,14 +180,15 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 		print "</td>\n";
 	}
 	print "</tr></table>\n\n";
-	if ($sosa!=0) {
+	// [ 1750674 ] Family.php, add MARR date, place to parents
+	//if ($sosa!=0) {
 		print "<a href=\"family.php?famid=$famid\" class=\"details1\">";
 		if ($SHOW_ID_NUMBERS) print "&lrm;($famid)&lrm;&nbsp;&nbsp;";
 		else print str_repeat("&nbsp;", 10);
 		if (showFact("MARR", $famid)) print_simple_fact($family->getGedcomRecord(), "MARR", $wife->getXref()); else print $pgv_lang["private"];
 		print "</a>";
-	}
-	else print "<br />\n";
+	//}
+	//else print "<br />\n";
 
 	/**
 	 * wife side
