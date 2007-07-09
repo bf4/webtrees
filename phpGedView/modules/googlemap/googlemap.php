@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Module
- * @version $Id: googlemap.php,v$
+ * $Id:$
  * @author Johan Borkhuis
  */
 
