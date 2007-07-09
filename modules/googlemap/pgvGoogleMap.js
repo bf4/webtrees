@@ -24,6 +24,7 @@
  * @package PhpGedView
  * @subpackage Display
  * @version $Id: pgvGoogleMap.js$
+ * $Id:$
  */
  
  /*

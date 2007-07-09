@@ -24,7 +24,7 @@
  * @package PhpGedView
  * @subpackage GoogleMap
  * @see config.php
- * @version $Id: editconfig.php,v$
+ * $Id:$
  */
 
 //-- security check, only allow access from module.php
