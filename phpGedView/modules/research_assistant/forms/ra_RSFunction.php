@@ -138,59 +138,61 @@ require_once("includes/person_class.php");
 		$femalesCount = 0;
 
 		foreach ($myindilist as $pid => $indi) {
-			//assign surname, gender, birthplace and occupation for the individual
-			$gender = get_gedcom_value("SEX", 1, $indi['gedcom'], '', false);
-			$locals = array();
-			foreach($inferences as $pr_id=>$value) {
-				//-- get the local value from the the individual record
-				if (!isset($locals[$value['local']])) {
-					if ($value['local']=='SURN') $locals['SURN'] = $indi['names'][0][2];
-					else if ($value['local']=='GIVN'){
-						$parts = preg_split("~/~", $indi['names'][0][0]);
-						$locals['GIVN'] = $parts[0];
-					}
-					else {
-						$locals[$value['local']] = get_gedcom_value($value['local'], 1, $indi['gedcom'], '', false);
-					}
-				}
-				
-				$record = getRecord($value['record'],$pid);			
-			
-				if (!empty($record)) {
-					if (preg_match("/SURN/", $value['comp'])) {
-						$ct = preg_match("/0 @(.*)@/", $record, $match);
-						if ($ct>0) {
-							$gid = $match[1];
-							$gedval = $indilist[$gid]['names'][0][2];
-							if (str2lower($locals[$value['local']])==str2lower($gedval)) $inferences[$pr_id]['value']++;
-							$inferences[$pr_id]['count']++;
+			if (isset($indi['gedcom'])) {
+				//assign surname, gender, birthplace and occupation for the individual
+				$gender = get_gedcom_value("SEX", 1, $indi['gedcom'], '', false);
+				$locals = array();
+				foreach($inferences as $pr_id=>$value) {
+					//-- get the local value from the the individual record
+					if (!isset($locals[$value['local']])) {
+						if ($value['local']=='SURN') $locals['SURN'] = $indi['names'][0][2];
+						else if ($value['local']=='GIVN'){
+							$parts = preg_split("~/~", $indi['names'][0][0]);
+							$locals['GIVN'] = $parts[0];
+						}
+						else {
+							$locals[$value['local']] = get_gedcom_value($value['local'], 1, $indi['gedcom'], '', false);
 						}
 					}
-					else if (preg_match("/GIVN/", $value['comp'])) {
-//						$gender1 = get_gedcom_value("SEX", 1, $indi['gedcom'], '', false);
-//						$gender2 = get_gedcom_value("SEX", 1, $record, '', false);
-//						if ($gender1==$gender2) {
+					
+					$record = getRecord($value['record'],$pid);			
+				
+					if (!empty($record)) {
+						if (preg_match("/SURN/", $value['comp'])) {
 							$ct = preg_match("/0 @(.*)@/", $record, $match);
 							if ($ct>0) {
 								$gid = $match[1];
-								$parts = preg_split("~/~", $indilist[$gid]['names'][0][0]);
-								$gedval = $parts[0];
-								$parts1 = preg_split("/\s+/", $gedval);
-								$parts2 = preg_split("/\s+/", $locals['GIVN']);
-								foreach($parts1 as $p1=>$part1) {
-									foreach($parts2 as $p2=>$part2) {
-										if (str2lower($part1)==str2lower($part2)) $inferences[$pr_id]['value']++;
-										$inferences[$pr_id]['count']++;
+								$gedval = $indilist[$gid]['names'][0][2];
+								if (str2lower($locals[$value['local']])==str2lower($gedval)) $inferences[$pr_id]['value']++;
+								$inferences[$pr_id]['count']++;
+							}
+						}
+						else if (preg_match("/GIVN/", $value['comp'])) {
+	//						$gender1 = get_gedcom_value("SEX", 1, $indi['gedcom'], '', false);
+	//						$gender2 = get_gedcom_value("SEX", 1, $record, '', false);
+	//						if ($gender1==$gender2) {
+								$ct = preg_match("/0 @(.*)@/", $record, $match);
+								if ($ct>0) {
+									$gid = $match[1];
+									$parts = preg_split("~/~", $indilist[$gid]['names'][0][0]);
+									$gedval = $parts[0];
+									$parts1 = preg_split("/\s+/", $gedval);
+									$parts2 = preg_split("/\s+/", $locals['GIVN']);
+									foreach($parts1 as $p1=>$part1) {
+										foreach($parts2 as $p2=>$part2) {
+											if (str2lower($part1)==str2lower($part2)) $inferences[$pr_id]['value']++;
+											$inferences[$pr_id]['count']++;
+										}
 									}
 								}
+	//						}
+						}
+						else {
+							$gedval = get_gedcom_value($value['comp'], 1, $record, '', false);
+							if (!empty($gedval) && !empty($locals[$value['local']])) {
+								if (str2lower($locals[$value['local']])==str2lower($gedval)) $inferences[$pr_id]['value']++;
+								$inferences[$pr_id]['count']++;
 							}
-//						}
-					}
-					else {
-						$gedval = get_gedcom_value($value['comp'], 1, $record, '', false);
-						if (!empty($gedval) && !empty($locals[$value['local']])) {
-							if (str2lower($locals[$value['local']])==str2lower($gedval)) $inferences[$pr_id]['value']++;
-							$inferences[$pr_id]['count']++;
 						}
 					}
 				}
