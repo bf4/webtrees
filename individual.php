@@ -60,6 +60,12 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 			print "&nbsp;&nbsp;";
 			if ($TEXT_DIRECTION=="rtl") print "&rlm;";
 			print "(".$controller->pid.")";
+			if (userIsAdmin(getUserName())) {
+				$pgvuser=getUserByGedcomId($controller->pid, $GEDCOM);
+				if ($pgvuser!==false) {
+					print " (<a href=\"useradmin.php?action=edituser&username={$pgvuser['username']}\">{$pgvuser['username']}</a>)";
+				}
+			}
 			if ($TEXT_DIRECTION=="rtl") print "&rlm;";
 		?>
 		</span><br />
@@ -231,60 +237,43 @@ loadedTabs[<?php print ($controller->default_tab+1); ?>] = true;
 function tempObj(tab, oXmlHttp) {
 	this.processFunc = function()
 	{
- 			if (oXmlHttp.readyState==4)
- 			{
- 				target = document.getElementById(tabid[tab]+'_content');
-  				evalAjaxJavascript(oXmlHttp.responseText, target);
-  				target.style.height = 'auto';
-  				if (tab==7) {
-  					if (!loadedTabs[7]) {
-  						loadMap();
-  						map.setMapType(GOOGLEMAP_MAP_TYPE);
-  					}
-  					SetMarkersAndBounds();
-  					ResizeMap();
-  					ResizeMap();
-  				}
-  				loadedTabs[tab] = true;
-  			}
- 		};
+		if (oXmlHttp.readyState==4)
+		{
+			target = document.getElementById(tabid[tab]+'_content');
+			evalAjaxJavascript(oXmlHttp.responseText, target);
+			target.style.height = 'auto';
+			if (tab==7) {
+				if (!loadedTabs[7]) {
+					loadMap();
+					map.setMapType(GOOGLEMAP_MAP_TYPE);
+				}
+				SetMarkersAndBounds();
+				ResizeMap();
+				ResizeMap();
+			}
+			loadedTabs[tab] = true;
+		}
+	};
 }
 
 function tabswitch(n) {
 	if (!tabid[n]) n = 1;
-	// show all tabs ?
-	var disp='none';
-	if (n==0) disp='block';
-	// reset all tabs areas
-	for (i=1; i<tabid.length; i++) {
+	for (var i=1; i<tabid.length; i++) {
+		var disp='none'; // reset inactive tabs
+		if (i==n || n==0) disp='block'; // active tab(s) : one or all
 		document.getElementById(tabid[i]).style.display=disp;
 		if (disp=='block' && !loadedTabs[i]) {
-			target = document.getElementById(tabid[i]+'_content');
-			if (target) {
+			// -- load ajax
+			if (document.getElementById(tabid[i]+'_content')) {
 				var oXmlHttp = createXMLHttp();
-				link = "individual.php?action=ajax&pid=<?php print $controller->pid; ?>&tab="+i;
+				var link = "individual.php?action=ajax&pid=<?php print $controller->pid; ?>&tab="+i;
+				if (location.search.indexOf("SQL_LOG=true") > -1) link += "&SQL_LOG=true";
 				oXmlHttp.open("get", link, true);
 				temp = new tempObj(i, oXmlHttp);
 				oXmlHttp.onreadystatechange=temp.processFunc;
-		  		oXmlHttp.send(null);
-	  		}
-  		}
-	}
-	// current tab area
-	if (n>0) {
-		document.getElementById(tabid[n]).style.display='block';
-		// -- load ajax
-		if (!loadedTabs[n]) {
-			target = document.getElementById(tabid[n]+'_content');
-			if (target) {
-				var oXmlHttp = createXMLHttp();
-				link = "individual.php?action=ajax&pid=<?php print $controller->pid; ?>&tab="+n;
-				oXmlHttp.open("get", link, true);
-				temp = new tempObj(n, oXmlHttp);
-				oXmlHttp.onreadystatechange=temp.processFunc;
-		  		oXmlHttp.send(null);
-	  		}
-  		}
+					oXmlHttp.send(null);
+				}
+			}
 	}
 	// empty tabs
 	for (i=0; i<tabid.length; i++) {

@@ -22,6 +22,7 @@
  * @version $Id$
  * @package PhpGedView
  * @subpackage Admin
+ * $Id$
  */
 require "config.php";
 require $confighelpfile["english"];

@@ -52,6 +52,9 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["family"]                    05 July 2007      A moved from editor.xx.php for [1736907]
++$pgv_lang["adr_leap_year"]							30 Jun 2007				A
+*$pgv_lang["ads"]									30 Jun 2007				w
 *pgv_lang["shv"]                        			10 Jun 2007         	S
 *pgv_lang["ads"]                        			10 Jun 2007         	S
 *$pgv_lang["search_fams"]							1 Jun 2007				w

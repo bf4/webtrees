@@ -22,6 +22,7 @@
  * @package PhpGedView
  * @subpackage Googlemap
  * @version $Id: defaultconfig.php$
+ * $Id$
  */
 
 $GOOGLEMAP_ENABLED = "false";          // Enable or disable Googlemap

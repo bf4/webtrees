@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Module
- * @version $Id: googlemap.php,v$
+ * $Id$
  * @author Johan Borkhuis
  */
 
@@ -192,7 +192,7 @@ function create_possible_place_names ($placename, $level) {
 
 	$retlist = array();
 
-	switch ($GM_PRE_POST_MODE[$level]) {
+	switch (@$GM_PRE_POST_MODE[$level]) {
 	case 0:     // 0: no pre/postfix
 		$retlist[] = $placename;
 		break;
@@ -343,7 +343,7 @@ function build_indiv_map($indifacts, $famids) {
 	$tables = $DBCONN->getListOf('tables');
 	$placelocation=in_array($TBLPREFIX."placelocation", $tables);
 	//-- sort the facts
-	usort($indifacts, "compare_facts");
+	stable_usort($indifacts, "compare_facts");
 	$i = 0;
 	foreach ($indifacts as $key => $value) {
 		if (preg_match("/1 (\w+)(.*)/", $value[1], $match)) {
@@ -599,9 +599,9 @@ function build_indiv_map($indifacts, $famids) {
 						print "\");\n";
 					} else {
 						print "<br/><br/>Lati: ";
-						if ($markers[$j]["lati"]>='0'){print "N".$markers[$j]["lati"];}else{ print str_replace('-', 'S', $markers[$j]["lati"]);}
+						if ($markers[$j]["lati"]>='0'){print "N".str_replace('-', '', $markers[$j]["lati"]);}else{ print str_replace('-', 'S', $markers[$j]["lati"]);}
 						print ", Long: ";
-						if ($markers[$j]["lng"]>='0'){print "E".$markers[$j]["lng"];}else{ print str_replace('-', 'W', $markers[$j]["lng"]);}
+						if ($markers[$j]["lng"]>='0'){print "E".str_replace('-', '', $markers[$j]["lng"]);}else{ print str_replace('-', 'W', $markers[$j]["lng"]);}
 						print "\");\n";
 					}
 					print "});\n";
@@ -654,9 +654,9 @@ function build_indiv_map($indifacts, $famids) {
 						print "\")";
 					} else {
 						print "<br/><br/>Lati: ";
-						if ($markers[$j]["lati"]>='0'){print "N".$markers[$j]["lati"];}else{ print str_replace('-', 'S', $markers[$j]["lati"]);}
+						if ($markers[$j]["lati"]>='0'){print "N".str_replace('-', '', $markers[$j]["lati"]);}else{ print str_replace('-', 'S', $markers[$j]["lati"]);}
 						print ", Long: ";
-						if ($markers[$j]["lng"]>='0'){print "E".$markers[$j]["lng"];}else{ print str_replace('-', 'W', $markers[$j]["lng"]);}
+						if ($markers[$j]["lng"]>='0'){print "E".str_replace('-', '', $markers[$j]["lng"]);}else{ print str_replace('-', 'W', $markers[$j]["lng"]);}
 						print "\")";
 					}
 					for($k=$j+1; $k<=$i; $k++) {
@@ -721,9 +721,9 @@ function build_indiv_map($indifacts, $famids) {
 								print "\")";
 							} else {
 								print "<br/><br/>Lati: ";
-								if ($markers[$j]["lati"]>='0'){print "N".$markers[$j]["lati"];}else{ print str_replace('-', 'S', $markers[$j]["lati"]);}
+								if ($markers[$j]["lati"]>='0'){print "N".str_replace('-', '', $markers[$j]["lati"]);}else{ print str_replace('-', 'S', $markers[$j]["lati"]);}
 								print ", Long: ";
-								if ($markers[$j]["lng"]>='0'){print "E".$markers[$j]["lng"];}else{ print str_replace('-', 'W', $markers[$j]["lng"]);}
+								if ($markers[$j]["lng"]>='0'){print "E".str_replace('-', '', $markers[$j]["lng"]);}else{ print str_replace('-', 'W', $markers[$j]["lng"]);}
 								print "\")";
 							}
 						}

@@ -1266,7 +1266,7 @@ if ($action=="choosepid") {
 	foreach($reqdfacts as $ind=>$fact) {
 		$indifacts[] = array($fact, "1 $fact\r\n", true, 0);
 	}
-	usort($indifacts, "compare_facts");
+	stable_usort($indifacts, "compare_facts");
 	$sfams = find_families_in_record($gedrec, "FAMS");
 	$cfams = find_families_in_record($gedrec, "FAMC");
 	if (count($cfams)==0) $cfams[] = "";
@@ -1697,7 +1697,7 @@ for($i=1; $i<=count($sfams); $i++) {
 	foreach($famreqdfacts as $ind=>$fact) {
 		$famfacts[] = array($fact, "1 $fact\r\n", 1);
 	}
-	usort($famfacts, "compare_facts");
+	stable_usort($famfacts, "compare_facts");
 ?>
 </td></tr>
 <tr>
@@ -2179,7 +2179,7 @@ for($j=1; $j<=count($cfams); $j++) {
 	foreach($famreqdfacts as $ind=>$fact) {
 		$famfacts[] = array($fact, "1 $fact\r\n", 1);
 	}
-	usort($famfacts, "compare_facts");
+	stable_usort($famfacts, "compare_facts");
 	$spid = "";
 	if($parents) {
 		if($pid!=$parents["HUSB"]) $spid=$parents["HUSB"];

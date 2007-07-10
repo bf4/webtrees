@@ -1522,7 +1522,7 @@ function print_note_record($text, $nlevel, $nrec) {
 	$elementID = "N-".floor(microtime()*1000000);
 	$text = preg_replace("/~~/", "<br />", trim($text));
 	$text .= get_cont($nlevel, $nrec);
-	$text = preg_replace("'(https?://[\w\./\-&=?~%#]*)'", "<a href=\"$1\" target=\"blank\">URL</a>", $text);
+	$text=expand_urls($text);
 	$text = trim($text);
 	if (!empty($text)) {
 		$text = PrintReady($text);
@@ -1963,10 +1963,10 @@ function PrintReady($text, $InHeaders=false) {
 				$hasallhits = true;
 				foreach($queries as $index=>$query1) {
 					$query1esc=addcslashes($query1, '/');
-					if (preg_match("/(".$query1esc.")/i", $text)) {
+					if (@preg_match("/(".$query1esc.")/i", $text)) { // Use @ as user-supplied query might be invalid.
 						$newtext = preg_replace("/(".$query1esc.")/i", "\x01$1\x02", $newtext);
 					}
-					else if (preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
+					else if (@preg_match("/(".str2upper($query1esc).")/", str2upper($text))) {
 						$nlen = strlen($query1);
 						$npos = strpos(str2upper($text), str2upper($query1));
 						$newtext = substr_replace($newtext, "\x02", $npos+$nlen, 0);
@@ -2168,19 +2168,19 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			}
 			print "</a>";
 			// ID age
-			if (!strstr($factrec, "_BIRT_")) {
-				$dct = preg_match("/2 DATE (.*)/", $factrec, $dmatch);
-				if ($dct>0) print " <span class=\"age\">".get_age($gedrec, $dmatch[1])."</span>";
-			}
+			if (!strstr($factrec, "_BIRT_") && preg_match("/2 DATE (.*)/", $factrec, $dmatch))
+				print get_age($gedrec, $dmatch[1]);
 			// RELAtionship calculation : for a family print relationship to both spouses
-			if ($view!="preview" && $type=='FAM') {
-				$famrec = find_family_record($pid);
-				if ($famrec) {
-					$parents = find_parents_in_record($famrec);
-					$pid1 = $parents["HUSB"];
-					if ($pid1 and $pid1!=$pid2) print " - <a href=\"relationship.php?pid1=$pid1&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["husband"] . "\" alt=\"" . $pgv_lang["husband"] . "\" class=\"sex_image\" />]</a>";
-					$pid1 = $parents["WIFE"];
-					if ($pid1 and $pid1!=$pid2) print " - <a href=\"relationship.php?pid1=$pid1&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["wife"] . "\" alt=\"" . $pgv_lang["wife"] . "\" class=\"sex_image\" />]</a>";
+			if ($view!="preview") {
+				if ($type=='FAM') {
+					$famrec = find_family_record($pid);
+					if ($famrec) {
+						$parents = find_parents_in_record($famrec);
+						$pid1 = $parents["HUSB"];
+						if ($pid1 and $pid1!=$pid2) print " - <a href=\"relationship.php?pid1=$pid1&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["husband"] . "\" alt=\"" . $pgv_lang["husband"] . "\" class=\"sex_image\" />]</a>";
+						$pid1 = $parents["WIFE"];
+						if ($pid1 and $pid1!=$pid2) print " - <a href=\"relationship.php?pid1=$pid1&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["wife"] . "\" alt=\"" . $pgv_lang["wife"] . "\" class=\"sex_image\" />]</a>";
+					}
 				}
 				else if ($pid!=$pid2) print " - <a href=\"relationship.php?pid1=$pid&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "]</a>";
 			}
@@ -2274,7 +2274,7 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 				if (!$indirec) $indirec=find_person_record($pid);
 				// do not print age after death
 				$deatrec=get_sub_record(1, "1 DEAT", $indirec);
-				if (empty($deatrec)||(compare_facts($factrec, $deatrec)!=1)||(strstr($factrec, "1 DEAT"))) {
+				if (empty($deatrec)||(compare_facts_date($factrec, $deatrec)<=0)||(strstr($factrec, "1 DEAT"))) {
 					print get_age($indirec,$match[1]);
 				}
 			}

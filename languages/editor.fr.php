@@ -25,6 +25,7 @@
  * @author Julien Damon
  * @version $Id$
  */
+
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
@@ -140,7 +141,6 @@ $pgv_lang["directory_not_exist"]        = "Répertoire absent.";
 $pgv_lang["error_remote"]               = "Vous avez sélectionné un site distant.";
 $pgv_lang["error_same"]                 = "Vous avez sélectionné le même site.";
 $pgv_lang["external_file"]              = "Objet Multimedia non trouvé sur le serveur. Impossible de le supprimer, déplacer ou renommer.";
-$pgv_lang["family"]                     = "Famille";
 $pgv_lang["file_missing"]               = "Fichier non reçu. Veuillez recommencer.";
 $pgv_lang["file_partial"]               = "Fichier reçu partiellement. Veuillez recommencer.";
 $pgv_lang["file_success"]               = "Fichier chargé avec succès";

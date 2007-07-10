@@ -1,12 +1,32 @@
 <?php
-/*=================================================
-   charset=utf-8
-   Project:         phpGedView
-   File:            lang.en.php
-   Author:          Johan Borkhuis
-   Comments:        English Language file for Sitemap
-===================================================*/
-
+/**
+ * English Language file for PhpGedView.
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2007  PGV Development Team
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * @package PhpGedView
+ * @subpackage SiteMap
+ * @version $Id$
+ */
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access a language file directly.";
+	exit;
+}
 
 // Admin menu
 $pgv_lang["generate_sitemap"]       = "Generate Sitemap files";
@@ -31,7 +51,7 @@ $pgv_lang["sm_monthly"]             = "monthly";
 $pgv_lang["sm_yearly"]              = "yearly";
 $pgv_lang["sm_never"]               = "never";
 $pgv_lang["sm_generate"]            = "Generate";
-$pgv_lang["gedcoms_privacy"]        = "No links to private inforation";
+$pgv_lang["gedcoms_privacy"]        = "No links to private information";
 
 
 ?>

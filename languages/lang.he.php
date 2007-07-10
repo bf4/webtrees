@@ -55,6 +55,7 @@ $pgv_lang["enter_fullname"] 			= "עליך למלא שם פרטי ושם משפ�
 $pgv_lang["name"]				= "שם";
 $pgv_lang["children"]			= "ילדים";
 $pgv_lang["child"]				= "ילד/ה";
+$pgv_lang["family"]			= "משפחה";
 $pgv_lang["as_child"]			= "משפחה עם הורים";
 $pgv_lang["source_menu"]			= "בחירות עבור מקור";
 $pgv_lang["other_records"]			= "הנתונים הקשורים למקור זה:";
@@ -637,6 +638,7 @@ $pgv_lang["ksl"]          		= "כסלו";
 $pgv_lang["tvt"]          		= "טבת";
 $pgv_lang["shv"]          		= "שבט";
 $pgv_lang["adr"]          		= "אדר";
+$pgv_lang["adr_leap_year"]		= "אדר א'"; 
 $pgv_lang["ads"]          		= "אדר ב'";
 $pgv_lang["nsn"]          		= "ניסן";
 $pgv_lang["iyr"]          		= "אייר";
@@ -960,7 +962,6 @@ $pgv_lang["removed_descending_18"] = " במרחק 18 יורד";
 $pgv_lang["removed_descending_19"] = " במרחק 19 יורד";
 $pgv_lang["removed_descending_20"] = " במרחק 20 יורד";
 
-//@@
 //-- GEDCOM edit utility
 $pgv_lang["check_delete"]		= "?זו GEDCOM האם הנך בטוח שברצונך למחוק עובדת";
 $pgv_lang["access_denied"]		= "<b>גישה נאסרה</b><br />אין לך גישה למשאב זה.";

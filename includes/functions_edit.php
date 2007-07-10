@@ -1590,8 +1590,8 @@ function check_input_date($datestr) {
 		if ($date['jd1']==0)
 			return $datestr;
 
-	// Text in brackets is special
-	if (preg_match('/(\s*\(.*)/', $datestr, $match))
+	// Trailing text (OS/NS years or details of CAL) needs to be retained.
+	if (preg_match('/(\/\d\d|\s*\(.*)/', $datestr, $match))
 		$text=$match[1];
 	else
 		$text='';

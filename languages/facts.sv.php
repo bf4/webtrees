@@ -162,6 +162,7 @@ $factarray["SERV"] = "Annan server";
 $factarray["_GEDF"] = "GEDCOM-fil";
 $factarray["_PRIM"]	= "Huvudbild";
 $factarray["_DBID"] = "Länkad databasID";
+$factarray["STAT:DATE"] = "Datum för statusändring";
 $factarray["FAMC:HUSB:SURN"] = "Faderns efternamn";
 $factarray["FAMC:WIFE:SURN"] = "Moderns efternamn";
 $factarray["FAMC:HUSB:BIRT:PLAC"] = "Faderns födelseort";

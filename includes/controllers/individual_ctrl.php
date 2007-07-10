@@ -685,13 +685,7 @@ class IndividualControllerRoot extends BaseController {
 	 */
 	function getIndiFacts() {
 		$indifacts = $this->indi->getIndiFacts();
-		//-- sort the facts
-		usort($indifacts, "compare_facts");
-		//sort_facts($indifacts);
-		//-- remove duplicate facts
-		foreach ($indifacts as $key => $value) $indifacts[$key] = serialize($value);
-		$indifacts = array_unique($indifacts);
-		foreach ($indifacts as $key => $value) $indifacts[$key] = unserialize($value);
+		stable_usort($indifacts, "compare_facts");
 		return $indifacts;
 	}
 	/**
@@ -984,7 +978,7 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	function print_facts_tab() {
-		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang;
+		global $FACT_COUNT, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $EXPAND_RELATIVES_EVENTS;
 		global $n_chil, $n_gchi;
 		global $EXPAND_RELATIVES_EVENTS, $LANGUAGE, $lang_short_cut;
 
@@ -1000,7 +994,6 @@ class IndividualControllerRoot extends BaseController {
 		}
 		else {
 			$indifacts = $this->getIndiFacts();
-			usort($indifacts, 'compare_facts');
 			if (count($indifacts)==0) {?>
 				<tr>
 					<td id="no_tab1" colspan="2" class="facts_value"><?php echo $pgv_lang["no_tab1"]?>
@@ -1041,22 +1034,15 @@ class IndividualControllerRoot extends BaseController {
 		?>
 		</table>
 		<br />
-		<script language="JavaScript" type="text/javascript">
-		<!--
-		function togglerow(classname) {
-			var rows = document.getElementsByTagName("tr");
-			for (i=0; i<rows.length; i++) {
-				if (rows[i].className.indexOf(classname) != -1) {
-					var disp = rows[i].style.display;
-					if (disp=="none") {
-						disp="table-row";
-						if (document.all && !window.opera) disp = "inline"; // IE
-					}
-					else disp="none";
-					rows[i].style.display=disp;
-				}
-			}
-		}
+<script language="JavaScript" type="text/javascript">
+<!--
+	// hide button if list is empty
+	var ebn = document.getElementsByName('row_rela');
+	var row_top = document.getElementById('row_top');
+	if (ebn.length==0 && row_top) row_top.style.display="none";
+	<?php if (!$EXPAND_RELATIVES_EVENTS) print "togglerow('row_rela');\n"; ?>
+//-->
+</script>
 		<?php
 		if (!$EXPAND_RELATIVES_EVENTS) print "togglerow('row_rela');\n";
 		print "togglerow('row_histo');\n";
@@ -1800,7 +1786,7 @@ class IndividualControllerRoot extends BaseController {
 		global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
 		global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;
 		global $GOOGLEMAP_ENABLED, $TBLPREFIX, $DBCONN, $TEXT_DIRECTION, $GM_DEFAULT_TOP_VALUE, $GOOGLEMAP_COORD;
-
+		global $GM_MARKER_COLOR, $GM_MARKER_SIZE, $GM_PREFIX, $GM_POSTFIX, $GM_PRE_POST_MODE;
 		include_once('modules/googlemap/googlemap.php');
 
 		if ($GOOGLEMAP_ENABLED == "false") {

@@ -25,7 +25,7 @@
  *
  * @package PhpGedView
  * @subpackage Admin
- * @version $Id$
+ * $Id$
  */
 
 require("modules/googlemap/".$pgv_language["english"]);

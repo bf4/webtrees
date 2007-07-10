@@ -461,19 +461,14 @@ function valid_date(datefield) {
 			datefield.value=f3+" "+months[f2-1]+" "+(f1>=100?f1:(f1<=yy?f1+cc:f1+cc-100));
 	}
 
-	// date modifier
-	var c1 = datefield.value.substr(0,1);
-	var y = datefield.value.substr(1);
-	if (c1=="=") datefield.value = eval(y); // =1872-39 => 1833
-	if (c1=="/") datefield.value = "BEF "+y; // /1860 => BEF 1860
-	if (c1=="-") datefield.value = "BEF "+y; // -1860 => BEF 1860
-	if (c1=="*") datefield.value = "ABT "+y; // *1860 => ABT 1860
-	if (c1=="+") datefield.value = "AFT "+y; // +1860 => AFT 1860
-	var c5 = datefield.value.substr(4,1);
-	var y = datefield.value.substr(0,4);
-	if (c5=="/") datefield.value = "AFT "+y; // 1860/ => AFT 1860
-	var z = datefield.value.substr(5);
-	if (c5=="-" && z!="") datefield.value = "BET "+y+" AND "+z; // 1850-1860 => BET 1850 AND 1860
+	// Shortcuts for date ranges
+	datefield.value=datefield.value.replace(/^[~*]([\w ]+)$/, "ABT $1");
+	datefield.value=datefield.value.replace(/^[>+]([\w ]+)$/, "AFT $1");
+	datefield.value=datefield.value.replace(/^([\w ]+)[-/]$/, "AFT $1");
+	datefield.value=datefield.value.replace(/^[</-]([\w ]+)$/, "BEF $1");
+	datefield.value=datefield.value.replace(/^([\w ]+) ?- ?([\w ]+)$/, "BET $1 AND $2");
+	if (datefield.value.match(/^=([\d ()/*+-]+)$/)) datefield.value=eval(RegExp.$1);
+	
 	// other format
 	datestr = datefield.value;
 	datestr = datestr.replace(/-/g, "/");
@@ -699,6 +694,7 @@ function evalAjaxJavascript(text, parentElement) {
 			if (jscode.length>0) {
 				ttext = document.createTextNode(jscode);
 				//-- add the JS code to the <script> element as a text node
+				jscode=jscode.replace(/<!--/g, ''); // remove html comment [ 1737256 ]
 				jscode=jscode.replace(/function ([^( ]*)/g,'window.$1 = function');
 				eval(jscode);
 			}

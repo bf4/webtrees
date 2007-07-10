@@ -1,16 +1,36 @@
 <?php
-/*=================================================
-   charset=utf-8
-   Project:         phpGedView
-   File:            lang.en.php
-   Author:          Johan Borkhuis
-   Comments:        English Language file for Google map module
-===================================================*/
-
+/**
+ * English Language file for PhpGedView.
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2007  PGV Development Team
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * @package PhpGedView
+ * @subpackage GoogleMap
+ * @version $Id$
+ */
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access a language file directly.";
+	exit;
+}
 
 $pgv_lang["googlemap"]              = "Map";
 $pgv_lang["no_gmtab"]               = "No map data for this person";
-$pgv_lang["gm_disabled"]            = "Googlemap module disabled";
+$pgv_lang["gm_disabled"]            = "GoogleMap module disabled";
 
 $pgv_lang['gm_redraw_map']          = "Redraw map";
 $pgv_lang["gm_map"]                 = "Map";
@@ -18,13 +38,13 @@ $pgv_lang["gm_satellite"]           = "Satellite";
 $pgv_lang["gm_hybrid"]              = "Hybrid";
 
 // Configuration texts
-$pgv_lang["gm_manage"]              = "Manage Googlemap configuration";
-$pgv_lang["configure_googlemap"]    = "Googlemap Configuration";
+$pgv_lang["gm_manage"]              = "Manage GoogleMap configuration";
+$pgv_lang["configure_googlemap"]    = "GoogleMap Configuration";
 $pgv_lang["gm_admin_error"]         = "Page only for Administrators";
 $pgv_lang["gm_db_error"]            = "placelocation table not found in database";
 $pgv_lang["gm_table_created"]       = "placelocation table created";
-$pgv_lang["googlemap_enable"]       = "Enable Googlemap";
-$pgv_lang["googlemapkey"]           = "Google Map API key";
+$pgv_lang["googlemap_enable"]       = "Enable GoogleMap";
+$pgv_lang["googlemapkey"]           = "GoogleMap API key";
 $pgv_lang["gm_map_type"]            = "Default map type";
 $pgv_lang["gm_map_size"]            = "Size of map (in pixels)";
 $pgv_lang["gm_map_size_x"]          = "Width";
@@ -92,20 +112,22 @@ $pgv_lang["list_inactive"]        	= "Click here to show inactive places";
 
 //Placecheck specific text
 $pgv_lang["placecheck"]				= "Place Check";
-$pgv_lang['placecheck_text']		= "This will list all the places from the selected gedcom file";
+$pgv_lang['placecheck_text']		= "This will list all the places from the selected GEDCOM file. By default this will NOT INCLUDE places that are fully matched between the GEDCOM file and the GoogleMap tables";
 $pgv_lang['placecheck_top']			= "Top Level Place";
 $pgv_lang['placecheck_one']			= "Level One Place";
 $pgv_lang['placecheck_select1']		= "Select Top Level...";
 $pgv_lang['placecheck_select2']		= "Select Next Level...";
 $pgv_lang['placecheck_key']			= "Key to colors used below";
-$pgv_lang['placecheck_key1']		= "<font size=\"-2\">this place and its coordinates do not exist in the googlemap tables</font>";
-$pgv_lang['placecheck_key2']		= "<font size=\"-2\">this place exists in the googlemap tables, but has no coordinates</font>";
-$pgv_lang['placecheck_key3']		= "<font size=\"-2\">this place level is blank in your gedcom file. It should be added to<br/>googlemap places as \"unknown\" with coordinates from its parent<br/>level before you add any place to the next level</font>";
-$pgv_lang['placecheck_head']		= "Place list for gedcom file";
-$pgv_lang['placecheck_key4']		= "<font size=\"-2\">this place level is blank in your gedcom file, but exists as 'unknown'<br/>in the googlemap places table with coordinates. No action required<br/>until the missing level can be entered</font>";
-$pgv_lang['placecheck_gedheader']	= "Gedcom File Place Data<br/>(2 PLAC tag)";
+$pgv_lang['placecheck_key1']		= "this place and its coordinates do not exist in the GoogleMap tables";
+$pgv_lang['placecheck_key2']		= "this place exists in the GoogleMap tables, but has no coordinates";
+$pgv_lang['placecheck_key3']		= "this place level is blank in your GEDCOM file. It should be added to<br/>GoogleMap places as \"unknown\" with coordinates from its parent<br/>level before you add any place to the next level";
+$pgv_lang['placecheck_key4']		= "this place level is blank in your GEDCOM file, but exists as 'unknown'<br/>in the GoogleMap places table with coordinates. No action required<br/>until the missing level can be entered";
+$pgv_lang['placecheck_head']		= "Place list for GEDCOM file";
+$pgv_lang['placecheck_gedheader']	= "GEDCOM File Place Data<br/>(2 PLAC tag)";
 $pgv_lang['placecheck_gm_header']	= "GoogleMap Places Table Data";
 $pgv_lang['placecheck_unique']		= "Total unique places";
-$pgv_lang["placecheck_zoom"]         = "Zoom=";
-
+$pgv_lang["placecheck_zoom"]        = "Zoom=";
+$pgv_lang["placecheck_options"]     = "PlaceCheck List Options";
+$pgv_lang["placecheck_filter_text"] = "List filtering options";
+$pgv_lang["placecheck_match"] 		= "Include fully matched places -";
 ?>

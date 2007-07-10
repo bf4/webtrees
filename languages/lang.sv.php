@@ -254,6 +254,7 @@ $pgv_lang["no_results"]			= "Inga resultat funna.";
 $pgv_lang["search_geds"]			= "GEDCOM-filer att söka i";
 $pgv_lang["search_general"]			= "Generell sökning";
 $pgv_lang["clipping_privacy"]		= "Vissa delar kunde inte läggas till på grund av integritetsrestriktioner";
+$pgv_lang["chart_new"]				= "Släkttavla";
 $pgv_lang["loading"]				= "Laddar...";
 $pgv_lang["clear_chart"]			= "Rensa tavla";
 $pgv_lang["file_information"]		= "Filinformation";
@@ -354,6 +355,7 @@ $pgv_lang["timeline_endYear"] = "Slutår";
 $pgv_lang["timeline_scrollSpeed"] = "Hastighet";
 $pgv_lang["timeline_controls"] = "Tidslinjekontroll";
 $pgv_lang["include_family"] = "Inkludera nära familjemedlemmar";
+$pgv_lang["family"]				= "Familj";
 $pgv_lang["lifespan_chart"] = "Livslinjetavla";
 $pgv_lang["zoom_in"]			= "Zooma in";
 //-- MONTH NAMES
@@ -920,7 +922,7 @@ $pgv_lang["fanchart_IE"]		= "Solfjäderstavlan kan inte skrivas ut direkt av din
 //-- RSS Feed
 $pgv_lang["rss_descr"]			= "Nyheter och länkar från #GEDCOM_TITLE#-sajten";
 $pgv_lang["rss_logo_descr"]		= "RSS-flöde skapat med PhpGedView";
-$pgv_lang["rss_feeds"]			= "RSS fl�den";
+$pgv_lang["rss_feeds"]			= "RSS flöden";
 $pgv_lang["no_feed_title"]		= "Matningen är inte tillgänglig";
 $pgv_lang["no_feed"]			= "Det finns ingen RSS-matning tillgänglig för denna PhpGedViewsajt";
 $pgv_lang["feed_login"]			= "Om du haer ett konto på denna PhpGedViewsajt då kan du <a href=\"#AUTH_URL#\">logga in</a> på servern med normal HTTP autenticiering för att se personlig inforamtion.";
@@ -1174,6 +1176,7 @@ $pgv_lang["htmlplus_block_taglist"]	= "Taglista";
 $pgv_lang["htmlplus_block_compat"]	= "Kompatibilitetsmod";
 $pgv_lang["htmlplus_block_current"]	= "Nuvarande";
 $pgv_lang["htmlplus_block_default"]	= "Standard";
+$pgv_lang["htmlplus_block_gedcom"]	= "Släktträd";
 $pgv_lang["htmlplus_block_birth"]	= "födelse";
 $pgv_lang["htmlplus_block_death"]	= "död";
 $pgv_lang["htmlplus_block_marrage"]	= "vigsel";
@@ -1330,4 +1333,5 @@ $pgv_lang["cache_life"]				= "Cachefils livslängd";
 $pgv_lang["genealogy"]					= "genealogi";
 $pgv_lang["view_img_details"]		= "Visa bilddetaljer";
 $pgv_lang["invalid_search_input"] 	= "Var vänlig och skriv in ett förnamn, efternamn eller ort tillsammans med ett årtal";
+$pgv_lang["search_place_word"]		= "Endast hela ord";
 ?>

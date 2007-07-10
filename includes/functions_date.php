@@ -900,24 +900,26 @@ function get_age($indirec, $datestr, $style=1) {
 
 	// Convert to days/months/years/etc.  NB - this is not perfect, as
 	// the birth/event dates may be in different calendars.
-	if (abs($max_age)<28) { // show in days
+	if (abs($max_age)<30) { // show in days
 		if ($min_age==$max_age)
-			if ($max_age-$min_age==1)
+			if ($max_age==0)
+				$age=""; // do not print "Age: 0 days"
+			else if ($max_age==1)
 				$age="1 {$pgv_lang['day1']}";
 			else
-				$age="$max_age {$pgv_lang['days']}";
+				$age=$max_age." {$pgv_lang['days']}";
 		else
-			$age="$min_age - $max_age {$pgv_lang['days']}";
+			$age=$min_age."-".$max_age." {$pgv_lang['days']}";
 	} else if (abs($max_age)<731) { // show in months
-		$min_age=floor($min_age/28);
-		$max_age=floor($max_age/28);
+		$min_age=floor($min_age/30.4);
+		$max_age=floor($max_age/30.4);
 		if ($min_age==$max_age)
 			if ($max_age-$min_age==1)
 				$age="1 {$pgv_lang['month1']}";
 			else
-				$age="$max_age {$pgv_lang['months']}";
+				$age=$max_age." {$pgv_lang['months']}";
 		else
-			$age="$min_age - $max_age {$pgv_lang['months']}";
+			$age=$min_age."-".$max_age." {$pgv_lang['months']}";
 	} else { // show in years
 		$min_age=floor($min_age/365.25);
 		$max_age=floor($max_age/365.25);
@@ -925,12 +927,12 @@ function get_age($indirec, $datestr, $style=1) {
 			if ($max_age-$min_age==1)
 				$age="1 {$pgv_lang['year1']}";
 			else
-				$age="$max_age {$pgv_lang['years']}";
+				$age=$max_age; //"$max_age {$pgv_lang['years']}";
 		else
-			$age="$min_age - $max_age {$pgv_lang['years']}";
+			$age=$min_age."-".$max_age; // {$pgv_lang['years']}";
 	}
 
-	if ($approx) $age.=" {$pgv_lang['apx']}";
+	if ($approx && !strpos($age, "-")) $age.=" {$pgv_lang['apx']}";
 	if ($style)  $age=" <span class=\"age\">({$pgv_lang['age']} {$age})</span>";
 	return $age;
 }
@@ -1178,16 +1180,18 @@ function default_gedcom_to_edit_date($datestr)
 function default_edit_to_gedcom_date($datestr)
 {
 	global $pgv_lang;
+	// The order of these keywords is significant, to avoid partial matches.  In particular:
+	// ads:adr_leap_year:adr to prevent "Adar" matching "Adar Sheni" or "Adar I" matching "Adar II"
 
-	foreach (array('jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec','vend','brum','frim','nivo','pluv','vent','germ','flor','prai','mess','ther','fruc','comp','tsh','csh','ksl','tvt','shv','adr','ads','nsn','iyr','svn','tmz','aav','ell','abt','aft','and','apx','bef','bet','cal','cir','est','from','int','to','b.c.') as $keyword)
-		$datestr=preg_replace("/\b".str_replace('.','[.]?',$pgv_lang[$keyword])."\b/i", $keyword, $datestr);
+	foreach (array('jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec','vend','brum','frim','nivo','pluv','vent','germ','flor','prai','mess','ther','fruc','comp','tsh','csh','ksl','tvt','shv','nsn','iyr','svn','tmz','aav','ell','abt','aft','and','bef','bet','cal','est','from','int','to','b.c.') as $keyword)
+		$datestr=preg_replace("/".str_replace('.','[.]?',$pgv_lang[$keyword])."/i", $keyword, $datestr);
 
-	foreach (array('january_1st','february_1st','march_1st','april_1st','may_1st','june_1st','july_1st','august_1st','september_1st','october_1st','november_1st','december_1st') as $keyword)
-		$datestr=preg_replace("/\b".str_replace('.','[.]?',$pgv_lang[$keyword])."\b/i", substr($keyword,0,3), $datestr);
+	foreach (array('ads','adr_leap_year','adr','january_1st','february_1st','march_1st','april_1st','may_1st','june_1st','july_1st','august_1st','september_1st','october_1st','november_1st','december_1st') as $keyword)
+		$datestr=preg_replace("/".str_replace('.','[.]?',$pgv_lang[$keyword])."/i", substr($keyword,0,3), $datestr);
 
 	// APX and CIR are not gedcom 5.5.1 keywords
 	foreach (array('apx','cir') as $keyword)
-		$datestr=preg_replace("/\b".str_replace('.','[.]?',$pgv_lang[$keyword])."\b/i", 'ABT', $datestr);
+		$datestr=preg_replace("/".str_replace('.','[.]?',$pgv_lang[$keyword])."/i", 'abt', $datestr);
 
 	return $datestr;
 }

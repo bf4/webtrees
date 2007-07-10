@@ -25,11 +25,13 @@
  * @author Julien Damon
  * @version $Id$
  */
+
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
 
+$pgv_lang["search_place_word"]          = "Mots entiers seulement";
 $pgv_lang["invalid_search_input"]       = "Entrez un nom de personne ou de lieu en complément de l'année";
 $pgv_lang["duplicate_username"]         = "Utilisateur déjà existant.  Un utilisateur existe déjà sous ce nom.  Veuillez retourner à la page précédente et choisir un autre nom.";
 $pgv_lang["cache_life"]                 = "Fichier Cache";
@@ -53,6 +55,7 @@ $pgv_lang["enter_fullname"]             = "Vous devez entrer un prénom et un no
 $pgv_lang["name"]                       = "Nom";
 $pgv_lang["children"]                   = "Enfants";
 $pgv_lang["child"]                      = "Enfant";
+$pgv_lang["family"]                     = "Famille";
 $pgv_lang["as_child"]                   = "Parents, frères et sœurs";
 $pgv_lang["source_menu"]                = "Options pour la source";
 $pgv_lang["other_records"]              = "Autres enregistrements liés à cette source";
@@ -615,6 +618,38 @@ $pgv_lang["sep"]                        = "Septembre";
 $pgv_lang["oct"]                        = "Octobre";
 $pgv_lang["nov"]                        = "Novembre";
 $pgv_lang["dec"]                        = "Décembre";
+
+#pgv_lang["vend"]                       = "Vendémiaire";
+#pgv_lang["brum"]                       = "Brumaire";
+#pgv_lang["frim"]                       = "Frimaire";
+#pgv_lang["nivo"]                       = "Nivôse";
+#pgv_lang["pluv"]                       = "Pluviôse";
+#pgv_lang["vent"]                       = "Ventôse";
+#pgv_lang["germ"]                       = "Germinal";
+#pgv_lang["flor"]                       = "Floréal";
+#pgv_lang["prai"]                       = "Prairial";
+#pgv_lang["mess"]                       = "Messidor";
+#pgv_lang["ther"]                       = "Thermidor";
+#pgv_lang["fruc"]                       = "Fructidor";
+#pgv_lang["comp"]                       = "jours complémentaires";
+
+#pgv_lang["tsh"]                        = "Tishrei";
+#pgv_lang["csh"]                        = "Heshvan";
+#pgv_lang["ksl"]                        = "Kislev";
+#pgv_lang["tvt"]                        = "Tevet";
+#pgv_lang["shv"]                        = "Shevat";
+#pgv_lang["adr"]                        = "Adar";
+#pgv_lang["adr_leap_year"]              = "Adar I";
+#pgv_lang["ads"]                        = "Adar II";
+#pgv_lang["nsn"]                        = "Nissan";
+#pgv_lang["iyr"]                        = "Iyar";
+#pgv_lang["svn"]                        = "Sivan";
+#pgv_lang["tmz"]                        = "Tamuz";
+#pgv_lang["aav"]                        = "Av";
+#pgv_lang["ell"]                        = "Elul";
+
+$pgv_lang["b.c."]                       = "av.J-C";
+
 $pgv_lang["abt"]                        = "vers";
 $pgv_lang["aft"]                        = "après";
 $pgv_lang["and"]                        = "et";
