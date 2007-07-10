@@ -4,7 +4,7 @@
  * reference this source.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006 PGV Development Team
+ * Copyright (C) 2002 to 2007 PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -146,8 +146,8 @@ $myfamlist = $controller->source->getSourceFams();
 $ci=count($myindilist);
 $cf=count($myfamlist);
 
-if ($ci>0) print_indi_table($myindilist, $pgv_lang["individuals"]." @ ".$controller->source->getTitle());
-if ($cf>0) print_fam_table($myfamlist, $pgv_lang["families"]." @ ".$controller->source->getTitle());
+if ($ci>0) print_indi_table($myindilist, $controller->source->getTitle());
+if ($cf>0) print_fam_table($myfamlist, $controller->source->getTitle());
 
 ?>
 	<br />
