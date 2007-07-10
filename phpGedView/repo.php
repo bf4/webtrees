@@ -4,7 +4,7 @@
  * Also shows how many sources reference this repository.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -227,34 +227,8 @@ $mysourcelist = search_sources($query);
 uasort($mysourcelist, "itemsort");
 $cs=count($mysourcelist);
 
-print_sour_table($mysourcelist, $pgv_lang["sources"]." @ ".$name);
+print_sour_table($mysourcelist, $name);
 
-/** DEPRECATED
-if ($cs>0) {
-	print_help_link("repos_listbox_help", "qm");
-
-	print "\n\t<table class=\"list_table $TEXT_DIRECTION\">\n\t\t<tr><td class=\"list_label\"";
-	if($cs>12)	print " colspan=\"2\"";
-	print "><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" border=\"0\" title=\"".$pgv_lang["titles_found"]."\" alt=\"".$pgv_lang["titles_found"]."\" />&nbsp;&nbsp;";
-	print $pgv_lang["titles_found"];
-	print "</td></tr><tr><td class=\"$TEXT_DIRECTION list_value_wrap\"><ul>";
-	if (count($mysourcelist)>0) {
-		$i=1;
-		// -- print the array
-		foreach ($mysourcelist as $key => $value) {
-			print_list_source($key, $value);
-			if ($i==ceil($cs/2) && $cs>12) print "</ul></td><td class=\"list_value_wrap\"><ul>\n";
-			$i++;
-		}
-	}
-
-	print "\n\t\t</ul></td>\n\t\t";
-
-	print "</tr><tr>";
-	print "</tr>\n\t</table>";
-}
-else print "&nbsp;&nbsp;&nbsp;<span class=\"warning\"><i>".$pgv_lang["no_results"]."</span>";
-**/
 print "<br /><br /></td><td valign=\"top\">";
 
 if ($view!="preview") {

@@ -343,9 +343,9 @@ if ($level > 0) {
 
 		$title = ""; foreach ($parent as $k=>$v) $title = $v.", ".$title;
 		$title = substr($title, 0, -2)." ";
-		print_indi_table($myindilist, $pgv_lang["individuals"]." @ ".$title);
-		print_fam_table($myfamlist, $pgv_lang["families"]." @ ".$title);
-		print_sour_table($mysourcelist, $pgv_lang["sources"]." @ ".$title);
+		print_indi_table($myindilist, $title);
+		print_fam_table($myfamlist, $title);
+		print_sour_table($mysourcelist, $title);
 	}
 }
 

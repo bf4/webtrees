@@ -253,15 +253,17 @@ function print_list_repository($key, $value, $useli=true) {
  */
 function print_indi_table($datalist, $legend="", $option="") {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION, $GEDCOM_ID_PREFIX;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 	
 	if (count($datalist)<1) return;
 	$tiny = (count($datalist)<300);
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");     //added back
 	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";   //added back
-
 	require_once("js/sorttable.js.htm");
 	require_once("includes/person_class.php");
-	if (empty($legend)) $legend=$pgv_lang["individuals"];
+
+	$legend = $pgv_lang["individuals"].($legend?" @ ".$legend:"");
+	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- filter buttons
@@ -584,15 +586,17 @@ function print_surn_table($datalist, $target="INDI") {
  */
 function print_fam_table($datalist, $legend="") {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	if (count($datalist)<1) return;
 	$tiny = (count($datalist)<300);
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
-	
 	require_once("js/sorttable.js.htm");
 	require_once("includes/family_class.php");
-	if (empty($legend)) $legend=$pgv_lang["families"];
+
+	$legend = $pgv_lang["families"].($legend?" @ ".$legend:"");
+	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sfamily"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- filter buttons
@@ -853,11 +857,15 @@ function print_fam_table($datalist, $legend="") {
  */
 function print_sour_table($datalist, $legend="") {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+
 	if (count($datalist)<1) return;
 	$name_subtags = array("_HEB", "ROMN");
 	require_once("js/sorttable.js.htm");
 	require_once("includes/source_class.php");
-	if (empty($legend)) $legend=$pgv_lang["sources"];
+
+	$legend = $pgv_lang["sources"].($legend?" @ ".$legend:"");
+	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
@@ -994,11 +1002,15 @@ T2;
  */
 function print_repo_table($datalist, $legend="") {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+
 	if (count($datalist)<1) return;
 	$name_subtags = array("_HEB", "ROMN");
 	require_once("js/sorttable.js.htm");
 	require_once("includes/repository_class.php");
-	if (empty($legend)) $legend=$pgv_lang["repos_found"];
+
+	$legend = $pgv_lang["repos_found"].($legend?" @ ".$legend:"");
+	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["repository"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
@@ -1071,10 +1083,14 @@ function print_repo_table($datalist, $legend="") {
  */
 function print_media_table($datalist, $legend="") {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+
 	if (count($datalist)<1) return;
 	require_once("js/sorttable.js.htm");
 	require_once("includes/media_class.php");
-	if (empty($legend)) $legend=$pgv_lang["media"];
+
+	$legend = $pgv_lang["media"].($legend?" @ ".$legend:"");
+	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
