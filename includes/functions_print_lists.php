@@ -525,60 +525,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 }
 
 /**
- * print a sortable table of surnames
- *
- * @param array $datalist contain records that were extracted from the database.
- * @param string $target where to go after clicking a surname : INDI page or FAM page
- */
-function print_surn_table($datalist, $target="INDI") {
-	global $pgv_lang, $factarray, $GEDCOM;
-	if (count($datalist)<1) return;
-	require_once("js/sorttable.js.htm");
-	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
-	//-- table header
-	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	echo "<tr>";
-	echo "<td></td>";
-	echo "<th class=\"list_label\">".$factarray["SURN"]."</th>";
-	echo "<th class=\"list_label\">";
-//	if ($target=="FAM") echo $pgv_lang["families"]; else echo $pgv_lang["individuals"];
-	if ($target=="FAM") echo $pgv_lang["spouses"]; else echo $pgv_lang["individuals"];
-	echo "</th>";
-	echo "</tr>\n";
-	//-- table body
-	$total = 0;
-	$n = 0;
-	foreach($datalist as $key => $value) {
-		if (!isset($value["name"])) break;
-		$surn = $value["name"];
-		if ($target=="FAM") $url = "famlist.php";	else $url = "indilist.php";
-		$url .= "?ged=".$GEDCOM."&amp;surname=".urlencode($surn);
-		//-- Counter
-		echo "<tr>";
-		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
-		//-- Surname
-		if (empty($surn) || trim("@".$surn,"_")=="@" || $surn=="@N.N.") $surn = $pgv_lang["NN"];
-		echo "<td class=\"list_value_wrap\" align=\"".get_align($surn)."\">";
-		echo "<a href=\"".$url."\" class=\"list_item name1\">".PrintReady($surn)."</a>";
-		echo "&nbsp;</td>";
-		//-- Surname count
-		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".$url."\" class=\"list_item name2\">".$value["match"]."</a>";
-		echo "</td>";
-		$total += $value["match"];
-
-		echo "</tr>\n";
-	}
-	//-- table footer
-	echo "<tr class=\"sortbottom\">";
-	echo "<td class=\"list_item\">&nbsp;</td>";
-	echo "<td class=\"list_item\">&nbsp;</td>";
-	echo "<td class=\"list_label name2\">".$total."</td>";
-	echo "</tr>\n";
-	echo "</table>\n";
-}
-
-/**
  * print a sortable table of families
  *
  * @param array $datalist contain families that were extracted from the database.
@@ -1158,6 +1104,39 @@ function print_media_table($datalist, $legend="") {
 	}
 	echo "</table>\n";
 	echo "</fieldset>\n";
+}
+
+/**
+ * print a cloudstyle table of surnames
+ *
+ * @param array $datalist contain records that were extracted from the database.
+ * @param string $target where to go after clicking a surname : INDI page or FAM page
+ */
+function print_surn_table($datalist, $target="INDI") {
+	global $pgv_lang, $factarray, $GEDCOM, $COMMON_NAMES_THRESHOLD;
+
+	if (count($datalist)<1) return;
+	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
+	//-- table header
+	echo "<table id=\"".$table_id."\" class=\"list_table center\">";
+	//-- table body
+	echo "<tr>";
+	echo "<td class=\"list_value_wrap\">";
+	foreach($datalist as $key => $value) {
+		if (!isset($value["name"])) break;
+		//-- Surname
+		$surn = $value["name"];
+		if (empty($surn) || trim("@".$surn,"_")=="@" || $surn=="@N.N.") $surn = $pgv_lang["NN"];
+		//-- Target
+		if ($target=="FAM") $url = "famlist.php";	else $url = "indilist.php";
+		$url .= "?ged=".$GEDCOM."&amp;surname=".urlencode($surn);
+		//-- fontsize
+		$fontsize = "+".round($value["match"]/$COMMON_NAMES_THRESHOLD);
+		echo "<a href=\"".$url."\" class=\"list_item\" alt=\"".$value["match"]."\" title=\"".$value["match"]."\"><font size=\"".$fontsize."\">&nbsp;".PrintReady($surn)."&nbsp;</font></a> ";
+	}
+	echo "</tr>\n";
+	//-- table footer
+	echo "</table>\n";
 }
 
 /**
