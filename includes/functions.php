@@ -1574,10 +1574,6 @@ function compare_fact_type($afact, $bfact) {
 	global $factarray, $pgv_lang;
 	static $factsort;
 
-	// _BIRT_????, etc. all sort together.
-	if (preg_match('/(_\w+_)/', $afact, $match)) $afact=$match[1];
-	if (preg_match('/(_\w+_)/', $bfact, $match)) $bfact=$match[1];
-
 	if (!is_array($factsort))
 		$factsort = array_flip(array(
 			"BIRT", 
@@ -1602,6 +1598,7 @@ function compare_fact_type($afact, $bfact) {
 			"_SEPR",
 			"DIVF",
 			"MARS",
+			"_BIRT_CHIL",
 			"DIV", "ANUL", 
 			"_BIRT_", "_MARR_", "_DEAT_",
 			"CENS",
@@ -1615,6 +1612,7 @@ function compare_fact_type($afact, $bfact) {
 			"NCHI",
 			"WILL",
 			"_HOL",
+			"_????_",
 			"DEAT", "CAUS",
 			"_FNRL", "BURI", "CREM", "_INTE", "CEME",
 			"_YART",
@@ -1634,10 +1632,19 @@ function compare_fact_type($afact, $bfact) {
 			"CHAN"
 		));
 
-	if (isset($factsort[$afact]) && isset($factsort[$bfact]))
-		return $factsort[$afact]-$factsort[$bfact];
-	else
-		return 0;
+	// Events not in the above list get mapped onto one that is.
+	if (!isset($factsort[$afact]))
+		if (preg_match('/(_(BIRT|MARR|DEAT)_)/', $afact, $match))
+			$afact=$match[1];
+		else
+			$afact="_????_";
+	if (!isset($factsort[$bfact]))
+		if (preg_match('/(_(BIRT|MARR|DEAT)_)/', $bfact, $match))
+			$bfact=$match[1];
+		else
+			$bfact="_????_";
+
+	return $factsort[$afact]-$factsort[$bfact];
 }
 
 /**
