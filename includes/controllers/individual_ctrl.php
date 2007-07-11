@@ -1156,6 +1156,8 @@ class IndividualControllerRoot extends BaseController {
 	 */
 	function get_media_count() {
 		$ct = preg_match("/\d OBJE/", $this->indi->getGedcomRecord());
+		foreach ($this->indi->getSpouseFamilies() as $k=>$sfam)
+			$ct += preg_match("/\d OBJE/", $sfam->getGedcomRecord());
 		return $ct;
 	}
 
