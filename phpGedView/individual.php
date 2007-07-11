@@ -427,17 +427,17 @@ if(empty($SEARCH_SPIDER))
 	print "<div id=\"media\" class=\"tab_page\" style=\"display:none;\" >\n";
 else
 	print "<div id=\"media\" class=\"tab_page\" style=\"display:block;\" >\n";
+if ($MULTI_MEDIA) {
+	print "<span class=\"subheaders\">".$pgv_lang["media"]."</span>";
+	print "<div id=\"media_content\">";
+	if (($controller->default_tab==3)||(!empty($SEARCH_SPIDER))) $controller->getTab(3);
+	else {
+		if ($controller->get_media_count()>0) loading_message();
+		else print "<span id=\"no_tab4\">".$pgv_lang["no_tab4"]."</span>";
+	}
+	print "</div>\n";
+}
 ?>
-<span class="subheaders"><?php print $pgv_lang["media"];?></span>
-<div id="media_content">
-<?php
-	if ($MULTI_MEDIA && ($controller->get_media_count()>0 || userCanEdit(getUserName()))) {
-		if (($controller->default_tab==3)||(!empty($SEARCH_SPIDER))) $controller->getTab(3);
-		else loading_message();
-   		}
-	else print "<table class=\"facts_table\"><tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr></table>\n";
-?>
-</div>
 </div>
 <!-- ============================= Start 5th tab individual page ==== Close relatives -->
 <?php

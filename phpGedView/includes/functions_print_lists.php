@@ -1107,7 +1107,7 @@ function print_media_table($datalist, $legend="") {
 }
 
 /**
- * print a cloudstyle table of surnames
+ * print a tag cloud of surnames
  *
  * @param array $datalist contain records that were extracted from the database.
  * @param string $target where to go after clicking a surname : INDI page or FAM page
@@ -1124,16 +1124,15 @@ function print_surn_table($datalist, $target="INDI") {
 	echo "<td class=\"list_value_wrap\">";
 	foreach($datalist as $key => $value) {
 		if (!isset($value["name"])) break;
-		//-- Surname
 		$surn = $value["name"];
-		if (empty($surn) || trim("@".$surn,"_")=="@" || $surn=="@N.N.") $surn = $pgv_lang["NN"];
-		//-- Target
 		if ($target=="FAM") $url = "famlist.php";	else $url = "indilist.php";
 		$url .= "?ged=".$GEDCOM."&amp;surname=".urlencode($surn);
-		//-- fontsize
-		$fontsize = "+".round($value["match"]/$COMMON_NAMES_THRESHOLD);
-		echo "<a href=\"".$url."\" class=\"list_item\" alt=\"".$value["match"]."\" title=\"".$value["match"]."\"><font size=\"".$fontsize."\">&nbsp;".PrintReady($surn)."&nbsp;</font></a> ";
+		if (empty($surn) || trim("@".$surn,"_")=="@" || $surn=="@N.N.") $surn = $pgv_lang["NN"];
+		$fontsize = "+".floor($value["match"]/$COMMON_NAMES_THRESHOLD);
+		echo " &nbsp;<a href=\"".$url."\" class=\"list_item\" title=\"".PrintReady($surn)." (".$value["match"].")\">"
+		."<font size=\"".$fontsize."\">".PrintReady($surn)."</font></a>&nbsp; ";
 	}
+	echo "</td>";
 	echo "</tr>\n";
 	//-- table footer
 	echo "</table>\n";
