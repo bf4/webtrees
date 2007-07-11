@@ -1129,7 +1129,7 @@ function print_surn_table($datalist, $target="INDI") {
 		$url .= "?ged=".$GEDCOM."&amp;surname=".urlencode($surn);
 		if (empty($surn) || trim("@".$surn,"_")=="@" || $surn=="@N.N.") $surn = $pgv_lang["NN"];
 		$fontsize = "+".floor($value["match"]/$COMMON_NAMES_THRESHOLD);
-		echo " &nbsp;<a href=\"".$url."\" class=\"list_item\" title=\"".PrintReady($surn)." (".$value["match"].")\">"
+		echo " &nbsp;<a href=\"".$url."\" class=\"list_item\" title=\"".PrintReady($surn." (".$value["match"].")")."\">"
 		."<font size=\"".$fontsize."\">".PrintReady($surn)."</font></a>&nbsp; ";
 	}
 	echo "</td>";
