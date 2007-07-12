@@ -392,9 +392,10 @@ function update_places($gid, $indirec, $update = false) {
 	$pt = preg_match_all("/\d PLAC (.*)/", $indirec, $match, PREG_SET_ORDER);
 	for ($i = 0; $i < $pt; $i++) {
 		$place = trim($match[$i][1]);
+		$lowplace = str2lower($place);
 		//-- if we have already visited this place for this person then we don't need to again
-		if (isset($personplace[str2lower($place)])) continue;
-		$personplace[str2lower($place)] = 1;
+		if (isset($personplace[$lowplace])) continue;
+		$personplace[$lowplace] = 1;
 		$places = preg_split("/,/", $place);
 		//-- reverse the array to start at the highest level
 		$secalp = array_reverse($places);

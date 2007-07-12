@@ -1039,7 +1039,6 @@ function get_indi_names($indirec, $import=false) {
  * @param string $name	The name
  * @return array		The array of codes
  */
-
 function DMSoundex($name, $option = "") {
 	global $PGV_BASEDIRECTORY, $dmsoundexlist, $dmcoding, $maxchar, $INDEX_DIRECTORY, $cachecount, $cachename;
 
@@ -1178,14 +1177,16 @@ function DMSoundex($name, $option = "") {
 
 	// Kill the doubles and zero's in each result
 	// Do this for every result
-	for ($i=0, $max=count($result); $i<$max; $i++) {
+	$ctr = count($result);
+	for ($i=0; $i<$ctr; $i++) {
 		$j=1;
 		$res = $result[$i][0];
 		// and check every code in the result.
 		// codes are stored separately in array elements, to keep
 		// distinction between 6 and 66.
 
-		while($j<count($result[$i])) {
+		$cti = count($result[$i]);
+		while($j<$cti) {
 
 //  Zeroes to remain in the Soundex result
 			if ((($result[$i][$j-1] != $result[$i][$j]) && ($result[$i][$j] != -1)) || $result[$i][$j] == 0) {
