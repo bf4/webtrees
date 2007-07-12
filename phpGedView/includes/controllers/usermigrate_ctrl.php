@@ -225,8 +225,8 @@ class UserMigrateControllerRoot extends BaseController {
 		
 		// Make the zip
 		if (count($this->flist) > 0) {
-			require "includes/pclzip.lib.php";
-			require "includes/adodb-time.inc.php";
+			require_once "includes/pclzip.lib.php";
+			require_once "includes/adodb-time.inc.php";
 			$this->buname = adodb_date("YmdHis").".zip";
 			$this->fname = $INDEX_DIRECTORY.$this->buname;
 			$comment = "Created by PhpGedView ".$VERSION." ".$VERSION_RELEASE." on ".adodb_date("r").".";
