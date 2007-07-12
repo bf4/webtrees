@@ -1219,8 +1219,8 @@ print "</tr>";
 	<tr>
 		<td class="descriptionbox wrap"><?php print_help_link("SURNAME_LIST_STYLE_help", "qm", "SURNAME_LIST_STYLE"); print $pgv_lang["SURNAME_LIST_STYLE"];?></td>
 		<td class="optionbox"><select name="NEW_SURNAME_LIST_STYLE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SURNAME_LIST_STYLE_help');">
-				<option value="style2" <?php if ($SURNAME_LIST_STYLE) print "selected=\"selected\""; ?>><?php print $pgv_lang["style2"];?></option>
-				<option value="style3" <?php if (!$SURNAME_LIST_STYLE) print "selected=\"selected\""; ?>><?php print $pgv_lang["style3"];?></option>
+				<option value="style2" <?php if ($SURNAME_LIST_STYLE=="style2") print "selected=\"selected\""; ?>><?php print $pgv_lang["style2"];?></option>
+				<option value="style3" <?php if ($SURNAME_LIST_STYLE=="style3") print "selected=\"selected\""; ?>><?php print $pgv_lang["style3"];?></option>
 			</select>
 		</td>
 	</tr>
