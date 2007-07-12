@@ -91,6 +91,7 @@ $SUBLIST_TRIGGER_I = "200";				// -- Number of names required before Individual 
 										// -- Set to zero to disable sub-lists
 $SUBLIST_TRIGGER_F = "200";				// -- Number of names required before Family lists start sub-listing by first name
 										// -- Set to zero to disable sub-lists
+$SURNAME_LIST_STYLE = "style2";			// -- Surname list style.  "style2"=sortable table, "style3"=list of names in varying font sizes
 
 $NAME_FROM_GEDCOM = false;				// -- By default phpGedView uses the name stored in the indexes to get a person's name
 										// -- With some gedcom formats the sortable name stored in the indexes does not get
