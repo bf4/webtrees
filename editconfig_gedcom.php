@@ -363,6 +363,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$SPLIT_PLACES\s*=\s*.*;/', "\$SPLIT_PLACES = ".$boolarray[$_POST["NEW_SPLIT_PLACES"]].";", $configtext);
 	$configtext = preg_replace('/\$SUBLIST_TRIGGER_I\s*=\s*.*;/', "\$SUBLIST_TRIGGER_I = \"".$_POST["NEW_SUBLIST_TRIGGER_I"]."\";", $configtext);
 	$configtext = preg_replace('/\$SUBLIST_TRIGGER_F\s*=\s*.*;/', "\$SUBLIST_TRIGGER_F = \"".$_POST["NEW_SUBLIST_TRIGGER_F"]."\";", $configtext);
+	$configtext = preg_replace('/\$SURNAME_LIST_STYLE\s*=\s*.*;/', "\$SURNAME_LIST_STYLE = \"".$_POST["NEW_SURNAME_LIST_STYLE"]."\";", $configtext);
 	$configtext = preg_replace('/\$SUPPORT_METHOD\s*=\s*".*";/', "\$SUPPORT_METHOD = \"".$_POST["NEW_SUPPORT_METHOD"]."\";", $configtext);
 	$configtext = preg_replace('/\$SURNAME_TRADITION\s*=\s*.*;/', "\$SURNAME_TRADITION = \"".$_POST["NEW_SURNAME_TRADITION"]."\";", $configtext);
 	$configtext = preg_replace('/\$SYNC_GEDCOM_FILE\s*=\s*.*;/', "\$SYNC_GEDCOM_FILE = ".$boolarray[$_POST["NEW_SYNC_GEDCOM_FILE"]].";", $configtext);
@@ -1214,6 +1215,14 @@ print "</tr>";
 	<tr>
 		<td class="descriptionbox wrap"><?php print_help_link("SUBLIST_TRIGGER_F_help", "qm", "SUBLIST_TRIGGER_F"); print $pgv_lang["SUBLIST_TRIGGER_F"];?></td>
 		<td class="optionbox"><input type="text" name="NEW_SUBLIST_TRIGGER_F" value="<?php print $SUBLIST_TRIGGER_F?>" size="5" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SUBLIST_TRIGGER_F_help');" /></td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("SURNAME_LIST_STYLE_help", "qm", "SURNAME_LIST_STYLE"); print $pgv_lang["SURNAME_LIST_STYLE"];?></td>
+		<td class="optionbox"><select name="NEW_SURNAME_LIST_STYLE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SURNAME_LIST_STYLE_help');">
+				<option value="style2" <?php if ($SURNAME_LIST_STYLE) print "selected=\"selected\""; ?>><?php print $pgv_lang["style2"];?></option>
+				<option value="style3" <?php if (!$SURNAME_LIST_STYLE) print "selected=\"selected\""; ?>><?php print $pgv_lang["style3"];?></option>
+			</select>
+		</td>
 	</tr>
 </table>
 </div>

@@ -1108,14 +1108,20 @@ function print_media_table($datalist, $legend="") {
 
 /**
  * print a tag cloud of surnames
+ * print a sortable table of surnames
  *
  * @param array $datalist contain records that were extracted from the database.
  * @param string $target where to go after clicking a surname : INDI page or FAM page
  */
 function print_surn_table($datalist, $target="INDI") {
-	global $pgv_lang, $factarray, $GEDCOM, $COMMON_NAMES_THRESHOLD;
-
+	global $pgv_lang, $factarray, $GEDCOM, $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD;
+	global $SURNAME_LIST_STYLE;
 	if (count($datalist)<1) return;
+
+  if ($SURNAME_LIST_STYLE=="style3") {
+	// Requested style is "cloud", where the surnames are simply a list of names (with links), 
+	// and the font size used for each name depends on the number of occurrences of this name
+	// in the database.  Note that the surname count doesn't display in this format.
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"list_table center\">";
@@ -1136,7 +1142,55 @@ function print_surn_table($datalist, $target="INDI") {
 	echo "</tr>\n";
 	//-- table footer
 	echo "</table>\n";
+	return;
+  }
+  
+    // Requested style isn't "cloud".  In this case, we'll produce a sortable list.
+	require_once("js/sorttable.js.htm");
+	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
+	//-- table header
+	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
+	echo "<tr>";
+	echo "<td></td>";
+	echo "<th class=\"list_label\">".$factarray["SURN"]."</th>";
+	echo "<th class=\"list_label\">";
+//	if ($target=="FAM") echo $pgv_lang["families"]; else echo $pgv_lang["individuals"];
+	if ($target=="FAM") echo $pgv_lang["spouses"]; else echo $pgv_lang["individuals"];
+	echo "</th>";
+	echo "</tr>\n";
+	//-- table body
+	$total = 0;
+	$n = 0;
+	foreach($datalist as $key => $value) {
+		if (!isset($value["name"])) break;
+		$surn = $value["name"];
+		if ($target=="FAM") $url = "famlist.php";	else $url = "indilist.php";
+		$url .= "?ged=".$GEDCOM."&amp;surname=".urlencode($surn);
+		//-- Counter
+		echo "<tr>";
+		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
+		//-- Surname
+		if (empty($surn) or trim("@".$surn,"_")=="@" or $surn=="@N.N.") $surn = $pgv_lang["NN"];
+		echo "<td class=\"list_value_wrap\" align=\"".get_align($surn)."\">";
+		echo "<a href=\"".$url."\" class=\"list_item name1\">".PrintReady($surn)."</a>";
+		echo "&nbsp;</td>";
+		//-- Surname count
+		echo "<td class=\"list_value_wrap\">";
+		echo "<a href=\"".$url."\" class=\"list_item name2\">".$value["match"]."</a>";
+		echo "</td>";
+		$total += $value["match"];
+
+		echo "</tr>\n";
+	}
+	//-- table footer
+	echo "<tr class=\"sortbottom\">";
+	echo "<td class=\"list_item\">&nbsp;</td>";
+	echo "<td class=\"list_item\">&nbsp;</td>";
+	echo "<td class=\"list_label name2\">".$total."</td>";
+	echo "</tr>\n";
+	echo "</table>\n";
 }
+
 
 /**
  * print a sortable table of recent changes
