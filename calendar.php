@@ -845,7 +845,7 @@ if (($action=="today") || ($action=="year")) {
 
 				// $text_indi .= "<tr><td>";
 				$text_indi .= "<li><a href=\"individual.php?pid=$gid&amp;GEDCOM=".get_gedcom_from_id($indi["gedfile"])."\"><b>".PrintReady(check_NN(get_sortable_name($gid)))."</b>";
-				$text_indi .= "<img id=\"box-$gid.$lct-sex\" src=\"$PGV_IMAGE_DIR/";
+				$text_indi .= "<img id=\"box-$gid.$lct-gender\" src=\"$PGV_IMAGE_DIR/";
 				if (preg_match("/1 SEX M/", $indi["gedcom"])>0){
 					$count_male++;
 					$text_indi .= $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
@@ -858,7 +858,7 @@ if (($action=="today") || ($action=="year")) {
 					$count_unknown++;
 					$text_indi .= $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
 				}
-				$text_indi .= "\" class=\"sex_image\" />";
+				$text_indi .= "\" class=\"gender_image\" />";
 				if ($SHOW_ID_NUMBERS) {
 					if ($TEXT_DIRECTION=="ltr") $text_indi .= "&lrm;($gid)&lrm;";
 					else $text_indi .= "&rlm;($gid)&rlm;";
@@ -1071,19 +1071,19 @@ if (($action=="today") || ($action=="year")) {
 			print $pgv_lang["total_indis"]." ".($count_male+$count_female+$count_unknown+$count_private_indi)."<br />&nbsp;&nbsp;";
 			if ($count_male>0){
 				print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sex"]["small"]."\" ";
-				print "title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"]."\" class=\"sex_image\" />&nbsp;";
+				print "title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"]."\" class=\"gender_image\" />&nbsp;";
 				print $count_male;
 			}
 			if (($count_male>0)&&($count_female>0)) print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 			if ($count_female>0) {
 				print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sexf"]["small"]."\" ";
-				print "title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"]."\" class=\"sex_image\"  />&nbsp;";
+				print "title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"]."\" class=\"gender_image\"  />&nbsp;";
 				print $count_female;
 			}
 			if ($count_unknown>0) {
 				print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 				print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sexn"]["small"]."\" ";
-				print "title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"]."\" class=\"sex_image\" />&nbsp;";
+				print "title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"]."\" class=\"gender_image\" />&nbsp;";
 				print $count_unknown;
 			}
 			print "</td>";

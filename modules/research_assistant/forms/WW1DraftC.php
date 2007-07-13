@@ -393,9 +393,9 @@ return false;}return true;}
     		$indiFact .= "2 PLAC ".$_POST["PlaceOfBirth"];
     	}
     	
-    	if(!empty($_POST["Sex".$i]))
+    	if(!empty($_POST["Gender".$i]))
     	{
-    		$indiFact .= "1 SEX ".$_POST["Sex".$i];
+    		$indiFact .= "1 SEX ".$_POST["Gender".$i];
     	}
     	
     	return $indiFact;
@@ -649,7 +649,7 @@ return false;}return true;}
 			if (!empty($_POST["Address".$number])) $text .= "Address: ".$_POST["Address".$number];
 			if (!empty($_POST["DOB".$number])) $text .= " DOB: ".$_POST["DOB".$number];
 			if (!empty($_POST["Race".$number])) $text .= ", Color: ".$_POST["Race".$number];
-			if (!empty($_POST["Sex".$number])) $text .= ", Sex: ".$_POST["Sex".$number];
+			if (!empty($_POST["Gender".$number])) $text .= ", Gender: ".$_POST["Gender".$number];
 			if (!empty($_POST["PlaceOfBirth".$number])) $text .= ", Place of Birth: ".$_POST["PlaceOfBirth".$number];
 			if (!empty($_POST["Nationality".$number])) $text .= ", Nationality: ".$_POST["Nationality".$number];
 			if (!empty($_POST["Trade".$number])) $text .= ", Trade: ".$_POST["Trade".$number];

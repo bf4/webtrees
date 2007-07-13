@@ -207,13 +207,13 @@ return false;}return true;}
   		$out .= '<td class="optionbox"><INPUT TYPE="CHECKBOX" name="WidowedDivorced'.$i.'" value="Widowed/Divorced"'.($value=='Widowed/Divorced'?' checked="checked"':'').' /></td>';
 		}
  		$out .='</tr>
-  <td class="descriptionbox">Sex: Male: M   Female: F.</td>';
+  <td class="descriptionbox">Gender: Male: M   Female: F.</td>';
   		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
   			$value = "";
-	  		if (isset($citation['ts_array']['rows'][$i]['Sex'])) $value = $citation['ts_array']['rows'][$i]['Sex'];
+	  		if (isset($citation['ts_array']['rows'][$i]['Gender'])) $value = $citation['ts_array']['rows'][$i]['Gender'];
   				$out .= '<td class="optionbox">
- 				Male:<INPUT TYPE="RADIO" value="M" name="Sex'.$i.'"'.($value=='M'?' checked="checked"':'').' /> 
-				Female:<INPUT TYPE="RADIO" value="F" name="Sex'.$i.'"'.($value=='F'?' checked="checked"':'').' /></td>';
+ 				Male:<INPUT TYPE="RADIO" value="M" name="Gender'.$i.'"'.($value=='M'?' checked="checked"':'').' /> 
+				Female:<INPUT TYPE="RADIO" value="F" name="Gender'.$i.'"'.($value=='F'?' checked="checked"':'').' /></td>';
 	}
 	$out .='</tr>
  <tr>
@@ -310,9 +310,9 @@ return false;}return true;}
     		$indiFact .= "2 PLAC ".$_POST["PlaceOfBirth"];
     	}
     	
-    	if(!empty($_POST["Sex".$i]))
+    	if(!empty($_POST["Gender".$i]))
     	{
-    		$indiFact .= "1 SEX ".$_POST["Sex".$i];
+    		$indiFact .= "1 SEX ".$_POST["Gender".$i];
     	}
     	
     	return $indiFact;
@@ -600,7 +600,7 @@ return false;}return true;}
 			if (!isset($_POST["Single".$number])) $_POST["Single".$number]="";
 			if (!isset($_POST["Married".$number])) $_POST["Married".$number]="";
 			if (!isset($_POST["WidowedDivorced".$number])) $_POST["WidowedDivorced".$number]="";
-			if (!isset($_POST["Sex".$number])) $_POST["Sex".$number]="";
+			if (!isset($_POST["Gender".$number])) $_POST["Gender".$number]="";
 			if (!isset($_POST["Age".$number])) $_POST["Age".$number]="";
 			if (!isset($_POST["Trade".$number])) $_POST["Trade".$number]="";
 			if (!isset($_POST["PlaceOfBirth".$number])) $_POST["PlaceOfBirth".$number]="";
@@ -613,7 +613,7 @@ return false;}return true;}
 			"Single"=>$_POST["Single".$number],
 			"Married"=>$_POST["Married".$number],
 			"WidowedDivorced"=>$_POST["WidowedDivorced".$number],
-			"Sex"=>$_POST["Sex".$number],
+			"Gender"=>$_POST["Gender".$number],
 			"Age"=>$_POST["Age".$number],
 			"Trade"=>$_POST["Trade".$number],
 			"PlaceOfBirth"=>$_POST["PlaceOfBirth".$number],
@@ -627,7 +627,7 @@ return false;}return true;}
 			if (!empty($_POST["Single".$number])) $text .= ", ".$_POST["Single".$number];
 			if (!empty($_POST["Married".$number])) $text .= ", ".$_POST["Married".$number];
 			if (!empty($_POST["WidowedDivorced".$number])) $text .= ", ".$_POST["WidowedDivorced".$number];
-			if (!empty($_POST["Sex".$number])) $text .= ", Sex: ".$_POST["Sex".$number];
+			if (!empty($_POST["Gender".$number])) $text .= ", Gender: ".$_POST["Gender".$number];
 			if (!empty($_POST["Age".$number])) $text .= ", Age: ".$_POST["Age".$number];
 			if (!empty($_POST["Trade".$number])) $text .= ", Profession: ".$_POST["Trade".$number];
 			if (!empty($_POST["PlaceOfBirth".$number])) $text .= ", Place of birth: ".$_POST["PlaceOfBirth".$number];

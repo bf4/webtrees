@@ -311,8 +311,8 @@ function add_new_record(pid, fact) {
 	return false;
 }
 
-function addnewchild(famid,sex) {
-	window.open('edit_interface.php?action=addchild&sex='+sex+'&famid='+famid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+function addnewchild(famid,gender) {
+	window.open('edit_interface.php?action=addchild&gender='+gender+'&famid='+famid+"&"+sessionname+"="+sessionid, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
 	return false;
 }
 
@@ -511,7 +511,7 @@ function expandbox(boxid, bstyle) {
 		parentbox=divbox;
 	//	if (bstyle!=2) divbox.style.position="absolute";
 	}
-	sex = document.getElementById("box-"+boxid+"-sex");
+	gender = document.getElementById("box-"+boxid+"-gender");
 	thumb1 = document.getElementById("box-"+boxid+"-thumb");
 	famlinks = document.getElementById("I"+boxid+"links");
 	icons = document.getElementById("icons-"+boxid);
@@ -604,13 +604,13 @@ function expandbox(boxid, bstyle) {
 			if (oldimgw) thumb1.style.width = oldimgw*2;
 			if (oldimgh) thumb1.style.height = oldimgh*2;
 		}
-		if (sex) {
-			oldimgw1 = sex.width;
-			oldimgh1 = sex.height;
-//			if (oldimgw1) sex.style.width = oldimgw1*2;
-//			if (oldimgh1) sex.style.height = oldimgh1*2;
-			if (oldimgw1) sex.style.width = "15px";
-			if (oldimgh1) sex.style.height = "15px";
+		if (gender) {
+			oldimgw1 = gender.width;
+			oldimgh1 = gender.height;
+//			if (oldimgw1) gender.style.width = oldimgw1*2;
+//			if (oldimgh1) gender.style.height = oldimgh1*2;
+			if (oldimgw1) gender.style.width = "15px";
+			if (oldimgh1) gender.style.height = "15px";
 		}
 	}
 	return true;
@@ -728,11 +728,11 @@ function restorebox(boxid, bstyle) {
 			else iconz.src = zoominout[0].src;
 		}
 		big = 0;
-		if (sex) {
+		if (gender) {
 			oldimgw1 = oldimgw1+"px";
 			oldimgh1 = oldimgh1+"px";
-			sex.style.width = oldimgw1;
-			sex.style.height = oldimgh1;
+			gender.style.width = oldimgw1;
+			gender.style.height = oldimgh1;
 		}
 		if (thumb1) {
 			oldimgw = oldimgw+"px";

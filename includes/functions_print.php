@@ -308,11 +308,11 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			   print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\" title=\"$title\" onmouseover=\"change_class('namedef-$boxID','name".$style."Hover'); return false;\" onmouseout=\"change_class('namedef-$boxID','name$style'); return false;\"><span id=\"namedef-$boxID\" class=\"name$style\">";
  			   print PrintReady($name);
 			   // NOTE: IMG ID
-			   print "<img id=\"box-$boxID-sex\" src=\"$PGV_IMAGE_DIR/";
+			   print "<img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
 			   if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
 			   else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
 			   else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
-			   print "\" class=\"sex_image\" />";
+			   print "\" class=\"gender_image\" />";
 			   if ($SHOW_ID_NUMBERS) {
 				   print "</span><span class=\"details$style\">";
 		      	   if ($TEXT_DIRECTION=="ltr") print "&lrm;($pid)&lrm;";
@@ -381,11 +381,11 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 print "</span>";
 	 print "<span class=\"name$style\">";
 	 // NOTE: IMG ID
-	 print "<img id=\"box-$boxID-sex\" src=\"$PGV_IMAGE_DIR/";
+	 print "<img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
 	 if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
 	 else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
 	 else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
-	 print "\" class=\"sex_image\" />";
+	 print "\" class=\"gender_image\" />";
 	 print "</span>\r\n";
 	 if ($SHOW_ID_NUMBERS) {
 			if ($TEXT_DIRECTION=="ltr") print "<span class=\"details$style\">&lrm;($pid)&lrm; </span>";
@@ -2216,9 +2216,9 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 					if ($famrec) {
 						$parents = find_parents_in_record($famrec);
 						$pid1 = $parents["HUSB"];
-						if ($pid1 and $pid1!=$pid2) print " - <a href=\"relationship.php?pid1=$pid1&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["husband"] . "\" alt=\"" . $pgv_lang["husband"] . "\" class=\"sex_image\" />]</a>";
+						if ($pid1 and $pid1!=$pid2) print " - <a href=\"relationship.php?pid1=$pid1&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["husband"] . "\" alt=\"" . $pgv_lang["husband"] . "\" class=\"gender_image\" />]</a>";
 						$pid1 = $parents["WIFE"];
-						if ($pid1 and $pid1!=$pid2) print " - <a href=\"relationship.php?pid1=$pid1&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["wife"] . "\" alt=\"" . $pgv_lang["wife"] . "\" class=\"sex_image\" />]</a>";
+						if ($pid1 and $pid1!=$pid2) print " - <a href=\"relationship.php?pid1=$pid1&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["wife"] . "\" alt=\"" . $pgv_lang["wife"] . "\" class=\"gender_image\" />]</a>";
 					}
 				}
 				else if ($pid!=$pid2) print " - <a href=\"relationship.php?pid1=$pid&amp;pid2=$pid2&amp;followspouse=1&amp;ged=$GEDCOM\">[" . $pgv_lang["relationship_chart"] . "]</a>";
@@ -2266,13 +2266,13 @@ function print_parents_age($pid, $bdate) {
 			$spouse = $parents["HUSB"];
 			if ($spouse and showFact("BIRT", $spouse)) {
 				$age = get_age(find_person_record($spouse), $bdate, false);
-				if (10<$age and $age<80) print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"sex_image\" />$age";
+				if (10<$age and $age<80) print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />$age";
 			}
 			// mother
 			$spouse = $parents["WIFE"];
 			if ($spouse and showFact("BIRT", $spouse)) {
 				$age = get_age(find_person_record($spouse), $bdate, false);
-				if (10<$age and $age<80) print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"sex_image\" />$age";
+				if (10<$age and $age<80) print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"gender_image\" />$age";
 			}
 			print "</span>";
 		}
