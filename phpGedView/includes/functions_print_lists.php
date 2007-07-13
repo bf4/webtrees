@@ -507,7 +507,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
 	echo $pgv_lang["total_names"]." : ".$n;
-	if ($hidden) echo "<br />".$pgv_lang["hidden"]." : ".$hidden;
+	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
 	if ($option=="sosa") echo "<td></td>";
 	echo "<td></td>";
@@ -779,7 +779,7 @@ function print_fam_table($datalist, $legend="") {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
 	echo $pgv_lang["total_fams"]." : ".$n;
-	if ($hidden) echo "<br />".$pgv_lang["hidden"]." : ".$hidden;
+	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td></td>";
@@ -912,7 +912,7 @@ function print_sour_table($datalist, $legend="") {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
 	echo $pgv_lang["total_sources"]." : ".$n;
-	if ($hidden) echo "<br />".$pgv_lang["hidden"]." : ".$hidden;
+	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
 	echo "<td></td>";
 	echo "<td class=\"t2\"></td>";
@@ -1139,7 +1139,7 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 		if (empty($surn) || trim("@".$surn,"_")=="@" || $surn=="@N.N.") $surn = $pgv_lang["NN"];
 		$fontsize = "+".floor($value["match"]/$COMMON_NAMES_THRESHOLD);
 		echo " &nbsp;<a href=\"".$url."\" class=\"list_item\" title=\"".PrintReady($surn." (".$value["match"].")")."\">"
-		."<font size=\"".$fontsize."\">".PrintReady($surn)."</font></a>&nbsp; ";
+		."<font size=\"".$fontsize."\">".PrintReady($surn)."</font></a>&thinsp;<small>".$value["match"]."</small>&nbsp; ";
 	}
 	echo "</td>";
 	echo "</tr>\n";
@@ -1218,8 +1218,12 @@ function print_changes_table($datalist) {
 	//-- table body
 	$hidden = 0;
 	$n = 0;
+	$NMAX = 1000;
 	foreach($datalist as $key => $value) {
-		$record = GedcomRecord::getInstance($key);
+		if ($n>=$NMAX) break;
+		$record = null;
+		if (isset($value['d_gid'])) $record = GedcomRecord::getInstance($value['d_gid']);
+		else $record = GedcomRecord::getInstance($key);
 		if (is_null($record) && isset($value[0])) $record = GedcomRecord::getInstance($value[0]);
 		if (is_null($record)) continue;
 		// Privacy
@@ -1286,7 +1290,8 @@ function print_changes_table($datalist) {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
 	echo $pgv_lang["total_names"].": ".$n;
-	if ($hidden) echo "<br />".$pgv_lang["hidden"].": ".$hidden;
+	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
+	if ($n>=$NMAX) echo "<br /><span class=\"warning\">".$pgv_lang["recent_changes"]." &gt; ".$NMAX."</span>";
 	echo "</td>";
 	echo "<td></td>";
 	echo "<td></td>";
@@ -1439,7 +1444,7 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 	//if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
 	echo $pgv_lang["total_names"].": ".$n;
-	if ($hidden) echo "<br />".$pgv_lang["hidden"].": ".$hidden;
+	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
 	echo "<td>";
 	if (strpos($option, "noDownload")===false) {
@@ -1514,7 +1519,7 @@ function load_behaviour() {
 				if (args[1].length) return table_filter(table, args[0], args[1]);
 				return false;
 			}
-		},
+		}/**,
 		'.sortable th' : function(element) {
 			element.onmouseout = nd; // hide helptext
 			element.onmouseover = function() { // show helptext
@@ -1525,7 +1530,7 @@ function load_behaviour() {
 				this.value = helptext; this.title = ''; // Firefox = value
 				return overlib(helptext, BGCOLOR, "#000000", FGCOLOR, "#FFFFE0");
 			}
-		}
+		}**/
 	}
 	Behaviour.register(myrules);
 	// ]]>
