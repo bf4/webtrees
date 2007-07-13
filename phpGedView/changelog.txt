@@ -9,6 +9,8 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1752869 ] Error In Clipping Cart - ERROR 8: Undefined index (canajun2eh)
+ - Added GEDCOM config option for Surname List styles (canajun2eh)
  - Fixed [ 1737256 ] 4.1 IE7 bug when default tab is not the first one (opus27)
  - Added patch [ 1747975 ] Pedigree charts missing pageSize (opus27)
  - Added patch [ 1747974 ] bdmlist.xml error (opus27)

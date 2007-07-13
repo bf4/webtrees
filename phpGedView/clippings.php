@@ -236,7 +236,7 @@ else {
 			if ($tag=='FAM' ) $icon = "sfamily";
 			if ($tag=='SOUR') $icon = "source";
 			if ($tag=='REPO') $icon = "repository";
-			if ($tag=='NOTE') $icon = "note";
+			if ($tag=='NOTE') $icon = "notes";
 			if ($tag=='OBJE') $icon = "media";
 			?>
 			<tr><td class="list_value"><img src="<?php echo $PGV_IMAGE_DIR."/".$PGV_IMAGES[$icon]["small"];?>" border="0" alt="<?php echo $tag;?>" title="<?php echo $tag;?>" /></td>

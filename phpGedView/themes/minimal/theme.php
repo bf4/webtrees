@@ -69,6 +69,7 @@ $PGV_IMAGES["notes"]["small"] = "small/notes.gif";
 $PGV_IMAGES["patriarch"]["small"] = "small/patriarch.gif";
 $PGV_IMAGES["pedigree"]["small"] = "small/pedigree.gif";
 $PGV_IMAGES["place"]["small"] = "small/place.gif";
+$PGV_IMAGES["repository"]["small"] = "small/repository.gif";
 $PGV_IMAGES["search"]["small"] = "small/search.gif";
 $PGV_IMAGES["sex"]["small"] = "small/male.gif";
 $PGV_IMAGES["sexf"]["small"] = "small/female.gif";
