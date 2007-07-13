@@ -125,11 +125,11 @@ function print_todays_events($block=true, $config="", $side, $index) {
 	                if ($lastgid != "") print "<br />";
 	                $name = get_person_name($gid);
 	                print "<a href=\"individual.php?pid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
-	                print "<img id=\"box-".$gid."-".$key."-sex\" src=\"$PGV_IMAGE_DIR/";
+	                print "<img id=\"box-".$gid."-".$key."-gender\" src=\"$PGV_IMAGE_DIR/";
 	                if (preg_match("/1 SEX M/", $indirec)>0) print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
 	                else  if (preg_match("/1 SEX F/", $indirec)>0) print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
 	                else print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
-	                print "\" class=\"sex_image\" />";
+	                print "\" class=\"gender_image\" />";
 	                if ($SHOW_ID_NUMBERS) {
 		                  print "&nbsp;";
 		                  if ($TEXT_DIRECTION=="rtl") print "&rlm;";
