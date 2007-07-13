@@ -777,6 +777,17 @@ function check_NN($names) {
 	return $fullname;
 }
 
+// Returns 1 if $string is valid 7 bit ASCII and 0 otherwise.
+function is_7bitascii($string) {
+	return preg_match('/^(?:[\x09\x0A\x0D\x20-\x7E])*$/', $string);
+}
+
+// Returns 1 if $string is valid UTF-8 and 0 otherwise.
+// See http://w3.org/International/questions/qa-forms-utf-8.html
+function is_utf8($string) {
+	return preg_match('/^(?:[\x09\x0A\x0D\x20-\x7E]|[\xC2-\xDF][\x80-\xBF]|\xE0[\xA0-\xBF][\x80-\xBF]|[\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}|\xED[\x80-\x9F][\x80-\xBF]|\xF0[\x90-\xBF][\x80-\xBF]{2}|[\xF1-\xF3][\x80-\xBF]{3}|\xF4[\x80-\x8F][\x80-\xBF]{2})*$/', $string);
+}
+
 /**
  * Put all characters in a string in lowercase
  *
@@ -790,6 +801,12 @@ function check_NN($names) {
 function str2lower($value) {
 	global $ALPHABET_upper, $ALPHABET_lower;
 	static $all_ALPHABET_upper, $all_ALPHABET_lower;
+
+	// Input may be 7 or 8 bit ASCII and we need UTF8 to work properly
+	if (is_7bitascii($value))
+		return strtolower($value);
+	else if (!is_utf8($value))
+		$value=utf8_encode($value);
 
 	//-- get all of the upper and lower alphabets as a string
 	if (!isset($all_ALPHABET_upper)) {
@@ -864,6 +881,12 @@ function str2lower($value) {
 function str2upper($value) {
 	global $ALPHABET_upper, $ALPHABET_lower;
 	static $all_ALPHABET_upper, $all_ALPHABET_lower;
+
+	// Input may be 7 or 8 bit ASCII and we need UTF8 to work properly
+	if (is_7bitascii($value))
+		return strtoupper($value);
+	else if (!is_utf8($value))
+		$value=utf8_encode($value);
 
 	//-- get all of the upper and lower alphabets as a string
 	if (!isset($all_ALPHABET_upper)) {
