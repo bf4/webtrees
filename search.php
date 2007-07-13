@@ -98,7 +98,7 @@ print_header($pgv_lang["search"]);
 				bplace = frm.birthplace.value;
 				ddate = frm.deathdate.value;
 				dplace = frm.deathplace.value;
-				sex = frm.gender.value;
+				gender = frm.gender.value;
 
 				if(name.length > 1)
 					message = false;
@@ -113,7 +113,7 @@ print_header($pgv_lang["search"]);
 				if(message)
 				{
 					<?php if ($SHOW_MULTISITE_SEARCH >= getUserAccessLevel()) { ?>
-					if(sex.length < 1)
+					if(gender.length < 1)
 					{
 						alert("<?php print $pgv_lang["invalid_search_multisite_input"]?>");
 						return false;

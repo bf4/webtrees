@@ -15,7 +15,7 @@
 			if (!empty($_POST["Families".$number])) $text .= " Family number: ".$_POST["Families".$number];
 			if (!empty($_POST["NameOfPeople".$number])) $text .= " Name: ".$_POST["NameOfPeople".$number];
 			if (!empty($_POST["Race".$number])) $text .= ", Color: ".$_POST["Race".$number];
-			if (!empty($_POST["Sex".$number])) $text .= ", Sex: ".$_POST["Sex".$number];
+			if (!empty($_POST["Gender".$number])) $text .= ", Gender: ".$_POST["Gender".$number];
 			if (!empty($_POST["Age".$number])) $text .= ", Age: ".$_POST["Age".$number];
 			if (!empty($_POST["Month".$number])) $text .= ", Month: ".$_POST["Month".$number];
 			if (!empty($_POST["Relationship".$number])) $text .= ", Relationship: ".$_POST["Relationship".$number];

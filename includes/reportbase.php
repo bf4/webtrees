@@ -1726,7 +1726,11 @@ function PGVRListSHandler($attrs) {
 						case "SUBCONTAINS":
 							$ct = preg_match("/$val\W/i", $subrec);
 							if ($ct>0) $keep = true;
-							else $keep = false;
+							else {
+								$ct = preg_match('/'.$val.'$/i', $subrec);
+								if ($ct>0) $keep = true;
+								else $keep = false;
+							}
 							break;
 						default:
 							$v = get_gedcom_value($t, $level, $subrec);

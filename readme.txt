@@ -865,9 +865,9 @@ requests that they begin with an "_" underscore.
 
 When PhpGedView comes across a tag that is not defined it will display an 
 error message.  You can disable these error messages by setting 
-$HIDE_GEDCOM_ERRORS=true; in the config.php file.  PhpGedView can also be 
+$HIDE_GEDCOM_ERRORS=true; in the gedcom configuration settings.  PhpGedView can also be 
 customized to work with these codes by adding them to the facts array in a 
-new language file named facts.en.extra.php.  If you add it to the English 
+new language file named extra.en.php.  If you add it to the English 
 facts file you should also add it to the other facts language files you are 
 using on your site if you want other languages to translate the tag 
 correctly.
@@ -879,7 +879,7 @@ for the ABBR GEDCOM tag.
 
 As an example, if you use a genealogy program that generates the tag 
 "_ZZZZ" you can customize PhpGedView to accept this code by adding the 
-following lines to the facts.en.extra.php file:
+following lines to the extra.en.php file:
     <?php
     $factarray["_ZZZZ"] = "Tag Label goes here";
     ?>
@@ -889,7 +889,7 @@ LANGUAGE EXTENSION FILES
 
 Language extension files are custom PHP files that you can use to make your 
 own language specific extensions to PhpGedView.  To add a language file 
-extension, create a new PHP file called lang.xx.extra.php replacing the 
+extension, create a new PHP file called extra.xx.php replacing the 
 "xx" with the code for the language you want to extend.  These files are 
 not automatically included with the package so that when you upgrade, your 
 extensions are not overwritten.
@@ -910,7 +910,8 @@ settings.
 
 If, for example, you wanted to change the GEDCOM title when you changed the
 language, you could change the title for each language by adding the 
-following line to your lang.xx.extra.php:
+following line to your extra.xx.php:
+	global $GEDCOMS;
     $GEDCOMS["surname.ged"]["title"] = "Title in Chinese";
 
 In this file you could also change the text on the buttons:
@@ -918,8 +919,9 @@ In this file you could also change the text on the buttons:
 
 With this file you could also change the GEDCOM that is displayed when the 
 language is selected.  Suppose you had a GEDCOM that was in German and one 
-that was in English.  In the lang.de.extra.php file you could add the 
+that was in English.  In the extra.de.php file you could add the 
 following lines:
+	global $GEDCOM;
     if ($GEDCOM=="english.ged") {
       header("Location: $SCRIPT_NAME?$QUERY_STRING&ged=german.ged");
       exit;
@@ -936,6 +938,12 @@ Thus I0001 in english.ged should refer to the same I0001 in german.ged.
 
 -------------------------------------------------------
 MIGRATING FROM DATABASE TO INDEX MODE AND VICE VERSA
+
+Older of versions of PhpGedView supported and internal "index" mode format
+which allowed it to run without a database.  Since version 4.0, index mode
+has no longer been supported.  If you are running an older version of PGV
+in index mode then these instructions can help you to upgrade to a new version
+of PGV which only supports databases.
 
 Basically it's possible to switch a PhpGedView installation from Index to 
 DATABASE mode or vice-versa without losing any settings.  The following 

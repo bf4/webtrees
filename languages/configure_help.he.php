@@ -3,7 +3,7 @@
  * Hebrew Language Configure Help file
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -277,6 +277,8 @@ $pgv_lang["SUBLIST_TRIGGER_I"]		= "מספר מכסימלי של שמות משפ�
 $pgv_lang["SUBLIST_TRIGGER_I_help"]	= "~#pgv_lang[SUBLIST_TRIGGER_I]#~<br /><br />Long lists of persons with the same surname can be broken into smaller sub-lists according to the first letter of the individual's given name.<br /><br />This option determines when sub-listing of surnames will occur.  To disable sub-listing completely, set this option to zero.<br />";
 $pgv_lang["SUBLIST_TRIGGER_F"]		= "מספר מכסימלי של שמות משפחה של משפחות"; 
 $pgv_lang["SUBLIST_TRIGGER_F_help"]	= "~#pgv_lang[SUBLIST_TRIGGER_F]#~<br /><br />Long lists of families with the same name can be broken into smaller sub-lists according to the first letter of the given name.<br /><br />This option determines when sub-listing of family names will occur.  To disable sub-listing completely, set this option to zero.<br />";
+$pgv_lang["SURNAME_LIST_STYLE"]	= "סגנון רשימת שמות משפחה";
+$pgv_lang["SURNAME_LIST_STYLE_help"]	= "~#pgv_lang[SURNAME_LIST_STYLE]#~<br /><br />Lists of surnames, as they appear in the #pgv_lang[block_top10]# block, the #pgv_lang[individual_list]#, and the #pgv_lang[family_list]#, can be shown in different styles.<ul><li><b>#pgv_lang[style2]#</b>&nbsp;&nbsp;&nbsp;In this style, the surnames are shown in a table that can be sorted either by surname or by count.</li><li><b>#pgv_lang[style3]#</b>&nbsp;&nbsp;&nbsp;In this style, the surnames are shown in a list, and the font size used for each name depends on the number of occurrences of that name in the database.  The count of names is not shown, and the list is not sortable.</li></ul><br />";
 $pgv_lang["NAME_FROM_GEDCOM"]		= "קבל השם להצגה מ-GEDCOM";
 $pgv_lang["NAME_FROM_GEDCOM_help"]		= "~#pgv_lang[NAME_FROM_GEDCOM]#~<br /><br />By default PhpGedView uses the name stored in the indexes to get a person's name.  With some GEDCOM formats and languages, the sortable name stored in the indexes does not get displayed properly and the best way to get the correct display name is from the GEDCOM.<br /><br />Spanish names are a good example of this.  A Spanish name can take the form (Given Names) (Father's Surname) (Mother's Surname).  Using the Indexes for sorting and display, the name would display like this: (Given Names) (Mother's Surname) (Father's Surname), which is incorrect.  Going back to the GEDCOM for the name will return the correct name.  However, retrieving the name from the GEDCOM will slow the program down.<br />";
 $pgv_lang["SHOW_ID_NUMBERS_help"]		= "~#pgv_lang[SHOW_ID_NUMBERS]#~<br /><br />This option controls whether or not to show ID numbers in parentheses after person names on charts.<br />";

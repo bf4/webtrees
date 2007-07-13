@@ -2,19 +2,22 @@
 /**
  * Repositories List
  *
- * Parses gedcom file and displays a list of the repositories in the file.
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
- * The alphabet bar shows all the available letters users can click. The bar is built
- * up from the lastnames first letter. Added to this bar is the symbol @, which is
- * shown as a translated version of the variable <var>pgv_lang["NN"]</var>, and a
- * translated version of the word ALL by means of variable <var>$pgv_lang["all"]</var>.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- * The details can be shown in two ways, with surnames or without surnames. By default
- * the user first sees a list of surnames of the chosen letter and by clicking on a
- * surname a list with names of people with that chosen surname is displayed.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * Beneath the details list is the option to skip the surname list or show it.
- * Depending on the current status of the list.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
  * @subpackage Lists
@@ -33,57 +36,8 @@ $ctot = $cr + $ca;
 print_header($pgv_lang["repo_list"]);
 print "<div class=\"center\">";
 print "<h2>".$pgv_lang["repo_list"]."</h2>\n\t";
-
 print_repo_table(array_merge($repolist, $addrepolist));
-
-/** DEPRECATED
-print "\n\t<table class=\"list_table $TEXT_DIRECTION\">\n\t\t<tr><td class=\"list_label\"";
-if($cr>12) print " colspan=\"2\"";
-print ">";
-if (isset($PGV_IMAGES["repository"]["small"])) {
-	print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["repository"]["small"]."\" border=\"0\" title=\"".$pgv_lang["titles_found"]."\" alt=\"".$pgv_lang["titles_found"]."\" />&nbsp;&nbsp;";
-}
-print $pgv_lang["titles_found"];
-print_help_link("repolist_listbox_help", "qm");
-print "</td></tr><tr><td class=\"$TEXT_DIRECTION list_value_wrap";
-if($cr>12) print " width50";
-print "\">";
-
-if ($cr>0){
-	print "<ul>";
-	$i=1;
-	// -- print the array
-	foreach ($repolist as $key => $value) {
-		print_list_repository($key, $value);
-		if ($i==ceil($cr/2) && $cr>12) {
-			print "</ul></td><td class=\"list_value_wrap";
-			if($cr>12) print " width50";
-			print "\"><ul>\n";
-		}
-		$i++;
-	}
-	// -- print the additional array
-	foreach ($addrepolist as $key => $value) {
-		print_list_repository($key, $value);
-		if ($i==ceil($cr/2) && $cr>12) {
-			print "</ul></td><td class=\"list_value_wrap";
-			if($cr>12) print " width50";
-			print "\"><ul>\n";
-		}
-		$i++;
-	}
-
-	print "\n\t\t</ul></td>\n\t\t";
-
-	print "</tr><tr><td class=\"center\" colspan=\"2\">".$pgv_lang["total_repositories"]." ".count($repo_total)."<br /";
-	if (count($repo_hide)>0) print "  --  ".$pgv_lang["hidden"]." ".count($repo_hide);
-}
-else print "<span class=\"warning\"><i>".$pgv_lang["no_results"]."</i></span>";
-
-print "</td>\n\t\t</tr>\n\t</table>";
-**/
 print "</div>";
 print "<br /><br />";
-load_behaviour();
 print_footer();
 ?>

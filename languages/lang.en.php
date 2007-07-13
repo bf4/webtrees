@@ -1085,6 +1085,7 @@ $pgv_lang["basic_or_all"]			= "Show only Births, Deaths, and Marriages?";
 $pgv_lang["style"]					= "Presentation Style";
 $pgv_lang["style1"]					= "Text";
 $pgv_lang["style2"]					= "Table";
+$pgv_lang["style3"]					= "List";
 $pgv_lang["cal_download"]			= "Allow calendar events download?";
 $pgv_lang["no_events_living"]		= "No events for living people exist for the next #pgv_lang[global_num1]# days.";
 $pgv_lang["no_events_living1"]		= "No events for living people exist for tomorrow.";

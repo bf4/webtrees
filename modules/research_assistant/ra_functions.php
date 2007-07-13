@@ -1054,7 +1054,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$MissingReturn = array (); //Local var for the return string
 		if ($person->sex == "U") //check for missing sex info
 			{
-			$MissingReturn[] = array("Sex", $pgv_lang["All"]);
+			$MissingReturn[] = array("SEX", $pgv_lang["All"]);
 		
 		}
 		if ($person->getBirthRecord(false) != "") //check for missing birth info

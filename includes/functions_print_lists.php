@@ -256,12 +256,12 @@ function print_list_repository($key, $value, $useli=true) {
  */
 function print_indi_table($datalist, $legend="", $option="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION, $GEDCOM_ID_PREFIX, $GEDCOM;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 	
 	if (count($datalist)<1) return;
 	if ($option=="MARR_PLAC") return;
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
-
 	require_once("js/sorttable.js.htm");
 	require_once("includes/person_class.php");
 	// legend
@@ -531,7 +531,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
 	echo $pgv_lang["total_names"]." : ".$n;
-	if ($hidden) echo "<br />".$pgv_lang["hidden"]." : ".$hidden;
+	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
 	if ($option=="sosa") echo "<td></td>";
 	echo "<td></td>";
@@ -611,6 +611,7 @@ function print_surn_table($datalist, $target="INDI") {
  */
 function print_fam_table($datalist, $legend="", $option="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+
 	if (count($datalist)<1) return;
 	if ($option=="BIRT_PLAC" or $option=="DEAT_PLAC") return;
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
@@ -861,7 +862,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
 	echo $pgv_lang["total_fams"]." : ".$n;
-	if ($hidden) echo "<br />".$pgv_lang["hidden"]." : ".$hidden;
+	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td></td>";
@@ -885,11 +886,15 @@ function print_fam_table($datalist, $legend="", $option="") {
  */
 function print_sour_table($datalist, $legend="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+
 	if (count($datalist)<1) return;
 	$name_subtags = array("_HEB", "ROMN");
 	require_once("js/sorttable.js.htm");
 	require_once("includes/source_class.php");
-	if (empty($legend)) $legend=$pgv_lang["sources"];
+
+	$legend = $pgv_lang["sources"].($legend?" @ ".$legend:"");
+	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
@@ -990,7 +995,7 @@ function print_sour_table($datalist, $legend="") {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
 	echo $pgv_lang["total_sources"]." : ".$n;
-	if ($hidden) echo "<br />".$pgv_lang["hidden"]." : ".$hidden;
+	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
 	echo "<td></td>";
 	echo "<td class=\"t2\"></td>";
@@ -1026,11 +1031,15 @@ T2;
  */
 function print_repo_table($datalist, $legend="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+
 	if (count($datalist)<1) return;
 	$name_subtags = array("_HEB", "ROMN");
 	require_once("js/sorttable.js.htm");
 	require_once("includes/repository_class.php");
-	if (empty($legend)) $legend=$pgv_lang["repos_found"];
+
+	$legend = $pgv_lang["repos_found"].($legend?" @ ".$legend:"");
+	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["repository"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
@@ -1103,10 +1112,14 @@ function print_repo_table($datalist, $legend="") {
  */
 function print_media_table($datalist, $legend="") {
 	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+
 	if (count($datalist)<1) return;
 	require_once("js/sorttable.js.htm");
 	require_once("includes/media_class.php");
-	if (empty($legend)) $legend=$pgv_lang["media"];
+
+	$legend = $pgv_lang["media"].($legend?" @ ".$legend:"");
+	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
@@ -1177,6 +1190,95 @@ function print_media_table($datalist, $legend="") {
 }
 
 /**
+ * print a tag cloud of surnames
+ * print a sortable table of surnames
+ *
+ * @param array $datalist contain records that were extracted from the database.
+ * @param string $target where to go after clicking a surname : INDI page or FAM page
+ * @param string $listFormat presentation style: "style2 = sortable list, "style3" = cloud
+ */
+function print_surn_table($datalist, $target="INDI", $listFormat="") {
+  global $pgv_lang, $factarray, $GEDCOM, $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD;
+  global $SURNAME_LIST_STYLE;
+  if (count($datalist)<1) return;
+  
+  if (empty($listFormat)) $listFormat = $SURNAME_LIST_STYLE;
+
+  if ($listFormat=="style3") {
+	// Requested style is "cloud", where the surnames are simply a list of names (with links), 
+	// and the font size used for each name depends on the number of occurrences of this name
+	// in the database.  Note that the surname count doesn't display in this format.
+	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
+	//-- table header
+	echo "<table id=\"".$table_id."\" class=\"list_table center\">";
+	//-- table body
+	echo "<tr>";
+	echo "<td class=\"list_value_wrap\">";
+	foreach($datalist as $key => $value) {
+		if (!isset($value["name"])) break;
+		$surn = $value["name"];
+		if ($target=="FAM") $url = "famlist.php";	else $url = "indilist.php";
+		$url .= "?ged=".$GEDCOM."&amp;surname=".urlencode($surn);
+		if (empty($surn) || trim("@".$surn,"_")=="@" || $surn=="@N.N.") $surn = $pgv_lang["NN"];
+		$fontsize = "+".floor($value["match"]/$COMMON_NAMES_THRESHOLD);
+		echo " &nbsp;<a href=\"".$url."\" class=\"list_item\" title=\"".PrintReady($surn." (".$value["match"].")")."\">"
+		."<font size=\"".$fontsize."\">".PrintReady($surn)."</font></a>&thinsp;<small>".$value["match"]."</small>&nbsp; ";
+	}
+	echo "</td>";
+	echo "</tr>\n";
+	//-- table footer
+	echo "</table>\n";
+	return;
+  }
+  
+    // Requested style isn't "cloud".  In this case, we'll produce a sortable list.
+	require_once("js/sorttable.js.htm");
+	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
+	//-- table header
+	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
+	echo "<tr>";
+	echo "<td></td>";
+	echo "<th class=\"list_label\">".$factarray["SURN"]."</th>";
+	echo "<th class=\"list_label\">";
+//	if ($target=="FAM") echo $pgv_lang["families"]; else echo $pgv_lang["individuals"];
+	if ($target=="FAM") echo $pgv_lang["spouses"]; else echo $pgv_lang["individuals"];
+	echo "</th>";
+	echo "</tr>\n";
+	//-- table body
+	$total = 0;
+	$n = 0;
+	foreach($datalist as $key => $value) {
+		if (!isset($value["name"])) break;
+		$surn = $value["name"];
+		if ($target=="FAM") $url = "famlist.php";	else $url = "indilist.php";
+		$url .= "?ged=".$GEDCOM."&amp;surname=".urlencode($surn);
+		//-- Counter
+		echo "<tr>";
+		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
+		//-- Surname
+		if (empty($surn) or trim("@".$surn,"_")=="@" or $surn=="@N.N.") $surn = $pgv_lang["NN"];
+		echo "<td class=\"list_value_wrap\" align=\"".get_align($surn)."\">";
+		echo "<a href=\"".$url."\" class=\"list_item name1\">".PrintReady($surn)."</a>";
+		echo "&nbsp;</td>";
+		//-- Surname count
+		echo "<td class=\"list_value_wrap\">";
+		echo "<a href=\"".$url."\" class=\"list_item name2\">".$value["match"]."</a>";
+		echo "</td>";
+		$total += $value["match"];
+
+		echo "</tr>\n";
+	}
+	//-- table footer
+	echo "<tr class=\"sortbottom\">";
+	echo "<td class=\"list_item\">&nbsp;</td>";
+	echo "<td class=\"list_item\">&nbsp;</td>";
+	echo "<td class=\"list_label name2\">".$total."</td>";
+	echo "</tr>\n";
+	echo "</table>\n";
+}
+
+
+/**
  * print a sortable table of recent changes
  *
  * @param array $datalist contain records that were extracted from the database.
@@ -1199,8 +1301,12 @@ function print_changes_table($datalist) {
 	//-- table body
 	$hidden = 0;
 	$n = 0;
+	$NMAX = 1000;
 	foreach($datalist as $key => $value) {
-		$record = GedcomRecord::getInstance($key);
+		if ($n>=$NMAX) break;
+		$record = null;
+		if (isset($value['d_gid'])) $record = GedcomRecord::getInstance($value['d_gid']);
+		else $record = GedcomRecord::getInstance($key);
 		if (is_null($record) and isset($value[0])) $record = GedcomRecord::getInstance($value[0]);
 		if (is_null($record)) continue;
 		// Privacy
@@ -1267,7 +1373,8 @@ function print_changes_table($datalist) {
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
 	echo $pgv_lang["total_names"].": ".$n;
-	if ($hidden) echo "<br />".$pgv_lang["hidden"].": ".$hidden;
+	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
+	if ($n>=$NMAX) echo "<br /><span class=\"warning\">".$pgv_lang["recent_changes"]." &gt; ".$NMAX."</span>";
 	echo "</td>";
 	echo "<td></td>";
 	echo "<td></td>";
@@ -1423,7 +1530,7 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 	//if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
 	echo $pgv_lang["total_names"].": ".$n;
-	if ($hidden) echo "<br />".$pgv_lang["hidden"].": ".$hidden;
+	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
 	echo "<td>";
 	if (strpos($option, "noDownload")===false) {
@@ -1498,7 +1605,7 @@ function load_behaviour() {
 				if (args[1].length) return table_filter(table, args[0], args[1]);
 				return false;
 			}
-		},
+		}/**,
 		'.sortable th' : function(element) {
 			element.onmouseout = nd; // hide helptext
 			element.onmouseover = function() { // show helptext
@@ -1509,7 +1616,7 @@ function load_behaviour() {
 				this.value = helptext; this.title = ''; // Firefox = value
 				return overlib(helptext, BGCOLOR, "#000000", FGCOLOR, "#FFFFE0");
 			}
-		}
+		}**/
 	}
 	Behaviour.register(myrules);
 	// ]]>

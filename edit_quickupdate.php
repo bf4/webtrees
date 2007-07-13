@@ -291,15 +291,15 @@ if ($action=="update") {
 	}
 	
 	//-- update the person's gender
-	if (!empty($SEX)) {
+	if (!empty($GENDER)) {
 		if (preg_match("/1 SEX (\w*)/", $gedrec, $match)>0) {
-			if ($match[1] != $SEX) {
-				$gedrec = preg_replace("/1 SEX (\w*)/", "1 SEX $SEX", $gedrec);
+			if ($match[1] != $GENDER) {
+				$gedrec = preg_replace("/1 SEX (\w*)/", "1 SEX $GENDER", $gedrec);
 				$updated = true;
 			}
 		}
 		else {
-			$gedrec .= "\r\n1 SEX $SEX";
+			$gedrec .= "\r\n1 SEX $GENDER";
 			$updated = true;
 		}
 	}
@@ -1403,7 +1403,7 @@ function checkform(frm) {
 <tr>
 	<td class="descriptionbox"><?php print_help_link("edit_sex_help", "qm"); print $pgv_lang["sex"];?></td>
 	<td class="optionbox" colspan="3">
-		<select name="SEX" tabindex="<?php print $tabkey; ?>">
+		<select name="GENDER" tabindex="<?php print $tabkey; ?>">
 			<option value="M"<?php if ($SEX=="M") print " selected=\"selected\""; ?>><?php print $pgv_lang["male"]; ?></option>
 			<option value="F"<?php if ($SEX=="F") print " selected=\"selected\""; ?>><?php print $pgv_lang["female"]; ?></option>
 			<option value="U"<?php if ($SEX=="U") print " selected=\"selected\""; ?>><?php print $pgv_lang["unknown"]; ?></option>

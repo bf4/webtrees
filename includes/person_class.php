@@ -517,7 +517,7 @@ class Person extends GedcomRecord {
 		if ($this->getSex()=="M") $s = "sex";
 		else if ($this->getSex()=="F") $s = "sexf";
 		else $s = "sexn";
-		$temp = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$s]["small"]."\" alt=\"\" class=\"sex_image\"";
+		$temp = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$s]["small"]."\" alt=\"\" class=\"gender_image\"";
 		if (!empty($style)) $temp .= " style=\"$style\"";
 		$temp .= " />";
 		return $temp;
