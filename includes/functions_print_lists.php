@@ -1112,13 +1112,16 @@ function print_media_table($datalist, $legend="") {
  *
  * @param array $datalist contain records that were extracted from the database.
  * @param string $target where to go after clicking a surname : INDI page or FAM page
+ * @param string $listFormat presentation style: "style2 = sortable list, "style3" = cloud
  */
-function print_surn_table($datalist, $target="INDI") {
-	global $pgv_lang, $factarray, $GEDCOM, $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD;
-	global $SURNAME_LIST_STYLE;
-	if (count($datalist)<1) return;
+function print_surn_table($datalist, $target="INDI", $listFormat="") {
+  global $pgv_lang, $factarray, $GEDCOM, $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD;
+  global $SURNAME_LIST_STYLE;
+  if (count($datalist)<1) return;
+  
+  if (empty($listFormat)) $listFormat = $SURNAME_LIST_STYLE;
 
-  if ($SURNAME_LIST_STYLE=="style3") {
+  if ($listFormat=="style3") {
 	// Requested style is "cloud", where the surnames are simply a list of names (with links), 
 	// and the font size used for each name depends on the number of occurrences of this name
 	// in the database.  Note that the surname count doesn't display in this format.
