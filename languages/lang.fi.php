@@ -992,6 +992,7 @@ $pgv_lang["basic_or_all"]		= "Näytä vain syntymät, kuolemat ja avioliitot?";
 $pgv_lang["style"]					= "Esitystyyli";
 $pgv_lang["style1"]					= "Teksti";
 $pgv_lang["style2"]					= "Taulukko";
+$pgv_lang["style3"]					= "Lista";
 $pgv_lang["cal_download"]			= "Sallitko kalenteritapahtumien latauksen?";
 $pgv_lang["no_events_living"]		= "Elossa olevien henkilöiden tapahtumia ei ole seuraavien #pgv_lang[global_num1]# päivän aikana.";
 $pgv_lang["no_events_living1"]	= "Elossa olevien henkilöiden tapahtumia ei ole huomenna.";

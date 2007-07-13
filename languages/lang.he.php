@@ -1079,6 +1079,7 @@ $pgv_lang["basic_or_all"]		= "הראה רק לידות, פטירות וחתונ�
 $pgv_lang["style"]			= "סגנון תצוגה";
 $pgv_lang["style1"]			= "טכסט";
 $pgv_lang["style2"]			= "טבלה";
+$pgv_lang["style3"]			= "רשימה";
 $pgv_lang["cal_download"]		= "הרשה הורדת אירועי לוח שנה?";
 $pgv_lang["no_events_living"]		= "אין אירוע של אנשים חיים ב-#pgv_lang[global_num1]# הימים הבאים.";
 $pgv_lang["no_events_living1"]		= "אין אירוע של אנשים חיים למחר.";
