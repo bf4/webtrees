@@ -3,7 +3,7 @@
  * Index caching functions
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,6 +41,9 @@ function loadCachedBlock($block, $index) {
 	//-- ignore caching when DEBUG is set
 	if (isset($DEBUG) && $DEBUG==true) return false;
 
+	//-- ignore caching for logged in users
+	if (getUserName()) return false;
+
 	//-- ignore cache when its life is not configured or when its life is zero
 	$cacheLife = 0;
 	if (isset($block[1]['cache'])) $cacheLife = $block[1]['cache'];
@@ -49,23 +52,6 @@ function loadCachedBlock($block, $index) {
 	}
 	if ($cacheLife==0) return false;
 
-	//-- ignore caching for logged in users 
-	$uname = getUserName();
-	if (!empty($uname)) return false;
-
-	//-- check for cache file
-	if (!file_exists($INDEX_DIRECTORY."/cache")) {
-		@mkdir($INDEX_DIRECTORY."/cache");
-		return false;
-	}
-	if (!file_exists($INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE])) {
-		@mkdir($INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]);
-		return false;
-	}
-	if (!file_exists($INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]."/".$GEDCOM)) {
-		@mkdir($INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]."/".$GEDCOM);
-		return false;
-	}
 	$fname = $INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]."/".$GEDCOM."/".$index."_".$block[0];
 	if (file_exists($fname)) {
 		// Check for expired cache (<0: no expiry), 0: immediate, >0: expires in x days)  Zero already checked
@@ -87,7 +73,7 @@ function loadCachedBlock($block, $index) {
  * @param array $block	[0]:name of the block to save, [1]:block's configuration
  * @param int $index	An id for this block in the case of multiple instances of the same block on the page
  * @param string $content	the actual content to save in the cache
- * @return boolean  returns false if the block could not be loaded from cache
+ * @return boolean  returns false if the block could not be saved to cache
  */
 function saveCachedBlock($block, $index, $content) {
 	global $PGV_BLOCKS, $INDEX_DIRECTORY, $DEBUG, $lang_short_cut, $LANGUAGE, $GEDCOMS, $GEDCOM;
@@ -95,28 +81,24 @@ function saveCachedBlock($block, $index, $content) {
 	//-- ignore caching when DEBUG is set
 	if (isset($DEBUG) && $DEBUG==true) return false;
 
+	//-- ignore caching for logged in users
+	if (getUserName()) return false;
+
 	//-- ignore cache when its life is not configured or when its life is zero
 	$cacheLife = 0;
 	if (isset($block[1]['cache'])) $cacheLife = $block[1]['cache'];
 	else if (isset($PGV_BLOCKS[$block[0]]['config']['cache'])) $cacheLife = $PGV_BLOCKS[$block[0]]['config']['cache'];
 	if ($cacheLife==0) return false;
-
-	//-- ignore caching for logged in users 
-	$uname = getUserName();
-	if (!empty($uname)) return false;
-
-	//-- check for cache file
-	if (!file_exists($INDEX_DIRECTORY."/cache")) {
-		mkdir($INDEX_DIRECTORY."/cache");
-	}
-	if (!file_exists($INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE])) {
-		mkdir($INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]);
-	}
-	if (!file_exists($INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]."/".$GEDCOM)) {
-		mkdir($INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]."/".$GEDCOM);
-	}
-	$fname = $INDEX_DIRECTORY."/cache/".$lang_short_cut[$LANGUAGE]."/".$GEDCOM."/".$index."_".$block[0];
+	
+	$fname = $INDEX_DIRECTORY."/cache";
+	@mkdir($fname);
+	$fname .= "/".$lang_short_cut[$LANGUAGE];
+	@mkdir($fname);
+	$fname .= "/".$GEDCOM;
+	@mkdir($fname);
+	$fname .= "/".$index."_".$block[0];
 	$fp = fopen($fname, "wb");
+	if (!$fp) return false;
 	fwrite($fp, $content);
 	fclose($fp);
 	return true;
