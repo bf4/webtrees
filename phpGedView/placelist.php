@@ -343,6 +343,11 @@ if ($level > 0) {
 
 		$title = ""; foreach ($parent as $k=>$v) $title = $v.", ".$title;
 		$title = substr($title, 0, -2)." ";
+		// Sort each of the tables by Name
+		if (count($myindilist) > 1) uasort($myindilist, "stringsort");
+		if (count($myfamlist) > 1) uasort($myfamlist, "stringsort");
+		if (count($mysourcelist) > 1) uasort($mysourcelist, "stringsort");
+		// Print each of the tables
 		print_indi_table($myindilist, $title);
 		print_fam_table($myfamlist, $title);
 		print_sour_table($mysourcelist, $title);

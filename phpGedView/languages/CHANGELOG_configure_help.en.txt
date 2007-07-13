@@ -44,6 +44,7 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
++$pgv_lang["SURNAME_LIST_STYLE_help"]				13 Jul 2007				w
 +$pgv_lang["SURNAME_LIST_STYLE"]					12 Jul 2007				A
 +$pgv_lang["SURNAME_LIST_STYLE_help"]				12 Jul 2007				A
 -$pgv_lang["ALPHA_INDEX_LISTS"]						1 Jun 2007				D
