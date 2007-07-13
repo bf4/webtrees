@@ -52,7 +52,10 @@ class TreeNav {
 			else if (!empty($_REQUEST['newroot'])) {
 				$_SESSION['navRoot'] = $this->rootPerson->getXref();
 				if (!empty($_REQUEST['drawport'])) $this->drawViewport('', "", "150px"); 
-				else $this->drawPerson($this->rootPerson, 4, 0, null);
+				else {
+					$fam = null;
+					$this->drawPerson($this->rootPerson, 4, 0, $fam);
+				}
 			}
 			else if (!empty($_REQUEST['parent'])) {
 				$person = $this->rootPerson;
@@ -61,7 +64,10 @@ class TreeNav {
 					$cfamily = end($fams);
 					if (!empty($cfamily)) {
 						$father = $cfamily->getHusband();
-						if (!empty($father)) $this->drawPerson($father, 1, 1, null);
+						if (!empty($father)) {
+							$fam = null;
+							$this->drawPerson($father, 1, 1, $fam);
+						}
 						else print "<br />\n";
 					}
 					else print "<br />\n";
@@ -73,7 +79,10 @@ class TreeNav {
 						$cfamily = end($fams);
 						if (!empty($cfamily)) {
 							$mother = $cfamily->getHusband();
-							if (!empty($mother)) $this->drawPerson($mother, 1, 1, null);
+							if (!empty($mother)) {
+								$fam = null;
+								$this->drawPerson($mother, 1, 1, $fam);
+							}
 							else print "<br />\n";
 						}
 						else print "<br />\n";
@@ -108,7 +117,7 @@ class TreeNav {
 		
 		<div id="out_<?php print $this->name; ?>" style="position: relative; <?php print $widthS.$heightS; ?>text-align: center; overflow: hidden;">
 			<div id="in_<?php print $this->name; ?>" style="position: relative; left: -20px; width: auto; cursor: move;" onmousedown="dragStart(event, 'in_<?php print $this->name; ?>', <?php print $this->name; ?>);" onmouseup="dragStop(event);">
-			<?php $this->drawPerson($this->rootPerson, 4, 0, null); ?>
+			<?php $parent=null; $this->drawPerson($this->rootPerson, 4, 0, $parent); ?>
 			</div>
 			<div id="controls" style="position: absolute; left: 0px; top: 0px; z-index: 100; background-color: #EEEEEE">
 			<table>
@@ -261,7 +270,8 @@ class TreeNav {
 		if (!empty($family) && $gen>0) {
 			$children = $family->getChildren();
 			foreach($children as $ci=>$child) {
-				$this->drawPerson($child, $gen-1, -1, null);
+				$fam = null;
+				$this->drawPerson($child, $gen-1, -1, $fam);
 			}
 		}
 	}
@@ -273,7 +283,7 @@ class TreeNav {
 	 * @param int $state			Whether we are going up or down the tree, -1 for descendents +1 for ancestors
 	 * @param Family $pfamily
 	 */
-	function drawPerson(&$person, $gen=4, $state=0, $pfamily=null) {
+	function drawPerson(&$person, $gen, $state, &$pfamily) {
 		global $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		
 		if ($gen<0) {
@@ -356,13 +366,13 @@ class TreeNav {
 								<tr>
 									<?php /* there is a IE JavaScript bug where the "id" has to be the same as the "name" in order to use the document.getElementsByName() function */ ?>
 									<td <?php if ($gen==0 && !empty($father)) print 'id="pload" name="pload" onclick="'.$this->name.'.loadParent(this, \''.$person->getXref().'\', \'f\');"'; ?>>
-										<?php if (!empty($father)) $this->drawPerson($father, $gen-1, 1, &$cfamily); else print "<br />\n";?>
+										<?php if (!empty($father)) $this->drawPerson($father, $gen-1, 1, $cfamily); else print "<br />\n";?>
 									</td>
 								</tr>
 								<tr>
 								<?php /* print the mother */ ?>
 									<td <?php if ($gen==0 && !empty($mother)) print 'id="pload" name="pload" onclick="'.$this->name.'.loadParent(this, \''.$person->getXref().'\', \'m\');"'; ?>>
-										<?php if (!empty($mother)) $this->drawPerson($mother, $gen-1, 1, &$mcfamily); else print"<br />\n";?>
+										<?php if (!empty($mother)) $this->drawPerson($mother, $gen-1, 1, $mcfamily); else print"<br />\n";?>
 									</td>
 								</tr>
 							</tbody>
