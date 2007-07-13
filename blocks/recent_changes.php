@@ -21,9 +21,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * $Id$
  * @package PhpGedView
  * @subpackage Blocks
+ * @version $Id$
  */
 
 $PGV_BLOCKS["print_recent_changes"]["name"]			= $pgv_lang["recent_changes_block"];
@@ -38,9 +38,8 @@ $PGV_BLOCKS["print_recent_changes"]["config"]		= array(
 //-- Recent Changes block
 //-- this block prints a list of changes that have occurred recently in your gedcom
 function print_recent_changes($block=true, $config="", $side, $index) {
-	global $pgv_lang, $factarray, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $command, $TEXT_DIRECTION;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $REGEXP_DB, $DEBUG, $ASC, $IGNORE_FACTS, $IGNORE_YEAR, $TOTAL_QUERIES, $LAST_QUERY, $PGV_BLOCKS, $SHOW_SOURCES;
-    global $objectlist;
+	global $pgv_lang, $factarray, $month, $year, $day, $monthtonum, $command;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $PGV_BLOCKS;
 
 	$block = true;			// Always restrict this block's height
 
@@ -54,58 +53,11 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 
 	$daytext = "";
 	$action = "today";
-	$found_facts = array();
 	$monthstart = mktime(1,0,0,$monthtonum[strtolower($month)],$day,$year);
 	$mmon2 = date("m", $monthstart-(60*60*24*$config["days"]));
 	$mday2 = date("d", $monthstart-(60*60*24*$config["days"]));
 	$myear2 = date("Y", $monthstart-(60*60*24*$config["days"]));
-	$changes = get_recent_changes($mday2, $mmon2, $myear2);
-
-	if (count($changes)>0) {
-		$found_facts = array();
-		$last_total = $TOTAL_QUERIES;
-		foreach($changes as $id=>$change) {
-			$gid = $change['d_gid'];
-			$gedrec = find_gedcom_record($change['d_gid']);
-			if (empty($gedrec)) $gedrec = find_updated_record($change['d_gid']);
-
-			if (empty($gedrec)) {
-				if ($DEBUG) print "Record ".$change['d_gid']." not found ";
-			} else {
-				$type = "INDI";
-				$match = array();
-				$ct = preg_match("/0 @.*@ (\w*)/", $gedrec, $match);
-				if ($ct>0) $type = trim($match[1]);
-				$disp = true;
-			  /** DEPRECATED : privacy is checked later in print_changes_table() [ 1704080 ]
-				switch($type) {
-					case 'INDI':
-						if (($filter=="living")&&(is_dead_id($gid)==1)) $disp = false;
-						else if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsByID($gid);
-						break;
-					case 'FAM':
-						if ($filter=="living") {
-							$parents = find_parents_in_record($gedrec);
-							if (is_dead_id($parents["HUSB"])==1) $disp = false;
-							else if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsByID($parents["HUSB"]);
-							if ($disp) {
-								if (is_dead_id($parents["WIFE"])==1) $disp = false;
-								else if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsByID($parents["WIFE"]);
-							}
-						}
-						else if ($HIDE_LIVE_PEOPLE) $disp = displayDetailsByID($gid, "FAM");
-						break;
-					default:
-						$disp = displayDetailsByID($gid, $type);
-						break;
-				}**/
-				if ($disp) {
-					$factrec = get_sub_record(1, "1 CHAN", $gedrec);
-					$found_facts[] = array($gid, $factrec, $type);
-				}
-			}
-		}
-	}
+	$found_facts = get_recent_changes($mday2, $mmon2, $myear2);
 
 // Start output
 	if (count($found_facts)==0 and $HideEmpty=="yes") return false;
@@ -137,12 +89,10 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 		print_text("recent_changes_none");
 	} else {
 		print_text("recent_changes_some");
-
-	// sortable table
-	require_once("includes/functions_print_lists.php");
-	print_changes_table($found_facts);
-
-			}
+		// sortable table
+		require_once("includes/functions_print_lists.php");
+		print_changes_table($found_facts);
+	}
 
 	if ($block) print "</div>\n"; //small_inner_block
 	print "</div>"; // blockcontent
@@ -151,7 +101,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 }
 
 function print_recent_changes_config($config) {
-	global $pgv_lang, $command, $PGV_BLOCKS, $TEXT_DIRECTION;
+	global $pgv_lang, $command, $PGV_BLOCKS;
 	if (empty($config)) $config = $PGV_BLOCKS["print_recent_changes"]["config"];
 	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_recent_changes"]["config"]["cache"];
 
