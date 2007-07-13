@@ -226,13 +226,13 @@ return false;}return true;}
   }
   $out .= '</tr>
 <tr>
-  <td class="descriptionbox" align="left">Sex: Male: M   Female: F.</td>';
+  <td class="descriptionbox" align="left">Gender: Male: M   Female: F.</td>';
   		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
   			$value = "";
-	  		if (isset($citation['ts_array']['rows'][$i]['Sex'])) $value = $citation['ts_array']['rows'][$i]['Sex'];
+	  		if (isset($citation['ts_array']['rows'][$i]['Gender'])) $value = $citation['ts_array']['rows'][$i]['Gender'];
   				$out .= '<td class="optionbox" align="left">
- 				Male:<INPUT TYPE="RADIO" value="M" name="Sex'.$i.'"'.($value=='M'?' checked="checked"':'').' /> 
-				Female:<INPUT TYPE="RADIO" value="F" name="Sex'.$i.'"'.($value=='F'?' checked="checked"':'').' /></td>';
+ 				Male:<INPUT TYPE="RADIO" value="M" name="Gender'.$i.'"'.($value=='M'?' checked="checked"':'').' /> 
+				Female:<INPUT TYPE="RADIO" value="F" name="Gender'.$i.'"'.($value=='F'?' checked="checked"':'').' /></td>';
 	}
 	$out .='</tr>
  <tr>
@@ -480,9 +480,9 @@ return false;}return true;}
     		$indiFact .= "2 PLAC ".$_POST["PlaceOfBirth"];
     	}
     	
-    	if(!empty($_POST["Sex".$i]))
+    	if(!empty($_POST["Gender".$i]))
     	{
-    		$indiFact .= "1 SEX ".$_POST["Sex".$i];
+    		$indiFact .= "1 SEX ".$_POST["Gender".$i];
     	}
     	
     	return $indiFact;
@@ -770,7 +770,7 @@ return false;}return true;}
 			if (!isset($_POST["HomeValue".$number])) $_POST["HomeValue".$number]="";
 			if (!isset($_POST["Radio".$number])) $_POST["Radio".$number]="";
 			if (!isset($_POST["LiveFarm".$number])) $_POST["LiveFarm".$number]="";
-			if (!isset($_POST["Sex".$number])) $_POST["Sex".$number]="";
+			if (!isset($_POST["Gender".$number])) $_POST["Gender".$number]="";
 			if (!isset($_POST["Race".$number])) $_POST["Race".$number]="";
 			if (!isset($_POST["Age".$number])) $_POST["Age".$number]="";
 			if (!isset($_POST["Single".$number])) $_POST["Single".$number]="";
@@ -802,7 +802,7 @@ return false;}return true;}
 			"HomeValue"=>$_POST["HomeValue".$number],
 			"Radio"=>$_POST["Radio".$number],
 			"LiveFarm"=>$_POST["LiveFarm".$number],
-			"Sex"=>$_POST["Sex".$number],
+			"Gender"=>$_POST["Gender".$number],
 			"Race"=>$_POST["Race".$number],
 			"Age"=>$_POST["Age".$number],
 			"Single"=>$_POST["Single".$number],
@@ -835,7 +835,7 @@ return false;}return true;}
 			if (!empty($_POST["HomeValue".$number])) $text .= ", Home Value:".$_POST["HomeValue".$number];
 			if (!empty($_POST["Radio".$number])) $text .= ", ".$_POST["Radio".$number];
 			if (!empty($_POST["LiveFarm".$number])) $text .= ", ".$_POST["LiveFarm".$number];
-			if (!empty($_POST["Sex".$number])) $text .= ", Sex: ".$_POST["Sex".$number];
+			if (!empty($_POST["Gender".$number])) $text .= ", Gender: ".$_POST["Gender".$number];
 			if (!empty($_POST["Race".$number])) $text .= ", Race: ".$_POST["Race".$number];
 			if (!empty($_POST["Age".$number])) $text .= ", Age: ".$_POST["Age".$number];
 			if (!empty($_POST["Single".$number])) $text .= ", ".$_POST["Single".$number];

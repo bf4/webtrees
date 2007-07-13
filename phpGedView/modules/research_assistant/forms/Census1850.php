@@ -189,13 +189,13 @@ return false;}return true;}
 		}
  		$out .='</tr>
 <tr>
-  <td class="descriptionbox" align="left">Sex</td>';
+  <td class="descriptionbox" align="left">Gender</td>';
   		for($i=0; $i<$_REQUEST['numOfRows']; $i++) {
   			$value = "";
-	  		if (isset($citation['ts_array']['rows'][$i]['Sex'])) $value = $citation['ts_array']['rows'][$i]['Sex'];
+	  		if (isset($citation['ts_array']['rows'][$i]['Gender'])) $value = $citation['ts_array']['rows'][$i]['Gender'];
   				$out .= '<td class="optionbox" align="left">
- 				Male:<INPUT tabindex="'.($i*100+19).'"  TYPE="RADIO" value="M" name="Sex'.$i.'"'.($value=='M'?' checked="checked"':'').' /> 
-				Female:<INPUT tabindex="'.($i*100+20).'"  TYPE="RADIO" value="F" name="Sex'.$i.'"'.($value=='F'?' checked="checked"':'').' /></td>';
+ 				Male:<INPUT tabindex="'.($i*100+19).'"  TYPE="RADIO" value="M" name="Gender'.$i.'"'.($value=='M'?' checked="checked"':'').' /> 
+				Female:<INPUT tabindex="'.($i*100+20).'"  TYPE="RADIO" value="F" name="Gender'.$i.'"'.($value=='F'?' checked="checked"':'').' /></td>';
 	}
 	$out .='</tr>
  <tr>
@@ -335,9 +335,9 @@ $out .= '</tr>
     		$indiFact .= "2 PLAC ".$_POST["PlaceOfBirth"];
     	}
     	
-    	if(!empty($_POST["Sex".$i]))
+    	if(!empty($_POST["Gender".$i]))
     	{
-    		$indiFact .= "1 SEX ".$_POST["Sex".$i];
+    		$indiFact .= "1 SEX ".$_POST["Gender".$i];
     	}
     	
     	return $indiFact;
@@ -597,7 +597,7 @@ $out .= '</tr>
 			if (!isset($_POST["Families".$number])) $_POST["Families".$number]="";
 			if (!isset($_POST["NameOfPeople".$number])) $_POST["NameOfPeople".$number]="";
 			if (!isset($_POST["Age".$number])) $_POST["Age".$number]="";
-			if (!isset($_POST["Sex".$number])) $_POST["Sex".$number]="";
+			if (!isset($_POST["Gender".$number])) $_POST["Gender".$number]="";
 			if (!isset($_POST["Race".$number])) $_POST["Race".$number]="";			
 			if (!isset($_POST["Trade".$number])) $_POST["Trade".$number]="";
 			if (!isset($_POST["realestate".$number])) $_POST["realestate".$number]="";
@@ -613,7 +613,7 @@ $out .= '</tr>
 			'Families'=>$_POST["Families".$number],
 			"NameOfPeople"=>$_POST["NameOfPeople".$number],
 			"Race"=>$_POST["Race".$number],
-			"Sex"=>$_POST["Sex".$number],
+			"Gender"=>$_POST["Gender".$number],
 			"Age"=>$_POST["Age".$number],
 			"Trade"=>$_POST["Trade".$number],
 			"realestate"=>$_POST["realestate".$number],
@@ -630,7 +630,7 @@ $out .= '</tr>
 			if (!empty($_POST["Families".$number])) $text .= " Family number: ".$_POST["Families".$number];
 			if (!empty($_POST["NameOfPeople".$number])) $text .= " Name: ".$_POST["NameOfPeople".$number];
 			if (!empty($_POST["Race".$number])) $text .= ", Color: ".$_POST["Race".$number];
-			if (!empty($_POST["Sex".$number])) $text .= ", Sex: ".$_POST["Sex".$number];
+			if (!empty($_POST["Gender".$number])) $text .= ", Gender: ".$_POST["Gender".$number];
 			if (!empty($_POST["Age".$number])) $text .= ", Age: ".$_POST["Age".$number];
 			if (!empty($_POST["Trade".$number])) $text .= ", Profession, Occupation or Trade: ".$_POST["Trade".$number];
 			if (!empty($_POST["realestate".$number])) $text .= ", ".$_POST["realestate".$number];

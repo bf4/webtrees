@@ -47,7 +47,7 @@ function autosearch_options()
 		$givennames = $person->getGivenNames();
 		$lastname = $person->getSurname();
 		$byear = $person->getBirthYear();
-		$sex = $person->getSex();
+		$gender = $person->getSex();
 		$seximg = $person->getSexImage();
 		
 	$to_return ="<form name='ancsearch' action='module.php' target=\"_blank\" method='post'> 
@@ -64,7 +64,7 @@ function autosearch_options()
 					 						<tr><td class ='optionbox'>
 					 					".$pgv_lang["autosearch_byear"]."</td><td class ='optionbox'> <input type='checkbox' name='byear' value=\"".$byear."\" checked='checked' />&nbsp; ".$byear."</td></tr>
 					 						 						<tr><td class ='optionbox'>
-					 					".$pgv_lang["autosearch_gender"]."</td><td class ='optionbox'> <input type='checkbox' name='sex' value=\"".$sex."\" checked='checked' />&nbsp; ".$sex.$seximg."</td></tr>				
+					 					".$pgv_lang["autosearch_gender"]."</td><td class ='optionbox'> <input type='checkbox' name='gender' value=\"".$gender."\" checked='checked' />&nbsp; ".$gender.$seximg."</td></tr>				
 								<tr><td class='optionbox' colspan=2 align='center'>".$pgv_lang["autosearch_plugin_name_ellisIsland"]."</td></tr>
 								<tr><td  align='center' class='topbottombar'colspan=2><input type='submit' value='".$pgv_lang["autosearch_search"]."' /></td></tr>
 		 			

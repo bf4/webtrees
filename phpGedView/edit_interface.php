@@ -484,7 +484,7 @@ case 'add':
 	break;
 //------------------------------------------------------------------------------
 case 'addchild':
-	print_indi_form("addchildaction", $famid, "", "", "CHIL", @$_REQUEST["sex"]);
+	print_indi_form("addchildaction", $famid, "", "", "CHIL", @$_REQUEST["gender"]);
 	break;
 //------------------------------------------------------------------------------
 case 'addspouse':
