@@ -515,16 +515,6 @@ $pgv_lang["um_mk_bu"] = "Erstelle Backup";
 $pgv_lang["um_nofiles"] = "Keine Dateien für Sicherheitskopie gefunden.";
 $pgv_lang["um_files_exist"] = "Möchten Sie bereits bestehenden Ausgangs-Dateien überschreiben?";
 $pgv_lang["um_results"]		= "Ergebnis";
-$pgv_lang["preview_faq_item"] = "FAQ-Einträge vorschauen";
-$pgv_lang["restore_faq_edits"] = "FAQ-Editieren erlauben";
-$pgv_lang["add_faq_item"] = "FAQ Eintrag hinzufügen";
-$pgv_lang["add_faq_item_help"] = "~#pgv_lang[add_faq_item]#~<br />Mit dieser Option können Sie einen Eintrag der FAQ-Liste hinzufügen.<br />";
-$pgv_lang["edit_faq_item"] = "FAQ-Eintrag bearbeiten";
-$pgv_lang["edit_faq_item_help"] = "~#pgv_lang[edit_faq_item]#~<br />Mit dieser Option können Sie einen bereits bestehenden FAQ-Eintrag bearbeiten.<br />";
-$pgv_lang["delete_faq_item"] = "FAQ-Eintrag löschen";
-$pgv_lang["delete_faq_item_help"] = "~#pgv_lang[delete_faq_item]#~<br />Mit dieser Option können Sie einen FAQ-Eintrag löschen.<br />";
-$pgv_lang["moveup_faq_item"] = "FAQ-Eintrag nach oben verschieben";
-$pgv_lang["movedown_faq_item"] = "FAQ-Eintrag nach unten verschieben";
 $pgv_lang["time_limit_help"]			= "~#pgv_lang[time_limit]#~<br />Maximale Import-Laufzeit.<br /><br />";
 $pgv_lang["THUMBNAIL_WIDTH"]			= "Breite des erstellten Miniaturbildes";
 $pgv_lang["SHOW_SOURCES"]			= "Zeige Quellen";
@@ -580,5 +570,25 @@ $pgv_lang["DBPERSIST_help"]			= "~#pgv_lang[DBPERSIST]#~<br />Bestimmt ob PhpGed
 $pgv_lang["AUTO_GENERATE_THUMBS"]	= "Automatisch Miniaturbilder erstellen";
 $pgv_lang["AUTO_GENERATE_THUMBS_help"]		= "~#pgv_lang[AUTO_GENERATE_THUMBS]#~<br />Bestimmt ob PhpgedView automatisch fehlende Miniaturbilder erstellen soll oder nicht.  Es ist aber möglich dass Ihr PHP-Betriebsystem die Miniaturbilder-Erstellung nicht unterstützt.<br /><br />";
 $pgv_lang["more_config_hjaelp"]			= "<br /><b>Mehr Hilfe</b><br />Wenn sie das <b>?</b> neben den Elementen klicken, können Sie mehr Hilfe erhalten.<br />";
+
+
+$pgv_lang["preview_faq_item"] = "FAQ-Einträge vorschauen";
+$pgv_lang["preview_faq_item_help"] = "~#pgv_lang[preview_faq_item]#~<br />Diese Option ermöglicht Ihnen, die FAQ Liste ohne Bearbeitungsoptionen zu sehen.<br /><br />Abgesehen von einem <b>Bearbeiten</b> Link als Überschrift vor dem ersten FAQ Eintrag, ist die Darstellung der FAQ-Seite genau wie sie einem gewöhnlichen Benutzer gezeigt wird. Mit diesem <b>Bearbeiten</b> Link können Sie alle FAQ-Bearbeitungsoptionen wiederherstellen.<br />";
+$pgv_lang["restore_faq_edits"] = "FAQ-Editieren erlauben";
+$pgv_lang["restore_faq_edits_help"] = "~#pgv_lang[restore_faq_edits]#~<br />Diese Option stellt die FAQ-Seite zurück auf die normale Verwalter-Ansicht, mit allen FAQ-Bearbeitungsoptionen.<br />";
+$pgv_lang["add_faq_item"] = "FAQ Eintrag hinzufügen";
+$pgv_lang["add_faq_item_help"] = "~#pgv_lang[add_faq_item]#~<br />Mit dieser Option können Sie einen Eintrag der FAQ-Liste hinzufügen.<br />";
+$pgv_lang["edit_faq_item"] = "FAQ-Eintrag bearbeiten";
+$pgv_lang["edit_faq_item_help"] = "~#pgv_lang[edit_faq_item]#~<br />Mit dieser Option können Sie einen bereits bestehenden FAQ-Eintrag bearbeiten.<br />";
+$pgv_lang["delete_faq_item"] = "FAQ-Eintrag löschen";
+$pgv_lang["delete_faq_item_help"] = "~#pgv_lang[delete_faq_item]#~<br />Mit dieser Option können Sie einen FAQ-Eintrag löschen.<br />";
+$pgv_lang["moveup_faq_item"] = "FAQ-Eintrag nach oben verschieben";
+$pgv_lang["moveup_faq_item_help"] = "~#pgv_lang[moveup_faq_item]#~<br />Diese Option ermöglicht es Ihnen, die Reihenfolge der FAQ-Einträge zu ändern.<br /><br />Jedes Mal, wenn Sie diese Option benutzen, wird die Ordnungsnummer dieses Eintrags um <b>1</b> verringert.  Anstatt dieser Option, können Sie auch den Eintrag bearbeiten, und das Feld «FAQ Reihenfolge» direkt ändern.  Wenn mehrere Einträge die selbe Ordnugsnummer haben, ist nur einer dieser Einträge sichtbar.  Welcher Eintrag dann sichtbar ist, ist unbestimmt.<br />";
+$pgv_lang["movedown_faq_item"] = "FAQ-Eintrag nach unten verschieben";
+$pgv_lang["movedown_faq_item_help"] = "~#pgv_lang[movedown_faq_item]#~<br />Diese Option ermöglicht es Ihnen, die Reihenfolge der FAQ-Einträge zu ändern.<br /><br />Jedes Mal, wenn Sie diese Option benutzen, wird die Ordnungsnummer dieses Eintrags um <b>1</b> erhöht.  Anstatt dieser Option, können Sie auch den Eintrag bearbeiten, und das Feld «FAQ Reihenfolge» direkt ändern.  Wenn mehrere Einträge die selbe Ordnugsnummer haben, ist nur einer dieser Einträge sichtbar.  Welcher Eintrag dann sichtbar ist, ist unbestimmt.<br />";
+$pgv_lang["add_faq_header_help"] = "~FAQ Überschrift~<br />Titel oder Thema des FAQ-Eintrags.<br /><br />Ihre Eingabe kann formatiert werden. HTML tags wie &lt;b&gt; und &lt;br&gt; sowie HTML entities wie &amp;amp; und &amp;nbsp; sind erlaubt.  Es ist nicht möglich, HTML tags so einzugeben dass sie als gewöhnlicher Text erkannt werden.<br /><br />#pgv_lang[add_faq_pgvLangRefs]#<br />";
+$pgv_lang["add_faq_body_help"] = "~FAQ Hauptteil~<br />Text des FAQ-Eintrags.<br /><br />Ihre Eingabe kann formatiert werden. HTML tags wie &lt;b&gt; und &lt;br&gt; sowie HTML entities wie &amp;amp; und &amp;nbsp; sind erlaubt.  Es ist nicht möglich, HTML tags so einzugeben dass sie als gewöhnlicher Text erkannt werden.<br /><br />#pgv_lang[add_faq_pgvLangRefs]#<br />";
+$pgv_lang["add_faq_pgvLangRefs"] = "Sie können im Text Einträge der Sprach-Dateien oder die aktuelle Stellung von verschiedenen Global-Variablen einfügen.  Beispiele:<ul><li><b>&#x23;pgv_lang[add_to_cart]&#x23;</b>&nbsp;&nbsp;&nbsp; erwähnt den Sprach-Variable \$pgv_lang[\"add_to_cart\"], und wenn so erwähnt, wird der Text mit <b>#pgv_lang[add_to_cart]#</b> ergänzt wenn die FAQ-Seite in der aktuellen Sprache angesehen wird.</li><li><b>&#x23;factarray[AFN]&#x23;</b>&nbsp;&nbsp;&nbsp;erwähnt den Fakt-Namen \$factarray[\"AFN\"], und wenn so erwähnt, wird der Text mit <b>#factarray[AFN]#</b> ergänzt wenn die FAQ-Seite in der aktuellen Sprache angesehen wird.</li><li><b>&#x23;GLOBALS[VERSION]&#x23;&nbsp;&#x23;GLOBALS[VERSION_RELEASE]&#x23;</b>&nbsp;&nbsp;&nbsp;erwähnt den globalen Variable \$VERSION, ein Leerzeichen, und dann den globalen Variable \$VERSION_RELEASE, und wenn so erwähnt, wird der Text mit <b>#GLOBALS[VERSION]#&nbsp;#GLOBALS[VERSION_RELEASE]#</b> ergänzt wenn die FAQ-Seite in der aktuellen Sprache angesehen wird.</li></ul><br />So können Sie FAQ-Listen erstellen, die sich nach der aktuellen Sprache richten.  Sie sollten Ihre eigenen FAQ-Titel und FAQ-Hauptteile in die <i>languages/extra.xx.php</i> Dateien (<i>xx</i> ist das Code der jeweiligen Sprache) im folgenden Format eingeben:<br />\$pgv_lang[\"faq_title1\"] = \"Beispiel eines FAQ-Titels\";<br />\$pgv_lang[\"faq_body1\"] = \"Beispiel eines FAQ-Hauptteils.\";<br />";
+$pgv_lang["add_faq_order_help"] = "~FAQ Reihenfolge~<br />Dieser Eintrag bestimmt die Reihenfolge, in der die FAQ-Einträge auf der FAQ-Seite dargestellt werden.<br /><br />Es ist nicht nötig, die Nummern sequentiell und ohne Löcher einzutragen.  Wenn die Reihenfolge der von Ihnen eingetragen Ordnungsnummern Löcher enthält, können Sie dann später andere Einträge in die FAQ-Liste einfügen. Zum Beispiel, wenn Sie die Ordnungsnummern 1, 6, 11, 16 benutzen, können Sie später andere Einträge mit den fehlenden Ordnungsnummern hinzufügen.  Negative Nummern und Null sind erlaubt, und ermöglichen Ihnen, Einträge <u>vor</u> dem jetzigen ersten Eintrag hinzuzufügen.<br /><br />Wenn mehrere Einträge die selbe Ordnugsnummer haben, ist nur einer dieser Einträge sichtbar.  Welcher Eintrag dann sichtbar ist, ist unbestimmt.<br />";
 
 ?>
