@@ -255,9 +255,10 @@ if ($action == "show") {
 					print "</td>";
 				}
 				// NOTE: Print the header of the current item
-				print "<td class=\"list_label wrap\">".html_entity_decode($data["header"]["text"])."</td></tr>";
+				$itemTitle = print_text($data["header"]["text"], 0, 2);
+				print "<td class=\"list_label wrap\">".html_entity_decode($itemTitle)."</td></tr>";
 				print "<tr>";
-				// NOTE: Print the edit options op the current item
+				// NOTE: Print the edit options of the current item
 				if ($canconfig && $adminedit) {
 					print "<td class=\"optionbox center\">";
 					print_help_link("moveup_faq_item_help","qm","moveup_faq_item");
@@ -273,8 +274,9 @@ if ($action == "show") {
 					print "<a href=\"faq.php?action=commit&amp;type=delete&amp;id=".$id."&amp;pidh=".$data["header"]["pid"]."&amp;pidb=".$data["body"]["pid"]."\" onclick=\"return confirm('".$pgv_lang["confirm_faq_delete"]."');\">".$pgv_lang["delete"]."</a>\n";
 					print "</td>";
 				}
-				// NOTE: Print the body text op the current item
-				print "<td class=\"list_value wrap\">".nl2br(html_entity_decode(stripslashes($data["body"]["text"])))."</td></tr>";				
+				// NOTE: Print the body text of the current item
+				$itemText = print_text($data["body"]["text"], 0, 2);
+				print "<td class=\"list_value wrap\">".nl2br(html_entity_decode(stripslashes($itemText)))."</td></tr>";				
 			}
 		}
 	}
