@@ -44,11 +44,11 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-*$factarray["SEX"]									13 July 2007			w
-*$pgv_lang["invalid_search_multisite_input_gender"]	13 July 2007			w
-*$pgv_lang["invalid_search_multisite_input"]		13 July 2007			w
-*$pgv_lang["edit_sex"]								13 July 2007			w
--$pgv_lang["family"]                    05 July 2007      M moved to lang.xx.php for [1736907]
+*$pgv_lang["edit_sex"]								13 July 2007			w	"sex" -> "gender"
+*$pgv_lang["gender_search"]							13 July 2007			w	"sex" -> "gender"
+*$pgv_lang["invalid_search_multisite_input"]		13 July 2007			w	"sex" -> "gender"
+*$pgv_lang["invalid_search_multisite_input_gender"]	13 July 2007			w	"sex" -> "gender"
+-$pgv_lang["family"]                    			05 July 2007      		M	moved to lang.xx.php for [1736907]
 +$pgv_lang["admin_override"]						04 March 2007			w
 *$pgv_lang["no_update_CHAN"]						04 March 2007			w
 +$pgv_lang["admin_override"]						03 March 2007			A
