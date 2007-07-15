@@ -2216,28 +2216,34 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
  * @param string $bdate	child birthdate
  */
 function print_parents_age($pid, $bdate) {
-	global $pgv_lang, $SHOW_PARENTS_AGE, $PGV_IMAGE_DIR, $PGV_IMAGES;
-	if ($SHOW_PARENTS_AGE) {
-		$famids = find_family_ids($pid);
-		// dont show age of parents if more than one family (ADOPtion)
-		if (count($famids)==1) {
-			print " <span class=\"age\">";
-			$parents = find_parents($famids[0]);
-			// father
-			$spouse = $parents["HUSB"];
-			if ($spouse and showFact("BIRT", $spouse)) {
-				$age = get_age(find_person_record($spouse), $bdate, false);
-				if (10<$age and $age<80) print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />$age";
-			}
-			// mother
-			$spouse = $parents["WIFE"];
-			if ($spouse and showFact("BIRT", $spouse)) {
-				$age = get_age(find_person_record($spouse), $bdate, false);
-				if (10<$age and $age<80) print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"gender_image\" />$age";
-			}
-			print "</span>";
-		}
+	global $pgv_lang, $factarray, $SHOW_PARENTS_AGE, $PGV_IMAGE_DIR, $PGV_IMAGES;
+	if (!$SHOW_PARENTS_AGE) return;
+	$person = Person::getInstance($pid);
+	$families = $person->getChildFamilies();
+	// dont show age of parents if more than one family (ADOPtion)
+	if (count($families)>1) return;
+	$family = array_shift($families);
+	if (!$family) return;
+	print " <span class=\"age\">";
+	//-- father
+	$spouse = $family->getHusband();
+	if ($spouse->xref) {
+		$age = get_age($spouse->gedrec, $bdate, 0);
+		print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />".$age;
 	}
+	//-- mother
+	$spouse = $family->getWife();
+	if ($spouse->xref) {
+		$age = get_age($spouse->gedrec, $bdate, 0);
+		if ($spouse->getDeathDate(false)) {
+			$child_bdate=parse_date($bdate);
+			$mother_ddate=parse_date($spouse->getDeathDate(false));
+			// highlight death of mother < 90 days
+			if ($mother_ddate[0]["jd1"]-$child_bdate[0]["jd1"]<90) $age = "<span style=\"border: thin solid grey; padding: 1px;\" title=\"".$factarray["_DEAT_MOTH"]."\">".$age."</span>";
+		}
+		print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"gender_image\" />".$age;
+	}
+	print "</span>";
 }
 /**
  * print fact DATE TIME
