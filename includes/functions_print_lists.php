@@ -259,18 +259,19 @@ function print_indi_table($datalist, $legend="", $option="") {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 	
 	if (count($datalist)<1) return;
+	$tiny = (count($datalist)<300);
 	if ($option=="MARR_PLAC") return;
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 	require_once("js/sorttable.js.htm");
 	require_once("includes/person_class.php");
 	// legend
-	if ($option=="BIRT_PLAC" or $option=="DEAT_PLAC") {
+	if ($option=="BIRT_PLAC" || $option=="DEAT_PLAC") {
 		$filter=$legend;
 		$legend=$factarray[substr($option,0,4)]." @ ".$legend;
 	}
-	else if (empty($legend)) $legend=$pgv_lang["individuals"];
-	else $legend=$pgv_lang["individuals"]." @ ".$legend;
+	$legend = $pgv_lang["individuals"].($legend?" @ ".$legend:"");
+	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- filter buttons
@@ -306,29 +307,31 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo $pgv_lang["reset"]."</button> ";
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	echo "<tr>";
-	echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
+	echo "<thead><tr>";
+	echo "<td class=\"sorttable_nosort\"></td>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">INDI</th>";
+	if ($option=="sosa") echo "<th class=\"list_label sorttable_numeric\">Sosa</th>";
 	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
-	if ($option=="sosa") echo "<th class=\"list_label\">Sosa</th>";
 	echo "<th class=\"list_label\">".$factarray["BIRT"]."</th>";
-	echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
+	if ($tiny) echo "<td class=\"list_label sorttable_nosort\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
 	echo "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
-	echo "<th class=\"list_label\"><img src=\"./images/children.gif\" alt=\"".$pgv_lang["children"]."\" title=\"".$pgv_lang["children"]."\" border=\"0\" /></th>";
+	if ($tiny) echo "<th class=\"list_label\"><img src=\"./images/children.gif\" alt=\"".$pgv_lang["children"]."\" title=\"".$pgv_lang["children"]."\" border=\"0\" /></th>";
 	echo "<th class=\"list_label\">".$factarray["DEAT"]."</th>";
-	echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
-	echo "<th class=\"list_label\">".$factarray["AGE"]."</th>";
+	if ($tiny) echo "<td class=\"list_label sorttable_nosort\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
+	echo "<th class=\"list_label sorttable_numeric\">".$factarray["AGE"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
-	if ($SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
+	if ($tiny && $SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
 	echo "<th class=\"list_label\" style=\"display:none\">SEX</th>";
 	echo "<th class=\"list_label\" style=\"display:none\">BIRT</th>";
 	echo "<th class=\"list_label\" style=\"display:none\">DEAT</th>";
 	echo "<th class=\"list_label\" style=\"display:none\">TREE</th>";
-	echo "</tr>\n";
+	echo "</tr></thead>\n";
 	//-- table body
+	echo "<tbody>\n";
 	$hidden = 0;
 	$n = 0;
 	$dateY = date("Y");
+	$today_jd = GregorianToJD(date('m'), date('d'), date('Y'));
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
 			$person = null;
@@ -352,8 +355,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 			continue;
 		}
 		//-- place filtering
-		if ($option=="BIRT_PLAC" and strstr($person->getBirthPlace(), $filter)===false) continue;
-		if ($option=="DEAT_PLAC" and strstr($person->getDeathPlace(), $filter)===false) continue;
+		if ($option=="BIRT_PLAC" && strstr($person->getBirthPlace(), $filter)===false) continue;
+		if ($option=="DEAT_PLAC" && strstr($person->getDeathPlace(), $filter)===false) continue;
 		//-- Counter
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
@@ -362,12 +365,21 @@ function print_indi_table($datalist, $legend="", $option="") {
 			echo "<td class=\"list_value_wrap rela\">";
 			echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$person->xref."</a></td>";
 		}
+		//-- SOSA
+		if ($option=="sosa") {
+			echo "<td class=\"list_value_wrap\">";
+			$sosa = $key;
+			$rootid = $datalist[1];
+			echo "<a href=\"relationship.php?pid1=".$rootid."&amp;pid2=".$person->xref."\"".
+			" class=\"list_item name2\">".$sosa."</a>";
+			echo "</td>";
+		}
 		//-- Indi name(s)
 		if ($person->isDead()) echo "<td class=\"list_value_wrap\"";
 		else echo "<td class=\"list_value_wrap alive\"";
 		echo " align=\"".get_align($name)."\">";
 		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
-		echo $person->getSexImage();
+		if ($tiny) echo $person->getSexImage();
 		
 // Do we really want to show all of a person's names? Perhaps this could be optional in the lists 
 //		for($ni=1; $ni<=$person->getNameCount(); $ni++) {
@@ -386,29 +398,18 @@ function print_indi_table($datalist, $legend="", $option="") {
 				if (empty($addname)) break;
 			}
 		}
-
 		echo "</td>";
-		//-- SOSA
-		if ($option=="sosa") {
-			echo "<td class=\"list_value_wrap\">";
-			$sosa = $key;
-			$rootid = $datalist[1];
-			echo "<a href=\"relationship.php?pid1=".$rootid."&amp;pid2=".$person->xref."\"".
-			" title=\"".$pgv_lang["relationship_chart"]."\"".
-			" class=\"list_item name2\">".$sosa."</a>";
-			echo "</td>";
-		}
 		//-- Birth date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		$filterkey = $person->getSortableBirthDate(false);
-		$sortkey = parse_date($person->getBirthDate(false)); 
-		$sortkey=$sortkey[0]['jd1'];
+		$bsortkey = parse_date($person->getBirthDate(false));
+		$bsortkey = $bsortkey[0]['jd1'];
 		$txt = get_changed_date($person->getBirthDate(false), true);
 		//if (empty($txt)) $txt = $pgv_lang["yes"];
 		if (!empty($txt)) {
 			echo "&nbsp;<a href=\"".$person->getDateUrl($person->getBirthDate(false))."\"".
 			" title=\"".$filterkey."\"".
-			" name=\"{$sortkey}\"".
+			" name=\"".$bsortkey."\"".
 			" class=\"list_item\">".$txt."</a>";
 		}
 		//-- Birth 2nd date ?
@@ -420,40 +421,41 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		echo "</td>";
 		//-- Birth anniversary
-		echo "<td class=\"list_value_wrap rela\">";
-		$age = $person->getAge("", date("d M Y"));
-		if ($age) {
-			$age = str_replace($pgv_lang["apx"]." ", "", $age);
-			echo "<a href=\"".$person->getDateUrl($person->bdate)."\" class=\"list_item\">".$age."</a>";
+		if ($tiny) {
+			echo "<td class=\"list_value_wrap rela\">";
+			$age = $person->getAge("", date("d M Y"));
+			if ($age) echo "<a href=\"".$person->getDateUrl($person->bdate)."\" class=\"list_item\">".$age."</a>";
+			else echo "&nbsp;";
+			echo "</td>";
 		}
-		else echo "&nbsp;";
-		echo "</td>";
 		//-- Birth place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($person->getBirthPlace())."\">";
 		echo "<a href=\"".$person->getPlaceUrl($person->getBirthPlace())."\" class=\"list_item\" title=\"".$person->getBirthPlace()."\">"
 		.PrintReady($person->getPlaceShort($person->getBirthPlace()))."</a>";
 		echo "&nbsp;</td>";
 		//-- Number of children
-		echo "<td class=\"list_value_wrap\">";
-		if ($person->disp) {
+		if ($tiny) {
+			echo "<td class=\"list_value_wrap\">";
 			echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$person->getNumberOfChildren()."</a>";
+			echo "</td>";
 		}
-		echo "</td>";
 		//-- Death date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		$filterkey = $person->getSortableDeathDate(false);
-		$sortkey = parse_date($person->getDeathDate(false)); 
-		$sortkey=$sortkey[0]['jd1'];
-		$txt = get_changed_date($person->getDeathDate(false), true);
-		if ($person->dest) $txt = $pgv_lang["yes"];
-		if (!$person->isDead()) $txt = "";
-		//else if (get_sub_record(1, "1 DEAT", $person->gedrec)=="") $txt .= "***";
-		if (!empty($txt)) {
-			echo "&nbsp;<a href=\"".$person->getDateUrl($person->getDeathDate(false))."\"".
-			" title=\"".$filterkey."\"".
-			" name=\"".$sortkey."\"".
-			" class=\"list_item\">".$txt."</a>";
+		if ($person->isDead()) {
+			$dsortkey = parse_date($person->getDeathDate(false));
+			$dsortkey = $dsortkey[0]['jd2'];
+			$txt = get_changed_date($person->getDeathDate(false), true);
+			if ($person->dest) $txt = $pgv_lang["yes"];
 		}
+		else {
+			$dsortkey = $today_jd;
+			$txt = "&nbsp;";
+		}
+		echo "<a href=\"".$person->getDateUrl($person->getDeathDate(false))."\"".
+		" title=\"".$filterkey."\"".
+		" name=\"".$dsortkey."\"".
+		" class=\"list_item\">".$txt."</a>";
 		//-- Death 2nd date ?
 		if (!empty($person->ddate2)) {
 			$txt = get_changed_date($person->ddate2, true);
@@ -463,28 +465,26 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		echo "</td>";
 		//-- Death anniversary
-		echo "<td class=\"list_value_wrap rela\">";
-		$age = "";
-		if ($person->isDead() and !$person->dest) $age = $person->getAge("\n1 BIRT\n2 DATE ".$person->ddate."\n", date("d M Y"));
-		if ($age) {
-			$age = str_replace($pgv_lang["apx"]." ", "", $age);
-			echo "<a href=\"".$person->getDateUrl($person->ddate)."\" class=\"list_item\">".$age."</a>";
+		if ($tiny) {
+			echo "<td class=\"list_value_wrap rela\">";
+			if ($person->isDead() && !$person->dest) $age = $person->getAge("\n1 BIRT\n2 DATE ".$person->ddate."\n", date("d M Y"));
+			else $age = "";
+			if ($age) echo "<a href=\"".$person->getDateUrl($person->ddate)."\" class=\"list_item\">".$age."</a>";
+			else echo "&nbsp;";
+			echo "</td>";
 		}
-		else echo "&nbsp;";
-		echo "</td>";
 		//-- Age at death
 		echo "<td class=\"list_value_wrap\">";
-		$age = "";
-		$sortkey = 0;
-		if ($person->isDead() and !$person->dest) {
+		if ($person->isDead() && !$person->dest) {
 			$age = $person->getAge();
-			$age = str_replace($pgv_lang["apx"]." ", "", $age);
-			// estimation in days for sorting
-			if (strpos($age, $pgv_lang["months"]) or strpos($age, $pgv_lang["month1"])) $sortkey = $age*30;
-			else if (strpos($age, $pgv_lang["days"]) or strpos($age, $pgv_lang["day1"])) $sortkey = $age*1;
-			else $sortkey = $age*365;
+			$sortkey = ($dsortkey-$bsortkey)." ".$pgv_lang["days"];
 		}
-		echo "<a href=\"".$person->getLinkUrl()."\" title=\"".sprintf("%05d",$sortkey)."\" class=\"list_item\">&nbsp;".$age."</a>";
+		else {
+			$age = "";
+			$sortkey = $bsortkey;
+		}
+		$sortkey = ($dsortkey-$bsortkey)." ".$pgv_lang["days"];
+		echo "<a href=\"".$person->getLinkUrl()."\" title=\"".$sortkey."\" class=\"list_item\">&nbsp;".$age."</a>";
 		echo "</td>";
 		//-- Death place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($person->getDeathPlace())."\">";
@@ -492,7 +492,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		.PrintReady($person->getPlaceShort($person->getDeathPlace()))."</a>";
 		echo "&nbsp;</td>";
 		//-- Last change
-		if ($SHOW_LAST_CHANGE) {
+		if ($tiny && $SHOW_LAST_CHANGE) {
 			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
 			$timestamp = get_changed_date($person->getLastchangeDate())." ".get_gedcom_value("DATE:TIME", 2, $person->getLastchangeRecord());
 			echo "<a href=\"".$person->getLinkUrl()."\"".
@@ -520,86 +520,33 @@ function print_indi_table($datalist, $legend="", $option="") {
 		//-- Roots or Leaves ?
 		echo "<td style=\"display:none\">";
 		if (!$person->getChildFamilyIds()) echo "R"; // roots
-		else if (!$person->isDead() and $person->getNumberOfChildren()<1) echo "L"; // leaves
+		else if (!$person->isDead() && $person->getNumberOfChildren()<1) echo "L"; // leaves
 		echo "</td>";
 
 		echo "</tr>\n";
 	}
+	echo "</tbody>\n";
 	//-- table footer
-	echo "<tr class=\"sortbottom\">";
+	echo "<tfoot><tr>";
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
+	if ($option=="sosa") echo "<td></td>";
 	echo "<td class=\"list_label\">";
 	echo $pgv_lang["total_names"]." : ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
-	if ($option=="sosa") echo "<td></td>";
+	echo "<td></td>";
+	if ($tiny) echo "<td></td>";
+	echo "<td></td>";
+	if ($tiny) echo "<td></td>";
+	echo "<td></td>";
+	if ($tiny) echo "<td></td>";
 	echo "<td></td>";
 	echo "<td></td>";
-	echo "<td></td>";
-	echo "<td></td>";
-	echo "<td></td>";
-	echo "<td></td>";
-	echo "<td></td>";
-	echo "<td></td>";
-	if ($SHOW_LAST_CHANGE) echo "<td></td>";
-	echo "</tr>";
+	if ($tiny && $SHOW_LAST_CHANGE) echo "<td></td>";
+	echo "</tr></tfoot>";
 	echo "</table>\n";
 	echo "</fieldset>\n";
-}
-
-/**
- * print a sortable table of surnames
- *
- * @param array $datalist contain records that were extracted from the database.
- * @param string $target where to go after clicking a surname : INDI page or FAM page
- */
-function print_surn_table($datalist, $target="INDI") {
-	global $pgv_lang, $factarray, $GEDCOM, $TEXT_DIRECTION;
-	if (count($datalist)<1) return;
-	require_once("js/sorttable.js.htm");
-	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
-	//-- table header
-	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	echo "<tr>";
-	echo "<td></td>";
-	echo "<th class=\"list_label\">".$factarray["SURN"]."</th>";
-	echo "<th class=\"list_label\">";
-//	if ($target=="FAM") echo $pgv_lang["families"]; else echo $pgv_lang["individuals"];
-	if ($target=="FAM") echo $pgv_lang["spouses"]; else echo $pgv_lang["individuals"];
-	echo "</th>";
-	echo "</tr>\n";
-	//-- table body
-	$total = 0;
-	$n = 0;
-	foreach($datalist as $key => $value) {
-		if (!isset($value["name"])) break;
-		$surn = $value["name"];
-		if ($target=="FAM") $url = "famlist.php";	else $url = "indilist.php";
-		$url .= "?ged=".$GEDCOM."&amp;surname=".urlencode($surn);
-		//-- Counter
-		echo "<tr>";
-		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
-		//-- Surname
-		if (empty($surn) or trim("@".$surn,"_")=="@" or $surn=="@N.N.") $surn = $pgv_lang["NN"];
-		echo "<td class=\"list_value_wrap\" align=\"".get_align($surn)."\">";
-		echo "<a href=\"".$url."\" class=\"list_item name1\">".PrintReady($surn)."</a>";
-		echo "&nbsp;</td>";
-		//-- Surname count
-		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".$url."\" class=\"list_item name2\">".$value["match"]."</a>";
-		echo "</td>";
-		$total += $value["match"];
-
-		echo "</tr>\n";
-	}
-	//-- table footer
-	echo "<tr class=\"sortbottom\">";
-	echo "<td class=\"list_item\">&nbsp;</td>";
-	echo "<td class=\"list_item\">&nbsp;</td>";
-	echo "<td class=\"list_label name2\">".$total."</td>";
-	echo "</tr>\n";
-	echo "</table>\n";
 }
 
 /**
@@ -610,10 +557,12 @@ function print_surn_table($datalist, $target="INDI") {
  * @param string $option optional filtering option
  */
 function print_fam_table($datalist, $legend="", $option="") {
-	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION, $GEDCOM;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	if (count($datalist)<1) return;
-	if ($option=="BIRT_PLAC" or $option=="DEAT_PLAC") return;
+	$tiny = (count($datalist)<300);
+	if ($option=="BIRT_PLAC" || $option=="DEAT_PLAC") return;
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 	require_once("js/sorttable.js.htm");
@@ -623,8 +572,8 @@ function print_fam_table($datalist, $legend="", $option="") {
 		$filter=$legend;
 		$legend=$factarray["MARR"]." @ ".$legend;
 	}
-	else if (empty($legend)) $legend=$pgv_lang["families"];
-	else $legend=$pgv_lang["families"]." @ ".$legend;
+	$legend = $pgv_lang["families"].($legend?" @ ".$legend:"");
+	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sfamily"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- filter buttons
@@ -654,25 +603,26 @@ function print_fam_table($datalist, $legend="", $option="") {
 	echo $pgv_lang["reset"]."</button> ";
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	echo "<tr>";
-	echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">FAM</th>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
+	echo "<thead><tr>";
+	echo "<td class=\"sorttable_nosort\"></td>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">FAM</th>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">INDI</th>";
 	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
+	echo "<th class=\"list_label sorttable_numeric\">".$factarray["AGE"]."</th>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">INDI</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["spouse"]."</th>";
+	echo "<th class=\"list_label sorttable_numeric\">".$factarray["AGE"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["MARR"]."</th>";
-	echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
-	echo "<th class=\"list_label\">".$factarray["AGE"]."</th>";
-	echo "<th class=\"list_label\">".$factarray["AGE"]."</th>";
+	if ($tiny) echo "<td class=\"list_label sorttable_nosort\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
 	echo "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
-	echo "<th class=\"list_label\"><img src=\"./images/children.gif\" alt=\"".$pgv_lang["children"]."\" title=\"".$pgv_lang["children"]."\" border=\"0\" /></th>";
-	if ($SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
+	if ($tiny) 	echo "<th class=\"list_label\"><img src=\"./images/children.gif\" alt=\"".$pgv_lang["children"]."\" title=\"".$pgv_lang["children"]."\" border=\"0\" /></th>";
+	if ($tiny && $SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
 	echo "<th class=\"list_label\" style=\"display:none\">MARR</th>";
 	echo "<th class=\"list_label\" style=\"display:none\">DEAT</th>";
 	echo "<th class=\"list_label\" style=\"display:none\">TREE</th>";
-	echo "</tr>\n";
+	echo "</tr></thead>\n";
 	//-- table body
+	echo "<tbody>\n";
 	$hidden = 0;
 	$n = 0;
 	foreach($datalist as $key => $value) {
@@ -693,12 +643,12 @@ function print_fam_table($datalist, $legend="", $option="") {
 		if (is_null($husb)) $husb = new Person('');
 		$wife = $family->getWife();
 		if (is_null($wife)) $wife = new Person('');
-		if (!$husb->canDisplayName() or !$wife->canDisplayName()) {
+		if (!$husb->canDisplayName() || !$wife->canDisplayName()) {
 			$hidden++;
 			continue;
 		}
 		//-- place filtering
-		if ($option=="MARR_PLAC" and strstr($family->getMarriagePlace(), $filter)===false) continue;
+		if ($option=="MARR_PLAC" && strstr($family->getMarriagePlace(), $filter)===false) continue;
 		//-- Counter
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
@@ -724,7 +674,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 		else echo "<td class=\"list_value_wrap alive\"";
 		echo " align=\"".get_align($name)."\">";
 		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
-		if ($husb->xref) echo $husb->getSexImage();
+		if ($tiny && $husb->xref) echo $husb->getSexImage();
 		
 //		for($ni=1; $ni<=$husb->getNameCount(); $ni++) {
 //			$addname = $husb->getSortableName('', $ni);
@@ -733,10 +683,24 @@ function print_fam_table($datalist, $legend="", $option="") {
  		foreach ($name_subtags as $k=>$subtag) {
  			for ($num=1; $num<9; $num++) {
  				$addname = $husb->getSortableName($subtag, $num);
- 				if (!empty($addname) and $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+ 				if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
  				if (empty($addname)) break;
  			}
  		}
+		echo "</td>";
+		//-- Husband age
+		echo "<td class=\"list_value_wrap\">";
+		$age = "";
+		$sortkey = "";
+		if ($family->getMarriageDate() && !$family->marr_est) {
+			$age = $husb->getAge("", $family->getMarriageDate());
+			$hsortkey = parse_date($husb->getBirthDate(false));
+			$hsortkey = $hsortkey[0]['jd1'];
+			$msortkey = parse_date($family->getMarriageDate());
+			$msortkey = $msortkey[0]['jd1'];
+			$sortkey = ($msortkey-$hsortkey)." ".$pgv_lang["days"];
+		}
+		echo "<a href=\"".$husb->getLinkUrl()."\" title=\"".$sortkey."\" class=\"list_item\">&nbsp; ".$age."</a>";
 		echo "</td>";
 		//-- Wife ID
 		if ($SHOW_ID_NUMBERS) {
@@ -751,7 +715,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 		else echo "<td class=\"list_value_wrap alive\"";
 		echo " align=\"".get_align($name)."\">";
 		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
-		if ($wife->xref) echo $wife->getSexImage();
+		if ($tiny && $wife->xref) echo $wife->getSexImage();
 		
 //		for($ni=1; $ni<=$wife->getNameCount(); $ni++) {
 //			$addname = $wife->getSortableName('', $ni);
@@ -760,17 +724,30 @@ function print_fam_table($datalist, $legend="", $option="") {
  		foreach ($name_subtags as $k=>$subtag) {
  			for ($num=1; $num<9; $num++) {
  				$addname = $wife->getSortableName($subtag, $num);
- 				if (!empty($addname) and $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+ 				if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
  				if (empty($addname)) break;
  			}
  		}
 		echo "</td>";
+		//-- Wife age
+		echo "<td class=\"list_value_wrap\">";
+		$age = "";
+		$sortkey = "";
+		if ($family->getMarriageDate() && !$family->marr_est) {
+			$age = $wife->getAge("", $family->getMarriageDate());
+			$wsortkey = parse_date($wife->getBirthDate(false));
+			$wsortkey = $wsortkey[0]['jd1'];
+			$sortkey = ($msortkey-$wsortkey)." ".$pgv_lang["days"];
+		}
+		echo "<a href=\"".$wife->getLinkUrl()."\" title=\"".$sortkey."\" class=\"list_item\">&nbsp;".$age."</a>";
+		echo "</td>";
 		//-- Marriage date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		$filterkey = $family->getSortableMarriageDate();
-		$sortkey = parse_date($family->getMarriageDate()); $sortkey=$sortkey[0]['jd1'];
+		$sortkey = parse_date($family->getMarriageDate());
+		$sortkey = $sortkey[0]['jd1'];
 		if (!$family->marr_est) $txt = get_changed_date($family->getMarriageDate(), true);
-		if (empty($txt) and !empty($family->marr_rec)) $txt = $pgv_lang["yes"];
+		if (empty($txt) && !empty($family->marr_rec)) $txt = $pgv_lang["yes"];
 		echo "&nbsp;<a href=\"".$family->getDateUrl($family->marr_date)."\"".
 		" title=\"".$filterkey."\"".
 		" name=\"".$sortkey."\"".
@@ -782,44 +759,27 @@ function print_fam_table($datalist, $legend="", $option="") {
 		" class=\"list_item\">".$txt."</a>";
 		echo "</td>";
 		//-- Marriage anniversary
-		echo "<td class=\"list_value_wrap rela\">";
-		$age = "";
-		if (!$family->marr_est) $age = $husb->getAge("\n1 BIRT\n2 DATE ".$family->marr_date."\n", date("d M Y"));
-		if ($age) {
-			$age = str_replace($pgv_lang["apx"]." ", "", $age);
-			echo "<a href=\"".$family->getDateUrl($family->marr_date)."\" class=\"list_item\">".$age."</a>";
+		if ($tiny) {
+			echo "<td class=\"list_value_wrap rela\">";
+			if (!$family->marr_est) $age = $husb->getAge("\n1 BIRT\n2 DATE ".$family->marr_date."\n", date("d M Y"));
+			else $age = "";
+			if ($age) echo "<a href=\"".$family->getDateUrl($family->marr_date)."\" class=\"list_item\">".$age."</a>";
+			else echo "&nbsp;";
+			echo "</td>";
 		}
-		else echo "&nbsp;";
-		echo "</td>";
-		//-- Husband age
-		echo "<td class=\"list_value_wrap\">";
-		$age = "";
-		if ($family->getMarriageDate() and !$family->marr_est) {
-			$age = $husb->getAge("", $family->getMarriageDate());
-			$age = str_replace($pgv_lang["apx"]." ", "", $age);
-		}
-		echo "<a href=\"".$husb->getLinkUrl()."\" title=\"".sprintf("%02d",$age)."\" class=\"list_item\">&nbsp; ".$age."</a>";
-		echo "</td>";
-		//-- Wife age
-		echo "<td class=\"list_value_wrap\">";
-		$age = "";
-		if ($family->getMarriageDate() and !$family->marr_est) {
-			$age = $wife->getAge("", $family->getMarriageDate());
-			$age = str_replace($pgv_lang["apx"]." ", "", $age);
-		}
-		echo "<a href=\"".$wife->getLinkUrl()."\" title=\"".sprintf("%02d",$age)."\" class=\"list_item\">&nbsp;".$age."</a>";
-		echo "</td>";
 		//-- Marriage place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($family->getMarriagePlace())."\">";
 		echo "<a href=\"".$family->getPlaceUrl($family->getMarriagePlace())."\" class=\"list_item\" title=\"".$family->getMarriagePlace()."\">"
 		.PrintReady($family->getPlaceShort($family->getMarriagePlace()))."</a>";
 		echo "&nbsp;</td>";
 		//-- Number of children
-		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".$family->getNumberOfChildren()."</a>";
-		echo "</td>";
+		if ($tiny) {
+			echo "<td class=\"list_value_wrap\">";
+			echo "<a href=\"".$family->getLinkUrl()."#children\" class=\"list_item\">".$family->getNumberOfChildren()."</a>";
+			echo "</td>";
+		}
 		//-- Last change
-		if ($SHOW_LAST_CHANGE) {
+		if ($tiny && $SHOW_LAST_CHANGE) {
 			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
 			$timestamp = get_changed_date($family->getLastchangeDate())." ".get_gedcom_value("DATE:TIME", 2, $family->getLastchangeRecord());
 			echo "<a href=\"".$family->getLinkUrl()."\"".
@@ -829,34 +789,35 @@ function print_fam_table($datalist, $legend="", $option="") {
 		}
 		//-- Sorting by marriage date
 		echo "<td style=\"display:none\">";
-		if (!$family->disp or $family->getMarriageRecord()=="" or $family->getMarriageYear()=="0000") echo "U";
+		if (!$family->disp || $family->getMarriageRecord()=="" || $family->getMarriageYear()=="0000") echo "U";
 		else if ($family->getMarriageYear()>=date('Y')-100) echo "Y100";
 		else echo "YES";
 		if ($family->isDivorced()) echo " DIV";
 		echo "</td>";
 		//-- Sorting alive/dead
 		echo "<td style=\"display:none\">";
-		if ($husb->isDead() and $wife->isDead()) echo "Y";
-		if ($husb->isDead() and !$wife->isDead()) {
+		if ($husb->isDead() && $wife->isDead()) echo "Y";
+		if ($husb->isDead() && !$wife->isDead()) {
 			if ($wife->getSex()=="F") echo "H";
 			if ($wife->getSex()=="M") echo "W"; // male partners
 		}
-		if (!$husb->isDead() and $wife->isDead()) {
+		if (!$husb->isDead() && $wife->isDead()) {
 			if ($husb->getSex()=="M") echo "W";
 			if ($husb->getSex()=="F") echo "H"; // female partners
 		}
-		if (!$husb->isDead() and !$wife->isDead()) echo "N";
+		if (!$husb->isDead() && !$wife->isDead()) echo "N";
 		echo "</td>";
 		//-- Roots or Leaves
 		echo "<td style=\"display:none\">";
-		if (!$husb->getChildFamilyIds() and !$wife->getChildFamilyIds()) echo "R"; // roots
-		else if (!$husb->isDead() and !$wife->isDead() and $family->getNumberOfChildren()<1) echo "L"; // leaves
+		if (!$husb->getChildFamilyIds() && !$wife->getChildFamilyIds()) echo "R"; // roots
+		else if (!$husb->isDead() && !$wife->isDead() && $family->getNumberOfChildren()<1) echo "L"; // leaves
 		echo "</td>";
 
 		echo "</tr>\n";
 	}
+	echo "</tbody>\n";
 	//-- table footer
-	echo "<tr class=\"sortbottom\">";
+	echo "<tfoot><tr>";
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
@@ -864,16 +825,16 @@ function print_fam_table($datalist, $legend="", $option="") {
 	echo $pgv_lang["total_fams"]." : ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
+	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td></td>";
 	echo "<td></td>";
 	echo "<td></td>";
+	if ($tiny) echo "<td></td>";
 	echo "<td></td>";
-	echo "<td></td>";
-	echo "<td></td>";
-	echo "<td></td>";
-	if ($SHOW_LAST_CHANGE) echo "<td></td>";
-	echo "</tr>";
+	if ($tiny) echo "<td></td>";
+	if ($tiny && $SHOW_LAST_CHANGE) echo "<td></td>";
+	echo "</tr></tfoot>";
 	echo "</table>\n";
 	echo "</fieldset>\n";
 }
@@ -899,12 +860,13 @@ function print_sour_table($datalist, $legend="") {
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	echo "<tr>";
-	echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">SOUR</th>";
+	echo "<thead><tr>";
+	echo "<td class=\"sorttable_nosort\"></td>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">SOUR</th>";
 	echo "<th class=\"list_label\">".$factarray["TITL"]."</th>";
 	$t2 = false; echo "<td class=\"list_label t2\">".$factarray["TITL"]."2</td>";
 	echo "<th class=\"list_label\">".$factarray["AUTH"]."</th>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">REPO</th>";
 	//-- only show the count of linked records if the DB is sufficiently small to handle the load
 	$show_details = (get_list_size("indilist")<1000);
 	if ($show_details) {
@@ -913,8 +875,9 @@ function print_sour_table($datalist, $legend="") {
 		echo "<th class=\"list_label\">".$pgv_lang["media"]."</th>";
 	}
 	if ($SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
-	echo "</tr>\n";
+	echo "</tr></thead>\n";
 	//-- table body
+	echo "<tbody>\n";
 	$hidden = 0;
 	$n = 0;
 	foreach ($datalist as $key => $value) {
@@ -952,7 +915,7 @@ function print_sour_table($datalist, $legend="") {
 		echo "<td class=\"list_value_wrap t2\">";
 		foreach ($name_subtags as $k=>$subtag) {
 			$addname = $source->getSortableName($subtag);
-			if (!empty($addname) and $addname!=$name) {
+			if (!empty($addname) && $addname!=$name) {
 				echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a><br />";
 				$t2 = true;
 			}
@@ -962,7 +925,12 @@ function print_sour_table($datalist, $legend="") {
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($source->getAuth())."\">";
 		echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".PrintReady($source->getAuth())."</a>";
 		echo "&nbsp;</td>";
-
+		//-- REPO
+		if ($SHOW_ID_NUMBERS) {
+			echo "<td class=\"list_value_wrap rela\">";
+			echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".$source->getRepo()."</a>";
+			echo "</td>";
+		}
 		if ($show_details) {
 			//-- Linked INDIs
 			echo "<td class=\"list_value_wrap\">";
@@ -989,8 +957,9 @@ function print_sour_table($datalist, $legend="") {
 
 		echo "</tr>\n";
 	}
+	echo "</tbody>\n";
 	//-- table footer
-	echo "<tr class=\"sortbottom\">";
+	echo "<tfoot><tr>";
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
@@ -1000,13 +969,14 @@ function print_sour_table($datalist, $legend="") {
 	echo "<td></td>";
 	echo "<td class=\"t2\"></td>";
 	echo "<td></td>";
+	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	if ($show_details) {
 		echo "<td></td>";
 		echo "<td></td>";
 		echo "<td></td>";
 	}
 	if ($SHOW_LAST_CHANGE) echo "<td></td>";
-	echo "</tr>";
+	echo "</tr></tfoot>";
 	echo "</table>\n";
 	echo "</fieldset>\n";
 	//-- hide TITLE2 col if empty
@@ -1044,14 +1014,16 @@ function print_repo_table($datalist, $legend="") {
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	echo "<tr>";
-	echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">REPO</th>";
+	echo "<thead><tr>";
+	echo "<td class=\"sorttable_nosort\"></td>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">REPO</th>";
 	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["sources"]."</th>";
 	if ($SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
-	echo "</tr>\n";
+	echo "</tr></thead>\n";
 	//-- table body
+	echo "<tbody>\n";
+	$hidden = 0;
 	$n = 0;
 	foreach ($datalist as $key => $value) {
 		if (!is_array($value)) {
@@ -1066,6 +1038,10 @@ function print_repo_table($datalist, $legend="") {
 			else $repo = Repository::getInstance($gid);
 		}
 		if (is_null($repo)) continue;
+		if (!$repo->canDisplayDetails()) {
+			$hidden++;
+			continue;
+		}
 		//-- Counter
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
@@ -1081,7 +1057,7 @@ function print_repo_table($datalist, $legend="") {
 		echo "<a href=\"".$repo->getLinkUrl()."\" class=\"list_item name2\">".PrintReady($name)."</a>";
 		foreach ($name_subtags as $k=>$subtag) {
 			$addname = $repo->getSortableName($subtag);
-			if (!empty($addname) and $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$repo->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+			if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$repo->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 		}
 		echo "</td>";
 		//-- Linked SOURces
@@ -1100,6 +1076,18 @@ function print_repo_table($datalist, $legend="") {
 
 		echo "</tr>\n";
 	}
+	echo "</tbody>\n";
+	//-- table footer
+	echo "<tfoot><tr>";
+	echo "<td></td>";
+	if ($SHOW_ID_NUMBERS) echo "<td></td>";
+	echo "<td class=\"list_label\">";
+	echo $pgv_lang["total_repositories"]." : ".$n;
+	if ($hidden) echo "<br />".$pgv_lang["hidden"]." : ".$hidden;
+	echo "</td>";
+	echo "<td></td>";
+	if ($SHOW_LAST_CHANGE) echo "<td></td>";
+	echo "</tr></tfoot>";
 	echo "</table>\n";
 	echo "</fieldset>\n";
 }
@@ -1124,16 +1112,17 @@ function print_media_table($datalist, $legend="") {
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	echo "<tr>";
-	echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">OBJE</th>";
+	echo "<thead><tr>";
+	echo "<td class=\"sorttable_nosort\"></td>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">OBJE</th>";
 	echo "<th class=\"list_label\">".$factarray["TITL"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["individuals"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["families"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["sources"]."</th>";
 	if ($SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
-	echo "</tr>\n";
+	echo "</tr></thead>\n";
 	//-- table body
+	echo "<tbody>\n";
 	$n = 0;
 	foreach ($datalist as $key => $value) {
 		$media = new Media($value["GEDCOM"]);
@@ -1185,6 +1174,7 @@ function print_media_table($datalist, $legend="") {
 
 		echo "</tr>\n";
 	}
+	echo "</tbody>\n";
 	echo "</table>\n";
 	echo "</fieldset>\n";
 }
@@ -1291,14 +1281,15 @@ function print_changes_table($datalist) {
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	echo "<tr>";
+	echo "<thead><tr>";
 	//echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">".$pgv_lang["id"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["CHAN"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["_PGVU"]."</th>";
-	echo "</tr>\n";
+	echo "</tr></thead>\n";
 	//-- table body
+	echo "<tbody>\n";
 	$hidden = 0;
 	$n = 0;
 	$NMAX = 1000;
@@ -1307,7 +1298,7 @@ function print_changes_table($datalist) {
 		$record = null;
 		if (isset($value['d_gid'])) $record = GedcomRecord::getInstance($value['d_gid']);
 		else $record = GedcomRecord::getInstance($key);
-		if (is_null($record) and isset($value[0])) $record = GedcomRecord::getInstance($value[0]);
+		if (is_null($record) && isset($value[0])) $record = GedcomRecord::getInstance($value[0]);
 		if (is_null($record)) continue;
 		// Privacy
 		if (!$record->canDisplayDetails()) {
@@ -1321,8 +1312,9 @@ function print_changes_table($datalist) {
 		//-- Record ID
 		if ($SHOW_ID_NUMBERS) {
 			echo "<td class=\"list_value_wrap rela\">";
+			// sort grouped by FAM INDI etc...
 			$sortkey = substr($record->xref, 0 ,1).sprintf("%05d", substr($record->xref, 1));
-			echo "<a href=\"".$record->getLinkUrl()."\" title=\"".$sortkey."\" class=\"list_item\">".$record->xref."</a></td>";
+			echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\" name=\"".$sortkey."\">".$record->xref."</a></td>";
 		}
 		//-- Record name(s)
 		if ($record->type=="FAM") $name = $record->getSortableName(true);
@@ -1340,16 +1332,16 @@ function print_changes_table($datalist) {
  			foreach ($name_subtags as $k=>$subtag) {
  				for ($num=1; $num<9; $num++) {
  					$addname = $record->getSortableName($subtag, $num);
- 					if (!empty($addname) and $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+ 					if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
  					if (empty($addname)) break;
  				}
  			}
 		}
-		if ($record->type=="SOUR" or $record->type=="REPO") {
+		if ($record->type=="SOUR" || $record->type=="REPO") {
 			$name_subtags = array("_HEB", "ROMN");
 			foreach ($name_subtags as $k=>$subtag) {
 				$addname = $record->getSortableName($subtag);
-				if (!empty($addname) and $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+				if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 			}
 		}
 		echo "</td>";
@@ -1367,8 +1359,9 @@ function print_changes_table($datalist) {
 
 		echo "</tr>\n";
 	}
+	echo "</tbody>\n";
 	//-- table footer
-	echo "<tr class=\"sortbottom\">";
+	echo "<tfoot><tr>";
 	//echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
@@ -1378,7 +1371,7 @@ function print_changes_table($datalist) {
 	echo "</td>";
 	echo "<td></td>";
 	echo "<td></td>";
-	echo "</tr>";
+	echo "</tr></tfoot>";
 	echo "</table>\n";
 }
 
@@ -1399,15 +1392,16 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
 	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	echo "<tr>";
+	echo "<thead><tr>";
 	//echo "<td></td>";
-	//if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
+	//if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">".$pgv_lang["id"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["DATE"]."</th>";
-	echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
+	echo "<td class=\"list_label sorttable_nosort\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
 	echo "<th class=\"list_label\">".$factarray["EVEN"]."</th>";
-	echo "</tr>\n";
+	echo "</tr></thead>\n";
 	//-- table body
+	echo "<tbody>\n";
 	$hidden = 0;
 	$n = 0;
 	$dateY = date("Y");
@@ -1422,7 +1416,7 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 		$event = trim($exp[1]);
 		if (empty($event)) continue;
 		//-- only birt/marr/deat ?
-		if (strpos($option, "onlyBDM") and strpos(" BIRT MARR DEAT", $event)===false) continue;
+		if (strpos($option, "onlyBDM") && strpos(" BIRT MARR DEAT", $event)===false) continue;
 		//-- Event date
 		$edate = get_gedcom_value("DATE", 2, $value[1], "", false);
 		if (empty($edate)) continue;
@@ -1439,7 +1433,7 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 		
 		if ($datemax < $anniv) continue;
 		// upcoming events starting tomorrow
-		if ($nextdays>0 and date("Ymd") == date("Ymd", $anniv)) continue;
+		if ($nextdays>0 && date("Ymd") == date("Ymd", $anniv)) continue;
 		// sorting by MM-DD-YYYY
 		$sortkey = sprintf("%02d-%02d-%04d", $pdate[0]["mon"], $pdate[0]["day"], $pdate[0]["year"]);
 		
@@ -1448,7 +1442,7 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 		if (is_null($record)) continue;
 		//-- only living people ?
 		if (strpos($option, "living")) {
-			if ($record->type=="INDI" and $record->isDead()) continue;
+			if ($record->type=="INDI" && $record->isDead()) continue;
 			if ($record->type=="FAM") {
 				$husb = $record->getHusband();
 				if (is_null($husb)) continue;
@@ -1486,20 +1480,21 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 			foreach ($name_subtags as $k=>$subtag) {
 				for ($num=1; $num<9; $num++) {
 					$addname = $record->getSortableName($subtag, $num);
-					if (!empty($addname) and $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+					if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 					if (empty($addname)) break;
 				}
 			}
 		}
-		if ($record->type=="SOUR" or $record->type=="REPO") {
+		if ($record->type=="SOUR" || $record->type=="REPO") {
 			$name_subtags = array("_HEB", "ROMN");
 			foreach ($name_subtags as $k=>$subtag) {
 				$addname = $record->getSortableName($subtag);
-				if (!empty($addname) and $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+				if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 			}
 		}
 		echo "</td>";
 		//-- Event date
+		//echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\" sorttable_customkey=\"".$sortkey."\">";
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		echo "<a href=\"".$record->getDateUrl($edate)."\"".
 		" title=\"".$sortkey."\"".
@@ -1509,9 +1504,7 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 		echo "<td class=\"list_value_wrap rela\">";
 		$person = new Person("");
 		$age = $person->getAge("\n1 BIRT\n2 DATE ".$edate."\n", date("d M Y", $anniv));
-		$age = str_replace($pgv_lang["apx"]." ", "", $age);
 		echo "<a href=\"".$record->getDateUrl($edate)."\"".
-		//" title=\"".strip_tags(get_changed_date(date("d M Y", $anniv)))."\"".
 		" title=\"".date("m-d-Y", $anniv)."\"".
 		" class=\"list_item\">".$age."</a>";
 		echo "<abbr class=\"dtstart\" title=\"".date("Ymd", $anniv)."\"></abbr>"; // hCalendar:dtstart
@@ -1524,8 +1517,9 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 
 		echo "</tr>\n";
 	}
+	echo "</tbody>\n";
 	//-- table footer
-	echo "<tr class=\"sortbottom\">";
+	echo "<tfoot><tr>";
 	//echo "<td></td>";
 	//if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
@@ -1543,7 +1537,7 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 	echo "</td>";
 	echo "<td></td>";
 	echo "<td></td>";
-	echo "</tr>";
+	echo "</tr></tfoot>";
 	echo "</table>\n";
 }
 

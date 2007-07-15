@@ -1034,15 +1034,22 @@ class IndividualControllerRoot extends BaseController {
 		?>
 		</table>
 		<br />
-<script language="JavaScript" type="text/javascript">
-<!--
-	// hide button if list is empty
-	var ebn = document.getElementsByName('row_rela');
-	var row_top = document.getElementById('row_top');
-	if (ebn.length==0 && row_top) row_top.style.display="none";
-	<?php if (!$EXPAND_RELATIVES_EVENTS) print "togglerow('row_rela');\n"; ?>
-//-->
-</script>
+		<script language="JavaScript" type="text/javascript">
+		<!--
+		function togglerow(classname) {
+			var rows = document.getElementsByTagName("tr");
+			for (i=0; i<rows.length; i++) {
+				if (rows[i].className.indexOf(classname) != -1) {
+					var disp = rows[i].style.display;
+					if (disp=="none") {
+						disp="table-row";
+						if (document.all && !window.opera) disp = "inline"; // IE
+					}
+					else disp="none";
+					rows[i].style.display=disp;
+				}
+			}
+		}
 		<?php
 		if (!$EXPAND_RELATIVES_EVENTS) print "togglerow('row_rela');\n";
 		print "togglerow('row_histo');\n";
@@ -1142,7 +1149,7 @@ class IndividualControllerRoot extends BaseController {
 					$FACT_COUNT++;
 				}
 				// 2nd level sources [ 1712181 ]
-				//$this->indi->add_family_facts(false);
+				$this->indi->add_family_facts(false);
 				foreach ($this->getIndiFacts() as $key => $factrec) {
 					print_main_sources($factrec[1], 2, $this->pid, $factrec[0], true);
 				}

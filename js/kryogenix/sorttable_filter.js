@@ -3,7 +3,7 @@
  * Additional filtering functions for sorttable.js
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  * @see sorttable.js
  * @package PhpGedView
  * @subpackage Display
- * @version $Id$
+ * @version $Id: $
  */
 
 function table_filter(id, keyword, filter) {
@@ -30,19 +30,17 @@ function table_filter(id, keyword, filter) {
 	// get column number
 	var firstRow = table.rows[0];
 	for (var c=0;c<firstRow.cells.length;c++) {
-		if (ts_getInnerText(firstRow.cells[c]).indexOf(keyword)!=-1) {
+		if (firstRow.cells[c].textContent && firstRow.cells[c].textContent.indexOf(keyword)!=-1) {
 			COLUMN=c;
 			break;
 		}
 	}
 	// apply filter
-	for (var r=1;r<table.rows.length;r++) {
-		var row = table.rows[r];
-		// don't do sortbottom last rows
-		if (row.className && (row.className.indexOf('sortbottom') != -1)) break;
+	for (var r=0;r<table.tBodies[0].rows.length;r++) {
+		var row = table.tBodies[0].rows[r];
 		// display row when matching filter
 		var disp = "none";
-		if (row.cells[COLUMN] && ts_getInnerText(row.cells[COLUMN]).indexOf(filter)!=-1) {
+		if (row.cells[COLUMN].textContent && row.cells[COLUMN].textContent.indexOf(filter)!=-1) {
 			disp="table-row";
 			if (document.all && !window.opera) disp = "inline"; // IE
 		}
@@ -56,13 +54,11 @@ function table_renum(id) {
 	var table = document.getElementById(id);
 	// is first column counter ?
 	var firstRow = table.rows[0];
-	if (ts_getInnerText(firstRow.cells[0])!='') return false;
+	if (firstRow.cells[0].innerHTML!='') return false;
 	// renumbering
 	var count=1;
-	for (var r=1;r<table.rows.length;r++) {
-		row = table.rows[r];
-		// don't do sortbottom last rows
-		if (row.className && (row.className.indexOf('sortbottom') != -1)) break;
+	for (var r=0;r<table.tBodies[0].rows.length;r++) {
+		row = table.tBodies[0].rows[r];
 		// count only visible rows
 		if (row.style.display!='none') row.cells[0].innerHTML = count++;
 	}
@@ -77,10 +73,10 @@ function table_filter_alive(id) {
 	var DCOL = -1;
 	var firstRow = table.rows[1];
 	for (var c=0;c<firstRow.cells.length;c++) {
-		key = firstRow.cells[c].getElementsByTagName("a");
+		atags = firstRow.cells[c].getElementsByTagName("a");
 		// <a href="url" title="YYYY-MM-DD HH:MM:SS" ...
 		// is "title" a date sortkey ?
-		if (key.length && key[0].title && key[0].title.substr(4,1)=='-') {
+		if (atags.length && atags[0].title && atags[0].title.substr(4,1)=='-') {
 			if (BCOL<0) BCOL=c;
 			else {
 				DCOL=c;
@@ -91,16 +87,14 @@ function table_filter_alive(id) {
 	if (BCOL<0) return;
 	if (DCOL<0) return;
 	// apply filter
-	for (var r=1;r<table.rows.length;r++) {
-		var row = table.rows[r];
-		// don't do sortbottom last rows
-		if (row.className && (row.className.indexOf('sortbottom') != -1)) break;
+	for (var r=0;r<table.tBodies[0].rows.length;r++) {
+		var row = table.tBodies[0].rows[r];
 		// get birth year
-		key = row.cells[BCOL].getElementsByTagName("a");
-		byear = key[0].title.substring(0,4);
+		atags = row.cells[BCOL].getElementsByTagName("a");
+		byear = atags[0].title.substring(0,4);
 		// get death year
-		key = row.cells[DCOL].getElementsByTagName("a");
-		dyear = key[0].title.substring(0,4);
+		atags = row.cells[DCOL].getElementsByTagName("a");
+		dyear = atags[0].title.substring(0,4);
 		// hide/show
 		var disp = "";
 		if (byear>0 && dyear>0 && (year<byear || dyear<year)) disp="none";
