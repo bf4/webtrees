@@ -1518,7 +1518,8 @@ function print_simple_fact($indirec, $fact, $pid) {
  */
 function print_note_record($text, $nlevel, $nrec) {
 	global $pgv_lang;
-	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+	global $PGV_IMAGE_DIR, $PGV_IMAGES, $EXPAND_SOURCES, $EXPAND_NOTES;
+	if (!isset($EXPAND_NOTES)) $EXPAND_NOTES = $EXPAND_SOURCES; // FIXME
 	$elementID = "N-".floor(microtime()*1000000);
 	$text = preg_replace("/~~/", "<br />", trim($text));
 	$text .= get_cont($nlevel, $nrec);
@@ -1528,11 +1529,16 @@ function print_note_record($text, $nlevel, $nrec) {
 		$text = PrintReady($text);
 		$brpos = strpos($text, "<br />");
 		print "\n\t\t<br /><span class=\"label\">";
-		if ($brpos !== false) print "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
+		if ($brpos !== false) {
+			if ($EXPAND_NOTES) $plusminus="minus"; else $plusminus="plus";
+			print "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
+		}
 		print $pgv_lang["note"].": </span><span class=\"field\">";
 		if ($brpos !== false) {
 			print substr($text, 0, $brpos);
-			print "<span id=\"$elementID\" class=\"note_details\">";
+			print "<span id=\"$elementID\"";
+			if ($EXPAND_NOTES) print " style=\"display:block\"";
+			print " class=\"note_details\">";
 			print substr($text, $brpos + 6);
 			print "</span>";
 		} else {
