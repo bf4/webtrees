@@ -131,49 +131,47 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 		$year = date('Y', $news['date']);
 //		print "<div class=\"person_box\" id=\"{$news['anchor']}\">\n";
 		print "<div class=\"news_box\" id=\"{$news['anchor']}\">\n";
-		$ct = preg_match("/#(.+)#/", $news['title'], $match);
-		if($ct > 0)
-		{
-			if(isset($pgv_lang[$match[1]]))
-			{
-				$news['title'] = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $news['title']);
+		
+		// Look for $pgv_lang, $factarray, and $GLOBALS substitutions in the News title
+		$newsTitle = print_text($news['title'], 0, 2);
+		$ct = preg_match("/#(.+)#/", $newsTitle, $match);
+		if($ct > 0) {
+			if(isset($pgv_lang[$match[1]])) {
+				$newsTitle = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $newsTitle);
 			}
 		}
-		print "<span class=\"news_title\">".PrintReady($news['title'])."</span><br />\n"
-			."<span class=\"news_date\">".get_changed_date("{$day} {$mon} {$year}").' - '.date($TIME_FORMAT, $news['date'])."</span><br /><br />\n"
-		;
-		$ct = preg_match("/#(.+)#/", $news['text'], $match);
-		if($ct > 0)
-		{
-			if(isset($pgv_lang[$match[1]]))
-			{
-				$news['text'] = preg_replace("/{$match[0]}/", $pgv_lang[$match[1]], $news['text']);
+		print "<span class=\"news_title\">".PrintReady($newsTitle)."</span><br />\n"
+			."<span class=\"news_date\">".get_changed_date("{$day} {$mon} {$year}").' - '.date($TIME_FORMAT, $news['date'])."</span><br /><br />\n";
+			
+		// Look for $pgv_lang, $factarray, and $GLOBALS substitutions in the News text
+		$newsText = print_text($news['text'], 0, 2);
+		$ct = preg_match("/#(.+)#/", $newsText, $match);
+		if($ct > 0) {
+			if(isset($pgv_lang[$match[1]])) {
+				$newsText = preg_replace("/{$match[0]}/", $pgv_lang[$match[1]], $newsText);
 			}
 		}
-		$ct = preg_match("/#(.+)#/", $news['text'], $match);
-		if($ct > 0)
-		{
-			if(isset($pgv_lang[$match[1]]))
-			{
-				$news['text'] = preg_replace("/{$match[0]}/", $pgv_lang[$match[1]], $news['text']);
+		$ct = preg_match("/#(.+)#/", $newsText, $match);
+		if($ct > 0) {
+			if(isset($pgv_lang[$match[1]])) {
+				$newsText = preg_replace("/{$match[0]}/", $pgv_lang[$match[1]], $newsText);
 			}
 			$varname = $match[1];
-			if(isset($$varname))
-			{
-				$news['text'] = preg_replace("/{$match[0]}/", $$varname, $news['text']);
+			if(isset($$varname)) {
+				$newsText = preg_replace("/{$match[0]}/", $$varname, $newsText);
 			}
 		}
 		$trans = get_html_translation_table(HTML_SPECIALCHARS);
 		$trans = array_flip($trans);
-		$news['text'] = strtr($news['text'], $trans);
-		$news['text'] = nl2br($news['text']);
-		print PrintReady($news['text'])."<br />\n";
-		if(userGedcomAdmin($uname))
-		{
+		$newsText = strtr($newsText, $trans);
+		$newsText = nl2br($newsText);
+		print PrintReady($newsText)."<br />\n";
+		
+		// Print Admin options for this News item
+		if(userGedcomAdmin($uname)) {
 			print "<hr size=\"1\" />"
 				."<a href=\"javascript:;\" onclick=\"editnews('{$key}'); return false;\">{$pgv_lang['edit']}</a> | "
-				."<a href=\"index.php?action=deletenews&amp;news_id={$key}&amp;command={$command}\" onclick=\"return confirm('{$pgv_lang['confirm_news_delete']}');\">{$pgv_lang['delete']}</a><br />"
-			;
+				."<a href=\"index.php?action=deletenews&amp;news_id={$key}&amp;command={$command}\" onclick=\"return confirm('{$pgv_lang['confirm_news_delete']}');\">{$pgv_lang['delete']}</a><br />";
 		}
 		print "</div>\n";
 	}

@@ -44,6 +44,7 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
++$pgv_lang["index_gedcom_news_adm_help"]			15 July 2007			MW	Moved from help_text.en.php
 *$pgv_lang["add_faq_header_help"]					14 Jul 2007				W
 *$pgv_lang["add_faq_body_help"]						14 Jul 2007				W
 +$pgv_lang["add_faq_pgvLangRefs"]					14 Jul 2007				A
