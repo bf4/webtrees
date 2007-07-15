@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Added Allow references to $pgv_lang, $factarray, $GLOBALS in News title & News body (canajun2eh)
  - Added Allow references to $pgv_lang, $factarray, $GLOBALS in FAQ title & FAQ body (canajun2eh)
  - Added [ 1753513 ] modify url parameters from "sex" to "gender" (yalnifj)
  - Fixed [ 1752869 ] Error In Clipping Cart - ERROR 8: Undefined index (canajun2eh)
