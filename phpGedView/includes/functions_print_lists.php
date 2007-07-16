@@ -955,7 +955,7 @@ function print_repo_table($datalist, $legend="") {
 	require_once("js/sorttable.js.htm");
 	require_once("includes/repository_class.php");
 
-	$legend = $pgv_lang["repos_found"].($legend?" @ ".$legend:"");
+	if ($legend == "") $legend = $pgv_lang["repos_found"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["repository"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
@@ -1035,7 +1035,7 @@ function print_media_table($datalist, $legend="") {
 	require_once("js/sorttable.js.htm");
 	require_once("includes/media_class.php");
 
-	$legend = $pgv_lang["media"].($legend?" @ ".$legend:"");
+	if ($legend == "") $pgv_lang["media"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
