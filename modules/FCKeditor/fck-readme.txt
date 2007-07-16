@@ -10,12 +10,23 @@ PhpGedView directory\
 ----modules\
 --------FCKeditor\
 ------------editor\....
-------------fckeditor.js
-------------......
+----------------......
 
 As long as this is present, PGV will use this as the default editor as opposed to a plain textarea.
 
+
 The FCKeditor homepage is at:
-http://www.fckeditor.net/default.html
+http://www.fckeditor.net
 Sourceforge Project page is at:
 http://sourceforge.net/projects/fckeditor/
+
+
+--------------------------------------------------------------------------------------
+UPDATED 16 JUL 2007:
+---------------------------------------------------------------------------------------
+1 - FCKeditor latest release (2.4.3) installed and tested succesfully on PGV 4.1b6.
+2 - Note that the folder name /modules/FCKeditor in PGV is case sensitive.
+    FCK may default to lower case 'fckeditor/' on install which will not work with PGV.
+     The fix is simply to rename the folder.
+3 - Note also that any folders or files that start with '_' (eg '_samples' or '_whatsnew.html')
+     are not necessary, so can be safely deleted.

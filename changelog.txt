@@ -27,6 +27,9 @@ Version 4.2
  - Adding a "never married" icon on ancestry booklet when NMR=0 (opus27)
 
 Version 4.1
+ - Fixed [ 1754482 ] Incorrect Indi / Fam / Source List titles (canajun2eh)
+ - Added Allow references to $pgv_lang, $factarray, $GLOBALS in News title & News body (canajun2eh)
+ - Added Allow references to $pgv_lang, $factarray, $GLOBALS in FAQ title & FAQ body (canajun2eh)
  - Added [ 1753513 ] modify url parameters from "sex" to "gender" (yalnifj)
  - Fixed [ 1752869 ] Error In Clipping Cart - ERROR 8: Undefined index (canajun2eh)
  - Added GEDCOM config option for Surname List styles (canajun2eh)

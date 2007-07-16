@@ -540,28 +540,34 @@ function getGedcomNews() {
 		$mon = date("M", $news["date"]);
 		$year = date("Y", $news["date"]);
 		$data = "";
-		$ct = preg_match("/#(.+)#/", $news["title"], $match);
+
+		// Look for $pgv_lang, $factarray, and $GLOBALS substitutions in the News title
+		$newsTitle = print_text($news["title"], 0, 2);
+		$ct = preg_match("/#(.+)#/", $newsTitle, $match);
 		if ($ct>0) {
-			if (isset($pgv_lang[$match[1]])) $news["title"] = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $news["title"]);
+			if (isset($pgv_lang[$match[1]])) $newsTitle = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $newsTitle);
 		}
-		$itemArray[0] = $news["title"];
+		$itemArray[0] = $newsTitle;
 
 		$itemArray[1] = iso8601_date($news["date"]);
-		$ct = preg_match("/#(.+)#/", $news["text"], $match);
+
+		// Look for $pgv_lang, $factarray, and $GLOBALS substitutions in the News text
+		$newsText = print_text($news["text"], 0, 2);
+		$ct = preg_match("/#(.+)#/", $newsText, $match);
 		if ($ct>0) {
-			if (isset($pgv_lang[$match[1]])) $news["text"] = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $news["text"]);
+			if (isset($pgv_lang[$match[1]])) $newsText = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $newsText);
 		}
-		$ct = preg_match("/#(.+)#/", $news["text"], $match);
+		$ct = preg_match("/#(.+)#/", $newsText, $match);
 		if ($ct>0) {
-			if (isset($pgv_lang[$match[1]])) $news["text"] = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $news["text"]);
+			if (isset($pgv_lang[$match[1]])) $newsText = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $newsText);
 			$varname = $match[1];
-			if (isset($$varname)) $news["text"] = preg_replace("/$match[0]/", $$varname, $news["text"]);
+			if (isset($$varname)) $newsText = preg_replace("/$match[0]/", $$varname, $newsText);
 		}
 		$trans = get_html_translation_table(HTML_SPECIALCHARS);
 		$trans = array_flip($trans);
-		$news["text"] = strtr($news["text"], $trans);
-		$news["text"] = nl2br($news["text"]);
-		$data .= $news["text"];
+		$newsText = strtr($newsText, $trans);
+		$newsText = nl2br($newsText);
+		$data .= $newsText;
 		$itemArray[2] = $data;
 		$itemArray[3] = $news["anchor"];
 		$dataArray[] = $itemArray;

@@ -44,8 +44,9 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-*$pgv_lang["annivers_sex_help"]						13 July 2007			w
-*$pgv_lang["help_ancestry.php"]						13 July 2007			w
+-$pgv_lang["index_gedcom_news_adm_help"]			15 July 2007			MW	Moved to configure_help.en.php
+*$pgv_lang["help_ancestry.php"]						13 July 2007			w	"sex" -> "gender"
+*$pgv_lang["annivers_sex_help"]						13 July 2007			w	"sex" -> "gender"
 *$pgv_lang["edit_QUAY_help"]						25 Jun 2007				W - changed number codes to match GEDCOM spec
 *$pgv_lang["search_replace_help"]					01 Jun 2007				W
 -$pgv_lang["firstname_alpha_help"]					01 Jun 2007				D
