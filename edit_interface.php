@@ -554,13 +554,25 @@ case 'linkfamaction':
 
 		//-- update the individual record for the person
 		if (preg_match("/1 $itag @$famid@/", $gedrec)==0) {
-			$gedrec = trim($gedrec)."\r\n1 $itag @$famid@";
-			if ($itag=="FAMC" && !empty($pedigree)) {
-				$gedrec.="\r\n2 PEDI $pedigree";
-				if ($pedigree=="adopted")
-					$gedrec.="\r\n1 ADOP\r\n2 FAMC @$famid@\r\n3 ADOP BOTH";
+			if ($itag=="FAMC") {
+				switch ($pedigree) {
+				case 'birth':
+					$gedrec.="\r\n1 FAMC @$famid@\r\n2 PEDI $pedigree";
+					break;
+				case 'adopted':
+					$gedrec.="\r\n1 FAMC @$famid@\r\n2 PEDI $pedigree\r\n1 ADOP\r\n2 FAMC @$famid@\r\n3 ADOP BOTH";
+					break;
+				case 'sealing':
+					$gedrec.="\r\n1 FAMC @$famid@\r\n2 PEDI $pedigree\r\n1 SLGC\r\n2 FAMC @$famid@";
+					break;
+				case 'foster':
+					$gedrec.="\r\n1 FAMC @$famid@\r\n2 PEDI $pedigree\r\n1 EVEN\r\n2 TYPE $pedigree";
+					break;
+				default:
+					$gedrec.="\r\n1 FAMC @$famid@";
+					break;
+				}
 			}
-			if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 			replace_gedrec($pid, $gedrec);
 		}
 
@@ -568,7 +580,6 @@ case 'linkfamaction':
 		if ($famtag=="CHIL") {
 			if (preg_match("/1 $famtag @$pid@/", $famrec)==0) {
 				$famrec = trim($famrec)."\r\n1 $famtag @$pid@";
-				if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
 				replace_gedrec($famid, $famrec);
 			}
 		}
@@ -972,9 +983,23 @@ case 'addchildaction':
 	}
 	else if (!empty($DEAT)) $gedrec .= "1 DEAT Y\r\n";
 	if (!empty($famid)) {
-		$gedrec.="1 FAMC @$famid@\r\n";
-		if (!empty($PEDI))
-			$gedrec.="2 PEDI $PEDI\r\n";
+		switch ($PEDI) {
+		case 'birth':
+			$gedrec.="1 FAMC @$famid@\r\n2 PEDI $PEDI";
+			break;
+		case 'adopted':
+			$gedrec.="1 FAMC @$famid@\r\n2 PEDI $PEDI\r\n1 ADOP\r\n2 FAMC @$famid@\r\n3 ADOP BOTH";
+			break;
+		case 'sealing':
+			$gedrec.="1 FAMC @$famid@\r\n2 PEDI $PEDI\r\n1 SLGC\r\n2 FAMC @$famid@";
+			break;
+		case 'foster':
+			$gedrec.="1 FAMC @$famid@\r\n2 PEDI $PEDI\r\n1 EVEN\r\n2 TYPE $PEDI";
+			break;
+		default:
+			$gedrec.="1 FAMC @$famid@";
+			break;
+		}
 	}
 
 	$gedrec = handle_updates($gedrec);
