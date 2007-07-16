@@ -262,7 +262,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	require_once("js/sorttable.js.htm");
 	require_once("includes/person_class.php");
 
-	$legend = $pgv_lang["individuals"].($legend?" @ ".$legend:"");
+	if ($legend == "") $legend = $pgv_lang["individuals"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
@@ -541,7 +541,7 @@ function print_fam_table($datalist, $legend="") {
 	require_once("js/sorttable.js.htm");
 	require_once("includes/family_class.php");
 
-	$legend = $pgv_lang["families"].($legend?" @ ".$legend:"");
+	if ($legend == "") $legend = $pgv_lang["families"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sfamily"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
@@ -810,7 +810,7 @@ function print_sour_table($datalist, $legend="") {
 	require_once("js/sorttable.js.htm");
 	require_once("includes/source_class.php");
 
-	$legend = $pgv_lang["sources"].($legend?" @ ".$legend:"");
+	if ($legend == "") $legend = $pgv_lang["sources"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
