@@ -5,7 +5,7 @@
  * This block will print a list of today's events
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ $PGV_BLOCKS["print_todays_events"]["config"]	= array(
 //-- today's events block
 //-- this block prints a list of today's upcoming events of living people in your gedcom
 function print_todays_events($block=true, $config="", $side, $index) {
-  global $pgv_lang, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $command, $TEXT_DIRECTION;
+  global $pgv_lang, $SHOW_ID_NUMBERS, $command, $TEXT_DIRECTION;
   global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $PGV_BLOCKS;
 
   $block = true;      // Always restrict this block's height
@@ -95,8 +95,8 @@ function print_todays_events($block=true, $config="", $side, $index) {
 	$PrivateFacts = false;
 	$lastgid="";
 	
-	$dateRangeStart = mktime(0,0,0,$monthtonum[strtolower($month)],$day,$year);
-	$dateRangeEnd = $dateRangeStart+(60*60*24)-1;
+	$dateRangeStart = mktime( 0, 0, 0);
+	$dateRangeEnd   = mktime(23,59,59);
 	
 	foreach($found_facts as $key=>$factarray) {
 	  $anniversaryDate = $factarray[3];
@@ -236,7 +236,7 @@ function print_todays_events($block=true, $config="", $side, $index) {
 }
 
 function print_todays_events_config($config) {
-	global $pgv_lang, $PGV_BLOCKS, $TEXT_DIRECTION;
+	global $pgv_lang, $PGV_BLOCKS;
 	if (empty($config)) $config = $PGV_BLOCKS["print_todays_events"]["config"];
 	if (!isset($config["filter"])) $config["filter"] = "all";
 	if (!isset($config["onlyBDM"])) $config["onlyBDM"] = "no";

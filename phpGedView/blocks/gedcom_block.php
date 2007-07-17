@@ -5,7 +5,7 @@
  * This block prints basic information about the active gedcom
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ $PGV_BLOCKS["print_gedcom_block"]["config"]		= array("cache"=>0);
 
 //-- function to print the gedcom block
 function print_gedcom_block($block = true, $config="", $side, $index) {
-	global $hits,$pgv_lang, $day, $month, $year, $GEDCOM, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $TIME_FORMAT,$SHOW_COUNTER, $command,$THEME_DIR,$TEXT_DIRECTION;
+	global $hits, $pgv_lang, $GEDCOM, $GEDCOMS, $TIME_FORMAT, $SHOW_COUNTER;
 
 
 	print "<div id=\"gedcom_welcome\" class=\"block\" >\n";
@@ -46,7 +46,7 @@ function print_gedcom_block($block = true, $config="", $side, $index) {
 	print "<td class=\"blockh3\"></td></tr></table>\n";
 	print "<div class=\"blockcontent\">";
 	print "<div class=\"center\">";
-	print "<br />".get_changed_date("$day $month $year")." - ".date($TIME_FORMAT, time()-$_SESSION["timediff"])."<br />\n";
+	print "<br />".get_changed_date(date("j M Y"))." - ".date($TIME_FORMAT, time()-$_SESSION["timediff"])."<br />\n";
 	if($SHOW_COUNTER)
 			print $pgv_lang["hit_count"]."  ".$hits."<br />\n";
 	print "\n<br />";
