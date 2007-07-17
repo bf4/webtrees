@@ -5,7 +5,7 @@
  * This block will print basic information and links for the user.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ $PGV_BLOCKS["print_welcome_block"]["config"]	= array("cache"=>0);
 
 //-- function to print the welcome block
 function print_welcome_block($block=true, $config="", $side, $index) {
-		global $pgv_lang, $day, $month, $year, $PGV_IMAGE_DIR, $PGV_IMAGES, $user, $GEDCOM, $TIME_FORMAT,$command;
+		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $user, $GEDCOM, $TIME_FORMAT;
 
 		print "<div id=\"user_welcome\" class=\"block\">\n";
 		print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
@@ -56,7 +56,7 @@ function print_welcome_block($block=true, $config="", $side, $index) {
 		print "</tr><tr><td class=\"center\" colspan=\"3\">";
 		print_help_link("mygedview_customize_help", "qm");
 		print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".getUserName()."&amp;command=user', '_blank', 'top=50,left=10,width=600,height=350,scrollbars=1,resizable=1');\">".$pgv_lang["customize_page"]."</a>\n";
-		print "\n<br />".get_changed_date("$day $month $year")." - ".date($TIME_FORMAT, time()-$_SESSION["timediff"])."\n";
+		print "\n<br />".get_changed_date(date("j M Y"))." - ".date($TIME_FORMAT, time()-$_SESSION["timediff"])."\n";
 		print "</td>\n";
 		print "</tr></table>"; // blockcontent
 		print "</div>"; // block
