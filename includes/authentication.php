@@ -1475,7 +1475,7 @@ function getBlocks($username) {
 function setBlocks($username, $ublocks, $setdefault=false) {
 	global $TBLPREFIX, $DBCONN;
 
-	$sql = "DELETE FROM ".$TBLPREFIX."blocks WHERE b_username='".$DBCONN->escapeSimple($username)."'";
+	$sql = "DELETE FROM ".$TBLPREFIX."blocks WHERE b_username='".$DBCONN->escapeSimple($username)."' AND b_name!='faq'";
 	$res = dbquery($sql);
 
 	foreach($ublocks["main"] as $order=>$block) {

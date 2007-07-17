@@ -3007,8 +3007,8 @@ function get_faq_data($id='') {
 
 	$faqs = array();
 	// Read the faq data from the DB
-	$sql = "SELECT b_id, b_location, b_order, b_config FROM ".$TBLPREFIX."blocks WHERE b_username='$GEDCOM' AND (b_location='header' OR b_location = 'body')";
-	if ($id != '') $sql .= "AND b_order='".$id."'";
+	$sql = "SELECT b_id, b_location, b_order, b_config FROM ".$TBLPREFIX."blocks WHERE b_username='$GEDCOM' AND b_name='faq'";
+	if ($id != '') $sql .= " AND b_order='".$id."'";
 	$res = dbquery($sql);
 
 	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
