@@ -139,13 +139,15 @@ function outputLevel($parent_id) {
 	global $TBLPREFIX, $DBCONN;
 	$tmp=place_id_to_hierarchy($parent_id);
 	$prefix=implode(';', $tmp);
-	$postfix=str_repeat(';', 3-count($tmp));
+	if ($prefix!='')
+		$prefix.=';';
+	$suffix=str_repeat(';', 3-count($tmp));
 	$level=count($tmp);
 
 	$sql="SELECT pl_id, pl_place,pl_long,pl_lati,pl_zoom,pl_icon FROM {$TBLPREFIX}placelocation WHERE pl_parent_id=".$DBCONN->escapeSimple($parent_id)." ORDER BY pl_place";
 	$res=dbquery($sql);
 	while ($row=&$res->fetchRow()) {
-		print "{$level};{$prefix};{$row[1]}{$postfix};{$row[2]};{$row[3]};{$row[4]};{$row[5]}\r\n";
+		print "{$level};{$prefix}{$row[1]}{$suffix};{$row[2]};{$row[3]};{$row[4]};{$row[5]}\r\n";
 		if ($level < 3)
 			outputLevel($row[0]);
 	}
