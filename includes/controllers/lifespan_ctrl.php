@@ -404,8 +404,12 @@ class LifespanControllerRoot extends BaseController {
 
 			$this->currentsex = $value->getSex();
 			if ($this->currentsex == "M"){
-				$this->malecolorR[++ $this->Mcolorindex];
-				$this->malecolorG[++ $this->Mcolorindex];
+				$this->Mcolorindex++;
+				if (!isset($this->malecolorR[$this->Mcolorindex])) $this->Mcolorindex=0;
+				$this->malecolorR[$this->Mcolorindex];
+				$this->Mcolorindex++;
+				if (!isset($this->malecolorG[$this->Mcolorindex])) $this->Mcolorindex=0;
+				$this->malecolorG[$this->Mcolorindex];
 				$red = dechex($this->malecolorR[$this->Mcolorindex]);
 				$green =dechex($this->malecolorR[$this->Mcolorindex]);
 				if(strlen($red)<2){
@@ -418,8 +422,12 @@ class LifespanControllerRoot extends BaseController {
 				$this->color = "#".$red.$green.dechex($this->malecolorB);
 			}
 			else if($this->currentsex == "F"){
-				$this->femalecolorG[++ $this->Fcolorindex];
-				$this->femalecolorB[++ $this->Fcolorindex];
+				$this->Fcolorindex++;
+				if (!isset($this->femalecolorG[$this->Fcolorindex])) $this->Fcolorindex = 0; 
+				$this->femalecolorG[$this->Fcolorindex];
+				$this->Fcolorindex++;
+				if (!isset($this->femalecolorB[$this->Fcolorindex])) $this->Fcolorindex = 0;
+				$this->femalecolorB[$this->Fcolorindex];
 				$this->color = "#".dechex($this->femalecolorR).dechex($this->femalecolorG[$this->Fcolorindex]).dechex($this->femalecolorB[$this->Fcolorindex]);
 			}
 			else{
