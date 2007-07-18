@@ -49,7 +49,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 	else $HideEmpty = "no";
 
 	$start=mktime(0,0,0)-86400*$config["days"];
-	$found_facts=get_recent_changes(date("j", $start), date("M", $start), date("Y", $start));
+	$found_facts=get_recent_changes(date("d", $start), date("m", $start), date("Y", $start));
 
 // Start output
 	if (count($found_facts)==0 and $HideEmpty=="yes") return false;
