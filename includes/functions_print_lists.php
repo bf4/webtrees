@@ -1106,7 +1106,7 @@ function print_media_table($datalist, $legend="") {
 	require_once("js/sorttable.js.htm");
 	require_once("includes/media_class.php");
 
-	if ($legend == "") $pgv_lang["media"];
+	if ($legend == "") $legend = $pgv_lang["media"];
 	$legend = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["small"]."\" alt=\"\" align=\"middle\" /> ".$legend;
 	echo "<fieldset><legend>".$legend."</legend>";
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID

@@ -5,7 +5,7 @@
  * This block will print a list of upcoming events
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ $PGV_BLOCKS["print_upcoming_events"]["config"]		= array(
 //-- upcoming events block
 //-- this block prints a list of upcoming events of people in your gedcom
 function print_upcoming_events($block=true, $config="", $side, $index) {
-  global $pgv_lang, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $command, $TEXT_DIRECTION;
+  global $pgv_lang, $SHOW_ID_NUMBERS, $command, $TEXT_DIRECTION;
   global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $PGV_BLOCKS;
   global $DAYS_TO_SHOW_LIMIT;
 
@@ -101,8 +101,8 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 	$PrivateFacts = false;
 	$lastgid="";
 	
-	$dateRangeStart = mktime(0,0,0,$monthtonum[strtolower($month)],$day+1,$year);
-	$dateRangeEnd = $dateRangeStart+(60*60*24*$daysprint)-1;
+	$dateRangeStart=mktime( 0, 0, 0)+86400;
+	$dateRangeEnd  =mktime(23,59,59)+86400*$daysprint;
 	
 	foreach($found_facts as $key=>$factarray) {
 	  $anniversaryDate = $factarray[3];
@@ -249,7 +249,7 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 }
 
 function print_upcoming_events_config($config) {
-  global $pgv_lang, $PGV_BLOCKS, $DAYS_TO_SHOW_LIMIT, $TEXT_DIRECTION;
+  global $pgv_lang, $PGV_BLOCKS, $DAYS_TO_SHOW_LIMIT;
   if (empty($config)) $config = $PGV_BLOCKS["print_upcoming_events"]["config"];
   if (!isset($DAYS_TO_SHOW_LIMIT)) $DAYS_TO_SHOW_LIMIT = 30;
   if (!isset($config["days"])) $config["days"] = 30;

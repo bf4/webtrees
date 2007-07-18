@@ -38,26 +38,18 @@ $PGV_BLOCKS["print_recent_changes"]["config"]		= array(
 //-- Recent Changes block
 //-- this block prints a list of changes that have occurred recently in your gedcom
 function print_recent_changes($block=true, $config="", $side, $index) {
-	global $pgv_lang, $factarray, $month, $year, $day, $monthtonum, $command;
+	global $pgv_lang, $command;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $PGV_BLOCKS;
 
 	$block = true;			// Always restrict this block's height
-
-	if ($command=="user") $filter = "living";
-	else $filter = "all";
 
 	if (empty($config)) $config = $PGV_BLOCKS["print_recent_changes"]["config"];
 	if ($config["days"]<1) $config["days"] = 30;
 	if (isset($config["hide_empty"])) $HideEmpty = $config["hide_empty"];
 	else $HideEmpty = "no";
 
-	$daytext = "";
-	$action = "today";
-	$monthstart = mktime(1,0,0,$monthtonum[strtolower($month)],$day,$year);
-	$mmon2 = date("m", $monthstart-(60*60*24*$config["days"]));
-	$mday2 = date("d", $monthstart-(60*60*24*$config["days"]));
-	$myear2 = date("Y", $monthstart-(60*60*24*$config["days"]));
-	$found_facts = get_recent_changes($mday2, $mmon2, $myear2);
+	$start=mktime(0,0,0)-86400*$config["days"];
+	$found_facts=get_recent_changes(date("d", $start), date("m", $start), date("Y", $start));
 
 // Start output
 	if (count($found_facts)==0 and $HideEmpty=="yes") return false;
