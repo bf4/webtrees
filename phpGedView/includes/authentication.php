@@ -59,7 +59,7 @@ function authenticateUser($username, $password, $basic=false) {
 	        if (!isset($user["verified_by_admin"])) $user["verified_by_admin"] = "";
 	        if ((($user["verified"] == "yes") and ($user["verified_by_admin"] == "yes")) or ($user["canadmin"] != "")){
 		        $sql = "UPDATE ".$TBLPREFIX."users SET u_loggedin='Y', u_sessiontime='".time()."' WHERE u_username='$username'";
-		        $res = dbquery($sql);
+		        $res = dbquery($sql,false);
 
 				AddToLog(($basic ? "Basic HTTP Authentication" :"Login"). " Successful ->" . $username ."<-");
 				//-- reset the user's session
@@ -129,7 +129,7 @@ function userLogout($username = "") {
 		else return;
 	}
 	$sql = "UPDATE ".$TBLPREFIX."users SET u_loggedin='N' WHERE u_username='".$username."'";
-	$res = dbquery($sql);
+	$res = dbquery($sql,false);
 
 	AddToLog("Logout - " . $username);
 
