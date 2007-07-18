@@ -89,8 +89,8 @@ function getUpcomingEvents() {
 	$PrivateFacts = false;
 	$lastgid="";
 
-	$dateRangeStart = mktime(0,0,0,$monthtonum[strtolower($month)],$day+1,$year);
-	$dateRangeEnd = $dateRangeStart+(60*60*24*$daysprint)-1;
+	$dateRangeStart=mktime( 0, 0, 0)+86400;
+	$dateRangeEnd  =mktime(23,59,59)+86400*$daysprint;
 
 	foreach($found_facts as $key=>$factarray) {
 		$anniversaryDate = $factarray[3];
@@ -248,8 +248,9 @@ function getTodaysEvents() {
 	$PrivateFacts = false;
 	$daytext = "<ul>";
 	$lastgid="";
-	$dateRangeStart = mktime(0,0,0,$monthtonum[strtolower($month)],$day,$year);
-	$dateRangeEnd = $dateRangeStart+(60*60*24)-1;
+
+	$dateRangeStart = mktime( 0, 0, 0);
+	$dateRangeEnd   = mktime(23,59,59);
 
 	foreach($found_facts as $key=>$factarray) {
 		$anniversaryDate = $factarray[3];
@@ -685,11 +686,8 @@ function getRecentChanges() {
 
 	$action = "today";
 	$found_facts = array();
-	$monthstart = mktime(1,0,0,$monthtonum[strtolower($month)],$day,$year);
-	$mmon2 = date("m", $monthstart-(60*60*24*$configDays));
-	$mday2 = date("d", $monthstart-(60*60*24*$configDays));
-	$myear2 = date("Y", $monthstart-(60*60*24*$configDays));
-	$changes = get_recent_changes($mday2, $mmon2, $myear2);
+	$start=mktime(0,0,0)-86400*$config["days"];
+	$changes=get_recent_changes(date("d", $start), date("m", $start), date("Y", $start));
 
 	if (count($changes)>0) {
 		$found_facts = array();
