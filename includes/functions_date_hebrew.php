@@ -278,7 +278,9 @@ function getJewishMonthName($month, $year) {
 	global $pgv_lang;
 	$months=array('','tvt','csh','ksl','tvt','shv',(isJewishLeapYear($year)?'adr_leap_year':'adr'),
 	              'ads','nsn','iyr','svn','tmz','aav','ell');
-	return $pgv_lang[$months[$month]];
+	if (isset($pgv_lang[$months[$month]]))
+		return $pgv_lang[$months[$month]];
+	return '';
 }
 
 /**
