@@ -126,12 +126,17 @@ class MediaControllerRoot extends IndividualController{
 		global $NAME_LINENUM, $SEX_LINENUM, $pgv_lang, $pgv_changes, $USE_QUICK_UPDATE;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
+		$links = get_media_relations($this->pid);
+		$linktoid = "new";
+		foreach ($links as $linktoid => $type) {
+			break;		// we're only interested in the key of the first list entry
+		}
 		//-- main edit menu
 		$menu = new Menu($pgv_lang["edit"]);
 		$click_link = "";
 		$click_link .= "window.open('addmedia.php?action=";
 		$click_link .= "editmedia&amp;pid=".$this->pid;
-		$click_link .= "&amp;linktoid=new";
+		$click_link .= "&amp;linktoid=$linktoid";
 		$click_link .= "', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";	
 		$menu->addOnclick($click_link);
 		if (!empty($PGV_IMAGES["edit_indi"]["small"]))
@@ -143,7 +148,7 @@ class MediaControllerRoot extends IndividualController{
 			$click_link = "";
 			$click_link .= "window.open('addmedia.php?action=";
 			$click_link .= "editmedia&amp;pid=".$this->pid;
-			$click_link .= "&amp;linktoid=new";
+			$click_link .= "&amp;linktoid=$linktoid";
 			$click_link .= "', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";	
 			$submenu->addOnclick($click_link);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");

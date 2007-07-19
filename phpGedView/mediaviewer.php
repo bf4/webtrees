@@ -139,9 +139,9 @@ else{
 					?>
 					 <br /><?php print $pgv_lang["relations_heading"]; ?>
 					<?php
-						//PrintMediaLinks($links, "");
+						// PrintMediaLinks($links, "");
 						require_once 'includes/functions_print_lists.php';
-						print_changes_table($links);
+						print_mediaLinks_table($links);
 					}	?>
 				</td>
 			</tr>
