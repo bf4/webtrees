@@ -1194,92 +1194,9 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 	echo "</table>\n";
 }
 
-
-/**
- * print a sortable table of media links to surnames, families, and sources
- *
- * @param array $links a list of database IDs (Indi, Family, Source)
- */
-function print_mediaLinks_table($links) {
-	global $pgv_lang, $factarray, $GEDCOM, $TEXT_DIRECTION;
-
-	if (count($links) == 0)
-		return false;
-
-	$linkList = array ();
-
-	foreach ($links as $id => $type) {
-		$linkItem = array ();
-
-		$linkItem["id"] = $id;
-		$linkItem["type"] = $type;
-		$linkItem["name"] = "";
-		if ($type == "INDI" && displayDetailsByID($id)) {
-//			$linkItem["name"] = "A" . get_sortable_name($id);
-//			$linkItem["printName"] = get_person_name($id);
-			$linkItem["printName"] = get_sortable_name($id);
-			$linkItem["name"] = "A" . $linkItem["printName"];
-		} else if ($type == "FAM" && displayDetailsByID($id, "FAM")) {
-//			$linkItem["name"] = "B" . get_sortable_family_descriptor($id);
-//			$linkItem["printName"] = get_family_descriptor($id);
-			$linkItem["printName"] = get_sortable_family_descriptor($id);
-			$linkItem["name"] = "B" . $linkItem["printName"];
-		} else if ($type == "SOUR" && displayDetailsByID($id, "SOUR")) {
-			$linkItem["printName"] = get_source_descriptor($id);
-			$linkItem["name"] = "C" . $linkItem["printName"];
-		}
-
-		if ($linkItem["name"] != "")
-			$linkList[] = $linkItem;
-	}
-	if (count($linkList)==0) return;
-	uasort($linkList, "mediasort");
-
-	// Print the sortable table of database items
-	require_once("js/sorttable.js.htm");
-	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
-	//-- table header
-	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	echo "<tr>";
-	echo "<td></td>";
-	echo "<th class=\"list_label\">".$pgv_lang["type"]."</th>";
-	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
-	echo "</tr>\n";
-	//-- table body
-	$n = 0;
-	foreach ($linkList as $linkItem) {
-		if ($linkItem["type"] == "INDI") {
-			$type = $pgv_lang["individual"];
-			$url = "individual.php?pid=";
-		} else if ($linkItem["type"] == "FAM") {
-			$type = $pgv_lang["family"];
-			$url = "family.php?famid=";
-		} else {
-			$type = $pgv_lang["source"];
-			$url = "source.php?sid=";
-		}
-		//-- Line number
-		echo "<td class=\"list_value_wrap\" align=\"".get_align($type)."\">";
-		echo ++$n;
-		echo "&nbsp;</td>";
-		//-- Type of name
-		echo "<td class=\"list_value_wrap\" align=\"".get_align($type)."\">";
-		echo $type;
-		echo "&nbsp;</td>";
-		//-- Name
-		echo "<td class=\"list_value_wrap\" align=\"".get_align($linkItem["printName"])."\">";
-		echo "<a href=\"".$url.$linkItem["id"]."\" class=\"list_item name1\">".PrintReady($linkItem["printName"])."</a>";
-		echo "&nbsp;</td>";
-
-		echo "</tr>\n";
-	}
-	//-- table footer
-	echo "</table>\n";
-}
-
-
 /**
  * print a sortable table of recent changes
+ * also called by mediaviewer to list records linked to a media
  *
  * @param array $datalist contain records that were extracted from the database.
  */
@@ -1305,9 +1222,11 @@ function print_changes_table($datalist) {
 	foreach($datalist as $key => $value) {
 		if ($n>=$NMAX) break;
 		$record = null;
-		if (isset($value['d_gid'])) $record = GedcomRecord::getInstance($value['d_gid']);
-		else $record = GedcomRecord::getInstance($key);
-		if (is_null($record) && isset($value[0])) $record = GedcomRecord::getInstance($value[0]);
+		if (!is_array($value)) $record = GedcomRecord::getInstance($key);
+		else {
+			if (isset($value['d_gid'])) $record = GedcomRecord::getInstance($value['d_gid']);
+			if (is_null($record) && isset($value[0])) $record = GedcomRecord::getInstance($value[0]);
+		}
 		if (is_null($record)) continue;
 		// Privacy
 		if (!$record->canDisplayDetails()) {
