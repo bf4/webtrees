@@ -873,7 +873,7 @@ function check_indi($id)
 			if (preg_match('/2 DATE .*(\d{4}).*(\d{4})?/', $subged, $m)==false) continue;
 			$year=$m[1];
 			if ($year<$elder) {
-				echo "<p>".pgv_href("INDI", $id, $name)."> Wrong families order</p>\n";
+				echo "<p>".pgv_href("INDI", $id, $name)."> ".$pgv_lang["reorder_families"]."</p>\n";
 				break;
 			}
 			$elder=$year;
@@ -886,6 +886,7 @@ function check_indi($id)
 
 function check_fam($id)
 {
+	global $pgv_lang;
 	global $indi_list, $fam_list, $EOL, $fam_facts_unique;
 	global $err_level, $critical, $error, $warning, $info;
 	global $showall;
@@ -957,7 +958,7 @@ function check_fam($id)
 			if (preg_match('/2 DATE .*(\d{4}).*(\d{4})?/', $subged, $m)==false) continue;
 			$year=$m[1];
 			if ($year<$elder) {
-				echo "<p>".pgv_href("FAM", $id, $name)."> Wrong children order</p>\n";
+				echo "<p>".pgv_href("FAM", $id, $name)."> ".$pgv_lang["reorder_children"]."</p>\n";
 				break;
 			}
 			$elder=$year;
