@@ -141,7 +141,7 @@ else{
 					<?php
 						// PrintMediaLinks($links, "");
 						require_once 'includes/functions_print_lists.php';
-						print_mediaLinks_table($links);
+						print_changes_table($links);
 					}	?>
 				</td>
 			</tr>
