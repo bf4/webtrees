@@ -177,6 +177,7 @@ if (($surname_sublist=="yes")&&($show_all=="yes")) {
 	}
 	uasort($surnames, "itemsort");
 	print_surn_table($surnames, "FAM");
+	if (count($fam_hide)>0) print "<br /><span class=\"warning\">".$pgv_lang["hidden"].": ".count($fam_hide)."</span>";
 }
 else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 	if (!isset($alpha)) $alpha="";
@@ -197,6 +198,7 @@ else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 	$i = 0;
 	uasort($surnames, "itemsort");
 	print_surn_table($surnames, "FAM");
+	if (count($fam_hide)>0) print "<br /><span class=\"warning\">".$pgv_lang["hidden"].": ".count($fam_hide)."</span>";
 }
 else {
 	$firstname_alpha = false;
