@@ -594,7 +594,7 @@ class Person extends GedcomRecord {
 		
 		//-- first check for the value in the gedcom record
 		$nchi = get_gedcom_value("NCHI", 1, $this->gedrec);
-		if ($nchi!="") return $nchi.".";
+		if ($nchi!="") return ($nchi+0);
 		
 		//-- check if the value was stored in the cache 
 		if (isset($indilist[$this->xref])
