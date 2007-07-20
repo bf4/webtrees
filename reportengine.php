@@ -5,7 +5,7 @@
  * Processes PGV XML Reports and generates a report
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -122,7 +122,7 @@ else if ($action=="setup") {
 	print_header($pgv_lang["enter_report_values"]);
 	//-- make sure the report exists
 	if (!file_exists($report)) {
-		print "<span class=\"error\">The specified report cannot be found</span>\n";
+		print "<span class=\"error\">".$pgv_lang["file_not_found"]."</span> ".$report."\n";
 	}
 	else {
 		require_once("includes/reportheader.php");
@@ -163,17 +163,27 @@ function paste_id(value) {
 		print "<input type=\"hidden\" name=\"action\" value=\"run\" />\n";
 		print "<input type=\"hidden\" name=\"report\" value=\"$report\" />\n";
 		print "<input type=\"hidden\" name=\"download\" value=\"\" />\n";
-		print "<input type=\"hidden\" name=\"output\" value=\"PDF\" />\n";
+		//print "<input type=\"hidden\" name=\"output\" value=\"PDF\" />\n";
 				
 		print "<table class=\"facts_table width50 center $TEXT_DIRECTION\">";
 		print "<tr><td class=\"topbottombar\" colspan=\"2\">".$pgv_lang["enter_report_values"]."</td></tr>";
 		print "<tr><td class=\"descriptionbox width30 wrap\">".$pgv_lang["selected_report"]."</td><td class=\"optionbox\">".$report_array["title"]."</td></tr>\n";
-		
+
+		$doctitle = trim($report_array["title"]);
 		$firstrun = 0;
 		if (!isset($report_array["inputs"])) $report_array["inputs"] = array();
 		foreach($report_array["inputs"] as $indexval => $input) {
 			if ((($input["name"] == "sources") && ($SHOW_SOURCES>=getUserAccessLevel(getUserName()))) || ($input["name"] != "sources")) {
 				if (($input["name"] != "photos") || ($MULTI_MEDIA)) {
+					// url forced default value ?
+					if (isset($_REQUEST[$input["name"]])) {
+						$input["default"]=$_REQUEST[$input["name"]];
+						// update doc title for bookmarking
+						$doctitle .= " ";
+						if (strpos($input["name"],"date2")) $doctitle .= "-";
+						$doctitle .= $input["default"];
+						if (strpos($input["name"],"date1")) $doctitle .= "-";
+					}
 					print "<tr><td class=\"descriptionbox wrap\">\n";
 					print "<input type=\"hidden\" name=\"varnames[]\" value=\"".$input["name"]."\" />\n";
 					print $input["value"]."</td><td class=\"optionbox\">";
@@ -200,7 +210,9 @@ function paste_id(value) {
 					if ($firstrun == 0) {
 						?>
 						<script language="JavaScript" type="text/javascript">
+						<!--
 							document.getElementById('<?php print $input["name"]; ?>').focus();
+						//-->
 						</script>
 						<?php
 						$firstrun++;
@@ -214,7 +226,9 @@ function paste_id(value) {
 						print "<select name=\"vars[".$input["name"]."]\" id=\"".$input["name"]."_var\">\n";
 						$options = preg_split("/[, ]+/", $input["options"]);
 						foreach($options as $indexval => $option) {
-							print "\t<option value=\"$option\">";
+							print "\t<option value=\"$option\" ";
+							if ($option==$input["default"]) print "selected=\"selected\"";
+							print ">";
 							if (isset($pgv_lang[$option])) print $pgv_lang[$option];
 							else if (isset($factarray[$option])) print $factarray[$option];
 							else print $option;
@@ -244,16 +258,38 @@ function paste_id(value) {
 				}
 			}
 		}
-		/* -- this will allow user to select future output formats */
-//		print "<tr><td class=\"descriptionbox width30 wrap\">Output Format</td><td class=\"optionbox\">";
-//		print "<select name=\"output\">\n";
-//		print "<option value=\"PDF\" selected=\"selected\">PDF</option>\n";
-//		print "<option value=\"HTML\">HTML</option>\n";
-//		print "</select></td></tr>\n";
-		print "<tr><td class=\"topbottombar\" colspan=\"2\"><input type=\"submit\" value=\"".$pgv_lang["download_report"]."\" onclick=\"document.setupreport.elements['download'].value='1';\"/></td></tr>\n";
+		
+		?>
+		<tr><td class="descriptionbox width30 wrap"></td>
+		<td class="optionbox">
+		<input type="radio" name="output" value="PDF"
+		checked="checked"
+		/><img src="images/media/pdf-32x32.png" alt="PDF" title="PDF" />
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="radio" name="output" value="HTML"
+		<?php if ($output=="HTML") echo " checked=\"checked\"";?>
+		/><img src="images/media/html-32x32.png" alt="HTML" title="HTML" />
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="radio" name="output" value="TEX"
+		<?php if ($output=="TEX") echo " checked=\"checked\"";?>
+		<?php if (!file_exists("includes/reportlatex.php")) echo " disabled=\"disabled\"";?>
+		/><img src="images/media/tex-32x32.png" alt="TEX" title="TEX" />
+		</td></tr>
+		<?php
+		print "<tr><td class=\"topbottombar\" colspan=\"2\">";
+		print " <input type=\"submit\" value=\"".$pgv_lang["download_report"]."\" onclick=\"document.setupreport.elements['download'].value='1';\"/>";
+		print " <input type=\"submit\" value=\"".$pgv_lang["cancel"]."\" onclick=\"document.setupreport.elements['action'].value='setup';\"/>";
+		print "</td></tr>\n";
 		print "</table>\n";
 		print "</form>\n";
 		print "<br /><br />\n";
+		?>
+		<script language="JavaScript" type="text/javascript">
+		<!--
+			document.title = '<?php print $doctitle; ?>';
+		//-->
+		</script>
+		<?php
 	}
 	print_footer();
 }
@@ -261,7 +297,8 @@ function paste_id(value) {
 else if ($action=="run") {
 	//-- load the report generator
 	if ($output=="HTML") require("includes/reporthtml.php");
-	else if ($output=="PDF") require("includes/reportpdf.php");
+	else if ($output=="TEX") require("includes/reportlatex.php");
+	else require("includes/reportpdf.php");
 
 	//-- start the sax parser
 	$xml_parser = xml_parser_create();
