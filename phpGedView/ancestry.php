@@ -5,7 +5,7 @@
  * ($rootid=1, father=2, mother=3 ...)
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -141,7 +141,7 @@ if ($view != "preview") {
 	<!-- // NOTE: show full -->
 	
 	<td class="descriptionbox">
-		<?php
+	<?php
 	print_help_link("show_full_help", "qm");
 	print $pgv_lang["show_details"]; ?>
 	</td>
@@ -208,12 +208,13 @@ if ($controller->chart_style==2) {
 //-- Family list
 if ($controller->chart_style==3) {
 	require_once("includes/functions_print_lists.php");
+	$PEDIGREE_GENERATIONS -= 1;
 	$treeid = ancestry_array($controller->rootid);
 	$famlist = array();
 	foreach ($treeid as $p=>$pid) {
-	  $person = Person::getInstance($pid);
+		$person = Person::getInstance($pid);
 		if (is_null($person)) continue;
-	  foreach ($person->getChildFamilyIds() as $f=>$famc) $famlist[] = $famc;
+		foreach ($person->getChildFamilyIds() as $f=>$famc) $famlist[] = $famc;
 	}
 	echo "<div class=\"center\">";
 	print_fam_table(array_unique($famlist), $pgv_lang["ancestry_chart"]." : ".PrintReady($controller->name));
