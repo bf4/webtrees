@@ -844,10 +844,7 @@ function find_children_in_record($famrec, $me='') {
  * @return array array of family ids
  */
 function find_family_ids($pid) {
-	$families = array();
-	if (!$pid) return $families;
-
-	$indirec = find_person_record($pid);
+	$indirec=find_person_record($pid);
 	return find_families_in_record($indirec, "FAMC");
 }
 
@@ -860,9 +857,7 @@ function find_family_ids($pid) {
  * @return array array of family ids
  */
 function find_sfamily_ids($pid) {
-	$families = array();
-	if (empty($pid)) return $families;
-	$indirec = find_person_record($pid);
+	$indirec=find_person_record($pid);
 	return find_families_in_record($indirec, "FAMS");
 }
 
@@ -875,15 +870,8 @@ function find_sfamily_ids($pid) {
  * @return array array of family ids
  */
 function find_families_in_record($indirec, $tag) {
-	$families = array();
-
-	$ct = preg_match_all("/1\s*$tag\s*@(.*)@/", $indirec, $match,PREG_SET_ORDER);
-	if ($ct>0){
-		for($i=0; $i<$ct; $i++) {
-			$families[$i] = $match[$i][1];
-		}
-	}
-	return $families;
+	preg_match_all("/1\s*{$tag}\s*@(.+)@/", $indirec, $match);
+	return $match[1];
 }
 
 /**

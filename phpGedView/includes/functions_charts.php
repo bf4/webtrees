@@ -744,10 +744,30 @@ function ancestry_array($rootid, $maxgen=0) {
 		if (!empty($treeid[$i])) {
 			$person = Person::getInstance($treeid[$i]);
 			$families = $person->getChildFamilies();
-			foreach($families as $famid=>$family) {
-				/*@var $family Family */
-				if (empty($treeid[($i * 2)])) $treeid[($i * 2)] = $family->getHusbId(); // -- set father id
-				if (empty($treeid[($i * 2) + 1])) $treeid[($i * 2) + 1] = $family->getWifeId(); // -- set mother id
+			$family=false;
+			if (count($families)>1) {
+				// If there is more than one FAMC record, choose the preferred parents:
+				$indirec=$person->getGedcomRecord();
+				// a) records with "2 _PRIMARY"
+				foreach ($families as $famid=>$fam)
+					if (empty($family) && preg_match("/\n\s*1\s+FAMC\s+@{$famid}@\s*\n(\s*[2-9].*\n)*(\s*2\s+_PRIMARY Y\b)/i", $indirec))
+					$family=$fam;
+				// b) records with "2 PEDI birt"
+				foreach ($families as $famid=>$fam)
+					if (empty($family) && preg_match("/\n\s*1\s+FAMC\s+@{$famid}@\s*\n(\s*[2-9].*\n)*(\s*2\s+PEDI\s+birth?\b)/i", $indirec))
+					$family=$fam;
+				// c) records with no "2 PEDI"
+				foreach ($families as $famid=>$fam)
+					if (empty($family) && !preg_match("/\n\s*1\s+FAMC\s+@{$famid}@\s*\n(\s*[2-9].*\n)*(\s*2\s+PEDI\b)/i", $indirec))
+					$family=$fam;
+			}
+			// d) any record
+			if (empty($family) && count($families>0))
+				$family=reset($families);
+			// Store the prefered parents
+			if (!empty($family)) {
+				$treeid[($i * 2)] = $family->getHusbId();
+				$treeid[($i * 2) + 1] = $family->getWifeId();
 			}
 		}
 	}
