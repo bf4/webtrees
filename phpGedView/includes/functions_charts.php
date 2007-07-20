@@ -732,7 +732,7 @@ function ancestry_array($rootid, $maxgen=0) {
 	global $PEDIGREE_GENERATIONS, $SHOW_EMPTY_BOXES;
 	// -- maximum size of the id array
 	if ($maxgen==0) $maxgen = $PEDIGREE_GENERATIONS;
-	$treesize = pow(2, ($maxgen+1));
+	$treesize = pow(2, ($maxgen));
 
 	$treeid = array();
 	$treeid[0] = "";

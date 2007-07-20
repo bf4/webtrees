@@ -247,8 +247,8 @@ function print_person_pedigree($pid, $count) {
  */
 function print_descendency($pid, $count) {
 	global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $bheight, $bwidth, $bhalfheight;
-	
-	if ($count>=$this->dgenerations) return 0;
+
+	if ($count>$this->dgenerations) return 0;
 	$person = Person::getInstance($pid);
 	if (is_null($person)) return;
 	

@@ -163,7 +163,7 @@ if ($view != "preview") {
 if ($controller->chart_style==0) {
 	$pidarr=array();
 	print "<ul style=\"list-style: none; display: block;\" id=\"ancestry_chart".($TEXT_DIRECTION=="rtl" ? "_rtl" : "") ."\">\r\n";
-	$controller->print_child_ascendancy($controller->rootid, 1, $OLD_PGENS);
+	$controller->print_child_ascendancy($controller->rootid, 1, $OLD_PGENS-1);
 	print "</ul>";
 	print "<br />";
 }
@@ -179,19 +179,17 @@ if ($controller->chart_style==1) {
 	<br />
 END;
 	// process the tree
-	$treeid = pedigree_array($controller->rootid);
-	$treesize = pow(2, (int)($PEDIGREE_GENERATIONS))-1;
-	for ($i = 0; $i < $treesize; $i++) {
-		$pid = $treeid[$i];
+	$treeid = ancestry_array($controller->rootid, $PEDIGREE_GENERATIONS-1);
+	foreach ($treeid as $i=>$pid) {
 		if ($pid) {
 			$person = Person::getInstance($pid);
 			if (!is_null($person)) {
 				$famids = $person->getChildFamilies();
 				foreach($famids as $famid=>$family) {
 					$parents = find_parents_in_record($family->getGedcomRecord());
-					if ($parents) print_sosa_family($famid, $pid, $i + 1);
+					if ($parents) print_sosa_family($famid, $pid, $i);
 					// 	show empty family only if it is the first and only one
-					else if ($i == 0) print_sosa_family("", $pid, $i + 1);
+					else if ($i == 1) print_sosa_family("", $pid, $i);
 				}
 			}
 		}
@@ -200,7 +198,7 @@ END;
 //-- Individual list
 if ($controller->chart_style==2) {
 	require_once("includes/functions_print_lists.php");
-	$treeid = ancestry_array($controller->rootid);
+	$treeid = ancestry_array($controller->rootid, $PEDIGREE_GENERATIONS);
 	echo "<div class=\"center\">";
 	print_indi_table($treeid, $pgv_lang["ancestry_chart"]." : ".PrintReady($controller->name), "sosa");
 	echo "</div>";
@@ -208,8 +206,7 @@ if ($controller->chart_style==2) {
 //-- Family list
 if ($controller->chart_style==3) {
 	require_once("includes/functions_print_lists.php");
-	$PEDIGREE_GENERATIONS -= 1;
-	$treeid = ancestry_array($controller->rootid);
+	$treeid = ancestry_array($controller->rootid, $PEDIGREE_GENERATIONS-1);
 	$famlist = array();
 	foreach ($treeid as $p=>$pid) {
 		$person = Person::getInstance($pid);

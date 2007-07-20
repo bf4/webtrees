@@ -3,7 +3,7 @@
  * Parses gedcom file and displays a descendancy tree.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -143,6 +143,7 @@ if ($view!="preview") {
 if (is_null($controller->descPerson)) {
 	print "<span class=\"error\">".$pgv_lang["record_not_found"]."</span>";
 }
+$controller->generations -= 1; // [ 1757792 ] Charts : wrong generations count
 //-- list
 if ($controller->chart_style==0) {
 	echo "<ul style=\"list-style: none; display: block;\" id=\"descendancy_chart".($TEXT_DIRECTION=="rtl" ? "_rtl" : "")."\">";
