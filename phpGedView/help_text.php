@@ -3,7 +3,7 @@
  * Shows helptext to the users
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,18 +31,18 @@ require "config.php";
 // Load language keys for English
 require $helptextfile["english"];
 @include("modules/research_assistant/languages/lang.".$lang_short_cut["english"].".php");
-@include("./languages/admin.".$lang_short_cut["english"].".php");
-@include("./languages/editor.".$lang_short_cut["english"].".php");
+@include($adminfile["english"]);
+@include($editorfile["english"]);
 @include("./languages/lang.extra.".$lang_short_cut["english"].".php");
-@include("./languages/extra.".$lang_short_cut["english"].".php");
+@include($extrafile["english"]);
 // Load language keys for language other than English
 if ($LANGUAGE != "english") {
 	@include($helptextfile[$LANGUAGE]);
 	@include("modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php");
-	@include("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
-	@include("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
+	@include($adminfile[$LANGUAGE]);
+	@include($editorfile[$LANGUAGE]);
 	@include("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php");
-	@include("./languages/extra.".$lang_short_cut[$LANGUAGE].".php");
+	@include($extrafile[$LANGUAGE]);
 }
 
 if (!isset($help)) $help = "";
