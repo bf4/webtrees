@@ -3,7 +3,7 @@
  * Administrative User Interface.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,16 +32,16 @@ if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
 require_once("includes/functions_print_lists.php");
 
 // Load language keys for English
-@include_once("./languages/admin.".$lang_short_cut["english"].".php");
-@include_once("./languages/editor.".$lang_short_cut["english"].".php");
+@include_once($adminfile["english"]);
+@include_once($editorfile["english"]);
 @include_once("./languages/lang.extra.".$lang_short_cut["english"].".php");
-@include_once("./languages/extra.".$lang_short_cut["english"].".php");
+@include_once($extrafile["english"]);
 // Load language keys for language other than English
 if ($LANGUAGE != "english") {
-	@include_once("./languages/admin.".$lang_short_cut[$LANGUAGE].".php");
-	@include_once("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
+	@include_once($adminfile[$LANGUAGE]);
+	@include_once($editorfile[$LANGUAGE]);
 	@include_once("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php");
-	@include_once("./languages/extra.".$lang_short_cut[$LANGUAGE].".php");
+	@include_once($extrafile[$LANGUAGE]);
 }
 	
 if (!isset($action)) $action="";

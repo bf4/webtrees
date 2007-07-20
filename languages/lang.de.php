@@ -1362,6 +1362,7 @@ $pgv_lang["accesskey_family_gedcom"]	= "G";
 $pgv_lang["add_faq_header"]				= "FAQ Überschrift";
 $pgv_lang["add_faq_body"]				= "FAQ Hauptteil";
 $pgv_lang["add_faq_order"]				= "FAQ Reihenfolge";
+$pgv_lang["add_faq_visibility"] 		= "FAQ Sichtbarkeit";
 $pgv_lang["no_faq_items"]				= "Die FAQ Liste ist leer.";
 $pgv_lang["position_item"]				= "Eintrag ordnen";
 $pgv_lang["faq_list"]					= "FAQ Liste";
