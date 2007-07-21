@@ -243,7 +243,7 @@ switch ($action) {
 
 			print "<table class=\"facts_table $TEXT_DIRECTION\" style=\"width:70%; \">";
 		    print "<tr><td class=\"facts_value center\" colspan=\"2\"><span class=\"subheaders\">".$pgv_lang["listing"].":&nbsp;&nbsp;&nbsp;";
-		    print substr($whichFile["english"],10)."&nbsp;&nbsp;&nbsp;".$pgv_lang["and"]."&nbsp;&nbsp;&nbsp;".substr($whichFile[$language2],10);
+		    print $whichFile["english"]."&nbsp;&nbsp;&nbsp;".$pgv_lang["and"]."&nbsp;&nbsp;&nbsp;".$whichFile[$language2];
 		    print "</span><br /><br />\n";
 		    print "<span class=\"subheaders\">" . $pgv_lang["contents"] . ":</span></td></tr>";
 			$lastfound = (-1);
@@ -581,7 +581,7 @@ switch ($action) {
 			    foreach($list as $key => $item) $list2[$item[0]] = $item[1];
 			    unset($list);
 
-		        print "<br /><span class=\"subheaders\">".$pgv_lang["comparing"]."<br />".substr($whichFile[$language1],10)."&nbsp;&nbsp;&nbsp;&lt;---&gt;&nbsp;&nbsp;&nbsp;".substr($whichFile[$language2],10)."</span><br /><br />\n";
+		        print "<br /><span class=\"subheaders\">".$pgv_lang["comparing"]."<br />".$whichFile[$language1]."&nbsp;&nbsp;&nbsp;&lt;---&gt;&nbsp;&nbsp;&nbsp;".$whichFile[$language2]."</span><br /><br />\n";
 		        // ---- Look for additions
 		        //      These are entries that exist in the first but don't exist in the second file
 		        print "<span class=\"subheaders\">".$pgv_lang["additions"].":</span>";
