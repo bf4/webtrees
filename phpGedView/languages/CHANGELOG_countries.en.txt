@@ -45,9 +45,27 @@ VERSION 4.1
 
 ?$countries["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$countries["FLK"]									23 July 2007			w	removed "(Malvinas)"
+*$countries["FSM"]									23 July 2007			w	removed "(Federated States of)"
+*$countries["GBR"]									23 July 2007			w	removed "(of Great Britain and Northern Ireland)"
+*$countries["IRN"]									23 July 2007			w	removed "(Islamic Republic of)"
+*$countries["KOR"]									23 July 2007			w	removed "(Republic of)"
+*$countries["LAO"]									23 July 2007			Sw	removed "People's Democratic Republic"
+*$countries["LBY"]									23 July 2007			w	removed "n Arab Jamahiriya";
+*$countries["MDA"]									23 July 2007			w	removed "(Republic of)"
+*$countries["MKD"]									23 July 2007			w	removed "(The former Yugoslav Republic of)"
+*$countries["MMR"]									23 July 2007			w	removed "(Burma)"
+*$countries["MOZ"]									23 July 2007			S	Changed to English spelling
+*$countries["PLW"]									23 July 2007			w	removed "(Belau)"
+*$countries["PRK"]									23 July 2007			w	removed "(Democratic People's Republic of Korea)"
+*$countries["SAU"]									23 July 2007			w	removed "(Kingdom of)"
+*$countries["SUN"]									23 July 2007			W	removed "." and "(Soviet Union)"
+*$countries["TZA"]									23 July 2007			w	removed "(United Republic of)"
+*$countries["VAT"]									23 July 2007			w	removed "(Holy See)"
++$countries["???"]									23 July 2007			A	added "Unknown"
 
+23 July 2007:  See also countries.en.php for a method of adding language-specific synonyms for
+the various Chapman codes.  These synonyms are NOT supported by the Translator tool, and are
+treated as normal text when they occur.  The synonyms should only appear in the countries.xx.php
+file for the language in which they occur.
 
-VERSION 4.0
-
-?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
--------------------------------------------------------------------------------------------
