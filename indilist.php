@@ -208,6 +208,7 @@ if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&($show_all=="yes")) {
 	$i = 0;
 	uasort($surnames, "itemsort");
 	print_surn_table($surnames);
+	if (count($indi_hide)>0) print "<br /><span class=\"warning\">".$pgv_lang["hidden"].": ".count($indi_hide)."</span>";
 }
 else if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 	if (!isset($alpha)) $alpha="";
@@ -257,6 +258,7 @@ else if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&(empty($surname))&&
 	$i = 0;
 	uasort($surnames, "itemsort");
 	print_surn_table($surnames);
+	if (count($indi_hide)>0) print "<br /><span class=\"warning\">".$pgv_lang["hidden"].": ".count($indi_hide)."</span>";
 }
 else {
 	$firstname_alpha = false;

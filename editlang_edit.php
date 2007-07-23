@@ -3,7 +3,7 @@
  * Edit a language file
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,6 +82,10 @@ switch ($file_type)
   case "countries": 
 	$lang_filename = $countryfile[$language2];
   	$lang_filename_orig = $countryfile["english"];
+  	break;
+  case "faqlist": 
+	$lang_filename = $faqlistfile[$language2];
+  	$lang_filename_orig = $faqlistfile["english"];
   	break;
   case "lang":
   default: 
@@ -224,6 +228,15 @@ if ($action == "save")
         			  $new_language_array = array();
         			  $new_language_file =  $countryfile[$language2];
         			  $new_language_array = read_complete_file_into_array($new_language_file, "countries[");
+        			  break;
+    case "faqlist": 
+        			  // read faqlist.en.php file into array
+        			  $english_language_array = array();
+        			  $english_language_array = read_complete_file_into_array($faqlistfile["english"], "faqlist[");
+        			  // read faqlist.xx.php file into array
+        			  $new_language_array = array();
+        			  $new_language_file =  $faqlistfile[$language2];
+        			  $new_language_array = read_complete_file_into_array($new_language_file, "faqlist[");
         			  break;
     case "lang": 
     default:

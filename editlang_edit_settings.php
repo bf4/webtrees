@@ -3,7 +3,7 @@
  * File to edit the language settings of PHPGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -112,6 +112,8 @@ if ($action == "new_lang") {
   $adminfile[$ln]    = "languages/admin.".$new_shortcut.".php";
   $editorfile[$ln]    = "languages/editor.".$new_shortcut.".php";
   $countryfile[$ln]    = "languages/countries.".$new_shortcut.".php";
+  $faqlistfile[$ln]    = "languages/faqlist.".$new_shortcut.".php";
+  $extrafile[$ln]    = "languages/extra.".$new_shortcut.".php";
 
 
   // Suggest a suitable flag file
@@ -464,6 +466,8 @@ if ($action != "save" and $action != "toggleActive") {
   if (!isset($v_adminfile)) $v_adminfile = "languages/admin.".$v_lang_shortcut.".php";
   if (!isset($v_editorfile)) $v_editorfile = "languages/editor.".$v_lang_shortcut.".php";
   if (!isset($v_countryfile)) $v_countryfile = "languages/countries.".$v_lang_shortcut.".php";
+  if (!isset($v_faqlistfile)) $v_faqlistfile = "languages/faqlist.".$v_lang_shortcut.".php";
+  if (!isset($v_extrafile)) $v_extrafile = "languages/extra.".$v_lang_shortcut.".php";
  
   if ($action != "new_lang"){
     print "<tr>";
@@ -473,7 +477,7 @@ if ($action != "save" and $action != "toggleActive") {
     print "</td>";
     write_td_with_textdir_check();
     
-    foreach(array($v_adminfile, $v_config_filename, $v_countryfile, $v_editorfile, $v_factsfile, $v_helpfile, $v_lang_filename) as $key => $fileName) {
+    foreach(array($v_adminfile, $v_config_filename, $v_countryfile, $v_editorfile, $v_factsfile, $v_faqlistfile, $v_helpfile, $v_lang_filename, $v_extrafile) as $key => $fileName) {
 	    print $fileName;
     	if (!file_exists($fileName)) print "&nbsp;&nbsp;<b class=\"error\">" . $pgv_lang["file_does_not_exist"] . "</b>";
     	print "<br />";
@@ -512,6 +516,7 @@ if ($action == "save") {
     $adminfile[$ln]    = "languages/admin.".$v_lang_shortcut.".php";
     $editorfile[$ln]    = "languages/editor.".$v_lang_shortcut.".php";
     $countryfile[$ln]    = "languages/countries.".$v_lang_shortcut.".php";
+    $extrafile[$ln]    = "languages/extra.".$v_lang_shortcut.".php";
     $language_settings[$ln]  = $lang;
     $languages[$ln]    = $ln;
   }
@@ -570,6 +575,8 @@ if ($action == "save" or $action=="toggleActive") {
         fwrite($fp, "\$lang[\"adminfile\"]    = \"" . $adminfile[$key] . "\";\r\n");
         fwrite($fp, "\$lang[\"editorfile\"]    = \"" . $editorfile[$key] . "\";\r\n");
         fwrite($fp, "\$lang[\"countryfile\"]    = \"" . $countryfile[$key] . "\";\r\n");
+        fwrite($fp, "\$lang[\"faqlistfile\"]    = \"" . $faqlistfile[$key] . "\";\r\n");
+        fwrite($fp, "\$lang[\"extrafile\"]    = \"" . $extrafile[$key] . "\";\r\n");
         fwrite($fp, "\$lang[\"DATE_FORMAT\"]    = \"" . $DATE_FORMAT_array[$key] . "\";\r\n");
         fwrite($fp, "\$lang[\"TIME_FORMAT\"]    = \"" . $TIME_FORMAT_array[$key] . "\";\r\n");
         fwrite($fp, "\$lang[\"WEEK_START\"]    = \"" . $WEEK_START_array[$key] . "\";\r\n");

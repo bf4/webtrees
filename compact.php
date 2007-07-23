@@ -3,7 +3,7 @@
  * Compact pedigree tree
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006	John Finlay and Others
+ * Copyright (C) 2002 to 2007	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -115,7 +115,7 @@ if ($view != "preview") {
 print "</td></tr></table>";
 
 // process the tree
-$treeid = ancestry_array($rootid,4);
+$treeid = ancestry_array($rootid, 5);
 print "<br />";
 print "<table width='100%' border='0' cellpadding='0' cellspacing='0'>";
 

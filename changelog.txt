@@ -27,6 +27,8 @@ Version 4.2
  - Adding a "never married" icon on ancestry booklet when NMR=0 (opus27)
 
 Version 4.1
+ - Added Implement faqlist.xx.php -- library of FAQs (canajun2eh)
+ - Fixed [ 1755178 ] Links table empty in Media Viewer (opus27)
  - Fixed [ 1755410 ] FAQ list lost when Index page configured (canajun2eh)
  - Fixed [ 1754482 ] Incorrect Indi / Fam / Source List titles (canajun2eh)
  - Added Allow references to $pgv_lang, $factarray, $GLOBALS in News title & News body (canajun2eh)

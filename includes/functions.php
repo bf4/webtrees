@@ -6,7 +6,7 @@
  * routines and sorting functions.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -844,10 +844,7 @@ function find_children_in_record($famrec, $me='') {
  * @return array array of family ids
  */
 function find_family_ids($pid) {
-	$families = array();
-	if (!$pid) return $families;
-
-	$indirec = find_person_record($pid);
+	$indirec=find_person_record($pid);
 	return find_families_in_record($indirec, "FAMC");
 }
 
@@ -860,9 +857,7 @@ function find_family_ids($pid) {
  * @return array array of family ids
  */
 function find_sfamily_ids($pid) {
-	$families = array();
-	if (empty($pid)) return $families;
-	$indirec = find_person_record($pid);
+	$indirec=find_person_record($pid);
 	return find_families_in_record($indirec, "FAMS");
 }
 
@@ -875,15 +870,8 @@ function find_sfamily_ids($pid) {
  * @return array array of family ids
  */
 function find_families_in_record($indirec, $tag) {
-	$families = array();
-
-	$ct = preg_match_all("/1\s*$tag\s*@(.*)@/", $indirec, $match,PREG_SET_ORDER);
-	if ($ct>0){
-		for($i=0; $i<$ct; $i++) {
-			$families[$i] = $match[$i][1];
-		}
-	}
-	return $families;
+	preg_match_all("/1\s*{$tag}\s*@(.+)@/", $indirec, $match);
+	return $match[1];
 }
 
 /**
@@ -3106,7 +3094,8 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
  *
  */
 function loadLanguage($desiredLanguage="english", $forceLoad=false) {
-	global $LANGUAGE, $pgv_language, $lang_short_cut, $pgv_lang, $factarray, $factsfile;
+	global $LANGUAGE, $lang_short_cut, $factarray, $pgv_lang;
+	global $pgv_language, $factsfile, $adminfile, $editorfile, $extrafile;
 	global $TEXT_DIRECTION, $TEXT_DIRECTION_array;
 	global $DATE_FORMAT, $DATE_FORMAT_array, $CONFIGURED;
 	global $TIME_FORMAT, $TIME_FORMAT_array;
@@ -3140,25 +3129,25 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 			include_once($file);
 		}
 		// load admin lang keys
-		$file = "./languages/admin.".$lang_short_cut[$LANGUAGE].".php";
+		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
 			if (!$goodDB || !adminUserExists() || userGedcomAdmin($username) || $user['canadmin'] || !$CONFIGURED) {
 				include($file);
 			}
 		}
 		// load the edit lang keys
-		$file = "./languages/editor.".$lang_short_cut[$LANGUAGE].".php";
+		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
 			if (!$goodDB || !adminUserExists() || userGedcomAdmin($username) || userCanEdit($username)) {
 				include($file);
 			}
 		}
-		
+		// load extra language files
 		$file = "./languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
 		if (file_exists($file)) {
 			include($file);
 		}
-		$file = "./languages/extra.".$lang_short_cut[$LANGUAGE].".php";
+		$file = $extrafile[$LANGUAGE];
 		if (file_exists($file)) {
 			include($file);
 		}
@@ -3191,24 +3180,25 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		$goodDB = check_db();
 		
 		// load admin lang keys
-		$file = "./languages/admin.".$lang_short_cut[$LANGUAGE].".php";
+		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
 			if ((!$goodDB || !adminUserExists() || userGedcomAdmin($username) || $user['canadmin'] || !$CONFIGURED)) {
 					include($file);
 			}
 		}
 		// load the edit lang keys
-		$file = "./languages/editor.".$lang_short_cut[$LANGUAGE].".php";
+		$file = $editorfile[$LANGUAGE];
 		if (file_exists($file)) {
 			if ((!$goodDB || !adminUserExists() || userGedcomAdmin($username) || userCanEdit($username))) {
 				include($file);
 			}
 		}
+		// load the extra language file 
 		$file = "./languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
 		if (file_exists($file)) {
 			include($file);
 		}
-		$file = "./languages/extra.".$lang_short_cut[$LANGUAGE].".php";
+		$file = $extrafile[$LANGUAGE];
 		if (file_exists($file)) {
 			include($file);
 		}

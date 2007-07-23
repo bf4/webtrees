@@ -1,11 +1,9 @@
 <?php
 /**
- * Display an hourglass chart
- *
- * Set the root person using the $pid variable
+ * German FAQ texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,32 +19,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * This Page Is Valid XHTML 1.0 Transitional! > 23 August 2005
  *
+ * @author PGV Developers
  * @package PhpGedView
- * @subpackage Charts
+ * @subpackage Languages
  * @version $Id$
  */
 
-/*
- * The purpose of this page is to build the left half of the Hourglass chart via Ajax.
- * This page only produces a husband and wife with the connecting lines to unite and 
- * 	label the pair as a pair.
- */
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
+	exit;
+}
 
-require_once("includes/controllers/hourglass_ctrl.php");
+$faqlist["FAQ_000_head"] = "\"FAQ\": Ich habe davon gehört, aber was ist das?";
+$faqlist["FAQ_000_body"] = "<b>FAQ</b> ist ein Akronym für den englischen Begriff, <b>F</b>requently <b>A</b>sked <b>Q</b>uestion.  Eine FAQ ist eine häufig gestellte Frage.<br /><br />Die FAQ-Liste ist eine Liste von Fragen die oft vorkommen, zusammen (natürlich) mit deren Antworten.  Die FAQ-Liste wurde vom PhpGedView-Team zusammengestellt, und wird öfters mit neuen Fragen ergänzt.";
 
-// -- print html header information
 ?>
-<!-- // NOTE: Start table header -->
-	<!-- // NOTE: Close table header -->
-<!-- // descendancy -->
-
-<!-- // pedigree -->
-	
-<td valign="middle">
-<?php
-$controller->print_person_pedigree($controller->pid, 0);?>
-</td>
-</tr></table>
-<br /><br />

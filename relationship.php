@@ -3,7 +3,7 @@
  * Calculates the relationship between two individuals in the gedcom
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -820,7 +820,10 @@ else {
 <?php
 $maxyoffset = $Dbaseyoffset;
 if ((!empty($pid1))&&(!empty($pid2))) {
-	if (!$disp) print_privacy_error($CONTACT_EMAIL);
+	if (!$disp) {
+		print "<br /><br />";
+		print_privacy_error($CONTACT_EMAIL);
+	}
 	else {
 		if (isset($_SESSION["relationships"][$path_to_find])) $node = $_SESSION["relationships"][$path_to_find];
 		else $node = get_relationship($pid1, $pid2, $followspouse, 0, true, $path_to_find);

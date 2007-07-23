@@ -1267,9 +1267,9 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 	echo "</table>\n";
 }
 
-
 /**
  * print a sortable table of recent changes
+ * also called by mediaviewer to list records linked to a media
  *
  * @param array $datalist contain records that were extracted from the database.
  */
@@ -1296,9 +1296,11 @@ function print_changes_table($datalist) {
 	foreach($datalist as $key => $value) {
 		if ($n>=$NMAX) break;
 		$record = null;
-		if (isset($value['d_gid'])) $record = GedcomRecord::getInstance($value['d_gid']);
-		else $record = GedcomRecord::getInstance($key);
-		if (is_null($record) && isset($value[0])) $record = GedcomRecord::getInstance($value[0]);
+		if (!is_array($value)) $record = GedcomRecord::getInstance($key);
+		else {
+			if (isset($value['d_gid'])) $record = GedcomRecord::getInstance($value['d_gid']);
+			if (is_null($record) && isset($value[0])) $record = GedcomRecord::getInstance($value[0]);
+		}
 		if (is_null($record)) continue;
 		// Privacy
 		if (!$record->canDisplayDetails()) {

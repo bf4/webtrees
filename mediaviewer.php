@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: functions_print.php 491 2006-10-12 15:51:11Z opus27 $
+ * @version $Id$
  * @TODO use more theme specific CSS, allow a more fluid layout to take advantage of the page width
  */
 //These files are required for this page to work
@@ -139,7 +139,7 @@ else{
 					?>
 					 <br /><?php print $pgv_lang["relations_heading"]; ?>
 					<?php
-						//PrintMediaLinks($links, "");
+						// PrintMediaLinks($links, "");
 						require_once 'includes/functions_print_lists.php';
 						print_changes_table($links);
 					}	?>

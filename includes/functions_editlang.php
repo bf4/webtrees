@@ -3,7 +3,7 @@
  * Various functions used by the language editor of PhpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,9 +77,11 @@ function UnLockFile($Temp_Filename)
 
 
 //-----------------------------------------------------------------
-function read_complete_file_into_array($dFileName, $string_needle)
-{
+function read_complete_file_into_array($dFileName, $string_needle) {
 	global $file_type, $language2, $lang_shortcut;
+
+	if (!is_array($string_needle)) $array_needle = array($string_needle);
+	else $array_needle = $string_needle;
 
 	$Filename =  $dFileName;
 	LockFile($Filename);
@@ -88,15 +90,13 @@ function read_complete_file_into_array($dFileName, $string_needle)
 	$InfoArray = array();
 	$dFound = ($fp = @fopen($Filename, "r"));
 
-	if (!$dFound)
-	{
+	if (!$dFound) {
 		$dUserName = getUserName();
 		$dUser = getUser($dUserName);
 		$dUserRealName = $dUser["firstname"]." ".$dUser["lastname"];
 		$Language2 = ucfirst($language2);
 
-		switch ($file_type)
-		{
+		switch ($file_type) {
 			case "lang":
 			case "admin":
 			case "editor":
@@ -118,6 +118,14 @@ function read_complete_file_into_array($dFileName, $string_needle)
 			case "countries":
 				$comment1 = "$Language2 Language file for PhpGedView.";
 				$comment2 = "//-- Define $Language2 name equivalents for Chapman country codes";
+				break;
+			case "faqlist":
+				$comment1 = "$Language2 FAQ file for PhpGedView.";
+				$comment2 = "//-- Define $Language2 Frequently Asked Questions";
+				break;
+			case "extra":
+				$comment1 = "$Language2 extra definitions file for PhpGedView.";
+				$comment2 = "//-- Define $Language2 extra definitions";
 				break;
 			case "rs_lang":
 				$comment1 = "$Language2 Language file for PhpGedView Researchlog";
@@ -170,15 +178,13 @@ function read_complete_file_into_array($dFileName, $string_needle)
 		$dFound = ($fp = @fopen($Filename, "r"));
 	}
 
-	if ($dFound)
-	{
-		while (!feof($fp))
-		{
+	if ($dFound) {
+		while (!feof($fp)) {
 			$line = fgets($fp, (6 * 1024));
-			if ($x = strpos(trim($line), $string_needle))
-			{
-				if ($x == 1)
-				{
+			$foundNeedle = false;
+			foreach ($array_needle as $needle) {
+			  if (!$foundNeedle && $x = strpos(trim($line), $needle)) {
+				if ($x == 1) {
 					$line_mine = $line;
 					$line = trim($line);
 					$key = trim(substr($line, 0, strpos($line, "]") + 1));
@@ -191,17 +197,17 @@ function read_complete_file_into_array($dFileName, $string_needle)
 					$InfoArray[$LineCounter][1] = $content;			// message of keystring
 
 					# print "#".$content."#<br />";
-					if ($content != "")
-					{
+					if ($content != "") {
 						$InfoArray[$LineCounter][2] = get_last_string($line_mine, $content);	// pos of the first char of the message
 					}
 					else $InfoArray[$LineCounter][2] = "";
 
 					$InfoArray[$LineCounter][3] = $line_mine;			// complete line
+					$foundNeedle = true;
 				}
-				else {$InfoArray[$LineCounter][0] = $line;}
-			}
-			else {$InfoArray[$LineCounter][0] = $line;}
+			  }
+		    }
+			if (!$foundNeedle) $InfoArray[$LineCounter][0] = $line;
 			$LineCounter++;
 		}
 		fclose($fp);
@@ -308,27 +314,26 @@ function write_array_into_file($dFileName01, $writeArray, $add_new_message_at_li
 }
 
 //-----------------------------------------------------------------
-function read_export_file_into_array($dFileName, $string_needle)
-{
+function read_export_file_into_array($dFileName, $string_needle) {
+
+	if (!is_array($string_needle)) $array_needle = array($string_needle);
+	else $array_needle = $string_needle;
+
 	$Filename = $dFileName;
 
 	$LineCounter = 0;
 	$InfoArray = array();
 	$dFound = ($fp = @fopen($Filename, "r"));
 
-	if (!$dFound)
-	{
+	if (!$dFound)  {
 		print "Error file not found"; Exit;
-	}
-	else
-	{
-		while (!feof($fp))
-		{
+	} else {
+		while (!feof($fp)) {
 			$line = fgets($fp, (6 * 1024));
-			if ($x = strpos(trim($line), $string_needle))
-			{
-				if ($x == 1)
-				{
+			$foundNeedle = false;
+			foreach ($array_needle as $needle) {
+			  if (!$foundNeedle && $x = strpos(trim($line), $needle)) {
+				if ($x == 1) {
 					$line_mine = $line;
 					$line = trim($line);
 					$key = trim(substr($line, 0, strpos($line, "]") + 1));
@@ -337,8 +342,10 @@ function read_export_file_into_array($dFileName, $string_needle)
 					else $content = "";
 					$InfoArray[$LineCounter][0] = $key;				// keystring
 					$InfoArray[$LineCounter][1] = $content;			// message of keystring
+					$foundNeedle = true;
 				}
 				$LineCounter++;
+			  }
 			}
 		}
 		fclose($fp);

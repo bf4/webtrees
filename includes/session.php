@@ -620,7 +620,7 @@ if (!isset($DEFAULT_GEDCOM)) $DEFAULT_GEDCOM = "";
 if (empty($_REQUEST["GEDCOM"])) {
    if (isset($_SESSION["GEDCOM"])) $GEDCOM = $_SESSION["GEDCOM"];
    else {
-      if ((empty($GEDCOM))||(empty($GEDCOMS[$GEDCOM]))) $GEDCOM=$DEFAULT_GEDCOM;
+      if (empty($GEDCOM) || empty($GEDCOMS[$GEDCOM])) $GEDCOM=$DEFAULT_GEDCOM;
       else if ((empty($GEDCOM))&&(count($GEDCOMS)>0)) {
          foreach($GEDCOMS as $ged_file=>$ged_array) {
 	         $GEDCOM = $ged_file;
@@ -637,7 +637,6 @@ if (isset($_REQUEST["ged"])) {
 }
 if (is_int($GEDCOM)) $GEDCOM = get_gedcom_from_id($GEDCOM);
 $_SESSION["GEDCOM"] = $GEDCOM;
-//$GEDCOM_TITLE = $GEDCOMS[$GEDCOM]["title"];
 $INDILIST_RETRIEVED = false;
 $FAMLIST_RETRIEVED = false;
 
@@ -719,6 +718,8 @@ $factsfile 				= array();
 $adminfile 				= array();
 $editorfile				= array();
 $countryfile			= array();
+$faqlistfile			= array();
+$extrafile				= array();
 $factsarray 			= array();
 $pgv_lang_name 			= array();
 $langcode				= array();
@@ -746,6 +747,8 @@ foreach ($language_settings as $key => $value) {
 	$adminfile[$key]			= $value["adminfile"];
 	$editorfile[$key]			= $value["editorfile"];
 	$countryfile[$key]			= $value["countryfile"];
+	$faqlistfile[$key]			= $value["faqlistfile"];
+	$extrafile[$key]			= $value["extrafile"];
 	$ALPHABET_upper[$key]		= $value["ALPHABET_upper"];
 	$ALPHABET_lower[$key]		= $value["ALPHABET_lower"];
 	$MULTI_LETTER_ALPHABET[$key] = $value["MULTI_LETTER_ALPHABET"];

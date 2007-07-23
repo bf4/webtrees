@@ -7,17 +7,18 @@ For changes between 2005.03.15 and 2005.12.08, refer to LANG_CHANGELOG_bef.2005.
 The LANG_CHANGELOG.txt file was getting too big to work with easily.
 
 Use this file to follow the changes made to the English language files
-between different versions of phpGedView.  There are seven separate CHANGELOG files,
+between different versions of phpGedView.  There are eight separate CHANGELOG files,
 one to correspond to each file that together make up the entire set of English text.
 
 The CHANGELOG files are:
+		CHANGELOG_admin.en.txt
 		CHANGELOG_configure_help.en.txt
 		CHANGELOG_countries.en.txt
+		CHANGELOG_editor.en.txt
 		CHANGELOG_facts.en.txt
+		CHANGELOG_faqlist.en.txt
 		CHANGELOG_help_text.en.txt
 		CHANGELOG_lang.en.txt
-		CHANGELOG_admin.en.txt
-		CHANGELOG_editor.en.txt
 
 + $pgv_lang["text"] / means added
 - $pgv_lang["text"] / deleted
@@ -44,6 +45,13 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
+*$pgv_lang["language_to_export_help"]				20 Jul 2007				W
+*$pgv_lang["lang_file_descriptions"]				20 Jul 2007				W
+*$pgv_lang["add_faq_header_help"]					20 Jul 2007				w
+*$pgv_lang["add_faq_body_help"]						20 Jul 2007				w
+*$pgv_lang["add_faq_pgvLangRefs"]					20 Jul 2007				W
+*$pgv_lang["add_faq_order_help"]					20 Jul 2007				w
++$pgv_lang["add_faq_visibility_help"]				19 Jul 2007				A
 +$pgv_lang["index_gedcom_news_adm_help"]			15 July 2007			MW	Moved from help_text.en.php
 *$pgv_lang["add_faq_header_help"]					14 Jul 2007				W
 *$pgv_lang["add_faq_body_help"]						14 Jul 2007				W

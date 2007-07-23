@@ -350,10 +350,13 @@ while ($x<$i) {
 	if ($matched[$x]!=0) {
 		print $gedplace;
 		$z=0;
-		while ($z<$parts) {
+		while ($z<$max) {
+		if ($z<$parts) {
 			print $plac[$z];
 			print $lati[$z];
 			print $long[$z];
+		} else {
+			print "<td class='facts_value'>&nbsp;</td><td class='facts_value'>&nbsp;</td><td class='facts_value'>&nbsp;</td>";}
 			$z++;
 		}
 		print "</tr>";

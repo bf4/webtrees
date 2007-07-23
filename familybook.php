@@ -5,7 +5,7 @@
  * Set the root person using the $pid variable
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -323,11 +323,11 @@ function print_family_book($pid, $descent)
         print "<td valign=\"middle\">\n";
         $dgenerations = $generations;
         $dgenerations = max_descendency_generations($pid, 0);
-        print_descendency($pid, 0);
+        print_descendency($pid, 1);
         print "</td>\n";
         //-- pedigree
         print "<td valign=\"middle\">\n";
-        print_person_pedigree($pid, 0);
+        print_person_pedigree($pid, 1);
         print "</td>\n";
         print "</tr></table>\n";
         print "<br /><br />\n";
