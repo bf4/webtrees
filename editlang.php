@@ -149,6 +149,10 @@ switch ($action) {
 		print ">" . "editor.xx.php" . "</option>";
 
 		print "\n\t\t\t<option value=\"facts\"";
+		if ($file_type == "extra") print " selected=\"selected\"";
+		print ">" . "extra.xx.php" . "</option>";
+
+		print "\n\t\t\t<option value=\"facts\"";
 		if ($file_type == "facts") print " selected=\"selected\"";
 		print ">" . "facts.xx.php" . "</option>";
 
@@ -227,6 +231,10 @@ switch ($action) {
 		      case "faqlist":
 		        $whichFile = $faqlistfile;
 		        $whichVars = "faqlist[";
+		        break;
+		      case "extra":
+		        $whichFile = $extrafile;
+		        $whichVars = array("pgv_lang[", "factarray[", "countries[", "countries[");
 		        break;
 		      case "lang":
 		      default:
@@ -532,7 +540,7 @@ switch ($action) {
 		print "</table>";
 		print "</form>";
 		if (isset($execute)) {
-    		foreach(array("admin", "configure_help", "countries", "editor", "facts", "faqlist", "help_text", "lang") as $file_type) {
+    		foreach(array("admin", "configure_help", "countries", "editor", "extra", "facts", "faqlist", "help_text", "lang") as $file_type) {
 		      switch ($file_type) {
 		        case "facts":
 		          $whichFile = $factsfile;
@@ -561,6 +569,10 @@ switch ($action) {
 		        case "faqlist":
 		          $whichFile = $faqlistfile;
 		          $whichVars = "faqlist[";
+		          break;
+		        case "extra":
+		          $whichFile = $extrafile;
+		          $whichVars = array("pgv_lang[", "factarray[", "countries[", "faqlist[");
 		          break;
 		        case "lang":
 		        default:
@@ -705,8 +717,10 @@ $helptextfile 			= array();
 $flagsfile 				= array();
 $factsfile 				= array();
 $factsarray 			= array();
-$adminarray 			= array();
-$editorarray 			= array();
+$adminfile	 			= array();
+$editorfile 			= array();
+$faqlistfile	 		= array();
+$extrafile		 		= array();
 $pgv_lang_name 			= array();
 $langcode				= array();
 $ALPHABET_upper			= array();
@@ -732,6 +746,8 @@ foreach ($language_settings as $key => $value) {
 	$factsfile[$key]			= $value["factsfile"];
 	$adminfile[$key]			= $value["adminfile"];
 	$editorfile[$key]			= $value["editorfile"];
+	$faqlistfile[$key]			= $value["faqlistfile"];
+	$extrafile[$key]			= $value["extrafile"];
 	$ALPHABET_upper[$key]		= $value["ALPHABET_upper"];
 	$ALPHABET_lower[$key]		= $value["ALPHABET_lower"];
 	$MULTI_LETTER_ALPHABET[$key] = $value["ALPHABET_lower"];
@@ -755,8 +771,8 @@ foreach ($language_settings as $key => $value) {
 }
 // Language specific admin editor language tags
 global $lang_short_cut;
-require "languages/editor.en.php";
-if(file_exists("languages/editor.".$lang_short_cut[$LANGUAGE].".php")) require "languages/editor.".$lang_short_cut[$LANGUAGE].".php";
+require $editorfile["english"];
+if(file_exists($editorfile["$LANGUAGE"])) require $editorfile["$LANGUAGE"];
 
 //Normal footer stuff
 require $pgv_language["english"];
