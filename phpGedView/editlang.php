@@ -148,7 +148,7 @@ switch ($action) {
 		if ($file_type == "editor") print " selected=\"selected\"";
 		print ">" . "editor.xx.php" . "</option>";
 
-		print "\n\t\t\t<option value=\"facts\"";
+		print "\n\t\t\t<option value=\"extra\"";
 		if ($file_type == "extra") print " selected=\"selected\"";
 		print ">" . "extra.xx.php" . "</option>";
 
@@ -234,7 +234,7 @@ switch ($action) {
 		        break;
 		      case "extra":
 		        $whichFile = $extrafile;
-		        $whichVars = array("pgv_lang[", "factarray[", "countries[", "countries[");
+		        $whichVars = array("pgv_lang[", "factarray[", "countries[", "faqlist[");
 		        break;
 		      case "lang":
 		      default:
