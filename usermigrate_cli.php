@@ -3,7 +3,7 @@
  * Command line utility for backups.
  * 
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  * @author John Finlay
  * @package PhpGedView
  * @subpackage Admin
- * @version $Id: usermigrate.php 552 2006-11-02 21:58:56Z yalnifj $
+ * @version $Id$
  */
 
 function print_usage() {
