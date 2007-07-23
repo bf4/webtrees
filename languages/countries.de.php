@@ -94,7 +94,7 @@ $countries["ETH"]="Äthiopien";
 $countries["FIN"]="Finnland";
 $countries["FJI"]="Fidschi";
 $countries["FLD"]="Flandern";
-$countries["FLK"]="Falklandinseln (Malvinas)";
+$countries["FLK"]="Falklandinseln";
 $countries["FRA"]="Frankreich";
 $countries["FRO"]="Färöer";
 $countries["FSM"]="Mikronesien";
@@ -228,7 +228,7 @@ $countries["SMR"]="San Marino";
 $countries["SOM"]="Somalia";
 $countries["SPM"]="St. Pierre und Miquelon";
 $countries["STP"]="São Tomé und Príncipe";
-$countries["SUN"]="UdSSR (Sowjet-Union)";
+$countries["SUN"]="UdSSR";
 $countries["SUR"]="Suriname";
 $countries["SVK"]="Slowakei";
 $countries["SVN"]="Slowenien";
@@ -275,5 +275,40 @@ $countries["ZAF"]="Südafrika";
 $countries["ZAR"]="Zaire";
 $countries["ZMB"]="Sambien";
 $countries["ZWE"]="Zimbabwe";
+$countries["???"]="Unbekannt";
+
+/*
+ * The following table lists alternate names for various Chapman codes.
+ * It will be used when country names have to be converted to Chapman codes.
+ * You do not have to list all the possibilities in all page languages.  This
+ * will be done automatically by the country-to-Chapman conversion routine.
+ *
+ * Because the list, and its contents, are specific to each language, the 
+ * Translator Tool won't let you work on the list directly.  The list will
+ * have to be updated and amended manually.
+ *
+ * Suppose Chapman code "XYZ" represents the same country, and that country 
+ * had the names "Name1", "Name2", "Name3" in its history.  It is now known
+ * as "Current name".  You can list the various names like this:
+ *
+ * $countries["XYZ"]="Current name";
+ * $altCountryName["XYZ"]="Name1; Name2; Name3";
+ *
+ * The Chapman-to-country conversion will always use the $countries list of
+ * the current page language, no matter what the original country name was.
+ * 
+ */
+$altCountryNames["COD"]="Zaire";
+$altCountryNames["DEU"]="Deutsche Demokratische Republik; DDR";
+$altCountryNames["FLK"]="Malvinas";		// Not really necessary: primary name in Spanish list
+$altCountryNames["GBR"]="Großbritannien";
+$altCountryNames["LKA"]="Ceylon";
+$altCountryNames["MAC"]="Macao";
+$altCountryNames["MMR"]="Burma";
+$altCountryNames["NLD"]="Holland";
+$altCountryNames["PLW"]="Belau";
+$altCountryNames["SUN"]="Sowjetunion";
+$altCountryNames["TLS"]="Ost Timor";
+$altCountryNames["WSM"]="West Samoa";
 
 ?>
