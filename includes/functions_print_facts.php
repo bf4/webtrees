@@ -1011,7 +1011,19 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 				print_main_notes($factrec, $level, $pid, $linenum, $noedit);
 			}
 		}
-		print "\n\t\t<tr><td valign=\"top\" class=\"descriptionbox $styleadd center width20\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\" alt=\"\" /><br />".$factarray["NOTE"];
+		print "\n\t\t<tr><td valign=\"top\" class=\"descriptionbox $styleadd center width20\">";
+		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\" alt=\"\" /><br />";
+		if ($level<2) print $factarray["NOTE"];
+		else {
+			$factlines = explode("\n", $factrec); // 1 BIRT Y\n2 NOTE ...
+			$factwords = explode(" ", $factlines[0]); // 1 BIRT Y
+			$factname = $factwords[1]; // BIRT
+			if ($factname == "EVEN") {
+				$factwords = explode(" ", $factlines[1]); // 1 EVEN\n2 TYPE MDCL\n2 NOTE
+				$factname = $factwords[2]; // MDCL
+			}
+			print $factarray[$factname];
+		}
 		if (!$noedit && userCanEdit(getUserName())&&(!FactEditRestricted($pid, $factrec))&&($styleadd!="change_old")&&($view!="preview")) {
 			$menu = array();
 			$menu["label"] = $pgv_lang["edit"];

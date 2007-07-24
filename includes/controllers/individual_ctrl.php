@@ -1060,6 +1060,11 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	function get_note_count() {
+		$ct = preg_match_all("/\d NOTE /", $this->indi->gedrec, $match, PREG_SET_ORDER);
+		foreach ($this->indi->getSpouseFamilies() as $k => $sfam)
+			$ct += preg_match("/\d NOTE /", $sfam->getGedcomRecord());
+		return $ct;
+		/**
 		$notecount=0;
 		$otherfacts = $this->getOtherFacts();
 		foreach ($otherfacts as $key => $factrec) {
@@ -1072,6 +1077,7 @@ class IndividualControllerRoot extends BaseController {
 			}
 		}
 		return $notecount;
+		**/
 	}
 
 	function print_notes_tab() {
@@ -1084,7 +1090,6 @@ class IndividualControllerRoot extends BaseController {
 		   print "</td></tr>";
 		}
 		else {
-			$notecount=0;
 			$otherfacts = $this->getOtherFacts();
 			foreach ($otherfacts as $key => $factrec) {
 				$ft = preg_match("/\d\s(\w+)(.*)/", $factrec[1], $match);
@@ -1093,11 +1098,15 @@ class IndividualControllerRoot extends BaseController {
 				$fact = trim($fact);
 				if ($fact=="NOTE") {
 					print_main_notes($factrec[1], 1, $this->pid, $factrec[0]);
-					$notecount++;
 				}
 				$FACT_COUNT++;
 			}
-		   if ($notecount==0) print "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab2"]."</td></tr>\n";
+			// 2nd level notes/sources [ 1712181 ]
+			$this->indi->add_family_facts(false);
+			foreach ($this->getIndiFacts() as $key => $factrec) {
+				print_main_notes($factrec[1], 2, $this->pid, $factrec[0], true);
+			}
+			if ($this->get_note_count()==0) print "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab2"]."</td></tr>\n";
 			//-- New Note Link
 			if (!$this->isPrintPreview() && (userCanEdit($this->uname))&&$this->indi->canDisplayDetails()) {
 			?>
@@ -1117,7 +1126,10 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	function get_source_count() {
-		return preg_match_all("/\d SOUR @(.*)@/", $this->indi->gedrec, $match, PREG_SET_ORDER);
+		$ct = preg_match_all("/\d SOUR @(.*)@/", $this->indi->gedrec, $match, PREG_SET_ORDER);
+		foreach ($this->indi->getSpouseFamilies() as $k => $sfam)
+			$ct += preg_match("/\d SOUR /", $sfam->getGedcomRecord());
+		return $ct;
 		/**
 		$sourcecount = 0;
 		$otheritems = $this->getOtherFacts();
