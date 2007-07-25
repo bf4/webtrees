@@ -309,5 +309,6 @@ $countries["ZAF"]="דרום אפריקה";
 $countries["ZAR"]="זאיר";
 $countries["ZMB"]="זמביה";
 $countries["ZWE"]="זימבבואה";
+$countries["???"]="בלתי ידוע"; //@@
 
 ?>

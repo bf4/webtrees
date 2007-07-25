@@ -309,4 +309,6 @@ $countries["ZAF"]="Etelä-Afrikka";
 $countries["ZAR"]="Zaire";
 $countries["ZMB"]="Sambia";
 $countries["ZWE"]="Zimbabwe";
+$countries["???"]="Tuntematon";
+
 ?>
