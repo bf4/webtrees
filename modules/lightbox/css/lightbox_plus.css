@@ -1,0 +1,122 @@
+
+/* lightbox_plus.css version 3.00  29/06/2007  */
+
+
+#lightbox {
+        background-color: #FFFFFF;
+        padding-left: 8px;
+        padding-right: 8px;
+        padding-top: 18px;
+        padding-bottom: 18px;
+}
+
+#overlay {
+        background-color: #000000;
+        filter:alpha(opacity=60);
+        -moz-opacity: 0.6;
+        opacity: 0.6;
+}
+
+#lightboxCaption {
+        padding-top: 3px;
+        padding-bottom: 3px;		
+        color: #000080;
+        background-color: #FFFFFF;
+        font-size: 100%;
+        font-weight: bold;
+        font-family: tahoma, verdana, arial, helvetica, sans-serif;
+        text-align: center;
+}
+
+#lightboxIndicator {
+        border: 0px solid #FFFFFF;
+}
+
+#lightboxOverallView {
+        background-image: url(images/overlay.png);
+}
+
+* html #lightboxOverallView,
+* html #overlay {
+        background-color: #000000;
+        background-image: url(images/blank.gif);
+        filter: Alpha(opacity=50);
+}
+
+.prvpic img
+{
+/* background-color: #777777; */
+background-color: none;
+border-style: dotted;
+border: 0px;
+border-color: none;
+padding: 1px;
+}
+
+.pic
+{
+/* background-color: #777777; */
+background-color: none;
+border-style: solid;
+border: 0px;
+border-color: #ffffff;
+padding: 0px;
+}
+
+/*
+#thumbcontainer
+{
+display: block;
+width: 100%;
+}
+*/
+
+#thumblist
+{
+display: block;
+list-style-type: none;
+float: left;
+}
+
+#thumblist li
+{
+display: block;
+list-style-type: none;
+padding-bottom: 8px;
+padding-left: 4px;
+padding-right: 4px;
+float: left;
+}
+
+#thumblist a img
+{
+border-style:none;
+border:0px;
+padding:1px;
+}
+
+
+#thumblist a:hover img
+{
+border-style:none;
+border:0px;
+background-color:#BDB071;
+padding:1px;
+}
+
+
+#clearlist:after
+{
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+/* #clearlist {display: inline-block;}  */
+
+/* Hides from IE-mac \*/
+* html .clearfix {height: 1%;}
+#clearlist {display: block;}
+/* End hide from IE-mac */
