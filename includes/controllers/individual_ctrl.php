@@ -1842,6 +1842,17 @@ class IndividualControllerRoot extends BaseController {
 			build_indiv_map($this->getIndiFacts(), $famids);
 		}
 	}
+
+// -----------------------------------------------------------------------------
+// Functions for Lightbox Album V3.0 29/May/2007
+// -----------------------------------------------------------------------------
+    function lightbox() {
+        include('modules/lightbox/functions/lightbox_ctrl.php');
+    }
+// -----------------------------------------------------------------------------
+// End LightBox Album Functions
+// -----------------------------------------------------------------------------
+		
 }
 // -- end of class
 //-- load a user extended class if one exists
