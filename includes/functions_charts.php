@@ -3,7 +3,7 @@
  * Functions used for charts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -811,7 +811,7 @@ function pedigree_array($rootid) {
 	$treeid = ancestry_array($rootid);
 	$treesize = count($treeid)-1;
 	//-- ancestry_array puts everyone at $i+1
-	for($i=0; $i<$treesize-1; $i++) $treeid[$i] = $treeid[$i+1]; 
+	for($i=0; $i<$treesize; $i++) $treeid[$i] = $treeid[$i+1];
 
 	// -- detect the highest generation that actually has a person in it and use it for the pedigree generations
 	if (!$SHOW_EMPTY_BOXES) {
