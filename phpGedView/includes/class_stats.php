@@ -241,7 +241,7 @@ class stats
 		if(file_exists("images/gedcoms/{$this->_gedcom['gedcom']}.jpg")){$highlight = "images/gedcoms/{$this->_gedcom['gedcom']}.jpg";}elseif(file_exists("images/gedcoms/{$this->_gedcom['gedcom']}.png")){$highlight = "images/gedcoms/{$this->_gedcom['gedcom']}.png";}
 		if(!$highlight){return '';}
 		$imgsize = findImageSize($highlight);
-		return "<a href=\"index.php?command=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" /></a>";
+		return "<a href=\"index.php?ctype=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" /></a>";
 	}
 
 	function gedcomHighlightLeft()
@@ -250,7 +250,7 @@ class stats
 		if(file_exists("images/gedcoms/{$this->_gedcom['gedcom']}.jpg")){$highlight = "images/gedcoms/{$this->_gedcom['gedcom']}.jpg";}elseif(file_exists("images/gedcoms/{$this->_gedcom['gedcom']}.png")){$highlight = "images/gedcoms/{$this->_gedcom['gedcom']}.png";}
 		if(!$highlight){return '';}
 		$imgsize = findImageSize($highlight);
-		return "<a href=\"index.php?command=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"left\" /></a>";
+		return "<a href=\"index.php?ctype=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"left\" /></a>";
 	}
 
 	function gedcomHighlightRight()
@@ -259,7 +259,7 @@ class stats
 		if(file_exists("images/gedcoms/{$this->_gedcom['gedcom']}.jpg")){$highlight = "images/gedcoms/{$this->_gedcom['gedcom']}.jpg";}elseif(file_exists("images/gedcoms/{$this->_gedcom['gedcom']}.png")){$highlight = "images/gedcoms/{$this->_gedcom['gedcom']}.png";}
 		if(!$highlight){return '';}
 		$imgsize = findImageSize($highlight);
-		return "<a href=\"index.php?command=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"right\" /></a>";
+		return "<a href=\"index.php?ctype=gedcom&amp;ged={$this->_gedcom['gedcom']}\" style=\"border-style:none;\"><img src=\"{$highlight}\" {$imgsize[3]} style=\"border:none; padding:2px 6px 2px 2px;\" align=\"right\" /></a>";
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

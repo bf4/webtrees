@@ -146,7 +146,7 @@ class SourceControllerRoot extends BaseController {
 			$indirec = find_source_record($this->sid);
 			//-- check if we just deleted the record and redirect to index
 			if (empty($indirec)) {
-				header("Location: index.php?command=gedcom");
+				header("Location: index.php?ctype=gedcom");
 				exit;
 			}
 			$this->source = new Source($indirec);

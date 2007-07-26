@@ -38,7 +38,7 @@ $PGV_BLOCKS["print_login_block"]["config"]		= array("cache"=>-1);
  * Prints a block allowing the user to login to the site directly from the portal
  */
 function print_login_block($block = true, $config="", $side, $index) {
-		global $pgv_lang, $GEDCOM, $GEDCOMS, $command, $SCRIPT_NAME, $QUERY_STRING, $USE_REGISTRATION_MODULE, $LOGIN_URL, $ALLOW_REMEMBER_ME;
+		global $pgv_lang, $GEDCOM, $GEDCOMS, $ctype, $SCRIPT_NAME, $QUERY_STRING, $USE_REGISTRATION_MODULE, $LOGIN_URL, $ALLOW_REMEMBER_ME;
 
 		$uname = getUserName();
 		if (!empty($uname)) return;
@@ -54,7 +54,7 @@ function print_login_block($block = true, $config="", $side, $index) {
 		print "</table>";
 		print "<div class=\"blockcontent\">";
 		print "<div class=\"center\"><form method=\"post\" action=\"$LOGIN_URL\" name=\"loginform\" onsubmit=\"t = new Date(); document.loginform.usertime.value=t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate()+' '+t.getHours()+':'+t.getMinutes()+':'+t.getSeconds(); return true;\">\n";
-		print "<input type=\"hidden\" name=\"url\" value=\"index.php?command=$command&amp;\" />\n";
+		print "<input type=\"hidden\" name=\"url\" value=\"index.php?ctype=$ctype&amp;\" />\n";
 		print "<input type=\"hidden\" name=\"ged\" value=\"";if (isset($GEDCOM)) print $GEDCOM; print "\" />";
 		print "<input type=\"hidden\" name=\"pid\" value=\"";if (isset($pid)) print $pid; print "\" />";
 		print "<input type=\"hidden\" name=\"usertime\" value=\"\" />\n";

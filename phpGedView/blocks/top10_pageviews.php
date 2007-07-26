@@ -36,7 +36,7 @@ $PGV_BLOCKS["top10_pageviews"]["config"]	= array(
 	);
 
 function top10_pageviews($block=true, $config="", $side, $index) {
-	global $pgv_lang, $GEDCOM, $INDEX_DIRECTORY, $PGV_BLOCKS, $command, $PGV_IMAGES, $PGV_IMAGE_DIR, $SHOW_SOURCES, $TEXT_DIRECTION;
+	global $pgv_lang, $GEDCOM, $INDEX_DIRECTORY, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR, $SHOW_SOURCES, $TEXT_DIRECTION;
 
 	if (empty($config)) $config = $PGV_BLOCKS["top10_pageviews"]["config"];
 	if (isset($config["count_placement"])) $CountSide = $config["count_placement"];
@@ -81,10 +81,10 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 	print_help_link("index_top10_pageviews_help", "qm");
 	if ($PGV_BLOCKS["top10_pageviews"]["canconfig"]) {
 		$username = getUserName();
-		if ((($command=="gedcom")&&(userGedcomAdmin($username))) || (($command=="user")&&(!empty($username)))) {
-			if ($command=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
+		if ((($ctype=="gedcom")&&(userGedcomAdmin($username))) || (($ctype=="user")&&(!empty($username)))) {
+			if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
 			else $name = $username;
-			print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;command=$command&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+			print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 			print "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
 		}
 	}
@@ -203,7 +203,7 @@ function top10_pageviews($block=true, $config="", $side, $index) {
 }
 
 function top10_pageviews_config($config) {
-	global $pgv_lang, $command, $PGV_BLOCKS;
+	global $pgv_lang, $ctype, $PGV_BLOCKS;
 	if (empty($config)) $config = $PGV_BLOCKS["top10_pageviews"]["config"];
 	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["top10_pageviews"]["config"]["cache"];
 
@@ -231,7 +231,7 @@ function top10_pageviews_config($config) {
 	print "</td></tr>";
 
 	// Cache file life
-	if ($command=="gedcom") {
+	if ($ctype=="gedcom") {
   		print "<tr><td class=\"descriptionbox wrap width33\">";
 			print_help_link("cache_life_help", "qm");
 			print $pgv_lang["cache_life"];

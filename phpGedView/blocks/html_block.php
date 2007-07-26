@@ -35,7 +35,7 @@ $PGV_BLOCKS["print_html_block"]["config"]		= array(
 	);
 
 function print_html_block($block=true, $config="", $side, $index) {
-	global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_IMAGES, $HTML_BLOCK_COUNT, $PGV_BLOCKS, $command, $GEDCOM;
+	global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_IMAGES, $HTML_BLOCK_COUNT, $PGV_BLOCKS, $ctype, $GEDCOM;
 
 	if (empty($config)) $config = $PGV_BLOCKS["print_html_block"]["config"];
 	if (!isset($HTML_BLOCK_COUNT)) $HTML_BLOCK_COUNT = 0;
@@ -62,10 +62,10 @@ function print_html_block($block=true, $config="", $side, $index) {
 	if ($block) print "</div>\n";
 	if ($PGV_BLOCKS["print_html_block"]["canconfig"]) {
 		$username = getUserName();
-		if ((($command=="gedcom")&&(userGedcomAdmin($username))) || (($command=="user")&&(!empty($username)))) {
-			if ($command=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
+		if ((($ctype=="gedcom")&&(userGedcomAdmin($username))) || (($ctype=="user")&&(!empty($username)))) {
+			if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
 			else $name = $username;
-			print "<br /><a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=$name&amp;command=$command&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+			print "<br /><a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 			print "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" title=\"".$pgv_lang["config_block"]."\" /></a>\n";
 		}
 	}
@@ -74,7 +74,7 @@ function print_html_block($block=true, $config="", $side, $index) {
 }
 
 function print_html_block_config($config) {
-	global $pgv_lang, $command, $PGV_BLOCKS, $TEXT_DIRECTION, $LANGUAGE, $language_settings;
+	global $pgv_lang, $ctype, $PGV_BLOCKS, $TEXT_DIRECTION, $LANGUAGE, $language_settings;
 	$useFCK = file_exists("./modules/FCKeditor/fckeditor.php");
 	if($useFCK){
 		include("./modules/FCKeditor/fckeditor.php");
@@ -100,7 +100,7 @@ function print_html_block_config($config) {
 	</td></tr>
 	<?php
 	// Cache file life
-	if ($command=="gedcom") {
+	if ($ctype=="gedcom") {
   		print "<tr><td class=\"descriptionbox wrap width33\">";
 			print_help_link("cache_life_help", "qm");
 			print $pgv_lang["cache_life"];

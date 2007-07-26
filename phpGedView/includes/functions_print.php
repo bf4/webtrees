@@ -1592,7 +1592,7 @@ function print_fact_notes($factrec, $level) {
 function print_gedcom_title_link($InHeader=FALSE) {
 	 global $GEDCOMS, $GEDCOM, $GEDCOM_TITLE;
 	 if ((count($GEDCOMS)==0)||(empty($GEDCOM))) return;
-	 print "<a href=\"index.php?command=gedcom\" class=\"gedcomtitle\">".PrintReady($GEDCOM_TITLE, $InHeader)."</a>";
+	 print "<a href=\"index.php?ctype=gedcom\" class=\"gedcomtitle\">".PrintReady($GEDCOM_TITLE, $InHeader)."</a>";
 }
 
 //-- function to print a privacy error with contact method

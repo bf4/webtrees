@@ -60,7 +60,7 @@ function iso8601_date($time) {
  * 				$dataArray[2] = data
  */
 function getUpcomingEvents() {
-	global $pgv_lang, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $command, $TEXT_DIRECTION;
+	global $pgv_lang, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $PGV_BLOCKS;
 	global $DAYS_TO_SHOW_LIMIT, $SERVER_URL;
 
@@ -226,7 +226,7 @@ function getUpcomingEvents() {
  * 				$dataArray[2] = data
  */
 function getTodaysEvents() {
-	global $pgv_lang, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $command, $TEXT_DIRECTION;
+	global $pgv_lang, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $PGV_BLOCKS;
 	global $SERVER_URL;
 	global $DAYS_TO_SHOW_LIMIT;
@@ -383,7 +383,7 @@ function getTodaysEvents() {
  * @TODO does not print the family with most children due to the embedded html in that function.
  */
 function getGedcomStats() {
-	global $pgv_lang, $day, $month, $year, $PGV_BLOCKS, $GEDCOM, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $command, $COMMON_NAMES_THRESHOLD, $SERVER_URL, $RTLOrd, $TBLPREFIX;
+	global $pgv_lang, $day, $month, $year, $PGV_BLOCKS, $GEDCOM, $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $ctype, $COMMON_NAMES_THRESHOLD, $SERVER_URL, $RTLOrd, $TBLPREFIX;
 
 	if (empty($config)) $config = $PGV_BLOCKS["print_gedcom_stats"]["config"];
 	if (!isset($config['stat_indi'])) $config = $PGV_BLOCKS["print_gedcom_stats"]["config"];
@@ -530,7 +530,7 @@ function getGedcomStats() {
  * @TODO prepend relative URL's in news items with $SERVER_URL
  */
 function getGedcomNews() {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $command, $TIME_FORMAT, $VERSION, $SERVER_URL;
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $TIME_FORMAT, $VERSION, $SERVER_URL;
 
 	$usernews = getUserNews($GEDCOM);
 
@@ -586,7 +586,7 @@ function getGedcomNews() {
  */
 function getTop10Surnames() {
 	global $pgv_lang, $GEDCOM,$SERVER_URL, $TEXT_DIRECTION;
-	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $command, $PGV_IMAGES, $PGV_IMAGE_DIR;
+	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR;
 
 	$data = "";
 	$dataArray = array();
@@ -666,11 +666,11 @@ function getTop10Surnames() {
  * @TODO use date of most recent change instead of curent time
  */
 function getRecentChanges() {
-	global $pgv_lang, $factarray, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $command, $TEXT_DIRECTION;
+	global $pgv_lang, $factarray, $month, $year, $day, $monthtonum, $HIDE_LIVE_PEOPLE, $SHOW_ID_NUMBERS, $ctype, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $REGEXP_DB, $DEBUG, $ASC, $IGNORE_FACTS, $IGNORE_YEAR, $TOTAL_QUERIES, $LAST_QUERY, $PGV_BLOCKS, $SHOW_SOURCES;
     global $objectlist, $SERVER_URL;
 
-	if ($command=="user") $filter = "living";
+	if ($ctype=="user") $filter = "living";
 	else $filter = "all";
 
 	if (empty($config)) $config = $PGV_BLOCKS["print_recent_changes"]["config"];
@@ -930,7 +930,7 @@ function getRandomMedia() {
 	global $pgv_lang, $GEDCOM, $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES, $GEDCOM_ID_PREFIX, $FAM_ID_PREFIX, $SOURCE_ID_PREFIX;
 	global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $DEBUG;
-	global $PGV_BLOCKS, $command, $action;
+	global $PGV_BLOCKS, $ctype, $action;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 	if (empty($config)) $config = $PGV_BLOCKS["print_random_media"]["config"];
 	if (isset($config["filter"])) $filter = $config["filter"];  // indi, event, or all

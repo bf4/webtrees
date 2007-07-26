@@ -38,7 +38,7 @@ $PGV_BLOCKS["print_recent_changes"]["config"]		= array(
 //-- Recent Changes block
 //-- this block prints a list of changes that have occurred recently in your gedcom
 function print_recent_changes($block=true, $config="", $side, $index) {
-	global $pgv_lang, $command;
+	global $pgv_lang, $ctype;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $PGV_BLOCKS;
 
 	$block = true;			// Always restrict this block's height
@@ -61,10 +61,10 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 	print_help_link("recent_changes_help", "qm");
 	if ($PGV_BLOCKS["print_recent_changes"]["canconfig"]) {
 		$username = getUserName();
-		if ((($command=="gedcom")&&(userGedcomAdmin($username))) || (($command=="user")&&(!empty($username)))) {
-			if ($command=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
+		if ((($ctype=="gedcom")&&(userGedcomAdmin($username))) || (($ctype=="user")&&(!empty($username)))) {
+			if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
 			else $name = $username;
-			print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;command=$command&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+			print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 			print "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
 		}
 	}
@@ -93,7 +93,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 }
 
 function print_recent_changes_config($config) {
-	global $pgv_lang, $command, $PGV_BLOCKS;
+	global $pgv_lang, $ctype, $PGV_BLOCKS;
 	if (empty($config)) $config = $PGV_BLOCKS["print_recent_changes"]["config"];
 	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_recent_changes"]["config"]["cache"];
 
@@ -116,7 +116,7 @@ function print_recent_changes_config($config) {
 	<?php
 
 	// Cache file life
-	if ($command=="gedcom") {
+	if ($ctype=="gedcom") {
   		print "<tr><td class=\"descriptionbox wrap width33\">";
 			print_help_link("cache_life_help", "qm");
 			print $pgv_lang["cache_life"];

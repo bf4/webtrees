@@ -37,7 +37,7 @@ $PGV_BLOCKS["print_block_name_top10"]["config"]		= array(
 
 function print_block_name_top10($block=true, $config="", $side, $index) {
 	global $pgv_lang, $GEDCOM, $DEBUG, $TEXT_DIRECTION;
-	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $command, $PGV_IMAGES, $PGV_IMAGE_DIR;
+	global $COMMON_NAMES_ADD, $COMMON_NAMES_REMOVE, $COMMON_NAMES_THRESHOLD, $PGV_BLOCKS, $ctype, $PGV_IMAGES, $PGV_IMAGE_DIR;
 
 	function top_surname_sort($a, $b) {
 		return $b["match"] - $a["match"];
@@ -90,10 +90,10 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 		print_help_link("index_common_names_help", "qm");
 		if ($PGV_BLOCKS["print_block_name_top10"]["canconfig"]) {
 			$username = getUserName();
-			if ((($command=="gedcom")&&(userGedcomAdmin($username))) || (($command=="user")&&(!empty($username)))) {
-				if ($command=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
+			if ((($ctype=="gedcom")&&(userGedcomAdmin($username))) || (($ctype=="user")&&(!empty($username)))) {
+				if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
 				else $name = $username;
-				print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;command=$command&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+				print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 				print "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
 			}
 		}
@@ -144,7 +144,7 @@ function print_block_name_top10($block=true, $config="", $side, $index) {
 }
 
 function print_block_name_top10_config($config) {
-	global $pgv_lang, $command, $PGV_BLOCKS, $TEXT_DIRECTION;
+	global $pgv_lang, $ctype, $PGV_BLOCKS, $TEXT_DIRECTION;
 	if (empty($config)) $config = $PGV_BLOCKS["print_block_name_top10"]["config"];
 	if (!isset($config["cache"])) $config["cache"] = $PGV_BLOCKS["print_block_name_top10"]["config"]["cache"];
 
@@ -166,7 +166,7 @@ function print_block_name_top10_config($config) {
 	**/
 
 	// Cache file life
-	if ($command=="gedcom") {
+	if ($ctype=="gedcom") {
   		print "<tr><td class=\"descriptionbox wrap width33\">";
 			print_help_link("cache_life_help", "qm");
 			print $pgv_lang["cache_life"];
