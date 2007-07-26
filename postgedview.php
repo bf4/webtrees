@@ -137,7 +137,7 @@
 				$_SESSION['pgv_user'] = $post_user;
 				$url = "index.php";
 				$url.="?".session_name()."=".session_id();
-				$url.="&command=gedcom";
+				$url.="&ctype=gedcom";
 				header("Location: $url");
 			}
 			else

@@ -110,8 +110,10 @@ function check_db($ignore_previous=false) {
  * this function returns the path to the currently active GEDCOM configuration file
  * @return string path to gedcom.ged_conf.php configuration file
  */
-function get_config_file() {
+function get_config_file($ged="") {
 	global $GEDCOMS, $GEDCOM;
+	
+	if (empty($ged)) $ged = $GEDCOM;
 	$config = "config_gedcom.php";
 	if (count($GEDCOMS)==0) {
 		return $config;
@@ -1282,31 +1284,31 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 				$aMultiLetter = false;
 				$bMultiLetter = false;
 				// Look for quadgraphs (4 letters that should be treated as 1)
-				if (isset($quadgraphs[$LANGUAGE])) {
+				if (isset($quadgraph[$LANGUAGE])) {
 					$aLetter = strtoupper(substr($aName, $aIndex, 4));
-					if (isset($quadgraphs[$LANGUAGE][$aLetter])) {
-						$aMultiLetter = $quadgraphs[$LANGUAGE][$aLetter];
+					if (isset($quadgraph[$LANGUAGE][$aLetter])) {
+						$aMultiLetter = $quadgraph[$LANGUAGE][$aLetter];
 						$aCharLen = 4;
 					}
 					$bLetter = strtoupper(substr($bName, $bIndex, 4));
-					if (isset($quadgraphs[$LANGUAGE][$bLetter])) {
-						$bMultiLetter = $quadgraphs[$LANGUAGE][$bLetter];
+					if (isset($quadgraph[$LANGUAGE][$bLetter])) {
+						$bMultiLetter = $quadgraph[$LANGUAGE][$bLetter];
 						$bCharLen = 4;
 					}
 				}
 				// Look for trigraphs (3 letters that should be treated as 1)
-				if (isset($trigraphs[$LANGUAGE])) {
+				if (isset($trigraph[$LANGUAGE])) {
 					if (!$aMultiLetter) {
 						$aLetter = strtoupper(substr($aName, $aIndex, 3));
-						if (isset($trigraphs[$LANGUAGE][$aLetter])) {
-							$aMultiLetter = $trigraphs[$LANGUAGE][$aLetter];
+						if (isset($trigraph[$LANGUAGE][$aLetter])) {
+							$aMultiLetter = $trigraph[$LANGUAGE][$aLetter];
 							$aCharLen = 3;
 						}
 					}
 					if (!$bMultiLetter) {
 						$bLetter = strtoupper(substr($bName, $bIndex, 3));
-						if (isset($trigraphs[$LANGUAGE][$bLetter])) {
-							$bMultiLetter = $trigraphs[$LANGUAGE][$bLetter];
+						if (isset($trigraph[$LANGUAGE][$bLetter])) {
+							$bMultiLetter = $trigraph[$LANGUAGE][$bLetter];
 							$bCharLen = 3;
 						}
 					}
@@ -1315,15 +1317,15 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 				if (isset($digraphs[$LANGUAGE])) {
 					if (!$aMultiLetter) {
 					$aLetter = strtoupper(substr($aName, $aIndex, 2));
-						if (isset($digraphs[$LANGUAGE][$aLetter])) {
-							$aMultiLetter = $digraphs[$LANGUAGE][$aLetter];
+						if (isset($digraph[$LANGUAGE][$aLetter])) {
+							$aMultiLetter = $digraph[$LANGUAGE][$aLetter];
 							$aCharLen = 2;
 						}
 					}
 					if (!$bMultiLetter) {
 					$bLetter = strtoupper(substr($bName, $bIndex, 2));
-						if (isset($digraphs[$LANGUAGE][$bLetter])) {
-							$bMultiLetter = $digraphs[$LANGUAGE][$bLetter];
+						if (isset($digraph[$LANGUAGE][$bLetter])) {
+							$bMultiLetter = $digraph[$LANGUAGE][$bLetter];
 							$bCharLen = 2;
 						}
 					}

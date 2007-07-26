@@ -795,7 +795,7 @@ if ($startimport == "true") {
 			progress = document.getElementById("link1"); 
 			if (progress) progress.innerHTML = '<a href="pedigree.php?ged=<?php print preg_replace("/'/", "\'", $ged); ?>">'+go_pedi+'</a>'; 
 			progress = document.getElementById("link2"); 
-			if (progress) progress.innerHTML = '<a href="index.php?command=gedcom&ged=<?php print preg_replace("/'/", "\'", $ged); ?>">'+go_welc+'</a>'; 
+			if (progress) progress.innerHTML = '<a href="index.php?ctype=gedcom&ged=<?php print preg_replace("/'/", "\'", $ged); ?>">'+go_welc+'</a>'; 
 			progress = document.getElementById("link3"); 
 			if (progress) progress.innerHTML = '<a href="editgedcoms.php"><?php print $pgv_lang["manage_gedcoms"]; ?></a>';
 		}

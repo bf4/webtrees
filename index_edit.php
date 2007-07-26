@@ -65,7 +65,7 @@ if (empty($uname) || empty($name)) {
 if (!userIsAdmin($uname)) $setdefault=false;
 
 if (!isset($action)) $action="";
-if (!isset($command)) $command="user";
+if (!isset($ctype)) $ctype="user";
 if (!isset($main)) $main=array();
 if (!isset($right)) $right=array();
 if (!isset($setdefault)) $setdefault=false;
@@ -135,7 +135,7 @@ if (file_exists("modules")) {
 $SortedBlocks = array();
 foreach($PGV_BLOCKS as $key => $BLOCK) {
 	if (!isset($BLOCK["type"])) $BLOCK["type"] = "both";
-	if (($BLOCK["type"]=="both") or ($BLOCK["type"]==$command)) {
+	if (($BLOCK["type"]=="both") or ($BLOCK["type"]==$ctype)) {
 		$SortedBlocks[$key] = $BLOCK["name"];
 	}
 }
@@ -156,7 +156,7 @@ foreach($SortedBlocks as $key => $b) {
 $SortedBlocks = array_flip($SortedBlocks);
 
 //-- get the blocks list
-if ($command=="user") {
+if ($ctype=="user") {
 	$ublocks = getBlocks($uname);
 	if (($action=="reset") || ((count($ublocks["main"])==0) && (count($ublocks["right"])==0))) {
 		$ublocks["main"] = array();
@@ -188,7 +188,7 @@ else {
 	}
 }
 
-if ($command=="user") print_simple_header($pgv_lang["mygedview"]);
+if ($ctype=="user") print_simple_header($pgv_lang["mygedview"]);
 else print_simple_header($GEDCOMS[$GEDCOM]["title"]);
 
 $GEDCOM_TITLE = PrintReady($GEDCOMS[$GEDCOM]["title"]);  // needed in $pgv_lang["rss_descr"]
@@ -220,7 +220,7 @@ if ($action=="updateconfig") {
 	}
 	print $pgv_lang["config_update_ok"]."<br />\n";
 	if (isset($_POST["nextaction"])) $action = $_POST["nextaction"];
-	if ($command!="user") $_SESSION['clearcache'] = true;
+	if ($ctype!="user") $_SESSION['clearcache'] = true;
 }
 
 if ($action=="update") {
@@ -280,7 +280,7 @@ if ($action=="configure" && isset($ublocks[$side][$index])) {
 	print "</table>";
 
 	print "\n<form name=\"block\" method=\"post\" action=\"index_edit.php\">\n";
-	print "<input type=\"hidden\" name=\"command\" value=\"$command\" />\n";
+	print "<input type=\"hidden\" name=\"ctype\" value=\"$ctype\" />\n";
 	print "<input type=\"hidden\" name=\"action\" value=\"updateconfig\" />\n";
 	print "<input type=\"hidden\" name=\"name\" value=\"$name\" />\n";
 	print "<input type=\"hidden\" name=\"nextaction\" value=\"configure\" />\n";
@@ -443,14 +443,14 @@ else {
 	<div id="configure" class="tab_page center" style="position: absolute; display: block; top: auto; left: auto; z-index: 1; ">
 	<br />
 	<form name="config_setup" method="post" action="index_edit.php">
-	<input type="hidden" name="command" value="<?php print $command;?>" />
+	<input type="hidden" name="ctype" value="<?php print $ctype;?>" />
 	<input type="hidden" name="action" value="update" />
 	<input type="hidden" name="name" value="<?php print $name;?>" />
 	<table dir="ltr" border="1" width="400px">
 	<tr><td class="topbottombar" colspan="7">
 	<?php
 	print_help_link("portal_config_intructions", "qm");
-	if ($command=="user") print "<b>".str2upper($pgv_lang["customize_page"])."</b>";
+	if ($ctype=="user") print "<b>".str2upper($pgv_lang["customize_page"])."</b>";
 	else print "<b>".str2upper($pgv_lang["customize_gedcom_page"])."</b>";
 	print "</td></tr>";
 	// NOTE: Row 1: Column legends
@@ -502,7 +502,7 @@ else {
 	print "<td class=\"optionbox\" dir=\"".$TEXT_DIRECTION."\">";
 		print "<select id=\"available_select\" name=\"available[]\" size=\"10\" onchange=\"show_description('available_select');\">\n";
 		foreach($SortedBlocks as $key => $value) {
-			if (!isset($PGV_BLOCKS[$key]["type"])) $PGV_BLOCKS[$key]["type"]=$command;
+			if (!isset($PGV_BLOCKS[$key]["type"])) $PGV_BLOCKS[$key]["type"]=$ctype;
 			print "<option value=\"$key\">".$SortedBlocks[$key]."</option>\n";
 		}
 		print "</select>\n";
@@ -542,26 +542,26 @@ else {
 	print "</div></td></tr>";
 	print "<tr><td class=\"topbottombar\" colspan=\"7\">";
 
-	if ((userIsAdmin($uname))&&($command=='user')) {
+	if ((userIsAdmin($uname))&&($ctype=='user')) {
 		print $pgv_lang["use_blocks_for_default"]."<input type=\"checkbox\" name=\"setdefault\" value=\"1\" /><br /><br />\n";
 	}
 
-	if ($command=='user') {
+	if ($ctype=='user') {
 		print_help_link("block_default_portal", "qm");
 	}
 	else {
 		print_help_link("block_default_index", "qm");
 	}
-	print "<input type=\"button\" value=\"".$pgv_lang["reset_default_blocks"]."\" onclick=\"window.location='index_edit.php?command=$command&amp;action=reset&amp;name=".preg_replace("/'/", "\'", $name)."';\" />\n";
+	print "<input type=\"button\" value=\"".$pgv_lang["reset_default_blocks"]."\" onclick=\"window.location='index_edit.php?ctype=$ctype&amp;action=reset&amp;name=".preg_replace("/'/", "\'", $name)."';\" />\n";
 	print "&nbsp;&nbsp;";
 	print_help_link("click_here_help", "qm");
 	print "<input type=\"button\" value=\"".$pgv_lang["click_here"]."\" onclick=\"select_options(); save_form();\" />\n";
 	print "&nbsp;&nbsp;";
 	print "<input type =\"button\" value=\"".$pgv_lang["cancel"]."\" onclick=\"window.close()\" />";
-	if (userGedcomAdmin(getUserName()) && $command!="user") {
+	if (userGedcomAdmin(getUserName()) && $ctype!="user") {
 		print "<br />";
 		print_help_link("clear_cache_help", "qm");
-		print "<input type =\"button\" value=\"".$pgv_lang["clear_cache"]."\" onclick=\"window.location='index_edit.php?command=$command&amp;action=clearcache&amp;name=".preg_replace("/'/", "\'", $name)."';\" />";
+		print "<input type =\"button\" value=\"".$pgv_lang["clear_cache"]."\" onclick=\"window.location='index_edit.php?ctype=$ctype&amp;action=clearcache&amp;name=".preg_replace("/'/", "\'", $name)."';\" />";
 	}
 	print "</td></tr></table>";
 	print "</form>\n";

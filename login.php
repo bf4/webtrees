@@ -75,7 +75,7 @@ if ($action=="login") {
 			}
 			if (!empty($pid)) $url = "individual.php?pid=".$pid;
 			//-- user does not have a pid?  Go to mygedview portal
-			else $url = "index.php?command=user";
+			else $url = "index.php?ctype=user";
 		}
 		
 		$urlnew = $SERVER_URL;
@@ -100,7 +100,7 @@ else {
 		if ((isset($_SERVER['HTTP_REFERER'])) && ((stristr($_SERVER['HTTP_REFERER'],$tSERVER_URL)!==false)||(stristr($_SERVER['HTTP_REFERER'],$tLOGIN_URL)!==false))) {
 			$url = basename($_SERVER['HTTP_REFERER']);
 			if (stristr($url, ".php")===false) {
-				$url = "index.php?command=gedcom&amp;ged=$GEDCOM";
+				$url = "index.php?ctype=gedcom&amp;ged=$GEDCOM";
 			}
 		}
 		else {
@@ -109,13 +109,13 @@ else {
 			}
 			//else $url = $SERVER_URL;
 			/* - commented out based on UI feedback	
-			else $url = "index.php?command=user";
+			else $url = "index.php?ctype=user";
 			*/
 			else $url = "individual.php";
 		}
 	}
-	else if (stristr($url, "index.php")&&!stristr($url, "command=")) {
-		$url.="&amp;command=gedcom";
+	else if (stristr($url, "index.php")&&!stristr($url, "ctype=")) {
+		$url.="&amp;ctype=gedcom";
 	}
 }
 

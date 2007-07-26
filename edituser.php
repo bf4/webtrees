@@ -60,7 +60,7 @@ $user = getUser($uname);
 if (!isset($user["default_tab"])) $user["default_tab"]=0;
 //-- prevent users with editing account disabled from being able to edit their account
 if (!$user["editaccount"]) {
-	header("Location: index.php?command=user");
+	header("Location: index.php?ctype=user");
 	exit;
 }
 print_header("PhpGedView ".$pgv_lang["user_admin"]);
