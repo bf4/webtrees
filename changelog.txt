@@ -27,6 +27,7 @@ Version 4.2
  - Adding a "never married" icon on ancestry booklet when NMR=0 (opus27)
 
 Version 4.1
+ - Changed "command" to "ctype" as mod_security work-a-round (yalnifj)
  - Added Implement faqlist.xx.php -- library of FAQs (canajun2eh)
  - Fixed [ 1755178 ] Links table empty in Media Viewer (opus27)
  - Fixed [ 1755410 ] FAQ list lost when Index page configured (canajun2eh)

@@ -443,7 +443,7 @@ class MenuBar
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
 		//-- main menu
-		$menu = new Menu($pgv_lang["welcome_page"], "index.php?command=gedcom", "down");
+		$menu = new Menu($pgv_lang["welcome_page"], "index.php?ctype=gedcom", "down");
 		if (!empty($PGV_IMAGES["gedcom"]["large"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["large"]);
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
@@ -451,7 +451,7 @@ class MenuBar
 		//-- gedcom list
 		if ($ALLOW_CHANGE_GEDCOM && count($GEDCOMS)>1) {
 			foreach($GEDCOMS as $ged=>$gedarray) {
-				$submenu = new Menu(PrintReady($gedarray["title"]), "index.php?command=gedcom&amp;ged=$ged");
+				$submenu = new Menu(PrintReady($gedarray["title"]), "index.php?ctype=gedcom&amp;ged=$ged");
 				if (!empty($PGV_IMAGES["gedcom"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]);
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
@@ -480,7 +480,7 @@ class MenuBar
 		
 		$username = getUserName();
 		
-		$link = "index.php?command=user";
+		$link = "index.php?ctype=user";
 		if (!empty($username)) {
 			$user = getUser($username);
 			if (!empty($user["gedcomid"][$GEDCOM])) {
@@ -523,7 +523,7 @@ class MenuBar
 				$menu->addSeperator();
 			}
 			//-- mygedview submenu
-			$submenu = new Menu($pgv_lang["mgv"], "index.php?command=user");
+			$submenu = new Menu($pgv_lang["mgv"], "index.php?ctype=user");
 			if (!empty($PGV_IMAGES["mygedview"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["mygedview"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");

@@ -936,8 +936,8 @@ if ((strstr($SCRIPT_NAME, "editconfig.php")===false)
 				} else {
 					$url = basename($_SERVER["PHP_SELF"])."?".$QUERY_STRING;
 					if (stristr($url, "index.php")!==false) {
-						if (stristr($url, "command=")===false) {
-							if ((!isset($_SERVER['HTTP_REFERER'])) || (stristr($_SERVER['HTTP_REFERER'],$SERVER_URL)===false)) $url .= "&command=gedcom";
+						if (stristr($url, "ctype=")===false) {
+							if ((!isset($_SERVER['HTTP_REFERER'])) || (stristr($_SERVER['HTTP_REFERER'],$SERVER_URL)===false)) $url .= "&ctype=gedcom";
 						}
 					}
 					if (stristr($url, "ged=")===false)  {

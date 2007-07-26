@@ -121,17 +121,17 @@ if (!isset($action)) $action="";
 //-- otherwise have them login again
 $uname = getUserName();
 if (empty($uname)) {
-	if (!empty($command)) {
-		if ($command=="user") {
-			header("Location: login.php?help_message=mygedview_login_help&url=".urlencode("index.php?command=user"));
+	if (!empty($ctype)) {
+		if ($ctype=="user") {
+			header("Location: login.php?help_message=mygedview_login_help&url=".urlencode("index.php?ctype=user"));
 			exit;
 		}
 	}
-	$command="gedcom";
+	$ctype="gedcom";
 }
 else $user = getUser($uname);
 
-if (empty($command)) $command="user";
+if (empty($ctype)) $ctype="user";
 
 if (!empty($uname)) {
 	//-- add favorites action
@@ -143,7 +143,7 @@ if (!empty($uname)) {
 		if ($indirec && $ct>0) {
 			$favorite = array();
 			if (!isset($favtype)) {
-				if ($command=="user") $favtype = "user";
+				if ($ctype=="user") $favtype = "user";
 				else $favtype = "gedcom";
 			}
 			if ($favtype=="gedcom") {
@@ -166,7 +166,7 @@ if (!empty($uname)) {
 		if (empty($favtitle)) $favtitle = $url;
 		$favorite = array();
 		if (!isset($favtype)) {
-			if ($command=="user") $favtype = "user";
+			if ($ctype=="user") $favtype = "user";
 			else $favtype = "gedcom";
 		}
 		if ($favtype=="gedcom") {
@@ -185,7 +185,7 @@ if (!empty($uname)) {
 	}
 	if (($action=="deletefav")&&(isset($fv_id))) {
 		deleteFavorite($fv_id);
-		if ($command=="gedcom") $_SESSION['clearcache'] = true;
+		if ($ctype=="gedcom") $_SESSION['clearcache'] = true;
 	}
 	else if ($action=="deletemessage") {
 		if (isset($message_id)) {
@@ -195,17 +195,17 @@ if (!empty($uname)) {
 					if (isset($mid)) deleteMessage($mid);
 				}
 			}
-			if ($command=="gedcom") $_SESSION['clearcache'] = true;
+			if ($ctype=="gedcom") $_SESSION['clearcache'] = true;
 		}
 	}
 	else if (($action=="deletenews")&&(isset($news_id))) {
 		deleteNews($news_id);
-		if ($command=="gedcom") $_SESSION['clearcache'] = true;
+		if ($ctype=="gedcom") $_SESSION['clearcache'] = true;
 	}
 }
 
 //-- get the blocks list
-if ($command=="user") {
+if ($ctype=="user") {
 	$ublocks = getBlocks($uname);
 	if ((count($ublocks["main"])==0) && (count($ublocks["right"])==0)) {
 		$ublocks["main"][] = array("print_todays_events", "");
@@ -306,7 +306,7 @@ if ($action=="ajax") {
 }
 //-- end of ajax call handler
 
-if ($command=="user") {
+if ($ctype=="user") {
 	$helpindex = "index_myged_help";
 	print_header($pgv_lang["mygedview"]);
 }
@@ -317,7 +317,7 @@ else {
 <script language="JavaScript" type="text/javascript">
 <!--
 	function refreshpage() {
-		window.location = 'index.php?command=<?php print $command; ?>';
+		window.location = 'index.php?ctype=<?php print $ctype; ?>';
 	}
 	function addnews(uname) {
 		window.open('editnews.php?username='+uname, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
@@ -365,7 +365,7 @@ else {
 <?php
 //-- start of main content section
 print "<table width=\"100%\"><tr><td>";		// This is needed so that page footers print in the right place
-if ($command=="user") {
+if ($ctype=="user") {
 	print "<div align=\"center\" style=\"width: 99%;\">";
 	print "<h1>".$pgv_lang["mygedview"]."</h1>";
 	print $pgv_lang["mygedview_desc"];
@@ -415,16 +415,16 @@ if (count($ublocks["right"])!=0) {
 
 print "</td></tr></table><br />";		// Close off that table
 
-if (($command=="user") and (!$welcome_block_present)) {
+if (($ctype=="user") and (!$welcome_block_present)) {
 	print "<div align=\"center\" style=\"width: 99%;\">";
 	print_help_link("mygedview_customize_help", "qm");
-	print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".getUserName()."&amp;command=user', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".$pgv_lang["customize_page"]."</a>\n";
+	print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".getUserName()."&amp;ctype=user', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".$pgv_lang["customize_page"]."</a>\n";
 	print "</div>";
 }
-if (($command=="gedcom") and (!$gedcom_block_present)) {
+if (($ctype=="gedcom") and (!$gedcom_block_present)) {
 	if (userIsAdmin(getUserName())) {
 		print "<div align=\"center\" style=\"width: 99%;\">";
-		print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=$GEDCOM&amp;command=gedcom', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".$pgv_lang["customize_gedcom_page"]."</a>\n";
+		print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=$GEDCOM&amp;ctype=gedcom', '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\">".$pgv_lang["customize_gedcom_page"]."</a>\n";
 		print "</div>";
 	}
 }

@@ -281,15 +281,14 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 function delete_gedrec($gid, $linkpid='') {
 	global $fcontents, $GEDCOM, $pgv_changes, $manual_save;
 
-		//-- first check if the record is not already deleted
-		if (isset($pgv_changes[$gid."_".$GEDCOM])) {
-			$change = end($pgv_changes[$gid."_".$GEDCOM]);
-			if ($change["type"]=="delete") return true;
-		}
+	//-- first check if the record is not already deleted
+	if (isset($pgv_changes[$gid."_".$GEDCOM])) {
+		$change = end($pgv_changes[$gid."_".$GEDCOM]);
+		if ($change["type"]=="delete") return true;
+	}
 
 	$undo = find_gedcom_record($gid);
 	if (empty($undo)) return false;
-	
 		$change = array();
 		$change["gid"] = $gid;
 		$change["gedcom"] = $GEDCOM;

@@ -31,13 +31,13 @@ function check_cookie(&$pun_user)
 	$now = time();
 	$uname = getUserName();
 	if (empty($uname)) {
-		if (!empty($command)) {
-			if ($command=="user") {
-				header("Location: login.php?help_message=mygedview_login_help&url=".urlencode("index.php?command=user"));
+		if (!empty($ctype)) {
+			if ($ctype=="user") {
+				header("Location: login.php?help_message=mygedview_login_help&url=".urlencode("index.php?ctype=user"));
 				exit;
 			}
 		}
-		$command="gedcom";
+		$ctype="gedcom";
 	}
 	else
 	{

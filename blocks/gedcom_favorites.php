@@ -33,7 +33,7 @@ $PGV_BLOCKS["print_gedcom_favorites"]["config"]		= array("cache"=>7);
 
 //-- print gedcom favorites
 function print_gedcom_favorites($block = true, $config="", $side, $index) {
-		global $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $command, $sourcelist, $TEXT_DIRECTION;
+		global $pgv_lang, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $ctype, $sourcelist, $TEXT_DIRECTION;
 
 		$userfavs = getUserFavorites($GEDCOM);
 		if (!is_array($userfavs)) $userfavs = array();
@@ -63,11 +63,11 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 			else $style = 2;
 			foreach($userfavs as $key=>$favorite) {
 				if (isset($favorite["id"])) $key=$favorite["id"];
-				$removeFavourite = "<a class=\"font9\" href=\"index.php?command=$command&amp;action=deletefav&amp;fv_id=".$key."\" onclick=\"return confirm('".$pgv_lang["confirm_fav_remove"]."');\">".$pgv_lang["remove"]."</a><br />\n";
+				$removeFavourite = "<a class=\"font9\" href=\"index.php?ctype=$ctype&amp;action=deletefav&amp;fv_id=".$key."\" onclick=\"return confirm('".$pgv_lang["confirm_fav_remove"]."');\">".$pgv_lang["remove"]."</a><br />\n";
 				print "<tr><td>";
 				if ($favorite["type"]=="URL") {
 					print "<div id=\"boxurl".$key.".0\" class=\"person_box\">\n";
-					if ($command=="user" || userGedcomAdmin(getUserName())) print $removeFavourite;
+					if ($ctype=="user" || userGedcomAdmin(getUserName())) print $removeFavourite;
 					print "<a href=\"".$favorite["url"]."\"><b>".PrintReady($favorite["title"])."</b></a>";
 					print "<br />".PrintReady($favorite["note"]);
 					print "</div>\n";
@@ -80,28 +80,28 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 							else if (preg_match("/1 SEX M/", $indirec)>0) print "";
 							else print "NN";
 							print "\">\n";
-							if ($command=="user" || userGedcomAdmin(getUserName())) print $removeFavourite;
+							if ($ctype=="user" || userGedcomAdmin(getUserName())) print $removeFavourite;
 							print_pedigree_person($favorite["gid"], $style, 1, $key);
 							print PrintReady($favorite["note"]);
 							print "</div>\n";
 						}
 						if ($favorite["type"]=="FAM") {
 							print "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">\n";
-							if ($command=="user" || userGedcomAdmin(getUserName())) print $removeFavourite;
+							if ($ctype=="user" || userGedcomAdmin(getUserName())) print $removeFavourite;
 							print_list_family($favorite["gid"], array(get_family_descriptor($favorite["gid"]), $favorite["file"]), false, "", false);
 							print PrintReady($favorite["note"]);
 							print "</div>\n";
 						}
 						if ($favorite["type"]=="SOUR") {
 							print "<div id=\"box".$favorite["gid"].".0\" class=\"person_box\">\n";
-							if ($command=="user" || userGedcomAdmin(getUserName())) print $removeFavourite;
+							if ($ctype=="user" || userGedcomAdmin(getUserName())) print $removeFavourite;
 							print_list_source($favorite["gid"], $sourcelist[$favorite["gid"]], false);
 							print PrintReady($favorite["note"]);
 							print "</div>\n";
 						}
 						if ($favorite["type"]=="OBJE") {
 							print "<div id=\"box".$favorite["gid"].".0\">\n";
-							if ($command=="user" || userIsAdmin(getUserName())) print $removeFavourite;
+							if ($ctype=="user" || userIsAdmin(getUserName())) print $removeFavourite;
 							print_media_links("1 OBJE @".$favorite["gid"]."@", 1, $favorite["gid"]);
 							print PrintReady($favorite["note"]);
 						}
@@ -127,7 +127,7 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 			print "<br /><div id=\"add_ged_fav\" style=\"display: none;\">\n";
 			print "<form name=\"addgfavform\" method=\"post\" action=\"index.php\">\n";
 			print "<input type=\"hidden\" name=\"action\" value=\"addfav\" />\n";
-			print "<input type=\"hidden\" name=\"command\" value=\"$command\" />\n";
+			print "<input type=\"hidden\" name=\"ctype\" value=\"$ctype\" />\n";
 			print "<input type=\"hidden\" name=\"favtype\" value=\"gedcom\" />\n";
 			print "<input type=\"hidden\" name=\"ged\" value=\"$GEDCOM\" />\n";
 			print "<table border=\"0\" cellspacing=\"0\" width=\"100%\"><tr><td>".$pgv_lang["add_fav_enter_id"]." <br />";

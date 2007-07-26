@@ -233,7 +233,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 			if (! empty($gedcomStats[2])) {
 				$item = new FeedItem();
 				$item->title = $gedcomStats[0];
-				$item->link = $SERVER_URL. "index.php?command=gedcom#gedcom_stats";
+				$item->link = $SERVER_URL. "index.php?ctype=gedcom#gedcom_stats";
 				$item->description = $gedcomStats[2];
 				$item->descriptionHtmlSyndicated = true;
 				if (! empty($gedcomStats[1])) {
@@ -275,7 +275,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 				if (! empty($newsItem[1])) {
 					$item = new FeedItem();
 					$item->title = $newsItem[0];
-					$item->link = $SERVER_URL . "index.php?command=gedcom#" . $newsItem[3];
+					$item->link = $SERVER_URL . "index.php?ctype=gedcom#" . $newsItem[3];
 					$item->description = $newsItem[2];
 					$item->descriptionHtmlSyndicated = true;
 					$item->date = $newsItem[1];
@@ -293,7 +293,7 @@ if(!loadCachedBlock($cacheControl, $rssStyle)){
 			if (! empty($recentChanges[2])) {
 				$item = new FeedItem();
 				$item->title = $recentChanges[0];
-				$item->link = $SERVER_URL. "index.php?command=gedcom#recent_changes";
+				$item->link = $SERVER_URL. "index.php?ctype=gedcom#recent_changes";
 				$item->description = $recentChanges[2];
 				$item->descriptionHtmlSyndicated = true;
 

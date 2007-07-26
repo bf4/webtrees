@@ -45,7 +45,7 @@ if ($MULTI_MEDIA) {
 		global $pgv_lang, $GEDCOM, $foundlist, $MULTI_MEDIA, $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $MEDIA_EXTERNAL, $MEDIA_DIRECTORY, $SHOW_SOURCES, $GEDCOM_ID_PREFIX, $FAM_ID_PREFIX, $SOURCE_ID_PREFIX;
 		global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $DEBUG;
-		global $PGV_BLOCKS, $command, $action;
+		global $PGV_BLOCKS, $ctype, $action;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
   		if (empty($config)) $config = $PGV_BLOCKS["print_random_media"]["config"];
   		if (isset($config["filter"])) $filter = $config["filter"];  // indi, event, or all
@@ -130,10 +130,10 @@ if ($MULTI_MEDIA) {
 				print_help_link("index_media_help", "qm", "random_picture");
 				if ($PGV_BLOCKS["print_random_media"]["canconfig"]) {
 					$username = getUserName();
-					if ((($command=="gedcom")&&(userGedcomAdmin($username))) || (($command=="user")&&(!empty($username)))) {
-						if ($command=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
+					if ((($ctype=="gedcom")&&(userGedcomAdmin($username))) || (($ctype=="user")&&(!empty($username)))) {
+						if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
 						else $name = $username;
-						print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;command=$command&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+						print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 						print "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
 					}
 				}

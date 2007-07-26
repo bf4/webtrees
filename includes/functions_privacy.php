@@ -721,11 +721,10 @@ function showFact($fact, $pid) {
 		if ($SHOW_SOURCES<getUserAccessLevel($username)) return false;
 	}
 	if ($fact!="NAME") {
-		$gedrec = find_gedcom_record($pid);
-		$disp = displayDetails($gedrec);
+		$disp = displayDetailsById($pid);
 		return $disp;
 	}
-	else if (!displayDetails(find_gedcom_record($pid))) return showLivingNameById($pid);
+	else if (!displayDetailsById($pid)) return showLivingNameById($pid);
 	else return true;
 }
 }
@@ -773,7 +772,8 @@ function showFactDetails($fact, $pid) {
  */
 function privatize_gedcom($gedrec) {
 	global $pgv_lang, $GEDCOM, $SHOW_PRIVATE_RELATIONSHIPS, $pgv_private_records;
-
+	global $global_facts, $person_facts;
+	
 	$gt = preg_match("/0 @(.+)@ (.+)/", $gedrec, $gmatch);
 	if ($gt > 0) {
 		$gid = trim($gmatch[1]);
@@ -851,6 +851,20 @@ function privatize_gedcom($gedrec) {
 			return $newrec;
 		}
 		else {
+			//-- check if we need to do any fact privacy checking
+			//---- check for REFN
+			$refn = false;
+			if (preg_match("/^\d REFN/", $gedrec)) $refn = true;
+			//---- check for any person facts
+			$ppriv = isset($person_facts[$gid]);
+			//---- check for any global facts
+			$gpriv = false;
+			foreach($global_facts as $key=>$gfact) {
+				if (preg_match("/^1 ".$key."/", $gedrec)>0) $gpriv = true;
+			}
+			//-- if no fact privacy then return the record
+			if (!$refn && !$ppriv && !$gpriv) return $gedrec;
+			
 			$newrec = "0 @".$gid."@ $type\r\n";
 			//-- check all of the sub facts for access
 			$subs = get_all_subrecords($gedrec, "", false, false, false);

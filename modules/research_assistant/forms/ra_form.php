@@ -501,7 +501,7 @@ END_OUT;
 				factfield = document.getElementById(fact);
 				if (factfield) {
 					factvalue = factfield.options[factfield.selectedIndex].value;
-					window.open('edit_interface.php?action=mod_edit_fact&mod=research_assistant&command=add&type='+type+'&fact='+factvalue+"&"+sessionname+"="+sessionid, '', 'top=50,left=50,width=710,height=500,resizable=1,scrollbars=1');
+					window.open('edit_interface.php?action=mod_edit_fact&mod=research_assistant&ctype=add&type='+type+'&fact='+factvalue+"&"+sessionname+"="+sessionid, '', 'top=50,left=50,width=710,height=500,resizable=1,scrollbars=1');
 					editi = factcount;
 				}
 				return false;
@@ -514,7 +514,7 @@ END_OUT;
 				if (factfield) {
 					factvalue = factfield.value;
 //					alert(factvalue+escape(factvalue));
-					window.open('edit_interface.php?action=mod_edit_fact&mod=research_assistant&command=edit&factrec='+escape(factvalue)+"&"+sessionname+"="+sessionid, '', 'top=50,left=50,width=710,height=500,resizable=1,scrollbars=1');
+					window.open('edit_interface.php?action=mod_edit_fact&mod=research_assistant&ctype=edit&factrec='+escape(factvalue)+"&"+sessionname+"="+sessionid, '', 'top=50,left=50,width=710,height=500,resizable=1,scrollbars=1');
 				}
 				return false;
 			}

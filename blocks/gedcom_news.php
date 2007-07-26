@@ -43,7 +43,7 @@ $PGV_BLOCKS['print_gedcom_news']['config']		= array(
  */
 function print_gedcom_news($block = true, $config='', $side, $index)
 {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $command, $TIME_FORMAT, $VERSION, $PGV_BLOCKS;
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $TIME_FORMAT, $VERSION, $PGV_BLOCKS;
 
 	if(empty($config))
 	{
@@ -78,9 +78,9 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 	if($PGV_BLOCKS['print_gedcom_news']['canconfig'])
 	{
 		$username = getUserName();
-		if((($command == 'gedcom') && (userGedcomAdmin($username))) || (!empty($username)))
+		if((($ctype == 'gedcom') && (userGedcomAdmin($username))) || (!empty($username)))
 		{
-			if($command == 'gedcom')
+			if($ctype == 'gedcom')
 			{
 				$name = preg_replace("/'/", "\'", $GEDCOM);
 			}
@@ -88,7 +88,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 			{
 				$name = $username;
 			}
-			print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name={$name}&amp;command={$command}&amp;action=configure&amp;side={$side}&amp;index={$index}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">"
+			print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name={$name}&amp;ctype={$ctype}&amp;action=configure&amp;side={$side}&amp;index={$index}', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">"
 				."<img class=\"adminicon\" src=\"{$PGV_IMAGE_DIR}/{$PGV_IMAGES['admin']['small']}\" width=\"15\" height=\"15\" border=\"0\" alt=\"{$pgv_lang['config_block']}\" /></a>\n"
 			;
 		}
@@ -171,7 +171,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 		if(userGedcomAdmin($uname)) {
 			print "<hr size=\"1\" />"
 				."<a href=\"javascript:;\" onclick=\"editnews('{$key}'); return false;\">{$pgv_lang['edit']}</a> | "
-				."<a href=\"index.php?action=deletenews&amp;news_id={$key}&amp;command={$command}\" onclick=\"return confirm('{$pgv_lang['confirm_news_delete']}');\">{$pgv_lang['delete']}</a><br />";
+				."<a href=\"index.php?action=deletenews&amp;news_id={$key}&amp;ctype={$ctype}\" onclick=\"return confirm('{$pgv_lang['confirm_news_delete']}');\">{$pgv_lang['delete']}</a><br />";
 		}
 		print "</div>\n";
 	}
@@ -189,7 +189,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 	{
 		if ($printedAddLink) print "&nbsp;&nbsp;|&nbsp;&nbsp;";
 		print_help_link("gedcom_news_archive_help", "qm");
-		print "<a href=\"index.php?gedcom_news_archive=yes&amp;command={$command}\">".$pgv_lang['gedcom_news_archive']."</a><br />";
+		print "<a href=\"index.php?gedcom_news_archive=yes&amp;ctype={$ctype}\">".$pgv_lang['gedcom_news_archive']."</a><br />";
 	}
 	print "</div>\n</div>"
 	;
@@ -197,7 +197,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 
 function print_gedcom_news_config($config)
 {
-	global $pgv_lang, $command, $PGV_BLOCKS;
+	global $pgv_lang, $ctype, $PGV_BLOCKS;
 	if (empty ($config)) $config = $PGV_BLOCKS["print_gedcom_news"]["config"];
 	if (!isset ($config["limit"])) $config["limit"] = "nolimit";
 	if (!isset ($config["flag"])) $config["flag"] = 0;
@@ -227,7 +227,7 @@ function print_gedcom_news_config($config)
 	print $output;
 	
 	// Cache file life
-	if ($command=="gedcom") {
+	if ($ctype=="gedcom") {
   		print "<tr><td class=\"descriptionbox wrap width33\">";
 			print_help_link("cache_life_help", "qm");
 			print $pgv_lang["cache_life"];

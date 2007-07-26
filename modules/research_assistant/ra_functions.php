@@ -1523,14 +1523,32 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 										'</td>
 									</tr>';
 										/*@var $person Person*/
-										//get a birthdate in yyyymmdd format
-										$bdate = $person->getSortableBirthDate(false);
-										//take out the dashes
-										$bdate = preg_replace("/-/","",$bdate);
-										//get a deathdate in yyyymmdd format
-										$ddate = $person->getSortableDeathDate(false);
-										//take out the dashes
-										$ddate = preg_replace("/-/","",$ddate);
+										//-- version 4.1 compatible
+										if (method_exists($person, "getSortableBirthDate")) {
+											//get a birthdate in yyyymmdd format
+											$bdate = $person->getSortableBirthDate(false);
+											//take out the dashes
+											$bdate = preg_replace("/-/","",$bdate);
+											//get a deathdate in yyyymmdd format
+											$ddate = $person->getSortableDeathDate(false);
+											//take out the dashes
+											$ddate = preg_replace("/-/","",$ddate);
+										}
+										//-- version 4.0 compatible
+										else {
+											$bdate = $person->getBirthDate();
+											$bdatea = parse_date($bdate);
+											if (empty($bdatea[0]['year'])) $bdatea[0]['year'] = "0000";
+											if (empty($bdatea[0]['mon'])) $bdatea[0]['mon'] = "00";
+											if (empty($bdatea[0]['day'])) $bdatea[0]['day'] = "00";
+											$bdate = $bdatea[0]['year'].$bdatea[0]['mon'].$bdatea[0]['day'];
+											$ddate = $person->getDeathDate();
+											$ddatea = parse_date($ddate);
+											if (empty($ddatea[0]['year'])) $ddatea[0]['year'] = "0000";
+											if (empty($ddatea[0]['mon'])) $ddatea[0]['mon'] = "00";
+											if (empty($ddatea[0]['day'])) $ddatea[0]['day'] = "00";
+											$ddate = $ddatea[0]['year'].$ddatea[0]['mon'].$ddatea[0]['day'];
+										}
 										
 										$sourcesInferred = array();
 										$sourcesPrinted = array();
@@ -1763,10 +1781,12 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 														
 											foreach($tempDates as $tKey=>$tVal)
 												{
-														$tempDate = get_gedcom_value("DATE",2,$tVal[1]);
-														$tempPlace = get_gedcom_value("PLAC",2,$tVal[1]);
-														$parsedDates = parse_date($tempDate);
-														$place = trim($place);
+													$tempDate = get_gedcom_value("DATE",2,$tVal[1]);
+													$tempPlace = get_gedcom_value("PLAC",2,$tVal[1]);
+													$parsedDates = parse_date($tempDate);
+													//-- 4.0 compat
+													if (!isset($parsedDates[0]['sort'])) $parsedDates[0]['sort'] = $parsedDates[0]['year']."-".$parsedDates[0]['mon']."-".$parsedDates[0]['day']; 
+													$place = trim($place);
 														
 													if(empty($closest))
 													{
@@ -1998,13 +2018,13 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	/**
 	 * function to handle fact edits/updates for task completion forms
 	 * this function is hooked in from the edit_interface.php file.
-	 * It requires at least that a command variable be put on the request
+	 * It requires at least that a ctype variable be put on the request
 	 */
 	function edit_fact() {
 		global $templefacts, $nondatefacts, $nonplacfacts;
 		global $factarray, $pgv_lang, $tag, $MULTI_MEDIA;
 		
-		if ($_REQUEST['command']=='add' && !empty($_REQUEST['fact'])) {
+		if ($_REQUEST['ctype']=='add' && !empty($_REQUEST['fact'])) {
 			$fact = $_REQUEST['fact'];
 			if (!empty($_REQUEST['type'])) $type = $_REQUEST['type'];
 			else $type='indi';
@@ -2013,7 +2033,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			print "<form method=\"post\" action=\"edit_interface.php\" enctype=\"multipart/form-data\">\n";
 			print "<input type=\"hidden\" name=\"action\" value=\"mod_edit_fact\" />\n";
 			print "<input type=\"hidden\" name=\"mod\" value=\"research_assistant\" />\n";
-			print "<input type=\"hidden\" name=\"command\" value=\"update\" />\n";
+			print "<input type=\"hidden\" name=\"ctype\" value=\"update\" />\n";
 			print "<input type=\"hidden\" name=\"type\" value=\"$type\" />\n";
 			
 			print "<br /><input type=\"submit\" value=\"".$pgv_lang["add"]."\" /><br />\n";
@@ -2032,12 +2052,12 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			print "<br /><input type=\"submit\" value=\"".$pgv_lang["add"]."\" /><br />\n";
 			print "</form>\n";
 		}
-		if ($_REQUEST['command']=='edit' && !empty($_REQUEST['factrec'])) {
+		if ($_REQUEST['ctype']=='edit' && !empty($_REQUEST['factrec'])) {
 			$gedrec = $_REQUEST['factrec'];
 			init_calendar_popup();
 			print "<form method=\"post\" action=\"edit_interface.php\" enctype=\"multipart/form-data\">\n";
 			print "<input type=\"hidden\" name=\"action\" value=\"mod_edit_fact\" />\n";
-			print "<input type=\"hidden\" name=\"command\" value=\"update\" />\n";
+			print "<input type=\"hidden\" name=\"ctype\" value=\"update\" />\n";
 			print "<input type=\"hidden\" name=\"mod\" value=\"research_assistant\" />\n";
 			print "<br /><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
 //		print "<pre>".$gedrec."</pre>";
@@ -2051,7 +2071,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			print "<br /><input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
 			print "</form>\n";
 		}
-		else if ($_REQUEST['command']=="update") {
+		else if ($_REQUEST['ctype']=="update") {
 			$factrec = handle_updates('');
 			if (!empty($_REQUEST['type'])) $type = $_REQUEST['type'];
 			else $type='indi';

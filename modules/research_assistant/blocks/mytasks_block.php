@@ -46,7 +46,7 @@ if ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel()) {
 	//-- print user messages
 	function print_mytasks($block=true, $config="", $side, $index) {
 			global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $TIME_FORMAT, $PGV_STORE_MESSAGES, $PGV_IMAGES, $usersortfields;
-			global $TBLPREFIX, $PGV_BLOCKS, $command, $GEDCOM;
+			global $TBLPREFIX, $PGV_BLOCKS, $ctype, $GEDCOM;
 			
 			if (empty($config)) $config = $PGV_BLOCKS["print_mytasks"]["config"];
 	  		if (isset($config["unassigned"])) $unassigned = $config["unassigned"];  // "yes" or "no"
@@ -117,10 +117,10 @@ if ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel()) {
 			
 			if ($PGV_BLOCKS["print_mytasks"]["canconfig"]) {
 	    		$username = getUserName();
-	    		if ((($command=="gedcom")&&(userGedcomAdmin($username))) || (($command=="user")&&(!empty($username)))) {
-	     		 if ($command=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
+	    		if ((($ctype=="gedcom")&&(userGedcomAdmin($username))) || (($ctype=="user")&&(!empty($username)))) {
+	     		 if ($ctype=="gedcom") $name = preg_replace("/'/", "\'", $GEDCOM);
 	     		 else $name = $username;
-	     		 print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;command=$command&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
+	     		 print "<a href=\"javascript: configure block\" onclick=\"window.open('index_edit.php?name=$name&amp;ctype=$ctype&amp;action=configure&amp;side=$side&amp;index=$index', '_blank', 'top=50,left=50,width=600,height=350,scrollbars=1,resizable=1'); return false;\">";
 	      		print "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
 	   			 }
 			}

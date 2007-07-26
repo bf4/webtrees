@@ -58,7 +58,7 @@ if ($action=="sendFiles") {
 
     if (isset($welcome)) {
         print "   <url>\n";
-        print "      <loc>".$SERVER_URL."index.php?command=gedcom&amp;ged=".$DBCONN->escapeSimple($gedcom_name)."</loc>\n";
+        print "      <loc>".$SERVER_URL."index.php?ctype=gedcom&amp;ged=".$DBCONN->escapeSimple($gedcom_name)."</loc>\n";
         print "      <changefreq>".$welcome_update."</changefreq>\n";
         print "      <priority>0.".$welcome_priority."</priority>\n";
         print "   </url>\n";
