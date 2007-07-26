@@ -37,7 +37,7 @@ $PGV_BLOCKS["print_user_news"]["config"]	= array("cache"=>0);
  *
  */
 function print_user_news($block=true, $config="", $side, $index) {
-		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $command, $TIME_FORMAT;
+		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype, $TIME_FORMAT;
 
 		$uname = getUserName();
 		$usernews = getUserNews($uname);
@@ -80,7 +80,7 @@ function print_user_news($block=true, $config="", $side, $index) {
 				$news["text"] = nl2br($news["text"]);
 				print PrintReady($news["text"])."<br /><br />\n";
 				print "<a href=\"javascript:;\" onclick=\"editnews('$key'); return false;\">".$pgv_lang["edit"]."</a> | ";
-				print "<a href=\"index.php?action=deletenews&amp;news_id=$key&amp;command=$command\" onclick=\"return confirm('".$pgv_lang["confirm_journal_delete"]."');\">".$pgv_lang["delete"]."</a><br />";
+				print "<a href=\"index.php?action=deletenews&amp;news_id=$key&amp;ctype=$ctype\" onclick=\"return confirm('".$pgv_lang["confirm_journal_delete"]."');\">".$pgv_lang["delete"]."</a><br />";
 				print "</div><br />\n";
 		}
 		if ($block) print "</div>\n";
