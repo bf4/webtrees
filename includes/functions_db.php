@@ -3250,9 +3250,7 @@ function compare_found_facts($a, $b) {
 		return $a[3]-$b[3];
 	// :TODO: Sort by name
 	// Sort by fact type
-	if (preg_match('/1 (\w+)/', $a[1], $matcha) && preg_match('/1 (\w+)/', $b[1], $matchb))
-		return compare_fact_type($matcha[1], $matchb[1]);
-	return 0;
+	return compare_facts_type($a[1], $b[1]);
 }
 
 ?>
