@@ -684,7 +684,7 @@ class IndividualControllerRoot extends BaseController {
 	 */
 	function getIndiFacts() {
 		$indifacts = $this->indi->getIndiFacts();
-		stable_usort($indifacts, "compare_facts");
+		sort_facts($indifacts);
 		return $indifacts;
 	}
 	/**

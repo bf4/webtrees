@@ -582,7 +582,7 @@ function print_family_facts($famid, $sosa = 0) {
 			}
 		}
 		if ((count($indifacts) > 0) || (count($otheritems) > 0)) {
-			stable_usort($indifacts, "compare_facts");
+			sort_facts($indifacts);
 			print "\n\t<span class=\"subheaders\">" . $pgv_lang["family_group_info"];
 			if ($SHOW_ID_NUMBERS and $famid != "") print "&nbsp;&nbsp;&nbsp;($famid)";
 			print "</span><br />\n\t<table class=\"facts_table\">";

@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Module
- * $Id:$
+ * $Id$
  * @author Johan Borkhuis
  */
 
@@ -343,7 +343,7 @@ function build_indiv_map($indifacts, $famids) {
 	$tables = $DBCONN->getListOf('tables');
 	$placelocation=in_array($TBLPREFIX."placelocation", $tables);
 	//-- sort the facts
-	stable_usort($indifacts, "compare_facts");
+	sort_facts($indifacts);
 	$i = 0;
 	foreach ($indifacts as $key => $value) {
 		if (preg_match("/1 (\w+)(.*)/", $value[1], $match)) {
