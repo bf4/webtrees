@@ -1560,9 +1560,30 @@ function lettersort($a, $b) {
 	return stringsort($a["letter"], $b["letter"]);
 }
 
-function compare_fact_type($afact, $bfact) {
-	global $factarray, $pgv_lang;
+// Helper function to sort facts.
+function compare_facts_type($arec, $brec) {
+	global $factarray;
 	static $factsort;
+
+	if (is_array($arec))
+		$arec = $arec[1];
+	if (is_array($brec))
+		$brec = $brec[1];
+	
+	// Facts from different families stay grouped together
+	if (preg_match('/_PGVFS @(\w+)@/', $arec, $match1) && preg_match('/_PGVFS @(\w+)@/', $brec, $match2) && $match1[1]!=$match2[1])
+		return 0;
+
+	// Extract fact type from record
+	if (!preg_match("/1\s+(\w+)/", $arec, $matcha) || !preg_match("/1\s+(\w+)/", $brec, $matchb))
+		return 0;
+	$afact=$matcha[1];
+	$bfact=$matchb[1];
+
+	if (($afact=="EVEN" || $afact=="FACT") && preg_match("/2\s+TYPE\s+(\w+)/", $arec, $match) && isset($factarray[$match[1]]))
+		$afact=$match[1];
+	if (($bfact=="EVEN" || $bfact=="FACT") && preg_match("/2\s+TYPE\s+(\w+)/", $brec, $match) && isset($factarray[$match[1]]))
+		$bfact=$match[1];
 
 	if (!is_array($factsort))
 		$factsort = array_flip(array(
@@ -1637,70 +1658,17 @@ function compare_fact_type($afact, $bfact) {
 	return $factsort[$afact]-$factsort[$bfact];
 }
 
-/**
- * compare two fact records by date
- *
- * Compare facts function is used by the usort PHP function to sort fact baseds on date, family and type
- * @param mixed $a an array with the fact record at index 1 or just a string with the factrecord
- * @param mixed $b an array with the fact record at index 1 or just a string with the factrecord
- * @return int <0 if $a should be sorted first, 0 if they should stay in order, >0 if $b should be sorted first
- */
-function compare_facts($a, $b) {
-	global $factarray, $pgv_lang;
-
-	if (is_array($a))
-		$arec = $a[1];
-	else
-		$arec = $a;
-	if (is_array($b))
-		$brec = $b[1];
-	else
-		$brec = $b;
-	
-	if (!preg_match("/1\s+(\w+)/", $arec, $matcha) || !preg_match("/1\s+(\w+)/", $brec, $matchb))
-		return 0;
-
-	// 1: If both facts have dates, sort by them
-	$cfd=compare_facts_date($arec, $brec);
-	if ($cfd!=0)
-		return $cfd;
-
-	// 2: Facts from different families stay retain their original order
-	if (preg_match('/_PGVFS @(\w+)@/', $arec, $match1) && preg_match('/_PGVFS @(\w+)@/', $brec, $match2) && $match1[1]!=$match2[1])
-		return 0;
-
-	$afact=$matcha[1];
-	$bfact=$matchb[1];
-	if (($afact=="EVEN" || $afact=="FACT") && preg_match("/2\s+TYPE\s+(\w+)/", $arec, $match) && isset($factarray[$match[1]]))
-		$afact=$match[1];
-	if (($bfact=="EVEN" || $bfact=="FACT") && preg_match("/2\s+TYPE\s+(\w+)/", $brec, $match) && isset($factarray[$match[1]]))
-		$bfact=$match[1];
-	
-	// 3: Compare by fact type
-	$cft=compare_fact_type($afact, $bfact);
-	if ($cft!=0)
-	 	return $cft;
-
-	// 4: sort by fact name
-	if (isset($factarray[$afact]))
-		$afact = $factarray[$afact];
-	else
-		if (isset($pgv_lang[$afact]))
-			$afact = $pgv_lang[$afact];
-	if (isset($factarray[$bfact]))
-		$bfact = $factarray[$bfact];
-	else
-		if (isset($pgv_lang[$bfact]))
-			$bfact = $pgv_lang[$bfact];
-	return stringsort($afact, $bfact);
-}
-
 // Helper function to sort facts.
 function compare_facts_date($arec, $brec) {
-	$cta = preg_match("/2 DATE (.*)/", $arec, $amatch);
-	if ($cta==0) return 0;
-	$ctb = preg_match("/2 DATE (.*)/", $brec, $bmatch);
-	if ($ctb==0) return 0;
+	if (is_array($arec))
+		$arec = $arec[1];
+	if (is_array($brec))
+		$brec = $brec[1];
+
+	// If either fact is undated, the facts sort equally.
+	if (!preg_match("/2 DATE (.*)/", $arec, $amatch) || !preg_match("/2 DATE (.*)/", $brec, $bmatch))
+		return 0;
+
 	$adate = parse_date($amatch[1]);
 	$bdate = parse_date($bmatch[1]);
 	// If either date can't be parsed, don't sort.
@@ -1745,17 +1713,33 @@ function compare_facts_date($arec, $brec) {
 		return 0;
 }
 
-// Since PHP 4.1.0, the usort() function is no longer stable.
-// We need stability to keep fam1 events separate from fam2
-// :TODO: Insertion sort is also stable and would be quicker.
-function stable_usort(&$arr, $cmp) {
+// Sort the facts, using three conflicting rules (family sequence,
+// date sequence and fact sequence).
+// We sort by fact first (preserving family order where possible) and then
+// resort by date (preserving fact order where possible).
+// This results in the dates always being in sequence, and the facts
+// *mostly* being in sequence.
+function sort_facts(&$arr) {
+	// Pass one - insertion sort on fact type
+	for ($i=1; $i<count($arr); ++$i) {
+		$tmp=$arr[$i];
+		$j=$i;
+		while ($j>0 && compare_facts_type($arr[$j-1], $tmp)>0) {
+			$arr[$j]=$arr[$j-1];
+			--$j;
+		}
+		$arr[$j]=$tmp;
+	}
+	// Pass two - modified bubble/insertion sort on date
 	for ($i=0; $i<count($arr)-1; ++$i)
-		for ($j=$i+1; $j<count($arr); ++$j)
-			if ($cmp($arr[$i],$arr[$j])>0) {
-				$tmp=$arr[$i];
-				$arr[$i]=$arr[$j];
-				$arr[$j]=$tmp;
+		for ($j=count($arr)-1; $j>$i; --$j)
+			if (compare_facts_date($arr[$i],$arr[$j])>0) {
+				$tmp=$arr[$j];
+				for ($k=$j; $k>$i; --$k)
+					$arr[$k]=$arr[$k-1];
+				$arr[$i]=$tmp;
 			}
+	return;
 }
 
 /**
@@ -1770,7 +1754,7 @@ function compare_date($a, $b) {
 	if (!empty($sortby)) $tag = $sortby;
 	$abirt = get_sub_record(1, "1 $tag", $a["gedcom"]);
 	$bbirt = get_sub_record(1, "1 $tag", $b["gedcom"]);
-	$c = compare_facts($abirt, $bbirt);
+	$c = compare_facts_date($abirt, $bbirt);
 	if ($c==0) return itemsort($a, $b);
 	else return $c;
 }
