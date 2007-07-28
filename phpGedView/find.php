@@ -654,7 +654,7 @@ if ($action=="filter") {
 	if ($type == "place") {
 		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>";
 		$placelist = array();
-		if (!empty($filter)) 
+		if ( isset($all) || !empty($filter) )  
 		{
 			find_place_list($filter);
 			uasort($placelist, "stringsort");
