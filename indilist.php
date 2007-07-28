@@ -48,12 +48,6 @@ print "<div class =\"center\">";
 print "\n\t<h2>".$pgv_lang["individual_list"]."</h2>";
 
 
-if(!(empty($SEARCH_SPIDER))) {
-	$surname_sublist = "no";
-	}
-else {
-	if (empty($surname_sublist)) $surname_sublist = "yes";
-	}
 
 if (empty($show_all)) $show_all = "no";
 if (empty($show_all_firstnames)) $show_all_firstnames = "no";
@@ -112,8 +106,37 @@ uasort($indialpha, "stringsort");
 
 if (isset($alpha) && !isset($indialpha["$alpha"])) unset($alpha);
 
+if (empty($surname_sublist)) 
+	$surname_sublist = "yes";
+
+/**
+ * In the first half of 2007, Google is only indexing the first 1,000 urls 
+ * on a page.  So, we adjust and do surname pages if the alphalist page 
+ * would exceed that number minus the header urls and alphas.
+ * 900 was chosen to have a good safety margin.
+ * We also now only generate one url per line, instead of 11.
+ * If you have over 1000 individuals in the same surname, some will 
+ * still not get indexed through here, and will have to be caught by 
+ * the close relatives on the individual.php or family.php page.
+ */
+if (!(empty($SEARCH_SPIDER))) {
+	$googleSplit = 900;
+	if (isset($alpha)) 
+		$show_count = count(get_alpha_indis($alpha));
+	else if (isset($surname)) 
+		$show_count = count(get_surname_indis($surname));
+	else
+		$show_count = count(get_indi_list());
+
+	if (($show_count > $googleSplit ) && (empty($surname)))  /* Generate extra surname pages if needed */
+		$surname_sublist = "yes";
+	else
+		$surname_sublist = "no";
+}
+
 if (count($indialpha) > 0) {
-	print_help_link("alpha_help", "qm", "alpha_index");
+	if (empty($SEARCH_SPIDER))
+		print_help_link("alpha_help", "qm", "alpha_index");
 	foreach($indialpha as $letter=>$list) {
 		if (empty($alpha)) {
 			if (!empty($surname)) {
@@ -125,11 +148,11 @@ if (count($indialpha) > 0) {
 				$startalpha = $letter;
 				$alpha = $letter;
 			}
-			if(!empty($SEARCH_SPIDER)) { // we want only 26+ letters and full list for spiders.
-				print "<a href=\"?alpha=".urlencode($letter)."&amp;surname_sublist=no&amp;ged=".$GEDCOM."\">";
+			if(!empty($SEARCH_SPIDER)) { // we say we want only 26+ letters and all for spiders.
+				print "<a href=\"".$SERVER_URL."indilist.php?alpha=".urlencode($letter)."&amp;surname_sublist=no&amp;ged=".$GEDCOM."\">";
 			}
 			else {
-				print "<a href=\"?alpha=".urlencode($letter)."&amp;surname_sublist=".$surname_sublist."\">";
+				print "<a href=\"".$SERVER_URL."indilist.php?alpha=".urlencode($letter)."&amp;surname_sublist=".$surname_sublist."\">";
 			}
 			if (($alpha==$letter)&&($show_all=="no")) print "<span class=\"warning\">".$letter."</span>";
 			else print $letter;
@@ -140,26 +163,26 @@ if (count($indialpha) > 0) {
 	if ($pass == true) {
 		if(!empty($SEARCH_SPIDER)) { // we want only 26+ letters and full list for spiders.
 
-			if (isset($alpha) && $alpha == "@") print "<a href=\"?alpha=@&amp;ged=".$GEDCOM."&amp;surname_sublist=no&amp;surname=@N.N.\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
-			else print "<a href=\"?alpha=@&amp;ged=".$GEDCOM."&amp;surname_sublist=no&amp;surname=@N.N.\">".PrintReady($pgv_lang["NN"])."</a>";
+			if (isset($alpha) && $alpha == "@") print "<a href=\"".$SERVER_URL."indilist.php?alpha=@&amp;ged=".$GEDCOM."&amp;surname_sublist=no&amp;surname=@N.N.\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
+			else print "<a href=\"".$SERVER_URL."indilist.php?alpha=@&amp;ged=".$GEDCOM."&amp;surname_sublist=no&amp;surname=@N.N.\">".PrintReady($pgv_lang["NN"])."</a>";
 			print " | \n";
 			$pass = false;
 		}
 		else {
-			if (isset($alpha) && $alpha == "@") print "<a href=\"?alpha=@&amp;surname_sublist=yes&amp;surname=@N.N.\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
-			else print "<a href=\"?alpha=@&amp;surname_sublist=yes&amp;surname=@N.N.\">".PrintReady($pgv_lang["NN"])."</a>";
+			if (isset($alpha) && $alpha == "@") print "<a href=\"".$SERVER_URL."indilist.php?alpha=@&amp;surname_sublist=yes&amp;surname=@N.N.\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
+			else print "<a href=\"".$SERVER_URL."indilist.php?alpha=@&amp;surname_sublist=yes&amp;surname=@N.N.\">".PrintReady($pgv_lang["NN"])."</a>";
 			print " | \n";
 			$pass = false;
 
 		}
 	}
 	if(!empty($SEARCH_SPIDER)) { // we want only 26+ letters and full list for spiders.
-		if ($show_all=="yes") print "<a href=\"?show_all=yes&amp;ged=".$GEDCOM."&amp;surname_sublist=no\"><span class=\"warning\">".$pgv_lang["all"]."</span></a>\n";
-		else print "<a href=\"?show_all=yes&amp;ged=".$GEDCOM."&amp;surname_sublist=no\">".$pgv_lang["all"]."</a>\n";
+		if ($show_all=="yes") print "<a href=\"".$SERVER_URL."indilist.php?show_all=yes&amp;ged=".$GEDCOM."&amp;surname_sublist=no\"><span class=\"warning\">".$pgv_lang["all"]."</span></a>\n";
+		else print "<a href=\"".$SERVER_URL."indilist.php?show_all=yes&amp;ged=".$GEDCOM."&amp;surname_sublist=no\">".$pgv_lang["all"]."</a>\n";
 	}
 	else {
-		if ($show_all=="yes") print "<a href=\"?show_all=yes&amp;surname_sublist=".$surname_sublist."\"><span class=\"warning\">".$pgv_lang["all"]."</span></a>\n";
-		else print "<a href=\"?show_all=yes&amp;surname_sublist=".$surname_sublist."\">".$pgv_lang["all"]."</a>\n";
+		if ($show_all=="yes") print "<a href=\"".$SERVER_URL."indilist.php?show_all=yes&amp;surname_sublist=".$surname_sublist."\"><span class=\"warning\">".$pgv_lang["all"]."</span></a>\n";
+		else print "<a href=\"".$SERVER_URL."indilist.php?show_all=yes&amp;surname_sublist=".$surname_sublist."\">".$pgv_lang["all"]."</a>\n";
 	}
 	if (isset($startalpha)) $alpha = $startalpha;
 }
@@ -175,21 +198,24 @@ if(empty($SEARCH_SPIDER)) {
 	if ($alpha != "@") {
 		if ($surname_sublist=="yes") {
 			print_help_link("skip_sublist_help", "qm", "skip_surnames");
-			print "<a href=\"?alpha=$alpha&amp;surname_sublist=no&amp;show_all=$show_all\">".$pgv_lang["skip_surnames"]."</a>";
+			print "<a href=\"".$SERVER_URL."indilist.php?alpha=$alpha&amp;surname_sublist=no&amp;show_all=$show_all\">".$pgv_lang["skip_surnames"]."</a>";
 		} else {
 			print_help_link("skip_sublist_help", "qm", "show_surnames");
-			print "<a href=\"?alpha=$alpha&amp;surname_sublist=yes&amp;show_all=$show_all\">".$pgv_lang["show_surnames"]."</a>";
+			print "<a href=\"".$SERVER_URL."indilist.php?alpha=$alpha&amp;surname_sublist=yes&amp;show_all=$show_all\">".$pgv_lang["show_surnames"]."</a>";
 		}
 	}
 }
 
-print "<br /><br />";
+if(empty($SEARCH_SPIDER)) {
+	print_help_link("name_list_help", "qm");
+	print "<br /><br />";
+}
 
 print "<table class=\"list_table $TEXT_DIRECTION\"><tr>";
 
 $TableTitle = "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]."\" border=\"0\" title=\"".$pgv_lang["individuals"]."\" alt=\"".$pgv_lang["individuals"]."\" />&nbsp;&nbsp;";
 
-if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&($show_all=="yes")) {
+if (($surname_sublist=="yes")&&($show_all=="yes")) {
 	get_indi_list();
 	if (!isset($alpha)) $alpha="";
 	$surnames = array();
@@ -210,7 +236,7 @@ if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&($show_all=="yes")) {
 	print_surn_table($surnames);
 	if (count($indi_hide)>0) print "<br /><span class=\"warning\">".$pgv_lang["hidden"].": ".count($indi_hide)."</span>";
 }
-else if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
+else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 	if (!isset($alpha)) $alpha="";
 	// get all of the individuals whose last names start with this letter
 	$tindilist = get_alpha_indis($alpha);
@@ -263,7 +289,7 @@ else if ((empty($SEARCH_SPIDER))&&($surname_sublist=="yes")&&(empty($surname))&&
 else {
 	$firstname_alpha = false;
 	//-- if the surname is set then only get the names in that surname list
-	if ((!empty($surname))&&($surname_sublist=="yes")&&(empty($SEARCH_SPIDER))) {
+	if ((!empty($surname))&&($surname_sublist=="yes")) {
 		$surname = trim($surname);
 		$tindilist = get_surname_indis($surname);
 		//-- split up long surname lists by first letter of first name
@@ -293,7 +319,7 @@ else {
 	}
 	else {
 		//--- the list is really long so divide it up again by the first letter of the first name
-		if (($firstname_alpha)&&(empty($SEARCH_SPIDER))) {
+		if (($firstname_alpha)) {
 			if (!isset($_SESSION[$surname."_firstalpha"])) {
 				$firstalpha = array();
 				foreach($tindilist as $gid=>$indi) {
@@ -325,7 +351,7 @@ else {
 						$fstartalpha = $letter;
 						$falpha = $letter;
 					}
-					print "<a href=\"?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;falpha=".urlencode($letter)."&amp;surname_sublist=".$surname_sublist."\">";
+					print "<a href=\"".$SERVER_URL."indilist.php?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;falpha=".urlencode($letter)."&amp;surname_sublist=".$surname_sublist."\">";
 					if (($falpha==$letter)&&($show_all_firstnames=="no")) print "<span class=\"warning\">".$letter."</span>";
 					else print $letter;
 					print "</a> | \n";

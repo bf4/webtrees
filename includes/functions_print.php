@@ -308,7 +308,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			   print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\" title=\"$title\" onmouseover=\"change_class('namedef-$boxID','name".$style."Hover'); return false;\" onmouseout=\"change_class('namedef-$boxID','name$style'); return false;\"><span id=\"namedef-$boxID\" class=\"name$style\">";
  			   print PrintReady($name);
 			   // NOTE: IMG ID
-			   print "<img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
+			   print " <img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
 			   if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
 			   else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
 			   else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
@@ -381,7 +381,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 print "</span>";
 	 print "<span class=\"name$style\">";
 	 // NOTE: IMG ID
-	 print "<img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
+	 print " <img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
 	 if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
 	 else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
 	 else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
@@ -508,6 +508,9 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		if(!((strstr($SCRIPT_NAME, "/individual.php")) ||
 		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
 		     (strstr($SCRIPT_NAME, "/login.php")) ||
+		     (strstr($SCRIPT_NAME, "/family.php")) ||
+		     (strstr($SCRIPT_NAME, "/famlist.php")) ||
+		     (strstr($SCRIPT_NAME, "/help_text.php")) ||
 		     (strstr($SCRIPT_NAME, "/source.php")) ||
 		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
 		     (strstr($SCRIPT_NAME, "/index.php"))) ) {
@@ -607,6 +610,9 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		  // Also ignored by crawlers like wget, so other checks have to be done too.
 		  if((strstr($SCRIPT_NAME, "/individual.php")) ||
 		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
+		     (strstr($SCRIPT_NAME, "/family.php")) ||
+		     (strstr($SCRIPT_NAME, "/famlist.php")) ||
+		     (strstr($SCRIPT_NAME, "/help_text.php")) ||
 		     (strstr($SCRIPT_NAME, "/source.php")) ||
 		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
 		     (strstr($SCRIPT_NAME, "/index.php")) ) {
@@ -760,6 +766,9 @@ function print_simple_header($title) {
 	if(!empty($SEARCH_SPIDER)) {
 		if(!((strstr($SCRIPT_NAME, "/individual.php")) ||
 		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
+		     (strstr($SCRIPT_NAME, "/family.php")) ||
+		     (strstr($SCRIPT_NAME, "/famlist.php")) ||
+		     (strstr($SCRIPT_NAME, "/help_text.php")) ||
 		     (strstr($SCRIPT_NAME, "/source.php")) ||
 		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
 		     (strstr($SCRIPT_NAME, "/index.php"))) ) {
@@ -811,6 +820,9 @@ function print_simple_header($title) {
 		  // Also ignored by crawlers like wget, so other checks have to be done too.
 		  if((strstr($SCRIPT_NAME, "/individual.php")) ||
 		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
+		     (strstr($SCRIPT_NAME, "/family.php")) ||
+		     (strstr($SCRIPT_NAME, "/famlist.php")) ||
+		     (strstr($SCRIPT_NAME, "/help_text.php")) ||
 		     (strstr($SCRIPT_NAME, "/source.php")) ||
 		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
 		     (strstr($SCRIPT_NAME, "/index.php")) ) {

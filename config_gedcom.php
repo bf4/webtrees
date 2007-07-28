@@ -137,7 +137,7 @@ $SECURITY_CHECK_GEDCOM_DOWNLOADABLE = true;	//-- check for downloadability of GE
 
 $SHOW_STATS = false;					//-- Show execution stats at the bottom of the page
 $SHOW_COUNTER = false;        //-- Show hit counters on portal and individual pages
-$SHOW_SPIDER_TAGLINE = true;         //-- On pages generated for search engines, name the engine as the last line
+$SHOW_SPIDER_TAGLINE = false;         //-- On pages generated for search engines, name the engine as the last line
 $DAYS_TO_SHOW_LIMIT = "30";			//-- Maximum number of days in Upcoming Events block
 $COMMON_NAMES_THRESHOLD	= "40";		//-- The minimum number of times a surname must appear before it is shown on the most common surnames list
 $COMMON_NAMES_ADD	= "";			//-- a comma seperated list of surnames the admin can add to the common surnames list
