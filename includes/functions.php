@@ -493,7 +493,6 @@ function get_sub_record($level, $tag, $gedrec, $num=1) {
  * @return array an array of the raw subrecords to return
  */
 function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $ApplyPriv=true) {
-	global $ASC, $IGNORE_FACTS, $IGNORE_YEAR;
 	$repeats = array();
 
 	$id = "";
@@ -566,12 +565,8 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $Ap
 		}
 	}
 
-	if ($sort) {
-		$ASC = 0;
-  		$IGNORE_FACTS = 0;
-  		$IGNORE_YEAR = 0;
-		usort($repeats, "compare_facts");
-	}
+	if ($sort)
+		sort_facts($repeats);
 	return $repeats;
 }
 
