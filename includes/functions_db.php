@@ -1074,7 +1074,7 @@ function search_indis_year_range($startyear, $endyear, $allgeds=false) {
 
 	$myindilist = array();
 	$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."dates WHERE i_id=d_gid AND i_file=d_file AND d_fact NOT IN('CHAN', 'BAPL', 'SLGC', 'SLGS', 'ENDL') AND ";
-	$sql .= "d_datestamp >= ".$startyear."0000 AND d_datestamp<".($endyear+1)."0000";
+	$sql .= "d_year >= ".$startyear." AND d_year<=".$endyear;
 
 	if (!$allgeds) $sql .= " AND i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
 	$res = dbquery($sql);
@@ -1582,7 +1582,7 @@ function search_fams_year_range($startyear, $endyear, $allgeds=false) {
 
 	$myfamlist = array();
 	$sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom FROM ".$TBLPREFIX."families, ".$TBLPREFIX."dates WHERE f_id=d_gid AND f_file=d_file AND d_fact NOT IN('CHAN', 'BAPL', 'SLGC', 'SLGS', 'ENDL') AND ";
-	$sql .= "d_datestamp >= ".$startyear."0000 AND d_datestamp<".($endyear+1)."0000";
+	$sql .= "d_year >= ".$startyear." AND d_year<=".$endyear;
 	if (!$allgeds) $sql .= " AND f_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
 	$res = dbquery($sql);
 
@@ -3143,7 +3143,7 @@ function get_event_list() {
 //		  	$dayindilist2 = search_indis_dates("", $mmon3);
 //		  	$dayindilist = pgv_array_merge($dayindilist, $dayindilist2);
 //		}
-
+		
 		// Search database for raw Family data if no cache was found
 		$dayfamlist = array();
 		$dayfamlist = search_fams_daterange($startstamp, $endstamp, "!CHAN");
@@ -3156,7 +3156,7 @@ function get_event_list() {
 //			$dayfamlist2 = search_fams_dates("", $mmon3);
 //			$dayfamlist = pgv_array_merge($dayfamlist, $dayfamlist2);
 //		}
-// Apply filter criteria and perform other transformations on the raw data
+		// Apply filter criteria and perform other transformations on the raw data
 		$found_facts = array();
 		foreach($dayindilist as $gid=>$indi) {
 			$facts = get_all_subrecords($indi["gedcom"], $skipfacts, false, false, false);
