@@ -3095,9 +3095,9 @@ global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
  * to be done by the routine that makes use of the event list.
  */
 function get_event_list() {
-	global $month, $year, $day, $monthtonum, $USE_RTL_FUNCTIONS;
+	global $USE_RTL_FUNCTIONS;
 	global $INDEX_DIRECTORY, $GEDCOM, $DEBUG;
-  	global $DAYS_TO_SHOW_LIMIT;
+	global $DAYS_TO_SHOW_LIMIT;
 
 	if (!isset($DAYS_TO_SHOW_LIMIT)) $DAYS_TO_SHOW_LIMIT = 30;
 
@@ -3110,7 +3110,7 @@ function get_event_list() {
 	if ((file_exists($INDEX_DIRECTORY.$GEDCOM."_upcoming.php"))&&(!isset($DEBUG)||($DEBUG==false))) {
 		$modtime = filemtime($INDEX_DIRECTORY.$GEDCOM."_upcoming.php");
 		$mday = date("d", $modtime);
-		if ($mday==$day) {
+		if ($mday==date('j')) {
 			$fp = fopen($INDEX_DIRECTORY.$GEDCOM."_upcoming.php", "rb");
 			$fcache = fread($fp, filesize($INDEX_DIRECTORY.$GEDCOM."_upcoming.php"));
 			fclose($fp);
@@ -3120,42 +3120,18 @@ function get_event_list() {
 	}
 
 	if (!$cache_load) {
-		$nmonth = $monthtonum[strtolower($month)];
-		$dateRangeStart = mktime(0,0,0,$nmonth,$day,$year);
+		$nmonth = date('n');
+		$dateRangeStart = mktime(0,0,0,date('n'),date('j'),date('Y'));
 		$dateRangeEnd = $dateRangeStart+(60*60*24*$DAYS_TO_SHOW_LIMIT)-1;
 		$startstamp = date("md", $dateRangeStart);
 		$endstamp = date("md", $dateRangeEnd);
-		$mmon = strtolower(date("M", $dateRangeStart));
-		$mmon3 = strtolower(date("M", $dateRangeEnd));
-		$mmon2 = $mmon3;
-		if ($mmon3=="mar" && $mmon=="jan") $mmon2="feb";
 
 		// Search database for raw Indi data if no cache was found
-		$dayindilist = array();
 		$dayindilist = search_indis_daterange($startstamp, $endstamp, "!CHAN");
-		
-//		$dayindilist = search_indis_dates("", $mmon);
-//		if ($mmon!=$mmon2) {
-//			$dayindilist2 = search_indis_dates("", $mmon2);
-//			$dayindilist = pgv_array_merge($dayindilist, $dayindilist2);
-//		}
-//		if ($mmon2!=$mmon3) {
-//		  	$dayindilist2 = search_indis_dates("", $mmon3);
-//		  	$dayindilist = pgv_array_merge($dayindilist, $dayindilist2);
-//		}
-		
+
 		// Search database for raw Family data if no cache was found
-		$dayfamlist = array();
 		$dayfamlist = search_fams_daterange($startstamp, $endstamp, "!CHAN");
-//		$dayfamlist = search_fams_dates("", $mmon);
-//		if ($mmon!=$mmon2) {
-//			$dayfamlist2 = search_fams_dates("", $mmon2);
-//			$dayfamlist = pgv_array_merge($dayfamlist, $dayfamlist2);
-//		}
-//		if ($mmon2!=$mmon3) {
-//			$dayfamlist2 = search_fams_dates("", $mmon3);
-//			$dayfamlist = pgv_array_merge($dayfamlist, $dayfamlist2);
-//		}
+
 		// Apply filter criteria and perform other transformations on the raw data
 		$found_facts = array();
 		foreach($dayindilist as $gid=>$indi) {
@@ -3180,10 +3156,10 @@ function get_event_list() {
 					$startSecond = 1;
 					if ($date[0]["day"]=="") {
 						$startSecond = 0;
-						$date[0]["day"] = ($date[0]["month"]==$nmonth) ? $day+1 : 1;
+						$date[0]["day"] = ($date[0]["month"]==$nmonth) ? date('j')+1 : 1;
 					}
-					$anniversaryDate = mktime(0,0,$startSecond,(int)$date[0]["mon"],(int)$date[0]["day"],$year);
-					if ($anniversaryDate<$dateRangeStart) $anniversaryDate = mktime(0,0,$startSecond,(int)$date[0]["mon"],(int)$date[0]["day"],$year+1);
+					$anniversaryDate = mktime(0,0,$startSecond,(int)$date[0]["mon"],(int)$date[0]["day"],date('Y'));
+					if ($anniversaryDate<$dateRangeStart) $anniversaryDate = mktime(0,0,$startSecond,(int)$date[0]["mon"],(int)$date[0]["day"],date('Y')+1);
 					if ($anniversaryDate>=$dateRangeStart && $anniversaryDate<=$dateRangeEnd) {
 						// Strip useless information:
 						//   NOTE, ADDR, OBJE, SOUR, PAGE, DATA, TEXT, CONC, CONT
@@ -3214,10 +3190,10 @@ function get_event_list() {
 					$startSecond = 1;
 					if ($date[0]["day"]=="") {
 						$startSecond = 0;
-						$date[0]["day"] = ($date[0]["month"]==$nmonth) ? $day+1 : 1;
+						$date[0]["day"] = ($date[0]["month"]==$nmonth) ? date('j')+1 : 1;
 					}
-					$anniversaryDate = mktime(0,0,$startSecond,(int)$date[0]["mon"],(int)$date[0]["day"],$year);
-					if ($anniversaryDate<$dateRangeStart) $anniversaryDate = mktime(0,0,$startSecond,(int)$date[0]["mon"],(int)$date[0]["day"],$year+1);
+					$anniversaryDate = mktime(0,0,$startSecond,(int)$date[0]["mon"],(int)$date[0]["day"],date('Y'));
+					if ($anniversaryDate<$dateRangeStart) $anniversaryDate = mktime(0,0,$startSecond,(int)$date[0]["mon"],(int)$date[0]["day"],date('Y')+1);
 					if ($anniversaryDate>=$dateRangeStart && $anniversaryDate<=$dateRangeEnd) {
 						// Strip useless information:
 						//   NOTE, ADDR, OBJE, SOUR, PAGE, DATA, TEXT, CONC, CONT
