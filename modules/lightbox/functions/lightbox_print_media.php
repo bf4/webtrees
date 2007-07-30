@@ -21,11 +21,12 @@
 $t=$kind ;
 $edit="1";
 
-      global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
-      global $pgv_lang, $pgv_changes, $factarray, $view;
-      global $GEDCOMS, $GEDCOM, $MEDIATYPE, $pgv_changes, $DBCONN, $DBTYPE;
-      global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $is_media, $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec ;
-      global $typ2b, $edit ;
+	global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
+	global $pgv_lang, $pgv_changes, $factarray, $view;
+	global $GEDCOMS, $GEDCOM, $MEDIATYPE, $pgv_changes, $DBCONN, $DBTYPE;
+	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
+	global $is_media, $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec;
+	global $typ2b, $edit, $tabno ;
 
 // Set type of media from call in album
 if ($t==1) {
@@ -92,7 +93,7 @@ $typ2b  .= ")";
       $sqlmm = "SELECT DISTINCT ";
       // Adding DISTINCT is the fix for: [ 1488550 ] Family/Individual Media Duplications
       // but it may not work for all RDBMS.
-      // $sqlmm  = "SELECT ";
+	  // $sqlmm  = "SELECT ";
       $sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping where ";
       $sqlmm .= "mm_gid IN (";
       $i=0;

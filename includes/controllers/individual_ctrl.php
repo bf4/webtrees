@@ -76,7 +76,7 @@ class IndividualControllerRoot extends BaseController {
 	var $total_names = 0;
 	var $SEX_COUNT = 0;
 	var $sexarray = array();
-	var $tabarray = array("facts","notes","sources","media","relatives","research","map");
+	var $tabarray = array("facts","notes","sources","media","relatives","research","map","lightbox");
 
 	/**
 	 * constructor
@@ -947,7 +947,7 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	function getTab($tab) {
-		//var $tabarray = array("facts","notes","sources","media","relatives","research","map");
+		//var $tabarray = array("facts","notes","sources","media","relatives","research","map","lightbox");
 		$tabType = $this->tabarray[$tab];
 		switch($tabType) {
 			case "facts":
@@ -971,6 +971,9 @@ class IndividualControllerRoot extends BaseController {
 			case "map":
 				$this->print_map_tab();
 				break;
+			case "lightbox":
+				$this->print_lightbox_tab();
+				break;				
 			default:
 				print "No tab found";
 				break;
@@ -1844,8 +1847,37 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 // -----------------------------------------------------------------------------
-// Functions for Lightbox Album V3.0 29/May/2007
+// Functions for Lightbox Album V3.0 29/July/2007
 // -----------------------------------------------------------------------------
+	/**
+	 * print the lightbox tab, ( which =  getTab7()  )
+	 */
+	function print_lightbox_tab() {
+		global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
+		global $pgv_lang, $pgv_changes, $factarray, $view;
+		global $GEDCOMS, $GEDCOM, $MEDIATYPE, $pgv_changes, $DBCONN, $DBTYPE;
+		global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $is_media;
+		global $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec ;
+		global $typ2b, $edit ;	
+		global $CONTACT_EMAIL, $pid, $tabno;
+
+		print "<table class=\"facts_table\">\n";		
+		$media_found = false;
+		if (!$this->indi->canDisplayDetails()) {
+			print "<tr><td class=\"facts_value\">";
+			print_privacy_error($CONTACT_EMAIL);
+			print "</td></tr>";
+		}else{
+			if (file_exists("modules/lightbox/album.php")) { 
+				include_once('modules/lightbox/album.php');	
+			}		
+		}
+		print "</table>";
+	}
+	
+	/**
+	 * include lightbox controller
+	 */
     function lightbox() {
         include('modules/lightbox/functions/lightbox_ctrl.php');
     }

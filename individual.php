@@ -31,6 +31,8 @@ require_once("includes/serviceclient_class.php");
 
 if (file_exists("modules/googlemap/".$pgv_language["english"])) require("modules/googlemap/".$pgv_language["english"]);
 if (file_exists("modules/googlemap/".$pgv_language[$LANGUAGE])) require("modules/googlemap/".$pgv_language[$LANGUAGE]);
+if (file_exists("modules/lightbox/".$pgv_language["english"])) require("modules/lightbox/".$pgv_language["english"]);
+if (file_exists("modules/lightbox/".$pgv_language[$LANGUAGE])) require("modules/lightbox/".$pgv_language[$LANGUAGE]);
 
 global $USE_THUMBS_MAIN;
 global $linkToID;
@@ -227,28 +229,23 @@ function showchanges() {
 	window.location = 'individual.php?pid=<?php print $controller->pid; ?>&show_changes=yes';
 }
 
-<?php //  ----------    The following lines changed by Brian Holland for lightbox/album module   --------  ?>
+<!-- =============================================== Added for Lightbox Module ================================================= -->
+<?php
+if (file_exists("modules/lightbox/album.php")) {
+	include_once ("modules/lightbox/functions/lb_indi_tabs2.php");
+}else{	
+?>
+<!-- =============================================== End Additions for Lightbox Module ========================================= -->
 
-//var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog');
-//<?php if (file_exists("modules/googlemap/defaultconfig.php")) {?>
-//var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog','googlemap');
-//<?php }?>
-//var loadedTabs = new Array(false,false,false,false,false,false,false,false);
+var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog');
+<?php if (file_exists("modules/googlemap/defaultconfig.php")) {?>
+var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog','googlemap');
+<?php }?>
+var loadedTabs = new Array(false,false,false,false,false,false,false,false);
 
-<?php if (file_exists("modules/googlemap/defaultconfig.php") && file_exists("modules/lightbox/album.php")) { ?>
-       var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog','googlemap','lightbox');
-       var loadedTabs = new Array(false,false,false,false,false,false,false,false,false);
-<?php }else if (file_exists("modules/googlemap/defaultconfig.php") && !file_exists("modules/lightbox/album.php")) { ?>
-       var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog','googlemap');
-       var loadedTabs = new Array(false,false,false,false,false,false,false,false);
-<?php }else if (!file_exists("modules/googlemap/defaultconfig.php") && file_exists("modules/lightbox/album.php")) { ?>
-       var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog','lightbox');
-       var loadedTabs = new Array(false,false,false,false,false,false,false,false);
-<?php }else{ ?>
-       var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog');
-       var loadedTabs = new Array(false,false,false,false,false,false,false);
+<!-- =============================================== Added for Lightbox Module ================================================= -->
 <?php } ?>
-<?php //  --------------------------------------------------------------------------------------------------------------------  ?>
+<!-- =============================================== End Additions for Lightbox Module ========================================= -->
 
 loadedTabs[<?php print ($controller->default_tab+1); ?>] = true;
 
@@ -354,28 +351,15 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
 <dd id="door2"><a href="javascript:;" onclick="tabswitch(2); return false;" ><?php print $pgv_lang["notes"]?></a></dd>
 <dd id="door3"><a href="javascript:;" onclick="tabswitch(3); return false;" ><?php print $pgv_lang["ssourcess"]?></a></dd>
 
-<?php //  ----------    The following lines changed by Brian Holland for lightbox/album module   ----------------------------- ?>
-<?php if (!file_exists("modules/googlemap/defaultconfig.php")) {  ?>
-          <?php if (file_exists("modules/lightbox/album.php") && (!userCanEdit(getUserName())) ) {?>
-          <dd id="door4"><a href="javascript:;" onclick="tabswitch(7); return false;" ><?php print "Album" ?></a></dd>
-          <?php }else{ ?>
-          <dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["media"]?></a></dd>
-          <?php } ?>
-          <?php if ( file_exists("modules/lightbox/album.php") && (userCanEdit(getUserName())) ) {?>
-          <dd id="door7"><a href="javascript:;" onclick="tabswitch(7); return false;" ><?php print "Album" ?></a></dd>
-          <?php } ?>
-<?php }elseif (file_exists("modules/googlemap/defaultconfig.php")) {  ?>
-          <?php if (file_exists("modules/lightbox/album.php") && (!userCanEdit(getUserName())) ) {?>
-          <dd id="door4"><a href="javascript:;" onclick="tabswitch(8); return false;" ><?php print "Album" ?></a></dd>
-          <?php }else{ ?>
-          <dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["media"]?></a></dd>
-          <?php } ?>
-          <?php if (file_exists("modules/lightbox/album.php") && (userCanEdit(getUserName())) ) {?>
-          <dd id="door8"><a href="javascript:;" onclick="tabswitch(8); return false;" ><?php print "Album" ?></a></dd>
-          <?php } ?>
-<?php } ?>
-<?php //  --------------------------------------------------------------------------------------------------------------------  ?>
+<!-- =============================================== Added for Lightbox Module ================================================ -->
+<?php	
+if (file_exists("modules/lightbox/album.php")) {
+	include_once ("modules/lightbox/functions/lb_indi_doors2.php");
+}else{	
+?>
+<!-- =============================================== End Additions for Lightbox Module ========================================= -->
 
+<dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["media"]?></a></dd>
 <dd id="door5"><a href="javascript:;" onclick="tabswitch(5); return false;" ><?php print $pgv_lang["relatives"]?></a></dd>
 <dd id="door6"><a href="javascript:;" onclick="tabswitch(6); return false;" ><?php print $pgv_lang["research_assistant"]?></a></dd>
 <?php if (file_exists("modules/googlemap/defaultconfig.php")) {?>
@@ -383,13 +367,9 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
 <?php }?>
 <dd id="door0"><a href="javascript:;" onclick="tabswitch(0); if (loadedTabs[7]) {ResizeMap(); ResizeMap();} return false;" ><?php print $pgv_lang["all"]?></a></dd>
 
-<?php //  ----------       The following lines added by Brian Holland for lightbox/album module      -------------------------  ?>
-<?php if (!file_exists("modules/googlemap/defaultconfig.php") && (file_exists("modules/lightbox/album.php") ) ) {  ?>
-<dd id="door7"></dd>
-<?php }elseif (file_exists("modules/googlemap/defaultconfig.php") && (file_exists("modules/lightbox/album.php") ) ) { ?>
-<dd id="door8"></dd>
+<!-- =============================================== Added for Lightbox Module ================================================ -->
 <?php } ?>
-<?php //  --------------------------------------------------------------------------------------------------------------------  ?>
+<!-- =============================================== End Additions for Lightbox Module ========================================= -->
 
 </dl>
 </div>
@@ -498,8 +478,8 @@ if(empty($SEARCH_SPIDER)) {
 	print "</div>\n";
 	print "</div>\n";
 }
-
 ?>
+
 <!-- ============================= Start 7th tab individual page ==== GoogleMaps -->
 <?php
 // Only show this section if we are not talking to a search engine.
@@ -579,13 +559,13 @@ if(empty($SEARCH_SPIDER)) {
 				        print "</div>\n";
 				        print "</td>\n";
 				        print "<td valign=\"top\" width=\"33%\">\n";
-		print "<div id=\"googlemap_content\">\n";
+						print "<div id=\"googlemap_content\">\n";
 				        setup_map();
 				        if ($controller->default_tab==6) {
 				        	$controller->getTab(6);
 				        }
-		else loading_message();
-		print "</div>\n";
+						else loading_message();
+						print "</div>\n";
 						print "</td></tr></table>\n";
 				}
             }
@@ -597,43 +577,37 @@ if(empty($SEARCH_SPIDER)) {
 		print "</div>\n";
 	}
 }
+
 ?>
+<!-- ============================= End 7th tab individual page ==== GoogleMaps ===== -->
 
-<!-- ============================= End 7th tab individual page ==== GoogleMaps -->
-
-<!-- ============================= Start 8th tab individual page ==== Album -->
+<!-- ============================= Start 8th tab individual page ==== Album ======== -->
 <?php
 if(empty($SEARCH_SPIDER)) {
-    if (file_exists("modules/lightbox/album.php")) {
-		print "<div id=\"lightbox\" class=\"tab_page\" style=\"display:none; background:none; \" >\n";
-        print "<span class=\"subheaders\"> &nbsp;&nbsp; Album </span>\n";
-        // Header info ---------------------------------------------------
-		include_once('modules/lightbox/functions/lb_head.php');		
+	if (file_exists("modules/lightbox/album.php")) {
+		print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none; background:none;\" \>\n";
+		print "<span class=\"subheaders\"> Album </span>\n";
+		// Header info ---------------------------------------------------		
+		$mediacnt = $controller->get_media_count();
+		if ($mediacnt!=0) {	
+		    print "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+			include_once('modules/lightbox/functions/lb_head.php');	
+		}else{
+			print "<table class=\"facts_table\"><tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr></table>\n";
+		}
     }else{
-        print "<div id=\"lightbox\" class=\"tab_page\" style=\"display:block; \" >\n";
+        print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:block; \" >\n";
     }
-
-    print "<div id=\"album_content\"> \n";
-    if (file_exists("modules/lightbox/album.php")) {
-          include_once('modules/lightbox/album.php');
-
-//            if (($controller->default_tab==7)||(!empty($SEARCH_SPIDER))) {
-//                $controller->getTab(7) ;
-//            }else{
-//                loading_message();
-//            }
-
-    }else{
-//         print "<table class=\"facts_table\"><tr><td id=\"no_tab8\" colspan=\"2\" class=\"facts_value\"> Album </td></tr></table>\n";
+	// Content info ---------------------------------------------------
+	print "<div id=\"album_content\"> \n";
+	if (file_exists("modules/lightbox/album.php")) {
+		if (($controller->default_tab==7)||(empty($SEARCH_SPIDER))) {
+			$controller->getTab(7) ;
+		}else{
+			loading_message();
+		}
+	}else{
     }
-
-    if ( !file_exists("modules/googlemap/defaultconfig.php") && file_exists("modules/lightbox/album.php") && !userCanEdit(getUserName()) ) {
-        print "<table><tr><td id=\"no_tab7\" colspan=\"2\" ></td></tr></table>\n";
-    }else if (file_exists("modules/googlemap/defaultconfig.php") && file_exists("modules/lightbox/album.php") && !userCanEdit(getUserName()) ) {
-        print "<table><tr><td id=\"no_tab8\" colspan=\"2\" ></td></tr></table>\n";
-    }else{
-    }
-
     print "</div>\n";
     print "</div>\n";
 }

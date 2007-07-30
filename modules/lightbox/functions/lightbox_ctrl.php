@@ -12,7 +12,7 @@
 // Function lightbox() for Lightbox Album - called by individual_ctrl.php
 // -----------------------------------------------------------------------------
 // function lightbox_relatives2() {
-global $edit;
+global $edit, $tabno;
 
 $edit=$edit;
 
