@@ -1,12 +1,9 @@
 <?php
-
 /**
- * -----------------------------------------------------------------------------
- *  lightbox_ctrl.php version 1.00k
- *
- *  Author Brian Holland 25 Jly 2007
- * -----------------------------------------------------------------------------
-*/
+ * @package PhpGedView
+ * @subpackage Lightbox
+ * @version $Id: lightbox_ctrl.php 1354 2007-07-30 21:49:03Z windmillway $
+ */
 
 // -----------------------------------------------------------------------------
 // Function lightbox() for Lightbox Album - called by individual_ctrl.php
