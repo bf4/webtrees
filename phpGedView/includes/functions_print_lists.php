@@ -393,7 +393,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		//-- Birth date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		$filterkey = $person->getSortableBirthDate(false);
 		$bsortkey = parse_date($person->getBirthDate(false));
 		$bsortkey = $bsortkey[0]['jd1'];
 		$txt = get_changed_date($person->getBirthDate(false), true);
@@ -403,7 +402,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		else {
 			echo "<a href=\"".$person->getDateUrl($person->getBirthDate(false))."\"".
-			" title=\"".$filterkey."\"".
 			" name=\"".$bsortkey."\"".
 			" class=\"list_item\">".$txt."</a>";
 		}
@@ -416,7 +414,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 				}
 				else {
 					echo "<br /><a href=\"".$person->getDateUrl($person->bdate2)."\"".
-					" title=\"".$person->getSortableBirthDate2()."\"".
 					" class=\"list_item\">".$txt."</a>";
 				}
 		}
@@ -455,7 +452,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		//-- Death date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		$filterkey = $person->getSortableDeathDate(false);
 		$dsortkey = parse_date($person->getDeathDate(false));
 		$dsortkey = $dsortkey[0]['jd1'];
 		$txt = get_changed_date($person->getDeathDate(false), true);
@@ -466,7 +462,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		else {
 			echo "<a href=\"".$person->getDateUrl($person->getDeathDate(false))."\"".
-			" title=\"".$filterkey."\"".
 			" name=\"".$dsortkey."\"".
 			" class=\"list_item\">".$txt."</a>";
 		}
@@ -479,7 +474,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 				}
 				else {
 					echo "<br /><a href=\"".$person->getDateUrl($person->ddate2)."\"".
-					" title=\"".$person->getSortableDeathDate2()."\"".
 					" class=\"list_item\">".$txt."</a>";
 				}
 		}
@@ -527,7 +521,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 			}
 			else {
 				echo "<a href=\"".$person->getLinkUrl()."\"".
-				" title=\"".$person->getSortableLastchangeDate()."\"".
 				" class=\"list_item\">".$timestamp."</a>";
 			}
 			echo "&nbsp;</td>";
@@ -765,7 +758,6 @@ function print_fam_table($datalist, $legend="") {
 		echo "</td>";
 		//-- Marriage date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		$filterkey = $family->getSortableMarriageDate();
 		$sortkey = parse_date($family->getMarriageDate());
 		$sortkey = $sortkey[0]['jd1'];
 		if (!$family->marr_est) $txt = get_changed_date($family->getMarriageDate(), true);
@@ -776,7 +768,6 @@ function print_fam_table($datalist, $legend="") {
 		}
 		else {
 			echo "&nbsp;<a href=\"".$family->getDateUrl($family->marr_date)."\"".
-			" title=\"".$filterkey."\"".
 			" name=\"".$sortkey."\"".
 			" class=\"list_item\">".$txt."</a>";
 		}
@@ -788,7 +779,6 @@ function print_fam_table($datalist, $legend="") {
 			}
 			else {
 				echo "<br /><a href=\"".$family->getDateUrl($family->marr_date2)."\"".
-				" title=\"".$family->getSortableMarriageDate2()."\"".
 				" class=\"list_item\">".$txt."</a>";
 			}
 		echo "</td>";
@@ -827,16 +817,12 @@ function print_fam_table($datalist, $legend="") {
 		//-- Last change
 		if ($tiny && $SHOW_LAST_CHANGE) {
 			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-			$timestamp = get_changed_date($family->getLastchangeDate())." ".get_gedcom_value("DATE:TIME", 2, $family->getLastchangeRecord());
-			if(!empty($SEARCH_SPIDER)) {
-				echo $timestamp;
-			}
-			else {
-				echo "<a href=\"".$family->getLinkUrl()."\"".
-				" title=\"".$family->getSortableLastchangeDate()."\"".
-				" class=\"list_item\">".$timestamp."</a>";
-			}
-			echo "&nbsp;</td>";
+			$changedate=$family->getLastchangeDate();
+			$changetime=get_gedcom_value("DATE:TIME", 2, $family->getLastchangeRecord());
+			$timestamp = get_changed_date($changedate)." ".$changetime;
+			$tmp=parse_date($changedate);
+			$sortkey=$tmp[0]['jd1'].preg_replace('/[^\d]/', '', $changetime);
+			echo "<a href=\"".$family->getLinkUrl()."\" name=\"{$sortkey}\" class=\"list_item\">{$timestamp}</a></td>";
 		}
 		//-- Sorting by marriage date
 		echo "<td style=\"display:none\">";
@@ -991,11 +977,12 @@ function print_sour_table($datalist, $legend="") {
 		//-- Last change
 		if ($SHOW_LAST_CHANGE) {
 			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-			$timestamp = get_changed_date($source->getLastchangeDate())." ".get_gedcom_value("DATE:TIME", 2, $source->getLastchangeRecord());
-			echo "<a href=\"".$source->getLinkUrl()."\"".
-			" title=\"".$source->getSortableLastchangeDate()."\"".
-			" class=\"list_item\">".$timestamp."</a>";
-			echo "&nbsp;</td>";
+			$changedate=$source->getLastchangeDate();
+			$changetime=get_gedcom_value("DATE:TIME", 2, $source->getLastchangeRecord());
+			$timestamp = get_changed_date($changedate)." ".$changetime;
+			$tmp=parse_date($changedate);
+			$sortkey=$tmp[0]['jd1'].preg_replace('/[^\d]/', '', $changetime);
+			echo "<a href=\"".$source->getLinkUrl()."\" name=\"{$sortkey}\" class=\"list_item\">{$timestamp}</a></td>";
 		}
 
 		echo "</tr>\n";
@@ -1102,11 +1089,12 @@ function print_repo_table($datalist, $legend="") {
 		//-- Last change
 		if ($SHOW_LAST_CHANGE) {
 			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-			$timestamp = get_changed_date($repo->getLastchangeDate())." ".get_gedcom_value("DATE:TIME", 2, $repo->getLastchangeRecord());
-			echo "<a href=\"".$repo->getLinkUrl()."\"".
-			" title=\"".$repo->getSortableLastchangeDate()."\"".
-			" class=\"list_item\">".$timestamp."</a>";
-			echo "&nbsp;</td>";
+			$changedate=$repo->getLastchangeDate();
+			$changetime=get_gedcom_value("DATE:TIME", 2, $repo->getLastchangeRecord());
+			$timestamp = get_changed_date($changedate)." ".$changetime;
+			$tmp=parse_date($changedate);
+			$sortkey=$tmp[0]['jd1'].preg_replace('/[^\d]/', '', $changetime);
+			echo "<a href=\"".$repo->getLinkUrl()."\" name=\"{$sortkey}\" class=\"list_item\">{$timestamp}</a></td>";
 		}
 
 		echo "</tr>\n";
@@ -1187,11 +1175,12 @@ function print_media_table($datalist, $legend="") {
 		//-- Last change
 		if ($SHOW_LAST_CHANGE) {
 			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-			$timestamp = get_changed_date($media->getLastchangeDate())." ".get_gedcom_value("DATE:TIME", 2, $media->getLastchangeRecord());
-			echo "<a href=\"".$media->getLinkUrl()."\"".
-			" title=\"".$media->getSortableLastchangeDate()."\"".
-			" class=\"list_item\">".$timestamp."</a>";
-			echo "&nbsp;</td>";
+			$changedate=$media->getLastchangeDate();
+			$changetime=get_gedcom_value("DATE:TIME", 2, $media->getLastchangeRecord());
+			$timestamp = get_changed_date($changedate)." ".$changetime;
+			$tmp=parse_date($changedate);
+			$sortkey=$tmp[0]['jd1'].preg_replace('/[^\d]/', '', $changetime);
+			echo "<a href=\"".$media->getLinkUrl()."\" name=\"{$sortkey}\" class=\"list_item\">{$timestamp}</a></td>";
 		}
 
 		echo "</tr>\n";
@@ -1367,12 +1356,13 @@ function print_changes_table($datalist) {
 		}
 		echo "</td>";
 		//-- Last change
-		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		$timestamp = get_changed_date($record->getLastchangeDate())." ".get_gedcom_value("DATE:TIME", 2, $record->getLastchangeRecord());
-		echo "<a href=\"".$record->getLinkUrl()."\"".
-		" title=\"".$record->getSortableLastchangeDate()."\"".
-		" class=\"list_item\">".$timestamp."</a>";
-		echo "&nbsp;</td>";
+		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
+		$changedate=$record->getLastchangeDate();
+		$changetime=get_gedcom_value("DATE:TIME", 2, $record->getLastchangeRecord());
+		$timestamp = get_changed_date($changedate)." ".$changetime;
+		$tmp=parse_date($changedate);
+		$sortkey=$tmp[0]['jd1'].preg_replace('/[^\d]/', '', $changetime);
+		echo "<a href=\"".$record->getLinkUrl()."\" name=\"{$sortkey}\" class=\"list_item\">{$timestamp}</a></td>";
 		//-- Last change user
 		echo "<td class=\"list_value_wrap\">";
 		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".$record->getLastchangeUser()."</a>";
