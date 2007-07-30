@@ -1111,11 +1111,13 @@ function generate_thumbnail($filename, $thumbnail) {
 	if (file_exists($thumbnail)) return false;
 	if (!is_writable($MEDIA_DIRECTORY."thumbs")) return false;
 
+/*	No references to "media/thumbs/urls" exist anywhere else
 	if (!is_dir(filename_decode($MEDIA_DIRECTORY."thumbs/urls"))) {
 		mkdir(filename_decode($MEDIA_DIRECTORY."thumbs/urls"), 0777);
 		AddToLog("Folder ".$MEDIA_DIRECTORY."thumbs/urls created.");
 	}
-	if (!is_writable(filename_decode($MEDIA_DIRECTORY."thumbs/urls"))) return false;
+	if (!is_writable(filename_decode($MEDIA_DIRECTORY."thumbs/urls"))) return false; 
+*/
 
 	$ext = "";
 	$ct = preg_match("/\.([^\.]+)$/", $filename, $match);
