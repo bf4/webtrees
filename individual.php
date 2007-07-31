@@ -229,13 +229,13 @@ function showchanges() {
 	window.location = 'individual.php?pid=<?php print $controller->pid; ?>&show_changes=yes';
 }
 
-<!-- =============================================== Added for Lightbox Module ================================================= -->
+<!-- ====================== Added for Lightbox Module ===================== -->
 <?php
 if (file_exists("modules/lightbox/album.php")) {
 	include_once ("modules/lightbox/functions/lb_indi_tabs2.php");
 }else{	
 ?>
-<!-- =============================================== End Additions for Lightbox Module ========================================= -->
+<!-- ================== End Additions for Lightbox Module ================== -->
 
 var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog');
 <?php if (file_exists("modules/googlemap/defaultconfig.php")) {?>
@@ -243,9 +243,9 @@ var tabid = new Array('0', 'facts','notes','sources','media','relatives','resear
 <?php }?>
 var loadedTabs = new Array(false,false,false,false,false,false,false,false);
 
-<!-- =============================================== Added for Lightbox Module ================================================= -->
+<!-- ====================== Added for Lightbox Module ===================== -->
 <?php } ?>
-<!-- =============================================== End Additions for Lightbox Module ========================================= -->
+<!-- ================== End Additions for Lightbox Module ================== -->
 
 loadedTabs[<?php print ($controller->default_tab+1); ?>] = true;
 
@@ -351,13 +351,13 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
 <dd id="door2"><a href="javascript:;" onclick="tabswitch(2); return false;" ><?php print $pgv_lang["notes"]?></a></dd>
 <dd id="door3"><a href="javascript:;" onclick="tabswitch(3); return false;" ><?php print $pgv_lang["ssourcess"]?></a></dd>
 
-<!-- =============================================== Added for Lightbox Module ================================================ -->
+<!-- ====================== Added for Lightbox Module ===================== -->
 <?php	
 if (file_exists("modules/lightbox/album.php")) {
 	include_once ("modules/lightbox/functions/lb_indi_doors2.php");
 }else{	
 ?>
-<!-- =============================================== End Additions for Lightbox Module ========================================= -->
+<!-- ================== End Additions for Lightbox Module ================== -->
 
 <dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["media"]?></a></dd>
 <dd id="door5"><a href="javascript:;" onclick="tabswitch(5); return false;" ><?php print $pgv_lang["relatives"]?></a></dd>
@@ -367,9 +367,9 @@ if (file_exists("modules/lightbox/album.php")) {
 <?php }?>
 <dd id="door0"><a href="javascript:;" onclick="tabswitch(0); if (loadedTabs[7]) {ResizeMap(); ResizeMap();} return false;" ><?php print $pgv_lang["all"]?></a></dd>
 
-<!-- =============================================== Added for Lightbox Module ================================================ -->
+<!-- ====================== Added for Lightbox Module ===================== -->
 <?php } ?>
-<!-- =============================================== End Additions for Lightbox Module ========================================= -->
+<!-- ================== End Additions for Lightbox Module ================== -->
 
 </dl>
 </div>
@@ -381,7 +381,7 @@ if (file_exists("modules/lightbox/album.php")) {
 	</tr>
 </table>
 
-<!-- ======================== Start 1st tab individual page ============ Personal Facts and Details -->
+<!-- ================== Start 1st tab individual page ============ Personal Facts and Details -->
 <?php
 if(empty($SEARCH_SPIDER))
 	print "<div id=\"facts\" class=\"tab_page\" style=\"display:none;\" >\n";
@@ -458,7 +458,7 @@ else
 </div>
 </div>
 
-<!-- ===================================== Start 6th tab individual page === Research Assistant -->
+<!-- ============================ Start 6th tab individual page === Research Assistant -->
 <?php
 // Only show this section if we are not talking to a search engine.
 if(empty($SEARCH_SPIDER)) {
@@ -480,7 +480,7 @@ if(empty($SEARCH_SPIDER)) {
 }
 ?>
 
-<!-- ============================= Start 7th tab individual page ==== GoogleMaps -->
+<!-- =========================== Start 7th tab individual page ==== GoogleMaps -->
 <?php
 // Only show this section if we are not talking to a search engine.
 //--------------------------------Start 7th tab individual page
@@ -579,9 +579,10 @@ if(empty($SEARCH_SPIDER)) {
 }
 
 ?>
-<!-- ============================= End 7th tab individual page ==== GoogleMaps ===== -->
+<!-- ========================== End 7th tab individual page ==== GoogleMaps ===== -->
 
-<!-- ============================= Start 8th tab individual page ==== Album ======== -->
+
+<!-- ========================== Start 8th tab individual page ==== Album ======== -->
 <?php
 if(empty($SEARCH_SPIDER)) {
 	if (file_exists("modules/lightbox/album.php")) {
@@ -590,7 +591,6 @@ if(empty($SEARCH_SPIDER)) {
 		// Header info ---------------------------------------------------		
 		$mediacnt = $controller->get_media_count();
 		if ($mediacnt!=0) {	
-		    print "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 			include_once('modules/lightbox/functions/lb_head.php');	
 		}else{
 			print "<table class=\"facts_table\"><tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr></table>\n";
