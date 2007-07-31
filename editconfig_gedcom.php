@@ -933,6 +933,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["accpriv_conf"]."\" onclick=\"exp
 	<tr>
 		<td class="descriptionbox wrap"> <?php print_help_link("WELCOME_TEXT_AUTH_MODE_help", "qm", "WELCOME_TEXT_AUTH_MODE"); print $pgv_lang["WELCOME_TEXT_AUTH_MODE"];?></td>
 		<td class="optionbox"><select name="NEW_WELCOME_TEXT_AUTH_MODE" tabindex="<?php $i++; print $i?>" onfocus="getHelp('WELCOME_TEXT_AUTH_MODE_help');">
+				<option value="0" <?php if ($WELCOME_TEXT_AUTH_MODE=='0') print "selected=\"selected\""; ?>><?php print $pgv_lang["WELCOME_TEXT_AUTH_MODE_OPT0"];?></option>
 				<option value="1" <?php if ($WELCOME_TEXT_AUTH_MODE=='1') print "selected=\"selected\""; ?>><?php print $pgv_lang["WELCOME_TEXT_AUTH_MODE_OPT1"];?></option>
 				<option value="2" <?php if ($WELCOME_TEXT_AUTH_MODE=='2') print "selected=\"selected\""; ?>><?php print $pgv_lang["WELCOME_TEXT_AUTH_MODE_OPT2"];?></option>
 				<option value="3" <?php if ($WELCOME_TEXT_AUTH_MODE=='3') print "selected=\"selected\""; ?>><?php print $pgv_lang["WELCOME_TEXT_AUTH_MODE_OPT3"];?></option>
