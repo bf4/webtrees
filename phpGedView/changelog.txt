@@ -9,6 +9,8 @@
 =====================================================================
 
 Version 4.1
+ - Changed Welcome text always appears on Login page (canajun2eh)
+ - Changed Custom Welcome text can contain language variable references (canajun2eh)
  - Changed "command" to "ctype" as mod_security work-a-round (yalnifj)
  - Added Implement faqlist.xx.php -- library of FAQs (canajun2eh)
  - Fixed [ 1755178 ] Links table empty in Media Viewer (opus27)

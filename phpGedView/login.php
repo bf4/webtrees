@@ -128,7 +128,8 @@ if ($_SESSION["cookie_login"]) {
 	print_text("cookie_login_help");
 	print "</div><br /><br />\n";
 }
-if ($REQUIRE_AUTHENTICATION) {
+//if ($REQUIRE_AUTHENTICATION) {
+if ($WELCOME_TEXT_AUTH_MODE!="0") {
 	require $helptextfile["english"];
 	if (file_exists($helptextfile[$LANGUAGE])) require $helptextfile[$LANGUAGE];
 	print "<table class=\"center width60 ltr\"><tr><td>";
@@ -152,7 +153,7 @@ if ($REQUIRE_AUTHENTICATION) {
 					$help_message = "welcome_text_cust_head";
 					print_text($help_message);
 				}
-				print $WELCOME_TEXT_AUTH_MODE_4;
+				print print_text($WELCOME_TEXT_AUTH_MODE_4,0,2);
 				break;
 		}
 		print "</td></tr></table><br /><br />\n";

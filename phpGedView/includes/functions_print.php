@@ -1694,7 +1694,7 @@ function print_help_link($help, $helpText, $show_desc="", $use_print_text=false,
  *		on something other than $pgv_lang array entries, but coded according to the
  *		same rules.
  * When we want it to return text we need to code:
- * print_text($mytext, 0, 1);
+ * print_text($mytext, 0, 2);
  * @param string $help		The variable that needs to be processed.
  * @param int $level		The position of the embedded variable
  * @param int $noprint		The switch if the text needs to be printed or returned
