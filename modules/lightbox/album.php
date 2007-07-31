@@ -1,19 +1,8 @@
 <?php
 /**
- * =============================================================================
- * Album module for phpGedView.  Author: Brian Holland
- * album.php version 3.0  29/Jun/2007
-*/
-// -----------------------------------------------------------------------------
-// Version
-//   print "&nbsp;&nbsp; v3.0a &nbsp;&nbsp;" ;
-// 25/Jly/2007
-// =============================================================================
-/**
- * =============================================================================
- * Brian Holland 2007
- * =============================================================================
+ * Lightbox Album module for phpGedView
  *
+ * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2005  John Finlay and Others
@@ -34,11 +23,10 @@
  *
  * @package PhpGedView
  * @subpackage Module
- * @version $Id: album.php,
+ * @version $Id$
  * @author Brian Holland
  */
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>

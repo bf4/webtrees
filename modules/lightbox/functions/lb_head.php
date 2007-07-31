@@ -1,3 +1,32 @@
+<?php
+/**
+ * Lightbox Album module for phpGedView
+ *
+ * Display media Items using Lightbox
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2005  John Finlay and Others
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * @package PhpGedView
+ * @subpackage Module
+ * @version $Id$
+ * @author Brian Holland
+ */
+?>
 <script language="Javascript">
 <!--
    function album_help(OPTS) {
@@ -29,7 +58,11 @@ require( "modules/lightbox/".$pgv_language["english"]);
 if (file_exists( "modules/lightbox/".$pgv_language[$LANGUAGE])) require  "modules/lightbox/".$pgv_language[$LANGUAGE];
 
 	//Lightbox-Album header Links
-	
+		print "<br>";
+		print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+			
 		//Help page
         print "&nbsp;&nbsp;&nbsp;" ;
         print "<a href=\"javascript: album_help()\" title=\"" . $pgv_lang["page_help"] . "\" >" ;
@@ -69,13 +102,13 @@ if (file_exists( "modules/lightbox/".$pgv_language[$LANGUAGE])) require  "module
 		else{ $edit==$edit;	}
         if ( userCanEdit(getUserName()) && $edit==1 ) {
             print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
-            print "<a href=" . $PHP_SELF . "?tab=7&pid=" . $pid . "&edit=0 title=\"" . $pgv_lang["turn_edit_OFF"] . "\">";
+            print "<a href=" . $PHP_SELF . "?tab=3&pid=" . $pid . "&edit=0 title=\"" . $pgv_lang["turn_edit_OFF"] . "\">";
             print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\" " . $pgv_lang["turn_edit_OFF"] . "\" />" ;
             print " " . $pgv_lang["turn_edit_OFF"] ;
             print " </a> ";
         }elseif ( userCanEdit(getUserName()) && $edit==0 ) {
             print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
-            print "<a href=" . $PHP_SELF . "?tab=7&pid=" . $pid . "&edit=1 title=\"" . $pgv_lang["turn_edit_ON"] . "\">";
+            print "<a href=" . $PHP_SELF . "?tab=3&pid=" . $pid . "&edit=1 title=\"" . $pgv_lang["turn_edit_ON"] . "\">";
             print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\" " . $pgv_lang["turn_edit_ON"] . "\" />" ;
             print " " . $pgv_lang["turn_edit_ON"] ;
             print " </a> ";		

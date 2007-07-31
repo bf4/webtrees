@@ -1,4 +1,31 @@
-	/* clearbox.css a ClearBox scripthez :: http://www.kreatura.hu/pyro/clearbox */
+/**
+ * Lightbox Album module for phpGedView
+ *
+ * Display media Items using Lightbox
+  *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2007 John Finlay and Others
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * @package PhpGedView
+ * @subpackage Modules
+ * @version $Id$
+ */
+ 
+/* clearbox.css a ClearBox scripthez :: http://www.kreatura.hu/pyro/clearbox */
 
 .CB_RoundPixBugFix, #CB_Padding, #CB_ImgContainer, #CB_PrevNext, #CB_ContentHide, #CB_LoadingImage, #CB_Text, #CB_Window, #CB_Image, #CB_TopLeft, #CB_Top, #CB_TopRight, #CB_Left, #CB_Content, #CB_Right, #CB_BtmLeft, #CB_Btm, #CB_BtmRight, #CB_Prev, #CB_Next, #CB_Prev:hover, #CB_Next:hover, #CB_CloseWindow, #CB_SlideShowS, #CB_SlideShowP, #CB_SlideShowBar, #CB_Email {
 	margin: 0;

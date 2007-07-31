@@ -1,6 +1,8 @@
 <?php
 /**
- * phpGedView LightBox. v.097i ---- modules/lightbox/languages/lang_en.php
+ * Lightbox Album module for phpGedView
+ *
+ * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2005  John Finlay and Others
@@ -20,9 +22,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @subpackage Family_Story
- * @author Nicholas B. Flint
-
+ * @subpackage Module
+ * @version $Id$
+ * @author Brian Holland
  */
 
 //-- security check, only allow access from module.php

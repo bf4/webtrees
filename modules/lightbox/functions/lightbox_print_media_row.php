@@ -1,12 +1,31 @@
 <?php
-
 /**
- * -----------------------------------------------------------------------------
- *  lightbox_print_media_row.php version 3.0a
+ * Lightbox Album module for phpGedView
  *
- *  Author Brian Holland 25 Jly 2007
- * -----------------------------------------------------------------------------
+ * Display media Items using Lightbox
  *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2005  John Finlay and Others
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * @package PhpGedView
+ * @subpackage Module
+ * @version $Id$
+ * @author Brian Holland
+ */
 /**
  * print a media row in a table
  * @param string $rtype whether this is a 'new', 'old', or 'normal' media row... this is used to determine if the rows should be printed with an outline color
@@ -76,7 +95,7 @@ print "<li>" . "\n";
 					print "<td align=\"center\" colspan=1>". "\n";
 					if ( eregi("1 SOUR",$rowm['m_gedrec'])) {
 //						print "<a href=\"" . $mainMedia . "\" rel='lightbox[general]' title='" . $mediaTitle . "'\" onmouseover=\"Tip('&nbsp;" . $mediaTitle . "&nbsp;<br>&nbsp;Source : <a href=\'http://www.windmillway.f2s.com/genealogy/source.php?sid=S1\'><b><font color=#0000FF>&nbsp; Link &nbsp;</font></b><\/a>', OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 8000, STICKY, true, PADDING, 8, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt')\" >" . "\n";
-						print "<a href=\"" . $mainMedia . "\" rel='lightbox[general]' title='" . $mediaTitle . "'\" onmouseover=\"Tip('&nbsp;" . $mediaTitle . "&nbsp;<br>&nbsp;Source : <a href=\'" . $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;(" . $sour . ")</font></b><\/a>', OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 8000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt')\" >" . "\n";
+						print "<a href=\"" . $mainMedia . "\" rel='lightbox[general]' title='" . $mediaTitle . "'\" onmouseover=\"Tip('&nbsp;" . $mediaTitle . "&nbsp;<br>&nbsp;Source : <a href=\'" . $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;(" . $sour . ")</font></b><\/a>', OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt')\" >" . "\n";
 					}else{
 						print "<a href=\"" . $mainMedia . "\" rel='lightbox[general]' title='" . $mediaTitle . "'\" >" . "\n";					
 					}
