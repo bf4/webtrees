@@ -32,7 +32,7 @@ $PGV_BLOCKS["review_changes_block"]["descr"]		= "review_changes_descr";
 $PGV_BLOCKS["review_changes_block"]["canconfig"]	= false;
 $PGV_BLOCKS["review_changes_block"]["config"]		= array(
 	"cache"=>0,
-	"days"=>1, 
+	"days"=>1,
 	"sendmail"=>"yes"
 	);
 
@@ -45,7 +45,7 @@ function review_changes_block($block = true, $config="", $side, $index) {
 	global $pgv_lang, $GEDCOM, $GEDCOMS, $ctype, $SCRIPT_NAME, $QUERY_STRING, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	global $pgv_changes, $LAST_CHANGE_EMAIL, $ALLOW_EDIT_GEDCOM, $SERVER_URL, $TEXT_DIRECTION, $SHOW_SOURCES, $TIME_FORMAT, $PGV_BLOCKS;
 	global $PHPGEDVIEW_EMAIL;
-	
+
 	if (!$ALLOW_EDIT_GEDCOM) return;
 
 	if (empty($config)) $config = $PGV_BLOCKS["review_changes_block"]["config"];
@@ -116,29 +116,29 @@ function review_changes_block($block = true, $config="", $side, $index) {
 					else $type = "INDI";
 					if ($type=="INDI") {
 						print "<b>".PrintReady(get_person_name($change["gid"]))."</b>&nbsp;";
-						if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+						if ($TEXT_DIRECTION=="rtl") print getRLM();
 						print "(".$change["gid"].")";
-						if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+						if ($TEXT_DIRECTION=="rtl") print getRLM();
 					}
 					else if ($type=="FAM") {
 						print "<b>".PrintReady(get_family_descriptor($change["gid"]))."</b>&nbsp;";
-						if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+						if ($TEXT_DIRECTION=="rtl") print getRLM();
 						print "(".$change["gid"].")";
-						if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+						if ($TEXT_DIRECTION=="rtl") print getRLM();
 					}
 					else if ($type=="SOUR") {
 						if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) {
 							print "<b>".PrintReady(get_source_descriptor($change["gid"]))."</b>&nbsp;";
-							if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+							if ($TEXT_DIRECTION=="rtl") print getRLM();
 							print "(".$change["gid"].")";
-							if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+							if ($TEXT_DIRECTION=="rtl") print getRLM();
 						}
 					}
 					else {
 						print "<b>".$factarray[$type]."</b>&nbsp;";
-						if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+						if ($TEXT_DIRECTION=="rtl") print getRLM();
 						print "(".$change["gid"].")";
-						if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+						if ($TEXT_DIRECTION=="rtl") print getRLM();
 						print " - ".$pgv_lang[$change["type"]]."\n<br />";
 					}
 					if ($block) print "<br />";
