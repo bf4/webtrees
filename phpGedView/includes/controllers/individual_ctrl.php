@@ -1481,7 +1481,7 @@ class IndividualControllerRoot extends BaseController {
 					<td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]; ?>" border="0" class="icon" alt="" /></td>
 					<td><span class="subheaders"><?php print PrintReady($this->indi->getSpouseFamilyLabel($family)); ?></span>
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
-					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " " . getLRM() "($famid)" . getLRM(); ?>]</a>
+					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM(); ?>]</a>
 				<?php } ?>
 				<?php if ($family->getMarriageDate()) echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".get_changed_date($family->getMarriageDate())." -- ".$family->getPlaceShort($family->getMarriagePlace());?>
 					</td>
