@@ -136,7 +136,7 @@ else {
 					$output .= "<a href=\"javascript:;\" onclick=\"return show_diff('individual.php?pid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes');\">".$pgv_lang["view_change_diff"]."</a> | ";
 					break;
 				case 'FAM':
-					$output.= "<b>".PrintReady(get_family_descriptor($change["gid"]))."</b> " . getLRM() . "(" . $change["gid"].")" getLRM() . "<br />";
+					$output.= "<b>".PrintReady(get_family_descriptor($change["gid"]))."</b> " . getLRM() . "(" . $change["gid"]. ")" . getLRM() . "<br />";
 					$output.= "<a href=\"javascript:;\" onclick=\"return show_diff('family.php?famid=".$change["gid"]."&amp;ged=".$change["gedcom"]."&amp;show_changes=yes');\">".$pgv_lang["view_change_diff"]."</a> | ";
 					break;
 				case 'SOUR':
