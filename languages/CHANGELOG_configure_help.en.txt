@@ -45,6 +45,11 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
+*$pgv_lang["WELCOME_TEXT_AUTH_MODE"]				31 Jul 2007				W
+*$pgv_lang["WELCOME_TEXT_AUTH_MODE_help"]			31 Jul 2007				W
++$pgv_lang["WELCOME_TEXT_AUTH_MODE_OPT0"]			31 Jul 2007				A
+*$pgv_lang["WELCOME_TEXT_AUTH_MODE_CUST"]			31 Jul 2007				W
+*$pgv_lang["WELCOME_TEXT_AUTH_MODE_CUST_help"]		31 Jul 2007				W
 *$pgv_lang["language_to_export_help"]				20 Jul 2007				W
 *$pgv_lang["lang_file_descriptions"]				20 Jul 2007				W
 *$pgv_lang["add_faq_header_help"]					20 Jul 2007				w

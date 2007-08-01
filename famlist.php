@@ -104,10 +104,39 @@ $famalpha = get_fam_alpha();
 
 uasort($famalpha, "stringsort");
 
+if (empty($surname_sublist))
+        $surname_sublist = "yes";
+
+/**
+ * In the first half of 2007, Google is only indexing the first 1,000 urls 
+ * on a page.  We now produce 4 urls per line, instead of 12.  So, we divide 
+ * 1000 by 5 for some breathing room, and adjust to do surname pages if the 
+ * alphalist page would exceed that number minus the header urls and alphas.
+ * 200 - letters - unknown and all - menu urls 
+ * If you have over 200 families in the same surname, some will still not
+ * get indexed through here, and will have to be caught by the close relatives
+ * on the individual.php, family.php, or the indilist.php page.
+ */
+if (!(empty($SEARCH_SPIDER))) {
+	$googleSplit = 200 - 26 - 2 - 4;
+	if (isset($alpha))
+       		$show_count = count(get_alpha_fams($alpha));
+	else if (isset($surname))
+        	$show_count = count(get_surname_fams($surname));
+	else
+        	$show_count = count(get_fam_list());
+
+        if (($show_count > $googleSplit ) && (empty($surname)))  /* Generate extra surname pages if needed */
+                $surname_sublist = "yes";
+        else
+                $surname_sublist = "no";
+}
+
 if (isset($alpha) && !isset($famalpha["$alpha"])) unset($alpha);
 
 if (count($famalpha) > 0) {
-	print_help_link("alpha_help", "qm", "alpha_index");
+	if (empty($SEARCH_SPIDER))
+		print_help_link("alpha_help", "qm", "alpha_index");
 	foreach($famalpha as $letter=>$list) {
 		if (empty($alpha)) {
 			if (!empty($surname)) {
@@ -120,7 +149,7 @@ if (count($famalpha) > 0) {
 				$startalpha = $letter;
 				$alpha = $letter;
 			}
-			print "<a href=\"?alpha=".urlencode($letter)."&amp;surname_sublist=".$surname_sublist."\">";
+			print "<a href=\"".$SERVER_URL."famlist.php?alpha=".urlencode($letter)."&amp;surname_sublist=".$surname_sublist."&amp;ged=".$GEDCOM."\">";
 			if (($alpha==$letter)&&($show_all=="no")) print "<span class=\"warning\">".$letter."</span>";
 			else print $letter;
 			print "</a> | \n";
@@ -128,13 +157,13 @@ if (count($famalpha) > 0) {
 		if ($letter === "@") $pass = true;
 	}
 	if ($pass == true) {
-		if (isset($alpha) && $alpha == "@") print "<a href=\"?alpha=@&amp;surname_sublist=yes&amp;surname=@N.N.\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
-		else print "<a href=\"?alpha=@&amp;surname_sublist=yes&amp;surname=@N.N.\">".PrintReady($pgv_lang["NN"])."</a>";
+		if (isset($alpha) && $alpha == "@") print "<a href=\"".$SERVER_URL."famlist.php?alpha=@&amp;surname_sublist=yes&amp;surname=@N.N.&amp;ged=".$GEDCOM."\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
+		else print "<a href=\"".$SERVER_URL."famlist.php?alpha=@&amp;surname_sublist=yes&amp;surname=@N.N.&amp;ged=".$GEDCOM."\">".PrintReady($pgv_lang["NN"])."</a>";
 		print " | \n";
 		$pass = false;
 	}
-	if ($show_all=="yes") print "<a href=\"?show_all=yes&amp;surname_sublist=".$surname_sublist."\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";
-	else print "<a href=\"?show_all=yes&amp;surname_sublist=".$surname_sublist."\">".$pgv_lang["all"]."</a>\n";
+	if ($show_all=="yes") print "<a href=\"".$SERVER_URL."famlist.php?show_all=yes&amp;surname_sublist=".$surname_sublist."&amp;ged=".$GEDCOM."\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";
+	else print "<a href=\"".$SERVER_URL."famlist.php?show_all=yes&amp;surname_sublist=".$surname_sublist."&amp;ged=".$GEDCOM."\">".$pgv_lang["all"]."</a>\n";
 	if (isset($startalpha)) $alpha = $startalpha;
 }
 
@@ -144,15 +173,18 @@ if(empty($SEARCH_SPIDER)) {
 	if ($alpha != "@") {
 		if ($surname_sublist=="yes") {
 			print_help_link("skip_sublist_help", "qm", "skip_surnames");
-			print "<a href=\"?alpha=$alpha&amp;surname_sublist=no&amp;show_all=$show_all\">".$pgv_lang["skip_surnames"]."</a>";
+			print "<a href=\"".$SERVER_URL."famlist.php?alpha=".$alpha."&amp;surname_sublist=no&amp;show_all=".$show_all."&amp;ged=".$GEDCOM."\">".$pgv_lang["skip_surnames"]."</a>";
 		} else {
 			print_help_link("skip_sublist_help", "qm", "show_surnames");
-			print "<a href=\"?alpha=$alpha&amp;surname_sublist=yes&amp;show_all=$show_all\">".$pgv_lang["show_surnames"]."</a>";
+			print "<a href=\"".$SERVER_URL."famlist.php?alpha=".$alpha."&amp;surname_sublist=yes&amp;show_all=".$show_all."&amp;ged=".$GEDCOM."\">".$pgv_lang["show_surnames"]."</a>";
 		}
 	}
 }
 
-print "<br /><br />";
+if (empty($SEARCH_SPIDER)) {
+	print_help_link("name_list_help", "qm", "name_list");
+	print "<br /><br />";
+}
 
 print "<table class=\"list_table $TEXT_DIRECTION\"><tr>";
 if (($surname_sublist=="yes")&&($show_all=="yes")) {
@@ -259,7 +291,7 @@ else {
 						$fstartalpha = $letter;
 						$falpha = $letter;
 					}
-					print "<a href=\"?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;falpha=".urlencode($letter)."&amp;surname_sublist=".$surname_sublist."\">";
+					print "<a href=\"".$SERVER_URL."famlist.php?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;falpha=".urlencode($letter)."&amp;surname_sublist=".$surname_sublist."&amp;ged=".$GEDCOM."\">";
 					if (($falpha==$letter)&&($show_all_firstnames=="no")) print "<span class=\"warning\">".$letter."</span>";
 					else print $letter;
 					print "</a> | \n";
@@ -267,13 +299,13 @@ else {
 				if ($letter === "@") $pass = true;
 			}
 			if ($pass == true) {
-				if (isset($falpha) && $falpha == "@") print "<a href=\"?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;falpha=@&amp;surname_sublist=yes\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
-				else print "<a href=\"?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;falpha=@&amp;surname_sublist=yes\">".PrintReady($pgv_lang["NN"])."</a>";
+				if (isset($falpha) && $falpha == "@") print "<a href=\"".$SERVER_URL."famlist.php?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;falpha=@&amp;surname_sublist=yes&amp;ged=".$GEDCOM."\"><span class=\"warning\">".PrintReady($pgv_lang["NN"])."</span></a>";
+				else print "<a href=\"".$SERVER_URL."famlist.php?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;falpha=@&amp;surname_sublist=yes&amp;ged=".$GEDCOM."\">".PrintReady($pgv_lang["NN"])."</a>";
 				print " | \n";
 				$pass = false;
 			}
-			if ($show_all_firstnames=="yes") print "<a href=\"?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;show_all_firstnames=no\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";
-			else print "<a href=\"?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;show_all_firstnames=yes\">".$pgv_lang["all"]."</a>\n";
+			if ($show_all_firstnames=="yes") print "<a href=\"".$SERVER_URL."famlist.php?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;show_all_firstnames=no&amp;ged=".$GEDCOM."\"><span class=\"warning\">".$pgv_lang["all"]."</span>\n";
+			else print "<a href=\"".$SERVER_URL."famlist.php?alpha=".urlencode($alpha)."&amp;surname=".urlencode($surname)."&amp;show_all_firstnames=yes&amp;ged=".$GEDCOM."\">".$pgv_lang["all"]."</a>\n";
 			if (isset($fstartalpha)) $falpha = $fstartalpha;
 			if ($show_all_firstnames=="no") {
 				$ffamlist = array();
@@ -304,5 +336,10 @@ if (!empty($surname) or $surname_sublist=="no") {
 
 print "<br /><br />\n";
 print "</div>\n";
-print_footer();
+if(empty($SEARCH_SPIDER)) {
+        print_footer();
+}
+else {
+        print "</div>\n</body>\n</html>\n";
+}
 ?>

@@ -1074,7 +1074,7 @@ function search_indis_year_range($startyear, $endyear, $allgeds=false) {
 
 	$myindilist = array();
 	$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."dates WHERE i_id=d_gid AND i_file=d_file AND d_fact NOT IN('CHAN', 'BAPL', 'SLGC', 'SLGS', 'ENDL') AND ";
-	$sql .= "d_datestamp >= ".$startyear."0000 AND d_datestamp<".($endyear+1)."0000";
+	$sql .= "d_year >= ".$startyear." AND d_year<=".$endyear;
 
 	if (!$allgeds) $sql .= " AND i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
 	$res = dbquery($sql);
@@ -1582,7 +1582,7 @@ function search_fams_year_range($startyear, $endyear, $allgeds=false) {
 
 	$myfamlist = array();
 	$sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom FROM ".$TBLPREFIX."families, ".$TBLPREFIX."dates WHERE f_id=d_gid AND f_file=d_file AND d_fact NOT IN('CHAN', 'BAPL', 'SLGC', 'SLGS', 'ENDL') AND ";
-	$sql .= "d_datestamp >= ".$startyear."0000 AND d_datestamp<".($endyear+1)."0000";
+	$sql .= "d_year >= ".$startyear." AND d_year<=".$endyear;
 	if (!$allgeds) $sql .= " AND f_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
 	$res = dbquery($sql);
 
@@ -3095,9 +3095,9 @@ global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
  * to be done by the routine that makes use of the event list.
  */
 function get_event_list() {
-	global $month, $year, $day, $monthtonum, $USE_RTL_FUNCTIONS;
+	global $USE_RTL_FUNCTIONS;
 	global $INDEX_DIRECTORY, $GEDCOM, $DEBUG;
-  	global $DAYS_TO_SHOW_LIMIT;
+	global $DAYS_TO_SHOW_LIMIT;
 
 	if (!isset($DAYS_TO_SHOW_LIMIT)) $DAYS_TO_SHOW_LIMIT = 30;
 
@@ -3110,7 +3110,7 @@ function get_event_list() {
 	if ((file_exists($INDEX_DIRECTORY.$GEDCOM."_upcoming.php"))&&(!isset($DEBUG)||($DEBUG==false))) {
 		$modtime = filemtime($INDEX_DIRECTORY.$GEDCOM."_upcoming.php");
 		$mday = date("d", $modtime);
-		if ($mday==$day) {
+		if ($mday==date('j')) {
 			$fp = fopen($INDEX_DIRECTORY.$GEDCOM."_upcoming.php", "rb");
 			$fcache = fread($fp, filesize($INDEX_DIRECTORY.$GEDCOM."_upcoming.php"));
 			fclose($fp);
@@ -3120,43 +3120,19 @@ function get_event_list() {
 	}
 
 	if (!$cache_load) {
-		$nmonth = $monthtonum[strtolower($month)];
-		$dateRangeStart = mktime(0,0,0,$nmonth,$day,$year);
+		$nmonth = date('n');
+		$dateRangeStart = mktime(0,0,0,date('n'),date('j'),date('Y'));
 		$dateRangeEnd = $dateRangeStart+(60*60*24*$DAYS_TO_SHOW_LIMIT)-1;
 		$startstamp = date("md", $dateRangeStart);
 		$endstamp = date("md", $dateRangeEnd);
-		$mmon = strtolower(date("M", $dateRangeStart));
-		$mmon3 = strtolower(date("M", $dateRangeEnd));
-		$mmon2 = $mmon3;
-		if ($mmon3=="mar" && $mmon=="jan") $mmon2="feb";
 
 		// Search database for raw Indi data if no cache was found
-		$dayindilist = array();
 		$dayindilist = search_indis_daterange($startstamp, $endstamp, "!CHAN");
-		
-//		$dayindilist = search_indis_dates("", $mmon);
-//		if ($mmon!=$mmon2) {
-//			$dayindilist2 = search_indis_dates("", $mmon2);
-//			$dayindilist = pgv_array_merge($dayindilist, $dayindilist2);
-//		}
-//		if ($mmon2!=$mmon3) {
-//		  	$dayindilist2 = search_indis_dates("", $mmon3);
-//		  	$dayindilist = pgv_array_merge($dayindilist, $dayindilist2);
-//		}
 
 		// Search database for raw Family data if no cache was found
-		$dayfamlist = array();
 		$dayfamlist = search_fams_daterange($startstamp, $endstamp, "!CHAN");
-//		$dayfamlist = search_fams_dates("", $mmon);
-//		if ($mmon!=$mmon2) {
-//			$dayfamlist2 = search_fams_dates("", $mmon2);
-//			$dayfamlist = pgv_array_merge($dayfamlist, $dayfamlist2);
-//		}
-//		if ($mmon2!=$mmon3) {
-//			$dayfamlist2 = search_fams_dates("", $mmon3);
-//			$dayfamlist = pgv_array_merge($dayfamlist, $dayfamlist2);
-//		}
-// Apply filter criteria and perform other transformations on the raw data
+
+		// Apply filter criteria and perform other transformations on the raw data
 		$found_facts = array();
 		foreach($dayindilist as $gid=>$indi) {
 			$facts = get_all_subrecords($indi["gedcom"], $skipfacts, false, false, false);
@@ -3180,10 +3156,10 @@ function get_event_list() {
 					$startSecond = 1;
 					if ($date[0]["day"]=="") {
 						$startSecond = 0;
-						$date[0]["day"] = ($date[0]["month"]==$nmonth) ? $day+1 : 1;
+						$date[0]["day"] = ($date[0]["month"]==$nmonth) ? date('j')+1 : 1;
 					}
-					$anniversaryDate = mktime(0,0,$startSecond,(int)$date[0]["mon"],(int)$date[0]["day"],$year);
-					if ($anniversaryDate<$dateRangeStart) $anniversaryDate = mktime(0,0,$startSecond,(int)$date[0]["mon"],(int)$date[0]["day"],$year+1);
+					$anniversaryDate = mktime(0,0,$startSecond,(int)$date[0]["mon"],(int)$date[0]["day"],date('Y'));
+					if ($anniversaryDate<$dateRangeStart) $anniversaryDate = mktime(0,0,$startSecond,(int)$date[0]["mon"],(int)$date[0]["day"],date('Y')+1);
 					if ($anniversaryDate>=$dateRangeStart && $anniversaryDate<=$dateRangeEnd) {
 						// Strip useless information:
 						//   NOTE, ADDR, OBJE, SOUR, PAGE, DATA, TEXT, CONC, CONT
@@ -3214,10 +3190,10 @@ function get_event_list() {
 					$startSecond = 1;
 					if ($date[0]["day"]=="") {
 						$startSecond = 0;
-						$date[0]["day"] = ($date[0]["month"]==$nmonth) ? $day+1 : 1;
+						$date[0]["day"] = ($date[0]["month"]==$nmonth) ? date('j')+1 : 1;
 					}
-					$anniversaryDate = mktime(0,0,$startSecond,(int)$date[0]["mon"],(int)$date[0]["day"],$year);
-					if ($anniversaryDate<$dateRangeStart) $anniversaryDate = mktime(0,0,$startSecond,(int)$date[0]["mon"],(int)$date[0]["day"],$year+1);
+					$anniversaryDate = mktime(0,0,$startSecond,(int)$date[0]["mon"],(int)$date[0]["day"],date('Y'));
+					if ($anniversaryDate<$dateRangeStart) $anniversaryDate = mktime(0,0,$startSecond,(int)$date[0]["mon"],(int)$date[0]["day"],date('Y')+1);
 					if ($anniversaryDate>=$dateRangeStart && $anniversaryDate<=$dateRangeEnd) {
 						// Strip useless information:
 						//   NOTE, ADDR, OBJE, SOUR, PAGE, DATA, TEXT, CONC, CONT
@@ -3250,9 +3226,7 @@ function compare_found_facts($a, $b) {
 		return $a[3]-$b[3];
 	// :TODO: Sort by name
 	// Sort by fact type
-	if (preg_match('/1 (\w+)/', $a[1], $matcha) && preg_match('/1 (\w+)/', $b[1], $matchb))
-		return compare_fact_type($matcha[1], $matchb[1]);
-	return 0;
+	return compare_facts_type($a[1], $b[1]);
 }
 
 ?>

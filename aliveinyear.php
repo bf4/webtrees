@@ -64,7 +64,7 @@ function check_alive($indirec, $year) {
 			}
 		}
 	}
-	
+
 	//-- check if year is between birth and death
 	if (isset($bdate) && isset($ddate)) {
 		//print "HERE $year>={$bdate[0]["year"]} && $year<={$ddate[0]["year"]}";
@@ -79,7 +79,7 @@ function check_alive($indirec, $year) {
 	$subrecs = get_all_subrecords($indirec, "CHAN", true, true, false);
 	foreach($subrecs as $ind=>$subrec) {
 		$ct = preg_match("/\d DATE (.*)/", $subrec, $match);
-		
+
 		if ($ct>0 && strstr($match[0], "@#DHEBREW@")===false) {
 			$bdate = parse_date($match[1]);
 			if (!empty($bdate[0]["year"])) $years[] = $bdate[0]["year"];
@@ -93,7 +93,7 @@ function check_alive($indirec, $year) {
 			return 0;
 		}
 	}
-	
+
 	foreach($years as $ind=>$year1) {
 		if (($year1-$year) > $MAX_ALIVE_AGE) {
 			//print "F".$match[$i][0].$indirec;
@@ -248,13 +248,13 @@ if (($surname_sublist=="yes")&&($show_all=="yes")) {
 
 	foreach($surnames as $surname=>$namecount) {
 		if (begRTLText($namecount["name"])) {
- 			print "<div class =\"rtl\" dir=\"rtl\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".urlencode($namecount["alpha"])."&amp;surname_sublist=$surname_sublist&amp;surname=".urlencode($namecount["name"])."\">&nbsp;".PrintReady($namecount["name"]) . "&rlm; - [".($namecount["match"])."]&rlm;";
+ 			print "<div class =\"rtl\" dir=\"rtl\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".urlencode($namecount["alpha"])."&amp;surname_sublist=$surname_sublist&amp;surname=".urlencode($namecount["name"])."\">&nbsp;".PrintReady($namecount["name"]) . getRLM() . " - [".($namecount["match"])."]" . getRLM();
 		}
 		else if (substr($namecount["name"], 0, 5) == "@N.N.") {
-			print "<div class =\"ltr\" dir=\"ltr\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".$namecount["alpha"]."&amp;surname_sublist=$surname_sublist&amp;surname=@N.N.\">&nbsp;".$pgv_lang["NN"] . "&lrm; - [".($namecount["match"])."]&lrm;&nbsp;";
+			print "<div class =\"ltr\" dir=\"ltr\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".$namecount["alpha"]."&amp;surname_sublist=$surname_sublist&amp;surname=@N.N.\">&nbsp;".$pgv_lang["NN"] . getLRM() . " - [".($namecount["match"])."]" . getLRM() . "&nbsp;";
 		}
 		else {
-			print "<div class =\"ltr\" dir=\"ltr\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".urlencode($namecount["alpha"])."&amp;surname_sublist=$surname_sublist&amp;surname=".urlencode($namecount["name"])."\">".PrintReady($namecount["name"]) . "&lrm; - [".($namecount["match"])."]&lrm;";
+			print "<div class =\"ltr\" dir=\"ltr\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".urlencode($namecount["alpha"])."&amp;surname_sublist=$surname_sublist&amp;surname=".urlencode($namecount["name"])."\">".PrintReady($namecount["name"]) . getLRM() . " - [" . ($namecount["match"])."]" . getLRM();
 		}
 
  		print "</a></div>\n";
@@ -330,13 +330,13 @@ else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 
 	foreach($surnames as $surname=>$namecount) {
 		if (begRTLText($namecount["name"])) {
- 			print "<div class =\"rtl\" dir=\"rtl\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".$alpha."&amp;surname_sublist=$surname_sublist&amp;surname=".urlencode($namecount["name"])."\">&nbsp;".PrintReady($namecount["name"]) . "&rlm; - [".($namecount["match"])."]&rlm;";
+ 			print "<div class =\"rtl\" dir=\"rtl\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".$alpha."&amp;surname_sublist=$surname_sublist&amp;surname=".urlencode($namecount["name"])."\">&nbsp;".PrintReady($namecount["name"]) . getRLM() . " - [".($namecount["match"])."]" . getRLM();
 		}
 		else if (substr($namecount["name"], 0, 5) == "@N.N.") {
-			print "<div class =\"ltr\" dir=\"ltr\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".$namecount["alpha"]."&amp;surname_sublist=$surname_sublist&amp;surname=@N.N.\">&nbsp;".$pgv_lang["NN"] . "&lrm; - [".($namecount["match"])."]&lrm;&nbsp;";
+			print "<div class =\"ltr\" dir=\"ltr\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".$namecount["alpha"]."&amp;surname_sublist=$surname_sublist&amp;surname=@N.N.\">&nbsp;".$pgv_lang["NN"] . getLRM() . " - [".($namecount["match"])."]" . getLRM() . "&nbsp;";
 		}
 		else {
-			print "<div class =\"ltr\" dir=\"ltr\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".$alpha."&amp;surname_sublist=$surname_sublist&amp;surname=".urlencode($namecount["name"])."\">".PrintReady($namecount["name"]) . "&lrm; - [".($namecount["match"])."]&lrm;";
+			print "<div class =\"ltr\" dir=\"ltr\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".$alpha."&amp;surname_sublist=$surname_sublist&amp;surname=".urlencode($namecount["name"])."\">".PrintReady($namecount["name"]) . getLRM() . " - [".($namecount["match"])."]" . getLRM();
 		}
 		print "</a>&nbsp;</div>\n";
 		$count_indi += $namecount["match"];

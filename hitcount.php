@@ -57,10 +57,10 @@ if($SHOW_COUNTER)
   }
 
   if(isset($pid) && find_person_record($pid)) { //individual counter
-  
+
   	// Capitalize ID to make sure we have a correct hitcount on the individual
   	$pid = strtoupper($pid);
-  	
+
   	//see if already viewed individual this session
     if(isset($_SESSION[$PGV_INDI_COUNTER_NAME][$pid]))
   	{
@@ -124,6 +124,6 @@ if($SHOW_COUNTER)
   for($i=0;$i<10;$i++)
     $hits = str_replace("$i","<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$i]["digit"]."\" alt=\"pgv_counter\" />","$hits");
 
-    if ($TEXT_DIRECTION=="rtl") $hits = "&lrm;".$hits."&lrm;";
+    if ($TEXT_DIRECTION=="rtl") $hits = getLRM() . $hits . getLRM();
 }
 ?>

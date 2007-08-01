@@ -38,11 +38,11 @@ require_once("includes/media_class.php");
 class MediaControllerRoot extends IndividualController{
 
 	var $mediaobject;
-	
+
 	function init() {
 		if (isset($_REQUEST['filename'])) $filename = $_REQUEST['filename'];
 		if (isset($_REQUEST['mid'])) $mid = $_REQUEST['mid'];
-		
+
 		//Checks to see if the File Name ($filename) exists
 		if (!empty($filename)){
 			//If the File Name ($filename) is set, then it will call the method to get the Media ID ($mid) from the File Name ($filename)
@@ -58,14 +58,14 @@ class MediaControllerRoot extends IndividualController{
 			$this->mediaobject = Media::getInstance($mid);
 			//This sets the controller ID to be the Media ID
 			$this->pid = $mid;
-			
+
 			if (is_null($this->mediaobject)) $this->mediaobject = new Media("0 @".$mid."@ OBJE");
 		}
-		
+
 		parent::init();
 	}
-	
-	/**	
+
+	/**
 	 * Add a new favorite for the action user
 	 */
 	function addFavorite() {
@@ -87,7 +87,7 @@ class MediaControllerRoot extends IndividualController{
 			}
 		}
 	}
-	
+
 	/**
 	 * Accept any edit changes into the database
 	 * Also update the indirec we will use to generate the page
@@ -98,8 +98,8 @@ class MediaControllerRoot extends IndividualController{
 		//This sets the controller ID to be the Media ID
 		if (is_null($this->mediaobject)) $this->mediaobject = new Media("0 @".$this->pid."@ OBJE");
 	}
-	
-	/**	
+
+	/**
 	 * return the title of this page
 	 * @return string	the title of the page to go in the <title> tags
 	 */
@@ -112,11 +112,11 @@ class MediaControllerRoot extends IndividualController{
 		}
 		else return $pgv_lang["unknown"];
 	}
-	
+
 	function canDisplayDetails() {
 		return $this->mediaobject->canDisplayDetails();
 	}
-	
+
 	/**
 	 * get the edit menu
 	 * @return Menu
@@ -137,7 +137,7 @@ class MediaControllerRoot extends IndividualController{
 		$click_link .= "window.open('addmedia.php?action=";
 		$click_link .= "editmedia&amp;pid=".$this->pid;
 		$click_link .= "&amp;linktoid=$linktoid";
-		$click_link .= "', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";	
+		$click_link .= "', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";
 		$menu->addOnclick($click_link);
 		if (!empty($PGV_IMAGES["edit_indi"]["small"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]);
@@ -149,7 +149,7 @@ class MediaControllerRoot extends IndividualController{
 			$click_link .= "window.open('addmedia.php?action=";
 			$click_link .= "editmedia&amp;pid=".$this->pid;
 			$click_link .= "&amp;linktoid=$linktoid";
-			$click_link .= "', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";	
+			$click_link .= "', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1')";
 			$submenu->addOnclick($click_link);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
@@ -159,7 +159,7 @@ class MediaControllerRoot extends IndividualController{
 			$submenu->addOnclick("return edit_raw('".$this->pid."');");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
-			
+
 			//- remove object option
 				$submenu = new Menu($pgv_lang["remove_object"]);
 				$submenu->addLink("media.php?action=removeobject&amp;xref=".$this->pid);
@@ -167,23 +167,23 @@ class MediaControllerRoot extends IndividualController{
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
-			
+
 			// main link displayed on page
 			$submenu = new Menu($pgv_lang["set_link"]." >");
 			$submenu->addOnclick("return ilinkitem('".$this->pid."','person');");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
 //			$submenu->addFlyout('right');
-	
+
 			$ssubmenu = new Menu($pgv_lang["to_person"]);
 			$ssubmenu->addOnclick("return ilinkitem('".$this->pid."','person');");
 			$ssubmenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$submenu->addSubMenu($ssubmenu);
-			
+
 			$ssubmenu = new Menu($pgv_lang["to_family"]);
 			$ssubmenu->addOnclick("return ilinkitem('".$this->pid."','family');");
 			$ssubmenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$submenu->addSubMenu($ssubmenu);
-			
+
 			$ssubmenu = new Menu($pgv_lang["to_source"]);
 			$ssubmenu->addOnclick("return ilinkitem('".$this->pid."','source');");
 			$ssubmenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
@@ -215,7 +215,7 @@ class MediaControllerRoot extends IndividualController{
 		}
 		return $menu;
 	}
-	
+
 	/**
 	 * check if we can show the other menu
 	 * @return boolean
@@ -226,7 +226,7 @@ class MediaControllerRoot extends IndividualController{
 			return true;
 		return false;
 	}
-	
+
 	/**
 	 * get the "other" menu
 	 * @return Menu
@@ -277,7 +277,7 @@ class MediaControllerRoot extends IndividualController{
 		}
 		return $menu;
 	}
-	
+
 	/**
 	 * check if we can show the gedcom record
 	 * @return boolean
@@ -287,14 +287,14 @@ class MediaControllerRoot extends IndividualController{
 		if ($SHOW_GEDCOM_RECORD && $this->mediaobject->canDisplayDetails())
 			return true;
 	}
-	
+
 	/**
 	 * return a list of facts
 	 * @return array
 	 */
 	function getFacts() {
 		global $pgv_changes, $GEDCOM;
-		
+
 		$facts = get_all_subrecords($this->mediaobject->getGedcomRecord(), "TITL,FILE");
 		$facts[] = "1 FILE ".$this->mediaobject->getFilename();
 		$facts[] = "1 TYPE ".$this->mediaobject->getFiletype();
@@ -334,25 +334,25 @@ class MediaControllerRoot extends IndividualController{
 				}
 			}
 		}
-		
+
 		//This does another check to see if the file exists.
 		//If so it will then check to see if the file's image size is null.
 		//If the file is null, it will not show the width and the height of the image
 		if (file_exists($this->getLocalFileName())){
 			$imagesize = @getimagesize($this->getLocalFileName());
 			if ($imagesize[0]){
-				$facts[] = "1 EVEN &lrm;".$imagesize[0]." x ".$imagesize[1]."&lrm;\r\n2 TYPE image_size";
+				$facts[] = "1 EVEN " . getLRM() .$imagesize[0]." x ".$imagesize[1].getLRM()  . "\r\n2 TYPE image_size";
 			}
 			//Prints the file size
 			$size = filesize($this->getLocalFileName());
 			//Rounds the size of the imgae to 2 decimal places
-			$size = "&lrm;".round($size/1024, 2)." kb&lrm;";
-			
+			$size = getLRM() . round($size/1024, 2)." kb" . getLRM();
+
 			$facts[] = "1 EVEN ".$size."\r\n2 TYPE file_size";
-			
+
 		}
-		
-		stable_usort($facts, "compare_facts");
+
+		sort_facts($facts);
 		return $facts;
 	}
 
@@ -362,7 +362,7 @@ class MediaControllerRoot extends IndividualController{
 	 */
 	function getLocalFilename() {
 		return check_media_depth($this->mediaobject->getFilename());
-		
+
 	}
 }
 // -- end of class

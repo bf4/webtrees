@@ -67,43 +67,54 @@ function table_renum(id) {
 function table_filter_alive(id) {
 	var table = document.getElementById(id);
 	var year = document.getElementById("aliveyear").value;
-	if (year<1500) return;
+	if (year>2500) // Approximate conversion of hebrew to gregorian year
+		year-=3761;
+
+	// Calculate Julian Day numbers for 1st Jan and 31st Dec
+	var jd_1jan=1721061+365*year+Math.floor((year-1)/4)-Math.floor((year-1)/100)+Math.floor((year-1)/400);
+	var jd_31dec=1721425+365*year+Math.floor(year/4)-Math.floor(year/100)+Math.floor(year/400);
+
 	// get birth and death column number
 	var BCOL = -1;
 	var DCOL = -1;
 	var firstRow = table.rows[1];
+	var key;
 	for (var c=0;c<firstRow.cells.length;c++) {
 		atags = firstRow.cells[c].getElementsByTagName("a");
-		// <a href="url" title="YYYY-MM-DD HH:MM:SS" ...
-		// is "title" a date sortkey ?
-		if (atags.length && atags[0].title && atags[0].title.substr(4,1)=='-') {
-			if (BCOL<0) BCOL=c;
+		if (key.length && key[0].name && key[0].name.match(/^\d+$/)) {
+			if (BCOL<0)
+				BCOL=c;
 			else {
 				DCOL=c;
 				break;
 			}
 		}
 	}
-	if (BCOL<0) return;
-	if (DCOL<0) return;
+	if (BCOL<0 || DCOL<0) return;
+
 	// apply filter
 	for (var r=0;r<table.tBodies[0].rows.length;r++) {
 		var row = table.tBodies[0].rows[r];
-		// get birth year
-		atags = row.cells[BCOL].getElementsByTagName("a");
-		byear = atags[0].title.substring(0,4);
-		// get death year
-		atags = row.cells[DCOL].getElementsByTagName("a");
-		dyear = atags[0].title.substring(0,4);
+		// get jd of birth/death
+		key=row.cells[BCOL].getElementsByTagName("a");
+		b_jd=parseInt(key[0].name,10);
+		key=row.cells[DCOL].getElementsByTagName("a");
+		d_jd=parseInt(key[0].name,10);
+		// assume birth/death based on max age of 100 years
+		if (b_jd==0 && d_jd>0)
+			b_jd=d_jd-36525;
+		if (d_jd==0 && b_jd>0)
+			d_jd=b_jd+36525;
 		// hide/show
-		var disp = "";
-		if (byear>0 && dyear>0 && (year<byear || dyear<year)) disp="none";
-		else {
-			disp="table-row";
-			if (document.all && !window.opera) disp = "inline"; // IE
-		}
-		row.style.display=disp;
+		if (b_jd<=jd_31dec && d_jd>=jd_1jan) {
+			if (document.all && !window.opera)
+				row.style.display="inline"; // IE
+			else
+				row.style.display="table-row";
+		} else
+			row.style.display="none";
 	}
+	// Resequence row numbers
 	table_renum(id);
 	return false;
 }

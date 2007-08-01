@@ -99,23 +99,9 @@ class LifespanControllerRoot extends BaseController {
 		else $term='LIKE';
 	
 		$myindilist = array();
-		//select dategroups.d_gid, i_name, dategroups.birth, dategroups.death FROM pgv_individuals,
-		//(select d_gid, d_file, MIN(d_datestamp) as birth, MAX(d_datestamp) as death from pgv_dates WHERE d_fact NOT IN ('CHAN','ENDL','SLGC','SLGS','BAPL') GROUP BY d_gid) as dategroups
-		//WHERE dategroups.death>=18790000 and dategroups.birth<=18810000 AND i_file=dategroups.d_file AND i_id=dategroups.d_gid
-
 		$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals, ";
-		$sql .= "(select d_gid, d_file, MIN(d_datestamp) as birth, MAX(d_datestamp) as death from ".$TBLPREFIX."dates WHERE d_fact NOT IN ('CHAN','ENDL','SLGC','SLGS','BAPL') AND d_file='".$GEDCOMS[$GEDCOM]['id']."' GROUP BY d_gid) as dategroups ";
-		$sql .= "WHERE dategroups.death >= ".$startyear."0000 AND dategroups.birth<=".$endyear."0000 AND i_file=dategroups.d_file AND i_id=dategroups.d_gid";
-		/*
-		$i=$startyear;
-		while($i <= $endyear) {
-			if ($i > $startyear) $sql .= " OR ";
-			if ($REGEXP_DB) $sql .= "i_gedcom $term '".$DBCONN->escapeSimple("2 DATE[^\n]* ".$i)."'";
-			else $sql .= "i_gedcom LIKE '".$DBCONN->escapeSimple("%2 DATE%".$i)."%'";
-			$i++;
-		}
-		$sql .= ")";
-		*/
+		$sql .= "(select d_gid, d_file, MIN(d_year) as birth, MAX(d_year) as death from ".$TBLPREFIX."dates WHERE d_fact NOT IN ('CHAN','ENDL','SLGC','SLGS','BAPL') AND d_file='".$GEDCOMS[$GEDCOM]['id']."' GROUP BY d_gid) as dategroups ";
+		$sql .= "WHERE dategroups.death >= ".$startyear." AND dategroups.birth<=".$endyear." AND i_file=dategroups.d_file AND i_id=dategroups.d_gid";
 		$sql .= " AND i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
 		//		print $sql;
 		$res = dbquery($sql);
@@ -478,7 +464,7 @@ class LifespanControllerRoot extends BaseController {
 				$value->add_family_facts(false);
 				$unparsedEvents = $value->getIndiFacts();
 				//sort_facts($unparsedEvents);
-				stable_usort($unparsedEvents, "compare_facts");
+				sort_facts($unparsedEvents);
 				//print_r($unparsedEvents);
 
 				$eventinformation = Array();

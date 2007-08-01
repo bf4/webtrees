@@ -63,15 +63,19 @@ print_header($controller->getPageTitle());
 		?></td>
 		<td valign="top" class="noprint">
 			<div class="accesskeys">
+			<?php
+                        if (empty($SEARCH_SPIDER)) {
+                        ?>
 				<a class="accesskeys" href="<?php print 'timeline.php?pids[0]=' . $controller->parents['HUSB'].'&amp;pids[1]='.$controller->parents['WIFE'];?>" title="<?php print $pgv_lang['parents_timeline'] ?>" tabindex="-1" accesskey="<?php print $pgv_lang['accesskey_family_parents_timeline']; ?>"><?php print $pgv_lang['parents_timeline'] ?></a>
 				<a class="accesskeys" href="<?php print 'timeline.php?' . $controller->getChildrenUrlTimeline();?>" title="<?php print $pgv_lang["children_timeline"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang['accesskey_family_children_timeline']; ?>"><?php print $pgv_lang['children_timeline'] ?></a>
 				<a class="accesskeys" href="<?php print 'timeline.php?pids[0]=' .$controller->getHusband().'&amp;pids[1]='.$controller->getWife().'&amp;'.$controller->getChildrenUrlTimeline(2);?>" title="<?php print $pgv_lang['family_timeline'] ?>" tabindex="-1" accesskey="<?php print $pgv_lang['accesskey_family_timeline']; ?>"><?php print $pgv_lang['family_timeline'] ?></a>
 				<?php if ($SHOW_GEDCOM_RECORD) { ?>
 				<a class="accesskeys" href="javascript:show_gedcom_record();" title="<?php print $pgv_lang["view_gedcom"] ?>" tabindex="-1" accesskey="<?php print $pgv_lang["accesskey_family_gedcom"]; ?>"><?php print $pgv_lang["view_gedcom"] ?></a>
 				<?php } ?>
+			<?php } ?>
 			</div>
 			<?php
-			if ($_REQUEST['view'] != 'preview') :
+			if (empty($SEARCH_SPIDER) && ($_REQUEST['view'] != 'preview')) :
 			?>
 			<table class="sublinks_table" cellspacing="4" cellpadding="0">
 				<tr>
@@ -131,4 +135,11 @@ print_header($controller->getPageTitle());
 	</tr>
 </table>
 <br />
-<?php print_footer();?>
+<?php
+if(empty($SEARCH_SPIDER))
+        print_footer();
+else {
+        if($SHOW_SPIDER_TAGLINE)
+                print $pgv_lang["label_search_engine_detected"].": ".$SEARCH_SPIDER;
+        print "\n</div>\n\t</body>\n</html>";
+}

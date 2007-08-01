@@ -308,15 +308,15 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			   print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\" title=\"$title\" onmouseover=\"change_class('namedef-$boxID','name".$style."Hover'); return false;\" onmouseout=\"change_class('namedef-$boxID','name$style'); return false;\"><span id=\"namedef-$boxID\" class=\"name$style\">";
  			   print PrintReady($name);
 			   // NOTE: IMG ID
-			   print "<img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
+			   print " <img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
 			   if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
 			   else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
 			   else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
 			   print "\" class=\"gender_image\" />";
 			   if ($SHOW_ID_NUMBERS) {
 				   print "</span><span class=\"details$style\">";
-		      	   if ($TEXT_DIRECTION=="ltr") print "&lrm;($pid)&lrm;";
-			        else print "&rlm;($pid)&rlm;";
+		      	   if ($TEXT_DIRECTION=="ltr") print getLRM() . "($pid)" . getLRM();
+			        else print getRLM() . "($pid)" . getRLM();
 				   // NOTE: Close span namedef-$personcount.$pid.$count
 				   print "</span>";
 			   }
@@ -381,15 +381,15 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 print "</span>";
 	 print "<span class=\"name$style\">";
 	 // NOTE: IMG ID
-	 print "<img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
+	 print " <img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
 	 if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
 	 else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
 	 else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
 	 print "\" class=\"gender_image\" />";
 	 print "</span>\r\n";
 	 if ($SHOW_ID_NUMBERS) {
-			if ($TEXT_DIRECTION=="ltr") print "<span class=\"details$style\">&lrm;($pid)&lrm; </span>";
-			else print "<span class=\"details$style\">&rlm;($pid)&rlm; </span>";
+			if ($TEXT_DIRECTION=="ltr") print "<span class=\"details$style\">" . getLRM() . "($pid)" . getLRM() . " </span>";
+			else print "<span class=\"details$style\">" . getRLM() . "($pid)" . getRLM() . " </span>";
 	 }
 	 if ($SHOW_LDS_AT_GLANCE) {
 		 print "<span class=\"details$style\">".get_lds_glance($indirec)."</span>";
@@ -508,6 +508,9 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		if(!((strstr($SCRIPT_NAME, "/individual.php")) ||
 		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
 		     (strstr($SCRIPT_NAME, "/login.php")) ||
+		     (strstr($SCRIPT_NAME, "/family.php")) ||
+		     (strstr($SCRIPT_NAME, "/famlist.php")) ||
+		     (strstr($SCRIPT_NAME, "/help_text.php")) ||
 		     (strstr($SCRIPT_NAME, "/source.php")) ||
 		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
 		     (strstr($SCRIPT_NAME, "/index.php"))) ) {
@@ -607,6 +610,9 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		  // Also ignored by crawlers like wget, so other checks have to be done too.
 		  if((strstr($SCRIPT_NAME, "/individual.php")) ||
 		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
+		     (strstr($SCRIPT_NAME, "/family.php")) ||
+		     (strstr($SCRIPT_NAME, "/famlist.php")) ||
+		     (strstr($SCRIPT_NAME, "/help_text.php")) ||
 		     (strstr($SCRIPT_NAME, "/source.php")) ||
 		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
 		     (strstr($SCRIPT_NAME, "/index.php")) ) {
@@ -760,6 +766,9 @@ function print_simple_header($title) {
 	if(!empty($SEARCH_SPIDER)) {
 		if(!((strstr($SCRIPT_NAME, "/individual.php")) ||
 		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
+		     (strstr($SCRIPT_NAME, "/family.php")) ||
+		     (strstr($SCRIPT_NAME, "/famlist.php")) ||
+		     (strstr($SCRIPT_NAME, "/help_text.php")) ||
 		     (strstr($SCRIPT_NAME, "/source.php")) ||
 		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
 		     (strstr($SCRIPT_NAME, "/index.php"))) ) {
@@ -811,6 +820,9 @@ function print_simple_header($title) {
 		  // Also ignored by crawlers like wget, so other checks have to be done too.
 		  if((strstr($SCRIPT_NAME, "/individual.php")) ||
 		     (strstr($SCRIPT_NAME, "/indilist.php")) ||
+		     (strstr($SCRIPT_NAME, "/family.php")) ||
+		     (strstr($SCRIPT_NAME, "/famlist.php")) ||
+		     (strstr($SCRIPT_NAME, "/help_text.php")) ||
 		     (strstr($SCRIPT_NAME, "/source.php")) ||
 		     (strstr($SCRIPT_NAME, "/search_engine.php")) ||
 		     (strstr($SCRIPT_NAME, "/index.php")) ) {
@@ -1217,7 +1229,7 @@ function print_favorite_selector($option=0) {
 							$submenu["label"] = PrintReady(get_person_name($favorite["gid"]));
 							if ($SHOW_ID_NUMBERS) {
 	 							if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-								else $submenu["label"] .= " &rlm;(".$favorite["gid"].")&rlm;";
+								else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 							}
 							unset($indilist[$pid]);
 						}
@@ -1226,7 +1238,7 @@ function print_favorite_selector($option=0) {
 							$submenu["label"] = PrintReady(get_family_descriptor($favorite["gid"]));
 							if ($SHOW_ID_NUMBERS) {
 	 							if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-								else $submenu["label"] .= " &rlm;(".$favorite["gid"].")&rlm;";
+								else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 							}
 							unset($famlist[$pid]);
 						}
@@ -1235,7 +1247,7 @@ function print_favorite_selector($option=0) {
 							$submenu["label"] = PrintReady(get_source_descriptor($favorite["gid"]));
 							if ($SHOW_ID_NUMBERS) {
 	 							if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-								else $submenu["label"] .= " &rlm;(".$favorite["gid"].")&rlm;";
+								else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 							}
 							unset($sourcelist[$pid]);
 						}
@@ -1246,7 +1258,7 @@ function print_favorite_selector($option=0) {
 								$submenu["label"] = PrintReady($media->getTitle());
 								if ($SHOW_ID_NUMBERS) {
 		 							if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-									else $submenu["label"] .= " &rlm;(".$favorite["gid"].")&rlm;";
+									else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 								}
 								if (isset($medialist[$pid])) unset($medialist[$pid]);
 							}
@@ -1301,7 +1313,7 @@ function print_favorite_selector($option=0) {
 								$submenu["label"] = PrintReady(get_person_name($favorite["gid"]));
 								if ($SHOW_ID_NUMBERS) {
 	 								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-									else $submenu["label"] .= " &rlm;(".$favorite["gid"].")&rlm;";
+									else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 							}
 							}
 							if ($favorite["type"]=="FAM") {
@@ -1309,7 +1321,7 @@ function print_favorite_selector($option=0) {
 								$submenu["label"] = PrintReady(get_family_descriptor($favorite["gid"]));
 								if ($SHOW_ID_NUMBERS) {
 	 								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-									else $submenu["label"] .= " &rlm;(".$favorite["gid"].")&rlm;";
+									else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 							}
 							}
 							if ($favorite["type"]=="SOUR") {
@@ -1317,7 +1329,7 @@ function print_favorite_selector($option=0) {
 								$submenu["label"] = PrintReady(get_source_descriptor($favorite["gid"]));
 								if ($SHOW_ID_NUMBERS) {
 	 								if ($TEXT_DIRECTION=="ltr") $submenu["label"] .= " (".$favorite["gid"].")";
-									else $submenu["label"] .= " &rlm;(".$favorite["gid"].")&rlm;";
+									else $submenu["label"] .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 							}
 							}
 							$submenu["labelpos"] = "right";
@@ -1367,7 +1379,7 @@ function print_favorite_selector($option=0) {
 									$name = strip_tags(PrintReady(get_person_name($pid)));
 								if ($SHOW_ID_NUMBERS) {
 									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-									else $name .= " &rlm;(".$favorite["gid"].")&rlm;";
+									else $name .= getRLM() . "(".$favorite["gid"].")" . getRLM();
 								}
 								print "\n\t\t\t\t<option value=\"individual.php?pid=";
 								   unset($indilist[$pid]);
@@ -1377,7 +1389,7 @@ function print_favorite_selector($option=0) {
 									if (strlen($name)>50) $name = substr($name, 0, 50);
 								if ($SHOW_ID_NUMBERS) {
 									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-									else $name .= " &rlm;(".$favorite["gid"].")&rlm;";
+									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 								}
 								print "\n\t\t\t\t<option value=\"family.php?famid=";
 								   unset($famlist[$pid]);
@@ -1387,7 +1399,7 @@ function print_favorite_selector($option=0) {
 									if (strlen($name)>50) $name = substr($name, 0, 50);
 								if ($SHOW_ID_NUMBERS) {
 									if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-									else $name .= " &rlm;(".$favorite["gid"].")&rlm;";
+									else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 								}
 								print "\n\t\t\t\t<option value=\"source.php?sid=";
 								   unset($sourcelist[$pid]);
@@ -1399,7 +1411,7 @@ function print_favorite_selector($option=0) {
 										if (strlen($name)>50) $name = substr($name, 0, 50);
 										if ($SHOW_ID_NUMBERS) {
 											if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-											else $name .= " &rlm;(".$favorite["gid"].")&rlm;";
+											else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 										}
 										print "\n\t\t\t\t<option value=\"mediaviewer.php?mid=";
 										unset($sourcelist[$pid]);
@@ -1437,7 +1449,7 @@ function print_favorite_selector($option=0) {
 								$name = strip_tags(PrintReady(get_person_name($pid)));
 							if ($SHOW_ID_NUMBERS) {
 								if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-								else $name .= " &rlm;(".$favorite["gid"].")&rlm;";
+								else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 							}
 							print "\n\t\t\t\t<option value=\"individual.php?pid=";
 							}
@@ -1445,7 +1457,7 @@ function print_favorite_selector($option=0) {
 								$name = strip_tags(PrintReady(get_family_descriptor($pid)));
 							if ($SHOW_ID_NUMBERS) {
 								if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-								else $name .= " &rlm;(".$favorite["gid"].")&rlm;";
+								else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 							}
 							print "\n\t\t\t\t<option value=\"family.php?famid=";
 							}
@@ -1453,7 +1465,7 @@ function print_favorite_selector($option=0) {
 								$name = strip_tags(PrintReady(get_source_descriptor($pid)));
 							if ($SHOW_ID_NUMBERS) {
 								if ($TEXT_DIRECTION=="ltr") $name .= " (".$favorite["gid"].")";
-								else $name .= " &rlm;(".$favorite["gid"].")&rlm;";
+								else $name .= " " . getRLM() . "(".$favorite["gid"].")" . getRLM();
 							}
 							print "\n\t\t\t\t<option value=\"source.php?sid=";
 						}
@@ -1696,7 +1708,7 @@ function print_help_link($help, $helpText, $show_desc="", $use_print_text=false,
  *		on something other than $pgv_lang array entries, but coded according to the
  *		same rules.
  * When we want it to return text we need to code:
- * print_text($mytext, 0, 1);
+ * print_text($mytext, 0, 2);
  * @param string $help		The variable that needs to be processed.
  * @param int $level		The position of the embedded variable
  * @param int $noprint		The switch if the text needs to be printed or returned
@@ -2089,9 +2101,9 @@ function PrintReady($text, $InHeaders=false) {
 			}
 			$thisLang = whatLanguage($tempText);
 			if (!isset($TEXT_DIRECTION_array[$thisLang]) || $TEXT_DIRECTION_array[$thisLang]=="ltr") {
-				$newText .= "&lrm;" . $thisChar . $tempText. $tempChar . "&lrm;";
+				$newText .= getLRM() . $thisChar . $tempText. $tempChar . getLRM();
 			} else {
-				$newText .= "&rlm;" . $thisChar . $tempText. $tempChar . "&rlm;";
+				$newText .= getRLM() . $thisChar . $tempText. $tempChar . getRLM();
  			   			}
 		} else {
 			$newText .= $thisChar;
@@ -2170,9 +2182,9 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			if (!empty($addname)) print " - " . PrintReady($addname);
 			if ($SHOW_ID_NUMBERS) {
 				print "&nbsp;&nbsp;";
-				if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+				if ($TEXT_DIRECTION=="rtl") print getRLM();
 				print "(".$pid2.")";
-				if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+				if ($TEXT_DIRECTION=="rtl") print getRLM();
 			}
 			print "</a>";
 			// ID age
@@ -2195,18 +2207,18 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 		}
 		else if (strstr($gedrec, "@ FAM")!==false) {
 			print "<a href=\"family.php?famid=$pid2\">";
-			if ($TEXT_DIRECTION == "ltr") print " &lrm;"; else print " &rlm;";
+			if ($TEXT_DIRECTION == "ltr") print getLRM(); else print " " . getRLM();
 			print "[".$pgv_lang["view_family"];
-  			if ($SHOW_ID_NUMBERS) print " &lrm;($pid2)&lrm;";
-  			if ($TEXT_DIRECTION == "ltr") print "&lrm;]</a>\n"; else print "&rlm;]</a>\n";
+  			if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($pid2)" . getLRM();
+  			if ($TEXT_DIRECTION == "ltr") print getLRM() . "]</a>\n"; else print getRLM() . "]</a>\n";
 		}
 		else {
 			print $pgv_lang["unknown"];
 			if ($SHOW_ID_NUMBERS) {
 				print "&nbsp;&nbsp;";
-				if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+				if ($TEXT_DIRECTION=="rtl") print getRLM();
 				print "(".$pid2.")";
-				if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+				if ($TEXT_DIRECTION=="rtl") print getRLM();
 			}
 		}
 		if ($linebr) print "<br />\n";
@@ -2827,8 +2839,8 @@ function DumpString($input) {
 		// Line 2: UTF8 character string
 		$thisLine = "  UTF8 ";
 		for ($i=$pos; $i<($pos+$lineLength); $i++) {
-			if (ord(substr($UTF8[$i], 0, 1)) < 0x20) $thisLine .= "&lrm;"." ";
-			else $thisLine .= "&lrm;".$UTF8[$i];
+			if (ord(substr($UTF8[$i], 0, 1)) < 0x20) $thisLine .= getLRM() . " ";
+			else $thisLine .= getLRM() . $UTF8[$i];
 		}
 		print str_replace(array(" ", $lrm, $rlm), array("&nbsp;", "&nbsp;", "&nbsp;"), $thisLine)."<br />";
 

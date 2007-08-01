@@ -266,12 +266,12 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			print "</td>";
 		}
 		$align = "";
-/*	Did not look good	
+/*	Did not look good
 		$ct = preg_match("/2 DATE (.+)/", $factrec, $match);
 		if (!empty($event) && $ct==0) {
 			if ($TEXT_DIRECTION=="rtl" && !hasRTLText($event) && hasLTRText($event) && $event!="N" && $event!="Y") $align=" align=\"left\"";
 			if ($TEXT_DIRECTION=="ltr" && $USE_RTL_FUNCTIONS && !hasLTRText($event) && hasRTLText($event)) $align=" align=\"right\"";
-		}   
+		}
 */
 		print "<td class=\"optionbox $styleadd wrap\" $align>";
 		//print "<td class=\"facts_value facts_value$styleadd\">";
@@ -321,12 +321,12 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				if (($view!="preview") && ($spouse!=="")) print " - ";
 				if ($view!="preview" &&(empty($SEARCH_SPIDER))) {
 					print "<a href=\"family.php?famid=$pid\">";
-					if ($TEXT_DIRECTION == "ltr") print " &lrm;";
-					else print " &rlm;";
+					if ($TEXT_DIRECTION == "ltr") print " " . getLRM();
+					else print " " . getRLM();
 					print "[".$pgv_lang["view_family"];
-					if ($SHOW_ID_NUMBERS) print " &lrm;($pid)&lrm;";
-					if ($TEXT_DIRECTION == "ltr") print "&lrm;]</a>\n";
-					else print "&rlm;]</a>\n";
+					if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($pid)" . getLRM();
+					if ($TEXT_DIRECTION == "ltr") print getLRM() . "]</a>\n";
+					else print getRLM() . "]</a>\n";
 				}
 			}
 			//-- print other characterizing fact information
@@ -359,7 +359,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				else if (strstr("_EMAIL", $fact)) {
 					print "<a href=\"mailto:".$event."\">".$event."</a>";
 				}
-				else if (strstr("FAX PHON FILE", $fact." ")) print "&lrm;".$event." &lrm;";
+				else if (strstr("FAX PHON FILE", $fact." ")) print getLRM(). $event." " . getLRM();
 				else if (!strstr("ADDR _RATID ", $fact." ") && $event!="Y") print PrintReady($event." ");
 				$temp = trim(get_cont(2, $factrec), "\r\n");
 				if (strstr("PHON ADDR ", $fact." ")===false && $temp!="") {
@@ -487,9 +487,9 @@ function print_repository_record($sid) {
 			$ct2 = preg_match("/0 @(.*)@/", $source, $rmatch);
 			if ($ct2>0) $rid = trim($rmatch[1]);
 			print "<span class=\"field\"><a href=\"repo.php?rid=$rid\"><b>".PrintReady($match[1])."</b>&nbsp;&nbsp;&nbsp;";
-			if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+			if ($TEXT_DIRECTION=="rtl") print getRLM();
 			print "(".$sid.")";
-			if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+			if ($TEXT_DIRECTION=="rtl") print getRLM();
 			print "</a></span><br />";
 		}
 		print_address_structure($source, 1);
@@ -651,7 +651,7 @@ function print_media_links($factrec, $level,$pid='') {
 				if(empty($SEARCH_SPIDER)) {
 					print "<a href=\"mediaviewer.php?mid=".$media_id."\">";
 				}
-				if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>&lrm;".PrintReady($mediaTitle)."</i>";
+				if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>" . getLRM() .  PrintReady($mediaTitle)."</i>";
 				else print "<i>".PrintReady($mediaTitle)."</i>";
 				if(empty($SEARCH_SPIDER)) {
 					print "</a>";
@@ -661,7 +661,7 @@ function print_media_links($factrec, $level,$pid='') {
 				if (!empty($row["m_ext"])) {
 					print "\n\t\t\t<br /><span class=\"label\">".$factarray["FORM"].": </span> <span class=\"field\">".$row["m_ext"]."</span>";
 					if($imgsize[2]!==false) {
-						print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?" &rlm;x&rlm; " : " x ") . $imgsize[1] . "</span>";
+						print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM() . " ") : " x ") . $imgsize[1] . "</span>";
 					}
 				}
 				$ttype = preg_match("/".($nlevel+1)." TYPE (.*)/", $row["m_gedrec"], $match);
@@ -692,7 +692,7 @@ function print_media_links($factrec, $level,$pid='') {
 							$famid = trim($match[1]);
 							if(empty($SEARCH_SPIDER)) {
 								print "<a href=\"family.php?famid=$famid\">[".$pgv_lang["view_family"];
-								if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;";
+								if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM();
 								print "]</a>\n";
 							}
 						}
@@ -800,7 +800,7 @@ function print_address_structure($factrec, $level) {
 		for($i=0; $i<$ct; $i++) {
 			$resultText .= "<tr>";
 			$resultText .= "\n\t\t<td><span class=\"label\"><b>".$factarray["PHON"].": </b></span></td><td><span class=\"field\">";
-			$resultText .= "&lrm;".$omatch[$i][1]."&lrm;";
+			$resultText .= getLRM() . $omatch[$i][1] . getLRM();
 			$resultText .= "</span></td></tr>\n";
 		}
 	}
@@ -809,7 +809,7 @@ function print_address_structure($factrec, $level) {
 		for($i=0; $i<$ct; $i++) {
 			$resultText .= "<tr>";
 			$resultText .= "\n\t\t<td><span class=\"label\"><b>".$factarray["FAX"].": </b></span></td><td><span class=\"field\">";
-			$resultText .= "&lrm;".$omatch[$i][1]."&lrm;";
+			$resultText .= getLRM() . $omatch[$i][1] . getLRM();
 			$resultText .= "</span></td></tr>\n";
 		}
 	}
@@ -1373,7 +1373,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		if(empty($SEARCH_SPIDER)) {
 			print "<a href=\"mediaviewer.php?mid=".$rowm["m_media"]."\">";
 		}
-		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>&lrm;".PrintReady(htmlspecialchars($mediaTitle));
+		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>" . getLRM() . PrintReady(htmlspecialchars($mediaTitle));
 		else print "<i>".PrintReady(htmlspecialchars($mediaTitle));
 		$addtitle = get_gedcom_value("TITL:_HEB", 2, $rowm["mm_gedrec"]);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:_HEB", 2, $rowm["m_gedrec"]);
@@ -1392,7 +1392,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		if (!empty($rowm["m_ext"])) {
 			print "\n\t\t\t<br /><span class=\"label\">".$factarray["FORM"].": </span> <span class=\"field\">".$rowm["m_ext"]."</span>";
 			if(isset($imgsize) and $imgsize[2]!==false) {
-				print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?" &rlm;x&rlm; " : " x ") . $imgsize[1] . "</span>";
+				print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM(). " ") : " x ") . $imgsize[1] . "</span>";
 			}
 		}
 		$ttype = preg_match("/\d TYPE (.*)/", $rowm["m_gedrec"], $match);
@@ -1424,7 +1424,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				if ($view != "preview") {
 						$famid = $rowm['mm_gid'];
 						print "<a href=\"family.php?famid=$famid\">[".$pgv_lang["view_family"];
-						if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;";
+						if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM();
 						print "]</a>\n";
 				}
 			}

@@ -122,9 +122,9 @@ function getUpcomingEvents() {
 										$daytext .= "<li><a href=\"" . $SERVER_URL . "individual.php?pid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
                   						if ($SHOW_ID_NUMBERS) {
 	              						    $daytext .= "&nbsp;";
-	              						    if ($TEXT_DIRECTION=="rtl") $daytext .= "&rlm;";
+	              						    if ($TEXT_DIRECTION=="rtl") $daytext .= getRLM();
 	              						    $daytext .= "(".$gid.")";
-	              						    if ($TEXT_DIRECTION=="rtl") $daytext .= "&rlm;";
+	              						    if ($TEXT_DIRECTION=="rtl") $daytext .= getRLM();
                   						}
 										$daytext .= "</a> ";
 										$lastgid=$gid;
@@ -177,9 +177,9 @@ function getUpcomingEvents() {
 									$daytext .=  "<li><a href=\"" . $SERVER_URL . "family.php?famid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
                   					if ($SHOW_ID_NUMBERS) {
 	              					    $daytext .= "&nbsp;";
-	              					    if ($TEXT_DIRECTION=="rtl") $daytext .= "&rlm;";
+	              					    if ($TEXT_DIRECTION=="rtl") $daytext .= getRLM();
 	              					    $daytext .= "(".$gid.")";
-	              					    if ($TEXT_DIRECTION=="rtl") $daytext .= "&rlm;";
+	              					    if ($TEXT_DIRECTION=="rtl") $daytext .= getRLM();
                   						}
 									$daytext .=  "</a> ";
 									$lastgid=$gid;
@@ -281,9 +281,9 @@ function getTodaysEvents() {
 									$daytext .= "<li><a href=\"".$SERVER_URL ."individual.php?pid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
                   					if ($SHOW_ID_NUMBERS) {
 	              					    $daytext .= "&nbsp;";
-	              					    if ($TEXT_DIRECTION=="rtl") $daytext .= "&rlm;";
+	              					    if ($TEXT_DIRECTION=="rtl") $daytext .= getRLM();
 	              					    $daytext .= "(".$gid.")";
-	              					    if ($TEXT_DIRECTION=="rtl") $daytext .= "&rlm;";
+	              					    if ($TEXT_DIRECTION=="rtl") $daytext .= getRLM();
                   					}
 									$daytext .=  "</a> ";
 									$lastgid=$gid;
@@ -337,9 +337,9 @@ function getTodaysEvents() {
 									$daytext .=  "<li><a href=\"".$SERVER_URL ."family.php?famid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
                   					if ($SHOW_ID_NUMBERS) {
 	              					    $daytext .= "&nbsp;";
-	              					    if ($TEXT_DIRECTION=="rtl") $daytext .= "&rlm;";
+	              					    if ($TEXT_DIRECTION=="rtl") $daytext .= getRLM();
 	              					    $daytext .= "(".$gid.")";
-	              					    if ($TEXT_DIRECTION=="rtl") $daytext .= "&rlm;";
+	              					    if ($TEXT_DIRECTION=="rtl") $daytext .= getRLM();
                   					}
 									$daytext .=  "</a> ";
 									$lastgid=$gid;
@@ -646,7 +646,7 @@ function getTop10Surnames() {
 		foreach($surnames as $indexval => $surname) {
 			if (stristr($surname["name"], "@N.N")===false) {
 				$data .= "<a href=\"" . $SERVER_URL ."indilist.php?surname=".rawurlencode($surname["name"])."\">".PrintReady($surname["name"])."</a> ";
-				if ($TEXT_DIRECTION=="rtl") $data .= "&rlm;[&rlm;".$surname["match"]."&rlm;]&rlm;<br />";
+				if ($TEXT_DIRECTION=="rtl") $data .= getRLM() . "[" . getRLM() .$surname["match"].getRLM() . "]" . getRLM() . "<br />";
 				else $data .= "[".$surname["match"]."]<br />";
 				$i++;
 				if ($i>=$numName) break;
@@ -753,9 +753,9 @@ function getRecentChanges() {
 							$recentText .= "<li><a href=\"" . $SERVER_URL . "individual.php?pid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
 							if ($SHOW_ID_NUMBERS) {
 								$recentText .= "&nbsp;&nbsp;";
-								if ($TEXT_DIRECTION=="rtl") $recentText .= "&rlm;";
+								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
 								$recentText .= "(".$gid.")";
-								if ($TEXT_DIRECTION=="rtl") $recentText .= "&rlm;";
+								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
 							}
 							$recentText .= "</a> ";
 							$lastgid=$gid;
@@ -786,9 +786,9 @@ function getRecentChanges() {
 							$recentText .= "<li><a href=\"" .$SERVER_URL . "family.php?famid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
 							if ($SHOW_ID_NUMBERS) {
 								$recentText .= "&nbsp;&nbsp;";
-								if ($TEXT_DIRECTION=="rtl") $recentText .= "&rlm;";
+								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
 								$recentText .= "(".$gid.")";
-								if ($TEXT_DIRECTION=="rtl") $recentText .= "&rlm;";
+								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
 							}
 							$recentText .= "</a> ";
 							$lastgid=$gid;
@@ -819,9 +819,9 @@ function getRecentChanges() {
 							$recentText .= "<li><a href=\"" . $SERVER_URL . "source.php?sid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
 							if ($SHOW_ID_NUMBERS) {
 								$recentText .= "&nbsp;&nbsp;";
-								if ($TEXT_DIRECTION=="rtl") $recentText .= "&rlm;";
+								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
 								$recentText .= "(".$gid.")";
-								if ($TEXT_DIRECTION=="rtl") $recentText .= "&rlm;";
+								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
 							}
 							$recentText .= "</a> ";
 							$lastgid=$gid;
@@ -852,9 +852,9 @@ function getRecentChanges() {
 							$recentText .= "<li><a href=\"" . $SERVER_URL . "repo.php?rid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
 							if ($SHOW_ID_NUMBERS) {
 								$recentText .= "&nbsp;&nbsp;";
-								if ($TEXT_DIRECTION=="rtl") $recentText .= "&rlm;";
+								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
 								$recentText .= "(".$gid.")";
-								if ($TEXT_DIRECTION=="rtl") $recentText .= "&rlm;";
+								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
 							}
 							$recentText .= "</a> ";
 							$lastgid=$gid;
@@ -886,9 +886,9 @@ function getRecentChanges() {
  							$recentText .= "<li><a href=\"" . $SERVER_URL . "medialist.php?action=filter&amp;search=yes&amp;filter=$SearchTitle&amp;ged=".$GEDCOM."\"><b>".PrintReady($title)."</b>";
 							if ($SHOW_ID_NUMBERS) {
 								$recentText .= "&nbsp;&nbsp;";
-								if ($TEXT_DIRECTION=="rtl") $recentText .= "&rlm;";
+								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
 								$recentText .= "(".$gid.")";
-								if ($TEXT_DIRECTION=="rtl") $recentText .= "&rlm;";
+								if ($TEXT_DIRECTION=="rtl") $recentText .= getRLM();
 							}
 							$recentText .= "</a> ";
 							$lastgid=$gid;

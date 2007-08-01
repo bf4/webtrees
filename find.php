@@ -107,7 +107,7 @@ switch ($type) {
 <script language="JavaScript" type="text/javascript">
 <!--
 	function pasteid(id, name,thumb) {
-	
+
 	if(thumb)
 	{
 	window.opener.<?php print $callback; ?>(id,name,thumb);
@@ -575,7 +575,7 @@ if ($action=="filter") {
 						if ($chooseType=="file" && !empty($media["XREF"])) $isvalid = false;
 						if ($chooseType!="file" && empty($media["XREF"])) $isvalid = false;
 					}
-					
+
 					if ($isvalid) {
 						if ($media["EXISTS"] && @filesize(filename_decode($media["FILE"])) != 0){
 							$imgsize = findImageSize($media["FILE"]);
@@ -600,9 +600,9 @@ if ($action=="filter") {
 						print "\n\t\t\t<td class=\"list_value $TEXT_DIRECTION\">";
 						if ($media["TITL"] != "") {
 							print "<b>".PrintReady($media["TITL"])."</b>&nbsp;&nbsp;";
-							if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+							if ($TEXT_DIRECTION=="rtl") print getRLM();
 							print "(".$media["XREF"].")";
-							if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+							if ($TEXT_DIRECTION=="rtl") print getRLM();
 							print "<br />";
 						}
 						if (!$embed){
@@ -654,7 +654,7 @@ if ($action=="filter") {
 	if ($type == "place") {
 		print "\n\t<table class=\"tabs_table $TEXT_DIRECTION width90\">\n\t\t<tr>";
 		$placelist = array();
-		if (!empty($filter)) 
+		if ( isset($all) || !empty($filter) )
 		{
 			find_place_list($filter);
 			uasort($placelist, "stringsort");
@@ -696,9 +696,9 @@ if ($action=="filter") {
 			foreach ($repolist as $key => $value) {
 				$id = $value["id"];
 			    print "<li><a href=\"javascript:;\" onclick=\"pasteid('$id');\"><span class=\"list_item\">".PrintReady(get_repo_descriptor($key))."&nbsp;&nbsp;&nbsp;";
-			    if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+			    if ($TEXT_DIRECTION=="rtl") print getRLM();
 			    print "(".$key.")";
-			    if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+			    if ($TEXT_DIRECTION=="rtl") print getRLM();
 			    print "</span></a></li>";
 			}
 			print "</ul></td></tr>";

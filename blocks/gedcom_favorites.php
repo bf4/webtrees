@@ -44,9 +44,9 @@ function print_gedcom_favorites($block = true, $config="", $side, $index) {
 		print "<td class=\"blockh2\" ><div class=\"blockhc\">";
 		print_help_link("index_favorites_help", "qm");
 		print "<b>".$pgv_lang["gedcom_favorites"]."&nbsp;&nbsp;";
-		if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+		if ($TEXT_DIRECTION=="rtl") print getRLM();
 		print "(".count($userfavs).")";
-		if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+		if ($TEXT_DIRECTION=="rtl") print getRLM();
 		print "</b>";
 		print "</div></td>";
 		print "<td class=\"blockh3\">&nbsp;</td></tr>\n";

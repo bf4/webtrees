@@ -51,7 +51,7 @@ $linkToID = $controller->sid;	// -- Tell addmedia.php what to link to
 <?php
 	if ($controller->accept_success) print "<b>".$pgv_lang["accept_successful"]."</b><br />";
 ?>
-			<span class="name_head"><?php print PrintReady($controller->source->getTitle()); if ($SHOW_ID_NUMBERS) print " &lrm;(".$controller->sid.")&lrm;"; ?></span><br />
+			<span class="name_head"><?php print PrintReady($controller->source->getTitle()); if ($SHOW_ID_NUMBERS) print " " . getLRM() . "(".$controller->sid.")" . getLRM(); ?></span><br />
 		</td>
 		<td valign="top" class="noprint">
 		<?php if (!$controller->isPrintPreview()) {

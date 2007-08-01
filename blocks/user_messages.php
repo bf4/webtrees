@@ -44,9 +44,9 @@ function print_user_messages($block=true, $config="", $side, $index) {
 		print "<td class=\"blockh2\" ><div class=\"blockhc\">";
 		print_help_link("mygedview_message_help", "qm");
 		print "<b>".$pgv_lang["my_messages"]."&nbsp;&nbsp;";
-		if ($TEXT_DIRECTION=="rtl") print "&rlm;"; 
+		if ($TEXT_DIRECTION=="rtl") print getRLM();
 		print "(".count($usermessages).")";
-		if ($TEXT_DIRECTION=="rtl") print "&rlm;"; 
+		if ($TEXT_DIRECTION=="rtl") print getRLM();
 		print "</b>";
 		print "</div></td>";
 		print "<td class=\"blockh3\">&nbsp;</td></tr>\n";
@@ -103,8 +103,8 @@ function print_user_messages($block=true, $config="", $side, $index) {
 				print "<td class=\"list_value_wrap\">";
 				if ($tempuser) {
 					print PrintReady($tempuser["firstname"]." ".$tempuser["lastname"]);
-					if ($TEXT_DIRECTION=="ltr") print " &lrm; - ".htmlspecialchars($message["from"])."&lrm;";
-					else print " &rlm; - ".htmlspecialchars($message["from"])."&rlm;";
+					if ($TEXT_DIRECTION=="ltr") print " " . getLRM() . " - ".htmlspecialchars($message["from"]) . getLRM();
+					else print " " . getRLM() . " - ".htmlspecialchars($message["from"]).getRLM();
 				}
 				else print "<a href=\"mailto:".$message["from"]."\">".preg_replace("/@/","@<span style=\"font-size:1px;\"> </span>",$message["from"])."</a>";
 				print "</td>\n";
@@ -136,8 +136,8 @@ function print_user_messages($block=true, $config="", $side, $index) {
 				if ($username!=$user["username"] && $user["verified_by_admin"])  {
 					print "<option value=\"".$user["username"]."\"";
 					print ">".PrintReady($user["firstname"]." ".$user["lastname"]);
-					if ($TEXT_DIRECTION=="ltr") print " &lrm; - ".$user["username"]."&lrm;</option>\n";
-					else print " &rlm; - ".$user["username"]."&rlm;</option>\n";
+					if ($TEXT_DIRECTION=="ltr") print " " . getLRM() . " - ".$user["username"] . getLRM() . "</option>\n";
+					else print " " . getRLM() . " - ".$user["username"]. getRLM() . "</option>\n";
 				}
 			}
 			print "</select><input type=\"button\" value=\"".$pgv_lang["send"]."\" onclick=\"message(document.messageform.touser.options[document.messageform.touser.selectedIndex].value, 'messaging2', ''); return false;\" />\n";
