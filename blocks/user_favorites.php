@@ -44,9 +44,9 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 		print "<td class=\"blockh2\" ><div class=\"blockhc\">";
 		print_help_link("mygedview_favorites_help", "qm");
 		print "<b>".$pgv_lang["my_favorites"]."&nbsp;&nbsp;";
-		if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+		if ($TEXT_DIRECTION=="rtl") print getRLM();
 		print "(".count($userfavs).")";
-		if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+		if ($TEXT_DIRECTION=="rtl") print getRLM();
 		print "</b>";
 		print "</div></td>";
 		print "<td class=\"blockh3\">&nbsp;</td></tr>\n";
@@ -56,7 +56,7 @@ function print_user_favorites($block=true, $config="", $side, $index) {
 		if (count($userfavs)==0) {
 		print_text("no_favorites");
 		print "\n";
-		} 
+		}
 		else {
 			print "<table width=\"100%\" class=\"$TEXT_DIRECTION\">";
 			$mygedcom = $GEDCOM;

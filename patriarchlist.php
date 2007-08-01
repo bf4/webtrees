@@ -283,12 +283,12 @@ if (($surname_sublist=="yes")&&($show_all=="yes")) {
 
 	foreach($surnames as $surname=>$namecount) {
 		if (begRTLText($namecount["name"])) {
-			print "<div class =\"rtl\"><a href=\"patriarchlist.php?alpha=".$namecount["alpha"]."&amp;surname_sublist=$surname_sublist&amp;surname=".$namecount["name"]."\">".$namecount["name"]." - &rlm;[".($namecount["match"])."]&rlm;";
+			print "<div class =\"rtl\"><a href=\"patriarchlist.php?alpha=".$namecount["alpha"]."&amp;surname_sublist=$surname_sublist&amp;surname=".$namecount["name"]."\">".$namecount["name"]." - " . getRLM() . "[".($namecount["match"])."]" . getRLM();
 		}
 		else if (substr(trim($namecount["name"]), 0, 4) == "@N.N") {
-			print "<div class =\"ltr\"><a href=\"patriarchlist.php?alpha=".$namecount["alpha"]."&amp;surname_sublist=$surname_sublist&amp;surname=@N.N.\">".$pgv_lang["NN"]." - &lrm;[".($namecount["match"])."]&lrm;";
+			print "<div class =\"ltr\"><a href=\"patriarchlist.php?alpha=".$namecount["alpha"]."&amp;surname_sublist=$surname_sublist&amp;surname=@N.N.\">".$pgv_lang["NN"]." - " . getLRM() . "[".($namecount["match"])."]" . getLRM();
 		}
-		else print "<div class =\"ltr\"><a href=\"patriarchlist.php?alpha=".$namecount["alpha"]."&amp;surname_sublist=$surname_sublist&amp;surname=".$namecount["name"]."\">".$namecount["name"]." - &lrm;[".($namecount["match"])."]&lrm;";
+		else print "<div class =\"ltr\"><a href=\"patriarchlist.php?alpha=".$namecount["alpha"]."&amp;surname_sublist=$surname_sublist&amp;surname=".$namecount["name"]."\">".$namecount["name"]." - " . getLRM() ."[".($namecount["match"])."]" getLRM();
 		print "</a></div>\n";
 		$count_indi += $namecount["match"];
 		$i++;
@@ -337,9 +337,9 @@ else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 
 	foreach($surnames as $surname=>$namecount) {
 		if (begRTLText($namecount["name"])) {
-			print "<div class =\"rtl\">&nbsp;<a href=\"patriarchlist.php?alpha=".$alpha."&amp;surname_sublist=$surname_sublist&amp;surname=".urlencode($namecount["name"])."\">".$namecount["name"]." - &rlm;[".($namecount["match"])."]&rlm;";
+			print "<div class =\"rtl\">&nbsp;<a href=\"patriarchlist.php?alpha=".$alpha."&amp;surname_sublist=$surname_sublist&amp;surname=".urlencode($namecount["name"])."\">".$namecount["name"]." - " . getRLM() . "[".($namecount["match"])."]" . getRLM();
 		}
-		else print "<div class =\"ltr\">&nbsp;<a href=\"patriarchlist.php?alpha=".$alpha."&amp;surname_sublist=$surname_sublist&amp;surname=".$namecount["name"]."\">".$namecount["name"]." - &lrm;[".($namecount["match"])."]&lrm;";
+		else print "<div class =\"ltr\">&nbsp;<a href=\"patriarchlist.php?alpha=".$alpha."&amp;surname_sublist=$surname_sublist&amp;surname=".$namecount["name"]."\">".$namecount["name"]." - " . getLRM() . "[".($namecount["match"])."]" . getLRM();
 		print "</a>&nbsp;</div>\n";
 		$count_indi += $namecount["match"];
 		$i++;

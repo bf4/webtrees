@@ -289,9 +289,9 @@ if ($ct>0){
 			print "<b>".PrintReady($name)."</b>";
 	    } else {
 			print "<b>".PrintReady($name)."</b>&nbsp;&nbsp;&nbsp;";
-			if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+			if ($TEXT_DIRECTION=="rtl") print getRLM();
 			print "(".$media["XREF"].")";
-			if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+			if ($TEXT_DIRECTION=="rtl") print getRLM();
 		}
 		if ($showFile) {
 			if ($isExternal) print "<br /><sub>URL</sub>";
@@ -324,7 +324,7 @@ if ($ct>0){
 		}
 
 			if($imgsize[2]!==false){
-		    	print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?" &rlm;x&rlm; " : " x ") . $imgsize[1] . "</span>";
+		    	print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?" " . getRLM() . "x" . getRLM() " : " x ") . $imgsize[1] . "</span>";
 			}
 
 	    print "</td></tr></table>\n";

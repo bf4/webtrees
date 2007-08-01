@@ -82,7 +82,7 @@ print_header("$name - $rid - ".$pgv_lang["repo_info"]);
 if ($accept_success) print "<b>".$pgv_lang["accept_successful"]."</b><br />";
 print "\n\t<span class=\"name_head\">".PrintReady($name);
 
-if ($SHOW_ID_NUMBERS) print " &lrm;($rid)&lrm;";
+if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($rid)" . getLRM();
 print "</span><br />";
 if (userCanEdit(getUserName())) {
 	if ($view!="preview") {

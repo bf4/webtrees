@@ -199,7 +199,7 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 				}
 			}
 		}
-		
+
 			$change = array();
 			$change["gid"] = $gid;
 			$change["gedcom"] = $GEDCOM;
@@ -223,7 +223,7 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 				}
 			}
 			$pgv_changes[$gid."_".$GEDCOM][] = $change;
-		
+
 		if (userAutoAccept()) {
 			require_once("includes/functions_import.php");
 			accept_changes($gid."_".$GEDCOM);
@@ -250,7 +250,7 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 		if (preg_match("/\d+/", $gid)==0) $xref = get_new_xref($type);
 		else $xref = $gid;
 		$gedrec = preg_replace("/0 @(.*)@/", "0 @$xref@", $gedrec);
-		
+
 		$change = array();
 		$change["gid"] = $xref;
 		$change["gedcom"] = $GEDCOM;
@@ -262,7 +262,7 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 		$change["undo"] = $gedrec;
 		if (!isset($pgv_changes[$xref."_".$GEDCOM])) $pgv_changes[$xref."_".$GEDCOM] = array();
 		$pgv_changes[$xref."_".$GEDCOM][] = $change;
-		
+
 		if (userAutoAccept()) {
 			require_once("includes/functions_import.php");
 			accept_changes($xref."_".$GEDCOM);
@@ -300,7 +300,7 @@ function delete_gedrec($gid, $linkpid='') {
 		$change["undo"] = "";
 		if (!isset($pgv_changes[$gid."_".$GEDCOM])) $pgv_changes[$gid."_".$GEDCOM] = array();
 		$pgv_changes[$gid."_".$GEDCOM][] = $change;
-	
+
 	if (userAutoAccept()) {
 		require_once("includes/functions_import.php");
 		accept_changes($gid."_".$GEDCOM);
@@ -320,7 +320,7 @@ function check_gedcom($gedrec, $chan=true) {
 
 	if ($USE_RTL_FUNCTIONS) {
 		//-- replace any added ltr processing codes
-//		$gedrec = preg_replace(array("/".html_entity_decode("&rlm;",ENT_COMPAT,"UTF-8")."/", "/".html_entity_decode("&lrm;",ENT_COMPAT,"UTF-8")."/"), array("",""), $gedrec);
+//		$gedrec = preg_replace(array("/".html_entity_decode(getRLM(),ENT_COMPAT,"UTF-8")."/", "/".html_entity_decode("&lrm;",ENT_COMPAT,"UTF-8")."/"), array("",""), $gedrec);
 		// Because of a bug in PHP 4, the above generates a run-time error message and does nothing.
 		// see:  http://bugs.php.net/bug.php?id=25670
 		// HTML entity &rlm; is the 3-byte UTF8 character 0xE2808F
@@ -388,7 +388,7 @@ function undo_change($cid, $index) {
 		if ($GEDCOM != $change["gedcom"]) {
 			$GEDCOM = $change["gedcom"];
 		}
-		
+
 		if ($index==0) unset($pgv_changes[$cid]);
 		else {
 			for($i=$index; $i<count($pgv_changes[$cid]); $i++) {
@@ -551,7 +551,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		if (empty($name_fields['NICK']) && !empty($name_bits[6]))
 			$name_fields['NICK']=$name_bits[6];
 	}
-	
+
 	// Edit the standard name fields
 	foreach($name_fields as $tag=>$value)
 		add_simple_tag("0 $tag $value");
@@ -712,7 +712,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	// Update the NAME and _MARNM fields from the name components
 	// and also display the value in read-only "gedcom" format.
 	function updatewholename() {
-		// Update NAME field from components and display it 
+		// Update NAME field from components and display it
 		var frm =document.forms[0];
 		var npfx=frm.NPFX.value;
 		var givn=frm.GIVN.value;
@@ -723,7 +723,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		document.getElementById('NAME_display').innerHTML=frm.NAME.value;
 		// Married names inherit some NSFX values, but not these
 		nsfx=nsfx.replace(/^(I|II|III|IV|V|VI|Junior|Jr\.?|Senior|Sr\.?)$/i, '');
-		// Update _MARNM field from _MARNM_SURN field and display it 
+		// Update _MARNM field from _MARNM_SURN field and display it
 		// Be careful of mixing latin/hebrew/etc. character sets.
 		var ip=document.getElementsByTagName('input');
 		var marnm_id='';
@@ -1274,9 +1274,9 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		if ($fact=="ASSO" and $value) print " ".PrintReady(get_person_name($value))." (".$value.")";
 		if ($fact=="SOUR" and $value) print " ".PrintReady(get_source_descriptor($value))." (".$value.")";
 	} else {
-		if ($fact=="DATE") print "&rlm;".get_changed_date($value)."&rlm;";
-		if ($fact=="ASSO" and $value) print " &rlm;".PrintReady(get_person_name($value))." (".$value.")&rlm;";
-		if ($fact=="SOUR" and $value) print " &rlm;".PrintReady(get_source_descriptor($value))."&rlm;&nbsp;&nbsp;&lrm(".$value.")&lrm;";
+		if ($fact=="DATE") print getRLM().get_changed_date($value).getRLM();
+		if ($fact=="ASSO" and $value) print " " . getRLM() . PrintReady(get_person_name($value))." (".$value.")" . getRLM();
+		if ($fact=="SOUR" and $value) print " " . getRLM() .PrintReady(get_source_descriptor($value)). getRLM() . "&nbsp;&nbsp;" . getLRM() . "(".$value.")" . getLRM();
 	}
 
 	// pastable values
@@ -1646,7 +1646,7 @@ function linkMedia($mediaid, $linktoid, $level=1) {
 	//-- check if we are re-editing an unaccepted link that is not already in the DB
 	$ct = preg_match("/1 OBJE @$mediaid@/", $gedrec);
 	if ($ct>0) return false;
-	
+
 	if ($gedrec) {
 		// Changed to match format of all other data adds.
 		//$mediarec = "1 OBJE @".$mediaid."@\r\n";
@@ -1918,7 +1918,7 @@ function delete_person($pid, $gedrec='') {
 	global $pgv_lang, $GEDCOM;
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
-	
+
 	if (empty($gedrec)) $gedrec = find_person_record($pid);
 	if (!empty($gedrec)) {
 		$success = true;

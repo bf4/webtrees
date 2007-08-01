@@ -1119,9 +1119,9 @@ if (check_media_structure()) {
 			for($i=0; $i<count($levels)-2; $i++) $pdir.=$levels[$i]."/";
 
 			$uplink = "<a href=\"media.php?directory=".rawurlencode($pdir)."&amp;level=".($level-1).$thumbget."\">";
-			if ($TEXT_DIRECTION=="rtl") $uplink .= "&lrm;";
+			if ($TEXT_DIRECTION=="rtl") $uplink .= getLRM();
 			$uplink .= $pdir;
-			if ($TEXT_DIRECTION=="rtl") $uplink .= "&lrm;";
+			if ($TEXT_DIRECTION=="rtl") $uplink .= getLRM();
 			$uplink .= "</a>\n";
 
 			$uplink2 = "<a href=\"media.php?directory=".rawurlencode($pdir)."&amp;level=".($level-1).$thumbget."\"><img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/";
@@ -1160,9 +1160,9 @@ if (check_media_structure()) {
 				print "<tr>";
 					print "<td class=\"descriptionbox $TEXT_DIRECTION\">";
 						print "<a href=\"media.php?directory=".rawurlencode($directory.$dir."/")."&amp;level=".($level+1).$thumbget."\">";
-						if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+						if ($TEXT_DIRECTION=="rtl") print getRLM();
 						print $dir;
-						if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+						if ($TEXT_DIRECTION=="rtl") print getRLM();
 						print "</a>";
 					print "</td>";
 					print "<td class=\"optionbox $TEXT_DIRECTION width10\">";
@@ -1244,12 +1244,12 @@ if (check_media_structure()) {
 								print "showmediaform&amp;filename=".rawurlencode($media["FILE"])."&amp;linktoid=new";
 							}
 							print "', '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["edit"]."</a><br />";
-							
+
 							// Edit Raw
 							if ($media["XREF"] != "") {
 								print "<a href=\"javascript:".$pgv_lang["edit_raw"]."\" onclick=\"return edit_raw('".$media['XREF']."');\">".$pgv_lang['edit_raw']."</a><br />\n";
 							}
-							
+
 							// Delete File
 							// 		don't delete external files
 							//		don't delete files linked to more than 1 object
@@ -1329,9 +1329,9 @@ if (check_media_structure()) {
     					} else {
 							if ($media["TITL"]!="") print "<b>".PrintReady($media["TITL"])."</b>&nbsp;&nbsp;&nbsp;";
 							if (!empty($media["XREF"])) {
-								if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+								if ($TEXT_DIRECTION=="rtl") print getRLM();
 								print "(".$media["XREF"].")";
-								if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+								if ($TEXT_DIRECTION=="rtl") print getRLM();
 								print "<br />";
 							}
 						}

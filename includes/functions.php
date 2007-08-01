@@ -112,7 +112,7 @@ function check_db($ignore_previous=false) {
  */
 function get_config_file($ged="") {
 	global $GEDCOMS, $GEDCOM;
-	
+
 	if (empty($ged)) $ged = $GEDCOM;
 	$config = "config_gedcom.php";
 	if (count($GEDCOMS)==0) {
@@ -500,7 +500,7 @@ function get_all_subrecords($gedrec, $ignore="", $families=true, $sort=true, $Ap
 	if ($gt > 0) {
 		$id = $gmatch[1];
 	}
-	
+
 	$hasResn = strstr($gedrec, " RESN ");
 	$prev_tags = array();
 	$ct = preg_match_all("/\n1 (\w+)(.*)/", $gedrec, $match, PREG_SET_ORDER|PREG_OFFSET_CAPTURE);
@@ -936,7 +936,7 @@ function find_updated_record($gid, $gedfile="") {
 
 	//-- if auto accept is on, the record is probably in the DB
 	if (userAutoAccept()) return find_gedcom_record($gid);
-	
+
 	if (isset($pgv_changes[$gid."_".$gedfile])) {
 		$change = end($pgv_changes[$gid."_".$gedfile]);
 		return $change['undo'];
@@ -1116,7 +1116,7 @@ function generate_thumbnail($filename, $thumbnail) {
 		mkdir(filename_decode($MEDIA_DIRECTORY."thumbs/urls"), 0777);
 		AddToLog("Folder ".$MEDIA_DIRECTORY."thumbs/urls created.");
 	}
-	if (!is_writable(filename_decode($MEDIA_DIRECTORY."thumbs/urls"))) return false; 
+	if (!is_writable(filename_decode($MEDIA_DIRECTORY."thumbs/urls"))) return false;
 */
 
 	$ext = "";
@@ -1566,7 +1566,7 @@ function compare_facts_type($arec, $brec) {
 		$arec = $arec[1];
 	if (is_array($brec))
 		$brec = $brec[1];
-	
+
 	// Facts from different families stay grouped together
 	if (preg_match('/_PGVFS @(\w+)@/', $arec, $match1) && preg_match('/_PGVFS @(\w+)@/', $brec, $match2) && $match1[1]!=$match2[1])
 		return 0;
@@ -1584,20 +1584,20 @@ function compare_facts_type($arec, $brec) {
 
 	if (!is_array($factsort))
 		$factsort = array_flip(array(
-			"BIRT", 
+			"BIRT",
 			"_HNM",
-			"ALIA", "_AKA", "_AKAN", 
+			"ALIA", "_AKA", "_AKAN",
 			"ADOP", "_ADPF", "_ADPF",
 			"_BRTM",
-			"CHR", "BAPM", 
+			"CHR", "BAPM",
 			"FCOM",
 			"CONF",
-			"BARM", "BASM",  
+			"BARM", "BASM",
 			"EDUC",
 			"GRAD",
 			"_DEG",
-			"EMIG", "IMMI", 
-			"NATU", 
+			"EMIG", "IMMI",
+			"NATU",
 			"_MILI", "_MILT",
 			"ENGA",
 			"MARB", "MARC", "MARL", "_MARI", "_MBON",
@@ -1607,14 +1607,14 @@ function compare_facts_type($arec, $brec) {
 			"DIVF",
 			"MARS",
 			"_BIRT_CHIL",
-			"DIV", "ANUL", 
+			"DIV", "ANUL",
 			"_BIRT_", "_MARR_", "_DEAT_",
 			"CENS",
-			"OCCU", 
-			"RESI", 
+			"OCCU",
+			"RESI",
 			"PROP",
 			"CHRA",
-			"RETI", 
+			"RETI",
 			"FACT", "EVEN",
 			"_NMR", "_NMAR", "NMR",
 			"NCHI",
@@ -1634,7 +1634,7 @@ function compare_facts_type($arec, $brec) {
 			"RELI",
 			"SSN", "IDNO",
 			"TEMP",
-			"SLGC", "BAPL", "CONL", "ENDL", "SLGS", 
+			"SLGC", "BAPL", "CONL", "ENDL", "SLGS",
 			"AFN", "REFN", "_PRMN", "REF", "RIN",
 			"ADDR", "PHON", "EMAIL", "_EMAIL", "EMAL", "FAX", "WWW", "URL", "_URL",
 			"CHAN"
@@ -2168,7 +2168,7 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
  */
 function write_changes() {
 	global $GEDCOMS, $GEDCOM, $pgv_changes, $INDEX_DIRECTORY, $CONTACT_EMAIL, $LAST_CHANGE_EMAIL;
-	
+
 	//-- only allow 1 thread to write changes at a time
 	$mutex = new Mutex("pgv_changes");
 	$mutex->Wait();
@@ -2207,10 +2207,10 @@ function write_changes() {
 		return false;
 	}
 	fclose($fp);
-	
+
 	//-- release the mutex acquired above
 	$mutex->Release();
-	
+
  	if (!empty($COMMIT_COMMAND)) {
 		$logline = AddToLog("pgv_changes.php updated by >".getUserName()."<");
  		check_in($logline, "pgv_changes.php", $INDEX_DIRECTORY);
@@ -2374,7 +2374,7 @@ function get_calendar_fact($factrec, $action, $filterof, $pid, $filterev="all") 
 					$text .= " (" . str_replace("#year_var#", $age, $pgv_lang["year_anniversary"]).")";
 				}
  				if($TEXT_DIRECTION == "rtl"){
- 					$text .= "&lrm;";
+ 					$text .= getLRM();
  				}
 			}
 			if (($action=='today')||($action=='year')) {
@@ -2886,7 +2886,7 @@ function CheckPageViews() {
 	global $SEARCH_SPIDER, $MAX_VIEWS, $MAX_VIEW_TIME;
 
 	if ($MAX_VIEW_TIME == 0 || $MAX_VIEWS == 0 || !empty($SEARCH_SPIDER)) return;
-	
+
 	if (!empty($_SESSION["pageviews"]["time"]) && !empty($_SESSION["pageviews"]["number"])) {
 		$_SESSION["pageviews"]["number"] ++;
 		if ($_SESSION["pageviews"]["number"] < $MAX_VIEWS) return;
@@ -2974,7 +2974,7 @@ function get_new_xref($type='INDI', $use_cache=false) {
 		$num++;
 		$key = $prefix.$num;
 	}
-	
+
 	//-- during the import we won't update the database at this time so return now
 	if ($use_cache && isset($MAX_IDS[$type])) {
 		return $key;
@@ -3161,7 +3161,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 		}
 
 		$goodDB = check_db();
-		
+
 		// load admin lang keys
 		$file = $adminfile[$LANGUAGE];
 		if (file_exists($file)) {
@@ -3176,7 +3176,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 				include($file);
 			}
 		}
-		// load the extra language file 
+		// load the extra language file
 		$file = "./languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
 		if (file_exists($file)) {
 			include($file);
