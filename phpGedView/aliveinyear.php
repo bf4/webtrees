@@ -330,7 +330,7 @@ else if (($surname_sublist=="yes")&&(empty($surname))&&($show_all=="no")) {
 
 	foreach($surnames as $surname=>$namecount) {
 		if (begRTLText($namecount["name"])) {
- 			print "<div class =\"rtl\" dir=\"rtl\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".$alpha."&amp;surname_sublist=$surname_sublist&amp;surname=".urlencode($namecount["name"])."\">&nbsp;".PrintReady($namecount["name"]) . getRLM() . " - [".($namecount["match"])."]" getRLM();
+ 			print "<div class =\"rtl\" dir=\"rtl\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".$alpha."&amp;surname_sublist=$surname_sublist&amp;surname=".urlencode($namecount["name"])."\">&nbsp;".PrintReady($namecount["name"]) . getRLM() . " - [".($namecount["match"])."]" . getRLM();
 		}
 		else if (substr($namecount["name"], 0, 5) == "@N.N.") {
 			print "<div class =\"ltr\" dir=\"ltr\">&nbsp;<a href=\"aliveinyear.php?year=$year&amp;alpha=".$namecount["alpha"]."&amp;surname_sublist=$surname_sublist&amp;surname=@N.N.\">&nbsp;".$pgv_lang["NN"] . getLRM() . " - [".($namecount["match"])."]" . getLRM() . "&nbsp;";

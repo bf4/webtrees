@@ -288,7 +288,7 @@ if (($surname_sublist=="yes")&&($show_all=="yes")) {
 		else if (substr(trim($namecount["name"]), 0, 4) == "@N.N") {
 			print "<div class =\"ltr\"><a href=\"patriarchlist.php?alpha=".$namecount["alpha"]."&amp;surname_sublist=$surname_sublist&amp;surname=@N.N.\">".$pgv_lang["NN"]." - " . getLRM() . "[".($namecount["match"])."]" . getLRM();
 		}
-		else print "<div class =\"ltr\"><a href=\"patriarchlist.php?alpha=".$namecount["alpha"]."&amp;surname_sublist=$surname_sublist&amp;surname=".$namecount["name"]."\">".$namecount["name"]." - " . getLRM() ."[".($namecount["match"])."]" getLRM();
+		else print "<div class =\"ltr\"><a href=\"patriarchlist.php?alpha=".$namecount["alpha"]."&amp;surname_sublist=$surname_sublist&amp;surname=".$namecount["name"]."\">".$namecount["name"]." - " . getLRM() ."[".($namecount["match"])."]" . getLRM();
 		print "</a></div>\n";
 		$count_indi += $namecount["match"];
 		$i++;
