@@ -4,7 +4,7 @@ $menubar = new MenuBar();
 $username = getUserName();
 $user = getUser($username);
 ?>
-<div id="header" class="<?php print $TEXT_DIRECTION; ?>">
+<div id="header" style=" z-index: 50;" class="<?php print $TEXT_DIRECTION; ?>">
 <table width="100%">
 	<tr>
 		<td>
