@@ -88,10 +88,22 @@ function useRTLFunctions() {
 	return $USE_RTL_FUNCTIONS;
 }
 
+/**
+ * this function returns "&lrm;" if the gedcom config $USE_RTL_FUNCTIONS is set to true.
+ * This is intended to cut down on extra &lrm; entries that have no use for users who do not need
+ * RTL functionality.
+ * @return "" if $USE_RTL_FUNCTIONS is false and  "&lrm;" if true.
+ */
 function getLRM(){
 	return  !useRTLFunctions() ? "" : "&lrm;";
 }
 
+/**
+ * this function returns "&rlm;" if the gedcom config $USE_RTL_FUNCTIONS is set to true.
+ * This is intended to cut down on extra &rlm; entries that have no use for users who do not need
+ * RTL functionality.
+ * @return "" if $USE_RTL_FUNCTIONS is false and  "&rlm;" if true.
+ */
 function getRLM(){
 	return  !useRTLFunctions() ? "" : "&rlm;";
 }
