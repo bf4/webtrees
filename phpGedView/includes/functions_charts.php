@@ -354,7 +354,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 						if ($famid) {
 							print "<br />";
 							print "<a class=\"details1\" href=\"family.php?famid=$famid\">";
-							if ($SHOW_ID_NUMBERS) print getLRM() . "($famid)&nbsp;" . getLRM();
+							if ($SHOW_ID_NUMBERS) print getLRM() . "&nbsp;($famid)&nbsp;" . getLRM();
 							print "</a>";
 						}
 						print "</td>\n";
