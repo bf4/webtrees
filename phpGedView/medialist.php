@@ -324,7 +324,7 @@ if ($ct>0){
 		}
 
 			if($imgsize[2]!==false){
-		    	print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?" " . getRLM() . "x" . getRLM() " : " x ") . $imgsize[1] . "</span>";
+		    	print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM() . " ") : " x ") . $imgsize[1] . "</span>";
 			}
 
 	    print "</td></tr></table>\n";
