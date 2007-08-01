@@ -288,9 +288,9 @@ else if ($type=="FAM") {
 }
 else if ($type=="SOUR") {
 	print "<b>".PrintReady(get_source_descriptor($pid))."&nbsp;&nbsp;&nbsp;";
-	if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+	if ($TEXT_DIRECTION=="rtl") print getRLM();
 	print "(".$pid.")";
-	if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+	if ($TEXT_DIRECTION=="rtl") print getRLM();
 	print "</b><br />";
 }
 if (strstr($action,"addchild")) {
@@ -664,7 +664,7 @@ case 'addnewsource':
 			<tr><td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width25"><?php print_help_link("edit_CALN_help", "qm"); print $factarray["CALN"]; ?></td>
 			<td class="optionbox wrap"><input tabindex="<?php print $tabkey; ?>" type="text" name="CALN" id="CALN" value="" /></td></tr>
 		</table>
-			<?php print_help_link("edit_SOUR_EVEN_help", "qm"); ?><a href="#"  onclick="return expand_layer('events');"><img id="events_img" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"];?>" border="0" width="11" height="11" alt="" title="" /> 
+			<?php print_help_link("edit_SOUR_EVEN_help", "qm"); ?><a href="#"  onclick="return expand_layer('events');"><img id="events_img" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"];?>" border="0" width="11" height="11" alt="" title="" />
 			<?php print $pgv_lang["source_events"]; ?></a>
 			<div id="events" style="display: none;">
 			<table class="facts_table">
@@ -904,7 +904,7 @@ case 'update':
 
 	//-- Refer to Bug [ 1329644 ] Add Married Name - Wrong Sequence
 	$newged = handle_updates($newged);
-	
+
 	if (!empty($ROMN)) $newged .= "2 ROMN $ROMN\r\n";
 	if (!empty($FONE)) $newged .= "2 FONE $FONE\r\n";
 	if (!empty($_AKA)) $newged .= "2 _AKA $_AKA\r\n";

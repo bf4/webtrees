@@ -713,8 +713,8 @@ if (($action == "listusers") || ($action == "edituser2") || ($action == "deleteu
 		else print "\t<td class=\"optionbox wrap\">".$username;
 		if (!empty($user["comment"])) print "<br /><img class=\"adminicon\" align=\"top\" alt=\"".PrintReady(stripslashes($user["comment"]))."\"  title=\"".PrintReady(stripslashes($user["comment"]))."\"  src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\">";
 		print "</td>\n";
-		if ($TEXT_DIRECTION=="ltr") print "\t<td class=\"optionbox wrap\">".$user["firstname"]." ".$user["lastname"]."&lrm;</td>\n";
-		else                        print "\t<td class=\"optionbox wrap\">".$user["firstname"]." ".$user["lastname"]."&rlm;</td>\n";
+		if ($TEXT_DIRECTION=="ltr") print "\t<td class=\"optionbox wrap\">".$user["firstname"]." ".$user["lastname"]. getLRM() . "</td>\n";
+		else                        print "\t<td class=\"optionbox wrap\">".$user["firstname"]." ".$user["lastname"]. getRLM() . "</td>\n";
 		print "\t<td class=\"optionbox wrap\">".$pgv_lang["lang_name_".$user["language"]]."<br /><img src=\"".$language_settings[$user["language"]]["flagsfile"]."\" class=\"brightflag\" alt=\"".$pgv_lang["lang_name_".$user["language"]]."\" title=\"".$pgv_lang["lang_name_".$user["language"]]."\" /></td>\n";
 		print "\t<td class=\"optionbox\">";
 		print "<a href=\"javascript: ".$pgv_lang["privileges"]."\" onclick=\"expand_layer('user-geds".$k."'); return false;\"><img id=\"user-geds".$k."_img\" src=\"".$PGV_IMAGE_DIR."/";

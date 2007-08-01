@@ -33,38 +33,38 @@ if ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel()) {
 	if (file_exists("modules/research_assistant/languages/lang.en.php")) require_once("modules/research_assistant/languages/lang.en.php");
 	if (file_exists("modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php")) require_once("modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php");
 	if (file_exists('modules/research_assistant/research_assistant.php')) include_once('modules/research_assistant/research_assistant.php');
-	
+
 	$PGV_BLOCKS["print_mytasks"]["name"]		= $pgv_lang["mytasks_block"];
 	$PGV_BLOCKS["print_mytasks"]["descr"]		= "mytasks_block_descr";
 	$PGV_BLOCKS["print_mytasks"]["canconfig"]	= true;
 	$PGV_BLOCKS["print_mytasks"]['config']		= array(
 		"cache"=>0,
-		"unassigned"=>"no", 
+		"unassigned"=>"no",
 		"completed" => "no"
 		);
-	
+
 	//-- print user messages
 	function print_mytasks($block=true, $config="", $side, $index) {
 			global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $TIME_FORMAT, $PGV_STORE_MESSAGES, $PGV_IMAGES, $usersortfields;
 			global $TBLPREFIX, $PGV_BLOCKS, $ctype, $GEDCOM;
-			
+
 			if (empty($config)) $config = $PGV_BLOCKS["print_mytasks"]["config"];
 	  		if (isset($config["unassigned"])) $unassigned = $config["unassigned"];  // "yes" or "no"
 	  		else $filter = "no";
 	  		if (isset($config["completed"])) $completed = $config["completed"];  // "yes" or "no"
 	  		else $completed = "no";
-	  		
+
 		   	$mod = new ra_functions();
 		   	$mod->init();
 			$userName = getUserName();
-			
+
 			//USERS CURRENT TASKS
 			$sql =	"Select * From " .$TBLPREFIX. "tasks where t_username ='".$userName."' AND t_enddate IS NULL";
 			$res = dbquery($sql);
 			$out = "<table class='list_table'><tr><th class='descriptionbox'>".$pgv_lang["Task_Name"]."</th><th class='descriptionbox'>".$pgv_lang["Start_Date"]."</th><th class='descriptionbox'>".$pgv_lang["edit"]."</th></tr>";
 			while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 				$task = db_cleanup($task);
-				
+
 				$tasktitle = '<a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'">'.$task['t_title'].'</a>';
 				$out .= '<tr><td>'.PrintReady($tasktitle).'</td><td>'.get_changed_date(date("d M Y",$task["t_startdate"]));
 				$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a>';
@@ -72,7 +72,7 @@ if ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel()) {
 				}
 			$out .= '</table>';
 			$res->numRows();
-			
+
 			//USERS COMPLETED TASKS
 			if($completed =="yes"){
 			$sql = "Select * From " .$TBLPREFIX. "tasks where t_username ='".$userName."' and t_enddate is NOT NULL";
@@ -88,7 +88,7 @@ if ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel()) {
 			$out .= '</table>';
 			$res->numRows();
 			}
-			
+
 			//UNASSIGNED TASKS
 			if($unassigned =="yes")
 			{
@@ -105,7 +105,7 @@ if ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel()) {
 				$out .= '</table>';
 				$res->numRows();
 			}
-					
+
 	// Print heading
 			if(getUserName())
 			{
@@ -114,7 +114,7 @@ if ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel()) {
 			print "<td class=\"blockh1\" >&nbsp;</td>";
 			print "<td class=\"blockh2\" ><div class=\"blockhc\">";
 			print_help_link("mytasks_help", "qm");
-			
+
 			if ($PGV_BLOCKS["print_mytasks"]["canconfig"]) {
 	    		$username = getUserName();
 	    		if ((($ctype=="gedcom")&&(userGedcomAdmin($username))) || (($ctype=="user")&&(!empty($username)))) {
@@ -124,25 +124,25 @@ if ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel()) {
 	      		print "<img class=\"adminicon\" src=\"$PGV_IMAGE_DIR/".$PGV_IMAGES["admin"]["small"]."\" width=\"15\" height=\"15\" border=\"0\" alt=\"".$pgv_lang["config_block"]."\" /></a>\n";
 	   			 }
 			}
-			
+
 			print "<b>".$pgv_lang["my_tasks"]."&nbsp;&nbsp;</b>";
-			if ($TEXT_DIRECTION=="rtl") print "&rlm;"; 
-	//Print Tasks	
+			if ($TEXT_DIRECTION=="rtl") print getRLM();
+	//Print Tasks
 			print "<td class=\"blockh3\"></td></tr></table>\n";
-			
+
 			print "<div class=\"blockcontent\">";
 			print $out;
 			print "</div></div>";
-			
+
 			}
 	}
-	
+
 	function print_mytasks_config($config) {
 		global $pgv_lang, $PGV_BLOCKS, $TEXT_DIRECTION;
 		if (empty($config)) $config = $PGV_BLOCKS["print_mytasks"]["config"];
 		if (!isset($config["unassigned"])) $config["unassigned"] = "no";
 		if (!isset($config["completed"])) $config["completed"] = "no";
-	
+
 		print "<tr><td class=\"descriptionbox wrap width33\">".$pgv_lang["mytask_show_tasks"]."</td>";?>
 		<td class="optionbox">
 	   	<select name="unassigned">
@@ -150,7 +150,7 @@ if ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel()) {
 	    	<option value="yes"<?php if ($config["unassigned"]=="yes") print " selected=\"selected\"";?>><?php print $pgv_lang["yes"]; ?></option>
 	  	</select>
 	  	</td></tr>
-	
+
 	  	<?php
 	  	print "<tr><td class=\"descriptionbox wrap width33\">".$pgv_lang["mytask_show_completed"]."</td>";?>
 	  	<td class="optionbox">

@@ -91,7 +91,7 @@ if (($action=="setdefault") && isset($default_ged)) {
 		fwrite($fp, $configtext);
 		fclose($fp);
 		$logline = AddToLog("gedcoms.php updated by >".getUserName()."<");
- 		if (!empty($COMMIT_COMMAND)) check_in($logline, "gedcoms.php", $INDEX_DIRECTORY);	
+ 		if (!empty($COMMIT_COMMAND)) check_in($logline, "gedcoms.php", $INDEX_DIRECTORY);
 	}
 }
 
@@ -167,8 +167,8 @@ $GedCount = 0;
 			print "<td colspan=\"5\" class=\"list_value_wrap\">";
 			if ($DEFAULT_GEDCOM==$gedc) print "<span class=\"label\">";
 			print PrintReady($gedarray["title"])."&nbsp;&nbsp;";
-			if ($TEXT_DIRECTION=="rtl") print "&rlm;(".$gedarray["id"].")&rlm;";
-			else print "&lrm;(".$gedarray["id"].")&lrm;";
+			if ($TEXT_DIRECTION=="rtl") print getRLM() . "(".$gedarray["id"].")" . getRLM();
+			else print getLRM() . "(".$gedarray["id"].")" . getLRM();
 			if ($DEFAULT_GEDCOM==$gedc) print "</span>";
 			print "&nbsp;&nbsp;<a href=\"editconfig_gedcom.php?source=replace_form&amp;path=".urlencode($gedarray['path'])."\">".$pgv_lang['upload_replacement']."</a>\n";
 			print "</td>";
@@ -184,7 +184,7 @@ $GedCount = 0;
 			print "<td valign=\"top\">";		// Column 2 (file name & notices)
 			if (file_exists($gedarray["path"])) {
 				if ($TEXT_DIRECTION=="ltr") print $gedarray["path"]." (";
-				else print "&lrm;".$gedarray["path"]." &rlm;(";
+				else print getLRM() . $gedarray["path"]." " . getRLM() . "(";
 				printf("%.2fKb", (filesize($gedarray["path"])/1024));
 				print ")";
 				/** deactivate [ 1573749 ]
@@ -236,7 +236,7 @@ $GedCount = 0;
 			print "</td>";
 
 			print "<td valign=\"top\">";		// Column 2  (file name & notices)
-			print "&lrm;".$gedarray["config"];
+			print getLRM() . $gedarray["config"];
 			print "</td>";
 
 			print "<td valign=\"top\">";		// Column 3  (Edit action)
@@ -255,7 +255,7 @@ $GedCount = 0;
 			print "</td>";
 
 			print "<td valign=\"top\">";		// Column 2  (file name & notices)
-			print "&lrm;".$gedarray["privacy"];
+			print getLRM() . $gedarray["privacy"];
 			print "</td>";
 
 			print "<td valign=\"top\">";		// Column 3  (Edit action)
@@ -277,10 +277,10 @@ $GedCount = 0;
 			if (file_exists($gedarray["config"])) require($gedarray["config"]);
 			print "<td valign=\"top\">";		// Column 2  (notices)
 			if (!isset($SEARCHLOG_CREATE)) {
-				print "&lrm;".$pgv_lang["none"];
+				print getLRM() . $pgv_lang["none"];
 			}
 			else {
-				print "&lrm;".$pgv_lang[$SEARCHLOG_CREATE];
+				print getLRM() . $pgv_lang[$SEARCHLOG_CREATE];
 			}
 			print "</td>";
 
@@ -329,10 +329,10 @@ $GedCount = 0;
 			if (file_exists($gedarray["config"])) require($gedarray["config"]);
 			print "<td valign=\"top\">";		// Column 2  (notices)
 			if (!isset($CHANGELOG_CREATE)) {
-				print "&lrm;".$pgv_lang["none"];
+				print getLRM() . $pgv_lang["none"];
 			}
 			else {
-				print "&lrm;".$pgv_lang[$CHANGELOG_CREATE];
+				print getLRM() . $pgv_lang[$CHANGELOG_CREATE];
 			}
 			print "</td>";
 

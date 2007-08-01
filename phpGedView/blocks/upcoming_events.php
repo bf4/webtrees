@@ -32,10 +32,10 @@ $PGV_BLOCKS["print_upcoming_events"]["infoStyle"]	= "style2";
 $PGV_BLOCKS["print_upcoming_events"]["canconfig"]	= true;
 $PGV_BLOCKS["print_upcoming_events"]["config"]		= array(
 	"cache"=>1,
-	"days"=>30, 
-	"filter"=>"all", 
-	"onlyBDM"=>"no", 
-	"infoStyle"=>"style2", 
+	"days"=>30,
+	"filter"=>"all",
+	"onlyBDM"=>"no",
+	"infoStyle"=>"style2",
 	"allowDownload"=>"yes"
 	);
 
@@ -60,12 +60,12 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
   else $infoStyle = "style2";
   if (isset($config["allowDownload"])) $allowDownload = $config["allowDownload"];	// "yes" or "no"
   else $allowDownload = "yes";
-  
+
   // Don't permit calendar download if not logged in
   $username = getUserName();
   if (empty($username)) $allowDownload = "no";
 
-  
+
   if ($daysprint < 1) $daysprint = 1;
   if ($daysprint > $DAYS_TO_SHOW_LIMIT) $daysprint = $DAYS_TO_SHOW_LIMIT;  // valid: 1 to limit
 
@@ -93,17 +93,17 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
   print "</table>";
   print "<div class=\"blockcontent\" >";
   if ($block) print "<div class=\"small_inner_block\">\n";
-  
-  
+
+
   // Output style 1:  Old format, no visible tables, much smaller text.  Better suited to right side of page.
   if ($infoStyle=="style1") {
 	$OutputDone = false;
 	$PrivateFacts = false;
 	$lastgid="";
-	
+
 	$dateRangeStart=mktime( 0, 0, 0)+86400;
 	$dateRangeEnd  =mktime(23,59,59)+86400*$daysprint;
-	
+
 	foreach($found_facts as $key=>$factarray) {
 	  $anniversaryDate = $factarray[3];
 	  if ($anniversaryDate>=$dateRangeStart && $anniversaryDate<=$dateRangeEnd) {
@@ -138,9 +138,9 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 	                print "\" class=\"gender_image\" />";
 	                if ($SHOW_ID_NUMBERS) {
 		                  print "&nbsp;";
-		                  if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+		                  if ($TEXT_DIRECTION=="rtl") print getRLM();
 		                  print "(".$gid.")";
-		                  if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+		                  if ($TEXT_DIRECTION=="rtl") print getRLM();
 	                }
 	                print "</a><br />\n";
 	                $lastgid=$gid;
@@ -154,11 +154,11 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 	        }
 	      }
 	    }
-	
+
 	    if ($factarray[2]=="FAM") {
 	      $gid = $factarray[0];
 	      $factrec = $factarray[1];
-	
+
 	      $disp = true;
 	      if ($filter=="living") {
 	        $parents = find_parents($gid);
@@ -195,9 +195,9 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 	                print "<a href=\"family.php?famid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
 	                if ($SHOW_ID_NUMBERS) {
 		                  print "&nbsp;";
-		                  if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+		                  if ($TEXT_DIRECTION=="rtl") print getRLM();
 		                  print "(".$gid.")";
-		                  if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+		                  if ($TEXT_DIRECTION=="rtl") print getRLM();
 	                }
 	                print "</a><br />\n";
 	                $lastgid=$gid;
@@ -213,7 +213,7 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 	    }
 	  }
 	}
-	
+
 	if ($PrivateFacts) {    // Facts were found but not printed for some reason
 	  $pgv_lang["global_num1"] = $daysprint;
 	  $Advisory = "no_events_privacy";
@@ -232,7 +232,7 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 	}
   }
 
-	
+
   // Style 2: New format, tables, big text, etc.  Not too good on right side of page
   if ($infoStyle=="style2") {
 	$option = "";
@@ -305,7 +305,7 @@ function print_upcoming_events_config($config) {
     	<option value="style2"<?php if ($config["infoStyle"]=="style2") print " selected=\"selected\"";?>><?php print $pgv_lang["style2"]; ?></option>
   	</select>
 	</td></tr>
- 
+
   	<tr><td class="descriptionbox wrap width33">
   	<?php
  	print_help_link("cal_dowload_help", "qm");

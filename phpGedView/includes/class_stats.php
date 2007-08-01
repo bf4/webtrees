@@ -446,7 +446,7 @@ class stats
 		{
 			if($listDir == 'rtl')
 			{
-				$id = "&nbsp;&nbsp;&rlm;({$row['d_gid']})&rlm;";
+				$id = "&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
 			}
 			else
 			{
@@ -501,7 +501,7 @@ class stats
 		{
 			if($listDir == 'rtl')
 			{
-				$id = "&nbsp;&nbsp;&rlm;({$row['d_gid']})&rlm;";
+				$id = "&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
 			}
 			else
 			{
@@ -560,7 +560,7 @@ class stats
 		{
 			if($listDir == 'rtl')
 			{
-				$id = "&nbsp;&nbsp;&rlm;({$row['d_gid']})&rlm;";
+				$id = "&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
 			}
 			else
 			{
@@ -615,7 +615,7 @@ class stats
 		{
 			if($listDir == 'rtl')
 			{
-				$id = "&nbsp;&nbsp;&rlm;({$row['d_gid']})&rlm;";
+				$id = "&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
 			}
 			else
 			{
@@ -676,7 +676,7 @@ class stats
 		{
 			if($listDir == 'rtl')
 			{
-				$id = "&nbsp;&nbsp;&rlm;({$row['d_gid']})&rlm;";
+				$id = "&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
 			}
 			else
 			{
@@ -757,7 +757,7 @@ class stats
 		{
 			if($listDir == 'rtl')
 			{
-				$id = "&nbsp;&nbsp;&rlm;({$row['d_gid']})&rlm;";
+				$id = "&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
 			}
 			else
 			{
@@ -838,7 +838,7 @@ class stats
 		{
 			if($listDir == 'rtl')
 			{
-				$id = "&nbsp;&nbsp;&rlm;({$row['d_gid']})&rlm;";
+				$id = "&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
 			}
 			else
 			{
@@ -931,7 +931,7 @@ class stats
 		{
 			if($listDir == 'rtl')
 			{
-				$id = "&nbsp;&nbsp;&rlm;({$row['d_gid']})&rlm;";
+				$id = "&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
 			}
 			else
 			{
@@ -995,7 +995,7 @@ class stats
 		{
 			if($listDir == 'rtl')
 			{
-				$id = "&nbsp;&nbsp;&rlm;({$row['d_gid']})&rlm;";
+				$id = "&nbsp;&nbsp;" . getRLM() . "({$row['d_gid']})" . getRLM();
 			}
 			else
 			{

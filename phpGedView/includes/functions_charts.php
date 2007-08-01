@@ -47,7 +47,7 @@ function print_sosa_number($sosa, $pid = "", $arrowDirection = "up") {
 	if ($arrowDirection=="blank") $visibility = "hidden";
 	else $visibility = "normal";
 	print "<td class=\"subheaders center\" style=\"vertical-align: middle; text-indent: 0px; margin-top: 0px; white-space: nowrap; visibility: $visibility;\">";
-	print "&lrm;$personLabel&lrm;";
+	print getLRM() . $personLabel . getLRM();
 	if ($sosa != "1" && $pid != "") {
 		if ($arrowDirection=="left") $dir = 0;
 		else if ($arrowDirection=="right") $dir = 1;
@@ -183,7 +183,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 	// [ 1750674 ] Family.php, add MARR date, place to parents
 	//if ($sosa!=0) {
 		print "<a href=\"family.php?famid=$famid\" class=\"details1\">";
-		if ($SHOW_ID_NUMBERS) print "&lrm;($famid)&lrm;&nbsp;&nbsp;";
+		if ($SHOW_ID_NUMBERS) print getLRM() . "($famid)" . getLRM() . "&nbsp;&nbsp;";
 		else print str_repeat("&nbsp;", 10);
 		if (showFact("MARR", $famid)) print_simple_fact($family->getGedcomRecord(), "MARR", $wife->getXref()); else print $pgv_lang["private"];
 		print "</a>";
@@ -354,7 +354,7 @@ function print_family_children($famid, $childid = "", $sosa = 0, $label="", $per
 						if ($famid) {
 							print "<br />";
 							print "<a class=\"details1\" href=\"family.php?famid=$famid\">";
-							if ($SHOW_ID_NUMBERS) print "&lrm;&nbsp;($famid)&nbsp;&lrm;";
+							if ($SHOW_ID_NUMBERS) print getLRM() . "($famid)&nbsp;" . getLRM();
 							print "</a>";
 						}
 						print "</td>\n";

@@ -32,9 +32,9 @@ $PGV_BLOCKS["print_todays_events"]["infoStyle"]	= "style2";
 $PGV_BLOCKS["print_todays_events"]["canconfig"]	= true;
 $PGV_BLOCKS["print_todays_events"]["config"]	= array(
 	"cache"=>1,
-	"filter"=>"all", 
-	"onlyBDM"=>"no", 
-	"infoStyle"=>"style2", 
+	"filter"=>"all",
+	"onlyBDM"=>"no",
+	"infoStyle"=>"style2",
 	"allowDownload"=>"yes"
 	);
 
@@ -55,11 +55,11 @@ function print_todays_events($block=true, $config="", $side, $index) {
   else $infoStyle = "style2";
   if (isset($config["allowDownload"])) $allowDownload = $config["allowDownload"];	// "yes" or "no"
   else $allowDownload = "yes";
-  
+
   // Don't permit calendar download if not logged in
   $username = getUserName();
   if (empty($username)) $allowDownload = "no";
-  
+
 
   // Look for cached Facts data
   $found_facts = get_event_list();
@@ -87,17 +87,17 @@ function print_todays_events($block=true, $config="", $side, $index) {
 
   print "<div class=\"blockcontent\" >";
   if ($block) print "<div class=\"small_inner_block\">\n";
-  
-  
+
+
   // Output style 1:  Old format, no visible tables, much smaller text.  Better suited to right side of page.
   if ($infoStyle=="style1") {
 	$OutputDone = false;
 	$PrivateFacts = false;
 	$lastgid="";
-	
+
 	$dateRangeStart = mktime( 0, 0, 0);
 	$dateRangeEnd   = mktime(23,59,59);
-	
+
 	foreach($found_facts as $key=>$factarray) {
 	  $anniversaryDate = $factarray[3];
 	  if ($anniversaryDate>=$dateRangeStart && $anniversaryDate<=$dateRangeEnd) {
@@ -110,7 +110,7 @@ function print_todays_events($block=true, $config="", $side, $index) {
 	        $disp = false;
 	        $PrivateFacts = true;
 	      }
-	
+
 	      if ($disp) {
 	        $indirec = find_person_record($gid);
 	        if ($indirec) {
@@ -132,9 +132,9 @@ function print_todays_events($block=true, $config="", $side, $index) {
 	                print "\" class=\"gender_image\" />";
 	                if ($SHOW_ID_NUMBERS) {
 		                  print "&nbsp;";
-		                  if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+		                  if ($TEXT_DIRECTION=="rtl") print getRLM();
 		                  print "(".$gid.")";
-		                  if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+		                  if ($TEXT_DIRECTION=="rtl") print getRLM();
 	                }
 	                print "</a><br />\n";
 	                $lastgid=$gid;
@@ -148,11 +148,11 @@ function print_todays_events($block=true, $config="", $side, $index) {
 	        }
 	      }
 	    }
-	
+
 	    if ($factarray[2]=="FAM") {
 	      $gid = $factarray[0];
 	      $factrec = $factarray[1];
-	
+
 	      $disp = true;
 	      if ($filter=="living") {
 	        $parents = find_parents($gid);
@@ -173,7 +173,7 @@ function print_todays_events($block=true, $config="", $side, $index) {
 	        $disp = false;
 	        $PrivateFacts = true;
 	      }
-	
+
 	      if ($disp) {
 	        $famrec = find_family_record($gid);
 	        if ($famrec) {
@@ -221,7 +221,7 @@ function print_todays_events($block=true, $config="", $side, $index) {
 	  print "</b><br />";
 	}
   }
-  
+
   // Style 2: New format, tables, big text, etc.  Not too good on right side of page
   if ($infoStyle=="style2") {
 	$option = "";
@@ -245,7 +245,7 @@ function print_todays_events_config($config) {
 
 	?>
 	<tr><td class="descriptionbox wrap width33">
-	<?php 
+	<?php
 	print $pgv_lang["living_or_all"];
 	?>
 	</td><td class="optionbox">
@@ -256,7 +256,7 @@ function print_todays_events_config($config) {
   	</td></tr>
 
   	<tr><td class="descriptionbox wrap width33">
-  	<?php 
+  	<?php
   	print_help_link("basic_or_all_help", "qm");
   	print $pgv_lang["basic_or_all"];
   	?>
@@ -278,7 +278,7 @@ function print_todays_events_config($config) {
     	<option value="style2"<?php if ($config["infoStyle"]=="style2") print " selected=\"selected\"";?>><?php print $pgv_lang["style2"]; ?></option>
   	</select>
   	</td></tr>
- 
+
   	<tr><td class="descriptionbox wrap width33">
   	<?php
  	print_help_link("cal_dowload_help", "qm");

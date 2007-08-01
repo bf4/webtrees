@@ -418,11 +418,11 @@ if ($action=="update") {
 			else $$key=$value;
 		}
 	}
-	
+
 	//-- delete the cache files for the welcome page blocks
 	include_once("includes/index_cache.php");
 	clearCache();
-	
+
 	$logline = AddToLog("Gedcom configuration ".$INDEX_DIRECTORY.$FILE."_conf.php"." updated by >".getUserName()."<", $FILE);
  	$gedcomconfname = $FILE."_conf.php";
  	if (!empty($COMMIT_COMMAND)) check_in($logline, $gedcomconfname, $INDEX_DIRECTORY);
@@ -504,8 +504,8 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
     <td colspan="2" class="facts_label"><?php
     		print "<h2>".$pgv_lang["gedconf_head"]." - ";
 		if (isset($ged)) {
-//			if ($TEXT_DIRECTION=="rtl") print "&rlm;(".$GEDCOMS[$ged]["id"].")&nbsp;&rlm;";
-//			else print "&nbsp;&lrm;(".$GEDCOMS[$ged]["id"].")&lrm;";
+//			if ($TEXT_DIRECTION=="rtl") print getRLM() . "(".$GEDCOMS[$ged]["id"].")&nbsp;" . getRLM();
+//			else print "&nbsp;" . getLRM() . "(".$GEDCOMS[$ged]["id"].")" . getLRM();
 			print $GEDCOMS[$ged]["title"];
 		}
 		else if ($source == "add_form") print $pgv_lang["add_gedcom"];

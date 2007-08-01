@@ -1,6 +1,6 @@
 <?php
 /**
- * Print logfiles 
+ * Print logfiles
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2003  John Finlay and Others
@@ -67,11 +67,11 @@ if ($auth) {
 	$lines = array_reverse($lines);
 	$num = sizeof($lines);
 
-	// Print 
+	// Print
 	print "<table class=\"facts_table ".$TEXT_DIRECTION."\">";
-	
+
 	if (($logtype == "syslog") || ($logtype == "gedlog")) {
-		print "<tr><td colspan=\"3\" class=\"topbottombar\">".$pgv_lang["logfile_content"]." [&lrm;".$INDEX_DIRECTORY.$logfile."]</td></tr>";
+		print "<tr><td colspan=\"3\" class=\"topbottombar\">".$pgv_lang["logfile_content"]." [" . getLRM() .$INDEX_DIRECTORY.$logfile."]</td></tr>";
 		print "<tr><td colspan=\"3\" class=\"topbottombar\">";
 		print"<input type=\"button\" value=\"".$pgv_lang["back"]."\" onclick='self.close()';/>&nbsp;<input type=\"button\" value=\"".$pgv_lang["refresh"]."\" onclick='window.location.reload()';/></td></tr>";
 		print "<tr><td class=\"list_label width10\">".$pgv_lang["date_time"]."</td><td class=\"list_label width10\">".$pgv_lang["ip_address"]."</td><td class=\"list_label width80\">".$pgv_lang["log_message"]."</td></tr>";
@@ -94,7 +94,7 @@ if ($auth) {
 	}
 
 	if ($logtype == "searchlog") {
-		print "<tr><td colspan=\"6\" class=\"topbottombar\">".$pgv_lang["logfile_content"]." [&lrm;".$INDEX_DIRECTORY.$logfile."]</td></tr>";
+		print "<tr><td colspan=\"6\" class=\"topbottombar\">".$pgv_lang["logfile_content"]." [" . getLRM() ..$INDEX_DIRECTORY.$logfile."]</td></tr>";
 		print "<tr><td colspan=\"6\" class=\"topbottombar\">";
 		print"<input type=\"button\" value=\"".$pgv_lang["back"]."\" onclick='self.close()';/>&nbsp;<input type=\"button\" value=\"".$pgv_lang["refresh"]."\" onclick='window.location.reload()';/></td></tr>";
 		print "<tr><td class=\"list_label width10\">".$pgv_lang["date_time"]."</td><td class=\"list_label width10\">".$pgv_lang["ip_address"]."</td><td class=\"list_label width10\">".$pgv_lang["user_name"]."</td><td class=\"list_label width10\">".$pgv_lang["searchtype"]."</td><td class=\"list_label width10\">".$pgv_lang["type"]."</td><td class=\"list_label width50\">".$pgv_lang["query"]."</td></tr>";

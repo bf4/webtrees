@@ -403,7 +403,7 @@ function real_path($path) {
 }
 
 /**
- * 
+ *
  * Construct the correct path for media files and thumbnails before moving them
  *
  * @param string $filename Filename including complete path
@@ -441,7 +441,7 @@ function set_media_path($filename, $moveto, $thumb = false) {
 }
 
 /**
- * 
+ *
  * Sanity check for the media folder. We need to check if the media and the thumbs folder
  * exist. If they don't exist we will try to create them otherwise we can't continue.
  *
@@ -557,8 +557,8 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 
 	if (!DB::isError($res)) {
 		$ct = $res->numRows();
-	// Build the raw medialist array, 
-	// but weed out any folders we're not interested in 
+	// Build the raw medialist array,
+	// but weed out any folders we're not interested in
 	while ($row = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		if ($row) {
 			if (!empty ($row["m_file"])) {
@@ -731,18 +731,18 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 			}
 			$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . $row["mm_gedfile"];
 
-			// Update the medialist with this cross-reference, 
+			// Update the medialist with this cross-reference,
 			// but only if the Media item actually exists (could be a phantom reference)
 			if (isset ($medialist[$keyMediaList])) {
 				$medialist[$keyMediaList]["LINKS"][stripslashes($row["mm_gid"])] = id_type(stripslashes($row["mm_gid"]));
 				$medialist[$keyMediaList]["LINKED"] = true;
 			}
-			
+
 			//-- store all of the ids in an array so that we can load up all of the people at once
 			$peopleIds[] = stripslashes($row["mm_gid"]);
 		}
 		$res->free();
-		
+
 		//-- load up all of the related people into the cache
 		load_people($peopleIds);
 		load_families($peopleIds);
@@ -825,7 +825,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 			if (!in_array($ext, $MEDIATYPE))
 				break;
 
-			// This is a valid media file: 
+			// This is a valid media file:
 			// now see whether we already know about it
 			$mediafile = $directory . $fileName;
 			$exist = false;
@@ -929,7 +929,7 @@ function filterMedia($media, $filter, $acceptExt) {
 		if (stristr($media["TITL"], $filter))
 			break;
 
-		//-- Accept when filter string contained in name of any item 
+		//-- Accept when filter string contained in name of any item
 		//-- this Media item is linked to.  (Privacy already checked)
 		$isValid = false;
 		if (count($links) != 0)
@@ -1032,9 +1032,9 @@ function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
 	// NOTE: Lets get the file details
 	if (strstr($filename, "://"))
 		return $filename;
-	
+
 	$filename = check_media_depth($filename, "NOTRUNC");
-	
+
 	$parts = pathinfo($filename);
 	$mainDir = $parts["dirname"] . "/";
 	$thumbDir = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY . "thumbs/", $mainDir);
@@ -1090,7 +1090,7 @@ function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
  * takes a filename, split it in parts and then recreates it according to the
  * chosen media depth
  *
- * When the input file name is a URL, this routine does nothing.  Only http:// URLs 
+ * When the input file name is a URL, this routine does nothing.  Only http:// URLs
  * are supported.
  *
  * @author	roland-d
@@ -1102,10 +1102,10 @@ function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
  *									"FRONT":	Truncate at front, keeping back part
  * @param	string	$noise		Controls the amount of chatting done by this function
  *									"VERBOSE"	Print messages
- *									"QUIET"		Don't print messages	
+ *									"QUIET"		Don't print messages
  * @return 	string	A filename validated for the media depth
  *
- * NOTE: 	The "NOTRUNC" option is required so that media that were inserted into the 
+ * NOTE: 	The "NOTRUNC" option is required so that media that were inserted into the
  *			database before $MEDIA_DIRECTORY_LEVELS was reduced will display properly.
  * NOTE:	The "QUIET" option is used during GEDCOM import, where we really don't need
  *			to know about every Media folder that's being created.
@@ -1429,7 +1429,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print_help_link("upload_thumbnail_file_help", "qm");
 		print $pgv_lang["thumbnail"] . "</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"thumbnail\" size=\"40\"><br /><sub>" . $pgv_lang["use_browse_advice"] . "</sub></td></tr>";
 	}
-		else print "<input type=\"hidden\" name=\"genthumb\" value=\"yes\" />"; 
+		else print "<input type=\"hidden\" name=\"genthumb\" value=\"yes\" />";
 	}
 	// File name on server
 	$isExternal = strstr($gedfile, "://");
@@ -1450,7 +1450,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			$fileName = $parts["basename"];
 			$folder = $parts["dirname"] . "/";
 		}
-		
+
 		print "<tr>";
 		print "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
 		print_help_link("upload_server_file_help", "qm", "upload_media");
@@ -1475,7 +1475,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			}
 		print "</td>";
 		print "</tr>";
-		
+
 	}
 	print "<input name=\"oldFilename\" type=\"hidden\" value=\"" . addslashes($fileName) . "\" />";
 
@@ -1663,7 +1663,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 				}
 				formfield = document.getElementById(formid);
 				formfield.value = ext;
-			} 
+			}
 		</script>
 <?php
 
@@ -1752,10 +1752,10 @@ function PrintMediaLinks($links, $size = "small") {
 				print $pgv_lang["view_person"] . " -- ";
 				print PrintReady($linkItem["printName"]) . "&nbsp;&nbsp;";
 				if ($TEXT_DIRECTION == "rtl")
-					print "&rlm;";
+					print getRLM();
 				print "(" . $linkItem["id"] . ")";
 				if ($TEXT_DIRECTION == "rtl")
-					print "&rlm;";
+					print getRLM();
 			}
 			print "</a>";
 		}
@@ -1773,10 +1773,10 @@ function PrintMediaLinks($links, $size = "small") {
 				print $pgv_lang["view_family"] . " -- ";
 				print PrintReady($linkItem["printName"]) . "&nbsp;&nbsp;";
 				if ($TEXT_DIRECTION == "rtl")
-					print "&rlm;";
+					print getRLM();
 				print "(" . $linkItem["id"] . ")";
 				if ($TEXT_DIRECTION == "rtl")
-					print "&rlm;";
+					print getRLM();
 			}
 			print "</a>";
 		}
@@ -1794,10 +1794,10 @@ function PrintMediaLinks($links, $size = "small") {
 				print $pgv_lang["view_source"] . " -- ";
 				print PrintReady($linkItem["printName"]) . "&nbsp;&nbsp;";
 				if ($TEXT_DIRECTION == "rtl")
-					print "&rlm;";
+					print getRLM();
 				print "(" . $linkItem["id"] . ")";
 				if ($TEXT_DIRECTION == "rtl")
-					print "&rlm;";
+					print getRLM();
 			}
 			print "</a>";
 		}
@@ -1817,7 +1817,7 @@ function get_media_id_from_file($filename){
 //returns an array of rows from the database containing the Person ID's for the people associated with this picture
 function get_media_relations($mid){
 	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS, $GEDCOM, $medialist;
-	
+
 	//-- check in the medialist cache first
 	$firstChar = substr($mid, 0, 1);
 	$restChar = substr($mid, 1);
@@ -1829,9 +1829,9 @@ function get_media_relations($mid){
 	if (isset ($medialist[$keyMediaList])) {
 		return $medialist[$keyMediaList]['LINKS'];
 	}
-	
+
 	$media = array();
-	
+
 	$dbq = "SELECT mm_gid FROM ".$TBLPREFIX."media_mapping WHERE mm_media='".$mid."' AND mm_gedfile='".$GEDCOMS[$GEDCOM]['id']."'";
 	$dbr = dbquery($dbq);
 	while($row = $dbr->fetchRow()) {
@@ -1868,7 +1868,7 @@ function picture_clip($person_id, $image_id, $filename, $thumbDir)
 	$res = dbquery($query);
 	$result = $res->fetchRow();
 	//Get the location of the file, and then make a location for the clipped image
-	
+
 	//store values to the variables
 	$top = get_gedcom_value("_TOP", 2, $result[0]);
 	$bottom = get_gedcom_value("_BOTTOM", 2, $result[0]);
