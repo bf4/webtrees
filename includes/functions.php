@@ -1731,10 +1731,10 @@ function sort_facts(&$arr) {
 	for ($i=0; $i<count($arr)-1; ++$i)
 		for ($j=count($arr)-1; $j>$i; --$j)
 			if (compare_facts_date($arr[$i],$arr[$j])>0) {
-				$tmp=$arr[$j];
-				for ($k=$j; $k>$i; --$k)
-					$arr[$k]=$arr[$k-1];
-				$arr[$i]=$tmp;
+				$tmp=$arr[$i];
+				for ($k=$i; $k<$j; ++$k)
+					$arr[$k]=$arr[$k+1];
+				$arr[$j]=$tmp;
 			}
 	return;
 }
