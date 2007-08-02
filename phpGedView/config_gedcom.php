@@ -30,7 +30,7 @@
  * @version $Id$
  */
 
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+if (stristr($_SERVER["SCRIPT_NAME"], "/".basename(__FILE__))!==false) {
 	print "Naughty, Naughty, Naughty!";
 	exit;
 }
