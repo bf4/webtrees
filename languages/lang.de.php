@@ -883,7 +883,7 @@ $pgv_lang["record_not_added"]			= "Datensatz #xref# konnte der Datei nicht hinzu
 $pgv_lang["lost_password"]				= "Haben Sie Ihr Kennwort verloren?";
 $pgv_lang["requestpassword"]			= "Neues Kennwort beantragen";
 $pgv_lang["no_account_yet"]				= "Haben Sie noch keine Benutzerdaten?";
-$pgv_lang["requestaccount"]				= "Als neuer Benutzer anmelden";
+$pgv_lang["requestaccount"]				= "Benutzer Antrag";
 $pgv_lang["emailadress"]				= "Mail Adresse";
 $pgv_lang["mandatory"]					= "Obligatorische Felder sind mit einem * markiert.";
 $pgv_lang["mail01_line01"]				= "Hallo #user_fullname# ...";
@@ -938,6 +938,7 @@ $pgv_lang["welcome_text_auth_mode_1"]	= "<center><b>Willkommen auf dieser Geneal
 $pgv_lang["welcome_text_auth_mode_2"]	= "<center><b>Willkommen auf dieser Genealogie Webseite</b></center><br />Der Zugriff auf diese Seite ist nur <u>autorisierten</u> Benutzern erlaubt.<br /><br />Wenn Sie bereits einen Benutzernamen haben, können Sie sich auf dieser Seite anmelden. Wenn Sie noch keinen Zugang besitzen, können Sie diesen beantragen, indem Sie auf den entsprechenden Link klicken.<br /><br />Sobald Ihre Angaben überprüft sind, wird der Verwalter Ihrem Antrag zustimmen (oder ihn ablehnen). Sie werden eine Mail mit dem Antragsergebnis erhalten.";
 $pgv_lang["welcome_text_auth_mode_3"]	= "<center><b>Willkommen auf dieser Genealogie Webseite</b></center><br />Den Zugriff auf diese Seite erhalten <u>nur Familienmitglieder</u>.<br /><br />Wenn Sie bereits einen Benutzernamen haben, können Sie sich auf dieser Seite anmelden. Wenn Sie noch keinen Zugang besitzen, können Sie diesen beantragen, indem Sie auf den entsprechenden Link klicken.<br /><br />Sobald Ihre Angaben überprüft sind, wird der Verwalter Ihrem Antrag zustimmen (oder ihn ablehnen).<br />Sie werden eine Mail mit dem Antragsergebnis erhalten.";
 $pgv_lang["welcome_text_cust_head"]		= "<center><b>Willkommen auf dieser Genealogie Webseite</b></center><br />Der Zugriff ist Benutzern vorbehalten, die einen Benutzernamen und ein Kennwort für diese Webseite haben.<br />";
+$pgv_lang["acceptable_use"]				= "<div class=\"largeError\">Bitte beachten Sie:</div><div class=\"error\">Indem Sie dieses ausgefüllte Formular einsenden, bestätigen Sie Ihr Einverständnis mit den folgenden Bedingungen:<ul><li>daß Sie immer Informationen über lebende Personen, die in dieser Datenbank vorkommen, vertraulich halten;</li><li>und daß Sie in der unten stehenden Textbox Ihre Verwandtschaft zu Personen in dieser Datenbank erklären oder uns Informationen über Personen, die in dieser Datenbank vorkommen sollten aber dort fehlen, mitteilen.</li></ul></div>";
 //-- mygedview page
 $pgv_lang["welcome"]					= "Willkommen";
 $pgv_lang["upcoming_events"]			= "Bevorstehende Ereignisse";

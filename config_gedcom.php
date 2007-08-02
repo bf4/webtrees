@@ -30,11 +30,7 @@
  * @version $Id$
  */
 
-if (preg_match("/\Wconfig_gedcom\.php/", $_SERVER["SCRIPT_NAME"])>0) {
-	print "Naughty, Naughty, Naughty!";
-	exit;
-}
-if (preg_match("/_conf\.php/", $_SERVER["SCRIPT_NAME"])>0) {
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Naughty, Naughty, Naughty!";
 	exit;
 }
@@ -77,11 +73,12 @@ $ABBREVIATE_CHART_LABELS = false;		//-- should chart labels like "Birth" be abbr
 $SHOW_PARENTS_AGE = true;				// -- show age of parents on charts next to the birth date
 
 $HIDE_LIVE_PEOPLE   = true;				// -- a false value will show details of people who are still alive
+$CHECK_CHILD_DATES  = true;             // -- When checking if a person is alive, check the children's birth dates in addition to the person's
 $REQUIRE_AUTHENTICATION = false;		// -- set this to try to force all visitors to login before they can view anything on the site
 $WELCOME_TEXT_AUTH_MODE = "1";			// -- Sets which predefined of custom welcome message will be displayed on the welcome page in authentication mode
 $WELCOME_TEXT_AUTH_MODE_4 = "";			// -- Customized welcome text to display on login screen if that option is chosen
 $WELCOME_TEXT_CUST_HEAD = false;		// -- Use standard PGV header to display with custom welcome text
-$CHECK_CHILD_DATES  = true;             // -- When checking if a person is alive, check the children's birth dates in addition to the person's
+$SHOW_REGISTER_CAUTION  = true;         // -- Show text about following site rules on Login-Register page
 $SHOW_GEDCOM_RECORD = true;				// -- a true value will provide a link on detail pages that will
 										// --allow people to view the actual lines from the gedcom file
 $ALLOW_EDIT_GEDCOM = true;				//-- allow users with canEdit privileges to edit the gedcom

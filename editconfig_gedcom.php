@@ -353,6 +353,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$SHOW_PARENTS_AGE\s*=\s*.*;/', "\$SHOW_PARENTS_AGE = ".$boolarray[$_POST["NEW_SHOW_PARENTS_AGE"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_PEDIGREE_PLACES\s*=\s*".*";/', "\$SHOW_PEDIGREE_PLACES = \"".$_POST["NEW_SHOW_PEDIGREE_PLACES"]."\";", $configtext);
 	$configtext = preg_replace('/\$SHOW_QUICK_RESN\s*=\s*.*;/', "\$SHOW_QUICK_RESN = ".$boolarray[$_POST["NEW_SHOW_QUICK_RESN"]].";", $configtext);
+	$configtext = preg_replace('/\$SHOW_REGISTER_CAUTION\s*=\s*.*;/', "\$SHOW_REGISTER_CAUTION = ".$boolarray[$_POST["NEW_SHOW_REGISTER_CAUTION"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_RELATIVES_EVENTS\s*=\s*.*;/', "\$SHOW_RELATIVES_EVENTS = \"".$_POST["NEW_SHOW_RELATIVES_EVENTS"]."\";", $configtext);
 	$configtext = preg_replace('/\$SHOW_SPIDER_TAGLINE\s*=\s*.*;/', "\$SHOW_SPIDER_TAGLINE = ".$boolarray[$_POST["NEW_SHOW_SPIDER_TAGLINE"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_STATS\s*=\s*.*;/', "\$SHOW_STATS = ".$boolarray[$_POST["NEW_SHOW_STATS"]].";", $configtext);
@@ -923,6 +924,14 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["accpriv_conf"]."\" onclick=\"exp
 		</td>
 	</tr>
 	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("CHECK_CHILD_DATES_help", "qm", "CHECK_CHILD_DATES"); print $pgv_lang["CHECK_CHILD_DATES"];?></td>
+		<td class="optionbox"><select name="NEW_CHECK_CHILD_DATES" tabindex="<?php $i++; print $i?>" onfocus="getHelp('CHECK_CHILD_DATES_help');">
+				<option value="yes" <?php if ($CHECK_CHILD_DATES) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$CHECK_CHILD_DATES) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
 		<td class="descriptionbox wrap"><?php print_help_link("REQUIRE_AUTHENTICATION_help", "qm", "REQUIRE_AUTHENTICATION"); print $pgv_lang["REQUIRE_AUTHENTICATION"];?></td>
 		<td class="optionbox"><select name="NEW_REQUIRE_AUTHENTICATION" tabindex="<?php $i++; print $i?>" onfocus="getHelp('REQUIRE_AUTHENTICATION_help');">
 				<option value="yes" <?php if ($REQUIRE_AUTHENTICATION) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
@@ -955,10 +964,10 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["accpriv_conf"]."\" onclick=\"exp
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap"><?php print_help_link("CHECK_CHILD_DATES_help", "qm", "CHECK_CHILD_DATES"); print $pgv_lang["CHECK_CHILD_DATES"];?></td>
-		<td class="optionbox"><select name="NEW_CHECK_CHILD_DATES" tabindex="<?php $i++; print $i?>" onfocus="getHelp('CHECK_CHILD_DATES_help');">
-				<option value="yes" <?php if ($CHECK_CHILD_DATES) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$CHECK_CHILD_DATES) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+		<td class="descriptionbox wrap width20"><?php print_help_link("SHOW_REGISTER_CAUTION_help", "qm", "SHOW_REGISTER_CAUTION"); print $pgv_lang["SHOW_REGISTER_CAUTION"];?></td>
+		<td class="optionbox"><select name="NEW_SHOW_REGISTER_CAUTION" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SHOW_REGISTER_CAUTION_help');">
+				<option value="yes" <?php if ($SHOW_REGISTER_CAUTION) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$SHOW_REGISTER_CAUTION) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 			</select>
 		</td>
 	</tr>

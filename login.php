@@ -5,7 +5,7 @@
  * Provides links for administrators to get to other administrative areas of the site
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -131,7 +131,9 @@ if ($_SESSION["cookie_login"]) {
 //if ($REQUIRE_AUTHENTICATION) {
 if ($WELCOME_TEXT_AUTH_MODE!="0") {
 	require $helptextfile["english"];
+	if (file_exists($extrafile["english"])) require $extrafile["english"];
 	if (file_exists($helptextfile[$LANGUAGE])) require $helptextfile[$LANGUAGE];
+	if (file_exists($extrafile[$LANGUAGE])) require $extrafile[$LANGUAGE];
 	print "<table class=\"center width60 ltr\"><tr><td>";
 	if (empty($help_message) || !isset($help_message)) {
 		if (!empty($GEDCOM)) require($INDEX_DIRECTORY.$GEDCOM."_conf.php");
