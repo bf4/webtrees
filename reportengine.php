@@ -262,18 +262,15 @@ function paste_id(value) {
 		?>
 		<tr><td class="descriptionbox width30 wrap"></td>
 		<td class="optionbox">
-		<input type="radio" name="output" value="PDF"
-		checked="checked"
-		/><img src="images/media/pdf-32x32.png" alt="PDF" title="PDF" />
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<input type="radio" name="output" value="HTML"
-		<?php if ($output=="HTML") echo " checked=\"checked\"";?>
-		/><img src="images/media/html-32x32.png" alt="HTML" title="HTML" />
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<input type="radio" name="output" value="TEX"
-		<?php if ($output=="TEX") echo " checked=\"checked\"";?>
-		<?php if (!file_exists("includes/reportlatex.php")) echo " disabled=\"disabled\"";?>
-		/><img src="images/media/tex-32x32.png" alt="TEX" title="TEX" />
+		<table><tr>
+		<td><img src="images/media/pdf.gif" alt="PDF" title="PDF" /></td>
+		<td><img src="images/media/html.gif" alt="HTML" title="HTML" /></td>
+		<td><img src="images/media/tex.gif" alt="LaTEX" title="LaTEX" /></td>
+		</tr><tr>
+		<td><center><input type="radio" name="output" value="PDF" checked="checked" /></center></td>
+		<td><center><input type="radio" name="output" value="HTML" <?php if ($output=="HTML") echo " checked=\"checked\"";?> /></center></td>
+		<td><center><input type="radio" name="output" value="TEX" <?php if ($output=="TEX") echo " checked=\"checked\"";?> <?php if (!file_exists("includes/reportlatex.php")) echo " disabled=\"disabled\"";?> /></center></td>
+		</tr></table>
 		</td></tr>
 		<?php
 		print "<tr><td class=\"topbottombar\" colspan=\"2\">";
