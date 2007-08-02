@@ -3,7 +3,7 @@
  * Register as a new User or request new password if it is lost
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,9 @@
 
 require "config.php";
 require $confighelpfile["english"];
+if (file_exists($extrafile["english"])) require $extrafile["english"];
 if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
+if (file_exists($extrafile[$LANGUAGE])) require $extrafile[$LANGUAGE];
 
 // Remove slashes
 if (isset($user_firstname)) $user_firstname = stripslashes($user_firstname);
@@ -144,7 +146,7 @@ switch ($action) {
 		break;
 
 	case "register" :
-  			$_SESSION["good_to_send"] = true;
+  		$_SESSION["good_to_send"] = true;
 		if (!$USE_REGISTRATION_MODULE) {
 			header("Location: index.php");
 			exit;
@@ -275,6 +277,14 @@ switch ($action) {
 			}
 			//-->
 			</script>
+			<?php
+				if ($SHOW_REGISTER_CAUTION) {
+					print "<center><table class=\"width50\"><tr><td>";
+					print_text("acceptable_use");
+					print "<br />";
+					print "</td></tr></table></center>";
+				}
+			?>
 			<div class="center">
 				<form name="registerform" method="post" action="login_register.php" onsubmit="t = new Date(); document.registerform.time.value=t.toUTCString(); return checkform(this);">
 					<input type="hidden" name="action" value="register" />
