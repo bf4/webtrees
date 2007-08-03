@@ -35,6 +35,42 @@ include_once('includes/functions_lang.php');
 require_once('includes/mutex_class.php');
 require_once('includes/index_cache.php');
 
+// Programs such as FTM use the "tag formal names" instead of the actual tags.  This list lets us convert.
+$TRANSLATE_TAGS=array(
+	// These are standard tags, as defined in the 5.5.1 gedcom spec.
+	'ABBREVIATION'=>'ABBR', 'ADDRESS'=>'ADDR', 'ADDRESS1'=>'ADR1', 'ADDRESS2'=>'ADR2', 'ADDRESS3'=>'ADR3',
+	'ADOPTION'=>'ADOP', 'ADULT_CHRISTENING'=>'CHRA', 'AGENCY'=>'AGNC', 'ALIAS'=>'ALIA', 'ANCESTORS'=>'ANCE',
+	'ANCES_INTEREST'=>'ANCI', 'ANNULMENT'=>'ANUL', 'ASSOCIATES'=>'ASSO', 'AUTHOR'=>'AUTH', 'BAPTISM'=>'BAPM',
+	'BAPTISM_LDS'=>'BAPL', 'BAR_MITZVAH'=>'BARM', 'BAS_MITZVAH'=>'BASM', 'BIRTH'=>'BIRT', 'BLESSING'=>'BLES',
+	'BURIAL'=>'BURI', 'CALL_NUMBER'=>'CALN', 'CASTE'=>'CAST', 'CAUSE'=>'CAUS', 'CENSUS'=>'CENS', 'CHANGE'=>'CHAN',
+	'CHARACTER'=>'CHAR', 'CHILD'=>'CHIL', 'CHILDREN_COUNT'=>'NCHI', 'CHRISTENING'=>'CHR', 'CONCATENATION'=>'CONC',
+	'CONFIRMATION'=>'CONF', 'CONFIRMATION_LDS'=>'CONL', 'CONTINUED'=>'CONT', 'COPYRIGHT'=>'COPR',
+	'CORPORATE'=>'CORP', 'COUNTRY'=>'CTRY', 'CREMATION'=>'CREM', 'DEATH'=>'DEAT', 'DESCENDANTS'=>'DESC',
+	'DESCENDANT_INT'=>'DESI', 'DESTINATION'=>'DEST', 'DIVORCE'=>'DIV', 'DIVORCE_FILED'=>'DIVF',
+	'EDUCATION'=>'EDUC', 'EMAIL'=>'EMAI', 'EMIGRATION'=>'EMIG', 'ENDOWMENT'=>'ENDL', 'ENGAGEMENT'=>'ENGA',
+	'EVENT'=>'EVEN', 'FACIMILIE'=>'FAX', 'FACSIMILE'=>'FAX', 'FAMILY'=>'FAM', 'FAMILY_CHILD'=>'FAMC',
+	'FAMILY_FILE'=>'FAMF', 'FAMILY_SPOUSE'=>'FAMS', 'FIRST_COMMUNION'=>'FCOM', 'FORMAT'=>'FORM', 'GEDCOM'=>'GEDC',
+	'GIVEN_NAME'=>'GIVN', 'GRADUATION'=>'GRAD', 'HEADER'=>'HEAD', 'HUSBAND'=>'HUSB', 'IDENT_NUMBER'=>'IDNO',
+	'IMMIGRATION'=>'IMMI', 'INDIVIDUAL'=>'INDI', 'LANGUAGE'=>'LANG', 'LATITUDE'=>'LATI', 'LONGITUDE'=>'LONG',
+	'MARRIAGE'=>'MARR', 'MARRIAGE_BANN'=>'MARB', 'MARRIAGE_COUNT'=>'NMR', 'MARR_CONTRACT'=>'MARC',
+	'MARR_LICENSE'=>'MARL', 'MARR_SETTLEMENT'=>'MARS', 'MEDIA'=>'MEDI', 'NAME_PREFIX'=>'NPFX',
+	'NAME_SUFFIX'=>'NSFX', 'NATIONALITY'=>'NATI', 'NATURALIZATION'=>'NATU', 'NICKNAME'=>'NICK', 'OBJECT'=>'OBJE',
+	'OCCUPATION'=>'OCCU', 'ORDINANCE'=>'ORDI', 'ORDINATION'=>'ORDN', 'PEDIGREE'=>'PEDI', 'PHONE'=>'PHON',
+	'PHONETIC'=>'FONE', 'PHY_DESCRIPTION'=>'DSCR', 'PLACE'=>'PLAC', 'POSTAL_CODE'=>'POST', 'PROBATE'=>'PROB',
+	'PROPERTY'=>'PROP', 'PUBLICATION'=>'PUBL', 'QUALITY_OF_DATA'=>'QUAL', 'REC_FILE_NUMBER'=>'RFN',
+	'REC_ID_NUMBER'=>'RIN', 'REFERENCE'=>'REFN', 'RELATIONSHIP'=>'RELA', 'RELIGION'=>'RELI', 'REPOSITORY'=>'REPO',
+	'RESIDENCE'=>'RESI', 'RESTRICTION'=>'RESN', 'RETIREMENT'=>'RETI', 'ROMANIZED'=>'ROMN', 'SEALING_CHILD'=>'SLGC',
+	'SEALING_SPOUSE'=>'SLGS', 'SOC_SEC_NUMBER'=>'SSN', 'SOURCE'=>'SOUR', 'STATE'=>'STAE', 'STATUS'=>'STAT',
+	'SUBMISSION'=>'SUBN', 'SUBMITTER'=>'SUBM', 'SURNAME'=>'SURN', 'SURN_PREFIX'=>'SPFX', 'TEMPLE'=>'TEMP',
+	'TITLE'=>'TITL', 'TRAILER'=>'TRLR', 'VERSION'=>'VERS', 'WEB'=>'WWW',
+	// TODO: These custom FTM tags are *GUESSES*.  Someone with FTM should check them!
+	'_DEATH_OF_SPOUSE'=>'_DETS', '_DEGREE'=>'_DEG', '_MEDICAL'=>'_MDCL', '_MILITARY'=>'_MILT',
+	'_SEPARATED'=>'_SEPR', 'CITATION'=>'CITN', '_FACT1'=>'_FA1', '_FACT2'=>'_FA2', '_FACT3'=>'_F3',
+	'_FACT4'=>'_FA4', '_FACT5'=>'_FA5', '_FACT6'=>'_FA6', '_FACT7'=>'_FA7', '_FACT8'=>'_FA8', '_FACT9'=>'_FA9',
+	'_FACT10'=>'_FA10', '_FACT11'=>'_FA11', '_FACT12'=>'_FA12', '_FACT13'=>'_FA13', '_MOTHER_RELATION'=>'_MREL',
+	'_FATHER_RELATION'=>'_FREL', '_MARR_STATUS'=>'MSTAT', '_MARR_END_STAT'=>'_MEND'
+);
+
 /**
  * import record into database
  *
@@ -47,8 +83,21 @@ function import_record($indirec, $update = false) {
 	global $TBLPREFIX, $GEDCOM_FILE, $FILE, $pgv_lang, $USE_RIN, $gdfp, $placecache;
 	global $ALPHABET_upper, $ALPHABET_lower, $place_id, $WORD_WRAPPED_NOTES, $GEDCOMS;
 	global $MAX_IDS, $fpnewged, $GEDCOM, $USE_RTL_FUNCTIONS, $GENERATE_UIDS;
+	global $TRANSLATE_TAGS;
 
 	$FILE = $GEDCOM;
+
+	// Clean input record
+	$indirec=preg_replace('/[\x00-\x09\x0B-\x0C\x0B-\x1F\x7F]+/', ' ', $indirec); // Illegal control characters
+	$indirec=preg_replace('/[\r\n]+/', "\n", $indirec); // Standardise line endings
+	$indirec=preg_replace('/ {2,}/', ' ', $indirec); // Repeated spaces
+	$indirec=preg_replace('/(^ | $)/m', '', $indirec); // Leading/trailing space
+	$indirec=preg_replace('/\n{2,}/', "\n", $indirec); // Blank lines
+	if (!$update) $indirec=str_replace('@@', '@', $indirec); // Escaped @ signs (only if importing from file)
+	
+	// Replace TAG_FORMAL_NAME (as sometimes created by FTM) with TAG
+	foreach ($TRANSLATE_TAGS as $tag_full=>$tag_abbr)
+		$indirec=preg_replace("/^(\d+ (@[^@]+@ )?){$tag_full}\b/m", '$1'.$tag_abbr, $indirec);
 
 	//-- import different types of records
 	$ct = preg_match("/0 @(.*)@ ([a-zA-Z_]+)/", $indirec, $match);
@@ -87,11 +136,6 @@ function import_record($indirec, $update = false) {
 		if ($MAX_IDS[$type] < $idnum)
 			$MAX_IDS[$type] = $idnum;
 
-	//-- remove double @ signs
-	$indirec = preg_replace("/@+/", "@", $indirec);
-
-	// remove heading spaces
-	$indirec = preg_replace("/\n(\s*)/", "\n", $indirec);
 	if ($USE_RTL_FUNCTIONS) {
 		//-- replace any added ltr processing codes
 		//		$indirec = preg_replace(array("/".html_entity_decode("&rlm;",ENT_COMPAT,"UTF-8")."/", "/".html_entity_decode("&lrm;",ENT_COMPAT,"UTF-8")."/"), array("",""), $indirec);
