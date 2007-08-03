@@ -29,8 +29,7 @@
 require_once("includes/controllers/individual_ctrl.php");
 require_once("includes/serviceclient_class.php");
 
-if (file_exists("modules/googlemap/".$pgv_language["english"])) require("modules/googlemap/".$pgv_language["english"]);
-if (file_exists("modules/googlemap/".$pgv_language[$LANGUAGE])) require("modules/googlemap/".$pgv_language[$LANGUAGE]);
+loadLangFile("gm_lang");	// Load GoogleMap language file
 
 global $USE_THUMBS_MAIN;
 global $linkToID;

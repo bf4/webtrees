@@ -6,7 +6,7 @@
  * back to here.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  * Author: Mike Elliott (coloredpixels)
  *
  * This program is free software; you can redistribute it and/or modify
@@ -32,8 +32,8 @@ global $SEARCH_SPIDER, $CHARACTER_SET;
 global $GEDCOMS, $ALLOW_CHANGE_GEDCOM, $DEFAULT_GEDCOM;
 
 require "config.php";
-require $helptextfile["english"];
-if (file_exists($helptextfile[$LANGUAGE])) require $helptextfile[$LANGUAGE];
+
+loadLangFile("pgv_help");
 
 if (!isset($help)) $help = "";
 require ("help_text_vars.php");

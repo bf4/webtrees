@@ -3,7 +3,7 @@
  * Display a diff between two language files to help in translating.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,8 +26,8 @@
 
 require "config.php";
 
-require  $confighelpfile["english"];
-if (file_exists( $confighelpfile[$LANGUAGE])) require  $confighelpfile[$LANGUAGE];
+loadLangFile("pgv_confighelp");
+
 require  "includes/functions_editlang.php";
 
 if (!isset($action)) $action="";
@@ -438,22 +438,10 @@ switch ($action) {
 
 		    // Temporarily switch languages to match the language selected for Export,
 		    //   so that function print_text will substitute text in the correct language
-			require  $pgv_language["english"];		// Load English first
-			require  $adminfile["english"];
-			require  $editorfile["english"];
-			require  $factsfile["english"];
-			require  $helptextfile["english"];
-		  	require  $confighelpfile["english"];
-		  	if (file_exists($extrafile["english"])) require  $extrafile["english"];
-		  	if ($language2 != "english") {
-				if (file_exists($pgv_language[$language2])) require  $pgv_language[$language2];	//   then output lang.
-				if (file_exists($adminfile[$language2])) require  $adminfile[$language2];
-				if (file_exists($editorfile[$language2])) require  $editorfile[$language2];
-				if (file_exists($factsfile[$language2])) require  $factsfile[$language2];
-				if (file_exists($helptextfile[$language2])) require  $helptextfile[$language2];
-		  		if (file_exists($confighelpfile[$language2])) require  $confighelpfile[$language2];
-		  		if (file_exists($extrafile[$language2])) require  $extrafile[$language2];
-		  	}
+		    $savedLanguage = $LANGUAGE;
+		    $LANGUAGE = $language2;
+		    loadLangFile("pgv_lang, pgv_admin, pgv_editor, pgv_facts, pgv_help, pgv_confighelp");
+		    $LANGUAGE = $savedLanguage;
 
 		    for ($z = 0; $z < sizeof($new_language_array); $z++)
 		    {
@@ -466,22 +454,7 @@ switch ($action) {
 
 		    // Restore language to original setting -- we're done
 			if ($language2 != $LANGUAGE) {			// Only necessary when languages differ
-				// Load English first
-				require  $pgv_language["english"];
-				require  $adminfile["english"];
-				require  $editorfile["english"];
-				require  $factsfile["english"];
-				require  $helptextfile["english"];
-			  	require  $confighelpfile["english"];
-			  	if (file_exists()) require  $extrafile["english"];
-				// then load active language
-				if (file_exists($pgv_language[$LANGUAGE])) require  $pgv_language[$LANGUAGE];
-				if (file_exists($adminfile[$LANGUAGE])) require  $adminfile[$LANGUAGE];
-				if (file_exists($editorfile[$LANGUAGE])) require  $editorfile[$LANGUAGE];
-				if (file_exists($factsfile[$LANGUAGE])) require  $factsfile[$LANGUAGE];
-				if (file_exists($helptextfile[$LANGUAGE])) require  $helptextfile[$LANGUAGE];
-			  	if (file_exists($confighelpfile[$LANGUAGE])) require  $confighelpfile[$LANGUAGE];
-			  	if (file_exists($extrafile[$LANGUAGE])) require  $extrafile[$LANGUAGE];
+		    	loadLangFile("pgv_lang, pgv_admin, pgv_editor, pgv_facts, pgv_help, pgv_confighelp");
 		  	}
 
 		    fwrite($fp, "</ol>\r\n");
@@ -769,13 +742,8 @@ foreach ($language_settings as $key => $value) {
 		$ct = strpos($dDummy, ";");
 	}
 }
-// Language specific admin editor language tags
-global $lang_short_cut;
-require $editorfile["english"];
-if(file_exists($editorfile["$LANGUAGE"])) require $editorfile["$LANGUAGE"];
 
-//Normal footer stuff
-require $pgv_language["english"];
-require $pgv_language[$LANGUAGE];
+loadLangFile("pgv_lang, pgv_editor");
+
 print_footer();
 ?>

@@ -24,8 +24,8 @@
  * @subpackage EditLang
  */
 require "config.php";
-require  $confighelpfile["english"];
-if (file_exists( $confighelpfile[$LANGUAGE])) require  $confighelpfile[$LANGUAGE];
+
+loadLangFile("pgv_confighelp");
 
 require  "includes/functions_editlang.php";
 if (file_exists( "rs_functions.php")) require  "rs_functions.php";

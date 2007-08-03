@@ -3,7 +3,7 @@
  * File contains var's to glue Help_text for PHPGedView together
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,8 +31,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"help_text_vars")) {
 	print "Now, why would you want to do that.  You're not hacking are you?";
 	exit;
 }
-require_once($confighelpfile["english"]);
-if (file_exists($confighelpfile[$LANGUAGE])) require_once($confighelpfile[$LANGUAGE]);
+loadLangFile("pgv_confighelp");
 
 $pgv_lang["help_manageservers.php"]	= "#pgv_lang[help_managesites]#";
 $pgv_lang["edit_RESN_help"]			= "#pgv_lang[RESN_help]#";

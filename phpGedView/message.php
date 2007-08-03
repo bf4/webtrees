@@ -3,7 +3,7 @@
  * Send a message to a user in the system
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,9 @@
  * @version $Id$
  */
 require("config.php");
-require $confighelpfile["english"];
-if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
+
+loadLangFile("pgv_confighelp");
+
 if (!isset($action)) $action="compose";
 
 print_simple_header($pgv_lang["phpgedview_message"]);

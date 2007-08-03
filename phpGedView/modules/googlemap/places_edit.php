@@ -3,7 +3,7 @@
  * Interface to edit place locations
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,13 +28,8 @@ require_once "config.php";
 if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
 require "includes/functions_edit.php";
 require $INDEX_DIRECTORY."pgv_changes.php";
-require_once($factsfile["english"]);
-require( "modules/googlemap/".$pgv_language["english"]);
-if (file_exists( "modules/googlemap/".$pgv_language[$LANGUAGE])) require  "modules/googlemap/".$pgv_language[$LANGUAGE];
-require( "modules/googlemap/".$helptextfile["english"]);
-if (file_exists("modules/googlemap/".$helptextfile[$LANGUAGE])) require "modules/googlemap/".$helptextfile[$LANGUAGE];
 
-if (file_exists( $factsfile[$LANGUAGE])) require_once $factsfile[$LANGUAGE];
+loadLangFile("pgv_facts, gm_lang, gm_help");
 
 print_simple_header($pgv_lang["edit_place_locations"]);
 

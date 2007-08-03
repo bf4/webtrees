@@ -3,7 +3,7 @@
  * Print logfiles
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,8 +31,7 @@ if (!userGedcomAdmin(getUserName())) {
 	exit;
 }
 
-require  $confighelpfile["english"];
-if (file_exists( $confighelpfile[$LANGUAGE])) require  $confighelpfile[$LANGUAGE];
+loadLangFile("pgv_confighelp");
 
 print_simple_header("Print logfile");
 

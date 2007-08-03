@@ -124,16 +124,10 @@ if ((!empty($searchtext)) && strlen($searchtext)>1 && (($searchuser == "yes") ||
 	unset($pgv_lang);
 	
 	// Load the user help if chosen
-	if ($searchuser == "yes") {
-		require  $helptextfile["english"];
-		if (file_exists( $helptextfile[$LANGUAGE])) require  $helptextfile[$LANGUAGE];
-	}
+	if ($searchuser == "yes") loadLangFile("pgv_help");
 
 	// Load the config help if chosen
-	if ($searchconfig == "yes") {
-		require  $confighelpfile["english"];
-		if (file_exists( $confighelpfile[$LANGUAGE])) require  $confighelpfile[$LANGUAGE];
-	}
+	if ($searchconfig == "yes") loadLangFile("pgv_confighelp");
 
 	// Find all helpvars, so we know what vars to check after the lang.xx file has been reloaded
 	foreach ($pgv_lang as $text => $value) {
@@ -142,9 +136,8 @@ if ((!empty($searchtext)) && strlen($searchtext)>1 && (($searchuser == "yes") ||
 	}
 
 	// Reload lang.xx file
-	loadLanguage($LANGUAGE, true);
-	require $confighelpfile["english"];
-	if (file_exists( $confighelpfile[$LANGUAGE])) require  $confighelpfile[$LANGUAGE];
+	unset($pgv_lang);
+	loadLangFile("pgv_lang, pgv_confighelp");
 
 	// Split the search criteria if all or any is chosen. Otherwise, just fill the array with the sentence
 	$criteria = array();

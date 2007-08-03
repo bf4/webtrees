@@ -3,7 +3,7 @@
  * Google map module for phpGedView
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,8 +28,7 @@
 require('modules/googlemap/defaultconfig.php');
 if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
 
-require( "modules/googlemap/".$pgv_language["english"]);
-if (file_exists( "modules/googlemap/".$pgv_language[$LANGUAGE])) require  "modules/googlemap/".$pgv_language[$LANGUAGE];
+loadLangFile("gm_lang");
 
 // functions copied from print_fact_place
 function print_fact_place_map($factrec) {

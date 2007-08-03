@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage SiteMap
- * @version $Id:$
+ * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
   print "You cannot access a language file directly.";
