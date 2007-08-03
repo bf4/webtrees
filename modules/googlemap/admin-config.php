@@ -5,7 +5,7 @@
  * Provides links for administrators to get to other administrative areas of the site
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,10 +28,7 @@
  * $Id$
  */
 
-require("modules/googlemap/".$pgv_language["english"]);
-require("modules/googlemap/".$helptextfile["english"]);
-if (file_exists("modules/googlemap/".$pgv_language[$LANGUAGE])) require("modules/googlemap/".$pgv_language[$LANGUAGE]);
-if (file_exists("modules/googlemap/".$helptextfile[$LANGUAGE])) require("modules/googlemap/".$helptextfile[$LANGUAGE]);
+loadLangFile("gm_lang, gm_help");
 
 ?>
 <script language="JavaScript" type="text/javascript">

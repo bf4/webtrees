@@ -15,7 +15,7 @@
 * If any of the checks fail the appropriate error or warning message will be displayed.
 *  
 * phpGedView: Genealogy Viewer
-* Copyright (C) 2002 to 2003  John Finlay and Others
+* Copyright (C) 2002 to 2007  John Finlay and Others
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -177,10 +177,8 @@ if (!function_exists('GregorianToJD'))
 
 if (($CONFIGURED || (isset($_REQUEST['action']) && $_REQUEST['action']=="update")) && !check_db(true)) 
 {
-	require_once $confighelpfile["english"];
-	if (file_exists($confighelpfile[$LANGUAGE]))
-		require_once $confighelpfile[$LANGUAGE];
-		$error = "";
+	loadLangFile("pgv_confighelp");
+	$error = "";
 	$error = "<span class=\"error\">".$pgv_lang["db_setup_bad"]."</span><br />";
 	$error .= "<span class=\"error\">" . $DBCONN->getMessage() . " " . $DBCONN->getUserInfo() . "</span><br />";
 	

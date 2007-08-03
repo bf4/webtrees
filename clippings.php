@@ -8,7 +8,7 @@
  * XHTML Validated 12 Feb 2006
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -95,8 +95,7 @@ if($ct==0) {
 	// -- new lines, added by Jans, to display helptext when cart is empty
 	if ($action!='add') {
 
-		require $helptextfile["english"];
-		if (file_exists($helptextfile[$LANGUAGE])) require $helptextfile[$LANGUAGE];
+		loadLangFile("pgv_help");
 		print_text("help_clippings.php");
 
 		?>

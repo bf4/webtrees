@@ -3,7 +3,7 @@
  * PopUp Window to allow editing of comments.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,13 +23,13 @@
  *
  * @package PhpGedView
  * @subpackage Edit
- * @version $Id: edit_quickupdate.php 229 2006-07-07 23:28:53Z yalnifj $
+ * @version $Id$
  */
  
 
  require_once("config.php");
- include_once("modules/research_assistant/languages/lang.en.php");
- @include_once("modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php");
+
+ loadLangFile("ra_lang");
 
 /***********************************************************************************************************
  *                                        AUTHENTICATING                                                   *

@@ -1805,7 +1805,7 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	function print_map_tab() {
-		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $pgv_lang, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_language;
+		global $SEARCH_SPIDER, $SESSION_HIDE_GOOGLEMAP, $pgv_lang, $CONTACT_EMAIL, $PGV_IMAGE_DIR, $PGV_IMAGES;
 		global $LANGUAGE;
 		global $GOOGLEMAP_API_KEY, $GOOGLEMAP_MAP_TYPE, $GOOGLEMAP_MIN_ZOOM, $GOOGLEMAP_MAX_ZOOM, $GEDCOM;
 		global $GOOGLEMAP_XSIZE, $GOOGLEMAP_YSIZE, $pgv_lang, $factarray, $SHOW_LIVING_NAMES, $PRIV_PUBLIC;

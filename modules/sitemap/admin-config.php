@@ -5,7 +5,7 @@
  * Provides links for administrators to get to other administrative areas of the site
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,10 +28,7 @@
  * @version $Id$
  */
 
-require("modules/sitemap/".$pgv_language["english"]);
-require("modules/sitemap/".$helptextfile["english"]);
-if (file_exists("modules/sitemap/".$pgv_language[$LANGUAGE])) require("modules/sitemap/".$pgv_language[$LANGUAGE]);
-if (file_exists("modules/sitemap/".$helptextfile[$LANGUAGE])) require("modules/sitemap/".$helptextfile[$LANGUAGE]);
+loadLangFile("sm_lang, sm_help");
 
 if (userIsAdmin(getUserName())) { ?>
    <tr>

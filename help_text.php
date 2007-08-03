@@ -28,22 +28,8 @@
  */
 
 require "config.php";
-// Load language keys for English
-require $helptextfile["english"];
-@include("modules/research_assistant/languages/lang.".$lang_short_cut["english"].".php");
-@include($adminfile["english"]);
-@include($editorfile["english"]);
-@include("./languages/lang.extra.".$lang_short_cut["english"].".php");
-@include($extrafile["english"]);
-// Load language keys for language other than English
-if ($LANGUAGE != "english") {
-	@include($helptextfile[$LANGUAGE]);
-	@include("modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php");
-	@include($adminfile[$LANGUAGE]);
-	@include($editorfile[$LANGUAGE]);
-	@include("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php");
-	@include($extrafile[$LANGUAGE]);
-}
+
+loadLangFile("pgv_help, pgv_admin, pgv_editor, ra_lang");	// Load language keys
 
 if (!isset($help)) $help = "";
 

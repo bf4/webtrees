@@ -136,11 +136,8 @@ if ($_SESSION["cookie_login"]) {
 }
 //if ($REQUIRE_AUTHENTICATION) {
 if ($WELCOME_TEXT_AUTH_MODE!="0") {
-	require $helptextfile["english"];
-	if (file_exists($extrafile["english"])) require $extrafile["english"];
-	if (file_exists($helptextfile[$LANGUAGE])) require $helptextfile[$LANGUAGE];
-	if (file_exists($extrafile[$LANGUAGE])) require $extrafile[$LANGUAGE];
-	print "<table class=\"center width60 ltr\"><tr><td>";
+	loadLangFile("pgv_help");
+	print "<table class=\"center width60 ".$TEXT_DIRECTION."\"><tr><td>";
 	if (empty($help_message) || !isset($help_message)) {
 		if (!empty($GEDCOM)) require($INDEX_DIRECTORY.$GEDCOM."_conf.php");
 		switch ($WELCOME_TEXT_AUTH_MODE){
@@ -170,8 +167,7 @@ if ($WELCOME_TEXT_AUTH_MODE!="0") {
 }
 else {
 	if (!empty($help_message) || isset($help_message)) {
-		require $helptextfile["english"];
-		if (file_exists($helptextfile[$LANGUAGE])) require $helptextfile[$LANGUAGE];
+		loadLangFile("pgv_help");
 		print "<table class=\"center width60 ltr\"><tr><td>";
 		print_text($help_message);
 		print "</td></tr></table><br /><br />\n";

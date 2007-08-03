@@ -3,7 +3,7 @@
  * Display a diff between two language files to help in translating.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,14 +26,7 @@
 
 require "config.php";
 
-require  $confighelpfile["english"];
-require("modules/sitemap/".$pgv_language["english"]);
-require("modules/sitemap/".$helptextfile["english"]);
-if (file_exists( $confighelpfile[$LANGUAGE])) require  $confighelpfile[$LANGUAGE];
-if (file_exists("modules/sitemap/".$pgv_language[$LANGUAGE])) require("modules/sitemap/".$pgv_language[$LANGUAGE]);
-if (file_exists("modules/sitemap/".$helptextfile[$LANGUAGE])) require("modules/sitemap/".$helptextfile[$LANGUAGE]);
-
-
+loadLangFile("pgv_confighelp, sm_lang, sm_help");
 
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again
@@ -58,7 +51,7 @@ if ($action=="sendFiles") {
 
     if (isset($welcome)) {
         print "   <url>\n";
-        print "      <loc>".$SERVER_URL."index.php?ctype=gedcom&amp;ged=".$DBCONN->escapeSimple($gedcom_name)."</loc>\n";
+        print "      <loc>".$SERVER_URL."index.php?command=gedcom&amp;ged=".$DBCONN->escapeSimple($gedcom_name)."</loc>\n";
         print "      <changefreq>".$welcome_update."</changefreq>\n";
         print "      <priority>0.".$welcome_priority."</priority>\n";
         print "   </url>\n";

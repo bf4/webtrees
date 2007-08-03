@@ -855,7 +855,7 @@ function print_addnewsource_link($element_id) {
  */
 function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose="", $rowDisplay=true) {
 	global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $MEDIA_DIRECTORY, $TEMPLE_CODES, $lang_short_cut, $LANGUAGE;
-	global $assorela, $tags, $emptyfacts, $TEXT_DIRECTION, $confighelpfile, $pgv_changes, $GEDCOM;
+	global $assorela, $tags, $emptyfacts, $TEXT_DIRECTION, $pgv_changes, $GEDCOM;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
 	global $tabkey, $STATUS_CODES, $REPO_ID_PREFIX, $SPLIT_PLACES, $pid, $linkToID;
 	global $bdm;

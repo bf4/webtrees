@@ -3,7 +3,7 @@
  * phpGedView Research Assistant Tool - ra_EditTask
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: ra_EditTask.php 999 2006-06-13 22:35:43Z jfinlay $:
+ * @version $Id$:
  * @author Jason Porter
  * @author Wade Lasson
  * @author Brandon Gagnon

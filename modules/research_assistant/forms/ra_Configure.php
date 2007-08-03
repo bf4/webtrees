@@ -3,7 +3,7 @@
  * phpGedView Research Assistant Tool - ra_Configure
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,10 +33,9 @@ if (strstr($_SERVER["SCRIPT_NAME"],"module.php")===false) {
 require_once'ra_form.php';
 require_once'config.php';
 
-global $confighelpfile, $LANGUAGE;
 global $pgv_lang;
-require $confighelpfile["english"];
-if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
+loadLangFile("pgv_confighelp");
+
 /**
  * @uses ra_form
  */

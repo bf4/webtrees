@@ -4,7 +4,7 @@
  * to keep bookmarks, see a list of upcoming events, etc.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,8 +45,7 @@ require_once("includes/index_cache.php");
  * @global $PGV_BLOCKS
  */
 
-require $confighelpfile["english"];
-if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
+loadLangFile("pgv_confighelp");
 
 global $pgv_lang, $PGV_USE_HELPIMG, $PGV_IMAGES, $PGV_IMAGE_DIR, $TEXT_DIRECTION;
 global $GEDCOM_TITLE;

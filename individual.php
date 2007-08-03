@@ -29,8 +29,7 @@
 require_once("includes/controllers/individual_ctrl.php");
 require_once("includes/serviceclient_class.php");
 
-if (file_exists("modules/googlemap/".$pgv_language["english"])) require("modules/googlemap/".$pgv_language["english"]);
-if (file_exists("modules/googlemap/".$pgv_language[$LANGUAGE])) require("modules/googlemap/".$pgv_language[$LANGUAGE]);
+loadLangFile("gm_lang");	// Load GoogleMap language file
 if (file_exists("modules/lightbox/".$pgv_language["english"])) require("modules/lightbox/".$pgv_language["english"]);
 if (file_exists("modules/lightbox/".$pgv_language[$LANGUAGE])) require("modules/lightbox/".$pgv_language[$LANGUAGE]);
 
@@ -60,7 +59,7 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 		<?php
 			print PrintReady($controller->indi->getName());
 			print "&nbsp;&nbsp;";
-			if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+			if ($TEXT_DIRECTION=="rtl") print getRLM();
 			print "(".$controller->pid.")";
 			if (userIsAdmin(getUserName())) {
 				$pgvuser=getUserByGedcomId($controller->pid, $GEDCOM);
@@ -68,7 +67,7 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 					print " (<a href=\"useradmin.php?action=edituser&username={$pgvuser['username']}\">{$pgvuser['username']}</a>)";
 				}
 			}
-			if ($TEXT_DIRECTION=="rtl") print "&rlm;";
+			if ($TEXT_DIRECTION=="rtl") print getRLM();
 		?>
 		</span><br />
 		<?php if (strlen($controller->indi->getAddName()) > 0) print "<span class=\"name_head\">".PrintReady($controller->indi->getAddName())."</span><br />"; ?>

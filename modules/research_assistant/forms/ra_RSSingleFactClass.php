@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage DataModel
- * @version $Id: person_class.php 517 2006-10-19 22:32:22Z opus27 $
+ * @version $Id$
  * @author Christopher Stolworthy
  */
 

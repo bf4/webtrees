@@ -26,10 +26,9 @@
  * @version $Id$
  */
  
-// -- include config file
 require("config.php");
-require $confighelpfile["english"];
-if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
+
+loadLangFile("pgv_confighelp");
 
 global $PGV_IMAGES, $faqs;
 
@@ -224,15 +223,7 @@ if ($action == "edit") {
 }
 
 if ($action == "show") {
-	// Load FAQ list from language files
-	if (file_exists($faqlistfile["english"])) {
-		require $faqlistfile["english"];
-		if (file_exists($extrafile["english"])) require $extrafile["english"];
-	}
-	if ($LANGUAGE!="english" && file_exists($faqlistfile[$LANGUAGE])) {
-		require $faqlistfile[$LANGUAGE];
-		if (file_exists($extrafile[$LANGUAGE])) require $extrafile[$LANGUAGE];
-	}
+	loadLangFile("pgv_faqlib");	// Load FAQ library from language files
 	
 	$faqs = get_faq_data();
 	print "<table class=\"list_table width100\">";

@@ -3,7 +3,7 @@
  * phpGedView Research Assistant Tool - United Kingdom Census 1841 File
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: Birth_Information.php 200 2005-11-09 20:37:48Z jporter $
+ * @version $Id$
  * @author Brandon Gagnon
  * @adapted from US Census 1880 for UK by Nigel Osborne
  */

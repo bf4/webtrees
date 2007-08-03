@@ -1214,7 +1214,7 @@ function AddToChangeLog($LogString, $ged="") {
 //----------------------------------- addMessage
 //-- stores a new message in the database
 function addMessage($message) {
-	global $TBLPREFIX, $CONTACT_METHOD, $pgv_lang,$CHARACTER_SET, $LANGUAGE, $PGV_STORE_MESSAGES, $SERVER_URL, $pgv_language, $PGV_SIMPLE_MAIL, $WEBMASTER_EMAIL, $DBCONN;
+	global $TBLPREFIX, $CONTACT_METHOD, $pgv_lang,$CHARACTER_SET, $LANGUAGE, $PGV_STORE_MESSAGES, $SERVER_URL, $PGV_SIMPLE_MAIL, $WEBMASTER_EMAIL, $DBCONN;
 	global $TEXT_DIRECTION, $TEXT_DIRECTION_array, $DATE_FORMAT, $DATE_FORMAT_array, $TIME_FORMAT, $TIME_FORMAT_array, $WEEK_START, $WEEK_START_array, $NAME_REVERSE, $NAME_REVERSE_array;
 	global $PHPGEDVIEW_EMAIL;
 

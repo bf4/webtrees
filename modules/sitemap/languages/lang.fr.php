@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage SiteMap
- * @version $Id:$
+ * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
   print "You cannot access a language file directly.";
@@ -29,28 +29,28 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 // Admin menu
-$pgv_lang["generate_sitemap"]           = "Générer mes fichiers 'Sitemap'";
+$pgv_lang["generate_sitemap"]           = "GÃ©nÃ©rer mes fichiers 'Sitemap'";
 
 // Sitemap pages
-$pgv_lang["selected_item"]              = "Eléments à inclure dans Sitemap:";
-$pgv_lang["gedcoms_selected"]           = "Fichiers GEDCOM à prendre en compte:";
-$pgv_lang["sitemaps_generated"]         = "Les 'Sitemaps' suivants ont été générés et peuvent ête téléchargés:";
-$pgv_lang["sitemaps_placement"]         = "Placer tous les fichiers à la racine de votre installation PhpGedView.";
+$pgv_lang["selected_item"]              = "ElÃ©ments Ã  inclure dans Sitemap:";
+$pgv_lang["gedcoms_selected"]           = "Fichiers GEDCOM Ã  prendre en compte:";
+$pgv_lang["sitemaps_generated"]         = "Les 'Sitemaps' suivants ont Ã©tÃ© gÃ©nÃ©rÃ©s et peuvent Ãªte tÃ©lÃ©chargÃ©s:";
+$pgv_lang["sitemaps_placement"]         = "Placer tous les fichiers Ã  la racine de votre installation PhpGedView.";
 $pgv_lang["sm_indi_info"]               = "Information Individu";
 $pgv_lang["sm_family_info"]             = "Information Famille";
 $pgv_lang["sm_individual_list"]         = "Liste des individus";
 $pgv_lang["sm_family_list"]             = "Liste des familles";
-$pgv_lang["sm_item"]                    = "Elément";
-$pgv_lang["sm_priority"]                = "Priorité";
-$pgv_lang["sm_updates"]                 = "Mises à jour";
+$pgv_lang["sm_item"]                    = "ElÃ©ment";
+$pgv_lang["sm_priority"]                = "PrioritÃ©";
+$pgv_lang["sm_updates"]                 = "Mises Ã  jour";
 $pgv_lang["sm_always"]                  = "toujours";
 $pgv_lang["sm_hourly"]                  = "chaque heure";
 $pgv_lang["sm_daily"]                   = "chaque jour";
 $pgv_lang["sm_weekly"]                  = "chaque semaine";
 $pgv_lang["sm_monthly"]                 = "chaque mois";
-$pgv_lang["sm_yearly"]                  = "chaque année";
+$pgv_lang["sm_yearly"]                  = "chaque annÃ©e";
 $pgv_lang["sm_never"]                   = "jamais";
-$pgv_lang["sm_generate"]                = "Générer";
-$pgv_lang["gedcoms_privacy"]            = "Pas de lien vers les détails privés";
+$pgv_lang["sm_generate"]                = "GÃ©nÃ©rer";
+$pgv_lang["gedcoms_privacy"]            = "Pas de lien vers les dÃ©tails privÃ©s";
 
 ?>

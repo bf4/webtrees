@@ -1271,24 +1271,34 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
   if (empty($listFormat)) $listFormat = $SURNAME_LIST_STYLE;
 
   if ($listFormat=="style3") {
-	// Requested style is "cloud", where the surnames are simply a list of names (with links),
+	// Requested style is "cloud", where the surnames are a list of names (with links), 
 	// and the font size used for each name depends on the number of occurrences of this name
-	// in the database.  Note that the surname count doesn't display in this format.
+	// in the database - generally known as a 'tag cloud'.
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
-	echo "<table id=\"".$table_id."\" class=\"list_table center\">";
+	echo "<table id=\"".$table_id."\" class=\"tag_cloud_table \">";
 	//-- table body
 	echo "<tr>";
-	echo "<td class=\"list_value_wrap\">";
+	echo "<td class=\"tag_cloud\">";
+	//-- Calculate range for font sizing
+	$max_tag = 0;
+	$font_tag = 0;
+	foreach($datalist as $key => $value) {
+		if (!isset($value["name"])) break;
+		if ($value["match"]>$max_tag)
+			$max_tag = $value["match"];
+	}
+	$font_tag = $max_tag / 6;
+	//-- Print each name
 	foreach($datalist as $key => $value) {
 		if (!isset($value["name"])) break;
 		$surn = $value["name"];
 		if ($target=="FAM") $url = "famlist.php";	else $url = "indilist.php";
 		$url .= "?ged=".$GEDCOM."&amp;surname=".urlencode($surn);
 		if (empty($surn) || trim("@".$surn,"_")=="@" || $surn=="@N.N.") $surn = $pgv_lang["NN"];
-		$fontsize = "+".floor($value["match"]/$COMMON_NAMES_THRESHOLD);
+		$fontsize = ceil($value["match"]/$font_tag);
 		echo " &nbsp;<a href=\"".$url."\" class=\"list_item\" title=\"".PrintReady($surn." (".$value["match"].")")."\">"
-		."<font size=\"".$fontsize."\">".PrintReady($surn)."</font></a>&thinsp;<small>".$value["match"]."</small>&nbsp; ";
+		."<font size=\"".$fontsize."\">".PrintReady($surn)."</font>&nbsp;<span class=\"tag_cloud_sub\">(".$value["match"].")</span></a>&nbsp;";
 	}
 	echo "</td>";
 	echo "</tr>\n";
@@ -1296,7 +1306,7 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 	echo "</table>\n";
 	return;
   }
-
+  
     // Requested style isn't "cloud".  In this case, we'll produce a sortable list.
 	require_once("js/sorttable.js.htm");
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID

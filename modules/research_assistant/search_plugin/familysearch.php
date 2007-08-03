@@ -5,7 +5,7 @@
  * This is a plug-in file for the Auto search Assistant
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version 
+ * @version $Id$
  * @package PhpGedView
  * @subpackage Research Assistant
  * @Author Dparker
@@ -31,9 +31,6 @@
  
 require_once("includes/person_class.php");
 require_once("includes/family_class.php");
-//require("modules/research_assistant/languages/lang.en.php");
-//global $lang_short_cut, $LANGUAGE;
-//if (file_exists("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php")) require("modules/research_assistant/languages/.".$lang_short_cut[$LANGUAGE].".php");
 
 function autosearch_options()
 {

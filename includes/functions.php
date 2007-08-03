@@ -1749,10 +1749,10 @@ function sort_facts(&$arr) {
 	for ($i=0; $i<count($arr)-1; ++$i)
 		for ($j=count($arr)-1; $j>$i; --$j)
 			if (compare_facts_date($arr[$i],$arr[$j])>0) {
-				$tmp=$arr[$j];
-				for ($k=$j; $k>$i; --$k)
-					$arr[$k]=$arr[$k-1];
-				$arr[$i]=$tmp;
+				$tmp=$arr[$i];
+				for ($k=$i; $k<$j; ++$k)
+					$arr[$k]=$arr[$k+1];
+				$arr[$j]=$tmp;
 			}
 	return;
 }
@@ -3081,6 +3081,118 @@ function check_in($logline, $filename, $dirname, $bInsert = false) {
 	return $bRetSts;
 }
 }
+
+/**
+ *		Load language files
+ *		Load the contents of a specified language file
+ *
+ *		The input parameter lists the types of language files that should be loaded.
+ *
+ *		This routine will always load the English version of the specified language
+ *		files first, followed by the same set of files in the currently active language.
+ *		After that, the "extra.xx.php" files will always be loaded, again trying for
+ *		English first.
+ *
+ *		To load the "help_text.xx.php" file set, you'd call this function thus:
+ *			loadLangFile("pgv_help");
+ *		To load the "configure_help.xx.php" and the "faqlist.xx.php" file set, the function
+ *		would be called thus:
+ *			loadLangFile("pgv_confighelp, pgv_faqlib");
+ *		To load all files, call the function this way:
+ *			loadLangFile("all"); 
+ */
+function loadLangFile($fileListNames="") {
+	global $pgv_language, $confighelpfile, $helptextfile, $factsfile, $adminfile, $editorfile, $countryfile, $faqlistfile, $extrafile;
+	global $LANGUAGE, $lang_short_cut;
+	global $pgv_lang, $countries, $altCountryNames, $faqlist;
+	
+	$allLists = "pgv_lang, pgv_confighelp, pgv_help, pgv_facts, pgv_admin, pgv_editor, pgv_country, pgv_faqlib";
+
+	// Empty list or "all" means "load complete file set"
+	if (empty($fileListNames) || $fileListNames=="all") $fileListNames = $allLists;
+
+	// Split input into a list of file types
+	$fileListNames = str_replace(array(";", " "), array(",", ""), $fileListNames);
+	$list = explode(",", $fileListNames);
+
+	// Work on each input file type 
+	foreach($list as $fileListName) {
+		switch ($fileListName) {
+		case "ra_lang":
+			$fileName1 = "modules/research_assistant/languages/lang.".$lang_short_cut["english"].".php";
+			$fileName2 = "modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php";
+			break;
+		case "ra_help":
+			$fileName1 = "modules/research_assistant/languages/help_text.".$lang_short_cut["english"].".php";
+			$fileName2 = "modules/research_assistant/languages/help_text.".$lang_short_cut[$LANGUAGE].".php";
+			break;
+		case "gm_lang":
+			$fileName1 = "modules/googlemap/languages/lang.".$lang_short_cut["english"].".php";
+			$fileName2 = "modules/googlemap/languages/lang.".$lang_short_cut[$LANGUAGE].".php";
+			break;
+		case "gm_help":
+			$fileName1 = "modules/googlemap/languages/help_text.".$lang_short_cut["english"].".php";
+			$fileName2 = "modules/googlemap/languages/help_text.".$lang_short_cut[$LANGUAGE].".php";
+			break;
+		case "sm_lang":
+			$fileName1 = "modules/sitemap/languages/lang.".$lang_short_cut["english"].".php";
+			$fileName2 = "modules/sitemap/languages/lang.".$lang_short_cut[$LANGUAGE].".php";
+			break;
+		case "sm_help":
+			$fileName1 = "modules/sitemap/languages/help_text.".$lang_short_cut["english"].".php";
+			$fileName2 = "modules/sitemap/languages/help_text.".$lang_short_cut[$LANGUAGE].".php";
+			break;
+		case "pgv_lang":
+			$fileName1 = $pgv_language["english"];
+			$fileName2 = $pgv_language[$LANGUAGE];
+			break;
+		case "pgv_confighelp":
+			$fileName1 = $confighelpfile["english"];
+			$fileName2 = $confighelpfile[$LANGUAGE];
+			break;
+		case "pgv_help":
+			$fileName1 = $helptextfile["english"];
+			$fileName2 = $helptextfile[$LANGUAGE];
+			break;
+		case "pgv_facts":
+			$fileName1 = $factsfile["english"];
+			$fileName2 = $factsfile[$LANGUAGE];
+			break;
+		case "pgv_admin":
+			$fileName1 = $adminfile["english"];
+			$fileName2 = $adminfile[$LANGUAGE];
+			break;
+		case "pgv_editor":
+			$fileName1 = $editorfile["english"];
+			$fileName2 = $editorfile[$LANGUAGE];
+			break;
+		case "pgv_country":
+			$fileName1 = $countryfile["english"];
+			$fileName2 = $countryfile[$LANGUAGE];
+			break;
+		case "pgv_faqlib":
+			$fileName1 = $faqlistfile["english"];
+			$fileName2 = $faqlistfile[$LANGUAGE];
+			break;
+		default:
+			return;
+		}
+		if (file_exists($fileName1)) require $fileName1;
+		if ($LANGUAGE!="english" && file_exists($fileName2)) require $fileName2;
+	}
+
+	// Now that the variables have been loaded in the desired language, load the optional 
+	// "extra.xx.php" file so that they can be over-ridden as desired by the site Admin
+	// For compatibility reasons, we'll first look for optional file "lang.xx.extra.php"
+	if (file_exists("languages/lang.".$lang_short_cut["english"].".extra.php")) require "languages/lang.".$lang_short_cut["english"].".extra.php";
+	if (file_exists($extrafile["english"])) require $extrafile["english"];
+	if ($LANGUAGE!="english") {
+		if (file_exists("languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php")) require "languages/lang.".$lang_short_cut[$LANGUAGE].".extra.php";
+		if (file_exists($extrafile[$LANGUAGE])) require $extrafile[$LANGUAGE];
+	}
+	
+}
+	
 
 /**
  *		Load language variables

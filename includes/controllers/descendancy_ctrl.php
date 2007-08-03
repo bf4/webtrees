@@ -3,7 +3,7 @@
  * Controller for the Descendancy Page
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006	John Finlay and Others
+ * Copyright (C) 2002 to 2007	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,8 +32,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 require_once("config.php");
 require_once 'includes/controllers/basecontrol.php';
 require_once("includes/functions_charts.php");
-require $confighelpfile["english"];
-if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
+
+loadLangFile("pgv_confighelp");
 
 require_once 'includes/menu.php';
 require_once 'includes/person_class.php';

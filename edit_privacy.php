@@ -28,10 +28,8 @@
  */
 require "config.php";
 require_once("includes/gedcomrecord.php");
-require $confighelpfile["english"];
-if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
-require $helptextfile["english"];
-if (file_exists($helptextfile[$LANGUAGE])) require $helptextfile[$LANGUAGE];
+loadLangFile("pgv_confighelp, pgv_help");
+
 if (empty($ged)) $ged = $GEDCOM;
 if ((!userGedcomAdmin(getUserName(), $ged))||(empty($ged))) {
 	header("Location: editgedcoms.php");

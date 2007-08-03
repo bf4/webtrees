@@ -3,7 +3,7 @@
  * Online UI for editing config.php site configuration variables
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,19 +35,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"menu.php")) {
 require( "modules/googlemap/defaultconfig.php" );
 if (file_exists('modules/googlemap/config.php')) require('modules/googlemap/config.php');
 
-require( $pgv_language["english"]);
-if (file_exists( $pgv_language[$LANGUAGE])) require  $pgv_language[$LANGUAGE];
-require $confighelpfile["english"];
-if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
-require $helptextfile["english"];
-if (file_exists($helptextfile[$LANGUAGE])) require $helptextfile[$LANGUAGE];
-require_once($factsfile["english"]);
-if (file_exists( $factsfile[$LANGUAGE])) require_once $factsfile[$LANGUAGE];
-
-require( "modules/googlemap/".$pgv_language["english"]);
-if (file_exists( "modules/googlemap/".$pgv_language[$LANGUAGE])) require  "modules/googlemap/".$pgv_language[$LANGUAGE];
-require( "modules/googlemap/".$helptextfile["english"]);
-if (file_exists("modules/googlemap/".$helptextfile[$LANGUAGE])) require "modules/googlemap/".$helptextfile[$LANGUAGE];
+loadLangFile("pgv_lang, pgv_confighelp, pgv_help, pgv_facts, gm_lang, gm_help");
 
 if (!isset($action)) $action="";
 if (!isset($parent)) $parent=0;

@@ -50,9 +50,8 @@ ini_set('register_globals', 'Off');
 require "config.php";
 require_once "includes/functions_import.php";
 require_once "includes/functions_export.php";
-require $confighelpfile["english"];
-if (file_exists($confighelpfile[$LANGUAGE]))
-require $confighelpfile[$LANGUAGE];
+
+loadLangFile("pgv_confighelp");
 
 if (!userGedcomAdmin(getUserName())) {
 	header("Location: login.php?url=uploadgedcom.php");

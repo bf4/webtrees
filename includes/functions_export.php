@@ -32,248 +32,214 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 /*
  * Create a header for a (newly-created or already-imported) gedcom file.
  */
-function gedcom_header($gedfile)
+function gedcom_header($gedfile, $CRLF="\r\n")
 {
 	global $CHARACTER_SET, $GEDCOMS, $VERSION, $VERSION_RELEASE, $pgv_lang, $TBLPREFIX;
 
 	// Default values for a new header
-	$SOUR="1 SOUR PhpGedView\r\n2 NAME PhpGedView Online Genealogy\r\n2 VERS $VERSION $VERSION_RELEASE\r\n";
-	$DEST="1 DEST DISKETTE\r\n";
-	$DATE="1 DATE ".strtoupper(date("d M Y"))."\r\n2 TIME ".date("H:i:s")."\r\n";
-	$GEDC="1 GEDC\r\n2 VERS 5.5.1\r\n2 FORM Lineage-Linked\r\n";
-	$CHAR="1 CHAR $CHARACTER_SET\r\n";
-	$FILE="1 FILE $gedfile\r\n";
+	$HEAD="0 HEAD{$CRLF}";
+	$SOUR="1 SOUR PhpGedView{$CRLF}2 NAME PhpGedView Online Genealogy{$CRLF}2 VERS {$VERSION} {$VERSION_RELEASE}{$CRLF}";
+	$DEST="1 DEST DISKETTE{$CRLF}";
+	$DATE="1 DATE ".strtoupper(date("d M Y")).$CRLF."2 TIME ".date("H:i:s").$CRLF;
+	$GEDC="1 GEDC{$CRLF}2 VERS 5.5.1{$CRLF}2 FORM Lineage-Linked{$CRLF}";
+	$CHAR="1 CHAR {$CHARACTER_SET}{$CRLF}";
+	$FILE="1 FILE {$gedfile}{$CRLF}";
 	$LANG="";
-	$PLAC="1 PLAC\r\n2 FORM ".$pgv_lang["default_form"]."\r\n";
+	$PLAC="1 PLAC{$CRLF}2 FORM {$pgv_lang['default_form']}{$CRLF}";
 	$COPR="";
 	$SUBN="";
-	$SUBM="1 SUBM @SUBM@\r\n0 @SUBM@ SUBM\r\n1 NAME ".getUserName()."\r\n"; // The SUBM record is mandatory
+	$SUBM="1 SUBM @SUBM@{$CRLF}0 @SUBM@ SUBM{$CRLF}1 NAME ".getUserName().$CRLF; // The SUBM record is mandatory
 
 	// Preserve some values from the original header
 	if (isset($GEDCOMS[$gedfile])) {
 		$head=find_gedcom_record("HEAD");
 		if (preg_match("/(1 CHAR [^\r\n]+)/", $head, $match))
-			$CHAR=$match[1]."\r\n";
+			$CHAR=$match[1].$CRLF;
 		if (preg_match("/1 PLAC[\r\n]+2 FORM ([^\r\n]+)/", $head, $match))
-			$PLAC="1 PLAC\r\n2 FORM ".$match[1]."\r\n";
+			$PLAC="1 PLAC{$CRLF}2 FORM {$match[1]}{$CRLF}";
 		if (preg_match("/(1 LANG [^\r\n]+)/", $head, $match))
-			$LANG=$match[1]."\r\n";
+			$LANG=$match[1].$CRLF;
 		if (preg_match("/(1 SUBN [^\r\n]+)/", $head, $match))
-			$SUBN=$match[1]."\r\n";
+			$SUBN=$match[1].$CRLF;
 		if (preg_match("/(1 COPR [^\r\n]+)/", $head, $match))
-			$COPR=$match[1]."\r\n";
+			$COPR=$match[1].$CRLF;
 		// Link to SUBM/SUBN records, if they exist
 		$sql="SELECT o_id FROM ${TBLPREFIX}other WHERE o_type='SUBN' AND o_file=".$GEDCOMS[$gedfile]["id"];
 		$res=dbquery($sql);
-		if ($res!==false && !DB::isError($res)) {
+		if (!DB::isError($res)) {
 			if ($res->numRows()>0) {
 				$row=$res->fetchRow();
-				$SUBN="1 SUBN @".$row[0]."@\r\n";
+				$SUBN="1 SUBN @".$row[0]."@{$CRLF}";
 			}
 			$res->free();
 		}
 		$sql="SELECT o_id FROM ${TBLPREFIX}other WHERE o_type='SUBM' AND o_file=".$GEDCOMS[$gedfile]["id"];
 		$res=dbquery($sql);
-		if ($res!==false && !DB::isError($res)) {
+		if (!DB::isError($res)) {
 			if ($res->numRows()>0) {
 				$row=$res->fetchRow();
-				$SUBM="1 SUBM @".$row[0]."@\r\n";
+				$SUBM="1 SUBM @".$row[0]."@{$CRLF}";
 			}
 			$res->free();
 		}
 	}
 
-	return "0 HEAD\r\n".$SOUR.$DEST.$DATE.$GEDC.$CHAR.$FILE.$COPR.$LANG.$PLAC.$SUBN.$SUBM;
+	return $HEAD.$SOUR.$DEST.$DATE.$GEDC.$CHAR.$FILE.$COPR.$LANG.$PLAC.$SUBN.$SUBM;
 }
 
-function print_gedcom($privatize_export='', $privatize_export_level='', $convert='', $remove='', $zip='', $gedout='') {
-		global $GEDCOMS, $GEDCOM, $ged, $VERSION, $VERSION_RELEASE, $pgv_lang, $CHARACTER_SET;
-		global $TBLPREFIX, $GEDCOM_ID_PREFIX, $SOURCE_ID_PREFIX, $FAM_ID_PREFIX, $REPO_ID_PREFIX, $MEDIA_ID_PREFIX;
+function print_gedcom($privatize_export, $privatize_export_level, $convert, $remove, $gedout, $CRLF="\r\n") {
+	global $GEDCOMS, $GEDCOM, $ged, $VERSION, $VERSION_RELEASE, $pgv_lang, $CHARACTER_SET;
+	global $TBLPREFIX, $GEDCOM_ID_PREFIX, $SOURCE_ID_PREFIX, $FAM_ID_PREFIX, $REPO_ID_PREFIX, $MEDIA_ID_PREFIX;
 
-		if ($privatize_export == "yes") {
-			create_export_user($privatize_export_level);
-			if (isset ($_SESSION)) {
-				$_SESSION["org_user"] = $_SESSION["pgv_user"];
-				$_SESSION["pgv_user"] = "export";
-			}
-			if (isset ($HTTP_SESSION_VARS)) {
-				$HTTP_SESSION_VARS["org_user"] = $HTTP_SESSION_VARS["pgv_user"];
-				$HTTP_SESSION_VARS["pgv_user"] = "export";
-			}
+	if ($privatize_export == "yes") {
+		create_export_user($privatize_export_level);
+		if (isset ($_SESSION)) {
+			$_SESSION["org_user"] = $_SESSION["pgv_user"];
+			$_SESSION["pgv_user"] = "export";
 		}
-
-		$GEDCOM = $ged;
-
-		$head=gedcom_header($ged);
-		if ($convert == "yes") {
-			$head = preg_replace("/UTF-8/", "ANSI", $head);
-			$head = utf8_decode($head);
-		}
-		$head = remove_custom_tags($head, $remove);
-		if ($zip == "yes")
-			fwrite($gedout, $head);
-		else
-			print $head;
-
-		$sql = "SELECT i_gedcom, REPLACE(i_id,'$GEDCOM_ID_PREFIX','')+0 as id FROM " . $TBLPREFIX . "individuals WHERE i_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY id";
-		$res = dbquery($sql);
-		while ($row = $res->fetchRow()) {
-			$rec = trim($row[0]) . "\r\n";
-			$rec = remove_custom_tags($rec, $remove);
-			if ($privatize_export == "yes")
-				$rec = privatize_gedcom($rec);
-			if ($convert == "yes")
-				$rec = utf8_decode($rec);
-			if ($zip == "yes")
-				fwrite($gedout, $rec);
-			else
-				print $rec;
-		}
-		$res->free();
-
-		$sql = "SELECT f_gedcom, REPLACE(f_id,'$FAM_ID_PREFIX','')+0 as id FROM " . $TBLPREFIX . "families WHERE f_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY id";
-		$res = dbquery($sql);
-		while ($row = $res->fetchRow()) {
-			$rec = trim($row[0]) . "\r\n";
-			$rec = remove_custom_tags($rec, $remove);
-			if ($privatize_export == "yes")
-				$rec = privatize_gedcom($rec);
-			if ($convert == "yes")
-				$rec = utf8_decode($rec);
-			if ($zip == "yes")
-				fwrite($gedout, $rec);
-			else
-				print $rec;
-		}
-		$res->free();
-
-		$sql = "SELECT s_gedcom, REPLACE(s_id,'$SOURCE_ID_PREFIX','')+0 as id FROM " . $TBLPREFIX . "sources WHERE s_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY id";
-		$res = dbquery($sql);
-		while ($row = $res->fetchRow()) {
-			$rec = trim($row[0]) . "\r\n";
-			$rec = remove_custom_tags($rec, $remove);
-			if ($privatize_export == "yes")
-				$rec = privatize_gedcom($rec);
-			if ($convert == "yes")
-				$rec = utf8_decode($rec);
-			if ($zip == "yes")
-				fwrite($gedout, $rec);
-			else
-				print $rec;
-		}
-		$res->free();
-
-		$sql = "SELECT o_gedcom, o_type, REPLACE(o_id,'$REPO_ID_PREFIX','')+0 as id FROM " . $TBLPREFIX . "other WHERE o_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY id";
-		$res = dbquery($sql);
-		while ($row = $res->fetchRow()) {
-			$rec = trim($row[0]) . "\r\n";
-			$key = $row[1];
-			if (($key != "HEAD") && ($key != "TRLR")) {
-				$rec = remove_custom_tags($rec, $remove);
-				if ($privatize_export == "yes")
-					$rec = privatize_gedcom($rec);
-				if ($convert == "yes")
-					$rec = utf8_decode($rec);
-				if ($zip == "yes")
-					fwrite($gedout, $rec);
-				else
-					print $rec;
-			}
-		}
-		$res->free();
-
-		$sql = "SELECT m_gedrec, REPLACE(m_media,'$MEDIA_ID_PREFIX','')+0 as id FROM " . $TBLPREFIX . "media WHERE m_gedfile=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY id";
-		$res = dbquery($sql);
-		while ($row = $res->fetchRow()) {
-			$rec = trim($row[0]) . "\r\n";
-			$rec = remove_custom_tags($rec, $remove);
-			if ($privatize_export == "yes")
-				$rec = privatize_gedcom($rec);
-			if ($convert == "yes")
-				$rec = utf8_decode($rec);
-			if ($zip == "yes")
-				fwrite($gedout, $rec);
-			else
-				print $rec;
-		}
-		$res->free();
-
-		if ($zip == "yes")
-			fwrite($gedout, "0 TRLR\r\n");
-		else
-			print "0 TRLR\r\n";
-
-		if ($privatize_export == "yes") {
-			if (isset ($_SESSION)) {
-				$_SESSION["pgv_user"] = $_SESSION["org_user"];
-			}
-			if (isset ($HTTP_SESSION_VARS)) {
-				$HTTP_SESSION_VARS["pgv_user"] = $HTTP_SESSION_VARS["org_user"];
-			}
-			deleteuser("export");
+		if (isset ($HTTP_SESSION_VARS)) {
+			$HTTP_SESSION_VARS["org_user"] = $HTTP_SESSION_VARS["pgv_user"];
+			$HTTP_SESSION_VARS["pgv_user"] = "export";
 		}
 	}
-	function print_gramps($privatize_export='', $privatize_export_level='', $convert='', $remove='', $zip='', $gedout='') {
-		global $GEDCOMS, $GEDCOM, $ged, $VERSION, $VERSION_RELEASE, $pgv_lang;
-		global $TBLPREFIX;
 
-		require_once ("includes/GEDownloadGedcom.php");
-		$geDownloadGedcom = new GEDownloadGedcom();
-		$geDownloadGedcom->begin_xml();
+	$GEDCOM = $ged;
 
-		$sql = "SELECT i_gedcom, i_id FROM " . $TBLPREFIX . "individuals WHERE i_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY i_id";
-		$res = dbquery($sql);
-		while ($row = $res->fetchRow()) {
-			$rec = trim($row[0]) . "\r\n";
-			$rec = remove_custom_tags($rec, $remove);
-			$geDownloadGedcom->create_person($rec, $row[1]);
-		}
-		$res->free();
-
-		$sql = "SELECT f_gedcom, f_id FROM " . $TBLPREFIX . "families WHERE f_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY f_id";
-		$res = dbquery($sql);
-		while ($row = $res->fetchRow()) {
-			$rec = trim($row[0]) . "\r\n";
-			$rec = remove_custom_tags($rec, $remove);
-			$geDownloadGedcom->create_family($rec, $row[1]);
-		}
-		$res->free();
-
-		$sql = "SELECT s_gedcom, s_id FROM " . $TBLPREFIX . "sources WHERE s_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY s_id";
-		$res = dbquery($sql);
-		while ($row = $res->fetchRow()) {
-			$rec = trim($row[0]) . "\r\n";
-			$rec = remove_custom_tags($rec, $remove);
-			$geDownloadGedcom->create_source($row[1], $rec);
-		}
-		$res->free();
-
-		$sql = "SELECT m_gedrec, m_media FROM " . $TBLPREFIX . "media WHERE m_gedfile=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY m_media";
-		$res = dbquery($sql);
-		
-		while ($row = $res->fetchRow()) {
-			$rec = trim($row[0]) . "\r\n";
-			$rec = remove_custom_tags($rec, $remove);
-			$mediaID = get_id_from_record($rec);
-			$geDownloadGedcom->create_media($mediaID,$rec, $row[1]);
-		}
-		$res->free();
-		if($zip !== "no")
-		{
-			fwrite($gedout,$geDownloadGedcom->dom->saveXML());
-		}
-		else
-			print $geDownloadGedcom->dom->saveXML();
-			//$geDownloadGedcom->validate($geDownloadGedcom->dom);
+	$head=gedcom_header($ged, $CRLF);
+	if ($convert == "yes") {
+		$head = preg_replace("/UTF-8/", "ANSI", $head);
+		$head = utf8_decode($head);
 	}
+	$head = remove_custom_tags($head, $remove);
+	fwrite($gedout, $head);
+
+	$sql = "SELECT i_gedcom FROM {$TBLPREFIX}individuals WHERE i_file={$GEDCOMS[$GEDCOM]['id']} ORDER BY REPLACE(i_id,'{$GEDCOM_ID_PREFIX}','')+0";
+	$res = dbquery($sql);
+	while ($row = $res->fetchRow()) {
+		$rec = preg_replace('/[\r\n]+/', $CRLF, $row[0]).$CRLF;
+		$rec = remove_custom_tags($rec, $remove);
+		if ($privatize_export == "yes")
+			$rec = privatize_gedcom($rec);
+		if ($convert == "yes")
+			$rec = utf8_decode($rec);
+		fwrite($gedout, $rec);
+	}
+	$res->free();
+
+	$sql = "SELECT f_gedcom FROM {$TBLPREFIX}families WHERE f_file={$GEDCOMS[$GEDCOM]['id']} ORDER BY REPLACE(f_id,'{$FAM_ID_PREFIX}','')+0";
+	$res = dbquery($sql);
+	while ($row = $res->fetchRow()) {
+		$rec = preg_replace('/[\r\n]+/', $CRLF, $row[0]).$CRLF;
+		$rec = remove_custom_tags($rec, $remove);
+		if ($privatize_export == "yes")
+			$rec = privatize_gedcom($rec);
+		if ($convert == "yes")
+			$rec = utf8_decode($rec);
+		fwrite($gedout, $rec);
+	}
+	$res->free();
+
+	$sql = "SELECT s_gedcom FROM {$TBLPREFIX}sources WHERE s_file={$GEDCOMS[$GEDCOM]['id']} ORDER BY REPLACE(s_id,'{$SOURCE_ID_PREFIX}','')+0";
+	$res = dbquery($sql);
+	while ($row = $res->fetchRow()) {
+		$rec = preg_replace('/[\r\n]+/', $CRLF, $row[0]).$CRLF;
+		$rec = remove_custom_tags($rec, $remove);
+		if ($privatize_export == "yes")
+			$rec = privatize_gedcom($rec);
+		if ($convert == "yes")
+			$rec = utf8_decode($rec);
+		fwrite($gedout, $rec);
+	}
+	$res->free();
+
+	$sql = "SELECT o_gedcom FROM {$TBLPREFIX}other WHERE o_file={$GEDCOMS[$GEDCOM]['id']} AND o_type!='HEAD' AND o_type!='TRLR' ORDER BY REPLACE(o_id,'{$REPO_ID_PREFIX}','')+0";
+	$res = dbquery($sql);
+	while ($row = $res->fetchRow()) {
+		$rec = preg_replace('/[\r\n]+/', $CRLF, $row[0]).$CRLF;
+		$rec = remove_custom_tags($rec, $remove);
+		if ($privatize_export == "yes")
+			$rec = privatize_gedcom($rec);
+		if ($convert == "yes")
+			$rec = utf8_decode($rec);
+		fwrite($gedout, $rec);
+	}
+	$res->free();
+
+	$sql = "SELECT m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile={$GEDCOMS[$GEDCOM]['id']} ORDER BY REPLACE(m_media,'{$MEDIA_ID_PREFIX}','')+0";
+	$res = dbquery($sql);
+	while ($row = $res->fetchRow()) {
+		$rec = preg_replace('/[\r\n]+/', $CRLF, $row[0]).$CRLF;
+		$rec = remove_custom_tags($rec, $remove);
+		if ($privatize_export == "yes")
+			$rec = privatize_gedcom($rec);
+		if ($convert == "yes")
+			$rec = utf8_decode($rec);
+		fwrite($gedout, $rec);
+	}
+	$res->free();
+
+	fwrite($gedout, "0 TRLR{$CRLF}");
+
+	if ($privatize_export == "yes") {
+		if (isset ($_SESSION)) {
+			$_SESSION["pgv_user"] = $_SESSION["org_user"];
+		}
+		if (isset ($HTTP_SESSION_VARS)) {
+			$HTTP_SESSION_VARS["pgv_user"] = $HTTP_SESSION_VARS["org_user"];
+		}
+		deleteuser("export");
+	}
+}
+
+function print_gramps($privatize_export, $privatize_export_level, $convert, $remove, $gedout, $CRLF="\r\n") {
+	global $GEDCOMS, $GEDCOM, $ged, $VERSION, $VERSION_RELEASE, $pgv_lang;
+	global $TBLPREFIX;
+	global $CRLF;
+
+	require_once ("includes/GEDownloadGedcom.php");
+	$geDownloadGedcom = new GEDownloadGedcom();
+	$geDownloadGedcom->begin_xml();
+
+	$sql = "SELECT i_gedcom, i_id FROM " . $TBLPREFIX . "individuals WHERE i_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY i_id";
+	$res = dbquery($sql);
+	while ($row = $res->fetchRow()) {
+		$rec = trim($row[0]).$CRLF;
+		$rec = remove_custom_tags($rec, $remove);
+		$geDownloadGedcom->create_person($rec, $row[1]);
+	}
+	$res->free();
+
+	$sql = "SELECT f_gedcom, f_id FROM " . $TBLPREFIX . "families WHERE f_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY f_id";
+	$res = dbquery($sql);
+	while ($row = $res->fetchRow()) {
+		$rec = trim($row[0]).$CRLF;
+		$rec = remove_custom_tags($rec, $remove);
+		$geDownloadGedcom->create_family($rec, $row[1]);
+	}
+	$res->free();
+
+	$sql = "SELECT s_gedcom, s_id FROM " . $TBLPREFIX . "sources WHERE s_file=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY s_id";
+	$res = dbquery($sql);
+	while ($row = $res->fetchRow()) {
+		$rec = trim($row[0]).$CRLF;
+		$rec = remove_custom_tags($rec, $remove);
+		$geDownloadGedcom->create_source($row[1], $rec);
+	}
+	$res->free();
+
+	$sql = "SELECT m_gedrec, m_media FROM " . $TBLPREFIX . "media WHERE m_gedfile=" . $GEDCOMS[$GEDCOM]['id'] . " ORDER BY m_media";
+	$res = dbquery($sql);
 	
-	function get_id_from_record($record)
-	{
-		
-		preg_match('~0 @(.*)@ (.*)~',$record, $varMatch);
-		return $varMatch[1];
+	while ($row = $res->fetchRow()) {
+		$rec = trim($row[0]).$CRLF;
+		$rec = remove_custom_tags($rec, $remove);
+		preg_match('/0 @(.*)@/',$rec, $varMatch);
+		$geDownloadGedcom->create_media($varMatch[1],$rec, $row[1]);
 	}
-	
+	$res->free();
+	fwrite($gedout,$geDownloadGedcom->dom->saveXML());
+}
+
 function um_export($proceed) {
 	global $INDEX_DIRECTORY, $TBLPREFIX, $DBCONN, $pgv_lang;
 	

@@ -1238,6 +1238,25 @@ a.showit:hover span {
 } 
 .iwstyle a:hover {
 }
+/* Tag Cloud styles*/
+.tag_cloud_table {
+	width:70%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.tag_cloud {
+	font-family: tahoma, arial, helvetica, sans-serif;
+	text-align: justify;
+	padding: 10px 5px 10px 15px; /* top right bottom left */
+}
+
+.tag_cloud_sub {
+	font-family: tahoma, arial, helvetica, sans-serif;
+	font-size: 8px;
+	color:#808080;
+}
+/* End of Tag Cloud styles*/
 
 /* Because the CSS file is only read once, the following two overriding classes MUST
    appear at the end of the entire CSS file.
