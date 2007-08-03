@@ -169,7 +169,7 @@ class UserMigrateControllerRoot extends BaseController {
 					$GEDCOM = $gedcom;
 					$gedname = $INDEX_DIRECTORY.$gedcom.".bak";
 					$gedout = fopen(filename_decode($gedname), "wb");
-					print_gedcom('', '', '', '', 'yes', $gedout);
+					print_gedcom('no', 'no', 'no', 'no', $gedout);
 					fclose($gedout);
 					$GEDCOM = $oldged;
 					$this->flist[] = $gedname;
