@@ -459,6 +459,7 @@ ignore_user_abort(false);
 
 if (empty($CONFIG_VERSION)) $CONFIG_VERSION = "2.65";
 if (empty($SERVER_URL)) $SERVER_URL = stripslashes("http://".$_SERVER["SERVER_NAME"].dirname($SCRIPT_NAME)."/");
+if (substr($SERVER_URL,-1)!="/") $SERVER_URL .= "/";	// make SURE that trailing "/" is present
 if (!isset($ALLOW_REMEMBER_ME)) $ALLOW_REMEMBER_ME = true;
 if (!isset($PGV_SIMPLE_MAIL)) $PGV_SIMPLE_MAIL = false;
 if (!isset($DBPERSIST)) $DBPERSIST = false;
