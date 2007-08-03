@@ -33,15 +33,15 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 $pgv_lang["clear_cache_succes"]		= "קיבצי cache הוסרו."; 
 $pgv_lang["clear_cache"]			= "cache נקה קיבצי"; 
-$pgv_lang["sanity_err0"]			= "Errors:"; //@@
-$pgv_lang["sanity_err1"]			= "You need to have PHP version 4.3 or higher."; //@@
-$pgv_lang["sanity_err2"]			= "The file or directory <i>#GLOBALS[whichFile]#</i> does not exist. Please verify that the file or directory exists, was not mis-named, and Read permissions are set correctly."; //@@
-$pgv_lang["sanity_err3"]			= "The file <i>#GLOBALS[whichFile]#</i> did not upload correctly. Please try to upload the file again."; //@@
-$pgv_lang["sanity_err4"]			= "The file <i>config.php</i> is corrupt."; //@@
-$pgv_lang["sanity_err5"]			= "The <i>config.php</i> file is not writable."; //@@
-$pgv_lang["sanity_err6"]			= "The <i>#GLOBALS[INDEX_DIRECTORY]#</i> directory is not writable."; //@@
-$pgv_lang["sanity_warn0"]			= "Warnings:"; //@@
-$pgv_lang["sanity_warn1"]			= "The <i>#GLOBALS[MEDIA_DIRECTORY]#</i> directory is not writable.  You will not be able to upload media files or generate thumbnails in PhpGedView."; //@@
+$pgv_lang["sanity_err0"]			= "שגיאות:"; 
+$pgv_lang["sanity_err1"]			= "אתה צריך מהדורת PHP 4.3 או גבוהה יותר.";
+$pgv_lang["sanity_err2"]			= "קובץ או תיקייה <i>#GLOBALS[whichFile]#</i> אינו קיים. בדוק שהקובץ או התיקייה קיים, ששמו נכון ושיש הרשאות קריאה."; 
+$pgv_lang["sanity_err3"]			= "קובץ <i>#GLOBALS[whichFile]#</i> לא הועלה בצורה נכונה. נשא להעלות את הקובץ שנית."; 
+$pgv_lang["sanity_err4"]			= "קובץ <i>config.php</i> אינו תקין."; 
+$pgv_lang["sanity_err5"]			= "קובץ <i>config.php</i> אינו בר כתיבה.";
+$pgv_lang["sanity_err6"]			= "תיקייה <i>#GLOBALS[INDEX_DIRECTORY]#</i> אינה ברת כתיבה."; 
+$pgv_lang["sanity_warn0"]			= "אזהרות:"; 
+$pgv_lang["sanity_warn1"]			= "תיקייה <i>#GLOBALS[MEDIA_DIRECTORY]#</i> אינה ברת כתיבה.  לא תוכל להעלות קיבצי מדיה או ליצור תמונות מזעריות ב-PhpGedView."; 
 $pgv_lang["sanity_warn2"]			= "The <i>#GLOBALS[MEDIA_DIRECTORY]#thumbs</i> directory is not writable.  You will not be able to upload thumbnails or generate thumbnails in PhpGedView."; //@@
 $pgv_lang["sanity_warn3"]			= "The GD imaging library does not exist. PhpGedView will still function, but some of the features, such as thumbnail generation and the circle diagram, will not work without the GD library.  Please see <a href='http://www.php.net/manual/en/ref.image.php'>http://www.php.net/manual/en/ref.image.php</a> for more information."; //@@
 $pgv_lang["sanity_warn4"]			= "The XML Parser library does not exist. PhpGedView will still function, but some of the features, such as report generation and web services, will not work without the XML Parser library. Please see <a href='http://www.php.net/manual/en/ref.xml.php'>http://www.php.net/manual/en/ref.xml.php</a> for more information."; //@@
