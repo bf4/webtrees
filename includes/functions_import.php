@@ -154,6 +154,20 @@ function import_record($indirec, $update = false) {
 		update_dates($gid, $indirec);
 	}
 
+	//-- import the ASSO links referenced in this record
+	$ct = preg_match_all("/\d ASSO @(.*)@/", $indirec, $match, PREG_SET_ORDER);
+	for($i=0; $i<$ct; $i++) {
+		$sql = "INSERT INTO ".$TBLPREFIX."assolinks (al_aid, al_gid, al_file) VALUES ('".$DBCONN->escapeSimple($match[$i][1])."','".$DBCONN->escapeSimple($gid)."','".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."')";
+		$res = dbquery($sql);
+	}
+	
+	//-- import the SOUR citations from this record
+	$ct = preg_match_all("/\d SOUR @(.*)@/", $indirec, $match, PREG_SET_ORDER);
+	for($i=0; $i<$ct; $i++) {
+		$sql = "INSERT INTO ".$TBLPREFIX."sourcelinks (sl_sid, sl_gid, sl_file) VALUES ('".$DBCONN->escapeSimple($match[$i][1])."','".$DBCONN->escapeSimple($gid)."','".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."')";
+		$res = dbquery($sql);
+	}
+
 	$newrec = update_media($gid, $indirec, $update);
 	if ($newrec != $indirec) {
 		$indirec = $newrec;
@@ -821,6 +835,8 @@ function setup_database() {
 	$has_other = false;
 	$has_sources = false;
 	$has_soundex = false;
+	$has_sourcelinks = false;
+	$has_assolinks = false;
 	
 	$sqlite = ($DBTYPE == "sqlite");
 
@@ -931,6 +947,12 @@ function setup_database() {
 					break;
 				case "soundex":
 					$has_soundex = true;
+					break;
+				case "sourcelinks":
+					$has_sourcelinks = true;
+					break;
+				case "assolinks":
+					$has_assolinks = true;
 					break;
 			}
 		}
@@ -1064,6 +1086,12 @@ function setup_database() {
 	}
 	if(!$has_soundex) {
 		create_soundex_table();
+	}
+	if(!$has_sourcelinks) {
+		create_sourcelinks_table();
+	}
+	if(!$has_assolinks) {
+		create_assolinks_table();
 	}
 	/*-- commenting out as it seems to cause more problems than it helps
 	$sql = "LOCK TABLE ".$TBLPREFIX."individuals WRITE, ".$TBLPREFIX."families WRITE, ".$TBLPREFIX."sources WRITE, ".$TBLPREFIX."other WRITE, ".$TBLPREFIX."places WRITE, ".$TBLPREFIX."users WRITE";
@@ -1248,6 +1276,8 @@ function create_names_table() {
 	$res = dbquery($sql);
 	$sql = "CREATE INDEX name_surn ON " . $TBLPREFIX . "names (n_surname)";
 	$res = dbquery($sql);
+	$sql = "CREATE INDEX name_file ON " . $TBLPREFIX . "names (n_file)";
+	$res = dbquery($sql);
 	if (isset($DEBUG) && $DEBUG==true) print "Successfully created names table.<br />\n";
 }
 /**
@@ -1269,6 +1299,8 @@ function create_remotelinks_table() {
 	$res = dbquery($sql);
 	$sql = "CREATE INDEX r_link_id ON " . $TBLPREFIX . "remotelinks (r_linkid)";
 	$res = dbquery($sql);
+	$sql = "CREATE INDEX r_file ON " . $TBLPREFIX . "remotelinks (r_file)";
+	$res = dbquery($sql);
 
 	if (isset($DEBUG) && $DEBUG==true) print $pgv_lang["created_remotelinks"] . "<br />\n";
 }
@@ -1289,6 +1321,8 @@ function create_soundex_table()
 	}
 	$sql = "CREATE INDEX sx_i_id_ix ON ".$TBLPREFIX."soundex (sx_i_id)";
 	$res = dbquery($sql);
+	$sql = "CREATE INDEX sx_file_ix ON " . $TBLPREFIX . "soundex (sx_file)";
+	$res = dbquery($sql);
 	if (isset($DEBUG) && $DEBUG==true) print "Successfully created soundex table.<br />\n";
 }
 /**
@@ -1308,7 +1342,7 @@ function create_media_table() {
 	}
 	$sql = "CREATE INDEX m_media ON " . $TBLPREFIX . "media (m_media)";
 	$res = dbquery($sql);
-	$sql = "CREATE INDEX m_media_id ON " . $TBLPREFIX . "media (m_media)";
+	$sql = "CREATE INDEX m_media_id ON " . $TBLPREFIX . "media (m_gedfile)";
 	$res = dbquery($sql);
 	if (isset($DEBUG) && $DEBUG==true) "Successfully created media table.<br />\n";
 }
@@ -1390,6 +1424,53 @@ function create_nextid_table() {
 	}
 	if (isset($DEBUG) && $DEBUG==true) print "Created nextid table.<br />\n";
 }
+
+/**
+ * Create the sourcelinks table
+ */
+function create_sourcelinks_table() {
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
+
+	$sql = "DROP TABLE " . $TBLPREFIX . "sourcelinks ";
+	$res = dbquery($sql, false);
+	$sql = "CREATE TABLE " . $TBLPREFIX . "sourcelinks (sl_sid VARCHAR(255), sl_gid VARCHAR(255), sl_file INT)";
+	$res = dbquery($sql);
+
+	if (DB :: isError($res)) {
+		exit;
+	}
+	$sql = "CREATE INDEX sl_sid_index ON " . $TBLPREFIX . "sourcelinks (sl_sid)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX sl_gid_index ON " . $TBLPREFIX . "sourcelinks (sl_gid)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX sl_file_index ON " . $TBLPREFIX . "sourcelinks (sl_file)";
+	$res = dbquery($sql);
+	if (isset($DEBUG) && $DEBUG==true) print "Created sourcelinks table.<br />\n";
+}
+
+/**
+ * Create the sourcelinks table
+ */
+function create_assolinks_table() {
+	global $TBLPREFIX, $pgv_lang, $DBCONN, $DBTYPE, $DEBUG;
+
+	$sql = "DROP TABLE " . $TBLPREFIX . "assolinks ";
+	$res = dbquery($sql, false);
+	$sql = "CREATE TABLE " . $TBLPREFIX . "assolinks (al_aid VARCHAR(255), al_gid VARCHAR(255), al_rela VARCHAR(255), al_file INT)";
+	$res = dbquery($sql);
+
+	if (DB :: isError($res)) {
+		exit;
+	}
+	$sql = "CREATE INDEX al_aid_index ON " . $TBLPREFIX . "assolinks (al_aid)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX al_gid_index ON " . $TBLPREFIX . "assolinks (al_gid)";
+	$res = dbquery($sql);
+	$sql = "CREATE INDEX al_file_index ON " . $TBLPREFIX . "assolinks (al_file)";
+	$res = dbquery($sql);
+	if (isset($DEBUG) && $DEBUG==true) print "Created assolinks table.<br />\n";
+}
+
 /**
  * delete a gedcom from the database
  *
@@ -1423,6 +1504,12 @@ function empty_database($FILE, $keepmedia=false) {
 	$res = dbquery($sql);
 
 	$sql = "DELETE FROM " . $TBLPREFIX . "dates WHERE d_file='$FILE'";
+	$res = dbquery($sql);
+
+	$sql = "DELETE FROM " . $TBLPREFIX . "sourcelinks WHERE sl_file='$FILE'";
+	$res = dbquery($sql);
+	
+	$sql = "DELETE FROM " . $TBLPREFIX . "assolinks WHERE al_file='$FILE'";
 	$res = dbquery($sql);
 
 	if (!$keepmedia) {
@@ -1706,6 +1793,12 @@ function update_record($indirec, $delete = false) {
 	$sql = "DELETE FROM " . $TBLPREFIX . "placelinks WHERE pl_gid='" . $DBCONN->escapeSimple($gid) . "' AND pl_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 	$res = dbquery($sql);
 
+	$sql = "DELETE FROM " . $TBLPREFIX . "sourcelinks WHERE sl_gid='" . $DBCONN->escapeSimple($gid) . "' AND sl_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+	$res = dbquery($sql);
+	
+	$sql = "DELETE FROM " . $TBLPREFIX . "assolinks WHERE (al_gid='" . $DBCONN->escapeSimple($gid) . "' OR al_aid='" . $DBCONN->escapeSimple($gid) . "') AND al_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+	$res = dbquery($sql);
+
 	$sql = "DELETE FROM " . $TBLPREFIX . "dates WHERE d_gid='" . $DBCONN->escapeSimple($gid) . "' AND d_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 	$res = dbquery($sql);
 
@@ -1747,6 +1840,9 @@ function update_record($indirec, $delete = false) {
 		} else
 			if ($type == "SOUR") {
 				$sql = "DELETE FROM " . $TBLPREFIX . "sources WHERE s_id LIKE '" . $DBCONN->escapeSimple($gid) . "' AND s_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+				$res = dbquery($sql);
+
+				$sql = "DELETE FROM " . $TBLPREFIX . "sourcelinks WHERE sl_sid='" . $DBCONN->escapeSimple($gid) . "' AND sl_file='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 				$res = dbquery($sql);
 
 			} else

@@ -832,7 +832,7 @@ function get_indi_list() {
 
 //-- get the assolist from the datastore
 function get_asso_list($type = "all", $ipid='') {
-	global $assolist, $GEDCOM;
+	global $assolist, $GEDCOM, $DBCONN;
 	global $TBLPREFIX, $ASSOLIST_RETRIEVED;
 
 	if ($ASSOLIST_RETRIEVED) return $assolist;
@@ -840,9 +840,8 @@ function get_asso_list($type = "all", $ipid='') {
 
 	$oldged = $GEDCOM;
 	if (($type == "all") || ($type == "fam")) {
-		$sql = "SELECT f_id, f_file, f_gedcom, f_husb, f_wife FROM ".$TBLPREFIX."families WHERE f_gedcom ";
-		if (!empty($pid)) $sql .= "LIKE '% ASSO @$ipid@%'";
-		else $sql .= "LIKE '% ASSO %'";
+		$sql = "SELECT f_id, f_file, f_gedcom, f_husb, f_wife FROM ".$TBLPREFIX."families, ".$TBLPREFIX."assolinks WHERE f_file=al_file AND f_id=al_gid ";
+		if (!empty($pid)) $sql .= "AND al_gid='".$DBCONN->escapeSimple($ipid)."'";
 		$res = dbquery($sql);
 
 		$ct = $res->numRows();
@@ -877,9 +876,8 @@ function get_asso_list($type = "all", $ipid='') {
 	}
 
 	if (($type == "all") || ($type == "indi")) {
-		$sql = "SELECT i_id, i_file, i_gedcom FROM ".$TBLPREFIX."individuals WHERE i_gedcom ";
-		if (!empty($pid)) $sql .= "LIKE '% ASSO @$ipid@%'";
-		else $sql .= "LIKE '% ASSO %'";
+		$sql = "SELECT i_id, i_file, i_gedcom FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."assolinks WHERE i_file=al_file AND i_id=al_gid ";
+		if (!empty($pid)) $sql .= "AND al_gid='".$DBCONN->escapeSimple($ipid)."'";
 		$res = dbquery($sql);
 
 		$ct = $res->numRows();

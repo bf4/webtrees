@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.2
+ - Added sourcelink and assolink tables [ 1718918 ] [ 1717381 ] (yalnifj)
  - Moved default config.php to config.dist (yalnifj)
  - Added [ 1649660 ] Place Hierarchy of Birth only places etc. (opus27)
  - Fixed [ 1701278 ] "Events of close.." Broken in Firefox if Valid xhtml used (opus27)

@@ -25,8 +25,13 @@
  * @version $Id: edit_interface.php 384 2006-08-30 16:51:24Z opus27 $
  */
 
-require("config.php");
-require("includes/functions_edit.php");
+require_once("config.php");
+require_once("includes/functions_edit.php");
+
+if (!userIsAdmin(getUserName())) {
+	header("Location: login.php?url=dir_editor.php");
+	exit;
+}
 
 Global $GEDCOMS;
 require("languages/countries.en.php");

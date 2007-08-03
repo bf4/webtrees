@@ -193,12 +193,27 @@ class Source extends GedcomRecord {
 	 * @return array
 	 */
 	function getSourceIndis() {
-		global $REGEXP_DB;
+		global $DBCONN, $indilist, $TBLPREFIX, $GEDCOM, $GEDCOMS;
 		if (!is_null($this->indilist)) return $this->indilist;
-		$query = "SOUR @".$this->xref."@";
-		if (!$REGEXP_DB) $query = "%".$query."%";
 
-		$this->indilist = search_indis($query);
+		$this->indilist = array();
+
+		$sql = "SELECT * FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."sourcelinks WHERE i_id=sl_gid AND i_file=sl_file AND sl_sid='".$DBCONN->escapeSimple($this->xref)."' AND sl_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."' ORDER BY i_surname";
+		$res = dbquery($sql);
+	
+		$ct = $res->numRows();
+		while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
+			$indi = array();
+			$indi["gedcom"] = $row["i_gedcom"];
+			$row = db_cleanup($row);
+			$indi["names"] = array(array($row["i_name"], $row["i_letter"], $row["i_surname"], "A"));
+			$indi["isdead"] = $row["i_isdead"];
+			$indi["gedfile"] = $row["i_file"];
+			$indilist[$row["i_id"]] = $indi;
+			$this->indilist[$row["i_id"]] = $indi;
+		}
+		$res->free();
+		
 		uasort($this->indilist, "itemsort");
 		
 		//-- load up the families with 1 query
@@ -227,12 +242,36 @@ class Source extends GedcomRecord {
 	 * @return array
 	 */
 	function getSourceFams() {
-		global $REGEXP_DB;
+		global $DBCONN, $famlist, $TBLPREFIX, $GEDCOM, $GEDCOMS;
 		if (!is_null($this->famlist)) return $this->famlist;
-		$query = "SOUR @".$this->xref."@";
-		if (!$REGEXP_DB) $query = "%".$query."%";
+		$this->famlist = array();
+		$sql = "SELECT * FROM ".$TBLPREFIX."families, ".$TBLPREFIX."sourcelinks WHERE sl_file=f_file AND sl_sid='".$DBCONN->escapeSimple($this->xref)."' AND sl_gid=f_id AND f_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
+		$res = dbquery($sql);
 
-		$this->famlist = search_fams($query);
+		$ct = $res->numRows();
+		while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
+			$fam = array();
+			$fam["gedcom"] = $row["f_gedcom"];
+			$row = db_cleanup($row);
+			$hname = get_sortable_name($row["f_husb"]);
+			$wname = get_sortable_name($row["f_wife"]);
+			$name = "";
+			if (!empty($hname)) $name = $hname;
+			else $name = "@N.N., @P.N.";
+	
+			if (!empty($wname)) $name .= " + ".$wname;
+			else $name .= " + @N.N., @P.N.";
+	
+			$fam["name"] = $name;
+			$fam["HUSB"] = $row["f_husb"];
+			$fam["WIFE"] = $row["f_wife"];
+			$fam["CHIL"] = $row["f_chil"];
+			$fam["gedfile"] = $row["f_file"];
+			$fam["numchil"] = $row["f_numchil"];
+			$famlist[$row["f_id"]] = $fam;
+			$this->famlist[$row["f_id"]] = $fam;
+		}
+		$res->free();
 		uasort($this->famlist, "itemsort");
 		return $this->famlist;
 	}
