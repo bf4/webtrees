@@ -1072,6 +1072,7 @@ $pgv_lang["welcome_text_auth_mode_1"]   =	"<b>BIENVENUE</b><br /><br />L'accès 
 $pgv_lang["welcome_text_auth_mode_2"]   =	"<b>BIENVENUE</b><br /><br />L'accès à ce site est réservé aux utilisateurs <b>autorisés</b>.<br />Si vous avez déjà un compte, vous pouvez vous connecter.<br /><br />Sinon, remplissez le formulaire.<br />Après vérification, l'administrateur acceptera ou refusera votre demande.<br />Vous recevrez un message d'information.";
 $pgv_lang["welcome_text_auth_mode_3"]   =	"<b>BIENVENUE</b><br /><br />L'accès à ce site est réservé aux utilisateurs <b>membres de la famille</b>.<br />Si vous avez déjà un compte, vous pouvez vous connecter.<br /><br />Sinon, remplissez le formulaire.<br />Après vérification, l'administrateur acceptera ou refusera votre demande.<br />Vous recevrez un message d'information.";
 $pgv_lang["welcome_text_cust_head"]     =	"<b>BIENVENUE</b><br /><br />L'accès à ce site est autorisé aux utilisateurs ayant un compte et un mot de passe.<br />";
+#pgv_lang["acceptable_use"]             = "<div class=\"largeError\">Notice:</div><div class=\"error\">By completing and submitting this form, you agree:<ul><li>to protect the privacy of living people listed on our site;</li><li>and in the text box below, to explain to whom you are related, or to provide us with information on someone who should be listed on our site.</li></ul></div>";
 
 
 //-- mygedview page
@@ -1079,8 +1080,9 @@ $pgv_lang["upcoming_events"]            = "Prochains anniversaires";
 $pgv_lang["living_or_all"]              = "Voir seulement les personnes vivantes ?";
 $pgv_lang["basic_or_all"]               = "Voir seulement Naissances, Mariages et Décès ?";
 $pgv_lang["style"]                      = "Style de présentation";
-$pgv_lang["style1"]                     = "Texte";
-#pgv_lang["style2"]                     = "Table";
+$pgv_lang["style1"]                     = "Liste";
+$pgv_lang["style2"]                     = "Table";
+$pgv_lang["style3"]                     = "Nuage de mots";
 $pgv_lang["cal_download"]               = "Afficher le bouton de téléchargement des évènements au format hcal ?";
 $pgv_lang["no_events_living"]           = "Aucun évènement pour une personne vivante dans les #pgv_lang[global_num1]# prochains jours.";
 $pgv_lang["no_events_living1"]          = "Aucun évènement pour une personne vivante pour demain.";
@@ -1544,6 +1546,7 @@ $pgv_lang["accesskey_viewing_advice_desc"]= "Astuces";
 $pgv_lang["add_faq_header"]             = "En-tête FAQ";
 $pgv_lang["add_faq_body"]               = "Corps FAQ";
 $pgv_lang["add_faq_order"]              = "Position FAQ";
+#pgv_lang["add_faq_visibility"]         = "FAQ Visibility";
 $pgv_lang["no_faq_items"]               = "FAQ vide.";
 $pgv_lang["position_item"]              = "Item no";
 $pgv_lang["faq_list"]                   = "Liste FAQ";
