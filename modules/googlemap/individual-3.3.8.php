@@ -5,7 +5,7 @@
  * Display all of the information about an individual
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005	John Finlay and Others
+ * Copyright (C) 2002 to 2007	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,14 +27,8 @@
  */
 
 require("config.php");
-require($PGV_BASE_DIRECTORY.$factsfile["english"]);
-if (file_exists($PGV_BASE_DIRECTORY.$factsfile[$LANGUAGE])) require($PGV_BASE_DIRECTORY.$factsfile[$LANGUAGE]);
 
-if (file_exists("modules/googlemap.php")) {
-    require( "modules/googlemap/".$pgv_language["english"]);
-    if (file_exists( "modules/googlemap/".$pgv_language[$LANGUAGE])) require  "modules/googlemap/".$pgv_language[$LANGUAGE];
-}
-
+loadLangFile("pgv_facts, gm_lang");
 
 if (empty($show_changes)) $show_changes = "yes";
 if (empty($action)) $action="";

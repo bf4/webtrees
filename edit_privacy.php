@@ -3,7 +3,7 @@
  * Edit Privacy Settings
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,10 +29,8 @@
 
 require "config.php";
 require_once("includes/gedcomrecord.php");
-require $confighelpfile["english"];
-if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
-require $helptextfile["english"];
-if (file_exists($helptextfile[$LANGUAGE])) require $helptextfile[$LANGUAGE];
+
+loadLangFile("pgv_confighelp, pgv_help");
 
 if (empty($ged)) $ged = $GEDCOM;
 

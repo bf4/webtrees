@@ -3,7 +3,7 @@
  * PopUp Window to provide users with a simple quick update form.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,8 +28,8 @@
 
 require_once("config.php");
 require_once("includes/functions_edit.php");
-@include_once("./languages/editor.en.php");
-@include_once("./languages/editor.".$lang_short_cut[$LANGUAGE].".php");
+
+loadLangFile("pgv_editor");
 
 if ($_SESSION["cookie_login"]) {
 	header("Location: login.php?type=simple&url=edit_interface.php");

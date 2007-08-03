@@ -3,7 +3,7 @@
  * Online UI for editing config.php site configuration variables
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,10 +28,7 @@
  */
 
 require_once "config.php";
-require_once $confighelpfile["english"];
-if (file_exists($confighelpfile[$LANGUAGE])) require_once $confighelpfile[$LANGUAGE];
-require_once $helptextfile["english"];
-if (file_exists($helptextfile[$LANGUAGE])) require_once $helptextfile[$LANGUAGE];
+loadLangFile("pgv_confighelp, pgv_help");
 
 require_once "sanity_check.php";
 

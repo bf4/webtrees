@@ -27,22 +27,9 @@
  */
 
 require "config.php";
-require $confighelpfile["english"];
-if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
 require_once("includes/functions_print_lists.php");
 
-// Load language keys for English
-@include_once($adminfile["english"]);
-@include_once($editorfile["english"]);
-@include_once("./languages/lang.extra.".$lang_short_cut["english"].".php");
-@include_once($extrafile["english"]);
-// Load language keys for language other than English
-if ($LANGUAGE != "english") {
-	@include_once($adminfile[$LANGUAGE]);
-	@include_once($editorfile[$LANGUAGE]);
-	@include_once("./languages/lang.extra.".$lang_short_cut[$LANGUAGE].".php");
-	@include_once($extrafile[$LANGUAGE]);
-}
+loadLangFile("pgv_confighelp, pgv_admin, pgv_editor");	// Load language variables
 	
 if (!isset($action)) $action="";
 

@@ -76,10 +76,7 @@ function GetGEDFromZIP($zipfile, $extract=true) {
 }
 
 
-require $confighelpfile["english"];
-if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
-require $helptextfile["english"];
-if (file_exists($helptextfile[$LANGUAGE])) require $helptextfile[$LANGUAGE];
+loadLangFile("pgv_confighelp, pgv_help");
 
 if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
 

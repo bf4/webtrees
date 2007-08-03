@@ -4,7 +4,7 @@
  * phpGedView Research Assistant Tool - RecordSearch.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: ra_functions.php 990 2006-06-12 20:20:27Z cstolworthy $
+ * @version $Id$
  * @author Christopher Stolworthy
  */
 //-- security check, only allow access from module.php
@@ -30,9 +30,9 @@ if (strstr($_SERVER["SCRIPT_NAME"],"ra_functions.php")) {
 	print "Now, why would you want to do that.  You're not hacking are you?";
 	exit;
 }
-// Set up our default language file.
-require_once('modules/research_assistant/languages/lang.en.php'); 
-@include_once("modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php");
+
+loadLangFile("ra_lang");	// Set up our default language file
+
 include_once("modules/research_assistant/forms/ra_privacy.php");
 require_once("includes/person_class.php");
 

@@ -5,7 +5,7 @@
  * authenticate.php and xxxxxx.dat files (MySQL mode).
  * 
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,8 +34,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 require_once("config.php");
 require_once 'includes/controllers/basecontrol.php';
-require($confighelpfile["english"]);
-if (file_exists($confighelpfile[$LANGUAGE])) require($confighelpfile[$LANGUAGE]);
+
+loadLangFile("pgv_confighelp");
 
 //-- make sure that they have admin status before they can use this page
 //-- otherwise have them login again

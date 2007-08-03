@@ -25,8 +25,8 @@
  */
 
 require "config.php";
-require  $confighelpfile["english"];
-if (file_exists( $confighelpfile[$LANGUAGE])) require  $confighelpfile[$LANGUAGE];
+
+loadLangFile("pgv_confighelp");
 
 if (!isset($ln)) $ln = "";
 if (!isset($action)) $action = "";

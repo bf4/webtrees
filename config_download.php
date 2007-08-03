@@ -3,7 +3,7 @@
  * Download config files that could not be saved.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,7 @@
  * @subpackage Admin
  */
 require "config.php";
-require $confighelpfile["english"];
-if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
+loadLangFile("pgv_confighelp");
 
 if ((adminUserExists()&&!userIsAdmin(getUserName()))&&$CONFIGURED) {
 	header("Location: admin.php");

@@ -23,7 +23,7 @@
  * @subpackage GoogleMap
  * @version $Id: index.php,v$
  * @author Johan Borkhuis
- * $Id:$
+ * $Id$
  */
 
 header("Location: ../../index.php");

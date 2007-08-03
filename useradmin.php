@@ -3,7 +3,7 @@
  * Administrative User Interface.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,9 +30,9 @@
  * load configuration and context
  */
 require "config.php";
-require $confighelpfile["english"];
-global $TEXT_DIRECTION;
-if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
+
+loadLangFile("pgv_confighelp");
+
 include "includes/functions_edit.php";
 
 // Remove slashes

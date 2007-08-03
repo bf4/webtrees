@@ -28,13 +28,7 @@
 require("config.php");
 require("googlemap.php"); // gives access to googlemap functions
 
-require( "modules/googlemap/".$pgv_language["english"]);
-if (file_exists( "modules/googlemap/".$pgv_language[$LANGUAGE]))
-	require "modules/googlemap/".$pgv_language[$LANGUAGE];
-
-require( "modules/googlemap/".$helptextfile["english"]);
-if (file_exists("modules/googlemap/".$helptextfile[$LANGUAGE]))
-	require "modules/googlemap/".$helptextfile[$LANGUAGE];
+loadLangFile("gm_lang, gm_help");
 
 // Must be an admin user to use this module
 if (!userGedcomAdmin(getUserName())) {

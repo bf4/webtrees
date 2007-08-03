@@ -27,10 +27,8 @@
  */
 
 require "config.php";
-require $confighelpfile["english"];
-if (file_exists($extrafile["english"])) require $extrafile["english"];
-if (file_exists($confighelpfile[$LANGUAGE])) require $confighelpfile[$LANGUAGE];
-if (file_exists($extrafile[$LANGUAGE])) require $extrafile[$LANGUAGE];
+
+loadLangFile("pgv_confighelp");
 
 // Remove slashes
 if (isset($user_firstname)) $user_firstname = stripslashes($user_firstname);
@@ -279,7 +277,7 @@ switch ($action) {
 			</script>
 			<?php
 				if ($SHOW_REGISTER_CAUTION) {
-					print "<center><table class=\"width50\"><tr><td>";
+					print "<center><table class=\"width50 ".$TEXT_DIRECTION."\"><tr><td>";
 					print_text("acceptable_use");
 					print "<br />";
 					print "</td></tr></table></center>";

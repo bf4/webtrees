@@ -35,8 +35,7 @@ if (!userGedcomAdmin(getUserName())) {
 	exit;
 }
 
-require  $confighelpfile["english"];
-if (file_exists( $confighelpfile[$LANGUAGE])) require  $confighelpfile[$LANGUAGE];
+loadLangFile("pgv_confighelp");
 
 if (!isset($action)) $action="";
 
