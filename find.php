@@ -577,7 +577,7 @@ if ($action=="filter") {
 					}
 
 					if ($isvalid) {
-						if ($media["EXISTS"] && @filesize(filename_decode($media["FILE"])) != 0){
+						if ($media["EXISTS"] && media_filesize($media["FILE"]) != 0){
 							$imgsize = findImageSize($media["FILE"]);
 							$imgwidth = $imgsize[0]+40;
 							$imgheight = $imgsize[1]+150;
@@ -610,7 +610,7 @@ if ($action=="filter") {
 						}
 						else print "<a href=\"javascript:;\" onclick=\"pasteid('".$media["XREF"]."','".$media["TITL"]."','".$media["THUMB"]."');\"><span dir=\"ltr\">".$media["FILE"]."</span></a> -- ";
 						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">".$pgv_lang["view"]."</a><br />";
-						if (!file_exists($media["FILE"]) && !stristr($media["FILE"], "://")) print $media["FILE"]."<br /><span class=\"error\">".$pgv_lang["file_not_exists"]."</span><br />";
+						if (!media_exists($media["FILE"]) && !stristr($media["FILE"], "://")) print $media["FILE"]."<br /><span class=\"error\">".$pgv_lang["file_not_exists"]."</span><br />";
 						else if (!stristr($media["FILE"], "://") && !empty($imgsize[0])) {
 							print "<br /><sub>&nbsp;&nbsp;".$pgv_lang["image_size"]." -- ".$imgsize[0]."x".$imgsize[1]."</sub><br />";
 						}

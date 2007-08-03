@@ -1599,6 +1599,7 @@ $pgv_lang["TYPE__video"] = "Video";
 $pgv_lang["view_slideshow"] = "View as slideshow";
 $pgv_lang["download_image"]			= "Download File";
 $pgv_lang["no_media"]				= "No Media Found";
+$pgv_lang["media_privacy"]			= "Privacy restrictions prevent you from viewing this item";
 $pgv_lang["relations_heading"]		= "The image relates to:";
 $pgv_lang["file_size"]				= "File Size";
 $pgv_lang["img_size"]				= "Image Size";

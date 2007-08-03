@@ -574,7 +574,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 						$media["EXISTS"] = true;
 					} else {
 						$media["THUMB"] = thumbnail_file($fileName);
-						$media["EXISTS"] = file_exists(filename_decode($fileName));
+						$media["EXISTS"] = media_exists($fileName);
 					}
 					$media["FORM"] = stripslashes($row["m_ext"]);
 					$media["TITL"] = stripslashes($row["m_titl"]);
@@ -686,7 +686,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 					if ($currentdir && $directory != dirname($fileName) . "/")
 						break;
 					$media["THUMB"] = thumbnail_file($fileName);
-					$media["EXISTS"] = file_exists(filename_decode($fileName));
+					$media["EXISTS"] = media_exists($fileName);
 				}
 
 				// Now save this for future use
@@ -1054,7 +1054,7 @@ function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
 	if (!$generateThumb)
 		return $thumbDir . $thumbName;
 
-	if (!$overwrite && file_exists(filename_decode($thumbDir . $thumbName)))
+	if (!$overwrite && media_exists($thumbDir . $thumbName))
 		return $thumbDir . $thumbName;
 
 	if ($AUTO_GENERATE_THUMBS && $generateThumb) {
@@ -1121,6 +1121,11 @@ function check_media_depth($filename, $truncate = "FRONT", $noise = "VERBOSE") {
 		$truncate = "FRONT";
 	if ($truncate == "NOTRUNC")
 		$truncate = "FRONT"; // **** temporary over-ride *****
+
+	if (strpos($_SERVER["SCRIPT_FILENAME"],"mediafirewall") > -1) {
+		// no extraneous output while displaying images
+		$noise = "QUIET";
+	}
 
 	if (empty ($noise) || ($noise != "VERBOSE" && $noise != "QUIET"))
 		$noise = "VERBOSE";
@@ -1669,16 +1674,22 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 
 	print_add_layer("SOUR", 1);
 	print_add_layer("NOTE", 1);
+	print_add_layer("RESN", 1);
 	print "<input type=\"submit\" value=\"" . $pgv_lang["save"] . "\" />";
 	print "</form>\n";
 }
 
+// looks in both the standard and protected media directories
 function findImageSize($file) {
+	global $USE_MEDIA_FIREWALL;
 	if (strtolower(substr($file, 0, 7)) == "http://")
 		$file = "http://" . rawurlencode(substr($file, 7));
 	else
 		$file = filename_decode($file);
-	$imgsize = @ getimagesize($file);
+	$imgsize = @getimagesize($file);
+	if ($USE_MEDIA_FIREWALL && !$imgsize) {
+		$imgsize = @getimagesize(get_media_firewall_path($file));
+	}
 	if (!$imgsize) {
 		$imgsize[0] = 300;
 		$imgsize[1] = 300;
@@ -1921,6 +1932,49 @@ function cropImage($image, $dest_image, $left, $top, $right, $bottom){ //$image 
 	imagegif($img,$dest_image);
 	imagedestroy($img);
 	}
+}
+
+// checks whether a media file exists.  looks in both the standard and protected media directories
+function media_exists($filename) {
+	global $USE_MEDIA_FIREWALL;
+	if (empty($filename)) { return false; }
+	$filename = filename_decode($filename);
+	if ( file_exists($filename) ) { return true; }
+	if ( $USE_MEDIA_FIREWALL && file_exists(get_media_firewall_path($filename)) ) { return true; }
+	return false;
+}
+
+// returns size of file.  looks in both the standard and protected media directories
+function media_filesize($filename) {
+	global $USE_MEDIA_FIREWALL;
+	$filename = filename_decode($filename);
+	if (file_exists($filename)) { return filesize($filename); }
+	if ($USE_MEDIA_FIREWALL && file_exists(get_media_firewall_path($filename))) { return filesize(get_media_firewall_path($filename)); }
+	return;
+}
+
+// pass in the standard media directory
+// returns protected media directory
+// strips off any "../" which may be configured in your MEDIA_DIRECTORY variable 
+function get_media_firewall_path($path) {
+	global $INDEX_DIRECTORY;
+	$path = str_replace("../", "", $path);
+	return ($INDEX_DIRECTORY . $path);
+}
+
+// recursively make directories
+// taken from http://us3.php.net/manual/en/function.mkdir.php#60861
+function mkdirs($dir, $mode = 0777, $recursive = true) {
+	if( is_null($dir) || $dir === "" ){
+		return FALSE;
+	}
+	if( is_dir($dir) || $dir === "/" ){
+		return TRUE;
+	}
+	if( mkdirs(dirname($dir), $mode, $recursive) ){
+		return mkdir($dir, $mode);
+	}
+	return FALSE;
 }
 
 ?>

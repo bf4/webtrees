@@ -193,6 +193,26 @@ class Media extends GedcomRecord {
 		return $this->ext;
 	}
 
+	function getContenttype() {
+		// this function needs to know mimetypes for all the media files that we serve through mediafirewall.php 
+		// list of mime types here:  http://www.webmaster-toolkit.com/mime-types.shtml
+		$mime['BMP']  = 'image/bmp';
+		$mime['GIF']  = 'image/gif';
+		$mime['JPG']  = 'image/jpeg';
+		$mime['MOV']  = 'video/quicktime';
+		$mime['MP3']  = 'audio/mpeg';
+		$mime['PDF']  = 'application/pdf';
+		$mime['PNG']  = 'image/png';
+		$mime['PSD']  = 'application/octet-stream';
+		$mime['SWF']  = 'application/x-shockwave-flash';
+		$mime['TIFF'] = 'image/tiff';
+
+		$mimetype = @$mime[$this->getFiletype()];
+		// if mimemtype is not defined in array above, try sending it as an image
+		if (!$mimetype) { $mimetype = 'image/'.strtolower($this->getFiletype()); }
+		return $mimetype; 
+	}
+
 	/**
 	 * get the URL to link to this object
 	 * @string a url that can be used to link to this object

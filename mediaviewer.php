@@ -69,10 +69,11 @@ else{
 					if ($controller->canDisplayDetails()) {
 					//Checks to see if the File exist in the system.
 					$filename = $controller->getLocalFilename();
-					if (preg_match("~://~", $filename) || file_exists($filename)){
+					$serverfilename = $controller->getServerFilename();
+					if (preg_match("~://~", $filename) || file_exists($serverfilename)){
 						//If the file exists, it will attempt to get the image size
 						//If the image size returns a null, then the file isn't a image.
-						$imagesize = @getimagesize($filename);
+						$imagesize = @getimagesize($serverfilename);
 						$imgwidth = $imagesize[0]+40;
 						$imgheight = $imagesize[1]+150;
 

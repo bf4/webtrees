@@ -40,6 +40,13 @@ The above list of codes may be amended as new situations arise.
 For massive changes, the variable names should be listed in the order in which they
 occur in the respective language files.
 
+VERSION 4.2
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+----------------------------------------------------------------------------------------
++$pgv_lang["USA_MEDIA_FIREWALL"]					02 Aug 2007				A	Media Firewall, patch 1749817
++$pgv_lang["USA_MEDIA_FIREWALL_help"]				02 Aug 2007				A	Media Firewall, patch 1749817
+
 
 VERSION 4.1
 

@@ -40,8 +40,20 @@ class MediaControllerRoot extends IndividualController{
 	var $mediaobject;
 
 	function init() {
+		global $MEDIA_DIRECTORY, $USE_MEDIA_FIREWALL;
 		if (isset($_REQUEST['filename'])) $filename = $_REQUEST['filename'];
 		if (isset($_REQUEST['mid'])) $mid = $_REQUEST['mid'];
+
+		if ($USE_MEDIA_FIREWALL) {
+			// this section used by mediafirewall.php to determine what media file was requested
+			if (isset($_SERVER['REDIRECT_URL'])) {
+				$filename = $_SERVER['REDIRECT_URL'];
+				// if user requested a thumbnail, lookup permissions based on the original image
+				$filename = str_replace('/thumbs', '', $filename);
+				// strip off the pgv directory and media directory from the requested url so just the image information is left
+				$filename = substr($filename, strpos($filename, $MEDIA_DIRECTORY) + strlen($MEDIA_DIRECTORY) - 1);
+			}
+		}
 
 		//Checks to see if the File Name ($filename) exists
 		if (!empty($filename)){
@@ -338,13 +350,13 @@ class MediaControllerRoot extends IndividualController{
 		//This does another check to see if the file exists.
 		//If so it will then check to see if the file's image size is null.
 		//If the file is null, it will not show the width and the height of the image
-		if (file_exists($this->getLocalFileName())){
-			$imagesize = @getimagesize($this->getLocalFileName());
+		if (file_exists($this->getServerFilename())){
+			$imagesize = @getimagesize($this->getServerFilename());
 			if ($imagesize[0]){
 				$facts[] = "1 EVEN " . getLRM() .$imagesize[0]." x ".$imagesize[1].getLRM()  . "\r\n2 TYPE image_size";
 			}
 			//Prints the file size
-			$size = filesize($this->getLocalFileName());
+			$size = filesize($this->getServerFilename());
 			//Rounds the size of the imgae to 2 decimal places
 			$size = getLRM() . round($size/1024, 2)." kb" . getLRM();
 
@@ -362,8 +374,26 @@ class MediaControllerRoot extends IndividualController{
 	 */
 	function getLocalFilename() {
 		return check_media_depth($this->mediaobject->getFilename());
-
 	}
+
+	function getServerFilename() {
+		global $USE_MEDIA_FIREWALL;
+		$localfilename = $this->getLocalFilename();
+		if (file_exists($localfilename)){
+			// found image in unprotected directory
+			return $localfilename;
+		}
+		if ($USE_MEDIA_FIREWALL) {
+			$protectedfilename = get_media_firewall_path($localfilename);
+			if (file_exists($protectedfilename)){
+				// found image in protected directory
+				return $protectedfilename;
+			}
+		}
+		// file doesn't exist, return the standard localfilename for backwards compatibility
+		return $localfilename;
+	}
+
 }
 // -- end of class
 //-- load a user extended class if one exists

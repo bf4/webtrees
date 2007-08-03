@@ -375,6 +375,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$USE_RTL_FUNCTIONS\s*=\s*.*;/', "\$USE_RTL_FUNCTIONS = ".$boolarray[$_POST["NEW_USE_RTL_FUNCTIONS"]].";", $configtext);
 	$configtext = preg_replace('/\$USE_THUMBS_MAIN\s*=\s*.*;/', "\$USE_THUMBS_MAIN = ".$boolarray[$_POST["NEW_USE_THUMBS_MAIN"]].";", $configtext);
 	$configtext = preg_replace('/\$USE_MEDIA_VIEWER\s*=\s*.*;/', "\$USE_MEDIA_VIEWER = ".$boolarray[$_POST["NEW_USE_MEDIA_VIEWER"]].";", $configtext);
+	$configtext = preg_replace('/\$USE_MEDIA_FIREWALL\s*=\s*.*;/', "\$USE_MEDIA_FIREWALL = ".$boolarray[$_POST["NEW_USE_MEDIA_FIREWALL"]].";", $configtext);
 	$configtext = preg_replace('/\$PHPGEDVIEW_EMAIL\s*=\s*".*";/', "\$PHPGEDVIEW_EMAIL = \"".trim($_POST["NEW_PHPGEDVIEW_EMAIL"])."\";", $configtext);
 	$configtext = preg_replace('/\$WEBMASTER_EMAIL\s*=\s*".*";/', "\$WEBMASTER_EMAIL = \"".$_POST["NEW_WEBMASTER_EMAIL"]."\";", $configtext);
 	$configtext = preg_replace('/\$WELCOME_TEXT_AUTH_MODE\s*=\s*".*";/', "\$WELCOME_TEXT_AUTH_MODE = \"".$_POST["NEW_WELCOME_TEXT_AUTH_MODE"]."\";", $configtext);
@@ -403,6 +404,58 @@ if ($action=="update") {
 	else {
 		fwrite($fp, $configtext);
 		fclose($fp);
+	}
+
+	if (($NEW_USE_MEDIA_FIREWALL=='yes') && !$USE_MEDIA_FIREWALL) {
+		AddToLog("Media Firewall enabled by >".getUserName()."<");
+
+		$httext = "";
+		if (file_exists($MEDIA_DIRECTORY.".htaccess")) {
+			$httext = implode('', file($MEDIA_DIRECTORY.".htaccess"));
+			// comment out any existing lines that set ErrorDocument 404
+			$httext = preg_replace('/^(ErrorDocument\s*404(.*))\n?/', "#$1\n", $httext);
+			$httext = preg_replace('/[^#](ErrorDocument\s*404(.*))\n?/', "\n#$1\n", $httext);
+		}
+		// add new ErrorDocument 404 line to the end of the file
+		$httext .= "\nErrorDocument\t404\t".dirname($SCRIPT_NAME)."/mediafirewall.php";
+
+		$fp = @fopen($MEDIA_DIRECTORY.".htaccess", "wb");
+		if (!$fp) {
+			$errors = true;
+			$error_msg .= "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."</span><br />\n";
+		} else {
+			fwrite($fp, $httext);
+			fclose($fp);
+		}
+
+		// as a convenience to the user, create the media/ and media/thumbs/ directories as children of index
+		// make world-writable so user will be able to upload their files
+		if (!is_dir(get_media_firewall_path($MEDIA_DIRECTORY))) {
+			@mkdir(get_media_firewall_path($MEDIA_DIRECTORY), 0777);
+		}
+		if (!is_dir(get_media_firewall_path($MEDIA_DIRECTORY . "thumbs"))) {
+			@mkdir(get_media_firewall_path($MEDIA_DIRECTORY . "thumbs"), 0777);
+		}
+
+
+	} elseif (($NEW_USE_MEDIA_FIREWALL=='no') && $USE_MEDIA_FIREWALL) {
+		AddToLog("Media Firewall disabled by >".getUserName()."<");
+
+		if (file_exists($MEDIA_DIRECTORY.".htaccess")) {
+			$httext = implode('', file($MEDIA_DIRECTORY.".htaccess"));
+			// comment out any lines that set ErrorDocument 404
+			$httext = preg_replace('/^(ErrorDocument\s*404(.*))\n?/', "#$1\n", $httext);
+			$httext = preg_replace('/[^#](ErrorDocument\s*404(.*))\n?/', "\n#$1\n", $httext);
+			$fp = @fopen($MEDIA_DIRECTORY.".htaccess", "wb");
+			if (!$fp) {
+				$errors = true;
+				$error_msg .= "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."</span><br />\n";
+			} else {
+				fwrite($fp, $httext);
+				fclose($fp);
+			}
+		}
+
 	}
 
 	// Delete Upcoming Events cache
@@ -887,6 +940,14 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["media_conf"]."\" onclick=\"expan
 		<td class="optionbox"><select name="NEW_USE_MEDIA_VIEWER" tabindex="<?php $i++; print $i?>" onfocus="getHelp('USE_MEDIA_VIEWER_help');">
 				<option value="yes" <?php if ($USE_MEDIA_VIEWER) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 				<option value="no" <?php if (!$USE_MEDIA_VIEWER) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("USE_MEDIA_FIREWALL_help", "qm", "USE_MEDIA_FIREWALL"); print $pgv_lang["USE_MEDIA_FIREWALL"];?></td>
+		<td class="optionbox"><select name="NEW_USE_MEDIA_FIREWALL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('USE_MEDIA_FIREWALL_help');">
+				<option value="yes" <?php if ($USE_MEDIA_FIREWALL) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$USE_MEDIA_FIREWALL) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 			</select>
 		</td>
 	</tr>

@@ -172,7 +172,7 @@ $typ2b  .= ")";
                                 $imgheight = 400+150;
                         }
                  }
-                 else if (file_exists(filename_decode(check_media_depth($rowm["m_file"], "NOTRUNC")))) {
+                 else if (media_exists(check_media_depth($rowm["m_file"], "NOTRUNC"))) {
                         $imgsize = findImageSize(check_media_depth($rowm["m_file"], "NOTRUNC"));
                         $imgwidth = $imgsize[0]+40;
                         $imgheight = $imgsize[1]+150;

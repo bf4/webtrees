@@ -109,6 +109,7 @@ $USE_THUMBS_MAIN = false;				// -- for the main image on the individual page, wh
 $THUMBNAIL_WIDTH = "100";				// -- the width to use when automatically generating thumbnails
 $AUTO_GENERATE_THUMBS = true;			// -- whether PGV should try to automatically generate thumbnails
 $USE_MEDIA_VIEWER = true;				// -- If set to true, when a user clicks on an image they will be taken to the mediaviewer.php page.  If set to false a new window will open at imageview.php
+$USE_MEDIA_FIREWALL = false;			// -- If set to true, enables the media firewall to serve images that aren't in the web directory
 
 $HIDE_GEDCOM_ERRORS = false;			//-- a true value will disable error messages for undefined GEDCOM codes.  See the
 										//-- non-standard gedcom codes section of the readme file for more information.

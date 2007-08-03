@@ -80,10 +80,10 @@ print "<li>" . "\n";
             $mainMedia = check_media_depth($rowm["m_file"], "NOTRUNC");
         if ($mediaTitle=="") $mediaTitle = basename($rowm["m_file"]);
 
-        if ($isExternal || file_exists(filename_decode($thumbnail))) {
+        if ($isExternal || media_exists($thumbnail)) {
 
             $mainFileExists = false;
-            if ($isExternal || file_exists($mainMedia)) {
+            if ($isExternal || media_exists($mainMedia)) {
                 $mainFileExists = true;
                 $imgsize = findImageSize($mainMedia);
                 $imgwidth = $imgsize[0]+40;

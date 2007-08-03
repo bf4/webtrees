@@ -640,7 +640,7 @@ function print_media_links($factrec, $level,$pid='') {
 			if (showFactDetails("OBJE", $pid)) {
 				if ($objectNum > 0) print "<br clear=\"all\" />";
 				print "<table><tr><td>";
-				if ($isExternal ||file_exists(filename_decode($thumbnail))) {
+				if ($isExternal || media_exists($thumbnail)) {
 					if ($USE_MEDIA_VIEWER) print "<a href=\"mediaviewer.php?mid=".$media_id."\">";
 					else print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\">";
 					print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
@@ -1182,7 +1182,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 				$imgheight = 400+150;
 			}
 		}
-		else if (file_exists(filename_decode(check_media_depth($rowm["m_file"], "NOTRUNC")))) {
+		else if (media_exists(check_media_depth($rowm["m_file"], "NOTRUNC"))) {
 			$imgsize = findImageSize(check_media_depth($rowm["m_file"], "NOTRUNC"));
 			$imgwidth = $imgsize[0]+40;
 			$imgheight = $imgsize[1]+150;
@@ -1355,9 +1355,9 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		if (!empty($subtitle)) $mediaTitle = $subtitle;
 		$mainMedia = check_media_depth($rowm["m_file"], "NOTRUNC");
 		if ($mediaTitle=="") $mediaTitle = basename($rowm["m_file"]);
-		if ($isExternal || file_exists(filename_decode($thumbnail))) {
+		if ($isExternal || media_exists($thumbnail)) {
 			$mainFileExists = false;
-			if ($isExternal || file_exists($mainMedia)) {
+			if ($isExternal || media_exists($mainMedia)) {
 				$mainFileExists = true;
 				$imgsize = findImageSize($mainMedia);
 				$imgwidth = $imgsize[0]+40;

@@ -1105,10 +1105,10 @@ function extract_filename($fullpath) {
  * @param string $thumbnail
  */
 function generate_thumbnail($filename, $thumbnail) {
-	global $MEDIA_DIRECTORY, $THUMBNAIL_WIDTH, $AUTO_GENERATE_THUMBS;
+	global $MEDIA_DIRECTORY, $THUMBNAIL_WIDTH, $AUTO_GENERATE_THUMBS, $USE_MEDIA_FIREWALL;
 
 	if (!$AUTO_GENERATE_THUMBS) return false;
-	if (file_exists($thumbnail)) return false;
+	if (media_exists($thumbnail)) return false;
 	if (!is_writable($MEDIA_DIRECTORY."thumbs")) return false;
 
 /*	No references to "media/thumbs/urls" exist anywhere else
@@ -1127,7 +1127,24 @@ function generate_thumbnail($filename, $thumbnail) {
 	if ($ext!='jpg' && $ext!='jpeg' && $ext!='gif' && $ext!='png') return false;
 
 	if (!strstr($filename, "://")) {
-		if (!file_exists(filename_decode($filename))) return false;
+		// internal
+		if (!file_exists(filename_decode($filename))) {
+			if ($USE_MEDIA_FIREWALL) {
+				// see if the file exists in the protected index directory
+				$filename = get_media_firewall_path($filename); 
+				if (!file_exists(filename_decode($filename))) return false;
+				// put the thumbnail in the protected directory too
+				$thumbnail = get_media_firewall_path($thumbnail);
+				// ensure the directory exists
+				if (!is_dir(dirname($thumbnail))) {
+					if (!mkdirs(dirname($thumbnail))) {
+						return false;
+					}
+				}
+			} else {
+				return false;
+			}
+		}
 		$imgsize = getimagesize(filename_decode($filename));
 		// Check if a size has been determined
 		if (!$imgsize) return false;
@@ -1139,6 +1156,7 @@ function generate_thumbnail($filename, $thumbnail) {
 		}
 	}
 	else {
+		// external
 		if ($fp = @fopen(filename_decode($filename), "rb")) {
 			if ($fp===false) return false;
 			$conts = "";
