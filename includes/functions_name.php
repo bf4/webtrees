@@ -476,6 +476,7 @@ function get_family_descriptor($fid) {
 		if ($NAME_REVERSE) $wname = "@N.N. @P.N.";
 		else $wname = "@P.N. @N.N.";
 	}
+	$result = "";
 	if (!empty($hname) && !empty($wname)) $result = check_NN($hname)." + ".check_NN($wname);
 	else if (!empty($hname) && empty($wname)) $result = check_NN($hname);
 	else if (empty($hname) && !empty($wname)) $result = check_NN($wname);
