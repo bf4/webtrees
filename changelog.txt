@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Fixed [ 1766591 ] Tag Clouds RTL, counts on wrong side of name (canajun2eh)
  - Fixed [ 1766061 ] SVN:1370 Link error on indilist.php (canajun2eh)
  - Fixed [ 1765861 ] Relatives Report - missing icons/images (canajun2eh)
  - Added "Acceptable use" notice on "Request new user account" page (canajun2eh)
