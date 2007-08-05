@@ -96,8 +96,10 @@ function import_record($indirec, $update = false) {
 	if (!$update) $indirec=str_replace('@@', '@', $indirec); // Escaped @ signs (only if importing from file)
 	
 	// Replace TAG_FORMAL_NAME (as sometimes created by FTM) with TAG
-	foreach ($TRANSLATE_TAGS as $tag_full=>$tag_abbr)
-		$indirec=preg_replace("/^(\d+ (@[^@]+@ )?){$tag_full}\b/m", '$1'.$tag_abbr, $indirec);
+	if (is_array($TRANSLATE_TAGS)) {
+		foreach ($TRANSLATE_TAGS as $tag_full=>$tag_abbr)
+			$indirec=preg_replace("/^(\d+ (@[^@]+@ )?){$tag_full}\b/m", '$1'.$tag_abbr, $indirec);
+	}
 
 	//-- import different types of records
 	$ct = preg_match("/0 @(.*)@ ([a-zA-Z_]+)/", $indirec, $match);
