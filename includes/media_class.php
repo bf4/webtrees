@@ -36,6 +36,7 @@ class Media extends GedcomRecord {
 	var $title = "";
 	var $file = "";
 	var $ext = "";
+	var $mime = "";
 	var $note = "";
 	var $filesize = -1;
 	var $width = 0;
@@ -155,6 +156,36 @@ class Media extends GedcomRecord {
 	}
 
 	/**
+	 * get the relative file path of the image on the server
+	 * @return string
+	 */
+	function getLocalFilename() {
+		return check_media_depth($this->file);
+	}
+
+	/**
+	 * get the file name on the server
+	 * @return string
+	 */
+	function getServerFilename() {
+		global $USE_MEDIA_FIREWALL;
+		$localfilename = $this->getLocalFilename();
+		if (file_exists($localfilename)){
+			// found image in unprotected directory
+			return $localfilename;
+		}
+		if ($USE_MEDIA_FIREWALL) {
+			$protectedfilename = get_media_firewall_path($localfilename);
+			if (file_exists($protectedfilename)){
+				// found image in protected directory
+				return $protectedfilename;
+			}
+		}
+		// file doesn't exist, return the standard localfilename for backwards compatibility
+		return $localfilename;
+	}
+
+	/**
 	 * get the thumbnail filename
 	 * @return string
 	 */
@@ -167,7 +198,7 @@ class Media extends GedcomRecord {
 	 * @return string
 	 */
 	function getFilesize() {
-		if ($this->filesize<0) $this->filesize = sprintf("%.2f", @filesize($this->file)/1024);
+		if ($this->filesize<0) $this->filesize = sprintf("%.2f", @filesize($this->getServerFilename())/1024);
 		return $this->filesize;
 	}
 
@@ -179,9 +210,10 @@ class Media extends GedcomRecord {
 		if ($this->ext) return $this->ext;
 		// image ?
 		$imageTypes = array("","GIF", "JPG", "PNG", "SWF", "PSD", "BMP", "TIFF", "TIFF", "JPC", "JP2", "JPX", "JB2", "SWC", "IFF", "WBMP", "XBM");
-		$imgsize = @getimagesize($this->file); // [0]=width [1]=height [2]=filetype
+		$imgsize = @getimagesize($this->getServerFilename()); // [0]=width [1]=height [2]=filetype
 		$this->width = 0+$imgsize[0];
 		$this->height = 0+$imgsize[1];
+		$this->mime = $imgsize['mime'];
 		$this->ext = $imageTypes[0+$imgsize[2]];
 		if ($this->ext) return $this->ext;
 		// not an image : get file extension
@@ -193,24 +225,14 @@ class Media extends GedcomRecord {
 		return $this->ext;
 	}
 
-	function getContenttype() {
-		// this function needs to know mimetypes for all the media files that we serve through mediafirewall.php 
-		// list of mime types here:  http://www.webmaster-toolkit.com/mime-types.shtml
-		$mime['BMP']  = 'image/bmp';
-		$mime['GIF']  = 'image/gif';
-		$mime['JPG']  = 'image/jpeg';
-		$mime['MOV']  = 'video/quicktime';
-		$mime['MP3']  = 'audio/mpeg';
-		$mime['PDF']  = 'application/pdf';
-		$mime['PNG']  = 'image/png';
-		$mime['PSD']  = 'application/octet-stream';
-		$mime['SWF']  = 'application/x-shockwave-flash';
-		$mime['TIFF'] = 'image/tiff';
-
-		$mimetype = @$mime[$this->getFiletype()];
-		// if mimemtype is not defined in array above, try sending it as an image
-		if (!$mimetype) { $mimetype = 'image/'.strtolower($this->getFiletype()); }
-		return $mimetype; 
+	/**
+	 * get the media mime type
+	 * @return string
+	 */
+	function getMimetype() {
+		if ($this->mime) return $this->mime;
+		$this->getFiletype(); // set everything we can
+		return $this->mime;
 	}
 
 	/**

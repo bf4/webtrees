@@ -9,6 +9,8 @@
 =====================================================================
 
 Version 4.2
+ - Added Watermarks [ 1739602 ] (ljm)
+ - Added Media Firewall [ 1749817 ] (ljm)
  - Added sourcelink and assolink tables [ 1718918 ] [ 1717381 ] (yalnifj)
  - Moved default config.php to config.dist (yalnifj)
  - Added [ 1649660 ] Place Hierarchy of Birth only places etc. (opus27)

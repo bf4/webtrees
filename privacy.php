@@ -172,6 +172,19 @@ $ENABLE_CLIPPINGS_CART = $PRIV_PUBLIC;
  */
 $SHOW_MULTISITE_SEARCH = $PRIV_NONE;
 /**
+ * Set the access level for viewing non-watermarked images
+ *
+ * Note: this has no effect unless the Media Firewall to be turned on and a watermark module is installed
+ * Can be one of the PRIV access levels:
+ *		- <var>$PRIV_HIDE</var>
+ *		- <var>$PRIV_PUBLIC</var>
+ *		- <var>$PRIV_USER</var>
+ *		- <var>$PRIV_NONE</var>
+ * The default settings is set to <var>$PRIV_USER</var> allowing only authenticated users to have access.
+ * @global integer $SHOW_NO_WATERMARK
+ */
+$SHOW_NO_WATERMARK = $PRIV_USER;
+/**
  * Set the program to use relationship privacy
  *
  * This tells the program that for private individuals calculate the relationship between the user

@@ -373,25 +373,15 @@ class MediaControllerRoot extends IndividualController{
 	 * @return string
 	 */
 	function getLocalFilename() {
-		return check_media_depth($this->mediaobject->getFilename());
+		return $this->mediaobject->getLocalFilename();
 	}
 
+	/**
+	 * get the file name on the server
+	 * @return string
+	 */
 	function getServerFilename() {
-		global $USE_MEDIA_FIREWALL;
-		$localfilename = $this->getLocalFilename();
-		if (file_exists($localfilename)){
-			// found image in unprotected directory
-			return $localfilename;
-		}
-		if ($USE_MEDIA_FIREWALL) {
-			$protectedfilename = get_media_firewall_path($localfilename);
-			if (file_exists($protectedfilename)){
-				// found image in protected directory
-				return $protectedfilename;
-			}
-		}
-		// file doesn't exist, return the standard localfilename for backwards compatibility
-		return $localfilename;
+		return $this->mediaobject->getServerFilename();
 	}
 
 }
