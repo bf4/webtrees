@@ -279,7 +279,7 @@ function getUserName() {
  */
 function userIsAdmin($username) {
 	if (empty($username)) return false;
-	if ($_SESSION['cookie_login']) return false;
+	if (isset($_SESSION['cookie_login']) && $_SESSION['cookie_login']==true) return false;
 	$user = getUser($username);
 	if (!$user) return false;
 	return $user["canadmin"];

@@ -1297,8 +1297,15 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 		$url .= "?ged=".$GEDCOM."&amp;surname=".urlencode($surn);
 		if (empty($surn) || trim("@".$surn,"_")=="@" || $surn=="@N.N.") $surn = $pgv_lang["NN"];
 		$fontsize = ceil($value["match"]/$font_tag);
-		echo " &nbsp;<a href=\"".$url."\" class=\"list_item\" title=\"".PrintReady($surn." (".$value["match"].")")."\">"
-		."<font size=\"".$fontsize."\">".PrintReady($surn)."</font>&nbsp;<span class=\"tag_cloud_sub\">(".$value["match"].")</span></a>&nbsp;";
+		if ($TEXT_DIRECTION=="ltr") {
+			$title = PrintReady($surn." (".$value["match"].")");
+			$tag = PrintReady("<font size=\"".$fontsize."\">".$surn."</font><span class=\"tag_cloud_sub\">&nbsp;(".$value["match"].")</span>");
+		} else {
+			$title = PrintReady("(".$value["match"].") ".$surn);
+			$tag = PrintReady("<span class=\"tag_cloud_sub\">(".$value["match"].")&nbsp;</span><font size=\"".$fontsize."\">".$surn."</font>");
+		}
+		
+		echo "<a href=\"".$url."\" class=\"list_item\" title=\"".$title."\">".$tag."</span></a>&nbsp;&nbsp; ";
 	}
 	echo "</td>";
 	echo "</tr>\n";

@@ -47,8 +47,8 @@ $TRANSLATE_TAGS=array(
 	'CONFIRMATION'=>'CONF', 'CONFIRMATION_LDS'=>'CONL', 'CONTINUED'=>'CONT', 'COPYRIGHT'=>'COPR',
 	'CORPORATE'=>'CORP', 'COUNTRY'=>'CTRY', 'CREMATION'=>'CREM', 'DEATH'=>'DEAT', 'DESCENDANTS'=>'DESC',
 	'DESCENDANT_INT'=>'DESI', 'DESTINATION'=>'DEST', 'DIVORCE'=>'DIV', 'DIVORCE_FILED'=>'DIVF',
-	'EDUCATION'=>'EDUC', 'EMAIL'=>'EMAI', 'EMIGRATION'=>'EMIG', 'ENDOWMENT'=>'ENDL', 'ENGAGEMENT'=>'ENGA',
-	'EVENT'=>'EVEN', 'FACIMILIE'=>'FAX', 'FACSIMILE'=>'FAX', 'FAMILY'=>'FAM', 'FAMILY_CHILD'=>'FAMC',
+	'EDUCATION'=>'EDUC', 'EMIGRATION'=>'EMIG', 'ENDOWMENT'=>'ENDL', 'ENGAGEMENT'=>'ENGA',
+	'EVENT'=>'EVEN', 'FACSIMILE'=>'FAX', 'FAMILY'=>'FAM', 'FAMILY_CHILD'=>'FAMC',
 	'FAMILY_FILE'=>'FAMF', 'FAMILY_SPOUSE'=>'FAMS', 'FIRST_COMMUNION'=>'FCOM', 'FORMAT'=>'FORM', 'GEDCOM'=>'GEDC',
 	'GIVEN_NAME'=>'GIVN', 'GRADUATION'=>'GRAD', 'HEADER'=>'HEAD', 'HUSBAND'=>'HUSB', 'IDENT_NUMBER'=>'IDNO',
 	'IMMIGRATION'=>'IMMI', 'INDIVIDUAL'=>'INDI', 'LANGUAGE'=>'LANG', 'LATITUDE'=>'LATI', 'LONGITUDE'=>'LONG',
@@ -64,11 +64,11 @@ $TRANSLATE_TAGS=array(
 	'SUBMISSION'=>'SUBN', 'SUBMITTER'=>'SUBM', 'SURNAME'=>'SURN', 'SURN_PREFIX'=>'SPFX', 'TEMPLE'=>'TEMP',
 	'TITLE'=>'TITL', 'TRAILER'=>'TRLR', 'VERSION'=>'VERS', 'WEB'=>'WWW',
 	// TODO: These custom FTM tags are *GUESSES*.  Someone with FTM should check them!
-	'_DEATH_OF_SPOUSE'=>'_DETS', '_DEGREE'=>'_DEG', '_MEDICAL'=>'_MDCL', '_MILITARY'=>'_MILT',
-	'_SEPARATED'=>'_SEPR', 'CITATION'=>'CITN', '_FACT1'=>'_FA1', '_FACT2'=>'_FA2', '_FACT3'=>'_F3',
-	'_FACT4'=>'_FA4', '_FACT5'=>'_FA5', '_FACT6'=>'_FA6', '_FACT7'=>'_FA7', '_FACT8'=>'_FA8', '_FACT9'=>'_FA9',
-	'_FACT10'=>'_FA10', '_FACT11'=>'_FA11', '_FACT12'=>'_FA12', '_FACT13'=>'_FA13', '_MOTHER_RELATION'=>'_MREL',
-	'_FATHER_RELATION'=>'_FREL', '_MARR_STATUS'=>'MSTAT', '_MARR_END_STAT'=>'_MEND'
+	'_DEATH_OF_SPOUSE'=>'_DETS', '_DEGREE'=>'_DEG', '_MEDICAL'=>'_MDCL', '_MILITARY_SERVICE'=>'_MILT',
+	'_SEPARATED'=>'_SEPR', 'CITATION'=>'CITN', '_MOTHER_RELATION'=>'_MREL',
+	'_FATHER_RELATION'=>'_FREL', '_MARR_STATUS'=>'MSTAT', '_MARR_END_STAT'=>'_MEND',
+	'_HEIGHT'=>'_HEIG', '_WEIGHT'=>'_WEIG', '_EXCOMMUNICATED'=>'_EXCM', '_ELECTED'=>'_ELEC', '_NAMESAKE'=>'_NAMS',
+	'_MISSION_(LDS)'=>'_MISN', '_UNKNOWN'=>'_UNKN'
 );
 
 /**
@@ -96,8 +96,10 @@ function import_record($indirec, $update = false) {
 	if (!$update) $indirec=str_replace('@@', '@', $indirec); // Escaped @ signs (only if importing from file)
 	
 	// Replace TAG_FORMAL_NAME (as sometimes created by FTM) with TAG
-	foreach ($TRANSLATE_TAGS as $tag_full=>$tag_abbr)
-		$indirec=preg_replace("/^(\d+ (@[^@]+@ )?){$tag_full}\b/m", '$1'.$tag_abbr, $indirec);
+	if (is_array($TRANSLATE_TAGS)) {
+		foreach ($TRANSLATE_TAGS as $tag_full=>$tag_abbr)
+			$indirec=preg_replace("/^(\d+ (@[^@]+@ )?){$tag_full}\b/m", '$1'.$tag_abbr, $indirec);
+	}
 
 	//-- import different types of records
 	$ct = preg_match("/0 @(.*)@ ([a-zA-Z_]+)/", $indirec, $match);
