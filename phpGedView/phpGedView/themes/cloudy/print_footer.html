@@ -1,0 +1,14 @@
+<script type="text/javascript" language="javascript" >
+ function show_divs(){
+        if (document.getElementById('index_small_blocks'))
+        {
+                var smallblocks = document.getElementById('index_small_blocks');
+                var blocks = document.getElementById('index_main_blocks');
+                smallblocks.style.visibility = 'visible';
+                smallblocks.style.display = 'inline';
+                blocks.style.visibility = 'visible';
+                blocks.style.display = 'inline';
+        }
+}
+window.onload = function() { show_divs(); }
+</script>
