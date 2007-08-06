@@ -76,6 +76,7 @@ $pgv_lang["main_media_fail0"]			= "Main media file <b>#GLOBALS[oldMediaFolder]##
 $pgv_lang["main_media_fail1"]			= "Main media file <b>#GLOBALS[oldMediaName]#</b> could not be renamed to <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_fail2"]			= "Main media file <b>#GLOBALS[oldMediaName]#</b> could not be moved from <b>#GLOBALS[oldMediaFolder]#</b> to <b>#GLOBALS[newMediaFolder]#</b>.";
 $pgv_lang["main_media_fail3"]			= "Main media file could not be moved and renamed from <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> to <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";
+$pgv_lang["resn_disabled"]				= "Note: You must enable the 'Use GEDCOM (RESN) Privacy restriction' feature for this setting to take effect.";
 $pgv_lang["thumb_media_ok1"]			= "Thumbnail file <b>#GLOBALS[oldMediaName]#</b> successfully renamed to <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["thumb_media_ok2"]			= "Thumbnail file <b>#GLOBALS[oldMediaName]#</b> successfully moved from <b>#GLOBALS[oldThumbFolder]#</b> to <b>#GLOBALS[newThumbFolder]#</b>.";
 $pgv_lang["thumb_media_ok3"]			= "Thumbnail file successfully moved and renamed from <b>#GLOBALS[oldThumbFolder]##GLOBALS[oldMediaName]#</b> to <b>#GLOBALS[newThumbFolder]##GLOBALS[newMediaName]#</b>.";

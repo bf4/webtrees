@@ -858,7 +858,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	global $assorela, $tags, $emptyfacts, $TEXT_DIRECTION, $pgv_changes, $GEDCOM;
 	global $NPFX_accept, $SPFX_accept, $NSFX_accept, $FILE_FORM_accept, $upload_count;
 	global $tabkey, $STATUS_CODES, $REPO_ID_PREFIX, $SPLIT_PLACES, $pid, $linkToID;
-	global $bdm;
+	global $bdm, $PRIVACY_BY_RESN;
 
 	if (!isset($noClose) && isset($readOnly) && $readOnly=="NOCLOSE") {
 		$noClose = "NOCLOSE";
@@ -1120,6 +1120,10 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		//-->
 		</script>
 		<?php
+		if (!$PRIVACY_BY_RESN && $level==1) {
+			// warn user that level 1 RESN tags have no effect when PRIVACY_BY_RESN is false 
+			print "<small>".$pgv_lang["resn_disabled"]."</small>";
+		}
 		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".$value."\" />\n";
 		print "<table><tr valign=\"top\">\n";
 		foreach (array("none", "locked", "privacy", "confidential") as $resn_index => $resn_val) {
@@ -1316,7 +1320,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
  */
 function print_add_layer($tag, $level=2, $printSaveButton=true) {
 	global $factarray, $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES;
-	global $MEDIA_DIRECTORY, $TEXT_DIRECTION;
+	global $MEDIA_DIRECTORY, $TEXT_DIRECTION, $PRIVACY_BY_RESN;
 	global $gedrec;
 	if ($tag=="SOUR") {
 		//-- Add new source to fact
@@ -1384,17 +1388,22 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		print "</table></div>";
 	}
 	if ($tag=="RESN") {
-		//-- Retrieve existing note or add new note to fact
-		$text = "";
-		print "<a href=\"javascript:;\" onclick=\"return expand_layer('newresn');\"><img id=\"newresn_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$factarray["RESN"]."</a>";
-		print_help_link("RESN_help", "qm");
-		print "<br />\n";
-		print "<div id=\"newresn\" style=\"display: none;\">\n";
-		if ($printSaveButton) print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
-		print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
-		// 2 NOTE
-		add_simple_tag(($level)." RESN ".$text);
-		print "</table></div>";
+		if (!$PRIVACY_BY_RESN && $level==1) {
+			// PRIVACY_BY_RESN is not active for level 1 tags
+			// do not display
+		} else {
+			//-- Retrieve existing resn or add new resn to fact
+			$text = "";
+			print "<a href=\"javascript:;\" onclick=\"return expand_layer('newresn');\"><img id=\"newresn_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" title=\"\" /> ".$factarray["RESN"]."</a>";
+			print_help_link("RESN_help", "qm");
+			print "<br />\n";
+			print "<div id=\"newresn\" style=\"display: none;\">\n";
+			if ($printSaveButton) print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />";
+			print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
+			// 2 RESN
+			add_simple_tag(($level)." RESN ".$text);
+			print "</table></div>";
+		}
 	}
 }
 /**
