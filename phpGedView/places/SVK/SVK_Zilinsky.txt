@@ -1,0 +1,13 @@
+<!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
+<!-- @version $Id$ -->
+Bytca (BY)
+Cadca (CA)
+Dolný Kubín (DK)
+Kysucké Nové Mesto (KM)
+Liptovský Mikuláš (LM)
+Martin (MT)
+Námestovo (NO)
+Ružomberok (RK)
+Turcianske Teplice (TR)
+Tvrdošín (TS)
+Žilina (ZA)
