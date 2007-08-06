@@ -1,9 +1,0 @@
-<!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
-<!-- @version $Id$ -->
-Komárno (KN)
-Levice (LV)
-Nitra (NR)
-Nové Zámky (NZ)
-Šala (SA)
-Topolcany (TO)
-Zlaté Moravce (ZM)
