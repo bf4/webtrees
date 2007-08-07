@@ -158,7 +158,7 @@ class UserMigrateControllerRoot extends BaseController {
 	
 		// Backup gedcoms
 		if (isset($_POST["um_gedcoms"])) {
-			foreach($GEDCOMS as $key=> $gedcom) {
+			foreach($GEDCOMS as $key=>$gedcom) {
 				//-- load the gedcom configuration settings
 				require(get_config_file($gedcom));
 				//-- check if the gedcom file is synchronized with the DB
@@ -166,8 +166,8 @@ class UserMigrateControllerRoot extends BaseController {
 				else {
 					//-- recreate the GEDCOM file if it is not synchronized
 					$oldged = $GEDCOM;
-					$GEDCOM = $gedcom;
-					$gedname = $INDEX_DIRECTORY.$gedcom.".bak";
+					$GEDCOM = $key;
+					$gedname = $INDEX_DIRECTORY.$key.".bak";
 					$gedout = fopen(filename_decode($gedname), "wb");
 					print_gedcom('no', 'no', 'no', 'no', $gedout);
 					fclose($gedout);
