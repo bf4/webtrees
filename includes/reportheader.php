@@ -143,7 +143,18 @@ function PGVRInputSHandler($attrs) {
 	if (isset($attrs["name"])) $input["name"] = $attrs["name"];
 	if (isset($attrs["type"])) $input["type"] = $attrs["type"];
 	if (isset($attrs["lookup"])) $input["lookup"] = $attrs["lookup"];
-	if (isset($attrs["default"])) $input["default"] = $attrs["default"];
+	if (isset($attrs["default"])) {
+		if ($attrs["default"]=="NOW") $input["default"] = date("d M Y"); 
+		else {
+			$ct = preg_match("/NOW\s*([+\-])\s*(\d+)/", $attrs['default'], $match);
+			if ($ct>0) {
+				$plus = 1;
+				if ($match[1]=="-") $plus = -1;
+				$input["default"] = date("d M Y", time()+$plus*60*60*24*$match[2]);
+			}
+			else $input["default"] = $attrs["default"];
+		}
+	}
 	if (isset($attrs["options"])) $input["options"] = $attrs["options"];
 }
 

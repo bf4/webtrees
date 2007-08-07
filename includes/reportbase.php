@@ -1164,6 +1164,7 @@ function PGVRvarSHandler($attrs) {
 			$ct = preg_match("/factarray\['(.*)'\]/", $var, $match);
 			if ($ct>0) $var = $match[1];
 		}
+		if (!empty($attrs["date"])) $var = get_changed_date($var);
 		$currentElement->addText($var);
 	}
 }
@@ -1653,7 +1654,39 @@ function PGVRListSHandler($attrs) {
 			break; */
 		default:
 			if (count($filters)>0) $list = search_indis($filters);
-			else $list = get_indi_list();
+			//-- handle date specific searches
+			foreach($filters2 as $f=>$filter) {
+				$tags = preg_split("/:/", $filter["tag"]);
+				if (end($tags)=="DATE") {
+					if ($filter['expr']=='LTE') {
+						$enddate = parse_date($filter['val']);
+						$endtag = $tags[0];
+					}
+					if ($filter['expr']=='GTE') {
+						$startdate = parse_date($filter['val']);
+						$starttag = $tags[0];
+					}
+				}
+			}
+			if (isset($startdate) && isset($enddate)) {
+				if (strlen($startdate[0]['mon'])<2) $startdate[0]['mon'] = '0'.$startdate[0]['mon'];
+				if (strlen($startdate[0]['day'])<2) $startdate[0]['day'] = '0'.$startdate[0]['day'];
+				if (strlen($enddate[0]['mon'])<2) $enddate[0]['mon'] = '0'.$enddate[0]['mon'];
+				if (strlen($enddate[0]['day'])<2) $enddate[0]['day'] = '0'.$enddate[0]['day'];
+				$start = $startdate[0]['year'].$startdate[0]['mon'].$startdate[0]['day'];
+				$end = $enddate[0]['year'].$enddate[0]['mon'].$enddate[0]['day'];
+				$dlist = search_indis_daterange($start, $end, $starttag.",".$endtag);
+				if (!isset($list)) $list = $dlist;
+				else {
+					//-- intersect the lists
+					$newlist = array();
+					foreach($list as $id=>$indi) {
+						if (isset($dlist[$id])) $newlist[$id] = $indi;
+					}
+					$list = $newlist;
+				}
+			}
+			if (!isset($list)) $list = get_indi_list();
 			break;
 	}
 	//-- apply other filters to the list that could not be added to the search string
@@ -1668,6 +1701,20 @@ function PGVRListSHandler($attrs) {
 					$val = $filter["val"];
 					if ($val=="''") $val = "";
 					$tags = preg_split("/:/", $tag);
+					$t = end($tags);
+//					print $value["gedcom"];
+					$v = get_gedcom_value($tag, 1, $value["gedcom"], '', false);
+					//-- check for EMAIL and _EMAIL (silly double gedcom standard :P)
+					if ($t=="EMAIL" && empty($v)) {
+						$tag = preg_replace("/EMAIL/", "_EMAIL", $tag);
+						$tags = preg_split("/:/", $tag);
+						$t = end($tags);
+						$v = get_sub_record(1, $tag, $value["gedcom"]);
+					}
+					
+					
+					$level = count($tags);
+					/*
 					$level = 1;
 					$subrec = $value["gedcom"];
 					foreach($tags as $indexval => $t) {
@@ -1680,11 +1727,12 @@ function PGVRListSHandler($attrs) {
 						$level++;
 					}
 					$level--;
+					*/
 					switch ($expr) {
 						case "GTE":
-							$ct = preg_match("/$level $t(.*)/", $subrec, $match);
-							if ($ct>0) {
-								$v = trim($match[1]);
+//							$ct = preg_match("/$level $t(.*)/", $subrec, $match);
+//							if ($ct>0) {
+//								$v = trim($match[1]);
 								if ($t=="DATE") {
 									$date1 = parse_date($v);
 									$date2 = parse_date($val);
@@ -1699,13 +1747,13 @@ function PGVRListSHandler($attrs) {
 									//print "[$key ".implode(" ", $date1[0])." ".implode(" ", $date2[0])." keep=$keep] ";
 								}
 								else if ($val >= $v) $keep=true;
-							}
-							else $keep=false;
+//							}
+//							else $keep=false;
 							break;
 						case "LTE":
-							$ct = preg_match("/$level $t(.*)/", $subrec, $match);
-							if ($ct>0) {
-								$v = trim($match[1]);
+//							$ct = preg_match("/$level $t(.*)/", $subrec, $match);
+//							if ($ct>0) {
+//								$v = trim($match[1]);
 								if ($t=="DATE") {
 									$date1 = parse_date($v);
 									$date2 = parse_date($val);
@@ -1720,25 +1768,22 @@ function PGVRListSHandler($attrs) {
 									//print "[$key ".implode(" ", $date1[0])." ".implode(" ", $date2[0])." keep=$keep] ";
 								}
 								else if ($val >= $v) $keep=true;
-							}
-							else $keep=false;
+//							}
+//							else $keep=false;
 							break;
 						case "SUBCONTAINS":
-							$ct = preg_match("/$val\W/i", $subrec);
+							$ct = preg_match("/$val\b/i", $v);
 							if ($ct>0) $keep = true;
-							else {
-								$ct = preg_match('/'.$val.'$/i', $subrec);
-								if ($ct>0) $keep = true;
-								else $keep = false;
-							}
+							//TEST End of line address match
+//							else {
+//								$ct = preg_match('/'.$val.'$/i', $v);
+//								if ($ct>0) $keep = true;
+//								else $keep = false;
+//							}
 							break;
 						default:
-							$v = get_gedcom_value($t, $level, $subrec);
-							//-- check for EMAIL and _EMAIL (silly double gedcom standard :P)
-							if ($t=="EMAIL"&&empty($v)) {
-								$t = "_EMAIL";
-								$v = get_gedcom_value($t, $level, $subrec);
-							}
+//							$v = get_gedcom_value($t, $level, $subrec);
+							
 							//print "[$key $t $v == $val $subrec]<br />";
 							if ($v==$val) $keep=true;
 							else $keep = false;

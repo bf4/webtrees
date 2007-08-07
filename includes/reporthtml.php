@@ -123,6 +123,7 @@ class PGVReport extends PGVReportBase {
 			else $element->render($this);
 		}
 		print "</div>\n";
+		print "<script type=\"text/javascript\">\ndocument.getElementById('headerdiv').style.height='".($this->Y)."pt';\n</script>\n";
 		//-- body
 		
 		$oldy = $this->Y;
@@ -136,10 +137,11 @@ class PGVReport extends PGVReportBase {
 			else if (is_object($element)) $element->render($this);
 		}
 		print "</div>\n";
-		print "<script type=\"text/javascript\">\ndocument.getElementById('bodydiv').style.height='".($this->Y-$oldy)."pt';\n</script>\n";
+		print "<script type=\"text/javascript\">\ndocument.getElementById('bodydiv').style.height='".($this->Y)."pt';\n</script>\n";
 		//-- footer
 //		$this->SetY(-36);
 		$oldy = $this->Y;
+		$this->Y=0;
 		print "<div id=\"footerdiv\" style=\"position: relative; top: auto; width: 100%; height: auto;\">\n";
 		$this->currentStyle = "footer";
 		foreach($this->footerElements as $indexval => $element) {
@@ -279,7 +281,7 @@ class PGVReport extends PGVReportBase {
 	
 	function getStringWidth($text) {
 		$style = $this->getStyle($this->currentStyle);
-		return strlen($text)*($style['size']/1.8);
+		return strlen($text)*($style['size']/2);
 	}
 	
 	function getCurrentStyleHeight() {
@@ -331,12 +333,13 @@ class PGVRCellHTML extends PGVRCell {
 				$align = "left";
 				break;
 		}
-		if ($this->top==".") $this->top = "auto";
-		else $this->top .= "pt";
-		if ($this->left==".") $this->left = "auto";
-		else $this->left .= "pt";
-		print "<div style=\"top: ".$this->top."; left: ".$this->left."; ";
+		if ($this->top==".") $this->top = $pdf->GetY();
+		$this->top .= "pt";
+		if ($this->left==".") $this->left = $pdf->GetX();
+		$this->left .= "pt";
+		print "<div style=\"position: absolute; top: ".$this->top."; left: ".$this->left."; ";
 		if ($this->width>0) print "width: ".$this->width."pt; ";
+		else print "width: ".$pdf->getMaxWidth()."pt; ";
 		if ($this->height>0) {
 			print "height: ".$this->height."pt; ";
 			$pdf->SetY($pdf->GetY()+$this->height);
@@ -512,8 +515,9 @@ class PGVRTextBoxHTML extends PGVRTextBox {
 		if ($this->newline) {
 			$lastheight = 0;
 			$ty = $pdf->GetY();
-			if ($curn != $pdf->PageNo()) $ny = $cury+$pdf->getCurrentStyleHeight();
-			else $ny = $cury+$this->height;
+			//if ($curn != $pdf->PageNo()) $ny = $cury+$pdf->getCurrentStyleHeight();
+			//else 
+			$ny = $cury+$this->height;
 			if ($ty > $ny) $ny = $ty;
 			$pdf->SetY($ny+1);
 			$pdf->SetX(0);
@@ -585,9 +589,9 @@ class PGVRTextHTML extends PGVRText {
 
 	function getHeight(&$pdf) {
 		$ct = substr_count($this->text, "\n");
-		if ($ct>0) $ct+=1;
+		//if ($ct>0) $ct+=1;
 		$style = $pdf->getStyle($this->styleName);
-		$h = (($style["size"]+4)*$ct);
+		$h = (($style["size"]+2)*$ct);
 		//print "[".$this->text." $ct $h]";
 		return $h;
 	}

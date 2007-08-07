@@ -44,6 +44,9 @@ VERSION 4.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["changedate1"]								07 Aug 2007				A
++$pgv_lang["changedate2"]								07 Aug 2007				A
++$pgv_lang["changes_report"]							07 Aug 2007				A
 +$pgv_lang["media_privacy"]								02 Aug 2007				A	Media Firewall, patch 1749817
 +$pgv_lang["historical_facts"]							14 Jun 2007				A
 +$pgv_lang["nephew"]									13 May 2007				A
@@ -57,7 +60,7 @@ VERSION 4.1
 *$pgv_lang["style1"]								3 Aug 2007				W
 *$pgv_lang["style3"]								3 Aug 2007				W
 +$pgv_lang["acceptable_use"]						2 Aug 2007				A
-+$pgv_lang["add_faq_visibility"]					19 Jul 2007				A
++$pgv_lang["add_faq_visibility"]					19 Jul 2007			A
 +$pgv_lang["style3"]								12 Jul 2007				A
 +$pgv_lang["family"]                    			05 July 2007      		A moved from editor.xx.php for [1736907]
 +$pgv_lang["adr_leap_year"]							30 Jun 2007				A

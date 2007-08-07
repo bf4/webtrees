@@ -1,0 +1,53 @@
+<PGVReport access="PRIV_USER" icon="place">
+	<!-- $Id: birthlist.xml 1202 2007-06-22 19:18:24Z canajun2eh $ -->
+	<PGVRTitle><PGVRvar var="pgv_lang[changes_report]" /></PGVRTitle>
+	<PGVRDescription>Prints a list of individuals matching specific change criteria</PGVRDescription>
+	<PGVRInput name="changedate1" lookup="DATE" type="text" default="NOW"><PGVRvar var="pgv_lang[changedate2]" /></PGVRInput>
+	<PGVRInput name="changedate2" lookup="DATE" type="text" default="NOW-30"><PGVRvar var="pgv_lang[changedate1]" /></PGVRInput>
+	<PGVRInput name="sortby" type="select" options="CHAN,NAME,BIRT"><PGVRvar var="pgv_lang[sort_by]" /></PGVRInput>
+	<PGVRInput name="pageSize" type="select" options="letter,A4,A3,A5,legal"><PGVRvar var="pgv_lang[page_size]" /></PGVRInput>
+	<PGVRStyle name="header" font="LucidaSansUnicode" size="16" style="b" />
+	<PGVRStyle name="pagenum" font="LucidaSansUnicode" size="8" style="" />
+	<PGVRStyle name="text" font="LucidaSansUnicode" size="9" style="" />
+	<PGVRStyle name="label" font="LucidaSansUnicode" size="10" style="b" />
+	<PGVRDoc pageSize="$pageSize" orientation="P" margin="24">
+		<PGVRHeader>
+			<PGVRCell width="0" height="20" align="center" style="header"><PGVRvar var="pgv_lang[changes_report]" /> <PGVRvar var="changedate1" date="1" /> - <PGVRvar var="changedate2" date="1" /></PGVRCell>
+			<PGVRCell width="0" height="10" align="right" style="pagenum"><PGVRvar var="pgv_lang[page]" /> <PGVRPageNum /> <PGVRvar var="pgv_lang[of]" /> <PGVRTotalPages /></PGVRCell>
+			<PGVRTextBox width="60" height="12" border="1">
+				<PGVRText style="label"> </PGVRText>
+			</PGVRTextBox>
+			<PGVRTextBox width="200" height="12" border="1">
+				<PGVRText style="label"><PGVRvar var="pgv_lang[name]" /></PGVRText>
+			</PGVRTextBox>
+			<PGVRTextBox width="200" height="12" border="1">
+				<PGVRText style="label"><PGVRvar var="factarray[BIRT]" /> - <PGVRvar var="factarray[DEAT]" /></PGVRText>
+			</PGVRTextBox>
+			<PGVRTextBox width="0" height="12" border="1" newline="1">
+				<PGVRText style="label"><PGVRvar var="factarray[CHAN]" /></PGVRText>
+			</PGVRTextBox>
+		</PGVRHeader>
+		<PGVRBody>
+			<PGVRList list="individual" filter1="CHAN:DATE LTE $changedate1" filter2="CHAN:DATE GTE $changedate2" sortby="$sortby">
+				<PGVRTextBox width="60" height="12" border="0">
+					<PGVRText style="text"><PGVRGedcomValue tag="@id" /></PGVRText>
+				</PGVRTextBox>
+				<PGVRTextBox width="200" height="12" border="0">
+					<PGVRText style="text"><PGVRGetPersonName id="" /></PGVRText>
+				</PGVRTextBox>
+				<PGVRTextBox width="200" height="12" border="0">
+					<PGVRText style="text"><PGVRvarLetter var="factarray[BIRT]" />: <PGVRGedcomValue tag="BIRT:DATE" /> - <PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" /></PGVRText>
+				</PGVRTextBox>
+				<PGVRTextBox width="0" height="12" border="0" newline="1">
+					<PGVRText style="text"><PGVRGedcomValue tag="CHAN:DATE" /> - <PGVRGedcomValue tag="CHAN:_PGVU" /></PGVRText>
+				</PGVRTextBox>
+			</PGVRList>
+			<PGVRCell width="0" height="25" border="0" align="right" style="label">
+				<br /><PGVRvar var="pgv_lang[total_indis]" />: <PGVRListTotal />
+			</PGVRCell>
+		</PGVRBody>
+		<PGVRFooter>
+			<PGVRCell width="0" height="10"><PGVRNow /></PGVRCell>
+		</PGVRFooter>
+	</PGVRDoc>
+</PGVReport>
