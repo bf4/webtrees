@@ -13,7 +13,7 @@ body {
 }
 html {
 	direction: rtl;
-	whitespace: normal;
+	white-space: normal;
 }
 #footer {
 	text-align: center;
