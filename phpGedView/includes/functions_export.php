@@ -88,7 +88,7 @@ function gedcom_header($gedfile, $CRLF="\r\n")
 }
 
 function print_gedcom($privatize_export, $privatize_export_level, $convert, $remove, $gedout, $CRLF="\r\n") {
-	global $GEDCOMS, $GEDCOM, $ged, $VERSION, $VERSION_RELEASE, $pgv_lang, $CHARACTER_SET;
+	global $GEDCOMS, $GEDCOM, $VERSION, $VERSION_RELEASE, $pgv_lang, $CHARACTER_SET;
 	global $TBLPREFIX, $GEDCOM_ID_PREFIX, $SOURCE_ID_PREFIX, $FAM_ID_PREFIX, $REPO_ID_PREFIX, $MEDIA_ID_PREFIX;
 
 	if ($privatize_export == "yes") {
@@ -103,9 +103,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 		}
 	}
 
-	$GEDCOM = $ged;
-
-	$head=gedcom_header($ged, $CRLF);
+	$head=gedcom_header($GEDCOM, $CRLF);
 	if ($convert == "yes") {
 		$head = preg_replace("/UTF-8/", "ANSI", $head);
 		$head = utf8_decode($head);
@@ -192,7 +190,7 @@ function print_gedcom($privatize_export, $privatize_export_level, $convert, $rem
 }
 
 function print_gramps($privatize_export, $privatize_export_level, $convert, $remove, $gedout, $CRLF="\r\n") {
-	global $GEDCOMS, $GEDCOM, $ged, $VERSION, $VERSION_RELEASE, $pgv_lang;
+	global $GEDCOMS, $GEDCOM, $VERSION, $VERSION_RELEASE, $pgv_lang;
 	global $TBLPREFIX;
 	global $CRLF;
 
