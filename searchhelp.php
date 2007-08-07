@@ -135,9 +135,7 @@ if ((!empty($searchtext)) && strlen($searchtext)>1 && (($searchuser == "yes") ||
 		else if ((substr($text, -5) == "_help" && $value{0}!="_") || (substr($text, -4) == ".php")) $helpvarnames[] = $text;
 	}
 
-	// Reload lang.xx file
-	unset($pgv_lang);
-	loadLangFile("pgv_lang, pgv_confighelp");
+	loadLangFile("pgv_lang");	// Reload lang.xx file (but keep the already-loaded Help text)
 
 	// Split the search criteria if all or any is chosen. Otherwise, just fill the array with the sentence
 	$criteria = array();
