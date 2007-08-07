@@ -3101,28 +3101,28 @@ function loadLangFile($fileListNames="") {
 	foreach($list as $fileListName) {
 		switch ($fileListName) {
 		case "ra_lang":
-			$fileName1 = "../modules/research_assistant/languages/lang.".$lang_short_cut["english"].".php";
-			$fileName2 = "../modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php";
+			$fileName1 = "modules/research_assistant/languages/lang.".$lang_short_cut["english"].".php";
+			$fileName2 = "modules/research_assistant/languages/lang.".$lang_short_cut[$LANGUAGE].".php";
 			break;
 		case "ra_help":
-			$fileName1 = "../modules/research_assistant/languages/help_text.".$lang_short_cut["english"].".php";
-			$fileName2 = "../modules/research_assistant/languages/help_text.".$lang_short_cut[$LANGUAGE].".php";
+			$fileName1 = "modules/research_assistant/languages/help_text.".$lang_short_cut["english"].".php";
+			$fileName2 = "modules/research_assistant/languages/help_text.".$lang_short_cut[$LANGUAGE].".php";
 			break;
 		case "gm_lang":
-			$fileName1 = "../modules/googlemap/languages/lang.".$lang_short_cut["english"].".php";
-			$fileName2 = "../modules/googlemap/languages/lang.".$lang_short_cut[$LANGUAGE].".php";
+			$fileName1 = "modules/googlemap/languages/lang.".$lang_short_cut["english"].".php";
+			$fileName2 = "modules/googlemap/languages/lang.".$lang_short_cut[$LANGUAGE].".php";
 			break;
 		case "gm_help":
-			$fileName1 = "../modules/googlemap/languages/help_text.".$lang_short_cut["english"].".php";
-			$fileName2 = "../modules/googlemap/languages/help_text.".$lang_short_cut[$LANGUAGE].".php";
+			$fileName1 = "modules/googlemap/languages/help_text.".$lang_short_cut["english"].".php";
+			$fileName2 = "modules/googlemap/languages/help_text.".$lang_short_cut[$LANGUAGE].".php";
 			break;
 		case "sm_lang":
-			$fileName1 = "../modules/sitemap/languages/lang.".$lang_short_cut["english"].".php";
-			$fileName2 = "../modules/sitemap/languages/lang.".$lang_short_cut[$LANGUAGE].".php";
+			$fileName1 = "modules/sitemap/languages/lang.".$lang_short_cut["english"].".php";
+			$fileName2 = "modules/sitemap/languages/lang.".$lang_short_cut[$LANGUAGE].".php";
 			break;
 		case "sm_help":
-			$fileName1 = "../modules/sitemap/languages/help_text.".$lang_short_cut["english"].".php";
-			$fileName2 = "../modules/sitemap/languages/help_text.".$lang_short_cut[$LANGUAGE].".php";
+			$fileName1 = "modules/sitemap/languages/help_text.".$lang_short_cut["english"].".php";
+			$fileName2 = "modules/sitemap/languages/help_text.".$lang_short_cut[$LANGUAGE].".php";
 			break;
 		case "pgv_lang":
 			$fileName1 = $pgv_language["english"];
