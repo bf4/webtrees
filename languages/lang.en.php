@@ -1562,6 +1562,7 @@ $pgv_lang["hs_results"] 		= "Results found:";
 $pgv_lang["hs_keyword"] 		= "Search for";
 $pgv_lang["hs_searchin"]		= "Search in";
 $pgv_lang["hs_searchuser"]		= "User Help";
+$pgv_lang["hs_searchmodules"]	= "Modules Help";
 $pgv_lang["hs_searchconfig"]	= "Administrator Help";
 $pgv_lang["hs_searchhow"]		= "Search type";
 $pgv_lang["hs_searchall"]		= "All words";
