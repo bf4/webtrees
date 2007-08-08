@@ -312,7 +312,7 @@
 						<PGVRText style="label1"><br /><PGVRvar var="pgv_lang[sources]" /><br /><br /></PGVRText>
 					</PGVRTextBox>
 				</PGVRPageHeader>
-				<PGVRTextBox border="0" width="$width" height="20">
+				<PGVRTextBox border="0" width="$width" height="20" newline="1">
 					<PGVRText style="label1"><br /><PGVRvar var="pgv_lang[sources]" /><br /><br /></PGVRText>
 					<PGVRFootnoteTexts />
 				</PGVRTextBox>

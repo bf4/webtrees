@@ -137,11 +137,12 @@ class PGVReport extends PGVReportBase {
 			else if (is_object($element)) $element->render($this);
 		}
 		print "</div>\n";
-		print "<script type=\"text/javascript\">\ndocument.getElementById('bodydiv').style.height='".($this->Y)."pt';\n</script>\n";
+		print "<script type=\"text/javascript\">\ndocument.getElementById('bodydiv').style.height='".($this->Y+2)."pt';\n</script>\n";
 		//-- footer
 //		$this->SetY(-36);
 		$oldy = $this->Y;
 		$this->Y=0;
+		$this->X=0;
 		print "<div id=\"footerdiv\" style=\"position: relative; top: auto; width: 100%; height: auto;\">\n";
 		$this->currentStyle = "footer";
 		foreach($this->footerElements as $indexval => $element) {
@@ -264,7 +265,7 @@ class PGVReport extends PGVReportBase {
 	function getFootnotesHeight() {
 		$h=0;
 		foreach($this->printedfootnotes as $indexval => $element) {
-			$h+=$element->getHeight($this);
+			$h+=$element->getFootnoteHeight($this);
 		}
 		return $h;
 	}
@@ -447,10 +448,10 @@ class PGVRTextBoxHTML extends PGVRTextBox {
 				$eh = $this->elements[$i]->getHeight($pdf);
 				//if ($eh>$h) $h = $eh;
 				//else if ($lw[1]) $h+=$eh;
-				$h+=$eh;
+				$h+=abs($eh);
 			}
 			else {
-				$h += $pdf->getFootnotesHeight();
+				$h += abs($pdf->getFootnotesHeight());
 			}
 		}
 		if ($h>$this->height) $this->height=$h;
@@ -495,7 +496,7 @@ class PGVRTextBoxHTML extends PGVRTextBox {
 			}
 		}
 
-		print "<div style=\"position: absolute; left: ".$pdf->GetX()."pt; top: ".$pdf->GetY()."pt; width: ".$this->width."pt; height: ".$this->height."pt;";
+		print "<div style=\"position: absolute; padding-left: 1pt; left: ".$pdf->GetX()."pt; top: ".$pdf->GetY()."pt; width: ".($this->width-1)."pt; height: ".$this->height."pt;";
 		if (!empty($this->fill)) {
 			print " background-color: ".$this->fill.";";
 		}
@@ -589,7 +590,7 @@ class PGVRTextHTML extends PGVRText {
 
 	function getHeight(&$pdf) {
 		$ct = substr_count($this->text, "\n");
-		//if ($ct>0) $ct+=1;
+		if ($ct>0) $ct+=1;
 		$style = $pdf->getStyle($this->styleName);
 		$h = (($style["size"]+2)*$ct);
 		//print "[".$this->text." $ct $h]";
@@ -690,15 +691,15 @@ class PGVRFootnoteHTML extends PGVRFootnote {
 		print "<a name=\"footnote".$this->num."\">".$this->num.". ";
 		$pdf->write($temptext."\n\n");
 		print "</a>\n";
-		$pdf->SetY($pdf->GetY()+$this->getFootnoteHeight($pdf));
+		$pdf->SetXY(0,$pdf->GetY()+$this->getFootnoteHeight($pdf));
 	}
 	
 	function getFootnoteHeight(&$pdf) {
 		$ct = substr_count($this->text, "\n");
-		if ($ct>0) $ct+=3;
+		$ct+=3;
 		$style = $pdf->getStyle($this->styleName);
 		$h = round(($style["size"]+4.2)*$ct);
-		//print "[".$this->text." $ct $h]";
+//		print "[".$this->text." $ct $h]";
 		return $h;
 	}
 }

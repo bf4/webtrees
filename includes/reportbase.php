@@ -1676,7 +1676,7 @@ function PGVRListSHandler($attrs) {
 				$start = $startdate[0]['year'].$startdate[0]['mon'].$startdate[0]['day'];
 				$end = $enddate[0]['year'].$enddate[0]['mon'].$enddate[0]['day'];
 				$dlist = search_indis_daterange($start, $end, $starttag.",".$endtag);
-				if (!isset($list)) $list = $dlist;
+				if (!isset($list) || count($list)==0) $list = $dlist;
 				else {
 					//-- intersect the lists
 					$newlist = array();
