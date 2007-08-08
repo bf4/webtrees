@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Edit
- * @version $Id: getdata.php,v 1.1.2.3 2005/11/29 19:29:53 opus27 Exp $
+ * @version $Id$
  * @see functions_places.php
  */
 

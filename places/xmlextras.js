@@ -1,5 +1,5 @@
 /**
- * @version $Id: xmlextras.js,v 1.1.2.2 2005/12/10 18:55:39 opus27 Exp $
+ * @version $Id$
  * @author http://momche.net
  */
 
