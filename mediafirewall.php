@@ -23,7 +23,7 @@
  *
  *
  * @package PhpGedView
- * @version $Id$
+ * @version $Id:$
  */
 
 require_once("includes/controllers/media_ctrl.php");

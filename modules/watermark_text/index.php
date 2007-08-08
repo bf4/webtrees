@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage watermark_text
- * @version $Id$
+ * @version $Id:$
  */
 
 header("Location: ../../index.php");
