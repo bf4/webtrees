@@ -38,11 +38,14 @@ class Media extends GedcomRecord {
 	var $ext = "";
 	var $mime = "";
 	var $note = "";
-	var $filesize = -1;
+	var $filesizeraw = -1;
 	var $width = 0;
 	var $height = 0;
 	var $indilist = null;
 	var $famlist = null;
+	var $serverfilename = "";
+	var $fileexists = false;
+	var $filepropset = false;
 
 	/**
 	 * Constructor for media object
@@ -100,10 +103,14 @@ class Media extends GedcomRecord {
 		return $this->disp;
 	}
 	
-	//Returns the Note for the associated media
+	/**
+	 * get the media note
+	 * @return string
+	 */
 	function getNote(){
 		return $this->note;
 	}
+
 	/**
 	 * get the media title
 	 * @return string
@@ -148,6 +155,14 @@ class Media extends GedcomRecord {
 	}
 
 	/**
+	 * get the thumbnail filename
+	 * @return string
+	 */
+	function getThumbnail() {
+		return thumbnail_file($this->file);
+	}
+
+	/**
 	 * get the media file name
 	 * @return string
 	 */
@@ -169,28 +184,36 @@ class Media extends GedcomRecord {
 	 */
 	function getServerFilename() {
 		global $USE_MEDIA_FIREWALL;
+		if ($this->serverfilename) return $this->serverfilename;
 		$localfilename = $this->getLocalFilename();
 		if (file_exists($localfilename)){
 			// found image in unprotected directory
-			return $localfilename;
+			$this->fileexists = true;
+			$this->serverfilename = $localfilename;
+			return $this->serverfilename;
 		}
 		if ($USE_MEDIA_FIREWALL) {
 			$protectedfilename = get_media_firewall_path($localfilename);
 			if (file_exists($protectedfilename)){
 				// found image in protected directory
-				return $protectedfilename;
+				$this->fileexists = true;
+				$this->serverfilename = $protectedfilename;
+				return $this->serverfilename;
 			}
 		}
 		// file doesn't exist, return the standard localfilename for backwards compatibility
-		return $localfilename;
+		$this->fileexists = false;
+		$this->serverfilename = $localfilename;
+		return $this->serverfilename;
 	}
 
 	/**
-	 * get the thumbnail filename
-	 * @return string
+	 * check if the file exists on this server
+	 * @return boolean
 	 */
-	function getThumbnail() {
-		return thumbnail_file($this->file);
+	function getFileExists() {
+		if (!$this->serverfilename) $this->getServerFilename();
+		return $this->fileexists;
 	}
 
 	/**
@@ -198,8 +221,17 @@ class Media extends GedcomRecord {
 	 * @return string
 	 */
 	function getFilesize() {
-		if ($this->filesize<0) $this->filesize = sprintf("%.2f", @filesize($this->getServerFilename())/1024);
-		return $this->filesize;
+		if (!$this->filepropset) $this->setFileProperties();
+		return(sprintf("%.2f", @$this->filesizeraw/1024));
+	}
+
+	/**
+	 * get the media file size, unformatted
+	 * @return number
+	 */
+	function getFilesizeraw() {
+		if (!$this->filepropset) $this->setFileProperties();
+		return $this->filesizeraw;
 	}
 
 	/**
@@ -207,21 +239,7 @@ class Media extends GedcomRecord {
 	 * @return string
 	 */
 	function getFiletype() {
-		if ($this->ext) return $this->ext;
-		// image ?
-		$imageTypes = array("","GIF", "JPG", "PNG", "SWF", "PSD", "BMP", "TIFF", "TIFF", "JPC", "JP2", "JPX", "JB2", "SWC", "IFF", "WBMP", "XBM");
-		$imgsize = @getimagesize($this->getServerFilename()); // [0]=width [1]=height [2]=filetype
-		$this->width = 0+$imgsize[0];
-		$this->height = 0+$imgsize[1];
-		$this->mime = $imgsize['mime'];
-		$this->ext = $imageTypes[0+$imgsize[2]];
-		if ($this->ext) return $this->ext;
-		// not an image : get file extension
-		$exp = explode("?", $this->file);
-		$pathinfo = pathinfo($exp[0]);
-		$this->ext = @strtoupper($pathinfo['extension']);
-		// unknown file type
-		if (!$this->ext) $this->ext = "-";
+		if (!$this->filepropset) $this->setFileProperties();
 		return $this->ext;
 	}
 
@@ -230,9 +248,71 @@ class Media extends GedcomRecord {
 	 * @return string
 	 */
 	function getMimetype() {
-		if ($this->mime) return $this->mime;
-		$this->getFiletype(); // set everything we can
+		if (!$this->filepropset) $this->setFileProperties();
 		return $this->mime;
+	}
+
+	/**
+	 * get the width of the image
+	 * @return number (0 if not an image)
+	 */
+	function getWidth() {
+		if (!$this->filepropset) $this->setFileProperties();
+		return $this->width;
+	}
+
+	/**
+	 * get the height of the image
+	 * @return number (0 if not an image)
+	 */
+	function getHeight() {
+		if (!$this->filepropset) $this->setFileProperties();
+		return $this->height;
+	}
+
+	/**
+	 * internal function, sets a number of properties
+	 * no need to call directly
+	 * @return nothing
+	 */
+	function setFileProperties() {
+		global $pgv_lang;
+		$imgsize;
+		if ($this->getFileExists()) {
+			$this->filesizeraw = @filesize($this->getServerFilename());
+			$imgsize = @getimagesize($this->getServerFilename()); // [0]=width [1]=height [2]=filetype
+		}
+		if (@$imgsize[0]) {
+			// this is an image
+			$this->width = 0+$imgsize[0];
+			$this->height = 0+$imgsize[1];
+			$imageTypes = array("","GIF", "JPG", "PNG", "SWF", "PSD", "BMP", "TIFF", "TIFF", "JPC", "JP2", "JPX", "JB2", "SWC", "IFF", "WBMP", "XBM");
+			$this->ext = $imageTypes[0+$imgsize[2]];
+		}
+		if (!$this->ext) {
+			// this is probably not an image
+			// set file type equal to the file extension
+			$exp = explode("?", $this->file);
+			$pathinfo = pathinfo($exp[0]);
+			$this->ext = @strtoupper($pathinfo['extension']);
+			if (!$this->ext) $this->ext = "-";
+		}
+		if (@$imgsize['mime']) {
+			$this->mime = $imgsize['mime'];
+		} else {
+			// lookup mime type based on file extension
+			// this list needs to contain mimetypes for all media types not recognized by imgsize['mime'] 
+			$mime['MOV']  = 'video/quicktime';
+			$mime['MP3']  = 'audio/mpeg';
+			$mime['PDF']  = 'application/pdf';
+			$this->mime   = @$mime[$this->ext];
+			if (!$this->mime) {
+				// if we don't know what the mimetype is, use something ambiguous
+				$this->mime = "application/octet-stream";
+				AddToLog($this->file.': '.$pgv_lang["unknown_mime"]);
+			}
+		}
+		$this->filepropset = true;
 	}
 
 	/**

@@ -23,7 +23,7 @@
  *
  *
  * @package PhpGedView
- * @version $Id:$
+ * @version $Id$
  */
 
 require_once("includes/controllers/media_ctrl.php");
@@ -34,7 +34,7 @@ $debug_mediafirewall	= 0; // set to 1 if you want to see media firewall values d
 $debug_watermark		= 0; // set to 1 if you want to see error messages from the watermark module instead of broken images
 $debug_forceImageRegen	= 0; // set to 1 if you want to force an image to be regenerated (for debugging only)
 
-// pass in an image type and this will determine if your system supports that image type 
+// pass in an image type and this will determine if your system supports editing of that image type 
 function isImageTypeSupported($reqtype) {
 	$reqtype = strtolower($reqtype);
 	if ( ( ($reqtype == 'jpg') || ($reqtype == 'jpeg') ) && (imagetypes() & IMG_JPG)) {
@@ -105,8 +105,21 @@ function sendErrorAndExit($type, $line1, $line2 = false) {
 	exit;
 }
 
+// pass in the complete serverpath to an image
+// this returns the complete serverpath to be used by the saved watermarked image
+// note that each gedcom gets a unique path to store images, this allows each gedcom to have their own watermarking config
+function getWatermarkPath ($path) {
+	global $GEDCOMS, $GEDCOM, $MEDIA_DIRECTORY;
+	$serverroot = get_media_firewall_path($MEDIA_DIRECTORY);
+	$path = str_replace($serverroot, $serverroot . 'watermark/'.$GEDCOMS[$GEDCOM]['gedcom'].'/', $path);
+	return $path;
+}
+
+
+// start processing here
+
 if (empty($controller->pid)) {
-	// the requested file is not in the database
+	// the requested file is not in the database, bail
 	// Note: the 404 error status is still in effect. 
 	// the substr command here is to get the extension of the file that was requested
 	sendErrorAndExit(substr(strrchr(@$_SERVER['REDIRECT_URL'], "."), 1), $pgv_lang["no_media"], @$_SERVER['REDIRECT_URL']);
@@ -115,6 +128,7 @@ if (empty($controller->pid)) {
 // if we got here, then the requested file was found in the database
 // and $controller contains all the details about the media object
 $serverFilename = $controller->getServerFilename();
+$isThumb = false;
 
 if (strpos($_SERVER['REDIRECT_URL'], '/thumbs/')) {
 	// the user requested a thumbnail, but the $controller only knows how to lookup information on the main file 
@@ -122,42 +136,64 @@ if (strpos($_SERVER['REDIRECT_URL'], '/thumbs/')) {
 	// NOTE: since this script was called when a 404 error occured, we know the requested file
 	// does not exist in the main media directory.  just check the media firewall directory
 	$serverFilename = get_media_firewall_path($controller->mediaobject->getThumbnail());
+	$isThumb = true;
 }
 
 if (!file_exists($serverFilename)) {
-	// the requested file is in the database, but it does not exist on the server
+	// the requested file is in the database, but it does not exist on the server.  bail.
 	// Note: the 404 error status is still in effect. 
 	sendErrorAndExit($controller->mediaobject->getFiletype(), $pgv_lang["no_media"], $serverFilename);
 }
 
 $protocol = $_SERVER["SERVER_PROTOCOL"];  // determine if we are using HTTP/1.0 or HTTP/1.1
-
-$filesize = filesize($serverFilename);
 $filetime = filemtime($serverFilename);
 $filetimeHeader = gmdate("D, d M Y H:i:s", $filetime).' GMT';
-
-$expireOffset = 3600 * 24;  // tell browser to cache this for 24 hours
+$expireOffset = 3600 * 24;  // tell browser to cache this image for 24 hours
 $expireHeader = gmdate("D, d M Y H:i:s", time() + $expireOffset) . " GMT";
 
 $type = isImageTypeSupported($controller->mediaobject->getFiletype());
-
 $usewatermark = false;
 // if this image supports watermarks and the watermark module is intalled...
 if ($type && function_exists("applyWatermark")) {
-	// if the user's priv's justify it...
-	if (getUserAccessLevel() > $SHOW_NO_WATERMARK ) {
-		// add a watermark
-		$usewatermark = true;
+	// if this is not a thumbnail, or WATERMARK_THUMB is true
+	if (!$isThumb || $WATERMARK_THUMB ) {
+		// if the user's priv's justify it...
+		if (getUserAccessLevel() > $SHOW_NO_WATERMARK ) {
+			// add a watermark
+			$usewatermark = true;
+		}
 	}
 }
 
-// setup the etag.  use enough info so that if anything important changes, the etag won't match
-// see http://blog.rd2inc.com/archives/2005/03/24/making-dynamic-php-pages-cacheable/
-$etag_string = basename($serverFilename).$filetime.getUserAccessLevel().$SHOW_NO_WATERMARK; 
-if ($usewatermark && file_exists('modules/watermark_text/config.php')) {
-	// if the watermark settings change, change the etag to force everything to be recalculated
-	$etag_string .= filemtime('modules/watermark_text/config.php');
+$watermarkfile = "";
+$configlastupdate = 0;
+$configfile = "";
+$generatewatermark = false;
+
+if ($usewatermark) {
+	// determine when the config settings were last updated
+	// getWatermarkConfigInfo() is defined in the watermark_text module
+	list($configfile, $configlastupdate) = getWatermarkConfigInfo();
+	$watermarkfile = getWatermarkPath($serverFilename);
+	if (!file_exists($watermarkfile)) {
+		// no saved watermark file exists
+		// generate the watermark file
+		$generatewatermark = true;
+	} else {
+		$watermarktime = filemtime($watermarkfile);  
+		if ( ($configlastupdate > $watermarktime) || ( $filetime > $watermarktime) ) {
+			// if config settings were updated after the saved file was created
+			// or if the original image was updated after the saved file was created
+			// generate the watermark file
+			$generatewatermark = true;
+		}
+	}
 }
+
+$mimetype = $controller->mediaobject->getMimetype();
+
+// setup the etag.  use enough info so that if anything important changes, the etag won't match
+$etag_string = basename($serverFilename).$filetime.getUserAccessLevel().$SHOW_NO_WATERMARK.$configlastupdate; 
 $etag = dechex(crc32($etag_string));
 
 // parse IF_MODIFIED_SINCE header from client
@@ -183,9 +219,9 @@ if ($debug_mediafirewall) {
 	echo  '<tr><td>controller->mediaobject->getFilename()</td><td>'.$controller->mediaobject->getFilename().'</td><td>this is direct from the gedcom</td></tr>';
 	echo  '<tr><td>controller->mediaobject->getServerFilename()</td><td>'.$controller->mediaobject->getServerFilename().'</td><td></td></tr>';
 	echo  '<tr><td>controller->mediaobject->getFiletype()</td><td>'.$controller->mediaobject->getFiletype().'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>controller->mediaobject->getMimetype()</td><td>'.$controller->mediaobject->getMimetype().'</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>mimetype</td><td>'.$mimetype.'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>controller->mediaobject->getFilesize()</td><td>'.$controller->mediaobject->getFilesize().'</td><td>cannot use this</td></tr>';
-	echo  '<tr><td>filesize</td><td>'.$filesize.'</td><td>this is right</td></tr>';
+	echo  '<tr><td>filesize</td><td>'.filesize($serverFilename).'</td><td>this is right</td></tr>';
 	echo  '<tr><td>controller->mediaobject->getThumbnail()</td><td>'.$controller->mediaobject->getThumbnail().'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>controller->mediaobject->canDisplayDetails()</td><td>'.$controller->mediaobject->canDisplayDetails().'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>controller->mediaobject->getTitle()</td><td>'.$controller->mediaobject->getTitle().'</td><td>&nbsp;</td></tr>';
@@ -201,12 +237,18 @@ if ($debug_mediafirewall) {
 	echo  '<tr><td>SHOW_NO_WATERMARK</td><td>'.$SHOW_NO_WATERMARK.'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>getUserAccessLevel()</td><td>'.getUserAccessLevel().'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>usewatermark</td><td>'.$usewatermark.'</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>generatewatermark</td><td>'.$generatewatermark.'</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>watermarkfile</td><td>'.$watermarkfile.'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>type</td><td>'.$type.'</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>WATERMARK_THUMB</td><td>'.$WATERMARK_THUMB.'</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>SAVE_WATERMARK_THUMB</td><td>'.$SAVE_WATERMARK_THUMB.'</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>SAVE_WATERMARK_IMAGE</td><td>'.$SAVE_WATERMARK_IMAGE.'</td><td>&nbsp;</td></tr>';
 	echo  '</table>';
 
 	echo '<pre>';
 	print_r(getimagesize($serverFilename));
 	print_r ($controller->mediaobject);
+	print_r ($GEDCOMS[$GEDCOM]);
 	echo '</pre>';
 
 	phpinfo();
@@ -222,14 +264,14 @@ if (!$controller->mediaobject->canDisplayDetails()) {
 }
 
 // add caching headers.  allow browser to cache file, but not proxy
-// see http://www.badpenguin.org/docs/php-cache.html
-header("Last-Modified: " . $filetimeHeader);
-header('ETag: "'.$etag.'"');
-header("Expires: ".$expireHeader);
-header("Cache-Control: max-age=".$expireOffset.", s-maxage=0, proxy-revalidate");
+if (!$debug_forceImageRegen) {
+	header("Last-Modified: " . $filetimeHeader);
+	header('ETag: "'.$etag.'"');
+	header("Expires: ".$expireHeader);
+	header("Cache-Control: max-age=".$expireOffset.", s-maxage=0, proxy-revalidate");
+}
 
 // if this file is already in the user's cache, don't resend it
-// see http://ontosys.com/php/cache.html
 // first check if the if_modified_since param matches
 if (($if_modified_since == $filetimeHeader) && !$debug_forceImageRegen) {
 	// then check if the etag matches
@@ -244,27 +286,51 @@ header($protocol." 200 OK");
 header("Status: 200 OK");
 
 // send headers for the image
-// note, there will be a problem if getMimetype() doesn't know the mime type for this particular piece of media
 if (!$debug_watermark) {
-	header("Content-Type: " . $controller->mediaobject->getMimetype());
+	header("Content-Type: " . $mimetype);
+	header('Content-Disposition: inline; filename="'.basename($serverFilename).'"');
 }
-header('Content-Disposition: inline; filename="'.basename($serverFilename).'"');
 
-if ( $usewatermark ) {
+if ( $generatewatermark ) {
+	// generate the watermarked image
 	$imCreateFunc = 'imagecreatefrom'.$type;
-	$im = $imCreateFunc($serverFilename);
+	$im = @$imCreateFunc($serverFilename);
+
+	if (!$im) {
+		// this image is defective.  bail 
+		sendErrorAndExit($controller->mediaobject->getFiletype(), $pgv_lang["media_broken"], $serverFilename);  
+	}
 
 	// applyWatermark() is defined in the watermark_text module
-	$im = applyWatermark($im);
+	$im = applyWatermark($im, $configfile);
 
 	$imSendFunc = 'image'.$type;
+	// save the image, if preferences allow
+	if ( ($isThumb && $SAVE_WATERMARK_THUMB) || (!$isThumb && $SAVE_WATERMARK_IMAGE) ) {
+		// make sure the directory exists
+		if (!is_dir(dirname($watermarkfile))) {
+			mkdirs(dirname($watermarkfile));
+		}
+		// save the image
+		$imSendFunc($im, $watermarkfile);
+	}
+
+	// send the image
 	$imSendFunc($im);
 	imagedestroy($im);
 	exit;
 
 } else {
-	// no watermark for this image
-	// just pass it through
+
+	if ( $usewatermark ) {
+		// the stored image is good, lets use it
+		$serverFilename = $watermarkfile;
+	}
+
+	// determine filesize of image (could be original or watermarked version) 
+	$filesize = filesize($serverFilename);
+
+	// set one more header
 	header("Content-Length: " . $filesize);
 
 	// open the file and send it

@@ -44,6 +44,12 @@ VERSION 4.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["WATERMARK_THUMB"]						07 Aug 2007				A	Media Firewall, patch 1749817
++$pgv_lang["WATERMARK_THUMB_help"]					07 Aug 2007				A	Media Firewall, patch 1749817
++$pgv_lang["SAVE_WATERMARK_THUMB"]					07 Aug 2007				A	Media Firewall, patch 1749817
++$pgv_lang["SAVE_WATERMARK_THUMB_help"]				07 Aug 2007				A	Media Firewall, patch 1749817
++$pgv_lang["SAVE_WATERMARK_IMAGE"]					07 Aug 2007				A	Media Firewall, patch 1749817
++$pgv_lang["SAVE_WATERMARK_IMAGE_help"]				07 Aug 2007				A	Media Firewall, patch 1749817
 +$pgv_lang["SHOW_NO_WATERMARK"]						04 Aug 2007				A	Watermarks, patch 1739602
 +$pgv_lang["SHOW_NO_WATERMARK_help"]				04 Aug 2007				A	Watermarks, patch 1739602
 +$pgv_lang["USA_MEDIA_FIREWALL"]					02 Aug 2007				A	Media Firewall, patch 1749817

@@ -21,84 +21,108 @@
  *
  * @package PhpGedView
  * @subpackage watermark_text
- * @version $Id:$
+ * @version $Id$
  */
  
- 
-// the media firewall passes an image to this function
-// this function can manipulate it however it wants  
+// determine which config file to use
+// return the path to the config file and the time it was last updated
+function getWatermarkConfigInfo() {
+	global $GEDCOMS, $GEDCOM;
+
+	// first look for a gedcom-specific file
+	$configfile = 'modules/watermark_text/'.$GEDCOMS[$GEDCOM]['gedcom'].'_conf.php';
+	$configlastupdate = 0;
+	if (file_exists($configfile)) {
+		$configlastupdate = filemtime($configfile);
+		return array ($configfile, $configlastupdate);
+	}
+
+	// now look for a generic file
+	$configfile = 'modules/watermark_text/config.php';
+	if (file_exists($configfile)) {
+		$configlastupdate = filemtime($configfile);
+	}
+	return array ($configfile, $configlastupdate);
+}
+
+
+
+// the media firewall passes in an image and a path to the config file
+// this function can manipulate the image however it wants
 // before returning it back to the media firewall
-function applyWatermark($im) {
+function applyWatermark($im, $configfile) {
 
 	// load configuration variables
-	include "modules/watermark_text/config.php";
+	// note, this file was determine by getConfigInfo
+	// we pass it in here to avoid calling file_exists a couple more times 
+	include $configfile;
 
-  // these values should be set in config.php. if not, set some defaults.  
+	// these values should be set in config.php. if not, set some defaults.  
 	if (!isset($word1_text))		$word1_text   = "Sample Text";
-	if (!isset($word1_maxlen))	$word1_maxlen = 90;
+	if (!isset($word1_maxsize))	$word1_maxsize = 90;
 	if (!isset($word1_color))		$word1_color  = "0, 0, 0";
 	if (!isset($word1_font))		$word1_font   = "";
 	if (!isset($word1_vpos))		$word1_vpos   = "middle";
 	if (!isset($word1_hpos))		$word1_hpos   = "left";
 
 	if (!isset($word2_text))		$word2_text   = "Sample Text";
-	if (!isset($word2_maxlen))	$word2_maxlen = 30;
+	if (!isset($word2_maxsize))	$word2_maxsize = 30;
 	if (!isset($word2_color))		$word2_color  = "0, 0, 0";
 	if (!isset($word2_font))		$word2_font   = "";
 	if (!isset($word2_vpos))		$word2_vpos   = "top";
 	if (!isset($word2_hpos))		$word2_hpos   = "left";
 
-  embedText($im, $word1_text, $word1_maxlen, $word1_color, $word1_font, $word1_vpos, $word1_hpos);
-  embedText($im, $word2_text, $word2_maxlen, $word2_color, $word2_font, $word2_vpos, $word2_hpos);
+	embedText($im, $word1_text, $word1_maxsize, $word1_color, $word1_font, $word1_vpos, $word1_hpos);
+	embedText($im, $word2_text, $word2_maxsize, $word2_color, $word2_font, $word2_vpos, $word2_hpos);
 
 	return ($im);
 }
  
-function embedText($im, $text, $maxlen, $color, $font, $vpos, $hpos) {
+function embedText($im, $text, $maxsize, $color, $font, $vpos, $hpos) {
 
 	// there are two ways to embed text with PHP
-  // (preferred) using GD and FreeType you can embed text using any True Type font
-  // (fall back) if that is not available, you can insert basic monospaced text
+	// (preferred) using GD and FreeType you can embed text using any True Type font
+	// (fall back) if that is not available, you can insert basic monospaced text
 
-  // determine whether TTF are available
-  $useTTF = (function_exists("imagettftext")) ? true : false;
+	// determine whether TTF is available
+	$useTTF = (function_exists("imagettftext")) ? true : false;
 	if (!isset($font)||!file_exists('modules/watermark_text/'.$font)) $useTTF = false;
 
-  # no errors if an invalid color string was passed in, just strange colors 
+	# no errors if an invalid color string was passed in, just strange colors 
 	$col=explode(",", $color);
 	$textcolor = @imagecolorallocate($im, $col[0],$col[1],$col[2]);
 
-  // paranoia is good!  make sure all variables have a value
+	// paranoia is good!  make sure all variables have a value
 	if (!isset($vpos) || ($vpos!="top" && $vpos!="middle" && $vpos!="bottom" && $vpos!="across")) $vpos = "middle";
 	if (($vpos="across") && (!isset($hpos) || ($hpos!="left" && $hpos!="right" && $hpos!="top2bottom" && $hpos!="bottom2top"))) $hpos = "left";
 
-  // make adjustments to settings that imagestring and imagestringup can't handle 
-  if (!$useTTF) {
-    // imagestringup only writes up, can't use top2bottom
-    if ($hpos=="top2bottom") $hpos = "bottom2top";  
-  }
-  
-  $height = imagesy($im);
-  $width  = imagesx($im);
+	// make adjustments to settings that imagestring and imagestringup can't handle 
+	if (!$useTTF) {
+		// imagestringup only writes up, can't use top2bottom
+		if ($hpos=="top2bottom") $hpos = "bottom2top";  
+	}
+
+	$height = imagesy($im);
+	$width  = imagesx($im);
 	$calc_angle=rad2deg(atan($height/$width));
 	$hypoth=$height/sin(deg2rad($calc_angle));
 
 	// vertical and horizontal position of the text
 	switch ($vpos) {
 		case "top":
-			$taille=textlength($maxlen,$width,$text);
+			$taille=textlength($maxsize,$width,$text);
 			$pos_y=$height*0.15+$taille;
 			$pos_x=$width*0.15;
 			$rotation=0;
 			break;
 		case "middle":
-			$taille=textlength($maxlen,$width,$text);
+			$taille=textlength($maxsize,$width,$text);
 			$pos_y=($height+$taille)/2;
 			$pos_x=$width*0.15;
 			$rotation=0;
 			break;			
 		case "bottom":
-			$taille=textlength($maxlen,$width,$text);
+			$taille=textlength($maxsize,$width,$text);
 			$pos_y=($height*.85-$taille);
 			$pos_x=$width*0.15;
 			$rotation=0;
@@ -106,26 +130,26 @@ function embedText($im, $text, $maxlen, $color, $font, $vpos, $hpos) {
 		case "across": 
 			switch ($hpos) {
 				case "left":
-				$taille=textlength($maxlen,$hypoth,$text);
+				$taille=textlength($maxsize,$hypoth,$text);
 				$pos_y=($height*.85-$taille);
 				$taille_text=($taille-2)*(strlen(stripslashes($text)));
 				$pos_x=$width*0.15;
 				$rotation=$calc_angle;
 				break;
 				case "right":
-				$taille=textlength($maxlen,$hypoth,$text);
+				$taille=textlength($maxsize,$hypoth,$text);
 				$pos_y=($height*.15-$taille);
 				$pos_x=$width*0.85;
 				$rotation=$calc_angle+180;
 				break;
 				case "top2bottom":
-				$taille=textlength($maxlen,$height,$text);
+				$taille=textlength($maxsize,$height,$text);
 				$pos_y=($height*.15-$taille);
 				$pos_x=($width*.90-$taille);
 				$rotation=-90;
 				break;
 				case "bottom2top":
-				$taille=textlength($maxlen,$height,$text);
+				$taille=textlength($maxsize,$height,$text);
 				$pos_y = $height*0.85;
 				$pos_x = $width*0.15;
 				$rotation=90;

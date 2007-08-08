@@ -44,6 +44,8 @@ VERSION 4.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["unknown_mime"]								07 Aug 2007				A
++$pgv_lang["media_broken"]								07 Aug 2007				A
 +$pgv_lang["changedate1"]								07 Aug 2007				A
 +$pgv_lang["changedate2"]								07 Aug 2007				A
 +$pgv_lang["changes_report"]							07 Aug 2007				A

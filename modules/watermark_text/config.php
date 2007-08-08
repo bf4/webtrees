@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage watermark_text
- * @version $Id:$
+ * @version $Id$
  */
 
 //====================
@@ -35,7 +35,7 @@ global $GEDCOMS, $GEDCOM;
 $word1_text		= $GEDCOMS[$GEDCOM]["title"];
 
 //maximum font size for "word1" ; will be automaticaly reduced to fit in the image
-$word1_maxlen	= 90;
+$word1_maxsize	= 5000;
 
 //rgb color codes for pasting text1
 $word1_color	= "0, 0, 0";
@@ -56,7 +56,7 @@ $word1_hpos		= "left";
 //====================
 
 $word2_text		= $_SERVER["HTTP_HOST"];
-$word2_maxlen	= 30;
+$word2_maxsize	= 30;
 $word2_color	= "255, 165, 96";
 $word2_font		= "arialbi.ttf";
 $word2_vpos		= "across";

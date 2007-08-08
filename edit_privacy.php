@@ -168,6 +168,9 @@ if ($action=="update") {
 	}
 	$configtext = preg_replace('/\$SHOW_MULTISITE_SEARCH\s*=\s*.*;/', "\$SHOW_MULTISITE_SEARCH = ".$_POST["v_SHOW_MULTISITE_SEARCH"].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_NO_WATERMARK\s*=\s*.*;/', "\$SHOW_NO_WATERMARK = ".$_POST["v_SHOW_NO_WATERMARK"].";", $configtext);
+	$configtext = preg_replace('/\$WATERMARK_THUMB\s*=\s*.*;/', "\$WATERMARK_THUMB = ".$boolarray[$_POST["v_WATERMARK_THUMB"]].";", $configtext);
+	$configtext = preg_replace('/\$SAVE_WATERMARK_THUMB\s*=\s*.*;/', "\$SAVE_WATERMARK_THUMB = ".$boolarray[$_POST["v_SAVE_WATERMARK_THUMB"]].";", $configtext);
+	$configtext = preg_replace('/\$SAVE_WATERMARK_IMAGE\s*=\s*.*;/', "\$SAVE_WATERMARK_IMAGE = ".$boolarray[$_POST["v_SAVE_WATERMARK_IMAGE"]].";", $configtext);
 	$configtext = preg_replace('/\$ENABLE_CLIPPINGS_CART\s*=\s*.*;/', "\$ENABLE_CLIPPINGS_CART = ".$_POST["v_ENABLE_CLIPPINGS_CART"].";", $configtext);
 	$configtext = preg_replace('/\$PRIVACY_BY_YEAR\s*=\s*.*;/', "\$PRIVACY_BY_YEAR = ".$boolarray[$_POST["v_PRIVACY_BY_YEAR"]].";", $configtext);
 	$configtext = preg_replace('/\$PRIVACY_BY_RESN\s*=\s*.*;/', "\$PRIVACY_BY_RESN = ".$boolarray[$_POST["v_PRIVACY_BY_RESN"]].";", $configtext);
@@ -358,14 +361,6 @@ require_once("js/dhtmlXTabbar.js.htm");
 					</tr>
 					<tr>
 						<td class="descriptionbox wrap">
-							<?php print_help_link("SHOW_NO_WATERMARK_help", "qm", "SHOW_NO_WATERMARK"); print $pgv_lang["SHOW_NO_WATERMARK"]; ?></td>
-						<td class="optionbox">
-							<select size="1" name="v_SHOW_NO_WATERMARK">
-								<?php write_access_option($SHOW_NO_WATERMARK); ?>
-							</select></td>
-					</tr>
-					<tr>
-						<td class="descriptionbox wrap">
 							<?php print_help_link("PRIVACY_BY_YEAR_help", "qm", "PRIVACY_BY_YEAR"); print $pgv_lang["PRIVACY_BY_YEAR"]; ?></td>
 						<td class="optionbox">
 							<select size="1" name="v_PRIVACY_BY_YEAR">
@@ -425,6 +420,38 @@ require_once("js/dhtmlXTabbar.js.htm");
 							<?php print_help_link("MAX_ALIVE_AGE_help", "qm", "MAX_ALIVE_AGE"); print $pgv_lang["MAX_ALIVE_AGE"]?></td>
 						<td class="optionbox">
 							<input type="text" name="v_MAX_ALIVE_AGE" value="<?php print $MAX_ALIVE_AGE?>" size="5"/></td>
+					</tr>
+					<tr>
+						<td class="descriptionbox wrap">
+							<?php print_help_link("SHOW_NO_WATERMARK_help", "qm", "SHOW_NO_WATERMARK"); print $pgv_lang["SHOW_NO_WATERMARK"]; ?></td>
+						<td class="optionbox">
+							<select size="1" name="v_SHOW_NO_WATERMARK">
+								<?php write_access_option($SHOW_NO_WATERMARK); ?>
+							</select></td>
+					</tr>
+					<tr>
+						<td class="descriptionbox wrap">
+							<?php print_help_link("WATERMARK_THUMB_help", "qm", "WATERMARK_THUMB"); print $pgv_lang["WATERMARK_THUMB"]; ?></td>
+						<td class="optionbox">
+							<select size="1" name="v_WATERMARK_THUMB">
+								<?php write_yes_no($WATERMARK_THUMB); ?>
+							</select></td>
+					</tr>
+					<tr>
+						<td class="descriptionbox wrap">
+							<?php print_help_link("SAVE_WATERMARK_THUMB_help", "qm", "SAVE_WATERMARK_THUMB"); print $pgv_lang["SAVE_WATERMARK_THUMB"]; ?></td>
+						<td class="optionbox">
+							<select size="1" name="v_SAVE_WATERMARK_THUMB">
+								<?php write_yes_no($SAVE_WATERMARK_THUMB); ?>
+							</select></td>
+					</tr>
+					<tr>
+						<td class="descriptionbox wrap">
+							<?php print_help_link("SAVE_WATERMARK_IMAGE_help", "qm", "SAVE_WATERMARK_IMAGE"); print $pgv_lang["SAVE_WATERMARK_IMAGE"]; ?></td>
+						<td class="optionbox">
+							<select size="1" name="v_SAVE_WATERMARK_IMAGE">
+								<?php write_yes_no($SAVE_WATERMARK_IMAGE); ?>
+							</select></td>
 					</tr>
 					<tr>
 						<td></td>

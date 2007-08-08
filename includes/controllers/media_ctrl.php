@@ -347,21 +347,15 @@ class MediaControllerRoot extends IndividualController{
 			}
 		}
 
-		//This does another check to see if the file exists.
-		//If so it will then check to see if the file's image size is null.
-		//If the file is null, it will not show the width and the height of the image
-		if (file_exists($this->getServerFilename())){
-			$imagesize = @getimagesize($this->getServerFilename());
-			if ($imagesize[0]){
-				$facts[] = "1 EVEN " . getLRM() .$imagesize[0]." x ".$imagesize[1].getLRM()  . "\r\n2 TYPE image_size";
+		if ($this->mediaobject->getFileExists()) {
+			// get height and width of image, when available
+			if ($this->mediaobject->getWidth()) {
+				$facts[] = "1 EVEN " . getLRM() . $this->mediaobject->getWidth()." x ".$this->mediaobject->getHeight() . getLRM() . "\r\n2 TYPE image_size";
 			}
 			//Prints the file size
-			$size = filesize($this->getServerFilename());
-			//Rounds the size of the imgae to 2 decimal places
-			$size = getLRM() . round($size/1024, 2)." kb" . getLRM();
-
+			//Rounds the size of the image to 2 decimal places
+			$size = getLRM() . round($this->mediaobject->getFilesizeraw()/1024, 2)." kb" . getLRM();
 			$facts[] = "1 EVEN ".$size."\r\n2 TYPE file_size";
-
 		}
 
 		sort_facts($facts);

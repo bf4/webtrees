@@ -185,6 +185,30 @@ $SHOW_MULTISITE_SEARCH = $PRIV_NONE;
  */
 $SHOW_NO_WATERMARK = $PRIV_USER;
 /**
+ * Set the program to watermark thumbnails
+ *
+ * A <b>false</b> value means thumbnails will not be watermarked
+ * A <b>true</b> value means thumbnails will be watermarked, assuming SHOW_NO_WATERMARK is set appropriately 
+ * @global boolean $WATERMARK_THUMB
+ */
+$WATERMARK_THUMB = false;
+/**
+ * Set the program to save copies of watermarked thumbnails
+ *
+ * A <b>false</b> value means copies of watermarked thumbnails will not be saved
+ * A <b>true</b> value means copies of watermarked thumbnails will be saved, assuming SHOW_NO_WATERMARK is set appropriately
+ * @global boolean $SAVE_WATERMARK_THUMB
+ */
+$SAVE_WATERMARK_THUMB = false;
+/**
+ * Set the program to save copies of watermarked full size images
+ *
+ * A <b>false</b> value means copies of watermarked images will not be saved
+ * A <b>true</b> value means copies of watermarked images will be saved, assuming SHOW_NO_WATERMARK is set appropriately
+ * @global boolean $SAVE_WATERMARK_IMAGE
+ */
+$SAVE_WATERMARK_IMAGE = false;
+/**
  * Set the program to use relationship privacy
  *
  * This tells the program that for private individuals calculate the relationship between the user
