@@ -43,6 +43,7 @@ if (!UserGedcomAdmin(GetUserName())) $searchuser = "yes";
 if (!isset($searchtext)) $searchtext = "";
 if (!isset($searchuser)) $searchuser = "no";
 if (!isset($searchconfig)) $searchconfig = "no";
+if (!isset($searchmodules)) $searchmodules = "no";
 $found = 0;
 
 ?>
@@ -89,20 +90,23 @@ if ($searchhow == "sentence") print " checked=\"checked\"";
 print " />".$pgv_lang["hs_searchsentence"]."<br />";
 print "</td></tr>";
 
-print "<tr><td ";
-if (UserIsAdmin(GetUserName())) print "rowspan=\"2\" ";
-print "class=\"descriptionbox width20 wrap vmiddle\">";
+print "<tr><td rowspan=\"2\" class=\"descriptionbox width20 wrap vmiddle\">";
 print_help_link("hs_searchin_advice", "qm", "hs_searchin");
 print $pgv_lang["hs_searchin"]."</td>";
-// Show choice where to search only to admins
-if (UserIsAdmin(GetUserName())) {
-	print "<td class=\"optionbox\"><input type=\"checkbox\" name=\"searchuser\" dir=\"ltr\" value=\"yes\"";
-	if ($searchuser == "yes") print " checked=\"checked\"";
-	print " />".$pgv_lang["hs_searchuser"]."<br />";
+print "<td class=\"optionbox\">";
+print "<input type=\"checkbox\" name=\"searchuser\" dir=\"ltr\" value=\"yes\"";
+if ($searchuser == "yes") print " checked=\"checked\"";
+print " />".$pgv_lang["hs_searchuser"]."<br />";
+print "<input type=\"checkbox\" name=\"searchmodules\" dir=\"ltr\" value=\"yes\"";
+if ($searchmodules == "yes") print " checked=\"checked\"";
+print " />".$pgv_lang["hs_searchmodules"]."<br />";
+// Show "administrator help" choice only to admins
+if (userGedcomAdmin(GetUserName())) {
 	print "<input type=\"checkbox\" name=\"searchconfig\" dir=\"ltr\" value=\"yes\"";
 	if ($searchconfig == "yes") print " checked=\"checked\"";
-	print " />".$pgv_lang["hs_searchconfig"]."</td></tr><tr>";
+	print " />".$pgv_lang["hs_searchconfig"];
 }
+print "</td></tr><tr>";
 print "<td class=\"optionbox\"><input type=\"radio\" name=\"searchintext\" dir=\"ltr\" value=\"true\"";
 if ($searchintext == "true") print " checked=\"checked\"";
 print " />".$pgv_lang["hs_intruehelp"]."<br />";
@@ -118,24 +122,27 @@ print "<input type=\"button\" value=\"".$pgv_lang["hs_close"]."\" onclick='self.
 print "</td></tr>";
 
 // Perform the search
-if ((!empty($searchtext)) && strlen($searchtext)>1 && (($searchuser == "yes") || ($searchconfig == "yes")))  {
+if ((!empty($searchtext)) && strlen($searchtext)>1)  {
 
+	// Determine the language files to be searched
+	$langFiles = "pgv_lang, ";
+	if (userGedcomAdmin(GetUserName())) $langFiles .= "pgv_admin, ";
+	if (userCanEdit(GetUserName())) $langFiles .= "pgv_editor, ";
+	if ($searchuser == "yes") $langFiles .= "pgv_help, ";
+	if ($searchconfig == "yes") $langFiles .= "pgv_confighelp, ";
+	if ($searchmodules == "yes") $langFiles .= "ra_lang, ra_help, gm_lang, gm_help, sm_lang, sm_help, ";
+	if (substr($langFiles, -2)==", ") $langFiles = substr($langFiles, 0, -2);
+	
 	$helpvarnames = array();
 	unset($pgv_lang);
 	
-	// Load the user help if chosen
-	if ($searchuser == "yes") loadLangFile("pgv_help");
-
-	// Load the config help if chosen
-	if ($searchconfig == "yes") loadLangFile("pgv_confighelp");
+	loadLangFile($langFiles);
 
 	// Find all helpvars, so we know what vars to check after the lang.xx file has been reloaded
 	foreach ($pgv_lang as $text => $value) {
 		if ($searchintext == "all") $helpvarnames[] = $text;
 		else if ((substr($text, -5) == "_help" && $value{0}!="_") || (substr($text, -4) == ".php")) $helpvarnames[] = $text;
 	}
-
-	loadLangFile("pgv_lang");	// Reload lang.xx file (but keep the already-loaded Help text)
 
 	// Split the search criteria if all or any is chosen. Otherwise, just fill the array with the sentence
 	$criteria = array();
