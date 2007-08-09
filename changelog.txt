@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1
+ - Restrict editing users from search and replace.  Admin and Accept users only (yalnifj)
  - Change backup so that DB data is always backed up to a file and included in the ZIP (yalnifj)
  - Added use case insensitive compare when checking for duplicate usernames (yalnifj)
  - Fixed [ 1767071 ] Error when approving any change on indi-page (canajun2eh)
