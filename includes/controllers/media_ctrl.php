@@ -347,7 +347,7 @@ class MediaControllerRoot extends IndividualController{
 			}
 		}
 
-		if ($this->mediaobject->getFileExists()) {
+		if ($this->mediaobject->fileExists()) {
 			// get height and width of image, when available
 			if ($this->mediaobject->getWidth()) {
 				$facts[] = "1 EVEN " . getLRM() . $this->mediaobject->getWidth()." x ".$this->mediaobject->getHeight() . getLRM() . "\r\n2 TYPE image_size";

@@ -23,7 +23,7 @@
  *
  *
  * @package PhpGedView
- * @version $Id:$
+ * @version $Id$
  */
 
 require_once("includes/controllers/media_ctrl.php");
@@ -139,7 +139,7 @@ if (strpos($_SERVER['REDIRECT_URL'], '/thumbs/')) {
 	$isThumb = true;
 }
 
-if (!file_exists($serverFilename)) {
+if (!$controller->mediaobject->fileExists()) {
 	// the requested file is in the database, but it does not exist on the server.  bail.
 	// Note: the 404 error status is still in effect. 
 	sendErrorAndExit($controller->mediaobject->getFiletype(), $pgv_lang["no_media"], $serverFilename);

@@ -70,17 +70,15 @@ else{
 					//Checks to see if the File exist in the system.
 					$filename = $controller->getLocalFilename();
 					$serverfilename = $controller->getServerFilename();
-					if (preg_match("~://~", $filename) || file_exists($serverfilename)){
-						//If the file exists, it will attempt to get the image size
-						//If the image size returns a null, then the file isn't a image.
-						$imagesize = @getimagesize($serverfilename);
-						$imgwidth = $imagesize[0]+40;
-						$imgheight = $imagesize[1]+150;
-
-						//Checks if the image size is null.
-						if ($imagesize[0]){
-								$dwidth = 300;
-								if ($imagesize[0]<300) $dwidth = $imagesize[0];
+					if ($controller->mediaobject->isExternal() || $controller->mediaobject->fileExists()){
+						// the file is external, or it exists locally 
+						// attempt to get the image size
+						if ($controller->mediaobject->getWidth()) {
+							// this is an image
+							$imgwidth = $controller->mediaobject->getWidth()+40;
+							$imgheight = $controller->mediaobject->getHeight()+150;
+							$dwidth = 300;
+							if ($imgwidth<300) $dwidth = $imgwidth;
 							//Makes it so the picture when clicked opens the Image View Page
 							?>
 							<a href="javascript:;" onclick="return openImage('<?php print rawurlencode($filename); ?>', <?php print $imgwidth; ?>, <?php print $imgheight; ?>);">
@@ -89,6 +87,7 @@ else{
 							<?php
 						}
 						else{
+							// this is not an image
 							?>
 							<a href="<?php print $filename; ?>" target="_BLANK">
 							<img src="<?php print thumbnail_file($filename); ?>" border="0" width="150" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
@@ -100,6 +99,7 @@ else{
 						<?php
 					}
 					else{
+						// the file is not external and does not exist
 						?>
 						<img src="<?php print thumbnail_file($filename); ?>" border="0" width="100" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
 						<br /><span class="error"><?php print $pgv_lang["file_not_found"];?></span>

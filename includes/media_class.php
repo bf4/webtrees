@@ -208,10 +208,18 @@ class Media extends GedcomRecord {
 	}
 
 	/**
+	 * check if the file is an external link
+	 * @return boolean
+	 */
+	function isExternal() {
+		return (strpos($this->file, '://') === false) ? false : true;
+	}
+
+	/**
 	 * check if the file exists on this server
 	 * @return boolean
 	 */
-	function getFileExists() {
+	function fileExists() {
 		if (!$this->serverfilename) $this->getServerFilename();
 		return $this->fileexists;
 	}
@@ -278,7 +286,7 @@ class Media extends GedcomRecord {
 	function setFileProperties() {
 		global $pgv_lang;
 		$imgsize;
-		if ($this->getFileExists()) {
+		if ($this->fileExists()) {
 			$this->filesizeraw = @filesize($this->getServerFilename());
 			$imgsize = @getimagesize($this->getServerFilename()); // [0]=width [1]=height [2]=filetype
 		}
