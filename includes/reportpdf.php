@@ -33,14 +33,10 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 require_once("includes/reportbase.php");
 
-define('FPDF_FONTPATH','fonts/');
+//define('FPDF_FONTPATH','fonts/');
 
-/**
- * load the FPDF class
- *
- * the FPDF class allows you to create PDF documents in PHP
- */
-require "ufpdf/ufpdf.php";
+require_once('tcpdf/config/lang/eng.php');
+require_once("tcpdf/tcpdf.php");
 
 /**
  * main PGV Report Class
@@ -70,8 +66,8 @@ class PGVReport extends PGVReportBase {
 			$element->setUrl("http://www.phpgedview.net/");
 			$this->pdf->addFooter($element);
 		}
-		$this->pdf->SetAutoPageBreak(false);
-		$this->pdf->SetAutoLineWrap(false);
+		//TCPDF $this->pdf->SetAutoPageBreak(false);
+		//TCPDF $this->pdf->SetAutoLineWrap(false);
 	}
 
 	function addElement(&$element) {
@@ -84,8 +80,8 @@ class PGVReport extends PGVReportBase {
 	function run() {
 		global $download, $embed_fonts;
 
-		$this->pdf->SetEmbedFonts($embed_fonts);
-		if ($embed_fonts) $this->pdf->AddFont('LucidaSansUnicode', '', 'LucidaSansRegular.php');
+		//TCPDF $this->pdf->SetEmbedFonts($embed_fonts);
+		if ($embed_fonts) $this->pdf->AddFont('dejavusans', '', 'dejavusans.php');
 		$this->pdf->setCurrentStyle(key($this->PGVRStyles));
 		$this->pdf->AliasNbPages();
 		$this->pdf->Body();
@@ -145,6 +141,10 @@ class PGVReport extends PGVReportBase {
 	function createLine($x1, $y1, $x2, $y2) {
 		return new PGVRLinePDF($x1, $y1, $x2, $y2);
 	}
+	
+	function createHTML($tag, $attrs) {
+		return new PGVRHtmlPDF($tag, $attrs);
+	}
 } //-- end PGVReport
 
 /**
@@ -154,7 +154,7 @@ class PGVReport extends PGVReportBase {
  * @package PhpGedView
  * @subpackage Reports
  */
-class PGVRPDF extends UFPDF {
+class PGVRPDF extends TCPDF {
 	/**
 	 * array of elements in the header
 	 */
@@ -355,6 +355,40 @@ class PGVRCellPDF extends PGVRCell {
 			$pdf->Link($curx, $cury, $this->width, $this->height, $url);
 		}
 	}
+}
+
+/**
+ * Cell element
+ */
+class PGVRHtmlPDF extends PGVRHtml {
+	
+	function PGVRHtmlPDF($tag, $attrs) {
+		parent::PGVRHtml($tag, $attrs);
+	}
+	
+	function render(&$pdf, $sub = false) {
+		global $TEXT_DIRECTION, $embed_fonts;
+		//print "[".$this->text."] ";
+
+		if (!empty($this->attrs['pgvrstyle'])) $pdf->setCurrentStyle($this->attrs['pgvrstyle']);
+		if (!empty($this->attrs['width'])) $this->attrs['width'] *= 3.9;
+		
+		$this->text = $this->getStart().$this->text;
+		foreach($this->elements as $k=>$element) {
+			if (is_string($element) && $element=="footnotetexts") $pdf->Footnotes();
+			else if (is_string($element) && $element=="addpage") $pdf->AddPage();
+			else if ($element->get_type()=='PGVRHtml') {
+//				$this->text .= $element->getStart(); 
+				$this->text .= $element->render($pdf, true);
+			}
+			else $element->render($pdf);
+		}
+		$this->text .= $this->getEnd();
+		if ($sub) return $this->text;
+//		print "[".htmlentities($this->text)."] ";
+		$pdf->writeHTML($this->text);
+	}
+
 }
 
 /**

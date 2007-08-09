@@ -2,12 +2,12 @@
 <!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[pedigree_chart]" /> (<PGVRvar var="pgv_lang[landscape]" />)</PGVRTitle>
 	<PGVRDescription>Prints a pedigree chart in landscape mode</PGVRDescription>
-	<PGVRStyle name="header" font="LucidaSansUnicode" size="18" style="" />
-	<PGVRStyle name="pagenum" font="LucidaSansUnicode" size="8" style="" />
-	<PGVRStyle name="label1" font="LucidaSansUnicode" size="8" style="" />
-	<PGVRStyle name="name" font="LucidaSansUnicode" size="10" style="" />
-	<PGVRStyle name="name1" font="LucidaSansUnicode" size="14" style="" />
-	<PGVRStyle name="text" font="LucidaSansUnicode" size="9" style="" />
+	<PGVRStyle name="header" font="dejavusans" size="18" style="" />
+	<PGVRStyle name="pagenum" font="dejavusans" size="8" style="" />
+	<PGVRStyle name="label1" font="dejavusans" size="8" style="" />
+	<PGVRStyle name="name" font="dejavusans" size="10" style="" />
+	<PGVRStyle name="name1" font="dejavusans" size="14" style="" />
+	<PGVRStyle name="text" font="dejavusans" size="9" style="" />
 	<PGVRInput name="pid" lookup="INDI" type="text" default=""><PGVRvar var="pgv_lang[enter_pid]" />:</PGVRInput>
 	<PGVRInput name="pageSize" type="select" options="letter,A4,A3,A5,legal"><PGVRvar var="pgv_lang[page_size]" /></PGVRInput>
 	<PGVRDoc pageSize="$pageSize" orientation="L" margin="24">

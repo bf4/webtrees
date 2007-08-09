@@ -6,10 +6,10 @@
 	<PGVRInput name="changedate2" lookup="DATE" type="text" default="NOW-30"><PGVRvar var="pgv_lang[changedate1]" /></PGVRInput>
 	<PGVRInput name="sortby" type="select" options="CHAN,NAME,BIRT"><PGVRvar var="pgv_lang[sort_by]" /></PGVRInput>
 	<PGVRInput name="pageSize" type="select" options="letter,A4,A3,A5,legal"><PGVRvar var="pgv_lang[page_size]" /></PGVRInput>
-	<PGVRStyle name="header" font="LucidaSansUnicode" size="16" style="b" />
-	<PGVRStyle name="pagenum" font="LucidaSansUnicode" size="8" style="" />
-	<PGVRStyle name="text" font="LucidaSansUnicode" size="9" style="" />
-	<PGVRStyle name="label" font="LucidaSansUnicode" size="10" style="b" />
+	<PGVRStyle name="header" font="dejavusans" size="16" style="b" />
+	<PGVRStyle name="pagenum" font="dejavusans" size="8" style="" />
+	<PGVRStyle name="text" font="dejavusans" size="9" style="" />
+	<PGVRStyle name="label" font="dejavusans" size="10" style="b" />
 	<PGVRDoc pageSize="$pageSize" orientation="P" margin="24">
 		<PGVRHeader>
 			<PGVRCell width="0" height="20" align="center" style="header"><PGVRvar var="pgv_lang[changes_report]" /> <PGVRvar var="changedate1" date="1" /> - <PGVRvar var="changedate2" date="1" /></PGVRCell>
@@ -17,10 +17,10 @@
 			<PGVRTextBox width="60" height="12" border="1">
 				<PGVRText style="label"> </PGVRText>
 			</PGVRTextBox>
-			<PGVRTextBox width="200" height="12" border="1">
+			<PGVRTextBox width="180" height="12" border="1">
 				<PGVRText style="label"><PGVRvar var="pgv_lang[name]" /></PGVRText>
 			</PGVRTextBox>
-			<PGVRTextBox width="200" height="12" border="1">
+			<PGVRTextBox width="190" height="12" border="1">
 				<PGVRText style="label"><PGVRvar var="factarray[BIRT]" /> - <PGVRvar var="factarray[DEAT]" /></PGVRText>
 			</PGVRTextBox>
 			<PGVRTextBox width="0" height="12" border="1" newline="1">
@@ -32,10 +32,10 @@
 				<PGVRTextBox width="60" height="12" border="0">
 					<PGVRText style="text"><PGVRGedcomValue tag="@id" /></PGVRText>
 				</PGVRTextBox>
-				<PGVRTextBox width="200" height="12" border="0">
+				<PGVRTextBox width="180" height="12" border="0">
 					<PGVRText style="text"><PGVRGetPersonName id="" /></PGVRText>
 				</PGVRTextBox>
-				<PGVRTextBox width="200" height="12" border="0">
+				<PGVRTextBox width="190" height="12" border="0">
 					<PGVRText style="text"><PGVRvarLetter var="factarray[BIRT]" />: <PGVRGedcomValue tag="BIRT:DATE" /> - <PGVRvarLetter var="factarray[DEAT]" />: <PGVRGedcomValue tag="DEAT:DATE" /></PGVRText>
 				</PGVRTextBox>
 				<PGVRTextBox width="0" height="12" border="0" newline="1">

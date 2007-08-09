@@ -76,6 +76,7 @@ class PGVReportBase {
 	var $orientation;
 	var $margin;
 	var $processing;
+	var $title = "";
 	
 	function setup($pw, $ph, $pageSize, $o, $m, $showGenText=true) {
 		global $pgv_lang, $VERSION, $vars, $pageSizes;
@@ -116,6 +117,10 @@ class PGVReportBase {
 		$this->processing = "H";
 	}
 	
+	function get_type() {
+		return 'PGVReport';
+	}
+	
 	function setProcessing($p) {
 		$this->processing = $p;
 	}
@@ -123,6 +128,14 @@ class PGVReportBase {
 	function addElement(&$element) {
 		print "PGVReportBase::addElement Not Implemented";
 		return false;
+	}
+	
+	function addTitle($data) {
+		$this->title .= $data;
+	}
+	
+	function addText($data) {
+		$this->title .= $data;
 	}
 	
 	function addStyle($style) {
@@ -168,6 +181,10 @@ class PGVReportBase {
 	function createLine($x1, $y1, $x2, $y2) {
 		return new PGVRLine($x1, $y1, $x2, $y2);
 	}
+	
+	function createHTML($tag, $attrs) {
+		return new PGVRHtml($tag, $attrs);
+	}
 }
 
 /**
@@ -208,8 +225,8 @@ class PGVRElement {
 		$t = preg_replace("/<br \/>/", "\n", $t);
 		$t = strip_tags($t);
 		$t = unhtmlentities($t);
-		if ($embed_fonts) $t = bidi_text($t);
-		else $t = smart_utf8_decode($t);
+		//if ($embed_fonts) $t = bidi_text($t);
+		//else $t = smart_utf8_decode($t);
 		$this->text .= $t;
 	}
 
@@ -235,7 +252,44 @@ class PGVRElement {
 	function get_type() {
 		return "PGVRElementBase";
 	}
+	
+	function setText($text) {
+		$this->text = $text;
+	}
 } //-- END PGVRElement
+
+class PGVRHtml extends PGVRElement {
+	var $tag;
+	var $attrs;
+	var $elements = array();
+	
+	function PGVRHtml($tag, $attrs) {
+		$this->tag = $tag;
+		$this->attrs = $attrs;
+	}
+	
+	function getStart() {
+		$str = "<".$this->tag." ";
+		foreach($this->attrs as $key=>$value) {
+			$str .= $key.'="'.$value.'" ';
+		}
+		$str .= ">";
+		return $str;
+	}
+	
+	function getEnd() {
+		return "</".$this->tag.">";
+	}
+	
+	
+	function addElement(&$element) {
+		$this->elements[] = $element;
+	}
+	
+	function get_type() {
+		return "PGVRHtml";
+	}
+}
 
 /**
  * Cell element
@@ -492,6 +546,14 @@ class PGVRLine extends PGVRElement {
  */
 $elementHandler = array();
 $elementHandler["PGVRStyle"]["start"] 		= "PGVRStyleSHandler";
+$elementHandler["PGVRTitle"]["start"]		= "PGVRTitleSHandler";
+$elementHandler["PGVRTitle"]["end"]			= "PGVRTitleEHandler";
+$elementHandler["PGVRDescription"]["start"]	= "";
+$elementHandler["PGVRInput"]["end"]			= "";
+$elementHandler["PGVRInput"]["start"]		= "";
+$elementHandler["PGVReport"]["end"]			= "";
+$elementHandler["PGVReport"]["start"]		= "";
+$elementHandler["PGVRDescription"]["end"]	= "";
 $elementHandler["PGVRDoc"]["start"] 		= "PGVRDocSHandler";
 $elementHandler["PGVRDoc"]["end"] 			= "PGVRDocEHandler";
 $elementHandler["PGVRHeader"]["start"] 		= "PGVRHeaderSHandler";
@@ -547,6 +609,7 @@ $currentElement = new PGVRElement();
  * @global bool $printData
  */
 $printData = false;
+$reportTitle = false;
 
 /**
  * print data stack
@@ -593,7 +656,10 @@ function startElement($parser, $name, $attrs) {
 	}
 	$attrs = $newattrs;
 	if (($processIfs==0 || $name=="PGVRif")&&($processGedcoms==0 || $name=="PGVRGedcom")&&($processRepeats==0 || $name=="PGVRFacts" || $name=="PGVRRepeatTag")) {
-		if (isset($elementHandler[$name]["start"])) call_user_func($elementHandler[$name]["start"], $attrs);
+		if (isset($elementHandler[$name]["start"])) {
+			if ($elementHandler[$name]["start"]!="") call_user_func($elementHandler[$name]["start"], $attrs);
+		}
+		else if (!isset($elementHandler[$name]["end"])) HTMLSHandler($name, $attrs);
 	}
 }
 
@@ -608,7 +674,10 @@ function endElement($parser, $name) {
 	global $elementHandler, $processIfs, $processGedcoms, $processRepeats;
 
 	if (($processIfs==0 || $name=="PGVRif")&&($processGedcoms==0 || $name=="PGVRGedcom")&&($processRepeats==0 || $name=="PGVRFacts" || $name=="PGVRRepeatTag" || $name=="PGVRList" || $name=="PGVRRelatives")) {
-		if (isset($elementHandler[$name]["end"])) call_user_func($elementHandler[$name]["end"]);
+		if (isset($elementHandler[$name]["end"])) {
+			if ($elementHandler[$name]["end"]!="") call_user_func($elementHandler[$name]["end"]);
+		}
+		else if (!isset($elementHandler[$name]["start"])) HTMLEHandler($name);
 	}
 }
 
@@ -621,7 +690,8 @@ function endElement($parser, $name) {
  * @param string $data the name of the xml element parsed
  */
 function characterData($parser, $data) {
-	global $printData, $currentElement, $processGedcoms, $processIfs;
+	global $printData, $currentElement, $processGedcoms, $processIfs, $reportTitle, $pgvreport;
+	if ($reportTitle) $pgvreport->addTitle($data);
 	if ($printData && ($processGedcoms==0) && ($processIfs==0)) $currentElement->addText($data);
 }
 
@@ -1805,10 +1875,13 @@ function PGVRListSHandler($attrs) {
 }
 
 function PGVRListEHandler() {
-	global $list, $repeats, $repeatsStack, $repeatBytes, $parser, $parserStack, $report, $pgvreport, $gedrec, $processRepeats, $list_total, $list_private;
+	global $currentElement, $list, $repeats, $repeatsStack, $repeatBytes, $parser, $parserStack, $report, $pgvreport, $gedrec, $processRepeats, $list_total, $list_private;
 	$processRepeats--;
 	if ($processRepeats>0) return;
 
+	//-- reset any text that may have been added parsing to the end of the loop
+	$currentElement->setText("");
+	
 	$line = xml_get_current_line_number($parser)-1;
 	$lineoffset = 0;
 	for($i=0; $i<count($repeatsStack); $i++) {
@@ -2073,5 +2146,47 @@ function PGVRNewPageSHandler($attrs) {
 	global $pgvreport;
 	$temp = "addpage";
 	$pgvreport->addElement($temp);
+}
+
+function HTMLSHandler($tag, $attrs) {
+	global $printData, $printDataStack, $pgvreportStack;
+	global $pgvreport, $currentElement, $PGVReportRoot;
+
+	if ($tag=="tempdoc") return;
+	
+	array_push($pgvreportStack, $pgvreport);
+	$pgvreport = $PGVReportRoot->createHTML($tag, $attrs);
+	$currentElement = $pgvreport;
+	
+	array_push($printDataStack, $printData);
+	$printData = true;
+//	print "[".$tag."] ";
+}
+
+function HTMLEHandler($tag) {
+	global $printData, $printDataStack;
+	global $pgvreport, $currentElement, $pgvreportStack;
+
+	if ($tag=="tempdoc") return;
+	
+	$printData = array_pop($printDataStack);
+	$currentElement = $pgvreport;
+	$pgvreport = array_pop($pgvreportStack);
+//	print "{".get_class($pgvreport)."} ";
+	if (!is_null($pgvreport)) $pgvreport->addElement($currentElement);
+	else $pgvreport = $currentElement;
+}
+
+function PGVRTitleSHandler($attrs) {
+	global $reportTitle, $printData, $printDataStack;
+	
+	$reportTitle = true;
+}
+
+function PGVRTitleEHandler() {
+	global $reportTitle, $printData, $printDataStack;
+	
+	$reportTitle = false;
+	
 }
 ?>

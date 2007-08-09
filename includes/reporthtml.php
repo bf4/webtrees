@@ -94,9 +94,11 @@ class PGVReport extends PGVReportBase {
 	}
 
 	function run() {
-		global $download, $embed_fonts, $TEXT_DIRECTION;
+		global $download, $embed_fonts, $CHARACTER_SET, $TEXT_DIRECTION, $rtl_stylesheet;
 
+		header("Content-Type: text/html; charset=$CHARACTER_SET");
 		print "<html>\n<head>";
+		print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$CHARACTER_SET\" />\n";
 		print "<style type=\"text/css\">\n";
 		$this->PGVRStyles['footer'] = array('name'=>'footer', 'font'=>'Arial', 'size'=>'10', 'style'=>'');
 		foreach($this->PGVRStyles as $class=>$style) {
@@ -112,6 +114,8 @@ class PGVReport extends PGVReportBase {
 			print "}\n";
 		}
 		print "</style>\n";
+		//if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\"></link>\n\t";
+		// print "<title></title>\n";
 		print "</head>\n<body>\n";
 		if (!isset($this->currentStyle)) $this->currentStyle = "";
 		$temp = $this->currentStyle;
@@ -358,6 +362,36 @@ class PGVRCellHTML extends PGVRCell {
 //			$pdf->Link($curx, $cury, $this->width, $this->height, $url);
 //		}
 	}
+}
+
+class PGVRHtmlPDF extends PGVRHtml {
+	
+	function PGVRHtmlPDF($tag, $attrs) {
+		parent::PGVRHtml($tag, $attrs);
+	}
+	
+	function render(&$pdf, $sub = false) {
+		global $TEXT_DIRECTION, $embed_fonts;
+		//print "[".$this->text."] ";
+
+		if (!empty($this->attrs['pgvrstyle'])) $pdf->setCurrentStyle($this->attrs['pgvrstyle']);
+		
+		$this->text = $this->getStart().$this->text;
+		foreach($this->elements as $k=>$element) {
+			if (is_string($element) && $element=="footnotetexts") $pdf->Footnotes();
+			else if (is_string($element) && $element=="addpage") $pdf->AddPage();
+			else if ($element->get_type()=='PGVRHtml') {
+//				$this->text .= $element->getStart(); 
+				$this->text .= $element->render($pdf, true);
+			}
+			else $element->render($pdf);
+		}
+		$this->text .= $this->getEnd();
+		if ($sub) return $this->text;
+//		print "[".htmlentities($this->text)."] ";
+		print $this->text;
+	}
+
 }
 
 /**

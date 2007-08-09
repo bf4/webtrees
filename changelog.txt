@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.2
+ - Replaced UFPDF library with TCPDF library for report generation (yalnifj)
  - Added Watermarks [ 1739602 ] (ljm)
  - Added Media Firewall [ 1749817 ] (ljm)
  - Added sourcelink and assolink tables [ 1718918 ] [ 1717381 ] (yalnifj)
