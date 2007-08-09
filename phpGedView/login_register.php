@@ -375,7 +375,9 @@ switch ($action) {
 				
 				AddToLog("User registration requested for: ".$user_name);
 				
-				if (getUser($user_name)!== false) {
+				$sql = "SELECT u_username FROM ".$TBLPREFIX."users WHERE u_username LIKE '".$user_name."'";
+				$res = dbquery($sql);
+				if ($res->numRows()>0) {
 					print "<span class=\"warning\">".print_text("duplicate_username",0,1)."</span><br /><br />";
 					print "<a href=\"javascript:history.back()\">".$pgv_lang["back"]."</a><br />";
 				}
