@@ -46,6 +46,7 @@ if (!$controller->indi->canDisplayName()) {
 }
 $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 ?>
+
 <table border="0" cellspacing="0" cellpadding="0" class="facts_table">
 	<tr>
 	<?php if ($controller->canShowHighlightedObject()) { ?>
@@ -231,7 +232,8 @@ function showchanges() {
 <!-- ====================== Added for Lightbox Module ===================== -->
 <?php
 if (file_exists("modules/lightbox/album.php")) {
-	include_once ("modules/lightbox/functions/lb_indi_tabs2.php");
+	include_once ("modules/lightbox/lb_config.php");
+	include_once ("modules/lightbox/functions/lb_indi_tabs_" . $mediatab . ".php");
 }else{	
 ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
@@ -353,7 +355,7 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
 <!-- ====================== Added for Lightbox Module ===================== -->
 <?php	
 if (file_exists("modules/lightbox/album.php")) {
-	include_once ("modules/lightbox/functions/lb_indi_doors2.php");
+	include_once ("modules/lightbox/functions/lb_indi_doors_" . $mediatab . ".php");
 }else{	
 ?>
 <!-- ================== End Additions for Lightbox Module ================== -->

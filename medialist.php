@@ -27,8 +27,8 @@ require_once("config.php");
 require_once 'includes/functions_print_facts.php';
 
 //BH -------------------------------------------------------
-require( "modules/lightbox/".$pgv_language["english"]);
-if (file_exists( "modules/lightbox/".$pgv_language[$LANGUAGE])) require  "modules/lightbox/".$pgv_language[$LANGUAGE];
+if (file_exists( "modules/lightbox/".$pgv_language["english"])) require( "modules/lightbox/".$pgv_language["english"]);
+if (file_exists( "modules/lightbox/".$pgv_language[$LANGUAGE])) require( "modules/lightbox/".$pgv_language[$LANGUAGE]);
 //BH --------------------------------------------------------
 
 global $MEDIA_EXTERNAL, $THUMBNAIL_WIDTH;

@@ -100,15 +100,15 @@ if (file_exists( "modules/lightbox/".$pgv_language[$LANGUAGE])) require  "module
 		//Turn Edit Mode On or Off
 		if (!isset($edit)) { $edit=1; }
 		else{ $edit==$edit;	}
-        if ( userCanEdit(getUserName()) && $edit==1 ) {
+        if ( userIsAdmin(getUserName()) && $edit==1 ) {
             print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
-            print "<a href=" . $PHP_SELF . "?tab=3&pid=" . $pid . "&edit=0 title=\"" . $pgv_lang["turn_edit_OFF"] . "\">";
+            print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&edit=0 title=\"" . $pgv_lang["turn_edit_OFF"] . "\">";
             print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\" " . $pgv_lang["turn_edit_OFF"] . "\" />" ;
             print " " . $pgv_lang["turn_edit_OFF"] ;
             print " </a> ";
-        }elseif ( userCanEdit(getUserName()) && $edit==0 ) {
+        }elseif ( userIsAdmin(getUserName()) && $edit==0 ) {
             print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
-            print "<a href=" . $PHP_SELF . "?tab=3&pid=" . $pid . "&edit=1 title=\"" . $pgv_lang["turn_edit_ON"] . "\">";
+            print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&edit=1 title=\"" . $pgv_lang["turn_edit_ON"] . "\">";
             print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\" " . $pgv_lang["turn_edit_ON"] . "\" />" ;
             print " " . $pgv_lang["turn_edit_ON"] ;
             print " </a> ";		

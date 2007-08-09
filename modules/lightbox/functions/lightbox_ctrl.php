@@ -36,9 +36,9 @@ global $edit, $tabno;
 $edit=$edit;
 
      if (!file_exists("modules/googlemap/defaultconfig.php")) {
-         $tabno = "3";
+         $tabno = ($tabno-1);
          }else{
-         $tabno = "3";
+         $tabno = ($tabno);
          }
 
 //     echo "Light Box Stuff";
@@ -182,7 +182,5 @@ $edit=$edit;
 // -----------------------------------------------------------------------------
 // End LightBox Album Functions
 // -----------------------------------------------------------------------------
-
-
 
 ?>
