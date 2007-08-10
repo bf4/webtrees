@@ -304,18 +304,21 @@ class MediaControllerRoot extends IndividualController{
 	 * return a list of facts
 	 * @return array
 	 */
-	function getFacts() {
-		global $pgv_changes, $GEDCOM;
+	function getFacts($includeFileName=true) {
+		global $pgv_changes, $GEDCOM, $pgv_lang;
 
 		$facts = get_all_subrecords($this->mediaobject->getGedcomRecord(), "TITL,FILE");
-		$facts[] = "1 FILE ".$this->mediaobject->getFilename();
-		$facts[] = "1 TYPE ".$this->mediaobject->getFiletype();
+		if ($includeFileName) $facts[] = "1 FILE ".$this->mediaobject->getFilename();
+		$facts[] = "1 FORM ".$this->mediaobject->getFiletype();
+		$mediaType = $this->mediaobject->getMediatype();
+		if (isset($pgv_lang["TYPE__".$mediaType])) $facts[] = "1 TYPE ".$pgv_lang["TYPE__".$mediaType];
 
 		if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
 			$newrec = find_updated_record($this->pid);
 			$newfacts = get_all_subrecords($newrec, "TITL,FILE");
 			$newmedia = new Media($newrec);
-			$newfacts[] = "1 FILE ".$newmedia->getFilename();
+			if ($includeFileName) $newfacts[] = "1 FILE ".$newmedia->getFilename();
+			$newfacts[] = "1 FORM ".$newmedia->getFiletype();
 			$newfacts[] = "1 TYPE ".$newmedia->getFiletype();
 			//print_r($newfacts);
 			//-- loop through new facts and add them to the list if they are any changes

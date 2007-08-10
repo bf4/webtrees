@@ -243,6 +243,15 @@ class Media extends GedcomRecord {
 	}
 
 	/**
+	 * get the media type
+	 * @return string
+	 */
+	function getMediatype() {
+		$mediaType = get_gedcom_value("FORM:TYPE", 2, $this->gedrec);
+		return $mediaType;
+	}
+
+	/**
 	 * get the media file type
 	 * @return string
 	 */

@@ -98,23 +98,19 @@ class LifespanControllerRoot extends BaseController {
 		else if (stristr($DBTYPE, "pgsql")!==false) $term = "~*";
 		else $term='LIKE';
 	
-		$myindilist = array();
-		$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals, ";
-		$sql .= "(select d_gid, d_file, MIN(d_year) as birth, MAX(d_year) as death from ".$TBLPREFIX."dates WHERE d_fact NOT IN ('CHAN','ENDL','SLGC','SLGS','BAPL') AND d_file='".$GEDCOMS[$GEDCOM]['id']."' GROUP BY d_gid) as dategroups ";
-		$sql .= "WHERE dategroups.death >= ".$startyear." AND dategroups.birth<=".$endyear." AND i_file=dategroups.d_file AND i_id=dategroups.d_gid";
-		$sql .= " AND i_file='".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])."'";
-		//		print $sql;
+		$sql = "SELECT date1.d_gid, date1.d_file, MIN(date1.d_year) as birth, MAX(date2.d_year) as death ";
+		$sql .= "FROM ".$TBLPREFIX."dates as date1, ".$TBLPREFIX."dates as date2, ".$TBLPREFIX."individuals ";
+		$sql .= "WHERE date1.d_gid=date2.d_gid AND date1.d_gid=i_id AND date1.d_fact NOT IN ('CHAN','ENDL','SLGC','SLGS','BAPL') AND date1.d_file='".$GEDCOMS[$GEDCOM]['id']."' ";
+		$sql .= "AND date1.d_file=date2.d_file AND date1.d_file=i_file AND date1.d_year>=".$DBCONN->escapeSimple($startyear)." AND date2.d_year<=".$DBCONN->escapeSimple($endyear)." GROUP BY d_gid";
 		$res = dbquery($sql);
-	
+		//print $sql;
+		$myids = array();
 		while($row =& $res->fetchRow()){
-			$row = db_cleanup($row);
-			$myindilist[$row[0]]["names"] = get_indi_names($row[3]);
-			$myindilist[$row[0]]["gedfile"] = $row[2];
-			$myindilist[$row[0]]["gedcom"] = $row[3];
-			$myindilist[$row[0]]["isdead"] = $row[4];
-			$indilist[$row[0]] = $myindilist[$row[0]];
+			$myids[] = $row[0];
 		}
 		$res->free();
+		//var_dump($myids);
+		$myindilist = load_people($myids);
 		return $myindilist;
 	}
 	
@@ -368,26 +364,22 @@ class LifespanControllerRoot extends BaseController {
 		echo "<div class=\"sublinks_cell\" style=\"text-align: left; position: absolute; top: ".$top."px; left: ".$leftPosition."px; width: ".$tickDistance."px;\">$newStartYear</div>";
 	}
 	
-	
 	//method used to place the person boxes onto the timeline
-	function fillTL($ar, $int, $Y) {
+	function fillTL($ar, $int, $top) {
 		global $maxX, $zindex, $pgv_lang, $factarray;
 		
-		if (empty($zindex)) $zindex = count($ar);
+		$zindex = 1;
 		
+		$rows = array();
 		$modFix = 0;
 		if($this->modTest == 1){
 			$modFix = (9 * $this->birthMod);
 		}
 		//base case
-		if (count($ar) == 0)
-			return $Y;
+		if (count($ar) == 0) return $top;
 		
-
 		foreach ($ar as $key => $value) {
-				
 			//Creates appropriate color scheme to show relationships
-
 			$this->currentsex = $value->getSex();
 			if ($this->currentsex == "M"){
 				$this->Mcolorindex++;
@@ -422,8 +414,6 @@ class LifespanControllerRoot extends BaseController {
 				
 			//set start position and size of person-box according to zoomfactor
 			/* @var $value Person */
-			if ($value->getBirthYear() > $int -1) {
-				
 				$birthYear = $value->getBirthYear();
 				$deathYear = $value->getDeathYear();
 				if($deathYear > date("Y")){
@@ -437,7 +427,7 @@ class LifespanControllerRoot extends BaseController {
 				if (stristr($value->getName(), "starredname"))
 						$minlength = (strlen($value->getName())-34) * $this->zoomfactor;
 				else	$minlength = strlen($value->getName()) * $this->zoomfactor;
-				$zindex--;
+				$zindex++;
 				if ($startPos > 15) {
 					$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 15 + $modFix;
 					$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 15;
@@ -456,6 +446,32 @@ class LifespanControllerRoot extends BaseController {
 				if ($value->isDead()) $lifespan .= $deathYear; 
 				$lifespannumeral = $deathYear - $birthYear;
 				
+				//-- calculate a good Y top value
+				$Y = $top;
+				$ready = false;
+				while(!$ready) {
+					if (!isset($rows[$Y])) {
+						$ready = true;
+						$rows[$Y]["x1"] = $startPos;
+						$rows[$Y]["x2"] = $startPos+$width;
+					}
+					else {
+						if ($rows[$Y]["x1"] > $startPos+$width) {
+							$ready = true;
+							$rows[$Y]["x1"] = $startPos;
+						}
+						else if ($rows[$Y]["x2"] < $startPos) {
+							$ready = true;
+							$rows[$Y]["x2"] = $startPos+$width;
+						}
+						else {
+							//move down 25 pixels
+							if ($this->zoomfactor > 10)$Y += 25 + $this->zoomfactor;
+							else $Y += 25;
+						}
+					}
+				}
+				
 				//Need to calculate each event and the spacing between them
 				// event1 distance will be event - birthyear   that will be the distance. then each distance will chain off that
 
@@ -463,18 +479,12 @@ class LifespanControllerRoot extends BaseController {
 				//$value->add_historical_facts();
 				$value->add_family_facts(false);
 				$unparsedEvents = $value->getIndiFacts();
-				//sort_facts($unparsedEvents);
 				sort_facts($unparsedEvents);
-				//print_r($unparsedEvents);
 
 				$eventinformation = Array();
 				$eventspacing = Array();
-				//print "UNPARSED:";
-				//print_r($unparsedEvents);
 				foreach($unparsedEvents as $index=>$val)
 				{
-
-					//print $val[1];
 					if(preg_match('/2 DATE/',$val[1]))
 					{
 						$date = get_gedcom_value("DATE",2,$val[1]);
@@ -503,24 +513,17 @@ class LifespanControllerRoot extends BaseController {
 						else if (isset($pgv_lang[$fact])) $trans = $pgv_lang[$fact];  
 						if (isset($eventinformation[$evntwdth])) $eventinformation[$evntwdth] .= "<br />\n".$trans."<br />\n".$date." ".$place;
 						else $eventinformation[$evntwdth]= $trans."<br />\n".$date." ".$place;
-						//$eventspacing[$eventwidth][$date];
 					}
 						
 				}
-				//sort by event width
 
-					
-				$out = ""; // this is the string we are going to build
-				//what we are going to do now that we have the facts array is we are going to pass it into a function then parse all the data and print from that function
-				// different display values in the box based on the size of the person-box
-				
 				//TODO 
 				//We need to get starred $value->getName() names within <span class=\"starredname\"> and </span> to print in the 'zoom-box' (<span> ...</span> below) on the same line as the rest of the name. 
 				//How?   Now these names print on other data on the next line.
 				
 				if ($width > ($minlength +110)) {
 					echo "\n<div id=\"bar_".$value->getXref()."\" style=\"position: absolute;top:".$Y."px; left:".$startPos."px; width:".$width."px; height:".$height."px;" .
-					" background-color:".$this->color."; border: solid blue 1px; z-index:$zindex;\">";
+					" background-color:".$this->color."; border: solid blue 1px; \">";
 					foreach($eventinformation as $evtwidth=>$val){
 						print "<div style=\"position:absolute;left:".$evtwidth." \"><a class=\"showit\" href='#'style=\"color:White; top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
 					}
@@ -534,7 +537,7 @@ class LifespanControllerRoot extends BaseController {
 				} else {
 					if ($width > $minlength +5) {
 						echo "\n<div style=\"text-align: left; position: absolute; top:".$Y."px; left:".$startPos."px; width:".$width."px; height:".$height."px;" .
-						"  background-color:".$this->color."; border: solid blue 1px; z-index:$zindex;\">";
+						"  background-color:".$this->color."; border: solid blue 1px; \">";
 						foreach($eventinformation as $evtwidth=>$val){
 							print "<div style=\"position:absolute;left:".$evtwidth." \"><a class=\"showit\" href='#'style=\"color:White; top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
 						}
@@ -546,7 +549,7 @@ class LifespanControllerRoot extends BaseController {
 						echo '</div>';
 					} else {
 						echo "\n<div style=\"text-align: left; position: absolute;top:".$Y."px; left:".$startPos."px;width:".$width."px; height:".$height."px;" .
-						" background-color:".$this->color."; border: solid blue 1px; z-index:$zindex;\">" ;
+						" background-color:".$this->color."; border: solid blue 1px;\">" ;
 							
 						print"<a class=\"showit\" href=\"individual.php?pid=".$value->getXref()."\"><b>".get_first_letter($pgv_lang["birth"])."</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".PrintReady(get_changed_date($value->getBirthDate()))." ".PrintReady($value->getBirthPlace())."<br/>";
 						foreach($eventinformation as $evtwidth=>$val){
@@ -559,9 +562,6 @@ class LifespanControllerRoot extends BaseController {
 					}
 				}
 				
-				
-				//remove used person from the working array
-				unset ($ar[$key]);
 				//change color
 				if ($this->colorindex < count($this->colorindex) - 1 && $this->Mcolorindex < count($this->Mcolorindex)-1 && $this->Fcolorindex < count($this->Fcolorindex)-1) {
 					//					do nothing
@@ -574,20 +574,8 @@ class LifespanControllerRoot extends BaseController {
 				if ($maxX < $startPos + $width)
 					$maxX = $startPos + $width;
 			}
-		}
-		//move down 25 pixels
-		if ($this->zoomfactor > 10){
-			$Y += 25 + $this->zoomfactor;
-		}
-		else{
-		$Y += 25;
-		}
 
-		//NOTE: this is where we'd implement the spacemanagement.
-		//currently set at 25
-
-		//recursive method call
-		return $this->fillTL($ar, 0, $Y);
+		return $Y;
 	}
 	/**
 	 * check the privacy of the incoming people to make sure they can be shown

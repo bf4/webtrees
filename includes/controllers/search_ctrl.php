@@ -333,7 +333,7 @@ class SearchControllerRoot extends BaseController {
 			{
 				if($varName == "action")
 				if($_REQUEST[$varName] == "replace")
-				if(!userCanEdit(getUserName()))
+						if(!userCanAccept(getUserName()))
 				{
 					$this->action = "general";
 					continue;
@@ -577,6 +577,7 @@ class SearchControllerRoot extends BaseController {
 		//-- don't try to make any changes if nothing was found
 		if (count($this->myindilist)==0 && count($this->myfamlist)==0 && count($this->mysourcelist)==0) return;
 
+		AddToLog("Search And Replace old:".$oldquery." new:".$this->replace);
 		$manual_save = true;
 		// Include edit functions.
 		include_once("includes/functions_edit.php");

@@ -5,7 +5,7 @@
  * This page displays all information about media that is selected in PHPGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,6 +64,13 @@ else{
 		?>
 		<table width="70%">
 			<tr>
+				<td class="name_head" colspan="2">
+					 <?php print PrintReady($controller->mediaobject->getTitle()); if ($SHOW_ID_NUMBERS) print " " . getLRM() . "(".$controller->pid.")" . getLRM(); ?>
+					 <?php print PrintReady($controller->mediaobject->getAddTitle()); ?> <br /><br />
+					 <?php if ($controller->mediaobject->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
+				</td>
+			</tr>
+			<tr>
 				<td align="center">
 					<?php
 					if ($controller->canDisplayDetails()) {
@@ -94,9 +101,7 @@ else{
 							</a>
 							<?php
 						}
-						?>
-						<br /><br /><a href="<?php print $filename; ?>"><?php print $pgv_lang["download_image"]; ?></a><br/>
-						<?php
+						if ($SHOW_MEDIA_DOWNLOAD) print "<br /><br /><a href=\"".$filename."\">".$pgv_lang["download_image"]."</a><br/>";
 					}
 					else{
 						// the file is not external and does not exist
@@ -111,17 +116,10 @@ else{
 				<td valign="top">
 					<table width="100%">
 						<tr>
-							<td class="name_head">
-								 <?php print PrintReady($controller->mediaobject->getTitle()); if ($SHOW_ID_NUMBERS) print " " . getLRM() . "(".$controller->pid.")" . getLRM(); ?>
-								 <?php print PrintReady($controller->mediaobject->getAddTitle()); ?> <br /><br />
-								 <?php if ($controller->mediaobject->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
-							</td>
-						</tr>
-						<tr>
 							<td>
-								<table class="facts_table">
+								<table class="facts_table<?php print $TEXT_DIRECTION=='ltr'?'':'_rtl';?>">
 									<?php
-										$facts = $controller->getFacts();
+										$facts = $controller->getFacts($SHOW_MEDIA_FILENAME);
 										foreach($facts as $f=>$factrec) {
 											print_fact($factrec, $controller->pid, 1, false, true);
 										}
@@ -133,12 +131,12 @@ else{
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">
+				<td class="center" colspan="2">
 					<?php
 					$links = get_media_relations($controller->pid);
 					if (isset($links)){
 					?>
-					 <br /><?php print $pgv_lang["relations_heading"]; ?>
+					 <br /><b><?php print $pgv_lang["relations_heading"]; ?></b><br /><br />
 					<?php
 						// PrintMediaLinks($links, "");
 						require_once 'includes/functions_print_lists.php';
