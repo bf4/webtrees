@@ -36,23 +36,9 @@ if (empty($controller->pid)) {
 else{
 
 	print_header($controller->getPageTitle());
-		//The next set of code draws the table that displays information about the person
-		?>
-		<table>
-			<tr>
-				<td colspan="2" class="name_head">
-					 <?php print PrintReady($controller->mediaobject->getTitle()); if ($SHOW_ID_NUMBERS) print " " . getLRM() . "(".$controller->pid.")" . getLRM(); ?>
-					 <?php print PrintReady($controller->mediaobject->getAddTitle()); ?> <br /><br />
-					 <?php if ($controller->mediaobject->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
-				</td>
-			</tr>
-			<tr>
-				<td valign="top">
-
-	<?php		
-	//The following lines of code are used to print the menu box
+	//The following lines of code are used to print the menu box on the top right hand corner
 	if ($controller->userCanEdit() || $controller->canShowOtherMenu()) { ?>
-		<table class="sublinks_table" cellspacing="4" cellpadding="0">
+		<table class="sublinks_table rtl" style="margin: 10px;" cellspacing="4" cellpadding="0" align="<?php print $TEXT_DIRECTION=='ltr'?'right':'left';?>">
 			<tr>
 				<td class="list_label <?php echo $TEXT_DIRECTION; ?>" colspan="5"><?php print $pgv_lang["media_options"]; ?></td>
 			</tr>
@@ -73,28 +59,19 @@ else{
 			</tr>
 		</table>
 		<?php
-	} ?>
-				
-					<table>
-						<tr>
-							<td>
-								<table class="facts_table<?php print $TEXT_DIRECTION=='ltr'?'':'_rtl';?>">
-									<?php
-										$facts = $controller->getFacts($SHOW_MEDIA_FILENAME);
-										foreach($facts as $f=>$factrec) {
-											print_fact($factrec, $controller->pid, 1, false, true);
-										}
-									?>
-								</table>
-							</td>
-						</tr>
-					</table>
-				
-				
-				
-				
+	}
+		//The next set of code draws the table that displays information about the person
+		?>
+		<table width="70%">
+			<tr>
+				<td class="name_head" colspan="2">
+					 <?php print PrintReady($controller->mediaobject->getTitle()); if ($SHOW_ID_NUMBERS) print " " . getLRM() . "(".$controller->pid.")" . getLRM(); ?>
+					 <?php print PrintReady($controller->mediaobject->getAddTitle()); ?> <br /><br />
+					 <?php if ($controller->mediaobject->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 				</td>
-				<td valign="top" align="center">
+			</tr>
+			<tr>
+				<td align="center">
 					<?php
 					if ($controller->canDisplayDetails()) {
 					//Checks to see if the File exist in the system.
@@ -134,6 +111,22 @@ else{
 					}
 					}
 					?>
+				</td>
+				<td valign="top">
+					<table width="100%">
+						<tr>
+							<td>
+								<table class="facts_table<?php print $TEXT_DIRECTION=='ltr'?'':'_rtl';?>">
+									<?php
+										$facts = $controller->getFacts($SHOW_MEDIA_FILENAME);
+										foreach($facts as $f=>$factrec) {
+											print_fact($factrec, $controller->pid, 1, false, true);
+										}
+									?>
+								</table>
+							</td>
+						</tr>
+					</table>
 				</td>
 			</tr>
 			<tr>
