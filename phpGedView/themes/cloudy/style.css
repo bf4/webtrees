@@ -522,6 +522,14 @@ th {
 	width: 98%;
 }
 
+.facts_table_rtl {
+	margin-left: 10px;
+	padding-left: 10px;
+	margin-right: 0px;
+	padding-right: 0px;
+	width: 98%;
+}
+
 .tabs_table {
 	max-width: 99%;
 	margin-right: 0pt;

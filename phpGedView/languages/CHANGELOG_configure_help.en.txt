@@ -45,6 +45,10 @@ VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
++$pgv_lang["SHOW_MEDIA_FILENAME"]					9 Aug 2007				A
++$pgv_lang["SHOW_MEDIA_FILENAME_help"]				9 Aug 2007				A
++$pgv_lang["SHOW_MEDIA_DOWNLOAD"]					9 Aug 2007				A
++$pgv_lang["SHOW_MEDIA_DOWNLOAD_help"]				9 Aug 2007				A
 +$pgv_lang["SHOW_REGISTER_CAUTION"]					2 Aug 2007				A
 +$pgv_lang["SHOW_REGISTER_CAUTION_help"]			2 Aug 2007				A
 *$pgv_lang["WELCOME_TEXT_AUTH_MODE"]				31 Jul 2007				W
