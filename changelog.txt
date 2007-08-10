@@ -9,6 +9,8 @@
 =====================================================================
 
 Version 4.1
+ - Make Media Viewer show of file name & download link configurable in GEDCOM config (canajun2eh)
+ - Change appearance of Media Viewer (canajun2eh)
  - Restrict editing users from search and replace.  Admin and Accept users only (yalnifj)
  - Change backup so that DB data is always backed up to a file and included in the ZIP (yalnifj)
  - Added use case insensitive compare when checking for duplicate usernames (yalnifj)

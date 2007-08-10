@@ -347,6 +347,8 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$SHOW_LAST_CHANGE\s*=\s*.*;/', "\$SHOW_LAST_CHANGE = ".$boolarray[$_POST["NEW_SHOW_LAST_CHANGE"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_LDS_AT_GLANCE\s*=\s*.*;/', "\$SHOW_LDS_AT_GLANCE = ".$boolarray[$_POST["NEW_SHOW_LDS_AT_GLANCE"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_MARRIED_NAMES\s*=\s*.*;/', "\$SHOW_MARRIED_NAMES = ".$boolarray[$_POST["NEW_SHOW_MARRIED_NAMES"]].";", $configtext);
+	$configtext = preg_replace('/\$SHOW_MEDIA_DOWNLOAD\s*=\s*.*;/', "\$SHOW_MEDIA_DOWNLOAD = ".$boolarray[$_POST["NEW_SHOW_MEDIA_DOWNLOAD"]].";", $configtext);
+	$configtext = preg_replace('/\$SHOW_MEDIA_FILENAME\s*=\s*.*;/', "\$SHOW_MEDIA_FILENAME = ".$boolarray[$_POST["NEW_SHOW_MEDIA_FILENAME"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_PARENTS_AGE\s*=\s*.*;/', "\$SHOW_PARENTS_AGE = ".$boolarray[$_POST["NEW_SHOW_PARENTS_AGE"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_PEDIGREE_PLACES\s*=\s*".*";/', "\$SHOW_PEDIGREE_PLACES = \"".$_POST["NEW_SHOW_PEDIGREE_PLACES"]."\";", $configtext);
 	$configtext = preg_replace('/\$SHOW_QUICK_RESN\s*=\s*.*;/', "\$SHOW_QUICK_RESN = ".$boolarray[$_POST["NEW_SHOW_QUICK_RESN"]].";", $configtext);
@@ -872,6 +874,14 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["media_conf"]."\" onclick=\"expan
 		</td>
 	</tr>
 	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("USE_THUMBS_MAIN_help", "qm", "USE_THUMBS_MAIN"); print $pgv_lang["USE_THUMBS_MAIN"];?></td>
+		<td class="optionbox"><select name="NEW_USE_THUMBS_MAIN" tabindex="<?php $i++; print $i?>" onfocus="getHelp('USE_THUMBS_MAIN_help');">
+				<option value="yes" <?php if ($USE_THUMBS_MAIN) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$USE_THUMBS_MAIN) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
 		<td class="descriptionbox wrap"><?php print_help_link("SHOW_HIGHLIGHT_IMAGES_help", "qm", "SHOW_HIGHLIGHT_IMAGES"); print $pgv_lang["SHOW_HIGHLIGHT_IMAGES"];?></td>
 		<td class="optionbox"><select name="NEW_SHOW_HIGHLIGHT_IMAGES" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SHOW_HIGHLIGHT_IMAGES_help');">
 				<option value="yes" <?php if ($SHOW_HIGHLIGHT_IMAGES) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
@@ -888,10 +898,18 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["media_conf"]."\" onclick=\"expan
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap"><?php print_help_link("USE_THUMBS_MAIN_help", "qm", "USE_THUMBS_MAIN"); print $pgv_lang["USE_THUMBS_MAIN"];?></td>
-		<td class="optionbox"><select name="NEW_USE_THUMBS_MAIN" tabindex="<?php $i++; print $i?>" onfocus="getHelp('USE_THUMBS_MAIN_help');">
-				<option value="yes" <?php if ($USE_THUMBS_MAIN) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$USE_THUMBS_MAIN) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+		<td class="descriptionbox wrap"><?php print_help_link("SHOW_MEDIA_FILENAME_help", "qm", "SHOW_MEDIA_FILENAME"); print $pgv_lang["SHOW_MEDIA_FILENAME"];?></td>
+		<td class="optionbox"><select name="NEW_SHOW_MEDIA_FILENAME" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SHOW_MEDIA_FILENAME_help');">
+				<option value="yes" <?php if ($SHOW_MEDIA_FILENAME) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$SHOW_MEDIA_FILENAME) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("SHOW_MEDIA_DOWNLOAD_help", "qm", "SHOW_MEDIA_DOWNLOAD"); print $pgv_lang["SHOW_MEDIA_DOWNLOAD"];?></td>
+		<td class="optionbox"><select name="NEW_SHOW_MEDIA_DOWNLOAD" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SHOW_MEDIA_DOWNLOAD_help');">
+				<option value="yes" <?php if ($SHOW_MEDIA_DOWNLOAD) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$SHOW_MEDIA_DOWNLOAD) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 			</select>
 		</td>
 	</tr>
