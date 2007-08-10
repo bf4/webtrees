@@ -366,7 +366,8 @@ function load_people($ids, $gedfile='') {
 	global $indilist, $DBCONN;
 	
 	if (count($ids)==0) return false;
-	
+
+	$myindilist = array();
 	if (empty($gedfile)) $gedfile = $GEDCOM;
 	if (!is_int($gedfile)) $gedfile = get_gedcom_from_id($gedfile);
 	
@@ -378,11 +379,12 @@ function load_people($ids, $gedfile='') {
 			$sql .= "'".$DBCONN->escapeSimple($id)."',";
 			$idsadded = true;
 		}
+		else $myindilist[$id] = $indilist[$id];
 	}
-	if (!$idsadded) return;
+	if (!$idsadded) return $myindilist;
 	$sql = rtrim($sql,',');
 	$sql .= ") AND i_file='".$DBCONN->escapeSimple($GEDCOMS[$gedfile]["id"])."'";
-	
+	//print $sql;
 	$res = dbquery($sql);
 
 	if (!DB::isError($res)) {
@@ -391,14 +393,16 @@ function load_people($ids, $gedfile='') {
 		}
 		while($row =& $res->fetchRow()) {
 			if (!isset($indilist[$row[4]])) {
-			$indilist[$row[4]]["gedcom"] = $row[0];
-			$indilist[$row[4]]["names"] = get_indi_names($row[0]);
-			$indilist[$row[4]]["isdead"] = $row[2];
-			$indilist[$row[4]]["gedfile"] = $row[3];
+				$indilist[$row[4]]["gedcom"] = $row[0];
+				$indilist[$row[4]]["names"] = get_indi_names($row[0]);
+				$indilist[$row[4]]["isdead"] = $row[2];
+				$indilist[$row[4]]["gedfile"] = $row[3];
 			}
+			$myindilist[$row[4]] = $indilist[$row[4]];
 		}
 		$res->free();
 	}
+	return $myindilist;
 }
 
 /**
