@@ -39,9 +39,15 @@
     global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $MEDIA_DIRECTORY, $TEXT_DIRECTION;
     global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
     global $SEARCH_SPIDER;
-    global $t, $edit, $SERVER_URL;
+    global $t, $edit, $SERVER_URL, $reorder;
 
+
+if (isset($reorder) && $reorder==1) {
+    print "<li class=\"facts_value\" style=\"border:0px;\" id=\"li_" . $rowm['m_media'] . "\" >";	
+	print "<b><font size=2 style=\"cursor:move;margin-bottom:2px;\">" . $rowm['m_media'] . "</font></b>";
+}else{	
 print "<li>" . "\n";
+}
     //print dummy image if media is linked to a 'private' person
     if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
         print "<table class=\"prvpic\"><tr><td align=\"center\" colspan=1>" . "\n";
@@ -80,22 +86,24 @@ print "<li>" . "\n";
             $mainMedia = check_media_depth($rowm["m_file"], "NOTRUNC");
         if ($mediaTitle=="") $mediaTitle = basename($rowm["m_file"]);
 
-        if ($isExternal || media_exists($thumbnail)) {
+        if ($isExternal || file_exists(filename_decode($thumbnail))) {
 
             $mainFileExists = false;
-            if ($isExternal || media_exists($mainMedia)) {
+            if ($isExternal || file_exists($mainMedia)) {
                 $mainFileExists = true;
                 $imgsize = findImageSize($mainMedia);
                 $imgwidth = $imgsize[0]+40;
                 $imgheight = $imgsize[1]+150;
 
                 // Test for filetypes supported by lightbox at the moment ================
-                if ( eregi("\.jpg",$rowm['m_file']) || eregi("\.jpeg",$rowm['m_file']) || eregi("\.gif",$rowm['m_file']) || eregi("\.png",$rowm['m_file']) ) {
+				if ( eregi("\.jpg",$rowm['m_file']) || eregi("\.jpeg",$rowm['m_file']) || eregi("\.gif",$rowm['m_file']) || eregi("\.png",$rowm['m_file']) ) {
 					print "<table class=\"pic\"><tr>" . "\n";
 					print "<td align=\"center\" colspan=1>". "\n";
 					
-					// If source info available and not editing - create tooltip link for source and details
-					if ( eregi("1 SOUR",$rowm['m_gedrec']) && ($edit==0 || !userCanEdit(getUserName()))) {
+					// If source info available and not editing and not reordering - create tooltip link for source and details
+					if ( $reorder==1 ) {
+					}else
+					if ( eregi("1 SOUR",$rowm['m_gedrec']) && ($edit==0 || !userCanEdit(getUserName())) ) {
 						print "<a href=\"" . $mainMedia . "\" rel='lightbox[general]' title='" . $mediaTitle . "'\" 
 						       onmouseover=\"Tip('&nbsp;" . $mediaTitle 
 							   . "&nbsp;<br>&nbsp;Source : <a href=\'" 
@@ -127,13 +135,17 @@ print "<li>" . "\n";
 							   OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt')\" >"
 							   . "\n";
 					}else{
+					print "<a href=\"" . $mainMedia . "\" rel='lightbox[general]' title='" . $mediaTitle . "'\" >";
 					}
 				// Or else use the pop-up window technique ==============================
 				}else{
-                     print "<table class=\"pic\" ><tr>" . "\n";
-                     print "<td align=\"center\" colspan=1>" . "\n";
-                     print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" >";
-                }
+					print "<table class=\"pic\" ><tr>" . "\n";
+					print "<td align=\"center\" colspan=1>" . "\n";
+					if ( $reorder==1 ) {
+					}else{
+						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" >";
+					}
+				}
             }
 
 // BH 		print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
@@ -148,9 +160,10 @@ print "<li>" . "\n";
 			if ($mainFileExists) print "</a>" . "\n";
 
             print "</td></tr>" . "\n";
-			
+
 			// editing icons
-            if ( userCanEdit(getUserName()) && $edit=="1" ) {
+			if ( $reorder==1 ) {
+            }elseif ( userCanEdit(getUserName()) && $edit=="1" ) {
 				print "<tr><td align=\"center\" nowrap=\"nowrap\">". "\n";
 				
 				// Edit Media Item Details

@@ -37,7 +37,9 @@
 // -----------------------------------------------------------------------------
 // function lightbox_print_main_media($pid, $level=1, $related=false, $noedit=false) {
 // -----------------------------------------------------------------------------
-
+	require_once("http://www.windmillway.f2s.com/genealogy/js/prototype.js.htm");
+	require_once("http://www.windmillway.f2s.com/genealogy/js/scriptaculous.js.htm"); 
+	
 $t=$kind ;
 $edit="1";
 
@@ -46,7 +48,7 @@ $edit="1";
 	global $GEDCOMS, $GEDCOM, $MEDIATYPE, $pgv_changes, $DBCONN, $DBTYPE;
 	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 	global $is_media, $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec;
-	global $typ2b, $edit, $tabno ;
+	global $typ2b, $edit, $tabno, $reorder;
 
 // Set type of media from call in album
 if ($t==1) {
@@ -148,8 +150,7 @@ $typ2b  .= ")";
             echo '<table><tr><td>' . "\n";
             echo "<center>" . "\n\n";  // needed for Firefox
             echo "<div id=\"thumbcontainer\">" . "\n";
-            echo "<ul id=\"thumblist\">" . "\n\n";
-
+            echo "<ul id=\"thumblist_".$t."\">" . "\n\n";
 
             while ($rowm = $resmm->fetchRow(DB_FETCHMODE_ASSOC)) {
 
@@ -172,7 +173,7 @@ $typ2b  .= ")";
                                 $imgheight = 400+150;
                         }
                  }
-                 else if (media_exists(check_media_depth($rowm["m_file"], "NOTRUNC"))) {
+                 else if (file_exists(filename_decode(check_media_depth($rowm["m_file"], "NOTRUNC")))) {
                         $imgsize = findImageSize(check_media_depth($rowm["m_file"], "NOTRUNC"));
                         $imgwidth = $imgsize[0]+40;
                         $imgheight = $imgsize[1]+150;
@@ -192,15 +193,41 @@ $typ2b  .= ")";
                  }
 
                  $mgedrec[] = $rowm["m_gedrec"];
+				 
 
             }
 
-            echo "</ul>";
+           echo "</ul>";
+			
+if (isset($reorder) && $reorder==1 && ($t==$t) ) {
+?>			
+<script type="text/javascript" language="javascript">
+// <![CDATA[
+	new Effect.BlindDown('thumblist_<?php print $t ?>', {duration: 1});
+	Sortable.create('thumblist_<?php print $t ?>',
+		{
+			onUpdate : function() {
+				inputs = $('thumblist_<?php print $t ?>').getElementsByTagName("input");
+				for (var i = 0; i < inputs.length; i++) inputs[i].value = i;
+			}
+		}
+	);
+// ]]>
+</script>	
+
+	
+<?php
+		
+
+}else{
+}				
             echo "</div>";
             echo "<div id=clearlist>";
             echo "</div>";
             echo "</center>";
             echo '</td></tr></table>' . "\n";
+			
+		
 
             if ($t==3 && $numm > 0) {
                  echo "<font size='1'>";
