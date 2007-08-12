@@ -9,6 +9,9 @@
 =====================================================================
 
 Version 4.1
+ - Move sample submenu file from "themes" to "includes/extra" (canajun2eh)
+ - Add sample top level menu file to "includes/extra" (canajun2eh)
+ - Add support for optional top level menu (built by site admin) (canajun2eh)
  - Make Media Viewer show of file name & download link configurable in GEDCOM config (canajun2eh)
  - Change appearance of Media Viewer (canajun2eh)
  - Restrict editing users from search and replace.  Admin and Accept users only (yalnifj)
