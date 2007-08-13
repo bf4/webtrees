@@ -92,10 +92,16 @@ function saveCachedBlock($block, $index, $content) {
 	
 	$fname = $INDEX_DIRECTORY."/cache";
 	@mkdir($fname);
+	@chmod($fname, 0777);	// Make SURE this dir. has 0777 perm. (so Admin can delete it without "root" access)
+
 	$fname .= "/".$lang_short_cut[$LANGUAGE];
 	@mkdir($fname);
+	@chmod($fname, 0777);
+
 	$fname .= "/".$GEDCOM;
 	@mkdir($fname);
+	@chmod($fname, 0777);
+
 	$fname .= "/".$index."_".$block[0];
 	$fp = @fopen($fname, "wb");
 	if (!$fp) return false;
