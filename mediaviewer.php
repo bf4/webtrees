@@ -77,7 +77,7 @@ else{
 					//Checks to see if the File exist in the system.
 					$filename = $controller->getLocalFilename();
 					$serverfilename = $controller->getServerFilename();
-					if ($controller->mediaobject->isExternal() || $controller->mediaobject->fileExists()){
+					if (isFileExternal($filename) || $controller->mediaobject->fileExists()){
 						// the file is external, or it exists locally 
 						// attempt to get the image size
 						if ($controller->mediaobject->getWidth()) {

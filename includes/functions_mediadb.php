@@ -563,13 +563,13 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 		if ($row) {
 			if (!empty ($row["m_file"])) {
 				$fileName = check_media_depth(stripslashes($row["m_file"]), "NOTRUNC", "QUIET");
-				if (($MEDIA_EXTERNAL && stristr($fileName, "://")) || !$currentdir || $directory == dirname($fileName) . "/") {
+				if (($MEDIA_EXTERNAL && isFileExternal($fileName)) || !$currentdir || $directory == dirname($fileName) . "/") {
 					$media = array ();
 					$media["ID"] = $row["m_id"];
 					$media["XREF"] = stripslashes($row["m_media"]);
 					$media["GEDFILE"] = $row["m_gedfile"];
 					$media["FILE"] = $fileName;
-					if ($MEDIA_EXTERNAL && stristr($fileName, "://")) {
+					if ($MEDIA_EXTERNAL && isFileExternal($fileName)) {
 						$media["THUMB"] = $fileName;
 						$media["EXISTS"] = true;
 					} else {
@@ -679,7 +679,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 				if (empty ($media["FILE"]))
 					break;
 				$fileName = check_media_depth(stripslashes($media["FILE"]), "NOTRUNC", "QUIET");
-				if ($MEDIA_EXTERNAL && stristr($media["FILE"], "://")) {
+				if ($MEDIA_EXTERNAL && isFileExternal($media["FILE"])) {
 					$media["THUMB"] = $fileName;
 					$media["EXISTS"] = true;
 				} else {
@@ -911,7 +911,7 @@ function filterMedia($media, $filter, $acceptExt) {
 		}
 
 		//-- Accept external Media only if specifically told to do so
-		if (stristr($media["FILE"], "://") && $acceptExt != "http")
+		if (isFileExternal($media["FILE"]) && $acceptExt != "http")
 			$isValid = false;
 
 		if (!$isValid)
@@ -1030,7 +1030,7 @@ function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
 		$overwrite = false;
 
 	// NOTE: Lets get the file details
-	if (strstr($filename, "://"))
+	if (isFileExternal($filename))
 		return $filename;
 
 	$filename = check_media_depth($filename, "NOTRUNC");
@@ -1114,7 +1114,7 @@ function check_media_depth($filename, $truncate = "FRONT", $noise = "VERBOSE") {
 	global $MEDIA_DIRECTORY, $MEDIA_DIRECTORY_LEVELS, $MEDIA_EXTERNAL;
 	global $pgv_lang;
 
-	if (empty ($filename) || ($MEDIA_EXTERNAL && stristr($filename, "://")))
+	if (empty ($filename) || ($MEDIA_EXTERNAL && isFileExternal($filename)))
 		return $filename;
 
 	if (empty ($truncate) || ($truncate != "NOTRUNC" && $truncate != "BACK" && $truncate != "FRONT"))
@@ -1437,7 +1437,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		else print "<input type=\"hidden\" name=\"genthumb\" value=\"yes\" />";
 	}
 	// File name on server
-	$isExternal = strstr($gedfile, "://");
+	$isExternal = isFileExternal($gedfile);
 	if ($gedfile == "FILE") {
 		if (userGedcomAdmin(getUserName())) {
 		add_simple_tag("1 $gedfile", "", $pgv_lang["server_file"], "", "NOCLOSE");
@@ -1976,5 +1976,10 @@ function mkdirs($dir, $mode = 0777, $recursive = true) {
 	}
 	return FALSE;
 }
+
+// determines whether the passed in filename is a link to an external source (i.e. contains '://')
+function isFileExternal($file) { 
+	return (strpos($file, '://') === false) ? false : true; 
+} 
 
 ?>

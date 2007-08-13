@@ -236,7 +236,7 @@ if ($action=="newentry") {
 		// No upload: should be an existing file on server
 		if ($tag[0]=="FILE") {
 			if (!empty($text[0])) {
-				$isExternal = strstr($text[0], "://");
+				$isExternal = isFileExternal($text[0]);
 				if ($isExternal) {
 					$fileName = $text[0];
 					$mediaFile = $fileName;
@@ -404,7 +404,7 @@ if ($action == "update") {
 	}
 	$res->free();
 	
-	$isExternal = strstr($oldFilename, "://") || strstr($filename, "://");
+	$isExternal = isFileExternal($oldFilename) || isFileExternal($filename);
 	$finalResult = true;
 		
 	// Handle Admin request to rename or move media file

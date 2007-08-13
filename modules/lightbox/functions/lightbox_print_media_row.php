@@ -66,7 +66,7 @@ print "<li>" . "\n";
     if ($rtype=='old') $styleadd = "change_old";
     // NOTE Start printing the media details
     $thumbnail = thumbnail_file($rowm["m_file"], true, false, $pid);
-    $isExternal = stristr($thumbnail,"://");
+    $isExternal = isFileExternal($thumbnail);
 
     $linenum = 0;
 
@@ -86,10 +86,10 @@ print "<li>" . "\n";
             $mainMedia = check_media_depth($rowm["m_file"], "NOTRUNC");
         if ($mediaTitle=="") $mediaTitle = basename($rowm["m_file"]);
 
-        if ($isExternal || file_exists(filename_decode($thumbnail))) {
+        if ($isExternal || media_exists($thumbnail)) {
 
             $mainFileExists = false;
-            if ($isExternal || file_exists($mainMedia)) {
+            if ($isExternal || media_exists($mainMedia)) {
                 $mainFileExists = true;
                 $imgsize = findImageSize($mainMedia);
                 $imgwidth = $imgsize[0]+40;

@@ -967,7 +967,7 @@ function getRandomMedia() {
 
 			//if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." Failed to pass privacy</span><br />\n";}
 
-			$isExternal = strstr($medialist[$value]["FILE"], "://");
+			$isExternal = isFileExternal($medialist[$value]["FILE"]);
 
 			if (!$isExternal) $disp &= file_exists($medialist[$value]["THUMB"]);
 			//if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." thumbnail file could not be found</span><br />\n";}

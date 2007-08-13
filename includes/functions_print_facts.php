@@ -630,7 +630,7 @@ function print_media_links($factrec, $level,$pid='') {
 
 			$mainMedia = check_media_depth($row["m_file"], "NOTRUNC");
 			$thumbnail = thumbnail_file($mainMedia, true, false, $pid);
-			$isExternal = stristr($row["m_file"],"://");
+			$isExternal = isFileExternal($row["m_file"]);
 			$mediaTitle = $row["m_titl"];
 
 			// Determine the size of the mediafile
@@ -1172,7 +1172,7 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 		// NOTE: Determine the size of the mediafile
 		$imgwidth = 300+40;
 		$imgheight = 300+150;
-		if (preg_match("'://'", $rowm["m_file"])) {
+		if (isFileExternal($rowm["m_file"])) {
 			if (in_array($rowm["m_ext"], $MEDIATYPE)) {
 				$imgwidth = 400+40;
 				$imgheight = 500+150;
@@ -1182,10 +1182,12 @@ function print_main_media($pid, $level=1, $related=false, $noedit=false) {
 				$imgheight = 400+150;
 			}
 		}
-		else if (media_exists(check_media_depth($rowm["m_file"], "NOTRUNC"))) {
-			$imgsize = findImageSize(check_media_depth($rowm["m_file"], "NOTRUNC"));
-			$imgwidth = $imgsize[0]+40;
-			$imgheight = $imgsize[1]+150;
+		else {
+			$imgsize = @findImageSize(check_media_depth($rowm["m_file"], "NOTRUNC"));
+			if ($imgsize[0]) {
+				$imgwidth = $imgsize[0]+40;
+				$imgheight = $imgsize[1]+150;
+			}
 		}
 		$rows=array();
 		//-- if there is a change to this media item then get the
@@ -1297,7 +1299,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	if ($rtype=='old') $styleadd = "change_old";
 	// NOTEStart printing the media details
 	$thumbnail = thumbnail_file($rowm["m_file"], true, false, $pid);
-	$isExternal = stristr($thumbnail,"://");
+	$isExternal = isFileExternal($thumbnail);
 
 	$linenum = 0;
 	print "\n\t\t<tr><td class=\"descriptionbox $styleadd center width20\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["small"]."\" alt=\"\" /><br />".$factarray["OBJE"];

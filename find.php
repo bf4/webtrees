@@ -567,7 +567,7 @@ if ($action=="filter") {
 				preg_match_all("/\//", $media["FILE"], $hits);
 				$ct = count($hits[0]);
 
-				if (($ct <= $level+1 && $external_links != "http" && !stristr($media["FILE"],"://")) || (stristr($media["FILE"],"://") && $external_links == "http")) {
+				if (($ct <= $level+1 && $external_links != "http" && !isFileExternal($media["FILE"])) || (isFileExternal($media["FILE"]) && $external_links == "http")) {
 					// simple filter to reduce the number of items to view
 					if ($applyfilter) $isvalid = (strpos(str2lower($media["FILE"]),str2lower($filter)) !== false);
 					else $isvalid = true;
@@ -610,8 +610,8 @@ if ($action=="filter") {
 						}
 						else print "<a href=\"javascript:;\" onclick=\"pasteid('".$media["XREF"]."','".$media["TITL"]."','".$media["THUMB"]."');\"><span dir=\"ltr\">".$media["FILE"]."</span></a> -- ";
 						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">".$pgv_lang["view"]."</a><br />";
-						if (!media_exists($media["FILE"]) && !stristr($media["FILE"], "://")) print $media["FILE"]."<br /><span class=\"error\">".$pgv_lang["file_not_exists"]."</span><br />";
-						else if (!stristr($media["FILE"], "://") && !empty($imgsize[0])) {
+						if (!media_exists($media["FILE"]) && !isFileExternal($media["FILE"])) print $media["FILE"]."<br /><span class=\"error\">".$pgv_lang["file_not_exists"]."</span><br />";
+						else if (!isFileExternal($media["FILE"]) && !empty($imgsize[0])) {
 							print "<br /><sub>&nbsp;&nbsp;".$pgv_lang["image_size"]." -- ".$imgsize[0]."x".$imgsize[1]."</sub><br />";
 						}
 						if ($media["LINKED"]) {

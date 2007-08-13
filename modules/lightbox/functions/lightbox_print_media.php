@@ -163,7 +163,7 @@ $typ2b  .= ")";
                  // NOTE: Determine the size of the mediafile
                  $imgwidth = 300+40;
                  $imgheight = 300+150;
-                 if (preg_match("'://'", $rowm["m_file"])) {
+                 if (isFileExternal($rowm["m_file"])) {
                         if (in_array($rowm["m_ext"], $MEDIATYPE)) {
                                 $imgwidth = 400+40;
                                 $imgheight = 500+150;
@@ -173,7 +173,7 @@ $typ2b  .= ")";
                                 $imgheight = 400+150;
                         }
                  }
-                 else if (file_exists(filename_decode(check_media_depth($rowm["m_file"], "NOTRUNC")))) {
+                 else if (media_exists(check_media_depth($rowm["m_file"], "NOTRUNC"))) {
                         $imgsize = findImageSize(check_media_depth($rowm["m_file"], "NOTRUNC"));
                         $imgwidth = $imgsize[0]+40;
                         $imgheight = $imgsize[1]+150;

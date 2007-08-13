@@ -167,7 +167,7 @@ print_simple_header($pgv_lang["imageview"]);
 </script>
 <?php
 print "<form name=\"zoomform\" onsubmit=\"setzoom(document.getElementById('zoomval').value); return false;\" action=\"imageview.php\">";
-$isExternal = strstr($filename, "://");
+$isExternal = isFileExternal($filename);
 if (!$isExternal && !media_exists($filename) ) {
 	print "<span class=\"error\">".$pgv_lang["file_not_found"]."&nbsp;".$filename."</span>";
 	print "<br /><br /><div class=\"center\"><a href=\"javascript:;\" onclick=\"self.close();\">".$pgv_lang["close_window"]."</a></div>\n";

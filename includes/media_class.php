@@ -208,14 +208,6 @@ class Media extends GedcomRecord {
 	}
 
 	/**
-	 * check if the file is an external link
-	 * @return boolean
-	 */
-	function isExternal() {
-		return (strpos($this->file, '://') === false) ? false : true;
-	}
-
-	/**
 	 * check if the file exists on this server
 	 * @return boolean
 	 */

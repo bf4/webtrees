@@ -294,7 +294,7 @@ if ($ct>0){
 	for($i=0; $i<$count; $i++) {
 	    $media = $medialist[$start+$i];
 
-	    $isExternal = strstr($media["FILE"], "://");
+	    $isExternal = isFileExternal($media["FILE"]);
 
 		$imgsize = findImageSize($media["FILE"]);
 	    $imgwidth = $imgsize[0]+40;

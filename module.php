@@ -188,7 +188,7 @@ switch($modinfo['Module']['type'])
 			case 'redirect':
 			{
 				// fully qualified url is recomended.
-				if(!stristr($results['url'], '://')){$results['url'] = "{$SERVER_URL}{$results['url']}";}
+				if(!isFileExternal($results['url'])){$results['url'] = "{$SERVER_URL}{$results['url']}";}
 				header("Location: {$results['url']}");
 				print ' '; // for some older browsers.
 				exit;

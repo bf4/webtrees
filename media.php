@@ -488,7 +488,7 @@ if (check_media_structure()) {
 		// not yet have any thumbnails created. Otherwise only the file specified.
 		if ($all == true) {
 			foreach ($medialist as $key => $media) {
-				if (!($MEDIA_EXTERNAL && stristr($filename, "://"))) {
+				if (!($MEDIA_EXTERNAL && isFileExternal($filename))) {
 					$thumbnail = str_replace("$MEDIA_DIRECTORY",$MEDIA_DIRECTORY."thumbs/",check_media_depth($media["FILE"], "NOTRUNC"));
 					if (!file_exists($thumbnail)) {
 						if (generate_thumbnail($media["FILE"],$thumbnail)) {
@@ -507,7 +507,7 @@ if (check_media_structure()) {
 			}
 		}
 		else if ($all == false) {
-			if (!($MEDIA_EXTERNAL && stristr($filename, "://"))) {
+			if (!($MEDIA_EXTERNAL && isFileExternal($filename))) {
 				$thumbnail = str_replace("$MEDIA_DIRECTORY",$MEDIA_DIRECTORY."thumbs/",check_media_depth($filename, "NOTRUNC"));
 				if (generate_thumbnail($filename,$thumbnail)) {
 					print_text("thumb_genned");
@@ -784,7 +784,7 @@ if (check_media_structure()) {
 				$finalResult = false;
 				break;
 			}
-			if (strstr($filename, "://")) {
+			if (isFileExternal($filename)) {
 				print "<span class=\"error\">".$pgv_lang["external_file"]."<br /><br /><b>".$pgv_lang["media_file_not_deleted"]."</b></span><br />";
 				$finalResult = false;
 				break;
@@ -1213,7 +1213,7 @@ if (check_media_structure()) {
 				foreach ($medialist as $indexval => $media) {
 					while (true) {
 						if (!filterMedia($media, $filter, $httpFilter)) break;
-						$isExternal = stristr($media["FILE"],"://");
+						$isExternal = isFileExternal($media["FILE"]);
 						if ($passCount==1 && !$isExternal) break;
 						if ($passCount==2 && $isExternal) break;
 						$imgsize = findImageSize($media["FILE"]);

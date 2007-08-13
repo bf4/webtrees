@@ -869,7 +869,7 @@ $THEME_DIR = $temp;
 $THEME_DIR = $temp2;
 
 if (isset ($GEDCOM_FILE)) {
-	if ((!strstr($GEDCOM_FILE, "://")) && (!file_exists($GEDCOM_FILE))) {
+	if ((!isFileExternal($GEDCOM_FILE)) && (!file_exists($GEDCOM_FILE))) {
 		print "<span class=\"error\"><b>Could not locate gedcom file at $GEDCOM_FILE<br /></b></span>\n";
 		unset ($GEDCOM_FILE);
 	}
