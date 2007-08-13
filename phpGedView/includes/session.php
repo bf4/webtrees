@@ -30,8 +30,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 //-- version of PhpGedView  (Let's keep this in an obvious place -- not buried in code)
-$VERSION = "4.1";
-$VERSION_RELEASE = "stable";
+$VERSION = "4.1.1";
+$VERSION_RELEASE = "beta 1";
 $REQUIRED_PRIVACY_VERSION = "3.1";
 
 if (strstr($_SERVER["PHP_SELF"],"session")) {
