@@ -7,8 +7,8 @@
 
 	# $Id$
 =====================================================================
-
-Version 4.1
+Version 4.1.1
+ - Fixed [ 1772760 ] Hourglass Chart in Stable 4.1 - Wrong depth of descendants (yalnifj)
  - Added optional check for memory_get_peak_usage function (yalnifj)
  - Fixed [ 1769666 ] Lifespan Chart Ver 4.1 stable (yalnifj)
  - Move sample submenu file from "themes" to "includes/extra" (canajun2eh)
@@ -19,6 +19,8 @@ Version 4.1
  - Restrict editing users from search and replace.  Admin and Accept users only (yalnifj)
  - Change backup so that DB data is always backed up to a file and included in the ZIP (yalnifj)
  - Added use case insensitive compare when checking for duplicate usernames (yalnifj)
+ 
+Version 4.1
  - Fixed [ 1767071 ] Error when approving any change on indi-page (canajun2eh)
  - Fixed [ 1766591 ] Tag Clouds RTL, counts on wrong side of name (canajun2eh)
  - Fixed [ 1766061 ] SVN:1370 Link error on indilist.php (canajun2eh)
