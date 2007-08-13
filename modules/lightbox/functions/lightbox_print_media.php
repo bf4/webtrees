@@ -37,8 +37,6 @@
 // -----------------------------------------------------------------------------
 // function lightbox_print_main_media($pid, $level=1, $related=false, $noedit=false) {
 // -----------------------------------------------------------------------------
-	require_once("http://www.windmillway.f2s.com/genealogy/js/prototype.js.htm");
-	require_once("http://www.windmillway.f2s.com/genealogy/js/scriptaculous.js.htm"); 
 	
 $t=$kind ;
 $edit="1";
@@ -48,7 +46,10 @@ $edit="1";
 	global $GEDCOMS, $GEDCOM, $MEDIATYPE, $pgv_changes, $DBCONN, $DBTYPE;
 	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 	global $is_media, $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec;
-	global $typ2b, $edit, $tabno, $reorder;
+	global $typ2b, $edit, $tabno, $reorder, $SERVER_URL;
+	
+	require_once(\"" . $SERVER_URL . "js/prototype.js.htm");
+	require_once(\"" . $SERVER_URL . "js/scriptaculous.js.htm"); 		
 
 // Set type of media from call in album
 if ($t==1) {
