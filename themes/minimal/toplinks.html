@@ -3,7 +3,7 @@
  * Top menu for Minimal theme
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003 John Finlay and Others
+ * Copyright (C) 2002 to 2007 John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,37 +27,97 @@ $menubar = new MenuBar();
 ?>
 <table width="100%" border="1" cellspacing="0">
 	<tr>
-		<td width="7%" valign="top">
-			<?php $menu = $menubar->getGedcomMenu(); $menu->addIcon(null); $menu->printMenu(); ?>
-		</td>
-		<td width="7%" valign="top">
-			<?php $menu = $menubar->getMygedviewMenu(); $menu->addIcon(null); $menu->printMenu(); ?>
-		</td>
-		<td width="7%" valign="top">
-			<?php $menu = $menubar->getChartsMenu(); $menu->addIcon(null); $menu->printMenu(); ?>
-		</td>
-		<td width="7%" valign="top">
-			<?php $menu = $menubar->getListsMenu(); $menu->addIcon(null); $menu->printMenu(); ?>
-		</td>
-		<td width="7%" valign="top">
-			<?php $menu = $menubar->getCalendarMenu(); $menu->addIcon(null); $menu->printMenu(); ?>
-		</td>
-		<td width="7%" valign="top">
-			<?php $menu = $menubar->getReportsMenu(); $menu->addIcon(null); $menu->printMenu(); ?>
-		</td>
-		<?php $menu = $menubar->getClippingsMenu(); 
-		if (!is_null($menu)) { ?> 
-		<td width="7%" valign="top"><?php $menu->printMenu(); ?></td>
-		<?php } ?>
-		<td width="7%" valign="top">
-			<?php $menu = $menubar->getSearchMenu(); $menu->addIcon(null); $menu->printMenu(); ?>
-		</td>
-		<?php $menus = $menubar->getModuleMenus(); foreach($menus as $m=>$menu) { $menu->addIcon(null); ?> 
-		<td width="7%" valign="top"><?php $menu->printMenu(); ?></td>
-		<?php } ?>
-		<td width="7%" valign="top">
-			<?php $menu = $menubar->getHelpMenu(); $menu->addIcon(null); $menu->printMenu(); ?>
-		</td>
+		<?php
+		$menu = $menubar->getGedcomMenu();
+		if ($menu->link != "") {
+			print "\t<td width=\"7%\" valign=\"top\">\n";
+			$menu->addIcon(null);
+			$menu->printMenu();
+			print "</td>";
+		}
+
+		$menu = $menubar->getMygedviewMenu();
+		if ($menu->link != "") {
+			print "\t<td width=\"7%\" valign=\"top\">\n";
+			$menu->addIcon(null);
+			$menu->printMenu();
+			print "</td>";
+		}
+
+		$menu = $menubar->getChartsMenu();
+		if ($menu->link != "") {
+			print "\t<td width=\"7%\" valign=\"top\">\n";
+			$menu->addIcon(null);
+			$menu->printMenu();
+			print "</td>";
+		}
+
+		$menu = $menubar->getListsMenu();
+		if ($menu->link != "") {
+			print "\t<td width=\"7%\" valign=\"top\">\n";
+			$menu->addIcon(null);
+			$menu->printMenu();
+			print "</td>";
+		}
+
+		$menu = $menubar->getCalendarMenu();
+		if ($menu->link != "") {
+			print "\t<td width=\"7%\" valign=\"top\">\n";
+			$menu->addIcon(null);
+			$menu->printMenu();
+			print "</td>";
+		}
+
+		$menu = $menubar->getReportsMenu();
+		if ($menu->link != "") {
+			print "\t<td width=\"7%\" valign=\"top\">\n";
+			$menu->addIcon(null);
+			$menu->printMenu();
+			print "</td>";
+		}
+
+		$menu = $menubar->getClippingsMenu();
+		if ($menu->link != "") {
+			print "\t<td width=\"7%\" valign=\"top\">\n";
+			$menu->addIcon(null);
+			$menu->printMenu();
+			print "</td>";
+		}
+
+		$menu = $menubar->getSearchMenu();
+		if ($menu->link != "") {
+			print "\t<td width=\"7%\" valign=\"top\">\n";
+			$menu->addIcon(null);
+			$menu->printMenu();
+			print "</td>";
+		}
+
+		$menu = $menubar->getOptionalMenu();
+		if ($menu->link != "") {
+			print "\t<td width=\"7%\" valign=\"top\">\n";
+			$menu->addIcon(null);
+			$menu->printMenu();
+			print "</td>";
+		}
+
+		$menus = $menubar->getModuleMenus();
+		foreach($menus as $m=>$menu) { 
+			if($menu->link != "") {
+				print "\t<td width=\"7%\" valign=\"top\">\n";
+				$menu->addLabel("", "none");
+				$menu->printMenu();
+				print "\t</td>\n";
+			}
+		}
+
+		$menu = $menubar->getHelpMenu();
+		if ($menu->link != "") {
+			print "\t<td width=\"7%\" valign=\"top\">\n";
+			$menu->addIcon(null);
+			$menu->printMenu();
+			print "</td>";
+		}
+	?>
 	</tr>
 </table>
 <img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]; ?>" width="100%" height="3" alt=""/>

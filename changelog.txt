@@ -25,17 +25,24 @@ Version 4.2
  - Added [ 1690092 ] Events of close relatives : remove duplicates (opus27)
  - Added [ 1564752 ] Shared facts for whole family (opus27)
  - Added index directory cleanup tool (yalnifj, neumont)
- - Updated Lifespan chart (yalnifj, neumont)
  - Added [ 1671286 ] Events of close relatives : add nephew/niece (opus27)
  - Added [ 1591541 ] DHTML JavaScript Tabbar (opus27)
  - Adding a "never married" icon on ancestry booklet when NMR=0 (opus27)
 
-Version 4.1
+Version 4.1.1
+ - Fixed [ 1772760 ] Hourglass Chart in Stable 4.1 - Wrong depth of descendants (yalnifj)
+ - Added optional check for memory_get_peak_usage function (yalnifj)
+ - Fixed [ 1769666 ] Lifespan Chart Ver 4.1 stable (yalnifj)
+ - Move sample submenu file from "themes" to "includes/extra" (canajun2eh)
+ - Add sample top level menu file to "includes/extra" (canajun2eh)
+ - Add support for optional top level menu (built by site admin) (canajun2eh)
  - Make Media Viewer show of file name & download link configurable in GEDCOM config (canajun2eh)
  - Change appearance of Media Viewer (canajun2eh)
  - Restrict editing users from search and replace.  Admin and Accept users only (yalnifj)
  - Change backup so that DB data is always backed up to a file and included in the ZIP (yalnifj)
  - Added use case insensitive compare when checking for duplicate usernames (yalnifj)
+ 
+Version 4.1
  - Fixed [ 1767071 ] Error when approving any change on indi-page (canajun2eh)
  - Fixed [ 1766591 ] Tag Clouds RTL, counts on wrong side of name (canajun2eh)
  - Fixed [ 1766061 ] SVN:1370 Link error on indilist.php (canajun2eh)

@@ -3,7 +3,7 @@
  * Top menu for Standard theme
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003 John Finlay and Others
+ * Copyright (C) 2002 to 2007 John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,19 +32,19 @@ $menubar = new MenuBar();
 			<?php 		
 			$menu = $menubar->getGedcomMenu(); 
 			if($menu->link != "") {
-				print "\t\t\t<td width=\"7%\" valign=\"top\">\n";
+				print "\t<td width=\"7%\" valign=\"top\">\n";
 				$menu->printMenu(); 
-				print "\t\t\t</td>\n";
+				print "\t</td>\n";
 			}	
 			$menu = $menubar->getMygedviewMenu(); 
 			if($menu->link != "") {
-				print "\t\t\t<td width=\"7%\" valign=\"top\">\n";
+				print "\t<td width=\"7%\" valign=\"top\">\n";
 				$menu->printMenu(); 
-				print "\t\t\t</td>\n";
+				print "\t</td>\n";
 			}	
 			$menu = $menubar->getChartsMenu(); 
 			if($menu->link != "") {
-				print "\t\t\t<td width=\"7%\" valign=\"top\">\n";
+				print "\t<td width=\"7%\" valign=\"top\">\n";
 				$menu->printMenu(); 
 				print "\t</td>\n";
 			}	
@@ -56,13 +56,13 @@ $menubar = new MenuBar();
 			}	
 			$menu = $menubar->getCalendarMenu(); 
 			if($menu->link != "") {
-				print "\t\t\t<td width=\"7%\" valign=\"top\">\n";
+				print "\t<td width=\"7%\" valign=\"top\">\n";
 				$menu->printMenu(); 
 				print "\t</td>\n";
 			}	
 			$menu = $menubar->getReportsMenu(); 
 			if($menu->link != "") {
-				print "\t\t\t<td width=\"7%\" valign=\"top\">\n";
+				print "\t<td width=\"7%\" valign=\"top\">\n";
 				$menu->printMenu(); 
 				print "\t</td>\n";
 			}
@@ -77,19 +77,31 @@ $menubar = new MenuBar();
 			if($menu->link != "") {
 				print "\t<td width=\"7%\" valign=\"top\">\n";
 				$menu->printMenu(); 
-				print "\t\t\t</td>\n";
+				print "\t</td>\n";
 			}	
 			*/
 
-			$menus = $menubar->getModuleMenus(); foreach($menus as $m=>$menu) { ?> 
-			<td width="7%" valign="top"><?php $menu->printMenu(); ?></td>
-			<?php } 
+			$menu = $menubar->getOptionalMenu(); 
+			if($menu->link != "") {
+				print "\t<td width=\"7%\" valign=\"top\">\n";
+				$menu->printMenu(); 
+				print "\t</td>\n";
+			}	
+
+			$menus = $menubar->getModuleMenus(); 
+			foreach($menus as $m=>$menu) {
+				if($menu->link != "") {
+					print "\t<td width=\"7%\" valign=\"top\">\n";
+					$menu->printMenu(); 
+					print "\t</td>\n";
+				}
+			} 
 
 			$menu = $menubar->getHelpMenu(); 
 			if($menu->link != "") {
 				print "\t<td width=\"7%\" valign=\"top\">\n";
 				$menu->printMenu(); 
-				print "\t\t\t</td>\n";
+				print "\t</td>\n";
 			}	
 			?>
 		</tr>

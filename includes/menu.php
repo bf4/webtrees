@@ -3,7 +3,7 @@
  * System for generating menus.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -199,7 +199,6 @@ class Menu
 				$output .= "<tr>";
 				$output .= "<td valign=\"middle\">";
 				$output .= $link;
-//				$output .= $MenuIcon."&nbsp;";
 				$output .= $MenuIcon;
 				$output .= "</a>";
 				$output .= "</td>";
@@ -224,7 +223,6 @@ class Menu
 				$output .= "</a></td>";
 				$output .= "<td valign=\"middle\">";
 				$output .= $link;
-//				$output .= "&nbsp;".$MenuIcon;
 				$output .= $MenuIcon;
 				$output .= "</a>";
 				$output .= "</td>";
@@ -459,12 +457,11 @@ class MenuBar
 			}
 		}
 
-		//-- modification by Darrel Damon to add Welcome Menu customization
-		$filename = "themes/custom_welcome_menu.php";
+		//-- Welcome Menu customization
+		$filename = "includes/extras/custom_welcome_menu.php";
 		if (file_exists($filename)) {
 			include $filename;
 		}
-		//-- end of modification
 
 		return $menu;
 	}
@@ -997,12 +994,33 @@ class MenuBar
 	}
 
 	/**
+	 * get the optional site-specific menu
+	 * @return Menu 	the menu item
+	 */
+	function &getOptionalMenu() {
+		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $SEARCH_SPIDER;
+		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
+		if (!file_exists("includes/extras/optional_menu.php") || !empty($SEARCH_SPIDER)) {
+			$menu = new Menu("", "", "");
+			$menu->print_menu = null;
+			return $menu;
+		}
+		require "includes/extras/optional_menu.php";
+		return $menu;
+	}
+
+	/**
 	 * get the print_preview menu
 	 * @return Menu 	the menu item
 	 */
 	function &getPreviewMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $SCRIPT_NAME, $QUERY_STRING, $pgv_lang;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl"; else $ff="";
+		if (!empty($SEARCH_SPIDER)) {
+			$menu = new Menu("", "", "");
+			$menu->print_menu = null;
+			return $menu;
+			}
 		//-- main print_preview menu item
 		$menu = new Menu($pgv_lang["print_preview"], $SCRIPT_NAME."?".$QUERY_STRING."&amp;view=preview", "down");
 		if (!empty($PGV_IMAGES["printer"]["large"]))

@@ -644,7 +644,7 @@ function print_descendency_ajax($pid, $count) {
  * @return maxdc Amount of generations the descendency actually goes
  */
 function max_descendency_generations($pid, $depth) {
-	if ($depth >= $this->generations) return $depth;
+	if ($depth > $this->generations) return $depth;
 	$person = Person::getInstance($pid);
 	if (is_null($person)) return $depth;
 	$famids = $person->getSpouseFamilies();
@@ -658,7 +658,8 @@ function max_descendency_generations($pid, $depth) {
 			if ($dc > $maxdc) $maxdc = $dc;
 		}
 	}
-	if ($maxdc==0) $maxdc++;
+	
+	$maxdc++;
 	return $maxdc;
 }
 

@@ -101,7 +101,7 @@ class LifespanControllerRoot extends BaseController {
 		$sql = "SELECT date1.d_gid, date1.d_file, MIN(date1.d_year) as birth, MAX(date2.d_year) as death ";
 		$sql .= "FROM ".$TBLPREFIX."dates as date1, ".$TBLPREFIX."dates as date2, ".$TBLPREFIX."individuals ";
 		$sql .= "WHERE date1.d_gid=date2.d_gid AND date1.d_gid=i_id AND date1.d_fact NOT IN ('CHAN','ENDL','SLGC','SLGS','BAPL') AND date1.d_file='".$GEDCOMS[$GEDCOM]['id']."' ";
-		$sql .= "AND date1.d_file=date2.d_file AND date1.d_file=i_file AND date1.d_year>=".$DBCONN->escapeSimple($startyear)." AND date2.d_year<=".$DBCONN->escapeSimple($endyear)." GROUP BY d_gid";
+		$sql .= "AND date1.d_file=date2.d_file AND date1.d_file=i_file AND date1.d_year>=".$DBCONN->escapeSimple($startyear)." AND date2.d_year<=".$DBCONN->escapeSimple($endyear)." AND date2.d_year!=0 GROUP BY d_gid";
 		$res = dbquery($sql);
 		//print $sql;
 		$myids = array();
@@ -368,15 +368,17 @@ class LifespanControllerRoot extends BaseController {
 	function fillTL($ar, $int, $top) {
 		global $maxX, $zindex, $pgv_lang, $factarray;
 		
-		$zindex = 1;
+		$zindex = count($ar);
 		
 		$rows = array();
+		$rowsZ = array();
 		$modFix = 0;
 		if($this->modTest == 1){
 			$modFix = (9 * $this->birthMod);
 		}
 		//base case
 		if (count($ar) == 0) return $top;
+		$maxY = $top;
 		
 		foreach ($ar as $key => $value) {
 			//Creates appropriate color scheme to show relationships
@@ -427,7 +429,6 @@ class LifespanControllerRoot extends BaseController {
 				if (stristr($value->getName(), "starredname"))
 						$minlength = (strlen($value->getName())-34) * $this->zoomfactor;
 				else	$minlength = strlen($value->getName()) * $this->zoomfactor;
-				$zindex++;
 				if ($startPos > 15) {
 					$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 15 + $modFix;
 					$startPos = (($birthYear - $this->timelineMinYear) * $this->zoomfactor) + 15;
@@ -448,21 +449,25 @@ class LifespanControllerRoot extends BaseController {
 				
 				//-- calculate a good Y top value
 				$Y = $top;
+				$Z = $zindex;
 				$ready = false;
 				while(!$ready) {
 					if (!isset($rows[$Y])) {
 						$ready = true;
 						$rows[$Y]["x1"] = $startPos;
 						$rows[$Y]["x2"] = $startPos+$width;
+						$rows[$Y]["z"] = $zindex;
 					}
 					else {
 						if ($rows[$Y]["x1"] > $startPos+$width) {
 							$ready = true;
 							$rows[$Y]["x1"] = $startPos;
+							$Z = $rows[$Y]["z"];
 						}
 						else if ($rows[$Y]["x2"] < $startPos) {
 							$ready = true;
 							$rows[$Y]["x2"] = $startPos+$width;
+							$Z = $rows[$Y]["z"];
 						}
 						else {
 							//move down 25 pixels
@@ -471,6 +476,8 @@ class LifespanControllerRoot extends BaseController {
 						}
 					}
 				}
+				
+				//$zindex = round($Y/10);
 				
 				//Need to calculate each event and the spacing between them
 				// event1 distance will be event - birthyear   that will be the distance. then each distance will chain off that
@@ -488,19 +495,12 @@ class LifespanControllerRoot extends BaseController {
 					if(preg_match('/2 DATE/',$val[1]))
 					{
 						$date = get_gedcom_value("DATE",2,$val[1]);
-						//$evt =  ereg_replace("DATE.*", "", $val[1]);
-						//$events[$evt][$date];
-						//$evt =  ereg_replace("\d (\w*)","",$evt);
 						$ft = preg_match("/1\s(\w+)(.*)/", $val[1], $match);
 						if ($ft>0) $fact = $match[1];
-						//print "EVENT:".$factarray[$fact]. " DATE:".$date;
 						$date_arr = parse_date($date);
 						$yearsin = $date_arr[0]["year"]-$birthYear;
-						//print "YearsIN:".$yearsin;
+						if ($lifespannumeral==0) $lifespannumeral = 1; 
 						$eventwidth = ($yearsin/$lifespannumeral)* 100; // percent of the lifespan before the event occured used for determining div spacing
-						//print "EVENTWIDTH:".$eventwidth;
-						//print "YEARSIN:".$yearsin;
-						//print "LIFESPAN:".$lifespan;
 						// figure out some schema
 						$evntwdth = $eventwidth."%";
 						//-- if the fact is a generic EVENt then get the qualifying TYPE
@@ -523,35 +523,35 @@ class LifespanControllerRoot extends BaseController {
 				
 				if ($width > ($minlength +110)) {
 					echo "\n<div id=\"bar_".$value->getXref()."\" style=\"position: absolute;top:".$Y."px; left:".$startPos."px; width:".$width."px; height:".$height."px;" .
-					" background-color:".$this->color."; border: solid blue 1px; \">";
+					" background-color:".$this->color."; border: solid blue 1px; z-index:$Z;\">";
 					foreach($eventinformation as $evtwidth=>$val){
-						print "<div style=\"position:absolute;left:".$evtwidth." \"><a class=\"showit\" href='#'style=\"color:White; top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
+						print "<div style=\"position:absolute; left:".$evtwidth.";\"><a class=\"showit\" href=\"#\" style=\"color:White; top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
 					}
-					print "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".PrintReady(get_changed_date($value->getBirthDate()))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
-					"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getName().":  $lifespan </a></td>" .
+					print "\n\t<table><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().PrintReady($value->getName())."<br/>".$pgv_lang["birth"]." ".PrintReady(get_changed_date($value->getBirthDate()))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
+					"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getSexImage().PrintReady($value->getName()).":  $lifespan </a></td>" .
 					"\n\t\t<td width=\"15\">";
-					if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getName()."<br/>".$pgv_lang["death"]." ".PrintReady(get_changed_date($value->getDeathDate()))." ".PrintReady($value->getDeathPlace())."</span></a>";
+					if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getSexImage().PrintReady($value->getName())."<br/>".$pgv_lang["death"]." ".PrintReady(get_changed_date($value->getDeathDate()))." ".PrintReady($value->getDeathPlace())."</span></a>";
 					print "</td></tr></table>";
 					echo '</div>';
 
 				} else {
 					if ($width > $minlength +5) {
 						echo "\n<div style=\"text-align: left; position: absolute; top:".$Y."px; left:".$startPos."px; width:".$width."px; height:".$height."px;" .
-						"  background-color:".$this->color."; border: solid blue 1px; \">";
+						"  background-color:".$this->color."; border: solid blue 1px; z-index:$Z;\">";
 						foreach($eventinformation as $evtwidth=>$val){
-							print "<div style=\"position:absolute;left:".$evtwidth." \"><a class=\"showit\" href='#'style=\"color:White; top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
+							print "<div style=\"position:absolute; left:".$evtwidth." \"><a class=\"showit\" href=\"#\" style=\"color:White; top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";
 						}
-						print "\n\t<table dir=\"ltr\"><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".PrintReady(get_changed_date($value->getBirthDate()))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
-						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getName()."</a></td>" .
+						print "\n\t<table dir=\"ltr\"><tr>\n\t\t<td width=\"15\"><a class=\"showit\" href=\"#\"><b>" .get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().PrintReady($value->getName())."<br/>".$pgv_lang["birth"]." ".PrintReady(get_changed_date($value->getBirthDate()))." ".PrintReady($value->getBirthPlace())."</span></a></td>" .
+						"\n\t\t<td align=\"left\" width=\"100%\"><a href=\"individual.php?pid=".$value->getXref()."\">".$value->getSexImage().PrintReady($value->getName())."</a></td>" .
 						"\n\t\t<td width=\"15\">";
-						if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getName()."<br/>".$pgv_lang["death"]." ".PrintReady(get_changed_date($value->getDeathDate()))." ".PrintReady($value->getDeathPlace())."</span></a>";
+						if ($value->isDead()) print "<a class=\"showit\" href=\"#\"><b>".get_first_letter($pgv_lang["death"])."</b><span>".$value->getSexImage().PrintReady($value->getName())."<br/>".$pgv_lang["death"]." ".PrintReady(get_changed_date($value->getDeathDate()))." ".PrintReady($value->getDeathPlace())."</span></a>";
 						print "</td></tr></table>";
 						echo '</div>';
 					} else {
 						echo "\n<div style=\"text-align: left; position: absolute;top:".$Y."px; left:".$startPos."px;width:".$width."px; height:".$height."px;" .
-						" background-color:".$this->color."; border: solid blue 1px;\">" ;
+						" background-color:".$this->color."; border: solid blue 1px; z-index:$Z;\">" ;
 							
-						print"<a class=\"showit\" href=\"individual.php?pid=".$value->getXref()."\"><b>".get_first_letter($pgv_lang["birth"])."</b><span>".$value->getName()."<br/>".$pgv_lang["birth"]." ".PrintReady(get_changed_date($value->getBirthDate()))." ".PrintReady($value->getBirthPlace())."<br/>";
+						print"<a class=\"showit\" href=\"individual.php?pid=".$value->getXref()."\"><b>".get_first_letter($pgv_lang["birth"])."</b><span>".$value->getSexImage().PrintReady($value->getName())."<br/>".$pgv_lang["birth"]." ".PrintReady(get_changed_date($value->getBirthDate()))." ".PrintReady($value->getBirthPlace())."<br/>";
 						foreach($eventinformation as $evtwidth=>$val){
 							print $val."<br />\n";
 						}
@@ -561,21 +561,15 @@ class LifespanControllerRoot extends BaseController {
 											
 					}
 				}
+				$zindex--;
 				
-				//change color
-				if ($this->colorindex < count($this->colorindex) - 1 && $this->Mcolorindex < count($this->Mcolorindex)-1 && $this->Fcolorindex < count($this->Fcolorindex)-1) {
-					//					do nothing
-				} else {
-					$this->colorindex = 0;
-					$this->Fcolorindex = 0;
-					$this->Mcolorindex = 0;
-				}
-
 				if ($maxX < $startPos + $width)
 					$maxX = $startPos + $width;
+				if ($maxY < $Y) $maxY = $Y;
+				
 			}
 
-		return $Y;
+		return $maxY;
 	}
 	/**
 	 * check the privacy of the incoming people to make sure they can be shown

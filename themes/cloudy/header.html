@@ -3,7 +3,7 @@
  * Header for Cloudy theme
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2003 John Finlay and Others
+ * Copyright (C) 2002 to 2007 John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -159,6 +159,13 @@ $menubar = new MenuBar();
 										$menu->printMenu();
 										print "\t</td>\n";
 									}
+									$menu = $menubar->getOptionalMenu();
+									if($menu->link != "") {
+										print "\t<td width=\"1\">\n";
+										$menu->addLabel("", "none");
+										$menu->printMenu();
+										print "\t</td>\n";
+									}
 									$menus = $menubar->getModuleMenus();
 									foreach($menus as $m=>$menu) { 
 										if($menu->link != "") {
@@ -168,7 +175,6 @@ $menubar = new MenuBar();
 											print "\t</td>\n";
 										}
 									}
-									if(empty($SEARCH_SPIDER)) { 
 										$menu = $menubar->getPreviewMenu();
 										if($menu->link != "") {
 											print "\t<td width=\"1\">\n";
@@ -176,7 +182,6 @@ $menubar = new MenuBar();
 											$menu->printMenu();
 											print "\t</td>\n";
 										}
-									}
 									$menu = $menubar->getHelpMenu();
 									if($menu->link != "") {
 										print "\t<td width=\"1\">\n";
