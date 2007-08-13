@@ -946,7 +946,8 @@ function print_execution_stats() {
 	print " ".$pgv_lang["total_privacy_checks"]." $PRIVACY_CHECKS.";
 	if (function_exists("memory_get_usage")) {
 		print " ".$pgv_lang["total_memory_usage"]." ";
-		$mem = memory_get_usage()/1024;
+		if (function_exists("memory_get_peak_usage")) $mem = memory_get_peak_usage()/1024;
+		else $mem = memory_get_usage()/1024;
 		printf("%.2f", $mem);
 		print " KB.";
 	}
