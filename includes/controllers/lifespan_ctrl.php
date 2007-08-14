@@ -371,7 +371,6 @@ class LifespanControllerRoot extends BaseController {
 		$zindex = count($ar);
 		
 		$rows = array();
-		$rowsZ = array();
 		$modFix = 0;
 		if($this->modTest == 1){
 			$modFix = (9 * $this->birthMod);
@@ -476,8 +475,6 @@ class LifespanControllerRoot extends BaseController {
 						}
 					}
 				}
-				
-				//$zindex = round($Y/10);
 				
 				//Need to calculate each event and the spacing between them
 				// event1 distance will be event - birthyear   that will be the distance. then each distance will chain off that

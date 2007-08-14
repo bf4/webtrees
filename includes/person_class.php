@@ -905,15 +905,15 @@ class Person extends GedcomRecord {
 					// -- handle special source fact case
 					if (($fact!="SOUR") && ($fact!="OBJE") && ($fact!="NOTE") && ($fact!="CHAN") && ($fact!="_UID") && ($fact!="RIN")) {
 						if ((!in_array($fact, $nonfacts))&&(!in_array($fact, $nonfamfacts))) {
-							if (!is_null($spouse)) $factrec.="\r\n1 _PGVS @".$spouse->getXref()."@\r\n";
-							$factrec.="1 _PGVFS @$famid@\r\n";
+							if (!is_null($spouse)) $factrec.="\r\n1 _PGVS @".$spouse->getXref()."@";
+							$factrec.="\r\n1 _PGVFS @$famid@\r\n";
 							if ($updfamily) $factrec .= "PGV_NEW\r\n";
 							$this->indifacts[]=array($linenum, $factrec);
 						}
 					}
 					else if ($fact=="OBJE") {
-						if (!is_null($spouse)) $factrec.="\r\n1 _PGVS @".$spouse->getXref()."@\r\n";
-						$factrec.="1 _PGVFS @$famid@\r\n";
+						if (!is_null($spouse)) $factrec.="\r\n1 _PGVS @".$spouse->getXref()."@";
+						$factrec.="\r\n1 _PGVFS @$famid@\r\n";
 						$this->otherfacts[]=array($linenum, $factrec);
 					}
 					$factrec = $line;
