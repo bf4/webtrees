@@ -8,6 +8,7 @@
 	# $Id$
 =====================================================================
 Version 4.1.1
+ - Fixed [ 1756818 ] Event data not retrieved to the blocks and numeric file ID (meliza)
  - Fixed [ 1773512 ] Unrecognized GEDCOM Code: MARR1 _PGVFS (yalnifj)
  - Fixed [ 1772760 ] Hourglass Chart in Stable 4.1 - Wrong depth of descendants (yalnifj)
  - Added optional check for memory_get_peak_usage function (yalnifj)
