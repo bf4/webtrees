@@ -854,7 +854,7 @@ class Person extends GedcomRecord {
 						 $sexfound = true;
 				  }
 				  else if ($fact=="OBJE") {}
-				  else if (!in_array($fact, $nonfacts)) {
+				  else if (!isset($nonfacts) || !in_array($fact, $nonfacts)) {
 						 $this->indifacts[$f]=array($linenum, $factrec);
 						 $f++;
 				  }

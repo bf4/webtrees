@@ -78,6 +78,7 @@ class GedcomRecord {
 	/**
 	 * Static function used to get an instance of an object
 	 * @param string $pid	the ID of the object to retrieve
+	 * @return GedcomRecord
 	 */
 	function &getInstance($pid, $simple=true) {
 		global $indilist, $famlist, $sourcelist, $repolist, $otherlist, $GEDCOM, $GEDCOMS, $pgv_changes;
@@ -401,12 +402,30 @@ class GedcomRecord {
 
 	/**
 	 * get the sortable name
-	 * This method should be overriden in child sub-classes
+	 * This method should be overridden in child sub-classes
 	 * (no class yet for NOTE record)
 	 * @return string
 	 */
 	function getSortableName() {
 		return $this->type." ".$this->xref;
+	}
+	
+	/**
+	 * get the name
+	 * This method should overridden in child sub-classes
+	 * @return string
+	 */
+	function getName() {
+		return get_gedcom_value("NAME", 1, $this->gedrec);
+	}
+	
+	/**
+	 * get the additional name
+	 * This method should overridden in child sub-classes
+	 * @return string
+	 */
+	function getAddName() {
+		return "";
 	}
 
 	/**

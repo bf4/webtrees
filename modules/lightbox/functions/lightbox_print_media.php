@@ -48,8 +48,8 @@ $edit="1";
 	global $is_media, $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec;
 	global $typ2b, $edit, $tabno, $reorder, $SERVER_URL;
 	
-	require_once(\"" . $SERVER_URL . "js/prototype.js.htm");
-	require_once(\"" . $SERVER_URL . "js/scriptaculous.js.htm"); 		
+	require_once("js/prototype.js.htm");
+	require_once("js/scriptaculous.js.htm"); 		
 
 // Set type of media from call in album
 if ($t==1) {

@@ -126,6 +126,14 @@ class Media extends GedcomRecord {
 		return $this->title;
 	}
 
+	function getName() {
+		return $this->getTitle();
+	}
+	
+	function getAddName() {
+		return $this->getAddTitle();
+	}
+
 	/**
 	 * get the _HEB or ROMN media title
 	 * @return string

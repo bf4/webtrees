@@ -9,6 +9,8 @@
 =====================================================================
 
 Version 4.2
+ - Added Charts block (yalnifj)
+ - Added changes report (yalnifj)
  - Replaced UFPDF library with TCPDF library for report generation (yalnifj)
  - Added Watermarks [ 1739602 ] (ljm)
  - Added Media Firewall [ 1749817 ] (ljm)

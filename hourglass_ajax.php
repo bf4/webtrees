@@ -35,6 +35,7 @@
  */
 
 require_once("includes/controllers/hourglass_ctrl.php");
+$controller->init();
 
 // -- print html header information
 ?>

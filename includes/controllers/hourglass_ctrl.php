@@ -91,13 +91,14 @@ class HourglassControllerRoot extends BaseController {
 	/**
 	 * Initialization function
 	 */
-	function init() {
+	function init($rootid='', $show_full=1, $generations=3) {
 	global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $bheight, $bwidth, $bhalfheight, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $PEDIGREE_FULL_DETAILS, $MAX_DESCENDANCY_GENERATIONS;
 	global $PGV_IMAGES, $PGV_IMAGE_DIR, $TEXT_DIRECTION;
 
 
 	if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
 	if (!empty($_REQUEST["pid"])) $this->pid = strtoupper($_REQUEST["pid"]);
+	if (!empty($rootid)) $this->pid = $rootid;
 
 	//-- flip the arrows for RTL languages
 	if ($TEXT_DIRECTION=="rtl") {
@@ -114,11 +115,11 @@ class HourglassControllerRoot extends BaseController {
 	
 	//Checks query strings to see if they exist else assign a default value
 	if (isset($_REQUEST["show_full"])) $this->show_full = $_REQUEST["show_full"];
-	else $this->show_full = 1;
+	else $this->show_full = $show_full;
 	if (isset($_REQUEST["show_spouse"])) $this->show_spouse=$_REQUEST["show_spouse"];
 	else $this->show_spouse=0;
 	if (isset($_REQUEST["generations"])) $this->generations=$_REQUEST["generations"];
-	else $this->generations = 3;
+	else $this->generations = $generations;
 	if ($this->generations > $MAX_DESCENDANCY_GENERATIONS) $this->generations = $MAX_DESCENDANCY_GENERATIONS;
 	if (!isset($this->view)) $this->view="";
 	
@@ -222,7 +223,7 @@ function print_person_pedigree($pid, $count) {
 		
 		//-- print an ajax arrow on the last generation of the adult female
 		if ($count==$this->generations-1 && (count(find_family_ids($ARID))>0) && !is_null (find_family_ids($ARID))) {
-			print "<a href=\"#\" onclick=\"return ChangeDiv('td_".$ARID."','".$ARID."','".$this->show_full."','".$this->show_spouse."','".$this->box_width."')\"><img id=\"arrow\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]["other"]."\" border=\"0\" alt=\"\" /></a> ";
+			print "<a href=\"#\" onclick=\"ChangeDiv('td_".$ARID."','".$ARID."','".$this->show_full."','".$this->show_spouse."','".$this->box_width."'); return false;\"><img id=\"arrow\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["rarrow"]["other"]."\" border=\"0\" alt=\"\" /></a> ";
 		}
 		
 		//-- recursively print the mother's family
@@ -648,6 +649,7 @@ function max_descendency_generations($pid, $depth) {
 	$person = Person::getInstance($pid);
 	if (is_null($person)) return $depth;
 	$famids = $person->getSpouseFamilies();
+	if ($person->getNumberOfChildren()==0) return $depth-1;
 	$maxdc = $depth;
 	foreach($famids as $famid => $family){
 		$ct = preg_match_all("/1 CHIL @(.*)@/", $family->gedrec, $match, PREG_SET_ORDER);
@@ -661,6 +663,51 @@ function max_descendency_generations($pid, $depth) {
 	
 	$maxdc++;
 	return $maxdc;
+}
+
+function setupJavascript() {
+	?>
+<script language="JavaScript" type="text/javascript">
+<!--
+	var pastefield;
+	function paste_id(value) {
+		pastefield.value=value;
+	}
+	
+	// <!--Hourglass control..... Ajax arrows at the end of chart-->
+ 	function ChangeDiv(div_id, ARID, full, spouse, width) {
+ 		var divelement = document.getElementById(div_id);
+ 		var oXmlHttp = createXMLHttp();	
+ 		oXmlHttp.open("get", "hourglass_ajax.php?show_full="+full+"&pid="+ ARID + "&generations=1&box_width="+width+"&show_spouse="+spouse, true);
+ 		oXmlHttp.onreadystatechange=function()
+ 		{
+  			if (oXmlHttp.readyState==4)
+   			{	
+    				divelement.innerHTML = oXmlHttp.responseText;
+    		}
+   		};
+  		oXmlHttp.send(null);	
+  		return false;
+	}
+	
+	// <!--Hourglass control..... Ajax arrows at the end of descendants chart-->
+	function ChangeDis(div_id, ARID, full, spouse, width) {
+ 		var divelement = document.getElementById(div_id);
+ 		var oXmlHttp = createXMLHttp();	
+ 		oXmlHttp.open("get", "hourglass_ajax_dis.php?show_full="+full+"&pid="+ ARID + "&generations=1&box_width="+width+"&show_spouse="+spouse, true);
+ 		oXmlHttp.onreadystatechange=function()
+ 		{
+  			if (oXmlHttp.readyState==4)
+   			{	
+    				divelement.innerHTML = oXmlHttp.responseText;
+    		}
+   		};
+  		oXmlHttp.send(null);	
+  		return false;
+	}
+//-->
+</script>
+	<?php
 }
 
 }
@@ -679,5 +726,5 @@ else
 }
 
 $controller = new HourglassController();
-$controller->init();
+
 ?>

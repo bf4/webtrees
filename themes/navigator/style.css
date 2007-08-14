@@ -297,6 +297,21 @@ table.center {
 	font: bold 14px tahoma, arial, helvetica, sans-serif;
 }
 
+a:hover .name1 {
+	color: red;
+	font: bold 10px tahoma, arial, helvetica, sans-serif;
+}
+
+a:hover .name2 {
+	color: red;
+	font: bold 12px tahoma, arial, helvetica, sans-serif;
+}
+
+a:hover .nameZoom {
+	color: red;
+	font: bold 14px tahoma, arial, helvetica, sans-serif;
+}
+
 .detailsZoom {
 	font: 14px tahoma, arial, helvetica, sans-serif;
 	text-decoration: none;
@@ -357,7 +372,7 @@ table.center {
 	margin: 2px;
 }
 
-.sex_image {
+.gender_image {
 	height: 9px;
 	width: 9px;
 	margin: 0px 3px;

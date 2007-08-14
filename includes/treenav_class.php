@@ -30,6 +30,7 @@ class TreeNav {
 	var $bwidth = 170;
 	var $zoomLevel = 0;
 	var $name = 'nav';
+	var $generations = 4;
 	
 	/**
 	 * Tree Navigator Constructor
@@ -117,7 +118,7 @@ class TreeNav {
 		
 		<div id="out_<?php print $this->name; ?>" style="position: relative; <?php print $widthS.$heightS; ?>text-align: center; overflow: hidden;">
 			<div id="in_<?php print $this->name; ?>" style="position: relative; left: -20px; width: auto; cursor: move;" onmousedown="dragStart(event, 'in_<?php print $this->name; ?>', <?php print $this->name; ?>);" onmouseup="dragStop(event);">
-			<?php $parent=null; $this->drawPerson($this->rootPerson, 4, 0, $parent); ?>
+			<?php $parent=null; $this->drawPerson($this->rootPerson, $this->generations, 0, $parent); ?>
 			</div>
 			<div id="controls" style="position: absolute; left: 0px; top: 0px; z-index: 100; background-color: #EEEEEE">
 			<table>

@@ -45,6 +45,7 @@ class PGVReport extends PGVReportBase {
 	var $bodyElements;
 	var $X=0;
 	var $Y=0;
+	var $maxY = 0;
 	var $currentStyle='';
 	var $pageN = 1;
 	var $printedfootnotes = array();
@@ -106,7 +107,7 @@ class PGVReport extends PGVReportBase {
 			if (strstr($style['style'], 'B')!==false) $styleAdd .= " font-weight: bold;";  
 			if (strstr($style['style'], 'U')!==false) $styleAdd .= " text-decoration: underline;";
 			if ($style['font']=='') $style['font'] = 'Arial';
-			else if ($style['font']=='LucidaSansUnicode') $style['font'] = 'Arial';
+			else if ($style['font']=='dejavusans') $style['font'] = 'Arial';
 			print ".".$class." {\n";
 			print "font-size: ".($style['size'])."pt;\n";
 			print "font-family: ".$style['font'].";\n";
@@ -132,6 +133,7 @@ class PGVReport extends PGVReportBase {
 		
 		$oldy = $this->Y;
 		$this->Y=0;
+		$this->maxY=0;
 		$this->runPageHeader();
 		print "<div id=\"bodydiv\" style=\"position: relative; top: auto; width: 100%; height: 100%;\">\n";
 		$this->currentStyle = "";
@@ -141,12 +143,13 @@ class PGVReport extends PGVReportBase {
 			else if (is_object($element)) $element->render($this);
 		}
 		print "</div>\n";
-		print "<script type=\"text/javascript\">\ndocument.getElementById('bodydiv').style.height='".($this->Y+2)."pt';\n</script>\n";
+		print "<script type=\"text/javascript\">\ndocument.getElementById('bodydiv').style.height='".($this->maxY+2)."pt';\n</script>\n";
 		//-- footer
 //		$this->SetY(-36);
 		$oldy = $this->Y;
 		$this->Y=0;
 		$this->X=0;
+		$this->maxY=0;
 		print "<div id=\"footerdiv\" style=\"position: relative; top: auto; width: 100%; height: auto;\">\n";
 		$this->currentStyle = "footer";
 		foreach($this->footerElements as $indexval => $element) {
@@ -157,7 +160,7 @@ class PGVReport extends PGVReportBase {
 		$this->currentStyle = $temp;
 		print "</div>\n";
 		
-		print "<script type=\"text/javascript\">\ndocument.getElementById('footerdiv').style.height='".($this->Y-$oldy)."pt';\n</script>\n";
+		print "<script type=\"text/javascript\">\ndocument.getElementById('footerdiv').style.height='".($this->maxY+2)."pt';\n</script>\n";
 		print "</body>\n</html>\n";
 	}
 	
@@ -194,10 +197,12 @@ class PGVReport extends PGVReportBase {
 	function SetXY($x, $y) {
 		$this->X = $x;
 		$this->Y = $y;
+		if ($this->maxY<$y) $this->maxY=$y;
 	}
 	
 	function SetY($y) {
 		$this->Y = $y;
+		if ($this->maxY<$y) $this->maxY=$y;
 	}
 	
 	function SetX($x) {
@@ -804,10 +809,12 @@ class PGVRLineHTML extends PGVRLine {
 		if ($this->y1==".") $this->y1=$pdf->GetY();
 		if ($this->x2==".") $this->x2=$pdf->GetX();
 		if ($this->y2==".") $this->y2=$pdf->GetY();
-		//$pdf->Line($this->x1, $this->y1, $this->x2, $this->y2);
 		// TODO Non verticle or horizontal lines can use a series of divs absolutely positioned
-		if ($this->x1 == $this->x2 || $this->y1==$this->y2) {
-			print "<div style=\"position: absolute; overflow: hidden; border: solid black 1px; left: ".($this->x1-1)."pt; top: ".($this->y1+1)."pt; width: ".($this->x2-$this->x1)."pt; height: ".($this->y2-$this->y1)."pt;\">&nbsp;</div>";
+		if ($this->x1 == $this->x2) {
+			print "<div style=\"position: absolute; overflow: hidden; border-left: solid black 1px; left: ".($this->x1-3)."pt; top: ".($this->y1+1)."pt; width: 1pt; height: ".($this->y2-$this->y1)."pt;\"> </div>";
+		}
+		if ($this->y1==$this->y2) {
+			print "<div style=\"position: absolute; overflow: hidden; border-top: solid black 1px; left: ".($this->x1-3)."pt; top: ".($this->y1+1)."pt; width: ".($this->x2-$this->x1)."pt; height: 1pt;\"> </div>";
 		}
 	}
 } //-- END PGVRLine

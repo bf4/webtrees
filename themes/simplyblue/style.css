@@ -309,9 +309,21 @@ table.center {
 	font: bold 10px tahoma, arial, helvetica, sans-serif; 
 }
 
-.name1Hover {
+a:hover .name1 {
 	color: white;
-	font: bold 10px tahoma, arial, helvetica, sans-serif; 
+	font: bold 10px tahoma, arial, helvetica, sans-serif;
+	text-decoration: underline;
+}
+
+a:hover .name2 {
+	color: white;
+	font: bold 12px tahoma, arial, helvetica, sans-serif;
+	text-decoration: underline;
+}
+
+a:hover .nameZoom {
+	color: white;
+	font: bold 14px tahoma, arial, helvetica, sans-serif;
 	text-decoration: underline;
 }
 
@@ -331,12 +343,6 @@ table.center {
 .name2 {
 	color: white;
 	font: bold 12px tahoma, arial, helvetica, sans-serif; 
-}
-
-.name2Hover {
-	color: white;
-	font: bold 12px tahoma, arial, helvetica, sans-serif; 
-	text-decoration: underline;
 }
 
 .details2 {

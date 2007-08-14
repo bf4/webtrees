@@ -270,9 +270,19 @@ table.center {
 	font: bold 10px tahoma, arial, helvetica, sans-serif;
 }
 
-.name1Hover {
+a:hover .name1 {
 	color: red;
 	font: bold 10px tahoma, arial, helvetica, sans-serif;
+}
+
+a:hover .name2 {
+	color: red;
+	font: bold 12px tahoma, arial, helvetica, sans-serif;
+}
+
+a:hover .nameZoom {
+	color: red;
+	font: bold 14px tahoma, arial, helvetica, sans-serif;
 }
 
 .namered {
@@ -289,11 +299,6 @@ table.center {
 
 .name2 {
 	color: #333333;
-	font: bold 12px tahoma, arial, helvetica, sans-serif;
-}
-
-.name2Hover {
-	color: red;
 	font: bold 12px tahoma, arial, helvetica, sans-serif;
 }
 
