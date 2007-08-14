@@ -1573,6 +1573,7 @@ $pgv_lang["hs_results"] 		= "נמצאו תוצאות:";
 $pgv_lang["hs_keyword"] 		= "חפש את";
 $pgv_lang["hs_searchin"]		= "חפש ב-";
 $pgv_lang["hs_searchuser"]		= "עזרה למשתמשים";
+$pgv_lang["hs_searchmodules"]	= "עזרה במודולים";
 $pgv_lang["hs_searchconfig"]		= "עזרה למנהלנים";
 $pgv_lang["hs_searchhow"]		= "סוג חיפוש";
 $pgv_lang["hs_searchall"]		= "כל המילים";
