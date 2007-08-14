@@ -41,6 +41,14 @@ For massive changes, the variable names should be listed in the order in which t
 occur in the respective language files.
 
 
+VERSION 4.1.1
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+-------------------------------------------------------------------------------------------
+*$pgv_lang["USE_THUMBS_MAIN"]						14 Aug 2007				W
+*$pgv_lang["USE_THUMBS_MAIN_help"]					14 Aug 2007				W
+
+
 VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
