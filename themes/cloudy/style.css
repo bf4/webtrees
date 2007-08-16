@@ -67,7 +67,6 @@ ul {
 #content {
 	width: auto;
 	background: white;
-	margin: 3px;
 }
 
 #header {
@@ -282,7 +281,8 @@ ul {
 }
 
 #facts, #relatives {
-	max-width: 95%;
+	max-width: 100%;
+	width: 100%;
 }
 
 #random_picture {
@@ -516,18 +516,11 @@ th {
 }
 
 .facts_table {
-	margin-right: 10px;
-	padding-right: 10px;
-	padding-left: 0px;
-	width: 98%;
+	width: 100%;
 }
 
 .facts_table_rtl {
-	margin-left: 10px;
-	padding-left: 10px;
-	margin-right: 0px;
-	padding-right: 0px;
-	width: 98%;
+	width: 100%;
 }
 
 .tabs_table {
@@ -537,7 +530,7 @@ th {
 }
 
 .tab_page {
-	max-width: 95%;
+	max-width: 100%;
 	width: 100%;
 }
 
@@ -1339,7 +1332,7 @@ h4 {
 	color: #000066;
 	font: 11px tahoma, arial, helvetica, sans-serif;
 	vertical-align: top;
-	white-space: nowrap;
+	white-space: normal;
 	padding: 3px;
 }
 
