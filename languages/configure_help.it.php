@@ -129,7 +129,7 @@ $pgv_lang["AUTHENTICATION_MODULE_help"] = "File from which to load authenticatio
 $pgv_lang["PRIVACY_MODULE"] = "Privacy File:";
 $pgv_lang["PRIVACY_MODULE_help"] = "File from which to load privacy functions. See <a href=\"http://gendorbendor.sourceforge.net\">http://gendorbendor.sourceforge.net</a> for more information and to download alternative privacy add-ons.<br /><br />This sets the \$PRIVACY_MODULE variable in the config.php file.";
 $pgv_lang["HIDE_LIVE_PEOPLE"] = "Hide living people:";
-$pgv_lang["HIDE_LIVE_PEOPLE_help"] = "The hide living people option tells PhpGedView to hide the personal detail so people who are still living.  Living people are defined to be those who do not have an event more than $MAX_ALIVE_AGE years ago, and who doesn't have any children born more than $MAX_ALIVE_AGE years ago.<br /><br />This sets the \$HIDE_LIVE_PEOPLE variable in the config.php file.";
+$pgv_lang["HIDE_LIVE_PEOPLE_help"] = "The hide living people option tells PhpGedView to hide the personal detail so people who are still living.  Living people are defined to be those who do not have an event more than \$MAX_ALIVE_AGE years ago, and who doesn't have any children born more than \$MAX_ALIVE_AGE years ago.<br /><br />This sets the \$HIDE_LIVE_PEOPLE variable in the config.php file.";
 $pgv_lang["CHECK_CHILD_DATES"] = "Check child dates:";
 $pgv_lang["CHECK_CHILD_DATES_help"] = "Checks the dates of the children when determining whether to a person is dead.  On older systems and large GEDCOMs this can slow down the response time of your site.<br /><br />This sets the \$CHECK_CHILD_DATES variable in the config.php file.";
 $pgv_lang["MAX_ALIVE_AGE"] = "Age at which to assume a person is dead:";
