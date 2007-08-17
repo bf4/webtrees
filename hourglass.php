@@ -28,6 +28,7 @@
  * @version $Id$
  */
 require_once("includes/controllers/hourglass_ctrl.php");
+$controller->init();
 
 // -- print html header information
 print_header(PrintReady($controller->name)." ".$pgv_lang["hourglass_chart"]);
@@ -38,49 +39,9 @@ if ($controller->view=="preview") {
 	print "<table><tr><td valign=\"top\">";
 	print "<h2>".$pgv_lang["hourglass_chart"].":<br />".PrintReady($controller->name)."</h2>";
 }
-?>
-<script language="JavaScript" type="text/javascript">
-<!--
-	var pastefield;
-	function paste_id(value) {
-		pastefield.value=value;
-	}
 	
-	// <!--Hourglass control..... Ajax arrows at the end of chart-->
- 	function ChangeDiv(div_id, ARID, full, spouse, width) {
- 		var divelement = document.getElementById(div_id);
- 		var oXmlHttp = createXMLHttp();	
- 		oXmlHttp.open("get", "hourglass_ajax.php?show_full="+full+"&pid="+ ARID + "&generations=1&box_width="+width+"&show_spouse="+spouse, true);
- 		oXmlHttp.onreadystatechange=function()
- 		{
-  			if (oXmlHttp.readyState==4)
-   			{	
-    				divelement.innerHTML = oXmlHttp.responseText;
-    		}
-   		};
-  		oXmlHttp.send(null);	
-  		return false;
-	}
+$controller->setupJavascript();
 	
-	// <!--Hourglass control..... Ajax arrows at the end of descendants chart-->
-	function ChangeDis(div_id, ARID, full, spouse, width) {
- 		var divelement = document.getElementById(div_id);
- 		var oXmlHttp = createXMLHttp();	
- 		oXmlHttp.open("get", "hourglass_ajax_dis.php?show_full="+full+"&pid="+ ARID + "&generations=1&box_width="+width+"&show_spouse="+spouse, true);
- 		oXmlHttp.onreadystatechange=function()
- 		{
-  			if (oXmlHttp.readyState==4)
-   			{	
-    				divelement.innerHTML = oXmlHttp.responseText;
-    		}
-   		};
-  		oXmlHttp.send(null);	
-  		return false;
-	}
-//-->
-</script>
-
-<?php
 $gencount=0;
 if ($view!="preview") {
 ?>

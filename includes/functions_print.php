@@ -305,7 +305,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 			   // NOTE: Start span namedef-$personcount.$pid.$count
 			   if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$pid;
 			   else $title = $pid." :".$pgv_lang["indi_info"];
-			   print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\" title=\"$title\" onmouseover=\"change_class('namedef-$boxID','name".$style."Hover'); return false;\" onmouseout=\"change_class('namedef-$boxID','name$style'); return false;\"><span id=\"namedef-$boxID\" class=\"name$style\">";
+			   print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\" title=\"$title\"><span id=\"namedef-$boxID\" class=\"name$style\">";
  			   print PrintReady($name);
 			   // NOTE: IMG ID
 			   print " <img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
@@ -360,7 +360,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 }
 	 if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$pid;
 	 else $title = $pid." :".$pgv_lang["indi_info"];
-	 print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\" title=\"$title\" onmouseover=\"change_class('namedef-$boxID','name".$style."Hover'); return false;\" onmouseout=\"change_class('namedef-$boxID','name$style'); return false;\"";
+	 print "<a href=\"individual.php?pid=$pid&amp;ged=$GEDCOM\" title=\"$title\" ";
 	 if (!$show_full) {
 		  //not needed or wanted for mouseover //if ($ZOOM_BOXES=="mouseover") print " onmouseover=\"event.cancelBubble = true;\"";
 		  if ($ZOOM_BOXES=="mousedown") print "onmousedown=\"event.cancelBubble = true;\"";

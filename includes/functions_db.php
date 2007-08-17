@@ -3161,8 +3161,6 @@ function get_event_list() {
 		$startstamp = date("md", $dateRangeStart);
 		$endstamp = date("md", $dateRangeEnd);
 		
-		
-
 		// Search database for raw Indi data if no cache was found
 		$dayindilist = search_indis_daterange($startstamp, $endstamp, "!CHAN");
 
@@ -3172,16 +3170,7 @@ function get_event_list() {
 		// Apply filter criteria and perform other transformations on the raw data
 		$found_facts = array();
 		foreach($dayindilist as $gid=>$indi) {
-/*			
-if ($gid=="I013") {			
-?><pre><?php
-echo "<br />gid  ".$gid."<br />"; 
-print_r($indi);
-?></pre><?php }
-*/				
-			
 			$facts = get_all_subrecords($indi["gedcom"], $skipfacts, false, false, false);
-			
 			foreach($facts as $key=>$factrec) {
 				$date = 0; 
 				if ($USE_RTL_FUNCTIONS) {
@@ -3199,7 +3188,6 @@ print_r($indi);
 				}
 				
 				if ($date !== 0) {
-					
 					$startSecond = 1;
 					if ($date[0]["day"]=="") {
 						$startSecond = 0;

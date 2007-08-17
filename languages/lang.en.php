@@ -31,6 +31,13 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["differences"]			= "Differences";
+$pgv_lang["charts_block"]			= "Charts Block";
+$pgv_lang["charts_block_descr"]		= "The Charts Block allows you to place a chart embedded into a block on the welcome page or on the MyGedView portal.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart.";
+$pgv_lang["chart_type"]				= "Chart Type";
+$pgv_lang["changedate1"]			= "Ending range of change dates";
+$pgv_lang["changedate2"]			= "Starting range of change dates";
+$pgv_lang["changes_report"]			= "Changes Report";
 $pgv_lang["search_place_word"]		= "Whole words only";
 $pgv_lang["invalid_search_input"] 	= "Please enter a Given name, Last name, or Place in addition to Year";
 $pgv_lang["duplicate_username"] 	= "Duplicate user name.  A user with that user name already exists.  Please choose another user name.";

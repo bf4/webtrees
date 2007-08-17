@@ -218,6 +218,25 @@ class Family extends GedcomRecord {
 	}
 
 	/**
+	 * get the family name
+	 * @return string
+	 */
+	function getName() {
+		global $pgv_lang;
+		$name = "";
+		if (is_null($this->husb)) $name .= $pgv_lang["unknown"];
+		else {
+			$name .= $this->husb->getName();
+		}
+		$name .= " + ";
+		if (is_null($this->wife)) $name .= $pgv_lang["unknown"];
+		else {
+			$name .= $this->wife->getName();
+		}
+		return $name;
+	}
+	
+	/**
 	 * get the family sortable name
 	 * @return string
 	 */

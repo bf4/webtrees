@@ -76,6 +76,7 @@ class PGVReportBase {
 	var $orientation;
 	var $margin;
 	var $processing;
+	var $title = "";
 	
 	function setup($pw, $ph, $pageSize, $o, $m, $showGenText=true) {
 		global $pgv_lang, $VERSION, $vars, $pageSizes;
@@ -116,6 +117,10 @@ class PGVReportBase {
 		$this->processing = "H";
 	}
 	
+	function get_type() {
+		return 'PGVReport';
+	}
+	
 	function setProcessing($p) {
 		$this->processing = $p;
 	}
@@ -123,6 +128,14 @@ class PGVReportBase {
 	function addElement(&$element) {
 		print "PGVReportBase::addElement Not Implemented";
 		return false;
+	}
+	
+	function addTitle($data) {
+		$this->title .= $data;
+	}
+	
+	function addText($data) {
+		$this->title .= $data;
 	}
 	
 	function addStyle($style) {
@@ -168,6 +181,10 @@ class PGVReportBase {
 	function createLine($x1, $y1, $x2, $y2) {
 		return new PGVRLine($x1, $y1, $x2, $y2);
 	}
+	
+	function createHTML($tag, $attrs) {
+		return new PGVRHtml($tag, $attrs);
+	}
 }
 
 /**
@@ -208,8 +225,8 @@ class PGVRElement {
 		$t = preg_replace("/<br \/>/", "\n", $t);
 		$t = strip_tags($t);
 		$t = unhtmlentities($t);
-		if ($embed_fonts) $t = bidi_text($t);
-		else $t = smart_utf8_decode($t);
+		//if ($embed_fonts) $t = bidi_text($t);
+		//else $t = smart_utf8_decode($t);
 		$this->text .= $t;
 	}
 
@@ -235,7 +252,44 @@ class PGVRElement {
 	function get_type() {
 		return "PGVRElementBase";
 	}
+	
+	function setText($text) {
+		$this->text = $text;
+	}
 } //-- END PGVRElement
+
+class PGVRHtml extends PGVRElement {
+	var $tag;
+	var $attrs;
+	var $elements = array();
+	
+	function PGVRHtml($tag, $attrs) {
+		$this->tag = $tag;
+		$this->attrs = $attrs;
+	}
+	
+	function getStart() {
+		$str = "<".$this->tag." ";
+		foreach($this->attrs as $key=>$value) {
+			$str .= $key.'="'.$value.'" ';
+		}
+		$str .= ">";
+		return $str;
+	}
+	
+	function getEnd() {
+		return "</".$this->tag.">";
+	}
+	
+	
+	function addElement(&$element) {
+		$this->elements[] = $element;
+	}
+	
+	function get_type() {
+		return "PGVRHtml";
+	}
+}
 
 /**
  * Cell element
@@ -492,6 +546,14 @@ class PGVRLine extends PGVRElement {
  */
 $elementHandler = array();
 $elementHandler["PGVRStyle"]["start"] 		= "PGVRStyleSHandler";
+$elementHandler["PGVRTitle"]["start"]		= "PGVRTitleSHandler";
+$elementHandler["PGVRTitle"]["end"]			= "PGVRTitleEHandler";
+$elementHandler["PGVRDescription"]["start"]	= "";
+$elementHandler["PGVRInput"]["end"]			= "";
+$elementHandler["PGVRInput"]["start"]		= "";
+$elementHandler["PGVReport"]["end"]			= "";
+$elementHandler["PGVReport"]["start"]		= "";
+$elementHandler["PGVRDescription"]["end"]	= "";
 $elementHandler["PGVRDoc"]["start"] 		= "PGVRDocSHandler";
 $elementHandler["PGVRDoc"]["end"] 			= "PGVRDocEHandler";
 $elementHandler["PGVRHeader"]["start"] 		= "PGVRHeaderSHandler";
@@ -547,6 +609,7 @@ $currentElement = new PGVRElement();
  * @global bool $printData
  */
 $printData = false;
+$reportTitle = false;
 
 /**
  * print data stack
@@ -593,7 +656,10 @@ function startElement($parser, $name, $attrs) {
 	}
 	$attrs = $newattrs;
 	if (($processIfs==0 || $name=="PGVRif")&&($processGedcoms==0 || $name=="PGVRGedcom")&&($processRepeats==0 || $name=="PGVRFacts" || $name=="PGVRRepeatTag")) {
-		if (isset($elementHandler[$name]["start"])) call_user_func($elementHandler[$name]["start"], $attrs);
+		if (isset($elementHandler[$name]["start"])) {
+			if ($elementHandler[$name]["start"]!="") call_user_func($elementHandler[$name]["start"], $attrs);
+		}
+		else if (!isset($elementHandler[$name]["end"])) HTMLSHandler($name, $attrs);
 	}
 }
 
@@ -608,7 +674,10 @@ function endElement($parser, $name) {
 	global $elementHandler, $processIfs, $processGedcoms, $processRepeats;
 
 	if (($processIfs==0 || $name=="PGVRif")&&($processGedcoms==0 || $name=="PGVRGedcom")&&($processRepeats==0 || $name=="PGVRFacts" || $name=="PGVRRepeatTag" || $name=="PGVRList" || $name=="PGVRRelatives")) {
-		if (isset($elementHandler[$name]["end"])) call_user_func($elementHandler[$name]["end"]);
+		if (isset($elementHandler[$name]["end"])) {
+			if ($elementHandler[$name]["end"]!="") call_user_func($elementHandler[$name]["end"]);
+		}
+		else if (!isset($elementHandler[$name]["start"])) HTMLEHandler($name);
 	}
 }
 
@@ -621,7 +690,8 @@ function endElement($parser, $name) {
  * @param string $data the name of the xml element parsed
  */
 function characterData($parser, $data) {
-	global $printData, $currentElement, $processGedcoms, $processIfs;
+	global $printData, $currentElement, $processGedcoms, $processIfs, $reportTitle, $pgvreport;
+	if ($reportTitle) $pgvreport->addTitle($data);
 	if ($printData && ($processGedcoms==0) && ($processIfs==0)) $currentElement->addText($data);
 }
 
@@ -948,10 +1018,12 @@ function PGVRGetPersonNameSHandler($attrs) {
 		}
 	}
 	if (!empty($id)) {
-		if (!displayDetailsById($id) && !showLivingNameByID($id)) $currentElement->addText($pgv_lang["private"]);
+		$record = GedcomRecord::getInstance($id);
+		if (is_null($record)) return;
+		if (!$record->canDisplayDetails()) $currentElement->addText($pgv_lang["private"]);
 		else {
-			$name = trim(get_person_name($id));
-			$addname = trim(get_add_person_name($id));
+			$name = $record->getName();
+			$addname = $record->getAddName();
 			if (hasRTLText($addname)) {
 				$addname .= " ".$name;
 				$name = $addname;
@@ -1164,6 +1236,7 @@ function PGVRvarSHandler($attrs) {
 			$ct = preg_match("/factarray\['(.*)'\]/", $var, $match);
 			if ($ct>0) $var = $match[1];
 		}
+		if (!empty($attrs["date"])) $var = get_changed_date($var);
 		$currentElement->addText($var);
 	}
 }
@@ -1209,7 +1282,24 @@ function PGVRFactsSHandler($attrs) {
 		$tag = $vars[$match[1]]["id"];
 	}
 
+	if (empty($attrs["diff"])) {
 	$repeats = get_all_subrecords($gedrec, $tag, $families);
+	}
+	else {
+		global $nonfacts;
+		$nonfacts = preg_split("/[\s,;:]/", $tag);
+		$person = new Person($gedrec);
+//		print "<pre>".$gedrec."</pre>";
+		$oldPerson = Person::getInstance($person->getXref());
+//		print "<pre>".$oldPerson->getGedcomRecord()."</pre>";
+		$oldPerson->diffMerge($person);
+		$facts = $oldPerson->getIndiFacts();
+		foreach($facts as $f=>$fact) {
+			if (strstr($fact[1], "PGV_NEW")!==false) $repeats[] = $fact[1];
+//			else if (strstr($fact[1], "PGV_OLD")!==false) $repeats[] = $fact[1];
+		}
+//		var_dump($repeats);
+	}
 }
 
 function PGVRFactsEHandler() {
@@ -1228,8 +1318,13 @@ function PGVRFactsEHandler() {
 	//-- read the xml from the file
 	$lines = file($report);
 	$reportxml = "<tempdoc>\n";
-	if ($lineoffset>0) $lineoffset--;
-	for($i=$repeatBytes+$lineoffset; $i<$line+$lineoffset; $i++) $reportxml .= $lines[$i];
+	while($lineoffset>0 && strstr($lines[$lineoffset+$repeatBytes], "<PGVRFacts ")===false) $lineoffset--;
+	$lineoffset++;
+//	var_dump($lineoffset);
+	for($i=$repeatBytes+$lineoffset; $i<$line+$lineoffset; $i++) {
+//		print $i." ".htmlentities($lines[$i]);
+		$reportxml .= $lines[$i];
+	}
 	$reportxml .= "</tempdoc>\n";
 
 	array_push($parserStack, $parser);
@@ -1561,6 +1656,7 @@ function PGVRLineSHandler($attrs) {
 
 function PGVRListSHandler($attrs) {
 	global $pgvreport, $gedrec, $repeats, $repeatBytes, $list, $repeatsStack, $processRepeats, $parser, $vars, $sortby;
+	global $pgv_changes, $GEDCOM;
 
 	$processRepeats++;
 	if ($processRepeats>1) return;
@@ -1651,9 +1747,50 @@ function PGVRListSHandler($attrs) {
 		case "other":
 			$list = get_other_list();
 			break; */
+		case "pending":
+			$list = array();
+			foreach($pgv_changes as $cid=>$changes) {
+				$change = end($changes);
+				if ($change["gedcom"]==$GEDCOM) {
+					$list[$change['gid']] = $change;
+				}
+			}
+			break;
 		default:
 			if (count($filters)>0) $list = search_indis($filters);
-			else $list = get_indi_list();
+			//-- handle date specific searches
+			foreach($filters2 as $f=>$filter) {
+				$tags = preg_split("/:/", $filter["tag"]);
+				if (end($tags)=="DATE") {
+					if ($filter['expr']=='LTE') {
+						$enddate = parse_date($filter['val']);
+						$endtag = $tags[0];
+					}
+					if ($filter['expr']=='GTE') {
+						$startdate = parse_date($filter['val']);
+						$starttag = $tags[0];
+					}
+				}
+			}
+			if (isset($startdate) && isset($enddate)) {
+				if (strlen($startdate[0]['mon'])<2) $startdate[0]['mon'] = '0'.$startdate[0]['mon'];
+				if (strlen($startdate[0]['day'])<2) $startdate[0]['day'] = '0'.$startdate[0]['day'];
+				if (strlen($enddate[0]['mon'])<2) $enddate[0]['mon'] = '0'.$enddate[0]['mon'];
+				if (strlen($enddate[0]['day'])<2) $enddate[0]['day'] = '0'.$enddate[0]['day'];
+				$start = $startdate[0]['year'].$startdate[0]['mon'].$startdate[0]['day'];
+				$end = $enddate[0]['year'].$enddate[0]['mon'].$enddate[0]['day'];
+				$dlist = search_indis_daterange($start, $end, $starttag.",".$endtag);
+				if (!isset($list) || count($list)==0) $list = $dlist;
+				else {
+					//-- intersect the lists
+					$newlist = array();
+					foreach($list as $id=>$indi) {
+						if (isset($dlist[$id])) $newlist[$id] = $indi;
+					}
+					$list = $newlist;
+				}
+			}
+			if (!isset($list)) $list = get_indi_list();
 			break;
 	}
 	//-- apply other filters to the list that could not be added to the search string
@@ -1668,23 +1805,20 @@ function PGVRListSHandler($attrs) {
 					$val = $filter["val"];
 					if ($val=="''") $val = "";
 					$tags = preg_split("/:/", $tag);
-					$level = 1;
-					$subrec = $value["gedcom"];
-					foreach($tags as $indexval => $t) {
-						$oldsub = $subrec;
-						$subrec = get_sub_record($level, $level." ".$t, $subrec);
-						if ($t=='EMAIL' && empty($subrec)) {
-							$t = "_EMAIL";
-							$subrec = get_sub_record($level, $level." ".$t, $oldsub);
-						}
-						$level++;
+					$t = end($tags);
+					$v = get_gedcom_value($tag, 1, $value["gedcom"], '', false);
+					//-- check for EMAIL and _EMAIL (silly double gedcom standard :P)
+					if ($t=="EMAIL" && empty($v)) {
+						$tag = preg_replace("/EMAIL/", "_EMAIL", $tag);
+						$tags = preg_split("/:/", $tag);
+						$t = end($tags);
+						$v = get_sub_record(1, $tag, $value["gedcom"]);
 					}
-					$level--;
+					
+					
+					$level = count($tags);
 					switch ($expr) {
 						case "GTE":
-							$ct = preg_match("/$level $t(.*)/", $subrec, $match);
-							if ($ct>0) {
-								$v = trim($match[1]);
 								if ($t=="DATE") {
 									$date1 = parse_date($v);
 									$date2 = parse_date($val);
@@ -1696,16 +1830,10 @@ function PGVRListSHandler($attrs) {
 											else $keep = false;
 										} else $keep = false;
 									} else $keep = false;
-									//print "[$key ".implode(" ", $date1[0])." ".implode(" ", $date2[0])." keep=$keep] ";
 								}
 								else if ($val >= $v) $keep=true;
-							}
-							else $keep=false;
 							break;
 						case "LTE":
-							$ct = preg_match("/$level $t(.*)/", $subrec, $match);
-							if ($ct>0) {
-								$v = trim($match[1]);
 								if ($t=="DATE") {
 									$date1 = parse_date($v);
 									$date2 = parse_date($val);
@@ -1720,29 +1848,14 @@ function PGVRListSHandler($attrs) {
 									//print "[$key ".implode(" ", $date1[0])." ".implode(" ", $date2[0])." keep=$keep] ";
 								}
 								else if ($val >= $v) $keep=true;
-							}
-							else $keep=false;
 							break;
 						case "SUBCONTAINS":
-							$ct = preg_match("/$val\W/i", $subrec);
+							$ct = preg_match("/$val\b/i", $v);
 							if ($ct>0) $keep = true;
-							else {
-								$ct = preg_match('/'.$val.'$/i', $subrec);
-								if ($ct>0) $keep = true;
-								else $keep = false;
-							}
 							break;
 						default:
-							$v = get_gedcom_value($t, $level, $subrec);
-							//-- check for EMAIL and _EMAIL (silly double gedcom standard :P)
-							if ($t=="EMAIL"&&empty($v)) {
-								$t = "_EMAIL";
-								$v = get_gedcom_value($t, $level, $subrec);
-							}
-							//print "[$key $t $v == $val $subrec]<br />";
 							if ($v==$val) $keep=true;
 							else $keep = false;
-							//print $keep;
 							break;
 					}
 				}
@@ -1760,10 +1873,13 @@ function PGVRListSHandler($attrs) {
 }
 
 function PGVRListEHandler() {
-	global $list, $repeats, $repeatsStack, $repeatBytes, $parser, $parserStack, $report, $pgvreport, $gedrec, $processRepeats, $list_total, $list_private;
+	global $currentElement, $list, $repeats, $repeatsStack, $repeatBytes, $parser, $parserStack, $report, $pgvreport, $gedrec, $processRepeats, $list_total, $list_private;
 	$processRepeats--;
 	if ($processRepeats>0) return;
 
+	//-- reset any text that may have been added parsing to the end of the loop
+	$currentElement->setText("");
+	
 	$line = xml_get_current_line_number($parser)-1;
 	$lineoffset = 0;
 	for($i=0; $i<count($repeatsStack); $i++) {
@@ -1794,7 +1910,8 @@ function PGVRListEHandler() {
 	$list_private = 0;
 	foreach($list as $key=>$value) {
 		if (displayDetailsById($key)) {
-			$gedrec = find_gedcom_record($key);
+			if (isset($value["undo"])) $gedrec = $value["undo"];
+			else $gedrec = find_gedcom_record($key);
 			//-- start the sax parser
 			$repeat_parser = xml_parser_create();
 			$parser = $repeat_parser;
@@ -2028,5 +2145,47 @@ function PGVRNewPageSHandler($attrs) {
 	global $pgvreport;
 	$temp = "addpage";
 	$pgvreport->addElement($temp);
+}
+
+function HTMLSHandler($tag, $attrs) {
+	global $printData, $printDataStack, $pgvreportStack;
+	global $pgvreport, $currentElement, $PGVReportRoot;
+
+	if ($tag=="tempdoc") return;
+	
+	array_push($pgvreportStack, $pgvreport);
+	$pgvreport = $PGVReportRoot->createHTML($tag, $attrs);
+	$currentElement = $pgvreport;
+	
+	array_push($printDataStack, $printData);
+	$printData = true;
+//	print "[".$tag."] ";
+}
+
+function HTMLEHandler($tag) {
+	global $printData, $printDataStack;
+	global $pgvreport, $currentElement, $pgvreportStack;
+
+	if ($tag=="tempdoc") return;
+	
+	$printData = array_pop($printDataStack);
+	$currentElement = $pgvreport;
+	$pgvreport = array_pop($pgvreportStack);
+//	print "{".get_class($pgvreport)."} ";
+	if (!is_null($pgvreport)) $pgvreport->addElement($currentElement);
+	else $pgvreport = $currentElement;
+}
+
+function PGVRTitleSHandler($attrs) {
+	global $reportTitle, $printData, $printDataStack;
+	
+	$reportTitle = true;
+}
+
+function PGVRTitleEHandler() {
+	global $reportTitle, $printData, $printDataStack;
+	
+	$reportTitle = false;
+	
 }
 ?>
