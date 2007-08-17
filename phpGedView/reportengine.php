@@ -258,7 +258,6 @@ function paste_id(value) {
 				}
 			}
 		}
-		
 		?>
 		<tr><td class="descriptionbox width30 wrap"></td>
 		<td class="optionbox">

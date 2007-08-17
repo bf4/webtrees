@@ -2,11 +2,11 @@
 	<!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[address_labels]" /></PGVRTitle>
 	<PGVRDescription>Prints address labels</PGVRDescription>
-	<PGVRStyle name="header" font="LucidaSansUnicode" size="16" style="b" />
-	<PGVRStyle name="pagenum" font="LucidaSansUnicode" size="8" style="" />
-	<PGVRStyle name="text" font="LucidaSansUnicode" size="8" style="" />
-	<PGVRStyle name="label" font="LucidaSansUnicode" size="8" style="b" />
-	<PGVRStyle name="idstyle" font="LucidaSansUnicode" size="6" style="" />
+	<PGVRStyle name="header" font="dejavusans" size="16" style="b" />
+	<PGVRStyle name="pagenum" font="dejavusans" size="8" style="" />
+	<PGVRStyle name="text" font="dejavusans" size="8" style="" />
+	<PGVRStyle name="label" font="dejavusans" size="8" style="b" />
+	<PGVRStyle name="idstyle" font="dejavusans" size="6" style="" />
 	<PGVRInput name="address" type="text"><PGVRvar var="pgv_lang[filter_address]" /> </PGVRInput>
 	<PGVRInput name="sortby" type="select" options="NAME,ID"><PGVRvar var="pgv_lang[sort_by]" /></PGVRInput>
 	<PGVRInput name="email_in" type="select" options="all,noemail,onlyemail"><PGVRvar var="pgv_lang[include]"/> </PGVRInput>

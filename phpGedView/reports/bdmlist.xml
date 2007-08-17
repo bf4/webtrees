@@ -31,11 +31,11 @@
 	<PGVRInput name="pageSize" type="select" options="letter,A4,A3,A5,legal">
 		<PGVRvar var="pgv_lang[page_size]" />
 	</PGVRInput>
-	<PGVRStyle name="header" font="LucidaSansUnicode" size="16" style="b" />
-	<PGVRStyle name="pagenum" font="LucidaSansUnicode" size="8" style="" />
-	<PGVRStyle name="text" font="LucidaSansUnicode" size="9" style="" />
-	<PGVRStyle name="small" font="LucidaSansUnicode" size="7" style="" />
-	<PGVRStyle name="label" font="LucidaSansUnicode" size="10" style="b" />
+	<PGVRStyle name="header" font="dejavusans" size="16" style="b" />
+	<PGVRStyle name="pagenum" font="dejavusans" size="8" style="" />
+	<PGVRStyle name="text" font="dejavusans" size="9" style="" />
+	<PGVRStyle name="small" font="dejavusans" size="7" style="" />
+	<PGVRStyle name="label" font="dejavusans" size="10" style="b" />
 	<PGVRDoc pageSize="$pageSize" orientation="L" margin="24">
 		<PGVRHeader>
 			<PGVRCell width="0" height="20" align="center" style="label">

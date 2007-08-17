@@ -92,15 +92,18 @@ function saveCachedBlock($block, $index, $content) {
 	
 	$fname = $INDEX_DIRECTORY."/cache";
 	@mkdir($fname);
-	@chmod($fname, 0777);	// Make SURE this dir. has 0777 perm. (so Admin can delete it without "root" access)
+	//--many people are not going to like automatically setting the permissions
+	//--777 is considered a security risk, if we can create the directory we should be able to write to it
+	//--do we need a windows specific check here instead?
+	//@chmod($fname, 0777);	// Make SURE this dir. has 0777 perm. (so Admin can delete it without "root" access)
 
 	$fname .= "/".$lang_short_cut[$LANGUAGE];
 	@mkdir($fname);
-	@chmod($fname, 0777);
+	//@chmod($fname, 0777);
 
 	$fname .= "/".$GEDCOM;
 	@mkdir($fname);
-	@chmod($fname, 0777);
+	//@chmod($fname, 0777);
 
 	$fname .= "/".$index."_".$block[0];
 	$fp = @fopen($fname, "wb");
