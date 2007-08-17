@@ -416,6 +416,7 @@ if ($action == "update") {
 				$filename .= ".".$parts["extension"];
 			}
 		}
+		if (!isset($folder) && isset($oldFolder)) $folder = $oldFolder; 
 		if (substr($folder,-1)!="/") $folder .= "/";
 		if ($folder=="/") $folder = "";
 		$folder = check_media_depth($folder."y.z", "BACK");
