@@ -362,10 +362,6 @@ class PGVRCellHTML extends PGVRCell {
 		if (!empty($url)) print "</a>";
 		print "</div>\n";
 		
-//		$pdf->MultiCell($this->width,$this->height,$temptext,0,$this->align);
-//		if (!empty($url)) {
-//			$pdf->Link($curx, $cury, $this->width, $this->height, $url);
-//		}
 	}
 }
 

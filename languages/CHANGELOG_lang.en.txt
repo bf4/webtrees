@@ -44,6 +44,7 @@ VERSION 4.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["differences"]								17 Aug 2007				A
 +$pgv_lang["charts_block"]								14 Aug 2007				A
 +$pgv_lang["charts_block_descr"]						14 Aug 2007				A
 +$pgv_lang["chart_type"]								14 Aug 2007				A

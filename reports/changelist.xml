@@ -28,7 +28,7 @@
 					<PGVRText style="label"><PGVRvar var="pgv_lang[name]" /></PGVRText>
 				</PGVRTextBox>
 				<PGVRTextBox width="190" height="12" border="1">
-					<PGVRText style="label">Differences</PGVRText>
+					<PGVRText style="label"><PGVRvar var="pgv_lang[differences]" /></PGVRText>
 				</PGVRTextBox>
 				<PGVRTextBox width="0" height="12" border="1" newline="1">
 					<PGVRText style="label"><PGVRvar var="factarray[CHAN]" /></PGVRText>
@@ -43,7 +43,7 @@
 					<PGVRTextBox width="190" height="12" border="0">
 						<PGVRFacts ignore="CHAN" families="0" diff="true">
 							<PGVRText style="text">
-								<PGVRvar var="factarray[@fact]" /><br />
+								<PGVRvar var="factarray[@fact]" /> <PGVRGedcomValue tag="@fact:DATE" /><br />
 							</PGVRText>
 						</PGVRFacts>
 					</PGVRTextBox>

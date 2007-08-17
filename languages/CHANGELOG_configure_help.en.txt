@@ -56,6 +56,14 @@ VERSION 4.2
 +$pgv_lang["USA_MEDIA_FIREWALL_help"]				02 Aug 2007				A	Media Firewall, patch 1749817
 
 
+VERSION 4.1.1
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+-------------------------------------------------------------------------------------------
+*$pgv_lang["USE_THUMBS_MAIN"]						14 Aug 2007				W
+*$pgv_lang["USE_THUMBS_MAIN_help"]					14 Aug 2007				W
+
+
 VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments

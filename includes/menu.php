@@ -148,10 +148,11 @@ class Menu
 			return $output;
 		}
 		$c = count($this->submenus);
-		$output = "<div id=\"menu{$id}\" class=\"{$this->class}\">\n";
+		$xicon = $this->icon ? $this->icon : "";
+		$xlink = $this->link ? $this->link : "";
+		$output = "<div x-link=\"{$xlink}\" x-icon=\"{$xicon}\" x-label=\"{$this->label}\" id=\"menu{$id}\" class=\"{$this->class}\">\n";
 		if ($this->link=="#") $this->link = "javascript:;";
-		$link = "<a href=\"{$this->link}\" onmouseover=\""
-		;
+		$link = "<a href=\"{$this->link}\" onmouseover=\"";
 		if ($c >= 0)
 		{
 			$link .= "show_submenu('menu{$id}_subs', 'menu{$id}', '{$this->flyout}'); ";
