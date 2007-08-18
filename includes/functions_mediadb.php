@@ -52,12 +52,12 @@ function remove_db_media($media, $ged) {
 	// remove the media record
 	$sql = "DELETE FROM " . $TBLPREFIX . "media WHERE m_media='$media' AND m_gedfile='$ged'";
 	if ($res = & dbquery($sql))
-	$success = true;
+		$success = true;
 
 	// remove all links to this media item
 	$sql = "DELETE FROM " . $TBLPREFIX . "media_mapping WHERE mm_media='$media' AND mm_gedfile='$ged'";
 	if ($res = & dbquery($sql))
-	$success = true;
+		$success = true;
 
 	return $success;
 }
@@ -141,7 +141,7 @@ function update_db_link($media, $indi, $gedrec, $ged, $order = -1) {
 		// replace the gedrec for the media link record
 		$sql = "UPDATE " . $TBLPREFIX . "media_mapping SET mm_gedrec = '" . addslashes($gedrec) . "'";
 		if ($order >= 0)
-		$sql .= ", mm_order = $order";
+			$sql .= ", mm_order = $order";
 		$sql .= " WHERE (mm_media = '" . addslashes($media) . "' AND mm_gedfile = '" . $GEDCOMS[$ged]["id"] . "' AND mm_gid = '" . addslashes($indi) . "')";
 		$tempsql = dbquery($sql);
 		if ($res = & $tempsql) {
@@ -325,7 +325,7 @@ function get_db_indi_mapping_list($indi) {
  * @param integer $level  The indent number for the NOTE record.
  * @param string $txt Block of text to convert.
  * @return gedrec Gedcom NOTE record.
- */
+*/
 function textblock_to_note($level, $txt) {
 
 	$newnote = $level . " NOTE\r\n";
@@ -334,7 +334,7 @@ function textblock_to_note($level, $txt) {
 	$newlines = preg_split("/\r?\n/", $newline);
 	for ($k = 0; $k < count($newlines); $k++) {
 		if ($k > 0)
-		$newlines[$k] = $indent . " CONT " . $newlines[$k];
+			$newlines[$k] = $indent . " CONT " . $newlines[$k];
 		if (strlen($newlines[$k]) > 255) {
 			while (strlen($newlines[$k]) > 255) {
 				$newnote .= substr($newlines[$k], 0, 255) . "\r\n";
@@ -376,26 +376,26 @@ function real_path($path) {
 	$path_tok_2 = $matches[0][2];
 
 	$path_tok_2 = preg_replace(array (
-	"/^\\/+/",
-	"/\\/+/"
+		"/^\\/+/",
+		"/\\/+/"
 	), array (
-	"",
-	"/"
+		"",
+		"/"
 	), $path_tok_2);
 
 	$path_parts = explode("/", $path_tok_2);
 	$real_path_parts = array ();
 
-	for ($i = 0, $real_path_parts = array (); $i < count($path_parts); $i++) {
+		for ($i = 0, $real_path_parts = array (); $i < count($path_parts); $i++) {
 		if ($path_parts[$i] == '.') {
 			continue;
 		} else
-		if ($path_parts[$i] == '..') {
-			if ((isset ($real_path_parts[0]) && $real_path_parts[0] != '..') || ($path_tok_1 != "")) {
-				array_pop($real_path_parts);
-				continue;
+			if ($path_parts[$i] == '..') {
+				if ((isset ($real_path_parts[0]) && $real_path_parts[0] != '..') || ($path_tok_1 != "")) {
+					array_pop($real_path_parts);
+					continue;
+				}
 			}
-		}
 		array_push($real_path_parts, $path_parts[$i]);
 	}
 
@@ -418,23 +418,23 @@ function set_media_path($filename, $moveto, $thumb = false) {
 		$ct = count($directories);
 		foreach ($directories as $key => $value) {
 			if ($key == 1 && $thumb == true)
-			$movefile .= "thumbs/";
+				$movefile .= "thumbs/";
 			if ($key != $ct -2)
-			$movefile .= $value;
+				$movefile .= $value;
 			if ($key != $ct -2 && $key != $ct -1)
-			$movefile .= "/";
+				$movefile .= "/";
 		}
 	} else {
 		$directories = preg_split("/\//", $filename);
 		$ct = count($directories);
 		foreach ($directories as $key => $value) {
 			if ($key == 1 && $thumb == true)
-			$movefile .= "thumbs/";
+				$movefile .= "thumbs/";
 			if ($key == $ct -1)
-			$movefile .= $moveto . "/";
+				$movefile .= $moveto . "/";
 			$movefile .= $value;
 			if ($key != $ct -1)
-			$movefile .= "/";
+				$movefile .= "/";
 		}
 	}
 	return $movefile;
@@ -456,12 +456,12 @@ function check_media_structure() {
 		// Check first if the $MEDIA_DIRECTORY exists
 		if (!is_dir($MEDIA_DIRECTORY)) {
 			if (!mkdir($MEDIA_DIRECTORY))
-			return false;
+				return false;
 			if (!file_exists($MEDIA_DIRECTORY . "index.php")) {
 				$inddata = html_entity_decode("<?php\nheader(\"Location: ../medialist.php\");\nexit;\n?>");
 				$fp = @ fopen($MEDIA_DIRECTORY . "index.php", "w+");
 				if (!$fp)
-				print "<div class=\"error\">" . $pgv_lang["security_no_create"] . $MEDIA_DIRECTORY . "thumbs</div>";
+					print "<div class=\"error\">" . $pgv_lang["security_no_create"] . $MEDIA_DIRECTORY . "thumbs</div>";
 				else {
 					// Write the index.php for the media folder
 					fputs($fp, $inddata);
@@ -474,13 +474,13 @@ function check_media_structure() {
 	if (!is_dir($MEDIA_DIRECTORY . "thumbs")) {
 		print $MEDIA_DIRECTORY . "thumbs";
 		if (!mkdir($MEDIA_DIRECTORY . "thumbs"))
-		return false;
+			return false;
 		if (file_exists($MEDIA_DIRECTORY . "index.php")) {
 			$inddata = file_get_contents($MEDIA_DIRECTORY . "index.php");
 			$inddatathumb = str_replace(": ../", ": ../../", $inddata);
 			$fpthumb = @ fopen($MEDIA_DIRECTORY . "thumbs/index.php", "w+");
 			if (!$fpthumb)
-			print "<div class=\"error\">" . $pgv_lang["security_no_create"] . $MEDIA_DIRECTORY . "thumbs</div>";
+				print "<div class=\"error\">" . $pgv_lang["security_no_create"] . $MEDIA_DIRECTORY . "thumbs</div>";
 			else {
 				// Write the index.php for the thumbs media folder
 				fputs($fpthumb, $inddatathumb);
@@ -524,25 +524,25 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	if (($ALLOW_CHANGE_GEDCOM) && (count($GEDCOMS) > 1)) {
 		foreach ($GEDCOMS as $key => $ged) {
 			$str = preg_replace(array (
-			"/\./",
-			"/-/",
-			"/ /"
+				"/\./",
+				"/-/",
+				"/ /"
 			), array (
-			"_",
-			"_",
-			"_"
+				"_",
+				"_",
+				"_"
 			), $key);
 			if (isset ($$str))
-			$sgeds[] = $key;
+				$sgeds[] = $key;
 		}
 	} else
-	$sgeds[] = $GEDCOM;
+		$sgeds[] = $GEDCOM;
 
 	// Create the medialist array of media in the DB and on disk
 	// NOTE: Get the media in the DB
 	$medialist = array ();
 	if (empty ($directory))
-	$directory = $MEDIA_DIRECTORY;
+		$directory = $MEDIA_DIRECTORY;
 	$myDir = str_replace($MEDIA_DIRECTORY, "", $directory);
 	$sql = "SELECT * FROM " . $TBLPREFIX . "media WHERE m_gedfile='" . $GEDCOMS[$GEDCOM]["id"] . "'";
 	if ($random == true) {
@@ -557,49 +557,49 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 
 	if (!DB::isError($res)) {
 		$ct = $res->numRows();
-		// Build the raw medialist array,
-		// but weed out any folders we're not interested in
-		while ($row = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			if ($row) {
-				if (!empty ($row["m_file"])) {
-					$fileName = check_media_depth(stripslashes($row["m_file"]), "NOTRUNC", "QUIET");
-					if (($MEDIA_EXTERNAL && stristr($fileName, "://")) || !$currentdir || $directory == dirname($fileName) . "/") {
-						$media = array ();
-						$media["ID"] = $row["m_id"];
-						$media["XREF"] = stripslashes($row["m_media"]);
-						$media["GEDFILE"] = $row["m_gedfile"];
-						$media["FILE"] = $fileName;
-						if ($MEDIA_EXTERNAL && stristr($fileName, "://")) {
-							$media["THUMB"] = $fileName;
-							$media["EXISTS"] = true;
-						} else {
-							$media["THUMB"] = thumbnail_file($fileName);
-							$media["EXISTS"] = file_exists(filename_decode($fileName));
-						}
-						$media["FORM"] = stripslashes($row["m_ext"]);
-						$media["TITL"] = stripslashes($row["m_titl"]);
-						$media["GEDCOM"] = stripslashes($row["m_gedrec"]);
-						$gedrec = & trim($row["m_gedrec"]);
-						$media["LEVEL"] = $gedrec{0};
-						$media["LINKED"] = false;
-						$media["LINKS"] = array ();
-						$media["CHANGE"] = "";
-
-						// Build a sortable key for the medialist
-						$firstChar = substr($media["XREF"], 0, 1);
-						$restChar = substr($media["XREF"], 1);
-						if (is_numeric($firstChar)) {
-							$firstChar = "";
-							$restChar = $media["XREF"];
-						}
-						$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . $media["GEDFILE"];
-						$medialist[$keyMediaList] = $media;
-						$mediaObjects[] = $media["XREF"];
+	// Build the raw medialist array,
+	// but weed out any folders we're not interested in
+	while ($row = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+		if ($row) {
+			if (!empty ($row["m_file"])) {
+				$fileName = check_media_depth(stripslashes($row["m_file"]), "NOTRUNC", "QUIET");
+				if (($MEDIA_EXTERNAL && stristr($fileName, "://")) || !$currentdir || $directory == dirname($fileName) . "/") {
+					$media = array ();
+					$media["ID"] = $row["m_id"];
+					$media["XREF"] = stripslashes($row["m_media"]);
+					$media["GEDFILE"] = $row["m_gedfile"];
+					$media["FILE"] = $fileName;
+					if ($MEDIA_EXTERNAL && stristr($fileName, "://")) {
+						$media["THUMB"] = $fileName;
+						$media["EXISTS"] = true;
+					} else {
+						$media["THUMB"] = thumbnail_file($fileName);
+						$media["EXISTS"] = file_exists(filename_decode($fileName));
 					}
+					$media["FORM"] = stripslashes($row["m_ext"]);
+					$media["TITL"] = stripslashes($row["m_titl"]);
+					$media["GEDCOM"] = stripslashes($row["m_gedrec"]);
+					$gedrec = & trim($row["m_gedrec"]);
+					$media["LEVEL"] = $gedrec{0};
+					$media["LINKED"] = false;
+					$media["LINKS"] = array ();
+					$media["CHANGE"] = "";
+
+					// Build a sortable key for the medialist
+					$firstChar = substr($media["XREF"], 0, 1);
+					$restChar = substr($media["XREF"], 1);
+					if (is_numeric($firstChar)) {
+						$firstChar = "";
+						$restChar = $media["XREF"];
+					}
+					$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . $media["GEDFILE"];
+					$medialist[$keyMediaList] = $media;
+					$mediaObjects[] = $media["XREF"];
 				}
 			}
 		}
-		$res->free();
+	}
+	$res->free();
 	}
 	//print "medialist: "; print_r($medialist); print "<br/><br/>";
 
@@ -611,11 +611,11 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 			//print "change: "; print_r($change); print "<br/><br/>";
 			while (true) {
 				if ($change["gedcom"] != $GEDCOM || $change["status"] != "submitted")
-				break;
+					break;
 
 				$gedrec = $change['undo'];
 				if (empty ($gedrec))
-				break;
+					break;
 
 				$ct = preg_match("/0 @.*@ (\w*)/", $gedrec, $match);
 				$type = trim($match[1]);
@@ -666,25 +666,25 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 							$event .= str_replace("<br />", "", get_cont(($subLevel +1), $subrec));
 
 							if ($fact == "FILE")
-							$media["FILE"] = $event;
+								$media["FILE"] = $event;
 							if ($fact == "FORM")
-							$media["FORM"] = $event;
+								$media["FORM"] = $event;
 							if ($fact == "TITL")
-							$media["TITL"] = $event;
+								$media["TITL"] = $event;
 						}
 					}
 				}
 
 				// And a few more blanks
 				if (empty ($media["FILE"]))
-				break;
+					break;
 				$fileName = check_media_depth(stripslashes($media["FILE"]), "NOTRUNC", "QUIET");
 				if ($MEDIA_EXTERNAL && stristr($media["FILE"], "://")) {
 					$media["THUMB"] = $fileName;
 					$media["EXISTS"] = true;
 				} else {
 					if ($currentdir && $directory != dirname($fileName) . "/")
-					break;
+						break;
 					$media["THUMB"] = thumbnail_file($fileName);
 					$media["EXISTS"] = file_exists(filename_decode($fileName));
 				}
@@ -711,9 +711,9 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 			$i++;
 			$sql .= "'" . $media["XREF"] . "'";
 			if ($i < $ct)
-			$sql .= ", ";
+				$sql .= ", ";
 			else
-			$sql .= ")";
+				$sql .= ")";
 		}
 		$sql .= " ORDER BY mm_gid";
 		//print "sql: ".$sql."<br />";
@@ -789,7 +789,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 
 	//-- for the media list do not look in the directory
 	if ($linkonly)
-	return $medialist;
+		return $medialist;
 
 	// The database part of the medialist is now complete.
 	// We still have to get a list of all media items that exist as files but
@@ -799,9 +799,9 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	// At the same time, we'll build a list of all the sub-folders in this folder.
 	$temp = str_replace($MEDIA_DIRECTORY, "", $directory);
 	if ($temp == "")
-	$folderDepth = 0;
+		$folderDepth = 0;
 	else
-	$folderDepth = count(explode("/", $temp)) - 1;
+		$folderDepth = count(explode("/", $temp)) - 1;
 	$dirs = array ();
 
 	$images = array ();
@@ -812,18 +812,18 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 		while (true) {
 			// Make sure we only look at valid media files
 			if (in_array($fileName, $BADMEDIA))
-			break;
+				break;
 			if (is_dir(filename_decode($directory . $fileName))) {
 				if ($folderDepth < $MEDIA_DIRECTORY_LEVELS)
-				$dirs[] = $fileName;
+					$dirs[] = $fileName;
 				break;
 			}
 			$exts = explode(".", $fileName);
 			if (count($exts) == 1)
-			break;
+				break;
 			$ext = strtolower($exts[count($exts) - 1]);
 			if (!in_array($ext, $MEDIATYPE))
-			break;
+				break;
 
 			// This is a valid media file:
 			// now see whether we already know about it
@@ -842,7 +842,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 				}
 			}
 			if ($exist)
-			break;
+				break;
 
 			// This media item is not yet in the database
 			$media = array ();
@@ -854,7 +854,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 			$media["EXISTS"] = true;
 			$media["FORM"] = $ext;
 			if ($ext == "jpg" || $ext == "jp2")
-			$media["FORM"] = "jpeg";
+				$media["FORM"] = "jpeg";
 			$media["TITL"] = "";
 			$media["GEDCOM"] = "";
 			$media["LEVEL"] = "0";
@@ -862,7 +862,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 			$media["LINKS"] = array ();
 			$media["CHANGE"] = "";
 			if ($oldObject)
-			$media["CHANGE"] = "append";
+				$media["CHANGE"] = "append";
 			$images[$fileName] = $media;
 			break;
 		}
@@ -890,9 +890,9 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 function filterMedia($media, $filter, $acceptExt) {
 
 	if (empty ($filter) || strlen($filter) < 2)
-	$filter = "";
+		$filter = "";
 	if (empty ($acceptExt) || $acceptExt != "http")
-	$acceptExt = "";
+		$acceptExt = "";
 
 	$isEditor = userCanEdit(getUserName());
 
@@ -912,35 +912,35 @@ function filterMedia($media, $filter, $acceptExt) {
 
 		//-- Accept external Media only if specifically told to do so
 		if (stristr($media["FILE"], "://") && $acceptExt != "http")
-		$isValid = false;
+			$isValid = false;
 
 		if (!$isValid)
-		break;
+			break;
 
 		//-- Accept everything if filter string is empty
 		if ($filter == "")
-		break;
+			break;
 
 		//-- Accept when filter string contained in file name (but only for editing users)
 		if ($isEditor && stristr(basename($media["FILE"]), $filter))
-		break;
+			break;
 
 		//-- Accept when filter string contained in Media item's title
 		if (stristr($media["TITL"], $filter))
-		break;
+			break;
 
 		//-- Accept when filter string contained in name of any item
 		//-- this Media item is linked to.  (Privacy already checked)
 		$isValid = false;
 		if (count($links) != 0)
-		break;
+			break;
 		foreach ($links as $id => $type) {
 			if ($type == "INDI" && stristr(get_person_name($id), $filter))
-			$isValid = true;
+				$isValid = true;
 			if ($type == "FAM" && stristr(get_family_descriptor($id), $filter))
-			$isValid = true;
+				$isValid = true;
 			if ($type == "SOUR" && stristr(get_source_descriptor($id), $filter))
-			$isValid = true;
+				$isValid = true;
 		}
 		break;
 	}
@@ -963,31 +963,31 @@ function search_media_pids($query, $allgeds = false, $ANDOR = "AND") {
 	global $TBLPREFIX, $GEDCOM, $indilist, $DBCONN, $REGEXP_DB, $GEDCOMS;
 	$myindilist = array ();
 	if ($REGEXP_DB)
-	$term = "REGEXP";
+		$term = "REGEXP";
 	else
-	$term = "LIKE";
+		$term = "LIKE";
 	if (!is_array($query))
-	$sql = "SELECT m_media as m_media FROM " . $TBLPREFIX . "media WHERE (m_gedrec $term '" . $DBCONN->escapeSimple(strtoupper($query)) . "' OR m_gedrec $term '" . $DBCONN->escapeSimple(str2upper($query)) . "' OR m_gedrec $term '" . $DBCONN->escapeSimple(str2lower($query)) . "')";
+		$sql = "SELECT m_media as m_media FROM " . $TBLPREFIX . "media WHERE (m_gedrec $term '" . $DBCONN->escapeSimple(strtoupper($query)) . "' OR m_gedrec $term '" . $DBCONN->escapeSimple(str2upper($query)) . "' OR m_gedrec $term '" . $DBCONN->escapeSimple(str2lower($query)) . "')";
 	else {
 		$sql = "SELECT m_media FROM " . $TBLPREFIX . "media WHERE (";
 		$i = 0;
 		foreach ($query as $indexval => $q) {
 			if ($i > 0)
-			$sql .= " $ANDOR ";
+				$sql .= " $ANDOR ";
 			$sql .= "(m_gedrec $term '" . $DBCONN->escapeSimple(str2upper($q)) . "' OR m_gedrec $term '" . $DBCONN->escapeSimple(str2lower($q)) . "')";
 			$i++;
 		}
 		$sql .= ")";
 	}
 	if (!$allgeds)
-	$sql .= " AND m_gedfile='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
+		$sql .= " AND m_gedfile='" . $DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]) . "'";
 
 	if ((is_array($allgeds)) && (count($allgeds) != 0)) {
 		$sql .= " AND (";
 		for ($i = 0; $i < count($allgeds); $i++) {
 			$sql .= "m_gedfile='" . $DBCONN->escapeSimple($allgeds[$i]) . "'";
 			if ($i < count($allgeds) - 1)
-			$sql .= " OR ";
+				$sql .= " OR ";
 		}
 		$sql .= ")";
 	}
@@ -1023,15 +1023,15 @@ function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
 	global $MEDIA_EXTERNAL;
 
 	if (strlen($filename) == 0)
-	return false;
+		return false;
 	if (!isset ($generateThumb))
-	$generateThumb = true;
+		$generateThumb = true;
 	if (!isset ($overwrite))
-	$overwrite = false;
+		$overwrite = false;
 
 	// NOTE: Lets get the file details
 	if (strstr($filename, "://"))
-	return $filename;
+		return $filename;
 
 	$filename = check_media_depth($filename, "NOTRUNC");
 
@@ -1040,9 +1040,9 @@ function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
 	$thumbDir = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY . "thumbs/", $mainDir);
 	$thumbName = $parts["basename"];
 	if (isset ($parts["extension"]))
-	$thumbExt = strtolower($parts["extension"]);
+		$thumbExt = strtolower($parts["extension"]);
 	else
-	$thumbExt = "";
+		$thumbExt = "";
 
 	if (!empty($pid)) {
 		$media_id_number = get_media_id_from_file($filename);
@@ -1052,10 +1052,10 @@ function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
 	}
 
 	if (!$generateThumb)
-	return $thumbDir . $thumbName;
+		return $thumbDir . $thumbName;
 
 	if (!$overwrite && file_exists(filename_decode($thumbDir . $thumbName)))
-	return $thumbDir . $thumbName;
+		return $thumbDir . $thumbName;
 
 	if ($AUTO_GENERATE_THUMBS && $generateThumb) {
 		if (generate_thumbnail($mainDir . $thumbName, $thumbDir . $thumbName)) {
@@ -1115,53 +1115,53 @@ function check_media_depth($filename, $truncate = "FRONT", $noise = "VERBOSE") {
 	global $pgv_lang;
 
 	if (empty ($filename) || ($MEDIA_EXTERNAL && stristr($filename, "://")))
-	return $filename;
+		return $filename;
 
 	if (empty ($truncate) || ($truncate != "NOTRUNC" && $truncate != "BACK" && $truncate != "FRONT"))
-	$truncate = "FRONT";
+		$truncate = "FRONT";
 	if ($truncate == "NOTRUNC")
-	$truncate = "FRONT"; // **** temporary over-ride *****
+		$truncate = "FRONT"; // **** temporary over-ride *****
 
 	if (empty ($noise) || ($noise != "VERBOSE" && $noise != "QUIET"))
-	$noise = "VERBOSE";
+		$noise = "VERBOSE";
 
 	// NOTE: Check media depth
 	$parts = pathinfo($filename);
 	//print_r($parts); print "<br />";
 	if (empty ($parts["dirname"]) || ($MEDIA_DIRECTORY_LEVELS == 0 && $truncate != "NOTRUNC"))
-	return $MEDIA_DIRECTORY . $parts["basename"];
+		return $MEDIA_DIRECTORY . $parts["basename"];
 
 	$fileName = $parts["basename"];
 
 	if (empty ($parts["dirname"]))
-	$folderName = $MEDIA_DIRECTORY;
+		$folderName = $MEDIA_DIRECTORY;
 	else
-	$folderName = $parts["dirname"] . "/";
+		$folderName = $parts["dirname"] . "/";
 
 	$folderName = trim($folderName);
 	$folderName = str_replace(array (
-	"\\",
-	"//"
+		"\\",
+		"//"
 	), "/", $folderName);
 	if (substr($folderName, 0, 1) == "/")
-	$folderName = substr($folderName, 1);
+		$folderName = substr($folderName, 1);
 	if (substr($folderName, 0, 2) == "./")
-	$folderName = substr($folderName, 2);
+		$folderName = substr($folderName, 2);
 	if (substr($folderName, 0, strlen($MEDIA_DIRECTORY)) == $MEDIA_DIRECTORY)
-	$folderName = substr($folderName, strlen($MEDIA_DIRECTORY));
+		$folderName = substr($folderName, strlen($MEDIA_DIRECTORY));
 	$folderName = str_replace("../", "", $folderName);
 	if (substr($folderName, 0, 7) == "thumbs/")
-	$folderName = substr($folderName, 7);
+		$folderName = substr($folderName, 7);
 	if (substr($folderName, 0, 4) == "CVS/")
-	$folderName = substr($folderName, 4);
+		$folderName = substr($folderName, 4);
 
 	if ($folderName == "")
-	return $MEDIA_DIRECTORY . $fileName;
+		return $MEDIA_DIRECTORY . $fileName;
 	$folderList = explode("/", $folderName);
 	$folderCount = count($folderList) - 1;
 	$folderDepth = min($folderCount, $MEDIA_DIRECTORY_LEVELS);
 	if ($truncate == "NOTRUNC")
-	$folderDepth = $folderCount;
+		$folderDepth = $folderCount;
 
 	if ($truncate == "BACK") {
 		$nStart = 0;
@@ -1175,13 +1175,13 @@ function check_media_depth($filename, $truncate = "FRONT", $noise = "VERBOSE") {
 	if (substr($folderList[$nStart], -1) == ":") {
 		$nStart++;
 		if ($nStart > $nEnd)
-		return $MEDIA_DIRECTORY . $fileName;
+			return $MEDIA_DIRECTORY . $fileName;
 	}
 	// Now check for, and skip, "./" at the beginning of the folder list
 	if ($folderList[$nStart] == ".") {
 		$nStart++;
 		if ($nStart > $nEnd)
-		return $MEDIA_DIRECTORY . $fileName;
+			return $MEDIA_DIRECTORY . $fileName;
 	}
 
 	$folderName = "";
@@ -1255,32 +1255,32 @@ function retrieve_media_object($gedrec, $gid) {
 	// NOTE: Get the media record
 	for ($linecounter = 1; $linecounter <= $linecount; $linecounter++) {
 		if ($linecounter < $linecount)
-		$line = $gedreclines[$linecounter];
+			$line = $gedreclines[$linecounter];
 		else
-		$line = " ";
+			$line = " ";
 		if (empty ($line))
-		$line = " ";
+			$line = " ";
 		if (preg_match("/[0-9]\sOBJE/", $line) > 0)
-		$objectline = $linecounter;
+			$objectline = $linecounter;
 		// Level 1 media
 		if (($linecounter == $linecount) || ($line {
 			0 }
-			== 1)) {
-				$ft = preg_match_all("/[1|2]\s(\w+)(.*)/", $factrec, $match, PREG_SET_ORDER);
-				if ($ft > 0) {
-					foreach ($match as $key => $hit) {
-						if (!stristr($hit[0], "@") && stristr($hit[1], "OBJE")) {
-							$key = $hit[0] { 0 };
-							$fact = get_sub_record($key, "OBJE", $factrec);
-							$itemsfound[$gid][$itemcounter] = array (
+		== 1)) {
+			$ft = preg_match_all("/[1|2]\s(\w+)(.*)/", $factrec, $match, PREG_SET_ORDER);
+			if ($ft > 0) {
+				foreach ($match as $key => $hit) {
+					if (!stristr($hit[0], "@") && stristr($hit[1], "OBJE")) {
+						$key = $hit[0] { 0 };
+						$fact = get_sub_record($key, "OBJE", $factrec);
+						$itemsfound[$gid][$itemcounter] = array (
 							($objectline
-							), $key, $fact);
-							$itemcounter++;
-						}
+						), $key, $fact);
+						$itemcounter++;
 					}
 				}
-				$factrec = $line;
-			} else
+			}
+			$factrec = $line;
+		} else
 			$factrec .= "\n" . $line;
 	}
 	return $itemsfound;
@@ -1296,7 +1296,7 @@ function get_media_folders() {
 	$folderList = array ();
 	$folderList[0] = $MEDIA_DIRECTORY;
 	if ($MEDIA_DIRECTORY_LEVELS == 0)
-	return $folderList;
+		return $folderList;
 
 	$currentFolderNum = 0;
 	$nextFolderNum = 1;
@@ -1312,7 +1312,7 @@ function get_media_folders() {
 			while (true) {
 				$entry = $dir->read();
 				if (!$entry)
-				break;
+					break;
 				if (is_dir($currentFolder . $entry . "/")) {
 					// Weed out some folders we're not interested in
 					if ($entry != "." && $entry != ".." && $entry != "CVS") {
@@ -1350,14 +1350,14 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	print "<input type=\"hidden\" name=\"ged\" value=\"$GEDCOM\" />\n";
 	print "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
 	if (!empty ($linktoid))
-	print "<input type=\"hidden\" name=\"linktoid\" value=\"$linktoid\" />\n";
+		print "<input type=\"hidden\" name=\"linktoid\" value=\"$linktoid\" />\n";
 	print "<input type=\"hidden\" name=\"level\" value=\"$level\" />\n";
 	print "<table class=\"facts_table center $TEXT_DIRECTION\">\n";
 	print "<tr><td class=\"topbottombar\" colspan=\"2\">";
 	if ($action == "newentry")
-	print $pgv_lang["add_media"];
+		print $pgv_lang["add_media"];
 	else
-	print $pgv_lang["edit_media"];
+		print $pgv_lang["edit_media"];
 	print "</td></tr>";
 	print "<tr><td colspan=\"2\" class=\"descriptionbox\"><input type=\"submit\" value=\"" . $pgv_lang["save"] . "\" /></td></tr>";
 	if ($linktoid == "new" || ($linktoid == "" && $action != "update")) {
@@ -1371,24 +1371,24 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print "<br /><sub>" . $pgv_lang["add_linkid_advice"] . "</sub></td></tr>";
 	}
 	if (isset ($pgv_changes[$pid . "_" . $GEDCOM]))
-	$gedrec = find_updated_record($pid);
+		$gedrec = find_updated_record($pid);
 	else
-	if (id_type($pid) == "OBJE")
-	$gedrec = find_media_record($pid);
-	else
-	$gedrec = "";
+		if (id_type($pid) == "OBJE")
+			$gedrec = find_media_record($pid);
+		else
+			$gedrec = "";
 
 	// 0 OBJE
 	// 1 FILE
 	if ($gedrec == "") {
 		$gedfile = "FILE";
 		if ($filename != "")
-		$gedfile = "FILE " . $filename;
+			$gedfile = "FILE " . $filename;
 	} else {
 		//		$gedfile = get_sub_record(1, "FILE", $gedrec);
 		$gedfile = get_first_tag(1, "FILE", $gedrec);
 		if (empty ($gedfile))
-		$gedfile = "FILE";
+			$gedfile = "FILE";
 	}
 	if ($gedfile != "FILE") {
 		$gedfile = "FILE " . check_media_depth(substr($gedfile, 5));
@@ -1405,39 +1405,39 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print " size=\"40\"><br /><sub>" . $pgv_lang["use_browse_advice"] . "</sub></td></tr>";
 		// Check for thumbnail generation support
 		if (userGedcomAdmin(getUserName())) {
-			$ThumbSupport = "";
-			if (function_exists("imagecreatefromjpeg") and function_exists("imagejpeg"))
+		$ThumbSupport = "";
+		if (function_exists("imagecreatefromjpeg") and function_exists("imagejpeg"))
 			$ThumbSupport .= ", JPG";
-			if (function_exists("imagecreatefromgif") and function_exists("imagegif"))
+		if (function_exists("imagecreatefromgif") and function_exists("imagegif"))
 			$ThumbSupport .= ", GIF";
-			if (function_exists("imagecreatefrompng") and function_exists("imagepng"))
+		if (function_exists("imagecreatefrompng") and function_exists("imagepng"))
 			$ThumbSupport .= ", PNG";
-			if (!$AUTO_GENERATE_THUMBS)
+		if (!$AUTO_GENERATE_THUMBS)
 			$ThumbSupport = "";
 
-			if ($ThumbSupport != "") {
-				$ThumbSupport = substr($ThumbSupport, 2); // Trim off first ", "
-				print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
-				print_help_link("generate_thumb_help", "qm", "generate_thumbnail");
-				print $pgv_lang["auto_thumbnail"];
-				print "</td><td class=\"optionbox wrap\">";
-				print "<input type=\"checkbox\" name=\"genthumb\" value=\"yes\" checked />";
-				print "&nbsp;&nbsp;&nbsp;" . $pgv_lang["generate_thumbnail"] . $ThumbSupport;
-				print "</td></tr>";
-			}
+		if ($ThumbSupport != "") {
+			$ThumbSupport = substr($ThumbSupport, 2); // Trim off first ", "
 			print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
-			print_help_link("upload_thumbnail_file_help", "qm");
-			print $pgv_lang["thumbnail"] . "</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"thumbnail\" size=\"40\"><br /><sub>" . $pgv_lang["use_browse_advice"] . "</sub></td></tr>";
+			print_help_link("generate_thumb_help", "qm", "generate_thumbnail");
+			print $pgv_lang["auto_thumbnail"];
+			print "</td><td class=\"optionbox wrap\">";
+			print "<input type=\"checkbox\" name=\"genthumb\" value=\"yes\" checked />";
+			print "&nbsp;&nbsp;&nbsp;" . $pgv_lang["generate_thumbnail"] . $ThumbSupport;
+			print "</td></tr>";
 		}
+		print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
+		print_help_link("upload_thumbnail_file_help", "qm");
+		print $pgv_lang["thumbnail"] . "</td><td class=\"optionbox wrap\"><input type=\"file\" name=\"thumbnail\" size=\"40\"><br /><sub>" . $pgv_lang["use_browse_advice"] . "</sub></td></tr>";
+	}
 		else print "<input type=\"hidden\" name=\"genthumb\" value=\"yes\" />";
 	}
 	// File name on server
 	$isExternal = strstr($gedfile, "://");
 	if ($gedfile == "FILE") {
 		if (userGedcomAdmin(getUserName())) {
-			add_simple_tag("1 $gedfile", "", $pgv_lang["server_file"], "", "NOCLOSE");
-			print "<br /><sub>" . $pgv_lang["server_file_advice"];
-			print "<br />" . $pgv_lang["server_file_advice2"] . "</sub></td></tr>";
+		add_simple_tag("1 $gedfile", "", $pgv_lang["server_file"], "", "NOCLOSE");
+		print "<br /><sub>" . $pgv_lang["server_file_advice"];
+		print "<br />" . $pgv_lang["server_file_advice2"] . "</sub></td></tr>";
 		}
 		$fileName = "";
 		$folder = "";
@@ -1457,22 +1457,22 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print $pgv_lang["server_file"];
 		print "</td>";
 		print "<td class=\"optionbox wrap $TEXT_DIRECTION wrap\">";
-		if (userGedcomAdmin(getUserName())) {
-			print "<input name=\"filename\" type=\"text\" value=\"" . htmlentities($fileName) . "\" size=\"40\"";
-			if ($isExternal)
+			if (userGedcomAdmin(getUserName())) {
+				print "<input name=\"filename\" type=\"text\" value=\"" . htmlentities($fileName) . "\" size=\"40\"";
+		if ($isExternal)
 			print " />";
-			else
+		else
 			print " /><br /><sub>" . $pgv_lang["server_file_advice"] . "</sub>";
-		}
-		else {
-			$thumbnail = thumbnail_file($fileName, true, false, $pid);
-			if (!empty($thumbnail)) {
-				print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
-				if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
-				print " alt=\"\" title=\"\" />";
 			}
-			print $fileName;
-		}
+			else {
+				$thumbnail = thumbnail_file($fileName, true, false, $pid);
+				if (!empty($thumbnail)) {
+					print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
+					if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
+					print " alt=\"\" title=\"\" />";
+				}
+				print $fileName;
+			}
 		print "</td>";
 		print "</tr>";
 
@@ -1496,13 +1496,13 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			if (!strpos($f, ".svn")){    //Do not print subversion directories
 				print "<option value=\"$f\"";
 				if ($folder == $f)
-				print " selected=\"selected\"";
+					print " selected=\"selected\"";
 				print ">$f</option>\n";
 			}
 		}
-		print "<option value=\"other\">" . $pgv_lang["add_media_other_folder"] . "</option>\n";
+			print "<option value=\"other\">" . $pgv_lang["add_media_other_folder"] . "</option>\n";
 		print "</select></span>\n";
-		print "<span dir=\"ltr\"><input type=\"text\" name=\"folder\" size=\"30\" value=\"" . $folder . "\"></span>";
+			print "<span dir=\"ltr\"><input type=\"text\" name=\"folder\" size=\"30\" value=\"" . $folder . "\"></span>";
 		if ($gedfile == "FILE") {
 			print "<br /><sub>" . $pgv_lang["server_folder_advice2"] . "</sub></td></tr>";
 		}
@@ -1515,75 +1515,75 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	print "<input name=\"oldFolder\" type=\"hidden\" value=\"" . addslashes($folder) . "\" />";
 	// 2 FORM
 	if ($gedrec == "")
-	$gedform = "FORM";
+		$gedform = "FORM";
 	else {
 		$gedform = get_first_tag(2, "FORM", $gedrec);
 		if (empty ($gedform))
-		$gedform = "FORM";
+			$gedform = "FORM";
 	}
 	$formid = add_simple_tag("2 $gedform");
 
 	// 3 TYPE
 	if ($gedrec == "")
-	$gedtype = "TYPE";
+		$gedtype = "TYPE";
 	else {
 		$temp = str_replace("\r\n", "\n", $gedrec) . "\n";
 		$types = preg_match("/3 TYPE(.*)\n/", $temp, $matches);
 		if (empty ($matches[0]))
-		$gedtype = "TYPE";
+			$gedtype = "TYPE";
 		else
-		$gedtype = "TYPE " . trim($matches[1]);
+			$gedtype = "TYPE " . trim($matches[1]);
 	}
 	add_simple_tag("3 $gedtype");
 
 	// 2 TITL
 	if ($gedrec == "")
-	$gedtitl = "TITL";
+		$gedtitl = "TITL";
 	else {
 		$gedtitl = get_first_tag(2, "TITL", $gedrec);
 		if (empty ($gedtitl))
-		$gedtitl = "TITL";
+			$gedtitl = "TITL";
 	}
 	add_simple_tag("2 $gedtitl");
 
 	// 3 _HEB
 	if ($gedrec == "")
-	$gedtitl = "_HEB";
+		$gedtitl = "_HEB";
 	else {
 		$gedtitl = get_first_tag(3, "_HEB", $gedrec);
 		if (empty ($gedtitl))
-		$gedtitl = "_HEB";
+			$gedtitl = "_HEB";
 	}
 	add_simple_tag("3 $gedtitl");
 
 	// 3 ROMN
 	if ($gedrec == "")
-	$gedtitl = "ROMN";
+		$gedtitl = "ROMN";
 	else {
 		$gedtitl = get_first_tag(3, "ROMN", $gedrec);
 		if (empty ($gedtitl))
-		$gedtitl = "ROMN";
+			$gedtitl = "ROMN";
 	}
 	add_simple_tag("3 $gedtitl");
 
 	// 2 _PRIM
 	if ($gedrec == "")
-	$gedprim = "_PRIM";
+		$gedprim = "_PRIM";
 	else {
 		//		$gedprim = get_sub_record(1, "_PRIM", $gedrec);
 		$gedprim = get_first_tag(1, "_PRIM", $gedrec);
 		if (empty ($gedprim))
-		$gedprim = "_PRIM";
+			$gedprim = "_PRIM";
 	}
 	add_simple_tag("1 $gedprim");
 	// 2 _THUM
 	if ($gedrec == "")
-	$gedthum = "_THUM";
+		$gedthum = "_THUM";
 	else {
 		//		$gedthum = get_sub_record(1, "_THUM", $gedrec);
 		$gedthum = get_first_tag(1, "_THUM", $gedrec);
 		if (empty ($gedthum))
-		$gedthum = "_THUM";
+			$gedthum = "_THUM";
 	}
 	add_simple_tag("1 $gedthum");
 
@@ -1609,7 +1609,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 						$haveQUAY = false;
 					}
 					if ($fact == "PAGE")
-					$havePAGE = true;
+						$havePAGE = true;
 					if ($fact == "TEXT") {
 						if (!$havePAGE) {
 							add_simple_tag(($sourceLevel +1) . " PAGE");
@@ -1624,9 +1624,9 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 						}
 					}
 					if ($fact == "DATE")
-					$haveDATE = true;
+						$haveDATE = true;
 					if ($fact == "QUAY")
-					$haveQUAY = true;
+						$haveQUAY = true;
 				} else {
 					$fact = "";
 					$event = "";
@@ -1634,26 +1634,26 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 				if (!empty ($fact) && $fact != "CONC" && $fact != "CONT" && $fact != "DATA") {
 					$subrecord = $subLevel . " " . $fact . " " . $event;
 					if ($inSource && $fact == "DATE")
-					add_simple_tag($subrecord, "", $pgv_lang["date_of_entry"]);
+						add_simple_tag($subrecord, "", $pgv_lang["date_of_entry"]);
 					else
-					add_simple_tag($subrecord);
+						add_simple_tag($subrecord);
 				}
 			}
 			if ($inSource) {
 				if (!$havePAGE)
-				add_simple_tag(($sourceLevel +1) . " PAGE");
+					add_simple_tag(($sourceLevel +1) . " PAGE");
 				if (!$haveTEXT)
-				add_simple_tag(($sourceLevel +2) . " TEXT");
+					add_simple_tag(($sourceLevel +2) . " TEXT");
 				if (!$haveDATE)
-				add_simple_tag(($sourceLevel +2) . " DATE", "", $pgv_lang["date_of_entry"]);
+					add_simple_tag(($sourceLevel +2) . " DATE", "", $pgv_lang["date_of_entry"]);
 				if (!$haveQUAY)
-				add_simple_tag(($sourceLevel +1) . " QUAY");
+					add_simple_tag(($sourceLevel +1) . " QUAY");
 			}
 		}
 	}
 	print "</table>\n";
-	?>
-<script language="JavaScript" type="text/javascript">
+?>
+		<script language="JavaScript" type="text/javascript">
 			var formid = '<?php print $formid; ?>';
 			function updateFormat(filename) {
 				var extsearch=/\.([a-zA-Z]{3,4})$/;
@@ -1667,7 +1667,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 				formfield.value = ext;
 			}
 		</script>
-	<?php
+<?php
 
 	print_add_layer("SOUR", 1);
 	print_add_layer("NOTE", 1);
@@ -1677,9 +1677,9 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 
 function findImageSize($file) {
 	if (strtolower(substr($file, 0, 7)) == "http://")
-	$file = "http://" . rawurlencode(substr($file, 7));
+		$file = "http://" . rawurlencode(substr($file, 7));
 	else
-	$file = filename_decode($file);
+		$file = filename_decode($file);
 	$imgsize = @ getimagesize($file);
 	if (!$imgsize) {
 		$imgsize[0] = 300;
@@ -1701,10 +1701,10 @@ function PrintMediaLinks($links, $size = "small") {
 	global $TEXT_DIRECTION, $pgv_lang;
 
 	if (count($links) == 0)
-	return false;
+		return false;
 
 	if ($size != "small")
-	$size = "normal";
+		$size = "normal";
 
 	$linkList = array ();
 
@@ -1718,17 +1718,17 @@ function PrintMediaLinks($links, $size = "small") {
 			$linkItem["name"] = "A" . get_sortable_name($id);
 			$linkItem["printName"] = get_person_name($id);
 		} else
-		if ($type == "FAM" && displayDetailsByID($id, "FAM")) {
-			$linkItem["name"] = "B" . get_sortable_family_descriptor($id);
-			$linkItem["printName"] = get_family_descriptor($id);
-		} else
-		if ($type == "SOUR" && displayDetailsByID($id, "SOUR")) {
-			$linkItem["printName"] = get_source_descriptor($id);
-			$linkItem["name"] = "C" . $linkItem["printName"];
-		}
+			if ($type == "FAM" && displayDetailsByID($id, "FAM")) {
+				$linkItem["name"] = "B" . get_sortable_family_descriptor($id);
+				$linkItem["printName"] = get_family_descriptor($id);
+			} else
+				if ($type == "SOUR" && displayDetailsByID($id, "SOUR")) {
+					$linkItem["printName"] = get_source_descriptor($id);
+					$linkItem["name"] = "C" . $linkItem["printName"];
+				}
 
 		if ($linkItem["name"] != "")
-		$linkList[] = $linkItem;
+			$linkList[] = $linkItem;
 	}
 	uasort($linkList, "mediasort");
 
@@ -1738,11 +1738,11 @@ function PrintMediaLinks($links, $size = "small") {
 	$firstSour = true;
 	$firstObje = true;
 	if ($size == "small")
-	print "<sub>";
+		print "<sub>";
 	foreach ($linkList as $linkItem) {
 		if ($linkItem["type"] == "INDI") {
 			if ($firstIndi && !$firstLink)
-			print "<br />";
+				print "<br />";
 			$firstLink = false;
 			$firstIndi = false;
 			print "<br /><a href=\"individual.php?pid=" . $linkItem["id"] . "\">";
@@ -1754,16 +1754,16 @@ function PrintMediaLinks($links, $size = "small") {
 				print $pgv_lang["view_person"] . " -- ";
 				print PrintReady($linkItem["printName"]) . "&nbsp;&nbsp;";
 				if ($TEXT_DIRECTION == "rtl")
-				print getRLM();
+					print getRLM();
 				print "(" . $linkItem["id"] . ")";
 				if ($TEXT_DIRECTION == "rtl")
-				print getRLM();
+					print getRLM();
 			}
 			print "</a>";
 		}
 		if ($linkItem["type"] == "FAM") {
 			if ($firstFam && !$firstLink)
-			print "<br />";
+				print "<br />";
 			$firstLink = false;
 			$firstFam = false;
 			print "<br /><a href=\"family.php?famid=" . $linkItem["id"] . "\">";
@@ -1775,16 +1775,16 @@ function PrintMediaLinks($links, $size = "small") {
 				print $pgv_lang["view_family"] . " -- ";
 				print PrintReady($linkItem["printName"]) . "&nbsp;&nbsp;";
 				if ($TEXT_DIRECTION == "rtl")
-				print getRLM();
+					print getRLM();
 				print "(" . $linkItem["id"] . ")";
 				if ($TEXT_DIRECTION == "rtl")
-				print getRLM();
+					print getRLM();
 			}
 			print "</a>";
 		}
 		if ($linkItem["type"] == "SOUR") {
 			if ($firstSour && !$firstLink)
-			print "<br />";
+				print "<br />";
 			$firstLink = false;
 			$firstSour = false;
 			print "<br /><a href=\"source.php?sid=" . $linkItem["id"] . "\">";
@@ -1796,16 +1796,16 @@ function PrintMediaLinks($links, $size = "small") {
 				print $pgv_lang["view_source"] . " -- ";
 				print PrintReady($linkItem["printName"]) . "&nbsp;&nbsp;";
 				if ($TEXT_DIRECTION == "rtl")
-				print getRLM();
+					print getRLM();
 				print "(" . $linkItem["id"] . ")";
 				if ($TEXT_DIRECTION == "rtl")
-				print getRLM();
+					print getRLM();
 			}
 			print "</a>";
 		}
 	}
 	if ($size == "small")
-	print "</sub>";
+		print "</sub>";
 	return true;
 }
 
@@ -1841,12 +1841,12 @@ function get_media_relations($mid){
 			$media[$row[0]] = id_type($row[0]);
 		}
 	}
-	$medialist[$keyMediaList]['LINKS'] = $media;
-	return $media;
+		$medialist[$keyMediaList]['LINKS'] = $media;
+		return $media;
 }
 //Basically calls the get_media_relations method but it uses a file name rather than a media id.
 function get_media_relations_with_file_name($filename){
-	global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS, $GEDCOM;
+global $TBLPREFIX, $BUILDING_INDEX, $DBCONN, $GEDCOMS, $GEDCOM;
 	$dbq = "select m_media from ".$TBLPREFIX."media where m_file='".$filename."' and m_gedfile='".$GEDCOMS[$GEDCOM]['id']."'";
 	$dbr = dbquery($dbq);
 	if (isset($dbr)){
@@ -1896,32 +1896,32 @@ function cropImage($image, $dest_image, $left, $top, $right, $bottom){ //$image 
 	$height = round($cheight * ($width/$cwidth));
 	if($ims['mime'] == "image/png") //if the type is png
 	{
-		$img = imagecreatetruecolor(($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
-		//$org_img = imagecreatefromjpeg($image);
-		$org_img = imagecreatefrompng($image);
-		$ims = @getimagesize($image);
-		imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
-		//imagejpeg($img,$dest_image,90);
-		imagepng($img,$dest_image);
-		imagedestroy($img);
+	$img = imagecreatetruecolor(($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
+	//$org_img = imagecreatefromjpeg($image);
+	$org_img = imagecreatefrompng($image);
+	$ims = @getimagesize($image);
+	imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
+	//imagejpeg($img,$dest_image,90);
+	imagepng($img,$dest_image);
+	imagedestroy($img);
 	}
 	if($ims['mime'] == "image/jpeg") //if the type is jpeg
 	{
-		$img = imagecreatetruecolor($width, $height);
-		$org_img = imagecreatefromjpeg($image);
-		$ims = @getimagesize($image);
-		imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
-		imagejpeg($img,$dest_image,90);
-		imagedestroy($img);
+	$img = imagecreatetruecolor($width, $height);
+	$org_img = imagecreatefromjpeg($image);
+	$ims = @getimagesize($image);
+	imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
+	imagejpeg($img,$dest_image,90);
+	imagedestroy($img);
 	}
 	if($ims['mime'] == "image/gif") //if the type is gif
 	{
-		$img = imagecreatetruecolor(($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
-		$org_img =  imagecreatefromgif($image);
-		$ims = @getimagesize($image);
-		imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
-		imagegif($img,$dest_image);
-		imagedestroy($img);
+	$img = imagecreatetruecolor(($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
+	$org_img =  imagecreatefromgif($image);
+	$ims = @getimagesize($image);
+	imagecopyresampled($img,$org_img, 0, 0, $left, $top, $width, $height, ($ims[0]-$right)-$left,($ims[1]-$bottom)-$top);
+	imagegif($img,$dest_image);
+	imagedestroy($img);
 	}
 }
 

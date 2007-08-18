@@ -32,6 +32,13 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["differences"]			= "Differenzen";
+$pgv_lang["charts_block"]			= "Diagramm-Block";
+$pgv_lang["charts_block_descr"]		= "Dieser Block ermöglicht es Ihnen, Diagramme auf den haupt und persönlichen Begrüßungsseiten zu zeigen.  Sie können in dessen Konfiguration bestimmen, ob der Block das Ahnen-, Nachfahren-, oder Sanduhr-Diagramm zeigen soll.  Sie können auch die ID-Nummer der Startperson bestimmen.";
+$pgv_lang["chart_type"]				= "Diagramm-Typ";
+$pgv_lang["changedate1"]			= "Datums-Bereich Ende";
+$pgv_lang["changedate2"]			= "Datums-Bereich Anfang";
+$pgv_lang["changes_report"]			= "Änderungen Bericht";
 $pgv_lang["search_place_word"]			= "Ganze Worte";
 $pgv_lang["invalid_search_input"]		= "Bitte geben Sie einen Namen oder einen Ort zusätzlich zur Jahresangabe ein";
 $pgv_lang["duplicate_username"]			= "Doppelter Benutzername. Ein Benutzer mit dem gewählten Namen existiert bereits. Bitte wählen Sie einen anderen Benutzernamen.";

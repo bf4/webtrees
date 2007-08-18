@@ -38,7 +38,7 @@ $DBTYPE = "mysql";								//-- type of database to connect when using the PEAR:D
 $DBHOST = "localhost";							//-- Host where MySQL database is kept
 $DBUSER = "root";									//-- MySQL database User Name
 $DBPASS = "";									//-- MySQL database User Password
-$DBNAME = "pgvsvn";							//-- The MySQL database name where you want PHPGedView to build its tables
+$DBNAME = "phpgedview";							//-- The MySQL database name where you want PHPGedView to build its tables
 $DBPERSIST = false;								//-- Use persistent database connections
 $TBLPREFIX = "pgv_";							//-- prefix to include on table names
 $INDEX_DIRECTORY = "./index/";					//-- Readable and Writeable Directory to store index files (include the trailing "/")
@@ -65,5 +65,5 @@ $CONFIG_VERSION = "4.0";						//-- the version this config file goes to
 $DIRECTORY_MODE = "ldap";						//-- User info stored in db or ldap directory
 $COMMIT_COMMAND = "";						//-- Choices are empty string, cvs or svn
 
-$CONFIGURED = true;
+$CONFIGURED = false;
 require_once("includes/session.php");
