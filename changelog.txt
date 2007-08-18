@@ -8,6 +8,7 @@
 	# $Id$
 =====================================================================
 Version 4.1.1
+ - Fixed [ 1777015 ] PGV 4.1.1 SVN 1453: errors in tcpdf.php (canajun2eh)
  - Fixed [ 1753399 ] Media File Update - Errors (yalnifj)
  - Added Charts block (yalnifj)
  - Added changes report (yalnifj)
