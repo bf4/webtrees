@@ -140,6 +140,7 @@ $pgv_lang["review_changes_email"]		= "Erinnerungs Mails versenden?";
 $pgv_lang["review_changes_email_freq"]	= "Erinnerungs Mails Häufigkeit (Tage)";
 $pgv_lang["review_changes_subject"]		= "PhpGedView - Änderungen kontrollieren";
 $pgv_lang["review_changes_body"]		= "An einer genealogischen Datenbank wurden Änderungen vorgenommen. Diese Änderungen müssen kontrolliert und übernommen werden, bevor sie für alle Nutzer sichtbar werden. Bitte klicken Sie auf die angegebene URL, um auf die PhpGedView-Seite zu gelangen und melden Sie sich an, um die Änderung zu kontrollieren. ";
+$pgv_lang["show_pending"]				= "Offene Änderungen zeigen";
 $pgv_lang["show_spouses"]				= "Ehepartner zeigen";
 $pgv_lang["quick_update_title"]			= "Schnelle Bearbeitung";
 $pgv_lang["quick_update_instructions"]	= "Auf dieser Seite können Sie schnell die Daten einer Person bearbeiten. Sie müssen nur die Daten eintragen, die neu sind oder von den Informationen in der Datenbank abweichen. Nachdem die Daten übermittelt sind, müssen sie noch von einem Verwalter kontrolliert und übernommen werden, bevor sie für alle Nutzer sichtbar werden.";
