@@ -100,11 +100,14 @@ else{$edit==$edit;}
 		//Slide Show
 		if ( $reorder==1 ) {
 		}else{
-			print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
-			print "<a href=\"modules/lightbox/images/slideshow.jpg\" rel=\"clearbox[general,6,start]\" title=\"" . $pgv_lang["lb_slide_show"] . "\">"; 
-			print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\"  title=\"" . $pgv_lang["lb_slide_show"] . "\" />" ;
-			print " " . $pgv_lang["lb_slide_show"]; 
-			print '</a>';
+			if ($mediacnt!=0) {
+				print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
+				print "<a href=\"modules/lightbox/images/slideshow.jpg\" rel=\"clearbox[general,6,start]\" title=\"" . $pgv_lang["lb_slide_show"] . "\">"; 
+				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\"  title=\"" . $pgv_lang["lb_slide_show"] . "\" />" ;
+				print " " . $pgv_lang["lb_slide_show"]; 
+				print '</a>';
+			}else{
+			}	
 		}
 		
 		//Add a new multimedia object

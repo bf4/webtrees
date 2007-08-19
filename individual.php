@@ -594,6 +594,7 @@ if(empty($SEARCH_SPIDER)) {
 		if ($mediacnt!=0) {	
 			include_once('modules/lightbox/functions/lb_head.php');	
 		}else{
+			include_once('modules/lightbox/functions/lb_head.php');			
 			print "<table class=\"facts_table\"><tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr></table>\n";
 		}
     }else{
