@@ -8,6 +8,8 @@
 	# $Id$
 =====================================================================
 Version 4.1.1
+ - Fixed PunBB to work in UTF-8 (meliza)
+ - Added Hebrew support to PunBB (meliza)
  - Fixed [ 1777015 ] PGV 4.1.1 SVN 1453: Move "fonts" subdirectory from "tcpdf" to "includes"
  - Fixed [ 1777015 ] PGV 4.1.1 SVN 1453: errors in tcpdf.php (canajun2eh)
  - Fixed [ 1753399 ] Media File Update - Errors (yalnifj)
