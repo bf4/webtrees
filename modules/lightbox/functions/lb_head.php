@@ -75,14 +75,14 @@ else{$edit==$edit;}
         print "</a>" ;
 		
 		//Reorder Media
-		if ( userIsAdmin(getUserName()) &&  (!isset($edit) || $edit==1) && ($reorder!=1 || !isset($reorder)) ) {
+		if ( userIsAdmin(getUserName()) && $mediacnt!=0 &&  (!isset($edit) || $edit==1) && ($reorder!=1 || !isset($reorder)) ) {
 			print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
 //			print "<a href=\"javascript: reorder_media()\" title=\"Reorder Media\" >" ;
 			print "<a href=\"" . $_SERVER['PHP_SELF'] . "?tab=" . $tabno . "&pid=" . $pid . "&edit=" . $edit . "&reorder=1\" title=\"Change Media Order *** Not working fully yet ! ***\" >" ;
 			print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\"  title=\"Change Media Order *** Not working fully yet ! ***\" >" ;
 			print " Change Media Order" ; 
 			print '</a>';  		
-		}elseif ( userIsAdmin(getUserName()) && (!isset($edit) || $edit==1) ){
+		}elseif ( userIsAdmin(getUserName()) && $mediacnt!=0 && (!isset($edit) || $edit==1) ){
 			print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
 //			print "<a href=\"javascript: reorder_media()\" title=\"Reorder Media\" >" ;
 			print "<a href=\"" . $_SERVER['PHP_SELF'] . "?tab=" . $tabno . "&pid=" . $pid . "&edit=" . $edit . "\" title=\"Save Media Order *** Not working fully yet ! ***\" >" ;
@@ -134,13 +134,13 @@ else{$edit==$edit;}
 
 		//Turn Edit Mode On or Off
 		if ( $reorder==1 ) {
-        }elseif (userIsAdmin(getUserName()) && $edit==1 ) {
+        }elseif (userIsAdmin(getUserName()) && $edit==1 && $mediacnt!=0) {
             print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
             print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&edit=0 title=\"" . $pgv_lang["turn_edit_OFF"] . "\">";
             print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\" " . $pgv_lang["turn_edit_OFF"] . "\" />" ;
             print " " . $pgv_lang["turn_edit_OFF"] ;
             print " </a> ";
-        }elseif (userIsAdmin(getUserName()) && $edit==0 ) {
+        }elseif (userIsAdmin(getUserName()) && $edit==0 && $mediacnt!=0) {
             print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
             print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&edit=1 title=\"" . $pgv_lang["turn_edit_ON"] . "\">";
             print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\" " . $pgv_lang["turn_edit_ON"] . "\" />" ;
