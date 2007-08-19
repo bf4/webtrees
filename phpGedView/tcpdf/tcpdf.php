@@ -28,7 +28,7 @@
 //    includes a method to print various barcode formats using an improved version of "Generic Barcode Render Class" by Karim Mribti (http://www.mribti.com/barcode/) (require GD library: http://www.boutell.com/gd/);
 //    defines standard Header() and Footer() methods.
 //
-// $Id $
+// @version $Id $
 //============================================================+
 
 /**
@@ -2123,7 +2123,7 @@ if(!class_exists('TCPDF')) {
 			while($i<$nb) {
 				//Get next character
 				$c = $s{$i};
-				if(preg_match("/[\n]/u", $c)) {
+				if(preg_match("/[\n]/", $c)) {
 					//Explicit line break
 					if($this->ws > 0) {
 						$this->ws = 0;
@@ -2141,7 +2141,7 @@ if(!class_exists('TCPDF')) {
 					}
 					continue;
 				}
-				if(preg_match("/[ ]/u", $c)) {
+				if(preg_match("/[ ]/", $c)) {
 					$sep = $i;
 					$ls = $l;
 					$ns++;
@@ -2239,7 +2239,7 @@ if(!class_exists('TCPDF')) {
 			$nb = strlen($s);
 
 			// handle single space character
-			if(($nb==1) AND preg_match("/[ ]/u", $s)) {
+			if(($nb==1) AND preg_match("/[ ]/", $s)) {
 				$this->x += $this->GetStringWidth($s);
 				return;
 			}
@@ -2252,7 +2252,7 @@ if(!class_exists('TCPDF')) {
 			while($i<$nb) {
 				//Get next character
 				$c=$s{$i};
-				if(preg_match("/[\n]/u", $c)) {
+				if(preg_match("/[\n]/", $c)) {
 					//Explicit line break
 					$this->Cell($w, $h, substr($s, $j, $i-$j), 0, 2, '', $fill, $link);
 					$i++;
@@ -2267,7 +2267,7 @@ if(!class_exists('TCPDF')) {
 					$nl++;
 					continue;
 				}
-				if(preg_match("/[ ]/u", $c)) {
+				if(preg_match("/[ ]/", $c)) {
 					$sep= $i;
 				}
 
@@ -3680,7 +3680,7 @@ if(!class_exists('TCPDF')) {
 			//replace carriage returns, newlines and tabs
 			$repTable = array("\t" => " ", "\n" => " ", "\r" => " ", "\0" => " ", "\x0B" => " "); 
 			$html = strtr($html, $repTable);
-			$pattern = '/(<[^>]+>)/Uu';
+			$pattern = '/(<[^>]+>)/U';
 			$a = preg_split($pattern, $html, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY); //explodes the string
 			
 			if (empty($this->lasth)) {
