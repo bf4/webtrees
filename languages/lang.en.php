@@ -272,6 +272,7 @@ $pgv_lang["review_changes_email"]	= "Send out reminder emails?";
 $pgv_lang["review_changes_email_freq"]	= "Reminder email frequency (days)";
 $pgv_lang["review_changes_subject"]	= "PhpGedView - Review changes";
 $pgv_lang["review_changes_body"]	= "Online changes have been made to a genealogical database.  These changes need to be reviewed and accepted before they will appear to all users.  Please use the URL below to enter that PhpGedView site and login to review the changes.";
+$pgv_lang["show_pending"]		= "Show pending changes";
 $pgv_lang["show_spouses"]		= "Show spouses";
 $pgv_lang["quick_update_title"] = "Quick Update";
 $pgv_lang["quick_update_instructions"] = "This page allows you to quickly update information for an individual.  You only need to fill out the information that is new or that has changed from what is currently in the database.  After your changes have been submitted they have to be reviewed by an administrator before they will become visible to all.";
