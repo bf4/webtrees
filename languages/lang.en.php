@@ -33,7 +33,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 $pgv_lang["differences"]			= "Differences";
 $pgv_lang["charts_block"]			= "Charts Block";
-$pgv_lang["charts_block_descr"]		= "The Charts Block allows you to place a chart embedded into a block on the welcome page or on the MyGedView portal.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart.";
+$pgv_lang["charts_block_descr"]		= "The Charts block allows you to place a chart on the Welcome or the MyGedView portal page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart.";
 $pgv_lang["chart_type"]				= "Chart Type";
 $pgv_lang["changedate1"]			= "Ending range of change dates";
 $pgv_lang["changedate2"]			= "Starting range of change dates";
@@ -272,6 +272,7 @@ $pgv_lang["review_changes_email"]	= "Send out reminder emails?";
 $pgv_lang["review_changes_email_freq"]	= "Reminder email frequency (days)";
 $pgv_lang["review_changes_subject"]	= "PhpGedView - Review changes";
 $pgv_lang["review_changes_body"]	= "Online changes have been made to a genealogical database.  These changes need to be reviewed and accepted before they will appear to all users.  Please use the URL below to enter that PhpGedView site and login to review the changes.";
+$pgv_lang["show_pending"]		= "Show pending changes";
 $pgv_lang["show_spouses"]		= "Show spouses";
 $pgv_lang["quick_update_title"] = "Quick Update";
 $pgv_lang["quick_update_instructions"] = "This page allows you to quickly update information for an individual.  You only need to fill out the information that is new or that has changed from what is currently in the database.  After your changes have been submitted they have to be reviewed by an administrator before they will become visible to all.";
@@ -1607,12 +1608,9 @@ $pgv_lang["TYPE__video"] = "Video";
 $pgv_lang["view_slideshow"] = "View as slideshow";
 $pgv_lang["download_image"]			= "Download File";
 $pgv_lang["no_media"]				= "No Media Found";
-$pgv_lang["media_privacy"]			= "Privacy restrictions prevent you from viewing this item";
 $pgv_lang["relations_heading"]		= "The image relates to:";
 $pgv_lang["file_size"]				= "File Size";
 $pgv_lang["img_size"]				= "Image Size";
-$pgv_lang["media_broken"]			= "This media file is broken and unreadable by PHP";
-$pgv_lang["unknown_mime"]			= "Unknown mimetype for this media file, this will cause problems for the Media Firewall.";
 
 //-- Modules
 $pgv_lang["module_error_unknown_action_v2"] = "Unknown action: [action].";

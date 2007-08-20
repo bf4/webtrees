@@ -32,9 +32,6 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 require_once("includes/reportbase.php");
-
-//define('FPDF_FONTPATH','fonts/');
-
 require_once('tcpdf/config/lang/eng.php');
 require_once("tcpdf/tcpdf.php");
 
@@ -355,6 +352,40 @@ class PGVRCellPDF extends PGVRCell {
 			$pdf->Link($curx, $cury, $this->width, $this->height, $url);
 		}
 	}
+}
+
+/**
+ * Cell element
+ */
+class PGVRHtmlPDF extends PGVRHtml {
+	
+	function PGVRHtmlPDF($tag, $attrs) {
+		parent::PGVRHtml($tag, $attrs);
+	}
+	
+	function render(&$pdf, $sub = false) {
+		global $TEXT_DIRECTION, $embed_fonts;
+		//print "[".$this->text."] ";
+
+		if (!empty($this->attrs['pgvrstyle'])) $pdf->setCurrentStyle($this->attrs['pgvrstyle']);
+		if (!empty($this->attrs['width'])) $this->attrs['width'] *= 3.9;
+		
+		$this->text = $this->getStart().$this->text;
+		foreach($this->elements as $k=>$element) {
+			if (is_string($element) && $element=="footnotetexts") $pdf->Footnotes();
+			else if (is_string($element) && $element=="addpage") $pdf->AddPage();
+			else if ($element->get_type()=='PGVRHtml') {
+//				$this->text .= $element->getStart(); 
+				$this->text .= $element->render($pdf, true);
+			}
+			else $element->render($pdf);
+		}
+		$this->text .= $this->getEnd();
+		if ($sub) return $this->text;
+//		print "[".htmlentities($this->text)."] ";
+		$pdf->writeHTML($this->text);
+	}
+
 }
 
 /**

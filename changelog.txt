@@ -9,9 +9,6 @@
 =====================================================================
 
 Version 4.2
- - Added Charts block (yalnifj)
- - Added changes report (yalnifj)
- - Replaced UFPDF library with TCPDF library for report generation (yalnifj)
  - Added Watermarks [ 1739602 ] (ljm)
  - Added Media Firewall [ 1749817 ] (ljm)
  - Added sourcelink and assolink tables [ 1718918 ] [ 1717381 ] (yalnifj)
@@ -32,6 +29,18 @@ Version 4.2
  - Adding a "never married" icon on ancestry booklet when NMR=0 (opus27)
 
 Version 4.1.1
+ - Fixed auto-accept users do not see the changes of other users (yalnifj, tthdoc)
+ - Fixed [ 1775026 ] Line break missing when re-ordering children (canajun2eh)
+ - Fixed [ 1769535 ] Line break missing when adding child or spouse to family (canajun2eh)
+ - Added Swedish and Finnish UTF-8 support to Modules PunBB (meliza)
+ - Fixed Modules PunBB to work in UTF-8 (meliza)
+ - Added Hebrew support to Modules PunBB (meliza)
+ - Fixed [ 1777015 ] PGV 4.1.1 SVN 1453: Move "fonts" subdirectory from "tcpdf" to "includes"
+ - Fixed [ 1777015 ] PGV 4.1.1 SVN 1453: errors in tcpdf.php (canajun2eh)
+ - Fixed [ 1753399 ] Media File Update - Errors (yalnifj)
+ - Added Charts block (yalnifj)
+ - Added changes report (yalnifj)
+ - Replaced UFPDF library with TCPDF library for report generation (yalnifj)
  - Fixed [ 1756818 ] Event data not retrieved to the blocks and numeric file ID (meliza)
  - Fixed [ 1773512 ] Unrecognized GEDCOM Code: MARR1 _PGVFS (yalnifj)
  - Fixed [ 1772760 ] Hourglass Chart in Stable 4.1 - Wrong depth of descendants (yalnifj)

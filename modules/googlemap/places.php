@@ -185,35 +185,34 @@ if ($action=="ImportGedcom") {
 		$i = 1;
 		$placerec = get_sub_record(2, "2 PLAC", $row[0], $i);
 		while (!empty($placerec)) {
-			$placelist[$j] = array();
-			preg_match("/2 PLAC (.*)/", $placerec, $match);
-			if (preg_match("/2 PLAC (.*)/", $placerec, $match)==0)
-				var_dump($placerec);
-			$placelist[$j]["place"] = trim($match[1]);
-			if (preg_match("/4 LATI (.*)/", $placerec, $match)) {
-				$placelist[$j]["lati"] = trim($match[1]);
-				if (($placelist[$j]["lati"][0] != "N") && ($placelist[$j]["lati"][0] != "S")) {
-					if ($placelist[$j]["lati"] < 0) {
-						$placelist[$j]["lati"][0] = "S";
-					} else {
-						$placelist[$j]["lati"] = "N".$placelist[$j]["lati"];
+			if (preg_match("/2 PLAC (.+)/", $placerec, $match)) {
+				$placelist[$j] = array();
+				$placelist[$j]["place"] = trim($match[1]);
+				if (preg_match("/4 LATI (.*)/", $placerec, $match)) {
+					$placelist[$j]["lati"] = trim($match[1]);
+					if (($placelist[$j]["lati"][0] != "N") && ($placelist[$j]["lati"][0] != "S")) {
+						if ($placelist[$j]["lati"] < 0) {
+							$placelist[$j]["lati"][0] = "S";
+						} else {
+							$placelist[$j]["lati"] = "N".$placelist[$j]["lati"];
+						}
 					}
 				}
-			}
-			else $placelist[$j]["lati"] = "0";
-			if (preg_match("/4 LONG (.*)/", $placerec, $match)) {
-				$placelist[$j]["long"] = trim($match[1]);
-				if (($placelist[$j]["long"][0] != "E") && ($placelist[$j]["long"][0] != "W")) {
-					if ($placelist[$j]["long"] < 0) {
-						$placelist[$j]["long"][0] = "W";
-					} else {
-						$placelist[$j]["long"] = "E".$placelist[$j]["long"];
+				else $placelist[$j]["lati"] = "0";
+				if (preg_match("/4 LONG (.*)/", $placerec, $match)) {
+					$placelist[$j]["long"] = trim($match[1]);
+					if (($placelist[$j]["long"][0] != "E") && ($placelist[$j]["long"][0] != "W")) {
+						if ($placelist[$j]["long"] < 0) {
+							$placelist[$j]["long"][0] = "W";
+						} else {
+							$placelist[$j]["long"] = "E".$placelist[$j]["long"];
+						}
 					}
 				}
+				else $placelist[$j]["long"] = "0";
+				$j = $j + 1;
 			}
-			else $placelist[$j]["long"] = "0";
 			$i = $i + 1;
-			$j = $j + 1;
 			$placerec = get_sub_record(2, "2 PLAC", $row[0], $i);
 		}
 	}
@@ -277,7 +276,7 @@ if ($action=="ImportGedcom") {
 				// Create lowest-level place, if necessary
 				if (empty($row[0])) {
 					$highestIndex++;
-					$sql="INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', '".$place["lati"]."', '".$place["long"]."', ".$default_zoom_level[$i].", NULL);";
+					$sql="INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', '".$place["long"]."', '".$place["lati"]."', ".$default_zoom_level[$i].", NULL);";
 				} else {
 					if (empty($row[1]) && empty($row[2]) && $place['lati']!="0" && $place['long']!="0") {
 						$sql="UPDATE ".$TBLPREFIX."placelocation SET pl_lati='".$place["lati"]."',pl_long='".$place["long"]."' where pl_id=".$row[0];

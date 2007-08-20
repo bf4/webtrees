@@ -32,6 +32,13 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["differences"]			= "Differenzen";
+$pgv_lang["charts_block"]			= "Diagramm-Block";
+$pgv_lang["charts_block_descr"]		= "Dieser Block ermöglicht es Ihnen, Diagramme auf den haupt und persönlichen Begrüßungsseiten zu zeigen.  Sie können in dessen Konfiguration bestimmen, ob der Block das Ahnen-, Nachfahren-, oder Sanduhr-Diagramm zeigen soll.  Sie können auch die ID-Nummer der Startperson bestimmen.";
+$pgv_lang["chart_type"]				= "Diagramm-Typ";
+$pgv_lang["changedate1"]			= "Datenbereich Ende";
+$pgv_lang["changedate2"]			= "Datenbereich Anfang";
+$pgv_lang["changes_report"]			= "Änderungen Bericht";
 $pgv_lang["search_place_word"]			= "Ganze Worte";
 $pgv_lang["invalid_search_input"]		= "Bitte geben Sie einen Namen oder einen Ort zusätzlich zur Jahresangabe ein";
 $pgv_lang["duplicate_username"]			= "Doppelter Benutzername. Ein Benutzer mit dem gewählten Namen existiert bereits. Bitte wählen Sie einen anderen Benutzernamen.";
@@ -133,6 +140,7 @@ $pgv_lang["review_changes_email"]		= "Erinnerungs Mails versenden?";
 $pgv_lang["review_changes_email_freq"]	= "Erinnerungs Mails Häufigkeit (Tage)";
 $pgv_lang["review_changes_subject"]		= "PhpGedView - Änderungen kontrollieren";
 $pgv_lang["review_changes_body"]		= "An einer genealogischen Datenbank wurden Änderungen vorgenommen. Diese Änderungen müssen kontrolliert und übernommen werden, bevor sie für alle Nutzer sichtbar werden. Bitte klicken Sie auf die angegebene URL, um auf die PhpGedView-Seite zu gelangen und melden Sie sich an, um die Änderung zu kontrollieren. ";
+$pgv_lang["show_pending"]				= "Offene Änderungen zeigen";
 $pgv_lang["show_spouses"]				= "Ehepartner zeigen";
 $pgv_lang["quick_update_title"]			= "Schnelle Bearbeitung";
 $pgv_lang["quick_update_instructions"]	= "Auf dieser Seite können Sie schnell die Daten einer Person bearbeiten. Sie müssen nur die Daten eintragen, die neu sind oder von den Informationen in der Datenbank abweichen. Nachdem die Daten übermittelt sind, müssen sie noch von einem Verwalter kontrolliert und übernommen werden, bevor sie für alle Nutzer sichtbar werden.";
@@ -1136,10 +1144,10 @@ $pgv_lang["death_report"]				= "Sterbedaten u. -Orte Bericht";
 $pgv_lang["deathplace"]					= "Sterbeort enthält";
 $pgv_lang["deathdate1"]					= "Sterbedatenbereich Anfang";
 $pgv_lang["deathdate2"]					= "Sterbedatenbereich Ende";
-$pgv_lang["marr_report"]				= "Heiratsdaten u. -Orte Bericht";
-$pgv_lang["marrplace"]					= "Heiratsort enthält";
-$pgv_lang["marrdate2"]					= "Heiratsdatenbereich Ende";
-$pgv_lang["marrdate1"]					= "Heiratsdatenbereich Anfang";
+$pgv_lang["marr_report"]				= "Ehedaten u. -Orte Bericht";
+$pgv_lang["marrplace"]					= "Eheort enthält";
+$pgv_lang["marrdate2"]					= "Ehedatenbereich Ende";
+$pgv_lang["marrdate1"]					= "Ehedatenbereich Anfang";
 $pgv_lang["sort_by"]					= "Sortieren nach";
 $pgv_lang["cleanup"]					= "Korrigieren";
 //-- CONFIGURE (extra) messages for programs patriarch, slklist and statistics

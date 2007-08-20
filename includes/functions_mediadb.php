@@ -1515,6 +1515,8 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	}
 	if ($isExternal || $MEDIA_DIRECTORY_LEVELS == 0)
 		print "<input name=\"folder\" type=\"hidden\" value=\"\" />";
+	else 
+		print "<input name=\"folder\" type=\"hidden\" value=\"" . addslashes($folder) . "\" />";
 	print "<input name=\"oldFolder\" type=\"hidden\" value=\"" . addslashes($folder) . "\" />";
 	// 2 FORM
 	if ($gedrec == "")

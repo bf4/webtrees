@@ -27,8 +27,7 @@
 require("config.php");
 require("includes/functions_edit.php");
 
-require("languages/countries.en.php");
-if (file_exists("languages/countries.".$lang_short_cut[$LANGUAGE].".php")) require("languages/countries.".$lang_short_cut[$LANGUAGE].".php");
+loadLangFile("pgv_country");
 asort($countries);
 
 if ($_SESSION["cookie_login"]) {
@@ -555,23 +554,25 @@ case 'linkfamaction':
 		//-- update the individual record for the person
 		if (preg_match("/1 $itag @$famid@/", $gedrec)==0) {
 			if ($itag=="FAMC") {
+				$gedrec .= "\r\n";
 				switch ($pedigree) {
 				case 'birth':
-					$gedrec.="\r\n1 FAMC @$famid@\r\n2 PEDI $pedigree";
+					$gedrec .= "1 FAMC @$famid@\r\n2 PEDI $pedigree";
 					break;
 				case 'adopted':
-					$gedrec.="\r\n1 FAMC @$famid@\r\n2 PEDI $pedigree\r\n1 ADOP\r\n2 FAMC @$famid@\r\n3 ADOP BOTH";
+					$gedrec .= "1 FAMC @$famid@\r\n2 PEDI $pedigree\r\n1 ADOP\r\n2 FAMC @$famid@\r\n3 ADOP BOTH";
 					break;
 				case 'sealing':
-					$gedrec.="\r\n1 FAMC @$famid@\r\n2 PEDI $pedigree\r\n1 SLGC\r\n2 FAMC @$famid@";
+					$gedrec .= "1 FAMC @$famid@\r\n2 PEDI $pedigree\r\n1 SLGC\r\n2 FAMC @$famid@";
 					break;
 				case 'foster':
-					$gedrec.="\r\n1 FAMC @$famid@\r\n2 PEDI $pedigree\r\n1 EVEN\r\n2 TYPE $pedigree";
+					$gedrec .= "1 FAMC @$famid@\r\n2 PEDI $pedigree\r\n1 EVEN\r\n2 TYPE $pedigree";
 					break;
 				default:
-					$gedrec.="\r\n1 FAMC @$famid@";
+					$gedrec .= "1 FAMC @$famid@";
 					break;
 				}
+				$gedrec .= "\r\n";
 			}
 			replace_gedrec($pid, $gedrec);
 		}
@@ -579,7 +580,7 @@ case 'linkfamaction':
 		//-- if it is adding a new child to a family
 		if ($famtag=="CHIL") {
 			if (preg_match("/1 $famtag @$pid@/", $famrec)==0) {
-				$famrec = trim($famrec)."\r\n1 $famtag @$pid@";
+				$famrec = trim($famrec) . "\r\n1 $famtag @$pid@\r\n";
 				replace_gedrec($famid, $famrec);
 			}
 		}
@@ -609,7 +610,7 @@ case 'linkfamaction':
 				}
 			}
 			else {
-				$famrec .= "\r\n1 $famtag @$pid@";
+				$famrec .= "\r\n1 $famtag @$pid@\r\n";
 				if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
 				replace_gedrec($famid, $famrec);
 			}
@@ -922,6 +923,10 @@ case 'update':
 //------------------------------------------------------------------------------
 case 'addchildaction':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
+
+	$usedSOUR = false;		// indicates whether 1 SOUR info used at 2 SOUR level
+	splitSOUR();			// separate SOUR record from the rest
+
 	$gedrec = "0 @REF@ INDI\r\n1 NAME $NAME\r\n";
 	if (!empty($TYPE)) $gedrec .= "2 TYPE $TYPE\r\n";
 	if (!empty($NPFX)) $gedrec .= "2 NPFX $NPFX\r\n";
@@ -953,9 +958,9 @@ case 'addchildaction':
 				$gedrec .= "4 LONG $BIRT_LONG\r\n";
 			}
 		}
-		if (isset($SOUR_BIRT) and $SOUR_BIRT and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
-			$gedrec .= "2 SOUR @".$text[0]."@\r\n";
-			if ($tag[1]=="PAGE" and $text[1]!="") $gedrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
+		if (isset($SOUR_BIRT) and $SOUR_BIRT and count($tagSOUR)>0) {
+			$gedrec = updateSOUR($gedrec, 2);
+			$usedSOUR = true;
 		}
 	}
 	else if (!empty($BIRT)) $gedrec .= "1 BIRT Y\r\n";
@@ -976,13 +981,14 @@ case 'addchildaction':
 				$gedrec .= "4 LONG $DEAT_LONG\r\n";
 			}
 		}
-		if (isset($SOUR_DEAT) and $SOUR_DEAT and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
-			$gedrec .= "2 SOUR @".$text[0]."@\r\n";
-			if ($tag[1]=="PAGE" and $text[1]!="") $gedrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
+		if (isset($SOUR_DEAT) and $SOUR_DEAT and count($tagSOUR)>0) {
+			$gedrec = updateSOUR($gedrec, 2);
+			$usedSOUR = true;
 		}
 	}
 	else if (!empty($DEAT)) $gedrec .= "1 DEAT Y\r\n";
 	if (!empty($famid)) {
+		$gedrec .= "\r\n";
 		switch ($PEDI) {
 		case 'birth':
 			$gedrec.="1 FAMC @$famid@\r\n2 PEDI $PEDI";
@@ -1000,9 +1006,11 @@ case 'addchildaction':
 			$gedrec.="1 FAMC @$famid@";
 			break;
 		}
+		$gedrec .= "\r\n";
 	}
 
-	$gedrec = handle_updates($gedrec);
+	if (!$usedSOUR) $gedrec = handle_updates($gedrec);
+	else $gedrec = updateRest($gedrec);
 
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	$xref = append_gedrec($gedrec);
@@ -1014,7 +1022,7 @@ case 'addchildaction':
 			else $gedrec = find_updated_record($famid);
 			if (!empty($gedrec)) {
 				$gedrec = trim($gedrec);
-				$gedrec .= "\r\n1 CHIL @$xref@";
+				$gedrec .= "\r\n1 CHIL @$xref@\r\n";
 				if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 				replace_gedrec($famid, $gedrec);
 			}
@@ -1025,6 +1033,10 @@ case 'addchildaction':
 //------------------------------------------------------------------------------
 case 'addspouseaction':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
+
+	$usedSOUR = false;		// indicates whether 1 SOUR info used at 2 SOUR level
+	splitSOUR();			// separate SOUR record from the rest
+
 	$gedrec = "0 @REF@ INDI\r\n1 NAME $NAME\r\n";
 	if (!empty($TYPE)) $gedrec .= "2 TYPE $TYPE\r\n";
 	if (!empty($NPFX)) $gedrec .= "2 NPFX $NPFX\r\n";
@@ -1056,9 +1068,9 @@ case 'addspouseaction':
 				$gedrec .= "4 LONG $BIRT_LONG\r\n";
 			}
 		}
-		if (isset($SOUR_BIRT) and $SOUR_BIRT and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
-			$gedrec .= "2 SOUR @".$text[0]."@\r\n";
-			if ($tag[1]=="PAGE" and $text[1]!="") $gedrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
+		if (isset($SOUR_BIRT) and $SOUR_BIRT and count($tagSOUR)>0) {
+			$gedrec = updateSOUR($gedrec, 2);
+			$usedSOUR = true;
 		}
 	}
 	else if (!empty($BIRT)) $gedrec .= "1 BIRT Y\r\n";
@@ -1079,13 +1091,16 @@ case 'addspouseaction':
 				$gedrec .= "4 LONG $DEAT_LONG\r\n";
 			}
 		}
-		if (isset($SOUR_DEAT) and $SOUR_DEAT and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
-			$gedrec .= "2 SOUR @".$text[0]."@\r\n";
-			if ($tag[1]=="PAGE" and $text[1]!="") $gedrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
+		if (isset($SOUR_DEAT) and $SOUR_DEAT and count($tagSOUR)>0) {
+			$gedrec = updateSOUR($gedrec, 2);
+			$usedSOUR = true;
 		}
 	}
 	else if (!empty($DEAT)) $gedrec .= "1 DEAT Y\r\n";
-	$gedrec = handle_updates($gedrec);
+
+	if (!$usedSOUR) $gedrec = handle_updates($gedrec);
+	else $gedrec = updateRest($gedrec);
+
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	$xref = append_gedrec($gedrec);
 	if ($xref) print "<br /><br />".$pgv_lang["update_successful"];
@@ -1121,12 +1136,16 @@ case 'addspouseaction':
 					$famrec .= "4 LONG $MARR_LONG\r\n";
 				}
 			}
-			if (isset($SOUR_MARR) and $SOUR_MARR and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
-				$famrec .= "2 SOUR @".$text[0]."@\r\n";
-				if ($tag[1]=="PAGE" and $text[1]!="") $famrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
+			if (isset($SOUR_MARR) and $SOUR_MARR and count($tagSOUR)>0) {
+				$famrec = updateSOUR($famrec, 2);
+				$usedSOUR = true;
 			}
 		}
 		else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
+
+		if (!$usedSOUR) $famrec = handle_updates($famrec);
+		else $famrec = updateRest($famrec);
+
 		if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
 		$famid = append_gedrec($famrec);
 	}
@@ -1135,8 +1154,7 @@ case 'addspouseaction':
 		if (isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_updated_record($famid);
 		else $famrec = find_family_record($famid);
 		if (!empty($famrec)) {
-			$famrec = trim($famrec);
-			$famrec .= "\r\n1 $famtag @$xref@\r\n";
+			$famrec = trim($famrec) . "\r\n1 $famtag @$xref@\r\n";
 			if ((!empty($MARR_DATE))||(!empty($MARR_PLAC))) {
 				$famrec .= "1 MARR\r\n";
 				if (!empty($MARR_DATE)) {
@@ -1154,12 +1172,16 @@ case 'addspouseaction':
 						$famrec .= "4 LONG $MARR_LONG\r\n";
 					}
 				}
-				if (isset($SOUR_MARR) and $SOUR_MARR and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
-					$famrec .= "2 SOUR @".$text[0]."@\r\n";
-					if ($tag[1]=="PAGE" and $text[1]!="") $famrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
+				if (isset($SOUR_MARR) and $SOUR_MARR and count($tagSOUR)>0) {
+					$famrec = handle_updates($famrec, 2);
+					$usedSOUR = true;
 				}
 			}
 			else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
+
+			if (!$usedSOUR) $famrec = handle_updates($famrec);
+			else $famrec = updateRest($famrec);
+
 			if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
 			replace_gedrec($famid, $famrec);
 		}
@@ -1170,8 +1192,7 @@ case 'addspouseaction':
 		$gedrec = find_updated_record($xref);
 		**/
 		$gedrec = $spouserec;
-		$gedrec = trim($gedrec);
-		$gedrec .= "\r\n1 FAMS @$famid@\r\n";
+		$gedrec = trim($gedrec) . "\r\n1 FAMS @$famid@\r\n";
 		if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 		replace_gedrec($xref, $gedrec);
 	}
@@ -1180,8 +1201,7 @@ case 'addspouseaction':
 		if (!isset($pgv_changes[$pid."_".$GEDCOM])) $indirec = find_gedcom_record($pid);
 		else $indirec = find_updated_record($pid);
 		if ($indirec) {
-			$indirec = trim($indirec);
-			$indirec .= "\r\n1 FAMS @$famid@\r\n";
+			$indirec = trim($indirec) . "\r\n1 FAMS @$famid@\r\n";
 			if ($GLOBALS["DEBUG"]) print "<pre>$indirec</pre>";
 			replace_gedrec($pid, $indirec);
 		}
@@ -1190,6 +1210,10 @@ case 'addspouseaction':
 //------------------------------------------------------------------------------
 case 'linkspouseaction':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
+
+	$usedSOUR = false;		// indicates whether 1 SOUR info used at 2 SOUR level
+	splitSOUR();			// separate SOUR record from the rest
+
 	if (!empty($spid)) {
 		if (isset($pgv_changes[$spid.'_'.$GEDCOM])) $gedrec = find_updated_record($spid);
 		else $gedrec = find_person_record($spid);
@@ -1225,12 +1249,16 @@ case 'linkspouseaction':
 							$famrec .= "4 LONG $MARR_LONG\r\n";
 						}
 					}
-					if (isset($SOUR_MARR) and $SOUR_MARR and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
-						$famrec .= "2 SOUR @".$text[0]."@\r\n";
-						if ($tag[1]=="PAGE" and $text[1]!="") $famrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
+					if (isset($SOUR_MARR) and $SOUR_MARR and count($tagSOUR)>0) {
+						$famrec = updateSOUR($famrec, 2);
+						$usedSOUR = true;
 					}
 				}
 				else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
+
+				if (!$usedSOUR) $famrec = handle_updates($famrec);
+				else $famrec = updateRest($famrec);
+
 				if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
 				$famid = append_gedrec($famrec);
 			}
@@ -1244,8 +1272,7 @@ case 'linkspouseaction':
 				if (!isset($pgv_changes[$pid."_".$GEDCOM])) $indirec = find_gedcom_record($pid);
 				else $indirec = find_updated_record($pid);
 				if (!empty($indirec)) {
-					$indirec = trim($indirec);
-					$indirec .= "\r\n1 FAMS @$famid@\r\n";
+					$indirec = trim($indirec) . "\r\n1 FAMS @$famid@\r\n";
 					if ($GLOBALS["DEBUG"]) print "<pre>$indirec</pre>";
 					replace_gedrec($pid, $indirec);
 				}
@@ -1256,6 +1283,10 @@ case 'linkspouseaction':
 //------------------------------------------------------------------------------
 case 'addnewparentaction':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
+
+	$usedSOUR = false;		// indicates whether 1 SOUR info used at 2 SOUR level
+	splitSOUR();			// separate SOUR record from the rest
+
 	$gedrec = "0 @REF@ INDI\r\n1 NAME $NAME\r\n";
 	if (!empty($TYPE)) $gedrec .= "2 TYPE $TYPE\r\n";
 	if (!empty($NPFX)) $gedrec .= "2 NPFX $NPFX\r\n";
@@ -1287,9 +1318,9 @@ case 'addnewparentaction':
 				$gedrec .= "4 LONG $BIRT_LONG\r\n";
 			}
 		}
-		if (isset($SOUR_BIRT) and $SOUR_BIRT and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
-			$gedrec .= "2 SOUR @".$text[0]."@\r\n";
-			if ($tag[1]=="PAGE" and $text[1]!="") $gedrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
+		if (isset($SOUR_BIRT) and $SOUR_BIRT and count($tagSOUR)>0) {
+			$gedrec = updateSOUR($gedrec, 2);
+			$usedSOUR = true;
 		}
 	}
 	else if (!empty($BIRT)) $gedrec .= "1 BIRT Y\r\n";
@@ -1310,13 +1341,16 @@ case 'addnewparentaction':
 				$gedrec .= "4 LONG $DEAT_LONG\r\n";
 			}
 		}
-		if (isset($SOUR_DEAT) and $SOUR_DEAT and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
-			$gedrec .= "2 SOUR @".$text[0]."@\r\n";
-			if ($tag[1]=="PAGE" and $text[1]!="") $gedrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
+		if (isset($SOUR_DEAT) and $SOUR_DEAT and count($tagSOUR)>0) {
+			$gedrec = updateSOUR($gedrec, 2);
+			$usedSOUR = true;
 		}
 	}
 	else if (!empty($DEAT)) $gedrec .= "1 DEAT Y\r\n";
-	$gedrec = handle_updates($gedrec);
+
+	if (!$usedSOUR) $gedrec = handle_updates($gedrec);
+	else $gedrec = updateRest($gedrec);
+
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	$xref = append_gedrec($gedrec);
 	if ($xref) print "<br /><br />".$pgv_lang["update_successful"];
@@ -1350,12 +1384,15 @@ case 'addnewparentaction':
 					$famrec .= "4 LONG $MARR_LONG\r\n";
 				}
 			}
-			if (isset($SOUR_MARR) and $SOUR_MARR and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
-				$famrec .= "2 SOUR @".$text[0]."@\r\n";
-				if ($tag[1]=="PAGE" and $text[1]!="") $famrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
+			if (isset($SOUR_MARR) and $SOUR_MARR and count($tagSOUR)>0) {
+				$famrec = updateSOUR($famrec, 2);
+				$usedSOUR = true;
 			}
 		}
 		else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
+
+		if (!$usedSOUR) $famrec = handle_updates($famrec);
+		else $famrec = updateRest($famrec);
 
 		if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
 		$famid = append_gedrec($famrec);
@@ -1365,8 +1402,7 @@ case 'addnewparentaction':
 		if (isset($pgv_changes[$famid."_".$GEDCOM])) $famrec = find_updated_record($famid);
 		else $famrec = find_family_record($famid);
 		if (!empty($famrec)) {
-			$famrec = trim($famrec);
-			$famrec .= "\r\n1 $famtag @$xref@\r\n";
+			$famrec = trim($famrec) . "\r\n1 $famtag @$xref@\r\n";
 			if ((!empty($MARR_DATE))||(!empty($MARR_PLAC))) {
 				$famrec .= "1 MARR\r\n";
 				if (!empty($MARR_DATE)) {
@@ -1384,12 +1420,16 @@ case 'addnewparentaction':
 						$famrec .= "4 LONG $MARR_LONG\r\n";
 					}
 				}
-				if (isset($SOUR_MARR) and $SOUR_MARR and $tag[0]=="SOUR" and $text[0]!="" and $islink[0]) {
-					$famrec .= "2 SOUR @".$text[0]."@\r\n";
-					if ($tag[1]=="PAGE" and $text[1]!="") $famrec .= "3 ".$tag[1]." ".$text[1]."\r\n";
+				if (isset($SOUR_MARR) and $SOUR_MARR and count($tagSOUR)>0) {
+					$famrec = updateSOUR($famrec, 2);
+					$usedSOUR = true;
 				}
 			}
 			else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
+
+			if (!$usedSOUR) $famrec = handle_updates($famrec);
+			else $famrec = updateRest($famrec);
+
 			if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
 			replace_gedrec($famid, $famrec);
 		}
@@ -1401,8 +1441,7 @@ case 'addnewparentaction':
 			else $gedrec = find_person_record($xref);
 			**/
 			$gedrec = $spouserec;
-			$gedrec = trim($gedrec);
-			$gedrec .= "\r\n1 FAMS @$famid@\r\n";
+			$gedrec = trim($gedrec) . "\r\n1 FAMS @$famid@\r\n";
 			if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 			replace_gedrec($xref, $gedrec);
 	}
@@ -1414,8 +1453,7 @@ case 'addnewparentaction':
 		if ($indirec) {
 			$ct = preg_match("/1 FAMC @$famid@/", $indirec);
 			if ($ct==0) {
-				$indirec = trim($indirec);
-				$indirec .= "\r\n1 FAMC @$famid@\r\n";
+				$indirec = trim($indirec) . "\r\n1 FAMC @$famid@\r\n";
 				if ($GLOBALS["DEBUG"]) print "<pre>$indirec</pre>";
 				replace_gedrec($pid, $indirec);
 			}
@@ -1612,7 +1650,7 @@ case 'copy':
 	break;
 //------------------------------------------------------------------------------
 case 'paste':
-	$gedrec .= "\r\n".$_SESSION["clipboard"][$fact]["factrec"];
+	$gedrec .= "\r\n".$_SESSION["clipboard"][$fact]["factrec"]."\r\n";
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	$success = replace_gedrec($pid, $gedrec);
@@ -1816,11 +1854,11 @@ case 'changefamily_update':
 	if (!empty($HUSB) && (is_null($father) || $father->getXref()!=$HUSB)) {
 		if (strstr($gedrec, "1 HUSB")!==false)
 			$gedrec = preg_replace("/1 HUSB @.*@/", "1 HUSB @$HUSB@", $gedrec);
-		else $gedrec .= "\r\n1 HUSB @$HUSB@";
+		else $gedrec .= "\r\n1 HUSB @$HUSB@\r\n";
 		if (isset($pgv_changes[$HUSB."_".$GEDCOM])) $indirec = find_updated_record($HUSB);
 		else $indirec = find_person_record($HUSB);
 		if (!empty($indirec) && (preg_match("/1 FAMS @$famid@/", $indirec)==0)) {
-			$indirec .= "\r\n1 FAMS @$famid@";
+			$indirec .= "\r\n1 FAMS @$famid@\r\n";
 			replace_gedrec($HUSB, $indirec);
 		}
 		$updated = true;
@@ -1853,11 +1891,11 @@ case 'changefamily_update':
 	if (!empty($WIFE) && (is_null($mother) || $mother->getXref()!=$WIFE)) {
 		if (strstr($gedrec, "1 WIFE")!==false)
 			$gedrec = preg_replace("/1 WIFE @.*@/", "1 WIFE @$WIFE@", $gedrec);
-		else $gedrec .= "\r\n1 WIFE @$WIFE@";
+		else $gedrec .= "\r\n1 WIFE @$WIFE@\r\n";
 		if (isset($pgv_changes[$WIFE."_".$GEDCOM])) $indirec = find_updated_record($WIFE);
 		else $indirec = find_person_record($WIFE);
 		if (!empty($indirec) && (preg_match("/1 FAMS @$famid@/", $indirec)==0)) {
-			$indirec .= "\r\n1 FAMS @$famid@";
+			$indirec .= "\r\n1 FAMS @$famid@\r\n";
 			replace_gedrec($WIFE, $indirec);
 		}
 		$updated = true;
@@ -1896,12 +1934,12 @@ case 'changefamily_update':
 		if (!empty($CHIL)) {
 			$newchildren[] = $CHIL;
 			if (preg_match("/1 CHIL @$CHIL@/", $gedrec)==0) {
-				$gedrec .= "\r\n1 CHIL @$CHIL@";
+				$gedrec .= "\r\n1 CHIL @$CHIL@\r\n";
 				$updated = true;
 				if (isset($pgv_changes[$CHIL."_".$GEDCOM])) $indirec = find_updated_record($CHIL);
 				else $indirec = find_person_record($CHIL);
 				if (!empty($indirec) && (preg_match("/1 FAMC @$famid@/", $indirec)==0)) {
-					$indirec .= "\r\n1 FAMC @$famid@";
+					$indirec .= "\r\n1 FAMC @$famid@\r\n";
 					replace_gedrec($CHIL, $indirec);
 				}
 			}
@@ -1950,12 +1988,12 @@ case 'reorder_update':
 	reset($order);
 	$newgedrec = $gedrec;
 	foreach($order as $child=>$num) {
-		// move each child subrecord to the bottom
+		// move each child subrecord to the bottom, in the order specified
 		$subrec = get_sub_record(1, "1 CHIL @".$child."@", $gedrec);
 		$subrec = trim($subrec,"\r\n");
 		if ($GLOBALS["DEBUG"]) echo "<pre>[".$subrec."]</pre>";
 		$newgedrec = str_replace($subrec,"", $newgedrec);
-		$newgedrec .= $subrec."\r\n";
+		$newgedrec .= "\r\n".$subrec."\r\n";
 	}
 	if ($GLOBALS["DEBUG"]) print "<pre>$newgedrec</pre>";
 	$success = (replace_gedrec($pid, $newgedrec));

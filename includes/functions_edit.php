@@ -1220,7 +1220,17 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 				if ($fact=="LONG") print " onblur=\"valid_lati_long(this, 'E', 'W');\" onmouseout=\"valid_lati_long(this, 'E', 'W');\"";
 				//if ($fact=="FILE") print " onchange=\"if (updateFormat) updateFormat(this.value);\"";
 				print " ".$readOnly." />\n";
-				if ($cols>20 && $readOnly=="") print_specialchar_link($element_id, false);
+		}
+		// split PLAC
+		if ($fact=="PLAC" && $readOnly=="") {
+			print "<div id=\"".$element_id."_pop\" style=\"display: inline;\">\n";
+			print_specialchar_link($element_id, false);
+			print_findplace_link($element_id);
+			print "</div>\n";
+			print "<a href=\"javascript:;\" onclick=\"toggle_lati_long();\"><img src=\"images/buttons/target.gif\" border=\"0\" align=\"middle\" alt=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" title=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" /></a>";
+			if ($SPLIT_PLACES) {
+				if (!function_exists("print_place_subfields")) require("includes/functions_places.php");
+				print_place_subfields($element_id);
 			}
 		}
 	}
@@ -1420,6 +1430,149 @@ function addDebugLog($logstr) {
 }
 
 /**
+ * This function splits the $glevels, $tag, $islink, and $text arrays so that the
+ * entries associated with a SOUR record are separate from everything else.
+ *
+ * Input arrays:
+ * - $glevels[] - an array of the gedcom level for each line that was edited
+ * - $tag[] - an array of the tags for each gedcom line that was edited
+ * - $islink[] - an array of 1 or 0 values to indicate when the text is a link element
+ * - $text[] - an array of the text data for each line
+ *
+ * Output arrays:
+ * ** For the SOUR record:
+ * - $glevelsSOUR[] - an array of the gedcom level for each line that was edited
+ * - $tagSOUR[] - an array of the tags for each gedcom line that was edited
+ * - $islinkSOUR[] - an array of 1 or 0 values to indicate when the text is a link element
+ * - $textSOUR[] - an array of the text data for each line
+ * ** For the remaining records:
+ * - $glevelsRest[] - an array of the gedcom level for each line that was edited
+ * - $tagRest[] - an array of the tags for each gedcom line that was edited
+ * - $islinkRest[] - an array of 1 or 0 values to indicate when the text is a link element
+ * - $textRest[] - an array of the text data for each line
+ *
+ */
+function splitSOUR() {
+	global $glevels, $tag, $islink, $text;
+	global $glevelsSOUR, $tagSOUR, $islinkSOUR, $textSOUR;
+	global $glevelsRest, $tagRest, $islinkRest, $textRest;
+
+	$glevelsSOUR = array();
+	$tagSOUR = array();
+	$islinkSOUR = array();
+	$textSOUR = array();
+
+	$glevelsRest = array();
+	$tagRest = array();
+	$islinkRest = array();
+	$textRest = array();
+
+	$inSOUR = false;
+
+	for ($i=0; $i<count($glevels); $i++) {
+		if ($inSOUR) {
+			if ($levelSOUR<$glevels[$i]) {
+				$dest = "S";
+			} else {
+				$inSOUR = false;
+				$dest = "R";
+			}
+		} else {
+			if ($tag[$i]=="SOUR") {
+				$inSOUR = true;
+				$levelSOUR = $glevels[$i];
+				$dest = "S";
+			} else {
+				$dest = "R";
+			}
+		}
+		if ($dest=="S") {
+			$glevelsSOUR[] = $glevels[$i];
+			$tagSOUR[] = $tag[$i];
+			$islinkSOUR[] = $islink[$i];
+			$textSOUR[] = $text[$i];
+		} else {
+			$glevelsRest[] = $glevels[$i];
+			$tagRest[] = $tag[$i];
+			$islinkRest[] = $islink[$i];
+			$textRest[] = $text[$i];
+		}
+	}
+}
+
+/**
+ * Add new GEDCOM lines from the $xxxSOUR interface update arrays, which
+ * were produced by the splitSOUR() function.
+ *
+ * See the handle_updates() function for details.
+ *
+ */
+function updateSOUR($inputRec, $levelOverride="no") {
+	global $glevels, $tag, $islink, $text;
+	global $glevelsSOUR, $tagSOUR, $islinkSOUR, $textSOUR;
+	global $glevelsRest, $tagRest, $islinkRest, $textRest;
+
+	if (count($tagSOUR)==0) return $inputRec;		// No update required
+	
+	// Save original interface update arrays before replacing them with the xxxSOUR ones
+	$glevelsSave = $glevels;
+	$tagSave = $tag;
+	$islinkSave = $islink;
+	$textSave = $text;
+
+	$glevels = $glevelsSOUR;
+	$tag = $tagSOUR;
+	$islink = $islinkSOUR;
+	$text = $textSOUR;
+	
+	$myRecord = handle_updates($inputRec, $levelOverride);		// Now do the update
+	
+	// Restore the original interface update arrays (just in case ...)
+	$glevels = $glevelsSave;
+	$tag = $tagSave;
+	$islink = $islinkSave;
+	$text = $textSave;
+
+	return $myRecord;
+}
+
+/**
+ * Add new GEDCOM lines from the $xxxRest interface update arrays, which
+ * were produced by the splitSOUR() function.
+ *
+ * See the handle_updates() function for details.
+ *
+ */
+function updateRest($inputRec, $levelOverride="no") {
+	global $glevels, $tag, $islink, $text;
+	global $glevelsSOUR, $tagSOUR, $islinkSOUR, $textSOUR;
+	global $glevelsRest, $tagRest, $islinkRest, $textRest;
+
+	if (count($tagRest)==0) return $inputRec;		// No update required
+	
+	// Save original interface update arrays before replacing them with the xxxRest ones
+	$glevelsSave = $glevels;
+	$tagSave = $tag;
+	$islinkSave = $islink;
+	$textSave = $text;
+
+	$glevels = $glevelsRest;
+	$tag = $tagRest;
+	$islink = $islinkRest;
+	$text = $textRest;
+	
+	$myRecord = handle_updates($inputRec, $levelOverride);		// Now do the update
+	
+	// Restore the original interface update arrays (just in case ...)
+	$glevels = $glevelsSave;
+	$tag = $tagSave;
+	$islink = $islinkSave;
+	$text = $textSave;
+
+	return $myRecord;
+}
+
+/**
  * Add new gedcom lines from interface update arrays
  * The edit_interface and add_simple_tag function produce the following
  * arrays incoming from the $_POST form
@@ -1439,10 +1592,14 @@ function addDebugLog($logstr) {
  * a 2 PLAC or 2 DATE line following it.  If there are no sub lines, then the line
  * can be safely removed.
  * @param string $newged	the new gedcom record to add the lines to
+ * @param int $levelOverride	Override GEDCOM level specified in $glevels[0]
  * @return string	The updated gedcom record
  */
-function handle_updates($newged) {
+function handle_updates($newged, $levelOverride="no") {
 	global $glevels, $islink, $tag, $uploaded_files, $text, $NOTE;
+
+	if ($levelOverride=="no" || count($glevels)==0) $levelAdjust = 0;
+	else $levelAdjust = $levelOverride - $glevels[0];
 
 	for($j=0; $j<count($glevels); $j++) {
 		//-- update external note records first
@@ -1530,16 +1687,17 @@ function handle_updates($newged) {
 		//if ((($text[trim($j)]!="")||($pass==true)) && (strlen($text[$j]) > 0)) {
 		//-- we have to let some emtpy text lines pass through... (DEAT, BIRT, etc)
 		if ($pass==true) {
-			if ($islink[$j]) $text[$j]="@".$text[$j]."@";
-			$newline = $glevels[$j]." ".$tag[$j];
+			$newline = $glevels[$j]+$levelAdjust." ".$tag[$j];
 			//-- check and translate the incoming dates
 			if ($tag[$j]=="DATE" && !empty($text[$j])) {
 				$text[$j] = check_input_date($text[$j]);
 			}
 			// print $newline;
-//			if (!empty($text[$j])) $newline .= " ".$text[$j];
-			if ($text[$j]!="") $newline .= " ".$text[$j];
-			$newged .= breakConts($newline, $glevels[$j]+1);
+			if ($text[$j]!="") {
+				if ($islink[$j]) $newline .= " @".$text[$j]."@";
+				else $newline .= " ".$text[$j];
+			}
+			$newged .= breakConts($newline, $glevels[$j]+1+$levelAdjust);
 		}
 	}
 
@@ -1608,7 +1766,8 @@ function check_input_date($datestr) {
 	foreach ($dates as $date) {
 		if (!empty($date['ext'])) $datestr.="{$date['ext']} ";
 		if (!empty($date['cal'])) $datestr.="{$date['cal']} ";
-		if ($date['day']!=0)      $datestr.="{$date['day']} ";
+		if ($date['day']>9)       $datestr.="{$date['day']} ";
+		else if ($date['day']>0)  $datestr.="0{$date['day']} ";
 		if ($date['mon']!=0)      $datestr.="{$date['month']} ";
 		if ($date['year']>0)      $datestr.="{$date['year']} ";
 		else                      $datestr.=(1-$date['year'])." B.C. ";

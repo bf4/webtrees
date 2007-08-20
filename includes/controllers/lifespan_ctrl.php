@@ -519,7 +519,7 @@ class LifespanControllerRoot extends BaseController {
 				//How?   Now these names print on other data on the next line.
 				
 				if ($width > ($minlength +110)) {
-					echo "\n<div id=\"bar_".$value->getXref()."\" style=\"position: absolute;top:".$Y."px; left:".$startPos."px; width:".$width."px; height:".$height."px;" .
+					echo "\n<div id=\"bar_".$value->getXref()."\" style=\"position: absolute; top:".$Y."px; left:".$startPos."px; width:".$width."px; height:".$height."px;" .
 					" background-color:".$this->color."; border: solid blue 1px; z-index:$Z;\">";
 					foreach($eventinformation as $evtwidth=>$val){
 						print "<div style=\"position:absolute; left:".$evtwidth.";\"><a class=\"showit\" href=\"#\" style=\"color:White; top:-2px; font-size:10px;\"><b>".get_first_letter($val)."</b><span>".PrintReady($val)."</span></a></div>";

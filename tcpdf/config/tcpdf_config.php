@@ -47,7 +47,7 @@ if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
 	/**
 	 * path for PDF fonts
 	 */
-	define ("FPDF_FONTPATH", K_PATH_MAIN."fonts/");
+	define ("FPDF_FONTPATH", "includes/fonts/");
 	
 	/**
 	 * cache directory for temporary files (full path)

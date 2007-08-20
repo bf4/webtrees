@@ -44,20 +44,27 @@ VERSION 4.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
-+$pgv_lang["differences"]								17 Aug 2007				A
-+$pgv_lang["charts_block"]								14 Aug 2007				A
-+$pgv_lang["charts_block_descr"]						14 Aug 2007				A
-+$pgv_lang["chart_type"]								14 Aug 2007				A
 +$pgv_lang["unknown_mime"]								07 Aug 2007				A
 +$pgv_lang["media_broken"]								07 Aug 2007				A
-+$pgv_lang["changedate1"]								07 Aug 2007				A
-+$pgv_lang["changedate2"]								07 Aug 2007				A
-+$pgv_lang["changes_report"]							07 Aug 2007				A
 +$pgv_lang["media_privacy"]								02 Aug 2007				A	Media Firewall, patch 1749817
 +$pgv_lang["historical_facts"]							14 Jun 2007				A
 +$pgv_lang["nephew"]									13 May 2007				A
 +$pgv_lang["niece"]										13 May 2007				A
 
+
+VERSION 4.1.1
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+----------------------------------------------------------------------------------------
++$pgv_lang["show_pending"]							19 Aug 2007				A
+*$pgv_lang["charts_block_descr"]					18 Aug 2007				W
++$pgv_lang["differences"]								17 Aug 2007				A
++$pgv_lang["charts_block"]								14 Aug 2007				A
++$pgv_lang["charts_block_descr"]						14 Aug 2007				A
++$pgv_lang["chart_type"]								14 Aug 2007				A
++$pgv_lang["changedate1"]								07 Aug 2007				A
++$pgv_lang["changedate2"]								07 Aug 2007				A
++$pgv_lang["changes_report"]							07 Aug 2007				A
 
 VERSION 4.1
 

@@ -285,7 +285,7 @@ class PGVReport extends PGVReportBase {
 		if (!empty($color)) $styleAdd .= " color: ".$color.";";
 		if ($style['font']=='') $style['font'] = 'Arial';
 		print "<span class=\"".$style['name']."\" style=\"".$styleAdd."\">";
-		print nl2br($text);
+		print nl2br(PrintReady($text));
 		print "</span>\n";
 	}
 	
