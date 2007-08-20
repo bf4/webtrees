@@ -1220,17 +1220,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 				if ($fact=="LONG") print " onblur=\"valid_lati_long(this, 'E', 'W');\" onmouseout=\"valid_lati_long(this, 'E', 'W');\"";
 				//if ($fact=="FILE") print " onchange=\"if (updateFormat) updateFormat(this.value);\"";
 				print " ".$readOnly." />\n";
-		}
-		// split PLAC
-		if ($fact=="PLAC" && $readOnly=="") {
-			print "<div id=\"".$element_id."_pop\" style=\"display: inline;\">\n";
-			print_specialchar_link($element_id, false);
-			print_findplace_link($element_id);
-			print "</div>\n";
-			print "<a href=\"javascript:;\" onclick=\"toggle_lati_long();\"><img src=\"images/buttons/target.gif\" border=\"0\" align=\"middle\" alt=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" title=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" /></a>";
-			if ($SPLIT_PLACES) {
-				if (!function_exists("print_place_subfields")) require("includes/functions_places.php");
-				print_place_subfields($element_id);
+				if (($cols>20 || $fact=="NPFX") && $readOnly=="") print_specialchar_link($element_id, false);
 			}
 		}
 	}

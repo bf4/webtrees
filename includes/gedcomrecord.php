@@ -429,24 +429,6 @@ class GedcomRecord {
 	}
 	
 	/**
-	 * get the name
-	 * This method should overridden in child sub-classes
-	 * @return string
-	 */
-	function getName() {
-		return get_gedcom_value("NAME", 1, $this->gedrec);
-	}
-	
-	/**
-	 * get the additional name
-	 * This method should overridden in child sub-classes
-	 * @return string
-	 */
-	function getAddName() {
-		return "";
-	}
-
-	/**
 	 * get  lastchange record
 	 * @return string the lastchange record
 	 */
