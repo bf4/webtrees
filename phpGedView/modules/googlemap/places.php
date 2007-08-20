@@ -277,7 +277,7 @@ if ($action=="ImportGedcom") {
 				// Create lowest-level place, if necessary
 				if (empty($row[0])) {
 					$highestIndex++;
-					$sql="INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', '".$place["lati"]."', '".$place["long"]."', ".$default_zoom_level[$i].", NULL);";
+					$sql="INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', '".$place["long"]."', '".$place["lati"]."', ".$default_zoom_level[$i].", NULL);";
 				} else {
 					if (empty($row[1]) && empty($row[2]) && $place['lati']!="0" && $place['long']!="0") {
 						$sql="UPDATE ".$TBLPREFIX."placelocation SET pl_lati='".$place["lati"]."',pl_long='".$place["long"]."' where pl_id=".$row[0];
