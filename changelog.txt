@@ -8,6 +8,8 @@
 	# $Id$
 =====================================================================
 Version 4.1.1
+ - Fixed [ 1775026 ] Line break missing when re-ordering children (canajun2eh)
+ - Fixed [ 1769535 ] Line break missing when adding child or spouse to family (canajun2eh)
  - Added Swedish and Finnish UTF-8 support to Modules PunBB (meliza)
  - Fixed Modules PunBB to work in UTF-8 (meliza)
  - Added Hebrew support to Modules PunBB (meliza)
