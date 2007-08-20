@@ -172,26 +172,22 @@ print "<strong>".$pgv_lang['placecheck_head'].": </strong>".$ged."<br/><br/>";
 $handle=fopen($all_geds[$ged], 'r');
 $place_list=array();
 $i=0;
-while (($value=fgets($handle))!==false) {
-	$value=preg_replace('/[\r\n]+/', '', $value);
-	if (preg_match('/^\s*(\d*)\s*(@[^@#]+@)?\s*(\S*)\s*(.*)/', $value, $match)) {
-		if (preg_match('/(2 PLAC)/', $value)) {
-			$place=substr($value,7);
-			if ($country=='XYZ') {
+while (($value=fgets($handle))!==false)
+	if (preg_match('/^2 PLAC ([^\r\n]+)/', $value, $match)) {
+		$place=$match[1];
+		if ($country=='XYZ') {
+			$place_list[$i]=$place;
+		}
+		if (strpos($place, $country)!==false) {
+			if ($state=='XYZ') {
 				$place_list[$i]=$place;
 			}
-			if (strpos($place, $country)!==false) {
-				if ($state=='XYZ') {
-					$place_list[$i]=$place;
-				}
-				if (strpos($place, $state)!==false) {
-					$place_list[$i]=$place;
-				}
+			if (strpos($place, $state)!==false) {
+				$place_list[$i]=$place;
 			}
-			$i++;
 		}
+		$i++;
 	}
-}
 
 //sort the array, limit to unique values, and count them
 $place_parts=array();
