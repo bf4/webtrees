@@ -96,9 +96,9 @@ if ($action=='addrecord') {
 	if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
 		// $_POST[] is already escaped by the framework, so no need to escapeSimple()
 	if (($_POST['LONG_CONTROL'] == '') || ($_POST['NEW_PLACE_LONG'] == '') || ($_POST['NEW_PLACE_LATI'] == '')) {
-		$sql = "INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", {$placeid}, {$level}, '{$_POST['NEW_PLACE_NAME']}', '' , '', {$_POST['NEW_ZOOM_FACTOR']}, '{$_POST['icon']}');";
+		$sql = "INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", {$placeid}, {$level}, '".$DBCONN->escapeSimple($_POST['NEW_PLACE_NAME'])."', '' , '', {$_POST['NEW_ZOOM_FACTOR']}, '{$_POST['icon']}');";
 	} else {
-		$sql = "INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", {$placeid}, {$level}, '{$_POST['NEW_PLACE_NAME']}', '{$_POST['LONG_CONTROL'][3]}{$_POST['NEW_PLACE_LONG']}', '{$_POST['LATI_CONTROL'][3]}{$_POST['NEW_PLACE_LATI']}', {$_POST['NEW_ZOOM_FACTOR']}, '{$_POST['icon']}');";
+		$sql = "INSERT INTO {$TBLPREFIX}placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".(getHighestIndex()+1).", {$placeid}, {$level}, '".$DBCONN->escapeSimple($_POST['NEW_PLACE_NAME'])."', '{$_POST['LONG_CONTROL'][3]}{$_POST['NEW_PLACE_LONG']}', '{$_POST['LATI_CONTROL'][3]}{$_POST['NEW_PLACE_LATI']}', {$_POST['NEW_ZOOM_FACTOR']}, '{$_POST['icon']}');";
 	}
 	if (userIsAdmin(getUserName())) {
 		$res = dbquery($sql);
