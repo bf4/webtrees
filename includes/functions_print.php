@@ -2248,13 +2248,13 @@ function print_parents_age($pid, $bdate) {
 	print " <span class=\"age\">";
 	//-- father
 	$spouse = $family->getHusband();
-	if ($spouse->xref) {
+	if (!is_null($spouse)) {
 		$age = get_age($spouse->gedrec, $bdate, 0);
 		print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />".$age;
 	}
 	//-- mother
 	$spouse = $family->getWife();
-	if ($spouse->xref) {
+	if (!is_null($spouse)) {
 		$age = get_age($spouse->gedrec, $bdate, 0);
 		if ($spouse->getDeathDate(false)) {
 			$child_bdate=parse_date($bdate);
