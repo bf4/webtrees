@@ -41,6 +41,16 @@ For massive changes, the variable names should be listed in the order in which t
 occur in the respective language files.
 
 
+VERSION 4.1.1
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+-----------------------------------------------------------------------------------------
+*$pgv_lang["index_portal_help"]						19 Aug 2007				w
+*$pgv_lang["mygedview_portal_help"]					19 Aug 2007				w
++$pgv_lang["index_charts_help"]						19 Aug 2007				A
+
+
+
 VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
