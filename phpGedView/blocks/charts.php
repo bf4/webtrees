@@ -67,7 +67,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	$person = Person::getInstance($config["rootId"]);
 	if ($person==null) $person = Person::getInstance($PEDIGREE_ROOT_ID);
 	
-	print "<div id=\"gedcom_stats\" class=\"block\">\n";
+	print "<div id=\"charts_block\" class=\"block\">\n";
 	print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
 	print "<td class=\"blockh1\" >&nbsp;</td>";
 	print "<td class=\"blockh2\" ><div class=\"blockhc\">";
