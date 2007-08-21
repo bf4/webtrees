@@ -8,6 +8,7 @@
 	# $Id$
 =====================================================================
 Version 4.1.1
+ - Fixed [ 1778362 ] New Blocks need some tweaking (yalnifj)
  - Fixed auto-accept users do not see the changes of other users (yalnifj, tthdoc)
  - Fixed [ 1775026 ] Line break missing when re-ordering children (canajun2eh)
  - Fixed [ 1769535 ] Line break missing when adding child or spouse to family (canajun2eh)
