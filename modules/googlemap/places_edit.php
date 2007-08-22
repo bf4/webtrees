@@ -570,17 +570,18 @@ if ($action=="add") {
 	}
 
 	function search_loc() {
+		var whereAmI = encodeURIComponent('<?php print addslashes(current($where_am_i));?>');
 <?php if ($level == 0) { ?>
 		request = 'http://ws.geonames.org/searchJSON?name=' +  encodeURIComponent(document.editplaces.NEW_PLACE_NAME.value)  + '&fclass=A&style=FULL&callback=getLocation';
 <?php } ?>
 <?php if ($level == 1) { ?>
-		request = 'http://ws.geonames.org/searchJSON?name=' +  encodeURIComponent(document.editplaces.NEW_PLACE_NAME.value)  + '&country=<?php print current($where_am_i);?>&fclass=P&fclass=A&style=FULL&callback=getLocation';
+		request = 'http://ws.geonames.org/searchJSON?name=' +  encodeURIComponent(document.editplaces.NEW_PLACE_NAME.value)  + '&country=' + whereAmI + '&fclass=P&fclass=A&style=FULL&callback=getLocation';
 <?php } ?>
 <?php if ($level == 2) { ?>
-		request = 'http://ws.geonames.org/searchJSON?name=' +  encodeURIComponent(document.editplaces.NEW_PLACE_NAME.value)  + '&country=<?php print current($where_am_i);?>&fclass=P&fclass=A&style=FULL&callback=getLocation';
+		request = 'http://ws.geonames.org/searchJSON?name=' +  encodeURIComponent(document.editplaces.NEW_PLACE_NAME.value)  + '&country=' + whereAmI + '&fclass=P&fclass=A&style=FULL&callback=getLocation';
 <?php } ?>
 <?php if ($level == 3) { ?>
-		request = 'http://ws.geonames.org/searchJSON?name=' +  encodeURIComponent(document.editplaces.NEW_PLACE_NAME.value)  + '&country=<?php print current($where_am_i);?>&fclass=P&style=FULL&callback=getLocation';
+		request = 'http://ws.geonames.org/searchJSON?name=' +  encodeURIComponent(document.editplaces.NEW_PLACE_NAME.value)  + '&country=' + whereAmI + '&fclass=P&style=FULL&callback=getLocation';
 <?php } ?>
 		// Create a new script object
 		aObj = new JSONscriptRequest(request);
