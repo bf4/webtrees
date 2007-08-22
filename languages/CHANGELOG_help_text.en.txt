@@ -45,6 +45,7 @@ VERSION 4.1.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["charts_block_help"]						22 Aug 2007				A
 +$pgv_lang["edit_PEDI_help"]						20 Aug 2007				A
 *$pgv_lang["index_portal_help"]						19 Aug 2007				w
 *$pgv_lang["mygedview_portal_help"]					19 Aug 2007				w

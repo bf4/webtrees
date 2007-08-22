@@ -71,7 +71,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
 	print "<td class=\"blockh1\" >&nbsp;</td>";
 	print "<td class=\"blockh2\" ><div class=\"blockhc\">";
-	print_help_link("index_stats_help", "qm");
+	print_help_link("charts_block_help", "qm");
 	if ($PGV_BLOCKS["print_charts_block"]["canconfig"]) {
 		$username = getUserName();
 		if ((($ctype=="gedcom")&&(userGedcomAdmin($username))) || (($ctype=="user")&&(!empty($username)))) {
