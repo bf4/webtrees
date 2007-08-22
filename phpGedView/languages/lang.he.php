@@ -31,6 +31,13 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["differences"]			= "הפרשים"; 
+$pgv_lang["charts_block"]			= "אזור תרשימים"; 
+$pgv_lang["charts_block_descr"]		= "אזור התרשימים מאפשר לשים תרשים על הדף ברוכים הבאים או על הפורטל MyGedView.  ניתן לקנפג את האזור כך שיראה אב-אבות, צאצאים או שעון חול.  אפשר גם לבחור את אדם המוצא של התרשים.";
+$pgv_lang["chart_type"]				= "סוג תרשים"; 
+$pgv_lang["changedate1"]			= "סוף התחום של תאריכי שינוי";
+$pgv_lang["changedate2"]			= "תחילת התחום של תאריכי שינוי";
+$pgv_lang["changes_report"]			= "דו\"ח שינויים"; 
 $pgv_lang["search_place_word"]		= "מילים שלמות בלבד";
 $pgv_lang["invalid_search_input"] 		= "הכנס בבקשה שם פרטי, שם משפחה או מקום בנוסף לשנה";
 $pgv_lang["duplicate_username"]		= "קוד משתמש כפול. משתמש עם קוד זה מוגדר כבר. נא בחר קוד משתמש אחר.";
@@ -256,6 +263,7 @@ $pgv_lang["review_changes_email_freq"]  = "תדירות (ימים) תזכורת 
 $pgv_lang["review_changes_subject"]	= "PhpGedView - סקור שינויי";
 $pgv_lang["review_changes_body"]	= "שינויי און-ליין נעשו במאגר חקר המשפחה. את השינויים יש לבדוק ולאשר כדי שכל המשתמשים יראו אותם. השתמש בכתובת URL למטה כדי להיכנס לאתר ה-PhpGedView הזה להתחברות ובדיקת השינויים.";
 $pgv_lang["show_spouses"]		= "הצג בני זוג";
+$pgv_lang["show_pending"]		= "הראה שינויים שממתינים לאישור"; 
 $pgv_lang["quick_update_title"] 	= "עדכון מהיר";
 $pgv_lang["quick_update_instructions"] 	= "הדף מאפשר עדכון מהיר של נתוני אדם. עליך למלא נתונים חדשים או נתונים שהשתנו לעומת הקיים באתר. לאחר שהשינויים שלך ישודרו, המנהלן יבדוק אותם לפני שכולם יוכלו לראותם באתר.";
 $pgv_lang["update_name"] 		= "עדכן שם";
@@ -646,6 +654,19 @@ $pgv_lang["svn"]          		= "סיוון";
 $pgv_lang["tmz"]          		= "תמוז";
 $pgv_lang["aav"]          		= "אב";
 $pgv_lang["ell"]          		= "אלול";
+
+$pgv_lang["muhar"]        = "מוחרם";
+$pgv_lang["safar"]        = "צפר";
+$pgv_lang["rabi1"]        = "רביע אל-אוול";
+$pgv_lang["rabi2"]        = "רביע א-ת'אני";
+$pgv_lang["juma1"]        = "ג׳ומאדא אל-אוואל";
+$pgv_lang["juma2"]        = "ג׳ומאדא אל-ת'אניה";
+$pgv_lang["rajab"]        = "רג׳ב";
+$pgv_lang["shaab"]        = "שעבאן";
+$pgv_lang["ramad"]        = "רמדאן";
+$pgv_lang["shaww"]        = "שוואל";
+$pgv_lang["dhuaq"]        = "ז'ו אל-קעדה";
+$pgv_lang["dhuah"]        = "זו אל-חיג׳ה";
 
 $pgv_lang["b.c."]         		= "לפנה\"ס";  
 
