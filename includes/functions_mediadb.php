@@ -1546,6 +1546,8 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	else {
 		$gedtitl = get_first_tag(2, "TITL", $gedrec);
 		if (empty ($gedtitl))
+			$gedtitl = get_first_tag(1, "TITL", $gedrec);
+		if (empty ($gedtitl))
 			$gedtitl = "TITL";
 	}
 	add_simple_tag("2 $gedtitl");
