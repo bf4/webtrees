@@ -288,7 +288,7 @@ class PGVReport extends PGVReportBase {
 		if (!empty($color)) $styleAdd .= " color: ".$color.";";
 		if ($style['font']=='') $style['font'] = 'Arial';
 		print "<span class=\"".$style['name']."\" style=\"".$styleAdd."\">";
-		print nl2br(PrintReady($text));
+		print nl2br(PrintReady($text, false, false));
 		print "</span>";
 	}
 
@@ -591,39 +591,8 @@ class PGVRTextHTML extends PGVRText {
 		$x = $pdf->GetX();
 		$cury = $pdf->GetY();
 
-//		if (!empty($this->color)) {
-//			$ct = preg_match("/#?(..)(..)(..)/", $this->color, $match);
-//			if ($ct>0) {
-//				//$this->style .= "F";
-//				$r = hexdec($match[1]);
-//				$g = hexdec($match[2]);
-//				$b = hexdec($match[3]);
-//				$pdf->SetTextColor($r, $g, $b);
-//			}
-//		}
-
-//		$lines = preg_split("/\n/", $temptext);
-//		$styleh = $pdf->getCurrentStyleHeight();
-//		if (count($lines)>0) {
-//			foreach($lines as $indexval => $line) {
-//				$pdf->SetXY($x, $cury);
-////				print "[$x $cury $line]";
-//				$pdf->Write($styleh,$line);
-//				$cury+=$styleh+1;
-//				if ($cury>$pdf->getPageHeight()) $cury = $pdf->getY()+$styleh+1;
-//				$x = $curx;
-//			}
-//		}
-//		else $pdf->Write($pdf->getCurrentStyleHeight(),$temptext);
-
 		$pdf->write($temptext, $this->color);
 
-//		$ct = preg_match_all("/".chr(215)."/", $temptext, $match);
-//		if ($ct>1) {
-//			$x = $pdf->GetX();
-//			$x = $x - pow(1.355, $ct);
-//			$pdf->SetX($x);
-//		}
 	}
 
 	function getHeight(&$pdf) {
@@ -644,6 +613,7 @@ class PGVRTextHTML extends PGVRText {
 				$lines = preg_split("/\n/", $this->text);
 				$newtext = "";
 				$wrapwidth = $this->wrapWidth;
+				$i=0;
 				foreach($lines as $indexval => $line) {
 					$w = $pdf->GetStringWidth($line)+10;
 					if ($w>$wrapwidth) {
@@ -661,7 +631,11 @@ class PGVRTextHTML extends PGVRText {
 						}
 						$newtext .= "\n";
 					}
-					else $newtext .= $line."\n";
+					else {
+						if ($i>0) $newtext .= "\n";
+						$newtext .= $line;
+					}
+					$i++;
 				}
 				$this->text = $newtext;
 				//$this->text = preg_replace("/\n/", "\n~", $this->text);
@@ -724,20 +698,17 @@ class PGVRFootnoteHTML extends PGVRFootnote {
 			$pdf->setCurrentStyle($this->styleName);
 		$temptext = preg_replace("/#PAGENUM#/", $pdf->PageNo(), $this->text);
 
-		//$pdf->SetLink($this->addlink, -1);
-		//$pdf->Write($pdf->getCurrentStyleHeight(),$this->num.". ".$temptext."\n\n");
 		print "<a name=\"footnote".$this->num."\">".$this->num.". ";
 		$pdf->write($temptext);
-		print "</a><br/>";
+		print "</a><br/>\n<br />\n";
 		$pdf->SetXY(0,$pdf->GetY()+$this->getFootnoteHeight($pdf));
 	}
 
 	function getFootnoteHeight(&$pdf) {
-		$ct = substr_count($this->text, "<br/>");
+		$ct = substr_count($this->text, "\n");
 		$ct+=3;
 		$style = $pdf->getStyle($this->styleName);
-		$h = round(($style["size"]+4.2)*$ct);
-//		print "[".$this->text." $ct $h]";
+		$h = round(($style["size"]+3.2)*$ct);
 		return $h;
 	}
 }

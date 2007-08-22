@@ -1984,7 +1984,7 @@ function print_theme_dropdown($style=0) {
  *
  * @param string $text to be printed
  */
-function PrintReady($text, $InHeaders=false) {
+function PrintReady($text, $InHeaders=false, $trim=true) {
 	global $query, $action, $firstname, $lastname, $place, $year, $DEBUG;
 	global $TEXT_DIRECTION_array;
 	// Check whether Search page highlighting should be done or not
@@ -2000,7 +2000,7 @@ function PrintReady($text, $InHeaders=false) {
 	$text = preg_replace("/&/", "&amp;", $text);
 	//-- make sure we didn't double convert &amp; to &amp;amp;
 	$text = preg_replace("/&amp;(\w+);/", "&$1;", $text);
-    $text = trim($text);
+    if ($trim) $text = trim($text);
     //-- if we are on the search page body, then highlight any search hits
     //		In this routine, we will assume that the input string doesn't contain any
     //		\x01 or \x02 characters.  We'll represent the <span class="search_hit"> by \x01
