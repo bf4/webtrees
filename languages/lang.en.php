@@ -656,6 +656,19 @@ $pgv_lang["tmz"]          = "Tamuz";
 $pgv_lang["aav"]          = "Av";
 $pgv_lang["ell"]          = "Elul";
 
+$pgv_lang["muhar"]        = "Muharram";
+$pgv_lang["safar"]        = "Safar";
+$pgv_lang["rabi1"]        = "Rabi' al-awwal";
+$pgv_lang["rabi2"]        = "Rabi' al-thani";
+$pgv_lang["juma1"]        = "Jumada al-awwal";
+$pgv_lang["juma2"]        = "Jumada al-thani";
+$pgv_lang["rajab"]        = "Rajab";
+$pgv_lang["shaab"]        = "Sha'aban";
+$pgv_lang["ramad"]        = "Ramadan";
+$pgv_lang["shaww"]        = "Shawwal";
+$pgv_lang["dhuaq"]        = "Dhu al-Qi'dah";
+$pgv_lang["dhuah"]        = "Dhu al-Hijjah";
+
 $pgv_lang["b.c."]         = "B.C.";
 
 $pgv_lang["abt"]					= "about";
