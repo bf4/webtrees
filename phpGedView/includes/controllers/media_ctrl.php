@@ -42,6 +42,8 @@ class MediaControllerRoot extends IndividualController{
 	function init() {
 		if (isset($_REQUEST['filename'])) $filename = $_REQUEST['filename'];
 		if (isset($_REQUEST['mid'])) $mid = $_REQUEST['mid'];
+		if (!empty($_REQUEST["show_changes"])) $this->show_changes = $_REQUEST["show_changes"];
+		if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
 
 		//Checks to see if the File Name ($filename) exists
 		if (!empty($filename)){
@@ -52,8 +54,10 @@ class MediaControllerRoot extends IndividualController{
 				$mid = false;
 			}
 		}
+	
 		//checks to see if the Media ID ($mid) is set. If the Media ID isn't set then there isn't any information avaliable for that picture the picture doesn't exist.
 		if (isset($mid) && $mid!=false){
+			$mid = clean_input($mid);
 			//This creates a Media Object from the getInstance method of the Media Class. It takes the Media ID ($mid) and creates the object.
 			$this->mediaobject = Media::getInstance($mid);
 			//This sets the controller ID to be the Media ID
@@ -62,7 +66,27 @@ class MediaControllerRoot extends IndividualController{
 			if (is_null($this->mediaobject)) $this->mediaobject = new Media("0 @".$mid."@ OBJE");
 		}
 
-		parent::init();
+		//-- check for the user
+		$this->uname = getUserName();
+		if (!empty($this->uname)) {
+			$this->user = getUser($this->uname);
+		}		
+		//-- perform the desired action
+		switch($this->action) {
+			case "addfav":
+				$this->addFavorite();
+				break;
+			case "accept":
+				$this->acceptChanges();
+				break;
+			case "undo":
+				$this->mediaobject->undoChange();
+				break;
+		}
+		
+		if ($this->mediaobject->canDisplayDetails()) {
+			$this->canedit = userCanEdit($this->uname);
+		}
 	}
 
 	/**
@@ -219,10 +243,10 @@ class MediaControllerRoot extends IndividualController{
 			$menu->addSubmenu($submenu);
 
 			if (userCanAccept($this->uname)) {
-				$submenu = new Menu($pgv_lang["undo_all"], "mediaviewer.php?pid=".$this->pid."&amp;action=undo");
+				$submenu = new Menu($pgv_lang["undo_all"], "mediaviewer.php?mid=".$this->pid."&amp;action=undo");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
-				$submenu = new Menu($pgv_lang["accept_all"], "mediaviewer.php?pid=".$this->pid."&amp;action=accept");
+				$submenu = new Menu($pgv_lang["accept_all"], "mediaviewer.php?mid=".$this->pid."&amp;action=accept");
 				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 				$menu->addSubmenu($submenu);
 			}
@@ -309,19 +333,23 @@ class MediaControllerRoot extends IndividualController{
 	function getFacts($includeFileName=true) {
 		global $pgv_changes, $GEDCOM, $pgv_lang;
 
-		$facts = get_all_subrecords($this->mediaobject->getGedcomRecord(), "TITL,FILE");
+		$ignore = "TITL,FILE";
+		if ($this->show_changes=='yes') $ignore = '';
+		else if (userGedcomAdmin($this->uname)) $ignore = "TITL";
+		$facts = get_all_subrecords($this->mediaobject->getGedcomRecord(), $ignore);
 		if ($includeFileName) $facts[] = "1 FILE ".$this->mediaobject->getFilename();
 		$facts[] = "1 FORM ".$this->mediaobject->getFiletype();
 		$mediaType = $this->mediaobject->getMediatype();
 		if (isset($pgv_lang["TYPE__".$mediaType])) $facts[] = "1 TYPE ".$pgv_lang["TYPE__".$mediaType];
 
-		if (isset($pgv_changes[$this->pid."_".$GEDCOM])) {
+		if (isset($pgv_changes[$this->pid."_".$GEDCOM]) && ($this->show_changes=="yes")) {
 			$newrec = find_updated_record($this->pid);
-			$newfacts = get_all_subrecords($newrec, "TITL,FILE");
+			$newfacts = get_all_subrecords($newrec);
 			$newmedia = new Media($newrec);
 			if ($includeFileName) $newfacts[] = "1 FILE ".$newmedia->getFilename();
 			$newfacts[] = "1 FORM ".$newmedia->getFiletype();
-			$newfacts[] = "1 TYPE ".$newmedia->getFiletype();
+			$mediaType = $newmedia->getMediatype();
+			if (isset($pgv_lang["TYPE__".$mediaType])) $newfacts[] = "1 TYPE ".$pgv_lang["TYPE__".$mediaType];
 			//print_r($newfacts);
 			//-- loop through new facts and add them to the list if they are any changes
 			//-- compare new and old facts of the Personal Fact and Details tab 1
