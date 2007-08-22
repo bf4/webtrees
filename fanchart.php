@@ -126,7 +126,7 @@ function print_fan_chart($treeid, $fanw=640, $fandeg=270) {
 	print "\r\n-->";
 	if (!file_exists($fontfile)) {
 		if (!empty($fontfile)) print "<span class=\"error\">".$pgv_lang["fontfile_error"]." : $fontfile</span>";
-		$fontfile="./fonts/LucidaSansRegular.ttf";
+		$fontfile="./includes/fonts/DejaVuSans.ttf";
 	}
 	print "\r\n<!-- trace start\r\n font-family\t=\t$fontfile\r\n-->";
 	if ($fontfile{0}!='/') $fontfile = dirname(__FILE__) . "/" . $fontfile;
