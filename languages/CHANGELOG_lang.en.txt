@@ -45,18 +45,18 @@ VERSION 4.1.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
-+$pgv_lang["muhar"]                   22 Aug 2007           A Months of the Hijri calendar
-+$pgv_lang["safar"]                   22 Aug 2007           A - see www.geonames.de/months2.html
-+$pgv_lang["rabi1"]                   22 Aug 2007           A for help with translations
-+$pgv_lang["rabi2"]                   22 Aug 2007           A
-+$pgv_lang["juma1"]                   22 Aug 2007           A
-+$pgv_lang["juma2"]                   22 Aug 2007           A
-+$pgv_lang["rajab"]                   22 Aug 2007           A
-+$pgv_lang["shaab"]                   22 Aug 2007           A
-+$pgv_lang["ramad"]                   22 Aug 2007           A
-+$pgv_lang["shaww"]                   22 Aug 2007           A
-+$pgv_lang["dhuaq"]                   22 Aug 2007           A
-+$pgv_lang["dhuah"]                   22 Aug 2007           A
++$pgv_lang["muhar"]									22 Aug 2007				A Months of the Hijri calendar
++$pgv_lang["safar"]									22 Aug 2007				A - see www.geonames.de/months2.html
++$pgv_lang["rabi1"]									22 Aug 2007				A for help with translations
++$pgv_lang["rabi2"]									22 Aug 2007				A
++$pgv_lang["juma1"]									22 Aug 2007				A
++$pgv_lang["juma2"]									22 Aug 2007				A
++$pgv_lang["rajab"]									22 Aug 2007				A
++$pgv_lang["shaab"]									22 Aug 2007				A
++$pgv_lang["ramad"]									22 Aug 2007				A
++$pgv_lang["shaww"]									22 Aug 2007				A
++$pgv_lang["dhuaq"]									22 Aug 2007				A
++$pgv_lang["dhuah"]									22 Aug 2007				A
 *$pgv_lang["charts_block_descr"]					18 Aug 2007				W
 +$pgv_lang["differences"]							17 Aug 2007				A
 +$pgv_lang["charts_block"]							14 Aug 2007				A
