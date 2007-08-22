@@ -592,7 +592,7 @@ form, button, input {display: none;} /* buttons and input are used out of forms 
 /*-- pseudo-class for fanchart : used on server-side to draw image --*/
 .fan_chart {
 	/*-- font-family must contain a server TTF file --*/
-	font-family: url(./fonts/LucidaSansRegular.ttf);
+	font-family: url(./includes/fonts/DejaVuSans.ttf);
 	font-size: 7px;
 	color: #000000;
 	background-color : #EEEEEE;
