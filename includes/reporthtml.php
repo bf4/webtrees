@@ -49,16 +49,16 @@ class PGVReport extends PGVReportBase {
 	var $currentStyle='';
 	var $pageN = 1;
 	var $printedfootnotes = array();
-	
+
 	function setup($pw, $ph, $pageSize, $o, $m, $showGenText=true) {
 		global $pgv_lang, $VERSION;
 		parent::setup($pw, $ph, $pageSize, $o, $m, $showGenText);
-		
+
 		$this->headerElements = array();
 		$this->pageHeaderElements = array();
 		$this->footerElements = array();
 		$this->bodyElements = array();
-		
+
 		if ($showGenText) {
 			$element = new PGVRCellHTML(0,10, "C", "");
 			$element->addText("$pgv_lang[generated_by] PhpGedView $VERSION");
@@ -66,7 +66,7 @@ class PGVReport extends PGVReportBase {
 			$this->footerElements[] = $element;
 		}
 	}
-	
+
 	function addPageHeader(&$element) {
 		$this->pageHeaderElements[] = $element;
 		return count($this->headerElements)-1;
@@ -78,7 +78,7 @@ class PGVReport extends PGVReportBase {
 		if ($this->processing=="F") return $this->footerElements[] = $element;
 		if ($this->processing=="B") return $this->bodyElements[] = $element;
 	}
-	
+
 	function runPageHeader() {
 		foreach($this->pageHeaderElements as $indexval => $element) {
 			if (is_string($element) && $element=="footnotetexts") $this->Footnotes();
@@ -86,11 +86,14 @@ class PGVReport extends PGVReportBase {
 			else if (is_object($element)) $element->render($this);
 		}
 	}
-	
+
 	function Footnotes() {
 		$this->currentStyle = "";
-		foreach($this->printedfootnotes as $indexval => $element) {
-			$element->renderFootnote($this);
+		if(!empty($this->printedfootnotes)){
+			print "<br/>";
+			foreach($this->printedfootnotes as $indexval => $element) {
+				$element->renderFootnote($this);
+			}
 		}
 	}
 
@@ -104,7 +107,7 @@ class PGVReport extends PGVReportBase {
 		$this->PGVRStyles['footer'] = array('name'=>'footer', 'font'=>'Arial', 'size'=>'10', 'style'=>'');
 		foreach($this->PGVRStyles as $class=>$style) {
 			$styleAdd = "";
-			if (strstr($style['style'], 'B')!==false) $styleAdd .= " font-weight: bold;";  
+			if (strstr($style['style'], 'B')!==false) $styleAdd .= " font-weight: bold;";
 			if (strstr($style['style'], 'U')!==false) $styleAdd .= " text-decoration: underline;";
 			if ($style['font']=='') $style['font'] = 'Arial';
 			else if ($style['font']=='dejavusans') $style['font'] = 'Arial';
@@ -130,7 +133,7 @@ class PGVReport extends PGVReportBase {
 		print "</div>\n";
 		print "<script type=\"text/javascript\">\ndocument.getElementById('headerdiv').style.height='".($this->Y)."pt';\n</script>\n";
 		//-- body
-		
+
 		$oldy = $this->Y;
 		$this->Y=0;
 		$this->maxY=0;
@@ -159,11 +162,11 @@ class PGVReport extends PGVReportBase {
 		}
 		$this->currentStyle = $temp;
 		print "</div>\n";
-		
+
 		print "<script type=\"text/javascript\">\ndocument.getElementById('footerdiv').style.height='".($this->maxY+2)."pt';\n</script>\n";
 		print "</body>\n</html>\n";
 	}
-	
+
 	function getStyle($s) {
 		if (!isset($this->PGVRStyles[$s]) || $s=='') {
 			$s = $this->currentStyle;
@@ -174,7 +177,7 @@ class PGVReport extends PGVReportBase {
 		}
 		return $this->PGVRStyles[$s];
 	}
-	
+
 	function getCurrentStyle() {
 		return $this->currentStyle;
 	}
@@ -185,34 +188,34 @@ class PGVReport extends PGVReportBase {
 		//print_r($style);
 		//$this->SetFont($style["font"], $style["style"], $style["size"]);
 	}
-	
+
 	function GetX() {
 		return $this->X;
 	}
-	
+
 	function GetY() {
 		return $this->Y;
 	}
-	
+
 	function SetXY($x, $y) {
 		$this->X = $x;
 		$this->Y = $y;
 		if ($this->maxY<$y) $this->maxY=$y;
 	}
-	
+
 	function SetY($y) {
 		$this->Y = $y;
 		if ($this->maxY<$y) $this->maxY=$y;
 	}
-	
+
 	function SetX($x) {
 		$this->X = $x;
 	}
-	
+
 	function AddPage() {
 		$this->pageN++;
 	}
-	
+
 	function PageNo() {
 		return $this->pageN;
 	}
@@ -229,35 +232,35 @@ class PGVReport extends PGVReportBase {
 	function clearPageHeader() {
 		$this->pageHeaderElements = array();
 	}
-	
+
 	function createCell($width, $height, $align, $style, $top=".", $left=".") {
 		return new PGVRCellHTML($width, $height, $align, $style, $top, $left);
 	}
-	
+
 	function createTextBox($width, $height, $border, $fill, $newline, $left=".", $top=".", $pagecheck="true") {
 		return new PGVRTextBoxHTML($width, $height, $border, $fill, $newline, $left, $top, $pagecheck);
 	}
-	
+
 	function createText($style, $color) {
 		return new PGVRTextHTML($style, $color);
 	}
-	
+
 	function createFootnote($style="") {
 		return new PGVRFootnoteHTML($style);
 	}
-	
+
 	function createPageHeader() {
 		return new PGVRPageHeaderHTML();
 	}
-	
+
 	function createImage($file, $x, $y, $w, $h) {
 		return new PGVRImageHTML($file, $x, $y, $w, $h);
 	}
-	
+
 	function createLine($x1, $y1, $x2, $y2) {
 		return new PGVRLineHTML($x1, $y1, $x2, $y2);
 	}
-	
+
 	function checkFootnote(&$footnote) {
 		for($i=0; $i<count($this->printedfootnotes); $i++) {
 			if ($this->printedfootnotes[$i]->getValue() == $footnote->getValue()) {
@@ -270,7 +273,7 @@ class PGVReport extends PGVReportBase {
 		$this->printedfootnotes[] = $footnote;
 		return false;
 	}
-	
+
 	function getFootnotesHeight() {
 		$h=0;
 		foreach($this->printedfootnotes as $indexval => $element) {
@@ -278,7 +281,7 @@ class PGVReport extends PGVReportBase {
 		}
 		return $h;
 	}
-	
+
 	function write($text, $color='') {
 		$style = $this->getStyle($this->getCurrentStyle());
 		$styleAdd = "";
@@ -286,14 +289,14 @@ class PGVReport extends PGVReportBase {
 		if ($style['font']=='') $style['font'] = 'Arial';
 		print "<span class=\"".$style['name']."\" style=\"".$styleAdd."\">";
 		print nl2br(PrintReady($text));
-		print "</span>\n";
+		print "</span>";
 	}
-	
+
 	function getStringWidth($text) {
 		$style = $this->getStyle($this->currentStyle);
 		return strlen($text)*($style['size']/2);
 	}
-	
+
 	function getCurrentStyleHeight() {
 		if (empty($this->currentStyle)) return 12;
 		$style = $this->getStyle($this->currentStyle);
@@ -308,11 +311,11 @@ $PGVReportRoot = $pgvreport;
  * Cell element
  */
 class PGVRCellHTML extends PGVRCell {
-	
+
 	function PGVRCellHTML($width, $height, $align, $style, $top=".", $left=".") {
 		parent::PGVRCell($width, $height, $align, $style, $top, $left);
 	}
-	
+
 	function render(&$pdf) {
 		global $TEXT_DIRECTION, $embed_fonts;
 		if (strstr($this->text, "{nb}")!==false) return;
@@ -355,34 +358,34 @@ class PGVRCellHTML extends PGVRCell {
 			$pdf->SetY($pdf->GetY()+$this->height);
 		}
 		print "text-align: ".$align.";\">\n";
-		
+
 		if (!empty($url)) print "<a href=\"$url\">";
 		//print $temptext;
 		$pdf->write($temptext);
 		if (!empty($url)) print "</a>";
 		print "</div>\n";
-		
+
 	}
 }
 
 class PGVRHtmlPDF extends PGVRHtml {
-	
+
 	function PGVRHtmlPDF($tag, $attrs) {
 		parent::PGVRHtml($tag, $attrs);
 	}
-	
+
 	function render(&$pdf, $sub = false) {
 		global $TEXT_DIRECTION, $embed_fonts;
 		//print "[".$this->text."] ";
 
 		if (!empty($this->attrs['pgvrstyle'])) $pdf->setCurrentStyle($this->attrs['pgvrstyle']);
-		
+
 		$this->text = $this->getStart().$this->text;
 		foreach($this->elements as $k=>$element) {
 			if (is_string($element) && $element=="footnotetexts") $pdf->Footnotes();
 			else if (is_string($element) && $element=="addpage") $pdf->AddPage();
 			else if ($element->get_type()=='PGVRHtml') {
-//				$this->text .= $element->getStart(); 
+//				$this->text .= $element->getStart();
 				$this->text .= $element->render($pdf, true);
 			}
 			else $element->render($pdf);
@@ -399,11 +402,11 @@ class PGVRHtmlPDF extends PGVRHtml {
  * TextBox element
  */
 class PGVRTextBoxHTML extends PGVRTextBox {
-	
+
 	function PGVRTextBoxHTML($width, $height, $border, $fill, $newline, $left=".", $top=".", $pagecheck="true") {
 		parent::PGVRTextBox($width, $height, $border, $fill, $newline, $left, $top, $pagecheck);
 	}
-	
+
 	function render(&$pdf) {
 		global $lastheight;
 
@@ -552,12 +555,12 @@ class PGVRTextBoxHTML extends PGVRTextBox {
 			$lastheight = 0;
 			$ty = $pdf->GetY();
 			//if ($curn != $pdf->PageNo()) $ny = $cury+$pdf->getCurrentStyleHeight();
-			//else 
+			//else
 			$ny = $cury+$this->height;
 			if ($ty > $ny) $ny = $ty;
 			$pdf->SetY($ny+1);
 			$pdf->SetX(0);
-			print "<br />\n";
+			//print "<br />\n";
 			//Here1 ty:71 ny:185 cury:169
 			//print "Here1 ty:$ty ny:$ny cury:$cury ";
 		}
@@ -579,7 +582,7 @@ class PGVRTextHTML extends PGVRText {
 	function PGVRTextHTML($style, $color) {
 		parent::PGVRText($style, $color);
 	}
-	
+
 	function render(&$pdf, $curx=0) {
 		global $embed_fonts;
 		$pdf->setCurrentStyle($this->styleName);
@@ -614,7 +617,7 @@ class PGVRTextHTML extends PGVRText {
 //		else $pdf->Write($pdf->getCurrentStyleHeight(),$temptext);
 
 		$pdf->write($temptext, $this->color);
-		
+
 //		$ct = preg_match_all("/".chr(215)."/", $temptext, $match);
 //		if ($ct>1) {
 //			$x = $pdf->GetX();
@@ -684,7 +687,7 @@ class PGVRFootnoteHTML extends PGVRFootnote {
 	function PGVRFootnoteHTML($style="") {
 		parent::PGVRFootnote($style);
 	}
-	
+
 	function render(&$pdf) {
 		global $footnote_count, $embed_fonts;
 
@@ -712,7 +715,7 @@ class PGVRFootnoteHTML extends PGVRFootnote {
 		$pdf->setCurrentStyle("footnotenum");
 		print "<a href=\"#footnote".$this->num."\">";
 		$pdf->write($this->num." ");
-		print "</a>\n";
+		print "</a>";
 	}
 
 	function renderFootnote(&$pdf) {
@@ -724,13 +727,13 @@ class PGVRFootnoteHTML extends PGVRFootnote {
 		//$pdf->SetLink($this->addlink, -1);
 		//$pdf->Write($pdf->getCurrentStyleHeight(),$this->num.". ".$temptext."\n\n");
 		print "<a name=\"footnote".$this->num."\">".$this->num.". ";
-		$pdf->write($temptext."\n\n");
-		print "</a>\n";
+		$pdf->write($temptext);
+		print "</a><br/>";
 		$pdf->SetXY(0,$pdf->GetY()+$this->getFootnoteHeight($pdf));
 	}
-	
+
 	function getFootnoteHeight(&$pdf) {
-		$ct = substr_count($this->text, "\n");
+		$ct = substr_count($this->text, "<br/>");
 		$ct+=3;
 		$style = $pdf->getStyle($this->styleName);
 		$h = round(($style["size"]+4.2)*$ct);
@@ -746,7 +749,7 @@ class PGVRPageHeaderHTML extends PGVRPageHeader {
 	function PGVRPageHeaderHTML() {
 		parent::PGVRPageHeader();
 	}
-	
+
 	function render(&$pdf) {
 		$pdf->clearPageHeader();
 		foreach($this->elements as $indexval => $element) {
@@ -759,11 +762,11 @@ class PGVRPageHeaderHTML extends PGVRPageHeader {
  * image element
  */
 class PGVRImageHTML extends PGVRImage {
-	
+
 	function PGVRImageHTML($file, $x, $y, $w, $h) {
 		parent::PGVRImage($file, $x, $y, $w, $h);
 	}
-	
+
 	function render(&$pdf) {
 		global $lastpicbottom, $lastpicpage, $lastpicleft, $lastpicright;;
 		if ($this->x==0) $this->x=$pdf->GetX();
