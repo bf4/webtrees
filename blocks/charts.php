@@ -21,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @version $Id: gedcom_stats.php 1343 2007-07-26 21:32:12Z yalnifj $
+ * @version $Id$
  * -- Slightly modified (rtl in table values) 2006/06/09 18:00:00 pfblair
  * @package PhpGedView
  * @subpackage Blocks
@@ -67,11 +67,11 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	$person = Person::getInstance($config["rootId"]);
 	if ($person==null) $person = Person::getInstance($PEDIGREE_ROOT_ID);
 	
-	print "<div id=\"gedcom_stats\" class=\"block\">\n";
+	print "<div id=\"charts_block\" class=\"block\">\n";
 	print "<table class=\"blockheader\" cellspacing=\"0\" cellpadding=\"0\" style=\"direction:ltr;\"><tr>";
 	print "<td class=\"blockh1\" >&nbsp;</td>";
 	print "<td class=\"blockh2\" ><div class=\"blockhc\">";
-	print_help_link("index_stats_help", "qm");
+	print_help_link("index_charts_help", "qm");
 	if ($PGV_BLOCKS["print_charts_block"]["canconfig"]) {
 		$username = getUserName();
 		if ((($ctype=="gedcom")&&(userGedcomAdmin($username))) || (($ctype=="user")&&(!empty($username)))) {
