@@ -93,8 +93,22 @@ class MediaControllerRoot extends IndividualController{
 	 * Also update the indirec we will use to generate the page
 	 */
 	function acceptChanges() {
-		parent::acceptChanges();
-		$this->mediaobject = Media::getInstance($this->pid);
+		global $GEDCOM, $medialist;
+		if (!userCanAccept($this->uname)) return;
+		require_once("includes/functions_import.php");
+		if (accept_changes($this->pid."_".$GEDCOM)) {
+			$this->show_changes="no";
+			$this->accept_success=true;
+			//-- delete the record from the cache and refresh it
+			if (isset($medialist[$this->pid])) unset($medialist[$this->pid]);
+			$indirec = find_gedcom_record($this->pid);
+			//-- check if we just deleted the record and redirect to index
+			if (empty($indirec)) {
+				header("Location: index.php?ctype=gedcom");
+				exit;
+			}
+			$this->mediaobject = Media::getInstance($this->pid);
+		}
 		//This sets the controller ID to be the Media ID
 		if (is_null($this->mediaobject)) $this->mediaobject = new Media("0 @".$this->pid."@ OBJE");
 	}
