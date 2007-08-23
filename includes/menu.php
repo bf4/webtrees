@@ -279,7 +279,7 @@ class Menu
 					$output .= ' style=\"right: -50px; overflow: visible;\"';
 				}
 			}
-			$output .= "\" onmouseover=\"show_submenu('{$this->parentmenu}'); show_submenu('{$submenuid}');\" onmouseout=\"timeout_submenu('menu{$id}_subs');\">\n";
+			$output .= " onmouseover=\"show_submenu('{$this->parentmenu}'); show_submenu('{$submenuid}');\" onmouseout=\"timeout_submenu('menu{$id}_subs');\">\n";
 			foreach($this->submenus as $submenu)
 			{
 				$submenu->parentmenu = $submenuid;

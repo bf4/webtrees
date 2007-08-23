@@ -537,6 +537,8 @@ a:hover .nameZoom {
 }
 
 .themesubmenu {
+	position: absolute;
+	visibility: hidden;
 	color: black;
 	text-decoration: none;
 	font: 11px tahoma, arial, helvetica, sans-serif;
