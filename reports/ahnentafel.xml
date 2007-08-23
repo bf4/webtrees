@@ -270,6 +270,7 @@
 			</PGVRRelatives>
 			<!-- if the sources were on, print the source citations as footnotes -->
 			<PGVRif condition="$sources==1">
+				<PGVRNewPage></PGVRNewPage>
 				<PGVRTextBox border="0" width="$width" height="20">
 					<PGVRText style="subheader"><br /><PGVRvar var="pgv_lang[sources]" /><br /><br /></PGVRText>
 					<PGVRFootnoteTexts />
