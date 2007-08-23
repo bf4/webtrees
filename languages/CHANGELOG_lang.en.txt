@@ -56,6 +56,7 @@ VERSION 4.1.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["htmlplus_block_descr"]					23 Aug 2007				S
 +$pgv_lang["muhar"]									22 Aug 2007				A Months of the Hijri calendar
 +$pgv_lang["safar"]									22 Aug 2007				A - see www.geonames.de/months2.html
 +$pgv_lang["rabi1"]									22 Aug 2007				A for help with translations
