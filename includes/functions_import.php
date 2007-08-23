@@ -90,7 +90,9 @@ function import_record($indirec, $update = false) {
 	// Clean input record
 	$indirec=preg_replace('/[\x00-\x09\x0B-\x0C\x0B-\x1F\x7F]+/', ' ', $indirec); // Illegal control characters
 	$indirec=preg_replace('/[\r\n]+/', "\n", $indirec); // Standardise line endings
-	$indirec=preg_replace('/ {2,}/', ' ', $indirec); // Repeated spaces
+	// EEK! We only need to remove repeated spaces in certain circumstances.
+	// This global replace breaks various other things, so take it out
+	//$indirec=preg_replace('/ {2,}/', ' ', $indirec); // Repeated spaces
 	$indirec=preg_replace('/(^ | $)/m', '', $indirec); // Leading/trailing space
 	$indirec=preg_replace('/\n{2,}/', "\n", $indirec); // Blank lines
 	if (!$update) $indirec=str_replace('@@', '@', $indirec); // Escaped @ signs (only if importing from file)
