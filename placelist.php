@@ -337,7 +337,12 @@ if ($level > 0) {
 		if ($_GET["filter"]=="all") $option="";
 		else $option=$_GET["filter"]."_PLAC";
 		$title = ""; foreach ($parent as $k=>$v) $title = $v.", ".$title;
-		$title = substr($title, 0, -2)." ";
+		$title = substr($title, 0, -2);
+		$positions = get_place_positions($parent, $level);
+		sort($positions);
+		print_indi_table($positions, $title, $option);
+		print_fam_table($positions, $title, $option);
+		/**
 		// Sort each of the tables by Name
 		if (count($myindilist) > 1) uasort($myindilist, "stringsort");
 		if (count($myfamlist) > 1) uasort($myfamlist, "stringsort");
@@ -346,6 +351,7 @@ if ($level > 0) {
 		print_indi_table($myindilist, $pgv_lang["individuals"]." @ ".$title);
 		print_fam_table($myfamlist, $pgv_lang["families"]." @ ".$title);
 		print_sour_table($mysourcelist, $pgv_lang["sources"]." @ ".$title);
+		**/
 		//-- page title
 		if ($_GET["filter"]!="all") $title = $factarray[$_GET["filter"]]." @ ".$title;
 		?>
