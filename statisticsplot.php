@@ -430,18 +430,18 @@ function set_params($current, $indfam, $xg,  $zg, $titstr,  $xt, $yt, $gx, $gz, 
 	global $pgv_lang;
 
 	$monthdata= array();
-	$monthdata[] = $pgv_lang["january_1st"];
-	$monthdata[] = $pgv_lang["february_1st"];
-	$monthdata[] = $pgv_lang["march_1st"];
-	$monthdata[] = $pgv_lang["april_1st"];
+	$monthdata[] = $pgv_lang["jan_1st"];
+	$monthdata[] = $pgv_lang["feb_1st"];
+	$monthdata[] = $pgv_lang["mar_1st"];
+	$monthdata[] = $pgv_lang["apr_1st"];
 	$monthdata[] = $pgv_lang["may_1st"];
-	$monthdata[] = $pgv_lang["june_1st"];
-	$monthdata[] = $pgv_lang["july_1st"];
-	$monthdata[] = $pgv_lang["august_1st"];
-	$monthdata[] = $pgv_lang["september_1st"];
-	$monthdata[] = $pgv_lang["october_1st"];
-	$monthdata[] = $pgv_lang["november_1st"];
-	$monthdata[] = $pgv_lang["december_1st"];
+	$monthdata[] = $pgv_lang["jun_1st"];
+	$monthdata[] = $pgv_lang["jul_1st"];
+	$monthdata[] = $pgv_lang["aug_1st"];
+	$monthdata[] = $pgv_lang["sep_1st"];
+	$monthdata[] = $pgv_lang["oct_1st"];
+	$monthdata[] = $pgv_lang["nov_1st"];
+	$monthdata[] = $pgv_lang["dec_1st"];
 	foreach ($monthdata as $key=>$month) {
 		$monthdata[$key] = utf8_decode($month);
 	}

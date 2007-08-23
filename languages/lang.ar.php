@@ -64,18 +64,18 @@ $pgv_lang["dec"]          = "ديسمبر";
 
 $pgv_lang["apx"]          = "زهاء تقريبا";
 
-$pgv_lang["january_1st"]  = "ياناير";
-$pgv_lang["february_1st"] = "فبراير";
-$pgv_lang["march_1st"]    = "مارس";
-$pgv_lang["april_1st"]    = "ابريل";
+$pgv_lang["jan_1st"]      = "ياناير";
+$pgv_lang["feb_1st"]      = "فبراير";
+$pgv_lang["mar_1st"]      = "مارس";
+$pgv_lang["apr_1st"]      = "ابريل";
 $pgv_lang["may_1st"]      = "مايو";
-$pgv_lang["june_1st"]     = "يونيو";
-$pgv_lang["july_1st"]     = "يوليو";
-$pgv_lang["august_1st"]   = "اغسطس";
-$pgv_lang["september_1st"]= "سبتمبر";
-$pgv_lang["october_1st"]  = "اكتوبر";
-$pgv_lang["november_1st"] = "نوفمبر";
-$pgv_lang["december_1st"] = "ديسمبر";
+$pgv_lang["jun_1st"]      = "يونيو";
+$pgv_lang["jul_1st"]      = "يوليو";
+$pgv_lang["aug_1st"]      = "اغسطس";
+$pgv_lang["sep_1st"]      = "سبتمبر";
+$pgv_lang["oct_1st"]      = "اكتوبر";
+$pgv_lang["nov_1st"]      = "نوفمبر";
+$pgv_lang["dec_1st"]      = "ديسمبر";
 
 $pgv_lang["muhar"]        = "محرّم";
 $pgv_lang["safar"]        = "صفر";
