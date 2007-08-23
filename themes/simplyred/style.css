@@ -1233,7 +1233,9 @@ a.showit:hover span {
 	z-index: 1;
 }
 .iwstyle {
-	width:360px;
+        background-image: url("images/redgradiant.gif");
+        padding:10px;
+        width:360px; /*this is from the original googlemap.php file so should be left in */
         /*background-color: #FFFFFF;*/
 }
 .iwstyle a {
