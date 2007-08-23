@@ -45,40 +45,41 @@ VERSION 4.1.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
-+$pgv_lang["jan_1st"]                 23 Aug 2007           A There are no translation changes here.
--$pgv_lang["january_1st"]             23 Aug 2007           D The $pgv_lang[] variables have been renamed.
-+$pgv_lang["feb_1st"]                 23 Aug 2007           A I have updated all the lang.XX.php files.
--$pgv_lang["february_1st"]            23 Aug 2007           D No further work is required by the translators.
-+$pgv_lang["mar_1st"]                 23 Aug 2007           A
--$pgv_lang["march_1st"]               23 Aug 2007           D
-+$pgv_lang["apr_1st"]                 23 Aug 2007           A
--$pgv_lang["april_1st"]               23 Aug 2007           D
-+$pgv_lang["jun_1st"]                 23 Aug 2007           A
--$pgv_lang["june_1st"]                23 Aug 2007           D
-+$pgv_lang["jul_1st"]                 23 Aug 2007           A
--$pgv_lang["july_1st"]                23 Aug 2007           D
-+$pgv_lang["aug_1st"]                 23 Aug 2007           A
--$pgv_lang["august_1st"]              23 Aug 2007           D
-+$pgv_lang["sep_1st"]                 23 Aug 2007           A
--$pgv_lang["september_1st"]           23 Aug 2007           D
-+$pgv_lang["oct_1st"]                 23 Aug 2007           A
--$pgv_lang["october_1st"]             23 Aug 2007           D
-+$pgv_lang["nov_1st"]                 23 Aug 2007           A
--$pgv_lang["november_1st"]            23 Aug 2007           D
-+$pgv_lang["dec_1st"]                 23 Aug 2007           A
--$pgv_lang["december_1st"]            23 Aug 2007           D
-+$pgv_lang["muhar"]                   22 Aug 2007           A Months of the Hijri calendar
-+$pgv_lang["safar"]                   22 Aug 2007           A - see www.geonames.de/months2.html
-+$pgv_lang["rabi1"]                   22 Aug 2007           A for help with translations
-+$pgv_lang["rabi2"]                   22 Aug 2007           A
-+$pgv_lang["juma1"]                   22 Aug 2007           A
-+$pgv_lang["juma2"]                   22 Aug 2007           A
-+$pgv_lang["rajab"]                   22 Aug 2007           A
-+$pgv_lang["shaab"]                   22 Aug 2007           A
-+$pgv_lang["ramad"]                   22 Aug 2007           A
-+$pgv_lang["shaww"]                   22 Aug 2007           A
-+$pgv_lang["dhuaq"]                   22 Aug 2007           A
-+$pgv_lang["dhuah"]                   22 Aug 2007           A
+*$pgv_lang["htmlplus_block_descr"]					23 Aug 2007				S
++$pgv_lang["jan_1st"]								23 Aug 2007				A There are no translation changes here.
+-$pgv_lang["january_1st"]							23 Aug 2007				D The $pgv_lang[] variables have been renamed.
++$pgv_lang["feb_1st"]								23 Aug 2007				A I have updated all the lang.XX.php files.
+-$pgv_lang["february_1st"]							23 Aug 2007				D No further work is required by the translators.
++$pgv_lang["mar_1st"]								23 Aug 2007				A
+-$pgv_lang["march_1st"]								23 Aug 2007				D
++$pgv_lang["apr_1st"]								23 Aug 2007				A
+-$pgv_lang["april_1st"]								23 Aug 2007				D
++$pgv_lang["jun_1st"]								23 Aug 2007				A
+-$pgv_lang["june_1st"]								23 Aug 2007				D
++$pgv_lang["jul_1st"]								23 Aug 2007				A
+-$pgv_lang["july_1st"]								23 Aug 2007				D
++$pgv_lang["aug_1st"]								23 Aug 2007				A
+-$pgv_lang["august_1st"]							23 Aug 2007				D
++$pgv_lang["sep_1st"]								23 Aug 2007				A
+-$pgv_lang["september_1st"]							23 Aug 2007				D
++$pgv_lang["oct_1st"]								23 Aug 2007				A
+-$pgv_lang["october_1st"]							23 Aug 2007				D
++$pgv_lang["nov_1st"]								23 Aug 2007				A
+-$pgv_lang["november_1st"]							23 Aug 2007				D
++$pgv_lang["dec_1st"]								23 Aug 2007				A
+-$pgv_lang["december_1st"]							23 Aug 2007				D
++$pgv_lang["muhar"]									22 Aug 2007				A Months of the Hijri calendar
++$pgv_lang["safar"]									22 Aug 2007				A - see www.geonames.de/months2.html
++$pgv_lang["rabi1"]									22 Aug 2007				A for help with translations
++$pgv_lang["rabi2"]									22 Aug 2007				A
++$pgv_lang["juma1"]									22 Aug 2007				A
++$pgv_lang["juma2"]									22 Aug 2007				A
++$pgv_lang["rajab"]									22 Aug 2007				A
++$pgv_lang["shaab"]									22 Aug 2007				A
++$pgv_lang["ramad"]									22 Aug 2007				A
++$pgv_lang["shaww"]									22 Aug 2007				A
++$pgv_lang["dhuaq"]									22 Aug 2007				A
++$pgv_lang["dhuah"]									22 Aug 2007				A
 *$pgv_lang["charts_block_descr"]					18 Aug 2007				W
 +$pgv_lang["differences"]							17 Aug 2007				A
 +$pgv_lang["charts_block"]							14 Aug 2007				A

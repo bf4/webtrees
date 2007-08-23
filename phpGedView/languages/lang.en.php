@@ -207,7 +207,7 @@ $pgv_lang["html_block_sample_part1"]	= "<p class=\"blockhc\"><b>Put your title h
 $pgv_lang["html_block_sample_part2"]	= "to change what is printed here.</p>";
 $pgv_lang["html_block_name"]		= "HTML";
 $pgv_lang["htmlplus_block_name"]	= "Advanced HTML";
-$pgv_lang["htmlplus_block_descr"]	= "This is an HTML block that you can place on your page to add any sort of message you may want.  You can insert referenes to information from your GEDCOM into the HTML text.";
+$pgv_lang["htmlplus_block_descr"]	= "This is an HTML block that you can place on your page to add any sort of message you may want.  You can insert references to information from your GEDCOM into the HTML text.";
 $pgv_lang["htmlplus_block_templates"] = "Templates";
 $pgv_lang["htmlplus_block_content"] = "Content";
 $pgv_lang["htmlplus_block_narrative"] = "Narrative style (English only)";
