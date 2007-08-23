@@ -675,10 +675,13 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		print "</td></tr>\n";
 	}
 	print "</table>\n";
-	print_add_layer("SOUR", 1);
-	print_add_layer("NOTE", 1);
-	if ($nextaction!='update') { // GEDCOM 5.5.1 spec says NAME doesn't get a OBJE
-		print_add_layer("OBJE", 1);
+	if ($nextaction=='update') { // GEDCOM 5.5.1 spec says NAME doesn't get a OBJE
+		print_add_layer('SOUR');
+		print_add_layer('NOTE');
+	} else {
+		print_add_layer('SOUR', 1);
+		print_add_layer('NOTE', 1);
+		print_add_layer('OBJE', 1);
 	}
 	print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
 	print "</form>\n";
