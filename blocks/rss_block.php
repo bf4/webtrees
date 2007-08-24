@@ -70,11 +70,11 @@ function print_RSS_block($block = true, $config="", $side, $index) {
 		print "\n\t\t<option value=\"recentChanges\">" . $pgv_lang["recent_changes"] . "</option>";
 		print "\n\t\t<option value=\"randomMedia\">" . $pgv_lang["random_picture"] . "</option>";
 		print "\n\t</select>";
-		print "\n\t<select name=\"auth\" class=\"header_select\" onchange=\"javascript:document.getElementById('rss_button').href = 'rss.php?ged=" . $GEDCOM . "&amp;lang=" . $LANGUAGE . "' + (document.rssform.module.value==''? '' : '&amp;module=' + document.rssform.module.value) + (document.rssform.rssStyle.value==''? '' : '&amp;rssStyle=' + document.rssform.rssStyle.value) + (document.rssform.auth.value==''? '' : '&amp;auth=' + document.rssform.auth.value);\">";
-		print "\n\t\t<option value=\"\">" . $pgv_lang["no_auth_needed"] . "</option>";
-		print "\n\t\t<option value=\"basic\">" . $pgv_lang["basic_auth"] . "</option>";
-		//print "\n\t\t<option value=\"digest\">" . $pgv_lang["digest_auth"] . "</option>";
-		print "\n\t</select>";
+		//print "\n\t<select name=\"auth\" class=\"header_select\" onchange=\"javascript:document.getElementById('rss_button').href = 'rss.php?ged=" . $GEDCOM . "&amp;lang=" . $LANGUAGE . "' + (document.rssform.module.value==''? '' : '&amp;module=' + document.rssform.module.value) + (document.rssform.rssStyle.value==''? '' : '&amp;rssStyle=' + document.rssform.rssStyle.value) + (document.rssform.auth.value==''? '' : '&amp;auth=' + document.rssform.auth.value);\">";
+		//print "\n\t\t<option value=\"\">" . $pgv_lang["no_auth_needed"] . "</option>";
+		//print "\n\t\t<option value=\"basic\">" . $pgv_lang["basic_auth"] . "</option>";
+		////print "\n\t\t<option value=\"digest\">" . $pgv_lang["digest_auth"] . "</option>";
+		//print "\n\t</select>";
 		print " <a id=\"rss_button\" href=\"rss.php?ged=" . $GEDCOM . "&amp;lang=" . $LANGUAGE . "\"><img class=\"icon\" src=\"images/feed-icon16x16.png\" alt=\"RSS\" title=\"RSS\" /></a>";
 		print "</form></div>\n";
 		print "<div class=\"center\">";
