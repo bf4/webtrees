@@ -1456,8 +1456,8 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 		if ($datemax < $anniv) continue;
 		// upcoming events starting tomorrow
 		if ($nextdays>0 && date("Ymd") == date("Ymd", $anniv)) continue;
-		// sorting by MM-DD-YYYY
-		$sortkey = sprintf("%02d-%02d-%04d", $pdate[0]["mon"], $pdate[0]["day"], $pdate[0]["year"]);
+		// sorting by MMDDYYYY
+		$sortkey = sprintf("%02d%02d%04d", $pdate[0]["mon"], $pdate[0]["day"], $pdate[0]["year"]);
 
 		//-- get gedcom record
 		$record = GedcomRecord::getInstance($value[0]);
@@ -1517,18 +1517,13 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 		echo "</td>";
 		//-- Event date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		echo "<a href=\"".$record->getDateUrl($edate)."\"".
-		" title=\"".$sortkey."\"".
-		" class=\"list_item\">".$timestamp."</a>";
+		print str_replace('<a', '<a class="list_item" name="'.$sortkey.'"', get_date_url($edate));
 		echo "</td>";
 		//-- Anniversary
 		echo "<td class=\"list_value_wrap rela\">";
 		$person = new Person("");
 		$age = $person->getAge("\n1 BIRT\n2 DATE ".$edate."\n", date("d M Y", $anniv));
-		echo "<a href=\"".$record->getDateUrl($edate)."\"".
-		//" title=\"".strip_tags(get_changed_date(date("d M Y", $anniv)))."\"".
-		" title=\"".date("m-d-Y", $anniv)."\"".
-		" class=\"list_item\">".$age."</a>";
+		echo '<a class="list_item" name="'.$age.'"></a>'.$age;
 		echo "<abbr class=\"dtstart\" title=\"".date("Ymd", $anniv)."\"></abbr>"; // hCalendar:dtstart
 		echo "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$age ".$factarray[$event]." : ".PrintReady(strip_tags($record->getSortableName()))."\"></abbr>"; // hCalendar:summary
 		echo "</td>";
