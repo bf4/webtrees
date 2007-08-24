@@ -548,7 +548,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		}
 		if (empty($name_fields['NSFX'])) $name_fields['NSFX']=$name_bits[10];
 		// Don't automatically create an empty NICK - it is an "advanced" field.
-		if (empty($name_fields['NICK']) && !empty($name_bits[6]))
+		if (empty($name_fields['NICK']) && !empty($name_bits[6]) && !preg_match('/^2 NICK/m',$namerec))
 			$name_fields['NICK']=$name_bits[6];
 	}
 
@@ -579,13 +579,13 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 					add_simple_tag("2 $tag $value");
 				}
 			}
-		// Allow a new row to be entered if there was no row provided
-		if (count($match[1])==0 || $tag!='_HEB' && $tag!='NICK')
-			if ($tag=='_MARNM') {
-				add_simple_tag("0 _MARNM");
-				add_simple_tag("0 _MARNM_SURN $new_marnm");
-			} else
-				add_simple_tag("0 $tag");
+			// Allow a new row to be entered if there was no row provided
+			if (count($match[1])==0 && empty($name_fields[$tag]) || $tag!='_HEB' && $tag!='NICK')
+				if ($tag=='_MARNM') {
+					add_simple_tag("0 _MARNM");
+					add_simple_tag("0 _MARNM_SURN $new_marnm");
+				} else
+					add_simple_tag("0 $tag");
 	}
 
 	// Handle any other NAME subfields that aren't included above (SOUR, NOTE, _CUSTOM, etc)
