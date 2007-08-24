@@ -159,7 +159,7 @@ function paste_id(value) {
 </script>
 		<?php
 		init_calendar_popup();
-		print "<form name=\"setupreport\" method=\"get\" action=\"reportengine.php\">\n";
+		print "<form name=\"setupreport\" method=\"get\" target=\"_blank\" action=\"reportengine.php\">\n";
 		print "<input type=\"hidden\" name=\"action\" value=\"run\" />\n";
 		print "<input type=\"hidden\" name=\"report\" value=\"$report\" />\n";
 		print "<input type=\"hidden\" name=\"download\" value=\"\" />\n";
@@ -264,11 +264,11 @@ function paste_id(value) {
 		<table><tr>
 		<td><img src="images/media/pdf.gif" alt="PDF" title="PDF" /></td>
 		<td><img src="images/media/html.gif" alt="HTML" title="HTML" /></td>
-		<td><img src="images/media/tex.gif" alt="LaTEX" title="LaTEX" /></td>
+		<!-- <td><img src="images/media/tex.gif" alt="LaTEX" title="LaTEX" /></td> -->
 		</tr><tr>
 		<td><center><input type="radio" name="output" value="PDF" checked="checked" /></center></td>
 		<td><center><input type="radio" name="output" value="HTML" <?php if ($output=="HTML") echo " checked=\"checked\"";?> /></center></td>
-		<td><center><input type="radio" name="output" value="TEX" <?php if ($output=="TEX") echo " checked=\"checked\"";?> <?php if (!file_exists("includes/reportlatex.php")) echo " disabled=\"disabled\"";?> /></center></td>
+		<!-- disable this option for now <td><center><input type="radio" name="output" value="TEX" <?php if ($output=="TEX") echo " checked=\"checked\"";?> <?php if (!file_exists("includes/reportlatex.php")) echo " disabled=\"disabled\"";?> /></center></td> -->
 		</tr></table>
 		</td></tr>
 		<?php

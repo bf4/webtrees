@@ -73,7 +73,7 @@
 					<PGVRTextBox width="25" height="20" border="0">
 						<PGVRText style="text"><PGVRvar var="num" />.</PGVRText>
 					</PGVRTextBox>
-					<PGVRTextBox width="500" height="12" border="0" newline="1">
+					<PGVRTextBox width="0" height="12" border="0" newline="1">
 						<PGVRText style="name"><PGVRGetPersonName id="" /></PGVRText>
 						<PGVRGedcom id="BIRT">
 							<PGVRText style="text"><PGVRvar var="printPronoun" />

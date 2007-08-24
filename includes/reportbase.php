@@ -225,7 +225,7 @@ class PGVRElement {
 		$t = preg_replace("/<br \/>/", "\n", $t);
 		$t = strip_tags($t);
 		$t = unhtmlentities($t);
-		//if ($embed_fonts) $t = bidi_text($t);
+		if ($embed_fonts) $t = bidi_text($t);
 		//else $t = smart_utf8_decode($t);
 		$this->text .= $t;
 	}
@@ -585,6 +585,7 @@ $elementHandler["PGVRFootnote"]["start"]	= "PGVRFootnoteSHandler";
 $elementHandler["PGVRFootnote"]["end"]		= "PGVRFootnoteEHandler";
 $elementHandler["PGVRFootnoteTexts"]["start"]	= "PGVRFootnoteTextsSHandler";
 $elementHandler["br"]["start"]				= "brSHandler";
+$elementHandler["sp"]["start"]				= "spSHandler";
 $elementHandler["PGVRPageHeader"]["start"] 		= "PGVRPageHeaderSHandler";
 $elementHandler["PGVRPageHeader"]["end"] 		= "PGVRPageHeaderEHandler";
 $elementHandler["PGVRHighlightedImage"]["start"] 		= "PGVRHighlightedImageSHandler";
@@ -1208,6 +1209,7 @@ function PGVRRepeatTagEHandler() {
 		if (!xml_parse($repeat_parser, $reportxml, true)) {
 			printf($reportxml."\nPGVRRepeatTagEHandler XML error: %s at line %d", xml_error_string(xml_get_error_code($repeat_parser)), xml_get_current_line_number($repeat_parser));
 			print_r($repeatsStack);
+			debug_print_backtrace();
 			exit;
 		}
 		xml_parser_free($repeat_parser);
@@ -1318,7 +1320,7 @@ function PGVRFactsEHandler() {
 	//-- read the xml from the file
 	$lines = file($report);
 	$reportxml = "<tempdoc>\n";
-	while($lineoffset>0 && strstr($lines[$lineoffset+$repeatBytes], "<PGVRFacts ")===false) $lineoffset--;
+	while($lineoffset+$repeatBytes>0 && strstr($lines[$lineoffset+$repeatBytes], "<PGVRFacts ")===false) $lineoffset--;
 	$lineoffset++;
 //	var_dump($lineoffset);
 	for($i=$repeatBytes+$lineoffset; $i<$line+$lineoffset; $i++) {
@@ -1357,6 +1359,7 @@ function PGVRFactsEHandler() {
 
 		if (!xml_parse($repeat_parser, $reportxml, true)) {
 			die(sprintf($reportxml."\nPGVRFactsEHandler XML error: %s at line %d", xml_error_string(xml_get_error_code($repeat_parser)), xml_get_current_line_number($repeat_parser)));
+			debug_print_backtrace();
 		}
 		xml_parser_free($repeat_parser);
 	}
@@ -1526,6 +1529,11 @@ function PGVRFootnoteTextsSHandler($attrs) {
 function brSHandler($attrs) {
 	global $printData, $currentElement, $processGedcoms;
 	if ($printData && ($processGedcoms==0)) $currentElement->addText("<br />");
+}
+
+function spSHandler($attrs) {
+	global $printData, $currentElement, $processGedcoms;
+	if ($printData && ($processGedcoms==0)) $currentElement->addText(" ");
 }
 
 function PGVRHighlightedImageSHandler($attrs) {
@@ -1925,6 +1933,7 @@ function PGVRListEHandler() {
 			if (!xml_parse($repeat_parser, $reportxml, true)) {
 				printf($reportxml."\nPGVRRepeatTagEHandler XML error: %s at line %d", xml_error_string(xml_get_error_code($repeat_parser)), xml_get_current_line_number($repeat_parser));
 				print_r($repeatsStack);
+				debug_print_backtrace();
 				exit;
 			}
 			xml_parser_free($repeat_parser);
@@ -2119,6 +2128,7 @@ function PGVRRelativesEHandler() {
 			if (!xml_parse($repeat_parser, $reportxml, true)) {
 				printf($reportxml."\nPGVRRelativesEHandler XML error: %s at line %d", xml_error_string(xml_get_error_code($repeat_parser)), xml_get_current_line_number($repeat_parser));
 				print_r($repeatsStack);
+				debug_print_backtrace();
 				exit;
 			}
 			xml_parser_free($repeat_parser);

@@ -620,6 +620,7 @@ class PGVRTextPDF extends PGVRText {
 				$lines = preg_split("/\n/", $this->text);
 				$newtext = "";
 				$wrapwidth = $this->wrapWidth;
+				$i=0;
 				foreach($lines as $indexval => $line) {
 					$w = $pdf->GetStringWidth($line)+10;
 					if ($w>$wrapwidth) {
@@ -635,9 +636,14 @@ class PGVRTextPDF extends PGVRText {
 								$wrapwidth = $this->wrapWidth2;
 							}
 						}
+						
 						$newtext .= "\n";
 					}
-					else $newtext .= $line."\n";
+					else {
+						if ($i>0) $newtext .= "\n";
+						$newtext .= $line;
+					}
+					$i++;
 				}
 				$this->text = $newtext;
 				//$this->text = preg_replace("/\n/", "\n~", $this->text);

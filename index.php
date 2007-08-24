@@ -384,7 +384,10 @@ if (count($ublocks["main"])!=0) {
 			ob_start();
 			eval($block[0]."(false, \$block[1], \"main\", $bindex);");
 			$content = ob_get_contents();
+			$temp = $SEARCH_SPIDER;
+			$SEARCH_SPIDER = false;
 			saveCachedBlock($block, "main".$bindex, $content);
+			$SEARCH_SPIDER = $temp;
 			ob_end_flush();
 		}
 	}

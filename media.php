@@ -1157,6 +1157,7 @@ if (check_media_structure()) {
 			}
 
 			foreach ($dirs as $indexval => $dir) {
+				if ($dir{0}!=".") {
 				print "<tr>";
 					print "<td class=\"descriptionbox $TEXT_DIRECTION\">";
 						print "<a href=\"media.php?directory=".rawurlencode($directory.$dir."/")."&amp;level=".($level+1).$thumbget."\">";
@@ -1177,7 +1178,7 @@ if (check_media_structure()) {
 						print "</form>";
 					print "</td>";
 				print "</tr>";
-
+				}
 			}
 		}
 		// Form for ceating a new directory

@@ -1000,13 +1000,18 @@ class Person extends GedcomRecord {
 			$parents[] = $family->getWife();
 				foreach ($parents as $indexval=>$parent) {
 				if (is_null($parent)) continue;
+				if ($sosa==1) {
 				if ($parent->getSex()=='M') {
 					$fact="_MARR_FATH";
 					$rela="father";
-				}
-				else {
+					} else {
 					$fact="_MARR_MOTH";
 					$rela="mother";
+				}
+				} else {
+					// Not currently used.  Do we want separate grandmother/grandfather events?
+					$fact="_MARR_GPAR";
+					$rela="grandparent";
 				}
 				if (strstr($SHOW_RELATIVES_EVENTS, $fact)) {
 					$sfamids = $parent->getSpouseFamilies();

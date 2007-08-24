@@ -29,6 +29,9 @@ Version 4.2
  - Adding a "never married" icon on ancestry booklet when NMR=0 (opus27)
 
 Version 4.1.1
+ - Fixed [ 1779085 ] [SVN1480] HTML Report should use a popup Target (yalnifj)
+ - Fixed [ 1776999 ] SVN 1451 - Circle Chart (yalnifj)
+ - Fixed [ 1778362 ] New Blocks need some tweaking (yalnifj)
  - Fixed auto-accept users do not see the changes of other users (yalnifj, tthdoc)
  - Fixed [ 1775026 ] Line break missing when re-ordering children (canajun2eh)
  - Fixed [ 1769535 ] Line break missing when adding child or spouse to family (canajun2eh)

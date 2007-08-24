@@ -154,18 +154,18 @@ $pgv_lang["thursday_1st"]			= "Th";
 $pgv_lang["friday_1st"]				= "F";
 $pgv_lang["saturday_1st"]			= "Sa";
 
-$pgv_lang["january_1st"]			= "Jan";
-$pgv_lang["february_1st"]			= "Feb";
-$pgv_lang["march_1st"]				= "March";
-$pgv_lang["april_1st"]				= "April";
+$pgv_lang["jan_1st"]					= "Jan";
+$pgv_lang["feb_1st"]					= "Feb";
+$pgv_lang["mar_1st"]					= "March";
+$pgv_lang["apr_1st"]					= "April";
 $pgv_lang["may_1st"]				= "May";
-$pgv_lang["june_1st"]				= "June";
-$pgv_lang["july_1st"]				= "July";
-$pgv_lang["august_1st"]				= "Aug";
-$pgv_lang["september_1st"]			= "Sep";
-$pgv_lang["october_1st"]			= "Oct";
-$pgv_lang["november_1st"]			= "Nov";
-$pgv_lang["december_1st"]			= "Dec";
+$pgv_lang["jun_1st"]					= "June";
+$pgv_lang["jul_1st"]					= "July";
+$pgv_lang["aug_1st"]					= "Aug";
+$pgv_lang["sep_1st"]					= "Sep";
+$pgv_lang["oct_1st"]					= "Oct";
+$pgv_lang["nov_1st"]					= "Nov";
+$pgv_lang["dec_1st"]					= "Dec";
 
 $pgv_lang["edit_source"]			= "Edit Source";
 $pgv_lang["familybook_chart"]		= "Family Book Chart";
@@ -656,6 +656,19 @@ $pgv_lang["svn"]          = "Sivan";
 $pgv_lang["tmz"]          = "Tamuz";
 $pgv_lang["aav"]          = "Av";
 $pgv_lang["ell"]          = "Elul";
+
+$pgv_lang["muhar"]        = "Muharram";
+$pgv_lang["safar"]        = "Safar";
+$pgv_lang["rabi1"]        = "Rabi' al-awwal";
+$pgv_lang["rabi2"]        = "Rabi' al-thani";
+$pgv_lang["juma1"]        = "Jumada al-awwal";
+$pgv_lang["juma2"]        = "Jumada al-thani";
+$pgv_lang["rajab"]        = "Rajab";
+$pgv_lang["shaab"]        = "Sha'aban";
+$pgv_lang["ramad"]        = "Ramadan";
+$pgv_lang["shaww"]        = "Shawwal";
+$pgv_lang["dhuaq"]        = "Dhu al-Qi'dah";
+$pgv_lang["dhuah"]        = "Dhu al-Hijjah";
 
 $pgv_lang["b.c."]         = "B.C.";
 

@@ -1373,7 +1373,7 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		print_findindi_link("gid", "");
 		print_findfamily_link("gid");
 		print_findsource_link("gid");
-		print "<br /><sub>" . $pgv_lang["add_linkid_advice"] . "</sub></td></tr>";
+		print "<br /><sub>" . $pgv_lang["add_linkid_advice"] . "</sub></td></tr>\n";
 	}
 	if (isset ($pgv_changes[$pid . "_" . $GEDCOM]))
 		$gedrec = find_updated_record($pid);
@@ -1456,11 +1456,12 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			$folder = $parts["dirname"] . "/";
 		}
 
-		print "<tr>";
-		print "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
+		print "\n<tr>";
+		print "<td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">\n";
+		print "<input name=\"oldFilename\" type=\"hidden\" value=\"" . addslashes($fileName) . "\" />";
 		print_help_link("upload_server_file_help", "qm", "upload_media");
 		print $pgv_lang["server_file"];
-		print "</td>";
+		print "</td>\n";
 		print "<td class=\"optionbox wrap $TEXT_DIRECTION wrap\">";
 			if (userGedcomAdmin(getUserName())) {
 				print "<input name=\"filename\" type=\"text\" value=\"" . htmlentities($fileName) . "\" size=\"40\"";
@@ -1477,15 +1478,15 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 					print " alt=\"\" title=\"\" />";
 				}
 				print $fileName;
+			print "<input name=\"filename\" type=\"hidden\" value=\"" . htmlentities($fileName) . "\" size=\"40\" />";
 			}
 		print "</td>";
-		print "</tr>";
+		print "</tr>\n";
 
 	}
-	print "<input name=\"oldFilename\" type=\"hidden\" value=\"" . addslashes($fileName) . "\" />";
 
 	// Box for user to choose the folder to store the image
-	if (!$isExternal && $MEDIA_DIRECTORY_LEVELS > 0 && userGedcomAdmin(getUserName())) {
+	if (!$isExternal && $MEDIA_DIRECTORY_LEVELS > 0) {
 		print "<tr><td class=\"descriptionbox $TEXT_DIRECTION wrap width25\">";
 		print_help_link("upload_server_folder_help", "qm");
 		if (empty ($folder)) {
@@ -1495,6 +1496,8 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 				$folder = $MEDIA_DIRECTORY;
 		}
 		print $pgv_lang["server_folder"] . "</td><td class=\"optionbox wrap\">";
+		//-- don't let regular users change the location of media items
+		if ($action!='update' || userGedcomAdmin(getUserName())) {
 		$folders = get_media_folders();
 		print "<span dir=\"ltr\"><select name=\"folder_list\" onchange=\"document.newmedia.folder.value=this.options[this.selectedIndex].value;\">\n";
 		foreach ($folders as $f) {
@@ -1505,18 +1508,19 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 				print ">$f</option>\n";
 			}
 		}
-			print "<option value=\"other\">" . $pgv_lang["add_media_other_folder"] . "</option>\n";
+			if (userGedcomAdmin(getUserName())) print "<option value=\"other\">" . $pgv_lang["add_media_other_folder"] . "</option>\n";
 		print "</select></span>\n";
-			print "<span dir=\"ltr\"><input type=\"text\" name=\"folder\" size=\"30\" value=\"" . $folder . "\"></span>";
+		}
+		else print $folder;
+		if (userGedcomAdmin(getUserName())) print "<span dir=\"ltr\"><input type=\"text\" name=\"folder\" size=\"30\" value=\"" . $folder . "\"></span>";
+		else print "<input name=\"folder\" type=\"hidden\" value=\"" . addslashes($folder) . "\" />";
 		if ($gedfile == "FILE") {
 			print "<br /><sub>" . $pgv_lang["server_folder_advice2"] . "</sub></td></tr>";
 		}
 		print "</td></tr>";
 	}
-	if ($isExternal || $MEDIA_DIRECTORY_LEVELS == 0)
-		print "<input name=\"folder\" type=\"hidden\" value=\"\" />";
 	else 
-		print "<input name=\"folder\" type=\"hidden\" value=\"" . addslashes($folder) . "\" />";
+		print "<input name=\"folder\" type=\"hidden\" value=\"\" />";
 	print "<input name=\"oldFolder\" type=\"hidden\" value=\"" . addslashes($folder) . "\" />";
 	// 2 FORM
 	if ($gedrec == "")
@@ -1546,6 +1550,8 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 		$gedtitl = "TITL";
 	else {
 		$gedtitl = get_first_tag(2, "TITL", $gedrec);
+		if (empty ($gedtitl))
+			$gedtitl = get_first_tag(1, "TITL", $gedrec);
 		if (empty ($gedtitl))
 			$gedtitl = "TITL";
 	}

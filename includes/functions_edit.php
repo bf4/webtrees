@@ -548,7 +548,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		}
 		if (empty($name_fields['NSFX'])) $name_fields['NSFX']=$name_bits[10];
 		// Don't automatically create an empty NICK - it is an "advanced" field.
-		if (empty($name_fields['NICK']) && !empty($name_bits[6]))
+		if (empty($name_fields['NICK']) && !empty($name_bits[6]) && !preg_match('/^2 NICK/m',$namerec))
 			$name_fields['NICK']=$name_bits[6];
 	}
 
@@ -580,7 +580,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 				}
 			}
 		// Allow a new row to be entered if there was no row provided
-		if (count($match[1])==0 || $tag!='_HEB' && $tag!='NICK')
+			if (count($match[1])==0 && empty($name_fields[$tag]) || $tag!='_HEB' && $tag!='NICK')
 			if ($tag=='_MARNM') {
 				add_simple_tag("0 _MARNM");
 				add_simple_tag("0 _MARNM_SURN $new_marnm");
@@ -675,10 +675,13 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		print "</td></tr>\n";
 	}
 	print "</table>\n";
-	print_add_layer("SOUR", 1);
-	print_add_layer("NOTE", 1);
-	if ($nextaction!='update') { // GEDCOM 5.5.1 spec says NAME doesn't get a OBJE
-		print_add_layer("OBJE", 1);
+	if ($nextaction=='update') { // GEDCOM 5.5.1 spec says NAME doesn't get a OBJE
+		print_add_layer('SOUR');
+		print_add_layer('NOTE');
+	} else {
+		print_add_layer('SOUR', 1);
+		print_add_layer('NOTE', 1);
+		print_add_layer('OBJE', 1);
 	}
 	print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
 	print "</form>\n";
