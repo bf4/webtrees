@@ -45,6 +45,8 @@ VERSION 4.1.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["switch_lifespan"]						25 Aug 2007				A
++$pgv_lang["switch_timeline"]						25 Aug 2007				A
 *$pgv_lang["htmlplus_block_descr"]					23 Aug 2007				S
 +$pgv_lang["jan_1st"]								23 Aug 2007				A There are no translation changes here.
 -$pgv_lang["january_1st"]							23 Aug 2007				D The $pgv_lang[] variables have been renamed.
@@ -80,6 +82,7 @@ VERSION 4.1.1
 +$pgv_lang["shaww"]									22 Aug 2007				A
 +$pgv_lang["dhuaq"]									22 Aug 2007				A
 +$pgv_lang["dhuah"]									22 Aug 2007				A
++$pgv_lang["show_pending"]							19 Aug 2007				A
 *$pgv_lang["charts_block_descr"]					18 Aug 2007				W
 +$pgv_lang["differences"]							17 Aug 2007				A
 +$pgv_lang["charts_block"]							14 Aug 2007				A

@@ -32,9 +32,6 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 require_once("includes/reportbase.php");
-
-//define('FPDF_FONTPATH','fonts/');
-
 require_once('tcpdf/config/lang/eng.php');
 require_once("tcpdf/tcpdf.php");
 

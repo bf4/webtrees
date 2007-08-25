@@ -836,7 +836,7 @@ class Person extends GedcomRecord {
 						 $sexfound = true;
 				  }
 				  else if ($fact=="OBJE") {}
-				  else if (!in_array($fact, $nonfacts)) {
+				  else if (!isset($nonfacts) || !in_array($fact, $nonfacts)) {
 						 $this->indifacts[$f]=array($linenum, $factrec);
 						 $f++;
 				  }
@@ -930,9 +930,8 @@ class Person extends GedcomRecord {
 
 		if (is_null($person)) return;
 		if (!$SHOW_RELATIVES_EVENTS) return;
-		if ($sosa>7) return; //sosa max for recursive call
+		if ($sosa>7) return; // sosa max for recursive call
 		if (empty($this->brec)) $this->_parseBirthDeath();
-		
 		$fams = $person->getChildFamilies();
 		//-- find family as child
 		foreach($fams as $famid=>$family) {

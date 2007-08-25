@@ -64,6 +64,7 @@ if (!$controller->isPrintPreview()) {
 			<div style="text-align: center"><input type="submit" value="<?php print $pgv_lang["show"]; ?>" /></div>			
 		</td></tr>
 	</table>
+	<?php if (count($controller->pids)<11) { ?><a href="timeline.php"><?php print $pgv_lang["switch_timeline"]; ?></a><?php } ?>
 	<?php }?>
 
 </form>

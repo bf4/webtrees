@@ -1079,7 +1079,7 @@ function extract_filename($fullpath) {
 	$regexp = "'[/\\\]'";
 	$srch = "/".addcslashes($MEDIA_DIRECTORY,'/.')."/";
 	$repl = "";
-	if (!strstr($fullpath, "://")) $nomedia = stripcslashes(preg_replace($srch, $repl, $fullpath));
+	if (!isFileExternal($fullpath)) $nomedia = stripcslashes(preg_replace($srch, $repl, $fullpath));
 	else $nomedia = $fullpath;
 	$ct = preg_match($regexp, $nomedia, $match);
 	if ($ct>0) {
@@ -1123,7 +1123,7 @@ function generate_thumbnail($filename, $thumbnail) {
 	}
 	if ($ext!='jpg' && $ext!='jpeg' && $ext!='gif' && $ext!='png') return false;
 
-	if (!strstr($filename, "://")) {
+	if (!isFileExternal($filename)) {
 		if (!file_exists(filename_decode($filename))) return false;
 		$imgsize = getimagesize(filename_decode($filename));
 		// Check if a size has been determined
@@ -1136,6 +1136,7 @@ function generate_thumbnail($filename, $thumbnail) {
 		}
 	}
 	else {
+		// external
 		if ($fp = @fopen(filename_decode($filename), "rb")) {
 			if ($fp===false) return false;
 			$conts = "";
@@ -1146,7 +1147,7 @@ function generate_thumbnail($filename, $thumbnail) {
 			$fp = fopen(filename_decode($thumbnail), "wb");
 			if (!fwrite($fp, $conts)) return false;
 			fclose($fp);
-			if (!stristr("://", $filename)) $imgsize = getimagesize(filename_decode($filename));
+			if (!isFileExternal($filename)) $imgsize = getimagesize(filename_decode($filename));
 			else $imgsize = getimagesize(filename_decode($thumbnail));
 			if ($imgsize===false) return false;
 			if (($imgsize[0]<150)&&($imgsize[1]<150)) return true;
