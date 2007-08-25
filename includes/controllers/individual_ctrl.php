@@ -373,7 +373,7 @@ class IndividualControllerRoot extends BaseController {
 					$filename = $firstmediarec["thumb"];
 					$class = "thumbnail";
 				}
-				$isExternal = stristr($filename,"://");
+				$isExternal = isFileExternal($filename);
 				if ($isExternal && $class=="thumbnail") $class .= "\" width=\"".$THUMBNAIL_WIDTH;
 				if (!empty($filename)) {
 					$result = "";

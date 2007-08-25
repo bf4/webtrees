@@ -8,6 +8,7 @@
 	# $Id$
 =====================================================================
 Version 4.1.1
+ - Fixed [ 1765862 ] Divide by zero error in timeline (yalnifj)
  - Fixed [ 1779085 ] [SVN1480] HTML Report should use a popup Target (yalnifj)
  - Fixed [ 1776999 ] SVN 1451 - Circle Chart (yalnifj)
  - Fixed [ 1778362 ] New Blocks need some tweaking (yalnifj)

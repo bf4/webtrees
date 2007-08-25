@@ -331,15 +331,19 @@ $controller->checkPrivacy();
 		</td>
 	<?php }
 	if ((count($controller->people)>0)&&(!$controller->isPrintPreview())) {
+		$scalemod = round($controller->scale*.2) + 1;
 		?>
 		<td class="list_value" style="padding: 5px">
-			<a href="<?php print $SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale+2); ?>"><?php print $pgv_lang["zoom_in"]; ?></a><br />
-			<a href="<?php print $SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale-2); ?>"><?php print $pgv_lang["zoom_out"]; ?></a>
+			<a href="<?php print $SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale+$scalemod); ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomin']['other']; ?>" title="<?php print $pgv_lang["zoom_in"]; ?>" border="0" /></a><br />
+			<a href="<?php print $SCRIPT_NAME."?".$controller->pidlinks."scale=".($controller->scale-$scalemod); ?>"><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['zoomout']['other']; ?>" title="<?php print $pgv_lang["zoom_out"]; ?>" border="0" /></a><br />
+			<input type="button" value="<?php print $pgv_lang['clear_chart']; ?>" onclick="window.location = 'timeline.php?clear=1';" />
 		</td>
 	<?php } ?>
 	</tr>
 </table>
-<?php if (!$controller->isPrintPreview()) { ?></form><?php } ?>
+<?php if (!$controller->isPrintPreview()) { ?>
+<a href="lifespan.php"><?php print $pgv_lang["switch_lifespan"]; ?></a>
+</form><?php } ?>
 <?php
 if (count($controller->people)>0) {
 	?>
@@ -354,8 +358,11 @@ if (count($controller->people)>0) {
 	<?php print $controller->baseyear."--"; ?>
 	</div>
 	<?php
+	//-- at a scale of 25 or higher, show every year
+	$mod = 25/$controller->scale;
+	if ($mod<1) $mod = 1;
 	for($i=$controller->baseyear+1; $i<$controller->topyear; $i++) {
-		if ($i % (25/$controller->scale)==0)  {
+		if ($i % $mod == 0)  {
 			print "\n\t\t<div id=\"scale$i\" style=\"font-family: Arial; position:absolute; ".($TEXT_DIRECTION =="ltr"?"left: $basexoffset":"right: $basexoffset")."px; top:".floor($baseyoffset+(($i-$controller->baseyear)*$controller->scale)-$controller->scale/2)."px; font-size: 7pt; text-align:".($TEXT_DIRECTION =="ltr"?"left":"right").";\">\n";
 			print $i."--";
 			print "</div>";

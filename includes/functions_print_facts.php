@@ -631,7 +631,7 @@ function print_media_links($factrec, $level,$pid='') {
 
 			$mainMedia = check_media_depth($row["m_file"], "NOTRUNC");
 			$thumbnail = thumbnail_file($mainMedia, true, false, $pid);
-			$isExternal = stristr($row["m_file"],"://");
+			$isExternal = isFileExternal($row["m_file"]);
 			$mediaTitle = $row["m_titl"];
 
 			// Determine the size of the mediafile
@@ -1287,7 +1287,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	if ($rtype=='old') $styleadd = "change_old";
 	// NOTEStart printing the media details
 	$thumbnail = thumbnail_file($rowm["m_file"], true, false, $pid);
-	$isExternal = stristr($thumbnail,"://");
+	$isExternal = isFileExternal($thumbnail);
 
 	$linenum = 0;
 	print "\n\t\t<tr><td class=\"descriptionbox $styleadd center width20\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["small"]."\" alt=\"\" /><br />".$factarray["OBJE"];
