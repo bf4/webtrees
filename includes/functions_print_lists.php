@@ -1203,7 +1203,7 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
   if (empty($listFormat)) $listFormat = $SURNAME_LIST_STYLE;
 
   if ($listFormat=="style3") {
-	// Requested style is "cloud", where the surnames are a list of names (with links), 
+	// Requested style is "cloud", where the surnames are a list of names (with links),
 	// and the font size used for each name depends on the number of occurrences of this name
 	// in the database - generally known as a 'tag cloud'.
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
@@ -1236,7 +1236,7 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 			$title = PrintReady("(".$value["match"].") ".$surn);
 			$tag = PrintReady("<span class=\"tag_cloud_sub\">(".$value["match"].")&nbsp;</span><font size=\"".$fontsize."\">".$surn."</font>");
 		}
-		
+
 		echo "<a href=\"".$url."\" class=\"list_item\" title=\"".$title."\">".$tag."</span></a>&nbsp;&nbsp; ";
 	}
 	echo "</td>";
@@ -1245,7 +1245,7 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 	echo "</table>\n";
 	return;
   }
-  
+
     // Requested style isn't "cloud".  In this case, we'll produce a sortable list.
 	require_once("js/sorttable.js.htm");
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
@@ -1523,7 +1523,7 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 		echo "<td class=\"list_value_wrap rela\">";
 		$person = new Person("");
 		$age = $person->getAge("\n1 BIRT\n2 DATE ".$edate."\n", date("d M Y", $anniv));
-		echo '<a class="list_item" name="'.$age.'"></a>'.$age;
+		echo "<a class=\"list_item\" name=\"" .$age. "\">" . $age . "</a>";
 		echo "<abbr class=\"dtstart\" title=\"".date("Ymd", $anniv)."\"></abbr>"; // hCalendar:dtstart
 		echo "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$age ".$factarray[$event]." : ".PrintReady(strip_tags($record->getSortableName()))."\"></abbr>"; // hCalendar:summary
 		echo "</td>";
