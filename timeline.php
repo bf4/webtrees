@@ -342,7 +342,7 @@ $controller->checkPrivacy();
 	</tr>
 </table>
 <?php if (!$controller->isPrintPreview()) { ?>
-<a href="lifespan.php"><?php print $pgv_lang["switch_lifespan"]; ?></a>
+<br /><a href="lifespan.php"><b><?php print $pgv_lang["switch_lifespan"]; ?><b></a>
 </form><?php } ?>
 <?php
 if (count($controller->people)>0) {

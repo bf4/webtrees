@@ -32,6 +32,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["switch_lifespan"]		= "Lebenspannen-Diagramm zeigen";
+$pgv_lang["switch_timeline"]		= "Lebenspannenanzeige zeigen";
 $pgv_lang["differences"]			= "Differenzen";
 $pgv_lang["charts_block"]			= "Diagramm-Block";
 $pgv_lang["charts_block_descr"]		= "Dieser Block ermöglicht es Ihnen, Diagramme auf den haupt und persönlichen Begrüßungsseiten zu zeigen.  Sie können in dessen Konfiguration bestimmen, ob der Block das Ahnen-, Nachfahren-, oder Sanduhr-Diagramm zeigen soll.  Sie können auch die ID-Nummer der Startperson bestimmen.";
