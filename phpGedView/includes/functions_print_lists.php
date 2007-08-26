@@ -483,7 +483,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 				print $age;
 			else
 				print '&nbsp;';
-			print '</td';
+			print '</td>';
 		}
 		//-- Age at death
 		print "<td class=\"list_value_wrap\">";
