@@ -196,7 +196,7 @@ class Media extends GedcomRecord {
 		$localfilename = $this->getLocalFilename();
 		if (file_exists($localfilename)){
 			// found image in unprotected directory
-			$this->fileexists = true;
+			$this->fileexists = 2;
 			$this->serverfilename = $localfilename;
 			return $this->serverfilename;
 		}
@@ -204,7 +204,7 @@ class Media extends GedcomRecord {
 			$protectedfilename = get_media_firewall_path($localfilename);
 			if (file_exists($protectedfilename)){
 				// found image in protected directory
-				$this->fileexists = true;
+				$this->fileexists = 3;
 				$this->serverfilename = $protectedfilename;
 				return $this->serverfilename;
 			}
@@ -326,7 +326,9 @@ class Media extends GedcomRecord {
 			if (!$this->mime) {
 				// if we don't know what the mimetype is, use something ambiguous
 				$this->mime = "application/octet-stream";
-				AddToLog($this->file.': '.$pgv_lang["unknown_mime"]);
+				if ($this->fileExists()) {
+					AddToLog($this->file.': '.$pgv_lang["unknown_mime"]);
+				}
 			}
 		}
 		$this->filepropset = true;

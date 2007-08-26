@@ -571,9 +571,11 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 					$media["FILE"] = $fileName;
 					if ($MEDIA_EXTERNAL && isFileExternal($fileName)) {
 						$media["THUMB"] = $fileName;
-						$media["EXISTS"] = true;
+						$media["THUMBEXISTS"] = 1; // 1 means external
+						$media["EXISTS"] = 1; // 1 means external
 					} else {
 						$media["THUMB"] = thumbnail_file($fileName);
+						$media["THUMBEXISTS"] = media_exists($media["THUMB"]);
 						$media["EXISTS"] = media_exists($fileName);
 					}
 					$media["FORM"] = stripslashes($row["m_ext"]);
@@ -644,6 +646,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 				$media["GEDFILE"] = $GEDCOMS[$GEDCOM]["id"];
 				$media["FILE"] = "";
 				$media["THUMB"] = "";
+				$media["THUMBEXISTS"] = false;
 				$media["EXISTS"] = false;
 				$media["FORM"] = "";
 				$media["TITL"] = "";
@@ -681,11 +684,13 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 				$fileName = check_media_depth(stripslashes($media["FILE"]), "NOTRUNC", "QUIET");
 				if ($MEDIA_EXTERNAL && isFileExternal($media["FILE"])) {
 					$media["THUMB"] = $fileName;
-					$media["EXISTS"] = true;
+					$media["THUMBEXISTS"] = 1;  // 1 means external
+					$media["EXISTS"] = 1;  // 1 means external
 				} else {
 					if ($currentdir && $directory != dirname($fileName) . "/")
 						break;
 					$media["THUMB"] = thumbnail_file($fileName);
+					$media["THUMBEXISTS"] = media_exists($media["THUMB"]);
 					$media["EXISTS"] = media_exists($fileName);
 				}
 
@@ -851,7 +856,8 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 			$media["GEDFILE"] = "";
 			$media["FILE"] = $directory . $fileName;
 			$media["THUMB"] = thumbnail_file($directory . $fileName, false);
-			$media["EXISTS"] = true;
+			$media["THUMBEXISTS"] = media_exists($media["THUMB"]);
+			$media["EXISTS"] = media_exists($media["FILE"]);
 			$media["FORM"] = $ext;
 			if ($ext == "jpg" || $ext == "jp2")
 				$media["FORM"] = "jpeg";
@@ -1942,13 +1948,18 @@ function cropImage($image, $dest_image, $left, $top, $right, $bottom){ //$image 
 	}
 }
 
-// checks whether a media file exists.  looks in both the standard and protected media directories
+// checks whether a media file exists.
+// returns 1 for external media
+// returns 2 if it was found in the standard directory
+// returns 3 if it was found in the media firewall directory
+// returns false if not found
 function media_exists($filename) {
 	global $USE_MEDIA_FIREWALL;
 	if (empty($filename)) { return false; }
+	if (isFileExternal($filename)) { return 1; }
 	$filename = filename_decode($filename);
-	if ( file_exists($filename) ) { return true; }
-	if ( $USE_MEDIA_FIREWALL && file_exists(get_media_firewall_path($filename)) ) { return true; }
+	if ( file_exists($filename) ) { return 2; }
+	if ( $USE_MEDIA_FIREWALL && file_exists(get_media_firewall_path($filename)) ) { return 3; }
 	return false;
 }
 
@@ -1959,6 +1970,21 @@ function media_filesize($filename) {
 	if (file_exists($filename)) { return filesize($filename); }
 	if ($USE_MEDIA_FIREWALL && file_exists(get_media_firewall_path($filename))) { return filesize(get_media_firewall_path($filename)); }
 	return;
+}
+
+// returns path to file on server
+function get_server_filename($filename) {
+		global $USE_MEDIA_FIREWALL;
+		if (file_exists($filename)){
+			return($filename);
+		}
+		if ($USE_MEDIA_FIREWALL) {
+			$protectedfilename = get_media_firewall_path($filename);
+			if (file_exists($protectedfilename)){
+				return($protectedfilename);
+			}
+		}
+		return($filename);
 }
 
 // pass in the standard media directory

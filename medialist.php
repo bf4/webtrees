@@ -321,7 +321,7 @@ if ($ct>0){
 		}
 //BH ----------- end change for Lightbox Album ----------------------------------
 
-		print "<img src=\"".thumbnail_file($media["FILE"])."\" align=\"left\" class=\"thumbnail\" border=\"none\"";
+		print "<img src=\"".$media["THUMB"]."\" align=\"left\" class=\"thumbnail\" border=\"none\"";
 		if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
 		print " alt=\"" . PrintReady($name) . "\" title=\"" . PrintReady($name) . "\" /></a>";
 		print "</td>\n\t\t<td class=\"list_value_wrap\" style=\"border: none;\" width=\"100%\">";
@@ -382,21 +382,21 @@ if ($ct>0){
 
 		PrintMediaLinks($media["LINKS"], "small");
 
-      if (!$isExternal && !media_exists($media["FILE"]) ) {
-		    print "<br /><span class=\"error\">".$pgv_lang["file_not_found"]." <span dir=\"ltr\">".PrintReady($media["FILE"])."</span></span>";
-	    }
-	    print "<br /><div class=\"indent\" style=\"white-space: normal; width: 95%;\">";
-	    print_fact_notes($media["GEDCOM"], $media["LEVEL"]+1);
+			if (!$isExternal && !$media["EXISTS"] ) {
+				print "<br /><span class=\"error\">".$pgv_lang["file_not_found"]." <span dir=\"ltr\">".PrintReady($media["FILE"])."</span></span>";
+			}
+			print "<br /><div class=\"indent\" style=\"white-space: normal; width: 95%;\">";
+			print_fact_notes($media["GEDCOM"], $media["LEVEL"]+1);
 
-	    print "</div>";
-	    if (!$isExternal && media_exists($media["FILE"])){
+			print "</div>";
+			if (!$isExternal && $media["EXISTS"]){
 			$imageTypes = array("","GIF", "JPG", "PNG", "SWF", "PSD", "BMP", "TIFF", "TIFF", "JPC", "JP2", "JPX", "JB2", "SWC", "IFF", "WBMP", "XBM");
 			if(!empty($imgsize[2])){
-		    	print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["media_format"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imageTypes[$imgsize[2]] . "</span>";
+				print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["media_format"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imageTypes[$imgsize[2]] . "</span>";
 			} else if(empty($imgsize[2])){
-			    $path_end=substr($media["FILE"], strlen($media["FILE"])-5);
-			    $imageType = strtoupper(substr($path_end, strpos($path_end, ".")+1));
-		    	print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["media_format"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imageType . "</span>";
+				$path_end=substr($media["FILE"], strlen($media["FILE"])-5);
+				$imageType = strtoupper(substr($path_end, strpos($path_end, ".")+1));
+				print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["media_format"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imageType . "</span>";
 			}
 
 			$fileSize = media_filesize($media["FILE"]);

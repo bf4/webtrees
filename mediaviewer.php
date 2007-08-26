@@ -76,7 +76,6 @@ else{
 					if ($controller->canDisplayDetails()) {
 					//Checks to see if the File exist in the system.
 					$filename = $controller->getLocalFilename();
-					$serverfilename = $controller->getServerFilename();
 					if (isFileExternal($filename) || $controller->mediaobject->fileExists()){
 						// the file is external, or it exists locally 
 						// attempt to get the image size
@@ -89,7 +88,7 @@ else{
 							//Makes it so the picture when clicked opens the Image View Page
 							?>
 							<a href="javascript:;" onclick="return openImage('<?php print rawurlencode($filename); ?>', <?php print $imgwidth; ?>, <?php print $imgheight; ?>);">
-								<img src="<?php if (!$USE_THUMBS_MAIN) print $filename; else print thumbnail_file($filename); ?>" border="0" <?php if (!$USE_THUMBS_MAIN) print "width=\"" . $dwidth . "\"";?> alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
+								<img src="<?php if (!$USE_THUMBS_MAIN) print $filename; else print $controller->mediaobject->getThumbnail(); ?>" border="0" <?php if (!$USE_THUMBS_MAIN) print "width=\"" . $dwidth . "\"";?> alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
 							</a>
 							<?php
 						}
@@ -97,7 +96,7 @@ else{
 							// this is not an image
 							?>
 							<a href="<?php print $filename; ?>" target="_BLANK">
-							<img src="<?php print thumbnail_file($filename); ?>" border="0" width="150" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
+							<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="150" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
 							</a>
 							<?php
 						}
@@ -106,7 +105,7 @@ else{
 					else{
 						// the file is not external and does not exist
 						?>
-						<img src="<?php print thumbnail_file($filename); ?>" border="0" width="100" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
+						<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="100" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
 						<br /><span class="error"><?php print $pgv_lang["file_not_found"];?></span>
 						<?php
 					}

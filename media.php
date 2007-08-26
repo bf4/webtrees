@@ -103,7 +103,8 @@ if (($level < 0) || ($level > $MEDIA_DIRECTORY_LEVELS)){
 }
 
 $thumbdir = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $directory);
-
+$directory_fw = get_media_firewall_path($directory);
+$thumbdir_fw = get_media_firewall_path($thumbdir);
 
 //-- check for admin once (used a bit in this script)
 $isadmin =  userIsAdmin(getUserName());
@@ -276,32 +277,51 @@ if (check_media_structure()) {
 		$clean = false;
 		$files = array();
 		$thumbfiles = array();
+		$files_fw = array();
+		$thumbfiles_fw = array();
 		$resdir = false;
 		$resthumb = false;
 		// Media directory check
-		if (is_dir(filename_decode($directory))) {
-		   	$handle = opendir(filename_decode($directory));
-		   	$files = array();
-		   	while (false !== ($file = readdir($handle))) {
+		if (@is_dir(filename_decode($directory))) {
+			$handle = opendir(filename_decode($directory));
+			$files = array();
+			while (false !== ($file = readdir($handle))) {
 				if (!in_array($file, $BADMEDIA)) $files[] = $file;
-		   	}
+			}
 		}
 		else {
 			print "<div class=\"error\">".$directory." ".$pgv_lang["directory_not_exist"]."</div>";
 			AddToLog($directory." ".$pgv_lang["directory_not_exist"]);
 		}
 
-	   	// Thumbs directory check
-	   	$thumbDirExists = false;
-	   	if (@is_dir(filename_decode($thumbdir))) {
-		   	$thumbDirExists = true;
-		   	$handle = opendir(filename_decode($thumbdir));
-		   	$thumbfiles = array();
-		   	while (false !== ($file = readdir($handle))) {
+		// Thumbs directory check
+		if (@is_dir(filename_decode($thumbdir))) {
+			$handle = opendir(filename_decode($thumbdir));
+			$thumbfiles = array();
+			while (false !== ($file = readdir($handle))) {
 				if (!in_array($file, $BADMEDIA)) $thumbfiles[] = $file;
-		   	}
-	   		closedir($handle);
-	   	}
+			}
+			closedir($handle);
+		}
+
+		// Media Firewall Media directory check
+		if (@is_dir(filename_decode($directory_fw))) {
+			$handle = opendir(filename_decode($directory_fw));
+			$files_fw = array();
+			while (false !== ($file = readdir($handle))) {
+				if (!in_array($file, $BADMEDIA)) $files_fw[] = $file;
+			}
+		}
+
+		// Media Firewall Thumbs directory check
+		if (@is_dir(filename_decode($thumbdir_fw))) {
+			$handle = opendir(filename_decode($thumbdir_fw));
+			$thumbfiles_fw = array();
+			while (false !== ($file = readdir($handle))) {
+				if (!in_array($file, $BADMEDIA)) $thumbfiles_fw[] = $file;
+			}
+			closedir($handle);
+		}
 
 		if (!isset($error)) {
 			if (count($files) > 0 ) {
@@ -314,25 +334,43 @@ if (check_media_structure()) {
 				AddToLog($thumbdir." -- ".$pgv_lang["directory_not_empty"]);
 				$clean = false;
 			}
+			if (count($files_fw) > 0 ) {
+				print "<div class=\"error\">".$directory_fw." -- ".$pgv_lang["directory_not_empty"]."</div>";
+				AddToLog($directory_fw." -- ".$pgv_lang["directory_not_empty"]);
+				$clean = false;
+			}
+			if (count($thumbfiles_fw) > 0) {
+				print "<div class=\"error\">".$thumbdir_fw." -- ".$pgv_lang["directory_not_empty"]."</div>";
+				AddToLog($thumbdir_fw." -- ".$pgv_lang["directory_not_empty"]);
+				$clean = false;
+			}
 			else $clean = true;
 		}
 
-		// Only start deleting if both media and thumbnail directory exist
+		// Only start deleting if all directories are empty
 		if ($clean) {
-			if (file_exists(filename_decode($directory."index.php"))) @unlink(filename_decode($directory."index.php"));
-			if (is_dir(filename_decode($directory))) $resdir = @rmdir(filename_decode(substr($directory,0,-1)));
+			$resdir = true;
 			$resthumb = true;
-			if ($thumbDirExists) {
-				if (file_exists(filename_decode($thumbdir."index.php"))) @unlink(filename_decode($thumbdir."index.php"));
-				if (@is_dir(filename_decode($thumbdir))) $resthumb = @rmdir(filename_decode(substr($thumbdir,0,-1)));
-			}
-			if ($resdir && $resthumb) {
+			$resdir_fw = true;
+			$resthumb_fw = true;
+			if (file_exists(filename_decode($directory."index.php"))) @unlink(filename_decode($directory."index.php"));
+			if (@is_dir(filename_decode($directory))) $resdir = @rmdir(filename_decode(substr($directory,0,-1)));
+			if (file_exists(filename_decode($thumbdir."index.php"))) @unlink(filename_decode($thumbdir."index.php"));
+			if (@is_dir(filename_decode($thumbdir))) $resthumb = @rmdir(filename_decode(substr($thumbdir,0,-1)));
+			if (file_exists(filename_decode($directory_fw."index.php"))) @unlink(filename_decode($directory_fw."index.php"));
+			if (@is_dir(filename_decode($directory_fw))) $resdir_fw = @rmdir(filename_decode(substr($directory_fw,0,-1)));
+			if (file_exists(filename_decode($thumbdir_fw."index.php"))) @unlink(filename_decode($thumbdir_fw."index.php"));
+			if (@is_dir(filename_decode($thumbdir_fw))) $resthumb_fw = @rmdir(filename_decode(substr($thumbdir_fw,0,-1)));
+			if ($resdir && $resthumb && $resdir_fw && $resthumb_fw) {
 				print $pgv_lang["delete_dir_success"];
 				AddToLog($directory." -- ".$pgv_lang["delete_dir_success"]);
 			} else {
 				if (!$resdir) {
 					print "<div class=\"error\">".$pgv_lang["media_not_deleted"]."</div>";
 					AddToLog($directory." -- ".$pgv_lang["media_not_deleted"]);
+				} else if (!$resdir_fw) {
+					print "<div class=\"error\">".$pgv_lang["media_not_deleted"]."</div>";
+					AddToLog($directory_fw." -- ".$pgv_lang["media_not_deleted"]);
 				} else {
 					print $pgv_lang["media_deleted"];
 					AddToLog($directory." -- ".$pgv_lang["media_deleted"]);
@@ -340,6 +378,9 @@ if (check_media_structure()) {
 				if (!$resthumb) {
 					print "<div class=\"error\">".$pgv_lang["thumbs_not_deleted"]."</div>";
 					AddToLog($thumbdir." -- ".$pgv_lang["thumbs_not_deleted"]);
+				} else if (!$resthumb_fw) {
+					print "<div class=\"error\">".$pgv_lang["thumbs_not_deleted"]."</div>";
+					AddToLog($thumbdir_fw." -- ".$pgv_lang["thumbs_not_deleted"]);
 				} else {
 					print $pgv_lang["thumbs_deleted"];
 					AddToLog($thumbdir." -- ".$pgv_lang["thumbs_deleted"]);
@@ -364,6 +405,9 @@ if (check_media_structure()) {
 	 * Directory access checks are done during menu creation so directories
 	 * deeper than the configured level will not be shown even if they exist.
 	 *
+	 * Media Firewall Note: not sure how this function gets called, 
+	 * not yet modified to work with the Media Firewall
+	 * 
 	 * @name $action->moveto
 	 */
 	if ($action=="moveto") {
@@ -490,7 +534,7 @@ if (check_media_structure()) {
 			foreach ($medialist as $key => $media) {
 				if (!($MEDIA_EXTERNAL && isFileExternal($filename))) {
 					$thumbnail = str_replace("$MEDIA_DIRECTORY",$MEDIA_DIRECTORY."thumbs/",check_media_depth($media["FILE"], "NOTRUNC"));
-					if (!file_exists($thumbnail)) {
+					if (!$media["THUMBEXISTS"]) {
 						if (generate_thumbnail($media["FILE"],$thumbnail)) {
 							print_text("thumb_genned");
 							AddToChangeLog(print_text("thumb_genned",0,1));
@@ -790,27 +834,29 @@ if (check_media_structure()) {
 				break;
 			}
 			// Check if file exists. If so, delete it
-			if (file_exists($filename) && $allowDelete) {
-				if (@unlink($filename)) {
+			$server_filename = get_server_filename($filename);
+			if (file_exists($server_filename) && $allowDelete) {
+				if (@unlink($server_filename)) {
 					print $pgv_lang["media_file_deleted"]."<br />";
-					AddToChangeLog($filename." -- ".$pgv_lang["media_file_deleted"]);
+					AddToChangeLog($server_filename." -- ".$pgv_lang["media_file_deleted"]);
 				} else {
 					$finalResult = false;
 					print "<span class=\"error\">".$pgv_lang["media_file_not_deleted"]."</span><br />";
-					AddToChangeLog($filename." -- ".$pgv_lang["media_file_not_deleted"]);
+					AddToChangeLog($server_filename." -- ".$pgv_lang["media_file_not_deleted"]);
 				}
 			}
 
 			// Check if thumbnail exists. If so, delete it.
 			$thumbnail = str_replace("$MEDIA_DIRECTORY",$MEDIA_DIRECTORY."thumbs/",$filename);
-			if (file_exists($thumbnail) && $allowDelete) {
-				if (@unlink($thumbnail)) {
+			$server_thumbnail = get_server_filename($thumbnail);
+			if (file_exists($server_thumbnail) && $allowDelete) {
+				if (@unlink($server_thumbnail)) {
 					print $pgv_lang["thumbnail_deleted"]."<br />";
-					AddToChangeLog($thumbnail." -- ".$pgv_lang["thumbnail_deleted"]);
+					AddToChangeLog($server_thumbnail." -- ".$pgv_lang["thumbnail_deleted"]);
 				} else {
 					$finalResult = false;
 					print "<span class=\"error\">".$pgv_lang["thumbnail_not_deleted"]."</span><br />";
-					AddToChangeLog($thumbnail." -- ".$pgv_lang["thumbnail_not_deleted"]);
+					AddToChangeLog($server_thumbnail." -- ".$pgv_lang["thumbnail_not_deleted"]);
 				}
 			}
 			break;
@@ -1288,7 +1334,7 @@ if (check_media_structure()) {
 							}
 
 							// Generate thumbnail
-							if (!$isExternal && (empty($media["THUMB"]) || !file_exists(filename_decode($media["THUMB"])))) {
+							if (!$isExternal && (empty($media["THUMB"]) || !$media["THUMBEXISTS"])) {
 								$ct = preg_match("/\.([^\.]+)$/", $media["FILE"], $match);
 								if ($ct>0) $ext = strtolower(trim($match[1]));
 								if ($ext=="jpg" || $ext=="jpeg" || $ext=="gif" || $ext=="png") {
@@ -1309,9 +1355,8 @@ if (check_media_structure()) {
 							else $mediaTitle = PrintReady(basename($media["FILE"]));
 							print "\n\t\t\t<td class=\"optionbox $changeClass $TEXT_DIRECTION width10\">";
 							if (!$isExternal) {
-								$thumbnail = thumbnail_file($media["FILE"]);
 								print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";
-								print "<img src=\"".$thumbnail."\" class=\"thumbnail\" border=\"0\" alt=\"" . $mediaTitle . "\" title=\"" . $mediaTitle . "\"/></a>\n";
+								print "<img src=\"".$media["THUMB"]."\" class=\"thumbnail\" border=\"0\" alt=\"" . $mediaTitle . "\" title=\"" . $mediaTitle . "\"/></a>\n";
 							} else {
 								print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";
 								print "<img src=\"".$media["FILE"]."\" class=\"thumbnail\" width=\"".$THUMBNAIL_WIDTH."\" border=\"0\" alt=\"" . $mediaTitle . "\" title=\"" . $mediaTitle . "\"/></a>\n";
@@ -1336,7 +1381,7 @@ if (check_media_structure()) {
 								print "<br />";
 							}
 						}
-						if (!$isExternal && !file_exists(filename_decode($media["FILE"]))) print "<span dir=\"ltr\">".PrintReady($media["FILE"])."</span><br /><span class=\"error\">".$pgv_lang["file_not_exists"]."</span><br />";
+						if (!$isExternal && !$media["EXISTS"]) print "<span dir=\"ltr\">".PrintReady($media["FILE"])."</span><br /><span class=\"error\">".$pgv_lang["file_not_exists"]."</span><br />";
 						else if ($isExternal) {
 							print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\"><b>URL</b></a><br />";
 						} else {
@@ -1355,6 +1400,11 @@ if (check_media_structure()) {
 						print "<br /><br />";
 						print_fact_sources($media["GEDCOM"], 1);
 						print_fact_notes($media["GEDCOM"], 1);
+
+						if ($USE_MEDIA_FIREWALL) {
+							if ($media["EXISTS"]) print $pgv_lang["media_dir_".$media["EXISTS"]]."<br />";
+							if ($media["THUMBEXISTS"]) print $pgv_lang["thumb_dir_".$media["THUMBEXISTS"]]."<br />";
+						}
 
 						print "\n\t\t\t</td></tr>";
 						break;

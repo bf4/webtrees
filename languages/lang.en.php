@@ -705,6 +705,12 @@ $pgv_lang["utf8_to_ansi"]			= "Convert from UTF-8 to ANSI (ISO-8859-1)";
 $pgv_lang["media_linked"]			= "This media object is linked to the following:";
 $pgv_lang["media_not_linked"]		= "This media object is not linked to any GEDCOM record.";
 $pgv_lang["deleted_files"]          = "Deleted Files:";
+$pgv_lang["media_dir_1"]			= "This media object is located on an external server";
+$pgv_lang["media_dir_2"]			= "This media object is in the standard media directory";
+$pgv_lang["media_dir_3"]			= "This media object is in the media firewall directory";
+$pgv_lang["thumb_dir_1"]			= "This thumbnail is located on an external server";
+$pgv_lang["thumb_dir_2"]			= "This thumbnail is in the standard media directory";
+$pgv_lang["thumb_dir_3"]			= "This thumbnail is in the media firewall directory";
 
 //-- Relationship chart messages
 $pgv_lang["relationship_great"]		= "Great";
@@ -1618,12 +1624,15 @@ $pgv_lang["TYPE__tombstone"] = "Tombstone";
 $pgv_lang["TYPE__video"] = "Video";
 
 //-- Other media suff
-$pgv_lang["view_slideshow"] = "View as slideshow";
-$pgv_lang["download_image"]			= "Download File";
+$pgv_lang["view_slideshow"] 		= "View as slideshow";
+$pgv_lang["download_image"]		= "Download File";
 $pgv_lang["no_media"]				= "No Media Found";
-$pgv_lang["relations_heading"]		= "The image relates to:";
+$pgv_lang["media_privacy"]			= "Privacy restrictions prevent you from viewing this item";
+$pgv_lang["relations_heading"]	= "The image relates to:";
 $pgv_lang["file_size"]				= "File Size";
 $pgv_lang["img_size"]				= "Image Size";
+$pgv_lang["media_broken"]			= "This media file is broken and unreadable by PHP";
+$pgv_lang["unknown_mime"]			= "Unknown mimetype for this media file, this will cause problems for the Media Firewall.";
 
 //-- Modules
 $pgv_lang["module_error_unknown_action_v2"] = "Unknown action: [action].";
