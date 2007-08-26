@@ -1520,7 +1520,7 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 		echo "</td>";
 		//-- Event date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		print str_replace('<a', '<a class="list_item" name="'.$sortkey.'"', get_date_url($edate));
+		print str_replace('<a', '<a name="'.$sortkey.'"', get_date_url($edate));
 		echo "</td>";
 		//-- Anniversary
 		echo "<td class=\"list_value_wrap rela\">";
