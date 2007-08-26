@@ -401,7 +401,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 			$txt=get_changed_date($person->getBirthDate(false));
 		}
 		if (empty($txt))
-			print $txt='&nbsp;';
+			print $txt='<a name="0">&nbsp;</a>';
 		else
 			print $txt;
 		//-- Birth 2nd date ?
@@ -456,7 +456,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 			$txt=get_changed_date($person->getDeathDate(false));
 		}
 		if (empty($txt))
-			print '&nbsp;';
+			print '<a name="0">&nbsp;</a>';
 		else
 			print $txt;
 		//-- Death 2nd date ?
@@ -487,14 +487,17 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		//-- Age at death
 		print "<td class=\"list_value_wrap\">";
-		$sortkey=$dsortkey-$bsortkey; // age in days for sorting
 		if ($person->isDead() && !$person->dest)
 			$age=$person->getAge();
 		else
-			$age = "";
-		if (empty($SEARCH_SPIDER))
-			echo "<a href=\"".$person->getLinkUrl()."\" name=\"".sprintf("%07d",$sortkey)."\" class=\"list_item\">&nbsp;".$age."</a>";
-		else
+			$age = "&nbsp;";
+		if (empty($SEARCH_SPIDER)) {
+			if ($dsortkey==0 || $bsortkey==0) // age in days for sorting
+				$sortkey=0;
+			else
+			$sortkey=$dsortkey-$bsortkey;
+			echo "<a href=\"".$person->getLinkUrl()."\" name=\"{$sortkey}\" class=\"list_item\">".$age."</a>";
+		} else
 			echo $age;
 		echo "</td>";
 		//-- Death place
