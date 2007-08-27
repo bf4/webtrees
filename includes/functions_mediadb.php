@@ -517,7 +517,7 @@ function check_media_structure() {
 function get_medialist($currentdir = false, $directory = "", $linkonly = false, $random = false) {
 	global $MEDIA_DIRECTORY_LEVELS, $BADMEDIA, $thumbdir, $TBLPREFIX, $MEDIATYPE, $DBCONN;
 	global $level, $dirs, $ALLOW_CHANGE_GEDCOM, $GEDCOM, $GEDCOMS, $MEDIA_DIRECTORY;
-	global $MEDIA_EXTERNAL, $medialist, $pgv_changes, $DBTYPE;
+	global $MEDIA_EXTERNAL, $medialist, $pgv_changes, $DBTYPE, $USE_MEDIA_FIREWALL;
 
 	// Retrieve the gedcoms to search in
 	$sgeds = array ();
@@ -808,19 +808,27 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	else
 		$folderDepth = count(explode("/", $temp)) - 1;
 	$dirs = array ();
-
 	$images = array ();
-	$d = dir(filename_decode(substr($directory, 0, -1)));
+
+	$dirs_to_check = array ();
+	if (is_dir(filename_decode($directory))) {
+		array_push($dirs_to_check, $directory);
+	}
+	if ($USE_MEDIA_FIREWALL && is_dir(filename_decode(get_media_firewall_path($directory)))) {
+		array_push($dirs_to_check, get_media_firewall_path($directory));
+	}
+
+foreach ($dirs_to_check as $thedir) {  
+	$d = dir(filename_decode(substr($thedir, 0, -1)));
 	while (false !== ($fileName = $d->read())) {
 		$fileName = filename_encode($fileName);
-
 		while (true) {
 			// Make sure we only look at valid media files
 			if (in_array($fileName, $BADMEDIA))
 				break;
-			if (is_dir(filename_decode($directory . $fileName))) {
+			if (is_dir(filename_decode($thedir . $fileName))) {
 				if ($folderDepth < $MEDIA_DIRECTORY_LEVELS)
-					$dirs[] = $fileName;
+					$dirs[] = $fileName; // note: we will remove duplicates when the loop is complete
 				break;
 			}
 			$exts = explode(".", $fileName);
@@ -874,7 +882,9 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 		}
 	}
 	$d->close();
+}
 	//print_r($images); print "<br />";
+	$dirs = array_unique($dirs); // remove duplicates that were added because we checked both the regular dir and the media firewall dir
 	sort($dirs);
 	//print_r($dirs); print "<br />";
 	if (count($images) > 0) {

@@ -64,6 +64,8 @@ class MediaControllerRoot extends IndividualController{
 			if (!$mid){
 				//This will set the Media ID to be false if the File given doesn't match to anything in the database
 				$mid = false;
+				// bail now or the commands below will fail
+				return;
 			}
 		}
 	

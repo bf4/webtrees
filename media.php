@@ -1402,8 +1402,22 @@ if (check_media_structure()) {
 						print_fact_notes($media["GEDCOM"], 1);
 
 						if ($USE_MEDIA_FIREWALL) {
-							if ($media["EXISTS"]) print $pgv_lang["media_dir_".$media["EXISTS"]]."<br />";
-							if ($media["THUMBEXISTS"]) print $pgv_lang["thumb_dir_".$media["THUMBEXISTS"]]."<br />";
+							if ($media["EXISTS"]) {
+								print $pgv_lang["media_dir_".$media["EXISTS"]];
+								if (!$media["XREF"] && ($media["EXISTS"] == 3)) {
+									// this file exists in the media firewall directory, but without an xref it cannot be displayed
+									print " ".$pgv_lang["file_exists_no_xref"];
+								}
+								print "<br />";
+							}
+							if ($media["THUMBEXISTS"]) {
+								print $pgv_lang["thumb_dir_".$media["THUMBEXISTS"]];
+								if (!$media["XREF"] && ($media["THUMBEXISTS"] == 3)) {
+									// this file exists in the media firewall directory, but without an xref it cannot be displayed
+									print " ".$pgv_lang["file_exists_no_xref"];
+								}
+								print "<br />";
+							}
 						}
 
 						print "\n\t\t\t</td></tr>";
