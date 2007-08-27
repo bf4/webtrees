@@ -21,8 +21,8 @@
  * 
  * @author Dparker
  * @package PhpGedView
- * @subpackage Edit
- * @version $Id: edit_interface.php 384 2006-08-30 16:51:24Z opus27 $
+ * @subpackage Admin
+ * @version $Id: dir_editor.php 384 2006-08-30 16:51:24Z opus27 $
  */
 
 require_once("config.php");
@@ -33,73 +33,102 @@ if (!userIsAdmin(getUserName())) {
 	exit;
 }
 
-Global $GEDCOMS;
-require("languages/countries.en.php");
-if (file_exists("languages/countries.".$lang_short_cut[$LANGUAGE].".php")) require("languages/countries.".$lang_short_cut[$LANGUAGE].".php");
-asort($countries);
-
-if (!userIsAdmin(getUserName())) {
-		$loginURL = "$LOGIN_URL?url=".urlencode(basename($SCRIPT_NAME)."?".$QUERY_STRING);
-		header("Location: $loginURL");
-	exit;
-}
 if ($_SESSION["cookie_login"]) {
 	header("Location: login.php?type=simple&ged=$GEDCOM&url=dir_editor.php".urlencode("?".$QUERY_STRING));
 	exit;
 }
 
+function full_rmdir( $dir )
+{
+	if ( !is_writable( $dir ) )
+	{
+		if ( !@chmod( $dir, 0777 ) )
+		{
+			return FALSE;
+		}
+	}
+	 
+	$d = dir( $dir );
+	while ( FALSE !== ( $entry = $d->read() ) )
+	{
+		if ( $entry == '.' || $entry == '..' )
+		{
+			continue;
+		}
+		$entry = $dir . '/' . $entry;
+		if ( is_dir( $entry ) )
+		{
+			if ( !full_rmdir( $entry ) )
+			{
+				return FALSE;
+			}
+			continue;
+		}
+		if ( !@unlink( $entry ) )
+		{
+			$d->close();
+			return FALSE;
+		}
+	}
+	 
+	$d->close();
+	 
+	rmdir( $dir );
+	 
+	return TRUE;
+}
 
 // Vars
 $ajaxdeleted = false;
 $elements = Array();
 $locked_by_context = array("readme.txt","index.php","gedcoms.php");
 
- print_header("Index Directory Editor");
-
- 
-
+print_header("Index Directory Editor");
  
 //post back
 if(isset($_REQUEST["to_delete"]))
 {
 	print "<span class=\"error\">".$pgv_lang["deleted_files"]."</span><br/>";
 	foreach($_REQUEST["to_delete"] as $k=>$v){
-		unlink($INDEX_DIRECTORY.$v);
+		if (is_dir($INDEX_DIRECTORY.$v)) full_rmdir($INDEX_DIRECTORY.$v);
+		else unlink($INDEX_DIRECTORY.$v);
 	 	print "<span class=\"error\">".$v."</span><br/>";
 	}
 	
 }
 
-	require_once("js/prototype.js.htm");
-	require_once("js/scriptaculous.js.htm");
-	//print "<br /><b>".$pgv_lang["index_edit"]."</b>";
-	//print_help_link("reorder_children_help", "qm");
-	?>
-		
-		<form name="delete_form" method="post" action="">
+require_once("js/prototype.js.htm");
+require_once("js/scriptaculous.js.htm");
+//print "<br /><b>".$pgv_lang["index_edit"]."</b>";
+//print_help_link("reorder_children_help", "qm");
+?>
+
+<form name="delete_form" method="post" action="">
+<table>
+	<tr>
+		<td>
 		<ul id="reorder_list">
 		<?php
 			
+		//-- lock the GEDCOM and settings files
+		foreach($GEDCOMS as $key=>$val){
+			$locked_by_context[] = str_replace($INDEX_DIRECTORY,"",$val{"privacy"});
+			$locked_by_context[] = str_replace($INDEX_DIRECTORY,"",$val{"config"});
+		}
 					$dir = dir($INDEX_DIRECTORY);
 					
 					$path = $INDEX_DIRECTORY; // snag our path
 					while (false !== ($entry = $dir->read())) {
 		   				//echo $entry."\n";
 						if($entry{0} != '.'){
-							foreach($GEDCOMS as $key=>$val){
-							 
-								if($key == $entry)
+				if(isset($GEDCOMS[$entry]))
 								{
-									
+					$val = $GEDCOMS[$entry];
 									print "<li class=\"facts_value\" alt=\"$entry\" style=\"margin-bottom:2px;\" id=\"lock_$entry\" >";
 									print "<img src=\"./images/RESN_confidential.gif\" />";
 									print "<span class=\"name2\">".$entry."</span>";
 									print "&nbsp;&nbsp; Associated Files:<i>  ".str_replace($path,"",$val{"privacy"});
 									print "  ".str_replace($path,"",$val{"config"})."</i>";
-									
-									// add to our locked array
-									$locked_by_context[] = str_replace($path,"",$val{"privacy"});
-									$locked_by_context[] = str_replace($path,"",$val{"config"});
 								}
 								else if (in_array($entry, $locked_by_context)){
 																		
@@ -112,31 +141,25 @@ if(isset($_REQUEST["to_delete"]))
 									print $entry;
 									$element[] = "li_".$entry;
 								}
-							
-							//print_pedigree_person($pid,2,false);
-
 							print "</li>";
 							}
 						}
-						
-					}
-					?></ul><?php
+		?>
+		</ul>
+		</td>
+		<td valign="top" id="trash"><?php
 					$dir->close();
 				
-				print "<div style=\"margin-bottom:2px;\" id=\"trash\" >";
-				//print_pedigree_person($pid,2,false);
-				
-				print "<table><tr><td><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["trashcan"]["medium"]."\" align=\"left\"/></td>";
+		print "<div style=\"margin-bottom:2px;\">";
+		print "<table><tr><td>";
+		if (isset($PGV_IMAGES["trashcan"]["medium"])) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["trashcan"]["medium"]."\" align=\"left\"/>";
+		else print "TRASH";
+		print "</td>";
 				print "<td valign=\"top\"><ul id=\"trashlist\">";
 				print "</ul></td></tr></table>";
 				print "</div>";
 				
-				//print_r($GEDCOMS);
-				//print_r($element);
-	
-		?>
-		
-<script type="text/javascript" language="javascript">
+		?> <script type="text/javascript" language="javascript">
 
 	new Effect.BlindDown('reorder_list', {duration: 1});
 	
@@ -148,22 +171,33 @@ if(isset($_REQUEST["to_delete"]))
 		 ?>
 		 
 	 Droppables.add('trash', {
+	 hoverclass: 'facts_valuered',
   onDrop: function(element) 
      { $('trashlist').innerHTML += 
         '<li class="facts_value">'+ element.innerHTML +'<input type="hidden" name="to_delete[]" value="'+element.innerHTML+'"/></li>' ; 
         element.style.display = "none";
+       // element.className='facts_valuered';
         }});
 function ul_clear()
 {
 	$('trashlist').innerHTML = ""; 
 	
+	list = document.getElementById('reorder_list');
+	children = list.childNodes;
+	for(i=0; i<children.length; i++) {
+		node = children[i];
+		if (node.tagName=='li' || node.tagName=='LI') {
+			//node.className='facts_value';
+			node.style.display='list-item';
+		}
+	}
 }	
 </script>
 
-		<button type="submit"><?php print $pgv_lang["save"];?></button>
-		<button type="submit" onclick="ul_clear();"><?php print $pgv_lang["cancel"];?></button>
-	<?php print_help_link("dir_editor_help","qm", '', false, false); ?>
-	</form>
-	
-	
-<?php print_footer(); ?>
+		<button type="submit"><?php print $pgv_lang["delete"];?></button>
+		<button type="button" onclick="ul_clear(); return false;"><?php print $pgv_lang["cancel"];?></button>
+		<?php print_help_link("dir_editor_help","qm", '', false, false); ?></td>
+	</tr>
+</table>
+</form>
+		<?php print_footer(); ?>

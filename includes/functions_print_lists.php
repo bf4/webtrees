@@ -47,8 +47,8 @@ require_once("includes/person_class.php");
  * @param array $value is an array of the form array($name, $GEDCOM)
  */
 function print_list_person($key, $value, $findid=false, $asso="", $useli=true) {
-	global $pgv_lang, $SCRIPT_NAME, $pass, $indi_private, $indi_hide, $indi_total, $factarray;
-	global $GEDCOM, $SHOW_ID_NUMBERS, $TEXT_DIRECTION, $SHOW_PEDIGREE_PLACES, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_DEATH_LISTS;
+	global $pgv_lang, $pass, $indi_private, $indi_hide, $indi_total;
+	global $GEDCOM, $SHOW_ID_NUMBERS, $TEXT_DIRECTION;
 
 	if ($value[1]>=1) $value[1] = get_gedcom_from_id($value[1]);
 	$GEDCOM = $value[1];
@@ -99,7 +99,6 @@ function print_list_person($key, $value, $findid=false, $asso="", $useli=true) {
 			if ($TEXT_DIRECTION=="ltr") print "(".$pgv_lang["associate"]."&nbsp;&nbsp;".$key.")";
   			else print getRLM() . "(" . getRLM() .$pgv_lang["associate"]."&nbsp;&nbsp;".$key. getRLM() . ")" . getRLM() . "</span></a>";
 		}
-//		if ($useli) print "</li>";
 		print "</".$tag.">";
 	}
 	else {
@@ -118,8 +117,7 @@ function print_list_person($key, $value, $findid=false, $asso="", $useli=true) {
  */
 function print_list_family($key, $value, $findid=false, $asso="", $useli=true) {
 	global $pgv_lang, $pass, $fam_private, $fam_hide, $fam_total, $SHOW_ID_NUMBERS;
-	global $GEDCOM, $HIDE_LIVE_PEOPLE, $SHOW_PEDIGREE_PLACES;
-	global $TEXT_DIRECTION;
+	global $GEDCOM, $TEXT_DIRECTION;
 	$GEDCOM = $value[1];
 	if (!isset($fam_private)) $fam_private=array();
 	if (!isset($fam_hide)) $fam_hide=array();
@@ -191,7 +189,7 @@ function print_list_family($key, $value, $findid=false, $asso="", $useli=true) {
  * @param array $value is an array of the form array($name, $GEDCOM)
  */
 function print_list_source($key, $value, $useli=true) {
-	global $source_total, $source_hide, $SHOW_SOURCES, $SHOW_ID_NUMBERS, $GEDCOM, $TEXT_DIRECTION;
+	global $source_total, $source_hide, $SHOW_ID_NUMBERS, $GEDCOM;
 
 	$GEDCOM = get_gedcom_from_id($value["gedfile"]);
 	if (!isset($source_total)) $source_total=array();
@@ -223,7 +221,7 @@ function print_list_source($key, $value, $useli=true) {
  * @param array $value is an array of the form array($name, $GEDCOM)
  */
 function print_list_repository($key, $value, $useli=true) {
-	global $repo_total, $repo_hide, $SHOW_ID_NUMBERS, $GEDCOM, $TEXT_DIRECTION;
+	global $repo_total, $repo_hide, $SHOW_ID_NUMBERS, $GEDCOM;
 
 	$GEDCOM = get_gedcom_from_id($value["gedfile"]);
 	if (!isset($repo_total)) $repo_total=array();
@@ -919,7 +917,7 @@ function print_fam_table($datalist, $legend="", $option="") {
  * @param string $legend optional legend of the fieldset
  */
 function print_sour_table($datalist, $legend="") {
-	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	if (count($datalist)<1) return;
@@ -1074,7 +1072,7 @@ T2;
  * @param string $legend optional legend of the fieldset
  */
 function print_repo_table($datalist, $legend="") {
-	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	if (count($datalist)<1) return;
@@ -1174,7 +1172,7 @@ function print_repo_table($datalist, $legend="") {
  * @param string $legend optional legend of the fieldset
  */
 function print_media_table($datalist, $legend="") {
-	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
+	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $TEXT_DIRECTION;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	if (count($datalist)<1) return;
@@ -1481,7 +1479,7 @@ function print_changes_table($datalist) {
  * @param string $option optional filtering option
  */
 function print_events_table($datalist, $nextdays=0, $option="") {
-	global $pgv_lang, $factarray, $LANGUAGE, $SHOW_ID_NUMBERS, $SHOW_LAST_CHANGE, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
 	if (count($datalist)<1) return;
 	require_once("js/sorttable.js.htm");
 	require_once("includes/gedcomrecord.php");

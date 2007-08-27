@@ -71,32 +71,35 @@ class TimelineControllerRoot extends BaseController {
 				if (stristr($newpid, "I")===false) $newpid = "I".$newpid;
 			}
 		}
-		//-- pids array
-		if (!isset($_REQUEST['pids'])){
-			$this->pids=array();
-			if (!empty($newpid)) $this->pids[] = $newpid;
-			else $this->pids[] = check_rootid("");
-		}
+		
+		if (isset($_REQUEST['clear'])) unset($_SESSION['timeline_pids']);
 		else {
-			$this->pids = $_REQUEST['pids'];
-			if (!empty($newpid)) $this->pids[] = $newpid;
+			if (isset($_SESSION['timeline_pids'])) $this->pids = $_SESSION['timeline_pids'];
+			//-- pids array
+			if (isset($_REQUEST['pids'])){
+				$this->pids = $_REQUEST['pids'];
+			}
 		}
 		if (!is_array($this->pids)) $this->pids = array();
 		else {
 			//-- make sure that arrays are indexed by numbers
 			$this->pids = array_values($this->pids);
 		}
+		if (!empty($newpid)) $this->pids[] = $newpid;
+		if (count($this->pids)==0) $this->pids[] = check_rootid("");
 		$remove = "";
 		if (!empty($_REQUEST['remove'])) $remove = $_REQUEST['remove'];
 		//-- cleanup user input
+		$newpids = array();
 		foreach($this->pids as $key=>$value) {
 			if ($value!=$remove) {
 				$value = clean_input($value);
-				$this->pids[$key] = $value;
+				$newpids[] = $value;
 				$person = Person::getInstance($value);
 				if (!is_null($person)) $this->people[] = $person; 
 			}
 		}
+		$this->pids = $newpids;
 		$this->pidlinks = "";
 		foreach($this->people as $p=>$indi) {
 			if (!is_null($indi) && $indi->canDisplayDetails()) {
@@ -144,6 +147,7 @@ class TimelineControllerRoot extends BaseController {
 				}
 			}
 		}
+		$_SESSION['timeline_pids'] = $this->pids;
 		if (empty($_REQUEST['scale'])) {
 			$this->scale = round(($this->topyear-$this->baseyear)/20 * count($this->indifacts)/4);
 			if ($this->scale<6) $this->scale = 6;

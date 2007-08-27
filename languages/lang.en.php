@@ -31,6 +31,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["switch_lifespan"]		= "Show Lifespan chart";
+$pgv_lang["switch_timeline"]		= "Show Timeline chart";
 $pgv_lang["differences"]			= "Differences";
 $pgv_lang["charts_block"]			= "Charts Block";
 $pgv_lang["charts_block_descr"]		= "The Charts block allows you to place a chart on the Welcome or the MyGedView portal page.  You can configure the block to show an ancestors, descendants, or hourglass view.  You can also choose the root person for the chart.";

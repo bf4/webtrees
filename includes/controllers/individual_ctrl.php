@@ -1265,7 +1265,7 @@ class IndividualControllerRoot extends BaseController {
 					<td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]; ?>" border="0" class="icon" alt="" /></td>
 					<td><span class="subheaders"><?php print PrintReady($label); ?></span>
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
-					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
+					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM(); ?>]</a>
 				<?php }?>
 					</td>
 				</tr>
@@ -1422,7 +1422,7 @@ class IndividualControllerRoot extends BaseController {
 					<td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]; ?>" border="0" class="icon" alt="" /></td>
 					<td><span class="subheaders"><?php print PrintReady($label); ?></span>
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
-					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
+					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM(); ?>]</a>
 				<?php } ?>
 					</td>
 				</tr>
@@ -1558,7 +1558,7 @@ class IndividualControllerRoot extends BaseController {
 					<td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]; ?>" border="0" class="icon" alt="" /></td>
 					<td><span class="subheaders"><?php print PrintReady($label); ?></span>
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
-					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " &lrm;($famid)&lrm;"; ?>]</a>
+					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM(); ?>]</a>
 				<?php } ?>
 					</td>
 				</tr>
