@@ -44,12 +44,12 @@ VERSION 4.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
-+$pgv_lang["media_dir_1"]								26 Aug 2007				A
-+$pgv_lang["media_dir_2"]								26 Aug 2007				A
-+$pgv_lang["media_dir_3"]								26 Aug 2007				A
-+$pgv_lang["thumb_dir_1"]								26 Aug 2007				A
-+$pgv_lang["thumb_dir_2"]								26 Aug 2007				A
-+$pgv_lang["thumb_dir_3"]								26 Aug 2007				A
++$pgv_lang["media_dir_1"]							26 Aug 2007				A
++$pgv_lang["media_dir_2"]							26 Aug 2007				A
++$pgv_lang["media_dir_3"]							26 Aug 2007				A
++$pgv_lang["thumb_dir_1"]							26 Aug 2007				A
++$pgv_lang["thumb_dir_2"]							26 Aug 2007				A
++$pgv_lang["thumb_dir_3"]							26 Aug 2007				A
 +$pgv_lang["unknown_mime"]							07 Aug 2007				A
 +$pgv_lang["media_broken"]							07 Aug 2007				A
 +$pgv_lang["media_privacy"]							02 Aug 2007				A	Media Firewall, patch 1749817

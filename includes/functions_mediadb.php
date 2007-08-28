@@ -502,7 +502,8 @@ function check_media_structure() {
  * - $media["XREF"]		Another copy of the Media ID (not sure why there are two)
  * - $media["GEDFILE"] 	the gedcom file the media item should be added to
  * - $media["FILE"] 	the filename of the media item
- * - $media["FORM"] 	the format of the item (ie JPG, PDF, etc)
+ * - $media["FORM"] 	the format of the item (ie bmp, gif, jpeg, pcx etc)
+ * - $media["TYPE"]		the type of media item (ie certificate, document, photo, tombstone etc)
  * - $media["TITL"] 	a title for the item, used for list display
  * - $media["GEDCOM"] 	gedcom record snippet
  * - $media["LEVEL"]	level number (normally zero)
@@ -578,7 +579,6 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 						$media["THUMBEXISTS"] = media_exists($media["THUMB"]);
 						$media["EXISTS"] = media_exists($fileName);
 					}
-					$media["FORM"] = stripslashes($row["m_ext"]);
 					$media["TITL"] = stripslashes($row["m_titl"]);
 					$media["GEDCOM"] = stripslashes($row["m_gedrec"]);
 					$gedrec = & trim($row["m_gedrec"]);
@@ -586,6 +586,9 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 					$media["LINKED"] = false;
 					$media["LINKS"] = array ();
 					$media["CHANGE"] = "";
+					// Extract Format and Type from GEDCOM record
+					$media["FORM"] = strtolower(get_gedcom_value("FORM", 2, $gedrec));
+					$media["TYPE"] = strtolower(get_gedcom_value("FORM:TYPE", 2, $gedrec));
 
 					// Build a sortable key for the medialist
 					$firstChar = substr($media["XREF"], 0, 1);
@@ -649,6 +652,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 				$media["THUMBEXISTS"] = false;
 				$media["EXISTS"] = false;
 				$media["FORM"] = "";
+				$media["TYPE"] = "";
 				$media["TITL"] = "";
 				$media["GEDCOM"] = $gedrec;
 				$media["LEVEL"] = "0";
@@ -672,6 +676,8 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 								$media["FILE"] = $event;
 							if ($fact == "FORM")
 								$media["FORM"] = $event;
+							if ($fact == "TYPE")
+								$media["TYPE"] = $event;
 							if ($fact == "TITL")
 								$media["TITL"] = $event;
 						}
@@ -818,71 +824,74 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 		array_push($dirs_to_check, get_media_firewall_path($directory));
 	}
 
-foreach ($dirs_to_check as $thedir) {  
-	$d = dir(filename_decode(substr($thedir, 0, -1)));
-	while (false !== ($fileName = $d->read())) {
-		$fileName = filename_encode($fileName);
-		while (true) {
-			// Make sure we only look at valid media files
-			if (in_array($fileName, $BADMEDIA))
-				break;
-			if (is_dir(filename_decode($thedir . $fileName))) {
-				if ($folderDepth < $MEDIA_DIRECTORY_LEVELS)
-					$dirs[] = $fileName; // note: we will remove duplicates when the loop is complete
-				break;
-			}
-			$exts = explode(".", $fileName);
-			if (count($exts) == 1)
-				break;
-			$ext = strtolower($exts[count($exts) - 1]);
-			if (!in_array($ext, $MEDIATYPE))
-				break;
-
-			// This is a valid media file:
-			// now see whether we already know about it
-			$mediafile = $directory . $fileName;
-			$exist = false;
-			$oldObject = false;
-			foreach ($medialist as $key => $item) {
-				if ($item["FILE"] == $directory . $fileName) {
-					if ($item["CHANGE"] == "delete") {
-						$exist = false;
-						$oldObject = true;
-					} else {
-						$exist = true;
-						$oldObject = false;
+	foreach ($dirs_to_check as $thedir) {
+		$d = dir(filename_decode(substr($thedir, 0, -1)));
+		while (false !== ($fileName = $d->read())) {
+			$fileName = filename_encode($fileName);
+			while (true) {
+				// Make sure we only look at valid media files
+				if (in_array($fileName, $BADMEDIA))
+					break;
+				if (is_dir(filename_decode($thedir . $fileName))) {
+					if ($folderDepth < $MEDIA_DIRECTORY_LEVELS)
+						$dirs[] = $fileName; // note: we will remove duplicates when the loop is complete
+					break;
+				}
+				$exts = explode(".", $fileName);
+				if (count($exts) == 1)
+					break;
+				$ext = strtolower($exts[count($exts) - 1]);
+				if (!in_array($ext, $MEDIATYPE))
+					break;
+	
+				// This is a valid media file:
+				// now see whether we already know about it
+				$mediafile = $directory . $fileName;
+				$exist = false;
+				$oldObject = false;
+				foreach ($medialist as $key => $item) {
+					if ($item["FILE"] == $directory . $fileName) {
+						if ($item["CHANGE"] == "delete") {
+							$exist = false;
+							$oldObject = true;
+						} else {
+							$exist = true;
+							$oldObject = false;
+						}
 					}
 				}
-			}
-			if ($exist)
+				if ($exist)
+					break;
+	
+				// This media item is not yet in the database
+				$media = array ();
+				$media["ID"] = "";
+				$media["XREF"] = "";
+				$media["GEDFILE"] = "";
+				$media["FILE"] = $directory . $fileName;
+				$media["THUMB"] = thumbnail_file($directory . $fileName, false);
+				$media["THUMBEXISTS"] = media_exists($media["THUMB"]);
+				$media["EXISTS"] = media_exists($media["FILE"]);
+				$media["FORM"] = $ext;
+				if ($ext == "jpg" || $ext == "jp2")
+					$media["FORM"] = "jpeg";
+				if ($ext == "tif")
+					$media["FORM"] = "tiff";
+				$media["TYPE"] = "";
+				$media["TITL"] = "";
+				$media["GEDCOM"] = "";
+				$media["LEVEL"] = "0";
+				$media["LINKED"] = false;
+				$media["LINKS"] = array ();
+				$media["CHANGE"] = "";
+				if ($oldObject)
+					$media["CHANGE"] = "append";
+				$images[$fileName] = $media;
 				break;
-
-			// This media item is not yet in the database
-			$media = array ();
-			$media["ID"] = "";
-			$media["XREF"] = "";
-			$media["GEDFILE"] = "";
-			$media["FILE"] = $directory . $fileName;
-			$media["THUMB"] = thumbnail_file($directory . $fileName, false);
-			$media["THUMBEXISTS"] = media_exists($media["THUMB"]);
-			$media["EXISTS"] = media_exists($media["FILE"]);
-			$media["FORM"] = $ext;
-			if ($ext == "jpg" || $ext == "jp2")
-				$media["FORM"] = "jpeg";
-			$media["TITL"] = "";
-			$media["GEDCOM"] = "";
-			$media["LEVEL"] = "0";
-			$media["LINKED"] = false;
-			$media["LINKS"] = array ();
-			$media["CHANGE"] = "";
-			if ($oldObject)
-				$media["CHANGE"] = "append";
-			$images[$fileName] = $media;
-			break;
+			}
 		}
+		$d->close();
 	}
-	$d->close();
-}
 	//print_r($images); print "<br />";
 	$dirs = array_unique($dirs); // remove duplicates that were added because we checked both the regular dir and the media firewall dir
 	sort($dirs);

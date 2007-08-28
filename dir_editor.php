@@ -22,7 +22,7 @@
  * @author Dparker
  * @package PhpGedView
  * @subpackage Admin
- * @version $Id: dir_editor.php 384 2006-08-30 16:51:24Z opus27 $
+ * @version $Id$
  */
 
 require_once("config.php");

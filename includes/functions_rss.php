@@ -932,6 +932,7 @@ function getRandomMedia() {
 	global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $DEBUG;
 	global $PGV_BLOCKS, $ctype, $action;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
+
 	if (empty($config)) $config = $PGV_BLOCKS["print_random_media"]["config"];
 	if (isset($config["filter"])) $filter = $config["filter"];  // indi, event, or all
 	else $filter = "all";
@@ -941,8 +942,8 @@ function getRandomMedia() {
 
 	$randomMedia = "";
 
-
 	if (!$MULTI_MEDIA) return;
+
 	$medialist = array();
 	$foundlist = array();
 
@@ -956,10 +957,11 @@ function getRandomMedia() {
 			$error = false;
 			$value = array_rand($medialist);
 			//if (isset($DEBUG)&&($DEBUG==true)) {
+			//	print "<br />";print_r($medialist[$value]);print "<br />";
 			//	print "Trying ".$medialist[$value]["XREF"]."<br />\n";
 			//}
 			$links = $medialist[$value]["LINKS"];
-			$disp = $medialist[$value]["EXISTS"] && $medialist[$value]["LINKED"] && $medialist[$value]["CHANGE"]!="delete" ;
+			$disp = ($medialist[$value]["EXISTS"]>0) && $medialist[$value]["LINKED"] && $medialist[$value]["CHANGE"]!="delete" ;
 			//if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." File does not exist, or is not linked to anyone, or is marked for deletion.</span><br />\n";}
 
 			$disp &= displayDetailsByID($value["XREF"], "OBJE");
@@ -969,8 +971,13 @@ function getRandomMedia() {
 
 			$isExternal = isFileExternal($medialist[$value]["FILE"]);
 
-			if (!$isExternal) $disp &= $medialist[$value]["THUMBEXISTS"];
+			if (!$isExternal) $disp &= ($medialist[$value]["THUMBEXISTS"]>0);
 			//if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." thumbnail file could not be found</span><br />\n";}
+
+			// Filter according to format and type  (Default: unless configured otherwise, don't filter)
+			if (!empty($medialist[$value]["FORM"]) && isset($config["filter_".$medialist[$value]["FORM"]]) && $config["filter_".$medialist[$value]["FORM"]]!="yes") $disp = false;
+			if (!empty($medialist[$value]["TYPE"]) && isset($config["filter_".$medialist[$value]["TYPE"]]) && $config["filter_".$medialist[$value]["TYPE"]]!="yes") $disp = false;
+			//if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed Format or Type filters</span><br />\n";}
 
 			if ($disp && count($links) != 0){
 				foreach($links as $key=>$type) {
