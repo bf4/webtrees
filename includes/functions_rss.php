@@ -969,7 +969,7 @@ function getRandomMedia() {
 
 			$isExternal = isFileExternal($medialist[$value]["FILE"]);
 
-			if (!$isExternal) $disp &= file_exists($medialist[$value]["THUMB"]);
+			if (!$isExternal) $disp &= $medialist[$value]["THUMBEXISTS"];
 			//if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." thumbnail file could not be found</span><br />\n";}
 
 			if ($disp && count($links) != 0){

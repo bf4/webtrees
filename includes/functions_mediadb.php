@@ -1957,10 +1957,6 @@ function cropImage($image, $dest_image, $left, $top, $right, $bottom){ //$image 
 	imagedestroy($img);
 	}
 }
-// determines whether the passed in filename is a link to an external source (i.e. contains '://')
-function isFileExternal($file) { 
-	return (strpos($file, '://') === false) ? false : true; 
-} 
 
 // checks whether a media file exists.
 // returns 1 for external media
