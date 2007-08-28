@@ -64,8 +64,9 @@ class MediaControllerRoot extends IndividualController{
 			if (!$mid){
 				//This will set the Media ID to be false if the File given doesn't match to anything in the database
 				$mid = false;
-				// bail now or the commands below will fail
-				return;
+				// create a very basic gedcom record for this file so that the functions of the media object will work
+				// this is used by the media firewall when requesting an object that exists in the media firewall directory but not in the gedcom
+				$this->mediaobject = new Media("0 @"."0"."@ OBJE\n1 FILE ".$filename);
 			}
 		}
 	

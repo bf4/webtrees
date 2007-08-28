@@ -713,7 +713,6 @@ $pgv_lang["media_dir_3"]			= "This media object is in the media firewall directo
 $pgv_lang["thumb_dir_1"]			= "This thumbnail is located on an external server";
 $pgv_lang["thumb_dir_2"]			= "This thumbnail is in the standard media directory";
 $pgv_lang["thumb_dir_3"]			= "This thumbnail is in the media firewall directory";
-$pgv_lang["file_exists_no_xref"]	= "but it is not viewable because it is not linked to a GEDCOM record.";
 //-- Relationship chart messages
 $pgv_lang["relationship_great"]		= "Great";
 $pgv_lang["relationship_chart"] 	= "Relationship Chart";

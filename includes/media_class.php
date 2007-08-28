@@ -166,8 +166,8 @@ class Media extends GedcomRecord {
 	 * get the thumbnail filename
 	 * @return string
 	 */
-	function getThumbnail() {
-		return thumbnail_file($this->file);
+	function getThumbnail($generateThumb = true) {
+		return thumbnail_file($this->file,$generateThumb);
 	}
 
 	/**

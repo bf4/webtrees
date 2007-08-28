@@ -118,15 +118,7 @@ function getWatermarkPath ($path) {
 
 // start processing here
 
-if (empty($controller->pid)) {
-	// the requested file is not in the database, bail
-	// Note: the 404 error status is still in effect. 
-	// the substr command here is to get the extension of the file that was requested
-	sendErrorAndExit(substr(strrchr(@$_SERVER['REDIRECT_URL'], "."), 1), $pgv_lang["no_media"], @$_SERVER['REDIRECT_URL']);
-}
-
-// if we got here, then the requested file was found in the database
-// and $controller contains all the details about the media object
+// get serverfilename from the media controller
 $serverFilename = $controller->getServerFilename();
 $isThumb = false;
 
@@ -135,18 +127,35 @@ if (strpos($_SERVER['REDIRECT_URL'], '/thumbs/')) {
 	// display the thumbnail file instead of the main file
 	// NOTE: since this script was called when a 404 error occured, we know the requested file
 	// does not exist in the main media directory.  just check the media firewall directory
-	$serverFilename = get_media_firewall_path($controller->mediaobject->getThumbnail());
+	$serverFilename = get_media_firewall_path($controller->mediaobject->getThumbnail(false));
 	$isThumb = true;
 }
 
-if (!$controller->mediaobject->fileExists()) {
-	// the requested file is in the database, but it does not exist on the server.  bail.
+if (!file_exists($serverFilename)) {
+	// the requested file MAY be in the gedcom, but it does NOT exist on the server.  bail.
 	// Note: the 404 error status is still in effect. 
-	sendErrorAndExit($controller->mediaobject->getFiletype(), $pgv_lang["no_media"], $serverFilename);
+	if (!$debug_mediafirewall) sendErrorAndExit($controller->mediaobject->getFiletype(), $pgv_lang["no_media"], $serverFilename);
+}
+
+if (empty($controller->pid)) {
+	// the requested file IS NOT in the gedcom, but it exists (the check for fileExists was above) 
+	if (!userIsAdmin(getUserName()) ) {
+		// only show these files to admin users
+		// bail since current user is not admin
+		// Note: the 404 error status is still in effect. 
+		if (!$debug_mediafirewall) sendErrorAndExit($controller->mediaobject->getFiletype(), $pgv_lang["media_privacy"], $serverFilename);
+	}
+}
+
+// check PGV permissions
+if (!$controller->mediaobject->canDisplayDetails()) {
+	// if no permissions, bail
+	// Note: the 404 error status is still in effect 
+	if (!$debug_mediafirewall) sendErrorAndExit($controller->mediaobject->getFiletype(), $pgv_lang["media_privacy"]);
 }
 
 $protocol = $_SERVER["SERVER_PROTOCOL"];  // determine if we are using HTTP/1.0 or HTTP/1.1
-$filetime = filemtime($serverFilename);
+$filetime = @filemtime($serverFilename);
 $filetimeHeader = gmdate("D, d M Y H:i:s", $filetime).' GMT';
 $expireOffset = 3600 * 24;  // tell browser to cache this image for 24 hours
 $expireHeader = gmdate("D, d M Y H:i:s", time() + $expireOffset) . " GMT";
@@ -214,14 +223,16 @@ if ($debug_mediafirewall) {
 	header('ETag: "'.$etag.'"');
 
 	echo  '<table border="1">';
+	echo  '<tr><td>$controller->pid</td><td>'.$controller->pid.'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>Requested URL</td><td>'.$_SERVER['REDIRECT_URL'].'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>serverFilename</td><td>'.$serverFilename.'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>controller->mediaobject->getFilename()</td><td>'.$controller->mediaobject->getFilename().'</td><td>this is direct from the gedcom</td></tr>';
 	echo  '<tr><td>controller->mediaobject->getServerFilename()</td><td>'.$controller->mediaobject->getServerFilename().'</td><td></td></tr>';
+	echo  '<tr><td>controller->mediaobject->fileExists()</td><td>'.$controller->mediaobject->fileExists().'</td><td></td></tr>';
 	echo  '<tr><td>controller->mediaobject->getFiletype()</td><td>'.$controller->mediaobject->getFiletype().'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>mimetype</td><td>'.$mimetype.'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>controller->mediaobject->getFilesize()</td><td>'.$controller->mediaobject->getFilesize().'</td><td>cannot use this</td></tr>';
-	echo  '<tr><td>filesize</td><td>'.filesize($serverFilename).'</td><td>this is right</td></tr>';
+	echo  '<tr><td>filesize</td><td>'.@filesize($serverFilename).'</td><td>this is right</td></tr>';
 	echo  '<tr><td>controller->mediaobject->getThumbnail()</td><td>'.$controller->mediaobject->getThumbnail().'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>controller->mediaobject->canDisplayDetails()</td><td>'.$controller->mediaobject->canDisplayDetails().'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>controller->mediaobject->getTitle()</td><td>'.$controller->mediaobject->getTitle().'</td><td>&nbsp;</td></tr>';
@@ -246,7 +257,7 @@ if ($debug_mediafirewall) {
 	echo  '</table>';
 
 	echo '<pre>';
-	print_r(getimagesize($serverFilename));
+	print_r (@getimagesize($serverFilename));
 	print_r ($controller->mediaobject);
 	print_r ($GEDCOMS[$GEDCOM]);
 	echo '</pre>';
@@ -255,13 +266,6 @@ if ($debug_mediafirewall) {
 	exit;
 }
 // do the real work here
-
-// check PGV permissions
-if (!$controller->mediaobject->canDisplayDetails()) {
-	// if no permissions, bail
-	// Note: the 404 error status is still in effect 
-	sendErrorAndExit($controller->mediaobject->getFiletype(), $pgv_lang["media_privacy"]);
-}
 
 // add caching headers.  allow browser to cache file, but not proxy
 if (!$debug_forceImageRegen) {
