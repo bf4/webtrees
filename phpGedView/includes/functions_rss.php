@@ -972,6 +972,11 @@ function getRandomMedia() {
 			if (!$isExternal) $disp &= file_exists($medialist[$value]["THUMB"]);
 			//if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." thumbnail file could not be found</span><br />\n";}
 
+			// Filter according to format and type  (Default: unless configured otherwise, don't filter)
+			if (!empty($medialist[$value]["FORM"]) && isset($config["filter_".$medialist[$value]["FORM"]]) && $config["filter_".$medialist[$value]["FORM"]]!="yes") $disp = false;
+			if (!empty($medialist[$value]["TYPE"]) && isset($config["filter_".$medialist[$value]["TYPE"]]) && $config["filter_".$medialist[$value]["TYPE"]]!="yes") $disp = false;
+			//if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed Format or Type filters</span><br />\n";}
+
 			if ($disp && count($links) != 0){
 				foreach($links as $key=>$type) {
 					$gedrec = find_gedcom_record($key);

@@ -502,7 +502,8 @@ function check_media_structure() {
  * - $media["XREF"]		Another copy of the Media ID (not sure why there are two)
  * - $media["GEDFILE"] 	the gedcom file the media item should be added to
  * - $media["FILE"] 	the filename of the media item
- * - $media["FORM"] 	the format of the item (ie JPG, PDF, etc)
+ * - $media["FORM"] 	the format of the item (ie bmp, gif, jpeg, pcx etc)
+ * - $media["TYPE"]		the type of media item (ie certificate, document, photo, tombstone etc)
  * - $media["TITL"] 	a title for the item, used for list display
  * - $media["GEDCOM"] 	gedcom record snippet
  * - $media["LEVEL"]	level number (normally zero)
@@ -576,7 +577,6 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 						$media["THUMB"] = thumbnail_file($fileName);
 						$media["EXISTS"] = file_exists(filename_decode($fileName));
 					}
-					$media["FORM"] = stripslashes($row["m_ext"]);
 					$media["TITL"] = stripslashes($row["m_titl"]);
 					$media["GEDCOM"] = stripslashes($row["m_gedrec"]);
 					$gedrec = & trim($row["m_gedrec"]);
@@ -584,6 +584,9 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 					$media["LINKED"] = false;
 					$media["LINKS"] = array ();
 					$media["CHANGE"] = "";
+					// Extract Format and Type from GEDCOM record
+					$media["FORM"] = strtolower(get_gedcom_value("FORM", 2, $gedrec));
+					$media["TYPE"] = strtolower(get_gedcom_value("FORM:TYPE", 2, $gedrec));
 
 					// Build a sortable key for the medialist
 					$firstChar = substr($media["XREF"], 0, 1);
