@@ -335,8 +335,8 @@ else {
 	 * @param string targetId	the id of the block to target the results too
 	 * @param string block 	the method name of the block to call (e.g. 'print_random_media')
  	 * @param string side 	the side of the page the block is on (e.g. 'main' or 'right')
- 	 * @param string ctype 	shows whether block is on Welcome or MyGedView page ('gedcom' or 'user')
 	 * @param int bindex 	the number of the block on that side, first block = 0
+ 	 * @param string ctype 	shows whether block is on Welcome or MyGedView page ('gedcom' or 'user')
 	 * @param boolean loading  Whether or not to show the loading message
 	 */
 	function ajaxBlock(targetId, block, side, bindex, ctype, loading) {

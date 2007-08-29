@@ -179,7 +179,7 @@ if ($MULTI_MEDIA) {
 				if ($config['controls']=='yes') {
 					if ($config['start']=='yes' || (isset($_COOKIE['rmblockplay'])&&$_COOKIE['rmblockplay']=='true')) $image = "stop";
 					else $image = "rarrow";
-					$linkNextImage = "<a href=\"javascript: ".$pgv_lang["next_image"]."\" onclick=\"return ajaxBlock('random_picture_content$index', 'print_random_media', '$side', $index, $ctype, true);\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES['rdarrow']['other']."\" border=\"0\" alt=\"".$pgv_lang["next_image"]."\" title=\"".$pgv_lang["next_image"]."\" /></a>\n";
+					$linkNextImage = "<a href=\"javascript: ".$pgv_lang["next_image"]."\" onclick=\"return ajaxBlock('random_picture_content$index', 'print_random_media', '$side', $index, '$ctype', true);\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES['rdarrow']['other']."\" border=\"0\" alt=\"".$pgv_lang["next_image"]."\" title=\"".$pgv_lang["next_image"]."\" /></a>\n";
 	
 					print "<div class=\"center\" id=\"random_picture_controls$index\">\n<br />";
 					if ($TEXT_DIRECTION=="rtl") print $linkNextImage;
