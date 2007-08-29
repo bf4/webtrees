@@ -31,6 +31,8 @@ Version 4.2
  - Adding a "never married" icon on ancestry booklet when NMR=0 (opus27)
 
 Version 4.1.1
+ - Fixed Ajax controls in Random Media block ignore block configuration (canajun2eh) 
+ - Added Filter by Format, Filter by Type in Random Media block (canajun2eh) 
  - Fixed [ 1765862 ] Divide by zero error in timeline (yalnifj)
  - Fixed [ 1779085 ] [SVN1480] HTML Report should use a popup Target (yalnifj)
  - Fixed [ 1776999 ] SVN 1451 - Circle Chart (yalnifj)
