@@ -35,7 +35,34 @@ if ($MULTI_MEDIA) {
 		"cache"=>0,
 		"filter"=>"all",
 		"controls"=>"yes",
-		"start"=>"no"
+		"start"=>"no",
+
+		"filter_avi"	=>"no",
+		"filter_bmp"	=>"yes",
+		"filter_gif"	=>"yes",
+		"filter_jpeg"	=>"yes",
+		"filter_mp3"	=>"no",
+		"filter_ole"	=>"yes",
+		"filter_pcx"	=>"yes",
+		"filter_png"	=>"yes",
+		"filter_tiff"	=>"yes",
+		"filter_wav"	=>"no",
+
+		"filter_audio"			=>"no",
+		"filter_book"			=>"yes",
+		"filter_card"			=>"yes",
+		"filter_certificate"	=>"yes",
+		"filter_document"		=>"yes",
+		"filter_electronic"		=>"yes",
+		"filter_fiche"			=>"yes",
+		"filter_film"			=>"yes",
+		"filter_magazine"		=>"yes",
+		"filter_manuscript"		=>"yes",
+		"filter_map"			=>"yes",
+		"filter_newspaper"		=>"yes",
+		"filter_photo"			=>"yes",
+		"filter_tombstone"		=>"yes",
+		"filter_video"			=>"no"
 		);
 
 	require_once 'includes/functions_print_facts.php';
@@ -47,13 +74,15 @@ if ($MULTI_MEDIA) {
 		global $MEDIATYPE, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER, $DEBUG;
 		global $PGV_BLOCKS, $ctype, $action;
 		global $PGV_IMAGE_DIR, $PGV_IMAGES;
+
+		if (!$MULTI_MEDIA) return;
+
   		if (empty($config)) $config = $PGV_BLOCKS["print_random_media"]["config"];
   		if (isset($config["filter"])) $filter = $config["filter"];  // indi, event, or all
   		else $filter = "all";
   		if (!isset($config['controls'])) $config['controls'] ="yes";
   		if (!isset($config['start'])) $config['start'] ="no";
 
-		if (!$MULTI_MEDIA) return;
 		$medialist = array();
 		$foundlist = array();
 
@@ -83,6 +112,11 @@ if ($MULTI_MEDIA) {
 
 				if ($block && !$isExternal) $disp &= file_exists($medialist[$value]["THUMB"]);
 				if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." thumbnail file could not be found</span><br />\n";}
+
+				// Filter according to format and type  (Default: unless configured otherwise, don't filter)
+				if (!empty($medialist[$value]["FORM"]) && isset($config["filter_".$medialist[$value]["FORM"]]) && $config["filter_".$medialist[$value]["FORM"]]!="yes") $disp = false;
+				if (!empty($medialist[$value]["TYPE"]) && isset($config["filter_".$medialist[$value]["TYPE"]]) && $config["filter_".$medialist[$value]["TYPE"]]!="yes") $disp = false;
+				if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." failed Format or Type filters</span><br />\n";}
 
 				if ($disp && count($links) != 0){
 					foreach($links as $key=>$type) {
@@ -145,7 +179,7 @@ if ($MULTI_MEDIA) {
 				if ($config['controls']=='yes') {
 					if ($config['start']=='yes' || (isset($_COOKIE['rmblockplay'])&&$_COOKIE['rmblockplay']=='true')) $image = "stop";
 					else $image = "rarrow";
-					$linkNextImage = "<a href=\"javascript: ".$pgv_lang["next_image"]."\" onclick=\"return ajaxBlock('random_picture_content$index', 'print_random_media', '$side', $index, true);\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES['rdarrow']['other']."\" border=\"0\" alt=\"".$pgv_lang["next_image"]."\" title=\"".$pgv_lang["next_image"]."\" /></a>\n";
+					$linkNextImage = "<a href=\"javascript: ".$pgv_lang["next_image"]."\" onclick=\"return ajaxBlock('random_picture_content$index', 'print_random_media', '$side', $index, '$ctype', true);\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES['rdarrow']['other']."\" border=\"0\" alt=\"".$pgv_lang["next_image"]."\" title=\"".$pgv_lang["next_image"]."\" /></a>\n";
 	
 					print "<div class=\"center\" id=\"random_picture_controls$index\">\n<br />";
 					if ($TEXT_DIRECTION=="rtl") print $linkNextImage;
@@ -175,7 +209,7 @@ if ($MULTI_MEDIA) {
             	
 						function playSlideShow() {
 							if (play) {
-									ajaxBlock('random_picture_content<?php print $index; ?>', 'print_random_media', '<?php print $side; ?>', <?php print $index; ?>, false);
+									ajaxBlock('random_picture_content<?php print $index; ?>', 'print_random_media', '<?php print $side; ?>', <?php print $index; ?>, '<?php print $ctype; ?>', false);
 								window.setTimeout('playSlideShow()', 4000);
 							}
 						}
@@ -249,12 +283,41 @@ if ($MULTI_MEDIA) {
 
 
 	function print_random_media_config($config) {
-		global $pgv_lang, $PGV_BLOCKS, $TEXT_DIRECTION;
+		global $pgv_lang, $factarray, $PGV_BLOCKS, $TEXT_DIRECTION;
 
 		if (empty($config)) $config = $PGV_BLOCKS["print_random_media"]["config"];
 		if (!isset($config["filter"])) $config["filter"] = "all";
 		if (!isset($config["controls"])) $config["controls"] = "yes";
 		if (!isset($config["start"])) $config["start"] = "no";
+
+		if (!isset($config["filter_avi"])) {
+			$config["filter_avi"]	= "no";
+			$config["filter_bmp"]	= "yes";
+			$config["filter_gif"]	= "yes";
+			$config["filter_jpeg"]	= "yes";
+			$config["filter_mp3"]	= "no";
+			$config["filter_ole"]	= "yes";
+			$config["filter_pcx"]	= "yes";
+			$config["filter_png"]	= "yes";
+			$config["filter_tiff"]	= "yes";
+			$config["filter_wav"]	= "no";
+
+			$config["filter_audio"]			= "no";
+			$config["filter_book"]			= "yes";
+			$config["filter_card"]			= "yes";
+			$config["filter_certificate"]	= "yes";
+			$config["filter_document"]		= "yes";
+			$config["filter_electronic"]	= "yes";
+			$config["filter_fiche"]			= "yes";
+			$config["filter_film"]			= "yes";
+			$config["filter_magazine"]		= "yes";
+			$config["filter_manuscript"]	= "yes";
+			$config["filter_map"]			= "yes";
+			$config["filter_newspaper"]		= "yes";
+			$config["filter_photo"]			= "yes";
+			$config["filter_tombstone"]		= "yes";
+			$config["filter_video"]			= "no";
+		}
 
 		print "<tr><td class=\"descriptionbox wrap width33\">";
  			print_help_link("random_media_persons_or_all_help", "qm");
@@ -267,6 +330,62 @@ if ($MULTI_MEDIA) {
 	    	<option value="all"<?php if ($config["filter"]=="all") print " selected=\"selected\"";?>><?php print $pgv_lang["all"]; ?></option>
 	  	</select>
 	  	</td></tr>
+
+	  	<tr><td class="descriptionbox wrap width33"><?php print_help_link("random_media_filter_help", "qm"); print $pgv_lang["filter"]; ?></td>
+	  	<td class="optionbox">
+	  		<center><b><?php print $factarray["FORM"]; ?></b></center>
+	  		<table class="width100">
+	  			<tr>
+					<td class="width33"><input type="checkbox" value="yes" name="filter_avi" <?php if ($config['filter_avi']=="yes") print "checked=\"checked\""; ?> />avi</td>
+					<td class="width33"><input type="checkbox" value="yes" name="filter_avi" <?php if ($config['filter_bmp']=="yes") print "checked=\"checked\""; ?> />bmp</td>
+					<td class="width33"><input type="checkbox" value="yes" name="filter_avi" <?php if ($config['filter_gif']=="yes") print "checked=\"checked\""; ?> />gif</td>
+	  			</tr><tr>
+					<td class="width33"><input type="checkbox" value="yes" name="filter_jpeg" <?php if ($config['filter_jpeg']=="yes") print "checked=\"checked\""; ?> />jpeg</td>
+					<td class="width33"><input type="checkbox" value="yes" name="filter_mp3" <?php if ($config['filter_mp3']=="yes") print "checked=\"checked\""; ?> />mp3</td>
+					<td class="width33"><input type="checkbox" value="yes" name="filter_ole" <?php if ($config['filter_ole']=="yes") print "checked=\"checked\""; ?> />ole</td>
+	  			</tr><tr>
+					<td class="width33"><input type="checkbox" value="yes" name="filter_pcx" <?php if ($config['filter_pcx']=="yes") print "checked=\"checked\""; ?> />pcx</td>
+					<td class="width33"><input type="checkbox" value="yes" name="filter_png" <?php if ($config['filter_png']=="yes") print "checked=\"checked\""; ?> />png</td>
+					<td class="width33"><input type="checkbox" value="yes" name="filter_tiff" <?php if ($config['filter_tiff']=="yes") print "checked=\"checked\""; ?> />tiff</td>
+	  			</tr>
+	  			</tr><tr>
+					<td class="width33"><input type="checkbox" value="yes" name="filter_wav" <?php if ($config['filter_wav']=="yes") print "checked=\"checked\""; ?> />wav</td>
+					<td class="width33">&nbsp;</td>
+					<td class="width33">&nbsp;</td>
+	  			</tr>
+	  		</table>
+	  		<br /><center><b><?php print $factarray["TYPE"]; ?></b></center>
+	  		<table class="width100">
+	  			<tr>
+	  			<?php
+	  			
+				//-- Build array of currently defined values for the Media Type
+				foreach ($pgv_lang as $varname => $typeValue) {
+					if (substr($varname, 0, 6) == "TYPE__") {
+						$type[strtolower(substr($varname, 6))] = $typeValue;
+					}
+				}
+				//-- Sort the array into a meaningful order
+				array_flip($type);
+				asort($type);
+				array_flip($type);
+				//-- Build the list of checkboxes
+				$i = 0;
+				foreach ($type as $typeName => $typeValue) {
+					$i++;
+					if ($i > 3) {
+						$i = 1;
+						print "</tr><tr>";
+					}
+					print "<td class=\"width33\"><input type=\"checkbox\" value=\"yes\" name=\"filter_".$typeName."\"";
+					if ($config['filter_'.$typeName]=="yes") print "checked=\"checked\"";
+					print " />".$typeValue."</td>";
+				}
+	  			?>
+	  			</tr>
+	  		</table>
+		</td></tr>
+	  		  	
 	  	<tr><td class="descriptionbox wrap width33"><?php print_help_link("random_media_ajax_controls_help", "qm"); print $pgv_lang["random_media_ajax_controls"]; ?></td>
 	  	<td class="optionbox"><select name="controls">
 			<option value="yes" <?php if ($config["controls"]=="yes") print " selected=\"selected\""; ?>><?php print $pgv_lang["yes"]; ?></option>
