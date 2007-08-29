@@ -336,9 +336,10 @@ else {
 	 * @param string block 	the method name of the block to call (e.g. 'print_random_media')
  	 * @param string side 	the side of the page the block is on (e.g. 'main' or 'right')
 	 * @param int bindex 	the number of the block on that side, first block = 0
+ 	 * @param string ctype 	shows whether block is on Welcome or MyGedView page ('gedcom' or 'user')
 	 * @param boolean loading  Whether or not to show the loading message
 	 */
-	function ajaxBlock(targetId, block, side, bindex, loading) {
+	function ajaxBlock(targetId, block, side, bindex, ctype, loading) {
 		target = document.getElementById(targetId);
 		if (!target) return false;
 		
@@ -346,7 +347,7 @@ else {
 		if (loading) target.innerHTML = "<br /><br /><?php print $pgv_lang['loading']; ?><br /><br />";
 		
 		var oXmlHttp = createXMLHttp();
-		link = "index.php?action=ajax&block="+block+"&side="+side+"&bindex="+bindex;
+		link = "index.php?action=ajax&block="+block+"&side="+side+"&bindex="+bindex+"&ctype="+ctype;
 		if (DEBUG) link = link + "&DEBUG="+DEBUG;
 		oXmlHttp.open("get", link, true);
 		oXmlHttp.onreadystatechange=function()

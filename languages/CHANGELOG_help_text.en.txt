@@ -45,6 +45,7 @@ VERSION 4.1.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["random_media_filter_help"]				29 Aug 2007				A
 *$pgv_lang["index_charts_help"]						22 Aug 2007				W
 -$pgv_lang["charts_block_help"]						22 Aug 2007				A
 +$pgv_lang["charts_block_help"]						22 Aug 2007				A
