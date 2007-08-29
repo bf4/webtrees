@@ -1506,6 +1506,13 @@ function itemsort($a, $b) {
 	return $result;
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// Sort a list (e.g. of SOURCES) by alphabetical name
+////////////////////////////////////////////////////////////////////////////////
+function source_sort($a, $b) {
+	return compareStrings($a['name'], $b['name']);
+}
+
 /**
  * sort an array of media items
  *

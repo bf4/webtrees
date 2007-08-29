@@ -31,8 +31,8 @@ print_header($pgv_lang["source_list"]);
 $addsourcelist = get_source_add_title_list();  //-- array of additional source titlesadd
 $sourcelist = get_source_list();               //-- array of regular source titles
 
-uasort($sourcelist, "itemsort");
-uasort($addsourcelist, "itemsort");
+uasort($sourcelist, "source_sort");
+uasort($addsourcelist, "source_sort");
 
 $ca = count($addsourcelist);
 $cs = count($sourcelist);
