@@ -1190,26 +1190,20 @@ function search_indis_names($query, $allgeds=false) {
 }
 
 /**
- * get recent changes since the given date inclusive
+ * get recent changes since the given julian day inclusive
  * @author	yalnifj
- * @param	int $day the day of the month to search for, leave empty to include all
- * @param	int $mon the integer value for the month to search for, leave empty to include all
- * @param	int $year the year to search for, leave empty to include all
+ * @param	int $jd, leave empty to include all
  */
-function get_recent_changes($day="", $mon="", $year="", $allgeds=false) {
+function get_recent_changes($jd=0, $allgeds=false) {
 	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS;
 
-	$changes = array();
-	while(strlen($year)<4) $year ='0'.$year;
-	while(strlen($mon)<2) $mon ='0'.$mon;
-	while(strlen($day)<2) $day ='0'.$day;
-	$datestamp = $year.$mon.$day;
-	$sql = "SELECT * FROM ".$TBLPREFIX."dates WHERE d_fact='CHAN' AND d_datestamp>=".$datestamp;
-	if (!$allgeds) $sql .= " AND d_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ";
-	$sql .= " ORDER BY d_datestamp DESC";
-	//print $sql;
-	$res = dbquery($sql);
+	$sql = "SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_fact='CHAN' AND d_julianday1>={$jd}";
+	if (!$allgeds)
+		$sql .= " AND d_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ";
+	$sql .= " ORDER BY d_julianday1 DESC";
 
+	$changes = array();
+	$res = dbquery($sql);
 	if (!DB::isError($res)) {
 		while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 			if (preg_match("/\w+:\w+/", $row['d_gid'])==0) {
