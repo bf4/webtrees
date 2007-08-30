@@ -39,7 +39,7 @@
 	foreach($medialist as $mid=>$media) {
 		// privacy has already been checked by medialist.php
 		// Check to see if the item is a real image
-		$imgsize = @getimagesize($media['FILE']);
+		$imgsize = findImageSize($media['FILE']);
 		if($imgsize != false){		
 	 		echo "Pic[$ix] = '".addcslashes(check_media_depth($media['FILE']), "'")."';\n";
 			echo "myImages[$ix] = '".addcslashes(thumbnail_file($media['FILE']), "'")."';\n";
