@@ -1284,9 +1284,7 @@ function search_indis_dates($day="", $month="", $year="", $fact="", $allgeds=fal
  * Search the dates table for individuals that had events in the given range
  *
  * @author	yalnifj
- * @param	int $day the day of the month to search for, leave empty to include all
- * @param	string $month the 3 letter abbr. of the month to search for, leave empty to include all
- * @param	int $year the year to search for, leave empty to include all
+ * @param	int $start, $end - range of julian days to search
  * @param	string $fact the facts to include (use a comma seperated list to include multiple facts)
  * 				prepend the fact with a ! to not include that fact
  * @param	boolean $allgeds setting if all gedcoms should be searched, default is false
@@ -1297,44 +1295,7 @@ function search_indis_daterange($start, $end, $fact='', $allgeds=false, $ANDOR="
 	global $USE_RTL_FUNCTIONS, $year; 
 	$myindilist = array();
 	
-	$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname, d_gid, d_fact FROM ".$TBLPREFIX."dates, ".$TBLPREFIX."individuals WHERE i_id=d_gid AND i_file=d_file ";
-//	if (!empty($day)) $sql .= "AND d_day='".$DBCONN->escapeSimple($day)."' ";
-//	if (!empty($month)) $sql .= "AND d_month='".$DBCONN->escapeSimple(str2upper($month))."' ";
-//	if (!empty($year)) $sql .= "AND d_year='".$DBCONN->escapeSimple($year)."' ";
-	$mod = 1;
-	for($i = strlen($start); $i>0; $i--) $mod=$mod*10;
-	if ($mod==100000000) $sql .= "AND d_datestamp>=".$start." AND d_datestamp<=".$end." ";
-	else { 
-		if ($start < $end) $sql .= " AND ((d_type is null AND ((d_datestamp%$mod)>=".$start." AND (d_datestamp%$mod)<=".$end.") OR (d_datestamp<0 AND -1*(d_datestamp%$mod)>=".$start." AND -1*(d_datestamp%$mod)<=".$end.")) ";
-		else $sql .= "AND ((d_type is null AND (((d_datestamp%$mod)>=".$start." OR (d_datestamp%$mod)<=".$end.") OR (d_datestamp<0 AND (-1*(d_datestamp%$mod)>=".$start." OR -1*(d_datestamp%$mod)<=".$end.")))) ";
-		// dates without a year are filled to the dates table with a negative timestamp
-
-		if ($USE_RTL_FUNCTIONS) {	
-			if (empty($year)) $year = date("Y", $time);
-
-			$startmonth = intval($start/100);
-			$startday = $start%100;
-			$startyear = $year;
-
-			$endmonth = intval($end/100);
-			$endday = $end%100;
-			if ($start<$end) $endyear = $year;
-			else $endyear = $year+1;
-
-			$startjewish=jdtojewish(gregoriantojd($startmonth, $startday, $year));
-			list($StartMonthhb, $StartDayhb, $StartYearhb) = split('/',$startjewish);
-			$endjewish=jdtojewish(gregoriantojd($endmonth, $endday, $endyear));
-			list($EndMonthhb, $EndDayhb, $EndYearhb) = split('/',$endjewish);
-			$starthb = $StartMonthhb*100+$StartDayhb;
-			if ($EndMonthhb==13) $EndMonthhb=0;
-			$endhb = ($EndMonthhb+1)*100+$EndDayhb; //to ensure that we get also Nisan dates on non leapyears
-
-			if ($starthb < $endhb) $sql .= " OR ((d_type=\"@#DHEBREW@\" AND ((d_datestamp%$mod)>=".$starthb." AND (d_datestamp%$mod)<=".$endhb.") OR (d_datestamp<0 AND -1*(d_datestamp%$mod)>=".$starthb." AND -1*(d_datestamp%$mod)<=".$endhb.")))) ";
-			else $sql .= "OR ((d_type=\"@#DHEBREW@\" AND (((d_datestamp%$mod)>=".$starthb." OR (d_datestamp%$mod)<=".$endhb.") OR (d_datestamp<0 AND (-1*(d_datestamp%$mod)>=".$starthb." OR -1*(d_datestamp%$mod)<=".$endhb.")))))) ";
-		}
-		else $sql .= ") ";
-	}
-
+	$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname, d_gid, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals WHERE i_id=d_gid AND i_file=d_file AND d_julianday2>={$start} AND d_julianday1<={$end} ";
 	if (!empty($fact)) {
 		$sql .= "AND (";
 		$facts = preg_split("/[,:; ]/", $fact);
@@ -1354,7 +1315,7 @@ function search_indis_daterange($start, $end, $fact='', $allgeds=false, $ANDOR="
 		$sql .= ") ";
 	}
 	if (!$allgeds) $sql .= "AND d_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ";
-	$sql .= "ORDER BY d_year DESC, d_mon DESC, d_day DESC";
+	$sql .= "ORDER BY d_julianday1";
 //	print $sql; 
 	$res = dbquery($sql);
 
@@ -1709,9 +1670,7 @@ function search_fams_dates($day="", $month="", $year="", $fact="", $allgeds=fals
  * Search the dates table for families that had events in the date range
  *
  * @author	yalnifj
- * @param	int $day the day of the month to search for, leave empty to include all
- * @param	string $month the 3 letter abbr. of the month to search for, leave empty to include all
- * @param	int $year the year to search for, leave empty to include all
+ * @param	int $start, $end - range of julian days to search
  * @param	string $fact the facts to include (use a comma seperated list to include multiple facts)
  * 				prepend the fact with a ! to not include that fact
  * @param	boolean $allgeds setting if all gedcoms should be searched, default is false
@@ -1721,14 +1680,7 @@ function search_fams_daterange($start, $end, $fact="", $allgeds=false) {
 	global $TBLPREFIX, $GEDCOM, $famlist, $DBCONN, $GEDCOM, $GEDCOMS;
 	$myfamlist = array();
 
-	$sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom, d_gid, d_fact FROM ".$TBLPREFIX."dates, ".$TBLPREFIX."families WHERE f_id=d_gid AND f_file=d_file ";
-//	if (!empty($day)) $sql .= "AND d_day='".$DBCONN->escapeSimple($day)."' ";
-//	if (!empty($month)) $sql .= "AND d_month='".$DBCONN->escapeSimple(str2upper($month))."' ";
-//	if (!empty($year)) $sql .= "AND d_year='".$DBCONN->escapeSimple($year)."' ";
-	$mod = 1;
-	for($i = strlen($start); $i>0; $i--) $mod=$mod*10;
-	if ($mod==100000000) $sql .= "AND d_datestamp>=".$start." AND d_datestamp<=".$end." ";
-	else $sql .= "AND (d_datestamp%$mod)>=".$start." AND (d_datestamp%$mod)<=".$end." ";
+	$sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom, d_gid, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}families WHERE f_id=d_gid AND f_file=d_file AND d_julianday2>={$start} AND d_julianday1<={$end} ";
 	if (!empty($fact)) {
 		$sql .= "AND (";
 		$facts = preg_split("/[,:; ]/", $fact);
@@ -1748,7 +1700,7 @@ function search_fams_daterange($start, $end, $fact="", $allgeds=false) {
 		$sql .= ") ";
 	}
 	if (!$allgeds) $sql .= "AND d_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ";
-	$sql .= "ORDER BY d_year, d_month, d_day DESC";
+	$sql .= "ORDER BY d_julianday1";
 
 	$res = dbquery($sql);
 

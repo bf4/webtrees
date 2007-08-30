@@ -1781,14 +1781,9 @@ function PGVRListSHandler($attrs) {
 				}
 			}
 			if (isset($startdate) && isset($enddate)) {
-				if (strlen($startdate[0]['mon'])<2) $startdate[0]['mon'] = '0'.$startdate[0]['mon'];
-				if (strlen($startdate[0]['day'])<2) $startdate[0]['day'] = '0'.$startdate[0]['day'];
-				if (strlen($enddate[0]['mon'])<2) $enddate[0]['mon'] = '0'.$enddate[0]['mon'];
-				if (strlen($enddate[0]['day'])<2) $enddate[0]['day'] = '0'.$enddate[0]['day'];
-				$start = $startdate[0]['year'].$startdate[0]['mon'].$startdate[0]['day'];
-				$end = $enddate[0]['year'].$enddate[0]['mon'].$enddate[0]['day'];
-				$dlist = search_indis_daterange($start, $end, $starttag.",".$endtag);
-				if (!isset($list) || count($list)==0) $list = $dlist;
+				$dlist = search_indis_daterange($startdate[0]['jd1'], $enddate[0]['jd2'], $starttag.",".$endtag);
+				if (!isset($list) || count($list)==0)
+					$list = $dlist;
 				else {
 					//-- intersect the lists
 					$newlist = array();
