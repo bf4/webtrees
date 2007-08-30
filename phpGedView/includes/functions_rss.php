@@ -686,8 +686,7 @@ function getRecentChanges() {
 
 	$action = "today";
 	$found_facts = array();
-	$start=mktime(0,0,0)-86400*$config["days"];
-	$changes=get_recent_changes(date("d", $start), date("m", $start), date("Y", $start));
+	$changes=get_recent_changes(today_jd()-$config['days']);
 
 	if (count($changes)>0) {
 		$found_facts = array();
