@@ -32,7 +32,6 @@
 
 // -- include config file
 require("config.php");
-require("includes/adodb-time.inc.php");
 require_once 'includes/person_class.php';
 require_once 'includes/family_class.php';
 
@@ -229,30 +228,16 @@ function getIcalRecord($date, $summary, $description, $URL=""){
 
 /**
  * Converts a GEDCOM date to an iCalendar format date.
- * If the ADOdb Date Library is available (part of the PhpGedView distribution),
- * the start year on the event will be the year that the event took place, to allow
- * viewing of the event in past years, otherwise the year is set as one year in the past
  *
  * @param $gedDate the GEDCOM date
  * @REMOVEDparam $endDate an optional boolean flag indicating that is the end date for the event, and will return the following date
- * @return the iCalendar date in the format 18991230 (start year prior to 1970 depends on the availability of ADOdb as above)s
+ * @return the iCalendar date in the format 18991230
  * @TODO by the spec, an end date is not needed, but since most applications generate and end date, we should test iCal before the commented out DTEND support is removed is removed
  */
 function getIcalDate($gedDate, $endDate=false){
 	$pBD = parse_date($gedDate);
-	$olddates = true;
-	$test = @adodb_mktime(0,0,0,1,1,1960);
-	if ($test==-1) $olddates = false;
-
-	if($olddates){
-		$times = adodb_mktime(0, 0, 0, $pBD[0]["mon"], ($endDate? $pBD[0]["day"] + 1 : $pBD[0]["day"]), $pBD[0]["year"]);
-		//$times = adodb_mktime(0, 0, 0, $pBD[0]["mon"], $pBD[0]["day"], $pBD[0]["year"]);
-	} else {
-		$times = mktime(0, 0, 0, $pBD[0]["mon"], ($endDate? $pBD[0]["day"] + 1 : $pBD[0]["day"]), date("Y")-1);
-		//$times = mktime(0, 0, 0, $pBD[0]["mon"],  $pBD[0]["day"], date("Y")-1);
-	}
-  	$iCalDate = date ( "Ymd",  $times);
-  	return $iCalDate;
+	list($m,$d,$y)=explode('/', jdtogregorian($pBD[0]['jd1']));
+	return sprintf("%04d%02d%02d", $y, $m, $d);
 }
 
 /**
