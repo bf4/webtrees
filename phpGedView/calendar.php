@@ -35,9 +35,14 @@ require("config.php");
 require_once("includes/functions_print_lists.php");
 require("includes/adodb-time.inc.php");
 
-if (!isset($year)) $year = adodb_date("Y");
-if (empty($day)) $day = adodb_date("j");
-if (empty($month)) $month = adodb_date("M");
+$monthlist=array('jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec');
+
+list($todayM, $todayD, $todayY)=explode('/', jdtogregorian(today_jd()));
+$todayMon=$monthlist[$todayM-1];
+
+if (!isset($year)) $year = $todayY;
+if (empty($day)) $day = $todayD;
+if (empty($month)) $month = $todayMon;
 
 $pattern="[-| |bet|abt|bef|aft]";
 $a=preg_split($pattern, str2lower($year));
@@ -61,9 +66,9 @@ if ($USE_RTL_FUNCTIONS) {
 	$datearray[0]["year"]  = $yr;
  	$datearray[0]["month"] = $month;
 //today
- 	$datearray[1]["day"]   = adodb_date("j");
- 	$datearray[1]["mon"]   = $monthtonum[str2lower(trim(adodb_date("M")))];
- 	$datearray[1]["year"]  = adodb_date("Y");
+ 	$datearray[1]["day"]   = $todayD;
+ 	$datearray[1]["mon"]   = $todayM;
+ 	$datearray[1]["year"]  = $todayY;
  	// should use $parse_date
 
     $date   	= gregorianToJewishGedcomDate($datearray);
@@ -107,7 +112,7 @@ if ($action=="year") {
 	if (strlen($year)>1 && preg_match("/\?/", $year)) $year = preg_replace("/\?/", "[0-9]", $year);
 	$year = preg_replace(array("/&lt;/", "/&gt;/", "/[?*+|&.,:'%_<>!#�{}=^]/", "/\\$/", "/\\\/",  "/\"/"), "", $year);
 	if (preg_match("/[\D]{1,2}/", $year) && strlen($year)<=2) $year="";
-	if (empty($year)) $year = adodb_date("Y");
+	if (empty($year)) $year = $todayY;
 	$year=trim($year);
 	$year_text=$year;
 	$year_query=$year;
@@ -185,7 +190,7 @@ if ($action=="year") {
 	}
 	else if (strlen($year)<4 && preg_match("/[\d]{1,3}/", $year)){
 
-		if (substr($year, 0, 2)<=substr(adodb_date("Y"), 0, 2)){
+		if (substr($year, 0, 2)<=substr($todayY, 0, 2)){
 			for ($i=strlen($year); $i<4; $i++) $year_text .="0";
 			$startyear=$year_text;
 			$year_text .= " - ".$year;
@@ -201,7 +206,7 @@ if ($action=="year") {
 	}
 }
 else {
-  if (strlen($year)<3) $year = adodb_date("Y");
+  if (strlen($year)<3) $year = $todayY;
 
 	if (strlen($year)>4){
 
@@ -213,7 +218,7 @@ else {
 			if (strlen($year_text)==$pos1+10) $year .= substr($yy, ($pos1+6), 1);
 		}
 		else if (strpos($year, "-", 1)>"0") $year = substr($year, 0, (strpos($year, "-", 0)));
-			else $year = adodb_date("Y");
+			else $year = $todayY;
 	}
 	$year=trim($year);
 
@@ -442,9 +447,9 @@ if ($view!="preview") {
 		else print $i;
 		print "</a> | ";
 	}
-	$Dd = adodb_date("j");
-	$Mm = adodb_date("M");
-	$Yy = adodb_date("Y");
+	$Dd = $todayD;
+	$Mm = $todayMon;
+	$Yy = $todayY;
 //	print "<a href=\"calendar.php?filterev=$filterev&amp;filterof=$filterof&amp;filtersx=$filtersx\"><b>".get_changed_date("$Dd $Mm $Yy")."</b></a> | ";
 	//-- for alternate calendars the year is needed
   	if ($CALENDAR_FORMAT!="gregorian" || ($USE_RTL_FUNCTIONS && $HEBREWFOUND[$GEDCOM] == true)) $datestr = "$Dd $Mm $Yy";
@@ -465,7 +470,6 @@ if ($view!="preview") {
 	print "<td colspan=\"7\" class=\"optionbox\">";
 
 	if (empty($mm)) $mm=strtolower($month);
-	$monthlist=array('jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec');
 	foreach($monthlist as $mon) {
 		print "<a href=\"calendar.php?day=$dd&amp;month=$mon&amp;year=$year&amp;filterev=$filterev&amp;filterof=$filterof&amp;filtersx=$filtersx&amp;action=".($action=="year"?"calendar":"$action")."\">";
 		$monthstr = $pgv_lang[$mon];
@@ -474,7 +478,7 @@ if ($view!="preview") {
 		print "</a> | ";
 	}
 
-	print "<a href=\"calendar.php?month=".strtolower(adodb_date("M"))."&amp;action=calendar&amp;filterev=$filterev&amp;filterof=$filterof&amp;filtersx=$filtersx\"><b>".$pgv_lang[strtolower(adodb_date("M"))]." ".strtolower(adodb_date("Y"))."</b></a> | ";
+	print "<a href=\"calendar.php?month={$todayMon}&amp;action=calendar&amp;filterev=$filterev&amp;filterof=$filterof&amp;filtersx=$filtersx\"><b>{$pgv_lang[$todayMon]} {$todayY}</b></a> | ";
 	print "</td>\n";
 	print "</tr><tr>";
 	print "<td class=\"descriptionbox vmiddle\">";
@@ -487,10 +491,10 @@ if ($view!="preview") {
 	}
 	print "<input type=\"text\" name=\"year\" value=\"$year\" size=\"7\" />";
 	if (strlen($year)<5){
-		if ($year<(adodb_date("Y"))) print " <a href=\"calendar.php?day=$day&amp;month=$month&amp;year=".($year+1)."&amp;action=".($action=="calendar"?"calendar":"year")."&amp;filterev=$filterev&amp;filterof=$filterof&amp;filtersx=$filtersx\" title=\"".($year+1)."\" >+1</a> |";
+		if ($year<$todayY) print " <a href=\"calendar.php?day=$day&amp;month=$month&amp;year=".($year+1)."&amp;action=".($action=="calendar"?"calendar":"year")."&amp;filterev=$filterev&amp;filterof=$filterof&amp;filtersx=$filtersx\" title=\"".($year+1)."\" >+1</a> |";
 		else if ($year<"AA") print " +1 |";
 	}
-	print " <a href=\"calendar.php?day=$day&amp;month=$month&amp;year=".adodb_date("Y")."&amp;action=".($action=="calendar"?"calendar":"year")."&amp;filterev=$filterev&amp;filterof=$filterof&amp;filtersx=$filtersx\"><b>".strtolower(adodb_date("Y"))."</b></a> | ";
+	print " <a href=\"calendar.php?day=$day&amp;month=$month&amp;year={$todayY}&amp;action=".($action=="calendar"?"calendar":"year")."&amp;filterev=$filterev&amp;filterof=$filterof&amp;filtersx=$filtersx\"><b>{$todayY}</b></a> | ";
 
 	print "</td>\n ";
 	if (!$HIDE_LIVE_PEOPLE||(!empty($username))) {
@@ -1297,7 +1301,7 @@ else if ($action=="calendar") {
 				else {
 					$day = $mday;
 					$currentDay = false;
-					if(($year == adodb_date("Y")) && (strtolower($month) == strtolower(adodb_date("M"))) && ($mday == adodb_date("j"))) //current day
+					if ($year==$todayY && strtolower($month)==$todayMon && $mday==$todayD) //current day
 						$currentDay = true;
 					print "<span class=\"cal_day". ($currentDay?" current_day":"") ."\">".$mday."</span>";
 					if ($CALENDAR_FORMAT=="hebrew_and_gregorian" || $CALENDAR_FORMAT=="hebrew" ||

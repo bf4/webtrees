@@ -1197,5 +1197,14 @@ function default_edit_to_gedcom_date($datestr)
 	return $datestr;
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// Get the current julian day of the client, not the server
+////////////////////////////////////////////////////////////////////////////////
+function today_jd() {
+	if (isset($_SESSION["timediff"]))
+		return unixtojd(time()-$_SESSION["timediff"]);
+	else
+		return unixtojd(time());
+}
 
 ?>
