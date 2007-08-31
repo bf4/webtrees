@@ -51,19 +51,16 @@ if (!isset($_SESSION["medialist"])) $search = "yes";
 print_header($pgv_lang["multi_title"]);
 print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t";
 
-//BH  ========================= Next few lines added for Lightbox Album ============================= 
+//LBox  ========================= Next few lines added for Lightbox Album ============================= 
 ?>
-  <META HTTP-EQUIV="imagetoolbar" CONTENT="no">
-
   <link  href="modules/lightbox/css/clearbox.css" rel="stylesheet" type="text/css" />
   <link  href="modules/lightbox/css/lightbox_plus.css" rel="stylesheet" type="text/css" media="screen" />
   <script src="modules/lightbox/js/clearbox.js" type="text/javascript"></script>
   <script src="modules/lightbox/js/spica.js" type="text/javascript"></script>
   <script src="modules/lightbox/js/lightbox_plus.js" type="text/javascript"></script>
-  
   <center>
 <?php
-//BH  ============================ end addition for Lightbox Album ==================================
+//LBox  ============================ end addition for Lightbox Album ==================================
 
 $isEditUser = userCanEdit(getUserName());		// -- Determines whether to show file names
 
@@ -155,7 +152,7 @@ if ($search == "yes") {
 			</td>
 		</tr>
 		
-<!-- ============================ BH added for Lightbox Album ============================== --> 		
+<!-- LBox ========================== added for Lightbox Album ============================== --> 		
 		<?php if (file_exists("modules/lightbox/album.php")) { ?>
 		<tr>
 			<td class="list_label" colspan="2">		
@@ -165,7 +162,7 @@ if ($search == "yes") {
 			</td>
 		</tr>
 		<?php }elseif (file_exists("modules/slideshow.php")) { ?>
-<!-- ============================ BH end addition for Lightbox Album ============================ --> 
+<!-- LBox ======================= end addition for Lightbox Album ============================ --> 
  			
 		<tr>
 			<td class="list_label" colspan="2">
@@ -174,9 +171,9 @@ if ($search == "yes") {
   				?>
 			</td>
 		</tr>
-<!-- ============================ BH changed for Lightbox Album ================================ --> 			
+<!-- LBox ======================== changed for Lightbox Album ================================ --> 			
 		<?php }else{} ?>
-<!-- ============================ end change for Lightbox Album ================================= --> 
+<!-- LBox ======================== end change for Lightbox Album ============================= --> 
 
 	</table>
 </form>
@@ -311,7 +308,7 @@ if ($ct>0){
 	    print "\n\t\t\t<td class=\"list_value_wrap\" width=\"50%\">";
 	    print "<table class=\"$TEXT_DIRECTION\">\n\t<tr>\n\t\t<td valign=\"top\" style=\"white-space: normal;\">";
 		
-//BH --------  change for Lightbox Album --------------------------------------------
+//LBox --------  change for Lightbox Album --------------------------------------------
 		if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$media["FILE"]) || eregi("\.jpeg",$media["FILE"]) || eregi("\.gif",$media["FILE"]) || eregi("\.png",$media["FILE"]) ) ) { 
 			print "<a href=\"" . $media["FILE"] . "\" rel='lightbox[general]' title='" . $name . "'\">" . "\n";	
         }elseif ($USE_MEDIA_VIEWER) {
@@ -319,14 +316,14 @@ if ($ct>0){
 		} else {
 			print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";	
 		}
-//BH ----------- end change for Lightbox Album ----------------------------------
+//LBox ----------- end change for Lightbox Album ----------------------------------
 
 		print "<img src=\"".$media["THUMB"]."\" align=\"left\" class=\"thumbnail\" border=\"none\"";
 		if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
 		print " alt=\"" . PrintReady($name) . "\" title=\"" . PrintReady($name) . "\" /></a>";
 		print "</td>\n\t\t<td class=\"list_value_wrap\" style=\"border: none;\" width=\"100%\">";
 		
-//BH --------  added for Lightbox Album --------------------------------------------
+//LBox --------  added for Lightbox Album --------------------------------------------
         if ( userCanEdit(getUserName()) ) {
 		print "<table border=0><tr>";
 		
@@ -361,7 +358,7 @@ if ($ct>0){
 			// ------------ Linespace ---------------------
 			print "<br>";
 		}	
-//BH ----------- end addition for Lightbox Album ---------------------------------------	
+//LBox ----------- end addition for Lightbox Album ---------------------------------------	
 			
 	    print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
 
@@ -488,51 +485,3 @@ print_footer();
 
 ?>
 
-<!-- ============================ BH added for Lightbox Album ============================== --> 	
-
-<script language="JavaScript1.2">
-
-/*
-Disable right click script II (on images)- By Dynamicdrive.com
-For full source, Terms of service, and 100s DTHML scripts
-Visit http://www.dynamicdrive.com
-*/
-
-var clickmessage="Please do not take copyrighted images!"
-
-function disableclick(e) {
-if (document.all) {
-if (event.button==2||event.button==3) {
-if (event.srcElement.tagName=="IMG"){
-alert(clickmessage);
-return false;
-}
-}
-}
-else if (document.layers) {
-if (e.which == 3) {
-alert(clickmessage);
-return false;
-}
-}
-else if (document.getElementById){
-if (e.which==3&&e.target.tagName=="IMG"){
-alert(clickmessage)
-return false
-}
-}
-}
-
-function associateimages(){
-for(i=0;i<document.images.length;i++)
-document.images[i].onmousedown=disableclick;
-}
-
-if (document.all)
-document.onmousedown=disableclick
-else if (document.getElementById)
-document.onmouseup=disableclick
-else if (document.layers)
-associateimages()
-</script>
-<!-- ============================ BH end addition for Lightbox Album ============================== --> 
