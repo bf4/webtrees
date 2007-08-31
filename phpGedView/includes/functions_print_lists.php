@@ -1410,9 +1410,8 @@ function print_changes_table($datalist) {
  *
  * @param array $datalist contain records that were extracted from the database.
  */
-function print_events_table($datalist, $nextdays=0, $option="") {
+function print_events_table($startjd, $endjd, $option="") {
 	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
-	if (count($datalist)<1) return;
 	require_once("js/sorttable.js.htm");
 	require_once("includes/gedcomrecord.php");
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
@@ -1429,52 +1428,28 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 	//-- table body
 	$hidden = 0;
 	$n = 0;
-	$dateY = date("Y");
-	// max anniversary date
-	$datemax = mktime(0, 0, 0, date("m"), date("d")+$nextdays, $dateY);
-	foreach($datalist as $key => $value) {
-
-		//-- check if we actually need to load up the record from the DB first
-		//-- Event name
-		$exp = explode("\n", $value[1]);
-		$exp = explode(" ", $exp[0]);
-		$event = trim($exp[1]);
-		if (empty($event)) continue;
+	foreach(get_event_list() as $key => $value) {
+		if ($value['jd']<$startjd || $value['jd']>$endjd)
+			continue;
 		//-- only birt/marr/deat ?
-		if (strpos($option, "onlyBDM") && strpos(" BIRT MARR DEAT", $event)===false) continue;
-		//-- Event date
-		$edate = get_gedcom_value("DATE", 2, $value[1], "", false);
-		if (empty($edate)) continue;
-		$timestamp = get_changed_date($edate);
-		$pdate = parse_date($edate);
+		if (strpos($option, "onlyBDM") && $value['fact']!='BIRT' && $value['fact']!='MARR' && $value['fact']!='DEAT')
+			continue;
 
-//		if (strpos($edate, "@#DHEBREW")!==false) $pdate = jewishGedcomDateToGregorian($pdate);
-		if (strpos($edate, "@#DHEBREW")!==false) $pdate = jewishGedcomDateToCurrentGregorian($pdate);
-
-		if ($pdate[0]["day"] == "") continue;
-		$anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], $dateY);
-		// add 1 year if anniversary before today
-		if (date("Ymd", $anniv) < date("Ymd")) $anniv = mktime(0, 0, 0, 0+$pdate[0]["mon"], 0+$pdate[0]["day"], $dateY+1);
-
-		if ($datemax < $anniv) continue;
-		// upcoming events starting tomorrow
-		if ($nextdays>0 && date("Ymd") == date("Ymd", $anniv)) continue;
-		// sorting by MMDDYYYY
-		$sortkey = sprintf("%02d%02d%04d", $pdate[0]["mon"], $pdate[0]["day"], $pdate[0]["year"]);
-
-		//-- get gedcom record
-		$record = GedcomRecord::getInstance($value[0]);
-		if (is_null($record)) continue;
+		//-- get gedcom record - it may have been deleted since we cached the event
+		$record = GedcomRecord::getInstance($value['id']);
+		if (is_null($record))
+			continue;
 		//-- only living people ?
 		if (strpos($option, "living")) {
-			if ($record->type=="INDI" && $record->isDead()) continue;
+			if ($record->type=="INDI" && $record->isDead())
+				continue;
 			if ($record->type=="FAM") {
 				$husb = $record->getHusband();
-				if (is_null($husb)) continue;
-				if ($husb->isDead()) continue;
+				if (is_null($husb) || $husb->isDead())
+					continue;
 				$wife = $record->getWife();
-				if (is_null($wife)) continue;
-				if ($wife->isDead()) continue;
+				if (is_null($wife) || $wife->isDead())
+					continue;
 			}
 		}
 
@@ -1484,55 +1459,50 @@ function print_events_table($datalist, $nextdays=0, $option="") {
 			continue;
 		}
 		//-- Counter
-		echo "<tr class=\"vevent\">"; // hCalendar:vevent
-		//echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
 		$n++;
-		//-- Record ID
-		/**if ($SHOW_ID_NUMBERS) {
-			echo "<td class=\"list_value_wrap rela\">";
-			echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".$record->xref."</a></td>";
-		}**/
+		echo "<tr class=\"vevent\">"; // hCalendar:vevent
 		//-- Record name(s)
-		if ($record->type=="FAM") $name = $record->getSortableName(true);
-		else $name = $record->getSortableName();
+		if ($record->type=="FAM")
+			$name=$record->getSortableName(true);
+		else
+			$name=$record->getSortableName();
 
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
 		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($record->type=="INDI") {
 			echo $record->getSexImage();
  			$name_subtags = array("", "_AKA", "_HEB", "ROMN");
-			if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
+			if ($SHOW_MARRIED_NAMES)
+				$name_subtags[] = "_MARNM";
 			foreach ($name_subtags as $k=>$subtag) {
 				for ($num=1; $num<9; $num++) {
 					$addname = $record->getSortableName($subtag, $num);
-					if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-					if (empty($addname)) break;
+					if (!empty($addname) && $addname!=$name)
+						echo "<br /><a title=\"".$subtag."\" href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+					if (empty($addname))
+						break;
 				}
-			}
-		}
-		if ($record->type=="SOUR" || $record->type=="REPO") {
-			$name_subtags = array("_HEB", "ROMN");
-			foreach ($name_subtags as $k=>$subtag) {
-				$addname = $record->getSortableName($subtag);
-				if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
 			}
 		}
 		echo "</td>";
 		//-- Event date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		print str_replace('<a', '<a name="'.$sortkey.'"', get_date_url($edate));
+		print str_replace('<a', '<a name="'.$value['jd'].'"', get_date_url($value['date']));
 		echo "</td>";
 		//-- Anniversary
 		echo "<td class=\"list_value_wrap rela\">";
-		$person = new Person("");
-		$age = $person->getAge("\n1 BIRT\n2 DATE ".$edate."\n", date("d M Y", $anniv));
-		echo "<a class=\"list_item\" name=\"" .$age. "\">" . $age . "</a>";
-		echo "<abbr class=\"dtstart\" title=\"".date("Ymd", $anniv)."\"></abbr>"; // hCalendar:dtstart
-		echo "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$age ".$factarray[$event]." : ".PrintReady(strip_tags($record->getSortableName()))."\"></abbr>"; // hCalendar:summary
+		$anniv = $value['anniv'];
+		if ($anniv==0)
+			$text='';
+		else
+			$text=$anniv;
+		echo "<a class=\"list_item\" name=\"{$anniv}\">{$text}</a>";
+		echo "<abbr class=\"dtstart\" title=\"".date("Ymd", jdtounix($value['jd']))."\"></abbr>"; // hCalendar:dtstart
+		echo "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$anniv ".$factarray[$value['fact']]." : ".PrintReady(strip_tags($record->getSortableName()))."\"></abbr>"; // hCalendar:summary
 		echo "</td>";
 		//-- Event name
 		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item url\">".$factarray[$event]."</a>"; // hCalendar:url
+		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item url\">".$factarray[$value['fact']]."</a>"; // hCalendar:url
 		echo "&nbsp;</td>";
 
 		echo "</tr>\n";
