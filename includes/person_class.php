@@ -351,35 +351,6 @@ class Person extends GedcomRecord {
 	}
 
 	/**
-	 * get sortable birth date
-	 * @return string the birth date in sortable format YYYY-MM-DD HH:MM
-	 */
-	function getSortableBirthDate($est = true) {
-		global $pgv_lang;
-		if (!$this->disp) return "0000-00-00";
-		$this->_parseBirthDeath();
-		$pdate = parse_date($this->bdate);
-		if ($this->best) {
-			if ($est) return $pdate[0]["sort"]." ".$pgv_lang["est"];
-			else return $pdate[0]["sort"];
-		}
-		if (!$est) return $pdate[0]["sort"];
-		$hms = get_gedcom_value("DATE:TIME", 2, $this->brec);
-		return $pdate[0]["sort"]." ".$hms;
-	}
-
-	/**
-	 * get sortable birth date2
-	 * @return string the birth date2 in sortable format YYYY-MM-DD HH:MM
-	 */
-	function getSortableBirthDate2() {
-		$this->_parseBirthDeath();
-		$pdate = parse_date($this->bdate2);
-		$hms = get_gedcom_value("DATE:TIME", 2, $this->brec2);
-		return $pdate[0]["sort"]." ".$hms;
-	}
-
-	/**
 	 * a function that returns the full GEDCOM line containing the birth date
 	 * @return string the date line from the gedcom birth record in the format of '2 DATE 1 JAN 1900'
 	 */
@@ -401,11 +372,9 @@ class Person extends GedcomRecord {
 	 * @return string
 	 */
 	function getBirthYear(){
-		return substr($this->getSortableBirthDate(),0,4);
-		/**$birthyear = $this->getBirthDate();
-		$bdate = parse_date($birthyear);
-		$byear = $bdate[0]['year'];
-		return $byear;**/
+		// TODO - change the design to use julian days, not gregorian years.
+		$bdate = parse_date($this->getBirthDate());
+		return $bdate[0]['year'];
 	}
 
 	/**
@@ -418,36 +387,6 @@ class Person extends GedcomRecord {
 		$this->_parseBirthDeath();
 		if (!$estimate && $this->dest) return '';
 		return $this->ddate;
-	}
-
-	/**
-	 * get sortable death date
-	 * @return string the death date in sortable format YYYY-MM-DD HH:MM
-	 */
-	function getSortableDeathDate($est = true) {
-		global $pgv_lang;
-		if (!$this->disp) return "0000-00-00";
-		$this->_parseBirthDeath();
-		//if ($this->isDead() and $this->dest) return "0000-00-01";
-		$pdate = parse_date($this->ddate);
-		if ($this->isDead() && $this->dest) {
-			if ($est) return $pdate[0]["sort"]." ".$pgv_lang["est"];
-			else return $pdate[0]["sort"];
-		}
-		if (!$est) return $pdate[0]["sort"];
-		$hms = get_gedcom_value("DATE:TIME", 2, $this->drec);
-		return $pdate[0]["sort"]." ".$hms;
-	}
-
-	/**
-	 * get sortable death date2
-	 * @return string the death date2 in sortable format YYYY-MM-DD HH:MM
-	 */
-	function getSortableDeathDate2() {
-		$this->_parseBirthDeath();
-		$pdate = parse_date($this->ddate2);
-		$hms = get_gedcom_value("DATE:TIME", 2, $this->drec2);
-		return $pdate[0]["sort"]." ".$hms;
 	}
 
 	/**
@@ -472,7 +411,9 @@ class Person extends GedcomRecord {
 	 * @return string the year of death
 	 */
 	function getDeathYear($est = true) {
-		return substr($this->getSortableDeathDate($est),0,4);
+		// TODO - change the design to use julian days, not gregorian years.
+		$ddate = parse_date($this->getDeathDate());
+		return $ddate[0]['year'];
 	}
 
 	/**

@@ -1522,33 +1522,18 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 										<td align="center" colspan="2" class="topbottombar">'.print_help_link("ra_missing_info_help", "qm", '', false, true).'<b>'.$pgv_lang['missing_info'].
 										'</td>
 									</tr>';
-										/*@var $person Person*/
-										//-- version 4.1 compatible
-										if (method_exists($person, "getSortableBirthDate")) {
-											//get a birthdate in yyyymmdd format
-											$bdate = $person->getSortableBirthDate(false);
-											//take out the dashes
-											$bdate = preg_replace("/-/","",$bdate);
-											//get a deathdate in yyyymmdd format
-											$ddate = $person->getSortableDeathDate(false);
-											//take out the dashes
-											$ddate = preg_replace("/-/","",$ddate);
-										}
-										//-- version 4.0 compatible
-										else {
-											$bdate = $person->getBirthDate();
-											$bdatea = parse_date($bdate);
-											if (empty($bdatea[0]['year'])) $bdatea[0]['year'] = "0000";
-											if (empty($bdatea[0]['mon'])) $bdatea[0]['mon'] = "00";
-											if (empty($bdatea[0]['day'])) $bdatea[0]['day'] = "00";
-											$bdate = $bdatea[0]['year'].$bdatea[0]['mon'].$bdatea[0]['day'];
-											$ddate = $person->getDeathDate();
-											$ddatea = parse_date($ddate);
-											if (empty($ddatea[0]['year'])) $ddatea[0]['year'] = "0000";
-											if (empty($ddatea[0]['mon'])) $ddatea[0]['mon'] = "00";
-											if (empty($ddatea[0]['day'])) $ddatea[0]['day'] = "00";
-											$ddate = $ddatea[0]['year'].$ddatea[0]['mon'].$ddatea[0]['day'];
-										}
+										$bdate = $person->getBirthDate();
+										$bdatea = parse_date($bdate);
+										if (empty($bdatea[0]['year'])) $bdatea[0]['year'] = "0000";
+										if (empty($bdatea[0]['mon'])) $bdatea[0]['mon'] = "00";
+										if (empty($bdatea[0]['day'])) $bdatea[0]['day'] = "00";
+										$bdate = $bdatea[0]['year'].$bdatea[0]['mon'].$bdatea[0]['day'];
+										$ddate = $person->getDeathDate();
+										$ddatea = parse_date($ddate);
+										if (empty($ddatea[0]['year'])) $ddatea[0]['year'] = "0000";
+										if (empty($ddatea[0]['mon'])) $ddatea[0]['mon'] = "00";
+										if (empty($ddatea[0]['day'])) $ddatea[0]['day'] = "00";
+										$ddate = $ddatea[0]['year'].$ddatea[0]['mon'].$ddatea[0]['day'];
 										
 										$sourcesInferred = array();
 										$sourcesPrinted = array();
