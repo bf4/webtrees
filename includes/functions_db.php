@@ -3068,10 +3068,10 @@ global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 function get_anniversary_events($jd, $facts='') {
 	global $GEDCOMS, $GEDCOM, $TBLPREFIX;
 
+	// If no facts specified, get all except these
 	$skipfacts = "CHAN,BAPL,SLGC,SLGS,ENDL,CENS,RESI,NOTE,ADDR,OBJE,SOUR,PAGE,DATA,TEXT";
 
 	$found_facts=array();
-
 	foreach (array('Gregorian'=>'@#DGREGORIAN@', 'Julian'=>'@#DJULIAN@', 'French'=>'@#DFRENCH R@', 'Jewish'=>'@#DHEBREW@') as $cal=>$cal_escape) {
 		$jdtocal="JDto{$cal}";
 		$caltojd="{$cal}toJD";
@@ -3132,10 +3132,34 @@ function get_anniversary_events($jd, $facts='') {
 					// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
 					// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
 					// to be cached.  We should store the level1 fact here (or somewhere)
-					$ged_date_regex="/2 DATE.*{$row[3]}\s*".($row[4]>0 ? "0*{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "")."/";
+					$ged_date_regex="/2 DATE.*({$row[3]}\s*".($row[4]>0 ? "0*{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "").")/";
 					foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
-						if (preg_match("/1 {$row[7]}/", $factrec) && preg_match($ged_date_regex, $factrec))
-							$found_facts[]=array($row[0], $factrec, $row[2], jdtounix($jd));
+						if (preg_match("/1 {$row[7]}/", $factrec) && preg_match($ged_date_regex, $factrec, $dmatch)) {
+							if (preg_match('/2 RESN (.+)/', $factrec, $match))
+								$resn=$match[1];
+							else
+								$resn='';
+							if (preg_match('/2 PLAC (.+)/', $factrec, $match))
+								$plac=$match[1];
+							else
+								$plac='';
+							$found_facts[]=array(
+								// These numeric elements are deprecated
+								0=>$row[0],
+								1=>$factrec,
+								2=>$row[2],
+								3=>jdtounix($jd),
+								// Should use these elements instead
+								'id'=>$row[0],
+								'objtype'=>$row[2],
+								'fact'=>$row[7],
+								'jd'=>$jd,
+								'anniv'=>($row[6]==0?0:$y-$row[6]),
+								'date'=>$dmatch[1],
+								'resn'=>$resn,
+								'plac'=>$plac
+							);
+						}
 				}
 				$res->free();
 			}
