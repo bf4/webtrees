@@ -48,6 +48,7 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 
   $block = true;      // Always restrict this block's height
 
+
   if (empty($config)) $config = $PGV_BLOCKS["print_upcoming_events"]["config"];
   if (!isset($DAYS_TO_SHOW_LIMIT)) $DAYS_TO_SHOW_LIMIT = 30;
   if (isset($config["days"])) $daysprint = $config["days"];
@@ -68,9 +69,8 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 
   if ($daysprint < 1) $daysprint = 1;
   if ($daysprint > $DAYS_TO_SHOW_LIMIT) $daysprint = $DAYS_TO_SHOW_LIMIT;  // valid: 1 to limit
-
-  // Look for cached Facts data
-  $found_facts = get_event_list();
+	$startjd=today_jd()+1;
+	$endjd=today_jd()+$daysprint;
 
   // Output starts here
   print "<div id=\"upcoming_events\" class=\"block\">";
@@ -101,12 +101,8 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 	$PrivateFacts = false;
 	$lastgid="";
 
-	$dateRangeStart=mktime( 0, 0, 0)+86400;
-	$dateRangeEnd  =mktime(23,59,59)+86400*$daysprint;
-
-	foreach($found_facts as $key=>$factarray) {
-	  $anniversaryDate = $factarray[3];
-	  if ($anniversaryDate>=$dateRangeStart && $anniversaryDate<=$dateRangeEnd) {
+	foreach(get_event_list() as $key=>$factarray) {
+	  if ($factarray['jd']>=$startjd && $factarray['jd']<=$endjd) {
 	    if ($factarray[2]=="INDI") {
 	      $gid = $factarray[0];
 	      $factrec = $factarray[1];
@@ -235,15 +231,15 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 
   // Style 2: New format, tables, big text, etc.  Not too good on right side of page
   if ($infoStyle=="style2") {
-	$option = "";
-	if ($onlyBDM == "yes") $option .= " onlyBDM";
-	if ($filter == "living") $option .= " living";
-	if ($allowDownload == "no") $option .= " noDownload";
-	print_events_table($found_facts, $daysprint, $option);
+		$option = "";
+		if ($onlyBDM == "yes") $option .= " onlyBDM";
+		if ($filter == "living") $option .= " living";
+		if ($allowDownload == "no") $option .= " noDownload";
+		print_events_table($startjd, $endjd, $option);
   }
 
-
-  if ($block) print "</div>\n";
+	if ($block)
+		print "</div>\n";
   print "</div>"; // blockcontent
   print "</div>"; // block
 }
