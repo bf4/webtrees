@@ -3185,9 +3185,7 @@ function get_anniversary_events($jd, $facts='') {
  * to be done by the routine that makes use of the event list.
  */
 function get_event_list() {
-	global $USE_RTL_FUNCTIONS;
-	global $INDEX_DIRECTORY, $GEDCOM, $DEBUG;
-	global $DAYS_TO_SHOW_LIMIT;
+	global $INDEX_DIRECTORY, $GEDCOM, $DEBUG, $DAYS_TO_SHOW_LIMIT, $COMMIT_COMMAND;
 
 	if (!isset($DAYS_TO_SHOW_LIMIT)) $DAYS_TO_SHOW_LIMIT = 30;
 
@@ -3204,10 +3202,10 @@ function get_event_list() {
 	}
 
 	$found_facts=array();
-	for ($jd=today_jd(); $jd<today_jd()+$DAYS_TO_SHOW_LIMIT; ++$jd)
+	for ($jd=today_jd(); $jd<=today_jd()+$DAYS_TO_SHOW_LIMIT; ++$jd)
 		$found_facts=array_merge($found_facts, get_anniversary_events($jd));
 
-// Cache the Facts data just found
+	// Cache the Facts data just found
 	if (is_writable($INDEX_DIRECTORY)) {
 		$fp = fopen($INDEX_DIRECTORY."/".$GEDCOM."_upcoming.php", "wb");
 		fwrite($fp, serialize($found_facts));
