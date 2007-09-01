@@ -336,20 +336,20 @@ if ($MULTI_MEDIA) {
 	  		<center><b><?php print $factarray["FORM"]; ?></b></center>
 	  		<table class="width100">
 	  			<tr>
-					<td class="width33"><input type="checkbox" value="yes" name="filter_avi" <?php if ($config['filter_avi']=="yes") print "checked=\"checked\""; ?> />avi</td>
-					<td class="width33"><input type="checkbox" value="yes" name="filter_avi" <?php if ($config['filter_bmp']=="yes") print "checked=\"checked\""; ?> />bmp</td>
-					<td class="width33"><input type="checkbox" value="yes" name="filter_avi" <?php if ($config['filter_gif']=="yes") print "checked=\"checked\""; ?> />gif</td>
+					<td class="width33"><input type="checkbox" value="yes" name="filter_avi" <?php if ($config['filter_avi']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;avi&nbsp;&nbsp;</td>
+					<td class="width33"><input type="checkbox" value="yes" name="filter_avi" <?php if ($config['filter_bmp']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;bmp&nbsp;&nbsp;</td>
+					<td class="width33"><input type="checkbox" value="yes" name="filter_avi" <?php if ($config['filter_gif']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;gif&nbsp;&nbsp;</td>
 	  			</tr><tr>
-					<td class="width33"><input type="checkbox" value="yes" name="filter_jpeg" <?php if ($config['filter_jpeg']=="yes") print "checked=\"checked\""; ?> />jpeg</td>
-					<td class="width33"><input type="checkbox" value="yes" name="filter_mp3" <?php if ($config['filter_mp3']=="yes") print "checked=\"checked\""; ?> />mp3</td>
-					<td class="width33"><input type="checkbox" value="yes" name="filter_ole" <?php if ($config['filter_ole']=="yes") print "checked=\"checked\""; ?> />ole</td>
+					<td class="width33"><input type="checkbox" value="yes" name="filter_jpeg" <?php if ($config['filter_jpeg']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;jpeg&nbsp;&nbsp;</td>
+					<td class="width33"><input type="checkbox" value="yes" name="filter_mp3" <?php if ($config['filter_mp3']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;mp3&nbsp;&nbsp;</td>
+					<td class="width33"><input type="checkbox" value="yes" name="filter_ole" <?php if ($config['filter_ole']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;ole&nbsp;&nbsp;</td>
 	  			</tr><tr>
-					<td class="width33"><input type="checkbox" value="yes" name="filter_pcx" <?php if ($config['filter_pcx']=="yes") print "checked=\"checked\""; ?> />pcx</td>
-					<td class="width33"><input type="checkbox" value="yes" name="filter_png" <?php if ($config['filter_png']=="yes") print "checked=\"checked\""; ?> />png</td>
-					<td class="width33"><input type="checkbox" value="yes" name="filter_tiff" <?php if ($config['filter_tiff']=="yes") print "checked=\"checked\""; ?> />tiff</td>
+					<td class="width33"><input type="checkbox" value="yes" name="filter_pcx" <?php if ($config['filter_pcx']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;pcx&nbsp;&nbsp;</td>
+					<td class="width33"><input type="checkbox" value="yes" name="filter_png" <?php if ($config['filter_png']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;png&nbsp;&nbsp;</td>
+					<td class="width33"><input type="checkbox" value="yes" name="filter_tiff" <?php if ($config['filter_tiff']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;tiff&nbsp;&nbsp;</td>
 	  			</tr>
 	  			</tr><tr>
-					<td class="width33"><input type="checkbox" value="yes" name="filter_wav" <?php if ($config['filter_wav']=="yes") print "checked=\"checked\""; ?> />wav</td>
+					<td class="width33"><input type="checkbox" value="yes" name="filter_wav" <?php if ($config['filter_wav']=="yes") print "checked=\"checked\""; ?> />&nbsp;&nbsp;wav&nbsp;&nbsp;</td>
 					<td class="width33">&nbsp;</td>
 					<td class="width33">&nbsp;</td>
 	  			</tr>
@@ -379,7 +379,7 @@ if ($MULTI_MEDIA) {
 					}
 					print "<td class=\"width33\"><input type=\"checkbox\" value=\"yes\" name=\"filter_".$typeName."\"";
 					if ($config['filter_'.$typeName]=="yes") print "checked=\"checked\"";
-					print " />".$typeValue."</td>";
+					print " />&nbsp;&nbsp;".$typeValue."&nbsp;&nbsp;</td>";
 				}
 	  			?>
 	  			</tr>
