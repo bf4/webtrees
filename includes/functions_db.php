@@ -3124,15 +3124,15 @@ function get_anniversary_events($jd, $facts='') {
 			$where.=" AND d_file={$GEDCOMS[$GEDCOM]['id']}";
 			
 			// Now fetch these anniversaries
-			$fam_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
-			$ind_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
+			$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
+			$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
 			foreach (array($ind_sql, $fam_sql) as $sql) {
 				$res=dbquery($sql);
 				while ($row=&$res->fetchRow()) {
 					// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
 					// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
 					// to be cached.  We should store the level1 fact here (or somewhere)
-					$ged_date_regex="/2 DATE.*({$row[3]}\s*".($row[4]>0 ? "0*{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "").")/";
+					$ged_date_regex="/2 DATE.*({$row[3]}\s*".($row[4]>0 ? "0*{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "").")/i";
 					foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
 						if (preg_match("/1 {$row[7]}/", $factrec) && preg_match($ged_date_regex, $factrec, $dmatch)) {
 							if (preg_match('/2 RESN (.+)/', $factrec, $match))
