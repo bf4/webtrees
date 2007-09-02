@@ -3202,7 +3202,10 @@ function get_event_list() {
 	}
 
 	$found_facts=array();
-	for ($jd=today_jd(); $jd<=today_jd()+$DAYS_TO_SHOW_LIMIT; ++$jd)
+	// Cache dates for a day either side of the range "today to today+N".
+	// This is because users may be in different time zones (and on different
+	// days) to the server.
+	for ($jd=unixtojd()-1; $jd<=unixtojd()+1+$DAYS_TO_SHOW_LIMIT; ++$jd)
 		$found_facts=array_merge($found_facts, get_anniversary_events($jd));
 
 	// Cache the Facts data just found
