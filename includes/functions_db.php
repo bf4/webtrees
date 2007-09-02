@@ -3102,7 +3102,7 @@ function get_anniversary_events($jd, $facts='') {
 			// Dates without days go on the first day of the month
 			// Dates with invalid days go on the last day of the month
 			if ($d==1)
-				$where.=" AND d_day<1";
+				$where.=" AND d_day<=1";
 			else
 				if ($d==$days_in_month)
 					$where.=" AND d_day>={$d}";
