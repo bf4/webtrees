@@ -323,8 +323,7 @@ function jewishGedcomDateToCurrentGregorian($datearray){
 	$dates = array();
 	//debug_print_backtrace();
 	if (empty($hYear)) {
-		if (isset($_SESSION["timediff"])) $time = time()-$_SESSION["timediff"];
-		else $time = time();
+		$time = client_time();
 		if (empty($day)) 	$day           = date("j", $time);
 		if (empty($month)) $month          = date("M", $time);
 		if (empty($year)) 	$year          = date("Y", $time);

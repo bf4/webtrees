@@ -31,8 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 require("config.php");
 
-if (isset($_SESSION["timediff"])) $time = time()-$_SESSION["timediff"];
-else $time = time();
+$time = client_time();
 $day = date("j", $time);
 $month = date("M", $time);
 $year = date("Y", $time);
