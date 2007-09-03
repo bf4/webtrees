@@ -158,7 +158,7 @@ function need_place_cleanup()
 	//if ($ct==0) return false;
 	$ct = preg_match_all ("/^1 (CAST|DSCR|IDNO|NATI|NCHI|NMR|OCCU|PROP|RELI|SSN|TITL|_FA1|_FA2|_FA3|_FA4|_FA5|_FA6)(\s*)$[\s]+(^2 TYPE(.*)[\s]+)?(^2 DATE(.*)[\s]+)?^2 PLAC (.*)$/m",$fcontents,$matches, PREG_SET_ORDER);
 	if($ct>0)
-	  return $matches[0];
+		return $matches[0];
 	return false;
 }
 
@@ -172,9 +172,9 @@ function place_cleanup()
 	global $fcontents;
 
 //searchs for '1 CAST|DSCR|IDNO|NATI|NCHI|NMR|OCCU|PROP|RELI|SSN|TITL #chars\n'
-//				    'optional 2 TYPE #chars\n'
-//						'optional 2 DATE #chars\n'
-//						'2 PLAC #chars'
+//            'optional 2 TYPE #chars\n'
+//            'optional 2 DATE #chars\n'
+//            '2 PLAC #chars'
 // and replaces the 1 level #chars with the PLAC #chars and blanks out the PLAC
 $fcontents = preg_replace("/^1 (CAST|DSCR|IDNO|NATI|NCHI|NMR|OCCU|PROP|RELI|SSN|TITL|_FA1|_FA2|_FA3|_FA4|_FA5|_FA6)(\s*)$[\s]+(^2 TYPE(.*)[\s]+)?(^2 DATE(.*)[\s]+)?^2 PLAC (.*)$/m",
 					 fixreplaceval('$1','$7','$3','$5'),$fcontents);
@@ -184,17 +184,17 @@ return true;
 //used to create string to be replaced back into GEDCOM
 function fixreplaceval($val1,$val7,$val3,$val5)
 {
-  $val = "1 ".$val1." ".trim($val7)."\n";
-  //trim off trailing spaces
-  $val3 = rtrim($val3);
+	$val = "1 ".$val1." ".trim($val7)."\n";
+	//trim off trailing spaces
+	$val3 = rtrim($val3);
 	if(!empty($val3))
-	  $val = $val.$val3;
+		$val = $val.$val3;
 
 	//trim off trailing spaces
-  $val5 = rtrim($val5);
+	$val5 = rtrim($val5);
 	if(!empty($val5))
 	{
-	  $val = $val.$val5;
+		$val = $val.$val5;
 	}
 
 	//$val = $val."\r\n2 PLAC";
@@ -215,14 +215,14 @@ function fixreplaceval($val1,$val7,$val3,$val5)
 function need_date_cleanup()
 {
 	global $fcontents;
-  $ct = preg_match_all ("/\n\d DATE[^\d]+(\d\d\d\d)[\/\\\\\-\.](\d\d)[\/\\\\\-\.](\d\d)/",$fcontents,$matches, PREG_SET_ORDER);
+	$ct = preg_match_all ("/\n\d DATE[^\d]+(\d\d\d\d)[\/\\\\\-\.](\d\d)[\/\\\\\-\.](\d\d)/",$fcontents,$matches, PREG_SET_ORDER);
 	if($ct>0) {
 		//print_r($matches);
-	  	return $matches[0];
-  	}
+			return $matches[0];
+		}
 	else
 	{
-  		$ct = preg_match_all ("/\n\d DATE[^\d]+(\d\d)[\/\\\\\-\.](\d\d)[\/\\\\\-\.](\d\d\d\d)/",$fcontents,$matches, PREG_SET_ORDER);
+			$ct = preg_match_all ("/\n\d DATE[^\d]+(\d\d)[\/\\\\\-\.](\d\d)[\/\\\\\-\.](\d\d\d\d)/",$fcontents,$matches, PREG_SET_ORDER);
 		if($ct>0) {
 			//print_r($matches);
 			$matches[0]["choose"] = true;
@@ -263,11 +263,6 @@ function changemonth($monval)
 		return $monval;
 }
 
-function fix_date($datestr) {
-	$date = parse_date($datestr);
-	if (isset($date[0])) return $date[0]["day"]." ".str2upper($date[0]["month"])." ".$date[0]["year"];
-	else return $datestr;
-}
 /**
  * clean up the bad dates found by the need_date_cleanup() function
  * @return boolean	returns true if cleanup was successful
@@ -276,25 +271,30 @@ function fix_date($datestr) {
 function date_cleanup($dayfirst=1)
 {
 	global $fcontents;
+	// Run all fixes twice, as there can be two dates in each DATE record
 
-	// convert all dates with anything but spaces as delimmeters
-	$fcontents = preg_replace("/DATE (\d\d)[^\s]([^\d]+)[^\s](\d\d\d\d)/", "DATE $1 $2 $3", $fcontents);
-  //convert all dates in YYYY-MM-DD or YYYY/MM/DD or YYYY\MM\DD format to DD MMM YYYY format
-	$fcontents = preg_replace("/DATE[^\d]+(\d\d\d\d)[\/\\\\\-\.](\d\d)[\/\\\\\-\.](\d\d)/e", "'DATE $3 '.changemonth('$2').' $1'", $fcontents);
-	$fcontents = preg_replace("/DATE ([^\d]+ [0-9]{1,2}, \d\d\d\d)/e", "'DATE '.fix_date('$1').''", $fcontents);
+	// Convert ISO/Japanese style dates "2000-12-31"
+	$fcontents=preg_replace("/2 DATE (.*)(\d\d\d\d)\W(0?[1-9]|1[0-2])\W(\d\d)/e", "'2 DATE $1$4 '.changemonth('$3').' $2'", $fcontents);
+	$fcontents=preg_replace("/2 DATE (.*)(\d\d\d\d)\W(0?[1-9]|1[0-2])\W(\d\d)/e", "'2 DATE $1$4 '.changemonth('$3').' $2'", $fcontents);
+	// Convert US style dates "FEB 14, 2000" or "February 5, 2000"
+	$fcontents=preg_replace("/2 DATE (.*)((JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)[A-Z]*) (\d{1,2}), (\d{4})/i", "2 DATE $1$4 $3 $5", $fcontents);
+	$fcontents=preg_replace("/2 DATE (.*)((JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)[A-Z]*) (\d{1,2}), (\d{4})/i", "2 DATE $1$4 $3 $5", $fcontents);
 
-	//day first in date format
-	if($dayfirst==1)
-	{
-  	//convert all dates in DD-MM-YYYY or DD/MM/YYYY or DD\MM\YYYY to DD MMM YYYY format
-	  $fcontents = preg_replace("/DATE[^\d]+(\d\d)[\/\\\\\-\.](\d\d)[\/\\\\\-\.](\d\d\d\d)/e", "'DATE $1 '.changemonth('$2').' $3'", $fcontents);
+	// Convert non-space delimiters "12-DEC-2000" or "01/02/2000"
+	// Without the "ungreedy" qualifier, this regex won't match the first of a pair of dates and
+	// with it, it won't match the second.  Not sure why.
+	$fcontents=preg_replace("/2 DATE (.*?)(\d\d?)\W(\w+)\W(\d\d\d\d)/", "2 DATE $1$2 $3 $4", $fcontents);
+	$fcontents=preg_replace("/2 DATE (.*)(\d\d?)\W(\w+)\W(\d\d\d\d)/", "2 DATE $1$2 $3 $4", $fcontents);
+
+	if ($dayfirst==1) {
+		// Interpret numeric dates as DD MM YYYY
+		$fcontents=preg_replace("/2 DATE (.*)(\d\d?) (0?[1-9]|1[0-2]) (\d\d\d\d)/e", "'2 DATE $1$2 '.changemonth('$3').' $4'", $fcontents);
+		$fcontents=preg_replace("/2 DATE (.*)(\d\d?) (0?[1-9]|1[0-2]) (\d\d\d\d)/e", "'2 DATE $1$2 '.changemonth('$3').' $4'", $fcontents);
+	} else if ($dayfirst==2) {
+		// Interpret numeric dates as MM DD YYYY
+		$fcontents=preg_replace("/2 DATE (.*)(0?[1-9]|1[0-2]) (\d\d?) (\d\d\d\d)/e", "'2 DATE $1$3 '.changemonth('$2').' $4'", $fcontents);
+		$fcontents=preg_replace("/2 DATE (.*)(0?[1-9]|1[0-2]) (\d\d?) (\d\d\d\d)/e", "'2 DATE $1$3 '.changemonth('$2').' $4'", $fcontents);
 	}
-	else if ($dayfirst==2) //month first
-	{
-	  //convert all dates in MM-DD-YYYY or MM/DD/YYYY or MM\DD\YYYY to DD MMM YYYY format
-		$fcontents = preg_replace("/DATE[^\d]+(\d\d)[\/\\\\\-\.](\d\d)[\/\\\\\-\.](\d\d\d\d)/e", "'DATE $2 '.changemonth('$1').' $3'", $fcontents);
-	}
-
 	return true;
 }
 
@@ -309,11 +309,11 @@ function date_cleanup($dayfirst=1)
 function need_macfile_cleanup()
 {
 	global $fcontents;
-  //check to see if need macfile cleanup
-  $ct = preg_match_all ("/\x0d[\d]/m",$fcontents,$matches);
-  if($ct > 0)
-	  return true;
-  return false;
+	//check to see if need macfile cleanup
+	$ct = preg_match_all ("/\x0d[\d]/m",$fcontents,$matches);
+	if($ct > 0)
+		return true;
+	return false;
 }
 
 /**
@@ -324,9 +324,9 @@ function need_macfile_cleanup()
 function macfile_cleanup()
 {
 	global $fcontents;
-  //replace all only \r (MAC files) with \r\n (DOS files)
-  $fcontents = preg_replace("/\x0d([\d])/","\x0d\x0a$1", $fcontents);
-  return true;
+	//replace all only \r (MAC files) with \r\n (DOS files)
+	$fcontents = preg_replace("/\x0d([\d])/","\x0d\x0a$1", $fcontents);
+	return true;
 }
 
 /**
@@ -341,30 +341,30 @@ function macfile_cleanup()
 function xref_change($tag="RIN")
 {
 	global $fcontents;
-  //-- find all of the XREFS in the file
-  $ct = preg_match_all("/0 @(.*)@ INDI/", $fcontents, $match, PREG_SET_ORDER);
-  for($i=0; $i<$ct; $i++) {
-  	$xref = trim($match[$i][1]);
-  	$indirec = find_updated_record($xref);
-  	if ($indirec!==false) {
-		  $rt = preg_match("/1 NAME (.*)/", $indirec, $rmatch);
+	//-- find all of the XREFS in the file
+	$ct = preg_match_all("/0 @(.*)@ INDI/", $fcontents, $match, PREG_SET_ORDER);
+	for($i=0; $i<$ct; $i++) {
+		$xref = trim($match[$i][1]);
+		$indirec = find_updated_record($xref);
+		if ($indirec!==false) {
+			$rt = preg_match("/1 NAME (.*)/", $indirec, $rmatch);
 			if($rt>0)
 			{
-			  $name = trim($rmatch[1])." (".$xref.")";
-			  $name = preg_replace("/\//","",$name);
+				$name = trim($rmatch[1])." (".$xref.")";
+				$name = preg_replace("/\//","",$name);
 			}
 			else
-			  $name = $xref;
+				$name = $xref;
 //  		print "Found record $i - $name: ";
-  		$rt = preg_match("/1 $tag (.*)/", $indirec, $rmatch);
-  		if ($rt>0) {
-  			$rin = trim($rmatch[1]);
-  			$fcontents = preg_replace("/@$xref@/", "@$rin@", $fcontents);
+			$rt = preg_match("/1 $tag (.*)/", $indirec, $rmatch);
+			if ($rt>0) {
+				$rin = trim($rmatch[1]);
+				$fcontents = preg_replace("/@$xref@/", "@$rin@", $fcontents);
 //  			print "successfully set to $rin<br />\n";
-  		}
-  		else   print "<span class=\"error\">No $tag found in record<br /></span>\n";
-  	}
-  }
+			}
+			else   print "<span class=\"error\">No $tag found in record<br /></span>\n";
+		}
+	}
 	return true;
 }
 
