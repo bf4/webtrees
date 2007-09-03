@@ -44,6 +44,11 @@ VERSION 4.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+
++$pgv_lang["MEDIA_FIREWALL_ROOTDIR"]			02 Sep 2007				A
++$pgv_lang["MEDIA_FIREWALL_ROOTDIR_help"]		02 Sep 2007				A
++$pgv_lang["MEDIA_FIREWALL_THUMBS"]				02 Sep 2007				A
++$pgv_lang["MEDIA_FIREWALL_THUMBS_help"]		02 Sep 2007				A
 +$pgv_lang["WATERMARK_THUMB"]						07 Aug 2007				A	Media Firewall, patch 1749817
 +$pgv_lang["WATERMARK_THUMB_help"]					07 Aug 2007				A	Media Firewall, patch 1749817
 +$pgv_lang["SAVE_WATERMARK_THUMB"]					07 Aug 2007				A	Media Firewall, patch 1749817

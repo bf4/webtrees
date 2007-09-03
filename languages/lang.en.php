@@ -713,6 +713,9 @@ $pgv_lang["media_dir_3"]			= "This media object is in the media firewall directo
 $pgv_lang["thumb_dir_1"]			= "This thumbnail is located on an external server";
 $pgv_lang["thumb_dir_2"]			= "This thumbnail is in the standard media directory";
 $pgv_lang["thumb_dir_3"]			= "This thumbnail is in the media firewall directory";
+$pgv_lang["media_firewall_rootdir_no_exist"]					= "The Media Firewall Root Directory you requested does not exist.  You must create it first.";
+$pgv_lang["media_firewall_protected_dir_no_exist"]			= "Unable to create the protected media directory in the the Media Firewall Root Directory.  Please create this directory and make it world-writable.";
+$pgv_lang["media_firewall_protected_dir_not_writable"]	= "Please make sure this directory is world writable:";
 //-- Relationship chart messages
 $pgv_lang["relationship_great"]		= "Great";
 $pgv_lang["relationship_chart"] 	= "Relationship Chart";

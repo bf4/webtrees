@@ -2010,9 +2010,9 @@ function get_server_filename($filename) {
 // returns protected media directory
 // strips off any "../" which may be configured in your MEDIA_DIRECTORY variable 
 function get_media_firewall_path($path) {
-	global $INDEX_DIRECTORY;
+	global $MEDIA_FIREWALL_ROOTDIR;
 	$path = str_replace("../", "", $path);
-	return ($INDEX_DIRECTORY . $path);
+	return ($MEDIA_FIREWALL_ROOTDIR . $path);
 }
 
 // recursively make directories
