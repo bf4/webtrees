@@ -117,7 +117,7 @@ $typ2b  .= ")";
       // Adding DISTINCT is the fix for: [ 1488550 ] Family/Individual Media Duplications
       // but it may not work for all RDBMS.
 	  // $sqlmm  = "SELECT ";
-      $sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping where ";
+      $sqlmm .= "m_media, m_ext, m_file, m_titl, m_gedfile, m_gedrec, mm_order, mm_gid, mm_gedrec FROM ".$TBLPREFIX."media, ".$TBLPREFIX."media_mapping where ";
       $sqlmm .= "mm_gid IN (";
       $i=0;
       foreach($ids as $key=>$id) {
@@ -132,10 +132,10 @@ $typ2b  .= ")";
 // BH Next line added
       $sqlmm .= " AND $typ2b ";
 
-      $sqlmm .= " ORDER BY m_titl ";
+      $sqlmm .= " ORDER BY mm_gid DESC, mm_order ";
       $resmm = dbquery($sqlmm);
       $foundObjs = array();
-
+	  
       $resmm1 = mysql_query($sqlmm);
       $numm = mysql_num_rows($resmm1);
 
@@ -318,12 +318,13 @@ if (isset($reorder) && $reorder==1 && ($t==$t) ) {
                 $value--;
            }
       }
-
+	  
 // -----------------------------------------------------------------------------
 
        if ($media_found) return $is_media="YES" ;
        else return $is_media="NO" ;
 
+	   
 
 // -----------------------------------------------------------------------------
 // }
