@@ -3153,6 +3153,7 @@ function get_anniversary_events($jd, $facts='') {
 								'id'=>$row[0],
 								'objtype'=>$row[2],
 								'fact'=>$row[7],
+								'factrec'=>$factrec,
 								'jd'=>$jd,
 								'anniv'=>($row[6]==0?0:$y-$row[6]),
 								'date'=>$dmatch[1],

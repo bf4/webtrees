@@ -108,7 +108,7 @@ if (isset($GEDCOMPATH)) {
 				$GEDCOMPATH = $upload_path.$GEDFILENAME;
 			}
 			else {
-		 		$upload_errors = array(print_text("file_success",0,1), print_text("file_too_big",0,1), print_text("file_too_big",0,1),print_text("file_partial",0,1), print_text("file_missing",0,1));
+				$upload_errors = array(print_text("file_success",0,1), print_text("file_too_big",0,1), print_text("file_too_big",0,1),print_text("file_partial",0,1), print_text("file_missing",0,1));
 				$error = print_text("upload_error",0,1)."<br />".$upload_errors[$_FILES['GEDCOMPATH']['error']];
 				$action = "upload_form";
 			}
@@ -122,7 +122,7 @@ if (isset($GEDCOMPATH)) {
 				//print $bakfile." ".$GEDCOMPATH;
 			}
 			else {
-		 		$upload_errors = array(print_text("file_success",0,1), print_text("file_too_big",0,1), print_text("file_too_big",0,1),print_text("file_partial",0,1), print_text("file_missing",0,1));
+				$upload_errors = array(print_text("file_success",0,1), print_text("file_too_big",0,1), print_text("file_too_big",0,1),print_text("file_partial",0,1), print_text("file_missing",0,1));
 				$error = print_text("upload_error",0,1)."<br />".$upload_errors[$_FILES['GEDCOMPATH']['error']];
 				$action = "upload_form";
 			}
@@ -406,7 +406,7 @@ if ($action=="update") {
 
 	// Delete Upcoming Events cache
 	if ($_POST["old_DAYS_TO_SHOW_LIMIT"] < $_POST["NEW_DAYS_TO_SHOW_LIMIT"]) {
-    	if (is_writable($INDEX_DIRECTORY) and file_exists($INDEX_DIRECTORY.$FILE."_upcoming.php")) {
+		if (is_writable($INDEX_DIRECTORY) and file_exists($INDEX_DIRECTORY.$FILE."_upcoming.php")) {
 			unlink ($INDEX_DIRECTORY.$FILE."_upcoming.php");
 		}
 	}
@@ -424,8 +424,8 @@ if ($action=="update") {
 	clearCache();
 
 	$logline = AddToLog("Gedcom configuration ".$INDEX_DIRECTORY.$FILE."_conf.php"." updated by >".getUserName()."<", $FILE);
- 	$gedcomconfname = $FILE."_conf.php";
- 	if (!empty($COMMIT_COMMAND)) check_in($logline, $gedcomconfname, $INDEX_DIRECTORY);
+	$gedcomconfname = $FILE."_conf.php";
+	if (!empty($COMMIT_COMMAND)) check_in($logline, $gedcomconfname, $INDEX_DIRECTORY);
 	if (!$errors) {
 		$gednews = getUserNews($FILE);
 		if (count($gednews)==0) {
@@ -433,7 +433,7 @@ if ($action=="update") {
 			$news["title"] = "#default_news_title#";
 			$news["username"] = $FILE;
 			$news["text"] = "#default_news_text#";
-			$news["date"] = time()-$_SESSION["timediff"];
+			$news["date"] = client_time();
 			addNews($news);
 		}
 		if ($source == "upload_form") $check = "upload";
@@ -502,7 +502,7 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
 <table class="facts_table <?php print $TEXT_DIRECTION ?>">
   <tr>
     <td colspan="2" class="facts_label"><?php
-    		print "<h2>".$pgv_lang["gedconf_head"]." - ";
+		print "<h2>".$pgv_lang["gedconf_head"]." - ";
 		if (isset($ged)) {
 //			if ($TEXT_DIRECTION=="rtl") print getRLM() . "(".$GEDCOMS[$ged]["id"].")&nbsp;" . getRLM();
 //			else print "&nbsp;" . getLRM() . "(".$GEDCOMS[$ged]["id"].")" . getLRM();
@@ -516,7 +516,7 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
 		print "<a href=\"editgedcoms.php\"><b>";
 		print $pgv_lang["lang_back_manage_gedcoms"];
 		print "</b></a><br /><br />";
-    	?>
+	?>
     </td>
   </tr>
 </table>
@@ -676,8 +676,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 						print_first_major_fact($PEDIGREE_ROOT_ID);
 						print "</span>\n";
 					}
-			    }
-			    else {
+				} else {
 					print "<span class=\"error\">";
 					print $pgv_lang["unable_to_find_record"];
 					print "</span>";
@@ -1520,12 +1519,12 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["useropt_conf"]."\" onclick=\"exp
 				<option value="no" <?php if (!$ENABLE_MULTI_LANGUAGE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 			</select>
 			<?php
-	        if (!file_exists($INDEX_DIRECTORY . "lang_settings.php")) {
-	        	print "<br /><span class=\"error\">";
-	        	print $pgv_lang["LANGUAGE_DEFAULT"];
-	        	print "</span>";
-         	}
-		    ?>
+				if (!file_exists($INDEX_DIRECTORY . "lang_settings.php")) {
+					print "<br /><span class=\"error\">";
+					print $pgv_lang["LANGUAGE_DEFAULT"];
+					print "</span>";
+				}
+			?>
 		</td>
 	</tr>
 	<tr>

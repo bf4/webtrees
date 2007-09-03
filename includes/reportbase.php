@@ -812,7 +812,7 @@ function PGVRCellEHandler() {
 function PGVRNowSHandler($attrs) {
 	global $currentElement;
 
-	$currentElement->addText(get_changed_date(date("j", time()-(isset($_SESSION["timediff"])?$_SESSION["timediff"]:0))." ".date("M", time()-(isset($_SESSION["timediff"])?$_SESSION["timediff"]:0))." ".date("Y", time()-(isset($_SESSION["timediff"])?$_SESSION["timediff"]:0))));
+	$currentElement->addText(get_changed_date(date("j M Y", client_time()));
 }
 
 function PGVRPageNumSHandler($attrs) {

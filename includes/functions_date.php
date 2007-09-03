@@ -1201,10 +1201,17 @@ function default_edit_to_gedcom_date($datestr)
 // Get the current julian day of the client, not the server
 ////////////////////////////////////////////////////////////////////////////////
 function today_jd() {
+	return unixtojd(client_time());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Get the current timestamp of the client, not the server
+////////////////////////////////////////////////////////////////////////////////
+function client_time() {
 	if (isset($_SESSION["timediff"]))
-		return unixtojd(time()-$_SESSION["timediff"]);
+		return time()-$_SESSION["timediff"];
 	else
-		return unixtojd(time());
+		return time();
 }
 
 ?>
