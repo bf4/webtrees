@@ -73,16 +73,19 @@ else{$edit==$edit;}
         print "<img src=\"".$PGV_IMAGE_DIR."/small/help.gif\" class=\"icon\" title=\"" . $pgv_lang["page_help"] . "\" />" ;
         print $pgv_lang["page_help"];
         print "</a>" ;
-		
+
+/*	NOT READY YET - More work to do		
 		//Reorder Media
-		if ( userIsAdmin(getUserName()) && $mediacnt!=0 &&  (!isset($edit) || $edit==1) && ($reorder!=1 || !isset($reorder)) ) {
+//		if ( userIsAdmin(getUserName()) && $mediacnt!=0 &&  (!isset($edit) || $edit==1) && ($reorder!=1 || !isset($reorder)) ) {
+		if ( userCanEdit(getUserName()) && $mediacnt!=0 &&  (!isset($edit) || $edit==1) && ($reorder!=1 || !isset($reorder)) ) {		
 			print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
 //			print "<a href=\"javascript: reorder_media()\" title=\"Reorder Media\" >" ;
 			print "<a href=\"" . $_SERVER['PHP_SELF'] . "?tab=" . $tabno . "&pid=" . $pid . "&edit=" . $edit . "&reorder=1\" title=\"Change Media Order *** Not working fully yet ! ***\" >" ;
 			print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\"  title=\"Change Media Order *** Not working fully yet ! ***\" >" ;
 			print " Change Media Order" ; 
 			print '</a>';  		
-		}elseif ( userIsAdmin(getUserName()) && $mediacnt!=0 && (!isset($edit) || $edit==1) ){
+//		}elseif ( userIsAdmin(getUserName()) && $mediacnt!=0 && (!isset($edit) || $edit==1) ){
+		}elseif ( userCanEdit(getUserName()) && $mediacnt!=0 && (!isset($edit) || $edit==1) ){		
 			print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
 //			print "<a href=\"javascript: reorder_media()\" title=\"Reorder Media\" >" ;
 			print "<a href=\"" . $_SERVER['PHP_SELF'] . "?tab=" . $tabno . "&pid=" . $pid . "&edit=" . $edit . "\" title=\"Save Media Order *** Not working fully yet ! ***\" >" ;
@@ -96,7 +99,7 @@ else{$edit==$edit;}
 				print "<font color=\"red\"> *** PLEASE NOTE THIS FUNCTION IS NOT WORKING YET (only the interface) *** </font>";				
 		}else{
 		}
-		
+*/		
 		//Slide Show
 		if ( $reorder==1 ) {
 		}else{
