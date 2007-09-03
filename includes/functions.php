@@ -1102,7 +1102,7 @@ function extract_filename($fullpath) {
  * @param string $thumbnail
  */
 function generate_thumbnail($filename, $thumbnail) {
-	global $MEDIA_DIRECTORY, $THUMBNAIL_WIDTH, $AUTO_GENERATE_THUMBS, $USE_MEDIA_FIREWALL;
+	global $MEDIA_DIRECTORY, $THUMBNAIL_WIDTH, $AUTO_GENERATE_THUMBS, $USE_MEDIA_FIREWALL, $MEDIA_FIREWALL_THUMBS;
 
 	if (!$AUTO_GENERATE_THUMBS) return false;
 	if (media_exists($thumbnail)) return false;
@@ -1130,8 +1130,10 @@ function generate_thumbnail($filename, $thumbnail) {
 				// see if the file exists in the protected index directory
 				$filename = get_media_firewall_path($filename); 
 				if (!file_exists(filename_decode($filename))) return false;
-				// put the thumbnail in the protected directory too
-				$thumbnail = get_media_firewall_path($thumbnail);
+				if ($MEDIA_FIREWALL_THUMBS) {
+					// put the thumbnail in the protected directory too
+					$thumbnail = get_media_firewall_path($thumbnail);
+				}
 				// ensure the directory exists
 				if (!is_dir(dirname($thumbnail))) {
 					if (!mkdirs(dirname($thumbnail))) {
