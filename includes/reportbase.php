@@ -812,7 +812,7 @@ function PGVRCellEHandler() {
 function PGVRNowSHandler($attrs) {
 	global $currentElement;
 
-	$currentElement->addText(get_changed_date(date("j M Y", client_time()));
+	$currentElement->addText(get_changed_date(date("j M Y", client_time())));
 }
 
 function PGVRPageNumSHandler($attrs) {
