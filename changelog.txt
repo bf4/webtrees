@@ -8,6 +8,7 @@
 	# $Id$
 =====================================================================
 Version 4.1.1
+ - Fixed [ 1782104 ] ERROR 8 in mediaviewer (yalnifj)
  - Fixed [ 1786455 ] Main menus draw behind Relationship table (canajun2eh)
  - Fixed Ajax controls in Random Media block ignore block configuration (canajun2eh) 
  - Added Filter by Format, Filter by Type in Random Media block (canajun2eh) 
