@@ -537,11 +537,7 @@ function update_dates($gid, $indirec) {
 		for ($i = 0; $i < $pt; $i++) {
 			$dates = parse_date($match[$i][1]);
 			foreach($dates as $date) {
-				if ($date['year']>0)
-					$datestamp=$date['year']*10000+$date['mon']*100+$date['day'];
-				else
-					$datestamp=-1*((1-$date['year'])*10000+$date['mon']*100+$date['day']);
-				$sql = "INSERT INTO {$TBLPREFIX}dates(d_day,d_month,d_mon,d_year,d_datestamp,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type)VALUES({$date['day']},'{$date['month']}',{$date['mon']},{$date['year']},{$datestamp},{$date['jd1']},{$date['jd2']},'".$DBCONN->escapeSimple($fact)."','".$DBCONN->escapeSimple($gid)."',{$GEDCOMS[$FILE]['id']},".(empty($date['cal'])?'NULL':"'{$date['cal']}'").")";
+				$sql = "INSERT INTO {$TBLPREFIX}dates(d_day,d_month,d_mon,d_year,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type)VALUES({$date['day']},'{$date['month']}',{$date['mon']},{$date['year']},{$date['jd1']},{$date['jd2']},'".$DBCONN->escapeSimple($fact)."','".$DBCONN->escapeSimple($gid)."',{$GEDCOMS[$FILE]['id']},".(empty($date['cal'])?'NULL':"'{$date['cal']}'").")";
 				$res=dbquery($sql);
 				$count++;
 			}

@@ -45,13 +45,12 @@ if (!isset ($privatize_export))
 
 if ($action == "download" && $zip == "yes") {
 	require "includes/pclzip.lib.php";
-	require "includes/adodb-time.inc.php";
 
 	$temppath = $INDEX_DIRECTORY . "tmp/";
 	$fileName = $ged;
 	if($filetype =="gramps")
 		$fileName = $ged.".gramps";
-	$zipname = "dl" . adodb_date("YmdHis") . $fileName . ".zip";
+	$zipname = "dl" . date("YmdHis") . $fileName . ".zip";
 	$zipfile = $INDEX_DIRECTORY . $zipname;
 	$gedname = $temppath . $fileName;
 
@@ -74,7 +73,7 @@ if ($action == "download" && $zip == "yes") {
 		break;
 	}
 	fclose($gedout);
-	$comment = "Created by PhpGedView " . $VERSION . " " . $VERSION_RELEASE . " on " . adodb_date("r") . ".";
+	$comment = "Created by PhpGedView " . $VERSION . " " . $VERSION_RELEASE . " on " . date("r") . ".";
 	$archive = new PclZip(filename_decode($zipfile));
 	$v_list = $archive->create(filename_decode($gedname), PCLZIP_OPT_COMMENT, $comment, PCLZIP_OPT_REMOVE_PATH, filename_decode($temppath));
 	if ($v_list == 0)

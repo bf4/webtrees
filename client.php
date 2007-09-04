@@ -521,19 +521,20 @@ else if ($action=="getchanges") {
 	else {
 		$lastdate = parse_date($date);
 		
-		if (empty($date) || empty($lastdate[0]['year']) || empty($lastdate[0]['month']) || empty($lastdate[0]['day'])) {
+		if ($lastdate[0]['jd1']==0) {
 			addDebugLog($action." ERROR 23: Invalid date parameter.  Please use a valid date in the GEDCOM format DD MMM YYYY.");
 			print "ERROR 23: Invalid date parameter.  Please use a valid date in the GEDCOM format DD MMM YYYY.\n";
-		}
-		else {
+		} else {
 			print "SUCCESS\n";
-			$timestamp = mktime(1, 0, 0, (int)$date[0]['mon'], (int)$date[0]['day'], $date[0]['year']);
-			if ($timestamp<time()-(60*60*24*180)) return new SOAP_Fault('checkUpdates', 'You cannot retrieve updates for more than 180 days.');
-					
-			$changes = get_recent_changes($date[0]['day'], $date[0]['mon'], $date[0]['year']);
-			$results = array();
-			foreach($changes as $id=>$change) {
-				print $change['d_gid']."\n";
+			if ($lastdate[0]['jd1']<today_jd()-180) {
+				addDebugLog($action." ERROR 24: You cannot retrieve updates for more than 180 days.");
+				print "ERROR 24: You cannot retrieve updates for more than 180 days.\n";
+			} else {
+				$changes = get_recent_changes($lastdate[0]['jd1']);
+				$results = array();
+				foreach($changes as $id=>$change) {
+					print $change['d_gid']."\n";
+				}
 			}
 		}
 	}

@@ -73,7 +73,7 @@ if ($action=="compose") {
 		$news_id="";
 		$news = array();
 		$news["username"] = $username;
-		$news["date"] = time()-$_SESSION["timediff"];
+		$news["date"] = client_time();
 		$news["title"] = "";
 		$news["text"] = "";
 	}

@@ -39,7 +39,7 @@ if (!isset($action)) {
 if (!isset($type)) $type = "full";
 
 if ($action=="login") {
-	if (isset($_POST['username'])) $username = $_POST['username'];
+	if (isset($_POST['username'])) $username = strip_tags($_POST['username']);
 	else $username="";
 	if (isset($_POST['password'])) $password = $_POST['password'];
 	else $password="";

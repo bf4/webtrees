@@ -91,8 +91,7 @@ if (file_exists("modules")) {
  * End loading list of Blocks in modules/XX/blocks directories
 */
 
-if (isset($_SESSION["timediff"])) $time = time()-$_SESSION["timediff"];
-else $time = time();
+$time = client_time();
 $day = date("j", $time);
 $month = date("M", $time);
 $year = date("Y", $time);

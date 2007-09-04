@@ -485,10 +485,10 @@ function get_changed_date($datestr, $linebr=false) {
 			// already in english !
 			if ($LANGUAGE!="english") {
 				foreach (array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December") as $indexval => $item) {
-					// February => Février
+					// February => Fï¿½vrier
 					$translated = $pgv_lang[substr(strtolower($item),0,3)];
 					$adate = str_replace($item, $translated, $adate);
-					// Feb => Fév
+					// Feb => Fï¿½v
 					$item = substr($item, 0, 3);
 					$translated = substr($translated, 0, 3);
 					$adate = str_replace($item, $translated, $adate);
@@ -1197,5 +1197,21 @@ function default_edit_to_gedcom_date($datestr)
 	return $datestr;
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// Get the current julian day of the client, not the server
+////////////////////////////////////////////////////////////////////////////////
+function today_jd() {
+	return unixtojd(client_time());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Get the current timestamp of the client, not the server
+////////////////////////////////////////////////////////////////////////////////
+function client_time() {
+	if (isset($_SESSION["timediff"]))
+		return time()-$_SESSION["timediff"];
+	else
+		return time();
+}
 
 ?>

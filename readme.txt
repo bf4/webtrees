@@ -573,12 +573,13 @@ Following is a more detailed description of each table:
   	d_month                # The 3 letter abbreviation for month of year
   	d_mon                  # Integer 1-12 for the month of year
   	d_year                 # The year for this date
-  	d_datestamp            # A date stamp of the form YYYYMMDD used for simple 
-  	                       # comparisons
+  	d_datestamp            # This column is no longer used and will be deleted in 4.2
   	d_fact                 # The fact that this date was associated with
   	d_gid                  # The gedcom XREF ID where this fact and date were found
   	d_file                 # The gedcom file id where this fact was found
   	d_type                 # Used if this date uses an alternate calendar type
+		d_julianday1           # The julian day number for this day (or start of this month/year)
+		d_julianday2           # The julian day number for this day (or end of this month/year)
 
   pgv_blocks:
     b_id INT(11)           # Record ID

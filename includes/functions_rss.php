@@ -31,8 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 require("config.php");
 
-if (isset($_SESSION["timediff"])) $time = time()-$_SESSION["timediff"];
-else $time = time();
+$time = client_time();
 $day = date("j", $time);
 $month = date("M", $time);
 $year = date("Y", $time);
@@ -686,8 +685,7 @@ function getRecentChanges() {
 
 	$action = "today";
 	$found_facts = array();
-	$start=mktime(0,0,0)-86400*$config["days"];
-	$changes=get_recent_changes(date("d", $start), date("m", $start), date("Y", $start));
+	$changes=get_recent_changes(today_jd()-$config['days']);
 
 	if (count($changes)>0) {
 		$found_facts = array();

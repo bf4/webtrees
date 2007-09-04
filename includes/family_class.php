@@ -321,17 +321,6 @@ class Family extends GedcomRecord {
 		//-- 2nd record with alternate date (hebrew...)
 		$this->marr_rec2 = trim(get_sub_record(1, "1 MARR", $this->gedrec, 2));
 		$this->marr_date2 = get_gedcom_value("DATE", 2, $this->marr_rec2, '', false);
-		//-- if no date estimate from births
-		/** FIXME
-		if (!empty($this->marr_rec) and empty($this->marr_date)) {
-			if (!is_null($this->husb)) $h=$this->husb->getBirthYear(); else $h=0;
-			if (!is_null($this->wife)) $w=$this->wife->getBirthYear(); else $w=0;
-			$myear=max($h,$w);
-			if ($myear>0) {
-				$this->marr_est=true;
-				$this->marr_date="AFT ".($myear+16); // MARR > BIRT+16
-			}
-		}**/
 	}
 
 	/**

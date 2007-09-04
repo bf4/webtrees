@@ -1529,7 +1529,8 @@ function setBlocks($username, $ublocks, $setdefault=false) {
 function addNews($news) {
 	global $TBLPREFIX, $DBCONN;
 
-	if (!isset($news["date"])) $news["date"] = time()-$_SESSION["timediff"];
+	if (!isset($news["date"]))
+		$news["date"] = client_time();
 	//$sql = "CREATE TABLE ".$TBLPREFIX."news (n_id INT NOT NULL auto_increment, n_username VARCHAR(100), n_date INT, n_text TEXT, PRIMARY KEY(n_id))";
 	if (!empty($news["id"])) {
 		// In case news items are added from usermigrate, it will also contain an ID.

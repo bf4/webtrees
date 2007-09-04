@@ -46,6 +46,8 @@ function print_todays_events($block=true, $config="", $side, $index) {
 
   $block = true;      // Always restrict this block's height
 
+	$todayjd=today_jd();
+
   if (empty($config)) $config = $PGV_BLOCKS["print_todays_events"]["config"];
   if (isset($config["filter"])) $filter = $config["filter"];  // "living" or "all"
   else $filter = "all";
@@ -59,10 +61,6 @@ function print_todays_events($block=true, $config="", $side, $index) {
   // Don't permit calendar download if not logged in
   $username = getUserName();
   if (empty($username)) $allowDownload = "no";
-
-
-  // Look for cached Facts data
-  $found_facts = get_event_list();
 
   //-- Start output
   print "<div id=\"on_this_day_events\" class=\"block\">";
@@ -95,21 +93,19 @@ function print_todays_events($block=true, $config="", $side, $index) {
 	$PrivateFacts = false;
 	$lastgid="";
 
-	$dateRangeStart = mktime( 0, 0, 0);
-	$dateRangeEnd   = mktime(23,59,59);
-
-	foreach($found_facts as $key=>$factarray) {
-	  $anniversaryDate = $factarray[3];
-	  if ($anniversaryDate>=$dateRangeStart && $anniversaryDate<=$dateRangeEnd) {
+	foreach (get_event_list() as $key=>$factarray) {
+	  if ($factarray['jd']==$todayjd) {
 	    if ($factarray[2]=="INDI") {
 	      $gid = $factarray[0];
 	      $factrec = $factarray[1];
 		    $disp = true;
-	      if ($filter=="living" and is_dead_id($gid)) $disp = false;
-	      else if (!displayDetailsByID($gid)) {
-	        $disp = false;
-	        $PrivateFacts = true;
-	      }
+				if ($filter=="living" && is_dead_id($gid))
+					$disp = false;
+				else
+					if (!displayDetailsByID($gid)) {
+	        	$disp = false;
+	        	$PrivateFacts = true;
+	      	}
 
 	      if ($disp) {
 	        $indirec = find_person_record($gid);
@@ -224,13 +220,15 @@ function print_todays_events($block=true, $config="", $side, $index) {
 
   // Style 2: New format, tables, big text, etc.  Not too good on right side of page
   if ($infoStyle=="style2") {
-	$option = "";
-	if ($onlyBDM == "yes") $option .= " onlyBDM";
-	if ($filter == "living") $option .= " living";
-	if ($allowDownload == "no") $option .= " noDownload";
-	print_events_table($found_facts, 0, $option);
-  }
-  if ($block) print "</div>\n";
+		$option = "";
+		if ($onlyBDM == "yes") $option .= " onlyBDM";
+		if ($filter == "living") $option .= " living";
+		if ($allowDownload == "no") $option .= " noDownload";
+		print_events_table($todayjd, $todayjd, $option);
+	}
+
+	if ($block)
+		print "</div>\n";
   print "</div>"; // blockcontent
   print "</div>"; // block
 }

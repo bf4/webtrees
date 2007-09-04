@@ -229,9 +229,9 @@ $cs=count($mysourcelist);
 
 print_sour_table($mysourcelist, $name);
 
-print "<br /><br /></td><td valign=\"top\">";
+print "<br /><br /></td><td valign=\"top\" class=\"noprint\">";
 
-if ($view!="preview") {
+if ($view!="preview" &&(empty($SEARCH_SPIDER))) {
 	print "\n\t<table cellspacing=\"10\" align=\"right\"><tr>";
 	if ($SHOW_GEDCOM_RECORD) {
 		print "\n\t\t<td align=\"center\" valign=\"top\"><span class=\"link\"><a href=\"javascript:show_gedcom_record();\"><img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"]."\" border=\"0\" alt=\"\" /><br />".$pgv_lang["view_gedcom"]."</a>";

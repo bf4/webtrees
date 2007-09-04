@@ -37,28 +37,30 @@ else{
 
 	print_header($controller->getPageTitle());
 	//The following lines of code are used to print the menu box on the top right hand corner
-	if ($controller->userCanEdit() || $controller->canShowOtherMenu()) { ?>
-		<table class="sublinks_table rtl" style="margin: 10px;" cellspacing="4" cellpadding="0" align="<?php print $TEXT_DIRECTION=='ltr'?'right':'left';?>">
-			<tr>
-				<td class="list_label <?php echo $TEXT_DIRECTION; ?>" colspan="5"><?php print $pgv_lang["media_options"]; ?></td>
-			</tr>
-			<tr>
-				<?php
-				if ($controller->userCanEdit()) {
-				?>
-				<td class="sublinks_cell <?php echo $TEXT_DIRECTION;?>">
-					<?php $menu = $controller->getEditMenu(); $menu->printMenu(); ?>
-				</td>
-				<?php }
-				if ($controller->canShowOtherMenu()) {
-				?>
-				<td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
-				<?php $menu = $controller->getOtherMenu(); $menu->printMenu(); ?>
-				</td>
-				<?php }	?>
-			</tr>
-		</table>
-		<?php
+	if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
+		if ($controller->userCanEdit() || $controller->canShowOtherMenu()) { ?>
+			<table class="sublinks_table rtl noprint" style="margin: 10px;" cellspacing="4" cellpadding="0" align="<?php print $TEXT_DIRECTION=='ltr'?'right':'left';?>">
+				<tr>
+					<td class="list_label <?php echo $TEXT_DIRECTION; ?>" colspan="5"><?php print $pgv_lang["media_options"]; ?></td>
+				</tr>
+				<tr>
+					<?php
+					if ($controller->userCanEdit()) {
+					?>
+					<td class="sublinks_cell <?php echo $TEXT_DIRECTION;?>">
+						<?php $menu = $controller->getEditMenu(); $menu->printMenu(); ?>
+					</td>
+					<?php }
+					if ($controller->canShowOtherMenu()) {
+					?>
+					<td class="sublinks_cell <?php echo $TEXT_DIRECTION; ?>">
+					<?php $menu = $controller->getOtherMenu(); $menu->printMenu(); ?>
+					</td>
+					<?php }	?>
+				</tr>
+			</table>
+			<?php
+		}
 	}
 		//The next set of code draws the table that displays information about the person
 		?>

@@ -1188,26 +1188,20 @@ function search_indis_names($query, $allgeds=false) {
 }
 
 /**
- * get recent changes since the given date inclusive
+ * get recent changes since the given julian day inclusive
  * @author	yalnifj
- * @param	int $day the day of the month to search for, leave empty to include all
- * @param	int $mon the integer value for the month to search for, leave empty to include all
- * @param	int $year the year to search for, leave empty to include all
+ * @param	int $jd, leave empty to include all
  */
-function get_recent_changes($day="", $mon="", $year="", $allgeds=false) {
+function get_recent_changes($jd=0, $allgeds=false) {
 	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS;
 
-	$changes = array();
-	while(strlen($year)<4) $year ='0'.$year;
-	while(strlen($mon)<2) $mon ='0'.$mon;
-	while(strlen($day)<2) $day ='0'.$day;
-	$datestamp = $year.$mon.$day;
-	$sql = "SELECT * FROM ".$TBLPREFIX."dates WHERE d_fact='CHAN' AND d_datestamp>=".$datestamp;
-	if (!$allgeds) $sql .= " AND d_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ";
-	$sql .= " ORDER BY d_datestamp DESC";
-	//print $sql;
-	$res = dbquery($sql);
+	$sql = "SELECT d_gid FROM {$TBLPREFIX}dates WHERE d_fact='CHAN' AND d_julianday1>={$jd}";
+	if (!$allgeds)
+		$sql .= " AND d_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ";
+	$sql .= " ORDER BY d_julianday1 DESC";
 
+	$changes = array();
+	$res = dbquery($sql);
 	if (!DB::isError($res)) {
 		while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 			if (preg_match("/\w+:\w+/", $row['d_gid'])==0) {
@@ -1288,9 +1282,7 @@ function search_indis_dates($day="", $month="", $year="", $fact="", $allgeds=fal
  * Search the dates table for individuals that had events in the given range
  *
  * @author	yalnifj
- * @param	int $day the day of the month to search for, leave empty to include all
- * @param	string $month the 3 letter abbr. of the month to search for, leave empty to include all
- * @param	int $year the year to search for, leave empty to include all
+ * @param	int $start, $end - range of julian days to search
  * @param	string $fact the facts to include (use a comma seperated list to include multiple facts)
  * 				prepend the fact with a ! to not include that fact
  * @param	boolean $allgeds setting if all gedcoms should be searched, default is false
@@ -1301,44 +1293,7 @@ function search_indis_daterange($start, $end, $fact='', $allgeds=false, $ANDOR="
 	global $USE_RTL_FUNCTIONS, $year; 
 	$myindilist = array();
 	
-	$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname, d_gid, d_fact FROM ".$TBLPREFIX."dates, ".$TBLPREFIX."individuals WHERE i_id=d_gid AND i_file=d_file ";
-//	if (!empty($day)) $sql .= "AND d_day='".$DBCONN->escapeSimple($day)."' ";
-//	if (!empty($month)) $sql .= "AND d_month='".$DBCONN->escapeSimple(str2upper($month))."' ";
-//	if (!empty($year)) $sql .= "AND d_year='".$DBCONN->escapeSimple($year)."' ";
-	$mod = 1;
-	for($i = strlen($start); $i>0; $i--) $mod=$mod*10;
-	if ($mod==100000000) $sql .= "AND d_datestamp>=".$start." AND d_datestamp<=".$end." ";
-	else { 
-		if ($start < $end) $sql .= " AND ((d_type is null AND ((d_datestamp%$mod)>=".$start." AND (d_datestamp%$mod)<=".$end.") OR (d_datestamp<0 AND -1*(d_datestamp%$mod)>=".$start." AND -1*(d_datestamp%$mod)<=".$end.")) ";
-		else $sql .= "AND ((d_type is null AND (((d_datestamp%$mod)>=".$start." OR (d_datestamp%$mod)<=".$end.") OR (d_datestamp<0 AND (-1*(d_datestamp%$mod)>=".$start." OR -1*(d_datestamp%$mod)<=".$end.")))) ";
-		// dates without a year are filled to the dates table with a negative timestamp
-
-		if ($USE_RTL_FUNCTIONS) {	
-			if (empty($year)) $year = date("Y", $time);
-
-			$startmonth = intval($start/100);
-			$startday = $start%100;
-			$startyear = $year;
-
-			$endmonth = intval($end/100);
-			$endday = $end%100;
-			if ($start<$end) $endyear = $year;
-			else $endyear = $year+1;
-
-			$startjewish=jdtojewish(gregoriantojd($startmonth, $startday, $year));
-			list($StartMonthhb, $StartDayhb, $StartYearhb) = split('/',$startjewish);
-			$endjewish=jdtojewish(gregoriantojd($endmonth, $endday, $endyear));
-			list($EndMonthhb, $EndDayhb, $EndYearhb) = split('/',$endjewish);
-			$starthb = $StartMonthhb*100+$StartDayhb;
-			if ($EndMonthhb==13) $EndMonthhb=0;
-			$endhb = ($EndMonthhb+1)*100+$EndDayhb; //to ensure that we get also Nisan dates on non leapyears
-
-			if ($starthb < $endhb) $sql .= " OR ((d_type=\"@#DHEBREW@\" AND ((d_datestamp%$mod)>=".$starthb." AND (d_datestamp%$mod)<=".$endhb.") OR (d_datestamp<0 AND -1*(d_datestamp%$mod)>=".$starthb." AND -1*(d_datestamp%$mod)<=".$endhb.")))) ";
-			else $sql .= "OR ((d_type=\"@#DHEBREW@\" AND (((d_datestamp%$mod)>=".$starthb." OR (d_datestamp%$mod)<=".$endhb.") OR (d_datestamp<0 AND (-1*(d_datestamp%$mod)>=".$starthb." OR -1*(d_datestamp%$mod)<=".$endhb.")))))) ";
-		}
-		else $sql .= ") ";
-	}
-
+	$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname, d_gid, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals WHERE i_id=d_gid AND i_file=d_file AND d_julianday2>={$start} AND d_julianday1<={$end} ";
 	if (!empty($fact)) {
 		$sql .= "AND (";
 		$facts = preg_split("/[,:; ]/", $fact);
@@ -1358,8 +1313,8 @@ function search_indis_daterange($start, $end, $fact='', $allgeds=false, $ANDOR="
 		$sql .= ") ";
 	}
 	if (!$allgeds) $sql .= "AND d_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ";
-	$sql .= "ORDER BY d_year DESC, d_mon DESC, d_day DESC";
-//	print $sql;
+	$sql .= "ORDER BY d_julianday1";
+//	print $sql; 
 	$res = dbquery($sql);
 
 	if (!DB::isError($res)) {
@@ -1713,9 +1668,7 @@ function search_fams_dates($day="", $month="", $year="", $fact="", $allgeds=fals
  * Search the dates table for families that had events in the date range
  *
  * @author	yalnifj
- * @param	int $day the day of the month to search for, leave empty to include all
- * @param	string $month the 3 letter abbr. of the month to search for, leave empty to include all
- * @param	int $year the year to search for, leave empty to include all
+ * @param	int $start, $end - range of julian days to search
  * @param	string $fact the facts to include (use a comma seperated list to include multiple facts)
  * 				prepend the fact with a ! to not include that fact
  * @param	boolean $allgeds setting if all gedcoms should be searched, default is false
@@ -1725,14 +1678,7 @@ function search_fams_daterange($start, $end, $fact="", $allgeds=false) {
 	global $TBLPREFIX, $GEDCOM, $famlist, $DBCONN, $GEDCOM, $GEDCOMS;
 	$myfamlist = array();
 
-	$sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom, d_gid, d_fact FROM ".$TBLPREFIX."dates, ".$TBLPREFIX."families WHERE f_id=d_gid AND f_file=d_file ";
-//	if (!empty($day)) $sql .= "AND d_day='".$DBCONN->escapeSimple($day)."' ";
-//	if (!empty($month)) $sql .= "AND d_month='".$DBCONN->escapeSimple(str2upper($month))."' ";
-//	if (!empty($year)) $sql .= "AND d_year='".$DBCONN->escapeSimple($year)."' ";
-	$mod = 1;
-	for($i = strlen($start); $i>0; $i--) $mod=$mod*10;
-	if ($mod==100000000) $sql .= "AND d_datestamp>=".$start." AND d_datestamp<=".$end." ";
-	else $sql .= "AND (d_datestamp%$mod)>=".$start." AND (d_datestamp%$mod)<=".$end." ";
+	$sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom, d_gid, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}families WHERE f_id=d_gid AND f_file=d_file AND d_julianday2>={$start} AND d_julianday1<={$end} ";
 	if (!empty($fact)) {
 		$sql .= "AND (";
 		$facts = preg_split("/[,:; ]/", $fact);
@@ -1752,7 +1698,7 @@ function search_fams_daterange($start, $end, $fact="", $allgeds=false) {
 		$sql .= ") ";
 	}
 	if (!$allgeds) $sql .= "AND d_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"])." ";
-	$sql .= "ORDER BY d_year, d_month, d_day DESC";
+	$sql .= "ORDER BY d_julianday1";
 
 	$res = dbquery($sql);
 
@@ -3112,6 +3058,116 @@ global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 	}
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// Get a list of events whose anniversary occured on a given julian day.
+// $jd    - the julian day
+// $facts - restrict the search to just these facts or leave blank for all
+////////////////////////////////////////////////////////////////////////////////
+function get_anniversary_events($jd, $facts='') {
+	global $GEDCOMS, $GEDCOM, $TBLPREFIX;
+
+	// If no facts specified, get all except these
+	$skipfacts = "CHAN,BAPL,SLGC,SLGS,ENDL,CENS,RESI,NOTE,ADDR,OBJE,SOUR,PAGE,DATA,TEXT";
+
+	$found_facts=array();
+	foreach (array('Gregorian'=>'@#DGREGORIAN@', 'Julian'=>'@#DJULIAN@', 'French'=>'@#DFRENCH R@', 'Jewish'=>'@#DHEBREW@') as $cal=>$cal_escape) {
+		$jdtocal="JDto{$cal}";
+		$caltojd="{$cal}toJD";
+		if (function_exists($jdtocal) && function_exists($caltojd))	{
+			list($m, $d, $y)=explode('/', $jdtocal($jd));
+			// Calculate the number of days in the month
+			$next_m=$m+1;
+			if ($cal=='Jewish') {
+				$months_in_year=13;
+				if ($next_m==7 && ((7*$y+1)%19)>=7) // Not a jewish leap year, so only one Adar
+					$next_m=8;
+			} else {
+				$months_in_year=12;
+			}
+			if ($next_m>$months_in_year) {
+				$next_m=1;
+				$next_y=$y+1;
+			} else {
+				$next_m=$m+1;
+				$next_y=$y;
+			}
+			$days_in_month=$caltojd($next_m, 1, $next_y)-$caltojd($m, 1, $y);
+			// Build a SQL where clause to match anniversaries in the appropriate calendar.
+			if ($cal_escape=='@#DGREGORIAN@')
+				$where="WHERE (d_type IS NULL OR d_type='{$cal_escape}')";
+			else
+				$where="WHERE d_type='{$cal_escape}'";
+			// Dates without days go on the first day of the month
+			// Dates with invalid days go on the last day of the month
+			if ($d==1)
+				$where.=" AND d_day<=1";
+			else
+				if ($d==$days_in_month)
+					$where.=" AND d_day>={$d}";
+				else
+					$where.=" AND d_day={$d}";
+			// Only events with a month have anniversaries
+			$where.=" AND d_mon={$m}";
+			// Only events in the past (includes dates without a year)
+			$where.=" AND d_year<={$y}";
+			// Restrict to certain types of fact
+			if (empty($facts)) {
+				$excl_facts="'".preg_replace('/\W+/', "','", $skipfacts)."'";
+				$where.=" AND d_fact NOT IN ({$excl_facts})";
+			} else {
+				$incl_facts="'".preg_replace('/\W+/', "','", $facts)."'";
+				$where.=" AND d_fact IN ({$incl_facts})";
+			}
+			// Only get events from the current gedcom
+			$where.=" AND d_file={$GEDCOMS[$GEDCOM]['id']}";
+			
+			// Now fetch these anniversaries
+			$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
+			$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
+			foreach (array($ind_sql, $fam_sql) as $sql) {
+				$res=dbquery($sql);
+				while ($row=&$res->fetchRow()) {
+					// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
+					// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
+					// to be cached.  We should store the level1 fact here (or somewhere)
+					$ged_date_regex="/2 DATE.*({$row[3]}\s*".($row[4]>0 ? "0*{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "").")/i";
+					foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
+						if (preg_match("/1 {$row[7]}/", $factrec) && preg_match($ged_date_regex, $factrec, $dmatch)) {
+							if (preg_match('/2 RESN (.+)/', $factrec, $match))
+								$resn=$match[1];
+							else
+								$resn='';
+							if (preg_match('/2 PLAC (.+)/', $factrec, $match))
+								$plac=$match[1];
+							else
+								$plac='';
+							$found_facts[]=array(
+								// These numeric elements are deprecated
+								0=>$row[0],
+								1=>$factrec,
+								2=>$row[2],
+								3=>jdtounix($jd),
+								// Should use these elements instead
+								'id'=>$row[0],
+								'objtype'=>$row[2],
+								'fact'=>$row[7],
+								'factrec'=>$factrec,
+								'jd'=>$jd,
+								'anniv'=>($row[6]==0?0:$y-$row[6]),
+								'date'=>$dmatch[1],
+								'resn'=>$resn,
+								'plac'=>$plac
+							);
+						}
+				}
+				$res->free();
+			}
+		}
+	}
+	return $found_facts;
+}
+
+
 /**
  * Get the list of current and upcoming events, sorted by anniversary date
  *
@@ -3128,18 +3184,11 @@ global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
  * to be done by the routine that makes use of the event list.
  */
 function get_event_list() {
-	global $USE_RTL_FUNCTIONS;
-	global $INDEX_DIRECTORY, $GEDCOM, $DEBUG;
-	global $DAYS_TO_SHOW_LIMIT;
+	global $INDEX_DIRECTORY, $GEDCOM, $DEBUG, $DAYS_TO_SHOW_LIMIT, $COMMIT_COMMAND;
 
 	if (!isset($DAYS_TO_SHOW_LIMIT)) $DAYS_TO_SHOW_LIMIT = 30;
 
-	$skipfacts = "CHAN,BAPL,SLGC,SLGS,ENDL";	// These are always excluded
-	$skipfacts .= ",CENS,RESI,NOTE,ADDR,OBJE,SOUR,PAGE,DATA,TEXT";
-
 	// Look for cached Facts data
-	$found_facts = array();
-	$cache_load = false;
 	if ((file_exists($INDEX_DIRECTORY.$GEDCOM."_upcoming.php"))&&(!isset($DEBUG)||($DEBUG==false))) {
 		$modtime = filemtime($INDEX_DIRECTORY.$GEDCOM."_upcoming.php");
 		$mday = date("d", $modtime);
@@ -3147,119 +3196,26 @@ function get_event_list() {
 			$fp = fopen($INDEX_DIRECTORY.$GEDCOM."_upcoming.php", "rb");
 			$fcache = fread($fp, filesize($INDEX_DIRECTORY.$GEDCOM."_upcoming.php"));
 			fclose($fp);
-			$found_facts = unserialize($fcache);
-			$cache_load = true;
+			return unserialize($fcache);
 		}
 	}
 
-	if (!$cache_load) {
-		$nmonth = date('n');
-		$dateRangeStart = mktime(0,0,0,date('n'),date('j'),date('Y'));
-		$dateRangeEnd = $dateRangeStart+(60*60*24*$DAYS_TO_SHOW_LIMIT)-1;
-		$startstamp = date("md", $dateRangeStart);
-		$endstamp = date("md", $dateRangeEnd);
-
-		// Search database for raw Indi data if no cache was found
-		$dayindilist = search_indis_daterange($startstamp, $endstamp, "!CHAN");
-
-		// Search database for raw Family data if no cache was found
-		$dayfamlist = search_fams_daterange($startstamp, $endstamp, "!CHAN");
-
-		// Apply filter criteria and perform other transformations on the raw data
-		$found_facts = array();
-		foreach($dayindilist as $gid=>$indi) {
-			$facts = get_all_subrecords($indi["gedcom"], $skipfacts, false, false, false);
-			foreach($facts as $key=>$factrec) {
-				$date = 0; 
-				if ($USE_RTL_FUNCTIONS) {
-					$hct = preg_match("/2 DATE.*(@#DHEBREW@)/", $factrec, $match);
-					if ($hct>0) {
-						$dct = preg_match("/2 DATE (.+)/", $factrec, $match);
-						$hebrew_date = parse_date(trim($match[1]));
-						$date = jewishGedcomDateToCurrentGregorian($hebrew_date);
-					}
-				} 
-				
-				if ($date===0) {
-				  	$ct = preg_match("/2 DATE (.+)/", $factrec, $match);
-				  	if ($ct>0) $date = parse_date(trim($match[1]));
-				}
-			  	
-				if ($date !== 0) {
-					$startSecond = 1;
-					if ($date[0]["day"]=="") {
-						$startSecond = 0;
-						$date[0]["day"] = ($date[0]["month"]==$nmonth) ? date('j')+1 : 1;
-					}
-					$anniversaryDate = mktime(0,0,$startSecond,(int)$date[0]["mon"],(int)$date[0]["day"],date('Y'));
-					if ($anniversaryDate<$dateRangeStart) $anniversaryDate = mktime(0,0,$startSecond,(int)$date[0]["mon"],(int)$date[0]["day"],date('Y')+1);
-					if ($anniversaryDate>=$dateRangeStart && $anniversaryDate<=$dateRangeEnd) {
-						// Strip useless information:
-						//   NOTE, ADDR, OBJE, SOUR, PAGE, DATA, TEXT, CONC, CONT
-						$factrec = preg_replace("/\d\s+(NOTE|ADDR|OBJE|SOUR|PAGE|DATA|TEXT|CONC|CONT)\s+(.+)\n/", "", $factrec);
-						$found_facts[] = array($gid, $factrec, "INDI", $anniversaryDate);
-					}
-				}
-			}
-		}
-		foreach($dayfamlist as $gid=>$fam) {
-			$facts = get_all_subrecords($fam["gedcom"], $skipfacts, false, false, false);
-			foreach($facts as $key=>$factrec) {
-				$date = 0;
-				if ($USE_RTL_FUNCTIONS) {
-					$hct = preg_match("/2 DATE.*(@#DHEBREW@)/", $factrec, $match);
-					if ($hct>0) {
-						$dct = preg_match("/2 DATE (.+)/", $factrec, $match);
-						$hebrew_date = parse_date(trim($match[1]));
-						$date = jewishGedcomDateToCurrentGregorian($hebrew_date);
-					}
-				} 
-				if ($date===0) {
-					$ct = preg_match("/2 DATE (.+)/", $factrec, $match);
-					if ($ct>0) $date = parse_date(trim($match[1]));
-				}
-				
-				if ($date !== 0) {
-					$startSecond = 1;
-					if ($date[0]["day"]=="") {
-						$startSecond = 0;
-						$date[0]["day"] = ($date[0]["month"]==$nmonth) ? date('j')+1 : 1;
-					}
-					$anniversaryDate = mktime(0,0,$startSecond,(int)$date[0]["mon"],(int)$date[0]["day"],date('Y'));
-					if ($anniversaryDate<$dateRangeStart) $anniversaryDate = mktime(0,0,$startSecond,(int)$date[0]["mon"],(int)$date[0]["day"],date('Y')+1);
-					if ($anniversaryDate>=$dateRangeStart && $anniversaryDate<=$dateRangeEnd) {
-						// Strip useless information:
-						//   NOTE, ADDR, OBJE, SOUR, PAGE, DATA, TEXT, CONC, CONT
-						$factrec = preg_replace("/\d\s+(NOTE|ADDR|OBJE|SOUR|PAGE|DATA|TEXT|CONC|CONT)\s+(.+)\n/", "", $factrec);
-						$found_facts[] = array($gid, $factrec, "FAM", $anniversaryDate);
-					}
-				}
-			}
-		}
-
-		uasort($found_facts, "compare_found_facts");
-		reset($found_facts);
-
-// Cache the Facts data just found
-		if (is_writable($INDEX_DIRECTORY)) {
-			$fp = fopen($INDEX_DIRECTORY."/".$GEDCOM."_upcoming.php", "wb");
-			fwrite($fp, serialize($found_facts));
-			fclose($fp);
-			$logline = AddToLog($GEDCOM."_upcoming.php updated by >".getUserName()."<");
- 			if (!empty($COMMIT_COMMAND)) check_in($logline, $GEDCOM."_upcoming.php", $INDEX_DIRECTORY);
-		}
+	$found_facts=array();
+	// Cache dates for a day either side of the range "today to today+N".
+	// This is because users may be in different time zones (and on different
+	// days) to the server.
+	for ($jd=unixtojd()-1; $jd<=unixtojd()+1+$DAYS_TO_SHOW_LIMIT; ++$jd)
+		$found_facts=array_merge($found_facts, get_anniversary_events($jd));
+	// Cache the Facts data just found
+	if (is_writable($INDEX_DIRECTORY)) {
+		$fp = fopen($INDEX_DIRECTORY."/".$GEDCOM."_upcoming.php", "wb");
+		fwrite($fp, serialize($found_facts));
+		fclose($fp);
+		$logline = AddToLog($GEDCOM."_upcoming.php updated by >".getUserName()."<");
+		if (!empty($COMMIT_COMMAND))
+			check_in($logline, $GEDCOM."_upcoming.php", $INDEX_DIRECTORY);
 	}
-
 	return $found_facts;
-}
-
-function compare_found_facts($a, $b) {
-	// Sort by date
-	if ($a[3]!=$b[3])
-		return $a[3]-$b[3];
-	// :TODO: Sort by name
-	// Sort by fact type
-	return compare_facts_type($a[1], $b[1]);
 }
 
 ?>
