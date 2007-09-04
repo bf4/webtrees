@@ -206,7 +206,7 @@ class Menu
 				$output .= "<td align=\"";
 				if ($TEXT_DIRECTION=="rtl") $output .= "right";
 				else $output .= "left";
-				$output .= "\" valign=\"middle\">";
+				$output .= "\" valign=\"middle\" style=\"white-space: nowrap;\">";
 				$output .= $link;
 				$output .= $this->label;
 				$output .= "</a></td>";
@@ -218,7 +218,7 @@ class Menu
 				$output .= "<td align=\"";
 				if ($TEXT_DIRECTION=="rtl") $output .= "left";
 				else $output .= "right";
-				$output .= "\" valign=\"middle\">";
+				$output .= "\" valign=\"middle\" style=\"white-space: nowrap;\">";
 				$output .= $link;
 				$output .= $this->label;
 				$output .= "</a></td>";
@@ -261,22 +261,22 @@ class Menu
 			$submenuid = "menu{$id}_subs";
 			if ($TEXT_DIRECTION == 'ltr')
 			{
-				$output .= '<div style="text-align: left; overflow: visible;">';
+				$output .= '<div style="text-align: left;">';
 			}
 			else
 			{
-				$output .= '<div style="text-align: right; overflow: visible;">';
+				$output .= '<div style="text-align: right;">';
 			}
 			$output .= "<div id=\"menu{$id}_subs\" class=\"{$this->submenuclass}\" ";
 			if ($this->flyout == 'right')
 			{
 				if ($TEXT_DIRECTION == 'ltr')
 				{
-					$output .= ' style=\"left: 80px; overflow: visible;\"';
+					$output .= ' style=\"left: 80px;\"';
 				}
 				else
 				{
-					$output .= ' style=\"right: -50px; overflow: visible;\"';
+					$output .= ' style=\"right: -50px;\"';
 				}
 			}
 			$output .= " onmouseover=\"show_submenu('{$this->parentmenu}'); show_submenu('{$submenuid}');\" onmouseout=\"timeout_submenu('menu{$id}_subs');\">\n";
