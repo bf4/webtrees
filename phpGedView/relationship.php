@@ -605,7 +605,7 @@ function paste_id(value) {
 	pastefield.value=value;
 }
 </script>
-<div id="relationship_chart_options<?php print ($TEXT_DIRECTION=="ltr")?"":"_rtl";?>" style="position: relative; width:98%;">
+<div id="relationship_chart_options<?php print ($TEXT_DIRECTION=="ltr")?"":"_rtl";?>" style="position: relative; z-index:90; width:98%;">
 <h2><?php print PrintReady($title_string);?></h2><br />
 <!-- // Print the form to change the number of displayed generations -->
 <?php

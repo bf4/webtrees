@@ -25,7 +25,7 @@
  */
 $menubar = new MenuBar();
 ?>
-<div style="position: relative; z-index: 50; width: 98%">
+<div style="width: 98%">
 		<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]; ?>" width="99%" height="3" alt="" />
 	<table id="topMenu">
 		<tr>
