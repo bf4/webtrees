@@ -235,30 +235,31 @@ if ($action == "show") {
 	}
 	else if (count($faqs) == 0 && !$canconfig) print "<tr><td class=\"error center\">".$pgv_lang["no_faq_items"]."</td></tr>";
 	else {
-		// NOTE: Add and preview link
-		if ($canconfig) print "<tr>";
-		if ($canconfig && $adminedit) {
+		// NOTE: Add a preview link
+		if ($canconfig) {
+			print "<tr>";
+			if ($adminedit) {
+				print "<td class=\"descriptionbox center\" colspan=\"2\">";
+				print_help_link("add_faq_item_help","qm","add_faq_item");
+				print "<a href=\"faq.php?action=add\">".$pgv_lang["add"]."</a></td>";
+			}
 			print "<td class=\"descriptionbox center\" colspan=\"2\">";
-			print_help_link("add_faq_item_help","qm","add_faq_item");
-			print "<a href=\"faq.php?action=add\">".$pgv_lang["add"]."</a></td>";
+			
+			if ($adminedit) {
+				print_help_link("preview_faq_item_help","qm","preview_faq_item");
+				print "<a href=\"faq.php?adminedit=0\">".$pgv_lang["preview"]."</a>";
+			} else {
+				print_help_link("restore_faq_edits_help","qm","restore_faq_edits");
+				print "<a href=\"faq.php?adminedit=1\">".$pgv_lang["edit"]."</a>";
+			}
+			print "</td>";
+			
+			if ($adminedit) {
+				if (isset($error)) print "<td class=\"topbottombar red\">".$error_message."</td>";
+				else print "<td class=\"topbottombar\">&nbsp;</td>";
+			}
+			print "</tr>";
 		}
-		if ($canconfig) print "<td class=\"descriptionbox center\" colspan=\"2\">";
-		
-		if ($canconfig && $adminedit) {
-			print_help_link("preview_faq_item_help","qm","preview_faq_item");
-			print "<a href=\"faq.php?adminedit=0\">".$pgv_lang["preview"]."</a>";
-		}
-		else if ($canconfig && !$adminedit) {
-			print_help_link("restore_faq_edits_help","qm","restore_faq_edits");
-			print "<a href=\"faq.php?adminedit=1\">".$pgv_lang["edit"]."</a>";
-		}
-		print "</td>";
-		
-		if ($canconfig && $adminedit) {
-			if (isset($error)) print "<td class=\"topbottombar red\">".$error_message."</td></tr>";
-			else print "<td class=\"topbottombar\">&nbsp;</td></tr>";
-		}
-		else print "</tr>";
 		
 		foreach($faqs as $id => $data) {
 			if ($data["header"] && $data["body"]) {
