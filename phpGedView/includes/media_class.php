@@ -102,7 +102,7 @@ class Media extends GedcomRecord {
 	function canDisplayDetails() {
 		return $this->disp;
 	}
-	
+
 	/**
 	 * get the media note
 	 * @return string
@@ -128,7 +128,7 @@ class Media extends GedcomRecord {
 	function getName() {
 		return $this->getTitle();
 	}
-	
+
 	function getAddName() {
 		return $this->getAddTitle();
 	}
@@ -141,14 +141,14 @@ class Media extends GedcomRecord {
 		global $pgv_lang;
 
 		if (!$this->canDisplayDetails()) return "";
-		
+
 		$addtitle = get_gedcom_value("TITL:_HEB", 2, $this->gedrec);
 		if (empty($addtitle)) $addtitle = get_gedcom_value("TITL:_HEB", 1, $this->gedrec);
 		if (!empty($addtitle)) $addtitle = "<br />".$addtitle;
-		
+
 		$addtitle2 = get_gedcom_value("TITL:ROMN", 2, $this->gedrec);
 		if (empty($addtitle2)) $addtitle2 = get_gedcom_value("TITL:ROMN", 1, $this->gedrec);
-		
+
 		if (!empty($addtitle2)) $addtitle .= "<br />\n".$addtitle2;
 		return $addtitle;
 	}
@@ -293,31 +293,31 @@ class Media extends GedcomRecord {
 	 */
 	function setFileProperties() {
 		global $pgv_lang;
-		$imgsize;
+		$imgsize='';
 		if ($this->fileExists()) {
 			$this->filesizeraw = @filesize($this->getServerFilename());
 			$imgsize = @getimagesize($this->getServerFilename()); // [0]=width [1]=height [2]=filetype
 		}
 		if (@$imgsize[0]) {
 			// this is an image
-		$this->width = 0+$imgsize[0];
-		$this->height = 0+$imgsize[1];
+			$this->width = 0+$imgsize[0];
+			$this->height = 0+$imgsize[1];
 			$imageTypes = array("","GIF", "JPG", "PNG", "SWF", "PSD", "BMP", "TIFF", "TIFF", "JPC", "JP2", "JPX", "JB2", "SWC", "IFF", "WBMP", "XBM");
-		$this->ext = $imageTypes[0+$imgsize[2]];
+			$this->ext = $imageTypes[0+$imgsize[2]];
 		}
 		if (!$this->ext) {
 			// this is probably not an image
 			// set file type equal to the file extension
-		$exp = explode("?", $this->file);
-		$pathinfo = pathinfo($exp[0]);
-		$this->ext = @strtoupper($pathinfo['extension']);
-		if (!$this->ext) $this->ext = "-";
+			$exp = explode("?", $this->file);
+			$pathinfo = pathinfo($exp[0]);
+			$this->ext = @strtoupper($pathinfo['extension']);
+			if (!$this->ext) $this->ext = "-";
 		}
 		if (@$imgsize['mime']) {
 			$this->mime = $imgsize['mime'];
 		} else {
 			// lookup mime type based on file extension
-			// this list needs to contain mimetypes for all media types not recognized by imgsize['mime'] 
+			// this list needs to contain mimetypes for all media types not recognized by imgsize['mime']
 			$mime['MOV']  = 'video/quicktime';
 			$mime['MP3']  = 'audio/mpeg';
 			$mime['PDF']  = 'application/pdf';
@@ -340,24 +340,24 @@ class Media extends GedcomRecord {
 
 		$url = "mediaviewer.php?mid=".$this->getXref()."&amp;ged=".$GEDCOM;
 		/** FIXME
-		if ($this->isRemote()) {
+		 if ($this->isRemote()) {
 			$parts = preg_split("/:/", $this->rfn);
 			if (count($parts)==2) {
-				$servid = $parts[0];
-				$aliaid = $parts[1];
-				if (!empty($servid)&&!empty($aliaid)) {
-					$servrec = find_gedcom_record($servid);
-					if (empty($servrec)) $servrec = find_updated_record($servid);
-					if (!empty($servrec)) {
-						$surl = get_gedcom_value("URL", 1, $servrec);
-						$url = "medialist.php?id=".$aliaid;
-						if (!empty($surl)) $url = dirname($surl)."/".$url;
-						$gedcom = get_gedcom_value("_DBID", 1, $servrec);
-						if (!empty($gedcom)) $url.="&amp;ged=".$gedcom;
-					}
-				}
+			$servid = $parts[0];
+			$aliaid = $parts[1];
+			if (!empty($servid)&&!empty($aliaid)) {
+			$servrec = find_gedcom_record($servid);
+			if (empty($servrec)) $servrec = find_updated_record($servid);
+			if (!empty($servrec)) {
+			$surl = get_gedcom_value("URL", 1, $servrec);
+			$url = "medialist.php?id=".$aliaid;
+			if (!empty($surl)) $url = dirname($surl)."/".$url;
+			$gedcom = get_gedcom_value("_DBID", 1, $servrec);
+			if (!empty($gedcom)) $url.="&amp;ged=".$gedcom;
 			}
-		}**/
+			}
+			}
+			}**/
 		return $url;
 	}
 
