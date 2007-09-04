@@ -1457,7 +1457,7 @@ class IndividualControllerRoot extends BaseController {
 					<?php
 					}
 				}
-				if (isset($family) && ($this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
+				if (isset($family) && (!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
 					?>
 					<tr>
 						<td class="facts_label"><?php echo $pgv_lang["add_child_to_family"]; ?></td>
