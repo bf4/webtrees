@@ -8,6 +8,7 @@
 	# $Id$
 =====================================================================
 Version 4.1.1
+ - Changed Sort chart, list, and report names in top menu (canajun2eh)
  - Applied [ 1745914 ] RA Search Plugin for genealogy-search-help.com (yalnifj)
  - Applied [ 1756626 ] Add 'label for' on login page (yalnifj)
  - Applied [ 1747980 ] Hide Edit Raw GEDCOM (yalnifj)
