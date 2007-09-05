@@ -508,7 +508,9 @@ class Person extends GedcomRecord {
 	 */
 	function getSpouseFamilyIds() {
 		if (!is_null($this->fams)) return $this->fams;
-		$this->fams = find_families_in_record($this->gedrec, "FAMS");
+		//$this->fams = find_families_in_record($this->gedrec, "FAMS");
+		preg_match_all("/1\s*FAMS\s*@(.+)@/", $this->gedrec, $match);
+		$this->fams = $match[1];
 		return $this->fams;
 	}
 	/**
@@ -569,7 +571,9 @@ class Person extends GedcomRecord {
 	 */
 	function getChildFamilyIds() {
 		if (!is_null($this->famc)) return $this->famc;
-		$this->famc = find_families_in_record($this->gedrec, "FAMC");
+		//$this->famc = find_families_in_record($this->gedrec, "FAMC");
+		preg_match_all("/1\s*FAMC\s*@(.+)@/", $this->gedrec, $match);
+		$this->famc = $match[1];
 		return $this->famc;
 	}
 	/**
@@ -590,6 +594,27 @@ class Person extends GedcomRecord {
 		}
 		$this->childFamilies = $families;
 		return $families;
+	}
+	/**
+	 * get primary family with parents
+	 * @return Family object
+	 */
+	function getPrimaryChildFamily() {
+		$families = $this->getChildFamilies();
+		if (count($families)==0) return null;
+		if (count($families)==1) return reset($families);
+		// If there is more than one FAMC record, choose the preferred parents:
+		// a) records with "2 _PRIMARY"
+		foreach ($families as $famid=>$fam)
+			if (preg_match("/\n\s*1\s+FAMC\s+@{$famid}@\s*\n(\s*[2-9].*\n)*(\s*2\s+_PRIMARY Y\b)/i", $this->gedrec)) return $fam;
+		// b) records with "2 PEDI birt"
+		foreach ($families as $famid=>$fam)
+			if (preg_match("/\n\s*1\s+FAMC\s+@{$famid}@\s*\n(\s*[2-9].*\n)*(\s*2\s+PEDI\s+birth?\b)/i", $this->gedrec)) return $fam;
+		// c) records with no "2 PEDI"
+		foreach ($families as $famid=>$fam)
+			if (!preg_match("/\n\s*1\s+FAMC\s+@{$famid}@\s*\n(\s*[2-9].*\n)*(\s*2\s+PEDI\b)/i", $this->gedrec)) return $fam;
+		// d) any record
+		return reset($families);
 	}
 	/**
 	 * get the step families from the parents
@@ -1426,6 +1451,28 @@ class Person extends GedcomRecord {
 			}
 		}
 		return $url."#content";
+	}
+
+	/**
+	 * get primary parents names for this person
+	 * @param string $htmlclass optional html class for the span block
+	 * @return string a span block with father & mother names
+	 */
+	function getPrimaryParentsNames($htmlclass="") {
+		global $pgv_lang;
+		$fam = $this->getPrimaryChildFamily();
+ 		if (!$fam) return "";
+		$husb = $fam->getHusband();
+		if ($husb) $father = $husb->getSortableName();
+ 		else $father = "";
+		$wife = $fam->getWife();
+		if ($wife) $mother = $wife->getSortableName();
+ 		else $mother = "";
+		$txt = "<span class=\"".$htmlclass."\">";
+		$txt .= "<br />".$pgv_lang["father"].": ".$father;
+		$txt .= "<br />".$pgv_lang["mother"].": ".$mother;
+		$txt .= "</span>";
+		return $txt;
 	}
 }
 ?>
