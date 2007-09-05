@@ -362,6 +362,7 @@ else if (isset($_GET['edit_forum']))
 	require PUN_ROOT.'footer.php';
 }
 
+else {
 
 $page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / Admin / Forums';
 require PUN_ROOT.'header.php';
@@ -402,7 +403,7 @@ generate_admin_menu('forums');
 
 		<h2 class="block2"><span>Edit forums</span></h2>
 		<div class="box">
-			<form id="edforum" method="post" action="admin_forums.php?action=edit">
+			<form id="edforum" method="post" action="<?php genurl('admin_forums.php?action=edit', true, true)?>">
 				<p class="submittop"><input type="submit" name="update_positions" value="Update positions" tabindex="3" /></p>
 <?php
 
@@ -455,3 +456,5 @@ while ($cur_forum = $db->fetch_assoc($result))
 <?php
 
 require PUN_ROOT.'footer.php';
+
+}

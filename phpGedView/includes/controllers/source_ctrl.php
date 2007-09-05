@@ -175,6 +175,7 @@ class SourceControllerRoot extends BaseController {
 	 */
 	function &getEditMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $pgv_changes;
+		global $SHOW_GEDCOM_RECORD;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 		
@@ -185,18 +186,21 @@ class SourceControllerRoot extends BaseController {
 		
 		// edit source menu
 		$menu = new Menu($pgv_lang['edit_source']);
-		$menu->addOnclick('return edit_raw(\''.$this->sid.'\');');
+		if ($SHOW_GEDCOM_RECORD || userIsAdmin($this->uname)) 
+			$menu->addOnclick('return edit_raw(\''.$this->sid.'\');');
 		if (!empty($PGV_IMAGES["edit_sour"]["small"]))
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
 
 		// edit source / edit_raw
-		$submenu = new Menu($pgv_lang['edit_raw']);
-		$submenu->addOnclick("return edit_raw('".$this->sid."');");
-		if (!empty($PGV_IMAGES["edit_sour"]["small"]))
-			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
-		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
-		$menu->addSubmenu($submenu);
+		if ($SHOW_GEDCOM_RECORD || userIsAdmin($this->uname)) {
+			$submenu = new Menu($pgv_lang['edit_raw']);
+			$submenu->addOnclick("return edit_raw('".$this->sid."');");
+			if (!empty($PGV_IMAGES["edit_sour"]["small"]))
+				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
+			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+			$menu->addSubmenu($submenu);
+		}
 		
 		// edit source / delete_source
 		$submenu = new Menu($pgv_lang['delete_source']);

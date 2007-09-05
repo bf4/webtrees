@@ -8,6 +8,10 @@
 	# $Id$
 =====================================================================
 Version 4.1.1
+ - Applied [ 1747980 ] Hide Edit Raw GEDCOM (yalnifj)
+ - Applied [ 1780060 ] Googlemap: Map items clipped on non-CSS3 browsers (yalnifj)
+ - Applied [ 1780075 ] 4.1 stable PunBB: Patches rollup (yalnifj)
+ - Applied [ 1782009 ] 4.1 stable: cannot use find media to link some media (yalnifj)
  - Fixed VERY minor XSS vulnerability on login page (yalnifj)
  - Fixed [ 1782104 ] ERROR 8 in mediaviewer (yalnifj)
  - Fixed [ 1786455 ] Main menus draw behind Relationship table (canajun2eh)

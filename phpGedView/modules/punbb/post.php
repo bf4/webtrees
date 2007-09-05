@@ -248,16 +248,16 @@ if (isset($_POST['form_sent']))
 								$mail_subject = str_replace('<topic_subject>', '\''.$cur_posting['subject'].'\'', $mail_subject);
 								$mail_message = str_replace('<topic_subject>', '\''.$cur_posting['subject'].'\'', $mail_message);
 								$mail_message = str_replace('<replier>', $username, $mail_message);
-								$mail_message = str_replace('<post_url>', $pun_config['o_base_url'].'/viewtopic.php?pid='.$new_pid.'#p'.$new_pid, $mail_message);
-								$mail_message = str_replace('<unsubscribe_url>', $pun_config['o_base_url'].'/misc.php?unsubscribe='.$tid, $mail_message);
+								$mail_message = str_replace('<post_url>', $pun_config['o_base_url'].'/'.genurl('viewtopic.php?pid=',true,false).$new_pid.'#p'.$new_pid, $mail_message);
+								$mail_message = str_replace('<unsubscribe_url>', $pun_config['o_base_url'].'/'.genurl('misc.php?unsubscribe=',true,false).$tid, $mail_message);
 								$mail_message = str_replace('<board_mailer>', $pun_config['o_board_title'].' '.$lang_common['Mailer'], $mail_message);
 
 								$mail_subject_full = str_replace('<topic_subject>', '\''.$cur_posting['subject'].'\'', $mail_subject_full);
 								$mail_message_full = str_replace('<topic_subject>', '\''.$cur_posting['subject'].'\'', $mail_message_full);
 								$mail_message_full = str_replace('<replier>', $username, $mail_message_full);
 								$mail_message_full = str_replace('<message>', $message, $mail_message_full);
-								$mail_message_full = str_replace('<post_url>', $pun_config['o_base_url'].'/viewtopic.php?pid='.$new_pid.'#p'.$new_pid, $mail_message_full);
-								$mail_message_full = str_replace('<unsubscribe_url>', $pun_config['o_base_url'].'/misc.php?unsubscribe='.$tid, $mail_message_full);
+								$mail_message_full = str_replace('<post_url>', $pun_config['o_base_url'].'/'.genurl('viewtopic.php?pid=',true,false).$new_pid.'#p'.$new_pid, $mail_message_full);
+								$mail_message_full = str_replace('<unsubscribe_url>', $pun_config['o_base_url'].'/'.genurl('misc.php?unsubscribe=',true,false).$tid, $mail_message_full);
 								$mail_message_full = str_replace('<board_mailer>', $pun_config['o_board_title'].' '.$lang_common['Mailer'], $mail_message_full);
 
 								$notification_emails[$cur_subscriber['language']][0] = $mail_subject;

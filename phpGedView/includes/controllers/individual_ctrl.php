@@ -521,9 +521,12 @@ class IndividualControllerRoot extends BaseController {
 		else $ff="";
 		//-- main edit menu
 		$menu = new Menu($pgv_lang["edit"]);
-		if ($USE_QUICK_UPDATE) $link = "return quickEdit('".$this->pid."');";
-		else $link = "return edit_raw('".$this->pid."');";
-		$menu->addOnclick($link);
+		//-- getting the link for the first menu has gotten more complicated
+		//-- so we are now setting it at the end of the method after the menu items have
+		//-- all been added
+//		if ($USE_QUICK_UPDATE) $link = "return quickEdit('".$this->pid."');";
+//		else $link = "return edit_raw('".$this->pid."');";
+//		$menu->addOnclick($link);
 		if (!empty($PGV_IMAGES["edit_indi"]["small"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]);
 		$menu->addClass("submenuitem$ff", "submenuitem_hover$ff", "submenu$ff");
@@ -535,10 +538,12 @@ class IndividualControllerRoot extends BaseController {
 			$menu->addSubmenu($submenu);
 		}
 		if (userCanEdit($this->uname)) {
-			$submenu = new Menu($pgv_lang["edit_raw"]);
-			$submenu->addOnclick("return edit_raw('".$this->pid."');");
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-			$menu->addSubmenu($submenu);
+			if (userIsAdmin($this->uname) || $this->canShowGedcomRecord()) {
+				$submenu = new Menu($pgv_lang["edit_raw"]);
+				$submenu->addOnclick("return edit_raw('".$this->pid."');");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$menu->addSubmenu($submenu);
+			}
 			if (count($this->indi->getSpouseFamilyIds())>1) {
 				$submenu = new Menu($pgv_lang["reorder_families"]);
 				$submenu->addOnclick("return reorder_families('".$this->pid."');");
@@ -591,6 +596,9 @@ class IndividualControllerRoot extends BaseController {
 				$menu->addSubmenu($submenu);
 			}
 		}
+		//-- get the link for the first submenu and set it as the link for the main menu
+		$link  = $menu->submenus[0]->onclick;
+		$menu->addOnclick($link);
 		return $menu;
 	}
 	/**

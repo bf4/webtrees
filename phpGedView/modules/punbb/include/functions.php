@@ -659,6 +659,7 @@ function message($message, $no_back_link = false)
 <?php
 
 	require PUN_ROOT.'footer.php';
+  exit;
 }
 
 
