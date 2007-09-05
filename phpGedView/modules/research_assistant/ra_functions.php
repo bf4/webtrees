@@ -1419,6 +1419,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		$this->sites["ellisisland.php"] = "EllisIslandRecords.org";	
 		$this->sites["geneanet.php"] = "GeneaNet.org";
 		$this->sites["werelate.php"] = "Werelate.org";
+		$this->sites["gensearchhelp.php"] = "Genealogy-Search-Help.com";
 		$opts = "";
 		$optCount = 1;
 			//load up the options into the html
