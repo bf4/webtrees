@@ -97,9 +97,11 @@ if (userCanEdit(getUserName())) {
 			print_help_link("show_changes_help", "qm");
 			print "<br />";
 		}
-		print "<a href=\"javascript:;\" onclick=\"return edit_raw('$rid');\">".$pgv_lang["edit_raw"]."</a>";
-		print_help_link("edit_raw_gedcom_help", "qm");
-		print " | ";
+		if ($SHOW_GEDCOM_RECORD || userIsAdmin(getUserName())) {
+			print "<a href=\"javascript:;\" onclick=\"return edit_raw('$rid');\">".$pgv_lang["edit_raw"]."</a>";
+			print_help_link("edit_raw_gedcom_help", "qm");
+			print " | ";
+		}
 		print "<a href=\"javascript:;\" onclick=\"return deleterepository('$rid');\">".$pgv_lang["delete_repo"]."</a>";
 		print_help_link("delete_repo_help", "qm");
 		print "<br />\n";
