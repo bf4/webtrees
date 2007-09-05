@@ -219,13 +219,8 @@ function print_todays_events($block=true, $config="", $side, $index) {
   }
 
   // Style 2: New format, tables, big text, etc.  Not too good on right side of page
-  if ($infoStyle=="style2") {
-		$option = "";
-		if ($onlyBDM == "yes") $option .= " onlyBDM";
-		if ($filter == "living") $option .= " living";
-		if ($allowDownload == "no") $option .= " noDownload";
-		print_events_table($todayjd, $todayjd, $option);
-	}
+  if ($infoStyle=="style2")
+		print_events_table($todayjd, $todayjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', $allowDownload=='yes');
 
 	if ($block)
 		print "</div>\n";
