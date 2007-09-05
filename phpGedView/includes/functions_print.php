@@ -1708,18 +1708,18 @@ function print_text($help, $level=0, $noprint=0){
 	 if (!isset($_SESSION["DEBUG_LANG"])) $DEBUG_LANG = "no";
 	 else $DEBUG_LANG = $_SESSION["DEBUG_LANG"];
 	 if ($DEBUG_LANG == "yes") print "[LANG_DEBUG] Variable called: ".$help."<br /><br />";
-	 $sentence = "";
+	 $sentence = false;
 	 if ($level>0) {
-		  $value ="";
-		  eval("if (!empty(\$$help)) \$value = \$$help;");
-		  if (empty($value)) return "";
+		  $value = false;
+		  eval("if (isset(\$$help)) \$value = \$$help;");
+		  if ($value===false) return false;
 		  $sentence = $value;
 	 }
-	 if (empty($sentence)) {
+	 if ($sentence===false) {
 		  if ($noprint == 2) {
 			  $sentence = $help;
 	  	  }
-	  	  else if (!empty($pgv_lang[$help])) $sentence = $pgv_lang[$help];
+	  	  else if (isset($pgv_lang[$help])) $sentence = $pgv_lang[$help];
 		  else {
 			if ($DEBUG_LANG == "yes") print "[LANG_DEBUG] Variable not present: ".$help."<br /><br />";
 		  	$sentence = $pgv_lang["help_not_exist"];
@@ -1737,7 +1737,7 @@ function print_text($help, $level=0, $noprint=0){
 		  $newreplace = preg_replace(array("/\[/","/\]/"), array("['","']"), $match[$i][1]);
 		  if ($DEBUG_LANG == "yes") print "[LANG_DEBUG] Embedded variable: ".$match[$i][1]."<br /><br />";
 		  $value = print_text($newreplace, $level+1);
-		  if (!empty($value)) $sentence = str_replace($match[$i][0], $value, $sentence);
+		  if ($value!==false) $sentence = str_replace($match[$i][0], $value, $sentence);
 		  else if ($noprint==0 && $level==0) $sentence = str_replace($match[$i][0], $match[$i][1].": ".$pgv_lang["var_not_exist"], $sentence);
 	 }
 	 // ------ Replace paired ~  by tag_start and tag_end (those vars contain CSS classes)
