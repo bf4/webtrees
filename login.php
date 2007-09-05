@@ -192,8 +192,8 @@ $i = 0;		// initialize tab index
 		  </tr>
 		  <?php if ($ALLOW_REMEMBER_ME) { ?>
 		  <tr>
-		  	<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("remember_me_help", "qm", "remember_me"); print $pgv_lang["remember_me"]?></td>
-		    <td class="optionbox <?php print $TEXT_DIRECTION; ?> "><input type="checkbox" tabindex="<?php $i++; print $i?>" name="remember" value="yes" <?php if (!empty($_COOKIE["pgv_rem"])) print "checked=\"checked\""; ?> class="formField" /></td>
+		  	<td class="descriptionbox <?php print $TEXT_DIRECTION; ?> wrap width50"><?php print_help_link("remember_me_help", "qm", "remember_me");?><label for="remember"><?php print $pgv_lang["remember_me"];?></label></td>
+		    <td class="optionbox <?php print $TEXT_DIRECTION; ?> "><input type="checkbox" tabindex="<?php $i++; print $i?>" id="remember" name="remember" value="yes" <?php if (!empty($_COOKIE["pgv_rem"])) print "checked=\"checked\""; ?> class="formField" /></td>
 		  </tr>
 		  <?php } ?>
 		  <tr>

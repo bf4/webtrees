@@ -28,6 +28,10 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["autosearch_ssurname"] = "Include spouse's surname:";
+$pgv_lang["autosearch_sgivennames"] = "Include spouse's given names:";
+$pgv_lang["autosearch_plugin_name_gensearchhelp"] = "Genealogy-Search-Help.com Plug-in";
+
 $pgv_lang["add_task_inst"]		= "If a task for your research results has not yet been created, you should create the task first and then choose the option to save and complete the task.";
 $pgv_lang["complete_task_inst"]	= "Choose a task from the list of your tasks below to complete the task and enter your results:";
 $pgv_lang["enter_results"]		= "Enter Results";
