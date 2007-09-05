@@ -525,6 +525,9 @@ a:hover .nameZoom {
 }
 
 .submenu, .submenu_rtl {
+	visibility: hidden;
+	position: absolute;
+	z-index: 100;
 	color: black;
 	text-decoration: none;
 	font: 11px tahoma, arial, helvetica, sans-serif;
