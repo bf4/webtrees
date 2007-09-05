@@ -3062,8 +3062,12 @@ global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Get a list of events whose anniversary occured on a given julian day.
+// Used on the on-this-day/upcoming blocks and the day/month calendar views.
 // $jd    - the julian day
 // $facts - restrict the search to just these facts or leave blank for all
+//
+// NOTE: get_anniversary_events() and get_calendar_events () have a lot of
+// common code.  Make sure you update them together!
 ////////////////////////////////////////////////////////////////////////////////
 function get_anniversary_events($jd, $facts='') {
 	global $GEDCOMS, $GEDCOM, $TBLPREFIX;
@@ -3135,14 +3139,6 @@ function get_anniversary_events($jd, $facts='') {
 					$ged_date_regex="/2 DATE.*({$row[3]}\s*".($row[4]>0 ? "0*{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "").")/i";
 					foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
 						if (preg_match("/1 {$row[7]}/", $factrec) && preg_match($ged_date_regex, $factrec, $dmatch)) {
-							if (preg_match('/2 RESN (.+)/', $factrec, $match))
-								$resn=$match[1];
-							else
-								$resn='';
-							if (preg_match('/2 PLAC (.+)/', $factrec, $match))
-								$plac=$match[1];
-							else
-								$plac='';
 							$found_facts[]=array(
 								// These numeric elements are deprecated
 								0=>$row[0],
@@ -3156,15 +3152,82 @@ function get_anniversary_events($jd, $facts='') {
 								'factrec'=>$factrec,
 								'jd'=>$jd,
 								'anniv'=>($row[6]==0?0:$y-$row[6]),
-								'date'=>$dmatch[1],
-								'resn'=>$resn,
-								'plac'=>$plac
+								'date'=>$dmatch[1]
 							);
 						}
 				}
 				$res->free();
 			}
 		}
+	}
+	return $found_facts;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Get a list of events which occured during a given date range.
+// TODO: Used by the recent-changes block and the calendar year view.
+// $jd1, $jd2 - the range of julian day
+// $facts - restrict the search to just these facts or leave blank for all
+//
+// NOTE: get_anniversary_events() and get_calendar_events () have a lot of
+// common code.  Make sure you update them together!
+////////////////////////////////////////////////////////////////////////////////
+function get_calendar_events($jd1, $jd2, $facts='') {
+	global $GEDCOMS, $GEDCOM, $TBLPREFIX;
+
+	// If no facts specified, get all except these
+	$skipfacts = "CHAN,BAPL,SLGC,SLGS,ENDL,CENS,RESI,NOTE,ADDR,OBJE,SOUR,PAGE,DATA,TEXT";
+
+	$found_facts=array();
+
+	// This where clause gives events that start/end/overlap the period
+	// e.g. 1914-1918 would show up on 1916
+	//$where="WHERE d_julianday1 <={$jd2} AND d_julianday2>={$jd1}";
+	// This where clause gives only events that start/end during the period
+	$where="WHERE (d_julianday1>={$jd1} AND d_julianday1<={$jd2} OR d_julianday2>={$jd1} AND d_julianday2<={$jd2})";
+
+	// Restrict to certain types of fact
+	if (empty($facts)) {
+		$excl_facts="'".preg_replace('/\W+/', "','", $skipfacts)."'";
+		$where.=" AND d_fact NOT IN ({$excl_facts})";
+	} else {
+		$incl_facts="'".preg_replace('/\W+/', "','", $facts)."'";
+		$where.=" AND d_fact IN ({$incl_facts})";
+	}
+	// Only get events from the current gedcom
+	$where.=" AND d_file={$GEDCOMS[$GEDCOM]['id']}";
+			
+	// Now fetch these anniversaries
+	$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
+	$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
+	foreach (array($ind_sql, $fam_sql) as $sql) {
+		$res=dbquery($sql);
+		while ($row=&$res->fetchRow()) {
+			// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
+			// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
+			// to be cached.  We should store the level1 fact here (or somewhere)
+			$ged_date_regex="/2 DATE.*({$row[3]}\s*".($row[4]>0 ? "0*{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "").")/i";
+			foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
+				if (preg_match("/1 {$row[7]}/", $factrec) && preg_match($ged_date_regex, $factrec, $dmatch)) {
+					$found_facts[]=array(
+						// These numeric elements are deprecated
+						0=>$row[0],
+						1=>$factrec,
+						2=>$row[2],
+						3=>jdtounix($jd1),
+						// Should use these elements instead
+						'id'=>$row[0],
+						'objtype'=>$row[2],
+						'fact'=>$row[7],
+						'factrec'=>$factrec,
+						'jd'=>$jd1,
+						'anniv'=>0,
+						'date'=>$dmatch[1]
+					);
+				}
+		}
+		$res->free();
 	}
 	return $found_facts;
 }
