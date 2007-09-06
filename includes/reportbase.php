@@ -1345,6 +1345,7 @@ function PGVRFactsEHandler() {
 				}
 			}
 			$desc = trim($match[2]);
+//			print $fact."[".$desc."]";
 			$desc .= get_cont(2, $gedrec);
 		}
 		//-- start the sax parser
@@ -1449,8 +1450,9 @@ function PGVRifSHandler($attrs) {
 	$condition = $attrs["condition"];
 	$condition = preg_replace("/\\$(\w+)/", "\$vars['$1'][\"id\"]", $condition);
 	$condition = preg_replace(array("/ LT /", "/ GT /"), array("<", ">"), $condition);
-	while (preg_match("/@([\w:]+)/", $condition, $match) > 0) {
-		$id = $match[1];
+	$ct = preg_match_all("/@([\w:\.]+)/", $condition, $match, PREG_SET_ORDER);
+	for($i=0; $i<$ct; $i++) {
+		$id = $match[$i][1];
 		$value="''";
 		if ($id=="ID") {
 			$ct = preg_match("/0 @(.+)@/", $gedrec, $match);
@@ -1482,9 +1484,9 @@ function PGVRifSHandler($attrs) {
 	}
 	$condition = "if ($condition) return true; else return false;";
 	$ret = @eval($condition);
-	//print $condition."<br />";
+//	print $condition."<br />";
 	//print_r($vars);
-	//if ($ret) print " true<br />"; else print " false<br />";
+//	if ($ret) print " true<br />"; else print " false<br />";
 	if (!$ret) {
 		$processIfs++;
 	}

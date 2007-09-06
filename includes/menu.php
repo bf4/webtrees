@@ -22,8 +22,7 @@
  * @package PhpGedView
  * @version $Id$
  */
-
-if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+if (stristr($_SERVER["SCRIPT_NAME"], "/".basename(__FILE__))!==false) {
 	print "You cannot access an include file directly.";
 	exit;
 }
@@ -150,8 +149,7 @@ class Menu
 		$c = count($this->submenus);
 		$output = "<div id=\"menu{$id}\" style=\"clear: both;\" class=\"{$this->class}\">\n";
 		if ($this->link=="#") $this->link = "javascript:;";
-		$link = "<a href=\"{$this->link}\" onmouseover=\""
-		;
+		$link = "<a href=\"{$this->link}\" onmouseover=\"";
 		if ($c >= 0)
 		{
 			$link .= "show_submenu('menu{$id}_subs', 'menu{$id}', '{$this->flyout}'); ";
@@ -599,7 +597,7 @@ class MenuBar
 			case "relationship":
 				//-- relationship
 				$pids[] = $myid;
-				if ($rootid and empty($myid)) {
+				if ($rootid && empty($myid)) {
 					$username = getUserName();
 					if (!empty($username)) {
 						$user = getUser($username);
