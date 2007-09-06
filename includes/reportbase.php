@@ -437,6 +437,8 @@ class PGVRFootnote extends PGVRElement {
 
 		$t = trim($t, "\r\n\t");
 		$t = preg_replace("/<br \/>/", "\n", $t);
+		// NOTE -- this will cause user added <brackets> to disappear?
+		// TODO find out why strip_tags was added and how to fix the problem without it
 		$t = strip_tags($t);
 		$t = unhtmlentities($t);
 		if ($embed_fonts) $t = bidi_text($t);
