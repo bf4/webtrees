@@ -8,6 +8,7 @@
 	# $Id$
 =====================================================================
 Version 4.1.1
+ - Fix [ 1783854 ] Memory exhaustion on line 1190 of functions_name.php (canajun2eh)
  - Applied [ 1738384 ] Italian language files update (yalnifj)
  - Changed Sort chart, list, and report names in top menu (canajun2eh)
  - Applied [ 1745914 ] RA Search Plugin for genealogy-search-help.com (yalnifj)

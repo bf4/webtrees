@@ -1110,7 +1110,7 @@ function DMSoundex($name, $option = "") {
 
 	// Check if in cache
 	$name = str2upper($name);
-	$name = trim($name);
+	$name = substr(trim($name), 0, 30);
 	if (isset($dmsoundexlist[$name])) return $dmsoundexlist[$name];
 
 	// Define the result array and set the first (empty) result
