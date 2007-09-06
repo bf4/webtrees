@@ -303,24 +303,46 @@ class FamilyRoot extends BaseController
 		if (!empty($PGV_IMAGES["timeline"]["small"]))
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
-		// charts / parents_timeline
-		$submenu = new Menu($pgv_lang['parents_timeline'], 'timeline.php?pids[0]='.$this->getHusband().'&amp;pids[1]='.$this->getWife());
-		if (!empty($PGV_IMAGES["timeline"]["small"]))
-			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
-		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
-		$menu->addSubmenu($submenu);
-		// charts / children_timeline
-		$submenu = new Menu($pgv_lang['children_timeline'], 'timeline.php?'.$this->getChildrenUrlTimeline());
-		if (!empty($PGV_IMAGES["timeline"]["small"]))
-			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
-		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
-		$menu->addSubmenu($submenu);
-		// charts / family_timeline
-		$submenu = new Menu($pgv_lang['family_timeline'], 'timeline.php?pids[0]='.$this->getHusband().'&amp;pids[1]='.$this->getWife().'&amp;'.$this->getChildrenUrlTimeline(2));
-		if (!empty($PGV_IMAGES["timeline"]["small"]))
-			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
-		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
-		$menu->addSubmenu($submenu);
+		// Build a sortable list of submenu items and then sort it in localized name order
+		$menuList = array();
+		$menuList["parentTimeLine"] = $pgv_lang['parents_timeline'];
+		$menuList["childTimeLine"] = $pgv_lang['children_timeline'];
+		$menuList["familyTimeLine"] = $pgv_lang['family_timeline'];
+		asort($menuList);
+
+		// Produce the submenus in localized name order
+		
+		foreach($menuList as $menuType => $menuName) {
+			switch ($menuType) {
+			case "parentTimeLine":
+				// charts / parents_timeline
+				$submenu = new Menu($pgv_lang['parents_timeline'], 'timeline.php?pids[0]='.$this->getHusband().'&amp;pids[1]='.$this->getWife());
+				if (!empty($PGV_IMAGES["timeline"]["small"]))
+					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
+				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+				$menu->addSubmenu($submenu);
+				break;
+
+			case "childTimeLine":
+				// charts / children_timeline
+				$submenu = new Menu($pgv_lang['children_timeline'], 'timeline.php?'.$this->getChildrenUrlTimeline());
+				if (!empty($PGV_IMAGES["timeline"]["small"]))
+					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
+				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+				$menu->addSubmenu($submenu);
+				break;
+
+			case "familyTimeLine":
+				// charts / family_timeline
+				$submenu = new Menu($pgv_lang['family_timeline'], 'timeline.php?pids[0]='.$this->getHusband().'&amp;pids[1]='.$this->getWife().'&amp;'.$this->getChildrenUrlTimeline(2));
+				if (!empty($PGV_IMAGES["timeline"]["small"]))
+					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['timeline']['small']}");
+				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+				$menu->addSubmenu($submenu);
+				break;
+
+			}
+		}
 
 		return $menu;
 	}
@@ -357,12 +379,14 @@ class FamilyRoot extends BaseController
 	 */
 	function &getEditMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $pgv_changes;
+		global $SHOW_GEDCOM_RECORD;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 
 		// edit_fam menu
 		$menu = new Menu($pgv_lang['edit_fam']);
-		$menu->addOnclick('return edit_raw(\''.$this->getFamilyID().'\');');
+		if ($SHOW_GEDCOM_RECORD || userIsAdmin($this->uname)) 
+			$menu->addOnclick('return edit_raw(\''.$this->getFamilyID().'\');');
 		if (!empty($PGV_IMAGES["edit_fam"]["small"]))
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
 		$menu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}", "submenu{$ff}");
@@ -376,12 +400,14 @@ class FamilyRoot extends BaseController
 		$menu->addSubmenu($submenu);
 
 		// edit_fam / edit_raw
-		$submenu = new Menu($pgv_lang['edit_raw']);
-		$submenu->addOnclick("return edit_raw('".$this->getFamilyID()."');");
-		if (!empty($PGV_IMAGES["edit_fam"]["small"]))
-			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
-		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
-		$menu->addSubmenu($submenu);
+		if ($SHOW_GEDCOM_RECORD || userIsAdmin($this->uname)) {
+			$submenu = new Menu($pgv_lang['edit_raw']);
+			$submenu->addOnclick("return edit_raw('".$this->getFamilyID()."');");
+			if (!empty($PGV_IMAGES["edit_fam"]["small"]))
+				$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
+			$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
+			$menu->addSubmenu($submenu);
+		}
 
 		// edit_fam / members
 		$submenu = new Menu($pgv_lang['change_family_members']);

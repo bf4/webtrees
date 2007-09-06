@@ -739,7 +739,7 @@ function build_indiv_map($indifacts, $famids) {
 			}
 		}
 		print "}</script>";
-		print "<div style=\"overflow-x: hidden; overflow-y: auto; height:{$GOOGLEMAP_YSIZE}px;\"><table class=\"facts_table\">";
+		print "<div style=\"overflow: auto; overflow-x: hidden; overflow-y: auto; height:{$GOOGLEMAP_YSIZE}px;\"><table class=\"facts_table\">";
 		foreach($markers as $marker) {
 			print "<tr><td class=\"facts_label\">";
 			print "<a href=\"javascript:highlight({$marker["index"]}, {$marker["tabindex"]})\">{$marker["fact"]}</a></td>";

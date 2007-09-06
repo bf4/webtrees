@@ -50,7 +50,7 @@ if ($action == 'change_pass')
 		// If the user is already logged in we shouldn't be here :)
 		if (!$pun_user['is_guest'])
 		{
-			header('Location: index.php');
+			header('Location: '.genurl('index.php'));
 			exit;
 		}
 
@@ -127,7 +127,7 @@ if ($action == 'change_pass')
 			pun_setcookie($pun_user['id'], $new_password_hash, $expire);
 		}
 
-		redirect('profile.php?section=essentials&amp;id='.$id, $lang_profile['Pass updated redirect']);
+		redirect(genurl('profile.php?section=essentials&amp;id=').$id, $lang_profile['Pass updated redirect']);
 	}
 
 	$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_common['Profile'];
@@ -139,7 +139,7 @@ if ($action == 'change_pass')
 <div class="blockform">
 	<h2><span><?php echo $lang_profile['Change pass'] ?></span></h2>
 	<div class="box">
-		<form id="change_pass" method="post" action="<?php genurl("profile.php?action=change_pass&amp;id={$id}", true, true)?>" onsubmit="return process_form(this)">
+		<form id="change_pass" method="post" action="<?php genurl("profile.php?action=change_pass&amp;id={$id}", false, true)?>" onsubmit="return process_form(this)">
 			<div class="inform">
 				<input type="hidden" name="form_sent" value="1" />
 				<fieldset>
@@ -219,7 +219,7 @@ else if ($action == 'change_email')
 			else if ($pun_config['o_mailing_list'] != '')
 			{
 				$mail_subject = 'Alert - Banned e-mail detected';
-				$mail_message = 'User \''.$pun_user['username'].'\' changed to banned e-mail address: '.$new_email."\n\n".'User profile: '.$pun_config['o_base_url'].'/profile.php?id='.$id."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
+				$mail_message = 'User \''.$pun_user['username'].'\' changed to banned e-mail address: '.$new_email."\n\n".'User profile: '.$pun_config['o_base_url'].'/'.genurl('profile.php?id=',true,false).$id."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
 
 				pun_mail($pun_config['o_mailing_list'], $mail_subject, $mail_message);
 			}
@@ -237,7 +237,7 @@ else if ($action == 'change_email')
 					$dupe_list[] = $cur_dupe['username'];
 
 				$mail_subject = 'Alert - Duplicate e-mail detected';
-				$mail_message = 'User \''.$pun_user['username'].'\' changed to an e-mail address that also belongs to: '.implode(', ', $dupe_list)."\n\n".'User profile: '.$pun_config['o_base_url'].'/profile.php?id='.$id."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
+				$mail_message = 'User \''.$pun_user['username'].'\' changed to an e-mail address that also belongs to: '.implode(', ', $dupe_list)."\n\n".'User profile: '.$pun_config['o_base_url'].'/'.genurl('profile.php?id=',true,false).$id."\n\n".'-- '."\n".'Forum Mailer'."\n".'(Do not reply to this message)';
 
 				pun_mail($pun_config['o_mailing_list'], $mail_subject, $mail_message);
 			}
@@ -275,7 +275,7 @@ else if ($action == 'change_email')
 <div class="blockform">
 	<h2><span><?php echo $lang_profile['Change e-mail'] ?></span></h2>
 	<div class="box">
-		<form id="change_email" method="post" action="<?php genurl("profile.php?action=change_email&amp;id={$id}", true, true)?>" id="change_email" onsubmit="return process_form(this)">
+		<form id="change_email" method="post" action="<?php genurl("profile.php?action=change_email&amp;id={$id}", false, true)?>" id="change_email" onsubmit="return process_form(this)">
 			<div class="inform">
 				<fieldset>
 					<legend><?php echo $lang_profile['E-mail legend'] ?></legend>
@@ -362,28 +362,28 @@ else if ($action == 'upload_avatar' || $action == 'upload_avatar2')
 				$extensions = array('.png', '.gif', '.jpg');
 
 			// Move the file to the avatar directory. We do this before checking the width/height to circumvent open_basedir restrictions.
-			if (!@move_uploaded_file($uploaded_file['tmp_name'], $pun_config['o_avatars_dir'].'/'.$id.'.tmp'))
-				message($lang_profile['Move failed'].' <a href="mailto:'.$pun_config['o_admin_email'].'">'.$pun_config['o_admin_email'].'</a>.');
+			if (!@move_uploaded_file($uploaded_file['tmp_name'], PUN_ROOT.$pun_config['o_avatars_dir'].'/'.$id.'.tmp'))
+				message($lang_profile['Move failed'].PUN_ROOT.$pun_config['o_avatars_dir'].' <a href="mailto:'.$pun_config['o_admin_email'].'">'.$pun_config['o_admin_email'].'</a>.');
 
 			// Now check the width/height
-			list($width, $height, $type,) = getimagesize($pun_config['o_avatars_dir'].'/'.$id.'.tmp');
+			list($width, $height, $type,) = getimagesize(PUN_ROOT.$pun_config['o_avatars_dir'].'/'.$id.'.tmp');
 			if (empty($width) || empty($height) || $width > $pun_config['o_avatars_width'] || $height > $pun_config['o_avatars_height'])
 			{
-				@unlink($pun_config['o_avatars_dir'].'/'.$id.'.tmp');
+				@unlink(PUN_ROOT.$pun_config['o_avatars_dir'].'/'.$id.'.tmp');
 				message($lang_profile['Too wide or high'].' '.$pun_config['o_avatars_width'].'x'.$pun_config['o_avatars_height'].' '.$lang_profile['pixels'].'.');
 			}
 			else if ($type == 1 && $uploaded_file['type'] != 'image/gif')	// Prevent dodgy uploads
 			{
-				@unlink($pun_config['o_avatars_dir'].'/'.$id.'.tmp');
+				@unlink(PUN_ROOT.$pun_config['o_avatars_dir'].'/'.$id.'.tmp');
 				message($lang_profile['Bad type']);
 			}
 
 			// Delete any old avatars and put the new one in place
-			@unlink($pun_config['o_avatars_dir'].'/'.$id.$extensions[0]);
-			@unlink($pun_config['o_avatars_dir'].'/'.$id.$extensions[1]);
-			@unlink($pun_config['o_avatars_dir'].'/'.$id.$extensions[2]);
-			@rename($pun_config['o_avatars_dir'].'/'.$id.'.tmp', $pun_config['o_avatars_dir'].'/'.$id.$extensions[0]);
-			@chmod($pun_config['o_avatars_dir'].'/'.$id.$extensions[0], 0644);
+			@unlink(PUN_ROOT.$pun_config['o_avatars_dir'].'/'.$id.$extensions[0]);
+			@unlink(PUN_ROOT.$pun_config['o_avatars_dir'].'/'.$id.$extensions[1]);
+			@unlink(PUN_ROOT.$pun_config['o_avatars_dir'].'/'.$id.$extensions[2]);
+			@rename(PUN_ROOT.$pun_config['o_avatars_dir'].'/'.$id.'.tmp', PUN_ROOT.$pun_config['o_avatars_dir'].'/'.$id.$extensions[0]);
+			@chmod(PUN_ROOT.$pun_config['o_avatars_dir'].'/'.$id.$extensions[0], 0644);
 		}
 		else
 			message($lang_profile['Unknown failure']);
@@ -391,7 +391,7 @@ else if ($action == 'upload_avatar' || $action == 'upload_avatar2')
 		// Enable use_avatar (seems sane since the user just uploaded an avatar)
 		$db->query('UPDATE '.$db->prefix.'users SET use_avatar=1 WHERE id='.$id) or error('Unable to update avatar state', __FILE__, __LINE__, $db->error());
 
-		redirect('profile.php?section=personality&amp;id='.$id, $lang_profile['Avatar upload redirect']);
+		redirect(genurl('profile.php?section=personality&amp;id=').$id, $lang_profile['Avatar upload redirect']);
 	}
 
 	$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_common['Profile'];
@@ -403,7 +403,7 @@ else if ($action == 'upload_avatar' || $action == 'upload_avatar2')
 <div class="blockform">
 	<h2><span><?php echo $lang_profile['Upload avatar'] ?></span></h2>
 	<div class="box">
-		<form id="upload_avatar" method="post" enctype="multipart/form-data" action="<?php genurl("profile.php?action=upload_avatar2&amp;id={$id}", true, true)?>" onsubmit="return process_form(this)">
+		<form id="upload_avatar" method="post" enctype="multipart/form-data" action="<?php genurl("profile.php?action=upload_avatar2&amp;id={$id}", false, true)?>" onsubmit="return process_form(this)">
 			<div class="inform">
 				<fieldset>
 					<legend><?php echo $lang_profile['Upload avatar legend'] ?></legend>
@@ -439,7 +439,7 @@ else if ($action == 'delete_avatar')
 	// Disable use_avatar
 	$db->query('UPDATE '.$db->prefix.'users SET use_avatar=0 WHERE id='.$id) or error('Unable to update avatar state', __FILE__, __LINE__, $db->error());
 
-	redirect('profile.php?section=personality&amp;id='.$id, $lang_profile['Avatar deleted redirect']);
+	redirect(genurl('profile.php?section=personality&amp;id=').$id, $lang_profile['Avatar deleted redirect']);
 }
 
 
@@ -474,7 +474,7 @@ else if (isset($_POST['update_group_membership']))
 		}
 	}
 
-	redirect('profile.php?section=admin&amp;id='.$id, $lang_profile['Group membership redirect']);
+	redirect(genurl('profile.php?section=admin&amp;id=').$id, $lang_profile['Group membership redirect']);
 }
 
 
@@ -515,7 +515,7 @@ else if (isset($_POST['update_forums']))
 		}
 	}
 
-	redirect('profile.php?section=admin&amp;id='.$id, $lang_profile['Update forums redirect']);
+	redirect(genurl('profile.php?section=admin&amp;id=').$id, $lang_profile['Update forums redirect']);
 }
 
 
@@ -524,7 +524,7 @@ else if (isset($_POST['ban']))
 	if ($pun_user['g_id'] > PUN_MOD || ($pun_user['g_id'] == PUN_MOD && $pun_config['p_mod_ban_users'] == '0'))
 		message($lang_common['No permission']);
 
-	redirect('admin_bans.php?add_ban='.$id, $lang_profile['Ban redirect']);
+	redirect(genurl('admin_bans.php?add_ban=').$id, $lang_profile['Ban redirect']);
 }
 
 
@@ -600,7 +600,7 @@ else if (isset($_POST['delete_user']) || isset($_POST['delete_user_comply']))
 		// Delete the user
 		$db->query('DELETE FROM '.$db->prefix.'users WHERE id='.$id) or error('Unable to delete user', __FILE__, __LINE__, $db->error());
 
-		redirect('index.php', $lang_profile['User delete redirect']);
+		redirect(genurl('index.php'), $lang_profile['User delete redirect']);
 	}
 
 	$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_common['Profile'];
@@ -887,8 +887,9 @@ else if (isset($_POST['form_sent']))
 		}
 	}
 
-	redirect('profile.php?section='.$section.'&amp;id='.$id, $lang_profile['Profile redirect']);
+	redirect(genurl('profile.php?section=').$section.'&amp;id='.$id, $lang_profile['Profile redirect']);
 }
+else {
 
 
 $result = $db->query('SELECT u.username, u.email, u.title, u.realname, u.url, u.jabber, u.icq, u.msn, u.aim, u.yahoo, u.location, u.use_avatar, u.signature, u.disp_topics, u.disp_posts, u.email_setting, u.save_pass, u.notify_with_post, u.show_smilies, u.show_img, u.show_img_sig, u.show_avatars, u.show_sig, u.timezone, u.language, u.style, u.num_posts, u.last_post, u.registered, u.registration_ip, u.admin_note, g.g_id, g.g_user_title FROM '.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE u.id='.$id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
@@ -904,7 +905,6 @@ if ($user['signature'] != '')
 	require PUN_ROOT.'include/parser.php';
 	$parsed_signature = parse_signature($user['signature']);
 }
-
 
 // View or edit?
 if ($pun_user['id'] != $id &&
@@ -1056,7 +1056,7 @@ else
 			else
 				$username_field = '<p>'.$lang_common['Username'].': '.pun_htmlspecialchars($user['username']).'</p>'."\n";
 
-			$email_field = '<label><strong>'.$lang_common['E-mail'].'</strong><br /><input type="text" name="req_email" value="'.$user['email'].'" size="40" maxlength="50" /><br /></label><p><a href="misc.php?email='.$id.'">'.$lang_common['Send e-mail'].'</a></p>'."\n";
+			$email_field = '<label><strong>'.$lang_common['E-mail'].'</strong><br /><input type="text" name="req_email" value="'.$user['email'].'" size="40" maxlength="50" /><br /></label><p><a href="'.genurl('misc.php?email='.$id).'">'.$lang_common['Send e-mail'].'</a></p>'."\n";
 		}
 		else
 		{
@@ -1069,11 +1069,11 @@ else
 		}
 
 		if ($pun_user['g_id'] == PUN_ADMIN)
-			$posts_field = '<label>'.$lang_common['Posts'].'<br /><input type="text" name="num_posts" value="'.$user['num_posts'].'" size="8" maxlength="8" /><br /></label><p><a href="search.php?action=show_user&amp;user_id='.$id.'">'.$lang_profile['Show posts'].'</a></p>'."\n";
+			$posts_field = '<label>'.$lang_common['Posts'].'<br /><input type="text" name="num_posts" value="'.$user['num_posts'].'" size="8" maxlength="8" /><br /></label><p><a href="'.genurl('search.php?action=show_user&amp;user_id='.$id).'">'.$lang_profile['Show posts'].'</a></p>'."\n";
 		else if ($pun_config['o_show_post_count'] == '1' || $pun_user['g_id'] < PUN_GUEST)
 			$posts_field = '<p>'.$lang_common['Posts'].': '.$user['num_posts'].' - <a href="'.genurl('search.php?action=show_user&amp;user_id='.$id).'">'.$lang_profile['Show posts'].'</a></p>'."\n";
 		else
-			$posts_field = '<p><a href="search.php?action=show_user&amp;user_id='.$id.'">'.$lang_profile['Show posts'].'</a></p>'."\n";
+			$posts_field = '<p><a href="'.genurl('search.php?action=show_user&amp;user_id='.$id).'">'.$lang_profile['Show posts'].'</a></p>'."\n";
 
 		$page_title = pun_htmlspecialchars($pun_config['o_board_title']).' / '.$lang_common['Profile'];
 		$required_fields = array('req_username' => $lang_common['Username'], 'req_email' => $lang_common['E-mail']);
@@ -1085,14 +1085,14 @@ else
 	<div class="blockform">
 		<h2><span><?php echo pun_htmlspecialchars($user['username']).' - '.$lang_profile['Section essentials'] ?></span></h2>
 		<div class="box">
-			<form id="profile1" method="post" action="<?php genurl("profile.php?section=essentials&amp;id={$id}", true, true)?>" onsubmit="return process_form(this)">
+			<form id="profile1" method="post" action="<?php genurl("profile.php?section=essentials&amp;id={$id}", false, true)?>" onsubmit="return process_form(this)">
 				<div class="inform">
 					<fieldset>
 						<legend><?php echo $lang_profile['Username and pass legend'] ?></legend>
 						<div class="infldset">
 							<input type="hidden" name="form_sent" value="1" />
 							<?php echo $username_field ?>
-<?php if ($pun_user['id'] == $id || $pun_user['g_id'] == PUN_ADMIN || ($user['g_id'] > PUN_MOD && $pun_config['p_mod_change_passwords'] == '1')): ?><p><a href="profile.php?action=change_pass&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Change pass'] ?></a></p>
+<?php if ($pun_user['id'] == $id || $pun_user['g_id'] == PUN_ADMIN || ($user['g_id'] > PUN_MOD && $pun_config['p_mod_change_passwords'] == '1')): ?><p><a href="<?php genurl('profile.php?action=change_pass&amp;id='.$id,false,true)?>"><?php echo $lang_profile['Change pass'] ?></a></p>
 <?php endif; ?>					</div>
 					</fieldset>
 				</div>
@@ -1193,7 +1193,7 @@ else
 					<fieldset>
 						<legend><?php echo $lang_profile['User activity'] ?></legend>
 						<div class="infldset">
-							<p><?php echo $lang_common['Registered'] ?>: <?php echo format_time($user['registered'], true); if ($pun_user['g_id'] < PUN_GUEST) echo ' (<a href="moderate.php?get_host='.pun_htmlspecialchars($user['registration_ip']).'">'.pun_htmlspecialchars($user['registration_ip']).'</a>)'; ?></p>
+							<p><?php echo $lang_common['Registered'] ?>: <?php echo format_time($user['registered'], true); if ($pun_user['g_id'] < PUN_GUEST) echo ' (<a href="'.genurl('moderate.php?get_host=').pun_htmlspecialchars($user['registration_ip']).'">'.pun_htmlspecialchars($user['registration_ip']).'</a>)'; ?></p>
 							<p><?php echo $lang_common['Last post'] ?>: <?php echo $last_post ?></p>
 								<?php echo $posts_field ?>
 <?php if ($pun_user['g_id'] < PUN_GUEST): ?>							<label><?php echo $lang_profile['Admin note'] ?><br />
@@ -1222,7 +1222,7 @@ else
 	<div class="blockform">
 		<h2><span><?php echo pun_htmlspecialchars($user['username']).' - '.$lang_profile['Section personal'] ?></span></h2>
 		<div class="box">
-			<form id="profile2" method="post" action="<?php genurl("profile.php?section=personal&amp;id={$id}", true, true)?>">
+			<form id="profile2" method="post" action="<?php genurl("profile.php?section=personal&amp;id={$id}", false, true)?>">
 				<div class="inform">
 					<fieldset>
 						<legend><?php echo $lang_profile['Personal details legend'] ?></legend>
@@ -1254,7 +1254,7 @@ else
 	<div class="blockform">
 		<h2><span><?php echo pun_htmlspecialchars($user['username']).' - '.$lang_profile['Section messaging'] ?></span></h2>
 		<div class="box">
-			<form id="profile3" method="post" action="<?php genurl("profile.php?section=messaging&amp;id={$id}", true, true)?>">
+			<form id="profile3" method="post" action="<?php genurl("profile.php?section=messaging&amp;id={$id}", false, true)?>">
 				<div class="inform">
 					<fieldset>
 						<legend><?php echo $lang_profile['Contact details legend'] ?></legend>
@@ -1306,7 +1306,7 @@ else
 	<div class="blockform">
 		<h2><span><?php echo pun_htmlspecialchars($user['username']).' - '.$lang_profile['Section personality'] ?></span></h2>
 		<div class="box">
-			<form id="profile4" method="post" action="<?php genurl("profile.php?section=personality&amp;id={$id}", true, true)?>">
+			<form id="profile4" method="post" action="<?php genurl("profile.php?section=personality&amp;id={$id}", false, true)?>">
 				<div><input type="hidden" name="form_sent" value="1" /></div>
 <?php if ($pun_config['o_avatars'] == '1'): ?>				<div class="inform">
 					<fieldset id="profileavatar">
@@ -1357,7 +1357,7 @@ else
 	<div class="blockform">
 		<h2><span><?php echo pun_htmlspecialchars($user['username']).' - '.$lang_profile['Section display'] ?></span></h2>
 		<div class="box">
-			<form id="profile5" method="post" action="<?php genurl("profile.php?section=display&amp;id={$id}", true, true)?>">
+			<form id="profile5" method="post" action="<?php genurl("profile.php?section=display&amp;id={$id}", false, true)?>">
 				<div><input type="hidden" name="form_sent" value="1" /></div>
 <?php
 
@@ -1449,7 +1449,7 @@ else
 	<div class="blockform">
 		<h2><span><?php echo pun_htmlspecialchars($user['username']).' - '.$lang_profile['Section privacy'] ?></span></h2>
 		<div class="box">
-			<form id="profile6" method="post" action="<?php genurl("profile.php?section=privacy&amp;id={$id}", true, true)?>">
+			<form id="profile6" method="post" action="<?php genurl("profile.php?section=privacy&amp;id={$id}", false, true)?>">
 				<div class="inform">
 					<fieldset>
 						<legend><?php echo $lang_prof_reg['Privacy options legend'] ?></legend>
@@ -1493,7 +1493,7 @@ else
 	<div class="blockform">
 		<h2><span><?php echo pun_htmlspecialchars($user['username']).' - '.$lang_profile['Section admin'] ?></span></h2>
 		<div class="box">
-			<form id="profile7" method="post" action="<?php genurl("profile.php?section=admin&amp;id={$id}", true, true)?>&amp;action=foo">
+			<form id="profile7" method="post" action="<?php genurl("profile.php?section=admin&amp;id={$id}", false, true)?>&amp;action=foo">
 				<div class="inform">
 				<input type="hidden" name="form_sent" value="1" />
 					<fieldset>
@@ -1613,4 +1613,5 @@ else
 <?php
 
 	require PUN_ROOT.'footer.php';
+}
 }

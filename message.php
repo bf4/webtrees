@@ -83,7 +83,7 @@ if (($action=="send")&&(isset($_SESSION["good_to_send"]))&&($_SESSION["good_to_s
 	if (!isset($_SERVER['HTTP_REFERER']) || stristr($_SERVER['HTTP_REFERER'],"message.php")===false) {
 		print "<center><br /><span class=\"error\">Invalid page referer.</span>\n";
         print "<br /><br /></center>";
-        AddToLog('Invalid page referer while trying to send a message.  Possible spam attach.');
+        AddToLog('Invalid page referer while trying to send a message.  Possible spam attack.');
         $action="compose";
 	}
 	if ($action!="compose") {
@@ -134,11 +134,14 @@ if (($action=="send")&&(isset($_SESSION["good_to_send"]))&&($_SESSION["good_to_s
 				if ($touser) {
 					print str_replace("#TO_USER#", "<b>".$touser["firstname"]." ".$touser["lastname"]."</b>", $pgv_lang["message_sent"]);
 				}
+				else AddToLog('Invalid TO user.'.$to.' Possible spam attack.');
 			}
+			else AddToLog('Unable to send message.  TO:'.$to.' FROM:'.$from);
 			$i++;
 		}
 	}
 }
+else if ($action=="send") AddToLog('Invalid Compose Session while trying to send a message.  Possible spam attack.');
 
 if ($action=="compose") {
 	print '<span class="subheaders">'.$pgv_lang["message"].'</span>';

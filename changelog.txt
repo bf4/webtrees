@@ -31,6 +31,16 @@ Version 4.2
 
 Version 4.1.1
  - Fixed [ 1783854 ] Memory exhaustion on line 1190 of functions_name.php (canajun2eh)
+ - Applied [ 1738384 ] Italian language files update (yalnifj)
+ - Changed Sort chart, list, and report names in top menu (canajun2eh)
+ - Applied [ 1745914 ] RA Search Plugin for genealogy-search-help.com (yalnifj)
+ - Applied [ 1756626 ] Add 'label for' on login page (yalnifj)
+ - Applied [ 1747980 ] Hide Edit Raw GEDCOM (yalnifj)
+ - Applied [ 1780060 ] Googlemap: Map items clipped on non-CSS3 browsers (yalnifj)
+ - Applied [ 1780075 ] 4.1 stable PunBB: Patches rollup (yalnifj)
+ - Applied [ 1782009 ] 4.1 stable: cannot use find media to link some media (yalnifj)
+ - Fixed VERY minor XSS vulnerability on login page (yalnifj)
+ - Fixed [ 1782104 ] ERROR 8 in mediaviewer (yalnifj)
  - Fixed [ 1786455 ] Main menus draw behind Relationship table (canajun2eh)
  - Fixed Ajax controls in Random Media block ignore block configuration (canajun2eh) 
  - Added Filter by Format, Filter by Type in Random Media block (canajun2eh) 

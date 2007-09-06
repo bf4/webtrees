@@ -616,94 +616,127 @@ class MenuBar
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["large"]);
 			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
 		}
-		//-- pedigree sub menu
+		
+		// Build a sortable list of submenu items and then sort it in localized name order
+		$menuList = array();
+		$menuList["pedigree"] = $pgv_lang["pedigree_chart"];
+		if (file_exists("descendancy.php")) $menuList["descendancy"] = $pgv_lang["descend_chart"];
+		if (file_exists("ancestry.php")) $menuList["ancestry"] = $pgv_lang["ancestry_chart"];
+		if (file_exists("compact.php")) $menuList["compact"] = $pgv_lang["compact_chart"];
+		if (file_exists("fanchart.php") and function_exists("imagettftext")) $menuList["fanchart"] = $pgv_lang["fan_chart"];
+		if (file_exists("hourglass.php")) $menuList["hourglass"] = $pgv_lang["hourglass_chart"];
+		if (file_exists("familybook.php")) $menuList["familybook"] = $pgv_lang["familybook_chart"];
+		if (file_exists("timeline.php")) $menuList["timeline"] = $pgv_lang["timeline_chart"];
+		if (file_exists("lifespan.php")) $menuList["lifespan"] = $pgv_lang["lifespan_chart"];
+		if (file_exists("relationship.php")) $menuList["relationship"] = $pgv_lang["relationship_chart"];
+		if (file_exists("statistics.php") && file_exists("jpgraph")) $menuList["statistics"] = $pgv_lang["statistics"];
+		asort($menuList);
+
+		// Produce the submenus in localized name order
+		
+		foreach($menuList as $menuType => $menuName) {
+			switch ($menuType) {
+			case "pedigree":
+				//-- pedigree
+				$link = "pedigree.php";
+				if ($rootid) $link .= "?rootid=".$rootid;
 		$submenu = new Menu($pgv_lang["pedigree_chart"], $link);
 		if (!empty($PGV_IMAGES["pedigree"]["small"]))
 			$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]);
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
-		//-- descendancy sub menu
-		if (file_exists("descendancy.php")) {
-			$link = "descendancy.php?ged=".$ged;
-			if ($default_id) $link .= "&amp;pid=".$default_id;
+				break;
+
+			case "descendancy":
+				//-- descendancy
+				$link = "descendancy.php";
+				if ($rootid) $link .= "?pid=".$rootid;
 			$submenu = new Menu($pgv_lang["descend_chart"], $link);
 			if (!empty($PGV_IMAGES["descendant"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["descendant"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
-		}
-		//-- ancestry submenu
-		if (file_exists("ancestry.php")) {
-			$link = "ancestry.php?ged=".$ged;
-			if ($default_id) $link .= "&amp;rootid=".$default_id;
+				break;
+
+			case "ancestry":
+				//-- ancestry
+				$link = "ancestry.php";
+				if ($rootid) $link .= "?rootid=".$rootid;
 			$submenu = new Menu($pgv_lang["ancestry_chart"], $link);
 			if (!empty($PGV_IMAGES["ancestry"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["ancestry"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
-		}
-		//-- compact submenu
-		if (file_exists("compact.php")) {
-			$link = "compact.php?ged=".$ged;
-			if ($default_id) $link .= "&amp;rootid=".$default_id;
+				break;
+
+			case "compact":
+				//-- compact
+				$link = "compact.php";
+				if ($rootid) $link .= "?rootid=".$rootid;
 			$submenu = new Menu($pgv_lang["compact_chart"], $link);
 			if (!empty($PGV_IMAGES["ancestry"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["ancestry"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
-		}
-		//-- fan chart submenu
-		if (file_exists("fanchart.php") and function_exists("imagettftext")) {
-			$link = "fanchart.php?ged=".$ged;
-			if ($default_id) $link .= "&amp;rootid=".$default_id;
+				break;
+
+			case "fanchart":
+				//-- fan chart
+				$link = "fanchart.php";
+				if ($rootid) $link .= "?rootid=".$rootid;
 			$submenu = new Menu($pgv_lang["fan_chart"], $link);
 			if (!empty($PGV_IMAGES["fanchart"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["fanchart"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
-		}
-		//-- hourglass submenu
-		if (file_exists("hourglass.php")) {
-			$link = "hourglass.php?ged=".$ged;
-			if ($default_id) $link .= "&amp;pid=".$default_id;
+				break;
+
+			case "hourglass":
+				//-- hourglass
+				$link = "hourglass.php";
+				if ($rootid) $link .= "?pid=".$rootid;
 			$submenu = new Menu($pgv_lang["hourglass_chart"], $link);
 			if (!empty($PGV_IMAGES["hourglass"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["hourglass"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
-		}
-		//-- familybook submenu
-		if (file_exists("familybook.php")) {
-			$link = "familybook.php?ged=".$ged;
-			if ($default_id) $link .= "&amp;pid=".$default_id;
+				break;
+
+			case "familybook":
+				//-- familybook
+				$link = "familybook.php";
+				if ($rootid) $link .= "?pid=".$rootid;
 			$submenu = new Menu($pgv_lang["familybook_chart"], $link);
 			if (!empty($PGV_IMAGES["fambook"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["fambook"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
-		}
-		//-- timeline chart submenu
-		if (file_exists("timeline.php")) {
-			$link = "timeline.php?ged=".$ged;
-			if ($default_id) $link .= "&amp;pids[]=".$default_id;
+				break;
+
+			case "timeline":
+				//-- timeline
+				$link = "timeline.php";
+				if ($rootid) $link .= "?pids[]=".$rootid;
 			$submenu = new Menu($pgv_lang["timeline_chart"], $link);
 			if (!empty($PGV_IMAGES["timeline"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["timeline"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
-		}
-		//-- timeline chart submenu
-		if (file_exists("lifespan.php")) {
-			$link = "lifespan.php?ged=".$ged;
-			if ($default_id) $link .= "&amp;newpid=".$default_id."&amp;addFamily=1";
+				break;
+
+			case "lifespan":
+				//-- lifespan
+				$link = "lifespan.php";
+				if ($rootid) $link .= "?pids[]=".$rootid."&amp;addFamily=1";
 			$submenu = new Menu($pgv_lang["lifespan_chart"], $link);
 			if (!empty($PGV_IMAGES["timeline"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["timeline"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
-		}
-		//-- relationship submenu
-		if (file_exists("relationship.php")) {
+				break;
+
+			case "relationship":
+				//-- relationship
 			$pids[] = $myid;
 			if ($rootid && empty($myid)) {
 				$username = getUserName();
@@ -738,14 +771,18 @@ class MenuBar
 					$menu->addSubmenu($submenu);
 				}
 			}
-		}
-		//-- produce a plot of statistics
-		if (file_exists("statistics.php") && file_exists("jpgraph")) {
+				break;
+
+			case "statistics":
+				//-- statistics plot
 			$submenu = new Menu($pgv_lang["statistics"], "statistics.php");
 			if (!empty($PGV_IMAGES["statistic"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["statistic"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
+				break;
+
+			}
 		}
 		return $menu;
 	}
@@ -805,58 +842,83 @@ class MenuBar
 			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
 		}
 
+		// Build a sortable list of submenu items and then sort it in localized name order
+		$menuList = array();
+		$menuList["individual"] = $pgv_lang["individual_list"];
+		if (file_exists("famlist.php")) $menuList["family"] = $pgv_lang["family_list"];
+		if (!$surname and file_exists("sourcelist.php") and $SHOW_SOURCES>=getUserAccessLevel(getUserName())) $menuList["source"] = $pgv_lang["source_list"];
+		if (!$surname and file_exists("repolist.php")) $menuList["repository"] = $pgv_lang["repo_list"];
+		if (!$surname and file_exists("placelist.php")) $menuList["places"] = $pgv_lang["place_list"];
+		if (!$surname and file_exists("medialist.php") and $MULTI_MEDIA) $menuList["media"] = $pgv_lang["media_list"];
+		// if (file_exists("patriarchlist.php")) $menuList["patriarch"] = $pgv_lang["patriarch_list"];
+		// if (!$surname and file_exists("aliveinyear.php")) $menuList["aliveinyear"] = $pgv_lang["alive_in_year"];
+		asort($menuList);
+
+		// Produce the submenus in localized name order
+		
+		foreach($menuList as $menuType => $menuName) {
+			switch ($menuType) {
+			case "individual":
 		//-- indi list sub menu
+				$link = "indilist.php";
+				if ($surname) $link .= "?surname=".$surname;
+				if ($surname) $link .= "?surname=".$surname;
 		$submenu = new Menu($pgv_lang["individual_list"], $link);
 		if (!empty($PGV_IMAGES["indis"]["small"]))
 			$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]);
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
+				break;
 
+			case "family":
 		//-- famlist sub menu
-		if (file_exists("famlist.php")) {
-			$link = "famlist.php?ged=$GEDCOM";
-			if ($surname) $link .= "&amp;surname=".$surname;
+				$link = "famlist.php";
+				if ($surname) $link .= "?surname=".$surname;
 			$submenu = new Menu($pgv_lang["family_list"], $link);
 			if (!empty($PGV_IMAGES["cfamily"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
-		}
+				break;
+
+			case "source":
 		//-- source
-		if (!$surname and file_exists("sourcelist.php") and $SHOW_SOURCES>=getUserAccessLevel(getUserName())) {
-			$submenu = new Menu($pgv_lang["source_list"], "sourcelist.php?ged=$GEDCOM");
+				$submenu = new Menu($pgv_lang["source_list"], "sourcelist.php");
 			if (!empty($PGV_IMAGES["menu_source"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["menu_source"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
-		}
+				break;
+
+			case "repository":
 		//-- repository
-		if (!$surname and file_exists("repolist.php")) {
 			$submenu = new Menu($pgv_lang["repo_list"], "repolist.php");
 			if (!empty($PGV_IMAGES["menu_repository"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["menu_repository"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
-		}
+				break;
+
+			case "places":
 		//-- places
-		if (!$surname and file_exists("placelist.php")) {
-			$submenu = new Menu($pgv_lang["place_list"], "placelist.php?ged=$GEDCOM");
+				$submenu = new Menu($pgv_lang["place_list"], "placelist.php");
 			if (!empty($PGV_IMAGES["place"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["place"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
-		}
+				break;
+
+			case "media":
 		//-- medialist
-		if (!$surname and file_exists("medialist.php") and $MULTI_MEDIA) {
-			$submenu = new Menu($pgv_lang["media_list"], "medialist.php?ged=$GEDCOM");
+				$submenu = new Menu($pgv_lang["media_list"], "medialist.php");
 			if (!empty($PGV_IMAGES["menu_media"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["menu_media"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
-		}
+				break;
+/*
+			case "patriarch":
 		//-- list most ancient parent of a family
-		/**
-		if (file_exists("patriarchlist.php")) {
 			$link = "patriarchlist.php";
 			if ($surname) $link .= "?surname=".$surname;
 			$submenu = new Menu($pgv_lang["patriarch_list"], $link);
@@ -864,16 +926,20 @@ class MenuBar
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["patriarch"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
-		}
+				break;
+
+			case "aliveinyear":
 		//-- aliveinyear
-		if (!$surname and file_exists("aliveinyear.php")) {
 			$submenu = new Menu($pgv_lang["alive_in_year"], "aliveinyear.php");
 			if (!empty($PGV_IMAGES["indis"]["small"]))
 				$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
+				break;
+*/
+			}
 		}
-		**/
+
 		return $menu;
 	}
 
@@ -943,15 +1009,25 @@ class MenuBar
 				$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["reports"]["large"]);
 			$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
 		}
-		//-- reports submenus
+
+		// Build a list of reports and sort that list into localized title order
 		$reports = get_report_list();
+		$menuList = array();
+		foreach ($reports as $file=>$report) {
+			if (!empty($report["title"][$LANGUAGE])) $label = $report["title"][$LANGUAGE];
+			else $label = implode("", $report["title"]);
+			$menuList[$file] = trim($label);
+		}
+		asort($menuList);
+
+		// Produce those submenus in localized name order
+
 		//print_r($reports);
 		$username = getUserName();
-		foreach($reports as $file=>$report) {
+		foreach($menuList as $file=>$label) {
+			$report = $reports[$file];
 			if (!isset($report["access"])) $report["access"] = $PRIV_PUBLIC;
 			if ($report["access"]>=getUserAccessLevel($username)) {
-				if (!empty($report["title"][$LANGUAGE])) $label = $report["title"][$LANGUAGE];
-				else $label = implode("", $report["title"]);
 				// indi report
 				if ($pid) $submenu = new Menu($label, "reportengine.php?ged=$GEDCOM&amp;action=setup&amp;report=".$report["file"]."&amp;pid=".$pid);
 				// family report

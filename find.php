@@ -608,7 +608,7 @@ if ($action=="filter") {
 						if (!$embed){
 							print "<a href=\"javascript:;\" onclick=\"pasteid('".addslashes($media["FILE"])."');\"><span dir=\"ltr\">".$media["FILE"]."</span></a> -- ";
 						}
-						else print "<a href=\"javascript:;\" onclick=\"pasteid('".$media["XREF"]."','".$media["TITL"]."','".$media["THUMB"]."');\"><span dir=\"ltr\">".$media["FILE"]."</span></a> -- ";
+						else print "<a href=\"javascript:;\" onclick=\"pasteid('".$media["XREF"]."','".addslashes($media["TITL"])."','".addslashes($media["THUMB"])."');\"><span dir=\"ltr\">".$media["FILE"]."</span></a> -- ";
 						print "<a href=\"javascript:;\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">".$pgv_lang["view"]."</a><br />";
 						if (!$media["EXISTS"] && !isFileExternal($media["FILE"])) print $media["FILE"]."<br /><span class=\"error\">".$pgv_lang["file_not_exists"]."</span><br />";
 						else if (!isFileExternal($media["FILE"]) && !empty($imgsize[0])) {

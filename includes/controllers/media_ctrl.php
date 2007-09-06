@@ -177,6 +177,7 @@ class MediaControllerRoot extends IndividualController{
 	function &getEditMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $TOTAL_NAMES;
 		global $NAME_LINENUM, $SEX_LINENUM, $pgv_lang, $pgv_changes, $USE_QUICK_UPDATE;
+		global $SHOW_GEDCOM_RECORD;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 		$links = get_media_relations($this->pid);
@@ -206,14 +207,16 @@ class MediaControllerRoot extends IndividualController{
 			$submenu->addOnclick($click_link);
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
+			
+			if ($SHOW_GEDCOM_RECORD || userIsAdmin(getUserName())) {
+				$submenu = new Menu($pgv_lang["edit_raw"]);
+				$submenu->addOnclick("return edit_raw('".$this->pid."');");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				$menu->addSubmenu($submenu);
+			}
 			//- end plain edit option
 			if (userGedcomAdmin(getUserName())) {
-			$submenu = new Menu($pgv_lang["edit_raw"]);
-			$submenu->addOnclick("return edit_raw('".$this->pid."');");
-			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
-			$menu->addSubmenu($submenu);
-
-			//- remove object option
+				//- remove object option
 				$submenu = new Menu($pgv_lang["remove_object"]);
 				$submenu->addLink("media.php?action=removeobject&amp;xref=".$this->pid);
 				$submenu->addOnclick("return confirm('".$pgv_lang["confirm_remove_object"]."')");

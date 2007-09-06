@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author Fabio Parri
+ * @author Lorenzo Simionato, Fabio Parri
  * @package PhpGedView
  * @subpackage Languages
  * @version $Id$
@@ -38,7 +38,7 @@ $factarray["ADR1"] = "Indirizzo 1";
 $factarray["ADR2"] = "Indirizzo 2";
 $factarray["ADOP"] = "Adozione";
 $factarray["AFN"] = "Ancestral File Number (AFN)";
-$factarray["AGE"] = "Età";
+$factarray["AGE"] = "Eta' ";
 $factarray["AGNC"] = "Istituzione";
 $factarray["ALIA"] = "Alias";
 $factarray["ANCE"] = "Antenati";
@@ -64,14 +64,15 @@ $factarray["CHAR"] = "Set di caratteri";
 $factarray["CHIL"] = "Bambino";
 $factarray["CHR"] = "Cresima";
 $factarray["CHRA"] = "Cresima da Adulto";
-$factarray["CITY"] = "Città";
+$factarray["CITY"] = "Citta' ";
 $factarray["CONF"] = "Comunione";
 $factarray["CONL"] = "Comunione Mormone";
 $factarray["COPR"] = "Copyright";
-$factarray["CORP"] = "Compagnia / Società";
+$factarray["CORP"] = "Compagnia / Societa' ";
 $factarray["CREM"] = "Cremazione";
 $factarray["CTRY"] = "Nazione";
 $factarray["DATA"] = "Dati";
+$factarray["DATE"]	= "Data";
 $factarray["DEAT"] = "Morte";
 $factarray["DESC"] = "Discendenti";
 $factarray["DESI"] = "Interesse Discendenti";
@@ -102,7 +103,7 @@ $factarray["MARL"] = "Licenza di matrimonio";
 $factarray["MARR"] = "Matrimonio";
 $factarray["MARS"] = "Accordo pre-matrimoniale";
 $factarray["NAME"] = "Nome";
-$factarray["NATI"] = "Nazionalità";
+$factarray["NATI"] = "Nazionalita' ";
 $factarray["NATU"] = "Naturalizzazione";
 $factarray["NCHI"] = "Numero di bambini";
 $factarray["NICK"] = "Soprannome";
@@ -120,9 +121,9 @@ $factarray["PLAC"] = "Posto";
 $factarray["PHON"] = "Telefono";
 $factarray["POST"] = "C.A.P.";
 $factarray["PROB"] = "Probate";
-$factarray["PROP"] = "Proprietà";
+$factarray["PROP"] = "Proprieta' ";
 $factarray["PUBL"] = "Pubblicazione";
-$factarray["QUAY"] = "Qualità  dei dati";
+$factarray["QUAY"] = "Qualita'  dei dati";
 $factarray["REFN"] = "Numero di riferimento";
 $factarray["RELI"] = "Religione";
 $factarray["RESI"] = "Residenza";
@@ -144,17 +145,22 @@ $factarray["SUBN"] = "Dati da trattare";
 $factarray["SURN"] = "Cognome";
 $factarray["TEMP"] = "Tempio";
 $factarray["TEXT"] = "Testo";
-$factarray["TIME"] = "Time";
+$factarray["TIME"] = "Ora";
 $factarray["TITL"] = "Titolo";
 $factarray["WILL"] = "Testamento";
 $factarray["_EMAIL"] = "Indirizzo e-mail";
 $factarray["EMAIL"] = "Indirizzo E-mail";
 $factarray["_TODO"] = "Item Da Fare";
 $factarray["_UID"] = "Identificatore Universale";
+$factarray["_PGVU"]	= "Ultima modifica di";
 
+$factarray["_MILT"]	= "Servizio Militare";
 // These facts are specific to GEDCOM exports from Family Tree Maker
 $factarray["_MDCL"]	= "Medical";
 $factarray["_SEPR"] = "Separato";
+$factarray["FACT"] = "Fatto";
+$factarray["MAP"] = "Mappa";
+$factarray["_BIBL"] = "Bibliografia";
 $factarray["_DETS"] = "Morte di un coniuge";
 $factarray["CITN"] = "Cittadinanza";
 
@@ -170,5 +176,10 @@ $factarray["_NMR"] = "Non sposato";
 $factarray["_NLIV"] = "Non in vita";
 $factarray["_NMAR"] = "Mai sposato";
 $factarray["_WEIG"] = "Peso";
+$factarray["_HNM"] = "Nome ebraico";
+$factarray["MARR_UNKNOWN"] = "Matrimonio di tipo sconosciuto";
+$factarray["MARR_RELIGIOUS"] = "Matrimonio Religioso";
+$factarray["MARR_CIVIL"] = "Matrimonio Civile";
+$factarray["COMM"]	= "Commento";
 
 ?>
