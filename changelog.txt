@@ -9,7 +9,6 @@
 =====================================================================
 Version 4.1.1
  - Added English FAQ texts from some registered PGV sites (meliza)
- - Fixed [ 1787494 ] Text gets lost by browser with '<' & '>' (yalnifj)
  - Fixed [ 1787942 ] Reports & Level 1 EMAIL TAG (yalnifj)
  - Fix [ 1783854 ] Memory exhaustion on line 1190 of functions_name.php (canajun2eh)
  - Applied [ 1738384 ] Italian language files update (yalnifj)
