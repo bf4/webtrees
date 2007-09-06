@@ -499,6 +499,8 @@ class MenuBar
 			switch ($menuType) {
 			case "pedigree":
 				//-- pedigree
+				$link = "pedigree.php";
+				if ($rootid) $link .= "?rootid=".$rootid;
 				$submenu = new Menu($pgv_lang["pedigree_chart"], $link);
 				if (!empty($PGV_IMAGES["pedigree"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["pedigree"]["small"]);
@@ -719,6 +721,9 @@ class MenuBar
 			switch ($menuType) {
 			case "individual":
 				//-- indi list sub menu
+				$link = "indilist.php";
+				if ($surname) $link .= "?surname=".$surname;
+				if ($surname) $link .= "?surname=".$surname;
 				$submenu = new Menu($pgv_lang["individual_list"], $link);
 				if (!empty($PGV_IMAGES["indis"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]);
