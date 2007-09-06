@@ -1997,7 +1997,8 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 		}
 	}
 	//-- convert all & to &amp;
-	$text = preg_replace("/&/", "&amp;", $text);
+	//-- maybe htmlspecialchars would be better?
+	$text = preg_replace(array("/&/","/</","/>/"), array("&amp;","&lt;","&gt;"), $text);
 	//-- make sure we didn't double convert &amp; to &amp;amp;
 	$text = preg_replace("/&amp;(\w+);/", "&$1;", $text);
     if ($trim) $text = trim($text);
