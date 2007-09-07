@@ -37,10 +37,31 @@ For massive changes, the variable names should be listed in the order in which t
 occur in the respective language files.
 
 
-VERSION 4.1
+VERSION 4.1.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$faqlist["FAQ_010_body"]							07 September 2007		fw
+*$faqlist["FAQ_015_body"]							07 September 2007		C
+*$faqlist["FAQ_017_body"]							07 September 2007		wC
+*$faqlist["FAQ_022_body"]							07 September 2007		C
+*$faqlist["FAQ_027_body"]							07 September 2007		S
+*$faqlist["FAQ_030_HELP"]							07 September 2007		w
+*$faqlist["FAQ_030_PLACES"]							07 September 2007		w
+*$faqlist["FAQ_030_NAMES"]							07 September 2007		W
+*$faqlist["FAQ_030_PREFIX"]							07 September 2007		W
+*$faqlist["FAQ_030_GIVN"]							07 September 2007		W
+*$faqlist["FAQ_030_SURNAME"]						07 September 2007		W
+*$faqlist["FAQ_030_NICKNAME"]						07 September 2007		w
+*$faqlist["FAQ_030_AKANAME"]						07 September 2007		W
+*$faqlist["FAQ_030_MARRNAME"]						07 September 2007		W
+*$faqlist["FAQ_030_MARRNAME2"]						07 September 2007		w
+*$faqlist["FAQ_030_CHNG"]							07 September 2007		w
+*$faqlist["FAQ_030_MEDIA2"]							07 September 2007		w
+*$faqlist["FAQ_032_body"]							07 September 2007		w
+*$faqlist["FAQ_037_body2"]							07 September 2007		S
+*$faqlist["FAQ_040_body"]							07 September 2007		w
+*$faqlist["FAQ_040_body2"]							07 September 2007		w
 *$faqlist["FAQ_015_body"]							06 September 2007		pwf
 *$faqlist["FAQ_017_head"]							06 September 2007		pw  also: fix missing </ul>
 *$faqlist["FAQ_020_body"]							06 September 2007		w
@@ -128,5 +149,11 @@ VERSION 4.1
 +$faqlist["FAQ_040_body2"]							06 September 2007		A
 +$faqlist["FAQ_050_head"]							06 September 2007		A
 +$faqlist["FAQ_050_body"]							06 September 2007		A
+
+
+VERSION 4.1
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+-----------------------------------------------------------------------------------------
 +$faqlist["FAQ_000_head"]							20 July 2007			A
 +$faqlist["FAQ_000_body"]							20 July 2007			A
