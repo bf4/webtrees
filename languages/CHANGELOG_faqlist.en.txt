@@ -41,6 +41,11 @@ VERSION 4.1.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$faqlist["FAQ_030_PLACES3"]						07 September 2007       w	
+*$faqlist["FAQ_030_PLACES4"]						07 September 2007       w	
+*$faqlist["FAQ_030_PLACES5"]						07 September 2007		W
+*$faqlist["FAQ_030_AKANAME"]						07 September 2007		W
+*$faqlist["FAQ_030_AKANAME2"]						07 September 2007		w
 *$faqlist["FAQ_030_PLACES3"]						07 September 2007       f	
 *$faqlist["FAQ_030_PLACES4"]						07 September 2007       f	
 +$faqlist["FAQ_030_PLACES5"]						07 September 2007		A
