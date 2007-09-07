@@ -1590,7 +1590,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	print "</td>";
 	print "<td>";
-	if (strpos($option, "noDownload")===false) {
+	if ($allow_download) {
 		$uri = "http://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
 		global $whichFile;
 		$whichFile = "hCal-events.ics";
