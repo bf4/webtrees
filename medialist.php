@@ -299,15 +299,10 @@ if ($ct>0){
 		}
 		print "</a><br />";
 
-		PrintMediaLinks($media["LINKS"], "small");
-
 	    if (!$isExternal && !file_exists(filename_decode($media["FILE"]))) {
 		    print "<br /><span class=\"error\">".$pgv_lang["file_not_found"]." <span dir=\"ltr\">".PrintReady($media["FILE"])."</span></span>";
 	    }
-	    print "<br /><div class=\"indent\" style=\"white-space: normal; width: 95%;\">";
-	    print_fact_notes($media["GEDCOM"], $media["LEVEL"]+1);
 
-	    print "</div>";
 	    if (!$isExternal && file_exists(filename_decode($media["FILE"]))){
 			$imageTypes = array("","GIF", "JPG", "PNG", "SWF", "PSD", "BMP", "TIFF", "TIFF", "JPC", "JP2", "JPX", "JB2", "SWC", "IFF", "WBMP", "XBM");
 			if(!empty($imgsize[2])){
@@ -321,11 +316,17 @@ if ($ct>0){
 			$fileSize = filesize(filename_decode($media["FILE"]));
 			$sizeString = getfilesize($fileSize);
 			print "&nbsp;&nbsp;&nbsp;<span class=\"field\" style=\"direction: ltr;\">" . $sizeString . "</span>";
-		}
 
 			if($imgsize[2]!==false){
 		    	print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM() . " ") : " x ") . $imgsize[1] . "</span>";
 			}
+		}
+
+	    print "<div style=\"white-space: normal; width: 95%;\">";
+	    print_fact_notes($media["GEDCOM"], $media["LEVEL"]+1);
+	    print "</div>";
+
+		PrintMediaLinks($media["LINKS"], "small");
 
 	    print "</td></tr></table>\n";
 	    print "</td>";

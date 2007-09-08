@@ -8,6 +8,10 @@
 	# $Id$
 =====================================================================
 Version 4.1.1
+ - Changed Print link list after Notes and Source on Manage Media pages (canajun2eh)
+ - Fixed Media source citation information lost when editing any media object info (canajun2eh)
+ - Fixed Formatting problems while editing long Media source citation text (canajun2eh)
+ - Fixed Formatting problems while editing long Media notes text (canajun2eh)
  - Fixed [ 1790543 ] Birth dates showing even when set to private (yalnifj)
  - Added English FAQ texts from some registered PGV sites (meliza)
  - Fixed [ 1787942 ] Reports & Level 1 EMAIL TAG (yalnifj)

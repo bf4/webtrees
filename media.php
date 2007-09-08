@@ -1345,16 +1345,15 @@ if (check_media_structure()) {
 								print "<sub>&nbsp;&nbsp;".$pgv_lang["image_size"]." -- ".$imgsize[0]."x".$imgsize[1]."</sub><br />";
 							}
 						}
+						print_fact_notes($media["GEDCOM"], 1);
+						print_fact_sources($media["GEDCOM"], 1);
 						if ($media["LINKED"]) {
-							print "<br />".$pgv_lang["media_linked"];
+							//print "<br />".$pgv_lang["media_linked"];
 							PrintMediaLinks($media["LINKS"], "normal");
 						} else {
 							print "<br />".$pgv_lang["media_not_linked"];
 						}
 
-						print "<br /><br />";
-						print_fact_sources($media["GEDCOM"], 1);
-						print_fact_notes($media["GEDCOM"], 1);
 
 						print "\n\t\t\t</td></tr>";
 						break;
