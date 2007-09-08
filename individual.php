@@ -98,7 +98,7 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 				++$col;
 				?>
 				<td valign="top" colspan="<?php print $maxcols-$col; ?>">
-				<?php if (!empty($birthrec)) { ?>
+				<?php if (!empty($birthrec) && showFactDetails("BIRT", $controller->pid) && !FactViewRestricted($controller->pid, $birthrec)) { ?>
 					<span class="label"><?php print $factarray["BIRT"].":"; ?></span>
 					<span class="field">
 						<?php print_fact_date($birthrec); ?>
@@ -108,7 +108,7 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 				<?php
 				// RFE [ 1229233 ] "DEAT" vs "DEAT Y"
 				// The check $deathrec != "1 DEAT" will not show any records that only have 1 DEAT in them
-				if ((!empty($deathrec)) && (trim($deathrec) != "1 DEAT")) {
+				if ((!empty($deathrec)) && (trim($deathrec) != "1 DEAT") && showFactDetails("DEAT", $controller->pid) && !FactViewRestricted($controller->pid, $deathrec)) {
 			?>
 				<span class="label"><?php print $factarray["DEAT"].":"; ?></span>
 				<span class="field">
