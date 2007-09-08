@@ -510,6 +510,7 @@ function print_fact_sources($factrec, $level) {
 	global $factarray;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_SOURCES, $EXPAND_SOURCES;
 	$nlevel = $level+1;
+	$printDone = false;
 	if ($SHOW_SOURCES<getUserAccessLevel(getUserName())) return;
 	// -- Systems not using source records [ 1046971 ]
 	$ct = preg_match_all("/$level SOUR (.*)/", $factrec, $match, PREG_SET_ORDER);
@@ -520,6 +521,7 @@ function print_fact_sources($factrec, $level) {
 			$srec = str_replace("\n".($level+1)." CONT ", " ", $srec); // remove n+1 CONT
 			$srec = str_replace("\n".($level+1)." CONC ", "", $srec); // remove n+1 CONC
 			print "<span class=\"label\">".$pgv_lang["source"].":</span> <span class=\"field\">".PrintReady($srec)."</span><br />";
+			$printDone = true;
 		}
 	}
 	// -- find source for each fact
@@ -595,8 +597,11 @@ function print_fact_sources($factrec, $level) {
 			print_fact_notes($srec, $nlevel);
 			print "</div>";
 			print "</div>";
+			
+			$printDone = true;
 		}
 	}
+	if ($printDone) print "<br />";
 }
 
 //-- Print the links to multi-media objects

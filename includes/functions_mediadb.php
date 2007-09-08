@@ -670,14 +670,12 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 							$subLevel = $match[1];
 							$fact = trim($match[2]);
 							$event = trim($match[3]);
-							$event .= str_replace("<br />", "", get_cont(($subLevel +1), $subrec));
+							$event .= get_cont(($subLevel +1), $subrec, false);
 
 							if ($fact == "FILE")
-								$media["FILE"] = $event;
+								$media["FILE"] = str_replace(array("\r", "\n"), "", $event);
 							if ($fact == "FORM")
-								$media["FORM"] = $event;
-							if ($fact == "TYPE")
-								$media["TYPE"] = $event;
+								$media["FORM"] =  str_replace(array("\r", "\n"), "", $event);
 							if ($fact == "TITL")
 								$media["TITL"] = $event;
 						}
@@ -1624,67 +1622,75 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 	add_simple_tag("1 $gedthum");
 
 	//-- print out editing fields for any other data in the media record
+	$sourceSOUR = "";
 	if (!empty ($gedrec)) {
-		$subrecs = get_all_subrecords($gedrec, "FILE,FORM,TYPE,TITL,_PRIM,_THUM,CHAN");
+		$subrecs = get_all_subrecords($gedrec, "FILE,FORM,TYPE,TITL,_PRIM,_THUM,CHAN,DATA");
 		foreach ($subrecs as $ind => $subrec) {
-			$inSource = false;
-			$pieces = explode("\r\n", $subrec);
+			$pieces = explode("\n", $subrec);
 			foreach ($pieces as $piece) {
 				$ft = preg_match("/(\d) (\w+)(.*)/", $piece, $match);
-				if ($ft > 0) {
-					$subLevel = $match[1];
-					$fact = trim($match[2]);
-					$event = trim($match[3]);
-					$event .= str_replace("<br />", "", get_cont(($subLevel +1), $subrec));
-					if ($fact == "SOUR") {
-						$sourceLevel = $subLevel;
-						$inSource = true;
-						$havePAGE = false;
-						$haveTEXT = false;
-						$haveDATE = false;
-						$haveQUAY = false;
-					}
-					if ($fact == "PAGE")
-						$havePAGE = true;
-					if ($fact == "TEXT") {
-						if (!$havePAGE) {
-							add_simple_tag(($sourceLevel +1) . " PAGE");
-							$havePAGE = true;
-						}
-						$haveTEXT = true;
-					}
-					if ($fact == "DATE") {
-						if (!$havePAGE) {
-							add_simple_tag(($sourceLevel +1) . " PAGE");
-							$havePAGE = true;
-						}
-					}
-					if ($fact == "DATE")
-						$haveDATE = true;
-					if ($fact == "QUAY")
-						$haveQUAY = true;
-				} else {
-					$fact = "";
-					$event = "";
+				if ($ft == 0) continue;
+				$subLevel = $match[1];
+				$fact = trim($match[2]);
+				$event = trim($match[3]);
+				if ($fact=="NOTE" || $fact=="TEXT") {
+					$event .= get_cont(($subLevel +1), $subrec, false);
 				}
+				if ($sourceSOUR!="" && $subLevel<=$sourceLevel) {
+					// Get rid of all saved Source data
+					add_simple_tag($sourceLevel ." SOUR ". $sourceSOUR);
+					add_simple_tag(($sourceLevel+1) ." PAGE ". $sourcePAGE);
+					add_simple_tag(($sourceLevel+2) ." TEXT ". $sourceTEXT);
+					add_simple_tag(($sourceLevel+2) ." DATE ". $sourceDATE, "", $pgv_lang["date_of_entry"]);
+					add_simple_tag(($sourceLevel+1) ." QUAY ". $sourceQUAY);
+					$sourceSOUR = "";
+				}
+				
+				if ($fact=="SOUR") {
+					$sourceLevel = $subLevel;
+					$sourceSOUR = $event;
+					$sourcePAGE = "";
+					$sourceTEXT = "";
+					$sourceDATE = "";
+					$sourceQUAY = "";
+					continue;
+				}
+
+				// Save all incoming data about this source reference
+				if ($sourceSOUR!="") {
+					if ($fact=="PAGE") {
+						$sourcePAGE = $event;
+						continue;
+					}
+					if ($fact=="TEXT") {
+						$sourceTEXT = $event;
+						continue;
+					}
+					if ($fact=="DATE") {
+						$sourceDATE = $event;
+						continue;
+					}
+					if ($fact=="QUAY") {
+						$sourceQUAY = $event;
+						continue;
+					}
+					continue;
+				}
+
+				// Output anything that isn't part of a source reference
 				if (!empty ($fact) && $fact != "CONC" && $fact != "CONT" && $fact != "DATA") {
-					$subrecord = $subLevel . " " . $fact . " " . $event;
-					if ($inSource && $fact == "DATE")
-						add_simple_tag($subrecord, "", $pgv_lang["date_of_entry"]);
-					else
-						add_simple_tag($subrecord);
+					add_simple_tag($subLevel ." ". $fact ." ". $event);
 				}
 			}
-			if ($inSource) {
-				if (!$havePAGE)
-					add_simple_tag(($sourceLevel +1) . " PAGE");
-				if (!$haveTEXT)
-					add_simple_tag(($sourceLevel +2) . " TEXT");
-				if (!$haveDATE)
-					add_simple_tag(($sourceLevel +2) . " DATE", "", $pgv_lang["date_of_entry"]);
-				if (!$haveQUAY)
-					add_simple_tag(($sourceLevel +1) . " QUAY");
-			}
+		}
+
+		if ($sourceSOUR!="") {
+			// Get rid of all saved Source data
+			add_simple_tag($sourceLevel ." SOUR ". $sourceSOUR);
+			add_simple_tag(($sourceLevel+1) ." PAGE ". $sourcePAGE);
+			add_simple_tag(($sourceLevel+2) ." TEXT ". $sourceTEXT);
+			add_simple_tag(($sourceLevel+2) ." DATE ". $sourceDATE, "", $pgv_lang["date_of_entry"]);
+			add_simple_tag(($sourceLevel+1) ." QUAY ". $sourceQUAY);
 		}
 	}
 	print "</table>\n";

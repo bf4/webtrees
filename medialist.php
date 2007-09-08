@@ -356,7 +356,7 @@ if ($ct>0){
 		print "</tr></table>";	
 			
 			// ------------ Linespace ---------------------
-			print "<br>";
+			//print "<br>";
 		}	
 //LBox ----------- end addition for Lightbox Album ---------------------------------------	
 			
@@ -377,16 +377,10 @@ if ($ct>0){
 		}
 		print "</a><br />";
 
-		PrintMediaLinks($media["LINKS"], "small");
-
-			if (!$isExternal && !$media["EXISTS"] ) {
-				print "<br /><span class=\"error\">".$pgv_lang["file_not_found"]." <span dir=\"ltr\">".PrintReady($media["FILE"])."</span></span>";
-			}
-			print "<br /><div class=\"indent\" style=\"white-space: normal; width: 95%;\">";
-			print_fact_notes($media["GEDCOM"], $media["LEVEL"]+1);
-
-			print "</div>";
-			if (!$isExternal && $media["EXISTS"]){
+		if (!$isExternal && !$media["EXISTS"] ) {
+			print "<br /><span class=\"error\">".$pgv_lang["file_not_found"]." <span dir=\"ltr\">".PrintReady($media["FILE"])."</span></span>";
+		}
+		if (!$isExternal && $media["EXISTS"]){
 			$imageTypes = array("","GIF", "JPG", "PNG", "SWF", "PSD", "BMP", "TIFF", "TIFF", "JPC", "JP2", "JPX", "JB2", "SWC", "IFF", "WBMP", "XBM");
 			if(!empty($imgsize[2])){
 				print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["media_format"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imageTypes[$imgsize[2]] . "</span>";
@@ -395,15 +389,20 @@ if ($ct>0){
 				$imageType = strtoupper(substr($path_end, strpos($path_end, ".")+1));
 				print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["media_format"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imageType . "</span>";
 			}
-
+	
 			$fileSize = media_filesize($media["FILE"]);
 			$sizeString = getfilesize($fileSize);
 			print "&nbsp;&nbsp;&nbsp;<span class=\"field\" style=\"direction: ltr;\">" . $sizeString . "</span>";
 		}
 
-			if($imgsize[2]!==false){
-		    	print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM() . " ") : " x ") . $imgsize[1] . "</span>";
-			}
+		if($imgsize[2]!==false){
+			print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM() . " ") : " x ") . $imgsize[1] . "</span>";
+		}
+		print "<br /><div style=\"white-space: normal; width: 95%;\">";
+		print_fact_notes($media["GEDCOM"], $media["LEVEL"]+1);
+		print "</div>";
+
+		PrintMediaLinks($media["LINKS"], "small");
 
 	    print "</td></tr></table>\n";
 	    print "</td>";
