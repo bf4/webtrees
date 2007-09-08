@@ -1527,8 +1527,8 @@ function print_note_record($text, $nlevel, $nrec) {
 	global $pgv_lang;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 	$elementID = "N-".floor(microtime()*1000000);
-	$text = preg_replace("/~~/", "<br />", trim($text));
 	$text .= get_cont($nlevel, $nrec);
+	$text = str_replace("~~", "<br />", trim($text));
 	$text=expand_urls($text);
 	$text = trim($text);
 	if (!empty($text)) {
@@ -1559,6 +1559,7 @@ function print_fact_notes($factrec, $level) {
 	 global $pgv_lang;
 	 global $factarray;
 	 global $WORD_WRAPPED_NOTES;
+	 $printDone = false;
 	 $nlevel = $level+1;
 	 $ct = preg_match_all("/$level NOTE(.*)/", $factrec, $match, PREG_SET_ORDER);
 	 for($j=0; $j<$ct; $j++) {
@@ -1593,7 +1594,9 @@ function print_fact_notes($factrec, $level) {
 	  	  if($closeSpan){
 	  		print "</span>";
 	  	  }
+	  	  $printDone = true;
 	 }
+	 if ($printDone) print "<br />"; 
 }
 /**
  * print a gedcom title linked to the gedcom portal

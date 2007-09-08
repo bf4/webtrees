@@ -723,8 +723,23 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 function get_cont($nlevel, $nrec, $tobr=true) {
 	global $WORD_WRAPPED_NOTES;
 	$text = "";
-	if ($tobr) $newline = "<br />\n";
+//	if ($tobr) $newline = "<br />\n";
+	if ($tobr) $newline = "<br />";
 	else $newline = "\r\n";
+
+	$subrecords = explode("\n", $nrec);
+	foreach ($subrecords as $thisSubrecord) {
+		if (substr($thisSubrecord, 0, 2)!=$nlevel." ") continue;
+		$subrecordType = substr($thisSubrecord, 2, 4);
+		if ($subrecordType=="CONT") $text .= $newline;
+		if ($subrecordType=="CONC" && $WORD_WRAPPED_NOTES) $text .= " ";
+		if ($subrecordType=="CONT" || $subrecordType=="CONC") {
+			$text .= rtrim(substr($thisSubrecord, 7));
+		}
+	}
+	
+	return rtrim($text, " ");
+/*
 	$tt = preg_match_all("/$nlevel CON[CT](.*)/", $nrec, $cmatch, PREG_SET_ORDER);
 	for($i=0; $i<$tt; $i++) {
 		if (strstr($cmatch[$i][0], "CONT")) $text.=$newline;
@@ -733,11 +748,12 @@ function get_cont($nlevel, $nrec, $tobr=true) {
 		if (!empty($conctxt)) {
 			if ($conctxt{0}==" ") $conctxt = substr($conctxt, 1);
 			$conctxt = preg_replace("/[\r\n]/","",$conctxt);
-			$text.=$conctxt;
+			$text.=rtrim($conctxt);
 		}
 	}
 	$text = preg_replace("/~~/", $newline, $text);
 	return $text;
+*/
 }
 
 /**
