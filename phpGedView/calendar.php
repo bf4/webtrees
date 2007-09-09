@@ -313,7 +313,8 @@ case 'calendar':
 	for ($jd=$cal_date->minJD, $d=1; $jd<=$cal_date->maxJD; ++$jd, ++$d)
 		foreach (apply_filter(get_anniversary_events($jd, $events), $filterof, $filtersx) as $event) {
 			$tmp=new GedcomDate($event['date']);
-	 		if ($tmp->date1->minJD != $tmp->date1->maxJD)
+	 		//if ($tmp->date1->minJD != $tmp->date1->maxJD) // PHP5
+	 		$tmp2=$tmp->date1; if ($tmp2->minJD != $tmp->date1->maxJD) // PHP4
 				$found_facts[0][$event['id']]=$event;
 			else
 				$found_facts[$d][$event['id']]=$event;
@@ -518,8 +519,8 @@ function apply_filter($facts, $filterof, $filtersx) {
 		}
 		if ($filterof=='recent') {
 			$dd=new GedcomDate($fact['date']);
-			if ($dd->MaxDate()->maxJD<$hundred_years)
-				continue;
+			//if ($dd->MaxDate()->maxJD<$hundred_years) continue; // PHP5
+			$tmp2=$dd->MaxDate(); if ($tmp2->maxJD<$hundred_years) continue; // PHP4
 		}
 		// Finally, check for privacy rules before adding fact.
 		if ($tmp->canDisplayDetails())
