@@ -596,7 +596,14 @@ $pgv_lang["media_dir_3"]				= "Dieses Medien Objekt befindet sich im geschützte
 $pgv_lang["thumb_dir_1"]				= "Dieses Miniaturbild befindet sich auf einem externen Server";
 $pgv_lang["thumb_dir_2"]				= "Dieses Miniaturbild befindet sich im gewöhnlichen Medien-Verzeichnis";
 $pgv_lang["thumb_dir_3"]				= "Dieses Miniaturbild befindet sich im geschützten Medien-Verzeichnis";
-$pgv_lang["file_exists_no_xref"]		= "aber wird nicht gezeigt da keine GEDCOM Datensatzverbindung besteht.";
+$pgv_lang["moveto_2"]					= "Ins geschütztes Verzeichnis verlegen";
+$pgv_lang["moveto_3"]					= "Ins gewöhnliches Verzeichnis verlegen";
+$pgv_lang["move_standard"]				= "Gewöhnlich verlegen";
+$pgv_lang["move_protected"]				= "Geschützt verlegen";
+$pgv_lang["move_time_exceeded"]			= "Die maximale Ausführungszeit wurde überschritten.  Bitte versuchen Sie den Befehl wieder, um weitere Dateien zu verlegen.";
+$pgv_lang["media_firewall_rootdir_no_exist"]			= "Das Media-Firewall Verzeichnis besteht nicht.  Sie müssen es zuerst erstellen.";
+$pgv_lang["media_firewall_protected_dir_no_exist"]		= "Das geschützte Medien-Verzeichnis konnte im Media-Firewall Verzeichnis nicht erstellt werden.  Sie müssen es erstellen, und auch darin öffentliches Schreiben erlauben.";
+$pgv_lang["media_firewall_protected_dir_not_writable"]	= "Das geschützte Medien-Verzeichnis im Media-Firewall Verzeichnis ist nicht öffentlich schreibbar. ";
 //-- Relationship chart messages
 $pgv_lang["relationship_great"]			= "Ur";
 $pgv_lang["relationship_chart"]			= "Verwandtschaftsberechnung";

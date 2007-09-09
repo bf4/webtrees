@@ -718,9 +718,9 @@ $pgv_lang["moveto_3"]				= "Move to standard directory";
 $pgv_lang["move_standard"]			= "Move standard";
 $pgv_lang["move_protected"]		= "Move protected";
 $pgv_lang["move_time_exceeded"]	= "The execution time limit was reached.  Try the command again to move the rest of the files.";
-$pgv_lang["media_firewall_rootdir_no_exist"]					= "The Media Firewall Root Directory you requested does not exist.  You must create it first.";
-$pgv_lang["media_firewall_protected_dir_no_exist"]			= "Unable to create the protected media directory in the the Media Firewall Root Directory.  Please create this directory and make it world-writable.";
-$pgv_lang["media_firewall_protected_dir_not_writable"]	= "Please make sure this directory is world writable:";
+$pgv_lang["media_firewall_rootdir_no_exist"]			= "The Media Firewall root directory you requested does not exist.  You must create it first.";
+$pgv_lang["media_firewall_protected_dir_no_exist"]		= "The protected media directory could not be created in the Media Firewall root directory.  Please create this directory and make it world-writable.";
+$pgv_lang["media_firewall_protected_dir_not_writable"]	= "The protected media directory in the Media Firewall root directory is not world writable. ";
 //-- Relationship chart messages
 $pgv_lang["relationship_great"]		= "Great";
 $pgv_lang["relationship_chart"] 	= "Relationship Chart";
