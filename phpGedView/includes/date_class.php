@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @version $Id:$
+ * @version $Id$
  *
  * NOTE: Since different calendars start their days at different times, (civil
  * midnight, solar midnight, sunset, sunrise, etc.), we convert on the basis of
@@ -196,7 +196,8 @@ class CalendarDate {
 		if ($this->m==0) $format=str_replace(array('F', 'm', 'M', 'n', 't'),                '', $format);
 		if ($this->y==0) $format=str_replace(array('t', 'L', 'G', 'y', 'Y'),                '', $format);
 		$str='';
-		foreach (str_split($format) as $code)
+		//foreach (str_split($format) as $code) // PHP5
+		preg_match_all('/(.)/', $format, $match); foreach ($match[1] as $code) // PHP4
 			switch ($code) {
 			case 'd': $str.=$this->FormatDayZeros(); break;
 			case 'j': $str.=$this->FormatDay(); break;
@@ -1039,21 +1040,29 @@ class GedcomDate {
 	function Compare($a, $b) {
 		// Get min/max JD for each date.
 		if ($a->qual1=='BEF')
-			$amin=$a->MinDate()->minJD-1;
+			//$amin=$a->MinDate()->minJD-1; // PHP5
+			{$tmp=$a->MinDate();$amin=$tmp->minJD-1;} // PHP4
 		else
-			$amin=$a->MinDate()->minJD;
+			//$amin=$a->MinDate()->minJD; // PHP5
+			{$tmp=$a->MinDate();$amin=$tmp->minJD;} // PHP4
 		if ($b->qual1=='BEF')
-			$bmin=$b->MinDate()->minJD-1;
+			//$bmin=$b->MinDate()->minJD-1; // PHP5
+			{$tmp=$b->MinDate();$bmin=$tmp->minJD-1;} // PHP4
 		else
-			$bmin=$b->MinDate()->minJD;
+			//$bmin=$b->MinDate()->minJD; // PHP5
+			{$tmp=$b->MinDate();$bmin=$tmp->minJD;} // PHP4
 		if ($a->qual1=='AFT')
-			$amax=$a->MaxDate()->maxJD+1;
+			//$amax=$a->MaxDate()->maxJD+1; // PHP5
+			{$tmp=$a->MaxDate();$amax=$tmp->maxJD+1;} // PHP4
 		else
-			$amax=$a->MaxDate()->maxJD;
+			//$amax=$a->MaxDate()->maxJD; // PHP5
+			{$tmp=$a->MaxDate();$amax=$tmp->maxJD;} // PHP4
 		if ($b->qual1=='AFT')
-			$bmax=$b->MaxDate()->maxJD+1;
+			//$bmax=$b->MaxDate()->maxJD+1; // PHP5
+			{$tmp=$b->MaxDate();$bmax=$tmp->maxJD+1;} // PH4
 		else
-			$bmax=$b->MaxDate()->maxJD;
+			//$bmax=$b->MaxDate()->maxJD; // PHP5
+			{$tmp==$b->MaxDate();$bmax=$tmp->maxJD;} // PHP4
 
 		if ($amax<$bmin)
 			return -1;
