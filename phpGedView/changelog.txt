@@ -7,6 +7,9 @@
 
 	# $Id$
 =====================================================================
+Version 4.1.2
+
+
 Version 4.1.1
  - Applied [ 1790552 ] childrec variable not initialized (yalnifj)
  - Changed Print link list after Notes and Source on Manage Media pages (canajun2eh)
