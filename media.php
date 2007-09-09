@@ -66,6 +66,41 @@ function dir_is_writable($dir) {
 	return($err_write);
 }
 
+/**
+ * Moves a file from one location to another, creating destination directory if needed
+ * used by the routines that move files between the standard media directory and the protected media directory
+ */
+function move_file($src, $dest) {
+	global $pgv_lang, $MEDIA_DIRECTORY;
+
+	// sometimes thumbnail files are set to something like "images/media.gif", this ensures we do not move them
+	// check to make sure the src file is in the standard or protected media directories
+	$media_firewall_dir = get_media_firewall_path("");
+	if (preg_match("'^($media_firewall_dir)?$MEDIA_DIRECTORY'", $src)==0){
+		return false;
+	}
+	// check to make sure the dest file is in the standard or protected media directories
+	if (preg_match("'^($media_firewall_dir)?$MEDIA_DIRECTORY'", $dest)==0){
+		return false;
+	}
+
+	$destdir = dirname($dest);
+	if (!is_dir($destdir)) {
+		@mkdirs($destdir);
+		if (!is_dir($destdir)) {
+			print "<div class=\"error\">".$pgv_lang["folder_no_create"]." [".$destdir."]</div>";
+			return false;
+		}
+	}
+	if(!rename($src, $dest)) {
+		print "<div class=\"error\">".$pgv_lang["media_file_not_moved"]." [".$src."]</div>";
+		return false;
+	}
+	print "<div>".$pgv_lang["media_file_moved"]." [".$src."]</div>";
+	return true;
+}
+
+
 // Get rid of extra slashes in input variables
 if (isset($filename)) $filename = stripslashes($filename);
 if (isset($directory))$directory = stripslashes($directory);
@@ -533,7 +568,8 @@ if (check_media_structure()) {
 		if ($all == true) {
 			foreach ($medialist as $key => $media) {
 				if (!($MEDIA_EXTERNAL && isFileExternal($filename))) {
-					$thumbnail = str_replace("$MEDIA_DIRECTORY",$MEDIA_DIRECTORY."thumbs/",check_media_depth($media["FILE"], "NOTRUNC"));
+					// why doesn't this use thumbnail_file??
+					$thumbnail = str_replace("$MEDIA_DIRECTORY",$MEDIA_DIRECTORY."thumbs/",check_media_depth($media["FILE"], "NOTRUNC"));  
 					if (!$media["THUMBEXISTS"]) {
 						if (generate_thumbnail($media["FILE"],$thumbnail)) {
 							print_text("thumb_genned");
@@ -569,6 +605,102 @@ if (check_media_structure()) {
 		print "</td></tr></table>";
 	}
 
+	// Move single file to protected dir
+	if ($action == "moveprotected") {
+		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<tr><td class=\"messagebox wrap\">";
+		if (strpos($filename,"../") !== false) {
+			// don't allow user to access directories outside of media dir
+			print "<div class=\"error\">".$pgv_lang["illegal_chars"]."</div>";
+		} else {
+			if (file_exists($filename)) {
+				move_file($filename, get_media_firewall_path($filename));
+			}
+			if ($MEDIA_FIREWALL_THUMBS) {
+				$thumbnail = thumbnail_file($filename,false);
+				if (file_exists($thumbnail)) {
+					move_file($thumbnail, get_media_firewall_path($thumbnail));
+				}
+			}
+		}
+		print "</td></tr></table>";
+		$action="filter";
+	}  
+  
+	// Move single file to standard dir
+	if ($action == "movestandard") {
+		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<tr><td class=\"messagebox wrap\">";
+		if (strpos($filename,"../") !== false) {
+			// don't allow user to access directories outside of media dir
+			print "<div class=\"error\">".$pgv_lang["illegal_chars"]."</div>";
+		} else {
+			if (file_exists(get_media_firewall_path($filename))) {
+				move_file(get_media_firewall_path($filename), $filename);
+			}
+			$thumbnail = thumbnail_file($filename,false);
+			if (file_exists(get_media_firewall_path($thumbnail))) {
+				move_file(get_media_firewall_path($thumbnail), $thumbnail);
+			}
+		}
+		print "</td></tr></table>";
+		$action="filter";
+	}  
+
+	// Move entire dir and all subdirs to protected dir
+	if ($action == "movedirprotected") {
+		if (empty($directory)) $directory = $MEDIA_DIRECTORY;
+		$timelimit = $TIME_LIMIT ? $TIME_LIMIT : 0;
+		$starttime = time();
+		$medialist = get_medialist(false, $directory);
+		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<tr><td class=\"messagebox wrap\">";
+		foreach ($medialist as $indexval => $media) {
+			$exectime = time() - $starttime;
+			if (($timelimit != 0) && ($timelimit - $exectime) < 3) {
+				// bail now to ensure nothing is lost
+				print $pgv_lang["move_time_exceeded"]."<br />";
+				break;
+			}
+			if ($media["EXISTS"] == 2) {
+				move_file($media["FILE"], get_media_firewall_path($media["FILE"]));
+			}
+			if ($MEDIA_FIREWALL_THUMBS) {
+				if ($media["THUMBEXISTS"] == 2) {
+					move_file($media["THUMB"], get_media_firewall_path($media["THUMB"]));
+				}
+			}
+		}
+		print "</td></tr></table>";
+		$action="filter";
+	}
+
+	// Move entire dir and all subdirs to stanard dir
+	if ($action == "movedirstandard") {
+		if (empty($directory)) $directory = $MEDIA_DIRECTORY;
+		$timelimit = $TIME_LIMIT ? $TIME_LIMIT : 0;
+		$starttime = time();
+		$medialist = get_medialist(false, $directory);
+		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<tr><td class=\"messagebox wrap\">";
+		foreach ($medialist as $indexval => $media) {
+			$exectime = time() - $starttime;
+			if (($timelimit != 0) && ($timelimit - $exectime) < 3) {
+				// bail now to ensure nothing is lost
+				print $pgv_lang["move_time_exceeded"]."<br />";
+				break;
+			}
+			if ($media["EXISTS"] == 3) {
+				move_file(get_media_firewall_path($media["FILE"]), $media["FILE"]);
+			}
+			if ($media["THUMBEXISTS"] == 3) {
+				move_file(get_media_firewall_path($media["THUMB"]), $media["THUMB"]);
+			}
+		}
+		print "</td></tr></table>";
+		$action="filter";
+	}
+
 	// Upload media items
 	if ($action == "upload") {
 		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
@@ -585,7 +717,21 @@ if (check_media_structure()) {
 				$folderName = dirname($folderName)."/";
 				$thumbFolderName = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $folderName);
 
-				if (!empty($folderName)) $_SESSION["upload_folder"] = $folderName;
+				if (!empty($folderName)) { 
+					$_SESSION["upload_folder"] = $folderName; // store standard media folder in session
+					if ($USE_MEDIA_FIREWALL) {
+						$folderName = get_media_firewall_path($folderName);
+					}
+					// make sure the dir exists
+					@mkdirs($folderName);
+				}
+				if (!empty($thumbFolderName)) { 
+					if ($USE_MEDIA_FIREWALL && $MEDIA_FIREWALL_THUMBS) {
+						$thumbFolderName = get_media_firewall_path($thumbFolderName);
+					}
+					// make sure the dir exists
+					@mkdirs($thumbFolderName);
+				}
 
 				$error = "";
 
@@ -1185,6 +1331,19 @@ if (check_media_structure()) {
 				print $pgv_lang["current_dir"];
 				print "<br />";
 				print PrintReady(substr($directory,0,-1));
+
+			if ($USE_MEDIA_FIREWALL) {
+				print "<br />";
+				print "<form name=\"blah2\" action=\"media.php\" method=\"post\">";
+				print "<input type=\"hidden\" name=\"directory\" value=\"".$directory."\" />";
+				print "<input type=\"hidden\" name=\"level\" value=\"".($level)."\" />";
+				print "<input type=\"hidden\" name=\"dir\" value=\"".$directory."\" />";
+				print "<input type=\"hidden\" name=\"action\" value=\"\" />";
+				print "<input type=\"submit\" value=\"".$pgv_lang["move_standard"]."\" onclick=\"this.form.action.value='movedirstandard';\">";
+				print "<input type=\"submit\" value=\"".$pgv_lang["move_protected"]."\" onclick=\"this.form.action.value='movedirprotected';\">";
+				print "</form>";
+			}
+
 			print "</td>";
 		print "</tr>";
 
@@ -1213,14 +1372,18 @@ if (check_media_structure()) {
 						print "</a>";
 					print "</td>";
 					print "<td class=\"optionbox $TEXT_DIRECTION width10\">";
-						// Delete directory option
+						// directory options
 						print "<form name=\"blah\" action=\"media.php\" method=\"post\">";
 						print "<input type=\"hidden\" name=\"directory\" value=\"".$directory.$dir."/\" />";
 						print "<input type=\"hidden\" name=\"parentdir\" value=\"".$directory."\" />";
 						print "<input type=\"hidden\" name=\"level\" value=\"".($level)."\" />";
 						print "<input type=\"hidden\" name=\"dir\" value=\"".$dir."\" />";
-						print "<input type=\"hidden\" name=\"action\" value=\"deletedir\" />";
-						print "<input type=\"image\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]."\" alt=\"".$pgv_lang['delete']."\" onclick=\"return confirm('".$pgv_lang["confirm_folder_delete"]."');\">";
+						print "<input type=\"hidden\" name=\"action\" value=\"\" />";
+						print "<input type=\"image\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["remove"]["other"]."\" alt=\"".$pgv_lang['delete']."\" onclick=\"this.form.action.value='deletedir';return confirm('".$pgv_lang["confirm_folder_delete"]."');\">";
+						if ($USE_MEDIA_FIREWALL) {
+							print "<input type=\"submit\" value=\"".$pgv_lang["move_standard"]."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='movedirstandard';\">";
+							print "<input type=\"submit\" value=\"".$pgv_lang["move_protected"]."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='movedirprotected';\">";
+						}
 						print "</form>";
 					print "</td>";
 				print "</tr>";
@@ -1333,6 +1496,16 @@ if (check_media_structure()) {
 								print_link_menu($media["XREF"]);
 							}
 
+
+							// Move image between standard and protected directories
+							if ($USE_MEDIA_FIREWALL && ($media["EXISTS"] > 1)) {
+								print "<a href=\"media.php?";
+								if ($media["EXISTS"] == 2) print "action=moveprotected";
+								if ($media["EXISTS"] == 3) print "action=movestandard";
+								print "&amp;showthumb=".$showthumb."&amp;filename=".rawurlencode($media["FILE"])."&amp;directory=".rawurlencode($directory)."&amp;level=".$level."&amp;xref=".$media["XREF"]."&amp;gedfile=".$media["GEDFILE"]."\">";
+								print $pgv_lang["moveto_".$media["EXISTS"]]."</a><br />";
+							}
+
 							// Generate thumbnail
 							if (!$isExternal && (empty($media["THUMB"]) || !$media["THUMBEXISTS"])) {
 								$ct = preg_match("/\.([^\.]+)$/", $media["FILE"], $match);
@@ -1366,13 +1539,13 @@ if (check_media_structure()) {
 
 						//-- name and size field
 						print "\n\t\t\t<td class=\"optionbox $changeClass $TEXT_DIRECTION wrap\">";
-    					if ($media["TITL"]!="" && begRTLText($media["TITL"]) && $TEXT_DIRECTION=="ltr") {
+						if ($media["TITL"]!="" && begRTLText($media["TITL"]) && $TEXT_DIRECTION=="ltr") {
 							if (!empty($media["XREF"])) {
 								print "(".$media["XREF"].")";
 								print "&nbsp;&nbsp;&nbsp;";
 							}
 							if ($media["TITL"]!="") print "<b>".PrintReady($media["TITL"])."</b><br />";
-    					} else {
+						} else {
 							if ($media["TITL"]!="") print "<b>".PrintReady($media["TITL"])."</b>&nbsp;&nbsp;&nbsp;";
 							if (!empty($media["XREF"])) {
 								if ($TEXT_DIRECTION=="rtl") print getRLM();
@@ -1401,6 +1574,7 @@ if (check_media_structure()) {
 
 
 						if ($USE_MEDIA_FIREWALL) {
+							print "<br /><br />";
 							if ($media["EXISTS"])      { print $pgv_lang["media_dir_".$media["EXISTS"]]."<br />"; }
 							if ($media["THUMBEXISTS"]) { print $pgv_lang["thumb_dir_".$media["THUMBEXISTS"]]."<br />"; }
 						}

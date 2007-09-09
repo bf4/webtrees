@@ -181,6 +181,7 @@ $pgv_lang["media_deleted"]			= "Media directory successfully removed.";
 $pgv_lang["media_exists"]			= "Media file already exists.";
 $pgv_lang["media_file"] 			= "Media file to upload";
 $pgv_lang["media_file_deleted"]		= "Media file successfully deleted.";
+$pgv_lang["media_file_moved"]			= "Media file moved.";
 $pgv_lang["media_file_not_moved"]	= "Media file could not be moved.";
 $pgv_lang["media_file_not_renamed"]	= "Media file could not be moved or renamed.";
 $pgv_lang["media_thumb_exists"]		= "Media thumbnail already exists.";
