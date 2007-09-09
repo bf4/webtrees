@@ -350,15 +350,16 @@ case 'today':
 			break;
 		}
 	}
+	break;
 case 'calendar':
 	$cal_facts=array();
 	foreach ($found_facts as $d=>$data) {
 		$cal_facts[$d]=array();
 		foreach ($data as $id=>$fact) {
 			if (empty($cal_facts[$d][$id]))
-				$cal_facts[$d][$id]=calendar_fact_text($fact,false);
+				$cal_facts[$d][$id]=calendar_fact_text($fact, false);
 			else
-				$cal_facts[$d][$id].=calendar_fact_text($fact,false);
+				$cal_facts[$d][$id].=calendar_fact_text($fact, false);
 		}
 	}
 	break;
