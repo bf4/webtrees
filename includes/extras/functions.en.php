@@ -27,6 +27,19 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// Create an ordinal suffix for a number.
+////////////////////////////////////////////////////////////////////////////////
+function ordinal_suffix_en($n) {
+	if ($n==1 || $n==21 || $n==31)
+		return 'st';
+	if ($n==2 || $n==22)
+		return 'nd';
+	if ($n==3 || $n==23)
+		return 'rd';
+  return 'th';
+}
+
 function getRelationshipText_en($relationshipDescription, $node, $pid1, $pid2)
 {
     global $pgv_lang, $lang_short_cut, $LANGUAGE;

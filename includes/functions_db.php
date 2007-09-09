@@ -3139,6 +3139,12 @@ function get_anniversary_events($jd, $facts='') {
 					$ged_date_regex="/2 DATE.*({$row[3]}\s*".($row[4]>0 ? "0*{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "").")/i";
 					foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
 						if (preg_match("/1 {$row[7]}/", $factrec) && preg_match($ged_date_regex, $factrec, $dmatch)) {
+							preg_match('/2 DATE (.+)/', $factrec, $match);
+							$date=$match[1];
+							if (preg_match('/2 PLAC (.+)/', $factrec, $match))
+								$plac=$match[1];
+							else
+								$plac='';
 							$found_facts[]=array(
 								// These numeric elements are deprecated
 								0=>$row[0],
@@ -3152,7 +3158,8 @@ function get_anniversary_events($jd, $facts='') {
 								'factrec'=>$factrec,
 								'jd'=>$jd,
 								'anniv'=>($row[6]==0?0:$y-$row[6]),
-								'date'=>$dmatch[1]
+								'date'=>$date,
+								'plac'=>$plac
 							);
 						}
 				}
@@ -3210,12 +3217,13 @@ function get_calendar_events($jd1, $jd2, $facts='') {
 			$ged_date_regex="/2 DATE.*({$row[3]}\s*".($row[4]>0 ? "0*{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "").")/i";
 			foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
 				if (preg_match("/1 {$row[7]}/", $factrec) && preg_match($ged_date_regex, $factrec, $dmatch)) {
+					preg_match('/2 DATE (.+)/', $factrec, $match);
+					$date=$match[1];
+					if (preg_match('/2 PLAC (.+)/', $factrec, $match))
+						$plac=$match[1];
+					else
+						$plac='';
 					$found_facts[]=array(
-						// These numeric elements are deprecated
-						0=>$row[0],
-						1=>$factrec,
-						2=>$row[2],
-						3=>jdtounix($jd1),
 						// Should use these elements instead
 						'id'=>$row[0],
 						'objtype'=>$row[2],
@@ -3223,7 +3231,8 @@ function get_calendar_events($jd1, $jd2, $facts='') {
 						'factrec'=>$factrec,
 						'jd'=>$jd1,
 						'anniv'=>0,
-						'date'=>$dmatch[1]
+						'date'=>$date,
+						'plac'=>$plac
 					);
 				}
 		}
