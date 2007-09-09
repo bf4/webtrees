@@ -721,7 +721,6 @@ class MenuBar
 				//-- indi list sub menu
 				$link = "indilist.php";
 				if ($surname) $link .= "?surname=".$surname;
-				if ($surname) $link .= "?surname=".$surname;
 				$submenu = new Menu($pgv_lang["individual_list"], $link);
 				if (!empty($PGV_IMAGES["indis"]["small"]))
 					$submenu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["small"]);
