@@ -92,27 +92,6 @@ if (file_exists("modules")) {
 */
 
 $time = client_time();
-$day = date("j", $time);
-$month = date("M", $time);
-$year = date("Y", $time);
-if ($USE_RTL_FUNCTIONS) {
-	//-------> Today's Hebrew Day with Gedcom Month
-	$datearray = array();
- 	$datearray[0]["day"]   = $day;
- 	$datearray[0]["mon"]   = $monthtonum[str2lower(trim($month))];
- 	$datearray[0]["year"]  = $year;
- 	$datearray[0]["month"] = $month;
-
-    $date   = gregorianToJewishGedcomDate($datearray);
-    $hDay   = $date[0]["day"];
-    $hMonth = $date[0]["month"];
-    $hYear	= $date[0]["year"];
-
-//    $currhDay   = $hDay;
-//    $currhMon   = trim($date[0]["month"]);
-//    $currhMonth = $monthtonum[str2lower($currhMon)];
-    $currhYear 	= $hYear;
-}
 
 if (!isset($action)) $action="";
 
