@@ -113,8 +113,13 @@ if ($view!='preview') {
 		if (!empty($m)) {
 			if ($n==$cal_date->m)
 				print "<span class=\"error\">{$pgv_lang[$m]}</span>";
-			else
+			else {
+				if ($cal_date->CALENDAR_ESCAPE=='@#DHEBREW@' && !$cal_date->IsLeapYear() && $n==7)
+					continue;
+				if ($cal_date->CALENDAR_ESCAPE=='@#DHEBREW@' && $cal_date->IsLeapYear() && $n==6)
+					$m.='_leap_year';
 				print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$m}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">{$pgv_lang[$m]}</a>";
+			}
 		 print ' | ';
 		}
 	print "<a href=\"calendar.php?cal={$cal}&amp;day={$today->d}&amp;month={$today_month}&amp;year={$today->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\"><b>".$today->Format('F Y').'</b></a></td></tr>';
