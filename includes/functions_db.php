@@ -3076,7 +3076,7 @@ function get_anniversary_events($jd, $facts='') {
 	$skipfacts = "CHAN,BAPL,SLGC,SLGS,ENDL,CENS,RESI,NOTE,ADDR,OBJE,SOUR,PAGE,DATA,TEXT";
 
 	$found_facts=array();
-	foreach (array(new GregorianDate($jd), new JulianDate($jd), new FrenchRDate($jd), new JulianDate($jd), new HijriDate($jd)) as $anniv) {
+	foreach (array(new GregorianDate($jd), new JulianDate($jd), new FrenchRDate($jd), new JewishDate($jd), new HijriDate($jd)) as $anniv) {
 		// Build a SQL where clause to match anniversaries in the appropriate calendar.
 		if ($anniv->CALENDAR_ESCAPE=='@#DGREGORIAN@')
 			$where="WHERE (d_type IS NULL OR d_type='{$anniv->CALENDAR_ESCAPE}')";
