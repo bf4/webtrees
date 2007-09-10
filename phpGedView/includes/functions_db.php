@@ -3076,95 +3076,77 @@ function get_anniversary_events($jd, $facts='') {
 	$skipfacts = "CHAN,BAPL,SLGC,SLGS,ENDL,CENS,RESI,NOTE,ADDR,OBJE,SOUR,PAGE,DATA,TEXT";
 
 	$found_facts=array();
-	foreach (array('Gregorian'=>'@#DGREGORIAN@', 'Julian'=>'@#DJULIAN@', 'French'=>'@#DFRENCH R@', 'Jewish'=>'@#DHEBREW@') as $cal=>$cal_escape) {
-		$jdtocal="JDto{$cal}";
-		$caltojd="{$cal}toJD";
-		if (function_exists($jdtocal) && function_exists($caltojd))	{
-			list($m, $d, $y)=explode('/', $jdtocal($jd));
-			// Calculate the number of days in the month
-			$next_m=$m+1;
-			if ($cal=='Jewish') {
-				$months_in_year=13;
-				if ($next_m==7 && ((7*$y+1)%19)>=7) // Not a jewish leap year, so only one Adar
-					$next_m=8;
-			} else {
-				$months_in_year=12;
-			}
-			if ($next_m>$months_in_year) {
-				$next_m=1;
-				$next_y=$y+1;
-			} else {
-				$next_m=$m+1;
-				$next_y=$y;
-			}
-			$days_in_month=$caltojd($next_m, 1, $next_y)-$caltojd($m, 1, $y);
-			// Build a SQL where clause to match anniversaries in the appropriate calendar.
-			if ($cal_escape=='@#DGREGORIAN@')
-				$where="WHERE (d_type IS NULL OR d_type='{$cal_escape}')";
+	foreach (array(new GregorianDate($jd), new JulianDate($jd), new FrenchRDate($jd), new JulianDate($jd), new HijriDate($jd)) as $anniv) {
+		// Build a SQL where clause to match anniversaries in the appropriate calendar.
+		if ($anniv->CALENDAR_ESCAPE=='@#DGREGORIAN@')
+			$where="WHERE (d_type IS NULL OR d_type='{$anniv->CALENDAR_ESCAPE}')";
+		else
+			$where="WHERE d_type='{$anniv->CALENDAR_ESCAPE}'";
+		// Dates without days go on the first day of the month
+		// Dates with invalid days go on the last day of the month
+		if ($anniv->d==1)
+			$where.=" AND d_day<=1";
+		else
+			if ($anniv->d==$anniv->Format('t'))
+				$where.=" AND d_day>={$anniv->d}";
 			else
-				$where="WHERE d_type='{$cal_escape}'";
-			// Dates without days go on the first day of the month
-			// Dates with invalid days go on the last day of the month
-			if ($d==1)
-				$where.=" AND d_day<=1";
-			else
-				if ($d==$days_in_month)
-					$where.=" AND d_day>={$d}";
-				else
-					$where.=" AND d_day={$d}";
-			// Only events with a month have anniversaries
-			$where.=" AND d_mon={$m}";
-			// Only events in the past (includes dates without a year)
-			$where.=" AND d_year<={$y}";
-			// Restrict to certain types of fact
-			if (empty($facts)) {
-				$excl_facts="'".preg_replace('/\W+/', "','", $skipfacts)."'";
-				$where.=" AND d_fact NOT IN ({$excl_facts})";
-			} else {
-				$incl_facts="'".preg_replace('/\W+/', "','", $facts)."'";
-				$where.=" AND d_fact IN ({$incl_facts})";
+				$where.=" AND d_day={$anniv->d}";
+		// Only events with a month have anniversaries
+		// On non-leap hebrew years, ADR also matches ADS
+		if ($anniv->CALENDAR_ESCAPE=='@#DHEBREW@' && $anniv->m==6 && !$anniv->IsLeapYear())
+			$where.=" AND (d_mon=6 OR d_mon=7)";
+		else
+			$where.=" AND d_mon={$anniv->m}";
+		// Only events in the past (includes dates without a year)
+		$where.=" AND d_year<={$anniv->y}";
+		// Restrict to certain types of fact
+		if (empty($facts)) {
+			$excl_facts="'".preg_replace('/\W+/', "','", $skipfacts)."'";
+			$where.=" AND d_fact NOT IN ({$excl_facts})";
+		} else {
+			$incl_facts="'".preg_replace('/\W+/', "','", $facts)."'";
+			$where.=" AND d_fact IN ({$incl_facts})";
+		}
+		// Only get events from the current gedcom
+		$where.=" AND d_file={$GEDCOMS[$GEDCOM]['id']}";
+		
+		// Now fetch these anniversaries
+		$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
+		$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
+		foreach (array($ind_sql, $fam_sql) as $sql) {
+			$res=dbquery($sql);
+			while ($row=&$res->fetchRow()) {
+				// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
+				// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
+				// to be cached.  We should store the level1 fact here (or somewhere)
+				$ged_date_regex="/2 DATE.*({$row[3]}\s*".($row[4]>0 ? "0*{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "").")/i";
+				foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
+					if (preg_match("/1 {$row[7]}/", $factrec) && preg_match($ged_date_regex, $factrec, $dmatch)) {
+						preg_match('/2 DATE (.+)/', $factrec, $match);
+						$date=$match[1];
+						if (preg_match('/2 PLAC (.+)/', $factrec, $match))
+							$plac=$match[1];
+						else
+							$plac='';
+						$found_facts[]=array(
+							// These numeric elements are deprecated
+							0=>$row[0],
+							1=>$factrec,
+							2=>$row[2],
+							3=>jdtounix($jd),
+							// Should use these elements instead
+							'id'=>$row[0],
+							'objtype'=>$row[2],
+							'fact'=>$row[7],
+							'factrec'=>$factrec,
+							'jd'=>$jd,
+							'anniv'=>($row[6]==0?0:$anniv->y-$row[6]),
+							'date'=>$date,
+							'plac'=>$plac
+						);
+					}
 			}
-			// Only get events from the current gedcom
-			$where.=" AND d_file={$GEDCOMS[$GEDCOM]['id']}";
-			
-			// Now fetch these anniversaries
-			$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
-			$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
-			foreach (array($ind_sql, $fam_sql) as $sql) {
-				$res=dbquery($sql);
-				while ($row=&$res->fetchRow()) {
-					// Generate a regex to match the retrieved date - so we can find it in the original gedcom record.
-					// TODO having to go back to the original gedcom is lame.  This is why it is so slow, and needs
-					// to be cached.  We should store the level1 fact here (or somewhere)
-					$ged_date_regex="/2 DATE.*({$row[3]}\s*".($row[4]>0 ? "0*{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "").")/i";
-					foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
-						if (preg_match("/1 {$row[7]}/", $factrec) && preg_match($ged_date_regex, $factrec, $dmatch)) {
-							preg_match('/2 DATE (.+)/', $factrec, $match);
-							$date=$match[1];
-							if (preg_match('/2 PLAC (.+)/', $factrec, $match))
-								$plac=$match[1];
-							else
-								$plac='';
-							$found_facts[]=array(
-								// These numeric elements are deprecated
-								0=>$row[0],
-								1=>$factrec,
-								2=>$row[2],
-								3=>jdtounix($jd),
-								// Should use these elements instead
-								'id'=>$row[0],
-								'objtype'=>$row[2],
-								'fact'=>$row[7],
-								'factrec'=>$factrec,
-								'jd'=>$jd,
-								'anniv'=>($row[6]==0?0:$y-$row[6]),
-								'date'=>$date,
-								'plac'=>$plac
-							);
-						}
-				}
-				$res->free();
-			}
+			$res->free();
 		}
 	}
 	return $found_facts;
