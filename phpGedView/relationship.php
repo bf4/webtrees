@@ -483,21 +483,21 @@ function getRelationshipSentence($node, $pid1, $pid2)
     $getLanguageSpecificName = "getFirstRelationsName_" . $langStr;
     if(function_exists($getLanguageSpecificName ))
     {
-        $pid1Name = $getLanguageSpecificName($pid1);
+        $pid1Name = PrintReady($getLanguageSpecificName($pid1));
     }
     else
     {
-        $pid1Name = get_person_name($pid1);
+        $pid1Name = PrintReady(get_person_name($pid1));         
     }
 
     $getLanguageSpecificName = "getSecondRelationsName_" . $langStr;
     if(function_exists($getLanguageSpecificName ))
     {
-        $pid2Name = $getLanguageSpecificName($pid2);
+        $pid2Name = PrintReady($getLanguageSpecificName($pid2));        
     }
     else
     {
-        $pid2Name = get_person_name($pid2);
+        $pid2Name = PrintReady(get_person_name($pid2));          
     }
 
     if($relationshipDescription != false)
