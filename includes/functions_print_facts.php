@@ -509,6 +509,7 @@ function print_fact_sources($factrec, $level) {
 	global $pgv_lang;
 	global $factarray;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_SOURCES, $EXPAND_SOURCES;
+	$printDone = false;
 	$nlevel = $level+1;
 	$printDone = false;
 	if ($SHOW_SOURCES<getUserAccessLevel(getUserName())) return;
@@ -520,7 +521,8 @@ function print_fact_sources($factrec, $level) {
 			$srec = substr($srec, 5); // remove SOUR
 			$srec = str_replace("\n".($level+1)." CONT ", " ", $srec); // remove n+1 CONT
 			$srec = str_replace("\n".($level+1)." CONC ", "", $srec); // remove n+1 CONC
-			print "<span class=\"label\">".$pgv_lang["source"].":</span> <span class=\"field\">".PrintReady($srec)."</span><br />";
+			print "<br /><span class=\"label\">".$pgv_lang["source"].":</span> <span class=\"field\">".PrintReady($srec)."</span><br />";
+			$printDone = true;
 			$printDone = true;
 		}
 	}
@@ -535,7 +537,7 @@ function print_fact_sources($factrec, $level) {
 			if (!$spos2) $spos2 = strlen($factrec);
 			$srec = substr($factrec, $spos1, $spos2-$spos1);
 			$lt = preg_match_all("/$nlevel \w+/", $srec, $matches);
-			if ($j > 0) print "<br />";
+			print "<br />";
 			print "\n\t\t<span class=\"label\">";
 			$elementID = $sid."-".floor(microtime()*1000000);
 			if ($EXPAND_SOURCES) $plusminus="minus"; else $plusminus="plus";
@@ -1436,7 +1438,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 				}
 			}
 		}
-		print "<br />\n";
+		//print "<br />\n";
 		$prim = get_gedcom_value("_PRIM", 2, $rowm["mm_gedrec"]);
 		if (empty($prim)) $prim = get_gedcom_value("_PRIM", 1, $rowm["m_gedrec"]);
 		if (!empty($prim)) {
@@ -1451,10 +1453,10 @@ function print_main_media_row($rtype, $rowm, $pid) {
 		if ($thum=="Y") print $pgv_lang["yes"]; else print $pgv_lang["no"];
 		print "<br />\n";
 		}
-		print_fact_sources($rowm["m_gedrec"], 1);
-		print_fact_sources($rowm["mm_gedrec"], 2);
 		print_fact_notes($rowm["m_gedrec"], 1);
 		print_fact_notes($rowm["mm_gedrec"], 2);
+		print_fact_sources($rowm["m_gedrec"], 1);
+		print_fact_sources($rowm["mm_gedrec"], 2);
 	}
 	print "</td></tr>";
 	return true;

@@ -7,7 +7,6 @@
 
 	# $Id$
 =====================================================================
-
 Version 4.2
  - Fixed Top menu text wraps when using IE or Opera (canajun2eh)
  - Added Watermarks [ 1739602 ] (ljm)
@@ -29,12 +28,24 @@ Version 4.2
  - Added [ 1591541 ] DHTML JavaScript Tabbar (opus27)
  - Adding a "never married" icon on ancestry booklet when NMR=0 (opus27)
 
+Version 4.1.2
+ - Fixed [ 1790943 ] 4.1.1 Individual Page - Submenu Lists - Individual is empty (canajun2eh)
+
 Version 4.1.1
  - Changed Print link list after Notes and Source on Manage Media pages (canajun2eh)
  - Fixed Media source citation information lost when editing any media object info (canajun2eh)
  - Fixed Formatting problems while editing long Media source citation text (canajun2eh)
  - Fixed Formatting problems while editing long Media notes text (canajun2eh)
  - Fixed [ 1783854 ] Memory exhaustion on line 1190 of functions_name.php (canajun2eh)
+ - Applied [ 1790552 ] childrec variable not initialized (yalnifj)
+ - Changed Print link list after Notes and Source on Manage Media pages (canajun2eh)
+ - Fixed Media source citation information lost when editing any media object info (canajun2eh)
+ - Fixed Formatting problems while editing long Media source citation text (canajun2eh)
+ - Fixed Formatting problems while editing long Media notes text (canajun2eh)
+ - Fixed [ 1790543 ] Birth dates showing even when set to private (yalnifj)
+ - Added English FAQ texts from some registered PGV sites (meliza)
+ - Fixed [ 1787942 ] Reports & Level 1 EMAIL TAG (yalnifj)
+ - Fix [ 1783854 ] Memory exhaustion on line 1190 of functions_name.php (canajun2eh)
  - Applied [ 1738384 ] Italian language files update (yalnifj)
  - Changed Sort chart, list, and report names in top menu (canajun2eh)
  - Applied [ 1745914 ] RA Search Plugin for genealogy-search-help.com (yalnifj)

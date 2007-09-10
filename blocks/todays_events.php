@@ -86,141 +86,16 @@ function print_todays_events($block=true, $config="", $side, $index) {
   print "<div class=\"blockcontent\" >";
   if ($block) print "<div class=\"small_inner_block\">\n";
 
-
-  // Output style 1:  Old format, no visible tables, much smaller text.  Better suited to right side of page.
-  if ($infoStyle=="style1") {
-	$OutputDone = false;
-	$PrivateFacts = false;
-	$lastgid="";
-
-	foreach (get_event_list() as $key=>$factarray) {
-	  if ($factarray['jd']==$todayjd) {
-	    if ($factarray[2]=="INDI") {
-	      $gid = $factarray[0];
-	      $factrec = $factarray[1];
-		    $disp = true;
-				if ($filter=="living" && is_dead_id($gid))
-					$disp = false;
-				else
-					if (!displayDetailsByID($gid)) {
-	        	$disp = false;
-	        	$PrivateFacts = true;
-	      	}
-
-	      if ($disp) {
-	        $indirec = find_person_record($gid);
-	        if ($indirec) {
-	          $filterev = "all";
-	          if ($onlyBDM == "yes") $filterev = "bdm";
-	          $text = get_calendar_fact($factrec, "today", $filter, $gid, $filterev);
-	          if ($text!="filter") {
-	            if (FactViewRestricted($gid, $factrec) or $text=="") {
-	              $PrivateFacts = true;
-	            } else {
-	              if ($lastgid!=$gid) {
-	                if ($lastgid != "") print "<br />";
-	                $name = get_person_name($gid);
-	                print "<a href=\"individual.php?pid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
-	                print "<img id=\"box-".$gid."-".$key."-gender\" src=\"$PGV_IMAGE_DIR/";
-	                if (preg_match("/1 SEX M/", $indirec)>0) print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
-	                else  if (preg_match("/1 SEX F/", $indirec)>0) print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
-	                else print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
-	                print "\" class=\"gender_image\" />";
-	                if ($SHOW_ID_NUMBERS) {
-		                  print "&nbsp;";
-		                  if ($TEXT_DIRECTION=="rtl") print getRLM();
-		                  print "(".$gid.")";
-		                  if ($TEXT_DIRECTION=="rtl") print getRLM();
-	                }
-	                print "</a><br />\n";
-	                $lastgid=$gid;
-	              }
-	              print "<div class=\"indent" . ($TEXT_DIRECTION=="rtl"?"_rtl":"") . "\">";
-	              print $text;
-	              print "</div>";
-	              $OutputDone = true;
-	            }
-	          }
-	        }
-	      }
-	    }
-
-	    if ($factarray[2]=="FAM") {
-	      $gid = $factarray[0];
-	      $factrec = $factarray[1];
-
-	      $disp = true;
-	      if ($filter=="living") {
-	        $parents = find_parents($gid);
-	        if (is_dead_id($parents["HUSB"])) $disp = false;
-	        else if (!displayDetailsByID($parents["HUSB"])) {
-	          $disp = false;
-	          $PrivateFacts = true;
-	        }
-	        if ($disp) {
-	          if (is_dead_id($parents["WIFE"])) $disp = false;
-	          else if (!displayDetailsByID($parents["WIFE"])) {
-	            $disp = false;
-	            $PrivateFacts = true;
-	          }
-	        }
-	      }
-	      else if (!displayDetailsByID($gid, "FAM")) {
-	        $disp = false;
-	        $PrivateFacts = true;
-	      }
-
-	      if ($disp) {
-	        $famrec = find_family_record($gid);
-	        if ($famrec) {
-	          $name = get_family_descriptor($gid);
-	          $filterev = "all";
-	          if ($onlyBDM == "yes") $filterev = "bdm";
-	          $text = get_calendar_fact($factrec, "today", $filter, $gid, $filterev);
-	          if ($text!="filter" and strpos($famrec, "1 DIV")===false) {
-	            if (FactViewRestricted($gid, $factrec) or $text=="") {
-		  	        $PrivateFacts = true;
-		          } else {
-	              if ($lastgid!=$gid) {
-	                if ($lastgid != "") print "<br />";
-	                print "<a href=\"family.php?famid=$gid&amp;ged=".$GEDCOM."\"><b>".PrintReady($name)."</b>";
-	                if ($SHOW_ID_NUMBERS) {
-		                  print "&nbsp;";
-		                  if ($TEXT_DIRECTION=="rtl") print "&rlm";
-		                  print "(".$gid.")";
-		                  if ($TEXT_DIRECTION=="rtl") print "&rlm";
-	                }
-	                print "</a><br />\n";
-	                $lastgid=$gid;
-	              }
-	              print "<div class=\"indent" . ($TEXT_DIRECTION=="rtl"?"_rtl":"") . "\">";
-	              print $text;
-	              print "</div>";
-	              $OutputDone = true;
-	            }
-	          }
-	        }
-	      }
-	    }
-	  }
-	}
-	if ($PrivateFacts) {    // Facts were found but not printed for some reason
-	  $Advisory = "none_today_privacy";
-	  if ($OutputDone) $Advisory = "more_today_privacy";
-	  print "<b>";
-	  print_text($Advisory);
-	  print "</b><br />";
-	} else if (!$OutputDone) {    // No Facts were found
-	  $Advisory = "none_today_" . $config["filter"];
-	  print "<b>";
-	  print_text($Advisory);
-	  print "</b><br />";
-	}
-  }
-
-  // Style 2: New format, tables, big text, etc.  Not too good on right side of page
-  if ($infoStyle=="style2")
+	switch ($infoStyle) {
+	case "style1":
+		// Output style 1:  Old format, no visible tables, much smaller text.  Better suited to right side of page.
+		print print_events_list($todayjd, $todayjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living');
+		break;
+	case "style2":
+  	// Style 2: New format, tables, big text, etc.  Not too good on right side of page
 		print_events_table($todayjd, $todayjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living', $allowDownload=='yes');
+		break;
+	}
 
 	if ($block)
 		print "</div>\n";

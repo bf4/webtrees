@@ -1743,29 +1743,6 @@ function check_input_date($datestr) {
 	else
 		$datestr=default_edit_to_gedcom_date($datestr);
 
-	$dates = parse_date($datestr);
-	// If we couldn't parse the date, leave it alone.
-	foreach ($dates as $date)
-		if ($date['jd1']==0)
-			return $datestr;
-
-	// Trailing text (OS/NS years or details of CAL) needs to be retained.
-	if (preg_match('/(\/\d\d|\s*\(.*)/', $datestr, $match))
-		$text=$match[1];
-	else
-		$text='';
-
-	$datestr='';
-	foreach ($dates as $date) {
-		if (!empty($date['ext'])) $datestr.="{$date['ext']} ";
-		if (!empty($date['cal'])) $datestr.="{$date['cal']} ";
-		if ($date['day']>9)       $datestr.="{$date['day']} ";
-		else if ($date['day']>0)  $datestr.="0{$date['day']} ";
-		if ($date['mon']!=0)      $datestr.="{$date['month']} ";
-		if ($date['year']>0)      $datestr.="{$date['year']} ";
-		else                      $datestr.=(1-$date['year'])." B.C. ";
-	}
-	$datestr.=$text;
 	return trim($datestr);
 }
 

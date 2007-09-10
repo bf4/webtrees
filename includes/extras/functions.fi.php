@@ -32,69 +32,31 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-//-- functions to take a date and display it in Finnish.
-//-- provided by: KurtNorgaz
-//-- updated by Meliza
-function getFinnishDate($datestr, $day) {
+////////////////////////////////////////////////////////////////////////////////
+// Localise a date. "[qualifier] date [qualifier date] [qualifier]"
+////////////////////////////////////////////////////////////////////////////////
+function date_localisation_fi(&$q1, &$d1, &$q2, &$d2, &$q3) {
 	global $pgv_lang;
 
-	//-- the Finnish text of the value for one date is shown at the end of the date
-	//-- the Finnish values of two dates are replaced by a -
-	$array_short = array("aft", "bet", "from", "to");
-	foreach($array_short as $indexval => $value) {
-
-	  $oldDateStr = $datestr;
-	  $newdatestr = preg_replace("/$value([^a-zA-Z])/i", "" . "\$1", $datestr);
-	  if ($newdatestr != $datestr) {
-
-		$datestr = $newdatestr;
-
-		switch ($value) {
-		  case "from" : $datestr = trim($datestr);
-						$temp_date = strtolower($datestr);
-						$pos_of_to = strpos(" ".$temp_date, "to");
-						$newdatestr = preg_replace("/to/", "", $temp_date);
-						if ($newdatestr != $temp_date) {
-							$datestr_01 = trim(substr($datestr, 0, $pos_of_to - 2));
-							$datestr_02 = substr($datestr, $pos_of_to + 1);
-							$datestr = $datestr_01." - ".$datestr_02." ";
-						}
-						else $datestr = $datestr." ".$pgv_lang[$value];
-						break;
-		  case "bet"  : $datestr = trim($datestr);
-						$temp_date = strtolower($datestr);
-						$pos_of_and = strpos(" ".$temp_date, "and");
-						$datestr_01 = trim(substr($datestr, 0, $pos_of_and - 2));
-						$datestr_02 = substr($datestr, $pos_of_and + 2);
-						if (strlen($datestr_01) > 0 && strlen($datestr_02) > 0)
-							$datestr = $datestr_01." - ".$datestr_02." ";
-						break;
-		  case "to"   : $datestr = $newdatestr." ".$pgv_lang[$value]; break;
-		  case "aft"  : $datestr = $newdatestr." ".$pgv_lang[$value]; break;
-		  default	  : $datestr = $oldDateStr; break;
-		}
-	  }
-	}
-	//-- the Finnish text of the value is shown bau before the date
-	$array_short = array("abt", "apx", "bef", "cal", "est", "int", "cir");
-	foreach($array_short as $indexval => $value) {
-		$datestr = preg_replace("/^$value([^a-zA-Z])/i", $pgv_lang[$value]."\$1", $datestr);
-		$datestr = preg_replace("/(\W)$value([^a-zA-Z])/i", "\$1".$pgv_lang[$value]."\$2", $datestr);
-	}
-	//-- Constant 'ta' is appended to the Finnish month values, if a day value exists (for the last date)
-	$array_short = array("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec");
-	foreach($array_short as $indexval => $value) {
-
-	if ($day > 0) {
-		 $datestr = preg_replace("/(\W)$value([^a-zA-Z])/i", "\$1".$pgv_lang[$value]."ta"."\$2", $datestr);
-		 $datestr = preg_replace("/^$value([^a-zA-Z])/i", $pgv_lang[$value]."ta"."\$1", $datestr);
-	  }
+	if ($q2=='')
+		// If only one date, put any q1 text after the date
+		$q2=$q1;
 	else {
-		 $datestr = preg_replace("/(\W)$value([^a-zA-Z])/i", "\$1".$pgv_lang[$value]."\$2", $datestr);
-		 $datestr = preg_replace("/^$value([^a-zA-Z])/i", $pgv_lang[$value]."\$1", $datestr);
-	  }
+		// If two dates, just use a dash
+		$q1='';
+		$q2='-';
 	}
-	return $datestr;
+
+	// Constant 'ta' is appended to the Finnish month values, if a day value exists
+	foreach (array('jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec') as $month) {
+		$d1=preg_replace("/\d+\s+{$month}/", "$1ta", $d1);
+		$d2=preg_replace("/\d+\s+{$month}/", "$1ta", $d2);
+	}
+
+	if (isset($pgv_lang[$q1]))
+		$q1=$pgv_lang[$q1];
+	if (isset($pgv_lang[$q2]))
+		$q2=$pgv_lang[$q2];
 }
 
 //-- functions to calculate finnish specific genitive names

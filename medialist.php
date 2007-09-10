@@ -393,14 +393,18 @@ if ($ct>0){
 			$fileSize = media_filesize($media["FILE"]);
 			$sizeString = getfilesize($fileSize);
 			print "&nbsp;&nbsp;&nbsp;<span class=\"field\" style=\"direction: ltr;\">" . $sizeString . "</span>";
+		
+			if($imgsize[2]!==false){
+				print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM() . " ") : " x ") . $imgsize[1] . "</span>";
+			}
+			print "<br /><div style=\"white-space: normal; width: 95%;\">";
+			print_fact_notes($media["GEDCOM"], $media["LEVEL"]+1);
+			print "</div>";
 		}
 
-		if($imgsize[2]!==false){
-			print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM() . " ") : " x ") . $imgsize[1] . "</span>";
-		}
-		print "<br /><div style=\"white-space: normal; width: 95%;\">";
-		print_fact_notes($media["GEDCOM"], $media["LEVEL"]+1);
-		print "</div>";
+	    print "<div style=\"white-space: normal; width: 95%;\">";
+	    print_fact_notes($media["GEDCOM"], $media["LEVEL"]+1);
+	    print "</div>";
 
 		PrintMediaLinks($media["LINKS"], "small");
 
@@ -483,4 +487,3 @@ if (file_exists("modules/slideshow/slideshow.php")) include_once("modules/slides
 print_footer();
 
 ?>
-

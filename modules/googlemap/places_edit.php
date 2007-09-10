@@ -322,6 +322,7 @@ if ($action=="add") {
 		if (GBrowserIsCompatible()) {
 			map = new GMap2(document.getElementById("map_pane"));
 			map.addControl(new GSmallMapControl());
+			map.addControl(new GMapTypeControl());
 			map.addControl(new GScaleControl()) ;
 			GEvent.addListener(map, 'click', function(overlay, point) {
 

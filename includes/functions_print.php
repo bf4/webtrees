@@ -1536,8 +1536,8 @@ function print_note_record($text, $nlevel, $nrec) {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $EXPAND_SOURCES, $EXPAND_NOTES;
 	if (!isset($EXPAND_NOTES)) $EXPAND_NOTES = $EXPAND_SOURCES; // FIXME
 	$elementID = "N-".floor(microtime()*1000000);
-	$text = preg_replace("/~~/", "<br />", trim($text));
 	$text .= get_cont($nlevel, $nrec);
+	$text = str_replace("~~", "<br />", trim($text));
 	$text=expand_urls($text);
 	$text = trim($text);
 	if (!empty($text)) {
@@ -1968,6 +1968,7 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 	}
 	//-- convert all & to &amp;
 	$text = preg_replace("/&/", "&amp;", $text);
+	//$text = preg_replace(array("/&/","/</","/>/"), array("&amp;","&lt;","&gt;"), $text);
 	//-- make sure we didn't double convert &amp; to &amp;amp;
 	$text = preg_replace("/&amp;(\w+);/", "&$1;", $text);
     if ($trim) $text = trim($text);

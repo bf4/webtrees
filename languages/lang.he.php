@@ -31,6 +31,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["switch_lifespan"]		= "הראה תרשים תוחלת חיים"; 
+$pgv_lang["switch_timeline"]		= "הראה תרשים קו הזמן"; 
 $pgv_lang["differences"]			= "הפרשים"; 
 $pgv_lang["charts_block"]			= "אזור תרשימים"; 
 $pgv_lang["charts_block_descr"]		= "אזור התרשימים מאפשר לשים תרשים על הדף ברוכים הבאים או על הפורטל MyGedView.  ניתן לקנפג את האזור כך שיראה אב-אבות, צאצאים או שעון חול.  אפשר גם לבחור את אדם המוצא של התרשים.";
@@ -148,18 +150,18 @@ $pgv_lang["wednesday_1st"]		= "ד";
 $pgv_lang["thursday_1st"]		= "ה";
 $pgv_lang["friday_1st"]		= "ו";
 $pgv_lang["saturday_1st"]		= "ש";
-$pgv_lang["jan_1st"]				= "ינואר'";
-$pgv_lang["feb_1st"]				= "פברואר'";
+$pgv_lang["jan_1st"]				= "ינואר";
+$pgv_lang["feb_1st"]				= "פברואר";
 $pgv_lang["mar_1st"]				= "מרץ";
-$pgv_lang["apr_1st"]				= "אפריל'";
+$pgv_lang["apr_1st"]				= "אפריל";
 $pgv_lang["may_1st"]		= "מאי";
-$pgv_lang["jun_1st"]				= "יוני'";
-$pgv_lang["jul_1st"]				= "יולי'";
-$pgv_lang["aug_1st"]				= "אוגוסט'";
-$pgv_lang["sep_1st"]				= "ספטמבר'";
-$pgv_lang["oct_1st"]				= "אוקטובר'";
-$pgv_lang["nov_1st"]				= "נובמבר'";
-$pgv_lang["dec_1st"]				= "דצמבר'";
+$pgv_lang["jun_1st"]				= "יוני";
+$pgv_lang["jul_1st"]				= "יולי";
+$pgv_lang["aug_1st"]				= "אוגוסט";
+$pgv_lang["sep_1st"]				= "ספטמבר";
+$pgv_lang["oct_1st"]				= "אוקטובר";
+$pgv_lang["nov_1st"]				= "נובמבר";
+$pgv_lang["dec_1st"]				= "דצמבר";
 $pgv_lang["edit_source"]		= "ערוך מקור";
 $pgv_lang["familybook_chart"]		= "תרשים ספר משפחה";
 $pgv_lang["family_of"]		= "משפחה של:&nbsp;";
@@ -611,7 +613,7 @@ $pgv_lang["timeline_endYear"] 		= "שנת סיום";
 $pgv_lang["timeline_scrollSpeed"] 	= "מהירות";
 $pgv_lang["timeline_controls"] 		= "הגדרות קו הזמן";
 $pgv_lang["include_family"] 		= "כלול משפחה קרובה";
-$pgv_lang["lifespan_chart"] 		= "תרשים תוהלת חיים";
+$pgv_lang["lifespan_chart"] 		= "תרשים תוחלת חיים";
 
 //-- MONTH NAMES
 $pgv_lang["jan"]			= "ינואר";
