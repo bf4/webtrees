@@ -1460,7 +1460,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		}
 
 		// Privacy
-		if (!$record->canDisplayDetails()) {
+		if (!$record->canDisplayDetails() || !showFactDetails($value['fact'], $value['id']) || FactViewRestricted($value['id'], $value['factrec'])) {
 			$hidden++;
 			continue;
 		}
@@ -1535,6 +1535,115 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	print "<td></td>";
 	print "</tr>";
 	print "</table>\n";
+}
+
+/**
+ * print a list of events
+ *
+ * This performs the same function as print_events_table(), but formats the output differently.
+ */
+function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false) {
+	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+
+	// Did we have any output?  Did we skip anything?
+	$output=false;
+	$filter=false;
+	$private=false;
+
+	$return='';
+
+	foreach(get_event_list() as $key => $value) {
+		if ($value['jd']<$startjd || $value['jd']>$endjd)
+			continue;
+		//-- only birt/marr/deat ?
+		if (!empty($events) && strpos($events, $value['fact'])===false)
+			continue;
+
+		//-- get gedcom record - it may have been deleted since we cached the event
+		$record = GedcomRecord::getInstance($value['id']);
+		if (is_null($record))
+			continue;
+		//-- only living people ?
+		if ($only_living) {
+			if ($record->type=="INDI" && $record->isDead()) {
+				$filter=true;
+				continue;
+			}
+			if ($record->type=="FAM") {
+				$husb = $record->getHusband();
+				if (is_null($husb) || $husb->isDead()) {
+					$filter=true;
+					continue;
+				}
+				$wife = $record->getWife();
+				if (is_null($wife) || $wife->isDead()) {
+					$filter=true;
+					continue;
+				}
+			}
+		}
+
+		// Privacy
+		if (!$record->canDisplayDetails() || !showFactDetails($value['fact'], $value['id']) || FactViewRestricted($value['id'], $value['factrec'])) {
+			$private=true;
+			continue;
+		}
+		$output=true;
+
+		$name=$record->getSortableName();
+		$url=$record->getLinkUrl();
+
+		$return.="<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+		if ($record->type=="INDI")
+			$return.=$record->getSexImage();
+		$return.="<div class=\"indent\">";
+		$return.=$factarray[$value['fact']].' - '.get_date_url($value['date']);
+		if ($value['anniv']!=0)
+			$return.=" (" . str_replace("#year_var#", $value['anniv'], $pgv_lang["year_anniversary"]).")";
+		$return.="</div>";
+	}
+
+	// Print a final summary message about restricted/filtered facts
+	$pgv_lang["global_num1"]=$endjd-$startjd+1; // TODO: This doesn't work as expected??
+	$return.="<b>";
+	if ($private)
+		if ($output)
+			if ($endjd==today_jd())
+				$return.=print_text ("more_today_privacy", 0, 1);
+			else
+				if ($startjd==$endjd)
+					$return.=print_text ("more_events_privacy1", 0, 1);
+				else
+					$return.=print_text ("more_events_privacy", 0, 1);
+		else
+			if ($endjd==today_jd())
+				$return.=print_text ("none_today_privacy", 0, 1);
+			else
+				if ($startjd==$endjd)
+					$return.=print_text ("no_events_privacy1", 0, 1);
+				else
+					$return.=print_text ("no_events_privacy", 0, 1);
+	else
+		if (!$output)
+			if ($filter)
+				if ($endjd==today_jd())
+					$return.=print_text ("none_today_living", 0, 1);
+				else
+					if ($startjd==$endjd)
+						$return.=print_text ("no_events_living1", 0, 1);
+					else
+						$return.=print_text ("no_events_living", 0, 1);
+			else
+				if ($endjd==today_jd())
+					$return.=print_text ("none_today_all", 0, 1);
+				else
+					if ($startjd==$endjd)
+						$return.=print_text ("no_events_all1", 0, 1);
+					else
+						$return.=print_text ("no_events_all", 0, 1);
+
+	$return.="</b>";
+	return $return;
 }
 
 /**
