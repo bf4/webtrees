@@ -205,7 +205,7 @@ function parse_date($date)
 	$gdate=new GedcomDate($date);
 	$pdate=array();
 	$pdate[]=array(
-		'ext'=>$gdate->qual1,
+		'ext'=>strtoupper($gdate->qual1),
 		'cal'=>$gdate->date1->CALENDAR_ESCAPE,
 		'day'=>$gdate->date1->d,
 		'mon'=>$gdate->date1->m,
@@ -214,9 +214,11 @@ function parse_date($date)
 		'jd1'=>$gdate->date1->minJD,
 		'jd2'=>$gdate->date1->maxJD
 		);
-	if (!is_null($gdate->date2))
+	if (!preg_match("/{$gdate->date1->CALENDAR_ESCAPE}/", $date))
+		$pdate[0]['cal']='';
+	if (!is_null($gdate->date2)) {
 		$pdate[]=array(
-			'ext'=>$gdate->qual2,
+			'ext'=>strtoupper($gdate->qual2),
 			'cal'=>$gdate->date2->CALENDAR_ESCAPE,
 			'day'=>$gdate->date2->d,
 			'mon'=>$gdate->date2->m,
@@ -225,6 +227,9 @@ function parse_date($date)
 			'jd1'=>$gdate->date2->minJD,
 			'jd2'=>$gdate->date2->maxJD
 		);
+		if (!preg_match("/{$gdate->date2->CALENDAR_ESCAPE}/", $date))
+			$pdate[1]['cal']='';
+	}
 	return $pdate;
 }
 
