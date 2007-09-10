@@ -316,6 +316,17 @@ If you need help or support visit  http://www.PhpGedView.net/support.php
 -------------------------------------------------------
 UPGRADING
 
+UPGRADING 4.1 to 4.1.x
+
+1. To upgrade from 4.1 to 4.1.1 or any other 4.1.x version, simply replace 
+   the files on the server with the new files.
+2. Some of the internal structures have changed, so you should also delete
+   your cache files.  This can be done from the "Customize Welcome Page" link
+   or by manually deleting the files from the "index" directory. 
+
+
+UPGRADING 4.0.x to 4.1.x
+
 Use the following steps to upgrade to v4.1.  These steps assume that you 
 are familiar with PhpGedView and have successfully installed it before.
 
