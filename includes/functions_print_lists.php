@@ -1600,6 +1600,8 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 		$return.=$factarray[$value['fact']].' - '.get_date_url($value['date']);
 		if ($value['anniv']!=0)
 			$return.=" (" . str_replace("#year_var#", $value['anniv'], $pgv_lang["year_anniversary"]).")";
+		if (!empty($value['plac']))
+			$return.=" - <a href=\"".GedcomRecord::getPlaceUrl($value['plac'])."\">".$value['plac']."</a>";
 		$return.="</div>";
 	}
 
