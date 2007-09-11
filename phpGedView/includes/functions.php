@@ -646,7 +646,8 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 		$value = trim($value);
 		//-- if it is a date value then convert the date
 		if ($convert && $t=="DATE") {
-			$value = get_changed_date($value);
+			$g = new GedcomDate($value);
+			$value = $g->Display();
 			if (!empty($truncate)) {
 				if (strlen($value)>$truncate) {
 					$value = preg_replace("/\(.+\)/", "", $value);
