@@ -56,17 +56,19 @@ function pgvMail($to, $from, $subject, $message) {
 		$mailFormatText = "text/plain";
 	}
 
-	$extraHeaders = "From: $from\r\nContent-type: $mailFormatText;\r\n";
+	$extraHeaders = "From: $from\r\nContent-type: $mailFormatText;";
 
 	if ($mailFormat != "multipart") {
-		$extraHeaders .= "\tcharset=\"$CHARACTER_SET\";\r\n\tformat=\"flowed\"\r\nContent-Transfer-Encoding: 8bit\r\n";
+		$extraHeaders .= "\tcharset=\"$CHARACTER_SET\";\tformat=\"flowed\"\r\nContent-Transfer-Encoding: 8bit";
 	}
 
 	if ($mailFormat == "html" || $mailFormat == "multipart") {
-		$extraHeaders .= "Mime-Version: 1.0\r\n";
+		$extraHeaders .= "\r\nMime-Version: 1.0";
 	}
 
-	$extraHeaders .= $extraHeaders; //add custom extra header
+	//-- doesn't this line just concatenate onto itself?
+	//$extraHeaders .= $extraHeaders; //add custom extra header
+	$extraHeaders .= "\r\n";
 
 
 	if ($mailFormat == "html") {

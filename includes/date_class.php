@@ -583,12 +583,12 @@ class JewishDate extends CalendarDate {
 // rather than the local language.
 ////////////////////////////////////////////////////////////////////////////////
 class HebrewDate extends JewishDate {
-	var $HEBREW_MONTHS=array("", "תשרי", "חשוון", "כסלו", "טבת", "שבט", "אדר", "אדר ב'", "ניסן", "אייר", "סיוון", "תמוז", "אב", "אלול");
-	var $HEBREW_DAYS=array("שני", "שלישי", "רביעי", "חמישי", "ששי", "שבת", "ראשון");
-	var $HEBREW_DAY_NUMBERS=array('', 'א׳', 'ב׳', 'ג׳', 'ד׳', 'ה׳', 'ו׳', 'ז׳', 'ח׳', 'ט׳', 'י׳', 'י״א', 'י״ב', 'י״ג', 'י״ד', 'ט״ו', 'ט״ז', 'י״ז', 'י״ח', 'י״ט', 'כ׳', 'כ״א', 'כ״ב', 'כ״ג', 'כ״ד', 'כ״ה', 'כ״ו', 'כ״ז', 'כ״ח', 'כ״ט', 'ל׳');
-	var $ALAFIM="אלפים";
-	var $GERSHAYIM="״";
-	var $GERSH="׳";
+	var $HEBREW_MONTHS=array("", "×ª×©×¨×™", "×—×©×•×•×Ÿ", "×›×¡×œ×•", "×˜×‘×ª", "×©×‘×˜", "×�×“×¨", "×�×“×¨ ×‘'", "× ×™×¡×Ÿ", "×�×™×™×¨", "×¡×™×•×•×Ÿ", "×ª×ž×•×–", "×�×‘", "×�×œ×•×œ");
+	var $HEBREW_DAYS=array("×©× ×™", "×©×œ×™×©×™", "×¨×‘×™×¢×™", "×—×ž×™×©×™", "×©×©×™", "×©×‘×ª", "×¨×�×©×•×Ÿ");
+	var $HEBREW_DAY_NUMBERS=array('', '×�×³', '×‘×³', '×’×³', '×“×³', '×”×³', '×•×³', '×–×³', '×—×³', '×˜×³', '×™×³', '×™×´×�', '×™×´×‘', '×™×´×’', '×™×´×“', '×˜×´×•', '×˜×´×–', '×™×´×–', '×™×´×—', '×™×´×˜', '×›×³', '×›×´×�', '×›×´×‘', '×›×´×’', '×›×´×“', '×›×´×”', '×›×´×•', '×›×´×–', '×›×´×—', '×›×´×˜', '×œ×³');
+	var $ALAFIM="×�×œ×¤×™×�";
+	var $GERSHAYIM="×´";
+	var $GERSH="×³";
 
 	function FormatDayZeros() {
 		return $this->FormatDay();
@@ -601,7 +601,7 @@ class HebrewDate extends JewishDate {
 	function FormatLongMonth() {
 		$mon=$this->NUM_TO_MONTH[$this->m];
 		if ($mon=='adr' &&$this->IsLeapYear())
-			return "אדר א'";
+			return "×�×“×¨ ×�'";
 		else
 			return $this->HEBREW_MONTHS[$this->m];
 	}
@@ -625,11 +625,11 @@ class HebrewDate extends JewishDate {
 	
 		$year=abs($this->y);
 	
-		$jHundreds = array("", "ק", "ר", "ש", "ת", "תק", "תר","תש", "תת", "תתק");
-		$jTens = array("", "י", "כ", "ל", "מ", "נ", "ס", "ע", "פ", "צ");
-		$jTenEnds = array("", "י", "ך", "ל", "ם", "ן", "ס", "ע", "ף", "ץ");
-		$tavTaz = array("ט״ו", "ט״ז");
-		$jOnes = array("", "א", "ב", "ג", "ד", "ה", "ו", "ז", "ח", "ט");
+		$jHundreds = array("", "×§", "×¨", "×©", "×ª", "×ª×§", "×ª×¨","×ª×©", "×ª×ª", "×ª×ª×§");
+		$jTens = array("", "×™", "×›", "×œ", "×ž", "× ", "×¡", "×¢", "×¤", "×¦");
+		$jTenEnds = array("", "×™", "×š", "×œ", "×�", "×Ÿ", "×¡", "×¢", "×£", "×¥");
+		$tavTaz = array("×˜×´×•", "×˜×´×–");
+		$jOnes = array("", "×�", "×‘", "×’", "×“", "×”", "×•", "×–", "×—", "×˜");
 		//
 		$shortYear = $year %1000; //discard thousands
 		//next check for all possible single Hebrew digit years
@@ -773,8 +773,8 @@ class HijriDate extends CalendarDate {
 // rather than the local language.
 ////////////////////////////////////////////////////////////////////////////////
 class ArabicDate extends HijriDate {
-	var $ARABIC_MONTHS=array("", "محرّم", "صفر", "ربيع الأول", "ربيع الثانى", "جمادى الأول", "جمادى الثاني", "رجب", "شعبان", "رمضان", "شوّال", "ذو القعدة", "ذو الحجة");
-	var $ARABIC_DAYS=array("الأثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعه", "السبت", "الأحد");
+	var $ARABIC_MONTHS=array("", "Ù…Ø­Ø±Ù‘Ù…", "ØµÙ�Ø±", "Ø±Ø¨ÙŠØ¹ Ø§Ù„Ø£ÙˆÙ„", "Ø±Ø¨ÙŠØ¹ Ø§Ù„Ø«Ø§Ù†Ù‰", "Ø¬Ù…Ø§Ø¯Ù‰ Ø§Ù„Ø£ÙˆÙ„", "Ø¬Ù…Ø§Ø¯Ù‰ Ø§Ù„Ø«Ø§Ù†ÙŠ", "Ø±Ø¬Ø¨", "Ø´Ø¹Ø¨Ø§Ù†", "Ø±Ù…Ø¶Ø§Ù†", "Ø´ÙˆÙ‘Ø§Ù„", "Ø°Ùˆ Ø§Ù„Ù‚Ø¹Ø¯Ø©", "Ø°Ùˆ Ø§Ù„Ø­Ø¬Ø©");
+	var $ARABIC_DAYS=array("Ø§Ù„Ø£Ø«Ù†ÙŠÙ†", "Ø§Ù„Ø«Ù„Ø§Ø«Ø§Ø¡", "Ø§Ù„Ø£Ø±Ø¨Ø¹Ø§Ø¡", "Ø§Ù„Ø®Ù…ÙŠØ³", "Ø§Ù„Ø¬Ù…Ø¹Ù‡", "Ø§Ù„Ø³Ø¨Øª", "Ø§Ù„Ø£Ø­Ø¯");
 
 	function FormatLongMonth() {
 		return $this->ARABIC_MONTHS[$this->m];
@@ -860,13 +860,13 @@ class GedcomDate {
 		// e.g. "@#DJULIAN@ BET 1520 AND 1530" instead of
 		// "BET @#DJULIAN@ 1520 AND @#DJULIAN@ 1530"
 		if (preg_match('/^(@#d[a-z ]+@) (from|bet) (.+) (and|to) (.+)/', $date, $match)) {
-			$this->qual1=$match(2);
+			$this->qual1=$match[2];
 			$this->date1=$this->ParseDate("{$match[1]} {$match[3]}");
-			$this->qual2=$match(4);
+			$this->qual2=$match[4];
 			$this->date2=$this->ParseDate("{$match[1]} {$match[5]}");
 		} else {
 			if (preg_match('/^(@#d[a-z ]+@) (from|bet|to|and|bef|aft|cal|est|int|abt|apx|est|cir) (.+)/', $date, $match)) {
-				$this->qual1=$match(2);
+				$this->qual1=$match[2];
 				$this->date1=$this->ParseDate($match[1].' '.$match[3]);
 			} else {
 				if (preg_match('/^(from|bet) (.+) (and|to) (.+)/', $date, $match)) {
