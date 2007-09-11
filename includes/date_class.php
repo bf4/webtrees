@@ -499,11 +499,11 @@ class JulianDate extends CalendarDate {
 
 	// Process new-style/old-style years and years BC
 	function ExtractYear($year) {
-		if (preg_match('/^(\d\d\d\d)(\/\d\d)$/', $year)) {
-			return $year+1;
+		if (preg_match('/^(\d\d\d\d) \d\d$/', $year, $match)) {
 			$this->new_old_style=true;
+			return $match[1]+1;
 		} else
-			if (preg_match('/^(\d+)(b\.?c\.?(e\.?)?)$/', $year, $match))
+			if (preg_match('/^(\d+)( ?b ?c ?)$/', $year, $match))
 				return -$match[1];
 			else
 				return $year;
@@ -512,7 +512,7 @@ class JulianDate extends CalendarDate {
 	function FormatLongYear() {
 		global $pgv_lang;
 		if ($this->y<0)
-			return (-$this->y).$pgv_lang['B.C.'];
+			return (-$this->y).$pgv_lang['b.c.'];
 		else
 			if ($this->new_old_style) {
 				return sprintf('%d/%02d', $this->y-1, $this->y % 100);
@@ -896,15 +896,17 @@ class GedcomDate {
 			$cal='';
 		}
 		// Split the date into D, M and Y
-		if (preg_match_all('/^ *(\d*) *([a-z]+\d?) *(\d\S*)? *$/', $date, $match)) { // DM, M, MY or DMY
+		if (preg_match_all('/^ *(\d*) *([a-z]{3,5}\d?) *(\d+( ?b ?c)?|\d\d\d\d \d\d)?$/', $date, $match)) { // DM, M, MY or DMY
 			$d=$match[1][0];
 			$m=$match[2][0];
 			$y=$match[3][0];
 		} else {
-			preg_match('/(\d{0,4})/', $date, $match); // Y
-			$d='';
+			if (preg_match('/(\d+( ?b ?c)?|\d\d\d\d)/', $date, $match)) // Y
+				$y=$match[1];
+			else
+				$y='';
 			$m='';
-			$y=$match[1];
+			$d='';
 		}
 		// Unambiguous dates - override calendar escape
 		if (preg_match('/^(tsh|csh|ksl|tvt|shv|adr|ads|nsn|iyr|svn|tmz|aav|ell)$/', $m))
@@ -916,7 +918,7 @@ class GedcomDate {
 				if (preg_match('/^(muhar|safar|rabi[12]|juma[12]|rajab|shaab|ramad|shaww|dhuaq|dhuah)$/', $m))
 					$cal='@#dhijri@'; // This is a PGV extension
 				else
-					if (preg_match('/^(\d\d\d\d\/\d\d|\d+ *b\.?c\.?)$/', $y))
+					if (preg_match('/^(\d\d\d\d \d\d|\d+ *b ?c ?)$/', $y))
 						$cal='@#djulian@';
 		// Ambiguous dates - don't override calendar escape
 		if ($cal=='')
