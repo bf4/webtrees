@@ -3,7 +3,7 @@
  * Polish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  Tymoteusz Motylewski www.motylewscy.com
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+	print "Nie można uzyskać bezpośredniego dostępu do pliku.";
 	exit;
 }
 
