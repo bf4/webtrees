@@ -1,6 +1,6 @@
 <?php
 /**
- * English texts
+ * Spanish language file for PhpGedView
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2007  PGV Development Team

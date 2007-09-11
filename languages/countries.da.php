@@ -42,7 +42,7 @@
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Du kan ikke hente sprogfiler direkte.";
+	print "Du kan ikke tilgå en sprogfil direkte.";
 	exit;
 }
 
