@@ -8,6 +8,8 @@
 	# $Id$
 =====================================================================
 Version 4.1.2
+ - Fixed [ 1410203 ] E-Mail not displaying characters correctly (yalnifj)
+ - Fixed [ 1792825 ] SVN:1630 Timeline Chart, bold footer (yalnifj)
  - removed adodb-time-inc.php as it is no longer being used (yalnifj)
  - Fixed [ 1759246 ] New individual source added without relevant fields (yalnifj)
  - Fixed [ 1790943 ] 4.1.1 Individual Page - Submenu Lists - Individual is empty (canajun2eh)
