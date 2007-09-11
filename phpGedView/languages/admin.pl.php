@@ -1,9 +1,9 @@
 <?php
 /**
- * English texts
+ * Polish texts
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,14 +20,15 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * @author PGV Developers
+ * @author Michael Paluchowski, http://genealogy.nethut.pl
+ * @author Tymoteusz Motylewski www.motylewscy.com
  * @package PhpGedView
  * @subpackage Languages
  * @version $Id$
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+	print "Nie można uzyskać bezpośredniego dostępu do pliku.";
 	exit;
 }
 

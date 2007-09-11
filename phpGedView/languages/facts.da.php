@@ -23,7 +23,7 @@
  * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Du har ikke direkte adgang til en sprogfil.";
+	print "Du kan ikke tilgå en sprogfil direkte.";
 	exit;
 }
 // -- Define a fact array to map GEDCOM tags with their danish values
