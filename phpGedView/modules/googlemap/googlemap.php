@@ -548,7 +548,8 @@ function build_indiv_map($indifacts, $famids) {
 
 		$indexcounter = 0;
 		for ($j=1; $j<=$i; $j++) {
-			$tooltip=html_entity_decode(strip_tags(tool_tip_text($markers[$j])), ENT_QUOTES, 'UTF-8');
+			// Use @ because some installations give warnings (but not errors?) about UTF-8
+			$tooltip=@html_entity_decode(strip_tags(tool_tip_text($markers[$j])), ENT_QUOTES, 'UTF-8');
 			if ($markers[$j]["placed"] == "no") {
 				$multimarker = -1;
 				// Count nr of locations where the long/lati is identical
@@ -661,7 +662,8 @@ function build_indiv_map($indifacts, $famids) {
 							$markers[$k]["placed"] = "yes";
 							$markers[$k]["index"] = $indexcounter;
 							if ($tabcounter == 4) {
-								$tooltip=html_entity_decode(strip_tags(tool_tip_text($markers[$k])), ENT_QUOTES, 'UTF-8');
+								// Use @ because some installations give warnings (but not errors?) about UTF-8
+								$tooltip=@html_entity_decode(strip_tags(tool_tip_text($markers[$k])), ENT_QUOTES, 'UTF-8');
 								print "\n";
 								print "];\n";
 								print "GEvent.addListener(Marker{$j}_{$markersindex}, \"click\", function(tabToSelect) {\n";
