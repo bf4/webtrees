@@ -442,8 +442,10 @@ case 'calendar':
 			} else
 				print '&nbsp;';
 		else {
-			// TODO use class=current_day for today.
-			print "<span class=\"cal_day\">{$d}</span>";
+			if ($d==$today->d && $cal_date->m==$today->m)
+				print "<span class=\"cal_day current_day\">{$d}</span>";
+			else
+				print "<span class=\"cal_day\">{$d}</span>";
 			// Show a converted date
 			foreach (explode('_and_', $CALENDAR_FORMAT) as $convcal) {
 				$alt_date=$cal_date->convert_to_cal($convcal);
