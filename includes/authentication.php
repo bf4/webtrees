@@ -1225,6 +1225,10 @@ function addMessage($message) {
 
 	$fUser = getUser($message["from"]);
 	$tUser = getUser($message["to"]);
+	if (!$tUser) {
+			//-- the to user must be a valid user in the system before it will send any mails
+			return false;
+	}
 	
 	// Switch to the "from" user's language
 	$oldLanguage = $LANGUAGE;
@@ -1251,6 +1255,27 @@ function addMessage($message) {
 		else $from = $fUser["email"];
 		$email2 = $pgv_lang["message_email2"]."\r\n\r\n".stripslashes($email2);
 
+	}
+	if ($message["method"]!="messaging") {
+		$subject1 = "[".$pgv_lang["phpgedview_message"].($TEXT_DIRECTION=="ltr"?"] ":" [").stripslashes($message["subject"]);
+		if (!$fUser) {
+			$email1 = $pgv_lang["message_email1"];
+			if (!empty($message["from_name"])) $email1 .= $message["from_name"]."\r\n\r\n".stripslashes($message["body"]);
+			else $email1 .= $from."\r\n\r\n".stripslashes($message["body"]);
+		}
+		else {
+			$email1 = $pgv_lang["message_email1"];
+			$email1 .= stripslashes($fromFullName)."\r\n\r\n".stripslashes($message["body"]);
+		}
+		if (!isset($message["no_from"])) {
+			if (stristr($from, $PHPGEDVIEW_EMAIL)){
+				$admuser = getuser($WEBMASTER_EMAIL);
+				$from = $admuser["email"];
+			}
+			if (!$fUser) $header2 = $PHPGEDVIEW_EMAIL;
+			else $header2 = $to;
+			pgvMail($from, $header2, $subject2, $email2);
+		}
 	}
 
 	//-- Load the "to" users language
@@ -1292,18 +1317,7 @@ function addMessage($message) {
 			if (!$PGV_SIMPLE_MAIL) $to = hex4email(stripslashes($toFullName),$CHARACTER_SET). " <".$tUser["email"].">";
 			else $to = $tUser["email"];
 		}
-		if (!$fUser) $header2 = $PHPGEDVIEW_EMAIL;
-		else $header2 = $to;
 		if (!empty($tUser["email"])) pgvMail($to, $from, $subject1, $email1);
-	}
-	if ($message["method"]!="messaging") {
-		if (!isset($message["no_from"])) {
-			if (stristr($from, $PHPGEDVIEW_EMAIL)){
-				$admuser = getuser($WEBMASTER_EMAIL);
-				$from = $admuser["email"];
-			}
-			pgvMail($from, $header2, $subject2, $email2);
-		}
 	}
 
 	if ($LANGUAGE!=$oldLanguage) loadLanguage($oldLanguage);			// restore language settings if needed

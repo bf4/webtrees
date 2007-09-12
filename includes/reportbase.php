@@ -222,7 +222,7 @@ class PGVRElement {
 		}
    		if ($found) $embed_fonts = true;
 		$t = trim($t, "\r\n\t");
-		$t = preg_replace("/<br \/>/", "\n", $t);
+		$t = preg_replace(array("/<br \/>/", "/&nbsp;/"), array("\n", " "), $t);
 		$t = strip_tags($t);
 		$t = unhtmlentities($t);
 		if ($embed_fonts) $t = bidi_text($t);
@@ -814,7 +814,8 @@ function PGVRCellEHandler() {
 function PGVRNowSHandler($attrs) {
 	global $currentElement;
 
-	$currentElement->addText(get_changed_date(date("j M Y", client_time())));
+	$g = new GedcomDate(date("j M Y", client_time()));
+	$currentElement->addText($g->Display());
 }
 
 function PGVRPageNumSHandler($attrs) {
@@ -1240,7 +1241,10 @@ function PGVRvarSHandler($attrs) {
 			$ct = preg_match("/factarray\['(.*)'\]/", $var, $match);
 			if ($ct>0) $var = $match[1];
 		}
-		if (!empty($attrs["date"])) $var = get_changed_date($var);
+		if (!empty($attrs["date"])) {
+			$g = new GedcomDate($var);
+			$var = $g->Display();
+		}
 		$currentElement->addText($var);
 	}
 }

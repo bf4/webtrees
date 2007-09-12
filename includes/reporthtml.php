@@ -101,7 +101,8 @@ class PGVReport extends PGVReportBase {
 		global $download, $embed_fonts, $CHARACTER_SET, $TEXT_DIRECTION, $rtl_stylesheet;
 
 		header("Content-Type: text/html; charset=$CHARACTER_SET");
-		print "<html>\n<head>";
+		print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
+		print "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\t<head>\n\t\t";
 		print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$CHARACTER_SET\" />\n";
 		print "<style type=\"text/css\">\n";
 		$this->PGVRStyles['footer'] = array('name'=>'footer', 'font'=>'Arial', 'size'=>'10', 'style'=>'');
@@ -117,10 +118,21 @@ class PGVReport extends PGVReportBase {
 			print $styleAdd."\n";
 			print "}\n";
 		}
+		//-- testing setting text direction
+		if ($TEXT_DIRECTION=="rtl") {
+?>
+body {
+	direction: rtl;
+	text-align: right;
+}
+html {
+	direction: rtl;
+	white-space: normal;
+}
+<?php
+		}
 		print "</style>\n";
-		//if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\"></link>\n\t";
-		// print "<title></title>\n";
-		print "</head>\n<body>\n";
+		print "</head>\n<body direction>\n";
 		if (!isset($this->currentStyle)) $this->currentStyle = "";
 		$temp = $this->currentStyle;
 		//-- header

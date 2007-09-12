@@ -1487,11 +1487,11 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	//if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">".$pgv_lang["id"]."</th>";
 	print "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
 	print "<th class=\"list_label\">".$factarray["DATE"]."</th>";
-	print "<td class=\"list_label sorttable_nosort\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
-	echo "<th class=\"list_label\">".$factarray["EVEN"]."</th>";
-	echo "</tr></thead>\n";
+	print "<th class=\"list_label sorttable_nosort\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></th>";
+	print "<th class=\"list_label\">".$factarray["EVEN"]."</th>";
+	print "</tr></thead>\n";
 	//-- table body
-	echo "<tbody>\n";
+	print "<tbody>\n";
 	$hidden = 0;
 	$n = 0;
 

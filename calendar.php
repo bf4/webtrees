@@ -442,8 +442,10 @@ case 'calendar':
 			} else
 				print '&nbsp;';
 		else {
-			// TODO use class=current_day for today.
-			print "<span class=\"cal_day\">{$d}</span>";
+			if ($d==$today->d && $cal_date->m==$today->m)
+				print "<span class=\"cal_day current_day\">{$d}</span>";
+			else
+				print "<span class=\"cal_day\">{$d}</span>";
 			// Show a converted date
 			foreach (explode('_and_', $CALENDAR_FORMAT) as $convcal) {
 				$alt_date=$cal_date->convert_to_cal($convcal);
@@ -536,7 +538,7 @@ function apply_filter($facts, $filterof, $filtersx) {
 function calendar_fact_text($fact, $show_places) {
 	global $factarray, $pgv_lang, $TEXT_DIRECTION;
 	$date=new GedcomDate($fact['date']);
-	$text='</br>'.$factarray[$fact['fact']].' - '.$date->Display(true, "j M y", "none");
+	$text='</br>'.$factarray[$fact['fact']].' - '.$date->Display(true, "j M y", array());
 	if ($fact['anniv']>0)
 		$text.=' <span dir="'.$TEXT_DIRECTION.'">('.str_replace('#year_var#', $fact['anniv'], $pgv_lang['year_anniversary']).')</span>';
 	if ($show_places && !empty($fact['plac']))

@@ -646,7 +646,8 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 		$value = trim($value);
 		//-- if it is a date value then convert the date
 		if ($convert && $t=="DATE") {
-			$value = get_changed_date($value);
+			$g = new GedcomDate($value);
+			$value = $g->Display();
 			if (!empty($truncate)) {
 				if (strlen($value)>$truncate) {
 					$value = preg_replace("/\(.+\)/", "", $value);
@@ -2310,36 +2311,23 @@ function filename_encode($filename) {
 	else return $filename;
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// Remove empty/duplicate values from a URL query string
+////////////////////////////////////////////////////////////////////////////////
+function normalize_query_string($query) {
+	$components=array();
+	foreach (preg_split('/(^\?|\&(amp;)*)/', $query, -1, PREG_SPLIT_NO_EMPTY) as $component)
+		if (strpos($component, '=')!==false) {
+			list ($key, $data)=explode('=', $component, 2);
+			$components[$key]=$data;
+		}
+	$new_query='';
+	foreach ($components as $key=>$data)
+		if (!empty($data))
+			$new_query.=(empty($new_query)?'?':'&amp;').$key.'='.$data;
 
-/*
- * - Function is not used anywhere so it is commented out to save memory
-//-- This function changes the used gedcom connected to a language
-function change_gedcom_per_language($new_gedcom_name,$new_language_name)
-{
-  global $QUERY_STRING;
-  global $PHP_SELF;
-
-  $QUERY_STRING = preg_replace("/&amp;/", "&", $QUERY_STRING);
-  $QUERY_STRING = preg_replace("/&&/", "&", $QUERY_STRING);
-  $terms = preg_split("/&/", $QUERY_STRING);
-  $vars = "";
-  for ($i=0; $i<count($terms); $i++)
-  {
-	if (substr($terms[$i],0,7) == "gedcom=")$terms[$i]="";
-	if ((!empty($terms[$i]))&&(strstr($terms[$i], "changelanguage")===false)&&(strpos($terms[$i], "NEWLANGUAGE")===false))
-	{
-	  $vars .= $terms[$i]."&";
-	}
-  }
-  $QUERY_STRING = $vars;
-  if (empty($QUERY_STRING))$QUERY_STRING = "GEDCOM=".$new_gedcom_name; else $QUERY_STRING = $QUERY_STRING . "&gedcom=".$new_gedcom_name;
-  $QUERY_STRING = preg_replace("/&&/", "&", $QUERY_STRING);
-  $_SESSION["GEDCOM"] = "GEDCOM=".$new_gedcom_name;
-  $_SESSION['CLANGUAGE'] = $new_language_name;
-  header("Location: ".$PHP_SELF."?".$QUERY_STRING);
-  exit;
+	return $new_query;
 }
-*/
 
 function getAlphabet(){
 	global $ALPHABET_upper, $ALPHABET_lower, $LANGUAGE;

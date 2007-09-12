@@ -34,6 +34,7 @@
  * are all for internal use only.
  */
 
+
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access an include file directly.";
 	exit;
@@ -188,9 +189,15 @@ class CalendarDate {
 	// $format - format string: the codes are specified in http://php.net/date
 	function Format($format) {
 		// Legacy formats
-		if ($format=='D M Y' || $format=='D. M Y') $format='j F Y';
-		if ($format=='M D Y' || $format=='M. D Y') $format='F j Y';
-		if ($format=='Y M D' || $format=='Y. M D') $format='Y F j';
+		switch ($format) {
+		case 'D M Y':   $format='j F Y';   break;
+		case 'D. M Y':  $format='j. F Y';  break;
+		case 'M D Y':   $format='F j Y';   break;
+		case 'M. D Y':  $format='F. j Y';  break;
+		case 'Y M D':   $format='Y F j';   break;
+		case 'Y. M D':  $format='Y. F j';  break;
+		case 'Y. M D.': $format='Y. F j.'; break;
+		}
 		// Don't show exact details for inexact dates
 		if ($this->d==0) $format=str_replace(array('d', 'j', 'l', 'D', 'N', 'S', 'w', 'z'), '', $format);
 		if ($this->m==0) $format=str_replace(array('F', 'm', 'M', 'n', 't'),                '', $format);
@@ -224,7 +231,8 @@ class CalendarDate {
 			default:  $str.=$code; break;
 			}
 		// Don't allow dates to wrap.
-		return str_replace(' ', '&nbsp;', trim($str));
+		return trim($str);
+		//return str_replace(' ', '&nbsp;', trim($str));
 	}
 
 	// Functions to extract bits of the date in various formats.  Individual calendars
@@ -499,11 +507,11 @@ class JulianDate extends CalendarDate {
 
 	// Process new-style/old-style years and years BC
 	function ExtractYear($year) {
-		if (preg_match('/^(\d\d\d\d)(\/\d\d)$/', $year)) {
-			return $year+1;
+		if (preg_match('/^(\d\d\d\d) \d\d$/', $year, $match)) {
 			$this->new_old_style=true;
+			return $match[1]+1;
 		} else
-			if (preg_match('/^(\d+)(b\.?c\.?(e\.?)?)$/', $year, $match))
+			if (preg_match('/^(\d+)( ?b ?c ?)$/', $year, $match))
 				return -$match[1];
 			else
 				return $year;
@@ -512,7 +520,7 @@ class JulianDate extends CalendarDate {
 	function FormatLongYear() {
 		global $pgv_lang;
 		if ($this->y<0)
-			return (-$this->y).$pgv_lang['B.C.'];
+			return (-$this->y).$pgv_lang['b.c.'];
 		else
 			if ($this->new_old_style) {
 				return sprintf('%d/%02d', $this->y-1, $this->y % 100);
@@ -860,13 +868,13 @@ class GedcomDate {
 		// e.g. "@#DJULIAN@ BET 1520 AND 1530" instead of
 		// "BET @#DJULIAN@ 1520 AND @#DJULIAN@ 1530"
 		if (preg_match('/^(@#d[a-z ]+@) (from|bet) (.+) (and|to) (.+)/', $date, $match)) {
-			$this->qual1=$match(2);
+			$this->qual1=$match[2];
 			$this->date1=$this->ParseDate("{$match[1]} {$match[3]}");
-			$this->qual2=$match(4);
+			$this->qual2=$match[4];
 			$this->date2=$this->ParseDate("{$match[1]} {$match[5]}");
 		} else {
 			if (preg_match('/^(@#d[a-z ]+@) (from|bet|to|and|bef|aft|cal|est|int|abt|apx|est|cir) (.+)/', $date, $match)) {
-				$this->qual1=$match(2);
+				$this->qual1=$match[2];
 				$this->date1=$this->ParseDate($match[1].' '.$match[3]);
 			} else {
 				if (preg_match('/^(from|bet) (.+) (and|to) (.+)/', $date, $match)) {
@@ -896,15 +904,17 @@ class GedcomDate {
 			$cal='';
 		}
 		// Split the date into D, M and Y
-		if (preg_match_all('/^ *(\d*) *([a-z]+\d?) *(\d\S*)? *$/', $date, $match)) { // DM, M, MY or DMY
+		if (preg_match_all('/^ *(\d*) *([a-z]{3,5}\d?) *(\d+( ?b ?c)?|\d\d\d\d \d\d)?$/', $date, $match)) { // DM, M, MY or DMY
 			$d=$match[1][0];
 			$m=$match[2][0];
 			$y=$match[3][0];
 		} else {
-			preg_match('/(\d{0,4})/', $date, $match); // Y
-			$d='';
+			if (preg_match('/(\d+( ?b ?c)?|\d\d\d\d)/', $date, $match)) // Y
+				$y=$match[1];
+			else
+				$y='';
 			$m='';
-			$y=$match[1];
+			$d='';
 		}
 		// Unambiguous dates - override calendar escape
 		if (preg_match('/^(tsh|csh|ksl|tvt|shv|adr|ads|nsn|iyr|svn|tmz|aav|ell)$/', $m))
@@ -916,7 +926,7 @@ class GedcomDate {
 				if (preg_match('/^(muhar|safar|rabi[12]|juma[12]|rajab|shaab|ramad|shaww|dhuaq|dhuah)$/', $m))
 					$cal='@#dhijri@'; // This is a PGV extension
 				else
-					if (preg_match('/^(\d\d\d\d\/\d\d|\d+ *b\.?c\.?)$/', $y))
+					if (preg_match('/^(\d\d\d\d \d\d|\d+ *b ?c ?)$/', $y))
 						$cal='@#djulian@';
 		// Ambiguous dates - don't override calendar escape
 		if ($cal=='')
@@ -940,13 +950,13 @@ class GedcomDate {
 
 	// Convert a date to the prefered format and calendar(s) display.
 	// Optionally make the date a URL to the calendar.
-	function Display($url=false, $date_fmt='', $cal_fmts='') {
+	function Display($url=false, $date_fmt='', $cal_fmts=NULL) {
 		global $lang_short_cut, $LANGUAGE, $TEXT_DIRECTION, $DATE_FORMAT, $CALENDAR_FORMAT;
 
 		// Convert dates to given calendars and given formats
 		if (empty($date_fmt))
 			$date_fmt=$DATE_FORMAT;
-		if (empty($cal_fmst))
+		if (is_null($cal_fmts))
 			$cal_fmts=explode('_and_', $CALENDAR_FORMAT);
 
 		// Allow special processing for different languages

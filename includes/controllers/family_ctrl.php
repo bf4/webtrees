@@ -379,11 +379,13 @@ class FamilyRoot extends BaseController
 	 */
 	function &getEditMenu() {
 		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $GEDCOM, $pgv_lang, $pgv_changes;
+		global $SHOW_GEDCOM_RECORD;
 		if ($TEXT_DIRECTION=="rtl") $ff="_rtl";
 		else $ff="";
 
 		// edit_fam menu
 		$menu = new Menu($pgv_lang['edit_fam']);
+		if ($SHOW_GEDCOM_RECORD || userIsAdmin($this->uname)) 
 		$menu->addOnclick('return edit_raw(\''.$this->getFamilyID().'\');');
 		if (!empty($PGV_IMAGES["edit_fam"]["small"]))
 			$menu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
@@ -398,12 +400,14 @@ class FamilyRoot extends BaseController
 		$menu->addSubmenu($submenu);
 
 		// edit_fam / edit_raw
+		if ($SHOW_GEDCOM_RECORD || userIsAdmin($this->uname)) {
 		$submenu = new Menu($pgv_lang['edit_raw']);
 		$submenu->addOnclick("return edit_raw('".$this->getFamilyID()."');");
 		if (!empty($PGV_IMAGES["edit_fam"]["small"]))
 			$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
 		$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 		$menu->addSubmenu($submenu);
+		}
 
 		// edit_fam / members
 		$submenu = new Menu($pgv_lang['change_family_members']);

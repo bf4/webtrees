@@ -79,7 +79,7 @@ $level2_tags=array( // The order of the $keys is significant
 	"WIFE" =>array("MARR"),
 	"FAMC" =>array("ADOP","SLGC"),
 	"FILE" =>array("OBJE"),
-	"_PRIM"=>array("OBJE"),
+	"_PRIM"=>array("OBJE")
 );
 $STANDARD_NAME_FACTS = array('NAME', 'NPFX', 'GIVN', 'SPFX', 'SURN', 'NSFX');
 
@@ -892,8 +892,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		txt=txt.replace(/\+/g,''); // +17.1234 ==> 17.1234
 		txt=txt.replace(/-/g,neg);	// -0.5698 ==> W0.5698
 		txt=txt.replace(/,/g,'.');	// 0,5698 ==> 0.5698
-		// 0°34'11 ==> 0:34:11
-		txt=txt.replace(/\uB0/g,':'); // °
+		// 0ï¿½34'11 ==> 0:34:11
+		txt=txt.replace(/\uB0/g,':'); // ï¿½
 		txt=txt.replace(/\u27/g,':'); // '
 		// 0:34:11.2W ==> W0.5698
 		txt=txt.replace(/^([0-9]+):([0-9]+):([0-9.]+)(.*)/g, function($0, $1, $2, $3, $4) { var n=parseFloat($1); n+=($2/60); n+=($3/3600); n=Math.round(n*1E4)/1E4; return $4+n; });
@@ -1815,7 +1815,7 @@ function linkMedia($mediaid, $linktoid, $level=1) {
  * @param string $fact	the new fact we are adding
  */
 function create_add_form($fact) {
-	global $tags;
+	global $tags, $pgv_lang;
 
 	$tags = array();
 
@@ -1833,6 +1833,13 @@ function create_add_form($fact) {
 		}
 		add_simple_tag("1 ".$fact);
 		insert_missing_subtags($tags[0]);
+		//-- handle the special SOURce case for level 1 sources [ 1759246 ] 
+		if ($fact=="SOUR") {
+			add_simple_tag("2 PAGE");
+			add_simple_tag("3 TEXT");
+			add_simple_tag("3 DATE", "", $pgv_lang["date_of_entry"]);
+			add_simple_tag("2 QUAY");
+		}
 	}
 }
 
@@ -2003,7 +2010,7 @@ function insert_missing_subtags($level1tag)
 		$type_val = substr($level1tag,5);
 		$level1tag = "MARR";
 	}
-
+	
 	foreach ($level2_tags as $key=>$value) {
 		if (in_array($level1tag, $value) && !in_array($key, $tags)) {
 			if ($key=="TYPE") add_simple_tag("2 TYPE ".$type_val);
