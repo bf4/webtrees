@@ -189,9 +189,15 @@ class CalendarDate {
 	// $format - format string: the codes are specified in http://php.net/date
 	function Format($format) {
 		// Legacy formats
-		if ($format=='D M Y' || $format=='D. M Y') $format='j F Y';
-		if ($format=='M D Y' || $format=='M. D Y') $format='F j Y';
-		if ($format=='Y M D' || $format=='Y. M D') $format='Y F j';
+		switch ($format) {
+		case 'D M Y':   $format='j F Y';   break;
+		case 'D. M Y':  $format='j. F Y';  break;
+		case 'M D Y':   $format='F j Y';   break;
+		case 'M. D Y':  $format='F. j Y';  break;
+		case 'Y M D':   $format='Y F j';   break;
+		case 'Y. M D':  $format='Y. F j';  break;
+		case 'Y. M D.': $format='Y. F j.'; break;
+		}
 		// Don't show exact details for inexact dates
 		if ($this->d==0) $format=str_replace(array('d', 'j', 'l', 'D', 'N', 'S', 'w', 'z'), '', $format);
 		if ($this->m==0) $format=str_replace(array('F', 'm', 'M', 'n', 't'),                '', $format);
