@@ -63,9 +63,7 @@ if (isset($execute) && $action == "debug") {
 	$DEBUG_LANG = $_SESSION["DEBUG_LANG"];
 }
 
-$QUERY_STRING = preg_replace("/&amp;/", "&", $QUERY_STRING);
-$QUERY_STRING = preg_replace("/&&/", "&", $QUERY_STRING);
-if (strpos($QUERY_STRING,"&dv="))$QUERY_STRING = substr($QUERY_STRING,0,strpos($QUERY_STRING,"&dv="));
+$QUERY_STRING=normalize_query_string($QUERY_STRING."&dv=");
 
 print "<script language=\"JavaScript\" type=\"text/javascript\">\n";
 print "<!--\n";

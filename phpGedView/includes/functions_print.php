@@ -566,17 +566,10 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	print "<link rel=\"stylesheet\" href=\"$print_stylesheet\" type=\"text/css\" media=\"print\"></link>\n\t";
 	if ($BROWSERTYPE == "msie") print "<style type=\"text/css\">\nFORM { margin-top: 0px; margin-bottom: 0px; }\n</style>\n";
 	print "<!-- PhpGedView v$VERSION -->\n";
-	if (isset($changelanguage)) {
-		$terms = preg_split("/[&?]/", $QUERY_STRING);
-		$vars = "";
-		for ($i=0; $i<count($terms); $i++) {
-			if ((!empty($terms[$i]))&&(strstr($terms[$i], "changelanguage")===false)&&(strpos($terms[$i], "NEWLANGUAGE")===false)) {
-					$vars .= $terms[$i]."&";
-			}
-		}
-		$query_string = $vars;
-	}
-	else $query_string = $QUERY_STRING;
+	if (isset($changelanguage))
+		$query_string=normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE=");
+	else
+		$query_string = $QUERY_STRING;
 	if ($view!="preview") {
 		 $old_META_AUTHOR = $META_AUTHOR;
 		 $old_META_PUBLISHER = $META_PUBLISHER;
@@ -973,7 +966,7 @@ function print_lang_form($option=0) {
 				 {
 					$i ++;
 					$flagid = "flag" . $i;
-					print "<a href=\"$SCRIPT_NAME?$QUERY_STRING&amp;changelanguage=yes&amp;NEWLANGUAGE=$key\">";
+					print "<a href=\"$SCRIPT_NAME".normalize_query_string($QUERY_STRING."&amp;changelanguage=yes&amp;NEWLANGUAGE=$key")."\">";
 					print "<img src=\"" . $flagsfile[$key] . "\" class=\"dimflag\" alt=\"" . $pgv_lang[$key]. "\" title=\"" . $pgv_lang[$key]. "\" onmouseover=\"change_class('".$flagid."','brightflag');\" onmouseout=\"change_class('".$flagid."','dimflag');\" id='".$flagid."' /></a>\n";
 				 }
 				 else
@@ -985,13 +978,10 @@ function print_lang_form($option=0) {
 			   default:
 					print "<form name=\"langform$LANG_FORM_COUNT\" action=\"$SCRIPT_NAME";
 					print "\" method=\"get\">";
-					$vars = preg_split("/&amp;/", $QUERY_STRING);
-					foreach($vars as $indexval => $var) {
+					$vars = preg_split('/(^\?|\&(amp;)*)/', normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE="), -1, PREG_SPLIT_NO_EMPTY);
+					foreach ($vars as $var) {
 						$parts = preg_split("/=/", $var);
-						if (count($parts)>1) {
-							if (($parts[0]!="changelanguage")&&($parts[0]!="NEWLANGUAGE"))
-								print "\n\t\t<input type=\"hidden\" name=\"$parts[0]\" value=\"".urldecode($parts[1])."\" />";
-						}
+						print "\n\t\t<input type=\"hidden\" name=\"$parts[0]\" value=\"".urldecode($parts[1])."\" />";
 					}
 					print "\n\t\t<input type=\"hidden\" name=\"changelanguage\" value=\"yes\" />\n\t\t<select name=\"NEWLANGUAGE\" class=\"header_select\" onchange=\"submit();\">";
 					print "\n\t\t\t<option value=\"\">".$pgv_lang["change_lang"]."</option>";
@@ -1022,11 +1012,10 @@ function print_user_links() {
 		  print '<a href="edituser.php" class="link">'.$pgv_lang["logged_in_as"].' ('.$username.')</a><br />';
 		  if ($user["canadmin"] || (userGedcomAdmin($username, $GEDCOM))) print "<a href=\"admin.php\" class=\"link\">".$pgv_lang["admin"]."</a> | ";
 		  print "<a href=\"index.php?logout=1\" class=\"link\">".$pgv_lang["logout"]."</a>";
-	 }
-	 else {
-		  $QUERY_STRING = preg_replace("/logout=1/", "", $QUERY_STRING);
-		  if(empty($SEARCH_SPIDER)) {
-		  	print "<a href=\"$LOGIN_URL?url=".urlencode(basename($SCRIPT_NAME)."?".$QUERY_STRING."&amp;ged=$GEDCOM")."\" class=\"link\">".$pgv_lang["login"]."</a>";
+	 } else {
+		  $QUERY_STRING = normalize_query_string($QUERY_STRING.'&amp;logout=');
+		  if (empty($SEARCH_SPIDER)) {
+		  	print "<a href=\"$LOGIN_URL?url=".urlencode(basename($SCRIPT_NAME).normalize_query_string($QUERY_STRING."&amp;ged=$GEDCOM"))."\" class=\"link\">".$pgv_lang["login"]."</a>";
 		  }
 	 }
 	 print "<br />";
@@ -1343,7 +1332,7 @@ function print_favorite_selector($option=0) {
 		default:
 			   print "<form name=\"favoriteform\" action=\"$SCRIPT_NAME";
 			   print "\" method=\"post\" onsubmit=\"return false;\">";
-			   print "\n\t\t<select name=\"fav_id\" class=\"header_select\" onchange=\"if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value!='') window.location=document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value; if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value=='add') window.location='$SCRIPT_NAME?$QUERY_STRING&amp;action=addfav&amp;gid=$pid&amp;pid=$pid';\">";
+			   print "\n\t\t<select name=\"fav_id\" class=\"header_select\" onchange=\"if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value!='') window.location=document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value; if (document.favoriteform.fav_id.options[document.favoriteform.fav_id.selectedIndex].value=='add') window.location='{$SCRIPT_NAME}".normalize_query_string("{$QUERY_STRING}&amp;action=addfav&amp;gid={$pid}&amp;pid={$pid}")."';\">";
 				print "\n\t\t\t<option value=\"\">".$pgv_lang["favorites"]."</option>\n";
 			if (!empty($username)) {
 				if (count($userfavs)>0 || (strpos($_SERVER["SCRIPT_NAME"], "individual.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "family.php")!==false || strpos($_SERVER["SCRIPT_NAME"], "source.php")!==false)) {
