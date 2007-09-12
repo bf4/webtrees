@@ -29,6 +29,7 @@ Version 4.2
  - Adding a "never married" icon on ancestry booklet when NMR=0 (opus27)
 
 Version 4.1.2
+ - Fixed [ 1792613 ] Text mangled when editing linked Note (canajun2eh)
  - Fixed [ 1790943 ] 4.1.1 Individual Page - Submenu Lists - Individual is empty (canajun2eh)
 
 Version 4.1.1

@@ -1034,7 +1034,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		else $noterec = find_updated_record($noteid);
 		$n1match = array();
 		$nt = preg_match("/0 @$value@ NOTE (.*)/", $noterec, $n1match);
-		if ($nt!==false) $value=trim(strip_tags(@$n1match[1].get_cont(1, $noterec)));
+		if ($nt!==false) $value=trim(strip_tags(@$n1match[1].get_cont(1, $noterec, false)));
 		$element_name="NOTE[".$noteid."]";
 	}
 
