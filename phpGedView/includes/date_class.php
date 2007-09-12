@@ -949,7 +949,7 @@ class GedcomDate {
 		// Convert dates to given calendars and given formats
 		if (empty($date_fmt))
 			$date_fmt=$DATE_FORMAT;
-		if (empty($cal_fmst))
+		if (empty($cal_fmts))
 			$cal_fmts=explode('_and_', $CALENDAR_FORMAT);
 
 		// Allow special processing for different languages
