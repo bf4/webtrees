@@ -1422,7 +1422,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	//if ($SHOW_ID_NUMBERS) print "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
 	print "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
 	print "<th class=\"list_label\">".$factarray["DATE"]."</th>";
-	print "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
+	print "<th class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></th>";
 	print "<th class=\"list_label\">".$factarray["EVEN"]."</th>";
 	print "</tr>\n";
 	//-- table body
