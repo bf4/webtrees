@@ -26,10 +26,10 @@
 require_once("config.php");
 require_once 'includes/functions_print_facts.php';
 
-//BH -------------------------------------------------------
+//LBox  ========================= Next few lines added for Lightbox Album ============================= 
 if (file_exists( "modules/lightbox/".$pgv_language["english"])) require( "modules/lightbox/".$pgv_language["english"]);
 if (file_exists( "modules/lightbox/".$pgv_language[$LANGUAGE])) require( "modules/lightbox/".$pgv_language[$LANGUAGE]);
-//BH --------------------------------------------------------
+//LBox  ============================ end addition for Lightbox Album ==================================
 
 global $MEDIA_EXTERNAL, $THUMBNAIL_WIDTH;
 global $GEDCOM, $GEDCOMS;
@@ -308,7 +308,7 @@ if ($ct>0){
 	    print "\n\t\t\t<td class=\"list_value_wrap\" width=\"50%\">";
 	    print "<table class=\"$TEXT_DIRECTION\">\n\t<tr>\n\t\t<td valign=\"top\" style=\"white-space: normal;\">";
 		
-//LBox --------  change for Lightbox Album --------------------------------------------
+//LBox  ========================= Next few lines Changed for Lightbox Album ============================= 
 		if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$media["FILE"]) || eregi("\.jpeg",$media["FILE"]) || eregi("\.gif",$media["FILE"]) || eregi("\.png",$media["FILE"]) ) ) { 
 			print "<a href=\"" . $media["FILE"] . "\" rel='lightbox[general]' title='" . $name . "'\">" . "\n";	
         }elseif ($USE_MEDIA_VIEWER) {
@@ -316,14 +316,14 @@ if ($ct>0){
 		} else {
 			print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";	
 		}
-//LBox ----------- end change for Lightbox Album ----------------------------------
+//LBox  ============================ end Change for Lightbox Album ==================================
 
 		print "<img src=\"".$media["THUMB"]."\" align=\"left\" class=\"thumbnail\" border=\"none\"";
 		if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
 		print " alt=\"" . PrintReady($name) . "\" title=\"" . PrintReady($name) . "\" /></a>";
 		print "</td>\n\t\t<td class=\"list_value_wrap\" style=\"border: none;\" width=\"100%\">";
 		
-//LBox --------  added for Lightbox Album --------------------------------------------
+//LBox  ========================= Next few lines added for Lightbox Album ============================= 
         if ( userCanEdit(getUserName()) ) {
 		print "<table border=0><tr>";
 		
@@ -358,7 +358,7 @@ if ($ct>0){
 			// ------------ Linespace ---------------------
 			//print "<br>";
 		}	
-//LBox ----------- end addition for Lightbox Album ---------------------------------------	
+//LBox  ========================= End Additions for Lightbox Album ============================= 	
 			
 	    print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
 
