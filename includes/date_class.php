@@ -225,7 +225,8 @@ class CalendarDate {
 			default:  $str.=$code; break;
 			}
 		// Don't allow dates to wrap.
-		return str_replace(' ', '&nbsp;', trim($str));
+		return trim($str);
+		//return str_replace(' ', '&nbsp;', trim($str));
 	}
 
 	// Functions to extract bits of the date in various formats.  Individual calendars
@@ -943,13 +944,13 @@ class GedcomDate {
 
 	// Convert a date to the prefered format and calendar(s) display.
 	// Optionally make the date a URL to the calendar.
-	function Display($url=false, $date_fmt='', $cal_fmts='') {
+	function Display($url=false, $date_fmt='', $cal_fmts=NULL) {
 		global $lang_short_cut, $LANGUAGE, $TEXT_DIRECTION, $DATE_FORMAT, $CALENDAR_FORMAT;
 
 		// Convert dates to given calendars and given formats
 		if (empty($date_fmt))
 			$date_fmt=$DATE_FORMAT;
-		if (empty($cal_fmts))
+		if (is_null($cal_fmts))
 			$cal_fmts=explode('_and_', $CALENDAR_FORMAT);
 
 		// Allow special processing for different languages
