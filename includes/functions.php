@@ -3000,6 +3000,14 @@ function loadLangFile($fileListNames="") {
 			$fileName1 = "modules/sitemap/languages/help_text.".$lang_short_cut["english"].".php";
 			$fileName2 = "modules/sitemap/languages/help_text.".$lang_short_cut[$LANGUAGE].".php";
 			break;
+		case "lb_lang":
+			$fileName1 = "modules/lightbox/languages/lang.".$lang_short_cut["english"].".php";
+			$fileName2 = "modules/lightbox/languages/lang.".$lang_short_cut[$LANGUAGE].".php";
+			break;
+		case "lb_help":
+			$fileName1 = "modules/lightbox/languages/help_text.".$lang_short_cut["english"].".php";
+			$fileName2 = "modules/lightbox/languages/help_text.".$lang_short_cut[$LANGUAGE].".php";
+			break;
 		case "pgv_lang":
 			$fileName1 = $pgv_language["english"];
 			$fileName2 = $pgv_language[$LANGUAGE];

@@ -54,8 +54,7 @@
 </script>
 
 <?php
-require( "modules/lightbox/".$pgv_language["english"]);
-if (file_exists( "modules/lightbox/".$pgv_language[$LANGUAGE])) require  "modules/lightbox/".$pgv_language[$LANGUAGE];
+loadLangFile("lb_lang");
 
 global $reorder, $edit;
 if (!isset($edit)) {$edit=1;} 

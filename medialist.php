@@ -26,14 +26,11 @@
 require_once("config.php");
 require_once 'includes/functions_print_facts.php';
 
-//LBox  ========================= Next few lines added for Lightbox Album ============================= 
-if (file_exists( "modules/lightbox/".$pgv_language["english"])) require( "modules/lightbox/".$pgv_language["english"]);
-if (file_exists( "modules/lightbox/".$pgv_language[$LANGUAGE])) require( "modules/lightbox/".$pgv_language[$LANGUAGE]);
-//LBox  ============================ end addition for Lightbox Album ==================================
-
 global $MEDIA_EXTERNAL, $THUMBNAIL_WIDTH;
 global $GEDCOM, $GEDCOMS;
 global $currentPage, $lastPage;
+
+loadLangFile("lb_lang");		// Load Lightbox language files
 
 $lrm = chr(0xE2).chr(0x80).chr(0x8E);
 $rlm = chr(0xE2).chr(0x80).chr(0x8F);
