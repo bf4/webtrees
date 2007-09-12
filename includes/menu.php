@@ -957,7 +957,7 @@ class MenuBar
 			return $menu;
 			}
 		//-- main print_preview menu item
-		$menu = new Menu($pgv_lang["print_preview"], $SCRIPT_NAME."?".$QUERY_STRING."&amp;view=preview", "down");
+		$menu = new Menu($pgv_lang["print_preview"], $SCRIPT_NAME.normalize_query_string($QUERY_STRING."&amp;view=preview"), "down");
 		if (!empty($PGV_IMAGES["printer"]["large"]))
 			$menu->addIcon($PGV_IMAGE_DIR."/".$PGV_IMAGES["printer"]["large"]);
 		$menu->addClass("menuitem$ff", "menuitem_hover$ff", "submenu$ff");
@@ -1130,9 +1130,9 @@ class MenuBar
 		//-- add show/hide context_help
 		$menu->addSeperator();
 		if ($_SESSION["show_context_help"])
-			$submenu = new Menu($pgv_lang["hide_context_help"], "$SCRIPT_NAME?$QUERY_STRING&amp;show_context_help=no");
+			$submenu = new Menu($pgv_lang["hide_context_help"], "$SCRIPT_NAME".normalize_query_string($QUERY_STRING."&amp;show_context_help=no"));
 		else
-			$submenu = new Menu($pgv_lang["show_context_help"], "$SCRIPT_NAME?$QUERY_STRING&amp;show_context_help=yes");
+			$submenu = new Menu($pgv_lang["show_context_help"], "$SCRIPT_NAME".normalize_query_string($QUERY_STRING."&amp;show_context_help=yes"));
 		$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 		$menu->addSubmenu($submenu);
 		return $menu;
