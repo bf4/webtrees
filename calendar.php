@@ -469,23 +469,26 @@ case 'calendar':
 	break;
 }
 
-if ($view=="preview"){
-	if (isset($myindilist[$gid]["gedfile"])) $showfile=get_gedcom_from_id($myindilist[$gid]["gedfile"]);
-	else $showfile=get_gedcom_from_id($myfamlist[$gid]["gedfile"]);
-	$showfilter="";
-	if ($filterof!="all") $showfilter = ($filterof=="living"?$pgv_lang["living_only"]:$pgv_lang["recent_events"]);
-	if (!empty($filtersx)){
-		if (!empty($showfilter)) $showfilter .= " - ";
-		$showfilter .= ($filtersx=="M"?$pgv_lang["male"]:$pgv_lang["female"]);
-	}
-	if ($filterev != "all"){
-		if (!empty($showfilter)) $showfilter .= " - ";
-		$showfilter .= $factarray[$filterev];
-	}
-	print "<br />".$showfile." (".$pgv_lang["filter"].": ";
-	if (!empty($showfilter)) print $showfilter.")";
-	else print $pgv_lang["all"].")";
-	print "</td></tr>";
+if ($view=="preview") {
+	// Print details of any filtering
+	$filters=array();
+	if ($filterof=='living')
+		$filters[]=$pgv_lang['living_only'];
+	if ($filterof=='recent')
+		$filters[]=$pgv_lang['recent_events'];
+	if ($filtersx=='M')
+		$filters[]=$pgv_lang["male"];
+	if ($filtersx=='F')
+		$filters[]=$pgv_lang["female"];
+	if ($filterev=='bdm')
+		$filters[]=$pgv_lang['bdm'];
+	else
+		if ($filterev!='all')
+			$filters[].=$factarray[$filterev];
+	$filtertext=implode(' - ', $filters);
+	if (!empty($filters))
+		$filtertext="({$pgv_lang['filter']}: {$filtertext})";
+	print "<br />{$GEDCOMS[$GEDCOM]['title']} {$filtertext}";
 }
 print "</table>";
 print "</div><br />";
