@@ -71,7 +71,7 @@ print '<tr><td class="facts_label" colspan="8"><h2>';
 
 switch ($action) {
 case 'today':
-	print $pgv_lang['on_this_day'].'<br/>'.$ged_date->Display(false, 'j F Y').'</td></tr>';
+	print $pgv_lang['on_this_day'].'<br/>'.$ged_date->Display(false).'</td></tr>';
 	break;
 case 'calendar':
 	print $pgv_lang['in_this_month'].'<br/>'.$ged_date->Display(false, 'F Y').'</td></tr>';
@@ -541,7 +541,7 @@ function apply_filter($facts, $filterof, $filtersx) {
 function calendar_fact_text($fact, $show_places) {
 	global $factarray, $pgv_lang, $TEXT_DIRECTION;
 	$date=new GedcomDate($fact['date']);
-	$text='</br>'.$factarray[$fact['fact']].' - '.$date->Display(true, "j M y", array());
+	$text='</br>'.$factarray[$fact['fact']].' - '.$date->Display(true, "", array());
 	if ($fact['anniv']>0)
 		$text.=' <span dir="'.$TEXT_DIRECTION.'">('.str_replace('#year_var#', $fact['anniv'], $pgv_lang['year_anniversary']).')</span>';
 	if ($show_places && !empty($fact['plac']))

@@ -38,10 +38,13 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 function date_localisation_fi(&$q1, &$d1, &$q2, &$d2, &$q3) {
 	global $pgv_lang;
 
-	if ($q2=='')
-		// If only one date, put any q1 text after the date
-		$q2=$q1;
-	else {
+	if ($q2=='') {
+		// If there is only one date, certain qualifiers go after it
+		if ($q1=='aft' || $q1=='to' || $q1=='from') {
+			$q2=$q1;
+			$q1='';
+		}
+	} else {
 		// If two dates, just use a dash
 		$q1='';
 		$q2='-';
