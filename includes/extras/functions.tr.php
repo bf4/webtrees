@@ -53,6 +53,7 @@ function date_localisation_tr(&$q1, &$d1, &$q2, &$d2, &$q3) {
 				case 80: $q1=str_replace('#EXT#', 'den', $pgv_lang[$q1]); break;
 				default: $q1=str_replace('#EXT#', 'dan', $pgv_lang[$q1]); break;
 				}
+				break;
 			case 6:
 			case 9: $q1=str_replace('#EXT#', 'dan', $pgv_lang[$q1]); break;
 			default: $q1=str_replace('#EXT#', 'den', $pgv_lang[$q1]); break;
