@@ -188,20 +188,19 @@ class CalendarDate {
 	// Format a date
 	// $format - format string: the codes are specified in http://php.net/date
 	function Format($format) {
-		// Legacy formats
-		switch ($format) {
-		case 'D M Y':   $format='j F Y';   break;
-		case 'D. M Y':  $format='j. F Y';  break;
-		case 'M D Y':   $format='F j Y';   break;
-		case 'M. D Y':  $format='F. j Y';  break;
-		case 'Y M D':   $format='Y F j';   break;
-		case 'Y. M D':  $format='Y. F j';  break;
-		case 'Y. M D.': $format='Y. F j.'; break;
+		// Legacy formats (DMY) become jFY
+		if (preg_match('/^[DMY,. ;\/-]+$/', $format)) {
+			$format=str_replace(array('D', 'M'), array('j', 'F'), $format);
 		}
 		// Don't show exact details for inexact dates
+		$old_format=$format;
 		if ($this->d==0) $format=str_replace(array('d', 'j', 'l', 'D', 'N', 'S', 'w', 'z'), '', $format);
 		if ($this->m==0) $format=str_replace(array('F', 'm', 'M', 'n', 't'),                '', $format);
 		if ($this->y==0) $format=str_replace(array('t', 'L', 'G', 'y', 'Y'),                '', $format);
+		// If we've trimmed the format, also trim the punctuation
+		if ($format!=$old_format)
+			$format=preg_replace('/(^[,. ;\/-]+)|([,. ;\/-]+$)/', '', $format);
+		// Build up the formated date, character at a time
 		$str='';
 		//foreach (str_split($format) as $code) // PHP5
 		preg_match_all('/(.)/', $format, $match); foreach ($match[1] as $code) // PHP4
