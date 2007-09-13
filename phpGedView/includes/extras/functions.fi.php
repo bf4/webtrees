@@ -53,8 +53,8 @@ function date_localisation_fi(&$q1, &$d1, &$q2, &$d2, &$q3) {
 	// Constant 'ta' is appended to the Finnish month values, if a day value exists
 	foreach (array('jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec') as $month) {
 		$month=$pgv_lang[$month];
-		$d1=preg_replace("/(\d+\s+{$month})/", "$1ta", $d1);
-		$d2=preg_replace("/(\d+\s+{$month})/", "$1ta", $d2);
+		$d1=preg_replace("/(\d+[ ,;.\/-]+{$month})/", "$1ta", $d1);
+		$d2=preg_replace("/(\d+[ ,;.\/-]+{$month})/", "$1ta", $d2);
 	}
 
 	if (isset($pgv_lang[$q1]))
