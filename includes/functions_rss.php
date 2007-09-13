@@ -78,8 +78,8 @@ function getUpcomingEvents() {
 	if ($daysprint < 1) $daysprint = 1;
 	if ($daysprint > $DAYS_TO_SHOW_LIMIT) $daysprint = $DAYS_TO_SHOW_LIMIT;  // valid: 1 to limit
 
-	$startjd=today_jd()+1;
-	$endjd=today_jd()+$daysprint;
+	$startjd=client_jd()+1;
+	$endjd=client_jd()+$daysprint;
 
   $daytext=print_events_list($startjd, $endjd, $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living');
 	$daytext = str_replace(array("<br />", "<ul></ul>", " </a>"), array(" ", "", "</a>"), $daytext);
@@ -110,7 +110,7 @@ function getTodaysEvents() {
 	if (isset($config["onlyBDM"])) $onlyBDM = $config["onlyBDM"];  // "yes" or "no"
 	else $onlyBDM = "no";
 
-  $daytext=print_events_list(today_jd(), today_jd(), $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living');
+  $daytext=print_events_list(client_jd(), client_jd(), $onlyBDM=='yes'?'BIRT MARR DEAT':'', $filter=='living');
 	$daytext = str_replace(array("<br />", "<ul></ul>", " </a>"), array(" ", "", "</a>"), $daytext);
 	$daytext = strip_tags($daytext, '<a><ul><li><b><span>');
 	$dataArray[2]  = $daytext;
@@ -428,7 +428,7 @@ function getRecentChanges() {
 
 	$action = "today";
 	$found_facts = array();
-	$changes=get_recent_changes(today_jd()-$config['days']);
+	$changes=get_recent_changes(client_jd()-$config['days']);
 
 	if (count($changes)>0) {
 		$found_facts = array();

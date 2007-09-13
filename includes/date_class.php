@@ -1020,7 +1020,7 @@ class GedcomDate {
 		return '<span class="date">'.trim("{$q1} {$d1}{$conv1} {$q2} {$d2}{$conv2} {$q3} {$this->text}").'</span>';
 	}
 
-	// Get the earliest/latest date from this date
+	// Get the earliest/latest date/JD from this date
 	function MinDate() {
 		return $this->date1;
 	}
@@ -1029,6 +1029,27 @@ class GedcomDate {
 			return $this->date1;
 		else
 			return $this->date2;
+	}
+	function  MinJD() {
+		$tmp=$this->MinDate();
+		return $tmp->minJD;
+	}
+	function  MaxJD() {
+		$tmp=$this->MaxDate();
+		return $tmp->maxJD;
+	}
+
+	// Offset this date by N years, and round to the whole year
+	function AddYears($n, $qual='') {
+		$tmp=(PHP_VERSION<5)? $this : clone($this);
+		$tmp->date1->y+=$n;
+		$tmp->date1->m=0;
+		$tmp->date1->d=0;
+		$tmp->date1->SetJDfromYMD();
+		$tmp->qual1=$qual;
+		$tmp->qual2='';
+		$tmp->date2=NULL;
+		return $tmp;
 	}
 
 	// Static function to get the age of an event

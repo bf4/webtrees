@@ -68,8 +68,8 @@ function print_upcoming_events($block=true, $config="", $side, $index) {
 
   if ($daysprint < 1) $daysprint = 1;
   if ($daysprint > $DAYS_TO_SHOW_LIMIT) $daysprint = $DAYS_TO_SHOW_LIMIT;  // valid: 1 to limit
-	$startjd=today_jd()+1;
-	$endjd=today_jd()+$daysprint;
+	$startjd=client_jd()+1;
+	$endjd=client_jd()+$daysprint;
 
   // Output starts here
   print "<div id=\"upcoming_events\" class=\"block\">";

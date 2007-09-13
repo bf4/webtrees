@@ -526,7 +526,7 @@ else if ($action=="getchanges") {
 			print "ERROR 23: Invalid date parameter.  Please use a valid date in the GEDCOM format DD MMM YYYY.\n";
 		} else {
 			print "SUCCESS\n";
-			if ($lastdate[0]['jd1']<today_jd()-180) {
+			if ($lastdate[0]['jd1']<server_jd()-180) {
 				addDebugLog($action." ERROR 24: You cannot retrieve updates for more than 180 days.");
 				print "ERROR 24: You cannot retrieve updates for more than 180 days.\n";
 			} else {

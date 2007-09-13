@@ -282,10 +282,15 @@ function default_edit_to_gedcom_date($datestr)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Get the current julian day of the client, not the server
+// Get the current julian day on the client/server
 ////////////////////////////////////////////////////////////////////////////////
-function today_jd() {
-	return unixtojd(client_time());
+function server_jd() {
+	$tmp=new GedcomDate(date('j M Y'));
+	return $tmp->MinJD();
+}
+function client_jd() {
+	$tmp=new GedcomDate(date('j M Y'), client_time());
+	return $tmp->MinJD();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -499,7 +499,7 @@ print_footer();
 /////////////////////////////////////////////////////////////////////////////////
 function apply_filter($facts, $filterof, $filtersx) {
 	$filtered=array();
-	$hundred_years=today_jd()-36525;
+	$hundred_years=server_jd()-36525;
 	foreach ($facts as $fact) {
 		$tmp=GedcomRecord::GetInstance($fact['id']);
 		// Filter on sex

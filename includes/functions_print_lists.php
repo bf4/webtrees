@@ -1610,7 +1610,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 	$return.="<b>";
 	if ($private)
 		if ($output)
-			if ($endjd==today_jd())
+			if ($endjd==client_jd())
 				$return.=print_text ("more_today_privacy", 0, 1);
 			else
 				if ($startjd==$endjd)
@@ -1618,7 +1618,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 				else
 					$return.=print_text ("more_events_privacy", 0, 1);
 		else
-			if ($endjd==today_jd())
+			if ($endjd==client_jd())
 				$return.=print_text ("none_today_privacy", 0, 1);
 			else
 				if ($startjd==$endjd)
@@ -1628,7 +1628,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 	else
 		if (!$output)
 			if ($filter)
-				if ($endjd==today_jd())
+				if ($endjd==client_jd())
 					$return.=print_text ("none_today_living", 0, 1);
 				else
 					if ($startjd==$endjd)
@@ -1636,7 +1636,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 					else
 						$return.=print_text ("no_events_living", 0, 1);
 			else
-				if ($endjd==today_jd())
+				if ($endjd==client_jd())
 					$return.=print_text ("none_today_all", 0, 1);
 				else
 					if ($startjd==$endjd)
