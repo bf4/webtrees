@@ -48,7 +48,7 @@ function print_recent_changes($block=true, $config="", $side, $index) {
 	if (isset($config["hide_empty"])) $HideEmpty = $config["hide_empty"];
 	else $HideEmpty = "no";
 
-	$found_facts=get_recent_changes(today_jd()-$config['days']);
+	$found_facts=get_recent_changes(client_jd()-$config['days']);
 
 // Start output
 	if (count($found_facts)==0 and $HideEmpty=="yes") return false;

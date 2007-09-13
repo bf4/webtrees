@@ -987,7 +987,7 @@ class PGVServiceLogic extends GenealogyService
 		if ($date[0]['jd1']==0)
 			return new SOAP_Fault('perform_update_check','Invalid date parameter.  Please use a valid date in the GEDCOM format DD MMM YYYY.');
 
-		if ($date[0]['jd1']<today_jd()-180)
+		if ($date[0]['jd1']<server_jd()-180)
 			return new SOAP_Fault('checkUpdates', 'You cannot retrieve updates for more than 180 days.');
 
 		$changes = get_recent_changes($date[0]['jd1']);
