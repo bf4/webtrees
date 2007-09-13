@@ -293,40 +293,33 @@ class Media extends GedcomRecord {
 	 */
 	function setFileProperties() {
 		global $pgv_lang;
-		$imgsize='';
+
 		if ($this->fileExists()) {
 			$this->filesizeraw = @filesize($this->getServerFilename());
-			$imgsize = @getimagesize($this->getServerFilename()); // [0]=width [1]=height [2]=filetype
-		}
-		if (@$imgsize[0]) {
-			// this is an image
-			$this->width = 0+$imgsize[0];
-			$this->height = 0+$imgsize[1];
-			$imageTypes = array("","GIF", "JPG", "PNG", "SWF", "PSD", "BMP", "TIFF", "TIFF", "JPC", "JP2", "JPX", "JB2", "SWC", "IFF", "WBMP", "XBM");
-			$this->ext = $imageTypes[0+$imgsize[2]];
-		}
-		if (!$this->ext) {
-			// this is probably not an image
-			// set file type equal to the file extension
-			$exp = explode("?", $this->file);
-			$pathinfo = pathinfo($exp[0]);
-			$this->ext = @strtoupper($pathinfo['extension']);
-			if (!$this->ext) $this->ext = "-";
-		}
-		if (@$imgsize['mime']) {
-			$this->mime = $imgsize['mime'];
-		} else {
-			// lookup mime type based on file extension
-			// this list needs to contain mimetypes for all media types not recognized by imgsize['mime']
-			$mime['MOV']  = 'video/quicktime';
-			$mime['MP3']  = 'audio/mpeg';
-			$mime['PDF']  = 'application/pdf';
-			$this->mime   = @$mime[$this->ext];
-			if (!$this->mime) {
-				// if we don't know what the mimetype is, use something ambiguous
-				$this->mime = "application/octet-stream";
-				AddToLog($this->file.': '.$pgv_lang["unknown_mime"]);
+			$imgsize=@getimagesize($this->getServerFilename()); // [0]=width [1]=height [2]=filetype
+			if (is_array($imgsize)) {
+				// this is an image
+				$this->width =0+$imgsize[0];
+				$this->height=0+$imgsize[1];
+				$imageTypes  =array("","GIF","JPG","PNG","SWF","PSD","BMP","TIFF","TIFF","JPC","JP2","JPX","JB2","SWC","IFF","WBMP","XBM");
+				$this->ext   =$imageTypes[0+$imgsize[2]];
+				$this->mime  =$imgsize['mime'];
+			} else {
+				// this is probably not an image
+				$this->width ='-';
+				$this->height='-';
+				$mime=array('MOV'=>'video/quicktime', 'MP3'=>'audio/mpeg', 'PDF'=>'application/pdf');
+				$this->ext=pathinfo(parse_url($this->getServerFilename(), PHP_URL_PATH), PATHINFO_EXTENSION);
+				if (empty($mime[$this->ext])) {
+					// if we don't know what the mimetype is, use something ambiguous
+					$this->mime='application/octet-stream';
+					AddToLog($this->file.': '."unknown_mime");
+				} else
+					$this->mime=$mime[$this->ext];
 			}
+		} else {
+			// File does not exist - presumably an external link
+			$this->mime='application/octet-stream';
 		}
 		$this->filepropset = true;
 	}
