@@ -331,8 +331,8 @@ $countries["???"]="Unknown";
  * 
  */
 $altCountryNames["COD"]="Zaire";
-$altCountryNames["DEU"]="East Germany; West Germany";
-$altCountryNames["FLK"]="Malvinas";		// Not really necessary: primary name in Spanish list
+$altCountryNames["DEU"]="East Germany; West Germany; GDR; FRG";
+$altCountryNames["FLK"]="Malvinas";
 $altCountryNames["GBR"]="Great Britain";
 $altCountryNames["LKA"]="Ceylon";
 $altCountryNames["MAC"]="Macao";
