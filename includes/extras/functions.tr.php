@@ -35,7 +35,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 ////////////////////////////////////////////////////////////////////////////////
 // Localise a date. "[qualifier] date [qualifier date] [qualifier]"
 ////////////////////////////////////////////////////////////////////////////////
-function date_localisation_fi(&$q1, &$d1, &$q2, &$d2, &$q3) {
+function date_localisation_tr(&$q1, &$d1, &$q2, &$d2, &$q3) {
 	global $pgv_lang;
 
 	switch ($q1) {
@@ -50,34 +50,34 @@ function date_localisation_fi(&$q1, &$d1, &$q2, &$d2, &$q3) {
 				case 20:
 				case 50:
 				case 70:
-				case 80: $q1=str_replace('#EXT#', 'den', $pgv_lang['from']); break;
-				default: $q1=str_replace('#EXT#', 'dan', $pgv_lang['from']); break;
+				case 80: $q1=str_replace('#EXT#', 'den', $pgv_lang[$q1]); break;
+				default: $q1=str_replace('#EXT#', 'dan', $pgv_lang[$q1]); break;
 				}
 			case 6:
-			case 9: $q1=str_replace('#EXT#', 'dan', $pgv_lang['from']); break;
-			default: $q1=str_replace('#EXT#', 'den', $pgv_lang['from']); break;
+			case 9: $q1=str_replace('#EXT#', 'dan', $pgv_lang[$q1]); break;
+			default: $q1=str_replace('#EXT#', 'den', $pgv_lang[$q1]); break;
 			}
 		} else {
-			$q1=str_replace('#EXT#', 'den', $pgv_lang['from']);
+			$q1=str_replace('#EXT#', 'den', $pgv_lang[$q1]);
 		}
 		break;
 	case 'to':
 		if (preg_match('/(\d{3,4})/', $d1, $match)) { // Extract year
 			switch ($match[1]) {
 			case '0':
-			case '9': $q1=str_replace('#EXT#', 'a', $pgv_lang['to']); break;
+			case '9': $q1=str_replace('#EXT#', 'a', $pgv_lang[$q1]); break;
 			case '2':
-			case '7': $q1=str_replace('#EXT#', 'ye', $pgv_lang['to']); break;
-			case '6': $q1=str_replace('#EXT#', 'ya', $pgv_lang['to']); break;
-			default: $q1=str_replace('#EXT#', 'e', $pgv_lang['to']); break;
+			case '7': $q1=str_replace('#EXT#', 'ye', $pgv_lang[$q1]); break;
+			case '6': $q1=str_replace('#EXT#', 'ya', $pgv_lang[$q1]); break;
+			default: $q1=str_replace('#EXT#', 'e', $pgv_lang[$q1]); break;
 			}
 		} else {
-			$q1=str_replace('#EXT#', 'e', $pgv_lang['to']); 
+			$q1=str_replace('#EXT#', 'e', $pgv_lang[$q1]); 
 		}
 		break;
 	default:
 		if (isset($pgv_lang[$q1]))
-			$q1=$pgv_lang[$q1]);
+			$q1=$pgv_lang[$q1];
 		break;
 	}
 
@@ -86,19 +86,19 @@ function date_localisation_fi(&$q1, &$d1, &$q2, &$d2, &$q3) {
 		if (preg_match('/(\d{3,4})/', $d2, $match)) { // Extract year
 			switch ($match[1] % 10) {
 			case 0:
-			case 9: $q2=str_replace('#EXT#', 'a', $pgv_lang['to']); break;
+			case 9: $q2=str_replace('#EXT#', 'a', $pgv_lang[$q2]); break;
 			case 2:
-			case 7: $q2=str_replace('#EXT#', 'ye', $pgv_lang['to']); break;
-			case 6: $q2=str_replace('#EXT#', 'ya', $pgv_lang['to']); break;
-			default: $q2=str_replace('#EXT#', 'e', $pgv_lang['to']); break;
+			case 7: $q2=str_replace('#EXT#', 'ye', $pgv_lang[$q2]); break;
+			case 6: $q2=str_replace('#EXT#', 'ya', $pgv_lang[$q2]); break;
+			default: $q2=str_replace('#EXT#', 'e', $pgv_lang[$q2]); break;
 			}
 		} else {
-			$q2=str_replace('#EXT#', 'e', $pgv_lang['to']); 
+			$q2=str_replace('#EXT#', 'e', $pgv_lang[$q2]); 
 		}
 		break;
 	default:
 		if (isset($pgv_lang[$q2]))
-			$q2=$pgv_lang[$q2]);
+			$q2=$pgv_lang[$q2];
 		break;
 	}
 }
