@@ -24,7 +24,7 @@
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Vous ne pouvez pas d'accéder aux fichiers de langue en direct.";
+	print "You cannot access a language file directly.";
 	exit;
 }
 
