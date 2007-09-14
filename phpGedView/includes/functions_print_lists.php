@@ -511,18 +511,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		echo "&nbsp;</td>";
 		//-- Last change
-		if ($tiny && $SHOW_LAST_CHANGE) {
-			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-			$timestamp = get_changed_date($person->getLastchangeDate())." ".get_gedcom_value("DATE:TIME", 2, $person->getLastchangeRecord());
-			if(!empty($SEARCH_SPIDER)) {
-				echo $timestamp;
-			}
-			else {
-				echo "<a href=\"".$person->getLinkUrl()."\"".
-				" class=\"list_item\">".$timestamp."</a>";
-			}
-			echo "&nbsp;</td>";
-		}
+		if ($tiny && $SHOW_LAST_CHANGE)
+			print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">".$person->LastChangeTimestamp(empty($SEARCH_SPIDER))."</td>";
 		//-- Sorting by gender
 		echo "<td style=\"display:none\">";
 		echo $person->getSex();
@@ -816,15 +806,8 @@ function print_fam_table($datalist, $legend="") {
 			echo "</td>";
 		}
 		//-- Last change
-		if ($tiny && $SHOW_LAST_CHANGE) {
-			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-			$changedate=$family->getLastchangeDate();
-			$changetime=get_gedcom_value("DATE:TIME", 2, $family->getLastchangeRecord());
-			$timestamp = get_changed_date($changedate)." ".$changetime;
-			$tmp=parse_date($changedate);
-			$sortkey=$tmp[0]['jd1'].preg_replace('/[^\d]/', '', $changetime);
-			echo "<a href=\"".$family->getLinkUrl()."\" name=\"{$sortkey}\" class=\"list_item\">{$timestamp}</a></td>";
-		}
+		if ($tiny && $SHOW_LAST_CHANGE)
+			print '<td class="'.strrev($TEXT_DIRECTION).' list_value_wrap rela">'.$family->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
 		//-- Sorting by marriage date
 		echo "<td style=\"display:none\">";
 		if (!$family->disp || $family->getMarriageRecord()=="" || $family->getMarriageYear()=="0000") echo "U";
@@ -887,6 +870,7 @@ function print_sour_table($datalist, $legend="") {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	if (count($datalist)<1) return;
+	$tiny = (count($datalist)<300);
 	$name_subtags = array("_HEB", "ROMN");
 	require_once("js/sorttable.js.htm");
 	require_once("includes/source_class.php");
@@ -910,7 +894,7 @@ function print_sour_table($datalist, $legend="") {
 		echo "<th class=\"list_label\">".$pgv_lang["families"]."</th>";
 		echo "<th class=\"list_label\">".$pgv_lang["media"]."</th>";
 	}
-	if ($SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
+	if ($tiny && $SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
 	echo "</tr>\n";
 	//-- table body
 	$hidden = 0;
@@ -976,16 +960,8 @@ function print_sour_table($datalist, $legend="") {
 			echo "</td>";
 		}
 		//-- Last change
-		if ($SHOW_LAST_CHANGE) {
-			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-			$changedate=$source->getLastchangeDate();
-			$changetime=get_gedcom_value("DATE:TIME", 2, $source->getLastchangeRecord());
-			$timestamp = get_changed_date($changedate)." ".$changetime;
-			$tmp=parse_date($changedate);
-			$sortkey=$tmp[0]['jd1'].preg_replace('/[^\d]/', '', $changetime);
-			echo "<a href=\"".$source->getLinkUrl()."\" name=\"{$sortkey}\" class=\"list_item\">{$timestamp}</a></td>";
-		}
-
+		if ($tiny && $SHOW_LAST_CHANGE)
+			print '<td class="'.strrev($TEXT_DIRECTION).' list_value_wrap rela">'.$source->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
 		echo "</tr>\n";
 	}
 	//-- table footer
@@ -1004,7 +980,7 @@ function print_sour_table($datalist, $legend="") {
 		echo "<td></td>";
 		echo "<td></td>";
 	}
-	if ($SHOW_LAST_CHANGE) echo "<td></td>";
+	if ($tiny && $SHOW_LAST_CHANGE) echo "<td></td>";
 	echo "</tr>";
 	echo "</table>\n";
 	echo "</fieldset>\n";
@@ -1033,6 +1009,7 @@ function print_repo_table($datalist, $legend="") {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	if (count($datalist)<1) return;
+	$tiny = (count($datalist)<300);
 	$name_subtags = array("_HEB", "ROMN");
 	require_once("js/sorttable.js.htm");
 	require_once("includes/repository_class.php");
@@ -1048,7 +1025,7 @@ function print_repo_table($datalist, $legend="") {
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">REPO</th>";
 	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["sources"]."</th>";
-	if ($SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
+	if ($tiny && $SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
 	echo "</tr>\n";
 	//-- table body
 	$n = 0;
@@ -1088,16 +1065,8 @@ function print_repo_table($datalist, $legend="") {
 		echo "<a href=\"".$repo->getLinkUrl()."\" class=\"list_item\">".count($repo->getRepositorySours())."</a>";
 		echo "</td>";
 		//-- Last change
-		if ($SHOW_LAST_CHANGE) {
-			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-			$changedate=$repo->getLastchangeDate();
-			$changetime=get_gedcom_value("DATE:TIME", 2, $repo->getLastchangeRecord());
-			$timestamp = get_changed_date($changedate)." ".$changetime;
-			$tmp=parse_date($changedate);
-			$sortkey=$tmp[0]['jd1'].preg_replace('/[^\d]/', '', $changetime);
-			echo "<a href=\"".$repo->getLinkUrl()."\" name=\"{$sortkey}\" class=\"list_item\">{$timestamp}</a></td>";
-		}
-
+		if ($tiny && $SHOW_LAST_CHANGE)
+			print '<td class="'.strrev($TEXT_DIRECTION).' list_value_wrap rela">'.$repo->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
 		echo "</tr>\n";
 	}
 	echo "</table>\n";
@@ -1174,16 +1143,8 @@ function print_media_table($datalist, $legend="") {
 			echo "</td>";
 		}
 		//-- Last change
-		if ($SHOW_LAST_CHANGE) {
-			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-			$changedate=$media->getLastchangeDate();
-			$changetime=get_gedcom_value("DATE:TIME", 2, $media->getLastchangeRecord());
-			$timestamp = get_changed_date($changedate)." ".$changetime;
-			$tmp=parse_date($changedate);
-			$sortkey=$tmp[0]['jd1'].preg_replace('/[^\d]/', '', $changetime);
-			echo "<a href=\"".$media->getLinkUrl()."\" name=\"{$sortkey}\" class=\"list_item\">{$timestamp}</a></td>";
-		}
-
+		if ($SHOW_LAST_CHANGE)
+			print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">".$media->LastChangeTimestamp(empty($SEARCH_SPIDER))."</td>";
 		echo "</tr>\n";
 	}
 	echo "</table>\n";
@@ -1373,19 +1334,10 @@ function print_changes_table($datalist) {
 			}
 		}
 		echo "</td>";
-		//-- Last change
-		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-		$changedate=$record->getLastchangeDate();
-		$changetime=get_gedcom_value("DATE:TIME", 2, $record->getLastchangeRecord());
-		$timestamp = get_changed_date($changedate)." ".$changetime;
-		$tmp=parse_date($changedate);
-		$sortkey=$tmp[0]['jd1'].preg_replace('/[^\d]/', '', $changetime);
-		echo "<a href=\"".$record->getLinkUrl()."\" name=\"{$sortkey}\" class=\"list_item\">{$timestamp}</a></td>";
+		//-- Last change date/time
+		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">".$record->LastChangeTimestamp(empty($SEARCH_SPIDER))."</td>";
 		//-- Last change user
-		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".$record->getLastchangeUser()."</a>";
-		echo "&nbsp;</td>";
-
+		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">".$record->LastChangeUser(empty($SEARCH_SPIDER))."</td>";
 		echo "</tr>\n";
 	}
 	//-- table footer
