@@ -387,39 +387,40 @@ class GedcomRecord {
 		return "";
 	}
 
-	/**
-	 * get  lastchange record
-	 * @return string the lastchange record
-	 */
-	function getLastchangeRecord() {
-		return trim(get_sub_record(1, "1 CHAN", $this->gedrec));
+	//////////////////////////////////////////////////////////////////////////////
+	// Get the last-change timestamp for this record - optionally wrapped in a
+	// link to ourself.
+	//////////////////////////////////////////////////////////////////////////////
+	function LastChangeTimestamp($add_url) {
+		global $TIME_FORMAT;
+		$chan_rec=get_sub_record(1, '1 CHAN', $this->gedrec);
+		if (empty($chan_rec))
+			return '&nbsp;';
+		$d=new GedcomDate(get_gedcom_value('DATE', 2, $chan_rec, '', false));
+		if (preg_match('/^(\d\d):(\d\d):(\d\d)$/', get_gedcom_value('DATE:TIME', 2, $chan_rec, '', false), $match)) {
+			$t=' '.date($TIME_FORMAT, mktime($match[1], $match[2], $match[3]));
+			$sort=$d->MinJD().$match[1].$match[2].$match[3];
+		} else {
+			$t='';
+			$sort=$d->MinJD().'000000';
+		}
+		$text=$d->Display(false).$t;
+		if ($add_url)
+			$text='<a name="'.$sort.'" href="'.$this->getLinkUrl().'">'.$text.'</a>';
+		return $text;
 	}
 
-	/**
-	 * get  lastchange date
-	 * @return string the lastchange date
-	 */
-	function getLastchangeDate() {
-		return get_gedcom_value("DATE", 2, $this->getLastchangeRecord(), '', false);
-	}
-
-	/**
-	 * get sortable lastchange date
-	 * @return string the lastchange date in sortable format YYYY-MM-DD HH:MM
-	 */
-	function getSortableLastchangeDate() {
-		$pdate = parse_date($this->getLastchangeDate());
-		$ptime = get_gedcom_value("DATE:TIME", 2, $this->getLastchangeRecord());
-		$sdate = sprintf("%04d-%02d-%02d %s", $pdate[0]["year"], $pdate[0]["mon"], $pdate[0]["day"], $ptime);
-		return $sdate;
-	}
-
-	/**
-	 * get lastchange PGV user
-	 * @return string the lastchange user
-	 */
-	function getLastchangeUser() {
-		return get_gedcom_value("_PGVU", 2, $this->getLastchangeRecord(), '', false);
+	//////////////////////////////////////////////////////////////////////////////
+	// Get the last-change user for this record
+	//////////////////////////////////////////////////////////////////////////////
+	function LastchangeUser() {
+		$chan_rec=get_sub_record(1, '1 CHAN', $this->gedrec);
+		if (empty($chan_rec))
+			return '&nbsp;';
+		$chan_user=get_gedcom_value("_PGVU", 2, $chan_rec, '', false);
+		if (empty($chan_user))
+			return '&nbsp;';
+		return $chan_user;
 	}
 }
 ?>
