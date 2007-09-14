@@ -56,7 +56,7 @@ function print_welcome_block($block=true, $config="", $side, $index) {
 	print "</tr><tr><td class=\"center\" colspan=\"3\">";
 	print_help_link("mygedview_customize_help", "qm");
 	print "<a href=\"javascript:;\" onclick=\"window.open('index_edit.php?name=".getUserName()."&amp;ctype=user', '_blank', 'top=50,left=10,width=600,height=350,scrollbars=1,resizable=1');\">".$pgv_lang["customize_page"]."</a>\n";
-	print "\n<br />".get_changed_date(date("j M Y", client_time()))." - ".date($TIME_FORMAT, client_time())."\n";
+	print "\n<br />".get_changed_date(date($DATE_FORMAT.' - ', client_time())).date($TIME_FORMAT, client_time())."\n";
 	print "</td>\n";
 	print "</tr></table>"; // blockcontent
 	print "</div>"; // block
