@@ -142,26 +142,39 @@ class CalendarDate {
 		return 0;
 	}
 
-	// How many years between one date and another.
-	function GetAnniversary($d1, $d2) {
-		if ($d1->$CALENDAR_ESCAPE==$d2->$CALENDAR_ESCAPE)
-			return $d2->y-$d1->y;
-		else
-			return 0;
-	}
-
-	// How long between two events in arbitrary calendars
-	function GetAge($d1, $d2) {
-		global $pgv_lang;
-		// TODO years, months and days
-		if ($d1->y==0 || $d2->y==0)
+	// How long between an event and a given julian day
+	// Return result as either a number of years or
+	// a gedcom-style age string.
+	// bool $full: true=gedcom style, false=just years
+	// int $jd: date for calculation
+	// TODO: JewishDate needs to redefine this to cope with leap months
+	function GetAge($full, $jd) {
+		if ($jd<=$this->minJD || $this->y==0)
 			return '';
-		if ($d1->$CALENDAR_ESCAPE==$d2->$CALENDAR_ESCAPE) {
-			
-			return $d2->y-$d1->y;
+		list($y,$m,$d)=$this->JDtoYMD($jd);
+		$dy=$y-$this->y;
+		$dm=$m-max($this->m,1);
+		$dd=$d-max($this->d,1);
+		if ($dd<0) {
+			$dd+=$this->Format('t');
+			$dm--;
 		}
-		// Different calendars, so we can only approximate.
-		return floor(($d2->minJD-$d1->minJD)/365.25);
+		if ($dm<0) {
+			$dm+=$this->NUM_MONTHS;
+			$dy--;
+		}
+		// Not a full age?  Then just the years
+		if (!$full)
+			return $dy;
+		// Age in years?
+		if ($dy>1)
+			return $dy.'y';
+		$dm+=$dy*$this->NUM_MONTHS;
+		// Age in months?
+		if ($dm>1)
+			return $dm.'m';
+		// Age in days?
+		return ($jd-$this->minJD)."d";
 	}
 
 	// Convert a date from one calendar to another.
@@ -1052,14 +1065,16 @@ class GedcomDate {
 		return $tmp;
 	}
 
-	// Static function to get the age of an event
-	function GetAge($a, $b) {
-		$min_age=CalendarDate::GetAge($a->MinDate(), $b->MaxDate());
-		$max_age=CalendarDate::GetAge($a->MinDate(), $b->MaxDate());
-    if ($min_age==$max_age)
-			return "<span class=\"age\">{$min_age}</span>";
-		else
-			return "<span class=\"age\">{$min_age} - {$max_age}</span>";
+	// Calculate the age of this event, at a given julian day
+	// Return the result as either a number of years (for indi lists, etc.)
+	// or a gedcom style age string: "1y 2m 3d"
+	function GetAge($full, $jd=NULL) {
+		static $today=NULL;
+		if (is_null($today)) // don't keep calculating today
+			$today=client_jd();
+		if (is_null($jd))
+			$jd=$today;
+		return $this->date1->GetAge($full, $jd);
 	}
 
 	// Static function to compare two dates.
