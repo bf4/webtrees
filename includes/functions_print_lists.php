@@ -320,6 +320,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	//-- table body
 	$hidden = 0;
 	$n = 0;
+	$d100y=new GedcomDate(date('Y')-100);  // 100 years ago
 	$dateY = date("Y");
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
@@ -465,18 +466,22 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "<td style=\"display:none\">";
 		echo $person->getSex();
 		echo "</td>";
-		//-- Sorting by birth date
+		//-- Filtering by birth date
 		echo "<td style=\"display:none\">";
-		if (!$person->disp || $person->getBirthYear()>=$dateY-100) echo "Y100";
-		else echo "YES";
+		if (!$person->disp || GedcomDate::Compare($bdate, $d100y)>0)
+			echo "Y100";
+		else
+			echo "YES";
 		echo "</td>";
-		//-- Sorting by death date
+		//-- Filtering by death date
 		echo "<td style=\"display:none\">";
 		if ($person->isDead()) {
-			if ($person->getDeathYear()>=$dateY-100) echo "Y100";
-			else echo "YES";
-		}
-		else echo "N";
+			if (GedcomDate::Compare($ddate, $d100y)>0)
+				echo "Y100";
+			else
+				echo "YES";
+		} else
+			echo "N";
 		echo "</td>";
 		//-- Roots or Leaves ?
 		echo "<td style=\"display:none\">";
@@ -577,6 +582,7 @@ function print_fam_table($datalist, $legend="") {
 	//-- table body
 	$hidden = 0;
 	$n = 0;
+	$d100y=new GedcomDate(date('Y')-100);  // 100 years ago
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
 			$family = Family::getInstance($key); // from placelist
@@ -719,10 +725,15 @@ function print_fam_table($datalist, $legend="") {
 			print '<td class="'.strrev($TEXT_DIRECTION).' list_value_wrap rela">'.$family->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
 		//-- Sorting by marriage date
 		echo "<td style=\"display:none\">";
-		if (!$family->disp || $family->getMarriageRecord()=="" || $family->getMarriageYear()=="0000") echo "U";
-		else if ($family->getMarriageYear()>=date('Y')-100) echo "Y100";
-		else echo "YES";
-		if ($family->isDivorced()) echo " DIV";
+		if (!$family->disp || $mdate->MinJD()==0)
+			echo "U";
+		else
+			if (GedcomDate::Compare($mdate, $d100y)>0)
+				echo "Y100";
+			else
+				echo "YES";
+		if ($family->isDivorced())
+			echo " DIV";
 		echo "</td>";
 		//-- Sorting alive/dead
 		echo "<td style=\"display:none\">";

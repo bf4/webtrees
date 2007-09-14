@@ -1092,29 +1092,21 @@ class GedcomDate {
 	function Compare($a, $b) {
 		// Get min/max JD for each date.
 		if ($a->qual1=='BEF')
-			//$amin=$a->MinDate()->minJD-1; // PHP5
-			{$tmp=$a->MinDate();$amin=$tmp->minJD-1;} // PHP4
+			$amin=$a->MinJD()-1;
 		else
-			//$amin=$a->MinDate()->minJD; // PHP5
-			{$tmp=$a->MinDate();$amin=$tmp->minJD;} // PHP4
+			$amin=$a->MinJD();
 		if ($b->qual1=='BEF')
-			//$bmin=$b->MinDate()->minJD-1; // PHP5
-			{$tmp=$b->MinDate();$bmin=$tmp->minJD-1;} // PHP4
+			$bmin=$b->MinJD()-1;
 		else
-			//$bmin=$b->MinDate()->minJD; // PHP5
-			{$tmp=$b->MinDate();$bmin=$tmp->minJD;} // PHP4
+			$bmin=$b->MinJD();
 		if ($a->qual1=='AFT')
-			//$amax=$a->MaxDate()->maxJD+1; // PHP5
-			{$tmp=$a->MaxDate();$amax=$tmp->maxJD+1;} // PHP4
+			$amax=$a->MaxJD()+1;
 		else
-			//$amax=$a->MaxDate()->maxJD; // PHP5
-			{$tmp=$a->MaxDate();$amax=$tmp->maxJD;} // PHP4
+			$amax=$a->MaxJD();
 		if ($b->qual1=='AFT')
-			//$bmax=$b->MaxDate()->maxJD+1; // PHP5
-			{$tmp=$b->MaxDate();$bmax=$tmp->maxJD+1;} // PH4
+			$bmax=$b->MaxJD()+1;
 		else
-			//$bmax=$b->MaxDate()->maxJD; // PHP5
-			{$tmp==$b->MaxDate();$bmax=$tmp->maxJD;} // PHP4
+			$bmax=$b->MaxJD();
 
 		if ($amax<$bmin)
 			return -1;
