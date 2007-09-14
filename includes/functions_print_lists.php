@@ -1363,7 +1363,7 @@ function print_changes_table($datalist) {
  * @param array $datalist contain records that were extracted from the database.
  */
 function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false, $allow_download=false) {
-	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION, $SERVER_URL;
 	require_once("js/sorttable.js.htm");
 	require_once("includes/gedcomrecord.php");
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
@@ -1476,7 +1476,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	print "</td>";
 	print "<td>";
 	if ($allow_download) {
-		$uri = "http://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+		$uri = $SERVER_URL.basename($_SERVER["REQUEST_URI"]);
 		global $whichFile;
 		$whichFile = "hCal-events.ics";
 		$title = print_text("download_file",0,1);
