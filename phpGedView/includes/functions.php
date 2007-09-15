@@ -2774,7 +2774,7 @@ function get_new_xref($type='INDI', $use_cache=false) {
 	}
 	else {
 		//-- check for the id in the nextid table
-		$sql = "SELECT * FROM ".$TBLPREFIX."nextid WHERE ni_type='".$DBCONN->escapeSimple($type)."' AND ni_gedfile='".$DBCONN->escapeSimple($gedid)."'";
+		$sql = "SELECT ni_id FROM ".$TBLPREFIX."nextid WHERE ni_type='".$DBCONN->escapeSimple($type)."' AND ni_gedfile='".$DBCONN->escapeSimple($gedid)."'";
 		$res =& dbquery($sql);
 		if ($res->numRows() > 0) {
 			$row = $res->fetchRow();

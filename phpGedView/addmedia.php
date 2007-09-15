@@ -255,12 +255,11 @@ if ($action=="newentry") {
 			//-- check if the file is used in more than one gedcom
 			//-- do not allow it to be moved or renamed if it is
 			$myFile = str_replace($MEDIA_DIRECTORY, "", $oldFolder.$oldFilename);
-			$sql = "SELECT * FROM ".$TBLPREFIX."media WHERE m_file LIKE '%".$DBCONN->escapeSimple($myFile)."'";
+			$sql = "SELECT 1 FROM {$TBLPREFIX}media WHERE m_file LIKE '%".$DBCONN->escapeSimple($myFile)."' AND m_gedfile<>".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']);
 			$res = dbquery($sql);
 			$onegedcom = true;
-			while($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-				if ($row['m_gedfile']!=$GEDCOMS[$GEDCOM]['id']) $onegedcom = false;
-			}
+			if ($row=$res->fetchRow(DB_FETCHMODE_ASSOC))
+				$onegedcom = false;
 			$res->free();
 			
 			// Handle Admin request to rename or move media file
@@ -396,12 +395,11 @@ if ($action == "update") {
 	//-- check if the file is used in more than one gedcom
 	//-- do not allow it to be moved or renamed if it is
 	$myFile = str_replace($MEDIA_DIRECTORY, "", $oldFolder.$oldFilename);
-	$sql = "SELECT * FROM ".$TBLPREFIX."media WHERE m_file LIKE '%".$DBCONN->escapeSimple($myFile)."'";
+	$sql = "SELECT 1 FROM {$TBLPREFIX}media WHERE m_file LIKE '%".$DBCONN->escapeSimple($myFile)."' AND m_gedfile<>".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']);
 	$res = dbquery($sql);
 	$onegedcom = true;
-	while($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		if ($row['m_gedfile']!=$GEDCOMS[$GEDCOM]['id']) $onegedcom = false;
-	}
+	if ($row=$res->fetchRow(DB_FETCHMODE_ASSOC))
+		$onegedcom = false;
 	$res->free();
 	
 	$isExternal = strstr($oldFilename, "://") || strstr($filename, "://");
