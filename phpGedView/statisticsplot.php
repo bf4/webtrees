@@ -278,7 +278,7 @@ function fill_ydata($z,$x,$val) {
 function myplot($mytitle,$n,$xdata,$xtitle,$ydata,$ytitle,$legend) {
 	global $x_as, $y_as, $z_as, $nrfam, $famgeg, $nrpers, $persgeg, $key2ind, $n1;
 	global $legend, $xdata, $ydata, $xmax, $xgrenzen, $zmax, $zgrenzen, $xgiven, $zgiven, $percentage;
-	global $pgv_lang, $SERVER_URL;
+	global $pgv_lang;
 
 	$colors= array("blue","orange","red","brown","green","yellow","pink","magenta");
 
