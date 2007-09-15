@@ -43,7 +43,7 @@ $PGV_BLOCKS["review_changes_block"]["config"]		= array(
  */
 function review_changes_block($block = true, $config="", $side, $index) {
 	global $pgv_lang, $GEDCOM, $GEDCOMS, $ctype, $SCRIPT_NAME, $QUERY_STRING, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES;
-	global $pgv_changes, $LAST_CHANGE_EMAIL, $ALLOW_EDIT_GEDCOM, $SERVER_URL, $TEXT_DIRECTION, $SHOW_SOURCES, $TIME_FORMAT, $PGV_BLOCKS;
+	global $pgv_changes, $LAST_CHANGE_EMAIL, $ALLOW_EDIT_GEDCOM, $TEXT_DIRECTION, $SHOW_SOURCES, $TIME_FORMAT, $PGV_BLOCKS;
 	global $PHPGEDVIEW_EMAIL;
 
 	if (!$ALLOW_EDIT_GEDCOM) return;
