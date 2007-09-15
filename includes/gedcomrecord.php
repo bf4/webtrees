@@ -242,9 +242,6 @@ class GedcomRecord {
 	 * @string a url that can be used to link to this person
 	 */
 	function getLinkUrl() {
-		global $GEDCOM, $SERVER_URL;
-
-		//$url = "index.php";
 		$url = "gedrecord.php?pid=".$this->xref; // no class yet for NOTE record
 		if ($this->isRemote()) {
 			$parts = preg_split("/:/", $this->rfn);
