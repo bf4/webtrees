@@ -416,10 +416,10 @@ class CalendarDate {
 		if ($this->d>0)
 			return $URL.'&amp;action=today';
 		else
-			if ($this->y==0)
-				return $URL.'&amp;action=year';
-			else
+			if ($this->m>0)
 				return $URL.'&amp;action=calendar';
+			else
+				return $URL.'&amp;action=year';
 	}
 } // class CalendarDate
 
