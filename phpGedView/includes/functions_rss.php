@@ -272,7 +272,7 @@ function getGedcomStats() {
  * @TODO prepend relative URL's in news items with $SERVER_URL
  */
 function getGedcomNews() {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $TIME_FORMAT, $VERSION, $SERVER_URL;
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $VERSION, $SERVER_URL;
 
 	$usernews = getUserNews($GEDCOM);
 

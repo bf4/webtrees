@@ -389,19 +389,19 @@ class GedcomRecord {
 	// link to ourself.
 	//////////////////////////////////////////////////////////////////////////////
 	function LastChangeTimestamp($add_url) {
-		global $TIME_FORMAT;
+		global $DATE_FORMAT, $TIME_FORMAT;
 		$chan_rec=get_sub_record(1, '1 CHAN', $this->gedrec);
 		if (empty($chan_rec))
 			return '&nbsp;';
 		$d=new GedcomDate(get_gedcom_value('DATE', 2, $chan_rec, '', false));
 		if (preg_match('/^(\d\d):(\d\d):(\d\d)$/', get_gedcom_value('DATE:TIME', 2, $chan_rec, '', false), $match)) {
-			$t=' '.date($TIME_FORMAT, mktime($match[1], $match[2], $match[3]));
+			$t=mktime($match[1], $match[2], $match[3]);
 			$sort=$d->MinJD().$match[1].$match[2].$match[3];
 		} else {
-			$t='';
+			$t=mktime(0,0,0);
 			$sort=$d->MinJD().'000000';
 		}
-		$text=$d->Display(false).$t;
+		$text=strip_tags($d->Display(false, "{$DATE_FORMAT} -", array()).date(" {$TIME_FORMAT}", $t));
 		if ($add_url)
 			$text='<a name="'.$sort.'" href="'.$this->getLinkUrl().'">'.$text.'</a>';
 		return $text;
