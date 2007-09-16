@@ -34,7 +34,7 @@ $PGV_BLOCKS["print_user_messages"]["config"]	= array("cache"=>0);
 
 //-- print user messages
 function print_user_messages($block=true, $config="", $side, $index) {
-		global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $TIME_FORMAT, $PGV_STORE_MESSAGES, $PGV_IMAGES, $usersortfields;
+		global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_STORE_MESSAGES, $PGV_IMAGES, $usersortfields;
 
 		$usermessages = getUserMessages(getUserName());
 
@@ -95,11 +95,8 @@ function print_user_messages($block=true, $config="", $side, $index) {
 				print "<td class=\"list_value_wrap\"><a href=\"javascript:;\" onclick=\"expand_layer('message$key'); return false;\"><b>".$showmsg."</b> <img id=\"message${key}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" alt=\"\" title=\"\" /></a></td>\n";
 				if (!empty($message["created"])) $time = strtotime($message["created"]);
 				else $time = time();
-				$day = date("j", $time);
-				$mon = date("M", $time);
-				$year = date("Y", $time);
 				$tempuser = getUser($message["from"]);
-				print "<td class=\"list_value_wrap\">".get_changed_date("$day $mon $year")." - ".date($TIME_FORMAT, $time)."</td>\n";
+				print "<td class=\"list_value_wrap\">".format_timestamp($time)."</td>\n";
 				print "<td class=\"list_value_wrap\">";
 				if ($tempuser) {
 					print PrintReady($tempuser["firstname"]." ".$tempuser["lastname"]);

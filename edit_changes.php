@@ -180,7 +180,7 @@ else {
 				$output .= PrintReady($cuser["firstname"]." ".$cuser["lastname"]);
 			}
  			$output .= PrintReady("&nbsp;(".$change["user"].")")."</a></td>\n";
- 			$output .= "<td class=\"list_value $TEXT_DIRECTION\">".get_changed_date(date("j M Y",$change["time"]))." ".date($TIME_FORMAT, $change["time"])."</td>\n";
+ 			$output .= "<td class=\"list_value $TEXT_DIRECTION\">".format_timestamp($change["time"])."</td>\n";
 			$output .= "<td class=\"list_value $TEXT_DIRECTION\">".$change["gedcom"]."</td>\n";
 			$output .= "</tr>\n";
 			if ($i==count($changes)-1) {
