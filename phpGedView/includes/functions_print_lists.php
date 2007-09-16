@@ -388,6 +388,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 			$rootid = $datalist[1];
 			echo "<a href=\"relationship.php?pid1=".$rootid."&amp;pid2=".$person->xref."\"".
 			" title=\"".$pgv_lang["relationship_chart"]."\"".
+			" name=\"{$sosa}\"".
 			" class=\"list_item name2\">".$sosa."</a>";
 			echo "</td>";
 		}
