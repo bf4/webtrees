@@ -43,7 +43,7 @@ $PGV_BLOCKS["review_changes_block"]["config"]		= array(
  */
 function review_changes_block($block = true, $config="", $side, $index) {
 	global $pgv_lang, $GEDCOM, $GEDCOMS, $ctype, $SCRIPT_NAME, $QUERY_STRING, $factarray, $PGV_IMAGE_DIR, $PGV_IMAGES;
-	global $pgv_changes, $LAST_CHANGE_EMAIL, $ALLOW_EDIT_GEDCOM, $TEXT_DIRECTION, $SHOW_SOURCES, $TIME_FORMAT, $PGV_BLOCKS;
+	global $pgv_changes, $LAST_CHANGE_EMAIL, $ALLOW_EDIT_GEDCOM, $TEXT_DIRECTION, $SHOW_SOURCES, $PGV_BLOCKS;
 	global $PHPGEDVIEW_EMAIL;
 
 	if (!$ALLOW_EDIT_GEDCOM) return;
@@ -97,14 +97,8 @@ function review_changes_block($block = true, $config="", $side, $index) {
 			if (userCanAccept(getUserName())) print "<a href=\"javascript:;\" onclick=\"window.open('edit_changes.php','_blank','width=600,height=500,resizable=1,scrollbars=1'); return false;\">".$pgv_lang["accept_changes"]."</a><br />\n";
 			if ($block) print "<div class=\"small_inner_block, $TEXT_DIRECTION\">\n";
 			if ($config["sendmail"]=="yes") {
-				$day = date("j", $LAST_CHANGE_EMAIL);
-				$mon = date("M", $LAST_CHANGE_EMAIL);
-				$year = date("Y", $LAST_CHANGE_EMAIL);
-				print $pgv_lang["last_email_sent"].get_changed_date("$day $mon $year")." - ".date($TIME_FORMAT, $LAST_CHANGE_EMAIL)."<br />\n";
-				$day = date("j", $LAST_CHANGE_EMAIL+(60*60*24*$config["days"]));
-				$mon = date("M", $LAST_CHANGE_EMAIL+(60*60*24*$config["days"]));
-				$year = date("Y", $LAST_CHANGE_EMAIL+(60*60*24*$config["days"]));
-				print $pgv_lang["next_email_sent"].get_changed_date("$day $mon $year")." - ".date($TIME_FORMAT, $LAST_CHANGE_EMAIL+(60*60*24*$config["days"]))."<br /><br />\n";
+				print $pgv_lang["last_email_sent"].format_timestamp($LAST_CHANGE_EMAIL)."<br />\n";
+				print $pgv_lang["next_email_sent"].format_timestamp($LAST_CHANGE_EMAIL+(60*60*24*$config["days"]))."<br /><br />\n";
 			}
 			foreach($pgv_changes as $cid=>$changes) {
 				$change = $changes[count($changes)-1];

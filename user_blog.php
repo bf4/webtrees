@@ -37,7 +37,7 @@ $PGV_BLOCKS["print_user_news"]["config"]	= array("cache"=>0);
  *
  */
 function print_user_news($block=true, $config="", $side, $index) {
-		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype, $TIME_FORMAT;
+		global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $ctype;
 
 		$uname = getUserName();
 		$usernews = getUserNews($uname);
@@ -64,7 +64,7 @@ function print_user_news($block=true, $config="", $side, $index) {
 						if (isset($pgv_lang[$match[1]])) $news["title"] = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $news["title"]);
 				}
 				print "<span class=\"news_title\">".PrintReady($news["title"])."</span><br />\n";
-				print "<span class=\"news_date\">".get_changed_date("$day $mon $year")." - ".date($TIME_FORMAT, $news["date"])."</span><br /><br />\n";
+				print "<span class=\"news_date\">".format_timestamp($news["date"])."</span><br /><br />\n";
 				$ct = preg_match("/#(.+)#/", $news["text"], $match);
 				if ($ct>0) {
 						if (isset($pgv_lang[$match[1]])) $news["text"] = preg_replace("/$match[0]/", $pgv_lang[$match[1]], $news["text"]);

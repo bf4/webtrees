@@ -43,7 +43,7 @@ $PGV_BLOCKS['print_gedcom_news']['config']		= array(
  */
 function print_gedcom_news($block = true, $config='', $side, $index)
 {
-	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $TIME_FORMAT, $VERSION, $PGV_BLOCKS;
+	global $pgv_lang, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION, $GEDCOM, $ctype, $VERSION, $PGV_BLOCKS;
 
 	if(empty($config))
 	{
@@ -126,9 +126,6 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 				break;
 			}
 		}
-		$day = date('j', $news['date']);
-		$mon = date('M', $news['date']);
-		$year = date('Y', $news['date']);
 //		print "<div class=\"person_box\" id=\"{$news['anchor']}\">\n";
 		print "<div class=\"news_box\" id=\"{$news['anchor']}\">\n";
 		
@@ -141,7 +138,7 @@ function print_gedcom_news($block = true, $config='', $side, $index)
 			}
 		}
 		print "<span class=\"news_title\">".PrintReady($newsTitle)."</span><br />\n"
-			."<span class=\"news_date\">".get_changed_date("{$day} {$mon} {$year}").' - '.date($TIME_FORMAT, $news['date'])."</span><br /><br />\n";
+			."<span class=\"news_date\">".format_timestamp($news['date'])."</span><br /><br />\n";
 			
 		// Look for $pgv_lang, $factarray, and $GLOBALS substitutions in the News text
 		$newsText = print_text($news['text'], 0, 2);
