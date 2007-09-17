@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @version $Id:$
+ * @version $Id$
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
@@ -34,6 +34,16 @@ function ordinal_suffix_fr($n) {
 	if ($n==1)
 		return 'er';
 	return 'éme';
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Localise a date. "[qualifier] date [qualifier date] [qualifier]"
+////////////////////////////////////////////////////////////////////////////////
+function date_localisation_fr(&$q1, &$d1, &$q2, &$d2, &$q3) {
+	// Years in the french republican calendar are displayed in roman numerals.
+	// They need a prefix of "an"
+	$d1=preg_replace("/(\b[IVX]+$)/", "an $1", $d1);
+	$d2=preg_replace("/(\b[IVX]+$)/", "an $1", $d2);
 }
 
 ?>
