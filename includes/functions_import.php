@@ -1181,7 +1181,7 @@ function create_placelinks_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "placelinks";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "placelinks (pl_p_id INT, pl_gid VARCHAR(255), pl_file INT, PRIMARY KEY(ps_p_id, pl_file))";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "placelinks (pl_p_id INT, pl_gid VARCHAR(255), pl_file INT, PRIMARY KEY(pl_p_id, pl_gid, pl_file))";
 	$res = dbquery($sql);
 	if (DB::isError($res)) {
 		print $pgv_lang["created_placelinks_fail"]."<br />\n";
