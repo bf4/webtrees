@@ -80,7 +80,7 @@ function ts_resortTable(lnk,clid) {
 	var table = getParent(td,'TABLE');
 
 	// PGV : confirm action for big table
-	if (table.rows.length > 300
+	if (table.rows.length > 500
 	&& !confirm("Sorting this big table may take a long time\r\nContinue ?")) {
 		lnk.style.cursor='pointer';
 		return;
@@ -139,8 +139,8 @@ function ts_pgv_sort(a,b) {
 	bkey = b.cells[SORT_COLUMN_INDEX].getElementsByTagName('a');
 	if (akey.length && akey[0].name && (bkey.length && bkey[0].name)) {
 		// use "name" value as numeric sortkey, if exists
-		aa = parseFloat(akey[0].name);
-		bb = parseFloat(bkey[0].name);
+		aa = parseInt(akey[0].name);
+		bb = parseInt(bkey[0].name);
 	} else {
 		// clean UTF8 special chars before sorting
 		aa = strclean(ts_getInnerText(a.cells[SORT_COLUMN_INDEX]).toLowerCase());

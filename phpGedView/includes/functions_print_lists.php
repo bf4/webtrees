@@ -256,7 +256,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER;
 
 	if (count($datalist)<1) return;
-	$tiny = (count($datalist)<300);
+	$tiny = (count($datalist)<=500);
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");     //added back
 	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";   //added back
 	require_once("js/sorttable.js.htm");
@@ -421,7 +421,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 			if(!empty($SEARCH_SPIDER))
 				echo $person->getNumberOfChildren();
 			else
-				echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$person->getNumberOfChildren()."</a>";
+				echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\" name=\"".$person->getNumberOfChildren()."\">".$person->getNumberOfChildren()."</a>";
 			echo "</td>";
 		}
 		//-- Death date
@@ -526,7 +526,7 @@ function print_fam_table($datalist, $legend="") {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER;
 
 	if (count($datalist)<1) return;
-	$tiny = (count($datalist)<300);
+	$tiny = (count($datalist)<=500);
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
 	require_once("js/sorttable.js.htm");
@@ -718,7 +718,7 @@ function print_fam_table($datalist, $legend="") {
 			if(!empty($SEARCH_SPIDER))
 				echo $family->getNumberOfChildren();
 			else
-				echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".$family->getNumberOfChildren()."</a>";
+				echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\" name=\"".$family->getNumberOfChildren()."\">".$family->getNumberOfChildren()."</a>";
 			echo "</td>";
 		}
 		//-- Last change
@@ -791,7 +791,7 @@ function print_sour_table($datalist, $legend="") {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	if (count($datalist)<1) return;
-	$tiny = (count($datalist)<300);
+	$tiny = (count($datalist)<=500);
 	$name_subtags = array("_HEB", "ROMN");
 	require_once("js/sorttable.js.htm");
 	require_once("includes/source_class.php");
@@ -930,7 +930,7 @@ function print_repo_table($datalist, $legend="") {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	if (count($datalist)<1) return;
-	$tiny = (count($datalist)<300);
+	$tiny = (count($datalist)<=500);
 	$name_subtags = array("_HEB", "ROMN");
 	require_once("js/sorttable.js.htm");
 	require_once("includes/repository_class.php");
