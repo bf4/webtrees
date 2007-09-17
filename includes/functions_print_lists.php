@@ -695,7 +695,7 @@ function print_fam_table($datalist, $legend="") {
 		print str_replace('<a', '<a name="'.$mdate->MinJD().'"', $mdate->Display(empty($SEARCH_SPIDER)));
 		//-- Marriage 2nd date ?
 		if (!empty($family->marr_date2)) {
-			$mdate2=new GedcomDate($person->ddate2);
+			$mdate2=new GedcomDate($family->marr_date2);
 			print '<br />'.$mdate2->Display(empty($SEARCH_SPIDER));
 		}
 		echo "</td>";
