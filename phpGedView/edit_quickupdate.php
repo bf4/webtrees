@@ -533,6 +533,19 @@ if ($action=="update") {
 				$bresn = "BRESN$i";
 				if (!empty($$bresn)) $spouserec .= "2 RESN ".$$bresn."\r\n";
 			}
+			$bdate = "DDATE$i";
+			$bplac = "DPLAC$i";
+			if (!empty($bdate)||!empty($bplac)) {
+				$spouserec .= "1 DEAT\r\n";
+				if (!empty($$bdate)) {
+					$bdate = $$bdate;
+					$bdate = check_input_date($bdate);
+					$spouserec .= "2 DATE $bdate\r\n";
+				}
+				if (!empty($$bplac)) $spouserec .= "2 PLAC ".$$bplac."\r\n";
+				$bresn = "BDRESN$i";
+				if (!empty($$bresn)) $spouserec .= "2 RESN ".$$bresn."\r\n";
+			}
 			$spouserec .= "\r\n1 FAMS @$famid@\r\n";
 			$SPID[$i] = append_gedrec($spouserec);
 		}
@@ -635,6 +648,7 @@ if ($action=="update") {
 			$csex = "";
 			if (!empty($$var)) $csex = $$var;
 			if (!empty($csex)) $childrec .= "1 SEX $csex\r\n";
+			//--child birth
 			$var = "C".$i."DATE";
 			$cdate = "";
 			if (!empty($$var)) $cdate = $$var;
@@ -647,6 +661,23 @@ if ($action=="update") {
 				if (!empty($cdate)) $childrec .= "2 DATE $cdate\r\n";
 				if (!empty($cplac)) $childrec .= "2 PLAC $cplac\r\n";
 				$var = "C".$i."RESN";
+				$cresn = "";
+				if (!empty($$var)) $cresn = $$var;
+				if (!empty($cresn)) $childrec .= "2 RESN $cresn\r\n";
+			}
+			//--child death
+			$var = "C".$i."DDATE";
+			$cdate = "";
+			if (!empty($$var)) $cdate = $$var;
+			$var = "C".$i."DPLAC";
+			$cplac = "";
+			if (!empty($$var)) $cplac = $$var;
+			if (!empty($cdate)||!empty($cplac)) {
+				$childrec .= "1 DEAT\r\n";
+				$cdate = check_input_date($cdate);
+				if (!empty($cdate)) $childrec .= "2 DATE $cdate\r\n";
+				if (!empty($cplac)) $childrec .= "2 PLAC $cplac\r\n";
+				$var = "C".$i."DRESN";
 				$cresn = "";
 				if (!empty($$var)) $cresn = $$var;
 				if (!empty($cresn)) $childrec .= "2 RESN $cresn\r\n";
@@ -674,6 +705,12 @@ if ($action=="update") {
 			if (!empty($BDATE)) $spouserec .= "2 DATE $BDATE\r\n";
 			if (!empty($BPLAC)) $spouserec .= "2 PLAC $BPLAC\r\n";
 			if (!empty($BRESN)) $spouserec .= "2 RESN $BRESN\r\n";
+		}
+		if (!empty($DDATE)||!empty($DPLAC)) {
+			$spouserec .= "1 DEAT\r\n";
+			if (!empty($DDATE)) $spouserec .= "2 DATE $DDATE\r\n";
+			if (!empty($DPLAC)) $spouserec .= "2 PLAC $DPLAC\r\n";
+			if (!empty($DRESN)) $spouserec .= "2 RESN $DRESN\r\n";
 		}
 		$xref = append_gedrec($spouserec);
 
@@ -726,6 +763,13 @@ if ($action=="update") {
 			if (!empty($CDATE)) $childrec .= "2 DATE $CDATE\r\n";
 			if (!empty($CPLAC)) $childrec .= "2 PLAC $CPLAC\r\n";
 			if (!empty($CRESN)) $childrec .= "2 RESN $CRESN\r\n";
+		}
+		if (!empty($CDDATE)||!empty($CDPLAC)) {
+			$childrec .= "1 DEAT\r\n";
+			$CDDATE = check_input_date($CDDATE);
+			if (!empty($CDDATE)) $childrec .= "2 DATE $CDDATE\r\n";
+			if (!empty($CDPLAC)) $childrec .= "2 PLAC $CDPLAC\r\n";
+			if (!empty($CDRESN)) $childrec .= "2 RESN $CDRESN\r\n";
 		}
 		$cxref = append_gedrec($childrec);
 
@@ -1038,6 +1082,7 @@ if ($action=="update") {
 			if (!empty($$var)) $csex = $$var;
 			else $csex = "";
 			if (!empty($csex)) $childrec .= "1 SEX $csex\r\n";
+			//-- child birth
 			$var = "C".$i."DATE";
 			if (!empty($$var)) $cdate = $$var;
 			else $cdate = "";
@@ -1050,6 +1095,23 @@ if ($action=="update") {
 				if (!empty($cdate)) $childrec .= "2 DATE $cdate\r\n";
 				if (!empty($cplac)) $childrec .= "2 PLAC $cplac\r\n";
 				$var = "C".$i."RESN";
+				if (!empty($$var)) $cresn = $$var;
+				else $cresn = "";
+				if (!empty($cresn)) $childrec .= "2 RESN $cresn\r\n";
+			}
+			//-- child death
+			$var = "C".$i."DDATE";
+			if (!empty($$var)) $cdate = $$var;
+			else $cdate = "";
+			$var = "C".$i."DPLAC";
+			if (!empty($$var)) $cplac = $$var;
+			else $cplac = "";
+			if (!empty($cdate)||!empty($cplac)) {
+				$childrec .= "1 DEAT\r\n";
+				$cdate = check_input_date($cdate);
+				if (!empty($cdate)) $childrec .= "2 DATE $cdate\r\n";
+				if (!empty($cplac)) $childrec .= "2 PLAC $cplac\r\n";
+				$var = "C".$i."DRESN";
 				if (!empty($$var)) $cresn = $$var;
 				else $cresn = "";
 				if (!empty($cresn)) $childrec .= "2 RESN $cresn\r\n";
@@ -1759,7 +1821,18 @@ for($i=1; $i<=count($sfams); $i++) {
 	<?php $tabkey++; ?>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
 	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="BPLAC<?php echo $i; ?>" id="bplace<?php echo $i; ?>" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="banchor1x" id="banchor1x" alt="" />
-	<?php print_findplace_link("place$f"); ?>
+	<?php print_findplace_link("bplace$i"); ?>
+	<?php $tabkey++; ?>
+	</td>
+</tr>
+<tr>
+	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["DEAT"]; ?><?php print $factarray["DATE"];?></td>
+	<td class="optionbox" colspan="3"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="DDATE<?php echo $i; ?>" id="DDATE<?php echo $i; ?>" onblur="valid_date(this);" /><?php print_calendar_popup("DDATE$i");?></td>
+	</tr>
+	<?php $tabkey++; ?>
+	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
+	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="DPLAC<?php echo $i; ?>" id="dplace<?php echo $i; ?>" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="banchor1x" id="banchor1x" alt="" />
+	<?php print_findplace_link("dplace$i"); ?>
 	<?php $tabkey++; ?>
 	</td>
 </tr>
@@ -1982,6 +2055,20 @@ if (empty($child_surname)) $child_surname = "";
 	</td>
 	<?php $tabkey++; ?>
 </tr>
+<tr>
+	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["DEAT"]; ?>
+		<?php print $factarray["DATE"];?>
+	</td>
+	<td class="optionbox" colspan="3"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="C<?php echo $i; ?>DDATE" id="C<?php echo $i; ?>DDATE" onblur="valid_date(this);" /><?php print_calendar_popup("C{$i}DDATE");?></td>
+	<?php $tabkey++; ?>
+	</tr>
+	<tr>
+	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
+	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="C<?php echo $i; ?>DPLAC" id="c<?php echo $i; ?>dplace" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="canchor1x" id="canchor1x" alt="" />
+	<?php print_findplace_link("c'.$i.'dplace"); ?>
+	</td>
+	<?php $tabkey++; ?>
+</tr>
 <?php print_quick_resn("C".$i."RESN"); ?>
 <tr><td colspan="4"><br /></td></tr>
 </table>
@@ -2053,7 +2140,22 @@ if (empty($child_surname)) $child_surname = "";
 	<?php $tabkey++; ?>
 	</td>
 </tr>
-<?php print_quick_resn("BRESN"); 
+<?php print_quick_resn("BRESN"); ?>
+<tr>
+	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["DEAT"]; ?>
+		<?php print $factarray["DATE"];?>
+	</td>
+	<td class="optionbox" colspan="3"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="DDATE" id="DDATE" onblur="valid_date(this);" /><?php print_calendar_popup("DDATE");?></td>
+	</tr>
+	<?php $tabkey++; ?>
+	<tr>
+	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
+	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="DPLAC" id="dplace" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="banchor1x" id="banchor1x" alt="" />
+	<?php print_findplace_link("dplace"); ?>
+	<?php $tabkey++; ?>
+	</td>
+</tr>
+<?php print_quick_resn("DRESN"); 
 
 // NOTE: Marriage
 ?>
@@ -2138,6 +2240,21 @@ if (empty($child_surname)) $child_surname = "";
 	<?php $tabkey++; ?>
 </tr>
 <?php print_quick_resn("CRESN"); ?>
+<tr>
+	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["DEAT"]; ?>
+		<?php print $factarray["DATE"];?>
+	</td>
+	<td class="optionbox" colspan="3"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="CDDATE" id="CDDATE" onblur="valid_date(this);" /><?php print_calendar_popup("CDDATE");?></td>
+	</tr>
+	<?php $tabkey++; ?>
+	<tr>
+	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
+	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="CDPLAC" id="cdplace" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="canchor2x" id="canchor2x" alt="" />
+	<?php print_findplace_link("cdplace"); ?>
+	</td>
+	<?php $tabkey++; ?>
+</tr>
+<?php print_quick_resn("CDRESN"); ?>
 </table>
 </div>
 
@@ -2614,6 +2731,21 @@ $chil = find_children_in_record($famrec, $pid);
 	<?php $tabkey++; ?>
 </tr>
 <?php print_quick_resn("C".$i."RESN"); ?>
+<tr>
+	<td class="descriptionbox"><?php print_help_link("def_gedcom_date_help", "qm"); print $factarray["DEAT"]; ?>
+		<?php print $factarray["DATE"];?>
+	</td>
+	<td class="optionbox" colspan="3"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="C<?php echo $i; ?>DDATE" id="C<?php echo $i; ?>DDATE" onblur="valid_date(this);" /><?php print_calendar_popup("C{$i}DDATE");?></td>
+	</tr>
+	<?php $tabkey++; ?>
+	<tr>
+	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
+	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="C<?php echo $i; ?>DPLAC" id="c<?php echo $i; ?>dplace" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="canchor3x" id="canchor3x" alt="" />
+	<?php print_findplace_link("c'.$i.'dplace"); ?>
+	</td>
+	<?php $tabkey++; ?>
+</tr>
+<?php print_quick_resn("C".$i."DRESN"); ?>
 </table>
 </div>
 	<?php
