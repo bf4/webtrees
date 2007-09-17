@@ -3044,7 +3044,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $MULTI_LETTER_ALPHABET, $digraph, $trigraph, $quadgraph, $digraphAll, $trigraphAll, $quadgraphAll;
 	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $UCDiacritOrder, $LCDiacritWhole, $LCDiacritStrip, $LCDiacritOrder;
 	global $unknownNN, $unknownPN;
-	global $JEWISH_ASHKENAZ_PRONUNCIATION;
+	global $JEWISH_ASHKENAZ_PRONUNCIATION, $CALENDAR_FORMAT;
 
 	if (!isset($pgv_language[$desiredLanguage])) $desiredLanguage = "english";
 	$username = getUserName();
@@ -3153,6 +3153,12 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 			$pgv_lang['csh']='Cheshvan';
 			$pgv_lang['tvt']='Teves';
 			break;
+	}
+
+	// Special formatting options; R selects conversion to french republican calendar.
+	if (strpos($DATE_FORMAT, 'R')!==false) {
+		$CALENDAR_FORMAT='frenchr';
+  	$DATE_FORMAT=trim(str_replace('R', '', $DATE_FORMAT));
 	}
 
 /**
