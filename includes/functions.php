@@ -3157,7 +3157,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 
 	// Special formatting options; R selects conversion to french republican calendar.
 	if (strpos($DATE_FORMAT, 'R')!==false) {
-		$CALENDAR_FORMAT='frenchr';
+		$CALENDAR_FORMAT='french';
   	$DATE_FORMAT=trim(str_replace('R', '', $DATE_FORMAT));
 	}
 
