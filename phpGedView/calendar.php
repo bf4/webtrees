@@ -273,7 +273,7 @@ if ($view!='preview') {
 	else
 		print " | <a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action=year\">{$pgv_lang['viewyear']}</a>";
 
-	foreach (array('gregorian', 'julian', 'jewish', 'frenchr', 'hijri') as $newcal) {
+	foreach (array('gregorian', 'julian', 'jewish', 'french', 'hijri') as $newcal) {
 		$tmp=$cal_date->convert_to_cal($newcal);
 		if ($tmp->InValidRange())
 			if ($tmp->CALENDAR_ESCAPE==$cal_date->CALENDAR_ESCAPE)

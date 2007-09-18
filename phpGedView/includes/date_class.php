@@ -185,7 +185,7 @@ class CalendarDate {
 		case 'julian':        return new JulianDate($this);
 		case 'jewish':        return new JewishDate($this);
 		case 'hebrew':        return new HebrewDate($this);
-		case 'frenchr':       return new FrenchRDate($this);
+		case 'french':        return new FrenchRDate($this);
 		case 'hijri':         return new HijriDate($this);
 		case 'arabic':        return new ArabicDate($this);
 		default:
