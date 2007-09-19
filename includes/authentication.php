@@ -576,8 +576,6 @@ function checkTableExists() {
 		alter table pgv_users drop column u_lastname;
 		 */
 		$res = dbquery($sql);
-		$sql = "CREATE INDEX users_username ON ".$TBLPREFIX."users (u_username)";
-		$res = dbquery($sql);
 	} else {
 		if (!$has_email) {
 			$sql = "ALTER TABLE ".$TBLPREFIX."users ADD u_email TEXT";
