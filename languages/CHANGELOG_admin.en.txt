@@ -39,6 +39,18 @@ Additional codes, to help Translators, follow the date as follows:
 The above list of codes may be amended as new situations arise.
 For massive changes, the variable names should be listed in the order in which they
 occur in the respective language files.
+
+VERSION 4.1
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+-----------------------------------------------------------------------------------------
++$pgv_lang["remove_all_files"]						19 Sep 2007				A
++$pgv_lang["warn_file_delete"]						19 Sep 2007				A
++$pgv_lang["deleted_files"]          				19 Sep 2007				A
++$pgv_lang["index_dir_cleanup_inst"]				19 Sep 2007				A
++$pgv_lang["index_dir_cleanup"]						19 Sep 2007				A
+
+
 VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
