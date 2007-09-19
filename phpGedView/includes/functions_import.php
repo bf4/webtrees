@@ -1306,7 +1306,7 @@ function create_media_table() {
 	}
 	$sql = "CREATE INDEX m_media ON " . $TBLPREFIX . "media (m_media)";
 	$res = dbquery($sql);
-	$sql = "CREATE INDEX m_media_id ON " . $TBLPREFIX . "media (m_media)";
+	$sql = "CREATE INDEX m_media_file ON " . $TBLPREFIX . "media (m_media, m_gedfile)";
 	$res = dbquery($sql);
 	if (isset($DEBUG) && $DEBUG==true) "Successfully created media table.<br />\n";
 }
@@ -1364,9 +1364,9 @@ function create_media_mapping_table() {
 		print $pgv_lang["created_media_mapping_fail"] . "<br />\n";
 		exit;
 	}
-	$sql = "CREATE INDEX mm_media_id ON " . $TBLPREFIX . "media_mapping (mm_media)";
+	$sql = "CREATE INDEX mm_media_id ON " . $TBLPREFIX . "media_mapping (mm_media, mm_gedfile)";
 	$res = dbquery($sql);
-	$sql = "CREATE INDEX mm_media_gid ON " . $TBLPREFIX . "media_mapping (mm_gid)";
+	$sql = "CREATE INDEX mm_media_gid ON " . $TBLPREFIX . "media_mapping (mm_gid, mm_gedfile)";
 	$res = dbquery($sql);
 	$sql = "CREATE INDEX mm_media_gedfile ON " . $TBLPREFIX . "media_mapping (mm_gedfile)";
 	$res = dbquery($sql);
