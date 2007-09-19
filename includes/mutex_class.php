@@ -56,11 +56,13 @@ class Mutex {
 		if (!Mutex::checkDBCONN()) return false;
 		$this->name = $name;
 		//-- check if this mutex already exists
-		$sql = "SELECT * FROM ".$TBLPREFIX."mutex WHERE mx_name='".$DBCONN->escapeSimple($name)."'";
-		$res = dbquery($sql);
+		$sql="SELECT 1 FROM {$TBLPREFIX}mutex WHERE mx_name='".$DBCONN->escapeSimple($name)."'";
+		$res=dbquery($sql);
+		$num_rows=$res->numRows();
+		$res->free();
 		//-- mutex doesn't exist so create it
-		if ($res->numRows()==0) {
-			$sql = "INSERT INTO ".$TBLPREFIX."mutex (mx_id, mx_name, mx_thread) VALUES (".get_next_id("mutex", "mx_id").", '".$DBCONN->escapeSimple($this->name)."', '0')";
+		if ($num_rows==0) {
+			$sql = "INSERT INTO {$TBLPREFIX}mutex (mx_id, mx_name, mx_thread) VALUES (".get_next_id("mutex", "mx_id").", '".$DBCONN->escapeSimple($this->name)."', '0')";
 			$res = dbquery($sql);
 		}
 		$this->waitCount = 0;
@@ -83,7 +85,7 @@ class Mutex {
 			//-- do not allow a thread to hold the mutex for more than 5 minutes (300 secs), should not be a problem with PHP
 			//--- this will allow another thread to access the mutex if another thread that held it crashed
 			//-- allow the same session to get the mutex more than once
-			$sql = "SELECT * FROM ".$TBLPREFIX."mutex WHERE mx_name='".$DBCONN->escapeSimple($this->name)."' AND (mx_thread='0' OR mx_thread='".session_id()."' OR mx_time < ".(time()-300).")";
+			$sql = "SELECT 1 FROM {$TBLPREFIX}mutex WHERE mx_name='".$DBCONN->escapeSimple($this->name)."' AND (mx_thread='0' OR mx_thread='".session_id()."' OR mx_time < ".(time()-300).")";
 			$res = dbquery($sql);
 			if ($res->numRows() > 0) {
 				$available = true;
@@ -95,9 +97,10 @@ class Mutex {
 				$this->waitCount++;
 				sleep(1);
 			}
+			$res->free();
 		}
 		
-		$sql = "UPDATE ".$TBLPREFIX."mutex SET mx_time=".time().", mx_thread='".session_id()."' WHERE mx_name='".$DBCONN->escapeSimple($this->name)."'";
+		$sql = "UPDATE {$TBLPREFIX}mutex SET mx_time=".time().", mx_thread='".session_id()."' WHERE mx_name='".$DBCONN->escapeSimple($this->name)."'";
 		$res = dbquery($sql);
 		return true;
 	}
@@ -111,7 +114,7 @@ class Mutex {
 		
 		if (!Mutex::checkDBCONN()) return false;
 		
-		$sql = "UPDATE ".$TBLPREFIX."mutex SET mx_time=0, mx_thread='0' WHERE mx_name='".$DBCONN->escapeSimple($this->name)."' AND mx_thread='".session_id()."'";
+		$sql = "UPDATE {$TBLPREFIX}mutex SET mx_time=0, mx_thread='0' WHERE mx_name='".$DBCONN->escapeSimple($this->name)."' AND mx_thread='".session_id()."'";
 		$res = dbquery($sql);
 		$this->waitCount = 0;
 //		print "releasing mutex ".$this->name;

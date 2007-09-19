@@ -89,6 +89,7 @@ class IndividualControllerRoot extends BaseController {
 	 */
 	function init() {
 		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $CHARACTER_SET;
+		global $USE_QUICK_UPDATE;
 
 		$this->sexarray["M"] = $pgv_lang["male"];
 		$this->sexarray["F"] = $pgv_lang["female"];
@@ -226,7 +227,7 @@ class IndividualControllerRoot extends BaseController {
 		//-- only allow editors or users who are editing their own individual or their immediate relatives
 		if ($this->indi->canDisplayDetails()) {
 			$this->canedit = userCanEdit($this->uname);
-			if (!$this->canedit) {
+			if (!$this->canedit && $USE_QUICK_UPDATE) {
 				if (!empty($this->user["gedcomid"][$GEDCOM])) {
 					if ($this->pid==$this->user["gedcomid"][$GEDCOM]) $this->canedit=true;
 					else {
@@ -598,8 +599,10 @@ class IndividualControllerRoot extends BaseController {
 			}
 		}
 		//-- get the link for the first submenu and set it as the link for the main menu
-		$link  = $menu->submenus[0]->onclick;
-		$menu->addOnclick($link);
+		if (isset($menu->submenus[0])) {
+			$link  = $menu->submenus[0]->onclick;
+			$menu->addOnclick($link);
+		}
 		return $menu;
 	}
 	/**

@@ -1273,8 +1273,8 @@ function addMessage($message) {
 				$from = $admuser["email"];
 			}
 			if (!$fUser) $header2 = $PHPGEDVIEW_EMAIL;
-			else $header2 = $to;
-			pgvMail($from, $header2, $subject2, $email2);
+			else if (isset($to)) $header2 = $to;
+			if (!empty($header2)) pgvMail($from, $header2, $subject2, $email2);
 		}
 	}
 

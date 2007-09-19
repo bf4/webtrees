@@ -46,7 +46,7 @@ function print_todays_events($block=true, $config="", $side, $index) {
 
   $block = true;      // Always restrict this block's height
 
-	$todayjd=today_jd();
+	$todayjd=client_jd();
 
   if (empty($config)) $config = $PGV_BLOCKS["print_todays_events"]["config"];
   if (isset($config["filter"])) $filter = $config["filter"];  // "living" or "all"

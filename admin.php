@@ -268,9 +268,9 @@ function showchanges() {
 				print $pgv_lang["administration"];
 				print "</h2>";
 				print $pgv_lang["system_time"];
-				print " ".get_changed_date(date("j M Y"))." - ".date($TIME_FORMAT);
+				print " ".format_timestamp(time());
 				print "<br />".$pgv_lang["user_time"];
-				print " ".get_changed_date(date("j M Y", client_time()))." - ".date($TIME_FORMAT, client_time());
+				print " ".format_timestamp();
 				if (userIsAdmin(getUserName())) {
 			if ($err_write) {
 				print "<br /><span class=\"error\">";

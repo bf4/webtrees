@@ -257,7 +257,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER;
 
 	if (count($datalist)<1) return;
-	$tiny = (count($datalist)<300);
+	$tiny = (count($datalist)<=500);
 	if ($option=="MARR_PLAC") return;
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 	if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
@@ -292,7 +292,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 	print "<button type=\"button\" class=\"TREE_L\" title=\"".$pgv_lang["button_TREE_L"]."\" >";
 	print $pgv_lang["leaves"]."</button> ";
 	print "<br />";
-	$y100 = get_changed_date(date('Y')-100);
 	print "<button type=\"button\" class=\"BIRT_YES\" title=\"".$pgv_lang["button_BIRT_YES"]."\" >";
 	print $factarray["BIRT"]."&gt;100</button> ";
 	print "<button type=\"button\" class=\"BIRT_Y100\" title=\"".$pgv_lang["button_BIRT_Y100"]."\" >";
@@ -328,6 +327,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	print "<tbody>\n";
 	$hidden = 0;
 	$n = 0;
+	$d100y=new GedcomDate(date('Y')-100);  // 100 years ago
 	$dateY = date("Y");
 	$today_jd = GregorianToJD(date('m'), date('d'), date('Y'));
 	foreach($datalist as $key => $value) {
@@ -399,43 +399,32 @@ function print_indi_table($datalist, $legend="", $option="") {
 				if (empty($addname)) break;
 			}
 		}
-		print "</td>";
+
+		echo "</td>";
+		//-- SOSA
+		if ($option=="sosa") {
+			echo "<td class=\"list_value_wrap\">";
+			$sosa = $key;
+			$rootid = $datalist[1];
+			echo "<a href=\"relationship.php?pid1=".$rootid."&amp;pid2=".$person->xref."\"".
+			" title=\"".$pgv_lang["relationship_chart"]."\"".
+			" name=\"{$sosa}\"".
+			" class=\"list_item name2\">".$sosa."</a>";
+			echo "</td>";
+		}
 		//-- Birth date
 		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		if (empty($SEARCH_SPIDER)) {
-			$bsortkey = parse_date($person->getBirthDate(false));
-			$bsortkey = $bsortkey[0]['jd1'];
-			$txt=str_replace('<a', '<a name="'.$bsortkey.'"', get_date_url($person->getBirthDate(false)));
-		} else {
-			$txt=get_changed_date($person->getBirthDate(false));
-		}
-		if (empty($txt))
-			print $txt='<a name="0">&nbsp;</a>';
-		else
-			print $txt;
+		$bdate=new GedcomDate($person->getBirthDate(false));
+		print str_replace('<a', '<a name="'.$bdate->MinJD().'"', $bdate->Display(empty($SEARCH_SPIDER)));
 		//-- Birth 2nd date ?
 		if (!empty($person->bdate2)) {
-			if (empty($SEARCH_SPIDER)) {
-				$txt=get_date_url($person->bdate2);
-			} else {
-				$txt=get_changed_date($person->bdate2);
-			}
-			if (empty($txt))
-				print '&nbsp;';
-			else
-				print '<br />'.$txt;
+			$bdate2=new GedcomDate($person->bdate2);
+			print '<br />'.$bdate2->Display(empty($SEARCH_SPIDER));
 		}
 		print "</td>";
 		//-- Birth anniversary
-		if ($tiny) {
-			print "<td class=\"list_value_wrap rela\">";
-			$age=$person->getAge("", date("d M Y"));
-			if ($age)
-				print $age;
-			else
-				print "&nbsp;";
-			print "</td>";
-		}
+		if ($tiny)
+			echo "<td class=\"list_value_wrap rela\"><span class=\"age\">".$bdate->GetAge(false)."</a></td>";
 		//-- Birth place
 		print "<td class=\"list_value_wrap\" align=\"".get_align($person->getBirthPlace())."\">";
 		if(!empty($SEARCH_SPIDER)) {
@@ -452,63 +441,35 @@ function print_indi_table($datalist, $legend="", $option="") {
 			if(!empty($SEARCH_SPIDER))
 				print $person->getNumberOfChildren();
 			else
-				print "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$person->getNumberOfChildren()."</a>";
+				print "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\" name=\"".$person->getNumberOfChildren()."\">".$person->getNumberOfChildren()."</a>";
 			print "</td>";
 		}
 		//-- Death date
 		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		if (empty($SEARCH_SPIDER)) {
-			$dsortkey = parse_date($person->getDeathDate(false));
-			$dsortkey = $dsortkey[0]['jd1'];
-			$txt=str_replace('<a', '<a name="'.$dsortkey.'"', get_date_url($person->getDeathDate(false)));
-		} else {
-			$txt=get_changed_date($person->getDeathDate(false));
-		}
-		if (empty($txt))
-			print '<a name="0">&nbsp;</a>';
-		else
-			print $txt;
+		$ddate=new GedcomDate($person->getDeathDate(false));
+		print str_replace('<a', '<a name="'.$ddate->MaxJD().'"', $ddate->Display(empty($SEARCH_SPIDER)));
 		//-- Death 2nd date ?
 		if (!empty($person->ddate2)) {
-			if (empty($SEARCH_SPIDER)) {
-				$txt=get_date_url($person->ddate2);
-			} else {
-				$txt=get_changed_date($person->ddate2);
-			}
-			if (empty($txt))
-				print '&nbsp;';
-			else
-				print '<br />'.$txt;
+			$ddate2=new GedcomDate($person->ddate2);
+			print '<br />'.$ddate2->Display(empty($SEARCH_SPIDER));
 		}
 		print "</td>";
 		//-- Death anniversary
 		if ($tiny) {
 			print "<td class=\"list_value_wrap rela\">";
-			if ($person->isDead() && !$person->dest)
-				$age=$person->getAge("\n1 BIRT\n2 DATE ".$person->ddate."\n", date("d M Y"));
-			else
-				$age='';
-			if ($age)
-				print $age;
-			else
-				print '&nbsp;';
+			if ($person->isDead() && !$person->dest) {
+				echo "<span class=\"age\">".$ddate->GetAge(false)."</a>";
+			} else
+				echo "&nbsp;";
 			print '</td>';
 		}
 		//-- Age at death
 		print "<td class=\"list_value_wrap\">";
-		if ($person->isDead() && !$person->dest)
-			$age=$person->getAge();
+		if ($person->isDead() && !$person->dest && $bdate->MinJD()>0)
+			echo "<a name=\"".($ddate->MaxJD()-$bdate->MinJD())."\" class=\"list_item age\">".$bdate->GetAge(false, $ddate->MaxJD())."</a>";
 		else
-			$age = "&nbsp;";
-		if (empty($SEARCH_SPIDER)) {
-			if ($dsortkey==0 || $bsortkey==0) // age in days for sorting
-				$sortkey=0;
-			else
-			$sortkey=$dsortkey-$bsortkey;
-			print "<a href=\"".$person->getLinkUrl()."\" name=\"{$sortkey}\" class=\"list_item\">".$age."</a>";
-		} else
-			print $age;
-		print "</td>";
+			echo "&nbsp;";
+		echo "</td>";
 		//-- Death place
 		print "<td class=\"list_value_wrap\" align=\"".get_align($person->getDeathPlace())."\">";
 		if(!empty($SEARCH_SPIDER)) {
@@ -520,34 +481,28 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		print "&nbsp;</td>";
 		//-- Last change
-		if ($tiny && $SHOW_LAST_CHANGE) {
-			print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-			$timestamp = get_changed_date($person->getLastchangeDate())." ".get_gedcom_value("DATE:TIME", 2, $person->getLastchangeRecord());
-			if(!empty($SEARCH_SPIDER)) {
-				print $timestamp;
-			}
-			else {
-				print "<a href=\"".$person->getLinkUrl()."\"".
-				" class=\"list_item\">".$timestamp."</a>";
-			}
-			print "&nbsp;</td>";
-		}
+		if ($tiny && $SHOW_LAST_CHANGE)
+			print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">".$person->LastChangeTimestamp(empty($SEARCH_SPIDER))."</td>";
 		//-- Sorting by gender
 		print "<td style=\"display:none\">";
 		print $person->getSex();
 		print "</td>";
-		//-- Sorting by birth date
-		print "<td style=\"display:none\">";
-		if (!$person->disp || $person->getBirthYear()>=$dateY-100) print "Y100";
-		else print "YES";
-		print "</td>";
-		//-- Sorting by death date
+		//-- Filtering by birth date
+		echo "<td style=\"display:none\">";
+		if (!$person->disp || GedcomDate::Compare($bdate, $d100y)>0)
+			echo "Y100";
+		else
+			echo "YES";
+		echo "</td>";
+		//-- Filtering by death date
 		print "<td style=\"display:none\">";
 		if ($person->isDead()) {
-			if ($person->getDeathYear()>=$dateY-100) print "Y100";
-			else print "YES";
-		}
-		else print "N";
+			if (GedcomDate::Compare($ddate, $d100y)>0)
+				echo "Y100";
+			else
+				echo "YES";
+		} else
+			echo "N";
 		echo "</td>";
 		//-- Roots or Leaves ?
 		echo "<td style=\"display:none\">";
@@ -593,7 +548,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SEARCH_SPIDER;
 
 	if (count($datalist)<1) return;
-	$tiny = (count($datalist)<300);
+	$tiny = (count($datalist)<=500);
 	if ($option=="BIRT_PLAC" || $option=="DEAT_PLAC") return;
 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 	//if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
@@ -622,7 +577,6 @@ function print_fam_table($datalist, $legend="", $option="") {
 	echo "<button type=\"button\" class=\"TREE_L\" title=\"".$pgv_lang["button_TREE_L"]."\" >";
 	echo $pgv_lang["leaves"]."</button> ";
 	echo "<br />";
-	$y100 = get_changed_date(date('Y')-100);
 	echo "<button type=\"button\" class=\"MARR_U\" title=\"".$pgv_lang["button_MARR_U"]."\" >";
 	echo $factarray["MARR"]." ?</button> ";
 	echo "<button type=\"button\" class=\"MARR_YES\" title=\"".$pgv_lang["button_MARR_YES"]."\" >";
@@ -657,6 +611,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 	echo "<tbody>\n";
 	$hidden = 0;
 	$n = 0;
+	$d100y=new GedcomDate(date('Y')-100);  // 100 years ago
 	foreach($datalist as $key => $value) {
 		if (!is_array($value)) {
 			$family = Family::getInstance($key); // from placelist
@@ -726,20 +681,13 @@ function print_fam_table($datalist, $legend="", $option="") {
 		echo "</td>";
 		//-- Husband age
 		echo "<td class=\"list_value_wrap\">";
-		$age = "";
-		$sortkey = "";
-		if ($family->getMarriageDate() && !$family->marr_est) {
-			$age = $husb->getAge("", $family->getMarriageDate());
-			$hsortkey = parse_date($husb->getBirthDate(false));
-			$hsortkey = $hsortkey[0]['jd1'];
-			$msortkey = parse_date($family->getMarriageDate());
-			$msortkey = $msortkey[0]['jd1'];
-			$sortkey = ($msortkey-$hsortkey)." ".$pgv_lang["days"];
-		}
-		if(!empty($SEARCH_SPIDER))
-			echo $age;
+		$mdate=new GedcomDate($family->getMarriageDate());
+		$hdate=new GedcomDate($husb->GetBirthDate());
+		$hage =$hdate->GetAge(false, $mdate->MinJD());
+		if (empty($hage))
+			print "&nbsp;";
 		else
-			echo "<a href=\"".$husb->getLinkUrl()."\" title=\"".sprintf("%02d",$age)."\" class=\"list_item\">".$age."</a>";
+			print "<a name=\"{$hage}\" class=\"list_item age\">{$hage}</a>";
 		echo "</td>";
 		//-- Wife ID
 		if ($SHOW_ID_NUMBERS) {
@@ -755,11 +703,6 @@ function print_fam_table($datalist, $legend="", $option="") {
 		echo " align=\"".get_align($name)."\">";
 		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($tiny && $wife->xref) echo $wife->getSexImage();
-
-//		for($ni=1; $ni<=$wife->getNameCount(); $ni++) {
-//			$addname = $wife->getSortableName('', $ni);
-//			if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-//		}
  		foreach ($name_subtags as $k=>$subtag) {
  			for ($num=1; $num<9; $num++) {
  				$addname = $wife->getSortableName($subtag, $num);
@@ -770,62 +713,25 @@ function print_fam_table($datalist, $legend="", $option="") {
 		echo "</td>";
 		//-- Wife age
 		echo "<td class=\"list_value_wrap\">";
-		$age = "";
-		$sortkey = "";
-		if ($family->getMarriageDate() && !$family->marr_est) {
-			$age = $wife->getAge("", $family->getMarriageDate());
-			$wsortkey = parse_date($wife->getBirthDate(false));
-			$wsortkey = $wsortkey[0]['jd1'];
-			$sortkey = ($msortkey-$wsortkey)." ".$pgv_lang["days"];
-		}
-		if(!empty($SEARCH_SPIDER))
-		echo $age;
+		$wdate=new GedcomDate($wife->GetBirthDate());
+		$wage =$wdate->GetAge(false, $mdate->MinJD());
+		if (empty($wage))
+			print "&nbsp;";
 		else
-		echo "<a href=\"".$wife->getLinkUrl()."\" title=\"".sprintf("%02d",$age)."\" class=\"list_item\">".$age."</a>";
+			print "<a name=\"{$wage}\" class=\"list_item age\">{$wage}</a>";
 		echo "</td>";
 		//-- Marriage date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		if (empty($SEARCH_SPIDER)) {
-			$msortkey=parse_date($family->getMarriageDate());
-			$msortkey=$msortkey[0]['jd1'];
-			$txt=str_replace('<a', '<a name="'.$msortkey.'"', get_date_url($family->getMarriageDate()));
-		} else {
-			$txt=get_changed_date($family->getMarriageDate());
-			echo "&nbsp; ".$txt;
-		}
-		if (empty($txt))
-			if (empty($family->marr_rec))
-				print '<a name="0"/></a>&nbsp;';
-			else
-				print '<a name="1"/></a>'.$pgv_lang["yes"];
-		else
-			print $txt;
+		print str_replace('<a', '<a name="'.$mdate->MinJD().'"', $mdate->Display(empty($SEARCH_SPIDER)));
 		//-- Marriage 2nd date ?
 		if (!empty($family->marr_date2)) {
-			if (empty($SEARCH_SPIDER)) {
-				$txt=get_date_url($family->marr_date2);
-			} else {
-				$txt=get_changed_date($family->marr_date2);
-			}
-			if (empty($txt))
-				print '&nbsp;';
-			else
-				print '<br />'.$txt;
+			$mdate2=new GedcomDate($family->marr_date2);
+			print '<br />'.$mdate2->Display(empty($SEARCH_SPIDER));
 		}
 		echo "</td>";
 		//-- Marriage anniversary
-		if ($tiny) {
-			echo "<td class=\"list_value_wrap rela\">";
-			if ($family->marr_est)
-				$age='';
-			else
-				$age = $husb->getAge("\n1 BIRT\n2 DATE ".$family->marr_date."\n", date("d M Y"));
-			if ($age)
-				echo $age;
-			else
-				echo "&nbsp;";
-			echo "</td>";
-		}
+		if ($tiny)
+			echo "<td class=\"list_value_wrap rela\"><span class=\"age\">".$mdate->GetAge(false)."</a></td>";
 		//-- Marriage place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($family->getMarriagePlace())."\">";
 		if(!empty($SEARCH_SPIDER)) {
@@ -842,25 +748,23 @@ function print_fam_table($datalist, $legend="", $option="") {
 			if(!empty($SEARCH_SPIDER))
 				echo $family->getNumberOfChildren();
 			else
-				echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".$family->getNumberOfChildren()."</a>";
+				echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\" name=\"".$family->getNumberOfChildren()."\">".$family->getNumberOfChildren()."</a>";
 			echo "</td>";
 		}
 		//-- Last change
-		if ($tiny && $SHOW_LAST_CHANGE) {
-			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-			$changedate=$family->getLastchangeDate();
-			$changetime=get_gedcom_value("DATE:TIME", 2, $family->getLastchangeRecord());
-			$timestamp = get_changed_date($changedate)." ".$changetime;
-			$tmp=parse_date($changedate);
-			$sortkey=$tmp[0]['jd1'].preg_replace('/[^\d]/', '', $changetime);
-			echo "<a href=\"".$family->getLinkUrl()."\" name=\"{$sortkey}\" class=\"list_item\">{$timestamp}</a></td>";
-		}
+		if ($tiny && $SHOW_LAST_CHANGE)
+			print '<td class="'.strrev($TEXT_DIRECTION).' list_value_wrap rela">'.$family->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
 		//-- Sorting by marriage date
 		echo "<td style=\"display:none\">";
-		if (!$family->disp || $family->getMarriageRecord()=="" || $family->getMarriageYear()=="0000") echo "U";
-		else if ($family->getMarriageYear()>=date('Y')-100) echo "Y100";
-		else echo "YES";
-		if ($family->isDivorced()) echo " DIV";
+		if (!$family->disp || $mdate->MinJD()==0)
+			echo "U";
+		else
+			if (GedcomDate::Compare($mdate, $d100y)>0)
+				echo "Y100";
+			else
+				echo "YES";
+		if ($family->isDivorced())
+			echo " DIV";
 		echo "</td>";
 		//-- Sorting alive/dead
 		echo "<td style=\"display:none\">";
@@ -918,6 +822,7 @@ function print_sour_table($datalist, $legend="") {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	if (count($datalist)<1) return;
+	$tiny = (count($datalist)<=500);
 	$name_subtags = array("_HEB", "ROMN");
 	require_once("js/sorttable.js.htm");
 	require_once("includes/source_class.php");
@@ -942,7 +847,7 @@ function print_sour_table($datalist, $legend="") {
 		echo "<th class=\"list_label\">".$pgv_lang["families"]."</th>";
 		echo "<th class=\"list_label\">".$pgv_lang["media"]."</th>";
 	}
-	if ($SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
+	if ($tiny && $SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
 	echo "</tr></thead>\n";
 	//-- table body
 	echo "<tbody>\n";
@@ -1014,16 +919,8 @@ function print_sour_table($datalist, $legend="") {
 			echo "</td>";
 		}
 		//-- Last change
-		if ($SHOW_LAST_CHANGE) {
-			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-			$changedate=$source->getLastchangeDate();
-			$changetime=get_gedcom_value("DATE:TIME", 2, $source->getLastchangeRecord());
-			$timestamp = get_changed_date($changedate)." ".$changetime;
-			$tmp=parse_date($changedate);
-			$sortkey=$tmp[0]['jd1'].preg_replace('/[^\d]/', '', $changetime);
-			echo "<a href=\"".$source->getLinkUrl()."\" name=\"{$sortkey}\" class=\"list_item\">{$timestamp}</a></td>";
-		}
-
+		if ($tiny && $SHOW_LAST_CHANGE)
+			print '<td class="'.strrev($TEXT_DIRECTION).' list_value_wrap rela">'.$source->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
 		echo "</tr>\n";
 	}
 	echo "</tbody>\n";
@@ -1044,7 +941,7 @@ function print_sour_table($datalist, $legend="") {
 		echo "<td></td>";
 		echo "<td></td>";
 	}
-	if ($SHOW_LAST_CHANGE) echo "<td></td>";
+	if ($tiny && $SHOW_LAST_CHANGE) echo "<td></td>";
 	echo "</tr></tfoot>";
 	echo "</table>\n";
 	echo "</fieldset>\n";
@@ -1073,6 +970,7 @@ function print_repo_table($datalist, $legend="") {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 
 	if (count($datalist)<1) return;
+	$tiny = (count($datalist)<=500);
 	$name_subtags = array("_HEB", "ROMN");
 	require_once("js/sorttable.js.htm");
 	require_once("includes/repository_class.php");
@@ -1088,7 +986,7 @@ function print_repo_table($datalist, $legend="") {
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">REPO</th>";
 	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["sources"]."</th>";
-	if ($SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
+	if ($tiny && $SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
 	echo "</tr></thead>\n";
 	//-- table body
 	echo "<tbody>\n";
@@ -1134,16 +1032,8 @@ function print_repo_table($datalist, $legend="") {
 		echo "<a href=\"".$repo->getLinkUrl()."\" class=\"list_item\">".count($repo->getRepositorySours())."</a>";
 		echo "</td>";
 		//-- Last change
-		if ($SHOW_LAST_CHANGE) {
-			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-			$changedate=$repo->getLastchangeDate();
-			$changetime=get_gedcom_value("DATE:TIME", 2, $repo->getLastchangeRecord());
-			$timestamp = get_changed_date($changedate)." ".$changetime;
-			$tmp=parse_date($changedate);
-			$sortkey=$tmp[0]['jd1'].preg_replace('/[^\d]/', '', $changetime);
-			echo "<a href=\"".$repo->getLinkUrl()."\" name=\"{$sortkey}\" class=\"list_item\">{$timestamp}</a></td>";
-		}
-
+		if ($tiny && $SHOW_LAST_CHANGE)
+			print '<td class="'.strrev($TEXT_DIRECTION).' list_value_wrap rela">'.$repo->LastChangeTimestamp(empty($SEARCH_SPIDER)).'</td>';
 		echo "</tr>\n";
 	}
 	echo "</tbody>\n";
@@ -1233,16 +1123,8 @@ function print_media_table($datalist, $legend="") {
 			echo "</td>";
 		}
 		//-- Last change
-		if ($SHOW_LAST_CHANGE) {
-			echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-			$changedate=$media->getLastchangeDate();
-			$changetime=get_gedcom_value("DATE:TIME", 2, $media->getLastchangeRecord());
-			$timestamp = get_changed_date($changedate)." ".$changetime;
-			$tmp=parse_date($changedate);
-			$sortkey=$tmp[0]['jd1'].preg_replace('/[^\d]/', '', $changetime);
-			echo "<a href=\"".$media->getLinkUrl()."\" name=\"{$sortkey}\" class=\"list_item\">{$timestamp}</a></td>";
-		}
-
+		if ($SHOW_LAST_CHANGE)
+			print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">".$media->LastChangeTimestamp(empty($SEARCH_SPIDER))."</td>";
 		echo "</tr>\n";
 	}
 	echo "</tbody>\n";
@@ -1435,19 +1317,10 @@ function print_changes_table($datalist) {
 			}
 		}
 		echo "</td>";
-		//-- Last change
-		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">";
-		$changedate=$record->getLastchangeDate();
-		$changetime=get_gedcom_value("DATE:TIME", 2, $record->getLastchangeRecord());
-		$timestamp = get_changed_date($changedate)." ".$changetime;
-		$tmp=parse_date($changedate);
-		$sortkey=$tmp[0]['jd1'].preg_replace('/[^\d]/', '', $changetime);
-		echo "<a href=\"".$record->getLinkUrl()."\" name=\"{$sortkey}\" class=\"list_item\">{$timestamp}</a></td>";
+		//-- Last change date/time
+		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">".$record->LastChangeTimestamp(empty($SEARCH_SPIDER))."</td>";
 		//-- Last change user
-		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".$record->getLastchangeUser()."</a>";
-		echo "&nbsp;</td>";
-
+		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">".$record->LastChangeUser(empty($SEARCH_SPIDER))."</td>";
 		echo "</tr>\n";
 	}
 	echo "</tbody>\n";
@@ -1476,7 +1349,7 @@ function print_changes_table($datalist) {
  * @param string $option optional filtering option
  */
 function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_living=false, $allow_download=false) {
-	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION;
+	global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $SHOW_MARRIED_NAMES, $TEXT_DIRECTION, $SERVER_URL;
 	require_once("js/sorttable.js.htm");
 	require_once("includes/gedcomrecord.php");
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
@@ -1558,7 +1431,8 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		print "</td>";
 		//-- Event date
 		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		print str_replace('<a', '<a name="'.$value['jd'].'"', get_date_url($value['date']));
+		$edate=new GedcomDate($value['date']);
+		print str_replace('<a', '<a name="'.$edate->MinJD().'"', $edate->Display(empty($SEARCH_SPIDER)));
 		print "</td>";
 		//-- Anniversary
 		print "<td class=\"list_value_wrap rela\">";
@@ -1591,7 +1465,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	print "</td>";
 	print "<td>";
 	if ($allow_download) {
-		$uri = "http://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+		$uri = $SERVER_URL.basename($_SERVER["REQUEST_URI"]);
 		global $whichFile;
 		$whichFile = "hCal-events.ics";
 		$title = print_text("download_file",0,1);
@@ -1664,7 +1538,8 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 		if ($record->type=="INDI")
 			$return.=$record->getSexImage();
 		$return.="<div class=\"indent\">";
-		$return.=$factarray[$value['fact']].' - '.get_date_url($value['date']);
+		$ed=new GedcomDate($value['date']);
+		$return.=$factarray[$value['fact']].' - '.$ed->Display(true);
 		if ($value['anniv']!=0)
 			$return.=" (" . str_replace("#year_var#", $value['anniv'], $pgv_lang["year_anniversary"]).")";
 		if (!empty($value['plac']))
@@ -1677,7 +1552,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 	$return.="<b>";
 	if ($private)
 		if ($output)
-			if ($endjd==today_jd())
+			if ($endjd==client_jd())
 				$return.=print_text ("more_today_privacy", 0, 1);
 			else
 				if ($startjd==$endjd)
@@ -1685,7 +1560,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 				else
 					$return.=print_text ("more_events_privacy", 0, 1);
 		else
-			if ($endjd==today_jd())
+			if ($endjd==client_jd())
 				$return.=print_text ("none_today_privacy", 0, 1);
 			else
 				if ($startjd==$endjd)
@@ -1695,7 +1570,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 	else
 		if (!$output)
 			if ($filter)
-				if ($endjd==today_jd())
+				if ($endjd==client_jd())
 					$return.=print_text ("none_today_living", 0, 1);
 				else
 					if ($startjd==$endjd)
@@ -1703,7 +1578,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 					else
 						$return.=print_text ("no_events_living", 0, 1);
 			else
-				if ($endjd==today_jd())
+				if ($endjd==client_jd())
 					$return.=print_text ("none_today_all", 0, 1);
 				else
 					if ($startjd==$endjd)

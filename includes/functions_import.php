@@ -1111,7 +1111,7 @@ function create_individuals_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "individuals";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "individuals (i_id VARCHAR(255), i_file INT, i_rin VARCHAR(255), i_name VARCHAR(255), i_isdead INT DEFAULT 1, i_gedcom ".DB_LONGTEXT_TYPE.", i_letter VARCHAR(5), i_surname VARCHAR(100))";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "individuals (i_id VARCHAR(255), i_file INT, i_rin VARCHAR(255), i_name VARCHAR(255), i_isdead INT DEFAULT 1, i_gedcom ".DB_LONGTEXT_TYPE.", i_letter VARCHAR(5), i_surname VARCHAR(100), PRIMARY KEY(i_id, i_file))";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
@@ -1139,7 +1139,7 @@ function create_families_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "families";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE ".$TBLPREFIX."families (f_id VARCHAR(255), f_file INT, f_husb VARCHAR(255), f_wife VARCHAR(255), f_chil TEXT, f_gedcom ".DB_LONGTEXT_TYPE.", f_numchil INT)";
+	$sql = "CREATE TABLE ".$TBLPREFIX."families (f_id VARCHAR(255), f_file INT, f_husb VARCHAR(255), f_wife VARCHAR(255), f_chil TEXT, f_gedcom ".DB_LONGTEXT_TYPE.", f_numchil INT, PRIMARY KEY(f_id, f_file))";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
@@ -1165,7 +1165,7 @@ function create_sources_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "sources";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "sources (s_id VARCHAR(255), s_file INT, s_name VARCHAR(255), s_gedcom ".DB_LONGTEXT_TYPE.")";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "sources (s_id VARCHAR(255), s_file INT, s_name VARCHAR(255), s_gedcom ".DB_LONGTEXT_TYPE.", PRIMARY KEY(s_id, s_file))";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
@@ -1188,7 +1188,7 @@ function create_other_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "other";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "other (o_id VARCHAR(255), o_file INT, o_type VARCHAR(20), o_gedcom ".DB_LONGTEXT_TYPE.")";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "other (o_id VARCHAR(255), o_file INT, o_type VARCHAR(20), o_gedcom ".DB_LONGTEXT_TYPE.", PRIMARY KEY(o_id, o_file))";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
@@ -1209,7 +1209,7 @@ function create_placelinks_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "placelinks";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "placelinks (pl_p_id INT, pl_gid VARCHAR(255), pl_file INT)";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "placelinks (pl_p_id INT, pl_gid VARCHAR(255), pl_file INT, PRIMARY KEY(pl_p_id, pl_gid, pl_file))";
 	$res = dbquery($sql);
 	if (DB::isError($res)) {
 		print $pgv_lang["created_placelinks_fail"]."<br />\n";

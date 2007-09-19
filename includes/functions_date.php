@@ -282,10 +282,32 @@ function default_edit_to_gedcom_date($datestr)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Get the current julian day of the client, not the server
+// Convert a unix timestamp into a formated date-time value, for logs, etc.
+// We can't just use date("$DATE_FORMAT- $TIME_FORMAT") as this doesn't
+// support internationalisation.
+// Don't attempt to convert into other calendars, as not all days start at
+// midnight, and we can only get it wrong.
+// Remove HTML tags, as the <span class="date"> wrappers apply to gedcom dates,
+// not timestamps
 ////////////////////////////////////////////////////////////////////////////////
-function today_jd() {
-	return unixtojd(client_time());
+function format_timestamp($t=NULL) {
+	global $DATE_FORMAT, $TIME_FORMAT;
+	if (is_null($t))
+		$t=client_time();
+	$d=new GedcomDate(date('j M Y', $t));
+	return strip_tags($d->Display(false, "{$DATE_FORMAT} -", array()).date(" {$TIME_FORMAT}", $t));
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Get the current julian day on the client/server
+////////////////////////////////////////////////////////////////////////////////
+function server_jd() {
+	$tmp=new GedcomDate(date('j M Y'));
+	return $tmp->MinJD();
+}
+function client_jd() {
+	$tmp=new GedcomDate(date('j M Y'), client_time());
+	return $tmp->MinJD();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

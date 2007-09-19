@@ -133,6 +133,7 @@ if (($action=="send")&&(isset($_SESSION["good_to_send"]))&&($_SESSION["good_to_s
 				$touser = getUser($to);
 				if ($touser) {
 					print str_replace("#TO_USER#", "<b>".$touser["firstname"]." ".$touser["lastname"]."</b>", $pgv_lang["message_sent"]);
+					print "<br />";
 				}
 				else AddToLog('Invalid TO user.'.$to.' Possible spam attack.');
 			}

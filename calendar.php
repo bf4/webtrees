@@ -71,7 +71,7 @@ print '<tr><td class="facts_label" colspan="8"><h2>';
 
 switch ($action) {
 case 'today':
-	print $pgv_lang['on_this_day'].'<br/>'.$ged_date->Display(false, 'j F Y').'</td></tr>';
+	print $pgv_lang['on_this_day'].'<br/>'.$ged_date->Display(false).'</td></tr>';
 	break;
 case 'calendar':
 	print $pgv_lang['in_this_month'].'<br/>'.$ged_date->Display(false, 'F Y').'</td></tr>';
@@ -273,7 +273,7 @@ if ($view!='preview') {
 	else
 		print " | <a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action=year\">{$pgv_lang['viewyear']}</a>";
 
-	foreach (array('gregorian', 'julian', 'jewish', 'frenchr', 'hijri') as $newcal) {
+	foreach (array('gregorian', 'julian', 'jewish', 'french', 'hijri') as $newcal) {
 		$tmp=$cal_date->convert_to_cal($newcal);
 		if ($tmp->InValidRange())
 			if ($tmp->CALENDAR_ESCAPE==$cal_date->CALENDAR_ESCAPE)
@@ -469,23 +469,26 @@ case 'calendar':
 	break;
 }
 
-if ($view=="preview"){
-	if (isset($myindilist[$gid]["gedfile"])) $showfile=get_gedcom_from_id($myindilist[$gid]["gedfile"]);
-	else $showfile=get_gedcom_from_id($myfamlist[$gid]["gedfile"]);
-	$showfilter="";
-	if ($filterof!="all") $showfilter = ($filterof=="living"?$pgv_lang["living_only"]:$pgv_lang["recent_events"]);
-	if (!empty($filtersx)){
-		if (!empty($showfilter)) $showfilter .= " - ";
-		$showfilter .= ($filtersx=="M"?$pgv_lang["male"]:$pgv_lang["female"]);
-	}
-	if ($filterev != "all"){
-		if (!empty($showfilter)) $showfilter .= " - ";
-		$showfilter .= $factarray[$filterev];
-	}
-	print "<br />".$showfile." (".$pgv_lang["filter"].": ";
-	if (!empty($showfilter)) print $showfilter.")";
-	else print $pgv_lang["all"].")";
-	print "</td></tr>";
+if ($view=="preview") {
+	// Print details of any filtering
+	$filters=array();
+	if ($filterof=='living')
+		$filters[]=$pgv_lang['living_only'];
+	if ($filterof=='recent')
+		$filters[]=$pgv_lang['recent_events'];
+	if ($filtersx=='M')
+		$filters[]=$pgv_lang["male"];
+	if ($filtersx=='F')
+		$filters[]=$pgv_lang["female"];
+	if ($filterev=='bdm')
+		$filters[]=$pgv_lang['bdm'];
+	else
+		if ($filterev!='all')
+			$filters[].=$factarray[$filterev];
+	$filtertext=implode(' - ', $filters);
+	if (!empty($filters))
+		$filtertext="({$pgv_lang['filter']}: {$filtertext})";
+	print "<br />{$GEDCOMS[$GEDCOM]['title']} {$filtertext}";
 }
 print "</table>";
 print "</div><br />";
@@ -496,7 +499,7 @@ print_footer();
 /////////////////////////////////////////////////////////////////////////////////
 function apply_filter($facts, $filterof, $filtersx) {
 	$filtered=array();
-	$hundred_years=today_jd()-36525;
+	$hundred_years=server_jd()-36525;
 	foreach ($facts as $fact) {
 		$tmp=GedcomRecord::GetInstance($fact['id']);
 		// Filter on sex
@@ -538,7 +541,7 @@ function apply_filter($facts, $filterof, $filtersx) {
 function calendar_fact_text($fact, $show_places) {
 	global $factarray, $pgv_lang, $TEXT_DIRECTION;
 	$date=new GedcomDate($fact['date']);
-	$text='</br>'.$factarray[$fact['fact']].' - '.$date->Display(true, "j M y", array());
+	$text='</br>'.$factarray[$fact['fact']].' - '.$date->Display(true, "", array());
 	if ($fact['anniv']>0)
 		$text.=' <span dir="'.$TEXT_DIRECTION.'">('.str_replace('#year_var#', $fact['anniv'], $pgv_lang['year_anniversary']).')</span>';
 	if ($show_places && !empty($fact['plac']))

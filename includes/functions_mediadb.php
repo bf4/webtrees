@@ -91,16 +91,13 @@ function unlink_db_item($media, $indi, $ged) {
  * @return boolean
  */
 function exists_db_link($media, $indi, $ged) {
-	global $GEDCOMS, $TBLPREFIX;
+	global $DBCONN, $GEDCOMS, $TBLPREFIX;
 
-	$sql = "SELECT * FROM " . $TBLPREFIX . "media_mapping WHERE mm_gedfile='" . $GEDCOMS[$ged]["id"] . "' AND mm_gid='" . addslashes($indi) . "' AND mm_media='" . addslashes($media) . "'";
-	$tempsql = dbquery($sql);
-	$res = & $tempsql;
-	if ($res->numRows()) {
-		return true;
-	} else {
-		return false;
-	}
+	$sql = "SELECT 1 FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile='".$DBCONN->EscapeSimple($GEDCOMS[$ged]['id'])."' AND mm_gid='".$DBCONN->EscapeSimple($indi)."' AND mm_media='".$DBCONN->EscapeSimple($media)."'";
+	$res=dbquery($sql);
+	$exists=($res->numRows())>0;
+	$res->free();
+	return $exists;
 }
 
 /**
@@ -170,22 +167,20 @@ function update_db_link($media, $indi, $gedrec, $ged, $order = -1) {
  *                       the order is not replaced.
  */
 function add_db_link($media, $indi, $gedrec, $ged, $order = -1) {
-	global $TBLPREFIX, $GEDCOMS;
+	global $TBLPREFIX, $GEDCOMS, $DBCONN;
 
 	// if no preference to order find the number of records and add to the end
 	if ($order = -1) {
-		$sql = "SELECT * FROM " . $TBLPREFIX . "media_mapping WHERE mm_gedfile='" . $GEDCOMS[$ged]["id"] . "' AND mm_gid='" . addslashes($indi) . "'";
-		$tempsql = dbquery($sql);
-		$res = & $tempsql;
-		$ct = $res->numRows();
-		$order = $ct +1;
+		$sql = "SELECT 1 FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile='".$DBCONN->escapeSimple($GEDCOMS[$ged]["id"])."' AND mm_gid='".$DBCONN->escapeSimple($indi)."'";
+		$res=dbquery($sql);
+		$order=$res->numRows() +1;
+		$res->free();
 	}
 
 	// add the new media link record
 	$mm_id = get_next_id("media_mapping", "mm_id");
-	$sql = "INSERT INTO " . $TBLPREFIX . "media_mapping VALUES('" . $mm_id . "','" . addslashes($media) . "','" . addslashes($indi) . "','" . addslashes($order) . "','" . $GEDCOMS[$ged]["id"] . "','" . addslashes($gedrec) . "')";
-	$tempsql = dbquery($sql);
-	if ($res = & $tempsql) {
+	$sql = "INSERT INTO {$TBLPREFIX}media_mapping (mm_id, mm_media, mm_gid, mm_order, mm_gedfile, mm_gedrec) VALUES('{$mm_id}','".$DBCONN->escapeSimple($media)."','".$DBCONN->escapeSimple($indi)."','".$DBCONN->escapeSimple($order)."','".$GEDCOMS[$ged]["id"]."','".$DBCONN->escapeSimple($gedrec)."')";
+	if (dbquery($sql)) {
 		AddToChangeLog("New media link added to the database: " . $media);
 		return true;
 	} else {
@@ -221,7 +216,7 @@ function get_db_media_list() {
 	global $TBLPREFIX;
 
 	$medialist = array ();
-	$sql = "SELECT * FROM " . $TBLPREFIX . "media WHERE m_gedfile='" . $GEDCOMS[$GEDCOM]["id"] . "' ORDER BY m_id";
+	$sql = "SELECT m_id, m_media, m_file, m_ext, m_titl, m_gedrec FROM {$TBLPREFIX}media WHERE m_gedfile='{$GEDCOMS[$GEDCOM]['id']}' ORDER BY m_id";
 	$tempsql = dbquery($sql);
 	$res = & $tempsql;
 	$ct = $res->numRows();
@@ -229,7 +224,7 @@ function get_db_media_list() {
 		$media = array ();
 		$media["ID"] = $row["m_id"];
 		$media["XREF"] = stripslashes($row["m_media"]);
-		$media["GEDFILE"] = stripslashes($row["m_gedfile"]);
+		$media["GEDFILE"] = $GEDCOMS[$GEDCOM]['id'];
 		$media["FILE"] = stripslashes($row["m_file"]);
 		$media["FORM"] = stripslashes($row["m_ext"]);
 		$media["TITL"] = stripslashes($row["m_titl"]);
@@ -260,21 +255,19 @@ function get_db_mapping_list() {
 	global $GEDCOM, $GEDCOMS, $TBLPREFIX;
 
 	$mappinglist = array ();
-	$sql = "SELECT * FROM " . $TBLPREFIX . "media_mapping WHERE mm_gedfile='" . $GEDCOMS[$GEDCOM]["id"] . "' ORDER BY mm_gid, mm_order";
-	$tempsql = dbquery($sql);
-	$res = & $tempsql;
-	$ct = $res->numRows();
+	$sql="SELECT mm_id, mm_gid, mm_media, mm_order, mm_gedfile, mm_gedrec FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile='{$GEDCOMS[$GEDCOM]['id']}' ORDER BY mm_gid, mm_order";
+	$res=dbquery($sql);
 	while ($row = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-		$mapping = array ();
+		$mapping=array ();
 		$mapping["ID"] = $row["mm_id"];
 		$mapping["INDI"] = stripslashes($row["mm_gid"]);
 		$mapping["XREF"] = stripslashes($row["mm_media"]);
-		$mapping["GEDFILE"] = stripslashes($row["mm_gedfile"]);
+		$mapping["GEDFILE"] = $GEDCOMS[$GEDCOM]['id'];
 		$mapping["ORDER"] = stripslashes($row["mm_order"]);
-		$mapping["GEDFILE"] = stripslashes($row["mm_gedfile"]);
 		$mapping["NOTE"] = stripslashes($row["mm_gedrec"]);
 		$mappinglist[] = $mapping;
 	}
+	$res->free();
 	return $mappinglist;
 }
 
@@ -300,22 +293,20 @@ function get_db_indi_mapping_list($indi) {
 	global $GEDCOM, $GEDCOMS, $TBLPREFIX, $DBCONN;
 
 	$mappinglist = array ();
-	$sql = "SELECT * FROM " . $TBLPREFIX . "media_mapping WHERE mm_gedfile='" . $GEDCOMS[$GEDCOM]["id"] . "' AND mm_gid='" . $DBCONN->escapeSimple($indi) . "' ORDER BY mm_order";
-	$tempsql = dbquery($sql);
-	$res = & $tempsql;
-	$ct = $res->numRows();
+	$sql = "SELECT mm_id, mm_gid, mm_media, mm_order, mm_gedrec FROM " . $TBLPREFIX . "media_mapping WHERE mm_gedfile='{$GEDCOMS[$GEDCOM]['id']}' AND mm_gid='".$DBCONN->escapeSimple($indi)."' ORDER BY mm_order";
+	$res = dbquery($sql);
 	while ($row = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$mapping = array ();
 		$mapping["ID"] = $row["mm_id"];
 		$mapping["INDI"] = stripslashes($row["mm_gid"]);
 		$mapping["XREF"] = stripslashes($row["mm_media"]);
-		$mapping["GEDFILE"] = stripslashes($row["mm_gedfile"]);
 		$mapping["ORDER"] = stripslashes($row["mm_order"]);
-		$mapping["GEDFILE"] = stripslashes($row["mm_gedfile"]);
+		$mapping["GEDFILE"] = $GEDCOMS[$GEDCOM]['id'];
 		$mapping["NOTE"] = stripslashes($row["mm_gedrec"]);
 		$mapping["CHECK"] = false;
 		$mappinglist[$row["mm_media"]] = $mapping;
 	}
+	$res->free();
 	return $mappinglist;
 }
 
@@ -545,13 +536,12 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	if (empty ($directory))
 		$directory = $MEDIA_DIRECTORY;
 	$myDir = str_replace($MEDIA_DIRECTORY, "", $directory);
-	$sql = "SELECT * FROM " . $TBLPREFIX . "media WHERE m_gedfile='" . $GEDCOMS[$GEDCOM]["id"] . "'";
+	$sql = "SELECT m_id, m_file, m_media, m_gedrec, m_titl FROM {$TBLPREFIX}media WHERE m_gedfile={$GEDCOMS[$GEDCOM]['id']}";
 	if ($random == true) {
 		$sql .= " ORDER BY ".DB_RANDOM."()";
 		$res = & dbquery($sql, true, 5);
 	} else {
 		$sql .= " AND (m_file LIKE '%" . $DBCONN->escapeSimple($myDir) . "%' OR m_file LIKE '%://%') ORDER BY m_id desc";
-		//print "sql: ".$sql."<br />";
 		$res = & dbquery($sql);
 	}
 	$mediaObjects = array ();
@@ -568,7 +558,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 					$media = array ();
 					$media["ID"] = $row["m_id"];
 					$media["XREF"] = stripslashes($row["m_media"]);
-					$media["GEDFILE"] = $row["m_gedfile"];
+					$media["GEDFILE"] = $GEDCOMS[$GEDCOM]['id'];
 					$media["FILE"] = $fileName;
 					if ($MEDIA_EXTERNAL && isFileExternal($fileName)) {
 						$media["THUMB"] = $fileName;
@@ -606,14 +596,12 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	}
 	$res->free();
 	}
-	//print "medialist: "; print_r($medialist); print "<br/><br/>";
 
 	// Look for new Media objects in the list of changes pending approval
 	// At the same time, accumulate a list of GEDCOM IDs that have changes pending approval
 	$changedRecords = array ();
 	foreach ($pgv_changes as $changes) {
 		foreach ($changes as $change) {
-			//print "change: "; print_r($change); print "<br/><br/>";
 			while (true) {
 				if ($change["gedcom"] != $GEDCOM || $change["status"] != "submitted")
 					break;
@@ -709,12 +697,11 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	}
 
 	$ct = count($medialist);
-	//print "medialist: "; print_r($medialist); print "<br/><br/>";
 
 	// Search the database for the applicable cross-references
 	// and fill in the Links part of the medialist
 	if ($ct > 0) {
-		$sql = "SELECT * FROM " . $TBLPREFIX . "media_mapping WHERE mm_gedfile='" . $GEDCOMS[$GEDCOM]["id"] . "' AND mm_media IN (";
+		$sql = "SELECT mm_gid, mm_media FROM {$TBLPREFIX}media_mapping WHERE mm_gedfile='{$GEDCOMS[$GEDCOM]['id']}' AND mm_media IN (";
 		$i = 0;
 		foreach ($medialist as $key => $media) {
 			$i++;
@@ -725,11 +712,9 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 				$sql .= ")";
 		}
 		$sql .= " ORDER BY mm_gid";
-		//print "sql: ".$sql."<br />";
 		$res = dbquery($sql);
 		$peopleIds = array();
 		while ($row = & $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-			//print_r($row); print "<br />";
 			// Build the key for the medialist
 			$temp = stripslashes($row["mm_media"]);
 			$firstChar = substr($temp, 0, 1);
@@ -738,7 +723,7 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 				$firstChar = "";
 				$restChar = $temp;
 			}
-			$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . $row["mm_gedfile"];
+			$keyMediaList = $firstChar . substr("000000" . $restChar, -6) . "_" . $GEDCOMS[$GEDCOM]['id'];
 
 			// Update the medialist with this cross-reference,
 			// but only if the Media item actually exists (could be a phantom reference)
@@ -793,7 +778,6 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 		}
 	}
 
-	//ksort($medialist);
 	uasort($medialist, "mediasort");
 
 	//-- for the media list do not look in the directory

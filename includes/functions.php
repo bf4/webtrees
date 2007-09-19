@@ -2585,8 +2585,8 @@ function get_query_string() {
 	if (!empty($_GET)) {
 		foreach($_GET as $key => $value) {
 			if($key != "view") {
-				if (!is_array($value)) $qstring .= $key."=".$value."&amp;";
-				else foreach($value as $k=>$v) $qstring .= $key."[".$k."]=".$v."&amp;";
+				if (!is_array($value)) $qstring .= $key."=".urlencode($value)."&amp;";
+				else foreach($value as $k=>$v) $qstring .= $key."[".$k."]=".urlencode($v)."&amp;";
 			}
 		}
 	}
@@ -2594,8 +2594,8 @@ function get_query_string() {
 		if (!empty($_POST)) {
 			foreach($_POST as $key => $value) {
 				if($key != "view") {
-					if (!is_array($value)) $qstring .= $key."=".$value."&amp;";
-					else foreach($value as $k=>$v) $qstring .= $key."[".$k."]=".$v."&amp;";
+					if (!is_array($value)) $qstring .= $key."=".urlencode($value)."&amp;";
+					else foreach($value as $k=>$v) $qstring .= $key."[".$k."]=".urlencode($v)."&amp;";
 				}
 			}
 		}
@@ -2793,7 +2793,7 @@ function get_new_xref($type='INDI', $use_cache=false) {
 	}
 	else {
 		//-- check for the id in the nextid table
-		$sql = "SELECT * FROM ".$TBLPREFIX."nextid WHERE ni_type='".$DBCONN->escapeSimple($type)."' AND ni_gedfile='".$DBCONN->escapeSimple($gedid)."'";
+		$sql = "SELECT ni_id FROM ".$TBLPREFIX."nextid WHERE ni_type='".$DBCONN->escapeSimple($type)."' AND ni_gedfile='".$DBCONN->escapeSimple($gedid)."'";
 		$res =& dbquery($sql);
 		if ($res->numRows() > 0) {
 			$row = $res->fetchRow();
@@ -3071,7 +3071,7 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	global $MULTI_LETTER_ALPHABET, $digraph, $trigraph, $quadgraph, $digraphAll, $trigraphAll, $quadgraphAll;
 	global $DICTIONARY_SORT, $UCDiacritWhole, $UCDiacritStrip, $UCDiacritOrder, $LCDiacritWhole, $LCDiacritStrip, $LCDiacritOrder;
 	global $unknownNN, $unknownPN;
-	global $JEWISH_ASHKENAZ_PRONUNCIATION;
+	global $JEWISH_ASHKENAZ_PRONUNCIATION, $CALENDAR_FORMAT;
 
 	if (!isset($pgv_language[$desiredLanguage])) $desiredLanguage = "english";
 	$username = getUserName();
@@ -3180,6 +3180,12 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 			$pgv_lang['csh']='Cheshvan';
 			$pgv_lang['tvt']='Teves';
 			break;
+	}
+
+	// Special formatting options; R selects conversion to french republican calendar.
+	if (strpos($DATE_FORMAT, 'R')!==false) {
+		$CALENDAR_FORMAT='french';
+  	$DATE_FORMAT=trim(str_replace('R', '', $DATE_FORMAT));
 	}
 
 /**

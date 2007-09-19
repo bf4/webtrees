@@ -294,7 +294,7 @@ class Media extends GedcomRecord {
 	 */
 	function setFileProperties() {
 		global $pgv_lang;
-		$imgsize='';
+
 		if ($this->fileExists()) {
 			$this->filesizeraw = @filesize($this->getServerFilename());
 			$imgsize = @getimagesize($this->getServerFilename()); // [0]=width [1]=height [2]=filetype

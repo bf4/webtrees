@@ -34,7 +34,7 @@ $PGV_BLOCKS["print_gedcom_block"]["config"]		= array("cache"=>0);
 
 //-- function to print the gedcom block
 function print_gedcom_block($block = true, $config="", $side, $index) {
-	global $hits, $pgv_lang, $GEDCOM, $GEDCOMS, $TIME_FORMAT, $SHOW_COUNTER;
+	global $hits, $pgv_lang, $GEDCOM, $GEDCOMS, $SHOW_COUNTER;
 
 
 	print "<div id=\"gedcom_welcome\" class=\"block\" >\n";
@@ -46,7 +46,7 @@ function print_gedcom_block($block = true, $config="", $side, $index) {
 	print "<td class=\"blockh3\"></td></tr></table>\n";
 	print "<div class=\"blockcontent\">";
 	print "<div class=\"center\">";
-	print "<br />".get_changed_date(date("j M Y", client_time()))." - ".date($TIME_FORMAT, client_time())."<br />\n";
+	print "<br />".format_timestamp()."<br />\n";
 	if ($SHOW_COUNTER)
 		print $pgv_lang["hit_count"]."  ".$hits."<br />\n";
 	print "\n<br />";

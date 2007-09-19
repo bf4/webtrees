@@ -621,7 +621,7 @@ function print_media_links($factrec, $level,$pid='') {
 	while ($objectNum < count($omatch)) {
 		$media_id = preg_replace("/@/", "", trim($omatch[$objectNum][1]));
 		if (displayDetailsById($media_id, "OBJE")) {
-			$sql = "SELECT * FROM ".$TBLPREFIX."media where m_media = '".$media_id."' AND m_gedfile = '".$GEDCOMS[$GEDCOM]["id"]."'";
+			$sql = "SELECT m_titl, m_file, m_gedrec FROM {$TBLPREFIX}media where m_media='{$media_id}' AND m_gedfile={$GEDCOMS[$GEDCOM]['id']}";
 			$tempsql = dbquery($sql);
 			$res =& $tempsql;
 			if ($res->numRows()>0) {

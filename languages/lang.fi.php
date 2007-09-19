@@ -571,20 +571,20 @@ $pgv_lang["ther"]         = "Thermidor";
 $pgv_lang["fruc"]         = "Fructidor";
 $pgv_lang["comp"]         = "jours complémentaires";
 
-$pgv_lang["tsh"]          = "tisrei";
-$pgv_lang["csh"]          = "hesvan";
-$pgv_lang["ksl"]          = "kislev";
-$pgv_lang["tvt"]          = "tevet";
-$pgv_lang["shv"]          = "sevat";
-$pgv_lang["adr"]          = "adar";
-$pgv_lang["adr_leap_year"]= "adar I";
-$pgv_lang["ads"]          = "adar II";
-$pgv_lang["nsn"]          = "nisan";
-$pgv_lang["iyr"]          = "ijar";
-$pgv_lang["svn"]          = "sivan";
-$pgv_lang["tmz"]          = "tamus";
-$pgv_lang["aav"]          = "av";
-$pgv_lang["ell"]          = "elul";
+$pgv_lang["tsh"]          = "tisrei-kuu";
+$pgv_lang["csh"]          = "hesvan-kuu";
+$pgv_lang["ksl"]          = "kislev-kuu";
+$pgv_lang["tvt"]          = "tevet-kuu";
+$pgv_lang["shv"]          = "sevat-kuu";
+$pgv_lang["adr"]          = "adar-kuu";
+$pgv_lang["adr_leap_year"]= "adar I-kuu";
+$pgv_lang["ads"]          = "adar II-kuu";
+$pgv_lang["nsn"]          = "nisan-kuu";
+$pgv_lang["iyr"]          = "ijar-kuu";
+$pgv_lang["svn"]          = "sivan-kuu";
+$pgv_lang["tmz"]          = "tamus-kuu";
+$pgv_lang["aav"]          = "av-kuu";
+$pgv_lang["ell"]          = "elul-kuu";
 
 //@@
 $pgv_lang["muhar"]        = "muharram";

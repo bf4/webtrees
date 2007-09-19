@@ -747,14 +747,14 @@ if (($action == "listusers") || ($action == "edituser2") || ($action == "deleteu
 		print "</td>\n";
 		if (((date("U") - $user["reg_timestamp"]) > 604800) && ($user["verified"]!="yes")) print "\t<td class=\"optionbox red\">";
 		else print "\t<td class=\"optionbox wrap\">";
-		print get_changed_date(date("d", $user["reg_timestamp"])." ".date("M", $user["reg_timestamp"])." ".date("Y", $user["reg_timestamp"]))." - ".date($TIME_FORMAT, $user["reg_timestamp"]);
+		print format_timestamp($user["reg_timestamp"]);
 		print "</td>\n";
 		print "\t<td class=\"optionbox wrap\">";
 		if ($user["reg_timestamp"] > $user["sessiontime"]) {
 			print $pgv_lang["never"];
 		}
 		else {
-			print get_changed_date(date("d", $user["sessiontime"])." ".date("M", $user["sessiontime"])." ".date("Y", $user["sessiontime"]))." - ".date($TIME_FORMAT, $user["sessiontime"]);
+			print format_timestamp($user["sessiontime"]);
 		}
 		print "</td>\n";
 		print "\t<td class=\"optionbox wrap\">";

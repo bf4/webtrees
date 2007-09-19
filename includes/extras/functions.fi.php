@@ -38,21 +38,21 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 function date_localisation_fi(&$q1, &$d1, &$q2, &$d2, &$q3) {
 	global $pgv_lang;
 
-	if ($q2=='')
-		// If only one date, put any q1 text after the date
-		$q2=$q1;
-	else {
+	if ($q2=='') {
+		// If there is only one date, certain qualifiers go after it
+		if ($q1=='aft' || $q1=='to' || $q1=='from') {
+			$q2=$q1;
+			$q1='';
+		}
+	} else {
 		// If two dates, just use a dash
 		$q1='';
 		$q2='-';
 	}
 
 	// Constant 'ta' is appended to the Finnish month values, if a day value exists
-	foreach (array('jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec') as $month) {
-		$month=$pgv_lang[$month];
-		$d1=preg_replace("/(\d+\s+{$month})/", "$1ta", $d1);
-		$d2=preg_replace("/(\d+\s+{$month})/", "$1ta", $d2);
-	}
+	$d1=preg_replace("/(\b\d{1,2}\D+kuu\b)/", "$1ta", $d1);
+	$d2=preg_replace("/(\b\d{1,2}\D+kuu\b)/", "$1ta", $d2);
 
 	if (isset($pgv_lang[$q1]))
 		$q1=$pgv_lang[$q1];

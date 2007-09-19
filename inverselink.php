@@ -98,7 +98,7 @@ if ($action == "choose" && $paramok) {
 	print "<tr><td class=\"descriptionbox width20 wrap\">".$pgv_lang["media_id"]."</td>";
 	if (!empty($mediaid)) {
 		//-- Get the title of this existing Media item
-		$sql = "SELECT * FROM ".$TBLPREFIX."media where m_media = '".$mediaid."' AND m_gedfile = '".$GEDCOMS[$GEDCOM]["id"]."'";
+		$sql = "SELECT m_titl FROM {$TBLPREFIX}media where m_media='{$mediaid}' AND m_gedfile='{$GEDCOMS[$GEDCOM]['id']}'";
 		$tempsql = dbquery($sql);
 		$res =& $tempsql;
 		$row =& $res->fetchRow(DB_FETCHMODE_ASSOC);

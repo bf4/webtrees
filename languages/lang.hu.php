@@ -405,6 +405,53 @@ $pgv_lang["sep"]			= "szeptember";
 $pgv_lang["oct"]			= "október";
 $pgv_lang["nov"]			= "november";
 $pgv_lang["dec"]			= "december";
+
+/*
+$pgv_lang["vend"]         = "Vendémiaire";
+$pgv_lang["brum"]         = "Brumaire";
+$pgv_lang["frim"]         = "Frimaire";
+$pgv_lang["nivo"]         = "Nivôse";
+$pgv_lang["pluv"]         = "Pluviôse";
+$pgv_lang["vent"]         = "Ventôse";
+$pgv_lang["germ"]         = "Germinal";
+$pgv_lang["flor"]         = "Floréal";
+$pgv_lang["prai"]         = "Prairial";
+$pgv_lang["mess"]         = "Messidor";
+$pgv_lang["ther"]         = "Thermidor";
+$pgv_lang["fruc"]         = "Fructidor";
+$pgv_lang["comp"]         = "jours complémentaires";
+*/
+$pgv_lang["tsh"]          = "Tisri";
+$pgv_lang["csh"]          = "Hesván";
+$pgv_lang["ksl"]          = "Kiszlév";
+$pgv_lang["tvt"]          = "Tévész";
+$pgv_lang["shv"]          = "Svát";
+$pgv_lang["adr"]          = "Ádár";
+$pgv_lang["adr_leap_year"]= "Ádár risón";
+$pgv_lang["ads"]          = "Ádár séni";
+$pgv_lang["nsn"]          = "Niszán";
+$pgv_lang["iyr"]          = "Ijár";
+$pgv_lang["svn"]          = "Sziván";
+$pgv_lang["tmz"]          = "Tamuz";
+$pgv_lang["aav"]          = "Áv";
+$pgv_lang["ell"]          = "Elul";
+
+$pgv_lang["muhar"]        = "Moharrem";
+$pgv_lang["safar"]        = "Safar";
+$pgv_lang["rabi1"]        = "Rébi el avvel";
+$pgv_lang["rabi2"]        = "Rébi el accher";
+$pgv_lang["juma1"]        = "Dsemádi el avvel";
+$pgv_lang["juma2"]        = "Dsemádi el accher";
+$pgv_lang["rajab"]        = "Redseb";
+$pgv_lang["shaab"]        = "Sabán";
+$pgv_lang["ramad"]        = "Ramadán";
+$pgv_lang["shaww"]        = "Sevvál";
+$pgv_lang["dhuaq"]        = "Dsül kade";
+$pgv_lang["dhuah"]        = "Dsül hedse";
+
+//$pgv_lang["b.c."]         = "B.C.";
+
+
 $pgv_lang["abt"]			= "körül";
 $pgv_lang["aft"]			= "után";
 $pgv_lang["and"]			= "és";
@@ -871,6 +918,20 @@ $pgv_lang["familybook_chart"]		= "Családi Kőnyv Grafikon";
 $pgv_lang["source_menu"]			= "Forrás Opció";
 $pgv_lang["edit_source"]			= "Forrás szerkesztése";
 $pgv_lang["cancel"]					= "Mégse";
+
+$pgv_lang["jan_1st"]					= "jan";
+$pgv_lang["feb_1st"]					= "febr";
+$pgv_lang["mar_1st"]					= "márc";
+$pgv_lang["apr_1st"]					= "ápr";
+$pgv_lang["may_1st"]					= "máj";
+$pgv_lang["jun_1st"]					= "jún";
+$pgv_lang["jul_1st"]					= "júl";
+$pgv_lang["aug_1st"]					= "aug";
+$pgv_lang["sep_1st"]					= "szept";
+$pgv_lang["oct_1st"]					= "okt";
+$pgv_lang["nov_1st"]					= "nov";
+$pgv_lang["dec_1st"]					= "dec";
+
 $pgv_lang["friday_1st"]					= "P";
 $pgv_lang["thursday_1st"]				= "Cs";
 $pgv_lang["wednesday_1st"]				= "Sze";
