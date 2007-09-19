@@ -8,6 +8,7 @@
 	# $Id$
 =====================================================================
 Version 4.1.2
+ - Added index directory cleanup tool (yalnifj, neumont)
  - Fixed [ 1792613 ] Text mangled when editing linked Note (canajun2eh)
  - Fixed [ 1410203 ] E-Mail not displaying characters correctly (yalnifj)
  - Fixed [ 1792825 ] SVN:1630 Timeline Chart, bold footer (yalnifj)

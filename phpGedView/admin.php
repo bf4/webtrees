@@ -176,7 +176,7 @@ function showchanges() {
 	</tr>
 <?php } ?>
 	<tr>
-			<td class="optionbox width50">&nbsp;</td>
+			<td class="optionbox width50"><?php if (userIsAdmin(getUserName())) { print_help_link("help_dir_editor.php", "qm"); print "<a href=\"dir_editor.php\">".$pgv_lang["index_dir_cleanup"]."</a>"; } ?>&nbsp;</td>
 			<td class="optionbox width50"><?php if ($d_pgv_changes != "") print $d_pgv_changes; else print "&nbsp;"; ?></td>
 	</tr>
 	<?php if (userIsAdmin(getUserName())) { ?>
