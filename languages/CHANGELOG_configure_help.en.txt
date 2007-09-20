@@ -45,6 +45,10 @@ VERSION 4.1.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
+*$pgv_lang["date_format_help"]						20 Sep 2007				Wf
+*$pgv_lang["date_format_help2"]						20 Sep 2007				Wf
+*$pgv_lang["date_format_help"]						19 Sep 2007				W		}  No wording changes, but text
++$pgv_lang["date_format_help2"]						19 Sep 2007				A		}  needed to be split into 2 vars.
 *$pgv_lang["CALENDAR_FORMAT_help"]					18 Sep 2007				W
 *$pgv_lang["date_format_help"]						18 Sep 2007				WFS
 *$pgv_lang["date_format_help"]						17 Sep 2007				WF		MAJOR changes
