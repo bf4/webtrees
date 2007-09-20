@@ -44,6 +44,7 @@ VERSION 4.1.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["index_dir_cleanup_inst"]				20 Sep 2007				w
 +$pgv_lang["remove_all_files"]						19 Sep 2007				A
 +$pgv_lang["warn_file_delete"]						19 Sep 2007				A
 +$pgv_lang["deleted_files"]          				19 Sep 2007				A
