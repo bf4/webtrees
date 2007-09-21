@@ -22,7 +22,7 @@
  * @author Dparker
  * @package PhpGedView
  * @subpackage Admin
- * @version $Id: dir_editor.php 384 2006-08-30 16:51:24Z opus27 $
+ * @version $Id$
  */
 
 require_once("config.php");
@@ -136,20 +136,20 @@ function warnuser(cbox) {
 				{
 					$val = $GEDCOMS[$entry];
 					print "<li class=\"facts_value\" name=\"$entry\" alt=\"$entry\" style=\"margin-bottom:2px;\" id=\"lock_$entry\" >";
-					print "<img src=\"./images/RESN_confidential.gif\" />";
+					print "<img src=\"./images/RESN_confidential.gif\" />&nbsp;&nbsp;";
 					print "<span class=\"name2\">".$entry."</span>";
-					print "&nbsp;&nbsp; Associated Files:<i>  ".str_replace($path,"",$val{"privacy"});
-					print "  ".str_replace($path,"",$val{"config"})."</i>";
+					print "&nbsp;&nbsp;{$pgv_lang["associated_files"]}<i>&nbsp;&nbsp;".str_replace($path,"",$val{"privacy"});
+					print "&nbsp;&nbsp;".str_replace($path,"",$val{"config"})."</i>";
 				}
 				else if (in_array($entry, $locked_by_context)) {
 					print "<li class=\"facts_value\" name=\"$entry\" alt=\"$entry\" style=\"margin-bottom:2px;\" id=\"lock_$entry\" >";
-					print "<img src=\"./images/RESN_confidential.gif\" />";
+					print "<img src=\"./images/RESN_confidential.gif\" />&nbsp;&nbsp;";
 					print "<span class=\"name2\">".$entry."</span>";
 				}
 				else if (in_array($entry, $locked_with_warning)) {
 					print "<li class=\"facts_value\" name=\"$entry\" warn=\"true\" alt=\"$entry\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$entry\" >";
 					print "<input type=\"checkbox\" name=\"to_delete[]\" warn=\"true\" value=\"".$entry."\" onclick=\"warnuser(this);\" />\n";
-					print "<img src=\"./images/RESN_locked.gif\" /> ";
+					print "<img src=\"./images/RESN_locked.gif\" />&nbsp;&nbsp;";
 					print $entry;
 					$element[] = "li_".$entry;
 				}
@@ -165,7 +165,7 @@ function warnuser(cbox) {
 		?>
 		</ul>
 		</td>
-		<td valign="top" id="trash"><?php
+		<td valign="top" id="trash" class="facts_value02"><?php
 		$dir->close();
 
 		print "<div style=\"margin-bottom:2px;\">";
