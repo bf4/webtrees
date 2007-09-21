@@ -181,11 +181,11 @@ table.center{
 }
 
 .facts_value02 {
-	background-color: #dfdfdf;
-	color: #555555;
+	background-color: white;
+	color: black;
 	border: solid black 1px;
 	font: 12px tahoma, arial, helvetica, sans-serif;
-	padding: 4px 4px 4px 4px;
+	padding: 5px;
 }
 
 .facts_labelred, .facts_labelblue {
