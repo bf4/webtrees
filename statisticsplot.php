@@ -586,15 +586,15 @@ if ($action=="update") {
 
 //-- out of range values
 	if (($x_as <  11) or ($x_as >  21)) {
-		print $pgv_lang["stpl_type"] .$x_as . $pgv_lang["stpl_noim"]  . "<br/>";
+		print $pgv_lang["stpl_type"] .$x_as . $pgv_lang["stplnoim"]  . "<br/>";
 		exit;
 	}
 	if (($y_as < 201) or ($y_as > 202)) {
-		print $pgv_lang["stpl_type"] .$y_as . $pgv_lang["stpl_noim"]  . "<br/>";
+		print $pgv_lang["stpl_type"] .$y_as . $pgv_lang["stplnoim"]  . "<br/>";
 		exit;
 	}
 	if (($z_as < 300) or ($z_as > 302)) {
-		print $pgv_lang["stpl_type"] .$z_as . $pgv_lang["stpl_noim"]  . "<br/>";
+		print $pgv_lang["stpl_type"] .$z_as . $pgv_lang["stplnoim"]  . "<br/>";
 		exit;
 	}
 
