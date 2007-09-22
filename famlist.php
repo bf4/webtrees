@@ -51,11 +51,8 @@ if (empty($surname_sublist)) $surname_sublist = "yes";
 if (empty($show_all)) $show_all = "no";
 
 // Remove slashes
-$lrm = chr(0xE2).chr(0x80).chr(0x8E);
-$rlm = chr(0xE2).chr(0x80).chr(0x8F);
 if (isset($alpha)) {
-	$alpha = stripslashes($alpha);
-	$alpha = str_replace(array($lrm, $rlm), "", $alpha);
+	$alpha = stripLRMRLM(stripslashes($alpha));
 	$doctitle = $pgv_lang["family_list"]." : ".$alpha;
 }
 if (isset($surname)) {

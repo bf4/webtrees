@@ -53,11 +53,8 @@ if (empty($show_all)) $show_all = "no";
 if (empty($show_all_firstnames)) $show_all_firstnames = "no";
 
 // Remove slashes
-$lrm = chr(0xE2).chr(0x80).chr(0x8E);
-$rlm = chr(0xE2).chr(0x80).chr(0x8F);
 if (isset($alpha)) {
-	$alpha = stripslashes($alpha);
-	$alpha = str_replace(array($lrm, $rlm), "", $alpha);
+	$alpha = stripLRMRLM(stripslashes($alpha));
 	$doctitle = $pgv_lang["individual_list"]." : ".$alpha;
 }
 if (isset($surname)) {
