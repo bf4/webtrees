@@ -75,6 +75,12 @@ $HNN = "\x28\xd7\x9c\xd7\x90\x20\xd7\x99\xd7\x93\xd7\x95\xd7\xa2\x29";
 $ANN = "\x28\xd8\xba\xd9\x8a\xd8\xb1\x20\xd9\x85\xd8\xb9\xd8\xb1\xd9\x88\xd9\x81\x29";
 
 /**
+ * $LRM and $RLM are the UTF-8 equivalents of the &lrm; and &rlm; HTML entities
+ */
+$LRM = chr(0xE2).chr(0x80).chr(0x8E);
+$RLM = chr(0xE2).chr(0x80).chr(0x8F);
+
+/**
  * Use RTL functions
  *
  * this function returns true if the gedcom config $USE_RTL_FUNCTIONS is set to true.
@@ -106,6 +112,20 @@ function getLRM(){
  */
 function getRLM(){
 	return  !useRTLFunctions() ? "" : "&rlm;";
+}
+
+/**
+ * This function strips &lrm; and &rlm; from the input string.  It should be used for all
+ * text that has been passed through the PrintReady() function before that text is stored
+ * in the database.  The database should NEVER contain these characters.
+ *
+ * @param 	string	The string from which the &lrm; and &rlm; characters should be stripped
+ * @return	string	The input string, with &lrm; and &rlm; stripped
+ */
+function stripLRMRLM($inputText) {
+	global $LRM, $RLM;
+	
+	return str_replace(array($LRM, $RLM, "&lrm;", "&rlm;"), "", $inputText);
 }
 
 

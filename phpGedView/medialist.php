@@ -30,16 +30,10 @@ global $MEDIA_EXTERNAL, $THUMBNAIL_WIDTH;
 global $GEDCOM, $GEDCOMS;
 global $currentPage, $lastPage;
 
-$lrm = chr(0xE2).chr(0x80).chr(0x8E);
-$rlm = chr(0xE2).chr(0x80).chr(0x8F);
-
 if (!isset($level)) $level = 0;
 if (!isset($action)) $action = "";
 if (!isset($filter)) $filter = "";
-else {
-	$filter = stripslashes($filter);
-	$filter = str_replace(array($lrm, $rlm), "", $filter);
-}
+else $filter = stripLRMRLM(stripslashes($filter));
 if (!isset($search)) $search = "yes";
 if (!isset($folder)) $folder = "ALL";
 if (!isset($_SESSION["medialist"])) $search = "yes";
