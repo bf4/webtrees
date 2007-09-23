@@ -50,6 +50,10 @@ $ged_date=new GedcomDate("$cal $day $month $year");
 $cal_date=$ged_date->date1;
 $cal=urlencode($cal);
 
+// Invalid month?  Pick a sensible one.
+if ($cal_date->CALENDAR_ESCAPE=='@#DHEBREW@' && $cal_date->m==7 && $cal_date->y!=0 && !$cal_date->IsLeapYear())
+	$cal_date->m=6;
+
 // Fill in any missing bits with todays date
 $today=$cal_date->Today();
 if ($cal_date->d==0) $cal_date->d=$today->d;
@@ -121,8 +125,10 @@ if ($view!='preview') {
 				if ($cal_date->CALENDAR_ESCAPE=='@#DHEBREW@' && !$cal_date->IsLeapYear() && $n==7)
 					continue;
 				if ($cal_date->CALENDAR_ESCAPE=='@#DHEBREW@' && $cal_date->IsLeapYear() && $n==6)
-					$m.='_leap_year';
-				print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$m}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">{$pgv_lang[$m]}</a>";
+					$l.='_leap_year';
+				else
+					$l='';
+				print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$m}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">{$pgv_lang[$m.$l]}</a>";
 			}
 		 print ' | ';
 		}
@@ -560,7 +566,7 @@ function calendar_list_text($list, $tag1, $tag2, $show_sex_symbols) {
 	global $males, $females;
 	foreach ($list as $id=>$facts) {
 		$tmp=GedcomRecord::GetInstance($id);
-		print "{$tag1}<a href=\"".$tmp->getLinkUrl()."\">".$tmp->getSortableName()."</a>&nbsp;";
+		print "{$tag1}<a href=\"".$tmp->getLinkUrl()."\">".PrintReady($tmp->getSortableName())."</a>&nbsp;";
 		if ($show_sex_symbols && $tmp->getType()=='INDI')
 			switch ($tmp->getSex()) {
 			case 'M':
