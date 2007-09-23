@@ -44,8 +44,14 @@ VERSION 4.1.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-+$pgv_lang["help_statisticsplot.php"				21 Sep 2007				A
-+$pgv_lang["help_statistics.php"					21 Sep 2007				A
+*$pgv_lang["stat_help"]								23 Sep 2007				f
+*$pgv_lang["stat_help_x"]							23 Sep 2007				w
+*$pgv_lang["stat_help_y"]							23 Sep 2007				w
+*$pgv_lang["stat_help_z"]							23 Sep 2007				w
+*$pgv_lang["stat_help_gwx"]							23 Sep 2007				w
+*$pgv_lang["stat_help_gwz"]							23 Sep 2007				w
++$pgv_lang["help_statisticsplot.php"]				21 Sep 2007				A
++$pgv_lang["help_statistics.php"]					21 Sep 2007				A
 +$pgv_lang["stat_help"]								21 Sep 2007				A
 +$pgv_lang["stat_help_x"]							21 Sep 2007				A
 +$pgv_lang["stat_help_y"]							21 Sep 2007				A
