@@ -63,6 +63,10 @@ $days_in_week=$cal_date->NUM_DAYS_OF_WEEK;
 $cal_month=$cal_date->Format('O');
 $today_month=$today->Format('O');
 
+// Invalid dates?  Go to monthly view, where they'll be found.
+if ($cal_date->d>$days_in_month && $action=='today')
+	$action='calendar';
+
 // Print the header stuff
 print_header($pgv_lang['anniversary_calendar']);
 print '<div style="text-align: center;" id="calendar_page">';
@@ -310,14 +314,13 @@ case 'calendar':
 	for ($d=0; $d<=$days_in_month; ++$d)
 		$found_facts[$d]=array();
 	// Fetch events for each day
-	for ($jd=$cal_date->minJD, $d=1; $jd<=$cal_date->maxJD; ++$jd, ++$d)
+	for ($jd=$cal_date->minJD; $jd<=$cal_date->maxJD; ++$jd)
 		foreach (apply_filter(get_anniversary_events($jd, $events), $filterof, $filtersx) as $event) {
 			$tmp=new GedcomDate($event['date']);
-	 		//if ($tmp->date1->minJD != $tmp->date1->maxJD) // PHP5
-	 		$tmp2=$tmp->date1; if ($tmp2->minJD != $tmp->date1->maxJD) // PHP4
-				$found_facts[0][$event['id']]=$event;
-			else
-				$found_facts[$d][$event['id']]=$event;
+			$d=$tmp->date1->d;
+			if ($d<1 || $d>$days_in_month)
+				$d=0;
+			$found_facts[$d][$event['id']]=$event;
 		}
 	break;
 case 'year':
