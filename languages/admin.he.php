@@ -31,18 +31,24 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["associated_files"]		= "קבצים קשורים:"; 
+$pgv_lang["remove_all_files"]		= "הסר את כל הקבצים הבלתי נחוצים"; 
+$pgv_lang["warn_file_delete"]		= "הקובץ הזה מכיל מידע חשוב כגון הגדרת השפות או נתוני שינויים תלויים ועומדים. האם אתה בטוח שאתה רוצה למחוק קובץ זה?"; 
+$pgv_lang["deleted_files"]          		= "קבצים שנמחקו:";
+$pgv_lang["index_dir_cleanup_inst"]		= "כדי למחוק קובץ או ספרית משנה מתיקית אינדקס גרור אותו לפח האשפה או בחר את תיבת הסימון שלו. לחץ על כפתור מחק כדי להסיר לצמיתות את הקבצים המסומנים.<br /><br />קבצים שמסומנים ע\"י <img src=\"./images/RESN_confidential.gif\" />  נחוצים לפעולה תקינה ולא ניתן למחוק אותם.<br />קבצים מסומנים ע\"י <img src=\"./images/RESN_locked.gif\" /> כוללים הגדרות חשובות או נתוני שינויים ממתינים ואותם יש למחוק רק אם אתה בטוח שאתה יודע מה שאתה עושה.<br /><br />"; 
+$pgv_lang["index_dir_cleanup"]		= "תיקיית אינדקס לניקוי"; 
 $pgv_lang["clear_cache_succes"]		= "קיבצי cache הוסרו."; 
-$pgv_lang["clear_cache"]			= "cache נקה קיבצי"; 
+$pgv_lang["clear_cache"]			= "נקה קיבצי cache "; 
 $pgv_lang["sanity_err0"]			= "שגיאות:"; 
 $pgv_lang["sanity_err1"]			= "אתה צריך מהדורת PHP 4.3 או גבוהה יותר.";
-$pgv_lang["sanity_err2"]			= "קובץ או תיקייה <i>#GLOBALS[whichFile]#</i> אינו קיים. בדוק שהקובץ או התיקייה קיים, ששמו נכון ושיש הרשאות קריאה."; 
-$pgv_lang["sanity_err3"]			= "קובץ <i>#GLOBALS[whichFile]#</i> לא הועלה בצורה נכונה. נשא להעלות את הקובץ שנית."; 
+$pgv_lang["sanity_err2"]			= "קובץ או תיקייה <i>#GLOBALS[whichFile]#</i> אינו קיים. בדוק שהקובץ או התיקייה קיימים, ששמו נכון ושיש הרשאות קריאה."; 
+$pgv_lang["sanity_err3"]			= "קובץ <i>#GLOBALS[whichFile]#</i> לא הועלה בצורה נכונה. נסה להעלות את הקובץ שנית."; 
 $pgv_lang["sanity_err4"]			= "קובץ <i>config.php</i> אינו תקין."; 
 $pgv_lang["sanity_err5"]			= "קובץ <i>config.php</i> אינו בר כתיבה.";
 $pgv_lang["sanity_err6"]			= "תיקייה <i>#GLOBALS[INDEX_DIRECTORY]#</i> אינה ברת כתיבה."; 
 $pgv_lang["sanity_warn0"]			= "אזהרות:"; 
 $pgv_lang["sanity_warn1"]			= "תיקייה <i>#GLOBALS[MEDIA_DIRECTORY]#</i> אינה ברת כתיבה.  לא תוכל להעלות קיבצי מדיה או ליצור תמונות מזעריות ב-PhpGedView."; 
-$pgv_lang["sanity_warn2"]			= "The <i>#GLOBALS[MEDIA_DIRECTORY]#thumbs</i> directory is not writable.  You will not be able to upload thumbnails or generate thumbnails in PhpGedView."; //@@
+$pgv_lang["sanity_warn2"]			= "תיקיית <i>#GLOBALS[MEDIA_DIRECTORY]#thumbs</i> לא ניתנת לכתיבה.  אינך יכול להעלות או ליצור קבצים מזעריים ב-PhpGedView."; 
 $pgv_lang["sanity_warn3"]			= "The GD imaging library does not exist. PhpGedView will still function, but some of the features, such as thumbnail generation and the circle diagram, will not work without the GD library.  Please see <a href='http://www.php.net/manual/en/ref.image.php'>http://www.php.net/manual/en/ref.image.php</a> for more information."; //@@
 $pgv_lang["sanity_warn4"]			= "The XML Parser library does not exist. PhpGedView will still function, but some of the features, such as report generation and web services, will not work without the XML Parser library. Please see <a href='http://www.php.net/manual/en/ref.xml.php'>http://www.php.net/manual/en/ref.xml.php</a> for more information."; //@@
 $pgv_lang["sanity_warn5"]			= "The DOM XML library does not exist. PhpGedView will still function, but some of the features, such as Gramps Export features in the clippings cart, download, and web services, will not work. Please see <a href='http://www.php.net/manual/en/ref.domxml.php'>http://www.php.net/manual/en/ref.domxml.php</a> for more information."; //@@
