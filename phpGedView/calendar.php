@@ -111,7 +111,7 @@ if ($view!='preview') {
 			print "<a href=\"calendar.php?cal={$cal}&amp;day={$d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">{$d}</a>";
 		print ' | ';
 	}
-	print "<a href=\"calendar.php?cal={$cal}&amp;day={$today->d}&amp;month={$today_month}&amp;year={$today->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\"><b>".$today->Format('j F Y').'</b></a></td></tr>';
+	print "<a href=\"calendar.php?cal={$cal}&amp;day={$today->d}&amp;month={$today_month}&amp;year={$today->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\"><b>".$today->Format($DATE_FORMAT).'</b></a></td></tr>';
 	// Month selector
 	print '<tr><td class="descriptionbox vmiddle">';
 	print_help_link('annivers_month_select_help', 'qm', 'month');
