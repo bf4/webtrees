@@ -637,6 +637,7 @@ class JewishDate extends CalendarDate {
 	var $MONTH_TO_NUM=array(''=>0, 'tsh'=>1, 'csh'=>2, 'ksl'=>3, 'tvt'=>4, 'shv'=>5, 'adr'=>6, 'ads'=>7, 'nsn'=>8, 'iyr'=>9, 'svn'=>10, 'tmz'=>11, 'aav'=>12, 'ell'=>13);
 	var $NUM_TO_MONTH=array(0=>'', 1=>'tsh', 2=>'csh', 3=>'ksl', 4=>'tvt', 5=>'shv', 6=>'adr', 7=>'ads', 8=>'nsn', 9=>'iyr', 10=>'svn', 11=>'tmz', 12=>'aav', 13=>'ell');
 	var $DAYS_OF_WEEK=array('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday');
+	var $NUM_MONTHS=13; // Temporary - until we find a better solution.
 	var $NUM_DAYS_OF_WEEK=7;
 	var $CAL_START_JD=347998; // 01 TSH 0001 = @#JULIAN@ 7 OCT 3761B.C.
 	var $CAL_END_JD=99999999;
