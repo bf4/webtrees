@@ -207,7 +207,7 @@ table.center {
 	color: white;
 	border: solid #094215 1px;
 	font: 12px tahoma, arial, helvetica, sans-serif;
-	padding: 4px 4px 4px 4px; 
+	padding: 5px; 
 }
 
 .facts_labelred, .facts_labelblue {

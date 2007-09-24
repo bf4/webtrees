@@ -433,28 +433,28 @@ if (isset($_SESSION[$GEDCOM."statTicks"])) {
 }
 
 ?>
-	<h3><?php print $pgv_lang["statvars"]; ?> <?php print_help_link("stat_help","qm"); ?> </h3>
+	<h3><?php print_help_link("stat_help","qm"); ?> <?php print $pgv_lang["statvars"]; ?></h3>
 	<form method="post" name="form" action="statisticsplot.php?action=newform">
 	<input type="hidden" name="action" value="update">
 
 	<table class="facts_table">
 	<tr>
-	<td class="descriptionbox width20 wrap"> <?php print $pgv_lang["statlxa"]; ?> </td>
+	<td class="descriptionbox width20 wrap"><?php print_help_link("stat_help_x","qm"); ?> <?php print $pgv_lang["statlxa"]; ?> </td>
 	<td class="optionbox"> <select name="x-as">
 		<option value= "11" selected="selected"><?php print $pgv_lang["stat_11_mb"]; ?>
 		<option value= "12"> <?php print $pgv_lang["stat_12_md"]; ?>
 		<option value= "13"> <?php print $pgv_lang["stat_13_mm"]; ?>
 		<option value= "14"> <?php print $pgv_lang["stat_14_mb1"]; ?>
 		<option value= "15"> <?php print $pgv_lang["stat_15_mm1"]; ?>
-		<option value= "16"> <?php print $pgv_lang["stat_16_mmb"] . "<i>" . $pgv_lang["stat_gmx"] ."</i>"; ?>
-		<option value= "17"> <?php print $pgv_lang["stat_17_arb"] . "<i>" . $pgv_lang["stat_gax"] ."</i>"; ?>
-		<option value= "18"> <?php print $pgv_lang["stat_18_ard"] . "<i>" . $pgv_lang["stat_gax"] ."</i>";  ?>
-		<option value= "19"> <?php print $pgv_lang["stat_19_arm"] . "<i>" . $pgv_lang["stat_gax"] ."</i>";  ?>
-		<option value= "20"> <?php print $pgv_lang["stat_20_arm1"] . "<i>" . $pgv_lang["stat_gax"] ."</i>";  ?>
-		<option value= "21"> <?php print $pgv_lang["stat_21_nok"] . "<i>" . $pgv_lang["stat_gnx"] ."</i>";  ?>
+		<option value= "16"> <?php print $pgv_lang["stat_16_mmb"]; ?>
+		<option value= "17"> <?php print $pgv_lang["stat_17_arb"]; ?>
+		<option value= "18"> <?php print $pgv_lang["stat_18_ard"]; ?>
+		<option value= "19"> <?php print $pgv_lang["stat_19_arm"]; ?>
+		<option value= "20"> <?php print $pgv_lang["stat_20_arm1"]; ?>
+		<option value= "21"> <?php print $pgv_lang["stat_21_nok"]; ?>
 	</select>
 	<tr>
-	<td class="descriptionbox width20 wrap"> <?php print $pgv_lang["statlya"]; ?>  </td>
+	<td class="descriptionbox width20 wrap"><?php print_help_link("stat_help_y","qm"); ?> <?php print $pgv_lang["statlya"]; ?>  </td>
 	<td class="optionbox"> <select name="y-as">
 		<option value= "201" selected="selected"> <?php print $pgv_lang["stat_201_num"]; ?>
 		<option value= "202"> <?php print $pgv_lang["stat_202_perc"]; ?>
@@ -462,7 +462,7 @@ if (isset($_SESSION[$GEDCOM."statTicks"])) {
 	</td>
 	</tr>
 	<tr>
-	<td class="descriptionbox width20 wrap"> <?php print $pgv_lang["statlza"]; ?>  </td>
+	<td class="descriptionbox width20 wrap"><?php print_help_link("stat_help_z","qm"); ?> <?php print $pgv_lang["statlza"]; ?>  </td>
 	<td class="optionbox"> <select name="z-as">
 		<option value= "300"> <?php print $pgv_lang["stat_300_none"]; ?>
 		<option value= "301"> <?php print $pgv_lang["stat_301_mf"]; ?>
@@ -477,27 +477,27 @@ if (isset($_SESSION[$GEDCOM."statTicks"])) {
 
 	<table class="facts_table">
 	<tr>
-	<td class="descriptionbox width20 wrap"> <?php print $pgv_lang["statar_xgl"]; ?> </td>
+	<td class="descriptionbox width20 wrap"><?php print_help_link("stat_help_gwx","qm"); ?> <?php print $pgv_lang["statar_xgl"]; ?> </td>
 	<td class="optionbox"> <input type="text" name="xas-grenzen-leeftijden" value="<?php print $xasGrLeeftijden; ?>"
-			size="60" onfocus="getHelp('periode_help');">
+			size="60">
 	</td>
 	</tr>
 	<tr>
 	<td class="descriptionbox width20 wrap"> <?php print $pgv_lang["statar_xgm"]; ?> </td>
 	<td class="optionbox"> <input type="text" name="xas-grenzen-maanden" value="<?php print $xasGrMaanden; ?>"
-			size="60" onfocus="getHelp('periode_help');">
+			size="60">
 	</td>
 	</tr>
 	<tr>
 	<td class="descriptionbox width20 wrap"> <?php print $pgv_lang["statar_xga"]; ?> </td>
 	<td class="optionbox"> <input type="text" name="xas-grenzen-aantallen" value="<?php print $xasGrAantallen; ?>"
-			size="60" onfocus="getHelp('periode_help');">
+			size="60">
 	</td>
 	</tr>
 	<tr>
-	<td class="descriptionbox width20 wrap"> <?php print $pgv_lang["statar_zgp"]; ?> </td>
+	<td class="descriptionbox width20 wrap"><?php print_help_link("stat_help_gwz","qm"); ?> <?php print $pgv_lang["statar_zgp"]; ?> </td>
 	<td class="optionbox"> <input type="text" name="zas-grenzen-periode" value="<?php print $zasGrPeriode; ?>"
-			size="60" onfocus="getHelp('periode_help');">
+			size="60">
 	</td>
 	</tr>
 	</table>

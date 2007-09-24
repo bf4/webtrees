@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Themes
- * @version $Id: toplinks.php 514 2006-10-19 01:59:43Z canajun2eh $
+ * @version $Id$
  */
 require_once('includes/treenav_class.php');
 require_once('themes/navigator/thememenu.php');

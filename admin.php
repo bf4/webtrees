@@ -75,13 +75,13 @@ if (count($dir_array)>0) {
 	$d_logfile_str .= "<input type=\"button\" name=\"logfile\" value=\" &gt; \" onclick=\"window.open('printlog.php?logfile='+document.logform.logfilename.options[document.logform.logfilename.selectedIndex].value, '_blank', 'top=50,left=10,width=600,height=500,scrollbars=1,resizable=1');\" />";
 	$d_logfile_str .= "</form>";
 }
-
+/*
 $usermanual_filename = "docs/english/PGV-manual-en.html";
 $d_LangName = "lang_name_" . "english";
 $doc_lang = $pgv_lang[$d_LangName];
 $new_usermanual_filename = "docs/" . $languages[$LANGUAGE] . "/PGV-manual-" . $language_settings[$LANGUAGE]["lang_short_cut"] . ".html";
 if (file_exists($new_usermanual_filename)){$usermanual_filename = $new_usermanual_filename; $d_LangName = "lang_name_" . $languages[$LANGUAGE]; $doc_lang = $pgv_lang[$d_LangName];}
-
+*/
 $d_img_module_str = "&nbsp;";
 if (file_exists("img_editconfig.php")) $d_img_module_str = "<a href=\"img_editconfig.php?action=edit\">".$pgv_lang["img_admin_settings"]."</a><br />";
 
@@ -110,15 +110,15 @@ function showchanges() {
 //-->
 </script>
 
-<h4>!!! This is an Admin TabBar demo. Scroll down for previous version !!!</h4>
+<h4 class="error"><?php print $pgv_lang["adminMenu_caution"]; ?></h4>
 <div id="admin_tabbar" class="dhtmlxTabBar" width="800px" height="400px" <?php if($TEXT_DIRECTION=="rtl") echo ' align="right"'?> >
-	<div id="admin_tab_info" name="<?php echo $pgv_lang["admin_info"]?>" class="indent" >
+	<div id="admin_tab_info" name="<?php print $pgv_lang["admin_info"]; ?>" class="indent" >
 		<fieldset>
-			<legend> PhpGedView 
+			<legend><?php print " {$pgv_lang["adminMenu_progname"]} "; ?>
 			</legend>
 			<ul>
 				<li>
-				<label> Version
+				<label><?php print " {$pgv_lang["adminMenu_version"]} "; ?>
 				</label>
 				<?php echo $VERSION . " " . $VERSION_RELEASE ?></li>
 				<li>
@@ -140,7 +140,7 @@ function showchanges() {
 			</ul>
 		</fieldset>
 		<fieldset>
-			<legend> Server
+			<legend><?php print " {$pgv_lang["adminMenu_server"]} "; ?>
 			</legend>
 			<ul>
 				<li>
@@ -153,7 +153,7 @@ function showchanges() {
 			</ul>
 		</fieldset>
 		<fieldset>
-			<legend> Browser
+			<legend><?php print " {$pgv_lang["adminMenu_browser"]} "; ?>
 			</legend>
 			<ul>
 				<li>
@@ -163,9 +163,9 @@ function showchanges() {
 	</fieldset>
 	</div>
 	<?php if (userIsAdmin(getUserName())) {?>
-	<div id="admin_tab_site" name="<?php echo $pgv_lang["admin_site"]?>">
+	<div id="admin_tab_site" name="<?php print $pgv_lang["admin_site"]; ?>">
 		<fieldset>
-			<legend> Users
+			<legend><?php print " {$pgv_lang["adminMenu_users"]} "; ?>
 			</legend>
 			<ul>
 				<li>
@@ -183,7 +183,7 @@ function showchanges() {
 			</ul>
 		</fieldset>
 		<fieldset>
-			<legend> Languages
+			<legend><?php print " {$pgv_lang["adminMenu_languages"]} "; ?>
 			</legend>
 			<ul>
 				<li>
@@ -207,53 +207,63 @@ function showchanges() {
 			</ul>
 		</fieldset>
 		<fieldset>
-			<legend> Servers
+			<legend><?php print " {$pgv_lang["adminMenu_servers"]} "; ?>
 			</legend>
 			<ul>
 				<li>
-					<a href="">Search engines</a></li>
+					<a href=""><?php print $pgv_lang["adminMenu_spiders"]; ?></a></li>
 				<li>
-					<a href="">Black list</a></li>
+					<a href=""><?php print $pgv_lang["adminMenu_block"]; ?></a></li>
 				<li>
-					<a href="">Remote phpGedView servers</a></li>
+					<a href=""><?php print $pgv_lang["adminMenu_remotes"]; ?></a></li>
 			</ul>
 		</fieldset>
 		<fieldset>
-			<legend> Logs
+			<legend><?php print " {$pgv_lang["adminMenu_logs"]} "; ?>
 			</legend>
 			<?php print $d_logfile_str; ?>
 		</fieldset>
 	</div>
-	<?php }?>
-	<div id="admin_tab_ged" name="<?php echo $pgv_lang["admin_geds"]?>">
-		<ul>
-			<li>
-			<?php print_help_link("edit_gedcoms_help", "qm"); ?>
-			<a href="editgedcoms.php">
-				<?php print $pgv_lang["manage_gedcoms"];?></a></li>
-			<li>
-			<?php print_help_link("help_edit_merge.php", "qm"); ?>
-			<a href="edit_merge.php">
-				<?php print $pgv_lang["merge_records"]; ?></a></li>
-			<?php if (userCanEdit(getUserName())) { ?>
-			<li>
-			<?php print_help_link("edit_add_unlinked_person_help", "qm"); ?>
-			<a href="javascript: <?php print $pgv_lang["add_unlinked_person"]; ?>" onclick="addnewchild(''); return false;">
-				<?php print $pgv_lang["add_unlinked_person"]; ?></a></li>
-			<li>
-			<?php print_help_link("edit_add_unlinked_source_help", "qm"); ?>
-			<a href="javascript: <?php print $pgv_lang["add_unlinked_source"]; ?>" onclick="addnewsource(''); return false;">
-				<?php print $pgv_lang["add_unlinked_source"]; ?></a></li>
-			<?php } ?>
-			<li>
-			<?php if ($d_pgv_changes != "") print $d_pgv_changes; else print "&nbsp;"; ?></li>
-		</ul>
-	</div>
-	<div id="admin_tab_mod" name="Modules">
+	<?php }
+	print "<div id=\"admin_tab_ged\" name=\"{$pgv_lang["admin_geds"]}\">";
+		print "<ul>";
+			print "<li>";
+				print_help_link("edit_gedcoms_help", "qm");
+				print "<a href=\"editgedcoms.php\">{$pgv_lang["manage_gedcoms"]}</a>";
+			print "</li>";
+			print "<li>";
+				print_help_link("help_edit_merge.php", "qm");
+				print "<a href=\"edit_merge.php\">{$pgv_lang["merge_records"]}</a>";
+			print "</li>";
+			if (userCanEdit(getUserName())) {
+				print "<li>";
+					print_help_link("edit_add_unlinked_person_help", "qm");
+					print "<a href=\"javascript: {$pgv_lang["add_unlinked_person"]}\" onclick=\"addnewchild(''); return false;\">{$pgv_lang["add_unlinked_person"]}</a>";
+				print "</li>";
+				print "<li>";
+					print_help_link("edit_add_unlinked_source_help", "qm");
+					print "<a href=\"javascript: {$pgv_lang["add_unlinked_source"]}\" onclick=\"addnewsource(''); return false;\">{$pgv_lang["add_unlinked_source"]}</a>";
+				print "</li>";
+			}
+			if (userIsAdmin(getUserName())) {
+				print "<li>";
+					print_help_link("help_dir_editor.php", "qm");
+					print "<a href=\"dir_editor.php\">{$pgv_lang["index_dir_cleanup"]}</a>";
+				print "</li>";
+			}
+			if ($d_pgv_changes != "") {
+				print "<li>";
+					print $d_pgv_changes;
+				print "</li>";
+			}
+		print "</ul>";
+	print "</div>";
+	?>
+	<div id="admin_tab_mod" name="<?php print $pgv_lang["adminMenu_modules"]; ?>">
 		<fieldset>
-			<legend> Googlemap
+			<legend><?php print " {$pgv_lang["adminMenu_googlemap"]} "; ?>
 			</legend>
-			<a href="">Googlemap</a>
+			<a href=""><?php print $pgv_lang["adminMenu_googlemap"]; ?></a>
 		</fieldset>
 	</div>
 </div>
@@ -326,7 +336,7 @@ function showchanges() {
 	</tr>
 <?php } ?>
 	<tr>
-			<td class="optionbox width50">&nbsp;</td>
+			<td class="optionbox width50"><?php if (userIsAdmin(getUserName())) { print_help_link("help_dir_editor.php", "qm"); print "<a href=\"dir_editor.php\">".$pgv_lang["index_dir_cleanup"]."</a>"; } ?>&nbsp;</td>
 			<td class="optionbox width50"><?php if ($d_pgv_changes != "") print $d_pgv_changes; else print "&nbsp;"; ?></td>
 	</tr>
 	<?php if (userIsAdmin(getUserName())) { ?>

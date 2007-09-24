@@ -31,6 +31,28 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+// -- Texts for the new Admin menu
+$pgv_lang["adminMenu_caution"]		= "This is an Admin TabBar demo. Not all options actually work.<br />Scroll down for previous version.";
+$pgv_lang["adminMenu_progname"]		= "PhpGedView";
+$pgv_lang["adminMenu_version"]		= "Version";
+$pgv_lang["adminMenu_server"]		= "Server";
+$pgv_lang["adminMenu_browser"]		= "Browser";
+$pgv_lang["adminMenu_users"]		= "Users";
+$pgv_lang["adminMenu_languages"]	= "Languages";
+$pgv_lang["adminMenu_servers"]		= "Servers";
+$pgv_lang["adminMenu_spiders"]		= "Search engines";
+$pgv_lang["adminMenu_block"]		= "Black list";
+$pgv_lang["adminMenu_remotes"]		= "Remote PhpGedView servers";
+$pgv_lang["adminMenu_logs"]			= "Logs";
+$pgv_lang["adminMenu_modules"]		= "Modules";
+$pgv_lang["adminMenu_googlemap"]	= "Googlemap";
+
+$pgv_lang["associated_files"]		= "Associated files:";
+$pgv_lang["remove_all_files"]		= "Remove all nonessential files";
+$pgv_lang["warn_file_delete"]		= "This file contains important information such as language settings or pending change data.  Are you sure you want to delete this file?";
+$pgv_lang["deleted_files"]          = "Deleted files:";
+$pgv_lang["index_dir_cleanup_inst"]	= "To delete a file or subdirectory from the Index directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.<br /><br />Files marked with <img src=\"./images/RESN_confidential.gif\" /> are required for proper operation and cannot be removed.<br />Files marked with <img src=\"./images/RESN_locked.gif\" /> have important settings or pending change data and should only be deleted if you are sure you know what you are doing.<br /><br />";
+$pgv_lang["index_dir_cleanup"]		= "Cleanup Index directory";
 $pgv_lang["clear_cache_succes"]		= "The cache files have been removed.";
 $pgv_lang["clear_cache"]			= "Clear Cache Files";
 $pgv_lang["sanity_err0"]			= "Errors:";

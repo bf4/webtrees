@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Themes
- * @version $Id: theme.php 655 2006-12-17 03:00:01Z canajun2eh $
+ * @version $Id$
  */
 
 $theme_name = "Navigator";		//-- the name of this theme

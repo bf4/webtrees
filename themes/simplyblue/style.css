@@ -205,9 +205,9 @@ table.center {
 .facts_value02 {
 	background-color: #253862;
 	color: white;
-	border: solid #091542 1px;
+	border: solid #094215 1px;
 	font: 12px tahoma, arial, helvetica, sans-serif;
-	padding: 4px 4px 4px 4px; 
+	padding: 5px; 
 }
 
 .facts_labelred, .facts_labelblue {

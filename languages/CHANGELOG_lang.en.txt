@@ -71,6 +71,41 @@ VERSION 4.2
 +$pgv_lang["niece"]									13 May 2007				A
 
 
+
+VERSION 4.1.2
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+----------------------------------------------------------------------------------------
+*$pgv_lang["statvars"]								23 Sep 2007				w
+*$pgv_lang["statlxa"]								23 Sep 2007				w
+*$pgv_lang["statlya"]								23 Sep 2007				w
+*$pgv_lang["statlza"]								23 Sep 2007				w
+*$pgv_lang["stat_301_mf"]							23 Sep 2007				w
+*$pgv_lang["statmess1"]								23 Sep 2007				w
+*$pgv_lang["statar_xgp"]							23 Sep 2007				w
+*$pgv_lang["statar_xgl"]							23 Sep 2007				w
+*$pgv_lang["statar_xgm"]							23 Sep 2007				w
+*$pgv_lang["statar_xga"]							23 Sep 2007				w
+*$pgv_lang["statar_zgp"]							23 Sep 2007				w
+*$pgv_lang["stplgzas"]								23 Sep 2007				w
+*$pgv_lang["stat_16_mmb"]							21 Sep 2007				w
+*$pgv_lang["stat_17_arb"]							21 Sep 2007				w
+*$pgv_lang["stat_18_ard"]							21 Sep 2007				w
+*$pgv_lang["stat_19_arm"]							21 Sep 2007				w
+*$pgv_lang["stat_20_arm1"]							21 Sep 2007				w
+*$pgv_lang["stat_21_nok"]							21 Sep 2007				w
+-$pgv_lang["stat_gmx"]								21 Sep 2007				D
+-$pgv_lang["stat_gax"]								21 Sep 2007				D
+-$pgv_lang["stat_gnx"]								21 Sep 2007				D
+*$pgv_lang["stat_302_cgp"]							21 Sep 2007				w
+*$pgv_lang["statar_xgp"]							21 Sep 2007				w
+*$pgv_lang["statar_xgl"]							21 Sep 2007				w
+*$pgv_lang["statar_xgm"]							21 Sep 2007				w
+*$pgv_lang["statar_xga"]							21 Sep 2007				w
+*$pgv_lang["statar_zgp"]							21 Sep 2007				w
+
+
+
 VERSION 4.1.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments

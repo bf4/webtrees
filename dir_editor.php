@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * 
+ *
  * @author Dparker
  * @package PhpGedView
  * @subpackage Admin
@@ -83,82 +83,100 @@ $ajaxdeleted = false;
 $elements = Array();
 $locked_by_context = array("readme.txt","index.php","gedcoms.php");
 
-print_header("Index Directory Editor");
- 
+print_header($pgv_lang["index_dir_cleanup"]);
+print "<h3>".$pgv_lang["index_dir_cleanup"]."</h3>";
+
+print $pgv_lang['index_dir_cleanup_inst'];
+
 //post back
 if(isset($_REQUEST["to_delete"]))
 {
 	print "<span class=\"error\">".$pgv_lang["deleted_files"]."</span><br/>";
 	foreach($_REQUEST["to_delete"] as $k=>$v){
 		if (is_dir($INDEX_DIRECTORY.$v)) full_rmdir($INDEX_DIRECTORY.$v);
-		else unlink($INDEX_DIRECTORY.$v);
-	 	print "<span class=\"error\">".$v."</span><br/>";
+		else if (file_exists($INDEX_DIRECTORY.$v)) unlink($INDEX_DIRECTORY.$v);
+		print "<span class=\"error\">".$v."</span><br/>";
 	}
-	
+
 }
 
 require_once("js/prototype.js.htm");
 require_once("js/scriptaculous.js.htm");
-//print "<br /><b>".$pgv_lang["index_edit"]."</b>";
-//print_help_link("reorder_children_help", "qm");
-?>
 
+?>
+<script type="text/javascript">
+<!--
+function warnuser(cbox) {
+	if (cbox.checked) {
+		if(!confirm('<?php print $pgv_lang["warn_file_delete"]; ?>')) cbox.checked = false;
+	}
+}
+//-->
+</script>
 <form name="delete_form" method="post" action="">
 <table>
 	<tr>
 		<td>
 		<ul id="reorder_list">
 		<?php
-			
+
+		$locked_with_warning = array("lang_settings.php","pgv_changes.php");
 		//-- lock the GEDCOM and settings files
 		foreach($GEDCOMS as $key=>$val){
 			$locked_by_context[] = str_replace($INDEX_DIRECTORY,"",$val{"privacy"});
 			$locked_by_context[] = str_replace($INDEX_DIRECTORY,"",$val{"config"});
 		}
-					$dir = dir($INDEX_DIRECTORY);
-					
-					$path = $INDEX_DIRECTORY; // snag our path
-					while (false !== ($entry = $dir->read())) {
-		   				//echo $entry."\n";
-						if($entry{0} != '.'){
+		$dir = dir($INDEX_DIRECTORY);
+
+		$path = $INDEX_DIRECTORY; // snag our path
+		while (false !== ($entry = $dir->read())) {
+			//echo $entry."\n";
+			if($entry{0} != '.'){
 				if(isset($GEDCOMS[$entry]))
-								{
+				{
 					$val = $GEDCOMS[$entry];
-									print "<li class=\"facts_value\" alt=\"$entry\" style=\"margin-bottom:2px;\" id=\"lock_$entry\" >";
-									print "<img src=\"./images/RESN_confidential.gif\" />";
-									print "<span class=\"name2\">".$entry."</span>";
-									print "&nbsp;&nbsp; Associated Files:<i>  ".str_replace($path,"",$val{"privacy"});
-									print "  ".str_replace($path,"",$val{"config"})."</i>";
-								}
-								else if (in_array($entry, $locked_by_context)){
-																		
-									print "<li class=\"facts_value\" alt=\"$entry\" style=\"margin-bottom:2px;\" id=\"lock_$entry\" >";
-									print "<img src=\"./images/RESN_confidential.gif\" />";
-									print "<span class=\"name2\">".$entry."</span>";	
-								}
-								else{
-									print "<li class=\"facts_value\" alt=\"$entry\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$entry\" >";
-									print $entry;
-									$element[] = "li_".$entry;
-								}
-							print "</li>";
-							}
-						}
+					print "<li class=\"facts_value\" name=\"$entry\" alt=\"$entry\" style=\"margin-bottom:2px;\" id=\"lock_$entry\" >";
+					print "<img src=\"./images/RESN_confidential.gif\" />&nbsp;&nbsp;";
+					print "<span class=\"name2\">".$entry."</span>";
+					print "&nbsp;&nbsp;{$pgv_lang["associated_files"]}<i>&nbsp;&nbsp;".str_replace($path,"",$val{"privacy"});
+					print "&nbsp;&nbsp;".str_replace($path,"",$val{"config"})."</i>";
+				}
+				else if (in_array($entry, $locked_by_context)) {
+					print "<li class=\"facts_value\" name=\"$entry\" alt=\"$entry\" style=\"margin-bottom:2px;\" id=\"lock_$entry\" >";
+					print "<img src=\"./images/RESN_confidential.gif\" />&nbsp;&nbsp;";
+					print "<span class=\"name2\">".$entry."</span>";
+				}
+				else if (in_array($entry, $locked_with_warning)) {
+					print "<li class=\"facts_value\" name=\"$entry\" warn=\"true\" alt=\"$entry\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$entry\" >";
+					print "<input type=\"checkbox\" name=\"to_delete[]\" warn=\"true\" value=\"".$entry."\" onclick=\"warnuser(this);\" />\n";
+					print "<img src=\"./images/RESN_locked.gif\" />&nbsp;&nbsp;";
+					print $entry;
+					$element[] = "li_".$entry;
+				}
+				else{
+					print "<li class=\"facts_value\" name=\"$entry\" alt=\"$entry\" style=\"cursor:move;margin-bottom:2px;\" id=\"li_$entry\" >";
+					print "<input type=\"checkbox\" name=\"to_delete[]\" value=\"".$entry."\" />\n";
+					print $entry;
+					$element[] = "li_".$entry;
+				}
+				print "</li>";
+			}
+		}
 		?>
 		</ul>
 		</td>
-		<td valign="top" id="trash"><?php
-					$dir->close();
-				
+		<td valign="top" id="trash" class="facts_value02"><?php
+		$dir->close();
+
 		print "<div style=\"margin-bottom:2px;\">";
 		print "<table><tr><td>";
 		if (isset($PGV_IMAGES["trashcan"]["medium"])) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["trashcan"]["medium"]."\" align=\"left\"/>";
-		else print "TRASH";
+		else print "<img src=\"images/trashcan.gif\" align=\"left\"/>";
 		print "</td>";
-				print "<td valign=\"top\"><ul id=\"trashlist\">";
-				print "</ul></td></tr></table>";
-				print "</div>";
-				
+		print "<td valign=\"top\"><ul id=\"trashlist\">";
+		print "</ul></td></tr></table>";
+		print "</div>";
+
 		?> <script type="text/javascript" language="javascript">
 
 	new Effect.BlindDown('reorder_list', {duration: 1});
@@ -173,8 +191,12 @@ require_once("js/scriptaculous.js.htm");
 	 Droppables.add('trash', {
 	 hoverclass: 'facts_valuered',
   onDrop: function(element) 
-     { $('trashlist').innerHTML += 
-        '<li class="facts_value">'+ element.innerHTML +'<input type="hidden" name="to_delete[]" value="'+element.innerHTML+'"/></li>' ; 
+     { 
+     	if (element.attributes.warn) {
+     		if (!confirm('<?php print $pgv_lang["warn_file_delete"]; ?>')) return;
+     	}
+     	$('trashlist').innerHTML += 
+        '<li class="facts_value">'+ element.attributes.name.value +'<input type="hidden" name="to_delete[]" value="'+element.attributes.name.value+'"/></li>' ; 
         element.style.display = "none";
        // element.className='facts_valuered';
         }});
@@ -192,11 +214,21 @@ function ul_clear()
 		}
 	}
 }	
+
+function removeAll() {
+	var elements = document.getElementsByName('to_delete[]');
+	for(i=0; i<elements.length; i++) {
+		node = elements[i];
+		if (!node.attributes.warn) node.checked = true;
+	}
+	document.delete_form.submit();
+}
 </script>
 
 		<button type="submit"><?php print $pgv_lang["delete"];?></button>
-		<button type="button" onclick="ul_clear(); return false;"><?php print $pgv_lang["cancel"];?></button>
-		<?php print_help_link("dir_editor_help","qm", '', false, false); ?></td>
+		<button type="button" onclick="ul_clear(); return false;"><?php print $pgv_lang["cancel"];?></button><br /><br />
+		<button type="button" onclick="removeAll(); return false;"><?php print $pgv_lang["remove_all_files"];?></button>		
+		<?php print_help_link("help_dir_editor.php","qm", '', false, false); ?></td>
 	</tr>
 </table>
 </form>
