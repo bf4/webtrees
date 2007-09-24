@@ -53,8 +53,9 @@ $pgv_lang["warn_file_delete"]		= "This file contains important information such 
 $pgv_lang["deleted_files"]          = "Deleted files:";
 $pgv_lang["index_dir_cleanup_inst"]	= "To delete a file or subdirectory from the Index directory drag it to the wastebasket or select its checkbox.  Click the Delete button to permanently remove the indicated files.<br /><br />Files marked with <img src=\"./images/RESN_confidential.gif\" /> are required for proper operation and cannot be removed.<br />Files marked with <img src=\"./images/RESN_locked.gif\" /> have important settings or pending change data and should only be deleted if you are sure you know what you are doing.<br /><br />";
 $pgv_lang["index_dir_cleanup"]		= "Cleanup Index directory";
+
 $pgv_lang["clear_cache_succes"]		= "The cache files have been removed.";
-$pgv_lang["clear_cache"]			= "Clear Cache Files";
+$pgv_lang["clear_cache"]			= "Clear cache files";
 $pgv_lang["sanity_err0"]			= "Errors:";
 $pgv_lang["sanity_err1"]			= "You need to have PHP version 4.3 or higher.";
 $pgv_lang["sanity_err2"]			= "The file or directory <i>#GLOBALS[whichFile]#</i> does not exist. Please verify that the file or directory exists, was not mis-named, and Read permissions are set correctly.";

@@ -3182,9 +3182,19 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 			break;
 	}
 
-	// Special formatting options; R selects conversion to french republican calendar.
+	// Special formatting options; R selects conversion to a language-dependent calendar.
+	// i.e. a French user will see conversion to the french calendar, a Hebrew user will
+	// see conversion to the hebrew calendar, etc.
 	if (strpos($DATE_FORMAT, 'R')!==false) {
-		$CALENDAR_FORMAT='french';
+		switch ($LANGUAGE) {
+		case 'french':
+		case 'hebrew':
+		case 'arabic':
+			// Two ways of doing this:
+			$CALENDAR_FORMAT=$LANGUAGE; // override gedcom calendar choice
+			// if (strpos($CALENDAR_FORMAT, $LANGUAGE)===false) $CALENDAR_FORMAT.="_and_{$language}"; // add to gedcom calendar choice
+			break;
+		}
   	$DATE_FORMAT=trim(str_replace('R', '', $DATE_FORMAT));
 	}
 

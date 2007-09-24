@@ -892,8 +892,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		txt=txt.replace(/\+/g,''); // +17.1234 ==> 17.1234
 		txt=txt.replace(/-/g,neg);	// -0.5698 ==> W0.5698
 		txt=txt.replace(/,/g,'.');	// 0,5698 ==> 0.5698
-		// 0ï¿½34'11 ==> 0:34:11
-		txt=txt.replace(/\uB0/g,':'); // ï¿½
+		// 0°34'11 ==> 0:34:11
+		txt=txt.replace(/\uB0/g,':'); // °
 		txt=txt.replace(/\u27/g,':'); // '
 		// 0:34:11.2W ==> W0.5698
 		txt=txt.replace(/^([0-9]+):([0-9]+):([0-9.]+)(.*)/g, function($0, $1, $2, $3, $4) { var n=parseFloat($1); n+=($2/60); n+=($3/3600); n=Math.round(n*1E4)/1E4; return $4+n; });

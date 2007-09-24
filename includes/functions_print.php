@@ -2743,6 +2743,8 @@ function get_lds_glance($indirec) {
  */
 
 function DumpString($input) {
+	global $LRM; $RLM;
+
 	if (empty($input)) return false;
 
 	$UTF8 = array();
@@ -2818,8 +2820,6 @@ function DumpString($input) {
 	$haveByte2 = (trim($hex2L)!="");
 
 	// We're ready: now output everything
-	$lrm = chr(0xE2).chr(0x80).chr(0x8E);
-	$rlm = chr(0xE2).chr(0x80).chr(0x8F);
 	print "<br /><code><span dir=\"ltr\">";
 	while (true) {
 		$lineLength = $lastPos - $pos;
@@ -2836,7 +2836,7 @@ function DumpString($input) {
 			if (ord(substr($UTF8[$i], 0, 1)) < 0x20) $thisLine .= getLRM() . " ";
 			else $thisLine .= getLRM() . $UTF8[$i];
 		}
-		print str_replace(array(" ", $lrm, $rlm), array("&nbsp;", "&nbsp;", "&nbsp;"), $thisLine)."<br />";
+		print str_replace(array(" ", $LRM, $RLM), array("&nbsp;", "&nbsp;", "&nbsp;"), $thisLine)."<br />";
 
 		// Line 3:  First hexadecimal byte
 		$thisLine = "Byte 1 ";

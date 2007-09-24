@@ -616,6 +616,12 @@ $pgv_lang["timeline_controls"] = "Timeline Controls";
 $pgv_lang["include_family"] = "Include Immediate Family";
 $pgv_lang["lifespan_chart"] = "Lifespan Chart";
 
+// am/pm suffixes for 12 hour clocks
+$pgv_lang["a.m."]         = "am";
+$pgv_lang["p.m."]         = "pm";
+$pgv_lang["noon"]         = "m";
+$pgv_lang["midn"]         = "mn";
+
 //-- MONTH NAMES
 $pgv_lang["jan"]					= "January";
 $pgv_lang["feb"]					= "February";

@@ -53,7 +53,6 @@ VERSION 4.1.2
 +$pgv_lang["index_dir_cleanup"]						19 Sep 2007				A
 
 
-
 VERSION 4.1
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments

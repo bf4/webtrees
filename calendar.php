@@ -50,6 +50,10 @@ $ged_date=new GedcomDate("$cal $day $month $year");
 $cal_date=$ged_date->date1;
 $cal=urlencode($cal);
 
+// Invalid month?  Pick a sensible one.
+if ($cal_date->CALENDAR_ESCAPE=='@#DHEBREW@' && $cal_date->m==7 && $cal_date->y!=0 && !$cal_date->IsLeapYear())
+	$cal_date->m=6;
+
 // Fill in any missing bits with todays date
 $today=$cal_date->Today();
 if ($cal_date->d==0) $cal_date->d=$today->d;
@@ -62,6 +66,10 @@ $days_in_month=$cal_date->Format('t');
 $days_in_week=$cal_date->NUM_DAYS_OF_WEEK;
 $cal_month=$cal_date->Format('O');
 $today_month=$today->Format('O');
+
+// Invalid dates?  Go to monthly view, where they'll be found.
+if ($cal_date->d>$days_in_month && $action=='today')
+	$action='calendar';
 
 // Print the header stuff
 print_header($pgv_lang['anniversary_calendar']);
@@ -114,11 +122,13 @@ if ($view!='preview') {
 			if ($n==$cal_date->m)
 				print "<span class=\"error\">{$pgv_lang[$m]}</span>";
 			else {
-				if ($cal_date->CALENDAR_ESCAPE=='@#DHEBREW@' && !$cal_date->IsLeapYear() && $n==7)
+				if ($n==7 && $cal_date->CALENDAR_ESCAPE=='@#DHEBREW@' && !$cal_date->IsLeapYear())
 					continue;
-				if ($cal_date->CALENDAR_ESCAPE=='@#DHEBREW@' && $cal_date->IsLeapYear() && $n==6)
-					$m.='_leap_year';
-				print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$m}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">{$pgv_lang[$m]}</a>";
+				if ($n==6 && $cal_date->CALENDAR_ESCAPE=='@#DHEBREW@' && $cal_date->IsLeapYear())
+					$l.='_leap_year';
+				else
+					$l='';
+				print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$m}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">{$pgv_lang[$m.$l]}</a>";
 			}
 		 print ' | ';
 		}
@@ -310,14 +320,13 @@ case 'calendar':
 	for ($d=0; $d<=$days_in_month; ++$d)
 		$found_facts[$d]=array();
 	// Fetch events for each day
-	for ($jd=$cal_date->minJD, $d=1; $jd<=$cal_date->maxJD; ++$jd, ++$d)
+	for ($jd=$cal_date->minJD; $jd<=$cal_date->maxJD; ++$jd)
 		foreach (apply_filter(get_anniversary_events($jd, $events), $filterof, $filtersx) as $event) {
 			$tmp=new GedcomDate($event['date']);
-	 		//if ($tmp->date1->minJD != $tmp->date1->maxJD) // PHP5
-	 		$tmp2=$tmp->date1; if ($tmp2->minJD != $tmp->date1->maxJD) // PHP4
-				$found_facts[0][$event['id']]=$event;
-			else
-				$found_facts[$d][$event['id']]=$event;
+			$d=$tmp->date1->d;
+			if ($d<1 || $d>$days_in_month)
+				$d=0;
+			$found_facts[$d][$event['id']]=$event;
 		}
 	break;
 case 'year':
@@ -340,19 +349,19 @@ case 'today':
 	$indis=array();
 	$fams=array();
 	foreach ($found_facts as $fact) {
-		$fact_text=calendar_fact_text($fact, $action=='year');
+		$fact_text=calendar_fact_text($fact, true);
 		switch ($fact['objtype']) {
 		case 'INDI':
 			if (empty($indis[$fact['id']]))
 				$indis[$fact['id']]=$fact_text;
 			else
-				$indis[$fact['id']].=$fact_text;
+				$indis[$fact['id']].='<br/>'.$fact_text;
 			break;
 		case 'FAM':
 			if (empty($fams[$fact['id']]))
 				$fams[$fact['id']]=$fact_text;
 			else
-				$fams[$fact['id']].=$fact_text;
+				$fams[$fact['id']].='<br/>'.$fact_text;
 			break;
 		}
 	}
@@ -365,7 +374,7 @@ case 'calendar':
 			if (empty($cal_facts[$d][$id]))
 				$cal_facts[$d][$id]=calendar_fact_text($fact, false);
 			else
-				$cal_facts[$d][$id].=calendar_fact_text($fact, false);
+				$cal_facts[$d][$id].='<br/>'.calendar_fact_text($fact, false);
 		}
 	}
 	break;
@@ -541,11 +550,11 @@ function apply_filter($facts, $filterof, $filtersx) {
 function calendar_fact_text($fact, $show_places) {
 	global $factarray, $pgv_lang, $TEXT_DIRECTION;
 	$date=new GedcomDate($fact['date']);
-	$text='</br>'.$factarray[$fact['fact']].' - '.$date->Display(true, "", array());
+	$text=$factarray[$fact['fact']].' - '.$date->Display(true, "", array());
 	if ($fact['anniv']>0)
 		$text.=' <span dir="'.$TEXT_DIRECTION.'">('.str_replace('#year_var#', $fact['anniv'], $pgv_lang['year_anniversary']).')</span>';
 	if ($show_places && !empty($fact['plac']))
-		$text.='<br/>'.$fact['plac'];
+		$text.=' - '.$fact['plac'];
 	return $text;
 }
 
@@ -557,7 +566,7 @@ function calendar_list_text($list, $tag1, $tag2, $show_sex_symbols) {
 	global $males, $females;
 	foreach ($list as $id=>$facts) {
 		$tmp=GedcomRecord::GetInstance($id);
-		print "{$tag1}<a href=\"".$tmp->getLinkUrl()."\">".$tmp->getSortableName()."</a>&nbsp;";
+		print "{$tag1}<a href=\"".$tmp->getLinkUrl()."\">".PrintReady($tmp->getSortableName())."</a>&nbsp;";
 		if ($show_sex_symbols && $tmp->getType()=='INDI')
 			switch ($tmp->getSex()) {
 			case 'M':

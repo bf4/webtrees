@@ -40,7 +40,6 @@ The above list of codes may be amended as new situations arise.
 For massive changes, the variable names should be listed in the order in which they
 occur in the respective language files.
 
-
 VERSION 4.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
@@ -71,7 +70,6 @@ VERSION 4.1.2
 +$pgv_lang["stat_help_gwz"]							21 Sep 2007				A
 *$pgv_lang["help_dir_editor.php"]					20 Sep 2007				w
 +$pgv_lang["help_dir_editor.php"]					19 Sep 2007				A
-
 
 
 VERSION 4.1.1

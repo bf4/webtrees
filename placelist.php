@@ -50,11 +50,8 @@ else {
 	else $parent = array_values($parent);
 }
 // Remove slashes
-$lrm = chr(0xE2).chr(0x80).chr(0x8E);
-$rlm = chr(0xE2).chr(0x80).chr(0x8F);
 foreach ($parent as $p => $child){
-	$child = stripslashes($child);
-	$parent[$p] = str_replace(array($lrm, $rlm), "", $child);
+	$parent[$p] = stripLRMRLM(stripslashes($child));
 }
 
 if (!isset($level)) {

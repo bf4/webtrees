@@ -228,6 +228,7 @@ if ($action=="update") {
 	if (!empty($gedcom_title)) $gedarray["title"] = $gedcom_title;
 	else if (!empty($_POST["gedcom_title"])) $gedarray["title"] = $_POST["gedcom_title"];
 	else $gedarray["title"] = str_replace("#GEDCOMFILE#", $GEDFILENAME, $pgv_lang["new_gedcom_title"]);
+	$gedarray["title"] = stripLRMRLM($gedarray["title"]);
 	$gedarray["path"] = $path.$GEDFILENAME;
 	$gedarray["id"] = $gedcom_id;
 
