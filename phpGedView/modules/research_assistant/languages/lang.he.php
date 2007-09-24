@@ -29,6 +29,9 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
 	exit;
 }
+$pgv_lang["autosearch_ssurname"] = "כלול שם משפחה של בן/בת זוג:"; 
+$pgv_lang["autosearch_sgivennames"] = "כלול שמות פרטיים של בן/בת זוג:"; 
+$pgv_lang["autosearch_plugin_name_gensearchhelp"] = "חיבור Genealogy-Search-Help.com";
 
 $pgv_lang["add_task_inst"]		= "אם משימה לתוצאות המחקר שלך עדיין לא נוצרה, עלך ליצור קודם כל את המשימה ואח\"כ לבחור את האופציה של שמירת וסיום המשימה."; 
 $pgv_lang["complete_task_inst"]	= "בחר משימה מרשימת המשימות שלך שלמטה כדי לסים את המשימה ולהכניס את תוצאותיך:";  
