@@ -122,9 +122,9 @@ if ($view!='preview') {
 			if ($n==$cal_date->m)
 				print "<span class=\"error\">{$pgv_lang[$m]}</span>";
 			else {
-				if ($cal_date->CALENDAR_ESCAPE=='@#DHEBREW@' && !$cal_date->IsLeapYear() && $n==7)
+				if ($n==7 && $cal_date->CALENDAR_ESCAPE=='@#DHEBREW@' && !$cal_date->IsLeapYear())
 					continue;
-				if ($cal_date->CALENDAR_ESCAPE=='@#DHEBREW@' && $cal_date->IsLeapYear() && $n==6)
+				if ($n==6 && $cal_date->CALENDAR_ESCAPE=='@#DHEBREW@' && $cal_date->IsLeapYear())
 					$l.='_leap_year';
 				else
 					$l='';
@@ -349,19 +349,19 @@ case 'today':
 	$indis=array();
 	$fams=array();
 	foreach ($found_facts as $fact) {
-		$fact_text=calendar_fact_text($fact, $action=='year');
+		$fact_text=calendar_fact_text($fact, true);
 		switch ($fact['objtype']) {
 		case 'INDI':
 			if (empty($indis[$fact['id']]))
 				$indis[$fact['id']]=$fact_text;
 			else
-				$indis[$fact['id']].=$fact_text;
+				$indis[$fact['id']].='<br/>'.$fact_text;
 			break;
 		case 'FAM':
 			if (empty($fams[$fact['id']]))
 				$fams[$fact['id']]=$fact_text;
 			else
-				$fams[$fact['id']].=$fact_text;
+				$fams[$fact['id']].='<br/>'.$fact_text;
 			break;
 		}
 	}
@@ -374,7 +374,7 @@ case 'calendar':
 			if (empty($cal_facts[$d][$id]))
 				$cal_facts[$d][$id]=calendar_fact_text($fact, false);
 			else
-				$cal_facts[$d][$id].=calendar_fact_text($fact, false);
+				$cal_facts[$d][$id].='<br/>'.calendar_fact_text($fact, false);
 		}
 	}
 	break;
@@ -550,11 +550,11 @@ function apply_filter($facts, $filterof, $filtersx) {
 function calendar_fact_text($fact, $show_places) {
 	global $factarray, $pgv_lang, $TEXT_DIRECTION;
 	$date=new GedcomDate($fact['date']);
-	$text='</br>'.$factarray[$fact['fact']].' - '.$date->Display(true, "", array());
+	$text=$factarray[$fact['fact']].' - '.$date->Display(true, "", array());
 	if ($fact['anniv']>0)
 		$text.=' <span dir="'.$TEXT_DIRECTION.'">('.str_replace('#year_var#', $fact['anniv'], $pgv_lang['year_anniversary']).')</span>';
 	if ($show_places && !empty($fact['plac']))
-		$text.='<br/>'.$fact['plac'];
+		$text.=' - '.$fact['plac'];
 	return $text;
 }
 
