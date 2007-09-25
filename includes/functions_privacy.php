@@ -586,7 +586,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 	    	$disp = true;
 	    	$sourcerec = find_source_record($pid);
 	    	if (!empty($sourcerec)) {
-	    		$repoid = get_gedcom_value("REPO", 1, $sourcrec);
+	    		$repoid = get_gedcom_value("REPO", 1, $sourcerec);
 	    		$disp = displayDetailsByID($repoid, "REPO");
 	    	}
 	    	$privacy_cache[$pkey] = $disp;
