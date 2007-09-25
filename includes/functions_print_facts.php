@@ -856,127 +856,130 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 	$ct = preg_match_all("/$level SOUR @(.*)@/", $factrec, $match, PREG_SET_ORDER);
 	$spos2 = 0;
 	for($j=0; $j<$ct; $j++) {
-		$spos1 = strpos($factrec, "$level SOUR @".$match[$j][1]."@", $spos2);
+		$sid = $match[$j][1];
+		$spos1 = strpos($factrec, "$level SOUR @".$sid."@", $spos2);
 		$spos2 = strpos($factrec, "\n$level", $spos1);
 		if (!$spos2) $spos2 = strlen($factrec);
 		$srec = substr($factrec, $spos1, $spos2-$spos1);
 		if (!showFact("SOUR", $pid) || FactViewRestricted($pid, $factrec)) return false;
-		print "\n\t\t\t<tr><td class=\"descriptionbox $styleadd center width20\">";
-		//print "\n\t\t\t<tr><td class=\"facts_label$styleadd\">";
-		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" alt=\"\" /><br />";
-		print $factarray["SOUR"];
-		if (!$noedit && userCanEdit(getUserName())&&(!FactEditRestricted($pid, $factrec))&&($styleadd!="red")&&($view!="preview")) {
-			$menu = array();
-			$menu["label"] = $pgv_lang["edit"];
-			$menu["labelpos"] = "right";
-			$menu["icon"] = "";
-			$menu["link"] = "#";
-			$menu["onclick"] = "return edit_record('$pid', $linenum);";
-			$menu["class"] = "";
-			$menu["hoverclass"] = "";
-			$menu["flyout"] = "down";
-			$menu["submenuclass"] = "submenu";
-			$menu["items"] = array();
-			$submenu = array();
-			$submenu["label"] = $pgv_lang["edit"];
-			$submenu["labelpos"] = "right";
-			$submenu["icon"] = "";
-			$submenu["onclick"] = "return edit_record('$pid', $linenum);";
-			$submenu["link"] = "#";
-			$submenu["class"] = "submenuitem";
-			$submenu["hoverclass"] = "submenuitem_hover";
-			$menu["items"][] = $submenu;
-			$submenu = array();
-			$submenu["label"] = $pgv_lang["delete"];
-			$submenu["labelpos"] = "right";
-			$submenu["icon"] = "";
-			$submenu["onclick"] = "return delete_record('$pid', $linenum);";
-			$submenu["link"] = "#";
-			$submenu["class"] = "submenuitem";
-			$submenu["hoverclass"] = "submenuitem_hover";
-			$menu["items"][] = $submenu;
-			$submenu = array();
-			$submenu["label"] = $pgv_lang["copy"];
-			$submenu["labelpos"] = "right";
-			$submenu["icon"] = "";
-			$submenu["onclick"] = "return copy_record('$pid', $linenum);";
-			$submenu["link"] = "#";
-			$submenu["class"] = "submenuitem";
-			$submenu["hoverclass"] = "submenuitem_hover";
-			$menu["items"][] = $submenu;
-			print " <div style=\"width:25px;\">";
-			print_menu($menu);
-			print "</div>";
-		}
-		print "</td>";
-		print "\n\t\t\t<td class=\"optionbox $styleadd wrap\">";
-		//print "\n\t\t\t<td class=\"facts_value$styleadd\">";
-		if (showFactDetails("SOUR", $pid)) {
-			$source = find_source_record($match[$j][1]);
-			echo "<a href=\"source.php?sid=".$match[$j][1]."\">";
-			$text = PrintReady(get_source_descriptor($match[$j][1]));
-			//-- Print additional source title
-			$add_descriptor = get_add_source_descriptor($match[$j][1]);
-			if ($add_descriptor) $text .= " - ".PrintReady($add_descriptor);
-			if (strpos($source, " _ITALIC")) echo "<i>".$text."</i>"; else echo $text;
-			echo "</a>";
-			// PUBL
-			$text = get_gedcom_value("PUBL", "1", $source);
-			if (!empty($text)) {
-				echo "<br /><span class=\"label\">".$factarray["PUBL"].": </span>";
-				if (strpos($source, " _PAREN")) echo "(".$text.")"; else echo $text;
+		if (displayDetailsById($sid, "SOUR")) {
+			print "\n\t\t\t<tr><td class=\"descriptionbox $styleadd center width20\">";
+			//print "\n\t\t\t<tr><td class=\"facts_label$styleadd\">";
+			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" alt=\"\" /><br />";
+			print $factarray["SOUR"];
+			if (!$noedit && userCanEdit(getUserName())&&(!FactEditRestricted($pid, $factrec))&&($styleadd!="red")&&($view!="preview")) {
+				$menu = array();
+				$menu["label"] = $pgv_lang["edit"];
+				$menu["labelpos"] = "right";
+				$menu["icon"] = "";
+				$menu["link"] = "#";
+				$menu["onclick"] = "return edit_record('$pid', $linenum);";
+				$menu["class"] = "";
+				$menu["hoverclass"] = "";
+				$menu["flyout"] = "down";
+				$menu["submenuclass"] = "submenu";
+				$menu["items"] = array();
+				$submenu = array();
+				$submenu["label"] = $pgv_lang["edit"];
+				$submenu["labelpos"] = "right";
+				$submenu["icon"] = "";
+				$submenu["onclick"] = "return edit_record('$pid', $linenum);";
+				$submenu["link"] = "#";
+				$submenu["class"] = "submenuitem";
+				$submenu["hoverclass"] = "submenuitem_hover";
+				$menu["items"][] = $submenu;
+				$submenu = array();
+				$submenu["label"] = $pgv_lang["delete"];
+				$submenu["labelpos"] = "right";
+				$submenu["icon"] = "";
+				$submenu["onclick"] = "return delete_record('$pid', $linenum);";
+				$submenu["link"] = "#";
+				$submenu["class"] = "submenuitem";
+				$submenu["hoverclass"] = "submenuitem_hover";
+				$menu["items"][] = $submenu;
+				$submenu = array();
+				$submenu["label"] = $pgv_lang["copy"];
+				$submenu["labelpos"] = "right";
+				$submenu["icon"] = "";
+				$submenu["onclick"] = "return copy_record('$pid', $linenum);";
+				$submenu["link"] = "#";
+				$submenu["class"] = "submenuitem";
+				$submenu["hoverclass"] = "submenuitem_hover";
+				$menu["items"][] = $submenu;
+				print " <div style=\"width:25px;\">";
+				print_menu($menu);
+				print "</div>";
 			}
-			// See if RESN tag prevents display or edit/delete
-			$resn_tag = preg_match("/2 RESN (.*)/", $factrec, $rmatch);
-			if ($resn_tag > 0) $resn_value = strtolower(trim($rmatch[1]));
-			// -- Find RESN tag
-			if (isset($resn_value)) {
-				print "<img src=\"images/RESN_".$resn_value.".gif\" alt=\"".$pgv_lang[$resn_value]."\" title=\"".$pgv_lang[$resn_value]."\" />\n";
-				print_help_link("RESN_help", "qm");
-			}
-			if ($source) {
-				$cs = preg_match("/$nlevel PAGE (.*)/", $srec, $cmatch);
-				if ($cs>0) {
-					print "\n\t\t\t<br /><span class=\"label\">".$factarray["PAGE"].": </span>".$cmatch[1];
-					$text = get_cont($nlevel+1, $srec);
-					$text = expand_urls($text);
-					print PrintReady($text);
+			print "</td>";
+			print "\n\t\t\t<td class=\"optionbox $styleadd wrap\">";
+			//print "\n\t\t\t<td class=\"facts_value$styleadd\">";
+			if (showFactDetails("SOUR", $pid)) {
+				$source = find_source_record($sid);
+				echo "<a href=\"source.php?sid=".$sid."\">";
+				$text = PrintReady(get_source_descriptor($sid));
+				//-- Print additional source title
+				$add_descriptor = get_add_source_descriptor($sid);
+				if ($add_descriptor) $text .= " - ".PrintReady($add_descriptor);
+				if (strpos($source, " _ITALIC")) echo "<i>".$text."</i>"; else echo $text;
+				echo "</a>";
+				// PUBL
+				$text = get_gedcom_value("PUBL", "1", $source);
+				if (!empty($text)) {
+					echo "<br /><span class=\"label\">".$factarray["PUBL"].": </span>";
+					if (strpos($source, " _PAREN")) echo "(".$text.")"; else echo $text;
 				}
-				$cs = preg_match("/$nlevel EVEN (.*)/", $srec, $cmatch);
-				if ($cs>0) {
-					print "<br /><span class=\"label\">".$factarray["EVEN"]." </span><span class=\"field\">".$cmatch[1]."</span>";
-					$cs = preg_match("/".($nlevel+1)." ROLE (.*)/", $srec, $cmatch);
-					if ($cs>0) print "\n\t\t\t<br />&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"label\">".$factarray["ROLE"]." </span><span class=\"field\">$cmatch[1]</span>";
+				// See if RESN tag prevents display or edit/delete
+				$resn_tag = preg_match("/2 RESN (.*)/", $factrec, $rmatch);
+				if ($resn_tag > 0) $resn_value = strtolower(trim($rmatch[1]));
+				// -- Find RESN tag
+				if (isset($resn_value)) {
+					print "<img src=\"images/RESN_".$resn_value.".gif\" alt=\"".$pgv_lang[$resn_value]."\" title=\"".$pgv_lang[$resn_value]."\" />\n";
+					print_help_link("RESN_help", "qm");
 				}
-				$cs = preg_match("/$nlevel DATA/", $srec, $cmatch);
-				if ($cs>0) {
-					print "<br /><span class=\"label\">".$factarray["DATA"]." </span>";
-					$cs = preg_match("/".($nlevel+1)." DATE (.*)/", $srec, $cmatch);
-					if ($cs>0) print "\n\t\t\t<br />&nbsp;&nbsp;<span class=\"label\">".$factarray["DATE"].":  </span><span class=\"field\">$cmatch[1]</span>";
-					$tt = preg_match_all("/".($nlevel+1)." TEXT (.*)/", $srec, $tmatch, PREG_SET_ORDER);
-					for($k=0; $k<$tt; $k++) {
-						print "<br />&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"label\">".$pgv_lang["text"]." </span>\n";
-						print "<span class=\"field\">".$tmatch[$k][1];
-						print get_cont($nlevel+2, $srec);
+				if ($source) {
+					$cs = preg_match("/$nlevel PAGE (.*)/", $srec, $cmatch);
+					if ($cs>0) {
+						print "\n\t\t\t<br /><span class=\"label\">".$factarray["PAGE"].": </span>".$cmatch[1];
+						$text = get_cont($nlevel+1, $srec);
+						$text = expand_urls($text);
+						print PrintReady($text);
+					}
+					$cs = preg_match("/$nlevel EVEN (.*)/", $srec, $cmatch);
+					if ($cs>0) {
+						print "<br /><span class=\"label\">".$factarray["EVEN"]." </span><span class=\"field\">".$cmatch[1]."</span>";
+						$cs = preg_match("/".($nlevel+1)." ROLE (.*)/", $srec, $cmatch);
+						if ($cs>0) print "\n\t\t\t<br />&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"label\">".$factarray["ROLE"]." </span><span class=\"field\">$cmatch[1]</span>";
+					}
+					$cs = preg_match("/$nlevel DATA/", $srec, $cmatch);
+					if ($cs>0) {
+						print "<br /><span class=\"label\">".$factarray["DATA"]." </span>";
+						$cs = preg_match("/".($nlevel+1)." DATE (.*)/", $srec, $cmatch);
+						if ($cs>0) print "\n\t\t\t<br />&nbsp;&nbsp;<span class=\"label\">".$factarray["DATE"].":  </span><span class=\"field\">$cmatch[1]</span>";
+						$tt = preg_match_all("/".($nlevel+1)." TEXT (.*)/", $srec, $tmatch, PREG_SET_ORDER);
+						for($k=0; $k<$tt; $k++) {
+							print "<br />&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"label\">".$pgv_lang["text"]." </span>\n";
+							print "<span class=\"field\">".$tmatch[$k][1];
+							print get_cont($nlevel+2, $srec);
+							print "</span>";
+						}
+					}
+					$cs = preg_match("/$nlevel QUAY (.*)/", $srec, $cmatch);
+					if ($cs>0) print "<br /><span class=\"label\">".$factarray["QUAY"]." </span><span class=\"field\">".$cmatch[1]."</span>";
+					$cs = preg_match_all("/$nlevel TEXT (.*)/", $srec, $tmatch, PREG_SET_ORDER);
+					for($k=0; $k<$cs; $k++) {
+						print "<br /><span class=\"label\">".$pgv_lang["text"]." </span><span class=\"field\">".$tmatch[$k][1];
+						$trec = get_sub_record($nlevel, $tmatch[$k][0], $srec);
+						$text = get_cont($nlevel+1, $trec);
+						$text = expand_urls($text);
+						print $text;
 						print "</span>";
 					}
+					print_media_links($srec, $nlevel);
+					print_fact_notes($srec, $nlevel);
 				}
-				$cs = preg_match("/$nlevel QUAY (.*)/", $srec, $cmatch);
-				if ($cs>0) print "<br /><span class=\"label\">".$factarray["QUAY"]." </span><span class=\"field\">".$cmatch[1]."</span>";
-				$cs = preg_match_all("/$nlevel TEXT (.*)/", $srec, $tmatch, PREG_SET_ORDER);
-				for($k=0; $k<$cs; $k++) {
-					print "<br /><span class=\"label\">".$pgv_lang["text"]." </span><span class=\"field\">".$tmatch[$k][1];
-					$trec = get_sub_record($nlevel, $tmatch[$k][0], $srec);
-					$text = get_cont($nlevel+1, $trec);
-					$text = expand_urls($text);
-					print $text;
-					print "</span>";
-				}
-				print_media_links($srec, $nlevel);
-				print_fact_notes($srec, $nlevel);
 			}
+			print "</td></tr>";
 		}
-		print "</td></tr>";
 	}
 }
 
