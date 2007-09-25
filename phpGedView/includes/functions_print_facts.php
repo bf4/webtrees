@@ -53,7 +53,7 @@ function expand_urls($text) {
 			'$m',
 			'return "<a href=\"".$m[0]."\" target=\"blank\">".preg_replace("/\b/", "<wbr/>", $m[0])."</a>";'
 		),
-		str_replace("<", "&lt;", $text)
+		preg_replace("/<(?!br)/i", "&lt;", $text) // no html except br
 	);
 }
 
