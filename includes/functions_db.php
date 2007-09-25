@@ -3078,21 +3078,105 @@ function get_anniversary_events($jd, $facts='') {
 			$where="WHERE (d_type IS NULL OR d_type='{$anniv->CALENDAR_ESCAPE}')";
 		else
 			$where="WHERE d_type='{$anniv->CALENDAR_ESCAPE}'";
-		// Dates without days go on the first day of the month
-		// Dates with invalid days go on the last day of the month
-		if ($anniv->d==1)
-			$where.=" AND d_day<=1";
-		else
-			if ($anniv->d==$anniv->Format('t'))
-				$where.=" AND d_day>={$anniv->d}";
-			else
-				$where.=" AND d_day={$anniv->d}";
-		// Only events with a month have anniversaries
-		// On non-leap hebrew years, ADR also matches ADS
-		if ($anniv->CALENDAR_ESCAPE=='@#DHEBREW@' && $anniv->m==6 && !$anniv->IsLeapYear())
-			$where.=" AND (d_mon=6 OR d_mon=7)";
-		else
+		// SIMPLE CASES:
+		// a) Non-hebrew anniversaries
+		// b) Hebrew months TVT, SHV, IYR, SVN, TMZ, AAV, ELL
+		if ($anniv->CALENDAR_ESCAPE!='@#DHEBREW@' || in_array($anniv->m, array(1, 5, 9, 10, 11, 12, 13))) {
+			// Dates without days go on the first day of the month
+			// Dates with invalid days go on the last day of the month
+			if ($anniv->d==1) {
+				$where.=" AND d_day<=1";
+			} else
+				if ($anniv->d==$anniv->Format('t'))
+					$where.=" AND d_day>={$anniv->d}";
+				else
+					$where.=" AND d_day={$anniv->d}";
 			$where.=" AND d_mon={$anniv->m}";
+		} else {
+			// SPECIAL CASES:
+			switch ($anniv->m) {
+			case 2:
+				// 29 CSH does not include 30 CSH (but would include an invalid 31 CSH if there were no 30 CSH)
+				if ($anniv->d==1)
+					$where.=" AND d_day<=1 AND d_mon=2";
+				else
+					if ($anniv->d==30)
+						$where.=" AND d_day>=30 AND d_mon=2";
+					else
+						if ($anniv->d==29 && $anniv->Format('t')==29)
+							$where.=" AND (d_day=29 OR d_day>30) AND d_mon=2";
+						else
+							$where.=" AND d_day={$anniv->d} AND d_mon=2";
+				break;
+			case 3:
+				// 1 KSL includes 30 CSH (if this year didn't have 30 CSH)
+				// 29 KSL does not include 30 KSL (but would include an invalid 31 KSL if there were no 30 KSL)
+				if ($anniv->d==1) {
+					$tmp=new JewishDate(array($anniv->y, 'csh', 1));
+					if ($tmp->Format('t')==29)
+						$where.=" AND (d_day<=1 AND d_mon=3 OR d_day=30 AND d_mon=2)";
+					else
+						$where.=" AND d_day<=1 AND d_mon=3";
+				} else
+					if ($anniv->d==30)
+						$where.=" AND d_day>=30 AND d_mon=3";
+					else
+						if ($anniv->d==29 && $anniv->Format('t')==29)
+							$where.=" AND (d_day=29 OR d_day>30) AND d_mon=3";
+						else
+							$where.=" AND d_day={$anniv->d} AND d_mon=3";
+				break;
+			case 4:
+				// 1 TVT includes 30 KSL (if this year didn't have 30 KSL)
+				if ($anniv->d==1) {
+					$tmp=new JewishDate($anniv->y, 'ksl', 1);
+					if ($tmp->Format('t')==29)
+						$where.=" AND (d_day<=1 AND d_mon=4 OR d_day=30 AND d_mon=3)";
+					else
+						$where.=" AND d_day<=1 AND d_mon=4";
+				} else
+					if ($anniv->d==$anniv->Format('t'))
+						$where.=" AND d_day>={$anniv->d} AND d_mon=4";
+					else
+						$where.=" AND d_day={$anniv->d} AND d_mon=4";
+				break;
+			case 6: // ADR (non-leap) includes ADS (leap)
+				if ($anniv->d==1)
+					$where.=" AND d_day<=1";
+				else
+					if ($anniv->d==$anniv->Format('t'))
+						$where.=" AND d_day>={$anniv->d}";
+					else
+						$where.=" AND d_day={$anniv->d}";
+				if ($anniv->IsLeapYear())
+					$where.=" AND (d_mon=6 AND MOD(7*d_year+1,19)<7)";
+				else
+					$where.=" AND (d_mon=6 OR d_mon=7)";
+				break;
+			case 7: // ADS includes ADR (non-leap)
+				if ($anniv->d==1)
+					$where.=" AND d_day<=1";
+				else
+					if ($anniv->d==$anniv->Format('t'))
+						$where.=" AND d_day>={$anniv->d}";
+					else
+						$where.=" AND d_day={$anniv->d}";
+				$where.=" AND (d_mon=6 AND MOD(7*d_year+1,19)>=7 OR d_mon=7)";
+				break;
+			case 8: // 1 NSN includes 30 ADR, if this year is non-leap
+				if ($anniv->d==1) {
+					if ($anniv->IsLeapYear())
+						$where.=" AND d_day<=1 AND d_mon=8";
+					else
+						$where.=" AND (d_day<=1 AND d_mon=8 OR d_day=30 AND d_mon=6)";
+				} else
+					if ($anniv->d==$anniv->Format('t'))
+						$where.=" AND d_day>={$anniv->d} AND d_mon=8";
+					else
+						$where.=" AND d_day={$anniv->d} AND d_mon=8";
+				break;
+			}
+		}
 		// Only events in the past (includes dates without a year)
 		$where.=" AND d_year<={$anniv->y}";
 		// Restrict to certain types of fact
@@ -3117,20 +3201,13 @@ function get_anniversary_events($jd, $facts='') {
 				// to be cached.  We should store the level1 fact here (or somewhere)
 				$ged_date_regex="/2 DATE.*({$row[3]}\s*".($row[4]>0 ? "0*{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "").")/i";
 				foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
-					if (preg_match("/1 {$row[7]}/", $factrec) && preg_match($ged_date_regex, $factrec, $dmatch)) {
-						preg_match('/2 DATE (.+)/', $factrec, $match);
-						$date=$match[1];
+					if (preg_match("/1 {$row[7]}/", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)){
+						$date=new GedcomDate($match[1]);
 						if (preg_match('/2 PLAC (.+)/', $factrec, $match))
 							$plac=$match[1];
 						else
 							$plac='';
 						$found_facts[]=array(
-							// These numeric elements are deprecated
-							0=>$row[0],
-							1=>$factrec,
-							2=>$row[2],
-							3=>jdtounix($jd),
-							// Should use these elements instead
 							'id'=>$row[0],
 							'objtype'=>$row[2],
 							'fact'=>$row[7],
@@ -3194,15 +3271,13 @@ function get_calendar_events($jd1, $jd2, $facts='') {
 			// to be cached.  We should store the level1 fact here (or somewhere)
 			$ged_date_regex="/2 DATE.*({$row[3]}\s*".($row[4]>0 ? "0*{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "").")/i";
 			foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
-				if (preg_match("/1 {$row[7]}/", $factrec) && preg_match($ged_date_regex, $factrec, $dmatch)) {
-					preg_match('/2 DATE (.+)/', $factrec, $match);
-					$date=$match[1];
+				if (preg_match("/1 {$row[7]}/", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)) {
+					$date=new GedcomDate($match[1]);
 					if (preg_match('/2 PLAC (.+)/', $factrec, $match))
 						$plac=$match[1];
 					else
 						$plac='';
 					$found_facts[]=array(
-						// Should use these elements instead
 						'id'=>$row[0],
 						'objtype'=>$row[2],
 						'fact'=>$row[7],
