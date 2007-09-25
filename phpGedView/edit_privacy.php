@@ -126,6 +126,11 @@ function search_ID_details($checkVar, $outputVar) {
 			print "\n<span class=\"list_item\">".PrintReady($name);
 			print "</span>\n";
 		}
+		else if ($type=="REPO") {
+			$name = get_repo_descriptor($pid);
+			print "\n<span class=\"list_item\">".PrintReady($name);
+			print "</span>\n";
+		}
 		else print "$type $pid";
 	}
 	else {
@@ -482,6 +487,7 @@ if ($action=="update") {
 			 print_findindi_link("v_new_person_privacy_access_ID","");
 			 print_findfamily_link("v_new_person_privacy_access_ID");
 			 print_findsource_link("v_new_person_privacy_access_ID");
+			 print_findrepository_link("v_new_person_privacy_access_ID");
 			 print_findmedia_link("v_new_person_privacy_access_ID", "1media");
                 ?>
               </td>
@@ -578,6 +584,7 @@ if ($action=="update") {
 			 print_findindi_link("v_new_user_privacy_access_ID","");
 			 print_findfamily_link("v_new_user_privacy_access_ID");
 			 print_findsource_link("v_new_user_privacy_access_ID");
+			 print_findrepository_link("v_new_user_privacy_access_ID");
 			 print_findmedia_link("v_new_person_privacy_access_ID", "1media");
                 ?>
               </td>
@@ -754,6 +761,7 @@ if ($action=="update") {
                 print_findindi_link("v_new_person_facts_access_ID","");
 			 print_findfamily_link("v_new_person_facts_access_ID");
 			 print_findsource_link("v_new_person_facts_access_ID");
+			 print_findrepository_link("v_new_person_facts_access_ID");
                 ?>
               </td>
               <td class="optionbox">
