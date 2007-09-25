@@ -85,7 +85,7 @@ class TimelineControllerRoot extends BaseController {
 			//-- make sure that arrays are indexed by numbers
 			$this->pids = array_values($this->pids);
 		}
-		if (!empty($newpid)) $this->pids[] = $newpid;
+		if (!empty($newpid) && !in_array($newpid, $this->pids)) $this->pids[] = $newpid;
 		if (count($this->pids)==0) $this->pids[] = check_rootid("");
 		$remove = "";
 		if (!empty($_REQUEST['remove'])) $remove = $_REQUEST['remove'];
