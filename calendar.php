@@ -119,18 +119,17 @@ if ($view!='preview') {
 	print '<td class="optionbox" colspan="7">';
 	foreach ($cal_date->NUM_TO_MONTH as $n=>$m)
 		if (!empty($m)) {
+			if ($n==7 && $cal_date->CALENDAR_ESCAPE=='@#DHEBREW@' && !$cal_date->IsLeapYear())
+				continue;
+			if ($n==6 && $cal_date->CALENDAR_ESCAPE=='@#DHEBREW@' && $cal_date->IsLeapYear())
+				$l.='_leap_year';
+			else
+				$l='';
+			$month_name=$pgv_lang[$m.$l];
 			if ($n==$cal_date->m)
-				print "<span class=\"error\">{$pgv_lang[$m]}</span>";
-			else {
-				if ($n==7 && $cal_date->CALENDAR_ESCAPE=='@#DHEBREW@' && !$cal_date->IsLeapYear())
-					continue;
-				if ($n==6 && $cal_date->CALENDAR_ESCAPE=='@#DHEBREW@' && $cal_date->IsLeapYear())
-					$l.='_leap_year';
-				else
-					$l='';
-				print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$m}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">{$pgv_lang[$m.$l]}</a>";
-			}
-		 print ' | ';
+				$month_name="<span class=\"error\">{$month_name}</span>";
+			print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$m}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">{$month_name}</a>";
+			print ' | ';
 		}
 	print "<a href=\"calendar.php?cal={$cal}&amp;day={$today->d}&amp;month={$today_month}&amp;year={$today->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\"><b>".$today->Format('F Y').'</b></a></td></tr>';
 	// Year selector
@@ -322,8 +321,8 @@ case 'calendar':
 	// Fetch events for each day
 	for ($jd=$cal_date->minJD; $jd<=$cal_date->maxJD; ++$jd)
 		foreach (apply_filter(get_anniversary_events($jd, $events), $filterof, $filtersx) as $event) {
-			$tmp=new GedcomDate($event['date']);
-			$d=$tmp->date1->d;
+			$d=$event['date']->date1->d;
+			$d=$jd-$cal_date->minJD+1;
 			if ($d<1 || $d>$days_in_month)
 				$d=0;
 			$found_facts[$d][$event['id']]=$event;
@@ -531,11 +530,8 @@ function apply_filter($facts, $filterof, $filtersx) {
 					continue;
 			}
 		}
-		if ($filterof=='recent') {
-			$dd=new GedcomDate($fact['date']);
-			//if ($dd->MaxDate()->maxJD<$hundred_years) continue; // PHP5
-			$tmp2=$dd->MaxDate(); if ($tmp2->maxJD<$hundred_years) continue; // PHP4
-		}
+		if ($filterof=='recent' && $fact['date']->MaxJD()<$hundred_years)
+			continue;
 		// Finally, check for privacy rules before adding fact.
 		if ($tmp->canDisplayDetails())
 			$filtered[]=$fact;
@@ -549,8 +545,7 @@ function apply_filter($facts, $filterof, $filtersx) {
 ////////////////////////////////////////////////////////////////////////////////
 function calendar_fact_text($fact, $show_places) {
 	global $factarray, $pgv_lang, $TEXT_DIRECTION;
-	$date=new GedcomDate($fact['date']);
-	$text=$factarray[$fact['fact']].' - '.$date->Display(true, "", array());
+	$text=$factarray[$fact['fact']].' - '.$fact['date']->Display(true, "", array());
 	if ($fact['anniv']>0)
 		$text.=' <span dir="'.$TEXT_DIRECTION.'">('.str_replace('#year_var#', $fact['anniv'], $pgv_lang['year_anniversary']).')</span>';
 	if ($show_places && !empty($fact['plac']))

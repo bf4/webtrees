@@ -1365,8 +1365,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		print "</td>";
 		//-- Event date
 		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		$edate=new GedcomDate($value['date']);
-		print str_replace('<a', '<a name="'.$edate->MinJD().'"', $edate->Display(empty($SEARCH_SPIDER)));
+		print str_replace('<a', '<a name="'.$value['date']->MinJD().'"', $value['date']->Display(empty($SEARCH_SPIDER)));
 		print "</td>";
 		//-- Anniversary
 		print "<td class=\"list_value_wrap rela\">";
@@ -1471,8 +1470,7 @@ function print_events_list($startjd, $endjd, $events='BIRT MARR DEAT', $only_liv
 		if ($record->type=="INDI")
 			$return.=$record->getSexImage();
 		$return.="<div class=\"indent\">";
-		$ed=new GedcomDate($value['date']);
-		$return.=$factarray[$value['fact']].' - '.$ed->Display(true);
+		$return.=$factarray[$value['fact']].' - '.$value['date']->Display(true);
 		if ($value['anniv']!=0)
 			$return.=" (" . str_replace("#year_var#", $value['anniv'], $pgv_lang["year_anniversary"]).")";
 		if (!empty($value['plac']))
