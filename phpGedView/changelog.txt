@@ -8,6 +8,7 @@
 	# $Id$
 =====================================================================
 Version 4.1.2
+ - Added [ 1557511 ] Repository Privacy (yalnifj)
  - Added index directory cleanup tool (yalnifj, neumont)
  - Fixed [ 1792613 ] Text mangled when editing linked Note (canajun2eh)
  - Fixed [ 1410203 ] E-Mail not displaying characters correctly (yalnifj)

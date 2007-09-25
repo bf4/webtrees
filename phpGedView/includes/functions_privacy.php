@@ -581,10 +581,16 @@ function displayDetailsByID($pid, $type = "INDI") {
 		$privacy_cache[$pkey] = $display;
 		return $display;
     }
-    if ($type=="SOUR") {
+	if ($type=="SOUR") {
 	    if ($SHOW_SOURCES>=getUserAccessLevel($username)) {
-	    	$privacy_cache[$pkey] = true;
-	    	return true;
+	    	$disp = true;
+	    	$sourcerec = find_source_record($pid);
+	    	if (!empty($sourcerec)) {
+	    		$repoid = get_gedcom_value("REPO", 1, $sourcrec);
+	    		$disp = displayDetailsByID($repoid, "REPO");
+	    	}
+	    	$privacy_cache[$pkey] = $disp;
+	    	return $disp;
 	    }
 		else {
 			$privacy_cache[$pkey] = false;
