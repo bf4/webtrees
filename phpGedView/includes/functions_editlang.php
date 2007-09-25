@@ -165,7 +165,7 @@ function read_complete_file_into_array($dFileName, $string_needle) {
 		fwrite($fp, " * @version \$Id\$\r\n");
 		fwrite($fp, " */\r\n");
 		fwrite($fp, "\r\n");
-		fwrite($fp, "if (stripos(\$_SERVER[\"SCRIPT_NAME\"], basename(__FILE__))!==false) {\r\n");
+		fwrite($fp, "if (stristr(\$_SERVER[\"SCRIPT_NAME\"], basename(__FILE__))!==false) {\r\n");
 		fwrite($fp, "	print \"You cannot access a language file directly.\";\r\n");
 		fwrite($fp, "	exit;\r\n");
 		fwrite($fp, "}\r\n");
