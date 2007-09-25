@@ -2576,7 +2576,7 @@ function get_query_string() {
 			foreach($_POST as $key => $value) {
 				if($key != "view") {
 					if (!is_array($value)) $qstring .= $key."=".urlencode($value)."&amp;";
-					else foreach($value as $k=>$v) $qstring .= $key."[".$k."]=".urlencode($v)."&amp;";
+					else foreach($value as $k=>$v) if (!is_array($v)) $qstring .= $key."[".$k."]=".urlencode($v)."&amp;";
 				}
 			}
 		}
