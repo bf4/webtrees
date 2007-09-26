@@ -165,7 +165,7 @@ function read_complete_file_into_array($dFileName, $string_needle) {
 		fwrite($fp, " * @version \$Id\$\r\n");
 		fwrite($fp, " */\r\n");
 		fwrite($fp, "\r\n");
-		fwrite($fp, "if (stristr(\$_SERVER[\"SCRIPT_NAME\"], basename(__FILE__))!==false) {\r\n");
+		fwrite($fp, "if (stripos(\$_SERVER[\"SCRIPT_NAME\"], basename(__FILE__))!==false) {\r\n");
 		fwrite($fp, "	print \"You cannot access a language file directly.\";\r\n");
 		fwrite($fp, "	exit;\r\n");
 		fwrite($fp, "}\r\n");
@@ -179,8 +179,23 @@ function read_complete_file_into_array($dFileName, $string_needle) {
 	}
 
 	if ($dFound) {
+		$inComment = false;		// Indicates whether we're skipping from "/*" to "*/"
 		while (!feof($fp)) {
 			$line = fgets($fp, (6 * 1024));
+
+			if (!$inComment) {
+				if (substr($line, 0, 2) == "/*") {
+					$inComment = true;
+				}
+			}
+			if ($inComment) {
+				$posnStarSlash = strpos($line, "*/");
+				if ($posnStarSlash === false) continue;
+				$inComment = false;
+				if ($posnStarSlash != 0) continue;
+				$line = substr($line, 2);
+			}
+
 			$foundNeedle = false;
 			foreach ($array_needle as $needle) {
 			  if (!$foundNeedle && $x = strpos(trim($line), $needle)) {
@@ -328,8 +343,23 @@ function read_export_file_into_array($dFileName, $string_needle) {
 	if (!$dFound)  {
 		print "Error file not found"; Exit;
 	} else {
+		$inComment = false;		// Indicates whether we're skipping from "/*" to "*/"
 		while (!feof($fp)) {
 			$line = fgets($fp, (6 * 1024));
+
+			if (!$inComment) {
+				if (substr($line, 0, 2) == "/*") {
+					$inComment = true;
+				}
+			}
+			if ($inComment) {
+				$posnStarSlash = strpos($line, "*/");
+				if ($posnStarSlash === false) continue;
+				$inComment = false;
+				if ($posnStarSlash != 0) continue;
+				$line = substr($line, 2);
+			}
+
 			$foundNeedle = false;
 			foreach ($array_needle as $needle) {
 			  if (!$foundNeedle && $x = strpos(trim($line), $needle)) {
