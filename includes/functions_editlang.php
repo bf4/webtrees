@@ -179,8 +179,23 @@ function read_complete_file_into_array($dFileName, $string_needle) {
 	}
 
 	if ($dFound) {
+		$inComment = false;		// Indicates whether we're skipping from "/*" to "*/"
 		while (!feof($fp)) {
 			$line = fgets($fp, (6 * 1024));
+
+			if (!$inComment) {
+				if (substr($line, 0, 2) == "/*") {
+					$inComment = true;
+				}
+			}
+			if ($inComment) {
+				$posnStarSlash = strpos($line, "*/");
+				if ($posnStarSlash === false) continue;
+				$inComment = false;
+				if ($posnStarSlash != 0) continue;
+				$line = substr($line, 2);
+			}
+
 			$foundNeedle = false;
 			foreach ($array_needle as $needle) {
 			  if (!$foundNeedle && $x = strpos(trim($line), $needle)) {
@@ -328,8 +343,23 @@ function read_export_file_into_array($dFileName, $string_needle) {
 	if (!$dFound)  {
 		print "Error file not found"; Exit;
 	} else {
+		$inComment = false;		// Indicates whether we're skipping from "/*" to "*/"
 		while (!feof($fp)) {
 			$line = fgets($fp, (6 * 1024));
+
+			if (!$inComment) {
+				if (substr($line, 0, 2) == "/*") {
+					$inComment = true;
+				}
+			}
+			if ($inComment) {
+				$posnStarSlash = strpos($line, "*/");
+				if ($posnStarSlash === false) continue;
+				$inComment = false;
+				if ($posnStarSlash != 0) continue;
+				$line = substr($line, 2);
+			}
+
 			$foundNeedle = false;
 			foreach ($array_needle as $needle) {
 			  if (!$foundNeedle && $x = strpos(trim($line), $needle)) {
