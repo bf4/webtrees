@@ -2761,7 +2761,7 @@ function get_lds_glance($indirec) {
  */
 
 function DumpString($input) {
-	global $LRM; $RLM;
+	global $LRM, $RLM;
 
 	if (empty($input)) return false;
 

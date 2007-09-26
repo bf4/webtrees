@@ -1569,7 +1569,7 @@ function updateRest($inputRec, $levelOverride="no") {
  * @return string	The updated gedcom record
  */
 function handle_updates($newged, $levelOverride="no") {
-	global $glevels, $islink, $tag, $uploaded_files, $text, $NOTE;
+	global $glevels, $islink, $tag, $uploaded_files, $text, $NOTE, $WORD_WRAPPED_NOTES;
 	
 	if ($levelOverride=="no" || count($glevels)==0) $levelAdjust = 0;
 	else $levelAdjust = $levelOverride - $glevels[0];
@@ -1584,28 +1584,35 @@ function handle_updates($newged, $levelOverride="no") {
 			else {
 				$noterec = find_gedcom_record($text[$j]);
 				$newnote = "0 @$text[$j]@ NOTE\r\n";
-				$newline = "1 CONC ".$NOTE[$text[$j]];
+				$newline = "1 CONC ".rtrim(stripLRMRLM($NOTE[$text[$j]]));
 				$newlines = preg_split("/\r?\n/", $newline);
 				for($k=0; $k<count($newlines); $k++) {
 					if ($k>0) $newlines[$k] = "1 CONT ".$newlines[$k];
 					if (strlen($newlines[$k])>255) {
-						while(strlen($newlines[$k])>255) {
-							// Make sure this piece doesn't end on a blank
-							// (Blanks belong at the start of the next piece)
-							$thisPiece = rtrim(substr($newlines[$k], 0, 255));
-							$newnote .= $thisPiece."\r\n";
-							$newlines[$k] = substr($newlines[$k], strlen($thisPiece));
-							$newlines[$k] = "1 CONC ".$newlines[$k];
+						if ($WORD_WRAPPED_NOTES) {
+							while(strlen($newlines[$k])>255) {
+								// Make sure this piece ends on a blank, because one blank will be
+								// added automatically when everything is put back together
+								$lastBlank = strrpos(substr($newlines[$k], 0, 255), " ");
+								$thisPiece = rtrim(substr($newlines[$k], 0, $lastBlank+1));
+								$newnote .= $thisPiece."\r\n";
+								$newlines[$k] = substr($newlines[$k], (strlen($thisPiece)+1));
+								$newlines[$k] = "1 CONC ".$newlines[$k];
+							}
+						} else {
+							while(strlen($newlines[$k])>255) {
+								// Make sure this piece doesn't end on a blank
+								// (Blanks belong at the start of the next piece)
+								$thisPiece = rtrim(substr($newlines[$k], 0, 255));
+								$newnote .= $thisPiece."\r\n";
+								$newlines[$k] = substr($newlines[$k], strlen($thisPiece));
+								$newlines[$k] = "1 CONC ".$newlines[$k];
+							}
 						}
 						$newnote .= trim($newlines[$k])."\r\n";
-					}
-					else {
+					} else {
 						$newnote .= trim($newlines[$k])."\r\n";
 					}
-				}
-				$notelines = preg_split("/\r?\n/", $noterec);
-				for($k=1; $k<count($notelines); $k++) {
-					if (preg_match("/1 CON[CT] /", $notelines[$k])==0) $newnote .= trim($notelines[$k])."\r\n";
 				}
 				if ($GLOBALS["DEBUG"]) print "<pre>$newnote</pre>";
 				replace_gedrec($text[$j], $newnote);
@@ -1684,23 +1691,35 @@ function handle_updates($newged, $levelOverride="no") {
  * @return string			returns the updated gedcom record
  */
 function breakConts($newline, $level) {
+	global $WORD_WRAPPED_NOTES;
+
 	$newged = "";
-	//-- convert returns to CONT lines and break up lines longer than 255 chars
-	$newlines = preg_split("/\r?\n/", $newline);
+	$newlines = preg_split("/\r?\n/", rtrim(stripLRMRLM($newline)));
 	for($k=0; $k<count($newlines); $k++) {
-		if ($k>0) $newlines[$k] = $level." CONT ".$newlines[$k];
+		if ($k>0) $newlines[$k] = "{$level} CONT ".$newlines[$k];
 		if (strlen($newlines[$k])>255) {
-			while(strlen($newlines[$k])>255) {
-				// Make sure this piece doesn't end on a blank
-				// (Blanks belong at the start of the next piece)
-				$thisPiece = rtrim(substr($newlines[$k], 0, 255));
-				$newged .= $thisPiece."\r\n";
-				$newlines[$k] = substr($newlines[$k], strlen($thisPiece));
-				$newlines[$k] = $level." CONC ".$newlines[$k];
+			if ($WORD_WRAPPED_NOTES) {
+				while(strlen($newlines[$k])>255) {
+					// Make sure this piece ends on a blank, because one blank will be
+					// added automatically when everything is put back together
+					$lastBlank = strrpos(substr($newlines[$k], 0, 255), " ");
+					$thisPiece = rtrim(substr($newlines[$k], 0, $lastBlank+1));
+					$newged .= $thisPiece."\r\n";
+					$newlines[$k] = substr($newlines[$k], (strlen($thisPiece)+1));
+					$newlines[$k] = "{$level} CONC ".$newlines[$k];
+				}
+			} else {
+				while(strlen($newlines[$k])>255) {
+					// Make sure this piece doesn't end on a blank
+					// (Blanks belong at the start of the next piece)
+					$thisPiece = rtrim(substr($newlines[$k], 0, 255));
+					$newged .= $thisPiece."\r\n";
+					$newlines[$k] = substr($newlines[$k], strlen($thisPiece));
+					$newlines[$k] = "{$level} CONC ".$newlines[$k];
+				}
 			}
 			$newged .= trim($newlines[$k])."\r\n";
-		}
-		else {
+		} else {
 			$newged .= trim($newlines[$k])."\r\n";
 		}
 	}
