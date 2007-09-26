@@ -1656,6 +1656,14 @@ case 'paste':
 	$success = replace_gedrec($pid, $gedrec);
 	if ($success) print "<br /><br />".$pgv_lang["update_successful"];
 	break;
+
+	
+//LBox ==============================================================
+case 'reorder_media':
+	include_once("modules/lightbox/functions/reorder_media.php");
+	break;	
+//LBox ==============================================================	
+	
 //------------------------------------------------------------------------------
 case 'reorder_children':
 	require_once("js/prototype.js.htm");

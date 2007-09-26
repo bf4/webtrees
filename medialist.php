@@ -24,7 +24,12 @@
  * @version $Id$
  */
 require_once("config.php");
-require_once 'includes/functions_print_facts.php';
+require_once('includes/functions_print_facts.php');
+
+// LBox -------------------------------------------------------
+require( "modules/lightbox/".$pgv_language["english"]);
+if (file_exists( "modules/lightbox/".$pgv_language[$LANGUAGE])) require  "modules/lightbox/".$pgv_language[$LANGUAGE];
+// LBox --------------------------------------------------------
 
 global $MEDIA_EXTERNAL, $THUMBNAIL_WIDTH;
 global $GEDCOM, $GEDCOMS;
@@ -39,6 +44,18 @@ if (!isset($folder)) $folder = "ALL";
 if (!isset($_SESSION["medialist"])) $search = "yes";
 print_header($pgv_lang["multi_title"]);
 print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t";
+
+// LBox ========================= Next few lines added for Lightbox Album ============================= 
+?>
+  <link  href="modules/lightbox/css/clearbox_music.css" 	rel="stylesheet" type="text/css" />
+  <link  href="modules/lightbox/css/lightbox_plus.css" 		rel="stylesheet" type="text/css" media="screen" />  
+ 
+  <script src="modules/lightbox/js/prototype.js" 		type="text/javascript"></script>
+  <script src="modules/lightbox/js/Sound.js" 			type="text/javascript"></script>
+  <script src="modules/lightbox/js/clearbox.js" 		type="text/javascript"></script>
+  <center>
+<?php
+// LBox  ============================ end addition for Lightbox Album ==================================
 
 $isEditUser = userCanEdit(getUserName());		// -- Determines whether to show file names
 
@@ -129,7 +146,12 @@ if ($search == "yes") {
 				<input type="submit" value=" &gt; "/>
 			</td>
 		</tr>
-		<?php if (file_exists("modules/slideshow.php")) { ?>
+<!-- LBox =========================== added for Lightbox Album ============================== --> 	
+		<?php 
+		if (file_exists("modules/lightbox/album.php")) { 
+			// do not need slideshow bar
+		}elseif (file_exists("modules/slideshow.php")) { ?>
+<!-- LBox ========================= end addition for Lightbox Album ========================== --> 
 		<tr>
 			<td class="list_label" colspan="2">
   				<?php
@@ -137,7 +159,10 @@ if ($search == "yes") {
   				?>
 			</td>
 		</tr>
-		<?php } ?>
+<!-- LBox ======================= BH changed for Lightbox Album ============================ --> 			
+		<?php }else{} ?>
+<!-- LBox ======================= end change for Lightbox Album ============================= --> 
+
 	</table>
 </form>
 <?php
@@ -270,12 +295,62 @@ if ($ct>0){
 
 	    print "\n\t\t\t<td class=\"list_value_wrap\" width=\"50%\">";
 	    print "<table class=\"$TEXT_DIRECTION\">\n\t<tr>\n\t\t<td valign=\"top\" style=\"white-space: normal;\">";
-	    if ($USE_MEDIA_VIEWER) print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
-	    else print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";
+		
+//LBox --------  change for Lightbox Album --------------------------------------------
+		if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$media["FILE"]) || eregi("\.jpeg",$media["FILE"]) || eregi("\.gif",$media["FILE"]) || eregi("\.png",$media["FILE"]) ) ) { 
+			print "<a href=\"" . $media["FILE"] . "\" rel='clearbox[general]' title='" . $name . "'\">" . "\n";	
+        }elseif ($USE_MEDIA_VIEWER) {
+			print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
+		} else {
+			print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";	
+		}
+//LBox ----------- end change for Lightbox Album ----------------------------------		
+		
 		print "<img src=\"".thumbnail_file($media["FILE"])."\" align=\"left\" class=\"thumbnail\" border=\"none\"";
 		if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
 		print " alt=\"" . PrintReady($name) . "\" title=\"" . PrintReady($name) . "\" /></a>";
 		print "</td>\n\t\t<td class=\"list_value_wrap\" style=\"border: none;\" width=\"100%\">";
+		
+//LBox --------  added for Lightbox Album --------------------------------------------
+		if ( file_exists("modules/lightbox/album.php")) {
+			if ( userCanEdit(getUserName()) ) {
+				print "<table border=0><tr>";
+		
+				// ---------- Edit Media --------------------
+				print "<td>";
+				print "<a href=\"javascript:;\" title=\"" . $pgv_lang["lb_edit_media"] . "\" onclick=\" return window.open('addmedia.php?action=editmedia&amp;pid=" . $media["XREF"] . "&amp;linktoid=', '_blank', 'top=50,left=50,width=600,height=600,resizable=1,scrollbars=1');\">";
+				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" />" ;
+				print "&nbsp;" . $pgv_lang["lb_edit_details"] ;
+				print "</a>" . "\n";			
+				print "</td>";
+			
+				// ---------- Link Media to person, family or source  ---------------
+				print "<td>";			
+				print "&nbsp;&nbsp;&nbsp;&nbsp";
+				print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\"" . $pgv_lang["set_link"] . "\" /></img>";
+				print "</td>";
+				print "<td valign=\"bottom\">";
+					include ("modules/lightbox/functions/lb_link.php");
+				print "</td>";
+			
+				// ---------- View Media Details (mediaviewer) --------------------
+				print "<td>";	
+				print "&nbsp;&nbsp;&nbsp;&nbsp";
+				print "<a href=\"mediaviewer.php?mid=" . $media["XREF"] . "\" title=\"" . $pgv_lang["lb_view_media"] . "\">";
+				print "<img src=\"modules/lightbox/images/image_view.gif\" class=\"icon\" title=\"" . $pgv_lang["lb_view_media"] . "\" /></img>";
+				print "&nbsp;" . $pgv_lang["lb_view_details"] ;
+				print "</a>" . "\n" ;
+				print "</td>";
+
+				print "</tr></table>";	
+			
+				// ------------ Linespace ---------------------
+				print "<br>";
+			}
+		}else{
+		}
+//LBox ----------- end addition for Lightbox Album ---------------------------------------	
+
 	    print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
 
 	    if (begRTLText($name) && $TEXT_DIRECTION=="ltr") {

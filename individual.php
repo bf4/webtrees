@@ -29,6 +29,10 @@
 require_once("includes/controllers/individual_ctrl.php");
 require_once("includes/serviceclient_class.php");
 
+// If Lightbox is installed, load Lightbox Language files
+if (file_exists("modules/lightbox/".$pgv_language["english"])) require("modules/lightbox/".$pgv_language["english"]);
+if (file_exists("modules/lightbox/".$pgv_language[$LANGUAGE])) require("modules/lightbox/".$pgv_language[$LANGUAGE]);
+
 loadLangFile("gm_lang");	// Load GoogleMap language file
 
 global $USE_THUMBS_MAIN;
@@ -225,6 +229,7 @@ function show_gedcom_record(shownew) {
 function showchanges() {
 	window.location = 'individual.php?pid=<?php print $controller->pid; ?>&show_changes=yes';
 }
+
 // The function below does not go well with validation.
 // The option to use getElementsByName is used in connection with code from
 // the functions_print.php file.
@@ -250,12 +255,23 @@ function togglerow(label) {
 	for (i=0; i<ebn.length; i++) ebn[i].style.display=disp;
 }
 
-
+<!-- ====================== Added for Lightbox Module ===================== -->
+<?php
+if (file_exists("modules/lightbox/album.php")) {
+	include_once ("modules/lightbox/lb_config.php"); 
+	include_once ("modules/lightbox/functions/lb_indi_tabs_" . $mediatab . ".php");
+}else{	
+?>
+<!-- ================== End Additions for Lightbox Module ================== -->
 var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog');
 <?php if (file_exists("modules/googlemap/defaultconfig.php")) {?>
 var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog','googlemap');
 <?php }?>
 var loadedTabs = new Array(false,false,false,false,false,false,false,false);
+<!-- ====================== Added for Lightbox Module ===================== -->
+ <?php } ?>
+<!-- ================== End Additions for Lightbox Module ================== -->
+
 loadedTabs[<?php print ($controller->default_tab+1); ?>] = true;
 
 function tempObj(tab, oXmlHttp) {
@@ -359,6 +375,15 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
 <dd id="door1"><a href="javascript:;" onclick="tabswitch(1); return false;" ><?php print $pgv_lang["personal_facts"]?></a></dd>
 <dd id="door2"><a href="javascript:;" onclick="tabswitch(2); return false;" ><?php print $pgv_lang["notes"]?></a></dd>
 <dd id="door3"><a href="javascript:;" onclick="tabswitch(3); return false;" ><?php print $pgv_lang["ssourcess"]?></a></dd>
+
+<!-- ====================== Added for Lightbox Module ===================== -->
+<?php	
+if (file_exists("modules/lightbox/album.php")) {
+	include_once ("modules/lightbox/functions/lb_indi_doors_" . $mediatab . ".php");
+}else{	
+?>
+<!-- ================== End Additions for Lightbox Module ================== -->
+
 <dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["media"]?></a></dd>
 <dd id="door5"><a href="javascript:;" onclick="tabswitch(5); return false;" ><?php print $pgv_lang["relatives"]?></a></dd>
 <dd id="door6"><a href="javascript:;" onclick="tabswitch(6); return false;" ><?php print $pgv_lang["research_assistant"]?></a></dd>
@@ -366,6 +391,11 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
 <dd id="door7"><a href="javascript:;" onclick="tabswitch(7); if (loadedTabs[7]) {ResizeMap(); ResizeMap();} return false;" ><?php print $pgv_lang["googlemap"]?></a></dd>
 <?php }?>
 <dd id="door0"><a href="javascript:;" onclick="tabswitch(0); if (loadedTabs[7]) {ResizeMap(); ResizeMap();} return false;" ><?php print $pgv_lang["all"]?></a></dd>
+
+<!-- ====================== Added for Lightbox Module ===================== -->
+<?php } ?>
+<!-- ================== End Additions for Lightbox Module ================== -->
+
 </dl>
 </div>
 <br />
@@ -453,7 +483,7 @@ else
 </div>
 </div>
 
-<!-- ===================================== Start 6th tab individual page === Research Assistant -->
+<!-- ============================ Start 6th tab individual page === Research Assistant -->
 <?php
 // Only show this section if we are not talking to a search engine.
 if(empty($SEARCH_SPIDER)) {
@@ -473,10 +503,11 @@ if(empty($SEARCH_SPIDER)) {
 	print "</div>\n";
 	print "</div>\n";
 }
+?>
 
+<!-- =========================== Start 7th tab individual page ==== GoogleMap -->
+<?php
 // Only show this section if we are not talking to a search engine.
-//--------------------------------Start 7th tab individual page
-//--- Google map
 if(empty($SEARCH_SPIDER)) {
 	if (file_exists("modules/googlemap/defaultconfig.php")) {
 		print "<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\" >\n";
@@ -563,7 +594,43 @@ if(empty($SEARCH_SPIDER)) {
 		print "</div>\n";
 	}
 }
+
 ?>
+<!-- ========================== End 7th tab individual page ==== GoogleMaps ===== -->
+
+
+<!-- ========================== Start 8th tab individual page ==== Album ======== -->
+<?php
+if(empty($SEARCH_SPIDER)) {
+	if (file_exists("modules/lightbox/album.php")) {
+		print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none; background:none;\" \>\n";
+		print "<span class=\"subheaders\"> Album </span>\n";
+		// Header info ---------------------------------------------------		
+		$mediacnt = $controller->get_media_count();
+		if ($mediacnt!=0) {	
+			include_once('modules/lightbox/functions/lb_head.php');	
+		}else{
+			include_once('modules/lightbox/functions/lb_head.php');	
+			print "<table class=\"facts_table\"><tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr></table>\n";
+		}
+    }else{
+        print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:block; \" >\n";
+    }
+	// Content info ---------------------------------------------------
+	print "<div id=\"album_content\"> \n";
+	if (file_exists("modules/lightbox/album.php")) {
+		if (($controller->default_tab==7)||(empty($SEARCH_SPIDER))) {
+			$controller->getTab(7) ;
+		}else{
+			loading_message();
+		}
+	}else{
+    }
+    print "</div>\n";
+    print "</div>\n";
+}
+?>
+<!-- ============================= End 8th tab individual page ==== Album -->
 
 <script language="JavaScript" type="text/javascript">
 <!--

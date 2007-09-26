@@ -1537,4 +1537,25 @@ function print_fact_icon($fact, $factrec, $label, $pid) {
 	}
 	return;
 }
+
+// -----------------------------------------------------------------------------
+//  Extra print_facts_functions for lightbox v3.00 11/Jun/2007
+// -----------------------------------------------------------------------------
+
+function lightbox_print_media($pid, $level=1, $related=false, $kind, $noedit=false ) {
+         include("modules/lightbox/functions/lightbox_print_media.php");
+}
+
+function lightbox_print_media_row($rtype, $rowm, $pid) {
+         include("modules/lightbox/functions/lightbox_print_media_row.php");
+}
+
+function lightbox_print_media_row_sort($rtype, $rowm, $pid) {
+         include("modules/lightbox/functions/lightbox_print_media_row_sort.php");
+}
+
+// -----------------------------------------------------------------------------
+//  End extra print_facts_functions for lightbox
+// -----------------------------------------------------------------------------
+
 ?>
