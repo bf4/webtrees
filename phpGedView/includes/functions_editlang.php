@@ -180,22 +180,24 @@ function read_complete_file_into_array($dFileName, $string_needle) {
 
 	if ($dFound) {
 		$inComment = false;		// Indicates whether we're skipping from "/*" to "*/"
+		$slashStar = "/*";
+		$starSlash = "*/";
 		while (!feof($fp)) {
 			$line = fgets($fp, (6 * 1024));
-
+/*  Code causes problems when editing a language file: disable until we can figure out what's wrong
 			if (!$inComment) {
-				if (substr($line, 0, 2) == "/*") {
+				if (substr($line, 0, 2) == $slashStar) {
 					$inComment = true;
 				}
 			}
 			if ($inComment) {
-				$posnStarSlash = strpos($line, "*/");
+				$posnStarSlash = strpos($line, $starSlash);
 				if ($posnStarSlash === false) continue;
 				$inComment = false;
 				if ($posnStarSlash != 0) continue;
 				$line = substr($line, 2);
 			}
-
+*/
 			$foundNeedle = false;
 			foreach ($array_needle as $needle) {
 			  if (!$foundNeedle && $x = strpos(trim($line), $needle)) {
@@ -344,22 +346,24 @@ function read_export_file_into_array($dFileName, $string_needle) {
 		print "Error file not found"; Exit;
 	} else {
 		$inComment = false;		// Indicates whether we're skipping from "/*" to "*/"
+		$slashStar = "/*";
+		$starSlash = "*/";
 		while (!feof($fp)) {
 			$line = fgets($fp, (6 * 1024));
-
+/*  Code causes problems when editing a language file: disable until we can figure out what's wrong
 			if (!$inComment) {
-				if (substr($line, 0, 2) == "/*") {
+				if (substr($line, 0, 2) == $slashStar) {
 					$inComment = true;
 				}
 			}
 			if ($inComment) {
-				$posnStarSlash = strpos($line, "*/");
+				$posnStarSlash = strpos($line, $starSlash);
 				if ($posnStarSlash === false) continue;
 				$inComment = false;
 				if ($posnStarSlash != 0) continue;
 				$line = substr($line, 2);
 			}
-
+*/
 			$foundNeedle = false;
 			foreach ($array_needle as $needle) {
 			  if (!$foundNeedle && $x = strpos(trim($line), $needle)) {
