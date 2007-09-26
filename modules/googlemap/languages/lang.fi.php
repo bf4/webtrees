@@ -21,6 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage GoogleMap
+ * @author Jani Miettinen
  * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
@@ -30,6 +31,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 
 $pgv_lang["googlemap"]              = "Kartta";
+$pgv_lang["no_gmtab"]               = "Ei kartta tietoa tällä henkilöllä";
+$pgv_lang["gm_disabled"]            = "GoogleKartta moduli estetty";
 
 $pgv_lang['gm_redraw_map']          = "Näytä kartta uudelleen";
 $pgv_lang["gm_map"]                 = "Kartta";
