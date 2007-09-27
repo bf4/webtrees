@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Module
- * @version $Id: lb_head.php 1430 2007-08-11 23:09:27Z windmillway $
+ * @version $Id$
  * @author Brian Holland
  */
 ?>
