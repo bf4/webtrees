@@ -45,11 +45,11 @@ if (empty($uname)) {
 	exit;
 }
 
-$fromEscapedChars	= array("\\\"", "&",     "<",    ">");
-$toPlainChars		= array("\"",   "&amp;", "&lt;", "&gt;");
+$fromEscapedChars	= array("&",     "<",    ">"   );
+$toPlainChars		= array("&amp;", "&lt;", "&gt;");
 
-$fromPlainChars		= array("&gt;", "&lt;", "&amp;", "\"");
-$toEscapedChars		= array(">",    "<",    "&",     "\\\"");
+$fromPlainChars		= array("&gt;", "&lt;", "&amp;");
+$toEscapedChars		= array(">",    "<",    "&"    );
 
 switch ($action){
   case "edit"	: print_header($pgv_lang["edit_lang_utility"]); break;
@@ -63,7 +63,8 @@ if (isset($execute) && $action == "debug") {
 	$DEBUG_LANG = $_SESSION["DEBUG_LANG"];
 }
 
-$QUERY_STRING=normalize_query_string($QUERY_STRING."&dv=");
+$QUERY_STRING = str_replace(array("&amp;", "&&"), "&", $QUERY_STRING);
+if (strpos($QUERY_STRING,"&dv="))$QUERY_STRING = substr($QUERY_STRING,0,strpos($QUERY_STRING,"&dv="));
 
 print "<script language=\"JavaScript\" type=\"text/javascript\">\n";
 print "<!--\n";
