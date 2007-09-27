@@ -29,9 +29,11 @@
 require_once("includes/controllers/individual_ctrl.php");
 require_once("includes/serviceclient_class.php");
 
-loadLangFile("gm_lang");	// Load GoogleMap language file
+// If Lightbox is installed, load Lightbox Language files
 if (file_exists("modules/lightbox/".$pgv_language["english"])) require("modules/lightbox/".$pgv_language["english"]);
 if (file_exists("modules/lightbox/".$pgv_language[$LANGUAGE])) require("modules/lightbox/".$pgv_language[$LANGUAGE]);
+
+loadLangFile("gm_lang");	// Load GoogleMap language file
 
 global $USE_THUMBS_MAIN;
 global $linkToID;
@@ -46,7 +48,6 @@ if (!$controller->indi->canDisplayName()) {
 }
 $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 ?>
-
 <table border="0" cellspacing="0" cellpadding="0" class="facts_table">
 	<tr>
 	<?php if ($controller->canShowHighlightedObject()) { ?>
@@ -229,23 +230,46 @@ function showchanges() {
 	window.location = 'individual.php?pid=<?php print $controller->pid; ?>&show_changes=yes';
 }
 
+// The function below does not go well with validation.
+// The option to use getElementsByName is used in connection with code from
+// the functions_print.php file.
+function togglerow(label) {
+	var ebn = document.getElementsByName(label);
+	if (ebn.length) var disp = ebn[0].style.display;
+	else var disp="";
+	if (disp=="none") {
+		disp="table-row";
+		if (document.all && !window.opera) disp = "inline"; // IE
+		rela_plus = document.getElementById('rela_plus');
+		if (rela_plus) rela_plus.style.display="none";
+		rela_minus = document.getElementById('rela_minus');
+		if (rela_minus) rela_minus.style.display="inline";
+	}
+	else {
+		disp="none";
+		var rela_plus = document.getElementById('rela_plus');
+		if (rela_plus) rela_plus.style.display="inline";
+		var rela_minus = document.getElementById('rela_minus');
+		if (rela_minus) rela_minus.style.display="none";
+	}
+	for (i=0; i<ebn.length; i++) ebn[i].style.display=disp;
+}
+
 <!-- ====================== Added for Lightbox Module ===================== -->
 <?php
 if (file_exists("modules/lightbox/album.php")) {
-	include_once ("modules/lightbox/lb_config.php");
+	include_once ("modules/lightbox/lb_config.php"); 
 	include_once ("modules/lightbox/functions/lb_indi_tabs_" . $mediatab . ".php");
 }else{	
 ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
-
 var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog');
 <?php if (file_exists("modules/googlemap/defaultconfig.php")) {?>
 var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog','googlemap');
 <?php }?>
 var loadedTabs = new Array(false,false,false,false,false,false,false,false);
-
 <!-- ====================== Added for Lightbox Module ===================== -->
-<?php } ?>
+ <?php } ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
 
 loadedTabs[<?php print ($controller->default_tab+1); ?>] = true;
@@ -382,7 +406,7 @@ if (file_exists("modules/lightbox/album.php")) {
 	</tr>
 </table>
 
-<!-- ================== Start 1st tab individual page ============ Personal Facts and Details -->
+<!-- ======================== Start 1st tab individual page ============ Personal Facts and Details -->
 <?php
 if(empty($SEARCH_SPIDER))
 	print "<div id=\"facts\" class=\"tab_page\" style=\"display:none;\" >\n";
@@ -481,11 +505,9 @@ if(empty($SEARCH_SPIDER)) {
 }
 ?>
 
-<!-- =========================== Start 7th tab individual page ==== GoogleMaps -->
+<!-- =========================== Start 7th tab individual page ==== GoogleMap -->
 <?php
 // Only show this section if we are not talking to a search engine.
-//--------------------------------Start 7th tab individual page
-//--- Google map
 if(empty($SEARCH_SPIDER)) {
 	if (file_exists("modules/googlemap/defaultconfig.php")) {
 		print "<div id=\"googlemap\" class=\"tab_page\" style=\"display:none;\" >\n";
@@ -493,21 +515,15 @@ if(empty($SEARCH_SPIDER)) {
     	include_once('modules/googlemap/googlemap.php');
 		if ($GOOGLEMAP_ENABLED == "false") {
 	        print "<table class=\"facts_table\">\n";
-	        print "<tr><td id=\"no_tab7\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</td></tr>\n";
+	        print "<tr><td id=\"no_tab7\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</script></td></tr>\n";
+	        print "<script type=\"text/javascript\">\n";
+	        print "function ResizeMap ()\n{\n}\nfunction SetMarkersAndBounds ()\n{\n}\n</script>\n";
 	        if (userIsAdmin(getUserName())) {
 	            print "<tr><td align=\"center\" colspan=\"2\">\n";
 	            print "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
 	            print "</td></tr>\n";
 	        }
 	        print "\n\t</table>\n<br />";
-			?>
-			<script language="JavaScript" type="text/javascript">
-			<!--
-				function ResizeMap () {}
-				function SetMarkersAndBounds () {}
-			//-->
-			</script>
-			<?php
 	    }
 	    else {
     	if(empty($SEARCH_SPIDER)) {
@@ -560,13 +576,13 @@ if(empty($SEARCH_SPIDER)) {
 				        print "</div>\n";
 				        print "</td>\n";
 				        print "<td valign=\"top\" width=\"33%\">\n";
-						print "<div id=\"googlemap_content\">\n";
+		print "<div id=\"googlemap_content\">\n";
 				        setup_map();
 				        if ($controller->default_tab==6) {
 				        	$controller->getTab(6);
 				        }
-						else loading_message();
-						print "</div>\n";
+		else loading_message();
+		print "</div>\n";
 						print "</td></tr></table>\n";
 				}
             }
@@ -594,7 +610,7 @@ if(empty($SEARCH_SPIDER)) {
 		if ($mediacnt!=0) {	
 			include_once('modules/lightbox/functions/lb_head.php');	
 		}else{
-			include_once('modules/lightbox/functions/lb_head.php');			
+			include_once('modules/lightbox/functions/lb_head.php');	
 			print "<table class=\"facts_table\"><tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr></table>\n";
 		}
     }else{

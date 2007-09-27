@@ -1840,7 +1840,8 @@ function get_relationship($pid1, $pid2, $followspouse=true, $maxlength=0, $ignor
 			$famids[$i]=$match[$i][1];
 		}
 		foreach($famids as $indexval => $fam) {
-			$famrec = find_family_record($fam);
+			if (isset($pgv_changes[$fam."_".$GEDCOM]) && userCanEdit(getUserName())) $famrec = find_updated_record($fam);
+			else $famrec = find_family_record($fam);
 			$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $match, PREG_SET_ORDER);
 			for($i=0; $i<$ct; $i++) {
 				$child = $match[$i][1];
@@ -2595,7 +2596,7 @@ function get_query_string() {
 			foreach($_POST as $key => $value) {
 				if($key != "view") {
 					if (!is_array($value)) $qstring .= $key."=".urlencode($value)."&amp;";
-					else foreach($value as $k=>$v) $qstring .= $key."[".$k."]=".urlencode($v)."&amp;";
+					else foreach($value as $k=>$v) if (!is_array($v)) $qstring .= $key."[".$k."]=".urlencode($v)."&amp;";
 				}
 			}
 		}

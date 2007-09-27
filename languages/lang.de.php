@@ -497,6 +497,13 @@ $pgv_lang["include_family"]				= "Direkte Familie hinzufügen";
 $pgv_lang["timeline_controls"]			= "Lebensspannen-Regler";
 $pgv_lang["timeline_scrollSpeed"]		= "Geschwindigkeit";
 $pgv_lang["timeline_beginYear"]			= "Start-Jahr";
+
+// am/pm suffixes for 12 hour clocks
+$pgv_lang["a.m."]         = "am";
+$pgv_lang["p.m."]         = "pm";
+$pgv_lang["noon"]         = "m";
+$pgv_lang["midn"]         = "mn";
+
 //-- MONTH NAMES
 $pgv_lang["jan"]						= "Januar";
 $pgv_lang["feb"]						= "Februar";

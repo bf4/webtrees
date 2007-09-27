@@ -458,7 +458,7 @@ $pgv_lang["total_sources"]		= "Kokonaismäärä - Lähteitä";
 //-- BUILDINDEX FILE MESSAGES
 //$pgv_lang["building_indi"]		= "Muodostetaan henkilökohtainen ja perhekohtainen indeksi";
 //$pgv_lang["building_index"] 		= "Muodostetaan indeksiluettelo";
-$pgv_lang["invalid_gedformat"]	= "Epäkelpo GEDCOM 5.5 muoto";
+$pgv_lang["invalid_gedformat"]	= "Epäkelpo GEDCOM muoto";
 //$pgv_lang["importing_records"]	= "Tuodaan tietueita tietokantaan";
 //$pgv_lang["detected_change"]		= "PhpGedView havaitsi muutoksen GEDCOM tiedostossa #GEDCOM#. Indeksitiedostot täytyy nyt päivittää ennen jatkamista.";
 //$pgv_lang["flushing"]		= "Tyhjennetään sisältö";
@@ -543,6 +543,13 @@ $pgv_lang["timeline_controls"] = "Aikajanaohjaimet";
 $pgv_lang["include_family"] = "Sisällytä ydinperhe";
 $pgv_lang["lifespan_chart"] = "Elinkaarikaavio";
 $pgv_lang["zoom_in"]		= "Lähennä";
+
+// am/pm suffixes for 12 hour clocks
+$pgv_lang["a.m."]         = "ap.";
+$pgv_lang["p.m."]         = "ip.";
+$pgv_lang["noon"]         = "keskipäivä"; //?? english m
+$pgv_lang["midn"]         = "keskiyö"; //english mn??
+
 //-- MONTH NAMES
 $pgv_lang["jan"]			= "tammikuu";
 $pgv_lang["feb"]			= "helmikuu";
@@ -571,36 +578,36 @@ $pgv_lang["ther"]         = "Thermidor";
 $pgv_lang["fruc"]         = "Fructidor";
 $pgv_lang["comp"]         = "jours complémentaires";
 
-$pgv_lang["tsh"]          = "tisrei-kuu";
-$pgv_lang["csh"]          = "hesvan-kuu";
+$pgv_lang["tsh"]          = "tishri-kuu";
+$pgv_lang["csh"]          = "chesvan-kuu";
 $pgv_lang["ksl"]          = "kislev-kuu";
 $pgv_lang["tvt"]          = "tevet-kuu";
-$pgv_lang["shv"]          = "sevat-kuu";
+$pgv_lang["shv"]          = "shvat-kuu";
 $pgv_lang["adr"]          = "adar-kuu";
 $pgv_lang["adr_leap_year"]= "adar I-kuu";
 $pgv_lang["ads"]          = "adar II-kuu";
 $pgv_lang["nsn"]          = "nisan-kuu";
 $pgv_lang["iyr"]          = "ijar-kuu";
 $pgv_lang["svn"]          = "sivan-kuu";
-$pgv_lang["tmz"]          = "tamus-kuu";
+$pgv_lang["tmz"]          = "tamuz-kuu";
 $pgv_lang["aav"]          = "av-kuu";
 $pgv_lang["ell"]          = "elul-kuu";
 
 //@@
 $pgv_lang["muhar"]        = "muharram";
 $pgv_lang["safar"]        = "safar";
-$pgv_lang["rabi1"]        = "rabi' al-awwal";
-$pgv_lang["rabi2"]        = "rabi' al-akhir";
-$pgv_lang["juma1"]        = "džumada-l-ula";
-$pgv_lang["juma2"]        = "džumada-l-akhira";
-$pgv_lang["rajab"]        = "radžab";
-$pgv_lang["shaab"]        = "ša’ban";
+$pgv_lang["rabi1"]        = "rabi` al-awwal";
+$pgv_lang["rabi2"]        = "rabi` al-sani";
+$pgv_lang["juma1"]        = "jumada-al-awwal";
+$pgv_lang["juma2"]        = "jumada-al-sani";
+$pgv_lang["rajab"]        = "rajab";
+$pgv_lang["shaab"]        = "sha`ban";
 $pgv_lang["ramad"]        = "ramadan";
-$pgv_lang["shaww"]        = "šawwal";
-$pgv_lang["dhuaq"]        = "dhu-l-qa'da";
-$pgv_lang["dhuah"]        = "dhu-l-hiddža";
+$pgv_lang["shaww"]        = "shawwal";
+$pgv_lang["dhuaq"]        = "dhul-qa`da";
+$pgv_lang["dhuah"]        = "dhul-hijja";
 
-$pgv_lang["b.c."]         = "e.Kr.";
+$pgv_lang["b.c."]         = "eKr";
 
 $pgv_lang["abt"]			= "noin";
 $pgv_lang["aft"]			= "jälkeen";
@@ -1389,9 +1396,9 @@ $pgv_lang["stat_18_ard"]		= "Ikä suhteessa kuolinvuoteen.";
 $pgv_lang["stat_19_arm"]		= "Ikä avioliittoonvihkimisvuonna.";
 $pgv_lang["stat_20_arm1"]		= "Ikä ensimmäisen avioliittoonvihkimisvuoden aikana.";
 $pgv_lang["stat_21_nok"]		= "Lasten lukumäärä.";
-$pgv_lang["stat_gmx"]		= "Tarkista kuukausien väliarvot.";
-$pgv_lang["stat_gax"]		= "Tarkista ikäarvojen väliarvot.";
-$pgv_lang["stat_gnx"]		= "Tarkista lukumäärien väliarvot.";
+//$pgv_lang["stat_gmx"]		= "Tarkista kuukausien väliarvot.";
+//$pgv_lang["stat_gax"]		= "Tarkista ikäarvojen väliarvot.";
+//$pgv_lang["stat_gnx"]		= "Tarkista lukumäärien väliarvot.";
 $pgv_lang["stat_200_none"]		= "Kaikki (tai tyhjä)";
 $pgv_lang["stat_201_num"]		= "Lukumäärät";
 $pgv_lang["stat_202_perc"]		= "Prosenttiosuus";

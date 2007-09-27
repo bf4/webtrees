@@ -231,7 +231,14 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 		else {
 			write_changes();
 		}
-			AddToChangeLog("Replacing gedcom record $gid ->" . getUserName() ."<-");
+		$backtrace = debug_backtrace();
+		$temp = "";
+		if (isset($backtrace[2])) $temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
+		if (isset($backtrace[1])) $temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
+		if (isset($backtrace[0])) $temp .= basename($backtrace[0]["file"])." (".$backtrace[0]["line"].")";
+		$action=basename($_SERVER["SCRIPT_NAME"]);
+		if (!empty($_REQUEST['action'])) $action .= " ".$_REQUEST['action'];
+		AddToChangeLog($action." ".$temp." Replacing gedcom record $gid ->" . getUserName() ."<-");
 		return true;
 	}
 	return false;
@@ -270,7 +277,14 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 		else {
 			write_changes();
 		}
-		AddToChangeLog("Appending new $type record $xref ->" . getUserName() ."<-");
+		$backtrace = debug_backtrace();
+		$temp = "";
+		if (isset($backtrace[2])) $temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
+		if (isset($backtrace[1])) $temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
+		if (isset($backtrace[0])) $temp .= basename($backtrace[0]["file"])." (".$backtrace[0]["line"].")";
+		$action=basename($_SERVER["SCRIPT_NAME"]);
+		if (!empty($_REQUEST['action'])) $action .= " ".$_REQUEST['action'];
+		AddToChangeLog($action." ".$temp." Appending new $type record $xref ->" . getUserName() ."<-");
 		return $xref;
 	}
 	return false;
@@ -308,7 +322,14 @@ function delete_gedrec($gid, $linkpid='') {
 	else {
 		write_changes();
 	}
-	AddToChangeLog("Deleting gedcom record $gid ->" . getUserName() ."<-");
+	$backtrace = debug_backtrace();
+	$temp = "";
+	if (isset($backtrace[2])) $temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
+	if (isset($backtrace[1])) $temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
+	if (isset($backtrace[0])) $temp .= basename($backtrace[0]["file"])." (".$backtrace[0]["line"].")";
+	$action=basename($_SERVER["SCRIPT_NAME"]);
+	if (!empty($_REQUEST['action'])) $action .= " ".$_REQUEST['action'];
+	AddToChangeLog($action." ".$temp." Deleting gedcom record $gid ->" . getUserName() ."<-");
 	return true;
 }
 
@@ -892,8 +913,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		txt=txt.replace(/\+/g,''); // +17.1234 ==> 17.1234
 		txt=txt.replace(/-/g,neg);	// -0.5698 ==> W0.5698
 		txt=txt.replace(/,/g,'.');	// 0,5698 ==> 0.5698
-		// 0°34'11 ==> 0:34:11
-		txt=txt.replace(/\uB0/g,':'); // °
+		// 0ï¿½34'11 ==> 0:34:11
+		txt=txt.replace(/\uB0/g,':'); // ï¿½
 		txt=txt.replace(/\u27/g,':'); // '
 		// 0:34:11.2W ==> W0.5698
 		txt=txt.replace(/^([0-9]+):([0-9]+):([0-9.]+)(.*)/g, function($0, $1, $2, $3, $4) { var n=parseFloat($1); n+=($2/60); n+=($3/3600); n=Math.round(n*1E4)/1E4; return $4+n; });
@@ -1621,21 +1642,18 @@ function handle_updates($newged, $levelOverride="no") {
 							}
 						} else {
 							while(strlen($newlines[$k])>255) {
-							// Make sure this piece doesn't end on a blank
-							// (Blanks belong at the start of the next piece)
-							$thisPiece = rtrim(substr($newlines[$k], 0, 255));
-							$newnote .= $thisPiece."\r\n";
-							$newlines[$k] = substr($newlines[$k], strlen($thisPiece));
-							$newlines[$k] = "1 CONC ".$newlines[$k];
+								// Make sure this piece doesn't end on a blank
+								// (Blanks belong at the start of the next piece)
+								$thisPiece = rtrim(substr($newlines[$k], 0, 255));
+								$newnote .= $thisPiece."\r\n";
+								$newlines[$k] = substr($newlines[$k], strlen($thisPiece));
+								$newlines[$k] = "1 CONC ".$newlines[$k];
+							}
 						}
 						$newnote .= trim($newlines[$k])."\r\n";
 					} else {
 						$newnote .= trim($newlines[$k])."\r\n";
 					}
-				}
-				$notelines = preg_split("/\r?\n/", $noterec);
-				for($k=1; $k<count($notelines); $k++) {
-					if (preg_match("/1 CON[CT] /", $notelines[$k])==0) $newnote .= trim($notelines[$k])."\r\n";
 				}
 				if ($GLOBALS["DEBUG"]) print "<pre>$newnote</pre>";
 				replace_gedrec($text[$j], $newnote);
@@ -1714,11 +1732,13 @@ function handle_updates($newged, $levelOverride="no") {
  * @return string			returns the updated gedcom record
  */
 function breakConts($newline, $level) {
+	global $WORD_WRAPPED_NOTES;
+
 	$newged = "";
 
 	$newlines = preg_split("/\r?\n/", rtrim(stripLRMRLM($newline)));
 	for($k=0; $k<count($newlines); $k++) {
-		if ($k>0) $newlines[$k] = $level." CONT ".$newlines[$k];
+		if ($k>0) $newlines[$k] = "{$level} CONT ".$newlines[$k];
 		if (strlen($newlines[$k])>255) {
 			if ($WORD_WRAPPED_NOTES) {
 				while(strlen($newlines[$k])>255) {
@@ -1731,13 +1751,14 @@ function breakConts($newline, $level) {
 					$newlines[$k] = "{$level} CONC ".$newlines[$k];
 				}
 			} else {
-			while(strlen($newlines[$k])>255) {
-				// Make sure this piece doesn't end on a blank
-				// (Blanks belong at the start of the next piece)
-				$thisPiece = rtrim(substr($newlines[$k], 0, 255));
-				$newged .= $thisPiece."\r\n";
-				$newlines[$k] = substr($newlines[$k], strlen($thisPiece));
-				$newlines[$k] = $level." CONC ".$newlines[$k];
+				while(strlen($newlines[$k])>255) {
+					// Make sure this piece doesn't end on a blank
+					// (Blanks belong at the start of the next piece)
+					$thisPiece = rtrim(substr($newlines[$k], 0, 255));
+					$newged .= $thisPiece."\r\n";
+					$newlines[$k] = substr($newlines[$k], strlen($thisPiece));
+					$newlines[$k] = "{$level} CONC ".$newlines[$k];
+				}
 			}
 			$newged .= trim($newlines[$k])."\r\n";
 		} else {

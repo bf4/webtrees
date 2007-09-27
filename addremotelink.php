@@ -327,12 +327,14 @@ function checkform(frm){
 		<td class="descriptionbox width20"><?php print_help_link('link_remote_rel_help', 'qm');?> <?php echo $pgv_lang["label_rel_to_current"];?></td>
 		<td class="optionbox"><select id="cbRelationship"
 			name="cbRelationship">
+			<!--  for now only allow creation of same person links... other links are confusing and cause problems 
 			<option value="mother" selected><?php echo $pgv_lang["mother"];?></option>
 			<option value="father"><?php echo $pgv_lang["father"];?></option>
 			<option value="husband"><?php echo $pgv_lang["husband"];?></option>
 			<option value="wife"><?php echo $pgv_lang["wife"];?></option>
 			<option value="son"><?php echo $pgv_lang["son"];?></option>
 			<option value="daughter"><?php echo $pgv_lang["daughter"];?></option>
+			-->
 			<option value="self"><?php echo $pgv_lang["current_person"];?></option>
 		</select></td>
 	</tr>

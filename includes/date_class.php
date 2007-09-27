@@ -1106,7 +1106,7 @@ class GedcomDate {
 	// return >0 if $b>$a
 	// return  0 if dates same/overlap/invalid
 	// BEF/AFT sort as the day before/after.
-	function Compare($a, $b) {
+	function Compare(&$a, &$b) {
 		// Get min/max JD for each date.
 		if ($a->qual1=='BEF')
 			$amin=$a->MinJD()-1;

@@ -399,6 +399,7 @@ function displayDetailsByID($pid, $type = "INDI") {
 						$path_length = $MAX_RELATION_PATH_LENGTH;
 						if ($user["max_relation_path"]>0) $path_length = $user["max_relation_path"];
 						$relationship = get_relationship($user["gedcomid"][$GEDCOM], $pid, $CHECK_MARRIAGE_RELATIONS, $path_length);
+						var_dump($relationship);
 						if ($relationship!==false) {
 							if ($cache_privacy) $privacy_cache[$pkey] = true;
 							return true;
@@ -580,10 +581,16 @@ function displayDetailsByID($pid, $type = "INDI") {
 		$privacy_cache[$pkey] = $display;
 		return $display;
     }
-    if ($type=="SOUR") {
+	if ($type=="SOUR") {
 	    if ($SHOW_SOURCES>=getUserAccessLevel($username)) {
-	    	$privacy_cache[$pkey] = true;
-	    	return true;
+	    	$disp = true;
+	    	$sourcerec = find_source_record($pid);
+	    	if (!empty($sourcerec)) {
+	    		$repoid = get_gedcom_value("REPO", 1, $sourcerec);
+	    		$disp = displayDetailsByID($repoid, "REPO");
+	    	}
+	    	$privacy_cache[$pkey] = $disp;
+	    	return $disp;
 	    }
 		else {
 			$privacy_cache[$pkey] = false;
@@ -703,7 +710,7 @@ if (!function_exists("showFact")) {
  * @param	string $pid the GEDCOM XRef ID for the entity to check privacy settings
  * @return	boolean return true to show the fact, return false to keep it private
  */
-function showFact($fact, $pid) {
+function showFact($fact, $pid, $type='INDI') {
 	global $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE, $PRIV_HIDE;
 	global $global_facts, $person_facts, $SHOW_SOURCES;
 
@@ -721,10 +728,10 @@ function showFact($fact, $pid) {
 		if ($SHOW_SOURCES<getUserAccessLevel($username)) return false;
 	}
 	if ($fact!="NAME") {
-		$disp = displayDetailsById($pid);
+		$disp = displayDetailsById($pid, $type);
 		return $disp;
 	}
-	else if (!displayDetailsById($pid)) return showLivingNameById($pid);
+	else if (!displayDetailsById($pid, $type)) return showLivingNameById($pid);
 	else return true;
 }
 }
@@ -852,18 +859,18 @@ function privatize_gedcom($gedrec) {
 		}
 		else {
 			//-- check if we need to do any fact privacy checking
-			//---- check for REFN
-			$refn = false;
-			if (preg_match("/^\d REFN/", $gedrec)) $refn = true;
+			//---- check for RESN
+			$resn = false;
+			if (preg_match("/^\d RESN/", $gedrec)) $resn = true;
 			//---- check for any person facts
 			$ppriv = isset($person_facts[$gid]);
 			//---- check for any global facts
 			$gpriv = false;
 			foreach($global_facts as $key=>$gfact) {
-				if (preg_match("/^1 ".$key."/", $gedrec)>0) $gpriv = true;
+				if (preg_match("/\n1 ".$key."/", $gedrec)>0) $gpriv = true;
 			}
 			//-- if no fact privacy then return the record
-			if (!$refn && !$ppriv && !$gpriv) return $gedrec;
+			if (!$resn && !$ppriv && !$gpriv) return $gedrec;
 			
 			$newrec = "0 @".$gid."@ $type\r\n";
 			//-- check all of the sub facts for access
@@ -873,7 +880,9 @@ function privatize_gedcom($gedrec) {
 				if ($ct > 0) $type = trim($match[1]);
 				else $type="";
 				if (FactViewRestricted($gid, $sub)==false && showFact($type, $gid) && showFactDetails($type, $gid)) $newrec .= $sub;
-				else $pgv_private_records[$gid] .= $sub;
+				else {
+					$pgv_private_records[$gid] .= $sub;
+				}
 			}
 			return $newrec;
 		}
@@ -917,25 +926,30 @@ function getUserAccessLevel($username="") {
  * @return int		Allowed or not allowed
  */
 function FactEditRestricted($pid, $factrec) {
-	global $GEDCOM;
-	$user = getUser(getuserName());
-	$myindi = "";
-	if (isset($user["gedcomid"][$GEDCOM])) trim($myindi = $user["gedcomid"][$GEDCOM]);
+	global $GEDCOM, $FAM_ID_PREFIX;
+	
+	$username = getUserName();
+	if (userGedcomAdmin($username)) return false;
+	
 	$ct = preg_match("/2 RESN (.*)/", $factrec, $match);
-	if ($ct == 0) return false;
 	if ($ct > 0) {
 		$match[1] = strtolower(trim($match[1]));
-		if ($match[1] == "none") return false;
-		if ((($match[1] == "confidential") || ($match[1] == "locked")) && ((userIsAdmin(getUserName())) || (userGedcomAdmin(getUserName())))) return false;
-		if (($match[1] == "privacy") && ((userIsAdmin(getUserName())) || ($myindi == $pid) || (userGedcomAdmin(getUserName())))) return false;
-		if (substr($pid,0,1) == "F"){
-			$famrec = find_family_record($pid);
-			$parents = find_parents_in_record($famrec);
-			if (($match[1] == "privacy") && ((userIsAdmin(getUserName())) || ($myindi == $parents["HUSB"]) || (userGedcomAdmin(getUserName())))) return false;
-			if (($match[1] == "privacy") && ((userIsAdmin(getUserName())) || ($myindi == $parents["WIFE"]) || (userGedcomAdmin(getUserName())))) return false;
+		if ($match[1] == "privacy" || $match[1]=="locked") {
+			$user = getUser($username);
+			$myindi = "";
+			if (isset($user["gedcomid"][$GEDCOM])) $myindi = trim($user["gedcomid"][$GEDCOM]);
+			
+			if ($myindi == $pid) return false;
+			if (substr($pid,0,1) == $FAM_ID_PREFIX){
+				$famrec = find_family_record($pid);
+				$parents = find_parents_in_record($famrec);
+				if ($myindi == $parents["HUSB"]) return false;
+				if ($myindi == $parents["WIFE"]) return false;
+			}
+			return true;
 		}
 	}
-	return true;
+	return false;
 }
 
 /**
@@ -948,29 +962,31 @@ function FactEditRestricted($pid, $factrec) {
  */
 function FactViewRestricted($pid, $factrec) {
 	global $GEDCOM, $FAM_ID_PREFIX;
-	$ct = preg_match("/2 RESN (.*)/", $factrec, $match);
-	if ($ct == 0) return false;
+	
 	$username = getUserName();
-	$user = getUser($username);
-	$myindi = "";
-	if (isset($user["gedcomid"][$GEDCOM])) $myindi = trim($user["gedcomid"][$GEDCOM]);
-	$pid = trim($pid);
+	if (userGedcomAdmin($username)) return false;
+	
+	$ct = preg_match("/2 RESN (.*)/", $factrec, $match);
 	if ($ct > 0) {
 		$match[1] = strtolower(trim($match[1]));
-		if ($match[1] == "none") return false;
-		if ($match[1] == "locked") return false;
-		if (($match[1] == "confidential") && (userGedcomAdmin($username))) return false;
-		if (($match[1] == "privacy") && (($myindi == $pid) || (userGedcomAdmin($username)))) return false;
-		//-- NOTE: This could lead to a potential bug in GEDCOMS that do not prefix their records with a number
-		//-- it is safer to look up the gedcom record
-		if (substr($pid,0,1) == $FAM_ID_PREFIX){
-			$famrec = find_family_record($pid);
-			$parents = find_parents_in_record($famrec);
-			if (($match[1] == "privacy") && (($myindi == $parents["WIFE"]) || (userGedcomAdmin($username)))) return false;
-			if (($match[1] == "privacy") && (($myindi == $parents["HUSB"]) || (userGedcomAdmin($username)))) return false;
+		if ($match[1] == "confidential") return true;
+		if ($match[1] == "privacy") {
+			$user = getUser($username);
+			$myindi = "";
+			if (isset($user["gedcomid"][$GEDCOM])) $myindi = trim($user["gedcomid"][$GEDCOM]);
+			if ($myindi == $pid) return false;
+			//-- NOTE: This could lead to a potential bug in GEDCOMS that do not prefix their records with a number
+			//-- it is safer to look up the gedcom record
+			if (substr($pid,0,1) == $FAM_ID_PREFIX){
+				$famrec = find_family_record($pid);
+				$parents = find_parents_in_record($famrec);
+				if ($myindi == $parents["WIFE"]) return false;
+				if ($myindi == $parents["HUSB"]) return false;
+			}
+			return true;
 		}
 	}
-	return true;
+	return false;
 }
 
 ?>

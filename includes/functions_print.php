@@ -981,7 +981,7 @@ function print_lang_form($option=0) {
 					$vars = preg_split('/(^\?|\&(amp;)*)/', normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE="), -1, PREG_SPLIT_NO_EMPTY);
 					foreach ($vars as $var) {
 						$parts = preg_split("/=/", $var);
-						print "\n\t\t<input type=\"hidden\" name=\"$parts[0]\" value=\"".urldecode($parts[1])."\" />";
+						print "\n\t\t<input type=\"hidden\" name=\"$parts[0]\" value=\"".htmlentities(urldecode($parts[1]))."\" />";
 					}
 					print "\n\t\t<input type=\"hidden\" name=\"changelanguage\" value=\"yes\" />\n\t\t<select name=\"NEWLANGUAGE\" class=\"header_select\" onchange=\"submit();\">";
 					print "\n\t\t\t<option value=\"\">".$pgv_lang["change_lang"]."</option>";
@@ -2407,8 +2407,8 @@ function print_fact_place($factrec, $anchor=false, $sub=false, $lds=false) {
 				print " <span class=\"label\">".$factarray["LONG"].": </span>".$map_long;
 			}
 			if ($map_lati and $map_long) {
-				$map_lati=trim(strtr($map_lati,"NSEW,°"," - -. ")); // S5,6789 ==> -5.6789
-				$map_long=trim(strtr($map_long,"NSEW,°"," - -. ")); // E3.456° ==> 3.456
+				$map_lati=trim(strtr($map_lati,"NSEW,ï¿½"," - -. ")); // S5,6789 ==> -5.6789
+				$map_long=trim(strtr($map_long,"NSEW,ï¿½"," - -. ")); // E3.456ï¿½ ==> 3.456
 				print " <a target=\"_BLANK\" href=\"http://www.mapquest.com/maps/map.adp?searchtype=address&formtype=latlong&latlongtype=decimal&latitude=".$map_lati."&longitude=".$map_long."\"><img src=\"images/mapq.gif\" border=\"0\" alt=\"Mapquest &copy;\" title=\"Mapquest &copy;\" /></a>";
 				print " <a target=\"_BLANK\" href=\"http://maps.google.com/maps?q=".$map_lati.",".$map_long."\"><img src=\"images/bubble.gif\" border=\"0\" alt=\"Google Maps &copy;\" title=\"Google Maps &copy;\" /></a>";
 				print " <a target=\"_BLANK\" href=\"http://www.multimap.com/map/browse.cgi?lat=".$map_lati."&lon=".$map_long."&scale=&icon=x\"><img src=\"images/multim.gif\" border=\"0\" alt=\"Multimap &copy;\" title=\"Multimap &copy;\" /></a>";
