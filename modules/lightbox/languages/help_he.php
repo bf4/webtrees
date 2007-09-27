@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Module
- * @version $Id$
+ * @version $Id:$
  * @author Brian Holland
  */
 
