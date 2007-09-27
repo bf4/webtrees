@@ -22,7 +22,7 @@
  * @package PhpGedView
  * @subpackage GoogleMap
  * @author Jani Miettinen
- * @version $Id: help_text.fi.php 1257 2007-07-09 04:16:06Z nigelo $
+ * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "You cannot access a language file directly.";
