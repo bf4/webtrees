@@ -51,11 +51,11 @@ print "<script language=\"JavaScript\" type=\"text/javascript\">";
   print "self.focus();";
 print "</script>\n";
 
-$fromEscapedChars	= array("\\\"", "&",     "<",    ">");
-$toPlainChars		= array("\"",   "&amp;", "&lt;", "&gt;");
+$fromEscapedChars	= array("&",     "<",    ">"   );
+$toPlainChars		= array("&amp;", "&lt;", "&gt;");
 
-$fromPlainChars		= array("&gt;", "&lt;", "&amp;", "\"");
-$toEscapedChars		= array(">",    "<",    "&",     "\\\"");
+$fromPlainChars		= array("&gt;", "&lt;", "&amp;");
+$toEscapedChars		= array(">",    "<",    "&",   );
 
 switch ($file_type)
 {

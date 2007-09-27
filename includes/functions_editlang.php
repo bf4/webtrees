@@ -184,48 +184,46 @@ function read_complete_file_into_array($dFileName, $string_needle) {
 		$starSlash = "*/";
 		while (!feof($fp)) {
 			$line = fgets($fp, (6 * 1024));
-/*  Code causes problems when editing a language file: disable until we can figure out what's wrong
+
 			if (!$inComment) {
 				if (substr($line, 0, 2) == $slashStar) {
 					$inComment = true;
 				}
 			}
-			if ($inComment) {
-				$posnStarSlash = strpos($line, $starSlash);
-				if ($posnStarSlash === false) continue;
-				$inComment = false;
-				if ($posnStarSlash != 0) continue;
-				$line = substr($line, 2);
-			}
-*/
+
 			$foundNeedle = false;
-			foreach ($array_needle as $needle) {
-			  if (!$foundNeedle && $x = strpos(trim($line), $needle)) {
-				if ($x == 1) {
-					$line_mine = $line;
-					$line = trim($line);
-					$key = trim(substr($line, 0, strpos($line, "]") + 1));
-					$ct = preg_match("/=\s*\"(.*)\"/", $line, $match);
-					# if ($ct>0) $content = trim($match[1]);
-					if ($ct>0) $content = $match[1];
-					else $content = "";
-					$InfoArray[$LineCounter][0] = $key;				// keystring
-					# print "#".$key."# ";
-					$InfoArray[$LineCounter][1] = $content;			// message of keystring
-
-					# print "#".$content."#<br />";
-					if ($content != "") {
-						$InfoArray[$LineCounter][2] = get_last_string($line_mine, $content);	// pos of the first char of the message
+			if (!$inComment) {
+				foreach ($array_needle as $needle) {
+				  if (!$foundNeedle && $x = strpos(trim($line), $needle)) {
+					if ($x == 1) {
+						$line_mine = $line;
+						$line = trim($line);
+						$key = trim(substr($line, 0, strpos($line, "]") + 1));
+						$ct = preg_match("/=\s*\"(.*)\"/", $line, $match);
+						# if ($ct>0) $content = trim($match[1]);
+						if ($ct>0) $content = $match[1];
+						else $content = "";
+						$InfoArray[$LineCounter][0] = $key;				// keystring
+						# print "#".$key."# ";
+						$InfoArray[$LineCounter][1] = $content;			// message of keystring
+            	
+						# print "#".$content."#<br />";
+						if ($content != "") {
+							$InfoArray[$LineCounter][2] = get_last_string($line_mine, $content);	// pos of the first char of the message
+						}
+						else $InfoArray[$LineCounter][2] = "";
+            	
+						$InfoArray[$LineCounter][3] = $line_mine;			// complete line
+						$foundNeedle = true;
 					}
-					else $InfoArray[$LineCounter][2] = "";
-
-					$InfoArray[$LineCounter][3] = $line_mine;			// complete line
-					$foundNeedle = true;
-				}
-			  }
-		    }
+				  }
+		    	}
+	    	}
 			if (!$foundNeedle) $InfoArray[$LineCounter][0] = $line;
 			$LineCounter++;
+
+			if (substr($line, 0, 2) == $starSlash) $inComment = false;
+			if (substr(trim($line), -2) == $starSlash) $inComment = false;
 		}
 		fclose($fp);
 	}
@@ -350,7 +348,7 @@ function read_export_file_into_array($dFileName, $string_needle) {
 		$starSlash = "*/";
 		while (!feof($fp)) {
 			$line = fgets($fp, (6 * 1024));
-/*  Code causes problems when editing a language file: disable until we can figure out what's wrong
+
 			if (!$inComment) {
 				if (substr($line, 0, 2) == $slashStar) {
 					$inComment = true;
@@ -363,7 +361,7 @@ function read_export_file_into_array($dFileName, $string_needle) {
 				if ($posnStarSlash != 0) continue;
 				$line = substr($line, 2);
 			}
-*/
+
 			$foundNeedle = false;
 			foreach ($array_needle as $needle) {
 			  if (!$foundNeedle && $x = strpos(trim($line), $needle)) {
