@@ -231,7 +231,9 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 		else {
 			write_changes();
 		}
-			AddToChangeLog("Replacing gedcom record $gid ->" . getUserName() ."<-");
+		$action=basename($_SERVER["SCRIPT_NAME"]);
+		if (!empty($_REQUEST['action'])) $action .= " ".$_REQUEST['action'];
+		AddToChangeLog($action." Replacing gedcom record $gid ->" . getUserName() ."<-");
 		return true;
 	}
 	return false;
@@ -270,7 +272,9 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 		else {
 			write_changes();
 		}
-		AddToChangeLog("Appending new $type record $xref ->" . getUserName() ."<-");
+		$action=basename($_SERVER["SCRIPT_NAME"]);
+		if (!empty($_REQUEST['action'])) $action .= " ".$_REQUEST['action'];
+		AddToChangeLog($action." Appending new $type record $xref ->" . getUserName() ."<-");
 		return $xref;
 	}
 	return false;
@@ -308,7 +312,9 @@ function delete_gedrec($gid, $linkpid='') {
 	else {
 		write_changes();
 	}
-	AddToChangeLog("Deleting gedcom record $gid ->" . getUserName() ."<-");
+	$action=basename($_SERVER["SCRIPT_NAME"]);
+	if (!empty($_REQUEST['action'])) $action .= " ".$_REQUEST['action'];
+	AddToChangeLog($action." Deleting gedcom record $gid ->" . getUserName() ."<-");
 	return true;
 }
 
