@@ -458,7 +458,7 @@ $pgv_lang["total_sources"]		= "Kokonaismäärä - Lähteitä";
 //-- BUILDINDEX FILE MESSAGES
 //$pgv_lang["building_indi"]		= "Muodostetaan henkilökohtainen ja perhekohtainen indeksi";
 //$pgv_lang["building_index"] 		= "Muodostetaan indeksiluettelo";
-$pgv_lang["invalid_gedformat"]	= "Epäkelpo GEDCOM 5.5 muoto";
+$pgv_lang["invalid_gedformat"]	= "Epäkelpo GEDCOM muoto";
 //$pgv_lang["importing_records"]	= "Tuodaan tietueita tietokantaan";
 //$pgv_lang["detected_change"]		= "PhpGedView havaitsi muutoksen GEDCOM tiedostossa #GEDCOM#. Indeksitiedostot täytyy nyt päivittää ennen jatkamista.";
 //$pgv_lang["flushing"]		= "Tyhjennetään sisältö";
