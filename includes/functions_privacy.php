@@ -887,7 +887,6 @@ function privatize_gedcom($gedrec) {
 					$pgv_private_records[$gid] .= $sub;
 				}
 			}
-debug_print_backtrace();
 			return $newrec;
 		}
 	}
