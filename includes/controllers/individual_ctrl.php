@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: individual_ctrl.php 1658 2007-09-13 16:05:11Z yalnifj $
+ * @version $Id$
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {

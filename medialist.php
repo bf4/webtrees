@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Lists
- * @version $Id: medialist.php 1702 2007-09-22 01:30:50Z canajun2eh $
+ * @version $Id$
  */
 require_once("config.php");
 require_once('includes/functions_print_facts.php');
