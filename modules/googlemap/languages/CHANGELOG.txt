@@ -49,6 +49,7 @@ Changes in help_text.en.php:
 
 ?$pgv_lang["whatever"]                              dd Monthname, year      Change codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["GOOGLEMAP_MAP_TYPE_help"]				27 September, 2007		w
 $pgv_lang["GM_NAME_PREFIX"]                         26 July, 2006           A, new feature
 $pgv_lang["GM_NAME_POSTFIX"]                        26 July, 2006           A, new feature
 $pgv_lang["GM_NAME_PRE_POST"]                       26 July, 2006           A, new feature
