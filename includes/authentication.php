@@ -1175,7 +1175,7 @@ function AddToChangeLog($LogString, $ged="") {
 	if (empty($ged)) $ged = $GEDCOM;
 	$oldged = $GEDCOM;
 	$GEDCOM = $ged;
-	include(get_config_file());
+	if ($ged!=$oldged) include(get_config_file());
 	if ($CHANGELOG_CREATE != "none") {
 		$REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
 		if (empty($CHANGELOG_CREATE)) $CHANGELOG_CREATE="daily";
@@ -1194,7 +1194,7 @@ function AddToChangeLog($LogString, $ged="") {
 
 	}
 	$GEDCOM = $oldged;
-	include(get_config_file());
+	if ($ged!=$oldged) include(get_config_file());
 }
 
 //----------------------------------- addMessage

@@ -231,9 +231,13 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 		else {
 			write_changes();
 		}
+		$backtrace = debug_backtrace();
+		$temp = "";
+		if (isset($backtrace[2])) $temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
+		if (isset($backtrace[1])) $temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
 		$action=basename($_SERVER["SCRIPT_NAME"]);
 		if (!empty($_REQUEST['action'])) $action .= " ".$_REQUEST['action'];
-		AddToChangeLog($action." Replacing gedcom record $gid ->" . getUserName() ."<-");
+		AddToChangeLog($action." ".$temp." Replacing gedcom record $gid ->" . getUserName() ."<-");
 		return true;
 	}
 	return false;
@@ -272,9 +276,13 @@ function append_gedrec($gedrec, $chan=true, $linkpid='') {
 		else {
 			write_changes();
 		}
+		$backtrace = debug_backtrace();
+		$temp = "";
+		if (isset($backtrace[2])) $temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
+		if (isset($backtrace[1])) $temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
 		$action=basename($_SERVER["SCRIPT_NAME"]);
 		if (!empty($_REQUEST['action'])) $action .= " ".$_REQUEST['action'];
-		AddToChangeLog($action." Appending new $type record $xref ->" . getUserName() ."<-");
+		AddToChangeLog($action." ".$temp." Appending new $type record $xref ->" . getUserName() ."<-");
 		return $xref;
 	}
 	return false;
@@ -312,9 +320,13 @@ function delete_gedrec($gid, $linkpid='') {
 	else {
 		write_changes();
 	}
+	$backtrace = debug_backtrace();
+	$temp = "";
+	if (isset($backtrace[2])) $temp .= basename($backtrace[2]["file"])." (".$backtrace[2]["line"].")";
+	if (isset($backtrace[1])) $temp .= basename($backtrace[1]["file"])." (".$backtrace[1]["line"].")";
 	$action=basename($_SERVER["SCRIPT_NAME"]);
 	if (!empty($_REQUEST['action'])) $action .= " ".$_REQUEST['action'];
-	AddToChangeLog($action." Deleting gedcom record $gid ->" . getUserName() ."<-");
+	AddToChangeLog($action." ".$temp." Deleting gedcom record $gid ->" . getUserName() ."<-");
 	return true;
 }
 
