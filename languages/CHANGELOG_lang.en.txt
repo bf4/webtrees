@@ -76,10 +76,11 @@ VERSION 4.1.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
-+$pgv_lang["a.m."]         						24 Sep 2007           A Suffixes for 12 hour clock
-+$pgv_lang["noon"]         						24 Sep 2007           A NB: can use am/pm (or pm/am)
-+$pgv_lang["midn"]         						24 Sep 2007           A for noon/midnight if your lang
-+$pgv_lang["p.m."]         						24 Sep 2007           A has a consistent interpretation
+*$pgv_lang["invalid_gedformat"]						27 Sep 2007				w
++$pgv_lang["a.m."]									24 Sep 2007				A Suffixes for 12 hour clock
++$pgv_lang["noon"]									24 Sep 2007				A NB: can use am/pm (or pm/am)
++$pgv_lang["midn"]									24 Sep 2007				A for noon/midnight if your lang
++$pgv_lang["p.m."]									24 Sep 2007				A has a consistent interpretation
 *$pgv_lang["statvars"]								23 Sep 2007				w
 *$pgv_lang["statlxa"]								23 Sep 2007				w
 *$pgv_lang["statlya"]								23 Sep 2007				w

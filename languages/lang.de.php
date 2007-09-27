@@ -442,7 +442,7 @@ $pgv_lang["people"]						= "Personen";
 $pgv_lang["families"]					= "Familien";
 $pgv_lang["total_sources"]				= "Anzahl Quellen:";
 //-- BUILDINDEX FILE MESSAGES
-$pgv_lang["invalid_gedformat"]			= "Format entspricht nicht dem GEDCOM 5.5 Standard";
+$pgv_lang["invalid_gedformat"]			= "Format entspricht nicht dem GEDCOM Standard";
 $pgv_lang["exec_time"]					= "Ausführungszeit:";
 $pgv_lang["unable_to_create_index"]		= "Index Dateien können nicht erstellt werden. Stellen Sie sicher, dass die Rechte zum Schreiben im PhpGedView-Verzeichnis gesetzt sind. Die Rechte können zurückgesetzt werden, sobald die Index Dateien erstellt sind.";
 $pgv_lang["changes_present"]			= "Die aktuelle GEDCOM Datei enthält Änderungen die noch kontrolliert werden müssen. Wenn Sie mit dem Import fortfahren, werden diese Änderungen unmittelbar in die Datenbank eingefügt. Sie sollten die Änderungen kontrollieren, bevor Sie mit dem Importieren fortfahren.";
