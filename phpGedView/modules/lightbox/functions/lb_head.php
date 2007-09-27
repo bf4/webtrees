@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Module
- * @version $Id: lb_head.php 1430 2007-08-11 23:09:27Z windmillway $
+ * @version $Id$
  * @author Brian Holland
  */
 ?>
@@ -54,8 +54,7 @@
 </script>
 
 <?php
-if (file_exists("modules/lightbox/".$pgv_language["english"]))  require("modules/lightbox/".$pgv_language["english"]);
-if (file_exists( "modules/lightbox/".$pgv_language[$LANGUAGE])) require( "modules/lightbox/".$pgv_language[$LANGUAGE]);
+loadLangFile("lb_lang");
 
 	//Lightbox-Album header Links
 		print "<br>";

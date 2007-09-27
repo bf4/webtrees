@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Module
- * @version $Id: album.php 1358 2007-07-31 22:28:49Z windmillway $
+ * @version $Id$
  * @author Brian Holland
  */
 ?>
