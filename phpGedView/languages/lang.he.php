@@ -557,7 +557,7 @@ $pgv_lang["families"]			= "משפחות";
 $pgv_lang["total_sources"]		= "סה\"כ מקורות";
 
 //-- BUILDINDEX FILE MESSAGES
-$pgv_lang["invalid_gedformat"]		= "מבנה GEDCOM 5.5 שגוי";
+$pgv_lang["invalid_gedformat"]		= "מבנה GEDCOM שגוי";
 $pgv_lang["exec_time"]		= "זמן העיבוד:";
 $pgv_lang["unable_to_create_index"]	= "לא ניתן ליצור קובץ אינדקסים. וודא שקיימות הרשאות לתיקייה PhpGedView. את ההרשאות ניתן לשנות אחרי שקובצי האינדקס יכתבו.";
 $pgv_lang["changes_present"]		= "שינויים לא מאושרים קיימים עבור ה-GEDCOM הנוכחי. אם תמשיך בייבוא זה, השינויים שממתינים לאישור יעדכנו את מאגר הנתונים מידית. עליך לעיין בשינויים הממתינים לפני שתמשיך בייבוא.";
