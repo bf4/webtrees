@@ -155,8 +155,41 @@ print_simple_header("Edit Interface $VERSION");
 //-- check if user has access to the gedcom record
 $disp = false;
 $success = false;
-$factdisp = true;
-$factedit = true;
+
+/**
+ * Check if the given gedcom record has any RESN editing restrictions
+ * This is used to prevent raw editing and deletion of records that are locked 
+ * @param string $gedrec
+ * @return boolean
+ */
+function checkFactEdit($gedrec) {
+	$username = getUserName();
+	if (userGedcomAdmin($username)) return true;
+	
+	$ct = preg_match("/2 RESN ((privacy)|(locked))/i", $gedrec, $match);
+	if ($ct > 0) {
+		$match[1] = strtolower(trim($match[1]));
+		$user = getUser($username);
+		$myindi = "";
+		if (isset($user["gedcomid"][$GEDCOM])) $myindi = trim($user["gedcomid"][$GEDCOM]);
+		
+		$gt = preg_match("/0 @(.+)@ (.+)/", $gedrec, $gmatch);
+		if ($gt > 0) {
+			$gid = trim($gmatch[1]);
+			$type = trim($gmatch[2]);
+			if ($myindi == $gid) return true;
+			if ($type=='FAM'){
+				$parents = find_parents_in_record($gedrec);
+				if ($myindi == $parents["HUSB"]) return true;
+				if ($myindi == $parents["WIFE"]) return true;
+			}
+		}
+		return false;
+	}
+	
+	return true;
+}
+
 if (!empty($pid)) {
 	$pid = clean_input($pid);
 	if (($pid!="newsour") and ($pid!="newrepo")) {
@@ -166,36 +199,7 @@ if (!empty($pid)) {
 		$ct = preg_match("/0 @$pid@ (.*)/", $gedrec, $match);
 		if ($ct>0) {
 			$type = trim($match[1]);
-			//-- if the record is for an INDI then check for display privileges for that indi
-			if ($type=="INDI") {
-				$disp = displayDetailsById($pid);
-				//-- if disp is true, also check for resn access
-				if ($disp == true){
-					$subs = get_all_subrecords($gedrec, "", false, false);
-					foreach($subs as $indexval => $sub) {
-						if (FactViewRestricted($pid, $sub)==true) $factdisp = false;
-						if (FactEditRestricted($pid, $sub)==true) $factedit = false;
-					}
-				}
-			}
-			//-- for FAM check for display privileges on both parents
-			else if ($type=="FAM") {
-				//-- check if there are restrictions on the facts
-				$subs = get_all_subrecords($gedrec, "", false, false);
-				foreach($subs as $indexval => $sub) {
-					if (FactViewRestricted($pid, $sub)==true) $factdisp = false;
-					if (FactEditRestricted($pid, $sub)==true) $factedit = false;
-				}
-				//-- check if we can display both parents
-				$parents = find_parents_in_record($gedrec);
-				$disp = displayDetailsById($parents["HUSB"]);
-				if ($disp) {
-					$disp = displayDetailsById($parents["WIFE"]);
-				}
-			}
-			else {
-				$disp=true;
-			}
+			$disp = displayDetailsById($pid, $type);
 		}
 	}
 	else {
@@ -211,36 +215,7 @@ else if (!empty($famid)) {
 		$ct = preg_match("/0 @$famid@ (.*)/", $gedrec, $match);
 		if ($ct>0) {
 			$type = trim($match[1]);
-			//-- if the record is for an INDI then check for display privileges for that indi
-			if ($type=="INDI") {
-				$disp = displayDetailsById($famid);
-				//-- if disp is true, also check for resn access
-				if ($disp == true){
-					$subs = get_all_subrecords($gedrec, "", false, false);
-					foreach($subs as $indexval => $sub) {
-						if (FactViewRestricted($famid, $sub)==true) $factdisp = false;
-						if (FactEditRestricted($famid, $sub)==true) $factedit = false;
-					}
-				}
-			}
-			//-- for FAM check for display privileges on both parents
-			else if ($type=="FAM") {
-				//-- check if there are restrictions on the facts
-				$subs = get_all_subrecords($gedrec, "", false, false);
-				foreach($subs as $indexval => $sub) {
-					if (FactViewRestricted($famid, $sub)==true) $factdisp = false;
-					if (FactEditRestricted($famid, $sub)==true) $factedit = false;
-				}
-				//-- check if we can display both parents
-				$parents = find_parents_in_record($gedrec);
-				$disp = displayDetailsById($parents["HUSB"]);
-				if ($disp) {
-					$disp = displayDetailsById($parents["WIFE"]);
-				}
-			}
-			else {
-				$disp=true;
-			}
+			$disp = displayDetailsById($famid, $type);
 		}
 	}
 }
@@ -363,7 +338,7 @@ case 'delete':
 //------------------------------------------------------------------------------
 //-- print a form to edit the raw gedcom record in a large textarea
 case 'editraw':
-	if (!$factedit) {
+	if (!checkFactEdit($gedrec)) {
 		print "<br />".$pgv_lang["privacy_prevented_editing"];
 		if (!empty($pid)) print "<br />".$pgv_lang["privacy_not_granted"]." pid $pid.";
 		if (!empty($famid)) print "<br />".$pgv_lang["privacy_not_granted"]." famid $famid.";
@@ -1464,7 +1439,7 @@ case 'addnewparentaction':
 case 'deleteperson':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
-	if (!$factedit) {
+	if (!checkFactEdit($gedrec)) {
 		print "<br />".$pgv_lang["privacy_prevented_editing"];
 		if (!empty($pid)) print "<br />".$pgv_lang["privacy_not_granted"]." pid $pid.";
 		if (!empty($famid)) print "<br />".$pgv_lang["privacy_not_granted"]." famid $famid.";
@@ -1477,7 +1452,7 @@ case 'deleteperson':
 case 'deletefamily':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
-	if (!$factedit) {
+	if (!checkFactEdit($gedrec)) {
 		print "<br />".$pgv_lang["privacy_prevented_editing"];
 		if (!empty($pid)) print "<br />".$pgv_lang["privacy_not_granted"]." pid $pid.";
 		if (!empty($famid)) print "<br />".$pgv_lang["privacy_not_granted"]." famid $famid.";
