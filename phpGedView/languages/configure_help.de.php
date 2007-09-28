@@ -1,29 +1,4 @@
 <?php
-/**
- * German Language file for PhpGedView.
- *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- * @package PhpGedView
- * @author Norgaz Kurt
- * @author Peter Pluntke
- * @version $Id$
- */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
@@ -251,7 +226,7 @@ $pgv_lang["PGV_SIMPLE_MAIL"] = "Einfache Mail-Header bei Mails verwenden";
 $pgv_lang["PGV_SIMPLE_MAIL_help"] = "~#pgv_lang[PGV_SIMPLE_MAIL]#~<br /><br />Normalerweise enthält der Mail-Header die Mail-Adresse und den Namen des Absenders. Einige Mailsysteme akzeptieren diese Angaben nicht. Setzen Sie diesen Wert auf «Ja», damit nur die Mail-Adresse verwendet wird.<br /><br />Diese Einstellung ändert die Variable \$PGV_SIMPLE_MAIL in der Datei config.php.<br /><br />";
 $pgv_lang["gedcom_title"]				= "GEDCOM-Datei Bezeichnung";
 $pgv_lang["gedcom_title_help"]		= "~#pgv_lang[gedcom_title]#~<br /><br />Geben Sie eine Bezeichnung ein, die erscheint, wenn Besucher zwischen mehreren GEDCOM-Dateien auf Ihrer Seite wählen.<br /><br />";
-$pgv_lang["new_gedcom_title"]			= "Genealogische Daten aus [#GEDCOMFILE#]";
+$pgv_lang["new_gedcom_title"]			= "~#pgv_lang[FAVICON]#~<br /><br />Ändern Sie diesen Wert, um auf die ICON-Grafik zu verweisen, die in der Liste der Favoriten/Lesezeichen derjenigen erscheinen, die ihre Website zur Liste ihrer Favoriten/Lesezeichen hinzufügen.<br /><br />";
 $pgv_lang["USE_MEDIA_VIEWER"]			= "Diabetrachter benutzen";
 $pgv_lang["SHOW_SPIDER_TAGLINE"]		= "Suchmaschinen-Namen zeigen";
 $pgv_lang["SHOW_PRIVATE_RELATIONSHIPS"]	= "Verwandtschaft zu privaten Personen zeigen";
@@ -466,6 +441,7 @@ $pgv_lang["name_reverse_help"]		= "~#pgv_lang[name_reverse]#~<br /><br />In eini
 $pgv_lang["ltr"]			= "Links nach rechts";
 $pgv_lang["rtl"]			= "Rechts nach links";
 $pgv_lang["file_does_not_exist"]	= "FEHLER! Diese Datei existiert nicht...<br /><br />";
+$pgv_lang["optional_file_not_exist"]	= "Diese nicht erforderliche Datei fehlt.";
 $pgv_lang["alphabet_upper"]		= "Alphabet Großbuchstaben";
 $pgv_lang["alphabet_upper_help"]	= "~#pgv_lang[alphabet_upper]#~<br /><br />Großbuchstaben-Alphabet. Dieses Alphabet wird benutzt, um die groß geschriebenen Namen in den Namen-Listen von PhpGedView zu sortieren (in der gewählte Sprache).<br /><br />";
 $pgv_lang["alphabet_lower"]		= "Alphabet Kleinbuchstaben";

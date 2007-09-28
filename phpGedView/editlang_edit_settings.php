@@ -141,7 +141,7 @@ if ($action == "new_lang") {
 else if(!isset($v_flagsfile) && isset($flagsfile[$ln])) $v_flagsfile=$flagsfile[$ln];
 else if(!isset($v_flagsfile)) $v_flagsfile = "";
 
-if ($action != "save" and $action != "toggleActive") {
+if ($action != "save" && $action != "toggleActive") {
   print "<script language=\"JavaScript\" type=\"text/javascript\">\n";
   print "var helpWin;\n";
   print "function helpPopup(which) {\n";
@@ -157,19 +157,12 @@ if ($action != "save" and $action != "toggleActive") {
   print "// -->\n";
   print "</script>\n";
 
-  print "<table class=\"facts_table\">";
-  print "<tr>";
   if ($action == "new_lang") {
-    print "<td class=\"facts_label\">" . $pgv_lang["add_new_language"] . "</td>";
+    print "<h2>" . $pgv_lang["add_new_language"] . "</h2>";
+  } else {
+    print "<h2>" . $pgv_lang["config_lang_utility"] . "</h2>";
   }
-  else {
-    print "<td class=\"facts_label\">" . $pgv_lang["config_lang_utility"] . "</td>";
-  }
-  print "</tr>";
-  print "<tr>";
-  print "<td class=\"facts_value\" style=\"text-align:center; \"><b>" . $pgv_lang[$d_LangName];
-  print "</b></td></tr>";
-  print "</table>\n";
+  print "<div class=\"center\"><b>" . $pgv_lang[$d_LangName] . "</b></div>";
 
   print "<form name=\"Form1\" method=\"post\" action=\"editlang_edit_settings.php\">";
   print "<input type=\"hidden\" name=\"".session_name()."\" value=\"".session_id()."\" />";
@@ -193,8 +186,8 @@ if ($action != "save" and $action != "toggleActive") {
     if (!isset($v_lang_use)) $v_lang_use = $pgv_lang_use[$ln];
     print "<tr>";
     print "<td class=\"facts_label\" >";
+	print_help_link("active_help", "qm");
     print $pgv_lang["active"];
-    print " <a href=\"javascript:;\" onclick=\"return helpPopup('active_help'); \"><b style=\"color: red; cursor: help; \">?</b></a>";
     print "</td>";
     write_td_with_textdir_check();
 
@@ -202,18 +195,16 @@ if ($action != "save" and $action != "toggleActive") {
       print "<input";
       if ($protectActive) print " disabled";
       print " type=\"checkbox\" name=\"v_lang_use\" value=\"true\" checked=\"checked\" />";
-    }
-    else print "<input type=\"checkbox\" name=\"v_lang_use\" value=\"true\" />";
+    } else print "<input type=\"checkbox\" name=\"v_lang_use\" value=\"true\" />";
     print "</td>";
     print "</tr>";
-  }
-  else print "<input type=\"hidden\" name=\"v_lang_use\" value=\"".$pgv_lang_use[$ln]."\" />";
+  } else print "<input type=\"hidden\" name=\"v_lang_use\" value=\"".$pgv_lang_use[$ln]."\" />";
 
   print "<tr>";
   if (!isset($v_original_lang_name)) $v_original_lang_name = $pgv_lang[$ln];
   print "<td class=\"facts_label\" >";
+  print_help_link("original_lang_name_help", "qm");
   print str_replace("#D_LANGNAME#", $pgv_lang[$d_LangName], $pgv_lang["original_lang_name"]);
-  print " <a href=\"javascript:;\" onclick=\"return helpPopup('original_lang_name_help'); \"><b style=\"color: red; cursor: help; \">?</b></a>";
   print "</td>";
   write_td_with_textdir_check();
   print "<input type=\"text\" name=\"v_original_lang_name\" size=\"30\" value=\"" . $v_original_lang_name . "\" />";
@@ -223,8 +214,8 @@ if ($action != "save" and $action != "toggleActive") {
   print "<tr>";
   if (!isset($v_lang_shortcut)) $v_lang_shortcut = $lang_short_cut[$ln];
   print "<td class=\"facts_label\" >";
+  print_help_link("lang_shortcut_help", "qm");
   print $pgv_lang["lang_shortcut"];
-  print " <a href=\"javascript:;\" onclick=\"return helpPopup('lang_shortcut_help'); \"><b style=\"color: red; cursor: help; \">?</b></a>";
   print "</td>";
   write_td_with_textdir_check();
   print "<input type=\"text\" name=\"v_lang_shortcut\" size=\"2\" value=\"" . $v_lang_shortcut . "\" onchange=\"document.Form1.action.value=''; submit();\" />";
@@ -234,8 +225,8 @@ if ($action != "save" and $action != "toggleActive") {
   print "<tr>";
   if (!isset($v_lang_langcode)) $v_lang_langcode = $lang_langcode[$ln];
   print "<td class=\"facts_label\" >";
+  print_help_link("lang_langcode_help", "qm");
   print $pgv_lang["lang_langcode"];
-  print " <a href=\"javascript:;\" onclick=\"return helpPopup('lang_langcode_help'); \"><b style=\"color: red; cursor: help; \">?</b></a>";
   print "</td>";
   write_td_with_textdir_check();
   print "<input type=\"text\" name=\"v_lang_langcode\" size=\"70\" value=\"" . $v_lang_langcode . "\" />";
@@ -245,8 +236,8 @@ if ($action != "save" and $action != "toggleActive") {
   print "<tr>";
   if (!isset($v_flagsfile)) $v_flagsfile = $flagsfile[$ln];
   print "<td class=\"facts_label\" >";
+  print_help_link("flagsfile_help", "qm");
   print $pgv_lang["flagsfile"];
-  print " <a href=\"javascript:;\" onclick=\"return helpPopup('flagsfile_help'); \"><b style=\"color: red; cursor: help; \">?</b></a>";
   print "</td>";
   write_td_with_textdir_check();
   $dire = "images/flags";
@@ -304,8 +295,8 @@ if ($action != "save" and $action != "toggleActive") {
   print "<tr>";
   if (!isset($v_date_format)) $v_date_format = $DATE_FORMAT_array[$ln];
   print "<td class=\"facts_label\" >";
+  print_help_link("date_format_help", "qm");
   print $pgv_lang["date_format"];
-  print " <a href=\"javascript:;\" onclick=\"return helpPopup('date_format_help'); \"><b style=\"color: red; cursor: help; \">?</b></a>";
   print "</td>";
   write_td_with_textdir_check();
   print "<input type=\"text\" name=\"v_date_format\" size=\"30\" value=\"" . $v_date_format . "\" />";
@@ -315,8 +306,8 @@ if ($action != "save" and $action != "toggleActive") {
   print "<tr>";
   if (!isset($v_time_format)) $v_time_format = $TIME_FORMAT_array[$ln];
   print "<td class=\"facts_label\" >";
+  print_help_link("time_format_help", "qm");
   print $pgv_lang["time_format"];
-  print " <a href=\"javascript:;\" onclick=\"return helpPopup('time_format_help'); \"><b style=\"color: red; cursor: help; \">?</b></a>";
   print "</td>";
   write_td_with_textdir_check();
   print "<input type=\"text\" name=\"v_time_format\" size=\"30\" value=\"" . $v_time_format . "\" />";
@@ -326,8 +317,8 @@ if ($action != "save" and $action != "toggleActive") {
   print "<tr>";
   if (!isset($v_week_start)) $v_week_start = $WEEK_START_array[$ln];
   print "<td class=\"facts_label\" >";
+  print_help_link("week_start_help", "qm");
   print $pgv_lang["week_start"];
-  print " <a href=\"javascript:;\" onclick=\"return helpPopup('week_start_help'); \"><b style=\"color: red; cursor: help; \">?</b></a>";
   print "</td>";
   write_td_with_textdir_check();
 
@@ -351,8 +342,8 @@ if ($action != "save" and $action != "toggleActive") {
   print "<tr>";
   if (!isset($v_text_direction)) $v_text_direction = $TEXT_DIRECTION_array[$ln];
   print "<td class=\"facts_label\" >";
+  print_help_link("text_direction_help", "qm");
   print $pgv_lang["text_direction"];
-  print " <a href=\"javascript:;\" onclick=\"return helpPopup('text_direction_help'); \"><b style=\"color: red; cursor: help; \">?</b></a>";
   print "</td>";
   write_td_with_textdir_check();
   print "<select size=\"1\" name=\"v_text_direction\">";
@@ -377,8 +368,8 @@ if ($action != "save" and $action != "toggleActive") {
   print "<tr>";
   if (!isset($v_name_reverse)) $v_name_reverse = $NAME_REVERSE_array[$ln];
   print "<td class=\"facts_label\" >";
+  print_help_link("name_reverse_help", "qm");
   print $pgv_lang["name_reverse"];
-  print " <a href=\"javascript:;\" onclick=\"return helpPopup('name_reverse_help'); \"><b style=\"color: red; cursor: help; \">?</b></a>";
   print "</td>";
   write_td_with_textdir_check();
   print "<select size=\"1\" name=\"v_name_reverse\">";
@@ -403,8 +394,8 @@ if ($action != "save" and $action != "toggleActive") {
   print "<tr>";
   if (!isset($v_alphabet_upper)) $v_alphabet_upper = $ALPHABET_upper[$ln];
   print "<td class=\"facts_label\" >";
+  print_help_link("alphabet_upper_help", "qm");
   print $pgv_lang["alphabet_upper"];
-  print " <a href=\"javascript:;\" onclick=\"return helpPopup('alphabet_upper_help'); \"><b style=\"color: red; cursor: help; \">?</b></a>";
   print "</td>";
   write_td_with_textdir_check();
   print "<input type=\"text\" name=\"v_alphabet_upper\" size=\"50\" value=\"" . $v_alphabet_upper . "\" />";
@@ -414,8 +405,8 @@ if ($action != "save" and $action != "toggleActive") {
   print "<tr>";
   if (!isset($v_alphabet_lower)) $v_alphabet_lower = $ALPHABET_lower[$ln];
   print "<td class=\"facts_label\" >";
+  print_help_link("alphabet_lower_help", "qm");
   print $pgv_lang["alphabet_lower"];
-  print " <a href=\"javascript:;\" onclick=\"return helpPopup('alphabet_lower_help'); \"><b style=\"color: red; cursor: help; \">?</b></a>";
   print "</td>";
   write_td_with_textdir_check();
   print "<input type=\"text\" name=\"v_alphabet_lower\" size=\"50\" value=\"" . $v_alphabet_lower . "\" />";
@@ -425,8 +416,8 @@ if ($action != "save" and $action != "toggleActive") {
   print "<tr>";
   if (!isset($v_multi_letter_alphabet)) $v_multi_letter_alphabet = $MULTI_LETTER_ALPHABET[$ln];
   print "<td class=\"facts_label\" >";
+  print_help_link("multi_letter_alphabet_help", "qm");
   print $pgv_lang["multi_letter_alphabet"];
-  print " <a href=\"javascript:;\" onclick=\"return helpPopup('multi_letter_alphabet_help'); \"><b style=\"color: red; cursor: help; \">?</b></a>";
   print "</td>";
   write_td_with_textdir_check();
   print "<input type=\"text\" name=\"v_multi_letter_alphabet\" size=\"50\" value=\"" . $v_multi_letter_alphabet . "\" />";
@@ -436,8 +427,8 @@ if ($action != "save" and $action != "toggleActive") {
   print "<tr>";
   if (!isset($v_dictionary_sort)) $v_dictionary_sort = $DICTIONARY_SORT[$ln];
   print "<td class=\"facts_label\" >";
+  print_help_link("dictionary_sort_help", "qm");
   print $pgv_lang["dictionary_sort"];
-  print " <a href=\"javascript:;\" onclick=\"return helpPopup('dictionary_sort_help'); \"><b style=\"color: red; cursor: help; \">?</b></a>";
   print "</td>";
   write_td_with_textdir_check();
   print "<select size=\"1\" name=\"v_dictionary_sort\">";
@@ -472,14 +463,22 @@ if ($action != "save" and $action != "toggleActive") {
   if ($action != "new_lang"){
     print "<tr>";
     print "<td class=\"facts_label\" >";
+	print_help_link("lang_filenames_help", "qm");
     print $pgv_lang["lang_filenames"];
-    print " <a href=\"javascript:;\" onclick=\"return helpPopup('lang_filenames_help'); \"><b style=\"color: red; cursor: help; \">?</b></a>";
     print "</td>";
     write_td_with_textdir_check();
-    
-    foreach(array($v_adminfile, $v_config_filename, $v_countryfile, $v_editorfile, $v_factsfile, $v_faqlistfile, $v_helpfile, $v_lang_filename, $v_extrafile) as $key => $fileName) {
+
+    // Look for missing required language files    
+    foreach(array($v_adminfile, $v_config_filename, $v_countryfile, $v_editorfile, $v_factsfile, $v_helpfile, $v_lang_filename) as $key => $fileName) {
 	    print $fileName;
-    	if (!file_exists($fileName)) print "&nbsp;&nbsp;<b class=\"error\">" . $pgv_lang["file_does_not_exist"] . "</b>";
+    	if (!file_exists($fileName)) print "&nbsp;&nbsp;&nbsp;&nbsp;<b class=\"error\">" . $pgv_lang["file_does_not_exist"] . "</b>";
+    	print "<br />";
+	}
+
+	// Look for missing optional language files
+    foreach(array($v_faqlistfile, $v_extrafile) as $key => $fileName) {
+	    print $fileName;
+    	if (!file_exists($fileName)) print "&nbsp;&nbsp;&nbsp;&nbsp;" . $pgv_lang["optional_file_not_exist"];
     	print "<br />";
 	}
   }
