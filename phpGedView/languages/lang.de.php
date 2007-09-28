@@ -441,7 +441,7 @@ $pgv_lang["people"]						= "Personen";
 $pgv_lang["families"]					= "Familien";
 $pgv_lang["total_sources"]				= "Anzahl Quellen:";
 //-- BUILDINDEX FILE MESSAGES
-$pgv_lang["invalid_gedformat"]			= "Format entspricht nicht dem GEDCOM Standard";
+$pgv_lang["invalid_gedformat"]			= "Format entspricht nicht dem GEDCOM 5.5 Standard";
 $pgv_lang["exec_time"]					= "Ausführungszeit:";
 $pgv_lang["unable_to_create_index"]		= "Index Dateien können nicht erstellt werden. Stellen Sie sicher, dass die Rechte zum Schreiben im PhpGedView-Verzeichnis gesetzt sind. Die Rechte können zurückgesetzt werden, sobald die Index Dateien erstellt sind.";
 $pgv_lang["changes_present"]			= "Die aktuelle GEDCOM Datei enthält Änderungen die noch kontrolliert werden müssen. Wenn Sie mit dem Import fortfahren, werden diese Änderungen unmittelbar in die Datenbank eingefügt. Sie sollten die Änderungen kontrollieren, bevor Sie mit dem Importieren fortfahren.";
@@ -496,13 +496,6 @@ $pgv_lang["include_family"]				= "Direkte Familie hinzufügen";
 $pgv_lang["timeline_controls"]			= "Lebensspannen-Regler";
 $pgv_lang["timeline_scrollSpeed"]		= "Geschwindigkeit";
 $pgv_lang["timeline_beginYear"]			= "Start-Jahr";
-
-// am/pm suffixes for 12 hour clocks
-$pgv_lang["a.m."]         = "am";
-$pgv_lang["p.m."]         = "pm";
-$pgv_lang["noon"]         = "m";
-$pgv_lang["midn"]         = "mn";
-
 //-- MONTH NAMES
 $pgv_lang["jan"]						= "Januar";
 $pgv_lang["feb"]						= "Februar";
@@ -1280,62 +1273,62 @@ $pgv_lang["twin"]						= "Zwilling";
 $pgv_lang["twin_brother"]				= "Zwillingsbruder";
 $pgv_lang["twin_sister"]				= "Zwillingsschwester";
 $pgv_lang["witness"]					= "Zeuge";
-
 //-- statistics utility
 $pgv_lang["statutci"]					= "Index kann nicht erstellt werden";
 $pgv_lang["statnnames"]					= "Anzahl der Namen=";
 $pgv_lang["statnfam"]					= "Anzahl der Familien=";
 $pgv_lang["statnmale"]					= "Anzahl männliche Personen=";
 $pgv_lang["statnfemale"]				= "Anzahl weibliche Personen=";
-$pgv_lang["statvars"]					= "Geben Sie bitte die folgenden Parameter ein";
-$pgv_lang["statlxa"]					= "entlang der X Achse:";
-$pgv_lang["statlya"]					= "entlang der Y Achse:";
-$pgv_lang["statlza"]					= "entlang der Z Achse:";
+$pgv_lang["statvars"]					= "Geben Sie bitte die folgenden Variablen zum Zeichnen ein";
+$pgv_lang["statlxa"]					= "entlang der X-Achse:";
+$pgv_lang["statlya"]					= "entlang der Y-Achse:";
+$pgv_lang["statlza"]					= "entlang der Z-Achse:";
 $pgv_lang["stat_10_none"]				= "keiner";
 $pgv_lang["stat_11_mb"]					= "Geburtsmonat";
 $pgv_lang["stat_12_md"]					= "Sterbemonat";
 $pgv_lang["stat_13_mm"]					= "Ehemonat";
 $pgv_lang["stat_14_mb1"]				= "Geburtsmonat des ersten Kindes";
 $pgv_lang["stat_15_mm1"]				= "Monat der ersten Ehe";
-$pgv_lang["stat_16_mmb"]				= "Monate zwischen Ehe und Geburt des ersten Kindes";
-$pgv_lang["stat_17_arb"]				= "Alter bezogen auf das Geburtsjahr";
-$pgv_lang["stat_18_ard"]				= "Alter bezogen auf das Sterbejahr";
-$pgv_lang["stat_19_arm"]				= "Alter im Jahr der Ehe";
-$pgv_lang["stat_20_arm1"]				= "Alter im Jahr der ersten Ehe";
-$pgv_lang["stat_21_nok"]				= "Anzahl der Kinder";
+$pgv_lang["stat_16_mmb"]				= "Monate zwischen Ehe und Geburt des ersten Kindes.";
+$pgv_lang["stat_17_arb"]				= "Alter bezogen auf das Geburtsjahr.";
+$pgv_lang["stat_18_ard"]				= "Alter bezogen auf das Sterbejahr.";
+$pgv_lang["stat_19_arm"]				= "Alter im Jahr der Ehe.";
+$pgv_lang["stat_20_arm1"]				= "Alter im Jahr der ersten Ehe.";
+$pgv_lang["stat_21_nok"]				= "Anzahl der Kinder.";
+$pgv_lang["stat_gmx"]					= " Bitte Bereichsgrenzen für Monat angeben";
+$pgv_lang["stat_gax"]					= " Bitte Bereichsgrenzen für das Alter angeben";
+$pgv_lang["stat_gnx"]					= " Bitte Bereichsgrenzen für Anzahl angeben";
 $pgv_lang["stat_200_none"]				= "alle (bzw. keine)";
 $pgv_lang["stat_201_num"]				= "Anzahl";
 $pgv_lang["stat_202_perc"]				= "Prozentzahlen";
-$pgv_lang["stat_300_none"]				= "keine";
-$pgv_lang["stat_301_mf"]				= "Geschlecht";
-$pgv_lang["stat_302_cgp"]				= "Zeiträume";
-$pgv_lang["statmess1"]					= "<b>Hier nur die Werte angeben, die sich gegebenenfalls auf die X Achse oder die Z Achse beziehen</b>";
-$pgv_lang["statar_xgp"]					= "X Achse Bereichsgrenzen (Zeiträume):";
-$pgv_lang["statar_xgl"]					= "X Achse Bereichsgrenzen (Alter):";
-$pgv_lang["statar_xgm"]					= "X Achse Bereichsgrenzen (Monate):";
-$pgv_lang["statar_xga"]					= "X Achse Bereichsgrenzen (Anzahl):";
-$pgv_lang["statar_zgp"]					= "Z Achse Bereichsgrenzen (Daten):";
+$pgv_lang["stat_300_none"]				= "keiner";
+$pgv_lang["stat_301_mf"]				= "männlich/weiblich";
+$pgv_lang["stat_302_cgp"]				= "Zeiträume (Bitte Bereichsgrenzen für Zeiträume angeben)";
+$pgv_lang["statmess1"]					= "<b>Hier nur die Werte angeben, die sich gegebenenfalls auf die X-Achse oder die Z-Achse beziehen</b>";
+$pgv_lang["statar_xgp"]					= "Bereichsgrenzen für Zeiträume (X-Achse):";
+$pgv_lang["statar_xgl"]					= "Bereichsgrenzen für Alter (X-Achse):";
+$pgv_lang["statar_xgm"]					= "Bereichsgrenzen für Monate (x-Achse).";
+$pgv_lang["statar_xga"]					= "Bereichsgrenzen für Anzahl (X-Achse):";
+$pgv_lang["statar_zgp"]					= "Bereichsgrenzen für Zeiträume (Z-Achse):";
 $pgv_lang["statreset"]					= "Zurücksetzen";
-$pgv_lang["statsubmit"]					= "Diagramm zeigen";
-
+$pgv_lang["statsubmit"]					= "Grafik zeigen";
 //-- statisticsplot utility
-$pgv_lang["statistiek_list"]			= "Statistik-Diagramm";
+$pgv_lang["statistiek_list"]			= "Statistik-Zeichnung";
 $pgv_lang["stpl"]						= "...";
-$pgv_lang["stplGDno"]					= "Die «Graphics Display Library» ist in PHP4 nicht verfügbar. Bitte wenden Sie sich an Ihren System Verwalter.";
-$pgv_lang["stpljpgraphno"]				= "Die «JPgraph» Module befinden sich nicht im Verzeichnis <i>phpgedview/jpgraph/</i>. Bitte laden Sie diese von http://www.aditus.nu/jpgraph/jpdownload.php herunter<br /> <h3>Danach müssen Sie die heruntergeladenen JPgraph Module ins Verzeichnis <i>phpgedview/jpgraph/</i> kopieren</h3>.<br />";
-$pgv_lang["stplinfo"]					= "Diagramm Informationen:";
+$pgv_lang["stplGDno"]					= "Die «Graphics Display Library» ist nicht verfügbar. Bitte wenden Sie sich an Ihren System-Verwalter.";
+$pgv_lang["stpljpgraphno"]				= "Die «JPgraph» Module befinden sich nicht im Unterverzeichnis <i>jpgraph/</i> von PhpGedView. Bitte laden Sie diese von http://www.aditus.nu/jpgraph/jpdownload.php herunter.  Danach müssen Sie die heruntergeladenen JPgraph Module ins Unterverzeichnis <i>jpgraph/</i> übertragen.<br />";
+$pgv_lang["stplinfo"]					= "Zeichnungs Informationen:";
 $pgv_lang["stpltype"]					= "Typ:";
 $pgv_lang["stplnoim"]					= "nicht verfügbar:";
 $pgv_lang["stplnumof"]					= "Anzahl der Messwerte ";
 $pgv_lang["stplmf"]						= " / männlich-weiblich";
 $pgv_lang["stplipot"]					= " / pro Zeitraum";
-$pgv_lang["stplgzas"]					= "Bereiche Z Achse:";
+$pgv_lang["stplgzas"]					= "Bereiche Z-Achse:";
 $pgv_lang["stplmonth"]					= "Monat";
 $pgv_lang["stplnumbers"]				= "Anzahl für eine Familie";
 $pgv_lang["stplage"]					= "Alter";
 $pgv_lang["stplperc"]					= "Prozentzahl";
 $pgv_lang["stplmarrbirth"]				= "Monate zwischen Heirat und Geburt des ersten Kindes";
-
 //-- alive in year
 $pgv_lang["alive_in_year"]				= "Lebend im Jahr";
 $pgv_lang["is_alive_in"]				= "Lebte noch in #YEAR#";
