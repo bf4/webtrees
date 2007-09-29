@@ -31,11 +31,15 @@
 // Configuration parameters for Lightbox Album  //
 // ----------------------------------------------------//
  
-$mediatab = 1 ;   	//  Media Tab on Individual Page for Editors and Admin.   
-					// Set 0 to hide Media Tab from Editors and Admin, 
-					// Set 1 to show Media Tab for Editors and Admin, 
-					// Media Tab is ALWAYS hidden from users
-
+$mediatab = 1 ;   		// Set to 0 to hide Media Tab from Editors and Admin, 
+						// Set to 1 to show Media Tab for Editors and Admin, 
+						// Media Tab is ALWAYS hidden from users
+					
+$thumb_edit = "icon" ;	// Set to "icon" to view icon links below Lightbox Thumbnails, 
+						// Set to "text" to view text links below Lightbox Thumbnails, 
+						
+						
+						
 
 					
 					

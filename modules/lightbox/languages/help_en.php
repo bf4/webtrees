@@ -75,7 +75,7 @@ echo "</li><br><br>";
 echo "<li>";
 echo "<b><font color=\"blue\">To Run the slide show</font></b><br>";
 echo "Click on the \"Start\" icon at bottom left.<br>";
-echo "If there is a music file, the music will start and the Speaker icon will appear.";
+echo "If there is a music file, the Speaker icon will appear.";
 echo "Click on the Speaker icon to toggle the music on and off.<br>";
 echo "Click on the Pause icon to stop the slide show.<br>";
 echo "NOTE: When the slideshow is running, the Zoom icon will not be visible";
