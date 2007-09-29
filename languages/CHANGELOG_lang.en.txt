@@ -47,6 +47,38 @@ VERSION 4.1.2
 ----------------------------------------------------------------------------------------
 *$pgv_lang["stplGDno"]								28 Sep 2007				W
 *$pgv_lang["stpljpgraphno"]							28 Sep 2007				W
+*$pgv_lang["invalid_gedformat"]						27 Sep 2007				w
++$pgv_lang["a.m."]									24 Sep 2007				A Suffixes for 12 hour clock
++$pgv_lang["noon"]									24 Sep 2007				A NB: can use am/pm (or pm/am)
++$pgv_lang["midn"]									24 Sep 2007				A for noon/midnight if your lang
++$pgv_lang["p.m."]									24 Sep 2007				A has a consistent interpretation
+*$pgv_lang["statvars"]								23 Sep 2007				w
+*$pgv_lang["statlxa"]								23 Sep 2007				w
+*$pgv_lang["statlya"]								23 Sep 2007				w
+*$pgv_lang["statlza"]								23 Sep 2007				w
+*$pgv_lang["stat_301_mf"]							23 Sep 2007				w
+*$pgv_lang["statmess1"]								23 Sep 2007				w
+*$pgv_lang["statar_xgp"]							23 Sep 2007				w
+*$pgv_lang["statar_xgl"]							23 Sep 2007				w
+*$pgv_lang["statar_xgm"]							23 Sep 2007				w
+*$pgv_lang["statar_xga"]							23 Sep 2007				w
+*$pgv_lang["statar_zgp"]							23 Sep 2007				w
+*$pgv_lang["stplgzas"]								23 Sep 2007				w
+*$pgv_lang["stat_16_mmb"]							21 Sep 2007				w
+*$pgv_lang["stat_17_arb"]							21 Sep 2007				w
+*$pgv_lang["stat_18_ard"]							21 Sep 2007				w
+*$pgv_lang["stat_19_arm"]							21 Sep 2007				w
+*$pgv_lang["stat_20_arm1"]							21 Sep 2007				w
+*$pgv_lang["stat_21_nok"]							21 Sep 2007				w
+-$pgv_lang["stat_gmx"]								21 Sep 2007				D
+-$pgv_lang["stat_gax"]								21 Sep 2007				D
+-$pgv_lang["stat_gnx"]								21 Sep 2007				D
+*$pgv_lang["stat_302_cgp"]							21 Sep 2007				w
+*$pgv_lang["statar_xgp"]							21 Sep 2007				w
+*$pgv_lang["statar_xgl"]							21 Sep 2007				w
+*$pgv_lang["statar_xgm"]							21 Sep 2007				w
+*$pgv_lang["statar_xga"]							21 Sep 2007				w
+*$pgv_lang["statar_zgp"]							21 Sep 2007				w
 
 
 
