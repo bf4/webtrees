@@ -344,12 +344,15 @@ var soond = null;
 			}
 			this.sound.start(this.position/1000, 1);         
 			this.stoped = false;
+			CB_Speak.setAttribute('src', CB_PicDir + CB_MusicStop);
 		} else {
 			this.position = this.sound.getPosition();
 			this.sound.stop();         
 			this.paused = true;
 			this.onPause();
+			CB_Speak.setAttribute('src', CB_PicDir + CB_MusicStart);
 		}
+		
 	}
 
 	Player.prototype.stop = function() {
@@ -401,7 +404,7 @@ var soond = null;
 		}
 	}
 
-	
+			
 // Start slideshow ---------------------------------------------------------------------
 	function CB_SSStart() {
 
@@ -414,16 +417,13 @@ var soond = null;
 			slideshowMusic = myMusic;			
 			if (slideshowMusic == null) {						
 				CB_Speak.style.display = "none";
-			} else { 
-				if (player.sound.getVolume() == 0) {
-					CB_Speak.style.display = "block";
-					player.loadTrack(slideshowMusic);						
-					CB_Speak.setAttribute('src', CB_PicDir + CB_MusicStart);					
+			} else {
+				CB_Speak.style.display = "block";
+				player.loadTrack(slideshowMusic);
+				if ( soond==null ){
+					CB_Speak.setAttribute('src', CB_PicDir + CB_MusicStart);
 				}else{
-					CB_Speak.style.display = "block";						
-					player.loadTrack(slideshowMusic);	
-					CB_Speak.setAttribute('src', CB_PicDir + CB_MusicStop);
-				}	
+				}
 			}
 //			var foreverMusic = anchor.getAttribute('loopMusic');
 			var foreverMusic = "true";					
@@ -441,7 +441,6 @@ var soond = null;
         CB_SS = "pause";		
         CB_SlideShow();
 		if ( slideshowMusic != null && soond==null) {		
-			player.play();
 			soond="playing";
 		}else{
 		}
@@ -451,13 +450,10 @@ var soond = null;
     function CB_SSPause() {
 		CB_SlideP.style.display = "none";
         CB_SlideS.style.display = "block";
-//		CB_Speak.setAttribute('src', CB_PicDir + CB_MusicStart);
-	CB_Speak.style.display = "block";
+		CB_Speak.style.display = "block";
         CB_ZoomS.style.display = "block";
         CB_ZoomP.style.display = "none";			
         CB_SlideShowStop();
-		if (slideshowMusic != null ) { 
-		}
 	}
 
 	
@@ -587,7 +583,6 @@ var soond = null;
 		}else{
 			document.onkeypress = CB_KeyPress;
 		}
-		
 //BH ------------------------------------------------------------------------------	
         if (!document.getElementById("CB_All") && CB_Show != 0) {
             document.body.style.position = "static";
@@ -763,6 +758,7 @@ var soond = null;
         CB_ImgHeightOld = CB_WinBaseH - CB_TextH;
         CB_SetAllPositions();
         CB_HideDocument();
+	
     }
 
 
@@ -1306,7 +1302,9 @@ var soond = null;
 		CB_Cls.onclick = function () {resetVolume(); CB_Close();};
         CB_SlideS.onclick = function () {resetZoom(); CB_SSStart();return false; };
         CB_SlideP.onclick = function () {CB_SSPause();return false;};		
-		CB_Speak.onclick = function () {player.toggleVolume();return false;};
+		CB_Speak.onclick = function () {
+			player.play();return false;
+		};
 		CB_ZoomP.onclick = function () {resetZoom(); return false; };
 	//	CB_ZoomS.onclick = function () {CB_FullSize(); };
         CB_PrvNxt.display = "block";

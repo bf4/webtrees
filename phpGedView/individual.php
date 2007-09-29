@@ -604,7 +604,7 @@ if(empty($SEARCH_SPIDER)) {
 if(empty($SEARCH_SPIDER)) {
 	if (file_exists("modules/lightbox/album.php")) {
 		print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none; background:none;\" \>\n";
-		print "<span class=\"subheaders\"> Album </span>\n";
+		print "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>\n";
 		// Header info ---------------------------------------------------		
 		$mediacnt = $controller->get_media_count();
 		if ($mediacnt!=0) {	

@@ -48,7 +48,7 @@
   
 <?php
 
-global $edit, $controller, $tabno, $_REQUEST;
+global $edit, $controller, $tabno, $_REQUEST, $thumb_edit;
 
 //------------------------------------------------------------------------------
 // Start Main Table
@@ -84,7 +84,7 @@ echo "<table border=0 width='100%'><tr>" . "\n\n";
 // Build Relatives navigator from includes/controllers/individual_ctrl
 //------------------------------------------------------------------------------
      echo '<td border=0 valign="top" align="center" width=220 class="optionbox" >' . "\n" ;
-     echo "<b>" . $pgv_lang["view"] . " 'Album'</b><br><br>" . "\n" ;
+     echo "<b>" . $pgv_lang["view"] . " '" . $pgv_lang["lightbox"] ."'</b><br><br>" . "\n" ;
 
 
      echo '<table><tr><td>';

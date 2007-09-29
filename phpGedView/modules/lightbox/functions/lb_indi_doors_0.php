@@ -30,21 +30,21 @@
 <?php //  ----------    The following lines changed by Brian Holland for lightbox/album module   ----------------------------- ?>
 <?php if (!file_exists("modules/googlemap/defaultconfig.php")) {  ?>
           <?php if (file_exists("modules/lightbox/album.php") && (!userCanEdit(getUserName())) ) {?>
-          <dd id="door4"><a href="javascript:;" onclick="tabswitch(7); return false;" ><?php print "Album" ?></a></dd>
+          <dd id="door4"><a href="javascript:;" onclick="tabswitch(7); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd>
           <?php }else{ ?>
           <dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["media"]?></a></dd>
           <?php } ?>
           <?php if ( file_exists("modules/lightbox/album.php") && (userCanEdit(getUserName())) ) {?>
-          <dd id="door7"><a href="javascript:;" onclick="tabswitch(7); return false;" ><?php print "Album" ?></a></dd>
+          <dd id="door7"><a href="javascript:;" onclick="tabswitch(7); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd>
           <?php } ?>
 <?php }elseif (file_exists("modules/googlemap/defaultconfig.php")) {  ?>
           <?php if (file_exists("modules/lightbox/album.php") && (!userCanEdit(getUserName())) ) {?>
-          <dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print "Album" ?></a></dd>
+          <dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd>
           <?php }else{ ?>
-          <dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print "Album" ?></a></dd>
+          <dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd>
           <?php } ?>
           <?php if (file_exists("modules/lightbox/album.php") && (userCanEdit(getUserName())) ) {?>
-          <dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print "Album" ?></a></dd>
+          <dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd>
           <?php } ?>
 <?php } ?>
 <?php //  --------------------------------------------------------------------------------------------------------------------  ?>
