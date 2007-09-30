@@ -21,7 +21,7 @@
 	position: absolute;
 	z-index: 1097;
 	top: 0px;
-	left: 0px;
+	left: 0px; 
 }
 
 #CB_ShowEtc {
@@ -42,7 +42,7 @@
 	background-color: #fff;
 	position: absolute;
 	z-index: 1100;
-	overflow: hidden;
+/*	overflow: hidden; */
 	top: 20px;
 	left: 0px;
 }
@@ -51,10 +51,10 @@
 	display: none;
 	height: 60px;
 	padding-top: 10px;
-	background-color: #777;
+	background-color: #000;
 	position: absolute;
 	z-index: 1100;
-	overflow: hidden;
+	overflow: hidden; 
 	top: 10px;
 	left: 0px;
 }
@@ -130,7 +130,7 @@
 }
 
 #CB_TopLeft {
-	background-image:url(../pic/s_topleft.png);
+	background-image:url(../pic/s_topright.png);
 	background-position:right bottom;
 }
 
@@ -140,12 +140,12 @@
 }
 
 #CB_TopRight {
-	background-image:url(../pic/s_topright.png);
+	background-image:url(../pic/s_topleft.png);
 	background-position:left bottom;
 }
 
 #CB_Left {
-	background-image:url(../pic/s_left.png);
+	background-image:url(../pic/s_right.png);
 	background-position:right top;
 }
 
@@ -154,12 +154,12 @@
 }
 
 #CB_Right {
-	background-image:url(../pic/s_right.png);
+	background-image:url(../pic/s_left.png);
 	background-position:left top;
 }
 
 #CB_BtmLeft {
-	background-image:url(../pic/s_btmleft.png);
+	background-image:url(../pic/s_btmright.png);
 	background-position:right top;
 }
 
@@ -169,7 +169,7 @@
 }
 
 #CB_BtmRight {
-	background-image:url(../pic/s_btmright.png);
+	background-image:url(../pic/s_btmleft.png);
 	background-position:left top;
 }
 

@@ -27,12 +27,18 @@
  * @author Brian Holland
  */
 ?>
+<?php
+loadLangFile("lb_lang");
+?>
+
 <script language="Javascript">
 <!--
    function album_help(OPTS) {
    var win01 = window.open(
    <?php if ($pgv_language[$LANGUAGE] == "languages/lang.fr.php") { ?>
    "modules/lightbox/languages/help_fr.php?"+OPTS, "win01", "resizable=1, scrollbars=1, HEIGHT=780, WIDTH=500 ");
+   <?php }else if ($pgv_language[$LANGUAGE] == "languages/lang.he.php") { ?>
+   "modules/lightbox/languages/help_he.php?"+OPTS, "win01", "resizable=1, scrollbars=1, HEIGHT=780, WIDTH=500 ");   
    <?php }else{ ?>
    "modules/lightbox/languages/help_en.php?"+OPTS, "win01", "resizable=1, scrollbars=1, HEIGHT=780, WIDTH=500 ");
    <?php } ?>
@@ -54,7 +60,7 @@
 </script>
 
 <?php
-loadLangFile("lb_lang");
+//loadLangFile("lb_lang");
 
 	//Lightbox-Album header Links
 		print "<br>";
@@ -65,6 +71,8 @@ loadLangFile("lb_lang");
 		//Help page
 		if ($pgv_language[$LANGUAGE] == "languages/lang.fr.php") { 
 			$help = "modules/lightbox/languages/help_fr.php";
+		}else if ($pgv_language[$LANGUAGE] == "languages/lang.he.php"){ 
+			$help = "modules/lightbox/languages/help_he.php";
 		}else{ 
 			$help = "modules/lightbox/languages/help_en.php";
 		} 		
