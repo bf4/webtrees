@@ -544,6 +544,15 @@ $pgv_lang["include_family"] = "Sisällytä ydinperhe";
 $pgv_lang["lifespan_chart"] = "Elinkaarikaavio";
 $pgv_lang["zoom_in"]		= "Lähennä";
 
+$pgv_lang["cal_gregorian"]            = "Gregoriaaninen";
+$pgv_lang["cal_julian"]               = "Juliaaninen";
+$pgv_lang["cal_french"]               = "Ranskalainen";
+$pgv_lang["cal_jewish"]               = "Juutalainen";
+$pgv_lang["cal_hebrew_and_gregorian"] = "Heprealainen ja Gregoriaaninen";
+$pgv_lang["cal_jewish_and_gregorian"] = "Juutalainen ja Gregoriaaninen";
+$pgv_lang["cal_hebrew"]               = "Heprealainen";
+$pgv_lang["cal_arabic"]               = "Arabialainen";
+
 // am/pm suffixes for 12 hour clocks
 $pgv_lang["a.m."]         = "ap.";
 $pgv_lang["p.m."]         = "ip.";

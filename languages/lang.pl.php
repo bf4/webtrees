@@ -395,6 +395,15 @@ $pgv_lang["lifespan_chart"] = "Wykres długości życia";
 $pgv_lang["timeline_scrollSpeed"] = "Szybkość przewijania";
 $pgv_lang["timeline_zoom"] = "Powiększenie";
 $pgv_lang["include_family"] = "Dodaj najbliższą rodzinę";
+
+$pgv_lang["cal_gregorian"]            = "Gregoriański";
+$pgv_lang["cal_julian"]               = "Juliański";
+$pgv_lang["cal_french"]               = "Francuski";
+$pgv_lang["cal_jewish"]               = "Żydowski";
+$pgv_lang["cal_hebrew"]               = "Hebrajski";
+$pgv_lang["cal_jewish_and_gregorian"] = "Żydowski i Gregoriański";
+$pgv_lang["cal_hebrew_and_gregorian"] = "Hebrajski i Gregoriański";
+
 //-- MONTH NAMES
 $pgv_lang["jan"]				= "Styczeń";
 $pgv_lang["feb"]				= "Luty";

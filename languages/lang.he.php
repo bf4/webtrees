@@ -615,6 +615,16 @@ $pgv_lang["timeline_controls"] 		= "הגדרות קו הזמן";
 $pgv_lang["include_family"] 		= "כלול משפחה קרובה";
 $pgv_lang["lifespan_chart"] 		= "תרשים תוחלת חיים";
 
+$pgv_lang["cal_gregorian"]            = "גרגוריאני";
+$pgv_lang["cal_julian"]               = "יוליאני";
+$pgv_lang["cal_french"]               = "צרפתי";
+$pgv_lang["cal_jewish"]               = "יהודי";
+$pgv_lang["cal_hebrew"]               = "עברי";
+$pgv_lang["cal_jewish_and_gregorian"] = "יהודי וגרגוריאני";
+$pgv_lang["cal_hebrew_and_gregorian"] = "עברי וגרגוריאני";
+$pgv_lang["cal_hijri"]                = "לוח שנה מוסלמי";
+$pgv_lang["cal_arabic"]               = "ערבי";
+
 // am/pm suffixes for 12 hour clocks
 $pgv_lang["a.m."]         = "לפנה\"צ"; 
 $pgv_lang["p.m."]         = "אחה\"צ";

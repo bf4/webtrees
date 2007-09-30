@@ -392,6 +392,17 @@ $pgv_lang["year"]			= "Év:";
 $pgv_lang["timeline_instructions"]	= "Az elterjedtebb böngészők támogatják a szövegdobozok grafikonon belüli mozgatását.";
 $pgv_lang["zoom_in"]			= "Nagyítás";
 $pgv_lang["zoom_out"]			= "Kicsinyítés";
+
+$pgv_lang["cal_gregorian"]            = "Gregorián";
+$pgv_lang["cal_julian"]               = "Juliánusz";
+$pgv_lang["cal_french"]               = "Francia";
+$pgv_lang["cal_jewish"]               = "Zsidó";
+$pgv_lang["cal_hebrew"]               = "Héber";
+$pgv_lang["cal_jewish_and_gregorian"] = "Zsidó és Gregorián";
+$pgv_lang["cal_hebrew_and_gregorian"] = "Héber and Gregorián";
+$pgv_lang["cal_hijri"]                = "Hijri";
+$pgv_lang["cal_arabic"]               = "Arab";
+
 //-- MONTH NAMES
 $pgv_lang["jan"]			= "január";
 $pgv_lang["feb"]			= "február";

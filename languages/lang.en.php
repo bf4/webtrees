@@ -615,6 +615,18 @@ $pgv_lang["timeline_controls"] = "Timeline Controls";
 $pgv_lang["include_family"] = "Include Immediate Family";
 $pgv_lang["lifespan_chart"] = "Lifespan Chart";
 
+// calendar conversion options
+$pgv_lang["cal_none"]                 = "No calendar conversion";
+$pgv_lang["cal_gregorian"]            = "Gregorian";
+$pgv_lang["cal_julian"]               = "Julian";
+$pgv_lang["cal_french"]               = "French";
+$pgv_lang["cal_jewish"]               = "Jewish";
+$pgv_lang["cal_hebrew"]               = "Hebrew";
+$pgv_lang["cal_jewish_and_gregorian"] = "Jewish and Gregorian";
+$pgv_lang["cal_hebrew_and_gregorian"] = "Hebrew and Gregorian";
+$pgv_lang["cal_hijri"]                = "Hijri";
+$pgv_lang["cal_arabic"]               = "Arabic";
+
 // am/pm suffixes for 12 hour clocks
 $pgv_lang["a.m."]         = "am";
 $pgv_lang["p.m."]         = "pm";

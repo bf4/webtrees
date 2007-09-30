@@ -616,6 +616,16 @@ $pgv_lang["timeline_controls"] = "Controles del cronograma";
 $pgv_lang["include_family"] = "Incluir la familia inmediata";
 // $pgv_lang["lifespan_chart"] = "Lifespan Chart";
 
+$pgv_lang["cal_gregorian"]            = "Gregoriano";
+$pgv_lang["cal_julian"]               = "Juliano";
+$pgv_lang["cal_french"]               = "Francés";
+$pgv_lang["cal_jewish"]               = "Judío";
+$pgv_lang["cal_hebrew"]               = "Hebreo";
+$pgv_lang["cal_jewish_and_gregorian"] = "Judío y Gregoriano";
+$pgv_lang["cal_hebrew_and_gregorian"] = "Hebreo y Gregoriano";
+$pgv_lang["cal_hijri"]                = "Hijri";
+$pgv_lang["cal_arabic"]               = "Árabe";
+
 //-- MONTH NAMES
 $pgv_lang["jan"]					= "enero";
 $pgv_lang["feb"]					= "febrero";

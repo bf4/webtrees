@@ -605,6 +605,16 @@ $pgv_lang["timeline_controls"]          = "Actions";
 $pgv_lang["include_family"]             = "Inclure la proche famille";
 $pgv_lang["lifespan_chart"]             = "Ligne de temps";
 
+$pgv_lang["cal_gregorian"]              = "Grégorien";
+$pgv_lang["cal_julian"]                 = "Julien";
+$pgv_lang["cal_french"]                 = "Français";
+$pgv_lang["cal_jewish"]                 = "Israélite";
+$pgv_lang["cal_hebrew"]                 = "Hébreu";
+$pgv_lang["cal_jewish_and_gregorian"]   = "Israélite et grégorien";
+$pgv_lang["cal_hebrew_and_gregorian"]   = "Hébreu et grégorien";
+$pgv_lang["cal_hijri"]                  = "Hijri";
+$pgv_lang["cal_arabic"]                 = "Arabe";
+
 //-- MONTH NAMES
 $pgv_lang["jan"]                        = "Janvier";
 $pgv_lang["feb"]                        = "Février";

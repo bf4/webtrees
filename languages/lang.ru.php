@@ -335,7 +335,16 @@ $pgv_lang["year"]			= "Год: ";
 $pgv_lang["timeline_instructions"]	= "В последних версиях браузеров можно двигать этикетки у оси мышью.";
 $pgv_lang["zoom_in"]			= "Расширить информацию<br />";
 $pgv_lang["zoom_out"]			= "Сжать информацию";
-$pgv_lang["jan"]			= "январь";
+
+$pgv_lang["cal_gregorian"]            = "Грегорианский";
+$pgv_lang["cal_julian"]               = "Юлианский";
+$pgv_lang["cal_french"]               = "Французский";
+$pgv_lang["cal_jewish"]               = "Еврейский";
+$pgv_lang["cal_hebrew"]               = "Иврит (дневнееврейский)";
+$pgv_lang["cal_jewish_and_gregorian"] = "Еврейский и Грегорианский";
+$pgv_lang["cal_hebrew_and_gregorian"] = "Иврит и Грегорианский";
+
+$pgv_lang["jan"]      = "январь";
 $pgv_lang["feb"]			= "февраль";
 $pgv_lang["mar"]			= "март";
 $pgv_lang["apr"]			= "апрель";

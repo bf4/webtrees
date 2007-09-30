@@ -311,6 +311,15 @@ $pgv_lang["year"]	= "Año:";
 $pgv_lang["timeline_instructions"]	= "En los navegadores actuales puede seleccionar y mover las cajas en el gráfico.";
 $pgv_lang["zoom_in"]	= "Agrandar";
 $pgv_lang["zoom_out"]	= "Achicar";
+
+$pgv_lang["gregorian"]            = "Gregoriano";
+$pgv_lang["julian"]               = "Juliano";
+$pgv_lang["french"]               = "Francés";
+$pgv_lang["jewish"]               = "Judío";
+$pgv_lang["hebrew"]               = "Hebreo";
+$pgv_lang["jewish_and_gregorian"] = "Judío y Gregoriano";
+$pgv_lang["hebrew_and_gregorian"] = "Hebreo y Gregoriano";
+
 //-- MONTH NAMES
 $pgv_lang["jan"]	= "Enero";
 $pgv_lang["feb"]	= "Febrero";

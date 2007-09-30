@@ -477,18 +477,13 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
 	function closeHelp() {
 		if (helpWin) helpWin.close();
 	}
-	function show_jewish(dbselect, sid) {
-		var sbox = document.getElementById(sid);
-		var sbox_style = sbox.style;
-
-		if ((dbselect.options[dbselect.selectedIndex].value=='jewish')
-			||(dbselect.options[dbselect.selectedIndex].value=='hebrew')
-			||(dbselect.options[dbselect.selectedIndex].value=='jewish_and_gregorian')
-			||(dbselect.options[dbselect.selectedIndex].value=='hebrew_and_gregorian')) {
-			sbox_style.display='block';
-		}
-		else {
-			sbox_style.display='none';
+	function show_jewish() {
+		var cal=document.getElementById('NEW_CALENDAR_FORMAT');
+		var rtl=document.getElementById('NEW_USE_RTL_FUNCTIONS');
+		if (rtl.options[rtl.selectedIndex].value=='yes' || cal.options[cal.selectedIndex].value.match(/jewish|hebrew/)) {
+			document.getElementById('hebrew-cal' ).style.display='block';
+		} else {
+			document.getElementById('hebrew-cal' ).style.display='none';
 		}
 	}
 	var pastefield;
@@ -690,21 +685,28 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 	<tr>
 		<td class="descriptionbox wrap">
 		<?php print_help_link("CALENDAR_FORMAT_help", "qm", "CALENDAR_FORMAT"); print $pgv_lang["CALENDAR_FORMAT"];?></td>
-		<td class="optionbox"><select name="NEW_CALENDAR_FORMAT" tabindex="<?php $i++; print $i?>"  onfocus="getHelp('CALENDAR_FORMAT_help');" onchange="show_jewish(this, 'hebrew-cal');">
-				<option value="gregorian" <?php if ($CALENDAR_FORMAT=='gregorian') print "selected=\"selected\""; ?>><?php print $pgv_lang["gregorian"];?></option>
-				<option value="julian" <?php if ($CALENDAR_FORMAT=='julian') print "selected=\"selected\""; ?>><?php print $pgv_lang["julian"];?></option>
-				<option value="french" <?php if ($CALENDAR_FORMAT=='french') print "selected=\"selected\""; ?>><?php print $pgv_lang["config_french"];?></option>
-				<option value="jewish" <?php if ($CALENDAR_FORMAT=='jewish') print "selected=\"selected\""; ?>><?php print $pgv_lang["jewish"];?></option>
-				<option value="jewish_and_gregorian" <?php if ($CALENDAR_FORMAT=='jewish_and_gregorian') print "selected=\"selected\""; ?>><?php print $pgv_lang["jewish_and_gregorian"];?></option>
-				<option value="hebrew" <?php if ($CALENDAR_FORMAT=='hebrew') print "selected=\"selected\""; ?>><?php print $pgv_lang["config_hebrew"];?></option>
-				<option value="hebrew_and_gregorian" <?php if ($CALENDAR_FORMAT=='hebrew_and_gregorian') print "selected=\"selected\""; ?>><?php print $pgv_lang["hebrew_and_gregorian"];?></option>
-				<option value="arabic" <?php if ($CALENDAR_FORMAT=='arabic') print "selected=\"selected\""; ?>><?php print $pgv_lang["arabic_cal"];?></option>
-				<option value="hijri" <?php if ($CALENDAR_FORMAT=='hijri') print "selected=\"selected\""; ?>><?php print $pgv_lang["hijri"];?></option>
+		<td class="optionbox"><select id="NEW_CALENDAR_FORMAT" name="NEW_CALENDAR_FORMAT" tabindex="<?php $i++; print $i?>"  onfocus="getHelp('CALENDAR_FORMAT_help');" onchange="show_jewish();">
+		<?php
+			foreach (array('none', 'gregorian', 'julian', 'french', 'jewish', 'jewish_and_gregorian', 'hebrew', 'hebrew_and_gregorian', 'hijri', 'arabic') as $cal) {
+				print "<option value=\"{$cal}\"";
+				if ($CALENDAR_FORMAT==$cal)
+					print " selected=\"selected\"";
+				print ">{$pgv_lang["cal_{$cal}"]}</option>";
+			}
+		?>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap width20">
+		<?php print_help_link("USE_RTL_FUNCTIONS_help", "qm", "USE_RTL_FUNCTIONS"); print $pgv_lang["USE_RTL_FUNCTIONS"];?></td>
+		<td class="optionbox"><select id="NEW_USE_RTL_FUNCTIONS" name="NEW_USE_RTL_FUNCTIONS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('USE_RTL_FUNCTIONS_help');" onchange="show_jewish();">
+				<option value="yes" <?php if ($USE_RTL_FUNCTIONS) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$USE_RTL_FUNCTIONS) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 			</select>
 		</td>
 	</tr>
 	</table>
-	<div id="hebrew-cal" style="display: <?php if (($CALENDAR_FORMAT=='jewish')||($CALENDAR_FORMAT=='jewish_and_gregorian')||($CALENDAR_FORMAT=='hebrew')||($CALENDAR_FORMAT=='hebrew_and_gregorian')) print 'block'; else print 'none';?>;">
+	<div id="hebrew-cal" style="display: <?php print $USE_RTL_FUNCTIONS ? 'block' : 'none';?>">
 	<table class="facts_table">
 	<tr>
 		<td class="descriptionbox wrap width20">
@@ -738,15 +740,6 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 	<table class="facts_table">
 	<tr>
 		<td class="descriptionbox wrap width20">
-		<?php print_help_link("USE_RTL_FUNCTIONS_help", "qm", "USE_RTL_FUNCTIONS"); print $pgv_lang["USE_RTL_FUNCTIONS"];?></td>
-		<td class="optionbox"><select name="NEW_USE_RTL_FUNCTIONS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('USE_RTL_FUNCTIONS_help');">
-				<option value="yes" <?php if ($USE_RTL_FUNCTIONS) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$USE_RTL_FUNCTIONS) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td class="descriptionbox wrap">
 		<?php print_help_link("USE_RIN_help", "qm", "USE_RIN"); print $pgv_lang["USE_RIN"];?></td>
 		<td class="optionbox"><select name="NEW_USE_RIN" tabindex="<?php $i++; print $i?>" onfocus="getHelp('USE_RIN_help');">
 				<option value="yes" <?php if ($USE_RIN) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
