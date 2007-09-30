@@ -65,7 +65,7 @@ $edit=$edit;
                                                 <?php
                                                 if ( ($people["husb"]->canDisplayDetails()) ) {
                                                      print "<a href=\"individual.php?tab=" . $tabno . "&pid=" . $people["husb"]->getXref() . "&edit=" . $edit . "\">";
-                                                     print get_person_name($people["husb"]->getXref());
+                                                     print PrintReady(get_person_name($people["husb"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
                                                       print "PRIVATE";
@@ -84,7 +84,7 @@ $edit=$edit;
                                                 <?php
                                                 if ( ($people["wife"]->canDisplayDetails()) ) {
                                                      print "<a href=\"individual.php?tab=" . $tabno . "&pid=" . $people["wife"]->getXref() . "&edit=" . $edit . "\">";
-                                                     print get_person_name($people["wife"]->getXref());
+                                                     print PrintReady(get_person_name($people["wife"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
                                                       print "PRIVATE";
@@ -119,7 +119,7 @@ $edit=$edit;
                                                 <?php
                                                 if ( ($people["husb"]->canDisplayDetails()) ) {
                                                      print "<a href=\"individual.php?tab=" . $tabno . "&pid=" . $people["husb"]->getXref() . "&edit=" . $edit . "\">";
-                                                     print get_person_name($people["husb"]->getXref());
+                                                     print PrintReady(get_person_name($people["husb"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
                                                       print "PRIVATE";
@@ -138,7 +138,7 @@ $edit=$edit;
                                                 <?php
                                                 if ( ($people["wife"]->canDisplayDetails()) ) {
                                                      print "<a href=\"individual.php?tab=" . $tabno . "&pid=" . $people["wife"]->getXref() . "&edit=" . $edit . "\">";
-                                                     print get_person_name($people["wife"]->getXref());
+                                                     print PrintReady(get_person_name($people["wife"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
                                                       print "PRIVATE";
@@ -160,7 +160,7 @@ $edit=$edit;
                                                 <?php
                                                 if ( ($child->canDisplayDetails()) ) {
                                                       print "<a href=\"individual.php?tab=" . $tabno . "&pid=" . $child->getXref() . "&edit=" . $edit . "\">";
-                                                      print get_person_name($child->getXref());
+                                                      print PrintReady(get_person_name($child->getXref()));
                                                       print "</a>" . "\n" ;
                                                 }else{
                                                       print "PRIVATE";
