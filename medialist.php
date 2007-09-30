@@ -27,8 +27,7 @@ require_once("config.php");
 require_once('includes/functions_print_facts.php');
 
 // LBox -------------------------------------------------------
-require( "modules/lightbox/".$pgv_language["english"]);
-if (file_exists( "modules/lightbox/".$pgv_language[$LANGUAGE])) require  "modules/lightbox/".$pgv_language[$LANGUAGE];
+loadLangFile("lb_lang");
 // LBox --------------------------------------------------------
 
 global $MEDIA_EXTERNAL, $THUMBNAIL_WIDTH;
@@ -47,13 +46,17 @@ print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t
 
 // LBox ========================= Next few lines added for Lightbox Album ============================= 
 ?>
-  <link  href="modules/lightbox/css/clearbox_music.css" 	rel="stylesheet" type="text/css" />
-  <link  href="modules/lightbox/css/lightbox_plus.css" 		rel="stylesheet" type="text/css" media="screen" />  
+	<?php if ($LANGUAGE=="hebrew") { ?>
+		<link  href="modules/lightbox/css/clearbox_music_RTL.css" 	rel="stylesheet" type="text/css" />
+	<?php }else{ ?>
+		<link  href="modules/lightbox/css/clearbox_music.css" 	rel="stylesheet" type="text/css" />
+	<?php } ?>
+	<link  href="modules/lightbox/css/lightbox_plus.css" 		rel="stylesheet" type="text/css" media="screen" />  
  
-  <script src="modules/lightbox/js/prototype.js" 		type="text/javascript"></script>
-  <script src="modules/lightbox/js/Sound.js" 			type="text/javascript"></script>
-  <script src="modules/lightbox/js/clearbox.js" 		type="text/javascript"></script>
-  <center>
+	<script src="modules/lightbox/js/prototype.js" 		type="text/javascript"></script>
+	<script src="modules/lightbox/js/Sound.js" 			type="text/javascript"></script>
+	<script src="modules/lightbox/js/clearbox.js" 		type="text/javascript"></script>
+	<center>
 <?php
 // LBox  ============================ end addition for Lightbox Album ==================================
 
