@@ -577,6 +577,16 @@ $pgv_lang["timeline_scrollSpeed"] = "Velocidade";
 $pgv_lang["timeline_endYear"] = "Ano de Término";
 $pgv_lang["timeline_beginYear"] = "Ano de Início";
 $pgv_lang["zoom_out"]="Menos Zoom";
+
+$pgv_lang["cal_gregorian"]="Gregoriano";
+$pgv_lang["cal_julian"]="Juliano";
+$pgv_lang["cal_french"]="Francês";
+$pgv_lang["cal_jewish"]="Judeu";
+$pgv_lang["cal_hebrew"]="Hebreu";
+$pgv_lang["cal_jewish_and_gregorian"]="Judeu e Gregoriano";
+$pgv_lang["cal_hebrew_and_gregorian"]="Hebreu e Gregoriano";
+$pgv_lang["cal_hijri"]="Hijri";
+
 $pgv_lang["jan"]="Janeiro";
 $pgv_lang["feb"]="Fevereiro";
 $pgv_lang["mar"]="Março";

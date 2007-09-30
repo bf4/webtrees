@@ -287,11 +287,11 @@ if ($view!='preview') {
 		$tmp=$cal_date->convert_to_cal($newcal);
 		if ($tmp->InValidRange())
 			if ($tmp->CALENDAR_ESCAPE==$cal_date->CALENDAR_ESCAPE)
-				print " | <span class=\"error\">{$newcal}</span>";
+				print " | <span class=\"error\">{$pgv_lang['cal_'.$newcal]}</span>";
 			else {
 				$newcalesc=urlencode($tmp->CALENDAR_ESCAPE);
 				$tmpmonth=$tmp->FormatGedcomMonth();
-				print " | <a href=\"calendar.php?cal={$newcalesc}&amp;day={$tmp->d}&amp;month={$tmpmonth}&amp;year={$tmp->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">{$newcal}</a>";
+				print " | <a href=\"calendar.php?cal={$newcalesc}&amp;day={$tmp->d}&amp;month={$tmpmonth}&amp;year={$tmp->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">{$pgv_lang['cal_'.$newcal]}</a>";
 			}
 	}
 	print "</td></tr>";

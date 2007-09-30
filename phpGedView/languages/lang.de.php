@@ -497,6 +497,16 @@ $pgv_lang["timeline_controls"]			= "Lebensspannen-Regler";
 $pgv_lang["timeline_scrollSpeed"]		= "Geschwindigkeit";
 $pgv_lang["timeline_beginYear"]			= "Start-Jahr";
 
+$pgv_lang["cal_gregorian"]            = "Gregorianisch";
+$pgv_lang["cal_julian"]               = "Julianisch";
+$pgv_lang["cal_french"]               = "Französisch";
+$pgv_lang["cal_jewish"]               = "Jüdisch";
+$pgv_lang["cal_hebrew"]               = "Hebräisch";
+$pgv_lang["cal_jewish_and_gregorian"] = "Jüdisch und Gregorianisch";
+$pgv_lang["cal_hebrew_and_gregorian"] = "Hebräisch und Gregorianisch";
+$pgv_lang["cal_hijri"]                = "Hijri";
+$pgv_lang["cal_arabic"]               = "Arabisch";
+
 // am/pm suffixes for 12 hour clocks
 $pgv_lang["a.m."]         = "am";
 $pgv_lang["p.m."]         = "pm";

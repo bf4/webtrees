@@ -393,6 +393,17 @@ $pgv_lang["year"]						= "Jaar:";
 $pgv_lang["timeline_instructions"]		= "In de nieuwste Internet Verkenners is het mogelijk om de weergegeven blokken te verschuiven zoals u dat wilt.";
 $pgv_lang["zoom_in"]					= "Inzoomen";
 $pgv_lang["zoom_out"]					= "Uitzoomen";
+
+$pgv_lang["cal_gregorian"]            = "Gregoriaans";
+$pgv_lang["cal_julian"]               = "Juliaans";
+$pgv_lang["cal_french"]               = "Frans";
+$pgv_lang["cal_jewish"]               = "Joods";
+$pgv_lang["cal_hebrew"]               = "Hebreeuws";
+$pgv_lang["cal_jewish_and_gregorian"] = "Joods en Gregoriaans";
+$pgv_lang["cal_hebrew_and_gregorian"] = "Hebreeuws en Gregoriaans";
+$pgv_lang["cal_hijri"]                = "Hijri";
+$pgv_lang["cal_arabic"]               = "Arabisch";
+
 // -- MONTH NAMES
 $pgv_lang["jan"]						= "januari";
 $pgv_lang["feb"]						= "februari";

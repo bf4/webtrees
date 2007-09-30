@@ -626,6 +626,16 @@ $pgv_lang["include_family"] = "Acil Aileyi İçer";
 $pgv_lang["lifespan_chart"] = "Ömür süre Grafiği";
 $pgv_lang["zoom_in"]			= "Görüntüyü büyüt";
 
+$pgv_lang["cal_gregorian"]            = "Milâdi";
+$pgv_lang["cal_julian"]               = "Jüliyen";
+$pgv_lang["cal_french"]               = "Fransızca";
+$pgv_lang["cal_jewish"]               = "Jahudice";
+$pgv_lang["cal_hebrew"]               = "İbranice";
+$pgv_lang["cal_jewish_and_gregorian"] = "Jahudice ve milâdi";
+$pgv_lang["cal_hebrew_and_gregorian"] = "İbranice ve milâdi";
+$pgv_lang["cal_hijri"]                = "Hicri";
+$pgv_lang["cal_arabic"]               = "Arapça";
+
 //-- MONTH NAMES
 $pgv_lang["jan"]			= "Ocak";
 $pgv_lang["feb"]			= "Şubat";
