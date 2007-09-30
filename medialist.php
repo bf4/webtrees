@@ -317,35 +317,31 @@ if ($ct>0){
 				print "<table border=0><tr>";
 		
 				// ---------- Edit Media --------------------
-				print "<td>";
+				print "<td class=\"width33 center\">";
 				print "<a href=\"javascript:;\" title=\"" . $pgv_lang["lb_edit_media"] . "\" onclick=\" return window.open('addmedia.php?action=editmedia&amp;pid=" . $media["XREF"] . "&amp;linktoid=', '_blank', 'top=50,left=50,width=600,height=600,resizable=1,scrollbars=1');\">";
 				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" />" ;
-				print "&nbsp;" . $pgv_lang["lb_edit_details"] ;
+				print "<br />" . $pgv_lang["lb_edit_details"] ;
 				print "</a>" . "\n";			
 				print "</td>";
 			
 				// ---------- Link Media to person, family or source  ---------------
-				print "<td>";			
-				print "&nbsp;&nbsp;&nbsp;&nbsp";
-				print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\"" . $pgv_lang["set_link"] . "\" /></img>";
-				print "</td>";
-				print "<td valign=\"bottom\">";
+				print "<td class=\"width33 center\">";			
+				print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\"" . $pgv_lang["set_link"] . "\" /></img><br />";
 					include ("modules/lightbox/functions/lb_link.php");
 				print "</td>";
 			
 				// ---------- View Media Details (mediaviewer) --------------------
-				print "<td>";	
-				print "&nbsp;&nbsp;&nbsp;&nbsp";
+				print "<td class=\"width33 center\">";	
 				print "<a href=\"mediaviewer.php?mid=" . $media["XREF"] . "\" title=\"" . $pgv_lang["lb_view_media"] . "\">";
 				print "<img src=\"modules/lightbox/images/image_view.gif\" class=\"icon\" title=\"" . $pgv_lang["lb_view_media"] . "\" /></img>";
-				print "&nbsp;" . $pgv_lang["lb_view_details"] ;
+				print "<br />" . $pgv_lang["lb_view_details"] ;
 				print "</a>" . "\n" ;
 				print "</td>";
 
 				print "</tr></table>";	
 			
 				// ------------ Linespace ---------------------
-				print "<br>";
+				print "<br />";
 			}
 		}else{
 		}
