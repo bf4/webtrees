@@ -26,13 +26,18 @@
 require_once("config.php");
 require_once('includes/functions_print_facts.php');
 
+if (file_exists("modules/lightbox/album.php")) {
+	include('modules/lightbox/lb_config.php');
+}else{
+}
+
 // LBox -------------------------------------------------------
 loadLangFile("lb_lang");
 // LBox --------------------------------------------------------
 
 global $MEDIA_EXTERNAL, $THUMBNAIL_WIDTH;
 global $GEDCOM, $GEDCOMS;
-global $currentPage, $lastPage;
+global $currentPage, $lastPage ;
 
 if (!isset($level)) $level = 0;
 if (!isset($action)) $action = "";
@@ -298,6 +303,7 @@ if ($ct>0){
 
 	    print "\n\t\t\t<td class=\"list_value_wrap\" width=\"50%\">";
 	    print "<table class=\"$TEXT_DIRECTION\">\n\t<tr>\n\t\t<td valign=\"top\" style=\"white-space: normal;\">";
+
 		
 //LBox --------  change for Lightbox Album --------------------------------------------
 		if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$media["FILE"]) || eregi("\.jpeg",$media["FILE"]) || eregi("\.gif",$media["FILE"]) || eregi("\.png",$media["FILE"]) ) ) { 
@@ -315,8 +321,8 @@ if ($ct>0){
 		print "</td>\n\t\t<td class=\"list_value_wrap\" style=\"border: none;\" width=\"100%\">";
 		
 //LBox --------  added for Lightbox Album --------------------------------------------
-		if ( file_exists("modules/lightbox/album.php")) {
-			if ( userCanEdit(getUserName()) ) {
+		if ( file_exists("modules/lightbox/album.php"  )) {
+			if ( userCanEdit(getUserName()) && $multimed_icons == "show" ) {
 				print "<table border=0><tr>";
 		
 				// ---------- Edit Media --------------------
@@ -345,6 +351,7 @@ if ($ct>0){
 			
 				// ------------ Linespace ---------------------
 				print "<br />";
+			}else{
 			}
 		}else{
 		}
