@@ -153,17 +153,11 @@ if ($search == "yes") {
 		</tr>
 		
 <!-- LBox ========================== added for Lightbox Album ============================== --> 		
-		<?php if (file_exists("modules/lightbox/album.php")) { ?>
-		<tr>
-			<td class="list_label" colspan="2">		
-				<?php 
-				print "<a href=\"modules/lightbox/images/slideshow.jpg\" rel=\"clearbox[general,5,start]\" title=\"" . $pgv_lang["view_slideshow"] . "\">$pgv_lang[view_slideshow]</a>\n";				
-				?>
-			</td>
-		</tr>
-		<?php }elseif (file_exists("modules/slideshow.php")) { ?>
+		<?php 
+		if (file_exists("modules/lightbox/album.php")) { 
+			// do not need slideshow bar
+		}elseif (file_exists("modules/slideshow.php")) { ?>
 <!-- LBox ======================= end addition for Lightbox Album ============================ --> 
- 			
 		<tr>
 			<td class="list_label" colspan="2">
   				<?php
