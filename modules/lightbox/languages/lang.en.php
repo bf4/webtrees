@@ -65,6 +65,3 @@ $pgv_lang["lb_view_source_tip"] = "View Source : ";
 $pgv_lang["lb_view_details_tip"] = "View Media Details : ";
 
 ?>
-$pgv_lang["lb_view_details_tip"] = "View Media Details : ";
-
-?>
