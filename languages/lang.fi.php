@@ -1099,6 +1099,7 @@ $pgv_lang["upcoming_events_block"]	= "Tulevien tapahtumien alue";
 $pgv_lang["upcoming_events_descr"]	= "Tulevat tapahtumat-alue aktiivisessa GEDCOM:issa näyttää luettelon 30 seuraavan vuorokauden aikana sattuvista tapahtumista. Käyttäjän OmaGedView sivun alueella luetteloidaan vain elävät henkilöt.GEDCOM tervetuloa-sivulla näytetään kaikki henkilöt.";
 $pgv_lang["todays_events_block"]	= "Tänä päivänä alue";
 $pgv_lang["todays_events_descr"]	= "Tänä päivänä  omassa historiassasi... alueella on luettelo tämän päivän tapahtumista. Mikäli tapahtumia ei löydy, ei aluetta näytetä. Käyttäjän OmaGedView sivun alueella luetteloidaan vain elävät, GEDCOM tervetuloa-sivulla näytetään kaikki henkilöt.";
+$pgv_lang["yahrzeit_block"]="Tulevat jortsaitit";
 $pgv_lang["logged_in_users_block"]	= "Sisäänkirjautuneet-alue";
 $pgv_lang["logged_in_users_descr"]	= "Sisäänkirjautuneet-alue näyttää luettelon tällä hetkellä sisäänkirjautuneista käyttäjistä.";
 $pgv_lang["user_messages_block"]	= "Käyttäjän viestialue";
