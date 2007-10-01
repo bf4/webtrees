@@ -335,6 +335,17 @@ $pgv_lang["year"]				= "Rok:";
 $pgv_lang["timeline_instructions"]		= "Ve většině novějších prohlížečů můžete klepnout na jméno v rámečku a přetáhnout jej na osu.";
 $pgv_lang["zoom_in"]				= "Zvětšit";
 $pgv_lang["zoom_out"]				= "Zmenšit";
+
+$pgv_lang["cal_gregorian"]            = "Gregoriánský";
+$pgv_lang["cal_julian"]               = "Juliánský";
+$pgv_lang["cal_french"]               = "Francouzský";
+$pgv_lang["cal_jewish"]               = "Židovský";
+$pgv_lang["cal_hebrew"]               = "Hebrejský";
+$pgv_lang["cal_jewish_and_gregorian"] = "Židovský a gregoriánský";
+$pgv_lang["cal_hebrew_and_gregorian"] = "Hebrejský a gregoriánský";
+$pgv_lang["cal_hijri"]                = "Muslimský (Hijri)";
+$pgv_lang["cal_arabic"]               = "Arabský";
+
 //-- MONTH NAMES
 $pgv_lang["jan"]			= "leden";
 $pgv_lang["feb"]			= "únor";

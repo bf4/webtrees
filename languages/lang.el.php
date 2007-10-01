@@ -329,6 +329,17 @@ $pgv_lang["year"]								= "Έτος:";
 $pgv_lang["timeline_instructions"]				= "In the most recent browsers you can click and drag the boxes around on the chart.";
 $pgv_lang["zoom_in"]							= "Μεγένθυνση";
 $pgv_lang["zoom_out"]							= "Σμίκρυνση";
+
+$pgv_lang["cal_gregorian"]            = "Γρηγοριανό";
+$pgv_lang["cal_julian"]               = "Ιουλιανό";
+$pgv_lang["cal_french"]               = "Γαλλικά";
+$pgv_lang["cal_jewish"]               = "Jewish";
+$pgv_lang["cal_hebrew"]               = "Hebrew";
+$pgv_lang["cal_jewish_and_gregorian"] = "Jewish and Gregorian";
+$pgv_lang["cal_hebrew_and_gregorian"] = "Hebrew and Gregorian";
+$pgv_lang["cal_hijri"]                = "Hijri";
+$pgv_lang["cal_arabic"]               = "Arabic";
+
 //-- MONTH NAMES
 $pgv_lang["jan"]								= "Ιανουάριος";
 $pgv_lang["feb"]								= "Φεβρουάριος";

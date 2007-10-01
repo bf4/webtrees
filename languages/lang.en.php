@@ -31,6 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["multi_site_search"] 		= "Multi Site Search";
 $pgv_lang["switch_lifespan"]		= "Show Lifespan chart";
 $pgv_lang["switch_timeline"]		= "Show Timeline chart";
 $pgv_lang["differences"]			= "Differences";
@@ -615,6 +616,18 @@ $pgv_lang["timeline_scrollSpeed"] = "Speed";
 $pgv_lang["timeline_controls"] = "Timeline Controls";
 $pgv_lang["include_family"] = "Include Immediate Family";
 $pgv_lang["lifespan_chart"] = "Lifespan Chart";
+
+// calendar conversion options
+$pgv_lang["cal_none"]                 = "No calendar conversion";
+$pgv_lang["cal_gregorian"]            = "Gregorian";
+$pgv_lang["cal_julian"]               = "Julian";
+$pgv_lang["cal_french"]               = "French";
+$pgv_lang["cal_jewish"]               = "Jewish";
+$pgv_lang["cal_hebrew"]               = "Hebrew";
+$pgv_lang["cal_jewish_and_gregorian"] = "Jewish and Gregorian";
+$pgv_lang["cal_hebrew_and_gregorian"] = "Hebrew and Gregorian";
+$pgv_lang["cal_hijri"]                = "Hijri";
+$pgv_lang["cal_arabic"]               = "Arabic";
 
 // am/pm suffixes for 12 hour clocks
 $pgv_lang["a.m."]         = "am";
@@ -1511,8 +1524,8 @@ $pgv_lang["statsubmit"]			 = "show the plot";
 //-- statisticsplot utility
 $pgv_lang["statistiek_list"]	= "Statistics Plot";
 $pgv_lang["stpl"]			 	= "...";
-$pgv_lang["stplGDno"]			 = "Graphics Display Library is not available in PHP 4. Please contact your system administrator";
-$pgv_lang["stpljpgraphno"]		= "JPgraph modules are not available in directory <i>phpgedview/jpgraph/</i> . Please get them from http://www.aditus.nu/jpgraph/jpdownload.php<br /> <h3>First install JPgraph in directory <i>phpgedview/jpgraph/</i></h3><br />";
+$pgv_lang["stplGDno"]			 = "Graphics Display Library is not installed on the server. Please contact your system administrator.";
+$pgv_lang["stpljpgraphno"]		= "JPgraph library is not installed in PhpGedView. Please download it from http://www.aditus.nu/jpgraph/jpdownload.php<br /> and then copy it to subdirectory <i>jpgraph/</i> on the server.";
 $pgv_lang["stplinfo"]			 = "plotting information:";
 $pgv_lang["stpltype"]			 = "type:";
 $pgv_lang["stplnoim"]			 = " not implemented:";

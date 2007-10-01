@@ -46,7 +46,18 @@ if (empty($filtersx)) $filtersx='';
 
 // Create a CalendarDate from the parameters
 $cal=urldecode($cal);
-$ged_date=new GedcomDate("$cal $day $month $year");
+// interpret the "advanced" year-range option 
+if (preg_match('/^(\d+)-(\d+)$/', $year, $match)) {
+	if (strlen($match[1]) > strlen($match[2]))
+		$match[2]=substr($match[1], 0, strlen($match[1])-strlen($match[2])).$match[2];
+	$ged_date=new GedcomDate("FROM {$cal} {$match[1]} TO {$cal} {$match[2]}");
+	$action='year';
+} else {
+	if ($year<0)
+		$year=(-$year)."B.C."; // need BC to parse date
+	$ged_date=new GedcomDate("{$cal} {$day} {$month} {$year}");
+	$year=$ged_date->date1->y; // need negative year for year entry field.
+}
 $cal_date=$ged_date->date1;
 $cal=urlencode($cal);
 
@@ -60,6 +71,8 @@ if ($cal_date->d==0) $cal_date->d=$today->d;
 if ($cal_date->m==0) $cal_date->m=$today->m;
 if ($cal_date->y==0) $cal_date->y=$today->y;
 $cal_date->SetJDfromYMD();
+if ($year==0)
+	$year=$cal_date->y;
 
 // Extract values from date
 $days_in_month=$cal_date->Format('t');
@@ -111,7 +124,8 @@ if ($view!='preview') {
 			print "<a href=\"calendar.php?cal={$cal}&amp;day={$d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">{$d}</a>";
 		print ' | ';
 	}
-	print "<a href=\"calendar.php?cal={$cal}&amp;day={$today->d}&amp;month={$today_month}&amp;year={$today->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\"><b>".$today->Format($DATE_FORMAT).'</b></a></td></tr>';
+	$tmp=new GedcomDate($today->Format('@ A O E')); // Need a gedcom date to get localisation
+	print "<a href=\"calendar.php?cal={$cal}&amp;day={$today->d}&amp;month={$today_month}&amp;year={$today->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\"><b>".$tmp->Display(true, NULL, array()).'</b></a></td></tr>';
 	// Month selector
 	print '<tr><td class="descriptionbox vmiddle">';
 	print_help_link('annivers_month_select_help', 'qm', 'month');
@@ -137,9 +151,9 @@ if ($view!='preview') {
 	print_help_link('annivers_year_select_help', 'qm', 'year');
 	print $pgv_lang['year'].'</td>';
 	print "<td class=\"optionbox vmiddle\">";
-	print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year=".($cal_date->y-1)."&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">-1</a>";
-	print " <input type=\"text\" name=\"year\" value=\"$year\" size=\"7\" /> ";
-	print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year=".($cal_date->y+1)."&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">+1</a>";
+	print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year=".($cal_date->y==1?-1:$cal_date->y-1)."&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">-1</a>";
+	print " <input type=\"text\" name=\"year\" value=\"{$year}\" size=\"7\" /> ";
+	print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year=".($cal_date->y==-1?1:$cal_date->y+1)."&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">+1</a>";
 	print " | <a href=\"calendar.php?cal={$cal}&amp;day={$today->d}&amp;month={$today_month}&amp;year={$today->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\"><b>".$today->Format('Y')."</b></a>";
 	print "</td> ";
 	// Filtering options
@@ -286,11 +300,11 @@ if ($view!='preview') {
 		$tmp=$cal_date->convert_to_cal($newcal);
 		if ($tmp->InValidRange())
 			if ($tmp->CALENDAR_ESCAPE==$cal_date->CALENDAR_ESCAPE)
-				print " | <span class=\"error\">{$newcal}</span>";
+				print " | <span class=\"error\">{$pgv_lang['cal_'.$newcal]}</span>";
 			else {
 				$newcalesc=urlencode($tmp->CALENDAR_ESCAPE);
 				$tmpmonth=$tmp->FormatGedcomMonth();
-				print " | <a href=\"calendar.php?cal={$newcalesc}&amp;day={$tmp->d}&amp;month={$tmpmonth}&amp;year={$tmp->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">{$newcal}</a>";
+				print " | <a href=\"calendar.php?cal={$newcalesc}&amp;day={$tmp->d}&amp;month={$tmpmonth}&amp;year={$tmp->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">{$pgv_lang['cal_'.$newcal]}</a>";
 			}
 	}
 	print "</td></tr>";
@@ -331,7 +345,7 @@ case 'calendar':
 case 'year':
 	$cal_date->m=0;
 	$cal_date->SetJDfromYMD();
-	$found_facts=apply_filter(get_calendar_events($cal_date->minJD, $cal_date->maxJD, $events), $filterof, $filtersx);
+	$found_facts=apply_filter(get_calendar_events($ged_date->MinJD(), $ged_date->MaxJD(), $events), $filterof, $filtersx);
 	// Eliminate duplictes (e.g. BET JUL 1900 AND SEP 1900 will appear twice in 1900)
 	foreach ($found_facts as $key=>$value)
 		$found_facts[$key]=serialize($found_facts[$key]);

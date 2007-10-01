@@ -498,6 +498,18 @@ $pgv_lang["timeline_controls"]			= "Lebensspannen-Regler";
 $pgv_lang["timeline_scrollSpeed"]		= "Geschwindigkeit";
 $pgv_lang["timeline_beginYear"]			= "Start-Jahr";
 
+// calendar conversion options
+$pgv_lang["cal_none"]                 = "Keine Übersetzung";
+$pgv_lang["cal_gregorian"]            = "Gregorianisch";
+$pgv_lang["cal_julian"]               = "Julianisch";
+$pgv_lang["cal_french"]               = "Französisch";
+$pgv_lang["cal_jewish"]               = "Jüdisch";
+$pgv_lang["cal_hebrew"]               = "Hebräisch";
+$pgv_lang["cal_jewish_and_gregorian"] = "Jüdisch und Gregorianisch";
+$pgv_lang["cal_hebrew_and_gregorian"] = "Hebräisch und Gregorianisch";
+$pgv_lang["cal_hijri"]                = "Hijri";
+$pgv_lang["cal_arabic"]               = "Arabisch";
+
 // am/pm suffixes for 12 hour clocks
 $pgv_lang["a.m."]         = "am";
 $pgv_lang["p.m."]         = "pm";
@@ -1339,8 +1351,8 @@ $pgv_lang["statsubmit"]					= "Diagramm zeigen";
 //-- statisticsplot utility
 $pgv_lang["statistiek_list"]			= "Statistik-Diagramm";
 $pgv_lang["stpl"]						= "...";
-$pgv_lang["stplGDno"]					= "Die «Graphics Display Library» ist in PHP4 nicht verfügbar. Bitte wenden Sie sich an Ihren System Verwalter.";
-$pgv_lang["stpljpgraphno"]				= "Die «JPgraph» Module befinden sich nicht im Verzeichnis <i>phpgedview/jpgraph/</i>. Bitte laden Sie diese von http://www.aditus.nu/jpgraph/jpdownload.php herunter<br /> <h3>Danach müssen Sie die heruntergeladenen JPgraph Module ins Verzeichnis <i>phpgedview/jpgraph/</i> kopieren</h3>.<br />";
+$pgv_lang["stplGDno"]					= "Die «Graphics Display Library» ist nicht verfügbar. Bitte wenden Sie sich an Ihren System-Verwalter.";
+$pgv_lang["stpljpgraphno"]				= "Die «JPgraph» Bibliothek befindet sich nicht im Unterverzeichnis <i>jpgraph/</i> von PhpGedView. Bitte laden Sie diese von http://www.aditus.nu/jpgraph/jpdownload.php herunter.  Danach müssen Sie die heruntergeladene JPgraph Bibliothek ins Unterverzeichnis <i>jpgraph/</i> übertragen.<br />";
 $pgv_lang["stplinfo"]					= "Diagramm Informationen:";
 $pgv_lang["stpltype"]					= "Typ:";
 $pgv_lang["stplnoim"]					= "nicht verfügbar:";

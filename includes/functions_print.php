@@ -988,7 +988,7 @@ function print_lang_form($option=0) {
 					foreach ($pgv_language as $key=>$value) {
 						 if ($language_settings[$key]["pgv_lang_use"]) {
 							  print "\n\t\t\t<option value=\"$key\" ";
-							  if ($LANGUAGE == $key) print "class=\"selected-option\"";
+							  if ($LANGUAGE == $key) print " selected=\"selected\" class=\"selected-option\"";
 							  print ">".$pgv_lang[$key]."</option>";
 						 }
 					}

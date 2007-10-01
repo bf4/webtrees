@@ -575,6 +575,17 @@ $pgv_lang["timeline_scrollSpeed"] = "Hastighed";
 $pgv_lang["timeline_controls"] = "Tidslinje kontroller";
 $pgv_lang["include_family"] = "Inkludér nærmeste familie";
 $pgv_lang["lifespan_chart"] = "Livsforløb diagram";
+
+$pgv_lang["cal_gregorian"]            = "Gregoriansk";
+$pgv_lang["cal_julian"]               = "Juliansk";
+$pgv_lang["cal_french"]               = "Fransk";
+$pgv_lang["cal_jewish"]               = "Jødisk";
+$pgv_lang["cal_hebrew"]               = "Hebræisk";
+$pgv_lang["cal_jewish_and_gregorian"] = "Jødisk og Gregoriansk";
+$pgv_lang["cal_hebrew_and_gregorian"] = "Hebræisk og Gregoriansk";
+$pgv_lang["cal_hijri"]                = "Hijri";
+$pgv_lang["cal_arabic"]               = "Arabisk";
+
 //-- MONTH NAMES
 $pgv_lang["jan"]				= "januar";
 $pgv_lang["feb"]				= "februar";

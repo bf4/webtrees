@@ -23,16 +23,13 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id$
+ * @version $Id: individual.php 1752 2007-09-27 10:52:59Z canajun2eh $
  */
 
 require_once("includes/controllers/individual_ctrl.php");
 require_once("includes/serviceclient_class.php");
 
-// If Lightbox is installed, load Lightbox Language files
-if (file_exists("modules/lightbox/".$pgv_language["english"])) require("modules/lightbox/".$pgv_language["english"]);
-if (file_exists("modules/lightbox/".$pgv_language[$LANGUAGE])) require("modules/lightbox/".$pgv_language[$LANGUAGE]);
-
+loadLangFile("lb_lang");	// Load Lightbox language file
 loadLangFile("gm_lang");	// Load GoogleMap language file
 
 global $USE_THUMBS_MAIN;
@@ -604,7 +601,7 @@ if(empty($SEARCH_SPIDER)) {
 if(empty($SEARCH_SPIDER)) {
 	if (file_exists("modules/lightbox/album.php")) {
 		print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none; background:none;\" \>\n";
-		print "<span class=\"subheaders\"> Album </span>\n";
+		print "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>\n";
 		// Header info ---------------------------------------------------		
 		$mediacnt = $controller->get_media_count();
 		if ($mediacnt!=0) {	

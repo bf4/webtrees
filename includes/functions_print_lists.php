@@ -842,7 +842,7 @@ function print_sour_table($datalist, $legend="") {
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">REPO</th>";
 	//-- only show the count of linked records if the DB is sufficiently small to handle the load
 	$show_details = (get_list_size("indilist")<1000);
-	if ($show_details) {
+	if ($tiny && $show_details) {
 		echo "<th class=\"list_label\">".$pgv_lang["individuals"]."</th>";
 		echo "<th class=\"list_label\">".$pgv_lang["families"]."</th>";
 		echo "<th class=\"list_label\">".$pgv_lang["media"]."</th>";
@@ -904,7 +904,7 @@ function print_sour_table($datalist, $legend="") {
 			echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".$source->getRepo()."</a>";
 			echo "</td>";
 		}
-		if ($show_details) {
+		if ($tiny && $show_details) { // $source->countSourceXXXX() is very slow.
 			//-- Linked INDIs
 			echo "<td class=\"list_value_wrap\">";
 			echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".$source->countSourceIndis()."</a>";
@@ -935,8 +935,7 @@ function print_sour_table($datalist, $legend="") {
 	echo "<td></td>";
 	echo "<td class=\"t2\"></td>";
 	echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<td></td>";
-	if ($show_details) {
+	if ($tiny && $show_details) {
 		echo "<td></td>";
 		echo "<td></td>";
 		echo "<td></td>";

@@ -593,6 +593,17 @@ $pgv_lang["year"]				= "År";
 $pgv_lang["timeline_instructions"]	= "- <i><b>PS!</b>  Du kan flytte på boksene under ved hjelp av musa!</i> (I de nyeste nettleserne)";
 $pgv_lang["zoom_out"]			= "Zoom ut";
 $pgv_lang["zoom_in"]			= "Zoom inn";
+
+$pgv_lang["cal_gregorian"]            = "Gregoriansk";
+$pgv_lang["cal_julian"]               = "Juliansk";
+$pgv_lang["cal_french"]               = "Fransk";
+$pgv_lang["cal_jewish"]               = "Jødisk";
+$pgv_lang["cal_hebrew"]               = "Hebraisk";
+$pgv_lang["cal_jewish_and_gregorian"] = "Jødisk og Gregoriansk";
+$pgv_lang["cal_hebrew_and_gregorian"] = "Hebraisk og Gregoriansk";
+$pgv_lang["cal_hijri"]                = "Hijri";
+$pgv_lang["cal_arabic"]               = "Arabisk";
+
 //-- MONTH NAMES
 $pgv_lang["jan"]				= "januar";
 $pgv_lang["feb"]				= "februar";

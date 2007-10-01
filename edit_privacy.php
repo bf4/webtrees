@@ -114,6 +114,11 @@ function search_ID_details($checkVar, $outputVar) {
 			print "\n<span class=\"list_item\">".PrintReady($name);
 			print "</span>\n";
 		}
+		else if ($type=="REPO") {
+			$name = get_repo_descriptor($pid);
+			print "\n<span class=\"list_item\">".PrintReady($name);
+			print "</span>\n";
+		}
 		else print "$type $pid";
 	}
 	else {
@@ -134,13 +139,13 @@ print_header($pgv_lang["privacy_header"]);
 ?>
 <table class="facts_table <?php print $TEXT_DIRECTION ?>">
 	<tr>
-		<td colspan="2" class="facts_label">
-<?php
+		<td colspan="2" class="facts_label"><?php
 			print "<h2>".$pgv_lang["edit_privacy_title"]." - ".$GEDCOMS[$ged]["title"]. "</h2>";
-			print "(&lrm;".$PRIVACY_MODULE.")";
+			print "(" . getLRM() . $PRIVACY_MODULE.")";
 			print "<br /><br /><a href=\"editgedcoms.php\"><b>";
 			print $pgv_lang["lang_back_manage_gedcoms"];
-			print "</b></a><br /><br />";?></td>
+			print "</b></a><br /><br />";?>
+		</td>
 	</tr>
 </table>
 <?php
@@ -285,16 +290,16 @@ if ($action=="update") {
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
-var pastefield;
-function paste_id(value) {
-pastefield.value=value;
-}
-var helpWin;
-function helpPopup(which) {
-if ((!helpWin)||(helpWin.closed)) helpWin = window.open('editconfig_help.php?help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
-else helpWin.location = 'editconfig_help.php?help='+which;
-return false;
-}
+  	var pastefield;
+	function paste_id(value) {
+	    pastefield.value=value;
+	}
+	var helpWin;
+	function helpPopup(which) {
+		if ((!helpWin)||(helpWin.closed)) helpWin = window.open('editconfig_help.php?help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
+		else helpWin.location = 'editconfig_help.php?help='+which;
+		return false;
+	}
 //-->
 </script>
 <form name="editprivacyform" method="post" action="edit_privacy.php">

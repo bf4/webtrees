@@ -557,7 +557,7 @@ $pgv_lang["families"]			= "משפחות";
 $pgv_lang["total_sources"]		= "סה\"כ מקורות";
 
 //-- BUILDINDEX FILE MESSAGES
-$pgv_lang["invalid_gedformat"]		= "מבנה GEDCOM 5.5 שגוי";
+$pgv_lang["invalid_gedformat"]		= "מבנה GEDCOM שגוי";
 $pgv_lang["exec_time"]		= "זמן העיבוד:";
 $pgv_lang["unable_to_create_index"]	= "לא ניתן ליצור קובץ אינדקסים. וודא שקיימות הרשאות לתיקייה PhpGedView. את ההרשאות ניתן לשנות אחרי שקובצי האינדקס יכתבו.";
 $pgv_lang["changes_present"]		= "שינויים לא מאושרים קיימים עבור ה-GEDCOM הנוכחי. אם תמשיך בייבוא זה, השינויים שממתינים לאישור יעדכנו את מאגר הנתונים מידית. עליך לעיין בשינויים הממתינים לפני שתמשיך בייבוא.";
@@ -614,6 +614,16 @@ $pgv_lang["timeline_scrollSpeed"] 	= "מהירות";
 $pgv_lang["timeline_controls"] 		= "הגדרות קו הזמן";
 $pgv_lang["include_family"] 		= "כלול משפחה קרובה";
 $pgv_lang["lifespan_chart"] 		= "תרשים תוחלת חיים";
+
+$pgv_lang["cal_gregorian"]            = "גרגוריאני";
+$pgv_lang["cal_julian"]               = "יוליאני";
+$pgv_lang["cal_french"]               = "צרפתי";
+$pgv_lang["cal_jewish"]               = "יהודי";
+$pgv_lang["cal_hebrew"]               = "עברי";
+$pgv_lang["cal_jewish_and_gregorian"] = "יהודי וגרגוריאני";
+$pgv_lang["cal_hebrew_and_gregorian"] = "עברי וגרגוריאני";
+$pgv_lang["cal_hijri"]                = "לוח שנה מוסלמי";
+$pgv_lang["cal_arabic"]               = "ערבי";
 
 // am/pm suffixes for 12 hour clocks
 $pgv_lang["a.m."]         = "לפנה\"צ"; 

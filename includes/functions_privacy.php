@@ -399,7 +399,6 @@ function displayDetailsByID($pid, $type = "INDI") {
 						$path_length = $MAX_RELATION_PATH_LENGTH;
 						if ($user["max_relation_path"]>0) $path_length = $user["max_relation_path"];
 						$relationship = get_relationship($user["gedcomid"][$GEDCOM], $pid, $CHECK_MARRIAGE_RELATIONS, $path_length);
-						var_dump($relationship);
 						if ($relationship!==false) {
 							if ($cache_privacy) $privacy_cache[$pkey] = true;
 							return true;

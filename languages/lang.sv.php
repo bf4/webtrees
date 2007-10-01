@@ -358,6 +358,17 @@ $pgv_lang["include_family"] = "Inkludera nära familjemedlemmar";
 $pgv_lang["family"]				= "Familj";
 $pgv_lang["lifespan_chart"] = "Livslinjetavla";
 $pgv_lang["zoom_in"]			= "Zooma in";
+
+$pgv_lang["cal_gregorian"]            = "Gregoriansk";
+$pgv_lang["cal_julian"]               = "Juliansk";
+$pgv_lang["cal_french"]               = "Fransk";
+$pgv_lang["cal_jewish"]               = "Judisk";
+$pgv_lang["cal_hebrew"]               = "Hebreisk";
+$pgv_lang["cal_jewish_and_gregorian"] = "Judisk och Gregoriansk";
+$pgv_lang["cal_hebrew_and_gregorian"] = "Hebreisk och Gregoriansk";
+$pgv_lang["cal_hijri"]                = "Hijri";
+$pgv_lang["cal_arabic"]               = "Arabisk";
+
 //-- MONTH NAMES
 $pgv_lang["jan"]				= "Januari";
 $pgv_lang["feb"]				= "Februari";

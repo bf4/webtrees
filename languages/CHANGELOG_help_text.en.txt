@@ -54,6 +54,7 @@ VERSION 4.1.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
++$pgv_lang["edit_AGNC_help"]						30 Sep 2007				A
 *$pgv_lang["stat_help"]								23 Sep 2007				f
 *$pgv_lang["stat_help_x"]							23 Sep 2007				w
 *$pgv_lang["stat_help_y"]							23 Sep 2007				w
