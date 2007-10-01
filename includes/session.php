@@ -723,7 +723,6 @@ $faqlistfile			= array();
 $extrafile				= array();
 $factsarray 			= array();
 $pgv_lang_name 			= array();
-$langcode				= array();
 $ALPHABET_upper			= array();
 $ALPHABET_lower			= array();
 $MULTI_LETTER_ALPHABET	= array();
@@ -761,47 +760,40 @@ foreach ($language_settings as $key => $value) {
 	$NAME_REVERSE_array[$key]	= $value["NAME_REVERSE"];
 
 	$pgv_lang["lang_name_$key"]	= $value["pgv_lang"];
-
-	$dDummy = $value["langcode"];
-	$ct = strpos($dDummy, ";");
-	while ($ct > 1) {
-		$shrtcut = substr($dDummy,0,$ct);
-		$dDummy = substr($dDummy,$ct+1);
-		$langcode[$shrtcut]		= $key;
-		$ct = strpos($dDummy, ";");
-	}
 }
-
 
 /**
  * The following business rules are used to choose currently active language
- * 1. If the user has chosen a language from the list or the flags, use their choice.
- * 2. When the user logs in, switch to the language in their user profile
- * 3. Use the language in visitor's browser settings if it is supported in the PGV site.
- *    If it is not supported, use the gedcom configuration setting.
+ * 1. Use the language in visitor's browser settings if it is supported in the PGV site.
+ *    If it is not supported, use the GEDCOM configuration setting.
+ * 2. If the user has chosen a language from the list or the flags, use their choice.
+ * 3. When the user logs in, switch to the language in their user profile unless the 
+ *    user made a language choice prior to logging in.
  * 4. When a user logs out their current language choice is ignored and the site will
  *    revert back to the language they first saw when arriving at the site according to
- *    rule 3.
+ *    rule 1.
  */
 if ((!empty($logout))&&($logout==1)) unset($_SESSION["CLANGUAGE"]);		// user is about to log out
 
 if (($ENABLE_MULTI_LANGUAGE)&&(empty($_SESSION["CLANGUAGE"]))&&(empty($SEARCH_SPIDER))) {
-   if (isset($HTTP_ACCEPT_LANGUAGE)) $accept_langs = $HTTP_ACCEPT_LANGUAGE;
-   else if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) $accept_langs = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-   if (isset($accept_langs)) {
-      if (strstr($accept_langs, ",")) {
-         $langs_array = preg_split("/(,\s*)|(;\s*)/", $accept_langs);
-         for ($i=0; $i<count($langs_array); $i++) {
-            if (!empty($langcode[$langs_array[$i]]) && $pgv_lang_use[$langcode[$langs_array[$i]]]) {
-               $LANGUAGE = $langcode[$langs_array[$i]];
-               break;
-            }
-         }
-      }
-      else {
-         if (!empty($langcode[$accept_langs])) $LANGUAGE = $langcode[$accept_langs];
-      }
-   }
+	if (isset($HTTP_ACCEPT_LANGUAGE)) $accept_langs = $HTTP_ACCEPT_LANGUAGE;
+	else if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) $accept_langs = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+	if (isset($accept_langs)) {
+		// Seach list of supported languages for this Browser's preferred page languages
+		$langs_array = preg_split("/(,\s*)|(;\s*)/", $accept_langs);
+		$foundLanguage = false;
+		foreach ($langs_array as $browserLang) {
+			$browserLang = strtolower($browserLang).";";
+			foreach ($pgv_lang_use as $language => $active) {
+				if (!$active) continue;
+				if (strpos($lang_langcode[$language], $browserLang) === false) continue;
+				$LANGUAGE = $language;
+				$foundLanguage = true;
+				break;
+			}
+			if ($foundLanguage) break;
+		}
+	}
 }
 $deflang = $LANGUAGE;
 
