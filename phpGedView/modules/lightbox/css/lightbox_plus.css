@@ -71,8 +71,8 @@
 .prvpic
 {
 background-color: #999999; 
-height: 84px;
-width: 60px;
+height: 80px;
+width: 60px; 
 border: 1px;
 border-style: solid;
 border-color: black;
@@ -85,7 +85,7 @@ background-color: none;
 border-style: dotted;
 border: 0px;
 border-color: none;
-padding: 1px;
+padding: 0px;
 }
 
 .pic
@@ -127,7 +127,7 @@ border-color: #ffffff;
 */
 margin-right: 5px;
 list-style-type: none;
-padding-bottom: 8px;
+padding-bottom: 0px;
 padding-left: 4px;
 padding-right: 4px;
 float: left;
@@ -136,7 +136,7 @@ float: left;
 #thumblist_1 a img, #thumblist_2 a img, #thumblist_3 a img, #thumblist_4 a img
 {
 border-style:none;
-border:0px;
+border:1px;
 padding:1px;
 }
 
