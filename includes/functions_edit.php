@@ -2067,20 +2067,20 @@ function insert_missing_subtags($level1tag)
 		}
 	}
 	// Do something (anything!) with unrecognised custom tags
-	if (substr($level1tag, 0, 1)=='_' && $level1tag!='_UID' && count($tags)==1) {
-		add_simple_tag("2 DATE");
-		add_simple_tag("2 PLAC");
-		if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
-			foreach ($match[1] as $tag)
-				add_simple_tag("3 $tag");
-		add_simple_tag("3 MAP");
-		add_simple_tag("4 LATI");
-		add_simple_tag("4 LONG");
-		add_simple_tag("2 ADDR");
-		add_simple_tag("2 AGNC");
-		add_simple_tag("2 TYPE");
-		add_simple_tag("2 AGE");
-	}
+	if (substr($level1tag, 0, 1)=='_' && $level1tag!='_UID')
+		foreach (array('DATE', 'PLAC', 'ADDR', 'AGNC', 'TYPE', 'AGE') as $tag)
+			if (!in_array($tag, $tags)) {
+				add_simple_tag("2 {$tag}");
+				if ($tag=='PLAC') {
+					if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
+						foreach ($match[1] as $atag)
+							add_simple_tag("3 $atag");
+					add_simple_tag("3 MAP");
+					add_simple_tag("4 LATI");
+					add_simple_tag("4 LONG");
+
+				}
+			}
 }
 
 /**
