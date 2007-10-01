@@ -35,7 +35,7 @@
 // -----------------------------------------------------------------------------
 // function lightbox_print_media_row($rtype, $rowm, $pid) {
 // -----------------------------------------------------------------------------
-  
+
     global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $MEDIA_DIRECTORY, $TEXT_DIRECTION;
     global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
     global $SEARCH_SPIDER;
@@ -52,8 +52,9 @@
 	
     //print dummy image if media is linked to a 'private' person
     if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
-        print "<table class=\"prvpic\"><tr><td align=\"center\" colspan=1>" . "\n";
-        print "<img src=\"modules/lightbox/images/private.gif\" class=\"icon\" width=\"60\" height=\"80\" alt=\" Image Private \" /></img>" . "\n" ;
+        print "<table><tr><td class=\"prvpic\" align=\"center\" colspan=1>" . "\n";
+		print $pgv_lang["lb_private"];
+//        print "<img src=\"modules/lightbox/images/private.gif\" class=\"icon\" width=\"60\" height=\"80\" alt=\" Image Private \" /></img>" . "\n" ;
         print "</td></tr></table>" . "\n";
 		return false;
     }
@@ -218,10 +219,12 @@
 // LB 		print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
 			print "<img src=\"" .$thumbnail . "\" height=80 border=\"0\" " ;
 
-			// These next lines disable the extra IE Browser tooltip. (It has to be done manually in Firefox)
-			// How to turn off tooltip in firefox:
-			// Type "about:config" in the Firefox address box and hit enter. 
-			// It shows a list of configurable features. Find "browser.chrome.toolbar_tips" item and double-click to turn it value to false.
+			// These next lines disable the extra IE Browser tooltip. (It has to be done manually in Firefox but this is not recommended)
+				// How to turn off tooltip in firefox: (Not recommended)
+					// Type "about:config" in the Firefox address box and hit enter. 
+					// It shows a list of configurable features. Find "browser.chrome.toolbar_tips" item and double-click to turn it value to false.
+				// If you perform the above, ALL, Firefox chrome tooltips will be turned off .. This is not recommended)
+				// I will try to find a better way of removing the doubled tooltips ... Brian Holland .. Lightbox developer)
 			if ( eregi("1 SOUR",$rowm['m_gedrec'])) {
 				print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\nSource info is available\" />";
 			}else{
