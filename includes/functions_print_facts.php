@@ -417,9 +417,20 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 					print '</span></span>';
 				}
 			}
+			// 0 SOUR/1 DATA/2 EVEN/3 DATE/3 PLAC
+			for ($even_num=1; $even_rec=get_sub_record(2, "2 EVEN", $factrec, $even_num); ++$even_num) {
+				$tmp1=get_gedcom_value('EVEN', 2, $even_rec, $truncate='', $convert=false);
+				$tmp2=new GedcomDate(get_gedcom_value('DATE', 3, $even_rec, $truncate='', $convert=false));
+				$tmp3=get_gedcom_value('PLAC', 3, $even_rec, $truncate='', $convert=false);
+				if (!empty($factarray[$tmp1]))
+					$tmp1=$factarray[$tmp1];
+				if ($even_num>1)
+					print "<br />";
+				print "<b>{$tmp1}</b>: ".$tmp2->Display(false, '', array())." {$tmp3}";
+			}
 			if ($fact!="ADDR") {
 				//-- catch all other facts that could be here
-				$special_facts = array("ADDR","ALIA","ASSO","CEME","CONC","CONT","DATE","DESC","EMAIL",
+				$special_facts = array("ADDR","ALIA","ASSO","CEME","CONC","CONT","DATE","DESC","EMAIL","EVEN",
 				"FAMC","FAMS","FAX","NOTE","OBJE","PHON","PLAC","RESN","SOUR","STAT","TEMP",
 				"TIME","TYPE","WWW","_EMAIL","_PGVU", "URL", "AGE");
 				$ct = preg_match_all("/\n2 (\w+) (.*)/", $factrec, $match, PREG_SET_ORDER);
