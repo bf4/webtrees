@@ -71,6 +71,8 @@ if ($cal_date->d==0) $cal_date->d=$today->d;
 if ($cal_date->m==0) $cal_date->m=$today->m;
 if ($cal_date->y==0) $cal_date->y=$today->y;
 $cal_date->SetJDfromYMD();
+if ($year==0)
+	$year=$cal_date->y;
 
 // Extract values from date
 $days_in_month=$cal_date->Format('t');
