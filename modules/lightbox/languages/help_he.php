@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,12 +23,12 @@
  *
  * @package PhpGedView
  * @subpackage Module
- * @version $Id:$
+ * @version $Id$
  * @author Brian Holland
  */
 
 
-echo "<font size=2 face=\"Verdana\"> ";
+echo "<font size=2 face=\"Verdana\"><span dir=\"rtl\"> ";
 echo "<h3>עזרה של אלבום-Lightbox: </h3>";
 echo "<ol> ";
 
@@ -46,7 +46,7 @@ echo "כאשר רואים את הצלמית הירוקה של פלוס בתחת�
 echo "השתמש בגלגל העכבר למעלה ולמטה כדי לשנות את הגודל.<br>";
 echo "(או השתמש במקשי \"i\" ו-\"o\")<br>";
 echo "הצלמית תשתנה למינוס אדום.<br> ";
-echo "כאשר התמונה תשונה לגודל גדול מהדף המוצג, השתמש במקשי החצים כדי \"להזיז" את התמונה.<br>";
+echo "כאשר התמונה תשונה לגודל גדול מהדף המוצג, השתמש במקשי החצים כדי \"להזיז\" את התמונה.<br>";
 echo "<b> מנה זום: </b><br>";
 echo "לחץ על הצלמית מינוס האדומה בתחתחת מימין כדי לצאת מאופן הזום.<br>";
 echo "(או השתמש במקש \"z\" )";
@@ -82,7 +82,7 @@ echo "הערה: כאשר המצגת מופעל - כפתור הזום לא מוצ
 echo "</li><br><br>";
 
 echo "<li>";
-echo "<b><font color=\"blue\">נווט ...</b></font><br>";
+echo "<font color=\"blue\"><b>נווט ...</b></font><br>";
 echo "השתמש בטבלת \" ראה 'אלבום'' \" משמאל לטבלת צלמיות של התמונות כדי לבחור ישירות מראה אלבום של אדם אחר.<br>";
 
 echo "</ol>";
@@ -95,5 +95,5 @@ echo "<b>הערה למנהלנים:</b><br>";
 echo "אם קובץ \"תמונה\" (jpeg וכו')  (תמונה, תעודה מסמך וכו') מופיע בשורת \"אחר\", משמעות הדבר שה\"סוג\" לא הוגדר.<br>";
 echo "יתכן ותרצה להגדיר מחדש את \"סוג\" המדיה של הפריטים הללו.";
 
-echo " </font> ";
+echo " </span></font> ";
  ?>
