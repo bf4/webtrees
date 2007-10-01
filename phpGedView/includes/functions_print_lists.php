@@ -810,7 +810,7 @@ function print_sour_table($datalist, $legend="") {
 	echo "<th class=\"list_label\">".$factarray["AUTH"]."</th>";
 	//-- only show the count of linked records if the DB is sufficiently small to handle the load
 	$show_details = (get_list_size("indilist")<1000);
-	if ($show_details) {
+	if ($tiny && $show_details) {
 		echo "<th class=\"list_label\">".$pgv_lang["individuals"]."</th>";
 		echo "<th class=\"list_label\">".$pgv_lang["families"]."</th>";
 		echo "<th class=\"list_label\">".$pgv_lang["media"]."</th>";
@@ -866,7 +866,7 @@ function print_sour_table($datalist, $legend="") {
 		echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".PrintReady($source->getAuth())."</a>";
 		echo "&nbsp;</td>";
 
-		if ($show_details) {
+		if ($tiny && $show_details) { // $source->countSourceXXXX() is very slow.
 			//-- Linked INDIs
 			echo "<td class=\"list_value_wrap\">";
 			echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".$source->countSourceIndis()."</a>";
@@ -896,7 +896,7 @@ function print_sour_table($datalist, $legend="") {
 	echo "<td></td>";
 	echo "<td class=\"t2\"></td>";
 	echo "<td></td>";
-	if ($show_details) {
+	if ($tiny && $show_details) {
 		echo "<td></td>";
 		echo "<td></td>";
 		echo "<td></td>";
