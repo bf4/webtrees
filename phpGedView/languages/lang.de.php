@@ -497,6 +497,8 @@ $pgv_lang["timeline_controls"]			= "Lebensspannen-Regler";
 $pgv_lang["timeline_scrollSpeed"]		= "Geschwindigkeit";
 $pgv_lang["timeline_beginYear"]			= "Start-Jahr";
 
+// calendar conversion options
+$pgv_lang["cal_none"]                 = "Keine Übersetzung";
 $pgv_lang["cal_gregorian"]            = "Gregorianisch";
 $pgv_lang["cal_julian"]               = "Julianisch";
 $pgv_lang["cal_french"]               = "Französisch";
