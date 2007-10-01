@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Module
- * @version $Id: lb_indi_tabs_0.php 1358 2007-07-31 22:28:49Z windmillway $
+ * @version $Id: lb_indi_tabs_0.php 1752 2007-09-27 10:52:59Z canajun2eh $
  * @author Brian Holland
  */
 ?>

@@ -34,32 +34,51 @@ echo "<ol> ";
 
 echo "<li>";
 echo "<b><font color=\"blue\">To view an image</font></b><br>";
-echo "Click on an image icon. ";
+echo "Click on any thumbnail. ";
 echo "The title of the image will appear at the bottom of the overlaid image. ";
 echo "</li><br><br>";
 
 echo "<li>";
 echo "<b><font color=\"blue\">To use zoom mode with a displayed image</font></b><br>" ;
 echo "<b> Enable Zoom: </b><br>";
-echo "Click on the [ZOOM] label at the top left of the image.<br> ";
-echo "Now use the mouse wheel up and down to resize.<br>";
-echo "When the image is re-sized larger than the viewed page, use the mouse left button (held down)  to \"drag\" the image around.<br>";
+echo "NOTE: The slideshow must be paused to see the \"zoom\" icons.<br>";
+echo "When the Green Plus icon at the bottom right of the image is visible. Zoom is already enabled.<br> ";
+echo "Use the mouse wheel up and down to resize.<br>";
+echo "(Or use keys \"i\" and \"o\")<br>";
+echo "The icon will change to a red minus.<br> ";
+echo "When the image is re-sized larger than the viewed page, use the arrow keys to \"move\" the image around.<br>";
 echo "<b> Disable Zoom: </b><br>";
-echo "Click on the [NORMAL] label at the top left again to get out of zoom mode, and see the title (bottom), and the [CLOSE X] label (top right) again.";
+echo "Click on the Red minus icon at the bottom right to get out of zoom mode.<br>";
+echo "(Or use the \"z\" key)";
 echo "</li><br><br>";
 
 echo "<li>";
-echo "<b><font color=\"blue\">To close an image (three ways)</font></b><br><ol>";
-echo "<li />When the cursor is within the image, click on the [CLOSE X] label at top right.<br>";
-echo "<li />Click anywhere else within the image<br>";
-echo " (note if you do this when in zoom mode, you will have to click the [ZOOM] label twice again when viewing the next image to see the title and the [CLOSE X] label once more.";
-echo "<li />Click outside the image<br>";
-echo " (note if you do this when in zoom mode, you will have to click the [ZOOM] label twice again when viewing the next image to see the title and the [CLOSE X] label once more.";
-echo "</li></ol><br>";
+echo "<b><font color=\"blue\">To close an image </font></b><br>";
+echo "Click on the Red X icon at bottom right.";
+echo "</li><br><br>";
 
 echo "<li>";
-echo "<b><font color=\"blue\">To view the next image in the section</font></b><br>";
-echo "Click on the [Next] or [Prev] labels which appear on the sides of the image when you \"mouse over\" the image.";
+echo "<b><font color=\"blue\">To view the next or previous image in the Album</font></b><br>";
+echo "AS you \"mouse over\" the image (when NOT in \"zoom\" mode), ";
+echo "the \"NEXT\" and \"PREV\" labels will appear.<br> ";
+echo " Click anywhere in the right half of the image to see the next image. Click anywhere in the left half of the image to see the previous image ";
+echo "</li><br><br>";
+
+echo "<li>";
+echo "<b><font color=\"blue\">To \"Jump\" to any other image in the Album</font></b><br>";
+echo "AS you \"mouse over\" the top 1cm of the image (when NOT in \"zoom\" mode), ";
+echo "the \"Gallery\" will appear.<br> ";
+echo "If necessary, move the mouse cursor left and right, and click any gallery thumbnail<br>";
+echo " \"Next\", \"Previous\" and \"Jump\" may be done whether the slideshow is running or paused. ";
+echo "</li><br><br>";
+
+echo "<li>";
+echo "<b><font color=\"blue\">To Run the slide show</font></b><br>";
+echo "Click on the \"Start\" icon at bottom left.<br>";
+echo "If there is a music file, the Speaker icon will appear.";
+echo "Click on the Speaker icon to toggle the music on and off.<br>";
+echo "Click on the Pause icon to stop the slide show.<br>";
+echo "NOTE: When the slideshow is running, the Zoom icon will not be visible";
 echo "</li><br><br>";
 
 echo "<li>";
@@ -69,9 +88,9 @@ echo "Use the \" View 'Album' \" table at the right of the image icon table to d
 echo "</ol>";
 
 echo "<br><b>Notes:</b><br>";
-echo "Image icons which appear within the \"Other\" row, will not be displayed with \"Lightbox\"<br> ";
-echo "e.g. PDF files, plus, audio, book, and video \"TYPES\" of media. <br>";
-echo "This is done intentionally as \"Lightbox\" cannot handle these files at the moment.<br><br>";
+echo "Thumbnails which are NOT images may be viewed individually, but will not be in the slide show.<br> ";
+echo "e.g. PDF files, plus, audio, book, and video \"TYPES\" of media. <br><br>";
+
 echo "<b>Note for Administrator:</b><br>";
 echo "If any \"image\" (jpeg etc) files (photo, certificate, document etc) appear in the \"Other\" row, it means that no \"TYPE\" has been set.<br>";
 echo "You may wish to re-classify the \"TYPE\" of media for these items.";

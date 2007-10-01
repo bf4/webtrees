@@ -60,4 +60,8 @@ $pgv_lang["turn_edit_OFF"] = "Turn Edit Mode OFF";
 
 $pgv_lang["lb_source_avail"] = "Source information available - Click here.";
 
+$pgv_lang["lb_private"] = "Image linked <br> to a Private Individual";
+$pgv_lang["lb_view_source_tip"] = "View Source : ";
+$pgv_lang["lb_view_details_tip"] = "View Media Details : ";
+
 ?>

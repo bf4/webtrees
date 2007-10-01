@@ -23,28 +23,28 @@
  *
  * @package PhpGedView
  * @subpackage Module
- * @version $Id: lb_indi_doors_0.php 1358 2007-07-31 22:28:49Z windmillway $
+ * @version $Id: lb_indi_doors_0.php 1772 2007-09-29 17:12:34Z windmillway $
  * @author Brian Holland
  */
 ?>
 <?php //  ----------    The following lines changed by Brian Holland for lightbox/album module   ----------------------------- ?>
 <?php if (!file_exists("modules/googlemap/defaultconfig.php")) {  ?>
           <?php if (file_exists("modules/lightbox/album.php") && (!userCanEdit(getUserName())) ) {?>
-          <dd id="door4"><a href="javascript:;" onclick="tabswitch(7); return false;" ><?php print "Album" ?></a></dd>
+          <dd id="door4"><a href="javascript:;" onclick="tabswitch(7); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd>
           <?php }else{ ?>
           <dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["media"]?></a></dd>
           <?php } ?>
           <?php if ( file_exists("modules/lightbox/album.php") && (userCanEdit(getUserName())) ) {?>
-          <dd id="door7"><a href="javascript:;" onclick="tabswitch(7); return false;" ><?php print "Album" ?></a></dd>
+          <dd id="door7"><a href="javascript:;" onclick="tabswitch(7); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd>
           <?php } ?>
 <?php }elseif (file_exists("modules/googlemap/defaultconfig.php")) {  ?>
           <?php if (file_exists("modules/lightbox/album.php") && (!userCanEdit(getUserName())) ) {?>
-          <dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print "Album" ?></a></dd>
+          <dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd>
           <?php }else{ ?>
-          <dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print "Album" ?></a></dd>
+          <dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd>
           <?php } ?>
           <?php if (file_exists("modules/lightbox/album.php") && (userCanEdit(getUserName())) ) {?>
-          <dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print "Album" ?></a></dd>
+          <dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd>
           <?php } ?>
 <?php } ?>
 <?php //  --------------------------------------------------------------------------------------------------------------------  ?>

@@ -310,7 +310,7 @@ if ($ct>0){
 		
 //LBox --------  change for Lightbox Album --------------------------------------------
 		if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$media["FILE"]) || eregi("\.jpeg",$media["FILE"]) || eregi("\.gif",$media["FILE"]) || eregi("\.png",$media["FILE"]) ) ) { 
-			print "<a href=\"" . $media["FILE"] . "\" rel='lightbox[general]' title='" . $name . "'\">" . "\n";	
+			print "<a href=\"" . $media["FILE"] . "\" rel='clearbox[general]' title='" . $name . "'\">" . "\n";	
         }elseif ($USE_MEDIA_VIEWER) {
 			print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
 		} else {

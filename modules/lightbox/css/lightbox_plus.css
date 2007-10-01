@@ -68,14 +68,24 @@
         filter: Alpha(opacity=50);
 }
 
+.prvpic
+{
+background-color: #999999; 
+height: 80px;
+width: 60px; 
+border: 1px;
+border-style: solid;
+border-color: black;
+margin-top: 0px;
+}
+
 .prvpic img
 {
-/* background-color: #777777; */
-background-color: none;
+background-color: none; 
 border-style: dotted;
 border: 0px;
 border-color: none;
-padding: 1px;
+padding: 0px;
 }
 
 .pic
@@ -95,6 +105,10 @@ display: block;
 width: 100%;
 }
 */
+#lb_icons
+{
+text-align: center, justify;
+}
 
 #thumblist_1, #thumblist_2, #thumblist_3, #thumblist_4
 {
@@ -106,8 +120,14 @@ float: left;
 #thumblist_1 li, #thumblist_2 li, #thumblist_3 li, #thumblist_4 li
 {
 display: block;
+/*
+border-style: solid;
+border: 1px;
+border-color: #ffffff;
+*/
+margin-right: 5px;
 list-style-type: none;
-padding-bottom: 8px;
+padding-bottom: 0px;
 padding-left: 4px;
 padding-right: 4px;
 float: left;
@@ -116,7 +136,7 @@ float: left;
 #thumblist_1 a img, #thumblist_2 a img, #thumblist_3 a img, #thumblist_4 a img
 {
 border-style:none;
-border:0px;
+border:1px;
 padding:1px;
 }
 

@@ -27,12 +27,18 @@
  * @author Brian Holland
  */
 ?>
+<?php
+loadLangFile("lb_lang");
+?>
+
 <script language="Javascript">
 <!--
    function album_help(OPTS) {
    var win01 = window.open(
    <?php if ($pgv_language[$LANGUAGE] == "languages/lang.fr.php") { ?>
    "modules/lightbox/languages/help_fr.php?"+OPTS, "win01", "resizable=1, scrollbars=1, HEIGHT=780, WIDTH=500 ");
+   <?php }else if ($pgv_language[$LANGUAGE] == "languages/lang.he.php") { ?>
+   "modules/lightbox/languages/help_he.php?"+OPTS, "win01", "resizable=1, scrollbars=1, HEIGHT=780, WIDTH=500 ");   
    <?php }else{ ?>
    "modules/lightbox/languages/help_en.php?"+OPTS, "win01", "resizable=1, scrollbars=1, HEIGHT=780, WIDTH=500 ");
    <?php } ?>
@@ -54,11 +60,7 @@
 </script>
 
 <?php
-loadLangFile("lb_lang");
-
-global $reorder, $edit;
-if (!isset($edit)) {$edit=1;} 
-else{$edit==$edit;}
+//loadLangFile("lb_lang");
 
 	//Lightbox-Album header Links
 		print "<br>";
@@ -67,54 +69,31 @@ else{$edit==$edit;}
 		print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 			
 		//Help page
+		if ($pgv_language[$LANGUAGE] == "languages/lang.fr.php") { 
+			$help = "modules/lightbox/languages/help_fr.php";
+		}else if ($pgv_language[$LANGUAGE] == "languages/lang.he.php"){ 
+			$help = "modules/lightbox/languages/help_he.php";
+		}else{ 
+			$help = "modules/lightbox/languages/help_en.php";
+		} 		
         print "&nbsp;&nbsp;&nbsp;" ;
-        print "<a href=\"javascript: album_help()\" title=\"" . $pgv_lang["page_help"] . "\" >" ;
+		print "<a href=\"" . $help . "\" rel='clearbox(500,760,click)' title=\"" . $pgv_lang["page_help"] . "\" > ";
         print "<img src=\"".$PGV_IMAGE_DIR."/small/help.gif\" class=\"icon\" title=\"" . $pgv_lang["page_help"] . "\" />" ;
         print $pgv_lang["page_help"];
         print "</a>" ;
-
-/*	NOT READY YET - More work to do		
-		//Reorder Media
-//		if ( userIsAdmin(getUserName()) && $mediacnt!=0 &&  (!isset($edit) || $edit==1) && ($reorder!=1 || !isset($reorder)) ) {
-		if ( userCanEdit(getUserName()) && $mediacnt!=0 &&  (!isset($edit) || $edit==1) && ($reorder!=1 || !isset($reorder)) ) {		
-			print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
-//			print "<a href=\"javascript: reorder_media()\" title=\"Reorder Media\" >" ;
-			print "<a href=\"" . $_SERVER['PHP_SELF'] . "?tab=" . $tabno . "&pid=" . $pid . "&edit=" . $edit . "&reorder=1\" title=\"Change Media Order *** Not working fully yet ! ***\" >" ;
-			print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\"  title=\"Change Media Order *** Not working fully yet ! ***\" >" ;
-			print " Change Media Order" ; 
-			print '</a>';  		
-//		}elseif ( userIsAdmin(getUserName()) && $mediacnt!=0 && (!isset($edit) || $edit==1) ){
-		}elseif ( userCanEdit(getUserName()) && $mediacnt!=0 && (!isset($edit) || $edit==1) ){		
-			print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
-//			print "<a href=\"javascript: reorder_media()\" title=\"Reorder Media\" >" ;
-			print "<a href=\"" . $_SERVER['PHP_SELF'] . "?tab=" . $tabno . "&pid=" . $pid . "&edit=" . $edit . "\" title=\"Save Media Order *** Not working fully yet ! ***\" >" ;
-			print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\"  title=\"Save Media Order\" />" ;
-			print " Save Media Order" ; 
-			print '</a>';
-				//NOTE for 4.2 SVN
-				print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
-				print "( Drag the Media icons by the id number at the top, to the left or right to sort. Then Save )";
-				print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
-				print "<font color=\"red\"> *** PLEASE NOTE THIS FUNCTION IS NOT WORKING YET (only the interface) *** </font>";				
-		}else{
-		}
-*/		
+/*		
 		//Slide Show
-		if ( $reorder==1 ) {
+		if ($mediacnt!=0) {
+			print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
+			print "<a href=\"modules/lightbox/images/slideshow.jpg\" rel=\"clearbox[general,6,start]\" title=\"" . $pgv_lang["lb_slide_show"] . "\">"; 
+			print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\"  title=\"" . $pgv_lang["lb_slide_show"] . "\" />" ;
+			print " " . $pgv_lang["lb_slide_show"]; 
+			print '</a>'; 
 		}else{
-			if ($mediacnt!=0) {
-				print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
-				print "<a href=\"modules/lightbox/images/slideshow.jpg\" rel=\"clearbox[general,6,start]\" title=\"" . $pgv_lang["lb_slide_show"] . "\">"; 
-				print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\"  title=\"" . $pgv_lang["lb_slide_show"] . "\" />" ;
-				print " " . $pgv_lang["lb_slide_show"]; 
-				print '</a>';
-			}else{
-			}	
-		}
-		
+		}		
+*/		
 		//Add a new multimedia object
-		if ( $reorder==1 || $edit==0 ) {
-		}elseif ( userCanEdit(getUserName()) ) {
+        if ( userCanEdit(getUserName()) ) {
             print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
             print "<a href=\"javascript: album_add()\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" > ";
             print "<img src=\"modules/lightbox/images/image_add.gif\" class=\"icon\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" />" ;
@@ -124,8 +103,7 @@ else{$edit==$edit;}
         }
 		
 		//Link to an existing item
-		if ( $reorder==1  || $edit==0 ) {
-        }elseif ( userCanEdit(getUserName()) ) {
+        if ( userCanEdit(getUserName()) ) {
             print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
             print "<a href=\"javascript: album_link()\" title=\"" . $pgv_lang["lb_link_media_full"] . "\" > ";
             print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\" " . $pgv_lang["lb_link_media_full"] . "\" />" ;
@@ -135,14 +113,15 @@ else{$edit==$edit;}
         }
 
 		//Turn Edit Mode On or Off
-		if ( $reorder==1 ) {
-        }elseif (userIsAdmin(getUserName()) && $edit==1 && $mediacnt!=0) {
+		if (!isset($edit)) { $edit=1; }
+		else{ $edit==$edit;	}
+        if ( userCanEdit(getUserName()) && $edit==1 && $mediacnt!=0) {
             print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
             print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&edit=0 title=\"" . $pgv_lang["turn_edit_OFF"] . "\">";
             print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\" " . $pgv_lang["turn_edit_OFF"] . "\" />" ;
             print " " . $pgv_lang["turn_edit_OFF"] ;
             print " </a> ";
-        }elseif (userIsAdmin(getUserName()) && $edit==0 && $mediacnt!=0) {
+        }elseif ( userCanEdit(getUserName()) && $edit==0 && $mediacnt!=0) {
             print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
             print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&edit=1 title=\"" . $pgv_lang["turn_edit_ON"] . "\">";
             print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\" " . $pgv_lang["turn_edit_ON"] . "\" />" ;

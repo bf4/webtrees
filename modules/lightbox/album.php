@@ -27,27 +27,35 @@
  * @author Brian Holland
  */
 ?>
+<?php 
+global $LANGUAGE;
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
 
   <title>Personal | Media Album v2.0</title>
+<?php if ($LANGUAGE=="hebrew") { ?>
+  <link  href="modules/lightbox/css/clearbox_music_RTL.css" 	rel="stylesheet" type="text/css" />
+<?php }else{ ?>
+  <link  href="modules/lightbox/css/clearbox_music.css" 	rel="stylesheet" type="text/css" />
+<?php } ?>
+  
+  <link  href="modules/lightbox/css/lightbox_plus.css" 		rel="stylesheet" type="text/css" media="screen" />  
  
-  <link  href="modules/lightbox/css/clearbox.css" rel="stylesheet" type="text/css" />
-  <link  href="modules/lightbox/css/lightbox_plus.css" rel="stylesheet" type="text/css" media="screen" />
-  <script src="modules/lightbox/js/clearbox.js" type="text/javascript"></script>
-  <script src="modules/lightbox/js/spica.js" type="text/javascript"></script>
-  <script src="modules/lightbox/js/lightbox_plus.js" type="text/javascript"></script>
-
+  <script src="modules/lightbox/js/prototype.js" 			type="text/javascript"></script>  
+  <script src="modules/lightbox/js/Sound.js" 				type="text/javascript"></script>
+  <script src="modules/lightbox/js/clearbox.js" 			type="text/javascript"></script>
+  
 </head>
 
 <body>
-
-  <script src="modules/lightbox/js/wz_tooltip.js" type="text/javascript"></script> 
-
+  <script src="modules/lightbox/js/wz_tooltip.js" 			type="text/javascript"></script>  
+  
+  
 <?php
 
-global $edit, $controller, $tabno, $_REQUEST;
+global $edit, $controller, $tabno, $_REQUEST, $thumb_edit;
 
 //------------------------------------------------------------------------------
 // Start Main Table
@@ -83,7 +91,7 @@ echo "<table border=0 width='100%'><tr>" . "\n\n";
 // Build Relatives navigator from includes/controllers/individual_ctrl
 //------------------------------------------------------------------------------
      echo '<td border=0 valign="top" align="center" width=220 class="optionbox" >' . "\n" ;
-     echo "<b>" . $pgv_lang["view"] . " 'Album'</b><br><br>" . "\n" ;
+     echo "<b>" . $pgv_lang["view"] . " '" . $pgv_lang["lightbox"] ."'</b><br><br>" . "\n" ;
 
 
      echo '<table><tr><td>';

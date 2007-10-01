@@ -16,7 +16,7 @@
 	elõzetes hozzájárulásával módosítható. A ClearBox a készítõ beleegyezése nélkül pénzért harmadik
 	félnek tovább nem adható!
 */
-		var CB_version='1.72';
+		var CB_version='200beta';
 
 /*
 	clearbox.js:
@@ -93,8 +93,8 @@
 		értéket 0-ra. (Ilyenkor nem árt megnövelni a CB_Padd értékét minimum 5-re, a szebb vizuális
 		megjelenés érdekében.)
 */
-/*		var CB_RoundPix=12; */
 		var CB_RoundPix=12;
+
 /*
 	CB_Animation:
 	
@@ -108,7 +108,7 @@
 		
 		Mindenképpen használd a ' ' jeleket.
 */
-		var CB_Animation='double';
+		var CB_Animation='warp';
 
 /*
 	CB_Jump_X:
@@ -116,16 +116,15 @@
 		Értéke egy pozitív egész szám (1-99). Megadja a vízszintes átméretezõ animáció gyorsaságát, 
 		részletességét.
 */
-/*		var CB_Jump_X=40; */
-		var CB_Jump_X=15;
+		var CB_Jump_X=	40;
+
 /*
 	CB_Jump_Y:
 		
 		Értéke egy pozitív egész szám (1-99). Megadja a függõleges átméretezõ animáció gyorsaságát, 
 		részletességét.
 */
-/*		var CB_Jump_Y=40; */
-		var CB_Jump_Y=15;		
+		var CB_Jump_Y=	40;
 
 /*
 	CB_AnimTimeout:
@@ -155,7 +154,7 @@
 		Értéke egy nem negatív egész szám (0- ). A kép keretén (és a lekerekítéseken) kívül ad még egy plusz
 		– gyakorlatilag láthatatlan - keretet a képnek (magyarul a kép körüli fehér keret vastagságát növeli).
 */
-		var CB_Padd=2;
+		var CB_Padd=0;
 
 /*
 	CB_ShowImgURL:
@@ -171,7 +170,7 @@
 		Értéke lehet 'be' vagy 'ki'. Megadja, hogy ha a ClearBox galériáknál legyen-e kijelezve az összes kép, illetve,
 		hogy éppen hányadik	kép van megjelenítve. Mindenképpen használd a ' ' jeleket.
 */
-		var CB_ImgNum='ki';
+		var CB_ImgNum='be';
 
 /*
 	CB_ImgNumBracket:
@@ -188,7 +187,7 @@
 		(másodpercben), mielõtt megjeleníti a következõ képet. Megjegyzés: sajnos ez csak közelítõleges értéket ad,
 		valójában a böngészõtõl is függ.
 */
-		var CB_SlShowTime=4;
+		var CB_SlShowTime=6;
 
 /*
 	CB_PadT:
@@ -197,7 +196,8 @@
 		Fontos: használd okosan ezt a paramétert a CB_TextH értékkel. A CB_PaddT a CB_TextH-ból mindenképpen
 		levonódik, így könnyen hibát generálhatunk a nem megfelelõ értékadással!
 */
-		var CB_PadT=10;
+//		var CB_PadT=10;
+		var CB_PadT=8;		
 
 /*
 	CB_TextH:
@@ -205,7 +205,8 @@
 		Értéke egy pozitív egész szám (25- ). A kép alatti szövegmezõ magasságát adja meg.
 		Fontos: figyelj a CB_PadT megfelelõ értékére is!
 */
-		var CB_TextH=25;
+//		var CB_TextH=40;
+		var CB_TextH=30;		
 		
 /*
 	CB_Font:
@@ -228,8 +229,9 @@
 	
 		Értéke egy színkód. A kép alatti szöveg színét adja meg. Mindenképpen használd a ' ' jeleket és a #-et. 
 */
-/*		var CB_FontColor='#656565'; */
-		var CB_FontColor='#0000BB';
+//		var CB_FontColor='#656565';
+		var CB_FontColor='#0000FF';		
+
 /*
 	CB_FontWeight:
 	
@@ -253,9 +255,8 @@
 	
 		Megadja, hogy alul milyen szöveg jelenjen meg a képek betöltése közben. Mindenképpen használd a ' ' jeleket.
 */
-/*		var CB_LoadingText='- kép betöltése -'; */
-/*		var CB_LoadingText='- loading image -'; */
-		var CB_LoadingText=' ';	
+//		var CB_LoadingText='- kép betöltése -';
+		var CB_LoadingText='- Loading -';
 		
 /*
 	CB_PicDir:
@@ -263,8 +264,8 @@
 		Megadja a ClearBox-hoz tartozó képek elérési útját. Amennyiben megváltoztatod, a clearbox.css-ben se felejtsd el
 		végrehajtani a szükséges változtatásokat! Mindenképpen használd a ' ' jeleket.
 */
-/*		var CB_PicDir='pic'; */
-		var CB_PicDir='modules/lightbox/pic';		
+		var CB_PicDir='modules/lightbox/pic';
+//		var CB_MusicDir='../music';
 
 /*
 	CB_BodyMargin paraméterek:
@@ -303,12 +304,13 @@
 		Megadhatod a CB_TextH megjelenõ gombok (linkek) nevét. Mindenképpen használd a ' ' jeleket.
 		A linkek kinézetét a clearbox.css fájlban tudod módosítani, a linkek class osztálya: CB_TextNav.
 */
-/*		var CB_NavTextPrv='elõzõ';
-		var CB_NavTextNxt='következõ';
-		var CB_NavTextCls='bezár'; */
-		var CB_NavTextPrv='<b>  Prev  &nbsp;&nbsp;&nbsp;</b>';
-		var CB_NavTextNxt='<b>&nbsp;&nbsp;&nbsp;  Next  </b>';
-		var CB_NavTextCls='<b>  Close  </b>';
+//BH		var CB_NavTextPrv='elõzõ';
+//BH		var CB_NavTextNxt='következõ';
+//BH		var CB_NavTextCls='bezár';
+		var CB_NavTextPrv='Prev';
+		var CB_NavTextNxt='Next';
+//BH		var CB_NavTextCls='';		
+
 /*
 	CB_Picture paraméterek:
 	
@@ -320,9 +322,39 @@
 */
 		var CB_PictureStart='start.png';
 		var CB_PicturePause='pause.png';
-		var CB_PictureClose='close.png';
+		var CB_PictureClose='close_red.png';
 		var CB_PictureLoading='loading.gif';
+		var CB_MusicStart='music_off.png';		
+		var CB_MusicStop='music_on.png';
+		var CB_MusicNull='music_null.png';
+		var CB_Speak='music_off.png';
+		var CB_ZoomStart='zoom_on.png';
+		var CB_ZoomStop='zoom_off.png';
+		
 
+// Choose one  (by uncommenting) of the following for the music track  ------------------------------
+
+//		var myMusic = '../music/Father_to_Son.mp3';	
+//		var myMusic = '../music/Lux_Aeterna.mp3';
+//		var myMusic = '../music/In_too_Deep.mp3';	
+		var myMusic = 'modules/lightbox/music/music.mp3';
+//		var myMusic = '../music/Earth.mp3';		
+
+
+// Slideshow music configurable options ---------------------------------------------------------
+//	var homeURL 					= "http://www.windmillway.f2s.com/genealogy_4.1/modules/lightbox/"; //URL to your installation directory
+	var foreverLoop 				= 0;	// Set 0 if want to stop on the last image or Set it to 1 for Infinite loop feature
+	var loopMusic					= true; //loops music if it is shorter then slideshow
+//	var SoundBridgeSWF 				= homeURL + "js/SoundBridge.swf";
+	var SoundBridgeSWF 				=  "modules/lightbox/js/SoundBridge.swf";	
+	
+// Music variables ---------------------------------------------------------
+	var slideshowMusic = null;
+	var firstTime = 1;
+	var objSpeakerImage;
+	var saveLoopMusic;
+
+		
 /*
 	Az alábbi kódon ne változtass, ellenkezõ esetben a ClearBox nem (megfelelõen) fog mûködni!.
 	clearbox.js elérési útjának megkeresése, majd ez alapján cbsource.js beillesztése a html dokumentumba:
@@ -337,6 +369,5 @@
 		document.write('<' + 'script');
 		document.write(' language="javascript"');
 		document.write(' type="text/javascript"');
-		document.write(' src="'+CB_jsdir+'clsource.js">');
+		document.write(' src="'+CB_jsdir+'clsource_music.js">');
 		document.write('</' + 'script' + '>');
-		
