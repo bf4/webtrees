@@ -61,5 +61,6 @@ $pgv_lang["turn_edit_OFF"] = "הפסק צורת עריכה";
 $pgv_lang["lb_source_avail"] = "קיימים נתוני מקור - לחץ כאן.";
 
 $pgv_lang["lb_private"] = "Meliza please translate";
-
+$pgv_lang["lb_view_source_tip"] = "Meliza please translate : ";
+$pgv_lang["lb_view_details_tip"] = "Meliza please translate : ";
 ?>

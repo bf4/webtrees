@@ -108,11 +108,11 @@
 								onmouseover=\"Tip('" 
 									. "&nbsp;<b>" . $mediaTitle . "</b>"
 									. "<br>" 								
-									. "&nbsp;View Source : <a href=\'" 
+									. "&nbsp;" . $pgv_lang["lb_view_source_tip"] . "<a href=\'" 
 									. $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;(" . $sour 
 									. ")</font></b><\/a>" 
 									. "<br>" 
-									. "&nbsp;View Media Details : <a href=\'" 
+									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'" 
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"] 
 									. "</font></b><\/a>'," 
 									. "OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
@@ -125,7 +125,7 @@
 								onmouseover=\"Tip('" 
 									. "&nbsp;<b>" . $mediaTitle . "</b>"
 									. "<br>"
-									. "&nbsp;View Media Details : <a href=\'"
+									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'"
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"]
 									. "</font></b><\/a>',"
 									. "OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
@@ -138,11 +138,11 @@
 								onmouseover=\"Tip('" 
 									. "&nbsp;<b>" . $mediaTitle . "</b>"
 									. "<br>" 								
-									. "&nbsp;View Source : <a href=\'" 
+									. "&nbsp;" . $pgv_lang["lb_view_source_tip"] . "<a href=\'" 
 									. $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;(" . $sour 
 									. ")</font></b><\/a>" 
 									. "<br>" 
-									. "&nbsp;View Media Details : <a href=\'" 
+									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'" 
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"] 
 									. "</font></b><\/a>'," 
 									. "OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
@@ -155,7 +155,7 @@
 								onmouseover=\"Tip('" 
 									. "&nbsp;<b>" . $mediaTitle . "</b>"
 									. "<br>"
-									. "&nbsp;View Media Details : <a href=\'"
+									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'"
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"]
 									. "</font></b><\/a>',"
 									. "OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
@@ -183,11 +183,11 @@
 								onmouseover=\"Tip('" 
 									. "&nbsp;<b>" . $mediaTitle . "</b>"
 									. "<br>" 								
-									. "&nbsp;View Source : <a href=\'" 
+									. "&nbsp;" . $pgv_lang["lb_view_source_tip"] . "<a href=\'" 
 									. $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;(" . $sour 
 									. ")</font></b><\/a>" 
 									. "<br>" 
-									. "&nbsp;View Media Details : <a href=\'" 
+									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'" 
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"] 
 									. "</font></b><\/a>'," 
 									. "OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
@@ -201,7 +201,7 @@
 								onmouseover=\"Tip('" 
 									. "&nbsp;<b>" . $mediaTitle . "</b>"
 									. "<br>"
-									. "&nbsp;View Media Details : <a href=\'"
+									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'"
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"]
 									. "</font></b><\/a>',"
 									. "OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 

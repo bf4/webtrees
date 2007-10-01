@@ -68,7 +68,7 @@ $edit=$edit;
                                                      print PrintReady(get_person_name($people["husb"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
-                                                      print "PRIVATE";
+                                                      print $pgv_lang["private"];
                                                 }
                                                 ?>
                                                 </td>
@@ -87,7 +87,7 @@ $edit=$edit;
                                                      print PrintReady(get_person_name($people["wife"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
-                                                      print "PRIVATE";
+                                                      print $pgv_lang["private"];
                                                 }
                                                 ?>
                                                 </td>
@@ -122,7 +122,7 @@ $edit=$edit;
                                                      print PrintReady(get_person_name($people["husb"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
-                                                      print "PRIVATE";
+                                                      print $pgv_lang["private"];
                                                 }
                                                 ?>
                                                 </td>
@@ -141,7 +141,7 @@ $edit=$edit;
                                                      print PrintReady(get_person_name($people["wife"]->getXref()));
                                                      print "</a>" . "\n" ;
                                                 }else{
-                                                      print "PRIVATE";
+                                                      print $pgv_lang["private"];
                                                 }
                                                 ?>
                                                 </td>
@@ -163,7 +163,7 @@ $edit=$edit;
                                                       print PrintReady(get_person_name($child->getXref()));
                                                       print "</a>" . "\n" ;
                                                 }else{
-                                                      print "PRIVATE";
+                                                      print $pgv_lang["private"];
                                                 }
                                                 ?>
                                                 </td>

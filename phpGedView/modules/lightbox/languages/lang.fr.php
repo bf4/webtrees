@@ -61,6 +61,7 @@ $pgv_lang["turn_edit_OFF"] = "Tourner éditent le mode AU LOIN";
 $pgv_lang["lb_source_avail"] = "L'information de source disponible - Cliquer ici";
 
 $pgv_lang["lb_private"] = "L'image<br>lié<br>à un<br>individu<br>privé";
-
+$pgv_lang["lb_view_source_tip"] = "Afficher Source : ";
+$pgv_lang["lb_view_details_tip"] = "Afficher détails de médias : ";
 
 ?>
