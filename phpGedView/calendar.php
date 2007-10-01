@@ -46,9 +46,18 @@ if (empty($filtersx)) $filtersx='';
 
 // Create a CalendarDate from the parameters
 $cal=urldecode($cal);
-if ($year<0)
-	$year=(-$year)."B.C.";
-$ged_date=new GedcomDate("$cal $day $month $year");
+// interpret the "advanced" year-range option 
+if (preg_match('/^(\d+)-(\d+)$/', $year, $match)) {
+	if (strlen($match[1]) > strlen($match[2]))
+		$match[2]=substr($match[1], 0, strlen($match[1])-strlen($match[2])).$match[2];
+	$ged_date=new GedcomDate("FROM {$cal} {$match[1]} TO {$cal} {$match[2]}");
+	$action='year';
+} else {
+	if ($year<0)
+		$year=(-$year)."B.C."; // need BC to parse date
+	$ged_date=new GedcomDate("{$cal} {$day} {$month} {$year}");
+	$year=$ged_date->date1->y; // need negative year for year entry field.
+}
 $cal_date=$ged_date->date1;
 $cal=urlencode($cal);
 
@@ -141,7 +150,7 @@ if ($view!='preview') {
 	print $pgv_lang['year'].'</td>';
 	print "<td class=\"optionbox vmiddle\">";
 	print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year=".($cal_date->y==1?-1:$cal_date->y-1)."&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">-1</a>";
-	print " <input type=\"text\" name=\"year\" value=\"{$cal_date->y}\" size=\"7\" /> ";
+	print " <input type=\"text\" name=\"year\" value=\"{$year}\" size=\"7\" /> ";
 	print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year=".($cal_date->y==-1?1:$cal_date->y+1)."&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">+1</a>";
 	print " | <a href=\"calendar.php?cal={$cal}&amp;day={$today->d}&amp;month={$today_month}&amp;year={$today->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\"><b>".$today->Format('Y')."</b></a>";
 	print "</td> ";
@@ -334,7 +343,7 @@ case 'calendar':
 case 'year':
 	$cal_date->m=0;
 	$cal_date->SetJDfromYMD();
-	$found_facts=apply_filter(get_calendar_events($cal_date->minJD, $cal_date->maxJD, $events), $filterof, $filtersx);
+	$found_facts=apply_filter(get_calendar_events($ged_date->MinJD(), $ged_date->MaxJD(), $events), $filterof, $filtersx);
 	// Eliminate duplictes (e.g. BET JUL 1900 AND SEP 1900 will appear twice in 1900)
 	foreach ($found_facts as $key=>$value)
 		$found_facts[$key]=serialize($found_facts[$key]);
