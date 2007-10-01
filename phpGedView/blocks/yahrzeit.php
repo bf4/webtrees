@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Blocks
- * @version $Id:$
+ * @version $Id$
  */
 
 $PGV_BLOCKS["print_yahrzeit"]["name"]		= $pgv_lang["yahrzeit_block"];
@@ -84,7 +84,8 @@ function print_yahrzeit($block=true, $config="", $side, $index) {
 	$yahrzeits=array();
 	for ($jd=$startjd-1; $jd<=$endjd;++$jd)
 		foreach (get_anniversary_events($jd, 'DEAT') as $fact)
-			$yahrzeits[]=$fact;
+			if ($fact['date']->date1->CALENDAR_ESCAPE=='@#DHEBREW@')
+				$yahrzeits[]=$fact;
 	// ...then adjust
 	foreach ($yahrzeits as $key=>$yahrzeit) {
 		$today=new JewishDate($yahrzeit['jd']);
