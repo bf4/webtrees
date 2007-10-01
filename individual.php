@@ -29,10 +29,7 @@
 require_once("includes/controllers/individual_ctrl.php");
 require_once("includes/serviceclient_class.php");
 
-// If Lightbox is installed, load Lightbox Language files
-if (file_exists("modules/lightbox/".$pgv_language["english"])) require("modules/lightbox/".$pgv_language["english"]);
-if (file_exists("modules/lightbox/".$pgv_language[$LANGUAGE])) require("modules/lightbox/".$pgv_language[$LANGUAGE]);
-
+loadLangFile("lb_lang");	// Load Lightbox language file
 loadLangFile("gm_lang");	// Load GoogleMap language file
 
 global $USE_THUMBS_MAIN;
