@@ -23,7 +23,7 @@
  *
  *
  * @package PhpGedView
- * @version $Id: mediafirewall.php 1521 2007-08-28 06:14:21Z ljm $
+ * @version $Id$
  */
 
 require_once("includes/controllers/media_ctrl.php");

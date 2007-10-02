@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage watermark_text
- * @version $Id: watermark_text.php 1412 2007-08-08 16:50:56Z ljm $
+ * @version $Id$
  */
  
 // determine which config file to use
