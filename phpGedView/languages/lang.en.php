@@ -724,7 +724,21 @@ $pgv_lang["research_assistant"]		= "Research Assistant";
 $pgv_lang["utf8_to_ansi"]			= "Convert from UTF-8 to ANSI (ISO-8859-1)";
 $pgv_lang["media_linked"]			= "This media object is linked to the following:";
 $pgv_lang["media_not_linked"]		= "This media object is not linked to any GEDCOM record.";
-
+$pgv_lang["deleted_files"]          = "Deleted Files:";
+$pgv_lang["media_dir_1"]			= "This media object is located on an external server";
+$pgv_lang["media_dir_2"]			= "This media object is in the standard media directory";
+$pgv_lang["media_dir_3"]			= "This media object is in the protected media directory";
+$pgv_lang["thumb_dir_1"]			= "This thumbnail is located on an external server";
+$pgv_lang["thumb_dir_2"]			= "This thumbnail is in the standard media directory";
+$pgv_lang["thumb_dir_3"]			= "This thumbnail is in the protected media directory";
+$pgv_lang["moveto_2"]				= "Move to protected directory";
+$pgv_lang["moveto_3"]				= "Move to standard directory";
+$pgv_lang["move_standard"]			= "Move standard";
+$pgv_lang["move_protected"]		= "Move protected";
+$pgv_lang["move_time_exceeded"]	= "The execution time limit was reached.  Try the command again to move the rest of the files.";
+$pgv_lang["media_firewall_rootdir_no_exist"]			= "The Media Firewall root directory you requested does not exist.  You must create it first.";
+$pgv_lang["media_firewall_protected_dir_no_exist"]		= "The protected media directory could not be created in the Media Firewall root directory.  Please create this directory and make it world-writable.";
+$pgv_lang["media_firewall_protected_dir_not_writable"]	= "The protected media directory in the Media Firewall root directory is not world writable. ";
 //-- Relationship chart messages
 $pgv_lang["relationship_great"]		= "Great";
 $pgv_lang["relationship_chart"] 	= "Relationship Chart";
@@ -1634,12 +1648,15 @@ $pgv_lang["TYPE__tombstone"] = "Tombstone";
 $pgv_lang["TYPE__video"] = "Video";
 
 //-- Other media suff
-$pgv_lang["view_slideshow"] = "View as slideshow";
+$pgv_lang["view_slideshow"] 		= "View as slideshow";
 $pgv_lang["download_image"]			= "Download File";
 $pgv_lang["no_media"]				= "No Media Found";
+$pgv_lang["media_privacy"]			= "Privacy restrictions prevent you from viewing this item";
 $pgv_lang["relations_heading"]		= "The image relates to:";
 $pgv_lang["file_size"]				= "File Size";
 $pgv_lang["img_size"]				= "Image Size";
+$pgv_lang["media_broken"]			= "This media file is broken and unreadable by PHP";
+$pgv_lang["unknown_mime"]			= "Unknown mimetype for this media file, this will cause problems for the Media Firewall.";
 
 //-- Modules
 $pgv_lang["module_error_unknown_action_v2"] = "Unknown action: [action].";

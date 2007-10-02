@@ -78,36 +78,36 @@ else{
 					if ($controller->canDisplayDetails()) {
 					//Checks to see if the File exist in the system.
 					$filename = $controller->getLocalFilename();
-					if (preg_match("~://~", $filename) || file_exists($filename)){
-						//If the file exists, it will attempt to get the image size
-						//If the image size returns a null, then the file isn't a image.
-						$imagesize = @getimagesize($filename);
-						$imgwidth = $imagesize[0]+40;
-						$imgheight = $imagesize[1]+150;
-
-						//Checks if the image size is null.
-						if ($imagesize[0]){
-								$dwidth = 300;
-								if ($imagesize[0]<300) $dwidth = $imagesize[0];
+					if (isFileExternal($filename) || $controller->mediaobject->fileExists()){
+						// the file is external, or it exists locally 
+						// attempt to get the image size
+						if ($controller->mediaobject->getWidth()) {
+							// this is an image
+							$imgwidth = $controller->mediaobject->getWidth()+40;
+							$imgheight = $controller->mediaobject->getHeight()+150;
+							$dwidth = 300;
+							if ($imgwidth<300) $dwidth = $imgwidth;
 							//Makes it so the picture when clicked opens the Image View Page
 							?>
 							<a href="javascript:;" onclick="return openImage('<?php print rawurlencode($filename); ?>', <?php print $imgwidth; ?>, <?php print $imgheight; ?>);">
-								<img src="<?php if (!$USE_THUMBS_MAIN) print $filename; else print thumbnail_file($filename); ?>" border="0" <?php if (!$USE_THUMBS_MAIN) print "width=\"" . $dwidth . "\"";?> alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
+								<img src="<?php if (!$USE_THUMBS_MAIN) print $filename; else print $controller->mediaobject->getThumbnail(); ?>" border="0" <?php if (!$USE_THUMBS_MAIN) print "width=\"" . $dwidth . "\"";?> alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
 							</a>
 							<?php
 						}
 						else{
+							// this is not an image
 							?>
 							<a href="<?php print $filename; ?>" target="_BLANK">
-							<img src="<?php print thumbnail_file($filename); ?>" border="0" width="150" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
+							<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="150" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
 							</a>
 							<?php
 						}
 						if ($SHOW_MEDIA_DOWNLOAD) print "<br /><br /><a href=\"".$filename."\">".$pgv_lang["download_image"]."</a><br/>";
 					}
 					else{
+						// the file is not external and does not exist
 						?>
-						<img src="<?php print thumbnail_file($filename); ?>" border="0" width="100" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
+						<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="100" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
 						<br /><span class="error"><?php print $pgv_lang["file_not_found"];?></span>
 						<?php
 					}

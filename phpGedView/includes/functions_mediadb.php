@@ -509,7 +509,7 @@ function check_media_structure() {
 function get_medialist($currentdir = false, $directory = "", $linkonly = false, $random = false) {
 	global $MEDIA_DIRECTORY_LEVELS, $BADMEDIA, $thumbdir, $TBLPREFIX, $MEDIATYPE, $DBCONN;
 	global $level, $dirs, $ALLOW_CHANGE_GEDCOM, $GEDCOM, $GEDCOMS, $MEDIA_DIRECTORY;
-	global $MEDIA_EXTERNAL, $medialist, $pgv_changes, $DBTYPE;
+	global $MEDIA_EXTERNAL, $medialist, $pgv_changes, $DBTYPE, $USE_MEDIA_FIREWALL;
 
 	// Retrieve the gedcoms to search in
 	$sgeds = array ();
@@ -562,10 +562,12 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 					$media["FILE"] = $fileName;
 					if ($MEDIA_EXTERNAL && isFileExternal($fileName)) {
 						$media["THUMB"] = $fileName;
-						$media["EXISTS"] = true;
+						$media["THUMBEXISTS"] = 1; // 1 means external
+						$media["EXISTS"] = 1; // 1 means external
 					} else {
 						$media["THUMB"] = thumbnail_file($fileName);
-						$media["EXISTS"] = file_exists(filename_decode($fileName));
+						$media["THUMBEXISTS"] = media_exists($media["THUMB"]);
+						$media["EXISTS"] = media_exists($fileName);
 					}
 					$media["TITL"] = stripslashes($row["m_titl"]);
 					$media["GEDCOM"] = stripslashes($row["m_gedrec"]);
@@ -635,8 +637,10 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 				$media["GEDFILE"] = $GEDCOMS[$GEDCOM]["id"];
 				$media["FILE"] = "";
 				$media["THUMB"] = "";
+				$media["THUMBEXISTS"] = false;
 				$media["EXISTS"] = false;
 				$media["FORM"] = "";
+				$media["TYPE"] = "";
 				$media["TITL"] = "";
 				$media["GEDCOM"] = $gedrec;
 				$media["LEVEL"] = "0";
@@ -672,12 +676,14 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 				$fileName = check_media_depth(stripslashes($media["FILE"]), "NOTRUNC", "QUIET");
 				if ($MEDIA_EXTERNAL && isFileExternal($media["FILE"])) {
 					$media["THUMB"] = $fileName;
-					$media["EXISTS"] = true;
+					$media["THUMBEXISTS"] = 1;  // 1 means external
+					$media["EXISTS"] = 1;  // 1 means external
 				} else {
 					if ($currentdir && $directory != dirname($fileName) . "/")
 						break;
 					$media["THUMB"] = thumbnail_file($fileName);
-					$media["EXISTS"] = file_exists(filename_decode($fileName));
+					$media["THUMBEXISTS"] = media_exists($media["THUMB"]);
+					$media["EXISTS"] = media_exists($fileName);
 				}
 
 				// Now save this for future use
@@ -790,72 +796,86 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 	else
 		$folderDepth = count(explode("/", $temp)) - 1;
 	$dirs = array ();
-
 	$images = array ();
-	$d = dir(filename_decode(substr($directory, 0, -1)));
-	while (false !== ($fileName = $d->read())) {
-		$fileName = filename_encode($fileName);
 
-		while (true) {
-			// Make sure we only look at valid media files
-			if (in_array($fileName, $BADMEDIA))
-				break;
-			if (is_dir(filename_decode($directory . $fileName))) {
-				if ($folderDepth < $MEDIA_DIRECTORY_LEVELS)
-					$dirs[] = $fileName;
-				break;
-			}
-			$exts = explode(".", $fileName);
-			if (count($exts) == 1)
-				break;
-			$ext = strtolower($exts[count($exts) - 1]);
-			if (!in_array($ext, $MEDIATYPE))
-				break;
+	$dirs_to_check = array ();
+	if (is_dir(filename_decode($directory))) {
+		array_push($dirs_to_check, $directory);
+	}
+	if ($USE_MEDIA_FIREWALL && is_dir(filename_decode(get_media_firewall_path($directory)))) {
+		array_push($dirs_to_check, get_media_firewall_path($directory));
+	}
 
-			// This is a valid media file:
-			// now see whether we already know about it
-			$mediafile = $directory . $fileName;
-			$exist = false;
-			$oldObject = false;
-			foreach ($medialist as $key => $item) {
-				if ($item["FILE"] == $directory . $fileName) {
-					if ($item["CHANGE"] == "delete") {
-						$exist = false;
-						$oldObject = true;
-					} else {
-						$exist = true;
-						$oldObject = false;
+	foreach ($dirs_to_check as $thedir) {
+		$d = dir(filename_decode(substr($thedir, 0, -1)));
+		while (false !== ($fileName = $d->read())) {
+			$fileName = filename_encode($fileName);
+			while (true) {
+				// Make sure we only look at valid media files
+				if (in_array($fileName, $BADMEDIA))
+					break;
+				if (is_dir(filename_decode($thedir . $fileName))) {
+					if ($folderDepth < $MEDIA_DIRECTORY_LEVELS)
+						$dirs[] = $fileName; // note: we will remove duplicates when the loop is complete
+					break;
+				}
+				$exts = explode(".", $fileName);
+				if (count($exts) == 1)
+					break;
+				$ext = strtolower($exts[count($exts) - 1]);
+				if (!in_array($ext, $MEDIATYPE))
+					break;
+	
+				// This is a valid media file:
+				// now see whether we already know about it
+				$mediafile = $directory . $fileName;
+				$exist = false;
+				$oldObject = false;
+				foreach ($medialist as $key => $item) {
+					if ($item["FILE"] == $directory . $fileName) {
+						if ($item["CHANGE"] == "delete") {
+							$exist = false;
+							$oldObject = true;
+						} else {
+							$exist = true;
+							$oldObject = false;
+						}
 					}
 				}
-			}
-			if ($exist)
+				if ($exist)
+					break;
+	
+				// This media item is not yet in the database
+				$media = array ();
+				$media["ID"] = "";
+				$media["XREF"] = "";
+				$media["GEDFILE"] = "";
+				$media["FILE"] = $directory . $fileName;
+				$media["THUMB"] = thumbnail_file($directory . $fileName, false);
+				$media["THUMBEXISTS"] = media_exists($media["THUMB"]);
+				$media["EXISTS"] = media_exists($media["FILE"]);
+				$media["FORM"] = $ext;
+				if ($ext == "jpg" || $ext == "jp2")
+					$media["FORM"] = "jpeg";
+				if ($ext == "tif")
+					$media["FORM"] = "tiff";
+				$media["TYPE"] = "";
+				$media["TITL"] = "";
+				$media["GEDCOM"] = "";
+				$media["LEVEL"] = "0";
+				$media["LINKED"] = false;
+				$media["LINKS"] = array ();
+				$media["CHANGE"] = "";
+				if ($oldObject)
+					$media["CHANGE"] = "append";
+				$images[$fileName] = $media;
 				break;
-
-			// This media item is not yet in the database
-			$media = array ();
-			$media["ID"] = "";
-			$media["XREF"] = "";
-			$media["GEDFILE"] = "";
-			$media["FILE"] = $directory . $fileName;
-			$media["THUMB"] = thumbnail_file($directory . $fileName, false);
-			$media["EXISTS"] = true;
-			$media["FORM"] = $ext;
-			if ($ext == "jpg" || $ext == "jp2")
-				$media["FORM"] = "jpeg";
-			$media["TITL"] = "";
-			$media["GEDCOM"] = "";
-			$media["LEVEL"] = "0";
-			$media["LINKED"] = false;
-			$media["LINKS"] = array ();
-			$media["CHANGE"] = "";
-			if ($oldObject)
-				$media["CHANGE"] = "append";
-			$images[$fileName] = $media;
-			break;
+			}
 		}
+		$d->close();
 	}
-	$d->close();
 	//print_r($images); print "<br />";
+	$dirs = array_unique($dirs); // remove duplicates that were added because we checked both the regular dir and the media firewall dir
 	sort($dirs);
 	//print_r($dirs); print "<br />";
 	if (count($images) > 0) {
@@ -1041,7 +1061,7 @@ function thumbnail_file($filename, $generateThumb = true, $overwrite = false) {
 	if (!$generateThumb)
 		return $thumbDir . $thumbName;
 
-	if (!$overwrite && file_exists(filename_decode($thumbDir . $thumbName)))
+	if (!$overwrite && media_exists($thumbDir . $thumbName))
 		return $thumbDir . $thumbName;
 
 	if ($AUTO_GENERATE_THUMBS && $generateThumb) {
@@ -1108,6 +1128,11 @@ function check_media_depth($filename, $truncate = "FRONT", $noise = "VERBOSE") {
 		$truncate = "FRONT";
 	if ($truncate == "NOTRUNC")
 		$truncate = "FRONT"; // **** temporary over-ride *****
+
+	if (strpos($_SERVER["SCRIPT_FILENAME"],"mediafirewall") > -1) {
+		// no extraneous output while displaying images
+		$noise = "QUIET";
+	}
 
 	if (empty ($noise) || ($noise != "VERBOSE" && $noise != "QUIET"))
 		$noise = "VERBOSE";
@@ -1672,16 +1697,22 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 
 	print_add_layer("SOUR", 1);
 	print_add_layer("NOTE", 1);
+	print_add_layer("RESN", 1);
 	print "<input type=\"submit\" value=\"" . $pgv_lang["save"] . "\" />";
 	print "</form>\n";
 }
 
+// looks in both the standard and protected media directories
 function findImageSize($file) {
+	global $USE_MEDIA_FIREWALL;
 	if (strtolower(substr($file, 0, 7)) == "http://")
 		$file = "http://" . rawurlencode(substr($file, 7));
 	else
 		$file = filename_decode($file);
-	$imgsize = @ getimagesize($file);
+	$imgsize = @getimagesize($file);
+	if ($USE_MEDIA_FIREWALL && !$imgsize) {
+		$imgsize = @getimagesize(get_media_firewall_path($file));
+	}
 	if (!$imgsize) {
 		$imgsize[0] = 300;
 		$imgsize[1] = 300;
@@ -1925,6 +1956,70 @@ function cropImage($image, $dest_image, $left, $top, $right, $bottom){ //$image 
 	imagedestroy($img);
 	}
 }
+
+// checks whether a media file exists.
+// returns 1 for external media
+// returns 2 if it was found in the standard directory
+// returns 3 if it was found in the media firewall directory
+// returns false if not found
+function media_exists($filename) {
+	global $USE_MEDIA_FIREWALL;
+	if (empty($filename)) { return false; }
+	if (isFileExternal($filename)) { return 1; }
+	$filename = filename_decode($filename);
+	if ( file_exists($filename) ) { return 2; }
+	if ( $USE_MEDIA_FIREWALL && file_exists(get_media_firewall_path($filename)) ) { return 3; }
+	return false;
+}
+
+// returns size of file.  looks in both the standard and protected media directories
+function media_filesize($filename) {
+	global $USE_MEDIA_FIREWALL;
+	$filename = filename_decode($filename);
+	if (file_exists($filename)) { return filesize($filename); }
+	if ($USE_MEDIA_FIREWALL && file_exists(get_media_firewall_path($filename))) { return filesize(get_media_firewall_path($filename)); }
+	return;
+}
+
+// returns path to file on server
+function get_server_filename($filename) {
+		global $USE_MEDIA_FIREWALL;
+		if (file_exists($filename)){
+			return($filename);
+		}
+		if ($USE_MEDIA_FIREWALL) {
+			$protectedfilename = get_media_firewall_path($filename);
+			if (file_exists($protectedfilename)){
+				return($protectedfilename);
+			}
+		}
+		return($filename);
+}
+
+// pass in the standard media directory
+// returns protected media directory
+// strips off any "../" which may be configured in your MEDIA_DIRECTORY variable 
+function get_media_firewall_path($path) {
+	global $MEDIA_FIREWALL_ROOTDIR;
+	$path = str_replace("../", "", $path);
+	return ($MEDIA_FIREWALL_ROOTDIR . $path);
+}
+
+// recursively make directories
+// taken from http://us3.php.net/manual/en/function.mkdir.php#60861
+function mkdirs($dir, $mode = 0777, $recursive = true) {
+	if( is_null($dir) || $dir === "" ){
+		return FALSE;
+	}
+	if( is_dir($dir) || $dir === "/" ){
+		return TRUE;
+	}
+	if( mkdirs(dirname($dir), $mode, $recursive) ){
+		return mkdir($dir, $mode);
+	}
+	return FALSE;
+}
+
 // determines whether the passed in filename is a link to an external source (i.e. contains '://')
 function isFileExternal($file) { 
 	return (strpos($file, '://') === false) ? false : true; 

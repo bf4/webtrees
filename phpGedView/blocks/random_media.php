@@ -100,7 +100,7 @@ if ($MULTI_MEDIA) {
 					print "Trying ".$medialist[$value]["XREF"]."<br />\n";
 				}
 				$links = $medialist[$value]["LINKS"];
-				$disp = $medialist[$value]["EXISTS"] && $medialist[$value]["LINKED"] && $medialist[$value]["CHANGE"]!="delete" ;
+				$disp = ($medialist[$value]["EXISTS"]>0) && $medialist[$value]["LINKED"] && $medialist[$value]["CHANGE"]!="delete" ;
 				if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." File does not exist, or is not linked to anyone, or is marked for deletion.</span><br />\n";}
 
 				$disp &= displayDetailsByID($value["XREF"], "OBJE");
@@ -108,9 +108,9 @@ if ($MULTI_MEDIA) {
 
 				if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." Failed to pass privacy</span><br />\n";}
 
-				$isExternal = strstr($medialist[$value]["FILE"], "://");
+				$isExternal = isFileExternal($medialist[$value]["FILE"]);
 
-				if ($block && !$isExternal) $disp &= file_exists($medialist[$value]["THUMB"]);
+				if ($block && !$isExternal) $disp &= ($medialist[$value]["THUMBEXISTS"]>0);
 				if (isset($DEBUG)&&($DEBUG==true) && !$disp && !$error) {$error = true; print "<span class=\"error\">".$medialist[$value]["XREF"]." thumbnail file could not be found</span><br />\n";}
 
 				// Filter according to format and type  (Default: unless configured otherwise, don't filter)

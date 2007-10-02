@@ -165,8 +165,8 @@ class Media extends GedcomRecord {
 	 * get the thumbnail filename
 	 * @return string
 	 */
-	function getThumbnail() {
-		return thumbnail_file($this->file);
+	function getThumbnail($generateThumb = true) {
+		return thumbnail_file($this->file,$generateThumb);
 	}
 
 	/**
@@ -195,7 +195,7 @@ class Media extends GedcomRecord {
 		$localfilename = $this->getLocalFilename();
 		if (file_exists($localfilename)){
 			// found image in unprotected directory
-			$this->fileexists = true;
+			$this->fileexists = 2;
 			$this->serverfilename = $localfilename;
 			return $this->serverfilename;
 		}
@@ -203,7 +203,7 @@ class Media extends GedcomRecord {
 			$protectedfilename = get_media_firewall_path($localfilename);
 			if (file_exists($protectedfilename)){
 				// found image in protected directory
-				$this->fileexists = true;
+				$this->fileexists = 3;
 				$this->serverfilename = $protectedfilename;
 				return $this->serverfilename;
 			}

@@ -8,6 +8,8 @@
 	# $Id$
 =====================================================================
 Version 4.1.2
+ - Added Watermarks [ 1739602 ] (ljm)
+ - Added Media Firewall [ 1749817 ] (ljm)
  - Fixed [ 1805621 ] [4.1.2] Undifined index: multi_site_search (yalnifj)
  - Fixed [ 1787410 ] [V4.1 Stable] Duplication of children (yalnifj)
  - Fixed [ 1802245 ] escaping in translation (canajun2eh)

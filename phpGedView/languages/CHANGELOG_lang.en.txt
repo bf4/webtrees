@@ -60,6 +60,28 @@ VERSION 4.1.2
 +$pgv_lang["cal_arabic"]              30 Sep 2007           M (moved from configure_help.XX.php and renamed)
 *$pgv_lang["stplGDno"]								28 Sep 2007				W
 *$pgv_lang["stpljpgraphno"]							28 Sep 2007				W
+*$pgv_lang["media_firewall_rootdir_no_exist"]		09 Sep 2007				C
+*$pgv_lang["media_firewall_protected_dir_no_exist"]	09 Sep 2007				C
+*$pgv_lang["media_firewall_protected_dir_not_writable"] 09 Sep 2007			W
+*$pgv_lang["media_dir_3"]							09 Sep 2007				w
+*$pgv_lang["thumb_dir_3"]							09 Sep 2007				w
++$pgv_lang["moveto_2"]								09 Sep 2007				A
++$pgv_lang["moveto_3"]								09 Sep 2007				A
++$pgv_lang["move_standard"]							09 Sep 2007				A
++$pgv_lang["move_protected"]						09 Sep 2007				A
++$pgv_lang["move_time_exceeded"]					09 Sep 2007				A
++$pgv_lang["media_firewall_rootdir_no_exist"]		02 Sep 2007				A
++$pgv_lang["media_firewall_protected_dir_no_exist"]	02 Sep 2007				A
++$pgv_lang["media_firewall_protected_dir_not_writable"]	02 Sep 2007			A
++$pgv_lang["media_dir_1"]							26 Aug 2007				A
++$pgv_lang["media_dir_2"]							26 Aug 2007				A
++$pgv_lang["media_dir_3"]							26 Aug 2007				A
++$pgv_lang["thumb_dir_1"]							26 Aug 2007				A
++$pgv_lang["thumb_dir_2"]							26 Aug 2007				A
++$pgv_lang["thumb_dir_3"]							26 Aug 2007				A
++$pgv_lang["unknown_mime"]							07 Aug 2007				A
++$pgv_lang["media_broken"]							07 Aug 2007				A
++$pgv_lang["media_privacy"]							02 Aug 2007				A	Media Firewall, patch 1749817
 *$pgv_lang["invalid_gedformat"]						27 Sep 2007				w
 +$pgv_lang["a.m."]									24 Sep 2007				A Suffixes for 12 hour clock
 +$pgv_lang["noon"]									24 Sep 2007				A NB: can use am/pm (or pm/am)
