@@ -255,7 +255,7 @@ if ($action=="update") {
 	if ($ct==0) $_POST["NEW_MEDIA_DIRECTORY"] .= "/";
 	if (substr($_POST["NEW_MEDIA_DIRECTORY"],0,2)=="./") $_POST["NEW_MEDIA_DIRECTORY"] = substr($_POST["NEW_MEDIA_DIRECTORY"],2);
 	if(preg_match("/.*[a-zA-Z]{1}:.*/",$_POST["NEW_MEDIA_DIRECTORY"])>0) $errors = true;
-	if (preg_match("'://'", $_POST["NEW_HOME_SITE_URL"])==0) $_POST["NEW_HOME_SITE_URL"] = "http://".$_POST["NEW_HOME_SITE_URL"];
+	if (!isFileExternal($_POST["NEW_HOME_SITE_URL"])) $_POST["NEW_HOME_SITE_URL"] = "http://".$_POST["NEW_HOME_SITE_URL"];
 	$_POST["NEW_PEDIGREE_ROOT_ID"] = trim($_POST["NEW_PEDIGREE_ROOT_ID"]);
 	if ($_POST["NEW_DAYS_TO_SHOW_LIMIT"] < 1) $_POST["NEW_DAYS_TO_SHOW_LIMIT"] = 1;
 	if ($_POST["NEW_DAYS_TO_SHOW_LIMIT"] > 30) $_POST["NEW_DAYS_TO_SHOW_LIMIT"] = 30;
@@ -375,6 +375,8 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$USE_RTL_FUNCTIONS\s*=\s*.*;/', "\$USE_RTL_FUNCTIONS = ".$boolarray[$_POST["NEW_USE_RTL_FUNCTIONS"]].";", $configtext);
 	$configtext = preg_replace('/\$USE_THUMBS_MAIN\s*=\s*.*;/', "\$USE_THUMBS_MAIN = ".$boolarray[$_POST["NEW_USE_THUMBS_MAIN"]].";", $configtext);
 	$configtext = preg_replace('/\$USE_MEDIA_VIEWER\s*=\s*.*;/', "\$USE_MEDIA_VIEWER = ".$boolarray[$_POST["NEW_USE_MEDIA_VIEWER"]].";", $configtext);
+	$configtext = preg_replace('/\$USE_MEDIA_FIREWALL\s*=\s*.*;/', "\$USE_MEDIA_FIREWALL = ".$boolarray[$_POST["NEW_USE_MEDIA_FIREWALL"]].";", $configtext);
+	$configtext = preg_replace('/\$MEDIA_FIREWALL_THUMBS\s*=\s*.*;/', "\$MEDIA_FIREWALL_THUMBS = ".$boolarray[$_POST["NEW_MEDIA_FIREWALL_THUMBS"]].";", $configtext);
 	$configtext = preg_replace('/\$PHPGEDVIEW_EMAIL\s*=\s*".*";/', "\$PHPGEDVIEW_EMAIL = \"".trim($_POST["NEW_PHPGEDVIEW_EMAIL"])."\";", $configtext);
 	$configtext = preg_replace('/\$WEBMASTER_EMAIL\s*=\s*".*";/', "\$WEBMASTER_EMAIL = \"".$_POST["NEW_WEBMASTER_EMAIL"]."\";", $configtext);
 	$configtext = preg_replace('/\$WELCOME_TEXT_AUTH_MODE\s*=\s*".*";/', "\$WELCOME_TEXT_AUTH_MODE = \"".$_POST["NEW_WELCOME_TEXT_AUTH_MODE"]."\";", $configtext);
@@ -382,7 +384,54 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$WELCOME_TEXT_CUST_HEAD\s*=\s*.*;/', "\$WELCOME_TEXT_CUST_HEAD = ".$boolarray[$_POST["NEW_WELCOME_TEXT_CUST_HEAD"]].";", $configtext);
 	$configtext = preg_replace('/\$WORD_WRAPPED_NOTES\s*=\s*.*;/', "\$WORD_WRAPPED_NOTES = ".$boolarray[$_POST["NEW_WORD_WRAPPED_NOTES"]].";", $configtext);
 	$configtext = preg_replace('/\$ZOOM_BOXES\s*=\s*\".*\";/', "\$ZOOM_BOXES = \"".$_POST["NEW_ZOOM_BOXES"]."\";", $configtext);
-	if (file_exists($NTHEME_DIR)) $configtext = preg_replace('/\$THEME_DIR\s*=\s*".*";/', "\$THEME_DIR = \"".$_POST["NTHEME_DIR"]."\";", $configtext);
+	if (!$_POST["NEW_MEDIA_FIREWALL_ROOTDIR"]) {
+		$NEW_MEDIA_FIREWALL_ROOTDIR = $INDEX_DIRECTORY;
+	} else {
+		$_POST["NEW_MEDIA_FIREWALL_ROOTDIR"] = trim($_POST["NEW_MEDIA_FIREWALL_ROOTDIR"]);
+		if (substr ($_POST["NEW_MEDIA_FIREWALL_ROOTDIR"], -1) != "/") $_POST["NEW_MEDIA_FIREWALL_ROOTDIR"] = $_POST["NEW_MEDIA_FIREWALL_ROOTDIR"] . "/";
+		$NEW_MEDIA_FIREWALL_ROOTDIR = $_POST["NEW_MEDIA_FIREWALL_ROOTDIR"];
+	}
+	if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR)) {
+		$errors = true;
+		$error_msg .= "<span class=\"error\">".$pgv_lang["media_firewall_rootdir_no_exist"]."</span><br />\n";
+	}
+	if (!$errors) {
+		// create the media directory 
+		// if NEW_MEDIA_FIREWALL_ROOTDIR is the INDEX_DIRECTORY, PGV will have perms to create it
+		// if PGV is unable to create the directory, tell the user to create it
+		if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY)) {
+			@mkdir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY, 0777);
+			if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY)) {
+				$errors = true;
+				$error_msg .= "<span class=\"error\">".$pgv_lang["media_firewall_protected_dir_no_exist"]." ".$NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."</span><br />\n";
+			}
+		}
+	}
+	if (!$errors) {
+		// create the thumbs dir to make sure we have write perms
+		if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."thumbs")) {
+			@mkdir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."thumbs", 0777);
+			if (!is_dir($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."thumbs")) {
+				$errors = true;
+				$error_msg .= "<span class=\"error\">".$pgv_lang["media_firewall_protected_dir_not_writable"]." ".$NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."</span><br />\n";
+			}
+		}
+	}	
+	if (!$errors) {
+		// copy the .htaccess file from INDEX_DIRECTORY to NEW_MEDIA_FIREWALL_ROOTDIR in case it is still in a web-accessible area
+		if (file_exists($INDEX_DIRECTORY.".htaccess")) {
+			copy ($INDEX_DIRECTORY.".htaccess", $NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY.".htaccess");
+			if (!file_exists($NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY.".htaccess")) {
+				$errors = true;
+				$error_msg .= "<span class=\"error\">".$pgv_lang["media_firewall_protected_dir_not_writable"]." ".$NEW_MEDIA_FIREWALL_ROOTDIR.$MEDIA_DIRECTORY."</span><br />\n";
+			}
+		}
+	}
+	if (!$errors) {
+		$configtext = preg_replace('/\$MEDIA_FIREWALL_ROOTDIR\s*=\s*".*";/', "\$MEDIA_FIREWALL_ROOTDIR = \"".$_POST["NEW_MEDIA_FIREWALL_ROOTDIR"]."\";", $configtext);
+	}	
+	if (file_exists($NTHEME_DIR)) 
+		$configtext = preg_replace('/\$THEME_DIR\s*=\s*".*";/', "\$THEME_DIR = \"".$_POST["NTHEME_DIR"]."\";", $configtext);
 	else {
 		$errors = true;
 	}
@@ -403,6 +452,52 @@ if ($action=="update") {
 	else {
 		fwrite($fp, $configtext);
 		fclose($fp);
+	}
+
+
+	if (($NEW_USE_MEDIA_FIREWALL=='yes') && !$USE_MEDIA_FIREWALL) {
+		AddToLog("Media Firewall enabled by >".getUserName()."<");
+
+		if (!$errors) {
+			// create/modify an htaccess file in the main media directory
+			$httext = "";
+			if (file_exists($MEDIA_DIRECTORY.".htaccess")) {
+				$httext = implode('', file($MEDIA_DIRECTORY.".htaccess"));
+				// comment out any existing lines that set ErrorDocument 404
+				$httext = preg_replace('/^(ErrorDocument\s*404(.*))\n?/', "#$1\n", $httext);
+				$httext = preg_replace('/[^#](ErrorDocument\s*404(.*))\n?/', "\n#$1\n", $httext);
+			}
+			// add new ErrorDocument 404 line to the end of the file
+			$httext .= "\nErrorDocument\t404\t".dirname($SCRIPT_NAME)."/mediafirewall.php";
+
+			$fp = @fopen($MEDIA_DIRECTORY.".htaccess", "wb");
+			if (!$fp) {
+				$errors = true;
+				$error_msg .= "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."</span><br />\n";
+			} else {
+				fwrite($fp, $httext);
+				fclose($fp);
+			}
+		}
+
+	} elseif (($NEW_USE_MEDIA_FIREWALL=='no') && $USE_MEDIA_FIREWALL) {
+		AddToLog("Media Firewall disabled by >".getUserName()."<");
+
+		if (file_exists($MEDIA_DIRECTORY.".htaccess")) {
+			$httext = implode('', file($MEDIA_DIRECTORY.".htaccess"));
+			// comment out any lines that set ErrorDocument 404
+			$httext = preg_replace('/^(ErrorDocument\s*404(.*))\n?/', "#$1\n", $httext);
+			$httext = preg_replace('/[^#](ErrorDocument\s*404(.*))\n?/', "\n#$1\n", $httext);
+			$fp = @fopen($MEDIA_DIRECTORY.".htaccess", "wb");
+			if (!$fp) {
+				$errors = true;
+				$error_msg .= "<span class=\"error\">".print_text("gedcom_config_write_error",0,1)."</span><br />\n";
+			} else {
+				fwrite($fp, $httext);
+				fclose($fp);
+			}
+		}
+
 	}
 
 	// Delete Upcoming Events cache
@@ -564,7 +659,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["gedcom_conf"]."\" onclick=\"expa
 					//-- gedcom not found so try looking for it with a .ged extension
 					if (strtolower(substr(trim($path.$GEDFILENAME), -4)) != ".ged") $GEDFILENAME .= ".ged";
 				}
-				if ((!strstr($GEDCOMPATH, "://")) &&(!file_exists($path.$GEDFILENAME))) {
+				if ((!isFileExternal($GEDCOMPATH)) &&(!file_exists($path.$GEDFILENAME))) {
 					print "<br /><span class=\"error\">".str_replace("#GEDCOM#", $GEDCOMPATH, $pgv_lang["error_header"])."</span>\n";
 				}
 			}
@@ -879,6 +974,26 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["media_conf"]."\" onclick=\"expan
 		<td class="optionbox"><select name="NEW_SHOW_HIGHLIGHT_IMAGES" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SHOW_HIGHLIGHT_IMAGES_help');">
 				<option value="yes" <?php if ($SHOW_HIGHLIGHT_IMAGES) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 				<option value="no" <?php if (!$SHOW_HIGHLIGHT_IMAGES) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("USE_MEDIA_FIREWALL_help", "qm", "USE_MEDIA_FIREWALL"); print $pgv_lang["USE_MEDIA_FIREWALL"];?></td>
+		<td class="optionbox"><select name="NEW_USE_MEDIA_FIREWALL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('USE_MEDIA_FIREWALL_help');">
+				<option value="yes" <?php if ($USE_MEDIA_FIREWALL) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$USE_MEDIA_FIREWALL) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("MEDIA_FIREWALL_ROOTDIR_help", "qm", "MEDIA_FIREWALL_ROOTDIR"); print $pgv_lang["MEDIA_FIREWALL_ROOTDIR"];?></td>
+		<td class="optionbox"><input type="text" name="NEW_MEDIA_FIREWALL_ROOTDIR" size="50" dir="ltr" value="<?php print ($MEDIA_FIREWALL_ROOTDIR == $INDEX_DIRECTORY) ? "" : $MEDIA_FIREWALL_ROOTDIR ?>" onfocus="getHelp('MEDIA_FIREWALL_ROOTDIR_help');" tabindex="<?php $i++; print $i?>" /></td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("MEDIA_FIREWALL_THUMBS_help", "qm", "MEDIA_FIREWALL_THUMBS"); print $pgv_lang["MEDIA_FIREWALL_THUMBS"];?></td>
+		<td class="optionbox"><select name="NEW_MEDIA_FIREWALL_THUMBS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('MEDIA_FIREWALL_THUMBS_help');">
+				<option value="yes" <?php if ($MEDIA_FIREWALL_THUMBS) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$MEDIA_FIREWALL_THUMBS) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 			</select>
 		</td>
 	</tr>

@@ -84,10 +84,9 @@
         if ($mediaTitle=="") $mediaTitle = basename($rowm["m_file"]);
 		
 		// Get Media info
-        if ($isExternal || file_exists(filename_decode($thumbnail))) {
-			
+		if ($isExternal || media_exists($thumbnail)) {
             $mainFileExists = false;
-            if ($isExternal || file_exists($mainMedia)) {
+            if ($isExternal || media_exists($mainMedia)) {
                 $mainFileExists = true;
                 $imgsize = findImageSize($mainMedia);
                 $imgwidth = $imgsize[0]+40;

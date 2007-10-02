@@ -133,7 +133,21 @@ if ($action=="newentry") {
 		$folderName = dirname($folderName)."/";
 		$thumbFolderName = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $folderName);
 
-		if (!empty($folderName)) $_SESSION["upload_folder"] = $folderName;
+		if (!empty($folderName)) { 
+			$_SESSION["upload_folder"] = $folderName; // store standard media folder in session
+			if ($USE_MEDIA_FIREWALL) {
+				$folderName = get_media_firewall_path($folderName);
+			}
+			// make sure the dir exists
+			@mkdirs($folderName);
+		}
+		if (!empty($thumbFolderName)) { 
+			if ($USE_MEDIA_FIREWALL && $MEDIA_FIREWALL_THUMBS) {
+				$thumbFolderName = get_media_firewall_path($thumbFolderName);
+			}
+			// make sure the dir exists
+			@mkdirs($thumbFolderName);
+		}
 
 		$error = "";
 		
@@ -236,7 +250,7 @@ if ($action=="newentry") {
 		// No upload: should be an existing file on server
 		if ($tag[0]=="FILE") {
 			if (!empty($text[0])) {
-				$isExternal = strstr($text[0], "://");
+				$isExternal = isFileExternal($text[0]);
 				if ($isExternal) {
 					$fileName = $text[0];
 					$mediaFile = $fileName;
@@ -402,7 +416,7 @@ if ($action == "update") {
 		$onegedcom = false;
 	$res->free();
 	
-	$isExternal = strstr($oldFilename, "://") || strstr($filename, "://");
+	$isExternal = isFileExternal($oldFilename) || isFileExternal($filename);
 	$finalResult = true;
 		
 	// Handle Admin request to rename or move media file

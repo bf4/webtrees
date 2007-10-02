@@ -40,10 +40,22 @@ class MediaControllerRoot extends IndividualController{
 	var $mediaobject;
 
 	function init() {
+		global $MEDIA_DIRECTORY, $USE_MEDIA_FIREWALL;
 		if (isset($_REQUEST['filename'])) $filename = $_REQUEST['filename'];
 		if (isset($_REQUEST['mid'])) $mid = $_REQUEST['mid'];
 		if (!empty($_REQUEST["show_changes"])) $this->show_changes = $_REQUEST["show_changes"];
 		if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
+
+		if ($USE_MEDIA_FIREWALL) {
+			// this section used by mediafirewall.php to determine what media file was requested
+			if (isset($_SERVER['REDIRECT_URL'])) {
+				$filename = $_SERVER['REDIRECT_URL'];
+				// if user requested a thumbnail, lookup permissions based on the original image
+				$filename = str_replace('/thumbs', '', $filename);
+				// strip off the pgv directory and media directory from the requested url so just the image information is left
+				$filename = substr($filename, strpos($filename, $MEDIA_DIRECTORY) + strlen($MEDIA_DIRECTORY) - 1);
+			}
+		}
 
 		//Checks to see if the File Name ($filename) exists
 		if (!empty($filename)){
@@ -52,6 +64,9 @@ class MediaControllerRoot extends IndividualController{
 			if (!$mid){
 				//This will set the Media ID to be false if the File given doesn't match to anything in the database
 				$mid = false;
+				// create a very basic gedcom record for this file so that the functions of the media object will work
+				// this is used by the media firewall when requesting an object that exists in the media firewall directory but not in the gedcom
+				$this->mediaobject = new Media("0 @"."0"."@ OBJE\n1 FILE ".$filename);
 			}
 		}
 	
@@ -383,21 +398,15 @@ class MediaControllerRoot extends IndividualController{
 			}
 		}
 
-		//This does another check to see if the file exists.
-		//If so it will then check to see if the file's image size is null.
-		//If the file is null, it will not show the width and the height of the image
-		if (file_exists($this->getLocalFileName())){
-			$imagesize = @getimagesize($this->getLocalFileName());
-			if ($imagesize[0]){
-				$facts[] = "1 EVEN " . getLRM() .$imagesize[0]." x ".$imagesize[1].getLRM()  . "\r\n2 TYPE image_size";
+		if ($this->mediaobject->fileExists()) {
+			// get height and width of image, when available
+			if ($this->mediaobject->getWidth()) {
+				$facts[] = "1 EVEN " . getLRM() . $this->mediaobject->getWidth()." x ".$this->mediaobject->getHeight() . getLRM() . "\r\n2 TYPE image_size";
 			}
 			//Prints the file size
-			$size = filesize($this->getLocalFileName());
-			//Rounds the size of the imgae to 2 decimal places
-			$size = getLRM() . round($size/1024, 2)." kb" . getLRM();
-
+			//Rounds the size of the image to 2 decimal places
+			$size = getLRM() . round($this->mediaobject->getFilesizeraw()/1024, 2)." kb" . getLRM();
 			$facts[] = "1 EVEN ".$size."\r\n2 TYPE file_size";
-
 		}
 
 		sort_facts($facts);
@@ -409,9 +418,17 @@ class MediaControllerRoot extends IndividualController{
 	 * @return string
 	 */
 	function getLocalFilename() {
-		return check_media_depth($this->mediaobject->getFilename());
-
+		return $this->mediaobject->getLocalFilename();
 	}
+
+	/**
+	 * get the file name on the server
+	 * @return string
+	 */
+	function getServerFilename() {
+		return $this->mediaobject->getServerFilename();
+	}
+
 }
 // -- end of class
 //-- load a user extended class if one exists

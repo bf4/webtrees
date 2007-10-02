@@ -178,6 +178,7 @@ $pgv_lang["media_deleted"]			= "Medien Verzeichnis erfolgreich entfernt.";
 $pgv_lang["media_exists"]			= "Medien Datei existiert bereits.";
 $pgv_lang["media_file"]                 = "Multimedia Datei zum Hochladen";
 $pgv_lang["media_file_deleted"]		= "Medien Datei erfolgreich gelöscht.";
+$pgv_lang["media_file_moved"]		= "Medien Datei erfolgreich verlegt.";
 $pgv_lang["media_file_not_moved"]	= "Medien Datei konnte nicht verlegt werden.";
 $pgv_lang["media_file_not_renamed"]	= "Medien Datei konnte nicht verlegt oder umbenannt werden.";
 $pgv_lang["media_thumb_exists"]		= "Miniaturbild existiert bereits.";

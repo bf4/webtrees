@@ -37,7 +37,7 @@ loadLangFile("lb_lang");
 
 global $MEDIA_EXTERNAL, $THUMBNAIL_WIDTH;
 global $GEDCOM, $GEDCOMS;
-global $currentPage, $lastPage ;
+global $currentPage, $lastPage;
 
 if (!isset($level)) $level = 0;
 if (!isset($action)) $action = "";
@@ -56,7 +56,7 @@ print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t
 	<?php }else{ ?>
 		<link  href="modules/lightbox/css/clearbox_music.css" 	rel="stylesheet" type="text/css" />
 	<?php } ?>
-	<link  href="modules/lightbox/css/lightbox_plus.css" 		rel="stylesheet" type="text/css" media="screen" />  
+	<link  href="modules/lightbox/css/lightbox_plus.css" rel="stylesheet" type="text/css" media="screen" />  
  
 	<script src="modules/lightbox/js/prototype.js" 		type="text/javascript"></script>
 	<script src="modules/lightbox/js/Sound.js" 			type="text/javascript"></script>
@@ -287,7 +287,7 @@ if ($ct>0){
 	for($i=0; $i<$count; $i++) {
 	    $media = $medialist[$start+$i];
 
-	    $isExternal = strstr($media["FILE"], "://");
+	    $isExternal = isFileExternal($media["FILE"]);
 
 		$imgsize = findImageSize($media["FILE"]);
 	    $imgwidth = $imgsize[0]+40;
@@ -314,8 +314,8 @@ if ($ct>0){
 			print "<a href=\"#\" onclick=\"return openImage('".rawurlencode($media["FILE"])."',$imgwidth, $imgheight);\">";	
 		}
 //LBox ----------- end change for Lightbox Album ----------------------------------		
-		
-		print "<img src=\"".thumbnail_file($media["FILE"])."\" align=\"left\" class=\"thumbnail\" border=\"none\"";
+
+		print "<img src=\"".$media["THUMB"]."\" align=\"left\" class=\"thumbnail\" border=\"none\"";
 		if ($isExternal) print " width=\"".$THUMBNAIL_WIDTH."\"";
 		print " alt=\"" . PrintReady($name) . "\" title=\"" . PrintReady($name) . "\" /></a>";
 		print "</td>\n\t\t<td class=\"list_value_wrap\" style=\"border: none;\" width=\"100%\">";
@@ -374,26 +374,25 @@ if ($ct>0){
 		}
 		print "</a><br />";
 
-	    if (!$isExternal && !file_exists(filename_decode($media["FILE"]))) {
-		    print "<br /><span class=\"error\">".$pgv_lang["file_not_found"]." <span dir=\"ltr\">".PrintReady($media["FILE"])."</span></span>";
-	    }
-
-	    if (!$isExternal && file_exists(filename_decode($media["FILE"]))){
+		if (!$isExternal && !$media["EXISTS"] ) {
+			print "<br /><span class=\"error\">".$pgv_lang["file_not_found"]." <span dir=\"ltr\">".PrintReady($media["FILE"])."</span></span>";
+		}
+		if (!$isExternal && $media["EXISTS"]){
 			$imageTypes = array("","GIF", "JPG", "PNG", "SWF", "PSD", "BMP", "TIFF", "TIFF", "JPC", "JP2", "JPX", "JB2", "SWC", "IFF", "WBMP", "XBM");
 			if(!empty($imgsize[2])){
-		    	print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["media_format"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imageTypes[$imgsize[2]] . "</span>";
+				print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["media_format"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imageTypes[$imgsize[2]] . "</span>";
 			} else if(empty($imgsize[2])){
-			    $path_end=substr($media["FILE"], strlen($media["FILE"])-5);
-			    $imageType = strtoupper(substr($path_end, strpos($path_end, ".")+1));
-		    	print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["media_format"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imageType . "</span>";
+				$path_end=substr($media["FILE"], strlen($media["FILE"])-5);
+				$imageType = strtoupper(substr($path_end, strpos($path_end, ".")+1));
+				print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["media_format"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imageType . "</span>";
 			}
 
-			$fileSize = filesize(filename_decode($media["FILE"]));
+			$fileSize = media_filesize($media["FILE"]);
 			$sizeString = getfilesize($fileSize);
 			print "&nbsp;&nbsp;&nbsp;<span class=\"field\" style=\"direction: ltr;\">" . $sizeString . "</span>";
 
 			if($imgsize[2]!==false){
-		    	print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM() . " ") : " x ") . $imgsize[1] . "</span>";
+				print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM() . " ") : " x ") . $imgsize[1] . "</span>";
 			}
 		}
 

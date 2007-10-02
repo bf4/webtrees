@@ -193,7 +193,7 @@ if ($action=="update" && (!isset($security_user)||$security_user!=$_POST['NEW_DB
 	$configtext = implode('', file("config.php"));
 	print $pgv_lang["config_file_read"];
 	print "<br />\n";
-	if (preg_match("'://'", $NEW_SERVER_URL)==0) $NEW_SERVER_URL = "http://".$NEW_SERVER_URL;
+	if (!isFileExternal($NEW_SERVER_URL)) $NEW_SERVER_URL = "http://".$NEW_SERVER_URL;
 	if (preg_match("'/$'", $NEW_SERVER_URL)==0) $NEW_SERVER_URL .= "/";
 	$_POST["NEW_INDEX_DIRECTORY"] = preg_replace('/\\\/','/',$_POST["NEW_INDEX_DIRECTORY"]);
 	if (preg_match('/\$DBTYPE\s*=\s*".*";/', $configtext)>0) {
