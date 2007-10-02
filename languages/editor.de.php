@@ -182,7 +182,6 @@ $pgv_lang["media_file_moved"]		= "Medien Datei erfolgreich verlegt.";
 $pgv_lang["media_file_not_moved"]	= "Medien Datei konnte nicht verlegt werden.";
 $pgv_lang["media_file_not_renamed"]	= "Medien Datei konnte nicht verlegt oder umbenannt werden.";
 $pgv_lang["media_thumb_exists"]		= "Miniaturbild existiert bereits.";
-$pgv_lang["multi_site_search"] 		= "Mehrere Internetseiten suchen";
 $pgv_lang["multiple_gedcoms"]		= "Diese Medien-Datei ist mit einer anderen genealogischen Datei auf diesem Server verbunden.  Sie kann nicht gelöscht, verlegt, oder umbenannt werden, bis diese Verbindungen gelöscht sind.";
 $pgv_lang["must_provide"]               = "Bitte eingeben:";
 $pgv_lang["name_search"]			= "Name:";
