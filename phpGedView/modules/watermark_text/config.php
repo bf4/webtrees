@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage watermark_text
- * @version $Id: config.php 1412 2007-08-08 16:50:56Z ljm $
+ * @version $Id$
  */
 
 //====================
