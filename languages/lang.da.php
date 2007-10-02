@@ -3,7 +3,7 @@
  * Danish Language file for PhpGedView.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Team
+ * Copyright (C) 2002 to 2005  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -143,7 +143,7 @@ $pgv_lang["jan_1st"]          = "Jan";
 $pgv_lang["feb_1st"]          = "Feb";
 $pgv_lang["mar_1st"]          = "Marts";
 $pgv_lang["apr_1st"]          = "April";
-$pgv_lang["may_1st"]				= "Maj";
+$pgv_lang["may_1st"]          = "Maj";
 $pgv_lang["jun_1st"]          = "Juni";
 $pgv_lang["jul_1st"]          = "Juli";
 $pgv_lang["aug_1st"]          = "Aug";

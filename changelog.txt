@@ -43,11 +43,6 @@ Version 4.1.2
  - Fixed [ 1790943 ] 4.1.1 Individual Page - Submenu Lists - Individual is empty (canajun2eh)
 
 Version 4.1.1
- - Changed Print link list after Notes and Source on Manage Media pages (canajun2eh)
- - Fixed Media source citation information lost when editing any media object info (canajun2eh)
- - Fixed Formatting problems while editing long Media source citation text (canajun2eh)
- - Fixed Formatting problems while editing long Media notes text (canajun2eh)
- - Fixed [ 1783854 ] Memory exhaustion on line 1190 of functions_name.php (canajun2eh)
  - Applied [ 1790552 ] childrec variable not initialized (yalnifj)
  - Changed Print link list after Notes and Source on Manage Media pages (canajun2eh)
  - Fixed Media source citation information lost when editing any media object info (canajun2eh)

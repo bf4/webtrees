@@ -5,7 +5,7 @@
  * Display media Items using Lightbox
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PHPGedView Development Team
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ $pgv_lang["turn_edit_OFF"] = "הפסק צורת עריכה";
 
 $pgv_lang["lb_source_avail"] = "קיימים נתוני מקור - לחץ כאן.";
 
-$pgv_lang["lb_private"] = "Meliza please translate";
-$pgv_lang["lb_view_source_tip"] = "Meliza please translate : ";
-$pgv_lang["lb_view_details_tip"] = "Meliza please translate : ";
+$pgv_lang["lb_private"] = "התמונה קשורה<br>לאדם פרטי"; 
+$pgv_lang["lb_view_source_tip"] = "הראה מקור: "; 
+$pgv_lang["lb_view_details_tip"] = "הראה פרטי מדיה: "; 
 ?>

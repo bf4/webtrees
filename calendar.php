@@ -46,18 +46,27 @@ if (empty($filtersx)) $filtersx='';
 
 // Create a CalendarDate from the parameters
 $cal=urldecode($cal);
-// interpret the "advanced" year-range option 
+// advance-year "year range"
 if (preg_match('/^(\d+)-(\d+)$/', $year, $match)) {
 	if (strlen($match[1]) > strlen($match[2]))
 		$match[2]=substr($match[1], 0, strlen($match[1])-strlen($match[2])).$match[2];
 	$ged_date=new GedcomDate("FROM {$cal} {$match[1]} TO {$cal} {$match[2]}");
 	$action='year';
-} else {
+} else 
+	// advanced-year "decade/century wildcard"
+	if (preg_match('/^(\d+)(\?+)$/', $year, $match)) {
+		$y1=$match[1].str_replace('?', '0', $match[2]);
+		$y2=$match[1].str_replace('?', '9', $match[2]);
+		$ged_date=new GedcomDate("FROM {$cal} {$y1} TO {$cal} {$y2}");
+		$action='year';
+	} else {
 	if ($year<0)
 		$year=(-$year)."B.C."; // need BC to parse date
+		// strip non-numeric characters, such as ABT
+		$year=preg_replace('/[^-0-9]/', '', $year);
 	$ged_date=new GedcomDate("{$cal} {$day} {$month} {$year}");
 	$year=$ged_date->date1->y; // need negative year for year entry field.
-}
+	}
 $cal_date=$ged_date->date1;
 $cal=urlencode($cal);
 
