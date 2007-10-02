@@ -26,6 +26,11 @@
 require_once("config.php");
 require_once('includes/functions_print_facts.php');
 
+if (file_exists("modules/lightbox/album.php")) {
+	include('modules/lightbox/lb_config.php');
+}else{
+}
+
 // LBox -------------------------------------------------------
 loadLangFile("lb_lang");
 // LBox --------------------------------------------------------
@@ -56,8 +61,6 @@ print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t
   <script src="modules/lightbox/js/prototype.js" 		type="text/javascript"></script>
   <script src="modules/lightbox/js/Sound.js" 			type="text/javascript"></script>
   <script src="modules/lightbox/js/clearbox.js" type="text/javascript"></script>
-  <script src="modules/lightbox/js/spica.js" type="text/javascript"></script>
-  <script src="modules/lightbox/js/lightbox_plus.js" type="text/javascript"></script>
   <center>
 <?php
 // LBox  ============================ end addition for Lightbox Album ==================================
@@ -319,7 +322,7 @@ if ($ct>0){
 		
 //LBox --------  added for Lightbox Album --------------------------------------------
 		if ( file_exists("modules/lightbox/album.php")) {
-        if ( userCanEdit(getUserName()) ) {
+        if ( userCanEdit(getUserName()) && $multimed_icons == "show" ) {
 		print "<table border=0><tr>";
 		
 		    // ---------- Edit Media --------------------
