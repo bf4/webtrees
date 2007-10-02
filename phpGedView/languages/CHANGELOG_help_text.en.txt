@@ -44,7 +44,7 @@ VERSION 4.1.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-*$pgv_lang["yahrzeit_help"]							02 Oct 2007				S
+*$pgv_lang["yahrzeit_help"]							02 Oct 2007				SW
 *$pgv_lang["yahrzeit_help"]							01 Oct 2007				wF
 *$pgv_lang["annivers_year_select_help"] 			01 Oct 2007     		W
 +$pgv_lang["yahrzeit_help"]							01 Oct 2007				A

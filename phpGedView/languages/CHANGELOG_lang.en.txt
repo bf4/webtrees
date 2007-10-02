@@ -50,16 +50,16 @@ VERSION 4.1.2
 +$pgv_lang["yahrzeit_block"]          				01 Oct 2007           	A
 +$pgv_lang["yahrzeit_descr"]          				01 Oct 2007           	A
 +$pgv_lang["multi_site_search"]						01 Oct 2007				A moved from editor.en.php
-+$pgv_lang["cal_none"]                30 Sep 2007           A
-+$pgv_lang["cal_gregorian"]           30 Sep 2007           M (moved from configure_help.XX.php and renamed)
-+$pgv_lang["cal_julian"]              30 Sep 2007           M (moved from configure_help.XX.php and renamed)
-+$pgv_lang["cal_french"]              30 Sep 2007           M (moved from configure_help.XX.php and renamed)
-+$pgv_lang["cal_jewish"]              30 Sep 2007           M (moved from configure_help.XX.php and renamed)
-+$pgv_lang["cal_hebrew"]              30 Sep 2007           M (moved from configure_help.XX.php and renamed)
-+$pgv_lang["cal_jewish_and_gregorian"]30 Sep 2007           M (moved from configure_help.XX.php and renamed)
-+$pgv_lang["cal_hebrew_and_gregorian"]30 Sep 2007           M (moved from configure_help.XX.php and renamed)
-+$pgv_lang["cal_hijri"]               30 Sep 2007           M (moved from configure_help.XX.php and renamed)
-+$pgv_lang["cal_arabic"]              30 Sep 2007           M (moved from configure_help.XX.php and renamed)
++$pgv_lang["cal_none"]								30 Sep 2007				A
++$pgv_lang["cal_gregorian"]							30 Sep 2007				M (moved from configure_help.XX.php and renamed)
++$pgv_lang["cal_julian"]							30 Sep 2007				M (moved from configure_help.XX.php and renamed)
++$pgv_lang["cal_french"]							30 Sep 2007				M (moved from configure_help.XX.php and renamed)
++$pgv_lang["cal_jewish"]							30 Sep 2007				M (moved from configure_help.XX.php and renamed)
++$pgv_lang["cal_hebrew"]							30 Sep 2007				M (moved from configure_help.XX.php and renamed)
++$pgv_lang["cal_jewish_and_gregorian"]				30 Sep 2007				M (moved from configure_help.XX.php and renamed)
++$pgv_lang["cal_hebrew_and_gregorian"]				30 Sep 2007				M (moved from configure_help.XX.php and renamed)
++$pgv_lang["cal_hijri"]								30 Sep 2007				M (moved from configure_help.XX.php and renamed)
++$pgv_lang["cal_arabic"]							30 Sep 2007				M (moved from configure_help.XX.php and renamed)
 *$pgv_lang["stplGDno"]								28 Sep 2007				W
 *$pgv_lang["stpljpgraphno"]							28 Sep 2007				W
 *$pgv_lang["media_firewall_rootdir_no_exist"]		09 Sep 2007				C
