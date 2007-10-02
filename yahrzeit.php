@@ -84,7 +84,8 @@ function print_yahrzeit($block=true, $config="", $side, $index) {
 	$yahrzeits=array();
 	for ($jd=$startjd-1; $jd<=$endjd;++$jd)
 		foreach (get_anniversary_events($jd, 'DEAT') as $fact)
-			if ($fact['date']->date1->CALENDAR_ESCAPE=='@#DHEBREW@')
+			// Exact hebrew dates only
+			if ($fact['date']->date1->CALENDAR_ESCAPE=='@#DHEBREW@' && $fact['date']->date1->d!=0 && $fact['date']->date1->y!=0)
 				$yahrzeits[]=$fact;
 	// ...then adjust
 	foreach ($yahrzeits as $key=>$yahrzeit) {
