@@ -5,7 +5,7 @@
  * This block will print a list of upcoming yahrzeit (hebrew death anniversaries) 
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2007 Greg Roach, fisharebest@users.sourceforge.net
+ * Copyright (C) 2007 PGV Developers
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Blocks
+ * @author Greg Roach, fisharebest@users.sourceforge.net
  * @version $Id$
  */
 
