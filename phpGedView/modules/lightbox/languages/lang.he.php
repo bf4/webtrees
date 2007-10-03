@@ -28,9 +28,9 @@
  */
 
 //-- security check, only allow access from module.php
-if (preg_match("/ra_lang\...\.php$/", $_SERVER["PHP_SELF"])>0) {
-        print "You cannot access a language file directly.";
-        exit;
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access a language file directly.";
+	exit;
 }
 
 $pgv_lang["lb_help"] = "עזרת אלבום";
