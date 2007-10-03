@@ -44,6 +44,12 @@ VERSION 4.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+
+
+VERSION 4.1.2
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+-------------------------------------------------------------------------------------------
 *$pgv_lang["USE_MEDIA_VIEWER_help"]					02 Sep 2007				W
 *$pgv_lang["USE_MEDIA_FIREWALL_help"]				02 Sep 2007				CW
 +$pgv_lang["MEDIA_FIREWALL_ROOTDIR"]				02 Sep 2007				A
@@ -60,12 +66,6 @@ VERSION 4.2
 +$pgv_lang["SHOW_NO_WATERMARK_help"]				04 Aug 2007				A	Watermarks, patch 1739602
 +$pgv_lang["USE_MEDIA_FIREWALL"]					02 Aug 2007				A	Media Firewall, patch 1749817
 +$pgv_lang["USE_MEDIA_FIREWALL_help"]				02 Aug 2007				A	Media Firewall, patch 1749817
-
-
-VERSION 4.1.2
-
-?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
--------------------------------------------------------------------------------------------
 *$pgv_lang["CALENDAR_FORMAT_help"]					30 Sep 2007				W
 *$pgv_lang["CALENDAR_FORMAT_help"]					30 Sep 2007				W
 -$pgv_lang["gregorian"]								30 Sep 2007				M (moved to lang.XX.php and renamed)

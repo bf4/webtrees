@@ -9,8 +9,6 @@
 =====================================================================
 Version 4.2
  - Fixed Top menu text wraps when using IE or Opera (canajun2eh)
- - Added Watermarks [ 1739602 ] (ljm)
- - Added Media Firewall [ 1749817 ] (ljm)
  - Added sourcelink and assolink tables [ 1718918 ] [ 1717381 ] (yalnifj)
  - Moved default config.php to config.dist (yalnifj)
  - Added [ 1649660 ] Place Hierarchy of Birth only places etc. (opus27)
@@ -29,6 +27,8 @@ Version 4.2
  - Adding a "never married" icon on ancestry booklet when NMR=0 (opus27)
 
 Version 4.1.2
+ - Added Watermarks [ 1739602 ] (ljm)
+ - Added Media Firewall [ 1749817 ] (ljm)
  - Fixed [ 1805621 ] [4.1.2] Undifined index: multi_site_search (yalnifj)
  - Fixed [ 1787410 ] [V4.1 Stable] Duplication of children (yalnifj)
  - Fixed [ 1802245 ] escaping in translation (canajun2eh)

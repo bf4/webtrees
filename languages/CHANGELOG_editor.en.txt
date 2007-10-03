@@ -45,8 +45,6 @@ VERSION 4.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-*$pgv_lang["media_file_moved"]						08 Sep 2007				A	
-*$pgv_lang["resn_disabled"]							05 Aug 2007				A	
 
 
 VERSION 4.1.2
@@ -54,7 +52,8 @@ VERSION 4.1.2
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
 -$pgv_lang["multi_site_search"]						01 Oct 2007				M	Moved to lang.xx.php
-
+*$pgv_lang["media_file_moved"]						08 Sep 2007				A	
+*$pgv_lang["resn_disabled"]							05 Aug 2007				A	
 
 VERSION 4.1
 
