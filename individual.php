@@ -600,8 +600,19 @@ if(empty($SEARCH_SPIDER)) {
 <?php
 if(empty($SEARCH_SPIDER)) {
 	if (file_exists("modules/lightbox/album.php")) {
+		// The following is temporary, until the handling of the Lightbox Help system
+		// is adjusted to match the usual PhpGedView practice
+		$lbHelpFile = "modules/lightbox/languages/help.".$lang_short_cut[$LANGUAGE].".php";
+		if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help.en.php";
+
 		print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none; background:none;\" \>\n";
-		print "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>\n";
+		
+		// ---------- Help link --------------------
+		print "<a href=\"" . $lbHelpFile . "\" rel='clearbox(500,760,click)' title=\"" . $pgv_lang["page_help"] . "\" >";
+        print "<img src=\"".$PGV_IMAGE_DIR."/small/help.gif\" class=\"icon\" title=\"" . $pgv_lang["page_help"] . "\" />" ;
+        print "</a>" ;
+
+		print "<span class=\"subheaders\">&nbsp;&nbsp;" . $pgv_lang["lightbox"] . "</span>\n";
 		// Header info ---------------------------------------------------		
 		$mediacnt = $controller->get_media_count();
 		if ($mediacnt!=0) {	
@@ -621,7 +632,6 @@ if(empty($SEARCH_SPIDER)) {
 		}else{
 			loading_message();
 		}
-	}else{
     }
     print "</div>\n";
     print "</div>\n";
