@@ -422,11 +422,18 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 				$tmp1=get_gedcom_value('EVEN', 2, $even_rec, $truncate='', $convert=false);
 				$tmp2=new GedcomDate(get_gedcom_value('DATE', 3, $even_rec, $truncate='', $convert=false));
 				$tmp3=get_gedcom_value('PLAC', 3, $even_rec, $truncate='', $convert=false);
-				if (!empty($factarray[$tmp1]))
-					$tmp1=$factarray[$tmp1];
 				if ($even_num>1)
 					print "<br />";
-				print "<b>{$tmp1}</b>: ".$tmp2->Display(false, '', array())." {$tmp3}";
+				print "<b>";
+				foreach (preg_split('/\W+/', $tmp1) as $key=>$value) {
+					if ($key>0)
+						print ", ";
+					if (empty($factarray[$value]))
+						print $value;
+					else
+						print $factarray[$value];
+				}
+				print "</b> - ".$tmp2->Display(false, '', array())." - {$tmp3}";
 			}
 			if ($fact!="ADDR") {
 				//-- catch all other facts that could be here
