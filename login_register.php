@@ -113,9 +113,11 @@ switch ($action) {
 			// switch language to user settings
 			$oldLanguage = $LANGUAGE;
 			if ($LANGUAGE != $newuser["language"]) loadLanguage($newuser["language"]);
+			if ($NAME_REVERSE) $newuserName = $newuser["lastname"]." ".$newuser["firstname"];
+			else $newuserName = $newuser["firstname"]." ".$newuser["lastname"];
 			
 			$mail_body = "";
-			$mail_body .= str_replace("#user_fullname#", $newuser["firstname"]." ".$newuser["lastname"], $pgv_lang["mail04_line01"]) . "\r\n\r\n";
+			$mail_body .= str_replace("#user_fullname#", $newuserName, $pgv_lang["mail04_line01"]) . "\r\n\r\n";
 			$mail_body .= $pgv_lang["mail04_line02"] . "\r\n\r\n";
 			$mail_body .= $pgv_lang["username"] . ": " . $newuser["username"] . "\r\n";
 			
@@ -469,8 +471,13 @@ switch ($action) {
 					$mail_body .= $pgv_lang["mail02_line01"] . "\r\n\r\n";
 					$mail_body .= str_replace("#SERVER_NAME#", $serverURL, $pgv_lang["mail02_line02"]) . "\r\n\r\n";
 					$mail_body .= $pgv_lang["username"] . " " . $user_name . "\r\n";
-					$mail_body .= $pgv_lang["firstname"] . " " . $user_firstname . "\r\n";
-					$mail_body .= $pgv_lang["lastname"] . " " . $user_lastname . "\r\n\r\n";
+					if ($NAME_REVERSE) {
+						$mail_body .= $pgv_lang["lastname"] . " " . $user_lastname . "\r\n\r\n";
+						$mail_body .= $pgv_lang["firstname"] . " " . $user_firstname . "\r\n";
+					} else {
+						$mail_body .= $pgv_lang["firstname"] . " " . $user_firstname . "\r\n";
+						$mail_body .= $pgv_lang["lastname"] . " " . $user_lastname . "\r\n\r\n";
+					}
 					$mail_body .= $pgv_lang["comments"].": " . $user_comments . "\r\n\r\n";
 					$mail_body .= $pgv_lang["mail02_line03"] . "\r\n\r\n";
 					if ($REQUIRE_ADMIN_AUTH_REGISTRATION) $mail_body .= $pgv_lang["mail02_line04"] . "\r\n";
