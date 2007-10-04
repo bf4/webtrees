@@ -1385,7 +1385,7 @@ class Person extends GedcomRecord {
 				}
 			}
 		}
-		return $url."#content";
+		return $url;
 	}
 }
 ?>
