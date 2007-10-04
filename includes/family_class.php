@@ -478,7 +478,7 @@ class Family extends GedcomRecord {
 				}
 			}
 		}
-		return $url."#content";
+		return $url;
 	}
 }
 ?>
