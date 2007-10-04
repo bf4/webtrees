@@ -78,7 +78,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 	global $CONTACT_EMAIL, $view, $FACT_COUNT;
 	global $SHOW_FACT_ICONS;
 	global $n_chil, $n_gchi;
-	global $SEARCH_SPIDER;
+	global $SEARCH_SPIDER, $NAME_REVERSE;
 	$FACT_COUNT++;
 	$estimates = array("abt","aft","bef","est","cir");
 	$ft = preg_match("/1 (\w+)(.*)/", $factrec, $match);
@@ -437,7 +437,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			}
 			if ($fact!="ADDR") {
 				//-- catch all other facts that could be here
-				$special_facts = array("ADDR","ALIA","ASSO","CEME","CONC","CONT","DATE","DESC","EMAIL","EVEN",
+				$special_facts = array("ADDR","ALIA","ASSO","CEME","CONC","CONT","DATE","DESC","EMAIL",
 				"FAMC","FAMS","FAX","NOTE","OBJE","PHON","PLAC","RESN","SOUR","STAT","TEMP",
 				"TIME","TYPE","WWW","_EMAIL","_PGVU", "URL", "AGE");
 				$ct = preg_match_all("/\n2 (\w+) (.*)/", $factrec, $match, PREG_SET_ORDER);
@@ -465,12 +465,13 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 		}
 		print "</td>";
 		print "\n\t\t</tr>";
-	}
-	else {
+	} else {
 		// -- catch all unknown codes here
 		$body = $pgv_lang["unrecognized_code"]." ".$fact;
 		$user=getUser($CONTACT_EMAIL);
-		if (!$HIDE_GEDCOM_ERRORS) print "\n\t\t<tr><td class=\"descriptionbox $styleadd\"><span class=\"error\">".$pgv_lang["unrecognized_code"].": $fact</span></td><td class=\"optionbox\">$event<br />".$pgv_lang["unrecognized_code_msg"]." <a href=\"javascript:;\" onclick=\"message('$CONTACT_EMAIL','', '', '$body'); return false;\">".$user["firstname"]." ".$user["lastname"]."</a>.</td></tr>";
+		if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+		else $userName = $user["firstname"]." ".$user["lastname"];
+		if (!$HIDE_GEDCOM_ERRORS) print "\n\t\t<tr><td class=\"descriptionbox $styleadd\"><span class=\"error\">".$pgv_lang["unrecognized_code"].": $fact</span></td><td class=\"optionbox\">$event<br />".$pgv_lang["unrecognized_code_msg"]." <a href=\"javascript:;\" onclick=\"message('$CONTACT_EMAIL','', '', '$body'); return false;\">".$userName."</a>.</td></tr>";
 	}
 }
 //------------------- end print fact function

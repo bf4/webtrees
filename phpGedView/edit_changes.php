@@ -177,7 +177,9 @@ else {
 			$output .= "<td class=\"list_value $TEXT_DIRECTION\"><a href=\"javascript:;\" onclick=\"return reply('".$change["user"]."','".$pgv_lang["review_changes"]."')\" alt=\"".$pgv_lang["message"]."\">";
 			$cuser = getUser($change["user"]);
 			if ($cuser) {
-				$output .= PrintReady($cuser["firstname"]." ".$cuser["lastname"]);
+				if ($NAME_REVERSE) $cuserName = $cuser["lastname"]." ".$cuser["firstname"];
+				else $cuserName = $cuser["firstname"]." ".$cuser["lastname"];
+				$output .= PrintReady($cuserName);
 			}
  			$output .= PrintReady("&nbsp;(".$change["user"].")")."</a></td>\n";
  			$output .= "<td class=\"list_value $TEXT_DIRECTION\">".format_timestamp($change["time"])."</td>\n";

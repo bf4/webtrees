@@ -35,6 +35,7 @@ $PGV_BLOCKS["print_user_messages"]["config"]	= array("cache"=>0);
 //-- print user messages
 function print_user_messages($block=true, $config="", $side, $index) {
 		global $pgv_lang, $PGV_IMAGE_DIR, $TEXT_DIRECTION, $PGV_STORE_MESSAGES, $PGV_IMAGES, $usersortfields;
+		global $NAME_REVERSE;
 
 		$usermessages = getUserMessages(getUserName());
 
@@ -99,7 +100,9 @@ function print_user_messages($block=true, $config="", $side, $index) {
 				print "<td class=\"list_value_wrap\">".format_timestamp($time)."</td>\n";
 				print "<td class=\"list_value_wrap\">";
 				if ($tempuser) {
-					print PrintReady($tempuser["firstname"]." ".$tempuser["lastname"]);
+					if ($NAME_REVERSE) $tempuserName = $tempuser["lastname"]." ".$tempuser["firstname"];
+					else $tempuserName = $tempuser["firstname"]." ".$tempuser["lastname"];
+					print PrintReady($tempuserName);
 					if ($TEXT_DIRECTION=="ltr") print " " . getLRM() . " - ".htmlspecialchars($message["from"]) . getLRM();
 					else print " " . getRLM() . " - ".htmlspecialchars($message["from"]).getRLM();
 				}
@@ -130,9 +133,11 @@ function print_user_messages($block=true, $config="", $side, $index) {
 				print "<option value=\"last_6mo\">".$pgv_lang["broadcast_not_logged_6mo"]."</option>\n";
 			}
 			foreach($users as $indexval => $user) {
-				if ($username!=$user["username"] && $user["verified_by_admin"])  {
+				if ($username!=$user["username"] && $user["verified_by_admin"]) {
+					if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"]; 
+					else $userName = $user["firstname"]." ".$user["lastname"];
 					print "<option value=\"".$user["username"]."\"";
-					print ">".PrintReady($user["firstname"]." ".$user["lastname"]);
+					print ">".PrintReady($userName);
 					if ($TEXT_DIRECTION=="ltr") print " " . getLRM() . " - ".$user["username"] . getLRM() . "</option>\n";
 					else print " " . getRLM() . " - ".$user["username"]. getRLM() . "</option>\n";
 				}

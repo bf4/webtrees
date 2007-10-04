@@ -613,7 +613,8 @@ if ($action=="update") {
                   print " value=\"";
                   print $username;
                   print "\">";
-                  print $user["firstname"]." ".$user["lastname"];
+                  if ($NAME_REVERSE) print $user["lastname"]." ".$user["firstname"];
+                  else print $user["firstname"]." ".$user["lastname"];
                   print "</option>";
                 }
                 ?>

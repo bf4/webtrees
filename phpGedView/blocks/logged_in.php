@@ -42,7 +42,7 @@ $PGV_BLOCKS["print_logged_in_users"]["config"]		= array("cache"=>0);
  * prints a list of other users who are logged in
  */
 function print_logged_in_users($block = true, $config = "", $side, $index) {
-	global $pgv_lang, $PGV_SESSION_TIME, $TEXT_DIRECTION;
+	global $pgv_lang, $PGV_SESSION_TIME, $TEXT_DIRECTION, $NAME_REVERSE;
 
 	$block = true; // Always restrict this block's height
 
@@ -97,8 +97,10 @@ function print_logged_in_users($block = true, $config = "", $side, $index) {
 	}
 	uasort($loggedusers, "usersort");
 	foreach ($loggedusers as $indexval => $user) {
+		if ($NAME_REVERSE) $userName = $user["lastname"] . " " . $user["firstname"];
+		else $userName = $user["firstname"] . " " . $user["lastname"];
 		print "<tr><td>";
-		print "<br />" . PrintReady($user["firstname"] . " " . $user["lastname"]);
+		print "<br />" . PrintReady($userName);
 		print " - " . $user["username"];
 		if (($cusername != $user["username"]) and ($user["contactmethod"] != "none")) {
 			print "<br /><a href=\"javascript:;\" onclick=\"return message('" . $user["username"] . "');\">" . $pgv_lang["message"] . "</a>";
