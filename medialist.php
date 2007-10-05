@@ -326,7 +326,7 @@ if ($ct>0){
 		print "<table border=0><tr>";
 		
 		    // ---------- Edit Media --------------------
-				print "<td class=\"width33 center\">";
+				print "<td class=\"width33 center\" valign=\"top\">";
             print "<a href=\"javascript:;\" title=\"" . $pgv_lang["lb_edit_media"] . "\" onclick=\" return window.open('addmedia.php?action=editmedia&amp;pid=" . $media["XREF"] . "&amp;linktoid=', '_blank', 'top=50,left=50,width=600,height=600,resizable=1,scrollbars=1');\">";
             print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" />" ;
 				print "<br />" . $pgv_lang["lb_edit_details"] ;
@@ -334,13 +334,13 @@ if ($ct>0){
 			print "</td>";
 			
 			// ---------- Link Media to person, family or source  ---------------
-				print "<td class=\"width33 center\">";			
+				print "<td class=\"width33 center\" valign=\"top\">";			
 				print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\"" . $pgv_lang["set_link"] . "\" /></img><br />";
 				include ("modules/lightbox/functions/lb_link.php");
 			print "</td>";
 			
 			// ---------- View Media Details (mediaviewer) --------------------
-				print "<td class=\"width33 center\">";	
+				print "<td class=\"width33 center\" valign=\"top\">";	
 			print "<a href=\"mediaviewer.php?mid=" . $media["XREF"] . "\" title=\"" . $pgv_lang["lb_view_media"] . "\">";
 			print "<img src=\"modules/lightbox/images/image_view.gif\" class=\"icon\" title=\"" . $pgv_lang["lb_view_media"] . "\" /></img>";
 				print "<br />" . $pgv_lang["lb_view_details"] ;

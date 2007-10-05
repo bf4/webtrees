@@ -28,9 +28,9 @@
  */
 
 //-- security check, only allow access from module.php
-if (preg_match("/ra_lang\...\.php$/", $_SERVER["PHP_SELF"])>0) {
-        print "You cannot access a language file directly.";
-        exit;
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "Vous ne pouvez pas d'accéder aux fichiers de langue en direct.";
+	exit;
 }
 
 $pgv_lang["lb_help"] = "Aide d'Album";
@@ -39,29 +39,29 @@ $pgv_lang["showmenu"] = "Afficher Menu:";
 $pgv_lang["active"] = "Actif";
 $pgv_lang["TYPE__other"] = "Autres";
 $pgv_lang["no_media"] = "Aucun";
-$pgv_lang["census_text"]  = "<< Ces images de recensement ont été obtenues à partir de << The National Archives >>, du gardien des disques d'original, ";
+$pgv_lang["census_text"]  = "\"Ces images de recensement ont été obtenues à partir de «The National Archives», gardien des dossiers originaux, ";
 $pgv_lang["census_text"] .= "et apparaissent ici avec leur approbation à condition qu'aucune utilisation commerciale n'est faite d'eux sans permission." . "\n" ;
-$pgv_lang["census_text"] .= "Des demandes de la publication commerciale de ces derniers ou d'autres images de recensement apparaissant sur ce site Web, devraient être dirigées vers : ";
-$pgv_lang["census_text"] .= "<< Image Library, The National Archives, Kew, Surrey, TW9 4DU, United Kingdom. >> >>" . "\n" ;
+$pgv_lang["census_text"] .= "Des demandes de la publication commerciale de ces derniers ou d'autres images de recensement apparaissant sur ce site Web, devraient être dirigées vers: ";
+$pgv_lang["census_text"] .= "Image Library, The National Archives, Kew, Surrey, TW9 4DU, United Kingdom. \"" . "\n" ;
 
 $pgv_lang["lb_edit_details"] = "Editer détails";
 $pgv_lang["lb_view_details"] = "Afficher détails";
-$pgv_lang["lb_edit_media"] = "Editer les détails de cet article de médias ";
-$pgv_lang["lb_delete_media"] = "Enlever cet article de médias - enleve seulement le lien sur cet individu - ne supprime pas le fichier ou d'autres liens ";
-$pgv_lang["lb_view_media"] = "Afficher les détails de cet article de médias. \nPlus d'autres Options de médias. ";
+$pgv_lang["lb_edit_media"] = "Editer les détails de cet objet média ";
+$pgv_lang["lb_delete_media"] = "Enlever cet objet média - enlève seulement le lien à cet individu - ne supprime pas le fichier ou d'autres liens ";
+$pgv_lang["lb_view_media"] = "Afficher les détails de cet objet média, \naussi d'autres options média. ";
 $pgv_lang["lb_add_media"] = "Ajouter un nouvel objet Multimédia";
-$pgv_lang["lb_add_media_full"] = "Ajouter de nouveaux Multimédia s'opposent à cet individu ";
-$pgv_lang["lb_link_media"] = "Relier � un objet Multimédia existant";
-$pgv_lang["lb_link_media_full"] = "Relier cet individu à un objet existant de Multimédia ";
+$pgv_lang["lb_add_media_full"] = "Ajouter de nouveaux objets Multimédia à cet individu ";
+$pgv_lang["lb_link_media"] = "Relier un objet Multimédia existant";
+$pgv_lang["lb_link_media_full"] = "Relier cet individu à un objet Multimédia existant";
 
 $pgv_lang["lb_slide_show"] = "Projection de diapositives";
-$pgv_lang["turn_edit_ON"] = "Tourner éditent le mode DESSUS";
-$pgv_lang["turn_edit_OFF"] = "Tourner éditent le mode AU LOIN";
+$pgv_lang["turn_edit_ON"] = "Activer le mode «edit»";
+$pgv_lang["turn_edit_OFF"] = "Désactiver le mode «edit»";
 
-$pgv_lang["lb_source_avail"] = "L'information de source disponible - Cliquer ici";
+$pgv_lang["lb_source_avail"] = "D'information de source disponible - Cliquez ici";
 
-$pgv_lang["lb_private"] = "L'image<br>lié<br>à un<br>individu<br>privé";
-$pgv_lang["lb_view_source_tip"] = "Afficher Source : ";
-$pgv_lang["lb_view_details_tip"] = "Afficher détails de médias : ";
+$pgv_lang["lb_private"] = "L'image est liée à<br />un individu privé";
+$pgv_lang["lb_view_source_tip"] = "Afficher source: ";
+$pgv_lang["lb_view_details_tip"] = "Afficher détails de média: ";
 
 ?>

@@ -25,8 +25,6 @@
  */
 require_once('includes/treenav_class.php');
 require_once('themes/navigator/thememenu.php');
-include_once('js/prototype.js.htm');
-include_once('js/scriptaculous.js.htm');
 
 global $ALLOW_CHANGE_GEDCOM;
 
@@ -35,22 +33,14 @@ $menubar = new NavMenuBar();
 
 ?>
 <script type="text/javascript" src="themes/navigator/navigator.js"></script>
-<div id="navbar" style="display:none; width: 98%; height: 165px; border-top: solid grey 1px; border-right: solid grey 1px;">
+<div id="navbar" style="display: none; width: 98%; height: 200px; border-top: solid grey 1px; border-right: solid grey 1px;">
 <table border="0" cellspacing="0" width="100%">
 <tr>
 	<td width="20%" valign="top">
-	<div id="navlinks" style="overflow: auto; height: 150px; min-width: 150px;">
+	<div id="navlinks" style="overflow: auto; height: 190px; min-width: 150px;">
 		<ul id="navlist" class="navlist">
-		<li class="menuitem" style="font-weight: bold;">
-			<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["large"];?>" class="icon" alt="<?php print $pgv_lang["trees"];?>" title="<?php print $pgv_lang["trees"];?>" />
-			<a href="#" onclick="highlightMenu(document.getElementById('navlist'), this); loadNav1('treelinks'); return false;"><?php print $pgv_lang["trees"];?></a></li>
-		<?php $menubar->navPrintMenu(1); ?>
-		<?php $menubar->navPrintMenu(2); ?>
-		<li class="menuitem">
-			<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["large"];?>" class="icon" alt="<?php print $pgv_lang["surnames"];?>" title="<?php print $pgv_lang["surnames"];?>" />
-			<a href="#" onclick="highlightMenu(document.getElementById('navlist'), this); loadNav1('themes/navigator/thememenu.php?navAjax=1&surnameContent=1'); return false;"><?php print $pgv_lang["surnames"];?></a></li>
 		<?php
-			for($i=3; $i<18; $i++) {
+			for($i=0; $i<18; $i++) {
 				$menubar->navPrintMenu($i);
 			}
 		?>
@@ -58,7 +48,7 @@ $menubar = new NavMenuBar();
 	</div>
 	</td>
 	<td id="midcell" width="25%" valign="top" style="border-left: solid grey 1px;">
-	<div id="midcontent" style="overflow: auto; height: 150px; min-width: 200px;">
+	<div id="midcontent" style="overflow: auto; height: 190px; min-width: 200px;">
 	<ul id="navlist2" class="navlist">
 	<?php if ($ALLOW_CHANGE_GEDCOM) { 
 		foreach($GEDCOMS as $gedc=>$gedarray) {
@@ -74,11 +64,11 @@ $menubar = new NavMenuBar();
 	</div>
 	</td>
 	<td id="midcell2" valign="top" style="border-left: solid grey 1px;">
-		<div id="midcontent2" style="overflow: auto; height: 150px; width: 0px">
+		<div id="midcontent2" style="overflow: auto; height: 190px; width: 0px">
 		</div>
 	</td>
 	<td id="navcontent" valign="top" width="65%" style="border-left: solid grey 1px;">
-	<?php $nav->drawViewport('tlnav', "", "150px", -2); ?>
+	<?php $nav->drawViewport('tlnav', "", "190px"); ?>
 	</td>
 </tr>
 </table>

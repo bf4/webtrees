@@ -222,19 +222,19 @@ class TreeNav {
 		<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $person->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM); ?>');" /> 
 		</span><br />
 		<div class="details1 indent">
-			<b><?php print get_first_letter($factarray['BIRT']);?>:</b> <?php print get_changed_date($person->getBirthDate()); ?>
+			<b><?php print get_first_letter($factarray['BIRT']);?>:</b> <?php if (!is_null($person->getBirthDate())) print $person->getBirthDate()->Display(); ?>
 			<?php $place = $person->getBirthPlace();  if (!empty($place)) print PrintReady($place); ?>
 			<br />
 			<b><?php print get_first_letter($factarray['MARR']);?>:</b>
 			<?php if (!empty($family)) {
-				print get_changed_date($family->getMarriageDate())." "; 
+				if (!is_null($family->getMarriageDate())) print $family->getMarriageDate()->Display()." "; 
 				$place=''; 
 				$place = $family->getMarriagePlace();  
 				if (!empty($place)) print PrintReady($place); ?>
 				<a href="family.php?famid=<?php print $family->getXref(); ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"><img id="d_<?php print $family->getXref(); ?>" alt="<?php print $family->getXref(); ?>" class="draggable" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['family']['button']; ?>" border="0" /></a>
 			<?php } ?>
 			<br />
-			<b><?php print get_first_letter($factarray['DEAT']);?>:</b> <?php print get_changed_date($person->getDeathDate(false)); ?>
+			<b><?php print get_first_letter($factarray['DEAT']);?>:</b> <?php if (!is_null($person->getDeathDate(false))) print $person->getDeathDate(false)->Display(); ?>
 			<?php $place = $person->getDeathPlace();  if (!empty($place)) print PrintReady($place); ?>
 		</div>
 		<br />
@@ -250,10 +250,10 @@ class TreeNav {
 			<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $spouse->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM); ?>');" />
 			<br />
 			<div class="details1 indent">
-			<b><?php print get_first_letter($factarray['BIRT']);?>:</b> <?php print get_changed_date($spouse->getBirthDate()); ?>
+			<b><?php print get_first_letter($factarray['BIRT']);?>:</b> <?php if (!is_null($spouse->getBirthDate())) print $spouse->getBirthDate()->Display(); ?>
 			<?php $place = $spouse->getBirthPlace();  if (!empty($place)) print PrintReady($place); ?>
 			<br />
-			<b><?php print get_first_letter($factarray['DEAT']);?>:</b> <?php print get_changed_date($spouse->getDeathDate(false)); ?>
+			<b><?php print get_first_letter($factarray['DEAT']);?>:</b> <?php if (!is_null($spouse->getDeathDate(false))) print $spouse->getDeathDate(false)->Display(); ?>
 			<?php $place = $spouse->getDeathPlace();  if (!empty($place)) print PrintReady($place); ?>
 			</div>
 			<?php 
@@ -330,7 +330,7 @@ class TreeNav {
 						$hasChildren = false;
 						if (!empty($family) && $family->getNumberOfChildren()>0) $hasChildren = true;  
 					?>
-					<td id="ch_<?php print $person->getXref();?>" align="right" <?php if ($gen==0 && $hasChildren) print 'id="cload" name="cload" onclick="'.$this->name.'.loadChildren(this, \''.$person->getXref().'\');"'; ?>>
+					<td id="ch_<?php print $person->getXref();?>" align="right" <?php if ($gen==0 && $hasChildren) print 'id="'.$this->name.'_cload" name="'.$this->name.'_cload" onclick="'.$this->name.'.loadChildren(this, \''.$person->getXref().'\');"'; ?>>
 						<?php
 							$this->drawChildren($family, $gen);
 						?>
@@ -366,13 +366,13 @@ class TreeNav {
 							<tbody>
 								<tr>
 									<?php /* there is a IE JavaScript bug where the "id" has to be the same as the "name" in order to use the document.getElementsByName() function */ ?>
-									<td <?php if ($gen==0 && !empty($father)) print 'id="pload" name="pload" onclick="'.$this->name.'.loadParent(this, \''.$person->getXref().'\', \'f\');"'; ?>>
+									<td <?php if ($gen==0 && !empty($father)) print 'id="'.$this->name.'_pload" name="'.$this->name.'_pload" onclick="'.$this->name.'.loadParent(this, \''.$person->getXref().'\', \'f\');"'; ?>>
 										<?php if (!empty($father)) $this->drawPerson($father, $gen-1, 1, $cfamily); else print "<br />\n";?>
 									</td>
 								</tr>
 								<tr>
 								<?php /* print the mother */ ?>
-									<td <?php if ($gen==0 && !empty($mother)) print 'id="pload" name="pload" onclick="'.$this->name.'.loadParent(this, \''.$person->getXref().'\', \'m\');"'; ?>>
+									<td <?php if ($gen==0 && !empty($mother)) print 'id="'.$this->name.'_pload" name="'.$this->name.'_pload" onclick="'.$this->name.'.loadParent(this, \''.$person->getXref().'\', \'m\');"'; ?>>
 										<?php if (!empty($mother)) $this->drawPerson($mother, $gen-1, 1, $mcfamily); else print"<br />\n";?>
 									</td>
 								</tr>

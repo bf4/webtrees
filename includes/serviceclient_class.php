@@ -785,7 +785,7 @@ if ($this->DEBUG) print "In CompairForUpdateFamily()<br />";
 	function mergeGedcomRecord($xref, $localrec, $isStub=false, $firstLink=false) {
 		global $FILE, $GEDCOM, $indilist, $famlist, $sourcelist, $otherlist;
 		global $TBLPREFIX, $GEDCOMS, $pgv_changes;
-if ($this->DEBUG) print "In mergeGedcomRecord($xref)<br />";
+if ($this->DEBUG) { print "In mergeGedcomRecord($xref)<br />";}
 		$FILE = $GEDCOM;
 		if (!$isStub) {
 			$gedrec = find_gedcom_record($this->xref.":".$xref);
@@ -977,11 +977,18 @@ if ($this->DEBUG) print __LINE__."adding record to the database ".$localrec;
 		if (empty($gedrec)) $gedrec = find_updated_record($id);
 		if (!empty($gedrec)) {
 			$url = get_gedcom_value("URL",1,$gedrec);
+			//get the type of url
+			$cType = get_gedcom_value("URL:TYPE",1, $gedrec);
 			$gedfile = get_gedcom_value("_DBID", 1, $gedrec);
 			if (empty($url) && empty($gedfile))
 				return null;
 			if (!empty($url) && (strtolower($url)!=strtolower($SERVER_URL))) {
-				$server = new ServiceClient($gedrec);
+				//if familysearch type
+				if(!empty($cType)) {
+					require_once("includes/familySearchWrapper.php");
+					$server = new familyWrapper($gedrec);
+				}
+				else $server = new ServiceClient($gedrec);//else create a Serviceclient class
 			}
 			else {
 				include_once('includes/localclient_class.php');

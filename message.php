@@ -132,7 +132,9 @@ if (($action=="send")&&(isset($_SESSION["good_to_send"]))&&($_SESSION["good_to_s
 			if (addMessage($message)){
 				$touser = getUser($to);
 				if ($touser) {
-					print str_replace("#TO_USER#", "<b>".$touser["firstname"]." ".$touser["lastname"]."</b>", $pgv_lang["message_sent"]);
+					if ($NAME_REVERSE) $touserName = $touser["lastname"]." ".$touser["firstname"];
+					else $touserName = $touser["firstname"]." ".$touser["lastname"];
+					print str_replace("#TO_USER#", "<b>".$touserName."</b>", $pgv_lang["message_sent"]);
 					print "<br />";
 				}
 				else AddToLog('Invalid TO user.'.$to.' Possible spam attack.');
@@ -184,7 +186,9 @@ if ($action=="compose") {
 	$touser = getUser($to);
 	$lang_temp = "lang_name_".$touser["language"];
 	if ($touser) {
-		print "<tr><td></td><td>".str_replace("#TO_USER#", "<b>".$touser["firstname"]." ".$touser["lastname"]."</b>", $pgv_lang["sending_to"])."<br />";
+		if ($NAME_REVERSE) $touserName = $touser["lastname"]." ".$touser["firstname"];
+		else $touserName = $touser["firstname"]." ".$touser["lastname"];
+		print "<tr><td></td><td>".str_replace("#TO_USER#", "<b>".$touserName."</b>", $pgv_lang["sending_to"])."<br />";
 		print str_replace("#USERLANG#", "<b>".$pgv_lang[$lang_temp]."</b>", $pgv_lang["preferred_lang"])."</td></tr>\n";
 	}
 

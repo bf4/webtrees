@@ -1,3 +1,6 @@
+
+var loadingMessage = "<p style=\"margin: 20px 20px 20px 20px\"><img src=\"images/loading.gif\" alt=\"\" title=\"\" /></p>";
+
 function tempNavObj(target, oXmlHttp, callback) {
 	this.processFunc = function()
 	{
@@ -202,6 +205,10 @@ function NavTree(outerId, innerId, name) {
 		this.reInit();
 		this.sizeLines();
 		Behaviour.apply();
+		//-- load up any other people to fill in the page
+		this.loadChildren(this.innerPort);
+ 		this.loadParents(this.innerPort);
+ 		
 		x = this.rootTable.offsetWidth/2;
 		y = this.rootTable.offsetHeight/2;
 		cx = this.outerPort.offsetWidth/2;
@@ -261,6 +268,51 @@ function NavTree(outerId, innerId, name) {
 				imgs[j].style.height = (10+this.zoom)+'px';
 			}
 		}
+	}
+	
+	/**
+	 * Check if any of the parent boxes need to be loaded
+	 */
+	this.loadParents = function(elNode) {
+		if (elNode.offsetLeft + this.rootTable.offsetWidth < this.outerPort.offsetWidth+40) {
+	  	var chil = document.getElementsByName(this.name+'_pload');
+	  	if (chil.length>0) {
+		  	for(i=0; i<chil.length; i++) {
+		  		if (chil[i] && chil[i].onclick) {
+		  			cell = chil[i];
+		  			y = findPosY(cell);
+		  			if (y < this.outerPort.offsetHeight + this.outerPort.offsetTop) {
+		  				if (cell.onclick) {
+		  					cell.onclick();
+		  				}
+		  			}
+		  		}
+		  	}
+	  	}
+	  }
+	}
+	
+	/**
+	 * Check if any of the children boxes need to be loaded
+	 */
+	this.loadChildren = function(elNode) {
+		if (elNode.offsetLeft > -40) {
+		  	children = document.getElementsByName(this.name+'_cload');
+		  	if (children.length>0) {
+			  	for(i=0; i<children.length; i++) {
+			  		if (children[i] && children[i].onclick) {
+			  			cell = children[i];
+			  			x = findPosX(cell);
+			  			y = findPosY(cell);
+			  			if (x > -10 && y < this.outerPort.offsetHeight + this.outerPort.offsetTop) {
+			  				if (cell.onclick) {
+			  					cell.onclick();
+			  				}
+			  			}
+			  		}
+			  	}
+		  	}
+		 }
 	}
 }
   
@@ -404,41 +456,10 @@ function dragGo(event) {
     event.preventDefault();
   
   //-- load children by ajax  
-  if (dragObj.elNode.offsetLeft > 0) {
-  	children = document.getElementsByName('cload');
-  	if (children.length>0) {
-	  	for(i=0; i<children.length; i++) {
-	  		if (children[i] && children[i].onclick) {
-	  			cell = children[i];
-	  			x = findPosX(cell);
-	  			y = findPosY(cell);
-	  			if (x > -10 && y < dragObj.nav.outerPort.offsetHeight+dragObj.nav.outerPort.offsetTop) {
-	  				if (cell.onclick) {
-	  					cell.onclick();
-	  				}
-	  			}
-	  		}
-	  	}
-  	}
-  }
+  dragObj.nav.loadChildren(dragObj.elNode);
   
   //-- load parents by ajax
-  if (dragObj.elNode.offsetLeft+dragObj.nav.rootTable.offsetWidth < dragObj.nav.outerPort.offsetWidth) {
-  	var chil = document.getElementsByName('pload');
-  	if (chil.length>0) {
-	  	for(i=0; i<chil.length; i++) {
-	  		if (chil[i] && chil[i].onclick) {
-	  			cell = chil[i];
-	  			y = findPosY(cell);
-	  			if (y < dragObj.nav.outerPort.offsetHeight+dragObj.nav.outerPort.offsetTop) {
-	  				if (cell.onclick) {
-	  					cell.onclick();
-	  				}
-	  			}
-	  		}
-	  	}
-  	}
-  }
+  dragObj.nav.loadParents(dragObj.elNode);
 }
 
 // Stop dragging the chart

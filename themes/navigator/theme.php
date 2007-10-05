@@ -59,6 +59,7 @@ $PGV_IMAGES["source"]["large"] = "source.gif";
 $PGV_IMAGES["menu_gallery"]["large"] = "menu_gallery.gif";
 $PGV_IMAGES["menu_punbb"]["large"] = "menu_punbb.gif";
 $PGV_IMAGES["menu_research"]["large"] = "menu_research.gif";
+$PGV_IMAGES["home"]["large"]	= "../themes/navigator/images/home.gif";
 
 //- PGV small icons
 $PGV_IMAGES["admin"]["small"] = "small/admin.gif";

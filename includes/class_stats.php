@@ -1091,49 +1091,47 @@ class stats
 // Contact                                                                   //
 ///////////////////////////////////////////////////////////////////////////////
 
-	function contactWebmaster()
-	{
-		global $pgv_lang;
-		if($GLOBALS['SUPPORT_METHOD'] == 'none'){return '';}
-		$user = getUser($GLOBALS['WEBMASTER_EMAIL']);
-		if(($user) && ($GLOBALS['SUPPORT_METHOD'] != 'mailto'))
-		{
-			$contact = "<a href=\"javascript:;\" accesskey=\"{$pgv_lang['accesskey_contact']}\" onclick=\"message('{$GLOBALS['WEBMASTER_EMAIL']}', '{$GLOBALS['SUPPORT_METHOD']}'); return false;\">{$user['firstname']} {$user['lastname']}</a>";
-		}
-		else
-		{
+	function contactWebmaster() {
+		global $pgv_lang, $NAME_REVERSE;
+		global $SUPPORT_METHOD, $WEBMASTER_EMAIL;
+
+		if($SUPPORT_METHOD == 'none') return '';
+		$user = getUser($WEBMASTER_EMAIL);
+		if(($user) && ($SUPPORT_METHOD != 'mailto')) {
+			if ($NAME_REVERSE) $userName = $user['lastname']. ' ' .$user['firstname'];
+			else $userName = $user['firstname']. ' ' .$user['lastname'];
+			$contact = "<a href=\"javascript:;\" accesskey=\"{$pgv_lang['accesskey_contact']}\" onclick=\"message('{$WEBMASTER_EMAIL}', '{$SUPPORT_METHOD}'); return false;\">{$userName}</a>";
+		} else {
 			$contact = '<a href="mailto:';
-			if($user)
-			{
-				$contact .= "{$user['email']}\" accesskey=\"{$pgv_lang['accesskey_contact']}\">{$user['firstname']} {$user['lastname']}</a>";
-			}
-			else
-			{
-				$contact .= "{$GLOBALS['WEBMASTER_EMAIL']}\">{$GLOBALS['WEBMASTER_EMAIL']}</a>";
+			if($user) {
+				if ($NAME_REVERSE) $userName = $user['lastname']. ' ' .$user['firstname'];
+				else $userName = $user['firstname']. ' ' .$user['lastname'];
+				$contact .= "{$user['email']}\" accesskey=\"{$pgv_lang['accesskey_contact']}\">{$userName}</a>";
+			} else {
+				$contact .= "{$WEBMASTER_EMAIL}\">{$WEBMASTER_EMAIL}</a>";
 			}
 		}
 		return $contact;
 	}
 
-	function contactGedcom()
-	{
-		global $pgv_lang;
-		if($GLOBALS['CONTACT_METHOD'] == 'none'){return '';}
-		$user = getUser($GLOBALS['CONTACT_EMAIL']);
-		if(($user) && ($GLOBALS['CONTACT_METHOD'] != 'mailto'))
-		{
-			$contact = "<a href=\"javascript:;\" accesskey=\"{$pgv_lang['accesskey_contact']}\" onclick=\"message('{$GLOBALS['CONTACT_EMAIL']}', '{$GLOBALS['SUPPORT_METHOD']}'); return false;\">{$user['firstname']} {$user['lastname']}</a>";
-		}
-		else
-		{
+	function contactGedcom() {
+		global $pgv_lang, $NAME_REVERSE;
+		global $CONTACT_METHOD, $CONTACT_EMAIL;
+
+		if($CONTACT_METHOD == 'none') return ''; 
+		$user = getUser($CONTACT_EMAIL);
+		if(($user) && ($CONTACT_METHOD != 'mailto')) {
+			if ($NAME_REVERSE) $userName = $user['lastname']. ' ' .$user['firstname'];
+			else $userName = $user['firstname']. ' ' .$user['lastname'];
+			$contact = "<a href=\"javascript:;\" accesskey=\"{$pgv_lang['accesskey_contact']}\" onclick=\"message('{$CONTACT_EMAIL}', '{$SUPPORT_METHOD}'); return false;\">{$userName}</a>";
+		} else {
 			$contact = '<a href="mailto:';
-			if($user)
-			{
-				$contact .= "{$user['email']}\" accesskey=\"{$pgv_lang['accesskey_contact']}\">{$user['firstname']} {$user['lastname']}</a>";
-			}
-			else
-			{
-				$contact .= "{$GLOBALS['CONTACT_EMAIL']}\">{$GLOBALS['CONTACT_EMAIL']}</a>";
+			if($user) {
+				if ($NAME_REVERSE) $userName = $user['lastname']. ' ' .$user['firstname'];
+				else $userName = $user['firstname']. ' ' .$user['lastname'];
+				$contact .= "{$user['email']}\" accesskey=\"{$pgv_lang['accesskey_contact']}\">{$userName}</a>";
+			} else {
+				$contact .= "{$CONTACT_EMAIL}\">{$CONTACT_EMAIL}</a>";
 			}
 		}
 		return $contact;

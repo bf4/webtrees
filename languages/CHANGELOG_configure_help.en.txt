@@ -44,6 +44,19 @@ VERSION 4.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["theme_options"]         				08 Aug 2007				A   Used for editconfig_gedcom.php
++$pgv_lang["lang_conf"]         					08 Aug 2007				A   Used for editconfig_gedcom.php
++$pgv_lang["calendar_conf"]         				08 Aug 2007				A   Used for editconfig_gedcom.php
++$pgv_lang["name_conf"]         					08 Aug 2007				A   Used for editconfig_gedcom.php
++$pgv_lang["surname_conf"]         					08 Aug 2007				A   Used for editconfig_gedcom.php
++$pgv_lang["visibility_conf"]         				08 Aug 2007				A   Used for editconfig_gedcom.php
++$pgv_lang["lists_conf"]         					08 Aug 2007				A   Used for editconfig_gedcom.php
++$pgv_lang["charts_conf"]         					08 Aug 2007				A   Used for editconfig_gedcom.php
++$pgv_lang["help_conf"]          					08 Aug 2007				A   Used for editconfig_gedcom.php
++$pgv_lang["facts_conf"]         					08 Aug 2007				A   Used for editconfig_gedcom.php
++$pgv_lang["ged_filter_reset"]						06 Aug 2007				A   Used for editconfig_gedcom_help.php
++$pgv_lang["ged_filter_description"]				06 Aug 2007				A   Used for editconfig_gedcom_help.php
++$pgv_lang["ged_filter_results"]					06 Aug 2007				A   Used for editconfig_gedcom_help.php
 
 
 VERSION 4.1.2

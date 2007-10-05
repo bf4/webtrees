@@ -1,4 +1,29 @@
 <?php
+/**
+ * Top menu for Navigator theme, overrides the menubar class to provide
+ * enhanced functionality
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2007 John Finlay and Others
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * @package PhpGedView
+ * @subpackage Themes
+ * @version $Id$
+ */
 if (!empty($_REQUEST['navAjax'])) {
 	chdir("../../");
 	require_once("config.php");
@@ -11,8 +36,18 @@ $pgv_lang["surnames"] = "Surnames";
 
 // -- overide default menu bar
 class NavMenuBar extends MenuBar {
-	var $defaultMenus = array("getHomeMenu","getGedcomMenu","getMygedviewMenu","getAdminMenu","getChartsMenu","getListsMenu",
+	var $defaultMenus = array("getHomeMenu","getTreeMenu","getGedcomMenu","getMygedviewMenu","getAdminMenu","getSurnameMenu","getChartsMenu","getListsMenu",
 	"getCalendarMenu", "getReportsMenu", "getClippingsMenu", "getSearchMenu", "getHelpMenu");
+	var $visitorDefaultMenus = array("getHomeMenu","getGedcomMenu","getSurnameMenu","getSearchMenu","getListsMenu",
+	"getClippingsMenu",  "getHelpMenu");
+	var $loggedIn = false;
+	
+	function NavMenuBar() {
+		//parent::MenuBar();
+		$username = getUserName();
+		if (empty($username)) $this->defaultMenus = $this->visitorDefaultMenus;
+		else $this->loggedIn = true;
+	}
 	
 	function handleAjax() {
 		//-- handle AJAX requests
@@ -94,7 +129,7 @@ class NavMenuBar extends MenuBar {
 			
 		}
 		uasort($surnames, "itemsort");
-		print "<ul id=\"surnameList\" class=\"navlist\">";
+		print "<ul id=\"surnames\" class=\"navlist\">";
 		foreach($surnames as $surname=>$scount) {
 			print "<li><a href=\"#\" onclick=\"loadSurnamePeople('".htmlentities($surname)."'); return false;\">".PrintReady(check_NN($scount["name"]))." [".$scount["count"]."]</a>";
 			//print "<div id=\"".htmlentities($surname)."\" style=\"display: none;\"></div>";
@@ -109,7 +144,7 @@ class NavMenuBar extends MenuBar {
 		global $pgv_lang;
 		$indialpha = get_indi_alpha();
 		foreach($indialpha as $l=>$letter) {
-			if ($letter!="@") print '<a href="#" style="font-size: 10px;" onclick="loadSurnames(\'themes/navigator/thememenu.php?navAjax=1&loadSurnames='.$letter.'\'); return false;">'.$letter."</a> ";
+			if ($letter!="@") print '<a href="#" style="font-size: 10px;" onclick="loadSurnames(\''.$letter.'\'); return false;">'.$letter."</a> ";
 		}
 		print '<a href="#" style="font-size: 10px;" onclick="loadSurnamePeople(\'@N.N.\'); return false;">';
 		print "(".$pgv_lang["unknown"].") ";
@@ -121,13 +156,38 @@ class NavMenuBar extends MenuBar {
 			<input type="button" onclick="" value="<?php print $pgv_lang["search"];?>" />
 		</form>
 		<div id="surnameList" style="font-size: 10px;">
+		<?php if (!empty($_REQUEST['loadSurnames'])) {
+			$this->loadSurnames($_REQUEST['loadSurnames']); 
+		}
+		?>
 		</div>
 		<?php
 	}
 	
+	function getSurnameMenu() {
+		global $PGV_IMAGE_DIR,$PGV_IMAGES,$pgv_lang;
+		$content = '<li class="menuitem">
+			<img src="'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["indis"]["large"].'" class="icon" alt="'.$pgv_lang["surnames"].'" title="'.$pgv_lang["surnames"].'" />
+			<a href="#" onclick="highlightMenu(document.getElementById(\'navlist\'), this); loadNav1(\'themes/navigator/thememenu.php?navAjax=1&surnameContent=1\'); return false;">'.$pgv_lang["surnames"].'</a></li>';
+		return $content;
+	}
+	
+	function getTreeMenu() {
+		global $PGV_IMAGE_DIR,$PGV_IMAGES,$pgv_lang;
+		$username = getUserName();
+		$content = '';
+		if (!empty($username)) {
+			$content = '<li class="menuitem" style="font-weight: bold;">
+			<img src="'.$PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["large"].'" class="icon" alt="'.$pgv_lang["trees"].'" title="'.$pgv_lang["trees"].'" />
+			<a href="#" onclick="highlightMenu(document.getElementById(\'navlist\'), this); loadNav1(\'treelinks\'); return false;">'.$pgv_lang["trees"].'</a></li>';
+		}
+		return $content;
+	}
+	
 	function navPrintMenu($mi) {
 		$menu = $this->getMenu($mi);
-		$this->navPrintMenuItem($menu, $mi);
+		if (is_object($menu)) $this->navPrintMenuItem($menu, $mi);
+		else print $menu;
 	}
 	
 	function navPrintMenuItem(&$menu, $mi, $level=1, $submi=0) {
@@ -298,6 +358,19 @@ class NavMenuBar extends MenuBar {
                     <input type="submit" name="search" value="'.$pgv_lang['search'].'" />
                   </form>';
 		$menu->addSubmenu($submenu);
+		return $menu;
+	}
+	
+	/**
+	 * get the clipping menu
+	 * @return Menu 	the menu item
+	 */
+	function &getClippingsMenu() {
+		$menu = null;
+		$username = getUserName();
+		if (!empty($username)) {
+			$menu = parent::getClippingsMenu();
+		}
 		return $menu;
 	}
 }

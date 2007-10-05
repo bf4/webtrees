@@ -192,24 +192,15 @@ if (!empty($newrepo)) {
 }
 print "\n<table class=\"facts_table\">";
 foreach($repofacts as $indexval => $fact) {
-	$factrec = $fact[0];
-	$linenum = $fact[1];
-//	$ft = preg_match("/1\s(_?\w+)\s(.*)/", $factrec, $match);
-	$ft = preg_match("/1\s(\w+)\s(.*)/", $factrec, $match);
-	if ($ft>0) $fact = $match[1];
-	else $fact="";
-	$fact = trim($fact);
 	if (!empty($fact)) {
-		if (showFact($fact, $rid)) {
-			if ($fact=="OBJE") {
+		if ($fact->getTag()=="OBJE") {
 				print_main_media($rid);
 			}
-			else if ($fact=="NOTE") {
-				print_main_notes($factrec, 1, $rid, $linenum);
+		else if ($fact->getTag()=="NOTE") {
+			print_main_notes($fact->getGedcomRecord(), 1, $rid, $fact->getLineNumber());
 			}
 			else {
-				print_fact($factrec, $rid, $linenum);
-			}
+			print_fact($fact);
 		}
 	}
 }

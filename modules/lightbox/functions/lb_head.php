@@ -28,20 +28,21 @@
  */
 ?>
 <?php
+global $lang_short_cut, $LANGUAGE;
+
 loadLangFile("lb_lang");
+
+// The following is temporary, until the handling of the Lightbox Help system
+// is adjusted to match the usual PhpGedView practice
+$lbHelpFile = "modules/lightbox/languages/help.".$lang_short_cut[$LANGUAGE].".php";
+if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help.en.php";
+
 ?>
 
 <script language="Javascript">
 <!--
    function album_help(OPTS) {
-   var win01 = window.open(
-   <?php if ($pgv_language[$LANGUAGE] == "languages/lang.fr.php") { ?>
-   "modules/lightbox/languages/help_fr.php?"+OPTS, "win01", "resizable=1, scrollbars=1, HEIGHT=780, WIDTH=500 ");
-   <?php }else if ($pgv_language[$LANGUAGE] == "languages/lang.he.php") { ?>
-   "modules/lightbox/languages/help_he.php?"+OPTS, "win01", "resizable=1, scrollbars=1, HEIGHT=780, WIDTH=500 ");   
-   <?php }else{ ?>
-   "modules/lightbox/languages/help_en.php?"+OPTS, "win01", "resizable=1, scrollbars=1, HEIGHT=780, WIDTH=500 ");
-   <?php } ?>
+   var win01 = window.open("<?php print $lbHelpFile;?>?"+OPTS, "win01", "resizable=1, scrollbars=1, HEIGHT=780, WIDTH=500 ");
    win01.focus()
    }
 
@@ -63,72 +64,62 @@ loadLangFile("lb_lang");
 //loadLangFile("lb_lang");
 
 	//Lightbox-Album header Links
-		print "<br>";
-		print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-		print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-		print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-			
-		//Help page
-		if ($pgv_language[$LANGUAGE] == "languages/lang.fr.php") { 
-			$help = "modules/lightbox/languages/help_fr.php";
-		}else if ($pgv_language[$LANGUAGE] == "languages/lang.he.php"){ 
-			$help = "modules/lightbox/languages/help_he.php";
-		}else{ 
-			$help = "modules/lightbox/languages/help_en.php";
-		} 		
-        print "&nbsp;&nbsp;&nbsp;" ;
-		print "<a href=\"" . $help . "\" rel='clearbox(500,760,click)' title=\"" . $pgv_lang["page_help"] . "\" > ";
-        print "<img src=\"".$PGV_IMAGE_DIR."/small/help.gif\" class=\"icon\" title=\"" . $pgv_lang["page_help"] . "\" />" ;
-        print $pgv_lang["page_help"];
-        print "</a>" ;
+		//print "<br>";
+		print "<table border=0 width=\"66%\"><tr>";
+
 /*		
 		//Slide Show
 		if ($mediacnt!=0) {
-			print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
+			print "<td class=\"width20 center wrap\" valign=\"top\">";
 			print "<a href=\"modules/lightbox/images/slideshow.jpg\" rel=\"clearbox[general,6,start]\" title=\"" . $pgv_lang["lb_slide_show"] . "\">"; 
-			print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\"  title=\"" . $pgv_lang["lb_slide_show"] . "\" />" ;
-			print " " . $pgv_lang["lb_slide_show"]; 
-			print '</a>'; 
-		}else{
+			print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\"  title=\"" . $pgv_lang["lb_slide_show"] . "\" /><br />" ;
+			print $pgv_lang["lb_slide_show"]; 
+			print '</a>';
+			print "</td>"; 
+            print "<td width=\"5%\">&nbsp;</td>";
 		}		
 */		
 		//Add a new multimedia object
         if ( userCanEdit(getUserName()) ) {
-            print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
+			print "<td class=\"width20 center wrap\" valign=\"top\">";
             print "<a href=\"javascript: album_add()\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" > ";
-            print "<img src=\"modules/lightbox/images/image_add.gif\" class=\"icon\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" />" ;
-            print " " . $pgv_lang["add_obje"] ;
-            print " </a> ";
-        }else{
+            print "<img src=\"modules/lightbox/images/image_add.gif\" class=\"icon\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" /><br />" ;
+            print $pgv_lang["lb_add_media_full"] ;
+            print "</a>";
+            print "</td>";
+            print "<td width=\"5%\">&nbsp;</td>";
         }
 		
 		//Link to an existing item
         if ( userCanEdit(getUserName()) ) {
-            print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
+			print "<td class=\"width20 center wrap\" valign=\"top\">";
             print "<a href=\"javascript: album_link()\" title=\"" . $pgv_lang["lb_link_media_full"] . "\" > ";
-            print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\" " . $pgv_lang["lb_link_media_full"] . "\" />" ;
-            print " " . $pgv_lang["link_to_existing_media"] ;
-            print " </a> ";
-        }else{
+            print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\" " . $pgv_lang["lb_link_media_full"] . "\" /><br />" ;
+            print $pgv_lang["lb_link_media_full"] ;
+            print "</a>";
+            print "</td>";
+            print "<td width=\"5%\">&nbsp;</td>";
         }
 
 		//Turn Edit Mode On or Off
-		if (!isset($edit)) { $edit=1; }
-		else{ $edit==$edit;	}
-        if ( userCanEdit(getUserName()) && $edit==1 && $mediacnt!=0) {
-            print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
-            print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&edit=0 title=\"" . $pgv_lang["turn_edit_OFF"] . "\">";
-            print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\" " . $pgv_lang["turn_edit_OFF"] . "\" />" ;
-            print " " . $pgv_lang["turn_edit_OFF"] ;
-            print " </a> ";
-        }elseif ( userCanEdit(getUserName()) && $edit==0 && $mediacnt!=0) {
-            print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
-            print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&edit=1 title=\"" . $pgv_lang["turn_edit_ON"] . "\">";
-            print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\" " . $pgv_lang["turn_edit_ON"] . "\" />" ;
-            print " " . $pgv_lang["turn_edit_ON"] ;
-            print " </a> ";		
-        }else{
+		if (!isset($edit)) $edit=1;
+		if ($edit==1) {
+			$lbEditMsg = $pgv_lang["turn_edit_OFF"];
+			$lbEditMode = 0;
+		} else {
+			$lbEditMsg = $pgv_lang["turn_edit_ON"];
+			$lbEditMode = 1;
 		}
+        if ( userCanEdit(getUserName()) && $mediacnt!=0) {
+			print "<td class=\"width20 center wrap\" valign=\"top\">";
+            print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&edit={$lbEditMode} title=\"{$lbEditMsg}\">";
+            print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$lbEditMsg}\" /><br />" ;
+            print $lbEditMsg;
+            print "</a>";
+            print "</td>";
+            print "<td width=\"5%\">&nbsp;</td>";
+		}
+		print "</tr></table>";
 		
 		
 ?>

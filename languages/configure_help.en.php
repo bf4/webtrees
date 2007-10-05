@@ -148,6 +148,16 @@ $pgv_lang["displ_hide_conf"]	= "Hide and Show";
 $pgv_lang["editopt_conf"]		= "Edit Options";
 $pgv_lang["useropt_conf"]		= "User Options";
 $pgv_lang["contact_conf"]		= "Contact Information";
+$pgv_lang["theme_options"]      = "Theme Options";
+$pgv_lang["lang_conf"]          = "Language Options";
+$pgv_lang["calendar_conf"]      = "Calendar Options";
+$pgv_lang["name_conf"]          = "Name Configuration";
+$pgv_lang["surname_conf"]       = "Surnames";
+$pgv_lang["visibility_conf"]    = "Visibility Options";
+$pgv_lang["lists_conf"]         = "List Configuration";
+$pgv_lang["charts_conf"]         = "Chart Options";
+$pgv_lang["help_conf"]          = "Help Options";
+$pgv_lang["facts_conf"]         = "Fact Information";
 $pgv_lang["meta_conf"]			= "Web Site and META Tag Settings";
 $pgv_lang["gedconf_head"]		= "GEDCOM Configuration";
 $pgv_lang["other_theme"]		= "Other, please type in";
@@ -681,5 +691,10 @@ $pgv_lang["time_limit_help"]			= "~#pgv_lang[time_limit]#~<br /><br />The maximu
 
 // Media items
 $pgv_lang["media_import_help"] = "~#pgv_lang[media_import]#~<br />This import will convert the multimedia links in your GEDCOM file to multimedia records. For example, the following media entry will be changed from:<blockquote><code>1 OBJE<br />2 FORM jpg<br />2 FILE media/grandma.jpg<br />2 TITL Picture of grandma</code></blockquote>to:<blockquote><code>0 @M1@ OBJE<br />1 FORM jpg<br />1 FILE media/grandma.jpg<br />1 TITL Picture of grandma</code></blockquote>The new multimedia record will be stored separately in the database. Links to external multimedia files will be changed to references to the new multimedia record, which will in turn contain a reference to the external file. For example, the following GEDCOM record will be changed from:<blockquote><code>0 @I1@ INDI<br />1 NAME Your/Name/<br />1 OBJE<br />2 FORM jpg<br />2 FILE media/grandma.jpg<br />2 TITL Picture of grandma</code></blockquote>to:<blockquote><code>0 @I1@ INDI<br />1 NAME Your/Name/<br />1 OBJE @M1@<br /></code></blockquote>The advantage of using multimedia records is that you can easily administer your media. When you change the title of a multimedia record, it is changed for all GEDCOM records that link to this multimedia record. Several people,families, or sources can be linked to the same multimedia record.";
+
+// editconfig_gedcom.php Option Filter
+$pgv_lang["ged_filter_results"] = "Results found:";
+$pgv_lang["ged_filter_reset"] = "Clear Search";
+$pgv_lang["ged_filter_description"] = "Search for an option: ";
 
 ?>

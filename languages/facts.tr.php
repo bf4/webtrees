@@ -20,8 +20,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @translator Kurt Norgaz
- * @translator Adem Genç
+ * @author Kurt Norgaz
+ * @author Adem GENÇ, uzayuydu@gmail.com, http://www.muttafi.com
  * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {

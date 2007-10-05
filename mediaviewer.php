@@ -121,8 +121,8 @@ else{
 								<table class="facts_table<?php print $TEXT_DIRECTION=='ltr'?'':'_rtl';?>">
 									<?php
 										$facts = $controller->getFacts($SHOW_MEDIA_FILENAME);
-										foreach($facts as $f=>$factrec) {
-											print_fact($factrec, $controller->pid, 1, false, true);
+										foreach($facts as $f=>$event) {
+											print_fact($event);
 										}
 									?>
 								</table>

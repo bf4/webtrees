@@ -314,10 +314,10 @@ function checkform(frm){
 </script>
 <?php if ($action!="addlink") { ?>
 <form method="post" name="addRemoteRelationship"
-	action="addremotelink.php" onsubmit="return checkform(this);"><input
-	type="hidden" name="action" value="addlink" /> <input type="hidden"
-	name="pid" value="<?php print $pid;?>"/> <input type="hidden" name="indi_rec"
-	value="<?php print $indirec;?>"/> <?php echo $name;?> <br />
+	action="addremotelink.php" onsubmit="return checkform(this);">
+	<input type="hidden" name="action" value="addlink" /> 
+	<input type="hidden" name="pid" value="<?php print $pid;?>"/> 
+	<?php echo $name;?> <br />
 <br />
 <table class="facts_table">
 	<tr>

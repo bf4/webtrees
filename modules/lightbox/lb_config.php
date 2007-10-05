@@ -51,7 +51,7 @@ $multimed_icons = "show" ; 	// Set to "show" to show Multimedia List Edit icons
 	
 	// Tab id no for Lightbox
 	if ($mediatab==1 && userCanEdit(getUserName())) {
-		$tabno=7;
+		$tabno=8;
 	}else{
 		$tabno=3;
 	}

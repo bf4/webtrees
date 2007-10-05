@@ -1599,10 +1599,32 @@ function lettersort($a, $b) {
 }
 
 // Helper function to sort facts.
-function compare_facts_type($arec, $brec) {
+function compare_facts_type(&$arec, &$brec) {
 	global $factarray;
 	static $factsort;
 
+	if (is_object($arec)) {
+		$afam = $arec->getFamilyId();
+		if (!empty($afam) && ($afam == $brec->getFamilyId()))
+			return 0;
+	
+		$afact = $arec->getTag();
+		$bfact = $brec->getTag();
+		if ($afact == null || $bfact == null)
+			return 0;
+			
+		if ($afact=="EVEN" || $afact=="FACT") {
+			$atype==$arec->getType();
+			if (!empty($atype)) $afact=$atype;
+		}
+		
+		if ($bfact=="EVEN" || $bfact=="FACT") {
+			$btype==$brec->getType();
+			if (!empty($btype)) $bfact=$btype;
+		}
+	}
+	else {
+		pgv_error_handler(2, "Use Event Class",'','');
 	if (is_array($arec))
 		$arec = $arec[1];
 	if (is_array($brec))
@@ -1615,13 +1637,15 @@ function compare_facts_type($arec, $brec) {
 	// Extract fact type from record
 	if (!preg_match("/1\s+(\w+)/", $arec, $matcha) || !preg_match("/1\s+(\w+)/", $brec, $matchb))
 		return 0;
-	$afact=$matcha[1];
-	$bfact=$matchb[1];
+			
+		$afact = $matcha[1];
+		$bfact = $matchb[1];
 
 	if (($afact=="EVEN" || $afact=="FACT") && preg_match("/2\s+TYPE\s+(\w+)/", $arec, $match) && isset($factarray[$match[1]]))
 		$afact=$match[1];
 	if (($bfact=="EVEN" || $bfact=="FACT") && preg_match("/2\s+TYPE\s+(\w+)/", $brec, $match) && isset($factarray[$match[1]]))
 		$bfact=$match[1];
+	}
 
 	if (!is_array($factsort))
 		$factsort = array_flip(array(
@@ -1697,7 +1721,17 @@ function compare_facts_type($arec, $brec) {
 }
 
 // Helper function to sort facts.
-function compare_facts_date($arec, $brec) {
+function compare_facts_date(&$arec, &$brec) {
+
+	if (is_object($arec)) {
+		$adate = $arec->getDate();
+		$bdate = $brec->getDate();
+	
+		if ($adate == null || $bdate == null)
+			return 0;	
+	}
+	else {
+		pgv_error_handler(2, "Don't parse the record, use the event class.", '','');
 	if (is_array($arec))
 		$arec = $arec[1];
 	if (is_array($brec))
@@ -1707,38 +1741,40 @@ function compare_facts_date($arec, $brec) {
 	if (!preg_match("/2 DATE (.*)/", $arec, $amatch) || !preg_match("/2 DATE (.*)/", $brec, $bmatch))
 		return 0;
 
-	$adate = parse_date($amatch[1]);
-	$bdate = parse_date($bmatch[1]);
+		$adate = new GedcomDate($amatch[1]);
+		$bdate = new GedcomDate($bmatch[1]);
+	}
+
 	// If either date can't be parsed, don't sort.
-	if ($adate[0]['jd1']==0 || $bdate[0]['jd1']==0)
+	if ($adate->date1->minJD==0 || $bdate->date1->minJD==0)
 		return 0;
 
 	// Remember that dates can be ranges and overlapping ranges sort equally.
-  $amin=$adate[0]['jd1'];
-  $bmin=$bdate[0]['jd1'];
-	if (empty($adate[1]))
-		$amax=$adate[0]['jd2'];
+  $amin=$adate->date1->minJD;
+  $bmin=$bdate->date1->minJD;
+	if (empty($adate->date2))
+		$amax=$adate->date1->maxJD;
 	else
-		$amax=$adate[1]['jd2'];
-	if (empty($bdate[1]))
-		$bmax=$bdate[0]['jd2'];
+		$amax=$adate->date2->maxJD;
+	if (empty($bdate->date2))
+		$bmax=$bdate->date1->maxJD;
 	else
-		$bmax=$bdate[1]['jd2'];
+		$bmax=$bdate->date2->maxJD;
 
 	// BEF/AFT XXX sort as the day before/after XXX
-	if ($adate[0]['ext']=='BEF') {
+	if (strtoupper($adate->qual1)=='BEF') {
 		$amin=$amin-1;
 		$amax=$amin;
 	}
-	if ($adate[0]['ext']=='AFT') {
+	if (strtoupper($adate->qual1)=='AFT') {
 		$amax=$amax+1;
 		$amin=$amax;
 	}
-	if ($bdate[0]['ext']=='BEF') {
+	if (strtoupper($bdate->qual1)=='BEF') {
 		$bmin=$bmin-1;
 		$bmax=$bmin;
 	}
-	if ($bdate[0]['ext']=='AFT') {
+	if (strtoupper($bdate->qual1)=='AFT') {
 		$bmax=$bmax+1;
 		$bmin=$bmax;
 	}

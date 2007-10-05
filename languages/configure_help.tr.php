@@ -20,8 +20,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @translator Kurt Norgaz
- * @translator Adem Genç
+ * @author Kurt Norgaz
+ * @author Adem GENÇ, uzayuydu@gmail.com, http://www.muttafi.com
  * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
@@ -85,6 +85,15 @@ $pgv_lang["ged_search"]			= "Arama-Günlük dosyaları";
 $pgv_lang["ged_privacy"]		= "Mahremiyet dosyası";
 $pgv_lang["show_phpinfo"]		= "PHPInfo sayfasını göster";
 $pgv_lang["confirm_gedcom_delete"]	= "Bu GEDCOM veritabanını hakikatten SİLMEK mi istiyorsunuz";
+$pgv_lang["gregorian"]			= "Milâdi";
+$pgv_lang["julian"]			= "Jüliyen";
+$pgv_lang["config_french"]		= "Fransızca";
+$pgv_lang["jewish"]			= "Jahudice";
+$pgv_lang["config_hebrew"]		= "İbranice";
+$pgv_lang["jewish_and_gregorian"]	= "Jahudice ve milâdi";
+$pgv_lang["hebrew_and_gregorian"]	= "İbranice ve milâdi";
+$pgv_lang["hijri"]			= "Hicri";
+$pgv_lang["arabic_cal"]			= "Arapça";
 $pgv_lang["disabled"]			= "Kullanım dışı";
 $pgv_lang["mouseover"]			= "Fare üzerindeyken (mouse over)";
 $pgv_lang["mousedown"]			= "Fare tıklandıktan sonra (mouse down)";
@@ -128,21 +137,21 @@ $pgv_lang["DISPLAY_JEWISH_THOUSANDS"]	= "İbranice binliklerini göster";
 $pgv_lang["DISPLAY_JEWISH_GERESHAYIM"]		= "İbranicre \"Gershayim\" göster";
 $pgv_lang["JEWISH_ASHKENAZ_PRONUNCIATION"]	= "Musevilere ait ashkenaz telaffuz";
 $pgv_lang["USE_RTL_FUNCTIONS"]			= "Sağdan sola (RTL) işlemini kullan";
-$pgv_lang["DEFAULT_PEDIGREE_GENERATIONS"]	= "Soy ağacı çizgesinde nesil sayısı";
-$pgv_lang["MAX_PEDIGREE_GENERATIONS"]		= "Soy ağacı çizgesinde maksimum nesil sayısı";
-$pgv_lang["MAX_DESCENDANCY_GENERATIONS"]	= "Şahsı izleyen nesiller çizgesinde maksimum nesil sayısı";
+$pgv_lang["DEFAULT_PEDIGREE_GENERATIONS"]	= "Soyağacı çiziminde nesil sayısı";
+$pgv_lang["MAX_PEDIGREE_GENERATIONS"]		= "Soyağacı çiziminde maksimum nesil sayısı";
+$pgv_lang["MAX_DESCENDANCY_GENERATIONS"]	= "Şahsı izleyen nesiller çiziminde maksimum nesil sayısı";
 $pgv_lang["USE_RIN"]			= "GEDCOM - Kişisel numaralarının yerine RIN# kullan";
 $pgv_lang["GENERATE_GUID"]		= "Otomatikman global olarak tek ID leri oluştur";
-$pgv_lang["PEDIGREE_ROOT_ID"]		= "Soy ağacı ya da şahsı izleyen nesiller çizgesinde kullanılacak ilk şahıs";
+$pgv_lang["PEDIGREE_ROOT_ID"]		= "Soyağacı ya da şahsı izleyen nesiller çiziminde kullanılacak ilk şahıs";
 $pgv_lang["GEDCOM_ID_PREFIX"]		= "GEDCOM - Kişisel numaralarının ön eki";
 $pgv_lang["SOURCE_ID_PREFIX"]		= "Kaynak numaralarının ön eki";
 $pgv_lang["REPO_ID_PREFIX"]		= "Havuz numaralarının ön eki";
-$pgv_lang["PEDIGREE_FULL_DETAILS"]	= "Soy ağacı ya da şahsı izleyen nesiller çizgesinde doğum ve ölüm detaylarını göster";
-$pgv_lang["PEDIGREE_LAYOUT"]		= "Genel soy ağacı çizgesinin düzeni";
-$pgv_lang["SHOW_EMPTY_BOXES"]		= "Soy ağacı çizgelerinde boş kutuları göster";
-$pgv_lang["ZOOM_BOXES"]			= "Çizgelerdeki kutuların büyültüp küçültmesine izin ver";
-$pgv_lang["LINK_ICONS"]			= "Çizgelerdeki bağlantı kutularının otomatik açılmasına izin ver";
-$pgv_lang["ABBREVIATE_CHART_LABELS"]			= "Çizgelerdeki hadise başlıklarını kısalt";
+$pgv_lang["PEDIGREE_FULL_DETAILS"]	= "Soyağacı ya da şahsı izleyen nesiller çiziminde doğum ve ölüm detaylarını göster";
+$pgv_lang["PEDIGREE_LAYOUT"]		= "Genel soyağacı çiziminin düzeni";
+$pgv_lang["SHOW_EMPTY_BOXES"]		= "Soyağacı çizimlerinde boş kutuları göster";
+$pgv_lang["ZOOM_BOXES"]			= "Çizimlerdeki kutuların büyültüp küçültmesine izin ver";
+$pgv_lang["LINK_ICONS"]			= "Çizimlerdeki bağlantı kutularının otomatik açılmasına izin ver";
+$pgv_lang["ABBREVIATE_CHART_LABELS"]			= "Çizimlerdeki hadise başlıklarını kısalt";
 $pgv_lang["SHOW_PARENTS_AGE"]			= "Ebeveyn yaşlarını çocukların doğum tarihinin yanında göster";
 $pgv_lang["SHOW_RELATIVES_EVENTS"]      = "Kişisel sayfada akrabaların hadiseleri göstermek veya göstermemek";
 $pgv_lang["EXPAND_RELATIVES_EVENTS"]      = "Otomatik olarak olayların listesi genişlet";
@@ -231,7 +240,7 @@ $pgv_lang["META_TITLE"]		= "Başlık etiketini isimlendirme ekle";
 $pgv_lang["META_SURNAME_KEYWORDS"]		= "\"Yaygın soy isimleri\" Keywords META alanına ekle";
 $pgv_lang["ENABLE_RSS"]				= "RSS Etkinleştir";
 $pgv_lang["RSS_FORMAT"]				= "RSS Biçimi";
-$pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE"] = "Güçlü indirme için GEDCOM dosyayı kontrol et";
+$pgv_lang["SECURITY_CHECK_GEDCOM_DOWNLOADABLE"] = "GEDCOM dosyaların indirebilirmidir kontrol et";
 $pgv_lang["gedcom_download_secure"]	= "#GEDCOM# indirilemez.";
 $pgv_lang["welcome_new"]			= "Yeni PhpGedView websitesine hoş geldiniz.";
 $pgv_lang["review_readme"]		= "Bu PhpGedView yazılımını yapılandırmaya devam etmeden önce <a href=\"readme.txt\" target=\"_blank\">readme.txt</a> dosyasını okumanızı tavsiye ederiz.<br /><br />";
@@ -451,7 +460,7 @@ $pgv_lang["um_imp_fail"] = "İçeri atarım başarısız oldu";
 $pgv_lang["um_backup"]			= "Yedekleme";
 $pgv_lang["um_zip_succ"] = "ZIP dosyası başarılı biçimde oluşturuldu.";
 $pgv_lang["um_zip_dl"] = "Yedekleme ZIP lendi İndir ";
-$pgv_lang["um_bu_explain"] = "Bu araç PhpSoyAğacındaki bir çok veri çeşitlerini yedekleyebilir bu yedek indirmenize izin verir.<br /><br />Bu verileri yedekleyip ZIP dosya olarak indirmek için yedeklemek istediğiniz bilgileri aşağıdaki seçim kutularında seçmelisiniz seçimlerinizi yaptıktan sonra aşağıdaki Yedeklemeyi yap düğmesine basınız.<br /><br />Bu oluşturulacak ZIP dosyası index dızınde siz elle silene kadar kalacaktır.<br />";
+$pgv_lang["um_bu_explain"] = "Bu araç PhpGedViewdeki bir çok veri çeşitlerini yedekleyebilir bu yedek indirmenize izin verir.<br /><br />Bu verileri yedekleyip ZIP dosya olarak indirmek için yedeklemek istediğiniz bilgileri aşağıdaki seçim kutularında seçmelisiniz seçimlerinizi yaptıktan sonra aşağıdaki Yedeklemeyi yap düğmesine basınız.<br /><br />Bu oluşturulacak ZIP dosyası index dızınde siz elle silene kadar kalacaktır.<br />";
 $pgv_lang["um_bu_config"]		= "PhpGedView yapılandırma dosyası";
 $pgv_lang["um_bu_gedcoms"]		= "GEDCOM dosyaları";
 $pgv_lang["um_bu_gedsets"]		= "GEDCOM ayarları, yapılandırma ve mahremiyet dosyaları";
@@ -473,14 +482,14 @@ $pgv_lang["SPLIT_PLACES"]		= "Düzenleme kipinde yerleri böl";
 $pgv_lang["ALLOW_REMEMBER_ME"]		= "Giriş sayfasında <b>Beni Hatırla</b> seçneği göster";
 $pgv_lang["UNDERLINE_NAME_QUOTES"]	= "Tırnak işaretleri arasındaki isimlerin altını çiz";
 $pgv_lang["PRIVACY_BY_RESN"]		= "GEDCOM (RESN) Gizlilik kısıtlamasını kullan";
-$pgv_lang["SHOW_LDS_AT_GLANCE"]		= "Çizge kutularında LDS kurallarının kodlarını göster";
+$pgv_lang["SHOW_LDS_AT_GLANCE"]		= "Çizim kutularında LDS kurallarının kodlarını göster";
 $pgv_lang["GEDCOM_DEFAULT_TAB"]		= "Şahısların bilgileri sayfasında gösterilecek ilk sekme";
 $pgv_lang["SHOW_MARRIED_NAMES"]		= "Şahıs listesinde evlilik isimlerini göster";
 $pgv_lang["SHOW_QUICK_RESN"]		= "#pgv_lang[quick_update_title]# formunda gizli alanları göster";
 $pgv_lang["USE_QUICK_UPDATE"]		= "#pgv_lang[quick_update_title]# formu kullan";
 $pgv_lang["SEARCHLOG_CREATE"]		= "Arama-Günlük dosyalarını arşivle";
 $pgv_lang["CHANGELOG_CREATE"]		= "Değişen Kütük Arşiv Dosyaları";
-$pgv_lang["CHART_BOX_TAGS"]		= "Çizgelerde gösterilecek diğer hadiseler";
+$pgv_lang["CHART_BOX_TAGS"]		= "Çizimlerde gösterilecek diğer hadiseler";
 
 $pgv_lang["FAM_ID_PREFIX"]		= "Aile ID öneki";
 $pgv_lang["QUICK_REQUIRED_FAMFACTS"]			= "Ailelerden her zaman gerçekler hızlı güncelleştirmede gösterirler";

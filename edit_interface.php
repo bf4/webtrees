@@ -361,7 +361,8 @@ case 'editraw':
 			print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
 			print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 			print $pgv_lang["no_update_CHAN"]."<br />\n";
-			print_fact_date(get_sub_record(1, "1 CHAN", $gedrec), false, true);
+			$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
+			print_fact_date($event, false, true);
 			print "</td></tr>\n";
 			print "</table>";
 		}
@@ -393,7 +394,8 @@ case 'edit':
 		print $pgv_lang["admin_override"]."</td><td class=\"optionbox wrap\">\n";
 		print "<input type=\"checkbox\" name=\"preserve_last_changed\" />\n";
 		print $pgv_lang["no_update_CHAN"]."<br />\n";
-		print_fact_date(get_sub_record(1, "1 CHAN", $gedrec), false, true);
+		$event = new Event(get_sub_record(1, "1 CHAN", $gedrec));
+		print_fact_date($event, false, true);
 		print "</td></tr>\n";
 		}
 	print "</table>";

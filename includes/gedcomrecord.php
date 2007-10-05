@@ -34,12 +34,17 @@ require_once('includes/family_class.php');
 require_once('includes/source_class.php');
 require_once('includes/repository_class.php');
 require_once('includes/media_class.php');
+require_once('includes/event_class.php');
+
 class GedcomRecord {
 	var $gedrec = "";
 	var $xref = "";
 	var $type = "";
 	var $changed = false;
 	var $rfn = null;
+	var $facts = null;
+	var $disp = null;
+	var $changeEvent = null;
 
 	/**
 	 * constructor for this class
@@ -67,7 +72,9 @@ class GedcomRecord {
 		}
 
 		//-- set the gedcom record a privatized version
-		$this->gedrec = privatize_gedcom($gedrec);
+		//-- temporarily take out this privacy, since we will probably check privacy again later
+		// $this->gedrec = privatize_gedcom($gedrec);
+		$this->gedrec = $gedrec;
 		$ct = preg_match("/0 @(.*)@ (.*)/", $this->gedrec, $match);
 		if ($ct>0) {
 			$this->xref = trim($match[1]);
@@ -328,7 +335,8 @@ class GedcomRecord {
 	 * @return boolean
 	 */
 	function canDisplayDetails() {
-		return displayDetails($this->gedrec, $this->type);
+		if (is_null($this->disp)) $this->disp = displayDetailsById($this->xref, $this->type);
+		return $this->disp;
 	}
 	
 	/**
@@ -384,17 +392,98 @@ class GedcomRecord {
 		return "";
 	}
 	
+	/**
+	 * Get the first Event for the given Fact type
+	 *
+	 * @param string $fact
+	 * @return Event
+	 */
+	function &getFactByType($factType) {
+		$this->parseFacts();
+		foreach($this->facts as $f=>$fact) {
+			if ($fact->getTag()==$factType) return $fact;
+		}
+	}
+
+	/**
+	 * Return an array of events that match the given types
+	 *
+	 * @param mixed $factTypes  may be a single string or an array of strings
+	 * @return Event
+	 */
+	function getAllFactsByType($factTypes) {
+		$this->parseFacts();
+		if (is_string($factTypes)) $factTypes = array($factTypes);
+		$facts = array();
+		foreach($this->facts as $f=>$fact) {
+			if (in_array($fact->getTag(), $factType)) $facts[] = $fact;
+		}
+		return $facts;
+	}
+
+	/**
+	 * returns an array of all of the facts
+	 * @return Array
+	 */
+	function getFacts() {
+		$this->parseFacts();
+		return $this->facts;
+	}
+
+	/**
+	 * Get the CHAN event for this record
+	 *
+	 * @return Event
+	 */
+	function getChangeEvent() {
+		if (is_null($this->changeEvent)) {
+			$this->changeEvent = $this->getFactByType("CHAN");
+		}
+		return $this->changeEvent;
+	}
+
+	/**
+	 * Parse the facts from the record
+	 */
+	function parseFacts() {
+		//-- only run this function once
+		if (!is_null($this->facts)) return;
+		//-- don't run this function if privacy does not allow viewing of details
+		if (!$this->canDisplayDetails()) return;
+		//-- find all the fact information
+		$indilines = preg_split("/[\r\n]+/", $this->gedrec);   // -- find the number of lines in the individuals record
+		$lct = count($indilines);
+		$factrec = "";	 // -- complete fact record
+		$line = "";   // -- temporary line buffer
+		$linenum=1;
+		for($i=1; $i<=$lct; $i++) {
+			if ($i<$lct) $line = $indilines[$i];
+			else $line=" ";
+			if (empty($line)) $line=" ";
+			if (($i==$lct)||($line{0}==1)) {
+				$event = new Event($factrec, $linenum);
+				$event->setParentObject($this);
+				$this->facts[] = $event;
+				$factrec = $line;
+				$linenum = $i;
+			}
+			else $factrec .= "\n".$line;
+		}
+	}
+
 	//////////////////////////////////////////////////////////////////////////////
 	// Get the last-change timestamp for this record - optionally wrapped in a
 	// link to ourself.
 	//////////////////////////////////////////////////////////////////////////////
 	function LastChangeTimestamp($add_url) {
 		global $DATE_FORMAT, $TIME_FORMAT;
-		$chan_rec=get_sub_record(1, '1 CHAN', $this->gedrec);
-		if (empty($chan_rec))
-			return '&nbsp;';
-		$d=new GedcomDate(get_gedcom_value('DATE', 2, $chan_rec, '', false));
-		if (preg_match('/^(\d\d):(\d\d):(\d\d)/', get_gedcom_value('DATE:TIME', 2, $chan_rec, '', false).':00', $match)) {
+
+		$chan = $this->getChangeEvent();
+
+		if (is_null($chan_rec))	return '&nbsp;';
+
+		$d = $chan->getDate();
+		if (preg_match('/^(\d\d):(\d\d):(\d\d)$/', get_gedcom_value('DATE:TIME', 2, $chan->getGedComRecord(), '', false), $match)) {
 			$t=mktime($match[1], $match[2], $match[3]);
 			$sort=$d->MinJD().$match[1].$match[2].$match[3];
 		} else {
@@ -411,12 +500,13 @@ class GedcomRecord {
 	// Get the last-change user for this record
 	//////////////////////////////////////////////////////////////////////////////
 	function LastchangeUser() {
-		$chan_rec=get_sub_record(1, '1 CHAN', $this->gedrec);
-		if (empty($chan_rec))
-			return '&nbsp;';
-		$chan_user=get_gedcom_value("_PGVU", 2, $chan_rec, '', false);
-		if (empty($chan_user))
-			return '&nbsp;';
+		$chan = $this->getChangeEvent();
+
+		if (is_null($chan_rec))	return '&nbsp;';
+		
+		$chan_user = $chan->getValue("_PGVU");
+		if (empty($chan_user)) return '&nbsp;';
+		
 		return $chan_user;
 	}
 }

@@ -1,3 +1,78 @@
+*V1.7.1 beta 3* (May 19, 2007)
+
+* Update to Prototype 1.5.1 final
+
+* New elements and handles options for Sortable.create which take arrays of elements or element ids. These overrule the normal handle and elements finding options on initialization of the sortable, and can yield huge performance increases in situations where these elements or ids are known at call time. [Thomas Fuchs]
+
+* Major performance improvement of Sortable.create when using the handle option. [Tobie Langel]
+
+* Fix Builder.node double quote escaping in attributes, fixes #8125. [Aa!]
+
+*V1.7.1 beta 2* (April 28, 2007)
+
+* Update to Prototype 1.5.1_rc4
+  - Various optimizations and fixes
+  - http://dev.rubyonrails.org/browser/spinoffs/prototype/trunk/CHANGELOG?rev=6604
+
+* Fix autocompleter indicator not appearing when calling activate() directly. Don't show indicator for local autocompleting. Fixes #7770. [pyro8019]
+
+* Don't clear out autocompleting fields in Mozilla-based browsers when navigating back to a page with the Back button, fixes #7752. [seanc]
+
+*V1.7.1 beta 1* (March 12, 2007)
+
+* Update to Prototype 1.5.1 r6386
+  - Fixes SlideUp/SlideDown on IE
+  - Fixes an opacity problem with IE
+  - Performance optimizations
+  - See http://dev.rubyonrails.org/browser/spinoffs/prototype/trunk/CHANGELOG?rev=6381 for more information
+    
+* Make builder unit tests work on IE
+
+* Fix id assignment for sounds on Firefox/Windows, fixes #7709 [Robert Wallis]
+
+* Add Sound.enable() and Sound.disable() to globally turn off Sound.play()
+
+* Added Sound.play(url,options) in new sound.js file. scriptaculous.js automatically includes this file.
+  Based on code by Jules Gravinese, used with permission.
+  
+  The sound player uses native sound support on IE, and falls back to using <embed> on other browsers,
+  which means it uses QuickTime for most cases. The recommended format to use is MP3.
+  
+    Examples:
+      Sound.play('blah.mp3');   
+      // --> plays sound immediately in 'global' track
+      Sound.play('blah.mp3',{replace:true});  
+      // --> stop playing all sounds in 'global' track, and play new sound
+      Sound.play('blah.mp3',{track:'mytrack'});
+      // --> places the sound in the 'mytrack' track
+      Sound.play('blah.mp3',{track:'mytrack',replace:true});
+      // --> stop playing all sounds in 'mytrack' track, and play new sound
+      
+  The sound effect used in the functional test is "Sword being drawn" by James Greever, released as freeware.
+
+* Various effects engine optimizations [Tobie Langel, Thomas Fuchs]
+
+* Make Ajax.InPlaceEditor more customizable: [thx godlie]
+  - Add an okLink option to Ajax.InPlaceEditor so you can have a link instead of a button. Uses the 'editor_ok_link' CSS class for styling, fixes #6455
+  - Add an cancelButton option to Ajax.InPlaceEditor, uses the 'editor_cancel_button' CSS class
+  - Add textBefore-, textBetween- and textAfterControls (which default to empty strings)
+  - For consistency, cancel link now also gets 'editor_cancel_link' CSS class
+
+* Add an onDropped callback to Draggables, that fires at the end of a drag when the Draggable was dropped on a Droppable
+
+* Add revert: 'failure' option to Draggables to only revert if not dropped on a valid drop target, fixes #6909 [davidw]
+
+* Update to new Prototype Browser detection
+
+* Fix a memory leak with Effect.Morph in Firefox, fixes #7558 [Malard]
+
+* Add ability to nest single nodes in Builder.node in addition to arrays of nodes.
+    Examples:
+      var element = Builder.node('div', Builder.node('span','blah'));
+      
+      Builder.dump();
+      var element = DIV(SPAN('blah'));
+
 *V1.7.0* (January 19, 2007)
 
 * Cleanups for Effect.Morph

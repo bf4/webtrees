@@ -39,11 +39,9 @@ class Family extends GedcomRecord {
 	var $children = array();
 	var $childrenIds = array();
 	var $disp = true;
-	var $marr_rec = null;
-	var $marr_date = null;
-	var $marr_type = null;
+	var $marriage = null;
+	var $divorce = null; 
 	var $marr_est = false; // estimate
-	var $div_rec = null;
 	var $marr_rec2 = null;
 	var $marr_date2 = null;
 	var $children_loaded = false;
@@ -314,13 +312,23 @@ class Family extends GedcomRecord {
 	 * parse marriage record
 	 */
 	function _parseMarriageRecord() {
-		$this->marr_rec = trim(get_sub_record(1, "1 MARR", $this->gedrec));
-		$this->marr_date = get_gedcom_value("DATE", 2, $this->marr_rec, '', false);
-		$this->marr_type = get_sub_record(2, "2 TYPE", $this->marr_rec);
-		$this->div_rec = trim(get_sub_record(1, "1 DIV", $this->gedrec));
+		$this->marriage = new Event(trim(get_sub_record(1, "1 MARR", $this->gedrec)), -1);
+		$this->marriage->setParentObject($this);
+		$this->divorce = new Event(trim(get_sub_record(1, "1 DIV", $this->gedrec)), -1);
+		$this->divorce->setParentObject($this);
 		//-- 2nd record with alternate date (hebrew...)
 		$this->marr_rec2 = trim(get_sub_record(1, "1 MARR", $this->gedrec, 2));
 		$this->marr_date2 = get_gedcom_value("DATE", 2, $this->marr_rec2, '', false);
+	}
+
+	/**
+	 * get the marriage event
+	 *
+	 * @return Event
+	 */
+	function getMarriage() {
+		if (is_null($this->marriage)) $this->_parseMarriageRecord();
+		return $this->marriage;
 	}
 
 	/**
@@ -328,8 +336,13 @@ class Family extends GedcomRecord {
 	 * @return string
 	 */
 	function getMarriageRecord() {
-		if (is_null($this->marr_rec)) $this->_parseMarriageRecord();
-		return $this->marr_rec;
+		if (is_null($this->marriage)) $this->_parseMarriageRecord();
+		return $this->marriage->getGedcomRecord();
+	}
+	
+	function getDivorce() {
+		if (is_null($this->divorce)) $this->_parseMarriageRecord();
+		return $this->divorce;
 	}
 
 	/**
@@ -337,8 +350,8 @@ class Family extends GedcomRecord {
 	 * @return string
 	 */
 	function getDivorceRecord() {
-		if (is_null($this->div_rec)) $this->_parseMarriageRecord();
-		return $this->div_rec;
+		if (is_null($this->divorce)) $this->_parseMarriageRecord();
+		return $this->divorce->getGedcomRecord();
 	}
 
 	/**
@@ -358,8 +371,8 @@ class Family extends GedcomRecord {
 	function getMarriageDate() {
 		global $pgv_lang;
 		if (!$this->disp) return $pgv_lang["private"];
-		if (is_null($this->marr_date)) $this->_parseMarriageRecord();
-		return $this->marr_date;
+		if (is_null($this->marriage)) $this->_parseMarriageRecord();
+		return $this->marriage->getDate();
 	}
 
 	/**
@@ -368,10 +381,10 @@ class Family extends GedcomRecord {
 	 */
 	function getSortableMarriageDate() {
 		if (!$this->disp) return "0000-00-01";
-		if (empty($this->marr_date)) $this->_parseMarriageRecord();
-		if (empty($this->marr_rec)) return "0000-00-00";
-		$pdate = parse_date($this->marr_date);
-		$hms = get_gedcom_value("DATE:TIME", 2, $this->marr_rec);
+		if (empty($this->marriage)) $this->_parseMarriageRecord();
+		if (empty($this->marriage)) return "0000-00-00";
+		$pdate = parse_date($this->marriage->getRawDate());
+		$hms = get_gedcom_value("DATE:TIME", 2, $this->marriage->getGedcomRecord());
 		return $pdate[0]["sort"]." ".$hms;
 	}
 
@@ -391,8 +404,8 @@ class Family extends GedcomRecord {
 	 * @return string
 	 */
 	function getMarriageType() {
-		if (is_null($this->marr_type)) $this->_parseMarriageRecord();
-		return $this->marr_type;
+		if (is_null($this->marriage)) $this->_parseMarriageRecord();
+		return $this->marriage->getType();
 	}
 
 	/**
@@ -400,7 +413,8 @@ class Family extends GedcomRecord {
 	 * @return string
 	 */
 	function getMarriagePlace() {
-		return get_gedcom_value("PLAC", 2, $this->getMarriageRecord(), '', false);
+		$marriage = $this->getMarriage();
+		return $marriage->getPlace();
 	}
 
 	/**
@@ -409,10 +423,6 @@ class Family extends GedcomRecord {
 	 */
 	function getMarriageYear() {
 		return substr($this->getSortableMarriageDate(),0,4);
-		/**$marryear = $this->getMarriageDate();
-		$mdate = parse_date($marryear);
-		$myear = $mdate[0]['year'];
-		return $myear;**/
 	}
 
 	/**
@@ -420,8 +430,8 @@ class Family extends GedcomRecord {
 	 * @return string
 	 */
 	function getDivorceDate() {
-		$drec = $this->getDivorceRecord();
-		return get_gedcom_value("DATE", 2, $drec);
+		$drec = $this->getDivorce();
+		return $drec->getDate();
 	}
 
 	/**
@@ -429,8 +439,8 @@ class Family extends GedcomRecord {
 	 * @return string
 	 */
 	function getDivorceType() {
-		$drec = $this->getDivorceRecord();
-		return get_gedcom_value("TYPE", 2, $drec);
+		$drec = $this->getDivorce();
+		return $drec->getType();
 	}
 
 	/**
@@ -438,7 +448,8 @@ class Family extends GedcomRecord {
 	 * @return string
 	 */
 	function getDivorcePlace() {
-		return get_gedcom_value("PLAC", 2, $this->getDivorceRecord());
+		$drec = $this->getDivorce();
+		return $drec->getPlace();
 	}
 
 	/**
@@ -446,7 +457,7 @@ class Family extends GedcomRecord {
 	 * @return string
 	 */
 	function getDivorceYear(){
-		$divorceyear = $this->getDivorceDate();
+		$divorceyear = $this->getDivorce()->getRawDate();
 		$ddate = parse_date($divorceyear);
 		$dyear = $ddate[0]['year'];
 		return $dyear;
@@ -478,7 +489,7 @@ class Family extends GedcomRecord {
 				}
 			}
 		}
-		return $url."#content";
+		return $url;
 	}
 }
 ?>

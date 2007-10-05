@@ -12,7 +12,6 @@ function navObj(target, oXmlHttp, store, link, callback) {
  		};
 }
 
-var loadingMessage = "<p style=\"margin: 20px 20px 20px 20px\"><img src=\"images/loading.gif\" alt=\"\" title=\"\" /></p>";
 var nav1Content = new Array();
 var nav2Content = new Array();
 
@@ -21,6 +20,10 @@ function loadNav1(link) {
 	target = document.getElementById('midcontent');
 	document.getElementById('midcontent2').style.width='0px';
 	if (!target) return;
+	document.cookie = 'nav1link='+link;
+	document.cookie = 'nav2link=';
+	document.cookie = 'navSurnames=';
+	document.cookie = 'navSurname=';
 	if (nav1Content[link]) target.innerHTML = nav1Content[link];
 	else {
 		var oXmlHttp = createXMLHttp();
@@ -37,6 +40,7 @@ function loadNav2(link) {
 	target = document.getElementById('midcontent2');
 	if (!target) return;
 	target.style.width = '155px';
+	document.cookie = 'nav2link='+link;
 	if (nav2Content[link]) target.innerHTML = nav2Content[link];
 	else {
 		var oXmlHttp = createXMLHttp();
@@ -48,11 +52,32 @@ function loadNav2(link) {
  	}
 }
 
+function readCookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
+}
+
 var firstClick = false;
 function navFirstClick() {
 	firstClick = true;
-	topnav.zoom = -5;
+	topnav.zoom = -7;
 	topnav.newRoot('', topnav.innerPort, GEDCOM);
+	//highlightMenu(document.getElementById('navlist'), this);
+	var link1 = readCookie('nav1link'); 
+	var link2 = readCookie('nav2link');
+	var surnames = readCookie('navSurnames'); 
+	var surname = readCookie('navSurname'); 
+	if (link1==null || link1=='') link1 = 'themes/navigator/thememenu.php?navAjax=1&surnameContent=1';
+	if (surnames!=null && surnames!='') link1 += '&loadSurnames='+surnames;
+	loadNav1(link1); 
+	if (link2!=null && link2!='') loadNav2(link2); 
+	if (surname!=null && surname!='') loadSurnamePeople(surname); 
 }
 
 function highlightMenu(content, selected) {
@@ -65,9 +90,11 @@ function highlightMenu(content, selected) {
 	selected.parentNode.style.fontWeight = 'bold';
 }
 
-function loadSurnames(link) {
+function loadSurnames(letter) {
 	target = document.getElementById('surnameList');
 	if (!target) return;
+	document.cookie = 'navSurnames='+letter;
+	link = 'themes/navigator/thememenu.php?navAjax=1&loadSurnames='+letter;
 	if (nav2Content[link]) target.innerHTML = nav2Content[link];
 	else {
 		var oXmlHttp = createXMLHttp();
@@ -84,6 +111,7 @@ function loadSurnamePeople(surname) {
 	target = document.getElementById('midcontent2');
 	if (!target) return;
 	target.style.width = '250px';
+	document.cookie = 'navSurname='+surname;
 	if (nav2Content[link]) target.innerHTML = nav2Content[link];
 	else {
 		var oXmlHttp = createXMLHttp();

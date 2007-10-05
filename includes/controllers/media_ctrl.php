@@ -35,7 +35,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 require_once('includes/controllers/individual_ctrl.php');
 require_once("includes/media_class.php");
 
-class MediaControllerRoot extends IndividualController{
+class MediaControllerRoot extends IndividualController {
 
 	var $mediaobject;
 
@@ -408,6 +408,12 @@ class MediaControllerRoot extends IndividualController{
 			$size = getLRM() . round($this->mediaobject->getFilesizeraw()/1024, 2)." kb" . getLRM();
 			$facts[] = "1 EVEN ".$size."\r\n2 TYPE file_size";
 		}
+		
+		$newfacts = array();
+		foreach($facts as $f=>$fact) {
+			$newfacts[] = new Event($fact);
+		}
+		$facts = $newfacts;
 
 		sort_facts($facts);
 		return $facts;

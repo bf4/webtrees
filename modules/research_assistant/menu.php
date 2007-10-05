@@ -23,7 +23,7 @@
  * @version $Id$
  */
 //-- security check, only allow access from module.php
-if (strstr($_SERVER["SCRIPT_NAME"],"menu.php")) {
+if (strstr($_SERVER["SCRIPT_NAME"],"research_assistant/menu.php")) {
 	print "Now, why would you want to do that.  You're not hacking are you?";
 	exit;
 }

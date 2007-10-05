@@ -20,10 +20,15 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @translator Kurt Norgaz
- * @translator Adem Genç
+ * @author Kurt Norgaz
+ * @author Adem GENÇ, uzayuydu@gmail.com, http://www.muttafi.com
  * @version $Id$
  */
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "Doğrudan lisan dosyasına erişemezsiniz.";
+	exit;
+}
+
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Doğrudan lisan dosyasına erişemezsiniz.";
 	exit;
@@ -185,7 +190,7 @@ $pgv_lang["view_change_diff"]		= "Değiştirilen Dosyalara Bak";
 
 
 $pgv_lang["admin_override"]			= "Yönetici Seçeneği";
-$pgv_lang["no_update_CHAN"]			= "Değişen kayıdı güncelleştirme (Son Değişen)";
+$pgv_lang["no_update_CHAN"]			= "Son değişiklik bilgilerini değiştirme (Son değişiklik)";
 $pgv_lang["select_events"]			= "Olayları Seç";
 $pgv_lang["source_events"]			= "Bu kaynakla olayları ilişkilendir";
 $pgv_lang["advanced_name_fields"]	= "Ek isimler (takma ad, evlilik adı, vs)";

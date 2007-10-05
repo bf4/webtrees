@@ -94,7 +94,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 			$title = $name." ".$pgv_lang["hourglass_chart"];
 			break;
 		case 'treenav':
-			$title = $name." Tree";
+			$title = $name." ".$pgv_lang["tree"];
 			break;
 	}
 	print "<b>".$title."</b>";

@@ -921,7 +921,7 @@ class GedcomDate {
 			$cal='';
 		}
 		// Split the date into D, M and Y
-		if (preg_match_all('/^ *(\d*) *([a-z]{3,5}\d?) *(\d+( ?b ?c)?|\d\d\d\d \d\d)?$/', $date, $match)) { // DM, M, MY or DMY
+		if (preg_match_all('/^ *(\d*) *([a-z]{3,5}\d?) *(\d+( ?b ?c)?|\d\d\d\d \d\d(\d\d)?)?$/', $date, $match)) { // DM, M, MY or DMY
 			$d=$match[1][0];
 			$m=$match[2][0];
 			$y=$match[3][0];

@@ -49,7 +49,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 global $PGV_IMAGE_DIR, $PGV_IMAGES, $ABBREVIATE_CHART_LABELS, $USE_MEDIA_VIEWER;
 	 global $chart_style, $box_width, $generations, $show_spouse, $show_full;
 	 global $CHART_BOX_TAGS, $SHOW_LDS_AT_GLANCE;
-	 global $SEARCH_SPIDER;
+	 global $SEARCH_SPIDER, $NAME_REVERSE;
 
 	 if ($style != 2) $style=1;
 
@@ -67,18 +67,22 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 if ($count==0) $count = rand();
 	 $lbwidth = $bwidth*.75;
 	 if ($lbwidth < 150) $lbwidth = 150;
-	 $indirec=find_person_record($pid);
-	 if (!$indirec) $indirec = find_updated_record($pid);
+	 
+	 $person = Person::getInstance($pid);
+	 
+	 //$indirec=find_person_record($pid);
+	 //if (!$indirec) $indirec = find_updated_record($pid);
 	 $isF = "NN";
-	 if (preg_match("/1 SEX F/", $indirec)>0) $isF="F";
-	 else if (preg_match("/1 SEX M/", $indirec)>0) $isF="";
-	 $disp = displayDetailsByID($pid, "INDI");
+	 if ($person->getSex()=="F") $isF="F";
+	 else if ($person->getSex()=="M") $isF="";
+	 
+	 $disp = $person->canDisplayDetails();
 	 $boxID = $pid.".".$personcount.".".$count;
 	 $mouseAction1 = "onmouseover=\"clear_family_box_timeout('".$boxID."');\" onmouseout=\"family_box_timeout('".$boxID."');\"";
 	 $mouseAction2 = " onmouseover=\"expandbox('".$boxID."', $style); return false;\" onmouseout=\"restorebox('".$boxID."', $style); return false;\"";
 	 $mouseAction3 = " onmousedown=\"expandbox('".$boxID."', $style); return false;\" onmouseup=\"restorebox('".$boxID."', $style); return false;\"";
 	 $mouseAction4 = " onclick=\"expandbox('".$boxID."', $style); return false;\"";
-	 if ($disp || showLivingNameByID($pid)) {
+	 if ($person->canDisplayName()) {
 		  if ($show_famlink && (empty($SEARCH_SPIDER))) {
 			   if ($LINK_ICONS!="disabled") {
 					//-- draw a box for the family popup
@@ -125,35 +129,35 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 					else $title = $pid." :".$pgv_lang["hourglass_chart"];
 						print "<a href=\"hourglass.php?pid=$pid&amp;chart_style=$chart_style&amp;PEDIGREE_GENERATIONS=$OLD_PGENS&amp;box_width=$box_width&amp;ged=$GEDCOM&amp;show_spouse=$show_spouse&amp;show_full=$show_full\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["hourglass_chart"]."</b></a><br />\n";
 					}
-					$ct = preg_match_all("/1\s*FAMS\s*@(.*)@/", $indirec, $match, PREG_SET_ORDER);
-					for ($i=0; $i<$ct; $i++) {
-						 $famid = $match[$i][1];
-						 $famrec = find_family_record($famid);
-						 if ($famrec) {
-							  $parents = find_parents_in_record($famrec);
-							  $spouse = "";
-							  if ($pid==$parents["HUSB"]) $spouse = $parents["WIFE"];
-							  if ($pid==$parents["WIFE"]) $spouse=$parents["HUSB"];
-							  $num = preg_match_all("/1\s*CHIL\s*@(.*)@/", $famrec, $smatch,PREG_SET_ORDER);
+					
+					$fams = $person->getSpouseFamilies();
+					/* @var $family Family */
+					foreach($fams as $famid=>$family) {
+						if (!is_null($family)) {
+							$spouse = $family->getSpouse($person);
+							 	
+							$children = $family->getChildren();
+							$num = count($children);
 							  if ((!empty($spouse))||($num>0)) {
 	 							 if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["familybook_chart"].": ".$famid;
 	 							 else $title = $famid." :".$pgv_lang["familybook_chart"];
 								 print "<a href=\"family.php?famid=$famid&amp;ged=$GEDCOM\" title=\"$title\" ".$mouseAction1."><b>".$pgv_lang["fam_spouse"]."</b></a><br /> \n";
 								if (!empty($spouse)) {
-	 								if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$spouse;
-	 								else $title = $spouse." :".$pgv_lang["indi_info"];
-									print "<a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1>";
- 									   if (($SHOW_LIVING_NAMES>=$PRIV_PUBLIC) || (displayDetailsByID($spouse))||(showLivingNameByID($spouse))) print PrintReady(get_person_name($spouse));
+	 								if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$spouse->getXref();
+	 								else $title = $spouse->getXref()." :".$pgv_lang["indi_info"];
+									print "<a href=\"individual.php?pid=".$spouse->getXref()."&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1>";
+ 									   if ($spouse->canDisplayName()) print PrintReady($spouse->getName());
 									   else print $pgv_lang["private"];
 									   print "</a><br />\n";
 								}
 							  }
-							  for($j=0; $j<$num; $j++) {
-								   $cpid = $smatch[$j][1];
+							/* @var $child Person */
+							foreach($children as $c=>$child) {
+								$cpid = $child->getXref();
 	 							   if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$cpid;
 	 							   else $title = $cpid." :".$pgv_lang["indi_info"];
 								   print "\n\t\t\t\t&nbsp;&nbsp;<a href=\"individual.php?pid=$cpid&amp;ged=$GEDCOM\" title=\"$title\" $mouseAction1>";
- 								   if (($SHOW_LIVING_NAMES>=$PRIV_PUBLIC) || (displayDetailsByID($cpid))||(showLivingNameByID($cpid))) print PrintReady(get_person_name($cpid));
+ 								if ($child->canDisplayName()) print PrintReady($child->getName());
 								   else print $pgv_lang["private"];
 								   print "<br /></a>";
 							  }
@@ -275,9 +279,9 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 		  else print "\n\t\t\t<div id=\"out-$boxID\" class=\"person_box$isF\" style=\"padding: 2px; overflow: hidden;\"><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\"><tr><td valign=\"top\">";
 	 }
 	 //-- find the name
-	 $name = get_person_name($pid);
+	 $name = $person->getName();
 	 if ($MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES && showFact("OBJE", $pid)) {
-		  $object = find_highlighted_object($pid, $indirec);
+	 	  $object = $person->findHighlightedMedia();
 		  if (!empty($object["thumb"])) {
 			   $size = findImageSize($object["thumb"]);
 			   $class = "pedigree_image_portrait";
@@ -298,10 +302,10 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 		  }
 	 }
 	 //-- find additional name
-	 $addname = get_add_person_name($pid);
+	 $addname = $person->getAddName();
 	 //-- check if the persion is visible
 	 if (!$disp) {
-		  if (showLivingName($indirec)) {
+		  if ($person->canDisplayName()) {
 			   // NOTE: Start span namedef-$personcount.$pid.$count
 			   if ($TEXT_DIRECTION=="ltr") $title = $pgv_lang["indi_info"].": ".$pid;
 			   else $title = $pid." :".$pgv_lang["indi_info"];
@@ -333,7 +337,9 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 		  else {
 			if(empty($SEARCH_SPIDER)) {
 				$user = getUser($CONTACT_EMAIL);
-				print "<a href=\"javascript:;\" onclick=\"if (confirm('".preg_replace("'<br />'", " ", $pgv_lang["privacy_error"])."\\n\\n".str_replace("#user[fullname]#", $user["firstname"]." ".$user["lastname"], $pgv_lang["clicking_ok"])."')) ";
+				if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+				else $userName = $user["firstname"]." ".$user["lastname"];
+				print "<a href=\"javascript:;\" onclick=\"if (confirm('".preg_replace("'<br />'", " ", $pgv_lang["privacy_error"])."\\n\\n".str_replace("#user[fullname]#", $userName, $pgv_lang["clicking_ok"])."')) ";
 				if ($CONTACT_METHOD!="none") {
 					if ($CONTACT_METHOD=="mailto") print "window.location = 'mailto:".$user["email"]."'; ";
 					else print "message('$CONTACT_EMAIL', '$CONTACT_METHOD'); ";
@@ -369,10 +375,11 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 // NOTE: Start span namedef-$pid.$personcount.$count
 	 print "><span id=\"namedef-$boxID\" class=\"name$style";
 	 // add optional CSS style for each fact
+	 $indirec = $person->getGedcomRecord();
 	 $cssfacts = array("BIRT","CHR","DEAT","BURI","CREM","ADOP","BAPM","BARM","BASM","BLES","CHRA","CONF","FCOM","ORDN","NATU","EMIG","IMMI","CENS","PROB","WILL","GRAD","RETI","CAST","DSCR","EDUC","IDNO",
 	 "NATI","NCHI","NMR","OCCU","PROP","RELI","RESI","SSN","TITL","BAPL","CONL","ENDL","SLGC","_MILI");
 	 foreach($cssfacts as $indexval => $fact) {
-		  $ct = preg_match_all("/1 $fact/", $indirec, $nmatch, PREG_SET_ORDER);
+		  $ct = preg_match("/1 $fact/", $indirec, $nmatch);
 		  if ($ct>0) print " $fact";
 	 }
 	 print "\">";
@@ -381,11 +388,7 @@ function print_pedigree_person($pid, $style=1, $show_famlink=true, $count=0, $pe
 	 print "</span>";
 	 print "<span class=\"name$style\">";
 	 // NOTE: IMG ID
-	 print " <img id=\"box-$boxID-gender\" src=\"$PGV_IMAGE_DIR/";
-	 if ($isF=="") print $PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"];
-	 else  if ($isF=="F")print $PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"];
-	 else  print $PGV_IMAGES["sexn"]["small"]."\" title=\"".$pgv_lang["unknown"]."\" alt=\"".$pgv_lang["unknown"];
-	 print "\" class=\"gender_image\" />";
+	 print " ".$person->getSexImage('', "box-$boxID-gender");
 	 print "</span>\r\n";
 	 if ($SHOW_ID_NUMBERS) {
 			if ($TEXT_DIRECTION=="ltr") print "<span class=\"details$style\">" . getLRM() . "($pid)" . getLRM() . " </span>";
@@ -414,25 +417,11 @@ if ($show_full)
 {
 	 print "\n<div id=\"inout2-$boxID\" ";
 	  print " style=\"display: block;\">\n";
-	 $birttag = "BIRT";
-	 $bpos1 = strpos($indirec, "1 BIRT");
-	 if ($bpos1) {
-	 	if (showFact($birttag, $pid)) print_simple_fact($indirec, $birttag, $pid);
-	 }
-	 //-- no birth check for christening or baptism
-	 else {
-		  $bpos1 = strpos($indirec, "1 CHR");
-		  if ($bpos1) {
-			   $birttag = "CHR";
-			   if (showFact($birttag, $pid)) print_simple_fact($indirec, $birttag, $pid);
-		  }
-		  else {
-			   $bpos1 = strpos($indirec, "1 BAPM");
-			   if ($bpos1) {
-					$birttag = "BAPM";
-					if (showFact($birttag, $pid)) print_simple_fact($indirec, $birttag, $pid);
-			   }
-		  }
+	 
+	 $birthEvent = $person->getBirthEvent();
+	 
+	 if (!empty($birthEvent)) {
+	 	if ($birthEvent->canShow()) $birthEvent->print_simple_fact();
 	 }
 	 //-- section to display optional tags in the boxes
 	 if (!empty($CHART_BOX_TAGS)) {
@@ -444,11 +433,9 @@ if ($show_full)
 		 }
 	 }
 
-	 $bpos1 = strpos($indirec, "1 DEAT");
-	 if ($bpos1) {
-		  if (showFact("DEAT", $pid)) {
-			  print_simple_fact($indirec, "DEAT", $pid);
-		  }
+	 $deathEvent = $person->getDeathEvent();
+	 if (!empty($deathEvent)) {
+	 	if ($deathEvent->canShow()) $deathEvent->print_simple_fact();
 	 }
 	 foreach (array("BURI", "CREM") as $indexval => $tag) {
 	 	if (strpos($CHART_BOX_TAGS, $tag)!==false && showFact($tag, $pid)) print_simple_fact($indirec, $tag, $pid);
@@ -494,7 +481,7 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	global $pgv_lang, $bwidth;
 	global $HOME_SITE_URL, $HOME_SITE_TEXT, $SERVER_URL;
 	global $BROWSERTYPE, $SEARCH_SPIDER;
-	global $view, $cart;
+	global $view, $cart, $NAME_REVERSE;
 	global $CHARACTER_SET, $VERSION, $PGV_IMAGE_DIR, $GEDCOMS, $GEDCOM, $GEDCOM_TITLE, $CONTACT_EMAIL, $COMMON_NAMES_THRESHOLD, $INDEX_DIRECTORY;
 	global $SCRIPT_NAME, $QUERY_STRING, $action, $query, $changelanguage,$theme_name;
 	global $FAVICON, $stylesheet, $print_stylesheet, $rtl_stylesheet, $headerfile, $toplinks, $THEME_DIR, $print_headerfile;
@@ -578,9 +565,11 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 		 $old_META_PAGE_TOPIC = $META_PAGE_TOPIC;
 		  $cuser = getUser($CONTACT_EMAIL);
 		  if ($cuser) {
-			  if (empty($META_AUTHOR)) $META_AUTHOR = $cuser["firstname"]." ".$cuser["lastname"];
-			  if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuser["firstname"]." ".$cuser["lastname"];
-			  if (empty($META_COPYRIGHT)) $META_COPYRIGHT = $cuser["firstname"]." ".$cuser["lastname"];
+			  if ($NAME_REVERSE) $cuserName = $cuser["lastname"]." ".$cuser["firstname"];
+			  else $cuserName = $cuser["firstname"]." ".$cuser["lastname"];
+			  if (empty($META_AUTHOR)) $META_AUTHOR = $cuserName;
+			  if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuserName;
+			  if (empty($META_COPYRIGHT)) $META_COPYRIGHT = $cuserName;
 		  }
 		  if (!empty($META_AUTHOR)) print "<meta name=\"author\" content=\"".$META_AUTHOR."\" />\n";
 		  if (!empty($META_PUBLISHER)) print "<meta name=\"publisher\" content=\"".$META_PUBLISHER."\" />\n";
@@ -746,7 +735,7 @@ function print_simple_header($title) {
 	 global $pgv_lang;
 	 global $HOME_SITE_URL;
 	 global $HOME_SITE_TEXT, $SEARCH_SPIDER;
-	 global $view, $rtl_stylesheet;
+	 global $view, $rtl_stylesheet, $NAME_REVERSE;
 	 global $CHARACTER_SET, $VERSION, $PGV_IMAGE_DIR;
 	 global $SCRIPT_NAME, $QUERY_STRING, $action, $query, $changelanguage;
 	 global $FAVICON, $stylesheet, $headerfile, $toplinks, $THEME_DIR, $print_headerfile, $SCRIPT_NAME;
@@ -788,9 +777,11 @@ function print_simple_header($title) {
 		 $old_META_PAGE_TOPIC = $META_PAGE_TOPIC;
 		  $cuser = getUser($CONTACT_EMAIL);
 		  if ($cuser) {
-			  if (empty($META_AUTHOR)) $META_AUTHOR = $cuser["firstname"]." ".$cuser["lastname"];
-			  if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuser["firstname"]." ".$cuser["lastname"];
-			  if (empty($META_COPYRIGHT)) $META_COPYRIGHT = $cuser["firstname"]." ".$cuser["lastname"];
+			  if ($NAME_REVERSE) $cuserName = $cuser["lastname"]." ".$cuser["firstname"];
+			  else $cuserName = $cuser["firstname"]." ".$cuser["lastname"];
+			  if (empty($META_AUTHOR)) $META_AUTHOR = $cuserName;
+			  if (empty($META_PUBLISHER)) $META_PUBLISHER = $cuserName;
+			  if (empty($META_COPYRIGHT)) $META_COPYRIGHT = $cuserName;
 		  }
 		  if (!empty($META_AUTHOR)) print "<meta name=\"author\" content=\"".$META_AUTHOR."\" />\n";
 		  if (!empty($META_PUBLISHER)) print "<meta name=\"publisher\" content=\"".$META_PUBLISHER."\" />\n";
@@ -981,14 +972,14 @@ function print_lang_form($option=0) {
 					$vars = preg_split('/(^\?|\&(amp;)*)/', normalize_query_string($QUERY_STRING."&amp;changelanguage=&amp;NEWLANGUAGE="), -1, PREG_SPLIT_NO_EMPTY);
 					foreach ($vars as $var) {
 						$parts = preg_split("/=/", $var);
-						print "\n\t\t<input type=\"hidden\" name=\"$parts[0]\" value=\"".htmlentities(urldecode($parts[1]))."\" />";
+								print "\n\t\t<input type=\"hidden\" name=\"$parts[0]\" value=\"".urldecode($parts[1])."\" />";
 					}
 					print "\n\t\t<input type=\"hidden\" name=\"changelanguage\" value=\"yes\" />\n\t\t<select name=\"NEWLANGUAGE\" class=\"header_select\" onchange=\"submit();\">";
 					print "\n\t\t\t<option value=\"\">".$pgv_lang["change_lang"]."</option>";
 					foreach ($pgv_language as $key=>$value) {
 						 if ($language_settings[$key]["pgv_lang_use"]) {
 							  print "\n\t\t\t<option value=\"$key\" ";
-							  if ($LANGUAGE == $key) print " selected=\"selected\" class=\"selected-option\"";
+							  if ($LANGUAGE == $key) print "class=\"selected-option\"";
 							  print ">".$pgv_lang[$key]."</option>";
 						 }
 					}
@@ -1028,6 +1019,8 @@ function print_user_links() {
  */
 function print_contact_links($style=0) {
 	global $WEBMASTER_EMAIL, $SUPPORT_METHOD, $CONTACT_EMAIL, $CONTACT_METHOD, $pgv_lang;
+	global $NAME_REVERSE;
+
 	if ($SUPPORT_METHOD=="none" && $CONTACT_METHOD=="none") return array();
 	if ($SUPPORT_METHOD=="none") $WEBMASTER_EMAIL = $CONTACT_EMAIL;
 	if ($CONTACT_METHOD=="none") $CONTACT_EMAIL = $WEBMASTER_EMAIL;
@@ -1038,33 +1031,44 @@ function print_contact_links($style=0) {
 			if ($CONTACT_EMAIL==$WEBMASTER_EMAIL) {
 				$user = getUser($WEBMASTER_EMAIL);
 				if (($user)&&($SUPPORT_METHOD!="mailto")) {
-					print $pgv_lang["for_all_contact"]." <a href=\"javascript:;\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\" onclick=\"message('$WEBMASTER_EMAIL', '$SUPPORT_METHOD'); return false;\">".$user["firstname"]." ".$user["lastname"]."</a><br />\n";
-				}
-				else {
+					if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+					else $userName = $user["firstname"]." ".$user["lastname"];
+					print $pgv_lang["for_all_contact"]." <a href=\"javascript:;\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\" onclick=\"message('$WEBMASTER_EMAIL', '$SUPPORT_METHOD'); return false;\">".$userName."</a><br />\n";
+				} else {
 					print $pgv_lang["for_support"]." <a href=\"mailto:";
-					if ($user) print $user["email"]."\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\">".$user["firstname"]." ".$user["lastname"]."</a><br />\n";
-					else print $WEBMASTER_EMAIL."\">".$WEBMASTER_EMAIL."</a><br />\n";
+					if ($user) {
+						if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+						else $userName = $user["firstname"]." ".$user["lastname"];
+						print $user["email"]."\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\">".$userName."</a><br />\n";
+					} else print $WEBMASTER_EMAIL."\">".$WEBMASTER_EMAIL."</a><br />\n";
 				}
-			}
+			} else {
 			//-- display two messages if the contact users are different
-			else {
 				  $user = getUser($CONTACT_EMAIL);
 				  if (($user)&&($CONTACT_METHOD!="mailto")) {
-					  print $pgv_lang["for_contact"]." <a href=\"javascript:;\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\" onclick=\"message('$CONTACT_EMAIL', '$CONTACT_METHOD'); return false;\">".$user["firstname"]." ".$user["lastname"]."</a><br />\n";
-				  }
-				  else {
+					  if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+					  else $userName = $user["firstname"]." ".$user["lastname"];
+					  print $pgv_lang["for_contact"]." <a href=\"javascript:;\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\" onclick=\"message('$CONTACT_EMAIL', '$CONTACT_METHOD'); return false;\">".$userName."</a><br />\n";
+				  } else {
 					   print $pgv_lang["for_contact"]." <a href=\"mailto:";
-					   if ($user) print $user["email"]."\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\">".$user["firstname"]." ".$user["lastname"]."</a><br />\n";
-					   else print $CONTACT_EMAIL."\">".$CONTACT_EMAIL."</a><br />\n";
+					   if ($user) {
+					  		if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+					  		else $userName = $user["firstname"]." ".$user["lastname"];
+							print $user["email"]."\" accesskey=\"". $pgv_lang["accesskey_contact"] ."\">".$userName."</a><br />\n";
+					   } else print $CONTACT_EMAIL."\">".$CONTACT_EMAIL."</a><br />\n";
 				  }
 				  $user = getUser($WEBMASTER_EMAIL);
 				  if (($user)&&($SUPPORT_METHOD!="mailto")) {
-					  print $pgv_lang["for_support"]." <a href=\"javascript:;\" onclick=\"message('$WEBMASTER_EMAIL', '$SUPPORT_METHOD'); return false;\">".$user["firstname"]." ".$user["lastname"]."</a><br />\n";
-				  }
-				  else {
+					  if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+					  else $userName = $user["firstname"]." ".$user["lastname"];
+					  print $pgv_lang["for_support"]." <a href=\"javascript:;\" onclick=\"message('$WEBMASTER_EMAIL', '$SUPPORT_METHOD'); return false;\">".$userName."</a><br />\n";
+				  } else {
 					   print $pgv_lang["for_support"]." <a href=\"mailto:";
-					   if ($user) print $user["email"]."\">".$user["firstname"]." ".$user["lastname"]."</a><br />\n";
-					   else print $WEBMASTER_EMAIL."\">".$WEBMASTER_EMAIL."</a><br />\n";
+					   if ($user) {
+					  	   if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+					  	   else $userName = $user["firstname"]." ".$user["lastname"];
+						   print $user["email"]."\">".$userName."</a><br />\n";
+					   } else print $WEBMASTER_EMAIL."\">".$WEBMASTER_EMAIL."</a><br />\n";
 				  }
 			}
 			print "</div>\n";
@@ -1075,7 +1079,9 @@ function print_contact_links($style=0) {
 				$submenu = array();
 				$user = getUser($WEBMASTER_EMAIL);
 				if (($user)&&($SUPPORT_METHOD!="mailto")) {
-					$submenu["label"] = $pgv_lang["support_contact"]." ".$user["firstname"]." ".$user["lastname"];
+					if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+					else $userName = $user["firstname"]." ".$user["lastname"];
+					$submenu["label"] = $pgv_lang["support_contact"]." ".$userName;
 					$submenu["onclick"] = "message('$WEBMASTER_EMAIL', '$SUPPORT_METHOD'); return false;";
 					$submenu["link"] = "#";
 				}
@@ -1083,10 +1089,11 @@ function print_contact_links($style=0) {
 					$submenu["label"] = $pgv_lang["support_contact"]." ";
 					$submenu["link"] = "mailto:";
 					if ($user) {
+						if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+						else $userName = $user["firstname"]." ".$user["lastname"];
 						$submenu["link"] .= $user["email"];
-						$submenu["label"] .= $user["firstname"]." ".$user["lastname"];
-					}
-					else {
+						$submenu["label"] .= $userName;
+					} else {
 						$submenu["link"] .= $WEBMASTER_EMAIL;
 						$submenu["label"] .= $WEBMASTER_EMAIL;
 					}
@@ -1096,23 +1103,24 @@ function print_contact_links($style=0) {
 	            $submenu["class"] = "submenuitem";
 	            $submenu["hoverclass"] = "submenuitem_hover";
 	            $menuitems[] = $submenu;
-			}
-			else {
+			} else {
 				$submenu = array();
 				$user = getUser($CONTACT_EMAIL);
 				if (($user)&&($CONTACT_METHOD!="mailto")) {
-					$submenu["label"] = $pgv_lang["genealogy_contact"]." ".$user["firstname"]." ".$user["lastname"];
+					if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+					else $userName = $user["firstname"]." ".$user["lastname"];
+					$submenu["label"] = $pgv_lang["genealogy_contact"]." ".$userName;
 					$submenu["onclick"] = "message('$CONTACT_EMAIL', '$CONTACT_METHOD'); return false;";
 					$submenu["link"] = "#";
-				}
-				else {
+				} else {
 					$submenu["label"] = $pgv_lang["genealogy_contact"]." ";
 					$submenu["link"] = "mailto:";
 					if ($user) {
+						if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+						else $userName = $user["firstname"]." ".$user["lastname"];
 						$submenu["link"] .= $user["email"];
-						$submenu["label"] .= $user["firstname"]." ".$user["lastname"];
-					}
-					else {
+						$submenu["label"] .= $userName;
+					} else {
 						$submenu["link"] .= $CONTACT_EMAIL;
 						$submenu["label"] .= $CONTACT_EMAIL;
 					}
@@ -1124,18 +1132,20 @@ function print_contact_links($style=0) {
 	            $submenu = array();
 				$user = getUser($WEBMASTER_EMAIL);
 				if (($user)&&($SUPPORT_METHOD!="mailto")) {
-					$submenu["label"] = $pgv_lang["support_contact"]." ".$user["firstname"]." ".$user["lastname"];
+					if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+					else $userName = $user["firstname"]." ".$user["lastname"];
+					$submenu["label"] = $pgv_lang["support_contact"]." ".$userName;
 					$submenu["onclick"] = "message('$WEBMASTER_EMAIL', '$SUPPORT_METHOD'); return false;";
 					$submenu["link"] = "#";
-				}
-				else {
+				} else {
 					$submenu["label"] = $pgv_lang["support_contact"]." ";
 					$submenu["link"] = "mailto:";
 					if ($user) {
+						if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+						else $userName = $user["firstname"]." ".$user["lastname"];
 						$submenu["link"] .= $user["email"];
-						$submenu["label"] .= $user["firstname"]." ".$user["lastname"];
-					}
-					else {
+						$submenu["label"] .= $userName;
+					} else {
 						$submenu["link"] .= $WEBMASTER_EMAIL;
 						$submenu["label"] .= $WEBMASTER_EMAIL;
 					}
@@ -1616,7 +1626,8 @@ function print_gedcom_title_link($InHeader=FALSE) {
 
 //-- function to print a privacy error with contact method
 function print_privacy_error($username) {
-	 global $pgv_lang, $CONTACT_METHOD, $SUPPORT_METHOD, $WEBMASTER_EMAIL;
+	 global $pgv_lang, $CONTACT_METHOD, $SUPPORT_METHOD, $WEBMASTER_EMAIL, $NAME_REVERSE;
+
 	 $method = $CONTACT_METHOD;
 	 if ($username==$WEBMASTER_EMAIL) $method = $SUPPORT_METHOD;
 	 $user = getUser($username);
@@ -1631,15 +1642,16 @@ function print_privacy_error($username) {
 		  if (!$user) {
 			   $email = $username;
 			   $fullname = $username;
-		  }
-		  else {
+		  } else {
 			   $email = $user["email"];
-			   $fullname = $user["firstname"]." ".$user["lastname"];
+			   if ($NAME_REVERSE) $fullname = $user["lastname"]." ".$user["firstname"];
+			   else $fullname = $user["firstname"]." ".$user["lastname"];
 		  }
 		  print " <a href=\"mailto:$email\">".$fullname."</a></span><br />";
-	 }
-	 else {
-		  print " <a href=\"javascript:;\" onclick=\"message('$username','$method'); return false;\">".$user["firstname"]." ".$user["lastname"]."</a></span><br />";
+	 } else {
+		 if ($NAME_REVERSE) $userName = $user["lastname"]." ".$user["firstname"];
+		 else $userName = $user["firstname"]." ".$user["lastname"];
+		 print " <a href=\"javascript:;\" onclick=\"message('$username','$method'); return false;\">".$userName."</a></span><br />";
 	 }
 }
 
@@ -2251,9 +2263,9 @@ function print_parents_age($pid, $bdate) {
 		$age = get_age($spouse->gedrec, $bdate, 0);
 		if ($spouse->getDeathDate(false)) {
 			$child_bdate=parse_date($bdate);
-			$mother_ddate=parse_date($spouse->getDeathDate(false));
+			$mother_ddate=$spouse->getDeathDate(false);
 			// highlight death of mother < 90 days
-			if ($mother_ddate[0]["jd1"]-$child_bdate[0]["jd1"]<90) $age = "<span style=\"border: thin solid grey; padding: 1px;\" title=\"".$factarray["_DEAT_MOTH"]."\">".$age."</span>";
+			if ($mother_ddate->date1->minJD-$child_bdate[0]["jd1"]<90) $age = "<span style=\"border: thin solid grey; padding: 1px;\" title=\"".$factarray["_DEAT_MOTH"]."\">".$age."</span>";
 		}
 		print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"gender_image\" />".$age;
 	}
@@ -2262,16 +2274,15 @@ function print_parents_age($pid, $bdate) {
 /**
  * print fact DATE TIME
  *
- * @param string $factrec	gedcom fact record
+ * @param Event $eventObj	Event to print the date for
  * @param boolean $anchor	option to print a link to calendar
  * @param boolean $time		option to print TIME value
- * @param string $fact		optional fact name (to print age)
- * @param string $pid		optional person ID (to print age)
- * @param string $indirec	optional individual record (to print age)
  */
-function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid=false, $indirec=false) {
+function print_fact_date(&$eventObj, $anchor=false, $time=false) {
 	global $factarray, $pgv_lang, $SEARCH_SPIDER;
 
+	if (!is_object($eventObj)) pgv_error_handler(2, "Must use Event object", __FILE__, __LINE__);
+	$factrec = $eventObj->getGedcomRecord();
 	$ct = preg_match("/2 DATE (.+)/", $factrec, $match);
 	if ($ct>0) {
 		print " ";
@@ -2286,16 +2297,17 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 			$tt = preg_match("/[2-3] TIME (.*)/", $timerec, $tmatch);
 			if ($tt>0) print " - <span class=\"date\">".$tmatch[1]."</span>";
 		}
-		if ($fact and $pid) {
+		$fact = $eventObj->getTag();
+		$parent = $eventObj->getParentObject();
+		if (!is_null($parent) && $parent->getType()=='INDI') {
 			// age of parents at child birth
-			if ($fact=="BIRT") print_parents_age($pid, $match[1]);
+			if ($fact=="BIRT") print_parents_age($parent->getXref(), $match[1]);
 			// age at event
 			else if ($fact!="CHAN") {
-				if (!$indirec) $indirec=find_person_record($pid);
+				$death = $parent->getDeathEvent();
 				// do not print age after death
-				$deatrec=get_sub_record(1, "1 DEAT", $indirec);
-				if (empty($deatrec)||(compare_facts_date($factrec, $deatrec)<=0)||(strstr($factrec, "1 DEAT"))) {
-					print get_age($indirec,$match[1]);
+				if (empty($death)||($eventObj->getTag()=='DEAT')||(compare_facts_date($eventObj, $death)<=0)) {
+					print get_age($parent->getGedcomRecord(),$eventObj->getRawDate());
 				}
 			}
 		}
@@ -2305,8 +2317,6 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 		// 1 DEAT Y with no DATE => print YES
 		// 1 DEAT N is not allowed
 		// It is not proper GEDCOM form to use a N(o) value with an event tag to infer that it did not happen.
-		$factrec = str_replace("\r\nPGV_OLD\r\n", "", $factrec);
-		$factrec = str_replace("\r\nPGV_NEW\r\n", "", $factrec);
 		$factdetail = preg_split("/ /", trim($factrec));
 		if (isset($factdetail)) if (count($factdetail) == 3) if (strtoupper($factdetail[2]) == "Y") print $pgv_lang["yes"];
 	}
@@ -2343,13 +2353,14 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 /**
  * print fact PLACe TEMPle STATus
  *
- * @param string $factrec	gedcom fact record
+ * @param Event $eventObj	gedcom fact record
  * @param boolean $anchor	option to print a link to placelist
  * @param boolean $sub		option to print place subrecords
  * @param boolean $lds		option to print LDS TEMPle and STATus
  */
-function print_fact_place($factrec, $anchor=false, $sub=false, $lds=false) {
+function print_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 	global $SHOW_PEDIGREE_PLACES, $TEMPLE_CODES, $pgv_lang, $factarray, $SEARCH_SPIDER;
+	$factrec = $eventObj->getGedcomRecord();
 	$out = false;
 	$ct = preg_match("/2 PLAC (.*)/", $factrec, $match);
 	if ($ct>0) {
@@ -2446,20 +2457,17 @@ function print_fact_place($factrec, $anchor=false, $sub=false, $lds=false) {
 function print_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM", "DEAT", "BURI", "BAPL", "ADOP")) {
 	global $pgv_lang, $factarray, $LANGUAGE, $TEXT_DIRECTION;
 
-	$indirec = find_person_record($key);
-	if (!$indirec) $indirec = find_family_record($key);
+	$person = GedcomRecord::getInstance($key);
+	if (is_null($person)) return;
 	foreach ($majorfacts as $indexval => $fact) {
-		$factrec = get_sub_record(1, "1 $fact", $indirec);
-		if (strlen($factrec)>7 and showFact("$fact", $key) and !FactViewRestricted($key, $factrec)) {
+		$event = $person->getFactByType($fact);
+		if (!is_null($event) && $event->hasDatePlace() && $event->canShow()) {
 			print "<span dir=\"$TEXT_DIRECTION\">";
 			echo "<br /><i>";
-			//print " -- <i>";
-			if (isset($pgv_lang[$fact])) print $pgv_lang[$fact];
-			else if (isset($factarray[$fact])) print $factarray[$fact];
-			else print $fact;
+			print $event->getLabel();
 			print " ";
-			print_fact_date($factrec);
-			print_fact_place($factrec);
+			print_fact_date($event);
+			print_fact_place($event);
 			print "</i>";
 			print "</span>";
 			break;
@@ -2474,12 +2482,22 @@ function print_first_major_fact($key, $majorfacts = array("BIRT", "CHR", "BAPM",
  */
 function CheckFactUnique($uniquefacts, $recfacts, $type) {
 
-	 foreach($recfacts as $indexval => $fact) {
-		if (($type == "SOUR") || ($type == "REPO")) $factrec = $fact[0];
-		if (($type == "FAM") || ($type == "INDI")) $factrec = $fact[1];
+	 foreach($recfacts as $indexval => $factarray) {
+	 	$fact=false;
+	 	if (is_object($factarray)) {
+	 		/* @var $factarray Event */
+	 		$fact = $factarray->getTag();	
+	 	}
+	 	else {
+			if (($type == "SOUR") || ($type == "REPO")) $factrec = $factarray[0];
+			if (($type == "FAM") || ($type == "INDI")) $factrec = $factarray[1];
+	 	
 		$ft = preg_match("/1 (\w+)(.*)/", $factrec, $match);
 		if ($ft>0) {
 			$fact = trim($match[1]);
+			}
+	 	}
+	 	if ($fact!==false) {
 			$key = array_search($fact, $uniquefacts);
 			if ($key !== false) unset($uniquefacts[$key]);
 		}

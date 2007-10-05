@@ -44,6 +44,7 @@ VERSION 4.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang['tree']									03 Oct 2007				A
 +$pgv_lang["historical_facts"]						14 Jun 2007				A
 +$pgv_lang["nephew"]								13 May 2007				A
 +$pgv_lang["niece"]									13 May 2007				A
