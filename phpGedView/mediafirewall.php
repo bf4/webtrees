@@ -58,6 +58,11 @@ function isImageTypeSupported($reqtype) {
 // basic idea from http://us.php.net/manual/en/function.imagecreatefromjpeg.php
 function sendErrorAndExit($type, $line1, $line2 = false) {
 
+	// line2 contains the information that only an admin should see, such as the full path to a file
+	if(!userIsAdmin(getUserName())) {  	 
+		$line2 = false;
+	}
+
 	$type = isImageTypeSupported($type);
 	if ( $type ){
 		// figure out how long the errr message is
@@ -184,7 +189,7 @@ if ($usewatermark) {
 	// getWatermarkConfigInfo() is defined in the watermark_text module
 	list($configfile, $configlastupdate) = getWatermarkConfigInfo();
 	$watermarkfile = getWatermarkPath($serverFilename);
-	if (!file_exists($watermarkfile)) {
+	if (!file_exists($watermarkfile) || $debug_forceImageRegen) {
 		// no saved watermark file exists
 		// generate the watermark file
 		$generatewatermark = true;

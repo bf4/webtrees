@@ -35,12 +35,16 @@ function getWatermarkConfigInfo() {
 	if (file_exists($configfile)) {
 		$configlastupdate = filemtime($configfile);
 		return array ($configfile, $configlastupdate);
+	} else {
+		$configfile = '';  
 	}
 
 	// now look for a generic file
 	$configfile = 'modules/watermark_text/config.php';
 	if (file_exists($configfile)) {
 		$configlastupdate = filemtime($configfile);
+	} else {
+		$configfile = '';  
 	}
 	return array ($configfile, $configlastupdate);
 }
@@ -55,7 +59,9 @@ function applyWatermark($im, $configfile) {
 	// load configuration variables
 	// note, this file was determine by getConfigInfo
 	// we pass it in here to avoid calling file_exists a couple more times 
-	include $configfile;
+	if ($configfile) {
+		include $configfile;
+	}
 
 	// these values should be set in config.php. if not, set some defaults.  
 	if (!isset($word1_text))		$word1_text   = "Sample Text";
@@ -86,7 +92,7 @@ function embedText($im, $text, $maxsize, $color, $font, $vpos, $hpos) {
 
 	// determine whether TTF is available
 	$useTTF = (function_exists("imagettftext")) ? true : false;
-	if (!isset($font)||!file_exists('modules/watermark_text/'.$font)) $useTTF = false;
+	if (!isset($font)||($font=='')||!file_exists('modules/watermark_text/'.$font)) $useTTF = false;
 
 	# no errors if an invalid color string was passed in, just strange colors 
 	$col=explode(",", $color);
