@@ -1732,59 +1732,19 @@ function compare_facts_date(&$arec, &$brec) {
 	}
 	else {
 		pgv_error_handler(2, "Don't parse the record, use the event class.", '','');
-	if (is_array($arec))
-		$arec = $arec[1];
-	if (is_array($brec))
-		$brec = $brec[1];
-
-	// If either fact is undated, the facts sort equally.
-	if (!preg_match("/2 DATE (.*)/", $arec, $amatch) || !preg_match("/2 DATE (.*)/", $brec, $bmatch))
-		return 0;
-
+		if (is_array($arec))
+			$arec = $arec[1];
+		if (is_array($brec))
+			$brec = $brec[1];
+	
+		// If either fact is undated, the facts sort equally.
+		if (!preg_match("/2 DATE (.*)/", $arec, $amatch) || !preg_match("/2 DATE (.*)/", $brec, $bmatch))
+			return 0;
+	
 		$adate = new GedcomDate($amatch[1]);
 		$bdate = new GedcomDate($bmatch[1]);
 	}
-
-	// If either date can't be parsed, don't sort.
-	if ($adate->date1->minJD==0 || $bdate->date1->minJD==0)
-		return 0;
-
-	// Remember that dates can be ranges and overlapping ranges sort equally.
-  $amin=$adate->date1->minJD;
-  $bmin=$bdate->date1->minJD;
-	if (empty($adate->date2))
-		$amax=$adate->date1->maxJD;
-	else
-		$amax=$adate->date2->maxJD;
-	if (empty($bdate->date2))
-		$bmax=$bdate->date1->maxJD;
-	else
-		$bmax=$bdate->date2->maxJD;
-
-	// BEF/AFT XXX sort as the day before/after XXX
-	if (strtoupper($adate->qual1)=='BEF') {
-		$amin=$amin-1;
-		$amax=$amin;
-	}
-	if (strtoupper($adate->qual1)=='AFT') {
-		$amax=$amax+1;
-		$amin=$amax;
-	}
-	if (strtoupper($bdate->qual1)=='BEF') {
-		$bmin=$bmin-1;
-		$bmax=$bmin;
-	}
-	if (strtoupper($bdate->qual1)=='AFT') {
-		$bmax=$bmax+1;
-		$bmin=$bmax;
-	}
-
-	if ($amax<$bmin)
-		return -1;
-	else if ($amin>$bmax)
-		return 1;
-	else
-		return 0;
+	return GedcomDate::Compare($a,$b);
 }
 
 // Sort the facts, using three conflicting rules (family sequence,
