@@ -1108,7 +1108,7 @@ class GedcomDate {
 	// BEF/AFT sort as the day before/after.
 	function Compare($a, $b) {
 		// Incomplete dates can't be sorted
-		if ($a->MinJD()==0 || $b->MinJD()==0)
+		if (!is_object($a) || !is_object($b) || $a->MinJD()==0 || $b->MinJD()==0)
 			return 0;
 		// Get min/max JD for each date.
 		switch ($a->qual1) {
