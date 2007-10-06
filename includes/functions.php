@@ -1744,7 +1744,7 @@ function compare_facts_date(&$arec, &$brec) {
 		$adate = new GedcomDate($amatch[1]);
 		$bdate = new GedcomDate($bmatch[1]);
 	}
-	return GedcomDate::Compare($a,$b);
+	return GedcomDate::Compare($adate,$bdate);
 }
 
 // Sort the facts, using three conflicting rules (family sequence,
