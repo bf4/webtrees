@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @author Kurt Norgaz
- * @author Adem GENÇ, uzayuydu@gmail.com, http://www.muttafi.com
+ * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
  * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
@@ -74,6 +74,7 @@ $pgv_lang["add_obje"]			= "Yeni mültimedya nesnesini ekle";
 $pgv_lang["add_name"]			= "Yeni isim ekle";
 $pgv_lang["edit_raw"]			= "Ham GEDCOM kayıdını düzenle";
 $pgv_lang["label_add_remote_link"]  = "Link Ekle";
+$pgv_lang["label_gedcom_id"]        = "Veritabanı ID";
 $pgv_lang["label_local_id"]         = "Kişisel ID";
 $pgv_lang["accept"]			= "Kabul et";
 $pgv_lang["accept_all"] 		= "Tüm değişiklikleri kabul et";
@@ -145,6 +146,7 @@ $pgv_lang["invalid_search_multisite_input_gender"] = "Lütfen daha fazla bilgi i
 $pgv_lang["label_diff_server"]      = "Farklı Site ";
 $pgv_lang["label_location"]         = "Site Konumu ";
 $pgv_lang["label_password_id2"]		= "Şifre: ";
+$pgv_lang["label_rel_to_current"]   = "Güncel Kişiye İlişki";
 $pgv_lang["label_remote_id"]        = "Uzak Kişi ID";
 $pgv_lang["label_same_server"]      = "Aynı site";
 $pgv_lang["label_site"]             = "Site";
@@ -163,18 +165,23 @@ $pgv_lang["media_exists"]			= "Media dosyası zaten var,";
 $pgv_lang["invalid_search_input"]	= "Lütfen sene ile beraber bir isim, soy isim ya da bir yerin ismini ekleyin";
 $pgv_lang["media_file"]			= "Medya dosyası";
 $pgv_lang["media_file_deleted"]		= "Media dosyası başarılı biçimde silindi.";
+$pgv_lang["media_file_moved"]			= "Media dosya taşındı.";
 $pgv_lang["media_file_not_moved"]	= "Media dosya taşınamaz.";
 $pgv_lang["media_file_not_renamed"]	= "Media dosya taşınamaz veya yeniden adlandırılanmaz.";
 $pgv_lang["media_thumb_exists"]		= "Media tırnak önizleme zaten mevcut.";
 $pgv_lang["multi_site_search"] 		= "Çoklu site arama";
+$pgv_lang["must_provide"]			= "Sağlamalısınız ";
 $pgv_lang["name_search"]			= "İsim: ";
 $pgv_lang["new_repo_created"]		= "Yeni saklama yeri oluşturuldu";
 $pgv_lang["new_source_created"] 	= "Yeni kaynak başarı ile eklenmiştir.";
 $pgv_lang["no_changes"]			= "Aktüel olarak yapılmış hiç bir değişiklik yoktur.";
 $pgv_lang["photo_replace"]		= "Bu fotoğrafı eski bir fotoğraf yerine mi koymak istiyorsunuz?";
 $pgv_lang["privacy_prevented_editing"]	= "Mahremiyet ayarları bu kayıtı düzenlemenizi engellemektedir.";
+$pgv_lang["record_marked_deleted"]		= "Bu kayıt yönetici onayı üzerine silme için işaretlendi.";
 $pgv_lang["replace_with"]			= "İle değiştir";
 $pgv_lang["show_changes"]		= "Bu kayıt güncelleştirilmiştir. Buraya tıklayıp değişiklikleri gözden geçirin.";
+$pgv_lang["thumb_genned"]			= "Tırnak önizleme #thumbnail# otomatikman üretildi.";
+$pgv_lang["thumbgen_error"]			= "Tırnak önizleme #thumbnail# otomatikman üretilemedi.";
 $pgv_lang["thumbnail"]			= "Tırnak resim";
 $pgv_lang["title_remote_link"]      = "Uzak link ekle";
 $pgv_lang["undo"]			= "Geri al";
