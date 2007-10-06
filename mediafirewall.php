@@ -28,8 +28,6 @@
 
 require_once("includes/controllers/media_ctrl.php");
 
-if (file_exists("modules/watermark_text/watermark_text.php")) include ("modules/watermark_text/watermark_text.php");
-
 $debug_mediafirewall	= 0; // set to 1 if you want to see media firewall values displayed instead of images
 $debug_watermark		= 0; // set to 1 if you want to see error messages from the watermark module instead of broken images
 $debug_forceImageRegen	= 0; // set to 1 if you want to force an image to be regenerated (for debugging only)
@@ -121,6 +119,155 @@ function getWatermarkPath ($path) {
 }
 
 
+
+// the media firewall passes in an image
+// this function can manipulate the image however it wants
+// before returning it back to the media firewall
+function applyWatermark($im) {
+	global $GEDCOMS, $GEDCOM;
+
+	// in the future these options will be set in the gedcom configuration area  
+
+	// text to watermark with 
+	$word1_text   = $GEDCOMS[$GEDCOM]["title"];
+	// maximum font size for "word1" ; will be automaticaly reduced to fit in the image
+	$word1_maxsize = 100;
+	// rgb color codes for text
+	$word1_color  = "0, 0, 0";
+	// ttf font file to use. must exist in the includes/fonts/ directory
+	$word1_font   = "";
+	// vertical position for the text to past; possible values are: top, middle or bottom, across
+	$word1_vpos   = "across";
+	// horizontal position for the text to past in media file; possible values are: left, right, top2bottom, bottom2top 
+	// this value is used only if $word1_vpos=across
+	$word1_hpos   = "left";
+
+	$word2_text   = $_SERVER["HTTP_HOST"];
+	$word2_maxsize = 20;
+	$word2_color  = "0, 0, 0";
+	$word2_font   = "";
+	$word2_vpos   = "top";
+	$word2_hpos   = "top2bottom";
+
+	embedText($im, $word1_text, $word1_maxsize, $word1_color, $word1_font, $word1_vpos, $word1_hpos);
+	embedText($im, $word2_text, $word2_maxsize, $word2_color, $word2_font, $word2_vpos, $word2_hpos);
+
+	return ($im);
+}
+ 
+function embedText($im, $text, $maxsize, $color, $font, $vpos, $hpos) {
+
+	// there are two ways to embed text with PHP
+	// (preferred) using GD and FreeType you can embed text using any True Type font
+	// (fall back) if that is not available, you can insert basic monospaced text
+
+	// determine whether TTF is available
+	$useTTF = (function_exists("imagettftext")) ? true : false;
+	if ($useTTF) {
+		if (!isset($font)||($font=='')||!file_exists('includes/fonts/'.$font)) {
+	  	$font = 'DejaVuSans.ttf';
+			if (!file_exists('includes/fonts/'.$font)) {
+			  $useTTF = false;
+	    }
+	  }
+	} 
+  
+	# no errors if an invalid color string was passed in, just strange colors 
+	$col=explode(",", $color);
+	$textcolor = @imagecolorallocate($im, $col[0],$col[1],$col[2]);
+
+	// paranoia is good!  make sure all variables have a value
+	if (!isset($vpos) || ($vpos!="top" && $vpos!="middle" && $vpos!="bottom" && $vpos!="across")) $vpos = "middle";
+	if (($vpos=="across") && (!isset($hpos) || ($hpos!="left" && $hpos!="right" && $hpos!="top2bottom" && $hpos!="bottom2top"))) $hpos = "left";
+
+	// make adjustments to settings that imagestring and imagestringup can't handle 
+	if (!$useTTF) {
+		// imagestringup only writes up, can't use top2bottom
+		if ($hpos=="top2bottom") $hpos = "bottom2top";  
+	}
+
+	$height = imagesy($im);
+	$width  = imagesx($im);
+	$calc_angle=rad2deg(atan($height/$width));
+	$hypoth=$height/sin(deg2rad($calc_angle));
+
+	// vertical and horizontal position of the text
+	switch ($vpos) {
+		case "top":
+			$taille=textlength($maxsize,$width,$text);
+			$pos_y=$height*0.15+$taille;
+			$pos_x=$width*0.15;
+			$rotation=0;
+			break;
+		case "middle":
+			$taille=textlength($maxsize,$width,$text);
+			$pos_y=($height+$taille)/2;
+			$pos_x=$width*0.15;
+			$rotation=0;
+			break;			
+		case "bottom":
+			$taille=textlength($maxsize,$width,$text);
+			$pos_y=($height*.85-$taille);
+			$pos_x=$width*0.15;
+			$rotation=0;
+			break;
+		case "across": 
+			switch ($hpos) {
+				case "left":
+				$taille=textlength($maxsize,$hypoth,$text);
+				$pos_y=($height*.85-$taille);
+				$taille_text=($taille-2)*(strlen(stripslashes($text)));
+				$pos_x=$width*0.15;
+				$rotation=$calc_angle;
+				break;
+				case "right":
+				$taille=textlength($maxsize,$hypoth,$text);
+				$pos_y=($height*.15-$taille);
+				$pos_x=$width*0.85;
+				$rotation=$calc_angle+180;
+				break;
+				case "top2bottom":
+				$taille=textlength($maxsize,$height,$text);
+				$pos_y=($height*.15-$taille);
+				$pos_x=($width*.90-$taille);
+				$rotation=-90;
+				break;
+				case "bottom2top":
+				$taille=textlength($maxsize,$height,$text);
+				$pos_y = $height*0.85;
+				$pos_x = $width*0.15;
+				$rotation=90;
+				break;			
+			}
+			break;
+		default:
+	}
+
+	// apply the text
+	if ($useTTF) {
+		imagettftext($im, $taille, $rotation, $pos_x, $pos_y, $textcolor, 'includes/fonts/'.$font, stripslashes($text));
+	} else {
+		if ($rotation!=90) {
+			imagestring($im, 5, $pos_x, $pos_y, stripslashes($text),$textcolor);
+		} else {
+			imagestringup($im, 5, $pos_x, $pos_y, stripslashes($text),$textcolor);
+		}
+	}
+
+}
+
+function textlength($t,$mxl,$text) {
+	$taille_c = $t;
+	while (($taille_c-2)*(strlen(stripslashes($text))) > $mxl) {
+		$taille_c--;
+		if ($taille_c == 2) break;
+	}
+	return ($taille_c);
+}
+
+
+
+// ******************************************************
 // start processing here
 
 // get serverfilename from the media controller
@@ -180,14 +327,9 @@ if ($type && function_exists("applyWatermark")) {
 }
 
 $watermarkfile = "";
-$configlastupdate = 0;
-$configfile = "";
 $generatewatermark = false;
 
 if ($usewatermark) {
-	// determine when the config settings were last updated
-	// getWatermarkConfigInfo() is defined in the watermark_text module
-	list($configfile, $configlastupdate) = getWatermarkConfigInfo();
 	$watermarkfile = getWatermarkPath($serverFilename);
 	if (!file_exists($watermarkfile) || $debug_forceImageRegen) {
 		// no saved watermark file exists
@@ -195,9 +337,8 @@ if ($usewatermark) {
 		$generatewatermark = true;
 	} else {
 		$watermarktime = filemtime($watermarkfile);  
-		if ( ($configlastupdate > $watermarktime) || ( $filetime > $watermarktime) ) {
-			// if config settings were updated after the saved file was created
-			// or if the original image was updated after the saved file was created
+		if ($filetime > $watermarktime) {
+			// if the original image was updated after the saved file was created
 			// generate the watermark file
 			$generatewatermark = true;
 		}
@@ -207,7 +348,7 @@ if ($usewatermark) {
 $mimetype = $controller->mediaobject->getMimetype();
 
 // setup the etag.  use enough info so that if anything important changes, the etag won't match
-$etag_string = basename($serverFilename).$filetime.getUserAccessLevel().$SHOW_NO_WATERMARK.$configlastupdate; 
+$etag_string = basename($serverFilename).$filetime.getUserAccessLevel().$SHOW_NO_WATERMARK; 
 $etag = dechex(crc32($etag_string));
 
 // parse IF_MODIFIED_SINCE header from client
@@ -310,8 +451,7 @@ if ( $generatewatermark ) {
 		sendErrorAndExit($controller->mediaobject->getFiletype(), $pgv_lang["media_broken"], $serverFilename);  
 	}
 
-	// applyWatermark() is defined in the watermark_text module
-	$im = applyWatermark($im, $configfile);
+	$im = applyWatermark($im);
 
 	$imSendFunc = 'image'.$type;
 	// save the image, if preferences allow
