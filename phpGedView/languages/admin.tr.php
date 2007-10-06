@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @author Kurt Norgaz
- * @author Adem GENÇ, uzayuydu@gmail.com, http://www.muttafi.com
+ * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
  * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
@@ -80,7 +80,7 @@ $pgv_lang["label_individuals"]      			= "Kişiseller";
 $pgv_lang["label_manual_search_engines"]		= "El ile IP yoluyla arama motorlarını işaretle";
 $pgv_lang["label_new_server"]     				= "Yeni site ekle";
 $pgv_lang["label_password_id"]					= "Şifre";
-$pgv_lang["label_remove_ip"]					= "Banlama IP Adresi (Eg: 198.128.*.*):";
+$pgv_lang["label_remove_ip"]					= "IP Adresini Banlama (Eg: 198.128.*.*):";
 $pgv_lang["label_remove_search"]				= "Arama motor örümcekleri olarak IP adresini işaretle: ";
 $pgv_lang["label_server_info"]     				= "Bütün kişiler yer boyunca uzaktan bağlandılar:";
 $pgv_lang["label_server_url"]       			= "Site URL/IP";
@@ -127,7 +127,7 @@ $pgv_lang["cleanup_users"]				= "Kullanıcıları temizle";
 $pgv_lang["click_here_to_continue"]		= "Devam etmek için buraya tıkla.";
 $pgv_lang["click_here_to_go_to_pedigree_tree"]	= "Soy ağacı - seçere tablosuna ulaşmak için buraya tıklayın";
 $pgv_lang["comment"]							= "Yönetici kullanıcıyı yorumlar";
-$pgv_lang["comment_exp"]						= "Yönetici uayardığı tarih";
+$pgv_lang["comment_exp"]						= "Yönetici uyardığı tarih";
 $pgv_lang["config_help"]						= "Genel ayarlar yardımı";
 $pgv_lang["config_still_writable"]				= "<i>config.php</i> dosyanız hala yazılabilirdir. Güvenlik için, bu dosyanın sade-okuma(read-only) izne ayarlayarak sitenizi güvenli hala getirebilirsiniz.";
 $pgv_lang["configuration"]		= "Genel ayarlar";
@@ -325,4 +325,8 @@ $pgv_lang["thumbnail_deleted"]		= "Tırnak önizleme dosya başarılı biçimde 
 $pgv_lang["thumbnail_not_deleted"]	= "Tırnak önizleme dosyası silinemiyor.";
 $pgv_lang["clear_cache"]			= "Cache Dosyaları Temizle";
 $pgv_lang["clear_cache_succes"]		= "Cache dosyalar temizlendi.";
+$pgv_lang["associated_files"]		= "Ortak dosyalar:";
+$pgv_lang["warn_file_delete"]		= "Bu dosya değişiklik verisi esnasında veya dil kurması gibi önemli bilgiyi kapsar. Bu dosyayı silmek istediğinizden emin misiniz?";
+$pgv_lang["deleted_files"]          = "Dosya silindi:";
+$pgv_lang["index_dir_cleanup"]		= "Index klasörü temizleme";
 ?>

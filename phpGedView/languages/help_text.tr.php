@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @author Kurt Norgaz
- * @author Adem GENÇ, uzayuydu@gmail.com, http://www.muttafi.com
+ * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
  * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
@@ -58,6 +58,29 @@ $pgv_lang["edituser_password_help"]		= "~#pgv_lang[password]#~<br /><br />Şifre
 $pgv_lang["edituser_conf_password_help"]	= "~#pgv_lang[confirm]#~<br /><br />Şifrenizi tekrar bu alana girmelisiniz bunun nedeni şifrenizi yazarken ne yazdığınızı göremediğiniz için herhangibir yanlışın olup olmadığını doğrulamak için gereklidir.<br /><br />Eğer herhangibi karakterde hata yaptıysanız uyarı alacaksınız ve her iki alanı tekrar şifrenizi girmenizi öneriyoruz.<br /><br />";
 $pgv_lang["edituser_change_lang_help"]		= "~#pgv_lang[change_lang]#~<br /><br />Burada dili değiştirebilirsiniz giriş yaptıktan sonra soyağacını kullanım dili olarak geçerli olacak ve istediğinizde dili değiştirebilirsiniz.<br /><br />İlk önce siteye eriştiğiniz zaman dil configurasyonda herşeyi görmek için PhpGedView aracı şunu farzeder, İstediğiniz zaman varsayınla dili tercih edebilirsiniz varsayılan dil yanlış olabilir bunun nedeni bu scriptin orijinal dili ingilizce olup uluslar arası diğer dillere amator kişilerin çevrilerinden dolayı eksik yada yanlış olabilir hatta hiç çevirilmemiş olabilir.<br /><br />Eğer istediğiniz dil yoksa yönetici kullanıma izin vermemiş veya hiç desteklemiyordur bunu öğrenmek için yöneci ile bağlatı kurun.<br /><br />PhpGedView çok fazla ücretsiz gönüllünün bir uluslar arası takımla bir projedir. Uzamanlar gelip giderler ingilizce dil diğer dillere göre çok daha iyi destek verir.<br /><br />Kullandığınız dil için yanlış veya çevirilmemiş olan dileri sizlerin yardımlarıyla çok daha iyi hale getirilebilir lütfen buna destek verin bu PhpGedView ücretsiz olarak herkese sunuluyor gelişmesi için herkesin desteği gerekiyor. Sizin desteğiniz nasıl olacak? Soyağacında gördüğünüz yanlış çevirilmiş veya hiç çevirilmemiş tabirleri Orilina ve doğru halı veya çevirdiğniz tabileri alt alta text dısyasına yazarak bu dosyayı yöneticinize ileterek onları işlemesini isteyebilirsiniz.";
 $pgv_lang["edituser_email_help"]		= "~#pgv_lang[emailadress]#~<br /><br />Sizinle haberleşmek için doğru email adresinizi girmeniz çok önemlidir.<br /><br /> Soyağacına üye olduktan sonra email hesabiniza bir mesaj gönderilecektir bu mesajın içinde hesabinizi aktifleştireceğiniz lik bulunmaktadır bu linki tıklamanız gerekiyor Bu yüzden gireceğiniz email adresiniz çok önemlidir gireceğiniz email adresinizden dahaönce mesajlar almış veya alır durumda olması gerekiyor buraya kayıt olduktan sonra email hesabi açarım demeyin çünkü üye olup Üye Olmak İstiyorum düğmesine basar basmaz soyağacı size posta gönderecektir bu postaya kesinlike ulaşmanız gerekiyor aksi durumda soy ağacına giriş imkanı olmayacaktır bu yüzden çalışna email adresinizi girmenizi unutmayın ve yanlış yazmadığınızdan emin olduktan sonra Üye Olmak İstiyorum düğmesini tıklayın.<br /><br />";
+$pgv_lang["help_contents_head_help"]		= "<b>YARDIM İLETİŞİMLERİ</b><br /><br />";
+$pgv_lang["help_contents_gedcom_info"]		= "GEDCOM bilgi";
+$pgv_lang["help_contents_gedcom_places"]	= "GEDCOM içinde yerleşim";
+$pgv_lang["ah3_help"]				= "_GEDCOM: Yükle ve Ekle";
+$pgv_lang["ah4_help"]				= "|_GEDCOM: Konfigürasyon dosya";
+$pgv_lang["ah5_help"]				= "_GEDCOM: Varsayılan";
+$pgv_lang["ah6_help"]				= "_GEDCOM: Sil";
+$pgv_lang["ah7_help"]				= "_GEDCOM: Ekle";
+$pgv_lang["ah8_help"]				= "_GEDCOM: Yeni oluştur";
+$pgv_lang["ah9_help"]				= "_GEDCOM: İndir";
+$pgv_lang["ah10_help"]				= "_GEDCOM: Yönetici sayfası";
+$pgv_lang["ah11_help"]				= "_GEDCOM: Biçim";
+$pgv_lang["ah12_help"]				= "_GEDCOM: İçeri aktar";
+$pgv_lang["ah13_help"]				= "_GEDCOM: Yükle";
+$pgv_lang["ah14_help"]				= "_GEDCOM: Onayla";
+$pgv_lang["ah15_help"]				= "_GEDCOM: UTF-8 den ANSI ye donuştur";
+$pgv_lang["ah16_help"]				= "_GEDCOM: Mahremiyet ayarları";
+$pgv_lang["ah17_help"]				= "_Kullanıcı Yönetimi";
+$pgv_lang["ah18_help"]				= "_Yönetim";
+$pgv_lang["ah19_help"]				= "_GEDCOM: Media araç";
+$pgv_lang["ah21_help"]				= "_Tercuman araçları";
+$pgv_lang["ah25_help"]				= "_PhpGedView yedekleme";
+$pgv_lang["ah26_help"]				= "_SSS Liste: Düzenle";
 
 $pgv_lang["register_comments_help"]	= "~#pgv_lang[comments]#~<br /><br />Buradaki soyağacıyla ilgili olup olmadığını site yöneticinin anlayabileceği veya tanıyabileceği şeklinde kendinizi tanıtan detaylı bilgi yazılması gerekiyor, Bu soyağacı sitesi yöneticisi aynı soydan olduğu için sizi kolayca tanıyabilecektir dedeniz ve anne baba isimleri yazarak kendinizi detaylı anlatmış olabilirsiniz.<br /><br />";
 $pgv_lang["register_gedcomid_help"]	= "~#pgv_lang[gedcomid]#~<br /><br />Bu soyağacında kayıtlı kişilerin her birinin ayrı ayrı ID numaraları vardır bu numaralar Gxx ile başlar veya başka harf ile başlar biliyorsanız girin bilmiyorsanız boş geçin aşağıdaki \"Kendinizi Tanıtın\" alanına kendinizi detaylı anlattığınızda ve yönetici onay verirken soyağacında sizin ID yanı Gedcom numaranız girecek ve siz soy ağacına girdiğiniz soyununu ootomatik olarak görülecektir ben nerdeyim diye aramanıza gerek kalmayacaktır.<br /><br />";
