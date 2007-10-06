@@ -1107,24 +1107,38 @@ class GedcomDate {
 	// return  0 if dates same/overlap/invalid
 	// BEF/AFT sort as the day before/after.
 	function Compare($a, $b) {
+		// Incomplete dates can't be sorted
+		if ($a->MinJD()==0 || $b->MinJD()==0)
+			return 0;
 		// Get min/max JD for each date.
-		if ($a->qual1=='BEF')
+		switch ($a->qual1) {
+		case 'bef':
 			$amin=$a->MinJD()-1;
-		else
-			$amin=$a->MinJD();
-		if ($b->qual1=='BEF')
-			$bmin=$b->MinJD()-1;
-		else
-			$bmin=$b->MinJD();
-		if ($a->qual1=='AFT')
+			$amax=$amin;
+			break;
+		case 'aft':
 			$amax=$a->MaxJD()+1;
-		else
+			$amin=$amax;
+			break;
+		default:
+			$amin=$a->MinJD();
 			$amax=$a->MaxJD();
-		if ($b->qual1=='AFT')
+			break;
+		}
+		switch ($b->qual1) {
+		case 'bef':
+			$bmin=$b->MinJD()-1;
+			$bmax=$bmin;
+			break;
+		case 'aft':
 			$bmax=$b->MaxJD()+1;
-		else
+			$bmin=$bmax;
+			break;
+		default:
+			$bmin=$b->MinJD();
 			$bmax=$b->MaxJD();
-
+			break;
+		}
 		if ($amax<$bmin)
 			return -1;
 		else
