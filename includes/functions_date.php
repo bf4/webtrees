@@ -302,12 +302,16 @@ function format_timestamp($t=NULL) {
 // Get the current julian day on the client/server
 ////////////////////////////////////////////////////////////////////////////////
 function server_jd() {
-	$tmp=new GedcomDate(date('j M Y'));
-	return $tmp->MinJD();
+	static $today=NULL;
+	if (is_null($today))
+		$today=new GedcomDate(date('j M Y'));
+	return $today->MinJD();
 }
 function client_jd() {
-	$tmp=new GedcomDate(date('j M Y'), client_time());
-	return $tmp->MinJD();
+	static $today=NULL;
+	if (is_null($today))
+		$today=new GedcomDate(date('j M Y'), client_time());
+	return $today->MinJD();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

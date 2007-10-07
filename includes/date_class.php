@@ -1089,16 +1089,22 @@ class GedcomDate {
 		return $tmp;
 	}
 
-	// Calculate the age of this event, at a given julian day
+	// Calculate the number of full years between two events.
 	// Return the result as either a number of years (for indi lists, etc.)
-	// or a gedcom style age string: "1y 2m 3d"
-	function GetAge($full, $jd=NULL) {
-		static $today=NULL;
-		if (is_null($today)) // don't keep calculating today
-			$today=client_jd();
-		if (is_null($jd))
-			$jd=$today;
-		return $this->date1->GetAge($full, $jd);
+	function GetAgeYears($d1, $d2=NULL) {
+		if (is_null($d2))
+			return $d1->date1->GetAge(false, client_jd());
+		else
+			return $d1->date1->GetAge(false, $d2->MinJD());
+	}
+
+	// Calculate the years/months/days between two events
+	// Return a gedcom style age string: "1y 2m 3d" (for fact details)
+	function GetAgeGedcom($d1, $d2=NULL) {
+		if (is_null($d2))
+			return $d1->date1->GetAge(true, client_jd());
+		else
+			return $d1->date1->GetAge(true, $d2->MinJD());
 	}
 
 	// Static function to compare two dates.

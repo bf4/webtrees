@@ -64,7 +64,8 @@ if ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel()) {
 				$task = db_cleanup($task);
 
 				$tasktitle = '<a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'">'.$task['t_title'].'</a>';
-				$out .= '<tr><td>'.PrintReady($tasktitle).'</td><td>'.get_changed_date(date("d M Y",$task["t_startdate"]));
+				$date=new GedcomDate(date("d M Y",$task["t_startdate"]));
+				$out .= '<tr><td>'.PrintReady($tasktitle).'</td><td>'.$date->Display(false);
 				$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a>';
 				$out .= '</td></tr>';
 				}
@@ -96,7 +97,8 @@ if ($SHOW_RESEARCH_ASSISTANT>=getUserAccessLevel()) {
 				while ($task = $res->fetchRow(DB_FETCHMODE_ASSOC)) {
 					$task = db_cleanup($task);
 					$tasktitle = '<a href="module.php?mod=research_assistant&amp;action=viewtask&amp;taskid='.$task['t_id'].'">'.$task['t_title'].'</a>';
-					$out .= '<tr><td>'.PrintReady($tasktitle).'</td><td>'.get_changed_date(date("d M Y",$task["t_startdate"]));
+					$date=new GedcomDate(date("d M Y",$task["t_startdate"]));
+					$out .= '<tr><td>'.PrintReady($tasktitle).'</td><td>'.$date->Display(false);
 					$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=edittask&amp;taskid='.$task["t_id"].'">'.$pgv_lang["edit"].'</a>';
 					$out .= '</td><td class="optionbox"><a href="module.php?mod=research_assistant&amp;action=assignUser&amp;t_id='.$task["t_id"].'&amp;t_username='.$userName.'">'.$pgv_lang["mytasks_takeOn"].'</a></td></tr>';
 					}

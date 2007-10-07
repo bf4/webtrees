@@ -211,10 +211,9 @@ class stats
 	function gedcomDate()
 	{
 		$head = find_gedcom_record('HEAD');
-		$ct = preg_match("/1 DATE (.*)/", $head, $match);
-		if($ct > 0)
-		{
-			return get_changed_date(trim($match[1]));
+		if (preg_match("/1 DATE (.+)/", $head, $match)) {
+			$date=new GedcomDate($match[1]);
+			return $date->Display(false);
 		}
 		return '';
 	}
@@ -222,17 +221,12 @@ class stats
 	function gedcomUpdated()
 	{
 		global $TBLPREFIX;
-		$rows = $this->_runSQL("SELECT d_year, d_month, d_day FROM {$TBLPREFIX}dates WHERE d_file = '{$this->_gedcom['id']}' AND d_fact = 'CHAN' AND d_year != '0' AND d_type IS NULL ORDER BY d_year DESC, d_mon DESC, d_day DESC", 1);
-		if(!isset($rows[0]))
-		{
-			$head = find_gedcom_record('HEAD');
-			$ct = preg_match("/1 DATE (.*)/", $head, $match);
-			if($ct > 0)
-			{
-				return get_changed_date(trim($match[1]));
-			}
+		$rows = $this->_runSQL("SELECT d_year, d_month, d_day FROM {$TBLPREFIX}dates WHERE d_file = '{$this->_gedcom['id']}' AND d_fact = 'CHAN' ORDER BY d_julianday1 DESC", 1);
+		if(isset($rows[0])) {
+			$date=new GedcomDate("{$rows[0]['d_day']} {$rows[0]['d_month']} {$rows[0]['d_year']}");
+			return $date->Display(false);
 		}
-		return get_changed_date("{$rows[0]['d_day']} {$rows[0]['d_month']} {$rows[0]['d_year']}");
+		return $this->gedcomDate();
 	}
 
 	function gedcomHighlight()
@@ -1141,7 +1135,7 @@ class stats
 // Date & Time                                                               //
 ///////////////////////////////////////////////////////////////////////////////
 
-	function serverDate(){return get_changed_date(date('j').' '.strtoupper(date('M')).' '.date('Y'));}
+	function serverDate() {$today=new GedcomDate(date('j M Y')); return $today->Display(false);}
 
 	function serverTime(){return date('g:i a');}
 
@@ -1149,13 +1143,13 @@ class stats
 
 	function serverTimezone(){return date('T');}
 
-	function browserDate(){return get_changed_date(date('j', time()-$_SESSION["timediff"]).' '.strtoupper(date('M', time()-$_SESSION["timediff"])).' '.date('Y', time()-$_SESSION["timediff"]));}
+	function browserDate() {$today=new GedcomDate(date('j M Y'), client_time()); return $today->Display(false);}
 
-	function browserTime(){return date('g:i a', time()-$_SESSION["timediff"]);}
+	function browserTime(){return date('g:i a', client_time());}
 
-	function browserTime24(){return date('G:i', time()-$_SESSION["timediff"]);}
+	function browserTime24(){return date('G:i', client_time());}
 
-	function browserTimezone(){return date('T', time()-$_SESSION["timediff"]);}
+	function browserTimezone(){return date('T', client_time());}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Misc.                                                                     //

@@ -30,6 +30,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 require("config.php");
+require("includes/functions_print_lists.php");
 
 $time = client_time();
 $day = date("j", $time);
@@ -149,15 +150,16 @@ function getGedcomStats() {
 			$data .= $text;
 		}
 	}
-	$ct=preg_match("/1 DATE (.*)/", $head, $match);
+	$ct=preg_match("/1 DATE (.+)/", $head, $match);
 	if ($ct>0) {
 		$date = trim($match[1]);
 		$dataArray[1] = strtotime($date);
 
+		$date=new GedcomDate($date);
 		if (empty($title)){
-			$data .= str_replace(array("#DATE#", "#CREATED_DATE#"), get_changed_date($date), $pgv_lang["gedcom_created_on"]);
+			$data .= str_replace(array("#DATE#", "#CREATED_DATE#"), $date->Display(false), $pgv_lang["gedcom_created_on"]);
 		} else {
-			$data .= str_replace(array("#DATE#", "#CREATED_DATE#"), get_changed_date($date), $pgv_lang["gedcom_created_on2"]);
+			$data .= str_replace(array("#DATE#", "#CREATED_DATE#"), $date->Display(false), $pgv_lang["gedcom_created_on2"]);
 		}
 	}
 
@@ -502,9 +504,11 @@ function getRecentChanges() {
 							$lastgid=$gid;
 						}
 						$recentText .= $factarray["CHAN"];
+						// TODO there is function in class gedcomrecord that does this.
 						$ct = preg_match("/\d DATE (.*)/", $factrec, $match);
 						if ($ct>0) {
-								$recentText .= " - " . get_changed_date($match[1]);
+								$date=new GedcomDate($match[1]);
+								$recentText .= " - " .$date->Display(false);
 								$tt = preg_match("/3 TIME (.*)/", $factrec, $match);
 								if ($tt>0) {
 									$recentText .= " - ".$match[1];
@@ -537,7 +541,8 @@ function getRecentChanges() {
 						$recentText .= $factarray["CHAN"];
 						$ct = preg_match("/\d DATE (.*)/", $factrec, $match);
 						if ($ct>0) {
-							$recentText .= " - " .get_changed_date($match[1]);
+							$date=new GedcomDate($match[1]);
+							$recentText .= " - " .$date->Display(false);
 							$tt = preg_match("/3 TIME (.*)/", $factrec, $match);
 							if ($tt>0) {
 								$recentText .= " - ".$match[1];
@@ -570,7 +575,8 @@ function getRecentChanges() {
 						$recentText .= $factarray["CHAN"];
 						$ct = preg_match("/\d DATE (.*)/", $factrec, $match);
 						if ($ct>0) {
-							$recentText .= " - ".get_changed_date($match[1]);
+							$date=new GedcomDate($match[1]);
+							$recentText .= " - ".$date->Display(false);
 							$tt = preg_match("/3 TIME (.*)/", $factrec, $match);
 							if ($tt>0) {
 								$recentText .= " - ".$match[1];
@@ -603,7 +609,8 @@ function getRecentChanges() {
 						$recentText .= $factarray["CHAN"];
 						$ct = preg_match("/\d DATE (.*)/", $factrec, $match);
 						if ($ct>0) {
-							$recentText .= " - ".get_changed_date($match[1]);
+							$date=new GedcomDate($match[1]);
+							$recentText .= " - ".$date->Display(false);
 							$tt = preg_match("/3 TIME (.*)/", $factrec, $match);
 							if ($tt>0) {
 								$recentText .=  " - ".$match[1];
@@ -637,7 +644,8 @@ function getRecentChanges() {
 						$recentText .= $factarray["CHAN"];
 						$ct = preg_match("/\d DATE (.*)/", $factrec, $match);
 						if ($ct>0) {
-							$recentText .= " - ".get_changed_date($match[1]);
+							$date=new GedcomDate($match[1]);
+							$recentText .= " - ".$date->Display(false);
 							$tt = preg_match("/3 TIME (.*)/", $factrec, $match);
 							if ($tt>0) {
 								$recentText .= " - ".$match[1];
