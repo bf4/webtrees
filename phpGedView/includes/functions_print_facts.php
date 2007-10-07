@@ -589,7 +589,10 @@ function print_fact_sources($factrec, $level) {
 			$cs = preg_match("/$nlevel DATA/", $srec, $cmatch);
 			if ($cs>0) {
 				$cs = preg_match("/".($nlevel+1)." DATE (.*)/", $srec, $cmatch);
-				if ($cs>0) print "\n\t\t\t<br /><span class=\"label\">".$factarray["DATE"].": </span><span class=\"field\">".get_changed_date($cmatch[1])."</span>";
+				if ($cs>0) {
+					$date=new GedcomDate($cmatch[1]);
+					print "\n\t\t\t<br /><span class=\"label\">".$factarray["DATE"].": </span><span class=\"field\">".$date->Display(false)."</span>";
+				}
 				$tt = preg_match_all("/".($nlevel+1)." TEXT (.*)/", $srec, $tmatch, PREG_SET_ORDER);
 				for($k=0; $k<$tt; $k++) {
 					print "<br /><span class=\"label\">".$pgv_lang["text"]." </span><span class=\"field\">";
@@ -600,7 +603,10 @@ function print_fact_sources($factrec, $level) {
 				}
 			}
 			$cs = preg_match("/".$nlevel." DATE (.*)/", $srec, $cmatch);
-			if ($cs>0) print "\n\t\t\t<br /><span class=\"label\">".$factarray["DATE"].": </span><span class=\"field\">".get_changed_date($cmatch[1])."</span>";
+			if ($cs>0) {
+				$date=new GedcomDate($cmatch[1]);
+				print "\n\t\t\t<br /><span class=\"label\">".$factarray["DATE"].": </span><span class=\"field\">".$date->Display(false)."</span>";
+			}
 			$cs = preg_match("/$nlevel QUAY (.*)/", $srec, $cmatch);
 			if ($cs>0) print "<br /><span class=\"label\">".$factarray["QUAY"]." </span><span class=\"field\">".$cmatch[1]."</span>";
 			$cs = preg_match_all("/$nlevel TEXT (.*)/", $srec, $tmatch, PREG_SET_ORDER);

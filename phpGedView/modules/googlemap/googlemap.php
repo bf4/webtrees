@@ -593,7 +593,8 @@ function build_indiv_map($indifacts, $famids) {
 						print preg_replace("/\"/", "\\\"", print_fact_place_map($markers[$j]["placerec"]));
 					}
 					if (!empty($markers[$j]["date"])) {
-						print "<br/>".addslashes(get_date_url($markers[$j]["date"]));
+						$date=new GedcomDate($markers[$j]["date"]);
+						print "<br/>".addslashes($date->Display(true));
 					}
 					if ($GOOGLEMAP_COORD == "false"){
 						print "\");\n";
@@ -648,7 +649,8 @@ function build_indiv_map($indifacts, $famids) {
 						print preg_replace("/\"/", "\\\"", print_fact_place_map($markers[$j]["placerec"]));
 					}
 					if (!empty($markers[$j]["date"])) {
-						print "<br/>".addslashes(get_date_url($markers[$j]["date"]));
+						$date=new GedcomDate($markers[$j]["date"]);
+						print "<br/>".addslashes($date->Display(true));
 					}
 					if ($GOOGLEMAP_COORD == "false"){
 						print "\")";
@@ -714,7 +716,8 @@ function build_indiv_map($indifacts, $famids) {
 								print preg_replace("/\"/", "\\\"", print_fact_place_map($markers[$k]["placerec"]));
 							}
 							if (!empty($markers[$k]["date"])) {
-								print "<br/>".addslashes(get_date_url($markers[$k]["date"]));
+								$date=new GedcomDate($markers[$k]["date"]);
+								print "<br/>".addslashes($date->Display(true));
 							}
 							if ($GOOGLEMAP_COORD == "false"){
 								print "\")";
@@ -759,8 +762,10 @@ function build_indiv_map($indifacts, $famids) {
 			} else {
 				print print_fact_place_map($marker["placerec"])."<br/>";
 			}
-			if (!empty($marker['date']))
-				print get_date_url($marker['date'])."<br/>";
+			if (!empty($marker['date'])) {
+				$date=new GedcomDate($marker['date']);
+				print $date->Display(true)."<br/>";
+			}
 			print "</td></tr>";
 		}
 		print "</table></div><br/>";
