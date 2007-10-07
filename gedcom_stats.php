@@ -102,11 +102,11 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 					print $text;
 			}
 		}
-		$ct=preg_match("/1 DATE (.*)/", $head, $match);
+		$ct=preg_match("/1 DATE (.+)/", $head, $match);
 		if ($ct>0) {
-			$date = trim($match[1]);
-			if (empty($title)) $text = str_replace(array("#DATE#", "#CREATED_DATE#"), get_changed_date($date), $pgv_lang["gedcom_created_on"]);
-			else $text = $text = str_replace(array("#DATE#", "#CREATED_DATE#"), get_changed_date($date), $pgv_lang["gedcom_created_on2"]);
+			$date = new GedcomDate($match[1]);
+			if (empty($title)) $text = str_replace(array("#DATE#", "#CREATED_DATE#"), $date->Display(false), $pgv_lang["gedcom_created_on"]);
+			else $text = $text = str_replace(array("#DATE#", "#CREATED_DATE#"), $date->Display(false), $pgv_lang["gedcom_created_on2"]);
 			print $text;
 		}
 
