@@ -144,10 +144,11 @@ global $pgv_lang, $TBLPREFIX, $DBCONN, $SOURCE_ID_PREFIX;
 
 		while($comment = $res->fetchRow(DB_FETCHMODE_ASSOC)){
 			$comment = db_cleanup($comment);
+			$date=new GedcomDate(date("d M Y", (int)$comment["c_datetime"]));
 			$out .= '<div class="blockcontent"><div class="person_box" id="comment1"><span class="news_title">' .
 					$comment["c_u_username"]. 	// INSERT username
 					'</span><br /><span class="news_date">' .
-					get_changed_date(date("d M Y", (int)$comment["c_datetime"])).' - '. date("g:i:s A",(int)$comment["c_datetime"]).		// INSERT datetime
+					$date->Display(false).' - '. date("g:i:s A",(int)$comment["c_datetime"]).		// INSERT datetime
 					'</span><br /><br />' .
 					nl2br($comment["c_body"]).			// INSERT body
 					'<hr size="1" />';

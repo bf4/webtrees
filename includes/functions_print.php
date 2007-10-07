@@ -2484,8 +2484,10 @@ function print_fact_place($factrec, $anchor=false, $sub=false, $lds=false) {
 		$ct = preg_match("/2 STAT (.*)/", $factrec, $match);
 		if ($ct>0) {
 			print "<br />".$pgv_lang["status"].": ".trim($match[1]);
-			if (preg_match("/3 DATE (.*)/", $factrec, $match))
-				print ", ".$factarray["STAT:DATE"].": ".get_date_url($match[1]);
+			if (preg_match("/3 DATE (.*)/", $factrec, $match)) {
+				$date=new GedcomDate($match[1]);
+				print ", ".$factarray["STAT:DATE"].": ".$date->Display(false);
+			}
 		}
 	}
 }
