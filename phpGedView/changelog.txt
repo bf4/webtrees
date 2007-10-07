@@ -8,6 +8,7 @@
 	# $Id$
 =====================================================================
 Version 4.1.2
+ - Consolidated Media Firewall and Watermark options in the Gedcom config screen
  - Fixed [ 1802261 ] Incomplete implementation of "surname first" option (canajun2eh)
  - Added Watermarks [ 1739602 ] (ljm)
  - Added Media Firewall [ 1749817 ] (ljm)

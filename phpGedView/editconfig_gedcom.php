@@ -76,6 +76,30 @@ function GetGEDFromZIP($zipfile, $extract=true) {
 }
 
 
+/**
+ * print write_access option
+ *
+ * @param string $checkVar
+ */
+function write_access_option($checkVar) {
+  global $PRIV_HIDE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE;
+  global $pgv_lang;
+
+  print "<option value=\"\$PRIV_PUBLIC\"";
+  if ($checkVar==$PRIV_PUBLIC) print " selected=\"selected\"";
+  print ">".$pgv_lang["PRIV_PUBLIC"]."</option>\n";
+  print "<option value=\"\$PRIV_USER\"";
+  if ($checkVar==$PRIV_USER) print " selected=\"selected\"";
+  print ">".$pgv_lang["PRIV_USER"]."</option>\n";
+  print "<option value=\"\$PRIV_NONE\"";
+  if ($checkVar==$PRIV_NONE) print " selected=\"selected\"";
+  print ">".$pgv_lang["PRIV_NONE"]."</option>\n";
+  print "<option value=\"\$PRIV_HIDE\"";
+  if ($checkVar==$PRIV_HIDE) print " selected=\"selected\"";
+  print ">".$pgv_lang["PRIV_HIDE"]."</option>\n";
+}
+
+
 loadLangFile("pgv_confighelp, pgv_help");
 
 if (!isset($_POST)) $_POST = $HTTP_POST_VARS;
@@ -377,6 +401,10 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$USE_MEDIA_VIEWER\s*=\s*.*;/', "\$USE_MEDIA_VIEWER = ".$boolarray[$_POST["NEW_USE_MEDIA_VIEWER"]].";", $configtext);
 	$configtext = preg_replace('/\$USE_MEDIA_FIREWALL\s*=\s*.*;/', "\$USE_MEDIA_FIREWALL = ".$boolarray[$_POST["NEW_USE_MEDIA_FIREWALL"]].";", $configtext);
 	$configtext = preg_replace('/\$MEDIA_FIREWALL_THUMBS\s*=\s*.*;/', "\$MEDIA_FIREWALL_THUMBS = ".$boolarray[$_POST["NEW_MEDIA_FIREWALL_THUMBS"]].";", $configtext);
+	$configtext = preg_replace('/\$SHOW_NO_WATERMARK\s*=\s*.*;/', "\$SHOW_NO_WATERMARK = ".$_POST["NEW_SHOW_NO_WATERMARK"].";", $configtext);
+	$configtext = preg_replace('/\$WATERMARK_THUMB\s*=\s*.*;/', "\$WATERMARK_THUMB = ".$boolarray[$_POST["NEW_WATERMARK_THUMB"]].";", $configtext);
+	$configtext = preg_replace('/\$SAVE_WATERMARK_THUMB\s*=\s*.*;/', "\$SAVE_WATERMARK_THUMB = ".$boolarray[$_POST["NEW_SAVE_WATERMARK_THUMB"]].";", $configtext);
+	$configtext = preg_replace('/\$SAVE_WATERMARK_IMAGE\s*=\s*.*;/', "\$SAVE_WATERMARK_IMAGE = ".$boolarray[$_POST["NEW_SAVE_WATERMARK_IMAGE"]].";", $configtext);
 	$configtext = preg_replace('/\$PHPGEDVIEW_EMAIL\s*=\s*".*";/', "\$PHPGEDVIEW_EMAIL = \"".trim($_POST["NEW_PHPGEDVIEW_EMAIL"])."\";", $configtext);
 	$configtext = preg_replace('/\$WEBMASTER_EMAIL\s*=\s*".*";/', "\$WEBMASTER_EMAIL = \"".$_POST["NEW_WEBMASTER_EMAIL"]."\";", $configtext);
 	$configtext = preg_replace('/\$WELCOME_TEXT_AUTH_MODE\s*=\s*".*";/', "\$WELCOME_TEXT_AUTH_MODE = \"".$_POST["NEW_WELCOME_TEXT_AUTH_MODE"]."\";", $configtext);
@@ -920,6 +948,7 @@ print "<a href=\"javascript: ".$pgv_lang["media_conf"]."\" onclick=\"expand_laye
 print "&nbsp;<a href=\"javascript: ".$pgv_lang["media_conf"]."\" onclick=\"expand_layer('config-media');return false\">".$pgv_lang["media_conf"]."</a>";
 ?></td></tr></table>
 <div id="config-media" style="display: none">
+
 <table class="facts_table">
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("MULTI_MEDIA_help", "qm", "MULTI_MEDIA"); print $pgv_lang["MULTI_MEDIA"];?></td>
@@ -929,6 +958,16 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["media_conf"]."\" onclick=\"expan
 			</select>
 		</td>
 	</tr>
+</table>
+
+<table class="facts_table"><tr><td class="subbar">
+<?php
+print "<a href=\"javascript: ".$pgv_lang["media_general_conf"]."\" onclick=\"expand_layer('config-media1');return false\"><img id=\"config-media1_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
+print "&nbsp;<a href=\"javascript: ".$pgv_lang["media_general_conf"]."\" onclick=\"expand_layer('config-media1');return false\">".$pgv_lang["media_general_conf"]."</a>";
+?></td></tr></table>
+<div id="config-media1" style="display: none">
+
+<table class="facts_table">
 	<tr>
 		<td class="descriptionbox wrap"><?php print_help_link("MEDIA_EXTERNAL_help", "qm", "MEDIA_EXTERNAL"); print $pgv_lang["MEDIA_EXTERNAL"];?></td>
 		<td class="optionbox"><select name="NEW_MEDIA_EXTERNAL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('MEDIA_EXTERNAL_help');">
@@ -978,26 +1017,6 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["media_conf"]."\" onclick=\"expan
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap"><?php print_help_link("USE_MEDIA_FIREWALL_help", "qm", "USE_MEDIA_FIREWALL"); print $pgv_lang["USE_MEDIA_FIREWALL"];?></td>
-		<td class="optionbox"><select name="NEW_USE_MEDIA_FIREWALL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('USE_MEDIA_FIREWALL_help');">
-				<option value="yes" <?php if ($USE_MEDIA_FIREWALL) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$USE_MEDIA_FIREWALL) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td class="descriptionbox wrap"><?php print_help_link("MEDIA_FIREWALL_ROOTDIR_help", "qm", "MEDIA_FIREWALL_ROOTDIR"); print $pgv_lang["MEDIA_FIREWALL_ROOTDIR"];?></td>
-		<td class="optionbox"><input type="text" name="NEW_MEDIA_FIREWALL_ROOTDIR" size="50" dir="ltr" value="<?php print ($MEDIA_FIREWALL_ROOTDIR == $INDEX_DIRECTORY) ? "" : $MEDIA_FIREWALL_ROOTDIR ?>" onfocus="getHelp('MEDIA_FIREWALL_ROOTDIR_help');" tabindex="<?php $i++; print $i?>" /></td>
-	</tr>
-	<tr>
-		<td class="descriptionbox wrap"><?php print_help_link("MEDIA_FIREWALL_THUMBS_help", "qm", "MEDIA_FIREWALL_THUMBS"); print $pgv_lang["MEDIA_FIREWALL_THUMBS"];?></td>
-		<td class="optionbox"><select name="NEW_MEDIA_FIREWALL_THUMBS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('MEDIA_FIREWALL_THUMBS_help');">
-				<option value="yes" <?php if ($MEDIA_FIREWALL_THUMBS) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$MEDIA_FIREWALL_THUMBS) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
-			</select>
-		</td>
-	</tr>
-	<tr>
 		<td class="descriptionbox wrap"><?php print_help_link("USE_MEDIA_VIEWER_help", "qm", "USE_MEDIA_VIEWER"); print $pgv_lang["USE_MEDIA_VIEWER"];?></td>
 		<td class="optionbox"><select name="NEW_USE_MEDIA_VIEWER" tabindex="<?php $i++; print $i?>" onfocus="getHelp('USE_MEDIA_VIEWER_help');">
 				<option value="yes" <?php if ($USE_MEDIA_VIEWER) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
@@ -1022,6 +1041,73 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["media_conf"]."\" onclick=\"expan
 		</td>
 	</tr>
 </table>
+</div>
+
+<table class="facts_table"><tr><td class="subbar">
+<?php
+print "<a href=\"javascript: ".$pgv_lang["media_firewall_conf"]."\" onclick=\"expand_layer('config-media2');return false\"><img id=\"config-media2_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"\" /></a>";
+print "&nbsp;<a href=\"javascript: ".$pgv_lang["media_firewall_conf"]."\" onclick=\"expand_layer('config-media2');return false\">".$pgv_lang["media_firewall_conf"]."</a>";
+?></td></tr></table>
+<div id="config-media2" style="display: none">
+<table class="facts_table">
+	<tr>
+		<td class="descriptionbox wrap width20"><?php print_help_link("USE_MEDIA_FIREWALL_help", "qm", "USE_MEDIA_FIREWALL"); print $pgv_lang["USE_MEDIA_FIREWALL"];?></td>
+		<td class="optionbox"><select name="NEW_USE_MEDIA_FIREWALL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('USE_MEDIA_FIREWALL_help');">
+				<option value="yes" <?php if ($USE_MEDIA_FIREWALL) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$USE_MEDIA_FIREWALL) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("MEDIA_FIREWALL_ROOTDIR_help", "qm", "MEDIA_FIREWALL_ROOTDIR"); print $pgv_lang["MEDIA_FIREWALL_ROOTDIR"];?></td>
+		<td class="optionbox"><input type="text" name="NEW_MEDIA_FIREWALL_ROOTDIR" size="50" dir="ltr" value="<?php print ($MEDIA_FIREWALL_ROOTDIR == $INDEX_DIRECTORY) ? "" : $MEDIA_FIREWALL_ROOTDIR ?>" onfocus="getHelp('MEDIA_FIREWALL_ROOTDIR_help');" tabindex="<?php $i++; print $i?>" /></td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("MEDIA_FIREWALL_THUMBS_help", "qm", "MEDIA_FIREWALL_THUMBS"); print $pgv_lang["MEDIA_FIREWALL_THUMBS"];?></td>
+		<td class="optionbox"><select name="NEW_MEDIA_FIREWALL_THUMBS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('MEDIA_FIREWALL_THUMBS_help');">
+				<option value="yes" <?php if ($MEDIA_FIREWALL_THUMBS) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$MEDIA_FIREWALL_THUMBS) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("SHOW_NO_WATERMARK_help", "qm", "SHOW_NO_WATERMARK"); print $pgv_lang["SHOW_NO_WATERMARK"]; ?></td>
+		<td class="optionbox">
+			<select size="1" name="NEW_SHOW_NO_WATERMARK">
+				<?php write_access_option($SHOW_NO_WATERMARK); ?>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("WATERMARK_THUMB_help", "qm", "WATERMARK_THUMB"); print $pgv_lang["WATERMARK_THUMB"]; ?></td>
+		<td class="optionbox">
+			<select size="1" name="NEW_WATERMARK_THUMB">
+				<option value="yes" <?php if ($WATERMARK_THUMB) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$WATERMARK_THUMB) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("SAVE_WATERMARK_THUMB_help", "qm", "SAVE_WATERMARK_THUMB"); print $pgv_lang["SAVE_WATERMARK_THUMB"]; ?></td>
+		<td class="optionbox">
+			<select size="1" name="NEW_SAVE_WATERMARK_THUMB">
+				<option value="yes" <?php if ($SAVE_WATERMARK_THUMB) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$SAVE_WATERMARK_THUMB) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("SAVE_WATERMARK_IMAGE_help", "qm", "SAVE_WATERMARK_IMAGE"); print $pgv_lang["SAVE_WATERMARK_IMAGE"]; ?></td>
+		<td class="optionbox">
+			<select size="1" name="NEW_SAVE_WATERMARK_IMAGE">
+				<option value="yes" <?php if ($SAVE_WATERMARK_IMAGE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$SAVE_WATERMARK_IMAGE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+</table>
+</div>
+
 <table class="facts_table" border="0">
 <tr><td style="padding: 5px" class="topbottombar">
 <input type="submit" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["save_config"]?>" onclick="closeHelp();" />

@@ -39,12 +39,8 @@
  * @package PhpGedView
  * @subpackage Privacy
  */
-if (preg_match("/\Wprivacy\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-	print "Now, why would you want to do that.  You're not hacking are you?";
-	exit;
-}
-if (preg_match("/_priv\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-	print "Now, why would you want to do that.  You're not hacking are you?";
+if (stristr($_SERVER["SCRIPT_NAME"], "/".basename(__FILE__))!==false) {
+	print "Naughty, Naughty, Naughty!";
 	exit;
 }
 
@@ -57,38 +53,6 @@ if (preg_match("/_priv\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
  * @global string $PRIVACY_VERSION
  */
 $PRIVACY_VERSION = "3.2";
-
-/**
- * Hide option from all users
- *
- * Global constant privacy level to hide the item to all users including the admin
- * @global integer $PRIV_HIDE
- */
-$PRIV_HIDE = -1;
-/**
- * Accessible by public
- *
- * Global constant privacy level that allows non-authenticated public visitors to view the marked
- * information.
- * @global integer $PRIV_PUBLIC
- */
-$PRIV_PUBLIC = 2;
-/**
- * accessible only by authenticated users
- *
- * Global constant privacy level that only allows authenticated users to access the marked 
- * information.
- * @global integer $PRIV_USER
- */
-$PRIV_USER = 1;
-/**
- * accessible only by admin users - Only works with <var>$global_facts</var>
- *
- * Global constant privacy level that only allows admin users to access the marked 
- * information.
- * @global integer $PRIV_NONE
- */
-$PRIV_NONE = 0;
 
 /**
  * Set the access level for dead people
@@ -171,43 +135,6 @@ $ENABLE_CLIPPINGS_CART = $PRIV_PUBLIC;
  * @global integer $ENABLE_CLIPPINGS_CART
  */
 $SHOW_MULTISITE_SEARCH = $PRIV_NONE;
-/**
- * Set the access level for viewing non-watermarked images
- *
- * Note: this has no effect unless the Media Firewall to be turned on and a watermark module is installed
- * Can be one of the PRIV access levels:
- *		- <var>$PRIV_HIDE</var>
- *		- <var>$PRIV_PUBLIC</var>
- *		- <var>$PRIV_USER</var>
- *		- <var>$PRIV_NONE</var>
- * The default settings is set to <var>$PRIV_USER</var> allowing only authenticated users to have access.
- * @global integer $SHOW_NO_WATERMARK
- */
-$SHOW_NO_WATERMARK = $PRIV_USER;
-/**
- * Set the program to watermark thumbnails
- *
- * A <b>false</b> value means thumbnails will not be watermarked
- * A <b>true</b> value means thumbnails will be watermarked, assuming SHOW_NO_WATERMARK is set appropriately 
- * @global boolean $WATERMARK_THUMB
- */
-$WATERMARK_THUMB = false;
-/**
- * Set the program to save copies of watermarked thumbnails
- *
- * A <b>false</b> value means copies of watermarked thumbnails will not be saved
- * A <b>true</b> value means copies of watermarked thumbnails will be saved, assuming SHOW_NO_WATERMARK is set appropriately
- * @global boolean $SAVE_WATERMARK_THUMB
- */
-$SAVE_WATERMARK_THUMB = false;
-/**
- * Set the program to save copies of watermarked full size images
- *
- * A <b>false</b> value means copies of watermarked images will not be saved
- * A <b>true</b> value means copies of watermarked images will be saved, assuming SHOW_NO_WATERMARK is set appropriately
- * @global boolean $SAVE_WATERMARK_IMAGE
- */
-$SAVE_WATERMARK_IMAGE = false;
 /**
  * Set the program to use relationship privacy
  *
