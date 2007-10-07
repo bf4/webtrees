@@ -305,8 +305,10 @@ function tool_tip_text($marker) {
 		$tool_tip.=": {$marker['info']}";
 	if (!empty($marker['name']) && (displayDetailsById($marker['name']) || showLivingNameById($marker['name'])))
 		$tool_tip.=": ".PrintReady(get_person_name($marker['name']));
-	if (!empty($marker['date']))
-		$tool_tip.=" - ".get_changed_date($marker['date']);
+	if (!empty($marker['date'])) {
+		$date=new GedcomDate($marker['date']);
+		$tool_tip.=" - ".$date->Display(false);
+	}
 	return $tool_tip;
 // dates & RTL is not OK - adding PrintReady does not solve it
 }

@@ -404,7 +404,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "</td>";
 		//-- Birth anniversary
 		if ($tiny)
-			echo "<td class=\"list_value_wrap rela\"><span class=\"age\">".$bdate->GetAge(false)."</a></td>";
+			echo "<td class=\"list_value_wrap rela\"><span class=\"age\">".GedcomDate::GetAgeYears($bdate)."</a></td>";
 		//-- Birth place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($person->getBirthPlace())."\">";
 		if(!empty($SEARCH_SPIDER)) {
@@ -438,7 +438,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		if ($tiny) {
 			print "<td class=\"list_value_wrap rela\">";
 			if ($person->isDead() && !$person->dest) {
-				echo "<span class=\"age\">".$ddate->GetAge(false)."</a>";
+				echo "<span class=\"age\">".GedcomDate::GetAgeYears($ddate)."</a>";
 			} else
 				echo "&nbsp;";
 			print '</td>';
@@ -446,7 +446,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		//-- Age at death
 		print "<td class=\"list_value_wrap\">";
 		if ($person->isDead() && !$person->dest && $bdate->MinJD()>0)
-			echo "<a name=\"".($ddate->MaxJD()-$bdate->MinJD())."\" class=\"list_item age\">".$bdate->GetAge(false, $ddate->MaxJD())."</a>";
+			echo "<a name=\"".($ddate->MaxJD()-$bdate->MinJD())."\" class=\"list_item age\">".GedcomDate::GetAgeYears($bdate, $ddate)."</a>";
 		else
 			echo "&nbsp;";
 		echo "</td>";
@@ -653,7 +653,7 @@ function print_fam_table($datalist, $legend="") {
 		echo "<td class=\"list_value_wrap\">";
 		$mdate=new GedcomDate($family->getMarriageDate());
 		$hdate=new GedcomDate($husb->GetBirthDate());
-		$hage =$hdate->GetAge(false, $mdate->MinJD());
+		$hage =GedcomDate::GetAgeYears($hdate, $mdate);
 		if (empty($hage))
 			print "&nbsp;";
 		else
@@ -684,7 +684,7 @@ function print_fam_table($datalist, $legend="") {
 		//-- Wife age
 		echo "<td class=\"list_value_wrap\">";
 		$wdate=new GedcomDate($wife->GetBirthDate());
-		$wage =$wdate->GetAge(false, $mdate->MinJD());
+		$wage =GedcomDate::GetAgeYears($wdate, $mdate);
 		if (empty($wage))
 			print "&nbsp;";
 		else
@@ -701,7 +701,7 @@ function print_fam_table($datalist, $legend="") {
 		echo "</td>";
 		//-- Marriage anniversary
 		if ($tiny)
-			echo "<td class=\"list_value_wrap rela\"><span class=\"age\">".$mdate->GetAge(false)."</a></td>";
+			echo "<td class=\"list_value_wrap rela\"><span class=\"age\">".GedcomDate::GetAgeYears($mdate)."</a></td>";
 		//-- Marriage place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($family->getMarriagePlace())."\">";
 		if(!empty($SEARCH_SPIDER)) {

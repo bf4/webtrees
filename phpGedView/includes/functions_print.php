@@ -2328,11 +2328,8 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 
 	$ct = preg_match("/2 DATE (.+)/", $factrec, $match);
 	if ($ct>0) {
-		print " ";
-		// link to calendar
-		if ($anchor && (empty($SEARCH_SPIDER))) print get_date_url($match[1]);
-		// simple date
-		else print get_changed_date(trim($match[1]));
+		$date=new GedcomDate($match[1]);
+		print " ".$date->Display($anchor && (empty($SEARCH_SPIDER)));
 		// time
 		if ($time) {
 			$timerec = get_sub_record(2, "2 TIME", $factrec);

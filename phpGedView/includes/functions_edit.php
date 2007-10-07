@@ -1298,11 +1298,17 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 
 	// current value
 	if ($TEXT_DIRECTION=="ltr") {
-		if ($fact=="DATE") print get_changed_date($value);
+		if ($fact=="DATE") {
+			$date=new GedcomDate($value);
+			print $date->Display(false);
+		}
 		if ($fact=="ASSO" and $value) print " ".PrintReady(get_person_name($value))." (".$value.")";
 		if ($fact=="SOUR" and $value) print " ".PrintReady(get_source_descriptor($value))." (".$value.")";
 	} else {
-		if ($fact=="DATE") print getRLM().get_changed_date($value).getRLM();
+		if ($fact=="DATE") {
+			$date=new GedcomDate($value);
+			print getRLM().$date->Display(false).getRLM();
+		}
 		if ($fact=="ASSO" and $value) print " " . getRLM() . PrintReady(get_person_name($value))." (".$value.")" . getRLM();
 		if ($fact=="SOUR" and $value) print " " . getRLM() .PrintReady(get_source_descriptor($value)). getRLM() . "&nbsp;&nbsp;" . getLRM() . "(".$value.")" . getLRM();
 	}
