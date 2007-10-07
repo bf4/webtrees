@@ -113,6 +113,10 @@ $USE_MEDIA_FIREWALL = false;			// -- If set to true, enables the media firewall 
 $MEDIA_FIREWALL_ROOTDIR = "";			// -- Dir that contains the protected image directory.  If empty, will use index dir
 if (!$MEDIA_FIREWALL_ROOTDIR) $MEDIA_FIREWALL_ROOTDIR = $INDEX_DIRECTORY;
 $MEDIA_FIREWALL_THUMBS = false;		// -- When an image is in the protected image directory, should the thumbnail be protected as well?
+$SHOW_NO_WATERMARK = $PRIV_USER;		// -- access level for viewing non-watermarked images.  PRIV_HIDE, PRIV_PUBLIC, PRIV_USER, PRIV_NONE
+$WATERMARK_THUMB = false;				// -- whether to watermark thumbnails too
+$SAVE_WATERMARK_THUMB = false;		// -- whether to save copies of watermarked thumbnails
+$SAVE_WATERMARK_IMAGE = false;		// -- whether to save copies of watermarked main images
 $SHOW_MEDIA_FILENAME = false;			// -- show Media File Name in Media Viewer
 $SHOW_MEDIA_DOWNLOAD = false;			// -- show Media Download link in Media Viewer
 
