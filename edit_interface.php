@@ -933,7 +933,7 @@ case 'addchildaction':
 				$gedrec .= "4 LONG $BIRT_LONG\r\n";
 			}
 		}
-		if (isset($SOUR_BIRT) and $SOUR_BIRT and count($tagSOUR)>0) {
+		if (isset($SOUR_BIRT) && $SOUR_BIRT=="Y" && count($tagSOUR)>0) {
 			$gedrec = updateSOUR($gedrec, 2);
 			$usedSOUR = true;
 		}
@@ -956,7 +956,7 @@ case 'addchildaction':
 				$gedrec .= "4 LONG $DEAT_LONG\r\n";
 			}
 		}
-		if (isset($SOUR_DEAT) and $SOUR_DEAT and count($tagSOUR)>0) {
+		if (isset($SOUR_DEAT) && $SOUR_DEAT=="Y" && count($tagSOUR)>0) {
 			$gedrec = updateSOUR($gedrec, 2);
 			$usedSOUR = true;
 		}
@@ -984,7 +984,7 @@ case 'addchildaction':
 		$gedrec .= "\r\n";
 	}
 
-	if (!$usedSOUR) $gedrec = handle_updates($gedrec);
+	if (isset($SOUR_INDI) && $SOUR_INDI=="Y") $gedrec = handle_updates($gedrec);
 	else $gedrec = updateRest($gedrec);
 
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
@@ -1043,7 +1043,7 @@ case 'addspouseaction':
 				$gedrec .= "4 LONG $BIRT_LONG\r\n";
 			}
 		}
-		if (isset($SOUR_BIRT) and $SOUR_BIRT and count($tagSOUR)>0) {
+		if (isset($SOUR_BIRT) && $SOUR_BIRT=="Y" && count($tagSOUR)>0) {
 			$gedrec = updateSOUR($gedrec, 2);
 			$usedSOUR = true;
 		}
@@ -1066,14 +1066,14 @@ case 'addspouseaction':
 				$gedrec .= "4 LONG $DEAT_LONG\r\n";
 			}
 		}
-		if (isset($SOUR_DEAT) and $SOUR_DEAT and count($tagSOUR)>0) {
+		if (isset($SOUR_DEAT) && $SOUR_DEAT=="Y" && count($tagSOUR)>0) {
 			$gedrec = updateSOUR($gedrec, 2);
 			$usedSOUR = true;
 		}
 	}
 	else if (!empty($DEAT)) $gedrec .= "1 DEAT Y\r\n";
 
-	if (!$usedSOUR) $gedrec = handle_updates($gedrec);
+	if (isset($SOUR_INDI) && $SOUR_INDI=="Y") $gedrec = handle_updates($gedrec);
 	else $gedrec = updateRest($gedrec);
 
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
@@ -1111,14 +1111,14 @@ case 'addspouseaction':
 					$famrec .= "4 LONG $MARR_LONG\r\n";
 				}
 			}
-			if (isset($SOUR_MARR) and $SOUR_MARR and count($tagSOUR)>0) {
+			if (isset($SOUR_MARR) && $SOUR_MARR=="Y" && count($tagSOUR)>0) {
 				$famrec = updateSOUR($famrec, 2);
 				$usedSOUR = true;
 			}
 		}
 		else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
 
-		if (!$usedSOUR) $famrec = handle_updates($famrec);
+		if (isset($SOUR_FAM) && $SOUR_FAM=="Y")  $famrec = handle_updates($famrec);
 		else $famrec = updateRest($famrec);
 
 		if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
@@ -1147,14 +1147,14 @@ case 'addspouseaction':
 						$famrec .= "4 LONG $MARR_LONG\r\n";
 					}
 				}
-				if (isset($SOUR_MARR) and $SOUR_MARR and count($tagSOUR)>0) {
+				if (isset($SOUR_MARR) && $SOUR_MARR=="Y" && count($tagSOUR)>0) {
 					$famrec = handle_updates($famrec, 2);
 					$usedSOUR = true;
 				}
 			}
 			else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
 
-			if (!$usedSOUR) $famrec = handle_updates($famrec);
+			if (isset($SOUR_FAM) && $SOUR_FAM=="Y")  $famrec = handle_updates($famrec);
 			else $famrec = updateRest($famrec);
 
 			if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
@@ -1224,14 +1224,14 @@ case 'linkspouseaction':
 							$famrec .= "4 LONG $MARR_LONG\r\n";
 						}
 					}
-					if (isset($SOUR_MARR) and $SOUR_MARR and count($tagSOUR)>0) {
+					if (isset($SOUR_MARR) && $SOUR_MARR=="Y" && count($tagSOUR)>0) {
 						$famrec = updateSOUR($famrec, 2);
 						$usedSOUR = true;
 					}
 				}
 				else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
 
-				if (!$usedSOUR) $famrec = handle_updates($famrec);
+				if (isset($SOUR_FAM) && $SOUR_FAM=="Y")  $famrec = handle_updates($famrec);
 				else $famrec = updateRest($famrec);
 
 				if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
@@ -1293,7 +1293,7 @@ case 'addnewparentaction':
 				$gedrec .= "4 LONG $BIRT_LONG\r\n";
 			}
 		}
-		if (isset($SOUR_BIRT) and $SOUR_BIRT and count($tagSOUR)>0) {
+		if (isset($SOUR_BIRT) && $SOUR_BIRT=="Y" && count($tagSOUR)>0) {
 			$gedrec = updateSOUR($gedrec, 2);
 			$usedSOUR = true;
 		}
@@ -1316,14 +1316,14 @@ case 'addnewparentaction':
 				$gedrec .= "4 LONG $DEAT_LONG\r\n";
 			}
 		}
-		if (isset($SOUR_DEAT) and $SOUR_DEAT and count($tagSOUR)>0) {
+		if (isset($SOUR_DEAT) && $SOUR_DEAT=="Y" && count($tagSOUR)>0) {
 			$gedrec = updateSOUR($gedrec, 2);
 			$usedSOUR = true;
 		}
 	}
 	else if (!empty($DEAT)) $gedrec .= "1 DEAT Y\r\n";
 
-	if (!$usedSOUR) $gedrec = handle_updates($gedrec);
+	if (isset($SOUR_INDI) && $SOUR_INDI=="Y") $gedrec = handle_updates($gedrec);
 	else $gedrec = updateRest($gedrec);
 
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
@@ -1359,14 +1359,14 @@ case 'addnewparentaction':
 					$famrec .= "4 LONG $MARR_LONG\r\n";
 				}
 			}
-			if (isset($SOUR_MARR) and $SOUR_MARR and count($tagSOUR)>0) {
+			if (isset($SOUR_MARR) && $SOUR_MARR=="Y" && count($tagSOUR)>0) {
 				$famrec = updateSOUR($famrec, 2);
 				$usedSOUR = true;
 			}
 		}
 		else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
 
-		if (!$usedSOUR) $famrec = handle_updates($famrec);
+		if (isset($SOUR_FAM) && $SOUR_FAM=="Y") $famrec = handle_updates($famrec);
 		else $famrec = updateRest($famrec);
 
 		if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
@@ -1395,14 +1395,14 @@ case 'addnewparentaction':
 						$famrec .= "4 LONG $MARR_LONG\r\n";
 					}
 				}
-				if (isset($SOUR_MARR) and $SOUR_MARR and count($tagSOUR)>0) {
+				if (isset($SOUR_MARR) && $SOUR_MARR=="Y" && count($tagSOUR)>0) {
 					$famrec = updateSOUR($famrec, 2);
 					$usedSOUR = true;
 				}
 			}
 			else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
 
-			if (!$usedSOUR) $famrec = handle_updates($famrec);
+			if (isset($SOUR_FAM) && $SOUR_FAM=="Y") $famrec = handle_updates($famrec);
 			else $famrec = updateRest($famrec);
 
 			if ($GLOBALS["DEBUG"]) print "<pre>$famrec</pre>";
