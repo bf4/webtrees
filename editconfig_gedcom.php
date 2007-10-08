@@ -969,7 +969,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["media_general_conf"]."\" onclick
 
 <table class="facts_table">
 	<tr>
-		<td class="descriptionbox wrap"><?php print_help_link("MEDIA_EXTERNAL_help", "qm", "MEDIA_EXTERNAL"); print $pgv_lang["MEDIA_EXTERNAL"];?></td>
+		<td class="descriptionbox wrap width20"><?php print_help_link("MEDIA_EXTERNAL_help", "qm", "MEDIA_EXTERNAL"); print $pgv_lang["MEDIA_EXTERNAL"];?></td>
 		<td class="optionbox"><select name="NEW_MEDIA_EXTERNAL" tabindex="<?php $i++; print $i?>" onfocus="getHelp('MEDIA_EXTERNAL_help');">
 				<option value="yes" <?php if ($MEDIA_EXTERNAL) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 				<option value="no" <?php if (!$MEDIA_EXTERNAL) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
@@ -1088,20 +1088,20 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["media_firewall_conf"]."\" onclic
 		</td>
 	</tr>
 	<tr>
-		<td class="descriptionbox wrap"><?php print_help_link("SAVE_WATERMARK_THUMB_help", "qm", "SAVE_WATERMARK_THUMB"); print $pgv_lang["SAVE_WATERMARK_THUMB"]; ?></td>
-		<td class="optionbox">
-			<select size="1" name="NEW_SAVE_WATERMARK_THUMB">
-				<option value="yes" <?php if ($SAVE_WATERMARK_THUMB) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
-				<option value="no" <?php if (!$SAVE_WATERMARK_THUMB) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
-			</select>
-		</td>
-	</tr>
-	<tr>
 		<td class="descriptionbox wrap"><?php print_help_link("SAVE_WATERMARK_IMAGE_help", "qm", "SAVE_WATERMARK_IMAGE"); print $pgv_lang["SAVE_WATERMARK_IMAGE"]; ?></td>
 		<td class="optionbox">
 			<select size="1" name="NEW_SAVE_WATERMARK_IMAGE">
 				<option value="yes" <?php if ($SAVE_WATERMARK_IMAGE) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 				<option value="no" <?php if (!$SAVE_WATERMARK_IMAGE) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("SAVE_WATERMARK_THUMB_help", "qm", "SAVE_WATERMARK_THUMB"); print $pgv_lang["SAVE_WATERMARK_THUMB"]; ?></td>
+		<td class="optionbox">
+			<select size="1" name="NEW_SAVE_WATERMARK_THUMB">
+				<option value="yes" <?php if ($SAVE_WATERMARK_THUMB) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$SAVE_WATERMARK_THUMB) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 			</select>
 		</td>
 	</tr>
