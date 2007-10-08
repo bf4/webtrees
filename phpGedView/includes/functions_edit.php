@@ -1270,19 +1270,24 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			//-- checkboxes to apply '1 SOUR' to BIRT/MARR/DEAT as '2 SOUR'
 			if ($level==1) {
 				echo "<br />";
-				echo "<input type=\"hidden\" id=\"SOUR_BIRT\" name=\"SOUR_BIRT\" value=\"Y\" />";
-				echo "<input type=\"hidden\" id=\"SOUR_MARR\" name=\"SOUR_MARR\" value=\"Y\" />";
-				echo "<input type=\"hidden\" id=\"SOUR_DEAT\" name=\"SOUR_DEAT\" value=\"Y\" />";
+				echo "<input type=\"hidden\" id=\"SOUR_BIRT\" name=\"SOUR_BIRT\" value=\"\" />";
+				echo "<input type=\"hidden\" id=\"SOUR_MARR\" name=\"SOUR_MARR\" value=\"\" />";
+				echo "<input type=\"hidden\" id=\"SOUR_FAM\" name=\"SOUR_FAM\" value=\"\" />";
+				echo "<input type=\"hidden\" id=\"SOUR_DEAT\" name=\"SOUR_DEAT\" value=\"\" />";
 				if (strpos($bdm, "B")!==false) {
-					echo "&nbsp;<input type=\"checkbox\" checked=\"checked\" onclick=\"if (this.checked) SOUR_BIRT.value='Y'; else SOUR_BIRT.value='';\" />";
+					echo "&nbsp;<input type=\"checkbox\" name=\"SOUR_INDI\" checked=\"checked\" value=\"Y\" />";
+					echo $pgv_lang['individual'];
+					echo "&nbsp;<input type=\"checkbox\" onclick=\"if (this.checked) SOUR_BIRT.value='Y'; else SOUR_BIRT.value='';\" />";
 					echo $factarray["BIRT"];
 				}
 				if (strpos($bdm, "M")!==false) {
-					echo "&nbsp;<input type=\"checkbox\" checked=\"checked\" onclick=\"if (this.checked) SOUR_MARR.value='Y'; else SOUR_MARR.value='';\" />";
+					echo "&nbsp;<input type=\"checkbox\" onclick=\"if (this.checked) SOUR_MARR.value='Y'; else SOUR_MARR.value='';\" />";
 					echo $factarray["MARR"];
+					echo "&nbsp;<input type=\"checkbox\" onclick=\"if (this.checked) SOUR_FAM.value='Y'; else SOUR_FAM.value='';\" />";
+					echo $pgv_lang["family"];
 				}
 				if (strpos($bdm, "D")!==false) {
-					echo "&nbsp;<input type=\"checkbox\" checked=\"checked\" onclick=\"if (this.checked) SOUR_DEAT.value='Y'; else SOUR_DEAT.value='';\" />";
+					echo "&nbsp;<input type=\"checkbox\" onclick=\"if (this.checked) SOUR_DEAT.value='Y'; else SOUR_DEAT.value='';\" />";
 					echo $factarray["DEAT"];
 				}
 			}
