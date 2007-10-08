@@ -66,14 +66,16 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_te
 	//Lightbox-Album header Links
 		//print "<br>";
 		print "<table border=0 width=\"66%\"><tr>";
-
+		print "<td class=\"width10 center wrap\" valign=\"top\">";
+		print "&nbsp;";
+		print "</td>"; 
 		
 		// Configuration
         if (userIsAdmin(getUserName())) {
             print "<td class=\"width20 center wrap\" valign=\"top\">";
             print "<a href=\"module.php?mod=lightbox&pgvaction=lb_editconfig\">";
 			if ($LB_AL_HEAD_LINKS == "both") {	
-				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"" . $pgv_lang["configure_lightbox"] . "\" />" ;
+				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"" . $pgv_lang["configure_lightbox"] . "\" /><br />" ;
 				print "" . $pgv_lang["configure_lightbox"] . "";
 			}else if ($LB_AL_HEAD_LINKS == "text") {
 				print "" . $pgv_lang["configure_lightbox"] . "";
@@ -92,10 +94,10 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_te
 			print "<td class=\"width20 center wrap\" valign=\"top\">";
             print "<a href=\"javascript: album_add()\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" > ";
 			if ($LB_AL_HEAD_LINKS == "both") {	
-				print "<img src=\"modules/lightbox/images/image_add.gif\" class=\"icon\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" />" ;
-				print $pgv_lang["lb_add_media_full"] ;
+				print "<img src=\"modules/lightbox/images/image_add.gif\" class=\"icon\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" /><br />" ;
+				print $pgv_lang["lb_add_media"] ;
 			}else if ($LB_AL_HEAD_LINKS == "text") {	
-				print $pgv_lang["lb_add_media_full"] ;
+				print $pgv_lang["lb_add_media"] ;
 			}else if ($LB_AL_HEAD_LINKS == "icon") {
 				print "<img src=\"modules/lightbox/images/image_add.gif\" class=\"icon\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" />" ;
 			}else{
@@ -111,10 +113,10 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_te
 			print "<td class=\"width20 center wrap\" valign=\"top\">";
             print "<a href=\"javascript: album_link()\" title=\"" . $pgv_lang["lb_link_media_full"] . "\" > ";
 			if ($LB_AL_HEAD_LINKS == "both") {	
-				print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\" " . $pgv_lang["lb_link_media_full"] . "\" />" ;
-				print $pgv_lang["lb_link_media_full"] ;
+				print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\" " . $pgv_lang["lb_link_media_full"] . "\" /><br />" ;
+				print $pgv_lang["lb_link_media"] ;
 			}else if ($LB_AL_HEAD_LINKS == "text") {
-				print $pgv_lang["lb_link_media_full"] ;
+				print $pgv_lang["lb_link_media"] ;
 			}else if ($LB_AL_HEAD_LINKS == "icon") {
 				print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\" " . $pgv_lang["lb_link_media_full"] . "\" />" ;
 			}else{
