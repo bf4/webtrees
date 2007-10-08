@@ -111,7 +111,7 @@ function print_user_messages($block=true, $config="", $side, $index) {
 				print "</tr>\n";
 				print "<tr><td class=\"list_value_wrap\" colspan=\"5\"><div id=\"message$key\" style=\"display: none;\">\n";
 				$message["body"] = nl2br(htmlspecialchars($message["body"]));
-				$message["body"] = preg_replace("/(http:.*)(<)/", "<a href=\"$1\" dir =\"ltr\">$1</a>$2", $message["body"]);
+				$message["body"] = expand_urls($message["body"]);
 
 				print PrintReady($message["body"])."<br /><br />\n";
 				if (preg_match("/RE:/", $message["subject"])==0) $message["subject"]="RE:".$message["subject"];
