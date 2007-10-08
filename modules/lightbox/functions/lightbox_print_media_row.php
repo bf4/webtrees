@@ -39,7 +39,7 @@
     global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $MEDIA_DIRECTORY, $TEXT_DIRECTION;
     global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
     global $SEARCH_SPIDER;
-    global $t, $edit, $SERVER_URL, $reorder, $thumb_edit;
+    global $t, $edit, $SERVER_URL, $reorder, $LB_AL_THUMB_LINKS;
 
 	// If reorder media has been clicked
 	if (isset($reorder) && $reorder==1) {
@@ -246,7 +246,7 @@
 				// Edit Media Item Details
                 print "<a href=\"javascript:;\" onclick=\" return window.open('addmedia.php?action=editmedia&amp;pid=" . $rowm['m_media'] . "&amp;linktoid=" . $rowm["mm_gid"] . "', '_blank', 'top=50,left=50,width=600,height=600,resizable=1,scrollbars=1');\" ";
 				print " title=\"" . $pgv_lang["lb_edit_media"] . "\">";
-				if ($thumb_edit == "text") {
+				if ($LB_AL_THUMB_LINKS == "text") {
 					print "<font size=2>" . $pgv_lang["edit"] . "</font>";
 				}else{	
 					print "<img src=\"modules/lightbox/images/image_edit.gif\" title=\"" . $pgv_lang["lb_edit_media"] . "\" /></img>";
@@ -258,7 +258,7 @@
 				// Remove Media Item from individual
                 print "<a href=\"javascript:;\" onclick=\" return delete_record('$pid', 'OBJE', '" . $rowm['m_media'] . "');\" ";
 				print " title=\"" . $pgv_lang["lb_delete_media"] . "\">";
-				if ($thumb_edit == "text") {
+				if ($LB_AL_THUMB_LINKS == "text") {
 					print "<font size=2>" . $pgv_lang["remove"] . "</font>";
 				}else{	
 					print "<img src=\"modules/lightbox/images/image_delete.gif\" title=\"" . $pgv_lang["lb_delete_media"] . "\" /></img>";

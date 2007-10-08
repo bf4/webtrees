@@ -170,7 +170,7 @@
 		Értéke lehet 'be' vagy 'ki'. Megadja, hogy ha a ClearBox galériáknál legyen-e kijelezve az összes kép, illetve,
 		hogy éppen hányadik	kép van megjelenítve. Mindenképpen használd a ' ' jeleket.
 */
-		var CB_ImgNum='be';
+		var CB_ImgNum='ki';
 
 /*
 	CB_ImgNumBracket:
@@ -187,7 +187,7 @@
 		(másodpercben), mielõtt megjeleníti a következõ képet. Megjegyzés: sajnos ez csak közelítõleges értéket ad,
 		valójában a böngészõtõl is függ.
 */
-		var CB_SlShowTime=6;
+//		var CB_SlShowTime=6;
 
 /*
 	CB_PadT:
@@ -256,7 +256,7 @@
 		Megadja, hogy alul milyen szöveg jelenjen meg a képek betöltése közben. Mindenképpen használd a ' ' jeleket.
 */
 //		var CB_LoadingText='- kép betöltése -';
-		var CB_LoadingText='- Loading -';
+		var CB_LoadingText='- >  < -';
 		
 /*
 	CB_PicDir:
@@ -332,20 +332,9 @@
 		var CB_ZoomStop='zoom_off.png';
 		
 
-// Choose one  (by uncommenting) of the following for the music track  ------------------------------
-
-//		var myMusic = '../music/Father_to_Son.mp3';	
-//		var myMusic = '../music/Lux_Aeterna.mp3';
-//		var myMusic = '../music/In_too_Deep.mp3';	
-		var myMusic = 'modules/lightbox/music/music.mp3';
-//		var myMusic = '../music/Earth.mp3';		
-
-
 // Slideshow music configurable options ---------------------------------------------------------
-//	var homeURL 					= "http://www.windmillway.f2s.com/genealogy_4.1/modules/lightbox/"; //URL to your installation directory
 	var foreverLoop 				= 0;	// Set 0 if want to stop on the last image or Set it to 1 for Infinite loop feature
 	var loopMusic					= true; //loops music if it is shorter then slideshow
-//	var SoundBridgeSWF 				= homeURL + "js/SoundBridge.swf";
 	var SoundBridgeSWF 				=  "modules/lightbox/js/SoundBridge.swf";	
 	
 // Music variables ---------------------------------------------------------

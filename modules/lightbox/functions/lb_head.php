@@ -35,7 +35,7 @@ loadLangFile("lb_lang");
 // The following is temporary, until the handling of the Lightbox Help system
 // is adjusted to match the usual PhpGedView practice
 $lbHelpFile = "modules/lightbox/languages/help.".$lang_short_cut[$LANGUAGE].".php";
-if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help.en.php";
+if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_text.en.php";
 
 ?>
 
@@ -67,41 +67,66 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help.en
 		//print "<br>";
 		print "<table border=0 width=\"66%\"><tr>";
 
-/*		
-		//Slide Show
-		if ($mediacnt!=0) {
-			print "<td class=\"width20 center wrap\" valign=\"top\">";
-			print "<a href=\"modules/lightbox/images/slideshow.jpg\" rel=\"clearbox[general,6,start]\" title=\"" . $pgv_lang["lb_slide_show"] . "\">"; 
-			print "<img src=\"modules/lightbox/images/images.gif\" class=\"icon\"  title=\"" . $pgv_lang["lb_slide_show"] . "\" /><br />" ;
-			print $pgv_lang["lb_slide_show"]; 
-			print '</a>';
+		
+		// Configuration
+        if (userIsAdmin(getUserName())) {
+            print "<td class=\"width20 center wrap\" valign=\"top\">";
+            print "<a href=\"module.php?mod=lightbox&pgvaction=lb_editconfig\">";
+			if ($LB_AL_HEAD_LINKS == "both") {	
+				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"" . $pgv_lang["configure_lightbox"] . "\" />" ;
+				print "" . $pgv_lang["configure_lightbox"] . "";
+			}else if ($LB_AL_HEAD_LINKS == "text") {
+				print "" . $pgv_lang["configure_lightbox"] . "";
+			}else if ($LB_AL_HEAD_LINKS == "icon") {
+				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"" . $pgv_lang["configure_lightbox"] . "\" />" ;	
+			}else{
+			}
+			print "</a>";
 			print "</td>"; 
-            print "<td width=\"5%\">&nbsp;</td>";
-		}		
-*/		
+            print "<td width=\"5%\">&nbsp;</td>";			
+            print "\n";
+        }		
+		
 		//Add a new multimedia object
         if ( userCanEdit(getUserName()) ) {
 			print "<td class=\"width20 center wrap\" valign=\"top\">";
             print "<a href=\"javascript: album_add()\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" > ";
-            print "<img src=\"modules/lightbox/images/image_add.gif\" class=\"icon\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" /><br />" ;
-            print $pgv_lang["lb_add_media_full"] ;
-            print "</a>";
+			if ($LB_AL_HEAD_LINKS == "both") {	
+				print "<img src=\"modules/lightbox/images/image_add.gif\" class=\"icon\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" />" ;
+				print $pgv_lang["lb_add_media_full"] ;
+			}else if ($LB_AL_HEAD_LINKS == "text") {	
+				print $pgv_lang["lb_add_media_full"] ;
+			}else if ($LB_AL_HEAD_LINKS == "icon") {
+				print "<img src=\"modules/lightbox/images/image_add.gif\" class=\"icon\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" />" ;
+			}else{
+			}
+            print " </a> ";
             print "</td>";
-            print "<td width=\"5%\">&nbsp;</td>";
+            print "<td width=\"5%\">&nbsp;</td>";            
+        }else{
         }
 		
 		//Link to an existing item
         if ( userCanEdit(getUserName()) ) {
 			print "<td class=\"width20 center wrap\" valign=\"top\">";
             print "<a href=\"javascript: album_link()\" title=\"" . $pgv_lang["lb_link_media_full"] . "\" > ";
-            print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\" " . $pgv_lang["lb_link_media_full"] . "\" /><br />" ;
-            print $pgv_lang["lb_link_media_full"] ;
-            print "</a>";
+			if ($LB_AL_HEAD_LINKS == "both") {	
+				print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\" " . $pgv_lang["lb_link_media_full"] . "\" />" ;
+				print $pgv_lang["lb_link_media_full"] ;
+			}else if ($LB_AL_HEAD_LINKS == "text") {
+				print $pgv_lang["lb_link_media_full"] ;
+			}else if ($LB_AL_HEAD_LINKS == "icon") {
+				print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\" " . $pgv_lang["lb_link_media_full"] . "\" />" ;
+			}else{
+			}
+            print " </a> ";
             print "</td>";
-            print "<td width=\"5%\">&nbsp;</td>";
+            print "<td width=\"5%\">&nbsp;</td>"; 
+        }else{
         }
 
 		//Turn Edit Mode On or Off
+		
 		if (!isset($edit)) $edit=1;
 		if ($edit==1) {
 			$lbEditMsg = $pgv_lang["turn_edit_OFF"];
@@ -110,16 +135,23 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help.en
 			$lbEditMsg = $pgv_lang["turn_edit_ON"];
 			$lbEditMode = 1;
 		}
+	
         if ( userCanEdit(getUserName()) && $mediacnt!=0) {
 			print "<td class=\"width20 center wrap\" valign=\"top\">";
             print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&edit={$lbEditMode} title=\"{$lbEditMsg}\">";
-            print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$lbEditMsg}\" /><br />" ;
-            print $lbEditMsg;
+			if ($LB_AL_HEAD_LINKS == "both") {
+            	print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$lbEditMsg}\" /><br />" ;
+            	print $lbEditMsg;
+            }else if ($LB_AL_HEAD_LINKS == "text") {
+            	print $lbEditMsg;
+            }else if ($LB_AL_HEAD_LINKS == "icon") {
+           		print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$lbEditMsg}\" /><br />" ;
+			}else{
+			}            			
             print "</a>";
             print "</td>";
             print "<td width=\"5%\">&nbsp;</td>";
-		}
+		}			
+            		
 		print "</tr></table>";
-		
-		
 ?>

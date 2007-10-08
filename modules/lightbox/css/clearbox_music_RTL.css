@@ -99,7 +99,7 @@
 
 #CB_LoadingImage {
 	position: absolute;
-	right: 50%;
+	left: 50%;
 	top: 50%;
 	margin-left: -12px;
 	margin-top: -12px;
@@ -112,7 +112,10 @@
 }
 
 #CB_Window {
-	left:50%; 
+	/* For IE */
+	right:expression( (document.body.clientWidth - CB_ImgWidthOld ) / 2 + 'px'); 
+	/* For FF */
+	left:50%;  
 	position:absolute;
 	top:50%;
 	visibility:hidden;

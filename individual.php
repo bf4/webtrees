@@ -606,13 +606,16 @@ if(empty($SEARCH_SPIDER)) {
 		if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help.en.php";
 
 		print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none; background:none;\" \>\n";
+
+		print "<span class=\"subheaders\">&nbsp;&nbsp;" . $pgv_lang["lightbox"] . "</span>\n";
+		print "&nbsp;&nbsp;"; 
 		
-		// ---------- Help link --------------------
+		// ---------- Help link --------------------		
 		print "<a href=\"" . $lbHelpFile . "\" rel='clearbox(500,760,click)' title=\"" . $pgv_lang["page_help"] . "\" >";
         print "<img src=\"".$PGV_IMAGE_DIR."/small/help.gif\" class=\"icon\" title=\"" . $pgv_lang["page_help"] . "\" />" ;
         print "</a>" ;
 
-		print "<span class=\"subheaders\">&nbsp;&nbsp;" . $pgv_lang["lightbox"] . "</span>\n";
+
 		// Header info ---------------------------------------------------		
 		$mediacnt = $controller->get_media_count();
 		if ($mediacnt!=0) {	

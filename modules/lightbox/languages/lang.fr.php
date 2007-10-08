@@ -33,6 +33,24 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+//Config Parameters -------------------------------------
+$pgv_lang["configure_lightbox"]		= "Configuration de Lightbox";
+$pgv_lang["mediatab"]       		= "<b>Page Individu - Etiquette de médias</b> - Aspect";
+$pgv_lang["lb_admin_error"]         = "Page only for Administrators";
+
+$pgv_lang["lb_icon"]				= "Icon";
+$pgv_lang["lb_text"]				= "Text";
+$pgv_lang["lb_both"]				= "Both";
+$pgv_lang["lb_none"]				= "None";
+
+$pgv_lang["lb_al_head_links"]		= "<b>Page Individu - Album Tab Header</b> - Aspect de Lien";
+$pgv_lang["lb_al_thumb_links"]		= "<b>Page Individu - Album Tab Thumbnails</b> - Aspect de Lien";
+$pgv_lang["lb_ml_thumb_links"]		= "<b>Page de Multimédia - Ongles du pouce</b> - Aspect de Lien";
+$pgv_lang["lb_music_file"]			= "<b>Fichier choisi de musique de Lightbox</b> - (mp3 seulment)";
+$pgv_lang["lb_ss_speed"]			= "<b>Vitesse de Projection de diapositives</b> - En seconds";
+
+// ---------------------------------------------------------------------
+
 $pgv_lang["lb_help"] = "Aide d'Album";
 $pgv_lang["lightbox"] = "Album";
 $pgv_lang["showmenu"] = "Afficher Menu:";

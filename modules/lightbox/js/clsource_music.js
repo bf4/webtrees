@@ -540,10 +540,14 @@ var soond = null;
     if (CB_ImgNum != "be" && CB_ImgNum != "ki") {
         CB_ImgNum = "be";
     }
+	
     CB_SlShowTime = parseInt(CB_SlShowTime);
     if (CB_SlShowTime < 1) {
         CB_SlShowTime = 5;
     }
+	
+//	var CB_SlShowTime = 5;
+	
     CB_SlShowTime *= 1000;
     if (CB_CheckDuplicates != "be" && CB_CheckDuplicates != "ki") {
         CB_CheckDuplicates = "ki";
@@ -913,7 +917,8 @@ var soond = null;
         CB_preImages = new Image;
         CB_preImages.src = CB_Gallery[CB_ActImgId][0];
         CB_Loaded = false;
-        CB_preImages.onerror = function () {CB_ShowImage();alert("ClearBox HIBA:\n\nA kepet nem lehet betolteni: " + CB_Gallery[CB_ActImgId][0]);return;};
+//		CB_preImages.onerror = function () {CB_ShowImage();alert("ClearBox ERROR:\n\nCould not open Image: " + CB_Gallery[CB_ActImgId][0]);return;};
+		CB_preImages.onerror = function () {CB_ShowImage();alert("ClearBox ERROR:\n\nCould not open Image : " );return;};
         CB_CheckLoaded();
     }
 
@@ -1151,7 +1156,7 @@ var soond = null;
 	}	
 	
 	function moveRight() {
-		if (CB_ImgWidthOld > BrSizeX) {
+		if (CB_ImgWidthOld > BrSizeX ){
 			CB_MarginL = CB_MarginL + 10;
 			CB_Win.style.marginLeft = CB_MarginL + "px";
 			CB_Prv.style.display = "none";
@@ -1207,7 +1212,7 @@ var soond = null;
 		CB_Img.style.width = CB_ImgWidthOld + "px";
 		CB_Img.style.height	= CB_ImgHeightOld + "px" ;
 		CB_ImgCont.style.height = CB_ImgHeightOld + ( 2 ) * CB_ImgBorder + "px";
-		CB_MarginL = parseInt(DocScrX - (CB_ImgWidthOld + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
+		CB_MarginL = parseInt(DocScrX - (CB_ImgWidthOld + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);		
 		CB_Win.style.marginLeft = CB_MarginL + "px";		
 		CB_MarginT = parseInt(DocScrY - (CB_ieRPBug + CB_ImgHeightOld + CB_TextH + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);		
 		CB_Win.style.marginTop = CB_MarginT - FF_ScrollbarBug / 2 + "px";				
