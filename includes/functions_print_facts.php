@@ -1566,7 +1566,7 @@ function print_fact_icon($fact, $factrec, $label, $pid) {
 }
 
 // -----------------------------------------------------------------------------
-//  Extra print_facts_functions for lightbox v3.00 11/Jun/2007
+//  Extra print_facts_functions for lightbox v3.00b 11/Jun/2007
 // -----------------------------------------------------------------------------
 
 function lightbox_print_media($pid, $level=1, $related=false, $kind, $noedit=false ) {

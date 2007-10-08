@@ -46,7 +46,7 @@
 			<PGVRList list="individual" filter1="ADDR CONTAINS ." filter2="ADDR SUBCONTAINS $address" filter3="$email" sortby="$sortby">
 				<PGVRTextBox top="$Y" left="$X" width="$width" height="$height" border="0" newline="$newline" pagecheck="false">
 					<PGVRText style="label"><PGVRGetPersonName id="" /></PGVRText>
-					<PGVRText style="text"><br /><PGVRGedcomValue tag="ADDR" /></PGVRText>
+					<PGVRText style="text"><br /><PGVRGedcomValue tag="ADDR" /><PGVRGedcomValue tag="RESI:ADDR" /></PGVRText>
 					<PGVRif condition="@ADDR:ADR1 != ''">
 						<PGVRText style="text"><br /><PGVRGedcomValue tag="ADDR:ADR1" /></PGVRText>
 					</PGVRif>

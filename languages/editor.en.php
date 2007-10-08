@@ -185,7 +185,6 @@ $pgv_lang["media_file_moved"]			= "Media file moved.";
 $pgv_lang["media_file_not_moved"]	= "Media file could not be moved.";
 $pgv_lang["media_file_not_renamed"]	= "Media file could not be moved or renamed.";
 $pgv_lang["media_thumb_exists"]		= "Media thumbnail already exists.";
-$pgv_lang["multi_site_search"] 		= "Multi Site Search";
 $pgv_lang["multiple_gedcoms"]		= "This file is linked to another genealogical database on this server.  It cannot be deleted, moved, or renamed until these links have been removed.";
 $pgv_lang["must_provide"]			= "You must provide a ";
 $pgv_lang["name_search"]			= "Name: ";
