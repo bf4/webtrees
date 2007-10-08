@@ -32,6 +32,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["multi_site_search"] 		= "Webseiten durchsuchen";
 $pgv_lang["switch_lifespan"]		= "Lebenspannen-Diagramm zeigen";
 $pgv_lang["switch_timeline"]		= "Lebenspannenanzeige zeigen";
 $pgv_lang["differences"]			= "Differenzen";
@@ -269,7 +270,7 @@ $pgv_lang["as_spouse"]					= "Familiendaten als Ehepartner";
 $pgv_lang["as_child"]					= "Familiendaten als Kind";
 $pgv_lang["view_gedcom"]				= "GEDCOM Datensatz zeigen";
 $pgv_lang["add_to_cart"]				= "Datensatz dem Sammelbehälter hinzufügen";
-$pgv_lang["privacy_error"]				= "Details dieser Person sind vertraulich.<br />";
+$pgv_lang["privacy_error"]				= "Details sind vertraulich und dürfen deshalb nicht gezeigt werden.<br />";
 $pgv_lang["more_information"]			= "Für weitere Informationen wenden Sie sich an:";
 $pgv_lang["name"]						= "Name";
 $pgv_lang["given_name"]					= "Vorname:";
