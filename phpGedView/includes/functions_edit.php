@@ -1059,9 +1059,11 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		$element_name="NOTE[".$noteid."]";
 	}
 
-	if (in_array($fact, $emptyfacts)&& (empty($value) or $value=="y" or $value=="Y")) {
+	if (in_array($fact, $emptyfacts)&& (empty($value) || $value=="y" || $value=="Y")) {
 		$value = strtoupper($value);
-		if ($fact=="MARR" or $level==1) $value="Y"; // default YES
+		//-- don't default anything to Y when adding events through people
+		//-- default to Y when specifically adding one of these events
+		if ($level==1) $value="Y"; // default YES
 		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".$value."\" />";
 		if ($level<=1) {
 			print "<input type=\"checkbox\" ";

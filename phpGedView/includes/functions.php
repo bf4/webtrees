@@ -1678,7 +1678,7 @@ function compare_facts_type($arec, $brec) {
 			"SLGC", "BAPL", "CONL", "ENDL", "SLGS",
 			"AFN", "REFN", "_PRMN", "REF", "RIN",
 			"ADDR", "PHON", "EMAIL", "_EMAIL", "EMAL", "FAX", "WWW", "URL", "_URL",
-			"CHAN"
+			"CHAN", "_TODO"
 		));
 
 	// Events not in the above list get mapped onto one that is.

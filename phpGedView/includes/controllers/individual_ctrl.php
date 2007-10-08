@@ -1772,7 +1772,7 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 // -----------------------------------------------------------------------------
-// Functions for Lightbox Album 
+// Functions for Lightbox Album V3.0 29/July/2007
 // -----------------------------------------------------------------------------
 	/**
 	 * print the lightbox tab, ( which =  getTab7()  )
