@@ -35,6 +35,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], "/".basename(__FILE__))!==false) {
 	exit;
 }
 
+global $PRIV_HIDE, $PRIV_PUBLIC, $PRIV_USER, $PRIV_NONE;
+
 //-- assign the default language.  User can override this setting if $ENABLE_MULTI_LANGUAGE = true
 $LANGUAGE = "english";
 
