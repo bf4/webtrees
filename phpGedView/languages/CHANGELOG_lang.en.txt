@@ -45,6 +45,9 @@ VERSION 4.1.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["move_standard"]							08 Oct 2007				w
+*$pgv_lang["move_protected"]						08 Oct 2007				w
++$pgv_lang["move_mediadirs"]						08 Oct 2007				A
 *$pgv_lang["yahrzeit_block"]          				02 Oct 2007           	S
 *$pgv_lang["yahrzeit_descr"]          				02 Oct 2007           	S
 +$pgv_lang["yahrzeit_block"]          				01 Oct 2007           	A
