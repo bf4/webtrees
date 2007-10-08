@@ -87,7 +87,8 @@ function NavTree(outerId, innerId, name) {
 		else vlines = document.getElementsByName("pvertline");
 		for(i=0; i<vlines.length; i++) {
 			ids = vlines[i].id.split("_");
-			
+			var y1 = 0;
+			var y2 = 0;
 			if (ids.length>1) {
 				toptable = document.getElementById('box_'+ids[1]);
 				bottable = document.getElementById('box_'+ids[2]);
@@ -112,7 +113,7 @@ function NavTree(outerId, innerId, name) {
 		}
 	}
 
-	this.loadChildren = function(target, xref) {
+	this.loadChild = function(target, xref) {
 		oXmlHttp = createXMLHttp();
 		link = "treenav.php?navAjax=1&jsname="+this.name+"&rootid="+xref+"&zoom="+this.zoom;
 		oXmlHttp.open("get", link, true);

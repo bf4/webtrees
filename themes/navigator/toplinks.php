@@ -25,6 +25,8 @@
  */
 require_once('includes/treenav_class.php');
 require_once('themes/navigator/thememenu.php');
+include_once('js/prototype.js.htm');
+include_once('js/scriptaculous.js.htm');
 
 global $ALLOW_CHANGE_GEDCOM;
 

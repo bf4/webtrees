@@ -330,7 +330,7 @@ class TreeNav {
 						$hasChildren = false;
 						if (!empty($family) && $family->getNumberOfChildren()>0) $hasChildren = true;  
 					?>
-					<td id="ch_<?php print $person->getXref();?>" align="right" <?php if ($gen==0 && $hasChildren) print 'id="'.$this->name.'_cload" name="'.$this->name.'_cload" onclick="'.$this->name.'.loadChildren(this, \''.$person->getXref().'\');"'; ?>>
+					<td id="ch_<?php print $person->getXref();?>" align="right" <?php if ($gen==0 && $hasChildren) print 'id="'.$this->name.'_cload" name="'.$this->name.'_cload" onclick="'.$this->name.'.loadChild(this, \''.$person->getXref().'\');"'; ?>>
 						<?php
 							$this->drawChildren($family, $gen);
 						?>
