@@ -35,6 +35,15 @@ VERSION 4.1.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
-
-*********** Nothing to show here.  The file "modules/lightbox/help_text.en.php"
-*********** does not yet exist.
++$pgv_lang["mediatabLegend"]						09 Oct 2007				A
++$pgv_lang["mediatab_help"]							09 Oct 2007				A
++$pgv_lang["lb_al_head_linksLegend"]				09 Oct 2007				A
++$pgv_lang["lb_al_head_links_help"]					09 Oct 2007				A
++$pgv_lang["lb_al_thumb_linksLegend"]				09 Oct 2007				A
++$pgv_lang["lb_al_thumb_links_help"]				09 Oct 2007				A
++$pgv_lang["lb_ml_thumb_linksLegend"]				09 Oct 2007				A
++$pgv_lang["lb_ml_thumb_links_help"]				09 Oct 2007				A
++$pgv_lang["lb_ss_speedLegend"]						09 Oct 2007				A
++$pgv_lang["lb_ss_speed_help"]						09 Oct 2007				A
++$pgv_lang["lb_music_fileLegend"]					09 Oct 2007				A
++$pgv_lang["lb_music_file_help"]					09 Oct 2007				A

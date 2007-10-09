@@ -28,26 +28,29 @@
  */
 
 //-- security check, only allow access from module.php
-if (preg_match("/ra_lang\...\.php$/", $_SERVER["PHP_SELF"])>0) {
-        print "You cannot access a language file directly.";
-        exit;
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access a language file directly.";
+	exit;
 }
 
 //Config Parameters -------------------------------------
 $pgv_lang["configure_lightbox"]		= "Lightbox-Album Configuration";
-$pgv_lang["mediatab"]       		= "<b>Individual Page - Media Tab</b> - Appearance";
+$pgv_lang["mediatab"]       		= "<b>Individual Page - Media Tab</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Appearance";
 $pgv_lang["lb_admin_error"]         = "Page only for Administrators";
 
 $pgv_lang["lb_icon"]				= "Icon";
 $pgv_lang["lb_text"]				= "Text";
 $pgv_lang["lb_both"]				= "Both";
 $pgv_lang["lb_none"]				= "None";
+$pgv_lang["lb_ml_ThumbLinkAdvice"]	= "Icon, Text, Both, or None";
 
-$pgv_lang["lb_al_head_links"]		= "<b>Individual Page - Album Tab Header</b> - Link appearance";
-$pgv_lang["lb_al_thumb_links"]		= "<b>Individual Page - Album Tab Thumbnails</b> - Link appearance";
-$pgv_lang["lb_ml_thumb_links"]		= "<b>Multimedia page - Thumbnails</b> - Link appearance";
-$pgv_lang["lb_music_file"]			= "<b>Selected Lightbox Music File</b> - (mp3 only)";
-$pgv_lang["lb_ss_speed"]			= "<b>Slide Show speed</b> - In seconds";
+$pgv_lang["lb_al_head_links"]		= "<b>Individual Page - Album Tab Header</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Link appearance";
+$pgv_lang["lb_al_thumb_links"]		= "<b>Individual Page - Album Tab Thumbnails</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Link appearance";
+$pgv_lang["lb_ml_thumb_links"]		= "<b>Multimedia page - Thumbnails</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Link appearance";
+$pgv_lang["lb_music_file"]			= "<b>Selected Lightbox music file</b><br />&nbsp;&nbsp;&nbsp;&nbsp;(mp3 only)";
+$pgv_lang["lb_musicFileAdvice"]		= "Location of music file";
+$pgv_lang["lb_ss_speed"]			= "<b>Slide Show speed</b>";
+$pgv_lang["lb_ss_SpeedAdvice"]		= "Slide show timing in seconds";
 
 // ---------------------------------------------------------------------
 
