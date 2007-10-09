@@ -63,6 +63,31 @@ VERSION 4.1.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
+*$pgv_lang["USE_MEDIA_VIEWER_help"]					08 Oct 2007				W
+*$pgv_lang["USE_MEDIA_FIREWALL_help"]				08 Oct 2007				w
+*$pgv_lang["MEDIA_FIREWALL_ROOTDIR_help"]			08 Oct 2007				W
+*$pgv_lang["MEDIA_FIREWALL_THUMBS_help"]			08 Oct 2007				w
+*$pgv_lang["WATERMARK_THUMB_help"]					08 Oct 2007				f
+*$pgv_lang["SAVE_WATERMARK_THUMB_help"]				08 Oct 2007				W
+*$pgv_lang["SAVE_WATERMARK_IMAGE_help"]				08 Oct 2007				W
+*$pgv_lang["SHOW_NO_WATERMARK_help"]				07 Oct 2007				w
+*$pgv_lang["SAVE_WATERMARK_THUMB_help"]				07 Oct 2007				w
+*$pgv_lang["SAVE_WATERMARK_IMAGE_help"]				07 Oct 2007				w
+*$pgv_lang["WATERMARK_THUMB_help"]					07 Oct 2007				w
++$pgv_lang["media_general_conf"]					07 Oct 2007				A
++$pgv_lang["media_firewall_conf"]					07 Oct 2007				A
+*$pgv_lang["CALENDAR_FORMAT_help"]					30 Sep 2007				W
+*$pgv_lang["CALENDAR_FORMAT_help"]					30 Sep 2007				W
+-$pgv_lang["gregorian"]								30 Sep 2007				M (moved to lang.XX.php and renamed)
+-$pgv_lang["julian"]								30 Sep 2007				M (moved to lang.XX.php and renamed)
+-$pgv_lang["config_french"]							30 Sep 2007				M (moved to lang.XX.php and renamed)
+-$pgv_lang["jewish"]								30 Sep 2007				M (moved to lang.XX.php and renamed)
+-$pgv_lang["config_hebrew"]							30 Sep 2007				M (moved to lang.XX.php and renamed)
+-$pgv_lang["jewish_and_gregorian"]					30 Sep 2007				M (moved to lang.XX.php and renamed)
+-$pgv_lang["hebrew_and_gregorian"]					30 Sep 2007				M (moved to lang.XX.php and renamed)
+-$pgv_lang["hijri"]									30 Sep 2007				M (moved to lang.XX.php and renamed)
+-$pgv_lang["arabic_cal"]							30 Sep 2007				M (moved to lang.XX.php and renamed)
++$pgv_lang["optional_file_not_exist"]				29 Sep 2007				A
 *$pgv_lang["USE_MEDIA_VIEWER_help"]					02 Sep 2007				W
 *$pgv_lang["USE_MEDIA_FIREWALL_help"]				02 Sep 2007				CW
 +$pgv_lang["MEDIA_FIREWALL_ROOTDIR"]				02 Sep 2007				A

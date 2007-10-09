@@ -36,7 +36,7 @@ require "config.php";
 loadLangFile("pgv_help");
 
 if (!isset($help)) $help = "";
-require ("help_text_vars.php");
+require ("includes/help_text_vars.php");
 
 header("Content-Type: text/html; charset=$CHARACTER_SET");
 

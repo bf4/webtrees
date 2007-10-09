@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @author Kurt Norgaz
- * @author Adem GENÇ, uzayuydu@gmail.com, http://www.muttafi.com
+ * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com
  * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
@@ -159,6 +159,26 @@ $factarray["_PGVU"]	= "Son değişikliği yapan";
 $factarray["SERV"] = "Uzak Server";
 $factarray["_GEDF"] = "GEDCOM Dosya";
 $factarray["_PRIM"]	= "Tercih edilen fotoğraf";
+$factarray["_DBID"] = "Veritabanı ID bağlandı";
+$factarray["STAT:DATE"] = "İstatistik Değişim Tarihi";
+$factarray["FAMC:HUSB:SURN"] = "Babaların Soyadı";
+$factarray["FAMC:WIFE:SURN"] = "Annelerin Soyadı";
+$factarray["FAMC:HUSB:BIRT:PLAC"] = "Babaların Doğumyeri";
+$factarray["FAMC:WIFE:BIRT:PLAC"] = "Annelerin Doğumyeri";
+$factarray["FAMC:MARR:PLAC"] = "Ebeveynlerin Evlilik Yeri";
+$factarray["FAMC:HUSB:OCCU"] = "Baba Mesleği";
+$factarray[":BIRT:PLAC"] = "Doğumyeri";
+$factarray["FAMS:MARR:PLAC"] = "Evlilik Yeri";
+$factarray["FAMS:SPOUSE:DEAT:PLAC"] = "Hayat Arkadaşı Ölüm Yeri";
+$factarray["FAMC:HUSB:GIVN"] = "Babanın İlk Adı";
+$factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Hayat Arkadaşın Doğum Yeri";
+$factarray["FAMC:WIFE:GIVN"] = "Annenin İlk Adı";
+$factarray["BIRT:PLAC"] = "Doğum Yeri";
+$factarray["DEAT:PLAC"] = "Ölüm Yeri";
+$factarray["CHR:PLAC"] = "Vaftiz eden yer ";
+$factarray["BAPM:PLAC"] = "Vaftiz yer";
+$factarray["BURI:PLAC"] = "Gömüldüğü Yer";
+$factarray["MARR:PLAC"] = "Evlendiği Yer";
 $factarray["_THUM"]	= "Bu fotoğrafı tırnak resim olarak kullan?";
 
 // These facts are specific to gedcom exports from Family Tree Maker

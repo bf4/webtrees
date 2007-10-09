@@ -43,7 +43,7 @@
 					<PGVRText style="text"><PGVRGetPersonName id="" /></PGVRText>
 				</PGVRTextBox>
 				<PGVRTextBox width="170" height="52" border="1">
-					<PGVRText style="text"><PGVRGedcomValue tag="ADDR" /></PGVRText>
+					<PGVRText style="text"><PGVRGedcomValue tag="ADDR" /><PGVRGedcomValue tag="RESI:ADDR" /></PGVRText>
 					<PGVRif condition="@ADDR:ADR1 != ''">
 						<PGVRText style="text"><br /><PGVRGedcomValue tag="ADDR:ADR1" /></PGVRText>
 					</PGVRif>

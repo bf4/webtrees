@@ -246,7 +246,8 @@ class TimelineControllerRoot extends BaseController {
 					else if (isset($pgv_lang[$fact])) print $pgv_lang[$fact];
 					else print $fact;
 					print "--";
-					print "<span class=\"date\">".get_changed_date($datestr)."</span> ";
+					$date=new GedcomDate($datestr);
+					print $date->Display(false);
 					if (!empty($desc)) print $desc." ";
 					if ($SHOW_PEDIGREE_PLACES>0) {
 						$pct = preg_match("/2 PLAC (.*)/", $factrec, $match);

@@ -31,30 +31,52 @@
 // Configuration parameters for Lightbox Album  //
 // ----------------------------------------------------//
  
-$mediatab = 1 ;   			// Set to 0 to hide Media Tab from Editors and Admin, 
-							// Set to 1 to show Media Tab for Editors and Admin, 
-							// Media Tab is ALWAYS hidden from users
+$mediatab = "1";  				// Individual Page Media Tab
+										// Set to 	0	to hide Media Tab on Indi page from Editors and Admin, 
+										// Set to 	1	to show Media Tab on Indi page for Editors and Admin,  [Default]
+										// Media Tab is ALWAYS hidden from everyone else.
 					
-$thumb_edit = "icon" ;		// Set to "icon" to view icon links below Lightbox Thumbnails, 
-							// Set to "text" to view text links below Lightbox Thumbnails, 
-						
-$multimed_icons = "show" ; 	// Set to "show" to show Multimedia List Edit icons
-							// Set to "hide" to hide Multimedia List Edit icons 
-						
-						
+$LB_AL_HEAD_LINKS = "both";			// Album Tab Page Header Links
+										// Set to "icon"	to view icon links 
+										// Set to "text"	to view text links ,
+										// Set to "both"	to view both. [Default]
+								
+$LB_AL_THUMB_LINKS = "text"; 		// Album Tab Page below Thumbnail Links
+										// Set to "icon"	to view icon links [Default]
+										// Set to "text"	to view text links ,
+																						
+$LB_ML_THUMB_LINKS = "both"; 		// MultiMedia List Page Thumbnail Links
+										// Set to "icon"	to view icon links 
+										// Set to "text"	to view text links ,
+										// Set to "both"	to view both. [Default]
+										// Set to "none"	to view neither.
+										
+$LB_SS_SPEED = "5";					// SlideShow speed in seconds.  [Min 2  max 25] 										
+							
+$LB_MUSIC_FILE = "modules/lightbox/music/music.mp3";  // The music file. [mp3 only]
 						
 
-					
-					
+// --------------------------------------------------------- //
+//  End Configuration parameters for Lightbox Album.  //
+// --------------------------------------------------------- //					
+?>						
 
+
+
+
+
+				
+					
+<?php
 // Do not change parameters below this line -------------------------------------------
 	
 	// Tab id no for Lightbox
-	if ($mediatab==1 && userCanEdit(getUserName())) {
+	if ($mediatab == 1 && userCanEdit(getUserName())) {
 		$tabno=8;
 	}else{
 		$tabno=3;
 	}
+	
 							
 	
 ?>

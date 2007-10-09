@@ -22,6 +22,7 @@
  * @package PhpGedView
  * @author Norgaz Kurt
  * @author Peter Pluntke
+ * @author Gerd Kroll
  * @version $Id$
  */
 
@@ -33,6 +34,8 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 //-- CONFIGURE FILE MESSAGES
 $pgv_lang["gedcom_conf"]		= "GEDCOM Grundlagen";
 $pgv_lang["media_conf"]			= "Multimedia";
+$pgv_lang["media_general_conf"]	= "Allgemeines";
+$pgv_lang["media_firewall_conf"]	= "Medien-Feuerwand";
 $pgv_lang["accpriv_conf"]		= "Zugang und Privatsphäre";
 $pgv_lang["displ_conf"]			= "Bildschirm und Layout";
 $pgv_lang["displ_names_conf"]	= "Namen";
@@ -243,7 +246,6 @@ $pgv_lang["PGV_SIMPLE_MAIL_help"] = "~#pgv_lang[PGV_SIMPLE_MAIL]#~<br /><br />No
 $pgv_lang["gedcom_title"]				= "GEDCOM-Datei Bezeichnung";
 $pgv_lang["gedcom_title_help"]		= "~#pgv_lang[gedcom_title]#~<br /><br />Geben Sie eine Bezeichnung ein, die erscheint, wenn Besucher zwischen mehreren GEDCOM-Dateien auf Ihrer Seite wählen.<br /><br />";
 $pgv_lang["new_gedcom_title"]			= "Genealogische Daten aus [#GEDCOMFILE#]";
-$pgv_lang["USE_MEDIA_VIEWER"]			= "Diabetrachter benutzen";
 $pgv_lang["SHOW_SPIDER_TAGLINE"]		= "Suchmaschinen-Namen zeigen";
 $pgv_lang["SHOW_PRIVATE_RELATIONSHIPS"]	= "Verwandtschaft zu privaten Personen zeigen";
 $pgv_lang["SYNC_GEDCOM_FILE"]			= "Änderungen sofort in der GEDCOM-Datei synchronisieren";
@@ -592,5 +594,23 @@ $pgv_lang["add_faq_pgvLangRefs"] = "Sie können im Text Einträge der Sprach-Dat
 $pgv_lang["add_faq_order_help"] = "~#pgv_lang[add_faq_order]#~<br /><br />Dieser Eintrag bestimmt die Reihenfolge, in der die FAQ-Einträge auf der FAQ-Seite dargestellt werden.<br /><br />Es ist nicht nötig, die Nummern sequentiell und ohne Löcher einzutragen.  Wenn die Reihenfolge der von Ihnen eingetragen Ordnungsnummern Löcher enthält, können Sie dann später andere Einträge in die FAQ-Liste einfügen. Zum Beispiel, wenn Sie die Ordnungsnummern 1, 6, 11, 16 benutzen, können Sie später andere Einträge mit den fehlenden Ordnungsnummern hinzufügen.  Negative Nummern und Null sind erlaubt, und ermöglichen Ihnen, Einträge <u>vor</u> dem jetzigen ersten Eintrag hinzuzufügen.<br /><br />Wenn mehrere Einträge die selbe Ordnugsnummer haben, ist nur einer dieser Einträge sichtbar.  Welcher Eintrag dann sichtbar ist, ist unbestimmt.<br /><br />";
 $pgv_lang["add_faq_visibility_help"] = "~#pgv_lang[add_faq_visibility]#~<br /><br />Sie können bestimmen, ob diese FAQ (oft gestellte Frage) immer sichtbar ist, oder ob sie nur der aktuellen GEDCOM-Datei sichtbar ist.<br /><br /><ul><li><b>#pgv_lang[all]#</b>&nbsp;&nbsp;&nbsp;Die FAQ ist in allen FAQ-Listen sichtbar, ohne Rücksicht auf die aktuelle GEDCOM-Datei.</li><li><b>#GLOBALS[GEDCOM]#</b>&nbsp;&nbsp;&nbsp;Die FAQ ist nur in der FAQ-Liste der aktuellen GEDCOM-Datei sichtbar.</li></ul><br /><br />";
 $pgv_lang["index_gedcom_news_adm_help"]		= "Im Textbereich dieses Blocks können Sie <b>HTML tags</b> und <b>HTML entities</b> einfügen. HTML sollte im Titelbereich nicht benutzt werden.<br /><br />Bitte achten Sie darauf, die Start- und End-Tags korrekt einzutragen. Dieses Programm verwendet <i>Style Sheets</i> (CSS). Jedes Theme hat seine eigene style sheet-Datei. Sie können auch «Klassen» aus diesen Style-Sheets verwenden.<br /><br />Wenn Sie weitere Hilfe benötigen: Auf der PhpGedView Webseite werden Sie einige Beispiele finden, wie Sie solche Tags in Ihren eigenen Blöcken verwenden.<br /><br />Folgender Text, der Eingaben der FAQ-Liste beschreibt, ist auch für Eingaben der GEDCOM-Neuigkeiten gültig.<br /><br />#pgv_lang[add_faq_pgvLangRefs]#<br /><br />";
+
+
+$pgv_lang["USE_MEDIA_VIEWER"]			= "Diabetrachter benutzen";
+$pgv_lang["USE_MEDIA_VIEWER_help"]		= "~#pgv_lang[USE_MEDIA_VIEWER]#~<br /><br />Wenn <b>#pgv_lang[yes]#</b> gewählt ist, wird durch das Klicken auf Bildern die Diabetrachter-Seite gezeigt.  Diese Seite enthält Einzelheiten über das Bild, und falls erlaubt, können die Einzelheiten auch bearbeitet werden.<br /><br />Wenn <b>#pgv_lang[no]#</b> gewählt ist, wird das Bild in voller Größe gezeigt, wenn Sie auf dem Miniaturbild klicken.<br /><br />";
+$pgv_lang["USE_MEDIA_FIREWALL"]			= "Medien-Feuerwand benutzen";
+$pgv_lang["USE_MEDIA_FIREWALL_help"]	= "~#pgv_lang[USE_MEDIA_FIREWALL]#~<br /><br />Die Medien-Feuerwand ist im Wikipedia beschrieben. <a href=\"http://wiki.phpgedview.net/en/index.php/Media_Firewall\" target=\"_blank\">http://wiki.phpgedview.net/en/index.php/Media_Firewall</a><br /><br />";
+$pgv_lang["MEDIA_FIREWALL_ROOTDIR"]			= "Medien-Feuerwand Hauptverzeichnis";
+$pgv_lang["MEDIA_FIREWALL_ROOTDIR_help"]	= "~#pgv_lang[MEDIA_FIREWALL_ROOTDIR]#~<br /><br />Verzeichnis, worin das geschützte Medien-Verzeichnis erstellt werden kann.  Der leere Eintrag bedeutet, dass das <b>#GLOBALS[INDEX_DIRECTORY]#</b> Verzeichnis benutzt wird.<br /><br />";
+$pgv_lang["MEDIA_FIREWALL_THUMBS"]			= "Miniaturbilder schützen";
+$pgv_lang["MEDIA_FIREWALL_THUMBS_help"]	= "~#pgv_lang[MEDIA_FIREWALL_THUMBS]#~<br /><br />Wenn das große Bild sich im geschützen Medien-Verzeichnis befindet, soll das dazugehörende Miniaturbild auch geschützt werden?<br /><br />";
+$pgv_lang["SHOW_NO_WATERMARK"]			= "Wem Bilder ohne Wasserzeichen zeigen";
+$pgv_lang["SHOW_NO_WATERMARK_help"]		= "~#pgv_lang[SHOW_NO_WATERMARK]#~<br /><br />Wenn die Medien-Feuerwand benutzt wird, werden Bilder mit Wasserzeichen versehen, wenn der Benutzer nicht genügende Rechte hat.<br /><br />";
+$pgv_lang["WATERMARK_THUMB"]			= "Miniaturbilder mit Wasserzeichen versehen";
+$pgv_lang["WATERMARK_THUMB_help"]		= "~#pgv_lang[WATERMARK_THUMB]#~<br /><br />Wenn die Medien-Feurwand benutzt wird, sollen Miniaturbilder auch mit Wasserzeichen versehen werden?  Medien-Listen laden langsamer wenn diese Option auf <b>#pgv_lang[yes]#</b> gestellt ist.<br /><br />";
+$pgv_lang["SAVE_WATERMARK_IMAGE"]		= "Mit Wasserzeichen versehene Bilder auf dem Server bewahren";
+$pgv_lang["SAVE_WATERMARK_IMAGE_help"]	= "~#pgv_lang[SAVE_WATERMARK_IMAGE]#~<br /><br />Wenn die Medien-Feurwand benutzt wird und hier <b>#pgv_lang[yes]#</b> gewählt ist, sind alle mit Wasserzeichen versehene Bilder auf dem Server bewahrt.<br /><br />Der Vorteil dieser Option ist ein schnelleres Zeigen der Bilder;  der Nachteil ist ein erhöhter Festplatten-Speicherbedarf, da dann jedes Bild zweimal gespeichert werden muss.<br /><br />";
+$pgv_lang["SAVE_WATERMARK_THUMB"]		= "Mit Wasserzeichen versehene Miniaturbilder auf dem Server bewahren";
+$pgv_lang["SAVE_WATERMARK_THUMB_help"]	= "~#pgv_lang[SAVE_WATERMARK_THUMB]#~<br /><br />Wenn die Medien-Feurwand benutzt wird und hier <b>#pgv_lang[yes]#</b> gewählt ist, sind alle mit Wasserzeichen versehene Miniaturbilder auf dem Server bewahrt.<br /><br />Der Vorteil dieser Option ist ein schnelleres Zeigen der Medienlisten;  der Nachteil ist ein erhöhter Festplatten-Speicherbedarf, da dann jedes Miniaturbild zweimal gespeichert werden muss.<br /><br />";
 
 ?>

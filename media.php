@@ -219,7 +219,7 @@ print_header($pgv_lang["manage_media"]);
 	<input type="hidden" name="level" value="<?php print $level; ?>" />
 	<input type="hidden" name="all" value="true" />
 	<input type="hidden" name="subclick" />
-	<table class="fact_table center width90 <?php print $TEXT_DIRECTION; ?>">
+	<table class="fact_table center width100 <?php print $TEXT_DIRECTION; ?>">
 	<tr><td class="topbottombar" colspan="6"><?php print_help_link("manage_media_help","qm","manage_media");print $pgv_lang["manage_media"];?></td></tr>
 	<!-- // NOTE: Filter options -->
 	<tr><td class="descriptionbox wrap width25"><?php print_help_link("filter_help","qm","filter"); print $pgv_lang["filter"];?></td>
@@ -842,7 +842,7 @@ if (check_media_structure()) {
 		print "<form name=\"uploadmedia\" enctype=\"multipart/form-data\" method=\"post\" action=\"media.php\">";
 		print "<input type=\"hidden\" name=\"action\" value=\"upload\" />";
 		print "<input type=\"hidden\" name=\"showthumb\" value=\"$showthumb\" />";
-		print "<table class=\"list_table $TEXT_DIRECTION width90\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		if (!$filesize = ini_get('upload_max_filesize')) $filesize = "2M";
 		print "<tr><td class=\"topbottombar\" colspan=\"2\">".$pgv_lang["upload_media"]."<br />".$pgv_lang["max_upload_size"].$filesize."</td></tr>";
 		$tab = 1;
@@ -1323,7 +1323,7 @@ if (check_media_structure()) {
 		}
 
 		// Start of media directory table
-		print "<table class=\"list_table width50 $TEXT_DIRECTION\">";
+		print "<table class=\"list_table width100 $TEXT_DIRECTION\">";
 
 		// Tell the user where he is
 		print "<tr>";
@@ -1333,13 +1333,14 @@ if (check_media_structure()) {
 				print PrintReady(substr($directory,0,-1));
 
 			if ($USE_MEDIA_FIREWALL) {
-				print "<br />";
+				print "<br /><br />";
 				print "<form name=\"blah2\" action=\"media.php\" method=\"post\">";
 				print "<input type=\"hidden\" name=\"directory\" value=\"".$directory."\" />";
 				print "<input type=\"hidden\" name=\"level\" value=\"".($level)."\" />";
 				print "<input type=\"hidden\" name=\"dir\" value=\"".$directory."\" />";
 				print "<input type=\"hidden\" name=\"action\" value=\"\" />";
 				print "<input type=\"submit\" value=\"".$pgv_lang["move_standard"]."\" onclick=\"this.form.action.value='movedirstandard';\">";
+				print_help_link("move_mediadirs_help","qm","move_mediadirs");
 				print "<input type=\"submit\" value=\"".$pgv_lang["move_protected"]."\" onclick=\"this.form.action.value='movedirprotected';\">";
 				print "</form>";
 			}
@@ -1410,7 +1411,7 @@ if (check_media_structure()) {
 
 		// display the images TODO x across if lots of files??
 		if (count($medialist)) {
-			print "\n\t<table class=\"list_table width90\">";
+			print "\n\t<table class=\"list_table width100\">";
 			if ($directory==$MEDIA_DIRECTORY) {
 				$httpFilter = "http";
 				$passStart = 1;
@@ -1437,7 +1438,7 @@ if (check_media_structure()) {
 
 						// Show column with file operations options
 						$printDone = true;
-						print "<tr><td class=\"optionbox $changeClass $TEXT_DIRECTION width10\">";
+						print "<tr><td class=\"optionbox $changeClass $TEXT_DIRECTION width20\">";
 
 						if ($media["CHANGE"]!="delete") {
 							// Edit File

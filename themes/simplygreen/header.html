@@ -1,4 +1,10 @@
-<?php global $SEARCH_SPIDER; ?>
+<?php 
+global $SEARCH_SPIDER; $TEXT_DIRECTION;
+
+$date=new GedcomDate(date('j M Y', client_time()));
+$displayDate = $date->Display(false);
+
+?>
 <div id="header" class="<?php print $TEXT_DIRECTION; ?>">
 <div class="headerimg" style="margin: 3px; background: url(<?php print $PGV_IMAGE_DIR; ?>/bannerimage.jpg) no-repeat center <?php print $TEXT_DIRECTION=="ltr"?"left":"right" ?>;">
   <table width="99%" class="headerimg" cellpadding="3" cellspacing="0" style="height:186;">
@@ -40,7 +46,7 @@
       <td valign="bottom">
         <?php if(empty($SEARCH_SPIDER)) { ?>
         <div class="date">
-          <?php print get_changed_date(date("j", time()-(isset($_SESSION["timediff"])?$_SESSION["timediff"]:0))." ".date("M", time()-(isset($_SESSION["timediff"])?$_SESSION["timediff"]:0))." ".date("Y", time()-(isset($_SESSION["timediff"])?$_SESSION["timediff"]:0))); ?>
+          <?php print $displayDate; ?>
         </div>
         <?php } ?>
         <a href="<?php print $HOME_SITE_URL; ?>">

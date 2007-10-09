@@ -1248,6 +1248,10 @@ class IndividualControllerRoot extends BaseController {
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
 					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM(); ?>]</a>
 				<?php }?>
+				<?php if ($family->getMarriageDate()) {
+					$date=new GedcomDate($family->getMarriageDate());
+					echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".$date->Display(false)." -- ".$family->getPlaceShort($family->getMarriagePlace());
+				}?>
 					</td>
 				</tr>
 			</table>
@@ -1407,6 +1411,10 @@ class IndividualControllerRoot extends BaseController {
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
 					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM(); ?>]</a>
 				<?php } ?>
+					<?php if ($family->getMarriageDate()) {
+						$date=new GedcomDate($family->getMarriageDate());
+						echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".$date->Display(false)." -- ".$family->getPlaceShort($family->getMarriagePlace());
+					}?>
 					</td>
 				</tr>
 			</table>
@@ -1545,6 +1553,13 @@ class IndividualControllerRoot extends BaseController {
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
 					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM(); ?>]</a>
 				<?php } ?>
+<<<<<<< .working
+=======
+				<?php if ($family->getMarriageDate()) {
+					$date=new GedcomDate($family->getMarriageDate());
+					echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".$date->Display(false)." -- ".$family->getPlaceShort($family->getMarriagePlace());
+				}?>
+>>>>>>> .merge-right.r1862
 					</td>
 				</tr>
 			</table>

@@ -1062,9 +1062,11 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 		$element_name="NOTE[".$noteid."]";
 	}
 
-	if (in_array($fact, $emptyfacts)&& (empty($value) or $value=="y" or $value=="Y")) {
+	if (in_array($fact, $emptyfacts)&& (empty($value) || $value=="y" || $value=="Y")) {
 		$value = strtoupper($value);
-		if ($fact=="MARR" or $level==1) $value="Y"; // default YES
+		//-- don't default anything to Y when adding events through people
+		//-- default to Y when specifically adding one of these events
+		if ($level==1) $value="Y"; // default YES
 		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".$value."\" />";
 		if ($level<=1) {
 			print "<input type=\"checkbox\" ";
@@ -1282,19 +1284,24 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			//-- checkboxes to apply '1 SOUR' to BIRT/MARR/DEAT as '2 SOUR'
 			if ($level==1) {
 				echo "<br />";
-				echo "<input type=\"hidden\" id=\"SOUR_BIRT\" name=\"SOUR_BIRT\" value=\"Y\" />";
-				echo "<input type=\"hidden\" id=\"SOUR_MARR\" name=\"SOUR_MARR\" value=\"Y\" />";
-				echo "<input type=\"hidden\" id=\"SOUR_DEAT\" name=\"SOUR_DEAT\" value=\"Y\" />";
+				echo "<input type=\"hidden\" id=\"SOUR_BIRT\" name=\"SOUR_BIRT\" value=\"\" />";
+				echo "<input type=\"hidden\" id=\"SOUR_MARR\" name=\"SOUR_MARR\" value=\"\" />";
+				echo "<input type=\"hidden\" id=\"SOUR_FAM\" name=\"SOUR_FAM\" value=\"\" />";
+				echo "<input type=\"hidden\" id=\"SOUR_DEAT\" name=\"SOUR_DEAT\" value=\"\" />";
 				if (strpos($bdm, "B")!==false) {
-					echo "&nbsp;<input type=\"checkbox\" checked=\"checked\" onclick=\"if (this.checked) SOUR_BIRT.value='Y'; else SOUR_BIRT.value='';\" />";
+					echo "&nbsp;<input type=\"checkbox\" name=\"SOUR_INDI\" checked=\"checked\" value=\"Y\" />";
+					echo $pgv_lang['individual'];
+					echo "&nbsp;<input type=\"checkbox\" onclick=\"if (this.checked) SOUR_BIRT.value='Y'; else SOUR_BIRT.value='';\" />";
 					echo $factarray["BIRT"];
 				}
 				if (strpos($bdm, "M")!==false) {
-					echo "&nbsp;<input type=\"checkbox\" checked=\"checked\" onclick=\"if (this.checked) SOUR_MARR.value='Y'; else SOUR_MARR.value='';\" />";
+					echo "&nbsp;<input type=\"checkbox\" onclick=\"if (this.checked) SOUR_MARR.value='Y'; else SOUR_MARR.value='';\" />";
 					echo $factarray["MARR"];
+					echo "&nbsp;<input type=\"checkbox\" onclick=\"if (this.checked) SOUR_FAM.value='Y'; else SOUR_FAM.value='';\" />";
+					echo $pgv_lang["family"];
 				}
 				if (strpos($bdm, "D")!==false) {
-					echo "&nbsp;<input type=\"checkbox\" checked=\"checked\" onclick=\"if (this.checked) SOUR_DEAT.value='Y'; else SOUR_DEAT.value='';\" />";
+					echo "&nbsp;<input type=\"checkbox\" onclick=\"if (this.checked) SOUR_DEAT.value='Y'; else SOUR_DEAT.value='';\" />";
 					echo $factarray["DEAT"];
 				}
 			}
@@ -1312,11 +1319,17 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 
 	// current value
 	if ($TEXT_DIRECTION=="ltr") {
-		if ($fact=="DATE") print get_changed_date($value);
+		if ($fact=="DATE") {
+			$date=new GedcomDate($value);
+			print $date->Display(false);
+		}
 		if ($fact=="ASSO" and $value) print " ".PrintReady(get_person_name($value))." (".$value.")";
 		if ($fact=="SOUR" and $value) print " ".PrintReady(get_source_descriptor($value))." (".$value.")";
 	} else {
-		if ($fact=="DATE") print getRLM().get_changed_date($value).getRLM();
+		if ($fact=="DATE") {
+			$date=new GedcomDate($value);
+			print getRLM().$date->Display(false).getRLM();
+		}
 		if ($fact=="ASSO" and $value) print " " . getRLM() . PrintReady(get_person_name($value))." (".$value.")" . getRLM();
 		if ($fact=="SOUR" and $value) print " " . getRLM() .PrintReady(get_source_descriptor($value)). getRLM() . "&nbsp;&nbsp;" . getLRM() . "(".$value.")" . getLRM();
 	}

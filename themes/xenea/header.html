@@ -1,4 +1,10 @@
-<?php global $SEARCH_SPIDER; $TEXT_DIRECTION;?>
+<?php 
+global $SEARCH_SPIDER; $TEXT_DIRECTION;
+
+$date=new GedcomDate(date('j M Y', client_time()));
+$displayDate = $date->Display(false);
+
+?>
 <div id="header" class="<?php print $TEXT_DIRECTION; ?>">
 <table width="100%" border="0" cellspacing="0" cellpadding="1" bgcolor="#003399">
    <tr>
@@ -34,7 +40,7 @@
                 <td><div id="favtheme" align="<?php print $TEXT_DIRECTION=="rtl"?"right":"left" ?>" class="blanco"><?php print_theme_dropdown(1); ?></div><?php print_user_links(); ?></td>
 				<td valign="top"></td>
                 <td><div align="center"><?php print_lang_form(1); ?></div></td>
-				<td><div id="favdate" align="<?php print $TEXT_DIRECTION=="rtl"?"left":"right" ?>" class="blanco"><?php print_favorite_selector(1); ?><?php print get_changed_date(date("j", time()-(isset($_SESSION["timediff"])?$_SESSION["timediff"]:0))." ".date("M", time()-(isset($_SESSION["timediff"])?$_SESSION["timediff"]:0))." ".date("Y", time()-(isset($_SESSION["timediff"])?$_SESSION["timediff"]:0))); ?>
+				<td><div id="favdate" align="<?php print $TEXT_DIRECTION=="rtl"?"left":"right" ?>" class="blanco"><?php print_favorite_selector(1); ?><?php print $displayDate; ?>
 
 
                 </div></td><td width="10"><img src="<?php print $PGV_IMAGE_DIR; ?>/pixel.gif" width="1" height="1" alt="" /></td></tr></table>

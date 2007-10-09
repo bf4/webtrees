@@ -305,8 +305,10 @@ function tool_tip_text($marker) {
 		$tool_tip.=": {$marker['info']}";
 	if (!empty($marker['name']) && (displayDetailsById($marker['name']) || showLivingNameById($marker['name'])))
 		$tool_tip.=": ".PrintReady(get_person_name($marker['name']));
-	if (!empty($marker['date']))
-		$tool_tip.=" - ".get_changed_date($marker['date']);
+	if (!empty($marker['date'])) {
+		$date=new GedcomDate($marker['date']);
+		$tool_tip.=" - ".$date->Display(false);
+	}
 	return $tool_tip;
 // dates & RTL is not OK - adding PrintReady does not solve it
 }
@@ -591,7 +593,8 @@ function build_indiv_map($indifacts, $famids) {
 						print preg_replace("/\"/", "\\\"", print_fact_place_map($markers[$j]["placerec"]));
 					}
 					if (!empty($markers[$j]["date"])) {
-						print "<br/>".addslashes(get_date_url($markers[$j]["date"]));
+						$date=new GedcomDate($markers[$j]["date"]);
+						print "<br/>".addslashes($date->Display(true));
 					}
 					if ($GOOGLEMAP_COORD == "false"){
 						print "\");\n";
@@ -646,7 +649,8 @@ function build_indiv_map($indifacts, $famids) {
 						print preg_replace("/\"/", "\\\"", print_fact_place_map($markers[$j]["placerec"]));
 					}
 					if (!empty($markers[$j]["date"])) {
-						print "<br/>".addslashes(get_date_url($markers[$j]["date"]));
+						$date=new GedcomDate($markers[$j]["date"]);
+						print "<br/>".addslashes($date->Display(true));
 					}
 					if ($GOOGLEMAP_COORD == "false"){
 						print "\")";
@@ -712,7 +716,8 @@ function build_indiv_map($indifacts, $famids) {
 								print preg_replace("/\"/", "\\\"", print_fact_place_map($markers[$k]["placerec"]));
 							}
 							if (!empty($markers[$k]["date"])) {
-								print "<br/>".addslashes(get_date_url($markers[$k]["date"]));
+								$date=new GedcomDate($markers[$k]["date"]);
+								print "<br/>".addslashes($date->Display(true));
 							}
 							if ($GOOGLEMAP_COORD == "false"){
 								print "\")";
@@ -757,8 +762,10 @@ function build_indiv_map($indifacts, $famids) {
 			} else {
 				print print_fact_place_map($marker["placerec"])."<br/>";
 			}
-			if (!empty($marker['date']))
-				print get_date_url($marker['date'])."<br/>";
+			if (!empty($marker['date'])) {
+				$date=new GedcomDate($marker['date']);
+				print $date->Display(true)."<br/>";
+			}
 			print "</td></tr>";
 		}
 		print "</table></div><br/>";

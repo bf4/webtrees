@@ -43,6 +43,7 @@ class SourceControllerRoot extends BaseController {
 	var $sid;
 	var $show_changes = "yes";
 	var $action = "";
+	/* @var Source */
 	var $source = null;
 	var $uname = "";
 	var $diffsource = null;

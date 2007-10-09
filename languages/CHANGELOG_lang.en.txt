@@ -55,6 +55,27 @@ VERSION 4.1.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["privacy_error"]							09 Oct 2007				W see [ 1804632 ] Private Sources/Repositories
+*$pgv_lang["move_standard"]							08 Oct 2007				w
+*$pgv_lang["move_protected"]						08 Oct 2007				w
++$pgv_lang["move_mediadirs"]						08 Oct 2007				A
+*$pgv_lang["yahrzeit_block"]          				02 Oct 2007           	S
+*$pgv_lang["yahrzeit_descr"]          				02 Oct 2007           	S
++$pgv_lang["yahrzeit_block"]          				01 Oct 2007           	A
++$pgv_lang["yahrzeit_descr"]          				01 Oct 2007           	A
++$pgv_lang["multi_site_search"]						01 Oct 2007				A moved from editor.en.php
++$pgv_lang["cal_none"]								30 Sep 2007				A
++$pgv_lang["cal_gregorian"]							30 Sep 2007				M (moved from configure_help.XX.php and renamed)
++$pgv_lang["cal_julian"]							30 Sep 2007				M (moved from configure_help.XX.php and renamed)
++$pgv_lang["cal_french"]							30 Sep 2007				M (moved from configure_help.XX.php and renamed)
++$pgv_lang["cal_jewish"]							30 Sep 2007				M (moved from configure_help.XX.php and renamed)
++$pgv_lang["cal_hebrew"]							30 Sep 2007				M (moved from configure_help.XX.php and renamed)
++$pgv_lang["cal_jewish_and_gregorian"]				30 Sep 2007				M (moved from configure_help.XX.php and renamed)
++$pgv_lang["cal_hebrew_and_gregorian"]				30 Sep 2007				M (moved from configure_help.XX.php and renamed)
++$pgv_lang["cal_hijri"]								30 Sep 2007				M (moved from configure_help.XX.php and renamed)
++$pgv_lang["cal_arabic"]							30 Sep 2007				M (moved from configure_help.XX.php and renamed)
+*$pgv_lang["stplGDno"]								28 Sep 2007				W
+*$pgv_lang["stpljpgraphno"]							28 Sep 2007				W
 *$pgv_lang["media_firewall_rootdir_no_exist"]		09 Sep 2007				C
 *$pgv_lang["media_firewall_protected_dir_no_exist"]	09 Sep 2007				C
 *$pgv_lang["media_firewall_protected_dir_not_writable"] 09 Sep 2007			W

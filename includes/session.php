@@ -641,6 +641,12 @@ $_SESSION["GEDCOM"] = $GEDCOM;
 $INDILIST_RETRIEVED = false;
 $FAMLIST_RETRIEVED = false;
 
+// privacy constants moved from privacy.php
+$PRIV_HIDE = -1;	//  Global constant privacy level to hide the item to all users including the admin
+$PRIV_PUBLIC = 2;	//  Global constant privacy level that allows non-authenticated public visitors to view the marked information
+$PRIV_USER = 1;	//  Global constant privacy level that only allows authenticated users to access the marked information
+$PRIV_NONE = 0;	//  Global constant privacy level that only allows admin users to access the marked information
+
 /**
  * Load GEDCOM configuration
  */

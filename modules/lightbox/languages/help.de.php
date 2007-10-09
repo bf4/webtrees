@@ -41,10 +41,10 @@ echo "<li>";
 echo "<b><font color=\"blue\">Zoom (Bild vergrößern oder verkleinern)</font></b><br />" ;
 echo "Bitte beachten Sie: Der Diavortrag muss halten, bevor die Zoom-Ikone sichtbar werden.<br />";
 echo "<b> Zoom einschalten:</b><br />";
-echo "Wenn das grüne Plus-Symbol unten rechts sichtbar ist, ist Zoom aktiviert. Durch Bewegung des Mausrads können Sie das Bild vergrößern oder verkleinern. (Sie können auch die «i» und «o» Tasten benutzen.)  Das Symbol unten rechts verändert sich in ein rotes Minus-Symbol.<br /> ";
+echo "Wenn das grüne Plus-Symbol unten rechts sichtbar ist, ist Zoom aktiviert. Durch Bewegung des Mausrads können Sie das Bild vergrößern oder verkleinern. (Sie können auch die <b>i</b> und <b>o</b> Tasten benutzen.)  Das Symbol unten rechts verändert sich in ein rotes Minus-Symbol.<br /> ";
 echo "Ein zu großes Bild kann mit Hilfe der Pfeil-Tasten im Fenster bewegt werden.<br />";
 echo "<b> Zoom ausschalten:</b><br />";
-echo "Wenn Sie das rote Minus-Symbol unten rechts klicken, wird Zoom ausgeschaltet. (Sie können auch die «z» Taste benutzen.)";
+echo "Wenn Sie das rote Minus-Symbol unten rechts klicken, wird Zoom ausgeschaltet. (Sie können auch die <b>z</b> Taste benutzen.)";
 echo "</li><br /><br />";
 
 echo "<li>";
@@ -54,7 +54,7 @@ echo "</li><br /><br />";
 
 echo "<li>";
 echo "<b><font color=\"blue\">Voriges oder nächstes Bild</font></b><br />";
-echo "Wenn Zoom NICHT aktiviert ist, erhalten Sie links « und rechts » Symbole durch Bewegung der Maus über dem Bild. Wenn Sie in der rechten Hälfte des Bildes klicken, erhalten Sie das nächste Bild der Serie.  Wenn Sie in der linken Hälfte klicken, erhalten Sie das vorige Bild.";
+echo "Wenn Zoom NICHT aktiviert ist, erhalten Sie links <b>&lt;</b> und rechts <b>&gt;</b> Symbole durch Bewegung der Maus über dem Bild. Wenn Sie in der rechten Hälfte des Bildes klicken, erhalten Sie das nächste Bild der Serie.  Wenn Sie in der linken Hälfte klicken, erhalten Sie das vorige Bild.";
 echo "</li><br /><br />";
 
 echo "<li>";
@@ -77,7 +77,7 @@ echo "<br /><b>Bemerke:</b><br />";
 echo "Miniaturbilder die NICHT richtige Bilder sind, wie PDF-Dateien, oder Ton, Buch, und Video Medien-Typen, können alleinständig betrachtet werden, aber sind niemals im Diavortrag.";
 
 echo "<br /><br /><b>Für Verwalter:</b><br />";
-echo "Falls Sie Dateien in gewöhnlichen Bild-Formaten (jpg, bmp, gif, usw.), die Bildertypen wie Foto, Urkunde, usw. darstellen, in der «Andere» Liste finden, haben Sie für diese Objekte vergessen, den richtigen Medien-Typ ein zu geben.  Um diesen Fehler zu beheben, müssen Sie die Einzelheiten des Medien-Objekts bearbeiten.";
+echo "Falls Sie Dateien in gewöhnlichen Bild-Formaten (jpg, bmp, gif, usw.), die Bildertypen wie Foto, Urkunde, usw. darstellen, in der <b>Andere</b> Liste finden, haben Sie für diese Objekte vergessen, den richtigen Medien-Typ einzugeben.  Um diesen Fehler zu beheben, müssen Sie die Einzelheiten des Medien-Objekts bearbeiten.";
 
 echo " </font> ";
  ?>

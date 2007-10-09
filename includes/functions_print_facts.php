@@ -585,7 +585,10 @@ function print_fact_sources($factrec, $level) {
 			$cs = preg_match("/$nlevel DATA/", $srec, $cmatch);
 			if ($cs>0) {
 				$cs = preg_match("/".($nlevel+1)." DATE (.*)/", $srec, $cmatch);
-				if ($cs>0) print "\n\t\t\t<br /><span class=\"label\">".$factarray["DATE"].": </span><span class=\"field\">".get_changed_date($cmatch[1])."</span>";
+				if ($cs>0) {
+					$date=new GedcomDate($cmatch[1]);
+					print "\n\t\t\t<br /><span class=\"label\">".$factarray["DATE"].": </span><span class=\"field\">".$date->Display(false)."</span>";
+				}
 				$tt = preg_match_all("/".($nlevel+1)." TEXT (.*)/", $srec, $tmatch, PREG_SET_ORDER);
 				for($k=0; $k<$tt; $k++) {
 					print "<br /><span class=\"label\">".$pgv_lang["text"]." </span><span class=\"field\">";
@@ -596,7 +599,10 @@ function print_fact_sources($factrec, $level) {
 				}
 			}
 			$cs = preg_match("/".$nlevel." DATE (.*)/", $srec, $cmatch);
-			if ($cs>0) print "\n\t\t\t<br /><span class=\"label\">".$factarray["DATE"].": </span><span class=\"field\">".get_changed_date($cmatch[1])."</span>";
+			if ($cs>0) {
+				$date=new GedcomDate($cmatch[1]);
+				print "\n\t\t\t<br /><span class=\"label\">".$factarray["DATE"].": </span><span class=\"field\">".$date->Display(false)."</span>";
+			}
 			$cs = preg_match("/$nlevel QUAY (.*)/", $srec, $cmatch);
 			if ($cs>0) print "<br /><span class=\"label\">".$factarray["QUAY"]." </span><span class=\"field\">".$cmatch[1]."</span>";
 			$cs = preg_match_all("/$nlevel TEXT (.*)/", $srec, $tmatch, PREG_SET_ORDER);
@@ -1565,7 +1571,7 @@ function print_fact_icon($fact, $factrec, $label, $pid) {
 
 
 // -----------------------------------------------------------------------------
-//  Extra print_facts_functions for lightbox v3.00b 11/Jun/2007
+//  Extra print_facts_functions for lightbox 
 // -----------------------------------------------------------------------------
 
 function lightbox_print_media($pid, $level=1, $related=false, $kind, $noedit=false ) {

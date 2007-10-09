@@ -2285,11 +2285,8 @@ function print_fact_date(&$eventObj, $anchor=false, $time=false) {
 	$factrec = $eventObj->getGedcomRecord();
 	$ct = preg_match("/2 DATE (.+)/", $factrec, $match);
 	if ($ct>0) {
-		print " ";
-		// link to calendar
-		if ($anchor && (empty($SEARCH_SPIDER))) print get_date_url($match[1]);
-		// simple date
-		else print get_changed_date(trim($match[1]));
+		$date=new GedcomDate($match[1]);
+		print " ".$date->Display($anchor && (empty($SEARCH_SPIDER)));
 		// time
 		if ($time) {
 			$timerec = get_sub_record(2, "2 TIME", $factrec);
@@ -2360,7 +2357,11 @@ function print_fact_date(&$eventObj, $anchor=false, $time=false) {
  */
 function print_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 	global $SHOW_PEDIGREE_PLACES, $TEMPLE_CODES, $pgv_lang, $factarray, $SEARCH_SPIDER;
-	$factrec = $eventObj->getGedcomRecord();
+	if (!is_object($eventObj)) {
+		pgv_error_handler("2", "Object was not sent in, please use Event object", __FILE__, __LINE__);
+		$factrec = $eventObj;
+	}
+	else $factrec = $eventObj->getGedcomRecord();
 	$out = false;
 	$ct = preg_match("/2 PLAC (.*)/", $factrec, $match);
 	if ($ct>0) {
@@ -2444,8 +2445,10 @@ function print_fact_place(&$eventObj, $anchor=false, $sub=false, $lds=false) {
 		$ct = preg_match("/2 STAT (.*)/", $factrec, $match);
 		if ($ct>0) {
 			print "<br />".$pgv_lang["status"].": ".trim($match[1]);
-			if (preg_match("/3 DATE (.*)/", $factrec, $match))
-				print ", ".$factarray["STAT:DATE"].": ".get_date_url($match[1]);
+			if (preg_match("/3 DATE (.*)/", $factrec, $match)) {
+				$date=new GedcomDate($match[1]);
+				print ", ".$factarray["STAT:DATE"].": ".$date->Display(false);
+			}
 		}
 	}
 }

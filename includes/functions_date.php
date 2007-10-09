@@ -33,18 +33,6 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 require_once('includes/date_class.php');
 
-// This function is deprecated.  Use class GedcomDate instead.
-function get_changed_date($datestr, $linebr=false) {
-	$date=new GedcomDate($datestr);
-	return $date->Display(false);
-}
-
-// This function is deprecated.  Use class GedcomDate instead.
-function get_date_url($datestr){
-	$date=new GedcomDate($datestr);
-	return $date->Display(true);
-}
-
 /**
  * get an individuals age at the given date
  * @param string $indirec the individual record so that we can get the birth date
@@ -302,12 +290,16 @@ function format_timestamp($t=NULL) {
 // Get the current julian day on the client/server
 ////////////////////////////////////////////////////////////////////////////////
 function server_jd() {
-	$tmp=new GedcomDate(date('j M Y'));
-	return $tmp->MinJD();
+	static $today=NULL;
+	if (is_null($today))
+		$today=new GedcomDate(date('j M Y'));
+	return $today->MinJD();
 }
 function client_jd() {
-	$tmp=new GedcomDate(date('j M Y'), client_time());
-	return $tmp->MinJD();
+	static $today=NULL;
+	if (is_null($today))
+		$today=new GedcomDate(date('j M Y'), client_time());
+	return $today->MinJD();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

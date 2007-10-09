@@ -1728,13 +1728,20 @@ function PGVRListSHandler($attrs) {
 					}
 					$searchstr = "";
 					$tags = preg_split("/:/", $tag);
-					$level = 1;
-					foreach($tags as $indexval => $t) {
-						if (!empty($searchstr)) $searchstr.="[^\n]*(\n[2-9][^\n]*)*\n";
-						//-- search for both EMAIL and _EMAIL... silly double gedcom standard
-						if ($t=="EMAIL" || $t=="_EMAIL") $t="_?EMAIL";
-						$searchstr .= $level." ".$t;
-						$level++;
+					//-- only limit to a level number if we are specifically looking at a level
+					if (count($tags)>1) {
+						$level = 1;
+						foreach($tags as $indexval => $t) {
+							if (!empty($searchstr)) $searchstr.="[^\n]*(\n[2-9][^\n]*)*\n";
+							//-- search for both EMAIL and _EMAIL... silly double gedcom standard
+							if ($t=="EMAIL" || $t=="_EMAIL") $t="_?EMAIL";
+							$searchstr .= $level." ".$t;
+							$level++;
+						}
+					}
+					else {
+						$t = $tag;
+						$searchstr = $tag;
 					}
 					switch ($expr) {
 						case "CONTAINS":
@@ -1861,8 +1868,11 @@ function PGVRListSHandler($attrs) {
 								else if ($val >= $v) $keep=true;
 							break;
 						case "SUBCONTAINS":
+							$v = get_sub_record($level, $level." ".$tag, $value["gedcom"]);
+							if (empty($v) && $tag=="ADDR") $v = get_sub_record($level+1, ($level+1)." ".$tag, $value["gedcom"]);
 							$ct = preg_match("/$val\b/i", $v);
 							if ($ct>0) $keep = true;
+							else $keep = false;
 							break;
 						default:
 							if ($v==$val) $keep=true;
