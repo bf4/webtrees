@@ -94,15 +94,13 @@ ul {
 
 .person_box {
 	background-image: url("images/redwhitegradiant2rev.gif");
-	background-repeat: repeat-x;
-	background-color: #8c323a;
+	background-repeat: repeat;
 	border: solid blue 1px; 
 }
 
 .person_boxF {
 	background-image: url("images/redwhitegradiant2.gif");
-	background-repeat: repeat-x;
-	background-color: #da6b82;
+	background-repeat: repeat;
 	border: solid red 1px; 
 }
 
@@ -169,7 +167,7 @@ table.center {
 	color: white;
 	border: solid #420915 1px;
 	background-image: url("images/redgradiant.gif");
-	background-repeat: repeat-x;
+	background-repeat: repeat;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px 4px 4px 4px;
 	width: 20%;
@@ -180,7 +178,7 @@ table.center {
 	color: white;
 	border: solid #420915 1px;
 	background-image: url("images/redgradiant.gif");
-	background-repeat: repeat-x;
+	background-repeat: repeat;
 	font: bold 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px 4px 4px 4px;
 	text-align: center;
@@ -213,8 +211,7 @@ table.center {
 .facts_labelred, .facts_labelblue {
 	color: #333333;
 	background-image: url("images/redgradiantrev.gif");
-	background-repeat: repeat-x;
-	background-color: #622538;
+	background-repeat: repeat;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px 4px 4px 4px;
 	width: 20%;
@@ -242,8 +239,7 @@ table.center {
 
 .tab_cell_active {
 	background-image: url("images/redwhitegradiant2.gif");
-	background-repeat: repeat-x;
-	background-color: #420915;
+	background-repeat: repeat;
 	border-left: outset #420915 2px;
 	border-top: outset #420915 2px;
 	border-right: outset #420915 2px;
@@ -254,8 +250,7 @@ table.center {
 
 .tab_cell_inactive {
 	background-image: url("images/redwhitegradiant.gif");
-	background-repeat: repeat-x;
-	background-color: #420915;
+	background-repeat: repeat;
 	border-left: solid #420915 2px;
 	border-top: solid #420915 2px;
 	border-right: outset #420915 2px;
@@ -289,8 +284,7 @@ table.center {
 
 .tab_cell_inactive_empty {
 	background-image: url("images/redwhitegradiant.gif");
-	background-repeat: repeat-x;
-	background-color: #925965;
+	background-repeat: repeat;
 	border-left: solid #320905 2px;
 	border-top: solid #320905 2px;
 	border-right: outset #320905 2px;
@@ -459,7 +453,7 @@ a:hover .nameZoom {
 
 .sublinks_table {
 	background-image: url("images/redgradiant.gif");
-	background-repeat: repeat-x;
+	background-repeat: repeat;
 	border: solid #c00000 1px; 
 }
 
@@ -507,8 +501,7 @@ a:hover .nameZoom {
 
 .selected-option {
 	background-image: url("images/redgradiant.gif");
-	background-repeat: repeat-x;
-	background-color: #c00000;
+	background-repeat: repeat;
 	color: white; 
 }
 
@@ -564,8 +557,7 @@ a:hover .nameZoom {
 .menuitem, .menuitem_rtl {
 	color: #555555;
 	background-image: url("images/redwhitegradiant.gif");
-	background-repeat: repeat-x;
-	background-color: white;
+	background-repeat: repeat;
 	border: solid white 1px;
 	height: 45px;
 	text-decoration: none;
@@ -577,8 +569,7 @@ a:hover .nameZoom {
 .menuitem_hover, .menuitem_hover_rtl {
 	color: black;
 	background-image: url("images/redwhitegradiant.gif");
-	background-repeat: repeat-x;
-	background-color: white;
+	background-repeat: repeat;
 	border: solid black 1px;
 	height: 45px;
 	text-decoration: none;
@@ -630,8 +621,7 @@ a:hover .nameZoom {
 
 .news_box {
 	background-image: url("images/redwhitegradiant2rev.gif");
-	background-repeat: repeat-x;
-	background-color: #c00000;
+	background-repeat: repeat;
 	border: solid blue 1px; 
 }
 
@@ -984,8 +974,7 @@ h4 {
 .topbottombar {
 	color: white;
 	background-image: url("images/redwhitegradiant2.gif");
-	background-repeat: repeat-x;
-	background-color: #622538;
+	background-repeat: repeat;
 	font: bold 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px;
 	text-align: center;
@@ -1191,6 +1180,7 @@ a.showit:hover span {
 	-moz-opacity: .85;
 	-khtml-opacity: .85;
 	z-index: 5;
+	white-space: normal; 
 }
 
 .lifespan_people span:first-letter {
