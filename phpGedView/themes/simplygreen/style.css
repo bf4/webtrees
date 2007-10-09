@@ -94,15 +94,13 @@ ul {
 
 .person_box {
 	background-image: url("images/greenwhitegradiant2rev.gif");
-	background-repeat: repeat-x;
-	background-color: #246339;
+	background-repeat: repeat;
 	border: solid #00c0aa 1px; 
 }
 
 .person_boxF {
 	background-image: url("images/greenwhitegradiant2.gif");
-	background-repeat: repeat-x;
-	background-color: #7a5283;
+	background-repeat: repeat;
 	border: solid #bb6a00 1px; 
 }
 
@@ -169,7 +167,7 @@ table.center {
 	color: white;
 	border: solid #094215 1px;
 	background-image: url("images/greengradiant.gif");
-	background-repeat: repeat-x;
+	background-repeat: repeat;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px 4px 4px 4px;
 	width: 20%;
@@ -180,7 +178,7 @@ table.center {
 	color: white;
 	border: solid #094215 1px;
 	background-image: url("images/greengradiant.gif");
-	background-repeat: repeat-x;
+	background-repeat: repeat;
 	font: bold 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px 4px 4px 4px;
 	text-align: center;
@@ -213,8 +211,7 @@ table.center {
 .facts_labelred, .facts_labelblue {
 	color: #333333;
 	background-image: url("images/greengradiantrev.gif");
-	background-repeat: repeat-x;
-	background-color: #256238;
+	background-repeat: repeat;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px 4px 4px 4px;
 	width: 20%;
@@ -242,8 +239,7 @@ table.center {
 
 .tab_cell_active {
 	background-image: url("images/greenwhitegradiant2.gif");
-	background-repeat: repeat-x;
-	background-color: #094215;
+	background-repeat: repeat;
 	border-left: outset #094215 2px;
 	border-top: outset #094215 2px;
 	border-right: outset #094215 2px;
@@ -254,8 +250,7 @@ table.center {
 
 .tab_cell_inactive {
 	background-image: url("images/greenwhitegradiant.gif");
-	background-repeat: repeat-x;
-	background-color: #094215;
+	background-repeat: repeat;
 	border-left: solid #094215 2px;
 	border-top: solid #094215 2px;
 	border-right: outset #094215 2px;
@@ -289,8 +284,7 @@ table.center {
 
 .tab_cell_inactive_empty {
 	background-image: url("images/greenwhitegradiant.gif");
-	background-repeat: repeat-x;
-	background-color: #599265;
+	background-repeat: repeat;
 	border-left: solid #093205 2px;
 	border-top: solid #093205 2px;
 	border-right: outset #093205 2px;
@@ -327,7 +321,8 @@ a:hover .nameZoom {
 }
 
 .namered {
-	border: solid red 1px; }
+	border: solid red 1px; 
+}
 
 .nameblue {
 	border: solid blue 1px; 
@@ -458,7 +453,7 @@ a:hover .nameZoom {
 
 .sublinks_table {
 	background-image: url("images/greengradiant.gif");
-	background-repeat: repeat-x;
+	background-repeat: repeat;
 	border: solid #00c000 1px; 
 }
 
@@ -506,8 +501,7 @@ a:hover .nameZoom {
 
 .selected-option {
 	background-image: url("images/greengradiant.gif");
-	background-repeat: repeat-x;
-	background-color: #00c000;
+	background-repeat: repeat;
 	color: white; 
 }
 
@@ -563,8 +557,7 @@ a:hover .nameZoom {
 .menuitem, .menuitem_rtl {
 	color: #555555;
 	background-image: url("images/greenwhitegradiant.gif");
-	background-repeat: repeat-x;
-	background-color: white;
+	background-repeat: repeat;
 	border: solid white 1px;
 	height: 45px;
 	text-decoration: none;
@@ -576,8 +569,7 @@ a:hover .nameZoom {
 .menuitem_hover, .menuitem_hover_rtl {
 	color: black;
 	background-image: url("images/greenwhitegradiant.gif");
-	background-repeat: repeat-x;
-	background-color: white;
+	background-repeat: repeat;
 	border: solid black 1px;
 	height: 45px;
 	text-decoration: none;
@@ -629,16 +621,13 @@ a:hover .nameZoom {
 
 .news_box {
 	background-image: url("images/greenwhitegradiant2rev.gif");
-	background-repeat: repeat-x;
-	background-color: #00c000;
+	background-repeat: repeat;
 	border: solid #00c0aa 1px; 
 }
 
 .news_title {
 	font: bold 14px tahoma, arial, helvetica, sans-serif;
 	color: white;
-	font-size: 14px;
-	font-weight: bold; 
 }
 
 .news_date {
@@ -667,8 +656,6 @@ a:hover .nameZoom {
 .helpheader {
 	font: bold 16px tahoma, arial, helvetica, sans-serif;
 	color: white;
-	font-size: 16px;
-	font-weight: bold; 
 }
 
 .helpstart {
@@ -681,7 +668,6 @@ a:hover .nameZoom {
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	color: white;
 }
-
 
 #content {
 	margin-left: 1px; 
@@ -988,8 +974,7 @@ h4 {
 .topbottombar {
 	color: white;
 	background-image: url("images/greenwhitegradiant2.gif");
-	background-repeat: repeat-x;
-	background-color: #256238;
+	background-repeat: repeat;
 	font: bold 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px;
 	text-align: center;
@@ -1195,6 +1180,7 @@ a.showit:hover span {
 	-moz-opacity: .85;
 	-khtml-opacity: .85;
 	z-index: 5;
+	white-space: normal; 
 }
 
 .lifespan_people span:first-letter {
