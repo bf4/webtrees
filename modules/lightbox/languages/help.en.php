@@ -54,7 +54,7 @@ echo "</li><br /><br />";
 
 echo "<li>";
 echo "<b><font color=\"blue\">To view the next or previous image</font></b><br />";
-echo "As you mouse over the image when NOT in Zoom mode, a « symbol will appear on the left side, and a » on the right. Click anywhere in the right half of the image to see the next image. Click anywhere in the left half to see the previous one.";
+echo "As you mouse over the image when NOT in Zoom mode, a \"<b><</b>\" symbol will appear on the left side, and a \"<b>></b>\" on the right. Click anywhere in the right half of the image to see the next image. Click anywhere in the left half to see the previous one.";
 echo "</li><br /><br />";
 
 echo "<li>";
