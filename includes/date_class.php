@@ -596,7 +596,7 @@ class JulianDate extends CalendarDate {
 
 	// Process new-style/old-style years and years BC
 	function ExtractYear($year) {
-		if (preg_match('/^(\d\d\d\d) \d\d$/', $year, $match)) {
+		if (preg_match('/^(\d\d\d\d) (\d\d)?\d\d$/', $year, $match)) {
 			$this->new_old_style=true;
 			return $match[1]+1;
 		} else
@@ -921,7 +921,7 @@ class GedcomDate {
 			$cal='';
 		}
 		// Split the date into D, M and Y
-		if (preg_match_all('/^ *(\d*) *([a-z]{3,5}\d?) *(\d+( ?b ?c)?|\d\d\d\d \d\d(\d\d)?)?$/', $date, $match)) { // DM, M, MY or DMY
+		if (preg_match_all('/^ *(\d*) *([a-z]{3,5}\d?) *(\d+( ?b ?c)?|\d\d\d\d (\d\d)?\d\d)?$/', $date, $match)) { // DM, M, MY or DMY
 			$d=$match[1][0];
 			$m=$match[2][0];
 			$y=$match[3][0];
@@ -943,7 +943,7 @@ class GedcomDate {
 				if (preg_match('/^(muhar|safar|rabi[12]|juma[12]|rajab|shaab|ramad|shaww|dhuaq|dhuah)$/', $m))
 					$cal='@#dhijri@'; // This is a PGV extension
 				else
-					if (preg_match('/^(\d\d\d\d \d\d|\d+ *b ?c ?)$/', $y))
+					if (preg_match('/^(\d\d\d\d (\d\d)?\d\d|\d+ *b ?c ?)$/', $y))
 						$cal='@#djulian@';
 		// Ambiguous dates - don't override calendar escape
 		if ($cal=='')
