@@ -192,7 +192,7 @@ function checkFactEdit($gedrec) {
 
 if (!empty($pid)) {
 	$pid = clean_input($pid);
-	if (($pid!="newsour") and ($pid!="newrepo")) {
+	if (($pid!="newsour") && ($pid!="newrepo")) {
 		if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 		else $gedrec = find_updated_record($pid);
 		if (empty($gedrec)) $gedrec =  find_record_in_file($pid);
@@ -700,7 +700,7 @@ case 'addsourceaction':
 	$newlines = preg_split("/\r?\n/", $newgedrec);
 	$newged = $newlines[0]."\r\n";
 	for($k=1; $k<count($newlines); $k++) {
-		if (((preg_match("/\d .... .*/", $newlines[$k])==0) and strlen($newlines[$k])!=0)) $newlines[$k] = "2 CONT ".$newlines[$k];
+		if (((preg_match("/\d .... .*/", $newlines[$k])==0) && strlen($newlines[$k])!=0)) $newlines[$k] = "2 CONT ".$newlines[$k];
 		if (strlen($newlines[$k])>255) {
 			while(strlen($newlines[$k])>255) {
 				$newPiece = rtrim(substr($newlines[$k], 0, 255));
@@ -790,7 +790,7 @@ case 'addrepoaction':
 	$newlines = preg_split("/\r?\n/", $newgedrec);
 	$newged = $newlines[0]."\r\n";
 	for($k=1; $k<count($newlines); $k++) {
-		if ((preg_match("/\d (.....|....|...) .*/", $newlines[$k])==0) and (strlen($newlines[$k])!=0)) $newlines[$k] = "2 CONT ".$newlines[$k];
+		if ((preg_match("/\d (.....|....|...) .*/", $newlines[$k])==0) && (strlen($newlines[$k])!=0)) $newlines[$k] = "2 CONT ".$newlines[$k];
 		if (strlen($newlines[$k])>255) {
 			while(strlen($newlines[$k])>255) {
 				$newPiece = rtrim(substr($newlines[$k], 0, 255));
@@ -899,7 +899,6 @@ case 'update':
 case 'addchildaction':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 
-	$usedSOUR = false;		// indicates whether 1 SOUR info used at 2 SOUR level
 	splitSOUR();			// separate SOUR record from the rest
 
 	$gedrec = "0 @REF@ INDI\r\n1 NAME $NAME\r\n";
@@ -935,7 +934,6 @@ case 'addchildaction':
 		}
 		if (isset($SOUR_BIRT) && $SOUR_BIRT=="Y" && count($tagSOUR)>0) {
 			$gedrec = updateSOUR($gedrec, 2);
-			$usedSOUR = true;
 		}
 	}
 	else if (!empty($BIRT)) $gedrec .= "1 BIRT Y\r\n";
@@ -958,7 +956,6 @@ case 'addchildaction':
 		}
 		if (isset($SOUR_DEAT) && $SOUR_DEAT=="Y" && count($tagSOUR)>0) {
 			$gedrec = updateSOUR($gedrec, 2);
-			$usedSOUR = true;
 		}
 	}
 	else if (!empty($DEAT)) $gedrec .= "1 DEAT Y\r\n";
@@ -1009,7 +1006,6 @@ case 'addchildaction':
 case 'addspouseaction':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 
-	$usedSOUR = false;		// indicates whether 1 SOUR info used at 2 SOUR level
 	splitSOUR();			// separate SOUR record from the rest
 
 	$gedrec = "0 @REF@ INDI\r\n1 NAME $NAME\r\n";
@@ -1045,7 +1041,6 @@ case 'addspouseaction':
 		}
 		if (isset($SOUR_BIRT) && $SOUR_BIRT=="Y" && count($tagSOUR)>0) {
 			$gedrec = updateSOUR($gedrec, 2);
-			$usedSOUR = true;
 		}
 	}
 	else if (!empty($BIRT)) $gedrec .= "1 BIRT Y\r\n";
@@ -1068,7 +1063,6 @@ case 'addspouseaction':
 		}
 		if (isset($SOUR_DEAT) && $SOUR_DEAT=="Y" && count($tagSOUR)>0) {
 			$gedrec = updateSOUR($gedrec, 2);
-			$usedSOUR = true;
 		}
 	}
 	else if (!empty($DEAT)) $gedrec .= "1 DEAT Y\r\n";
@@ -1113,7 +1107,6 @@ case 'addspouseaction':
 			}
 			if (isset($SOUR_MARR) && $SOUR_MARR=="Y" && count($tagSOUR)>0) {
 				$famrec = updateSOUR($famrec, 2);
-				$usedSOUR = true;
 			}
 		}
 		else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
@@ -1149,7 +1142,6 @@ case 'addspouseaction':
 				}
 				if (isset($SOUR_MARR) && $SOUR_MARR=="Y" && count($tagSOUR)>0) {
 					$famrec = handle_updates($famrec, 2);
-					$usedSOUR = true;
 				}
 			}
 			else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
@@ -1186,7 +1178,6 @@ case 'addspouseaction':
 case 'linkspouseaction':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 
-	$usedSOUR = false;		// indicates whether 1 SOUR info used at 2 SOUR level
 	splitSOUR();			// separate SOUR record from the rest
 
 	if (!empty($spid)) {
@@ -1226,7 +1217,6 @@ case 'linkspouseaction':
 					}
 					if (isset($SOUR_MARR) && $SOUR_MARR=="Y" && count($tagSOUR)>0) {
 						$famrec = updateSOUR($famrec, 2);
-						$usedSOUR = true;
 					}
 				}
 				else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
@@ -1259,7 +1249,6 @@ case 'linkspouseaction':
 case 'addnewparentaction':
 	if ($GLOBALS["DEBUG"]) phpinfo(32);
 
-	$usedSOUR = false;		// indicates whether 1 SOUR info used at 2 SOUR level
 	splitSOUR();			// separate SOUR record from the rest
 
 	$gedrec = "0 @REF@ INDI\r\n1 NAME $NAME\r\n";
@@ -1295,7 +1284,6 @@ case 'addnewparentaction':
 		}
 		if (isset($SOUR_BIRT) && $SOUR_BIRT=="Y" && count($tagSOUR)>0) {
 			$gedrec = updateSOUR($gedrec, 2);
-			$usedSOUR = true;
 		}
 	}
 	else if (!empty($BIRT)) $gedrec .= "1 BIRT Y\r\n";
@@ -1318,7 +1306,6 @@ case 'addnewparentaction':
 		}
 		if (isset($SOUR_DEAT) && $SOUR_DEAT=="Y" && count($tagSOUR)>0) {
 			$gedrec = updateSOUR($gedrec, 2);
-			$usedSOUR = true;
 		}
 	}
 	else if (!empty($DEAT)) $gedrec .= "1 DEAT Y\r\n";
@@ -1361,7 +1348,6 @@ case 'addnewparentaction':
 			}
 			if (isset($SOUR_MARR) && $SOUR_MARR=="Y" && count($tagSOUR)>0) {
 				$famrec = updateSOUR($famrec, 2);
-				$usedSOUR = true;
 			}
 		}
 		else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
@@ -1397,7 +1383,6 @@ case 'addnewparentaction':
 				}
 				if (isset($SOUR_MARR) && $SOUR_MARR=="Y" && count($tagSOUR)>0) {
 					$famrec = updateSOUR($famrec, 2);
-					$usedSOUR = true;
 				}
 			}
 			else if (!empty($MARR)) $famrec .= "1 MARR Y\r\n";
@@ -2067,7 +2052,7 @@ case 'mod_edit_fact':
 }
 //------------------------------------------------------------------------------
 // autoclose window when update successful
-if ($success and $EDIT_AUTOCLOSE and !$GLOBALS["DEBUG"]) {
+if ($success && $EDIT_AUTOCLOSE && !$GLOBALS["DEBUG"]) {
 	if ($action=="copy") print "\n<script type=\"text/javascript\">\n<!--\nwindow.close();\n//-->\n</script>";
 	else print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
 }
