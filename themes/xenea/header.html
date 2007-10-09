@@ -1,12 +1,7 @@
 <?php 
 global $SEARCH_SPIDER; $TEXT_DIRECTION;
 
-// This is a hacked version of the original get_changed_date() function call.
-// "somebody" decided to get rid of the function itself.
-$time = time();
-if (isset($_SESSION["timediff"])) $time -= $_SESSION["timediff"];
-$datestr = date("j", $time)." ".date("M", $time)." ".date("Y", $time);
-$date=new GedcomDate($datestr);
+$date=new GedcomDate(date('j M Y', client_time()));
 $displayDate = $date->Display(false);
 
 ?>
