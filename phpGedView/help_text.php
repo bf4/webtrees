@@ -33,7 +33,7 @@ loadLangFile("pgv_help, pgv_admin, pgv_editor, ra_lang");	// Load language keys
 
 if (!isset($help)) $help = "";
 
-require ("help_text_vars.php");
+require ("includes/help_text_vars.php");
 print_simple_header($pgv_lang["help_header"]);
 print "<a name=\"top\"></a><span class=\"helpheader\">".$pgv_lang["help_header"]."</span><br /><br />\n<div class=\"helptext\">\n";
 $actione = "";
