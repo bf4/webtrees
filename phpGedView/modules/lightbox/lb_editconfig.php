@@ -33,8 +33,8 @@ if (strstr($_SERVER["SCRIPT_NAME"],"menu.php")) {
     print "Now, why would you want to do that.  You're not hacking are you?";
     exit;
 }
-loadLangFile("pgv_lang, pgv_confighelp, pgv_help, lb_lang");
 global $pgv_lang;
+loadLangFile("pgv_lang, pgv_confighelp, pgv_help, lb_lang, lb_help");
 print_header($pgv_lang["configure_lightbox"]);
 
 if (file_exists('modules/lightbox/lb_config.php')) require('modules/lightbox/lb_config.php');
@@ -95,7 +95,7 @@ $i = 0;
 		return false;
 	}
 	function getHelp(which) {
-		if ((helpWin)&&(!helpWin.closed)) helpWin.location='module.php?mod=googlemap&pgvaction=lb_editconfig_help&help='+which;
+		if ((helpWin)&&(!helpWin.closed)) helpWin.location='module.php?mod=lightbox&pgvaction=lb_editconfig_help&help='+which;
 	}
 
 	function closeHelp() {
@@ -111,13 +111,13 @@ $i = 0;
     <table class="facts_table">
 
     <tr >
-		<td class="descriptionbox" width=400><?php //print_help_link("mediatab_help", "qm", "mediatab"); ?><?php print $pgv_lang["mediatab"];?></td> 
+		<td class="descriptionbox" width=400><?php print_help_link("mediatab_help", "qm", "mediatab"); ?><?php print $pgv_lang["mediatab"];?></td> 
 		<td class="optionbox">
 			<select name="NEW_mediatab" tabindex="<?php $i++; print $i?>" onfocus="getHelp('mediatab_help');"> 
                 <option value="1" <?php if ($mediatab==1) print "selected=\"selected\""; ?>><?php print $pgv_lang["show"];?></option>		
                 <option value="0" <?php if ($mediatab==0) print "selected=\"selected\""; ?>><?php print $pgv_lang["hide"];?></option>
             </select>
-		&nbsp; <?php print $pgv_lang["show"];?></option>&nbsp;&nbsp;<?php print $pgv_lang["hide"];?> 
+		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["show"];?>&nbsp;&nbsp;<?php print $pgv_lang["hide"];?> 
 		</td>		
     </tr>
 	
@@ -126,7 +126,7 @@ $i = 0;
 	</td></tr>
 	
     <tr>
-		<td class="descriptionbox"><?php //print_help_link("lb_al_head_links_help", "qm", "lb_al_head_links");?><?php print $pgv_lang["lb_al_head_links"];?></td> 
+		<td class="descriptionbox"><?php print_help_link("lb_al_head_links_help", "qm", "lb_al_head_links");?><?php print $pgv_lang["lb_al_head_links"];?></td> 
 		<td class="optionbox">
 			<select name="NEW_LB_AL_HEAD_LINKS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_AL_HEAD_LINKS_help');">
                 <option value="icon" <?php if ($LB_AL_HEAD_LINKS=="icon") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_icon"];?></option>
@@ -141,7 +141,7 @@ $i = 0;
 	</td></tr>
 	
     <tr>
-		<td class="descriptionbox"><?php //print_help_link("lb_al_thumb_links_help", "qm", "lb_al_thumb_links");?><?php print $pgv_lang["lb_al_thumb_links"];?></td> 
+		<td class="descriptionbox"><?php print_help_link("lb_al_thumb_links_help", "qm", "lb_al_thumb_links");?><?php print $pgv_lang["lb_al_thumb_links"];?></td> 
 		<td class="optionbox"><select name="NEW_LB_AL_THUMB_LINKS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_AL_THUMB_LINKS_help');">
                 <option value="icon" <?php if ($LB_AL_THUMB_LINKS=="icon") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_icon"];?></option>
                 <option value="text" <?php if ($LB_AL_THUMB_LINKS=="text") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_text"];?></option>
@@ -154,7 +154,7 @@ $i = 0;
 	</td></tr>
 	
 	<tr>
-		<td class="descriptionbox"><?php //print_help_link("lb_ml_thumb_links_help", "qm", "lb_ml_thumb_links");?><?php print $pgv_lang["lb_ml_thumb_links"];?></td> 
+		<td class="descriptionbox"><?php print_help_link("lb_ml_thumb_links_help", "qm", "lb_ml_thumb_links");?><?php print $pgv_lang["lb_ml_thumb_links"];?></td> 
 		<td class="optionbox">
 			<select name="NEW_LB_ML_THUMB_LINKS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_ML_THUMB_LINKS_help');" />
                 <option value= "text" <?php if ($LB_ML_THUMB_LINKS == "text")  print "selected=\"selected\""; ?>><?php print  "Text";?></option>
@@ -162,7 +162,7 @@ $i = 0;
                 <option value= "both" <?php if ($LB_ML_THUMB_LINKS == "both")  print "selected=\"selected\""; ?>><?php print  "Both";?></option>
                 <option value= "none" <?php if ($LB_ML_THUMB_LINKS == "none")  print "selected=\"selected\""; ?>><?php print  "None";?></option>
             </select>		
-		&nbsp;&nbsp; Icon, Text, Both, or None		
+		&nbsp;&nbsp; <?php print $pgv_lang["lb_ml_ThumbLinkAdvice"];?>		
 		</td>
     </tr>		
 	
@@ -171,7 +171,7 @@ $i = 0;
 	</td></tr>
 
 	<tr>
-		<td class="descriptionbox"><?php //print_help_link("lb_ss_speed_help", "qm", "lb_ss_speed");?><?php print $pgv_lang["lb_ss_speed"];?></td> 
+		<td class="descriptionbox"><?php print_help_link("lb_ss_speed_help", "qm", "lb_ss_speed");?><?php print $pgv_lang["lb_ss_speed"];?></td> 
 		<td class="optionbox"><select name="NEW_LB_SS_SPEED" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_SS_SPEED_help');" />
                 <option value= "2" <?php if ($LB_SS_SPEED == 2)  print "selected=\"selected\""; ?>><?php print  "2";?></option>
                 <option value= "3" <?php if ($LB_SS_SPEED == 3)  print "selected=\"selected\""; ?>><?php print  "3";?></option>
@@ -187,7 +187,7 @@ $i = 0;
                 <option value="20" <?php if ($LB_SS_SPEED ==20)  print "selected=\"selected\""; ?>><?php print "20";?></option>	
                 <option value="25" <?php if ($LB_SS_SPEED ==25)  print "selected=\"selected\""; ?>><?php print "25";?></option>					
             </select>		
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Slide show timing in seconds		
+		&nbsp;&nbsp; <?php print $pgv_lang["lb_ss_SpeedAdvice"];?>
 		</td>
     </tr>		
 
@@ -195,10 +195,10 @@ $i = 0;
 	</td></tr>
 	
 	<tr>
-		<td class="descriptionbox"><?php //print_help_link("lb_music_file_help", "qm", "lb_music_file");?><?php print $pgv_lang["lb_music_file"];?></td> 
+		<td class="descriptionbox"><?php print_help_link("lb_music_file_help", "qm", "lb_music_file");?><?php print $pgv_lang["lb_music_file"];?></td> 
 		<td class="optionbox">
 			<input type="text" name="NEW_LB_MUSIC_FILE" value="<?php print $LB_MUSIC_FILE;?>" size="60" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_MUSIC_FILE_help');" />
-		&nbsp;&nbsp; Location of music File			
+		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_musicFileAdvice"];?>
 		</td>
     </tr>	
 	

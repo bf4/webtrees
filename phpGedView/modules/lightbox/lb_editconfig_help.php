@@ -26,7 +26,7 @@
  */
 require "config.php";
 
-loadLangFile("pgv_confighelp, pgv_help, lb_help");
+loadLangFile("pgv_lang, pgv_confighelp, pgv_help, lb_lang, lb_help");
 
 print_simple_header($pgv_lang["config_help"]);
 print '<span class="helpheader">';
