@@ -296,7 +296,7 @@ class Media extends GedcomRecord {
 
 		if ($this->fileExists()) {
 			$this->filesizeraw = @filesize($this->getServerFilename());
-			$imgsize=@getimagesize($this->getServerFilename()); // [0]=width [1]=height [2]=filetype
+			$imgsize=@getimagesize($this->getServerFilename()); // [0]=width [1]=height [2]=filetype ['mime']=mimetype
 			if (is_array($imgsize)) {
 				// this is an image
 				$this->width =0+$imgsize[0];
@@ -304,22 +304,26 @@ class Media extends GedcomRecord {
 				$imageTypes  =array("","GIF","JPG","PNG","SWF","PSD","BMP","TIFF","TIFF","JPC","JP2","JPX","JB2","SWC","IFF","WBMP","XBM");
 				$this->ext   =$imageTypes[0+$imgsize[2]];
 				$this->mime  =$imgsize['mime'];
-			} else {
-				// this is probably not an image
-				$this->width ='-';
-				$this->height='-';
-				$mime=array('MOV'=>'video/quicktime', 'MP3'=>'audio/mpeg', 'PDF'=>'application/pdf');
-				$this->ext=pathinfo(parse_url($this->getServerFilename(), PHP_URL_PATH), PATHINFO_EXTENSION);
-				if (empty($mime[$this->ext])) {
-					// if we don't know what the mimetype is, use something ambiguous
-					$this->mime='application/octet-stream';
-					AddToLog($this->file.': '."unknown_mime");
-				} else
-					$this->mime=$mime[$this->ext];
 			}
-		} else {
-			// File does not exist - presumably an external link
-			$this->mime='application/octet-stream';
+		}
+		if (!$this->mime) {
+			// this is not an image, OR the file doesn't exist OR it is a url
+			// set file type equal to the file extension - can't use parse_url because this may not be a full url
+			$exp = explode("?", $this->file);
+			$pathinfo = pathinfo($exp[0]);
+			$this->ext = @strtoupper($pathinfo['extension']);
+			$mime=array('MOV'=>'video/quicktime', 'MP3'=>'audio/mpeg', 'PDF'=>'application/pdf', 'RTF'=>'text/rtf');
+			if (empty($mime[$this->ext])) {
+				// if we don't know what the mimetype is, use something ambiguous
+				$this->mime='application/octet-stream';
+				if ($this->fileExists()) {
+					// alert the admin if we cannot determine the mime type of an existing file
+					// as the media firewall will be unable to serve this file properly
+					AddToLog($this->file.': '.$pgv_lang["unknown_mime"]);
+				}
+			} else {
+				$this->mime=$mime[$this->ext];
+			}
 		}
 		$this->filepropset = true;
 	}
