@@ -313,7 +313,9 @@ class Media extends GedcomRecord {
 			$exp = explode("?", $this->file);
 			$pathinfo = pathinfo($exp[0]);
 			$this->ext = @strtoupper($pathinfo['extension']);
-			$mime=array('MOV'=>'video/quicktime', 'MP3'=>'audio/mpeg', 'PDF'=>'application/pdf', 'RTF'=>'text/rtf');
+			// all mimetypes we wish to serve with the media firewall must be added to this array.
+			$mime=array('DOC'=>'application/msword', 'MOV'=>'video/quicktime', 'MP3'=>'audio/mpeg', 'PDF'=>'application/pdf', 
+			'PPT'=>'application/vnd.ms-powerpoint', 'RTF'=>'text/rtf', 'SID'=>'image/x-mrsid', 'TXT'=>'text/plain', 'XLS'=>'application/vnd.ms-excel');
 			if (empty($mime[$this->ext])) {
 				// if we don't know what the mimetype is, use something ambiguous
 				$this->mime='application/octet-stream';

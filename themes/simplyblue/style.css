@@ -39,7 +39,6 @@ body {
 
 fieldset {
 	margin: 8px 8px 4px 8px;
-
 }
 
 legend {
@@ -95,15 +94,13 @@ ul {
 
 .person_box {
 	background-image: url("images/bluewhitegradiant2rev.gif");
-	background-repeat: repeat-x;
-	background-color: #244a9d;
+	background-repeat: repeat;
 	border: solid #00c0aa 1px; 
 }
 
 .person_boxF {
 	background-image: url("images/bluewhitegradiant2.gif");
-	background-repeat: repeat-x;
-	background-color: #7a82e7;
+	background-repeat: repeat;
 	border: solid #bb6a00 1px; 
 }
 
@@ -163,13 +160,14 @@ table.center {
 }
 
 .facts_table, .facts_table_rtl {
-	width: 100%; }
+	width: 100%; 
+}
 
 .facts_label {
 	color: white;
 	border: solid #094215 1px;
 	background-image: url("images/bluegradiantrev.gif");
-	background-repeat: repeat-x;
+	background-repeat: repeat;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px 4px 4px 4px;
 	width: 20%;
@@ -180,7 +178,7 @@ table.center {
 	color: white;
 	border: solid #094215 1px;
 	background-image: url("images/bluegradiant.gif");
-	background-repeat: repeat-x;
+	background-repeat: repeat;
 	font: bold 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px 4px 4px 4px;
 	text-align: center;
@@ -213,8 +211,7 @@ table.center {
 .facts_labelred, .facts_labelblue {
 	color: #333333;
 	background-image: url("images/bluegradiantrev.gif");
-	background-repeat: repeat-x;
-	background-color: #253862;
+	background-repeat: repeat;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px 4px 4px 4px;
 	width: 20%;
@@ -224,7 +221,6 @@ table.center {
 .facts_valuered, .facts_valueblue {
 	background-color: #253862;
 	color: white;
-	border: solid red 2px;
 	font: 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px 4px 4px 4px; 
 }
@@ -243,8 +239,7 @@ table.center {
 
 .tab_cell_active {
 	background-image: url("images/bluewhitegradiant2.gif");
-	background-repeat: repeat-x;
-	background-color: #091542;
+	background-repeat: repeat;
 	border-left: outset #091542 2px;
 	border-top: outset #091542 2px;
 	border-right: outset #091542 2px;
@@ -255,8 +250,7 @@ table.center {
 
 .tab_cell_inactive {
 	background-image: url("images/bluewhitegradiant.gif");
-	background-repeat: repeat-x;
-	background-color: #091542;
+	background-repeat: repeat;
 	border-left: solid #091542 2px;
 	border-top: solid #091542 2px;
 	border-right: outset #091542 2px;
@@ -290,8 +284,7 @@ table.center {
 
 .tab_cell_inactive_empty {
 	background-image: url("images/bluewhitegradiant.gif");
-	background-repeat: repeat-x;
-	background-color: #596592;
+	background-repeat: repeat;
 	border-left: solid #090532 2px;
 	border-top: solid #090532 2px;
 	border-right: outset #090532 2px;
@@ -460,7 +453,7 @@ a:hover .nameZoom {
 
 .sublinks_table {
 	background-image: url("images/bluegradiant.gif");
-	background-repeat: repeat-x;
+	background-repeat: repeat;
 	border: solid #0000c0 1px; 
 }
 
@@ -508,8 +501,7 @@ a:hover .nameZoom {
 
 .selected-option {
 	background-image: url("images/bluegradiant.gif");
-	background-repeat: repeat-x;
-	background-color: #0000c0;
+	background-repeat: repeat;
 	color: white; 
 }
 
@@ -565,12 +557,10 @@ a:hover .nameZoom {
 .menuitem, .menuitem_rtl {
 	color: #555555;
 	background-image: url("images/bluewhitegradiant.gif");
-	background-repeat: repeat-x;
-	background-color: white;
+	background-repeat: repeat;
 	border: solid white 1px;
 	height: 45px;
 	text-decoration: none;
-	font: bold 11px tahoma, arial, helvetica, sans-serif; 
 	font: bold 11px tahoma, arial, helvetica, sans-serif; 
 	text-align: center;
 	padding: 1px; 
@@ -579,8 +569,7 @@ a:hover .nameZoom {
 .menuitem_hover, .menuitem_hover_rtl {
 	color: black;
 	background-image: url("images/bluewhitegradiant.gif");
-	background-repeat: repeat-x;
-	background-color: white;
+	background-repeat: repeat;
 	border: solid black 1px;
 	height: 45px;
 	text-decoration: none;
@@ -632,8 +621,7 @@ a:hover .nameZoom {
 
 .news_box {
 	background-image: url("images/bluewhitegradiant2rev.gif");
-	background-repeat: repeat-x;
-	background-color: #0000c0;
+	background-repeat: repeat;
 	border: solid #00c0aa 1px; 
 }
 
@@ -986,8 +974,7 @@ h4 {
 .topbottombar {
 	color: white;
 	background-image: url("images/bluewhitegradiant2.gif");
-	background-repeat: repeat-x;
-	background-color: #253862;
+	background-repeat: repeat;
 	font: bold 12px tahoma, arial, helvetica, sans-serif;
 	padding: 4px;
 	text-align: center;
@@ -1225,6 +1212,7 @@ a.showit:hover span {
 	left: -10px; 
 	top: -65px; 
 	z-index: 2; 
+	background-color: white
 }
 
 .lifespan_people {

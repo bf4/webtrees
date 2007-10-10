@@ -150,7 +150,7 @@ class IndividualControllerRoot extends BaseController {
 			$this->default_tab = $_REQUEST['tab'];
 		}
 
-		if ($this->default_tab<-2 || $this->default_tab>7) $this->default_tab=0;
+		if ($this->default_tab<-2 || $this->default_tab>9) $this->default_tab=0;
 
 		$this->indi = new Person($indirec, false);
 		$_SESSION['navRoot'] = $this->indi->getXref();

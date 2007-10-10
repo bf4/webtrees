@@ -79,7 +79,8 @@ $level2_tags=array( // The order of the $keys is significant
 	"WIFE" =>array("MARR"),
 	"FAMC" =>array("ADOP","SLGC"),
 	"FILE" =>array("OBJE"),
-	"_PRIM"=>array("OBJE")
+	"_PRIM"=>array("OBJE"),
+	"EVEN" =>array("DATA")
 );
 $STANDARD_NAME_FACTS = array('NAME', 'NPFX', 'GIVN', 'SPFX', 'SURN', 'NSFX');
 
@@ -2083,6 +2084,10 @@ function insert_missing_subtags($level1tag)
 					break;
 				case "FILE":
 					add_simple_tag("3 FORM");
+					break;
+				case "EVEN":
+					add_simple_tag("3 DATE");
+					add_simple_tag("3 PLAC");
 					break;
 				case "STAT":
 					if (in_array($level1tag, $templefacts))

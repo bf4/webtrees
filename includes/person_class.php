@@ -57,7 +57,7 @@ class Person extends GedcomRecord {
 	var $file = "";
 	var $age = null;
 	var $isdead = -1;
-	
+
 	/**
 	 * Constructor for person object
 	 * @param string $gedrec	the raw individual gedcom record
@@ -83,8 +83,8 @@ class Person extends GedcomRecord {
 		global $indilist, $GEDCOM, $GEDCOMS, $pgv_changes;
 
 		if (isset($indilist[$pid])
-			&& isset($indilist[$pid]['gedfile'])
-			&& $indilist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
+		&& isset($indilist[$pid]['gedfile'])
+		&& $indilist[$pid]['gedfile']==$GEDCOMS[$GEDCOM]['id']) {
 			if (isset($indilist[$pid]['object'])) return $indilist[$pid]['object'];
 		}
 
@@ -141,7 +141,7 @@ class Person extends GedcomRecord {
 	 */
 	function getNameCount() {
 		global $indilist;
-		
+
 		if (isset($indilist[$this->getXref()]['names'])) return count($indilist[$this->getXref()]['names']);
 		$names = get_indi_names($this->gedrec);
 		return count($names);
@@ -270,10 +270,10 @@ class Person extends GedcomRecord {
 	 */
 	function _parseBirthDeath() {
 		global $MAX_ALIVE_AGE, $pgv_lang;
-		
+
 		if ($this->bd_parsed) return;
 		$this->bd_parsed = true;
-		
+
 		$brec = trim(get_sub_record(1, "1 BIRT", $this->gedrec));
 		$drec = trim(get_sub_record(1, "1 DEAT", $this->gedrec));
 		//-- if no birth look for christening or baptism
@@ -562,7 +562,7 @@ class Person extends GedcomRecord {
 		$this->spouseFamilies = $families;
 		return $families;
 	}
-	
+
 	/**
 	 * get the current spouse of this person
 	 * The current spouse is defined as the spouse from the latest family.
@@ -582,15 +582,15 @@ class Person extends GedcomRecord {
 	 */
 	function getNumberOfChildren() {
 		global $indilist, $GEDCOMS, $GEDCOM;
-		
+
 		//-- first check for the value in the gedcom record
 		$nchi = get_gedcom_value("NCHI", 1, $this->gedrec);
 		if ($nchi!="") return ($nchi+0);
-		
-		//-- check if the value was stored in the cache 
+
+		//-- check if the value was stored in the cache
 		if (isset($indilist[$this->xref])
-				&& $indilist[$this->xref]["gedfile"] == $GEDCOMS[$GEDCOM]['id'] 
-				&& isset($indilist[$this->xref]["numchil"])) return ($indilist[$this->xref]["numchil"]+0);
+		&& $indilist[$this->xref]["gedfile"] == $GEDCOMS[$GEDCOM]['id']
+		&& isset($indilist[$this->xref]["numchil"])) return ($indilist[$this->xref]["numchil"]+0);
 		$nchi=0;
 		foreach ($this->getSpouseFamilies() as $famid=>$family) $nchi+=$family->getNumberOfChildren();
 		return $nchi;
@@ -636,13 +636,13 @@ class Person extends GedcomRecord {
 		// If there is more than one FAMC record, choose the preferred parents:
 		// a) records with "2 _PRIMARY"
 		foreach ($families as $famid=>$fam)
-			if (preg_match("/\n\s*1\s+FAMC\s+@{$famid}@\s*\n(\s*[2-9].*\n)*(\s*2\s+_PRIMARY Y\b)/i", $this->gedrec)) return $fam;
+		if (preg_match("/\n\s*1\s+FAMC\s+@{$famid}@\s*\n(\s*[2-9].*\n)*(\s*2\s+_PRIMARY Y\b)/i", $this->gedrec)) return $fam;
 		// b) records with "2 PEDI birt"
 		foreach ($families as $famid=>$fam)
-			if (preg_match("/\n\s*1\s+FAMC\s+@{$famid}@\s*\n(\s*[2-9].*\n)*(\s*2\s+PEDI\s+birth?\b)/i", $this->gedrec)) return $fam;
+		if (preg_match("/\n\s*1\s+FAMC\s+@{$famid}@\s*\n(\s*[2-9].*\n)*(\s*2\s+PEDI\s+birth?\b)/i", $this->gedrec)) return $fam;
 		// c) records with no "2 PEDI"
 		foreach ($families as $famid=>$fam)
-			if (!preg_match("/\n\s*1\s+FAMC\s+@{$famid}@\s*\n(\s*[2-9].*\n)*(\s*2\s+PEDI\b)/i", $this->gedrec)) return $fam;
+		if (!preg_match("/\n\s*1\s+FAMC\s+@{$famid}@\s*\n(\s*[2-9].*\n)*(\s*2\s+PEDI\b)/i", $this->gedrec)) return $fam;
 		// d) any record
 		return reset($families);
 	}
@@ -689,7 +689,7 @@ class Person extends GedcomRecord {
 		$this->parseFacts();
 		return $this->indifacts;
 	}
-	
+
 	/**
 	 * get other facts
 	 * @return array
@@ -802,46 +802,47 @@ class Person extends GedcomRecord {
 	 */
 	function parseFacts() {
 		global $nonfacts;
-		
+
 		//-- only run this function once
 		if ($this->facts_parsed) return;
 		//-- don't run this function if privacy does not allow viewing of details
 		if (!$this->canDisplayDetails()) return;
 		$sexfound = false;
+		//-- run the parseFacts() method from the parent class
 		parent::parseFacts();
 		$this->facts_parsed = true;
-		
-		//-- find all the fact information
+
+		//-- sort the fact info into different categories for people
 		foreach($this->facts as $f=>$event) {
 			$fact = $event->getTag();
-				  // -- handle special name fact case
-				  if ($fact=="NAME") {
+			// -- handle special name fact case
+			if ($fact=="NAME") {
 				$this->globalfacts[] = $event;
-				  }
-				  // -- handle special source fact case
-				  else if ($fact=="SOUR") {
+			}
+			// -- handle special source fact case
+			else if ($fact=="SOUR") {
 				$this->otherfacts[] = $event;
-				  }
-				  // -- handle special note fact case
-				  else if ($fact=="NOTE") {
+			}
+			// -- handle special note fact case
+			else if ($fact=="NOTE") {
 				$this->otherfacts[] = $event;
-				  }
-				  // -- handle special sex case
-				  else if ($fact=="SEX") {
+			}
+			// -- handle special sex case
+			else if ($fact=="SEX") {
 				$this->globalfacts[] = $event;
-						 $sexfound = true;
-				  }
-				  else if ($fact=="OBJE") {}
-				  else if (!isset($nonfacts) || !in_array($fact, $nonfacts)) {
+				$sexfound = true;
+			}
+			else if ($fact=="OBJE") {}
+			else if (!isset($nonfacts) || !in_array($fact, $nonfacts)) {
 				$this->indifacts[] = $event;
-				  }
+			}
 		}
 		//-- add a new sex fact if one was not found
 		if (!$sexfound) {
 			$this->globalfacts[] = new Event("1 SEX U", 'new');
 		}
 	}
-	
+
 	/**
 	 * add facts from the family record
 	 * @param boolean $otherfacts	whether or not to add other related facts such as parents facts, associated people facts, and historical facts
@@ -880,22 +881,22 @@ class Person extends GedcomRecord {
 					if ($fact=="DIV") $hasdiv = true;
 					$factrec = trim($factrec);
 					if (!empty($factrec)) {
-					// -- handle special source fact case
-					if (($fact!="SOUR") && ($fact!="OBJE") && ($fact!="NOTE") && ($fact!="CHAN") && ($fact!="_UID") && ($fact!="RIN")) {
-						if ((!in_array($fact, $nonfacts))&&(!in_array($fact, $nonfamfacts))) {
-							if (!is_null($spouse)) $factrec.="\r\n1 _PGVS @".$spouse->getXref()."@";
-							$factrec.="\r\n1 _PGVFS @$famid@\r\n";
-							if ($updfamily) $factrec .= "PGV_NEW\r\n";
+						// -- handle special source fact case
+						if (($fact!="SOUR") && ($fact!="OBJE") && ($fact!="NOTE") && ($fact!="CHAN") && ($fact!="_UID") && ($fact!="RIN")) {
+							if ((!in_array($fact, $nonfacts))&&(!in_array($fact, $nonfamfacts))) {
+								if (!is_null($spouse)) $factrec.="\r\n1 _PGVS @".$spouse->getXref()."@";
+								$factrec.="\r\n1 _PGVFS @$famid@\r\n";
+								if ($updfamily) $factrec .= "PGV_NEW\r\n";
 								$event = new Event($factrec, $linenum);
 								$event->setParentObject($this);
 								$this->indifacts[] = $event;
+							}
 						}
-					}
-					else if ($fact=="OBJE") {
-						if (!is_null($spouse)) $factrec.="\r\n1 _PGVS @".$spouse->getXref()."@";
-						$factrec.="\r\n1 _PGVFS @$famid@\r\n";
-						$this->otherfacts[]=array($linenum, $factrec);
-					}
+						else if ($fact=="OBJE") {
+							if (!is_null($spouse)) $factrec.="\r\n1 _PGVS @".$spouse->getXref()."@";
+							$factrec.="\r\n1 _PGVFS @$famid@\r\n";
+							$this->otherfacts[]=array($linenum, $factrec);
+						}
 					}
 					$factrec = $line;
 					$linenum = $i;
@@ -912,7 +913,7 @@ class Person extends GedcomRecord {
 			$this->add_historical_facts();
 			$this->add_asso_facts($this);
 		}
-	
+
 	}
 	/**
 	 * add parents events to individual facts array
@@ -983,16 +984,16 @@ class Person extends GedcomRecord {
 
 			$parents[] = $family->getHusband();
 			$parents[] = $family->getWife();
-				foreach ($parents as $indexval=>$parent) {
+			foreach ($parents as $indexval=>$parent) {
 				if (is_null($parent)) continue;
 				if ($sosa==1) {
-				if ($parent->getSex()=='M') {
-					$fact="_MARR_FATH";
-					$rela="father";
+					if ($parent->getSex()=='M') {
+						$fact="_MARR_FATH";
+						$rela="father";
 					} else {
-					$fact="_MARR_MOTH";
-					$rela="mother";
-				}
+						$fact="_MARR_MOTH";
+						$rela="mother";
+					}
 				} else {
 					// Not currently used.  Do we want separate grandmother/grandfather events?
 					$fact="_MARR_GPAR";
@@ -1000,7 +1001,7 @@ class Person extends GedcomRecord {
 				}
 				if (strstr($SHOW_RELATIVES_EVENTS, $fact)) {
 					$sfamids = $parent->getSpouseFamilies();
-						foreach ($sfamids as $sfamid=>$sfamily) {
+					foreach ($sfamids as $sfamid=>$sfamily) {
 						if ($sfamid==$famid && $rela=="mother") continue; // show current family marriage only for father
 						$srec = $sfamily->getMarriageRecord();
 						$sEvent = new Event($srec);
@@ -1045,7 +1046,7 @@ class Person extends GedcomRecord {
 		if ($option=="3") $option="_MSIB";
 		if (strstr($SHOW_RELATIVES_EVENTS, $option)===false) return;
 		if (empty($this->brec)) $this->_parseBirthDeath();
-		
+
 		$children = $family->getChildren();
 		foreach($children as $key=>$child) {
 			$spid = $child->getXref();
@@ -1100,7 +1101,7 @@ class Person extends GedcomRecord {
 					$sEvent = new Event($srec);
 					if ($fact=="_BIRT_CHIL" or // always print child's birth event
 					(compare_facts_date($this->getBirthEvent(), $sEvent)<0 && compare_facts_date($sEvent, $this->getDeathEvent())<0)
-						) {
+					) {
 						$sdate = get_sub_record(2, "2 DATE", $srec);
 						$factrec = "1 ".$fact;
 						if (strstr($srec, "1 CHR")) $factrec .= " ".$factarray["CHR"];
@@ -1414,7 +1415,7 @@ class Person extends GedcomRecord {
 				$this->otherfacts[]=$newfact;
 			}
 		}
-	
+
 		//-- compare new and old facts of the Global facts
 		for($i=0; $i<count($this->globalfacts); $i++) {
 			$found=false;
@@ -1496,13 +1497,13 @@ class Person extends GedcomRecord {
 	function getPrimaryParentsNames($htmlclass="") {
 		global $pgv_lang;
 		$fam = $this->getPrimaryChildFamily();
- 		if (!$fam) return "";
+		if (!$fam) return "";
 		$husb = $fam->getHusband();
 		if ($husb) $father = $husb->getSortableName();
- 		else $father = "";
+		else $father = "";
 		$wife = $fam->getWife();
 		if ($wife) $mother = $wife->getSortableName();
- 		else $mother = "";
+		else $mother = "";
 		$txt = "<span class=\"".$htmlclass."\">";
 		$txt .= "<br />".$pgv_lang["father"].": ".$father;
 		$txt .= "<br />".$pgv_lang["mother"].": ".$mother;

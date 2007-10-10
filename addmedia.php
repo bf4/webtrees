@@ -378,8 +378,11 @@ if ($action=="newentry") {
 		$media_id = get_new_xref("OBJE");
 		$newged = "0 @".$media_id."@ OBJE\r\n";
 		//-- set the FILE text to the correct file location
-		if (userGedcomAdmin(getUserName())) $text[0] = $folderName.$mediaFile;
-		else $newged .= "1 FILE ".$folderName.$mediaFile."\r\n";
+		// NOTE: $_SESSION["upload_folder"] contains the externally accessible directory rather than the media firewall directory
+		// This is the value we want stored in the GEDCOM
+		$folderNameForGedcom = (isFileExternal($text[0])) ? "" : $_SESSION["upload_folder"];
+		if (userGedcomAdmin(getUserName())) $text[0] = $folderNameForGedcom.$mediaFile;
+		else $newged .= "1 FILE ".$folderNameForGedcom.$mediaFile."\r\n";
     	
 		$newged = handle_updates($newged);
 		

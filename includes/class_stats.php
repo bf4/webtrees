@@ -455,7 +455,12 @@ class stats
 		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir;
 		$rows = $this->_runSQL("SELECT d_gid, d_year, d_mon, d_day FROM {$TBLPREFIX}dates WHERE d_file = '{$this->_gedcom['id']}' AND d_fact = 'BIRT' AND d_year != '0' AND d_type IS NULL ORDER BY d_year ASC, d_mon ASC, d_day ASC", 1);$row = $rows[0];
 		ob_start();
-		print_fact_place(get_sub_record(1, '1 BIRT', find_person_record($row['d_gid'])), true, true, true);
+		$gedobj = GedcomRecord::getInstance($row['d_gid']);
+		if (!is_null($gedobj)) {
+			$event = $gedobj->getFactByType('BIRT');
+			print_fact_place($event, true, true, true);
+		}
+		//print_fact_place(get_sub_record(1, '1 BIRT', find_person_record($row['d_gid'])), true, true, true);
 		$place = ob_get_contents();
 		ob_end_clean();
 		return $place;
@@ -510,7 +515,12 @@ class stats
 		global $TBLPREFIX, $SHOW_ID_NUMBERS, $listDir;
 		$rows = $this->_runSQL("SELECT d_gid, d_year, d_mon, d_day FROM {$TBLPREFIX}dates WHERE d_file = '{$this->_gedcom['id']}' AND d_fact = 'BIRT' AND d_year != '0' AND d_type IS NULL ORDER BY d_year DESC, d_mon DESC, d_day DESC", 1);$row = $rows[0];
 		ob_start();
-		print_fact_place(get_sub_record(1, '1 BIRT', find_person_record($row['d_gid'])), true, true, true);
+		$gedobj = GedcomRecord::getInstance($row['d_gid']);
+		if (!is_null($gedobj)) {
+			$event = $gedobj->getFactByType('BIRT');
+			print_fact_place($event, true, true, true);
+		}
+		//print_fact_place(get_sub_record(1, '1 BIRT', find_person_record($row['d_gid'])), true, true, true);
 		$place = ob_get_contents();
 		ob_end_clean();
 		return $place;
@@ -569,7 +579,12 @@ class stats
 		global $TBLPREFIX;
 		$rows = $this->_runSQL("SELECT d_gid, d_year, d_mon, d_day FROM {$TBLPREFIX}dates WHERE d_file = '{$this->_gedcom['id']}' AND d_fact = 'DEAT' AND d_year != '0' AND d_type IS NULL ORDER BY d_year ASC, d_mon ASC, d_day ASC", 1);$row = $rows[0];
 		ob_start();
-		print_fact_place(get_sub_record(1, '1 DEAT', find_person_record($row['d_gid'])), true, true, true);
+		$gedobj = GedcomRecord::getInstance($row['d_gid']);
+		if (!is_null($gedobj)) {
+			$event = $gedobj->getFactByType("DEAT");
+			print_fact_place($event, true, true, true);
+		}
+		//print_fact_place(get_sub_record(1, '1 DEAT', find_person_record($row['d_gid'])), true, true, true);
 		$place = ob_get_contents();
 		ob_end_clean();
 		return $place;
@@ -624,7 +639,12 @@ class stats
 		global $TBLPREFIX;
 		$rows = $this->_runSQL("SELECT d_gid, d_year, d_mon, d_day FROM {$TBLPREFIX}dates WHERE d_file = '{$this->_gedcom['id']}' AND d_fact = 'DEAT' AND d_year != '0' AND d_type IS NULL ORDER BY d_year DESC, d_mon DESC, d_day DESC", 1);$row = $rows[0];
 		ob_start();
-		print_fact_place(get_sub_record(1, '1 DEAT', find_person_record($row['d_gid'])), true, true, true);
+		$gedobj = GedcomRecord::getInstance($row['d_gid']);
+		if (!is_null($gedobj)) {
+			$event = $gedobj->getFactByType("DEAT");
+			print_fact_place($event, true, true, true);
+		}
+		//print_fact_place(get_sub_record(1, '1 DEAT', find_person_record($row['d_gid'])), true, true, true);
 		$place = ob_get_contents();
 		ob_end_clean();
 		return $place;
@@ -940,7 +960,12 @@ class stats
 		global $TBLPREFIX;
 		$rows = $this->_runSQL("SELECT d_gid, d_year, d_month, d_mon, d_day, d_fact FROM {$TBLPREFIX}dates WHERE d_file = '{$this->_gedcom['id']}' AND d_gid != 'HEAD' AND (d_fact = 'BIRT' OR d_fact = 'DEAT' OR d_fact = 'MARR' OR d_fact = 'ADOP' OR d_fact = 'BURI') AND d_year != '0' AND d_type IS NULL ORDER BY d_year ASC, d_mon ASC, d_day ASC", 1);$row = $rows[0];
 		ob_start();
-		print_fact_place(get_sub_record(1, "1 {$row['d_fact']}", find_gedcom_record($row['d_gid'])), true, true, true);
+		$gedobj = GedcomRecord::getInstance($row['d_gid']);
+		if (!is_null($gedobj)) {
+			$event = $gedobj->getFactByType($row['d_fact']);
+			print_fact_place($event, true, true, true);
+		}
+		//print_fact_place(get_sub_record(1, "1 {$row['d_fact']}", find_gedcom_record($row['d_gid'])), true, true, true);
 		$place = ob_get_contents();
 		ob_end_clean();
 		return $place;
@@ -1004,7 +1029,12 @@ class stats
 		global $TBLPREFIX;
 		$rows = $this->_runSQL("SELECT d_gid, d_year, d_month, d_mon, d_day, d_fact FROM {$TBLPREFIX}dates WHERE d_file = '{$this->_gedcom['id']}' AND d_gid != 'HEAD' AND (d_fact = 'BIRT' OR d_fact = 'DEAT' OR d_fact = 'MARR' OR d_fact = 'ADOP' OR d_fact = 'BURI') AND d_year != '0' AND d_type IS NULL ORDER BY d_year DESC, d_mon DESC, d_day DESC", 1);$row = $rows[0];
 		ob_start();
-		print_fact_place(get_sub_record(1, "1 {$row['d_fact']}", find_gedcom_record($row['d_gid'])), true, true, true);
+		$gedobj = GedcomRecord::getInstance($row['d_gid']);
+		if (!is_null($gedobj)) {
+			$event = $gedobj->getFactByType($row['d_fact']);
+			print_fact_place($event, true, true, true);
+		}
+		//print_fact_place(get_sub_record(1, "1 {$row['d_fact']}", find_gedcom_record($row['d_gid'])), true, true, true);
 		$place = ob_get_contents();
 		ob_end_clean();
 		return $place;
@@ -1110,7 +1140,7 @@ class stats
 
 	function contactGedcom() {
 		global $pgv_lang, $NAME_REVERSE;
-		global $CONTACT_METHOD, $CONTACT_EMAIL;
+		global $CONTACT_METHOD, $CONTACT_EMAIL, $SUPPORT_METHOD;
 
 		if($CONTACT_METHOD == 'none') return ''; 
 		$user = getUser($CONTACT_EMAIL);
