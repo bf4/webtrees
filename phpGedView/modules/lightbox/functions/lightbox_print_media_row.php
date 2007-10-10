@@ -67,21 +67,35 @@
     $thumbnail = thumbnail_file($rowm["m_file"], true, false, $pid);
     $isExternal = stristr($thumbnail,"://");
     $linenum = 0;
-
-
-    // NOTE Get the title of the media
+    
     if (showFactDetails("OBJE", $pid)) {
+	
+		//  Get the title of the media
         $mediaTitle = $rowm["m_titl"];
         $subtitle = get_gedcom_value("TITL", 2, $rowm["mm_gedrec"]);
+
+		// If no title, use filename
+        if (!empty($subtitle)) $mediaTitle = $subtitle;
+            $mainMedia = check_media_depth($rowm["m_file"], "NOTRUNC");
+        if ($mediaTitle=="") $mediaTitle = basename($rowm["m_file"]);		
 		
 		// Get the tooltip link for source
 		$sour = get_gedcom_value("SOUR", 1, $rowm["m_gedrec"]);	
 		$sourdesc = PrintReady(get_source_descriptor($sour));
 
-		//If no title, use filename
-        if (!empty($subtitle)) $mediaTitle = $subtitle;
-            $mainMedia = check_media_depth($rowm["m_file"], "NOTRUNC");
-        if ($mediaTitle=="") $mediaTitle = basename($rowm["m_file"]);
+		// Avoid special character problems
+		$mediaTitle =  addslashes($mediaTitle);
+		//make ready for RTL
+		$mediaTitle = PrintReady($mediaTitle);
+		$sour1 = " - " . $sour ; 
+		$sour2 = PrintReady($sour1);
+		
+		//text alignment for tooltip
+		if ($TEXT_DIRECTION=="rtl") {
+			$alignm = "right";
+		}else{
+			$alignm = "left";
+		}
 		
 		// Get Media info
 		if ($isExternal || media_exists($thumbnail)) {
@@ -103,61 +117,67 @@
 						
 					// Else if source info available and file = PDF - Open with Lightbox URL,  and create tooltip link for source AND media details
 					}else if (eregi("1 SOUR",$rowm['m_gedrec']) && eregi("\.pdf",$rowm['m_file'])) { 
-						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(1200,700,click)' title='" . $mediaTitle . "'\"
+						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(1200,700,click)' title=\"" . stripslashes($mediaTitle) . "\"\"
 								onmouseover=\"Tip('" 
 									. "&nbsp;<b>" . $mediaTitle . "</b>"
 									. "<br>" 								
 									. "&nbsp;" . $pgv_lang["lb_view_source_tip"] . "<a href=\'" 
-									. $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;(" . $sour 
-									. ")</font></b><\/a>" 
+									. $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;" . $sour2 
+									. "</font></b><\/a>" 
 									. "<br>" 
 									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'" 
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"] 
 									. "</font></b><\/a>'," 
-									. "OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
+									. "TEXTALIGN, '" . $alignm . "', OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
 								. ")\""
 								. ">\n";								
 								
 					// Else if no source info available and file = PDF - Open with Lightbox URL,  and create tooltip link for media details only
 					}else if (!eregi("1 SOUR",$rowm['m_gedrec']) && eregi("\.pdf",$rowm['m_file'])) { 
-						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(1200,700,click)' title='" . $mediaTitle . "'\" 
+						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(1200,700,click)' title=\"" . stripslashes($mediaTitle) . "\"\" 
 								onmouseover=\"Tip('" 
 									. "&nbsp;<b>" . $mediaTitle . "</b>"
 									. "<br>"
 									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'"
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"]
 									. "</font></b><\/a>',"
-									. "OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
+									. "TEXTALIGN, '" . $alignm . "', OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
 								. ")\"" 
 								. ">\n";								
-						
+					
+
+					
 					// Else If source info available, - Open with Lightbox normal,  and create tooltip link for source AND media details
-					}else if (eregi("1 SOUR",$rowm['m_gedrec'])) { 
-						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' title='" . $mediaTitle . "'\" 
+					}else if (eregi("1 SOUR",$rowm['m_gedrec'])) {
+
+						print	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' title=\"" . stripslashes($mediaTitle) . "\"\" 
 								onmouseover=\"Tip('" 
 									. "&nbsp;<b>" . $mediaTitle . "</b>"
-									. "<br>" 								
+									. "<br>"
+									
 									. "&nbsp;" . $pgv_lang["lb_view_source_tip"] . "<a href=\'" 
-									. $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;(" . $sour 
-									. ")</font></b><\/a>" 
+									. $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;" . $sour2  
+									. "</font></b><\/a>" 
+									
 									. "<br>" 
-									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'" 
+									. "&nbsp;" . PrintReady($pgv_lang["lb_view_details_tip"]) . "<a href=\'" 
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"] 
 									. "</font></b><\/a>'," 
-									. "OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
+									. "TEXTALIGN, '" . $alignm . "', OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
 								. ")\""
 								. ">\n";
+		
 					
 					// If no source info available - Open with Lightbox normal, and create tooltip link for media details only
 					}else if (!eregi("1 SOUR",$rowm['m_gedrec'])) { 
-						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' title='" . $mediaTitle . "'\"
+						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' title=\"" . stripslashes($mediaTitle) . "\"\"
 								onmouseover=\"Tip('" 
 									. "&nbsp;<b>" . $mediaTitle . "</b>"
 									. "<br>"
 									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'"
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"]
 									. "</font></b><\/a>',"
-									. "OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
+									. "TEXTALIGN, '" . $alignm . "', OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
 								. ")\"" 
 								. ">\n";
 
@@ -178,32 +198,32 @@
 					// Else if source info available and file is not supported by Lightbox - Open with Pop-up, and create tooltip link for source AND media details
 					}else if (eregi("1 SOUR",$rowm['m_gedrec'])) { 
 						print 	"<a href=\"javascript:;\" 
-								onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" title='" . $mediaTitle . "'\" 
+								onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" title=\"" . stripslashes($mediaTitle) . "\"\" 
 								onmouseover=\"Tip('" 
 									. "&nbsp;<b>" . $mediaTitle . "</b>"
 									. "<br>" 								
 									. "&nbsp;" . $pgv_lang["lb_view_source_tip"] . "<a href=\'" 
-									. $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;(" . $sour 
-									. ")</font></b><\/a>" 
+									. $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;" . $sour2 
+									. "</font></b><\/a>" 
 									. "<br>" 
 									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'" 
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"] 
 									. "</font></b><\/a>'," 
-									. "OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
+									. "TEXTALIGN, '" . $alignm . "', OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
 								. ")\""
 								. ">\n";
 							
 					// Else if no source info available and file is not supported by Lightbox - Open with Pop-up, and create tooltip link for media details only
 					}else if (!eregi("1 SOUR",$rowm['m_gedrec'])) { 
 						print 	"<a href=\"javascript:;\" 
-								onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" title='" . $mediaTitle . "'\"
+								onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" title=\"" . stripslashes($mediaTitle) . "\"\"
 								onmouseover=\"Tip('" 
 									. "&nbsp;<b>" . $mediaTitle . "</b>"
 									. "<br>"
 									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'"
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"]
 									. "</font></b><\/a>',"
-									. "OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
+									. "TEXTALIGN, '" . $alignm . "', OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
 								. ")\"" 
 								. ">\n";									
 					
@@ -278,11 +298,18 @@
             }else{
 				//Do nothing
 			}
-			
+				
             print "</table>" . "\n";
         }
 
-//  -----------------------------------------------------------------------------------------------------------------------------		
+      
+		
+//  -----------------------------------------------------------------------------------------------------------------------------	
+/*
+if ($TEXT_DIRECTION=="rtl" && !hasRTLText($sour1)) print "".PrintReady($sour1);
+else print "<i>&lrm;".PrintReady($sour1);
+*/
+	
 /* 
 		if ($TEXT_DIRECTION=="rtl" && !hasRTLText($mediaTitle)) print "<i>&lrm;".PrintReady($mediaTitle);
 //        		else print "<i>".PrintReady($mediaTitle);

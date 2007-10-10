@@ -46,7 +46,7 @@ global $LANGUAGE;
   <title>Personal | Media Album </title>
 
 
-<?php if ($LANGUAGE=="hebrew") { ?>
+<?php if ($TEXT_DIRECTION == "rtl") { ?>
 		<link href ="modules/lightbox/css/clearbox_music_RTL.css" 	rel="stylesheet" type="text/css" />
 		<link href ="modules/lightbox/css/album_page.css" 			rel="stylesheet" type="text/css" media="screen" /> 
 		<!--[if lte IE 7]>
