@@ -61,7 +61,7 @@ print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t
 	var CB_SlShowTime 	= '<?php print $LB_SS_SPEED; 	?>';	// Slide show timer
 	</script>
 
-<?php 	if ($LANGUAGE=="hebrew") { ?>
+<?php 	if ($TEXT_DIRECTION == "rtl") { ?>
 			<link  href="modules/lightbox/css/clearbox_music_RTL.css" 	rel="stylesheet" type="text/css" />
 			<link href ="modules/lightbox/css/album_page.css" 			rel="stylesheet" type="text/css" media="screen" /> 
 			<!--[if lte IE 7]>
@@ -76,7 +76,7 @@ print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t
 		<script src="modules/lightbox/js/clearbox.js" 				type="text/javascript"></script>
 		<center>
 		
-		<script src="modules/lightbox/js/wz_tooltip.js" 			type="text/javascript"></script>  
+
 <?php
 // LBox  ================================================================================
 
@@ -309,6 +309,7 @@ if ($ct>0){
 	    $imgheight = $imgsize[1]+150;
 
 	    $name = trim($media["TITL"]);
+		$name1 = addslashes($media["TITL"]);
 		$showFile = $isEditUser;
 		if ($name=="") {
 			//$showFile = false;
@@ -322,7 +323,9 @@ if ($ct>0){
 		
 //LBox --------  change for Lightbox Album --------------------------------------------
 		if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$media["FILE"]) || eregi("\.jpeg",$media["FILE"]) || eregi("\.gif",$media["FILE"]) || eregi("\.png",$media["FILE"]) ) ) { 
-			print "<a href=\"" . $media["FILE"] . "\" rel='clearbox[general]' title='" . $name . "'\">" . "\n";	
+			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . stripslashes(PrintReady($name1)) . "\"\">" . "\n";	
+
+
         }elseif ($USE_MEDIA_VIEWER) {
 			print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
 		} else {
@@ -503,6 +506,21 @@ if ($ct>0){
 		}
 	}
 	print "</td>";
+	print "</tr>\n</table></td></tr>";
+	print "</table><br />";
+}
+print "\n</div>\n";
+/** not ready for 4.1
+require_once("includes/functions_print_lists.php");
+$legend = $pgv_lang["media"];
+if ($filter) $legend .= " : &laquo;".$filter."&raquo;";
+print_media_table($medialist, $legend);
+**/
+// -- load up the slideshow code
+if (file_exists("modules/slideshow/slideshow.php")) include_once("modules/slideshow/slideshow.php");
+print_footer();
+
+?>nt "</td>";
 	print "</tr>\n</table></td></tr>";
 	print "</table><br />";
 }
