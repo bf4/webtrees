@@ -54,6 +54,9 @@ function isImageTypeSupported($reqtype) {
 // if the image type is not supported:
 //   sends html version of error message and exits the script
 // basic idea from http://us.php.net/manual/en/function.imagecreatefromjpeg.php
+// type  - file extension: JPG, GIF, PNG
+// line1 - the error message
+// line2 - the media file which caused the error (shown only to admins)
 function sendErrorAndExit($type, $line1, $line2 = false) {
 
 	// line2 contains the information that only an admin should see, such as the full path to a file
@@ -92,18 +95,21 @@ function sendErrorAndExit($type, $line1, $line2 = false) {
 	} else {
 		// output a standard html string
 		// Note: any error status (such as 404) is still in effect 
-		echo '<!-- filler space so IE will display the custom 404 error -->';
-		echo '<!-- filler space so IE will display the custom 404 error -->';
-		echo '<!-- filler space so IE will display the custom 404 error -->';
-		echo '<!-- filler space so IE will display the custom 404 error -->';
-		echo '<!-- filler space so IE will display the custom 404 error -->';
-		echo '<!-- filler space so IE will display the custom 404 error -->';
-		echo '<!-- filler space so IE will display the custom 404 error -->';
-		echo '<!-- filler space so IE will display the custom 404 error -->';
-		echo "<div align=\"center\">".$line1."</div>";
+		echo "<html><body>\n";
+		echo "<!-- filler space so IE will display the custom 404 error -->";
+		echo "<!-- filler space so IE will display the custom 404 error -->";
+		echo "<!-- filler space so IE will display the custom 404 error -->";
+		echo "<!-- filler space so IE will display the custom 404 error -->";
+		echo "<!-- filler space so IE will display the custom 404 error -->";
+		echo "<!-- filler space so IE will display the custom 404 error -->";
+		echo "<!-- filler space so IE will display the custom 404 error -->";
+		echo "<!-- filler space so IE will display the custom 404 error -->";
+		echo "\n<div align=\"center\">".$line1."</div>\n";
 		if ($line2) {
-			echo "<div align=\"center\">".$line2."</div>";
+			// line2 comes from url, wrap in PrintReady
+			echo "<div align=\"center\">".PrintReady($line2)."</div>\n";
 		}
+		echo "</body></html>\n";
 	}
 	exit;
 }
@@ -156,16 +162,15 @@ function applyWatermark($im) {
 }
  
 function embedText($im, $text, $maxsize, $color, $font, $vpos, $hpos) {
+	global $useTTF;
 
 	// there are two ways to embed text with PHP
 	// (preferred) using GD and FreeType you can embed text using any True Type font
 	// (fall back) if that is not available, you can insert basic monospaced text
-
-	// determine whether TTF is available
-	$useTTF = (function_exists("imagettftext")) ? true : false;
 	if ($useTTF) {
+		// imagettftext is available, make sure the requested font exists
 		if (!isset($font)||($font=='')||!file_exists('includes/fonts/'.$font)) {
-	  	$font = 'DejaVuSans.ttf';
+	  	$font = 'DejaVuSans.ttf'; // this font ships with PGV
 			if (!file_exists('includes/fonts/'.$font)) {
 			  $useTTF = false;
 	    }
@@ -245,8 +250,13 @@ function embedText($im, $text, $maxsize, $color, $font, $vpos, $hpos) {
 
 	// apply the text
 	if ($useTTF) {
+		// if imagettftext throws errors, catch them with a custom error handler
+		set_error_handler("imagettftextErrorHandler");
 		imagettftext($im, $taille, $rotation, $pos_x, $pos_y, $textcolor, 'includes/fonts/'.$font, stripslashes($text));
-	} else {
+		restore_error_handler();
+	}
+	// don't use an 'else' here since imagettftextErrorHandler may have changed the value of $useTTF from true to false
+	if (!$useTTF) {
 		if ($rotation!=90) {
 			imagestring($im, 5, $pos_x, $pos_y, stripslashes($text),$textcolor);
 		} else {
@@ -265,10 +275,25 @@ function textlength($t,$mxl,$text) {
 	return ($taille_c);
 }
 
+// imagettftext is the function that is most likely to throw an error
+// use this custom error handler to catch and log it
+function imagettftextErrorHandler($errno, $errstr, $errfile, $errline) {
+	global $useTTF, $serverFilename;
+	// log the error
+	AddToLog($serverFilename." Media Firewall error: ".$errstr);
+	// change value of useTTF to false so the fallback watermarking can be used.
+	$useTTF = false;
+	return true;
+}
+
+
 
 
 // ******************************************************
 // start processing here
+
+// this needs to be a global variable so imagettftextErrorHandler can set it
+$useTTF = (function_exists("imagettftext")) ? true : false;
 
 // get serverfilename from the media controller
 $serverFilename = $controller->getServerFilename();
