@@ -1110,7 +1110,7 @@ class stats
 
 	function contactGedcom() {
 		global $pgv_lang, $NAME_REVERSE;
-		global $CONTACT_METHOD, $CONTACT_EMAIL;
+		global $CONTACT_METHOD, $CONTACT_EMAIL, $SUPPORT_METHOD;
 
 		if($CONTACT_METHOD == 'none') return ''; 
 		$user = getUser($CONTACT_EMAIL);
