@@ -770,8 +770,8 @@ class FrenchRDate extends CalendarDate {
 class HijriDate extends CalendarDate {
 	// TODO these variables should be STATIC, but this makes them invisible to CalendarDate
 	var $CALENDAR_ESCAPE='@#DHIJRI@';
-	var $MONTH_TO_NUM=array(''=>0, 'muhar'=>1, 'safar'=>2, 'rabi1'=>3, 'rabi2'=>4, 'juma1'=>5, 'juma2'=>6, 'rajab'=>7, 'shaab'=>8, 'ramad'=>9, 'shaww'=>10, 'dhuaq'=>11, 'dhuah'=>12);
-	var $NUM_TO_MONTH=array(0=>'', 1=>'muhar', 2=>'safar', 3=>'rabi1', 4=>'rabi2', 5=>'juma1', 6=>'juma2', 7=>'rajab', 8=>'shaab', 9=>'ramad', 10=>'shaww', 11=>'dhuaq', 12=>'dhuah');
+	var $MONTH_TO_NUM=array(''=>0, 'muhar'=>1, 'safar'=>2, 'rabia'=>3, 'rabit'=>4, 'jumaa'=>5, 'jumat'=>6, 'rajab'=>7, 'shaab'=>8, 'ramad'=>9, 'shaww'=>10, 'dhuaq'=>11, 'dhuah'=>12);
+	var $NUM_TO_MONTH=array(0=>'', 1=>'muhar', 2=>'safar', 3=>'rabia', 4=>'rabit', 5=>'jumaa', 6=>'jumat', 7=>'rajab', 8=>'shaab', 9=>'ramad', 10=>'shaww', 11=>'dhuaq', 12=>'dhuah');
 	var $NUM_MONTHS=12;
 	var $DAYS_OF_WEEK=array('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday');
 	var $NUM_DAYS_OF_WEEK=7;
@@ -921,7 +921,7 @@ class GedcomDate {
 			$cal='';
 		}
 		// Split the date into D, M and Y
-		if (preg_match_all('/^ *(\d*) *([a-z]{3,5}\d?) *(\d+( ?b ?c)?|\d\d\d\d (\d\d)?\d\d)?$/', $date, $match)) { // DM, M, MY or DMY
+		if (preg_match_all('/^ *(\d*) *([a-z]{3,5}) *(\d+( ?b ?c)?|\d\d\d\d (\d\d)?\d\d)?$/', $date, $match)) { // DM, M, MY or DMY
 			$d=$match[1][0];
 			$m=$match[2][0];
 			$y=$match[3][0];
@@ -940,7 +940,7 @@ class GedcomDate {
 			if (preg_match('/^(vend|brum|frim|nivo|pluv|vent|germ|flor|prai|mess|ther|fruc|com)$/', $m))
 				$cal='@#dfrench r@';
 			else
-				if (preg_match('/^(muhar|safar|rabi[12]|juma[12]|rajab|shaab|ramad|shaww|dhuaq|dhuah)$/', $m))
+				if (preg_match('/^(muhar|safar|rabi[at]|juma[at]|rajab|shaab|ramad|shaww|dhuaq|dhuah)$/', $m))
 					$cal='@#dhijri@'; // This is a PGV extension
 				else
 					if (preg_match('/^(\d\d\d\d (\d\d)?\d\d|\d+ *b ?c ?)$/', $y))
@@ -1089,16 +1089,22 @@ class GedcomDate {
 		return $tmp;
 	}
 
-	// Calculate the age of this event, at a given julian day
+	// Calculate the number of full years between two events.
 	// Return the result as either a number of years (for indi lists, etc.)
-	// or a gedcom style age string: "1y 2m 3d"
-	function GetAge($full, $jd=NULL) {
-		static $today=NULL;
-		if (is_null($today)) // don't keep calculating today
-			$today=client_jd();
-		if (is_null($jd))
-			$jd=$today;
-		return $this->date1->GetAge($full, $jd);
+	function GetAgeYears($d1, $d2=NULL) {
+		if (is_null($d2))
+			return $d1->date1->GetAge(false, client_jd());
+		else
+			return $d1->date1->GetAge(false, $d2->MinJD());
+	}
+
+	// Calculate the years/months/days between two events
+	// Return a gedcom style age string: "1y 2m 3d" (for fact details)
+	function GetAgeGedcom($d1, $d2=NULL) {
+		if (is_null($d2))
+			return $d1->date1->GetAge(true, client_jd());
+		else
+			return $d1->date1->GetAge(true, $d2->MinJD());
 	}
 
 	// Static function to compare two dates.
