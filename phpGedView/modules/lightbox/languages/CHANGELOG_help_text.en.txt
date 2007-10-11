@@ -35,6 +35,7 @@ VERSION 4.1.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["mediatab_help"]							11 Oct 2007				w
 +$pgv_lang["mediatabLegend"]						09 Oct 2007				A
 +$pgv_lang["mediatab_help"]							09 Oct 2007				A
 +$pgv_lang["lb_al_head_linksLegend"]				09 Oct 2007				A
