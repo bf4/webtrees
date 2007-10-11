@@ -1656,8 +1656,8 @@ $pgv_lang["media_privacy"]			= "Privacy restrictions prevent you from viewing th
 $pgv_lang["relations_heading"]		= "The image relates to:";
 $pgv_lang["file_size"]				= "File Size";
 $pgv_lang["img_size"]				= "Image Size";
-$pgv_lang["media_broken"]			= "This media file is broken and unreadable by PHP";
-$pgv_lang["unknown_mime"]			= "Unknown mimetype for this media file, this will cause problems for the Media Firewall.";
+$pgv_lang["media_broken"]			= "This media file is broken and unable to be watermarked";
+$pgv_lang["unknown_mime"]			= "Media Firewall error: >Unknown Mimetype< for file";
 
 //-- Modules
 $pgv_lang["module_error_unknown_action_v2"] = "Unknown action: [action].";
