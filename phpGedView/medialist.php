@@ -520,19 +520,4 @@ print_media_table($medialist, $legend);
 if (file_exists("modules/slideshow/slideshow.php")) include_once("modules/slideshow/slideshow.php");
 print_footer();
 
-?>nt "</td>";
-	print "</tr>\n</table></td></tr>";
-	print "</table><br />";
-}
-print "\n</div>\n";
-/** not ready for 4.1
-require_once("includes/functions_print_lists.php");
-$legend = $pgv_lang["media"];
-if ($filter) $legend .= " : &laquo;".$filter."&raquo;";
-print_media_table($medialist, $legend);
-**/
-// -- load up the slideshow code
-if (file_exists("modules/slideshow/slideshow.php")) include_once("modules/slideshow/slideshow.php");
-print_footer();
-
 ?>
