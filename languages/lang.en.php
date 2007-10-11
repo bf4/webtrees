@@ -1656,7 +1656,7 @@ $pgv_lang["media_privacy"]			= "Privacy restrictions prevent you from viewing th
 $pgv_lang["relations_heading"]		= "The image relates to:";
 $pgv_lang["file_size"]				= "File Size";
 $pgv_lang["img_size"]				= "Image Size";
-$pgv_lang["media_broken"]			= "This media file is broken and unable to be watermarked";
+$pgv_lang["media_broken"]			= "This media file is broken and cannot be watermarked";
 $pgv_lang["unknown_mime"]			= "Media Firewall error: >Unknown Mimetype< for file";
 
 //-- Modules
