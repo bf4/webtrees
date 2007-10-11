@@ -53,8 +53,7 @@ print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t
 // Get Javascript variables from lb_config.php --------------------------- 
  if (file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/lb_config.php');
-}else{
-}
+
 ?>
 	<SCRIPT LANGUAGE=Javascript>
 	var myMusic 		= '<?php print $LB_MUSIC_FILE; ?>';  	// The music file
@@ -78,6 +77,9 @@ print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t
 		
 
 <?php
+}else{
+}
+
 // LBox  ================================================================================
 
 $isEditUser = userCanEdit(getUserName());		// -- Determines whether to show file names
@@ -309,7 +311,7 @@ if ($ct>0){
 	    $imgheight = $imgsize[1]+150;
 
 	    $name = trim($media["TITL"]);
-		$name1 = addslashes($media["TITL"]);
+//		$name1 = addslashes($media["TITL"]);
 		$showFile = $isEditUser;
 		if ($name=="") {
 			//$showFile = false;
@@ -323,8 +325,8 @@ if ($ct>0){
 		
 //LBox --------  change for Lightbox Album --------------------------------------------
 		if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$media["FILE"]) || eregi("\.jpeg",$media["FILE"]) || eregi("\.gif",$media["FILE"]) || eregi("\.png",$media["FILE"]) ) ) { 
-			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . stripslashes(PrintReady($name1)) . "\"\">" . "\n";	
-
+//			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . stripslashes(PrintReady($name1)) . "\"\">" . "\n";	
+			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . PrintReady($name) . "\"\">" . "\n";
 
         }elseif ($USE_MEDIA_VIEWER) {
 			print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
