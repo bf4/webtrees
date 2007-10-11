@@ -56,11 +56,11 @@ function isImageTypeSupported($reqtype) {
 // basic idea from http://us.php.net/manual/en/function.imagecreatefromjpeg.php
 // type  - file extension: JPG, GIF, PNG
 // line1 - the error message
-// line2 - the media file which caused the error (shown only to admins)
+// line2 - the media file which caused the error (shown only to admins/editors)
 function sendErrorAndExit($type, $line1, $line2 = false) {
 
-	// line2 contains the information that only an admin should see, such as the full path to a file
-	if(!userIsAdmin(getUserName())) {  	 
+	// line2 contains the information that only an admin/editor should see, such as the full path to a file
+	if(!userCanEdit(getUserName())) {  	 
 		$line2 = false;
 	}
 
@@ -280,7 +280,8 @@ function textlength($t,$mxl,$text) {
 function imagettftextErrorHandler($errno, $errstr, $errfile, $errline) {
 	global $useTTF, $serverFilename;
 	// log the error
-	AddToLog($serverFilename." Media Firewall error: ".$errstr);
+	$filesize = sprintf("%.2f", filesize($serverFilename)/1024);
+	AddToLog("Media Firewall error: >".$errstr."< in file >".$serverFilename."< (".$filesize."kb)" );
 	// change value of useTTF to false so the fallback watermarking can be used.
 	$useTTF = false;
 	return true;
@@ -316,7 +317,7 @@ if (!file_exists($serverFilename)) {
 
 if (empty($controller->pid)) {
 	// the requested file IS NOT in the gedcom, but it exists (the check for fileExists was above) 
-	if (!userIsAdmin(getUserName()) ) {
+	if (!userCanEdit(getUserName()) ) {
 		// only show these files to admin users
 		// bail since current user is not admin
 		// Note: the 404 error status is still in effect. 
@@ -471,46 +472,50 @@ if ( $generatewatermark ) {
 	$imCreateFunc = 'imagecreatefrom'.$type;
 	$im = @$imCreateFunc($serverFilename);
 
-	if (!$im) {
-		// this image is defective.  bail 
-		sendErrorAndExit($controller->mediaobject->getFiletype(), $pgv_lang["media_broken"], $serverFilename);  
-	}
+	if ($im) {
+		$im = applyWatermark($im);
 
-	$im = applyWatermark($im);
-
-	$imSendFunc = 'image'.$type;
-	// save the image, if preferences allow
-	if ( ($isThumb && $SAVE_WATERMARK_THUMB) || (!$isThumb && $SAVE_WATERMARK_IMAGE) ) {
-		// make sure the directory exists
-		if (!is_dir(dirname($watermarkfile))) {
-			mkdirs(dirname($watermarkfile));
+		$imSendFunc = 'image'.$type;
+		// save the image, if preferences allow
+		if ( ($isThumb && $SAVE_WATERMARK_THUMB) || (!$isThumb && $SAVE_WATERMARK_IMAGE) ) {
+			// make sure the directory exists
+			if (!is_dir(dirname($watermarkfile))) {
+				mkdirs(dirname($watermarkfile));
+			}
+			// save the image
+			$imSendFunc($im, $watermarkfile);
 		}
-		// save the image
-		$imSendFunc($im, $watermarkfile);
+
+		// send the image
+		$imSendFunc($im);
+		imagedestroy($im);
+		exit;
+
+	} else {
+		// this image is defective.  log it 
+		$filesize = filesize($serverFilename);
+		AddToLog("Media Firewall error: >".$pgv_lang["media_broken"]."< in file >".$serverFilename."< (".$filesize."kb)" );
+
+		// set usewatermark to false so image will simply be passed through below
+		$usewatermark = false;  
 	}
-
-	// send the image
-	$imSendFunc($im);
-	imagedestroy($im);
-	exit;
-
-} else {
-
-	if ( $usewatermark ) {
-		// the stored image is good, lets use it
-		$serverFilename = $watermarkfile;
-	}
-
-	// determine filesize of image (could be original or watermarked version) 
-	$filesize = filesize($serverFilename);
-
-	// set one more header
-	header("Content-Length: " . $filesize);
-
-	// open the file and send it
-	$fp = fopen($serverFilename, 'rb');
-	fpassthru($fp);
-	exit;
 }
+
+// pass the image through without manipulating it 
+
+if ( $usewatermark ) {
+	// the stored watermarked image is good, lets use it
+	$serverFilename = $watermarkfile;
+}
+
+// determine filesize of image (could be original or watermarked version) 
+$filesize = filesize($serverFilename);
+
+// set one more header
+header("Content-Length: " . $filesize);
+// open the file and send it
+$fp = fopen($serverFilename, 'rb');
+fpassthru($fp);
+exit;
 
 ?>

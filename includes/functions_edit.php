@@ -168,6 +168,49 @@ function get_prev_xref($gid, $type='INDI') {
 }
 
 /**
+ * Check if the given gedcom record has changed since the last session access
+ * This is used to check if the gedcom record changed between the time the user 
+ * loaded the individual page and the time they clicked on a link to edit
+ * the data.
+ *
+ * @param string $pid	The gedcom id of the record to check pgv_changes
+ * @param string $gedrec	The latest gedcom record to check the CHAN:DATE:TIME (auto accept)
+ */
+function checkChangeTime($pid, $gedrec) {
+	global $GEDCOM, $pgv_changes, $pgv_lang;
+	//-- check if the record changes since last access
+	$changeTime = 0;
+	$changeUser = "";
+	if (isset($pgv_changes[$pid."_".$GEDCOM])) {
+		$change = end($pgv_changes[$pid."_".$GEDCOM]);
+		$changeTime = $change['time'];
+		$changeUser = $change['user'];
+	}
+	else {
+		$changrec = get_sub_record(1, "1 CHAN", $gedrec);
+		$cdate = get_gedcom_value("DATE", 2, $changrec);
+		if (!empty($cdate)) {
+			$ctime = get_gedcom_value("DATE:TIME", 2, $changrec);
+			$changeUser = get_gedcom_value("_PGVU", 2, $changrec);
+			$chan_date = parse_date($cdate);
+			$chan_time = parse_time($ctime);
+			if (!isset($chan_time[0])) $chan_time[0] = 0;
+			if (!isset($chan_time[1])) $chan_time[1] = 0;
+			if (!isset($chan_time[2])) $chan_time[2] = 0;
+			$changeTime = mktime($chan_time[0], $chan_time[1], $chan_time[2], (int)$chan_date[0]['mon'], (int)$chan_date[0]['day'], $chan_date[0]['year']);
+		}
+	}
+	if ($changeTime > $_SESSION['last_access_time']) {
+		print "<span class=\"error\">".preg_replace("/#PID#/", $pid, $pgv_lang["edit_concurrency_msg2"])."<br /><br />";
+		if (!empty($changeUser)) print preg_replace(array("/#CHANGEUSER#/", "/#CHANGEDATE#/"), array($changeUser,date("d M Y h:i:s", $changeTime)), $pgv_lang["edit_concurrency_change"])."<br /><br />";
+		print $pgv_lang["edit_concurrency_reload"]."</span>";
+		print_simple_footer();
+		exit;
+	}
+	return false;
+}
+
+/**
  * This function will replace a gedcom record with
  * the id $gid with the $gedrec
  * @param string $gid	The XREF id of the record to replace
@@ -1914,9 +1957,19 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	global $lang_short_cut, $LANGUAGE;
 
 	$gedlines = split("\n", $gedrec);	// -- find the number of lines in the record
+	if (!isset($gedlines[$linenum])) {
+		print "<span class=\"error\">".$pgv_lang["edit_concurrency_msg1"]."<br /><br />";
+		print $pgv_lang["edit_concurrency_reload"]."</span>";
+		return;
+	}
 	$fields = preg_split("/\s/", $gedlines[$linenum]);
 	$glevel = $fields[0];
 	$level = $glevel;
+	if ($level!=1) {
+		print "<span class=\"error\">".$pgv_lang["edit_concurrency_msg1"]."<br /><br />";
+		print $pgv_lang["edit_concurrency_reload"]."</span>";
+		return;
+	}
 	$type = trim($fields[1]);
 	$level1type = $type;
 	if (count($fields)>2) {

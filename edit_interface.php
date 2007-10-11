@@ -189,6 +189,7 @@ function checkFactEdit($gedrec) {
 	
 	return true;
 }
+//-- end checkFactEdit function
 
 if (!empty($pid)) {
 	$pid = clean_input($pid);
@@ -205,6 +206,7 @@ if (!empty($pid)) {
 	else {
 		$disp = true;
 	}
+	checkChangeTime($pid, $gedrec);
 }
 else if (!empty($famid)) {
 	$famid = clean_input($famid);
@@ -217,6 +219,8 @@ else if (!empty($famid)) {
 			$type = trim($match[1]);
 			$disp = displayDetailsById($famid, $type);
 		}
+		
+		checkChangeTime($famid, $gedrec);
 	}
 }
 else if (($action!="addchild")&&($action!="addchildaction")&&($action!="addnewsource")&&($action!="mod_edit_fact")) {

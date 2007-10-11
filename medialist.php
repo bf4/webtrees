@@ -312,6 +312,7 @@ if ($ct>0){
 	    $imgheight = $imgsize[1]+150;
 
 	    $name = trim($media["TITL"]);
+//		$name1 = addslashes($media["TITL"]);
 		$showFile = $isEditUser;
 		if ($name=="") {
 			//$showFile = false;
@@ -324,7 +325,9 @@ if ($ct>0){
 		
 //LBox --------  change for Lightbox Album --------------------------------------------
 		if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$media["FILE"]) || eregi("\.jpeg",$media["FILE"]) || eregi("\.gif",$media["FILE"]) || eregi("\.png",$media["FILE"]) ) ) { 
-			print "<a href=\"" . $media["FILE"] . "\" rel='clearbox[general]' title='" . $name . "'\">" . "\n";	
+//			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . stripslashes(PrintReady($name1)) . "\"\">" . "\n";	
+			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . PrintReady($name) . "\"\">" . "\n";
+
         }elseif ($USE_MEDIA_VIEWER) {
 			print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
 		} else {

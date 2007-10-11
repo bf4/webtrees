@@ -292,6 +292,7 @@ if ($action=="newentry") {
 			if ($oldFolder=="/") $oldFolder = "";
 			$oldFolder = check_media_depth($oldFolder."y.z", "BACK");
 			$oldFolder = dirname($oldFolder)."/";
+			$_SESSION["upload_folder"] = $folder; // store standard media folder in session
 			
 			$finalResult = true;
 			if ($filename!=$oldFilename || $folder!=$oldFolder) {
@@ -304,6 +305,11 @@ if ($action=="newentry") {
 				} else {
 					$oldMainFile = $oldFolder.$oldFilename;
 					$newMainFile = $folder.$filename;
+					if (media_exists($oldMainFile) == 3) {
+						// the file is in the media firewall directory
+						$oldMainFile = get_media_firewall_path($oldMainFile);
+						$newMainFile = get_media_firewall_path($newMainFile);
+					}
 					$oldThumFile = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $oldMainFile);
 					$newThumFile = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $newMainFile);
 					$isMain = file_exists(filename_decode($oldMainFile));
@@ -440,6 +446,7 @@ if ($action == "update") {
 		if ($oldFolder=="/") $oldFolder = "";
 		$oldFolder = check_media_depth($oldFolder."y.z", "BACK");
 		$oldFolder = dirname($oldFolder)."/";
+		$_SESSION["upload_folder"] = $folder; // store standard media folder in session
 	}
 		
 	if ($filename!=$oldFilename || $folder!=$oldFolder) {
@@ -452,6 +459,11 @@ if ($action == "update") {
 		} else if (!$isExternal) {
 			$oldMainFile = $oldFolder.$oldFilename;
 			$newMainFile = $folder.$filename;
+			if (media_exists($oldMainFile) == 3) {
+				// the file is in the media firewall directory
+				$oldMainFile = get_media_firewall_path($oldMainFile);
+				$newMainFile = get_media_firewall_path($newMainFile);
+			}
 			$oldThumFile = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $oldMainFile);
 			$newThumFile = str_replace($MEDIA_DIRECTORY, $MEDIA_DIRECTORY."thumbs/", $newMainFile);
 			$isMain = file_exists(filename_decode($oldMainFile));

@@ -31,6 +31,10 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["edit_concurrency_change"] = "This record was last changed by <i>#CHANGEUSER#</i> at #CHANGEDATE#";
+$pgv_lang["edit_concurrency_msg2"]	= "The record with id #PID# was changed by another user since you last accessed it.";
+$pgv_lang["edit_concurrency_msg1"]	= "There was an error while creating the edit form.  This record may have changed by another user since you previously viewed it.";
+$pgv_lang["edit_concurrency_reload"]	= "Please go back and reload the page you were on before to make sure you are working with the latest record.";
 $pgv_lang["admin_override"]			= "Admin Option";
 $pgv_lang["no_update_CHAN"]			= "Do not update the CHAN (Last Change) record";
 $pgv_lang["select_events"]			= "Select Events";

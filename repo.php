@@ -34,6 +34,9 @@ if ($SHOW_SOURCES<getUserAccessLevel(getUserName())) {
 	exit;
 }
 
+//-- keep the time of this access to help with concurrent edits
+$_SESSION['last_access_time'] = time();
+
 if (empty($action)) $action="";
 if (empty($show_changes)) $show_changes = "yes";
 if (empty($rid)) $rid = " ";

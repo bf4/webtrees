@@ -100,6 +100,9 @@ if ((!userCanEdit($uname))&&(!$pass)) {
 if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 else $gedrec = find_updated_record($pid);
 
+//-- make sure we are working with the latest record
+checkChangeTime($pid, $gedrec);
+
 //-- only allow edit of individual records
 $disp = true;
 $ct = preg_match("/0 @$pid@ (.*)/", $gedrec, $match);

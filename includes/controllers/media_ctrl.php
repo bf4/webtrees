@@ -45,6 +45,9 @@ class MediaControllerRoot extends IndividualController {
 		if (isset($_REQUEST['mid'])) $mid = $_REQUEST['mid'];
 		if (!empty($_REQUEST["show_changes"])) $this->show_changes = $_REQUEST["show_changes"];
 		if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
+		
+		//-- keep the time of this access to help with concurrent edits
+		$_SESSION['last_access_time'] = time();
 
 		if ($USE_MEDIA_FIREWALL) {
 			// this section used by mediafirewall.php to determine what media file was requested
