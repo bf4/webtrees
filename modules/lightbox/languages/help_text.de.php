@@ -34,7 +34,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 $pgv_lang["mediatabLegend"]			= "Multimedia Ordner Darstellung";
-$pgv_lang["mediatab_help"]			= "~#pgv_lang[mediatabLegend]#~<br />Hier können Sie bestimmen, ob der gewöhnliche Medien-Ordner auf der Persönlichen Fakten und Details Seite gezeigt werden soll oder nicht.<br /><br />Wenn Sie <b>#pgv_lang[hide]#</b> wählen, wird nur der <b>#pgv_lang[lightbox]#</b> Ordner gezeigt, und dieser Ordner wird dann auch auf <b>#pgv_lang[media]#</b> umbenannt.<br />";
+$pgv_lang["mediatab_help"]			= "~#pgv_lang[mediatabLegend]#~<br />Hier können Sie bestimmen, ob der gewöhnliche Medien-Ordner auf der #pgv_lang[indi_info]# Seite gezeigt werden soll oder nicht.<br /><br />Wenn Sie <b>#pgv_lang[hide]#</b> wählen, wird nur der <b>#pgv_lang[lightbox]#</b> Ordner gezeigt, und dieser Ordner wird dann auch auf <b>#pgv_lang[media]#</b> umbenannt.<br />";
 $pgv_lang["lb_al_head_linksLegend"]	= "Album Ordner Kopfbereich Links-Darstellung";
 $pgv_lang["lb_al_head_links_help"]	= "~#pgv_lang[lb_al_head_linksLegend]#~<br />Hier können Sie bestimmen, ob die Links im Kopfbereich des #pgv_lang[lightbox]# Ordners nur mit Ikonen, nur mit Text, oder mit Ikonen und Text dargestellt werden sollen.  Diese Links sind für die Option-Einstellung, oder für das Bearbeiten von neuen Medien-Objekten gedacht.<br /><br />Die <b>#pgv_lang[lb_icon]#</b> Wahl ist wahrscheinlich nicht sehr nützlich, da Sie die Funktion des jeweiligen Ikons nur durch Verschieben des Maus-Pfeils über das Ikon erkennen können.<br />";
 $pgv_lang["lb_al_thumb_linksLegend"]= "Album Ordner Miniaturbilder Links-Darstellung";
