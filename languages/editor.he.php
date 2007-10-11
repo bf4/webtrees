@@ -31,6 +31,10 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["edit_concurrency_change"] 	= "הרשומה הזו שונתה לאחרונה ע\"י <i>#CHANGEUSER#</i> ב-#CHANGEDATE#"; 
+$pgv_lang["edit_concurrency_msg2"]	= "הרשומה עם קוד זיהוי #PID# שונתה ע\"י משתמש אחר לאחר שניגשת אליה בפעם האחרונה ."; 
+$pgv_lang["edit_concurrency_msg1"]	= "הייתה שגיאה בזמן יצירת טופס העריכה.  יתכן שהרשומה שונתה ע\"י משתמש אחר אחרי שהסתכלת עליה בפעם הקודמת."; 
+$pgv_lang["edit_concurrency_reload"]	= " העלה מחדש את הדף שהיית בו מקודם כדי להבטיח שאתה עובד על רשומה עדכנית."; 
 $pgv_lang["admin_override"]		= " אופצית מנהלן";
 $pgv_lang["no_update_CHAN"]	= "אין לעדכן רשומת שינוי אחרון CHAN"; 
 $pgv_lang["select_events"]		= "בחר מאורעות"; 
@@ -76,6 +80,7 @@ $pgv_lang["main_media_fail0"]		= "קובץ המדיה <b><span dir=\"ltr\">#GLOB
 $pgv_lang["main_media_fail1"]		= "לא ניתן לשנות את שמו של קובץ המדיה הראשי <b>#GLOBALS[oldMediaName]#</b> ל-<b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_fail2"]		= "לא ניתן להעביר את קובץ המדיה הראשי <b>#GLOBALS[oldMediaName]#</b> מ-<b><span dir=\"ltr\">#GLOBALS[oldMediaFolder]#</span></b> ל-<b><span dir=\"ltr\">#GLOBALS[newMediaFolder]#</span></b>.";
 $pgv_lang["main_media_fail3"]		= "לא ניתן להעביר את קובץ המדיה הראשי ולשנות את שמו  מ-<b><span dir=\"ltr\">#GLOBALS[oldMediaFolder]#</span>#GLOBALS[oldMediaName]#</b> ל-<b><span dir=\"ltr\">#GLOBALS[newMediaFolder]#</span>#GLOBALS[newMediaName]#</b>.";
+$pgv_lang["resn_disabled"]				= "הערה: יש לאפשר מאפיין 'השתמש בהגבלת הפרטיות של (GEDCOM (RESN' כדי שהערך הזה יופעל."; 
 $pgv_lang["thumb_media_ok1"]	= "השם של קובץ המדיה המזערי <b>#GLOBALS[oldMediaName]#</b> שונה בהצלחה ל-<b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["thumb_media_ok2"]	= "קובץ המדיה המזערי <b>#GLOBALS[oldMediaName]#</b> הועבר בהצלחה מ-<b><span dir=\"ltr\">#GLOBALS[oldThumbFolder]#</span></b> ל-<b><span dir=\"ltr\">#GLOBALS[newThumbFolder]#</span></b>.";
 $pgv_lang["thumb_media_ok3"]	= "קובץ המדיה המזערי הועבר ושמו שונה מ-<b><span dir=\"ltr\">#GLOBALS[oldThumbFolder]#</span>#GLOBALS[oldMediaName]#</b> ל-<b><span dir=\"ltr\">#GLOBALS[newThumbFolder]#</span>#GLOBALS[newMediaName]#</b>.";
@@ -182,10 +187,10 @@ $pgv_lang["media_deleted"]		= "תיקיית המדיה הוסרה בהצלחה."
 $pgv_lang["media_exists"]		= "קובץ המדיה כבר קיים.";
 $pgv_lang["media_file"]		= "קובץ מדיה שאותו יש להעלות";
 $pgv_lang["media_file_deleted"]	= "קובץ מדיה נמחק בהצלחה.";
+$pgv_lang["media_file_moved"]	= "קובץ המדיה הועבר."; 
 $pgv_lang["media_file_not_moved"]	= "לא ניתן להעביר את קובץ המדיה.";
 $pgv_lang["media_file_not_renamed"]	= "לא ניתן להעביר את או לשנות את השם של קובץ המדיה.";
 $pgv_lang["media_thumb_exists"]	= "תמונה מזערית של המדיה כבר קיימת";
-//$pgv_lang["multi_site_search"] 		= "חיפוש רב אתרים";
 $pgv_lang["multiple_gedcoms"]		= "הקובץ מקושר למאגר נתונים של חקר משפחה אחר על השרת.  לא ניתן למחוק, להעביר או לשנות את שמו עד שהקשרים יוסרו.";
 $pgv_lang["must_provide"]		= "יש לספק ";
 $pgv_lang["name_search"]		= "שם: ";

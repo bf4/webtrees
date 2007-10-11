@@ -1,0 +1,49 @@
+<?php
+/**
+ * English language file for Lightbox Album module
+ *
+ * Display media Items using Lightbox
+ *
+ * phpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2007  PhpGedView developers
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * @package PhpGedView
+ * @subpackage Module
+ * @version $Id$
+ * @author Brian Holland
+ */
+
+//-- security check, only allow access from module.php
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access a language file directly.";
+	exit;
+}
+
+$pgv_lang["mediatabLegend"]		= "הופעת חציץ מדיה";
+$pgv_lang["mediatab_help"]		= "~#pgv_lang[mediatabLegend]#~<br />הבחירה מאפשרת לך לקבוע אם להראות את חציץ המדיה על דף #pgv_lang[indi_info]#.<br /><br />כאשר הערך הוא <b>#pgv_lang[hide]#</b>, מראים רק את החציץ <b>#pgv_lang[lightbox]#</b>, והוא יקרא גם כן <b>#pgv_lang[media]#</b>.<br />";
+$pgv_lang["lb_al_head_linksLegend"]	= "הופעת קישור חציץ כותרת של אלבום";
+$pgv_lang["lb_al_head_links_help"]		= "~#pgv_lang[lb_al_head_linksLegend]#~<br />הבחירה מאפשרת לקבוע אם אזור הכותרת של ה#pgv_lang[lightbox]# tab, אשר מכילה קישורים לXXX מופעים שונים של מודול ה-Lightbox, תכלול רק צלמיות, רק טכסט או שניהם.<br /><br />בחירה <b>#pgv_lang[lb_icon]#</b> אינה שימושית מאוד, מכיוון שלא רואים שום סימן לשימוש של הצלמיות עד שהעכבר מרחף מעל הצלמית.<br />";
+$pgv_lang["lb_al_thumb_linksLegend"]= "הופעת קישור חציץ עמוד תמונות ממוזערות של אלבום ";
+$pgv_lang["lb_al_thumb_links_help"]	= "~#pgv_lang[lb_al_thumb_linksLegend]#~<br />הבחירה מאפשרת לקבוע אם אזור הקישורים מתחת לכל תמונה ממוזערת יראה צלמית או טכסט.  הקישורים שאותם רואים כאן מאפשרים עריכה של פירטי ישות מדיה או מחיקתה.<br />";
+$pgv_lang["lb_ml_thumb_linksLegend"]= "הופעת קישור תמונות ממוזערות";
+$pgv_lang["lb_ml_thumb_links_help"]	= "~#pgv_lang[lb_ml_thumb_linksLegend]#~<br />הבחירה מאפשרת לקבוע אם אזור הקישורים מעל לפירוט פריטי מדיה ברשימת מולטימדיה יכלול רק צלמיות, רק טכסט או שניהם.  הקישורים המוצגים כאן מאפשרים לבצע פעולות עריכה שונות עבור ישות המדיה הספציפית.<br /><br />הבחירה <b>#pgv_lang[lb_none]#</b> מחביאה את הקשורים הללו לחלוטין ולכן מתנהגת כאילו למשתמש אין הרשאות עריכה.<br />";
+$pgv_lang["lb_ss_speedLegend"]		= "מהירות מצגת שקופיות";
+$pgv_lang["lb_ss_speed_help"]		= "~#pgv_lang[lb_ss_speedLegend]#~<br />הבחירה קובעת את אורך הזמן שיש להציג כל תמונה לפני שמצגת השקופיות תציג את התמונה הבאה לפי הסדר.<br />";
+$pgv_lang["lb_music_fileLegend"]	= "בחר קובץ מוסיקה של Lightbox";
+$pgv_lang["lb_music_file_help"]		= "~#pgv_lang[lb_music_fileLegend]#~<br />הבחירה מאפשרת לקבוע קובץ מוסיקה או קובץ קול אחר שאותו יש לנגן כאשר מצגת השקופיות פעילה.<br /><br />המאפיין הזה תומך רק בקבצים במבנה mp3.<br />";
+ 
+?>
