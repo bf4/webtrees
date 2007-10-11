@@ -45,6 +45,7 @@ VERSION 4.1.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["media_broken"]							11 Oct 2007				w
 *$pgv_lang["media_broken"]							10 Oct 2007				w
 *$pgv_lang["unknown_mime"]							10 Oct 2007				w
 *$pgv_lang["privacy_error"]							09 Oct 2007				W see [ 1804632 ] Private Sources/Repositories
