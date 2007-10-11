@@ -53,28 +53,14 @@ print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t
 // Get Javascript variables from lb_config.php --------------------------- 
  if (file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/lb_config.php');
-}else{
-}
+
 ?>
-<<<<<<< .working
-	<?php if ($LANGUAGE=="hebrew") { ?>
-		<link  href="modules/lightbox/css/clearbox_music_RTL.css" 	rel="stylesheet" type="text/css" />
-	<?php }else{ ?>
-  <link  href="modules/lightbox/css/clearbox_music.css" 	rel="stylesheet" type="text/css" />
-	<?php } ?>
-  <link  href="modules/lightbox/css/lightbox_plus.css" rel="stylesheet" type="text/css" media="screen" />
- 
-  <script src="modules/lightbox/js/prototype.js" 		type="text/javascript"></script>
-  <script src="modules/lightbox/js/Sound.js" 			type="text/javascript"></script>
-  <script src="modules/lightbox/js/clearbox.js" type="text/javascript"></script>
-  <center>
-=======
 	<SCRIPT LANGUAGE=Javascript>
 	var myMusic 		= '<?php print $LB_MUSIC_FILE; ?>';  	// The music file
 	var CB_SlShowTime 	= '<?php print $LB_SS_SPEED; 	?>';	// Slide show timer
 	</script>
 
-<?php 	if ($LANGUAGE=="hebrew") { ?>
+<?php 	if ($TEXT_DIRECTION == "rtl") { ?>
 			<link  href="modules/lightbox/css/clearbox_music_RTL.css" 	rel="stylesheet" type="text/css" />
 			<link href ="modules/lightbox/css/album_page.css" 			rel="stylesheet" type="text/css" media="screen" /> 
 			<!--[if lte IE 7]>
@@ -89,9 +75,11 @@ print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t
 		<script src="modules/lightbox/js/clearbox.js" 				type="text/javascript"></script>
 		<center>
 		
-		<script src="modules/lightbox/js/wz_tooltip.js" 			type="text/javascript"></script>  
->>>>>>> .merge-right.r1862
+
 <?php
+}else{
+}
+
 // LBox  ================================================================================
 
 $isEditUser = userCanEdit(getUserName());		// -- Determines whether to show file names
