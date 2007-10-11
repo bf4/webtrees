@@ -214,8 +214,9 @@ class Event {
 	 *
 	 * @return GedcomDate
 	 */
-	function &getDate($estimate = true) {
+	function getDate($estimate = true) {
 		if (!$estimate && $this->dest) return null;
+		return new GedcomDate($this->rawDate); // Temporary - next line returning a corrupted object?
 		return $this->date;
 	}
 	

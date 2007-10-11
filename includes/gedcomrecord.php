@@ -480,7 +480,7 @@ class GedcomRecord {
 
 		$chan = $this->getChangeEvent();
 
-		if (is_null($chan_rec))	return '&nbsp;';
+		if (is_null($chan))	return '&nbsp;';
 
 		$d = $chan->getDate();
 		if (preg_match('/^(\d\d):(\d\d):(\d\d)$/', get_gedcom_value('DATE:TIME', 2, $chan->getGedComRecord(), '', false), $match)) {

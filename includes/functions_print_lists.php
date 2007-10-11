@@ -414,11 +414,11 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		//-- Birth date
 		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		$bdate=new GedcomDate($person->getBirthDate(false));
+		$bdate=$person->getBirthDate(false);
 		print str_replace('<a', '<a name="'.$bdate->MinJD().'"', $bdate->Display(empty($SEARCH_SPIDER)));
 		//-- Birth 2nd date ?
 		if (!empty($person->bdate2)) {
-			$bdate2=new GedcomDate($person->bdate2);
+			$bdate2=$person->bdate2;
 			print '<br />'.$bdate2->Display(empty($SEARCH_SPIDER));
 		}
 		print "</td>";
@@ -446,11 +446,11 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		//-- Death date
 		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
-		$ddate=new GedcomDate($person->getDeathDate(false));
+		$ddate=$person->getDeathDate(false);
 		print str_replace('<a', '<a name="'.$ddate->MaxJD().'"', $ddate->Display(empty($SEARCH_SPIDER)));
 		//-- Death 2nd date ?
 		if (!empty($person->ddate2)) {
-			$ddate2=new GedcomDate($person->ddate2);
+			$ddate2=$person->ddate2;
 			print '<br />'.$ddate2->Display(empty($SEARCH_SPIDER));
 		}
 		print "</td>";
@@ -681,8 +681,8 @@ function print_fam_table($datalist, $legend="", $option="") {
 		echo "</td>";
 		//-- Husband age
 		echo "<td class=\"list_value_wrap\">";
-		$mdate=new GedcomDate($family->getMarriageDate());
-		$hdate=new GedcomDate($husb->GetBirthDate());
+		$mdate=$family->getMarriageDate();
+		$hdate=$husb->GetBirthDate();
 		$hage =GedcomDate::GetAgeYears($hdate, $mdate);
 		if (empty($hage))
 			print "&nbsp;";
@@ -713,7 +713,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 		echo "</td>";
 		//-- Wife age
 		echo "<td class=\"list_value_wrap\">";
-		$wdate=new GedcomDate($wife->GetBirthDate());
+		$wdate=$wife->GetBirthDate();
 		$wage =GedcomDate::GetAgeYears($wdate, $mdate);
 		if (empty($wage))
 			print "&nbsp;";
@@ -725,7 +725,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 		print str_replace('<a', '<a name="'.$mdate->MinJD().'"', $mdate->Display(empty($SEARCH_SPIDER)));
 		//-- Marriage 2nd date ?
 		if (!empty($family->marr_date2)) {
-			$mdate2=new GedcomDate($family->marr_date2);
+			$mdate2=$family->marr_date2;
 			print '<br />'.$mdate2->Display(empty($SEARCH_SPIDER));
 		}
 		echo "</td>";
