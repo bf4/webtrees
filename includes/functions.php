@@ -1614,12 +1614,12 @@ function compare_facts_type(&$arec, &$brec) {
 			return 0;
 			
 		if ($afact=="EVEN" || $afact=="FACT") {
-			$atype==$arec->getType();
+			$atype=$arec->getType();
 			if (!empty($atype)) $afact=$atype;
 		}
 		
 		if ($bfact=="EVEN" || $bfact=="FACT") {
-			$btype==$brec->getType();
+			$btype=$brec->getType();
 			if (!empty($btype)) $bfact=$btype;
 		}
 	}

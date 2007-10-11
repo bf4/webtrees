@@ -683,11 +683,12 @@ function print_fam_table($datalist, $legend="", $option="") {
 		echo "<td class=\"list_value_wrap\">";
 		$mdate=$family->getMarriageDate();
 		$hdate=$husb->GetBirthDate();
-		$hage =GedcomDate::GetAgeYears($hdate, $mdate);
-		if (empty($hage))
+		if (is_null($hdate) || is_null($mdate))
 			print "&nbsp;";
-		else
+		else {
+			$hage =GedcomDate::GetAgeYears($hdate, $mdate);
 			print "<a name=\"{$hage}\" class=\"list_item age\">{$hage}</a>";
+		}
 		echo "</td>";
 		//-- Wife ID
 		if ($SHOW_ID_NUMBERS) {
@@ -714,11 +715,12 @@ function print_fam_table($datalist, $legend="", $option="") {
 		//-- Wife age
 		echo "<td class=\"list_value_wrap\">";
 		$wdate=$wife->GetBirthDate();
-		$wage =GedcomDate::GetAgeYears($wdate, $mdate);
-		if (empty($wage))
+		if (is_null($wdate) || is_null($mdate))
 			print "&nbsp;";
-		else
+		else {
+			$wage =GedcomDate::GetAgeYears($wdate, $mdate);
 			print "<a name=\"{$wage}\" class=\"list_item age\">{$wage}</a>";
+		}
 		echo "</td>";
 		//-- Marriage date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";

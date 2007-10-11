@@ -129,7 +129,7 @@ class Event {
 			}
 			
 			if ($header[0] == "TYPE") {
-				$this->type = $conValue;
+				$this->type = $header[1];
 				continue;
 			}
 		}
