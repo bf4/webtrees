@@ -63,6 +63,9 @@ class SourceControllerRoot extends BaseController {
 	function init() {
 		global $pgv_lang, $CONTACT_EMAIL, $GEDCOM, $pgv_changes;
 		
+		//-- keep the time of this access to help with concurrent edits
+		$_SESSION['last_access_time'] = time();
+		
 		if (!empty($_REQUEST["show_changes"])) $this->show_changes = $_REQUEST["show_changes"];
 		if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
 		if (!empty($_REQUEST["sid"])) $this->sid = strtoupper($_REQUEST["sid"]);

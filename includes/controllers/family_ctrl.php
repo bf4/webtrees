@@ -80,6 +80,9 @@ class FamilyRoot extends BaseController
 		$bwidth = $Dbwidth;
 		$pbwidth = $bwidth + 12;
 		$pbheight = $bheight + 14;
+		
+		//-- keep the time of this access to help with concurrent edits
+		$_SESSION['last_access_time'] = time();
 
 		if (!isset($_REQUEST['action']))
 		{

@@ -8,6 +8,7 @@
 	# $Id$
 =====================================================================
 Version 4.1.2
+ - Added concurrent edit check... warn user if the record changed out from under them (yalnifj)
  - Fixed [ 1804537 ] unselected source added to new family (yalnifj)
  - Fixed [ 1802830 ] Adress Reports print wrong data (yalnifj)
  - Consolidated Media Firewall and Watermark options in the Gedcom config screen
