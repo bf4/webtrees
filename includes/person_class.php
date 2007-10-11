@@ -519,17 +519,13 @@ class Person extends GedcomRecord {
 		if (is_object($elderdate)) {
 			$p1 = $elderdate;
 			$p2 = $this->getBirthDate();
-			if ($p1->date1->minJD && $p2->date1->minJD) {
-				$gap = $p2->date1->minJD-$p1->date1->minJD; // days
-				$gap = round($gap*12/365.25); // months
-				$label .= "<div class=\"age $TEXT_DIRECTION\">";
-				if ($gap<0) $label .= "<img alt=\"\" src=\"images/warning.gif\" /> ";
-				if ($gap!=0) $label .= $gap." ".$pgv_lang["months"];
-				$label .= "</div>";
-			}
+			$label.="<div class=\"age $TEXT_DIRECTION\">";
+			$label.=get_age_at_event(GedcomDate::GetAgeGedcom($p1, $p2));
+			$label.="</div>";
 		}
-		if ($counter) $label .= "<div class=\"".strrev($TEXT_DIRECTION)."\">".$pgv_lang["number_sign"].$counter."</div>";
-		$label .= $this->label;
+		if ($counter)
+			$label .= "<div class=\"".strrev($TEXT_DIRECTION)."\">".$pgv_lang["number_sign"].$counter."</div>";
+		$label.=$this->label;
 		return $label;
 	}
 	/**

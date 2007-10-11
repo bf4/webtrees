@@ -145,7 +145,8 @@ function showchanges() {
 			<ul>
 				<li>
 				<img src="images/small/time_server.gif" alt="<?php echo $pgv_lang["system_time"]?>" title="<?php echo $pgv_lang["system_time"]?> " />
-				<?php echo get_changed_date(date("j M Y"))." - ".date($TIME_FORMAT);?></li>
+				<?php $date=new GedcomDate(date('j M Y'));
+$displayDate = $date->Display(false); ?></li>
 				<li>
 				<?php print_help_link("phpinfo_help", "qm"); ?>
 				<a href="pgvinfo.php?action=phpinfo" title="<?php print $pgv_lang["show_phpinfo"]; ?>">
@@ -158,7 +159,8 @@ function showchanges() {
 			<ul>
 				<li>
 				<img src="images/small/time_desktop.gif" alt="<?php echo $pgv_lang["user_time"]?>" title="<?php echo $pgv_lang["user_time"]?> " />
-				<?php echo get_changed_date(date("j M Y", time()-$_SESSION["timediff"]))." - ".date($TIME_FORMAT, time()-$_SESSION["timediff"]);?></li>
+				<?php $date=new GedcomDate(date('j M Y', client_time()));
+$displayDate = $date->Display(false); ?></li>
 			</ul>
 	</fieldset>
 	</div>

@@ -154,37 +154,31 @@ function get_age($indirec, $datestr, $style=1) {
 function get_age_at_event($agestring) {
 	global $pgv_lang;
 
-	$age = "";
-	$match = explode(" ", strtolower($agestring));
-	for ($i=0; $i<count($match); $i++) {
-		$txt = trim($match[$i]);
-		$txt = trim($txt, ".");
-		if ($txt=="chi") $txt="child";
-		if ($txt=="inf") $txt="infant";
-		if ($txt=="sti") $txt="stillborn";
-		if (isset($pgv_lang[$txt])) $age.=$pgv_lang[$txt];
-		else {
-			$n = trim(substr($txt,0,-1));
-			$u = substr($txt,-1,1);
-			if ($u=="y") {
-				$age.= " ".$n." ";
-				if ($n == 1) $age .= $pgv_lang["year1"];
-				else $age .= $pgv_lang["years"];
-			}
-			else if ($u=="m") {
-				$age.= " ".$n." ";
-				if ($n == 1) $age .= $pgv_lang["month1"];
-				else $age .= $pgv_lang["months"];
-			}
-			else if ($u=="d") {
-				$age.= " ".$n." ";
-				if ($n == 1) $age .= $pgv_lang["day1"];
-				else $age .= $pgv_lang["days"];
-			}
-			else $age.=" ".$txt;
-		}
-	}
-	return $age;
+	return preg_replace(
+		array(
+			'/\bchi\b/',
+			'/\binfant\b/',
+			'/\bsti\b/',
+			'/\b1y/',
+			'/(\d+)y/',
+			'/\b1m/',
+			'/(\d+)m/',
+			'/\b1d/',
+			'/(\d+)d/'
+		),
+		array(
+			$pgv_lang['child'],
+			$pgv_lang['infant'],  
+	 		$pgv_lang['stillborn'], 
+			'1 '.$pgv_lang['year1'], 
+			'$1 '.$pgv_lang['years'],
+	  	'1 '.$pgv_lang['month1'], 
+	 		'$1 '.$pgv_lang['months'],
+	  	'1 '.$pgv_lang['day1'],  
+			'$1 '.$pgv_lang['days']
+		),
+		$agestring
+	);
 }
 
 // This function is deprecated.  Use class GedcomDate instead.
