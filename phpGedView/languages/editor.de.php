@@ -217,5 +217,9 @@ $pgv_lang["view_change_diff"]                = "Änderungen ansehen";
 
 $pgv_lang["no_update_CHAN"]			= "CHAN (letzte Änderung) Datensatz nicht ändern";
 $pgv_lang["admin_override"]			= "Verwalter Option";
+$pgv_lang["edit_concurrency_change"] = "Dieser Datensatz wurde zuletzt von <i>#CHANGEUSER#</i> um #CHANGEDATE# geändert.";
+$pgv_lang["edit_concurrency_msg2"]	= "Ein anderer Benutzer hat den Datensatz mit ID-Nummer #PID# geändert, seit Sie ihn aufruften.";
+$pgv_lang["edit_concurrency_msg1"]	= "Ein Fehler trat während dem Aufbau des Editier-Formulars auf.  Ein anderer Benutzer hat womöglich den Datensatz geändert, seit Sie ihn aufruften.";
+$pgv_lang["edit_concurrency_reload"]	= "Bitte benutzen Sie den «Vorige Seite» Button des Browsers, und rufen Sie dann die vorige Seite erneut auf.  So können Sie sicher sein, dass Sie den neuesten Datensatz bearbeiten.";
 
 ?>
