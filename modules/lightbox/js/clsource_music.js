@@ -450,7 +450,11 @@ var soond = null;
     function CB_SSPause() {
 		CB_SlideP.style.display = "none";
         CB_SlideS.style.display = "block";
-		CB_Speak.style.display = "block";
+		if (slideshowMusic == null) {
+			CB_Speak.style.display = "none";				
+		}else{
+			CB_Speak.style.display = "block";
+		}
         CB_ZoomS.style.display = "block";
         CB_ZoomP.style.display = "none";			
         CB_SlideShowStop();
@@ -890,7 +894,11 @@ var soond = null;
             if (CB_SS == "start") {
                 CB_SlideS.style.display = "block";
                 CB_SlideP.style.display = "none";
-				CB_Speak.style.display = "block";		
+				if (slideshowMusic == null) {
+					CB_Speak.style.display = "none";				
+				}else{
+					CB_Speak.style.display = "block";
+				}
 //			CB_ZoomS.style.display = "none";				
 				CB_ZoomP.style.display = "none";
             } else {
@@ -1129,7 +1137,7 @@ var soond = null;
             } else {
                 CB_Txt.innerHTML = CB_Clicked[1];
             }
-            CB_Txt.innerHTML += " " + CB_ImgNumBracket.substring(0, 1) + "<a class=\"CB_TextNav\" href=\"javascript:void(0)\" onclick=\"CB_Close();\">" + CB_NavTextCls + "</a>" + CB_ImgNumBracket.substring(1, 2);
+//Temp            CB_Txt.innerHTML += " " + CB_ImgNumBracket.substring(0, 1) + "<a class=\"CB_TextNav\" href=\"javascript:void(0)\" onclick=\"CB_Close();\">" + CB_NavTextCls + "</a>" + CB_ImgNumBracket.substring(1, 2);
             CB_HideContent.onclick = function () {CB_Close();return false;};
             CB_ClearBox = "be";
             CB_IsAnimating = 0;
@@ -1345,7 +1353,11 @@ var soond = null;
             if (CB_SS == "pause") {
                 CB_SlideP.style.display = "block";
                 CB_SlideB.style.display = "block";
-				CB_Speak.style.display = "block";		
+				if (slideshowMusic == null) {
+					CB_Speak.style.display = "none";				
+				}else{
+					CB_Speak.style.display = "block";
+				}		
                 CB_SlideShow();
             } else {
                 CB_SlideS.style.display = "block";
@@ -1501,7 +1513,11 @@ var soond = null;
                 CB_Txt.innerHTML = "<a class=\"CB_TextNav\" href=\"javascript:void(0)\" onclick=\"if(CB_SSTimer){CB_SlideShowJump();}CB_LoadImage(" + (CB_ActImgId - 1) + ")\" alt=\"&lt;\">" + CB_NavTextPrv + "</a> " + a;
             }
             CB_Prv.style.display = "block";
-			CB_Speak.style.display = "block";
+			if (slideshowMusic == null) {
+				CB_Speak.style.display = "none";				
+			}else{
+				CB_Speak.style.display = "block";
+			}
             CB_Prv.onclick = function () {if (CB_SSTimer) {CB_SlideShowJump();}CB_LoadImage(CB_ActImgId - 1);return false;};
         }
         if (CB_ActImgId < CB_Gallery.length - 1) {
@@ -1516,7 +1532,11 @@ var soond = null;
             CB_Nxt.onclick = function () {if (CB_SSTimer) {CB_SlideShowJump();}CB_LoadImage(CB_ActImgId + 1);return false;};
         }
         if (CB_ActImgId == 1 && CB_SS == "start" && soond=="playing" ) {
-			CB_Speak.style.display = "block";
+			if (slideshowMusic == null) {
+			CB_Speak.style.display = "none";				
+				}else{
+				CB_Speak.style.display = "block";
+			}
 		}
         return;
     }
@@ -1542,13 +1562,17 @@ var soond = null;
         CB_iFr.style.width = "0px";
         CB_iFr.style.height = "0px";
         CB_ShowDocument();
-		player.onStopButtonClick();
+		if (slideshowMusic == null) {
+			//do nothing
+		}else{
+			player.onStopButtonClick();		
+		}
 		soond=null;
 		closeZoom();
 		zoomSet=0;
         return;
     }
-
+	
 
     function CB_ShowDocument() {
         if (CB_Hide > 0) {

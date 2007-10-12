@@ -42,7 +42,7 @@ if (!isset($action)) $action = "";
 if (!isset($filter)) $filter = "";
 else $filter = stripLRMRLM(stripslashes($filter));
 if (!isset($search)) $search = "yes";
-if (!isset($folder)) $folder = "ALL";
+if (!isset($folder)) $folder = "media/";
 if (!isset($_SESSION["medialist"])) $search = "yes";
 print_header($pgv_lang["multi_title"]);
 print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t";
@@ -56,7 +56,11 @@ print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t
 
 ?>
 	<SCRIPT LANGUAGE=Javascript>
-	var myMusic 		= '<?php print $LB_MUSIC_FILE; ?>';  	// The music file
+	<?php if ($LB_MUSIC_FILE == "") { ?>
+		var myMusic = null;
+	<?php }else{ ?>
+		var myMusic 		= '<?php print $LB_MUSIC_FILE; ?>';  	// The music file
+    <?php } ?>
 	var CB_SlShowTime 	= '<?php print $LB_SS_SPEED; 	?>';	// Slide show timer
 	</script>
 
