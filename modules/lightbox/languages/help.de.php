@@ -64,7 +64,7 @@ echo "<br /><br /></li>";
 
 echo "<li>";
 echo "<b><font color=\"blue\">Diavortrag</font></b><br />";
-echo "Der Diavortrag beginnt, wenn Sie das Start-Ikon unten links klicken.  Für Ton-Objekte erhalten Sie das Ihnen bekannte Lautsprecher-Symbol.  Sie können dann das Symbol klicken, um den Ton ein- und aus zu schalten. Um den Diavortrag zu unterbrechen, müssen Sie das Pause-Symbol unten links klicken.";
+echo "Der Diavortrag beginnt, wenn Sie das Start-Ikon unten links klicken.  Wenn eine Tonspur-Datei vorhanden ist, erhalten Sie das Ihnen bekannte Lautsprecher-Symbol.  Sie können dann das Symbol klicken, um die Tonspur ein- und aus zu schalten. Um den Diavortrag zu unterbrechen, müssen Sie das Pause-Symbol unten links klicken.";
 echo "<br /><br /></li>";
 
 echo "<li>";

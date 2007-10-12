@@ -46,9 +46,9 @@ $pgv_lang["lb_ml_ThumbLinkAdvice"]	= "Icon, Text, Both, or None";
 
 $pgv_lang["lb_al_head_links"]		= "<b>Individual Page - Album Tab Header</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Link appearance";
 $pgv_lang["lb_al_thumb_links"]		= "<b>Individual Page - Album Tab Thumbnails</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Link appearance";
-$pgv_lang["lb_ml_thumb_links"]		= "<b>Multimedia page - Thumbnails</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Link appearance";
-$pgv_lang["lb_music_file"]			= "<b>Selected Lightbox music file</b><br />&nbsp;&nbsp;&nbsp;&nbsp;(mp3 only)";
-$pgv_lang["lb_musicFileAdvice"]		= "Location of music file ( Leave blank for no music )";
+$pgv_lang["lb_ml_thumb_links"]		= "<b>Multimedia Page - Thumbnails</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Link appearance";
+$pgv_lang["lb_music_file"]			= "<b>Slideshow sound track</b><br />&nbsp;&nbsp;&nbsp;&nbsp;(mp3 only)";
+$pgv_lang["lb_musicFileAdvice"]		= "Location of sound track file (Leave blank for no sound track)";
 $pgv_lang["lb_ss_speed"]			= "<b>Slide Show speed</b>";
 $pgv_lang["lb_ss_SpeedAdvice"]		= "Slide show timing in seconds";
 
