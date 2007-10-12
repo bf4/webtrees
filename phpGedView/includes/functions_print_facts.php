@@ -79,6 +79,10 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 	global $SHOW_FACT_ICONS;
 	global $n_chil, $n_gchi;
 	global $SEARCH_SPIDER, $NAME_REVERSE;
+	
+	//-- keep the time of this access to help with concurrent edits
+	$_SESSION['last_access_time'] = time();
+	
 	$FACT_COUNT++;
 	$estimates = array("abt","aft","bef","est","cir");
 	$ft = preg_match("/1 (\w+)(.*)/", $factrec, $match);
@@ -871,6 +875,10 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $factarray, $view;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_SOURCES;
 	if ($SHOW_SOURCES<getUserAccessLevel(getUserName())) return;
+	
+	//-- keep the time of this access to help with concurrent edits
+	$_SESSION['last_access_time'] = time();
+	
 	$nlevel = $level+1;
 	$styleadd="";
 	$ct = preg_match("/PGV_NEW/", $factrec, $match);
@@ -1024,6 +1032,10 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 	global $PGV_IMAGE_DIR;
 	global $PGV_IMAGES;
 	global $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
+	
+	//-- keep the time of this access to help with concurrent edits
+	$_SESSION['last_access_time'] = time();
+	
 	$styleadd="";
 	$ct = preg_match("/PGV_NEW/", $factrec, $match);
 	if ($ct>0) $styleadd="change_new";
@@ -1311,12 +1323,14 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
 	global $SEARCH_SPIDER;
 
-	//print $rtype." ".$rowm["m_media"]." ".$pid;
 	if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
 		//print $rowm['m_media']." no privacy ";
 		return false;
 	}
 
+	//-- keep the time of this access to help with concurrent edits
+	$_SESSION['last_access_time'] = time();
+		
 	$styleadd="";
 	if ($rtype=='new') $styleadd = "change_new";
 	if ($rtype=='old') $styleadd = "change_old";
