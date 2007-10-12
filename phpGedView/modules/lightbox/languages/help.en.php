@@ -70,15 +70,20 @@ echo "<br /><br /></li>";
 echo "<li>";
 echo "<b><font color=\"blue\">Navigation ...</b></font><br />";
 echo "Use the View Album table at the right of the image icon table to directly choose another person's Album view.";
-echo "</li>";
+echo "<br /><br /></li>";
 
 echo "</ol>";
+echo "<ul>";
 
-echo "<br /><b>Notes:</b><br />";
+echo "<li>";
+echo "<b>Note:</b><br />";
 echo "Thumbnails which are NOT images, such as PDF files and audio, book, and video Media types, may be viewed individually, but will not be in the slide show.";
+echo "<br /><br /></li>";
 
-echo "<br /><br /><b>Note for Administrator:</b><br />";
+echo "<li>";
+echo "<b>Note for Administrator:</b><br />";
 echo "If any files of the usual image formats (jpg, bmp, gif, etc.) representing image types such as photo, certificate, document, etc. appear in the <b>Other</b> row, you have forgotten to set the Media type for these objects.  You may wish to edit the Media type for these items.";
+echo "<br /><br /></li>";
 
-echo " </font> ";
+echo "</ul>";
  ?>

@@ -70,15 +70,20 @@ echo "<br /><br /></li>";
 echo "<li>";
 echo "<b><font color=\"blue\">Navigation ...</b></font><br />";
 echo "Rechts neben den Bildern finden Sie eine Tabelle wodurch Sie direkten Zugriff zu anderen Photoalben haben.";
-echo "</li>";
+echo "<br /><br /></li>";
 
 echo "</ol>";
+echo "<ul>";
 
-echo "<br /><b>Bemerke:</b><br />";
+echo "<li>";
+echo "<b>Bemerk:</b><br />";
 echo "Miniaturbilder die NICHT richtige Bilder sind, wie PDF-Dateien, oder Ton, Buch, und Video Medien-Typen, können alleinständig betrachtet werden, aber sind niemals im Diavortrag.";
+echo "<br /><br /></li>";
 
-echo "<br /><br /><b>Für Verwalter:</b><br />";
+echo "<li>";
+echo "<b>Für Verwalter:</b><br />";
 echo "Falls Sie Dateien in gewöhnlichen Bild-Formaten (jpg, bmp, gif, usw.), die Bildertypen wie Foto, Urkunde, usw. darstellen, in der <b>Andere</b> Liste finden, haben Sie für diese Objekte vergessen, den richtigen Medien-Typ einzugeben.  Um diesen Fehler zu beheben, müssen Sie die Einzelheiten des Medien-Objekts bearbeiten.";
+echo "<br /><br /></li>";
 
-echo " </font> ";
+echo "</ul>";
  ?>
