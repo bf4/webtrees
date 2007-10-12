@@ -43,7 +43,7 @@ $pgv_lang["lb_ml_thumb_linksLegend"]= "Thumbnails Link appearance";
 $pgv_lang["lb_ml_thumb_links_help"]	= "~#pgv_lang[lb_ml_thumb_linksLegend]#~<br />This option lets you determine whether the Links area above the Media object's details in the MultiMedia list should contain only icons, only text, or both.  The links shown here let you perform various editing actions on the Media object in question.<br /><br />The <b>#pgv_lang[lb_none]#</b> option completely hides these links, and thus acts as if the user did not have any editing rights.<br />";
 $pgv_lang["lb_ss_speedLegend"]		= "Slide Show speed";
 $pgv_lang["lb_ss_speed_help"]		= "~#pgv_lang[lb_ss_speedLegend]#~<br />This option determines the length of time each image should be displayed before the Slide Show displays the next image in the sequence.<br />";
-$pgv_lang["lb_music_fileLegend"]	= "Selected Lightbox music file";
-$pgv_lang["lb_music_file_help"]		= "~#pgv_lang[lb_music_fileLegend]#~<br />This option lets you specify a music or other sound file to be played whenever the slide show is active.<br /><br />This feature only supports files in the mp3 format.<br />";
+$pgv_lang["lb_music_fileLegend"]	= "Slideshow Sound Track";
+$pgv_lang["lb_music_file_help"]		= "~#pgv_lang[lb_music_fileLegend]#~<br />This option lets you specify a sound track to be played whenever the slide show is active.  When you leave this field blank, no sound will play during the slide show.<br /><br />This feature only supports files in the mp3 format.<br />";
  
 ?>

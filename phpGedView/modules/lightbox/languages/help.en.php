@@ -64,7 +64,7 @@ echo "<br /><br /></li>";
 
 echo "<li>";
 echo "<b><font color=\"blue\">To run the slide show</font></b><br />";
-echo "Click on the Start icon at bottom left. If there is a music file, the Speaker icon will appear.  Click on the Speaker icon to toggle the music on and off. Click on the Pause icon to stop the slide show.";
+echo "Click on the Start icon at bottom left. If there is a sound track file, the Speaker icon will appear.  Click on the Speaker icon to toggle the sound track on and off. Click on the Pause icon to stop the slide show.";
 echo "<br /><br /></li>";
 
 echo "<li>";

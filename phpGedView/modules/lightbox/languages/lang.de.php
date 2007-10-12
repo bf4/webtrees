@@ -48,8 +48,8 @@ $pgv_lang["lb_ml_ThumbLinkAdvice"]	= "Ikon, Text, Beide, oder Keine";
 $pgv_lang["lb_al_head_links"]		= "<b>Persönliche Fakten Seite - Album Ordner Kopfbereich</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Links-Darstellung";
 $pgv_lang["lb_al_thumb_links"]		= "<b>Persönliche Fakten Seite - Album Ordner Miniaturbilder</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Links-Darstellung";
 $pgv_lang["lb_ml_thumb_links"]		= "<b>MultiMedia Seite - Minaturbilder</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Links-Darstellung";
-$pgv_lang["lb_music_file"]			= "<b>Gewählte Ton-Datei</b><br />&nbsp;&nbsp;&nbsp;&nbsp;(nur mp3 unterstützt)";
-$pgv_lang["lb_musicFileAdvice"]		= "Lagerort der gewählten Ton-Datei";
+$pgv_lang["lb_music_file"]			= "<b>Dia-Vortrag Tonspur</b><br />&nbsp;&nbsp;&nbsp;&nbsp;(nur mp3 unterstützt)";
+$pgv_lang["lb_musicFileAdvice"]		= "Lagerort der gewählten Tonspur  (wenn leer: keine Tonspur)";
 $pgv_lang["lb_ss_speed"]			= "<b>Dia-Vortrag Geschwindigkeit</b>";
 $pgv_lang["lb_ss_SpeedAdvice"]		= "Dia-Vortrag Geschwindigkeit in Sekunden";
 
