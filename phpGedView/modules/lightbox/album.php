@@ -31,7 +31,11 @@
 	include('modules/lightbox/lb_config.php'); 
 	?>
 	<SCRIPT LANGUAGE=Javascript>
-	var myMusic 		= '<?php print $LB_MUSIC_FILE; ?>';  	// The music file
+	<?php if ($LB_MUSIC_FILE == "") { ?>
+		var myMusic = null;
+	<?php }else{ ?>
+		var myMusic 		= '<?php print $LB_MUSIC_FILE; ?>';  	// The music file
+    <?php } ?>
 	var CB_SlShowTime 	= '<?php print $LB_SS_SPEED; 	?>';	// Slide show timer
 	</script>
 	<?php
