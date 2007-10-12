@@ -403,7 +403,8 @@ class Person extends GedcomRecord {
 		// TODO - change the design to use julian days, not gregorian years.
 		$this->_parseBirthDeath();
 		//$bdate = parse_date($this->getBirthDate());
-		return $this->birthEvent->getDate()->date1->y;
+		$bdate = $this->birthEvent->getDate();
+		return $bdate->date1->y;
 	}
 
 	/**
@@ -443,7 +444,8 @@ class Person extends GedcomRecord {
 		// TODO - change the design to use julian days, not gregorian years.
 		//$ddate = parse_date($this->getDeathDate());
 		$this->_parseBirthDeath();
-		return $this->deathEvent->getDate()->date1->y;
+		$ddate = $this->deathEvent->getDate();
+		return $ddate->date1->y;
 	}
 
 	/**
@@ -463,7 +465,8 @@ class Person extends GedcomRecord {
 		if (empty($birtrec) && (empty($this->birthEvent) || $this->best)) return "";
 		if (empty($birtrec)) $birtrec=$this->gedrec;
 		if (empty($when)) {
-			if ($this->isDead()) $when = $this->deathEvent->getDate()->Display(); // age at death
+			$ddate = $this->deathEvent->getDate();
+			if ($this->isDead()) $when = $ddate->Display(); // age at death
 			else $when = date("d M Y"); // today
 		}
 		$age = get_age($birtrec, $when, 0);
@@ -1124,7 +1127,7 @@ class Person extends GedcomRecord {
 					$srec = get_sub_record(1, "1 DEAT", $childrec);
 					if (!$srec) $srec = get_sub_record(1, "1 BURI", $childrec);
 					$sEvent = new Event($srec);
-					if (compare_facts_date($this->getBirthEvent(), $sEvent)<0 && compare_facts_date($sEvent, $this->getDeathEvent())<0) {
+					if ($srec && compare_facts_date($this->getBirthEvent(), $sEvent)<0 && compare_facts_date($sEvent, $this->getDeathEvent())<0) {
 						$factrec = "1 ".$fact;
 						$sdate = get_sub_record(2, "2 DATE", $srec);
 						if (strstr($srec, "1 BURI")) $factrec .= " ".$factarray["BURI"];
@@ -1211,7 +1214,7 @@ class Person extends GedcomRecord {
 			$srec = $spouse->getDeathRecord(false);
 			if (!$srec) $srec = get_sub_record(1, "1 BURI", $spouse->getGedcomRecord());
 			$sEvent = new Event($srec);
-			if (compare_facts_date($this->getBirthEvent(), $sEvent)<0 && compare_facts_date($sEvent, $this->getDeathEvent())<0) {
+			if ($srec && compare_facts_date($this->getBirthEvent(), $sEvent)<0 && compare_facts_date($sEvent, $this->getDeathEvent())<0) {
 				$factrec = "1 ".$fact;
 				if (strstr($srec, "1 BURI")) $factrec .= " ".$factarray["BURI"];
 				$sdate=get_sub_record(2, "2 DATE", $srec);

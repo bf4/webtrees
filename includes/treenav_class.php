@@ -222,19 +222,28 @@ class TreeNav {
 		<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $person->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM); ?>');" /> 
 		</span><br />
 		<div class="details1 indent">
-			<b><?php print get_first_letter($factarray['BIRT']);?>:</b> <?php if (!is_null($person->getBirthDate())) print $person->getBirthDate()->Display(); ?>
+			<b><?php print get_first_letter($factarray['BIRT']);?>:</b>
+			<?php
+				$bdate = $person->getBirthDate();
+				if (!is_null($bdate)) print $bdate->Display();
+			?>
 			<?php $place = $person->getBirthPlace();  if (!empty($place)) print PrintReady($place); ?>
 			<br />
 			<b><?php print get_first_letter($factarray['MARR']);?>:</b>
 			<?php if (!empty($family)) {
-				if (!is_null($family->getMarriageDate())) print $family->getMarriageDate()->Display()." "; 
+				$mdate = $family->getMarriageDate();
+				if (!is_null($mdate)) print $mdate->Display()." ";
 				$place=''; 
 				$place = $family->getMarriagePlace();  
 				if (!empty($place)) print PrintReady($place); ?>
 				<a href="family.php?famid=<?php print $family->getXref(); ?>" onclick="if (!<?php print $this->name;?>.collapseBox) return false;"><img id="d_<?php print $family->getXref(); ?>" alt="<?php print $family->getXref(); ?>" class="draggable" src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES['family']['button']; ?>" border="0" /></a>
 			<?php } ?>
 			<br />
-			<b><?php print get_first_letter($factarray['DEAT']);?>:</b> <?php if (!is_null($person->getDeathDate(false))) print $person->getDeathDate(false)->Display(); ?>
+			<b><?php print get_first_letter($factarray['DEAT']);?>:</b>
+			<?php
+				$ddate = $person->getDeathDate(false);
+				if (!is_null($ddate)) print $ddate->Display();
+			?>
 			<?php $place = $person->getDeathPlace();  if (!empty($place)) print PrintReady($place); ?>
 		</div>
 		<br />
@@ -250,10 +259,18 @@ class TreeNav {
 			<img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["gedcom"]["small"];?>" border="0" width="15" onclick="<?php print $this->name;?>.newRoot('<?php print $spouse->getXref();?>', <?php print $this->name;?>.innerPort, '<?php print htmlentities($GEDCOM); ?>');" />
 			<br />
 			<div class="details1 indent">
-			<b><?php print get_first_letter($factarray['BIRT']);?>:</b> <?php if (!is_null($spouse->getBirthDate())) print $spouse->getBirthDate()->Display(); ?>
+			<b><?php print get_first_letter($factarray['BIRT']);?>:</b>
+			<?php
+				$bdate = $spouse->getBirthDate();
+				if (!is_null($bdate)) print $bdate->Display();
+			?>
 			<?php $place = $spouse->getBirthPlace();  if (!empty($place)) print PrintReady($place); ?>
 			<br />
-			<b><?php print get_first_letter($factarray['DEAT']);?>:</b> <?php if (!is_null($spouse->getDeathDate(false))) print $spouse->getDeathDate(false)->Display(); ?>
+			<b><?php print get_first_letter($factarray['DEAT']);?>:</b>
+			<?php
+				$ddate = $spouse->getDeathDate(false);
+				if (!is_null($ddate)) print $ddate->Display();
+			?>
 			<?php $place = $spouse->getDeathPlace();  if (!empty($place)) print PrintReady($place); ?>
 			</div>
 			<?php 

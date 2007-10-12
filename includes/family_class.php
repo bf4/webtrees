@@ -3,7 +3,7 @@
  * Class file for a Family
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006	John Finlay and Others
+ * Copyright (C) 2002 to 2007	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -457,10 +457,12 @@ class Family extends GedcomRecord {
 	 * @return string
 	 */
 	function getDivorceYear(){
-		$divorceyear = $this->getDivorce()->getRawDate();
+		/**$divorceyear = $this->getDivorce()->getRawDate();
 		$ddate = parse_date($divorceyear);
 		$dyear = $ddate[0]['year'];
-		return $dyear;
+		return $dyear;**/
+		$ddate = $this->getDivorceDate();
+		return $ddate->date1->y;
 	}
 
 	/**

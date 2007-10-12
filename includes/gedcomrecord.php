@@ -502,7 +502,7 @@ class GedcomRecord {
 	function LastchangeUser() {
 		$chan = $this->getChangeEvent();
 
-		if (is_null($chan_rec))	return '&nbsp;';
+		if (is_null($chan))	return '&nbsp;';
 		
 		$chan_user = $chan->getValue("_PGVU");
 		if (empty($chan_user)) return '&nbsp;';
