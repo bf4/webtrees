@@ -1,6 +1,6 @@
 <?php
 /**
- * English language file for Lightbox Album module
+ * Hebrew language file for Lightbox Album module
  *
  * Display media Items using Lightbox
  *
@@ -43,7 +43,7 @@ $pgv_lang["lb_ml_thumb_linksLegend"]= "הופעת קישור תמונות ממו
 $pgv_lang["lb_ml_thumb_links_help"]	= "~#pgv_lang[lb_ml_thumb_linksLegend]#~<br />הבחירה מאפשרת לקבוע אם אזור הקישורים מעל לפירוט פריטי מדיה ברשימת מולטימדיה יכלול רק צלמיות, רק טכסט או שניהם.  הקישורים המוצגים כאן מאפשרים לבצע פעולות עריכה שונות עבור ישות המדיה הספציפית.<br /><br />הבחירה <b>#pgv_lang[lb_none]#</b> מחביאה את הקשורים הללו לחלוטין ולכן מתנהגת כאילו למשתמש אין הרשאות עריכה.<br />";
 $pgv_lang["lb_ss_speedLegend"]		= "מהירות מצגת שקופיות";
 $pgv_lang["lb_ss_speed_help"]		= "~#pgv_lang[lb_ss_speedLegend]#~<br />הבחירה קובעת את אורך הזמן שיש להציג כל תמונה לפני שמצגת השקופיות תציג את התמונה הבאה לפי הסדר.<br />";
-$pgv_lang["lb_music_fileLegend"]	= "בחר קובץ מוסיקה של Lightbox";
-$pgv_lang["lb_music_file_help"]		= "~#pgv_lang[lb_music_fileLegend]#~<br />הבחירה מאפשרת לקבוע קובץ מוסיקה או קובץ קול אחר שאותו יש לנגן כאשר מצגת השקופיות פעילה.<br /><br />המאפיין הזה תומך רק בקבצים במבנה mp3.<br />";
+$pgv_lang["lb_music_fileLegend"]	= "פס קול של מצגת שקופיות";
+$pgv_lang["lb_music_file_help"]		= "~#pgv_lang[lb_music_fileLegend]#~<br />הבחירה מאפשרת לקבוע קובץ פס קול שינוגן כאשר מצגת השקופיות פעילה. אם תשאיר שדה זה ריק, לא יושמע קול בזמן מצגת השקופיות.<br /><br />המאפיין הזה תומך רק בקבצים במבנה mp3.<br />"; 
  
 ?>

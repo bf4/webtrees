@@ -47,8 +47,8 @@ $pgv_lang["lb_ml_ThumbLinkAdvice"]	= "צלמית, טכסט, שניהם או אף
 $pgv_lang["lb_al_head_links"]		= "<b>דף אישי - חציץ כותרת של האלבום</b><br />&nbsp;&nbsp;&nbsp;&nbsp;מראה קישור"; 
 $pgv_lang["lb_al_thumb_links"]		= "<b>דף אישי - חציץ תמונות ממוזערות של האלבום </b><br />&nbsp;&nbsp;&nbsp;&nbsp;מראה קישור"; 
 $pgv_lang["lb_ml_thumb_links"]		= "<b>דף מולטימדיה - תמונות ממוזערות</b><br />&nbsp;&nbsp;&nbsp;&nbsp;מראה קישור"; 
-$pgv_lang["lb_music_file"]			= "<b>בחר קובץ מוסיקה של Lightbox</b><br />&nbsp;&nbsp;&nbsp;&nbsp;(רק mp3)"; 
-$pgv_lang["lb_musicFileAdvice"]		= "מיקום קובץ מוסיקה";
+$pgv_lang["lb_music_file"]			= "<b>פס קול של מצגת שקופיות</b><br />&nbsp;&nbsp;&nbsp;&nbsp;(רק mp3)";
+$pgv_lang["lb_musicFileAdvice"]		= "מיקום קובץ פס קול (השאר ריק עבור שום פס קול)"; 
 $pgv_lang["lb_ss_speed"]			= "<b>מהירות מצגת שקופיות</b>"; 
 $pgv_lang["lb_ss_SpeedAdvice"]		= "משך תיזמון מצגת שקפים בשניות"; 
 
