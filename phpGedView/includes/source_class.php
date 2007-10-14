@@ -45,9 +45,10 @@ class Source extends GedcomRecord {
 	function Source($gedrec) {
 		parent::GedcomRecord($gedrec);
 		$this->disp = displayDetailsByID($this->xref, "SOUR");
-		$this->name = get_source_descriptor($this->xref);
+		
+		$this->name = PrintReady(get_source_descriptor($this->xref));
 		$add_descriptor = get_add_source_descriptor($this->xref);
-		if ($add_descriptor) $this->name .= " - ".$add_descriptor;
+		if ($add_descriptor) $this->name .= " - ".PrintReady($add_descriptor);
 	}
 
 	/**
