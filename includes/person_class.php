@@ -932,6 +932,12 @@ class Person extends GedcomRecord {
 		if ($sosa>7) return; // sosa max for recursive call
 		$this->_parseBirthDeath();
 		$fams = $person->getChildFamilies();
+		// Only include events between birth and death
+		$bEvent=$this->getBirthEvent();
+		$dEvent=$this->getDeathEvent();
+		$bDate =$bEvent->getDate();
+		$dDate =$dEvent->getDate();
+		
 		//-- find family as child
 		foreach($fams as $famid=>$family) {
 			// add father death
@@ -940,7 +946,7 @@ class Person extends GedcomRecord {
 			if ($spouse && strstr($SHOW_RELATIVES_EVENTS, $fact)) {
 				$srec = $spouse->getDeathRecord(false);
 				$sEvent = new Event($srec);
-				if (compare_facts_date($this->getBirthEvent(), $sEvent)<0 && compare_facts_date($sEvent, $this->getDeathEvent())<0) {
+				if (GedcomDate::Compare($bDate, $sEvent->getDate())<0 && GedcomDate::Compare($sEvent->getDate(), $dDate)<0) {
 					$factrec = "1 ".$fact;
 					$sdate = get_sub_record(2, "2 DATE", $srec);
 					if (strstr($srec, "1 BURI")) $factrec .= " ".$factarray["BURI"];
@@ -962,7 +968,7 @@ class Person extends GedcomRecord {
 			if ($spouse and strstr($SHOW_RELATIVES_EVENTS, $fact)) {
 				$srec = $spouse->getDeathRecord(false);
 				$sEvent = new Event($srec);
-				if (compare_facts_date($this->getBirthEvent(), $sEvent)<0 && compare_facts_date($sEvent, $this->getDeathEvent())<0) {
+				if (GedcomDate::Compare($bDate, $sEvent->getDate())<0 && GedcomDate::Compare($sEvent->getDate(), $dDate)<0) {
 					$factrec = "1 ".$fact;
 					$sdate = get_sub_record(2, "2 DATE", $srec);
 					if (strstr($srec, "1 BURI")) $factrec .= " ".$factarray["BURI"];
@@ -1004,7 +1010,7 @@ class Person extends GedcomRecord {
 						if ($sfamid==$famid && $rela=="mother") continue; // show current family marriage only for father
 						$srec = $sfamily->getMarriageRecord();
 						$sEvent = new Event($srec);
-						if (compare_facts_date($this->getBirthEvent(), $sEvent)<0 && compare_facts_date($sEvent, $this->getDeathEvent())<0) {
+						if (GedcomDate::Compare($bDate, $sEvent->getDate())<0 && GedcomDate::Compare($sEvent->getDate(), $dDate)<0) {
 							$factrec = "1 ".$fact;
 							$sdate = get_sub_record(2, "2 DATE", $srec);
 							$factrec .= "\n".trim($sdate);
@@ -1046,6 +1052,12 @@ class Person extends GedcomRecord {
 		if (strstr($SHOW_RELATIVES_EVENTS, $option)===false) return;
 		if (empty($this->brec)) $this->_parseBirthDeath();
 
+		// Only include events between birth and death
+		$bEvent=$this->getBirthEvent();
+		$dEvent=$this->getDeathEvent();
+		$bDate =$bEvent->getDate();
+		$dDate =$dEvent->getDate();
+		
 		$children = $family->getChildren();
 		foreach($children as $key=>$child) {
 			$spid = $child->getXref();
@@ -1098,9 +1110,8 @@ class Person extends GedcomRecord {
 					$srec = get_sub_record(1, "1 BIRT", $childrec);
 					if (!$srec) $srec = get_sub_record(1, "1 CHR", $childrec);
 					$sEvent = new Event($srec);
-					if ($fact=="_BIRT_CHIL" or // always print child's birth event
-					(compare_facts_date($this->getBirthEvent(), $sEvent)<0 && compare_facts_date($sEvent, $this->getDeathEvent())<0)
-					) {
+					if ($fact=="_BIRT_CHIL" || // always print child's birth event
+					    GedcomDate::Compare($bDate, $sEvent->getDate())<0 && GedcomDate::Compare($sEvent->getDate(), $dDate)<0) {
 						$sdate = get_sub_record(2, "2 DATE", $srec);
 						$factrec = "1 ".$fact;
 						if (strstr($srec, "1 CHR")) $factrec .= " ".$factarray["CHR"];
@@ -1127,7 +1138,7 @@ class Person extends GedcomRecord {
 					$srec = get_sub_record(1, "1 DEAT", $childrec);
 					if (!$srec) $srec = get_sub_record(1, "1 BURI", $childrec);
 					$sEvent = new Event($srec);
-					if ($srec && compare_facts_date($this->getBirthEvent(), $sEvent)<0 && compare_facts_date($sEvent, $this->getDeathEvent())<0) {
+					if (GedcomDate::Compare($bDate, $sEvent->getDate())<0 && GedcomDate::Compare($sEvent->getDate(), $dDate)<0) {
 						$factrec = "1 ".$fact;
 						$sdate = get_sub_record(2, "2 DATE", $srec);
 						if (strstr($srec, "1 BURI")) $factrec .= " ".$factarray["BURI"];
@@ -1148,7 +1159,7 @@ class Person extends GedcomRecord {
 						$childrec = $sfamily->getGedcomRecord();
 						$srec = get_sub_record(1, "1 MARR", $childrec);
 						$sEvent = new Event($srec);
-						if (compare_facts_date($this->getBirthEvent(), $sEvent)<0 && compare_facts_date($sEvent, $this->getDeathEvent())<0) {
+						if (GedcomDate::Compare($bDate, $sEvent->getDate())<0 && GedcomDate::Compare($sEvent->getDate(), $dDate)<0) {
 							$factrec = "1 ".$fact;
 							$sdate = get_sub_record(2, "2 DATE", $srec);
 							$factrec .= "\n".trim($sdate);
@@ -1208,13 +1219,19 @@ class Person extends GedcomRecord {
 		// do not show if divorced
 		if (strstr($famrec, "1 DIV")) return;
 		if (empty($this->brec)) $this->_parseBirthDeath();
+		// Only include events between birth and death
+		$bEvent=$this->getBirthEvent();
+		$dEvent=$this->getDeathEvent();
+		$bDate =$bEvent->getDate();
+		$dDate =$dEvent->getDate();
+		
 		// add spouse death
 		$fact = "_DEAT_SPOU";
 		if ($spouse && strstr($SHOW_RELATIVES_EVENTS, $fact)) {
 			$srec = $spouse->getDeathRecord(false);
 			if (!$srec) $srec = get_sub_record(1, "1 BURI", $spouse->getGedcomRecord());
 			$sEvent = new Event($srec);
-			if ($srec && compare_facts_date($this->getBirthEvent(), $sEvent)<0 && compare_facts_date($sEvent, $this->getDeathEvent())<0) {
+			if (GedcomDate::Compare($bDate, $sEvent->getDate())<0 && GedcomDate::Compare($sEvent->getDate(), $dDate)<0) {
 				$factrec = "1 ".$fact;
 				if (strstr($srec, "1 BURI")) $factrec .= " ".$factarray["BURI"];
 				$sdate=get_sub_record(2, "2 DATE", $srec);
@@ -1264,13 +1281,19 @@ class Person extends GedcomRecord {
 		if (!$SHOW_RELATIVES_EVENTS) return;
 		if (empty($this->bdate)) return; //FIXME Not sure of the logic, but if this exists but was not parsed, it will incorrectly return empty. Should probably call getBirthDate or getGedcomBirthDate()
 		if (empty($this->brec)) $this->_parseBirthDeath();
+		// Only include events between birth and death
+		$bEvent=$this->getBirthEvent();
+		$dEvent=$this->getDeathEvent();
+		$bDate =$bEvent->getDate();
+		$dDate =$dEvent->getDate();
+		
 		$histo=array();
 		if (file_exists("languages/histo.".$lang_short_cut[$LANGUAGE].".php")) {
 			@include("languages/histo.".$lang_short_cut[$LANGUAGE].".php");
 		}
 		foreach ($histo as $indexval=>$hrec) {
 			$sdate = get_sub_record(2, "2 DATE", $hrec);
-			if (compare_facts_date($this->getBirthEvent(), $sdate)<0 && compare_facts_date($sdate, $this->getDeathEvent())<0) {
+			if (GedcomDate::Compare($bDate, $sEvent->getDate())<0 && GedcomDate::Compare($sEvent->getDate(), $dDate)<0) {
 				//$this->indifacts[]=array(-1, $hrec);
 				$this->indifacts[] = new Event($hrec, -1);
 			}

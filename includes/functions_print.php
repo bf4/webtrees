@@ -2303,7 +2303,7 @@ function print_fact_date(&$eventObj, $anchor=false, $time=false) {
 			else if ($fact!="CHAN") {
 				$death = $parent->getDeathEvent();
 				// do not print age after death
-				if (empty($death)||($eventObj->getTag()=='DEAT')||(compare_facts_date($eventObj, $death)<=0)) {
+				if (empty($death)||($eventObj->getTag()=='DEAT')||(GedcomDate::Compare($eventObj->getDate(), $death->getDate())<=0)) {
 					print get_age($parent->getGedcomRecord(),$eventObj->getRawDate());
 				}
 			}

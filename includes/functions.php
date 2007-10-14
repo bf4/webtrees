@@ -1598,155 +1598,6 @@ function lettersort($a, $b) {
 	return stringsort($a["letter"], $b["letter"]);
 }
 
-// Helper function to sort facts.
-function compare_facts_type(&$arec, &$brec) {
-	global $factarray;
-	static $factsort;
-
-	if (is_object($arec)) {
-		$afam = $arec->getFamilyId();
-		if (!empty($afam) && ($afam == $brec->getFamilyId()))
-			return 0;
-	
-		$afact = $arec->getTag();
-		$bfact = $brec->getTag();
-		if ($afact == null || $bfact == null)
-			return 0;
-			
-		if ($afact=="EVEN" || $afact=="FACT") {
-			$atype=$arec->getType();
-			if (!empty($atype)) $afact=$atype;
-		}
-		
-		if ($bfact=="EVEN" || $bfact=="FACT") {
-			$btype=$brec->getType();
-			if (!empty($btype)) $bfact=$btype;
-		}
-	}
-	else {
-		pgv_error_handler(2, "Use Event Class",'','');
-	if (is_array($arec))
-		$arec = $arec[1];
-	if (is_array($brec))
-		$brec = $brec[1];
-
-	// Facts from different families stay grouped together
-	if (preg_match('/_PGVFS @(\w+)@/', $arec, $match1) && preg_match('/_PGVFS @(\w+)@/', $brec, $match2) && $match1[1]!=$match2[1])
-		return 0;
-
-	// Extract fact type from record
-	if (!preg_match("/1\s+(\w+)/", $arec, $matcha) || !preg_match("/1\s+(\w+)/", $brec, $matchb))
-		return 0;
-			
-		$afact = $matcha[1];
-		$bfact = $matchb[1];
-
-	if (($afact=="EVEN" || $afact=="FACT") && preg_match("/2\s+TYPE\s+(\w+)/", $arec, $match) && isset($factarray[$match[1]]))
-		$afact=$match[1];
-	if (($bfact=="EVEN" || $bfact=="FACT") && preg_match("/2\s+TYPE\s+(\w+)/", $brec, $match) && isset($factarray[$match[1]]))
-		$bfact=$match[1];
-	}
-
-	if (!is_array($factsort))
-		$factsort = array_flip(array(
-			"BIRT",
-			"_HNM",
-			"ALIA", "_AKA", "_AKAN",
-			"ADOP", "_ADPF", "_ADPF",
-			"_BRTM",
-			"CHR", "BAPM",
-			"FCOM",
-			"CONF",
-			"BARM", "BASM",
-			"EDUC",
-			"GRAD",
-			"_DEG",
-			"EMIG", "IMMI",
-			"NATU",
-			"_MILI", "_MILT",
-			"ENGA",
-			"MARB", "MARC", "MARL", "_MARI", "_MBON",
-			"MARR", "MARR_CIVIL", "MARR_RELIGIOUS", "MARR_PARTNERS", "MARR_UNKNOWN", "_COML",
-			"_STAT",
-			"_SEPR",
-			"DIVF",
-			"MARS",
-			"_BIRT_CHIL",
-			"DIV", "ANUL",
-			"_BIRT_", "_MARR_", "_DEAT_",
-			"CENS",
-			"OCCU",
-			"RESI",
-			"PROP",
-			"CHRA",
-			"RETI",
-			"FACT", "EVEN",
-			"_NMR", "_NMAR", "NMR",
-			"NCHI",
-			"WILL",
-			"_HOL",
-			"_????_",
-			"DEAT", "CAUS",
-			"_FNRL", "BURI", "CREM", "_INTE", "CEME",
-			"_YART",
-			"_NLIV",
-			"PROB",
-			"TITL",
-			"COMM",
-			"NATI",
-			"CITN",
-			"CAST",
-			"RELI",
-			"SSN", "IDNO",
-			"TEMP",
-			"SLGC", "BAPL", "CONL", "ENDL", "SLGS",
-			"AFN", "REFN", "_PRMN", "REF", "RIN",
-			"ADDR", "PHON", "EMAIL", "_EMAIL", "EMAL", "FAX", "WWW", "URL", "_URL",
-			"CHAN", "_TODO"
-		));
-
-	// Events not in the above list get mapped onto one that is.
-	if (!isset($factsort[$afact]))
-		if (preg_match('/(_(BIRT|MARR|DEAT)_)/', $afact, $match))
-			$afact=$match[1];
-		else
-			$afact="_????_";
-	if (!isset($factsort[$bfact]))
-		if (preg_match('/(_(BIRT|MARR|DEAT)_)/', $bfact, $match))
-			$bfact=$match[1];
-		else
-			$bfact="_????_";
-
-	return $factsort[$afact]-$factsort[$bfact];
-}
-
-// Helper function to sort facts.
-function compare_facts_date(&$arec, &$brec) {
-
-	if (is_object($arec)) {
-		$adate = $arec->getDate();
-		$bdate = $brec->getDate();
-	
-		if ($adate == null || $bdate == null)
-			return 0;	
-	}
-	else {
-		pgv_error_handler(2, "Don't parse the record, use the event class.", '','');
-		if (is_array($arec))
-			$arec = $arec[1];
-		if (is_array($brec))
-			$brec = $brec[1];
-	
-		// If either fact is undated, the facts sort equally.
-		if (!preg_match("/2 DATE (.*)/", $arec, $amatch) || !preg_match("/2 DATE (.*)/", $brec, $bmatch))
-			return 0;
-	
-		$adate = new GedcomDate($amatch[1]);
-		$bdate = new GedcomDate($bmatch[1]);
-	}
-	return GedcomDate::Compare($adate,$bdate);
-}
-
 // Sort the facts, using three conflicting rules (family sequence,
 // date sequence and fact sequence).
 // We sort by fact first (preserving family order where possible) and then
@@ -1758,7 +1609,7 @@ function sort_facts(&$arr) {
 	for ($i=1; $i<count($arr); ++$i) {
 		$tmp=$arr[$i];
 		$j=$i;
-		while ($j>0 && compare_facts_type($arr[$j-1], $tmp)>0) {
+		while ($j>0 && Event::CompareType($arr[$j-1], $tmp)>0) {
 			$arr[$j]=$arr[$j-1];
 			--$j;
 		}
@@ -1767,7 +1618,7 @@ function sort_facts(&$arr) {
 	// Pass two - modified bubble/insertion sort on date
 	for ($i=0; $i<count($arr)-1; ++$i)
 		for ($j=count($arr)-1; $j>$i; --$j)
-			if (compare_facts_date($arr[$i],$arr[$j])>0) {
+			if (Event::CompareDate($arr[$i],$arr[$j])>0) {
 				$tmp=$arr[$i];
 				for ($k=$i; $k<$j; ++$k)
 					$arr[$k]=$arr[$k+1];
@@ -1784,13 +1635,23 @@ function sort_facts(&$arr) {
 function compare_date($a, $b) {
 	global $sortby;
 
-	$tag = "BIRT";
-	if (!empty($sortby)) $tag = $sortby;
-	$abirt = get_sub_record(1, "1 $tag", $a["gedcom"]);
-	$bbirt = get_sub_record(1, "1 $tag", $b["gedcom"]);
-	$c = compare_facts_date($abirt, $bbirt);
-	if ($c==0) return itemsort($a, $b);
-	else return $c;
+	// Sort by BIRT if no other event specified
+	if (empty($sortby))
+		$tag = $sortby;
+	else
+		$tag = "BIRT";
+
+	$adate=get_gedcom_value('$tag:DATE', 1, $a['gedcom'], '', false);
+	$bdate=get_gedcom_value('$tag:DATE', 1, $b['gedcom'], '', false);
+	if (!empty($adate) && !empty($bdate)){
+		$adate=new GedcomDate($adate);
+		$bdate=new GedcomDate($adate);
+		$cmp=GedcomDate::Compare($adate, $bdate);
+		if ($cmp!=0)
+			return $cmp;
+	}
+	// Same date?  Sort by name
+	return itemsort($a, $b);
 }
 
 function gedcomsort($a, $b) {

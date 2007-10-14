@@ -342,6 +342,96 @@ class Event {
 		print "<br />\n";
 	}
 
+	// Helper functions to sort events
+	function CompareDate(&$a, &$b) {
+		return GedcomDate::Compare($a->getDate(), $b->getDate());
+	}
+
+	function CompareType(&$a, &$b) {
+		static $factsort=NULL;
+
+		if (is_null($factsort))
+			$factsort=array_flip(array(
+				"BIRT",
+				"_HNM",
+				"ALIA", "_AKA", "_AKAN",
+				"ADOP", "_ADPF", "_ADPF",
+				"_BRTM",
+				"CHR", "BAPM",
+				"FCOM",
+				"CONF",
+				"BARM", "BASM",
+				"EDUC",
+				"GRAD",
+				"_DEG",
+				"EMIG", "IMMI",
+				"NATU",
+				"_MILI", "_MILT",
+				"ENGA",
+				"MARB", "MARC", "MARL", "_MARI", "_MBON",
+				"MARR", "MARR_CIVIL", "MARR_RELIGIOUS", "MARR_PARTNERS", "MARR_UNKNOWN", "_COML",
+				"_STAT",
+				"_SEPR",
+				"DIVF",
+				"MARS",
+				"_BIRT_CHIL",
+				"DIV", "ANUL",
+				"_BIRT_", "_MARR_", "_DEAT_", // other events of close relatives
+				"CENS",
+				"OCCU",
+				"RESI",
+				"PROP",
+				"CHRA",
+				"RETI",
+				"FACT", "EVEN",
+				"_NMR", "_NMAR", "NMR",
+				"NCHI",
+				"WILL",
+				"_HOL",
+				"_????_",
+				"DEAT", "CAUS",
+				"_FNRL", "BURI", "CREM", "_INTE", "CEME",
+				"_YART",
+				"_NLIV",
+				"PROB",
+				"TITL",
+				"COMM",
+				"NATI",
+				"CITN",
+				"CAST",
+				"RELI",
+				"SSN", "IDNO",
+				"TEMP",
+				"SLGC", "BAPL", "CONL", "ENDL", "SLGS",
+				"AFN", "REFN", "_PRMN", "REF", "RIN",
+				"ADDR", "PHON", "EMAIL", "_EMAIL", "EMAL", "FAX", "WWW", "URL", "_URL",
+				"CHAN", "_TODO"
+			));
+
+		// Facts from different families stay grouped together
+		$afam = $a->getFamilyId();
+		if (!empty($a) && $a==$b->getFamilyId())
+			return 0;
+
+		$atag = $a->getTag();
+		$btag = $b->getTag();
+		
+		// Events not in the above list get mapped onto one that is.
+		if (!array_key_exists($atag, $factsort))
+			if (preg_match('/^(_(BIRT|MARR|DEAT)_)/', $atag, $match))
+				$atag=$match[1];
+			else
+				$atag="_????_";
+		if (!array_key_exists($btag, $factsort))
+			if (preg_match('/^(_(BIRT|MARR|DEAT)_)/', $btag, $match))
+				$btag=$match[1];
+			else
+				$btag="_????_";
+
+		return $factsort[$atag]-$factsort[$btag];
+	}
+
+
 // When classes are fully implemented for these methods, getters should use lazy instantiation
 //	/**
 //	 * The address of the place where the event occured.
