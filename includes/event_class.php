@@ -3,7 +3,7 @@
  * Class that defines an event details object
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006	John Finlay and Others
+ * Copyright (C) 2002 to 2007	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,38 +43,36 @@ class Event {
 	var $canShowDetails = null;
 	var $canEdit = null;
 	var $state = "";
-	
-	var $familiyId = null;
-	var $type = null;
-	var $tag = null;
-	var $rawDate = null;
-	var $date = null;
+	var $familyId = NULL;
+	var $type = NULL;
+	var $tag = NULL;
+	var $rawDate = NULL;
+	var $date = NULL;
 	var $place = null;
 	var $gedComRecord = null;
 	var $resn = null;
 	var $dest = false;
 	var $label = null;
-	
 	var $parentObject = null;
-	
-	var $detail = null;
-	
-	var $values = array();
+	var $detail = NULL;
+	var $values = NULL;
 	
 	/**
-	 * Get the first level 2 value for the given GEDCOM tag
+	 * Get the value for the first given GEDCOM tag
 	 *
-	 * @param unknown_type $code
-	 * @return unknown
+	 * @param string $code
+	 * @return string
 	 */
 	function getValue($code) {
-		if ($code=="DATE") return $this->rawDate;
-		else if ($code=="PLAC") return $this->place;
-		
-		if (isset($this->values[$code])) return $this->values[$code];
-		$value = get_gedcom_value($code, 2, $this->gedComRecord,'',false);
-		$this->values[$code] = $value;
-		return $value;	
+		if (is_null($this->values)) {
+			$this->values=array();
+			preg_match_all('/\n2\s(\w+)\s*(.*)/', $this->gedComRecord, $matches, PREG_SET_ORDER);
+			foreach ($matches as $match)
+				$this->values[$match[1]]=$match[2];
+		}
+		if (array_key_exists($code, $this->values))
+			return $this->values[$code];
+		return '';
 	}
 	
 	/**
@@ -86,52 +84,15 @@ class Event {
 	 * @return Event
 	 */
 	function Event($subrecord, $lineNumber=-1) {
-		$this->lineNumber = $lineNumber;
-		$this->gedComRecord = $subrecord;
-		if (empty($subrecord)) return;
-		
-		//Split the record into an array of level 2 sub records
-		$levelTwos = split("\n2 ", $subrecord);
-		
-		//Split the first entry which contains the tag of event
-		$tmp = explode(" ", $levelTwos[0], 3); // preg_split("/\s/", $subrecord, 3);
-		if (count($tmp)<2) return;
-		$this->tag = trim($tmp[1]);
-		
-		//Only add detail if the tag's detail information is present
-		if (!empty($tmp[2])) {
-			$this->detail = trim($tmp[2]);
-		}
-		
-		foreach($levelTwos as $lvl2Sub) {
-			//Split all the records underneath the level 2 record
-			$subLevels = split("\n", $lvl2Sub);
-			
-			//Grab the type of event and its associated value
-			//The first element should be the event type
-			//The second element should be the associated data
-			$header = explode(" ", trim($subLevels[0]), 2);
-
-			if ($header[0] == "DATE") {
-				$this->rawDate = $header[1];
-				$this->date = new GedcomDate($this->rawDate);
-				continue;
-			}
-			
-			if ($header[0] == "PLAC") {
-				$this->place = $header[1];
-				continue;
-			}
-			
-			if ($header[0] == "_PGVFS") {
-				$this->familyId = trim($header[1], "@");
-				continue;
-			}
-			
-			if ($header[0] == "TYPE") {
-				$this->type = $header[1];
-				continue;
-			}
+		global $factarray;
+		if (preg_match('/^1 (\w+) *(.*)/', $subrecord, $match)) {
+			$this->tag=$match[1];
+			$this->detail=$match[2];
+			$this->lineNumber=$lineNumber;
+			$this->gedComRecord=$subrecord;
+			// Store 1 EVEN/2 TYPE XXXX as a XXXX event.  Makes subsequent processing easier.
+			if (($this->tag=='EVEN' || $this->tag=='FACT') && preg_match('/2 TYPE (\w+)/', $subrecord, $match) && array_key_exists($match[1], $factarray))
+				$this->tag=$match[1];
 		}
 	}
 	
@@ -197,6 +158,8 @@ class Event {
 	 * @return string
 	 */
 	function getType() {
+		if (is_null($this->type))
+			$this->type=$this->getValue('TYPE');
 		return $this->type;
 	}
 	
@@ -206,7 +169,30 @@ class Event {
 	 * @return string
 	 */
 	function getRawDate() {
+		if (is_null($this->rawDate))
+			$this->rawDate=$this->getValue('DATE');
 		return $this->rawDate;
+	}
+	
+	/**
+	 * The place where the event occured.
+	 *
+	 * @return string
+	 */
+	function getPlace() {
+		if (is_null($this->place))
+			$this->place=$this->getValue('PLAC');
+		return $this->place;
+	}
+	
+	function getFamilyId() {
+		if (is_null($this->familyId))
+			$this->familyId=$this->getValue('_PGVFS');
+		return $this->familyId;
+	}
+	
+	function getSpouseId() {
+		return $this->getValue("_PGVS");
 	}
 	
 	/**
@@ -215,6 +201,9 @@ class Event {
 	 * @return GedcomDate
 	 */
 	function getDate($estimate = true) {
+		if (is_null($this->date))
+			$this->date=new GedcomDate($this->getValue('DATE'));
+
 		if (!$estimate && $this->dest) return null;
 		return new GedcomDate($this->rawDate); // Temporary - next line returning a corrupted object?
 		return $this->date;
@@ -228,15 +217,6 @@ class Event {
 	function setDate(&$date) {
 		$this->date = $date;
 		$this->dest = true;
-	}
-	
-	/**
-	 * The place where the event occured.
-	 *
-	 * @return string
-	 */
-	function getPlace() {
-		return $this->place;
 	}
 	
 	/**
@@ -287,14 +267,6 @@ class Event {
 		return $this->detail;
 	}
 	
-	function getFamilyId() {
-		return $this->getValue("_PGVFS");
-	}
-	
-	function getSpouseId() {
-		return $this->getValue("_PGVS");
-	}
-	
 	/**
 	 * Check whether this fact has information to display
 	 * Checks for a date or a place
@@ -302,27 +274,22 @@ class Event {
 	 * @return boolean
 	 */
 	function hasDatePlace() {
-		return (is_null($this->date) && is_null($this->place));
+		return ($this->getDate() || $this->getPlace());
 	}
 	
-	function getLabel($abbreviate = false) {
-		global $pgv_lang, $factarray;
+	function getLabel($abbreviate=false) {
+		global $factarray;
+
+		if (is_null($this->label))
+			if (array_key_exists($this->tag, $factarray))
+				$this->label=$factarray[$this->tag];
+			else
+				$this->label=$this->tag;
 		
-		if (!is_null($this->label)) return $this->label;
-		
-		$this->label = "";
-		$tag = $this->tag;
-		if ($tag=="EVEN" || $tag=="FACT") {
-			$type = $this->getType();
-			if (!empty($type)) $tag = $type;
-		}
-		if (isset($pgv_lang[$tag])) $this->label = $pgv_lang[$tag];
-		else if (isset($factarray[$tag])) $this->label = $factarray[$tag];
-		else $this->label = $tag;
-		
-		if ($abbreviate) $this->label = get_first_letter($this->label);
-		
-		return $this->label;
+		if ($abbreviate)
+			return get_first_letter($this->label);
+		else
+			return $this->label;
 	}
 	
 	function print_simple_fact() {
