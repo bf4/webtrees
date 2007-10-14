@@ -1580,22 +1580,20 @@ function mediasort($a, $b) {
  * @return int negative numbers sort $a first, positive sort $b first
  */
 function idsort($a, $b) {
-	if (isset($a["gedcom"])) {
-		$ct = preg_match("/0 @(.*)@/", $a["gedcom"], $match);
-		if ($ct>0) $aid = $match[1];
-	}
-	if (isset($b["gedcom"])) {
-		$ct = preg_match("/0 @(.*)@/", $b["gedcom"], $match);
-		if ($ct>0) $bid = $match[1];
-	}
-	if (empty($aid) || empty($bid)) return itemsort($a, $b);
-	else return stringsort($aid, $bid);
+	if (isset($a["gedcom"]) && isset($b["gedcom"]) && preg_match("/0 @(.*)@/", $a["gedcom"], $amatch) && preg_match("/0 @(.*)@/", $b["gedcom"], $bmatch))
+		return stringsort($amatch[1], $bmatch[1]);
+	else
+		return itemsort($a, $b);
 }
 
 //-- comparison function for usort
 //-- used for index mode
 function lettersort($a, $b) {
 	return stringsort($a["letter"], $b["letter"]);
+}
+
+function gedcomsort($a, $b) {
+	return stringsort(str2upper($a["title"]), str2upper($b["title"]));
 }
 
 // Sort the facts, using three conflicting rules (family sequence,
@@ -1641,8 +1639,8 @@ function compare_date($a, $b) {
 	else
 		$tag = "BIRT";
 
-	$adate=get_gedcom_value('$tag:DATE', 1, $a['gedcom'], '', false);
-	$bdate=get_gedcom_value('$tag:DATE', 1, $b['gedcom'], '', false);
+	$adate=get_gedcom_value("$tag:DATE", 1, $a['gedcom'], '', false);
+	$bdate=get_gedcom_value("$tag:DATE", 1, $b['gedcom'], '', false);
 	if (!empty($adate) && !empty($bdate)){
 		$adate=new GedcomDate($adate);
 		$bdate=new GedcomDate($adate);
@@ -1652,13 +1650,6 @@ function compare_date($a, $b) {
 	}
 	// Same date?  Sort by name
 	return itemsort($a, $b);
-}
-
-function gedcomsort($a, $b) {
-	$aname = str2upper($a["title"]);
-	$bname = str2upper($b["title"]);
-
-	return stringsort($aname, $bname);
 }
 
 // ************************************************* START OF MISCELLANIOUS FUNCTIONS ********************************* //
