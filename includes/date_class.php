@@ -155,13 +155,6 @@ class CalendarDate {
 			return '<img alt="" src="images/warning.gif" />';
 		list($y,$m,$d)=$this->JDtoYMD($jd);
 		$dy=$y-$this->y;
-
-		// Just the years for lists, etc.
-		if (!$full)
-			return $dy;
-		// Age in years?
-		if ($dy>1)
-			return $dy.'y';
 		$dm=$m-max($this->m,1);
 		$dd=$d-max($this->d,1);
 		if ($dd<0) {
@@ -172,6 +165,12 @@ class CalendarDate {
 			$dm+=$this->NUM_MONTHS;
 			$dy--;
 		}
+		// Not a full age?  Then just the years
+		if (!$full)
+			return $dy;
+		// Age in years?
+		if ($dy>1)
+			return $dy.'y';
 		$dm+=$dy*$this->NUM_MONTHS;
 		// Age in months?
 		if ($dm>1)
