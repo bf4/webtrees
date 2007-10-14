@@ -339,7 +339,7 @@ if ($level > 0) {
 		print "<br />";
 
 		$title = ""; foreach ($parent as $k=>$v) $title = $v.", ".$title;
-		$title = substr($title, 0, -2)." ";
+		$title = PrintReady(substr($title, 0, -2))." "; 
 		// Sort each of the tables by Name
 		if (count($myindilist) > 1) uasort($myindilist, "stringsort");
 		if (count($myfamlist) > 1) uasort($myfamlist, "stringsort");
