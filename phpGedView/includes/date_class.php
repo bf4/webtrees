@@ -149,8 +149,10 @@ class CalendarDate {
 	// int $jd: date for calculation
 	// TODO: JewishDate needs to redefine this to cope with leap months
 	function GetAge($full, $jd) {
-		if ($jd<=$this->minJD || $this->y==0)
+		if ($this->y==0 || $this->minJD==$jd || $jd==0)
 			return '';
+		if ($jd<$this->minJD)
+			return '<img alt="" src="images/warning.gif" />';
 		list($y,$m,$d)=$this->JDtoYMD($jd);
 		$dy=$y-$this->y;
 		$dm=$m-max($this->m,1);
@@ -1112,7 +1114,7 @@ class GedcomDate {
 	// return >0 if $b>$a
 	// return  0 if dates same/overlap/invalid
 	// BEF/AFT sort as the day before/after.
-	function Compare($a, $b) {
+	function Compare(&$a, &$b) {
 		// Incomplete dates can't be sorted
 		if (!is_object($a) || !is_object($b) || $a->MinJD()==0 || $b->MinJD()==0)
 			return 0;
