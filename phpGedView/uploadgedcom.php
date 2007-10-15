@@ -932,8 +932,6 @@ if ($stage == 1) {
 	$BLOCK_SIZE = 1024 * 4; //-- 4k bytes per read (4kb is usually the page size of a virtual memory system)
 	//-- resume a halted import from the session
 	if (!empty ($_SESSION["resumed"])) {
-		$place_count = $_SESSION["place_count"];
-		$date_count = $_SESSION["date_count"];
 		$TOTAL_BYTES = $_SESSION["TOTAL_BYTES"];
 		$fcontents = $_SESSION["fcontents"];
 		$listtype = $_SESSION["listtype"];
@@ -949,8 +947,6 @@ if ($stage == 1) {
 	} else {
 		$fcontents = "";
 		$TOTAL_BYTES = 0;
-		$place_count = 0;
-		$date_count = 0;
 		$media_count = 0;
 		$MAX_IDS = array();
 		$listtype = array();
@@ -982,11 +978,8 @@ if ($stage == 1) {
 			print "\n";
 
 			//-- import anything that is not a blob
-			if (preg_match("/\n1 BLOB/", $indirec) == 0) {
-				import_record(trim($indirec));
-				$place_count += update_places($gid, $indirec);
-				$date_count += update_dates($gid, $indirec);
-			}
+			if (!preg_match("/\n1 BLOB/", $indirec))
+				import_record($indirec, false);
 
 			//-- move the cursor to the start of the next record
 			$pos1 = $pos2;
@@ -1041,8 +1034,6 @@ if ($stage == 1) {
 					$importtime = $importtime + $exectime;
 					$fcontents = substr($fcontents, $pos2);
 					//-- store the resume information in the session
-					$_SESSION["place_count"] = $place_count;
-					$_SESSION["date_count"] = $date_count;
 					$_SESSION["media_count"] = $media_count;
 					$_SESSION["TOTAL_BYTES"] = $TOTAL_BYTES;
 					$_SESSION["fcontents"] = $fcontents;
@@ -1208,8 +1199,6 @@ if ($stage == 1) {
 					$importtime = $importtime + $exectime;
 					$fcontents = substr($fcontents, $pos2);
 					//-- store the resume information in the session
-					$_SESSION["place_count"] = $place_count;
-					$_SESSION["date_count"] = $date_count;
 					$_SESSION["media_count"] = $media_count;
 					$_SESSION["TOTAL_BYTES"] = $TOTAL_BYTES;
 					$_SESSION["fcontents"] = $fcontents;
@@ -1306,8 +1295,6 @@ if ($stage == 1) {
 	
 	$record_count = 0;
 	$_SESSION["resumed"] = 0;
-	unset ($_SESSION["place_count"]);
-	unset ($_SESSION["date_count"]);
 	unset ($_SESSION["TOTAL_BYTES"]);
 	unset ($_SESSION["fcontents"]);
 	unset ($_SESSION["listtype"]);

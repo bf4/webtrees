@@ -76,7 +76,7 @@ $TRANSLATE_TAGS=array(
  * @param string $indirec the raw gedcom record to parse
  * @param boolean $update whether or not this is an updated record that has been accepted
  */
-function import_record($indirec, $update = false) {
+function import_record($indirec, $update) {
 	global $DBCONN, $gid, $type, $indilist, $famlist, $sourcelist, $otherlist, $TOTAL_QUERIES, $prepared_statement;
 	global $TBLPREFIX, $GEDCOM_FILE, $FILE, $pgv_lang, $USE_RIN, $gdfp, $placecache;
 	global $ALPHABET_upper, $ALPHABET_lower, $place_id, $WORD_WRAPPED_NOTES, $GEDCOMS;
@@ -91,7 +91,7 @@ function import_record($indirec, $update = false) {
 	// EEK! We only need to remove repeated spaces in certain circumstances.
 	// This global replace breaks various other things, so take it out
 	//$indirec=preg_replace('/ {2,}/', ' ', $indirec); // Repeated spaces
-	$indirec=preg_replace('/(^ | $)/m', '', $indirec); // Leading/trailing space
+	$indirec=preg_replace('/(^ +| +$)/m', '', $indirec); // Leading/trailing space
 	$indirec=preg_replace('/\n{2,}/', "\n", $indirec); // Blank lines
 	if (!$update) $indirec=str_replace('@@', '@', $indirec); // Escaped @ signs (only if importing from file)
 	
@@ -150,11 +150,9 @@ function import_record($indirec, $update = false) {
 		) . chr(0x80) . chr(0x8F), chr(0xE2) . chr(0x80) . chr(0x8E)), "", $indirec);
 	}
 
-	//-- if this is an import from an online update then import the places
-	if ($update) {
-		update_places($gid, $indirec, $update);
-		update_dates($gid, $indirec);
-	}
+	// Update the dates and places tables.
+	update_places($gid, $indirec);
+	update_dates($gid, $indirec);
 
 	$newrec = update_media($gid, $indirec, $update);
 	if ($newrec != $indirec) {
@@ -429,7 +427,7 @@ function add_new_name($gid, $newname, $letter, $surname, $indirec) {
  * into the places table
  * @param string $indirec
  */
-function update_places($gid, $indirec, $update = false) {
+function update_places($gid, $indirec) {
 	global $FILE, $placecache, $TBLPREFIX, $DBCONN, $GEDCOMS;
 
 	if (!isset($placecache)) $placecache = array();
@@ -497,7 +495,6 @@ function update_places($gid, $indirec, $update = false) {
 			$level++;
 		}
 	}
-	return $pt;
 }
 
 /**
@@ -507,7 +504,6 @@ function update_places($gid, $indirec, $update = false) {
  */
 function update_dates($gid, $indirec) {
 	global $FILE, $TBLPREFIX, $DBCONN, $GEDCOMS;
-	$count = 0;
 	$pt = preg_match("/\d DATE (.*)/", $indirec, $match);
 	if ($pt == 0)
 		return 0;
@@ -525,11 +521,9 @@ function update_dates($gid, $indirec) {
 			foreach($dates as $date) {
 				$sql = "INSERT INTO {$TBLPREFIX}dates(d_day,d_month,d_mon,d_year,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type)VALUES({$date['day']},'{$date['month']}',{$date['mon']},{$date['year']},{$date['jd1']},{$date['jd2']},'".$DBCONN->escapeSimple($fact)."','".$DBCONN->escapeSimple($gid)."',{$GEDCOMS[$FILE]['id']},".(empty($date['cal'])?'NULL':"'{$date['cal']}'").")";
 				$res=dbquery($sql);
-				$count++;
 			}
 		}
 	}
-	return $count;
 }
 
 /**
