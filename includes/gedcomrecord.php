@@ -483,7 +483,7 @@ class GedcomRecord {
 		if (is_null($chan))	return '&nbsp;';
 
 		$d = $chan->getDate();
-		if (preg_match('/^(\d\d):(\d\d):(\d\d)$/', get_gedcom_value('DATE:TIME', 2, $chan->getGedComRecord(), '', false), $match)) {
+		if (preg_match('/^(\d\d):(\d\d):(\d\d)$/', get_gedcom_value('DATE:TIME', 2, $chan->getGedComRecord(), '', false).':00', $match)) {
 			$t=mktime($match[1], $match[2], $match[3]);
 			$sort=$d->MinJD().$match[1].$match[2].$match[3];
 		} else {
