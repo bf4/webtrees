@@ -268,7 +268,7 @@ if ($display=="hierarchy") {
 		if (begRTLText($value))
 			 print "<li class=\"rtl\" dir=\"rtl\"";
 		else print "<li class=\"ltr\" dir=\"ltr\"";
-		print "type=\"square\">\n<a href=\"?action=$action&amp;level=".($level+1).$linklevels;
+		print " type=\"square\">\n<a href=\"?action=$action&amp;level=".($level+1).$linklevels;
 		print "&amp;parent[$level]=".urlencode($value)."\" class=\"list_item\">";
 
 		if (trim($value)=="") print $pgv_lang["unknown"];
@@ -389,7 +389,7 @@ if ($display=="list") {
 			if (begRTLText($revplace))
 			     print "<li class=\"rtl\" dir=\"rtl\"";
 		    else print "<li class=\"ltr\" dir=\"ltr\"";
-			print "type=\"square\"><a href=\"?action=show&amp;display=hierarchy&amp;level=$level$linklevels\">";
+			print " type=\"square\"><a href=\"?action=show&amp;display=hierarchy&amp;level=$level$linklevels\">";
 			print PrintReady($revplace)."</a></li>\n";
 			$i++;
 			if ($ct > 20){
