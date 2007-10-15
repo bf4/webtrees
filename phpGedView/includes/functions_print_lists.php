@@ -404,7 +404,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "</td>";
 		//-- Birth anniversary
 		if ($tiny)
-			echo "<td class=\"list_value_wrap rela\"><span class=\"age\">".GedcomDate::GetAgeYears($bdate)."</a></td>";
+			echo "<td class=\"list_value_wrap rela\"><span class=\"age\">".GedcomDate::GetAgeYears($bdate)."</span></td>";
 		//-- Birth place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($person->getBirthPlace())."\">";
 		if(!empty($SEARCH_SPIDER)) {
@@ -438,7 +438,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		if ($tiny) {
 			print "<td class=\"list_value_wrap rela\">";
 			if ($person->isDead() && !$person->dest) {
-				echo "<span class=\"age\">".GedcomDate::GetAgeYears($ddate)."</a>";
+				echo "<span class=\"age\">".GedcomDate::GetAgeYears($ddate)."</span>";
 			} else
 				echo "&nbsp;";
 			print '</td>';
@@ -701,7 +701,7 @@ function print_fam_table($datalist, $legend="") {
 		echo "</td>";
 		//-- Marriage anniversary
 		if ($tiny)
-			echo "<td class=\"list_value_wrap rela\"><span class=\"age\">".GedcomDate::GetAgeYears($mdate)."</a></td>";
+			echo "<td class=\"list_value_wrap rela\"><span class=\"age\">".GedcomDate::GetAgeYears($mdate)."</span></td>";
 		//-- Marriage place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($family->getMarriagePlace())."\">";
 		if(!empty($SEARCH_SPIDER)) {
@@ -1093,7 +1093,7 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 	// in the database - generally known as a 'tag cloud'.
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
-	echo "<table id=\"".$table_id."\" class=\"tag_cloud_table \">";
+	echo "<table id=\"".$table_id."\" class=\"tag_cloud_table\">";
 	//-- table body
 	echo "<tr>";
 	echo "<td class=\"tag_cloud\">";
@@ -1122,7 +1122,7 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 			$tag = PrintReady("<span class=\"tag_cloud_sub\">(".$value["match"].")&nbsp;</span><font size=\"".$fontsize."\">".$surn."</font>");
 		}
 
-		echo "<a href=\"".$url."\" class=\"list_item\" title=\"".$title."\">".$tag."</span></a>&nbsp;&nbsp; ";
+		echo "<a href=\"".$url."\" class=\"list_item\" title=\"".$title."\">".$tag."</a>&nbsp;&nbsp; ";
 	}
 	echo "</td>";
 	echo "</tr>\n";

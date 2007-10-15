@@ -56,7 +56,7 @@ print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t
 	include('modules/lightbox/lb_config.php');
 
 ?>
-	<SCRIPT LANGUAGE=Javascript>
+	<script type="text/javascript">
 	<?php if ($LB_MUSIC_FILE == "") { ?>
 		var myMusic = null;
 	<?php }else{ ?>
@@ -136,8 +136,8 @@ if ($search == "yes") {
 		</tr>
 		<?php
 			// Box for user to choose the folder
+			print "<tr><td class=\"list_label width25\">";
 			if ($MEDIA_DIRECTORY_LEVELS > 0) {
-				print "<tr><td class=\"list_label width25\">";
 				print_help_link("upload_server_folder_help", "qm");
 				if (empty($folder)) {
 					if (!empty($_SESSION['upload_folder'])) $folder = $_SESSION['upload_folder'];
@@ -154,8 +154,9 @@ if ($search == "yes") {
 					else print $f;
 					print "</option>\n";
 				}
-				print "</select></td></tr>";
+				print "</select>";
 			} else print "<input name=\"folder\" type=\"hidden\" value=\"ALL\" />";
+			print "</td></tr>";
 		?>
 		<tr>
 			<td class="list_label" colspan="2">
@@ -330,8 +331,8 @@ if ($ct>0){
 		
 //LBox --------  change for Lightbox Album --------------------------------------------
 		if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$media["FILE"]) || eregi("\.jpeg",$media["FILE"]) || eregi("\.gif",$media["FILE"]) || eregi("\.png",$media["FILE"]) ) ) { 
-//			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . stripslashes(PrintReady($name1)) . "\"\">" . "\n";	
-			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . PrintReady($name) . "\"\">" . "\n";
+//			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . stripslashes(PrintReady($name1)) . "\">" . "\n";
+			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . PrintReady($name) . "\">" . "\n";
 
         }elseif ($USE_MEDIA_VIEWER) {
 			print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
@@ -356,10 +357,10 @@ if ($ct>0){
 					print "<td class=\"width33 center\" valign=\"top\">";
 					print "<a href=\"javascript:;\" title=\"" . $pgv_lang["lb_edit_media"] . "\" onclick=\" return window.open('addmedia.php?action=editmedia&amp;pid=" . $media["XREF"] . "&amp;linktoid=', '_blank', 'top=50,left=50,width=600,height=600,resizable=1,scrollbars=1');\">";
 					if ($LB_ML_THUMB_LINKS == "both") {
-						print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" />" ;
+						print "<img src=\"modules/lightbox/images/image_edit.gif\" alt=\"\" class=\"icon\" />" ;
 						print "<br />" . $pgv_lang["lb_edit_details"] ;
 					}else if ($LB_ML_THUMB_LINKS == "icon") {
-						print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" />" ;
+						print "<img src=\"modules/lightbox/images/image_edit.gif\" alt=\"\" class=\"icon\" />" ;
 					}else if($LB_ML_THUMB_LINKS == "text") { 
 						print "<br />" . $pgv_lang["lb_edit_details"] ;
 					}else{
@@ -370,7 +371,7 @@ if ($ct>0){
 					// ---------- Link Media to person, family or source  ---------------
 					print "<td class=\"width33 center\" valign=\"bottom\">";
 					if ($LB_ML_THUMB_LINKS == "both" || $LB_ML_THUMB_LINKS == "icon") {
-						print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\"" . $pgv_lang["set_link"] . "\" /></img><br />";
+						print "<img src=\"modules/lightbox/images/image_link.gif\" alt=\"\" class=\"icon\" title=\"" . $pgv_lang["set_link"] . "\" /><br />";
 						include ("modules/lightbox/functions/lb_link.php");
 					}else if ($LB_ML_THUMB_LINKS == "text") {
 						include ("modules/lightbox/functions/lb_link.php");
@@ -382,10 +383,10 @@ if ($ct>0){
 					print "<td class=\"width33 center\" valign=\"top\">";	
 					print "<a href=\"mediaviewer.php?mid=" . $media["XREF"] . "\" title=\"" . $pgv_lang["lb_view_media"] . "\">";
 					if ($LB_ML_THUMB_LINKS == "both") {
-						print "<img src=\"modules/lightbox/images/image_view.gif\" class=\"icon\" title=\"" . $pgv_lang["lb_view_media"] . "\" /></img>";
+						print "<img src=\"modules/lightbox/images/image_view.gif\" alt=\"\" class=\"icon\" title=\"" . $pgv_lang["lb_view_media"] . "\" />";
 						print "<br />" . $pgv_lang["lb_view_details"] ;
 					}else if ($LB_ML_THUMB_LINKS == "icon") {
-						print "<img src=\"modules/lightbox/images/image_view.gif\" class=\"icon\" title=\"" . $pgv_lang["lb_view_media"] . "\" /></img>";
+						print "<img src=\"modules/lightbox/images/image_view.gif\" alt=\"\" class=\"icon\" title=\"" . $pgv_lang["lb_view_media"] . "\" />";
 					}else if($LB_ML_THUMB_LINKS == "text") { 
 						print "<br />" . $pgv_lang["lb_view_details"] ;
 					}else{
