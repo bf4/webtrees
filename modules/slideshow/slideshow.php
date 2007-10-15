@@ -26,12 +26,12 @@
  */
 
 // TODO - Fix preview bar which is currently commented out
-
-	// Create the JavaScript Arrays to hold the images
-	echo "<script language='JavaScript'>\n";
-	echo "var Pic = new Array();\n";	// The main images
-	echo "var myImages = new Array();\n";	// The preview images
-	
+?>
+<script type="text/javascript">
+// Create the JavaScript Arrays to hold the images
+var Pic = new Array();	// The main images
+var myImages = new Array();	// The preview images
+<?php
 	$ix = 0;
 	
 	$yz = 0;
@@ -46,10 +46,10 @@
 			global $ix;
 	 		$ix++;
 		}
-	}	
-echo "</script>\n"; 	
+	}
 ?>
-<style>
+</script>
+<style type="text/css">
 #scroller1 img, #scroller2 img{
 border:0px solid #7777aa;
 }
@@ -67,41 +67,45 @@ border:0px solid #7777aa;
 <!-- BEGIN FLOATING SLIDE SHOW CODE //-->
 <div id="theLayer" style="position:absolute;left:0;top:0;visibility:hidden;z-index:	100;">
   <table border="0" cellspacing="0" cellpadding="3" class="person_box">
-  <tr>
-  <td id="titleBar" style="cursor:move" align="left">
-  <div onSelectStart="return false">
-  <div onMouseover="isHot=true;if (isN4) ddN4(theLayer)" onMouseout="isHot=false" dir="ltr">
-<input type="image" src="modules/slideshow/images/previous.gif" onclick="btnPreviousClick()" style="cursor:pointer">
-<input type="image" src="modules/slideshow/images/pause.gif" onclick="btnPauseClick()" style="cursor:pointer">
-<input type="image" src="modules/slideshow/images/play.gif" onclick="btnStartClick()" style="cursor:pointer">
-<input type="image" src="modules/slideshow/images/next.gif" onclick="btnNextClick()" style="cursor:pointer">
-<img src="modules/slideshow/images/spacer.gif" width="64px" height="32px">
-  <a href="#" onClick="btnPauseClick(); hideMe(); return false;"><img src="modules/slideshow/images/quit.gif"></a>
-  </div>
-  </div>
-  </td>
-  </tr>
-  <tr>
-  <td style="padding:0px">
-<table border="0" cellpadding="0" cellspacing="0" >
-<tr>
-<td id="VU">
-<!-- Set your image URL and dimensions here //-->
-<img src="SS1.jpg" name='SlideShow' height="300"></td> 
-<td id="imgName" valign="top" style="padding:5px" width="150" />
-</tr>
-</table>
-  </td>
-  <tr><td>
-  <form id="myForm">
+	  <tr>
+		  <td id="titleBar" style="cursor:move" align="left">
+  			<div onselectstart="return false">
+  				<div onmouseover="isHot=true;if (isN4) ddN4(theLayer)" onmouseout="isHot=false" dir="ltr">
+						<input type="image" src="modules/slideshow/images/previous.gif" onclick="btnPreviousClick()" style="cursor:pointer" />
+						<input type="image" src="modules/slideshow/images/pause.gif" onclick="btnPauseClick()" style="cursor:pointer" />
+						<input type="image" src="modules/slideshow/images/play.gif" onclick="btnStartClick()" style="cursor:pointer" />
+						<input type="image" src="modules/slideshow/images/next.gif" onclick="btnNextClick()" style="cursor:pointer" />
+						<img src="modules/slideshow/images/spacer.gif" alt="" width="64px" height="32px" />
+						<a href="#" onclick="btnPauseClick(); hideMe(); return false;"><img src="modules/slideshow/images/quit.gif" alt="" /></a>
+	  			</div>
+			  </div>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td style="padding:0px">
+				<table border="0" cellpadding="0" cellspacing="0" >
+					<tr>
+						<td id="VU">
+							<!-- Set your image URL and dimensions here //-->
+							<img src="SS1.jpg" alt="" name="SlideShow" height="300" />
+						</td>
+						<td id="imgName" valign="top" style="padding:5px" width="150">
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+  	<tr>
+			<td>
+  			<form id="myForm">
     <!--  <input id="cbx" name="cb1" type="checkbox" value="ON">Automatically restart slideshow 
     <br />
     Slideshow Speed
     <br />
     -->
-	<div class="slider" id="slider-1" tabIndex="1" style="width:350px">
-		<input class="slider-input" id="slider-input-1"/>
-	</div>
+					<div class="slider" id="slider-1" tabindex="1" style="width:350px">
+						<input class="slider-input" id="slider-input-1" />
+					</div>
 	<script type="text/javascript">
 
 	var s = new Slider(document.getElementById("slider-1"), document.getElementById("slider-input-1"));
@@ -119,7 +123,7 @@ border:0px solid #7777aa;
 
 </script>
 	
-    </form>
+    		</form>
     <?php /* uncomment to show preview bar
   <table align="center">
   <tr>
@@ -138,15 +142,13 @@ border:0px solid #7777aa;
   </tr>
   </table>
   */ ?>
-    </td>
+    	</td>
     </tr>
   </table>
 </div>
 
 <!-- END FLOATING SLIDESHOW CODE //--> 
-</form>
-
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
 <!--
 //runSlideShow(); //-- uncomment to automatically start slide show
 //initHS3(); //-- uncomment to show preview bar

@@ -76,7 +76,7 @@ $TRANSLATE_TAGS=array(
  * @param string $indirec the raw gedcom record to parse
  * @param boolean $update whether or not this is an updated record that has been accepted
  */
-function import_record($indirec, $update = false) {
+function import_record($indirec, $update) {
 	global $DBCONN, $gid, $type, $indilist, $famlist, $sourcelist, $otherlist, $TOTAL_QUERIES, $prepared_statement;
 	global $TBLPREFIX, $GEDCOM_FILE, $FILE, $pgv_lang, $USE_RIN, $gdfp, $placecache;
 	global $ALPHABET_upper, $ALPHABET_lower, $place_id, $WORD_WRAPPED_NOTES, $GEDCOMS;
@@ -91,7 +91,7 @@ function import_record($indirec, $update = false) {
 	// EEK! We only need to remove repeated spaces in certain circumstances.
 	// This global replace breaks various other things, so take it out
 	//$indirec=preg_replace('/ {2,}/', ' ', $indirec); // Repeated spaces
-	$indirec=preg_replace('/(^ | $)/m', '', $indirec); // Leading/trailing space
+	$indirec=preg_replace('/(^ +| +$)/m', '', $indirec); // Leading/trailing space
 	$indirec=preg_replace('/\n{2,}/', "\n", $indirec); // Blank lines
 	if (!$update) $indirec=str_replace('@@', '@', $indirec); // Escaped @ signs (only if importing from file)
 	
@@ -150,11 +150,9 @@ function import_record($indirec, $update = false) {
 		) . chr(0x80) . chr(0x8F), chr(0xE2) . chr(0x80) . chr(0x8E)), "", $indirec);
 	}
 
-	//-- if this is an import from an online update then import the places
-	if ($update) {
-		update_places($gid, $indirec, $update);
-		update_dates($gid, $indirec);
-	}
+	// Update the dates and places tables.
+	update_places($gid, $indirec);
+	update_dates($gid, $indirec);
 
 	//-- import the ASSO links referenced in this record
 	$ct = preg_match_all("/\d ASSO @(.*)@/", $indirec, $match, PREG_SET_ORDER);
@@ -443,7 +441,7 @@ function add_new_name($gid, $newname, $letter, $surname, $indirec) {
  * into the places table
  * @param string $indirec
  */
-function update_places($gid, $indirec, $update = false) {
+function update_places($gid, $indirec) {
 	global $FILE, $placecache, $TBLPREFIX, $DBCONN, $GEDCOMS;
 
 	if (!isset($placecache)) $placecache = array();
@@ -511,7 +509,6 @@ function update_places($gid, $indirec, $update = false) {
 			$level++;
 		}
 	}
-	return $pt;
 }
 
 /**
@@ -521,7 +518,6 @@ function update_places($gid, $indirec, $update = false) {
  */
 function update_dates($gid, $indirec) {
 	global $FILE, $TBLPREFIX, $DBCONN, $GEDCOMS;
-	$count = 0;
 	$pt = preg_match("/\d DATE (.*)/", $indirec, $match);
 	if ($pt == 0)
 		return 0;
@@ -542,11 +538,9 @@ function update_dates($gid, $indirec) {
 				if (preg_match('/(\d\d\d\d) \d+/', $year, $ymatch)) $year = $ymatch[1];
 				$sql = "INSERT INTO {$TBLPREFIX}dates(d_day,d_month,d_mon,d_year,d_julianday1,d_julianday2,d_fact,d_gid,d_file,d_type)VALUES({$date['day']},'{$date['month']}',{$date['mon']},{$year},{$date['jd1']},{$date['jd2']},'".$DBCONN->escapeSimple($fact)."','".$DBCONN->escapeSimple($gid)."',{$GEDCOMS[$FILE]['id']},".(empty($date['cal'])?'NULL':"'{$date['cal']}'").")";
 				$res=dbquery($sql);
-				$count++;
 			}
 		}
 	}
-	return $count;
 }
 
 /**
@@ -1114,7 +1108,7 @@ function create_individuals_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "individuals";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "individuals (i_id VARCHAR(255), i_file INT, i_rin VARCHAR(255), i_name VARCHAR(255), i_isdead INT DEFAULT 1, i_gedcom ".DB_LONGTEXT_TYPE.", i_letter VARCHAR(5), i_surname VARCHAR(100), PRIMARY KEY(i_id, i_file))";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "individuals (i_id VARCHAR(255) NOT NULL, i_file INT NOT NULL, i_rin VARCHAR(255), i_name VARCHAR(255), i_isdead INT DEFAULT 1, i_gedcom ".DB_LONGTEXT_TYPE.", i_letter VARCHAR(5), i_surname VARCHAR(100), PRIMARY KEY(i_id, i_file))";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
@@ -1142,7 +1136,7 @@ function create_families_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "families";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE ".$TBLPREFIX."families (f_id VARCHAR(255), f_file INT, f_husb VARCHAR(255), f_wife VARCHAR(255), f_chil TEXT, f_gedcom ".DB_LONGTEXT_TYPE.", f_numchil INT, PRIMARY KEY(f_id, f_file))";
+	$sql = "CREATE TABLE ".$TBLPREFIX."families (f_id VARCHAR(255) NOT NULL, f_file INT NOT NULL, f_husb VARCHAR(255), f_wife VARCHAR(255), f_chil TEXT, f_gedcom ".DB_LONGTEXT_TYPE.", f_numchil INT, PRIMARY KEY(f_id, f_file))";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
@@ -1168,7 +1162,7 @@ function create_sources_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "sources";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "sources (s_id VARCHAR(255), s_file INT, s_name VARCHAR(255), s_gedcom ".DB_LONGTEXT_TYPE.", PRIMARY KEY(s_id, s_file))";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "sources (s_id VARCHAR(255)NOT NULL, s_file INT NOT NULL, s_name VARCHAR(255), s_gedcom ".DB_LONGTEXT_TYPE.", PRIMARY KEY(s_id, s_file))";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
@@ -1191,7 +1185,7 @@ function create_other_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "other";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "other (o_id VARCHAR(255), o_file INT, o_type VARCHAR(20), o_gedcom ".DB_LONGTEXT_TYPE.", PRIMARY KEY(o_id, o_file))";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "other (o_id VARCHAR(255) NOT NULL, o_file INT NOT NULL, o_type VARCHAR(20), o_gedcom ".DB_LONGTEXT_TYPE.", PRIMARY KEY(o_id, o_file))";
 	$res = dbquery($sql);
 
 	if (DB :: isError($res)) {
@@ -1212,7 +1206,7 @@ function create_placelinks_table() {
 
 	$sql = "DROP TABLE " . $TBLPREFIX . "placelinks";
 	$res = dbquery($sql, false);
-	$sql = "CREATE TABLE " . $TBLPREFIX . "placelinks (pl_p_id INT, pl_gid VARCHAR(255), pl_file INT, PRIMARY KEY(pl_p_id, pl_gid, pl_file))";
+	$sql = "CREATE TABLE " . $TBLPREFIX . "placelinks (pl_p_id INT NOT NULL, pl_gid VARCHAR(255) NOT NULL, pl_file INT NOT NULL, PRIMARY KEY(pl_p_id, pl_gid, pl_file))";
 	$res = dbquery($sql);
 	if (DB::isError($res)) {
 		print $pgv_lang["created_placelinks_fail"]."<br />\n";

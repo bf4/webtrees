@@ -223,7 +223,7 @@ $mysourcelist = search_sources($query);
 uasort($mysourcelist, "itemsort");
 $cs=count($mysourcelist);
 
-print_sour_table($mysourcelist, $name);
+print_sour_table($mysourcelist, PrintReady($name));  //@@@@@
 
 print "<br /><br /></td><td valign=\"top\" class=\"noprint\">";
 

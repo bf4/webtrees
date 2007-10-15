@@ -166,7 +166,7 @@ if ($display=="hierarchy") {
 			else {
 				$areaname = str_replace("'","\'",$parent[1]);
 			}
-			$mapname = strtr($mapname,"ŠŒšœŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖØÙÚÛÜİßàáâãäåæçèéêëìíîïğñòóôõöøùúûüıÿ' ","SOZsozYYuAAAAAAACEEEEIIIIDNOOOOOOUUUUYsaaaaaaaceeeeiiiionoooooouuuuyy--");
+			$mapname = strtr($mapname,"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½' ","SOZsozYYuAAAAAAACEEEEIIIIDNOOOOOOUUUUYsaaaaaaaceeeeiiiionoooooouuuuyy--");
 			$imgfile = "places/".$country."/".$mapname.".gif";
 		}
 		if (file_exists($imgfile) and file_exists($mapfile)) {
@@ -269,7 +269,7 @@ if ($display=="hierarchy") {
 		if (begRTLText($value))
 			 print "<li class=\"rtl\" dir=\"rtl\"";
 		else print "<li class=\"ltr\" dir=\"ltr\"";
-		print "type=\"square\">\n<a href=\"?action=$action&amp;level=".($level+1).$linklevels;
+		print " type=\"square\">\n<a href=\"?action=$action&amp;level=".($level+1).$linklevels;
 		print "&amp;parent[$level]=".urlencode($value)."\" class=\"list_item\">";
 
 		if (trim($value)=="") print $pgv_lang["unknown"];
@@ -340,6 +340,7 @@ if ($level > 0) {
 		print_indi_table($positions, $title, $option);
 		print_fam_table($positions, $title, $option);
 		/**
+		$title = PrintReady(substr($title, 0, -2))." "; 
 		// Sort each of the tables by Name
 		if (count($myindilist) > 1) uasort($myindilist, "stringsort");
 		if (count($myfamlist) > 1) uasort($myfamlist, "stringsort");
@@ -399,7 +400,7 @@ if ($display=="list") {
 			if (begRTLText($revplace))
 			     print "<li class=\"rtl\" dir=\"rtl\"";
 		    else print "<li class=\"ltr\" dir=\"ltr\"";
-			print "type=\"square\"><a href=\"?action=show&amp;display=hierarchy&amp;level=$level$linklevels\">";
+			print " type=\"square\"><a href=\"?action=show&amp;display=hierarchy&amp;level=$level$linklevels\">";
 			print PrintReady($revplace)."</a></li>\n";
 			$i++;
 			if ($ct > 20){

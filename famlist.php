@@ -182,7 +182,7 @@ if (empty($SEARCH_SPIDER)) {
 	print "<br /><br />";
 }
 
-print "<table class=\"list_table $TEXT_DIRECTION\"><tr>";
+print "<table class=\"list_table $TEXT_DIRECTION\"><tr><td class=\"center\">";
 if (($surname_sublist=="yes")&&($show_all=="yes")) {
 	get_fam_list();
 	if (!isset($alpha)) $alpha="";
@@ -316,7 +316,7 @@ else {
 		uasort($tfamlist, "itemsort");
 	}
 }
-print "</tr></table>";
+print "</td></tr></table>";
 
 if ($show_all=="yes") unset($alpha);
 if (!empty($surname) && $surname_sublist=="yes") $legend = str_replace("#surname#", check_NN($surname), $pgv_lang["fams_with_surname"]);

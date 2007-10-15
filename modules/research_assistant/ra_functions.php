@@ -1769,9 +1769,9 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 														
 											foreach($tempDates as $tKey=>$tVal)
 												{
-													$tempDate = get_gedcom_value("DATE",2,$tVal[1]);
-													$tempPlace = get_gedcom_value("PLAC",2,$tVal[1]);
-													$parsedDates = parse_date($tempDate);
+													$tempDate = $tVal->getDate();
+													$tempPlace = $tVal->getPlace();
+													
 													//-- 4.0 compat
 													if (!isset($parsedDates[0]['sort'])) $parsedDates[0]['sort'] = $parsedDates[0]['year']."-".$parsedDates[0]['mon']."-".$parsedDates[0]['day']; 
 													$place = trim($place);

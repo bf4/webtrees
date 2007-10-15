@@ -621,7 +621,7 @@ if(empty($SEARCH_SPIDER)) {
 
 		print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none; background:none;\" \>\n";
 
-		print "<span class=\"subheaders\">&nbsp;&nbsp;" . $pgv_lang["lightbox"] . "</span>\n";
+		print "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>\n";
 		print "&nbsp;&nbsp;"; 
 		
 		// ---------- Help link --------------------		
