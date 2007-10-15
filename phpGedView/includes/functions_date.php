@@ -105,7 +105,7 @@ function get_age($indirec, $datestr, $style=1) {
 	if (abs($max_age)<30) { // show in days
 		if ($min_age==$max_age)
 			if ($max_age==0)
-				$age=""; // do not print "Age: 0 days"
+				return ''; // do not print "Age: 0 days"
 			else if ($max_age==1)
 				$age="1 {$pgv_lang['day1']}";
 			else
