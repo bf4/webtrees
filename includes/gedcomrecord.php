@@ -448,6 +448,7 @@ class GedcomRecord {
 	function parseFacts() {
 		//-- only run this function once
 		if (!is_null($this->facts)) return;
+		$this->facts=array();
 		//-- don't run this function if privacy does not allow viewing of details
 		if (!$this->canDisplayDetails()) return;
 		//-- find all the fact information
@@ -460,10 +461,12 @@ class GedcomRecord {
 			if ($i<$lct) $line = $indilines[$i];
 			else $line=" ";
 			if (empty($line)) $line=" ";
-			if (($i==$lct)||($line{0}==1)) {
-				$event = new Event($factrec, $linenum);
-				$event->setParentObject($this);
-				$this->facts[] = $event;
+			if ($i==$lct||$line{0}==1) {
+				if ($i>1){
+					$event = new Event($factrec, $linenum);
+					$event->setParentObject($this);
+					$this->facts[] = $event;
+				}
 				$factrec = $line;
 				$linenum = $i;
 			}
