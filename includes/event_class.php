@@ -72,7 +72,7 @@ class Event {
 		}
 		if (array_key_exists($code, $this->values))
 			return $this->values[$code];
-		return '';
+		return NULL;
 	}
 	
 	/**
