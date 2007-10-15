@@ -170,6 +170,7 @@ $pgv_lang["media_deleted"]			= "Folderen med mediefiler blev fjernet.";
 $pgv_lang["media_exists"]			= "Mediefilen findes allerede.";
 $pgv_lang["media_file"] 			= "Mediefil";
 $pgv_lang["media_file_deleted"]		= "Mediefil blev slettet.";
+$pgv_lang["media_file_moved"]			= "Mediefil flyttet.";
 $pgv_lang["media_file_not_moved"]	= "Mediefilen kunne ikke flyttes.";
 $pgv_lang["media_file_not_renamed"]	= "Mediefilen kunne ikke flyttes eller omd�";
 $pgv_lang["media_thumb_exists"]		= "Miniaturebillede findes allerede.";
@@ -210,5 +211,7 @@ $pgv_lang["view_change_diff"]	= "Vis ændring, forskelle";
 $pgv_lang["admin_override"]			= "Admin indstilling";
 $pgv_lang["no_update_CHAN"]			= "Opdatér ikke CHAN (sidst ændret) posten";
 $pgv_lang["select_events"]			= "Vælg hændelser";
+$pgv_lang["edit_concurrency_change"] = "Posten blev sidst ændret af <i>#CHANGEUSER#</i> den #CHANGEDATE#";
+$pgv_lang["edit_concurrency_msg2"]	= "Posten med id #PID# er blevet ændret af en anden bruger siden du sidst tilgik den.";
 $pgv_lang["source_events"]			= "Tilknyt hændelser med denne kilde";
 ?>
