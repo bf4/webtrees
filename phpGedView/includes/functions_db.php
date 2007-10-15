@@ -1065,37 +1065,6 @@ function search_indis_fam($add2myindilist) {
 	return $myindilist;
 }
 
-/**
- * Search for individuals who had dates within the given year ranges
- * @param int $startyear	the starting year
- * @param int $endyear		The ending year
- * @return array
- */
-function search_indis_year_range($startyear, $endyear, $allgeds=false) {
-	global $TBLPREFIX, $GEDCOM, $indilist, $DBCONN, $GEDCOMS;
-
-	$myindilist = array();
-	$sql = "SELECT i_id, i_name, i_file, i_gedcom, i_isdead, i_letter, i_surname FROM ".$TBLPREFIX."individuals, ".$TBLPREFIX."dates WHERE i_id=d_gid AND i_file=d_file AND d_fact NOT IN('CHAN', 'BAPL', 'SLGC', 'SLGS', 'ENDL') AND ";
-	$sql .= "d_year >= ".$startyear." AND d_year<=".$endyear;
-
-	if (!$allgeds) $sql .= " AND i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
-	$res = dbquery($sql);
-
-	if (!DB::isError($res)) {
-		while($row =& $res->fetchRow()){
-			$row = db_cleanup($row);
-			$myindilist[$row[0]]["names"] = get_indi_names($row[3]);
-			$myindilist[$row[0]]["gedfile"] = $row[2];
-			$myindilist[$row[0]]["gedcom"] = $row[3];
-			$myindilist[$row[0]]["isdead"] = $row[4];
-			$indilist[$row[0]] = $myindilist[$row[0]];
-		}
-		$res->free();
-	}
-	return $myindilist;
-}
-
-
 //-- search through the gedcom records for individuals
 function search_indis_names($query, $allgeds=false) {
 	global $TBLPREFIX, $GEDCOM, $indilist, $DBCONN, $REGEXP_DB, $DBTYPE, $GEDCOMS;
@@ -1561,34 +1530,6 @@ function search_fams_members($query, $allgeds=false, $ANDOR="AND", $allnames=fal
 		}
 	}
 	$res->free();
-	return $myfamlist;
-}
-
-//-- search through the gedcom records for families with daterange
-function search_fams_year_range($startyear, $endyear, $allgeds=false) {
-	global $TBLPREFIX, $GEDCOM, $famlist, $DBCONN, $GEDCOMS;
-
-	$myfamlist = array();
-	$sql = "SELECT f_id, f_husb, f_wife, f_file, f_gedcom FROM ".$TBLPREFIX."families, ".$TBLPREFIX."dates WHERE f_id=d_gid AND f_file=d_file AND d_fact NOT IN('CHAN', 'BAPL', 'SLGC', 'SLGS', 'ENDL') AND ";
-	$sql .= "d_year >= ".$startyear." AND d_year<=".$endyear;
-	if (!$allgeds) $sql .= " AND f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
-	$res = dbquery($sql);
-
-	if (!DB::isError($res)) {
-		while($row =& $res->fetchRow()){
-			$row = db_cleanup($row);
-			$hname = get_sortable_name($row[1]);
-			$wname = get_sortable_name($row[2]);
-			if (empty($hname)) $hname = "@N.N.";
-			if (empty($wname)) $wname = "@N.N.";
-			$name = $hname." + ".$wname;
-			$myfamlist[$row[0]]["name"] = $name;
-			$myfamlist[$row[0]]["gedfile"] = $row[3];
-			$myfamlist[$row[0]]["gedcom"] = $row[4];
-			$famlist[$row[0]] = $myfamlist[$row[0]];
-		}
-		$res->free();
-	}
 	return $myfamlist;
 }
 
