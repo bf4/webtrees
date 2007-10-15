@@ -156,15 +156,15 @@ function get_age_at_event($agestring) {
 
 	return preg_replace(
 		array(
-			'/\bchi\b/',
-			'/\binfant\b/',
-			'/\bsti\b/',
-			'/\b1y/',
-			'/(\d+)y/',
-			'/\b1m/',
-			'/(\d+)m/',
-			'/\b1d/',
-			'/(\d+)d/'
+			'/\bchi\b/i',
+			'/\binfant\b/i',
+			'/\bsti\b/i',
+			'/\b1y/i',
+			'/(\d+)y/i',
+			'/\b1m/i',
+			'/(\d+)m/i',
+			'/\b1d/i',
+			'/(\d+)d/i'
 		),
 		array(
 			$pgv_lang['child'],
