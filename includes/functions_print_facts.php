@@ -308,6 +308,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			//-- print spouse name for marriage events
 			$ct = preg_match("/_PGVS @(.*)@/", $factrec, $match);
 			if ($ct>0) {
+				print " ";
 				$spouse=$match[1];
 				if ($spouse!=="") {
 					print "<a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\">";
