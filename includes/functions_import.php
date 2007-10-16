@@ -432,8 +432,9 @@ function update_places($gid, $indirec) {
 
 	if (!isset($placecache)) $placecache = array();
 	$personplace = array();
-	//-- import all place locations
-	$pt = preg_match_all("/\d PLAC (.*)/", $indirec, $match, PREG_SET_ORDER);
+	// import all place locations, but not control info such as
+	// 0 HEAD/1 PLAC or 0 _EVDEF/1 PLAC
+	$pt = preg_match_all("/[2-9] PLAC (.+)/", $indirec, $match, PREG_SET_ORDER);
 	for ($i = 0; $i < $pt; $i++) {
 		$place = trim($match[$i][1]);
 		$lowplace = str2lower($place);
