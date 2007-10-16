@@ -344,9 +344,9 @@ class Person extends GedcomRecord {
 	 */
 	function getBirthDate($estimate = true) {
 		global $pgv_lang;
-		if (!$this->disp) return $pgv_lang["private"];
+		if (!$this->disp) return new GedcomDate("({$pgv_lang['private']})");
 		$this->_parseBirthDeath();
-		if (!$estimate && $this->best) return '';
+		if (!$estimate && $this->best) return new GedcomDate('');
 		return $this->bdate;
 	}
 
@@ -383,9 +383,9 @@ class Person extends GedcomRecord {
 	 */
 	function getDeathDate($estimate = true) {
 		global $pgv_lang;
-		if (!$this->disp) return $pgv_lang["private"];
+		if (!$this->disp) return new GedcomDate("({$pgv_lang['private']})");
 		$this->_parseBirthDeath();
-		if (!$estimate && $this->dest) return '';
+		if (!$estimate && $this->dest) return new GedcomDate('');
 		return $this->ddate;
 	}
 
