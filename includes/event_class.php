@@ -46,7 +46,6 @@ class Event {
 	var $familyId = NULL;
 	var $type = NULL;
 	var $tag = NULL;
-	var $rawDate = NULL;
 	var $date = NULL;
 	var $place = null;
 	var $gedComRecord = null;
@@ -164,17 +163,6 @@ class Event {
 	}
 	
 	/**
-	 * The unlocalized (raw) date stored in the GEDCom record.
-	 *
-	 * @return string
-	 */
-	function getRawDate() {
-		if (is_null($this->rawDate))
-			$this->rawDate=$this->getValue('DATE');
-		return $this->rawDate;
-	}
-	
-	/**
 	 * The place where the event occured.
 	 *
 	 * @return string
@@ -205,7 +193,6 @@ class Event {
 			$this->date=new GedcomDate($this->getValue('DATE'));
 
 		if (!$estimate && $this->dest) return null;
-		return new GedcomDate($this->rawDate); // Temporary - next line returning a corrupted object?
 		return $this->date;
 	}
 	

@@ -2196,7 +2196,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			// ID age
 			if (!strstr($factrec, "_BIRT_") && preg_match("/2 DATE (.*)/", $factrec, $dmatch)) {
 				$tmp=new Person($gedrec);
-				$birth_date=new GedcomDate($tmp->getBirthDate());
+				$birth_date=$tmp->getBirthDate();
 				$event_date=new GedcomDate($dmatch[1]);
 				$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $event_date));
 				if (!empty($age))
@@ -2324,8 +2324,8 @@ function print_fact_date(&$eventObj, $anchor=false, $time=false) {
 					// Only show calculated age if it differs from recorded age
 					if (!empty($age)) {
 						if (!empty($fact_age) && $fact_age!=$age ||
-						    !empty($husb_age) && $tmp->getSex()=='M' && $husb_age!= $age ||
-						    !empty($wife_age) && $tmp->getSex()=='F' && $wife_age!=$age)
+						    !empty($husb_age) && $parent->getSex()=='M' && $husb_age!= $age ||
+						    !empty($wife_age) && $parent->getSex()=='F' && $wife_age!=$age)
 							print " ({$pgv_lang['age']} ".get_age_at_event($age).")";
 					}
 				}
