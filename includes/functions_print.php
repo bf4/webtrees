@@ -2270,7 +2270,7 @@ function print_parents_age($person, $bdate) {
 			$child_bdate=parse_date($bdate);
 			$mother_ddate=$spouse->getDeathDate(false);
 			// highlight death of mother < 90 days
-			if ($mother_ddate->date1->minJD-$child_bdate[0]["jd1"]<90)
+			if ($mother_ddate->date1->minJD>0 && $mother_ddate->date1->minJD-$child_bdate[0]["jd1"]<90)
 				$age = "<span style=\"border: thin solid grey; padding: 1px;\" title=\"".$factarray["_DEAT_MOTH"]."\">".$age."</span>";
 		}
 		print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"gender_image\" />".$age;
