@@ -2194,8 +2194,14 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			}
 			print "</a>";
 			// ID age
-			if (!strstr($factrec, "_BIRT_") && preg_match("/2 DATE (.*)/", $factrec, $dmatch))
-				print get_age($gedrec, $dmatch[1]);
+			if (!strstr($factrec, "_BIRT_") && preg_match("/2 DATE (.*)/", $factrec, $dmatch)) {
+				$tmp=new Person($gedrec);
+				$birth_date=new GedcomDate($tmp->getBirthDate());
+				$event_date=new GedcomDate($dmatch[1]);
+				$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $event_date));
+				if (!empty($age))
+					print " ({$pgv_lang['age']} {$age})";
+			}
 			// RELAtionship calculation : for a family print relationship to both spouses
 			if ($view!="preview") {
 				if ($type=='FAM') {
@@ -2254,18 +2260,19 @@ function print_parents_age($pid, $bdate) {
 	//-- father
 	$spouse = $family->getHusband();
 	if (!is_null($spouse)) {
-		$age = get_age($spouse->gedrec, $bdate, 0);
+		$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate()), new Gedcomdate($bdate));
 		print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />".$age;
 	}
 	//-- mother
 	$spouse = $family->getWife();
 	if (!is_null($spouse)) {
-		$age = get_age($spouse->gedrec, $bdate, 0);
+		$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate()), new Gedcomdate($bdate));
 		if ($spouse->getDeathDate(false)) {
 			$child_bdate=parse_date($bdate);
 			$mother_ddate=$spouse->getDeathDate(false);
 			// highlight death of mother < 90 days
-			if ($mother_ddate->date1->minJD-$child_bdate[0]["jd1"]<90) $age = "<span style=\"border: thin solid grey; padding: 1px;\" title=\"".$factarray["_DEAT_MOTH"]."\">".$age."</span>";
+			if ($mother_ddate->date1->minJD-$child_bdate[0]["jd1"]<90)
+				$age = "<span style=\"border: thin solid grey; padding: 1px;\" title=\"".$factarray["_DEAT_MOTH"]."\">".$age."</span>";
 		}
 		print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"gender_image\" />".$age;
 	}
@@ -2283,8 +2290,16 @@ function print_fact_date(&$eventObj, $anchor=false, $time=false) {
 
 	if (!is_object($eventObj)) pgv_error_handler(2, "Must use Event object", __FILE__, __LINE__);
 	$factrec = $eventObj->getGedcomRecord();
-	$ct = preg_match("/2 DATE (.+)/", $factrec, $match);
-	if ($ct>0) {
+
+	// Recorded age
+	$fact_age=get_gedcom_value("AGE", 2, $factrec);
+	if (empty($fact_age))
+		$fact_age=get_gedcom_value("DATE:AGE", 2, $factrec);
+	$husb_age=get_gedcom_value("HUSB:AGE", 2, $factrec);
+	$wife_age=get_gedcom_value("WIFE:AGE", 2, $factrec);
+
+	// Calculated age
+	if (preg_match("/2 DATE (.+)/", $factrec, $match)) {
 		$date=new GedcomDate($match[1]);
 		print " ".$date->Display($anchor && (empty($SEARCH_SPIDER)));
 		// time
@@ -2298,17 +2313,26 @@ function print_fact_date(&$eventObj, $anchor=false, $time=false) {
 		$parent = $eventObj->getParentObject();
 		if (!is_null($parent) && $parent->getType()=='INDI') {
 			// age of parents at child birth
-			if ($fact=="BIRT") print_parents_age($parent->getXref(), $match[1]);
+			if ($fact=="BIRT")
+				print_parents_age($pid, $match[1]);
 			// age at event
 			else if ($fact!="CHAN") {
 				$death = $parent->getDeathEvent();
 				// do not print age after death
 				if (empty($death)||($eventObj->getTag()=='DEAT')||(GedcomDate::Compare($eventObj->getDate(), $death->getDate())<=0)) {
-					print get_age($parent->getGedcomRecord(),$eventObj->getRawDate());
+					$tmp=new Person($indirec);
+					$birth_date=new GedcomDate($tmp->getBirthDate());
+					$age=GedcomDate::GetAgeGedcom($birth_date, $date);
+					// Only show calculated age if it differs from recorded age
+					if (!empty($age)) {
+						if (!empty($fact_age) && $fact_age!=$age ||
+						    !empty($husb_age) && $tmp->getSex()=='M' && $husb_age!= $age ||
+						    !empty($wife_age) && $tmp->getSex()=='F' && $wife_age!=$age)
+							print " ({$pgv_lang['age']} ".get_age_at_event($age).")";
+					}
 				}
 			}
 		}
-		print " ";
 	}
 	else {
 		// 1 DEAT Y with no DATE => print YES
@@ -2317,35 +2341,10 @@ function print_fact_date(&$eventObj, $anchor=false, $time=false) {
 		$factdetail = preg_split("/ /", trim($factrec));
 		if (isset($factdetail)) if (count($factdetail) == 3) if (strtoupper($factdetail[2]) == "Y") print $pgv_lang["yes"];
 	}
-	// gedcom indi age
-	$ages=array();
-	$agerec = get_gedcom_value("AGE", 2, $factrec);
-	$daterec = get_sub_record(2, "2 DATE", $factrec);
-	if (empty($agerec)) $agerec = get_gedcom_value("AGE", 3, $daterec);
-	$ages[0] = $agerec;
-	// gedcom husband age
-	$husbrec = get_sub_record(2, "2 HUSB", $factrec);
-	if (!empty($husbrec)) $agerec = get_gedcom_value("AGE", 3, $husbrec);
-	else $agerec = "";
-	$ages[1] = $agerec;
-	// gedcom wife age
-	$wiferec = get_sub_record(2, "2 WIFE", $factrec);
-	if (!empty($wiferec)) $agerec = get_gedcom_value("AGE", 3, $wiferec);
-	else $agerec = "";
-	$ages[2] = $agerec;
 	// print gedcom ages
-	foreach ($ages as $indexval=>$agerec) {
-		if (!empty($agerec)) {
-			print "<span class=\"label\">";
-			if ($indexval==1) print $pgv_lang["husband"];
-			else if ($indexval==2) print $pgv_lang["wife"];
-			else print $factarray["AGE"];
-			print "</span>: ";
-			$age = get_age_at_event($agerec);
-			print PrintReady($age);
-			print " ";
-		}
-	}
+	foreach (array($factarray['AGE']=>$fact_age, $pgv_lang['husband']=>$husb_age, $pgv_lang['wife']=>$wife_age) as $label=>$age)
+		if (!empty($age))
+			print " <span class=\"label\">{$label}</span>: ".get_age_at_event($age);
 }
 /**
  * print fact PLACe TEMPle STATus

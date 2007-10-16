@@ -332,6 +332,7 @@ function print_fact(&$eventObj, $noedit=false) {
 			}
 			//-- print other characterizing fact information
 			if ($event!="" and $fact!="ASSO") {
+				print " ";
 				$ct = preg_match("/@(.*)@/", $event, $match);
 				if ($ct>0) {
 					$gedrec = find_gedcom_record($match[1]);

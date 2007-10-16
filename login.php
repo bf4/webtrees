@@ -161,9 +161,9 @@ if ($WELCOME_TEXT_AUTH_MODE!="0") {
 				print print_text($WELCOME_TEXT_AUTH_MODE_4,0,2);
 				break;
 		}
-		print "</td></tr></table><br /><br />\n";
 	}
 	else print_text($help_message);
+	print "</td></tr></table><br /><br />\n";
 }
 else {
 	if (!empty($help_message) || isset($help_message)) {

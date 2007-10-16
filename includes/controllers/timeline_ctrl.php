@@ -248,7 +248,13 @@ class TimelineControllerRoot extends BaseController {
 					print "--";
 					$date=new GedcomDate($datestr);
 					print $date->Display(false);
-					if (!empty($desc)) print $desc." ";
+					$indi=Person::GetInstance($factitem["pid"]); // TODO we already have this object somewhere....
+					$birth_date=new GedcomDate($indi->getBirthDate());
+					$event_date=new GedcomDate($datestr);
+					$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $event_date));
+					if (!empty($age))
+						print " ({$pgv_lang['age']} {$age})";
+					print " {$desc}";
 					if ($SHOW_PEDIGREE_PLACES>0) {
 						$pct = preg_match("/2 PLAC (.*)/", $factrec, $match);
 						if ($pct>0) {
@@ -262,8 +268,6 @@ class TimelineControllerRoot extends BaseController {
 							}
 						}
 					}
-					$age = get_age(find_person_record($factitem["pid"]), $datestr);
-					if (!empty($age)) print $age;
 					//-- print spouse name for marriage events
 					$ct = preg_match("/1 _PGVS @(.*)@/", $factrec, $match);
 					if ($ct>0) {
