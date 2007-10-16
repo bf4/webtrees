@@ -2247,10 +2247,9 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
  * @param string $pid	child ID
  * @param string $bdate	child birthdate
  */
-function print_parents_age($pid, $bdate) {
+function print_parents_age($person, $bdate) {
 	global $pgv_lang, $factarray, $SHOW_PARENTS_AGE, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	if (!$SHOW_PARENTS_AGE) return;
-	$person = Person::getInstance($pid);
 	$families = $person->getChildFamilies();
 	// dont show age of parents if more than one family (ADOPtion)
 	if (count($families)>1) return;
@@ -2260,13 +2259,13 @@ function print_parents_age($pid, $bdate) {
 	//-- father
 	$spouse = $family->getHusband();
 	if (!is_null($spouse)) {
-		$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate()), new Gedcomdate($bdate));
+		$age=GedcomDate::GetAgeYears($spouse->getBirthDate(), new Gedcomdate($bdate));
 		print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />".$age;
 	}
 	//-- mother
 	$spouse = $family->getWife();
 	if (!is_null($spouse)) {
-		$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate()), new Gedcomdate($bdate));
+		$age=GedcomDate::GetAgeYears($spouse->getBirthDate(), new Gedcomdate($bdate));
 		if ($spouse->getDeathDate(false)) {
 			$child_bdate=parse_date($bdate);
 			$mother_ddate=$spouse->getDeathDate(false);
@@ -2314,14 +2313,13 @@ function print_fact_date(&$eventObj, $anchor=false, $time=false) {
 		if (!is_null($parent) && $parent->getType()=='INDI') {
 			// age of parents at child birth
 			if ($fact=="BIRT")
-				print_parents_age($pid, $match[1]);
+				print_parents_age($parent, $match[1]);
 			// age at event
 			else if ($fact!="CHAN") {
 				$death = $parent->getDeathEvent();
 				// do not print age after death
 				if (empty($death)||($eventObj->getTag()=='DEAT')||(GedcomDate::Compare($eventObj->getDate(), $death->getDate())<=0)) {
-					$tmp=new Person($indirec);
-					$birth_date=new GedcomDate($tmp->getBirthDate());
+					$birth_date=$parent->getBirthDate();
 					$age=GedcomDate::GetAgeGedcom($birth_date, $date);
 					// Only show calculated age if it differs from recorded age
 					if (!empty($age)) {
