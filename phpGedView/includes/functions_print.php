@@ -2368,6 +2368,7 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 					// Only show calculated age if it differs from recorded age
 					if (!empty($age)) {
 						if (!empty($fact_age) && $fact_age!=$age ||
+						    empty($fact_age) && empty($husb_age) && empty($wife_age) ||
 						    !empty($husb_age) && $tmp->getSex()=='M' && $husb_age!= $age ||
 						    !empty($wife_age) && $tmp->getSex()=='F' && $wife_age!=$age)
 							print " ({$pgv_lang['age']} ".get_age_at_event($age).")";
