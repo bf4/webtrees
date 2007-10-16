@@ -154,11 +154,11 @@ function get_age($indirec, $datestr, $style=1) {
 function get_age_at_event($agestring) {
 	global $pgv_lang;
 
-	return preg_replace(
+	$agestring=preg_replace(
 		array(
-			'/\bchi\b/i',
-			'/\binfant\b/i',
-			'/\bsti\b/i',
+			'/\bchi(ld)?\b/i',
+			'/\binf(ant)?\b/i',
+			'/\bsti(llborn)?\b/i',
 			'/\b1y/i',
 			'/(\d+)y/i',
 			'/\b1m/i',
@@ -170,8 +170,8 @@ function get_age_at_event($agestring) {
 			$pgv_lang['child'],
 			$pgv_lang['infant'],  
 	 		$pgv_lang['stillborn'], 
-			'1 '.$pgv_lang['year1'], 
-			'$1 '.$pgv_lang['years'],
+			'1' /*'1 '.$pgv_lang['year1']*/, 
+			'$1' /*'$1 '.$pgv_lang['years']*/,
 	  	'1 '.$pgv_lang['month1'], 
 	 		'$1 '.$pgv_lang['months'],
 	  	'1 '.$pgv_lang['day1'],  
@@ -179,6 +179,9 @@ function get_age_at_event($agestring) {
 		),
 		$agestring
 	);
+	if (!empty($agestring))
+		$agestring="<span class=\"age\">{$agestring}</span>";
+	return $agestring;
 }
 
 // This function is deprecated.  Use class GedcomDate instead.
