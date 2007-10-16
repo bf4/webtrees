@@ -34,112 +34,6 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 require_once('includes/date_class.php');
 
 /**
- * get an individuals age at the given date
- * @param string $indirec the individual record so that we can get the birth date
- * @param string $datestr the date string (everything after DATE) to calculate the age for
- * @param string $style optional style (default 1=HTML style)
- * @return string the age in a string
- */
-function get_age($indirec, $datestr, $style=1) {
-	global $pgv_lang;
-
-	$min_birt_jd=0; $max_birt_jd=0; // Earliest/latest dates for the birth.
-	$min_even_jd=0; $max_even_jd=0; // Earliest/latest dates for the event.
-	$approx=false;
-
-	// If the person has no birth, try a christening/baptism date instead.
-	$btag='1 BIRT';
-	if (strpos($indirec, $btag)===false) $btag='1 CHR';
-	if (strpos($indirec, $btag)===false) $btag='1 BAPM';
-	if (strpos($indirec, $btag)===false) return '';
-
-	// A Gedcom date can indicate a range (JAN => 1 JAN-31 JAN and 2000 => 1 JAN-31-DEC
-	// It can also be an explicit range (JUN-JUL => 1 JUN-31-JUL)
-	// Multiple dates may also be present.
-	$index = 1;
-	$birthrec = get_sub_record(1, $btag, $indirec, $index);
-	while(!empty($birthrec)) {
-		if (preg_match("/2 DATE (.+)/", $birthrec, $match)) {
-			$date=parse_date($match[1]);
-			if ($date[0]['jd1']>0) {
-				if (!empty($date[0]['ext']) && empty($date[1])) // A date range is not an approximation
-					$approx=true;
-				if ($min_birt_jd==0)
-					$min_birt_jd=$date[0]['jd1'];
-				else
-					$min_birt_jd=min($min_birt_jd, $date[0]['jd1']);
-				$max_birt_jd=max($max_birt_jd, $date[0]['jd2']);
-			}
-			if (!empty($date[1]))
-				$max_birt_jd=max($max_birt_jd, $date[1]['jd2']);
-		}
-		$index++;
-		$birthrec = get_sub_record(1, $btag, $indirec, $index);
-	}
-	if ($min_birt_jd==0)
-		return;
-	if ($max_birt_jd==0)
-		$max_birt_jd=$min_birt_jd;
-
-	$date=parse_date($datestr);
-	if ($date[0]['jd1']>0) {
-		if (!empty($date[0]['ext']) && empty($date[1])) // A date range is not an approximation
-			$approx=true;
-		$min_even_jd=$date[0]['jd1'];
-		$max_even_jd=$date[0]['jd2'];
-	}
-	if (!empty($date[1]))
-		$max_even_jd=max($max_even_jd, $date[1]['jd2']);
-
-	if ($min_even_jd==0)
-		return;
-	if ($max_even_jd==0)
-		$max_even_jd=$min_even_jd;
-
-	// We now have earliest/latest possible dates for both the birth and the event.
-  $min_age=max(0,$min_even_jd - $max_birt_jd);
-	$max_age=$max_even_jd - $min_birt_jd;
-
-	// Convert to days/months/years/etc.  NB - this is not perfect, as
-	// the birth/event dates may be in different calendars.
-	if (abs($max_age)<30) { // show in days
-		if ($min_age==$max_age)
-			if ($max_age==0)
-				return ''; // do not print "Age: 0 days"
-			else if ($max_age==1)
-				$age="1 {$pgv_lang['day1']}";
-			else
-				$age=$max_age." {$pgv_lang['days']}";
-		else
-			$age=$min_age."-".$max_age." {$pgv_lang['days']}";
-	} else if (abs($max_age)<731) { // show in months
-		$min_age=floor($min_age/30.4);
-		$max_age=floor($max_age/30.4);
-		if ($min_age==$max_age)
-			if ($max_age-$min_age==1)
-				$age="1 {$pgv_lang['month1']}";
-			else
-				$age=$max_age." {$pgv_lang['months']}";
-		else
-			$age=$min_age."-".$max_age." {$pgv_lang['months']}";
-	} else { // show in years
-		$min_age=floor($min_age/365.25);
-		$max_age=floor($max_age/365.25);
-		if ($min_age==$max_age)
-			if ($max_age-$min_age==1)
-				$age="1 {$pgv_lang['year1']}";
-			else
-				$age=$max_age; //"$max_age {$pgv_lang['years']}";
-		else
-			$age=$min_age."-".$max_age; // {$pgv_lang['years']}";
-	}
-
-	if ($approx && !strpos($age, "-")) $age.=" {$pgv_lang['apx']}";
-	if ($style)  $age=" <span class=\"age\">({$pgv_lang['age']} {$age})</span>";
-	return $age;
-}
-
-/**
  * translate gedcom age string
  *
  * Examples:
@@ -148,10 +42,11 @@ function get_age($indirec, $datestr, $style=1) {
  * INFANT
  *
  * @param string $agestring gedcom AGE field value
+ * @param bool $show_years;
  * @return string age in user language
  * @see http://homepages.rootsweb.com/~pmcbride/gedcom/55gcch2.htm#AGE_AT_EVENT
  */
-function get_age_at_event($agestring) {
+function get_age_at_event($agestring, $show_years) {
 	global $pgv_lang;
 
 	$agestring=preg_replace(
@@ -170,8 +65,8 @@ function get_age_at_event($agestring) {
 			$pgv_lang['child'],
 			$pgv_lang['infant'],  
 	 		$pgv_lang['stillborn'], 
-			'1' /*'1 '.$pgv_lang['year1']*/, 
-			'$1' /*'$1 '.$pgv_lang['years']*/,
+			$show_years ? '1 '.$pgv_lang['year1'] : '1', 
+			$show_years ? '$1 '.$pgv_lang['years'] : '$1',
 	  	'1 '.$pgv_lang['month1'], 
 	 		'$1 '.$pgv_lang['months'],
 	  	'1 '.$pgv_lang['day1'],  

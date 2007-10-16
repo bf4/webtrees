@@ -2165,7 +2165,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				$p = strpos($rela, "(=");
 				if ($p>0) $rela = trim(substr($rela, 0, $p));
 				if ($pid2==$pid) print "<span class=\"details_label\">";
-				print $rela.": ";
+				print " {$rela}: ";
 				if ($pid2==$pid) print "</span>";
 			}
 			else $rela = $factarray["RELA"]; // default
@@ -2198,7 +2198,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				$tmp=new Person($gedrec);
 				$birth_date=$tmp->getBirthDate();
 				$event_date=new GedcomDate($dmatch[1]);
-				$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $event_date));
+				$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $event_date), false);
 				if (!empty($age))
 					print " ({$pgv_lang['age']} {$age})";
 			}
@@ -2324,9 +2324,10 @@ function print_fact_date(&$eventObj, $anchor=false, $time=false) {
 					// Only show calculated age if it differs from recorded age
 					if (!empty($age)) {
 						if (!empty($fact_age) && $fact_age!=$age ||
+						    empty($fact_age) && empty($husb_age) && empty($wife_age) ||
 						    !empty($husb_age) && $parent->getSex()=='M' && $husb_age!= $age ||
 						    !empty($wife_age) && $parent->getSex()=='F' && $wife_age!=$age)
-							print " ({$pgv_lang['age']} ".get_age_at_event($age).")";
+							print " ({$pgv_lang['age']} ".get_age_at_event($age, false).")";
 					}
 				}
 			}
@@ -2342,7 +2343,7 @@ function print_fact_date(&$eventObj, $anchor=false, $time=false) {
 	// print gedcom ages
 	foreach (array($factarray['AGE']=>$fact_age, $pgv_lang['husband']=>$husb_age, $pgv_lang['wife']=>$wife_age) as $label=>$age)
 		if (!empty($age))
-			print " <span class=\"label\">{$label}</span>: ".get_age_at_event($age);
+			print " <span class=\"label\">{$label}</span>: ".get_age_at_event($age, false);
 }
 /**
  * print fact PLACe TEMPle STATus

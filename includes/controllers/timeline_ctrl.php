@@ -251,7 +251,7 @@ class TimelineControllerRoot extends BaseController {
 					$indi=Person::GetInstance($factitem["pid"]); // TODO we already have this object somewhere....
 					$birth_date=new GedcomDate($indi->getBirthDate());
 					$event_date=new GedcomDate($datestr);
-					$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $event_date));
+					$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $event_date), false);
 					if (!empty($age))
 						print " ({$pgv_lang['age']} {$age})";
 					print " {$desc}";

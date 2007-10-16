@@ -644,13 +644,13 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 					add_simple_tag("2 $tag $value");
 				}
 			}
-		// Allow a new row to be entered if there was no row provided
+			// Allow a new row to be entered if there was no row provided
 			if (count($match[1])==0 && empty($name_fields[$tag]) || $tag!='_HEB' && $tag!='NICK')
-			if ($tag=='_MARNM') {
-				add_simple_tag("0 _MARNM");
-				add_simple_tag("0 _MARNM_SURN $new_marnm");
-			} else
-				add_simple_tag("0 $tag");
+				if ($tag=='_MARNM') {
+					add_simple_tag("0 _MARNM");
+					add_simple_tag("0 _MARNM_SURN $new_marnm");
+				} else
+					add_simple_tag("0 $tag");
 	}
 
 	// Handle any other NAME subfields that aren't included above (SOUR, NOTE, _CUSTOM, etc)
@@ -1283,20 +1283,20 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 				}
 			}
 			else {
-				// text
-				print "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value))."\" size=\"".$cols."\" dir=\"ltr\"";
-				if ($fact=="NPFX") print " onkeyup=\"wactjavascript_autoComplete(npfx_accept,this,event)\" autocomplete=\"off\" ";
-				// onKeyUp should suffice.  Why the others?
-				if (in_array($fact, $subnamefacts)) print " onBlur=\"updatewholename();\" onMouseOut=\"updatewholename();\" onKeyUp=\"updatewholename();\"";
-				if ($fact=="DATE") print " onblur=\"valid_date(this);\" onmouseout=\"valid_date(this);\"";
-				if ($fact=="LATI") print " onblur=\"valid_lati_long(this, 'N', 'S');\" onmouseout=\"valid_lati_long(this, 'N', 'S');\"";
-				if ($fact=="LONG") print " onblur=\"valid_lati_long(this, 'E', 'W');\" onmouseout=\"valid_lati_long(this, 'E', 'W');\"";
-				//if ($fact=="FILE") print " onchange=\"if (updateFormat) updateFormat(this.value);\"";
-				print " ".$readOnly." />\n";
+			// text
+			print "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value))."\" size=\"".$cols."\" dir=\"ltr\"";
+			if ($fact=="NPFX") print " onkeyup=\"wactjavascript_autoComplete(npfx_accept,this,event)\" autocomplete=\"off\" ";
+			// onKeyUp should suffice.  Why the others?
+			if (in_array($fact, $subnamefacts)) print " onBlur=\"updatewholename();\" onMouseOut=\"updatewholename();\" onKeyUp=\"updatewholename();\"";
+			if ($fact=="DATE") print " onblur=\"valid_date(this);\" onmouseout=\"valid_date(this);\"";
+			if ($fact=="LATI") print " onblur=\"valid_lati_long(this, 'N', 'S');\" onmouseout=\"valid_lati_long(this, 'N', 'S');\"";
+			if ($fact=="LONG") print " onblur=\"valid_lati_long(this, 'E', 'W');\" onmouseout=\"valid_lati_long(this, 'E', 'W');\"";
+			//if ($fact=="FILE") print " onchange=\"if (updateFormat) updateFormat(this.value);\"";
+			print " ".$readOnly." />\n";
 				if (($cols>20 || $fact=="NPFX") && $readOnly=="") print_specialchar_link($element_id, false);
+		}
 			}
 		}
-	}
 	// MARRiage TYPE : hide text field and show a selection list
 	if ($fact=="TYPE" and $tags[0]=="MARR") {
 		print "<script type='text/javascript'>";
@@ -1671,7 +1671,7 @@ function updateRest($inputRec, $levelOverride="no") {
  */
 function handle_updates($newged, $levelOverride="no") {
 	global $glevels, $islink, $tag, $uploaded_files, $text, $NOTE, $WORD_WRAPPED_NOTES;
-
+	
 	if ($levelOverride=="no" || count($glevels)==0) $levelAdjust = 0;
 	else $levelAdjust = $levelOverride - $glevels[0];
 
@@ -2162,20 +2162,20 @@ function insert_missing_subtags($level1tag)
 		}
 	}
 	// Do something (anything!) with unrecognised custom tags
-	if (substr($level1tag, 0, 1)=='_' && $level1tag!='_UID' && count($tags)==1) {
-		add_simple_tag("2 DATE");
-		add_simple_tag("2 PLAC");
-		if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
-			foreach ($match[1] as $tag)
-				add_simple_tag("3 $tag");
-		add_simple_tag("3 MAP");
-		add_simple_tag("4 LATI");
-		add_simple_tag("4 LONG");
-		add_simple_tag("2 ADDR");
-		add_simple_tag("2 AGNC");
-		add_simple_tag("2 TYPE");
-		add_simple_tag("2 AGE");
-	}
+	if (substr($level1tag, 0, 1)=='_' && $level1tag!='_UID')
+		foreach (array('DATE', 'PLAC', 'ADDR', 'AGNC', 'TYPE', 'AGE') as $tag)
+			if (!in_array($tag, $tags)) {
+				add_simple_tag("2 {$tag}");
+				if ($tag=='PLAC') {
+					if (preg_match_all('/([A-Z0-9_]+)/', $ADVANCED_PLAC_FACTS, $match))
+						foreach ($match[1] as $atag)
+							add_simple_tag("3 $atag");
+					add_simple_tag("3 MAP");
+					add_simple_tag("4 LATI");
+					add_simple_tag("4 LONG");
+
+				}
+			}
 }
 
 /**
@@ -2213,7 +2213,7 @@ function delete_person($pid, $gedrec='') {
 					}
 				}
 				//-- if there is not at least two people in a family then the family is deleted
-				$pt = preg_match_all("/1 .{4} @(.*)@/", $newfamrec, $pmatch, PREG_SET_ORDER);
+				$pt = preg_match_all("/1 (HUSB|WIFE|CHIL) @(.*)@/", $newfamrec, $pmatch, PREG_SET_ORDER);
 				if ($pt<2) {
 					for ($j=0; $j<$pt; $j++) {
 						$xref = $pmatch[$j][1];
