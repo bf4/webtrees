@@ -497,7 +497,7 @@ class Person extends GedcomRecord {
 			$p1 = $elderdate;
 			$p2 = $this->getBirthDate();
 			$label.="<div class=\"age $TEXT_DIRECTION\">";
-			$label.=get_age_at_event(GedcomDate::GetAgeGedcom($p1, $p2));
+			$label.=get_age_at_event(GedcomDate::GetAgeGedcom($p1, $p2), true);
 			$label.="</div>";
 		}
 		if ($counter)
