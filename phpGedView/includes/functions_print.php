@@ -2213,7 +2213,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 				$p = strpos($rela, "(=");
 				if ($p>0) $rela = trim(substr($rela, 0, $p));
 				if ($pid2==$pid) print "<span class=\"details_label\">";
-				print $rela.": ";
+				print " {$rela}: ";
 				if ($pid2==$pid) print "</span>";
 			}
 			else $rela = $factarray["RELA"]; // default
