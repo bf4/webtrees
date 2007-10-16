@@ -417,31 +417,6 @@ class Person extends GedcomRecord {
 	}
 
 	/**
-	 * get the age
-	 * @param string $birtrec	gedcom record containing BIRT date
-	 * @param string $when	ending date to calculate age
-	 * @return string the age
-	 */
-	function getAge($birtrec="", $when="") {
-		if (empty($birtrec) && empty($when)) {
-			if (!is_null($this->age)) return $this->age;
-			else $keepage = true;
-		}
-
-		$this->_parseBirthDeath();
-		//-- don't calculate a birth age when no birth record
-		if (empty($birtrec) && (empty($this->brec) || $this->best)) return "";
-		if (empty($birtrec)) $birtrec=$this->gedrec;
-		if (empty($when)) {
-			if ($this->isDead()) $when = $this->ddate; // age at death
-			else $when = date("d M Y"); // today
-		}
-		$age = get_age($birtrec, $when, 0);
-		if (isset($keepage)) $this->age = $age;
-		return $age;
-	}
-
-	/**
 	 * get the sex
 	 * @return string 	return M, F, or U
 	 */

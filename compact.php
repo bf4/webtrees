@@ -310,19 +310,12 @@ function print_td_person($n) {
 	}
 
 	if ($pid) {
-		$indirec=find_person_record($pid);
-		if (!$indirec) $indirec = find_updated_record($pid);
+		$indi=Person::getInstance($pid);
+		$name=$indi->getName();
+		$addname=$indi->getAddName();
 
-		if ((!displayDetailsByID($pid))&&(!showLivingNameByID($pid))) {
-			$name = $pgv_lang["private"];
-			$addname = "";
-		}
-		else {
-			$name = get_person_name($pid);
-			$addname = get_add_person_name($pid);
-		}
 		if (($showthumbs) && $MULTI_MEDIA && $SHOW_HIGHLIGHT_IMAGES && showFact("OBJE", $pid)) {
-			$object = find_highlighted_object($pid, $indirec);
+			$object = find_highlighted_object($pid, $indi->gedrec);
 			if (!empty($object["thumb"])) {
 				$size = findImageSize($object["thumb"]);
 				$class = "pedigree_image_portrait";
@@ -338,6 +331,7 @@ function print_td_person($n) {
 				else $text .= " />\n";
 			}
 		}
+
 		$text .= "<a class=\"name1\" href=\"individual.php?pid=$pid\" title=\"$title\"> ";
 		$text .= PrintReady($name);
 		if ($addname) $text .= "<br />" . PrintReady($addname);
@@ -349,18 +343,17 @@ function print_td_person($n) {
   		   $text .= "(".$pid.")</span>";
 		}
 		$text .= "<br />";
-		if (displayDetailsByID($pid)) {
-			$text .= "<span class='details1'>";
-			$birthrec = get_sub_record(1, "1 BIRT", $indirec);
-			$ct = preg_match("/2 DATE.*(\d\d\d\d)/", $birthrec, $bmatch);
-			if ($ct>0) $text .= trim($bmatch[1]);
-			$deathrec = get_sub_record(1, "1 DEAT", $indirec);
-			$ct = preg_match("/2 DATE.*(\d\d\d\d)/", $deathrec, $dmatch);
-			if ($ct>0) {
-				$text .= "-".trim($dmatch[1]);
-				$text .= "<br />".get_age($indirec, substr(get_sub_record(2, "2 DATE", $deathrec),7));
-			} else $text .= "-<br />";
-			$text .= "</span>";
+		if ($indi->canDisplayDetails()) {
+			$text.="<span class='details1'>";
+			$birth=new GedcomDate($indi->getBirthDate(false));
+			$death=new GedcomDate($indi->getDeathDate(false));
+			$text.=$birth->date1->Format('Y');
+			$text.='-';
+			$text.=$death->date1->Format('Y');
+			$age=GedcomDate::GetAgeYears($birth, $death);
+			if ($age)
+				$text.=" <span class=\"age\">({$age})</span>";
+			$text.="</span>";
 		}
 	}
 	$text = unhtmlentities($text);
@@ -369,8 +362,11 @@ function print_td_person($n) {
 	// -- box color
 	$isF="";
 	if ($n==1) {
-		if (strpos($indirec, "1 SEX F")!==false) $isF="F";
-	} else if ($n%2) $isF="F";
+		if ($indi->getSex()=='F')
+			$isF="F";
+	} else
+		if ($n%2)
+			$isF="F";
 	// -- box size
 	if ($n==1) print "<td";
 	else print "<td width='15%'";

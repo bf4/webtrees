@@ -314,7 +314,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			if ($ct>0) {
 				$spouse=$match[1];
 				if ($spouse!=="") {
-					print "<a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\">";
+					print " <a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\">";
 					if (displayDetailsById($spouse)||showLivingNameById($spouse)) {
 						print PrintReady(get_person_name($spouse));
 						$addname = get_add_person_name($spouse);
