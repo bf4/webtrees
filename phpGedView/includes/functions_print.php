@@ -2005,7 +2005,7 @@ function print_theme_dropdown($style=0) {
  */
 function PrintReady($text, $InHeaders=false, $trim=true) {
 	global $query, $action, $firstname, $lastname, $place, $year, $DEBUG;
-	global $TEXT_DIRECTION_array;
+	global $TEXT_DIRECTION_array, $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
 	// Check whether Search page highlighting should be done or not
 	$HighlightOK = false;
 	if (strstr($_SERVER["SCRIPT_NAME"], "search.php")) {	// If we're on the Search page
@@ -2135,39 +2135,41 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 	// To correct the problem, we need to enclose the parentheses, braces, or brackets with
 	// zero-width characters (&lrm; or &rlm;) having a directionality that matches the
 	// directionality of the text that is enclosed by the parentheses, etc.
-
-	$charPos = 0;
-	$lastChar = strlen($text);
-	$newText = "";
-	while (true) {
-		if ($charPos > $lastChar) break;
-		$thisChar = substr($text, $charPos, 1);
-		$charPos ++;
-		if ($thisChar=="(" || $thisChar=="{" || $thisChar=="[") {
-			$tempText = "";
-			while (true) {
-				$tempChar = "";
-				if ($charPos > $lastChar) break;
-				$tempChar = substr($text, $charPos, 1);
-				$charPos ++;
-				if ($tempChar==")" || $tempChar=="}" || $tempChar=="]") break;
-				$tempText .= $tempChar;
-			}
-			$thisLang = whatLanguage($tempText);
-			if (!isset($TEXT_DIRECTION_array[$thisLang]) || $TEXT_DIRECTION_array[$thisLang]=="ltr") {
-				$newText .= getLRM() . $thisChar . $tempText. $tempChar . getLRM();
+	if ($USE_RTL_FUNCTIONS || $TEXT_DIRECTION=="rtl") {
+		$charPos = 0;
+		$lastChar = strlen($text);
+		$newText = "";
+		while (true) {
+			if ($charPos > $lastChar) break;
+			$thisChar = substr($text, $charPos, 1);
+			$charPos ++;
+			if ($thisChar=="(" || $thisChar=="{" || $thisChar=="[") {
+				$tempText = "";
+				while (true) {
+					$tempChar = "";
+					if ($charPos > $lastChar) break;
+					$tempChar = substr($text, $charPos, 1);
+					$charPos ++;
+					if ($tempChar==")" || $tempChar=="}" || $tempChar=="]") break;
+					$tempText .= $tempChar;
+				}
+				$thisLang = whatLanguage($tempText);
+				if (!isset($TEXT_DIRECTION_array[$thisLang]) || $TEXT_DIRECTION_array[$thisLang]=="ltr") {
+					$newText .= getLRM() . $thisChar . $tempText. $tempChar . getLRM();
+				} else {
+					$newText .= getRLM() . $thisChar . $tempText. $tempChar . getRLM();
+	 			   			}
 			} else {
-				$newText .= getRLM() . $thisChar . $tempText. $tempChar . getRLM();
- 			   			}
-		} else {
-			$newText .= $thisChar;
-			   			}
-			   			     }
+				$newText .= $thisChar;
+			}
+		}
+		$text = $newText;
+	}
 
     // Parentheses, braces, and brackets have been processed:
     //		Finish processing of "Highlight Start and "Highlight end"
-	$newText = str_replace(array("\x02\x01", "\x02 \x01", "\x01", "\x02"), array("", " ", "<span class=\"search_hit\">", "</span>"), $newText);
-    return $newText;
+	$text = str_replace(array("\x02\x01", "\x02 \x01", "\x01", "\x02"), array("", " ", "<span class=\"search_hit\">", "</span>"), $text);
+    return $text;
 }
 /**
  * print ASSO RELA information
