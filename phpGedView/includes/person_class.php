@@ -348,7 +348,7 @@ class Person extends GedcomRecord {
 		if (!$this->disp) return $pgv_lang['private'];
 		$this->_parseBirthDeath();
 		//if (!$estimate && $this->best) return new GedcomDate('');
-		if (!$estimate && $this->best) '';
+		if (!$estimate && $this->best) return '';
 		return $this->bdate;
 	}
 
@@ -389,7 +389,7 @@ class Person extends GedcomRecord {
 		if (!$this->disp) return $pgv_lang['private'];
 		$this->_parseBirthDeath();
 		//if (!$estimate && $this->dest) return new GedcomDate('');
-		if (!$estimate && $this->dest) '';
+		if (!$estimate && $this->dest) return '';
 		return $this->ddate;
 	}
 
