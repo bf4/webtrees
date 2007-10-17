@@ -489,7 +489,11 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	print "<input type=\"hidden\" name=\"famid\" value=\"$famid\" />\n";
 	print "<input type=\"hidden\" name=\"pid\" value=\"$pid\" />\n";
 	print "<input type=\"hidden\" name=\"famtag\" value=\"$famtag\" />\n";
-	print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
+	print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />\n";
+	print "<input type=\"hidden\" name=\"goto\" value=\"\" />\n";
+	if (preg_match('/^add(child|spouse|newparent|newrepository)/', $nextaction)) {
+		print "<input type=\"submit\" value=\"{$pgv_lang['saveandgo']}\" onclick=\"document.addchildform.goto.value='new';\"/>\n";
+	}
 	print "<table class=\"facts_table\">";
 
 	// When adding a new child, specify the pedigree
@@ -748,7 +752,10 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		print_add_layer('NOTE', 1);
 		print_add_layer('OBJE', 1);
 	}
-	print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" /><br />\n";
+	print "<input type=\"submit\" value=\"".$pgv_lang["save"]."\" />\n";
+	if (preg_match('/^add(child|spouse|newparent|source)/', $nextaction)) {
+		print "<input type=\"submit\" value=\"{$pgv_lang['saveandgo']}\" onclick=\"document.addchildform.goto.value='new';\"/>\n";
+	}
 	print "</form>\n";
 	?>
 	<script type="text/javascript" src="autocomplete.js"></script>
