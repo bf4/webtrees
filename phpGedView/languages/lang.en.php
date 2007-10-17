@@ -711,6 +711,7 @@ $pgv_lang["password_mismatch"]		= "Passwords do not match.";
 $pgv_lang["enter_username"] 		= "You must enter a user name.";
 $pgv_lang["enter_password"] 		= "You must enter a password.";
 $pgv_lang["save"]					= "Save";
+$pgv_lang["saveandgo"]		= "Save and go to new record";
 $pgv_lang["delete"] 				= "Delete";
 $pgv_lang["edit"]					= "Edit";
 $pgv_lang["no_login"]				= "Unable to authenticate user.";

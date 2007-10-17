@@ -145,8 +145,12 @@ print_simple_header("Edit Interface $VERSION");
 		magnify = mag;
 	}
 
-	function edit_close() {
-		if (window.opener.showchanges) window.opener.showchanges();
+	function edit_close(newurl) {
+		if (newurl)
+			window.opener.location=newurl;
+		else
+			if (window.opener.showchanges)
+				window.opener.showchanges();
 		window.close();
 	}
 //-->
@@ -720,6 +724,7 @@ case 'addsourceaction':
 	}
 	if ($GLOBALS["DEBUG"]) print "<pre>$newged</pre>";
 	$xref = append_gedrec($newged);
+	$link = "source.php?sid=$xref&amp;show_changes=yes";
 	if ($xref) {
 		print "<br /><br />\n".$pgv_lang["new_source_created"]."<br /><br />";
 		print "<a href=\"javascript:// SOUR $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_id_into_field"]." <b>$xref</b></a>\n";
@@ -810,6 +815,7 @@ case 'addrepoaction':
 	}
 	if ($GLOBALS["DEBUG"]) print "<pre>$newged</pre>";
 	$xref = append_gedrec($newged);
+	$link = "repo.php?rid=$xref&amp;show_changes=yes";
 	if ($xref) {
 		print "<br /><br />\n".$pgv_lang["new_repo_created"]."<br /><br />";
 		print "<a href=\"javascript:// REPO $xref\" onclick=\"openerpasteid('$xref'); return false;\">".$pgv_lang["paste_rid_into_field"]." <b>$xref</b></a>\n";
@@ -990,6 +996,7 @@ case 'addchildaction':
 
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	$xref = append_gedrec($gedrec);
+	$link = "individual.php?pid=$xref&amp;show_changes=yes";
 	if ($xref) {
 		print "<br /><br />".$pgv_lang["update_successful"];
 		$gedrec = "";
@@ -1076,6 +1083,7 @@ case 'addspouseaction':
 
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	$xref = append_gedrec($gedrec);
+	$link = "individual.php?pid=$xref&amp;show_changes=yes";
 	if ($xref) print "<br /><br />".$pgv_lang["update_successful"];
 	else exit;
 	$spouserec = $gedrec;
@@ -1319,6 +1327,7 @@ case 'addnewparentaction':
 
 	if ($GLOBALS["DEBUG"]) print "<pre>$gedrec</pre>";
 	$xref = append_gedrec($gedrec);
+	$link = "individual.php?pid=$xref&amp;show_changes=yes";
 	if ($xref) print "<br /><br />".$pgv_lang["update_successful"];
 	else exit;
 	$spouserec = $gedrec;
@@ -2054,13 +2063,17 @@ case 'mod_edit_fact':
 	}
 	break;
 }
+// Redirect to new record, if requested
+if (empty($goto) || empty($link))
+	$link='';
 //------------------------------------------------------------------------------
 // autoclose window when update successful
 if ($success && $EDIT_AUTOCLOSE && !$GLOBALS["DEBUG"]) {
 	if ($action=="copy") print "\n<script type=\"text/javascript\">\n<!--\nwindow.close();\n//-->\n</script>";
-	else print "\n<script type=\"text/javascript\">\n<!--\nedit_close();\n//-->\n</script>";
+	else print "\n<script type=\"text/javascript\">\n<!--\nedit_close('{$link}');\n//-->\n</script>";
 }
 
-print "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close();\">".$pgv_lang["close_window"]."</a></div><br />\n";
+
+print "<div class=\"center\"><a href=\"javascript:;\" onclick=\"edit_close('{$link}');\">".$pgv_lang["close_window"]."</a></div><br />\n";
 print_simple_footer();
 ?>
