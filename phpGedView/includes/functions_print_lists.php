@@ -1135,7 +1135,7 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 		echo "&nbsp;</td>";
 		//-- Surname count
 		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".$url."\" class=\"list_item name2\">".$value["match"]."</a>";
+		echo "<a href=\"{$url}\" class=\"list_item name2\" name=\"{$value['match']}\">{$value["match"]}</a>";
 		echo "</td>";
 		$total += $value["match"];
 
