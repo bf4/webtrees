@@ -2708,7 +2708,7 @@ function get_next_id($table, $field) {
 	$sql = "SELECT MAX($field) FROM ".$TBLPREFIX.$table;
 	$res = dbquery($sql);
 
-	if (!DB::isError($res)) {
+	if ($res!==false && !DB::isError($res)) {
 		$row = $res->fetchRow();
 		$res->free();
 		$newid = $row[0];

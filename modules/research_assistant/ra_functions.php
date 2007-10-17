@@ -1045,9 +1045,10 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	}
 	/**
 	 * Function to find missing information
+	 * @param Person $person
 	 * @return mixed
 	 */
-	function getMissinginfo(& $person) {
+	function getMissinginfo(&$person) {
 		global $factarray, $templefacts, $nondatefacts, $nonplacfacts, $pgv_lang;
 		
 		$perId = $person->getXref();
@@ -1085,31 +1086,29 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 			
 		}
 
-		$indifacts = get_all_subrecords($person->gedrec, "FAMS,FAMC,NOTE,OBJE,SEX,NAME,SOUR,REFN,CHAN,AFN,_UID,_COMM", false);
+		//$indifacts = get_all_subrecords($person->gedrec, "FAMS,FAMC,NOTE,OBJE,SEX,NAME,SOUR,REFN,CHAN,AFN,_UID,_COMM", false);
+		$indifacts = $person->getIndiFacts();
 
+		/* @var $far Event */
 		foreach ($indifacts as $key => $far) {
-			$match = array();
-			$ft = preg_match("/1 (\w+)(.*)/", $far, $match);
-			if ($ft > 0) {
-				$fact = trim($match[1]);
-				$event = trim($match[2]);
-			}
+			$fact = $far->getTag();
+			$event = $far->getDetail();
 			if ($fact=="EVEN" || $fact=="FACT") {
-				$fact = get_gedcom_value("TYPE", 2, $far);
+				$fact = $far->getType();
 			}
-			$date = get_gedcom_value("DATE", 2, $far);
+			$date = $far->getDate();
 			if (empty ($date)) {
 				if (!in_array($fact, $nondatefacts)) {
 					$MissingReturn[] = array ($fact, "DATE");
 				}
 			}
-			$source = get_gedcom_value("SOUR", 2, $far);
+			$source = get_gedcom_value("SOUR", 2, $far->getGedComRecord());
 			if (empty ($source))
 				$MissingReturn[] = array ($fact, "SOUR");
-			$plac = get_gedcom_value("PLAC", 2, $far);
+			$plac = $far->getPlace();
 			if (empty ($plac)) {
 				if (in_array($fact, $templefacts)) {
-					$plac = get_gedcom_value("TEMP", 2, $far);
+					$plac = $far->getValue("TEMP");
 					if (empty($plac)) {
 						$MissingReturn[] = array ($fact, "TEMP");
 					}
@@ -1460,11 +1459,14 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		{
 			return $currentDate;
 		}
+		//var_dump($people);
+		return $people;
 	}
 
 	/**
 	 * tab is the function that builds the display for the different screens.
 	 * These screens are identified by a tab
+	 * @param Person $person
 	 */
 	function tab(&$person) {
 		// Start our engines.
@@ -1525,18 +1527,18 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 										<td align="center" colspan="2" class="topbottombar">'.print_help_link("ra_missing_info_help", "qm", '', false, true).'<b>'.$pgv_lang['missing_info'].
 										'</td>
 									</tr>';
-										$bdate = $person->getBirthDate();
-										$bdatea = parse_date($bdate);
-										if (empty($bdatea[0]['year'])) $bdatea[0]['year'] = "0000";
-										if (empty($bdatea[0]['mon'])) $bdatea[0]['mon'] = "00";
-										if (empty($bdatea[0]['day'])) $bdatea[0]['day'] = "00";
-										$bdate = $bdatea[0]['year'].$bdatea[0]['mon'].$bdatea[0]['day'];
-										$ddate = $person->getDeathDate();
-										$ddatea = parse_date($ddate);
-										if (empty($ddatea[0]['year'])) $ddatea[0]['year'] = "0000";
-										if (empty($ddatea[0]['mon'])) $ddatea[0]['mon'] = "00";
-										if (empty($ddatea[0]['day'])) $ddatea[0]['day'] = "00";
-										$ddate = $ddatea[0]['year'].$ddatea[0]['mon'].$ddatea[0]['day'];
+										$bdatea = $person->getBirthDate();
+										//$bdatea = parse_date($bdate);
+										if (empty($bdatea->date1->y)) $bdatea->date1->y = "0000";
+										if (empty($bdatea->date1->m)) $bdatea->date1->m = "00";
+										if (empty($bdatea->date1->d)) $bdatea->date1->d = "00";
+										$bdate = $bdatea->date1->y.$bdatea->date1->m.$bdatea->date1->d;
+										$ddatea = $person->getDeathDate();
+										//$ddatea = parse_date($ddate);
+										if (empty($ddatea->date1->y)) $ddatea->date1->y = "0000";
+										if (empty($ddatea->date1->m)) $ddatea->date1->m = "00";
+										if (empty($ddatea->date1->d)) $ddatea->date1->d = "00";
+										$ddate = $ddatea->date1->y.$ddatea->date1->m.$ddatea->date1->d;
 										
 										$sourcesInferred = array();
 										$sourcesPrinted = array();

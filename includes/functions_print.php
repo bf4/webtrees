@@ -2247,7 +2247,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
  * @param string $pid	child ID
  * @param string $bdate	child birthdate
  */
-function print_parents_age($person, $bdate) {
+function print_parents_age(&$person, $bdate) {
 	global $pgv_lang, $factarray, $SHOW_PARENTS_AGE, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	if (!$SHOW_PARENTS_AGE) return;
 	$families = $person->getChildFamilies();
@@ -2258,13 +2258,13 @@ function print_parents_age($person, $bdate) {
 	print " <span class=\"age\">";
 	//-- father
 	$spouse = $family->getHusband();
-	if (!is_null($spouse)) {
+	if (!is_null($spouse) && !is_null($spouse->getBirthDate())) {
 		$age=GedcomDate::GetAgeYears($spouse->getBirthDate(), new Gedcomdate($bdate));
 		print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />".$age;
 	}
 	//-- mother
 	$spouse = $family->getWife();
-	if (!is_null($spouse)) {
+	if (!is_null($spouse) && !is_null($spouse->getBirthDate())) {
 		$age=GedcomDate::GetAgeYears($spouse->getBirthDate(), new Gedcomdate($bdate));
 		if ($spouse->getDeathDate(false)) {
 			$child_bdate=parse_date($bdate);

@@ -139,7 +139,7 @@ $HOME_SITE_URL   = "http://www.phpgedview.net";     // -- url for your home page
 $HOME_SITE_TEXT  = "About PhpGedView";                     // -- name of your site
 $SHOW_FACT_ICONS = true;					//-- Show Fact icons on Indi page
 $FAVICON = "images/favicon.ico";                          // -- change to point to your favicon, either relative or absolute
-$THEME_DIR = "themes/navigator/";					// -- directory where display theme files are kept
+$THEME_DIR = "themes/standard/";					// -- directory where display theme files are kept
 if (substr ($THEME_DIR, -1) != "/") $THEME_DIR = $THEME_DIR . "/";
 $ALLOW_THEME_DROPDOWN = false; 					//-- allows the themes to display theme change dropdown
 $SECURITY_CHECK_GEDCOM_DOWNLOADABLE = true;	//-- check for downloadability of GEDCOM
