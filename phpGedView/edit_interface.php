@@ -206,11 +206,11 @@ if (!empty($pid)) {
 			$type = trim($match[1]);
 			$disp = displayDetailsById($pid, $type);
 		}
+		checkChangeTime($pid, $gedrec);
 	}
 	else {
 		$disp = true;
 	}
-	checkChangeTime($pid, $gedrec);
 }
 else if (!empty($famid)) {
 	$famid = clean_input($famid);
