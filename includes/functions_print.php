@@ -1957,7 +1957,7 @@ function print_theme_dropdown($style=0) {
  */
 function PrintReady($text, $InHeaders=false, $trim=true) {
 	global $query, $action, $firstname, $lastname, $place, $year, $DEBUG;
-	global $TEXT_DIRECTION_array;
+	global $TEXT_DIRECTION_array, $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
 	// Check whether Search page highlighting should be done or not
 	$HighlightOK = false;
 	if (strstr($_SERVER["SCRIPT_NAME"], "search.php")) {	// If we're on the Search page
@@ -2087,39 +2087,41 @@ function PrintReady($text, $InHeaders=false, $trim=true) {
 	// To correct the problem, we need to enclose the parentheses, braces, or brackets with
 	// zero-width characters (&lrm; or &rlm;) having a directionality that matches the
 	// directionality of the text that is enclosed by the parentheses, etc.
-
-	$charPos = 0;
-	$lastChar = strlen($text);
-	$newText = "";
-	while (true) {
-		if ($charPos > $lastChar) break;
-		$thisChar = substr($text, $charPos, 1);
-		$charPos ++;
-		if ($thisChar=="(" || $thisChar=="{" || $thisChar=="[") {
-			$tempText = "";
-			while (true) {
-				$tempChar = "";
-				if ($charPos > $lastChar) break;
-				$tempChar = substr($text, $charPos, 1);
-				$charPos ++;
-				if ($tempChar==")" || $tempChar=="}" || $tempChar=="]") break;
-				$tempText .= $tempChar;
-			}
-			$thisLang = whatLanguage($tempText);
-			if (!isset($TEXT_DIRECTION_array[$thisLang]) || $TEXT_DIRECTION_array[$thisLang]=="ltr") {
-				$newText .= getLRM() . $thisChar . $tempText. $tempChar . getLRM();
+	if ($USE_RTL_FUNCTIONS || $TEXT_DIRECTION=="rtl") {
+		$charPos = 0;
+		$lastChar = strlen($text);
+		$newText = "";
+		while (true) {
+			if ($charPos > $lastChar) break;
+			$thisChar = substr($text, $charPos, 1);
+			$charPos ++;
+			if ($thisChar=="(" || $thisChar=="{" || $thisChar=="[") {
+				$tempText = "";
+				while (true) {
+					$tempChar = "";
+					if ($charPos > $lastChar) break;
+					$tempChar = substr($text, $charPos, 1);
+					$charPos ++;
+					if ($tempChar==")" || $tempChar=="}" || $tempChar=="]") break;
+					$tempText .= $tempChar;
+				}
+				$thisLang = whatLanguage($tempText);
+				if (!isset($TEXT_DIRECTION_array[$thisLang]) || $TEXT_DIRECTION_array[$thisLang]=="ltr") {
+					$newText .= getLRM() . $thisChar . $tempText. $tempChar . getLRM();
+				} else {
+					$newText .= getRLM() . $thisChar . $tempText. $tempChar . getRLM();
+	 			   			}
 			} else {
-				$newText .= getRLM() . $thisChar . $tempText. $tempChar . getRLM();
- 			   			}
-		} else {
-			$newText .= $thisChar;
-			   			}
-			   			     }
+				$newText .= $thisChar;
+			}
+		}
+		$text = $newText;
+	}
 
     // Parentheses, braces, and brackets have been processed:
     //		Finish processing of "Highlight Start and "Highlight end"
-	$newText = str_replace(array("\x02\x01", "\x02 \x01", "\x01", "\x02"), array("", " ", "<span class=\"search_hit\">", "</span>"), $newText);
-    return $newText;
+	$text = str_replace(array("\x02\x01", "\x02 \x01", "\x01", "\x02"), array("", " ", "<span class=\"search_hit\">", "</span>"), $text);
+    return $text;
 }
 /**
  * print ASSO RELA information
@@ -2196,7 +2198,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			// ID age
 			if (!strstr($factrec, "_BIRT_") && preg_match("/2 DATE (.*)/", $factrec, $dmatch)) {
 				$tmp=new Person($gedrec);
-				$birth_date=$tmp->getBirthDate();
+				$birth_date=$tmp->getBirthDate(false);
 				$event_date=new GedcomDate($dmatch[1]);
 				$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $event_date), false);
 				if (!empty($age))
@@ -2309,26 +2311,32 @@ function print_fact_date(&$eventObj, $anchor=false, $time=false) {
 			if ($tt>0) print " - <span class=\"date\">".$tmatch[1]."</span>";
 		}
 		$fact = $eventObj->getTag();
-		$parent = $eventObj->getParentObject();
-		if (!is_null($parent) && $parent->getType()=='INDI') {
+		$person = $eventObj->getParentObject();
+		if (!is_null($person) && $person->getType()=='INDI') {
 			// age of parents at child birth
 			if ($fact=="BIRT")
-				print_parents_age($parent, $match[1]);
+				print_parents_age($person, $match[1]);
 			// age at event
 			else if ($fact!="CHAN") {
-				$death = $parent->getDeathEvent();
-				// do not print age after death
-				if (empty($death)||($eventObj->getTag()=='DEAT')||(GedcomDate::Compare($eventObj->getDate(), $death->getDate())<=0)) {
-					$birth_date=$parent->getBirthDate();
+				$birth_date=$person->getBirthDate(false);
+				$death_date=$person->getDeathDate(false);
+				if (GedcomDate::Compare($date, $death_date)<0 || $fact=='DEAT') {
+					// Before death, print age
 					$age=GedcomDate::GetAgeGedcom($birth_date, $date);
 					// Only show calculated age if it differs from recorded age
 					if (!empty($age)) {
 						if (!empty($fact_age) && $fact_age!=$age ||
 						    empty($fact_age) && empty($husb_age) && empty($wife_age) ||
-						    !empty($husb_age) && $parent->getSex()=='M' && $husb_age!= $age ||
-						    !empty($wife_age) && $parent->getSex()=='F' && $wife_age!=$age)
+						    !empty($husb_age) && $person->getSex()=='M' && $husb_age!= $age ||
+						    !empty($wife_age) && $person->getSex()=='F' && $wife_age!=$age)
 							print " ({$pgv_lang['age']} ".get_age_at_event($age, false).")";
 					}
+				}
+				if (GedcomDate::Compare($date, $death_date)>0) {
+					// After death, print time since death
+					$age=GedcomDate::GetAgeGedcom($death_date, $date);
+					if (!empty($age))
+						print " (".get_age_at_event($age, true)." ".$pgv_lang['after_death'].")";
 				}
 			}
 		}

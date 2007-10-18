@@ -595,6 +595,7 @@ $pgv_lang["enter_fullname"]				= "Sie müssen einen vollständigen Namen eingebe
 $pgv_lang["enter_password"]				= "Sie müssen ein Kennwort eingeben.";
 $pgv_lang["confirm_password"]			= "Sie müssen das Kennwort bestätigen.";
 $pgv_lang["save"]						= "Speichern";
+$pgv_lang["saveandgo"]		= "Speichern und nächsten Datensatz aufrufen";
 $pgv_lang["delete"]						= "Löschen";
 $pgv_lang["edit"]						= "Bearbeiten";
 $pgv_lang["no_login"]					= "Kann Benutzer nicht verifizieren.";

@@ -908,10 +908,8 @@ class Person extends GedcomRecord {
 		$this->_parseBirthDeath();
 		$fams = $person->getChildFamilies();
 		// Only include events between birth and death
-		$bEvent=$this->getBirthEvent();
-		$dEvent=$this->getDeathEvent();
-		$bDate =$bEvent->getDate();
-		$dDate =$dEvent->getDate();
+		$bDate=$this->getBirthDate();
+		$dDate=$this->getDeathDate();
 		
 		//-- find family as child
 		foreach($fams as $famid=>$family) {
@@ -1028,10 +1026,8 @@ class Person extends GedcomRecord {
 		if (empty($this->brec)) $this->_parseBirthDeath();
 
 		// Only include events between birth and death
-		$bEvent=$this->getBirthEvent();
-		$dEvent=$this->getDeathEvent();
-		$bDate =$bEvent->getDate();
-		$dDate =$dEvent->getDate();
+		$bDate=$this->getBirthDate();
+		$dDate=$this->getDeathDate();
 		
 		$children = $family->getChildren();
 		foreach($children as $key=>$child) {
@@ -1195,10 +1191,8 @@ class Person extends GedcomRecord {
 		if (strstr($famrec, "1 DIV")) return;
 		if (empty($this->brec)) $this->_parseBirthDeath();
 		// Only include events between birth and death
-		$bEvent=$this->getBirthEvent();
-		$dEvent=$this->getDeathEvent();
-		$bDate =$bEvent->getDate();
-		$dDate =$dEvent->getDate();
+		$bDate=$this->getBirthDate();
+		$dDate=$this->getDeathDate();
 		
 		// add spouse death
 		$fact = "_DEAT_SPOU";
@@ -1257,10 +1251,8 @@ class Person extends GedcomRecord {
 		if (empty($this->bdate)) return; //FIXME Not sure of the logic, but if this exists but was not parsed, it will incorrectly return empty. Should probably call getBirthDate or getGedcomBirthDate()
 		if (empty($this->brec)) $this->_parseBirthDeath();
 		// Only include events between birth and death
-		$bEvent=$this->getBirthEvent();
-		$dEvent=$this->getDeathEvent();
-		$bDate =$bEvent->getDate();
-		$dDate =$dEvent->getDate();
+		$bDate=$this->getBirthDate();
+		$dDate=$this->getDeathDate();
 		
 		$histo=array();
 		if (file_exists("languages/histo.".$lang_short_cut[$LANGUAGE].".php")) {

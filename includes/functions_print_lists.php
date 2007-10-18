@@ -359,13 +359,8 @@ function print_indi_table($datalist, $legend="", $option="") {
 		print "<tr>";
 		print "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
 		//-- Gedcom ID
-		if ($SHOW_ID_NUMBERS) {
-			print "<td class=\"list_value_wrap rela\">";
-			if(!empty($SEARCH_SPIDER))
-				print $person->xref."</td>";
-			else
-				print "<a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".$person->xref."</a></td>";
-		}
+		if ($SHOW_ID_NUMBERS)
+			echo '<td class="list_value_wrap rela">'.$person->getXrefLink().'</td>';
 		//-- SOSA
 		if ($option=="sosa") {
 			print "<td class=\"list_value_wrap\">";
@@ -640,21 +635,11 @@ function print_fam_table($datalist, $legend="", $option="") {
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
 		//-- Family ID
-		if ($SHOW_ID_NUMBERS) {
-			echo "<td class=\"list_value_wrap rela\">";
-			// redundant URL when we only can use 1,000.
-			if(!empty($SEARCH_SPIDER))
-				echo $family->xref;
-			else
-				echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".$family->xref."</a>";
-			echo "</td>";
-		}
+		if ($SHOW_ID_NUMBERS)
+			echo '<td class="list_value_wrap rela">'.$family->getXrefLink().'</td>';
 		//-- Husband ID
-		if ($SHOW_ID_NUMBERS) {
-			echo "<td class=\"list_value_wrap rela\">";
-			echo "<a href=\"".$husb->getLinkUrl()."\" class=\"list_item\">".$husb->xref."</a>";
-			echo "</td>";
-		}
+		if ($SHOW_ID_NUMBERS)
+			echo '<td class="list_value_wrap rela">'.$husb->getXrefLink().'</td>';
 		//-- Husband name(s)
 		if (isset($value["name"])) {
 			$partners = explode(" + ", $value["name"]); // "husb + wife"
@@ -691,11 +676,8 @@ function print_fam_table($datalist, $legend="", $option="") {
 		}
 		echo "</td>";
 		//-- Wife ID
-		if ($SHOW_ID_NUMBERS) {
-			echo "<td class=\"list_value_wrap rela\">";
-			echo "<a href=\"".$wife->getLinkUrl()."\" class=\"list_item\">".$wife->xref."</a>";
-			echo "</td>";
-		}
+		if ($SHOW_ID_NUMBERS)
+			echo '<td class="list_value_wrap rela">'.$wife->getXrefLink().'</td>';
 		//-- Wife name(s)
 		if (isset($value["name"])) $name = check_NN($partners[1]);
 		else $name = $wife->getSortableName();
@@ -876,11 +858,8 @@ function print_sour_table($datalist, $legend="") {
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
 		//-- Source ID
-		if ($SHOW_ID_NUMBERS) {
-			echo "<td class=\"list_value_wrap rela\">";
-			echo "<a href=\"".$source->getLinkUrl()."\" class=\"list_item\">".$source->xref."</a>";
-			echo "</td>";
-		}
+		if ($SHOW_ID_NUMBERS)
+			echo '<td class="list_value_wrap rela">'.$source->getXrefLink().'</td>';
 		//-- Source name(s)
 		$name = $source->getSortableName();
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
@@ -1014,11 +993,8 @@ function print_repo_table($datalist, $legend="") {
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
 		//-- REPO ID
-		if ($SHOW_ID_NUMBERS) {
-			echo "<td class=\"list_value_wrap rela\">";
-			echo "<a href=\"".$repo->getLinkUrl()."\" class=\"list_item\">".$repo->xref."</a>";
-			echo "</td>";
-		}
+		if ($SHOW_ID_NUMBERS)
+			echo '<td class="list_value_wrap rela">'.$repo->getXrefLink().'</td>';
 		//-- Repository name(s)
 		$name = $repo->getSortableName();
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
@@ -1093,11 +1069,8 @@ function print_media_table($datalist, $legend="") {
 		echo "<tr>";
 		echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
 		//-- Object ID
-		if ($SHOW_ID_NUMBERS) {
-			echo "<td class=\"list_value_wrap rela\">";
-			echo "<a href=\"".$media->getLinkUrl()."\" class=\"list_item\">".$media->xref."</a>";
-			echo "</td>";
-		}
+		if ($SHOW_ID_NUMBERS)
+			echo '<td class="list_value_wrap rela">'.$media->getXrefLink().'</td>';
 		//-- Object name(s)
 		$name = $media->getSortableName();
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($name)."\">";
@@ -1223,7 +1196,7 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 		echo "&nbsp;</td>";
 		//-- Surname count
 		echo "<td class=\"list_value_wrap\">";
-		echo "<a href=\"".$url."\" class=\"list_item name2\">".$value["match"]."</a>";
+		echo "<a href=\"{$url}\" class=\"list_item name2\" name=\"{$value['match']}\">{$value["match"]}</a>";
 		echo "</td>";
 		$total += $value["match"];
 
@@ -1283,12 +1256,8 @@ function print_changes_table($datalist) {
 		//echo "<td class=\"list_value_wrap rela list_item\">".++$n."</td>";
 		++$n;
 		//-- Record ID
-		if ($SHOW_ID_NUMBERS) {
-			echo "<td class=\"list_value_wrap rela\">";
-			// sort grouped by FAM INDI etc...
-			$sortkey = substr($record->xref, 0 ,1).sprintf("%05d", substr($record->xref, 1));
-			echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item\" name=\"".$sortkey."\">".$record->xref."</a></td>";
-		}
+		if ($SHOW_ID_NUMBERS)
+			echo '<td class="list_value_wrap rela">'.$record->getXrefLink().'</td>';
 		//-- Record name(s)
 		if ($record->type=="FAM") $name = $record->getSortableName(true);
 		else $name = $record->getSortableName();

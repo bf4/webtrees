@@ -1366,17 +1366,19 @@ function compareStrings($aName, $bName, $ignoreCase=true) {
 				if (!$aMultiLetter) {
 					$aCharLen = 1;
 					$aLetter = substr($aName, $aIndex, 1);
-					if ((ord($aLetter) & 0xE0) == 0xC0) $aCharLen = 2;		// 2-byte sequence
-					if ((ord($aLetter) & 0xF0) == 0xE0) $aCharLen = 3;		// 3-byte sequence
-					if ((ord($aLetter) & 0xF8) == 0xF0) $aCharLen = 4;		// 4-byte sequence
+					$aOrd = ord($aLetter);
+					if (($aOrd & 0xE0) == 0xC0) $aCharLen = 2;		// 2-byte sequence
+					if (($aOrd & 0xF0) == 0xE0) $aCharLen = 3;		// 3-byte sequence
+					if (($aOrd & 0xF8) == 0xF0) $aCharLen = 4;		// 4-byte sequence
 				}
 
 				if (!$bMultiLetter) {
 					$bCharLen = 1;
 					$bLetter = substr($bName, $bIndex, 1);
-					if ((ord($bLetter) & 0xE0) == 0xC0) $bCharLen = 2;		// 2-byte sequence
-					if ((ord($bLetter) & 0xF0) == 0xE0) $bCharLen = 3;		// 3-byte sequence
-					if ((ord($bLetter) & 0xF8) == 0xF0) $bCharLen = 4;		// 4-byte sequence
+					$bOrd = ord($bLetter);
+					if (($bOrd & 0xE0) == 0xC0) $bCharLen = 2;		// 2-byte sequence
+					if (($bOrd & 0xF0) == 0xE0) $bCharLen = 3;		// 3-byte sequence
+					if (($bOrd & 0xF8) == 0xF0) $bCharLen = 4;		// 4-byte sequence
 				}
 
 				$aLetter = substr($aName, $aIndex, $aCharLen);
@@ -3125,6 +3127,13 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
  	require "includes/sort_tables_utf8.php";
 	return $result;
 }
+
+/**
+ * determines whether the passed in filename is a link to an external source (i.e. contains '://')
+ */
+function isFileExternal($file) { 
+	return (strpos($file, '://') === false) ? false : true; 
+} 
 
 // optional extra file
 if (file_exists( "includes/functions.extra.php")) require  "includes/functions.extra.php";

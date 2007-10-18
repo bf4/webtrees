@@ -101,7 +101,8 @@ function useRTLFunctions() {
  * @return "" if $USE_RTL_FUNCTIONS is false and  "&lrm;" if true.
  */
 function getLRM(){
-	return  !useRTLFunctions() ? "" : "&lrm;";
+	global $TEXT_DIRECTION;
+	return  (useRTLFunctions() || ($TEXT_DIRECTION=='rtl')) ? "&lrm;" : "";
 }
 
 /**
@@ -111,7 +112,8 @@ function getLRM(){
  * @return "" if $USE_RTL_FUNCTIONS is false and  "&rlm;" if true.
  */
 function getRLM(){
-	return  !useRTLFunctions() ? "" : "&rlm;";
+	global $TEXT_DIRECTION;
+	return  (useRTLFunctions() || ($TEXT_DIRECTION!='rtl')) ? "&rlm;" : "";
 }
 
 /**
@@ -318,7 +320,7 @@ function bidi_text($text) {
 		global $RTLOrd;
 
 		// דו"ח אישי
-		//קראטוןםפ שדגכעיחלךף זסבה� מצתץ עברי איתה מאיה (אתקה) שם משפחה ‎
+		//קראטוןםפ שדגכעיחלךף זסבה� מצתץ עברי איתה מאיה (אתקה) שם משפחה ‎
 		//מספר מזהה (SSN)
 
 		$found = false;

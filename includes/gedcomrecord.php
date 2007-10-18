@@ -290,6 +290,15 @@ class GedcomRecord {
 		return $title;
 	}
 
+	// Get an HTML link to this object, for use in sortable lists.
+	function getXrefLink() {
+		global $SEARCH_SPIDER;
+		if (empty($SEARCH_SPIDER))
+			return "<a href=\"".$this->getLinkUrl()."\" name=\"".preg_replace('/\D/','',$this->getXref())."\">".$this->getXref()."</a>";
+		else
+			return $this->getXref();
+	}
+
 	/**
 	 * return an absolute url for linking to this record from another site
 	 *
