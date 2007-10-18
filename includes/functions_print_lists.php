@@ -1362,7 +1362,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	//print "<td></td>";
 	//if ($SHOW_ID_NUMBERS) print "<td></td>";
 	print "<td class=\"list_label\">";
-	print $pgv_lang["total_names"].": ".$n;
+	print $pgv_lang["stat_events"].": ".$n;
 	if ($hidden) print "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	print "</td>";
 	print "<td>";
