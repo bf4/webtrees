@@ -3280,6 +3280,13 @@ function loadLanguage($desiredLanguage="english", $forceLoad=false) {
 	return $result;
 }
 
+/**
+ * determines whether the passed in filename is a link to an external source (i.e. contains '://')
+ */
+function isFileExternal($file) { 
+	return (strpos($file, '://') === false) ? false : true; 
+} 
+
 // optional extra file
 if (file_exists( "includes/functions.extra.php")) require  "includes/functions.extra.php";
 

@@ -2020,9 +2020,4 @@ function mkdirs($dir, $mode = 0777, $recursive = true) {
 	return FALSE;
 }
 
-// determines whether the passed in filename is a link to an external source (i.e. contains '://')
-function isFileExternal($file) { 
-	return (strpos($file, '://') === false) ? false : true; 
-} 
-
 ?>
