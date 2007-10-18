@@ -45,6 +45,7 @@ VERSION 4.1.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["after_death"]               18 Oct 2007       A "(XXXX after death)"
 +$pgv_lang["saveandgo"]                 17 Oct 2007       A
 *$pgv_lang["privacy_error"]							12 Oct 2007				w
 *$pgv_lang["media_broken"]							11 Oct 2007				w

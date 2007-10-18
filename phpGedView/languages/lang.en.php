@@ -598,6 +598,7 @@ $pgv_lang["years"]					= "years";
 $pgv_lang["day1"]					= "day";
 $pgv_lang["month1"]					= "month";
 $pgv_lang["year1"]					= "year";
+$pgv_lang["after_death"]        ="after death";
 $pgv_lang["timeline_title"] 		= "PhpGedView Timeline";
 $pgv_lang["timeline_chart"] 		= "Timeline Chart";
 $pgv_lang["remove_person"]			= "Remove Person";

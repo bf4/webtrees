@@ -2246,7 +2246,7 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 			// ID age
 			if (!strstr($factrec, "_BIRT_") && preg_match("/2 DATE (.*)/", $factrec, $dmatch)) {
 				$tmp=new Person($gedrec);
-				$birth_date=new GedcomDate($tmp->getBirthDate());
+				$birth_date=new GedcomDate($tmp->getBirthDate(false));
 				$event_date=new GedcomDate($dmatch[1]);
 				$age=get_age_at_event(GedcomDate::GetAgeGedcom($birth_date, $event_date), false);
 				if (!empty($age))
@@ -2360,21 +2360,28 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 				print_parents_age($pid, $match[1]);
 			// age at event
 			else if ($fact!="CHAN") {
-				if (!$indirec) $indirec=find_person_record($pid);
-				// do not print age after death
-				$deatrec=get_sub_record(1, "1 DEAT", $indirec);
-				if (empty($deatrec)||(compare_facts_date($factrec, $deatrec)<=0)||(strstr($factrec, "1 DEAT"))) {
-					$tmp=new Person($indirec);
-					$birth_date=new GedcomDate($tmp->getBirthDate());
+				if (!$indirec)
+					$indirec=find_person_record($pid);
+				$person=new Person($indirec);
+				$birth_date=new GedcomDate($person->getBirthDate(false));
+				$death_date=new GedcomDate($person->getDeathDate(false));
+				if (GedcomDate::Compare($date, $death_date)<0 || $fact=='DEAT') {
+					// Before death, print age
 					$age=GedcomDate::GetAgeGedcom($birth_date, $date);
 					// Only show calculated age if it differs from recorded age
 					if (!empty($age)) {
 						if (!empty($fact_age) && $fact_age!=$age ||
 						    empty($fact_age) && empty($husb_age) && empty($wife_age) ||
-						    !empty($husb_age) && $tmp->getSex()=='M' && $husb_age!= $age ||
-						    !empty($wife_age) && $tmp->getSex()=='F' && $wife_age!=$age)
+						    !empty($husb_age) && $person->getSex()=='M' && $husb_age!= $age ||
+						    !empty($wife_age) && $person->getSex()=='F' && $wife_age!=$age)
 							print " ({$pgv_lang['age']} ".get_age_at_event($age, false).")";
 					}
+				}
+				if (GedcomDate::Compare($date, $death_date)>0) {
+					// After death, print time since death
+					$age=GedcomDate::GetAgeGedcom($death_date, $date);
+					if (!empty($age))
+						print " (".get_age_at_event($age, true)." ".$pgv_lang['after_death'].")";
 				}
 			}
 		}
