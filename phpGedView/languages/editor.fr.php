@@ -27,7 +27,7 @@
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Vous ne pouvez pas d'accéder aux fichiers de langue en direct.";
+	header("HTTP/1.0 403 Forbidden" );
 	exit;
 }
 
@@ -157,8 +157,8 @@ $pgv_lang["hebrew_surn"]                = "Nom Hébreu";
 $pgv_lang["hide_changes"]               = "Masquer les modifications.";
 $pgv_lang["highlighted"]                = "Surbrillance";
 $pgv_lang["illegal_chars"]              = "Présence de caractères interdits";
-#pgv_lang["invalid_search_multisite_input"]= "Please enter one of the following:  Name, Birth Date, Birth Place, Death Date, Death Place, and Sex ";
-#pgv_lang["invalid_search_multisite_input_gender"]= "Please search again with more information than just sex";
+#pgv_lang["invalid_search_multisite_input"]= "Please enter one of the following:  Name, Birth Date, Birth Place, Death Date, Death Place, and Gender ";
+#pgv_lang["invalid_search_multisite_input_gender"]= "Please search again with more information than just gender";
 $pgv_lang["label_diff_server"]          = "Un autre site";
 $pgv_lang["label_location"]             = "Adresse";
 $pgv_lang["label_password_id2"]         = "Mot de passe: ";
@@ -216,5 +216,4 @@ $pgv_lang["upload_media"]               = "Charger des objets MultiMedia";
 $pgv_lang["upload_media_help"]          = "~#pgv_lang[upload_media]#~<br /><br />Choisir un fichier sur votre ordinateur. Il sera copié sur le serveur dans le dossier <b>#MEDIA_DIRECTORY#</b> ou un de ses sous-dossiers.<br /><br />Le nom du dossier sera ajouté à #MEDIA_DIRECTORY#. Par exemple, #MEDIA_DIRECTORY#famille. Si le dossier de vignettes n'existe pas, il sera créé automatiquement.";
 $pgv_lang["upload_successful"]          = "Téléchargement réussi";
 $pgv_lang["view_change_diff"]           = "Voir les différences";
-
 ?>

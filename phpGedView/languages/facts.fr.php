@@ -26,10 +26,10 @@
  * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Vous ne pouvez pas d'accéder aux fichiers de langue en direct.";
+	header("HTTP/1.0 403 Forbidden" );
 	exit;
 }
-// -- Define a fact array to map GEDCOM tags with their french values
+
 $factarray["ABBR"]                      = "Abréviation";
 $factarray["ADDR"]                      = "Adresse";
 $factarray["ADR1"]                      = "Adresse 1";
