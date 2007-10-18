@@ -24,10 +24,9 @@
  * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Vous ne pouvez pas d'accéder aux fichiers de langue en direct.";
+	header("HTTP/1.0 403 Forbidden" );
 	exit;
 }
-
 $countries["ABW"]                       ="Aruba";
 #countries["ACA"]                       ="Acadia";
 $countries["AFG"]                       ="Afghanistan";

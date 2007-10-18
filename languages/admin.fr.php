@@ -26,7 +26,7 @@
  * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Vous ne pouvez pas d'accéder aux fichiers de langue en direct.";
+	header("HTTP/1.0 403 Forbidden" );
 	exit;
 }
 
@@ -346,5 +346,4 @@ $pgv_lang["spanish"]                    = "Façon Espagnole";
 $pgv_lang["portuguese"]                 = "Façon Portugaise";
 $pgv_lang["icelandic"]                  = "Façon Islandaise";
 $pgv_lang["paternal"]                   = "Nom du père (défaut)";
-
 ?>

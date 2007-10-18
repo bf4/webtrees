@@ -25,9 +25,8 @@
  * @author Julien Damon
  * @version $Id$
  */
-
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Vous ne pouvez pas d'accéder aux fichiers de langue en direct.";
+	header("HTTP/1.0 403 Forbidden" );
 	exit;
 }
 
@@ -139,23 +138,23 @@ $pgv_lang["no_family_facts"]            = "Aucun évènement pour cette famille.
 $pgv_lang["stat_males"]                 = "Total hommes";
 $pgv_lang["stat_females"]               = "Total femmes";
 
-$pgv_lang["sunday_1st"]                 = "D";
-$pgv_lang["monday_1st"]                 = "L";
-$pgv_lang["tuesday_1st"]                = "Ma";
-$pgv_lang["wednesday_1st"]              = "Me";
-$pgv_lang["thursday_1st"]               = "J";
-$pgv_lang["friday_1st"]                 = "V";
-$pgv_lang["saturday_1st"]               = "S";
+$pgv_lang["sunday_1st"]                 = "Dim";
+$pgv_lang["monday_1st"]                 = "Lun";
+$pgv_lang["tuesday_1st"]                = "Mar";
+$pgv_lang["wednesday_1st"]              = "Mer";
+$pgv_lang["thursday_1st"]               = "Jeu";
+$pgv_lang["friday_1st"]                 = "Ven";
+$pgv_lang["saturday_1st"]               = "Sam";
 
 $pgv_lang["jan_1st"]                    = "Jan";
 $pgv_lang["feb_1st"]                    = "Fév";
-$pgv_lang["mar_1st"]                    = "Mars";
-$pgv_lang["apr_1st"]                    = "Avril";
+$pgv_lang["mar_1st"]                    = "Mar";
+$pgv_lang["apr_1st"]                    = "Avr";
 $pgv_lang["may_1st"]                    = "Mai";
 $pgv_lang["jun_1st"]                    = "Juin";
-$pgv_lang["jul_1st"]                    = "Juill";
+$pgv_lang["jul_1st"]                    = "Juil";
 $pgv_lang["aug_1st"]                    = "Août";
-$pgv_lang["sep_1st"]                    = "Sept";
+$pgv_lang["sep_1st"]                    = "Sep";
 $pgv_lang["oct_1st"]                    = "Oct";
 $pgv_lang["nov_1st"]                    = "Nov";
 $pgv_lang["dec_1st"]                    = "Déc";
@@ -406,6 +405,7 @@ $pgv_lang["mother"]                     = "Mère";
 #pgv_lang["parent"]                     = "Parent";
 $pgv_lang["relatives"]                  = "Famille proche";
 $pgv_lang["relatives_events"]           = "Évènements de la famille proche";
+$pgv_lang["historical_facts"]           = "Faits historiques";
 $pgv_lang["spouse"]                     = "Conjoint";
 $pgv_lang["spouses"]                    = "Conjoints";
 $pgv_lang["surnames"]                   = "Noms de famille";
@@ -678,7 +678,8 @@ $pgv_lang["rebuild_indexes"]            = "Reconstruire les index";
 $pgv_lang["password_mismatch"]          = "Mot de passe sans correspondance.";
 $pgv_lang["enter_username"]             = "Vous devez entrer un nom d'utilisateur.";
 $pgv_lang["enter_password"]             = "Vous devez entrer un mot de passe.";
-$pgv_lang["save"]                       = "Sauvegarder";
+$pgv_lang["save"]                       = "Enregistrer";
+$pgv_lang["saveandgo"]                  = "Enregistrer et ouvrir la nouvelle page";
 $pgv_lang["delete"]                     = "Supprimer";
 $pgv_lang["edit"]                       = "Modifier";
 $pgv_lang["no_login"]                   = "Authentification de l'utilisateur impossible.";
