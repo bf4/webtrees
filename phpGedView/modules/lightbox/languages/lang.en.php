@@ -55,14 +55,15 @@ $pgv_lang["lb_ss_SpeedAdvice"]		= "Slide show timing in seconds";
 // ---------------------------------------------------------------------
 
 
-$pgv_lang["lb_help"] 		= "Album Help";
-$pgv_lang["lightbox"]		= "Album";
-$pgv_lang["showmenu"] 		= "Show Menu:";
-$pgv_lang["active"] 		= "Active";
-$pgv_lang["TYPE__other"] 	= "Other";
-$pgv_lang["no_media"] 		= "None";
+$pgv_lang["lb_help"] 		 = "Album Help";
+$pgv_lang["lightbox"]		 = "Album";
+$pgv_lang["showmenu"] 		 = "Show Menu:";
+$pgv_lang["active"] 		 = "Active";
+$pgv_lang["TYPE__other"] 	 = "Other";
+$pgv_lang["no_media"] 		 = "None";
+$pgv_lang["TYPE__footnotes"] = "Footnotes";
 
-$pgv_lang["census_text"]  	= "\"These census images have been obtained from \"The National Archives\", the custodian of the original records, ";
+$pgv_lang["census_text"]  	 = "\"These census images have been obtained from \"The National Archives\", the custodian of the original records, ";
 $pgv_lang["census_text"] 	.= "and appear here with their approval on the condition that no commercial use is made of them without permission." . "\n" ;
 $pgv_lang["census_text"] 	.= "Requests for commercial publication of these or other census images appearing on this website should be directed to: ";
 $pgv_lang["census_text"] 	.= "Image Library, The National Archives, Kew, Surrey, TW9 4DU, United Kingdom.\"" . "\n" ;

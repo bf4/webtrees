@@ -35,11 +35,11 @@
 // -----------------------------------------------------------------------------
 // function lightbox_print_media_row($rtype, $rowm, $pid) {
 // -----------------------------------------------------------------------------
-
+$n=1;
     global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $MEDIA_DIRECTORY, $TEXT_DIRECTION;
     global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
     global $SEARCH_SPIDER;
-    global $t, $edit, $SERVER_URL, $reorder, $LB_AL_THUMB_LINKS;
+    global $t, $n, $edit, $SERVER_URL, $reorder, $LB_AL_THUMB_LINKS, $note, $rowm;
 
 	// If reorder media has been clicked
 	if (isset($reorder) && $reorder==1) {
@@ -52,7 +52,7 @@
 	
     //print dummy image if media is linked to a 'private' person
     if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
-        print "<table><tr><td class=\"prvpic\" align=\"center\" colspan=1>" . "\n";
+        print "<table><tr><br><td class=\"prvpic\" align=\"center\" colspan=1>" . "\n";
 		print $pgv_lang["lb_private"];
 //        print "<img src=\"modules/lightbox/images/private.gif\" class=\"icon\" width=\"60\" height=\"80\" alt=\" Image Private \" /></img>" . "\n" ;
         print "</td></tr></table>" . "\n";
@@ -98,6 +98,7 @@
 		}
 		
 		// Get Media info
+
 		if ($isExternal || media_exists($thumbnail)) {
             $mainFileExists = false;
             if ($isExternal || media_exists($mainMedia)) {
@@ -107,7 +108,7 @@
                 $imgheight = $imgsize[1]+150;
 
                 // For filetypes supported by lightbox at the moment ================
-				if ( eregi("\.jpg",$rowm['m_file']) || eregi("\.jpeg",$rowm['m_file']) || eregi("\.gif",$rowm['m_file']) || eregi("\.png",$rowm['m_file']) || eregi("\.pdf",$rowm['m_file']) ) {
+				if ( eregi("\.jpg",$rowm['m_file']) || eregi("\.jpeg",$rowm['m_file']) || eregi("\.gif",$rowm['m_file']) || eregi("\.png",$rowm['m_file']) || eregi("\.pdf",$rowm['m_file']) || eregi("http",$rowm['m_file']) ) {
 					print "<table class=\"pic\"><tr>" . "\n";
 					print "<td align=\"center\" colspan=1>". "\n";
 					
@@ -115,11 +116,11 @@
 					if ( $reorder==1 ) {
 						// Do not show tooltip
 						
-					// Else if source info available and file = PDF - Open with Lightbox URL,  and create tooltip link for source AND media details
-					}else if (eregi("1 SOUR",$rowm['m_gedrec']) && eregi("\.pdf",$rowm['m_file'])) { 
+					// Else if source info available and file = PDF or URL - Open with Lightbox URL,  and create tooltip link for source AND media details
+					}else if (eregi("1 SOUR",$rowm['m_gedrec']) && (eregi("\.pdf",$rowm['m_file']) || eregi("http",$rowm['m_file'])) ) {  
 						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(1200,700,click)' title=\"" . stripslashes($mediaTitle) . "\"\"
 								onmouseover=\"Tip('" 
-									. "&nbsp;<b>" . $mediaTitle . "</b>"
+									. "&nbsp;" . $mediaTitle . ""
 									. "<br>" 								
 									. "&nbsp;" . $pgv_lang["lb_view_source_tip"] . "<a href=\'" 
 									. $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;" . $sour2 
@@ -132,11 +133,11 @@
 								. ")\""
 								. ">\n";								
 								
-					// Else if no source info available and file = PDF - Open with Lightbox URL,  and create tooltip link for media details only
-					}else if (!eregi("1 SOUR",$rowm['m_gedrec']) && eregi("\.pdf",$rowm['m_file'])) { 
+					// Else if no source info available and file = PDF or URL - Open with Lightbox URL,  and create tooltip link for media details only
+					}else if (!eregi("1 SOUR",$rowm['m_gedrec']) && (eregi("\.pdf",$rowm['m_file']) || eregi("http",$rowm['m_file'])) ) { 
 						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(1200,700,click)' title=\"" . stripslashes($mediaTitle) . "\"\" 
 								onmouseover=\"Tip('" 
-									. "&nbsp;<b>" . $mediaTitle . "</b>"
+									. "&nbsp;" . $mediaTitle . ""
 									. "<br>"
 									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'"
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"]
@@ -152,7 +153,7 @@
 
 						print	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' title=\"" . stripslashes($mediaTitle) . "\"\" 
 								onmouseover=\"Tip('" 
-									. "&nbsp;<b>" . $mediaTitle . "</b>"
+									. "&nbsp;" . $mediaTitle . ""
 									. "<br>"
 									
 									. "&nbsp;" . $pgv_lang["lb_view_source_tip"] . "<a href=\'" 
@@ -172,7 +173,7 @@
 					}else if (!eregi("1 SOUR",$rowm['m_gedrec'])) { 
 						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' title=\"" . stripslashes($mediaTitle) . "\"\"
 								onmouseover=\"Tip('" 
-									. "&nbsp;<b>" . $mediaTitle . "</b>"
+									. "&nbsp;" . $mediaTitle . ""
 									. "<br>"
 									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'"
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"]
@@ -200,7 +201,7 @@
 						print 	"<a href=\"javascript:;\" 
 								onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" title=\"" . stripslashes($mediaTitle) . "\"\" 
 								onmouseover=\"Tip('" 
-									. "&nbsp;<b>" . $mediaTitle . "</b>"
+									. "&nbsp;" . $mediaTitle . ""
 									. "<br>" 								
 									. "&nbsp;" . $pgv_lang["lb_view_source_tip"] . "<a href=\'" 
 									. $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;" . $sour2 
@@ -218,7 +219,7 @@
 						print 	"<a href=\"javascript:;\" 
 								onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" title=\"" . stripslashes($mediaTitle) . "\"\"
 								onmouseover=\"Tip('" 
-									. "&nbsp;<b>" . $mediaTitle . "</b>"
+									. "&nbsp;" . $mediaTitle . ""
 									. "<br>"
 									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'"
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"]
@@ -234,15 +235,28 @@
 				}
             }
 			
-			// Print the Thumbnail
+			// Print the Thumbnail if Image, Common Thumbnail if URL
 // LB 		print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
-			print "<img src=\"" .$thumbnail . "\" height=80 border=\"0\" " ;
-
+			if (eregi("http",$rowm['m_file'])) {
+				print "<br><img src=\"" . $MEDIA_DIRECTORY . "thumbs/urls/URL.jpg \" height=80 border=\"0\" " ;
+			}else{
+				// Ceck for Notes associated with media item
+			    if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
+					$note[$n]  = $pgv_lang["note"] . " " . ($n+1) . "";
+					print "<font size=1>" . $note[$n] . "</font><br>";
+//					$note_text[$n] = print_fact_notes($rowm["m_gedrec"], 1);						
+					$n++;
+				
+				}else{
+					print "<br>";
+				}			
+				print "<img src=\"" .$thumbnail . "\" height=80 border=\"0\" " ;
+			}
 			// These next lines disable the extra IE Browser tooltip. (It has to be done manually in Firefox but this is not recommended)
 				// How to turn off tooltip in firefox: (Not recommended)
 					// Type "about:config" in the Firefox address box and hit enter. 
 					// It shows a list of configurable features. Find "browser.chrome.toolbar_tips" item and double-click to turn it value to false.
-				// If you perform the above, ALL, Firefox chrome tooltips will be turned off .. This is not recommended)
+				// If you perform the above, ALL Firefox chrome tooltips will be turned off .. This is not recommended)
 				// I will try to find a better way of removing the doubled tooltips ... Brian Holland .. Lightbox developer)
 			if ( eregi("1 SOUR",$rowm['m_gedrec'])) {
 				print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\nSource info is available\" />";
@@ -298,7 +312,7 @@
             }else{
 				//Do nothing
 			}
-				
+
             print "</table>" . "\n";
         }
 
