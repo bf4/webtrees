@@ -73,7 +73,7 @@ global $LANGUAGE;
 	
 <?php
 //include('modules/lightbox/lb_config.php');
-global $edit, $controller, $tabno, $_REQUEST, $thumb_edit ;
+global $edit, $controller, $tabno, $_REQUEST, $thumb_edit, $n ;
 
 //------------------------------------------------------------------------------
 // Start Main Table
@@ -83,8 +83,9 @@ echo "<table border=0 width='100%'><tr>" . "\n\n";
 //------------------------------------------------------------------------------
 // Build Thumbnail Rows
 //------------------------------------------------------------------------------
+
      echo "<td>";
-     for ($t=1; $t <=4; $t++) {
+     for ($t=1; $t <=5; $t++) {
 
            if ($t==1) {
                 lightbox_print_media($pid, 0, true, 1);
@@ -98,6 +99,9 @@ echo "<table border=0 width='100%'><tr>" . "\n\n";
            elseif ($t==4) {
                 lightbox_print_media($pid, 0, true, 4);
            }
+           elseif ($t==5) {
+                lightbox_print_media($pid, 0, true, 4);
+           }		   
            else{
            }
 
@@ -133,3 +137,4 @@ echo "<center>";
 </body>
 </html>
 <?php  echo "\n" ;  ?>
+

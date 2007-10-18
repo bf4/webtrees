@@ -599,7 +599,7 @@ if(empty($SEARCH_SPIDER)) {
 <!-- ========================== Start 8th tab individual page ==== Album ======== -->
 <?php
 if(empty($SEARCH_SPIDER)) {
-	if (file_exists("modules/lightbox/album.php")) {
+	if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 		// The following is temporary, until the handling of the Lightbox Help system
 		// is adjusted to match the usual PhpGedView practice
 		$lbHelpFile = "modules/lightbox/languages/help.".$lang_short_cut[$LANGUAGE].".php";
@@ -625,11 +625,11 @@ if(empty($SEARCH_SPIDER)) {
 			print "<table class=\"facts_table\"><tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr></table>\n";
 		}
     }else{
-        print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:block; \" >\n";
+       print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:block; \" >\n";
     }
 	// Content info ---------------------------------------------------
 	print "<div id=\"album_content\"> \n";
-	if (file_exists("modules/lightbox/album.php")) {
+	if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 		if (($controller->default_tab==7)||(empty($SEARCH_SPIDER))) {
 			$controller->getTab(7) ;
 		}else{
