@@ -2809,7 +2809,6 @@ function DumpString($input) {
 	$hex3R = "";
 	$hex4L = "";
 	$hex4R = "";
-	$hexLetters = "0123456789ABCDEF";
 
 	$pos = 0;
 	while (true) {
@@ -2823,40 +2822,32 @@ function DumpString($input) {
 		$UTF8[] = $thisChar;
 
 		// Separate the current UTF8 character into hexadecimal digits
-		$byte = ord(substr($thisChar, 0, 1));
-		$nibbleL = $byte >> 4;
-		$hex1L .= substr($hexLetters, $nibbleL, 1);
-		$nibbleR = $byte & 0x0F;
-		$hex1R .= substr($hexLetters, $nibbleR, 1);
+		$byte = bin2hex(substr($thisChar, 0, 1));
+		$hex1L .= substr($byte, 0, 1);
+		$hex1R .= substr($byte, 1, 1);
 
 		if ($charLen > 1) {
-			$byte = ord(substr($thisChar, 1, 1));
-			$nibbleL = $byte >> 4;
-			$hex2L .= substr($hexLetters, $nibbleL, 1);
-			$nibbleR = $byte & 0x0F;
-			$hex2R .= substr($hexLetters, $nibbleR, 1);
+			$byte = bin2hex(substr($thisChar, 1, 1));
+			$hex2L .= substr($byte, 0, 1);
+			$hex2R .= substr($byte, 1, 1);
 		} else {
 			$hex2L .= " ";
 			$hex2R .= " ";
 		}
 
 		if ($charLen > 2) {
-			$byte = ord(substr($thisChar, 2, 1));
-			$nibbleL = $byte >> 4;
-			$hex3L .= substr($hexLetters, $nibbleL, 1);
-			$nibbleR = $byte & 0x0F;
-			$hex3R .= substr($hexLetters, $nibbleR, 1);
+			$byte = bin2hex(substr($thisChar, 2, 1));
+			$hex3L .= substr($byte, 0, 1);
+			$hex3R .= substr($byte, 1, 1);
 		} else {
 			$hex3L .= " ";
 			$hex3R .= " ";
 		}
 
 		if ($charLen > 3) {
-			$byte = ord(substr($thisChar, 3, 1));
-			$nibbleL = $byte >> 4;
-			$hex4L .= substr($hexLetters, $nibbleL, 1);
-			$nibbleR = $byte & 0x0F;
-			$hex4R .= substr($hexLetters, $nibbleR, 1);
+			$byte = bin2hex(substr($thisChar, 3, 1));
+			$hex4L .= substr($byte, 0, 1);
+			$hex4R .= substr($byte, 1, 1);
 		} else {
 			$hex4L .= " ";
 			$hex4R .= " ";

@@ -480,6 +480,7 @@ $pgv_lang["years"]						= "Jahre";
 $pgv_lang["day1"]						= "Tag";
 $pgv_lang["month1"]						= "Monat";
 $pgv_lang["year1"]						= "Jahr";
+$pgv_lang["after_death"]        		= "nach Tod";
 $pgv_lang["timeline_title"]				= "Lebensspanne";
 $pgv_lang["timeline_chart"]				= "Lebenspannenanzeige";
 $pgv_lang["remove_person"]				= "Person entfernen";
