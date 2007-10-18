@@ -642,7 +642,7 @@ function print_fam_table($datalist, $legend="") {
 		if (empty($hage))
 			print "&nbsp;";
 		else
-			print "<a name=\"{$hage}\" class=\"list_item age\">{$hage}</a>";
+			print "<a name=\"".($mdate->MaxJD()-$hdate->MinJD())."\" class=\"list_item age\">{$hage}</a>";
 		echo "</td>";
 		//-- Wife ID
 		if ($SHOW_ID_NUMBERS)
@@ -670,7 +670,7 @@ function print_fam_table($datalist, $legend="") {
 		if (empty($wage))
 			print "&nbsp;";
 		else
-			print "<a name=\"{$wage}\" class=\"list_item age\">{$wage}</a>";
+			print "<a name=\"".($mdate->MaxJD()-$wdate->MinJD())."\" class=\"list_item age\">{$wage}</a>";
 		echo "</td>";
 		//-- Marriage date
 		echo "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
