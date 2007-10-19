@@ -8,6 +8,9 @@
 	# $Id$
 =====================================================================
 Version 4.1.2
+ - Fixed [ 1800412 ] Media source citation bug (canajun2eh)
+ - Fixed [ 1802378 ] Source Citation Duplicates Part of Note as Citation (canajun2eh)
+ - Fixed [ 1792613 ] Text mangled when editing linked Note (canajun2eh)
  - Added concurrent edit check... warn user if the record changed out from under them (yalnifj)
  - Fixed [ 1804537 ] unselected source added to new family (yalnifj)
  - Fixed [ 1802830 ] Adress Reports print wrong data (yalnifj)

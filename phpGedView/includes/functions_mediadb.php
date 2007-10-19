@@ -319,24 +319,7 @@ function get_db_indi_mapping_list($indi) {
 */
 function textblock_to_note($level, $txt) {
 
-	$newnote = $level . " NOTE\r\n";
-	$indent = $level +1;
-	$newline = $indent . " CONC " . $txt;
-	$newlines = preg_split("/\r?\n/", $newline);
-	for ($k = 0; $k < count($newlines); $k++) {
-		if ($k > 0)
-			$newlines[$k] = $indent . " CONT " . $newlines[$k];
-		if (strlen($newlines[$k]) > 255) {
-			while (strlen($newlines[$k]) > 255) {
-				$newnote .= substr($newlines[$k], 0, 255) . "\r\n";
-				$newlines[$k] = substr($newlines[$k], 255);
-				$newlines[$k] = $indent . " CONC " . $newlines[$k];
-			}
-			$newnote .= trim($newlines[$k]) . "\r\n";
-		} else {
-			$newnote .= trim($newlines[$k]) . "\r\n";
-		}
-	}
+	$newnote = breakConts("{$level} NOTE ". $txt);
 	return $newnote;
 }
 

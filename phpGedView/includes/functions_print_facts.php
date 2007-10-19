@@ -314,7 +314,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			if ($ct>0) {
 				$spouse=$match[1];
 				if ($spouse!=="") {
-					print " <a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\">";
+					print "<a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\">";
 					if (displayDetailsById($spouse)||showLivingNameById($spouse)) {
 						print PrintReady(get_person_name($spouse));
 						$addname = get_add_person_name($spouse);
@@ -566,65 +566,30 @@ function print_fact_sources($factrec, $level) {
 			if ($EXPAND_SOURCES) $plusminus="minus"; else $plusminus="plus";
 			if ($lt>0) print "<a href=\"javascript:;\" onclick=\"expand_layer('$elementID'); return false;\"><img id=\"{$elementID}_img\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES[$plusminus]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["show_details"]."\" title=\"".$pgv_lang["show_details"]."\" /></a> ";
 			print $pgv_lang["source"].":</span> <span class=\"field\">";
+			$source = find_source_record($sid);
 			print "<a href=\"source.php?sid=".$sid."\">";
-			print PrintReady(get_source_descriptor($sid));
+			$text = PrintReady(get_source_descriptor($sid));
 			//-- Print additional source title
 			$add_descriptor = get_add_source_descriptor($sid);
-			if ($add_descriptor) print " - ".PrintReady($add_descriptor);
+			if ($add_descriptor) $text .= " - ".PrintReady($add_descriptor);
+			// if (strpos($source, " _ITALIC")) print "<i>".$text."</i>"; else print $text;
+			print $text;
 			print "</a>";
 			print "</span>";
+
 			print "<div id=\"$elementID\"";
 			if ($EXPAND_SOURCES) print " style=\"display:block\"";
 			print " class=\"source_citations\">";
-			$cs = preg_match("/$nlevel PAGE (.*)/", $srec, $cmatch);
-			if ($cs>0) {
-				print "\n\t\t\t<span class=\"label\">".$factarray["PAGE"].": </span><span class=\"field\">";
-				$text = $cmatch[1];
-				$text.= get_cont($nlevel+1, $srec);
-				$text = expand_urls($text);
-				print PrintReady($text);
-				print "</span>";
+			// PUBL
+			$text = get_gedcom_value("PUBL", "1", $source);
+			if (!empty($text)) {
+				print "<span class=\"label\">".$factarray["PUBL"].": </span>";
+				// if (strpos($source, " _PAREN")) print "(".$text.")"; else print $text;
+				print $text;
 			}
-			$cs = preg_match("/$nlevel EVEN (.*)/", $srec, $cmatch);
-			if ($cs>0) {
-				print "<br /><span class=\"label\">".$factarray["EVEN"]." </span><span class=\"field\">".$cmatch[1]."</span>";
-				$cs = preg_match("/".($nlevel+1)." ROLE (.*)/", $srec, $cmatch);
-				if ($cs>0) print "\n\t\t\t<br /><span class=\"label\">".$factarray["ROLE"]." </span><span class=\"field\">$cmatch[1]</span>";
-			}
-			$cs = preg_match("/$nlevel DATA/", $srec, $cmatch);
-			if ($cs>0) {
-				$cs = preg_match("/".($nlevel+1)." DATE (.*)/", $srec, $cmatch);
-				if ($cs>0) {
-					$date=new GedcomDate($cmatch[1]);
-					print "\n\t\t\t<br /><span class=\"label\">".$factarray["DATE"].": </span><span class=\"field\">".$date->Display(false)."</span>";
-				}
-				$tt = preg_match_all("/".($nlevel+1)." TEXT (.*)/", $srec, $tmatch, PREG_SET_ORDER);
-				for($k=0; $k<$tt; $k++) {
-					print "<br /><span class=\"label\">".$pgv_lang["text"]." </span><span class=\"field\">";
-					$text = $tmatch[$k][1];
-					$text .= get_cont($nlevel+2, $srec);
-					print PrintReady($text);
-					print "</span>";
-				}
-			}
-			$cs = preg_match("/".$nlevel." DATE (.*)/", $srec, $cmatch);
-			if ($cs>0) {
-				$date=new GedcomDate($cmatch[1]);
-				print "\n\t\t\t<br /><span class=\"label\">".$factarray["DATE"].": </span><span class=\"field\">".$date->Display(false)."</span>";
-			}
-			$cs = preg_match("/$nlevel QUAY (.*)/", $srec, $cmatch);
-			if ($cs>0) print "<br /><span class=\"label\">".$factarray["QUAY"]." </span><span class=\"field\">".$cmatch[1]."</span>";
-			$cs = preg_match_all("/$nlevel TEXT (.*)/", $srec, $tmatch, PREG_SET_ORDER);
-			for($k=0; $k<$cs; $k++) {
-				print "<br /><span class=\"label\">".$pgv_lang["text"]." </span><span class=\"field\">";
-				$text = $tmatch[$k][1];
-				$text .= get_cont($nlevel+1, $srec);
-				$text = expand_urls($text);
-				print PrintReady($text);
-				print "</span>";
-			}
+			printSourceStructure(getSourceStructure($srec));
 			print "<div class=\"indent\">";
-			if (function_exists('print_media_links')) print_media_links($srec, $nlevel);
+			print_media_links($srec, $nlevel);
 			print_fact_notes($srec, $nlevel);
 			print "</div>";
 			print "</div>";
@@ -954,13 +919,15 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 				//-- Print additional source title
 				$add_descriptor = get_add_source_descriptor($sid);
 				if ($add_descriptor) $text .= " - ".PrintReady($add_descriptor);
-				if (strpos($source, " _ITALIC")) echo "<i>".$text."</i>"; else echo $text;
+				// if (strpos($source, " _ITALIC")) echo "<i>".$text."</i>"; else echo $text;
+				echo $text;
 				echo "</a>";
 				// PUBL
 				$text = get_gedcom_value("PUBL", "1", $source);
 				if (!empty($text)) {
 					echo "<br /><span class=\"label\">".$factarray["PUBL"].": </span>";
-					if (strpos($source, " _PAREN")) echo "(".$text.")"; else echo $text;
+					// if (strpos($source, " _PAREN")) echo "(".$text.")"; else echo $text;
+					echo $text;
 				}
 				// See if RESN tag prevents display or edit/delete
 				$resn_tag = preg_match("/2 RESN (.*)/", $factrec, $rmatch);
@@ -971,50 +938,125 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 					print_help_link("RESN_help", "qm");
 				}
 				if ($source) {
-					$cs = preg_match("/$nlevel PAGE (.*)/", $srec, $cmatch);
-					if ($cs>0) {
-						print "\n\t\t\t<br /><span class=\"label\">".$factarray["PAGE"].": </span>".$cmatch[1];
-						$text = get_cont($nlevel+1, $srec);
-						$text = expand_urls($text);
-						print PrintReady($text);
-					}
-					$cs = preg_match("/$nlevel EVEN (.*)/", $srec, $cmatch);
-					if ($cs>0) {
-						print "<br /><span class=\"label\">".$factarray["EVEN"]." </span><span class=\"field\">".$cmatch[1]."</span>";
-						$cs = preg_match("/".($nlevel+1)." ROLE (.*)/", $srec, $cmatch);
-						if ($cs>0) print "\n\t\t\t<br />&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"label\">".$factarray["ROLE"]." </span><span class=\"field\">$cmatch[1]</span>";
-					}
-					$cs = preg_match("/$nlevel DATA/", $srec, $cmatch);
-					if ($cs>0) {
-						print "<br /><span class=\"label\">".$factarray["DATA"]." </span>";
-						$cs = preg_match("/".($nlevel+1)." DATE (.*)/", $srec, $cmatch);
-						if ($cs>0) print "\n\t\t\t<br />&nbsp;&nbsp;<span class=\"label\">".$factarray["DATE"].":  </span><span class=\"field\">$cmatch[1]</span>";
-						$tt = preg_match_all("/".($nlevel+1)." TEXT (.*)/", $srec, $tmatch, PREG_SET_ORDER);
-						for($k=0; $k<$tt; $k++) {
-							print "<br />&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"label\">".$pgv_lang["text"]." </span>\n";
-							print "<span class=\"field\">".$tmatch[$k][1];
-							print get_cont($nlevel+2, $srec);
-							print "</span>";
-						}
-					}
-					$cs = preg_match("/$nlevel QUAY (.*)/", $srec, $cmatch);
-					if ($cs>0) print "<br /><span class=\"label\">".$factarray["QUAY"]." </span><span class=\"field\">".$cmatch[1]."</span>";
-					$cs = preg_match_all("/$nlevel TEXT (.*)/", $srec, $tmatch, PREG_SET_ORDER);
-					for($k=0; $k<$cs; $k++) {
-						print "<br /><span class=\"label\">".$pgv_lang["text"]." </span><span class=\"field\">".$tmatch[$k][1];
-						$trec = get_sub_record($nlevel, $tmatch[$k][0], $srec);
-						$text = get_cont($nlevel+1, $trec);
-						$text = expand_urls($text);
-						print $text;
-						print "</span>";
-					}
+					printSourceStructure(getSourceStructure($srec));
+					print "<div class=\"indent\">";
 					print_media_links($srec, $nlevel);
 					print_fact_notes($srec, $nlevel);
+					print "</div>";
 				}
 			}
 			print "</td></tr>";
 		}
 	}
+}
+
+/** 
+ *	Print SOUR structure
+ *
+ *  This function prints the input array of SOUR sub-records built by the 
+ *  getSourceStructure() function.
+ *
+ *  The input array is defined as follows:
+ *	$textSOUR["PAGE"] = +1  Source citation	
+ *	$textSOUR["EVEN"] = +1  Event type
+ *	$textSOUR["ROLE"] = +2  Role in event
+ *	$textSOUR["DATA"] = +1  place holder (no text in this sub-record)
+ *	$textSOUR["DATE"] = +2  Entry recording date
+ *	$textSOUR["TEXT"] = +2  (array) Text from source
+ *	$textSOUR["QUAY"] = +1  Certainty assessment
+ *	$textSOUR["TEXT2"] = +1 (array) Text from source
+ */
+function printSourceStructure($textSOUR) {
+	global $pgv_lang, $factarray;
+
+	if ($textSOUR["PAGE"]!="") {
+		print "\n\t\t\t<br /><span class=\"label\">".$factarray["PAGE"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($textSOUR["PAGE"]))."</span>";
+	}
+
+	if ($textSOUR["EVEN"]!="") {
+		print "<br /><span class=\"label\">".$factarray["EVEN"].":&nbsp;</span><span class=\"field\">".PrintReady($textSOUR["EVEN"])."</span>";
+		if ($textSOUR["ROLE"]!="") {
+			print "\n\t\t\t<br />&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"label\">".$factarray["ROLE"].":&nbsp;</span><span class=\"field\">".PrintReady($textSOUR["ROLE"])."</span>";
+		}
+	}
+
+	if ($textSOUR["DATE"]!="" || count($textSOUR["TEXT"])!=0) {
+		// print "<br /><span class=\"label\">".$factarray["DATA"]."</span>";
+		if ($textSOUR["DATE"]!="") {
+			$date=new GedcomDate($textSOUR["DATE"]);
+			print "\n\t\t\t<br />&nbsp;&nbsp;<span class=\"label\">".$pgv_lang["date_of_entry"].":&nbsp;</span><span class=\"field\">".$date->Display(false)."</span>";
+		}
+		foreach($textSOUR["TEXT"] as $text) {
+			print "\n\t\t\t<br />&nbsp;&nbsp;<span class=\"label\">".$factarray["TEXT"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($text))."</span>";
+		}
+	}
+
+	if ($textSOUR["QUAY"]!="") {
+		print "\n\t\t\t<br /><span class=\"label\">".$factarray["QUAY"].":&nbsp;</span><span class=\"field\">".PrintReady($textSOUR["QUAY"])."</span>";
+	}
+
+	foreach($textSOUR["TEXT2"] as $text) {
+		print "\n\t\t\t<br /><span class=\"label\">".$factarray["TEXT"].":&nbsp;</span><span class=\"field\">".PrintReady(expand_urls($text))."</span>";
+	}
+
+}
+
+/**
+ * Extract SOUR structure from the incoming Source sub-record
+ *
+ *  The output array is defined as follows:
+ *	$textSOUR["PAGE"] = +1  Source citation	
+ *	$textSOUR["EVEN"] = +1  Event type
+ *	$textSOUR["ROLE"] = +2  Role in event
+ *	$textSOUR["DATA"] = +1  place holder (no text in this sub-record)
+ *	$textSOUR["DATE"] = +2  Entry recording date
+ *	$textSOUR["TEXT"] = +2  (array) Text from source
+ *	$textSOUR["QUAY"] = +1  Certainty assessment
+ *	$textSOUR["TEXT2"] = +1 (array) Text from source
+ */
+function getSourceStructure($srec) {
+	global $WORD_WRAPPED_NOTES;
+
+	// Set up the output array
+	$textSOUR = array();
+	$textSOUR["PAGE"] = "";
+	$textSOUR["EVEN"] = "";
+	$textSOUR["ROLE"] = "";
+	$textSOUR["DATA"] = "";
+	$textSOUR["DATE"] = "";
+	$textSOUR["TEXT"] = array();
+	$textSOUR["QUAY"] = "";
+	$textSOUR["TEXT2"] = array();
+
+	if ($srec=="") return $textSOUR;
+
+	$subrecords = explode("\n", $srec);
+	$levelSOUR = substr($subrecords[0], 0, 1);
+	for ($i=0; $i<count($subrecords); $i++) {
+		$subrecords[$i] = trim($subrecords[$i]);
+		$level = substr($subrecords[$i], 0, 1);
+		$tag = substr($subrecords[$i], 2, 4);
+		$text = substr($subrecords[$i], 7);
+		$i++;
+		for (; $i<count($subrecords); $i++) {
+			$nextTag = substr($subrecords[$i], 2, 4);
+			if ($nextTag!="CONC" && $nextTag!="CONT") {
+				$i--;
+				break;
+			}
+			if ($nextTag=="CONT") $text .= "<br />";
+			if ($nextTag=="CONC" && $WORD_WRAPPED_NOTES) $text .= " ";
+			$text .= rtrim(substr($subrecords[$i], 7));
+		}
+		if ($tag=="TEXT") {
+			if ($level==($levelSOUR+1)) $textSOUR["TEXT2"][] = $text;
+			else $textSOUR["TEXT"][] = $text;
+		} else {
+			$textSOUR[$tag] = $text;
+		}
+	}
+
+	return $textSOUR;
 }
 
 /**
