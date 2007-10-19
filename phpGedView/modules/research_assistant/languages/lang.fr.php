@@ -24,9 +24,13 @@
  * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+	header("HTTP/1.0 403 Forbidden" );
 	exit;
 }
+
+#pgv_lang["autosearch_ssurname"]        = "Include spouse's surname:";
+#pgv_lang["autosearch_sgivennames"]     = "Include spouse's given names:";
+#pgv_lang["autosearch_plugin_name_gensearchhelp"]= "Genealogy-Search-Help.com Plug-in";
 
 #pgv_lang["add_task_inst"]              = "If a task for your research results has not yet been created, you should create the task first and then choose the option to save and complete the task.";
 #pgv_lang["complete_task_inst"]         = "Choose a task from the list of your tasks below to complete the task and enter your results:";
@@ -64,15 +68,15 @@ $pgv_lang["view_probabilities"]         = "Voir les Probabilités";
 
 
 // -- RA GENERAL MESSAGES
-$pgv_lang["Edit_Task"]                  = "Modifier la Tâche";
+#pgv_lang["edit_task"]                  = "Edit Task";
 $pgv_lang["completed"]                  = "Terminé";
 #pgv_lang["complete"]                   = "Complete";
 #pgv_lang["incomplete"]                 = "Incomplete";
-#pgv_lang["comres"]                     = "Comments/Results";
+$pgv_lang["comres"]                     = "Commentaires/Résultats";
 #pgv_lang["description"]                = "Description";
 $pgv_lang["created"]                    = "Créé";
 $pgv_lang["modified"]                   = "Modifié";
-#pgv_lang["folder_list"]                = "Folder List";
+$pgv_lang["folder_list"]                = "Liste des dossiers";
 $pgv_lang["details"]                    = "Détails";
 $pgv_lang["result"]                     = "Résultat";
 $pgv_lang["okay"]                       = "Ok";
@@ -88,7 +92,7 @@ $pgv_lang["FieldName"]                  = "Nom du champ";
 #pgv_lang["InputType"]                  = "Input Type";
 $pgv_lang["Values"]                     = "Valeurs";
 #pgv_lang["FormBuilder"]                = "FormBuilder"; 
-#pgv_lang["FormName"]                   = "Enter the form name";
+$pgv_lang["FormName"]                   = "Titre du formulaire";
 #pgv_lang["MultiplePeople"]             = "Does the form apply to multiple people?";
 #pgv_lang["EnterGEDCOMExtension"]       = "Please enter the GEDCOM extension for the form's fact type";
 #pgv_lang['FormDesciption']             = "Please enter a description for the form";
@@ -138,7 +142,7 @@ $pgv_lang["Folder_Name"]                = "Nom du dossier";
 #pgv_lang["folder_delete_check"]        = "Are you sure you want to delete this folder?";
 #pgv_lang["no_folder_name"]             = "Folder name field must be filled in.";
 $pgv_lang["add_folder"]                 = "Ajouter un dossier";
-$pgv_lang["Folder_Name"]                = "Nom du dossier";
+#pgv_lang["folder_name"]                = "Folder Name:";
 $pgv_lang["Parent_Folder:"]             = "Dossier parent :";
 $pgv_lang["No_Parent"]                  = "Aucun parent";
 $pgv_lang["Folder_Description:"]        = "Description du dossier :";
@@ -181,9 +185,9 @@ $pgv_lang["log_modified_by"]            = "par";
 // -- RA_FUNCTIONS MESSAGES
 #pgv_lang["function_folder_delete"]     = "ERROR: Cannot delete this folder because it still contains research log entries.<br />First move or delete these research log entries and then try to delete the folder again.";
 #pgv_lang["function_subfolder_delete"]  = "ERROR: Cannot delete this folder because it still contains subfolders.<br />First move or delete these subfolders and then try to delete the folder again.";
-#pgv_lang["folder_delete_ok"]           = "The folder #folder_name# has been deleted sucessfully.";
-#pgv_lang["folder_update_ok"]           = "The folder #folder_name# has been sucessfully updated.";
-#pgv_lang["folder_added"]               = "The folder #folder_name# was sucessfully added.";
+$pgv_lang["folder_delete_ok"]           = "Le dossier #folder_name# a été supprimé.";
+$pgv_lang["folder_update_ok"]           = "Le dossier #folder_name# a été mis à jour.";
+$pgv_lang["folder_added"]               = "Le dossier #folder_name# a été ajouté.";
 
 //-- RA_SEARCH MESSAGES
 #pgv_lang["search_results"]             = "Search Results";
@@ -285,19 +289,19 @@ $pgv_lang["log_modified_by"]            = "par";
 #pgv_lang["mytask_show_completed"]      = "Show completed tasks?";
 
 //-- Auto Search Assistant
-#pgv_lang["autosearch_surname"]         = "Include surname:";
-#pgv_lang["autosearch_givenname"]       = "Include given names:";
-#pgv_lang["autosearch_byear"]           = "Include birth year:";
-#pgv_lang["autosearch_bloc"]            = "Include birth location:";  
-#pgv_lang["autosearch_dyear"]           = "Include death year:";
-#pgv_lang["autosearch_dloc"]            = "Include death location:";
-#pgv_lang["autosearch_gender"]          = "Include gender:";
+$pgv_lang["autosearch_surname"]         = "Inclure le nom de famille:";
+$pgv_lang["autosearch_givenname"]       = "Inclure le prénom:";
+$pgv_lang["autosearch_byear"]           = "Inclure l'année de naissance:";
+$pgv_lang["autosearch_bloc"]            = "Inclure le lieu de naissance:";
+$pgv_lang["autosearch_dyear"]           = "Inclure l'année de décès:";
+$pgv_lang["autosearch_dloc"]            = "Inclure le lieu de décès:";
+$pgv_lang["autosearch_gender"]          = "Inclure le sexe:";
 #pgv_lang["autosearch_plugin_name"]     = "";  
-#pgv_lang["autosearch_fsurname"]        = "Include father's surname:";
-#pgv_lang["autosearch_fgivennames"]     = "Include father's given names:";
-#pgv_lang["autosearch_msurname"]        = "Include mother's surname:";
-#pgv_lang["autosearch_mgivennames"]     = "Include mother's given names:"; 
-#pgv_lang["autosearch_country"]         = "Include country:"; 
+$pgv_lang["autosearch_fsurname"]        = "Inclure le nom de famille du père:";
+$pgv_lang["autosearch_fgivennames"]     = "Inclure le prénom du père:";
+$pgv_lang["autosearch_msurname"]        = "Inclure le nom de famille de la mère:";
+$pgv_lang["autosearch_mgivennames"]     = "Inclure le prénom de la mère:";
+$pgv_lang["autosearch_country"]         = "Inclure le pays:";
 #pgv_lang["autosearch_plugin_name_ancestry"]= "Ancestry.com Plug-in";
 #pgv_lang["autosearch_plugin_name_ancestrycouk"]= "Ancestry.co.uk Plug-in";
 #pgv_lang["autosearch_plugin_name_ellisIsland"]= "EllisIslandRecords.org Plug-in";
@@ -305,8 +309,8 @@ $pgv_lang["log_modified_by"]            = "par";
 #pgv_lang["autosearch_plugin_name_gen"] = "Genealogy.com Plug-in"; 
 #pgv_lang["autosearch_plugin_name_fs"]  = "FamilySearch.org Plug-in";
 #pgv_lang["autosearch_plugin_name_werelate"]= "Werelate.org Plug-in";
-#pgv_lang["autosearch_search"]          = "Search";
-#pgv_lang["autosearch_keywords"]        = "Keywords:";
+$pgv_lang["autosearch_search"]          = "Rechercher";
+$pgv_lang["autosearch_keywords"]        = "Mots-clés:";
 
 //Folder deletion error messages
 #pgv_lang["has_tasks"]                  ="The folder currently contains tasks and cannot be deleted";

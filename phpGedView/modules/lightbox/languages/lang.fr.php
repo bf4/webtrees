@@ -29,57 +29,57 @@
 
 //-- security check, only allow access from module.php
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Vous ne pouvez pas d'accéder aux fichiers de langue en direct.";
+	header("HTTP/1.0 403 Forbidden" );
 	exit;
 }
 
 //Config Parameters -------------------------------------
-$pgv_lang["configure_lightbox"]		= "Configuration de Lightbox";
-$pgv_lang["mediatab"]       		= "<b>Page Individu - Etiquette de médias</b> - Aspect";
-$pgv_lang["lb_admin_error"]         = "Page only for Administrators";
+$pgv_lang["configure_lightbox"]         = "Configuration de Lightbox";
+$pgv_lang["mediatab"]                   = "<b>Page Individu - Etiquette de médias</b> - Aspect";
+$pgv_lang["lb_admin_error"]             = "Réservé aux administrateurs";
 
-$pgv_lang["lb_icon"]				= "Icon";
-$pgv_lang["lb_text"]				= "Text";
-$pgv_lang["lb_both"]				= "Both";
-$pgv_lang["lb_none"]				= "None";
+$pgv_lang["lb_icon"]                    = "Icone";
+$pgv_lang["lb_text"]                    = "Texte";
+$pgv_lang["lb_both"]                    = "Les deux";
+$pgv_lang["lb_none"]                    = "Aucun";
+$pgv_lang["lb_ml_ThumbLinkAdvice"]      = "Icone, texte, les deux, ou aucun";
 
-$pgv_lang["lb_al_head_links"]		= "<b>Page Individu - Album Tab Header</b> - Aspect de Lien";
-$pgv_lang["lb_al_thumb_links"]		= "<b>Page Individu - Album Tab Thumbnails</b> - Aspect de Lien";
-$pgv_lang["lb_ml_thumb_links"]		= "<b>Page de Multimédia - Ongles du pouce</b> - Aspect de Lien";
-$pgv_lang["lb_music_file"]			= "<b>Fichier choisi de musique de Lightbox</b> - (mp3 seulment)";
-$pgv_lang["lb_ss_speed"]			= "<b>Vitesse de Projection de diapositives</b> - En seconds";
+$pgv_lang["lb_al_head_links"]           = "<b>Page Individu - Onglet Album - Entête</b> - Aspect de Lien";
+$pgv_lang["lb_al_thumb_links"]          = "<b>Page Individu - Onglet Album - Vignettes</b> - Aspect de Lien";
+$pgv_lang["lb_ml_thumb_links"]          = "<b>Page de Multimedia - Vignettes</b> - Aspect de Lien";
+$pgv_lang["lb_music_file"]              = "<b>Fond sonore Lightbox</b> - (mp3 uniquement)";
+$pgv_lang["lb_musicFileAdvice"]         = "(Laisser vide si aucun fond sonore)";
+$pgv_lang["lb_ss_speed"]                = "<b>Vitesse du diaporama</b>";
+$pgv_lang["lb_ss_SpeedAdvice"]          = "secondes";
 
 // ---------------------------------------------------------------------
 
-$pgv_lang["lb_help"] = "Aide d'Album";
-$pgv_lang["lightbox"] = "Album";
-$pgv_lang["showmenu"] = "Afficher Menu:";
-$pgv_lang["active"] = "Actif";
-$pgv_lang["TYPE__other"] = "Autres";
-$pgv_lang["no_media"] = "Aucun";
-$pgv_lang["census_text"]  = "\"Ces images de recensement ont été obtenues à partir de «The National Archives», gardien des dossiers originaux, ";
-$pgv_lang["census_text"] .= "et apparaissent ici avec leur approbation à condition qu'aucune utilisation commerciale n'est faite d'eux sans permission." . "\n" ;
-$pgv_lang["census_text"] .= "Des demandes de la publication commerciale de ces derniers ou d'autres images de recensement apparaissant sur ce site Web, devraient être dirigées vers: ";
-$pgv_lang["census_text"] .= "Image Library, The National Archives, Kew, Surrey, TW9 4DU, United Kingdom. \"" . "\n" ;
 
-$pgv_lang["lb_edit_details"] = "Editer détails";
-$pgv_lang["lb_view_details"] = "Afficher détails";
-$pgv_lang["lb_edit_media"] = "Editer les détails de cet objet média ";
-$pgv_lang["lb_delete_media"] = "Enlever cet objet média - enlève seulement le lien à cet individu - ne supprime pas le fichier ou d'autres liens ";
-$pgv_lang["lb_view_media"] = "Afficher les détails de cet objet média, \naussi d'autres options média. ";
-$pgv_lang["lb_add_media"] = "Ajouter un nouvel objet Multimédia";
-$pgv_lang["lb_add_media_full"] = "Ajouter de nouveaux objets Multimédia à cet individu ";
-$pgv_lang["lb_link_media"] = "Relier un objet Multimédia existant";
-$pgv_lang["lb_link_media_full"] = "Relier cet individu à un objet Multimédia existant";
+$pgv_lang["lb_help"]                    = "Aide d'Album";
+$pgv_lang["lightbox"]                   = "Album";
+$pgv_lang["showmenu"]                   = "Afficher Menu:";
+$pgv_lang["active"]                     = "Actif";
+$pgv_lang["TYPE__other"]                = "Autres";
+$pgv_lang["no_media"]                   = "Aucun";
+$pgv_lang["TYPE__footnotes"]            = "Notes de pied-de-page";
 
-$pgv_lang["lb_slide_show"] = "Projection de diapositives";
-$pgv_lang["turn_edit_ON"] = "Activer le mode «edit»";
-$pgv_lang["turn_edit_OFF"] = "Désactiver le mode «edit»";
+$pgv_lang["lb_edit_details"]            = "Editer détails";
+$pgv_lang["lb_view_details"]            = "Afficher détails";
+$pgv_lang["lb_edit_media"]              = "Editer les détails de cet objet Multimedia ";
+$pgv_lang["lb_delete_media"]            = "Supprimer cet objet Multimedia - enlève seulement le lien à cet individu - ne supprime pas le fichier ou d'autres liens ";
+$pgv_lang["lb_view_media"]              = "Afficher les détails de cet objet Multimedia, \naussi d'autres options média. ";
+$pgv_lang["lb_add_media"]               = "Ajouter un nouvel objet Multimedia";
+$pgv_lang["lb_add_media_full"]          = "Ajouter de nouveaux objets Multimedia à cet individu ";
+$pgv_lang["lb_link_media"]              = "Relier un objet Multimedia existant";
+$pgv_lang["lb_link_media_full"]         = "Relier cet individu à un objet Multimedia existant";
 
-$pgv_lang["lb_source_avail"] = "D'information de source disponible - Cliquez ici";
+$pgv_lang["lb_slide_show"]              = "Projection de diapositives";
+$pgv_lang["turn_edit_ON"]               = "Activer le mode «édition»";
+$pgv_lang["turn_edit_OFF"]              = "Désactiver le mode «édition»";
 
-$pgv_lang["lb_private"] = "L'image est liée à<br />un individu privé";
-$pgv_lang["lb_view_source_tip"] = "Afficher source: ";
-$pgv_lang["lb_view_details_tip"] = "Afficher détails de média: ";
+$pgv_lang["lb_source_avail"]            = "Source disponible - Cliquez ici";
 
+$pgv_lang["lb_private"]                 = "L'image est liée à<br />un individu privé";
+$pgv_lang["lb_view_source_tip"]         = "Afficher la source: ";
+$pgv_lang["lb_view_details_tip"]        = "Afficher les détails de l'objet Multimedia: ";
 ?>
