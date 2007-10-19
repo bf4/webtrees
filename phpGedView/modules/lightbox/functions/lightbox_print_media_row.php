@@ -107,46 +107,14 @@ $n=1;
                 $imgwidth = $imgsize[0]+40;
                 $imgheight = $imgsize[1]+150;
 
-                // For filetypes supported by lightbox at the moment ================
-				if ( eregi("\.jpg",$rowm['m_file']) || eregi("\.jpeg",$rowm['m_file']) || eregi("\.gif",$rowm['m_file']) || eregi("\.png",$rowm['m_file']) || eregi("\.pdf",$rowm['m_file']) || eregi("http",$rowm['m_file']) ) {
+                // For Regular filetypes supported by lightbox at the moment ================
+				if ( eregi("\.jpg",$rowm['m_file']) || eregi("\.jpeg",$rowm['m_file']) || eregi("\.gif",$rowm['m_file']) || eregi("\.png",$rowm['m_file'])  ) {
 					print "<table class=\"pic\"><tr>" . "\n";
 					print "<td align=\"center\" colspan=1>". "\n";
 					
 					//If reordering media
 					if ( $reorder==1 ) {
-						// Do not show tooltip
-						
-					// Else if source info available and file = PDF or URL - Open with Lightbox URL,  and create tooltip link for source AND media details
-					}else if (eregi("1 SOUR",$rowm['m_gedrec']) && (eregi("\.pdf",$rowm['m_file']) || eregi("http",$rowm['m_file'])) ) {  
-						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(1200,700,click)' title=\"" . stripslashes($mediaTitle) . "\"\"
-								onmouseover=\"Tip('" 
-									. "&nbsp;" . $mediaTitle . ""
-									. "<br>" 								
-									. "&nbsp;" . $pgv_lang["lb_view_source_tip"] . "<a href=\'" 
-									. $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;" . $sour2 
-									. "</font></b><\/a>" 
-									. "<br>" 
-									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'" 
-									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"] 
-									. "</font></b><\/a>'," 
-									. "TEXTALIGN, '" . $alignm . "', OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
-								. ")\""
-								. ">\n";								
-								
-					// Else if no source info available and file = PDF or URL - Open with Lightbox URL,  and create tooltip link for media details only
-					}else if (!eregi("1 SOUR",$rowm['m_gedrec']) && (eregi("\.pdf",$rowm['m_file']) || eregi("http",$rowm['m_file'])) ) { 
-						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(1200,700,click)' title=\"" . stripslashes($mediaTitle) . "\"\" 
-								onmouseover=\"Tip('" 
-									. "&nbsp;" . $mediaTitle . ""
-									. "<br>"
-									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'"
-									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"]
-									. "</font></b><\/a>',"
-									. "TEXTALIGN, '" . $alignm . "', OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
-								. ")\"" 
-								. ">\n";								
-					
-
+						// Do not show tooltip	
 					
 					// Else If source info available, - Open with Lightbox normal,  and create tooltip link for source AND media details
 					}else if (eregi("1 SOUR",$rowm['m_gedrec'])) {
@@ -184,8 +152,50 @@ $n=1;
 
 					}else{
 						// Do nothing
-					}		
+					}
+					
+                // For URL filetypes supported by lightbox at the moment  ================
+				}else if ( eregi("http",$rowm['m_file']) || eregi("\.pdf",$rowm['m_file']) ) {				
+					print "<table class=\"pic\"><tr>" . "\n";
+					print "<td align=\"center\" colspan=1>". "\n";					
 
+					//If reordering media
+					if ( $reorder==1 ) {
+						// Do not show tooltip
+						
+					// Else if source info available and file = PDF  - Open with Lightbox URL,  and create tooltip link for source AND media details
+					}else if (eregi("1 SOUR",$rowm['m_gedrec']) && (eregi("\.pdf",$rowm['m_file']) || eregi("http",$rowm['m_file']) ) ) {  
+						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(1200,700,click)' title=\"" . stripslashes($mediaTitle) . "\"\"
+								onmouseover=\"Tip('" 
+									. "&nbsp;" . $mediaTitle . ""
+									. "<br>" 								
+									. "&nbsp;" . $pgv_lang["lb_view_source_tip"] . "<a href=\'" 
+									. $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;" . $sour2 
+									. "</font></b><\/a>" 
+									. "<br>" 
+									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'" 
+									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"] 
+									. "</font></b><\/a>'," 
+									. "TEXTALIGN, '" . $alignm . "', OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
+								. ")\""
+								. ">\n";								
+								
+					// Else if no source info available and file = PDF or URL - Open with Lightbox URL,  and create tooltip link for media details only
+					}else if (!eregi("1 SOUR",$rowm['m_gedrec']) && (eregi("\.pdf",$rowm['m_file']) || eregi("http",$rowm['m_file'])) ) { 
+						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(1200,700,click)' title=\"" . stripslashes($mediaTitle) . "\"\" 
+								onmouseover=\"Tip('" 
+									. "&nbsp;" . $mediaTitle . ""
+									. "<br>"
+									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'"
+									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"]
+									. "</font></b><\/a>',"
+									. "TEXTALIGN, '" . $alignm . "', OFFSETY, -30, OFFSETX, 5, CLICKCLOSE, true, DURATION, 4000, STICKY, true, PADDING, 5, BGCOLOR, '#f3f3f3', FONTSIZE, '8pt'" 
+								. ")\"" 
+								. ">\n";
+					}else{
+						// Do nothing
+					}								
+				
 					
 				// Else For filetypes NOT supported by lightbox at the moment, use the pop-up window technique ==============================
 				}else{
@@ -235,12 +245,12 @@ $n=1;
 				}
             }
 			
-			// Print the Thumbnail if Image, Common Thumbnail if URL
+			// Print the Common Thumbnail if just plain UR, or the properThumbnail if Image, 
 // LB 		print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
-			if (eregi("http",$rowm['m_file'])) {
+			if (eregi("http",$rowm['m_file']) && !eregi("\.jpg",$rowm['m_file']) && !eregi("\.jpeg",$rowm['m_file']) && !eregi("\.gif",$rowm['m_file']) && !eregi("\.png",$rowm['m_file'])) {
 				print "<br><img src=\"" . $MEDIA_DIRECTORY . "thumbs/urls/URL.jpg \" height=80 border=\"0\" " ;
 			}else{
-				// Ceck for Notes associated with media item
+				// Check for Notes associated with media item
 			    if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
 					$note[$n]  = $pgv_lang["note"] . " " . ($n+1) . "";
 					print "<font size=1>" . $note[$n] . "</font><br>";
