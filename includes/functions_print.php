@@ -2300,24 +2300,23 @@ function print_asso_rela_record($pid, $factrec, $linebr=false, $type='INDI') {
 function print_parents_age($pid, $bdate) {
 	global $pgv_lang, $SHOW_PARENTS_AGE, $PGV_IMAGE_DIR, $PGV_IMAGES;
 	if ($SHOW_PARENTS_AGE) {
-		$famids = find_family_ids($pid);
+		$person = Person::getInstance($pid);
+		$families = $person->getChildFamilies();
 		// dont show age of parents if more than one family (ADOPtion)
-		if (count($famids)==1) {
+		if (count($families)==1) {
 			print " <span class=\"age\">";
-			$parents = find_parents($famids[0]);
+			$family = current($families);
+			$spouse = $family->getHusband();
 			// father
-			$spouse = $parents["HUSB"];
-			if ($spouse and showFact("BIRT", $spouse)) {
-				$spouse=Person::getInstance($spouse);
+			if ($spouse && showFact("BIRT", $spouse->getXref())) {
 				$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate()), new Gedcomdate($bdate));
-				if (10<$age and $age<80) print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />$age";
+				if (10<$age && $age<80) print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sex"]["small"] . "\" title=\"" . $pgv_lang["father"] . "\" alt=\"" . $pgv_lang["father"] . "\" class=\"gender_image\" />$age";
 			}
 			// mother
-			$spouse = $parents["WIFE"];
-			if ($spouse and showFact("BIRT", $spouse)) {
-				$spouse=Person::getInstance($spouse);
+			$spouse = $family->getWife();
+			if ($spouse && showFact("BIRT", $spouse->getXref())) {
 				$age=GedcomDate::GetAgeYears(new GedcomDate($spouse->getBirthDate()), new Gedcomdate($bdate));
-				if (10<$age and $age<80) print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"gender_image\" />$age";
+				if (10<$age && $age<80) print "<img src=\"$PGV_IMAGE_DIR/" . $PGV_IMAGES["sexf"]["small"] . "\" title=\"" . $pgv_lang["mother"] . "\" alt=\"" . $pgv_lang["mother"] . "\" class=\"gender_image\" />$age";
 			}
 			print "</span>";
 		}
