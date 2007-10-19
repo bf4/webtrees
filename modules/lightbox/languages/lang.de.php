@@ -60,8 +60,10 @@ $pgv_lang["lb_help"] = "Album Hilfe";
 $pgv_lang["lightbox"] = "Album";
 $pgv_lang["showmenu"] = "Menü zeigen:";
 $pgv_lang["active"] = "Aktiv";
-$pgv_lang["TYPE__other"] = "Anderer";
-$pgv_lang["no_media"] = "Kein";
+$pgv_lang["TYPE__other"] = "Andere Typen";
+$pgv_lang["no_media"] = "Keine";
+$pgv_lang["TYPE__footnotes"] = "Fußnoten";
+
 $pgv_lang["census_text"]  = "\"These census images have been obtained from \"The National Archives\", the custodian of the original records, ";
 $pgv_lang["census_text"] .= "and appear here with their approval on the condition that no commercial use is made of them without permission." . "\n" ;
 $pgv_lang["census_text"] .= "Requests for commercial publication of these or other census images appearing on this website should be directed to: ";
