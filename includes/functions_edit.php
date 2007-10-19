@@ -1674,40 +1674,11 @@ function handle_updates($newged, $levelOverride="no") {
 			if (empty($NOTE[$text[$j]])) {
 				delete_gedrec($text[$j]);
 				$text[$j] = "";
-			}
-			else {
+			} else {
 				$noterec = find_gedcom_record($text[$j]);
 				$newnote = "0 @$text[$j]@ NOTE\r\n";
 				$newline = "1 CONC ".rtrim(stripLRMRLM($NOTE[$text[$j]]));
-				$newlines = preg_split("/\r?\n/", $newline);
-				for($k=0; $k<count($newlines); $k++) {
-					if ($k>0) $newlines[$k] = "1 CONT ".$newlines[$k];
-					if (strlen($newlines[$k])>255) {
-						if ($WORD_WRAPPED_NOTES) {
-							while(strlen($newlines[$k])>255) {
-								// Make sure this piece ends on a blank, because one blank will be
-								// added automatically when everything is put back together
-								$lastBlank = strrpos(substr($newlines[$k], 0, 255), " ");
-								$thisPiece = rtrim(substr($newlines[$k], 0, $lastBlank+1));
-								$newnote .= $thisPiece."\r\n";
-								$newlines[$k] = substr($newlines[$k], (strlen($thisPiece)+1));
-								$newlines[$k] = "1 CONC ".$newlines[$k];
-							}
-						} else {
-							while(strlen($newlines[$k])>255) {
-								// Make sure this piece doesn't end on a blank
-								// (Blanks belong at the start of the next piece)
-								$thisPiece = rtrim(substr($newlines[$k], 0, 255));
-								$newnote .= $thisPiece."\r\n";
-								$newlines[$k] = substr($newlines[$k], strlen($thisPiece));
-								$newlines[$k] = "1 CONC ".$newlines[$k];
-							}
-						}
-						$newnote .= trim($newlines[$k])."\r\n";
-					} else {
-						$newnote .= trim($newlines[$k])."\r\n";
-					}
-				}
+				$newnote .= breakConts($newline);
 				if ($GLOBALS["DEBUG"]) print "<pre>$newnote</pre>";
 				replace_gedrec($text[$j], $newnote);
 			}
@@ -1771,54 +1742,13 @@ function handle_updates($newged, $levelOverride="no") {
 				if ($islink[$j]) $newline .= " @".$text[$j]."@";
 				else $newline .= " ".$text[$j];
 			}
-			$newged .= breakConts($newline, $glevels[$j]+1+$levelAdjust);
+			$newged .= breakConts($newline);
 		}
 	}
 
 	return $newged;
 }
 
-/**
- * break up a line of gedcom text into multiple CONT/CONC lines
- * @param string $newline	the line of text to break
- * @param int $level		the GEDCOM level that new lines should have
- * @return string			returns the updated gedcom record
- */
-function breakConts($newline, $level) {
-	global $WORD_WRAPPED_NOTES;
-
-	$newged = "";
-	$newlines = preg_split("/\r?\n/", rtrim(stripLRMRLM($newline)));
-	for($k=0; $k<count($newlines); $k++) {
-		if ($k>0) $newlines[$k] = "{$level} CONT ".$newlines[$k];
-		if (strlen($newlines[$k])>255) {
-			if ($WORD_WRAPPED_NOTES) {
-				while(strlen($newlines[$k])>255) {
-					// Make sure this piece ends on a blank, because one blank will be
-					// added automatically when everything is put back together
-					$lastBlank = strrpos(substr($newlines[$k], 0, 255), " ");
-					$thisPiece = rtrim(substr($newlines[$k], 0, $lastBlank+1));
-					$newged .= $thisPiece."\r\n";
-					$newlines[$k] = substr($newlines[$k], (strlen($thisPiece)+1));
-					$newlines[$k] = "{$level} CONC ".$newlines[$k];
-				}
-			} else {
-				while(strlen($newlines[$k])>255) {
-					// Make sure this piece doesn't end on a blank
-					// (Blanks belong at the start of the next piece)
-					$thisPiece = rtrim(substr($newlines[$k], 0, 255));
-					$newged .= $thisPiece."\r\n";
-					$newlines[$k] = substr($newlines[$k], strlen($thisPiece));
-					$newlines[$k] = "{$level} CONC ".$newlines[$k];
-				}
-			}
-			$newged .= trim($newlines[$k])."\r\n";
-		} else {
-			$newged .= trim($newlines[$k])."\r\n";
-		}
-	}
-	return $newged;
-}
 
 /**
  * check the given date that was input by a user and convert it
@@ -1978,9 +1908,8 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 	// where a level 1 tag is missing a level 2 tag.  Here we only need to
 	// handle the more complicated cases.
 	$expected_subtags=array(
-		// Can't use this logic for SOUR, as it gets the order of subfields wrong.
-		//'SOUR'=>array('PAGE', 'QUAY'),
-		//'PAGE'=>array('TEXT', 'DATE'),
+		'SOUR'=>array('PAGE', 'DATA', 'QUAY'),
+		'DATA'=>array('TEXT', 'DATE'),
 		'PLAC'=>array('MAP'),
 		'MAP' =>array('LATI', 'LONG')
 	);
@@ -1994,6 +1923,7 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 			if ($j>2) $text .= " ";
 			$text .= $fields[$j];
 		}
+		$text = rtrim($text);
 		while(($i+1<count($gedlines))&&(preg_match("/".($level+1)." (CON[CT])\s?(.*)/", $gedlines[$i+1], $cmatch)>0)) {
 			if ($cmatch[1]=="CONT") $text.="\n";
 			else if ($WORD_WRAPPED_NOTES) $text .= " ";
@@ -2001,6 +1931,11 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 			$conctxt = preg_replace("/[\r\n]/","",$conctxt);
 			$text.=$conctxt;
 			$i++;
+		}
+
+		if ($type=="SOUR") {
+			$inSource = true;
+			$levelSource = $level;
 		}
 
 		if ($type!="DATA" && $type!="CONC" && $type!="CONT") {
@@ -2018,15 +1953,6 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 			else add_simple_tag($subrecord, $level0type);
 		}
 
-		if ($type=="SOUR") {
-			$inSource = true;
-			$levelSource = $level;
-			$haveSourcePage = false;
-			$haveSourceText = false;
-			$haveSourceDate = false;
-			$haveSourceQuay = false;
-		}
-
 		// Get a list of tags present at the next level
 		$subtags=array();
 		for ($ii=$i+1; isset($gedlines[$ii]) && preg_match('/^\s*(\d+)\s+(\S+)/', $gedlines[$ii], $mm) && $mm[1]>$level; ++$ii)
@@ -2037,7 +1963,9 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 		if (!empty($expected_subtags[$type]))
 			foreach ($expected_subtags[$type] as $subtag)
 				if (!in_array($subtag, $subtags)) {
-					add_simple_tag(($level+1).' '.$subtag);
+					if (!$inSource || $subtag!="DATA") {
+						add_simple_tag(($level+1).' '.$subtag);
+					}
 					if (!empty($expected_subtags[$subtag]))
 						foreach ($expected_subtags[$subtag] as $subsubtag)
 							add_simple_tag(($level+2).' '.$subsubtag);
@@ -2056,40 +1984,6 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 			if (isset($fields[1])) $type = trim($fields[1]);
 			else $level = 0;
 		} else $level = 0;
-
-		// Check for, and add, missing tags subordinate to SOUR
-		// The logic here is complicated because the missing tags MUST
-		// be in the right order.
-		if ($inSource) {
-			if ($levelSource < $level) {
-				if ($type=="PAGE") $haveSourcePage = true;
-				if ($type=="TEXT") {
-					if (!$haveSourcePage) {
-						add_simple_tag(($levelSource+1)." PAGE");
-						$haveSourcePage = true;
-					}
-					$haveSourceText = true;
-				}
-				if ($type=="DATE") {
-					if (!$haveSourceText) {
-						if (!$haveSourcePage) {
-							add_simple_tag(($levelSource+1)." PAGE");
-							$haveSourcePage = true;
-						}
-						add_simple_tag($levelSource." TEXT");
-						$haveSourceText = true;
-					}
-				}
-				if ($type=="DATE") $haveSourceDate = true;
-				if ($type=="QUAY") $haveSourceQuay = true;
-			} else {
-				if (!$haveSourcePage) add_simple_tag(($levelSource+1)." PAGE");
-				if (!$haveSourceText) add_simple_tag(($levelSource+2)." TEXT");
-				if (!$haveSourceDate) add_simple_tag(($levelSource+2)." DATE", "", $pgv_lang["date_of_entry"]);
-				if (!$haveSourceQuay) add_simple_tag(($levelSource+1)." QUAY");
-				$inSource = false;
-			}
-		}
 
 		if ($level<=$glevel) break;
 

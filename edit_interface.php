@@ -223,7 +223,6 @@ else if (!empty($famid)) {
 			$type = trim($match[1]);
 			$disp = displayDetailsById($famid, $type);
 		}
-		
 		checkChangeTime($famid, $gedrec);
 	}
 }
@@ -705,22 +704,16 @@ case 'addsourceaction':
 		$newgedrec .= "1 REPO @$REPO@\r\n";
 		if (!empty($CALN)) $newgedrec .= "2 CALN $CALN\r\n";
 	}
-	$newlines = preg_split("/\r?\n/", $newgedrec);
+	$newlines = preg_split("/\r?\n/", stripLRMRLM($newgedrec));
 	$newged = $newlines[0]."\r\n";
+	$level = substr($newlines[0], 0, 1) + 1;
 	for($k=1; $k<count($newlines); $k++) {
-		if (((preg_match("/\d .... .*/", $newlines[$k])==0) && strlen($newlines[$k])!=0)) $newlines[$k] = "2 CONT ".$newlines[$k];
-		if (strlen($newlines[$k])>255) {
-			while(strlen($newlines[$k])>255) {
-				$newPiece = rtrim(substr($newlines[$k], 0, 255));
-				$newged .= $newPiece."\r\n";
-				$newlines[$k] = substr($newlines[$k], strlen($newPiece));
-				$newlines[$k] = "2 CONC ".$newlines[$k];
-			}
-			$newged .= trim($newlines[$k])."\r\n";
+		if (preg_match("/^\d (.....|....|...) /", $newlines[$k])!==false) {
+			$level = substr($newlines[$k], 0, 1) + 1;
+		} else {
+			$newlines[$k] = "{$level} CONT ".$newlines[$k];
 		}
-		else {
-			$newged .= trim($newlines[$k])."\r\n";
-		}
+		$newged .= breakConts($newlines[$k]);
 	}
 	if ($GLOBALS["DEBUG"]) print "<pre>$newged</pre>";
 	$xref = append_gedrec($newged);
@@ -796,22 +789,16 @@ case 'addrepoaction':
 	if (!empty($FAX)) $newgedrec .= "1 FAX $FAX\r\n";
 	if (!empty($EMAIL)) $newgedrec .= "1 EMAIL $EMAIL\r\n";
 	if (!empty($WWW)) $newgedrec .= "1 WWW $WWW\r\n";
-	$newlines = preg_split("/\r?\n/", $newgedrec);
+	$newlines = preg_split("/\r?\n/", stripLRMRLM($newgedrec));
 	$newged = $newlines[0]."\r\n";
+	$level = substr($newlines[0], 0, 1) + 1;
 	for($k=1; $k<count($newlines); $k++) {
-		if ((preg_match("/\d (.....|....|...) .*/", $newlines[$k])==0) && (strlen($newlines[$k])!=0)) $newlines[$k] = "2 CONT ".$newlines[$k];
-		if (strlen($newlines[$k])>255) {
-			while(strlen($newlines[$k])>255) {
-				$newPiece = rtrim(substr($newlines[$k], 0, 255));
-				$newged .= $newPiece."\r\n";
-				$newlines[$k] = substr($newlines[$k], strlen($newPiece));
-				$newlines[$k] = "2 CONC ".$newlines[$k];
-			}
-			$newged .= trim($newlines[$k])."\r\n";
+		if (preg_match("/^\d (.....|....|...) /", $newlines[$k])!==false) {
+			$level = substr($newlines[$k], 0, 1) + 1;
+		} else {
+			$newlines[$k] = "{$level} CONT ".$newlines[$k];
 		}
-		else {
-			$newged .= trim($newlines[$k])."\r\n";
-		}
+		$newged .= breakConts($newlines[$k]);
 	}
 	if ($GLOBALS["DEBUG"]) print "<pre>$newged</pre>";
 	$xref = append_gedrec($newged);
