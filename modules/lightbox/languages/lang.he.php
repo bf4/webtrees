@@ -60,6 +60,7 @@ $pgv_lang["showmenu"] = "הראה תפריט:";
 $pgv_lang["active"] = "פעיל";
 $pgv_lang["TYPE__other"] = "אחר";
 $pgv_lang["no_media"] = "אין"; 
+$pgv_lang["TYPE__footnotes"] = "הערות שוליים"; 
 
 $pgv_lang["census_text"]  = "\"תמונות המפקד האלו התקבלו מ\"הארכיון הלאומי\", השומר על הרשומות המקוריות, "; 
 $pgv_lang["census_text"] .= "והן מופיעות כאן כולל אישור שלהן בתנאי שלא יעשה בהן שום שימוש מסחרי ללא אישור ." . "\n" ;

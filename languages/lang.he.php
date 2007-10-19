@@ -593,6 +593,7 @@ $pgv_lang["years"]			= "שנים";
 $pgv_lang["day1"]			= "יום";
 $pgv_lang["month1"]			= "חודש";
 $pgv_lang["year1"]			= "שנה";
+$pgv_lang["after_death"]        ="לאחר הפטירה"; 
 $pgv_lang["timeline_title"]		= "תרשים קו הזמן של PhpGedView";
 $pgv_lang["timeline_chart"]		= "תרשים קו הזמן";
 $pgv_lang["remove_person"]		= "הסר אדם";
@@ -705,6 +706,7 @@ $pgv_lang["password_mismatch"]	= "הסיסמאות אינן מתאימות.";
 $pgv_lang["enter_username"]		= ".יש למלא קוד משתמש";
 $pgv_lang["enter_password"]		= ".יש למלא סיסמא";
 $pgv_lang["save"]			= "שמור";
+$pgv_lang["saveandgo"]		= "שמור ועבור לרשומה חדשה"; 
 $pgv_lang["delete"]		= "מחק";
 $pgv_lang["edit"]			= "ערוך";
 $pgv_lang["no_login"]		= "לא ניתן לאשר משתמש.";
@@ -736,7 +738,7 @@ $pgv_lang["media_firewall_protected_dir_no_exist"]		= "לא ניתן ליצור 
 $pgv_lang["media_firewall_protected_dir_not_writable"]	= "ספריית המדיה המוגנת הנמצאת בספריית השורש של חומת האש אינה ניתנת לכתיבה עולמית.";
 
 //-- Relationship chart messages
-$pgv_lang["relationship_great"]	= "Great"; //--@@ ??
+$pgv_lang["relationship_great"]	= "Great"; //--@#@ ??
 $pgv_lang["relationship_chart"]	= "קירבה משפחתית";
 $pgv_lang["person1"]		= "אדם א'";
 $pgv_lang["person2"]		= "אדם ב'";
@@ -971,7 +973,7 @@ $pgv_lang["female_cousin_19"]           	= "דודנית מדרגה 19";
 $pgv_lang["female_cousin_20"]           	= "דודנית מדרגה 20";
 $pgv_lang["female_cousin_n"]           		= "דודנית מדרגה %d";
 // Only referenced from english specific functions
-//@@ SEE http://www.weinel.com/family/relations.html - ASCENDING?
+//@#@ SEE http://www.weinel.com/family/relations.html - ASCENDING?
 // N/A
 $pgv_lang["removed_ascending_1"]   = " במרחק 1 עולה"; //" once removed ascending";
 $pgv_lang["removed_ascending_2"]   = " במרחק 2 עולה";
@@ -1424,17 +1426,17 @@ $pgv_lang["sosa_31"]               	= "N/A";
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
 //              %3\$d is replaced with the number of generations - 2
-$pgv_lang["sosa_paternal_female_n_generations"]	= "%3\$d x great grandfather"; //@@
-$pgv_lang["sosa_paternal_male_n_generations"]	= "%3\$d x great grandmother"; //@@
-$pgv_lang["sosa_maternal_female_n_generations"]	= "%3\$d x great grandfather"; //@@
-$pgv_lang["sosa_maternal_male_n_generations"]	= "%3\$d x great grandmother"; //@@
+$pgv_lang["sosa_paternal_female_n_generations"]	= "%3\$d x great grandfather"; //@#@
+$pgv_lang["sosa_paternal_male_n_generations"]	= "%3\$d x great grandmother"; //@#@
+$pgv_lang["sosa_maternal_female_n_generations"]	= "%3\$d x great grandfather"; //@#@
+$pgv_lang["sosa_maternal_male_n_generations"]	= "%3\$d x great grandmother"; //@#@
 
 //-- FAN CHART
 $pgv_lang["compact_chart"]		= "תרשים קומפקטי";
 $pgv_lang["fan_chart"]		= "תרשים מניפה";
-//$pgv_lang["fan_chart"]		= "@@++Circle Diagram";
+//$pgv_lang["fan_chart"]		= "@#@++Circle Diagram";
 $pgv_lang["gen_fan_chart"]    		= "תרשים מניפה של #PEDIGREE_GENERATIONS# דורות";
-//$pgv_lang["gen_fan_chart"]  		= "@@++#PEDIGREE_GENERATIONS# Generation Circle Diagram";
+//$pgv_lang["gen_fan_chart"]  		= "@#@++#PEDIGREE_GENERATIONS# Generation Circle Diagram";
 $pgv_lang["fan_width"]		= "רוחב";
 $pgv_lang["gd_library"]		= "בעיית קונפיגורציה של שרת ה-PHP: תיקיית GD 2.x דרושה כדי להשתמש בפונקציות התמונה.";
 $pgv_lang["gd_freetype"]		= "בעיית קונפיגורציה של שרת ה-PHP: תיקיית Freetype דרושה כדי להשתמש בפונטי TrueType.";
