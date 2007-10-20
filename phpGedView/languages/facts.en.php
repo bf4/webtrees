@@ -298,9 +298,9 @@ $factarray["_BIRT_HSIB"] = "Birth of a half-sibling";
 $factarray["_MARR_HSIB"] = "Marriage of a half-sibling";
 $factarray["_DEAT_HSIB"] = "Death of a half-sibling";
 
-$factarray["_BIRT_NEPH"] = "Birth of a nephew/niece";
-$factarray["_MARR_NEPH"] = "Marriage of a nephew/niece";
-$factarray["_DEAT_NEPH"] = "Death of a nephew/niece";
+$factarray["_BIRT_NEPH"] = "Birth of a nephew or niece";
+$factarray["_MARR_NEPH"] = "Marriage of a nephew or niece";
+$factarray["_DEAT_NEPH"] = "Death of a nephew or niece";
 
 $factarray["_DEAT_GPAR"] = "Death of a grand-parent";
 
