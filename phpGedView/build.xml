@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="PGVBuild" basedir="." default="package">
+<project name="PGVBuild" basedir="." default="zip">
 	<property name="proj.name" value="PhpGedView" />
 	<property name="pgv.version" value="4.1.2" />
 	<property name="dist.dir" value="../../distribution" />
@@ -31,12 +31,32 @@
 		<include name=".htaccess" />
 		<exclude name="*.txt" />
 	</fileset>
+
+	<fileset id="not.basic.langs" dir="./languages">
+		<exclude name="*.de.*" />
+		<exclude name="*.en.php" />
+		<exclude name="*.fr.*" />
+		<exclude name="*.he.*" />
+		<exclude name="*.nl.*" />
+		<exclude name="*.no.*" />
+		<exclude name="*.sv.*" />
+		<exclude name=".htaccess" />
+	</fileset>
+
 	<fileset id="basic.themes" dir="./themes">
 		<include name="cloudy/**" />
 		<include name="ocean/**" />
 		<include name="simplygreen/**" />
 		<include name="standard/**" />
-		<include name="xenea/**" /> 
+		<include name="xenea/**" />
+	</fileset>
+
+	<fileset id="not.basic.themes" dir="./themes">
+		<exclude name="cloudy/**" />
+		<exclude name="ocean/**" />
+		<exclude name="simplygreen/**" />
+		<exclude name="standard/**" />
+		<exclude name="xenea/**" />
 	</fileset>
 
 	<target name="clean">
@@ -49,7 +69,7 @@
 		<delete dir="${modules.dir}" failonerror="false" />
 		<delete dir="${demo.dir}" failonerror="false" />
 	</target>
-	
+
 	<defaultexcludes add="**/*.cache" />
 	<defaultexcludes add="**/*.cache/**" />
 	<defaultexcludes add="**/*.settings" />
@@ -63,10 +83,16 @@
 				<exclude name="build.xml" />
 				<exclude name="**/mymedia/**" />
 				<exclude name="**/mymedia" />
+				<exclude name="**/index/**" />
+			</fileset>
+			<fileset dir=".">
+				<include name="**/index/index.php" />
+				<include name="**/index/readme.php" />
+				<include name="**/index/.htaccess" />
 			</fileset>
 		</copy>
-		<move file="${basic.dir}/config.dist"
-			tofile="${basic.dir}/config.php" />
+		<move file="${all.dir}/config.dist"
+			tofile="${all.dir}/config.php" />
 	</target>
 
 	<target name="package-basic">
@@ -74,13 +100,20 @@
 		<copy todir="${basic.dir}">
 			<fileset dir=".">
 				<exclude name="build.xml" />
-				<include name="**/modules" />
 				<exclude name="**/modules/**" />
 				<exclude name="**/places/**" />
 				<exclude name="**/languages/**" />
 				<exclude name="**/themes/**" />
 				<exclude name="**/mymedia/**" />
 				<exclude name="**/mymedia" />
+				<exclude name="**/index/**" />
+			</fileset>
+			<fileset dir=".">
+				<include name="**/modules/readme.txt" />
+				<include name="**/places/*.*" />
+				<include name="**/index/index.php" />
+				<include name="**/index/readme.php" />
+				<include name="**/index/.htaccess" />
 			</fileset>
 		</copy>
 		<echo message="copy languages" />
@@ -88,7 +121,7 @@
 			<fileset refid="basic.langs"></fileset>
 		</copy>
 		<echo message="copy themes" />
-		
+
 		<copy todir="${basic.dir}/themes">
 			<fileset refid="basic.themes"></fileset>
 		</copy>
@@ -99,20 +132,14 @@
 	<target name="package-lang">
 		<!-- languages -->
 		<copy todir="${lang.dir}">
-		<not>
-			<fileset refid="basic.langs">
-			</fileset>
-			</not>
+			<fileset refid="not.basic.langs"></fileset>
 		</copy>
 	</target>
 
 	<target name="package-themes">
 		<!-- themes -->
 		<copy todir="${themes.dir}">
-		<not>
-			<fileset refid="basic.themes">
-			</fileset>
-		</not>
+			<fileset refid="not.basic.themes"></fileset>
 		</copy>
 	</target>
 
@@ -146,10 +173,27 @@
 				<include name="**/**" />
 			</fileset>
 		</copy>
+		<copy todir="${demo.dir}/democd/sites/modules">
+			<fileset dir="${modules.dir}/lightbox">
+				<include name="**/**" />
+			</fileset>
+		</copy>
+		<move file="${demo.dir}/democd/sites/config.dist"
+			tofile="${demo.dir}/democd/sites/config.php" />
 	</target>
 
 	<target name="package"
 		depends="package-all, package-basic, package-lang, package-themes, package-modules, package-places, package-demo">
 		<!--  default target which does everything -->
+	</target>
+	
+	<target name="zip" depends="package">
+		<zip destfile="${all.dir}.zip" basedir="${all.dir}" update="true" />
+		<zip destfile="${basic.dir}.zip" basedir="${basic.dir}" update="true" />
+		<zip destfile="${lang.dir}.zip" basedir="${lang.dir}" update="true" />
+		<zip destfile="${places.dir}.zip" basedir="${places.dir}" update="true" />
+		<zip destfile="${themes.dir}.zip" basedir="${themes.dir}" update="true" />
+		<zip destfile="${demo.dir}.zip" basedir="${demo.dir}" update="true" />
+		
 	</target>
 </project>
