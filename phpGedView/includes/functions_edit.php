@@ -223,7 +223,14 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 
 	$gid = strtoupper($gid);
 	//-- restore any data that was hidden during privatizing
-	if (isset($pgv_private_records[$gid])) $gedrec = trim($gedrec)."\r\n".trim(get_last_private_data($gid));
+	if (isset($pgv_private_records[$gid])) {
+		$privatedata = trim(get_last_private_data($gid));
+		$subs = get_all_subrecords($privatedata, '', false, false, false);
+		foreach($subs as $s=>$sub) {
+			if (strstr($gedrec, $sub)===false) $gedrec = trim($gedrec)."\r\n".$privatedata;
+		}
+		unset($pgv_private_records[$gid]);
+	}
 
 	if (($gedrec = check_gedcom($gedrec, $chan))!==false) {
 		//-- the following block of code checks if the XREF was changed in this record.
