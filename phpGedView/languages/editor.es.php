@@ -69,7 +69,6 @@ $pgv_lang["add_linkid_advice"]			= "Introduzca o busque el ID de la persona, fam
 $pgv_lang["use_browse_advice"]			= "Utilice el botón &laquo;Examinar&raquo; para localizar en su equipo local el archivo deseado.";
 $pgv_lang["add_media_other_folder"]		= "Otra carpeta... por favor, tecléela";
 $pgv_lang["add_media_file"]				= "Archivo audiovisual existente en el servidor";
-$pgv_lang["date_of_entry"]				= "Fecha de la entrada en la fuente original";
 $pgv_lang["main_media_ok1"]				= "El archivo audiovisual principal <b>#GLOBALS[oldMediaName]#</b> ha sido renombrado con éxito a <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_ok2"]				= "El archivo audiovisual principal <b>#GLOBALS[oldMediaName]#</b> se movió con éxito de <b>#GLOBALS[oldMediaFolder]#</b> a <b>#GLOBALS[newMediaFolder]#</b>.";
 $pgv_lang["main_media_ok3"]				= "El archivo audiovisual principarl se movió y renombró con éxito de <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> a <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";

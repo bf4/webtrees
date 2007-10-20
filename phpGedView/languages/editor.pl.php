@@ -65,7 +65,6 @@ $pgv_lang["add_linkid_advice"]			= "Podaj lub wyszukaj identyfikator osoby, rodz
 $pgv_lang["use_browse_advice"]			= "Użyj przycisku &laquo;Przeglądaj&raquo; aby znaleźć plik na twoim komputerze.";
 $pgv_lang["add_media_other_folder"]	= "Inny katalog. Wprowadź";
 $pgv_lang["add_media_file"]		= "Istniejący plik mediów na serwerze";
-$pgv_lang["date_of_entry"]		= "Data wpisu w oryginalnym źródle";
 $pgv_lang["main_media_ok1"]				= "Zmiana nazwy głównego pliku multimediów z <b>#GLOBALS[oldMediaName]#</b> na <b>#GLOBALS[newMediaName]#</b> została zakończona pomyślnie.";
 $pgv_lang["main_media_ok2"]				= "Przenoszenie głównego pliku multimediów <b>#GLOBALS[oldMediaName]#</b> z <b>#GLOBALS[oldMediaFolder]#</b> do <b>#GLOBALS[newMediaFolder]#</b> zostało zakończone pomyślnie.";
 $pgv_lang["main_media_ok3"]				= "Przenoszenie i zmiana nazwy głównego pliku multimediów z <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> do <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b> zostało zakończone pomyślnie.";

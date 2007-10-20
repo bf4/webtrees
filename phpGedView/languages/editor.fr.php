@@ -68,7 +68,6 @@ $pgv_lang["server_file_advice2"]        = "Entrer une URL commencant par &laquo;
 #pgv_lang["use_browse_advice"]          = "Use the &laquo;Browse&raquo; button to search your local computer for the desired file.";
 #pgv_lang["add_media_other_folder"]     = "Other folder... please type in";
 #pgv_lang["add_media_file"]             = "Existing Media file on server";
-$pgv_lang["date_of_entry"]              = "Date d'entrée dans le document original";
 $pgv_lang["main_media_ok1"]             = "Fichier MultiMedia <b>#GLOBALS[oldMediaName]#</b> renommé <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_ok2"]             = "Fichier MultiMedia <b>#GLOBALS[oldMediaName]#</b> déplacé de <b>#GLOBALS[oldMediaFolder]#</b> vers <b>#GLOBALS[newMediaFolder]#</b>.";
 $pgv_lang["main_media_ok3"]             = "Fichier MultiMedia renommé et déplacé de <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> vers <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";

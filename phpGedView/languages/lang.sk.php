@@ -16,6 +16,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 //-- GENERAL HELP MESSAGES
+$pgv_lang["date_of_entry"]				= "Dátum záznamu v orginálnom zdroji";
 $pgv_lang["qm"]				= "?";
 $pgv_lang["qm_ah"]			= "?";
 $pgv_lang["page_help"]			= "Nápoveda";

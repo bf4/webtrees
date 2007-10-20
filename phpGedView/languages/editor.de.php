@@ -66,7 +66,6 @@ $pgv_lang["add_linkid_advice"]		= "Die ID Nummer einer Person, Familie, oder Que
 $pgv_lang["use_browse_advice"]		= "Mit dem &laquo;Browse&raquo; Button können Sie Ihren lokalen Computer nach der gewünschten Datei durchsuchen.";
 $pgv_lang["add_media_other_folder"]		= "Anderes Verzeichnis ... bitte eingeben";
 $pgv_lang["add_media_file"]				= "Bereits bestehende Medien-Datei";
-$pgv_lang["date_of_entry"]			= "Datum des Eintrages in der ursprünglichen Quelle";
 $pgv_lang["main_media_ok1"]			= "Das Medien-Objekt <b>#GLOBALS[oldMediaName]#</b> wurde auf <b>#GLOBALS[newMediaName]#</b> umbenannt.";
 $pgv_lang["main_media_ok2"]			= "Das Medien-Objekt <b>#GLOBALS[oldMediaName]#</b> wurde von <b>#GLOBALS[oldMediaFolder]#</b> nach <b>#GLOBALS[newMediaFolder]#</b> verlegt.";
 $pgv_lang["main_media_ok3"]			= "Das Medien-Objekt wurde von <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> nach <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b> verlegt und umbenannt.";

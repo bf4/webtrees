@@ -29,6 +29,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["date_of_entry"]				= "Orijinal kaynağın giriş tarihi";
 $pgv_lang["continue_import2"]		= "Tarih verilerini okumaya devam et";
 $pgv_lang["importing_dates"]		= "Tarih verileri okunuyor";
 $pgv_lang["changelog"]			= "v#VERSION# sürümündeki değişiklikler";

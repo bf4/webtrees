@@ -64,7 +64,6 @@ $pgv_lang["add_linkid_advice"]	= "Lisää tai etsi sen henkilön, perheen tai l�
 $pgv_lang["use_browse_advice"]	= "Käytä &laquo;Selaa&raquo;-painiketta hakeaksesi tiedostoa omalta tietokoneeltasi.";
 $pgv_lang["add_media_other_folder"]	= "Toinen hakemisto ... ole hyvä ja kirjoita";
 $pgv_lang["add_media_file"]		= "Palvelimella oleva mediatiedosto";
-$pgv_lang["date_of_entry"]		= "Alkuperäisen lähteen päiväys";
 $pgv_lang["main_media_ok1"]		= "Mediatiedoston <b>#GLOBALS[oldMediaName]#</b> nimi muutettu nimeksi <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_ok2"]		= "Mediatiedosto <b>#GLOBALS[oldMediaName]#</b> siirretty hakemistosta <b>#GLOBALS[oldMediaFolder]#</b> hakemistoon <b>#GLOBALS[newMediaFolder]#</b>.";
 $pgv_lang["main_media_ok3"]		= "Mediatiedosto siirretty ja nimetty uudestaan seuraavasti:</ br>Vanha: <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b></ br>Uusi: <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";

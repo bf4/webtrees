@@ -30,6 +30,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["date_of_entry"]				= "Data do registro na fonte original";
 $pgv_lang["roman_surn"]="Sobrenome Románico";
 $pgv_lang["roman_givn"]="Nomes Románicos";
 $pgv_lang["include"]="Incluir:";

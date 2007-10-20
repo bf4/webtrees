@@ -63,7 +63,6 @@ $pgv_lang["add_linkid_advice"]			= "Bu media bağlı olduğu yeri bulmak için g
 $pgv_lang["use_browse_advice"]			= "Yerel bilgisayarınızdan dosya aramak için &laquo;Gözat&raquo; butonunu kullanın.";
 $pgv_lang["add_media_other_folder"]		= "Diğer klasör... lütfen tipini gir ";
 $pgv_lang["add_media_file"]				= "Sunucuda var olan media dosyalar";
-$pgv_lang["date_of_entry"]				= "Orijinal kaynağın giriş tarihi";
 $pgv_lang["main_media_ok1"]				= "Ana media dosya <b>#GLOBALS[oldMediaName]#</b> yeniden başarılı biçimde <b>#GLOBALS[newMediaName]#</b> olarak adlandırıldı.";
 $pgv_lang["main_media_fail0"]			= "Ana media dosya <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> mevcut değil.";
 $pgv_lang["thumb_media_ok1"]			= "Tırnak önizleme dosya <b>#GLOBALS[oldMediaName]#</b> yeniden başarılı biçimde <b>#GLOBALS[newMediaName]#</b> olarak adlandırıldı.";
