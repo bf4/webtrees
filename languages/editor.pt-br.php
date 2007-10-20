@@ -63,7 +63,6 @@ $pgv_lang["add_linkid_advice"]="Informe ou pesquise a ID da pessoa, família, ou
 $pgv_lang["use_browse_advice"]="Use o botão de &laquo;Procurar&raquo; e selecione em seu computador o arquivo desejado.";
 $pgv_lang["add_media_other_folder"]="Outra pasta...por favor informe";
 $pgv_lang["add_media_file"]="Arquivo de mídia existe no servidor";
-$pgv_lang["date_of_entry"]				= "Data do registro na fonte original";
 $pgv_lang["main_media_ok1"]="Arquivo principal de mídia <b>#GLOBALS[oldMediaName]#</b> foi renomeado com sucesso para <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_ok2"]="Arquivo principal de mídia <b>#GLOBALS[oldMediaName]#</b> foi movido com sucesso de <b>#GLOBALS[oldMediaFolder]#</b> para <b>#GLOBALS[newMediaFolder]#</b>.";
 $pgv_lang["main_media_ok3"]="Pasta principal de mídia foi movida e renomeada de  <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> para <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.|";

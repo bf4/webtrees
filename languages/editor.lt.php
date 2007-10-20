@@ -54,7 +54,6 @@ $pgv_lang["server_file_advice"]			= "Jei norite išsaugoti orginalų vardą, tai
 $pgv_lang["server_file_advice2"]		= "Jūs galite suvesti URL, prasidedantį nuo &laquo;http://&raquo;.";
 $pgv_lang["add_media_other_folder"]		= "Kita direktorija...  Prašom suvesti";
 $pgv_lang["add_media_file"]				= "Egsiztuojanti audio/video byla serveryje";
-$pgv_lang["date_of_entry"]				= "Orginalaus šaltinius įrašo data";
 $pgv_lang["main_media_ok1"]				= "Pagrindinė media byla <b>#GLOBALS[oldMediaName]#</b> sėkmingai pakeista į  <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_ok2"]				= "Pagrindinė media byla <b>#GLOBALS[oldMediaName]#</b> sėkmingai perkelta iš <b>#GLOBALS[oldMediaFolder]#</b>  į   <b>#GLOBALS[newMediaFolder]#</b>.";
 $pgv_lang["add_obje"]				= "Pridėti naują multimedia(audio/video/foto) objektą";

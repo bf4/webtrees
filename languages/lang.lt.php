@@ -30,6 +30,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 //-- GENERAL HELP MESSAGES
+$pgv_lang["date_of_entry"]				= "Orginalaus šaltinius įrašo data";
 $pgv_lang["password"]				= "Slaptažodis";
 $pgv_lang["confirm"]				= "Patvirtinkite slaptažodį";
 $pgv_lang["login"]					= "Pasisveikinti";

@@ -63,7 +63,6 @@ $pgv_lang["add_linkid_advice"]			= "Vložte alebo vyhľadajte ID osoby, rodiny a
 $pgv_lang["use_browse_advice"]			= "Použite tlačítko &laquo;Prehľadať&raquo; na vyhľadanie vašeho lokálneho počítača pre žiadaný súbor.";
 $pgv_lang["add_media_other_folder"]		= "Ďalší adresár... prosím zadajte";
 $pgv_lang["add_media_file"]				= "Existujúci súbor médii na servere";
-$pgv_lang["date_of_entry"]				= "Dátum záznamu v orginálnom zdroji";
 $pgv_lang["main_media_ok1"]				= "Hlavný súbor medií <b>#GLOBALS[oldMediaName]#</b> bol úspešne premenovaný na <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_ok2"]				= "Hlavný súbor médií <b>#GLOBALS[oldMediaName]#</b> bol úspešne presunutý z <b>#GLOBALS[oldMediaFolder]#</b> do <b>#GLOBALS[newMediaFolder]#</b>.";
 $pgv_lang["main_media_ok3"]				= "Hlavný súbor médií bol úspešne presunutý a premenovaný z <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> na <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";
