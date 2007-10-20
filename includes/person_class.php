@@ -458,10 +458,33 @@ class Person extends GedcomRecord {
 	 * The label can be used when building a list of people
 	 * to display the relationship between this person
 	 * and the person listed on the page
+	 * @param string $elderdate optional elder sibling birthdate to calculate gap
+	 * @param int $counter optional children counter
 	 * @return string
 	 */
-	function getLabel() {
-		return $this->label;
+	function getLabel($elderdate="", $counter=0) {
+		global $pgv_lang, $TEXT_DIRECTION;
+		$label = "";
+		$gap = 0;
+		if ($elderdate) {
+			$p1 = parse_date($elderdate);
+			$p2 = parse_date($this->getBirthDate());
+			if ($p1[0]["jd1"] && $p2[0]["jd1"]) {
+				$gap = $p2[0]["jd1"]-$p1[0]["jd1"]; // days
+				$gap = round($gap*12/365.25); // months
+				$label .= "<div class=\"age $TEXT_DIRECTION\">";
+				// negative gap for children means wrong order
+				if ($gap<0 && $counter>0) $label .= "<img alt=\"\" src=\"images/warning.gif\" /> ";
+				// gap in years or months
+				if ($gap>20 or $gap<-20) $label .= round($gap/12)." ".$pgv_lang["years"];
+				else if ($gap!=0) $label .= $gap." ".$pgv_lang["months"];
+				$label .= "</div>";
+			}
+		}
+		if ($counter) $label .= "<div class=\"".strrev($TEXT_DIRECTION)."\">".$pgv_lang["number_sign"].$counter."</div>";
+		$label .= $this->label;
+		if ($gap!=0 && $counter<1) $label .= "<br />&nbsp;";
+		return $label;
 	}
 	/**
 	 * get family with spouse ids
@@ -868,6 +891,8 @@ class Person extends GedcomRecord {
 					if (!showFact("DEAT", $spouse->getXref())) $factrec .= "\n2 RESN privacy";
 					$factrec .= "\n2 ASSO @".$spouse->getXref()."@";
 					$factrec .= "\n3 RELA sosa_".($sosa*2);
+					// recorded as ASSOciate ? [ 1690092 ]
+					$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 					$this->indifacts[]=array(0, $factrec);
 				}
 			}
@@ -886,6 +911,8 @@ class Person extends GedcomRecord {
 					if (!showFact("DEAT", $spouse->getXref())) $factrec .= "\n2 RESN privacy";
 					$factrec .= "\n2 ASSO @".$spouse->getXref()."@";
 					$factrec .= "\n3 RELA sosa_".($sosa*2+1);
+					// recorded as ASSOciate ? [ 1690092 ]
+					$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 					$this->indifacts[]=array(0, $factrec);
 				}
 			}
@@ -947,12 +974,15 @@ class Person extends GedcomRecord {
 	 * @param string $except	Gedcom childid already processed
 	 * @return records added to indifacts array
 	 */
-	function add_children_facts(&$family, $option="", $except="") {
+	function add_children_facts(&$family, $option="_CHIL", $except="") {
 		global $SHOW_RELATIVES_EVENTS, $factarray;
 
-		if (!$SHOW_RELATIVES_EVENTS) return;
+		if ($option=="1") $option="_SIBL";
+		if ($option=="2") $option="_FSIB";
+		if ($option=="3") $option="_MSIB";
+		if (strstr($SHOW_RELATIVES_EVENTS, $option)===false) return;
 		if (empty($this->brec)) $this->_parseBirthDeath();
-		
+
 		$children = $family->getChildren();
 		foreach($children as $key=>$child) {
 			$spid = $child->getXref();
@@ -964,43 +994,43 @@ class Person extends GedcomRecord {
 				if ($sex=="F") $rela="daughter";
 				if ($sex=="M") $rela="son";
 				// grandchildren
-				if ($option=="grand") {
+				if ($option=="_GCHI") {
 					$rela="grandchild";
 					if ($sex=="F") $rela="granddaughter";
 					if ($sex=="M") $rela="grandson";
 				}
 				// stepsiblings
-				if ($option=="step") {
+				if ($option=="_HSIB") {
 					$rela="halfsibling";
 					if ($sex=="F") $rela="halfsister";
 					if ($sex=="M") $rela="halfbrother";
 				}
 				// siblings
-				if ($option=="1") {
+				if ($option=="_SIBL") {
 					$rela="sibling";
 					if ($sex=="F") $rela="sister";
 					if ($sex=="M") $rela="brother";
 				}
 				// uncles/aunts
-				if ($option=="2" or $option=="3") {
+				if ($option=="_FSIB" or $option=="_MSIB") {
 					$rela="uncle/aunt";
 					if ($sex=="F") $rela="aunt";
 					if ($sex=="M") $rela="uncle";
 				}
 				// firstcousins
-				if ($option=="first") {
+				if ($option=="_COUS") {
 					$rela="firstcousin";
 					if ($sex=="F") $rela="femalecousin";
 					if ($sex=="M") $rela="malecousin";
 				}
+				// nephew/niece
+				if ($option=="_NEPH") {
+					$rela="nephew/niece";
+					if ($sex=="F") $rela="niece";
+					if ($sex=="M") $rela="nephew";
+				}
 				// add child birth
-				$fact = "_BIRT_CHIL";
-				if ($option=="grand") $fact = "_BIRT_GCHI";
-				if ($option=="step") $fact = "_BIRT_HSIB";
-				if ($option=="first") $fact = "_BIRT_COUS";
-				if ($option=="1") $fact = "_BIRT_SIBL";
-				if ($option=="2") $fact = "_BIRT_FSIB";
-				if ($option=="3") $fact = "_BIRT_MSIB";
+				$fact = "_BIRT".$option;
 				if (strstr($SHOW_RELATIVES_EVENTS, $fact)) {
 					$srec = get_sub_record(1, "1 BIRT", $childrec);
 					if (!$srec) $srec = get_sub_record(1, "1 CHR", $childrec);
@@ -1014,17 +1044,20 @@ class Person extends GedcomRecord {
 						if (!showFact("BIRT", $spid)) $factrec .= "\n2 RESN privacy";
 						$factrec .= "\n2 ASSO @".$spid."@";
 						$factrec .= "\n3 RELA ".$rela;
+						// add parents on grandchildren, cousin or nephew's birth
+						if ($option=="_GCHI" or $option=="_COUS" or $option=="_NEPH") {
+							$factrec .= "\n2 ASSO @".$family->getHusbId()."@";
+							$factrec .= "\n3 RELA from";
+							$factrec .= "\n2 ASSO @".$family->getWifeId()."@";
+							$factrec .= "\n3 RELA and";
+						}
+						// recorded as ASSOciate ? [ 1690092 ]
+						$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 						$this->indifacts[]=array(0, $factrec);
 					}
 				}
 				// add child death
-				$fact = "_DEAT_CHIL";
-				if ($option=="grand") $fact = "_DEAT_GCHI";
-				if ($option=="step") $fact = "_DEAT_HSIB";
-				if ($option=="first") $fact = "_DEAT_COUS";
-				if ($option=="1") $fact = "_DEAT_SIBL";
-				if ($option=="2") $fact = "_DEAT_FSIB";
-				if ($option=="3") $fact = "_DEAT_MSIB";
+				$fact = "_DEAT".$option;
 				if (strstr($SHOW_RELATIVES_EVENTS, $fact)) {
 					$srec = get_sub_record(1, "1 DEAT", $childrec);
 					if (!$srec) $srec = get_sub_record(1, "1 BURI", $childrec);
@@ -1036,17 +1069,13 @@ class Person extends GedcomRecord {
 						if (!showFact("DEAT", $spid)) $factrec .= "\n2 RESN privacy";
 						$factrec .= "\n2 ASSO @".$spid."@";
 						$factrec .= "\n3 RELA ".$rela;
+						// recorded as ASSOciate ? [ 1690092 ]
+						$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 						$this->indifacts[]=array(0, $factrec);
 					}
 				}
 				// add child marriage
-				$fact = "_MARR_CHIL";
-				if ($option=="grand") $fact = "_MARR_GCHI";
-				if ($option=="step") $fact = "_MARR_HSIB";
-				if ($option=="first") $fact = "_MARR_COUS";
-				if ($option=="1") $fact = "_MARR_SIBL";
-				if ($option=="2") $fact = "_MARR_FSIB";
-				if ($option=="3") $fact = "_MARR_MSIB";
+				$fact = "_MARR".$option;
 				if (strstr($SHOW_RELATIVES_EVENTS, $fact)) {
 					foreach($child->getSpouseFamilies() as $sfamid=>$sfamily) {
 						$childrec = $sfamily->getGedcomRecord();
@@ -1068,22 +1097,28 @@ class Person extends GedcomRecord {
 							else $rela2="spouse";
 							$factrec .= "\n2 ASSO @".$sfamily->getSpouseId($spid)."@";
 							$factrec .= "\n3 RELA ".$rela2;
-							$arec = get_sub_record(2, "2 ASSO @".$spid."@", $srec);
-							if ($arec) $factrec .= "\n".$arec;
+							// recorded as ASSOciate ? [ 1690092 ]
+							$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 							$this->indifacts[]=array(0, $factrec);
 						}
 					}
 				}
-				// add grand-children
-				if ($option=="") {
+				// add children of children = grand-children
+				if ($option=="_CHIL") {
 					foreach($child->getSpouseFamilies() as $sfamid=>$sfamily) {
-						$this->add_children_facts($sfamily, "grand");
+						$this->add_children_facts($sfamily, "_GCHI");
 					}
 				}
-				// first cousins
-				if ($option=="2" or $option=="3") {
+				// add children of siblings = nephew/niece
+				if ($option=="_SIBL") {
 					foreach($child->getSpouseFamilies() as $sfamid=>$sfamily) {
-						$this->add_children_facts($sfamily, "first");
+						$this->add_children_facts($sfamily, "_NEPH");
+					}
+				}
+				// add children of uncle/aunt = firstcousins
+				if ($option=="_FSIB" or $option=="_MSIB") {
+					foreach($child->getSpouseFamilies() as $sfamid=>$sfamily) {
+						$this->add_children_facts($sfamily, "_COUS");
 					}
 				}
 			}
@@ -1118,6 +1153,8 @@ class Person extends GedcomRecord {
 				if (!showFact("DEAT", $spouse->getXref())) $factrec .= "\n2 RESN privacy";
 				$factrec .= "\n2 ASSO @".$spouse->getXref()."@";
 				$factrec .= "\n3 RELA spouse";
+				// recorded as ASSOciate ? [ 1690092 ]
+				$factrec .= "\n". get_sub_record(2, "2 ASSO @".$this->xref."@", $srec);
 				$this->indifacts[]=array(0, $factrec);
 			}
 		}
@@ -1163,7 +1200,7 @@ class Person extends GedcomRecord {
 		foreach ($histo as $indexval=>$hrec) {
 			$sdate = get_sub_record(2, "2 DATE", $hrec);
 			if (compare_facts_date($this->getGedcomBirthDate(), $sdate)<0 && compare_facts_date($sdate, $this->getGedcomDeathDate())<0) {
-				$this->indifacts[]=array(0, $hrec);
+				$this->indifacts[]=array(-1, $hrec);
 			}
 		}
 	}
@@ -1222,8 +1259,16 @@ class Person extends GedcomRecord {
 						else $factrec .= "\n2 ASSO @".$rid."@\n3 RELA ".$label;
 						//$factrec .= "\n3 NOTE ".$rela;
 						$factrec .= "\n2 ASSO @".$person->getXref()."@\n3 RELA ".$rela;
-
-						$this->indifacts[] = array(0, $factrec);
+						// check if this fact already exists in the list
+						$found = false;
+						foreach($this->indifacts as $k=>$v) {
+							if (strpos($v[1], trim($sdate))
+							&& strpos($v[1], "2 ASSO @".$person->getXref()."@")) {
+								$found = true;
+								break;
+							}
+						}
+						if (!$found) $this->indifacts[] = array(0, $factrec);
 					}
 				}
 			}

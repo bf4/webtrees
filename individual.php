@@ -227,31 +227,6 @@ function showchanges() {
 	window.location = 'individual.php?pid=<?php print $controller->pid; ?>&show_changes=yes';
 }
 
-// The function below does not go well with validation.
-// The option to use getElementsByName is used in connection with code from
-// the functions_print.php file.
-function togglerow(label) {
-	var ebn = document.getElementsByName(label);
-	if (ebn.length) var disp = ebn[0].style.display;
-	else var disp="";
-	if (disp=="none") {
-		disp="table-row";
-		if (document.all && !window.opera) disp = "inline"; // IE
-		rela_plus = document.getElementById('rela_plus');
-		if (rela_plus) rela_plus.style.display="none";
-		rela_minus = document.getElementById('rela_minus');
-		if (rela_minus) rela_minus.style.display="inline";
-	}
-	else {
-		disp="none";
-		var rela_plus = document.getElementById('rela_plus');
-		if (rela_plus) rela_plus.style.display="inline";
-		var rela_minus = document.getElementById('rela_minus');
-		if (rela_minus) rela_minus.style.display="none";
-	}
-	for (i=0; i<ebn.length; i++) ebn[i].style.display=disp;
-}
-
 <!-- ====================== Added for Lightbox Module ===================== -->
 <?php
 if (file_exists("modules/lightbox/album.php")) {
@@ -315,25 +290,27 @@ function tabswitch(n) {
 	// empty tabs
 	for (i=0; i<tabid.length; i++) {
 		var elt = document.getElementById('door'+i);
-		if (document.getElementById('no_tab'+i)) { // empty ?
-			if (<?php if (userCanEdit(getUserName())) echo 'true'; else echo 'false';?>) {
-				elt.style.display='block';
-				elt.style.opacity='0.4';
-				elt.style.filter='alpha(opacity=40)';
+		if (elt) {
+			if (document.getElementById('no_tab'+i)) { // empty ?
+				if (<?php if (userCanEdit(getUserName())) echo 'true'; else echo 'false';?>) {
+					elt.style.display='block';
+					elt.style.opacity='0.4';
+					elt.style.filter='alpha(opacity=40)';
+				}
+				else elt.style.display='none'; // empty and not editable ==> hide
+				//if (i==3 && <?php if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) echo 'true'; else echo 'false';?>) elt.style.display='none'; // no sources
+				if (i==4 && <?php if (!$MULTI_MEDIA) echo 'true'; else echo 'false';?>) elt.style.display='none'; // no multimedia
+				if (i==6) elt.style.display='none'; // hide researchlog
+				// ALL : hide empty contents
+				if (n==0) document.getElementById(tabid[i]).style.display='none';
 			}
-			else elt.style.display='none'; // empty and not editable ==> hide
-			//if (i==3 && <?php if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) echo 'true'; else echo 'false';?>) elt.style.display='none'; // no sources
-			if (i==4 && <?php if (!$MULTI_MEDIA) echo 'true'; else echo 'false';?>) elt.style.display='none'; // no multimedia
-			if (i==6) elt.style.display='none'; // hide researchlog
-			// ALL : hide empty contents
-			if (n==0) document.getElementById(tabid[i]).style.display='none';
+			else elt.style.display='block';
 		}
-		else elt.style.display='block';
 	}
 	// current door
 	for (i=0; i<tabid.length; i++) {
-		document.getElementById('door'+i).className='door optionbox rela';
-		//document.getElementById('door'+i).className='tab_cell_inactive';
+		var elt = document.getElementById('door'+i);
+		if (elt) elt.className='door optionbox rela';
 	}
 	document.getElementById('door'+n).className='door optionbox';
 	//document.getElementById('door'+n).className='tab_cell_active';
@@ -513,14 +490,20 @@ if(empty($SEARCH_SPIDER)) {
 		if ($GOOGLEMAP_ENABLED == "false") {
 	        print "<table class=\"facts_table\">\n";
 	        print "<tr><td id=\"no_tab7\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["gm_disabled"]."</script></td></tr>\n";
-	        print "<script type=\"text/javascript\">\n";
-	        print "function ResizeMap ()\n{\n}\nfunction SetMarkersAndBounds ()\n{\n}\n</script>\n";
 	        if (userIsAdmin(getUserName())) {
 	            print "<tr><td align=\"center\" colspan=\"2\">\n";
 	            print "<a href=\"module.php?mod=googlemap&pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
 	            print "</td></tr>\n";
 	        }
 	        print "\n\t</table>\n<br />";
+			?>
+			<script language="JavaScript" type="text/javascript">
+			<!--
+				function ResizeMap () {}
+				function SetMarkersAndBounds () {}
+			//-->
+			</script>
+			<?php
 	    }
 	    else {
     	if(empty($SEARCH_SPIDER)) {
