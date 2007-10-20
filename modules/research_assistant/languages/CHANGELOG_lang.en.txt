@@ -1,6 +1,6 @@
 PHPGEDVIEW RESEARCH-LOG LANGUAGE FILE CHANGELOG
 
-# $Id: CHANGELOG_lang.en.txt 915 2007-03-06 00:16:58Z yalnifj $
+# $Id$
 
 Use this file to follow the changes made to the language files
 between different versions of phpGedView.  Use the rs_lang.en.php

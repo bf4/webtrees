@@ -1,5 +1,5 @@
 <PGVReport access="PRIV_USER" icon="place">
-	<!-- $Id: birthlist.xml 1202 2007-06-22 19:18:24Z canajun2eh $ -->
+	<!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[changes_report]" /></PGVRTitle>
 	<PGVRDescription>Prints a list of individuals matching specific change criteria</PGVRDescription>
 	<PGVRInput name="changedate1" lookup="DATE" type="text" default="NOW"><PGVRvar var="pgv_lang[changedate2]" /></PGVRInput>

@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: lang.de.php 1191 2007-06-12 08:53:59Z fisharebest $
+ * @version $Id$
  */
 
  

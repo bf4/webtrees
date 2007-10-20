@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @version $Id: person_class.php 981 2007-03-21 13:24:38Z fisharebest $
+ * @version $Id$
  */
 require_once('includes/person_class.php');
 require_once('includes/functions_charts.php');

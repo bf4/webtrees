@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: lang.fr.php 979 2007-03-21 11:57:39Z opus27 $
+ * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
   print "You cannot access a language file directly.";

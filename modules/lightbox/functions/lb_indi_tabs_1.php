@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Charts
- * @version $Id: lb_indi_tabs_1.php 1752 2007-09-27 10:52:59Z canajun2eh $
+ * @version $Id$
  */
 ?>
 <?php if (file_exists("modules/googlemap/defaultconfig.php") && file_exists("modules/lightbox/album.php") && !userCanEdit(getUserName()) ) { ?>

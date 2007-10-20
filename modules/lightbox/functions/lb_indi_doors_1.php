@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage Module
- * @version $Id: lb_indi_doors_1.php 1772 2007-09-29 17:12:34Z windmillway $
+ * @version $Id$
  * @author Brian Holland
  */
 ?>

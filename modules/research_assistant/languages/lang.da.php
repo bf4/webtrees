@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Research_Assistant
- * @version $Id: lang.da.php 1093 2007-05-20 19:37:45Z hylle $
+ * @version $Id$
  */
   
  

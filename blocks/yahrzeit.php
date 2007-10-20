@@ -24,7 +24,7 @@
  * @package PhpGedView
  * @subpackage Blocks
  * @author Greg Roach, fisharebest@users.sourceforge.net
- * @version $Id: yahrzeit.php 1816 2007-10-02 12:07:52Z canajun2eh $
+ * @version $Id$
  */
 
 $PGV_BLOCKS["print_yahrzeit"]["name"]		= $pgv_lang["yahrzeit_block"];
