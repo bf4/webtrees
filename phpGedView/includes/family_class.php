@@ -3,7 +3,7 @@
  * Class file for a Family
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006	John Finlay and Others
+ * Copyright (C) 2002 to 2007	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -83,29 +83,28 @@ class Family extends GedcomRecord {
 			if (isset($famlist[$pid]['object'])) return $famlist[$pid]['object'];
 		}
 
-		$indirec = find_family_record($pid);
-		if (empty($indirec)) {
+		$gedrec = find_family_record($pid);
+		if (empty($gedrec)) {
 			$ct = preg_match("/(\w+):(.+)/", $pid, $match);
 			if ($ct>0) {
 				$servid = trim($match[1]);
 				$remoteid = trim($match[2]);
 				$service = ServiceClient::getInstance($servid);
-				$newrec = $service->mergeGedcomRecord($remoteid, "0 @".$pid."@ FAM\r\n1 RFN ".$pid, false);
-				$indirec = $newrec;
+				if ($service) $gedrec = $service->mergeGedcomRecord($remoteid, "0 @".$pid."@ FAM\r\n1 RFN ".$pid, false);
 			}
 		}
-		if (empty($indirec)) {
+		if (empty($gedrec)) {
 			if (userCanEdit(getUserName()) && isset($pgv_changes[$pid."_".$GEDCOM])) {
-				$indirec = find_updated_record($pid);
+				$gedrec = find_updated_record($pid);
 				$fromfile = true;
 			}
 		}
-		if (empty($indirec)) return null;
-		$family = new Family($indirec, $simple);
-		if (!empty($fromfile)) $family->setChanged(true);
-		$famlist[$pid]['object'] = &$family;
+		if (empty($gedrec)) return null;
+		$object = new Family($gedrec, $simple);
+		if (!empty($fromfile)) $object->setChanged(true);
+		$famlist[$pid]['object'] = &$object;
 		if (!isset($famlist[$pid]['gedfile'])) $famlist[$pid]['gedfile'] = $GEDCOMS[$GEDCOM]['id'];
-		return $family;
+		return $object;
 	}
 
 	/**
@@ -316,7 +315,7 @@ class Family extends GedcomRecord {
 	function _parseMarriageRecord() {
 		$this->marr_rec = trim(get_sub_record(1, "1 MARR", $this->gedrec));
 		$this->marr_date = get_gedcom_value("DATE", 2, $this->marr_rec, '', false);
-		$this->marr_type = get_sub_record(2, "2 TYPE", $this->marr_rec);
+		$this->marr_type = get_gedcom_value("TYPE", 2, $this->marr_rec, '', false);
 		$this->div_rec = trim(get_sub_record(1, "1 DIV", $this->gedrec));
 		//-- 2nd record with alternate date (hebrew...)
 		$this->marr_rec2 = trim(get_sub_record(1, "1 MARR", $this->gedrec, 2));
@@ -331,7 +330,7 @@ class Family extends GedcomRecord {
 		if (is_null($this->marr_rec)) $this->_parseMarriageRecord();
 		return $this->marr_rec;
 	}
-	
+
 	/**
 	 * get divorce record
 	 * @return string

@@ -1665,6 +1665,7 @@ case 'reorder_children':
 	new Effect.BlindDown('reorder_list', {duration: 1});
 	Sortable.create('reorder_list',
 		{
+			scroll:window,
 			onUpdate : function() {
 				inputs = $('reorder_list').getElementsByTagName("input");
 				for (var i = 0; i < inputs.length; i++) inputs[i].value = i;
@@ -2008,6 +2009,7 @@ case 'reorder_fams':
 	new Effect.BlindDown('reorder_list', {duration: 1});
 	Sortable.create('reorder_list',
 		{
+			scroll:window,
 			onUpdate : function() {
 				inputs = $('reorder_list').getElementsByTagName("input");
 				for (var i = 0; i < inputs.length; i++) inputs[i].value = i;

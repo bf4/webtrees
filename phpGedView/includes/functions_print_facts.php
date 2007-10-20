@@ -82,7 +82,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 	
 	//-- keep the time of this access to help with concurrent edits
 	$_SESSION['last_access_time'] = time();
-	
+
 	$FACT_COUNT++;
 	$estimates = array("abt","aft","bef","est","cir");
 	$ft = preg_match("/1 (\w+)(.*)/", $factrec, $match);
@@ -106,6 +106,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 	if ($ct>0) $styleadd="change_old";
 	if (($linenum<1) && (!empty($SEARCH_SPIDER)))  return; // don't add relatives for spiders.
 	if ($linenum<1) $styleadd="rela"; // not editable
+	if ($linenum==-1) $styleadd="histo"; // historical facts
 	// -- avoid known non facts
 	if (in_array($fact, $nonfacts)) return;
 	//-- do not print empty facts
@@ -127,8 +128,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			if (!showFact($factref, $pid)) return false;
 			if ($styleadd=="") $rowID = "row_".floor(microtime()*1000000);
 			else $rowID = "row_".$styleadd;
-			//print "\n\t\t<tr id=\"".$rowID."\">";
-			print "\n\t\t<tr id=\"".$rowID."\" name=\"".$rowID."\">"; //invalid, but Events of close relatives broken in firefox without name attribute (bug # [ 1701278 ] )
+			print "\n\t\t<tr id=\"".$rowID."\" class=\"".$rowID."\">";
 			print "\n\t\t\t<td class=\"descriptionbox $styleadd center width20\">";
 			$label = $factref;
 			if (isset($factarray["$factref"])) $label = $factarray[$factref];
@@ -203,8 +203,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			if (!showFact($factref, $pid)) return false;
 			if ($styleadd=="") $rowID = "row_".floor(microtime()*1000000);
 			else $rowID = "row_".$styleadd;
-			//print "\n\t\t<tr id=\"".$rowID."\">";
-			print "\n\t\t<tr id=\"".$rowID."\" name=\"".$rowID."\">"; //invalid, but Events of close relatives broken in firefox without name attribute (bug # [ 1701278 ] )
+			print "\n\t\t<tr id=\"".$rowID."\" class=\"".$rowID."\">";
 			$label = $factref;
 			if (isset($factarray["$factref"])) $label = $factarray[$factref];
 			if (isset($pgv_lang[$factref])) $label = $pgv_lang[$factref];
@@ -863,9 +862,8 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 		if (!showFact("SOUR", $pid) || FactViewRestricted($pid, $factrec)) return false;
 		if (displayDetailsById($sid, "SOUR")) {
 			print "\n\t\t\t<tr><td class=\"descriptionbox $styleadd center width20\">";
-			//print "\n\t\t\t<tr><td class=\"facts_label$styleadd\">";
-			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" alt=\"\" /><br />";
-			print $factarray["SOUR"];
+			if ($level==1) echo "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" alt=\"\" /><br />";
+			echo $factarray[trim(substr($factrec, 2, 5))];
 			if (!$noedit && userCanEdit(getUserName())&&(!FactEditRestricted($pid, $factrec))&&($styleadd!="red")&&($view!="preview")) {
 				$menu = array();
 				$menu["label"] = $pgv_lang["edit"];
@@ -1101,7 +1099,19 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 				print_main_notes($factrec, $level, $pid, $linenum, $noedit);
 			}
 		}
-		print "\n\t\t<tr><td valign=\"top\" class=\"descriptionbox $styleadd center width20\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\" alt=\"\" /><br />".$factarray["NOTE"];
+		print "\n\t\t<tr><td valign=\"top\" class=\"descriptionbox $styleadd center width20\">";
+		//print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\" alt=\"\" /><br />";
+		if ($level<2) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\" alt=\"\" /><br />".$factarray["NOTE"];
+		else {
+			$factlines = explode("\n", $factrec); // 1 BIRT Y\n2 NOTE ...
+			$factwords = explode(" ", $factlines[0]); // 1 BIRT Y
+			$factname = $factwords[1]; // BIRT
+			if ($factname == "EVEN") {
+				$factwords = explode(" ", $factlines[1]); // 1 EVEN\n2 TYPE MDCL\n2 NOTE
+				$factname = $factwords[2]; // MDCL
+			}
+			print $factarray[$factname];
+		}
 		if (!$noedit && userCanEdit(getUserName())&&(!FactEditRestricted($pid, $factrec))&&($styleadd!="change_old")&&($view!="preview")) {
 			$menu = array();
 			$menu["label"] = $pgv_lang["edit"];

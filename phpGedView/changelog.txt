@@ -7,7 +7,16 @@
 
 	# $Id$
 =====================================================================
-Version 4.1.2
+
+Version 4.1.3
+ - Added [ 1714274 ] MARR date on Close Relative tab (opus27)
+ - Added [ 1712181 ] Show Sources Linked to Events in the Source Tab (opus27)
+ - Fixed [ 1701278 ] "Events of close.." Broken in Firefox if Valid xhtml used (opus27)
+ - Added [ 1690092 ] Events of close relatives : remove duplicates (opus27)
+ - Added [ 1671286 ] Events of close relatives : add nephew/niece (opus27)
+ - Added [ 1564752 ] Shared facts for whole family (opus27)
+
+Version 4.1.2 2007-10-19
  - Fixed [ 1800412 ] Media source citation bug (canajun2eh)
  - Fixed [ 1802378 ] Source Citation Duplicates Part of Note as Citation (canajun2eh)
  - Fixed [ 1792613 ] Text mangled when editing linked Note (canajun2eh)
@@ -31,8 +40,7 @@ Version 4.1.2
  - Fixed [ 1759246 ] New individual source added without relevant fields (yalnifj)
  - Fixed [ 1790943 ] 4.1.1 Individual Page - Submenu Lists - Individual is empty (canajun2eh)
 
-
-Version 4.1.1
+Version 4.1.1 2007-09-08
  - Applied [ 1790552 ] childrec variable not initialized (yalnifj)
  - Changed Print link list after Notes and Source on Manage Media pages (canajun2eh)
  - Fixed Media source citation information lost when editing any media object info (canajun2eh)
@@ -84,10 +92,10 @@ Version 4.1.1
  - Restrict editing users from search and replace.  Admin and Accept users only (yalnifj)
  - Change backup so that DB data is always backed up to a file and included in the ZIP (yalnifj)
  - Added use case insensitive compare when checking for duplicate usernames (yalnifj)
- 
-Version 4.1
  - Fixed [ 1767071 ] Error when approving any change on indi-page (canajun2eh)
  - Fixed [ 1766591 ] Tag Clouds RTL, counts on wrong side of name (canajun2eh)
+
+Version 4.1 2007-08-03
  - Fixed [ 1766061 ] SVN:1370 Link error on indilist.php (canajun2eh)
  - Fixed [ 1765861 ] Relatives Report - missing icons/images (canajun2eh)
  - Added "Acceptable use" notice on "Request new user account" page (canajun2eh)
