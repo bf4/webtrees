@@ -31,6 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["date_of_entry"]		= "Alkuperäisen lähteen päiväys";
 $pgv_lang["address_labels"]		= "Osoitetarrat";
 $pgv_lang["filter_address"]		= "Näytä osoitteet, jotka sisältävät:";
 $pgv_lang["address_list"]		= "Osoiteluettelo";

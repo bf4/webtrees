@@ -31,6 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["date_of_entry"]				= "Indtastningsdato i original kilde";
 $pgv_lang["genealogy"]					= "slægtsforskning";
 $pgv_lang["activate"]					= "Aktivér";
 $pgv_lang["deactivate"]					= "Deaktivér";

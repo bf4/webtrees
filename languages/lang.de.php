@@ -32,6 +32,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["date_of_entry"]			= "Datum des Eintrags in der ursprünglichen Quelle";
 $pgv_lang["multi_site_search"] 		= "Webseiten durchsuchen";
 $pgv_lang["switch_lifespan"]		= "Lebenspannen-Diagramm zeigen";
 $pgv_lang["switch_timeline"]		= "Lebenspannenanzeige zeigen";

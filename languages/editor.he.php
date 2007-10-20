@@ -68,7 +68,6 @@ $pgv_lang["add_linkid_advice"]	= "הכנס או חפש את קוד הזיהוי 
 $pgv_lang["use_browse_advice"]	= "השתמש בכפתור ה-&laquo;Browse&raquo; כדי לחפש את הקובץ הרצוי במחשב המקומי שלך.";
 $pgv_lang["add_media_other_folder"]	= "תיקייה אחרת... נא הקלד";
 $pgv_lang["add_media_file"]		= "קובץ מדיה קיים על השרת";
-$pgv_lang["date_of_entry"]		= "תאריך רישום במקור האוריגינלי";
 $pgv_lang["main_media_ok1"]		= "השם של קובץ המדיה הראשי <b>#GLOBALS[oldMediaName]#</b> שונה בהצלחה ל-<b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_ok2"]		= "קובץ המדיה הראשי <b>#GLOBALS[oldMediaName]#</b> הועבר בהצלחה מ-<span dir=\"ltr\"><b>#GLOBALS[oldMediaFolder]#</b></span> אל <span dir=\"ltr\"><b>#GLOBALS[newMediaFolder]#</b></span>.";
 $pgv_lang["main_media_ok3"]		= "קובץ המדיה הראשי הועבר ושמו שונה מ-<b><span dir=\"ltr\">#GLOBALS[oldMediaFolder]#</span>#GLOBALS[oldMediaName]#</b> ל-<b><span dir=\"ltr\">#GLOBALS[newMediaFolder]#</span>#GLOBALS[newMediaName]#</b>.";

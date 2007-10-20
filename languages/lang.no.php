@@ -32,6 +32,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["date_of_entry"]			= "Angitt dato i originalkilde";
 $pgv_lang["file_information"]		= "Fil-informasjon";
 $pgv_lang["choose_file_type"]		= "Velg filtype";
 $pgv_lang["add_individual_by_id"]	= "Legg til person ved hjelp av ID";

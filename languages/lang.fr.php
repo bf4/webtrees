@@ -31,6 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["date_of_entry"]              = "Date d'entrée dans le document original";
 $pgv_lang["search_place_word"]          = "Mots entiers seulement";
 $pgv_lang["invalid_search_input"]       = "Entrez un nom de personne ou de lieu en complément de l'année";
 $pgv_lang["duplicate_username"]         = "Utilisateur déjà existant.  Un utilisateur existe déjà sous ce nom.  Veuillez retourner à la page précédente et choisir un autre nom.";

@@ -32,6 +32,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["date_of_entry"]				= "Fecha de la entrada en la fuente original";
 // $pgv_lang["switch_lifespan"]		= "Show Lifespan chart";
 $pgv_lang["switch_timeline"]		= "Mostrar Cronograma";
 $pgv_lang["differences"]			= "Diferencias";

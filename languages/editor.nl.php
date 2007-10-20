@@ -63,7 +63,6 @@ $pgv_lang["add_linkid_advice"]			= "Voer de ID van de persoon, familie of bron i
 $pgv_lang["use_browse_advice"]			= "Gebruik de knop &laquo;Bladeren&raquo; of &laquo;Browse&raquo; om op uw computer naar de gewenste file te zoeken.";
 $pgv_lang["add_media_other_folder"]		= "Andere map ... voer in";
 $pgv_lang["add_media_file"]				= "Bestaand mediabestand op server";
-$pgv_lang["date_of_entry"]				= "Invoerdatum bij bron";
 $pgv_lang["main_media_ok1"]				= "Mediabestand <b>#GLOBALS[oldMediaName]#</b> hernoemd naar <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_ok2"]				= "Mediabestand <b>#GLOBALS[oldMediaName]#</b> verplaatst van <b>#GLOBALS[oldMediaFolder]#</b> naar <b>#GLOBALS[newMediaFolder]#</b>";
 $pgv_lang["main_media_ok3"]				= "Mediabestand verplaatst en hernoemd van <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> naar <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";

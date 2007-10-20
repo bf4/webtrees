@@ -63,7 +63,6 @@ $pgv_lang["add_linkid_advice"]			= "Angi eller søk etter IDen til personen, fam
 $pgv_lang["use_browse_advice"]			= "Bruk knappen &laquo;Bla gjennom&raquo; for å finne ønsket fil på din lokale datamaskin.";
 $pgv_lang["add_media_other_folder"]		= "Andre mapper... - skriv inn";
 $pgv_lang["add_media_file"]				= "Eksisterende mediafile på server";
-$pgv_lang["date_of_entry"]			= "Angitt dato i originalkilde";
 $pgv_lang["main_media_ok1"]			= "Hovedmediafilen <b>#GLOBALS[oldMediaName]#</b> heter nå <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_ok2"]			= "Hovedmediafilen <b>#GLOBALS[oldMediaName]#</b> er nå flyttet fra <b>#GLOBALS[oldMediaFolder]#</b> til <b>#GLOBALS[newMediaFolder]#</b>.";
 $pgv_lang["main_media_ok3"]			= "Hovedmediafilen er flyttet eller gitt nytt navn fra <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> til <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";

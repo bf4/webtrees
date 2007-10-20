@@ -72,7 +72,6 @@ $pgv_lang["add_linkid_advice"]			= "Enter or search for the ID of the person, fa
 $pgv_lang["use_browse_advice"]			= "Use the &laquo;Browse&raquo; button to search your local computer for the desired file.";
 $pgv_lang["add_media_other_folder"]		= "Other folder... please type in";
 $pgv_lang["add_media_file"]				= "Existing Media file on server";
-$pgv_lang["date_of_entry"]				= "Date of entry in original source";
 $pgv_lang["main_media_ok1"]				= "Main media file <b>#GLOBALS[oldMediaName]#</b> successfully renamed to <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_ok2"]				= "Main media file <b>#GLOBALS[oldMediaName]#</b> successfully moved from <b>#GLOBALS[oldMediaFolder]#</b> to <b>#GLOBALS[newMediaFolder]#</b>.";
 $pgv_lang["main_media_ok3"]				= "Main media file successfully moved and renamed from <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> to <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";

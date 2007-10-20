@@ -63,7 +63,6 @@ $pgv_lang["server_folder_advice2"]		= "Denne indtastning ignoreres hvis du har i
 $pgv_lang["add_linkid_advice"]			= "Indtast eller søg efter ID på den person, familie eller kilde til hvilken dette medieemne skal tilknyttes.";
 $pgv_lang["use_browse_advice"]			= "Brug &laquo;Gennemse&raquo; knappen til at søge på din lokale computer efter den ønskede fil.";
 $pgv_lang["add_media_file"]				= "Eksisterende mediefil på server";
-$pgv_lang["date_of_entry"]				= "Indtastningsdato i original kilde";
 $pgv_lang["add_media_other_folder"]		= "Anden mappe... indtast venligst";
 $pgv_lang["thumb_media_ok1"]			= "Miniaturefilen <b>#GLOBALS[oldMediaName]#</b> er korrekt omdøbt til <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["thumb_media_ok2"]			= "Miniaturefilen <b>#GLOBALS[oldMediaName]#</b> er korrekt flyttet fra <b>#GLOBALS[oldThumbFolder]#</b> til <b>#GLOBALS[newThumbFolder]#</b>.";

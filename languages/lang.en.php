@@ -31,6 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["date_of_entry"]			= "Date of entry in original source";
 $pgv_lang['tree']					= "Tree";
 $pgv_lang["multi_site_search"] 		= "Multi Site Search";
 $pgv_lang["switch_lifespan"]		= "Show Lifespan chart";
