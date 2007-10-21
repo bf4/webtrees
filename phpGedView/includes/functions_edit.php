@@ -1422,13 +1422,14 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		add_simple_tag(($level+1)." $page");
 		// 3 DATA
 		// 4 TEXT
+		// 4 DATE
 		$text = "TEXT";
 		add_simple_tag(($level+2)." $text");
 		add_simple_tag(($level+2)." DATE", "", $pgv_lang["date_of_entry"]);
-		// 3 OBJE
-		add_simple_tag(($level+1)." OBJE @@");
 		// 3 QUAY
 		add_simple_tag(($level+1)." QUAY");
+		// 3 OBJE
+		add_simple_tag(($level+1)." OBJE @@");
 		print "</table></div>";
 	}
 	if ($tag=="ASSO") {
@@ -1975,7 +1976,8 @@ function create_edit_form($gedrec, $linenum, $level0type) {
 					}
 					if (!empty($expected_subtags[$subtag]))
 						foreach ($expected_subtags[$subtag] as $subsubtag)
-							add_simple_tag(($level+2).' '.$subsubtag);
+							if ($inSource && $subsubtag=="DATE") add_simple_tag(($level+2).' '.$subsubtag, "", $pgv_lang["date_of_entry"]);
+							else add_simple_tag(($level+2).' '.$subsubtag);
 				}
 
 		// Awkward special cases

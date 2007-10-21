@@ -541,8 +541,9 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	   print "<link rel=\"shortcut icon\" href=\"$FAVICON\" type=\"image/x-icon\"></link>\n\t\t";
 	}
 
-	if (!isset($META_TITLE)) $META_TITLE = "";
-	print "<title>".PrintReady(strip_tags($title)." - ".$META_TITLE." - PhpGedView", TRUE)."</title>\n\t";
+	if (empty($META_TITLE)) $metaTitle = " - PhpGedView";
+	else $metaTitle = " - ".$META_TITLE." - PhpGedView";
+	print "<title>".PrintReady(strip_tags($title).$metaTitle, TRUE)."</title>\n\t";
 	$GEDCOM_TITLE = "";
 	if (!empty($GEDCOMS[$GEDCOM]["title"])) $GEDCOM_TITLE = $GEDCOMS[$GEDCOM]["title"];
 	if ($ENABLE_RSS){
@@ -1541,10 +1542,10 @@ function print_note_record($text, $nlevel, $nrec) {
 	global $pgv_lang;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES;
 	$elementID = "N-".floor(microtime()*1000000);
-	$text .= get_cont($nlevel, $nrec);
-	$text = str_replace("~~", "<br />", trim($text));
-	$text=expand_urls($text);
 	$text = trim($text);
+	$text .= get_cont($nlevel, $nrec);
+	$text = str_replace("~~", "<br />", $text);
+	$text = trim(expand_urls(stripLRMRLM($text)));
 	if (!empty($text)) {
 		$text = PrintReady($text);
 		$brpos = strpos($text, "<br />");
@@ -1578,7 +1579,7 @@ function print_fact_notes($factrec, $level) {
 	 $ct = preg_match_all("/$level NOTE(.*)/", $factrec, $match, PREG_SET_ORDER);
 	 for($j=0; $j<$ct; $j++) {
 		  $spos1 = strpos($factrec, $match[$j][0]);
-		  $spos2 = strpos($factrec, "\n$level", $spos1+1);
+		  $spos2 = strpos($factrec."\n$level", "\n$level", $spos1+1);
 		  if (!$spos2) $spos2 = strlen($factrec);
 		  $nrec = substr($factrec, $spos1, $spos2-$spos1);
 		  if (!isset($match[$j][1])) $match[$j][1]="";

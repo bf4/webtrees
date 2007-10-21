@@ -863,7 +863,8 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 		if (displayDetailsById($sid, "SOUR")) {
 			print "\n\t\t\t<tr><td class=\"descriptionbox $styleadd center width20\">";
 			if ($level==1) echo "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" alt=\"\" /><br />";
-			echo $factarray[trim(substr($factrec, 2, 5))];
+			$temp = preg_match("/^\d (\w*)/", $factrec, $factname);
+			echo $factarray[$factname[1]];
 			if (!$noedit && userCanEdit(getUserName())&&(!FactEditRestricted($pid, $factrec))&&($styleadd!="red")&&($view!="preview")) {
 				$menu = array();
 				$menu["label"] = $pgv_lang["edit"];
