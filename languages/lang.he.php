@@ -674,10 +674,10 @@ $pgv_lang["ell"]          		= "אלול";
 
 $pgv_lang["muhar"]        = "מוחרם";
 $pgv_lang["safar"]        = "צפר";
-$pgv_lang["rabi1"]        = "רביע אל-אוול";
-$pgv_lang["rabi2"]        = "רביע א-ת'אני";
-$pgv_lang["juma1"]        = "ג׳ומאדא אל-אוואל";
-$pgv_lang["juma2"]        = "ג׳ומאדא אל-ת'אניה";
+$pgv_lang["rabia"]        = "רביע אל-אוול";
+$pgv_lang["rabit"]        = "רביע א-ת'אני";
+$pgv_lang["jumaa"]        = "ג׳ומאדא אל-אוואל";
+$pgv_lang["jumat"]        = "ג׳ומאדא אל-ת'אניה";
 $pgv_lang["rajab"]        = "רג׳ב";
 $pgv_lang["shaab"]        = "שעבאן";
 $pgv_lang["ramad"]        = "רמדאן";

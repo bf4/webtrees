@@ -606,10 +606,10 @@ $pgv_lang["ell"]          = "elul-kuu";
 //@@
 $pgv_lang["muhar"]        = "muharram";
 $pgv_lang["safar"]        = "safar";
-$pgv_lang["rabi1"]        = "rabi` al-awwal";
-$pgv_lang["rabi2"]        = "rabi` al-sani";
-$pgv_lang["juma1"]        = "jumada-al-awwal";
-$pgv_lang["juma2"]        = "jumada-al-sani";
+$pgv_lang["rabia"]        = "rabi` al-awwal";
+$pgv_lang["rabit"]        = "rabi` al-sani";
+$pgv_lang["jumaa"]        = "jumada-al-awwal";
+$pgv_lang["jumat"]        = "jumada-al-sani";
 $pgv_lang["rajab"]        = "rajab";
 $pgv_lang["shaab"]        = "sha`ban";
 $pgv_lang["ramad"]        = "ramadan";

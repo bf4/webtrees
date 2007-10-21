@@ -45,6 +45,14 @@ VERSION 4.1.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+-$pgv_lang["rabi1"]									21 Oct 2007				D	Name change
++$pgv_lang["rabia"]									21 Oct 2007				A	Name change
+-$pgv_lang["rabi2"]									21 Oct 2007				D	Name change
++$pgv_lang["rabit"]									21 Oct 2007				A	Name change
+-$pgv_lang["juma1"]									21 Oct 2007				D	Name change
++$pgv_lang["jumaa"]									21 Oct 2007				A	Name change
+-$pgv_lang["juma2"]									21 Oct 2007				D	Name change
++$pgv_lang["jumat"]									21 Oct 2007				A	Name change
 +$pgv_lang["historical_facts"]						20 Oct 2007				A
 +$pgv_lang["nephew"]								20 Oct 2007				A
 +$pgv_lang["niece"]									20 Oct 2007				A
