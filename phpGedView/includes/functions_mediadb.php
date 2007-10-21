@@ -1310,7 +1310,7 @@ function get_media_folders() {
 					break;
 				if (is_dir($currentFolder . $entry . "/")) {
 					// Weed out some folders we're not interested in
-					if ($entry != "." && $entry != ".." && $entry != "CVS") {
+					if ($entry != "." && $entry != ".." && $entry != "CVS" && $entry != ".svn") {
 						if ($currentFolder . $entry . "/" != $MEDIA_DIRECTORY . "thumbs/") {
 							$folderList[$nextFolderNum] = $currentFolder . $entry . "/";
 							$nextFolderNum++;
