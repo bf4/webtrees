@@ -128,17 +128,11 @@ if ($search == "yes") {
 	<input type="hidden" name="action" value="filter" />
 	<input type="hidden" name="search" value="yes" />
 	<table class="list-table center width50 <?php print $TEXT_DIRECTION; ?>">
-		<tr>
-			<td class="list_label" colspan="2">
-				<?php print_help_link("simple_filter_help","qm"); print $pgv_lang["filter"]; ?>
-				&nbsp;<input id="filter" name="filter" value="<?php print PrintReady($filter); ?>"/>
-			</td>
-		</tr>
 		<?php
 			// Box for user to choose the folder
 			print "<tr><td class=\"list_label width25\">";
 			if ($MEDIA_DIRECTORY_LEVELS > 0) {
-				print_help_link("upload_server_folder_help", "qm");
+				print_help_link("view_server_folder_help", "qm");
 				if (empty($folder)) {
 					if (!empty($_SESSION['upload_folder'])) $folder = $_SESSION['upload_folder'];
 					else $folder = "ALL";
@@ -158,6 +152,12 @@ if ($search == "yes") {
 			} else print "<input name=\"folder\" type=\"hidden\" value=\"ALL\" />";
 			print "</td></tr>";
 		?>
+		<tr>
+			<td class="list_label" colspan="2">
+				<?php print_help_link("simple_filter_help","qm"); print $pgv_lang["filter"]; ?>
+				&nbsp;<input id="filter" name="filter" value="<?php print PrintReady($filter); ?>"/>
+			</td>
+		</tr>
 		<tr>
 			<td class="list_label" colspan="2">
 				<select name="max">
@@ -369,7 +369,7 @@ if ($ct>0){
 					print "</td>";
 			
 					// ---------- Link Media to person, family or source  ---------------
-					print "<td class=\"width33 center\" valign=\"bottom\">";
+					print "<td class=\"width33 center\" valign=\"top\">";
 					if ($LB_ML_THUMB_LINKS == "both" || $LB_ML_THUMB_LINKS == "icon") {
 						print "<img src=\"modules/lightbox/images/image_link.gif\" alt=\"\" class=\"icon\" title=\"" . $pgv_lang["set_link"] . "\" /><br />";
 						include ("modules/lightbox/functions/lb_link.php");
