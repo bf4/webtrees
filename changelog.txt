@@ -9,6 +9,10 @@
 =====================================================================
 
 Version 4.1.3
+ - Fixed [ 1817180 ] CONC Issue in Individual and medialist Page (canajun2eh)
+ - Fixed [ 1817120 ] SOUR tab - errors (canajun2eh)
+ - Fixed [ 1817295 ] show by year ... 3 digit entry doesn't work (canajun2eh)
+ - Fixed [ 1795563 ] HTML <title> tag, bad format (canajun2eh)
  - Added [ 1714274 ] MARR date on Close Relative tab (opus27)
  - Added [ 1712181 ] Show Sources Linked to Events in the Source Tab (opus27)
  - Fixed [ 1701278 ] "Events of close.." Broken in Firefox if Valid xhtml used (opus27)
