@@ -449,10 +449,10 @@ $pgv_lang["ell"]          = "Elul";
 
 $pgv_lang["muhar"]        = "Moharrem";
 $pgv_lang["safar"]        = "Safar";
-$pgv_lang["rabi1"]        = "Rébi el avvel";
-$pgv_lang["rabi2"]        = "Rébi el accher";
-$pgv_lang["juma1"]        = "Dsemádi el avvel";
-$pgv_lang["juma2"]        = "Dsemádi el accher";
+$pgv_lang["rabia"]        = "Rébi el avvel";
+$pgv_lang["rabit"]        = "Rébi el accher";
+$pgv_lang["jumaa"]        = "Dsemádi el avvel";
+$pgv_lang["jumat"]        = "Dsemádi el accher";
 $pgv_lang["rajab"]        = "Redseb";
 $pgv_lang["shaab"]        = "Sabán";
 $pgv_lang["ramad"]        = "Ramadán";
