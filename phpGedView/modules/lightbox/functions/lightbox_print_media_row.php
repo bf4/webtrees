@@ -35,11 +35,12 @@
 // -----------------------------------------------------------------------------
 // function lightbox_print_media_row($rtype, $rowm, $pid) {
 // -----------------------------------------------------------------------------
-$n=1;
+
+
     global $PGV_IMAGE_DIR, $PGV_IMAGES, $view, $MEDIA_DIRECTORY, $TEXT_DIRECTION;
     global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
     global $SEARCH_SPIDER;
-    global $t, $n, $edit, $SERVER_URL, $reorder, $LB_AL_THUMB_LINKS, $note, $rowm;
+    global $t, $n, $item, $items, $p, $edit, $SERVER_URL, $reorder, $LB_AL_THUMB_LINKS, $note, $rowm;
 
 	// If reorder media has been clicked
 	if (isset($reorder) && $reorder==1) {
@@ -49,14 +50,18 @@ $n=1;
 	}else{
 		print "<li>" . "\n";
 	}
-	
+
     //print dummy image if media is linked to a 'private' person
     if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
         print "<table><tr><br><td class=\"prvpic\" align=\"center\" colspan=1>" . "\n";
 		print $pgv_lang["lb_private"];
-//        print "<img src=\"modules/lightbox/images/private.gif\" class=\"icon\" width=\"60\" height=\"80\" alt=\" Image Private \" /></img>" . "\n" ;
+//		print "<img src=\"modules/lightbox/images/private.gif\" class=\"icon\" width=\"60\" height=\"80\" alt=\" Image Private \" /></img>" . "\n" ;
         print "</td></tr></table>" . "\n";
+		$item++;
+//	print $item;						
+//	print_r($items);			
 		return false;
+		
     }
 
     $styleadd="";
@@ -112,6 +117,29 @@ $n=1;
 					print "<table class=\"pic\"><tr>" . "\n";
 					print "<td align=\"center\" colspan=1>". "\n";
 					
+					// Check for Notes associated media item
+					if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
+						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
+							$note[$n]  = $pgv_lang["note"] . " " . ($n+1) . "";
+							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";
+							print "<br>";
+							$items[$n+1]= $item+1;
+							$n++;
+						}							
+					}else
+						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
+							$note[$n]  = $pgv_lang["note"] . " " . ($n+1) . "";	
+							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";
+							print "<br>";
+							$items[$n+1]= $item+1;
+							$n++;
+					}else{
+						print "<font size=1>&nbsp;</font>";				
+						print "<br>";
+					}
+					$item++;
+//	print $item;						
+//	print_r($items);						
 					//If reordering media
 					if ( $reorder==1 ) {
 						// Do not show tooltip	
@@ -157,8 +185,31 @@ $n=1;
                 // For URL filetypes supported by lightbox at the moment  ================
 				}else if ( eregi("http",$rowm['m_file']) || eregi("\.pdf",$rowm['m_file']) ) {				
 					print "<table class=\"pic\"><tr>" . "\n";
-					print "<td align=\"center\" colspan=1>". "\n";					
-
+					print "<td align=\"center\" colspan=1>". "\n";	
+					
+					// Check for Notes associated media item
+					if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
+						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
+							$note[$n]  = $pgv_lang["note"] . " " . ($n+1) . "";
+							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";
+							print "<br>";
+							$items[$n+1]= $item+1;
+							$n++;
+						}							
+					}else
+						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
+							$note[$n]  = $pgv_lang["note"] . " " . ($n+1) . "";	
+							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";					
+							print "<br>";
+							$items[$n+1]= $item+1;
+							$n++;
+					}else{
+						print "<font size=1>&nbsp;</font>";				
+						print "<br>";
+					}
+					$item++;
+//	print $item;						
+//	print_r($items);							
 					//If reordering media
 					if ( $reorder==1 ) {
 						// Do not show tooltip
@@ -202,6 +253,30 @@ $n=1;
 					print "<table class=\"pic\" ><tr>" . "\n";
 					print "<td align=\"center\" colspan=1>" . "\n";
 					
+					// Check for Notes associated media item
+					if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
+						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
+							$note[$n]  = $pgv_lang["note"] . " " . ($n+1) . "";
+							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";
+							print "<br>";
+							$items[$n+1]= $item+1;
+							$n++;
+						}							
+					}else
+						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
+							$note[$n]  = $pgv_lang["note"] . " " . ($n+1) . "";	
+							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";						
+							print "<br>";
+							$items[$n+1]= $item+1;
+							$n++;
+					}else{
+						print "<font size=1>&nbsp;</font>";				
+						print "<br>";
+					}
+					$item++;
+//	print $item;						
+//	print_r($items);					
+					
 					//If reordering media
 					if ( $reorder==1 ) {
 						// Do not show tooltip
@@ -244,22 +319,17 @@ $n=1;
 					}
 				}
             }
-			
-			// Print the Common Thumbnail if just plain UR, or the properThumbnail if Image, 
+
+
 // LB 		print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
-			if (eregi("http",$rowm['m_file']) && !eregi("\.jpg",$rowm['m_file']) && !eregi("\.jpeg",$rowm['m_file']) && !eregi("\.gif",$rowm['m_file']) && !eregi("\.png",$rowm['m_file'])) {
-				print "<br><img src=\"" . $MEDIA_DIRECTORY . "thumbs/urls/URL.jpg \" height=80 border=\"0\" " ;
-			}else{
-				// Check for Notes associated with media item
-			    if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
-					$note[$n]  = $pgv_lang["note"] . " " . ($n+1) . "";
-					print "<font size=1>" . $note[$n] . "</font><br>";
-//					$note_text[$n] = print_fact_notes($rowm["m_gedrec"], 1);						
-					$n++;
+
 				
-				}else{
-					print "<br>";
-				}			
+			// If Plain URL Print the Common Thumbnail.... else ......, 
+			if (eregi("http",$rowm['m_file']) && !eregi("\.jpg",$rowm['m_file']) && !eregi("\.jpeg",$rowm['m_file']) && !eregi("\.gif",$rowm['m_file']) && !eregi("\.png",$rowm['m_file'])) {
+				print "<img src=\"" . $MEDIA_DIRECTORY . "thumbs/urls/URL.jpg \" height=80 border=\"0\" " ;
+				
+			// Else Print the Regular Thumbnail if associated with an image, 
+			}else{
 				print "<img src=\"" .$thumbnail . "\" height=80 border=\"0\" " ;
 			}
 			// These next lines disable the extra IE Browser tooltip. (It has to be done manually in Firefox but this is not recommended)
