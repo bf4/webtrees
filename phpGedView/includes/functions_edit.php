@@ -200,9 +200,9 @@ function checkChangeTime($pid, $gedrec) {
 			$changeTime = mktime($chan_time[0], $chan_time[1], $chan_time[2], (int)$chan_date[0]['mon'], (int)$chan_date[0]['day'], $chan_date[0]['year']);
 		}
 	}
-	if ($changeUser!=getUserName() && $changeTime!=0 && isset($_SESSION['last_access_time']) && $changeTime > $_SESSION['last_access_time']) {
+	if (isset($_REQUEST['linenum']) && $changeTime!=0 && isset($_SESSION['last_access_time']) && $changeTime > $_SESSION['last_access_time']) {
 		print "<span class=\"error\">".preg_replace("/#PID#/", $pid, $pgv_lang["edit_concurrency_msg2"])."<br /><br />";
-		if (!empty($changeUser)) print preg_replace(array("/#CHANGEUSER#/", "/#CHANGEDATE#/"), array($changeUser,date("d M Y h:i:s", $changeTime)), $pgv_lang["edit_concurrency_change"])."<br /><br />";
+		if (!empty($changeUser)) print preg_replace(array("/#CHANGEUSER#/", "/#CHANGEDATE#/"), array($changeUser,date("d M Y H:i:s", $changeTime)), $pgv_lang["edit_concurrency_change"])."<br /><br />";
 		print $pgv_lang["edit_concurrency_reload"]."</span>";
 		print_simple_footer();
 		exit;
