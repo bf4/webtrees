@@ -55,8 +55,9 @@ $pgv_lang["page_x_of_y"]				= "Seite #GLOBALS[currentPage]# von #GLOBALS[lastPag
 $pgv_lang["options"]					= "Optionen:";
 $pgv_lang["config_update_ok"]			= "Die Konfigurations-Datei wurde aktualisiert.";
 $pgv_lang["server_folder"]				= "Verzeichnisname auf dem Server";
+$pgv_lang["medialist_recursive"]	= "Medien-Dateien in Unterverzeichnissen aufzählen";
 $pgv_lang["media_options"]				= "Medien-Optionen";
-$pgv_lang["index_edit_advice"]			= "Markieren Sie den Namen eines Blockes und klicken Sie auf eines der Pfeil-Symbole, um den markierten Block in die gewünschte Richtung zu bewegen.";
+$pgv_lang["index_edit_advice"]			= "Markieren Sie den Namen eines Blocks und klicken Sie auf einen der Pfeile, um den markierten Block in die gewünschte Richtung zu bewegen.";
 $pgv_lang["changelog"]					= "Änderungen in Version #VERSION#";
 $pgv_lang["html_block_descr"]			= "Mit diesem Block können Sie einen beliebigen Text auf Ihrer Seite einfügen.";
 $pgv_lang["html_block_sample_part1"]	= "<p class=\"blockhc\"><b>Titel hier eingeben</b></p><br /><p>Klicken Sie auf Konfigurieren";
