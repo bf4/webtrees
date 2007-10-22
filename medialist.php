@@ -42,9 +42,9 @@ if (!isset($action)) $action = "";
 if (!isset($filter)) $filter = "";
 else $filter = stripLRMRLM(stripslashes($filter));
 if (!isset($search)) $search = "yes";
-//if (!isset($folder)) $folder = "media/";
 if (!isset($folder)) $folder = $MEDIA_DIRECTORY;
 if (!isset($_SESSION["medialist"])) $search = "yes";
+$currentdironly = (isset($subdirs) && $subdirs=="on") ? false : true;
 print_header($pgv_lang["multi_title"]);
 print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t";
 
@@ -94,9 +94,14 @@ if (userIsAdmin(getUserName()) && $action=="generate" && !empty($file) && !empty
 	generate_thumbnail($file, $thumb);
 }
 if ($search == "yes") {
+	if ($folder == "ALL") {
+		$folder = $MEDIA_DIRECTORY;
+		$currentdironly = false;
+	}
+	// show external links only if looking at top level directory
+	$showExternal = ($folder == $MEDIA_DIRECTORY) ? true : false;
 	$medialist = array();
-	if ($folder=="ALL") get_medialist(false, "", true);
-	else get_medialist(true, $folder, true);
+	get_medialist($currentdironly, $folder, true, false, $showExternal);
 
 	//-- remove all private media objects
 	foreach($medialist as $key => $media) {
@@ -152,6 +157,14 @@ if ($search == "yes") {
 			} else print "<input name=\"folder\" type=\"hidden\" value=\"ALL\" />";
 			print "</td></tr>";
 		?>
+    <?php if ($MEDIA_DIRECTORY_LEVELS > 0) { ?>
+		<tr>
+			<td class="list_label" colspan="2">
+				<label for="subdirs"><?php print $pgv_lang["medialist_recursive"] ?></label>
+				&nbsp;<input type="checkbox" id="subdirs" name="subdirs" <?php if (!$currentdironly) { ?>checked="checked"<?php } ?> />
+			</td>
+		</tr>
+    <?php } ?>
 		<tr>
 			<td class="list_label" colspan="2">
 				<?php print_help_link("simple_filter_help","qm"); print $pgv_lang["filter"]; ?>

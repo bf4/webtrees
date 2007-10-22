@@ -476,6 +476,9 @@ function check_media_structure() {
  * - $media["XREF"]		Another copy of the Media ID (not sure why there are two)
  * - $media["GEDFILE"] 	the gedcom file the media item should be added to
  * - $media["FILE"] 	the filename of the media item
+ * - $media["EXISTS"] 	whether the file exists.  0=no, 1=external, 2=std dir, 3=protected dir
+ * - $media["THUMB"]	the filename of the thumbnail
+ * - $media["THUMBEXISTS"]	whether the thumbnail exists.  0=no, 1=external, 2=std dir, 3=protected dir
  * - $media["FORM"] 	the format of the item (ie bmp, gif, jpeg, pcx etc)
  * - $media["TYPE"]		the type of media item (ie certificate, document, photo, tombstone etc)
  * - $media["TITL"] 	a title for the item, used for list display
@@ -489,7 +492,7 @@ function check_media_structure() {
  * @return mixed A media list array.
  */
 
-function get_medialist($currentdir = false, $directory = "", $linkonly = false, $random = false) {
+function get_medialist($currentdir = false, $directory = "", $linkonly = false, $random = false, $includeExternal = true) {
 	global $MEDIA_DIRECTORY_LEVELS, $BADMEDIA, $thumbdir, $TBLPREFIX, $MEDIATYPE, $DBCONN;
 	global $level, $dirs, $ALLOW_CHANGE_GEDCOM, $GEDCOM, $GEDCOMS, $MEDIA_DIRECTORY;
 	global $MEDIA_EXTERNAL, $medialist, $pgv_changes, $DBTYPE, $USE_MEDIA_FIREWALL;
@@ -537,13 +540,17 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 		if ($row) {
 			if (!empty ($row["m_file"])) {
 				$fileName = check_media_depth(stripslashes($row["m_file"]), "NOTRUNC", "QUIET");
-				if (($MEDIA_EXTERNAL && isFileExternal($fileName)) || !$currentdir || $directory == dirname($fileName) . "/") {
+				$isExternal = isFileExternal($fileName);
+				if ( $isExternal && (!$MEDIA_EXTERNAL || !$includeExternal) ) {
+					continue;
+				}
+				if ($isExternal || !$currentdir || $directory == dirname($fileName) . "/") {
 					$media = array ();
 					$media["ID"] = $row["m_id"];
 					$media["XREF"] = stripslashes($row["m_media"]);
 					$media["GEDFILE"] = $GEDCOMS[$GEDCOM]['id'];
 					$media["FILE"] = $fileName;
-					if ($MEDIA_EXTERNAL && isFileExternal($fileName)) {
+					if ($isExternal) {
 						$media["THUMB"] = $fileName;
 						$media["THUMBEXISTS"] = 1; // 1 means external
 						$media["EXISTS"] = 1; // 1 means external
