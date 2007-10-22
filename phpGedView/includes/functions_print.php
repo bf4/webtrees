@@ -962,12 +962,23 @@ function print_lang_form($option=0) {
 	 if ($ENABLE_MULTI_LANGUAGE) {
 		  if (empty($LANG_FORM_COUNT)) $LANG_FORM_COUNT=1;
 		  else $LANG_FORM_COUNT++;
+		  
+		  //-- determine which languages are actually being used
+		  $used_langs = array();
+		  foreach ($pgv_language as $key=>$value) {
+		  	if ($language_settings[$key]["pgv_lang_use"]) {
+		  		$used_langs[$key] = $value;
+		  	}
+		  }
+		  //-- don't show the form if there is only one language enabled
+		  if (count($used_langs)<2) return;
+		  
 		  print "\n\t<div class=\"lang_form\">\n";
 		  switch($option) {
 			   case 1:
 			   //-- flags option
 			   $i = 0;
-			   foreach ($pgv_language as $key=>$value)
+			   foreach ($used_langs as $key=>$value)
 			   {
 				 if (($key != $LANGUAGE) and ($language_settings[$key]["pgv_lang_use"]))
 				 {
@@ -992,7 +1003,7 @@ function print_lang_form($option=0) {
 					}
 					print "\n\t\t<input type=\"hidden\" name=\"changelanguage\" value=\"yes\" />\n\t\t<select name=\"NEWLANGUAGE\" class=\"header_select\" onchange=\"submit();\">";
 					print "\n\t\t\t<option value=\"\">".$pgv_lang["change_lang"]."</option>";
-					foreach ($pgv_language as $key=>$value) {
+					foreach ($used_langs as $key=>$value) {
 						 if ($language_settings[$key]["pgv_lang_use"]) {
 							  print "\n\t\t\t<option value=\"$key\" ";
 							  if ($LANGUAGE == $key) print " selected=\"selected\" class=\"selected-option\"";

@@ -1584,16 +1584,20 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			$gedprim = "_PRIM";
 	}
 	add_simple_tag("1 $gedprim");
-	// 2 _THUM
-	if ($gedrec == "")
-		$gedthum = "_THUM";
-	else {
-		//		$gedthum = get_sub_record(1, "_THUM", $gedrec);
-		$gedthum = get_first_tag(1, "_THUM", $gedrec);
-		if (empty ($gedthum))
+	
+	//-- don't show _THUM option to regular users
+	if (userGedcomAdmin(getUserName())) {
+		// 2 _THUM
+		if ($gedrec == "")
 			$gedthum = "_THUM";
+		else {
+			//		$gedthum = get_sub_record(1, "_THUM", $gedrec);
+			$gedthum = get_first_tag(1, "_THUM", $gedrec);
+			if (empty ($gedthum))
+				$gedthum = "_THUM";
+		}
+		add_simple_tag("1 $gedthum");
 	}
-	add_simple_tag("1 $gedthum");
 
 	//-- print out editing fields for any other data in the media record
 	$sourceSOUR = "";
