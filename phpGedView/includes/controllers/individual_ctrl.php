@@ -1019,9 +1019,9 @@ class IndividualControllerRoot extends BaseController {
 			<tr id="row_top">
 				<td></td>
 				<td class="descriptionbox rela">
-					<input id="checkbox_rela" type="checkbox" <?php if ($EXPAND_RELATIVES_EVENTS) echo " checked=\"checked\""?> onclick="togglerow('row_rela');" /><?php echo $pgv_lang["relatives_events"]?>
+					<input id="checkbox_rela" type="checkbox" <?php if ($EXPAND_RELATIVES_EVENTS) echo " checked=\"checked\""?> onclick="togglerow('row_rela');" /><label for="checkbox_rela"><?php echo $pgv_lang["relatives_events"]?></label>
 					<?php if (file_exists("languages/histo.".$lang_short_cut[$LANGUAGE].".php")) {?>
-						<input id="checkbox_histo" type="checkbox" onclick="togglerow('row_histo');" /><?php echo $pgv_lang["historical_facts"]?>
+						<input id="checkbox_histo" type="checkbox" onclick="togglerow('row_histo');" /><label for="checkbox_histo"><?php echo $pgv_lang["historical_facts"]?></label>
 					<?php }?>
 				</td>
 			</tr>
@@ -1335,10 +1335,11 @@ class IndividualControllerRoot extends BaseController {
 				}
 				?>
 				<tr>
-					<td>
-					<?php echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()?>
+					<td class="facts_label">
+					<br />
 					</td>
-					<td>
+					<td class="facts_value">
+					<?php echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren();?><br />
 					<?php if ($family->getMarriageDate()) {
 						$date=new GedcomDate($family->getMarriageDate());
 						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($family->getMarriagePlace());
@@ -1415,6 +1416,7 @@ class IndividualControllerRoot extends BaseController {
 			$label = $this->indi->getStepFamilyLabel($family);
 			$people = $this->buildFamilyList($family, "step");
 			?>
+			<br />
 			<table>
 				<tr>
 					<td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]; ?>" border="0" class="icon" alt="" /></td>
@@ -1476,10 +1478,10 @@ class IndividualControllerRoot extends BaseController {
 				}
 				?>
 				<tr>
-					<td>
-					<?php echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()?>
+					<td class="facts_label">
 					</td>
-					<td>
+					<td class="facts_value">
+					<?php echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()?><br />
 					<?php if ($family->getMarriageDate()) {
 						$date=new GedcomDate($family->getMarriageDate());
 						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($family->getMarriagePlace());
@@ -1553,6 +1555,7 @@ class IndividualControllerRoot extends BaseController {
 			$label = $this->indi->getSpouseFamilyLabel($family);
 			$people = $this->buildFamilyList($family, "spouse");
 			?>
+			<br />
 			<table>
 				<tr>
 					<td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]; ?>" border="0" class="icon" alt="" /></td>
@@ -1634,10 +1637,10 @@ class IndividualControllerRoot extends BaseController {
 				}
 				?>
 				<tr>
-					<td>
-					<?php echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()?>
+					<td class="facts_label"><br />
 					</td>
-					<td>
+					<td class="facts_value">
+					<?php echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()?><br />
 					<?php if ($family->getMarriageDate()) {
 						$date=new GedcomDate($family->getMarriageDate());
 						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($family->getMarriagePlace());
@@ -1712,6 +1715,25 @@ class IndividualControllerRoot extends BaseController {
 		?>
 		<br />
 		<?php
+	if (!$this->isPrintPreview()) {
+		?>
+		<table class="facts_table"><tr><td class="facts_value">
+	<script type="text/javascript">
+	<!--
+		function toggleElderdate() {
+			hiddenEls = document.getElementsByName('elderdate');
+			for(i=0; i<hiddenEls.length; i++) {
+				if (hiddenEls[i].style.display=='none') hiddenEls[i].style.display='block';
+				else hiddenEls[i].style.display='none';
+			}
+		}
+	//-->
+	</script>
+		<input id="checkbox_elder" type="checkbox" onclick="toggleElderdate();" />
+		<label for="checkbox_elder"><?php print $pgv_lang['age_differences'] ?></label>
+		</td></tr></table>
+		<?php
+		}
 		if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
 		?>
 		<table class="facts_table">

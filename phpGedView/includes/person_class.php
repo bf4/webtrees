@@ -472,7 +472,7 @@ class Person extends GedcomRecord {
 			if ($p1[0]["jd1"] && $p2[0]["jd1"]) {
 				$gap = $p2[0]["jd1"]-$p1[0]["jd1"]; // days
 				$gap = round($gap*12/365.25); // months
-				$label .= "<div class=\"age $TEXT_DIRECTION\">";
+				$label .= "<div name=\"elderdate\" class=\"age $TEXT_DIRECTION\" style=\"display: none;\">";
 				// negative gap for children means wrong order
 				if ($gap<0 && $counter>0) $label .= "<img alt=\"\" src=\"images/warning.gif\" /> ";
 				// gap in years or months
@@ -481,7 +481,7 @@ class Person extends GedcomRecord {
 				$label .= "</div>";
 			}
 		}
-		if ($counter) $label .= "<div class=\"".strrev($TEXT_DIRECTION)."\">".$pgv_lang["number_sign"].$counter."</div>";
+		if ($counter) $label .= "<div name=\"elderdate\" class=\"".strrev($TEXT_DIRECTION)."\" style=\"display:none;\">".$pgv_lang["number_sign"].$counter."</div>";
 		$label .= $this->label;
 		if ($gap!=0 && $counter<1) $label .= "<br />&nbsp;";
 		return $label;
