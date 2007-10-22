@@ -505,7 +505,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 
 	// When adding a new child, specify the pedigree
 	if ($nextaction=='addchildaction')
-		add_simple_tag("0 PEDI birth");
+		add_simple_tag("0 PEDI");
 
 	// Populate the standard NAME field and subfields
 	$name_fields=array();
