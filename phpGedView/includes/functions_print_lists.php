@@ -1346,7 +1346,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 			print $anniv;
 		if ($allow_download) {
 			// hCalendar:dtstart and hCalendar:summary
-			print "<abbr class=\"dtstart\" title=\"".date("Ymd", jdtounix($value['jd']))."\"></abbr>";
+			print "<abbr class=\"dtstart\" title=\"".strip_tags($value['date']->Display(false,'Ymd',array()))."\"></abbr>";
 			print "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$anniv ".$factarray[$value['fact']]." : ".PrintReady(strip_tags($record->getSortableName()))."\"></abbr>";
 		}
 		print "</td>";
