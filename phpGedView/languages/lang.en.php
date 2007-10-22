@@ -59,6 +59,7 @@ $pgv_lang["SHOW_ID_NUMBERS"]		= "Show ID numbers next to names";
 $pgv_lang["SHOW_HIGHLIGHT_IMAGES"]	= "Show highlight images in people boxes";
 $pgv_lang["view_img_details"]		= "View image details";
 $pgv_lang["server_folder"]			= "Folder name on server";
+$pgv_lang["medialist_recursive"]	= "List files in subdirectories";
 $pgv_lang["media_options"]			= "Media Options";
 $pgv_lang["confirm_password"]					= "You must confirm the password.";
 $pgv_lang["enter_email"]						= "You must enter an email address.";
