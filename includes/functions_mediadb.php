@@ -319,24 +319,7 @@ function get_db_indi_mapping_list($indi) {
 */
 function textblock_to_note($level, $txt) {
 
-	$newnote = $level . " NOTE\r\n";
-	$indent = $level +1;
-	$newline = $indent . " CONC " . $txt;
-	$newlines = preg_split("/\r?\n/", $newline);
-	for ($k = 0; $k < count($newlines); $k++) {
-		if ($k > 0)
-			$newlines[$k] = $indent . " CONT " . $newlines[$k];
-		if (strlen($newlines[$k]) > 255) {
-			while (strlen($newlines[$k]) > 255) {
-				$newnote .= substr($newlines[$k], 0, 255) . "\r\n";
-				$newlines[$k] = substr($newlines[$k], 255);
-				$newlines[$k] = $indent . " CONC " . $newlines[$k];
-			}
-			$newnote .= trim($newlines[$k]) . "\r\n";
-		} else {
-			$newnote .= trim($newlines[$k]) . "\r\n";
-		}
-	}
+	$newnote = breakConts("{$level} NOTE ". $txt);
 	return $newnote;
 }
 
@@ -493,6 +476,9 @@ function check_media_structure() {
  * - $media["XREF"]		Another copy of the Media ID (not sure why there are two)
  * - $media["GEDFILE"] 	the gedcom file the media item should be added to
  * - $media["FILE"] 	the filename of the media item
+ * - $media["EXISTS"] 	whether the file exists.  0=no, 1=external, 2=std dir, 3=protected dir
+ * - $media["THUMB"]	the filename of the thumbnail
+ * - $media["THUMBEXISTS"]	whether the thumbnail exists.  0=no, 1=external, 2=std dir, 3=protected dir
  * - $media["FORM"] 	the format of the item (ie bmp, gif, jpeg, pcx etc)
  * - $media["TYPE"]		the type of media item (ie certificate, document, photo, tombstone etc)
  * - $media["TITL"] 	a title for the item, used for list display
@@ -506,7 +492,7 @@ function check_media_structure() {
  * @return mixed A media list array.
  */
 
-function get_medialist($currentdir = false, $directory = "", $linkonly = false, $random = false) {
+function get_medialist($currentdir = false, $directory = "", $linkonly = false, $random = false, $includeExternal = true) {
 	global $MEDIA_DIRECTORY_LEVELS, $BADMEDIA, $thumbdir, $TBLPREFIX, $MEDIATYPE, $DBCONN;
 	global $level, $dirs, $ALLOW_CHANGE_GEDCOM, $GEDCOM, $GEDCOMS, $MEDIA_DIRECTORY;
 	global $MEDIA_EXTERNAL, $medialist, $pgv_changes, $DBTYPE, $USE_MEDIA_FIREWALL;
@@ -554,13 +540,17 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 		if ($row) {
 			if (!empty ($row["m_file"])) {
 				$fileName = check_media_depth(stripslashes($row["m_file"]), "NOTRUNC", "QUIET");
-				if (($MEDIA_EXTERNAL && isFileExternal($fileName)) || !$currentdir || $directory == dirname($fileName) . "/") {
+				$isExternal = isFileExternal($fileName);
+				if ( $isExternal && (!$MEDIA_EXTERNAL || !$includeExternal) ) {
+					continue;
+				}
+				if ($isExternal || !$currentdir || $directory == dirname($fileName) . "/") {
 					$media = array ();
 					$media["ID"] = $row["m_id"];
 					$media["XREF"] = stripslashes($row["m_media"]);
 					$media["GEDFILE"] = $GEDCOMS[$GEDCOM]['id'];
 					$media["FILE"] = $fileName;
-					if ($MEDIA_EXTERNAL && isFileExternal($fileName)) {
+					if ($isExternal) {
 						$media["THUMB"] = $fileName;
 						$media["THUMBEXISTS"] = 1; // 1 means external
 						$media["EXISTS"] = 1; // 1 means external
@@ -1327,7 +1317,7 @@ function get_media_folders() {
 					break;
 				if (is_dir($currentFolder . $entry . "/")) {
 					// Weed out some folders we're not interested in
-					if ($entry != "." && $entry != ".." && $entry != "CVS") {
+					if ($entry != "." && $entry != ".." && $entry != "CVS" && $entry != ".svn") {
 						if ($currentFolder . $entry . "/" != $MEDIA_DIRECTORY . "thumbs/") {
 							$folderList[$nextFolderNum] = $currentFolder . $entry . "/";
 							$nextFolderNum++;
@@ -1594,16 +1584,20 @@ function show_media_form($pid, $action = "newentry", $filename = "", $linktoid =
 			$gedprim = "_PRIM";
 	}
 	add_simple_tag("1 $gedprim");
-	// 2 _THUM
-	if ($gedrec == "")
-		$gedthum = "_THUM";
-	else {
-		//		$gedthum = get_sub_record(1, "_THUM", $gedrec);
-		$gedthum = get_first_tag(1, "_THUM", $gedrec);
-		if (empty ($gedthum))
+	
+	//-- don't show _THUM option to regular users
+	if (userGedcomAdmin(getUserName())) {
+		// 2 _THUM
+		if ($gedrec == "")
 			$gedthum = "_THUM";
+		else {
+			//		$gedthum = get_sub_record(1, "_THUM", $gedrec);
+			$gedthum = get_first_tag(1, "_THUM", $gedrec);
+			if (empty ($gedthum))
+				$gedthum = "_THUM";
+		}
+		add_simple_tag("1 $gedthum");
 	}
-	add_simple_tag("1 $gedthum");
 
 	//-- print out editing fields for any other data in the media record
 	$sourceSOUR = "";

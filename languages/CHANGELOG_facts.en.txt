@@ -40,16 +40,14 @@ The above list of codes may be amended as new situations arise.
 For massive changes, the variable names should be listed in the order in which they
 occur in the respective language files.
 
-
-VERSION 4.2
-
+VERSION 4.1.3
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
-+$factarray["_BIRT_NEPH"]							7 Mar 2007        A   [ 1671286 ]
-+$factarray["_MARR_NEPH"]							7 Mar 2007        A   [ 1671286 ]
-+$factarray["_DEAT_NEPH"]							7 Mar 2007        A   [ 1671286 ]
-+$factarray["_FAMC_EMIG"]							7 Mar 2007        A   [ 1671286 ]
-+$factarray["_FAMC_RESI"]							7 Mar 2007        A   [ 1671286 ]
++$factarray["_BIRT_NEPH"]							20 Oct 2007        A   [ 1671286 ]
++$factarray["_MARR_NEPH"]							20 Oct 2007        A   [ 1671286 ]
++$factarray["_DEAT_NEPH"]							20 Oct 2007        A   [ 1671286 ]
++$factarray["_FAMC_EMIG"]							20 Oct 2007        A   [ 1671286 ]
++$factarray["_FAMC_RESI"]							20 Oct 2007        A   [ 1671286 ]
 
 
 VERSION 4.1

@@ -566,6 +566,7 @@ if ($action=="edituser") {
 				<option value="3" <?php if (@$user['default_tab']==3) print "selected=\"selected\""; ?>><?php print $pgv_lang["media"];?></option>
 				<option value="4" <?php if (@$user['default_tab']==4) print "selected=\"selected\""; ?>><?php print $pgv_lang["relatives"];?></option>
 				<option value="-1" <?php if (@$user['default_tab']==-1) print "selected=\"selected\""; ?>><?php print $pgv_lang["all"];?></option>
+				<option value="-2" <?php if (@$user['default_tab']==-2) print "selected=\"selected\""; ?>><?php print $pgv_lang["lasttab"];?></option>
 			</select>
 		</td>
 	</tr>
@@ -977,11 +978,13 @@ if ($action == "createform") {
 		<tr>
 			<td class="descriptionbox wrap"><?php print_help_link("useradmin_user_default_tab_help", "qm", "user_default_tab"); print $pgv_lang["user_default_tab"];?></td>
 			<td class="optionbox wrap"><select name="new_default_tab" tabindex="<?php $tab++; print $tab; ?>">
-				<option value="0"><?php print $pgv_lang["personal_facts"];?></option>
-				<option value="1"><?php print $pgv_lang["notes"];?></option>
-				<option value="2"><?php print $pgv_lang["ssourcess"];?></option>
-				<option value="3"><?php print $pgv_lang["media"];?></option>
-				<option value="4"><?php print $pgv_lang["relatives"];?></option>
+				<option value="0" <?php if ($GEDCOM_DEFAULT_TAB==0) print "selected=\"selected\""; ?>><?php print $pgv_lang["personal_facts"];?></option>
+				<option value="1" <?php if ($GEDCOM_DEFAULT_TAB==1) print "selected=\"selected\""; ?>><?php print $pgv_lang["notes"];?></option>
+				<option value="2" <?php if ($GEDCOM_DEFAULT_TAB==2) print "selected=\"selected\""; ?>><?php print $pgv_lang["ssourcess"];?></option>
+				<option value="3" <?php if ($GEDCOM_DEFAULT_TAB==3) print "selected=\"selected\""; ?>><?php print $pgv_lang["media"];?></option>
+				<option value="4" <?php if ($GEDCOM_DEFAULT_TAB==4) print "selected=\"selected\""; ?>><?php print $pgv_lang["relatives"];?></option>
+				<option value="-1" <?php if ($GEDCOM_DEFAULT_TAB==-1) print "selected=\"selected\""; ?>><?php print $pgv_lang["all"];?></option>
+				<option value="-2" <?php if ($GEDCOM_DEFAULT_TAB==-2) print "selected=\"selected\""; ?>><?php print $pgv_lang["lasttab"];?></option>
 				</select>
 			</td>
 		</tr>

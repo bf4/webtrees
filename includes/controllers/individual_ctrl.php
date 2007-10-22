@@ -751,9 +751,9 @@ class IndividualControllerRoot extends BaseController {
 			$labels["brother"] = $pgv_lang["brother"];
 		}
 		if ($type=="step"){
-			$labels["parent"] = "";		//print $pgv_lang["stepparent"];
-			$labels["mother"] = "";		//print $pgv_lang["stepmom"];
-			$labels["father"] = "";		//print $pgv_lang["stepdad"];
+			$labels["parent"] = ".";		//print $pgv_lang["stepparent"];
+			$labels["mother"] = ".";		//print $pgv_lang["stepmom"];
+			$labels["father"] = ".";		//print $pgv_lang["stepdad"];
 			$labels["sibling"] = $pgv_lang["halfsibling"];
 			$labels["sister"] = $pgv_lang["halfsister"];
 			$labels["brother"] = $pgv_lang["halfbrother"];
@@ -774,8 +774,8 @@ class IndividualControllerRoot extends BaseController {
 						$labels["father"] = $pgv_lang["husband"];
 					}
 					else {
-						$label = $type;
 						if (isset($pgv_lang[$type])) $label = $pgv_lang[$type];
+						else $label = $pgv_lang["partner"];
 						$labels["parent"] = $label;
 						$labels["mother"] = $label;
 						$labels["father"] = $label;
@@ -804,12 +804,12 @@ class IndividualControllerRoot extends BaseController {
 			$wife = $family->getWife();
 			$children = $family->getChildren();
 		}
-		//-- step families should only show the step parent
+		//-- step families : set the label for the common parent
 		if ($type=="step") {
 			$fams = $this->indi->getChildFamilies();
 			foreach($fams as $key=>$fam) {
-				if ($fam->hasParent($husb)) $husb = null;
-				if ($fam->hasParent($wife)) $wife = null;
+				if ($fam->hasParent($husb)) $labels["father"] = $pgv_lang["father"];
+				if ($fam->hasParent($wife)) $labels["mother"] = $pgv_lang["mother"];
 			}
 		}
 		//-- set the label for the husband
@@ -1022,9 +1022,9 @@ class IndividualControllerRoot extends BaseController {
 			<tr id="row_top">
 				<td></td>
 				<td class="descriptionbox rela">
-					<input id="checkbox_rela" type="checkbox" <?php if ($EXPAND_RELATIVES_EVENTS) echo " checked=\"checked\""?> onclick="togglerow('row_rela');" /><?php echo $pgv_lang["relatives_events"]?>
+					<input id="checkbox_rela" type="checkbox" <?php if ($EXPAND_RELATIVES_EVENTS) echo " checked=\"checked\""?> onclick="togglerow('row_rela');" /><label for="checkbox_rela"><?php echo $pgv_lang["relatives_events"]?></label>
 					<?php if (file_exists("languages/histo.".$lang_short_cut[$LANGUAGE].".php")) {?>
-						<input id="checkbox_histo" type="checkbox" onclick="togglerow('row_histo');" /><?php echo $pgv_lang["historical_facts"]?>
+						<input id="checkbox_histo" type="checkbox" onclick="togglerow('row_histo');" /><label for="checkbox_histo"><?php echo $pgv_lang["historical_facts"]?></label>
 					<?php }?>
 				</td>
 			</tr>
@@ -1253,7 +1253,7 @@ class IndividualControllerRoot extends BaseController {
 				<?php }?>
 				<?php if ($family->getMarriageDate()) {
 					$date=$family->getMarriageDate();
-					echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".$date->Display(false)." -- ".$family->getPlaceShort($family->getMarriagePlace());
+					//echo "- <span class=\"details_label\">".$pgv_lang["marriage"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($family->getMarriagePlace());
 				}?>
 					</td>
 				</tr>
@@ -1261,6 +1261,7 @@ class IndividualControllerRoot extends BaseController {
 			<table class="facts_table">
 				<?php
 				$styleadd = "";
+				$elderdate = "";
 				if (isset($people["newhusb"])) {
 					$styleadd = "red";
 					?>
@@ -1271,6 +1272,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
+					$elderdate = $people["newhusb"]->getBirthDate();
 				}
 				if (isset($people["husb"])) {
 					?>
@@ -1281,6 +1283,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
+					$elderdate = $people["husb"]->getBirthDate();
 				}
 				else if (!isset($people["newhusb"])) {
 					if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
@@ -1296,7 +1299,7 @@ class IndividualControllerRoot extends BaseController {
 					$styleadd = "red";
 					?>
 					<tr>
-						<td class="facts_labelblue"><?php print $people["newwife"]->getLabel(); ?></td>
+						<td class="facts_labelblue"><?php print $people["newwife"]->getLabel($elderdate); ?></td>
 						<td class="<?php print $this->getPersonStyle($people["newwife"]); ?>">
 						<?php print_pedigree_person($people["newwife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
 						</td>
@@ -1306,7 +1309,7 @@ class IndividualControllerRoot extends BaseController {
 				if (isset($people["wife"])) {
 					?>
 					<tr>
-						<td class="facts_label<?php print $styleadd; ?>"><?php print $people["wife"]->getLabel(); ?></td>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $people["wife"]->getLabel($elderdate); ?></td>
 						<td class="<?php print $this->getPersonStyle($people["wife"]); ?>">
 						<?php print_pedigree_person($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
 						</td>
@@ -1324,16 +1327,14 @@ class IndividualControllerRoot extends BaseController {
 				}
 				?>
 				<tr>
-					<td>
-					<?php echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()?>
+					<td class="facts_label">
+					<br />
 					</td>
-					<td>
+					<td class="facts_value">
+					<?php echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren();?><br />
 					<?php if ($family->getMarriageDate()) {
-						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>";
-						$date = $family->getMarriageDate();
-						if (is_string($date)) echo $date;
-						else echo $date->Display();
-						echo " -- ".$family->getPlaceShort($family->getMarriagePlace());
+						$date=new GedcomDate($family->getMarriageDate());
+						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($family->getMarriagePlace());
 					} ?>
 					</td>
 				</tr>
@@ -1407,6 +1408,7 @@ class IndividualControllerRoot extends BaseController {
 			$label = $this->indi->getStepFamilyLabel($family);
 			$people = $this->buildFamilyList($family, "step");
 			?>
+			<br />
 			<table>
 				<tr>
 					<td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]; ?>" border="0" class="icon" alt="" /></td>
@@ -1424,6 +1426,7 @@ class IndividualControllerRoot extends BaseController {
 			<table class="facts_table">
 				<?php
 				$styleadd = "";
+				$elderdate = "";
 				if (isset($people["newhusb"])) {
 					$styleadd = "red";
 					?>
@@ -1434,6 +1437,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
+					$elderdate = $people["newhusb"]->getBirthDate();
 				}
 				if (isset($people["husb"])) {
 					?>
@@ -1444,13 +1448,14 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
+					$elderdate = $people["husb"]->getBirthDate();
 				}
 				$styleadd = "";
 				if (isset($people["newwife"])) {
 					$styleadd = "red";
 					?>
 					<tr>
-						<td class="facts_labelblue"><?php print $people["newwife"]->getLabel(); ?></td>
+						<td class="facts_labelblue"><?php print $people["newwife"]->getLabel($elderdate); ?></td>
 						<td class="<?php print $this->getPersonStyle($people["newwife"]); ?>">
 						<?php print_pedigree_person($people["newwife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
 						</td>
@@ -1460,7 +1465,7 @@ class IndividualControllerRoot extends BaseController {
 				if (isset($people["wife"])) {
 					?>
 					<tr>
-						<td class="facts_label<?php print $styleadd; ?>"><?php print $people["wife"]->getLabel(); ?></td>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $people["wife"]->getLabel($elderdate); ?></td>
 						<td class="<?php print $this->getPersonStyle($people["wife"]); ?>">
 						<?php print_pedigree_person($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
 						</td>
@@ -1469,16 +1474,13 @@ class IndividualControllerRoot extends BaseController {
 				}
 				?>
 				<tr>
-					<td>
-					<?php echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()?>
+					<td class="facts_label">
 					</td>
-					<td>
+					<td class="facts_value">
+					<?php echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()?><br />
 					<?php if ($family->getMarriageDate()) {
-						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>";
-						$date = $family->getMarriageDate();
-						if (is_string($date)) echo $date;
-						else echo $date->Display();
-						echo " -- ".$family->getPlaceShort($family->getMarriagePlace());
+						$date=new GedcomDate($family->getMarriageDate());
+						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($family->getMarriagePlace());
 					} ?>
 					</td>
 				</tr>
@@ -1549,6 +1551,7 @@ class IndividualControllerRoot extends BaseController {
 			$label = $this->indi->getSpouseFamilyLabel($family);
 			$people = $this->buildFamilyList($family, "spouse");
 			?>
+			<br />
 			<table>
 				<tr>
 					<td><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["cfamily"]["small"]; ?>" border="0" class="icon" alt="" /></td>
@@ -1556,16 +1559,20 @@ class IndividualControllerRoot extends BaseController {
 				<?php if ((!$this->isPrintPreview())&&(empty($SEARCH_SPIDER))) { ?>
 					 - <a href="family.php?famid=<?php print $famid; ?>">[<?php print $pgv_lang["view_family"]; ?><?php if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($famid)" . getLRM(); ?>]</a>
 				<?php } ?>
+<<<<<<< .working
 				<?php if ($family->getMarriageDate()) {
 					$date=$family->getMarriageDate();
 					echo "- <span class=\"details_label\">".$pgv_lang["marriage"]." </span>".$date->Display(false)." -- ".$family->getPlaceShort($family->getMarriagePlace());
 				}?>
+=======
+>>>>>>> .merge-right.r1997
 					</td>
 				</tr>
 			</table>
 			<table class="facts_table">
 				<?php
 				$styleadd = "";
+				$elderdate = "";
 				if ($this->indi->equals($people["husb"])) $spousetag = 'WIFE';
 				else $spousetag = 'HUSB';
 				if (isset($people["newhusb"])) {
@@ -1578,6 +1585,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
+					$elderdate = $people["newhusb"]->getBirthDate();
 				}
 				if (isset($people["husb"])) {
 					?>
@@ -1588,13 +1596,14 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
+					$elderdate = $people["husb"]->getBirthDate();
 				}
 				$styleadd = "";
 				if (isset($people["newwife"])) {
 					$styleadd = "red";
 					?>
 					<tr>
-						<td class="facts_labelblue"><?php print $people["newwife"]->getLabel(); ?></td>
+						<td class="facts_labelblue"><?php print $people["newwife"]->getLabel($elderdate); ?></td>
 						<td class="<?php print $this->getPersonStyle($people["newwife"]); ?>">
 						<?php print_pedigree_person($people["newwife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
 						</td>
@@ -1604,7 +1613,7 @@ class IndividualControllerRoot extends BaseController {
 				if (isset($people["wife"])) {
 					?>
 					<tr>
-						<td class="facts_label<?php print $styleadd; ?>"><?php print $people["wife"]->getLabel(); ?></td>
+						<td class="facts_label<?php print $styleadd; ?>"><?php print $people["wife"]->getLabel($elderdate); ?></td>
 						<td class="<?php print $this->getPersonStyle($people["wife"]); ?>">
 						<?php print_pedigree_person($people["wife"]->getXref(), 2, !$this->isPrintPreview(), 0, $personcount++); ?>
 						</td>
@@ -1631,16 +1640,13 @@ class IndividualControllerRoot extends BaseController {
 				}
 				?>
 				<tr>
-					<td>
-					<?php echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()?>
+					<td class="facts_label"><br />
 					</td>
-					<td>
-					<?php if (!is_null($family->getMarriageDate())) {
-						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>";
-						$date = $family->getMarriageDate();
-						if (is_string($date)) echo $date;
-						else echo $date->Display();
-						echo " -- ".$family->getPlaceShort($family->getMarriagePlace());
+					<td class="facts_value">
+					<?php echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()?><br />
+					<?php if ($family->getMarriageDate()) {
+						$date=new GedcomDate($family->getMarriageDate());
+						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($family->getMarriagePlace());
 					} ?>
 					</td>
 				</tr>
@@ -1712,6 +1718,25 @@ class IndividualControllerRoot extends BaseController {
 		?>
 		<br />
 		<?php
+	if (!$this->isPrintPreview()) {
+		?>
+		<table class="facts_table"><tr><td class="facts_value">
+	<script type="text/javascript">
+	<!--
+		function toggleElderdate() {
+			hiddenEls = document.getElementsByName('elderdate');
+			for(i=0; i<hiddenEls.length; i++) {
+				if (hiddenEls[i].style.display=='none') hiddenEls[i].style.display='block';
+				else hiddenEls[i].style.display='none';
+			}
+		}
+	//-->
+	</script>
+		<input id="checkbox_elder" type="checkbox" onclick="toggleElderdate();" />
+		<label for="checkbox_elder"><?php print $pgv_lang['age_differences'] ?></label>
+		</td></tr></table>
+		<?php
+		}
 		if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
 		?>
 		<table class="facts_table">

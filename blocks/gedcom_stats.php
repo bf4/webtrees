@@ -225,8 +225,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				</td>
 				<td class="facts_value"><div dir="rtl">
 				<?php
-				if (!empty($username)) $user = getUser($username);
-				if ($user["canadmin"] || (userGedcomAdmin($username, $GEDCOM))){
+				if (userGedcomAdmin($username, $GEDCOM)){
 					echo "<a href=\"useradmin.php\">" . count(getUsers()) . "</a>";
 				} else {
 					echo count(getUsers());
@@ -257,9 +256,11 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				<td class="facts_value"><div dir="rtl">
 					<a href="calendar.php?action=year&amp;year=<?php echo $row["year"]?>"><?php echo $row["year"]?></a>
 				</div></td>
+				<?php if (!$block){ ?>
 				<td  class="facts_value">
-					<?php	if (!$block && displayDetailsById($row["d_gid"])) print_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", false)?>
+					<?php	if (displayDetailsById($row["d_gid"])) print_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", false)?>
 				</td>
+				<?php } ?>
 			</tr>
 			<?php
 		}
@@ -281,9 +282,11 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				<td class="facts_value"><div dir="rtl">
 					<a href="calendar.php?action=year&amp;year=<?php echo $row["year"]?>"><?php echo $row["year"]?></a>
 				</div></td>
-				<td  class="facts_value">
-					<?php if (!$block && displayDetailsById($row["d_gid"])) print_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", false)?>
+				<?php if (!$block){ ?>
+				<td class="facts_value">
+					<?php if (displayDetailsById($row["d_gid"])) print_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", false)?>
 				</td>
+				<?php } ?>
 			</tr>
 			<?php
 		}
@@ -305,9 +308,11 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				<td class="facts_value"><div dir="rtl">
 					<a href="calendar.php?action=year&amp;year=<?php echo $row["year"]?>"><?php echo $row["year"]?></a>
 				</div></td>
+				<?php if (!$block){ ?>
 				<td  class="facts_value">
-					<?php if (!$block && displayDetailsById($row["d_gid"])) print_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", false)?>
+					<?php if (displayDetailsById($row["d_gid"])) print_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", false)?>
 				</td>
+				<?php } ?>
 			</tr>
 			<?php
 		}
@@ -329,9 +334,11 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				<td class="facts_value"><div dir="rtl">
 					<a href="calendar.php?action=year&amp;year=<?php echo $row["year"]?>"><?php echo $row["year"]?></a>
 				</div></td>
+				<?php if (!$block){ ?>
 				<td  class="facts_value">
-					<?php if (!$block && displayDetailsById($row["d_gid"])) print_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", false)?>
+					<?php if (displayDetailsById($row["d_gid"])) print_list_person($row["d_gid"], array(get_person_name($row["d_gid"]), $GEDCOM), false, "", false)?>
 				</td>
+				<?php } ?>
 			</tr>
 			<?php
 		}
@@ -353,9 +360,11 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 				<td class="facts_value"><div dir="rtl">
 					<?php echo floor($row[0]/365.25)?>
 				</div></td>
+				<?php if (!$block){ ?>
 				<td  class="facts_value">
-					<?php if (!$block && displayDetailsById($row[1])) print_list_person($row[1], array(get_person_name($row[1]), $GEDCOM), false, "", false)?>
+					<?php if (displayDetailsById($row[1])) print_list_person($row[1], array(get_person_name($row[1]), $GEDCOM), false, "", false)?>
 				</td>
+				<?php } ?>
 			</tr>
 			<?php
 		}

@@ -81,6 +81,20 @@ PhpGedView requires a web server with at least PHP v4.3 and around 20MB of
 web space.  The default installations of PHP on most servers should provide
 you with all of the PHP functionality you should need.
 
+Database
+    You will need at least 1 database and a username and password to access it. 
+    PhpGedView primarily supports MySQL, but has also been tested and shown to 
+    work with Postgresql, SQLite, and SQL-Server. The versions required for 
+    each of these databases is outlined below: 
+    MySQL 3.23+ 
+    PostgresQL 8.0+ 
+    SQLite available through PDO-SQLite which is included in PHP 5 
+    MS SQL-Server 2003+ 
+
+Web space
+    At least 20MB of web space on the web server. You will need more than this 
+    if you intend to store multimedia linked to individuals. 
+
 To use the reporting engine, PHP needs to be compiled with XML support.  
 This is compiled into PHP by default unless it is specifically disabled.  
 See http://us3.php.net/manual/en/ref.xml.php

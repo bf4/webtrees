@@ -672,7 +672,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 			print "&nbsp;";
 		else {
 			$hage =GedcomDate::GetAgeYears($hdate, $mdate);
-			print "<a name=\"{$hage}\" class=\"list_item age\">{$hage}</a>";
+			print "<a name=\"".($mdate->MaxJD()-$hdate->MinJD())."\" class=\"list_item age\">{$hage}</a>";
 		}
 		echo "</td>";
 		//-- Wife ID
@@ -701,7 +701,7 @@ function print_fam_table($datalist, $legend="", $option="") {
 			print "&nbsp;";
 		else {
 			$wage =GedcomDate::GetAgeYears($wdate, $mdate);
-			print "<a name=\"{$wage}\" class=\"list_item age\">{$wage}</a>";
+			print "<a name=\"".($mdate->MaxJD()-$wdate->MinJD())."\" class=\"list_item age\">{$wage}</a>";
 		}
 		echo "</td>";
 		//-- Marriage date
@@ -1412,7 +1412,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 			print $anniv;
 		if ($allow_download) {
 			// hCalendar:dtstart and hCalendar:summary
-			print "<abbr class=\"dtstart\" title=\"".date("Ymd", jdtounix($value['jd']))."\"></abbr>";
+			print "<abbr class=\"dtstart\" title=\"".strip_tags($value['date']->Display(false,'Ymd',array()))."\"></abbr>";
 			print "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$anniv ".$factarray[$value['fact']]." : ".PrintReady(strip_tags($record->getSortableName()))."\"></abbr>";
 		}
 		print "</td>";
@@ -1429,7 +1429,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	//echo "<td></td>";
 	//if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	print "<td class=\"list_label\">";
-	print $pgv_lang["total_names"].": ".$n;
+	print $pgv_lang["stat_events"].": ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	print "</td>";
 	print "<td>";

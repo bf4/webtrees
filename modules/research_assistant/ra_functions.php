@@ -146,7 +146,7 @@ class ra_functions {
 			}
 			else
 			{
-				for($i = 0; ($i < count($parts) && $i<6); $i++)
+				for($i = 0; ($i < count($parts) && $i<5); $i++)
 				{
 					$sql .= ' AND PL_LV'.($i+1).' LIKE \'%'.$DBCONN->escapeSimple($parts[$numOfParts]).'%\'';
 					$numOfParts--;

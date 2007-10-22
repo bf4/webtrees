@@ -24,7 +24,7 @@
  * @version $Id$
  */
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "You cannot access a language file directly.";
+	header("HTTP/1.0 403 Forbidden" );
 	exit;
 }
 
@@ -99,7 +99,7 @@ $pgv_lang["pl_city"]                    = "Ville";
 $pgv_lang["pl_neighborhood"]            = "Voisinage";
 $pgv_lang["pl_house"]                   = "Maison";
 $pgv_lang["pl_max"]                     = "Max";
-#pgv_lang["pl_delete"]                  = "Delete geographic location";
+$pgv_lang["pl_delete"]                  = "Supprimer ce lieu";
 
 $pgv_lang["pl_flag"]                    = "Drapeau";
 $pgv_lang["flags_edit"]                 = "Choisir un drapeau";
@@ -112,19 +112,22 @@ $pgv_lang["list_inactive"]              = "Voir les lieux inutilisés";
 
 //Placecheck specific text
 #pgv_lang["placecheck"]                 = "Place Check";
-#pgv_lang['placecheck_text']            = "This will list all the places from the selected gedcom file";
+#pgv_lang['placecheck_text']            = "This will list all the places from the selected GEDCOM file. By default this will NOT INCLUDE places that are fully matched between the GEDCOM file and the GoogleMap tables";
 #pgv_lang['placecheck_top']             = "Top Level Place";
 #pgv_lang['placecheck_one']             = "Level One Place";
 #pgv_lang['placecheck_select1']         = "Select Top Level...";
 #pgv_lang['placecheck_select2']         = "Select Next Level...";
 #pgv_lang['placecheck_key']             = "Key to colors used below";
-#pgv_lang['placecheck_key1']            = "<font size=\"-2\">this place and its coordinates do not exist in the googlemap tables</font>";
-#pgv_lang['placecheck_key2']            = "<font size=\"-2\">this place exists in the googlemap tables, but has no coordinates</font>";
-#pgv_lang['placecheck_key3']            = "<font size=\"-2\">this place level is blank in your gedcom file. It should be added to <br/>googlemap places as \"Unknown\" with coordinates from its parent<br/>level before you add any place to the next level</font>";
-#pgv_lang['placecheck_head']            = "Place list for gedcom file";
-#pgv_lang['placecheck_gedheader']       = "Gedcom File Place Data<br/>(2 PLAC tag)";
+$pgv_lang['placecheck_key1']            = "ce lieu et ses coordonnées n'existent pas dans les tables GoogleMap";
+$pgv_lang['placecheck_key2']            = "ce lieu existe dans les tables GoogleMap, mais pas ses coordonnées";
+#pgv_lang['placecheck_key3']            = "this place level is blank in your GEDCOM file. It should be added to<br/>GoogleMap places as \"unknown\" with coordinates from its parent<br/>level before you add any place to the next level";
+#pgv_lang['placecheck_key4']            = "this place level is blank in your GEDCOM file, but exists as 'unknown'<br/>in the GoogleMap places table with coordinates. No action required<br/>until the missing level can be entered";
+#pgv_lang['placecheck_head']            = "Place list for GEDCOM file";
+#pgv_lang['placecheck_gedheader']       = "GEDCOM File Place Data<br/>(2 PLAC tag)";
 #pgv_lang['placecheck_gm_header']       = "GoogleMap Places Table Data";
 #pgv_lang['placecheck_unique']          = "Total unique places";
 #pgv_lang["placecheck_zoom"]            = "Zoom=";
-
+#pgv_lang["placecheck_options"]         = "PlaceCheck List Options";
+#pgv_lang["placecheck_filter_text"]     = "List filtering options";
+#pgv_lang["placecheck_match"]           = "Include fully matched places -";
 ?>

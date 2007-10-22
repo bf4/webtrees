@@ -302,6 +302,10 @@ $factarray["_BIRT_HSIB"] = "Geburt von Halbgeschwister";
 $factarray["_MARR_HSIB"] = "Ehe von Halbgeschwister";
 $factarray["_DEAT_HSIB"] = "Tod von Halbgeschwister";
 
+$factarray["_BIRT_NEPH"] = "Geburt von Neffe oder Nichte";
+$factarray["_MARR_NEPH"] = "Ehe von Neffe oder Nichte";
+$factarray["_DEAT_NEPH"] = "Tod von Neffe oder Nichte";
+
 $factarray["_DEAT_GPAR"] = "Tod von Großeltern";
 
 $factarray["_BIRT_FSIB"] = "Geburt von Vaters Geschwister";
@@ -315,6 +319,10 @@ $factarray["_DEAT_MSIB"] = "Tod von Mutters Geschwister";
 $factarray["_BIRT_COUS"] = "Geburt eines Cousins";
 $factarray["_MARR_COUS"] = "Ehe eines Cousins";
 $factarray["_DEAT_COUS"] = "Tod eines Cousins";
+
+$factarray["_FAMC_EMIG"] = "Auswanderung der Eltern";
+$factarray["_FAMC_RESI"] = "Wohnort der Eltern";
+
 
 //-- PGV Only facts
 $factarray["_THUM"]	= "Dieses Bild auch als Miniaturbild verwenden?";

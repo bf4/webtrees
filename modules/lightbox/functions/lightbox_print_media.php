@@ -40,14 +40,17 @@
 	
 $t=$kind ;
 $edit="1";
+$n=1;
+$fn=1;
 
 	global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
 	global $pgv_lang, $pgv_changes, $factarray, $view;
 	global $GEDCOMS, $GEDCOM, $MEDIATYPE, $pgv_changes, $DBCONN, $DBTYPE;
 	global $WORD_WRAPPED_NOTES, $MEDIA_DIRECTORY, $PGV_IMAGE_DIR, $PGV_IMAGES, $TEXT_DIRECTION;
 	global $is_media, $cntm1, $cntm2, $cntm3, $cntm4, $t, $mgedrec;
-	global $typ2b, $edit, $tabno;
-	
+	global $res, $typ2b, $edit, $tabno, $n, $item, $items, $p, $note, $rowm, $note_text;
+
+
 	// Set type of media from call in album
 	if ($t==1) {
 	$tt      = $pgv_lang["TYPE__photo"];
@@ -85,7 +88,11 @@ $edit="1";
 	$typ2b  .= " (m_gedrec LIKE     '%TYPE video%')      ";
 	$typ2b  .= ")";
 	}
-
+	if ($t==5){
+	$tt      = $pgv_lang["TYPE__footnotes"];
+	$typ2b   = "(m_gedrec LIKE     '%%')";
+	}
+	
 	if (!showFact("OBJE", $pid)) return false;
 	if (!isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_gedcom_record($pid);
 	else $gedrec = find_updated_record($pid);
@@ -136,15 +143,26 @@ $edit="1";
 	  
 	$numm = $resmm->numRows();
 	  
-	if ( $t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm>0 ) {
+	if ( $t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm>0 || ($t==5 )) {
 		echo "\n\n";
 		echo '<table border=0 class="facts_table"><tr>' . "\n";;
 		echo '<td width="80" align="center" class="descriptionbox">' ;
-		echo "<b><br><br>" . $tt . "</b><br><br>(" . $numm . ")";
+		if ($t==5){
+			echo "<b><br>" . $tt . "</b><br><br>";
+		}else{
+			echo "<b><br><br>" . $tt . "</b><br><br>(" . $numm . ")";
+		}
 		echo '</td><td class="facts_value">';
-		echo "<center>" . "\n";
+		if ($t==5){
+		}else{
+			echo "<center>" . "\n";
+		}
 		echo '<table><tr><td>' . "\n";
-		echo "<center>" . "\n\n";  // needed for Firefox
+		if ($t==5){
+		
+		}else{		
+			echo "<center>" . "\n\n";  // needed for Firefox
+		}
 		echo "<div id=\"thumbcontainer\">" . "\n";
 		echo "<ul id=\"thumblist_".$t."\">" . "\n\n";
 
@@ -179,13 +197,36 @@ $edit="1";
 			if (isset($current_objes[$rowm['m_media']]))  $current_objes[$rowm['m_media']]--; {
 			}
 
-			foreach($rows as $rtype => $rowm) {
-//				if  ( FactViewRestricted($rowm['m_media'], $rowm['m_gedrec']) == "true" )
-				$res = lightbox_print_media_row($rtype, $rowm, $pid);
-				$media_found = $media_found || $res;
-				$foundObjs[$rowm['m_media']]=true;
-			}
+
+				foreach($rows as $rtype => $rowm) {
+//					if  ( FactViewRestricted($rowm['m_media'], $rowm['m_gedrec']) == "true" )
+					if ($t!=5){
+						$res = lightbox_print_media_row($rtype, $rowm, $pid);
+					}
+						$media_found = $media_found || $res;
+						$foundObjs[$rowm['m_media']]=true;
+				}
+
 			$mgedrec[] = $rowm["m_gedrec"];
+			
+			if ( $t==5 ) {
+			    if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
+					echo '<table border=0 padding=0>';
+					if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
+					
+					}else{
+						print "<tr><td id=\"Note " . ($fn) . "\" class=\"factnote\">";
+						$note[$fn]  = $pgv_lang["note"] . " " . ($fn) . "";		
+						print "<font size=1>" . $note[$fn] . "</font>";									
+						print_fact_notes($mgedrec[$items[$fn]-1], 1);
+						print "</td></tr>";
+						$fn++;
+						echo '</table>';
+					}	
+						
+				}					
+			}	
+		
 		}
 		
 		echo "</ul>";
@@ -205,8 +246,10 @@ $edit="1";
 		echo "</center>" . "\n";
 		echo '</td>'. "\n";
 		echo '</td></tr></table>' . "\n\n";
-
+		
+		
     }
+	
 
 	//-- objects are removed from the $current_objes list as they are printed
 	//-- any objects left in the list are new objects recently added to the gedcom

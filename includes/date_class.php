@@ -928,10 +928,13 @@ class GedcomDate {
 			$m=$match[2][0];
 			$y=$match[3][0];
 		} else {
-			if (preg_match('/(\d+( ?b ?c)?|\d\d\d\d)/', $date, $match)) // Y
+			if (preg_match('/(\d+( ?b ?c)|\d\d\d\d)/', $date, $match)) // Y BC or YYYY
 				$y=$match[1];
 			else
-				$y='';
+				if (preg_match('/(\d{1,4})/', $date, $match)) // Y
+					$y=$match[1];
+				else
+					$y='';
 			$m='';
 			$d='';
 		}
@@ -949,7 +952,7 @@ class GedcomDate {
 						$cal='@#djulian@';
 		// Ambiguous dates - don't override calendar escape
 		if ($cal=='')
-			if (preg_match('/^(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)$/', $m))
+			if (preg_match('/^(jan|feb|mar|apr|may|jun|jul|aug|s<F5>ep|oct|nov|dec)$/', $m))
 				$cal='@#dgregorian@';
 			else
 				if (preg_match('/^[345]\d\d\d$/', $y)) // Year 3000-5999

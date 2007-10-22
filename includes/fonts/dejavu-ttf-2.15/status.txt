@@ -1,5 +1,5 @@
 This is the status file for DejaVu fonts
-($Id: status.txt 1586 2007-02-18 16:07:32Z ben_laenen $)
+($Id$)
 
 original = present in original Bitstream Vera 1.10
 <version> = added in DejaVu fonts <version>

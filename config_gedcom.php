@@ -8,7 +8,7 @@
  * names gedcom.ged_conf.php.
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  PGV Development Teacm
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -177,7 +177,7 @@ $CHANGELOG_CREATE   = "monthly";	//-- log changes applied by users
 $SHOW_LDS_AT_GLANCE	= false;	//-- Show status of LDS ordinances in chart boxes
 $UNDERLINE_NAME_QUOTES	= false;	//-- convert double quotes in names to underlines
 $SPLIT_PLACES	= true;	//-- split PLAC tag into subtags (town, county, state...) in edit mode
-$SHOW_RELATIVES_EVENTS = "_DEAT_SPOU,_BIRT_CHIL,_DEAT_CHIL,_BIRT_GCHI,_DEAT_GCHI,_DEAT_FATH,_DEAT_MOTH,_BIRT_SIBL,_DEAT_SIBL,_BIRT_HSIB,_DEAT_HSIB,_DEAT_GPAR,_BIRT_FSIB,_DEAT_FSIB,_BIRT_MSIB,_DEAT_MSIB"; //-- show birth and death of relatives on individual page
+$SHOW_RELATIVES_EVENTS = "_BIRT_CHIL,_BIRT_COUS,_BIRT_FSIB,_BIRT_GCHI,_BIRT_HSIB,_BIRT_MSIB,_BIRT_NEPH,_BIRT_SIBL,_DEAT_CHIL,_DEAT_COUS,_DEAT_FATH,_DEAT_FSIB,_DEAT_GCHI,_DEAT_GPAR,_DEAT_HSIB,_DEAT_MOTH,_DEAT_MSIB,_DEAT_NEPH,_DEAT_SIBL,_DEAT_SPOU,_MARR_CHIL,_MARR_COUS,_MARR_FATH,_MARR_FSIB,_MARR_GCHI,_MARR_HSIB,_MARR_MOTH,_MARR_MSIB,_MARR_NEPH,_MARR_SIBL"; //-- show events of relatives on individual page
 $EXPAND_RELATIVES_EVENTS = false;
 $EXPAND_SOURCES = false;
 $EDIT_AUTOCLOSE = false; //-- autoclose edit window when update successful

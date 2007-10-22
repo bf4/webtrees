@@ -44,6 +44,7 @@ else $filter = stripLRMRLM(stripslashes($filter));
 if (!isset($search)) $search = "yes";
 if (!isset($folder)) $folder = $MEDIA_DIRECTORY;
 if (!isset($_SESSION["medialist"])) $search = "yes";
+$currentdironly = (isset($subdirs) && $subdirs=="on") ? false : true;
 print_header($pgv_lang["multi_title"]);
 print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t";
 
@@ -93,9 +94,14 @@ if (userIsAdmin(getUserName()) && $action=="generate" && !empty($file) && !empty
 	generate_thumbnail($file, $thumb);
 }
 if ($search == "yes") {
+	if ($folder == "ALL") {
+		$folder = $MEDIA_DIRECTORY;
+		$currentdironly = false;
+	}
+	// show external links only if looking at top level directory
+	$showExternal = ($folder == $MEDIA_DIRECTORY) ? true : false;
 	$medialist = array();
-	if ($folder=="ALL") get_medialist(false, "", true);
-	else get_medialist(true, $folder, true);
+	get_medialist($currentdironly, $folder, true, false, $showExternal);
 
 	//-- remove all private media objects
 	foreach($medialist as $key => $media) {
@@ -127,17 +133,11 @@ if ($search == "yes") {
 	<input type="hidden" name="action" value="filter" />
 	<input type="hidden" name="search" value="yes" />
 	<table class="list-table center width50 <?php print $TEXT_DIRECTION; ?>">
-		<tr>
-			<td class="list_label" colspan="2">
-				<?php print_help_link("simple_filter_help","qm"); print $pgv_lang["filter"]; ?>
-				&nbsp;<input id="filter" name="filter" value="<?php print PrintReady($filter); ?>"/>
-			</td>
-		</tr>
 		<?php
 			// Box for user to choose the folder
 			print "<tr><td class=\"list_label width25\">";
 			if ($MEDIA_DIRECTORY_LEVELS > 0) {
-				print_help_link("upload_server_folder_help", "qm");
+				print_help_link("view_server_folder_help", "qm");
 				if (empty($folder)) {
 					if (!empty($_SESSION['upload_folder'])) $folder = $_SESSION['upload_folder'];
 					else $folder = "ALL";
@@ -157,6 +157,20 @@ if ($search == "yes") {
 			} else print "<input name=\"folder\" type=\"hidden\" value=\"ALL\" />";
 			print "</td></tr>";
 		?>
+    <?php if ($MEDIA_DIRECTORY_LEVELS > 0) { ?>
+		<tr>
+			<td class="list_label" colspan="2">
+				<label for="subdirs"><?php print $pgv_lang["medialist_recursive"] ?></label>
+				&nbsp;<input type="checkbox" id="subdirs" name="subdirs" <?php if (!$currentdironly) { ?>checked="checked"<?php } ?> />
+			</td>
+		</tr>
+    <?php } ?>
+		<tr>
+			<td class="list_label" colspan="2">
+				<?php print_help_link("simple_filter_help","qm"); print $pgv_lang["filter"]; ?>
+				&nbsp;<input id="filter" name="filter" value="<?php print PrintReady($filter); ?>"/>
+			</td>
+		</tr>
 		<tr>
 			<td class="list_label" colspan="2">
 				<select name="max">
@@ -367,7 +381,7 @@ if ($ct>0){
 					print "</td>";
 			
 					// ---------- Link Media to person, family or source  ---------------
-					print "<td class=\"width33 center\" valign=\"bottom\">";
+					print "<td class=\"width33 center\" valign=\"top\">";
 					if ($LB_ML_THUMB_LINKS == "both" || $LB_ML_THUMB_LINKS == "icon") {
 						print "<img src=\"modules/lightbox/images/image_link.gif\" alt=\"\" class=\"icon\" title=\"" . $pgv_lang["set_link"] . "\" /><br />";
 						include ("modules/lightbox/functions/lb_link.php");

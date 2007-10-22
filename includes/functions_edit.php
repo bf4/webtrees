@@ -200,9 +200,9 @@ function checkChangeTime($pid, $gedrec) {
 			$changeTime = mktime($chan_time[0], $chan_time[1], $chan_time[2], (int)$chan_date[0]['mon'], (int)$chan_date[0]['day'], $chan_date[0]['year']);
 		}
 	}
-	if ($changeUser!=getUserName() && $changeTime!=0 && isset($_SESSION['last_access_time']) && $changeTime > $_SESSION['last_access_time']) {
+	if (isset($_REQUEST['linenum']) && $changeTime!=0 && isset($_SESSION['last_access_time']) && $changeTime > $_SESSION['last_access_time']) {
 		print "<span class=\"error\">".preg_replace("/#PID#/", $pid, $pgv_lang["edit_concurrency_msg2"])."<br /><br />";
-		if (!empty($changeUser)) print preg_replace(array("/#CHANGEUSER#/", "/#CHANGEDATE#/"), array($changeUser,date("d M Y h:i:s", $changeTime)), $pgv_lang["edit_concurrency_change"])."<br /><br />";
+		if (!empty($changeUser)) print preg_replace(array("/#CHANGEUSER#/", "/#CHANGEDATE#/"), array($changeUser,date("d M Y H:i:s", $changeTime)), $pgv_lang["edit_concurrency_change"])."<br /><br />";
 		print $pgv_lang["edit_concurrency_reload"]."</span>";
 		print_simple_footer();
 		exit;
@@ -223,7 +223,14 @@ function replace_gedrec($gid, $gedrec, $chan=true, $linkpid='') {
 
 	$gid = strtoupper($gid);
 	//-- restore any data that was hidden during privatizing
-	if (isset($pgv_private_records[$gid])) $gedrec = trim($gedrec)."\r\n".trim(get_last_private_data($gid));
+	if (isset($pgv_private_records[$gid])) {
+		$privatedata = trim(get_last_private_data($gid));
+		$subs = get_all_subrecords($privatedata, '', false, false, false);
+		foreach($subs as $s=>$sub) {
+			if (strstr($gedrec, $sub)===false) $gedrec = trim($gedrec)."\r\n".$privatedata;
+		}
+		unset($pgv_private_records[$gid]);
+	}
 
 	if (($gedrec = check_gedcom($gedrec, $chan))!==false) {
 		//-- the following block of code checks if the XREF was changed in this record.
@@ -498,7 +505,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 
 	// When adding a new child, specify the pedigree
 	if ($nextaction=='addchildaction')
-		add_simple_tag("0 PEDI birth");
+		add_simple_tag("0 PEDI");
 
 	// Populate the standard NAME field and subfields
 	$name_fields=array();
@@ -1429,13 +1436,14 @@ function print_add_layer($tag, $level=2, $printSaveButton=true) {
 		add_simple_tag(($level+1)." $page");
 		// 3 DATA
 		// 4 TEXT
+		// 4 DATE
 		$text = "TEXT";
 		add_simple_tag(($level+2)." $text");
 		add_simple_tag(($level+2)." DATE", "", $pgv_lang["date_of_entry"]);
-		// 3 OBJE
-		add_simple_tag(($level+1)." OBJE @@");
 		// 3 QUAY
 		add_simple_tag(($level+1)." QUAY");
+		// 3 OBJE
+		add_simple_tag(($level+1)." OBJE @@");
 		print "</table></div>";
 	}
 	if ($tag=="ASSO") {
@@ -1688,40 +1696,11 @@ function handle_updates($newged, $levelOverride="no") {
 			if (empty($NOTE[$text[$j]])) {
 				delete_gedrec($text[$j]);
 				$text[$j] = "";
-			}
-			else {
+			} else {
 				$noterec = find_gedcom_record($text[$j]);
 				$newnote = "0 @$text[$j]@ NOTE\r\n";
 				$newline = "1 CONC ".rtrim(stripLRMRLM($NOTE[$text[$j]]));
-				$newlines = preg_split("/\r?\n/", $newline);
-				for($k=0; $k<count($newlines); $k++) {
-					if ($k>0) $newlines[$k] = "1 CONT ".$newlines[$k];
-					if (strlen($newlines[$k])>255) {
-						if ($WORD_WRAPPED_NOTES) {
-							while(strlen($newlines[$k])>255) {
-								// Make sure this piece ends on a blank, because one blank will be
-								// added automatically when everything is put back together
-								$lastBlank = strrpos(substr($newlines[$k], 0, 255), " ");
-								$thisPiece = rtrim(substr($newlines[$k], 0, $lastBlank+1));
-								$newnote .= $thisPiece."\r\n";
-								$newlines[$k] = substr($newlines[$k], (strlen($thisPiece)+1));
-								$newlines[$k] = "1 CONC ".$newlines[$k];
-							}
-						} else {
-							while(strlen($newlines[$k])>255) {
-								// Make sure this piece doesn't end on a blank
-								// (Blanks belong at the start of the next piece)
-								$thisPiece = rtrim(substr($newlines[$k], 0, 255));
-								$newnote .= $thisPiece."\r\n";
-								$newlines[$k] = substr($newlines[$k], strlen($thisPiece));
-								$newlines[$k] = "1 CONC ".$newlines[$k];
-							}
-						}
-						$newnote .= trim($newlines[$k])."\r\n";
-					} else {
-						$newnote .= trim($newlines[$k])."\r\n";
-					}
-				}
+				$newnote .= breakConts($newline);
 				if ($GLOBALS["DEBUG"]) print "<pre>$newnote</pre>";
 				replace_gedrec($text[$j], $newnote);
 			}
@@ -1785,55 +1764,13 @@ function handle_updates($newged, $levelOverride="no") {
 				if ($islink[$j]) $newline .= " @".$text[$j]."@";
 				else $newline .= " ".$text[$j];
 			}
-			$newged .= breakConts($newline, $glevels[$j]+1+$levelAdjust);
+			$newged .= breakConts($newline);
 		}
 	}
 
 	return $newged;
 }
 
-/**
- * break up a line of gedcom text into multiple CONT/CONC lines
- * @param string $newline	the line of text to break
- * @param int $level		the GEDCOM level that new lines should have
- * @return string			returns the updated gedcom record
- */
-function breakConts($newline, $level) {
-	global $WORD_WRAPPED_NOTES;
-
-	$newged = "";
-
-	$newlines = preg_split("/\r?\n/", rtrim(stripLRMRLM($newline)));
-	for($k=0; $k<count($newlines); $k++) {
-		if ($k>0) $newlines[$k] = "{$level} CONT ".$newlines[$k];
-		if (strlen($newlines[$k])>255) {
-			if ($WORD_WRAPPED_NOTES) {
-				while(strlen($newlines[$k])>255) {
-					// Make sure this piece ends on a blank, because one blank will be
-					// added automatically when everything is put back together
-					$lastBlank = strrpos(substr($newlines[$k], 0, 255), " ");
-					$thisPiece = rtrim(substr($newlines[$k], 0, $lastBlank+1));
-					$newged .= $thisPiece."\r\n";
-					$newlines[$k] = substr($newlines[$k], (strlen($thisPiece)+1));
-					$newlines[$k] = "{$level} CONC ".$newlines[$k];
-				}
-			} else {
-				while(strlen($newlines[$k])>255) {
-					// Make sure this piece doesn't end on a blank
-					// (Blanks belong at the start of the next piece)
-					$thisPiece = rtrim(substr($newlines[$k], 0, 255));
-					$newged .= $thisPiece."\r\n";
-					$newlines[$k] = substr($newlines[$k], strlen($thisPiece));
-					$newlines[$k] = "{$level} CONC ".$newlines[$k];
-				}
-			}
-			$newged .= trim($newlines[$k])."\r\n";
-		} else {
-			$newged .= trim($newlines[$k])."\r\n";
-		}
-	}
-	return $newged;
-}
 
 /**
  * check the given date that was input by a user and convert it

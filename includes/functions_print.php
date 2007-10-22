@@ -526,8 +526,9 @@ function print_header($title, $head="",$use_alternate_styles=true) {
 	   print "<link rel=\"shortcut icon\" href=\"$FAVICON\" type=\"image/x-icon\"></link>\n\t\t";
 	}
 
-	if (!isset($META_TITLE)) $META_TITLE = "";
-	print "<title>".PrintReady(strip_tags($title)." - ".$META_TITLE." - PhpGedView", TRUE)."</title>\n\t";
+	if (empty($META_TITLE)) $metaTitle = " - PhpGedView";
+	else $metaTitle = " - ".$META_TITLE." - PhpGedView";
+	print "<title>".PrintReady(strip_tags($title).$metaTitle, TRUE)."</title>\n\t";
 	$GEDCOM_TITLE = "";
 	if (!empty($GEDCOMS[$GEDCOM]["title"])) $GEDCOM_TITLE = $GEDCOMS[$GEDCOM]["title"];
 	if ($ENABLE_RSS){
@@ -946,12 +947,23 @@ function print_lang_form($option=0) {
 	 if ($ENABLE_MULTI_LANGUAGE) {
 		  if (empty($LANG_FORM_COUNT)) $LANG_FORM_COUNT=1;
 		  else $LANG_FORM_COUNT++;
+		  
+		  //-- determine which languages are actually being used
+		  $used_langs = array();
+		  foreach ($pgv_language as $key=>$value) {
+		  	if ($language_settings[$key]["pgv_lang_use"]) {
+		  		$used_langs[$key] = $value;
+		  	}
+		  }
+		  //-- don't show the form if there is only one language enabled
+		  if (count($used_langs)<2) return;
+		  
 		  print "\n\t<div class=\"lang_form\">\n";
 		  switch($option) {
 			   case 1:
 			   //-- flags option
 			   $i = 0;
-			   foreach ($pgv_language as $key=>$value)
+			   foreach ($used_langs as $key=>$value)
 			   {
 				 if (($key != $LANGUAGE) and ($language_settings[$key]["pgv_lang_use"]))
 				 {
@@ -976,7 +988,7 @@ function print_lang_form($option=0) {
 					}
 					print "\n\t\t<input type=\"hidden\" name=\"changelanguage\" value=\"yes\" />\n\t\t<select name=\"NEWLANGUAGE\" class=\"header_select\" onchange=\"submit();\">";
 					print "\n\t\t\t<option value=\"\">".$pgv_lang["change_lang"]."</option>";
-					foreach ($pgv_language as $key=>$value) {
+					foreach ($used_langs as $key=>$value) {
 						 if ($language_settings[$key]["pgv_lang_use"]) {
 							  print "\n\t\t\t<option value=\"$key\" ";
 							  if ($LANGUAGE == $key) print "class=\"selected-option\"";
@@ -1535,10 +1547,10 @@ function print_note_record($text, $nlevel, $nrec) {
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $EXPAND_SOURCES, $EXPAND_NOTES;
 	if (!isset($EXPAND_NOTES)) $EXPAND_NOTES = $EXPAND_SOURCES; // FIXME
 	$elementID = "N-".floor(microtime()*1000000);
-	$text .= get_cont($nlevel, $nrec);
-	$text = str_replace("~~", "<br />", trim($text));
-	$text=expand_urls($text);
 	$text = trim($text);
+	$text .= get_cont($nlevel, $nrec);
+	$text = str_replace("~~", "<br />", $text);
+	$text = trim(expand_urls(stripLRMRLM($text)));
 	if (!empty($text)) {
 		$text = PrintReady($text);
 		$brpos = strpos($text, "<br />");
@@ -1577,7 +1589,7 @@ function print_fact_notes($factrec, $level) {
 	 $ct = preg_match_all("/$level NOTE(.*)/", $factrec, $match, PREG_SET_ORDER);
 	 for($j=0; $j<$ct; $j++) {
 		  $spos1 = strpos($factrec, $match[$j][0]);
-		  $spos2 = strpos($factrec, "\n$level", $spos1+1);
+		  $spos2 = strpos($factrec."\n$level", "\n$level", $spos1+1);
 		  if (!$spos2) $spos2 = strlen($factrec);
 		  $nrec = substr($factrec, $spos1, $spos2-$spos1);
 		  if (!isset($match[$j][1])) $match[$j][1]="";
@@ -2783,7 +2795,6 @@ function DumpString($input) {
 	$hex3R = "";
 	$hex4L = "";
 	$hex4R = "";
-	$hexLetters = "0123456789ABCDEF";
 
 	$pos = 0;
 	while (true) {
@@ -2797,40 +2808,32 @@ function DumpString($input) {
 		$UTF8[] = $thisChar;
 
 		// Separate the current UTF8 character into hexadecimal digits
-		$byte = ord(substr($thisChar, 0, 1));
-		$nibbleL = $byte >> 4;
-		$hex1L .= substr($hexLetters, $nibbleL, 1);
-		$nibbleR = $byte & 0x0F;
-		$hex1R .= substr($hexLetters, $nibbleR, 1);
+		$byte = bin2hex(substr($thisChar, 0, 1));
+		$hex1L .= substr($byte, 0, 1);
+		$hex1R .= substr($byte, 1, 1);
 
 		if ($charLen > 1) {
-			$byte = ord(substr($thisChar, 1, 1));
-			$nibbleL = $byte >> 4;
-			$hex2L .= substr($hexLetters, $nibbleL, 1);
-			$nibbleR = $byte & 0x0F;
-			$hex2R .= substr($hexLetters, $nibbleR, 1);
+			$byte = bin2hex(substr($thisChar, 1, 1));
+			$hex2L .= substr($byte, 0, 1);
+			$hex2R .= substr($byte, 1, 1);
 		} else {
 			$hex2L .= " ";
 			$hex2R .= " ";
 		}
 
 		if ($charLen > 2) {
-			$byte = ord(substr($thisChar, 2, 1));
-			$nibbleL = $byte >> 4;
-			$hex3L .= substr($hexLetters, $nibbleL, 1);
-			$nibbleR = $byte & 0x0F;
-			$hex3R .= substr($hexLetters, $nibbleR, 1);
+			$byte = bin2hex(substr($thisChar, 2, 1));
+			$hex3L .= substr($byte, 0, 1);
+			$hex3R .= substr($byte, 1, 1);
 		} else {
 			$hex3L .= " ";
 			$hex3R .= " ";
 		}
 
 		if ($charLen > 3) {
-			$byte = ord(substr($thisChar, 3, 1));
-			$nibbleL = $byte >> 4;
-			$hex4L .= substr($hexLetters, $nibbleL, 1);
-			$nibbleR = $byte & 0x0F;
-			$hex4R .= substr($hexLetters, $nibbleR, 1);
+			$byte = bin2hex(substr($thisChar, 3, 1));
+			$hex4L .= substr($byte, 0, 1);
+			$hex4R .= substr($byte, 1, 1);
 		} else {
 			$hex4L .= " ";
 			$hex4R .= " ";

@@ -494,16 +494,25 @@ class Person extends GedcomRecord {
 	function getLabel($elderdate="", $counter=0) {
 		global $pgv_lang, $TEXT_DIRECTION;
 		$label = "";
-		if (is_object($elderdate)) {
-			$p1 = $elderdate;
-			$p2 = $this->getBirthDate();
-			$label.="<div class=\"age $TEXT_DIRECTION\">";
-			$label.=get_age_at_event(GedcomDate::GetAgeGedcom($p1, $p2), true);
-			$label.="</div>";
+		$gap = 0;
+		if ($elderdate) {
+			$p1 = parse_date($elderdate);
+			$p2 = parse_date($this->getBirthDate());
+			if ($p1[0]["jd1"] && $p2[0]["jd1"]) {
+				$gap = $p2[0]["jd1"]-$p1[0]["jd1"]; // days
+				$gap = round($gap*12/365.25); // months
+				$label .= "<div name=\"elderdate\" class=\"age $TEXT_DIRECTION\" style=\"display: none;\">";
+				// negative gap for children means wrong order
+				if ($gap<0 && $counter>0) $label .= "<img alt=\"\" src=\"images/warning.gif\" /> ";
+				// gap in years or months
+				if ($gap>20 or $gap<-20) $label .= round($gap/12)." ".$pgv_lang["years"];
+				else if ($gap!=0) $label .= $gap." ".$pgv_lang["months"];
+				$label .= "</div>";
+			}
 		}
-		if ($counter)
-			$label .= "<div class=\"".strrev($TEXT_DIRECTION)."\">".$pgv_lang["number_sign"].$counter."</div>";
-		$label.=$this->label;
+		if ($counter) $label .= "<div name=\"elderdate\" class=\"".strrev($TEXT_DIRECTION)."\" style=\"display:none;\">".$pgv_lang["number_sign"].$counter."</div>";
+		$label .= $this->label;
+		if ($gap!=0 && $counter<1) $label .= "<br />&nbsp;";
 		return $label;
 	}
 	/**

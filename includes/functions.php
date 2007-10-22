@@ -714,6 +714,57 @@ function get_gedcom_value($tag, $level, $gedrec, $truncate='', $convert=true) {
 }
 
 /**
+ * create CONT lines
+ *
+ * Break input GEDCOM subrecord into pieces not more than 255 chars long,
+ * with CONC and CONT lines as needed.  Routine also pays attention to the
+ * word wrapped Notes option.
+ *
+ * @param	string	$newline	Input GEDCOM subrecord to be worked on
+ * @return	string	$newged		Output string with all necessary CONC and CONT lines
+ */
+function breakConts($newline) {
+	global $WORD_WRAPPED_NOTES;
+
+	// Determine level number of CONC and CONT lines
+	$level = substr($newline, 0, 1);
+	$tag = substr($newline, 1, 6);
+	if ($tag!=" CONC " && $tag!=" CONT ") $level ++;
+
+	$newged = "";
+	$newlines = preg_split("/\r?\n/", rtrim(stripLRMRLM($newline)));
+	for($k=0; $k<count($newlines); $k++) {
+		if ($k>0) $newlines[$k] = "{$level} CONT ".$newlines[$k];
+		if (strlen($newlines[$k])>255) {
+			if ($WORD_WRAPPED_NOTES) {
+				while(strlen($newlines[$k])>255) {
+					// Make sure this piece ends on a blank, because one blank will be
+					// added automatically when everything is put back together
+					$lastBlank = strrpos(substr($newlines[$k], 0, 255), " ");
+					$thisPiece = rtrim(substr($newlines[$k], 0, $lastBlank+1));
+					$newged .= $thisPiece."\r\n";
+					$newlines[$k] = substr($newlines[$k], (strlen($thisPiece)+1));
+					$newlines[$k] = "{$level} CONC ".$newlines[$k];
+				}
+			} else {
+				while(strlen($newlines[$k])>255) {
+					// Make sure this piece doesn't end on a blank
+					// (Blanks belong at the start of the next piece)
+					$thisPiece = rtrim(substr($newlines[$k], 0, 255));
+					$newged .= $thisPiece."\r\n";
+					$newlines[$k] = substr($newlines[$k], strlen($thisPiece));
+					$newlines[$k] = "{$level} CONC ".$newlines[$k];
+				}
+			}
+			$newged .= trim($newlines[$k])."\r\n";
+		} else {
+			$newged .= trim($newlines[$k])."\r\n";
+		}
+	}
+	return $newged;
+}
+
+/**
  * get CONT lines
  *
  * get the N+1 CONT or CONC lines of a gedcom subrecord
@@ -740,21 +791,6 @@ function get_cont($nlevel, $nrec, $tobr=true) {
 	}
 	
 	return rtrim($text, " ");
-/*
-	$tt = preg_match_all("/$nlevel CON[CT](.*)/", $nrec, $cmatch, PREG_SET_ORDER);
-	for($i=0; $i<$tt; $i++) {
-		if (strstr($cmatch[$i][0], "CONT")) $text.=$newline;
-		else if ($WORD_WRAPPED_NOTES) $text.=" ";
-		$conctxt = $cmatch[$i][1];
-		if (!empty($conctxt)) {
-			if ($conctxt{0}==" ") $conctxt = substr($conctxt, 1);
-			$conctxt = preg_replace("/[\r\n]/","",$conctxt);
-			$text.=rtrim($conctxt);
-		}
-	}
-	$text = preg_replace("/~~/", $newline, $text);
-	return $text;
-*/
 }
 
 /**
