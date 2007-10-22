@@ -313,7 +313,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			if ($ct>0) {
 				$spouse=$match[1];
 				if ($spouse!=="") {
-					print " <a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\">";
+ 					print " <a href=\"individual.php?pid=$spouse&amp;ged=$GEDCOM\">";
 					if (displayDetailsById($spouse)||showLivingNameById($spouse)) {
 						print PrintReady(get_person_name($spouse));
 						$addname = get_add_person_name($spouse);
@@ -329,8 +329,8 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 					else print " " . getRLM();
 					print "[".$pgv_lang["view_family"];
 					if ($SHOW_ID_NUMBERS) print " " . getLRM() . "($pid)" . getLRM();
-					if ($TEXT_DIRECTION == "ltr") print getLRM() . "]</a>\n";
-					else print getRLM() . "]</a>\n";
+ 					if ($TEXT_DIRECTION == "ltr") print getLRM() . "]</a>\n";
+ 					else print getRLM() . "]</a>\n";
 				}
 			}
 			//-- print other characterizing fact information
@@ -395,7 +395,8 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			print_asso_rela_record($pid, $factrec, true, id_type($pid));
 			// -- find _PGVU field
 			$ct = preg_match("/2 _PGVU (.*)/", $factrec, $match);
-			if ($ct>0) print $factarray["_PGVU"].": ".$match[1];
+//			if ($ct>0) print $factarray["_PGVU"].": ".$match[1];			
+			if ($ct>0) print " - ".$factarray["_PGVU"].": ".$match[1];
 			// -- Find RESN tag
 			if (isset($resn_value)) {
 				print "<img src=\"images/RESN_".$resn_value.".gif\" alt=\"".$pgv_lang[$resn_value]."\" title=\"".$pgv_lang[$resn_value]."\" />\n";
