@@ -17,7 +17,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-// $Id: class.SunOS.inc.php,v 1.22 2006/02/11 17:55:25 bigmichi1 Exp $
+// $Id$
 
 $error->addError("WARN", "The SunOS version of phpSysInfo is work in progress, some things currently don't work");
 

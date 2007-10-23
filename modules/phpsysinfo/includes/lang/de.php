@@ -17,7 +17,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
-// $Id: de.php,v 1.18 2006/03/10 21:57:13 bigmichi1 Exp $
+// $Id$
 
 $text['title']          = 'System Information';
 

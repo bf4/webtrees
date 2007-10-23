@@ -17,7 +17,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
-// $Id: sr.php,v 1.4 2005/12/31 17:25:02 bigmichi1 Exp $
+// $Id$
 
 $charset                = 'utf-8';
 
