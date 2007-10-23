@@ -41,6 +41,15 @@ For massive changes, the variable names should be listed in the order in which t
 occur in the respective language files.
 
 
+VERSION 4.1.3
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+-------------------------------------------------------------------------------------------
++$pgv_lang["SHOW_AGE_DIFF"]            			 23 Oct 2007      A
++$pgv_lang["SHOW_AGE_DIFF_help"] 						 23 Oct 2007      A
++$pgv_lang["EXPAND_NOTES"] 									 23 Oct 2007      A
++$pgv_lang["EXPAND_NOTES_help"]			 				23 Oct 2007      A
+
 VERSION 4.1.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
