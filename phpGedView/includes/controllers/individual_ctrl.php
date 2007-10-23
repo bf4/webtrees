@@ -1229,7 +1229,7 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	function print_relatives_tab() {
-		global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_AGE_DIFF;
 		$personcount=0;
 		$families = $this->indi->getChildFamilies();
 		if (count($families)==0) {
@@ -1280,7 +1280,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $people["newhusb"]->getBirthDate();
+					$elderdate = $people["newhusb"]->getBirthDate(false);
 				}
 				if (isset($people["husb"])) {
 					?>
@@ -1291,7 +1291,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $people["husb"]->getBirthDate();
+					$elderdate = $people["husb"]->getBirthDate(false);
 				}
 				else if (!isset($people["newhusb"])) {
 					if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
@@ -1339,7 +1339,7 @@ class IndividualControllerRoot extends BaseController {
 					<br />
 					</td>
 					<td class="facts_value">
-					<?php echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren();?><br />
+					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
 					<?php if ($family->getMarriageDate()) {
 						$date=new GedcomDate($family->getMarriageDate());
 						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($family->getMarriagePlace());
@@ -1372,7 +1372,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $child->getBirthDate();
+					$elderdate = $child->getBirthDate(false);
 					}
 				}
 				$styleadd = "red";
@@ -1441,7 +1441,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $people["newhusb"]->getBirthDate();
+					$elderdate = $people["newhusb"]->getBirthDate(false);
 				}
 				if (isset($people["husb"])) {
 					?>
@@ -1452,7 +1452,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $people["husb"]->getBirthDate();
+					$elderdate = $people["husb"]->getBirthDate(false);
 				}
 				$styleadd = "";
 				if (isset($people["newwife"])) {
@@ -1481,7 +1481,7 @@ class IndividualControllerRoot extends BaseController {
 					<td class="facts_label">
 					</td>
 					<td class="facts_value">
-					<?php echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()?><br />
+					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
 					<?php if ($family->getMarriageDate()) {
 						$date=new GedcomDate($family->getMarriageDate());
 						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($family->getMarriagePlace());
@@ -1514,7 +1514,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $child->getBirthDate();
+					$elderdate = $child->getBirthDate(false);
 					}
 				}
 				$styleadd = "red";
@@ -1582,7 +1582,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $people["newhusb"]->getBirthDate();
+					$elderdate = $people["newhusb"]->getBirthDate(false);
 				}
 				if (isset($people["husb"])) {
 					?>
@@ -1593,7 +1593,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $people["husb"]->getBirthDate();
+					$elderdate = $people["husb"]->getBirthDate(false);
 				}
 				$styleadd = "";
 				if (isset($people["newwife"])) {
@@ -1640,7 +1640,7 @@ class IndividualControllerRoot extends BaseController {
 					<td class="facts_label"><br />
 					</td>
 					<td class="facts_value">
-					<?php echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()?><br />
+					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
 					<?php if ($family->getMarriageDate()) {
 						$date=new GedcomDate($family->getMarriageDate());
 						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($family->getMarriagePlace());
@@ -1673,7 +1673,7 @@ class IndividualControllerRoot extends BaseController {
 						</td>
 					</tr>
 					<?php
-					$elderdate = $child->getBirthDate();
+					$elderdate = $child->getBirthDate(false);
 					}
 				}
 				$styleadd = "red";
@@ -1727,9 +1727,10 @@ class IndividualControllerRoot extends BaseController {
 				else hiddenEls[i].style.display='none';
 			}
 		}
+		<?php if (!$SHOW_AGE_DIFF) echo "toggleElderdate();";?>
 	//-->
 	</script>
-		<input id="checkbox_elder" type="checkbox" onclick="toggleElderdate();" />
+		<input id="checkbox_elder" type="checkbox" onclick="toggleElderdate();" <?php if ($SHOW_AGE_DIFF) echo "checked=\"checked\"";?>/>
 		<label for="checkbox_elder"><?php print $pgv_lang['age_differences'] ?></label>
 		</td></tr></table>
 		<?php
