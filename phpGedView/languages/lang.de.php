@@ -20,10 +20,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @author Jürgen Bach 
- * @author Gerd Kroll
- * @author Kurt Norgaz 
- * @author Peter Pluntke
+ * @translator Jürgen Bach 
+ * @translator Gerd Kroll
+ * @translator Kurt Norgaz 
+ * @translator Peter Pluntke
  * @version $Id$
  */
 
@@ -32,6 +32,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["age_differences"]		= "Altersdifferenzen zeigen";
 $pgv_lang["date_of_entry"]			= "Datum des Eintrages in der ursprünglichen Quelle";
 $pgv_lang["multi_site_search"] 		= "Webseiten durchsuchen";
 $pgv_lang["switch_lifespan"]		= "Lebenspannen-Diagramm zeigen";
