@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1.3
+ - Fixed [ 1813634 ] [4.1.2] Link this person to an existing family as a child (yalnifj)
  - Medialist - only show external files when viewing root dir, add option to view files in subdirs (ljm)
  - Fixed [ 1817180 ] CONC Issue in Individual and medialist Page (canajun2eh)
  - Fixed [ 1817120 ] SOUR tab - errors (canajun2eh)

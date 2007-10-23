@@ -483,7 +483,7 @@ case 'addfamlink':
 	print "<input type=\"hidden\" name=\"famtag\" value=\"$famtag\" />\n";
 	print "<table class=\"facts_table\">";
 	print "<tr><td class=\"facts_label\">".$pgv_lang["family"]."</td>";
-	print "<td class=\"facts_value\"><input type=\"text\" name=\"famid\" size=\"8\" /> ";
+	print "<td class=\"facts_value\"><input type=\"text\" id=\"famid\" name=\"famid\" size=\"8\" /> ";
 	print_findfamily_link("famid");
 	print "\n</td></tr>";
 	if ($famtag=="CHIL") {
