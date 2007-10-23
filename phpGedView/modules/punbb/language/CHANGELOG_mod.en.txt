@@ -1,6 +1,6 @@
 GALLERY2 MODULE LANGUAGE FILE CHANGELOG
 
-# $Id: $
+# $Id$
 
 Use this file to follow the changes made to the English language files
 between different versions of phpGedView.  There are five separate CHANGELOG files,

@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Gallery2
- * @version $Id: $
+ * @version $Id$
  * @author Patrick Kellum
  */
 $modinfo = parse_ini_file('modules/gallery2.php', true);

@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage Gallery2
- * @version $Id: $
+ * @version $Id$
  * @author Patrick Kellum
  */
 /*

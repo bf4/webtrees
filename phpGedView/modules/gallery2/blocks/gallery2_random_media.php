@@ -23,7 +23,7 @@
  *
  * @package PhpGedView
  * @subpackage blocks
- * @version $Id: $
+ * @version $Id$
  * @author Patrick Kellum
  */
 
