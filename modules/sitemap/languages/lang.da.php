@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage SiteMap
- * @version $Id: lang.da.php 1380 2007-08-03 14:27:47Z canajun2eh $
+ * @version $Id$
  */
 
 

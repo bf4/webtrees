@@ -21,7 +21,7 @@
  *
  * @package PhpGedView
  * @subpackage SiteMap
- * @version $Id: help_text.da.php 1380 2007-08-03 14:27:47Z canajun2eh $
+ * @version $Id$
  */
 if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
   print "Du kan ikke tilgå en sprogfil direkte.";

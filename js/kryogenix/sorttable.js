@@ -8,7 +8,7 @@
  *
  * @package PhpGedView
  * @subpackage Display
- * @version $Id: $
+ * @version $Id$
  */
  /*
   SortTable
