@@ -32,6 +32,12 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["associated_files"]		= "Archivos asociados:";
+$pgv_lang["remove_all_files"]		= "Borrar todos los archivos no esenciales";
+$pgv_lang["warn_file_delete"]		= "Este archivo contiene información importante como ajustes de idioma o datos de los cambios pendientes.  ¿Está seguro de que desea borrar este archivo?";
+$pgv_lang["deleted_files"]          = "Archivos borrados:";
+$pgv_lang["index_dir_cleanup_inst"]	= "Para borrar un archivo del directorio de índice, arrástrelo a la basura o marque su casilla de selección.  Haga clic en el botón de borrar para eliminar permanentemente los archivos de la basura.<br /><br />Los archivos marcados con <img src=\"./images/RESN_confidential.gif\" /> se requieren para el correcto funcionamiento y no pueden eliminarse.<br />Los archivos marcados con <img src=\"./images/RESN_locked.gif\" /> tienen ajustes importantes o datos de cambios pendientes y sólo debería borrarlos si está seguro de lo que hace.<br /><br />";
+$pgv_lang["index_dir_cleanup"]		= "Limpieza del directorio de ínidice";
 $pgv_lang["clear_cache_succes"]		= "Los archivos recordados se han borrado.";
 $pgv_lang["clear_cache"]			= "Limpiar los archivos de recuerdo";
 $pgv_lang["sanity_err0"]			= "Errores:";
@@ -49,7 +55,7 @@ $pgv_lang["sanity_warn4"]			= "No existe la biblioteca XML Parser. PhpGedView fu
 $pgv_lang["sanity_warn5"]			= "No existe la biblioteca DOM XML. PhpGedView funcionará a pesar de ello, pero algunas funciones, como la exportación en formato Gramps en el carrito genealógico, la descarga y los servicios web no funcionarán. Consulte por favor <a href='http://www.php.net/manual/en/ref.domxml.php'>http://www.php.net/manual/en/ref.domxml.php</a> (en inglés) para más información.";
 $pgv_lang["sanity_warn6"]			= "No existe la biblioteca Calendar. PhpGedView funcionará a pesar de ello, pero algunas funciones, como la conversión a otros calendarios como el hebreo o el francés revolucionario, no funcionarán.  No es esencial para utilizar PhpGedView. Consulte por favor <a href='http://www.php.net/manual/en/ref.calendar.php'>http://www.php.net/manual/en/ref.calendar.php</a> para más información.";
 $pgv_lang["ip_address"]				= "Dirección IP";
-$pgv_lang["date_time"]				= "Hora y fecha:";
+$pgv_lang["date_time"]				= "Fecha y hora";
 $pgv_lang["log_message"]			= "Mensaje en el diario";
 $pgv_lang["searchtype"]				= "Tipo de búsqueda";
 $pgv_lang["query"]					= "Búsqueda";
@@ -169,7 +175,7 @@ $pgv_lang["error_header_write"] 				= "El archivo GEDCOM, [#GEDCOM#], no es grab
 $pgv_lang["error_siteauth_failed"]				= "Falló la autenticación con el sitio remoto";
 $pgv_lang["error_url_blank"]					= "Por favor, no deje en blanco ni el título del sitio remoto ni la URL";
 $pgv_lang["error_view_info"]       				= "Debe seleccionar la persona cuya información desee ver.";
-$pgv_lang["example_date"]						= "Ejemplo de fecha inválida para su GEDCOM:";
+$pgv_lang["example_date"]						= "Ejemplo de fecha inválida en su GEDCOM:";
 $pgv_lang["example_place"]						= "Ejemplo de lugar inválido en su GEDCOM:";
 $pgv_lang["fbsql"]								= "FrontBase";
 $pgv_lang["found_record"]						= "Registros encontrados";
@@ -249,7 +255,7 @@ $pgv_lang["PGV_SESSION_TIME"]					= "Duración de la Sesión";
 $pgv_lang["PGV_SIMPLE_MAIL"] 					= "Usar encabezamientos simples en los correos externos";
 $pgv_lang["PGV_STORE_MESSAGES"]					= "Permitir el archivo de mensajes en línea:";
 $pgv_lang["phpinfo"]							= "PHPInfo";
-$pgv_lang["place_cleanup_detected"] 			= "Se detectaron codificaciones de lugar incorrectas. Estos errores deben ser corregidos. El ejemplo siguiente muestra el lugar inválido detectado:";
+$pgv_lang["place_cleanup_detected"] 			= "Se detectaron codificaciones de lugar incorrectas. Estos errores deberían corregirse.";
 $pgv_lang["please_be_patient"]					= "POR FAVOR SEA PACIENTE";
 $pgv_lang["privileges"]							= "Privilegios";
 $pgv_lang["reading_file"]						= "Leyendo archivo GEDCOM";

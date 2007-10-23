@@ -23,7 +23,7 @@
  * @author PGV Developers
  * @translator: Julio Sánchez Fernández
  * @package PhpGedView
- * @subpackage Site Map
+ * @subpackage SiteMap
  * @version $Id$
  */
 
