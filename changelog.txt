@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1.3
+ - Fixed [ 1751010 ] [4.1.2] Quick update links to choose a place (yalnifj)
  - Fixed [ 1806096 ] Googlemap and apostrophes (yalnifj)
  - Fixed [ 1813473 ] Fatal error - functions_print_lists, by adding more error checking (yalnifj)
  - Fixed [ 1813634 ] [4.1.2] Link this person to an existing family as a child (yalnifj)
