@@ -35,15 +35,13 @@
  *		HOL		Holland						Official name is NLD "Netherlands"
  *		ESM		Western Samoa				Official name is WSM "Samoa"
  *											
- * @author PGV Developers
- * @translator: Julio Sánchez Fernández
  * @package PhpGedView
  * @subpackage Languages
  * @version $Id$
  */
 
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
-	print "Usted no puede acceder a este archivo de idioma directamente.";
+	print "You cannot access a language file directly.";
 	exit;
 }
 
@@ -128,7 +126,7 @@ $countries["ETH"]="Etiopía";
 $countries["FIN"]="Finlandia";
 $countries["FJI"]="Fiyi";
 $countries["FLD"]="Flandes";
-$countries["FLK"]="Islas Falkland";
+$countries["FLK"]="Islas Malvinas";
 $countries["FRA"]="Francia";
 $countries["FRO"]="Islas Feroe";
 $countries["FSM"]="Micronesia";
@@ -334,12 +332,11 @@ $countries["???"]="";
  */
 $altCountryNames["COD"]="Zaire";
 $altCountryNames["DEU"]="Alemania Oriental; Alemania Occidental";
-$altCountryNames["FLK"]="Islas Malvinas";		// Not really necessary: primary name in Spanish list
+$altCountryNames["FLK"]="Islas Falkland";
 $altCountryNames["GBR"]="Gran Bretaña";
 $altCountryNames["LKA"]="Ceilán";
 $altCountryNames["MMR"]="Birmania";
-//$altCountryNames["NLD"]="Holland";
-//$altCountryNames["PLW"]="Belau";
+$altCountryNames["NLD"]="Holanda";
 $altCountryNames["SUN"]="Unión Soviética";
 $altCountryNames["TLS"]="Timor Oriental";
 $altCountryNames["VAT"]="Santa Sede";

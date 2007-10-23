@@ -32,6 +32,10 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["edit_concurrency_change"] = "Este registro fue modificado por última vez por <i>#CHANGEUSER#</i> el #CHANGEDATE#";
+$pgv_lang["edit_concurrency_msg2"]	= "El registro con id #PID# fue modificado por otro usuario desde que accedió a él por última vez.";
+$pgv_lang["edit_concurrency_msg1"]	= "Ocurrión un error mientras se creaba el formulario de Edición.  Otro usuario puede haber cambiado este registro desde que lo visualizó.";
+$pgv_lang["edit_concurrency_reload"]	= "Por favor utilice el botón de Página Anterior de su navegador y recargue la página anterior para asegurars de que trabaja con el registro más reciente.";
 $pgv_lang["admin_override"]			= "Opción de administración";
 $pgv_lang["no_update_CHAN"]			= "No actualizar el registro CHAN (último cambio)";
 $pgv_lang["select_events"]			= "Seleccionar eventos";
@@ -76,6 +80,7 @@ $pgv_lang["main_media_fail0"]			= "El archivo audiovisual <b>#GLOBALS[oldMediaFo
 $pgv_lang["main_media_fail1"]			= "No se pudo renombrar el archivo audiovisual principal de <b>#GLOBALS[oldMediaName]#</b> a <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_fail2"]			= "No se pudo mover el archivo audiovisual principal <b>#GLOBALS[oldMediaName]#</b> de <b>#GLOBALS[oldMediaFolder]#</b> a <b>#GLOBALS[newMediaFolder]#</b>.";
 $pgv_lang["main_media_fail3"]			= "No se pudo mover y renombrar el archivo audiovisual principal de <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> a <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";
+$pgv_lang["resn_disabled"]				= "Nota: Debe activar la función 'Utilizar la restricción de privacidad de GEDCOM (RESN)' para que este ajuste surta efecto.";
 $pgv_lang["thumb_media_ok1"]			= "El archivo de miniatura <b>#GLOBALS[oldMediaName]#</b> se renombró con éxito a <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["thumb_media_ok2"]			= "El archivo de miniatura <b>#GLOBALS[oldMediaName]#</b> se movió con éxito de <b>#GLOBALS[oldThumbFolder]#</b> a <b>#GLOBALS[newThumbFolder]#</b>.";
 $pgv_lang["thumb_media_ok3"]			= "El archivo de miniatura se movió y renombró con éxito de <b>#GLOBALS[oldThumbFolder]##GLOBALS[oldMediaName]#</b> a <b>#GLOBALS[newThumbFolder]##GLOBALS[newMediaName]#</b>.";
@@ -124,7 +129,7 @@ $pgv_lang["birthplace_search"]		= "Lugar de nacimiento: ";
 $pgv_lang["change"]					= "Cambiar";
 $pgv_lang["change_family_instr"]	= "Utilice esta página para cambiar o eliminar miembros de esta familia.<br /><br />Para cada miembro de esta familia, puede usar el vínculo Cambiar para escoger otra persona diferente para ese papel en la familia. También puede utilizar el vínculo Borrar para eliminar esa persona de la familia.<br /><br />Cuando haya terminado de cambiar los miembros de la familia, haga clic en el botón Salvar para salvar los cambios.<br />";
 $pgv_lang["change_family_members"]	= "Modificar los miembros de la familia";
-$pgv_lang["changes_occurred"]		= "Esta persona tuvo los cambios siguientes:";
+$pgv_lang["changes_occurred"]		= "Este registro tuvo los cambios siguientes:";
 $pgv_lang["confirm_remove"]			= "¿Está seguro de que quiere desconectar este hijo de la familia?";
 $pgv_lang["confirm_remove_object"]	= "¿Está seguro de querer borrar este objeto de la base de datos?";
 $pgv_lang["create_repository"]		= "Crear Repositorio";
@@ -180,10 +185,10 @@ $pgv_lang["media_deleted"]			= "Directorio de objetos audiovisuales eliminado co
 $pgv_lang["media_exists"]			= "El archivo audiovisual ya existe.";
 $pgv_lang["media_file"] 			= "Archivos Multimedia";
 $pgv_lang["media_file_deleted"]		= "Archivo audiovisual borrado con éxito.";
-$pgv_lang["media_file_not_moved"]	= "No se pudo mover el archivo audiovisual.";
-$pgv_lang["media_file_not_renamed"]	= "No se pudo mover o cambiar en nombre del archivo audiovisual.";
+$pgv_lang["media_file_moved"]			= "Se trasladó el archivo audiovisual.";
+$pgv_lang["media_file_not_moved"]	= "No se pudo trasladar el archivo audiovisual.";
+$pgv_lang["media_file_not_renamed"]	= "No se pudo trasladar o cambiar el nombre del archivo audiovisual.";
 $pgv_lang["media_thumb_exists"]		= "La miniatura del archivo audiovisual ya existe.";
-$pgv_lang["multi_site_search"] 		= "Búsqueda multi-sitio";
 $pgv_lang["multiple_gedcoms"]		= "Este archivo está vinculado con otra base de datos genealógica en este servidor. No puede borrarse, moverse o se le puede cambiar de nombre hasta que se hayan eliminado estos vínculos.";
 $pgv_lang["must_provide"]			= "Debe suministrar un ";
 $pgv_lang["name_search"]			= "Nombre: ";

@@ -32,9 +32,9 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-// $pgv_lang["autosearch_ssurname"] = "Include spouse's surname:";
-// $pgv_lang["autosearch_sgivennames"] = "Include spouse's given names:";
-// $pgv_lang["autosearch_plugin_name_gensearchhelp"] = "Genealogy-Search-Help.com Plug-in";
+$pgv_lang["autosearch_ssurname"] = "Incluir apellido del cónyuge:";
+$pgv_lang["autosearch_sgivennames"] = "Incluir los nombres de pila del cónyuge:";
+$pgv_lang["autosearch_plugin_name_gensearchhelp"] = "Módulo para Genealogy-Search-Help.com";
 
 $pgv_lang["add_task_inst"]		= "Si no se ha creado una tarea aún para sus resultados de investigación, debería crearla antes y después elegir la opción de salvar y completar la tarea.";
 $pgv_lang["complete_task_inst"]	= "Escoja una tarea de la lista de tareas que se muestra para completarla e introduzca los resultados de la tarea:";
@@ -248,13 +248,13 @@ $pgv_lang["show_add_unlinked_source"]   = "Mostrar Agregar Fuente sin Vincular";
 $pgv_lang["show_view_probabilities"]	= "Mostrar Ver Probabilidades";
 
 //-- COMMENT HELP
-// $pgv_lang["comment_title_help"]			= "Comment Title Help here.";
+$pgv_lang["comment_title_help"]			= "Aquí va la ayuda sobre el Título del Comentario.";
 $pgv_lang["comment_help"]				= "Haga clic aquí para obtener ayuda.";
 
 //-- Census Forms
 $pgv_lang["rows"]                       = "Número de filas";
 $pgv_lang["state"]                      = "Estado/Provincia";
-// $pgv_lang["call/url"]                   = "Call Number/URL";
+$pgv_lang["call/url"]                   = "Referencia/URL";
 $pgv_lang["enumDate"]                   = "Fecha de la enumeración";
 $pgv_lang["county"]                     = "Condado";
 $pgv_lang["city"]                       = "Población";

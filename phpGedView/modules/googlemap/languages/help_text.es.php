@@ -59,13 +59,13 @@ $pgv_lang["GM_DEFAULT_LEVEL_0_help"]    = "~#pgv_lang[GM_DEFAULT_LEVEL_0]#~<br /
 $pgv_lang["GM_NOF_LEVELS"]              = "~#pgv_lang[GM_NOF_LEVELS]#~<br /><br />Este campo indica el número de niveles en la jerarquía de lugares que se utiliza en los módulos Googlemap.<br/>El valor predeterminado es 4 (País, Estado/Provincia, Condado, Lugar), que es generalmente adecuado. Si desea añadir un nivel extra (por ejemplo, para añadir lugares específicos como cementerios o escuelas) cambie este valor.  Si quiere eliminar un nivel (por ejemplo, condado) también puede cambiar este valor, pero tenga en cuenta que los archivos que contienen las ubicaciones de los lugares contienen una estructura de cuatro niveles.";
 $pgv_lang["GM_NOF_LEVELS_help"]         = "~#pgv_lang[GM_NOF_LEVELS]#~<br /><br />Este campo indica el número de niveles en la jerarquía de lugares que se utiliza en los módulos Googlemap.<br/>El valor predeterminado es 4 (País, Estado/Provincia, Condado, Lugar), que es generalmente adecuado. Si desea añadir un nivel extra (por ejemplo, para añadir lugares específicos como cementerios o escuelas) cambie este valor.  Si quiere eliminar un nivel (por ejemplo, condado) también puede cambiar este valor, pero tenga en cuenta que los archivos que contienen las ubicaciones de los lugares contienen una estructura de cuatro niveles.";
 
-// $pgv_lang["GM_NAME_PREFIX"]             = "Prefix for names used on this level";
+$pgv_lang["GM_NAME_PREFIX"]             = "Prefijo para los nombres utilizados en este nivel";
 $pgv_lang["GM_NAME_PREFIX_help"]        = "~#pgv_lang[GM_NAME_PREFIX]#~<br /><br />Este valor puede anteponerse a los nombres de este nivel. Pueden usarse varios valores, separados por punto y coma";
 
-$pgv_lang["GM_NAME_POSTFIX"]            = "~#pgv_lang[GM_NAME_POSTFIX]#~<br /><br />Este valor se añadirá detrás de los nombres de este nivel. Pueden usarse varios valores, separados por punto y coma";
-$pgv_lang["GM_NAME_POSTFIX_help"]       = "~#pgv_lang[GM_NAME_POSTFIX]#~<br /><br />Este valore se añadirá detrás de los nombres de este nivel. Pueden usarse varios valores, separados por punto y coma";
+$pgv_lang["GM_NAME_POSTFIX"]            = "Sufijo para los nombres utilizados en este nivel";
+$pgv_lang["GM_NAME_POSTFIX_help"]       = "~#pgv_lang[GM_NAME_POSTFIX]#~<br /><br />Este valor se añadirá detrás de los nombres de este nivel. Pueden usarse varios valores, separados por punto y coma";
 
-// $pgv_lang["GM_NAME_PRE_POST"]           = "Order of the pre/postfix to use.";
+$pgv_lang["GM_NAME_PRE_POST"]           = "Orden de prefijo y sufijo a utilizar.";
 $pgv_lang["GM_NAME_PRE_POST_help"]      = "~#pgv_lang[GM_NAME_PRE_POST]#~<br /><br />Este campo indica el orden en que se prueban los nombres usando el prefijo y el sufijo. Los valores posibles son:<br/><ul><li>Ni prefijo ni sufijo</li><li>Nombre normal, Prefijo, Sufijo, ambos</li><li>Nombre normal, Sufijo, Prefijo, ambos</li><li>Prefijo, Sufijo, ambos, Nombre normal</li><li>Sufijo, Prefijo, ambos, Nombre normal</li><li>Prefijo, Sufijo, Nombre normal, ambos</li><li>Sufijo, Prefijo, Nombre normal, ambos</li></ul>";
 
 $pgv_lang["PL_EDIT_LOCATION"]           = "Modificar o borrar posición";
