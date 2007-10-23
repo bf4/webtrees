@@ -258,7 +258,7 @@ if ($action=="ImportGedcom") {
 			if ($escparent == "") {
 				$escparent = "Unknown";
 			}
-			$psql = "SELECT pl_id,pl_long,pl_lati,pl_zoom FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$parent_id AND pl_place LIKE '".$escparent."'";
+			$psql = "SELECT pl_id,pl_long,pl_lati,pl_zoom FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$parent_id AND pl_place LIKE '".$DBCONN->escapeSimple($escparent)."'";
 			$res = dbquery($psql);
 			$row =& $res->fetchRow();
 			$res->free();
@@ -267,7 +267,7 @@ if ($action=="ImportGedcom") {
 				// Create higher-level places, if necessary
 				if (empty($row[0])) {
 					$highestIndex++;
-					$sql="INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', NULL, NULL, ".$default_zoom_level[$i].", NULL);";
+					$sql="INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$DBCONN->escapeSimple($escparent)."', NULL, NULL, ".$default_zoom_level[$i].", NULL);";
 					$parent_id=$highestIndex;
 				} else {
 					$parent_id=$row[0];
@@ -276,7 +276,7 @@ if ($action=="ImportGedcom") {
 				// Create lowest-level place, if necessary
 				if (empty($row[0])) {
 					$highestIndex++;
-					$sql="INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', '".$place["long"]."', '".$place["lati"]."', ".$default_zoom_level[$i].", NULL);";
+					$sql="INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$DBCONN->escapeSimple($escparent)."', '".$place["long"]."', '".$place["lati"]."', ".$default_zoom_level[$i].", NULL);";
 				} else {
 					if (empty($row[1]) && empty($row[2]) && $place['lati']!="0" && $place['long']!="0") {
 						$sql="UPDATE ".$TBLPREFIX."placelocation SET pl_lati='".$place["lati"]."',pl_long='".$place["long"]."' where pl_id=".$row[0];
@@ -398,7 +398,7 @@ if ($action=="ImportFile2") {
 			if ($escparent == "") {
 				$escparent = "Unknown";
 			}
-			$psql = "SELECT pl_id,pl_long,pl_lati,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$parent_id AND pl_place LIKE '".$escparent."' ORDER BY pl_place";
+			$psql = "SELECT pl_id,pl_long,pl_lati,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$parent_id AND pl_place LIKE '".$DBCONN->escapeSimple($escparent)."' ORDER BY pl_place";
 			$res = dbquery($psql);
 			$row =& $res->fetchRow();
 			$res->free();
@@ -412,10 +412,10 @@ if ($action=="ImportFile2") {
 						$zoomlevel = $default_zoom_level[$i];
 					}
 					if (($place["lati"] == "0") || ($place["long"] == "0") || (($i+1) < count($parent))) {
-						$sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', NULL, NULL, ".$default_zoom_level[$i].",'".$place["icon"]."');";
+						$sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$DBCONN->escapeSimple($escparent)."', NULL, NULL, ".$default_zoom_level[$i].",'".$place["icon"]."');";
 					}
 					else {
-						$sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', '".$place["long"]."' , '".$place["lati"]."', ".$zoomlevel.",'".$place["icon"]."');";
+						$sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$DBCONN->escapeSimple($escparent)."', '".$place["long"]."' , '".$place["lati"]."', ".$zoomlevel.",'".$place["icon"]."');";
 					}
 					$parent_id = $highestIndex;
 					if (userIsAdmin(getUserName())) {

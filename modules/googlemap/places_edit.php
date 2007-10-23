@@ -80,7 +80,7 @@ function place_id_to_hierarchy($id) {
 function getHighestIndex() {
 	global $TBLPREFIX;
 	$sql="SELECT MAX(pl_id) FROM {$TBLPREFIX}placelocation WHERE 1";
-	$res=dbquery($sql);
+	$res=dbquery($sql, true, 1);
 	$row=&$res->fetchRow();
 	$res->free();
 	if (empty($row[0]))
