@@ -68,7 +68,7 @@ echo "Click on the Start icon at bottom left. If there is a sound track file, th
 echo "<br /><br /></li>";
 
 echo "<li>";
-echo "<b><font color=\"blue\">Navigation ...</b></font><br />";
+echo "<b><font color=\"blue\">Navigation ...</font></b><br />";
 echo "Use the View Album table at the right of the image icon table to directly choose another person's Album view.";
 echo "<br /><br /></li>";
 
