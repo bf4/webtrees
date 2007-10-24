@@ -1547,9 +1547,10 @@ function print_simple_fact($indirec, $fact, $pid) {
  * @param string $text
  * @param int $nlevel	the level of the note record
  * @param string $nrec	the note record to print
+ * @param bool $textOnly	Don't print the "Note: " introduction
  * @return boolean
  */
-function print_note_record($text, $nlevel, $nrec) {
+function print_note_record($text, $nlevel, $nrec, $textOnly=false) {
 	global $pgv_lang;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $EXPAND_NOTES;
 	$elementID = "N-".floor(microtime()*1000000);
@@ -1559,6 +1560,10 @@ function print_note_record($text, $nlevel, $nrec) {
 	$text = trim(expand_urls(stripLRMRLM($text)));
 	if (!empty($text)) {
 		$text = PrintReady($text);
+		if ($textOnly) {
+			print $text;
+			return true;
+		}
 		$brpos = strpos($text, "<br />");
 		print "\n\t\t<br /><span class=\"label\">";
 		if ($brpos !== false) {
@@ -1585,49 +1590,52 @@ function print_note_record($text, $nlevel, $nrec) {
  * Print all of the notes in this fact record
  * @param string $factrec	the factrecord to print the notes from
  * @param int $level		The level of the factrecord
+ * @param bool $textOnly	Don't print the "Note: " introduction
  */
-function print_fact_notes($factrec, $level) {
-	 global $pgv_lang;
-	 global $factarray;
-	 global $WORD_WRAPPED_NOTES;
-	 $printDone = false;
-	 $nlevel = $level+1;
-	 $ct = preg_match_all("/$level NOTE(.*)/", $factrec, $match, PREG_SET_ORDER);
-	 for($j=0; $j<$ct; $j++) {
-		  $spos1 = strpos($factrec, $match[$j][0]);
-		  $spos2 = strpos($factrec."\n$level", "\n$level", $spos1+1);
-		  if (!$spos2) $spos2 = strlen($factrec);
-		  $nrec = substr($factrec, $spos1, $spos2-$spos1);
-		  if (!isset($match[$j][1])) $match[$j][1]="";
-		  $nt = preg_match("/@(.*)@/", $match[$j][1], $nmatch);
-		  $closeSpan = false;
-		  if ($nt==0) {
-			   //-- print embedded note records
-				$closeSpan = print_note_record($match[$j][1], $nlevel, $nrec);
-		  }
-		  else {
-		  	if (displayDetailsByID($nmatch[1], "NOTE")) {
-			   //-- print linked note records
-			   $noterec = find_gedcom_record($nmatch[1]);
-			   $nt = preg_match("/0 @$nmatch[1]@ NOTE (.*)/", $noterec, $n1match);
-			   $closeSpan = print_note_record(($nt>0)?$n1match[1]:"", 1, $noterec);
-		   		if (preg_match("/1 SOUR/", $noterec)>0) {
-			   		print "<br />\n";
-					print_fact_sources($noterec, 1);
+function print_fact_notes($factrec, $level, $textOnly=false) {
+	global $pgv_lang;
+	global $factarray;
+	$printDone = false;
+	$nlevel = $level+1;
+	$ct = preg_match_all("/$level NOTE(.*)/", $factrec, $match, PREG_SET_ORDER);
+	for($j=0; $j<$ct; $j++) {
+		$spos1 = strpos($factrec, $match[$j][0]);
+		$spos2 = strpos($factrec."\n$level", "\n$level", $spos1+1);
+		if (!$spos2) $spos2 = strlen($factrec);
+		$nrec = substr($factrec, $spos1, $spos2-$spos1);
+		if (!isset($match[$j][1])) $match[$j][1]="";
+		$nt = preg_match("/@(.*)@/", $match[$j][1], $nmatch);
+		$closeSpan = false;
+		if ($nt==0) {
+			//-- print embedded note records
+			$closeSpan = print_note_record($match[$j][1], $nlevel, $nrec, $textOnly);
+		} else {
+			if (displayDetailsByID($nmatch[1], "NOTE")) {
+				//-- print linked note records
+				$noterec = find_gedcom_record($nmatch[1]);
+				$nt = preg_match("/0 @$nmatch[1]@ NOTE (.*)/", $noterec, $n1match);
+				$closeSpan = print_note_record(($nt>0)?$n1match[1]:"", 1, $noterec, $textOnly);
+				if (!$textOnly) {
+					if (preg_match("/1 SOUR/", $noterec)>0) {
+						print "<br />\n";
+						print_fact_sources($noterec, 1);
+					}
 				}
 		  	}
-		  }
-		  if (preg_match("/$nlevel SOUR/", $factrec)>0) {
-		  	print "<div class=\"indent\">";
-		  	print_fact_sources($nrec, $nlevel);
-		  	print "</div>";
-	  	  }
-	  	  if($closeSpan){
-	  		print "</span>";
-	  	  }
-	  	  $printDone = true;
-	 }
-	 if ($printDone) print "<br />"; 
+		}
+		if (!$textOnly) {
+			if (preg_match("/$nlevel SOUR/", $factrec)>0) {
+				print "<div class=\"indent\">";
+				print_fact_sources($nrec, $nlevel);
+				print "</div>";
+			}
+		}
+		if($closeSpan){
+			print "</span>";
+		}
+		$printDone = true;
+	}
+	if ($printDone) print "<br />"; 
 }
 /**
  * print a gedcom title linked to the gedcom portal
