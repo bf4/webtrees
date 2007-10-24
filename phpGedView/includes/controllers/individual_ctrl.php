@@ -1238,6 +1238,7 @@ class IndividualControllerRoot extends BaseController {
 
 	function print_relatives_tab() {
 		global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_AGE_DIFF;
+		global $pgv_changes, $GEDCOM;
 		if (!$this->isPrintPreview()) {
 		?>
 		<script type="text/javascript">
@@ -1289,7 +1290,6 @@ class IndividualControllerRoot extends BaseController {
 				<?php }?>
 				<?php if ($family->getMarriageDate()) {
 					$date=new GedcomDate($family->getMarriageDate());
-					//echo "- <span class=\"details_label\">".$pgv_lang["marriage"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($family->getMarriagePlace());
 				}?>
 					</td>
 				</tr>
@@ -1361,20 +1361,37 @@ class IndividualControllerRoot extends BaseController {
 						<?php
 					}
 				}
+				if ($family->getMarriageRecord()!="" || userCanEdit(getUserName())) {
+					$styleadd = "";
+					$date = $family->getMarriageDate();
+					$place = $family->getMarriagePlace();
+					if (!$date && $this->show_changes=="yes" && isset($pgv_changes[$family->getXref()."_".$GEDCOM])) {
+						$famrec = find_updated_record($family->getXref());
+						$marrrec = get_sub_record(1, "1 MARR", $famrec);
+						if ($marrrec!=$family->getMarriageRecord()) {
+							$date = get_gedcom_value("MARR:DATE", 1, $marrrec, '', false);
+							$place = get_gedcom_value("MARR:PLAC", 1, $marrrec, '', false); 
+							$styleadd = "blue";
+						}
+					}
 				?>
 				<tr>
-					<td class="facts_label">
-					<br />
+					<td class="facts_label"><br />
 					</td>
-					<td class="facts_value">
+					<td class="facts_value<?php print $styleadd ?>">
 					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
-					<?php if ($family->getMarriageDate()) {
-						$date=new GedcomDate($family->getMarriageDate());
-						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($family->getMarriagePlace());
-					} ?>
+					<?php if ($date) {
+						$date=new GedcomDate($date);
+						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($place);
+					}
+					else if ($family->getMarriageRecord()=="" && userCanEdit(getUserName())) {
+						print "<a href=\"#\" onclick=\"return add_new_record('".$family->getXref()."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
+					}
+					 ?>
 					</td>
 				</tr>
 				<?php
+				}
 				$styleadd = "blue";
 				if (isset($people["newchildren"])) {
 					foreach($people["newchildren"] as $key=>$child) {
@@ -1504,19 +1521,37 @@ class IndividualControllerRoot extends BaseController {
 					</tr>
 					<?php
 				}
+				if ($family->getMarriageRecord()!="" || userCanEdit(getUserName())) {
+					$styleadd = "";
+					$date = $family->getMarriageDate();
+					$place = $family->getMarriagePlace();
+					if (!$date && $this->show_changes=="yes" && isset($pgv_changes[$family->getXref()."_".$GEDCOM])) {
+						$famrec = find_updated_record($family->getXref());
+						$marrrec = get_sub_record(1, "1 MARR", $famrec);
+						if ($marrrec!=$family->getMarriageRecord()) {
+							$date = get_gedcom_value("MARR:DATE", 1, $marrrec, '', false);
+							$place = get_gedcom_value("MARR:PLAC", 1, $marrrec, '', false); 
+							$styleadd = "blue";
+						}
+					}
 				?>
 				<tr>
-					<td class="facts_label">
+					<td class="facts_label"><br />
 					</td>
-					<td class="facts_value">
+					<td class="facts_value<?php print $styleadd ?>">
 					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
-					<?php if ($family->getMarriageDate()) {
-						$date=new GedcomDate($family->getMarriageDate());
-						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($family->getMarriagePlace());
-					} ?>
+					<?php if ($date) {
+						$date=new GedcomDate($date);
+						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($place);
+					}
+					else if ($family->getMarriageRecord()=="" && userCanEdit(getUserName())) {
+						print "<a href=\"#\" onclick=\"return add_new_record('".$family->getXref()."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
+					}
+					 ?>
 					</td>
 				</tr>
 				<?php
+				}
 				$styleadd = "blue";
 				if (isset($people["newchildren"])) {
 					foreach($people["newchildren"] as $key=>$child) {
@@ -1663,19 +1698,37 @@ class IndividualControllerRoot extends BaseController {
 						<?php
 					}
 				}
+				if ($family->getMarriageRecord()!="" || userCanEdit(getUserName())) {
+					$styleadd = "";
+					$date = $family->getMarriageDate();
+					$place = $family->getMarriagePlace();
+					if (!$date && $this->show_changes=="yes" && isset($pgv_changes[$family->getXref()."_".$GEDCOM])) {
+						$famrec = find_updated_record($family->getXref());
+						$marrrec = get_sub_record(1, "1 MARR", $famrec);
+						if ($marrrec!=$family->getMarriageRecord()) {
+							$date = get_gedcom_value("MARR:DATE", 1, $marrrec, '', false);
+							$place = get_gedcom_value("MARR:PLAC", 1, $marrrec, '', false); 
+							$styleadd = "blue";
+						}
+					}
 				?>
 				<tr>
 					<td class="facts_label"><br />
 					</td>
-					<td class="facts_value">
+					<td class="facts_value<?php print $styleadd ?>">
 					<?php //echo "<span class=\"details_label\">".$factarray["NCHI"].": </span>".$family->getNumberOfChildren()."<br />";?>
-					<?php if ($family->getMarriageDate()) {
-						$date=new GedcomDate($family->getMarriageDate());
-						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($family->getMarriagePlace());
-					} ?>
+					<?php if ($date) {
+						$date=new GedcomDate($date);
+						echo "<span class=\"details_label\">".$factarray["MARR"].": </span>".$date->Display(false)." -- ".$family->getPlaceShort($place);
+					}
+					else if ($family->getMarriageRecord()=="" && userCanEdit(getUserName())) {
+						print "<a href=\"#\" onclick=\"return add_new_record('".$family->getXref()."', 'MARR');\">".$pgv_lang['add_marriage']."</a>";
+					}
+					 ?>
 					</td>
 				</tr>
 				<?php
+				}
 				$styleadd = "blue";
 				if (isset($people["newchildren"])) {
 					foreach($people["newchildren"] as $key=>$child) {
