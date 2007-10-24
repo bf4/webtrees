@@ -30,22 +30,14 @@
 <?php 
 	if ($MULTI_MEDIA){ 
 		if (!file_exists("modules/googlemap/defaultconfig.php")) {  ?>
-			<?php if (file_exists("modules/lightbox/album.php") && (!userCanEdit(getUserName())) ) {?>
-				<dd id="door4"><a href="javascript:;" onclick="tabswitch(7); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd>
-			<?php }else{ ?>
-				<dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["media"]?></a></dd>
-			<?php } ?>
-			<?php if (file_exists("modules/lightbox/album.php") && (userCanEdit(getUserName())) ) {?>
+			<?php if (file_exists("modules/lightbox/album.php") ) {?>
+				<dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["media"] ?></a></dd>
 				<dd id="door7"><a href="javascript:;" onclick="tabswitch(7); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd>
 			<?php } 
 		}elseif (file_exists("modules/googlemap/defaultconfig.php")) {  ?>
-			<?php if (file_exists("modules/lightbox/album.php") && (!userCanEdit(getUserName())) ) {?>
-				<dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd>
-			<?php }else{ ?>
-				<dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["media"]?></a></dd>  
-			<?php } ?>
-			<?php if (file_exists("modules/lightbox/album.php") && (userCanEdit(getUserName())) ) {?>
-				<dd id="door8"><a href="javascript:;" onclick="tabswitch(8); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd>
+			<?php if (file_exists("modules/lightbox/album.php") ) {?>
+				<dd id="door4"><a href="javascript:;" onclick="tabswitch(4); return false;" ><?php print $pgv_lang["media"] ?></a></dd>
+				<dd id="door8"><a href="javascript:;" onclick="tabswitch(8); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd> 
 			<?php } 
 		} 
 	}
@@ -60,6 +52,8 @@
 	<!--<dd id="door0" style={background-color:transparent;} style={border:0px;} ></dd> -->
  
 <?php
+	// If not $MULTI_MEDIA hide the media and album tabs
+//	if (!$MULTI_MEDIA){ 
 		if (!file_exists("modules/googlemap/defaultconfig.php") && (file_exists("modules/lightbox/album.php") ) ) {  ?>
 			<dd id="door4" style={background-color:transparent;} style={border:0px;} ></dd> 
 			<dd id="door7" style={background-color:transparent;} style={border:0px;} ></dd> 
@@ -69,5 +63,6 @@
 			<dd id="door8" style={background-color:transparent;} style={border:0px;} ></dd> 
 		<?php 
 		} 
+//	}
 ?>
 

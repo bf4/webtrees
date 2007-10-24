@@ -31,7 +31,7 @@
 // Function lightbox() for Lightbox Album - called by individual_ctrl.php
 // -----------------------------------------------------------------------------
 // function lightbox_relatives2() {
-global $edit, $tabno;
+global $edit, $tabno, $mediacnt;
 
 $edit=$edit;
 
@@ -42,7 +42,7 @@ $edit=$edit;
          }
 
 //     echo "Light Box Stuff";
-     echo "<table width='230'><tr><td>";
+     echo "<table width='230'>";
 
 
 
@@ -176,7 +176,7 @@ $edit=$edit;
                 <?php
                 }
 
-     echo "</td></tr></table>";
+     echo "</table>";
 
 // }
 // -----------------------------------------------------------------------------

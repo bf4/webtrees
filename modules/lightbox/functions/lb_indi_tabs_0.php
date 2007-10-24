@@ -27,6 +27,7 @@
  * @author Brian Holland
  */
 ?>
+
 <?php if (file_exists("modules/googlemap/defaultconfig.php") && file_exists("modules/lightbox/album.php")) { ?>
        var tabid = new Array('0', 'facts','notes','sources','lightbox2','relatives','researchlog','googlemap');
        var loadedTabs = new Array(false,false,false,false,false,false,false,false);
