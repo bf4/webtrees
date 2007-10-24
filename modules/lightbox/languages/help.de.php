@@ -68,7 +68,7 @@ echo "Der Diavortrag beginnt, wenn Sie das Start-Ikon unten links klicken.  Wenn
 echo "<br /><br /></li>";
 
 echo "<li>";
-echo "<b><font color=\"blue\">Navigation ...</b></font><br />";
+echo "<b><font color=\"blue\">Navigation ...</font></b><br />";
 echo "Rechts neben den Bildern finden Sie eine Tabelle wodurch Sie direkten Zugriff zu anderen Photoalben haben.";
 echo "<br /><br /></li>";
 
