@@ -1083,7 +1083,7 @@ class IndividualControllerRoot extends BaseController {
 	}
 
 	function print_notes_tab() {
-		global $pgv_lang, $CONTACT_EMAIL, $FACT_COUNT;
+		global $pgv_lang, $factarray, $CONTACT_EMAIL, $FACT_COUNT;
 		?>
 		<table class="facts_table">
 		<?php if (!$this->indi->canDisplayDetails()) {
@@ -1094,7 +1094,7 @@ class IndividualControllerRoot extends BaseController {
 		else {
 			$otherfacts = $this->getOtherFacts();
 			foreach ($otherfacts as $key => $factrec) {
-				$ft = preg_match("/\d\s(\w+)(.*)/", $factrec[1], $match);
+				$ft = preg_match("/\n\d (\w+)(.*)/", "\n".$factrec[1], $match);
 				if ($ft>0) $fact = $match[1];
 				else $fact="";
 				$fact = trim($fact);
@@ -1106,7 +1106,15 @@ class IndividualControllerRoot extends BaseController {
 			// 2nd level notes/sources [ 1712181 ]
 			$this->indi->add_family_facts(false);
 			foreach ($this->getIndiFacts() as $key => $factrec) {
-				print_main_notes($factrec[1], 2, $this->pid, $factrec[0], true);
+				$np = preg_match("/\n2 NOTE/", $factrec[1], $match);
+				if ($np!=0) {
+					$ft = preg_match("/^1 (\w+)/", $factrec[1], $match);
+					$fact = trim($match[1]);
+					print "<tr><td class=\"facts_label\">{$factarray[$fact]}</td>";
+					print "<td class=\"facts_value\">";
+					print_fact_notes($factrec[1], 2, true);
+					print "</td></tr>";
+				}
 			}
 			if ($this->get_note_count()==0) print "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab2"]."</td></tr>\n";
 			//-- New Note Link
@@ -1230,6 +1238,26 @@ class IndividualControllerRoot extends BaseController {
 
 	function print_relatives_tab() {
 		global $pgv_lang, $factarray, $SHOW_ID_NUMBERS, $PGV_IMAGE_DIR, $PGV_IMAGES, $SHOW_AGE_DIFF;
+		if (!$this->isPrintPreview()) {
+		?>
+		<script type="text/javascript">
+		<!--
+			function toggleElderdate() {
+				hiddenEls = document.getElementsByName('elderdate');
+				for(i=0; i<hiddenEls.length; i++) {
+					if (hiddenEls[i].style.display=='none') hiddenEls[i].style.display='block';
+					else hiddenEls[i].style.display='none';
+				}
+			}
+			<?php if (!$SHOW_AGE_DIFF) echo "toggleElderdate();";?>
+		//-->
+		</script>
+		<table class="facts_table"><tr><td style="width:20%; padding:4px"></td><td class="descriptionbox rela">
+		<input id="checkbox_elder" type="checkbox" onclick="toggleElderdate();" <?php if ($SHOW_AGE_DIFF) echo "checked=\"checked\"";?>/>
+		<label for="checkbox_elder"><?php print $pgv_lang['age_differences'] ?></label>
+		</td></tr></table>
+		<?php
+		}
 		$personcount=0;
 		$families = $this->indi->getChildFamilies();
 		if (count($families)==0) {
@@ -1715,26 +1743,6 @@ class IndividualControllerRoot extends BaseController {
 		?>
 		<br />
 		<?php
-	if (!$this->isPrintPreview()) {
-		?>
-		<table class="facts_table"><tr><td class="facts_value">
-	<script type="text/javascript">
-	<!--
-		function toggleElderdate() {
-			hiddenEls = document.getElementsByName('elderdate');
-			for(i=0; i<hiddenEls.length; i++) {
-				if (hiddenEls[i].style.display=='none') hiddenEls[i].style.display='block';
-				else hiddenEls[i].style.display='none';
-			}
-		}
-		<?php if (!$SHOW_AGE_DIFF) echo "toggleElderdate();";?>
-	//-->
-	</script>
-		<input id="checkbox_elder" type="checkbox" onclick="toggleElderdate();" <?php if ($SHOW_AGE_DIFF) echo "checked=\"checked\"";?>/>
-		<label for="checkbox_elder"><?php print $pgv_lang['age_differences'] ?></label>
-		</td></tr></table>
-		<?php
-		}
 		if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
 		?>
 		<table class="facts_table">
