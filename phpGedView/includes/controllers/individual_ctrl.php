@@ -920,6 +920,9 @@ class IndividualControllerRoot extends BaseController {
 					$label = $labels["brother"];
 				}
 				if ($children[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
+				$famcrec = get_sub_record(1, "1 FAMC @".$family->getXref()."@", $children[$i]->gedrec);
+				$pedi = get_gedcom_value("PEDI", 2, $famcrec, '', false);
+				if ($pedi && isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
 				$children[$i]->setLabel($label);
 			}
 		}
@@ -934,6 +937,9 @@ class IndividualControllerRoot extends BaseController {
 				$label = $labels["brother"];
 			}
 			if ($newchildren[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
+			$famcrec = get_sub_record(1, "1 FAMC @".$family->getXref()."@", $newchildren[$i]->gedrec);
+			$pedi = get_gedcom_value("PEDI", 2, $famcrec, '', false);
+			if ($pedi && isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
 			$newchildren[$i]->setLabel($label);
 		}
 		$num = count($delchildren);
@@ -947,6 +953,9 @@ class IndividualControllerRoot extends BaseController {
 				$label = $labels["brother"];
 			}
 			if ($delchildren[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
+			$famcrec = get_sub_record(1, "1 FAMC @".$family->getXref()."@", $delchildren[$i]->gedrec);
+			$pedi = get_gedcom_value("PEDI", 2, $famcrec, '', false);
+			if ($pedi && isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
 			$delchildren[$i]->setLabel($label);
 		}
 		if (!is_null($newhusb)) $people['newhusb'] = $newhusb;
