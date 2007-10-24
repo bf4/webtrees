@@ -111,7 +111,8 @@ $pgv_lang["PLE_FLAGS"]                  = "Select flag";
 $pgv_lang["PLE_FLAGS_help"]             = "Using the pull down menu it is possible to select a country, of which a flag can be selected. If no flags are shown, then there are no flags defined for this country.";
 
 $pgv_lang["PLIF_FILENAME"]              = "Enter filename";
-$pgv_lang["PLIF_FILENAME_help"]         = "Enter the name of the file containing the place locations in CSV format.";
+$pgv_lang["PLIF_FILENAME_help"]         = "Browse for the file on your computer which contains the place locations in CSV format.";
+$pgv_lang["PLIF_LOCALFILE_help"]        = "Select a file from the list of files already on the server which contains the place locations in CSV format.";
 
 $pgv_lang["PLIF_CLEAN"]                 = "Clean placelocation database";
 $pgv_lang["PLIF_CLEAN_help"]            = "When this option is selected the placelocation database will be cleared. This means that only the location stored in this table will be deleted. This will not change anything in the GEDCOM.";

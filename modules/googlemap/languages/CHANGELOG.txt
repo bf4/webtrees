@@ -26,6 +26,7 @@ Changes in lang.en.php:
 
 ?$pgv_lang["whatever"]                              dd Monthname, year      Change codes and comments
 ----------------------------------------------------------------------------------------
++$pgv_lang["pl_places_localfile"]					24 Oct 2006				A
 +$pgv_lang["gm_level"]                              26 July, 2006           A, new feature
 +$pgv_lang["gm_pp_none"]                            26 July, 2006           A, new feature
 +$pgv_lang["gm_pp_n_pr_po_b"]                       26 July, 2006           A, new feature
@@ -49,6 +50,8 @@ Changes in help_text.en.php:
 
 ?$pgv_lang["whatever"]                              dd Monthname, year      Change codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["PLIF_FILENAME_help"]					24 Oct 2007				W
++$pgv_lang["PLIF_LOCALFILE_help"]					24 Oct 2007				A
 *$pgv_lang["GOOGLEMAP_MAP_TYPE_help"]				27 September, 2007		w
 $pgv_lang["GM_NAME_PREFIX"]                         26 July, 2006           A, new feature
 $pgv_lang["GM_NAME_POSTFIX"]                        26 July, 2006           A, new feature

@@ -267,7 +267,7 @@ if ($action=="ImportGedcom") {
 				// Create higher-level places, if necessary
 				if (empty($row[0])) {
 					$highestIndex++;
-					$sql="INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$DBCONN->escapeSimple($escparent)."', NULL, NULL, ".$default_zoom_level[$i].", NULL);";
+					$sql="INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', NULL, NULL, ".$default_zoom_level[$i].", NULL);";
 					$parent_id=$highestIndex;
 				} else {
 					$parent_id=$row[0];
@@ -276,7 +276,7 @@ if ($action=="ImportGedcom") {
 				// Create lowest-level place, if necessary
 				if (empty($row[0])) {
 					$highestIndex++;
-					$sql="INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$DBCONN->escapeSimple($escparent)."', '".$place["long"]."', '".$place["lati"]."', ".$default_zoom_level[$i].", NULL);";
+					$sql="INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', '".$place["long"]."', '".$place["lati"]."', ".$default_zoom_level[$i].", NULL);";
 				} else {
 					if (empty($row[1]) && empty($row[2]) && $place['lati']!="0" && $place['long']!="0") {
 						$sql="UPDATE ".$TBLPREFIX."placelocation SET pl_lati='".$place["lati"]."',pl_long='".$place["long"]."' where pl_id=".$row[0];
@@ -293,6 +293,27 @@ if ($action=="ImportGedcom") {
 }
 
 if ($action=="ImportFile") {
+	/**
+	 * recursively find all of the csv files on the server
+	 *
+	 * @param string $path
+	 */
+	function findFiles($path) {
+		global $placefiles;
+		if (file_exists($path)) {
+			$dir = dir($path);
+			while (false !== ($entry = $dir->read())) {
+		   		if ($entry!="." && $entry!=".." && $entry!=".svn") {
+		   			if (is_dir($path."/".$entry)) findFiles($path."/".$entry); 
+		   			else if (strstr($entry, ".csv")!==false) $placefiles[] = preg_replace("~modules/googlemap/extra~", "", $path)."/".$entry;
+		   		}
+			}
+			$dir->close();
+		}
+	}
+	
+	$placefiles = array();
+	findFiles("modules/googlemap/extra");
 ?>
 <form method="post" enctype="multipart/form-data" id="importfile" name="importfile" action="module.php?mod=googlemap&pgvaction=places">
 	<input type="hidden" name="action" value="ImportFile2" />
@@ -301,6 +322,19 @@ if ($action=="ImportFile") {
 			<td class="descriptionbox"><?php print_help_link("PLIF_FILENAME_help", "qm", "PLIF_FILENAME");?><?php print $pgv_lang["pl_places_filename"];?></td>
 			<td class="optionbox"><input type="file" name="placesfile" size="50"></td>
 		</tr>
+		<?php if (count($placefiles)>0) { ?>
+		<tr>
+			<td class="descriptionbox"><?php print_help_link("PLIF_LOCALFILE_help", "qm", "pl_places_localfile");?><?php print $pgv_lang["pl_places_localfile"];?></td>
+			<td class="optionbox">
+				<select name="localfile">
+					<option></option>
+					<?php foreach($placefiles as $p=>$placefile) { ?>
+					<option value="<?php print htmlspecialchars($placefile); ?>"><?php print $placefile; ?></option>
+					<?php } ?>
+				</select>
+			</td>
+		</tr>
+		<?php } ?>
 		<tr>
 			<td class="descriptionbox"><?php print_help_link("PLIF_CLEAN_help", "qm", "PLIF_CLEAN");?><?php print $pgv_lang["pl_clean_db"];?></td>
 			<td class="optionbox"><input type="checkbox" name="cleardatabase"></td>
@@ -314,7 +348,7 @@ if ($action=="ImportFile") {
 			<td class="optionbox"><input type="checkbox" name="overwritedata"></td>
 		</tr>
 	</table>
-	<input id="savebutton" type="submit" value="<?php print $pgv_lang["save"];?>" /><br />
+	<input id="savebutton" type="submit" value="<?php print $pgv_lang["continue"];?>" /><br />
 </form>
 <?php
 	print_footer();
@@ -326,7 +360,8 @@ if ($action=="ImportFile2") {
 		$sql = "DELETE FROM ".$TBLPREFIX."placelocation WHERE 1";
 		$res = dbquery($sql);
 	}
-	$lines = file($_FILES["placesfile"]["tmp_name"]);
+	if (!empty($_FILES["placesfile"]["tmp_name"])) $lines = file($_FILES["placesfile"]["tmp_name"]);
+	else if (!empty($_REQUEST['localfile'])) $lines = file("modules/googlemap/extra".$_REQUEST['localfile']);
 	// Strip BYTE-ORDER-MARK, if present
 	if (!empty($lines[0]) && substr($lines[0],0,3)==chr(239).chr(187).chr(191)) $lines[0]=substr($lines[0],3);
 	asort($lines);
@@ -340,7 +375,7 @@ if ($action=="ImportFile2") {
 	}
 	foreach ($lines as $p => $placerec){
 		$fieldrec = preg_split ("/;/", $placerec);
-		if (($fieldrec[0] == "0") || ($fieldrec[0] == "1") || ($fieldrec[0] == "2") || ($fieldrec[0] == "3")) {
+		if (is_numeric($fieldrec[0]) && $fieldrec[0]<=3) {
 			$placelist[$j] = array();
 			$placelist[$j]["place"] = "";
 			if ($fieldrec[0] > 2) $placelist[$j]["place"]  = $fieldrec[4].", ";
@@ -398,7 +433,7 @@ if ($action=="ImportFile2") {
 			if ($escparent == "") {
 				$escparent = "Unknown";
 			}
-			$psql = "SELECT pl_id,pl_long,pl_lati,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$parent_id AND pl_place LIKE '".$DBCONN->escapeSimple($escparent)."' ORDER BY pl_place";
+			$psql = "SELECT pl_id,pl_long,pl_lati,pl_zoom,pl_icon FROM ".$TBLPREFIX."placelocation WHERE pl_level=".$i." AND pl_parent_id=$parent_id AND pl_place LIKE '".$escparent."' ORDER BY pl_place";
 			$res = dbquery($psql);
 			$row =& $res->fetchRow();
 			$res->free();
@@ -412,37 +447,30 @@ if ($action=="ImportFile2") {
 						$zoomlevel = $default_zoom_level[$i];
 					}
 					if (($place["lati"] == "0") || ($place["long"] == "0") || (($i+1) < count($parent))) {
-						$sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$DBCONN->escapeSimple($escparent)."', NULL, NULL, ".$default_zoom_level[$i].",'".$place["icon"]."');";
+						$sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', NULL, NULL, ".$default_zoom_level[$i].",'".$place["icon"]."');";
 					}
 					else {
-						$sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$DBCONN->escapeSimple($escparent)."', '".$place["long"]."' , '".$place["lati"]."', ".$zoomlevel.",'".$place["icon"]."');";
+						$sql = "INSERT INTO ".$TBLPREFIX."placelocation (pl_id, pl_parent_id, pl_level, pl_place, pl_long, pl_lati, pl_zoom, pl_icon) VALUES (".$highestIndex.", $parent_id, ".$i.", '".$escparent."', '".$place["long"]."' , '".$place["lati"]."', ".$zoomlevel.",'".$place["icon"]."');";
 					}
 					$parent_id = $highestIndex;
-					if (userIsAdmin(getUserName())) {
-						$res = dbquery($sql);
-					}
+					$res = dbquery($sql);
+					if (DB::isError($res)) print __FILE__." ".__LINE__;
 				}
 			}
 			else {
 				$parent_id = $row[0];
 				if ((isset($_POST["overwritedata"])) && ($i+1 == count($parent))) {
 					$sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati='".$place["lati"]."',pl_long='".$place["long"]."',pl_zoom='".$place["zoom"]."',pl_icon='".$place["icon"]."' where pl_id=$parent_id";
-					if (userIsAdmin(getUserName())) {
-						$res = dbquery($sql, true, 1);
-					}
+					$res = dbquery($sql, true, 1);
 				}
 				else {
 					if ((($row[1] == "0") || ($row[1] == null)) && (($row[2] == "0") || ($row[2] == null))) {
 						$sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_lati='".$place["lati"]."',pl_long='".$place["long"]."' where pl_id=$parent_id";
-						if (userIsAdmin(getUserName())) {
-							$res = dbquery($sql, true, 1);
-						}
+						$res = dbquery($sql, true, 1);
 					}
 					if (empty($row[4]) && !empty($place['icon'])) {
 						$sql = "UPDATE ".$TBLPREFIX."placelocation SET pl_icon='".$place["icon"]."' where pl_id=$parent_id";
-						if (userIsAdmin(getUserName())) {
-							$res = dbquery($sql, true, 1);
-						}
+						$res = dbquery($sql, true, 1);
 					}
 				}
 			}
