@@ -19,5 +19,6 @@ $inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:HUSB', 'comp'=>'GIVN', 'v
 $inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:WIFE', 'comp'=>'GIVN', 'value'=>0, 'count'=>0);
 $inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:HUSB:FAMC:HUSB', 'comp'=>'GIVN', 'value'=>0, 'count'=>0);
 $inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:WIFE:FAMC:WIFE', 'comp'=>'GIVN', 'value'=>0, 'count'=>0);
-
+$inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:WIFE:FAMC:HUSB', 'comp'=>'GIVN', 'value'=>0, 'count'=>0);  
+$inferences[] = array('local'=>'GIVN', 'record'=>'FAMC:HUSB:FAMC:WIFE', 'comp'=>'GIVN', 'value'=>0, 'count'=>0); 
 ?>	
