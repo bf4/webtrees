@@ -31,6 +31,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["age_differences"]		= "הראה הפרשי גילים";
 $pgv_lang["date_of_entry"]		= "תאריך רישום במקור האוריגינלי";
 $pgv_lang["multi_site_search"] 		= "חיפוש רב אתרים";
 $pgv_lang["switch_lifespan"]		= "הראה תרשים תוחלת חיים"; 
@@ -59,6 +60,7 @@ $pgv_lang["SHOW_ID_NUMBERS"]		= "הראה קודי זיהוי ליד שמות";
 $pgv_lang["SHOW_HIGHLIGHT_IMAGES"]	= "הראת תמונות מודגשות בתיבות של אנשים"; 
 $pgv_lang["view_img_details"]			= "הצג פירטי האימג'";
 $pgv_lang["server_folder"]			= "שם התיקייה על השרת"; 
+$pgv_lang["medialist_recursive"]	= "הצג קבצים בתיקייות משנה"; //
 $pgv_lang["media_options"]			= "אופציות מדיה"; 
 $pgv_lang["confirm_password"]		= "עליך לאשר את הסיסמא."; 
 $pgv_lang["enter_email"]			= "עליך להכניס כתובת דואר אלקטרוני."; 
@@ -409,6 +411,8 @@ $pgv_lang["mother"] 		= "אם";
 $pgv_lang["parent"] 			= "הורה";
 $pgv_lang["relatives"]		= "קרובי משפחה";
 $pgv_lang["relatives_events"]		= "אירועים של קרובי משפחה";
+$pgv_lang["historical_facts"]		= "עובדות היסטוריות";
+$pgv_lang["partner"] 				= "שותף"; //
 $pgv_lang["spouse"]			= "בן/בת זוג";
 $pgv_lang["spouses"] 		= "בני זוג";
 $pgv_lang["surnames"]		= "שמות משפחה";
@@ -758,6 +762,8 @@ $pgv_lang["brother-in-law"]		= "גיס";
 $pgv_lang["sister-in-law"]		= "גיסה";
 $pgv_lang["aunt"]			= "דודה";
 $pgv_lang["uncle"]		= "דוד";
+$pgv_lang["nephew"]		= "אחיינית";
+$pgv_lang["niece"]		= "אחיין"; 
 $pgv_lang["firstcousin"]		= "בן דוד מדרגה ראשונה";
 $pgv_lang["femalecousin"]		= "בת דודה";
 $pgv_lang["malecousin"]		= "בן דוד";
