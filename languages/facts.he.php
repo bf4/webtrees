@@ -303,6 +303,9 @@ $factarray["_BIRT_HSIB"] = "לידת אח/ות למחצה";
 $factarray["_MARR_HSIB"] = "נישואי אח/ות למחצה";
 $factarray["_DEAT_HSIB"] = "פטירת אח/ות למחצה";
 
+$factarray["_BIRT_NEPH"] = "לידת אחיין או אחיינית"; 
+$factarray["_MARR_NEPH"] = "נישואי אחיין או אחיינית"; 
+$factarray["_DEAT_NEPH"] = "פטירת אחיין או אחיינית";
 $factarray["_DEAT_GPAR"] = "פטירת סבא או סבתא";
 
 $factarray["_BIRT_FSIB"] = "לידת אח או אחות האב";
@@ -316,6 +319,9 @@ $factarray["_DEAT_MSIB"] = "פטירת אח או אחות האם";
 $factarray["_BIRT_COUS"] = "לידת בן דוד מדרגה ראשונה";
 $factarray["_MARR_COUS"] = "נישואי בן דוד מדרגה ראשונה";
 $factarray["_DEAT_COUS"] = "פטירת בן דוד מדרגה ראשונה";
+
+$factarray["_FAMC_EMIG"] = "הגירת הורים";
+$factarray["_FAMC_RESI"] = "מגורי הורים";
 
 //-- PGV Only facts
 $factarray["_THUM"] = "השתמש בתמונה זו כתמונה ממוזערת?";
