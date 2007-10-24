@@ -180,6 +180,9 @@ $factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Geburtsort des Ehepartners";
 $factarray["FAMC:WIFE:GIVN"] = "Vornamen der Mutter";
 $factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Vornamen des väterlichen Großvaters";
 $factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Vornamen der mütterlichen Großmutter";
+$factarray["FAMC:WIFE:FAMC:HUSB:GIVN"] = "Vornamen des mütterlichen Großvaters"; 
+$factarray["FAMC:HUSB:FAMC:WIFE:GIVN"] = "Vornamen der väterlichen Großmutter";
+$factarray["FAMS:CHIL:BIRT:PLAC"] = "Geburtsort des Kindes";
 
 
 // These facts are all colon delimited
