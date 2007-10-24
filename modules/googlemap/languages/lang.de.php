@@ -1,12 +1,34 @@
 <?php
-/*=================================================
-   charset=utf-8
-   Project:         phpGedView
-   File:            lang.de.php
-   Author:	    Christian Helms
-   Comments:        German Language file for Google map module / 2006-08-02 10:30
-===================================================*/
-
+/**
+ * German Language file for PhpGedView.
+ *
+ * PhpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2007  PGV Development Team
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * @package PhpGedView
+ * @subpackage GoogleMap
+ * @translator Christian Helms
+ * @translator Gerd Kroll
+ * @version $Id$
+ */
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
+	exit;
+}
 
 $pgv_lang["googlemap"]              = "Karte";
 $pgv_lang["no_gmtab"]               = "Keine Karteninformation für diese Person";
@@ -64,6 +86,7 @@ $pgv_lang["pl_north_short"]         = "N";
 $pgv_lang["pl_south_short"]         = "S";
 $pgv_lang["pl_east_short"]          = "O";
 $pgv_lang["pl_west_short"]          = "W";
+$pgv_lang["pl_places_localfile"]	= "Server-Datei mit Ortsdaten (CSV)";
 $pgv_lang["pl_places_filename"]     = "Datei mit Ortsdaten (CSV)";
 $pgv_lang["pl_clean_db"]            = "Alle Ortsdaten vor dem Import löschen?";
 $pgv_lang["pl_update_only"]         = "Nur die vorhandenen Orte aktualisieren?";

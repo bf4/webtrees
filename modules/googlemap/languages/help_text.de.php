@@ -2,8 +2,8 @@
 /**
  * German Language file for PhpGedView.
  *
- * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * PhpGedView: Genealogy Viewer
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,13 +21,15 @@
  *
  * @package PhpGedView
  * @subpackage GoogleMap
+ * @translator Christian Helms
+ * @translator Gerd Kroll
  * @version $Id$
- * 2006-08-02 10:30 /chw
  */
-if (preg_match("/help_text\...\.php$/", $_SERVER["SCRIPT_NAME"])>0) {
-  print "You cannot access a language file directly.";
-  exit;
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "Direkter Sprach-Dateien Zugriff ist nicht erlaubt.";
+	exit;
 }
+
 $pgv_lang["GOOGLEMAP_ENABLE"]           = "Kartendarstellung aktivieren";
 $pgv_lang["GOOGLEMAP_ENABLE_help"]      = "Kartendarstellung aktivieren<br /><br />Diese Option aktiviert oder deaktiviert die Kartendarstellung mit Google-Map.<br>Bei deaktivierter Kartendarstellung bleibt der Karteireiter für die Kartendarstellung zwar leer, der Link um die Darstellung zu verwalten ist aber weiterhin aktiv.";
 
@@ -103,7 +105,8 @@ $pgv_lang["PLE_FLAGS"]                  = "Flaggen";
 $pgv_lang["PLE_FLAGS_help"]             = "Flaggen<br /><br />Aus dieser Liste wählen Sie das Land aus, aus dessen Flaggen Sie eine auswählen wollen. Wenn keine Flaggen angezeigt werden, sind auch noch keine Flaggen für dieses Land hinterlegt.";
 
 $pgv_lang["PLIF_FILENAME"]              = "Dateiname";
-$pgv_lang["PLIF_FILENAME_help"]         = "Dateiname<br /><br />Hier tragen Sie den Name der Datei hinein, welche die Ortsdaten im CSV-Format enthält.";
+$pgv_lang["PLIF_FILENAME_help"]         = "Dateiname<br /><br />Durchsuchen Sie Ihren lokalen Computer nach der Datei die Ortsdaten im CSV-Format enthält.";
+$pgv_lang["PLIF_LOCALFILE_help"]        = "Dateiname<br /><br />Wählen Sie aus der Liste der bereits auf dem Server bestehenden Dateien die Datei die Ortsdaten im CSV-Format enthält.";
 
 $pgv_lang["PLIF_CLEAN"]                 = "Bereinigen der Ortsdaten DB";
 $pgv_lang["PLIF_CLEAN_help"]            = "Bereinigen der Ortsdaten DB<br /><br />Mit dieser Option kann die Ortsdatenbank gelöscht werden. Nur die (zusätzliche) Tabelle mit den Ortsdateninformationen für die Kartendarstellung wird in der Datenbank gelöscht, Die GEDCOM Datei mit ihren Ortsdaten ist davon niocht berührt!";
