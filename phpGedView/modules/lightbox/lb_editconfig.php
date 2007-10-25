@@ -33,7 +33,7 @@ if (strstr($_SERVER["SCRIPT_NAME"],"menu.php")) {
     print "Now, why would you want to do that.  You're not hacking are you?";
     exit;
 }
-global $pgv_lang;
+global $pgv_lang, $pid;
 loadLangFile("pgv_lang, pgv_confighelp, pgv_help, lb_lang, lb_help");
 print_header($pgv_lang["configure_lightbox"]);
 
@@ -63,6 +63,9 @@ if ($action=="update" && !isset($security_user)) {
     $configtext = preg_replace('/\$LB_ML_THUMB_LINKS\s*=\s*".*";/', "\$LB_ML_THUMB_LINKS = \"".$_POST["NEW_LB_ML_THUMB_LINKS"]."\";", $configtext);
     $configtext = preg_replace('/\$LB_MUSIC_FILE\s*=\s*".*";/', "\$LB_MUSIC_FILE = \"".$_POST["NEW_LB_MUSIC_FILE"]."\";", $configtext);
     $configtext = preg_replace('/\$LB_SS_SPEED\s*=\s*".*";/', "\$LB_SS_SPEED = \"".$_POST["NEW_LB_SS_SPEED"]."\";", $configtext);
+    $configtext = preg_replace('/\$LB_TRANSITION\s*=\s*".*";/', "\$LB_TRANSITION = \"".$_POST["NEW_LB_TRANSITION"]."\";", $configtext);
+	$configtext = preg_replace('/\$LB_URL_WIDTH\s*=\s*".*";/', "\$LB_URL_WIDTH = \"".$_POST["NEW_LB_URL_WIDTH"]."\";", $configtext);
+	$configtext = preg_replace('/\$LB_URL_HEIGHT\s*=\s*".*";/', "\$LB_URL_HEIGHT = \"".$_POST["NEW_LB_URL_HEIGHT"]."\";", $configtext);
 
 	
     $res = @eval($configtext);
@@ -89,6 +92,7 @@ $i = 0;
 <script language="JavaScript" type="text/javascript">
 	<!--
 	var helpWin;
+	
 	function helpPopup(which) {
 		if ((!helpWin)||(helpWin.closed)) helpWin = window.open('module.php?mod=lightbox&pgvaction=lb_editconfig_help&help='+which,'_blank','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
 		else helpWin.location = 'modules/lightbox/lb_editconfig_help.php?help='+which;
@@ -101,11 +105,10 @@ $i = 0;
 	function closeHelp() {
 		if (helpWin) helpWin.close();
 	}
-	
 	//-->
 </script>
 
-<form method="post" name="configform" action="module.php?mod=lightbox&pgvaction=lb_editconfig">
+<form method="post" name="configform" action="module.php?mod=lightbox&pgvaction=lb_editconfig&pid=<?php echo $pid ?>">
 <input type="hidden" name="action" value="update" />
 
     <table class="facts_table">
@@ -204,18 +207,53 @@ $i = 0;
 	
 	
 	<tr><td>
-	<br><br>
 	</td></tr>
 	
+    <tr>
+		<td class="descriptionbox"><?php print_help_link("lb_transition_help", "qm", "lb_transition");?><?php print $pgv_lang["lb_transition"];?></td> 
+		<td class="optionbox"><select name="NEW_LB_TRANSITION" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_TRANSITION_help');">
+				<option value="none"   <?php if ($LB_TRANSITION=="none")   print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_none"];?></option>
+				<option value="normal" <?php if ($LB_TRANSITION=="normal") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_normal"];?></option>
+				<option value="double" <?php if ($LB_TRANSITION=="double") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_double"];?></option>
+				<option value="warp"   <?php if ($LB_TRANSITION=="warp")   print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_warp"];?></option>
+            </select>
+		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_none"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_normal"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_double"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_warp"];?>	
+		</td>		
+    </tr>
+	
+	<tr><td>
+	</td></tr>
+
+	<tr>
+		<td class="descriptionbox"><?php print_help_link("lb_url_dimensions_help", "qm", "lb_url_dimensions");?><?php print $pgv_lang["lb_url_dimensions"];?></td> 
+		<td class="optionbox">
+			<input type="text" name="NEW_LB_URL_WIDTH"  value="<?php print $LB_URL_WIDTH;?>"  size="4" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_TRANSITION_help');" />
+			<?php print $pgv_lang["lb_width"];?>
+			&nbsp;&nbsp;&nbsp; 
+			<input type="text" name="NEW_LB_URL_HEIGHT" value="<?php print $LB_URL_HEIGHT;?>" size="4" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_TRANSITION_help');" />
+			<?php print $pgv_lang["lb_height"];?>
+		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_url_dimensionsAdvice"];?>
+		</td>
+    </tr>	
+	
+	
+	<tr><td>
+	</td></tr>		
+
     </table>
+	
+	<br><br>	
 	
     <table class="facts_table">
 
      <tr>
+
         <td class="descriptionbox" colspan="2" align="center">
             <input type="submit" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["save_config"];?>" onclick="closeHelp();" />
             &nbsp;&nbsp;
             <input type="reset" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["reset"];?>" />
+            &nbsp;&nbsp;				
+			<INPUT TYPE="button" VALUE="Return to Album Page" onclick="javascript:window.location='individual.php?pid=<?php echo $pid;?>'" /> 			
         </td>
 
     </tr>

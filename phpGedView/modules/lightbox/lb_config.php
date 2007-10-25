@@ -31,7 +31,7 @@
 // Configuration parameters for Lightbox Album  //
 // ----------------------------------------------------//
  
-$mediatab = "1";  				// Individual Page Media Tab
+$mediatab = "1";  					// Individual Page Media Tab
 										// Set to 	0	to hide Media Tab on Indi page from All Users, 
 										// Set to 	1	to show Media Tab on Indi page to All Users,  [Default]
 										
@@ -54,7 +54,17 @@ $LB_ML_THUMB_LINKS = "both"; 		// MultiMedia List Page Thumbnail Links
 $LB_SS_SPEED = "4";					// SlideShow speed in seconds.  [Min 2  max 25] 										
 							
 $LB_MUSIC_FILE = "modules/lightbox/music/Father_to_Son.mp3";  // The music file. [mp3 only]
-						
+
+$LB_TRANSITION = "double";			// Next or Prvious Image Transition effect
+										// Set to "none"		No transtion effect
+										// Set to "normal"		Normal transtion effect
+										// Set to "double"		Fast transition effect
+										// Set to "warp"		Stretch transtition effect
+										
+$LB_URL_WIDTH = "1200";				//  URL Window width in pixels
+	
+$LB_URL_HEIGHT = "700";				//  URL Window height in pixels	
+									
 
 // --------------------------------------------------------- //
 //  End Configuration parameters for Lightbox Album.  //
