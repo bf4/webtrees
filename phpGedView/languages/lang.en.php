@@ -418,6 +418,7 @@ $pgv_lang["siblings"]				= "Sibling";
 $pgv_lang["father"] 				= "Father";
 $pgv_lang["mother"] 				= "Mother";
 $pgv_lang["parent"] 				= "Parent";
+$pgv_lang["self"] 					= "Self";
 $pgv_lang["relatives"]				= "Close Relatives";
 $pgv_lang["relatives_events"]		= "Events of close relatives";
 $pgv_lang["historical_facts"]		= "Historical facts";
