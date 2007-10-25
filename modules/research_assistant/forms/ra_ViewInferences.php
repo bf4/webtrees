@@ -67,7 +67,7 @@ class ra_ViewInferences extends ra_form {
 				else $out .= $input;
 				if(empty($input))
 				{
-					$out .= "Self";
+					$out .= $pgv_lang["self"];
 				}
 				$out .= " ";
 			}

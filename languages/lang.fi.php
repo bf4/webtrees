@@ -31,15 +31,16 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["age_differences"]	= "Näytä ikäerot";
 $pgv_lang["date_of_entry"]		= "Alkuperäisen lähteen päiväys";
-$pgv_lang["address_labels"]		= "Osoitetarrat";
+$pgv_lang["address_labels"]	= "Osoitetarrat";
 $pgv_lang["filter_address"]		= "Näytä osoitteet, jotka sisältävät:";
 $pgv_lang["address_list"]		= "Osoiteluettelo";
 $pgv_lang["autocomplete"]		= "Automaattinen täydentäminen";
 $pgv_lang["index_edit_advice"]	= "Korosta aluenimeä ja näpäytä sitten nuolikuvaketta siirtääksesi aluetta haluttuun suuntaan.";
-//$pgv_lang["importing_dates"]		= "Tuodaan päivämäärätietueita";
+//$pgv_lang["importing_dates"]	= "Tuodaan päivämäärätietueita";
 $pgv_lang["changelog"]		= "Version #VERSION# muutoksia";
-$pgv_lang["html_block_descr"]		= "Tämä on yksinkertainen HTML-alue jonka voit sijoittaa sivullesi lisätäksesi minkä tahansa viestin.";
+$pgv_lang["html_block_descr"]	= "Tämä on yksinkertainen HTML-alue jonka voit sijoittaa sivullesi lisätäksesi minkä tahansa viestin.";
 $pgv_lang["html_block_sample_part1"]	= "<p class=\"blockhc\"><b>Kirjoita otsikkosi tähän </b></p><br /><p>Näpäytä Konfiguroi-painiketta.";
 $pgv_lang["html_block_sample_part2"]	= "muuttaaksesi sen, mikä on tulostettu tähän.</p>";
 $pgv_lang["html_block_name"]		= "HTML-alue";
@@ -297,6 +298,7 @@ $pgv_lang["siblings"] 		= "Sisarukset";
 $pgv_lang["father"] 			= "Isä";
 $pgv_lang["mother"] 		= "Äiti";
 $pgv_lang["parent"] 			= "Vanhempi";
+$pgv_lang["self"] 					= "Itse";
 $pgv_lang["relatives"]		= "Lähisukulaisia";
 $pgv_lang["relatives_events"]		= "Lähisukulaisten tapahtumia";
 $pgv_lang["child"]			= "Lapsi";
