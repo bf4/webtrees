@@ -120,10 +120,10 @@ function parse_date($date)
  */
 function parse_time($timestr)
 {
-	$time = preg_split("/:/", $timestr);
-	$time['hour'] = $time[0];
-	$time['minutes'] = $time[1];
-	$time['seconds'] = $time[2];
+	$time = preg_split("/:/", $timestr."::");
+	$time['hour'] = $time[0]+0;
+	$time['minutes'] = $time[1]+0;
+	$time['seconds'] = $time[2]+0;
 
 	return $time;
 }
