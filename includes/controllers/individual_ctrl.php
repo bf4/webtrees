@@ -1803,6 +1803,11 @@ class IndividualControllerRoot extends BaseController {
 		}
 		if ($personcount==0) print "<table><tr><td id=\"no_tab5\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab5"]."</td></tr></table>\n";
 		?>
+		<script type="text/javascript">
+		<!--
+			<?php if (!$SHOW_AGE_DIFF) echo "toggleElderdate();";?>
+		//-->
+		</script>
 		<br />
 		<?php
 		if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
