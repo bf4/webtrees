@@ -471,7 +471,7 @@ class Person extends GedcomRecord {
 			$p2 = parse_date($this->getBirthDate(false));
 			if ($p1[0]["jd1"] && $p2[0]["jd1"]) {
 				$gap = $p2[0]["jd1"]-$p1[0]["jd1"]; // days
-				$label .= "<div name=\"elderdate\" class=\"age $TEXT_DIRECTION\">";
+				$label .= "<div class=\"elderdate age $TEXT_DIRECTION\">";
 				// warning if negative gap : wrong order
 				if ($gap<0 && $counter>0) $label .= "<img alt=\"\" src=\"images/warning.gif\" /> ";
 				// warning if gap<6 months
@@ -603,6 +603,14 @@ class Person extends GedcomRecord {
 		if (!preg_match("/\n\s*1\s+FAMC\s+@{$famid}@\s*\n(\s*[2-9].*\n)*(\s*2\s+PEDI\b)/i", $this->gedrec)) return $fam;
 		// d) any record
 		return reset($families);
+	}
+	/**
+	 * get family with child pedigree
+	 * @return string FAMC:PEDI value [ adopted | birth | foster | sealing ]
+	 */
+	function getChildFamilyPedigree($famid) {
+		$subrec = get_sub_record(1, "1 FAMC @".$famid."@", $this->gedrec);
+		return get_gedcom_value("PEDI", 2, $subrec, '', false);
 	}
 	/**
 	 * get the step families from the parents

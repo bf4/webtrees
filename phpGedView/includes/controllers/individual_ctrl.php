@@ -920,8 +920,7 @@ class IndividualControllerRoot extends BaseController {
 					$label = $labels["brother"];
 				}
 				if ($children[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
-				$famcrec = get_sub_record(1, "1 FAMC @".$family->getXref()."@", $children[$i]->gedrec);
-				$pedi = get_gedcom_value("PEDI", 2, $famcrec, '', false);
+				$pedi = $children[$i]->getChildFamilyPedigree($family->getXref());
 				if ($pedi && isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
 				$children[$i]->setLabel($label);
 			}
@@ -937,8 +936,7 @@ class IndividualControllerRoot extends BaseController {
 				$label = $labels["brother"];
 			}
 			if ($newchildren[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
-			$famcrec = get_sub_record(1, "1 FAMC @".$family->getXref()."@", $newchildren[$i]->gedrec);
-			$pedi = get_gedcom_value("PEDI", 2, $famcrec, '', false);
+			$pedi = $children[$i]->getChildFamilyPedigree($family->getXref());
 			if ($pedi && isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
 			$newchildren[$i]->setLabel($label);
 		}
@@ -953,8 +951,7 @@ class IndividualControllerRoot extends BaseController {
 				$label = $labels["brother"];
 			}
 			if ($delchildren[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
-			$famcrec = get_sub_record(1, "1 FAMC @".$family->getXref()."@", $delchildren[$i]->gedrec);
-			$pedi = get_gedcom_value("PEDI", 2, $famcrec, '', false);
+			$pedi = $children[$i]->getChildFamilyPedigree($family->getXref());
 			if ($pedi && isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
 			$delchildren[$i]->setLabel($label);
 		}
@@ -1028,9 +1025,9 @@ class IndividualControllerRoot extends BaseController {
 			<tr id="row_top">
 				<td></td>
 				<td class="descriptionbox rela">
-					<input id="checkbox_rela" type="checkbox" <?php if ($EXPAND_RELATIVES_EVENTS) echo " checked=\"checked\""?> onclick="togglerow('row_rela');" /><label for="checkbox_rela"><?php echo $pgv_lang["relatives_events"]?></label>
+					<input id="checkbox_rela" type="checkbox" <?php if ($EXPAND_RELATIVES_EVENTS) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_rela');" /><label for="checkbox_rela"><?php echo $pgv_lang["relatives_events"]?></label>
 					<?php if (file_exists("languages/histo.".$lang_short_cut[$LANGUAGE].".php")) {?>
-						<input id="checkbox_histo" type="checkbox" onclick="togglerow('row_histo');" /><label for="checkbox_histo"><?php echo $pgv_lang["historical_facts"]?></label>
+						<input id="checkbox_histo" type="checkbox" onclick="toggleByClassName('TR', 'row_histo');" /><label for="checkbox_histo"><?php echo $pgv_lang["historical_facts"]?></label>
 					<?php }?>
 				</td>
 			</tr>
@@ -1061,23 +1058,9 @@ class IndividualControllerRoot extends BaseController {
 		<br />
 		<script language="JavaScript" type="text/javascript">
 		<!--
-		function togglerow(classname) {
-			var rows = document.getElementsByTagName("tr");
-			for (i=0; i<rows.length; i++) {
-				if (rows[i].className.indexOf(classname) != -1) {
-					var disp = rows[i].style.display;
-					if (disp=="none") {
-						disp="table-row";
-						if (document.all && !window.opera) disp = "inline"; // IE
-					}
-					else disp="none";
-					rows[i].style.display=disp;
-				}
-			}
-		}
 		<?php
-		if (!$EXPAND_RELATIVES_EVENTS) print "togglerow('row_rela');\n";
-		print "togglerow('row_histo');\n";
+		if (!$EXPAND_RELATIVES_EVENTS) print "toggleByClassName('TR', 'row_rela');\n";
+		print "toggleByClassName('TR', 'row_histo');\n";
 		?>
 		//-->
 		</script>
@@ -1250,20 +1233,8 @@ class IndividualControllerRoot extends BaseController {
 		global $pgv_changes, $GEDCOM;
 		if (!$this->isPrintPreview()) {
 		?>
-		<script type="text/javascript">
-		<!--
-			function toggleElderdate() {
-				hiddenEls = document.getElementsByName('elderdate');
-				for(i=0; i<hiddenEls.length; i++) {
-					if (hiddenEls[i].style.display=='none') hiddenEls[i].style.display='block';
-					else hiddenEls[i].style.display='none';
-				}
-			}
-			<?php if (!$SHOW_AGE_DIFF) echo "toggleElderdate();";?>
-		//-->
-		</script>
 		<table class="facts_table"><tr><td style="width:20%; padding:4px"></td><td class="descriptionbox rela">
-		<input id="checkbox_elder" type="checkbox" onclick="toggleElderdate();" <?php if ($SHOW_AGE_DIFF) echo "checked=\"checked\"";?>/>
+		<input id="checkbox_elder" type="checkbox" onclick="toggleByClassName('DIV', 'elderdate');" <?php if ($SHOW_AGE_DIFF) echo "checked=\"checked\"";?>/>
 		<label for="checkbox_elder"><?php print $pgv_lang['age_differences'] ?></label>
 		</td></tr></table>
 		<?php
@@ -1805,7 +1776,7 @@ class IndividualControllerRoot extends BaseController {
 		?>
 		<script type="text/javascript">
 		<!--
-			<?php if (!$SHOW_AGE_DIFF) echo "toggleElderdate();";?>
+			<?php if (!$SHOW_AGE_DIFF) echo "toggleByClassName('DIV', 'elderdate');";?>
 		//-->
 		</script>
 		<br />
