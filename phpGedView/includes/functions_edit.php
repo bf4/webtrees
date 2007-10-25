@@ -193,7 +193,8 @@ function checkChangeTime($pid, $gedrec) {
 			$ctime = get_gedcom_value("DATE:TIME", 2, $changrec);
 			$changeUser = get_gedcom_value("_PGVU", 2, $changrec, '', false);
 			$chan_date = parse_date($cdate);
-			$chan_time = parse_time($ctime);
+			$chan_time = array();
+			if (!empty($ctime)) $chan_time = parse_time($ctime);
 			if (!isset($chan_time[0])) $chan_time[0] = 0;
 			if (!isset($chan_time[1])) $chan_time[1] = 0;
 			if (!isset($chan_time[2])) $chan_time[2] = 0;
