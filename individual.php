@@ -1,5 +1,5 @@
 <?php
-/**
+  /**
  * Individual Page
  *
  * Display all of the information about an individual
@@ -589,14 +589,14 @@ if(empty($SEARCH_SPIDER)) {
 		$lbHelpFile = "modules/lightbox/languages/help.".$lang_short_cut[$LANGUAGE].".php";
 		if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help.en.php";
 
-		print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none; background:none;\" \>\n";
+		print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none; background:none;\" >\n";
 
 		print "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>\n";
 		print "&nbsp;&nbsp;"; 
 		
 		// ---------- Help link --------------------		
 		print "<a href=\"" . $lbHelpFile . "\" rel='clearbox(500,760,click)' title=\"" . $pgv_lang["page_help"] . "\" >";
-        print "<img src=\"".$PGV_IMAGE_DIR."/small/help.gif\" class=\"icon\" title=\"" . $pgv_lang["page_help"] . "\" />" ;
+        print "<img alt=\"\" src=\"".$PGV_IMAGE_DIR."/small/help.gif\" class=\"icon\" title=\"" . $pgv_lang["page_help"] . "\" />" ;
         print "</a>" ;
 
 
@@ -637,6 +637,7 @@ if(empty($SEARCH_SPIDER)) {
 <?php if ($controller->isPrintPreview()) print "tabswitch(0)";
 else print "tabswitch(". ($controller->default_tab+1) .");\n";
 ?>
+if (typeof toggleByClassName == "undefined") alert('phpgedview.js\na javascript function is missing\n\nPlease clear your Web browser cache');
 //-->
 </script>
 <?php
