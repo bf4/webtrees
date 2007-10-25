@@ -20,7 +20,7 @@
  *
  * @package PhpGedView
  * @subpackage punBB
- * @version $Id: $
+ * @version $Id$
  * @author Patrick Kellum
  * @translator Matti Valve
  */

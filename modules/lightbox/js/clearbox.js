@@ -100,7 +100,7 @@
 	
 		A ClearBox ablak animációja állítható be vele. Többféle lehetõség közül választhatsz:
 
-			'ki': 		ilyenkor az ablak egy lépésben felveszi a méretet,
+			'none': 		ilyenkor az ablak egy lépésben felveszi a méretet,
 			'normal':	ez a már megszokott animáció,
 			'double':	ilyenkor az ablak egyszerre méretezõdik X és Y irányban
 			'warp':		mint a double, de a kép még az animáció megkezdése elõtt megjelenik
@@ -108,7 +108,7 @@
 		
 		Mindenképpen használd a ' ' jeleket.
 */
-		var CB_Animation='warp';
+//		var CB_Animation='none';
 
 /*
 	CB_Jump_X:

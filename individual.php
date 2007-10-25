@@ -29,11 +29,7 @@
 require_once("includes/controllers/individual_ctrl.php");
 require_once("includes/serviceclient_class.php");
 
-loadLangFile("gm_lang");	// Load GoogleMap language file
-if (file_exists("modules/lightbox/".$pgv_language["english"])) require("modules/lightbox/".$pgv_language["english"]);
-if (file_exists("modules/lightbox/".$pgv_language[$LANGUAGE])) require("modules/lightbox/".$pgv_language[$LANGUAGE]);
-
-global $USE_THUMBS_MAIN;
+global $USE_THUMBS_MAIN, $mediacnt;
 global $linkToID;
 global $SEARCH_SPIDER;
 
@@ -251,6 +247,7 @@ var loadedTabs = new Array(false,false,false,false,false,false,false,false,false
 <!-- ================== End Additions for Lightbox Module ================== -->
 
 loadedTabs[<?php print ($controller->default_tab+1); ?>] = true;
+//loadedTabs[9] = true;
 
 function tempObj(tab, oXmlHttp) {
 	this.processFunc = function()
@@ -309,7 +306,8 @@ function tabswitch(n) {
 				else elt.style.display='none'; // empty and not editable ==> hide
 				//if (i==3 && <?php if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) echo 'true'; else echo 'false';?>) elt.style.display='none'; // no sources
 				if (i==4 && <?php if (!$MULTI_MEDIA) echo 'true'; else echo 'false';?>) elt.style.display='none'; // no multimedia
-				if (i==6) elt.style.display='none'; // hide researchlog
+				if (i==7) elt.style.display='none'; // hide researchlog
+				if (i==9 && <?php if (!$MULTI_MEDIA) echo 'true'; else echo 'false';?>) elt.style.display='none'; // no multimedia (for Album tab)				
 				// ALL : hide empty contents
 				if (n==0) document.getElementById(tabid[i]).style.display='none';
 			}
@@ -635,27 +633,42 @@ if(empty($SEARCH_SPIDER)) {
 			include_once('modules/lightbox/functions/lb_head.php');	
 		}else{
 			include_once('modules/lightbox/functions/lb_head.php');			
-			print "<table class=\"facts_table\"><tr><td id=\"no_tab4\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr></table>\n";
+			print "<table class=\"facts_table\"><tr><td id=\"no_tab9\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr></table>\n";
 		}
     }else{
        print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:block; \" >\n";
     }
 	// Content info ---------------------------------------------------
 	print "<div id=\"lightbox2_content\"> \n";
-	if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-		$controller->getTab(8) ;
-		/* -- for loading using ajax
-		 * -- this should be fixed so that the page can load through ajax
-		 * -- javascript may need to be loaded first
-		if (($controller->default_tab==8)||(!empty($SEARCH_SPIDER))) {
-			$controller->getTab(8) ;
-		}else{
-			loading_message();
+	if ($mediacnt!=0) {	
+		if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+if ($TEXT_DIRECTION == "rtl") { ?>
+		<link href ="modules/lightbox/css/clearbox_music_RTL.css" 	rel="stylesheet" type="text/css" />
+		<link href ="modules/lightbox/css/album_page.css" 			rel="stylesheet" type="text/css" media="screen" /> 
+		<!--[if lte IE 7]>
+		<link href ="modules/lightbox/css/album_page_RTL.css" 			rel="stylesheet" type="text/css" media="screen" /> 
+		<![endif]-->
+
+<?php }else{ ?>
+		<link href ="modules/lightbox/css/clearbox_music.css" 		rel="stylesheet" type="text/css" />
+		<link href ="modules/lightbox/css/album_page.css" 			rel="stylesheet" type="text/css" media="screen" />  
+<?php } ?>
+  
+	<script src="modules/lightbox/js/prototype.js" 				type="text/javascript"></script>  
+	<script src="modules/lightbox/js/Sound.js" 					type="text/javascript"></script>
+	<script src="modules/lightbox/js/clearbox.js" 				type="text/javascript"></script>
+  
+
+	<script src="modules/lightbox/js/wz_tooltip.js" 			type="text/javascript"></script>  
+
+<?php
+			if (($controller->default_tab==8)&&(empty($SEARCH_SPIDER))) {
+				$controller->getTab(8) ;
+			}else{
+				loading_message();
+			}
 		}
-		*/
-	}else{
-		
-    }
+	}
     print "</div>\n";
     print "</div>\n";
 }

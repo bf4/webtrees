@@ -501,7 +501,7 @@ var soond = null;
     if (CB_WinPadd < 0) {
         CB_WinPadd = 5;
     }
-    if (CB_Animation != "ki" &&
+    if (CB_Animation != "none" &&
         CB_Animation != "normal" &&
         CB_Animation != "double" && CB_Animation != "warp") {
         CB_Animation = "double";
@@ -976,7 +976,7 @@ var soond = null;
             }
             CB_WindowResizeX();
             CB_WindowResizeY();
-        } else if (CB_Animation == "ki") {
+        } else if (CB_Animation == "none") {
             CB_SetMargins();
             CB_ImgCont.style.height = CB_ImgHeight + 2 * CB_ImgBorder + "px";
             CB_Img.style.width = CB_ImgWidth + "px";

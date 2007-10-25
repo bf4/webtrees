@@ -35,6 +35,13 @@ VERSION 4.1.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["lb_normal"]								25 Oct 2007				A
+*$pgv_lang["lb_double"]								25 Oct 2007				A
+*$pgv_lang["lb_warp"]  								25 Oct 2007				A
+*$pgv_lang["lb_url_dimensions"]						25 Oct 2007				A
+*$pgv_lang["lb_url_dimensionsAdvice"]				25 Oct 2007				A
+*$pgv_lang["lb_width"]								25 Oct 2007				A
+*$pgv_lang["lb_height"]								25 Oct 2007				A
 *$pgv_lang["TYPE__footnotes"] 						15 Oct 2007				A
 *$pgv_lang["lb_music_file"]							12 Oct 2007				W
 *$pgv_lang["lb_musicFileAdvice"]					12 Oct 2007				W

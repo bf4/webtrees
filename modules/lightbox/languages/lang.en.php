@@ -52,6 +52,16 @@ $pgv_lang["lb_musicFileAdvice"]		= "Location of sound track file (Leave blank fo
 $pgv_lang["lb_ss_speed"]			= "<b>Slide Show speed</b>";
 $pgv_lang["lb_ss_SpeedAdvice"]		= "Slide show timing in seconds";
 
+$pgv_lang["lb_transition"]				= "Previous and Next Image Transition Effect";
+$pgv_lang["lb_normal"]					= "Normal";
+$pgv_lang["lb_double"]					= "Double";
+$pgv_lang["lb_warp"]					= "Warp";
+$pgv_lang["lb_url_dimensions"]			= "URL Window dimensions";
+$pgv_lang["lb_url_dimensionsAdvice"]	= "Width and Height of URL Window in pixels";
+$pgv_lang["lb_width"]					= "Width";
+$pgv_lang["lb_height"]					= "Height";
+									
+
 // ---------------------------------------------------------------------
 
 

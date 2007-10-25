@@ -17,7 +17,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-// $Id: class.NetBSD.inc.php,v 1.18 2006/04/18 16:57:32 bigmichi1 Exp $
+// $Id$
 if (!defined('IN_PHPSYSINFO')) {
     die("No Hacking");
 }

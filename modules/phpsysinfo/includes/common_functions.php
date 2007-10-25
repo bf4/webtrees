@@ -12,7 +12,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// $Id: common_functions.php,v 1.42 2006/04/17 13:03:38 bigmichi1 Exp $
+// $Id$
 // HTML/XML Comment
 function created_by ()
 {

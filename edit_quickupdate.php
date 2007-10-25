@@ -1929,7 +1929,7 @@ if (count($famaddfacts)>0) { ?>
 	<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="F<?php echo $i; ?>DATE" id="F<?php echo $i; ?>DATE" onblur="valid_date(this);" /><?php print_calendar_popup("F".$i."DATE");?></td>
 	<?php $tabkey++; ?>
 	<td class="optionbox"><input type="text" tabindex="<?php print $tabkey; ?>" name="F<?php echo $i; ?>PLAC" id="F<?php echo $i; ?>place" />
-	<?php print_findplace_link("F'.$i.'place"); ?>
+	<?php print_findplace_link("F".$i."place"); ?>
 	</td>
 	<?php $tabkey++; ?>
 	<td class="optionbox">&nbsp;</td>
@@ -2054,7 +2054,7 @@ if (empty($child_surname)) $child_surname = "";
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
 	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="C<?php echo $i; ?>PLAC" id="c<?php echo $i; ?>place" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="canchor1x" id="canchor1x" alt="" />
-	<?php print_findplace_link("c'.$i.'place"); ?>
+	<?php print_findplace_link("c".$i."place"); ?>
 	</td>
 	<?php $tabkey++; ?>
 </tr>
@@ -2068,7 +2068,7 @@ if (empty($child_surname)) $child_surname = "";
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
 	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="C<?php echo $i; ?>DPLAC" id="c<?php echo $i; ?>dplace" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="canchor1x" id="canchor1x" alt="" />
-	<?php print_findplace_link("c'.$i.'dplace"); ?>
+	<?php print_findplace_link("c".$i."dplace"); ?>
 	</td>
 	<?php $tabkey++; ?>
 </tr>
@@ -2541,7 +2541,7 @@ foreach($famfacts as $f=>$fact) {
 				<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php print $tabkey; $tabkey++;?>" size="15" name="F<?php echo $i; ?>DATES[]" id="F<?php echo $i; ?>DATE<?php echo $f; ?>" onblur="valid_date(this);" value="<?php echo PrintReady(htmlspecialchars($date)); ?>" /><?php print_calendar_popup("F{$i}DATE$f");?></td>
 				<?php if (empty($temp) && (!in_array($fact_tag, $nonplacfacts))) { ?>
 					<td class="optionbox"><input size="30" type="text" tabindex="<?php print $tabkey; $tabkey++; ?>" name="F<?php echo $i; ?>PLACS[]" id="F<?php echo $i; ?>place<?php echo $f; ?>" value="<?php print PrintReady(htmlspecialchars($plac)); ?>" />
-					<?php print_findplace_link("F'.$i.'place$f"); ?>
+					<?php print_findplace_link("F".$i."place$f"); ?>
                          </td>
 				<?php }
 				else {
@@ -2605,7 +2605,7 @@ foreach($famfacts as $f=>$fact) {
 		<td class="optionbox"><input type="text" dir="ltr" tabindex="<?php print $tabkey; ?>" size="15" name="F<?php echo $i; ?>DATE" id="F<?php echo $i; ?>DATE" onblur="valid_date(this);" /><?php print_calendar_popup("F".$i."DATE");?></td>
 		<?php $tabkey++; ?>
 		<td class="optionbox"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="F<?php echo $i; ?>PLAC" id="F<?php echo $i; ?>place" />
-		<?php print_findplace_link("F'.$i.'place"); ?>
+		<?php print_findplace_link("F".$i."place"); ?>
 		</td>
 		<?php $tabkey++; ?>
 		<td class="optionbox">&nbsp;</td>
@@ -2729,7 +2729,7 @@ $chil = find_children_in_record($famrec, $pid);
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
 	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="C<?php echo $i; ?>PLAC" id="c<?php echo $i; ?>place" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="canchor3x" id="canchor3x" alt="" />
-	<?php print_findplace_link("c'.$i.'place"); ?>
+	<?php print_findplace_link("c".$i."place"); ?>
 	</td>
 	<?php $tabkey++; ?>
 </tr>
@@ -2744,7 +2744,7 @@ $chil = find_children_in_record($famrec, $pid);
 	<tr>
 	<td class="descriptionbox"><?php print_help_link("edit_PLAC_help", "qm"); print $factarray["PLAC"];?></td>
 	<td class="optionbox" colspan="3"><input size="30" type="text" tabindex="<?php print $tabkey; ?>" name="C<?php echo $i; ?>DPLAC" id="c<?php echo $i; ?>dplace" /><img src="<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"];?>" name="canchor3x" id="canchor3x" alt="" />
-	<?php print_findplace_link("c'.$i.'dplace"); ?>
+	<?php print_findplace_link("c".$i."dplace"); ?>
 	</td>
 	<?php $tabkey++; ?>
 </tr>

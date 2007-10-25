@@ -35,7 +35,7 @@ echo "<ol> ";
 echo "<li>";
 echo "<b><font color=\"blue\">To view an image</font></b><br />";
 echo "Click on any thumbnail. The title of the image will appear at the bottom of the overlaid image. ";
-echo "</li><br /><br />";
+echo "<br /><br /></li>";
 
 echo "<li>";
 echo "<b><font color=\"blue\">To use zoom mode</font></b><br />" ;
@@ -45,39 +45,45 @@ echo "When the green Plus icon at the bottom right of the image is visible, Zoom
 echo "When the image is re-sized larger than the viewed page, use the arrow keys to move the image around.<br />";
 echo "<b> Disable Zoom: </b><br />";
 echo "Click on the red Minus icon at the bottom right to get out of Zoom mode. (Or use the <b>z</b> key)";
-echo "</li><br /><br />";
+echo "<br /><br /></li>";
 
 echo "<li>";
 echo "<b><font color=\"blue\">To close an image </font></b><br />";
 echo "Click on the red X icon at bottom right.";
-echo "</li><br /><br />";
+echo "<br /><br /></li>";
 
 echo "<li>";
 echo "<b><font color=\"blue\">To view the next or previous image</font></b><br />";
 echo "As you mouse over the image when NOT in Zoom mode, a <b>&lt;</b> symbol will appear on the left side, and a <b>&gt;</b> on the right. Click anywhere in the right half of the image to see the next image. Click anywhere in the left half to see the previous one.";
-echo "</li><br /><br />";
+echo "<br /><br /></li>";
 
 echo "<li>";
 echo "<b><font color=\"blue\">To jump to any other image in the Album</font></b><br />";
-echo "As you mouse over the top 1 cm of the image when NOT in Zoom mode, a thumbnail Gallery will appear. If necessary, move the mouse cursor left and right to make other sections of this thumbnail Gallery show.  Click any Gallery thumbnail to jump diectly to the associated image. <b>Next</b>, <b>Previous</b> and <b>Jump</b> may be done whether the slideshow is running or paused. ";
-echo "</li><br /><br />";
+echo "As you mouse over the top 1 cm of the image when NOT in Zoom mode, a thumbnail Gallery will appear. If necessary, move the mouse cursor left and right to make other sections of this thumbnail Gallery show.  Click any Gallery thumbnail to jump diectly to the associated image. <b>Next</b>, <b>Previous</b> and <b>Jump</b> may be done whether the slideshow is running or paused.";
+echo "<br /><br /></li>";
 
 echo "<li>";
 echo "<b><font color=\"blue\">To run the slide show</font></b><br />";
-echo "Click on the Start icon at bottom left. If there is a music file, the Speaker icon will appear.  Click on the Speaker icon to toggle the music on and off. Click on the Pause icon to stop the slide show.<br />";
-echo "</li><br /><br />";
+echo "Click on the Start icon at bottom left. If there is a sound track file, the Speaker icon will appear.  Click on the Speaker icon to toggle the sound track on and off. Click on the Pause icon to stop the slide show.";
+echo "<br /><br /></li>";
 
 echo "<li>";
-echo "<b><font color=\"blue\">Navigation ...</b></font><br />";
-echo "Use the View Album table at the right of the image icon table to directly choose another person's Album view.<br />";
+echo "<b><font color=\"blue\">Navigation ...</font></b><br />";
+echo "Use the View Album table at the right of the image icon table to directly choose another person's Album view.";
+echo "<br /><br /></li>";
 
 echo "</ol>";
+echo "<ul>";
 
-echo "<br /><b>Notes:</b><br />";
+echo "<li>";
+echo "<b>Note:</b><br />";
 echo "Thumbnails which are NOT images, such as PDF files and audio, book, and video Media types, may be viewed individually, but will not be in the slide show.";
+echo "<br /><br /></li>";
 
-echo "<br /><br /><b>Note for Administrator:</b><br />";
+echo "<li>";
+echo "<b>Note for Administrator:</b><br />";
 echo "If any files of the usual image formats (jpg, bmp, gif, etc.) representing image types such as photo, certificate, document, etc. appear in the <b>Other</b> row, you have forgotten to set the Media type for these objects.  You may wish to edit the Media type for these items.";
+echo "<br /><br /></li>";
 
-echo " </font> ";
+echo "</ul>";
  ?>

@@ -176,7 +176,9 @@ $factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Spouse's Birth Place";
 $factarray["FAMC:WIFE:GIVN"] = "Mother's Given Name";
 $factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Paternal Grandfather's Given Name";
 $factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Maternal Grandmother's Given Name";
-
+$factarray["FAMC:WIFE:FAMC:HUSB:GIVN"] = "Maternal Grandfather's Given Name"; 
+$factarray["FAMC:HUSB:FAMC:WIFE:GIVN"] = "Paternal Grandmother's Given Name";
+$factarray["FAMS:CHIL:BIRT:PLAC"] = "Child's Birth Place";
 
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "Birth Place";

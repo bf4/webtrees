@@ -86,6 +86,7 @@ $pgv_lang["pl_north_short"]         = "N";
 $pgv_lang["pl_south_short"]         = "S";
 $pgv_lang["pl_east_short"]          = "E";
 $pgv_lang["pl_west_short"]          = "W";
+$pgv_lang["pl_places_localfile"]	= "Server file containing places (CSV)";
 $pgv_lang["pl_places_filename"]     = "File containing places (CSV)";
 $pgv_lang["pl_clean_db"]            = "Clear all place-locations before import?";
 $pgv_lang["pl_update_only"]         = "Update existing places only?";

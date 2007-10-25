@@ -19,11 +19,20 @@
 		</PGVRHeader>
 		<PGVRBody>
 			<PGVRSetVar name="email" value="" />
+			<PGVRSetVar name="addrfilter" value="ADDR CONTAINS ." />
+			<PGVRSetVar name="addrfilter2" value="" />
+			<PGVRif condition="$address != ''">
+				<PGVRSetVar name="addrfilter2" value="ADDR SUBCONTAINS $address" />
+			</PGVRif>
 			<PGVRif condition="$email_in=='noemail'">
 				<PGVRSetVar name="email" value="EMAIL EQUALS ''" />
 			</PGVRif>
 			<PGVRif condition="$email_in=='onlyemail'">
 				<PGVRSetVar name="email" value="EMAIL CONTAINS ." />
+				<PGVRif condition="$address==''">
+					<PGVRSetVar name="addrfilter" value="EMAIL CONTAINS ." />
+					<PGVRSetVar name="email" value="" />
+				</PGVRif>
 			</PGVRif>
 			<PGVRSetVar name="newline" value="0" />
 			<PGVRSetVar name="count" value="1" />
@@ -43,7 +52,7 @@
 			</PGVRif>
 			<PGVRSetVar name="X" value="$Xstart" />
 			<PGVRSetVar name="Y" value="$Ystart" />
-			<PGVRList list="individual" filter1="ADDR CONTAINS ." filter2="ADDR SUBCONTAINS $address" filter3="$email" sortby="$sortby">
+			<PGVRList list="individual" filter1="$addrfilter" filter2="$addrfilter2" filter3="$email" sortby="$sortby">
 				<PGVRTextBox top="$Y" left="$X" width="$width" height="$height" border="0" newline="$newline" pagecheck="false">
 					<PGVRText style="label"><PGVRGetPersonName id="" /></PGVRText>
 					<PGVRText style="text"><br /><PGVRGedcomValue tag="ADDR" /><PGVRGedcomValue tag="RESI:ADDR" /></PGVRText>

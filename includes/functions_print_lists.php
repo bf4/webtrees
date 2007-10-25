@@ -57,13 +57,20 @@ function print_list_person($key, $value, $findid=false, $asso="", $useli=true) {
 	if (!isset($indi_total)) $indi_total=array();
 	$indi_total[$key."[".$GEDCOM."]"] = 1;
 
+	$tag = "span";
+	if ($useli) $tag = "li";
+		
 	$person = Person::getInstance($key);
+	if (is_null($person)) {
+		print "<".$tag.">";
+		print "<span class=\"error\">".$pgv_lang["unable_to_find_record"]." ".$key."</span>";
+		print "</".$tag.">";
+		return;
+	}
 	$disp = $person->canDisplayDetails();
 	if ($person->canDisplayName()) {
 		if (begRTLText($value[0])) $listDir = "rtl";
 		else $listDir = "ltr";
-		$tag = "span";
-		if ($useli) $tag = "li";
 		print "<".$tag." class=\"".$listDir."\" dir=\"".$listDir."\">";
 		if ($findid == true) print "<a href=\"javascript:;\" onclick=\"pasteid('".$key."', '".preg_replace("/(['\"])/", "\\$1", PrintReady($value[0]." - ".$person->getBirthYear()))."'); return false;\" class=\"list_item\"><b>".$value[0]."</b>";
 		else print "<a href=\"individual.php?pid=$key&amp;ged=$value[1]\" class=\"list_item\"><b>".PrintReady($value[0])."</b>";

@@ -20,7 +20,7 @@
  *
  * @package PhpGedView
  * @subpackage punBB
- * @version $Id: $
+ * @version $Id$
  * @author Alexander [ali3n]
  */
 $pgv_lang['mod_punbb'] = 'Nachrichten Forum';

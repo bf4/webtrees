@@ -107,7 +107,7 @@ class Person extends GedcomRecord {
 				$fromfile = true;
 			}
 		}
-		if (empty($indirec)) return null;
+		//if (empty($indirec)) return null;
 		$person = new Person($indirec, $simple);
 		if (!empty($fromfile)) $person->setChanged(true);
 		//-- update the cache
@@ -496,21 +496,29 @@ class Person extends GedcomRecord {
 		$label = "";
 		$gap = 0;
 		if ($elderdate) {
-			$p1 = parse_date($elderdate);
-			$p2 = parse_date($this->getBirthDate());
-			if ($p1[0]["jd1"] && $p2[0]["jd1"]) {
-				$gap = $p2[0]["jd1"]-$p1[0]["jd1"]; // days
-				$gap = round($gap*12/365.25); // months
-				$label .= "<div name=\"elderdate\" class=\"age $TEXT_DIRECTION\" style=\"display: none;\">";
-				// negative gap for children means wrong order
+			$p1 = $elderdate;
+			$p2 = $this->getBirthDate(false);
+			if ($p1->date1->minJD && $p2->date1->minJD) {
+				$gap = $p2->date1->minJD - $p1->date1->minJD; // days
+				$label .= "<div name=\"elderdate\" class=\"age $TEXT_DIRECTION\">";
+				// warning if negative gap : wrong order
 				if ($gap<0 && $counter>0) $label .= "<img alt=\"\" src=\"images/warning.gif\" /> ";
+				// warning if gap<6 months
+				if ($gap>1 && $gap<180 && $counter>0) $label .= "<img alt=\"\" src=\"images/warning.gif\" /> ";
+				// children with same date means twin
+				if ($gap==0 && $counter>1) {
+					if ($this->getSex()=="M") $label .= $pgv_lang["twin_brother"];
+					else if ($this->getSex()=="F") $label .= $pgv_lang["twin_sister"];
+					else $label .= $pgv_lang["twin"];
+				}
 				// gap in years or months
+				$gap = round($gap*12/365.25); // months
 				if ($gap>20 or $gap<-20) $label .= round($gap/12)." ".$pgv_lang["years"];
 				else if ($gap!=0) $label .= $gap." ".$pgv_lang["months"];
 				$label .= "</div>";
 			}
 		}
-		if ($counter) $label .= "<div name=\"elderdate\" class=\"".strrev($TEXT_DIRECTION)."\" style=\"display:none;\">".$pgv_lang["number_sign"].$counter."</div>";
+		if ($counter) $label .= "<div class=\"".strrev($TEXT_DIRECTION)."\">".$pgv_lang["number_sign"].$counter."</div>";
 		$label .= $this->label;
 		if ($gap!=0 && $counter<1) $label .= "<br />&nbsp;";
 		return $label;
@@ -1301,7 +1309,8 @@ class Person extends GedcomRecord {
 					if (empty($srec)) break;
 					$arec = get_sub_record(2, "2 ASSO @".$person->getXref()."@", $srec);
 					if ($arec) {
-						$fact = trim(substr($srec, 2, 5));
+						$temp = preg_match("/^\d (\w*)/", $srec, $factname);
+						$fact = $factname[1];
 						if (isset($factarray[$fact])) $label = strip_tags($factarray[$fact]);
 						else $label = $fact;
 						if ($fact=="EVEN") {
@@ -1313,7 +1322,7 @@ class Person extends GedcomRecord {
 						$rrec = get_sub_record(3, "3 RELA", $arec);
 						$rela = trim(substr($rrec, 7));
 						if (empty($rela)) $rela = "ASSO";
-						if (isset($pgv_lang[$rela])) $rela = $pgv_lang[$rela];
+						if (isset($pgv_lang[strtolower($rela)])) $rela = $pgv_lang[strtolower($rela)];
 						else if (isset($factarray[$rela])) $rela = $factarray[$rela];
 						// add an event record
 						$factrec = "1 EVEN\n2 TYPE ".$label."<br/>[ <span class=\"details_label\">".$rela."</span> ]";
@@ -1332,7 +1341,7 @@ class Person extends GedcomRecord {
 						$factrec .= "\n2 ASSO @".$person->getXref()."@\n3 RELA ".$rela;
 						// check if this fact already exists in the list
 						$found = false;
-						foreach($this->indifacts as $k=>$v) {
+						if ($sdate) foreach($this->indifacts as $k=>$v) {
 							if (strpos($v[1], trim($sdate))
 							&& strpos($v[1], "2 ASSO @".$person->getXref()."@")) {
 								$found = true;

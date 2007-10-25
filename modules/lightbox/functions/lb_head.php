@@ -74,7 +74,7 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_te
         if (userIsAdmin(getUserName())) {
 			if ($LB_AL_HEAD_LINKS == "both") {	
 	            print "<td class=\"width20 center wrap\" valign=\"top\">";
-	            print "<a href=\"module.php?mod=lightbox&pgvaction=lb_editconfig\">";
+	            print "<a href=\"module.php?mod=lightbox&pgvaction=lb_editconfig&pid=" . $pid . "\">";
 				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"" . $pgv_lang["configure_lightbox"] . "\" /><br />" ;
 				print "" . $pgv_lang["configure_lightbox"] . "";
 				print "</a>";
@@ -92,7 +92,7 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_te
 			}else if ($LB_AL_HEAD_LINKS == "icon") {
 				print "<td>";
 				print "&nbsp;&nbsp;";
-	            print "<a href=\"module.php?mod=lightbox&pgvaction=lb_editconfig\">";
+	            print "<a href=\"module.php?mod=lightbox&pgvaction=lb_editconfig&pid=" . $pid . "\">";
 				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"" . $pgv_lang["configure_lightbox"] . "\" />" ;	
 				print "</a>";
  	           print "\n";

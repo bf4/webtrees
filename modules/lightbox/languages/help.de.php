@@ -35,7 +35,7 @@ echo "<ol> ";
 echo "<li>";
 echo "<b><font color=\"blue\">Um Bilder zu betrachten</font></b><br />";
 echo "klicken Sie einfach eins der Miniaturbilder. Der Bildtitel wird dann unter dem Bild gezeigt.";
-echo "</li><br /><br />";
+echo "<br /><br /></li>";
 
 echo "<li>";
 echo "<b><font color=\"blue\">Zoom (Bild vergrößern oder verkleinern)</font></b><br />" ;
@@ -45,39 +45,45 @@ echo "Wenn das grüne Plus-Symbol unten rechts sichtbar ist, ist Zoom aktiviert.
 echo "Ein zu großes Bild kann mit Hilfe der Pfeil-Tasten im Fenster bewegt werden.<br />";
 echo "<b> Zoom ausschalten:</b><br />";
 echo "Wenn Sie das rote Minus-Symbol unten rechts klicken, wird Zoom ausgeschaltet. (Sie können auch die <b>z</b> Taste benutzen.)";
-echo "</li><br /><br />";
+echo "<br /><br /></li>";
 
 echo "<li>";
 echo "<b><font color=\"blue\">Um den Diavortrag zu beenden</font></b><br />";
 echo "klicken Sie einfach das rote X-Symbol unten rechts.";
-echo "</li><br /><br />";
+echo "<br /><br /></li>";
 
 echo "<li>";
 echo "<b><font color=\"blue\">Voriges oder nächstes Bild</font></b><br />";
 echo "Wenn Zoom NICHT aktiviert ist, erhalten Sie links <b>&lt;</b> und rechts <b>&gt;</b> Symbole durch Bewegung der Maus über dem Bild. Wenn Sie in der rechten Hälfte des Bildes klicken, erhalten Sie das nächste Bild der Serie.  Wenn Sie in der linken Hälfte klicken, erhalten Sie das vorige Bild.";
-echo "</li><br /><br />";
+echo "<br /><br /></li>";
 
 echo "<li>";
 echo "<b><font color=\"blue\">Direkter Zugriff zu Bildern</font></b><br />";
 echo "Durch Bewegung der Maus im oberen Bildstreifen, der ungefähr 1 cm hoch ist, (Zoom ist NICHT aktiviert), erhalten Sie einen Streifen von Miniaturbildern die Ihnen zugänglich sind.  Um direkten Zugang zu Ihnen zugänglichen Bildern zu bewirken, müssen Sie nur das gewünschte Miniaturbild klicken. Direkter Zugang oder Aufruf des vorigen oder nächsten Bildes ist jederzeit möglich, wenn Zoom nicht aktiviert ist.";
-echo "</li><br /><br />";
+echo "<br /><br /></li>";
 
 echo "<li>";
 echo "<b><font color=\"blue\">Diavortrag</font></b><br />";
-echo "Der Diavortrag beginnt, wenn Sie das Start-Ikon unten links klicken.  Für Ton-Objekte erhalten Sie das Ihnen bekannte Lautsprecher-Symbol.  Sie können dann das Symbol klicken, um den Ton ein- und aus zu schalten. Um den Diavortrag zu unterbrechen, müssen Sie das Pause-Symbol unten links klicken.<br />";
-echo "</li><br /><br />";
+echo "Der Diavortrag beginnt, wenn Sie das Start-Ikon unten links klicken.  Wenn eine Tonspur-Datei vorhanden ist, erhalten Sie das Ihnen bekannte Lautsprecher-Symbol.  Sie können dann das Symbol klicken, um die Tonspur ein- und aus zu schalten. Um den Diavortrag zu unterbrechen, müssen Sie das Pause-Symbol unten links klicken.";
+echo "<br /><br /></li>";
 
 echo "<li>";
-echo "<b><font color=\"blue\">Navigation ...</b></font><br />";
-echo "Rechts neben den Bildern finden Sie eine Tabelle wodurch Sie direkten Zugriff zu anderen Photoalben haben.<br />";
+echo "<b><font color=\"blue\">Navigation ...</font></b><br />";
+echo "Rechts neben den Bildern finden Sie eine Tabelle wodurch Sie direkten Zugriff zu anderen Photoalben haben.";
+echo "<br /><br /></li>";
 
 echo "</ol>";
+echo "<ul>";
 
-echo "<br /><b>Bemerke:</b><br />";
+echo "<li>";
+echo "<b>Bemerk:</b><br />";
 echo "Miniaturbilder die NICHT richtige Bilder sind, wie PDF-Dateien, oder Ton, Buch, und Video Medien-Typen, können alleinständig betrachtet werden, aber sind niemals im Diavortrag.";
+echo "<br /><br /></li>";
 
-echo "<br /><br /><b>Für Verwalter:</b><br />";
+echo "<li>";
+echo "<b>Für Verwalter:</b><br />";
 echo "Falls Sie Dateien in gewöhnlichen Bild-Formaten (jpg, bmp, gif, usw.), die Bildertypen wie Foto, Urkunde, usw. darstellen, in der <b>Andere</b> Liste finden, haben Sie für diese Objekte vergessen, den richtigen Medien-Typ einzugeben.  Um diesen Fehler zu beheben, müssen Sie die Einzelheiten des Medien-Objekts bearbeiten.";
+echo "<br /><br /></li>";
 
-echo " </font> ";
+echo "</ul>";
  ?>

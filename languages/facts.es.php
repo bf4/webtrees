@@ -302,6 +302,10 @@ $factarray["_BIRT_HSIB"] = "Nacimiento de un medio hermano";
 $factarray["_MARR_HSIB"] = "Matrimonio de un medio hermano";
 $factarray["_DEAT_HSIB"] = "Defunción de un medio hermano";
 
+$factarray["_BIRT_NEPH"] = "Nacimiento de un sobrino o una sobrina";
+$factarray["_MARR_NEPH"] = "Matrimonio de un sobrino o una sobrina";
+$factarray["_DEAT_NEPH"] = "Defunción de un sobrino o una sobrina";
+
 $factarray["_DEAT_GPAR"] = "Defunción de un abuelo";
 
 $factarray["_BIRT_FSIB"] = "Nacimiento de un tío paterno";
@@ -315,6 +319,9 @@ $factarray["_DEAT_MSIB"] = "Defunción de un tío materno";
 $factarray["_BIRT_COUS"] = "Nacimiento de un primo hermano";
 $factarray["_MARR_COUS"] = "Matrimonio de un primo hermano";
 $factarray["_DEAT_COUS"] = "Defunción de un primo hermano";
+
+$factarray["_FAMC_EMIG"] = "Emigración de los padres";
+$factarray["_FAMC_RESI"] = "Residencia de los padres";
 
 //-- PGV Only facts
 $factarray["_THUM"]	= "¿Usar esta imagen como la miniatura?";

@@ -17,7 +17,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
-// $Id: filesystems.php,v 1.27 2006/04/22 14:35:57 bigmichi1 Exp $
+// $Id$
 
 //
 // xml_filesystems()

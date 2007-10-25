@@ -1683,7 +1683,6 @@ function PGVRListSHandler($attrs) {
 		$sortby = $vars[$vmatch[1]]["id"];
 		$sortby = trim($sortby);
 	}
-
 	$list = array();
 	$listname = "individual";
 	if (isset($attrs["list"])) $listname=$attrs["list"];
@@ -1740,8 +1739,9 @@ function PGVRListSHandler($attrs) {
 						}
 					}
 					else {
+						if ($tag=="EMAIL" || $tag=="_EMAIL") $tag="_?EMAIL";
 						$t = $tag;
-						$searchstr = $tag;
+						$searchstr = "1 ".$tag;
 					}
 					switch ($expr) {
 						case "CONTAINS":

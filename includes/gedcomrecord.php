@@ -482,6 +482,49 @@ class GedcomRecord {
 			else $factrec .= "\n".$line;
 		}
 	}
+	
+	/**
+	 * Merge the facts from another GedcomRecord object into this object
+	 * for generating a diff view
+	 * @param GedcomRecord $diff	the record to compare facts with
+	 */
+	function diffMerge(&$diff) {
+		if (is_null($diff)) return;
+		$this->parseFacts();
+		$diff->parseFacts();
+
+		//-- update old facts
+		foreach($this->facts as $key=>$event) {
+			$found = false;
+			foreach($diff->facts as $indexval => $newevent) {
+				$newfact = $newevent->getGedComRecord();
+				$newfact=preg_replace("/\\\/", "/", $newfact);
+				if (trim($newfact)==trim($event->getGedcomRecord())) {
+					$found = true;
+					break;
+				}
+			}
+			if (!$found) {
+				$this->facts[$key]->gedComRecord.="\r\nPGV_OLD\r\n";
+			}
+		}
+		//-- look for new facts
+		foreach($diff->facts as $key=>$newevent) {
+			$found = false;
+			foreach($this->facts as $indexval => $event) {
+				$newfact = $newevent->getGedcomRecord();
+				$newfact=preg_replace("/\\\/", "/", $newfact);
+				if (trim($newfact)==trim($fact->getGedcomRecord())) {
+					$found = true;
+					break;
+				}
+			}
+			if (!$found) {
+				$newevent->gedComRecord.="\nPGV_NEW\n";
+				$this->facts[]=$newevent;
+			}
+		}
+	}
 
 	//////////////////////////////////////////////////////////////////////////////
 	// Get the last-change timestamp for this record - optionally wrapped in a

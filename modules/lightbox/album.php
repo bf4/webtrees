@@ -29,6 +29,7 @@
  
 // Get Javascript variables from lb_config.php --------------------------- 
 	include('modules/lightbox/lb_config.php'); 
+
 	?>
 	<SCRIPT LANGUAGE=Javascript>
 	<?php if ($LB_MUSIC_FILE == "") { ?>
@@ -37,42 +38,15 @@
 		var myMusic 		= '<?php print $LB_MUSIC_FILE; ?>';  	// The music file
     <?php } ?>
 	var CB_SlShowTime 	= '<?php print $LB_SS_SPEED; 	?>';	// Slide show timer
-	</script>
+	var CB_Animation	= '<?php print $LB_TRANSITION; 	?>';	// Next/Prev Image transition effect
+	
+	</script>	
+
+	
 	<?php
 
 // ------------------------------------------------------------------------------- 
-global $LANGUAGE;
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-<head>
-
-  <title>Personal | Media Album </title>
-
-
-<?php if ($TEXT_DIRECTION == "rtl") { ?>
-		<link href ="modules/lightbox/css/clearbox_music_RTL.css" 	rel="stylesheet" type="text/css" />
-		<link href ="modules/lightbox/css/album_page.css" 			rel="stylesheet" type="text/css" media="screen" /> 
-		<!--[if lte IE 7]>
-		<link href ="modules/lightbox/css/album_page_RTL.css" 			rel="stylesheet" type="text/css" media="screen" /> 
-		<![endif]-->
-
-<?php }else{ ?>
-		<link href ="modules/lightbox/css/clearbox_music.css" 		rel="stylesheet" type="text/css" />
-		<link href ="modules/lightbox/css/album_page.css" 			rel="stylesheet" type="text/css" media="screen" />  
-<?php } ?>
-  
-	<script src="modules/lightbox/js/prototype.js" 				type="text/javascript"></script>  
-	<script src="modules/lightbox/js/Sound.js" 					type="text/javascript"></script>
-	<script src="modules/lightbox/js/clearbox.js" 				type="text/javascript"></script>
-  
-</head>
-
-<body>
-	<script src="modules/lightbox/js/wz_tooltip.js" 			type="text/javascript"></script>  
-	
-<?php
-//include('modules/lightbox/lb_config.php');
+global $LANGUAGE, $mediacnt;
 global $edit, $controller, $tabno, $_REQUEST, $thumb_edit, $n ;
 
 //------------------------------------------------------------------------------
@@ -100,7 +74,7 @@ echo "<table border=0 width='100%'><tr>" . "\n\n";
                 lightbox_print_media($pid, 0, true, 4);
            }
            elseif ($t==5) {
-                lightbox_print_media($pid, 0, true, 4);
+                lightbox_print_media($pid, 0, true, 5);
            }		   
            else{
            }
@@ -134,7 +108,6 @@ echo "</tr></table>";
 echo "<center>";
 ?>
 
-</body>
-</html>
+
 <?php  echo "\n" ;  ?>
 

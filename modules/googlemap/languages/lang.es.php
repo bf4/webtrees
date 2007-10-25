@@ -26,7 +26,6 @@
  * @subpackage GoogleMap
  * @version $Id$
  */
-
 if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Usted no puede acceder a este archivo de idioma directamente.";
 	exit;
@@ -115,7 +114,7 @@ $pgv_lang["pl_delete_error"]        = "Ubicación no borrada.  Esta ubicación t
 $pgv_lang["list_inactive"]        	= "Haga clic aquí para mostrar los lugares inactivos";
 
 //Placecheck specific text
-$pgv_lang["placecheck"]				= "Comprobación de sitios";
+$pgv_lang["placecheck"]				= "Comprobación de lugares";
 $pgv_lang['placecheck_text']		= "Esto listará todos los sitios del archivo GEDCOM seleccionado. Por defecto NO SE INCLUIRÁN lugares que que corresponden completamente entre el archivo GEDCOM y las tablas GoogleMap";
 $pgv_lang['placecheck_top']			= "Nivel más alto de la Jerarquía de Lugares";
 $pgv_lang['placecheck_one']			= "Lugar de Nivel Uno";

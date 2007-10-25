@@ -33,15 +33,38 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+//Config Parameters -------------------------------------
+$pgv_lang["configure_lightbox"]		= "ערוך אלבום Lightbox";
+$pgv_lang["mediatab"]       		= "<b>דף אישי - חוצץ מדיה</b><br />&nbsp;&nbsp;&nbsp;&nbsp;מראה"; 
+$pgv_lang["lb_admin_error"]         = "דף רק עבור מנהלנים"; 
+
+$pgv_lang["lb_icon"]				= "צלמית"; 
+$pgv_lang["lb_text"]				= "טכסט";
+$pgv_lang["lb_both"]				= "שניהם"; 
+$pgv_lang["lb_none"]				= "אף אחד"; 
+$pgv_lang["lb_ml_ThumbLinkAdvice"]	= "צלמית, טכסט, שניהם או אף אחד";
+
+$pgv_lang["lb_al_head_links"]		= "<b>דף אישי - חציץ כותרת של האלבום</b><br />&nbsp;&nbsp;&nbsp;&nbsp;מראה קישור"; 
+$pgv_lang["lb_al_thumb_links"]		= "<b>דף אישי - חציץ תמונות ממוזערות של האלבום </b><br />&nbsp;&nbsp;&nbsp;&nbsp;מראה קישור"; 
+$pgv_lang["lb_ml_thumb_links"]		= "<b>דף מולטימדיה - תמונות ממוזערות</b><br />&nbsp;&nbsp;&nbsp;&nbsp;מראה קישור"; 
+$pgv_lang["lb_music_file"]			= "<b>פס קול של מצגת שקופיות</b><br />&nbsp;&nbsp;&nbsp;&nbsp;(רק mp3)";
+$pgv_lang["lb_musicFileAdvice"]		= "מיקום קובץ פס קול (השאר ריק עבור שום פס קול)"; 
+$pgv_lang["lb_ss_speed"]			= "<b>מהירות מצגת שקופיות</b>"; 
+$pgv_lang["lb_ss_SpeedAdvice"]		= "משך תיזמון מצגת שקפים בשניות"; 
+
+// ---------------------------------------------------------------------
+
 $pgv_lang["lb_help"] = "עזרת אלבום";
 $pgv_lang["lightbox"] = "אלבום";
 $pgv_lang["showmenu"] = "הראה תפריט:";
 $pgv_lang["active"] = "פעיל";
 $pgv_lang["TYPE__other"] = "אחר";
 $pgv_lang["no_media"] = "אין"; 
+$pgv_lang["TYPE__footnotes"] = "הערות שוליים"; 
+
 $pgv_lang["census_text"]  = "\"תמונות המפקד האלו התקבלו מ\"הארכיון הלאומי\", השומר על הרשומות המקוריות, "; 
 $pgv_lang["census_text"] .= "והן מופיעות כאן כולל אישור שלהן בתנאי שלא יעשה בהן שום שימוש מסחרי ללא אישור ." . "\n" ;
-$pgv_lang["census_text"] .= "בקשות לפרסום מסחרי של תמונות מפקד אלו או תמונות מפקד אחרות שמופיעות באתר זה יש לשלוח אל : ";
+$pgv_lang["census_text"] .= "בקשות לפרסום מסחרי של תמונות מפקד אלו או תמונות מפקד אחרות שמופיעות באתר זה יש לשלוח אל: ";
 $pgv_lang["census_text"] .= "Image Library, The National Archives, Kew, Surrey, TW9 4DU, United Kingdom.\"" . "\n" ;
 
 $pgv_lang["lb_edit_details"] = "ערוך פרטים";

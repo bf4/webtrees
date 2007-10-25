@@ -20,7 +20,7 @@
  *
  * @package PhpGedView
  * @subpackage punBB
- * @version $Id: $
+ * @version $Id$
  * @author Clovis
  */
 $pgv_lang['mod_punbb'] = 'Forum';
