@@ -34,23 +34,33 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 //Config Parameters -------------------------------------
-$pgv_lang["configure_lightbox"]		= "Lightbox-Album Configuration";
-$pgv_lang["mediatab"]       		= "<b>Individual Page - Media Tab</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Appearance";
-$pgv_lang["lb_admin_error"]         = "Page only for Administrators";
+$pgv_lang["configure_lightbox"]			= "Lightbox-Album Configuration";
+$pgv_lang["mediatab"]       			= "<b>Individual Page - Media Tab</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Appearance";
+$pgv_lang["lb_admin_error"]				= "Page only for Administrators";
 
-$pgv_lang["lb_icon"]				= "Icon";
-$pgv_lang["lb_text"]				= "Text";
-$pgv_lang["lb_both"]				= "Both";
-$pgv_lang["lb_none"]				= "None";
-$pgv_lang["lb_ml_ThumbLinkAdvice"]	= "Icon, Text, Both, or None";
+$pgv_lang["lb_icon"]					= "Icon";
+$pgv_lang["lb_text"]					= "Text";
+$pgv_lang["lb_both"]					= "Both";
+$pgv_lang["lb_none"]					= "None";
+$pgv_lang["lb_ml_ThumbLinkAdvice"]		= "Icon, Text, Both, or None";
 
-$pgv_lang["lb_al_head_links"]		= "<b>Individual Page - Album Tab Header</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Link appearance";
-$pgv_lang["lb_al_thumb_links"]		= "<b>Individual Page - Album Tab Thumbnails</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Link appearance";
-$pgv_lang["lb_ml_thumb_links"]		= "<b>Multimedia Page - Thumbnails</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Link appearance";
-$pgv_lang["lb_music_file"]			= "<b>Slideshow sound track</b><br />&nbsp;&nbsp;&nbsp;&nbsp;(mp3 only)";
-$pgv_lang["lb_musicFileAdvice"]		= "Location of sound track file (Leave blank for no sound track)";
-$pgv_lang["lb_ss_speed"]			= "<b>Slide Show speed</b>";
-$pgv_lang["lb_ss_SpeedAdvice"]		= "Slide show timing in seconds";
+$pgv_lang["lb_al_head_links"]			= "<b>Individual Page - Album Tab Header</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Link appearance";
+$pgv_lang["lb_al_thumb_links"]			= "<b>Individual Page - Album Tab Thumbnails</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Link appearance";
+$pgv_lang["lb_ml_thumb_links"]			= "<b>Multimedia Page - Thumbnails</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Link appearance";
+$pgv_lang["lb_music_file"]				= "<b>Slideshow sound track</b><br />&nbsp;&nbsp;&nbsp;&nbsp;(mp3 only)";
+$pgv_lang["lb_musicFileAdvice"]			= "Location of sound track file (Leave blank for no sound track)";
+$pgv_lang["lb_ss_speed"]				= "<b>Slide Show speed</b>";
+$pgv_lang["lb_ss_SpeedAdvice"]			= "Slide show timing in seconds";
+
+$pgv_lang["lb_transition"]				= "Previous and Next Image Transition Effect";
+$pgv_lang["lb_normal"]					= "Normal";
+$pgv_lang["lb_double"]					= "Double";
+$pgv_lang["lb_warp"]					= "Warp";
+$pgv_lang["lb_url_dimensions"]			= "URL Window dimensions";
+$pgv_lang["lb_url_dimensionsAdvice"]	= "Width and Height of URL Window in pixels";
+$pgv_lang["lb_width"]					= "Width";
+$pgv_lang["lb_height"]					= "Height";
+									
 
 // ---------------------------------------------------------------------
 

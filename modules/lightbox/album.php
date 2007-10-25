@@ -34,9 +34,11 @@
 	<?php if ($LB_MUSIC_FILE == "") { ?>
 		var myMusic = null;
 	<?php }else{ ?>
-		var myMusic 		= '<?php print $LB_MUSIC_FILE; ?>';  	// The music file
+		var myMusic 	= '<?php print $LB_MUSIC_FILE; ?>'; // The music file
     <?php } ?>
 	var CB_SlShowTime 	= '<?php print $LB_SS_SPEED; 	?>';	// Slide show timer
+	var CB_Animation	= '<?php print $LB_TRANSITION; 	?>';	// Next/Prev Image transition effect
+	
 	</script>	
 
 	
@@ -67,7 +69,7 @@ global $LANGUAGE, $mediacnt;
 
 <?php
 //include('modules/lightbox/lb_config.php');
-global $edit, $controller, $tabno, $_REQUEST, $thumb_edit, $n ;
+global $edit, $controller, $tabno, $_REQUEST, $thumb_edit, $n, $LB_URL_WIDTH, $LB_URL_HEIGHT ;
 
 //------------------------------------------------------------------------------
 // Start Main Table

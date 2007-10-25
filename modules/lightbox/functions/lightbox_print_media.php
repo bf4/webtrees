@@ -215,11 +215,13 @@ $fn=1;
 					if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
 					
 					}else{
-						print "<tr><td id=\"Note " . ($fn) . "\" class=\"factnote\">";
-						$note[$fn]  = $pgv_lang["note"] . " " . ($fn) . "";		
-						print "<font size=1>" . $note[$fn] . "</font>";									
+						print "<tr>";
+						print "<td id=\"" . $pgv_lang["note"]. " " . ($fn) . "\" class=\"factnote\">";
+						$note[$fn]  = $pgv_lang["note"] . " " . ($fn) . "";
+						print "<font size=1>" . $note[$fn] . "</font>";
 						print_fact_notes($mgedrec[$items[$fn]-1], 1);
-						print "</td></tr>";
+						print "</td>";
+						print "</tr>";
 						$fn++;
 						echo '</table>';
 					}	

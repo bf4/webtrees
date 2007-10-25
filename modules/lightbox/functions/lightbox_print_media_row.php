@@ -41,6 +41,7 @@
     global $SHOW_ID_NUMBERS, $GEDCOM, $factarray, $pgv_lang, $THUMBNAIL_WIDTH, $USE_MEDIA_VIEWER;
     global $SEARCH_SPIDER;
     global $t, $n, $item, $items, $p, $edit, $SERVER_URL, $reorder, $LB_AL_THUMB_LINKS, $note, $rowm;
+	global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 
 	// If reorder media has been clicked
 	if (isset($reorder) && $reorder==1) {
@@ -216,7 +217,7 @@
 						
 					// Else if source info available and file = PDF  - Open with Lightbox URL,  and create tooltip link for source AND media details
 					}else if (eregi("1 SOUR",$rowm['m_gedrec']) && (eregi("\.pdf",$rowm['m_file']) || eregi("http",$rowm['m_file']) ) ) {  
-						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(1200,700,click)' title=\"" . stripslashes($mediaTitle) . "\"\"
+						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' title=\"" . stripslashes($mediaTitle) . "\"\"
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
 									. "<br>" 								
@@ -233,7 +234,7 @@
 								
 					// Else if no source info available and file = PDF or URL - Open with Lightbox URL,  and create tooltip link for media details only
 					}else if (!eregi("1 SOUR",$rowm['m_gedrec']) && (eregi("\.pdf",$rowm['m_file']) || eregi("http",$rowm['m_file'])) ) { 
-						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(1200,700,click)' title=\"" . stripslashes($mediaTitle) . "\"\" 
+						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' title=\"" . stripslashes($mediaTitle) . "\"\" 
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
 									. "<br>"
