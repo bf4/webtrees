@@ -29,15 +29,17 @@
 //These files are required for this page to work
 require_once("includes/controllers/media_ctrl.php");
 
-if (empty($controller->pid)) {
-	//If there isn't any media loaded then this will print the no media tag.
-	echo "<div align=\"center\">".$pgv_lang["no_media"]."</div>";
-}
-else{
+/* Note:
+ *  if $controller->getLocalFilename() is not set, then an invalid MID was passed in
+ *  if $controller->pid is not set, then a filename was passed in that is not in the gedcom
+ */
+
+$filename = $controller->getLocalFilename();
+
 
 	print_header($controller->getPageTitle());
 	//The following lines of code are used to print the menu box on the top right hand corner
-	if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
+	if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))&&!empty($controller->pid)&&!empty($filename)) {
 		if ($controller->userCanEdit() || $controller->canShowOtherMenu()) { ?>
 			<table class="sublinks_table rtl noprint" style="margin: 10px;" cellspacing="4" cellpadding="0" align="<?php print $TEXT_DIRECTION=='ltr'?'right':'left';?>">
 				<tr>
@@ -67,7 +69,7 @@ else{
 		<table width="70%">
 			<tr>
 				<td class="name_head" colspan="2">
-					 <?php print PrintReady($controller->mediaobject->getTitle()); if ($SHOW_ID_NUMBERS) print " " . getLRM() . "(".$controller->pid.")" . getLRM(); ?>
+					 <?php print PrintReady($controller->mediaobject->getTitle()); if ($SHOW_ID_NUMBERS && !empty($controller->pid)) print " " . getLRM() . "(".$controller->pid.")" . getLRM(); ?>
 					 <?php print PrintReady($controller->mediaobject->getAddTitle()); ?> <br /><br />
 					 <?php if ($controller->mediaobject->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 				</td>
@@ -77,8 +79,7 @@ else{
 					<?php
 					if ($controller->canDisplayDetails()) {
 					//Checks to see if the File exist in the system.
-					$filename = $controller->getLocalFilename();
-					if (isFileExternal($filename) || $controller->mediaobject->fileExists()){
+					if (!empty($filename) && (isFileExternal($filename) || $controller->mediaobject->fileExists()) ) {
 						// the file is external, or it exists locally 
 						// attempt to get the image size
 						if ($controller->mediaobject->getWidth()) {
@@ -135,7 +136,7 @@ else{
 				<td class="center" colspan="2">
 					<?php
 					$links = get_media_relations($controller->pid);
-					if (isset($links)){
+					if (isset($links) && !empty($links)){
 					?>
 					 <br /><b><?php print $pgv_lang["relations_heading"]; ?></b><br /><br />
 					<?php
@@ -174,7 +175,6 @@ function ilinkitem(mediaid, type) {
 //-->
 </script>
 <br /><br /><br />
-	<?php
-}
+<?php
 print_footer();
 ?>

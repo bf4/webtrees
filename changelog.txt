@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1.3
+ - Fixed [ 1814226 ] Clean up mediaviewer output when requested file doesn't exist (ljm)
  - Added [ 1743793 ] Email Report (yalnifj)
  - Fixed [ 1818948 ] Notes in Notes Tab Truncated (canajun2eh)
  - Added [ 1753870 ] "automatically expand notes" option (opus27)
