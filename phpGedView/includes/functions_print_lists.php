@@ -374,7 +374,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo "</td>";
 		//-- GIVN
 		echo "<td style=\"display:none\">";
-		$exp = explode(",", $name.",");
+		$exp = explode(",", str_replace('<', ',', $name).",");
 		echo $exp[1];
 		echo "</td>";
 		//-- SOSA
@@ -640,7 +640,7 @@ function print_fam_table($datalist, $legend="") {
 		echo "</td>";
 		//-- Husb GIVN
 		echo "<td style=\"display:none\">";
-		$exp = explode(",", $name.",");
+		$exp = explode(",", str_replace('<', ',', $name).",");
 		echo $exp[1];
 		echo "</td>";
 		//-- Husband age
@@ -674,7 +674,7 @@ function print_fam_table($datalist, $legend="") {
 		echo "</td>";
 		//-- Wife GIVN
 		echo "<td style=\"display:none\">";
-		$exp = explode(",", $name.",");
+		$exp = explode(",", str_replace('<', ',', $name).",");
 		echo $exp[1];
 		echo "</td>";
 		//-- Wife age
@@ -1190,6 +1190,7 @@ function print_changes_table($datalist) {
 	//echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
+	echo "<th style=\"display:none\">GIVN</th>";
 	echo "<th class=\"list_label\">".$factarray["CHAN"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["_PGVU"]."</th>";
 	echo "</tr>\n";
@@ -1225,10 +1226,6 @@ function print_changes_table($datalist) {
 		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($record->type=="INDI") {
 			echo $record->getSexImage();
-//			for($ni=1; $ni<=$record->getNameCount(); $ni++) {
-//				$addname = $record->getSortableName('', $ni);
-//				if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-//			}
 			$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 			if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
  			foreach ($name_subtags as $k=>$subtag) {
@@ -1247,6 +1244,11 @@ function print_changes_table($datalist) {
 			}
 		}
 		echo "</td>";
+		//-- GIVN
+		echo "<td style=\"display:none\">";
+		$exp = explode(",", str_replace('<', ',', $name).",");
+		echo $exp[1];
+		echo "</td>";
 		//-- Last change date/time
 		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">".$record->LastChangeTimestamp(empty($SEARCH_SPIDER))."</td>";
 		//-- Last change user
@@ -1258,10 +1260,12 @@ function print_changes_table($datalist) {
 	//echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
+	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
 	echo $pgv_lang["total_names"].": ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	if ($n>=$NMAX) echo "<br /><span class=\"warning\">".$pgv_lang["recent_changes"]." &gt; ".$NMAX."</span>";
 	echo "</td>";
+	echo "<td style=\"display:none\">GIVN</td>";
 	echo "<td></td>";
 	echo "<td></td>";
 	echo "</tr>";
@@ -1286,6 +1290,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	//print "<td></td>";
 	//if ($SHOW_ID_NUMBERS) print "<th class=\"list_label rela\">".$pgv_lang["id"]."</th>";
 	print "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
+	print "<th style=\"display:none\">GIVN</th>";
 	print "<th class=\"list_label\">".$factarray["DATE"]."</th>";
 	print "<th class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></th>";
 	print "<th class=\"list_label\">".$factarray["EVEN"]."</th>";
@@ -1355,6 +1360,11 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 			}
 		}
 		print "</td>";
+		//-- GIVN
+		echo "<td style=\"display:none\">";
+		$exp = explode(",", str_replace('<', ',', $name).",");
+		echo $exp[1];
+		echo "</td>";
 		//-- Event date
 		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		print str_replace('<a', '<a name="'.$value['date']->MinJD().'"', $value['date']->Display(empty($SEARCH_SPIDER)));
@@ -1384,9 +1394,11 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	//print "<td></td>";
 	//if ($SHOW_ID_NUMBERS) print "<td></td>";
 	print "<td class=\"list_label\">";
+	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
 	print $pgv_lang["stat_events"].": ".$n;
 	if ($hidden) print "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	print "</td>";
+	print "<td style=\"display:none\">GIVN</td>";
 	print "<td>";
 	if ($allow_download) {
 		$uri = $SERVER_URL.basename($_SERVER["REQUEST_URI"]);
@@ -1585,19 +1597,6 @@ function load_behaviour() {
 		}**/
 	}
 	Behaviour.register(myrules);
-	/**
-	 * sort by GIVN
-	 */
-	function sortByNextCol(node) {
-		var td = node.parentNode;
-		var tr = td.parentNode;
-		var table = tr.parentNode;
-		for (var c = 0; c < tr.childNodes.length; c++) if (tr.childNodes[c] == td) break;
-		c++; // c is current col => c+1 is hidden sortable col
-		var a = table.rows[0].cells[c].getElementsByTagName("a"); // get hidden col header links
-		if (a.length) ts_resortTable(a[0], c);
-		return false;
-	}
 	// ]]>
 	</script>
 <?php
