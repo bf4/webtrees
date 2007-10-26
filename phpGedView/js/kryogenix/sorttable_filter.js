@@ -78,14 +78,14 @@ function table_filter_alive(id) {
 	var jd_1jan=1721061+365*year+Math.floor((year-1)/4)-Math.floor((year-1)/100)+Math.floor((year-1)/400);
 	var jd_31dec=1721425+365*year+Math.floor(year/4)-Math.floor(year/100)+Math.floor(year/400);
 
-	// get birth and death column number
+	// get birth and death column number => search for <span class="date"
 	var BCOL = -1;
 	var DCOL = -1;
 	var firstRow = table.rows[1];
 	var key;
 	for (var c=0;c<firstRow.cells.length;c++) {
-		key = firstRow.cells[c].getElementsByTagName("a");
-		if (key.length && key[0].name && key[0].name.match(/^\d+$/)) {
+		key = firstRow.cells[c].getElementsByTagName("SPAN");
+		if (key.length && key[0].className && key[0].className.indexOf('date') != -1) {
 			if (BCOL<0)
 				BCOL=c;
 			else {
