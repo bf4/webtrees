@@ -180,15 +180,14 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 		print "</td>\n";
 	}
 	print "</tr></table>\n\n";
-	// [ 1750674 ] Family.php, add MARR date, place to parents
-	//if ($sosa!=0) {
+	if ($sosa!=0) {
 		print "<a href=\"family.php?famid=$famid\" class=\"details1\">";
 		if ($SHOW_ID_NUMBERS) print getLRM() . "($famid)" . getLRM() . "&nbsp;&nbsp;";
 		else print str_repeat("&nbsp;", 10);
 		if (showFact("MARR", $famid)) print_simple_fact($family->getGedcomRecord(), "MARR", $wife->getXref()); else print $pgv_lang["private"];
 		print "</a>";
-	//}
-	//else print "<br />\n";
+	}
+	else print "<br />\n";
 
 	/**
 	 * wife side
@@ -264,7 +263,7 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
  * @param string $label optional indi label (descendancy booklet)
  */
 function print_family_children($famid, $childid = "", $sosa = 0, $label="", $personcount="1") {
-	global $pgv_lang, $pbwidth, $pbheight, $view, $show_famlink, $show_cousins;
+	global $pgv_lang, $factarray, $pbwidth, $pbheight, $view, $show_famlink, $show_cousins;
 	global $PGV_IMAGE_DIR, $PGV_IMAGES, $show_changes, $pgv_changes, $GEDCOM, $SHOW_ID_NUMBERS, $TEXT_DIRECTION;
 
 	$children = get_children_ids($famid);
