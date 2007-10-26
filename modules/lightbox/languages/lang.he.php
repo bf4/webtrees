@@ -35,13 +35,13 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 //Config Parameters -------------------------------------
 $pgv_lang["configure_lightbox"]		= "ערוך אלבום Lightbox";
-$pgv_lang["mediatab"]       		= "<b>דף אישי - חוצץ מדיה</b><br />&nbsp;&nbsp;&nbsp;&nbsp;מראה"; 
-$pgv_lang["lb_admin_error"]         = "דף רק עבור מנהלנים"; 
+$pgv_lang["mediatab"]       			= "<b>דף אישי - חוצץ מדיה</b><br />&nbsp;&nbsp;&nbsp;&nbsp;מראה"; 
+$pgv_lang["lb_admin_error"]         		= "דף רק עבור מנהלנים"; 
 
-$pgv_lang["lb_icon"]				= "צלמית"; 
-$pgv_lang["lb_text"]				= "טכסט";
-$pgv_lang["lb_both"]				= "שניהם"; 
-$pgv_lang["lb_none"]				= "אף אחד"; 
+$pgv_lang["lb_icon"]			= "צלמית"; 
+$pgv_lang["lb_text"]			= "טכסט";
+$pgv_lang["lb_both"]			= "שניהם"; 
+$pgv_lang["lb_none"]			= "אף אחד"; 
 $pgv_lang["lb_ml_ThumbLinkAdvice"]	= "צלמית, טכסט, שניהם או אף אחד";
 
 $pgv_lang["lb_al_head_links"]		= "<b>דף אישי - חציץ כותרת של האלבום</b><br />&nbsp;&nbsp;&nbsp;&nbsp;מראה קישור"; 
@@ -52,14 +52,23 @@ $pgv_lang["lb_musicFileAdvice"]		= "מיקום קובץ פס קול (השאר ר
 $pgv_lang["lb_ss_speed"]			= "<b>מהירות מצגת שקופיות</b>"; 
 $pgv_lang["lb_ss_SpeedAdvice"]		= "משך תיזמון מצגת שקפים בשניות"; 
 
+$pgv_lang["lb_transition"]			= "צורת מעבר מתמונה לתמונה";
+$pgv_lang["lb_normal"]			= "רגיל"; 
+$pgv_lang["lb_double"]			= "כפול"; 
+$pgv_lang["lb_warp"]			= "גרירה"; 
+$pgv_lang["lb_url_dimensions"]		= "מימדי חלון URL"; 
+$pgv_lang["lb_url_dimensionsAdvice"]	= "רוחב וגובה של חלון URL בפיקסלים";
+$pgv_lang["lb_width"]			= "רוחב"; 
+$pgv_lang["lb_height"]			= "גובה"; 
+
 // ---------------------------------------------------------------------
 
-$pgv_lang["lb_help"] = "עזרת אלבום";
-$pgv_lang["lightbox"] = "אלבום";
-$pgv_lang["showmenu"] = "הראה תפריט:";
-$pgv_lang["active"] = "פעיל";
-$pgv_lang["TYPE__other"] = "אחר";
-$pgv_lang["no_media"] = "אין"; 
+$pgv_lang["lb_help"] 	= "עזרת אלבום";
+$pgv_lang["lightbox"] 	= "אלבום";
+$pgv_lang["showmenu"] 	= "הראה תפריט:";
+$pgv_lang["active"] 	= "פעיל";
+$pgv_lang["TYPE__other"] 	= "אחר";
+$pgv_lang["no_media"] 	= "אין"; 
 $pgv_lang["TYPE__footnotes"] = "הערות שוליים"; 
 
 $pgv_lang["census_text"]  = "\"תמונות המפקד האלו התקבלו מ\"הארכיון הלאומי\", השומר על הרשומות המקוריות, "; 
@@ -85,5 +94,6 @@ $pgv_lang["lb_source_avail"] = "קיימים נתוני מקור - לחץ כאן
 
 $pgv_lang["lb_private"] = "התמונה קשורה<br>לאדם פרטי"; 
 $pgv_lang["lb_view_source_tip"] = "הראה מקור: "; 
-$pgv_lang["lb_view_details_tip"] = "הראה פרטי מדיה: "; 
+$pgv_lang["lb_view_details_tip"] = "הראה פרטי מדיה: ";
+
 ?>

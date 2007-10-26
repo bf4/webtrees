@@ -180,9 +180,9 @@ $factarray["FAMS:SPOUSE:BIRT:PLAC"] = "מקום הלידה של בן/בת הזו
 $factarray["FAMC:WIFE:GIVN"] = "שם פרטי של האם";
 $factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "שם פרטי של הסב מצד האב";
 $factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "שם פרטי של הסבתא מצד האם";
-//@@$factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Paternal Grandfather's Given Name";
-//@@$factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Maternal Grandmother's Given Name";
-
+$factarray["FAMC:WIFE:FAMC:HUSB:GIVN"] = "שם פרטי של הסב מצד האם"; 
+$factarray["FAMC:HUSB:FAMC:WIFE:GIVN"] = "שם פרטי של הסבתא מצד האב"; 
+$factarray["FAMS:CHIL:BIRT:PLAC"] = "מקום הלידה של בן/בת"; 
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "מקום לידה";
 $factarray["DEAT:PLAC"] = "מקום פטירה";
