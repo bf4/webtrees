@@ -114,7 +114,7 @@ $i = 0;
     <table class="facts_table">
 
     <tr >
-		<td class="descriptionbox" width=400><?php print_help_link("mediatab_help", "qm", "mediatab"); ?><?php print $pgv_lang["mediatab"];?></td> 
+		<td class="descriptionbox" width=400><?php print_help_link("mediatab_help", "qm", "mediatab"); ?><b><?php print $pgv_lang["mediatab"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_appearance"];?></td> 
 		<td class="optionbox">
 			<select name="NEW_mediatab" tabindex="<?php $i++; print $i?>" onfocus="getHelp('mediatab_help');"> 
                 <option value="1" <?php if ($mediatab==1) print "selected=\"selected\""; ?>><?php print $pgv_lang["show"];?></option>		
@@ -129,7 +129,7 @@ $i = 0;
 	</td></tr>
 	
     <tr>
-		<td class="descriptionbox"><?php print_help_link("lb_al_head_links_help", "qm", "lb_al_head_links");?><?php print $pgv_lang["lb_al_head_links"];?></td> 
+		<td class="descriptionbox"><?php print_help_link("lb_al_head_links_help", "qm", "lb_al_head_links");?><b><?php print $pgv_lang["lb_al_head_links"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_linkAppearance"];?></td> 
 		<td class="optionbox">
 			<select name="NEW_LB_AL_HEAD_LINKS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_AL_HEAD_LINKS_help');">
                 <option value="icon" <?php if ($LB_AL_HEAD_LINKS=="icon") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_icon"];?></option>
@@ -144,7 +144,7 @@ $i = 0;
 	</td></tr>
 	
     <tr>
-		<td class="descriptionbox"><?php print_help_link("lb_al_thumb_links_help", "qm", "lb_al_thumb_links");?><?php print $pgv_lang["lb_al_thumb_links"];?></td> 
+		<td class="descriptionbox"><?php print_help_link("lb_al_thumb_links_help", "qm", "lb_al_thumb_links");?><b><?php print $pgv_lang["lb_al_thumb_links"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_linkAppearance"];?></td> 
 		<td class="optionbox"><select name="NEW_LB_AL_THUMB_LINKS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_AL_THUMB_LINKS_help');">
                 <option value="icon" <?php if ($LB_AL_THUMB_LINKS=="icon") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_icon"];?></option>
                 <option value="text" <?php if ($LB_AL_THUMB_LINKS=="text") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_text"];?></option>
@@ -157,7 +157,7 @@ $i = 0;
 	</td></tr>
 	
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("lb_ml_thumb_links_help", "qm", "lb_ml_thumb_links");?><?php print $pgv_lang["lb_ml_thumb_links"];?></td> 
+		<td class="descriptionbox"><?php print_help_link("lb_ml_thumb_links_help", "qm", "lb_ml_thumb_links");?><b><?php print $pgv_lang["lb_ml_thumb_links"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_linkAppearance"];?></td> 
 		<td class="optionbox">
 			<select name="NEW_LB_ML_THUMB_LINKS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_ML_THUMB_LINKS_help');" />
                 <option value= "text" <?php if ($LB_ML_THUMB_LINKS == "text")  print "selected=\"selected\""; ?>><?php print  $pgv_lang["lb_text"];?></option>
@@ -165,7 +165,7 @@ $i = 0;
                 <option value= "both" <?php if ($LB_ML_THUMB_LINKS == "both")  print "selected=\"selected\""; ?>><?php print  $pgv_lang["lb_both"];?></option>
                 <option value= "none" <?php if ($LB_ML_THUMB_LINKS == "none")  print "selected=\"selected\""; ?>><?php print  $pgv_lang["lb_none"];?></option>
             </select>		
-		&nbsp;&nbsp; <?php print $pgv_lang["lb_ml_ThumbLinkAdvice"];?>		
+		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_none"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_text"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_icon"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_both"];?>	
 		</td>
     </tr>		
 	
@@ -174,7 +174,7 @@ $i = 0;
 	</td></tr>
 
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("lb_ss_speed_help", "qm", "lb_ss_speed");?><?php print $pgv_lang["lb_ss_speed"];?></td> 
+		<td class="descriptionbox"><?php print_help_link("lb_ss_speed_help", "qm", "lb_ss_speed");?><b><?php print $pgv_lang["lb_ss_speed"];?></b></td> 
 		<td class="optionbox"><select name="NEW_LB_SS_SPEED" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_SS_SPEED_help');" />
                 <option value= "2" <?php if ($LB_SS_SPEED == 2)  print "selected=\"selected\""; ?>><?php print  "2";?></option>
                 <option value= "3" <?php if ($LB_SS_SPEED == 3)  print "selected=\"selected\""; ?>><?php print  "3";?></option>
@@ -190,7 +190,7 @@ $i = 0;
                 <option value="20" <?php if ($LB_SS_SPEED ==20)  print "selected=\"selected\""; ?>><?php print "20";?></option>	
                 <option value="25" <?php if ($LB_SS_SPEED ==25)  print "selected=\"selected\""; ?>><?php print "25";?></option>					
             </select>		
-		&nbsp;&nbsp; <?php print $pgv_lang["lb_ss_SpeedAdvice"];?>
+		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_ss_SpeedAdvice"];?>
 		</td>
     </tr>		
 
@@ -198,10 +198,10 @@ $i = 0;
 	</td></tr>
 	
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("lb_music_file_help", "qm", "lb_music_file");?><?php print $pgv_lang["lb_music_file"];?></td> 
+		<td class="descriptionbox"><?php print_help_link("lb_music_file_help", "qm", "lb_music_file");?><b><?php print $pgv_lang["lb_music_file"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_MP3Only"];?></td> 
 		<td class="optionbox">
-			<input type="text" name="NEW_LB_MUSIC_FILE" value="<?php print $LB_MUSIC_FILE;?>" size="60" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_MUSIC_FILE_help');" />
-		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_musicFileAdvice"];?>
+			<input type="text" name="NEW_LB_MUSIC_FILE" value="<?php print $LB_MUSIC_FILE;?>" size="60" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_MUSIC_FILE_help');" /><br />
+		<?php print $pgv_lang["lb_musicFileAdvice"];?>
 		</td>
     </tr>	
 	
@@ -210,7 +210,7 @@ $i = 0;
 	</td></tr>
 	
     <tr>
-		<td class="descriptionbox"><?php print_help_link("lb_transition_help", "qm", "lb_transition");?><?php print $pgv_lang["lb_transition"];?></td> 
+		<td class="descriptionbox"><?php print_help_link("lb_transition_help", "qm", "lb_transition");?><b><?php print $pgv_lang["lb_transition"];?></b></td> 
 		<td class="optionbox"><select name="NEW_LB_TRANSITION" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_TRANSITION_help');">
 				<option value="none"   <?php if ($LB_TRANSITION=="none")   print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_none"];?></option>
 				<option value="normal" <?php if ($LB_TRANSITION=="normal") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_normal"];?></option>
@@ -225,14 +225,14 @@ $i = 0;
 	</td></tr>
 
 	<tr>
-		<td class="descriptionbox"><?php print_help_link("lb_url_dimensions_help", "qm", "lb_url_dimensions");?><?php print $pgv_lang["lb_url_dimensions"];?></td> 
+		<td class="descriptionbox"><?php print_help_link("lb_url_dimensions_help", "qm", "lb_url_dimensions");?><b><?php print $pgv_lang["lb_url_dimensions"];?><b></td> 
 		<td class="optionbox">
 			<input type="text" name="NEW_LB_URL_WIDTH"  value="<?php print $LB_URL_WIDTH;?>"  size="4" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_TRANSITION_help');" />
 			<?php print $pgv_lang["lb_width"];?>
 			&nbsp;&nbsp;&nbsp; 
 			<input type="text" name="NEW_LB_URL_HEIGHT" value="<?php print $LB_URL_HEIGHT;?>" size="4" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_TRANSITION_help');" />
-			<?php print $pgv_lang["lb_height"];?>
-		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_url_dimensionsAdvice"];?>
+			<?php print $pgv_lang["lb_height"];?><br />
+		<?php print $pgv_lang["lb_url_dimensionsAdvice"];?>
 		</td>
     </tr>	
 	
@@ -253,7 +253,7 @@ $i = 0;
             &nbsp;&nbsp;
             <input type="reset" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["reset"];?>" />
             &nbsp;&nbsp;				
-			<INPUT TYPE="button" VALUE="Return to Album Page" onclick="javascript:window.location='individual.php?pid=<?php echo $pid;?>'" /> 			
+			<INPUT TYPE="button" VALUE="<?php print $pgv_lang["lb_toAlbumPage"];?>" onclick="javascript:window.location='individual.php?pid=<?php echo $pid;?>'" /> 			
         </td>
 
     </tr>

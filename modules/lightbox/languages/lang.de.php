@@ -36,22 +36,35 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 //Config Parameters -------------------------------------
 $pgv_lang["configure_lightbox"]		= "Album Konfiguration";
-$pgv_lang["mediatab"]       		= "<b>Persönliche Fakten Seite - Multimedia Ordner</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Darstellung";
+$pgv_lang["mediatab"]       		= "Persönliche Fakten Seite - Multimedia Ordner";
+$pgv_lang["lb_appearance"]			= "Darstellung";
+$pgv_lang["lb_linkAppearance"]		= "Links-Darstellung";
+$pgv_lang["lb_MP3Only"]				= "(nur mp3 unterstützt)";
 $pgv_lang["lb_admin_error"]         = "Nur für Verwalter bestimmt";
+$pgv_lang["lb_toAlbumPage"]			= "Zurück zur Album-Seite";
 
 $pgv_lang["lb_icon"]				= "Ikon";
 $pgv_lang["lb_text"]				= "Text";
 $pgv_lang["lb_both"]				= "Beide";
 $pgv_lang["lb_none"]				= "Keine";
-$pgv_lang["lb_ml_ThumbLinkAdvice"]	= "Ikon, Text, Beide, oder Keine";
 
-$pgv_lang["lb_al_head_links"]		= "<b>Persönliche Fakten Seite - Album Ordner Kopfbereich</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Links-Darstellung";
-$pgv_lang["lb_al_thumb_links"]		= "<b>Persönliche Fakten Seite - Album Ordner Miniaturbilder</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Links-Darstellung";
-$pgv_lang["lb_ml_thumb_links"]		= "<b>MultiMedia Seite - Minaturbilder</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Links-Darstellung";
-$pgv_lang["lb_music_file"]			= "<b>Dia-Vortrag Tonspur</b><br />&nbsp;&nbsp;&nbsp;&nbsp;(nur mp3 unterstützt)";
+$pgv_lang["lb_al_head_links"]		= "Persönliche Fakten Seite - Album Ordner Kopfbereich";
+$pgv_lang["lb_al_thumb_links"]		= "Persönliche Fakten Seite - Album Ordner Miniaturbilder";
+$pgv_lang["lb_ml_thumb_links"]		= "MultiMedia Seite - Minaturbilder";
+$pgv_lang["lb_music_file"]			= "Dia-Vortrag Tonspur";
 $pgv_lang["lb_musicFileAdvice"]		= "Lagerort der gewählten Tonspur  (wenn leer: keine Tonspur)";
-$pgv_lang["lb_ss_speed"]			= "<b>Dia-Vortrag Geschwindigkeit</b>";
+$pgv_lang["lb_ss_speed"]			= "Dia-Vortrag Geschwindigkeit";
 $pgv_lang["lb_ss_SpeedAdvice"]		= "Dia-Vortrag Geschwindigkeit in Sekunden";
+
+$pgv_lang["lb_transition"]			= "Dia-Wechsel Geschwindigkeit";
+$pgv_lang["lb_normal"]				= "Normal";
+$pgv_lang["lb_double"]				= "Doppelt";
+$pgv_lang["lb_warp"]				= "Super";
+$pgv_lang["lb_url_dimensions"]		= "URL-Fenster Maß";
+$pgv_lang["lb_url_dimensionsAdvice"]	= "Breite und Höhe des URL-Fensters in Pixel";
+$pgv_lang["lb_width"]				= "Breite";
+$pgv_lang["lb_height"]				= "Höhe";
+
 
 // ---------------------------------------------------------------------
 

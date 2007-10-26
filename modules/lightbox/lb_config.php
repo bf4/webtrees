@@ -55,7 +55,7 @@ $LB_SS_SPEED = "4";					// SlideShow speed in seconds.  [Min 2  max 25]
 							
 $LB_MUSIC_FILE = "modules/lightbox/music/Father_to_Son.mp3";  // The music file. [mp3 only]
 
-$LB_TRANSITION = "double";			// Next or Prvious Image Transition effect
+$LB_TRANSITION = "warp";			// Next or Prvious Image Transition effect
 										// Set to "none"		No transtion effect
 										// Set to "normal"		Normal transtion effect
 										// Set to "double"		Fast transition effect
