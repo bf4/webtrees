@@ -258,14 +258,18 @@ function tempObj(tab, oXmlHttp) {
 			target = document.getElementById(tabid[tab]+'_content');
 			evalAjaxJavascript(oXmlHttp.responseText, target);
 			target.style.height = 'auto';
-			if (tab==8) {
-				if (!loadedTabs[8]) {
+			if (tabid[tab]=='googlemap') {
+				if (!loadedTabs[tab]) {
 					loadMap();
 					map.setMapType(GOOGLEMAP_MAP_TYPE);
 				}
 				SetMarkersAndBounds();
 				ResizeMap();
 				ResizeMap();
+			}
+			//-- initialize lightbox tabs
+			if (tabid[tab]=='lightbox2') {
+				CB_Init();
 			}
 			loadedTabs[tab] = true;
 		}
@@ -619,8 +623,6 @@ else
 
 	if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 
-		include('modules/lightbox/functions/lb_call_js.php'); 
-		
 		// The following is temporary, until the handling of the Lightbox Help system
 		// is adjusted to match the usual PhpGedView practice
 		$lbHelpFile = "modules/lightbox/languages/help.".$lang_short_cut[$LANGUAGE].".php";

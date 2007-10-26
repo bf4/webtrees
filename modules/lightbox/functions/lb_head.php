@@ -59,10 +59,9 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_te
    }
 -->
 </script>
-
 <?php
 //loadLangFile("lb_lang");
-
+include('modules/lightbox/functions/lb_call_js.php'); 
 	//Lightbox-Album header Links
 		//print "<br>";
 		print "<table border=0 width=\"66%\"><tr>";
