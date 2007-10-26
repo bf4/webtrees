@@ -3,7 +3,7 @@
  * Additional filtering functions for sorttable.js
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2006  John Finlay and Others
+ * Copyright (C) 2002 to 2007  John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -122,5 +122,16 @@ function table_filter_alive(id) {
 	}
 	// Resequence row numbers
 	table_renum(id);
+	return false;
+}
+
+function sortByNextCol(node) {
+	var td = node.parentNode;
+	var tr = td.parentNode;
+	var table = tr.parentNode;
+	for (var c = 0; c < tr.childNodes.length; c++) if (tr.childNodes[c] == td) break;
+	c++; // c is current col => c+1 is hidden sortable col
+	var a = table.rows[0].cells[c].getElementsByTagName("a"); // get hidden col header links
+	if (a.length) ts_resortTable(a[0], c);
 	return false;
 }
