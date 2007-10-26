@@ -491,42 +491,30 @@ function print_indi_table($datalist, $legend="", $option="") {
 	//-- table footer
 	echo "<tr class=\"sortbottom\">";
 	echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<td></td>";
-	echo "<td class=\"list_label\">";
+	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // INDI:ID
+	echo "<td class=\"list_label\">"; // NAME
+	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
 	echo $pgv_lang["total_names"]." : ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
-	echo '<br /><a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a>';
 	echo "</td>";
-	echo "<td></td>"; // GIVN
-	if ($option=="sosa") echo "<td></td>";
-	echo "<td></td>";
-	if ($tiny) echo "<td></td>";
-	echo "<td></td>";
-	if ($tiny) echo "<td></td>";
-	echo "<td></td>";
-	if ($tiny) echo "<td></td>";
-	echo "<td></td>";
-	echo "<td></td>";
-	if ($tiny && $SHOW_LAST_CHANGE) echo "<td></td>";
+	echo "<td style=\"display:none\">GIVN</td>";
+	if ($option=="sosa") echo "<td></td>"; // SOSA
+	echo "<td></td>"; // BIRT:DATE
+	if ($tiny) echo "<td></td>"; // BIRT:Reminder
+	echo "<td></td>"; // BIRT:PLAC
+	if ($tiny) echo "<td></td>"; // Children
+	echo "<td></td>"; // DEAT:DATE
+	if ($tiny) echo "<td></td>"; // DEAT:Reminder
+	echo "<td></td>"; // DEAT:AGE
+	echo "<td></td>"; // DEAT:PLAC
+	if ($tiny && $SHOW_LAST_CHANGE) echo "<td></td>"; // CHAN
+	echo "<td style=\"display:none\">SEX</td>";
+	echo "<td style=\"display:none\">BIRT</td>";
+	echo "<td style=\"display:none\">DEAT</td>";
+	echo "<td style=\"display:none\">TREE</td>";
 	echo "</tr>";
 	echo "</table>\n";
 	echo "</fieldset>\n";
-?>
-		<script type="text/javascript">
-		// <![CDATA[
-		function sortByNextCol(node) {
-			var td = node.parentNode;
-			var tr = td.parentNode;
-			var table = tr.parentNode;
-			for (var c = 0; c < tr.childNodes.length; c++) if (tr.childNodes[c] == td) break;
-			c++; // c is current col => c+1 is hidden sortable col
-			var a = table.rows[0].cells[c].getElementsByTagName("a"); // get hidden col links
-			if (a.length) ts_resortTable(a[0], c);
-			return false;
-		}
-		// ]]>
-		</script>
-<?php
 }
 
 /**
@@ -581,18 +569,20 @@ function print_fam_table($datalist, $legend="") {
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">FAM</th>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
 	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
+	echo "<th style=\"display:none\">HUSB:GIVN</th>";
 	echo "<th class=\"list_label\">".$factarray["AGE"]."</th>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["spouse"]."</th>";
+	echo "<th style=\"display:none\">WIFE:GIVN</th>";
 	echo "<th class=\"list_label\">".$factarray["AGE"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["MARR"]."</th>";
 	if ($tiny) echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
 	echo "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
 	if ($tiny) echo "<th class=\"list_label\"><img src=\"./images/children.gif\" alt=\"".$pgv_lang["children"]."\" title=\"".$pgv_lang["children"]."\" border=\"0\" /></th>";
 	if ($tiny && $SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
-	echo "<th class=\"list_label\" style=\"display:none\">MARR</th>";
-	echo "<th class=\"list_label\" style=\"display:none\">DEAT</th>";
-	echo "<th class=\"list_label\" style=\"display:none\">TREE</th>";
+	echo "<th style=\"display:none\">MARR</th>";
+	echo "<th style=\"display:none\">DEAT</th>";
+	echo "<th style=\"display:none\">TREE</th>";
 	echo "</tr>\n";
 	//-- table body
 	$hidden = 0;
@@ -640,11 +630,6 @@ function print_fam_table($datalist, $legend="") {
 		echo " align=\"".get_align($name)."\">";
 		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($tiny && $husb->xref) echo $husb->getSexImage();
-
-//		for($ni=1; $ni<=$husb->getNameCount(); $ni++) {
-//			$addname = $husb->getSortableName('', $ni);
-//			if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-//		}
  		foreach ($name_subtags as $k=>$subtag) {
  			for ($num=1; $num<9; $num++) {
  				$addname = $husb->getSortableName($subtag, $num);
@@ -652,6 +637,11 @@ function print_fam_table($datalist, $legend="") {
  				if (empty($addname)) break;
  			}
  		}
+		echo "</td>";
+		//-- Husb GIVN
+		echo "<td style=\"display:none\">";
+		$exp = explode(",", $name.",");
+		echo $exp[1];
 		echo "</td>";
 		//-- Husband age
 		echo "<td class=\"list_value_wrap\">";
@@ -681,6 +671,11 @@ function print_fam_table($datalist, $legend="") {
  				if (empty($addname)) break;
  			}
  		}
+		echo "</td>";
+		//-- Wife GIVN
+		echo "<td style=\"display:none\">";
+		$exp = explode(",", $name.",");
+		echo $exp[1];
 		echo "</td>";
 		//-- Wife age
 		echo "<td class=\"list_value_wrap\">";
@@ -761,21 +756,29 @@ function print_fam_table($datalist, $legend="") {
 	//-- table footer
 	echo "<tr class=\"sortbottom\">";
 	echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<td></td>";
-	echo "<td class=\"list_label\">";
+	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // FAM:ID
+	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // HUSB:ID
+	echo "<td class=\"list_label\">"; // HUSB:NAME
+	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
 	echo $pgv_lang["total_fams"]." : ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
-	if ($SHOW_ID_NUMBERS) echo "<td></td>";
-	echo "<td></td>";
-	echo "<td></td>";
-	echo "<td></td>";
-	echo "<td></td>";
-	if ($tiny) echo "<td></td>";
-	echo "<td></td>";
-	if ($tiny) echo "<td></td>";
-	if ($tiny && $SHOW_LAST_CHANGE) echo "<td></td>";
+	echo "<td style=\"display:none\">HUSB:GIVN</td>";
+	echo "<td></td>"; // HUSB:AGE
+	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // WIFE:ID
+	echo "<td class=\"list_label\" style=\"vertical-align: top;\">"; // WIFE:NAME
+	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+	echo "</td>";
+	echo "<td style=\"display:none\">WIFE:GIVN</td>";
+	echo "<td></td>"; // WIFE:AGE
+	echo "<td></td>"; // MARR:DATE
+	echo "<td></td>"; // MARR:Reminder
+	echo "<td></td>"; // MARR:PLAC
+	if ($tiny) echo "<td></td>"; // FAM:ChildrenCount
+	if ($tiny && $SHOW_LAST_CHANGE) echo "<td></td>"; // FAM:CHAN
+	echo "<td style=\"display:none\">MARR</td>";
+	echo "<td style=\"display:none\">DEAT</td>";
+	echo "<td style=\"display:none\">TREE</td>";
 	echo "</tr>";
 	echo "</table>\n";
 	echo "</fieldset>\n";
@@ -1582,6 +1585,19 @@ function load_behaviour() {
 		}**/
 	}
 	Behaviour.register(myrules);
+	/**
+	 * sort by GIVN
+	 */
+	function sortByNextCol(node) {
+		var td = node.parentNode;
+		var tr = td.parentNode;
+		var table = tr.parentNode;
+		for (var c = 0; c < tr.childNodes.length; c++) if (tr.childNodes[c] == td) break;
+		c++; // c is current col => c+1 is hidden sortable col
+		var a = table.rows[0].cells[c].getElementsByTagName("a"); // get hidden col header links
+		if (a.length) ts_resortTable(a[0], c);
+		return false;
+	}
 	// ]]>
 	</script>
 <?php
