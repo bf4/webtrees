@@ -25,11 +25,11 @@
  * @subpackage Charts
  * @version $Id$
  */
-
+ 	
 require_once("includes/controllers/individual_ctrl.php");
 require_once("includes/serviceclient_class.php");
 
-global $USE_THUMBS_MAIN, $mediacnt;
+global $USE_THUMBS_MAIN, $mediacnt, $tabno, $mediatab;
 global $linkToID;
 global $SEARCH_SPIDER;
 
@@ -227,6 +227,7 @@ function showchanges() {
 	window.location = 'individual.php?pid=<?php print $controller->pid; ?>&show_changes=yes';
 }
 
+
 <!-- ====================== Added for Lightbox Module ===================== -->
 <?php
 if (file_exists("modules/lightbox/album.php")) {
@@ -387,6 +388,8 @@ if (file_exists("modules/lightbox/album.php")) {
 	</tr>
 </table>
 
+
+
 <!-- ================== Start 1st tab individual page ============ Personal Facts and Details -->
 <?php
 if(empty($SEARCH_SPIDER))
@@ -484,7 +487,7 @@ if(empty($SEARCH_SPIDER)) {
 </div>
 </div>
 <?php } ?>
-<!-- ============================ Start 6th tab individual page === Research Assistant -->
+<!-- ============================ Start 7th tab individual page === Research Assistant -->
 <?php
 // Only show this section if we are not talking to a search engine.
 if(empty($SEARCH_SPIDER)) {
@@ -506,7 +509,7 @@ if(empty($SEARCH_SPIDER)) {
 }
 ?>
 
-<!-- =========================== Start 7th tab individual page ==== GoogleMaps -->
+<!-- =========================== Start 8th tab individual page ==== GoogleMaps -->
 <?php
 // Only show this section if we are not talking to a search engine.
 //--------------------------------Start 7th tab individual page
@@ -605,19 +608,25 @@ if(empty($SEARCH_SPIDER)) {
 }
 
 ?>
-<!-- ========================== End 7th tab individual page ==== GoogleMaps ===== -->
 
 
-<!-- ========================== Start 8th tab individual page ==== Album ======== -->
+<!-- ========================== Start 9th tab individual page ==== Album ======== -->
 <?php
-if(empty($SEARCH_SPIDER)) {
+if(empty($SEARCH_SPIDER))
+	print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none;\" >\n";
+else
+	print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:block;\" >\n";
+
 	if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+
+		include('modules/lightbox/functions/lb_call_js.php'); 
+		
 		// The following is temporary, until the handling of the Lightbox Help system
 		// is adjusted to match the usual PhpGedView practice
 		$lbHelpFile = "modules/lightbox/languages/help.".$lang_short_cut[$LANGUAGE].".php";
 		if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help.en.php";
 
-		print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none; background:none;\" \>\n";
+//		print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none; background:none;\" \>\n";
 
 		print "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>\n";
 		print "&nbsp;&nbsp;"; 
@@ -642,38 +651,21 @@ if(empty($SEARCH_SPIDER)) {
 	print "<div id=\"lightbox2_content\"> \n";
 	if ($mediacnt!=0) {	
 		if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-if ($TEXT_DIRECTION == "rtl") { ?>
-		<link href ="modules/lightbox/css/clearbox_music_RTL.css" 	rel="stylesheet" type="text/css" />
-		<link href ="modules/lightbox/css/album_page.css" 			rel="stylesheet" type="text/css" media="screen" /> 
-		<!--[if lte IE 7]>
-		<link href ="modules/lightbox/css/album_page_RTL.css" 			rel="stylesheet" type="text/css" media="screen" /> 
-		<![endif]-->
 
-<?php }else{ ?>
-		<link href ="modules/lightbox/css/clearbox_music.css" 		rel="stylesheet" type="text/css" />
-		<link href ="modules/lightbox/css/album_page.css" 			rel="stylesheet" type="text/css" media="screen" />  
-<?php } ?>
-  
-	<script src="modules/lightbox/js/prototype.js" 				type="text/javascript"></script>  
-	<script src="modules/lightbox/js/Sound.js" 					type="text/javascript"></script>
-	<script src="modules/lightbox/js/clearbox.js" 				type="text/javascript"></script>
-  
-
-	<script src="modules/lightbox/js/wz_tooltip.js" 			type="text/javascript"></script>  
-
-<?php
-			if (($controller->default_tab==8)&&(empty($SEARCH_SPIDER))) {
+			if (($controller->default_tab==8)||(!empty($SEARCH_SPIDER))) {
 				$controller->getTab(8) ;
+			
 			}else{
 				loading_message();
 			}
 		}
 	}
+	
     print "</div>\n";
     print "</div>\n";
-}
+//}
 ?>
-<!-- ============================= End 8th tab individual page ==== Album -->
+<!-- ============================= End 9th tab individual page ==== Album -->
 
 <script language="JavaScript" type="text/javascript">
 <!--

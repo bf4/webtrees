@@ -26,29 +26,11 @@
  * @version $Id$
  * @author Brian Holland
  */
- 
-// Get Javascript variables from lb_config.php --------------------------- 
-	include('modules/lightbox/lb_config.php'); 
-
-	?>
-	<SCRIPT LANGUAGE=Javascript>
-	<?php if ($LB_MUSIC_FILE == "") { ?>
-		var myMusic = null;
-	<?php }else{ ?>
-		var myMusic 		= '<?php print $LB_MUSIC_FILE; ?>';  	// The music file
-    <?php } ?>
-	var CB_SlShowTime 	= '<?php print $LB_SS_SPEED; 	?>';	// Slide show timer
-	var CB_Animation	= '<?php print $LB_TRANSITION; 	?>';	// Next/Prev Image transition effect
-	
-	</script>	
-
-	
-	<?php
-
-// ------------------------------------------------------------------------------- 
 global $LANGUAGE, $mediacnt;
-global $edit, $controller, $tabno, $_REQUEST, $thumb_edit, $n ;
+global $edit, $controller, $tabno, $_REQUEST, $thumb_edit, $n, $LB_URL_WIDTH, $LB_URL_HEIGHT ;
 
+//		include('modules/lightbox/functions/lb_call_js.php'); 
+		
 //------------------------------------------------------------------------------
 // Start Main Table
 //------------------------------------------------------------------------------

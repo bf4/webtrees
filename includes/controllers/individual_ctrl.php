@@ -1936,7 +1936,7 @@ class IndividualControllerRoot extends BaseController {
 // Functions for Lightbox Album V3.0 29/July/2007
 // -----------------------------------------------------------------------------
 	/**
-	 * print the lightbox tab, ( which =  getTab7()  )
+	 * print the lightbox tab, ( which =  getTab8()  )
 	 */
 	function print_lightbox_tab() {
 		global $MULTI_MEDIA, $TBLPREFIX, $SHOW_ID_NUMBERS, $MEDIA_EXTERNAL;
