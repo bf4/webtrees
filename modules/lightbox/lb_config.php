@@ -84,7 +84,7 @@ $LB_URL_HEIGHT = "700";				//  URL Window height in pixels
 	if 			($mediatab == 1 && userCanEdit(getUserName())) {
 		$tabno=8;
 	}else if 	($mediatab == 1 && !userCanEdit(getUserName())) {
-		$tabno=7;		
+		$tabno=8;		
 	}else if	($mediatab == 0 && userCanEdit(getUserName())) {
 		$tabno=3;
 	}else{
