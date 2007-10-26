@@ -86,6 +86,7 @@ $pgv_lang["pl_north_short"]         	= "צפון";
 $pgv_lang["pl_south_short"]         	= "דרום";
 $pgv_lang["pl_east_short"]          	= "מזרח";
 $pgv_lang["pl_west_short"]          	= "מערב";
+$pgv_lang["pl_places_localfile"]	= "הקובץ על השרת שכולל מיקומים (CSV)";
 $pgv_lang["pl_places_filename"]     	= "הקובץ כולל מיקומים (CSV)";
 $pgv_lang["pl_clean_db"]            	= "האם לנקות את כל המיקומים לפני ייבוא?";
 $pgv_lang["pl_update_only"]         	= "עדכן רק מקומות קיימים?";
@@ -107,7 +108,7 @@ $pgv_lang["pl_remove_flag"]         	= "הסר דגל";
 
 $pgv_lang["pl_remove_location"]     	= "?הסר המיקום";
 $pgv_lang["pl_delete_error"]        	= "המיקום לא הורד: המיקום כולל תתי מיקומים";
-$pgv_lang["list_inactive"]        	= "לחץ כאן כדי להראות מקומות שאינם בשימוש"; 
+$pgv_lang["list_inactive"]        		= "לחץ כאן כדי להראות מקומות שאינם בשימוש"; 
 
 //Placecheck specific text
 $pgv_lang["placecheck"]		= "בדיקת מקום";
