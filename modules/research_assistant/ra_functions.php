@@ -73,6 +73,23 @@ if (!function_exists("find_updated_record")) {
 }
 
 /**
+ * trims a PLAC string to a certain depth for comparison purposes
+ */
+function trimLocation($loc) {
+	$loclevels = 4;  // number of levels of detail to keep
+	if (!$loc) return "";
+	$newLoc = ""; 
+	// reverse the array so that we get the top level first
+	$levels = array_reverse(preg_split("/,/", $loc));
+	foreach($levels as $pindex=>$ppart) {
+		// build the location string in reverse order, up to the requested number of levels
+		if ($pindex < $loclevels) $newLoc .= trim($ppart).",";
+	}
+	// there is an extra comma at the end, but since this string is just used for comparison purposes, it won't hurt anything
+	return ($newLoc);
+}
+
+/**
  * Base class for the Research Assistant, contains all basic functionality
  */
 class ra_functions {
@@ -1242,7 +1259,12 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 						$locals['GIVN'] = $parts[0];
 					}
 					else {
-						$locals[$value['local']] = get_gedcom_value($value['local'], 1, $indi['gedcom'], '', false);
+						$localvalue = get_gedcom_value($value['local'], 1, $indi['gedcom'], '', false);
+						if ( (strpos($value['local'],':PLAC') !== false) && $localvalue) {
+							// this is a PLAC string, trim it to a consistent number of levels
+							$localvalue = trimLocation($localvalue);
+						}               
+						$locals[$value['local']] = $localvalue;
 					}
 				}
 				
@@ -1311,8 +1333,19 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 					else {
 						$gedval = get_gedcom_value($value['comp'], 1, $record, '', false);
 						if (!empty($gedval) && !empty($locals[$value['local']])) {
-							if (str2lower($locals[$value['local']])==str2lower($gedval)) $inferences[$pr_id]['value']++;
+
+							if ( (strpos($value['comp'],':PLAC') !== false) && $gedval) {
+								// this is a PLAC string, trim it to a consistent number of levels
+								$gedval = trimLocation($gedval);
+							}               
+
 							$inferences[$pr_id]['count']++;
+							if (str2lower($locals[$value['local']])==str2lower($gedval)) {
+								$inferences[$pr_id]['value']++; 
+//								if (strpos($value['local'],':PLAC') !== false) { print "<p>".$value['local']."-".$locals[$value['local']]."<br />".$value['comp']."-".$gedval."<br />SAME!</p>"; }               
+//							} else {
+//								if (strpos($value['local'],':PLAC') !== false) { print "<p>".$value['local']."-".$locals[$value['local']]."<br />".$value['comp']."-".$gedval."<br />DIFFERENT</p>"; }
+							}
 						}
 					}
 				}
@@ -1346,6 +1379,8 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 		//print_r($inferences); 
 		return $inferences;
 	}
+
+
 	/**
 	 * codeToLang converts the GedCom code to its associated text
 	 */
