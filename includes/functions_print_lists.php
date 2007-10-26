@@ -309,6 +309,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
 	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
+	echo "<th class=\"list_label\" style=\"display:none\">GIVN</th>";
 	if ($option=="sosa") echo "<th class=\"list_label\">Sosa</th>";
 	echo "<th class=\"list_label\">".$factarray["BIRT"]."</th>";
 	if ($tiny) echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
@@ -363,17 +364,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 		echo " align=\"".get_align($name)."\">";
 		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($tiny) echo $person->getSexImage();
-
-// Do we really want to show all of a person's names? Perhaps this could be optional in the lists
-//		for($ni=1; $ni<=$person->getNameCount(); $ni++) {
-//			$addname = $person->getSortableName('', $ni);
-//			if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-//		}
-// this code could iterate over an indi record up to 50 times
-// adds about 2 secs to a list of 128 people
-// need a better solution - for now returned the code
-// removing the code causes us not to see alternate names in the list as expected
-
 		foreach ($name_subtags as $k=>$subtag) {
 			for ($num=1; $num<9; $num++) {
 				$addname = $person->getSortableName($subtag, $num);
@@ -381,7 +371,11 @@ function print_indi_table($datalist, $legend="", $option="") {
 				if (empty($addname)) break;
 			}
 		}
-
+		echo "</td>";
+		//-- GIVN
+		echo "<td style=\"display:none\">";
+		$exp = explode(",", $name.",");
+		echo $exp[1];
 		echo "</td>";
 		//-- SOSA
 		if ($option=="sosa") {
@@ -501,7 +495,9 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "<td class=\"list_label\">";
 	echo $pgv_lang["total_names"]." : ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
+	echo '<br /><a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a>';
 	echo "</td>";
+	echo "<td></td>"; // GIVN
 	if ($option=="sosa") echo "<td></td>";
 	echo "<td></td>";
 	if ($tiny) echo "<td></td>";
@@ -515,6 +511,22 @@ function print_indi_table($datalist, $legend="", $option="") {
 	echo "</tr>";
 	echo "</table>\n";
 	echo "</fieldset>\n";
+?>
+		<script type="text/javascript">
+		// <![CDATA[
+		function sortByNextCol(node) {
+			var td = node.parentNode;
+			var tr = td.parentNode;
+			var table = tr.parentNode;
+			for (var c = 0; c < tr.childNodes.length; c++) if (tr.childNodes[c] == td) break;
+			c++; // c is current col => c+1 is hidden sortable col
+			var a = table.rows[0].cells[c].getElementsByTagName("a"); // get hidden col links
+			if (a.length) ts_resortTable(a[0], c);
+			return false;
+		}
+		// ]]>
+		</script>
+<?php
 }
 
 /**
