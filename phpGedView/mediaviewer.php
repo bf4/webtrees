@@ -79,7 +79,7 @@ $filename = $controller->getLocalFilename();
 					<?php
 					if ($controller->canDisplayDetails()) {
 					//Checks to see if the File exist in the system.
-					if (!empty($filename) && (isFileExternal($filename) || $controller->mediaobject->fileExists()) ) {
+					if (isFileExternal($filename) || $controller->mediaobject->fileExists()) {
 						// the file is external, or it exists locally 
 						// attempt to get the image size
 						if ($controller->mediaobject->getWidth()) {

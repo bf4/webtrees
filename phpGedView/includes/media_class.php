@@ -193,19 +193,21 @@ class Media extends GedcomRecord {
 		global $USE_MEDIA_FIREWALL;
 		if ($this->serverfilename) return $this->serverfilename;
 		$localfilename = $this->getLocalFilename();
-		if (file_exists($localfilename)){
-			// found image in unprotected directory
-			$this->fileexists = 2;
-			$this->serverfilename = $localfilename;
-			return $this->serverfilename;
-		}
-		if ($USE_MEDIA_FIREWALL) {
-			$protectedfilename = get_media_firewall_path($localfilename);
-			if (file_exists($protectedfilename)){
-				// found image in protected directory
-				$this->fileexists = 3;
-				$this->serverfilename = $protectedfilename;
+		if (!empty($localfilename)) {
+			if (file_exists($localfilename)){
+				// found image in unprotected directory
+				$this->fileexists = 2;
+				$this->serverfilename = $localfilename;
 				return $this->serverfilename;
+			}
+			if ($USE_MEDIA_FIREWALL) {
+				$protectedfilename = get_media_firewall_path($localfilename);
+				if (file_exists($protectedfilename)){
+					// found image in protected directory
+					$this->fileexists = 3;
+					$this->serverfilename = $protectedfilename;
+					return $this->serverfilename;
+				}
 			}
 		}
 		// file doesn't exist, return the standard localfilename for backwards compatibility
