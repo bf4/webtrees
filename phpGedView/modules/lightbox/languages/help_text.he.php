@@ -45,8 +45,9 @@ $pgv_lang["lb_ss_speedLegend"]		= "מהירות מצגת שקופיות";
 $pgv_lang["lb_ss_speed_help"]		= "~#pgv_lang[lb_ss_speedLegend]#~<br />הבחירה קובעת את אורך הזמן שיש להציג כל תמונה לפני שמצגת השקופיות תציג את התמונה הבאה לפי הסדר.<br />";
 $pgv_lang["lb_music_fileLegend"]		= "פס קול של מצגת שקופיות";
 $pgv_lang["lb_music_file_help"]		= "~#pgv_lang[lb_music_fileLegend]#~<br />הבחירה מאפשרת לקבוע קובץ פס קול שינוגן כאשר מצגת השקופיות פעילה. אם תשאיר שדה זה ריק, לא יושמע קול בזמן מצגת השקופיות.<br /><br />המאפיין הזה תומך רק בקבצים במבנה mp3.<br />"; 
-$pgv_lang["lb_transitionLegend"]		= "צורת מעבר מתמונה לתמונה"; 
-$pgv_lang["lb_transition_help"]		= "~#pgv_lang[lb_transitionLegend]#~<br />הבחירה מאפשרת לקבוע את צורת המעבר מתמונה לתמונה במצגת שקופיות ובמעבר ידני מתמונה לתמונה.<br />"; //@@
+$pgv_lang["lb_transitionLegend"]		= "מהירות המעבר מתמונה לתמונה";
+$pgv_lang["lb_transition_help"]		= "~#pgv_lang[lb_transitionLegend]#~<br />האופציה מאפשרת לקבוע את מהירות המעבר מתמונה לתמונה. הבחירה מופעלת בזמן מצגת שקופיות. היא מופעלת גם כן כאשר עוברים ידנית לתמונה הקודמת או הבאה כאשר מצגת התמונות אינה מופעלת.<br /><br />אופצית <b>#pgv_lang[lb_none]#</b> מונעת מעבר בין תמונות כך שהתמונה החדשה מחליפה מידית את הישנה ללא שינוי ניראה לעין במימדי התמונה.<br />"; 
+
 $pgv_lang["lb_url_dimensionsLegend"]	= "מימדי חלון Lightbox URL"; 
 $pgv_lang["lb_url_dimensions_help"]	= "~#pgv_lang[lb_url_dimensionsLegend]#~<br />כאשר לוחצים על תמונה ממוזערת של URL, הבחירה מאפשרת לקבוע את מימדי חלון Lightbox URL בפיקסלים.<br /><br />בדרך כלל זה יהיה פחות ממימדי החלון הנוכחי בדפדפת, ובוודאי פחות מרזולוציית המסך.<br />"; 
  
