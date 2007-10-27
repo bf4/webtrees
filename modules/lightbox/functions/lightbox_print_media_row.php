@@ -53,8 +53,14 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 	
     //print dummy image if media is linked to a 'private' person
     if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
+	
+		print "<font size=1>&nbsp;</font>";				
+		print "<br />";	
+	
         print "<table><tr><td class=\"prvpic\" align=\"center\" colspan=1>" . "\n";
 		print $pgv_lang["lb_private"];
+		
+	
 //        print "<img src=\"modules/lightbox/images/private.gif\" class=\"icon\" width=\"60\" height=\"80\" alt=\" Image Private \" /></img>" . "\n" ;
         print "</td></tr></table>" . "\n";
 		$item++;

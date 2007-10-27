@@ -35,7 +35,7 @@
 			<?php } 
 		}elseif (file_exists("modules/googlemap/defaultconfig.php")) {  ?>
 			<?php if (file_exists("modules/lightbox/album.php") ) {?>
-				<dd id="door8"><a href="javascript:;" onclick="tabswitch(8); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd> 
+				<dd id="door4"><a href="javascript:;" onclick="tabswitch(9); return false;" ><?php print $pgv_lang["lightbox"] ?></a></dd> 
 			<?php } 
 		} 
 	}
@@ -59,7 +59,7 @@
 		<?php 
 		}elseif (file_exists("modules/googlemap/defaultconfig.php") && (file_exists("modules/lightbox/album.php") ) ) { ?>
 			<dd id="door4" style={background-color:transparent;} style={border:0px;} ></dd> 
-			<dd id="door8" style={background-color:transparent;} style={border:0px;} ></dd> 
+			<dd id="door9" style={background-color:transparent;} style={border:0px;} ></dd> 
 		<?php 
 		} 
 //	}

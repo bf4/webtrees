@@ -31,10 +31,13 @@
 // Function lightbox() for Lightbox Album - called by individual_ctrl.php
 // -----------------------------------------------------------------------------
 // function lightbox_relatives2() {
+
 global $edit, $tabno, $mediacnt;
 
 $edit=$edit;
 
+	$tabno=8;
+	
      if (!file_exists("modules/googlemap/defaultconfig.php")) {
          $tabno = ($tabno-1);
          }else{

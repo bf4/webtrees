@@ -41,27 +41,30 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_te
 
 <script language="Javascript">
 <!--
-   function album_help(OPTS) {
-   var win01 = window.open("<?php print $lbHelpFile;?>?"+OPTS, "win01", "resizable=1, scrollbars=1, HEIGHT=780, WIDTH=500 ");
-   win01.focus()
-   }
+	function album_help(OPTS) {
+		var win01 = window.open("<?php print $lbHelpFile;?>?"+OPTS, "win01", "resizable=1, scrollbars=1, HEIGHT=780, WIDTH=500 ");
+		win01.focus()
+	}
 
-   function album_add() {
-   var win01 = window.open(
-   "addmedia.php?action=showmediaform&linktoid=<?php print $pid; ?>", "win01", "resizable=1, scrollbars=1, top=50, HEIGHT=780, WIDTH=600 ");
-   win01.focus()
-   }
+	function album_add() {
+		var win01 = window.open(
+		"addmedia.php?action=showmediaform&linktoid=<?php print $pid; ?>", "win01", "resizable=1, scrollbars=1, top=50, HEIGHT=780, WIDTH=600 ");
+		win01.focus()
+	}
 
-      function album_link() {
-   var win01 = window.open(
-   "inverselink.php?linktoid=<?php print $pid; ?>&linkto=person", "win01", "resizable=1, scrollbars=1, top=50, HEIGHT=200, WIDTH=600 ");
-   win01.focus()
-   }
+	function album_link() {
+		var win01 = window.open(
+		"inverselink.php?linktoid=<?php print $pid; ?>&linkto=person", "win01", "resizable=1, scrollbars=1, top=50, HEIGHT=200, WIDTH=600 ");
+		win01.focus()
+	}
 -->
 </script>
+
 <?php
-//loadLangFile("lb_lang");
+
+// Load Lightbox javascript and css files
 include('modules/lightbox/functions/lb_call_js.php'); 
+
 	//Lightbox-Album header Links
 		//print "<br>";
 		print "<table border=0 width=\"66%\"><tr>";

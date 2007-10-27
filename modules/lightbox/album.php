@@ -26,7 +26,7 @@
  * @version $Id$
  * @author Brian Holland
  */
-global $LANGUAGE, $mediacnt;
+global $LANGUAGE, $mediatab, $mediacnt;
 global $edit, $controller, $tabno, $_REQUEST, $thumb_edit, $n, $LB_URL_WIDTH, $LB_URL_HEIGHT ;
 
 //		include('modules/lightbox/functions/lb_call_js.php'); 
