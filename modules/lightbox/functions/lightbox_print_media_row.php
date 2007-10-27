@@ -286,7 +286,7 @@
 					// Else if source info available and file is not supported by Lightbox - Open with Pop-up, and create tooltip link for source AND media details
 					}else if (eregi("1 SOUR",$rowm['m_gedrec'])) { 
 						print 	"<a href=\"javascript:;\" 
-								onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" title=\"" . stripslashes($mediaTitle) . "\"\" 
+								onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" title=\"" . $mediaTitle . "\"\" 
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
 									. "<br>" 								
@@ -304,7 +304,7 @@
 					// Else if no source info available and file is not supported by Lightbox - Open with Pop-up, and create tooltip link for media details only
 					}else if (!eregi("1 SOUR",$rowm['m_gedrec'])) { 
 						print 	"<a href=\"javascript:;\" 
-								onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" title=\"" . stripslashes($mediaTitle) . "\"\"
+								onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" title=\"" . $mediaTitle . "\"\"
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
 									. "<br>"
@@ -341,9 +341,9 @@
 				// If you perform the above, ALL Firefox chrome tooltips will be turned off .. This is not recommended)
 				// I will try to find a better way of removing the doubled tooltips ... Brian Holland .. Lightbox developer)
 			if ( eregi("1 SOUR",$rowm['m_gedrec'])) {
-				print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\nSource info is available\" />";
+				print " alt=\"" . $mediaTitle . "\" title=\"" . $mediaTitle . "\nSource info is available\" />";
 			}else{
-				print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\" />";
+				print " alt=\"" . $mediaTitle . "\" title=\"" . $mediaTitle . "\" />";
 			}
 			
 			// Close anchor
