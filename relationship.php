@@ -465,11 +465,6 @@ function getRelationshipSentence($node, $pid1, $pid2)
 	        }
 	}
 
-	if($relationshipDescription != false)
-	{
-	    $relationshipDescription = str2lower($relationshipDescription, "UTF-8");
-	}
-
 	$langStr = str_replace("-", "_", $lang_short_cut[$LANGUAGE]);
     // check for language specific override of relationship
     $getLanguageSpecificRelationship = "getRelationshipText_" . $langStr;

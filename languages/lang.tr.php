@@ -1711,10 +1711,10 @@ $pgv_lang["sosa_28"]				= "Büyük-büyük-büyükbaba";
 $pgv_lang["sosa_29"]				= "Büyük-büyük-büyükanne";
 $pgv_lang["sosa_30"]				= "Büyük-büyük-büyükbaba";
 $pgv_lang["sosa_31"]				= "Büyük-büyük-büyükanne";
-$pgv_lang["sosa_paternal_female_n_generations"]	= "%3\$d x büyük büyükbaba";
-$pgv_lang["sosa_paternal_male_n_generations"]	= "%3\$d x büyük büyükanne";
-$pgv_lang["sosa_maternal_female_n_generations"]	= "%3\$d x büyük büyükbaba";
-$pgv_lang["sosa_maternal_male_n_generations"]	= "%3\$d x büyük büyükanne";
+$pgv_lang["sosa_paternal_male_n_generations"]	= "%3\$d x büyük büyükbaba";
+$pgv_lang["sosa_paternal_female_n_generations"]	= "%3\$d x büyük büyükanne";
+$pgv_lang["sosa_maternal_male_n_generations"]	= "%3\$d x büyük büyükbaba";
+$pgv_lang["sosa_maternal_female_n_generations"]	= "%3\$d x büyük büyükanne";
 
 
 // 5th generation
