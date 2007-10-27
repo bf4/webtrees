@@ -95,9 +95,8 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 		$sourdesc = PrintReady(get_source_descriptor($sour));
 
 		// Avoid special character problems
-		$mediaTitle =  addslashes($mediaTitle);
 		//make ready for RTL
-		$mediaTitle = PrintReady($mediaTitle);
+		$mediaTitle = PrintReady(htmlspecialchars($mediaTitle));
 		$sour1 = " - " . $sour ; 
 		$sour2 = PrintReady($sour1);
 		
@@ -152,7 +151,7 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 					// Else If source info available, - Open with Lightbox normal,  and create tooltip link for source AND media details
 					}else if (eregi("1 SOUR",$rowm['m_gedrec'])) {
 
-						print	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' title=\"" . stripslashes($mediaTitle) . "\"\" 
+						print	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' title=\"" . $mediaTitle . "\"\" 
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
 								. "<br />"
@@ -172,7 +171,7 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 					
 					// If no source info available - Open with Lightbox normal, and create tooltip link for media details only
 					}else if (!eregi("1 SOUR",$rowm['m_gedrec'])) { 
-						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' title=\"" . stripslashes($mediaTitle) . "\"\"
+						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' title=\"" . $mediaTitle . "\"\"
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
 								. "<br />"
@@ -218,7 +217,7 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 
 					// Else if source info available and file = PDF  - Open with Lightbox URL,  and create tooltip link for source AND media details
 					}else if (eregi("1 SOUR",$rowm['m_gedrec']) && (eregi("\.pdf",$rowm['m_file']) || eregi("http",$rowm['m_file']) ) ) {  
-					print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' title=\"" . stripslashes($mediaTitle) . "\"\"
+					print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' title=\"" . $mediaTitle . "\"\"
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
 								. "<br />"
@@ -235,7 +234,7 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 		
 					// Else if no source info available and file = PDF or URL - Open with Lightbox URL,  and create tooltip link for media details only
 					}else if (!eregi("1 SOUR",$rowm['m_gedrec']) && (eregi("\.pdf",$rowm['m_file']) || eregi("http",$rowm['m_file'])) ) { 
-					print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' title=\"" . stripslashes($mediaTitle) . "\"\"
+					print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' title=\"" . $mediaTitle . "\"\"
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
 								. "<br />"
@@ -284,7 +283,7 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 					// Else if source info available and file is not supported by Lightbox - Open with Pop-up, and create tooltip link for source AND media details
 					}else if (eregi("1 SOUR",$rowm['m_gedrec'])) { 
 						print 	"<a href=\"javascript:;\" 
-								onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" title=\"" . stripslashes($mediaTitle) . "\"\" 
+								onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" title=\"" . $mediaTitle . "\"\" 
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
 								. "<br />"
@@ -302,7 +301,7 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 					// Else if no source info available and file is not supported by Lightbox - Open with Pop-up, and create tooltip link for media details only
 					}else if (!eregi("1 SOUR",$rowm['m_gedrec'])) { 
 						print 	"<a href=\"javascript:;\" 
-								onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" title=\"" . stripslashes($mediaTitle) . "\"\"
+								onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" title=\"" . $mediaTitle . "\"\"
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
 								. "<br />"
@@ -335,9 +334,9 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 				// If you perform the above, ALL Firefox chrome tooltips will be turned off .. This is not recommended)
 				// I will try to find a better way of removing the doubled tooltips ... Brian Holland .. Lightbox developer)
 			if ( eregi("1 SOUR",$rowm['m_gedrec'])) {
-				print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\nSource info is available\" />";
+				print " alt=\"" . $mediaTitle . "\" title=\"" . $mediaTitle . "\nSource info is available\" />";
 			}else{
-				print " alt=\"" . PrintReady($mediaTitle) . "\" title=\"" . PrintReady($mediaTitle) . "\" />";
+				print " alt=\"" . $mediaTitle . "\" title=\"" . $mediaTitle . "\" />";
 			}
 			
 			// Close anchor
