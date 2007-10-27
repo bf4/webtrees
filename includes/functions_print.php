@@ -1658,7 +1658,7 @@ function print_privacy_error($username) {
 	 if ($username==$WEBMASTER_EMAIL) $method = $SUPPORT_METHOD;
 	 $user = getUser($username);
 	 if (!$user) $method = "mailto";
-	 print "<br /><span class=\"error\">".$pgv_lang["privacy_error"];
+	 print "<br /><span class=\"error\">".$pgv_lang["privacy_error"]." ";
 	 if ($method=="none") {
 		  print "</span><br />\n";
 		  return;
