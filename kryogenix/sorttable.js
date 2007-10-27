@@ -137,21 +137,18 @@ function getParent(el, pTagName) {
 function ts_pgv_sort(a,b) {
 	akey = a.cells[SORT_COLUMN_INDEX].getElementsByTagName('a');
 	bkey = b.cells[SORT_COLUMN_INDEX].getElementsByTagName('a');
-	if (akey.length && akey[0].name && (bkey.length && bkey[0].name)) {
+	if (akey.length && akey[0].name && bkey.length && bkey[0].name) {
 		// use "name" value as numeric sortkey, if exists
 		aa = parseInt(akey[0].name);
 		bb = parseInt(bkey[0].name);
-	} else {
-		// clean UTF8 special chars before sorting
-		aa = strclean(ts_getInnerText(a.cells[SORT_COLUMN_INDEX]).toLowerCase());
-		bb = strclean(ts_getInnerText(b.cells[SORT_COLUMN_INDEX]).toLowerCase());
+		if (aa==bb) return a.rowIndex-b.rowIndex; // equal values sort by their original sequence
+		if (aa<bb) return -1;
+		if (aa>bb) return 1;
 	}
-	// equal values sort by their original sequence
-	if (aa==bb)
-		return a.rowIndex-b.rowIndex;
-	if (aa<bb) return -1;
-	if (aa>bb) return 1;
-	return 0;
+	aa = ts_getInnerText(a.cells[SORT_COLUMN_INDEX]);
+	bb = ts_getInnerText(b.cells[SORT_COLUMN_INDEX]);
+	if (aa==bb) return a.rowIndex-b.rowIndex; // equal values sort by their original sequence
+	return _lc_sort(aa,bb); // locale.js
 }
 
 function addEvent(elm, evType, fn, useCapture)
