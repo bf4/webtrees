@@ -56,17 +56,17 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 		<?php if ((empty($SEARCH_SPIDER))&&($controller->accept_success)) print "<b>".$pgv_lang["accept_successful"]."</b><br />"; ?>
 		<span class="name_head">
 		<?php
+		    if ($TEXT_DIRECTION=="rtl") print "&nbsp;";
 			print PrintReady($controller->indi->getName());
 			print "&nbsp;&nbsp;";
-			if ($TEXT_DIRECTION=="rtl") print getRLM();
-			print "(".$controller->pid.")";
+ 			print PrintReady("(".$controller->pid.")");
 			if (userIsAdmin(getUserName())) {
 				$pgvuser=getUserByGedcomId($controller->pid, $GEDCOM);
 				if ($pgvuser!==false) {
-					print " (<a href=\"useradmin.php?action=edituser&username={$pgvuser['username']}\">{$pgvuser['username']}</a>)";
+  					print "&nbsp;";
+					print printReady("(<a href=\"useradmin.php?action=edituser&username={$pgvuser['username']}\">{$pgvuser['username']}</a>)");
 				}
 			}
-			if ($TEXT_DIRECTION=="rtl") print getRLM();
 		?>
 		</span><br />
 		<?php if (strlen($controller->indi->getAddName()) > 0) print "<span class=\"name_head\">".PrintReady($controller->indi->getAddName())."</span><br />"; ?>
