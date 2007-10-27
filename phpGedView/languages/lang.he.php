@@ -1434,10 +1434,10 @@ $pgv_lang["sosa_31"]               	= "N/A";
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
 //              %3\$d is replaced with the number of generations - 2
-$pgv_lang["sosa_paternal_female_n_generations"]	= "%3\$d x great grandfather"; //@#@
-$pgv_lang["sosa_paternal_male_n_generations"]	= "%3\$d x great grandmother"; //@#@
-$pgv_lang["sosa_maternal_female_n_generations"]	= "%3\$d x great grandfather"; //@#@
-$pgv_lang["sosa_maternal_male_n_generations"]	= "%3\$d x great grandmother"; //@#@
+$pgv_lang["sosa_paternal_male_n_generations"]	= "%3\$d x great grandfather"; //@#@
+$pgv_lang["sosa_paternal_female_n_generations"]	= "%3\$d x great grandmother"; //@#@
+$pgv_lang["sosa_maternal_male_n_generations"]	= "%3\$d x great grandfather"; //@#@
+$pgv_lang["sosa_maternal_female_n_generations"]	= "%3\$d x great grandmother"; //@#@
 
 //-- FAN CHART
 $pgv_lang["compact_chart"]		= "תרשים קומפקטי";
