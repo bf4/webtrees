@@ -936,7 +936,7 @@ class IndividualControllerRoot extends BaseController {
 				$label = $labels["brother"];
 			}
 			if ($newchildren[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
-			$pedi = $children[$i]->getChildFamilyPedigree($family->getXref());
+			$pedi = $newchildren[$i]->getChildFamilyPedigree($family->getXref());
 			if ($pedi && isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
 			$newchildren[$i]->setLabel($label);
 		}
@@ -951,7 +951,7 @@ class IndividualControllerRoot extends BaseController {
 				$label = $labels["brother"];
 			}
 			if ($delchildren[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
-			$pedi = $children[$i]->getChildFamilyPedigree($family->getXref());
+			$pedi = $delchildren[$i]->getChildFamilyPedigree($family->getXref());
 			if ($pedi && isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
 			$delchildren[$i]->setLabel($label);
 		}
