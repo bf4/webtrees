@@ -1887,6 +1887,7 @@ function PGVRListSHandler($attrs) {
 	}
 	if ($sortby=="NAME") uasort($list, "itemsort");
 	else if ($sortby=="ID") uasort($list, "idsort");
+	else if ($sortby=="CHAN") uasort($list, "compare_date_descending");
 	else uasort($list, "compare_date");
 	//print count($list);
 	array_push($repeatsStack, array($repeats, $repeatBytes));

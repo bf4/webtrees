@@ -1834,6 +1834,10 @@ function compare_date($a, $b) {
 	if ($c==0) return itemsort($a, $b);
 	else return $c;
 }
+function compare_date_descending($a, $b) {
+	$result = compare_date($a, $b);
+	return (0 - $result);
+}
 
 function gedcomsort($a, $b) {
 	$aname = str2upper($a["title"]);

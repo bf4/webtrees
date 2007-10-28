@@ -2,8 +2,8 @@
 	<!-- $Id$ -->
 	<PGVRTitle><PGVRvar var="pgv_lang[changes_report]" /></PGVRTitle>
 	<PGVRDescription>Prints a list of individuals matching specific change criteria</PGVRDescription>
-	<PGVRInput name="changedate1" lookup="DATE" type="text" default="NOW"><PGVRvar var="pgv_lang[changedate2]" /></PGVRInput>
-	<PGVRInput name="changedate2" lookup="DATE" type="text" default="NOW-30"><PGVRvar var="pgv_lang[changedate1]" /></PGVRInput>
+	<PGVRInput name="changeRangeStart" lookup="DATE" type="text" default="NOW-30"><PGVRvar var="pgv_lang[changedate2]" /></PGVRInput>
+	<PGVRInput name="changeRangeEnd" lookup="DATE" type="text" default="NOW"><PGVRvar var="pgv_lang[changedate1]" /></PGVRInput>
 	<PGVRInput name="sortby" type="select" options="CHAN,NAME,BIRT"><PGVRvar var="pgv_lang[sort_by]" /></PGVRInput>
 	<PGVRInput name="pending" type="select" options="yes,no"><PGVRvar var="pgv_lang[show_pending]" /></PGVRInput>
 	<PGVRInput name="pageSize" type="select" options="letter,A4,A3,A5,legal"><PGVRvar var="pgv_lang[page_size]" /></PGVRInput>
@@ -57,7 +57,7 @@
 			</PGVRif>
 			<br />
 			<!-- Recent Changes Section -->
-			<PGVRCell width="0" height="20" align="center" style="header2"><PGVRvar var="pgv_lang[recent_changes]" /> <PGVRvar var="changedate1" date="1" /> - <PGVRvar var="changedate2" date="1" /></PGVRCell>
+			<PGVRCell width="0" height="20" align="center" style="header2"><PGVRvar var="pgv_lang[recent_changes]" /> <PGVRvar var="changeRangeStart" date="1" /> - <PGVRvar var="changeRangeEnd" date="1" /></PGVRCell>
 			<PGVRTextBox width="60" height="12" border="1">
 				<PGVRText style="label"> </PGVRText>
 			</PGVRTextBox>
@@ -70,7 +70,7 @@
 			<PGVRTextBox width="0" height="12" border="1" newline="1">
 				<PGVRText style="label"><PGVRvar var="factarray[CHAN]" /></PGVRText>
 			</PGVRTextBox>
-			<PGVRList list="individual" filter1="CHAN:DATE LTE $changedate1" filter2="CHAN:DATE GTE $changedate2" sortby="$sortby">
+			<PGVRList list="individual" filter1="CHAN:DATE LTE $changeRangeEnd" filter2="CHAN:DATE GTE $changeRangeStart" sortby="$sortby">
 				<PGVRTextBox width="60" height="12" border="0">
 					<PGVRText style="text"><PGVRGedcomValue tag="@id" /></PGVRText>
 				</PGVRTextBox>
