@@ -458,7 +458,8 @@ if ($ct>0){
 		}
 
 	    print "<div style=\"white-space: normal; width: 95%;\">";
-	    print_fact_notes($media["GEDCOM"], $media["LEVEL"]+1);
+	    print_fact_sources($media["GEDCOM"], $media["LEVEL"]+1);
+	    print_fact_notes($media["GEDCOM"], $media["LEVEL"]+1);  
 	    print "</div>";
 
 		PrintMediaLinks($media["LINKS"], "small");
