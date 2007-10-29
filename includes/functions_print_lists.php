@@ -444,7 +444,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		if ($person->isDead() && !$person->dest && $bdate->MinJD()>0)
 			echo "<a name=\"".($ddate->MaxJD()-$bdate->MinJD())."\" class=\"list_item age\">".GedcomDate::GetAgeYears($bdate, $ddate)."</a>";
 		else
-			echo "&nbsp;";
+			echo '<a name="-1">&nbsp;</a>';
 		echo "</td>";
 		//-- Death place
 		echo "<td class=\"list_value_wrap\" align=\"".get_align($person->getDeathPlace())."\">";
