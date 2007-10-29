@@ -32,10 +32,11 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["add_marriage"]			= "Agregar un nuevo matrimonio";
 $pgv_lang["edit_concurrency_change"] = "Este registro fue modificado por última vez por <i>#CHANGEUSER#</i> el #CHANGEDATE#";
 $pgv_lang["edit_concurrency_msg2"]	= "El registro con id #PID# fue modificado por otro usuario desde que accedió a él por última vez.";
-$pgv_lang["edit_concurrency_msg1"]	= "Ocurrión un error mientras se creaba el formulario de Edición.  Otro usuario puede haber cambiado este registro desde que lo visualizó.";
-$pgv_lang["edit_concurrency_reload"]	= "Por favor utilice el botón de Página Anterior de su navegador y recargue la página anterior para asegurars de que trabaja con el registro más reciente.";
+$pgv_lang["edit_concurrency_msg1"]	= "Ocurrió un error mientras se creaba el formulario de Edición.  Otro usuario puede haber cambiado este registro desde que lo visualizó.";
+$pgv_lang["edit_concurrency_reload"]	= "Por favor utilice el botón de Página Anterior de su navegador y recargue la página anterior para asegurarse de que trabaja con el registro más reciente.";
 $pgv_lang["admin_override"]			= "Opción de administración";
 $pgv_lang["no_update_CHAN"]			= "No actualizar el registro CHAN (último cambio)";
 $pgv_lang["select_events"]			= "Seleccionar eventos";
