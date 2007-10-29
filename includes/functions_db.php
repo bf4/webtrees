@@ -2182,7 +2182,7 @@ function get_alpha_indis($letter) {
 	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
 		//if (substr($row["n_letter"], 0, strlen($letter))==$letter||(isset($text)?substr($row["n_letter"], 0, strlen($text))==$text:FALSE)){
-			if (!isset($indilist[$row["i_id"]])) {
+			if (!isset($indilist[$row["i_id"]]) || !isset($indilist[$row["i_id"]]["names"])) {
 				$indi = array();
 				$indi["names"] = array(array($row["i_name"], $row["i_letter"], $row["i_surname"], "P"), array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]));
 				$indi["isdead"] = $row["i_isdead"];
@@ -2280,7 +2280,7 @@ function get_surname_indis($surname) {
 
 	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
-		if (isset($indilist[$row["i_id"]])) {
+		if (isset($indilist[$row["i_id"]]) && isset($indilist[$row["i_id"]]["names"])) {
 			$namearray = array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]);
 			// do not add to the array an indi name that already exists in it
 			if (!in_array($namearray, $indilist[$row["i_id"]]["names"])) {
