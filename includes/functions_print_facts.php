@@ -128,7 +128,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			if (!showFact($factref, $pid)) return false;
 			if ($styleadd=="") $rowID = "row_".floor(microtime()*1000000);
 			else $rowID = "row_".$styleadd;
-			print "\n\t\t<tr id=\"".$rowID."\" class=\"".$rowID."\">";
+			print "\n\t\t<tr class=\"".$rowID."\">";
 			print "\n\t\t\t<td class=\"descriptionbox $styleadd center width20\">";
 			$label = $factref;
 			if (isset($factarray["$factref"])) $label = $factarray[$factref];
@@ -203,7 +203,7 @@ function print_fact($factrec, $pid, $linenum, $indirec=false, $noedit=false) {
 			if (!showFact($factref, $pid)) return false;
 			if ($styleadd=="") $rowID = "row_".floor(microtime()*1000000);
 			else $rowID = "row_".$styleadd;
-			print "\n\t\t<tr id=\"".$rowID."\" class=\"".$rowID."\">";
+			print "\n\t\t<tr class=\"".$rowID."\">";
 			$label = $factref;
 			if (isset($factarray["$factref"])) $label = $factarray[$factref];
 			if (isset($pgv_lang[$factref])) $label = $pgv_lang[$factref];
@@ -862,7 +862,9 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 		$srec = substr($factrec, $spos1, $spos2-$spos1);
 		if (!showFact("SOUR", $pid) || FactViewRestricted($pid, $factrec)) return false;
 		if (displayDetailsById($sid, "SOUR")) {
-			print "\n\t\t\t<tr><td class=\"descriptionbox $styleadd center width20\">";
+			if ($level==2) print "<tr class=\"row_sour2 rela\">";
+			else print "<tr>";
+			print "<td class=\"descriptionbox $styleadd center width20\">";
 			if ($level==1) echo "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" alt=\"\" /><br />";
 			$temp = preg_match("/^\d (\w*)/", $factrec, $factname);
 			echo $factarray[$factname[1]];
@@ -1087,10 +1089,11 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 	$nlevel = $level+1;
 	$ct = preg_match_all("/$level NOTE(.*)/", $factrec, $match, PREG_SET_ORDER);
 	for($j=0; $j<$ct; $j++) {
-		$spos1 = strpos($factrec, "$level NOTE ".$match[$j][1]);
+		/**$spos1 = strpos($factrec, "$level NOTE ".$match[$j][1]);
 		$spos2 = strpos($factrec, "\n$level", $spos1);
 		if (!$spos2) $spos2 = strlen($factrec);
-		$nrec = substr($factrec, $spos1, $spos2-$spos1);
+		$nrec = substr($factrec, $spos1, $spos2-$spos1);**/
+		$nrec = get_sub_record($level, "$level NOTE", $factrec, $j+1);
 		if (!showFact("NOTE", $pid)||FactViewRestricted($pid, $factrec)) return false;
 		$nt = preg_match("/\d NOTE @(.*)@/", $match[$j][0], $nmatch);
 		if ($nt>0) {
@@ -1101,7 +1104,9 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 				print_main_notes($factrec, $level, $pid, $linenum, $noedit);
 			}
 		}
-		print "\n\t\t<tr><td valign=\"top\" class=\"descriptionbox $styleadd center width20\">";
+		if ($level==2) print "<tr class=\"row_note2 rela\">";
+		else print "<tr>";
+		print "<td valign=\"top\" class=\"descriptionbox $styleadd center width20\">";
 		//print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\" alt=\"\" /><br />";
 		if ($level<2) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\" alt=\"\" /><br />".$factarray["NOTE"];
 		else {
@@ -1162,7 +1167,7 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 			$text = preg_replace("/~~/", "<br />", trim($match[$j][1]));
 			$text .= get_cont($nlevel, $nrec);
 			$text = expand_urls($text);
-		$text = PrintReady($text);
+			$text = PrintReady($text);
 		}
 		else {
 			//-- print linked note records
