@@ -33,10 +33,11 @@
  */
 
 //-- security check, only allow access from module.php
-if (preg_match("/ra_lang\...\.php$/", $_SERVER["PHP_SELF"])>0) {
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	print "Nie można uzyskać bezpośredniego dostępu do pliku.";
 	exit;
 }
+
 $pgv_lang["missing_info"] 		= "Brakujące informacje";
 $temp_out_autosearch = 	"Ta opcja spowoduje automatyczne przeszukanie baz Ancestry i FamilySearch, ";
 $temp_out_autosearch .= "możesz wybrać poszukiwania po nazwisku i dacie narodzin/śmierci <br />";

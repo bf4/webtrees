@@ -373,6 +373,7 @@ if ($action=="update") {
 	$configtext = preg_replace('/\$SHOW_ID_NUMBERS\s*=\s*.*;/', "\$SHOW_ID_NUMBERS = ".$boolarray[$_POST["NEW_SHOW_ID_NUMBERS"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_LAST_CHANGE\s*=\s*.*;/', "\$SHOW_LAST_CHANGE = ".$boolarray[$_POST["NEW_SHOW_LAST_CHANGE"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_LDS_AT_GLANCE\s*=\s*.*;/', "\$SHOW_LDS_AT_GLANCE = ".$boolarray[$_POST["NEW_SHOW_LDS_AT_GLANCE"]].";", $configtext);
+	$configtext = preg_replace('/\$SHOW_LEVEL2_NOTES\s*=\s*.*;/', "\$SHOW_LEVEL2_NOTES = ".$boolarray[$_POST["NEW_SHOW_LEVEL2_NOTES"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_MARRIED_NAMES\s*=\s*.*;/', "\$SHOW_MARRIED_NAMES = ".$boolarray[$_POST["NEW_SHOW_MARRIED_NAMES"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_MEDIA_DOWNLOAD\s*=\s*.*;/', "\$SHOW_MEDIA_DOWNLOAD = ".$boolarray[$_POST["NEW_SHOW_MEDIA_DOWNLOAD"]].";", $configtext);
 	$configtext = preg_replace('/\$SHOW_MEDIA_FILENAME\s*=\s*.*;/', "\$SHOW_MEDIA_FILENAME = ".$boolarray[$_POST["NEW_SHOW_MEDIA_FILENAME"]].";", $configtext);
@@ -814,7 +815,6 @@ function display_results(amount_found){
     </td>
   </tr>
 </table>
-	</td></tr></table>
 
 <?php if ($source!="replace_form") { ?> <input type="hidden" name="action" value="update" />
 <?php } else { ?> <input type="hidden" name="action" value="replace" /> <?php } ?>
@@ -1681,6 +1681,15 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["displ_hide_conf"]."\" onclick=\"
 			<select name="NEW_EXPAND_NOTES" tabindex="<?php $i++; print $i?>" onfocus="getHelp('EXPAND_NOTES_help');">
 				<option value="yes" <?php if ($EXPAND_NOTES) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
 				<option value="no" <?php if (!$EXPAND_NOTES) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="descriptionbox wrap"><?php print_help_link("SHOW_LEVEL2_NOTES_help", "qm", "SHOW_LEVEL2_NOTES"); print $pgv_lang["SHOW_LEVEL2_NOTES"];?></td>
+		<td class="optionbox">
+			<select name="NEW_SHOW_LEVEL2_NOTES" tabindex="<?php $i++; print $i?>" onfocus="getHelp('SHOW_LEVEL2_NOTES_help');">
+				<option value="yes" <?php if ($SHOW_LEVEL2_NOTES) print "selected=\"selected\""; ?>><?php print $pgv_lang["yes"];?></option>
+				<option value="no" <?php if (!$SHOW_LEVEL2_NOTES) print "selected=\"selected\""; ?>><?php print $pgv_lang["no"];?></option>
 			</select>
 		</td>
 	</tr>

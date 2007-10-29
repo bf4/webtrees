@@ -2601,8 +2601,14 @@ function delete_gedcom($ged) {
 	}
 }
 
-//-- return the current size of the given list
-//- list options are indilist famlist sourcelist and otherlist
+/**
+ * return the current size of the given list
+ * list options are indilist famlist sourcelist and otherlist
+ *
+ * @param string $list	list options are indilist famlist sourcelist and otherlist
+ * @param string $filter
+ * @return int
+ */
 function get_list_size($list, $filter="") {
 	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS, $DBTYPE;
 
@@ -2617,36 +2623,45 @@ function get_list_size($list, $filter="") {
 			$sql = "SELECT count(i_file) FROM ".$TBLPREFIX."individuals WHERE i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
 			if ($filter) $sql .= " AND i_gedcom $term '$filter'";
 			$res = dbquery($sql);
-
-			while($row =& $res->fetchRow()) return $row[0];
+			$row =& $res->fetchRow();
+			$res->free();
+			return $row[0];
 		break;
 		case "famlist":
 			$sql = "SELECT count(f_file) FROM ".$TBLPREFIX."families WHERE f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
 			if ($filter) $sql .= " AND f_gedcom $term '$filter'";
 			$res = dbquery($sql);
 
-			while($row =& $res->fetchRow()) return $row[0];
+			$row =& $res->fetchRow();
+			$res->free();
+			return $row[0];
 		break;
 		case "sourcelist":
 			$sql = "SELECT count(s_file) FROM ".$TBLPREFIX."sources WHERE s_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
 			if ($filter) $sql .= " AND s_gedcom $term '$filter'";
 			$res = dbquery($sql);
 
-			while($row =& $res->fetchRow()) return $row[0];
+			$row =& $res->fetchRow();
+			$res->free();
+			return $row[0];
 		break;
 		case "objectlist": // media object
 			$sql = "SELECT count(m_id) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
 			if ($filter) $sql .= " AND m_gedrec $term '$filter'";
 			$res = dbquery($sql);
 
-			while($row =& $res->fetchRow()) return $row[0];
+			$row =& $res->fetchRow();
+			$res->free();
+			return $row[0];
 		break;
 		case "otherlist": // REPO
 			$sql = "SELECT count(o_file) FROM ".$TBLPREFIX."other WHERE o_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
 			if ($filter) $sql .= " AND o_gedcom $term '$filter'";
 			$res = dbquery($sql);
 
-			while($row =& $res->fetchRow()) return $row[0];
+			$row =& $res->fetchRow();
+			$res->free();
+			return $row[0];
 		break;
 	}
 	return 0;
@@ -2836,9 +2851,6 @@ global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 // Used on the on-this-day/upcoming blocks and the day/month calendar views.
 // $jd    - the julian day
 // $facts - restrict the search to just these facts or leave blank for all
-//
-// NOTE: get_anniversary_events() and get_calendar_events () have a lot of
-// common code.  Make sure you update them together!
 ////////////////////////////////////////////////////////////////////////////////
 function get_anniversary_events($jd, $facts='') {
 	global $GEDCOMS, $GEDCOM, $TBLPREFIX;
@@ -3006,9 +3018,6 @@ function get_anniversary_events($jd, $facts='') {
 // TODO: Used by the recent-changes block and the calendar year view.
 // $jd1, $jd2 - the range of julian day
 // $facts - restrict the search to just these facts or leave blank for all
-//
-// NOTE: get_anniversary_events() and get_calendar_events () have a lot of
-// common code.  Make sure you update them together!
 ////////////////////////////////////////////////////////////////////////////////
 function get_calendar_events($jd1, $jd2, $facts='') {
 	global $GEDCOMS, $GEDCOM, $TBLPREFIX;
@@ -3036,8 +3045,8 @@ function get_calendar_events($jd1, $jd2, $facts='') {
 	$where.=" AND d_file={$GEDCOMS[$GEDCOM]['id']}";
 			
 	// Now fetch these anniversaries
-	$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
-	$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
+	$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_mon ASC, d_day ASC, d_year DESC";
+	$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_mon ASC, d_day ASC, d_year DESC";
 	foreach (array($ind_sql, $fam_sql) as $sql) {
 		$res=dbquery($sql);
 		while ($row=&$res->fetchRow()) {

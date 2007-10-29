@@ -194,9 +194,6 @@ function checkChangeTime($pid, $gedrec) {
 			$changeUser = get_gedcom_value("_PGVU", 2, $changrec, '', false);
 			$chan_date = parse_date($cdate);
 			$chan_time = parse_time($ctime);
-			if (!isset($chan_time[0])) $chan_time[0] = 0;
-			if (!isset($chan_time[1])) $chan_time[1] = 0;
-			if (!isset($chan_time[2])) $chan_time[2] = 0;
 			$changeTime = mktime($chan_time[0], $chan_time[1], $chan_time[2], (int)$chan_date[0]['mon'], (int)$chan_date[0]['day'], $chan_date[0]['year']);
 		}
 	}

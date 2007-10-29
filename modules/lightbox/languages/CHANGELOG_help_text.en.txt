@@ -31,12 +31,20 @@ For massive changes, the variable names should be listed in the order in which t
 occur in the respective language files.
 
 
+VERSION 4.1.3
+
+?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
+----------------------------------------------------------------------------------------
+*$pgv_lang["lb_transitionLegend"]					26 Oct 2007				W
+*$pgv_lang["lb_transition_help"] 					26 Oct 2007				W
++$pgv_lang["lb_transitionLegend"]					25 Oct 2007				A
++$pgv_lang["lb_transition_help"] 					25 Oct 2007				A
+
+
 VERSION 4.1.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
-*$pgv_lang["lb_transitionLegend"]					25 Oct 2007				A
-*$pgv_lang["lb_transition_help"] 					25 Oct 2007				A
 *$pgv_lang["lb_music_fileLegend"]					12 Oct 2007				W
 *$pgv_lang["lb_music_file_help"]					12 Oct 2007				W	
 *$pgv_lang["mediatab_help"]							11 Oct 2007				w

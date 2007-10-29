@@ -31,6 +31,11 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+$pgv_lang["add_marriage"]			= "הוסף נישואין"; //@@
+$pgv_lang["edit_concurrency_change"] 	= "הרשומה הזו שונתה לאחרונה ע\"י <i>#CHANGEUSER#</i> ב-#CHANGEDATE#"; 
+$pgv_lang["edit_concurrency_msg2"]	= "הרשומה עם קוד זיהוי #PID# שונתה ע\"י משתמש אחר לאחר שניגשת אליה בפעם האחרונה ."; 
+$pgv_lang["edit_concurrency_msg1"]	= "הייתה שגיאה בזמן יצירת טופס העריכה.  יתכן שהרשומה שונתה ע\"י משתמש אחר אחרי שהסתכלת עליה בפעם הקודמת."; 
+$pgv_lang["edit_concurrency_reload"]	= " השתמש בכפתור הדף הקודם של הדפדפן שלך כדי להעלות מחדש את הדף שהיית בו קודם כדי להבטיח שאתה עובד על רשומה עדכנית."; 
 $pgv_lang["admin_override"]		= " אופצית מנהלן";
 $pgv_lang["no_update_CHAN"]	= "אין לעדכן רשומת שינוי אחרון CHAN"; 
 $pgv_lang["select_events"]		= "בחר מאורעות"; 
@@ -41,7 +46,7 @@ $pgv_lang["replace"]			= "החלפת רשומה";
 $pgv_lang["append"]			= "הוספת רשומה בסוף";
 $pgv_lang["review_changes"]		= "סקור שינויי GEDCOM";
 $pgv_lang["remove_object"]		= "הסר ישות מדיה";
-$pgv_lang["remove_links"]		= "הסר קישור";
+$pgv_lang["remove_links"]			= "הסר קישור";
 $pgv_lang["media_not_deleted"]	= "תיקיית המדיה לא הוסרה.";
 $pgv_lang["thumbs_not_deleted"]	= "תיקיית התמונות המזעריות לא הוסרה.";
 $pgv_lang["thumbs_deleted"]		= "תיקיית התמונות המזעריות הוסרה בהצלחה.";

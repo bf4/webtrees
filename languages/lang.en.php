@@ -31,9 +31,10 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
-$pgv_lang["date_of_entry"]			= "Date of entry in original source";
 $pgv_lang['tree']					= "Tree";
+
 $pgv_lang["age_differences"]		= "Show Age Differences";
+$pgv_lang["date_of_entry"]			= "Date of entry in original source";
 $pgv_lang["multi_site_search"] 		= "Multi Site Search";
 $pgv_lang["switch_lifespan"]		= "Show Lifespan chart";
 $pgv_lang["switch_timeline"]		= "Show Timeline chart";
@@ -419,6 +420,7 @@ $pgv_lang["siblings"]				= "Sibling";
 $pgv_lang["father"] 				= "Father";
 $pgv_lang["mother"] 				= "Mother";
 $pgv_lang["parent"] 				= "Parent";
+$pgv_lang["self"] 					= "Self";
 $pgv_lang["relatives"]				= "Close Relatives";
 $pgv_lang["relatives_events"]		= "Events of close relatives";
 $pgv_lang["historical_facts"]		= "Historical facts";
@@ -1443,10 +1445,10 @@ $pgv_lang["sosa_31"]				= "Great-great-grandmother";
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
 //              %3\$d is replaced with the number of generations - 2
-$pgv_lang["sosa_paternal_female_n_generations"]	= "%3\$d x great grandfather";
-$pgv_lang["sosa_paternal_male_n_generations"]	= "%3\$d x great grandmother";
-$pgv_lang["sosa_maternal_female_n_generations"]	= "%3\$d x great grandfather";
-$pgv_lang["sosa_maternal_male_n_generations"]	= "%3\$d x great grandmother";
+$pgv_lang["sosa_paternal_male_n_generations"]	= "%3\$d x paternal great grandfather";
+$pgv_lang["sosa_paternal_female_n_generations"]	= "%3\$d x paternal great grandmother";
+$pgv_lang["sosa_maternal_male_n_generations"]	= "%3\$d x maternal great grandfather";
+$pgv_lang["sosa_maternal_female_n_generations"]	= "%3\$d x maternal great grandmother";
 
 //-- FAN CHART
 $pgv_lang["compact_chart"]			= "Compact Chart";

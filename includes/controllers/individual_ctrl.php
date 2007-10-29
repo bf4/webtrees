@@ -943,8 +943,7 @@ class IndividualControllerRoot extends BaseController {
 				$label = $labels["brother"];
 			}
 			if ($newchildren[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
-			$famcrec = get_sub_record(1, "1 FAMC @".$family->getXref()."@", $newchildren[$i]->gedrec);
-			$pedi = get_gedcom_value("PEDI", 2, $famcrec, '', false);
+			$pedi = $newchildren[$i]->getChildFamilyPedigree($family->getXref());
 			if ($pedi && isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
 			$newchildren[$i]->setLabel($label);
 		}
@@ -959,8 +958,7 @@ class IndividualControllerRoot extends BaseController {
 				$label = $labels["brother"];
 			}
 			if ($delchildren[$i]->getXref()==$this->pid) $label = "<img src=\"images/selected.png\" alt=\"\" />";
-			$famcrec = get_sub_record(1, "1 FAMC @".$family->getXref()."@", $delchildren[$i]->gedrec);
-			$pedi = get_gedcom_value("PEDI", 2, $famcrec, '', false);
+			$pedi = $delchildren[$i]->getChildFamilyPedigree($family->getXref());
 			if ($pedi && isset($pgv_lang[$pedi])) $label .= " (".$pgv_lang[$pedi].")";
 			$delchildren[$i]->setLabel($label);
 		}
@@ -1100,14 +1098,14 @@ class IndividualControllerRoot extends BaseController {
 
 	function print_notes_tab() {
 		global $pgv_lang, $factarray, $CONTACT_EMAIL, $FACT_COUNT;
+		global $SHOW_LEVEL2_NOTES;
 		?>
 		<table class="facts_table">
 		<?php if (!$this->indi->canDisplayDetails()) {
 		   print "<tr><td class=\"facts_value\">";
 		   print_privacy_error($CONTACT_EMAIL);
 		   print "</td></tr>";
-		}
-		else {
+		} else {
 			$otherfacts = $this->getOtherFacts();
 			foreach ($otherfacts as $key => $event) {
 				$fact = $event->getTag();
@@ -1116,10 +1114,20 @@ class IndividualControllerRoot extends BaseController {
 				}
 				$FACT_COUNT++;
 			}
-			// 2nd level notes/sources [ 1712181 ]
-			$this->indi->add_family_facts(false);
-			foreach ($this->getIndiFacts() as $key => $event) {
-				print_main_notes($event->getGedcomRecord(), 2, $this->pid, $event->getLineNumber(), true);
+			if ($SHOW_LEVEL2_NOTES) {
+				// 2nd level notes/sources [ 1712181 ]
+				$this->indi->add_family_facts(false);
+				foreach ($this->getIndiFacts() as $key => $factrec) {
+					$np = preg_match("/\n2 NOTE/", $factrec[1], $match);
+					if ($np!=0) {
+						$ft = preg_match("/^1 (\w+)/", $factrec[1], $match);
+						$fact = trim($match[1]);
+						print "<tr><td class=\"facts_label\">{$factarray[$fact]}</td>";
+						print "<td class=\"facts_value\">";
+						print_fact_notes($factrec[1], 2, true);
+						print "</td></tr>";
+					}
+				}
 			}
 			if ($this->get_note_count()==0) print "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab2"]."</td></tr>\n";
 			//-- New Note Link
@@ -1149,22 +1157,24 @@ class IndividualControllerRoot extends BaseController {
 
 	function print_sources_tab() {
 		global $CONTACT_EMAIL, $pgv_lang, $FACT_COUNT;
+		global $SHOW_LEVEL2_NOTES;
 		?>
 		<table class="facts_table">
 		<?php	if (!$this->indi->canDisplayDetails()) {
 				print "<tr><td class=\"facts_value\">";
 				print_privacy_error($CONTACT_EMAIL);
 				print "</td></tr>";
-			}
-			else {
+			} else {
 				foreach ($this->getOtherFacts() as $key => $event) {
 					print_main_sources($event->getGedcomRecord(), 1, $this->pid, $event->getLineNumber());
 					$FACT_COUNT++;
 				}
-				// 2nd level sources [ 1712181 ]
-				$this->indi->add_family_facts(false);
-				foreach ($this->getIndiFacts() as $key => $event) {
-					print_main_sources($event->getGedcomRecord(), 2, $this->pid, $event->getLineNumber(), true);
+				if ($SHOW_LEVEL2_NOTES) {
+					// 2nd level sources [ 1712181 ]
+					$this->indi->add_family_facts(false);
+					foreach ($this->getIndiFacts() as $key => $factrec) {
+						print_main_sources($factrec[1], 2, $this->pid, $factrec[0], true);
+					}
 				}
 				if ($this->get_source_count()==0) print "<tr><td id=\"no_tab3\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab3"]."</td></tr>\n";
 				//-- New Source Link

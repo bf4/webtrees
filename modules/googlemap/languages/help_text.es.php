@@ -116,6 +116,7 @@ $pgv_lang["PLE_FLAGS_help"]             = "Utilizando el menú desplegable es po
 
 $pgv_lang["PLIF_FILENAME"]              = "Introduzca nombre de archivo";
 $pgv_lang["PLIF_FILENAME_help"]         = "Introduzca el nombre del archivo que contiene las posiciones de los lugares en formato CSV.";
+$pgv_lang["PLIF_LOCALFILE_help"]        = "Seleccione un archivo de la lista de archivos ya presentes en el servidor que contenga las localizaciones de los lugares en formato CSV.";
 
 $pgv_lang["PLIF_CLEAN"]                 = "Limpiar la base de datos de posiciones de lugares";
 $pgv_lang["PLIF_CLEAN_help"]            = "Si se selecciona esta opción se borrará la base de datos placelocation. Esto quiere decir que sólo la posición almacenada en esta tabla se borrará. Esto no cambiará nada en el GEDCOM.";

@@ -310,26 +310,27 @@ function print_indi_table($datalist, $legend="", $option="") {
 	print "<button type=\"button\" class=\"reset\" title=\"".$pgv_lang["button_reset"]."\" >";
 	print $pgv_lang["reset"]."</button> ";
 	//-- table header
-	print "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
-	print "<thead><tr>";
-	print "<td class=\"sorttable_nosort\"></td>";
-	if ($SHOW_ID_NUMBERS) print "<th class=\"list_label rela sorttable_numeric\">INDI</th>";
-	if ($option=="sosa") print "<th class=\"list_label sorttable_numeric\">Sosa</th>";
-	print "<th class=\"list_label\">".$factarray["NAME"]."</th>";
-	print "<th class=\"list_label\">".$factarray["BIRT"]."</th>";
-	if ($tiny) print "<td class=\"list_label sorttable_nosort\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
-	print "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
-	if ($tiny) print "<th class=\"list_label\"><img src=\"./images/children.gif\" alt=\"".$pgv_lang["children"]."\" title=\"".$pgv_lang["children"]."\" border=\"0\" /></th>";
-	print "<th class=\"list_label\">".$factarray["DEAT"]."</th>";
-	if ($tiny) print "<td class=\"list_label sorttable_nosort\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
-	print "<th class=\"list_label sorttable_numeric\">".$factarray["AGE"]."</th>";
-	print "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
-	if ($tiny && $SHOW_LAST_CHANGE) print "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
-	print "<th class=\"list_label\" style=\"display:none\">SEX</th>";
-	print "<th class=\"list_label\" style=\"display:none\">BIRT</th>";
-	print "<th class=\"list_label\" style=\"display:none\">DEAT</th>";
-	print "<th class=\"list_label\" style=\"display:none\">TREE</th>";
-	print "</tr></thead>\n";
+	echo "<table id=\"".$table_id."\" class=\"sortable list_table center\">";
+	echo "<tr>";
+	echo "<td></td>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
+	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
+	echo "<th class=\"list_label\" style=\"display:none\">GIVN</th>";
+	if ($option=="sosa") echo "<th class=\"list_label\">Sosa</th>";
+	echo "<th class=\"list_label\">".$factarray["BIRT"]."</th>";
+	if ($tiny) echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
+	echo "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
+	if ($tiny) echo "<th class=\"list_label\"><img src=\"./images/children.gif\" alt=\"".$pgv_lang["children"]."\" title=\"".$pgv_lang["children"]."\" border=\"0\" /></th>";
+	echo "<th class=\"list_label\">".$factarray["DEAT"]."</th>";
+	if ($tiny) echo "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
+	echo "<th class=\"list_label\">".$factarray["AGE"]."</th>";
+	echo "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
+	if ($tiny && $SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
+	echo "<th class=\"list_label\" style=\"display:none\">SEX</th>";
+	echo "<th class=\"list_label\" style=\"display:none\">BIRT</th>";
+	echo "<th class=\"list_label\" style=\"display:none\">DEAT</th>";
+	echo "<th class=\"list_label\" style=\"display:none\">TREE</th>";
+	echo "</tr>\n";
 	//-- table body
 	print "<tbody>\n";
 	$hidden = 0;
@@ -384,16 +385,6 @@ function print_indi_table($datalist, $legend="", $option="") {
 		print "<a href=\"".$person->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($tiny) print $person->getSexImage();
 
-// Do we really want to show all of a person's names? Perhaps this could be optional in the lists
-//		for($ni=1; $ni<=$person->getNameCount(); $ni++) {
-//			$addname = $person->getSortableName('', $ni);
-//			if (!empty($addname) && $addname!=$name) print "<br /><a href=\"".$person->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-//		}
-// this code could iterate over an indi record up to 50 times
-// adds about 2 secs to a list of 128 people
-// need a better solution - for now returned the code
-// removing the code causes us not to see alternate names in the list as expected
-
 		foreach ($name_subtags as $k=>$subtag) {
 			for ($num=1; $num<9; $num++) {
 				$addname = $person->getSortableName($subtag, $num);
@@ -401,7 +392,11 @@ function print_indi_table($datalist, $legend="", $option="") {
 				if (empty($addname)) break;
 			}
 		}
-
+		echo "</td>";
+		//-- GIVN
+		echo "<td style=\"display:none\">";
+		$exp = explode(",", str_replace('<', ',', $name).",");
+		echo $exp[1];
 		echo "</td>";
 		//-- SOSA
 		if ($option=="sosa") {
@@ -470,7 +465,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		if ($person->isDead() && !$person->dest && $bdate->MinJD()>0)
 			echo "<a name=\"".($ddate->MaxJD()-$bdate->MinJD())."\" class=\"list_item age\">".GedcomDate::GetAgeYears($bdate, $ddate)."</a>";
 		else
-			echo "&nbsp;";
+			echo '<a name="-1">&nbsp;</a>';
 		echo "</td>";
 		//-- Death place
 		print "<td class=\"list_value_wrap\" align=\"".get_align($person->getDeathPlace())."\">";
@@ -518,21 +513,27 @@ function print_indi_table($datalist, $legend="", $option="") {
 	//-- table footer
 	echo "<tfoot><tr>";
 	echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<td></td>";
-	if ($option=="sosa") echo "<td></td>";
-	echo "<td class=\"list_label\">";
+	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // INDI:ID
+	echo "<td class=\"list_label\">"; // NAME
+	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
 	echo $pgv_lang["total_names"]." : ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
-	echo "<td></td>";
-	if ($tiny) echo "<td></td>";
-	echo "<td></td>";
-	if ($tiny) echo "<td></td>";
-	echo "<td></td>";
-	if ($tiny) echo "<td></td>";
-	echo "<td></td>";
-	echo "<td></td>";
-	if ($tiny && $SHOW_LAST_CHANGE) echo "<td></td>";
+	echo "<td style=\"display:none\">GIVN</td>";
+	if ($option=="sosa") echo "<td></td>"; // SOSA
+	echo "<td></td>"; // BIRT:DATE
+	if ($tiny) echo "<td></td>"; // BIRT:Reminder
+	echo "<td></td>"; // BIRT:PLAC
+	if ($tiny) echo "<td></td>"; // Children
+	echo "<td></td>"; // DEAT:DATE
+	if ($tiny) echo "<td></td>"; // DEAT:Reminder
+	echo "<td></td>"; // DEAT:AGE
+	echo "<td></td>"; // DEAT:PLAC
+	if ($tiny && $SHOW_LAST_CHANGE) echo "<td></td>"; // CHAN
+	echo "<td style=\"display:none\">SEX</td>";
+	echo "<td style=\"display:none\">BIRT</td>";
+	echo "<td style=\"display:none\">DEAT</td>";
+	echo "<td style=\"display:none\">TREE</td>";
 	echo "</tr></tfoot>";
 	echo "</table>\n";
 	echo "</fieldset>\n";
@@ -596,18 +597,20 @@ function print_fam_table($datalist, $legend="", $option="") {
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">FAM</th>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">INDI</th>";
 	echo "<th class=\"list_label\">".$factarray["NAME"]."</th>";
-	echo "<th class=\"list_label sorttable_numeric\">".$factarray["AGE"]."</th>";
-	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">INDI</th>";
+	echo "<th style=\"display:none\">HUSB:GIVN</th>";
+	echo "<th class=\"list_label\">".$factarray["AGE"]."</th>";
+	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela\">INDI</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["spouse"]."</th>";
-	echo "<th class=\"list_label sorttable_numeric\">".$factarray["AGE"]."</th>";
+	echo "<th style=\"display:none\">WIFE:GIVN</th>";
+	echo "<th class=\"list_label\">".$factarray["AGE"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["MARR"]."</th>";
 	if ($tiny) echo "<td class=\"list_label sorttable_nosort\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
 	echo "<th class=\"list_label\">".$factarray["PLAC"]."</th>";
 	if ($tiny) 	echo "<th class=\"list_label\"><img src=\"./images/children.gif\" alt=\"".$pgv_lang["children"]."\" title=\"".$pgv_lang["children"]."\" border=\"0\" /></th>";
 	if ($tiny && $SHOW_LAST_CHANGE) echo "<th class=\"list_label rela\">".$factarray["CHAN"]."</th>";
-	echo "<th class=\"list_label\" style=\"display:none\">MARR</th>";
-	echo "<th class=\"list_label\" style=\"display:none\">DEAT</th>";
-	echo "<th class=\"list_label\" style=\"display:none\">TREE</th>";
+	echo "<th style=\"display:none\">MARR</th>";
+	echo "<th style=\"display:none\">DEAT</th>";
+	echo "<th style=\"display:none\">TREE</th>";
 	echo "</tr></thead>\n";
 	//-- table body
 	echo "<tbody>\n";
@@ -658,11 +661,6 @@ function print_fam_table($datalist, $legend="", $option="") {
 		echo " align=\"".get_align($name)."\">";
 		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($tiny && $husb->xref) echo $husb->getSexImage();
-
-//		for($ni=1; $ni<=$husb->getNameCount(); $ni++) {
-//			$addname = $husb->getSortableName('', $ni);
-//			if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-//		}
  		foreach ($name_subtags as $k=>$subtag) {
  			for ($num=1; $num<9; $num++) {
  				$addname = $husb->getSortableName($subtag, $num);
@@ -670,6 +668,11 @@ function print_fam_table($datalist, $legend="", $option="") {
  				if (empty($addname)) break;
  			}
  		}
+		echo "</td>";
+		//-- Husb GIVN
+		echo "<td style=\"display:none\">";
+		$exp = explode(",", str_replace('<', ',', $name).",");
+		echo $exp[1];
 		echo "</td>";
 		//-- Husband age
 		echo "<td class=\"list_value_wrap\">";
@@ -700,6 +703,11 @@ function print_fam_table($datalist, $legend="", $option="") {
  				if (empty($addname)) break;
  			}
  		}
+		echo "</td>";
+		//-- Wife GIVN
+		echo "<td style=\"display:none\">";
+		$exp = explode(",", str_replace('<', ',', $name).",");
+		echo $exp[1];
 		echo "</td>";
 		//-- Wife age
 		echo "<td class=\"list_value_wrap\">";
@@ -782,21 +790,29 @@ function print_fam_table($datalist, $legend="", $option="") {
 	//-- table footer
 	echo "<tfoot><tr>";
 	echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<td></td>";
-	echo "<td class=\"list_label\">";
+	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // FAM:ID
+	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // HUSB:ID
+	echo "<td class=\"list_label\">"; // HUSB:NAME
+	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
 	echo $pgv_lang["total_fams"]." : ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	echo "</td>";
-	echo "<td></td>";
-	if ($SHOW_ID_NUMBERS) echo "<td></td>";
-	echo "<td></td>";
-	echo "<td></td>";
-	echo "<td></td>";
-	if ($tiny) echo "<td></td>";
-	echo "<td></td>";
-	if ($tiny) echo "<td></td>";
-	if ($tiny && $SHOW_LAST_CHANGE) echo "<td></td>";
+	echo "<td style=\"display:none\">HUSB:GIVN</td>";
+	echo "<td></td>"; // HUSB:AGE
+	if ($SHOW_ID_NUMBERS) echo "<td></td>"; // WIFE:ID
+	echo "<td class=\"list_label\" style=\"vertical-align: top;\">"; // WIFE:NAME
+	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
+	echo "</td>";
+	echo "<td style=\"display:none\">WIFE:GIVN</td>";
+	echo "<td></td>"; // WIFE:AGE
+	echo "<td></td>"; // MARR:DATE
+	echo "<td></td>"; // MARR:Reminder
+	echo "<td></td>"; // MARR:PLAC
+	if ($tiny) echo "<td></td>"; // FAM:ChildrenCount
+	if ($tiny && $SHOW_LAST_CHANGE) echo "<td></td>"; // FAM:CHAN
+	echo "<td style=\"display:none\">MARR</td>";
+	echo "<td style=\"display:none\">DEAT</td>";
+	echo "<td style=\"display:none\">TREE</td>";
 	echo "</tr></tfoot>";
 	echo "</table>\n";
 	echo "</fieldset>\n";
@@ -1236,6 +1252,7 @@ function print_changes_table($datalist) {
 	//echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">".$pgv_lang["id"]."</th>";
 	echo "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
+	echo "<th style=\"display:none\">GIVN</th>";
 	echo "<th class=\"list_label\">".$factarray["CHAN"]."</th>";
 	echo "<th class=\"list_label\">".$factarray["_PGVU"]."</th>";
 	echo "</tr></thead>\n";
@@ -1272,10 +1289,6 @@ function print_changes_table($datalist) {
 		echo "<a href=\"".$record->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($record->type=="INDI") {
 			echo $record->getSexImage();
-//			for($ni=1; $ni<=$record->getNameCount(); $ni++) {
-//				$addname = $record->getSortableName('', $ni);
-//				if (!empty($addname) && $addname!=$name) echo "<br /><a href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
-//			}
 			$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 			if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
  			foreach ($name_subtags as $k=>$subtag) {
@@ -1294,6 +1307,11 @@ function print_changes_table($datalist) {
 			}
 		}
 		echo "</td>";
+		//-- GIVN
+		echo "<td style=\"display:none\">";
+		$exp = explode(",", str_replace('<', ',', $name).",");
+		echo $exp[1];
+		echo "</td>";
 		//-- Last change date/time
 		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap rela\">".$record->LastChangeTimestamp(empty($SEARCH_SPIDER))."</td>";
 		//-- Last change user
@@ -1306,10 +1324,12 @@ function print_changes_table($datalist) {
 	//echo "<td></td>";
 	if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	echo "<td class=\"list_label\">";
+	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
 	echo $pgv_lang["total_names"].": ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	if ($n>=$NMAX) echo "<br /><span class=\"warning\">".$pgv_lang["recent_changes"]." &gt; ".$NMAX."</span>";
 	echo "</td>";
+	echo "<td style=\"display:none\">GIVN</td>";
 	echo "<td></td>";
 	echo "<td></td>";
 	echo "</tr></tfoot>";
@@ -1336,8 +1356,9 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	//echo "<td></td>";
 	//if ($SHOW_ID_NUMBERS) echo "<th class=\"list_label rela sorttable_numeric\">".$pgv_lang["id"]."</th>";
 	print "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
+	print "<th style=\"display:none\">GIVN</th>";
 	print "<th class=\"list_label\">".$factarray["DATE"]."</th>";
-	print "<th class=\"list_label sorttable_nosort\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></th>";
+	print "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></th>";
 	print "<th class=\"list_label\">".$factarray["EVEN"]."</th>";
 	print "</tr></thead>\n";
 	//-- table body
@@ -1406,6 +1427,11 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 			}
 		}
 		print "</td>";
+		//-- GIVN
+		echo "<td style=\"display:none\">";
+		$exp = explode(",", str_replace('<', ',', $name).",");
+		echo $exp[1];
+		echo "</td>";
 		//-- Event date
 		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		print str_replace('<a', '<a name="'.$value['date']->MinJD().'"', $value['date']->Display(empty($SEARCH_SPIDER)));
@@ -1436,9 +1462,11 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	//echo "<td></td>";
 	//if ($SHOW_ID_NUMBERS) echo "<td></td>";
 	print "<td class=\"list_label\">";
+	echo '<a href="javascript:;" onclick="sortByNextCol(this)"><img src="images/topdown.gif" alt="" border="0" /> '.$factarray["GIVN"].'</a><br />';
 	print $pgv_lang["stat_events"].": ".$n;
 	if ($hidden) echo "<br /><span class=\"warning\">".$pgv_lang["hidden"]." : ".$hidden."</span>";
 	print "</td>";
+	print "<td style=\"display:none\">GIVN</td>";
 	print "<td>";
 	if ($allow_download) {
 		$uri = $SERVER_URL.basename($_SERVER["REQUEST_URI"]);

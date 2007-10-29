@@ -1676,6 +1676,10 @@ function compare_date($a, $b) {
 		$tag = $sortby;
 	else
 		$tag = "BIRT";
+function compare_date_descending($a, $b) {
+	$result = compare_date($a, $b);
+	return (0 - $result);
+}
 
 	$adate=get_gedcom_value("$tag:DATE", 1, $a['gedcom'], '', false);
 	$bdate=get_gedcom_value("$tag:DATE", 1, $b['gedcom'], '', false);

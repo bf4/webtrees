@@ -1347,11 +1347,11 @@ h4 {
 }
 
 .rela {
-/*	filter: alpha(opacity=50);
+	filter: alpha(opacity=50);
 	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);
 	-moz-opacity: 0.50;
-	opacity: 0.50; */
-	color: grey;
+	opacity: 0.50; 
+	color: black;
 }
 
 /* Text direction */

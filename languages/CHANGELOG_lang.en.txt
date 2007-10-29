@@ -54,6 +54,11 @@ VERSION 4.1.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+*$pgv_lang["sosa_paternal_male_n_generations"]		27 Oct 2007				} Switch "male" and "female"
+*$pgv_lang["sosa_paternal_female_n_generations"]	27 Oct 2007				} in variable names so that 
+*$pgv_lang["sosa_maternal_male_n_generations"]		27 Oct 2007				} the variable name reflects
+*$pgv_lang["sosa_maternal_female_n_generations"]	27 Oct 2007				} the text
++$pgv_lang["self"] 									25 Oct 2007             A
 +$pgv_lang["age_differences"]						22 Oct 2007				A
 +$pgv_lang["medialist_recursive"]					21 Oct 2007				A
 -$pgv_lang["rabi1"]									21 Oct 2007				D	Name change
@@ -124,19 +129,6 @@ VERSION 4.1.2
 +$pgv_lang["unknown_mime"]							07 Aug 2007				A
 +$pgv_lang["media_broken"]							07 Aug 2007				A
 +$pgv_lang["media_privacy"]							02 Aug 2007				A	Media Firewall, patch 1749817
-+$pgv_lang["multi_site_search"]						01 Oct 2007				A moved from editor.en.php
-+$pgv_lang["cal_none"]                30 Sep 2007           A
-+$pgv_lang["cal_gregorian"]           30 Sep 2007           M (moved from configure_help.XX.php and renamed)
-+$pgv_lang["cal_julian"]              30 Sep 2007           M (moved from configure_help.XX.php and renamed)
-+$pgv_lang["cal_french"]              30 Sep 2007           M (moved from configure_help.XX.php and renamed)
-+$pgv_lang["cal_jewish"]              30 Sep 2007           M (moved from configure_help.XX.php and renamed)
-+$pgv_lang["cal_hebrew"]              30 Sep 2007           M (moved from configure_help.XX.php and renamed)
-+$pgv_lang["cal_jewish_and_gregorian"]30 Sep 2007           M (moved from configure_help.XX.php and renamed)
-+$pgv_lang["cal_hebrew_and_gregorian"]30 Sep 2007           M (moved from configure_help.XX.php and renamed)
-+$pgv_lang["cal_hijri"]               30 Sep 2007           M (moved from configure_help.XX.php and renamed)
-+$pgv_lang["cal_arabic"]              30 Sep 2007           M (moved from configure_help.XX.php and renamed)
-*$pgv_lang["stplGDno"]								28 Sep 2007				W
-*$pgv_lang["stpljpgraphno"]							28 Sep 2007				W
 *$pgv_lang["invalid_gedformat"]						27 Sep 2007				w
 +$pgv_lang["a.m."]									24 Sep 2007				A Suffixes for 12 hour clock
 +$pgv_lang["noon"]									24 Sep 2007				A NB: can use am/pm (or pm/am)

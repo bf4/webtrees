@@ -43,6 +43,8 @@ $pgv_lang["lb_ml_thumb_linksLegend"]= "Minaturbilder Links-Darstellung";
 $pgv_lang["lb_ml_thumb_links_help"]	= "~#pgv_lang[lb_ml_thumb_linksLegend]#~<br />Hier können Sie bestimmen, ob links Links über den Details jedes Medien-Objekts in der Medien-Liste nur mit Ikonen, nur mit Text, oder mit Ikonen und Text dargestellt werden sollen.  Diese Links sind für das Bearbeiten oder Löschen von Medien-Objekten gedacht.<br /><br />Wenn Sie hier <b>#pgv_lang[lb_none]#</b> wählen, sind die Links völlig versteckt, genau als ob der Benutzer keine Editier-Rechte hätte.<br />";
 $pgv_lang["lb_ss_speedLegend"]		= "Dia-Vortrag Geschwindigkeit";
 $pgv_lang["lb_ss_speed_help"]		= "~#pgv_lang[lb_ss_speedLegend]#~<br />Diese Option bestimmt die Wartezeit zwischen Bildern des Dia-Vortrags.<br />";
+$pgv_lang["lb_transitionLegend"]	= "Dia-Wechsel Geschwindigkeit";
+$pgv_lang["lb_transition_help"]		= "~#pgv_lang[lb_transitionLegend]#~<br />Diese Option bestimmt die Geschwindigkeit des Diawechsels.  Ihre Wahl ist für den laufenden Diavortrag gültig.  Sie ist auch für den manuellen Diawechsel gültig.<br /><br />Die <b>#pgv_lang[lb_none]#</b> Option bestimmt dass das alte Bild sofort durch ein neues ersetzt wird, ohne dass Änderungen der Bildgröße beobachtet werden können.<br />";
 $pgv_lang["lb_music_fileLegend"]	= "Dia-Vortrag Tonspur";
 $pgv_lang["lb_music_file_help"]		= "~#pgv_lang[lb_music_fileLegend]#~<br />Diese Option bestimmt die Tonspur, die während des Dia-Vortrags gespielt werden soll.  Das leere Feld bestimmt, dass während des Vortrags kein Ton spielt.<br /><br />Bitte beachten Sie, dass nur Dateien im mp3 Format unterstützt sind.<br />";
  

@@ -497,6 +497,19 @@ Function.prototype.forEach = function(object, block, context) {
 	}
 };
 
+function ts_pgv_sort(a,b) {
+	akey = a.cells[SORT_COLUMN_INDEX].getElementsByTagName('a');
+	bkey = b.cells[SORT_COLUMN_INDEX].getElementsByTagName('a');
+	if (akey.length && akey[0].name && bkey.length && bkey[0].name) {
+		// use "name" value as numeric sortkey, if exists
+		aa = parseInt(akey[0].name);
+		bb = parseInt(bkey[0].name);
+		if (aa==bb) return a.rowIndex-b.rowIndex; // equal values sort by their original sequence
+		if (aa<bb) return -1;
+		if (aa>bb) return 1;
+	}
+};
+
 // character enumeration
 String.forEach = function(string, block, context) {
 	Array.forEach(string.split(""), function(chr, index) {

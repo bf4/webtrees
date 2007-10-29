@@ -1304,10 +1304,10 @@ $pgv_lang["sosa_28"]         	     	= "N/A";
 $pgv_lang["sosa_29"]         	     	= "N/A";
 $pgv_lang["sosa_30"]          	    	= "N/A";
 $pgv_lang["sosa_31"]          	    	= "N/A";
-$pgv_lang["sosa_paternal_female_n_generations"]	= "%3\$d x isoisoisiä";
-$pgv_lang["sosa_paternal_male_n_generations"]	= "%3\$d x isoisoäiti";
-$pgv_lang["sosa_maternal_female_n_generations"]	= "%3\$d x isoisoisiä";
-$pgv_lang["sosa_maternal_male_n_generations"]	= "%3\$d x isoisoäiti";
+$pgv_lang["sosa_paternal_male_n_generations"]	= "%3\$d x isoisoisiä";
+$pgv_lang["sosa_paternal_female_n_generations"]	= "%3\$d x isoisoäiti";
+$pgv_lang["sosa_maternal_male_n_generations"]	= "%3\$d x isoisoisiä";
+$pgv_lang["sosa_maternal_female_n_generations"]	= "%3\$d x isoisoäiti";
 // 5th generation
 //$pgv_lang["sosa_32"]          	    	= "N/A";
 //$pgv_lang["sosa_33"]          	    	= "N/A";

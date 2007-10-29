@@ -168,12 +168,7 @@ function print_gedcom_stats($block = true, $config="", $side, $index) {
 		}
 		if ($config["stat_media"]=="yes") {
 			if ($MULTI_MEDIA==true) {
-				$sql = "SELECT COUNT(m_id) FROM ".$TBLPREFIX."media WHERE m_gedfile='".$GEDCOMS[$GEDCOM]["id"]."'";
-				$tempsql = dbquery($sql);
-				$res =& $tempsql;
-				$row =& $res->fetchRow();
-				$media_count = $row[0];
-				$res->free();
+				$media_count = get_list_size('objectlist');
 				?>
 				<tr>
 					<td class="facts_label">

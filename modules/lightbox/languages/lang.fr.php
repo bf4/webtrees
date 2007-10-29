@@ -35,21 +35,23 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 //Config Parameters -------------------------------------
 $pgv_lang["configure_lightbox"]         = "Configuration de Lightbox";
-$pgv_lang["mediatab"]                   = "<b>Page Individu - Etiquette de médias</b> - Aspect";
+$pgv_lang["mediatab"]                   = "Page Individu - Etiquette de médias";
+$pgv_lang["lb_appearance"]				= "Aspect";
+$pgv_lang["lb_linkAppearance"]			= "Aspect de Lien";
+$pgv_lang["lb_MP3Only"]					= "(mp3 uniquement)";
 $pgv_lang["lb_admin_error"]             = "Réservé aux administrateurs";
 
 $pgv_lang["lb_icon"]                    = "Icone";
 $pgv_lang["lb_text"]                    = "Texte";
 $pgv_lang["lb_both"]                    = "Les deux";
 $pgv_lang["lb_none"]                    = "Aucun";
-$pgv_lang["lb_ml_ThumbLinkAdvice"]      = "Icone, texte, les deux, ou aucun";
 
-$pgv_lang["lb_al_head_links"]           = "<b>Page Individu - Onglet Album - Entête</b> - Aspect de Lien";
-$pgv_lang["lb_al_thumb_links"]          = "<b>Page Individu - Onglet Album - Vignettes</b> - Aspect de Lien";
-$pgv_lang["lb_ml_thumb_links"]          = "<b>Page de Multimedia - Vignettes</b> - Aspect de Lien";
-$pgv_lang["lb_music_file"]              = "<b>Fond sonore Lightbox</b> - (mp3 uniquement)";
+$pgv_lang["lb_al_head_links"]           = "Page Individu - Onglet Album - Entête";
+$pgv_lang["lb_al_thumb_links"]          = "Page Individu - Onglet Album - Vignettes";
+$pgv_lang["lb_ml_thumb_links"]          = "Page de Multimedia - Vignettes";
+$pgv_lang["lb_music_file"]              = "Fond sonore Lightbox";
 $pgv_lang["lb_musicFileAdvice"]         = "(Laisser vide si aucun fond sonore)";
-$pgv_lang["lb_ss_speed"]                = "<b>Vitesse du diaporama</b>";
+$pgv_lang["lb_ss_speed"]                = "Vitesse du diaporama";
 $pgv_lang["lb_ss_SpeedAdvice"]          = "secondes";
 
 // ---------------------------------------------------------------------

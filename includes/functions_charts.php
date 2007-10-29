@@ -180,15 +180,14 @@ function print_family_parents($famid, $sosa = 0, $label="", $parid="", $gparid="
 		print "</td>\n";
 	}
 	print "</tr></table>\n\n";
-	// [ 1750674 ] Family.php, add MARR date, place to parents
-	//if ($sosa!=0) {
+	if ($sosa!=0) {
 		print "<a href=\"family.php?famid=$famid\" class=\"details1\">";
 		if ($SHOW_ID_NUMBERS) print getLRM() . "($famid)" . getLRM() . "&nbsp;&nbsp;";
 		else print str_repeat("&nbsp;", 10);
 		if (showFact("MARR", $famid)) print_simple_fact($family->getGedcomRecord(), "MARR", $wife->getXref()); else print $pgv_lang["private"];
 		print "</a>";
-	//}
-	//else print "<br />\n";
+	}
+	else print "<br />\n";
 
 	/**
 	 * wife side
@@ -853,159 +852,140 @@ function print_url_arrow($id, $url, $label, $dir=2) {
  *
  * @param string $sosa sosa number
  */
-function get_sosa_name( $sosa ) {
+function get_sosa_name($sosa) {
 	global $LANGUAGE, $pgv_lang;
 
 	if ($sosa<2) return "";
 	$sosaname = "";
 	$sosanr = floor($sosa/2);
-	$gen = floor( log($sosanr) / log(2) );
+	$gen = floor(log($sosanr) / log(2));
 
     // first try a generic algorithm, this is later overridden
 	// by language specific algorithms.
-	if (isset($pgv_lang["sosa_$sosa"]) && !empty($pgv_lang["sosa_$sosa"]))
-	{
-	    $sosaname = $pgv_lang["sosa_$sosa"];
-	}
-	else if($gen > 2)
-	{
-        $paternal = (floor($sosa/pow(2,$gen)) == 2);
-		if ($sosa%2){
-			if($paternal && !empty($pgv_lang["sosa_paternal_male_n_generations"])) {
-				$sosaname = sprintf($pgv_lang["sosa_paternal_male_n_generations"], $gen+1, $gen, $gen-1);
+	if (!empty($pgv_lang["sosa_$sosa"])) $sosaname = $pgv_lang["sosa_$sosa"];
+	else if($gen > 2) {
+		switch ($LANGUAGE) {
+		case "danish":
+		case "norwegian":
+		case "swedish":
+			$sosaname = "";
+			$addname = "";
+			$father = strtolower($pgv_lang["father"]);
+			$mother = strtolower($pgv_lang["mother"]);
+			$grand = "be".($LANGUAGE == "danish"?"dste":"ste");
+			$great = "olde";
+			$tip = "tip".($LANGUAGE == "danish"?"-":"p-");
+			for($i = $gen; $i > 2; $i--) {
+				$sosaname .= $tip;
 			}
-			else if ( !empty($pgv_lang["sosa_maternal_male_n_generations"])){
-				$sosaname = sprintf($pgv_lang["sosa_maternal_male_n_generations"], $gen+1, $gen, $gen-1);
+			if ($gen >= 2) $sosaname .= $great;
+			if ($gen == 1) $sosaname .= $grand;
+	
+			for ($i=$gen; $i>0; $i--){
+				if (!(floor($sosa/(pow(2,$i)))%2)) $addname .= $father;
+				else $addname .= $mother;
+				if (($gen%2 && !($i%2)) || (!($gen%2) && $i%2)) $addname .= "s ";
 			}
-		}
-		else {
-			if($paternal && !empty($pgv_lang["sosa_paternal_female_n_generations"])) {
-				$sosaname = sprintf($pgv_lang["sosa_paternal_female_n_generations"], $gen+1, $gen, $gen-1);
+			if ($LANGUAGE == "swedish") $sosaname = $addname;
+			if ($sosa%2==0){
+				$sosaname .= $father;
+				if ($gen>0) $addname .= $father;
+			} else {
+				$sosaname .= $mother;
+				if ($gen>0) $addname .= $mother;
 			}
-			else if (!empty($pgv_lang["sosa_maternal_female_n_generations"])){
-				$sosaname = sprintf($pgv_lang["sosa_maternal_female_n_generations"], $gen+1, $gen, $gen-1);
+			$sosaname = str2upper(substr($sosaname, 0,1)).substr($sosaname,1);
+			if ($LANGUAGE != "swedish") if (!empty($addname)) $sosaname .= ($gen>5?"<br />&nbsp;&nbsp;&nbsp;&nbsp;":"")." <small>(".$addname.")</small>";
+			break;
+	
+		case "dutch":
+		    $sosaname = "";
+			if ($gen & 256) $sosaname .= $pgv_lang["sosa_11"];
+			if ($gen & 128) $sosaname .= $pgv_lang["sosa_10"];
+			if ($gen & 64) $sosaname .= $pgv_lang["sosa_9"];
+			if ($gen & 32) $sosaname .= $pgv_lang["sosa_8"];
+			if ($gen & 16) $sosaname .= $pgv_lang["sosa_7"];
+			if ($gen & 8) $sosaname .= $pgv_lang["sosa_6"];
+			if ($gen & 4) $sosaname .= $pgv_lang["sosa_5"];
+			$gen = $gen - floor($gen / 4)*4;
+			if ($gen == 3) $sosaname .= $pgv_lang["sosa_4"].$pgv_lang["sosa_3"].$pgv_lang["sosa_2"];
+			if ($gen == 2) $sosaname .= $pgv_lang["sosa_3"].$pgv_lang["sosa_2"];
+			if ($gen == 1) $sosaname .= $pgv_lang["sosa_2"];
+			if ($sosa%2==0) $sosaname .= strtolower($pgv_lang["father"]);
+			else $sosaname .= strtolower($pgv_lang["mother"]);
+			$sosaname = str2upper(substr($sosaname, 0,1)).substr($sosaname,1);
+			break;
+	
+		case "finnish":
+		    $sosaname = "";
+			$father = str2lower($pgv_lang["father"]);
+			$mother = str2lower($pgv_lang["mother"]);
+	//		$father = "isä";
+	//		$mother = "äiti";
+	//		$pgv_lang["sosa_2"]= "äidin";	//Grand (mother)
+			for ($i=$gen; $i>0; $i--){
+				if (!(floor($sosa/(pow(2,$i)))%2)) $sosaname .= $father."n";
+	//			else $sosaname .= $pgv_lang["sosa_2"];
+				else $sosaname .= substr($mother, 0,3)."din";
 			}
-		}
-    }
-
-	if ($LANGUAGE == "danish" || $LANGUAGE == "norwegian" || $LANGUAGE == "swedish") {
-		$sosaname = "";
-		$addname = "";
-		$father = strtolower($pgv_lang["father"]);
-		$mother = strtolower($pgv_lang["mother"]);
-		$grand = "be".($LANGUAGE == "danish"?"dste":"ste");
-		$great = "olde";
-		$tip = "tip".($LANGUAGE == "danish"?"-":"p-");
-		for($i = $gen; $i > 2; $i--) {
-			$sosaname .= $tip;
-		}
-		if ($gen >= 2) $sosaname .= $great;
-		if ($gen == 1) $sosaname .= $grand;
-
-		for ($i=$gen; $i>0; $i--){
-			if (!(floor($sosa/(pow(2,$i)))%2)) $addname .= $father;
-			else $addname .= $mother;
-			if (($gen%2 && !($i%2)) || (!($gen%2) && $i%2)) $addname .= "s ";
-		}
-		if ($LANGUAGE == "swedish") $sosaname = $addname;
-		if (!($sosa%2)){
-			$sosaname .= $father;
-			if ($gen>0) $addname .= $father;
-		}
-		else {
-			$sosaname .= $mother;
-			if ($gen>0) $addname .= $mother;
-		}
-		$sosaname = str2upper(substr($sosaname, 0,1)).substr($sosaname,1);
-		if ($LANGUAGE != "swedish") if (!empty($addname)) $sosaname .= ($gen>5?"<br />&nbsp;&nbsp;&nbsp;&nbsp;":"")." <small>(".$addname.")</small>";
-	}
-	if ($LANGUAGE == "dutch") {
-	    $sosaname = "";
-		if ($gen & 256) $sosaname .= $pgv_lang["sosa_11"];
-		if ($gen & 128) $sosaname .= $pgv_lang["sosa_10"];
-		if ($gen & 64) $sosaname .= $pgv_lang["sosa_9"];
-		if ($gen & 32) $sosaname .= $pgv_lang["sosa_8"];
-		if ($gen & 16) $sosaname .= $pgv_lang["sosa_7"];
-		if ($gen & 8) $sosaname .= $pgv_lang["sosa_6"];
-		if ($gen & 4) $sosaname .= $pgv_lang["sosa_5"];
-		$gen = $gen - floor($gen / 4)*4;
-		if ($gen == 3) $sosaname .= $pgv_lang["sosa_4"].$pgv_lang["sosa_3"].$pgv_lang["sosa_2"];
-		if ($gen == 2) $sosaname .= $pgv_lang["sosa_3"].$pgv_lang["sosa_2"];
-		if ($gen == 1) $sosaname .= $pgv_lang["sosa_2"];
-		if ($sosa%2) $sosaname .= strtolower($pgv_lang["mother"]);
-		else $sosaname .= strtolower($pgv_lang["father"]);
-		$sosaname = str2upper(substr($sosaname, 0,1)).substr($sosaname,1);
-		return $sosaname;
-	}
-	if ($LANGUAGE == "finnish") {
-	    $sosaname = "";
-		$father = str2lower($pgv_lang["father"]);
-		$mother = str2lower($pgv_lang["mother"]);
-//		$father = "isä";
-//		$mother = "äiti";
-//		$pgv_lang["sosa_2"]= "äidin";	//Grand (mother)
-		for ($i=$gen; $i>0; $i--){
-			if (!(floor($sosa/(pow(2,$i)))%2)) $sosaname .= $father."n";
-//			else $sosaname .= $pgv_lang["sosa_2"];
-			else $sosaname .= substr($mother, 0,3)."din";
-		}
-		if (!($sosa%2)) $sosaname .= $father;
-		else $sosaname .= $mother;
-		if (substr($sosaname, 0,1)=="i") $sosaname = str2upper(substr($sosaname, 0,1)).substr($sosaname,1);
-		else $sosaname = str2upper(substr($mother, 0,2)).substr($sosaname,2);
-	}
-	if ($LANGUAGE == "german") {
-	    $sosaname = "";
-		for($i = $gen; $i > 1; $i--) {
-			$sosaname .= "Ur-";
-		}
-		if ($gen >= 1) $sosaname .= "Groß";
-		if (!($sosa%2)) $sosaname .= strtolower($pgv_lang["father"]);
-		else $sosaname .= strtolower($pgv_lang["mother"]);
-		$sosaname = str2upper(substr($sosaname, 0,1)).substr($sosaname,1);
-	}
-	if ($LANGUAGE == "hebrew") {
-	    $sosaname = "";
-		$addname = "";
-		$father = $pgv_lang["father"];
-		$mother = $pgv_lang["mother"];
-		$greatf = $pgv_lang["sosa_22"];
-		$greatm = $pgv_lang["sosa_21"];
-		$of = $pgv_lang["sosa_23"];
-		$grandfather = $pgv_lang["sosa_4"];
-		$grandmother = $pgv_lang["sosa_5"];
-//		$father = "Aba";
-//		$mother = "Ima";
-//		$grandfather = "Saba";
-//		$grandmother = "Savta";
-//		$greatf = " raba";
-//		$greatm = " rabta";
-//		$of = " shel ";
-		for ($i=$gen; $i>=0; $i--){
-			if ($i==0){
-				if (!($sosa%2)) $addname .= "f";
+			if ($sosa%2==0) $sosaname .= $father;
+			else $sosaname .= $mother;
+			if (substr($sosaname, 0,1)=="i") $sosaname = str2upper(substr($sosaname, 0,1)).substr($sosaname,1);
+			else $sosaname = str2upper(substr($mother, 0,2)).substr($sosaname,2);
+			break;
+	
+		case "hebrew":
+		    $sosaname = "";
+			$addname = "";
+			$father = $pgv_lang["father"];
+			$mother = $pgv_lang["mother"];
+			$greatf = $pgv_lang["sosa_22"];
+			$greatm = $pgv_lang["sosa_21"];
+			$of = $pgv_lang["sosa_23"];
+			$grandfather = $pgv_lang["sosa_4"];
+			$grandmother = $pgv_lang["sosa_5"];
+	//		$father = "Aba";
+	//		$mother = "Ima";
+	//		$grandfather = "Saba";
+	//		$grandmother = "Savta";
+	//		$greatf = " raba";
+	//		$greatm = " rabta";
+	//		$of = " shel ";
+			for ($i=$gen; $i>=0; $i--) {
+				if ($i==0) {
+					if (!($sosa%2)) $addname .= "f";
+					else $addname .= "m";
+				}
+				else if (!(floor($sosa/(pow(2,$i)))%2)) $addname .= "f";
 				else $addname .= "m";
+				if ($i==0 || strlen($addname)==3) {
+					if (strlen($addname)==3) {
+						if (substr($addname, 2,1)=="f") $addname = $grandfather.$greatf;
+						else $addname = $grandmother.$greatm;
+					}
+					else if (strlen($addname)==2) {
+						if (substr($addname, 1,1)=="f") $addname = $grandfather;
+						else $addname = $grandmother;
+					}
+					else {
+						if ($addname=="f") $addname = $father;
+						else $addname = $mother;
+					}
+					$sosaname = $addname.($i<$gen-2?$of:"").$sosaname;
+					$addname="";
+				}
 			}
-			else if (!(floor($sosa/(pow(2,$i)))%2)) $addname .= "f";
-			else $addname .= "m";
-			if ($i==0 || strlen($addname)==3){
-				if (strlen($addname)==3){
-					if (substr($addname, 2,1)=="f") $addname = $grandfather.$greatf;
-					else $addname = $grandmother.$greatm;
-				}
-				else if (strlen($addname)==2){
-					if (substr($addname, 1,1)=="f") $addname = $grandfather;
-					else $addname = $grandmother;
-				}
-				else {
-					if ($addname=="f") $addname = $father;
-					else $addname = $mother;
-				}
-				$sosaname = $addname.($i<$gen-2?$of:"").$sosaname;
-				$addname="";
+			break;
+	
+		default:
+			$paternal = (floor($sosa/pow(2,$gen)) == 2) ? "paternal" : "maternal";
+			$male = ($sosa%2==0) ? "male" : "female";
+			if (!empty($pgv_lang["sosa_{$paternal}_{$male}_n_generations"])) {
+				$sosaname = sprintf($pgv_lang["sosa_{$paternal}_{$male}_n_generations"], $gen+1, $gen, $gen-1);
 			}
-		}
+	    }
 	}
+
 	if (!empty($sosaname)) return "$sosaname<!-- sosa=$sosa nr=$sosanr gen=$gen -->";
 	else return  "<!-- sosa=$sosa nr=$sosanr gen=$gen -->";
 }

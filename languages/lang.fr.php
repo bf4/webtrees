@@ -1388,10 +1388,10 @@ $pgv_lang["sosa_31"]                    = "Arrière-arrière-grand-mère";
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
 //              %3\$d is replaced with the number of generations - 2
-$pgv_lang["sosa_paternal_female_n_generations"]= "%3\$d x arrière grand-père";
-$pgv_lang["sosa_paternal_male_n_generations"]= "%3\$d x arrière grand-mère";
-$pgv_lang["sosa_maternal_female_n_generations"]= "%3\$d x arrière grand-père";
-$pgv_lang["sosa_maternal_male_n_generations"]= "%3\$d x arrière grand-mère";
+$pgv_lang["sosa_paternal_male_n_generations"]= "%3\$d x arrière grand-père paternel";
+$pgv_lang["sosa_paternal_female_n_generations"]= "%3\$d x arrière grand-mère paternelle";
+$pgv_lang["sosa_maternal_male_n_generations"]= "%3\$d x arrière grand-père maternel";
+$pgv_lang["sosa_maternal_female_n_generations"]= "%3\$d x arrière grand-mère maternelle";
 
 //-- FAN CHART
 $pgv_lang["compact_chart"]              = "Arbre compact";

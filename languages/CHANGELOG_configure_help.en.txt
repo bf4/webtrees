@@ -54,15 +54,17 @@ VERSION 4.2
 +$pgv_lang["charts_conf"]         					08 Aug 2007				A   Used for editconfig_gedcom.php
 +$pgv_lang["help_conf"]          					08 Aug 2007				A   Used for editconfig_gedcom.php
 +$pgv_lang["facts_conf"]         					08 Aug 2007				A   Used for editconfig_gedcom.php
-+$pgv_lang["ged_filter_reset"]						06 Aug 2007				A   Used for editconfig_gedcom_help.php
-+$pgv_lang["ged_filter_description"]				06 Aug 2007				A   Used for editconfig_gedcom_help.php
-+$pgv_lang["ged_filter_results"]					06 Aug 2007				A   Used for editconfig_gedcom_help.php
 
 
 VERSION 4.1.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
++$pgv_lang["ged_filter_reset"]						06 Aug 2007				A   Used for editconfig_gedcom_help.php
++$pgv_lang["ged_filter_description"]				06 Aug 2007				A   Used for editconfig_gedcom_help.php
++$pgv_lang["ged_filter_results"]					06 Aug 2007				A   Used for editconfig_gedcom_help.php
++$pgv_lang["SHOW_LEVEL2_NOTES"]						28 Oct 2007				A
++$pgv_lang["SHOW_LEVEL2_NOTES_help"]				28 Oct 2007				A
 +$pgv_lang["SHOW_AGE_DIFF"]            			 23 Oct 2007      A
 +$pgv_lang["SHOW_AGE_DIFF_help"] 						 23 Oct 2007      A
 +$pgv_lang["EXPAND_NOTES"] 									 23 Oct 2007      A
@@ -113,18 +115,6 @@ VERSION 4.1.2
 +$pgv_lang["SHOW_NO_WATERMARK_help"]				04 Aug 2007				A	Watermarks, patch 1739602
 +$pgv_lang["USE_MEDIA_FIREWALL"]					02 Aug 2007				A	Media Firewall, patch 1749817
 +$pgv_lang["USE_MEDIA_FIREWALL_help"]				02 Aug 2007				A	Media Firewall, patch 1749817
-*$pgv_lang["CALENDAR_FORMAT_help"]					30 Sep 2007				W
-*$pgv_lang["CALENDAR_FORMAT_help"]					30 Sep 2007				W
--$pgv_lang["gregorian"]								30 Sep 2007				M (moved to lang.XX.php and renamed)
--$pgv_lang["julian"]								30 Sep 2007				M (moved to lang.XX.php and renamed)
--$pgv_lang["config_french"]							30 Sep 2007				M (moved to lang.XX.php and renamed)
--$pgv_lang["jewish"]								30 Sep 2007				M (moved to lang.XX.php and renamed)
--$pgv_lang["config_hebrew"]							30 Sep 2007				M (moved to lang.XX.php and renamed)
--$pgv_lang["jewish_and_gregorian"]					30 Sep 2007				M (moved to lang.XX.php and renamed)
--$pgv_lang["hebrew_and_gregorian"]					30 Sep 2007				M (moved to lang.XX.php and renamed)
--$pgv_lang["hijri"]									30 Sep 2007				M (moved to lang.XX.php and renamed)
--$pgv_lang["arabic_cal"]							30 Sep 2007				M (moved to lang.XX.php and renamed)
-+$pgv_lang["optional_file_not_exist"]				29 Sep 2007				A
 *$pgv_lang["date_format_help"]						21 Sep 2007				w		"date" -> "format" in 2 places
 *$pgv_lang["date_format_help"]						20 Sep 2007				Wf
 *$pgv_lang["date_format_help2"]						20 Sep 2007				Wf
