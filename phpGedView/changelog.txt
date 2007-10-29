@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1.3
+ - Added GEDCOM configuration search filter (yalnifj, neumont)
  - Fixed [ 1821180 ] Changes Report Form Dates are switched (canajun2eh)
  - Added [ 1820679 ] Language specific sort in Sorttable Tables (opus27)
  - Fixed [ 1805955 ] Alive in year: doesn't recognise death date (opus27)

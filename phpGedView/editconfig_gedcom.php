@@ -619,7 +619,7 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
 //-->
 </script>
 
-<form enctype="multipart/form-data" method="post" name="configform" action="editconfig_gedcom.php">
+<form enctype="multipart/form-data" method="post" id="configform" name="configform" action="editconfig_gedcom.php">
 
 <table class="facts_table <?php print $TEXT_DIRECTION ?>">
   <tr>
@@ -639,7 +639,184 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
 		print $pgv_lang["lang_back_manage_gedcoms"];
 		print "</b></a><br /><br />";
 	?>
+
+<script language="javascript" type="text/javascript">
+<!--
+var searchable_tds, searchable_text;
+
+/* Function that returns all occurances of an element with the tagName "tag" that DO NOT have a parent (up to the root "node") with the same tagName 
+(i.e. div A is a parent node of div B, this function would return only div A)*/
+function getFirstElementsByTagName(node, tag){
+	if(!node || !tag || !node.childNodes) return [];
+	var rtn = [];
+	var elms = node.getElementsByTagName(tag);
+	for(var i=0; i<elms.length; i++){
+		var parent = elms[i];
+		while(parent && parent.parentNode && parent.parentNode.tagName.toUpperCase().indexOf(tag) < 0){
+			if(parent.parentNode == node){
+				rtn[rtn.length] = elms[i];
+				break;
+			}
+			parent = parent.parentNode;
+		}
+	}
+	return rtn;
+}
+/* Finds the name and short description of options for searching */
+function capture_text(form){
+	searchable_tds = [];							// Start with an empty array
+	searchable_text = [];							// Start with an empty array
+	var trs = form.getElementsByTagName("TR");		// Get the rows in the form
+	for(var i=0; i<trs.length; i++){				// For each row in the form
+		var tds = getFirstElementsByTagName(trs[i], "TD");// Get the TD's
+		if(tds.length == 2 && tds[0].className.toUpperCase().indexOf("DESCRIPTIONBOX") >= 0){						// If there are exactly 2 TD's
+			searchable_tds[searchable_tds.length] = tds[0];	// Save the TD's
+			var text_nodes = ""; // variable for building the searchable text string
+			for(var j=0; j<tds[0].childNodes.length; j++){ // for each child node in the td
+				if(tds[0].childNodes[j].nodeType == 3){ // if the node is a TEXT NODE
+					text_nodes = text_nodes + " " + tds[0].childNodes[j].textContent.toUpperCase(); // append a space and the capitalized text
+				}
+			}
+			if(text_nodes && text_nodes != ""){
+				searchable_text[searchable_text.length] = text_nodes; // Save the text, case insensitively
+			}
+		}
+	}
+}
+/* Starting at a given node (or TD,) all parents, up to the form, are expanded & otherwise made visible. */
+function expand_to_the_top(td){
+	var p = td.parentNode;							// Start by expanding the row
+	while(p && p.tagName.toUpperCase() != "FORM"){  // And expand until the parent form is hit
+		/* Expand current node */
+		if(p.style){								// If this foo has style, we can expand it
+			if(p.tagName.toUpperCase() == "DIV" && p.id != ""){   // If this foo is a div, we can use the available expansion function provided in some other Javascript
+				expand_layer(p.id, true);				// Expand it!
+			}
+			else{									// Otherwise
+				p.style.display = "";				// Remove the "none" from the display
+			}
+		}
+		p = p.parentNode;							// Climb up the tree
+	}
+}
+/* Function that SHOWS all rows */
+function show_all(root, first){
+	if(root.childNodes){
+    	for(var i=0; i<root.childNodes.length; i++)
+    	{
+    		show_all(root.childNodes[i], false);
+    		if(root.style){
+    			root.style.display = "";
+    		}
+    	}
+	}
+	if(first == undefined){
+		collapse_divs(root);
+	}
+}
+/* Function that HIDES all rows */
+function hide_all(root){
+	for(var i=0; i<searchable_tds.length; i++){
+		searchable_tds[i].parentNode.style.display = "none;";
+	}
+	collapse_divs(root);
+}
+/* Function that COLLAPSES all divs (that are meant to be expanded) */
+function collapse_divs(root){
+	control_divs(root, false);
+}
+
+/* Function that EXPANDS all divs (that are meant to be expanded) */
+function expand_divs(root){
+	control_divs(root, true);
+}
+/* Function that HIDES all divs */
+function hide_divs(root){
+	var divs = getFirstElementsByTagName(root, "div");
+	for(var i=0; i<divs.length; i++)
+		divs[i].style.display = "none;";
+}
+/* Refactored function for controlling whether or not divs are expanded or collapsed */
+function control_divs(root, boolexpand){
+	var divs = root.getElementsByTagName("div");
+	for(var i=0; i<divs.length; i++){
+		if(divs[i].id != ""){   // If this foo is a div, we can use the available expansion function provided in some other Javascript
+			expand_layer(divs[i].id, boolexpand);				// Collapse it!
+		}
+	}
+}
+/* Function that filters editconfig_gedcom.php options */
+function hide_irrelevant(txt){
+	var form = document.getElementById("configform"); 		// find the form we are sifting through
+	if(txt && txt.length > 0 && txt != " "){				// If we have text to search for
+		/* Save the TD's and TEXT's that will be searched if they haven't already been saved */
+		if(searchable_tds == undefined){					// If we haven't already collected the searchable TD's & searchable texts
+			capture_text(form);
+		}
+		hide_all(form);							// hide everything we dont want to see (everthing, until we find matches)
+		expand_divs(form);
+		hide_divs(form);
+		txt = txt.toUpperCase();							// Make the search string case insensitive
+		/* Search each searchable TEXT and see if we have a match */
+		var matches = 0;
+		for(var i=0; i<searchable_tds.length; i++){			// For each searchable TD
+			if(searchable_text[i].indexOf(txt) > -1){					// If the text matches
+				expand_to_the_top(searchable_tds[i]);		// Expand this node, and all parent's parent's nodes until we hit the form
+				matches++;
+			}
+		}
+		display_results(matches);
+		show_hebrew();
+		
+	}
+	else{
+		display_results(-1);
+		show_all(form);
+		show_hebrew();
+	}
+}
+/* Function that shows or hides Hebrew calendar options */
+function show_hebrew(){
+	var calendar = document.getElementById("NEW_CALENDAR_FORMAT");
+	if(calendar != undefined)
+		show_jewish(calendar, "hebrew-cal");
+}
+/* Function that resets the search field and collapses the form divs */
+function clear_gedfilter(){
+	display_results(-1);
+	show_all(document.getElementById("configform"));
+	document.getElementById("searching_for_options").value = "";
+}
+/* Function that writes the results to a span under the search field; -1 Means to clear it */
+function display_results(amount_found){
+	if(amount_found == -1)
+		document.getElementById("gedfilter_results").innerHTML = "";
+    else
+    	document.getElementById("gedfilter_results").innerHTML = "<?php print $pgv_lang["ged_filter_results"] ?>  " + amount_found;	
+}
+//-->
+</script>
+<table class="facts_table">
+	<tr>
+		<td>
+			<b>
+				<?php print $pgv_lang["ged_filter_description"] ?>&nbsp;&nbsp;
+			</b>
+			<input type="text" id="searching_for_options" name="searching_for_options" onkeyup="hide_irrelevant(this.value);"/>
+			&nbsp;&nbsp;
+			<input type="submit" onclick="clear_gedfilter();return false;" value="<?php print $pgv_lang["ged_filter_reset"]?>"/>
+			&nbsp;&nbsp;
+			<p>
+				<b>
+					<font color="red">
+						<span id="gedfilter_results"/>
+					</font>
+				</b>
+			</p>
     </td>
+  </tr>
+</table>
+   </td>
   </tr>
 </table>
 
