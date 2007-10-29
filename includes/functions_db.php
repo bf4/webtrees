@@ -2853,9 +2853,6 @@ global $TBLPREFIX, $DBCONN, $GEDCOMS, $GEDCOM;
 // Used on the on-this-day/upcoming blocks and the day/month calendar views.
 // $jd    - the julian day
 // $facts - restrict the search to just these facts or leave blank for all
-//
-// NOTE: get_anniversary_events() and get_calendar_events () have a lot of
-// common code.  Make sure you update them together!
 ////////////////////////////////////////////////////////////////////////////////
 function get_anniversary_events($jd, $facts='') {
 	global $GEDCOMS, $GEDCOM, $TBLPREFIX;
@@ -3023,9 +3020,6 @@ function get_anniversary_events($jd, $facts='') {
 // TODO: Used by the recent-changes block and the calendar year view.
 // $jd1, $jd2 - the range of julian day
 // $facts - restrict the search to just these facts or leave blank for all
-//
-// NOTE: get_anniversary_events() and get_calendar_events () have a lot of
-// common code.  Make sure you update them together!
 ////////////////////////////////////////////////////////////////////////////////
 function get_calendar_events($jd1, $jd2, $facts='') {
 	global $GEDCOMS, $GEDCOM, $TBLPREFIX;
@@ -3053,8 +3047,8 @@ function get_calendar_events($jd1, $jd2, $facts='') {
 	$where.=" AND d_file={$GEDCOMS[$GEDCOM]['id']}";
 			
 	// Now fetch these anniversaries
-	$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_day ASC, d_year DESC";
-	$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_day ASC, d_year DESC";
+	$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_mon ASC, d_day ASC, d_year DESC";
+	$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_mon ASC, d_day ASC, d_year DESC";
 	foreach (array($ind_sql, $fam_sql) as $sql) {
 		$res=dbquery($sql);
 		while ($row=&$res->fetchRow()) {
