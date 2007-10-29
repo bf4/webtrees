@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1.3
+ - Fixed [ 1523064 ] Missing Individual Source Data in Media List (yalnifj)
  - Fixed [ 1750358 ] Indilist/Familylist - Visitor - Error (yalnifj)
  - Added GEDCOM configuration search filter (yalnifj, neumont)
  - Fixed [ 1821180 ] Changes Report Form Dates are switched (canajun2eh)
