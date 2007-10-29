@@ -488,6 +488,19 @@ if ($verify == "verify_gedcom") {
 			print "selected=\"selected\"";
 			print ">".$pgv_lang["no"]."</option>";
 			print "</select></td></tr>";
+			//-- check if there are media in the DB already
+			$mc = get_list_size('objectlist');
+			
+			$hasObje = false;
+			//-- read the gedcom and check if it has OBJE records
+			$fp = fopen($GEDCOMS[$GEDFILENAME]["path"], "r");
+			while (!feof($fp) && !$hasObje) {
+				$fcontents = fread($fp, 1024 * 4);
+				if (strpos($fcontents, "@ OBJE")!==false) $hasObje = true;
+			}
+			fclose($fp);
+			
+			if ($mc>0 && !$hasObje) {
 			?>
 			<tr>
 			<td class="descriptionbox wrap width20">
@@ -500,6 +513,7 @@ if ($verify == "verify_gedcom") {
 			</td>
 			</tr>
 			<?php
+			}
 			print "<tr><td class=\"optionbox wrap\" colspan=\"2\">";
 		}
 		print "</td></tr></table>";
