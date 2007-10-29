@@ -49,7 +49,16 @@
 
 		// main link displayed on page
 		$menu = array();
-		$menu["label"] = $pgv_lang["set_link"];
+		if ($LB_ML_THUMB_LINKS == "icon" || $LB_ML_THUMB_LINKS == "both") {
+			$menu["icon"] = "modules/lightbox/images/image_link.gif";
+		}
+		if($LB_ML_THUMB_LINKS == "both") { 
+			$menu["label"] = "<br />".$pgv_lang["set_link"];
+		}
+		if($LB_ML_THUMB_LINKS == "text") { 
+			$menu["label"] = $pgv_lang["set_link"];
+		}
+		
 		$menu["link"] = "#";
 		$menu["onclick"] = "return ilinkitem('$mediaid','person')";
 //		$menu["class"] = "thememenuitem";
