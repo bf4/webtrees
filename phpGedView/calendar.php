@@ -345,7 +345,6 @@ case 'calendar':
 	for ($jd=$cal_date->minJD; $jd<=$cal_date->maxJD; ++$jd)
 		foreach (apply_filter(get_anniversary_events($jd, $events), $filterof, $filtersx) as $event) {
 			$d=$event['date']->date1->d;
-			$d=$jd-$cal_date->minJD+1;
 			if ($d<1 || $d>$days_in_month)
 				$d=0;
 			$found_facts[$d][$event['id']]=$event;
