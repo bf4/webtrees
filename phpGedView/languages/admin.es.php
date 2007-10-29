@@ -319,8 +319,8 @@ $pgv_lang["warn_users"]							= "Usuarios con avisos";
 $pgv_lang["weekly"]								= "Semanalmente";
 $pgv_lang["welcome_new"]						= "Bienvenido a su nuevo sitio PhpGedView. Dado que está viendo esta página, ha instalado PhpGedView con éxito y puede comenzar a configurarlo en la forma que desee.<br>";
 $pgv_lang["yearly"]								= "Anualmente";
-$pgv_lang["admin_OK_subject"]					= "Solicitud de datos en #SERVER_NAME#";
-$pgv_lang["admin_OK_message"]					= "No tiene mensajes pendientes.";
+$pgv_lang["admin_OK_subject"]					= "Aprobación de la cuenta en #SERVER_NAME#";
+$pgv_lang["admin_OK_message"]					= "El administrador del sitio PhpGedView #SERVER_NAME# ha aprobado su solicitud de cuenta.  Ya puede entrar de forma identificada accediendo al siguiente vínculo:\\r\n\\r\n#SERVER_NAME#\\r\n";
 
 // Text for the Gedcom Checker
 $pgv_lang["gedcheck"]     = "Comprobador de Gedcom";          // Module title

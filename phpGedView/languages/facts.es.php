@@ -180,7 +180,9 @@ $factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Lugar de nacimiento del cónyuge";
 $factarray["FAMC:WIFE:GIVN"] = "Nombre de pila de la madre";
 $factarray["FAMC:HUSB:FAMC:HUSB:GIVN"] = "Nombre de pila del abuelo paterno";
 $factarray["FAMC:WIFE:FAMC:WIFE:GIVN"] = "Nombre de pila de la abuela materna";
-
+$factarray["FAMC:WIFE:FAMC:HUSB:GIVN"] = "Nombre de pila del abuelo materno"; 
+$factarray["FAMC:HUSB:FAMC:WIFE:GIVN"] = "Nombre de pila de la abuela paterno";
+$factarray["FAMS:CHIL:BIRT:PLAC"] = "Lugar de nacimiento del hijo/a";
 
 // These facts are all colon delimited
 $factarray["BIRT:PLAC"] = "Lugar de nacimiento";

@@ -35,25 +35,36 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 }
 
 //Config Parameters -------------------------------------
-$pgv_lang["configure_lightbox"]		= "Configuración del Álbum Lightbox";
-$pgv_lang["mediatab"]       		= "Página de persona - Pestaña de objetos";
-$pgv_lang["lb_appearance"]			= "Apariencia";
-$pgv_lang["lb_linkAppearance"]		= "Apariencia del vínculo";
-$pgv_lang["lb_MP3Only"]				= "(sólo mp3)";
-$pgv_lang["lb_admin_error"]         = "Página sólo para administradores";
+$pgv_lang["configure_lightbox"]			= "Configuración del Álbum Lightbox";
+$pgv_lang["mediatab"]       			= "<b>Página de persona - Pestaña de objetos</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Apariencia";
+$pgv_lang["lb_appearance"]				= "Apariencia";
+$pgv_lang["lb_linkAppearance"]			= "Apariencia del vínculo";
+$pgv_lang["lb_MP3Only"]					= "(sólo mp3)";
+$pgv_lang["lb_admin_error"]				= "Página sólo para administradores";
+// $pgv_lang["lb_toAlbumPage"]				= "Return to Album page";
 
-$pgv_lang["lb_icon"]				= "Icono";
-$pgv_lang["lb_text"]				= "Texto";
-$pgv_lang["lb_both"]				= "Ambos";
-$pgv_lang["lb_none"]				= "Ninguno";
+$pgv_lang["lb_icon"]					= "Icono";
+$pgv_lang["lb_text"]					= "Texto";
+$pgv_lang["lb_both"]					= "Ambos";
+$pgv_lang["lb_none"]					= "Ninguno";
 
-$pgv_lang["lb_al_head_links"]		= "Página de persona - Encabezamiento de la pestaña Álbum";
-$pgv_lang["lb_al_thumb_links"]		= "Página de persona - Miniaturas en la pestaña Álbum";
-$pgv_lang["lb_ml_thumb_links"]		= "Página de objetos audiovisuales - Miniaturas";
-$pgv_lang["lb_music_file"]			= "Banda sonora para la presentación";
-$pgv_lang["lb_musicFileAdvice"]		= "Ubicación del archivo con la banda sonora (déjelo en blanco si no hay banda sonora)";
-$pgv_lang["lb_ss_speed"]			= "Velocidad de la Presentación";
-$pgv_lang["lb_ss_SpeedAdvice"]		= "Tiempo de permanencia de la imagen en segundos";
+$pgv_lang["lb_al_head_links"]			= "<b>Página de persona - Encabezamiento de la pestaña Álbum</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Apariencia del vínculo";
+$pgv_lang["lb_al_thumb_links"]			= "<b>Página de persona - Miniaturas en la pestaña Álbum</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Apariencia de los vínculos";
+$pgv_lang["lb_ml_thumb_links"]			= "<b>Página de objetos audiovisuales - Miniaturas</b><br />&nbsp;&nbsp;&nbsp;&nbsp;Apariencia de los vínculos";
+$pgv_lang["lb_music_file"]				= "<b>Banda sonora para la presentación</b><br />&nbsp;&nbsp;&nbsp;&nbsp;(sólo mp3)";
+$pgv_lang["lb_musicFileAdvice"]			= "Ubicación del archivo con la banda sonora (déjelo en blanco si no hay banda sonora)";
+$pgv_lang["lb_ss_speed"]				= "<b>Velocidad de la Presentación</b>";
+$pgv_lang["lb_ss_SpeedAdvice"]			= "Tiempo de permanencia de la imagen en segundos";
+
+// $pgv_lang["lb_transition"]				= "Image Transition speed";
+// $pgv_lang["lb_normal"]					= "Normal";
+$pgv_lang["lb_double"]					= "Doble";
+// $pgv_lang["lb_warp"]					= "Warp";
+// $pgv_lang["lb_url_dimensions"]			= "URL Window dimensions";
+// $pgv_lang["lb_url_dimensionsAdvice"]	= "Width and height of URL window in pixels";
+$pgv_lang["lb_width"]					= "Anchura";
+$pgv_lang["lb_height"]					= "Altura";
+									
 
 // ---------------------------------------------------------------------
 
