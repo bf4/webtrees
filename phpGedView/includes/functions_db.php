@@ -2376,7 +2376,7 @@ function get_alpha_fams($letter) {
 				$wname = get_sortable_name($WIFE);
 				if (hasRTLText($hname)) {
 					$indirec = find_person_record($WIFE);
-					if (isset($indilist[$WIFE])) {
+					if (isset($indilist[$WIFE]["names"])) {
 						foreach($indilist[$WIFE]["names"] as $n=>$namearray) {
 							if (hasRTLText($namearray[0])) {
 								$surnames[str2upper($namearray[2])] = $namearray[2];
