@@ -993,7 +993,7 @@ if ($stage == 1) {
 
 			//-- import anything that is not a blob
 			if (!preg_match("/\n1 BLOB/", $indirec))
-				import_record($indirec, false);
+				import_record(trim($indirec), false);
 
 			//-- move the cursor to the start of the next record
 			$pos1 = $pos2;
