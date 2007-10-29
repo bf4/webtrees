@@ -98,10 +98,12 @@ function print_yahrzeit($block=true, $config="", $side, $index) {
     print "<th class=\"list_label\">".$factarray["NAME"]."</th>";
 	print "<th style=\"display:none\">GIVN</th>";
 	print "<th class=\"list_label\">".$factarray["DATE"]."</th>";
-	print "<th class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></th>";
+	print "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></th>";
 	print "<th class=\"list_label\">".$factarray["_YART"]."</th>";
 	print "</tr>\n";
-	
+
+//TODO visitors do not see the anniversary column?	
+		
 	//-- table body
 	$hidden = 0; 
 	$n = 0; 
