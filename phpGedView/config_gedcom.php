@@ -181,6 +181,7 @@ $SHOW_RELATIVES_EVENTS = "_BIRT_CHIL,_BIRT_COUS,_BIRT_FSIB,_BIRT_GCHI,_BIRT_HSIB
 $EXPAND_RELATIVES_EVENTS = false;
 $EXPAND_SOURCES = false;
 $EXPAND_NOTES = false;
+$SHOW_LEVEL2_NOTES = true;			// -- Show level 2 Notes & Sources on Notes & Sources tabs
 $SHOW_AGE_DIFF = false;				// -- show age diff between spouses and between children on close relatives tab
 $EDIT_AUTOCLOSE = false; //-- autoclose edit window when update successful
 $SOUR_FACTS_UNIQUE = "AUTH,ABBR,TITL,PUBL,TEXT";
