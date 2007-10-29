@@ -2603,8 +2603,14 @@ function delete_gedcom($ged) {
 	}
 }
 
-//-- return the current size of the given list
-//- list options are indilist famlist sourcelist and otherlist
+/**
+ * return the current size of the given list
+ * list options are indilist famlist sourcelist and otherlist
+ *
+ * @param string $list	list options are indilist famlist sourcelist and otherlist
+ * @param string $filter
+ * @return int
+ */
 function get_list_size($list, $filter="") {
 	global $TBLPREFIX, $GEDCOM, $DBCONN, $GEDCOMS, $DBTYPE;
 
@@ -2619,36 +2625,45 @@ function get_list_size($list, $filter="") {
 			$sql = "SELECT count(i_file) FROM ".$TBLPREFIX."individuals WHERE i_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
 			if ($filter) $sql .= " AND i_gedcom $term '$filter'";
 			$res = dbquery($sql);
-
-			while($row =& $res->fetchRow()) return $row[0];
+			$row =& $res->fetchRow();
+			$res->free();
+			return $row[0];
 		break;
 		case "famlist":
 			$sql = "SELECT count(f_file) FROM ".$TBLPREFIX."families WHERE f_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
 			if ($filter) $sql .= " AND f_gedcom $term '$filter'";
 			$res = dbquery($sql);
 
-			while($row =& $res->fetchRow()) return $row[0];
+			$row =& $res->fetchRow();
+			$res->free();
+			return $row[0];
 		break;
 		case "sourcelist":
 			$sql = "SELECT count(s_file) FROM ".$TBLPREFIX."sources WHERE s_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
 			if ($filter) $sql .= " AND s_gedcom $term '$filter'";
 			$res = dbquery($sql);
 
-			while($row =& $res->fetchRow()) return $row[0];
+			$row =& $res->fetchRow();
+			$res->free();
+			return $row[0];
 		break;
 		case "objectlist": // media object
 			$sql = "SELECT count(m_id) FROM ".$TBLPREFIX."media WHERE m_gedfile=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
 			if ($filter) $sql .= " AND m_gedrec $term '$filter'";
 			$res = dbquery($sql);
 
-			while($row =& $res->fetchRow()) return $row[0];
+			$row =& $res->fetchRow();
+			$res->free();
+			return $row[0];
 		break;
 		case "otherlist": // REPO
 			$sql = "SELECT count(o_file) FROM ".$TBLPREFIX."other WHERE o_file=".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]["id"]); 
 			if ($filter) $sql .= " AND o_gedcom $term '$filter'";
 			$res = dbquery($sql);
 
-			while($row =& $res->fetchRow()) return $row[0];
+			$row =& $res->fetchRow();
+			$res->free();
+			return $row[0];
 		break;
 	}
 	return 0;
