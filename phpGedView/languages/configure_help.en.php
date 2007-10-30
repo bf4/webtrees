@@ -691,8 +691,9 @@ $pgv_lang["time_limit_help"]			= "~#pgv_lang[time_limit]#~<br /><br />The maximu
 $pgv_lang["media_import_help"] = "~#pgv_lang[media_import]#~<br />This import will convert the multimedia links in your GEDCOM file to multimedia records. For example, the following media entry will be changed from:<blockquote><code>1 OBJE<br />2 FORM jpg<br />2 FILE media/grandma.jpg<br />2 TITL Picture of grandma</code></blockquote>to:<blockquote><code>0 @M1@ OBJE<br />1 FORM jpg<br />1 FILE media/grandma.jpg<br />1 TITL Picture of grandma</code></blockquote>The new multimedia record will be stored separately in the database. Links to external multimedia files will be changed to references to the new multimedia record, which will in turn contain a reference to the external file. For example, the following GEDCOM record will be changed from:<blockquote><code>0 @I1@ INDI<br />1 NAME Your/Name/<br />1 OBJE<br />2 FORM jpg<br />2 FILE media/grandma.jpg<br />2 TITL Picture of grandma</code></blockquote>to:<blockquote><code>0 @I1@ INDI<br />1 NAME Your/Name/<br />1 OBJE @M1@<br /></code></blockquote>The advantage of using multimedia records is that you can easily administer your media. When you change the title of a multimedia record, it is changed for all GEDCOM records that link to this multimedia record. Several people,families, or sources can be linked to the same multimedia record.";
 
 // editconfig_gedcom.php Option Filter
-$pgv_lang["ged_filter_results"] = "Results found:";
+$pgv_lang["ged_filter_results"] = "Results found";
 $pgv_lang["ged_filter_reset"] = "Clear Search";
-$pgv_lang["ged_filter_description"] = "Search for an option: ";
+$pgv_lang["ged_filter_description"] = "Search option text";
+$pgv_lang["ged_filter_description_help"] = "~#pgv_lang[ged_filter_description]#~<br />This option lets you search the text associated with configuration options.<br /><br />As you type letters, the search will find all configuration options that contain that letter sequence.  The search becomes more precise as you type more letters.<br />";
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 /**
- * UI for online updating of the gedcom config file.
+ * UI for online updating of the GEDCOM config file.
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2007  PGV Development Team
@@ -799,6 +799,7 @@ function display_results(amount_found){
 <table class="facts_table">
 	<tr>
 		<td>
+			<?php print_help_link("ged_filter_description_help", "qm", "ged_filter_description");?>
 			<b>
 				<?php print $pgv_lang["ged_filter_description"] ?>&nbsp;&nbsp;
 			</b>
