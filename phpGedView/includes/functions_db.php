@@ -3046,9 +3046,9 @@ function get_calendar_events($jd1, $jd2, $facts='') {
 	// Only get events from the current gedcom
 	$where.=" AND d_file={$GEDCOMS[$GEDCOM]['id']}";
 			
-	// Now fetch these anniversaries
-	$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_mon ASC, d_day ASC, d_year DESC";
-	$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_mon ASC, d_day ASC, d_year DESC";
+	// Now fetch these events
+	$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_julianday1";
+	$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_julianday1";
 	foreach (array($ind_sql, $fam_sql) as $sql) {
 		$res=dbquery($sql);
 		while ($row=&$res->fetchRow()) {
