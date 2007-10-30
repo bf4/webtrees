@@ -2876,7 +2876,7 @@ function get_anniversary_events($jd, $facts='') {
 			if ($anniv->d==1) {
 				$where.=" AND d_day<=1";
 			} else
-				if ($anniv->d==$anniv->Format('t'))
+				if ($anniv->d==$anniv->DaysInMonth())
 					$where.=" AND d_day>={$anniv->d}";
 				else
 					$where.=" AND d_day={$anniv->d}";
@@ -2892,7 +2892,7 @@ function get_anniversary_events($jd, $facts='') {
 					if ($anniv->d==30)
 						$where.=" AND d_day>=30 AND d_mon=2";
 					else
-						if ($anniv->d==29 && $anniv->Format('t')==29)
+						if ($anniv->d==29 && $anniv->DaysInMonth()==29)
 							$where.=" AND (d_day=29 OR d_day>30) AND d_mon=2";
 						else
 							$where.=" AND d_day={$anniv->d} AND d_mon=2";
@@ -2902,7 +2902,7 @@ function get_anniversary_events($jd, $facts='') {
 				// 29 KSL does not include 30 KSL (but would include an invalid 31 KSL if there were no 30 KSL)
 				if ($anniv->d==1) {
 					$tmp=new JewishDate(array($anniv->y, 'csh', 1));
-					if ($tmp->Format('t')==29)
+					if ($tmp->DaysInMonth()==29)
 						$where.=" AND (d_day<=1 AND d_mon=3 OR d_day=30 AND d_mon=2)";
 					else
 						$where.=" AND d_day<=1 AND d_mon=3";
@@ -2910,7 +2910,7 @@ function get_anniversary_events($jd, $facts='') {
 					if ($anniv->d==30)
 						$where.=" AND d_day>=30 AND d_mon=3";
 					else
-						if ($anniv->d==29 && $anniv->Format('t')==29)
+						if ($anniv->d==29 && $anniv->DaysInMonth()==29)
 							$where.=" AND (d_day=29 OR d_day>30) AND d_mon=3";
 						else
 							$where.=" AND d_day={$anniv->d} AND d_mon=3";
@@ -2919,12 +2919,12 @@ function get_anniversary_events($jd, $facts='') {
 				// 1 TVT includes 30 KSL (if this year didn't have 30 KSL)
 				if ($anniv->d==1) {
 					$tmp=new JewishDate($anniv->y, 'ksl', 1);
-					if ($tmp->Format('t')==29)
+					if ($tmp->DaysInMonth()==29)
 						$where.=" AND (d_day<=1 AND d_mon=4 OR d_day=30 AND d_mon=3)";
 					else
 						$where.=" AND d_day<=1 AND d_mon=4";
 				} else
-					if ($anniv->d==$anniv->Format('t'))
+					if ($anniv->d==$anniv->DaysInMonth())
 						$where.=" AND d_day>={$anniv->d} AND d_mon=4";
 					else
 						$where.=" AND d_day={$anniv->d} AND d_mon=4";
@@ -2933,7 +2933,7 @@ function get_anniversary_events($jd, $facts='') {
 				if ($anniv->d==1)
 					$where.=" AND d_day<=1";
 				else
-					if ($anniv->d==$anniv->Format('t'))
+					if ($anniv->d==$anniv->DaysInMonth())
 						$where.=" AND d_day>={$anniv->d}";
 					else
 						$where.=" AND d_day={$anniv->d}";
@@ -2946,7 +2946,7 @@ function get_anniversary_events($jd, $facts='') {
 				if ($anniv->d==1)
 					$where.=" AND d_day<=1";
 				else
-					if ($anniv->d==$anniv->Format('t'))
+					if ($anniv->d==$anniv->DaysInMonth())
 						$where.=" AND d_day>={$anniv->d}";
 					else
 						$where.=" AND d_day={$anniv->d}";
@@ -2959,7 +2959,7 @@ function get_anniversary_events($jd, $facts='') {
 					else
 						$where.=" AND (d_day<=1 AND d_mon=8 OR d_day=30 AND d_mon=6)";
 				} else
-					if ($anniv->d==$anniv->Format('t'))
+					if ($anniv->d==$anniv->DaysInMonth())
 						$where.=" AND d_day>={$anniv->d} AND d_mon=8";
 					else
 						$where.=" AND d_day={$anniv->d} AND d_mon=8";

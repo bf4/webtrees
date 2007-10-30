@@ -84,8 +84,8 @@ if ($year==0)
 	$year=$cal_date->y;
 
 // Extract values from date
-$days_in_month=$cal_date->Format('t');
-$days_in_week=$cal_date->NUM_DAYS_OF_WEEK;
+$days_in_month=$cal_date->DaysInMonth();
+$days_in_week=$cal_date->DaysInWeek();
 $cal_month=$cal_date->Format('O');
 $today_month=$today->Format('O');
 
@@ -344,8 +344,10 @@ case 'calendar':
 	// Fetch events for each day
 	for ($jd=$cal_date->minJD; $jd<=$cal_date->maxJD; ++$jd)
 		foreach (apply_filter(get_anniversary_events($jd, $events), $filterof, $filtersx) as $event) {
-			$d=$event['date']->date1->d;
-			if ($d<1 || $d>$days_in_month)
+			$tmp=$event['date']->MinDate();
+			if ($tmp->IsDayValid())
+				$d=$jd-$cal_date->minJD+1;
+			else
 				$d=0;
 			$found_facts[$d][$event['id']]=$event;
 		}
@@ -440,7 +442,7 @@ case 'calendar':
 	$week_start=($WEEK_START+6)%$days_in_week;
 	// The french  calendar has a 10-day week, but our config only lets us choose
 	// mon-sun as a start day.  Force french calendars to start on primidi
-	if ($cal_date->NUM_DAYS_OF_WEEK==10)
+	if ($days_in_week==10)
 		$week_start=0;
 	print "<table class=\"list_table width100 $TEXT_DIRECTION\"><tr>";
 	for ($week_day=0; $week_day<$days_in_week; ++$week_day) {
