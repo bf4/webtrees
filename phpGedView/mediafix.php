@@ -40,6 +40,7 @@ function fixmedia($oldrecord) {
 			}
 			else {
 				$level = $line{0};
+				$sublevel = $level + 1;
 				$oldi = $i;
 				do {
 					$i++;
