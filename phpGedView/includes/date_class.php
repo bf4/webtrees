@@ -998,6 +998,7 @@ class GedcomDate {
 		// EXPERIMENTAL CODE for [ 1050249 ] Privacy: year instead of complete date in public views
 		// TODO If feedback is positive, create a GUI option to edit it.
 		global $PUBLIC_DATE_FORMAT;
+		
 		$username=getUserName();
 		if (!empty($PUBLIC_DATE_FORMAT) && $date_fmt==$DATE_FORMAT && empty($username))
 			$date_fmt=$PUBLIC_DATE_FORMAT;
@@ -1045,7 +1046,10 @@ class GedcomDate {
 				// If the date is different to the unconverted date, add it to the date string.
 				if ($d1!=$d1tmp && $d1tmp!='')
 					if ($url)
-						$conv1.=' <span dir="'.$TEXT_DIRECTION.'">(<a href="'.$d1conv->CalendarURL().'">'.$d1tmp.'</a>)</span>';
+					    if ($CALENDAR_FORMAT!="none")
+							$conv1.=' <span dir="'.$TEXT_DIRECTION.'">(<a href="'.$d1conv->CalendarURL().'">'.$d1tmp.'</a>)</span>';
+						else	
+							$conv1.=' <span dir="'.$TEXT_DIRECTION.'"><br /><a href="'.$d1conv->CalendarURL().'">'.$d1tmp.'</a></span>';
 					else
 						$conv1.=' <span dir="'.$TEXT_DIRECTION.'">('.$d1tmp.')</span>';
 				if (!is_null($this->date2) && $d2!=$d2tmp && $d1tmp!='')
