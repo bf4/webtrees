@@ -26,6 +26,10 @@
 require("config.php");
 require("includes/functions_edit.php");
 
+if (!userGedcomAdmin(getUserName())) {
+	header('Location: index.php');
+}
+
 function fixmedia($oldrecord) {
 	$newrec = "";
 	$objelinks = array();
