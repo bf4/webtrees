@@ -1275,9 +1275,13 @@ function generate_thumbnail($filename, $thumbnail) {
  * Function to sort GEDCOM fact tags based on their tanslations
  */
 function factsort($a, $b) {
-   global $factarray;
+	global $factarray;
 
-   return stringsort(trim(strip_tags($factarray[$a])), trim(strip_tags($factarray[$b])));
+	if (array_key_exists($a, $factarray))
+		$a=$factarray[$a];
+	if (array_key_exists($b, $factarray))
+		$b=$factarray[$b];
+	return stringsort($a, $b);
 }
 /**
  * String sorting function
