@@ -138,7 +138,7 @@ function print_yahrzeit($block=true, $config="", $side, $index) {
 		$hd1=new HebrewDate($hd);
 		$hd1->y+=1;
 		$hd1->SetJDFromYMD();
-		if ($hd->d==30 && $today->Format('t')=='29' && $hd1->Format('t')==30)
+		if ($hd->d==30 && $today->DaysInMonth()=='29' && $hd1->DaysInMonth()==30)
 			$yahrzeits[$key]['jd']++;
 //TODO does this rule work only on 30th of CSH, KSL and ADR dates?? does not work as expected for CHS
 //30 CHS shows yahrzeit date as 2 KSL
