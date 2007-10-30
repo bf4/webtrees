@@ -160,7 +160,7 @@ class CalendarDate {
 		$dm=$m-max($this->m,1);
 		$dd=$d-max($this->d,1);
 		if ($dd<0) {
-			$dd+=$this->Format('t');
+			$dd+=$this->DaysInMonth();
 			$dm--;
 		}
 		if ($dm<0) {
@@ -213,6 +213,22 @@ class CalendarDate {
 		return $this->minJD>=$this->CAL_START_JD && $this->maxJD<=$this->CAL_END_JD;
 	}
 
+	// Is the day number valid for the current month?
+	function IsDayValid() {
+		return $this->d >= 1 && $this->d <= $this->DaysInMonth();
+	}
+
+	// How many days in the current month
+	function DaysInMonth() {
+		list($ny,$nm)=$this->NextMonth();
+		return $this->YMDtoJD($ny, $nm, 1) - $this->YMDtoJD($this->y, $this->m, 1);
+	}
+
+	// How many days in the current week
+	function DaysInWeek() {
+		return $this->NUM_DAYS_OF_WEEK;
+	}
+
 	// Format a date
 	// $format - format string: the codes are specified in http://php.net/date
 	function Format($format) {
@@ -245,8 +261,7 @@ class CalendarDate {
 			case 'm': $str.=$this->FormatMonthZeros(); break;
 			case 'M': $str.=$this->FormatShortMonth(); break;
 			case 'n': $str.=$this->FormatMonth(); break;
-			case 't': list($ny,$nm)=$this->NextMonth();
-			          $str.=$this->YMDtoJD($ny, $nm, 1) - $this->YMDtoJD($this->y, $this->m, 1); break;
+			case 't': $str.=$this->DaysInMonth(); break;
 			case 'L': $str.=$this->IsLeapYear() ? 1 : 0; break;
 			case 'Y': $str.=$this->FormatLongYear(); break;
 			case 'y': $str.=$this->FormatShortYear(); break;
