@@ -622,8 +622,9 @@ $pgv_lang["SAVE_WATERMARK_THUMB"]		= "Mit Wasserzeichen versehene Miniaturbilder
 $pgv_lang["SAVE_WATERMARK_THUMB_help"]	= "~#pgv_lang[SAVE_WATERMARK_THUMB]#~<br /><br />Wenn die Medien-Feurwand benutzt wird und hier <b>#pgv_lang[yes]#</b> gewählt ist, sind alle mit Wasserzeichen versehene Miniaturbilder auf dem Server bewahrt.<br /><br />Der Vorteil dieser Option ist ein schnelleres Zeigen der Medienlisten;  der Nachteil ist ein erhöhter Festplatten-Speicherbedarf, da dann jedes Miniaturbild zweimal gespeichert werden muss.<br /><br />";
 
 // editconfig_gedcom.php Option Filter
-$pgv_lang["ged_filter_results"] = "Resultate: ";
-$pgv_lang["ged_filter_reset"] = "Neue Suche";
-$pgv_lang["ged_filter_description"] = "Nach Konfiguration-Option suchen: ";
+$pgv_lang["ged_filter_results"]			= "Resultate";
+$pgv_lang["ged_filter_reset"]			= "Neue Suche";
+$pgv_lang["ged_filter_description"]		= "Optionen-Text durchsuchen";
+$pgv_lang["ged_filter_description_help"] = "~#pgv_lang[ged_filter_description]#~<br />Diese Option ermöglicht das Durchsuchen der Optione-Texte.<br /><br />Je mehr Buchstaben Sie eingeben, desto präziser ist die Suche.<br />";
 
 ?>
