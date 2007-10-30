@@ -1295,7 +1295,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	print "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
 	print "<th style=\"display:none\">GIVN</th>";
 	print "<th class=\"list_label\">".$factarray["DATE"]."</th>";
-	print "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
+	print "<th class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
 	print "<th class=\"list_label\">".$factarray["EVEN"]."</th>";
 	print "</tr>\n";
 	//-- table body
@@ -1376,9 +1376,9 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		print "<td class=\"list_value_wrap rela\">";
 		$anniv = $value['anniv'];
 		if ($anniv==0)
-			print '&nbsp;';
+			print '<a name="-1">&nbsp;</a>';
 		else
-			print $anniv;
+			print "<a name=\"{$anniv}\">{$anniv}</a>";
 		if ($allow_download) {
 			// hCalendar:dtstart and hCalendar:summary
 			print "<abbr class=\"dtstart\" title=\"".strip_tags($value['date']->Display(false,'Ymd',array()))."\"></abbr>";
