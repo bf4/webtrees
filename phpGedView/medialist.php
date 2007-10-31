@@ -373,7 +373,7 @@ if ($ct>0){
 					print "<table border=0><tr>";
 		
 					// ---------- Edit Media --------------------
-					print "<td class=\"width33 center\" valign=\"top\">";
+					print "<td class=\"width33 wrap center font9\" valign=\"top\">";
 					print "<a href=\"javascript:;\" title=\"" . $pgv_lang["lb_edit_media"] . "\" onclick=\" return window.open('addmedia.php?action=editmedia&amp;pid=" . $media["XREF"] . "&amp;linktoid=', '_blank', 'top=50,left=50,width=600,height=600,resizable=1,scrollbars=1');\">";
 					if ($LB_ML_THUMB_LINKS == "icon" || $LB_ML_THUMB_LINKS == "both") {
 						print "<img src=\"modules/lightbox/images/image_edit.gif\" alt=\"\" class=\"icon\" />" ;
@@ -388,12 +388,12 @@ if ($ct>0){
 					print "</td>";
 			
 					// ---------- Link Media to person, family or source  ---------------
-					print "<td class=\"width33 center\" valign=\"top\">";
+					print "<td class=\"width33 wrap center font9\" valign=\"top\">";
 					include ("modules/lightbox/functions/lb_link.php");
 					print "</td>";
 			
 					// ---------- View Media Details (mediaviewer) --------------------
-					print "<td class=\"width33 center\" valign=\"top\">";	
+					print "<td class=\"width33 wrap center font9\" valign=\"top\">";	
 					print "<a href=\"mediaviewer.php?mid=" . $media["XREF"] . "\" title=\"" . $pgv_lang["lb_view_media"] . "\">";
 					if ($LB_ML_THUMB_LINKS == "icon" || $LB_ML_THUMB_LINKS == "both") {
 						print "<img src=\"modules/lightbox/images/image_view.gif\" alt=\"\" class=\"icon\" title=\"" . $pgv_lang["lb_view_media"] . "\" />";
