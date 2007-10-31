@@ -43,7 +43,6 @@ $pgv_lang["charts_block_descr"]		= "Dieser Block ermöglicht es Ihnen, Diagramme
 $pgv_lang["chart_type"]				= "Diagramm-Typ";
 $pgv_lang["changedate1"]			= "Datenbereich Ende";
 $pgv_lang["changedate2"]			= "Datenbereich Anfang";
-$pgv_lang["changes_report"]			= "Änderungen Bericht";
 $pgv_lang["search_place_word"]			= "Ganze Worte";
 $pgv_lang["invalid_search_input"]		= "Bitte geben Sie einen Namen oder einen Ort zusätzlich zur Jahresangabe ein";
 $pgv_lang["duplicate_username"]			= "Doppelter Benutzername. Ein Benutzer mit dem gewählten Namen existiert bereits. Bitte wählen Sie einen anderen Benutzernamen.";
@@ -90,6 +89,8 @@ $pgv_lang["after"]						= "hinter";
 $pgv_lang["config_block"]				= "Konfigurieren";
 $pgv_lang["enter_comments"]				= "Bitte geben Sie ihre Verwandtschaft zu den Daten im Bemerkungsfeld ein.";
 $pgv_lang["comments"]					= "Bemerkungen";
+
+//-- Ahnentafel report
 $pgv_lang["ahnentafel_report"]			= "Ahnentafel Bericht";
 $pgv_lang["ahnentafel_header"]			= "Ahnentafel Bericht für ";
 $pgv_lang["ahnentafel_generation"]		= "Generation ";
@@ -107,6 +108,12 @@ $pgv_lang["ahnentafel_died_f"]			= "starb";
 $pgv_lang["ahnentafel_died_m"]			= "starb";
 $pgv_lang["ahnentafel_place"]			= " in ";
 $pgv_lang["ahnentafel_no_details"]		= " aber die Einzelheiten sind nicht bekannt";
+
+//-- Changes report
+$pgv_lang["changes_report"]			= "Änderungen Bericht";
+$pgv_lang["changes_pending_tot"]	= "Noch nicht akzeptierte Änderungen insgesamt: ";
+$pgv_lang["changes_accepted_tot"]	= "Schon akzeptierte Änderungen insgesamt: ";
+
 $pgv_lang["child-family"]				= "Eltern und Geschwister";
 $pgv_lang["spouse-family"]				= "Ehepartner und Kinder";
 $pgv_lang["direct-ancestors"]			= "Vorfahren in direkter Linie";

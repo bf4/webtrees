@@ -42,7 +42,6 @@ $pgv_lang["charts_block_descr"]		= "The Charts block allows you to place a chart
 $pgv_lang["chart_type"]				= "Chart Type";
 $pgv_lang["changedate1"]			= "Ending range of change dates";
 $pgv_lang["changedate2"]			= "Starting range of change dates";
-$pgv_lang["changes_report"]			= "Changes Report";
 $pgv_lang["search_place_word"]		= "Whole words only";
 $pgv_lang["invalid_search_input"] 	= "Please enter a Given name, Last name, or Place in addition to Year";
 $pgv_lang["duplicate_username"] 	= "Duplicate user name.  A user with that user name already exists.  Please choose another user name.";
@@ -1338,6 +1337,11 @@ $pgv_lang["ahnentafel_buried_m"]	= "was buried";			// male
 $pgv_lang["ahnentafel_buried_f"]	= "was buried";			// female
 $pgv_lang["ahnentafel_place"]		= " in ";				// place name follows this
 $pgv_lang["ahnentafel_no_details"]	= " but the details are unknown";
+
+//-- Changes report
+$pgv_lang["changes_report"]			= "Changes Report";
+$pgv_lang["changes_pending_tot"]	= "Total pending changes: ";
+$pgv_lang["changes_accepted_tot"]	= "Total accepted changes: ";
 
 //-- Descendancy report
 $pgv_lang["descend_report"]		= "Descendancy Report";
