@@ -60,17 +60,18 @@ print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t
 		if ($LB_AL_THUMB_LINKS!="none") $LB_AL_THUMB_LINKS = "text";
 		if ($LB_ML_THUMB_LINKS!="none") $LB_ML_THUMB_LINKS = "text";
 	}
-
 ?>
-	<script type="text/javascript">
+	<SCRIPT LANGUAGE="Javascript" type="text/javascript">
+	<!--
 	<?php if ($LB_MUSIC_FILE == "") { ?>
 		var myMusic = null;
 	<?php }else{ ?>
-		var myMusic 		= '<?php print $LB_MUSIC_FILE; ?>';  	// The music file
+		var myMusic 	= '<?php print $LB_MUSIC_FILE; ?>'; // The music file
     <?php } ?>
 	var CB_SlShowTime 	= '<?php print $LB_SS_SPEED; 	?>';	// Slide show timer
-	</script>
-
+	var CB_Animation	= '<?php print $LB_TRANSITION; 	?>';	// Next/Prev Image transition effect
+	//-->
+	</script>	
 <?php 	if ($TEXT_DIRECTION == "rtl") { ?>
 			<link  href="modules/lightbox/css/clearbox_music_RTL.css" 	rel="stylesheet" type="text/css" />
 			<link href ="modules/lightbox/css/album_page.css" 			rel="stylesheet" type="text/css" media="screen" /> 
