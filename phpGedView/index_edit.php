@@ -277,7 +277,16 @@ if ($action=="configure" && isset($ublocks[$side][$index])) {
 	print "<b>".$PGV_BLOCKS[$block[0]]["name"]."</b>";
 	print "</td></tr>";
 	print "</table>";
-
+?>
+<script language="JavaScript" type="text/javascript">
+<!--
+	var pastefield;
+	function paste_id(value) {
+		pastefield.value=value;
+	}
+//-->
+</script>
+<?php
 	print "\n<form name=\"block\" method=\"post\" action=\"index_edit.php\">\n";
 	print "<input type=\"hidden\" name=\"ctype\" value=\"$ctype\" />\n";
 	print "<input type=\"hidden\" name=\"action\" value=\"updateconfig\" />\n";

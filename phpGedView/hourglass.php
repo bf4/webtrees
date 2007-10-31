@@ -136,6 +136,11 @@ $controller->print_person_pedigree($controller->pid, 1);?>
 </tr></table>
 </div>
 <br /><br />
+<script type="text/javascript">
+<!--
+sizeLines();
+//-->
+</script>
 <?php
 print_footer();
 ?>
