@@ -30,7 +30,8 @@
 // Get Javascript variables from lb_config.php --------------------------- 
 	include('modules/lightbox/lb_config.php'); 
 	?>
-	<SCRIPT LANGUAGE=Javascript>
+	<SCRIPT LANGUAGE="Javascript" type="text/javascript">
+	<!--
 	<?php if ($LB_MUSIC_FILE == "") { ?>
 		var myMusic = null;
 	<?php }else{ ?>
@@ -38,10 +39,8 @@
     <?php } ?>
 	var CB_SlShowTime 	= '<?php print $LB_SS_SPEED; 	?>';	// Slide show timer
 	var CB_Animation	= '<?php print $LB_TRANSITION; 	?>';	// Next/Prev Image transition effect
-	
+	//-->
 	</script>	
-
-	
 	<?php
 
 // ------------------------------------------------------------------------------- 
