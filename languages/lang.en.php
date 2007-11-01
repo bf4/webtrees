@@ -188,7 +188,6 @@ $pgv_lang["title_search_link"]      = "Add Local Link";
 $pgv_lang["label_site_url2"]        = "Site URL";
 //new stuff
 
-$pgv_lang["cancel"]					= "Cancel";
 $pgv_lang["delete_family_confirm"]	= "Deleting the family will unlink all of the individuals from each other but will leave the individuals in place.  Are you sure you want to delete this family?";
 $pgv_lang["delete_family"]			= "Delete family";
 $pgv_lang["add_favorite"]			= "Add a new favorite";
@@ -555,7 +554,6 @@ $pgv_lang["find_repository"]		= "Find Repository";
 $pgv_lang["total_repositories"]		= "Total Repositories";
 $pgv_lang["confirm_delete_repo"]	= "Are you sure you want to delete this Repository from the database?";
 
-
 //-- SOURCE FILE MESSAGES
 $pgv_lang["source_info"]			= "Source Information";
 $pgv_lang["people"] 				= "People";
@@ -747,6 +745,7 @@ $pgv_lang["move_time_exceeded"]	= "The execution time limit was reached.  Try th
 $pgv_lang["media_firewall_rootdir_no_exist"]			= "The Media Firewall root directory you requested does not exist.  You must create it first.";
 $pgv_lang["media_firewall_protected_dir_no_exist"]		= "The protected media directory could not be created in the Media Firewall root directory.  Please create this directory and make it world-writable.";
 $pgv_lang["media_firewall_protected_dir_not_writable"]	= "The protected media directory in the Media Firewall root directory is not world writable. ";
+
 //-- Relationship chart messages
 $pgv_lang["relationship_great"]		= "Great";
 $pgv_lang["relationship_chart"] 	= "Relationship Chart";
@@ -932,7 +931,6 @@ $pgv_lang["sosa_aunt_bm_7"] 				= "great aunt";      // mother's mother's sister
 $pgv_lang["n_x_paternal_aunt_bm"]		= "%2\$d x great aunt";
 $pgv_lang["n_x_maternal_aunt_bm"]	    = "%2\$d x great aunt";
 
-
 // if a specific cousin relationship cannot be represented in a language translate as "";
 $pgv_lang["male_cousin_1"]              = "first cousin";
 $pgv_lang["male_cousin_2"]              = "second cousin";
@@ -1018,7 +1016,6 @@ $pgv_lang["removed_descending_17"] = " seventeen times removed descending";
 $pgv_lang["removed_descending_18"] = " eighteen times removed descending";
 $pgv_lang["removed_descending_19"] = " nineteen times removed descending";
 $pgv_lang["removed_descending_20"] = " twenty times removed descending";
-
 
 //-- GEDCOM edit utility
 $pgv_lang["check_delete"]			= "Are you sure you want to delete this GEDCOM fact?";
@@ -1306,6 +1303,7 @@ $pgv_lang["block_not_configure"]	=	"This block cannot be configured.";
 
 //-- validate GEDCOM
 $pgv_lang["add_media_tool"] 		= "Add Media Tool";
+
 //-- hourglass chart
 $pgv_lang["hourglass_chart"]		= "Hourglass Chart";
 
