@@ -102,8 +102,6 @@ function print_yahrzeit($block=true, $config="", $side, $index) {
 	print "<th class=\"list_label\">".$factarray["_YART"]."</th>";
 	print "</tr>\n";
 
-//TODO visitors do not see the anniversary column?	
-		
 	//-- table body
 	$hidden = 0; 
 	$n = 0; 
@@ -123,11 +121,7 @@ function print_yahrzeit($block=true, $config="", $side, $index) {
 //		foreach (get_anniversary_events($jd, 'DEAT') as $fact)
 		foreach (get_anniversary_events($jd, 'DEAT _YART') as $fact)
 			
-// TODO!! need also to retrieve 1 FACT/EVEN 2 _YART - their d_fact is FACT/EVEN, not _YART !!! the d_fact should be the TYPE value, if this value exists in the facts.en.php - or we should search also for EVEN/FACT with our facts in the gedcom TYPEg!!!
-// we should also show in this case the text of _YART etc. (not EVEN/FACT texts) in the today's and upcoming events blocks   			
-// same in calendar ...
-
-			// Exact hebrew DD MMM dates only
+			// Extract hebrew DD MMM dates only
 //			if ($fact['date']->date1->CALENDAR_ESCAPE=='@#DHEBREW@' && $fact['date']->date1->d!=0 && $fact['date']->date1->y!=0)
 			if ($fact['date']->date1->CALENDAR_ESCAPE=='@#DHEBREW@' && $fact['date']->date1->d!=0 && $fact['date']->date1->m!=0)
 				$yahrzeits[]=$fact;
@@ -211,6 +205,9 @@ function print_yahrzeit($block=true, $config="", $side, $index) {
 		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		print $yahrzeit['date']->Display(true, NULL, array());
 		print "</td>";
+		
+//TODO should sort by julian day as in upcoming events block - sorts now by char DD MMM YYYY		
+		
 		//-- Anniversary
 		print "<td class=\"list_value_wrap rela\">";
 		$anniv = $yahrzeit['anniv'];
@@ -228,8 +225,9 @@ function print_yahrzeit($block=true, $config="", $side, $index) {
 		//-- upcomming yahrzeit dates
 		print "<td class=\"list_value_wrap\">";
 		
-// TODO print the 2 dates one under the other
-// should the style be the same as the style of the death date (at least in cloudy)? 
+// TODO print the 2 dates one under the other - done by changing the date class
+// should the style be the same as the style of the death date (in cloudy)? 
+// TODO should sort by julian day  - I see now 2 KSL between 19 and 20 CHS and 1 TSH should sort after 20 ELL
 		
 		print "<a href=\"".$url."\" class=\"list_item url\">".$td->Display(true, NULL, array('gregorian'))."</a>"; // hCalendar:url
 		print "&nbsp;</td>";
