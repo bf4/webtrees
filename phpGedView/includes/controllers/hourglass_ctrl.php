@@ -182,24 +182,26 @@ class HourglassControllerRoot extends BaseController {
 	 * @return void
 	 */
 	function print_person_pedigree($pid, $count) {
-		global $SHOW_EMPTY_BOXES, $PGV_IMAGE_DIR, $PGV_IMAGES;
+		global $SHOW_EMPTY_BOXES, $PGV_IMAGE_DIR, $PGV_IMAGES, $bhalfheight;
 		if ($count>=$this->generations) return;
 		$person = Person::getInstance($pid);
 		if (is_null($person)) return;
 		$families = $person->getChildFamilies();
+		//-- calculate how tall the lines should be
+		$lh = ($bhalfheight+3) * pow(2, ($this->generations-$count-1));
 		foreach($families as $famid => $family) {
 			print "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"empty-cells: show;\">\n";
 			$parents = find_parents($famid);
 			$height="100%";
 			print "<tr>";
-			print "<td height=\"50%\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
-			print "<td rowspan=\"2\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"7\" height=\"3\" alt=\"\" /></td>";
-			print "<td rowspan=\"2\">";
+			print "<td valign=\"bottom\"><img name=\"pvline\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."\" width=\"3\" height=\"$lh\" alt=\"\" /></td>";
+			print "<td><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"7\" height=\"3\" alt=\"\" /></td>";
+			print "<td>";
 			//-- print the father box
 			print_pedigree_person($parents["HUSB"]);
 			print "</td>";
 			$ARID = $parents["HUSB"];
-			print "<td id= \"td_".$ARID."\" rowspan=\"2\">";
+			print "<td id=\"td_".$ARID."\">";
 
 			//-- print an Ajax arrow on the last generation of the adult male
 			if ($count==$this->generations-1 && (count(find_family_ids($ARID))>0) && !is_null (find_family_ids($ARID))) {
@@ -207,19 +209,16 @@ class HourglassControllerRoot extends BaseController {
 			}
 			//-- recursively get the father's family
 			$this->print_person_pedigree($parents["HUSB"], $count+1);
-
 			print "</td>";
-			print "</tr>\n<tr>\n<td height=\"50%\"";
-			print " style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\" ";
-			print "><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>\n<tr>";
-			print "<td height=\"50%\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
-			print "<td rowspan=\"2\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"7\" height=\"3\" alt=\"\" /></td>";
-			print "<td rowspan=\"2\">";
+			print "</tr>\n<tr>\n";
+			print "<td valign=\"top\"><img name=\"pvline\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."\" width=\"3\" height=\"$lh\" alt=\"\" /></td>";
+			print "<td><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"7\" height=\"3\" alt=\"\" /></td>";
+			print "<td>";
 			//-- print the mother box
 			print_pedigree_person($parents["WIFE"]);
 			print "</td>";
 			$ARID = $parents["WIFE"];
-			print "<td id= \"td_".$ARID."\" rowspan=\"2\">";
+			print "<td id=\"td_".$ARID."\">";
 
 
 			//-- print an ajax arrow on the last generation of the adult female
@@ -231,7 +230,6 @@ class HourglassControllerRoot extends BaseController {
 			$this->print_person_pedigree($parents["WIFE"], $count+1);
 			print "</td>";
 			print "</tr>";
-			print "<tr>\n<td height=\"50%\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>";
 			print "</table>";
 			break;
 		}
@@ -265,7 +263,7 @@ class HourglassControllerRoot extends BaseController {
 
 		print "<table id=\"table_$pid\" align=\"".$tablealign."\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">";
 		print "<tr>";
-		print "<td id=\"td_$pid\" align=\"$tablealign\" width=\"100%\">\n";
+		print "<td align=\"$tablealign\" width=\"100%\">\n";
 		$numkids = 0;
 		$families = $person->getSpouseFamilies();
 		$famcount = count($families);
@@ -289,7 +287,7 @@ class HourglassControllerRoot extends BaseController {
 					$person2 = $children[$i];
 					$chil = $person2->getXref();
 					print "<tr>";
-					print "<td class=\"$TEXT_DIRECTION\">";
+					print "<td id=\"td_$chil\" class=\"$TEXT_DIRECTION\" align=\"$tablealign\">";
 					$kids = $this->print_descendency($chil, $count+1);
 					$numkids += $kids;
 					print "</td>";
@@ -330,7 +328,9 @@ class HourglassControllerRoot extends BaseController {
 			for($j=$count; $j<$this->dgenerations; $j++) {
 				print "<div style=\"width: ".($tbwidth)."px;\"><br /></div>\n</td>\n<td width=\"$bwidth\">";
 			}
-			if (count($person->getSpouseFamilies())==0) {
+			$kcount = 0;
+			foreach($families as $famid=>$family) $kcount+=$family->getNumberOfChildren();
+			if ($kcount==0) {
 				print "<div style=\"width: ".($this->arrwidth)."px;\"><br /></div>\n</td>\n<td width=\"$bwidth\">";
 			} else {
 				print "<div style=\"width: ".($this->arrwidth)."px;\"><a href=\"$pid\" onclick=\"return ChangeDis('td_".$pid."','".$pid."','".$this->show_full."','".$this->show_spouse."','".$this->box_width."')\"><img id=\"arrow\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["larrow"]["other"]."\" border=\"0\" alt=\"\" /></a></div>\n";
@@ -501,131 +501,6 @@ class HourglassControllerRoot extends BaseController {
 		print "</table>";
 		return $numkids;
 	}
-	/////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////
-	// Prints the descendency half of the chart via ajax
-
-	function print_descendency_ajax($pid, $count) {
-		global $TEXT_DIRECTION, $PGV_IMAGE_DIR, $PGV_IMAGES, $pgv_lang, $bheight, $bwidth, $bhalfheight;
-
-		if ($count>=$this->dgenerations) return 0;
-		$person = Person::getInstance($pid);
-		if (is_null($person)) return;
-
-		$tablealign = "right";
-		if ($TEXT_DIRECTION=="rtl") $tablealign = "left";
-
-		//	print $this->dgenerations;
-		print "<!-- print_descendency for $pid -->";
-		print "<table align=\"$tablealign\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">";
-		print "<tr>";
-		print "<td align=\"$tablealign\" width=\"$bwidth\">";
-
-		$numkids = 0;
-		$families = $person->getSpouseFamilies();
-		if (count($families)>0) {
-			$firstkids = 0;
-			foreach($families as $famid => $family) {
-				$famrec = find_family_record($famid);
-				$ct = preg_match_all("/1 CHIL @(.*)@/", $famrec, $match, PREG_SET_ORDER);
-				if ($ct>0) {
-					print "<table style=\"position: relative; top: auto; text-align: $tablealign;\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">";
-					for($i=0; $i<$ct; $i++) {
-						$rowspan = 2;
-						if (($i>0)&&($i<$ct-1)) $rowspan=1;
-						$chil = trim($match[$i][1]);
-						///////////////////////////////////////////////////////////
-						//// use the $kids as the "$ARID" when you add the method call
-						print "<tr>";
-						if ($count+1 < $this->dgenerations) {
-							print "<td id=\"td_".$chil."\" rowspan=\"$rowspan\">";
-							$kids = $this->print_descendency($chil, $count+1);
-							if ($i==0) $firstkids = $kids;
-							print $kids."-";
-							$numkids += $kids;
-							print "</td>";
-								
-						}
-						else {
-							$person2 = Person::getInstance($chil);
-							$fam = $person2->getSpouseFamilies();
-							if (count($fam)>0) {
-								$numchil = 0;
-								foreach($fam as $famid=>$family) {
-									if (!is_null($family)) $numchil += $family->getNumberOfChildren();
-								}
-								if ($numchil>0) {
-									print "<td id= \"td_".$chil."\" rowspan=\"$rowspan\"><a href=\".$chil.\" onclick=\"return ChangeDis('td_".$chil."','".$chil."','".$this->show_full."','".$this->show_spouse."', '".$this->box_width."')\"><img id=\"arrow\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["larrow"]["other"]."\" border=\"0\" alt=\"\" /></a></td>";
-								}
-								else{
-									print "<td id= \"td_".$chil."\" rowspan=\"$rowspan\"><div style=\"width: ".$this->arrwidth."px; height: ".$this->arrheight."px;\">&nbsp;</div></td>";
-								}
-							}
-							else{
-								print "<td id= \"td_".$chil."\" rowspan=\"$rowspan\"><div style=\"width: ".$this->arrwidth."px; height: ".$this->arrheight."px;\">&nbsp;</div></td>";
-							}
-
-								
-							print "<td class=\"$TEXT_DIRECTION\" id=\"tc_".$chil."\"  rowspan=\"".$rowspan."\" / >";
-							print_pedigree_person($chil);
-							// NOTE: If statement OK
-							if ($this->show_spouse) {
-								$cfams = $person2->getSpouseFamilies();
-								foreach($cfams as $famid => $family) {
-									$famrec = find_family_record($famid);
-									if (!empty($famrec)) {
-										$parents = find_parents_in_record($famrec);
-										if ($parents["HUSB"]!=$chil){
-											print_pedigree_person($parents["HUSB"]);
-											print "<br />";
-										}
-										else {
-											print_pedigree_person($parents["WIFE"]);
-											print "<br />";
-										}
-									}
-								}
-							}
-							$numkids++;
-							print "</td>";
-						}
-
-						$twidth = 7;
-						if ($ct==1) $twidth+=3;
-						print "<td id=\"ta_".$chil."\" rowspan=\"$rowspan\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" width=\"".$twidth."\" height=\"3\" alt=\"\" /></td>";
-						if ($ct>1) {
-							if ($i==0) {
-								//////////////////////
-
-								print "<td height=\"".($bhalfheight+4)."px\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>";
-								print "<tr valign=\"bottom\"><td height=\"".$bhalfheight."px\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
-									
-							} else if ($i==($ct-1)) {
-								print "<td height=\"".($bhalfheight+4)."px\" style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td></tr>";
-								print "<tr><td height=\"".$bhalfheight."px\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /></td>";
-
-							} else {
-								print "<td style=\"background: url('".$PGV_IMAGE_DIR."/".$PGV_IMAGES["vline"]["other"]."');\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["spacer"]["other"]."\" width=\"3\" alt=\"\" /> <td/>";
-							}
-						}
-						print "</tr>";
-
-					}
-					print "</table>";
-				}
-			}
-		}
-		print "</td></tr>";
-		print "</table>";
-		return $numkids;
-	}
-
-
-	////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * Calculates number of generations a person has
@@ -657,6 +532,10 @@ class HourglassControllerRoot extends BaseController {
 		return $maxdc;
 	}
 
+	/**
+	 * setup all of the javascript that is needed for the hourglass chart
+	 *
+	 */
 	function setupJavascript() {
 		global $bhalfheight;
 		?>
@@ -676,7 +555,8 @@ class HourglassControllerRoot extends BaseController {
  		{
   			if (oXmlHttp.readyState==4)
    			{	
-    				divelement.innerHTML = oXmlHttp.responseText;
+    			divelement.innerHTML = oXmlHttp.responseText;
+    			sizeLines();
     		}
    		};
   		oXmlHttp.send(null);	
@@ -687,7 +567,7 @@ class HourglassControllerRoot extends BaseController {
 	function ChangeDis(div_id, ARID, full, spouse, width) {
  		var divelement = document.getElementById(div_id);
  		var oXmlHttp = createXMLHttp();	
- 		oXmlHttp.open("get", "hourglass_ajax_dis.php?show_full="+full+"&pid="+ ARID + "&generations=1&box_width="+width+"&show_spouse="+spouse, true);
+ 		oXmlHttp.open("get", "hourglass_ajax.php?type=desc&show_full="+full+"&pid="+ ARID + "&generations=1&box_width="+width+"&show_spouse="+spouse, true);
  		oXmlHttp.onreadystatechange=function()
  		{
   			if (oXmlHttp.readyState==4)
@@ -707,8 +587,6 @@ class HourglassControllerRoot extends BaseController {
 			var pid = vlines[i].id.substr(vlines[i].id.indexOf("_")+1);
 			var hline = document.getElementById("table_"+pid);
 			var hline2 = document.getElementById("table2_"+pid);
-			//hline.style.border="solid red 2px";
-			//hline2.style.border="solid blue 2px";
 			vlines[i].style.height=(hline.offsetHeight - (hline2.offsetTop + <?php print $bhalfheight+2 ?>))+'px';
 		}
 		
@@ -717,10 +595,14 @@ class HourglassControllerRoot extends BaseController {
 			var pid = vlines[i].id.substr(vlines[i].id.indexOf("_")+1);
 			var hline = document.getElementById("table_"+pid);
 			var hline2 = document.getElementById("table2_"+pid);
-			//hline.style.border="solid red 2px";
-			//hline2.style.border="solid blue 2px";
-			//alert(hline2.offsetTop);
 			vlines[i].style.height=(hline.offsetTop+hline2.offsetTop + <?php print $bhalfheight+2 ?>)+'px';
+		}
+		
+		vlines = document.getElementsByName("pvline");
+		//alert(vlines[0].parentNode.parentNode.parentNode);
+		for(i=0; i < vlines.length; i++) {
+			//vlines[i].parentNode.style.height="50%";
+			vlines[i].style.height=(vlines[i].parentNode.offsetHeight/2)+'px';
 		}
 	}
 //-->

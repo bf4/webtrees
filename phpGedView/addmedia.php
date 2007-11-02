@@ -273,6 +273,7 @@ if ($action=="newentry") {
 		} else {
 			//-- check if the file is used in more than one gedcom
 			//-- do not allow it to be moved or renamed if it is
+			if (!isset($oldFilename)) $oldFilename = $filename;
 			$myFile = str_replace($MEDIA_DIRECTORY, "", $oldFolder.$oldFilename);
 			$sql = "SELECT 1 FROM {$TBLPREFIX}media WHERE m_file LIKE '%".$DBCONN->escapeSimple($myFile)."' AND m_gedfile<>".$DBCONN->escapeSimple($GEDCOMS[$GEDCOM]['id']);
 			$res = dbquery($sql);
