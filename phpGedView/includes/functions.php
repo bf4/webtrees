@@ -1832,8 +1832,15 @@ function compare_date($a, $b) {
 
 	$tag = "BIRT";
 	if (!empty($sortby)) $tag = $sortby;
-	$abirt = get_sub_record(1, "1 $tag", $a["gedcom"]);
-	$bbirt = get_sub_record(1, "1 $tag", $b["gedcom"]);
+	if (isset($a["undo"]) && $tag=="CHAN") {
+		// Look at record in pgv_changes.php
+		$abirt = get_sub_record(1, "1 $tag", $a["undo"]);
+		$bbirt = get_sub_record(1, "1 $tag", $b["undo"]);
+	} else {
+		// Look at record in GEDCOM
+		$abirt = get_sub_record(1, "1 $tag", $a["gedcom"]);
+		$bbirt = get_sub_record(1, "1 $tag", $b["gedcom"]);
+	}
 	$c = compare_facts_date($abirt, $bbirt);
 	if ($c==0) return itemsort($a, $b);
 	else return $c;
