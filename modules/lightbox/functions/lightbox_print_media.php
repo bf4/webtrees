@@ -211,7 +211,7 @@ if ( $t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm>
 					print "<p id=\"" . $pgv_lang["note"]. "_" . ($fn) . "\" class=\"lb_notes\">";	
 						$note[$fn]  = $pgv_lang["note"] . "_" . ($fn) . "";
 //					print "<a href=\"#a".$note[$fn]."\" class=\"lb_notes\" <font size=1>" . $note[$fn] . "</font>";
-					print $note[$fn]."<font size=1>" . $note[$fn] . "</font>";					
+					print "<font size=1>" . $note[$fn] . "</font>";					
 						print_fact_notes($mgedrec[$items[$fn]-1], 1);
 					$fn++;
 //					print "</a></p>";
