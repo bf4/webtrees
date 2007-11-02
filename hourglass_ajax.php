@@ -39,16 +39,8 @@ require_once("includes/controllers/hourglass_ctrl.php");
 $controller->init();
 
 // -- print html header information
+if (isset($_REQUEST['type']) && $_REQUEST['type']=='desc')
+	$controller->print_descendency($controller->pid, 1, false);
+else
+	$controller->print_person_pedigree($controller->pid, 0);
 ?>
-<!-- // NOTE: Start table header -->
-	<!-- // NOTE: Close table header -->
-<!-- // descendancy -->
-
-<!-- // pedigree -->
-	
-<td valign="middle">
-<?php
-$controller->print_person_pedigree($controller->pid, 0);?>
-</td>
-</tr></table>
-<br /><br />
