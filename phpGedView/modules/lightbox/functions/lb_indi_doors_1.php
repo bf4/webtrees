@@ -51,18 +51,5 @@
 	<dd id="door0"><a href="javascript:;" onclick="tabswitch(0); if (loadedTabs[7]) {ResizeMap(); ResizeMap();} return false;" ><?php print $pgv_lang["all"]?></a></dd>
 	<!--<dd id="door0" style={background-color:transparent;} style={border:0px;} ></dd> -->
  
-<?php
-	// If not $MULTI_MEDIA hide the media and album tabs
-//	if (!$MULTI_MEDIA){ 
-		if (!file_exists("modules/googlemap/defaultconfig.php") && (file_exists("modules/lightbox/album.php") ) ) {  ?>
-			<dd id="door4" style={background-color:transparent;} style={border:0px;} ></dd> 
-			<dd id="door7" style={background-color:transparent;} style={border:0px;} ></dd> 
-		<?php 
-		}elseif (file_exists("modules/googlemap/defaultconfig.php") && (file_exists("modules/lightbox/album.php") ) ) { ?>
-			<dd id="door4" style={background-color:transparent;} style={border:0px;} ></dd> 
-			<dd id="door8" style={background-color:transparent;} style={border:0px;} ></dd> 
-		<?php 
-		} 
-//	}
-?>
+
 
