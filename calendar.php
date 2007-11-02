@@ -345,7 +345,7 @@ case 'calendar':
 	for ($jd=$cal_date->minJD; $jd<=$cal_date->maxJD; ++$jd)
 		foreach (apply_filter(get_anniversary_events($jd, $events), $filterof, $filtersx) as $event) {
 			$tmp=$event['date']->MinDate();
-			if ($tmp->IsDayValid())
+			if ($tmp->d>=1 && $tmp->d<=$cal_date->DaysInMonth())
 				$d=$jd-$cal_date->minJD+1;
 			else
 				$d=0;

@@ -213,11 +213,6 @@ class CalendarDate {
 		return $this->minJD>=$this->CAL_START_JD && $this->maxJD<=$this->CAL_END_JD;
 	}
 
-	// Is the day number valid for the current month?
-	function IsDayValid() {
-		return $this->d >= 1 && $this->d <= $this->DaysInMonth();
-	}
-
 	// How many days in the current month
 	function DaysInMonth() {
 		list($ny,$nm)=$this->NextMonth();
