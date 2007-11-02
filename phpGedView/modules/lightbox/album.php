@@ -29,7 +29,7 @@
  
 // Get Javascript variables from lb_config.php --------------------------- 
 	include('modules/lightbox/lb_config.php'); 
-	include('modules/lightbox/functions/browser_detection_php_ar.php');
+//	include('modules/lightbox/functions/browser_detection_php_ar.php');
 	
 	?>
 	<SCRIPT LANGUAGE="Javascript" type="text/javascript">
