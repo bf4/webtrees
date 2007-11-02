@@ -2,7 +2,7 @@
 /**
  * Lightbox Album module for phpGedView
  *
- * Display media Items using Lightbox
+ * Display media Items using Lightbox 4.2
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2007  PHPGedView Development Team
@@ -41,87 +41,114 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_te
 
 <script language="Javascript">
 <!--
-   function album_help(OPTS) {
-   var win01 = window.open("<?php print $lbHelpFile;?>?"+OPTS, "win01", "resizable=1, scrollbars=1, HEIGHT=780, WIDTH=500 ");
-   win01.focus()
-   }
+	function album_help(OPTS) {
+		var win01 = window.open("<?php print $lbHelpFile;?>?"+OPTS, "win01", "resizable=1, scrollbars=1, HEIGHT=780, WIDTH=500 ");
+		win01.focus()
+	}
 
-   function album_add() {
-   var win01 = window.open(
-   "addmedia.php?action=showmediaform&linktoid=<?php print $pid; ?>", "win01", "resizable=1, scrollbars=1, top=50, HEIGHT=780, WIDTH=600 ");
-   win01.focus()
-   }
+	function album_add() {
+		var win01 = window.open(
+		"addmedia.php?action=showmediaform&linktoid=<?php print $pid; ?>", "win01", "resizable=1, scrollbars=1, top=50, HEIGHT=780, WIDTH=600 ");
+		win01.focus()
+	}
 
-      function album_link() {
-   var win01 = window.open(
-   "inverselink.php?linktoid=<?php print $pid; ?>&linkto=person", "win01", "resizable=1, scrollbars=1, top=50, HEIGHT=200, WIDTH=600 ");
-   win01.focus()
-   }
+	function album_link() {
+		var win01 = window.open(
+		"inverselink.php?linktoid=<?php print $pid; ?>&linkto=person", "win01", "resizable=1, scrollbars=1, top=50, HEIGHT=200, WIDTH=600 ");
+		win01.focus()
+	}
 -->
 </script>
 
 <?php
-//loadLangFile("lb_lang");
+
+// Load Lightbox javascript and css files
+// include('modules/lightbox/functions/lb_call_js.php'); 
 
 	//Lightbox-Album header Links
 		//print "<br>";
 		print "<table border=0 width=\"66%\"><tr>";
-		print "<td class=\"width10\">&nbsp;</td>"; 
+		print "<td class=\"width10 center wrap\" valign=\"top\">";
 
 		
 		// Configuration
         if (userIsAdmin(getUserName())) {
-			print "<td class=\"width20 center wrap font9\" valign=\"top\">";
-			print "<a href=\"module.php?mod=lightbox&pgvaction=lb_editconfig&pid=" . $pid . "\">";
-			if ($LB_AL_HEAD_LINKS == "icon" || $LB_AL_HEAD_LINKS == "both") {	
-				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"" . $pgv_lang["configure_lightbox"] . "\" />" ;
+			if ($LB_AL_HEAD_LINKS == "both") {	
+	            print "<td class=\"width20 center wrap\" valign=\"top\">";
+	            print "<a href=\"module.php?mod=lightbox&pgvaction=lb_editconfig&pid=" . $pid . "\">";
+				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"" . $pgv_lang["configure_lightbox"] . "\" /><br />" ;
+				print "" . $pgv_lang["configure_lightbox"] . "";
+				print "</a>";
+				print "</td>"; 
+	            print "<td width=\"5%\">&nbsp;</td>";			
+	            print "\n";
+			}else if ($LB_AL_HEAD_LINKS == "text") {
+	            print "<td class=\"width20 center wrap\" valign=\"top\">";
+	            print "<a href=\"module.php?mod=lightbox&pgvaction=lb_editconfig\">";
+				print "" . $pgv_lang["configure_lightbox"] . "";
+				print "</a>";
+				print "</td>"; 
+	            print "<td width=\"5%\">&nbsp;</td>";			
+	            print "\n";
+			}else if ($LB_AL_HEAD_LINKS == "icon") {
+				print "<td>";
+				print "&nbsp;&nbsp;";
+	            print "<a href=\"module.php?mod=lightbox&pgvaction=lb_editconfig&pid=" . $pid . "\">";
+				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"" . $pgv_lang["configure_lightbox"] . "\" />" ;	
+				print "</a>";
+				print "\n";
 			}
-			if ($LB_AL_HEAD_LINKS == "both") {
-				print "<br />";
-			}	
-			if ($LB_AL_HEAD_LINKS == "both" || $LB_AL_HEAD_LINKS == "text") {	
-				print $pgv_lang["configure_lightbox"];
-			}
-			print "</a>";
-			print "</td>"; 
-			print "<td width=\"5%\">&nbsp;</td>";			
-			print "\n";
         }		
 		
 		//Add a new multimedia object
-		if (userCanEdit(getUserName())) {
-			print "<td class=\"width20 center wrap font9\" valign=\"top\">";
-			print "<a href=\"javascript: album_add()\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" > ";
-			if ($LB_AL_HEAD_LINKS == "icon" || $LB_AL_HEAD_LINKS == "both") {	
-				print "<img src=\"modules/lightbox/images/image_add.gif\" class=\"icon\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" />";
+        if ( userCanEdit(getUserName()) ) {
+			if ($LB_AL_HEAD_LINKS == "both") {	
+				print "<td class=\"width20 center wrap\" valign=\"top\">";
+	            print "<a href=\"javascript: album_add()\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" > ";
+				print "<img src=\"modules/lightbox/images/image_add.gif\" class=\"icon\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" /><br />" ;
+				print $pgv_lang["lb_add_media"] ;
+	            print " </a> ";
+	            print "</td>";
+	            print "<td width=\"5%\">&nbsp;</td>";            
+			}else if ($LB_AL_HEAD_LINKS == "text") {	
+				print "<td class=\"width20 center wrap\" valign=\"top\">";
+	            print "<a href=\"javascript: album_add()\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" > ";
+				print $pgv_lang["lb_add_media"] ;
+	            print " </a> ";
+	            print "</td>";
+	            print "<td width=\"5%\">&nbsp;</td>";            
+			}else if ($LB_AL_HEAD_LINKS == "icon") {
+				print "&nbsp;&nbsp;";
+	            print "<a href=\"javascript: album_add()\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" > ";
+				print "<img src=\"modules/lightbox/images/image_add.gif\" class=\"icon\" title=\"" . $pgv_lang["lb_add_media_full"] . "\" />" ;
+	            print "</a>";
 			}
-			if ($LB_AL_HEAD_LINKS == "both") {
-				print "<br />";
-			}	
-			if ($LB_AL_HEAD_LINKS == "both" || $LB_AL_HEAD_LINKS == "text") {	
-				print $pgv_lang["lb_add_media"];
-			}
-			print " </a> ";
-			print "</td>";
-			print "<td width=\"5%\">&nbsp;</td>";            
         }
 		
 		//Link to an existing item
-        if (userCanEdit(getUserName())) {
-			print "<td class=\"width20 center wrap font9\" valign=\"top\">";
-			print "<a href=\"javascript: album_link()\" title=\"" . $pgv_lang["lb_link_media_full"] . "\" > ";
-			if ($LB_AL_HEAD_LINKS == "icon" || $LB_AL_HEAD_LINKS == "both") {	
-				print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\" " . $pgv_lang["lb_link_media_full"] . "\" />";
+        if ( userCanEdit(getUserName()) ) {
+			if ($LB_AL_HEAD_LINKS == "both") {	
+				print "<td class=\"width20 center wrap\" valign=\"top\">";
+	            print "<a href=\"javascript: album_link()\" title=\"" . $pgv_lang["lb_link_media_full"] . "\" > ";
+				print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\" " . $pgv_lang["lb_link_media_full"] . "\" /><br />" ;
+				print $pgv_lang["lb_link_media"] ;
+	            print " </a> ";
+	            print "</td>";
+	            print "<td width=\"5%\">&nbsp;</td>"; 
+			}else if ($LB_AL_HEAD_LINKS == "text") {
+				print "<td class=\"width20 center wrap\" valign=\"top\">";
+	            print "<a href=\"javascript: album_link()\" title=\"" . $pgv_lang["lb_link_media_full"] . "\" > ";
+				print $pgv_lang["lb_link_media"] ;
+	            print " </a> ";
+	            print "</td>";
+	            print "<td width=\"5%\">&nbsp;</td>"; 
+			}else if ($LB_AL_HEAD_LINKS == "icon") {
+				print "&nbsp;&nbsp;";
+	            print "<a href=\"javascript: album_link()\" title=\"" . $pgv_lang["lb_link_media_full"] . "\" > ";
+				print "<img src=\"modules/lightbox/images/image_link.gif\" class=\"icon\" title=\" " . $pgv_lang["lb_link_media_full"] . "\" />" ;
+	            print "</a> ";
+			}else{
 			}
-			if ($LB_AL_HEAD_LINKS == "both") {
-				print "<br />";
-			}	
-			if ($LB_AL_HEAD_LINKS == "both" || $LB_AL_HEAD_LINKS == "text") {	
-				print $pgv_lang["lb_link_media"];
-			}
-			print " </a> ";
-			print "</td>";
-			print "<td width=\"5%\">&nbsp;</td>"; 
         }
 
 		//Turn Edit Mode On or Off
@@ -135,21 +162,29 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_te
 			$lbEditMode = 1;
 		}
 	
-		if (userCanEdit(getUserName()) && $mediacnt!=0) {
-			print "<td class=\"width20 center wrap font9\" valign=\"top\">";
-			print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&edit={$lbEditMode} title=\"{$lbEditMsg}\">";
-			if ($LB_AL_HEAD_LINKS == "icon" || $LB_AL_HEAD_LINKS == "both") {	
-				print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$lbEditMsg}\" />" ;
-			}
+        if ( userCanEdit(getUserName()) && $mediacnt!=0) {
 			if ($LB_AL_HEAD_LINKS == "both") {
-				print "<br />";
-			}	
-			if ($LB_AL_HEAD_LINKS == "both" || $LB_AL_HEAD_LINKS == "text") {	
-				print $lbEditMsg;
-			}
-			print "</a>";
-			print "</td>";
-			print "<td width=\"5%\">&nbsp;</td>";
+ 				print "<td class=\"width20 center wrap\" valign=\"top\">";
+	            print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&edit={$lbEditMode} title=\"{$lbEditMsg}\">";
+ 	          	print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$lbEditMsg}\" /><br />" ;
+            	print $lbEditMsg;
+	            print "</a>";
+	            print "</td>";
+	            print "<td width=\"5%\">&nbsp;</td>";
+            }else if ($LB_AL_HEAD_LINKS == "text") {
+  				print "<td class=\"width20 center wrap\" valign=\"top\">";
+	            print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&edit={$lbEditMode} title=\"{$lbEditMsg}\">";
+	          	print $lbEditMsg;
+	            print "</a>";
+	            print "</td>";
+	            print "<td width=\"5%\">&nbsp;</td>";
+           }else if ($LB_AL_HEAD_LINKS == "icon") {
+				print "&nbsp;&nbsp;";
+	            print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&edit={$lbEditMode} title=\"{$lbEditMsg}\">";
+          		print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$lbEditMsg}\" /><br />" ;
+	            print "</a>";
+				print "</td>";
+			}           			
 		}			
             		
 		print "</tr></table>";
