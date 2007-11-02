@@ -349,7 +349,7 @@ case 'calendar':
 				$d=$jd-$cal_date->minJD+1;
 			else
 				$d=0;
-			$found_facts[$d][$event['id']]=$event;
+			$found_facts[$d][]=$event;
 		}
 	break;
 case 'year':
@@ -391,9 +391,10 @@ case 'today':
 	break;
 case 'calendar':
 	$cal_facts=array();
-	foreach ($found_facts as $d=>$data) {
+	foreach ($found_facts as $d=>$facts) {
 		$cal_facts[$d]=array();
-		foreach ($data as $id=>$fact) {
+		foreach ($facts as $fact) {
+			$id=$fact['id'];
 			if (empty($cal_facts[$d][$id]))
 				$cal_facts[$d][$id]=calendar_fact_text($fact, false);
 			else
