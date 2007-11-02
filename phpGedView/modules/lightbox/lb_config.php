@@ -44,7 +44,6 @@ $LB_AL_HEAD_LINKS = "text";			// Album Tab Page Header Links
 $LB_AL_THUMB_LINKS = "icon"; 		// Album Tab Page below Thumbnail Links
 										// Set to "icon"	to view icon links [Default]
 										// Set to "text"	to view text links ,
-										// Set to "both"	to view both. 
 																						
 $LB_ML_THUMB_LINKS = "both"; 		// MultiMedia List Page Thumbnail Links
 										// Set to "icon"	to view icon links 

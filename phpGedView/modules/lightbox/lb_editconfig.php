@@ -148,9 +148,8 @@ $i = 0;
 		<td class="optionbox"><select name="NEW_LB_AL_THUMB_LINKS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_AL_THUMB_LINKS_help');">
                 <option value="icon" <?php if ($LB_AL_THUMB_LINKS=="icon") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_icon"];?></option>
                 <option value="text" <?php if ($LB_AL_THUMB_LINKS=="text") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_text"];?></option>
-                <option value="both" <?php if ($LB_AL_THUMB_LINKS=="both") print "selected=\"selected\""; ?>><?php print $pgv_lang["lb_both"];?></option>
-            </select>
-		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_icon"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_text"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_both"];?>
+                </select>
+		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_icon"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_text"];?>
 		</td>		
     </tr>
 	
