@@ -31,6 +31,10 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 
 //-- GENERAL HELP MESSAGES
 $pgv_lang["date_of_entry"]		= "Datum i orginalkälla";
+$pgv_lang["multi_site_search"] 		= "Multisajtsökning";
+$pgv_lang["differences"]			= "Skillnader";
+$pgv_lang["switch_lifespan"]		= "Visa ";
+$pgv_lang["switch_timeline"]		= "Visa tidslinjediagram";
 $pgv_lang["qm"]					= "?";
 $pgv_lang["qm_ah"]				= "?";
 $pgv_lang["page_help"]			= "Hjälp";
@@ -150,9 +154,12 @@ $pgv_lang["father"] 			= "Far";
 $pgv_lang["adopted"]			= "Adopterad";
 $pgv_lang["mother"] 			= "Mor";
 $pgv_lang["parent"] 				= "Förälder";
+$pgv_lang["self"] 					= "Själv";
 $pgv_lang["surnames"]			= "Efternamn";
 $pgv_lang["relatives"]			= "Släktingar";
 $pgv_lang["relatives_events"]		= "Händelser för nära släktingar";
+$pgv_lang["historical_facts"]		= "Historiska fakta";
+$pgv_lang["partner"] 				= "Partner";
 $pgv_lang["child"]				= "Barn";
 $pgv_lang["spouse"]				= "Maka/Make";
 $pgv_lang["foster"]				= "Fosterbarn";
@@ -341,6 +348,7 @@ $pgv_lang["years"]					= "år";
 $pgv_lang["day1"]					= "dag";
 $pgv_lang["month1"]					= "månad";
 $pgv_lang["year1"]					= "år";
+$pgv_lang["after_death"]        ="efter döden";
 $pgv_lang["timeline_title"]		= "PhpGedView tidslinje";
 $pgv_lang["timeline_chart"]		= "Tidslinje";
 $pgv_lang["remove_person"]		= "Ta bort person";
@@ -358,6 +366,7 @@ $pgv_lang["timeline_controls"] = "Tidslinjekontroll";
 $pgv_lang["include_family"] = "Inkludera nära familjemedlemmar";
 $pgv_lang["family"]				= "Familj";
 $pgv_lang["lifespan_chart"] = "Livslinjetavla";
+$pgv_lang["cal_none"]                 = "Ingen kalenderkonvertering";
 $pgv_lang["zoom_in"]			= "Zooma in";
 
 $pgv_lang["cal_gregorian"]            = "Gregoriansk";
@@ -816,6 +825,7 @@ $pgv_lang["config_update_ok"]			= "Lyckad uppdatering av konfigurationsfil.";
 $pgv_lang["add_media_tool"]			= "Verktyg för att lägga till media";
 $pgv_lang["media_linked"]			= "Detta mediaobjekt länkat till följande:";
 $pgv_lang["media_not_linked"]		= "Detta mediaobjekt är inte länkat till någon GEDCOM-post.";
+$pgv_lang["deleted_files"]          = "Raderade filer:";
 //-- ANCESTRY FILE MESSAGES
 $pgv_lang["ancestry_chart"] 		= "Släktöversikt";
 $pgv_lang["gen_ancestry_chart"]     = "#PEDIGREE_GENERATIONS# generationer släktöversikten";
@@ -1329,6 +1339,7 @@ $pgv_lang["page_size"]					= "Sidstorlek";
 $pgv_lang["descend_report"]				= "Ättlingsrapport";
 $pgv_lang["descendancy_header"]		= "Ättlingsrapport för ";
 $pgv_lang["server_folder"]				= "Mappnamn på servern";
+$pgv_lang["medialist_recursive"]	= "Lista filer i undermapper";
 $pgv_lang["media_options"]			= "Mediaval";
 $pgv_lang["page_x_of_y"]				= "Sida #GLOBALS[currentPage]# av #GLOBALS[lastPage]#<br />";
 $pgv_lang["include"]				= "Inkludera:";
@@ -1346,4 +1357,5 @@ $pgv_lang["genealogy"]					= "genealogi";
 $pgv_lang["view_img_details"]		= "Visa bilddetaljer";
 $pgv_lang["invalid_search_input"] 	= "Var vänlig och skriv in ett förnamn, efternamn eller ort tillsammans med ett årtal";
 $pgv_lang["search_place_word"]		= "Endast hela ord";
+$pgv_lang["age_differences"]		= "Visa åldersskillnad";
 ?>
