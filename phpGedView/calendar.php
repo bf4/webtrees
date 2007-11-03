@@ -62,8 +62,6 @@ if (preg_match('/^(\d+)-(\d+)$/', $year, $match)) {
 	} else {
 		if ($year<0)
 			$year=(-$year)."B.C."; // need BC to parse date
-		// strip non-numeric characters, such as ABT
-		$year=preg_replace('/[^-0-9]/', '', $year);
 		$ged_date=new GedcomDate("{$cal} {$day} {$month} {$year}");
 		$year=$ged_date->date1->y; // need negative year for year entry field.
 	}
@@ -485,7 +483,6 @@ case 'calendar':
 				if ($alt_date->CALENDAR_ESCAPE!=$cal_date->CALENDAR_ESCAPE) {
 					list($alt_date->y, $alt_date->m, $alt_date->d)=$alt_date->JDtoYMD($cal_date->minJD+$d-1);
 					$alt_date->SetJDfromYMD();
-					// TODO rtl_cal_day reverses the text (3 Aug becomes Aug 3).  We want the blue and alignment, but not this.
 					print "<span class=\"rtl_cal_day\">".$alt_date->Format("j M")."</span>";
 					break;
 				}
