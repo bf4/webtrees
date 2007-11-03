@@ -783,8 +783,10 @@ function print_simple_header($title) {
 	if( $FAVICON ) {
 	   print "<link rel=\"shortcut icon\" href=\"$FAVICON\" type=\"image/x-icon\"></link>\n\t\t";
 	}
-	if (!isset($META_TITLE)) $META_TITLE = "";
-	print "<title>".PrintReady(strip_tags($title))." - ".$META_TITLE." - PhpGedView</title>\n\t<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\"></link>\n\t";
+	if (empty($META_TITLE)) $metaTitle = " - PhpGedView";
+	else $metaTitle = " - ".$META_TITLE." - PhpGedView";
+	print "<title>".PrintReady(strip_tags($title).$metaTitle, TRUE)."</title>\n\t";
+	print "<link rel=\"stylesheet\" href=\"$stylesheet\" type=\"text/css\"></link>\n\t";
 	if ((!empty($rtl_stylesheet))&&($TEXT_DIRECTION=="rtl")) print "<link rel=\"stylesheet\" href=\"$rtl_stylesheet\" type=\"text/css\" media=\"all\"></link>\n\t";
 	$old_META_AUTHOR = $META_AUTHOR;
 		 $old_META_PUBLISHER = $META_PUBLISHER;
