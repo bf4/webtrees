@@ -164,125 +164,103 @@ if ($view!='preview') {
 	print " | <a href=\"calendar.php?cal={$cal}&amp;day={$today->d}&amp;month={$today_month}&amp;year={$today->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\"><b>".$today->Format('Y')."</b></a>";
 	print "</td> ";
 	// Filtering options
-	$username = getUserName();
+	print "<td class=\"descriptionbox vmiddle\">";
+	print_help_link("annivers_show_help", "qm", "show");
+	print $pgv_lang["show"].":&nbsp;</td>";
+	print "<td class=\"optionbox vmiddle\">";
+	print "<select class=\"list_value\" name=\"filterof\" onchange=\"document.dateform.submit();\">";
+	print "<option value=\"all\"";
+	if ($filterof == "all") print " selected=\"selected\"";
+	print ">".$pgv_lang["all_people"]."</option>";
+	$username=getUserName();
 	if (!$HIDE_LIVE_PEOPLE||(!empty($username))) {
-		print "<td class=\"descriptionbox vmiddle\">";
-		print_help_link("annivers_show_help", "qm", "show");
-		print $pgv_lang["show"].":&nbsp;</td>";
-		print "<td class=\"optionbox vmiddle\">";
-		print "<select class=\"list_value\" name=\"filterof\" onchange=\"document.dateform.submit();\">";
-		print "<option value=\"all\"";
-		if ($filterof == "all") print " selected=\"selected\"";
-		print ">".$pgv_lang["all_people"]."</option>";
 		print "<option value=\"living\"";
 		if ($filterof == "living") print " selected=\"selected\"";
 		print ">".$pgv_lang["living_only"]."</option>";
-		print "<option value=\"recent\"";
-		if ($filterof == "recent") print " selected=\"selected\"";
-		print ">".$pgv_lang["recent_events"]."</option>";
-		print "</select>";
+	}
+	print "<option value=\"recent\"";
+	if ($filterof == "recent") print " selected=\"selected\"";
+	print ">".$pgv_lang["recent_events"]."</option>";
+	print "</select>";
+
+	print "</td>";
+	print "<td class=\"descriptionbox vmiddle\">";
+	print_help_link("annivers_sex_help", "qm", "sex");
+	print $pgv_lang["sex"].":&nbsp;</td>";
+	print "<td class=\"optionbox vmiddle\">";
+	if ($filtersx=="") {
+		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["all"]."\" alt=\"".$pgv_lang["all"]."\" width=\"15\" height=\"15\" border=\"0\" align=\"middle\" />";
+		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["all"]."\" alt=\"".$pgv_lang["all"]."\" width=\"15\" height=\"15\" border=\"0\" align=\"middle\" /> | ";
 	} else {
-		print "<td class=\"descriptionbox vmiddle\">";
-		print_help_link("annivers_show_help", "qm", "show");
-		print $pgv_lang["show"].":&nbsp;</td>";
-		print "<td colspan=\"5\" class=\"optionbox vmiddle\">";
-		if ($filterof=="all")
-			print "<span class=\"error\">".$pgv_lang["all_people"]. "</span> | ";
-		else
-			print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof=all&amp;filtersx={$filtersx}&amp;action={$action}\">".$pgv_lang["all_people"]."</a>"." | ";
-		if ($filterof=="recent")
-			print "<span class=\"error\">".$pgv_lang["recent_events"]. "</span> | ";
-		else
-			print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof=recent&amp;filtersx={$filtersx}&amp;action={$action}\">".$pgv_lang["recent_events"]."</a>";
+		print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx=&amp;action={$action}\">";
+		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["all"]."\" alt=\"".$pgv_lang["all"]."\" width=\"9\" height=\"9\" border=\"0\" align=\"middle\" />";
+		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["all"]."\" alt=\"".$pgv_lang["all"]."\" width=\"9\" height=\"9\" border=\"0\" align=\"middle\" /></a>"." | ";
 	}
+	if ($filtersx=="M") {
+		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"]."\" width=\"15\" height=\"15\" border=\"0\" align=\"middle\" /> | ";
+	} else {
+		print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx=M&amp;action={$action}\">";
+		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"]."\" width=\"9\" height=\"9\" border=\"0\" align=\"middle\" /></a> | ";
+	}
+	if ($filtersx=="F")
+		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"]."\" width=\"15\" height=\"15\" border=\"0\" align=\"middle\" />";
+	else
+		print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx=F&amp;action={$action}\">";
+		print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"]."\" width=\"9\" height=\"9\" border=\"0\" align=\"middle\" /></a>";
 
-	if (!$HIDE_LIVE_PEOPLE||(!empty($username))) {
-		print "</td>";
-		print "<td class=\"descriptionbox vmiddle\">";
-		print_help_link("annivers_sex_help", "qm", "sex");
-		print $pgv_lang["sex"].":&nbsp;</td>";
-		print "<td class=\"optionbox vmiddle\">";
-		if ($filtersx=="") {
-			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["all"]."\" alt=\"".$pgv_lang["all"]."\" width=\"15\" height=\"15\" border=\"0\" align=\"middle\" />";
-			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["all"]."\" alt=\"".$pgv_lang["all"]."\" width=\"15\" height=\"15\" border=\"0\" align=\"middle\" /> | ";
-		} else {
-			print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx=&amp;action={$action}\">";
-			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["all"]."\" alt=\"".$pgv_lang["all"]."\" width=\"9\" height=\"9\" border=\"0\" align=\"middle\" />";
-			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["all"]."\" alt=\"".$pgv_lang["all"]."\" width=\"9\" height=\"9\" border=\"0\" align=\"middle\" /></a>"." | ";
-		}
-		if ($filtersx=="M") {
-			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"]."\" width=\"15\" height=\"15\" border=\"0\" align=\"middle\" /> | ";
-		} else {
-			print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx=M&amp;action={$action}\">";
-			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sex"]["small"]."\" title=\"".$pgv_lang["male"]."\" alt=\"".$pgv_lang["male"]."\" width=\"9\" height=\"9\" border=\"0\" align=\"middle\" /></a> | ";
-		}
-		if ($filtersx=="F")
-			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"]."\" width=\"15\" height=\"15\" border=\"0\" align=\"middle\" />";
-		else
-			print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx=F&amp;action={$action}\">";
-			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"]."\" width=\"9\" height=\"9\" border=\"0\" align=\"middle\" /></a>";
-	}
-
-	if (!$HIDE_LIVE_PEOPLE||(!empty($username))) {
-		print "</td>";
-		global $factarray;
-		print "<td class=\"descriptionbox vmiddle\">";
-		print_help_link("annivers_event_help", "qm", "showcal");
-		print $pgv_lang["showcal"]."&nbsp;</td>";
-		print "<td class=\"optionbox\"";
-		if (!$HIDE_LIVE_PEOPLE||!empty($username))
-			print ">";
-		else
-			print " colspan=\"3\">";
-		print "<input type=\"hidden\" name=\"filterev\" value=\"$filterev\" />";
-		print "<select class=\"list_value\" name=\"filterev\" onchange=\"document.dateform.submit();\">";
-		print "<option value=\"bdm\"";
-		if ($filterev == "bdm") print " selected=\"selected\"";
-		print ">".$pgv_lang["bdm"]."</option>";
-		print "<option value=\"all\"";
-		if ($filterev == "all") print " selected=\"selected\"";
-		print ">".$pgv_lang["all"]."</option>";
-		print "<option value=\"BIRT\"";
-		if ($filterev == "BIRT") print " selected=\"selected\"";
-		print ">".$factarray["BIRT"]."</option>";
-		print "<option value=\"CHR\"";
-		if ($filterev == "CHR") print " selected=\"selected\"";
-		print ">".$factarray["CHR"]."</option>";
-		print "<option value=\"CHRA\"";
-		if ($filterev == "CHRA") print " selected=\"selected\"";
-		print ">".$factarray["CHRA"]."</option>";
-		print "<option value=\"BAPM\"";
-		if ($filterev == "BAPM") print " selected=\"selected\"";
-		print ">".$factarray["BAPM"]."</option>";
-		print "<option value=\"_COML\"";
-		if ($filterev == "_COML") print " selected=\"selected\"";
-		print ">".$factarray["_COML"]."</option>";
-		print "<option value=\"MARR\"";
-		if ($filterev == "MARR") print " selected=\"selected\"";
-		print ">".$factarray["MARR"]."</option>";
-		print "<option value=\"_SEPR\"";
-		if ($filterev == "_SEPR") print " selected=\"selected\"";
-		print ">".$factarray["_SEPR"]."</option>";
-		print "<option value=\"DIV\"";
-		if ($filterev == "DIV") print " selected=\"selected\"";
-		print ">".$factarray["DIV"]."</option>";
-		print "<option value=\"DEAT\"";
-		if ($filterev == "DEAT") print " selected=\"selected\"";
-		print ">".$factarray["DEAT"]."</option>";
-		print "<option value=\"BURI\"";
-		if ($filterev == "BURI") print " selected=\"selected\"";
-		print ">".$factarray["BURI"]."</option>";
-		print "<option value=\"IMMI\"";
-		if ($filterev == "IMMI") print " selected=\"selected\"";
-		print ">".$factarray["IMMI"]."</option>";
-		print "<option value=\"EMIG\"";
-		if ($filterev == "EMIG") print " selected=\"selected\"";
-		print ">".$factarray["EMIG"]."</option>";
-		print "<option value=\"EVEN\"";
-		if ($filterev == "EVEN") print " selected=\"selected\"";
-		print ">".$pgv_lang["custom_event"]."</option>";
-		print "</select>";
-	}
+	print "</td>";
+	print "<td class=\"descriptionbox vmiddle\">";
+	print_help_link("annivers_event_help", "qm", "showcal");
+	print $pgv_lang["showcal"]."&nbsp;</td>";
+	print "<td class=\"optionbox\">";
+	print "<input type=\"hidden\" name=\"filterev\" value=\"$filterev\" />";
+	print "<select class=\"list_value\" name=\"filterev\" onchange=\"document.dateform.submit();\">";
+	print "<option value=\"bdm\"";
+	if ($filterev == "bdm") print " selected=\"selected\"";
+	print ">".$pgv_lang["bdm"]."</option>";
+	print "<option value=\"all\"";
+	if ($filterev == "all") print " selected=\"selected\"";
+	print ">".$pgv_lang["all"]."</option>";
+	print "<option value=\"BIRT\"";
+	if ($filterev == "BIRT") print " selected=\"selected\"";
+	print ">".$factarray["BIRT"]."</option>";
+	print "<option value=\"CHR\"";
+	if ($filterev == "CHR") print " selected=\"selected\"";
+	print ">".$factarray["CHR"]."</option>";
+	print "<option value=\"CHRA\"";
+	if ($filterev == "CHRA") print " selected=\"selected\"";
+	print ">".$factarray["CHRA"]."</option>";
+	print "<option value=\"BAPM\"";
+	if ($filterev == "BAPM") print " selected=\"selected\"";
+	print ">".$factarray["BAPM"]."</option>";
+	print "<option value=\"_COML\"";
+	if ($filterev == "_COML") print " selected=\"selected\"";
+	print ">".$factarray["_COML"]."</option>";
+	print "<option value=\"MARR\"";
+	if ($filterev == "MARR") print " selected=\"selected\"";
+	print ">".$factarray["MARR"]."</option>";
+	print "<option value=\"_SEPR\"";
+	if ($filterev == "_SEPR") print " selected=\"selected\"";
+	print ">".$factarray["_SEPR"]."</option>";
+	print "<option value=\"DIV\"";
+	if ($filterev == "DIV") print " selected=\"selected\"";
+	print ">".$factarray["DIV"]."</option>";
+	print "<option value=\"DEAT\"";
+	if ($filterev == "DEAT") print " selected=\"selected\"";
+	print ">".$factarray["DEAT"]."</option>";
+	print "<option value=\"BURI\"";
+	if ($filterev == "BURI") print " selected=\"selected\"";
+	print ">".$factarray["BURI"]."</option>";
+	print "<option value=\"IMMI\"";
+	if ($filterev == "IMMI") print " selected=\"selected\"";
+	print ">".$factarray["IMMI"]."</option>";
+	print "<option value=\"EMIG\"";
+	if ($filterev == "EMIG") print " selected=\"selected\"";
+	print ">".$factarray["EMIG"]."</option>";
+	print "<option value=\"EVEN\"";
+	if ($filterev == "EVEN") print " selected=\"selected\"";
+	print ">".$pgv_lang["custom_event"]."</option>";
+	print "</select>";
 	print "</td></tr>";
 	// Day/Month/Year and calendar selector
 	print '<tr><td class="topbottombar" colspan="8">';
