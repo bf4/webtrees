@@ -241,7 +241,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 function print_yahrzeit_config($config) {
   global $pgv_lang, $PGV_BLOCKS, $DAYS_TO_SHOW_LIMIT;
 
-	if (empty($config)) $config=$PGV_BLOCKS["yarhzeit_block"]["config"];
+	if (empty($config)) $config=$PGV_BLOCKS["print_yahrzeit"]["config"];
 
 	if (empty($config['infoStyle'    ])) $config['infoStyle'    ]='style2';
 	if (empty($config['allowDownload'])) $config['allowDownload']='yes';
