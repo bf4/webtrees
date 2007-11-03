@@ -337,9 +337,18 @@ $useTTF = (function_exists("imagettftext")) ? true : false;
 
 // get serverfilename from the media controller
 $serverFilename = $controller->getServerFilename();
-$isThumb = false;
+if (!$serverFilename) {
+	// either the server is not setting the REQUEST_URI variable as we expect,
+	// or the media firewall is being used from outside the media directory 
+	$requestedfile = ( isset($_SERVER['REQUEST_URI']) ) ? $_SERVER['REQUEST_URI'] : "REQUEST_URI NOT SET"; 
+	$exp = explode("?", $requestedfile);
+	$pathinfo = pathinfo($exp[0]);
+	$ext = @strtolower($pathinfo['extension']);
+	if (!$debug_mediafirewall) sendErrorAndExit($ext, $pgv_lang["media_firewall_invalid_dir"], $requestedfile);
+}
 
-if (strpos($_SERVER['REDIRECT_URL'], '/thumbs/')) {
+$isThumb = false;
+if (strpos($_SERVER['REQUEST_URI'], '/thumbs/')) {
 	// the user requested a thumbnail, but the $controller only knows how to lookup information on the main file 
 	// display the thumbnail file instead of the main file
 	// NOTE: since this script was called when a 404 error occured, we know the requested file
