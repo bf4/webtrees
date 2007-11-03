@@ -640,6 +640,8 @@ $pgv_lang["move_time_exceeded"]			= "Die maximale Ausführungszeit wurde übersc
 $pgv_lang["media_firewall_rootdir_no_exist"]			= "Das Media-Firewall Verzeichnis besteht nicht.  Sie müssen es zuerst erstellen.";
 $pgv_lang["media_firewall_protected_dir_no_exist"]		= "Das geschützte Medien-Verzeichnis konnte im Media-Firewall Verzeichnis nicht erstellt werden.  Sie müssen es erstellen, und auch darin öffentliches Schreiben erlauben.";
 $pgv_lang["media_firewall_protected_dir_not_writable"]	= "Das geschützte Medien-Verzeichnis im Media-Firewall Verzeichnis ist nicht öffentlich schreibbar. ";
+$pgv_lang["media_firewall_invalid_dir"]	= "Fehler: Sie versuchen, die Medien-Feuerwand außerhalb des Medien-Verzeichnisses zu benutzen.";
+
 //-- Relationship chart messages
 $pgv_lang["relationship_chart"]			= "Verwandtschaftsberechnung";
 $pgv_lang["person1"]					= "Person 1";
