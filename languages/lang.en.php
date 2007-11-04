@@ -745,7 +745,7 @@ $pgv_lang["move_time_exceeded"]	= "The execution time limit was reached.  Try th
 $pgv_lang["media_firewall_rootdir_no_exist"]			= "The Media Firewall root directory you requested does not exist.  You must create it first.";
 $pgv_lang["media_firewall_protected_dir_no_exist"]		= "The protected media directory could not be created in the Media Firewall root directory.  Please create this directory and make it world-writable.";
 $pgv_lang["media_firewall_protected_dir_not_writable"]	= "The protected media directory in the Media Firewall root directory is not world writable. ";
-$pgv_lang["media_firewall_invalid_dir"]	= "Error: Media Firewall being used outside the media directory";
+$pgv_lang["media_firewall_invalid_dir"]	= "Error: The Media Firewall was launched from a directory other than the media directory.";
 
 //-- Relationship chart messages
 $pgv_lang["relationship_great"]		= "Great";
