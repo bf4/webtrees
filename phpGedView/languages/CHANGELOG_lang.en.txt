@@ -45,7 +45,8 @@ VERSION 4.1.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
-+$pgv_lang["media_firewall_invalid_dir"]		2 NOV 2007				A
+*$pgv_lang["media_firewall_invalid_dir"]			3 NOV 2007				W
++$pgv_lang["media_firewall_invalid_dir"]			2 NOV 2007				A
 -$pgv_lang["cancel"]								1 NOV 2007				d removed duplicate entry
 +$pgv_lang["changes_pending_tot"]					31 Oct 2007				A
 +$pgv_lang["changes_accepted_tot"]					31 Oct 2007				A
