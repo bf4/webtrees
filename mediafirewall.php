@@ -469,7 +469,7 @@ if ($debug_mediafirewall) {
 
 	echo  '<table border="1">';
 	echo  '<tr><td>$controller->pid</td><td>'.$controller->pid.'</td><td>&nbsp;</td></tr>';
-	echo  '<tr><td>Requested URL</td><td>'.$_SERVER['REDIRECT_URL'].'</td><td>&nbsp;</td></tr>';
+	echo  '<tr><td>Requested URL</td><td>'.urldecode($_SERVER['REQUEST_URI']).'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>serverFilename</td><td>'.$serverFilename.'</td><td>&nbsp;</td></tr>';
 	echo  '<tr><td>controller->mediaobject->getFilename()</td><td>'.$controller->mediaobject->getFilename().'</td><td>this is direct from the gedcom</td></tr>';
 	echo  '<tr><td>controller->mediaobject->getServerFilename()</td><td>'.$controller->mediaobject->getServerFilename().'</td><td></td></tr>';

@@ -57,6 +57,8 @@ class MediaControllerRoot extends IndividualController{
 				//   Apache: /phpGedView/media/a.jpg
 				//   IIS:    /phpGedView/mediafirewall.php?404;http://server/phpGedView/media/a.jpg
 				$requestedfile = $_SERVER['REQUEST_URI'];
+				// urldecode the request
+				$requestedfile = urldecode($requestedfile);
 				// make sure the requested file is in the media directory
 				if (strpos($requestedfile, $MEDIA_DIRECTORY) !== false) {
 					// strip off the pgv directory and media directory from the requested url so just the image information is left
