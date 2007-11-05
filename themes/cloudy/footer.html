@@ -147,6 +147,7 @@ JSCRIPT;
 
         print "\nwindow.onload = function() {\n\t";
         print $onload."\n";
+		print "if (window.sizeLines) sizeLines();\n";
         print "}\n-->\n";
         print "</script>\n";
         $footerscriptshown=true;
