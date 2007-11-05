@@ -45,6 +45,7 @@ if (!$controller->indi->canDisplayName()) {
 }
 $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 ?>
+
 <table border="0" cellspacing="0" cellpadding="0" class="facts_table">
 	<tr>
 	<?php if ($controller->canShowHighlightedObject()) { ?>
@@ -260,8 +261,8 @@ function tempObj(tab, oXmlHttp) {
 			target = document.getElementById(tabid[tab]+'_content');
 			evalAjaxJavascript(oXmlHttp.responseText, target);
 			target.style.height = 'auto';
-			if (tab==7) {
-				if (!loadedTabs[7]) {
+			if (tabid[tab]=='googlemap') {
+				if (!loadedTabs[tab]) {
 					loadMap();
 					map.setMapType(GOOGLEMAP_MAP_TYPE);
 				}
@@ -269,6 +270,10 @@ function tempObj(tab, oXmlHttp) {
 				ResizeMap();
 				ResizeMap();
 			}
+			//-- initialize lightbox tabs
+			if (tabid[tab]=='lightbox2') {
+				CB_Init();
+			}			
 			loadedTabs[tab] = true;
 		}
 	};
@@ -588,23 +593,25 @@ if(empty($SEARCH_SPIDER)) {
 
 <!-- ========================== Start 8th tab individual page ==== Album ======== -->
 <?php
-if(empty($SEARCH_SPIDER)) {
+if(empty($SEARCH_SPIDER))
+	print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none;\" >\n";
+else
+	print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:block;\" >\n";
+	
 	if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
+	
 		// The following is temporary, until the handling of the Lightbox Help system
 		// is adjusted to match the usual PhpGedView practice
 		$lbHelpFile = "modules/lightbox/languages/help.".$lang_short_cut[$LANGUAGE].".php";
 		if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help.en.php";
-
-		print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none; background:none;\" >\n";
 
 		print "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>\n";
 		print "&nbsp;&nbsp;"; 
 		
 		// ---------- Help link --------------------		
 		print "<a href=\"" . $lbHelpFile . "\" rel='clearbox(500,760,click)' title=\"" . $pgv_lang["page_help"] . "\" >";
-        print "<img alt=\"\" src=\"".$PGV_IMAGE_DIR."/small/help.gif\" class=\"icon\" title=\"" . $pgv_lang["page_help"] . "\" />" ;
+        print "<img src=\"".$PGV_IMAGE_DIR."/small/help.gif\" class=\"icon\" title=\"" . $pgv_lang["page_help"] . "\" />" ;
         print "</a>" ;
-
 
 		// Header info ---------------------------------------------------		
 		$mediacnt = $controller->get_media_count();
@@ -618,19 +625,22 @@ if(empty($SEARCH_SPIDER)) {
        print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:block; \" >\n";
     }
 	// Content info ---------------------------------------------------
-	print "<div id=\"album_content\"> \n";
+	print "<div id=\"lightbox2_content\"> \n";
 	if ($mediacnt!=0) {	
 		if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-			if (($controller->default_tab==7)||(empty($SEARCH_SPIDER))) {
+		
+			if (($controller->default_tab==7)||(!empty($SEARCH_SPIDER))) {
 				$controller->getTab(7) ;
+				
 			}else{
 				loading_message();
 			}
 		}
 	}
+	
     print "</div>\n";
     print "</div>\n";
-}
+// }
 ?>
 <!-- ============================= End 8th tab individual page ==== Album -->
 
@@ -644,7 +654,11 @@ if(empty($SEARCH_SPIDER)) {
 else print "tabswitch(". ($controller->default_tab+1) .");\n";
 ?>
 if (typeof toggleByClassName == "undefined") alert('phpgedview.js\na javascript function is missing\n\nPlease clear your Web browser cache');
+
 //-->
+
+
+
 </script>
 <?php
 if(empty($SEARCH_SPIDER))
