@@ -587,7 +587,8 @@ class HourglassControllerRoot extends BaseController {
 			var pid = vlines[i].id.substr(vlines[i].id.indexOf("_")+1);
 			var hline = document.getElementById("table_"+pid);
 			var hline2 = document.getElementById("table2_"+pid);
-			vlines[i].style.height=(hline.offsetHeight - (hline2.offsetTop + <?php print $bhalfheight+2 ?>))+'px';
+			var newHeight = (hline.offsetHeight - (hline2.offsetTop + <?php print $bhalfheight+2 ?>));
+			vlines[i].style.height=newHeight+'px';
 		}
 		
 		vlines = document.getElementsByName("bvertline");

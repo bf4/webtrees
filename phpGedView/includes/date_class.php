@@ -913,7 +913,7 @@ class GedcomDate {
 					$this->qual2=$match[3];
 					$this->date2=$this->ParseDate($match[4]);
 				} else {
-					if (preg_match('/^(from|bet|to|and|bef|aft|cal|est|int|abt|apx|est|cir) (.+)/', $date, $match)) {
+					if (preg_match('/^(from|bet|to|and|bef|aft|cal|est|int|abt|apx|est|cir|qtr) (.+)/', $date, $match)) {
 						$this->qual1=$match[1];
 						$this->date1=$this->ParseDate($match[2]);
 					} else {
@@ -948,6 +948,9 @@ class GedcomDate {
 				else
 					$y='';
 			$m='';
+			//-- check for any month in the date instead of just defaulting to none
+			if (preg_match('/(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/', $date, $match))
+				$m=$match[1];
 			$d='';
 		}
 		// Unambiguous dates - override calendar escape
@@ -964,7 +967,7 @@ class GedcomDate {
 						$cal='@#djulian@';
 		// Ambiguous dates - don't override calendar escape
 		if ($cal=='')
-			if (preg_match('/^(jan|feb|mar|apr|may|jun|jul|aug|s<F5>ep|oct|nov|dec)$/', $m))
+			if (preg_match('/^(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)$/', $m))
 				$cal='@#dgregorian@';
 			else
 				if (preg_match('/^[345]\d\d\d$/', $y)) // Year 3000-5999
