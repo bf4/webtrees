@@ -126,8 +126,6 @@ $pgv_lang["no_search_site"]			= "Be sure to select at least one remote site.";
 $pgv_lang["search_sites"] 			= "Sites to search";
 $pgv_lang["site_list"]				= "Site: ";
 $pgv_lang["site_had"]				= " contained the following";
-$pgv_lang["indi_is_remote"]			= "The information for this individual was linked from a remote site.";
-$pgv_lang["link_remote"]            = "Link remote person";
 $pgv_lang["label_search_engine_detected"]  = "Search Engine Spider Detected";
 
 $pgv_lang["ex-spouse"] = "Ex-Spouse";
@@ -729,7 +727,6 @@ $pgv_lang["research_assistant"]		= "Research Assistant";
 $pgv_lang["utf8_to_ansi"]			= "Convert from UTF-8 to ANSI (ISO-8859-1)";
 $pgv_lang["media_linked"]			= "This media object is linked to the following:";
 $pgv_lang["media_not_linked"]		= "This media object is not linked to any GEDCOM record.";
-$pgv_lang["deleted_files"]          = "Deleted Files:";
 $pgv_lang["media_dir_1"]			= "This media object is located on an external server";
 $pgv_lang["media_dir_2"]			= "This media object is in the standard media directory";
 $pgv_lang["media_dir_3"]			= "This media object is in the protected media directory";

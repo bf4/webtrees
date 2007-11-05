@@ -45,9 +45,10 @@ VERSION 4.1.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
-*$pgv_lang["media_firewall_invalid_dir"]			3 NOV 2007				W
-+$pgv_lang["media_firewall_invalid_dir"]			2 NOV 2007				A
--$pgv_lang["cancel"]								1 NOV 2007				d removed duplicate entry
+-$pgv_lang["deleted_files"]							05 Nov 2007				D
+*$pgv_lang["media_firewall_invalid_dir"]			03 NOV 2007				W
++$pgv_lang["media_firewall_invalid_dir"]			02 NOV 2007				A
+-$pgv_lang["cancel"]								01 NOV 2007				d removed duplicate entry
 +$pgv_lang["changes_pending_tot"]					31 Oct 2007				A
 +$pgv_lang["changes_accepted_tot"]					31 Oct 2007				A
 *$pgv_lang["sosa_paternal_male_n_generations"]		27 Oct 2007				} Switch "male" and "female"
