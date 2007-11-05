@@ -143,15 +143,19 @@ $foundObjs = array();
  
 $numm = $resmm->numRows();
  
-if ( $t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm>0 || ($t==5 )) {
+if ( ($t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm>0 || ($t==5 )) ) {
 	echo "\n\n";
 	echo '<table border=0 class="facts_table"><tr>' . "\n";;
 	echo '<td width="80" align="center" class="descriptionbox">' ;
+	
 	if ($t==5){
 		echo "<b><br>" . $tt . "</b><br><br>";
-	}else{
+	}else if ( ($t!=5) && (userCanAccess(getUserName())) ){
 		echo "<b><br><br>" . $tt . "</b><br><br>(" . $numm . ")";
+	}else{
+		echo "<b><br>" . $tt . "</b><br><br>";	
 	}
+	
 	echo '</td>';
 	echo '<td class="facts_value">';
 	echo "<table width=\"100%\"><tr><td>" . "\n";
