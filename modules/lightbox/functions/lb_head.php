@@ -2,7 +2,7 @@
 /**
  * Lightbox Album module for phpGedView
  *
- * Display media Items using Lightbox 4.2
+ * Display media Items using Lightbox 4.1
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2007  PHPGedView Development Team
@@ -63,7 +63,7 @@ if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help_te
 <?php
 
 // Load Lightbox javascript and css files
-// include('modules/lightbox/functions/lb_call_js.php'); 
+include('modules/lightbox/functions/lb_call_js.php'); 
 
 	//Lightbox-Album header Links
 		//print "<br>";
