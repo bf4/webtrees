@@ -51,18 +51,22 @@
 		print "<li>" . "\n";
 	}
 
-    //print dummy image if media is linked to a 'private' person
+    //If media is linked to a 'private' person
     if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
 	
-        print "<table><tr><br><td class=\"prvpic\" align=\"center\" colspan=1>" . "\n";
+/*	
+		// Print Dummy Image
+		print "<table><tr>";
+		print "<font size=1>&nbsp;</font>";
+		print "<br />";		
+		print "<td class=\"prvpic\" align=\"center\" colspan=1>" . "\n";
 		print $pgv_lang["lb_private"];
-//		print "<img src=\"modules/lightbox/images/private.gif\" class=\"icon\" width=\"60\" height=\"80\" alt=\" Image Private \" /></img>" . "\n" ;
-        print "</td></tr></table>" . "\n";
+		//		print "<img src=\"modules/lightbox/images/private.gif\" class=\"icon\" width=\"60\" height=\"80\" alt=\" Image Private \" /></img>" . "\n" ;
+		print "</td></tr></table>" . "\n";
+*/	
+	
 		$item++;
-//	print $item;						
-//	print_r($items);			
 		return false;
-		
     }
 
     $styleadd="";
@@ -104,7 +108,7 @@
 		
 		// Get Media info
 
-		if ($isExternal || media_exists($thumbnail)) {
+		if ($isExternal || media_exists($thumbnail) && !FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
             $mainFileExists = false;
             if ($isExternal || media_exists($mainMedia)) {
                 $mainFileExists = true;

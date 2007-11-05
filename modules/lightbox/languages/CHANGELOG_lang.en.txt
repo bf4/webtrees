@@ -35,6 +35,8 @@ VERSION 4.1.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 ----------------------------------------------------------------------------------------
+-$pgv_lang["active"] 								05 Nov 2007				D
+-$pgv_lang["no_media"]								05 Nov 2007				D
 *$pgv_lang["mediatab"]								26 Oct 2007				W
 +$pgv_lang["lb_appearance"]							26 Oct 2007				A
 +$pgv_lang["lb_linkAppearance"]						26 Oct 2007				A
