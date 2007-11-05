@@ -5,32 +5,38 @@ ob_start();
 require_once('SOAP/Client.php');
 
 //-- put your URL here
-$url = 'http://localhost/pgv/genservice.php?wsdl';
-
+$url = 'http://localhost/pgv-svn/genservice.php?wsdl';
+print "Getting WSDL<br />";
 $wsdl = new SOAP_WSDL($url);
 
-//print_r(array_keys($wsdl->bindings));
-
+print "Getting Proxy<br />";
 $soap = $wsdl->getProxy();
 
+print "Getting ServiceInfo<br />\n";
 $s = $soap->ServiceInfo();
-print_r($s);
+var_dump($s);
+print "After ServiceInfo()<br />";
 
-$result = $soap->Authenticate('', '', 'presidents.ged', '', 'GRAMPS');
-print_r($result);
+$result = $soap->Authenticate('', '', '', '', 'GEDCOM');
+var_dump($result);
 
+print "After Authenticate<br />";
+
+$res = $soap->getPersonById($result->SID, "I2");
+var_dump($res);
+print "After getPersonById<br />";
 //$person = $soap->getPersonByID($result->SID, "I1");
 //print_r($person);
-require_once('includes/GrampsExport.php');
-$ge= new GrampsExport();
-$ge->begin_xml();
-$ge->create_family(find_family_record("F1"), "F1", 1);
-//$ge->create_person(find_person_record("I1"), "I1", 1);
-$xml = $ge->dom->saveXML();
-print htmlentities($xml);
-
-$family = $soap->getFamilyByID($result->SID, "F1");
-print_r($family);
+//require_once('includes/GrampsExport.php');
+//$ge= new GrampsExport();
+//$ge->begin_xml();
+//$ge->create_family(find_family_record("F1"), "F1", 1);
+////$ge->create_person(find_person_record("I1"), "I1", 1);
+//$xml = $ge->dom->saveXML();
+//print htmlentities($xml);
+//
+//$family = $soap->getFamilyByID($result->SID, "F1");
+//print_r($family);
 
 //$ids = $soap->checkUpdates($result->SID, "01 JAN 2006");
 //print_r($ids);
