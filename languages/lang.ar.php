@@ -79,10 +79,10 @@ $pgv_lang["dec_1st"]      = "ديسمبر";
 
 $pgv_lang["muhar"]        = "محرّم";
 $pgv_lang["safar"]        = "صفر";
-$pgv_lang["rabi1"]        = "ربيع الأول";
-$pgv_lang["rabi2"]        = "ربيع الثانى";
-$pgv_lang["juma1"]        = "جمادى الأول";
-$pgv_lang["juma2"]        = "جمادى الثاني";
+$pgv_lang["rabia"]        = "ربيع الأول";
+$pgv_lang["rabit"]        = "ربيع الثانى";
+$pgv_lang["jumaa"]        = "جمادى الأول";
+$pgv_lang["jumat"]        = "جمادى الثاني";
 $pgv_lang["rajab"]        = "رجب";
 $pgv_lang["shaab"]        = "شعبان";
 $pgv_lang["ramad"]        = "رمضان";
