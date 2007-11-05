@@ -7,10 +7,17 @@ require_once('SOAP/Client.php');
 //-- put your URL here
 $url = 'http://localhost/pgv-svn/genservice.php?wsdl';
 print "Getting WSDL<br />";
-$wsdl = new SOAP_WSDL($url);
 
-print "Getting Proxy<br />";
-$soap = $wsdl->getProxy();
+if (!class_exists('SoapClient')) {
+	print "Using PEAR:SOAP<br />";
+	$wsdl = new SOAP_WSDL($url);
+	print "Getting Proxy<br />";
+	$soap = $wsdl->getProxy();
+}
+else {
+	print "Using SOAP Extension<br />";
+	$soap = new SoapClient($url);
+}
 
 print "Getting ServiceInfo<br />\n";
 $s = $soap->ServiceInfo();
@@ -25,6 +32,11 @@ print "After Authenticate<br />";
 $res = $soap->getPersonById($result->SID, "I2");
 var_dump($res);
 print "After getPersonById<br />";
+
+$res = $soap->getGedcomRecord($result->SID, "I2");
+var_dump($res);
+print "After getGedcomRecord<br />";
+
 //$person = $soap->getPersonByID($result->SID, "I1");
 //print_r($person);
 //require_once('includes/GrampsExport.php');
