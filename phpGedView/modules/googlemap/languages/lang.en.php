@@ -32,7 +32,7 @@ $pgv_lang["googlemap"]              = "Map";
 $pgv_lang["no_gmtab"]               = "No map data for this person";
 $pgv_lang["gm_disabled"]            = "GoogleMap module disabled";
 
-$pgv_lang['gm_redraw_map']          = "Redraw map";
+$pgv_lang["gm_redraw_map"]          = "Redraw map";
 $pgv_lang["gm_map"]                 = "Map";
 $pgv_lang["gm_satellite"]           = "Satellite";
 $pgv_lang["gm_hybrid"]              = "Hybrid";
@@ -72,7 +72,6 @@ $pgv_lang["googlemap_coord"]        = "Display Map Co-ordinates";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Edit geographic place locations";
-$pgv_lang["pl_no_places_found"]     = "No places found";
 $pgv_lang["pl_zoom_factor"]         = "Zoom factor";
 $pgv_lang["pl_place_icon"]          = "Icon";
 $pgv_lang["pl_edit"]                = "Edit geographic location";
@@ -113,20 +112,20 @@ $pgv_lang["list_inactive"]        	= "Click here to show inactive places";
 
 //Placecheck specific text
 $pgv_lang["placecheck"]				= "Place Check";
-$pgv_lang['placecheck_text']		= "This will list all the places from the selected GEDCOM file. By default this will NOT INCLUDE places that are fully matched between the GEDCOM file and the GoogleMap tables";
-$pgv_lang['placecheck_top']			= "Top Level Place";
-$pgv_lang['placecheck_one']			= "Level One Place";
-$pgv_lang['placecheck_select1']		= "Select Top Level...";
-$pgv_lang['placecheck_select2']		= "Select Next Level...";
-$pgv_lang['placecheck_key']			= "Key to colors used below";
-$pgv_lang['placecheck_key1']		= "this place and its coordinates do not exist in the GoogleMap tables";
-$pgv_lang['placecheck_key2']		= "this place exists in the GoogleMap tables, but has no coordinates";
-$pgv_lang['placecheck_key3']		= "this place level is blank in your GEDCOM file. It should be added to<br/>GoogleMap places as \"unknown\" with coordinates from its parent<br/>level before you add any place to the next level";
-$pgv_lang['placecheck_key4']		= "this place level is blank in your GEDCOM file, but exists as 'unknown'<br/>in the GoogleMap places table with coordinates. No action required<br/>until the missing level can be entered";
-$pgv_lang['placecheck_head']		= "Place list for GEDCOM file";
-$pgv_lang['placecheck_gedheader']	= "GEDCOM File Place Data<br/>(2 PLAC tag)";
-$pgv_lang['placecheck_gm_header']	= "GoogleMap Places Table Data";
-$pgv_lang['placecheck_unique']		= "Total unique places";
+$pgv_lang["placecheck_text"]		= "This will list all the places from the selected GEDCOM file. By default this will NOT INCLUDE places that are fully matched between the GEDCOM file and the GoogleMap tables";
+$pgv_lang["placecheck_top"]			= "Top Level Place";
+$pgv_lang["placecheck_one"]			= "Level One Place";
+$pgv_lang["placecheck_select1"]		= "Select Top Level...";
+$pgv_lang["placecheck_select2"]		= "Select Next Level...";
+$pgv_lang["placecheck_key"]			= "Key to colors used below";
+$pgv_lang["placecheck_key1"]		= "this place and its coordinates do not exist in the GoogleMap tables";
+$pgv_lang["placecheck_key2"]		= "this place exists in the GoogleMap tables, but has no coordinates";
+$pgv_lang["placecheck_key3"]		= "this place level is blank in your GEDCOM file. It should be added to<br/>GoogleMap places as \"unknown\" with coordinates from its parent<br/>level before you add any place to the next level";
+$pgv_lang["placecheck_key4"]		= "this place level is blank in your GEDCOM file, but exists as 'unknown'<br/>in the GoogleMap places table with coordinates. No action required<br/>until the missing level can be entered";
+$pgv_lang["placecheck_head"]		= "Place list for GEDCOM file";
+$pgv_lang["placecheck_gedheader"]	= "GEDCOM File Place Data<br/>(2 PLAC tag)";
+$pgv_lang["placecheck_gm_header"]	= "GoogleMap Places Table Data";
+$pgv_lang["placecheck_unique"]		= "Total unique places";
 $pgv_lang["placecheck_zoom"]        = "Zoom=";
 $pgv_lang["placecheck_options"]     = "PlaceCheck List Options";
 $pgv_lang["placecheck_filter_text"] = "List filtering options";
