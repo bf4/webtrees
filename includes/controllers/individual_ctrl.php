@@ -89,7 +89,7 @@ class IndividualControllerRoot extends BaseController {
 	 */
 	function init() {
 		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $CHARACTER_SET;
-		global $USE_QUICK_UPDATE;
+		global $USE_QUICK_UPDATE, $pid;
 
 		//-- keep the time of this access to help with concurrent edits
 		$_SESSION['last_access_time'] = time();
@@ -102,6 +102,8 @@ class IndividualControllerRoot extends BaseController {
 		if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
 		if (!empty($_REQUEST["pid"])) $this->pid = strtoupper($_REQUEST["pid"]);
 		$this->pid = clean_input($this->pid);
+		$pid = $this->pid;
+		
 		$this->default_tab = $GEDCOM_DEFAULT_TAB;
 		$indirec = find_person_record($this->pid);
 //		print_r($indirec);
