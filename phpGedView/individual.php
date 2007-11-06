@@ -212,22 +212,22 @@ $linkToID = $controller->pid;	// -- Tell addmedia.php what to link to
 	<?php if ($controller->indi->isMarkedDeleted()) print "<span class=\"error\">".$pgv_lang["record_marked_deleted"]."</span>"; ?>
 <script language="JavaScript" type="text/javascript">
 // <![CDATA[
-function open_link_remote(pid){
-	window.open("addremotelink.php?pid="+pid, "_blank", "top=50,left=50,width=600,height=500,scrollbars=1,scrollable=1,resizable=1");
-	return false;
-}
-
 // javascript function to open a window with the raw gedcom in it
 function show_gedcom_record(shownew) {
 	fromfile="";
 	if (shownew=="yes") fromfile='&fromfile=1';
 	var recwin = window.open("gedrecord.php?pid=<?php print $controller->pid; ?>"+fromfile, "_blank", "top=50,left=50,width=600,height=400,scrollbars=1,scrollable=1,resizable=1");
 }
+<?php if (userCanAccept(getUserName())) { ?>
+function open_link_remote(pid){
+	window.open("addremotelink.php?pid="+pid, "_blank", "top=50,left=50,width=600,height=500,scrollbars=1,scrollable=1,resizable=1");
+	return false;
+}
 
 function showchanges() {
 	window.location = 'individual.php?pid=<?php print $controller->pid; ?>&show_changes=yes';
 }
-
+<?php } ?>
 <!-- ====================== Added for Lightbox Module ===================== -->
 <?php
 if (file_exists("modules/lightbox/album.php")) {
@@ -325,7 +325,6 @@ function tabswitch(n) {
 		if (elt) elt.className='door optionbox rela';
 	}
 	document.getElementById('door'+n).className='door optionbox';
-	//document.getElementById('door'+n).className='tab_cell_active';
 	// set a cookie which stores the last tab they clicked on
 	document.cookie = "lasttabs=<?php print $controller->getCookieTabString().$controller->pid; ?>="+n;
 	return false;

@@ -684,6 +684,7 @@ function showBack() {
 	 arrows[3] = new Image();
 	 arrows[3].src = "<?php print $PGV_IMAGE_DIR."/".$PGV_IMAGES["darrow2"]["other"]; ?>";
 
+<?php if (userCanEdit(getUserName())) { ?>
 function delete_record(pid, linenum, mediaid) {
 	if (!mediaid) mediaid="";
 	 if (confirm('<?php print $pgv_lang["check_delete"]; ?>')) {
@@ -704,6 +705,7 @@ function deleterepository(pid) {
 	 }
 	 return false;
 }
+<?php } ?>
 function message(username, method, url, subject) {
 	 if ((!url)||(url=="")) url='<?php print urlencode(basename($SCRIPT_NAME)."?".$QUERY_STRING); ?>';
 	 if ((!subject)||(subject=="")) subject= '';
