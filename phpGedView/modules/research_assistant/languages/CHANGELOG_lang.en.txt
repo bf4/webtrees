@@ -31,7 +31,50 @@ VERSION 4.1.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-$pgv_lang["description"]						= "Description";
+$pgv_lang["help_comments"] 
+$pgv_lang["comres"]
+$pgv_lang["modified"]
+$pgv_lang["folder_list"]
+$pgv_lang["Edit_Task"]
+$pgv_lang["End_Date"]
+$pgv_lang["folder_new"]
+$pgv_lang["folder_delete_check"]
+$pgv_lang["edit_research_folder"]
+$pgv_lang["folder_not_exist"]
+$pgv_lang["folder_parent"]
+$pgv_lang["parent_id"]
+$pgv_lang["folder_users"]
+$pgv_lang["edit_research_log"]
+$pgv_lang["log_not_exist"]
+$pgv_lang["edit_log_entry"]
+$pgv_lang["log_no_entry"]
+$pgv_lang["log_modified"]
+$pgv_lang["log_modified_by"]
+$pgv_lang["log_edit_entry"]
+$pgv_lang["research_logs"]
+$pgv_lang["log_no_entry_folder"]
+$pgv_lang["folder_sub"]
+$pgv_lang["folder_sub_new"]
+$pgv_lang["log_show"]
+$pgv_lang["log_show_uncomplete"]
+$pgv_lang["log_show_complete"]
+$pgv_lang["log_delete_check"]
+$pgv_lang["function_folder_delete"]
+$pgv_lang["function_subfolder_delete"]
+$pgv_lang["folder_delete_ok"]
+$pgv_lang["folder_update_ok"]
+$pgv_lang["folder_added"]
+$pgv_lang["search_results"]
+$pgv_lang["nothing_found"]
+$pgv_lang["help_rs_folders.php"]
+$pgv_lang["help_rs_editfolder.php"]
+$pgv_lang["help_rs_editlog.php"]
+$pgv_lang["no_sources"]
+$pgv_lang["no_people"]
+$pgv_lang["comment_title_help"]
+$pgv_lang["comment_help"]
+
+-$pgv_lang["description"]							5 Nov 2007				D
 
 
 VERSION 4.1
