@@ -594,11 +594,9 @@ if(empty($SEARCH_SPIDER)) {
 
 <!-- ========================== Start 8th tab individual page ==== Album ======== -->
 <?php
-if(empty($SEARCH_SPIDER))
+if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 	print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none;\" >\n";
-else
-	print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:block;\" >\n";
-
+	
 	if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 
 		// The following is temporary, until the handling of the Lightbox Help system
@@ -641,7 +639,7 @@ else
 
     print "</div>\n";
     print "</div>\n";
-// }
+}
 ?>
 <!-- ============================= End 8th tab individual page ==== Album -->
 
