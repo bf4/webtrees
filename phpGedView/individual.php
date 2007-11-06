@@ -231,7 +231,7 @@ function showchanges() {
 <!-- ====================== Added for Lightbox Module ===================== -->
 <?php
 if (file_exists("modules/lightbox/album.php")) {
-	include_once ("modules/lightbox/lb_config.php"); 
+	include_once ("modules/lightbox/lb_config.php");
 	include_once ("modules/lightbox/functions/lb_indi_tabs_" . $mediatab . ".php");
 	if ($theme_name=="Minimal") {
 		// Force icon options to "text" when we're dealing with the Minimal theme
@@ -239,7 +239,7 @@ if (file_exists("modules/lightbox/album.php")) {
 		if ($LB_AL_THUMB_LINKS!="none") $LB_AL_THUMB_LINKS = "text";
 		if ($LB_ML_THUMB_LINKS!="none") $LB_ML_THUMB_LINKS = "text";
 	}
-}else{	
+}else{
 ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
 var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog');
@@ -273,7 +273,7 @@ function tempObj(tab, oXmlHttp) {
 			//-- initialize lightbox tabs
 			if (tabid[tab]=='lightbox2') {
 				CB_Init();
-			}			
+			}
 			loadedTabs[tab] = true;
 		}
 	};
@@ -312,7 +312,7 @@ function tabswitch(n) {
 				//if (i==3 && <?php if ($SHOW_SOURCES>=getUserAccessLevel(getUserName())) echo 'true'; else echo 'false';?>) elt.style.display='none'; // no sources
 				if (i==4 && <?php if (!$MULTI_MEDIA) echo 'true'; else echo 'false';?>) elt.style.display='none'; // no multimedia
 				if (i==6) elt.style.display='none'; // hide researchlog
-				if (i==8 && <?php if (!$MULTI_MEDIA) echo 'true'; else echo 'false';?>) elt.style.display='none'; // no multimedia (for Album tab)				
+				if (i==8 && <?php if (!$MULTI_MEDIA) echo 'true'; else echo 'false';?>) elt.style.display='none'; // no multimedia (for Album tab)
 				// ALL : hide empty contents
 				if (n==0) document.getElementById(tabid[i]).style.display='none';
 			}
@@ -363,10 +363,10 @@ if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
 <dd id="door3"><a href="javascript:;" onclick="tabswitch(3); return false;" ><?php print $pgv_lang["ssourcess"]?></a></dd>
 
 <!-- ====================== Added for Lightbox Module ===================== -->
-<?php	
+<?php
 if (file_exists("modules/lightbox/album.php")) {
 	include_once ("modules/lightbox/functions/lb_indi_doors_" . $mediatab . ".php");
-}else{	
+}else{
 ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
 
@@ -521,12 +521,13 @@ if(empty($SEARCH_SPIDER)) {
     	if(empty($SEARCH_SPIDER)) {
 	    	$tNew = preg_replace("/&HIDE_GOOGLEMAP=true/", "", $_SERVER["REQUEST_URI"]);
 	    	$tNew = preg_replace("/&HIDE_GOOGLEMAP=false/", "", $tNew);
+	    	$tNew = preg_replace("/&/", "&amp;", $tNew);
 	    	if($SESSION_HIDE_GOOGLEMAP == "true") {
-			    print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"http://".$_SERVER["SERVER_NAME"].$tNew."&amp;HIDE_GOOGLEMAP=false\">";
+			    print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"".$tNew."&amp;HIDE_GOOGLEMAP=false\">";
 			    print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["activate"]."\" title=\"".$pgv_lang["activate"]."\" />";
 			    print " ".$pgv_lang["activate"]."</a></span>\n";
 		    	} else {
-			    print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"http://".$_SERVER["SERVER_NAME"].$tNew."&amp;HIDE_GOOGLEMAP=true\">";
+			    print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"" .$tNew."&amp;HIDE_GOOGLEMAP=true\">";
 			    print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["deactivate"]."\" title=\"".$pgv_lang["deactivate"]."\" />";
 			    print " ".$pgv_lang["deactivate"]."</a></span>\n";
 			}
@@ -597,28 +598,28 @@ if(empty($SEARCH_SPIDER))
 	print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none;\" >\n";
 else
 	print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:block;\" >\n";
-	
+
 	if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-	
+
 		// The following is temporary, until the handling of the Lightbox Help system
 		// is adjusted to match the usual PhpGedView practice
 		$lbHelpFile = "modules/lightbox/languages/help.".$lang_short_cut[$LANGUAGE].".php";
 		if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help.en.php";
 
 		print "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>\n";
-		print "&nbsp;&nbsp;"; 
-		
-		// ---------- Help link --------------------		
+		print "&nbsp;&nbsp;";
+
+		// ---------- Help link --------------------
 		print "<a href=\"" . $lbHelpFile . "\" rel='clearbox(500,760,click)' title=\"" . $pgv_lang["page_help"] . "\" >";
         print "<img src=\"".$PGV_IMAGE_DIR."/small/help.gif\" class=\"icon\" title=\"" . $pgv_lang["page_help"] . "\" />" ;
         print "</a>" ;
 
-		// Header info ---------------------------------------------------		
+		// Header info ---------------------------------------------------
 		$mediacnt = $controller->get_media_count();
-		if ($mediacnt!=0) {	
-			include_once('modules/lightbox/functions/lb_head.php');	
+		if ($mediacnt!=0) {
+			include_once('modules/lightbox/functions/lb_head.php');
 		}else{
-			include_once('modules/lightbox/functions/lb_head.php');	
+			include_once('modules/lightbox/functions/lb_head.php');
 			print "<table class=\"facts_table\"><tr><td id=\"no_tab8\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab4"]."</td></tr></table>\n";
 		}
     }else{
@@ -626,18 +627,18 @@ else
     }
 	// Content info ---------------------------------------------------
 	print "<div id=\"lightbox2_content\"> \n";
-	if ($mediacnt!=0) {	
+	if ($mediacnt!=0) {
 		if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
-		
+
 			if (($controller->default_tab==7)||(!empty($SEARCH_SPIDER))) {
 				$controller->getTab(7) ;
-				
+
 			}else{
 				loading_message();
 			}
 		}
 	}
-	
+
     print "</div>\n";
     print "</div>\n";
 // }
