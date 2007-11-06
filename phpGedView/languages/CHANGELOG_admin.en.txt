@@ -44,6 +44,9 @@ VERSION 4.1.2
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
+*$pgv_lang["label_add_search_server"]				05 Nov 2007				w	removed duplicate
+*$pgv_lang["label_add_server"]						05 Nov 2007				w	removed duplicate
+*$pgv_lang["label_ban_server"]						05 Nov 2007				w	removed duplicate
 -$pgv_lang["download_file"]							05 Nov 2007				D
 +$pgv_lang["associated_files"]						20 Sep 2007				A
 *$pgv_lang["index_dir_cleanup_inst"]				20 Sep 2007				w
