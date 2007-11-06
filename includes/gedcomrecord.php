@@ -460,6 +460,8 @@ class GedcomRecord {
 		$this->facts=array();
 		//-- don't run this function if privacy does not allow viewing of details
 		if (!$this->canDisplayDetails()) return;
+		//-- must trim the record here because the record is trimmed in edit and it could mess up line numbers
+		$this->gedrec = trim($this->gedrec);
 		//-- find all the fact information
 		$indilines = preg_split("/[\r\n]+/", $this->gedrec);   // -- find the number of lines in the individuals record
 		$lct = count($indilines);

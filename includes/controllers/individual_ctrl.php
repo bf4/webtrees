@@ -1101,11 +1101,21 @@ class IndividualControllerRoot extends BaseController {
 		global $SHOW_LEVEL2_NOTES;
 		?>
 		<table class="facts_table">
-		<?php if (!$this->indi->canDisplayDetails()) {
-		   print "<tr><td class=\"facts_value\">";
-		   print_privacy_error($CONTACT_EMAIL);
-		   print "</td></tr>";
+		<?php
+		if (!$this->indi->canDisplayDetails()) {
+			print "<tr><td class=\"facts_value\">";
+			print_privacy_error($CONTACT_EMAIL);
+			print "</td></tr>";
 		} else {
+		?>
+			<tr>
+				<td></td>
+				<td class="descriptionbox rela">
+					<input id="checkbox_note2" type="checkbox" <?php if ($SHOW_LEVEL2_NOTES) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_note2');" />
+					<label for="checkbox_note2"><?php echo "2 NOTE"?></label>
+				</td>
+			</tr>
+			<?php
 			$otherfacts = $this->getOtherFacts();
 			foreach ($otherfacts as $key => $event) {
 				$fact = $event->getTag();
@@ -1118,15 +1128,7 @@ class IndividualControllerRoot extends BaseController {
 				// 2nd level notes/sources [ 1712181 ]
 				$this->indi->add_family_facts(false);
 				foreach ($this->getIndiFacts() as $key => $factrec) {
-					$np = preg_match("/\n2 NOTE/", $factrec[1], $match);
-					if ($np!=0) {
-						$ft = preg_match("/^1 (\w+)/", $factrec[1], $match);
-						$fact = trim($match[1]);
-						print "<tr><td class=\"facts_label\">{$factarray[$fact]}</td>";
-						print "<td class=\"facts_value\">";
-						print_fact_notes($factrec[1], 2, true);
-						print "</td></tr>";
-					}
+					print_main_notes($factrec[1], 2, $this->pid, $factrec[0], true);
 				}
 			}
 			if ($this->get_note_count()==0) print "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab2"]."</td></tr>\n";
@@ -1146,6 +1148,15 @@ class IndividualControllerRoot extends BaseController {
 		</table>
 		<br />
 		<?php
+		if (!$SHOW_LEVEL2_NOTES) {
+		?>
+			<script language="JavaScript" type="text/javascript">
+			<!--
+			toggleByClassName('TR', 'row_note2');
+			//-->
+			</script>
+		<?php
+		}
 	}
 
 	function get_source_count() {
@@ -1165,35 +1176,56 @@ class IndividualControllerRoot extends BaseController {
 				print_privacy_error($CONTACT_EMAIL);
 				print "</td></tr>";
 			} else {
-				foreach ($this->getOtherFacts() as $key => $event) {
+				?>
+			<tr>
+				<td></td>
+				<td class="descriptionbox rela">
+					<input id="checkbox_sour2" type="checkbox" <?php if ($SHOW_LEVEL2_NOTES) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_sour2');" />
+					<label for="checkbox_sour2"><?php echo "2 SOUR"?></label>
+				</td>
+			</tr>
+			<?php
+				$otheritems = $this->getOtherFacts();
+				foreach ($otheritems as $key => $event) {
 					print_main_sources($event->getGedcomRecord(), 1, $this->pid, $event->getLineNumber());
 					$FACT_COUNT++;
 				}
-				if ($SHOW_LEVEL2_NOTES) {
-					// 2nd level sources [ 1712181 ]
-					$this->indi->add_family_facts(false);
-					foreach ($this->getIndiFacts() as $key => $factrec) {
-						print_main_sources($factrec[1], 2, $this->pid, $factrec[0], true);
-					}
-				}
-				if ($this->get_source_count()==0) print "<tr><td id=\"no_tab3\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab3"]."</td></tr>\n";
-				//-- New Source Link
-				if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
-				?>
-					<tr>
-						<td class="facts_label"><?php print_help_link("add_source_help", "qm"); ?><?php echo $pgv_lang["add_source_lbl"]; ?></td>
-						<td class="facts_value">
-						<a href="javascript:;" onclick="add_new_record('<?php echo $this->pid; ?>','SOUR'); return false;"><?php echo $pgv_lang["add_source"]; ?></a>
-						<br />
-						</td>
-					</tr>
-				<?php
+				$FACT_COUNT++;
+			}
+			if ($SHOW_LEVEL2_NOTES) {
+				// 2nd level sources [ 1712181 ]
+				$this->indi->add_family_facts(false);
+				foreach ($this->getIndiFacts() as $key => $factrec) {
+					print_main_sources($factrec[1], 2, $this->pid, $factrec[0], true);
 				}
 			}
+			if ($this->get_source_count()==0) print "<tr><td id=\"no_tab3\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab3"]."</td></tr>\n";
+			//-- New Source Link
+			if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {
 			?>
+				<tr>
+					<td class="facts_label"><?php print_help_link("add_source_help", "qm"); ?><?php echo $pgv_lang["add_source_lbl"]; ?></td>
+					<td class="facts_value">
+					<a href="javascript:;" onclick="add_new_record('<?php echo $this->pid; ?>','SOUR'); return false;"><?php echo $pgv_lang["add_source"]; ?></a>
+					<br />
+					</td>
+				</tr>
+			<?php
+			}
+		}
+		?>
 		</table>
 		<br />
 		<?php
+		if (!$SHOW_LEVEL2_NOTES) {
+		?>
+			<script language="JavaScript" type="text/javascript">
+			<!--
+			toggleByClassName('TR', 'row_sour2');
+			//-->
+			</script>
+		<?php
+		}
 	}
 
 	/**

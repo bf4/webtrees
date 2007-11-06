@@ -5,19 +5,37 @@ ob_start();
 require_once('SOAP/Client.php');
 
 //-- put your URL here
-$url = 'http://localhost/pgv-nu/genservice.php?wsdl';
+$url = 'http://localhost/pgv-svn/genservice.php?wsdl';
+print "Getting WSDL<br />";
 
-$wsdl = new SOAP_WSDL($url);
+if (!class_exists('SoapClient')) {
+	print "Using PEAR:SOAP<br />";
+	$wsdl = new SOAP_WSDL($url);
+	print "Getting Proxy<br />";
+	$soap = $wsdl->getProxy();
+}
+else {
+	print "Using SOAP Extension<br />";
+	$soap = new SoapClient($url);
+}
 
-//print_r(array_keys($wsdl->bindings));
-
-$soap = $wsdl->getProxy();
-
+print "Getting ServiceInfo<br />\n";
 $s = $soap->ServiceInfo();
-print_r($s);
+var_dump($s);
+print "After ServiceInfo()<br />";
 
-$result = $soap->Authenticate('', '', 'presidents.ged', '', 'GEDCOM');
-print_r($result);
+$result = $soap->Authenticate('', '', '', '', 'GEDCOM');
+var_dump($result);
+
+print "After Authenticate<br />";
+
+$res = $soap->getPersonById($result->SID, "I2");
+var_dump($res);
+print "After getPersonById<br />";
+
+$res = $soap->getGedcomRecord($result->SID, "I2");
+var_dump($res);
+print "After getGedcomRecord<br />";
 
 //$person = $soap->getPersonByID($result->SID, "I1");
 //print_r($person);
@@ -28,9 +46,9 @@ print_r($result);
 ////$ge->create_person(find_person_record("I1"), "I1", 1);
 //$xml = $ge->dom->saveXML();
 //print htmlentities($xml);
-
-$family = $soap->getFamilyByID($result->SID, "F1");
-print_r($family);
+//
+//$family = $soap->getFamilyByID($result->SID, "F1");
+//print_r($family);
 
 $anc = $soap->getAncestry($result->SID, "I1", 3, false);
 print_r($anc);

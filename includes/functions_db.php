@@ -2180,7 +2180,7 @@ function get_alpha_indis($letter) {
 	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
 		//if (substr($row["n_letter"], 0, strlen($letter))==$letter||(isset($text)?substr($row["n_letter"], 0, strlen($text))==$text:FALSE)){
-			if (!isset($indilist[$row["i_id"]])) {
+			if (!isset($indilist[$row["i_id"]]) || !isset($indilist[$row["i_id"]]["names"])) {
 				$indi = array();
 				$indi["names"] = array(array($row["i_name"], $row["i_letter"], $row["i_surname"], "P"), array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]));
 				$indi["isdead"] = $row["i_isdead"];
@@ -2278,7 +2278,7 @@ function get_surname_indis($surname) {
 
 	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
-		if (isset($indilist[$row["i_id"]])) {
+		if (isset($indilist[$row["i_id"]]) && isset($indilist[$row["i_id"]]["names"])) {
 			$namearray = array($row["n_name"], $row["n_letter"], $row["n_surname"], $row["n_type"]);
 			// do not add to the array an indi name that already exists in it
 			if (!in_array($namearray, $indilist[$row["i_id"]]["names"])) {
@@ -2374,7 +2374,7 @@ function get_alpha_fams($letter) {
 				$wname = get_sortable_name($WIFE);
 				if (hasRTLText($hname)) {
 					$indirec = find_person_record($WIFE);
-					if (isset($indilist[$WIFE])) {
+					if (isset($indilist[$WIFE]["names"])) {
 						foreach($indilist[$WIFE]["names"] as $n=>$namearray) {
 							if (hasRTLText($namearray[0])) {
 								$surnames[str2upper($namearray[2])] = $namearray[2];
@@ -2874,7 +2874,7 @@ function get_anniversary_events($jd, $facts='') {
 			if ($anniv->d==1) {
 				$where.=" AND d_day<=1";
 			} else
-				if ($anniv->d==$anniv->Format('t'))
+				if ($anniv->d==$anniv->DaysInMonth())
 					$where.=" AND d_day>={$anniv->d}";
 				else
 					$where.=" AND d_day={$anniv->d}";
@@ -2890,7 +2890,7 @@ function get_anniversary_events($jd, $facts='') {
 					if ($anniv->d==30)
 						$where.=" AND d_day>=30 AND d_mon=2";
 					else
-						if ($anniv->d==29 && $anniv->Format('t')==29)
+						if ($anniv->d==29 && $anniv->DaysInMonth()==29)
 							$where.=" AND (d_day=29 OR d_day>30) AND d_mon=2";
 						else
 							$where.=" AND d_day={$anniv->d} AND d_mon=2";
@@ -2900,7 +2900,7 @@ function get_anniversary_events($jd, $facts='') {
 				// 29 KSL does not include 30 KSL (but would include an invalid 31 KSL if there were no 30 KSL)
 				if ($anniv->d==1) {
 					$tmp=new JewishDate(array($anniv->y, 'csh', 1));
-					if ($tmp->Format('t')==29)
+					if ($tmp->DaysInMonth()==29)
 						$where.=" AND (d_day<=1 AND d_mon=3 OR d_day=30 AND d_mon=2)";
 					else
 						$where.=" AND d_day<=1 AND d_mon=3";
@@ -2908,7 +2908,7 @@ function get_anniversary_events($jd, $facts='') {
 					if ($anniv->d==30)
 						$where.=" AND d_day>=30 AND d_mon=3";
 					else
-						if ($anniv->d==29 && $anniv->Format('t')==29)
+						if ($anniv->d==29 && $anniv->DaysInMonth()==29)
 							$where.=" AND (d_day=29 OR d_day>30) AND d_mon=3";
 						else
 							$where.=" AND d_day={$anniv->d} AND d_mon=3";
@@ -2917,12 +2917,12 @@ function get_anniversary_events($jd, $facts='') {
 				// 1 TVT includes 30 KSL (if this year didn't have 30 KSL)
 				if ($anniv->d==1) {
 					$tmp=new JewishDate($anniv->y, 'ksl', 1);
-					if ($tmp->Format('t')==29)
+					if ($tmp->DaysInMonth()==29)
 						$where.=" AND (d_day<=1 AND d_mon=4 OR d_day=30 AND d_mon=3)";
 					else
 						$where.=" AND d_day<=1 AND d_mon=4";
 				} else
-					if ($anniv->d==$anniv->Format('t'))
+					if ($anniv->d==$anniv->DaysInMonth())
 						$where.=" AND d_day>={$anniv->d} AND d_mon=4";
 					else
 						$where.=" AND d_day={$anniv->d} AND d_mon=4";
@@ -2931,7 +2931,7 @@ function get_anniversary_events($jd, $facts='') {
 				if ($anniv->d==1)
 					$where.=" AND d_day<=1";
 				else
-					if ($anniv->d==$anniv->Format('t'))
+					if ($anniv->d==$anniv->DaysInMonth())
 						$where.=" AND d_day>={$anniv->d}";
 					else
 						$where.=" AND d_day={$anniv->d}";
@@ -2944,7 +2944,7 @@ function get_anniversary_events($jd, $facts='') {
 				if ($anniv->d==1)
 					$where.=" AND d_day<=1";
 				else
-					if ($anniv->d==$anniv->Format('t'))
+					if ($anniv->d==$anniv->DaysInMonth())
 						$where.=" AND d_day>={$anniv->d}";
 					else
 						$where.=" AND d_day={$anniv->d}";
@@ -2957,7 +2957,7 @@ function get_anniversary_events($jd, $facts='') {
 					else
 						$where.=" AND (d_day<=1 AND d_mon=8 OR d_day=30 AND d_mon=6)";
 				} else
-					if ($anniv->d==$anniv->Format('t'))
+					if ($anniv->d==$anniv->DaysInMonth())
 						$where.=" AND d_day>={$anniv->d} AND d_mon=8";
 					else
 						$where.=" AND d_day={$anniv->d} AND d_mon=8";
@@ -2988,7 +2988,7 @@ function get_anniversary_events($jd, $facts='') {
 				// to be cached.  We should store the level1 fact here (or somewhere)
 				$ged_date_regex="/2 DATE.*({$row[3]}\s*".($row[4]>0 ? "0*{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "").")/i";
 				foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
-					if (preg_match("/1 {$row[7]}/", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)){
+					if (preg_match("/(^1 {$row[7]}|^1 (FACT|EVEN).*\n2 TYPE {$row[7]})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)){
 						$date=new GedcomDate($match[1]);
 						if (preg_match('/2 PLAC (.+)/', $factrec, $match))
 							$plac=$match[1];
@@ -3044,9 +3044,9 @@ function get_calendar_events($jd1, $jd2, $facts='') {
 	// Only get events from the current gedcom
 	$where.=" AND d_file={$GEDCOMS[$GEDCOM]['id']}";
 			
-	// Now fetch these anniversaries
-	$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_mon ASC, d_day ASC, d_year DESC";
-	$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_mon ASC, d_day ASC, d_year DESC";
+	// Now fetch these events
+	$ind_sql="SELECT d_gid, i_gedcom, 'INDI', d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}individuals {$where} AND d_gid=i_id AND d_file=i_file ORDER BY d_julianday1";
+	$fam_sql="SELECT d_gid, f_gedcom, 'FAM',  d_type, d_day, d_month, d_year, d_fact FROM {$TBLPREFIX}dates, {$TBLPREFIX}families    {$where} AND d_gid=f_id AND d_file=f_file ORDER BY d_julianday1";
 	foreach (array($ind_sql, $fam_sql) as $sql) {
 		$res=dbquery($sql);
 		while ($row=&$res->fetchRow()) {
@@ -3055,7 +3055,7 @@ function get_calendar_events($jd1, $jd2, $facts='') {
 			// to be cached.  We should store the level1 fact here (or somewhere)
 			$ged_date_regex="/2 DATE.*({$row[3]}\s*".($row[4]>0 ? "0*{$row[4]}\s*" : "").$row[5]."\s*".($row[6]>0 ? "0*{$row[6]}\s*" : "").")/i";
 			foreach (get_all_subrecords($row[1], $skipfacts, false, false, false) as $factrec)
-				if (preg_match("/1 {$row[7]}/", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)) {
+				if (preg_match("/(^1 {$row[7]}|^1 (FACT|EVEN).*\n2 TYPE {$row[7]})/s", $factrec) && preg_match($ged_date_regex, $factrec) && preg_match('/2 DATE (.+)/', $factrec, $match)) {
 					$date=new GedcomDate($match[1]);
 					if (preg_match('/2 PLAC (.+)/', $factrec, $match))
 						$plac=$match[1];

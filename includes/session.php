@@ -34,11 +34,6 @@ $VERSION = "4.2";
 $VERSION_RELEASE = "alpha";
 $REQUIRED_PRIVACY_VERSION = "3.1";
 
-if (strstr($_SERVER["PHP_SELF"],"session")) {
-	print "Now, why would you want to do that.  You're not hacking are you?";
-	exit;
-}
-
 function isAlphaNum($value) {
         return preg_match('/^[a-zA-Z0-9]+$/', $value);
     }
@@ -485,7 +480,7 @@ $start_time = getmicrotime();
 
 //-- Setup array of media types
 $MEDIATYPE = array("a11","acb","adc","adf","afm","ai","aiff","aif","amg","anm","ans","apd","asf","au","avi","awm","bga","bmp","bob","bpt","bw","cal","cel","cdr","cgm","cmp","cmv","cmx","cpi","cur","cut","cvs","cwk","dcs","dib","dmf","dng","doc","dsm","dxf","dwg","emf","enc","eps","fac","fax","fit","fla","flc","fli","fpx","ftk","ged","gif","gmf","hdf","iax","ica","icb","ico","idw","iff","img","jbg","jbig","jfif","jpe","jpeg","jp2","jpg","jtf","jtp","lwf","mac","mid","midi","miff","mki","mmm",".mod","mov","mp2","mp3","mpg","mpt","msk","msp","mus","mvi","nap","ogg","pal","pbm","pcc","pcd","pcf","pct","pcx","pdd","pdf","pfr","pgm","pic","pict","pk","pm3","pm4","pm5","png","ppm","ppt","ps","psd","psp","pxr","qt","qxd","ras","rgb","rgba","rif","rip","rla","rle","rpf","rtf","scr","sdc","sdd","sdw","sgi","sid","sng","swf","tga","tiff","tif","txt","text","tub","ul","vda","vis","vob","vpg","vst","wav","wdb","win","wk1","wks","wmf","wmv","wpd","wxf","wp4","wp5","wp6","wpg","wpp","xbm","xls","xpm","xwd","yuv","zgm");
-$BADMEDIA = array(".","..","CVS","thumbs","index.php","MediaInfo.txt", ".cvsignore");
+$BADMEDIA = array(".","..","CVS","thumbs","index.php","MediaInfo.txt", ".cvsignore", ".svn", "watermark");
 
 
 //-- start the php session
@@ -494,7 +489,7 @@ $date = date("D M j H:i:s T Y", $time);
 //-- set the path to the pgv site so that users cannot login on one site
 //-- and then automatically be logged in at another site on the same server
 $pgv_path = "/";
-if (!empty($_SERVER["PHP_SELF"])) $pgv_path = str_replace("\\", "/", dirname($_SERVER["PHP_SELF"]));
+if (!empty($SCRIPT_NAME)) $pgv_path = str_replace("\\", "/", dirname($SCRIPT_NAME));
 session_set_cookie_params($date, $pgv_path);
 if (($PGV_SESSION_TIME>0)&&(function_exists('session_cache_expire'))) session_cache_expire($PGV_SESSION_TIME/60);
 if (!empty($PGV_SESSION_SAVE_PATH)) session_save_path($PGV_SESSION_SAVE_PATH);

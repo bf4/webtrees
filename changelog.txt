@@ -9,7 +9,6 @@
 =====================================================================
 Version 4.2
  - Added Tree tab to individual page (yalnifj)
- - Added GEDCOM configuration search filter (yalnifj, neumont)
  - Added Event class (yalnifj, neumont)
  - Fixed Top menu text wraps when using IE or Opera (canajun2eh)
  - Added sourcelink and assolink tables [ 1718918 ] [ 1717381 ] (yalnifj)
@@ -30,6 +29,7 @@ Version 4.2
  - Adding a "never married" icon on ancestry booklet when NMR=0 (opus27)
 
 Version 4.1.3
+ - Added GEDCOM configuration search filter (yalnifj, neumont)
  - Fixed [ 1821180 ] Changes Report Form Dates are switched (canajun2eh)
  - Added [ 1820679 ] Language specific sort in Sorttable Tables (opus27)
  - Fixed [ 1805955 ] Alive in year: doesn't recognise death date (opus27)

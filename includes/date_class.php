@@ -160,7 +160,7 @@ class CalendarDate {
 		$dm=$m-max($this->m,1);
 		$dd=$d-max($this->d,1);
 		if ($dd<0) {
-			$dd+=$this->Format('t');
+			$dd+=$this->DaysInMonth();
 			$dm--;
 		}
 		if ($dm<0) {
@@ -213,6 +213,17 @@ class CalendarDate {
 		return $this->minJD>=$this->CAL_START_JD && $this->maxJD<=$this->CAL_END_JD;
 	}
 
+	// How many days in the current month
+	function DaysInMonth() {
+		list($ny,$nm)=$this->NextMonth();
+		return $this->YMDtoJD($ny, $nm, 1) - $this->YMDtoJD($this->y, $this->m, 1);
+	}
+
+	// How many days in the current week
+	function DaysInWeek() {
+		return $this->NUM_DAYS_OF_WEEK;
+	}
+
 	// Format a date
 	// $format - format string: the codes are specified in http://php.net/date
 	function Format($format) {
@@ -245,8 +256,7 @@ class CalendarDate {
 			case 'm': $str.=$this->FormatMonthZeros(); break;
 			case 'M': $str.=$this->FormatShortMonth(); break;
 			case 'n': $str.=$this->FormatMonth(); break;
-			case 't': list($ny,$nm)=$this->NextMonth();
-			          $str.=$this->YMDtoJD($ny, $nm, 1) - $this->YMDtoJD($this->y, $this->m, 1); break;
+			case 't': $str.=$this->DaysInMonth(); break;
 			case 'L': $str.=$this->IsLeapYear() ? 1 : 0; break;
 			case 'Y': $str.=$this->FormatLongYear(); break;
 			case 'y': $str.=$this->FormatShortYear(); break;
@@ -903,7 +913,7 @@ class GedcomDate {
 					$this->qual2=$match[3];
 					$this->date2=$this->ParseDate($match[4]);
 				} else {
-					if (preg_match('/^(from|bet|to|and|bef|aft|cal|est|int|abt|apx|est|cir) (.+)/', $date, $match)) {
+					if (preg_match('/^(from|bet|to|and|bef|aft|cal|est|int|abt|apx|est|cir|qtr) (.+)/', $date, $match)) {
 						$this->qual1=$match[1];
 						$this->date1=$this->ParseDate($match[2]);
 					} else {
@@ -938,6 +948,9 @@ class GedcomDate {
 				else
 					$y='';
 			$m='';
+			//-- check for any month in the date instead of just defaulting to none
+			if (preg_match('/(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/', $date, $match))
+				$m=$match[1];
 			$d='';
 		}
 		// Unambiguous dates - override calendar escape
@@ -954,7 +967,7 @@ class GedcomDate {
 						$cal='@#djulian@';
 		// Ambiguous dates - don't override calendar escape
 		if ($cal=='')
-			if (preg_match('/^(jan|feb|mar|apr|may|jun|jul|aug|s<F5>ep|oct|nov|dec)$/', $m))
+			if (preg_match('/^(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)$/', $m))
 				$cal='@#dgregorian@';
 			else
 				if (preg_match('/^[345]\d\d\d$/', $y)) // Year 3000-5999
@@ -998,6 +1011,7 @@ class GedcomDate {
 		// EXPERIMENTAL CODE for [ 1050249 ] Privacy: year instead of complete date in public views
 		// TODO If feedback is positive, create a GUI option to edit it.
 		global $PUBLIC_DATE_FORMAT;
+		
 		$username=getUserName();
 		if (!empty($PUBLIC_DATE_FORMAT) && $date_fmt==$DATE_FORMAT && empty($username))
 			$date_fmt=$PUBLIC_DATE_FORMAT;
@@ -1045,7 +1059,10 @@ class GedcomDate {
 				// If the date is different to the unconverted date, add it to the date string.
 				if ($d1!=$d1tmp && $d1tmp!='')
 					if ($url)
-						$conv1.=' <span dir="'.$TEXT_DIRECTION.'">(<a href="'.$d1conv->CalendarURL().'">'.$d1tmp.'</a>)</span>';
+					    if ($CALENDAR_FORMAT!="none")
+							$conv1.=' <span dir="'.$TEXT_DIRECTION.'">(<a href="'.$d1conv->CalendarURL().'">'.$d1tmp.'</a>)</span>';
+						else	
+							$conv1.=' <span dir="'.$TEXT_DIRECTION.'"><br /><a href="'.$d1conv->CalendarURL().'">'.$d1tmp.'</a></span>';
 					else
 						$conv1.=' <span dir="'.$TEXT_DIRECTION.'">('.$d1tmp.')</span>';
 				if (!is_null($this->date2) && $d2!=$d2tmp && $d1tmp!='')

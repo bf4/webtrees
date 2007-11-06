@@ -669,7 +669,11 @@ function get_medialist($currentdir = false, $directory = "", $linkonly = false, 
 					$media["THUMBEXISTS"] = 1;  // 1 means external
 					$media["EXISTS"] = 1;  // 1 means external
 				} else {
+					// if currentdir is true, then we are only looking for files in $directory, no subdirs
 					if ($currentdir && $directory != dirname($fileName) . "/")
+						break;
+					// if currentdir is false, then we are looking for all files recursively below $directory.  ignore anything outside of $directory
+					if (!$currentdir && strpos(dirname($fileName),$directory . "/") === false )
 						break;
 					$media["THUMB"] = thumbnail_file($fileName);
 					$media["THUMBEXISTS"] = media_exists($media["THUMB"]);

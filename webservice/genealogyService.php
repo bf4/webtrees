@@ -58,6 +58,7 @@ class GenealogyService
 	var $__namespace = 'Genealogy';
 	var $service_version = '1.1';
 	var $varNames = array();
+	var $logging = false;
 
 	function GenealogyService() 
 	{
@@ -456,6 +457,7 @@ class GenealogyService
 	*/
 	function serviceInfo()
 	{
+		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") ServiceInfo");
 		$result = $this->postServiceInfo();
 
 		if($result !== false)
@@ -487,6 +489,9 @@ class GenealogyService
 	*/
 	function Authenticate($username, $password, $gedcom, $compression, $data_type="GEDCOM")
 	{
+		if (empty($data_type)) $data_type='GEDCOM';
+		
+		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") Authenticate($username, '****', $gedcom, $compression, $data_type)");
 		$result = $this->postAuthenticate($username, $password, $gedcom, $compression, $data_type);
 		if($result !== false)
 		{
@@ -517,6 +522,7 @@ class GenealogyService
 	*/
 	function changeGedcom($gedcom)
 	{
+		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") changeGedcom($gedcom)");
 		$result = $this->postChangeGedcom($gedcom);
 		if($result !== false)
 		{
@@ -547,6 +553,7 @@ class GenealogyService
 	*/
 	function getPersonByID($SID, $PID)
 	{
+		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") getPersonByID($SID, $PID)");
 		//check the session
 		$result = $this->start_session($SID);
 		if ($result !== true) 
@@ -568,6 +575,7 @@ class GenealogyService
 	 ***/
 	function getFamilyByID($SID,$FID)
 	{
+		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") getFamilyByID($SID, $FID)");
 		//check the session
 		$result = $this->start_session($SID);
 		if ($result !== true) 
@@ -589,6 +597,7 @@ class GenealogyService
 	 */
 	function getSourceByID($SID,$SCID)
 	{
+		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") getSourceByID($SID, $SCID)");
 		//check the session
 		$result = $this->start_session($SID);
 		if ($result !== true) 
@@ -640,6 +649,7 @@ class GenealogyService
 	*/
 	function getGedcomRecord($SID, $PID)
 	{
+		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") getGedcomRecord($SID, $PID)");
 		$result = $this->start_session($SID);
 		if ($result !== true) 
 			return $result;
@@ -667,6 +677,7 @@ class GenealogyService
 	*/
 	function getVar($SID, $var)
 	{
+		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") getVar($SID, $var)");
 		//check the session
 		$result = $this->start_session($SID);
 		if ($result !== true) 
@@ -696,6 +707,7 @@ class GenealogyService
 	*/
 	function getAncestry($SID, $rootID, $generations, $returnGedcom)
 	{
+		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") getGedcomRecord($SID, $rootID, $generations, $returnGedcom)");
 		$result = $this->start_session($SID);
 		if ($result !== true)
 			return $result;
@@ -726,6 +738,7 @@ class GenealogyService
 	*/
 	function getDescendants($SID, $rootID, $generations, $returnGedcom)
 	{
+		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") getDescendants($SID, $rootID, $generations, $returnGedcom)");
 		$result = $this->start_session($SID);
 		if($result !== true)
 			return $result;
@@ -758,6 +771,7 @@ class GenealogyService
 	*/
 	function appendRecord($SID, $gedrec)
 	{
+		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") appendRecord($SID, $gedrec)");
 		$result = $this->start_session($SID);
 		if ($result !== true)
 			return $result;
@@ -790,6 +804,7 @@ class GenealogyService
 	*/
 	function deleteRecord($SID, $RID)
 	{
+		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") deleteRecord($SID, $RID)");
 		$result = $this->start_session($SID);
 		if ($result !== true)
 			return $result;
@@ -820,6 +835,7 @@ class GenealogyService
 	*/
 	function updateRecord($SID, $RID, $gedcom)
 	{
+		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") updateRecord($SID, $RID, $gedcom)");
 		$result = $this->start_session($SID);
 		if ($result !== true)
 			return $result;
@@ -853,6 +869,7 @@ class GenealogyService
 	*/
 	function checkUpdatesByID($SID,$RID,$lastUpdate)
 	{
+		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") checkUpdatesByID($SID,$RID,$lastUpdate)");
 		$result = $this->start_session($SID);
 		if($result !== true)
 			return $result;
@@ -879,6 +896,7 @@ class GenealogyService
 	*/
 	function checkUpdates($SID,$lastUpdate)
 	{
+		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") checkUpdates($SID,$lastUpdate)");
 		$result = $this->start_session($SID);
 		if($result !== true)
 			return $result;
@@ -905,6 +923,7 @@ class GenealogyService
 	*/
 	function getKnownServers($SID,$limit)
 	{
+		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") getKnownServers($SID,$limit)");
 		$result = $this->start_session($SID);
 		if($result !== true)
 			return $result;
@@ -932,6 +951,7 @@ class GenealogyService
 	*/
 	function search($SID, $query, $start, $maxResults)
 	{
+		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") search($SID, $query, $start, $maxResults)");
 		$result = $this->start_session($SID);
 		if($result !== true)
 			return $result;
@@ -958,6 +978,7 @@ class GenealogyService
 	*/
 	function getXref($SID, $position, $type)
 	{
+		if ($this->logging) AddToLog(basename(__FILE__)." (".__LINE__.") getXref($SID, $position, $type)");
 		$result = $this->start_session($SID);
 		if($result !== true)
 			return $result;
@@ -1008,7 +1029,7 @@ class GenealogyService
 		global $HTTP_RAW_POST_DATA;
 
 		// Fire up PEAR::SOAP_Server
-		$server = new SOAP_Server;
+		$server = new SOAP_Server();
 
 		// Add your object to SOAP server (note namespace)
 		$server->addObjectMap($this,'urn:' . $this->__namespace);
@@ -1017,6 +1038,7 @@ class GenealogyService
 		if (isset($_SERVER['REQUEST_METHOD']) &&
 			$_SERVER['REQUEST_METHOD']=='POST') 
 		{
+			
 			$server->service($HTTP_RAW_POST_DATA);
 			return $server;
 		}

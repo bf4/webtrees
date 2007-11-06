@@ -59,7 +59,7 @@ function print_list_person($key, $value, $findid=false, $asso="", $useli=true) {
 
 	$tag = "span";
 	if ($useli) $tag = "li";
-		
+
 	$person = Person::getInstance($key);
 	if (is_null($person)) {
 		print "<".$tag.">";
@@ -176,7 +176,7 @@ function print_list_family($key, $value, $findid=false, $asso="", $useli=true) {
 			print " <a href=\"individual.php?pid=$indikey&amp;ged=$ged\" title=\"$name\" class=\"list_item\">";
 			print "&nbsp;&nbsp;";
 			if ($TEXT_DIRECTION=="ltr") print "(".$pgv_lang["associate"]."&nbsp;&nbsp;".$indikey.")</a>";
-  			else print getRLM() . "(" . getRLM() .$pgv_lang["associate"]." &nbsp;&nbsp;".$indikey.getRLM() . ")" . getRLM() . "</span></a>";
+			else print getRLM() . "(" . getRLM() .$pgv_lang["associate"]." &nbsp;&nbsp;".$indikey.getRLM() . ")" . getRLM() . "</span></a>";
 		}
 		print "</".$tag.">";
 	}															//begin re-added by pluntke
@@ -379,12 +379,12 @@ function print_indi_table($datalist, $legend="", $option="") {
 			print "</td>";
 		}
 		//-- Indi name(s)
-		if ($person->isDead()) print "<td class=\"list_value_wrap\"";
-		else print "<td class=\"list_value_wrap alive\"";
-		print " align=\"".get_align($name)."\">";
-		print "<a href=\"".$person->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
-		if ($tiny) print $person->getSexImage();
-
+		$tdclass = "list_value_wrap";
+		if (!$person->isDead()) $tdclass .= " alive";
+		if (!$person->getChildFamilyIds()) $tdclass .= " patriarch";
+		echo "<td class=\"".$tdclass."\" align=\"".get_align($name)."\">";
+		echo "<a href=\"".$person->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
+		if ($tiny) echo $person->getSexImage();
 		foreach ($name_subtags as $k=>$subtag) {
 			for ($num=1; $num<9; $num++) {
 				$addname = $person->getSortableName($subtag, $num);
@@ -656,18 +656,19 @@ function print_fam_table($datalist, $legend="", $option="") {
 			$name = check_NN($partners[0]);
 		}
 		else $name = $husb->getSortableName();
-		if ($husb->isDead()) echo "<td class=\"list_value_wrap\"";
-		else echo "<td class=\"list_value_wrap alive\"";
-		echo " align=\"".get_align($name)."\">";
+		$tdclass = "list_value_wrap";
+		if (!$husb->isDead()) $tdclass .= " alive";
+		if (!$husb->getChildFamilyIds()) $tdclass .= " patriarch";
+		echo "<td class=\"".$tdclass."\" align=\"".get_align($name)."\">";
 		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($tiny && $husb->xref) echo $husb->getSexImage();
- 		foreach ($name_subtags as $k=>$subtag) {
- 			for ($num=1; $num<9; $num++) {
- 				$addname = $husb->getSortableName($subtag, $num);
- 				if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
- 				if (empty($addname)) break;
- 			}
- 		}
+		foreach ($name_subtags as $k=>$subtag) {
+			for ($num=1; $num<9; $num++) {
+				$addname = $husb->getSortableName($subtag, $num);
+				if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+				if (empty($addname)) break;
+			}
+		}
 		echo "</td>";
 		//-- Husb GIVN
 		echo "<td style=\"display:none\">";
@@ -691,18 +692,19 @@ function print_fam_table($datalist, $legend="", $option="") {
 		//-- Wife name(s)
 		if (isset($value["name"])) $name = check_NN($partners[1]);
 		else $name = $wife->getSortableName();
-		if ($wife->isDead()) echo "<td class=\"list_value_wrap\"";
-		else echo "<td class=\"list_value_wrap alive\"";
-		echo " align=\"".get_align($name)."\">";
+		$tdclass = "list_value_wrap";
+		if (!$wife->isDead()) $tdclass .= " alive";
+		if (!$wife->getChildFamilyIds()) $tdclass .= " patriarch";
+		echo "<td class=\"".$tdclass."\" align=\"".get_align($name)."\">";
 		echo "<a href=\"".$family->getLinkUrl()."\" class=\"list_item name2\" dir=\"".$TEXT_DIRECTION."\">".PrintReady($name)."</a>";
 		if ($tiny && $wife->xref) echo $wife->getSexImage();
- 		foreach ($name_subtags as $k=>$subtag) {
- 			for ($num=1; $num<9; $num++) {
- 				$addname = $wife->getSortableName($subtag, $num);
- 				if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
- 				if (empty($addname)) break;
- 			}
- 		}
+		foreach ($name_subtags as $k=>$subtag) {
+			for ($num=1; $num<9; $num++) {
+				$addname = $wife->getSortableName($subtag, $num);
+				if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$family->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+				if (empty($addname)) break;
+			}
+		}
 		echo "</td>";
 		//-- Wife GIVN
 		echo "<td style=\"display:none\">";
@@ -1138,13 +1140,13 @@ function print_media_table($datalist, $legend="") {
  * @param string $listFormat presentation style: "style2 = sortable list, "style3" = cloud
  */
 function print_surn_table($datalist, $target="INDI", $listFormat="") {
-  global $pgv_lang, $factarray, $GEDCOM, $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD;
-  global $SURNAME_LIST_STYLE;
-  if (count($datalist)<1) return;
+	global $pgv_lang, $factarray, $GEDCOM, $TEXT_DIRECTION, $COMMON_NAMES_THRESHOLD;
+	global $SURNAME_LIST_STYLE;
+	if (count($datalist)<1) return;
 
-  if (empty($listFormat)) $listFormat = $SURNAME_LIST_STYLE;
+	if (empty($listFormat)) $listFormat = $SURNAME_LIST_STYLE;
 
-  if ($listFormat=="style3") {
+	if ($listFormat=="style3") {
 	// Requested style is "cloud", where the surnames are a list of names (with links), 
 	// and the font size used for each name depends on the number of occurrences of this name
 	// in the database - generally known as a 'tag cloud'.
@@ -1186,9 +1188,9 @@ function print_surn_table($datalist, $target="INDI", $listFormat="") {
 	//-- table footer
 	echo "</table>\n";
 	return;
-  }
+	}
 
-    // Requested style isn't "cloud".  In this case, we'll produce a sortable list.
+	// Requested style isn't "cloud".  In this case, we'll produce a sortable list.
 	require_once("js/sorttable.js.htm");
 	$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 	//-- table header
@@ -1291,13 +1293,13 @@ function print_changes_table($datalist) {
 			echo $record->getSexImage();
 			$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 			if ($SHOW_MARRIED_NAMES) $name_subtags[] = "_MARNM";
- 			foreach ($name_subtags as $k=>$subtag) {
- 				for ($num=1; $num<9; $num++) {
- 					$addname = $record->getSortableName($subtag, $num);
- 					if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
- 					if (empty($addname)) break;
- 				}
- 			}
+			foreach ($name_subtags as $k=>$subtag) {
+				for ($num=1; $num<9; $num++) {
+					$addname = $record->getSortableName($subtag, $num);
+					if (!empty($addname) && $addname!=$name) echo "<br /><a title=\"".$subtag."\" href=\"".$record->getLinkUrl()."\" class=\"list_item\">".PrintReady($addname)."</a>";
+					if (empty($addname)) break;
+				}
+			}
 		}
 		if ($record->type=="SOUR" || $record->type=="REPO") {
 			$name_subtags = array("_HEB", "ROMN");
@@ -1358,7 +1360,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	print "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
 	print "<th style=\"display:none\">GIVN</th>";
 	print "<th class=\"list_label\">".$factarray["DATE"]."</th>";
-	print "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></th>";
+	print "<th class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></th>";
 	print "<th class=\"list_label\">".$factarray["EVEN"]."</th>";
 	print "</tr></thead>\n";
 	//-- table body
@@ -1367,7 +1369,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	$n = 0;
 
 	// Which types of name do we display for an INDI
- 	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
+	$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 	if ($SHOW_MARRIED_NAMES)
 		$name_subtags[] = "_MARNM";
 
@@ -1440,9 +1442,9 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 		print "<td class=\"list_value_wrap rela\">";
 		$anniv = $value['anniv'];
 		if ($anniv==0)
-			print '&nbsp;';
+			print '<a name="-1">&nbsp;</a>';
 		else
-			print $anniv;
+			print "<a name=\"{$anniv}\">{$anniv}</a>";
 		if ($allow_download) {
 			// hCalendar:dtstart and hCalendar:summary
 			print "<abbr class=\"dtstart\" title=\"".strip_tags($value['date']->Display(false,'Ymd',array()))."\"></abbr>";
@@ -1603,8 +1605,8 @@ function get_align($txt) {
 		global $TEXT_DIRECTION, $USE_RTL_FUNCTIONS;
 
 		if (!empty($txt)) {
-  			if ($TEXT_DIRECTION=="rtl" && !hasRTLText($txt) && hasLTRText($txt)) return "left";
-  			if ($TEXT_DIRECTION=="ltr" && hasRTLText($txt) && !hasLTRText($txt) && $USE_RTL_FUNCTIONS) return "right";
+			if ($TEXT_DIRECTION=="rtl" && !hasRTLText($txt) && hasLTRText($txt)) return "left";
+			if ($TEXT_DIRECTION=="ltr" && hasRTLText($txt) && !hasLTRText($txt) && $USE_RTL_FUNCTIONS) return "right";
 		}
 		if ($TEXT_DIRECTION=="rtl") return "right";
 		return "left";

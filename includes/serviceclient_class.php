@@ -43,6 +43,7 @@ class ServiceClient extends GedcomRecord {
 	var $password = "";
 	var $type = "";
 	var $data_type = "";
+	var $client_type = "SOAP"; // whether to use SOAP or PEAR:SOAP by default
 	var $DEBUG = false;
 
 	/**
@@ -105,13 +106,19 @@ class ServiceClient extends GedcomRecord {
 	function authenticate() {
 		if (!empty($this->SID)) return $this->SID;
 		if (is_null($this->soapClient)) {
-			AddToLog("getting wsdl");
-			//	get the wsdl and cache it
-			$wsdl = new SOAP_WSDL($this->url);
-			AddToLog("wsdl found");
-			//change the encoding style
-			$this->__change_encoding($wsdl);
-			$this->soapClient = $wsdl->getProxy();
+			if (!class_exists('SoapClient') || $this->client_type=='PEAR:SOAP') {
+				AddToLog('Using PEAR:SOAP library');
+				//	get the wsdl and cache it
+				$wsdl = new SOAP_WSDL($this->url);
+				//change the encoding style
+				$this->__change_encoding($wsdl);
+				$this->soapClient = $wsdl->getProxy();
+			}
+			else {
+				AddtoLog("Using SOAP Extension");
+				//-- don't use exceptions in PHP 4
+				$this->soapClient = new SoapClient($this->url, array('exceptions' => 0));
+			}
 		}
 		if (!$this->isError($this->soapClient)) {
 			$res = $this->soapClient->Authenticate($this->username, $this->password, $this->gedfile, "",$this->data_type);
@@ -796,7 +803,6 @@ if ($this->DEBUG) { print "In mergeGedcomRecord($xref)<br />";}
 		if ($firstLink) {
 			$this->authenticate();
 			$result = $this->soapClient->getGedcomRecord($this->SID, $xref);
-			//print_r($result);
 			if (PEAR::isError($result) || isset($result->faultcode) || get_class($result)=='SOAP_Fault' || is_object($result)) {
 				if (isset($result->faultstring)) {
 					AddToLog($result->faultstring);

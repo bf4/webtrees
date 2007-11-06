@@ -1967,7 +1967,11 @@ function PGVRListTotalSHandler($attrs) {
 
 	if (empty($list_total)) $list_total = 0;
 
-	$currentElement->addText(($list_total - $list_private)." / ".$list_total);
+	if ($list_private==0) {
+		$currentElement->addText($list_total);
+	} else {
+		$currentElement->addText(($list_total - $list_private)." / ".$list_total);
+	} 
 }
 
 function PGVRRelativesSHandler($attrs) {

@@ -506,11 +506,11 @@ class Person extends GedcomRecord {
 				// warning if gap<6 months
 				if ($gap>1 && $gap<180 && $counter>0) $label .= "<img alt=\"\" src=\"images/warning.gif\" /> ";
 				// children with same date means twin
-				if ($gap==0 && $counter>1) {
+				/**if ($gap==0 && $counter>1) {
 					if ($this->getSex()=="M") $label .= $pgv_lang["twin_brother"];
 					else if ($this->getSex()=="F") $label .= $pgv_lang["twin_sister"];
 					else $label .= $pgv_lang["twin"];
-				}
+				}**/
 				// gap in years or months
 				$gap = round($gap*12/365.25); // months
 				if ($gap>20 or $gap<-20) $label .= round($gap/12)." ".$pgv_lang["years"];

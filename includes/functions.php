@@ -1275,9 +1275,13 @@ function generate_thumbnail($filename, $thumbnail) {
  * Function to sort GEDCOM fact tags based on their tanslations
  */
 function factsort($a, $b) {
-   global $factarray;
+	global $factarray;
 
-   return stringsort(trim(strip_tags($factarray[$a])), trim(strip_tags($factarray[$b])));
+	if (array_key_exists($a, $factarray))
+		$a=$factarray[$a];
+	if (array_key_exists($b, $factarray))
+		$b=$factarray[$b];
+	return stringsort($a, $b);
 }
 /**
  * String sorting function
@@ -1671,18 +1675,16 @@ function sort_facts(&$arr) {
 function compare_date($a, $b) {
 	global $sortby;
 
-	// Sort by BIRT if no other event specified
-	if (empty($sortby))
-		$tag = $sortby;
-	else
-		$tag = "BIRT";
-function compare_date_descending($a, $b) {
-	$result = compare_date($a, $b);
-	return (0 - $result);
-}
-
-	$adate=get_gedcom_value("$tag:DATE", 1, $a['gedcom'], '', false);
-	$bdate=get_gedcom_value("$tag:DATE", 1, $b['gedcom'], '', false);
+	$tag = "BIRT";
+	if (!empty($sortby)) $tag = $sortby;
+	if (isset($a["undo"])) {
+		// Look at record in pgv_changes.php
+		$adate=get_gedcom_value("$tag:DATE", 1, $a['undo'], '', false);
+		$bdate=get_gedcom_value("$tag:DATE", 1, $b['undo'], '', false);
+	} else {
+		$adate=get_gedcom_value("$tag:DATE", 1, $a['gedcom'], '', false);
+		$bdate=get_gedcom_value("$tag:DATE", 1, $b['gedcom'], '', false);
+	}
 	if (!empty($adate) && !empty($bdate)){
 		$adate=new GedcomDate($adate);
 		$bdate=new GedcomDate($adate);
@@ -1692,6 +1694,11 @@ function compare_date_descending($a, $b) {
 	}
 	// Same date?  Sort by name
 	return itemsort($a, $b);
+}
+
+function compare_date_descending($a, $b) {
+	$result = compare_date($a, $b);
+	return (0 - $result);
 }
 
 // ************************************************* START OF MISCELLANIOUS FUNCTIONS ********************************* //

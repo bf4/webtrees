@@ -54,17 +54,24 @@ print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t
 // Get Javascript variables from lb_config.php --------------------------- 
  if (file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/lb_config.php');
-
+	if ($theme_name=="Minimal") {
+		// Force icon options to "text" when we're dealing with the Minimal theme
+		if ($LB_AL_HEAD_LINKS!="none") $LB_AL_HEAD_LINKS = "text";
+		if ($LB_AL_THUMB_LINKS!="none") $LB_AL_THUMB_LINKS = "text";
+		if ($LB_ML_THUMB_LINKS!="none") $LB_ML_THUMB_LINKS = "text";
+	}
 ?>
-	<script type="text/javascript">
+	<SCRIPT LANGUAGE="Javascript" type="text/javascript">
+	<!--
 	<?php if ($LB_MUSIC_FILE == "") { ?>
 		var myMusic = null;
 	<?php }else{ ?>
-		var myMusic 		= '<?php print $LB_MUSIC_FILE; ?>';  	// The music file
+		var myMusic 	= '<?php print $LB_MUSIC_FILE; ?>'; // The music file
     <?php } ?>
 	var CB_SlShowTime 	= '<?php print $LB_SS_SPEED; 	?>';	// Slide show timer
-	</script>
-
+	var CB_Animation	= '<?php print $LB_TRANSITION; 	?>';	// Next/Prev Image transition effect
+	//-->
+	</script>	
 <?php 	if ($TEXT_DIRECTION == "rtl") { ?>
 			<link  href="modules/lightbox/css/clearbox_music_RTL.css" 	rel="stylesheet" type="text/css" />
 			<link href ="modules/lightbox/css/album_page.css" 			rel="stylesheet" type="text/css" media="screen" /> 
@@ -366,42 +373,36 @@ if ($ct>0){
 				if ($LB_ML_THUMB_LINKS != "none") {
 					print "<table border=0><tr>";
 					// ---------- Edit Media --------------------
-					print "<td class=\"width33 center\" valign=\"top\">";
+					print "<td class=\"width33 wrap center font9\" valign=\"top\">";
 					print "<a href=\"javascript:;\" title=\"" . $pgv_lang["lb_edit_media"] . "\" onclick=\" return window.open('addmedia.php?action=editmedia&amp;pid=" . $media["XREF"] . "&amp;linktoid=', '_blank', 'top=50,left=50,width=600,height=600,resizable=1,scrollbars=1');\">";
-					if ($LB_ML_THUMB_LINKS == "both") {
+					if ($LB_ML_THUMB_LINKS == "icon" || $LB_ML_THUMB_LINKS == "both") {
 						print "<img src=\"modules/lightbox/images/image_edit.gif\" alt=\"\" class=\"icon\" />" ;
-						print "<br />" . $pgv_lang["lb_edit_details"] ;
-					}else if ($LB_ML_THUMB_LINKS == "icon") {
-						print "<img src=\"modules/lightbox/images/image_edit.gif\" alt=\"\" class=\"icon\" />" ;
-					}else if($LB_ML_THUMB_LINKS == "text") { 
-						print "<br />" . $pgv_lang["lb_edit_details"] ;
-					}else{
+					}
+					if($LB_ML_THUMB_LINKS == "both") { 
+						print "<br />";
+					}
+					if($LB_ML_THUMB_LINKS == "both" || $LB_ML_THUMB_LINKS == "text") { 
+						print $pgv_lang["lb_edit_details"] ;
 					}
 					print "</a>" . "\n";			
 					print "</td>";
 			
 					// ---------- Link Media to person, family or source  ---------------
-					print "<td class=\"width33 center\" valign=\"top\">";
-					if ($LB_ML_THUMB_LINKS == "both" || $LB_ML_THUMB_LINKS == "icon") {
-						print "<img src=\"modules/lightbox/images/image_link.gif\" alt=\"\" class=\"icon\" title=\"" . $pgv_lang["set_link"] . "\" /><br />";
-						include ("modules/lightbox/functions/lb_link.php");
-					}else if ($LB_ML_THUMB_LINKS == "text") {
-						include ("modules/lightbox/functions/lb_link.php");
-					}else{
-					}
+					print "<td class=\"width33 wrap center font9\" valign=\"top\">";
+					include ("modules/lightbox/functions/lb_link.php");
 					print "</td>";
 			
 					// ---------- View Media Details (mediaviewer) --------------------
-					print "<td class=\"width33 center\" valign=\"top\">";	
+					print "<td class=\"width33 wrap center font9\" valign=\"top\">";	
 					print "<a href=\"mediaviewer.php?mid=" . $media["XREF"] . "\" title=\"" . $pgv_lang["lb_view_media"] . "\">";
+					if ($LB_ML_THUMB_LINKS == "icon" || $LB_ML_THUMB_LINKS == "both") {
+						print "<img src=\"modules/lightbox/images/image_view.gif\" alt=\"\" class=\"icon\" title=\"" . $pgv_lang["lb_view_media"] . "\" />";
+					}
 					if ($LB_ML_THUMB_LINKS == "both") {
-						print "<img src=\"modules/lightbox/images/image_view.gif\" alt=\"\" class=\"icon\" title=\"" . $pgv_lang["lb_view_media"] . "\" />";
-						print "<br />" . $pgv_lang["lb_view_details"] ;
-					}else if ($LB_ML_THUMB_LINKS == "icon") {
-						print "<img src=\"modules/lightbox/images/image_view.gif\" alt=\"\" class=\"icon\" title=\"" . $pgv_lang["lb_view_media"] . "\" />";
-					}else if($LB_ML_THUMB_LINKS == "text") { 
-						print "<br />" . $pgv_lang["lb_view_details"] ;
-					}else{
+						print "<br />";
+					}
+					if($LB_ML_THUMB_LINKS == "both" || $LB_ML_THUMB_LINKS == "text") { 
+						print $pgv_lang["lb_view_details"] ;
 					}					
 					print "</a>" . "\n" ;
 					print "</td>";
@@ -459,7 +460,8 @@ if ($ct>0){
 		}
 
 	    print "<div style=\"white-space: normal; width: 95%;\">";
-	    print_fact_notes($media["GEDCOM"], $media["LEVEL"]+1);
+	    print_fact_sources($media["GEDCOM"], $media["LEVEL"]+1);
+	    print_fact_notes($media["GEDCOM"], $media["LEVEL"]+1);  
 	    print "</div>";
 
 		PrintMediaLinks($media["LINKS"], "small");

@@ -518,16 +518,17 @@ function update_places($gid, $indirec) {
  * @param string $indirec
  */
 function update_dates($gid, $indirec) {
-	global $FILE, $TBLPREFIX, $DBCONN, $GEDCOMS;
+	global $FILE, $TBLPREFIX, $DBCONN, $GEDCOMS, $factarray;
 	$pt = preg_match("/\d DATE (.*)/", $indirec, $match);
 	if ($pt == 0)
 		return 0;
 	$facts = get_all_subrecords($indirec, "", false, false, false);
 	foreach ($facts as $f => $factrec) {
-		$fact = "EVEN";
-		$ft = preg_match("/1 (\w+)(.*)/", $factrec, $match);
-		if ($ft > 0) {
+		if (preg_match("/1 (\w+)/", $factrec, $match)) {
 			$fact = trim($match[1]);
+			// 1 FACT/2 TYPE XXXX gets recorded as XXXX to enable searching
+			if (($fact=='FACT' || $fact=='EVEN') && preg_match("/\n2 TYPE (\w+)/", $factrec, $match) && array_key_exists($match[1], $factarray))
+				$fact=$match[1];
 			$event = trim($match[2]);
 		}
 		$pt = preg_match_all("/2 DATE (.*)/", $factrec, $match, PREG_SET_ORDER);
