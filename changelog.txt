@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1.3
+ - Fixed [ 1824016 ] Undo Changes Option Missing on Source Page (yalnifj)
  - fixed [ 1825797 ] XSS on the "research assistant" page (yalnifj)
  - fixed [ 1797468 ] 4.1.1 Hourglass Chart display bug (many other related bug reports) (yalnifj)
  - fixed [ 1527172 ] 4.01 stable: Hourglass chart doesn't show all spouses (yalnifj)
