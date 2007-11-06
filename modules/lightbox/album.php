@@ -91,17 +91,8 @@ echo "<table border=0 width='100%'><tr>" . "\n\n";
 // End Main Table
 //------------------------------------------------------------------------------
 echo "</tr></table>";
-echo "<center>";
+echo "<center>" . "\n";
 ?>
 
 
-<?php  echo "\n" ;  ?>
-
--------------------------
-echo "</tr></table>";
-echo "<center>";
-?>
-
-
-<?php  echo "\n" ;  ?>
 
