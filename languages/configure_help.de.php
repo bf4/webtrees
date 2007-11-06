@@ -57,7 +57,6 @@ $pgv_lang["bad_host_user_pass"]	= "PhpGedView konnte keine Verbindung zu Ihrem D
 $pgv_lang["bad_database_name"]	= "PhpGedView hat eine Verbindung zu Ihrem Datenbank Host hergestellt, konnte aber den von Ihnen angegebenen Datenbanknamen nicht verwenden. Bitte prüfen Sie, dass diese Datenbank existiert und dass der angegebene Benutzername die notwendigen Zugriffsrechte hat.";
 $pgv_lang["db"]				= "Datenbank";
 $pgv_lang["dbase"]			= "dBase";
-$pgv_lang["mysql"]			= "MySQL";
 $pgv_lang["current_gedcoms"]		= "Vorhandene GEDCOMs";
 $pgv_lang["ged_gedcom"]			= "GEDCOM-Datei";
 $pgv_lang["ged_title"]			= "GEDCOM Bezeichnung";

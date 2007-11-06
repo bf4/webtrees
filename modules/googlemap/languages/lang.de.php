@@ -72,7 +72,6 @@ $pgv_lang["gm_pp_po_pr_n_b"]        = "Suffix, Präfix, normal, beide";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Geografische Ortskoordinaten bearbeiten";
-$pgv_lang["pl_no_places_found"]     = "Keine Orte gefunden";
 $pgv_lang["pl_zoom_factor"]         = "Zoomfaktor";
 $pgv_lang["pl_place_icon"]          = "Icon";
 $pgv_lang["pl_edit"]                = "Geografische Ortsdaten bearbeiten";
