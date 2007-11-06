@@ -59,7 +59,7 @@ function print_list_person($key, $value, $findid=false, $asso="", $useli=true) {
 
 	$tag = "span";
 	if ($useli) $tag = "li";
-		
+
 	$person = Person::getInstance($key);
 	if (is_null($person)) {
 		print "<".$tag.">";
@@ -1295,7 +1295,7 @@ function print_events_table($startjd, $endjd, $events='BIRT MARR DEAT', $only_li
 	print "<th class=\"list_label\">".$pgv_lang["record"]."</th>";
 	print "<th style=\"display:none\">GIVN</th>";
 	print "<th class=\"list_label\">".$factarray["DATE"]."</th>";
-	print "<th class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></td>";
+	print "<th class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"".$pgv_lang["anniversary"]."\" title=\"".$pgv_lang["anniversary"]."\" border=\"0\" /></th>";
 	print "<th class=\"list_label\">".$factarray["EVEN"]."</th>";
 	print "</tr>\n";
 	//-- table body

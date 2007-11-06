@@ -2,7 +2,7 @@
 /**
  * Yahrzeit Block
  *
- * This block will print a list of upcoming yahrzeit (hebrew death anniversaries) 
+ * This block will print a list of upcoming yahrzeit (hebrew death anniversaries)
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2007 PGV Developers
@@ -47,13 +47,13 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 
 	if (empty($config))
 		$config=$PGV_BLOCKS['print_yahrzeit']['config'];
-  
+
 	$startjd=server_jd();
 	$endjd  =$startjd+max(min($config['days'], 1), $DAYS_TO_SHOW_LIMIT)-1;
 
 	$username=getUserName();
 	if (empty($username))
-		$allowDownload = "no"; 
+		$allowDownload = "no";
 
 	print '<div id="yahrzeit" class="block">';
 	print '<table class="blockheader" cellspacing="0" cellpadding="0"><tr>';
@@ -92,7 +92,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 					++$hidden;
 	// ...then adjust dates
 	foreach ($yahrzeits as $key=>$yahrzeit)
-		if (strpos('1 DEAT', $yahrzeit['factrec'])!==false) { // Just DEAT, not _YART 
+		if (strpos('1 DEAT', $yahrzeit['factrec'])!==false) { // Just DEAT, not _YART
 			$today=new JewishDate($yahrzeit['jd']);
 			$hd=$yahrzeit['date']->MinDate();
 			$hd1=new JewishDate($hd);
@@ -131,19 +131,19 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		require_once("includes/gedcomrecord.php");
 		$table_id = "ID".floor(microtime()*1000000); // sorttable requires a unique ID
 		print "<table id=\"{$table_id}\" class=\"sortable list_table center\">";
-		print "<tr>";    
+		print "<tr>";
 		print "<th class=\"list_label\">{$factarray['NAME']}</th>";
 		print "<th style=\"display:none\">GIVN</th>";
 		print "<th class=\"list_label\">{$factarray['DATE']}</th>";
-		print "<td class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"{$pgv_lang['anniversary']}\" title=\"{$pgv_lang['anniversary']}\" border=\"0\" /></th>";
+		print "<th class=\"list_label\"><img src=\"./images/reminder.gif\" alt=\"{$pgv_lang['anniversary']}\" title=\"{$pgv_lang['anniversary']}\" border=\"0\" /></th>";
 		print "<th class=\"list_label\">{$factarray['_YART']}</th>";
 		print "</tr>";
-	
+
 		// Which types of name do we display for an INDI
 		$name_subtags = array("", "_AKA", "_HEB", "ROMN");
 		if ($SHOW_MARRIED_NAMES)
 			$name_subtags[] = "_MARNM";
-	
+
 		foreach ($yahrzeits as $yahrzeit)
 			if ($yahrzeit['jd']>=$startjd && $yahrzeit['jd']<$startjd+$config['days']) {
 				$ind=person::GetInstance($yahrzeit['id']);
@@ -157,7 +157,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 				foreach ($name_subtags as $subtag) {
 					for ($num=1; ; ++$num) {
 						$addname = $ind->getSortableName($subtag, $num);
-		
+
 						if (empty($addname))
 							break;
 						else
@@ -166,22 +166,22 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 					}
 				}
 				print "</td>";
-		
+
 				//-- GIVN for sorting
 				echo "<td style=\"display:none\">";
 				$exp = explode(",", str_replace('<', ',', $name).",");
 				echo $exp[1];
 				echo "</td>";
-		
+
 		//		print "<a href=\"".$ind->getLinkUrl()."\">".PrintReady($ind->getSortableName())."</a>".$ind->getSexImage();
 				$today=new JewishDate($yahrzeit['jd']);
 				$td=new GedcomDate($today->Format('@ A O E'));
-		
+
 				//-- death/yahrzeit event date
 				print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 				print $yahrzeit['date']->Display(true, NULL, array());
 				print "</td>";
-		
+
 				//-- Anniversary
 				print "<td class=\"list_value_wrap rela\">";
 				$anniv = $yahrzeit['anniv'];
@@ -195,20 +195,20 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 					print "<abbr class=\"dtstart\" title=\"".strip_tags($yahrzeit['date']->Display(false,'Ymd',array()))."\"></abbr>";
 					print "<abbr class=\"summary\" title=\"".$pgv_lang["anniversary"]." #$anniv ".$factarray[$yahrzeit['fact']]." : ".PrintReady(strip_tags($ind->getSortableName()))."\"></abbr>";
 				}
-		
+
 				//-- upcomming yahrzeit dates
 				print "<td class=\"list_value_wrap\">";
-		
+
 		// TODO print the 2 dates one under the other - done by changing the date class
-		// should the style be the same as the style of the death date (in cloudy)? 
+		// should the style be the same as the style of the death date (in cloudy)?
 		// TODO should sort by julian day  - I see now 2 KSL between 19 and 20 CHS and 1 TSH should sort after 20 ELL
-		
+
 				print "<a href=\"".$url."\" class=\"list_item url\">".$td->Display(true, NULL, array('gregorian'))."</a>"; // hCalendar:url
 				print "&nbsp;</td>";
-		
+
 				print "</tr>\n";
 			}
-		
+
 		//-- table footer
 		print "<tr class=\"sortbottom\">";
 		print "<td class=\"list_label\">";
@@ -219,7 +219,7 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 		print "</td>";
 		print "<td style=\"display:none\">GIVN</td>";
 		print "<td>";
-		if ($config['allowDownload']=='yes') { 
+		if ($config['allowDownload']=='yes') {
 			$uri = $SERVER_URL.basename($_SERVER['REQUEST_URI']);
 			global $whichFile;
 			$whichFile = 'hCal-events.ics';
