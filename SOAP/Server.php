@@ -207,7 +207,6 @@ class SOAP_Server extends SOAP_Base
         if (!$this->fault) {
             /* $response is a SOAP_Msg object. */
             $soap_msg = $this->parseRequest($data, $attachments);
-//            AddToLog("result:" .print_r($soap_msg, true));
 
             /* Handle Mime or DIME encoding. */
             /* TODO: DIME decoding should move to the transport, do it here

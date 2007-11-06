@@ -1062,6 +1062,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	}
 	/**
 	 * Function to find missing information
+	 * @param Person $person
 	 * @return mixed
 	 */
 	function getMissinginfo(& $person) {
@@ -1500,6 +1501,7 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	/**
 	 * tab is the function that builds the display for the different screens.
 	 * These screens are identified by a tab
+	 * @param Person $person
 	 */
 	function tab(&$person) {
 		// Start our engines.

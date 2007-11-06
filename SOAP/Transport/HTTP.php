@@ -515,7 +515,7 @@ class SOAP_Transport_HTTP extends SOAP_Base
         }
         if ($this->timeout > 0) {
             // some builds of PHP do not support this, silence the warning
-            $temp = socket_set_timeout($fp, $this->timeout);
+            $temp = @socket_set_timeout($fp, $this->timeout);
             if (!$temp) print "Unable to set timeout";
         }
         if (!fputs($fp, $this->outgoing_payload, strlen($this->outgoing_payload))) {

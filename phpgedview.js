@@ -376,8 +376,8 @@ function reorder_families(pid) {
 	return false;
 }
 
-function quickEdit(pid, act) {
-	window.open('edit_quickupdate.php?pid='+pid+"&"+sessionname+"="+sessionid+"&action="+act, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
+function quickEdit(pid, act, ged) {
+	window.open('edit_quickupdate.php?pid='+pid+"&"+sessionname+"="+sessionid+"&action="+act+"&ged="+ged, '_blank', 'top=50,left=50,width=600,height=500,resizable=1,scrollbars=1');
 	return false;
 }
 
