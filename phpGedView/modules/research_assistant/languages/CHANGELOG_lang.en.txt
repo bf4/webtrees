@@ -31,48 +31,48 @@ VERSION 4.1.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -----------------------------------------------------------------------------------------
-$pgv_lang["help_comments"] 
-$pgv_lang["comres"]
-$pgv_lang["modified"]
-$pgv_lang["folder_list"]
-$pgv_lang["Edit_Task"]
-$pgv_lang["End_Date"]
-$pgv_lang["folder_new"]
-$pgv_lang["folder_delete_check"]
-$pgv_lang["edit_research_folder"]
-$pgv_lang["folder_not_exist"]
-$pgv_lang["folder_parent"]
-$pgv_lang["parent_id"]
-$pgv_lang["folder_users"]
-$pgv_lang["edit_research_log"]
-$pgv_lang["log_not_exist"]
-$pgv_lang["edit_log_entry"]
-$pgv_lang["log_no_entry"]
-$pgv_lang["log_modified"]
-$pgv_lang["log_modified_by"]
-$pgv_lang["log_edit_entry"]
-$pgv_lang["research_logs"]
-$pgv_lang["log_no_entry_folder"]
-$pgv_lang["folder_sub"]
-$pgv_lang["folder_sub_new"]
-$pgv_lang["log_show"]
-$pgv_lang["log_show_uncomplete"]
-$pgv_lang["log_show_complete"]
-$pgv_lang["log_delete_check"]
-$pgv_lang["function_folder_delete"]
-$pgv_lang["function_subfolder_delete"]
-$pgv_lang["folder_delete_ok"]
-$pgv_lang["folder_update_ok"]
-$pgv_lang["folder_added"]
-$pgv_lang["search_results"]
-$pgv_lang["nothing_found"]
-$pgv_lang["help_rs_folders.php"]
-$pgv_lang["help_rs_editfolder.php"]
-$pgv_lang["help_rs_editlog.php"]
-$pgv_lang["no_sources"]
-$pgv_lang["no_people"]
-$pgv_lang["comment_title_help"]
-$pgv_lang["comment_help"]
+-$pgv_lang["help_comments"]							6 Nov 2007				D
+-$pgv_lang["comres"]								6 Nov 2007				D
+-$pgv_lang["modified"]								6 Nov 2007				D
+-$pgv_lang["folder_list"]							6 Nov 2007				D
+-$pgv_lang["Edit_Task"]								6 Nov 2007				D
+-$pgv_lang["End_Date"]								6 Nov 2007				D
+-$pgv_lang["folder_new"]							6 Nov 2007				D
+-$pgv_lang["folder_delete_check"]					6 Nov 2007				D
+-$pgv_lang["edit_research_folder"]					6 Nov 2007				D
+-$pgv_lang["folder_not_exist"]						6 Nov 2007				D
+-$pgv_lang["folder_parent"]							6 Nov 2007				D
+-$pgv_lang["parent_id"]								6 Nov 2007				D
+-$pgv_lang["folder_users"]							6 Nov 2007				D
+-$pgv_lang["edit_research_log"]						6 Nov 2007				D
+-$pgv_lang["log_not_exist"]							6 Nov 2007				D
+-$pgv_lang["edit_log_entry"]						6 Nov 2007				D
+-$pgv_lang["log_no_entry"]							6 Nov 2007				D
+-$pgv_lang["log_modified"]							6 Nov 2007				D
+-$pgv_lang["log_modified_by"]						6 Nov 2007				D
+-$pgv_lang["log_edit_entry"]						6 Nov 2007				D
+-$pgv_lang["research_logs"]							6 Nov 2007				D
+-$pgv_lang["log_no_entry_folder"]					6 Nov 2007				D
+-$pgv_lang["folder_sub"]							6 Nov 2007				D
+-$pgv_lang["folder_sub_new"]						6 Nov 2007				D
+-$pgv_lang["log_show"]								6 Nov 2007				D
+-$pgv_lang["log_show_uncomplete"]					6 Nov 2007				D
+-$pgv_lang["log_show_complete"]						6 Nov 2007				D
+-$pgv_lang["log_delete_check"]						6 Nov 2007				D
+-$pgv_lang["function_folder_delete"]				6 Nov 2007				D
+-$pgv_lang["function_subfolder_delete"]				6 Nov 2007				D
+-$pgv_lang["folder_delete_ok"]						6 Nov 2007				D
+-$pgv_lang["folder_update_ok"]						6 Nov 2007				D
+-$pgv_lang["folder_added"]							6 Nov 2007				D
+-$pgv_lang["search_results"]						6 Nov 2007				D
+-$pgv_lang["nothing_found"]							6 Nov 2007				D
+-$pgv_lang["help_rs_folders.php"]					6 Nov 2007				D
+-$pgv_lang["help_rs_editfolder.php"]				6 Nov 2007				D
+-$pgv_lang["help_rs_editlog.php"]					6 Nov 2007				D
+-$pgv_lang["no_sources"]							6 Nov 2007				D
+-$pgv_lang["no_people"]								6 Nov 2007				D
+-$pgv_lang["comment_title_help"]					6 Nov 2007				D
+-$pgv_lang["comment_help"]							6 Nov 2007				D
 
 -$pgv_lang["description"]							5 Nov 2007				D
 
@@ -84,7 +84,7 @@ VERSION 4.1
 +$pgv_lang["autosearch_ssurname"] 					05 Sep 2007				A
 +$pgv_lang["autosearch_sgivennames"] 				05 Sep 2007				A
 +$pgv_lang["autosearch_plugin_name_gensearchhelp"]	05 Sep 2007				A
-*$pgv_lang["no_sour_tasks"]           				02 June 2007    		S
+*$pgv_lang["no_sour_tasks"]		   				02 June 2007			S
 +$pgv_lang["TheMostLikely"]							01 March 2007			A
 *$pgv_lang["add_task_inst"]							18 Feb 2007				w  Correct grammar
 *$pgv_lang["auto_gen_inst"]							18 Feb 2007				w  Correct grammar
