@@ -160,10 +160,10 @@ $i = 0;
 		<td class="descriptionbox"><?php print_help_link("lb_ml_thumb_links_help", "qm", "lb_ml_thumb_links");?><b><?php print $pgv_lang["lb_ml_thumb_links"];?></b><br />&nbsp;&nbsp;&nbsp;&nbsp;<?php print $pgv_lang["lb_linkAppearance"];?></td> 
 		<td class="optionbox">
 			<select name="NEW_LB_ML_THUMB_LINKS" tabindex="<?php $i++; print $i?>" onfocus="getHelp('LB_ML_THUMB_LINKS_help');" />
+                <option value= "none" <?php if ($LB_ML_THUMB_LINKS == "none")  print "selected=\"selected\""; ?>><?php print  $pgv_lang["lb_none"];?></option>
                 <option value= "text" <?php if ($LB_ML_THUMB_LINKS == "text")  print "selected=\"selected\""; ?>><?php print  $pgv_lang["lb_text"];?></option>
                 <option value= "icon" <?php if ($LB_ML_THUMB_LINKS == "icon")  print "selected=\"selected\""; ?>><?php print  $pgv_lang["lb_icon"];?></option>
                 <option value= "both" <?php if ($LB_ML_THUMB_LINKS == "both")  print "selected=\"selected\""; ?>><?php print  $pgv_lang["lb_both"];?></option>
-                <option value= "none" <?php if ($LB_ML_THUMB_LINKS == "none")  print "selected=\"selected\""; ?>><?php print  $pgv_lang["lb_none"];?></option>
             </select>		
 		&nbsp;&nbsp;&nbsp; <?php print $pgv_lang["lb_none"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_text"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_icon"];?>&nbsp;&nbsp;<?php print $pgv_lang["lb_both"];?>	
 		</td>

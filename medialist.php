@@ -197,13 +197,12 @@ if ($search == "yes") {
 				<input type="submit" value=" &gt; "/>
 			</td>
 		</tr>
-		
-<!-- LBox ========================== added for Lightbox Album ============================== --> 		
+<!-- LBox =========================== added for Lightbox Album ============================== --> 	
 		<?php 
 		if (file_exists("modules/lightbox/album.php")) { 
 			// do not need slideshow bar
 		}elseif (file_exists("modules/slideshow.php")) { ?>
-<!-- LBox ======================= end addition for Lightbox Album ============================ --> 
+<!-- LBox ========================= end addition for Lightbox Album ========================== --> 
 		<tr>
 			<td class="list_label" colspan="2">
   				<?php
@@ -349,6 +348,7 @@ if ($ct>0){
 	    print "\n\t\t\t<td class=\"list_value_wrap\" width=\"50%\">";
 	    print "<table class=\"$TEXT_DIRECTION\">\n\t<tr>\n\t\t<td valign=\"top\" style=\"white-space: normal;\">";
 		
+		
 //LBox --------  change for Lightbox Album --------------------------------------------
 		if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$media["FILE"]) || eregi("\.jpeg",$media["FILE"]) || eregi("\.gif",$media["FILE"]) || eregi("\.png",$media["FILE"]) ) ) { 
 //			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . stripslashes(PrintReady($name1)) . "\">" . "\n";
@@ -372,6 +372,7 @@ if ($ct>0){
 			
 				if ($LB_ML_THUMB_LINKS != "none") {
 					print "<table border=0><tr>";
+		
 					// ---------- Edit Media --------------------
 					print "<td class=\"width33 wrap center font9\" valign=\"top\">";
 					print "<a href=\"javascript:;\" title=\"" . $pgv_lang["lb_edit_media"] . "\" onclick=\" return window.open('addmedia.php?action=editmedia&amp;pid=" . $media["XREF"] . "&amp;linktoid=', '_blank', 'top=50,left=50,width=600,height=600,resizable=1,scrollbars=1');\">";
@@ -412,6 +413,7 @@ if ($ct>0){
 			}
 			// ------------ Linespace ---------------------
 				print "<br />";
+			}else{
 			}
 		}else{
 		}	
@@ -454,9 +456,6 @@ if ($ct>0){
 			if($imgsize[2]!==false){
 				print "\n\t\t\t<span class=\"label\"><br />".$pgv_lang["image_size"].": </span> <span class=\"field\" style=\"direction: ltr;\">" . $imgsize[0] . ($TEXT_DIRECTION =="rtl"?(" " . getRLM() . "x" . getRLM() . " ") : " x ") . $imgsize[1] . "</span>";
 			}
-			print "<br /><div style=\"white-space: normal; width: 95%;\">";
-			print_fact_notes($media["GEDCOM"], $media["LEVEL"]+1);
-			print "</div>";
 		}
 
 	    print "<div style=\"white-space: normal; width: 95%;\">";

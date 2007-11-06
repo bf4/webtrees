@@ -412,7 +412,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		//-- Birth date
 		print "<td class=\"".strrev($TEXT_DIRECTION)." list_value_wrap\">";
 		$bdate=$person->getBirthDate(false);
-		print str_replace('<a', '<a name="'.$bdate->MinJD().'"', $bdate->Display(empty($SEARCH_SPIDER)));
+		if (!empty($bdate)) print str_replace('<a', '<a name="'.$bdate->MinJD().'"', $bdate->Display(empty($SEARCH_SPIDER)));
 		//-- Birth 2nd date ?
 		if (!empty($person->bdate2)) {
 			$bdate2=$person->bdate2;
@@ -462,7 +462,7 @@ function print_indi_table($datalist, $legend="", $option="") {
 		}
 		//-- Age at death
 		print "<td class=\"list_value_wrap\">";
-		if ($person->isDead() && !$person->dest && $bdate->MinJD()>0)
+		if ($person->isDead() && !$person->dest && !is_null($bdate) && $bdate->MinJD()>0)
 			echo "<a name=\"".($ddate->MaxJD()-$bdate->MinJD())."\" class=\"list_item age\">".GedcomDate::GetAgeYears($bdate, $ddate)."</a>";
 		else
 			echo '<a name="-1">&nbsp;</a>';

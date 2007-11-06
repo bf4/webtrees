@@ -46,7 +46,6 @@ $pgv_lang["lb_icon"]				= "Icon";
 $pgv_lang["lb_text"]				= "Text";
 $pgv_lang["lb_both"]				= "Both";
 $pgv_lang["lb_none"]				= "None";
-$pgv_lang["lb_ml_ThumbLinkAdvice"]	= "Icon, Text, Both, or None";
 
 $pgv_lang["lb_al_head_links"]			= "Individual Page - Album Tab Header";
 $pgv_lang["lb_al_thumb_links"]			= "Individual Page - Album Tab Thumbnails";
@@ -72,9 +71,9 @@ $pgv_lang["lb_height"]					= "Height";
 $pgv_lang["lb_help"] 		 = "Album Help";
 $pgv_lang["lightbox"]		 = "Album";
 $pgv_lang["showmenu"] 		 = "Show Menu:";
-$pgv_lang["active"] 		 = "Active";
+
 $pgv_lang["TYPE__other"] 	 = "Other";
-$pgv_lang["no_media"] 		 = "None";
+
 $pgv_lang["TYPE__footnotes"] = "Footnotes";
 
 $pgv_lang["census_text"]  	 = "\"These census images have been obtained from \"The National Archives\", the custodian of the original records, ";

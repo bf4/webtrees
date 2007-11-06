@@ -2,7 +2,7 @@
 /**
  * Lightbox Album module for phpGedView
  *
- * Display media Items using Lightbox
+ * Display media Items using Lightbox 4.1
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2007  PHPGedView Development Team
@@ -51,23 +51,22 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 		print "<li>" . "\n";
 	}
 	
-    //print dummy image if media is linked to a 'private' person
+    //If media is linked to a 'private' person
     if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
 	
+/*	
+		// Print Dummy Image
+		print "<table><tr>";
 		print "<font size=1>&nbsp;</font>";				
 		print "<br />";	
-	
-        print "<table><tr><td class=\"prvpic\" align=\"center\" colspan=1>" . "\n";
+		print "<td class=\"prvpic\" align=\"center\" colspan=1>" . "\n";
 		print $pgv_lang["lb_private"];
-		
-	
 //        print "<img src=\"modules/lightbox/images/private.gif\" class=\"icon\" width=\"60\" height=\"80\" alt=\" Image Private \" /></img>" . "\n" ;
         print "</td></tr></table>" . "\n";
+*/	
+	
 		$item++;
-//	print $item;						
-//	print_r($items);			
 		return false;
-		
     }
 
     $styleadd="";
@@ -107,11 +106,9 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 			$alignm = "left";
 		}
 		
-	print "<table class=\"pic\"><tr>" . "\n";
-	print "<td align=\"center\" colspan=1>". "\n";
-
 		// Get Media info
-		if ($isExternal || media_exists($thumbnail)) {			
+
+		if ($isExternal || media_exists($thumbnail) && !FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
             $mainFileExists = false;
             if ($isExternal || media_exists($mainMedia)) {
                 $mainFileExists = true;
@@ -121,25 +118,28 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 
                 // For Regular filetypes supported by lightbox at the moment ================
 				if ( eregi("\.jpg",$rowm['m_file']) || eregi("\.jpeg",$rowm['m_file']) || eregi("\.gif",$rowm['m_file']) || eregi("\.png",$rowm['m_file'])  ) {
+					print "<table class=\"pic\"><tr>" . "\n";
+					print "<td align=\"center\" colspan=1>". "\n";
+					
 					// Check for Notes associated media item
 					if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
 						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
-							$note[$n]  = $pgv_lang["note"] . " " . ($n+1) . "";
+							$note[$n]  = $pgv_lang["note"] . "_" . ($n+1) . "";
 							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";
-						print "<br />";
+							print "<br>";
 							$items[$n+1]= $item+1;
 							$n++;
 						}							
 					}else
 						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
-							$note[$n]  = $pgv_lang["note"] . " " . ($n+1) . "";	
+							$note[$n]  = $pgv_lang["note"] . "_" . ($n+1) . "";	
 							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";
-					print "<br />";
+							print "<br>";
 							$items[$n+1]= $item+1;
 							$n++;
 					}else{
 						print "<font size=1>&nbsp;</font>";				
-					print "<br />";
+						print "<br>";
 					}
 					$item++;
 //	print $item;						
@@ -151,16 +151,17 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 					// Else If source info available, - Open with Lightbox normal,  and create tooltip link for source AND media details
 					}else if (eregi("1 SOUR",$rowm['m_gedrec'])) {
 
+//						print	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' title=\"" . stripslashes($mediaTitle) . "\"\" 
 						print	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' title=\"" . $mediaTitle . "\"\" 
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
-								. "<br />"
+									. "<br>"
 									
 									. "&nbsp;" . $pgv_lang["lb_view_source_tip"] . "<a href=\'" 
 									. $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;" . $sour2 
 									. "</font></b><\/a>" 
 									
-								. "<br />"
+									. "<br>" 
 									. "&nbsp;" . PrintReady($pgv_lang["lb_view_details_tip"]) . "<a href=\'" 
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"] 
 									. "</font></b><\/a>'," 
@@ -174,7 +175,7 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 						print 	"<a href=\"" . $mainMedia . "\" rel='clearbox[general]' title=\"" . $mediaTitle . "\"\"
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
-								. "<br />"
+									. "<br>"
 									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'"
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"]
 									. "</font></b><\/a>',"
@@ -188,25 +189,29 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 
                 // For URL filetypes supported by lightbox at the moment  ================
 				}else if ( eregi("http",$rowm['m_file']) || eregi("\.pdf",$rowm['m_file']) ) {				
+					print "<table class=\"pic\"><tr>" . "\n";
+					print "<td align=\"center\" colspan=1>". "\n";	
+					
 					// Check for Notes associated media item
 					if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
 						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
-							$note[$n]  = $pgv_lang["note"] . " " . ($n+1) . "";
+							$note[$n]  = $pgv_lang["note"] . "_" . ($n+1) . "";
 							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";
-						print "<br />";
+//							print $note[$n] . "\"> <font size=1>" . $note[$n] . "</font>";							
+							print "<br>";
 							$items[$n+1]= $item+1;
 							$n++;
 						}							
 					}else
 						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
-							$note[$n]  = $pgv_lang["note"] . " " . ($n+1) . "";	
+							$note[$n]  = $pgv_lang["note"] . "_" . ($n+1) . "";	
 							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";					
-					print "<br />";
+							print "<br>";
 							$items[$n+1]= $item+1;
 							$n++;
 					}else{
 						print "<font size=1>&nbsp;</font>";				
-					print "<br />";
+						print "<br>";
 					}
 					$item++;
 //	print $item;						
@@ -220,11 +225,11 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 					print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' title=\"" . $mediaTitle . "\"\"
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
-								. "<br />"
+									. "<br>" 								
 									. "&nbsp;" . $pgv_lang["lb_view_source_tip"] . "<a href=\'" 
 									. $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;" . $sour2  
 									. "</font></b><\/a>" 
-								. "<br />"
+									. "<br>" 
 									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'" 
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"] 
 									. "</font></b><\/a>'," 
@@ -237,7 +242,7 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 					print 	"<a href=\"" . $mainMedia . "\" rel='clearbox(" . $LB_URL_WIDTH . "," . $LB_URL_HEIGHT . ",click)' title=\"" . $mediaTitle . "\"\"
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
-								. "<br />"
+									. "<br>"
 									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'"
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"]
 									. "</font></b><\/a>',"
@@ -252,25 +257,28 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 					
 				// Else For filetypes NOT supported by lightbox at the moment, use the pop-up window technique ==============================
 				}else{
+					print "<table class=\"pic\" ><tr>" . "\n";
+					print "<td align=\"center\" colspan=1>" . "\n";
+					
 					// Check for Notes associated media item
 					if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
 						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
-							$note[$n]  = $pgv_lang["note"] . " " . ($n+1) . "";
+							$note[$n]  = $pgv_lang["note"] . "_" . ($n+1) . "";
 							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";
-						print "<br />";
+							print "<br>";
 							$items[$n+1]= $item+1;
 							$n++;
 						}							
 					}else
 						if ( eregi("1 NOTE",$rowm['m_gedrec']) ) {
-							$note[$n]  = $pgv_lang["note"] . " " . ($n+1) . "";	
+							$note[$n]  = $pgv_lang["note"] . "_" . ($n+1) . "";	
 							print "<a href=\"#" . $note[$n] . "\"> <font size=1>" . $note[$n] . "</font></a>";						
-					print "<br />";
+							print "<br>";
 							$items[$n+1]= $item+1;
 							$n++;
 					}else{
 						print "<font size=1>&nbsp;</font>";				
-					print "<br />";
+						print "<br>";
 					}
 					$item++;
 //	print $item;						
@@ -286,11 +294,11 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 								onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" title=\"" . $mediaTitle . "\"\" 
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
-								. "<br />"
+									. "<br>" 								
 									. "&nbsp;" . $pgv_lang["lb_view_source_tip"] . "<a href=\'" 
 									. $SERVER_URL . "source.php?sid=" . $sour . "\'><b><font color=#0000FF>&nbsp;" . $sourdesc . "&nbsp;" . $sour2 
 									. "</font></b><\/a>" 
-								. "<br />"
+									. "<br>" 
 									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'" 
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"] 
 									. "</font></b><\/a>'," 
@@ -304,7 +312,7 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 								onclick=\"return openImage('".rawurlencode($mainMedia)."',$imgwidth, $imgheight);\" title=\"" . $mediaTitle . "\"\"
 								onmouseover=\"Tip('" 
 									. "&nbsp;" . $mediaTitle . ""
-								. "<br />"
+									. "<br>"
 									. "&nbsp;" . $pgv_lang["lb_view_details_tip"] . "<a href=\'"
 									. $SERVER_URL . "mediaviewer.php?mid=" . $rowm["m_media"] . "\'><b><font color=#0000FF>&nbsp;" . $rowm["m_media"]
 									. "</font></b><\/a>',"
@@ -319,13 +327,24 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 				}
             }
 			
+
+// LB 		print "<img src=\"".$thumbnail."\" border=\"0\" align=\"" . ($TEXT_DIRECTION== "rtl"?"right": "left") . "\" class=\"thumbnail\"";
+
+				
 			// If Plain URL Print the Common Thumbnail.... else ......, 
 			if (eregi("http",$rowm['m_file']) && !eregi("\.jpg",$rowm['m_file']) && !eregi("\.jpeg",$rowm['m_file']) && !eregi("\.gif",$rowm['m_file']) && !eregi("\.png",$rowm['m_file'])) {
 				print "<img src=\"" . $MEDIA_DIRECTORY . "thumbs/urls/URL.jpg \" height=80 border=\"0\" " ;
 				
 			// Else Print the Regular Thumbnail if associated with an image, 
 			}else{
+			
+				$browser = $_SERVER['HTTP_USER_AGENT']; 
+				if(strstr($browser,"MSIE")) {
 			print "<img src=\"" .$thumbnail . "\" height=80 border=\"0\" " ;
+				}else{
+					print "<img src=\"" . $thumbnail . "\" height=78 border=\"0\" " ;
+				}			
+
 			}
 			// These next lines disable the extra IE Browser tooltip. (It has to be done manually in Firefox but this is not recommended)
 				// How to turn off tooltip in firefox: (Not recommended)

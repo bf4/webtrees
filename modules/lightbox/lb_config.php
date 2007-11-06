@@ -53,13 +53,14 @@ $LB_ML_THUMB_LINKS = "both"; 		// MultiMedia List Page Thumbnail Links
 										
 $LB_SS_SPEED = "4";					// SlideShow speed in seconds.  [Min 2  max 25]  [Default=4]										
 							
-$LB_MUSIC_FILE = "modules/lightbox/music/music.mp3";  // The music file. [mp3 only] [Default= "modules/lightbox/music/music.mp3"]
+$LB_MUSIC_FILE = "modules/lightbox/music/music.mp3";  // The music file. [mp3 only] [Default = modules/lightbox/music/music.mp3]
 						
 $LB_TRANSITION = "warp";			// Next or Prvious Image Transition effect
 										// Set to "none"		No transtion effect
 										// Set to "normal"		Normal transtion effect
 										// Set to "double"		Fast transition effect
 										// Set to "warp"		Stretch transtition effect  [Default]
+										
 $LB_URL_WIDTH = "1000";				//  URL Window width in pixels [default 1000]
 	
 $LB_URL_HEIGHT = "600";				//  URL Window height in pixels [default 600]	
@@ -68,12 +69,15 @@ $LB_URL_HEIGHT = "600";				//  URL Window height in pixels [default 600]
 // --------------------------------------------------------- //
 //  End Configuration parameters for Lightbox Album.  //
 // --------------------------------------------------------- //					
+?>						
 
 
 
 
 
 
+					
+<?php
 // Do not change parameters below this line -------------------------------------------
 	
 	// Tab id no for Lightbox

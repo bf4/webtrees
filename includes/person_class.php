@@ -393,6 +393,7 @@ class Person extends GedcomRecord {
 	 */
 	function getBirthPlace() {
 		$this->_parseBirthDeath();
+		if (is_null($this->birthEvent)) return "";
 		return $this->birthEvent->getPlace();
 	}
 

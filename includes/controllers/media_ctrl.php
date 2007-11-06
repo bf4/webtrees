@@ -49,14 +49,23 @@ class MediaControllerRoot extends IndividualController {
 		//-- keep the time of this access to help with concurrent edits
 		$_SESSION['last_access_time'] = time();
 
-		if ($USE_MEDIA_FIREWALL) {
+		if ($USE_MEDIA_FIREWALL && empty($filename) && empty($mid)) {
 			// this section used by mediafirewall.php to determine what media file was requested
-			if (isset($_SERVER['REDIRECT_URL'])) {
-				$filename = $_SERVER['REDIRECT_URL'];
+
+			if (isset($_SERVER['REQUEST_URI'])) {
+				// NOTE: format of this server variable:
+				//   Apache: /phpGedView/media/a.jpg
+				//   IIS:    /phpGedView/mediafirewall.php?404;http://server/phpGedView/media/a.jpg
+				$requestedfile = $_SERVER['REQUEST_URI'];
+				// urldecode the request
+				$requestedfile = urldecode($requestedfile);
+				// make sure the requested file is in the media directory
+				if (strpos($requestedfile, $MEDIA_DIRECTORY) !== false) {
+					// strip off the pgv directory and media directory from the requested url so just the image information is left
+					$filename = substr($requestedfile, strpos($requestedfile, $MEDIA_DIRECTORY) + strlen($MEDIA_DIRECTORY) - 1);
 				// if user requested a thumbnail, lookup permissions based on the original image
 				$filename = str_replace('/thumbs', '', $filename);
-				// strip off the pgv directory and media directory from the requested url so just the image information is left
-				$filename = substr($filename, strpos($filename, $MEDIA_DIRECTORY) + strlen($MEDIA_DIRECTORY) - 1);
+				}
 			}
 		}
 
@@ -83,6 +92,13 @@ class MediaControllerRoot extends IndividualController {
 
 			if (is_null($this->mediaobject)) $this->mediaobject = new Media("0 @".$mid."@ OBJE");
 		}
+
+		// one final test to be sure we have a media object defined
+		// ways this can happen:
+		//   if user failed to pass in a filename or mid to mediaviewer.php
+		//   if the server did not set the environmental variables correctly for the media firewall
+		//   if media firewall is being called from outside the media directory  
+		if (is_null($this->mediaobject)) $this->mediaobject = new Media("0 @"."0"."@ OBJE");
 
 		//-- check for the user
 		$this->uname = getUserName();

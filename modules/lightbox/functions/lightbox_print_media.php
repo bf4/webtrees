@@ -142,28 +142,29 @@ $foundObjs = array();
 	  
 $numm = $resmm->numRows();
 	  
-if ( $t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm>0 || ($t==5 )) {
+if ( ($t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm>0 || ($t==5 )) ) {
 		echo "\n\n";
 		echo '<table border=0 class="facts_table"><tr>' . "\n";;
 		echo '<td width="80" align="center" class="descriptionbox">' ;
+	
 		if ($t==5){
 			echo "<b><br>" . $tt . "</b><br><br>";
-		}else{
+	}else if ( ($t!=5) && (userCanAccess(getUserName())) ){
 			echo "<b><br><br>" . $tt . "</b><br><br>(" . $numm . ")";
-		}
-		echo '</td><td class="facts_value">';
-		if ($t==5){
 		}else{
-			echo "<center>" . "\n";
+		echo "<b><br>" . $tt . "</b><br><br>";	
 		}
-		echo '<table><tr><td>' . "\n";
+	
+	echo '</td>';
+	echo '<td class="facts_value">';
+	echo "<table width=\"100%\"><tr><td>" . "\n";
+	
 		if ($t==5){
 		
 		}else{		
-			echo "<center>" . "\n\n";  // needed for Firefox
-		}
 		echo "<div id=\"thumbcontainer\">" . "\n";
 		echo "<ul id=\"thumblist_".$t."\">" . "\n\n";
+	}	
 
 		while ($rowm = $resmm->fetchRow(DB_FETCHMODE_ASSOC)) {
 		
@@ -210,16 +211,14 @@ if ( $t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm>
 					if (!displayDetailsById($rowm['m_media'], 'OBJE') || FactViewRestricted($rowm['m_media'], $rowm['m_gedrec'])) {
 					
 					}else{
-					echo '<table border="0" padding="0">';
-					print "<tr>";
-					print "<td id=\"" . $pgv_lang["note"]. " " . ($fn) . "\" class=\"factnote\">";
-						$note[$fn]  = $pgv_lang["note"] . " " . ($fn) . "";		
+					print "<p id=\"" . $pgv_lang["note"]. "_" . ($fn) . "\" class=\"lb_notes\">";	
+						$note[$fn]  = $pgv_lang["note"] . "_" . ($fn) . "";
+//					print "<a href=\"#a".$note[$fn]."\" class=\"lb_notes\" <font size=1>" . $note[$fn] . "</font>";
 						print "<font size=1>" . $note[$fn] . "</font>";									
 						print_fact_notes($mgedrec[$items[$fn]-1], 1);
-					print "</td>";
-					print "</tr>";
 						$fn++;
-						echo '</table>';
+//					print "</a></p>";
+					print "</p>";					
 					}	
 						
 				}					

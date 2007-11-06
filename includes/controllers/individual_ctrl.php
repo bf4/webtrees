@@ -1128,7 +1128,7 @@ class IndividualControllerRoot extends BaseController {
 				// 2nd level notes/sources [ 1712181 ]
 				$this->indi->add_family_facts(false);
 				foreach ($this->getIndiFacts() as $key => $factrec) {
-					print_main_notes($factrec[1], 2, $this->pid, $factrec[0], true);
+					print_main_notes($factrec->getGedcomRecord(), 2, $this->pid, $factrec->getLineNumber(), true);
 				}
 			}
 			if ($this->get_note_count()==0) print "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab2"]."</td></tr>\n";
@@ -1196,7 +1196,7 @@ class IndividualControllerRoot extends BaseController {
 				// 2nd level sources [ 1712181 ]
 				$this->indi->add_family_facts(false);
 				foreach ($this->getIndiFacts() as $key => $factrec) {
-					print_main_sources($factrec[1], 2, $this->pid, $factrec[0], true);
+					print_main_sources($factrec->getGedcomRecord(), 2, $this->pid, $factrec->getLineNumber(), true);
 				}
 			}
 			if ($this->get_source_count()==0) print "<tr><td id=\"no_tab3\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab3"]."</td></tr>\n";
@@ -1212,7 +1212,6 @@ class IndividualControllerRoot extends BaseController {
 				</tr>
 			<?php
 			}
-		}
 		?>
 		</table>
 		<br />

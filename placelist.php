@@ -166,7 +166,7 @@ if ($display=="hierarchy") {
 			else {
 				$areaname = str_replace("'","\'",$parent[1]);
 			}
-			$mapname = strtr($mapname,"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ' ","SOZsozYYuAAAAAAACEEEEIIIIDNOOOOOOUUUUYsaaaaaaaceeeeiiiionoooooouuuuyy--");
+			$mapname = strtr($mapname,"ЉЊЋљњћџҐµАБВГДЕЖЗИЙКЛМНОПРСТУФХЦШЩЪЫЬЭЯабвгдежзийклмнопрстуфхцшщъыьэя' ","SOZsozYYuAAAAAAACEEEEIIIIDNOOOOOOUUUUYsaaaaaaaceeeeiiiionoooooouuuuyy--");
 			$imgfile = "places/".$country."/".$mapname.".gif";
 		}
 		if (file_exists($imgfile) and file_exists($mapfile)) {

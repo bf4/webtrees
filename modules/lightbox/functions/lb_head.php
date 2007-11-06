@@ -2,7 +2,7 @@
 /**
  * Lightbox Album module for phpGedView
  *
- * Display media Items using Lightbox
+ * Display media Items using Lightbox 4.1
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2007  PHPGedView Development Team
@@ -69,7 +69,6 @@ include('modules/lightbox/functions/lb_call_js.php');
 		//print "<br>";
 		print "<table border=0 width=\"66%\"><tr>";
 		print "<td class=\"width10 center wrap\" valign=\"top\">";
-		print "</td>"; 
 
 		
 		// Configuration

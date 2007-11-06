@@ -834,7 +834,7 @@ function get_indi_list() {
 
 //-- get the assolist from the datastore
 function get_asso_list($type = "all", $ipid='') {
-	global $assolist, $GEDCOM, $DBCONN;
+	global $assolist, $GEDCOM;
 	global $TBLPREFIX, $ASSOLIST_RETRIEVED;
 
 	if ($ASSOLIST_RETRIEVED) return $assolist;

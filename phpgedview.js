@@ -2,7 +2,7 @@
  * Common javascript functions
  *
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2005  PGV Development Team
+ * Copyright (C) 2002 to 2007  PGV Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1206,6 +1206,25 @@ function findSpecialChar(field) {
 	pastefield = field;
 	window.open('find.php?type=specialchar', '_blank', 'top=55,left=55,width=400,height=450,scrollbars=1,resizeable=1');
 	return false;
+}
+
+function toggleByClassName(tagName, className) {
+	var elements = document.getElementsByTagName(tagName.toUpperCase());
+	for (var i = 0; i < elements.length; i++) {
+		var ecn = elements[i].className;
+		if (ecn && ecn.match(new RegExp("(^|\\s)" + className + "(\\s|$)"))) {
+			var disp = elements[i].style.display;
+			if (disp == "none") {
+				if (tagName == "TR") {
+					disp = "table-row";
+					if (document.all && !window.opera) disp = "inline"; // IE
+				}
+				else disp = "block";
+			}
+			else disp = "none";
+			elements[i].style.display = disp;
+		}
+	}
 }
 
   function findPosX(obj)

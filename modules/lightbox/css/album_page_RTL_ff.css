@@ -22,7 +22,7 @@
  *
  * @package PhpGedView
  * @subpackage Modules
- * @version $Id$
+ * @version $Id: album_page_RTL_ff.css 2106 2007-11-02 13:20:31Z canajun2eh $
  */
  
 /* lightbox_plus.css version 3.00  29/06/2007  */
@@ -120,7 +120,7 @@ text-align: center, justify;
 {
 display: block;
 list-style-type: none;
-float: left;
+float: right;
 }
 
 #thumblist_1 li, #thumblist_2 li, #thumblist_3 li, #thumblist_4 li, #thumblist_5 li,

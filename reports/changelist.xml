@@ -52,10 +52,9 @@
 				</PGVRTextBox>
 				</PGVRList>
 				<PGVRCell width="0" height="25" border="0" align="right" style="label">
-					<br /><PGVRvar var="pgv_lang[review_changes_block]" />: <PGVRListTotal />
+					<PGVRvar var="pgv_lang[changes_pending_tot]" /><PGVRListTotal /><br />
 				</PGVRCell>
 			</PGVRif>
-			<br />
 			<!-- Recent Changes Section -->
 			<PGVRCell width="0" height="20" align="center" style="header2"><PGVRvar var="pgv_lang[recent_changes]" /> <PGVRvar var="changeRangeStart" date="1" /> - <PGVRvar var="changeRangeEnd" date="1" /></PGVRCell>
 			<PGVRTextBox width="60" height="12" border="1">
@@ -85,7 +84,7 @@
 				</PGVRTextBox>
 			</PGVRList>
 			<PGVRCell width="0" height="25" border="0" align="right" style="label">
-				<br /><PGVRvar var="pgv_lang[total_indis]" />: <PGVRListTotal />
+				<PGVRvar var="pgv_lang[changes_accepted_tot]" /><PGVRListTotal />
 			</PGVRCell>
 		</PGVRBody>
 		<PGVRFooter>

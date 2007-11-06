@@ -999,7 +999,7 @@ class GedcomDate {
 
 	// Convert a date to the prefered format and calendar(s) display.
 	// Optionally make the date a URL to the calendar.
-	function Display($url=false, $date_fmt='', $cal_fmts=NULL) {
+	function Display($url=false, $date_fmt='', $cal_fmts=NULL, $spanTag=true) {
 		global $lang_short_cut, $LANGUAGE, $TEXT_DIRECTION, $DATE_FORMAT, $CALENDAR_FORMAT;
 
 		// Convert dates to given calendars and given formats
@@ -1078,7 +1078,8 @@ class GedcomDate {
 					$d2='<a href="'.$this->date2->CalendarURL().'">'.$d2.'</a>';
 			}
 	
-		return '<span class="date">'.trim("{$q1} {$d1}{$conv1} {$q2} {$d2}{$conv2} {$q3} {$this->text}").'</span>';
+		if ($spanTag) return '<span class="date">'.trim("{$q1} {$d1}{$conv1} {$q2} {$d2}{$conv2} {$q3} {$this->text}").'</span>';
+		else return trim("{$q1} {$d1}{$conv1} {$q2} {$d2}{$conv2} {$q3} {$this->text}");
 	}
 
 	// Get the earliest/latest date/JD from this date
@@ -1116,6 +1117,7 @@ class GedcomDate {
 	// Calculate the number of full years between two events.
 	// Return the result as either a number of years (for indi lists, etc.)
 	function GetAgeYears($d1, $d2=NULL) {
+		if (is_null($d1)) return;
 		if (is_null($d2))
 			return $d1->date1->GetAge(false, client_jd());
 		else

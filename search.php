@@ -299,7 +299,7 @@ if ($controller->action == "soundex") {
 		<td class="list_value">
 			<input tabindex="3" type="text" name="firstname" value="<?php print $controller->myfirstname; ?>" />
 		</td>
-		<td class="list_value" style="vertical-align: middle; text-align: center; padding: 5px;"  rowspan="7">
+		<td class="list_value" style="vertical-align: middle; text-align: center; padding: 5px;"  rowspan="6">
 			<input tabindex="7" type="submit" value="<?php print $pgv_lang["search"]; ?>" />
 		</td>
 	</tr>

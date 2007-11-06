@@ -345,4 +345,10 @@ $pgv_lang["sanity_warn6"]			= "Kalender biblioteket finns inte. PhpGedView komme
 $pgv_lang["clear_cache_succes"]		= "Cache-filerna har tagits bort.";
 $pgv_lang["clear_cache"]			= "Töm cache-filerna";
 
+$pgv_lang["associated_files"]		= "Associerade filer: ";
+$pgv_lang["remove_all_files"]		= "Ta bort alla onödiga filer";
+$pgv_lang["warn_file_delete"]		= "Denna fil innehåller viktig information om språkinställningar eller information om väntande ändringar. Är du säker på att du vill ta bort filen?";
+$pgv_lang["deleted_files"]          = "Borttagna filer:";
+$pgv_lang["index_dir_cleanup_inst"]	= "För att radera filer eller katalog från indexmappen dra den till papperskorgen eller välj dess kryssruta. Klicka på radera-knappenför att permanent tabort de markerade filerna.<br /><br />Filer markerade med <img src=\\\"./images/RESN_confidential.gif\\\" /> krävs för att programmet ska fungera och kan inte tas bort.<br />filer markerade med <img src=\\\"./images/RESN_locked.gif\\\" /> innehåller viktiga inställningar eller ändrade data och bör endast raderas om du är säker på vad du gör.<br /><br />";
+$pgv_lang["index_dir_cleanup"]		= "Rensa indexmappen";
 ?>

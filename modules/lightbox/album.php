@@ -26,11 +26,15 @@
  * @version $Id$
  * @author Brian Holland
  */
+loadLangFile("lb_lang");
+
+// Get Javascript variables from lb_config.php --------------------------- 
+	include('modules/lightbox/lb_config.php'); 
+//	include('modules/lightbox/functions/browser_detection_php_ar.php');
+
 global $LANGUAGE, $mediatab, $mediacnt;
 global $edit, $controller, $tabno, $_REQUEST, $thumb_edit, $n, $LB_URL_WIDTH, $LB_URL_HEIGHT ;
 
-//		include('modules/lightbox/functions/lb_call_js.php'); 
-		
 //------------------------------------------------------------------------------
 // Start Main Table
 //------------------------------------------------------------------------------
@@ -87,8 +91,8 @@ echo "<table border=0 width='100%'><tr>" . "\n\n";
 // End Main Table
 //------------------------------------------------------------------------------
 echo "</tr></table>";
-echo "<center>";
+echo "<center>" . "\n";
 ?>
 
-<?php  echo "\n" ;  ?>
+
 

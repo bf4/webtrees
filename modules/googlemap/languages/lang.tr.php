@@ -41,9 +41,9 @@ $pgv_lang["gm_hybrid"]              = "Karma";
 // Configuration texts
 $pgv_lang["gm_manage"]              = "Googlemap konfigürasyonu yönetimi";
 $pgv_lang["configure_googlemap"]    = "GoogleMap konfigürasyonu";
-$pgv_lang["gm_admin_error"]         = "Sadece yöneticileri için sayfa";
-$pgv_lang["gm_db_error"]            = "Yer konum tablo databasede bulunamadı";
-$pgv_lang["gm_table_created"]       = "yer konum tablo oluştur";
+$pgv_lang["gm_admin_error"]         = "Sadece yöneticileri için bu sayfa";
+$pgv_lang["gm_db_error"]            = "Yer konumun tablosu databasede bulunamadı";
+$pgv_lang["gm_table_created"]       = "yer konum tabloyu oluştur";
 $pgv_lang["googlemap_enable"]       = "GoogleMap Etkin";
 $pgv_lang["googlemapkey"]           = "GoogleMap API keyi";
 $pgv_lang["gm_map_type"]            = "Varsayılan harita tipi";
@@ -72,17 +72,17 @@ $pgv_lang["googlemap_coord"]        = "Harita koordinatları göster";
 
 
 // Texts used on the Places location page
-$pgv_lang["edit_place_locations"]   = "Coğrafi yer konumları düzelt";
+$pgv_lang["edit_place_locations"]   = "Coğrafi yer konumları düzenle";
 $pgv_lang["pl_no_places_found"]     = "Yerler bulunamadı";
 $pgv_lang["pl_zoom_factor"]         = "Büyültme faktör ";
 $pgv_lang["pl_place_icon"]          = "İkon";
-$pgv_lang["pl_edit"]                = "Coğrafi konumu düzelt";
+$pgv_lang["pl_edit"]                = "Coğrafi konumu düzenle";
 $pgv_lang["pl_add_place"]           = "Yer ekle";
-$pgv_lang["pl_import_gedcom"]       = "Geçerli GEDCOM dan içeri aktar";
-$pgv_lang["pl_import_all_gedcom"]   = "Tüm GEDCOM lardan içeri aktar";
+$pgv_lang["pl_import_gedcom"]       = "Geçerli GEDCOMdan içeri aktar";
+$pgv_lang["pl_import_all_gedcom"]   = "Tüm GEDCOMlardan içeri aktar";
 $pgv_lang["pl_import_file"]         = "Dosyadan içeri aktar";
-$pgv_lang["pl_export_file"]         = "Güncel görüntülemeyi dosyayı dışarı ver";
-$pgv_lang["pl_export_all_file"]     = "Tüm konumların dosyayı dışarı ver";
+$pgv_lang["pl_export_file"]         = "Geçerli görüntülenen dosyadan dışarı ver";
+$pgv_lang["pl_export_all_file"]     = "Tüm konumların dosyalarını dışarı ver";
 $pgv_lang["pl_north_short"]         = "K";
 $pgv_lang["pl_south_short"]         = "G";
 $pgv_lang["pl_east_short"]          = "D";
@@ -104,7 +104,7 @@ $pgv_lang["pl_delete"]              = "Coğrafi konumu sil";
 
 $pgv_lang["pl_flag"]                = "Bayrak";
 $pgv_lang["flags_edit"]             = "Bayrak seç";
-$pgv_lang["pl_change_flag"]         = "Bayrak değiştir";
+$pgv_lang["pl_change_flag"]         = "Bayrağı değiştir";
 $pgv_lang["pl_remove_flag"]         = "Bayrağı kaldır";
 
 $pgv_lang["pl_remove_location"]     = "Bu konumu kaldır?";
@@ -128,7 +128,7 @@ $pgv_lang['placecheck_gedheader']	= "GEDCOM dosya yer verisi<br/>(2 PLAC tag)";
 $pgv_lang['placecheck_gm_header']	= "GoogleMap yerlerin tablo verisi";
 $pgv_lang['placecheck_unique']		= "Tek yerlerin toplamı";
 $pgv_lang["placecheck_zoom"]        = "Zum=";
-$pgv_lang["placecheck_options"]     = "Lütfen yer liste seçnekleri denetle";
+$pgv_lang["placecheck_options"]     = "Yer liste seçnekleri denetle";
 $pgv_lang["placecheck_filter_text"] = "Filitrelenen Seçeneklerin Listesi";
-$pgv_lang["placecheck_match"] 		= "Tüm aynı yerleri dahil -";
+$pgv_lang["placecheck_match"] 		= "Tüm aynı yerler dahil -";
 ?>

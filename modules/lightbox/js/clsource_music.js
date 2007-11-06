@@ -432,7 +432,8 @@ var soond = null;
 			}					
 			if (foreverLoop == 1) { loopMusic = true;  }
 //		}
-
+//	CB_Prv.style.display = "none";
+//	CB_Nxt.style.display = "none";	
         CB_SlideS.style.display = "none";
         CB_SlideP.style.display = "block";
 		CB_ZoomS.style.display = "none";
@@ -448,6 +449,8 @@ var soond = null;
 
 // Pause slideshow	---------------------------------------------------------------------
     function CB_SSPause() {
+//	CB_Prv.style.display = "block";
+//	CB_Nxt.style.display = "block";		
 		CB_SlideP.style.display = "none";
         CB_SlideS.style.display = "block";
 		if (slideshowMusic == null) {
@@ -928,6 +931,9 @@ var soond = null;
 //		CB_preImages.onerror = function () {CB_ShowImage();alert("ClearBox ERROR:\n\nCould not open Image: " + CB_Gallery[CB_ActImgId][0]);return;};
 		CB_preImages.onerror = function () {CB_ShowImage();alert("ClearBox ERROR:\n\nCould not open Image : " );return;};
         CB_CheckLoaded();
+		
+//		resetZoom();
+		
     }
 
 	
@@ -1261,6 +1267,7 @@ var soond = null;
 
 	function setZoom() {
 		zoomSet = 2;
+		// Drag and Drop
 	}
 	
 	function resetZoom() {
@@ -1284,17 +1291,19 @@ var soond = null;
 		CB_ShTh.style.display = "block";
 		CB_Zoom = "false";
 		zoomSet=1;
+		CB_Win.style.left = "50%";
+		CB_Win.style.top = "50%";		
 	}	
 	
 	function closeZoom() {
 		CB_ImgWidthOld = CB_ImgWidthOrig;
 		CB_ImgHeightOld = CB_ImgHeightOrig;	
-		CB_Img.style.width = CB_ImgWidthOld + "px";
-		CB_Img.style.height	= CB_ImgHeightOld + "px" ;
-		CB_ImgCont.style.height = CB_ImgHeightOld + ( 2 ) * CB_ImgBorder + "px";
-		CB_MarginL = parseInt(DocScrX - (CB_ImgWidthOld + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
+		CB_Img.style.width = CB_ImgWidthOrig + "px";
+		CB_Img.style.height	= CB_ImgHeightOrig + "px" ;
+		CB_ImgCont.style.height = CB_ImgHeightOrig + ( 2 ) * CB_ImgBorder + "px";
+		CB_MarginL = parseInt(DocScrX - (CB_ImgWidthOrig + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
 		CB_Win.style.marginLeft = CB_MarginL + "px";	
-		CB_MarginT = parseInt(DocScrY - (CB_ieRPBug + CB_ImgHeightOld + CB_TextH + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
+		CB_MarginT = parseInt(DocScrY - (CB_ieRPBug + CB_ImgHeightOrig + CB_TextH + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
 		CB_Win.style.marginTop = CB_MarginT - FF_ScrollbarBug / 2 + "px";
 		CB_Prv.style.display = "block";
 		CB_Nxt.style.display = "block";	
@@ -1308,6 +1317,7 @@ var soond = null;
 		zoomSet=1;
 	}		
 	
+	
     function CB_ShowImage() {
 		// init music player
 		setMusicPlayer();
@@ -1320,6 +1330,13 @@ var soond = null;
 		};
 		CB_ZoomP.onclick = function () {resetZoom(); return false; };
 	//	CB_ZoomS.onclick = function () {CB_FullSize(); };
+
+		// Drag and Drop
+		if (CB_ZoomP) {
+			dragDrop.initElement(CB_Win);
+			CB_Win.onclick = function() {return false;};
+		}
+	
         CB_PrvNxt.display = "block";
         if (CB_Animation != "warp") {
             CB_Txt.innerHTML = "";
@@ -1455,6 +1472,7 @@ var soond = null;
         CB_jj = 0;
         CB_SlideBW = 0;
         CB_SlideB.style.display = "none";
+		
     }
 
 
@@ -1518,7 +1536,7 @@ var soond = null;
 			}else{
 				CB_Speak.style.display = "block";
 			}
-            CB_Prv.onclick = function () {if (CB_SSTimer) {CB_SlideShowJump();}CB_LoadImage(CB_ActImgId - 1);return false;};
+            CB_Prv.onclick = function () {if (CB_SSTimer) {CB_SlideShowJump();}	resetZoom(); CB_LoadImage(CB_ActImgId - 1);return false;};
         }
         if (CB_ActImgId < CB_Gallery.length - 1) {
             if (CB_Preload == "be") {
@@ -1529,7 +1547,7 @@ var soond = null;
                 CB_Txt.innerHTML += " <a class=\"CB_TextNav\" href=\"javascript:void(0)\" onclick=\"if(CB_SSTimer){CB_SlideShowJump();}CB_LoadImage(" + (CB_ActImgId + 1) + ")\" alt=\"&gt;\">" + CB_NavTextNxt + "</a>";
             }
             CB_Nxt.style.display = "block";
-            CB_Nxt.onclick = function () {if (CB_SSTimer) {CB_SlideShowJump();}CB_LoadImage(CB_ActImgId + 1);return false;};
+            CB_Nxt.onclick = function () {if (CB_SSTimer) {CB_SlideShowJump();} resetZoom(); CB_LoadImage(CB_ActImgId + 1);return false;};
         }
         if (CB_ActImgId == 1 && CB_SS == "start" && soond=="playing" ) {
 			if (slideshowMusic == null) {
@@ -1539,10 +1557,13 @@ var soond = null;
 			}
 		}
         return;
+	
     }
 
 
     function CB_Close() {
+		CB_Win.style.left = "50%";
+		CB_Win.style.top = "50%";
         CB_ImgHd.style.width = "0px";
         CB_ImgHd.style.height = "0px";
         CB_ImgHd.style.visibility = "hidden";
@@ -1734,5 +1755,144 @@ function hideFlash(){
 
 }
 
-// ---------------------------------------------------	
+
+
+/*------------------------------Drag and Drop - quirksmode----------------------------------------------*/
+dragDrop = {
+    keyHTML: '<a href="#" class="keyLink">#</a>',
+    keySpeed: 10, // pixels per keypress event
+    initialMouseX: undefined,
+    initialMouseY: undefined,
+    startX: undefined,
+    startY: undefined,
+    dXKeys: undefined,
+    dYKeys: undefined,
+    draggedObject: undefined,
+    initElement: function (element) {
+/*	
+		if (typeof element == 'string')
+			element = document.getElementById(element);
+				element = document.getElementById(element);
+*/	
+		element.onmousedown = dragDrop.startDragMouse;
+
+/*		
+		element.innerHTML += dragDrop.keyHTML;
+		var links = element.getElementsByTagName('a');
+		var lastLink = links[links.length-1];
+		lastLink.relatedElement = element;
+		lastLink.onclick = dragDrop.startDragKeys;
+*/
+    },
+    startDragMouse: function (e) {
+        dragDrop.startDrag(CB_Win);
+        var evt = e || window.event;
+        dragDrop.initialMouseX = evt.clientX;
+        dragDrop.initialMouseY = evt.clientY;
+        addEventSimple(document,'mousemove',dragDrop.dragMouse);
+        addEventSimple(document,'mouseup',dragDrop.releaseElement);
+        return false;
+    },
+    startDragKeys: function () {
+        dragDrop.startDrag(this.relatedElement);
+        dragDrop.dXKeys = dragDrop.dYKeys = 0;
+        addEventSimple(document,'keydown',dragDrop.dragKeys);
+        addEventSimple(document,'keypress',dragDrop.switchKeyEvents);
+        this.blur();
+        return false;
+    },
+    startDrag: function (obj) {
+        if (dragDrop.draggedObject)
+            dragDrop.releaseElement();
+		if(IE){	
+			dragDrop.startX = (obj.offsetLeft+(CB_ImgWidthOld + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
+			dragDrop.startY = (obj.offsetTop+(CB_ieRPBug + CB_ImgHeightOld + CB_TextH + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
+		}else{
+			dragDrop.startX = (obj.offsetLeft)+CB_ieRPBug ;
+			dragDrop.startY = (obj.offsetTop)+CB_ieRPBug ;
+		}
+        dragDrop.draggedObject = obj;
+        obj.className += ' dragged';
+    },
+    dragMouse: function (e) {
+        var evt = e || window.event;
+        var dX = evt.clientX - dragDrop.initialMouseX;
+        var dY = evt.clientY - dragDrop.initialMouseY;
+        dragDrop.setPosition(dX,dY);
+        return false;
+    },
+    dragKeys: function(e) {
+        var evt = e || window.event;
+        var key = evt.keyCode;
+        switch (key) {
+            case 37:    // left
+            case 63234:
+                dragDrop.dXKeys -= dragDrop.keySpeed;
+                break;
+            case 38:    // up
+            case 63232:
+                dragDrop.dYKeys -= dragDrop.keySpeed;
+                break;
+            case 39:    // right
+            case 63235:
+                dragDrop.dXKeys += dragDrop.keySpeed;
+                break;
+            case 40:    // down
+            case 63233:
+                dragDrop.dYKeys += dragDrop.keySpeed;
+                break;
+            case 13:     // enter
+            case 27:     // escape
+                dragDrop.releaseElement();
+                return false;
+            default:
+                return true;
+        }
+        dragDrop.setPosition(dragDrop.dXKeys,dragDrop.dYKeys);
+        if (evt.preventDefault) // also solves problem in Saf; keypress part of default ???
+            evt.preventDefault();
+        return false;
+    },
+    setPosition: function (dx,dy) {
+        dragDrop.draggedObject.style.left = dragDrop.startX + dx + 'px';
+        dragDrop.draggedObject.style.top = dragDrop.startY + dy + 'px';
+    },
+    switchKeyEvents: function () {
+
+        // for Opera and Safari 1.3
+
+        removeEventSimple(document,'keydown',dragDrop.dragKeys);
+        removeEventSimple(document,'keypress',dragDrop.switchKeyEvents);
+        addEventSimple(document,'keypress',dragDrop.dragKeys);
+    },
+    releaseElement: function() {
+        removeEventSimple(document,'mousemove',dragDrop.dragMouse);
+        removeEventSimple(document,'mouseup',dragDrop.releaseElement);
+        removeEventSimple(document,'keypress',dragDrop.dragKeys);
+        removeEventSimple(document,'keypress',dragDrop.switchKeyEvents);
+        removeEventSimple(document,'keydown',dragDrop.dragKeys);
+        dragDrop.draggedObject.className = dragDrop.draggedObject.className.replace(/dragged/,'');
+        dragDrop.draggedObject = null;
+    }
+}
+
+function addEventSimple(obj,evt,fn) {
+    if (obj.addEventListener)
+        obj.addEventListener(evt,fn,false);
+    else if (obj.attachEvent)
+        obj.attachEvent('on'+evt,fn);
+}
+
+function removeEventSimple(obj,evt,fn) {
+    if (obj.removeEventListener)
+        obj.removeEventListener(evt,fn,false);
+    else if (obj.detachEvent)
+        obj.detachEvent('on'+evt,fn);
+}
+ 
+// --------------------------------------------------------------------------------------
+
+ 
+
+
 	

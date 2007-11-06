@@ -1,11 +1,8 @@
 <?php
 /**
- * Display an hourglass chart
- *
- * Set the root person using the $pid variable
- *
+ * punBB Module
  * phpGedView: Genealogy Viewer
- * Copyright (C) 2002 to 2007  John Finlay and Others
+ * Copyright (C) 2002 to 2005	John Finlay and Others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,25 +18,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * This Page Is Valid XHTML 1.0 Transitional! > 23 August 2005
- *
  * @package PhpGedView
- * @subpackage Charts
- * @version $Id$
+ * @subpackage punBB
+ * @version $Id: mod_tr.php 2102 2007-11-01 18:47:00Z canajun2eh $
+ * @author Patrick Kellum
+ * @author Adem GENÇ uzayuydu@gmail.com http://www.muttafi.com 
  */
-
-/*
- * The purpose of this page is to build the left half of the Hourglass chart via Ajax.
- * This page only produces a husband and wife with the connecting lines to unite and 
- * 	label the pair as a pair.
- */
-
-require_once("includes/controllers/hourglass_ctrl.php");
-$controller->init();
-
-// -- print html header information
-if (isset($_REQUEST['type']) && $_REQUEST['type']=='desc')
-	$controller->print_descendency($controller->pid, 1, false);
-else
-	$controller->print_person_pedigree($controller->pid, 0);
+$pgv_lang['mod_punbb'] = 'Mesaj Forumu';
+$pgv_lang['mod_punbb_search'] = 'Forumda Ara';
+$pgv_lang['mod_punbb_admin'] = 'Forum Yönetimi';
 ?>

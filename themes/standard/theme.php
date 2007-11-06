@@ -134,7 +134,6 @@ $PGV_IMAGES["rarrow"]["other"] = "rarrow.gif";
 $PGV_IMAGES["rarrow2"]["other"] = "rarrow2.gif";
 $PGV_IMAGES["rdarrow"]["other"] = "rdarrow.gif";
 $PGV_IMAGES["remove"]["other"]	= "remove.gif";
-$PGV_IMAGES["move_1"]["other"]	= "move_1.gif";
 $PGV_IMAGES["spacer"]["other"] = "spacer.gif";
 $PGV_IMAGES["uarrow"]["other"] = "uarrow.gif";
 $PGV_IMAGES["uarrow2"]["other"] = "uarrow2.gif";
@@ -161,9 +160,6 @@ $PGV_IMAGES["6"]["digit"] = "6.jpg";
 $PGV_IMAGES["7"]["digit"] = "7.jpg";
 $PGV_IMAGES["8"]["digit"] = "8.jpg";
 $PGV_IMAGES["9"]["digit"] = "9.jpg";
-
-//Index ajax interface
-$PGV_IMAGES["trashcan"]["medium"] = "trashcan.gif";
 
 //-- This section defines variables for the pedigree chart
 $bwidth = 225;		// -- width of boxes on pedigree chart

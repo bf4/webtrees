@@ -162,9 +162,6 @@ $PGV_IMAGES["7"]["digit"] = "7.jpg";
 $PGV_IMAGES["8"]["digit"] = "8.jpg";
 $PGV_IMAGES["9"]["digit"] = "9.jpg";
 
-//Index ajax interface
-$PGV_IMAGES["trashcan"]["medium"] = "trashcan.gif";
-
 //-- This section defines variables for the pedigree chart
 $bwidth = 220;		// -- width of boxes on pedigree chart
 $bheight = 80;		// -- height of boxes on pedigree chart

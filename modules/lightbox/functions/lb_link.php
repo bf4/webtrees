@@ -26,14 +26,6 @@
  * @version $Id$
  * @author Brian Holland
  */
-?>
-<script language="JavaScript" type="text/javascript">
-  function ilinkitem(mediaid, type) {
-		window.open('inverselink.php?mediaid='+mediaid+'&linkto='+type+'&'+sessionname+'='+sessionid, '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1');
-		return false;
-	}
-</script>
-<?php
 	// Set Link
 	/**
 	 * Generate link flyout menu
@@ -49,7 +41,17 @@
 
 		// main link displayed on page
 		$menu = array();
+		if ($LB_ML_THUMB_LINKS == "icon" || $LB_ML_THUMB_LINKS == "both") {
+			$menu["icon"] = "modules/lightbox/images/image_link.gif";
+		}
+		if ($LB_ML_THUMB_LINKS == "both") { 
 		$menu["label"] = $pgv_lang["set_link"];
+			$menu["labelpos"] = "down";
+		}
+		if ($LB_ML_THUMB_LINKS == "text") { 
+			$menu["label"] = $pgv_lang["set_link"];
+		}
+		
 		$menu["link"] = "#";
 		$menu["onclick"] = "return ilinkitem('$mediaid','person')";
 //		$menu["class"] = "thememenuitem";
@@ -84,6 +86,14 @@
 		$menu["items"][] = $submenu;
 
 		print_menu($menu);
+?>
+<script language="JavaScript" type="text/javascript">
+  function ilinkitem(mediaid, type) {
+		window.open('inverselink.php?mediaid='+mediaid+'&linkto='+type+'&'+sessionname+'='+sessionid, '_blank', 'top=50,left=50,width=400,height=300,resizable=1,scrollbars=1');
+		return false;
+	}
+</script>
+<?php
 		
 //	}			
 			

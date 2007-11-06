@@ -16,7 +16,33 @@ global $tabno;
 			</script>	
 			<?php
 // ------------------------------------------------------------------------------- 		
+?>
 	
+<?php if ($TEXT_DIRECTION == "rtl") { ?>
+		<link href ="modules/lightbox/css/clearbox_music_RTL.css" 	rel="stylesheet" type="text/css" />
+		<link href ="modules/lightbox/css/album_page_RTL_ff.css" 	rel="stylesheet" type="text/css" media="screen" /> 
+		<script src="modules/lightbox/js/prototype.js" 				type="text/javascript"></script> 
+		<script src="modules/lightbox/js/Sound.js" 					type="text/javascript"></script>
+		<script src="modules/lightbox/js/clearbox.js" 				type="text/javascript"></script>
+		<!--[if lte IE 7]>
+		<link href ="modules/lightbox/css/album_page_RTL.css" 				rel="stylesheet" type="text/css" media="screen" /> 
+		<![endif]-->				
+		
+<?php }else{ ?>
+		<link href ="modules/lightbox/css/clearbox_music.css" 		rel="stylesheet" type="text/css" />
+		<link href ="modules/lightbox/css/album_page.css" 			rel="stylesheet" type="text/css" media="screen" />  
+		<script src="modules/lightbox/js/prototype.js" 				type="text/javascript"></script>  
+		<script src="modules/lightbox/js/Sound.js" 					type="text/javascript"></script>
+		<script src="modules/lightbox/js/clearbox.js" 				type="text/javascript"></script>		
+<?php } ?>
+  
+
+  
+
+	<script src="modules/lightbox/js/wz_tooltip.js" 			type="text/javascript"></script>  
+	
+<?php
+/*	
 // -------------------------------------------------------------------------------
 			if ($TEXT_DIRECTION == "rtl") { ?>
 			
@@ -37,4 +63,9 @@ global $tabno;
 			<script src="modules/lightbox/js/clearbox.js" 				type="text/javascript"></script>
 			<script src="modules/lightbox/js/wz_tooltip.js" 			type="text/javascript"></script> 
 <?php
+
+*/
+
 // ------------------------------------------------------------------------------- 
+
+?>

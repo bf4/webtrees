@@ -345,8 +345,8 @@ function print_td_person($n) {
 		$text .= "<br />";
 		if ($indi->canDisplayDetails()) {
 			$text.="<span class='details1'>";
-			$birth=new GedcomDate($indi->getBirthDate(false));
-			$death=new GedcomDate($indi->getDeathDate(false));
+			$birth=$indi->getBirthDate(false);
+			$death=$indi->getDeathDate(false);
 			$text.=$birth->date1->Format('Y');
 			$text.='-';
 			$text.=$death->date1->Format('Y');

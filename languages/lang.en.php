@@ -44,7 +44,6 @@ $pgv_lang["charts_block_descr"]		= "The Charts block allows you to place a chart
 $pgv_lang["chart_type"]				= "Chart Type";
 $pgv_lang["changedate1"]			= "Ending range of change dates";
 $pgv_lang["changedate2"]			= "Starting range of change dates";
-$pgv_lang["changes_report"]			= "Changes Report";
 $pgv_lang["search_place_word"]		= "Whole words only";
 $pgv_lang["invalid_search_input"] 	= "Please enter a Given name, Last name, or Place in addition to Year";
 $pgv_lang["duplicate_username"] 	= "Duplicate user name.  A user with that user name already exists.  Please choose another user name.";
@@ -80,7 +79,7 @@ $pgv_lang["enter_terms"]			= "Enter Search terms";
 $pgv_lang["search_asso_label"]		= "Associates";
 $pgv_lang["search_asso_text"]		= "Show related persons/families";
 $pgv_lang["search_DM"]				= "Daitch-Mokotoff";
-$pgv_lang["search_fams"]			= "Families";
+$pgv_lang["search_fams"]			= "Family Names";
 $pgv_lang["search_gedcom"]			= "Search databases";
 $pgv_lang["search_geds"]			= "Databases to search in";
 $pgv_lang["search_indis"]			= "Individual Names";
@@ -129,8 +128,6 @@ $pgv_lang["no_search_site"]			= "Be sure to select at least one remote site.";
 $pgv_lang["search_sites"] 			= "Sites to search";
 $pgv_lang["site_list"]				= "Site: ";
 $pgv_lang["site_had"]				= " contained the following";
-$pgv_lang["indi_is_remote"]			= "The information for this individual was linked from a remote site.";
-$pgv_lang["link_remote"]            = "Link remote person";
 $pgv_lang["label_search_engine_detected"]  = "Search Engine Spider Detected";
 
 $pgv_lang["ex-spouse"] = "Ex-Spouse";
@@ -191,7 +188,6 @@ $pgv_lang["title_search_link"]      = "Add Local Link";
 $pgv_lang["label_site_url2"]        = "Site URL";
 //new stuff
 
-$pgv_lang["cancel"]					= "Cancel";
 $pgv_lang["delete_family_confirm"]	= "Deleting the family will unlink all of the individuals from each other but will leave the individuals in place.  Are you sure you want to delete this family?";
 $pgv_lang["delete_family"]			= "Delete family";
 $pgv_lang["add_favorite"]			= "Add a new favorite";
@@ -734,7 +730,6 @@ $pgv_lang["research_assistant"]		= "Research Assistant";
 $pgv_lang["utf8_to_ansi"]			= "Convert from UTF-8 to ANSI (ISO-8859-1)";
 $pgv_lang["media_linked"]			= "This media object is linked to the following:";
 $pgv_lang["media_not_linked"]		= "This media object is not linked to any GEDCOM record.";
-$pgv_lang["deleted_files"]          = "Deleted Files:";
 $pgv_lang["media_dir_1"]			= "This media object is located on an external server";
 $pgv_lang["media_dir_2"]			= "This media object is in the standard media directory";
 $pgv_lang["media_dir_3"]			= "This media object is in the protected media directory";
@@ -750,6 +745,8 @@ $pgv_lang["move_time_exceeded"]	= "The execution time limit was reached.  Try th
 $pgv_lang["media_firewall_rootdir_no_exist"]			= "The Media Firewall root directory you requested does not exist.  You must create it first.";
 $pgv_lang["media_firewall_protected_dir_no_exist"]		= "The protected media directory could not be created in the Media Firewall root directory.  Please create this directory and make it world-writable.";
 $pgv_lang["media_firewall_protected_dir_not_writable"]	= "The protected media directory in the Media Firewall root directory is not world writable. ";
+$pgv_lang["media_firewall_invalid_dir"]	= "Error: The Media Firewall was launched from a directory other than the media directory.";
+
 //-- Relationship chart messages
 $pgv_lang["relationship_great"]		= "Great";
 $pgv_lang["relationship_chart"] 	= "Relationship Chart";
@@ -1340,6 +1337,11 @@ $pgv_lang["ahnentafel_buried_m"]	= "was buried";			// male
 $pgv_lang["ahnentafel_buried_f"]	= "was buried";			// female
 $pgv_lang["ahnentafel_place"]		= " in ";				// place name follows this
 $pgv_lang["ahnentafel_no_details"]	= " but the details are unknown";
+
+//-- Changes report
+$pgv_lang["changes_report"]			= "Changes Report";
+$pgv_lang["changes_pending_tot"]	= "Total pending changes: ";
+$pgv_lang["changes_accepted_tot"]	= "Total accepted changes: ";
 
 //-- Descendancy report
 $pgv_lang["descend_report"]		= "Descendancy Report";

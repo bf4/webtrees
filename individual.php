@@ -233,6 +233,12 @@ function showchanges() {
 if (file_exists("modules/lightbox/album.php")) {
 	include_once ("modules/lightbox/lb_config.php");
 	include_once ("modules/lightbox/functions/lb_indi_tabs_" . $mediatab . ".php");
+	if ($theme_name=="Minimal") {
+		// Force icon options to "text" when we're dealing with the Minimal theme
+		if ($LB_AL_HEAD_LINKS!="none") $LB_AL_HEAD_LINKS = "text";
+		if ($LB_AL_THUMB_LINKS!="none") $LB_AL_THUMB_LINKS = "text";
+		if ($LB_ML_THUMB_LINKS!="none") $LB_ML_THUMB_LINKS = "text";
+	}
 }else{	
 ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
@@ -248,7 +254,6 @@ var loadedTabs = new Array(false,false,false,false,false,false,false,false,false
 <!-- ================== End Additions for Lightbox Module ================== -->
 
 loadedTabs[<?php print ($controller->default_tab+1); ?>] = true;
-//loadedTabs[9] = true;
 
 function tempObj(tab, oXmlHttp) {
 	this.processFunc = function()
@@ -291,6 +296,7 @@ function tabswitch(n) {
 			else if (document.getElementById(tabid[i]+'_content')) {
 				var oXmlHttp = createXMLHttp();
 				var link = "individual.php?action=ajax&pid=<?php print $controller->pid; ?>&tab="+i;
+				if (location.search.indexOf("SQL_LOG=true") > -1) link += "&SQL_LOG=true";
 				oXmlHttp.open("get", link, true);
 				temp = new tempObj(i, oXmlHttp);
 				oXmlHttp.onreadystatechange=temp.processFunc;
@@ -545,12 +551,13 @@ if(empty($SEARCH_SPIDER)) {
     	if(empty($SEARCH_SPIDER)) {
 	    	$tNew = preg_replace("/&HIDE_GOOGLEMAP=true/", "", $_SERVER["REQUEST_URI"]);
 	    	$tNew = preg_replace("/&HIDE_GOOGLEMAP=false/", "", $tNew);
+	    	$tNew = preg_replace("/&/", "&amp;", $tNew);
 	    	if($SESSION_HIDE_GOOGLEMAP == "true") {
-			    print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"http://".$_SERVER["SERVER_NAME"].$tNew."&amp;HIDE_GOOGLEMAP=false\">";
+			    print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"".$tNew."&amp;HIDE_GOOGLEMAP=false\">";
 			    print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["plus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["activate"]."\" title=\"".$pgv_lang["activate"]."\" />";
 			    print " ".$pgv_lang["activate"]."</a></span>\n";
 		    	} else {
-			    print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"http://".$_SERVER["SERVER_NAME"].$tNew."&amp;HIDE_GOOGLEMAP=true\">";
+			    print "&nbsp;&nbsp;&nbsp;<span class=\"font9\"><a href=\"" .$tNew."&amp;HIDE_GOOGLEMAP=true\">";
 			    print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["minus"]["other"]."\" border=\"0\" width=\"11\" height=\"11\" alt=\"".$pgv_lang["deactivate"]."\" title=\"".$pgv_lang["deactivate"]."\" />";
 			    print " ".$pgv_lang["deactivate"]."</a></span>\n";
 			}
@@ -616,10 +623,8 @@ if(empty($SEARCH_SPIDER)) {
 
 <!-- ========================== Start 9th tab individual page ==== Album ======== -->
 <?php
-if(empty($SEARCH_SPIDER))
+if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 	print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none;\" >\n";
-else
-	print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:block;\" >\n";
 
 	if ($MULTI_MEDIA && file_exists("modules/lightbox/album.php")) {
 
@@ -627,8 +632,6 @@ else
 		// is adjusted to match the usual PhpGedView practice
 		$lbHelpFile = "modules/lightbox/languages/help.".$lang_short_cut[$LANGUAGE].".php";
 		if (!file_exists($lbHelpFile)) $lbHelpFile = "modules/lightbox/languages/help.en.php";
-
-//		print "<div id=\"lightbox2\" class=\"tab_page\" style=\"display:none; background:none;\" \>\n";
 
 		print "<span class=\"subheaders\">" . $pgv_lang["lightbox"] . "</span>\n";
 		print "&nbsp;&nbsp;"; 
@@ -665,7 +668,7 @@ else
 	
     print "</div>\n";
     print "</div>\n";
-//}
+}
 ?>
 <!-- ============================= End 9th tab individual page ==== Album -->
 
@@ -678,6 +681,8 @@ else
 <?php if ($controller->isPrintPreview()) print "tabswitch(0)";
 else print "tabswitch(". ($controller->default_tab+1) .");\n";
 ?>
+if (typeof toggleByClassName == "undefined") alert('phpgedview.js\na javascript function is missing\n\nPlease clear your Web browser cache');
+
 //-->
 </script>
 <?php

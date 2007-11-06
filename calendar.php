@@ -62,8 +62,6 @@ if (preg_match('/^(\d+)-(\d+)$/', $year, $match)) {
 	} else {
 	if ($year<0)
 		$year=(-$year)."B.C."; // need BC to parse date
-		// strip non-numeric characters, such as ABT
-		$year=preg_replace('/[^-0-9]/', '', $year);
 	$ged_date=new GedcomDate("{$cal} {$day} {$month} {$year}");
 	$year=$ged_date->date1->y; // need negative year for year entry field.
 	}
@@ -84,8 +82,8 @@ if ($year==0)
 	$year=$cal_date->y;
 
 // Extract values from date
-$days_in_month=$cal_date->Format('t');
-$days_in_week=$cal_date->NUM_DAYS_OF_WEEK;
+$days_in_month=$cal_date->DaysInMonth();
+$days_in_week=$cal_date->DaysInWeek();
 $cal_month=$cal_date->Format('O');
 $today_month=$today->Format('O');
 
@@ -166,8 +164,6 @@ if ($view!='preview') {
 	print " | <a href=\"calendar.php?cal={$cal}&amp;day={$today->d}&amp;month={$today_month}&amp;year={$today->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\"><b>".$today->Format('Y')."</b></a>";
 	print "</td> ";
 	// Filtering options
-	$username = getUserName();
-	if (!$HIDE_LIVE_PEOPLE||(!empty($username))) {
 		print "<td class=\"descriptionbox vmiddle\">";
 		print_help_link("annivers_show_help", "qm", "show");
 		print $pgv_lang["show"].":&nbsp;</td>";
@@ -176,29 +172,17 @@ if ($view!='preview') {
 		print "<option value=\"all\"";
 		if ($filterof == "all") print " selected=\"selected\"";
 		print ">".$pgv_lang["all_people"]."</option>";
+	$username=getUserName();
+	if (!$HIDE_LIVE_PEOPLE||(!empty($username))) {
 		print "<option value=\"living\"";
 		if ($filterof == "living") print " selected=\"selected\"";
 		print ">".$pgv_lang["living_only"]."</option>";
+	}
 		print "<option value=\"recent\"";
 		if ($filterof == "recent") print " selected=\"selected\"";
 		print ">".$pgv_lang["recent_events"]."</option>";
 		print "</select>";
-	} else {
-		print "<td class=\"descriptionbox vmiddle\">";
-		print_help_link("annivers_show_help", "qm", "show");
-		print $pgv_lang["show"].":&nbsp;</td>";
-		print "<td colspan=\"5\" class=\"optionbox vmiddle\">";
-		if ($filterof=="all")
-			print "<span class=\"error\">".$pgv_lang["all_people"]. "</span> | ";
-		else
-			print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof=all&amp;filtersx={$filtersx}&amp;action={$action}\">".$pgv_lang["all_people"]."</a>"." | ";
-		if ($filterof=="recent")
-			print "<span class=\"error\">".$pgv_lang["recent_events"]. "</span> | ";
-		else
-			print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof=recent&amp;filtersx={$filtersx}&amp;action={$action}\">".$pgv_lang["recent_events"]."</a>";
-	}
 
-	if (!$HIDE_LIVE_PEOPLE||(!empty($username))) {
 		print "</td>";
 		print "<td class=\"descriptionbox vmiddle\">";
 		print_help_link("annivers_sex_help", "qm", "sex");
@@ -223,19 +207,12 @@ if ($view!='preview') {
 		else
 			print "<a href=\"calendar.php?cal={$cal}&amp;day={$cal_date->d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx=F&amp;action={$action}\">";
 			print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["sexf"]["small"]."\" title=\"".$pgv_lang["female"]."\" alt=\"".$pgv_lang["female"]."\" width=\"9\" height=\"9\" border=\"0\" align=\"middle\" /></a>";
-	}
 
-	if (!$HIDE_LIVE_PEOPLE||(!empty($username))) {
 		print "</td>";
-		global $factarray;
 		print "<td class=\"descriptionbox vmiddle\">";
 		print_help_link("annivers_event_help", "qm", "showcal");
 		print $pgv_lang["showcal"]."&nbsp;</td>";
-		print "<td class=\"optionbox\"";
-		if (!$HIDE_LIVE_PEOPLE||!empty($username))
-			print ">";
-		else
-			print " colspan=\"3\">";
+	print "<td class=\"optionbox\">";
 		print "<input type=\"hidden\" name=\"filterev\" value=\"$filterev\" />";
 		print "<select class=\"list_value\" name=\"filterev\" onchange=\"document.dateform.submit();\">";
 		print "<option value=\"bdm\"";
@@ -284,7 +261,6 @@ if ($view!='preview') {
 		if ($filterev == "EVEN") print " selected=\"selected\"";
 		print ">".$pgv_lang["custom_event"]."</option>";
 		print "</select>";
-	}
 	print "</td></tr>";
 	// Day/Month/Year and calendar selector
 	print '<tr><td class="topbottombar" colspan="8">';
@@ -344,10 +320,12 @@ case 'calendar':
 	// Fetch events for each day
 	for ($jd=$cal_date->minJD; $jd<=$cal_date->maxJD; ++$jd)
 		foreach (apply_filter(get_anniversary_events($jd, $events), $filterof, $filtersx) as $event) {
-			$d=$event['date']->date1->d;
-			if ($d<1 || $d>$days_in_month)
+			$tmp=$event['date']->MinDate();
+			if ($tmp->d>=1 && $tmp->d<=$cal_date->DaysInMonth())
+				$d=$jd-$cal_date->minJD+1;
+			else
 				$d=0;
-			$found_facts[$d][$event['id']]=$event;
+			$found_facts[$d][]=$event;
 		}
 	break;
 case 'year':
@@ -389,9 +367,10 @@ case 'today':
 	break;
 case 'calendar':
 	$cal_facts=array();
-	foreach ($found_facts as $d=>$data) {
+	foreach ($found_facts as $d=>$facts) {
 		$cal_facts[$d]=array();
-		foreach ($data as $id=>$fact) {
+		foreach ($facts as $fact) {
+			$id=$fact['id'];
 			if (empty($cal_facts[$d][$id]))
 				$cal_facts[$d][$id]=calendar_fact_text($fact, false);
 			else
@@ -440,7 +419,7 @@ case 'calendar':
 	$week_start=($WEEK_START+6)%$days_in_week;
 	// The french  calendar has a 10-day week, but our config only lets us choose
 	// mon-sun as a start day.  Force french calendars to start on primidi
-	if ($cal_date->NUM_DAYS_OF_WEEK==10)
+	if ($days_in_week==10)
 		$week_start=0;
 	print "<table class=\"list_table width100 $TEXT_DIRECTION\"><tr>";
 	for ($week_day=0; $week_day<$days_in_week; ++$week_day) {
@@ -482,7 +461,6 @@ case 'calendar':
 				if ($alt_date->CALENDAR_ESCAPE!=$cal_date->CALENDAR_ESCAPE) {
 					list($alt_date->y, $alt_date->m, $alt_date->d)=$alt_date->JDtoYMD($cal_date->minJD+$d-1);
 					$alt_date->SetJDfromYMD();
-					// TODO rtl_cal_day reverses the text (3 Aug becomes Aug 3).  We want the blue and alignment, but not this.
 					print "<span class=\"rtl_cal_day\">".$alt_date->Format("j M")."</span>";
 					break;
 				}

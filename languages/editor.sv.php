@@ -70,6 +70,7 @@ $pgv_lang["main_media_fail0"]			= "Huvudmediafilen <b>#GLOBALS[oldMediaFolder]##
 $pgv_lang["main_media_fail1"]			= "huvudmediafilen <b>#GLOBALS[oldMediaName]#</b> kunde inte döpas om till <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["main_media_fail2"]			= "Huvudmediafilen <b>#GLOBALS[oldMediaName]#</b> kunde inte flyttas ifrån <b>#GLOBALS[oldMediaFolder]#</b> till <b>#GLOBALS[newMediaFolder]#.";
 $pgv_lang["main_media_fail3"]			= "Huvudmediafilen kunde inte flyttas och döpas om ifrån <b>#GLOBALS[oldMediaFolder]##GLOBALS[oldMediaName]#</b> till <b>#GLOBALS[newMediaFolder]##GLOBALS[newMediaName]#</b>.";
+$pgv_lang["resn_disabled"]				= "Obs: Du måste aktivera \'Används GEDCOM(RESN) integritetsrestriktioner\' för att denna inställning ska ha någon effekt. ";
 $pgv_lang["thumb_media_ok1"]			= "Miniatyrbildsfilen b>#GLOBALS[oldMediaName]#</b> döptes om till <b>#GLOBALS[newMediaName]#</b>.";
 $pgv_lang["thumb_media_ok2"]			= "Miniatyrbildsfilen <b>#GLOBALS[oldMediaName]#</b> flyttades ifrån <b>#GLOBALS[oldThumbFolder]#</b> till <b>#GLOBALS[newThumbFolder]#</b>.";
 $pgv_lang["thumb_media_ok3"]			= "Miniatyrbildsfilen flyttades och döptes om ifrån <b>#GLOBALS[oldThumbFolder]##GLOBALS[oldMediaName]#</b> till <b>#GLOBALS[newThumbFolder]##GLOBALS[newMediaName]#</b>.";
@@ -174,6 +175,7 @@ $pgv_lang["media_deleted"]			= "Mediamappen borttagen.";
 $pgv_lang["media_exists"]			= "Mediafil existerar redan.";
 $pgv_lang["media_file"]			= "Mediafiler";
 $pgv_lang["media_file_deleted"]		= "Mediafiler raderades.";
+$pgv_lang["media_file_moved"]			= "Mediafiler borttagna.";
 $pgv_lang["media_file_not_moved"]	= "Mediafil kunde inte flyttas.";
 $pgv_lang["media_file_not_renamed"]	= "Mediafil kunde inte flyttas eller döpas om.";
 $pgv_lang["media_thumb_exists"]		= "Media-miniatyr existerar redan.";
@@ -217,4 +219,9 @@ $pgv_lang["source_events"]			= "Associera händelse med denna källa";
 $pgv_lang["admin_override"]			= "Administratörsinställningar";
 $pgv_lang["no_update_CHAN"]			= "Uppdatera inte CHAN (Senast ändrade) posten";
 
+$pgv_lang["add_marriage"]			= "Lägg till en ny vigsel";
+$pgv_lang["edit_concurrency_change"] = "Denna post ändrades senast av <i>#CHANGEUSER#</i> den #CHANGEDATE#";
+$pgv_lang["edit_concurrency_msg2"]	= "Posten med id #PID# har ändrats av en annan användare sedan du senast  besökte den.";
+$pgv_lang["edit_concurrency_msg1"]	= "Ett fel uppstod när redigeringsformuläret skapades. En annan användare kan ha ändrat posten sedan du senast tittade på den.";
+$pgv_lang["edit_concurrency_reload"]	= "Använd ditt webprograms tillbaka-knapp för att ladda om sidan så att du är säker på att du arbetar med den senaste datan.";
 ?>

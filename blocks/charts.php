@@ -55,7 +55,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	if ($config['type']!='treenav') {
 		include_once("includes/controllers/hourglass_ctrl.php");
 		/* @var $controller HourglassController */
-		$controller->init($config["rootId"],0,2);
+		$controller->init($config["rootId"],0,3);
 		$controller->setupJavascript();
 	}
 	else {
@@ -108,7 +108,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 	<?php
 	if ($config['type']=='descendants' || $config['type']=='hourglass') {
 		print "<td valign=\"middle\">";
-		$controller->print_descendency($config['rootId'], 0);
+		$controller->print_descendency($config['rootId'], 1, false);
 		print "</td>";
 	}
 	if ($config['type']=='pedigree' || $config['type']=='hourglass') {
@@ -119,7 +119,7 @@ function print_charts_block($block = true, $config="", $side, $index) {
 			print "</td>";
 		}
 		print "<td valign=\"middle\">";
-		$controller->print_person_pedigree($config['rootId'], 0);
+		$controller->print_person_pedigree($config['rootId'], 1);
 		print "</td>";
 	}
 	if ($config['type']=='treenav') {
@@ -128,6 +128,13 @@ function print_charts_block($block = true, $config="", $side, $index) {
 		print "</td>";
 	}
 	print "</tr></table>\n";
+		?>
+		<script type="text/javascript">
+		<!--
+		if (sizeLines) sizeLines();
+		//-->
+		</script>
+		<?php
 	print "</div>\n";
 	print "</div>\n";
 	print "</div>";
