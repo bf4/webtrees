@@ -1072,20 +1072,19 @@ global $SHOW_MY_TASKS, $SHOW_ADD_TASK, $SHOW_AUTO_GEN_TASK, $SHOW_VIEW_FOLDERS, 
 	
 		$MissingReturn = array (); //Local var for the return string
 		if ($person->sex == "U") //check for missing sex info
-			{
+		{
 			$MissingReturn[] = array("SEX", $pgv_lang["All"]);
-		
 		}
 		if ($person->getBirthRecord(false) != "") //check for missing birth info
-			{
+		{
 
 		} else {
 			$probFacts = singleInference($perId,"BIRT");
 			$MissingReturn[] = array("BIRT", $pgv_lang["All"],$probFacts);
 
 		}
-		if ($person->getDeathRecord(false) != "") //check for missing death info
-			{
+		if ($person->getDeathRecord(false) != "" || !$person->isDead()) //check for missing death info
+		{
 
 		} else {
 			$probFacts = singleInference($perId,"DEAT");
