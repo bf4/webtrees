@@ -1,13 +1,10 @@
 <!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
 <!-- @version $Id$ -->
-Gelnica (GL)
-Košice I (K1)
-Košice II (K2)
-Košice III (K3)
-Košice IV (K4)
-Košice-okolie (KS)
-Michalovce (MI)
-Rožnava (RV)
-Sobrance (SO)
-Spišská Nová Ves (SN)
-Trebišov (TV)
+Gelnica
+Košice
+Košice-okolie
+Michalovce
+Rožnava
+Sobrance
+Spišská Nová Ves
+Trebišov
