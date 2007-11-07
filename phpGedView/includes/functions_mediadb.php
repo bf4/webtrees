@@ -2003,6 +2003,14 @@ function get_media_firewall_path($path) {
 	return ($MEDIA_FIREWALL_ROOTDIR . $path);
 }
 
+// pass in the protected media directory
+// returns standard media directory
+function get_media_standard_path($path) {
+	global $MEDIA_FIREWALL_ROOTDIR;
+	$path = str_replace($MEDIA_FIREWALL_ROOTDIR, "", $path);
+	return ($path);
+}
+
 // recursively make directories
 // taken from http://us3.php.net/manual/en/function.mkdir.php#60861
 function mkdirs($dir, $mode = 0777, $recursive = true) {
