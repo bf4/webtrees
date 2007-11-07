@@ -1,15 +1,15 @@
 <!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
 <!-- @version $Id$ -->
-Bardejov (BJ)
-Humenné (HE)
-Kežmarok (KK)
-Levoca (LE)
-Medzilaborce (ML)
-Poprad (PP)
-Prešov (PO)
-Sabinov (SB)
-Snina (SV)
-Stará Lubovna (SL)
-Stropkov (SP)
-Svidník (SK)
-Vranov nad Toplou (VT)
+Bardejov
+Humenné
+Kežmarok
+Levoča
+Medzilaborce
+Poprad
+Prešov
+Sabinov
+Snina
+Stará Ľubovňa
+Stropkov
+Svidník
+Vranov nad Topľou
