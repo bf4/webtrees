@@ -47,6 +47,13 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 
 	if (empty($config))
 		$config=$PGV_BLOCKS['print_yahrzeit']['config'];
+	
+	if (empty($config['infoStyle'    ])) $config['infoStyle'    ]='style2';
+	if (empty($config['allowDownload'])) $config['allowDownload']='yes';
+	if (empty($config['days'         ])) $config['days'         ]=$DAYS_TO_SHOW_LIMIT;
+
+	if ($config['days']<1                  ) $config['days']=1;
+	if ($config['days']>$DAYS_TO_SHOW_LIMIT) $config['days']=$DAYS_TO_SHOW_LIMIT;
 
 	$startjd=server_jd();
 	$endjd  =$startjd+max(min($config['days'], 1), $DAYS_TO_SHOW_LIMIT)-1;
