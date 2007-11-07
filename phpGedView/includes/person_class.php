@@ -1328,20 +1328,27 @@ class Person extends GedcomRecord {
 		for($i=0; $i<count($this->indifacts); $i++) {
 			$found=false;
 			foreach($diff->indifacts as $indexval => $newfact) {
-				if (trim($newfact[1])==trim($this->indifacts[$i][1])) {
-					$this->indifacts[$i][0] = $newfact[0];				//-- make sure the correct linenumber is used
+				//-- remove all whitespace for comparison
+				$tnf = preg_replace("/\s+/", " ", $newfact[1]);
+				$tif = preg_replace("/\s+/", " ", $this->indifacts[$i][1]);
+				if ($tnf==$tif) {
+					$this->indifacts[$i] = $newfact;				//-- make sure the correct linenumber is used
 					$found=true;
 					break;
 				}
 			}
+			//-- fact was deleted?
 			if (!$found) {
 				$this->indifacts[$i][1].="\r\nPGV_OLD\r\n";
 			}
 		}
+		//-- check for any new facts being added
 		foreach($diff->indifacts as $indexval => $newfact) {
 			$found=false;
 			foreach($this->indifacts as $indexval => $fact) {
-				if (trim($fact[1])==trim($newfact[1])) {
+				$tif = preg_replace("/\s+/", " ", $fact[1]);
+				$tnf = preg_replace("/\s+/", " ", $newfact[1]);
+				if ($tif==$tnf) {
 					$found=true;
 					break;
 				}

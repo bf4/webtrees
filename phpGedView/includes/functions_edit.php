@@ -1289,6 +1289,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			print "<a href=\"javascript:;\" onclick=\"toggle_lati_long();\"><img src=\"images/buttons/target.gif\" border=\"0\" align=\"middle\" alt=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" title=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" /></a>";
 			if ($SPLIT_PLACES) {
 				if (!function_exists("print_place_subfields")) require("includes/functions_places.php");
+				setup_place_subfields($element_id);
 				print_place_subfields($element_id);
 			}
 		}

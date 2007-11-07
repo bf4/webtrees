@@ -509,9 +509,13 @@ cAutocomplete.prototype.loadListArray = function( sData )
 {
 	var hInput = document.getElementById( this.sInputId )
 	// added for PGV place edition :
-    sData += '&ctry='+strclean(document.getElementsByName('PLAC_CTRY')[0].value.substr(0,3).toUpperCase());
-    sData += '&stae='+strclean(document.getElementsByName('PLAC_STAE')[0].value);
-    sData += '&cnty='+strclean(document.getElementsByName('PLAC_CNTY')[0].value);
+	//alert(element_id);
+	var ctry = document.getElementsByName(element_id+'_PLAC_CTRY')[0];
+	var stae = document.getElementsByName(element_id+'_PLAC_STAE')[0];
+	var cnty = document.getElementsByName(element_id+'_PLAC_CNTY')[0];
+    if (ctry) sData += '&ctry='+strclean(ctry.value.substr(0,3).toUpperCase());
+    if (stae) sData += '&stae='+strclean(stae.value);
+    if (cnty) sData += '&cnty='+strclean(cnty.value);
     sData += '&s=';
     // end
 	this.hXMLHttp.open( 'GET', this.sListURL + sData, false )
