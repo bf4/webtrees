@@ -1242,7 +1242,7 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["media_firewall_conf"]."\" onclic
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("MEDIA_FIREWALL_ROOTDIR_help", "qm", "MEDIA_FIREWALL_ROOTDIR"); print $pgv_lang["MEDIA_FIREWALL_ROOTDIR"];?></td>
 		<td class="optionbox"><input type="text" name="NEW_MEDIA_FIREWALL_ROOTDIR" size="50" dir="ltr" value="<?php print ($MEDIA_FIREWALL_ROOTDIR == $INDEX_DIRECTORY) ? "" : $MEDIA_FIREWALL_ROOTDIR ?>" onfocus="getHelp('MEDIA_FIREWALL_ROOTDIR_help');" tabindex="<?php $i++; print $i?>" /><br />
-		<?php print $pgv_lang["MEDIA_FIREWALL_ROOTDIR_note"] ?></td>
+		<?php print_text("MEDIA_FIREWALL_ROOTDIR_note"); ?></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap width20"><?php print_help_link("MEDIA_FIREWALL_THUMBS_help", "qm", "MEDIA_FIREWALL_THUMBS"); print $pgv_lang["MEDIA_FIREWALL_THUMBS"];?></td>

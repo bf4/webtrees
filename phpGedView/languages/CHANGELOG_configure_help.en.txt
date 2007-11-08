@@ -45,21 +45,23 @@ VERSION 4.1.3
 
 ?$pgv_lang["whatever"]								dd Monthname, year		Change codes and comments
 -------------------------------------------------------------------------------------------
-+$pgv_lang["MEDIA_FIREWALL_ROOTDIR_note"]			07 Nov 2006				A
--$pgv_lang["ALLOW_CHANGE_GEDCOM"]					05 Nov 2006				D
--$pgv_lang["ALLOW_REMEMBER_ME"]						05 Nov 2006				D
--$pgv_lang["ALLOW_USER_THEMES"]						05 Nov 2006				D
--$pgv_lang["INDEX_DIRECTORY"]						05 Nov 2006				D
--$pgv_lang["LANG_SELECTION"]						05 Nov 2006				D
--$pgv_lang["PGV_MEMORY_LIMIT"]						05 Nov 2006				D
--$pgv_lang["PGV_SESSION_SAVE_PATH"]					05 Nov 2006				D
--$pgv_lang["PGV_SESSION_TIME"]						05 Nov 2006				D
--$pgv_lang["PGV_SIMPLE_MAIL"]						05 Nov 2006				D
--$pgv_lang["PGV_STORE_MESSAGES"]					05 Nov 2006				D
--$pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION"]		05 Nov 2006				D
--$pgv_lang["SERVER_URL"]							05 Nov 2006				D
--$pgv_lang["TBLPREFIX"]								05 Nov 2006				D
--$pgv_lang["USE_REGISTRATION_MODULE"]				05 Nov 2006				D
+*$pgv_lang["MEDIA_FIREWALL_ROOTDIR_help"]			08 Nov 2007				W
+*$pgv_lang["MEDIA_FIREWALL_ROOTDIR_note"]			08 Nov 2007				W
++$pgv_lang["MEDIA_FIREWALL_ROOTDIR_note"]			07 Nov 2007				A
+-$pgv_lang["ALLOW_CHANGE_GEDCOM"]					05 Nov 2007				D
+-$pgv_lang["ALLOW_REMEMBER_ME"]						05 Nov 2007				D
+-$pgv_lang["ALLOW_USER_THEMES"]						05 Nov 2007				D
+-$pgv_lang["INDEX_DIRECTORY"]						05 Nov 2007				D
+-$pgv_lang["LANG_SELECTION"]						05 Nov 2007				D
+-$pgv_lang["PGV_MEMORY_LIMIT"]						05 Nov 2007				D
+-$pgv_lang["PGV_SESSION_SAVE_PATH"]					05 Nov 2007				D
+-$pgv_lang["PGV_SESSION_TIME"]						05 Nov 2007				D
+-$pgv_lang["PGV_SIMPLE_MAIL"]						05 Nov 2007				D
+-$pgv_lang["PGV_STORE_MESSAGES"]					05 Nov 2007				D
+-$pgv_lang["REQUIRE_ADMIN_AUTH_REGISTRATION"]		05 Nov 2007				D
+-$pgv_lang["SERVER_URL"]							05 Nov 2007				D
+-$pgv_lang["TBLPREFIX"]								05 Nov 2007				D
+-$pgv_lang["USE_REGISTRATION_MODULE"]				05 Nov 2007				D
 *$pgv_lang["ged_filter_results"]					29 Oct 2007				w
 *$pgv_lang["ged_filter_description"]				29 Oct 2007				w
 +$pgv_lang["ged_filter_description_help"]			29 Oct 2007				A

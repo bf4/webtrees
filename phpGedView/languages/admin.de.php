@@ -216,7 +216,6 @@ $pgv_lang["mysqli"]						= "MySQL 4.1+ oder PHP 5";
 $pgv_lang["never"]						= "Nie";
 $pgv_lang["no_logs"]					= "Logging deaktivieren";
 $pgv_lang["no_messaging"]				= "keine Nachrichten-Funktion";
-$pgv_lang["none"]						= "Keine";
 $pgv_lang["oci8"]						= "Oracle 7+";
 $pgv_lang["page_views"]					= "&nbsp;&nbsp;Seiten innerhalb&nbsp;&nbsp;";
 $pgv_lang["performing_validation"]		= "GEDCOM Überprüfung wird durchgeführt, bitte wählen Sie die gewünschten Optionen und klicken Sie auf <b>Korrigieren</b>";
