@@ -476,10 +476,10 @@ function remove_subrecord($oldrecord, $tag, $gid='', $num=0) {
  * delete a subrecord from a parent record using the linenumber
  *
  * @param string $oldrecord		parent record to delete from
- * @param int $linenumber		linenumber where the subrecord to delete starts
+ * @param int $linenum		linenumber where the subrecord to delete starts
  * @return string				the new record
  */
-function remove_subline($oldrecord, $linenumber) {
+function remove_subline($oldrecord, $linenum) {
 	$newrec = "";
 	$gedlines = preg_split("/\n/", $oldrecord);
 
