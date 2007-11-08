@@ -160,18 +160,19 @@ else {
 				$output.="<a href=\"javascript:;\" onclick=\"return edit_raw('".$change["gid"]."');\">".$pgv_lang["edit_raw"]."</a><br />";
 				$output.="<div class=\"indent\">\n";
 				$output.=$pgv_lang["changes_occurred"]."<br />\n";
-				$output.="<table class=\"list_table\">\n";
-				$output.="<tr><td class=\"list_label\">".$pgv_lang["undo"]."</td>";
+				$output.="<table class=\"list_table\">\n<tr>";
 				$output.="<td class=\"list_label\">".$pgv_lang["accept"]."</td>";
-				$output.="<td class=\"list_label\">".$pgv_lang["type"]."</td><td class=\"list_label\">".$pgv_lang["username"]."</td><td class=\"list_label\">".$pgv_lang["date"]."</td><td class=\"list_label\">GEDCOM</td></tr>\n";
+				$output.="<td class=\"list_label\">".$pgv_lang["type"]."</td>";
+				$output.="<td class=\"list_label\">".$pgv_lang["username"]."</td>";
+				$output.="<td class=\"list_label\">".$pgv_lang["date"]."</td>";
+				$output.="<td class=\"list_label\">GEDCOM</td>";
+				$output.="<td class=\"list_label\">".$pgv_lang["undo"]."</td>";
+				$output.="</tr>\n";
 			}
 			if ($i==count($changes)-1) {
-				$output .= "<td class=\"list_value $TEXT_DIRECTION\"><a href=\"edit_changes.php?action=undo&amp;cid=$cid&amp;index=$i\">".$pgv_lang["undo"]."</a></td>";
 				$output .= "<td class=\"list_value $TEXT_DIRECTION\"><a href=\"edit_changes.php?action=accept&amp;cid=$cid\">".$pgv_lang["accept"]."</a></td>\n";
-			}
-			else {
-				$output .= "<td class=\"list_value $TEXT_DIRECTION\"><br /></td>";
-				$output .= "<td class=\"list_value $TEXT_DIRECTION\"><br /></td>";
+			} else {
+				$output .= "<td class=\"list_value $TEXT_DIRECTION\">&nbsp;</td>";
 			}
 			$output .= "<td class=\"list_value $TEXT_DIRECTION\"><b>".$pgv_lang[$change["type"]]."</b></td>\n";
 			$output .= "<td class=\"list_value $TEXT_DIRECTION\"><a href=\"javascript:;\" onclick=\"return reply('".$change["user"]."','".$pgv_lang["review_changes"]."')\" alt=\"".$pgv_lang["message"]."\">";
@@ -184,6 +185,11 @@ else {
  			$output .= PrintReady("&nbsp;(".$change["user"].")")."</a></td>\n";
  			$output .= "<td class=\"list_value $TEXT_DIRECTION\">".format_timestamp($change["time"])."</td>\n";
 			$output .= "<td class=\"list_value $TEXT_DIRECTION\">".$change["gedcom"]."</td>\n";
+			if ($i==count($changes)-1) {
+				$output .= "<td class=\"list_value $TEXT_DIRECTION\"><a href=\"edit_changes.php?action=undo&amp;cid=$cid&amp;index=$i\">".$pgv_lang["undo"]."</a></td>";
+			} else {
+				$output .= "<td class=\"list_value $TEXT_DIRECTION\">&nbsp;</td>";
+			}
 			$output .= "</tr>\n";
 			if ($i==count($changes)-1) {
 				$output .= "</table>\n";
@@ -198,22 +204,28 @@ else {
 	// Row 1 column 1: title "Accept all"
 	$output2 .= "<tr><td class=\"list_label\">".$pgv_lang["accept_all"]."</td>";
 	// Row 1 column 2: separator
-	$output2 .= "<td class=\"list_label width10\">&nbsp;</td>";
+	$output2 .= "<td class=\"list_label width25\">&nbsp;</td>";
 	// Row 1 column 3: title "Undo all"
 	$output2 .= "<td class=\"list_label\">".$pgv_lang["undo_all"]."</td></tr>";
 
 	// Row 2 column 1: action "Accept all"
 	$output2 .= "<tr><td class=\"list_value\">";
+	$count = 0;
 	foreach($changedgedcoms as $ged=>$value) {
-		$output2 .= "<a href=\"edit_changes.php?action=acceptall&amp;ged=$ged\">$ged - ".$pgv_lang["accept_all"]."</a><br />\n";
+		if ($count!=0) $output2.="<br /><br />";
+		$output2 .= "<a href=\"edit_changes.php?action=acceptall&amp;ged=$ged\">$ged - ".$pgv_lang["accept_all"]."</a>\n";
+		$count ++;
 	}
 	$output2 .= "</td>";
 	// Row 2 column 2: separator
-	$output2 .= "<td class=\"list_value width10\">&nbsp;</td>";
+	$output2 .= "<td class=\"list_value width25\">&nbsp;</td>";
 	// Row 2 column 3: action "Undo all"
 	$output2 .= "<td class=\"list_value\">";
+	$count = 0;
 	foreach($changedgedcoms as $ged=>$value) {
-		$output2 .= "<a href=\"edit_changes.php?action=undoall&amp;ged=$ged\" onclick=\"return confirm('".$pgv_lang["undo_all_confirm"]."');\">$ged - ".$pgv_lang["undo_all"]."</a><br />\n";
+		if ($count!=0) $output2.="<br /><br />";
+		$output2 .= "<a href=\"edit_changes.php?action=undoall&amp;ged=$ged\" onclick=\"return confirm('".$pgv_lang["undo_all_confirm"]."');\">$ged - ".$pgv_lang["undo_all"]."</a>\n";
+		$count ++;
 	}
 	$output2 .= "</td></tr>";
 	$output2 .= "</table>";
