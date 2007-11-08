@@ -311,7 +311,7 @@ case 'delete':
 			//-- when deleting a media link
 			//-- $linenum comes is an OBJE and the $mediaid to delete should be set
 			if (!is_numeric($linenum)) $newged = remove_subrecord($gedrec, $linenum, $mediaid);
-			else $newged = remove_subline($gedrec, $linenumer);
+			else $newged = remove_subline($gedrec, $linenum);
 			$success = (replace_gedrec($pid, $newged));
 			if ($success) print "<br /><br />".$pgv_lang["gedrec_deleted"];
 		}
