@@ -1022,56 +1022,62 @@ if (check_media_structure()) {
 			//-- get all of the XREFS associated with this record
 			//-- and check if the file is used in multiple gedcoms
 			$myFile = str_replace($MEDIA_DIRECTORY, "", $filename);
+			//-- figure out how many levels are in this file
+			$mlevels = preg_split("~[/\\\]~", $filename);
 			$sql = "SELECT * FROM ".$TBLPREFIX."media WHERE m_file LIKE '%".$DBCONN->escapeSimple($myFile)."'";
 			$res = dbquery($sql);
 
 			while($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-				if ($row["m_gedfile"]!=$GEDCOMS[$GEDCOM]["id"]) $onegedcom = false;
-				else $xrefs[] = $row["m_media"];
+				$rlevels = preg_split("~[/\\\]~", $row["m_file"]);
+				//-- make sure we only delete a file at the same level of directories
+				//-- see 1825257
+				if (count($rlevels)==count($mlevels)) {
+					if ($row["m_gedfile"]!=$GEDCOMS[$GEDCOM]["id"]) $onegedcom = false;
+					else $xrefs[] = $row["m_media"];
+				}
 			}
 			$res->free();
 			$xrefs = array_unique($xrefs);
 		}
 
 		$finalResult = true;
-		while ($allowDelete) {
+		if ($allowDelete) {
 			if (!$onegedcom) {
 				print "<span class=\"error\">".$pgv_lang["multiple_gedcoms"]."<br /><br /><b>".$pgv_lang["media_file_not_deleted"]."</b></span><br />";
 				$finalResult = false;
-				break;
 			}
 			if (isFileExternal($filename)) {
 				print "<span class=\"error\">".$pgv_lang["external_file"]."<br /><br /><b>".$pgv_lang["media_file_not_deleted"]."</b></span><br />";
 				$finalResult = false;
-				break;
 			}
-			// Check if file exists. If so, delete it
-			$server_filename = get_server_filename($filename);
-			if (file_exists($server_filename) && $allowDelete) {
-				if (@unlink($server_filename)) {
-					print $pgv_lang["media_file_deleted"]."<br />";
-					AddToChangeLog($server_filename." -- ".$pgv_lang["media_file_deleted"]);
-				} else {
-					$finalResult = false;
-					print "<span class=\"error\">".$pgv_lang["media_file_not_deleted"]."</span><br />";
-					AddToChangeLog($server_filename." -- ".$pgv_lang["media_file_not_deleted"]);
+			if ($finalResult) {
+				// Check if file exists. If so, delete it
+				$server_filename = get_server_filename($filename);
+				if (file_exists($server_filename) && $allowDelete) {
+					if (@unlink($server_filename)) {
+						print $pgv_lang["media_file_deleted"]."<br />";
+						AddToChangeLog($server_filename." -- ".$pgv_lang["media_file_deleted"]);
+					} else {
+						$finalResult = false;
+						print "<span class=\"error\">".$pgv_lang["media_file_not_deleted"]."</span><br />";
+						AddToChangeLog($server_filename." -- ".$pgv_lang["media_file_not_deleted"]);
+					}
+				}
+	
+				// Check if thumbnail exists. If so, delete it.
+				$thumbnail = str_replace("$MEDIA_DIRECTORY",$MEDIA_DIRECTORY."thumbs/",$filename);
+				$server_thumbnail = get_server_filename($thumbnail);
+				if (file_exists($server_thumbnail) && $allowDelete) {
+					if (@unlink($server_thumbnail)) {
+						print $pgv_lang["thumbnail_deleted"]."<br />";
+						AddToChangeLog($server_thumbnail." -- ".$pgv_lang["thumbnail_deleted"]);
+					} else {
+						$finalResult = false;
+						print "<span class=\"error\">".$pgv_lang["thumbnail_not_deleted"]."</span><br />";
+						AddToChangeLog($server_thumbnail." -- ".$pgv_lang["thumbnail_not_deleted"]);
+					}
 				}
 			}
-
-			// Check if thumbnail exists. If so, delete it.
-			$thumbnail = str_replace("$MEDIA_DIRECTORY",$MEDIA_DIRECTORY."thumbs/",$filename);
-			$server_thumbnail = get_server_filename($thumbnail);
-			if (file_exists($server_thumbnail) && $allowDelete) {
-				if (@unlink($server_thumbnail)) {
-					print $pgv_lang["thumbnail_deleted"]."<br />";
-					AddToChangeLog($server_thumbnail." -- ".$pgv_lang["thumbnail_deleted"]);
-				} else {
-					$finalResult = false;
-					print "<span class=\"error\">".$pgv_lang["thumbnail_not_deleted"]."</span><br />";
-					AddToChangeLog($server_thumbnail." -- ".$pgv_lang["thumbnail_not_deleted"]);
-				}
-			}
-			break;
 		}
 
 		//-- loop through all of the found xrefs and delete any references to them
@@ -1079,13 +1085,31 @@ if (check_media_structure()) {
 			// Remove references to media file from gedcom and database
 			// Check for XREF
 			if ($xref != "") {
+				$links = get_media_relations($xref);
+				foreach($links as $pid=>$type) {
+					if (isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_updated_record($pid);
+					else $gedrec = find_gedcom_record($pid, '', $type);
+					$gedrec = remove_subrecord($gedrec, "OBJE", $xref, -1);
+					if (replace_gedrec($pid, $gedrec, true, $xref)) {
+						print_text("record_updated");
+						AddToChangeLog(print_text("record_updated",0,1));
+					} else {
+						$finalResult = false;
+						print "<span class=\"error\">";
+						print_text("record_not_updated");
+						print "</span>";
+						AddToChangeLog(print_text("record_not_updated",0,1));
+					}
+					print "<br />";
+				}
+				/** why are we search through all of the tables instead of joining on the media mapping?
 				// Combine the searchquery of filename and xref
 				$mediaRef = "@".$xref."@";
 				$query[] = $mediaRef;
 
 				// Find the INDIS with the mediafile in it
 				$foundindis = search_indis($query);
-
+				
 				// Now update the record
 				foreach ($foundindis as $pid => $person) {
 					// Check if changes to the record exist
@@ -1263,9 +1287,10 @@ if (check_media_structure()) {
 					}
 					print "<br />";
 				}
+				*/
 
 				// Record changes to the Media object
-				if ($xref!="") {
+					//-- why do we accept changes just to delete the item?
 					include_once('includes/functions_import.php');
 					accept_changes($xref."_".$GEDCOM);
 					$objerec = find_gedcom_record($xref);
@@ -1299,7 +1324,6 @@ if (check_media_structure()) {
 						}
 						print "<br />";
 					}
-				}
 			}
 		}
 		if ($finalResult) print $pgv_lang["update_successful"];

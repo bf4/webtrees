@@ -413,9 +413,11 @@ function load_people($ids, $gedfile='') {
  * add it to the cache.
  * @link http://phpgedview.sourceforge.net/devdocs/arrays.php#other
  * @param string $pid the unique gedcom xref id of the record to retrieve
+ * @param string $gedfile	[optional] the gedcomfile to search in
+ * @param string $type		[optional] the type of record to find (INDI, FAM, SOUR, etc)
  * @return string the raw gedcom record is returned
  */
-function find_gedcom_record($pid, $gedfile = "") {
+function find_gedcom_record($pid, $gedfile = "", $type="") {
 	global $TBLPREFIX, $GEDCOMS;
 	global $GEDCOM, $indilist, $famlist, $sourcelist, $objectlist, $otherlist, $DBCONN;
 
@@ -431,7 +433,7 @@ function find_gedcom_record($pid, $gedfile = "") {
 
 	//-- try to look ahead and guess the best type of record to look for
 	//-- NOTE: not foolproof so leave the other section in place
-	$type = id_type($pid);
+	if (empty($type)) $type = id_type($pid);
 	switch($type) {
 		case 'INDI':
 			$gedrec = find_person_record($pid, $gedfile);

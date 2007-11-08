@@ -442,6 +442,70 @@ function check_gedcom($gedrec, $chan=true) {
 }
 
 /**
+ * remove a subrecord from a parent record by gedcom tag
+ *
+ * @param string $oldrecord	the parent record to remove the subrecord from
+ * @param string $tag	the GEDCOM subtag to start deleting at
+ * @param string $gid	[optional] gid can be used to limit to @gid@
+ * @param int $num		[optional] num specifies which multiple of the tag to remove, set to -1 to remove all 
+ * @return string		returns the oldrecord minus the subrecord(s)
+ */
+function remove_subrecord($oldrecord, $tag, $gid='', $num=0) {
+	$newrec = "";
+	$gedlines = preg_split("/\n/", $oldrecord);
+
+	$n = 0;
+	$matchstr = $tag;
+	if (!empty($gid)) $matchstr .= " @".$gid."@";
+	for($i=0; $i<count($gedlines); $i++) {
+		if (preg_match("/".$matchstr."/", $gedlines[$i])>0) {
+			if ($num==-1 || $n==$num) {
+				$glevel = $gedlines[$i]{0};
+				$i++;
+				while((isset($gedlines[$i]))&&(strlen($gedlines[$i])<4 || $gedlines[$i]{0}>$glevel)) $i++;
+			}
+			else $n++;
+		}
+		else $newrec .= $gedlines[$i]."\n";
+	}
+	
+	return trim($newrec);
+}
+
+/**
+ * delete a subrecord from a parent record using the linenumber
+ *
+ * @param string $oldrecord		parent record to delete from
+ * @param int $linenumber		linenumber where the subrecord to delete starts
+ * @return string				the new record
+ */
+function remove_subline($oldrecord, $linenumber) {
+	$newrec = "";
+	$gedlines = preg_split("/\n/", $oldrecord);
+
+	for($i=0; $i<$linenum; $i++) {
+		if (trim($gedlines[$i])!="") $newrec .= $gedlines[$i]."\n";
+	}
+	if (isset($gedlines[$linenum])) {
+		$fields = preg_split("/\s/", $gedlines[$linenum]);
+		$glevel = $fields[0];
+		$i++;
+		if ($i<count($gedlines)) {
+			//-- don't put empty lines in the record
+			while((isset($gedlines[$i]))&&(strlen($gedlines[$i])<4 || $gedlines[$i]{0}>$glevel)) $i++;
+			while($i<count($gedlines)) {
+				if (trim($gedlines[$i])!="") $newrec .= $gedlines[$i]."\n";
+				$i++;
+			}
+		}
+	}
+	else return $oldrecord;
+	
+	$newrec = trim($newrec);
+	return $newrec;
+}
+
+/**
  * Undo a change
  * this function will undo a change in the gedcom file
  * @param string $cid	the change id of the form gid_gedcom
