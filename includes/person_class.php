@@ -610,7 +610,9 @@ class Person extends GedcomRecord {
 	 */
 	function getChildFamilyPedigree($famid) {
 		$subrec = get_sub_record(1, "1 FAMC @".$famid."@", $this->gedrec);
-		return get_gedcom_value("PEDI", 2, $subrec, '', false);
+		$pedi = get_gedcom_value("PEDI", 2, $subrec, '', false);
+		if (strpos($pedi, "birt")!==false) return ""; // birth=default => return an empty string
+		return $pedi;
 	}
 	/**
 	 * get the step families from the parents
