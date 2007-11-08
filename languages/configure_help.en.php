@@ -36,6 +36,7 @@ $pgv_lang["USE_MEDIA_FIREWALL"]			= "Use Media Firewall";
 $pgv_lang["USE_MEDIA_FIREWALL_help"]	= "~#pgv_lang[USE_MEDIA_FIREWALL]#~<br /><br />See the Wiki for a description of how to use the Media Firewall. <a href=\"http://wiki.phpgedview.net/en/index.php/Media_Firewall\" target=\"_blank\">http://wiki.phpgedview.net/en/index.php/Media_Firewall</a><br /><br />";
 $pgv_lang["MEDIA_FIREWALL_ROOTDIR"]			= "Media Firewall Root Directory";
 $pgv_lang["MEDIA_FIREWALL_ROOTDIR_help"]	= "~#pgv_lang[MEDIA_FIREWALL_ROOTDIR]#~<br /><br />Directory in which the protected Media directory can be created.  When this field is empty, the <b>#GLOBALS[INDEX_DIRECTORY]#</b> directory will be used.<br /><br />";
+$pgv_lang["MEDIA_FIREWALL_ROOTDIR_note"]	= "Leave this field blank to use the Index Directory as your Media Firewall Root Directory";
 $pgv_lang["MEDIA_FIREWALL_THUMBS"]			= "Protect Thumbnails of Protected Images";
 $pgv_lang["MEDIA_FIREWALL_THUMBS_help"]	= "~#pgv_lang[MEDIA_FIREWALL_THUMBS]#~<br /><br />When an image is in the protected Media directory, should its thumbnail be protected as well?<br /><br />";
 $pgv_lang["SHOW_SPIDER_TAGLINE"]		= "Show spider tagline";
