@@ -1031,7 +1031,17 @@ if (check_media_structure()) {
 				$rlevels = preg_split("~[/\\\]~", $row["m_file"]);
 				//-- make sure we only delete a file at the same level of directories
 				//-- see 1825257
-				if (count($rlevels)==count($mlevels) && end($mlevels)==end($rlevels)) {
+				$match = true;
+				$j=0;
+				for($i=count($rlevels)-1; $i>=0; $i--) {
+					if ($rlevels[$i] != $mlevels[$i]) {
+						$match = false;
+						break;
+					}
+					$j++;
+					if ($j>$MEDIA_DIRECTORY_LEVELS) break;
+				}
+				if ($match) {
 					if ($row["m_gedfile"]!=$GEDCOMS[$GEDCOM]["id"]) $onegedcom = false;
 					else $xrefs[] = $row["m_media"];
 				}
