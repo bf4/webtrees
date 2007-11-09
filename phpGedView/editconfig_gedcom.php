@@ -640,6 +640,7 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
 		print "</b></a><br /><br />";
 	?>
 
+<?php if ($source!="replace_form") { ?>
 <script language="javascript" type="text/javascript">
 <!--
 var searchable_tds, searchable_text;
@@ -817,6 +818,7 @@ function display_results(amount_found){
     </td>
   </tr>
 </table>
+<?php } // ($source!="replace_form") ?>
    </td>
   </tr>
 </table>
