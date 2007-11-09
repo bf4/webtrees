@@ -55,9 +55,6 @@ $pgv_lang["auto_search_text"]		= "חיפוש אוטומטי";
 $pgv_lang["task_list"]		= "משימות";
 $pgv_lang["task_list_text"]		= "האזור מציג משימות שיצרת, לחץ על 'התבונן' כדי לראות משימות";
 
-// -- HELP COMMENTS
-$pgv_lang["help_comments"] 		= "##Here you can add comments. Other people can see them and add their own comments."; 
-
 // -- MENU ITEM MESSAGES
 $pgv_lang["my_tasks"]		= "עוזר מחקר";
 $pgv_lang["add_task"]		= "הוסף משימה";
@@ -67,17 +64,12 @@ $pgv_lang["up_folder"]		= "עלה תיקייה";
 $pgv_lang["edit_folder"]		= "הוסף/עדכן תיקייה"; 
 $pgv_lang["gen_tasks"]		= "צור משימות אוטומטית";
 
-
 // -- RA GENERAL MESSAGES
 $pgv_lang["edit_task"]		= "ערוך משימה";
 $pgv_lang["completed"]		= "סיום";
 $pgv_lang["complete"]		= "סיים";  
 $pgv_lang["incomplete"]		= "חלקי"; 
-$pgv_lang["comres"]			= "##Comments/Results";
-$pgv_lang["description"]		= "תיאור";
 $pgv_lang["created"]			= "נוצר"; 
-$pgv_lang["modified"]		= "##Modified";
-$pgv_lang["folder_list"]		= "##Folder List";
 $pgv_lang["details"]			= "פירוט"; 
 $pgv_lang["result"]                     	= "תוצאה";
 $pgv_lang["okay"]                               	= "OK";
@@ -130,17 +122,13 @@ $pgv_lang["ViewProbExplanation"]	= "דף זה מנתח את נתוני קובץ 
 
 // -- RA_FOLDER MESSAGES
 $pgv_lang["Folder"]                             	= "תיקייה:";
-$pgv_lang["Edit_Task"]                 	= "##ערוך משימה"; //@@@ where used
 $pgv_lang["Edit_Gen_Task"]                 	= "ערוך משימה שנוצרה";
-$pgv_lang["End_Date"]                 	= "##End Date";
 $pgv_lang["Start_Date"]                 	= "תאריך התחלה";
 $pgv_lang["Task_Name"]                	= "שם משימה";
 $pgv_lang["Folder_Name"]                	= "שם תיקייה";
 $pgv_lang["Folder_View"]                	= "מבט תיקייות"; /////
 $pgv_lang["Task_View"]                  	= "מבט משימות";
 $pgv_lang["page_header"]		= "תיקיות עוזר מחקר"; 
-$pgv_lang["folder_new"]		= "##Create New Folder";
-$pgv_lang["folder_delete_check"]	= "##Are you sure you want to delete this folder?";
 $pgv_lang["no_folder_name"]             	= "יש למלא את שם התיקייה.";
 $pgv_lang["add_folder"]                 	= "הוסף תיקייה";
 $pgv_lang["folder_name"]                	= "שם תיקייה:";
@@ -154,53 +142,13 @@ $pgv_lang["folder_problem"]             	= "התגלת תקלה בהוספת ה�
 // -- Missing Information Help 
 $pgv_lang["ra_missing_info_help"] 	= "האזור מציג מידע חסר על הרשומה. בחר תיבת סימון ותיקייה ולחץ <b>הוסף משימה</b> עבור הנתון החסר. המשימות שכבר נוצרו תוצגנה עם <b>התבונן</b> במקום עם תיבת סימון <br />"; 
 
-// -- RA_EDITFOLDER MESSAGES	
-$pgv_lang["edit_research_folder"]	= "##Edit Research Folder";
-$pgv_lang["folder_not_exist"]		= "##This folder does not exist: ";
-$pgv_lang["folder_parent"]		= "##Parent Folder";
-$pgv_lang["parent_id"]		= "##None";
-$pgv_lang["folder_users"]		= "##Other Users who can see this folder";
-
-// -- RA_EDITLOG MESSAGES
-$pgv_lang["edit_research_log"]		= "##Edit Research Log";
-$pgv_lang["log_not_exist"]		= "##This log does not exist: ";
-
-// -- RA_LOG MESSAGES
-$pgv_lang["edit_log_entry"]		= "##Edit Research Log Entry";
-$pgv_lang["log_no_entry"]		= "##ERROR: You do not have permission to access this item.";
-$pgv_lang["log_modified"]		= "##Last Modified";
-$pgv_lang["log_modified_by"]		= "##Last Modified By";
-$pgv_lang["log_edit_entry"]		= "##Edit this entry";
-
 // -- RA_LISTLOGS MESSAGES
-$pgv_lang["research_logs"]		= "##Research Logs";
-$pgv_lang["log_no_entry_folder"]	= "##ERROR: You do not have permission to access this folder.";
-$pgv_lang["folder_sub"]		= "##Sub Folders";
-$pgv_lang["folder_sub_new"]		= "##Create New Sub Folder";
 $pgv_lang["task_entry"]		= "צור משימה חדשה.";
-$pgv_lang["log_show"]		= "##Show All Logs";
-$pgv_lang["log_show_uncomplete"]	= "##Show Uncompleted Logs";
-$pgv_lang["log_show_complete"]	= "##Show Completed Logs";
-$pgv_lang["log_delete_check"]		= "##Are you sure you want to delete this log entry?";
-
-// -- RA_FUNCTIONS MESSAGES
-$pgv_lang["function_folder_delete"]	= "##ERROR: Cannot delete this folder because it still contains research log entries.<br />First move or delete these research log entries and then try to delete the folder again.";
-$pgv_lang["function_subfolder_delete"]	= "##ERROR: Cannot delete this folder because it still contains subfolders.<br />First move or delete these subfolders and then try to delete the folder again.";
-$pgv_lang["folder_delete_ok"]		= "##The folder #folder_name# has been deleted sucessfully.";
-$pgv_lang["folder_update_ok"]		= "##The folder #folder_name# has been sucessfully updated.";
-$pgv_lang["folder_added"]		= "##The folder #folder_name# was sucessfully added.";
-
-//-- RA_SEARCH MESSAGES
-$pgv_lang["search_results"]		= "##Search Results";
-$pgv_lang["nothing_found"]		= "##No matching logs found.";
 
 //-- ERROR MESSAGES
-$pgv_lang["no_folder"]		= "##No folder exists yet. Please create a new folder first.";
+$pgv_lang["no_folder"]		= "שום תיקייה אינה קיימת עדיין. צור תיקייה חדשה תחילה."; 
 
 //-- HELP MESSAGES
-$pgv_lang["help_rs_folders.php"]	= "##Research Assistant Folders<br /> #pgv_lang[sorry]#";
-$pgv_lang["help_rs_editfolder.php"]	= "##Research Assistant Edit Folders<br />#pgv_lang[sorry]#";
-$pgv_lang["help_rs_editlog.php"]	= "##Research Assistant Edit Log<br />#pgv_lang[sorry]#";
 $pgv_lang["ra_fold_name_help"]	= "~מבט תיקייות~<ul><li><b>שם תיקייה:</b> העמוד הזה כולל את השמות של כל התיקיות שיצרת.</li><li><b>תאור:</b> העמוד הזה כולל את התאור של התיקיות.</li></ul>"; 
 $pgv_lang["ra_add_task_help"]		= "~הוסף משימה~<ul><li><b>כותרת:</b> כאן תמלא את הכותרת של המשימה שאותה אתה מוסיף.</li><li><b>תיקייה:</b> בשדה זה ניתן להקצות את התיקייה שבה יש לשים את המשימה החדשה.</li><li><b>תאור:</b> הכנס את תאור המשימה שאותה אתה מוסיף.</li><li><b>מקורות:</b>  הקצה מקורות למשימה.</li><li><b>אנשים:</b> הקצה אנשים הקשורים למשימה החדשה.</li></ul>";
 $pgv_lang["ra_edit_folder_help"]	= "~ערוך תיקייה~<ul><li><b>שם התיקייה:</b> כאן תמלא את הכותרת של המשימה שאותה אתה עורך.</li><li><b>תיקיית הורה:</b> תוכל להקצות תיקיית הורה לתיקייה שאתה עורך.</li><li><b>תאור התיקייה:</b> תאור המשימה שאותה אתה עורך.</li></ul>"; 
@@ -216,8 +164,6 @@ $pgv_lang["ra_edit_task_help"]		= "~ערוך משימה~<ul><li><b>כותרת:</
 //-- RA_VIEWTASK MESSAGES
 $pgv_lang["view_task"]		= "התבונן במשימה";
 $pgv_lang["add_new_comment"]	= "הוסף הערה חדשה";
-$pgv_lang["no_sources"]		= "##There are no sources associated with this task.";
-$pgv_lang["no_people"]		= "##There are no people associated with this task.";
 $pgv_lang["no_indi_tasks"]		= "אין משימות השייכות לאדם זה.";
 $pgv_lang["no_sour_tasks"]		= "אין משימות הקשורות למקור זה."; 
 $pgv_lang["edit_comment"]		= "ערוך הערה";
@@ -243,10 +189,6 @@ $pgv_lang["show_view_folders"]	= "הראה התבונן בתיקייות ";
 $pgv_lang["show_add_folder"]		= "הראה הוסף תיקייה";
 $pgv_lang["show_add_unlinked_source"]   = "הראה מבט הוסף מקור לא קשור";
 $pgv_lang["show_view_probabilities"]	= "הערה התבונן בהסתברויות";
-
-//-- COMMENT HELP
-$pgv_lang["comment_title_help"]	= "##Comment Title Help here.";
-$pgv_lang["comment_help"]		= "##Click here for help.";
 
 //-- Census Forms
 $pgv_lang["rows"]                       	= "מספר שורות";
