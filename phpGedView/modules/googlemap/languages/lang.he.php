@@ -72,7 +72,6 @@ $pgv_lang["googlemap_coord"]        	= "הצג קוארדינטות של המפ�
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   	= "ערוך מיקומים גיאוגרפיים";
-$pgv_lang["pl_no_places_found"]     	= "לא נמצאו מקומות";
 $pgv_lang["pl_zoom_factor"]         	= "מקדם זום";
 $pgv_lang["pl_place_icon"]          	= "צלמית";
 $pgv_lang["pl_edit"]                	= "ערוך מיקום גיאוגרפי";
