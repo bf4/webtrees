@@ -1092,7 +1092,8 @@ class IndividualControllerRoot extends BaseController {
 				<td></td>
 				<td class="descriptionbox rela">
 					<input id="checkbox_note2" type="checkbox" <?php if ($SHOW_LEVEL2_NOTES) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_note2');" />
-					<label for="checkbox_note2"><?php echo "2 NOTE"?></label>
+					<label for="checkbox_note2"><?php echo $pgv_lang["show_fact_notes"];?></label>
+					<?php print_help_link("show_fact_sources_help", "qm", "show_fact_notes");?>
 				</td>
 			</tr>
 			<?php
@@ -1107,12 +1108,10 @@ class IndividualControllerRoot extends BaseController {
 				}
 				$FACT_COUNT++;
 			}
-			if ($SHOW_LEVEL2_NOTES) {
-				// 2nd level notes/sources [ 1712181 ]
-				$this->indi->add_family_facts(false);
-				foreach ($this->getIndiFacts() as $key => $factrec) {
-					print_main_notes($factrec[1], 2, $this->pid, $factrec[0], true);
-				}
+			// 2nd level notes/sources [ 1712181 ]
+			$this->indi->add_family_facts(false);
+			foreach ($this->getIndiFacts() as $key => $factrec) {
+				print_main_notes($factrec[1], 2, $this->pid, $factrec[0], true);
 			}
 			if ($this->get_note_count()==0) print "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab2"]."</td></tr>\n";
 			//-- New Note Link
@@ -1165,7 +1164,8 @@ class IndividualControllerRoot extends BaseController {
 				<td></td>
 				<td class="descriptionbox rela">
 					<input id="checkbox_sour2" type="checkbox" <?php if ($SHOW_LEVEL2_NOTES) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_sour2');" />
-					<label for="checkbox_sour2"><?php echo "2 SOUR"?></label>
+					<label for="checkbox_sour2"><?php echo $pgv_lang["show_fact_sources"];?></label>
+					<?php print_help_link("show_fact_sources_help", "qm", "show_fact_sources");?>
 				</td>
 			</tr>
 			<?php
@@ -1180,12 +1180,10 @@ class IndividualControllerRoot extends BaseController {
 				}
 				$FACT_COUNT++;
 			}
-			if ($SHOW_LEVEL2_NOTES) {
-				// 2nd level sources [ 1712181 ]
-				$this->indi->add_family_facts(false);
-				foreach ($this->getIndiFacts() as $key => $factrec) {
-					print_main_sources($factrec[1], 2, $this->pid, $factrec[0], true);
-				}
+			// 2nd level sources [ 1712181 ]
+			$this->indi->add_family_facts(false);
+			foreach ($this->getIndiFacts() as $key => $factrec) {
+				print_main_sources($factrec[1], 2, $this->pid, $factrec[0], true);
 			}
 			if ($this->get_source_count()==0) print "<tr><td id=\"no_tab3\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab3"]."</td></tr>\n";
 			//-- New Source Link

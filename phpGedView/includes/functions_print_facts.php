@@ -862,9 +862,11 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 		$srec = substr($factrec, $spos1, $spos2-$spos1);
 		if (!showFact("SOUR", $pid) || FactViewRestricted($pid, $factrec)) return false;
 		if (displayDetailsById($sid, "SOUR")) {
-			if ($level==2) print "<tr class=\"row_sour2 rela\">";
+			if ($level==2) print "<tr class=row_sour2>";
 			else print "<tr>";
-			print "<td class=\"descriptionbox $styleadd center width20\">";
+			print "<td class=\"descriptionbox";
+			if ($level==2) print " rela";
+			print " $styleadd center width20\">";
 			if ($level==1) echo "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" alt=\"\" /><br />";
 			$temp = preg_match("/^\d (\w*)/", $factrec, $factname);
 			echo $factarray[$factname[1]];
@@ -1104,9 +1106,11 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 				print_main_notes($factrec, $level, $pid, $linenum, $noedit);
 			}
 		}
-		if ($level==2) print "<tr class=\"row_note2 rela\">";
+		if ($level==2) print "<tr class=\"row_note2\">";
 		else print "<tr>";
-		print "<td valign=\"top\" class=\"descriptionbox $styleadd center width20\">";
+		print "<td valign=\"top\" class=\"descriptionbox";
+		if ($level==2) print " rela";
+		print " $styleadd center width20\">";
 		//print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\" alt=\"\" /><br />";
 		if ($level<2) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\" alt=\"\" /><br />".$factarray["NOTE"];
 		else {

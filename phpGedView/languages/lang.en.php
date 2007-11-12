@@ -438,6 +438,8 @@ $pgv_lang["no_tab3"]				= "There are no Source citations for this individual.";
 $pgv_lang["no_tab4"]				= "There are no media objects for this individual.";
 $pgv_lang["no_tab5"]				= "There are no close relatives for this individual.";
 $pgv_lang["no_tab6"]				= "There are no research logs attached to this individual.";
+$pgv_lang["show_fact_sources"]		= "Show all sources";
+$pgv_lang["show_fact_notes"]		= "Show all notes";
 
 //-- FAMILY FILE MESSAGES
 $pgv_lang["family_info"]			= "Family Information";
