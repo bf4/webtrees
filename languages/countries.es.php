@@ -339,6 +339,7 @@ $altCountryNames["MMR"]="Birmania";
 $altCountryNames["NLD"]="Holanda";
 $altCountryNames["SUN"]="Unión Soviética";
 $altCountryNames["TLS"]="Timor Oriental";
+$altCountryNames["USA"]="Estados Unidos";
 $altCountryNames["VAT"]="Santa Sede";
 $altCountryNames["WSM"]="Samoa Occidental";
 
