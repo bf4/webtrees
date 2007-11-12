@@ -320,6 +320,9 @@ $pgv_lang["no_tab3"]					= "Zu dieser Person gibt es keine Quellenangaben.";
 $pgv_lang["no_tab4"]					= "Zu dieser Person gibt es keine Multimedia Objekte.";
 $pgv_lang["no_tab5"]					= "Zu dieser Person gibt es keine direkte Verwandschaft.";
 $pgv_lang["no_tab6"]					= "Zu dieser Person gibt es keine Forschung Protokolle.";
+$pgv_lang["show_fact_sources"]			= "Zeige alle Quellen";
+$pgv_lang["show_fact_notes"]			= "Zeige alle Bemerke";
+
 //-- FAMILY FILE MESSAGES
 $pgv_lang["family_info"]				= "Familien Informationen";
 $pgv_lang["family_group_info"]			= "Informationen zur Familiengruppe";
@@ -332,6 +335,7 @@ $pgv_lang["children"]					= "Kinder";
 $pgv_lang["no_children"]				= "Keine Kinder eingetragen";
 $pgv_lang["childless_family"]			= "Diese Familie blieb kinderlos";
 $pgv_lang["parents_timeline"]			= "Ehepaar in Lebensspannen-Ansicht zeigen";
+
 //-- CLIPPINGS FILE MESSAGES
 $pgv_lang["clip_cart"]					= "Sammelbehälter";
 $pgv_lang["which_links"]				= "Welche Verbindungen dieser Familie möchten Sie noch hinzufügen?";
