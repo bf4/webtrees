@@ -233,12 +233,6 @@ function showchanges() {
 if (file_exists("modules/lightbox/album.php")) {
 	include_once ("modules/lightbox/lb_config.php");
 	include_once ("modules/lightbox/functions/lb_indi_tabs_" . $mediatab . ".php");
-	if ($theme_name=="Minimal") {
-		// Force icon options to "text" when we're dealing with the Minimal theme
-		if ($LB_AL_HEAD_LINKS!="none") $LB_AL_HEAD_LINKS = "text";
-		if ($LB_AL_THUMB_LINKS!="none") $LB_AL_THUMB_LINKS = "text";
-		if ($LB_ML_THUMB_LINKS!="none") $LB_ML_THUMB_LINKS = "text";
-	}
 }else{
 ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
@@ -608,7 +602,12 @@ if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 
 		// ---------- Help link --------------------
 		print "<a href=\"" . $lbHelpFile . "\" rel='clearbox(500,760,click)' title=\"" . $pgv_lang["page_help"] . "\" >";
-        print "<img src=\"".$PGV_IMAGE_DIR."/small/help.gif\" class=\"icon\" title=\"" . $pgv_lang["page_help"] . "\" />" ;
+		if ($theme_name=="Minimal") {
+			// Force icon options to "text" when we're dealing with the Minimal theme
+			print $pgv_lang["page_help"];
+		}else{
+			print "<img src=\"".$PGV_IMAGE_DIR."/small/help.gif\" class=\"icon\" title=\"" . $pgv_lang["page_help"] . "\" />" ;
+		}
         print "</a>" ;
 
 		// Header info ---------------------------------------------------
