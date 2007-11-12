@@ -35,7 +35,7 @@ $pgv_lang["googlemap"]              = "Mapa";
 $pgv_lang["no_gmtab"]               = "No hay datos de mapa para esta persona";
 $pgv_lang["gm_disabled"]            = "Módulo GoogleMap desactivado";
 
-$pgv_lang['gm_redraw_map']          = "Redibujar mapa";
+$pgv_lang["gm_redraw_map"]          = "Redibujar mapa";
 $pgv_lang["gm_map"]                 = "Mapa";
 $pgv_lang["gm_satellite"]           = "Satélite";
 $pgv_lang["gm_hybrid"]              = "Híbrido";
@@ -75,7 +75,6 @@ $pgv_lang["googlemap_coord"]        = "Mostrar coordenadas del mapa";
 
 // Texts used on the Places location page
 $pgv_lang["edit_place_locations"]   = "Editar las posiciones geográficas de los lugares";
-$pgv_lang["pl_no_places_found"]     = "No se encontraron lugares";
 $pgv_lang["pl_zoom_factor"]         = "Factor de aumento";
 $pgv_lang["pl_place_icon"]          = "Icono";
 $pgv_lang["pl_edit"]                = "Modificar la posición geográfica";
@@ -116,20 +115,20 @@ $pgv_lang["list_inactive"]        	= "Haga clic aquí para mostrar los lugares i
 
 //Placecheck specific text
 $pgv_lang["placecheck"]				= "Comprobación de lugares";
-$pgv_lang['placecheck_text']		= "Esto listará todos los sitios del archivo GEDCOM seleccionado. Por defecto NO SE INCLUIRÁN lugares que que corresponden completamente entre el archivo GEDCOM y las tablas GoogleMap";
-$pgv_lang['placecheck_top']			= "Nivel más alto de la Jerarquía de Lugares";
-$pgv_lang['placecheck_one']			= "Lugar de Nivel Uno";
-$pgv_lang['placecheck_select1']		= "Seleccione el nivel más alto...";
-$pgv_lang['placecheck_select2']		= "Seleccione siguiente nivel...";
-$pgv_lang['placecheck_key']			= "Explicación de los colores usados a continuación";
-$pgv_lang['placecheck_key1']		= "este lugar y sus coordenadas no existe en las tablas de GoogleMap";
-$pgv_lang['placecheck_key2']		= "este sitio existe en las tablas de GoogleMap, pero no tiene coordenadas";
-$pgv_lang['placecheck_key3']		= "este lugar está en blanco en su archivo GEDCOM. Debería agregarse a los sitios<br/>GoogleMap como \"desconocido\" con las coordenadas de su nivel superior<br/>antes de agregar ningún otro lugar al siguiente nivel";
-$pgv_lang['placecheck_key4']		= "el nivel de este lugar está en blanco en su archivo GEDCOM, pero existe como 'desconocido'<br/>en la tabla de lugares GoogleMap con coordenadas. No se requiere ninguna acción<br/>hasta que el nivel que falta se pueda introducir";
-$pgv_lang['placecheck_head']		= "Lista de lugares del archivo GEDCOM";
-$pgv_lang['placecheck_gedheader']	= "Datos de lugares en archivo GEDCOM<br/>(etiqueta 2 PLAC)";
-$pgv_lang['placecheck_gm_header']	= "Datos de la tabla de lugares GoogleMap";
-$pgv_lang['placecheck_unique']		= "Total de lugares distintos";
+$pgv_lang["placecheck_text"]		= "Esto listará todos los sitios del archivo GEDCOM seleccionado. Por defecto NO SE INCLUIRÁN lugares que que corresponden completamente entre el archivo GEDCOM y las tablas GoogleMap";
+$pgv_lang["placecheck_top"]			= "Nivel más alto de la Jerarquía de Lugares";
+$pgv_lang["placecheck_one"]			= "Lugar de Nivel Uno";
+$pgv_lang["placecheck_select1"]		= "Seleccione el nivel más alto...";
+$pgv_lang["placecheck_select2"]		= "Seleccione siguiente nivel...";
+$pgv_lang["placecheck_key"]			= "Explicación de los colores usados a continuación";
+$pgv_lang["placecheck_key1"]		= "este lugar y sus coordenadas no existe en las tablas de GoogleMap";
+$pgv_lang["placecheck_key2"]		= "este sitio existe en las tablas de GoogleMap, pero no tiene coordenadas";
+$pgv_lang["placecheck_key3"]		= "este lugar está en blanco en su archivo GEDCOM. Debería agregarse a los sitios<br/>GoogleMap como \"desconocido\" con las coordenadas de su nivel superior<br/>antes de agregar ningún otro lugar al siguiente nivel";
+$pgv_lang["placecheck_key4"]		= "el nivel de este lugar está en blanco en su archivo GEDCOM, pero existe como 'desconocido'<br/>en la tabla de lugares GoogleMap con coordenadas. No se requiere ninguna acción<br/>hasta que el nivel que falta se pueda introducir";
+$pgv_lang["placecheck_head"]		= "Lista de lugares del archivo GEDCOM";
+$pgv_lang["placecheck_gedheader"]	= "Datos de lugares en archivo GEDCOM<br/>(etiqueta 2 PLAC)";
+$pgv_lang["placecheck_gm_header"]	= "Datos de la tabla de lugares GoogleMap";
+$pgv_lang["placecheck_unique"]		= "Total de lugares distintos";
 $pgv_lang["placecheck_zoom"]        = "Zoom=";
 $pgv_lang["placecheck_options"]     = "Listar opciones para la comprobación de lugares";
 $pgv_lang["placecheck_filter_text"] = "Opciones de filtrado de listas";

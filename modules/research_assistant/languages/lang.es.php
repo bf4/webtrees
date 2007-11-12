@@ -58,9 +58,6 @@ $pgv_lang["auto_search_text"]	= "Búsqueda automática";
 $pgv_lang["task_list"]			= "Tareas";
 $pgv_lang["task_list_text"]		= "En esta área se muestran las tareas que ha creado. Haga clic en <b>Ver</b> para ver las tareas.";
 
-// -- HELP COMMENTS
-$pgv_lang["help_comments"] = "Aquí puede añadir comentarios.  Otras personas pueden verlas y añadir sus propios comentarios.";
-
 // -- MENU ITEM MESSAGES
 $pgv_lang["my_tasks"]							= "Mis tareas";
 $pgv_lang["add_task"]							= "Agregar tarea";
@@ -70,17 +67,12 @@ $pgv_lang["up_folder"]							= "Subir a la carpeta superior";
 $pgv_lang["edit_folder"]						= "Agregar/Modificar Carpeta";
 $pgv_lang["gen_tasks"]							= "Auto-generar tareas";
 
-
 // -- RA GENERAL MESSAGES
 $pgv_lang["edit_task"]							= "Modificar tarea";
 $pgv_lang["completed"]							= "Completada";
 $pgv_lang["complete"]							= "Completada";
 $pgv_lang["incomplete"]							= "Incompleta";
-$pgv_lang["comres"]								= "Comentarios/Resultados";
-$pgv_lang["description"]						= "Descripción";
 $pgv_lang["created"]							= "Creada";
-$pgv_lang["modified"]							= "Modificado";
-$pgv_lang["folder_list"]						= "Lista de carpetas";
 $pgv_lang["details"]							= "Detalles";
 $pgv_lang["result"]                     		= "Resultado";
 $pgv_lang["okay"]                               = "Aceptar";
@@ -99,7 +91,7 @@ $pgv_lang["FormBuilder"]						= "Constructor de formularios";
 $pgv_lang["FormName"]							= "Introduzca el nombre del formulario";
 $pgv_lang["MultiplePeople"]						= "¿Se aplica este formulario a múltiples personas?";
 $pgv_lang["EnterGEDCOMExtension"]				= "Introduzca por favor la extensión GEDCOM para el tipo del hecho del formulario";
-$pgv_lang['FormDesciption']						= "Introduzca por favor una descripción para el formulario";
+$pgv_lang["FormDesciption"]						= "Introduzca por favor una descripción para el formulario";
 $pgv_lang["FormGeneration"]						= "Completada la generación del formulario";
 $pgv_lang["CustomField"]						= "Nombre del campo personalizado";
 $pgv_lang["txt"]								= "Texto";
@@ -133,17 +125,13 @@ $pgv_lang["ViewProbExplanation"]				= "Esta página analiza los datos del GEDCOM
 
 // -- RA_FOLDER MESSAGES
 $pgv_lang["Folder"]                             = "Carpeta en el servidor";
-$pgv_lang["Edit_Task"]                 			= "Modificar tarea";
 $pgv_lang["Edit_Gen_Task"]                 		= "Modificar la tarea generada";
-$pgv_lang["End_Date"]                 			= "Fecha de fin";
 $pgv_lang["Start_Date"]                 		= "Fecha de comienzo";
 $pgv_lang["Task_Name"]                			= "Nombre de la tarea";
 $pgv_lang["Folder_Name"]                		= "Nombre de la carpeta";
 $pgv_lang["Folder_View"]                		= "Vista de carpetas";
 $pgv_lang["Task_View"]                  		= "Vista de tareas";
 $pgv_lang["page_header"]						= "Carpetas del ayudante de investigación";
-$pgv_lang["folder_new"]							= "Crear nueva carpeta";
-$pgv_lang["folder_delete_check"]				= "¿Está seguro de querer borrar esta carpeta?";
 $pgv_lang["no_folder_name"]             		= "Debe rellenarse el campo del nombre de carpeta.";
 $pgv_lang["add_folder"]                 		= "Agregar carpeta";
 $pgv_lang["folder_name"]                		= "Nombre de carpeta";
@@ -157,53 +145,13 @@ $pgv_lang["folder_problem"]             		= "Ha habido problemas agregando su ca
 // -- Missing Information Help 
 $pgv_lang["ra_missing_info_help"] = "Esta área muestra la información que falta acerca del registro. Seleccione una casilla y una carpeta y haga clic en <b>Agregar Tarea</b> para crear una tarea para el dato que falta. Las tareas existentes mostrarán <b>Ver</b> en vez de una casilla.<br />";
 
-// -- RA_EDITFOLDER MESSAGES	
-$pgv_lang["edit_research_folder"]			= "Modificar la carpeta de investigación";
-$pgv_lang["folder_not_exist"]				= "Esta carpeta no existe: ";
-$pgv_lang["folder_parent"]					= "Carpeta Superior";
-$pgv_lang["parent_id"]						= "Ninguna";
-$pgv_lang["folder_users"]					= "Otros usuarios que pueden ver esta carpeta";
-
-// -- RA_EDITLOG MESSAGES
-$pgv_lang["edit_research_log"]				= "Modificar el diario de investigación";
-$pgv_lang["log_not_exist"]					= "Este diario no existe: ";
-
-// -- RA_LOG MESSAGES
-$pgv_lang["edit_log_entry"]					= "Modificar entrada en el diario de investigación";
-$pgv_lang["log_no_entry"]					= "ERROR: No tiene permiso para acceder a este elemento.";
-$pgv_lang["log_modified"]					= "Último cambio en";
-$pgv_lang["log_modified_by"]				= "Último cambio por";
-$pgv_lang["log_edit_entry"]					= "Modificar esta entrada";
-
 // -- RA_LISTLOGS MESSAGES
-$pgv_lang["research_logs"]					= "Diarios de investigación";
-$pgv_lang["log_no_entry_folder"]			= "ERROR: No tiene permiso para acceder a esta carpeta.";
-$pgv_lang["folder_sub"]						= "Subcarpetas";
-$pgv_lang["folder_sub_new"]					= "Crear nueva subcarpeta";
 $pgv_lang["task_entry"]						= "Crear nueva tarea.";
-$pgv_lang["log_show"]						= "Mostrar todos los diarios";
-$pgv_lang["log_show_uncomplete"]			= "Mostrar los diarios sin completar";
-$pgv_lang["log_show_complete"]				= "Mostrar los diarios completados";
-$pgv_lang["log_delete_check"]				= "¿Esta seguro de que quiere borrar esta entrada del diario?";
-
-// -- RA_FUNCTIONS MESSAGES
-$pgv_lang["function_folder_delete"]			= "ERROR: No se puede borrar esta carpeta porque aún contiene entradas de diario de investigación.<br />Primero mueva o borre estas entradas del diario de investigación e intente borrar la carpeta de nuevo después.";
-$pgv_lang["function_subfolder_delete"]		= "ERROR: No se puede borrar esta carpeta porque aún contiene subcarpetas.<br />Primero mueva o borre estas subcarpetas e intente borrar la carpeta de nuevo después.";
-$pgv_lang["folder_delete_ok"]				= "La carpeta #folder_name# se ha borrado con éxito.";
-$pgv_lang["folder_update_ok"]				= "La carpeta #folder_name# se ha actualizado con éxito.";
-$pgv_lang["folder_added"]					= "La carpeta #folder_name# se añadió con éxito.";
-
-//-- RA_SEARCH MESSAGES
-$pgv_lang["search_results"]					= "Resultados de la búsqueda";
-$pgv_lang["nothing_found"]					= "No se encontraron diarios con correspondencias.";
 
 //-- ERROR MESSAGES
 $pgv_lang["no_folder"]						= "No existe ninguna carpeta aún. Cree por favor una nueva carpeta antes.";
 
 //-- HELP MESSAGES
-$pgv_lang["help_rs_folders.php"]			= "Carpetas del ayudante de investigación<br /> #pgv_lang[sorry]#";
-$pgv_lang["help_rs_editfolder.php"]			= "Modificar carpetas del ayudante de investigación<br />#pgv_lang[sorry]#";
-$pgv_lang["help_rs_editlog.php"]			= "Modificar diario del ayudante de investigación<br />#pgv_lang[sorry]#";
 $pgv_lang["ra_fold_name_help"]				= "~Vista de carpeta~<ul><li><b>Nombre de la carpeta:</b> Esta columna contiene los nombres de las carpetas que ha creado.</li><li><b>Descripción:</b> Esta columna contiene la descripción de las carpetas.</li></ul>";
 $pgv_lang["ra_add_task_help"]				= "~Agregar Nueva Tarea~<ul><li><b>Título:</b> Esto debería contener el título de la tarea que está agregando.</li><li><b>Carpeta:</b> En este campo debería asignar a qué carpeta quiere que vaya su nueva tarea.</li><li><b>Descripción:</b> Introduzca una descripción de la tarea que desea agregar.</li><li><b>Fuentes:</b> Asignar las fuentes que tenga para la tarea.</li><li><b>Personas:</b> Asignar las personas asociadas para la nueva tarea.</li></ul>";
 $pgv_lang["ra_edit_folder_help"]			= "~Modificar carpeta~<ul><li><b>Nombre de la carpeta:</b> Aquí es donde debería añadir el título de la carpeta que está modificando.</b></li><li><b>Carpeta superior:</b> Aquí puede asignar la carpeta que contiene a ésta carpeta, si es una subcarpeta lo que está modificando.</b></li><li><b>Descripción de la carpeta:</b> Ésta es la descripción de la carpeta que está modificando.</b></li></ul>";
@@ -219,13 +167,11 @@ $pgv_lang["ra_edit_task_help"]				= "~Editar Tarea~<ul><li><b>Título:</b> Esto 
 //-- RA_VIEWTASK MESSAGES
 $pgv_lang["view_task"]						= "Ver tarea";
 $pgv_lang["add_new_comment"]				= "Agregar nuevo comentario";
-$pgv_lang["no_sources"]						= "No hay fuentes asociadas a esta tarea.";
-$pgv_lang["no_people"]						= "No hay personas asociadas a esta tarea.";
 $pgv_lang["no_indi_tasks"]					= "No hay tareas asociadas con esta persona.";
 $pgv_lang["no_sour_tasks"]					= "No hay tareas asociadas con esta fuente.";
 $pgv_lang["edit_comment"]					= "Modificar Comentario";
 $pgv_lang["comment_success"]				= "Su comentario se agregó con éxito.";
-$pgv_lang['comment_body']					= 'Comentario';
+$pgv_lang["comment_body"]					= 'Comentario';
 
 //-- RA_COMMENT MESSAGES
 $pgv_lang["comment_delete_check"]		= "¿Está seguro de que quiere borrar este comentario?";
@@ -247,10 +193,6 @@ $pgv_lang["show_add_folder"]		    = "Mostrar Agregar Carpeta";
 $pgv_lang["show_add_unlinked_source"]   = "Mostrar Agregar Fuente sin Vincular";
 $pgv_lang["show_view_probabilities"]	= "Mostrar Ver Probabilidades";
 
-//-- COMMENT HELP
-$pgv_lang["comment_title_help"]			= "Aquí va la ayuda sobre el Título del Comentario.";
-$pgv_lang["comment_help"]				= "Haga clic aquí para obtener ayuda.";
-
 //-- Census Forms
 $pgv_lang["rows"]                       = "Número de filas";
 $pgv_lang["state"]                      = "Estado/Provincia";
@@ -260,7 +202,7 @@ $pgv_lang["county"]                     = "Condado";
 $pgv_lang["city"]                       = "Población";
 $pgv_lang["complete_title"]				= "Completar una tarea";
 $pgv_lang["select_form"]				= "Seleccionar formulario";
-$pgv_lang['choose_form_label']			= "Escoja un formulario de investigación común:";
+$pgv_lang["choose_form_label"]			= "Escoja un formulario de investigación común:";
 $pgv_lang["book"]                 		= "Libro";
 $pgv_lang["folio"]                   	= "Folio";
 $pgv_lang["uk_county"]					= "Condado";
