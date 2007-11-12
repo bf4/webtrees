@@ -49,7 +49,7 @@
 		<dd id="door7"><a href="javascript:;" onclick="tabswitch(7); if (loadedTabs[7]) {ResizeMap(); ResizeMap();} return false;" ><?php print $pgv_lang["googlemap"]?></a></dd>
 	<?php } ?>
 	<dd id="door0"><a href="javascript:;" onclick="tabswitch(0); if (loadedTabs[7]) {ResizeMap(); ResizeMap();} return false;" ><?php print $pgv_lang["all"]?></a></dd>
-	<!--<dd id="door0" style={background-color:transparent;} style={border:0px;} ></dd> -->
+
  
 
 

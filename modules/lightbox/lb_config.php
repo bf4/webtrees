@@ -81,16 +81,14 @@ $LB_URL_HEIGHT = "600";				//  URL Window height in pixels [default 600]
 // Do not change parameters below this line -------------------------------------------
 	
 	// Tab id no for Lightbox
-	if 			($mediatab == 1 && userCanEdit(getUserName())) {
-		$tabno=7;
-	}else if 	($mediatab == 1 && !userCanEdit(getUserName())) {
-		$tabno=7;		
-	}else if	($mediatab == 0 && userCanEdit(getUserName())) {
-		$tabno=3;
-	}else{
-		$tabno=3;	
-	}
-	
+	$tabno=7;	
+
+	if ($theme_name=="Minimal") {
+		// Force icon options to "text" when we're dealing with the Minimal theme
+		if ($LB_AL_HEAD_LINKS!="none") $LB_AL_HEAD_LINKS = "text";
+		if ($LB_AL_THUMB_LINKS!="none") $LB_AL_THUMB_LINKS = "text";
+		if ($LB_ML_THUMB_LINKS!="none") $LB_ML_THUMB_LINKS = "text";
+	}	
 							
 	
 ?>

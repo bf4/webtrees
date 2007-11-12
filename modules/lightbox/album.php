@@ -29,7 +29,7 @@
 loadLangFile("lb_lang");
 
 // Get Javascript variables from lb_config.php --------------------------- 
-	include('modules/lightbox/lb_config.php'); 
+//	include('modules/lightbox/lb_config.php'); 
 //	include('modules/lightbox/functions/browser_detection_php_ar.php');
 
 global $LANGUAGE, $mediatab, $mediacnt;
