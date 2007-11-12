@@ -1,8 +1,8 @@
 <?php
 /**
- * Lightbox Album module for phpGedView
+ * Individual Page
  *
- * Display media Items using Lightbox
+ * Display all of the information about an individual
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2007  PHPGedView Development Team
@@ -22,22 +22,21 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @subpackage Module
+ * @subpackage Charts
  * @version $Id$
- * @author Brian Holland
  */
 ?>
 
 <?php if (file_exists("modules/googlemap/defaultconfig.php") && file_exists("modules/lightbox/album.php")) { ?>
-       var tabid = new Array('0', 'facts','notes','sources','lightbox2','relatives','researchlog','googlemap');
+       var tabid = new Array('0','facts','notes','sources','media','relatives','researchlog','googlemap','lightbox2');
        var loadedTabs = new Array(false,false,false,false,false,false,false,false);
 <?php }else if (file_exists("modules/googlemap/defaultconfig.php") && !file_exists("modules/lightbox/album.php")) { ?>
-       var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog','googlemap');
+       var tabid = new Array('0','facts','notes','sources','media','relatives','researchlog','googlemap');
        var loadedTabs = new Array(false,false,false,false,false,false,false,false);
 <?php }else if (!file_exists("modules/googlemap/defaultconfig.php") && file_exists("modules/lightbox/album.php")) { ?>
-       var tabid = new Array('0', 'facts','notes','sources','lightbox2','relatives','researchlog');
-       var loadedTabs = new Array(false,false,false,false,false,false,false);
+       var tabid = new Array('0','facts','notes','sources','media','relatives','researchlog','lightbox2');
+       var loadedTabs = new Array(false,false,false,false,false,false,false,false);
 <?php }else{ ?>
-       var tabid = new Array('0', 'facts','notes','sources','media','relatives','researchlog');
+       var tabid = new Array('0','facts','notes','sources','media','relatives','researchlog');
        var loadedTabs = new Array(false,false,false,false,false,false,false);
 <?php } ?>
