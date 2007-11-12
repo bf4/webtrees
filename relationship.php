@@ -811,7 +811,7 @@ else {
 }
 ?>
 </div>
-<div id="relationship_chart<?php print ($TEXT_DIRECTION=="ltr")?"":"_rtl";?>" style="position: relative; z-index: 1; width:98%;">
+<div id="relationship_chart<?php print ($TEXT_DIRECTION=="ltr")?"":"_rtl";?>" style="position:relative; z-index:1; width:98%;">
 <?php
 $maxyoffset = $Dbaseyoffset;
 if ((!empty($pid1))&&(!empty($pid2))) {
@@ -829,6 +829,9 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 			$_SESSION["relationships"][$path_to_find] = $node;
 			$yoffset = $Dbaseyoffset + 20;
 			$xoffset = $Dbasexoffset;
+			$colNum = 0;
+			$rowNum = 0;
+			$boxNum = 0;
 			$previous="";
 			$previous2="";
             $xs = $Dbxspacing+70;
@@ -855,8 +858,8 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 			   // need more yoffset before the first box ?
                if ($asc==1) $yoffset -= $dmin*($Dbheight+$ys);
                if ($asc==-1) $yoffset += $dmax*($Dbheight+$ys);
+				$rowNum = ($asc==-1) ? $depth : 0;
 			}
-
 			$maxxoffset = -1*$Dbwidth-20;
 			$maxyoffset = $yoffset;
 			if ($TEXT_DIRECTION=="ltr") {
@@ -867,7 +870,7 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 				$lArrow = $PGV_IMAGES["rarrow"]["other"];
 			}
 			foreach($node["path"] as $index=>$pid) {
-			    print "\r\n\r\n<!-- Node $index -->\r\n";
+			    print "\r\n\r\n<!-- Node:{$index} -->\r\n";
 				$linex = $xoffset;
 				$liney = $yoffset;
 				$mfstyle = "NN";
@@ -889,21 +892,24 @@ if ((!empty($pid1))&&(!empty($pid2))) {
                        $linex=$xoffset+$Dbwidth/2;
                        // put the box up or down ?
                        $yoffset += $asc*($Dbheight+$lh);
+						$rowNum += $asc;
                        if ($asc==1) $liney = $yoffset-$lh; else $liney = $yoffset+$Dbheight;
                        // need to draw a joining line ?
                        if ($previous=="child" and $previous2!="parent") {
                           $joinh = 3;
                           $joinw = $xs/2+2;
                           $xoffset += $Dbwidth+$xs;
+							$colNum ++;
+							//$rowNum is inherited from the box immediately to the left
                           $linex = $xoffset-$xs/2;
                           if ($asc==-1) $liney=$yoffset+$Dbheight; else $liney=$yoffset-$lh;
                           $joinx = $xoffset-$xs;
                           $joiny = $liney-2-($asc-1)/2*$lh;
-                          print "<div id=\"joina$index\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".($joinx+$Dbxspacing)."px; top:".($joiny+$Dbyspacing)."px; z-index:".(count($node["path"])-$index)."; \" align=\"center\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" align=\"left\" width=\"".$joinw."\" height=\"".$joinh."\" alt=\"\" /></div>\n";
+                          print "<div id=\"joina$index\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".($joinx+$Dbxspacing)."px; top:".($joiny+$Dbyspacing)."px; z-index:-100; \" align=\"center\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" align=\"left\" width=\"".$joinw."\" height=\"".$joinh."\" alt=\"\" /></div>\n";
                           $joinw = $xs/2+2;
                           $joinx = $joinx+$xs/2;
                           $joiny = $joiny+$asc*$lh;
-                          print "<div id=\"joinb$index\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".($joinx+$Dbxspacing)."px; top:".($joiny+$Dbyspacing)."px; z-index:".(count($node["path"])-$index)."; \" align=\"center\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" align=\"left\" width=\"".$joinw."\" height=\"".$joinh."\" alt=\"\" /></div>\n";
+                          print "<div id=\"joinb$index\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".($joinx+$Dbxspacing)."px; top:".($joiny+$Dbyspacing)."px; z-index:-100; \" align=\"center\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" align=\"left\" width=\"".$joinw."\" height=\"".$joinh."\" alt=\"\" /></div>\n";
                        }
                        $previous2=$previous;;
                        $previous="parent";
@@ -915,6 +921,8 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 					if ($mfstyle=="F") $node["relations"][$index]="sister";
 					if ($mfstyle=="") $node["relations"][$index]="brother";
 					$xoffset += $Dbwidth+$Dbxspacing+70;
+					$colNum ++;
+					//$rowNum is inherited from the box immediately to the left
 					$line = $PGV_IMAGES["hline"]["other"];
 					$linex += $Dbwidth;
 					$liney += $Dbheight/2;
@@ -933,6 +941,8 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 					if ($mfstyle=="F") $node["relations"][$index]="wife";
 					if ($mfstyle=="") $node["relations"][$index]="husband";
 					$xoffset += $Dbwidth+$Dbxspacing+70;
+					$colNum ++;
+					//$rowNum is inherited from the box immediately to the left
 					$line = $PGV_IMAGES["hline"]["other"];
 					$linex += $Dbwidth;
 					$liney += $Dbheight/2;
@@ -961,21 +971,24 @@ if ((!empty($pid1))&&(!empty($pid2))) {
                        $linex = $xoffset+$Dbwidth/2;
                        // put the box up or down ?
                        $yoffset -= $asc*($Dbheight+$lh);
+                       $rowNum -= $asc;
                        if ($asc==-1) $liney = $yoffset-$lh; else $liney = $yoffset+$Dbheight;
                        // need to draw a joining line ?
                        if ($previous=="parent" and $previous2!="child") {
                           $joinh = 3;
                           $joinw = $xs/2+2;
                           $xoffset += $Dbwidth+$xs;
+							$colNum ++;
+							//$rowNum is inherited from the box immediately to the left
                           $linex = $xoffset-$xs/2;
                           if ($asc==1) $liney=$yoffset+$Dbheight; else $liney=$yoffset-($lh+$Dbyspacing);
                           $joinx = $xoffset-$xs;
                           $joiny = $liney-2+($asc+1)/2*$lh;
-                          print "<div id=\"joina$index\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".($joinx+$Dbxspacing)."px; top:".($joiny+$Dbyspacing)."px; z-index:".(count($node["path"])-$index)."; \" align=\"center\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" align=\"left\" width=\"".$joinw."\" height=\"".$joinh."\" alt=\"\" /></div>\n";
+                          print "<div id=\"joina$index\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".($joinx+$Dbxspacing)."px; top:".($joiny+$Dbyspacing)."px; z-index:-100; \" align=\"center\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" align=\"left\" width=\"".$joinw."\" height=\"".$joinh."\" alt=\"\" /></div>\n";
                           $joinw = $xs/2+2;
                           $joinx = $joinx+$xs/2;
                           $joiny = $joiny-$asc*$lh;
-                          print "<div id=\"joinb$index\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".($joinx+$Dbxspacing)."px; top:".($joiny+$Dbyspacing)."px; z-index:".(count($node["path"])-$index)."; \" align=\"center\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" align=\"left\" width=\"".$joinw."\" height=\"".$joinh."\" alt=\"\" /></div>\n";
+                          print "<div id=\"joinb$index\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".($joinx+$Dbxspacing)."px; top:".($joiny+$Dbyspacing)."px; z-index:-100; \" align=\"center\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["hline"]["other"]."\" align=\"left\" width=\"".$joinw."\" height=\"".$joinh."\" alt=\"\" /></div>\n";
                        }
                        $previous2=$previous;;
                        $previous="child";
@@ -993,14 +1006,14 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 
 				if ($index>0) {
 					if ($TEXT_DIRECTION=="rtl" && $line!=$PGV_IMAGES["hline"]["other"]) {
-						print "<div id=\"line$index\" dir=\"ltr\" style=\"background:none; position:absolute; right:".($plinex+$Dbxspacing)."px; top:".($liney+$Dbyspacing)."px; width:".($lw+$lh*2)."px; z-index:".(count($node["path"])-$index)."; \" align=\"right\">";
+						print "<div id=\"line$index\" dir=\"ltr\" style=\"background:none; position:absolute; right:".($plinex+$Dbxspacing)."px; top:".($liney+$Dbyspacing)."px; width:".($lw+$lh*2)."px; z-index:-100; \" align=\"right\">";
 						print "<img src=\"$PGV_IMAGE_DIR/$line\" align=\"right\" width=\"$lw\" height=\"$lh\" alt=\"\" />\n";
 						print "<br />";
 						print $pgv_lang[$node["relations"][$index]]."\n";
 						print "<img src=\"$arrow_img\" border=\"0\" align=\"middle\" alt=\"\" />\n";
 					}
 					else {
-						print "<div id=\"line$index\" style=\"background:none;  position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".($plinex+$Dbxspacing)."px; top:".($liney+$Dbyspacing)."px; width:".($lw+$lh*2)."px; z-index:".(count($node["path"])-$index)."; \" align=\"".($lh==3?"center":"left")."\"><img src=\"$PGV_IMAGE_DIR/$line\" align=\"left\" width=\"$lw\" height=\"$lh\" alt=\"\" />\n";
+						print "<div id=\"line$index\" style=\"background:none;  position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".($plinex+$Dbxspacing)."px; top:".($liney+$Dbyspacing)."px; width:".($lw+$lh*2)."px; z-index:-100; \" align=\"".($lh==3?"center":"left")."\"><img src=\"$PGV_IMAGE_DIR/$line\" align=\"left\" width=\"$lw\" height=\"$lh\" alt=\"\" />\n";
 						print "<br />";
 						print "<img src=\"$arrow_img\" border=\"0\" align=\"middle\" alt=\"\" />\n";
 						if ($lh == 3) print "<br />"; // note: $lh==3 means horiz arrow
@@ -1008,7 +1021,17 @@ if ((!empty($pid1))&&(!empty($pid2))) {
 					}
 					print "</div>\n";
 				}
-				print "<div id=\"box$pid.0\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".$pxoffset."px; top:".$pyoffset."px; width:".$Dbwidth."px; height:".$Dbheight."px; z-index:".(count($node["path"])-$index)."; \"><table><tr><td colspan=\"2\" width=\"$Dbwidth\" height=\"$Dbheight\">";
+				// Determine the z-index for this box
+			    $boxNum ++;
+				if ($TEXT_DIRECTION=="rtl" && $BROWSERTYPE=="mozilla") {
+			    	if ($pretty) $zIndex = ($colNum * $depth - $rowNum + $depth);
+			    	else $zIndex = $boxNum;
+		    	} else {
+			    	if ($pretty) $zIndex = 200 - ($colNum * $depth + $rowNum);
+			    	else $zIndex = 200 - $boxNum;
+		    	}
+		    	
+				print "<div id=\"box$pid.0\" style=\"position:absolute; ".($TEXT_DIRECTION=="ltr"?"left":"right").":".$pxoffset."px; top:".$pyoffset."px; width:".$Dbwidth."px; height:".$Dbheight."px; z-index:".$zIndex."; \"><table><tr><td colspan=\"2\" width=\"$Dbwidth\" height=\"$Dbheight\">";
 				print_pedigree_person($pid, 1, ($view!="preview"));
 				print "</td></tr></table></div>\n";
 			}

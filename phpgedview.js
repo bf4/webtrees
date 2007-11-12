@@ -202,9 +202,18 @@ var show = false;
 			famlinks = document.getElementById("I"+boxid+"links");
 			divbox = document.getElementById("out-"+boxid);
 			parentbox = document.getElementById("box"+boxid);
+			if (!parentbox) parentbox = document.getElementById(pboxid+".0");
 			if (famlinks && divbox && parentbox) {
-				famlinks.style.top = "0px";
-				if (textDirection=="ltr") famleft = parseInt(divbox.style.width)+15;
+				divWidth = parseInt(divbox.style.width);
+				linkWidth = parseInt(famlinks.style.width);
+				parentWidth = parseInt(parentbox.style.width);
+				//alert('Widths div:'+divWidth+' parent:'+parentWidth+' links:'+linkWidth);
+				famlinks.style.top = "3px";
+				famleft = divWidth+8;
+				if (textDirection=="rtl") {
+					famleft -= (divWidth+linkWidth+5);
+					if (browserType!="mozilla") famleft -= 11;
+				}
 				pagewidth = document.documentElement.offsetWidth+document.documentElement.scrollLeft;
 				//alert(pagewidth);
 				if (famleft+parseInt(parentbox.style.left) > pagewidth-100) famleft=25;
