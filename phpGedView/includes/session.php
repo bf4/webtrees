@@ -337,7 +337,8 @@ if($WIN32) $seperator=";"; else $seperator = ":";
 //-- append our 'includes/' path to the include_path ini setting for ease of use.
 $ini_include_path = @ini_get('include_path');
 $includes_dir = dirname(@realpath(__FILE__));
-@ini_set('include_path', "{$includes_dir}{$seperator}{$ini_include_path}");
+$includes_dir .= $seperator.dirname($includes_dir);
+@ini_set('include_path', ".{$seperator}{$includes_dir}{$seperator}{$ini_include_path}");
 unset($ini_include_path, $includes_dir); // destroy some variables for security reasons.
 
 set_magic_quotes_runtime(0);

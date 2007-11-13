@@ -755,7 +755,7 @@ else
 					poster_id INT(10) UNSIGNED NOT NULL DEFAULT 1,
 					poster_ip VARCHAR(15),
 					poster_email VARCHAR(50),
-					message TEXT NOT NULL DEFAULT '',
+					message TEXT NOT NULL,
 					hide_smilies TINYINT(1) NOT NULL DEFAULT 0,
 					posted INT(10) UNSIGNED NOT NULL DEFAULT 0,
 					edited INT(10) UNSIGNED,
@@ -850,7 +850,7 @@ else
 					forum_id INT(10) UNSIGNED NOT NULL DEFAULT 0,
 					reported_by INT(10) UNSIGNED NOT NULL DEFAULT 0,
 					created INT(10) UNSIGNED NOT NULL DEFAULT 0,
-					message TEXT NOT NULL DEFAULT '',
+					message TEXT NOT NULL,
 					zapped INT(10) UNSIGNED,
 					zapped_by INT(10) UNSIGNED,
 					PRIMARY KEY (id)
@@ -899,7 +899,7 @@ else
 			$sql = 'CREATE TABLE '.$db_prefix."search_cache (
 					id INT(10) UNSIGNED NOT NULL DEFAULT 0,
 					ident VARCHAR(200) NOT NULL DEFAULT '',
-					search_data TEXT NOT NULL DEFAULT '',
+					search_data TEXT NOT NULL,
 					PRIMARY KEY (id)
 					) TYPE=MyISAM;";
 			break;
