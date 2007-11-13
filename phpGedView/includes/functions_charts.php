@@ -902,20 +902,21 @@ function get_sosa_name($sosa) {
 	
 		case "dutch":
 		    $sosaname = "";
-			if ($gen & 256) $sosaname .= $pgv_lang["sosa_11"];
-			if ($gen & 128) $sosaname .= $pgv_lang["sosa_10"];
-			if ($gen & 64) $sosaname .= $pgv_lang["sosa_9"];
-			if ($gen & 32) $sosaname .= $pgv_lang["sosa_8"];
-			if ($gen & 16) $sosaname .= $pgv_lang["sosa_7"];
-			if ($gen & 8) $sosaname .= $pgv_lang["sosa_6"];
-			if ($gen & 4) $sosaname .= $pgv_lang["sosa_5"];
+		    // Please leave the following strings untranslated
+			if ($gen & 256) $sosaname .= "hoog";
+			if ($gen & 128) $sosaname .= "opper";
+			if ($gen & 64) $sosaname .= "aards";
+			if ($gen & 32) $sosaname .= "voor";
+			if ($gen & 16) $sosaname .= "edel";
+			if ($gen & 8) $sosaname .= "stam";
+			if ($gen & 4) $sosaname .= "oud";
 			$gen = $gen - floor($gen / 4)*4;
-			if ($gen == 3) $sosaname .= $pgv_lang["sosa_4"].$pgv_lang["sosa_3"].$pgv_lang["sosa_2"];
-			if ($gen == 2) $sosaname .= $pgv_lang["sosa_3"].$pgv_lang["sosa_2"];
-			if ($gen == 1) $sosaname .= $pgv_lang["sosa_2"];
-			if ($sosa%2==0) $sosaname .= strtolower($pgv_lang["father"]);
-			else $sosaname .= strtolower($pgv_lang["mother"]);
-			$sosaname = str2upper(substr($sosaname, 0,1)).substr($sosaname,1);
+			if ($gen == 3) $sosaname .= "betovergroot";
+			if ($gen == 2) $sosaname .= "overgroot";
+			if ($gen == 1) $sosaname .= "groot";
+			if ($sosa%2==0) $sosaname .= $pgv_lang["father"];
+			else $sosaname .= $pgv_lang["mother"];
+			$sosaname = strtolower($sosaname);
 			break;
 	
 		case "finnish":
