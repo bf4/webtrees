@@ -81,15 +81,7 @@ $LB_URL_HEIGHT = "600";				//  URL Window height in pixels [default 600]
 // Do not change parameters below this line -------------------------------------------
 	
 	// Tab id no for Lightbox
-	if 			($mediatab == 1 && userCanEdit(getUserName())) {
-		$tabno=8;
-	}else if 	($mediatab == 1 && !userCanEdit(getUserName())) {
-		$tabno=8;		
-	}else if	($mediatab == 0 && userCanEdit(getUserName())) {
-		$tabno=3;
-	}else{
-		$tabno=3;	
-	}
+	$tabno=8;
 	
 							
 	

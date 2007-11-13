@@ -252,7 +252,7 @@ $i = 0;
             &nbsp;&nbsp;
             <input type="reset" tabindex="<?php $i++; print $i?>" value="<?php print $pgv_lang["reset"];?>" />
             &nbsp;&nbsp;				
-			<INPUT TYPE="button" VALUE="<?php print $pgv_lang["lb_toAlbumPage"];?>" onclick="javascript:window.location='individual.php?pid=<?php echo $pid;?>&tab=7'" /> 			
+			<INPUT TYPE="button" VALUE="<?php print $pgv_lang["lb_toAlbumPage"];?>" onclick="javascript:window.location='individual.php?pid=<?php echo $pid;?>&tab=8'" /> 			
         </td>
 
     </tr>
