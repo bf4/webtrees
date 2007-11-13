@@ -104,7 +104,7 @@ global $tmb;
 							}else{
 								$dwidth = 300;							
 							}
-							if ($imgwidth<300) $dwidth = $imgwidth;
+							if ($imgwidth<$dwidth) $dwidth = $imgwidth;
 							
 							// If Lightbox installed, open image with Lightbox
 							if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$filename) || eregi("\.jpeg",$filename) || eregi("\.gif",$filename) || eregi("\.png",$filename) ) ) { 
