@@ -553,6 +553,7 @@ if(empty($SEARCH_SPIDER)) {
 				        if ($TEXT_DIRECTION=="ltr") print "<td align=\"left\">";
 				        else print "<td align=\"right\">";
 				        print "<a href=\"javascript:ResizeMap()\">".$pgv_lang["gm_redraw_map"]."</a></td>\n";
+				        print "<td>&nbsp;</td>\n";
 				        if ($TEXT_DIRECTION=="ltr") print "<td align=\"right\">\n";
 				        else print "<td align=\"left\">\n";
 				        print "<a href=\"javascript:map.setMapType(G_NORMAL_MAP)\">".$pgv_lang["gm_map"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
@@ -560,8 +561,14 @@ if(empty($SEARCH_SPIDER)) {
 				        print "<a href=\"javascript:map.setMapType(G_HYBRID_MAP)\">".$pgv_lang["gm_hybrid"]."</a>\n";
 				        print "</td></tr>\n";
 				        if (userIsAdmin(getUserName())) {
-				            print "<tr><td align=\"center\" colspan=\"2\">\n";
+				            print "<tr><td align=\"left\">\n";
 				            print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+				            print "</td>\n";
+   				            print "<td align=\"center\">\n";
+				            print "<a href=\"module.php?mod=googlemap&pgvaction=places\">".$pgv_lang["edit_place_locations"]."</a>";
+				            print "</td>\n";
+   				            print "<td align=\"right\">\n";
+				            print "<a href=\"module.php?mod=googlemap&pgvaction=placecheck\">".$pgv_lang["placecheck"]."</a>";
 				            print "</td></tr>\n";
 				        }
 				        print "</table>\n";
