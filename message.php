@@ -110,7 +110,7 @@ if (($action=="send")&&(isset($_SESSION["good_to_send"]))&&($_SESSION["good_to_s
 			$sixmos = 60*60*24*30*6;	//-- timestamp for six months
 			foreach($users as $indexval => $tuser) {
 				// SEE Bug [ 1827547 ] Message to inactive users sent to newcomers
-				if ($tuser["verified_by_admin"]=="yes" && (time() - $tuser["sessiontime"] > $sixmos)) {
+				if ($tuser["sessiontime"]>0 && (time() - $tuser["sessiontime"] > $sixmos)) {
 					$toarray[] = $tuser["username"];
 				}
 				//-- not verified by registration past 6 months
