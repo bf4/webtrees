@@ -173,6 +173,7 @@ $factarray["FAMS:SPOUSE:DEAT:PLAC"] = "Hayat Arkadaşı Ölüm Yeri";
 $factarray["FAMC:HUSB:GIVN"] = "Babanın İlk Adı";
 $factarray["FAMS:SPOUSE:BIRT:PLAC"] = "Hayat Arkadaşın Doğum Yeri";
 $factarray["FAMC:WIFE:GIVN"] = "Annenin İlk Adı";
+$factarray["FAMS:CHIL:BIRT:PLAC"] = "Çocukların Doğum Yeri";
 $factarray["BIRT:PLAC"] = "Doğum Yeri";
 $factarray["DEAT:PLAC"] = "Ölüm Yeri";
 $factarray["CHR:PLAC"] = "Vaftiz eden yer ";
@@ -268,6 +269,9 @@ $factarray["_MARR_SIBL"] = "Kardeşinin evliliği";
 $factarray["_BIRT_HSIB"] = "Üvey kardeşinin doğumu";
 $factarray["_MARR_HSIB"] = "Üvey kardeşinin evliliği";
 $factarray["_DEAT_HSIB"] = "Üvey kardeşinin ölümü";
+$factarray["_BIRT_NEPH"] = "Erkek veya Kız yeğenin doğumu";
+$factarray["_MARR_NEPH"] = "Erkek veya Kız yeğenin evliliği";
+$factarray["_DEAT_NEPH"] = "Erken veya Kız yeğenin ölümü";
 $factarray["_DEAT_SIBL"] = "Kardeşinin ölümü";
 $factarray["_DEAT_GPAR"] = "Büyük ebeveynin ölümü";
 $factarray["_BIRT_FSIB"] = "Amcanın doğumu";
@@ -279,6 +283,8 @@ $factarray["_DEAT_MSIB"] = "Üvey annesinin ölümü";
 $factarray["_BIRT_COUS"] = "İlk kuzeninin doğumu";
 $factarray["_MARR_COUS"] = "İlk kuzeninin evliliği";
 $factarray["_DEAT_COUS"] = "İlk kuzeninin ölümü";
+$factarray["_FAMC_EMIG"] = "Ebeveynlerin göçü";
+$factarray["_FAMC_RESI"] = "Ebeveynlerin ikâmeti";
 
 // GEDCOM 5.5.1 related facts
 $factarray["ROMN"] = "Latince";
