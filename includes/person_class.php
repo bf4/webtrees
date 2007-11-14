@@ -373,9 +373,9 @@ class Person extends GedcomRecord {
 	 * get the birth year
 	 * @return string
 	 */
-	function getBirthYear(){
+	function getBirthYear($est = true){
 		// TODO - change the design to use julian days, not gregorian years.
-		$bdate = parse_date($this->getBirthDate());
+		$bdate = parse_date($this->getBirthDate($est));
 		return $bdate[0]['year'];
 	}
 
@@ -416,7 +416,7 @@ class Person extends GedcomRecord {
 	 */
 	function getDeathYear($est = true) {
 		// TODO - change the design to use julian days, not gregorian years.
-		$ddate = parse_date($this->getDeathDate());
+		$ddate = parse_date($this->getDeathDate($est));
 		return $ddate[0]['year'];
 	}
 
