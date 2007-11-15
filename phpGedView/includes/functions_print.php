@@ -2405,7 +2405,7 @@ function print_fact_date($factrec, $anchor=false, $time=false, $fact=false, $pid
 							print " ({$pgv_lang['age']} ".get_age_at_event($age, false).")";
 					}
 				}
-				if (GedcomDate::Compare($date, $death_date)>0) {
+				if ($fact!='DEAT' && GedcomDate::Compare($date, $death_date)>0) {
 					// After death, print time since death
 					$age=GedcomDate::GetAgeGedcom($death_date, $date);
 					if (!empty($age))
