@@ -193,9 +193,9 @@ function print_yahrzeit($block=true, $config='', $side, $index) {
 				print "<td class=\"list_value_wrap rela\">";
 				$anniv = $yahrzeit['anniv'];
 				if ($anniv==0)
-					print '&nbsp;';
+					print '<a name="0">&nbsp;</a>';
 				else
-					print $anniv;
+					print "<a name=\"{$anniv}\">{$anniv}</a>";
 				if ($config['allowDownload']=='yes') {
 					// hCalendar:dtstart and hCalendar:summary
 		//TODO does this work??
