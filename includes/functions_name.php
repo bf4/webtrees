@@ -271,7 +271,9 @@ function get_person_name($pid, $checkUnknown=true) {
 	if ($NAME_FROM_GEDCOM) {
 		$indirec = find_person_record($pid);
 		if (!$indirec) $indirec = find_updated_record($pid);
-		$name = get_name_in_record($indirec);
+		//$name = get_name_in_record($indirec);
+		//-- SEE bug [ 1830176 ] get_name_in_record() incorrect results
+		$name = get_gedcom_value("NAME", 1, $indirec, '', false);
 	}
 	else {
 		//-- first check if the person is in the cache
