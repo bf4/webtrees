@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1.3
+ - Fixed [ 1753047 ] Email/sync with account (yalnifj)
  - Fixed [ 1830176 ] get_name_in_record() incorrect results (yalnifj)
  - Fixed [ 1832387 ] No support for Latin-A in Places edit (canajun2eh)
  - fixed [ 1823749 ] Backup fails, 4.1.2 (yalnifj)
