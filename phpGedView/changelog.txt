@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1.3
+ - Fixed [ 1832387 ] No support for Latin-A in Places edit (canajun2eh)
  - fixed [ 1823749 ] Backup fails, 4.1.2 (yalnifj)
  - fixed [ 1827547 ] Message to inactive users sent to newcomers (yalnifj)
  - fixed [ 1825257 ] Delete one media file - all files with same name deleted (yalnifj)
