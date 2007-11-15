@@ -864,7 +864,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		var spfx=frm.SPFX.value;
 		var surn=frm.SURN.value;
 		var nsfx=frm.NSFX.value;
-		frm.NAME.value=trim(npfx+" "+givn+" /"+trim(spfx+" "+surn)+"/ "+nsfx);
+		document.getElementById('NAME').value=trim(npfx+" "+givn+" /"+trim(spfx+" "+surn)+"/ "+nsfx);
 		document.getElementById('NAME_display').innerHTML=frm.NAME.value;
 		// Married names inherit some NSFX values, but not these
 		nsfx=nsfx.replace(/^(I|II|III|IV|V|VI|Junior|Jr\.?|Senior|Sr\.?)$/i, '');
@@ -905,21 +905,56 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	 * convert a hidden field to a text box
 	 */
 	var oldName = "";
+	var manualChange = false;
 	function convertHidden(eid) {
 		var element = document.getElementById(eid);
 		if (element) {
 			if (element.type=="hidden") {
-				element.type="text";
+				//-- IE doesn't allow changing the "type" of an input field so we'll cludge it ( silly :P)
+				if (IE) {
+					var newInput = document.createElement('input');
+					newInput.setAttribute("type", "text");
+					newInput.setAttribute("name", element.Name);
+					newInput.setAttribute("id", element.id);
+					newInput.setAttribute("value", element.value);
+					newInput.setAttribute("onchange", element.onchange);
+					var parent = element.parentNode;
+					parent.replaceChild(newInput, element);
+					element = newInput;
+				}
+				else {
+					element.type="text";
+				}
 				element.size="40";
 				oldName = element.value;
+				manualChange = true;
 				var delement = document.getElementById(eid+"_display");
 				if (delement) {
 					delement.style.display='none';
+					//-- force FF ui to update the display
+					if (delement.innerHTML != oldName) {
+						oldName = delement.innerHTML;
+						element.value = oldName;
+					}
 				}
 			}
 			else {
 				manualChange = false;
-				element.type="hidden";
+				//-- IE doesn't allow changing the "type" of an input field so we'll cludge it ( silly :P)
+				if (IE) {
+					var newInput = document.createElement('input');
+					newInput.setAttribute("type", "hidden");
+					newInput.setAttribute("name", element.Name);
+					newInput.setAttribute("id", element.id);
+					newInput.setAttribute("value", element.value);
+					newInput.setAttribute("onchange", element.onchange);
+					var parent = element.parentNode;
+					parent.replaceChild(newInput, element);
+					element = newInput;
+				}
+				else {
+					element.type="hidden";
+				}
 				var delement = document.getElementById(eid+"_display");
 				if (delement) {
 					delement.style.display='inline';
@@ -934,7 +969,6 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	 * If the value changed set manualChange to true so that changing
 	 * the other fields doesn't change the NAME line
 	 */
-	var manualChange = false;
 	function updateTextName(eid) {
 		var element = document.getElementById(eid);
 		if (element) {
@@ -971,7 +1005,11 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	<?php
 	// Force the 1 NAME record to be rebuilt from the 2 XXXX parts
 	// This tidies up whitespace and removes "nicknames".
-	print "<script type='text/javascript'>updatewholename();</script>";
+	// See [ 1830176 ] - don't automatically update the 1 NAME line from 2 parts
+	// in case the user wants them to be different
+	// if the user actually makes a change in one of the parts then the updatewholename
+	// will be called and the 1 NAME updated
+	//print "<script type='text/javascript'>updatewholename();</script>";
 }
 
 /**
@@ -1374,8 +1412,8 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	}
 	else if (($fact=="NAME" && $upperlevel!='REPO') || $fact=="_MARNM") {
 		// Populated in javascript from sub-tags
-		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" onchange=\"updateTextName('".$element_id."');\">";
-		print "<span id=\"".$element_id."_display\"></span>";
+		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" onchange=\"updateTextName('".$element_id."');\" value=\"".PrintReady(htmlspecialchars($value))."\" >";
+		print "<span id=\"".$element_id."_display\">".PrintReady(htmlspecialchars($value))."</span>";
 		print " <a href=\"#edit_name\" alt=\"".$pgv_lang["edit_name"]."\" onclick=\"convertHidden('".$element_id."'); return false;\"> <img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]."\" border=\"0\" width=\"20\" alt=\"".$pgv_lang["edit_name"]."\" align=\"top\" /></a>";
 	} else {
 		// textarea
