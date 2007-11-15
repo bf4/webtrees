@@ -539,7 +539,7 @@ class IndividualControllerRoot extends BaseController {
 		//-- quickedit sub menu
 		if ($USE_QUICK_UPDATE) {
 			$submenu = new Menu($pgv_lang["quick_update_title"]);
-			$submenu->addOnclick("return quickEdit('".$this->pid."');");
+			$submenu->addOnclick("return quickEdit('".$this->pid."','','".$GEDCOM."');");
 			$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
 			$menu->addSubmenu($submenu);
 		}
