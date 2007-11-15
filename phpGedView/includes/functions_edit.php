@@ -855,6 +855,8 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	// Update the NAME and _MARNM fields from the name components
 	// and also display the value in read-only "gedcom" format.
 	function updatewholename() {
+		// don't update the name if the user manually changed it
+		if (manualChange) return;
 		// Update NAME field from components and display it
 		var frm =document.forms[0];
 		var npfx=frm.NPFX.value;
@@ -899,23 +901,47 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		}
 	}
 	
+	/**
+	 * convert a hidden field to a text box
+	 */
+	var oldName = "";
 	function convertHidden(eid) {
 		var element = document.getElementById(eid);
 		if (element) {
 			if (element.type=="hidden") {
 				element.type="text";
 				element.size="40";
+				oldName = element.value;
 				var delement = document.getElementById(eid+"_display");
 				if (delement) {
 					delement.style.display='none';
 				}
 			}
 			else {
+				manualChange = false;
 				element.type="hidden";
 				var delement = document.getElementById(eid+"_display");
 				if (delement) {
 					delement.style.display='inline';
 				}
+			}
+		}
+	}
+	
+	/**
+	 * if the user manually changed the NAME field, then update the textual 
+	 * HTML representation of it
+	 * If the value changed set manualChange to true so that changing
+	 * the other fields doesn't change the NAME line
+	 */
+	var manualChange = false;
+	function updateTextName(eid) {
+		var element = document.getElementById(eid);
+		if (element) {
+			if (element.value!=oldName) manualChange = true;
+			var delement = document.getElementById(eid+"_display");
+			if (delement) {
+				delement.innerHTML = element.value;
 			}
 		}
 	}
@@ -1348,7 +1374,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	}
 	else if (($fact=="NAME" && $upperlevel!='REPO') || $fact=="_MARNM") {
 		// Populated in javascript from sub-tags
-		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\">";
+		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" onchange=\"updateTextName('".$element_id."');\">";
 		print "<span id=\"".$element_id."_display\"></span>";
 		print " <a href=\"#edit_name\" alt=\"".$pgv_lang["edit_name"]."\" onclick=\"convertHidden('".$element_id."'); return false;\"> <img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]."\" border=\"0\" width=\"20\" alt=\"".$pgv_lang["edit_name"]."\" align=\"top\" /></a>";
 	} else {
@@ -1359,7 +1385,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			print "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value))."\" size=\"".$cols."\" dir=\"ltr\"";
 			if ($fact=="NPFX") print " onkeyup=\"wactjavascript_autoComplete(npfx_accept,this,event)\" autocomplete=\"off\" ";
 			// onKeyUp should suffice.  Why the others?
-			if (in_array($fact, $subnamefacts)) print " onBlur=\"updatewholename();\" onMouseOut=\"updatewholename();\" onKeyUp=\"updatewholename();\"";
+			if (in_array($fact, $subnamefacts)) print " onBlur=\"updatewholename();\" onKeyUp=\"updatewholename();\"";
 			if ($fact=="DATE") print " onblur=\"valid_date(this);\" onmouseout=\"valid_date(this);\"";
 			if ($fact=="LATI") print " onblur=\"valid_lati_long(this, 'N', 'S');\" onmouseout=\"valid_lati_long(this, 'N', 'S');\"";
 			if ($fact=="LONG") print " onblur=\"valid_lati_long(this, 'E', 'W');\" onmouseout=\"valid_lati_long(this, 'E', 'W');\"";
