@@ -628,7 +628,7 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
 		if (isset($ged)) {
 //			if ($TEXT_DIRECTION=="rtl") print getRLM() . "(".$GEDCOMS[$ged]["id"].")&nbsp;" . getRLM();
 //			else print "&nbsp;" . getLRM() . "(".$GEDCOMS[$ged]["id"].")" . getLRM();
-			print $GEDCOMS[$ged]["title"];
+			if (isset($GEDCOMS[$ged])) print $GEDCOMS[$ged]["title"];
 		}
 		else if ($source == "add_form") print $pgv_lang["add_gedcom"];
 		else if ($source == "upload_form") print $pgv_lang["upload_gedcom"];

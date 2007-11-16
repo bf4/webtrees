@@ -128,7 +128,7 @@ if (!(empty($SEARCH_SPIDER))) {
                 $surname_sublist = "no";
 }
 
-if (isset($alpha) && !isset($famalpha["$alpha"])) unset($alpha);
+if (isset($alpha) && !isset($famalpha["$alpha"])) $alpha="";
 
 if (count($famalpha) > 0) {
 	if (empty($SEARCH_SPIDER))
@@ -166,7 +166,7 @@ if (count($famalpha) > 0) {
 print "<br /><br />";
 
 if(empty($SEARCH_SPIDER)) {
-	if ($alpha != "@") {
+	if (isset($alpha) && $alpha != "@") {
 		if ($surname_sublist=="yes") {
 			print_help_link("skip_sublist_help", "qm", "skip_surnames");
 			print "<a href=\"famlist.php?alpha=".$alpha."&amp;surname_sublist=no&amp;show_all=".$show_all."&amp;ged=".$GEDCOM."\">".$pgv_lang["skip_surnames"]."</a>";
