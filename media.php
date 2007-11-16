@@ -339,7 +339,7 @@ if (check_media_structure()) {
 	 * @name $action->newdir
 	 */
 	if ($action == "newdir") {
-		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		// security checks, no names with . .. / \ in them
 		// add more if required
@@ -387,7 +387,7 @@ if (check_media_structure()) {
 	}
 
 	if ($action == "deletedir") {
-		print "<table class=\"list_table center width50\">";
+		print "<table class=\"list_table center width100\">";
 		print "<tr><td class=\"messagebox\">";
 		// Check if media directory and thumbs directory are empty
 		$clean = false;
@@ -527,7 +527,7 @@ if (check_media_structure()) {
 	 * @name $action->moveto
 	 */
 	if ($action=="moveto") {
-		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		// just in case someone fashions the right url
 
@@ -639,7 +639,7 @@ if (check_media_structure()) {
 	 * @name $action->thumbnail
 	 */
 	if ($action == "thumbnail") {
-		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		// TODO: add option to generate thumbnails for all images on page
 		// Cycle through $medialist and skip all exisiting thumbs
@@ -688,7 +688,7 @@ if (check_media_structure()) {
 
 	// Move single file to protected dir
 	if ($action == "moveprotected") {
-		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		if (strpos($filename,"../") !== false) {
 			// don't allow user to access directories outside of media dir
@@ -710,7 +710,7 @@ if (check_media_structure()) {
   
 	// Move single file to standard dir
 	if ($action == "movestandard") {
-		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		if (strpos($filename,"../") !== false) {
 			// don't allow user to access directories outside of media dir
@@ -730,7 +730,7 @@ if (check_media_structure()) {
 
 	// Move entire dir and all subdirs to protected dir
 	if ($action == "movedirprotected") {
-		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		print "<strong>".$pgv_lang["move_protected"]."<br />";
 		move_files(substr($directory,0,-1), true);
@@ -740,7 +740,7 @@ if (check_media_structure()) {
 
 	// Move entire dir and all subdirs to stanard dir
 	if ($action == "movedirstandard") {
-		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		print "<strong>".$pgv_lang["move_standard"]."<br />";
 		move_files(substr(get_media_firewall_path($directory),0,-1), false);
@@ -749,7 +749,7 @@ if (check_media_structure()) {
 	}
 
 	if ($action == "setpermswrite") {
-		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		print "<strong>".$pgv_lang["setperms_writable"]."<br />";
 		set_perms(substr($directory,0,-1), 0666, 0777);
@@ -758,7 +758,7 @@ if (check_media_structure()) {
 		$action="filter";
 	}
 	if ($action == "setpermsread") {
-		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		print "<strong>".$pgv_lang["setperms_readonly"]."<br />";
 		set_perms(substr($directory,0,-1), 0664, 0775);
@@ -769,7 +769,7 @@ if (check_media_structure()) {
   
 	// Upload media items
 	if ($action == "upload") {
-		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		$upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pgv_lang["file_too_big"],$pgv_lang["file_partial"], $pgv_lang["file_missing"]);
 		?>
@@ -1014,7 +1014,7 @@ if (check_media_structure()) {
 
 	// Delete file
 	if ($action == "deletefile") {
-		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		$xrefs = array($xref);
 		$onegedcom = true;
