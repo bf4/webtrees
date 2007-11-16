@@ -9,6 +9,7 @@
 =====================================================================
 
 Version 4.1.3
+ - Fixed [ 1822946 ] Missing reference to port number in $SERVER_URL (yalnifj)
  - Fixed [ 1586584 ] Minimal theme - Icons on some Indi page tabs (canajun2eh)
  - Fixed [ 1549501 ] Quick Edit - Name editing rarely works (yalnifj)
  - Fixed [ 1753047 ] Email/sync with account (yalnifj)
