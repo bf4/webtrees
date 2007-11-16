@@ -901,16 +901,20 @@ function get_sosa_name($sosa) {
 			break;
 	
 		case "dutch":
+			// reference: http://nl.wikipedia.org/wiki/Voorouder
+			// Our numbers are 2 less than those shown in the article.  We number parents
+			// as generation zero where the article numbers them as generation 2.
 		    $sosaname = "";
 		    // Please leave the following strings untranslated
-			if ($gen & 256) $sosaname .= "hoog";
-			if ($gen & 128) $sosaname .= "opper";
-			if ($gen & 64) $sosaname .= "aards";
-			if ($gen & 32) $sosaname .= "voor";
-			if ($gen & 16) $sosaname .= "edel";
-			if ($gen & 8) $sosaname .= "stam";
-			if ($gen & 4) $sosaname .= "oud";
-			$gen = $gen - floor($gen / 4)*4;
+		    if ($gen & 512) break;					// 512 or higher
+			if ($gen & 256) $sosaname .= "hoog";	// 256 to 511
+			if ($gen & 128) $sosaname .= "opper";	// 128 to 511
+			if ($gen & 64) $sosaname .= "aarts";	// 64 to 511
+			if ($gen & 32) $sosaname .= "voor";		// 32 to 511
+			if ($gen & 16) $sosaname .= "edel";		// 16 to 511
+			if ($gen & 8) $sosaname .= "stam";		// 8 to 511
+			if ($gen & 4) $sosaname .= "oud";		// 4 to 511
+			$gen = $gen & 3;
 			if ($gen == 3) $sosaname .= "betovergroot";
 			if ($gen == 2) $sosaname .= "overgroot";
 			if ($gen == 1) $sosaname .= "groot";
