@@ -81,6 +81,7 @@
 		<copy todir="${all.dir}">
 			<fileset dir=".">
 				<exclude name="build.xml" />
+				<exclude name="buildUpgradePatch.php" />
 				<exclude name="**/mymedia/**" />
 				<exclude name="**/mymedia" />
 				<exclude name="**/index/**" />
@@ -100,6 +101,7 @@
 		<copy todir="${basic.dir}">
 			<fileset dir=".">
 				<exclude name="build.xml" />
+				<exclude name="buildUpgradePatch.php" />
 				<exclude name="**/modules/**" />
 				<exclude name="**/places/**" />
 				<exclude name="**/languages/**" />
