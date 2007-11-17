@@ -1005,7 +1005,7 @@ function get_indi_names($indirec, $import=false) {
 			if (empty($surname)) $surname = "@N.N.";
 			//-- all ____ names get changed to @N.N.
 			if (preg_match("/^_+$/", $surname)>0) $surname="@N.N.";
-			$lname = preg_replace("/^[a-z0-9 \.\-\_\(\[]+/", "", $surname);
+			$lname = preg_replace("/^[a-z0-9 '\.\-\_\(\[]+/", "", $surname);
 			if (empty($lname)) $lname = $surname;
 			$letter = get_first_letter($lname, $import);
 			$letter = str2upper($letter);
@@ -1017,7 +1017,7 @@ function get_indi_names($indirec, $import=false) {
 			if (!empty($addname)) {
 				$surname = extract_surname($addname, false);
 				if (empty($surname)) $surname = "@N.N.";
-				$lname = preg_replace("/^[a-z0-9 \.\-]+/", "", $surname);
+				$lname = preg_replace("/^[a-z0-9 '\.\-\_\(\[]+/", "", $surname);
 				if (empty($lname)) $lname = $surname;
 				$letter = get_first_letter($lname, $import);
 				$letter = str2upper($letter);
