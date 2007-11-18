@@ -339,6 +339,8 @@ $pgv_lang["no_tab3"]		= "Tällä henkilöllä ei ole lähteitä.";
 $pgv_lang["no_tab4"]		= "Tällä henkilöllä ei ole multimediakohteita.";
 $pgv_lang["no_tab5"]		= "Tällä henkilöllä ei ole lähisukulaisia.";
 $pgv_lang["no_tab6"]		= "Tälle henkilölle ei ole tutkimuslokia.";
+$pgv_lang["show_fact_notes"]		= "Näytä kaikki lisätiedot";
+$pgv_lang["show_fact_sources"]		= "Näytä kaikki lähteet";
 //-- FAMILY FILE MESSAGES
 $pgv_lang["family_info"]		= "Perhetieto";
 $pgv_lang["family_group_info"]		= "Perheen ryhmätieto";
