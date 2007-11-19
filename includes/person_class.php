@@ -178,7 +178,16 @@ class Person extends GedcomRecord {
 //			if (isset($indilist[$this->getXref()]['names'][$num-1])) $name = $indilist[$this->getXref()]['names'][$num-1][0];
 		}
 		else {
-			$namerec = get_sub_record(2, "2 ".$subtag, $this->gedrec, $num);
+			// Get the sub record from *all* the 1 NAME records
+			$all_name_recs=get_sub_record(1, "1 NAME", $this->gedrec, 1);
+			for ($i=2; ; ++$i) {
+				$tmp=get_sub_record(1, "1 NAME", $this->gedrec, $i);
+				if (empty($tmp))
+					break;
+				else
+					$all_name_recs.="\n".$tmp;
+			}
+			$namerec = get_sub_record(2, "2 ".$subtag, $all_name_recs, $num);
 			$name = get_gedcom_value($subtag, 2, $namerec, '', false);
 		}
 		if (empty($name)) return "";
