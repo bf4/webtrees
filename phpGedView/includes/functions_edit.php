@@ -674,6 +674,12 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		}
 	}
 
+	// Make sure there are two slashes in the name
+	if (preg_match('/\//', $name_fields['NAME'])==0)
+		$name_fields['NAME'].=' /';
+	if (preg_match('/\//', $name_fields['NAME'])==1)
+		$name_fields['NAME'].='/';
+
 	// Populate any missing 2 XXXX fields from the 1 NAME field
 	$npfx_accept=implode('|', $NPFX_accept);
 	if (preg_match ("/((($npfx_accept)\.?\s+)*)([^\r\n\/\"]*)(\"(.*)\")?\s*\/(([a-z]{2,3}\s+)*)(.*)\/\s*([^\r\n]*)/i", $name_fields['NAME'], $name_bits)) {
