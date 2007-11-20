@@ -1120,7 +1120,8 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 				$factwords = explode(" ", $factlines[1]); // 1 EVEN\n2 TYPE MDCL\n2 NOTE
 				$factname = $factwords[2]; // MDCL
 			}
-			print $factarray[$factname];
+			if (isset($factarray[$factname])) print $factarray[$factname];
+			else print $factname;
 		}
 		if (!$noedit && userCanEdit(getUserName())&&(!FactEditRestricted($pid, $factrec))&&($styleadd!="change_old")&&($view!="preview")) {
 			$menu = array();
