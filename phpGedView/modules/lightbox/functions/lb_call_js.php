@@ -1,5 +1,7 @@
 <?php
-global $tabno;
+global $tabno ;
+
+loadLangFile("lb_lang");	// Load Lightbox language file
 
 // Get Javascript variables from lb_config.php --------------------------- 
 //			include('modules/lightbox/lb_config.php'); 
@@ -12,13 +14,23 @@ global $tabno;
 			
 			?>
 			<SCRIPT LANGUAGE=Javascript>
+			
+			var CB_ImgDetails		= "<?php print "\- ".$pgv_lang["lb_details"]." \-";	?>";		// Detail Text
+			var CB_Detail_Info		= "<?php print $pgv_lang["lb_detail_info"];			?>";		// Detail Info			
+			var CB_Pause_SS			= "<?php print $pgv_lang["lb_pause_ss"]; 			?>";		// Pause Slideshow
+			var CB_Start_SS			= "<?php print $pgv_lang["lb_start_ss"]; 			?>";		// Start Slideshow
+			var CB_Music			= "<?php print $pgv_lang["lb_music"];				?>";		// Music On/Off 
+			var CB_Zoom_Off			= "<?php print $pgv_lang["lb_zoom_off"];			?>";		// Disable Zoom
+			var CB_Zoom_On			= "<?php print $pgv_lang["lb_zoom_on"];				?>";		// Zoom is Enabled		
+			var CB_Close_Win		= "<?php print $pgv_lang["lb_close_win"];			?>";		// Close Lightbox Window
+		
 			<?php if ($LB_MUSIC_FILE == "") { ?>
 				var myMusic = null;
 			<?php }else{ ?>
-				var myMusic 		= '<?php print $LB_MUSIC_FILE; ?>';  	// The music file
+				var myMusic 	= '<?php print $LB_MUSIC_FILE; 			?>';  	// The music file
 			<?php } ?>
-			var CB_SlShowTime 	= '<?php print $LB_SS_SPEED; 	?>';	// Slide show timer
-			var CB_Animation	= '<?php print $LB_TRANSITION; 	?>';	// Next/Prev Image transition effect
+			var CB_SlShowTime 	= '<?php print $LB_SS_SPEED; 			?>';	// Slide show timer
+			var CB_Animation	= '<?php print $LB_TRANSITION; 			?>';	// Next/Prev Image transition effect
 	
 			</script>	
 			<?php

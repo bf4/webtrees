@@ -54,42 +54,15 @@ print "\n\t<div class=\"center\"><h2>".$pgv_lang["multi_title"]."</h2></div>\n\t
 // Get Javascript variables from lb_config.php --------------------------- 
  if (file_exists("modules/lightbox/album.php")) {
 	include('modules/lightbox/lb_config.php');
+	include('modules/lightbox/functions/lb_call_js.php');	
+	
 	if ($theme_name=="Minimal") {
 		// Force icon options to "text" when we're dealing with the Minimal theme
 		if ($LB_AL_HEAD_LINKS!="none") $LB_AL_HEAD_LINKS = "text";
 		if ($LB_AL_THUMB_LINKS!="none") $LB_AL_THUMB_LINKS = "text";
 		if ($LB_ML_THUMB_LINKS!="none") $LB_ML_THUMB_LINKS = "text";
 	}
-?>
-	<SCRIPT LANGUAGE="Javascript" type="text/javascript">
-	<!--
-	<?php if ($LB_MUSIC_FILE == "") { ?>
-		var myMusic = null;
-	<?php }else{ ?>
-		var myMusic 	= '<?php print $LB_MUSIC_FILE; ?>'; // The music file
-    <?php } ?>
-	var CB_SlShowTime 	= '<?php print $LB_SS_SPEED; 	?>';	// Slide show timer
-	var CB_Animation	= '<?php print $LB_TRANSITION; 	?>';	// Next/Prev Image transition effect
-	//-->
-	</script>	
-<?php 	if ($TEXT_DIRECTION == "rtl") { ?>
-			<link  href="modules/lightbox/css/clearbox_music_RTL.css" 	rel="stylesheet" type="text/css" />
-			<link href ="modules/lightbox/css/album_page.css" 			rel="stylesheet" type="text/css" media="screen" /> 
-			<!--[if lte IE 7]>
-			<link href ="modules/lightbox/css/album_page_RTL.css" 			rel="stylesheet" type="text/css" media="screen" /> 
-			<![endif]-->		
-<?php 	}else{ ?>
-			<link href ="modules/lightbox/css/clearbox_music.css" 		rel="stylesheet" type="text/css" />
-			<link href ="modules/lightbox/css/album_page.css" 			rel="stylesheet" type="text/css" media="screen" /> 
-<?php 	} ?>
-		<script src="modules/lightbox/js/prototype.js" 				type="text/javascript"></script>  
-		<script src="modules/lightbox/js/Sound.js" 					type="text/javascript"></script>
-		<script src="modules/lightbox/js/clearbox.js" 				type="text/javascript"></script>
-		<center>
-		
 
-<?php
-}else{
 }
 
 // LBox  ================================================================================
@@ -352,7 +325,9 @@ if ($ct>0){
 //LBox --------  change for Lightbox Album --------------------------------------------
 		if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$media["FILE"]) || eregi("\.jpeg",$media["FILE"]) || eregi("\.gif",$media["FILE"]) || eregi("\.png",$media["FILE"]) ) ) { 
 //			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . stripslashes(PrintReady($name1)) . "\">" . "\n";
-			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . PrintReady($name) . "\">" . "\n";
+			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . $media["XREF"] . ":" . $GEDCOM . ":" . PrintReady($name) . "\">" . "\n";
+			
+// title=\"" . $rowm["m_media"] . ":" . $GEDCOM . ":" . $mediaTitle . "\"\"
 
         }elseif ($USE_MEDIA_VIEWER) {
 			print "<a href=\"mediaviewer.php?mid=".$media["XREF"]."\">";
@@ -377,7 +352,7 @@ if ($ct>0){
 					print "<td class=\"width33 wrap center font9\" valign=\"top\">";
 					print "<a href=\"javascript:;\" title=\"" . $pgv_lang["lb_edit_media"] . "\" onclick=\" return window.open('addmedia.php?action=editmedia&amp;pid=" . $media["XREF"] . "&amp;linktoid=', '_blank', 'top=50,left=50,width=600,height=600,resizable=1,scrollbars=1');\">";
 					if ($LB_ML_THUMB_LINKS == "icon" || $LB_ML_THUMB_LINKS == "both") {
-						print "<img src=\"modules/lightbox/images/image_edit.gif\" alt=\"\" class=\"icon\" />" ;
+						print "<img src=\"modules/lightbox/images/image_edit.gif\" alt=\"\" class=\"icon\" title=\"" . $pgv_lang["lb_edit_media"] . "\" />&nbsp;&nbsp;&nbsp;" ;
 					}
 					if($LB_ML_THUMB_LINKS == "both") { 
 						print "<br />";
@@ -397,7 +372,7 @@ if ($ct>0){
 					print "<td class=\"width33 wrap center font9\" valign=\"top\">";	
 					print "<a href=\"mediaviewer.php?mid=" . $media["XREF"] . "\" title=\"" . $pgv_lang["lb_view_media"] . "\">";
 					if ($LB_ML_THUMB_LINKS == "icon" || $LB_ML_THUMB_LINKS == "both") {
-						print "<img src=\"modules/lightbox/images/image_view.gif\" alt=\"\" class=\"icon\" title=\"" . $pgv_lang["lb_view_media"] . "\" />";
+						print "&nbsp;&nbsp;&nbsp;<img src=\"modules/lightbox/images/image_view.gif\" alt=\"\" class=\"icon\" title=\"" . $pgv_lang["lb_view_media"] . "\" />";
 					}
 					if ($LB_ML_THUMB_LINKS == "both") {
 						print "<br />";

@@ -33,6 +33,22 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 	exit;
 }
 
+// Added in VERSION 4.1.4 
+
+$pgv_lang["lb_details"]			= "Details";
+$pgv_lang["lb_detail_info"]		= "View this Media Item Details ...  Plus other Media Options - MediaViewer page";
+$pgv_lang["lb_pause_ss"]		= "Pause Slideshow";
+$pgv_lang["lb_start_ss"]		= "Start Slideshow";
+$pgv_lang["lb_music"]			= "Turn Music On/Off";
+$pgv_lang["lb_zoom_off"]		= "Disable Zoom";
+$pgv_lang["lb_zoom_on"]			= "Zoom is enabled ... Use mousewheel or i and o keys to zoom in and out";
+$pgv_lang["lb_close_win"]		= "Close Lightbox window";
+
+
+
+
+// VERSION 4.1.3 
+
 //Config Parameters -------------------------------------
 $pgv_lang["configure_lightbox"]			= "Lightbox-Album Configuration";
 $pgv_lang["mediatab"]       			= "Individual Page - Media Tab";
@@ -85,7 +101,7 @@ $pgv_lang["lb_edit_details"] 	= "Edit Details";
 $pgv_lang["lb_view_details"] 	= "View Details";
 $pgv_lang["lb_edit_media"] 		= "Edit this Media Item's Details";
 $pgv_lang["lb_delete_media"] 	= "Remove this Media Item - Only Removes link to this individual - Does not delete Media File or other links";
-$pgv_lang["lb_view_media"] 		= "View this Media Item's Details. \nPlus other Media Options - MediaViewer page";
+$pgv_lang["lb_view_media"] 		= "View this Media Item's Details \nPlus other Media Options - MediaViewer page";
 $pgv_lang["lb_add_media"] 		= "Add a new Media Object";
 $pgv_lang["lb_add_media_full"] 	= "Add a new Multimedia Object to this Individual";
 $pgv_lang["lb_link_media"] 		= "Link to an existing Media Object";
@@ -100,5 +116,7 @@ $pgv_lang["lb_source_avail"] 	= "Source information available - Click here.";
 $pgv_lang["lb_private"] 		= "Image linked <br> to a Private Individual";
 $pgv_lang["lb_view_source_tip"] = "View Source : ";
 $pgv_lang["lb_view_details_tip"] = "View Media Details : ";
+
+
 
 ?>
