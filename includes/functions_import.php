@@ -931,7 +931,7 @@ function setup_database() {
 					break;
 				case "media_mapping" :
 					$has_media_mapping = true;
-					$info = $DBCONN->tableInfo($TBLPREFIX . "media_maping");
+					$info = $DBCONN->tableInfo($TBLPREFIX . "media_mapping");
 					foreach ($info as $indexval => $field) {
 						switch ($field["name"]) {
 							case "mm_gid_type" : 
