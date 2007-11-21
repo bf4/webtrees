@@ -94,7 +94,7 @@ class IndividualControllerRoot extends BaseController {
 	 */
 	function init() {
 		global $USE_RIN, $MAX_ALIVE_AGE, $GEDCOM, $GEDCOM_DEFAULT_TAB, $pgv_changes, $pgv_lang, $CHARACTER_SET;
-		global $USE_QUICK_UPDATE;
+		global $USE_QUICK_UPDATE, $pid;
 
 		//-- keep the time of this access to help with concurrent edits
 		$_SESSION['last_access_time'] = time();
@@ -107,6 +107,8 @@ class IndividualControllerRoot extends BaseController {
 		if (!empty($_REQUEST["action"])) $this->action = $_REQUEST["action"];
 		if (!empty($_REQUEST["pid"])) $this->pid = strtoupper($_REQUEST["pid"]);
 		$this->pid = clean_input($this->pid);
+		$pid = $this->pid;
+		
 		$this->default_tab = $GEDCOM_DEFAULT_TAB;
 		$indirec = find_person_record($this->pid);
 //		print_r($indirec);
@@ -1112,7 +1114,8 @@ class IndividualControllerRoot extends BaseController {
 				<td></td>
 				<td class="descriptionbox rela">
 					<input id="checkbox_note2" type="checkbox" <?php if ($SHOW_LEVEL2_NOTES) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_note2');" />
-					<label for="checkbox_note2"><?php echo "2 NOTE"?></label>
+					<label for="checkbox_note2"><?php echo $pgv_lang["show_fact_notes"];?></label>
+					<?php print_help_link("show_fact_sources_help", "qm", "show_fact_notes");?>
 				</td>
 			</tr>
 			<?php
@@ -1124,13 +1127,11 @@ class IndividualControllerRoot extends BaseController {
 				}
 				$FACT_COUNT++;
 			}
-			if ($SHOW_LEVEL2_NOTES) {
 				// 2nd level notes/sources [ 1712181 ]
 				$this->indi->add_family_facts(false);
 				foreach ($this->getIndiFacts() as $key => $factrec) {
 					print_main_notes($factrec->getGedcomRecord(), 2, $this->pid, $factrec->getLineNumber(), true);
 				}
-			}
 			if ($this->get_note_count()==0) print "<tr><td id=\"no_tab2\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab2"]."</td></tr>\n";
 			//-- New Note Link
 			if (!$this->isPrintPreview() && (userCanEdit($this->uname))&&$this->indi->canDisplayDetails()) {
@@ -1181,7 +1182,8 @@ class IndividualControllerRoot extends BaseController {
 				<td></td>
 				<td class="descriptionbox rela">
 					<input id="checkbox_sour2" type="checkbox" <?php if ($SHOW_LEVEL2_NOTES) echo " checked=\"checked\""?> onclick="toggleByClassName('TR', 'row_sour2');" />
-					<label for="checkbox_sour2"><?php echo "2 SOUR"?></label>
+					<label for="checkbox_sour2"><?php echo $pgv_lang["show_fact_sources"];?></label>
+					<?php print_help_link("show_fact_sources_help", "qm", "show_fact_sources");?>
 				</td>
 			</tr>
 			<?php
@@ -1192,13 +1194,11 @@ class IndividualControllerRoot extends BaseController {
 				}
 				$FACT_COUNT++;
 			}
-			if ($SHOW_LEVEL2_NOTES) {
 				// 2nd level sources [ 1712181 ]
 				$this->indi->add_family_facts(false);
 				foreach ($this->getIndiFacts() as $key => $factrec) {
 					print_main_sources($factrec->getGedcomRecord(), 2, $this->pid, $factrec->getLineNumber(), true);
 				}
-			}
 			if ($this->get_source_count()==0) print "<tr><td id=\"no_tab3\" colspan=\"2\" class=\"facts_value\">".$pgv_lang["no_tab3"]."</td></tr>\n";
 			//-- New Source Link
 			if ((!$this->isPrintPreview()) && (userCanEdit(getUserName()))&&($this->indi->canDisplayDetails())) {

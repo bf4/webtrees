@@ -100,7 +100,7 @@ $tindilist = array();
 $indialpha = get_indi_alpha();
 uasort($indialpha, "stringsort");
 
-if (isset($alpha) && !isset($indialpha["$alpha"])) unset($alpha);
+if (isset($alpha) && !isset($indialpha["$alpha"])) $alpha="";
 
 if (empty($surname_sublist)) 
 	$surname_sublist = "yes";
@@ -191,7 +191,7 @@ if ($expalpha=="(" || $expalpha=="[" || $expalpha=="?" || $expalpha=="/" || $exp
 print "<br /><br />";
 
 if(empty($SEARCH_SPIDER)) {
-	if ($alpha != "@") {
+	if (isset($alpha) && $alpha != "@") {
 		if ($surname_sublist=="yes") {
 			print_help_link("skip_sublist_help", "qm", "skip_surnames");
 			print "<a href=\"indilist.php?alpha=$alpha&amp;surname_sublist=no&amp;show_all=$show_all\">".$pgv_lang["skip_surnames"]."</a>";

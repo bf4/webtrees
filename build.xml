@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="PGVBuild" basedir="." default="zip">
 	<property name="proj.name" value="PhpGedView" />
-	<property name="pgv.version" value="4.1.2" />
+	<property name="pgv.version" value="4.1.3" />
 	<property name="dist.dir" value="../../distribution" />
 	<property name="all.dir"
 		value="${dist.dir}/${proj.name}-all-${pgv.version}" />
@@ -81,6 +81,7 @@
 		<copy todir="${all.dir}">
 			<fileset dir=".">
 				<exclude name="build.xml" />
+				<exclude name="buildUpgradePatch.php" />
 				<exclude name="**/mymedia/**" />
 				<exclude name="**/mymedia" />
 				<exclude name="**/index/**" />
@@ -100,6 +101,7 @@
 		<copy todir="${basic.dir}">
 			<fileset dir=".">
 				<exclude name="build.xml" />
+				<exclude name="buildUpgradePatch.php" />
 				<exclude name="**/modules/**" />
 				<exclude name="**/places/**" />
 				<exclude name="**/languages/**" />

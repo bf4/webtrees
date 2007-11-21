@@ -172,7 +172,16 @@ class Person extends GedcomRecord {
 			//			if (isset($indilist[$this->getXref()]['names'][$num-1])) $name = $indilist[$this->getXref()]['names'][$num-1][0];
 		}
 		else {
-			$namerec = get_sub_record(2, "2 ".$subtag, $this->gedrec, $num);
+			// Get the sub record from *all* the 1 NAME records
+			$all_name_recs=get_sub_record(1, "1 NAME", $this->gedrec, 1);
+			for ($i=2; ; ++$i) {
+				$tmp=get_sub_record(1, "1 NAME", $this->gedrec, $i);
+				if (empty($tmp))
+					break;
+				else
+					$all_name_recs.="\n".$tmp;
+			}
+			$namerec = get_sub_record(2, "2 ".$subtag, $all_name_recs, $num);
 			$name = get_gedcom_value($subtag, 2, $namerec, '', false);
 		}
 		if (empty($name)) return "";
@@ -403,7 +412,7 @@ class Person extends GedcomRecord {
 	 * get the birth year
 	 * @return string
 	 */
-	function getBirthYear(){
+	function getBirthYear($est = true){
 		// TODO - change the design to use julian days, not gregorian years.
 		$this->_parseBirthDeath();
 		//$bdate = parse_date($this->getBirthDate());
@@ -642,6 +651,16 @@ class Person extends GedcomRecord {
 		if (!preg_match("/\n\s*1\s+FAMC\s+@{$famid}@\s*\n(\s*[2-9].*\n)*(\s*2\s+PEDI\b)/i", $this->gedrec)) return $fam;
 		// d) any record
 		return reset($families);
+	}
+	/**
+	 * get family with child pedigree
+	 * @return string FAMC:PEDI value [ adopted | birth | foster | sealing ]
+	 */
+	function getChildFamilyPedigree($famid) {
+		$subrec = get_sub_record(1, "1 FAMC @".$famid."@", $this->gedrec);
+		$pedi = get_gedcom_value("PEDI", 2, $subrec, '', false);
+		if (strpos($pedi, "birt")!==false) return ""; // birth=default => return an empty string
+		return $pedi;
 	}
 	/**
 	 * get the step families from the parents
@@ -1377,21 +1396,27 @@ class Person extends GedcomRecord {
 			$found=false;
 			$oldfactrec = $this->indifacts[$i]->getGedcomRecord();
 			foreach($diff->indifacts as $indexval => $newfact) {
-				$newfactrec = $newfact->getGedcomRecord();
-				if (trim($newfactrec)==trim($oldfactrec)) {
-					$oldfactrec = $newfactrec;				//-- make sure the correct linenumber is used
+				//-- remove all whitespace for comparison
+				$tnf = preg_replace("/\s+/", " ", $newfact[1]);
+				$tif = preg_replace("/\s+/", " ", $this->indifacts[$i][1]);
+				if ($tnf==$tif) {
+					$this->indifacts[$i] = $newfact;				//-- make sure the correct linenumber is used
 					$found=true;
 					break;
 				}
 			}
+			//-- fact was deleted?
 			if (!$found) {
 				$this->indifacts[$i]->gedComRecord.="\r\nPGV_OLD\r\n";
 			}
 		}
+		//-- check for any new facts being added
 		foreach($diff->indifacts as $indexval => $newfact) {
 			$found=false;
 			foreach($this->indifacts as $indexval => $fact) {
-				if (trim($fact->getGedcomRecord())==trim($newfact->getGedcomRecord())) {
+				$tif = preg_replace("/\s+/", " ", $fact[1]);
+				$tnf = preg_replace("/\s+/", " ", $newfact[1]);
+				if ($tif==$tnf) {
 					$found=true;
 					break;
 				}

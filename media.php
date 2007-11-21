@@ -71,16 +71,15 @@ function dir_is_writable($dir) {
  * used by the routines that move files between the standard media directory and the protected media directory
  */
 function move_file($src, $dest) {
-	global $pgv_lang, $MEDIA_DIRECTORY;
+	global $pgv_lang, $MEDIA_FIREWALL_ROOTDIR, $MEDIA_DIRECTORY;
 
 	// sometimes thumbnail files are set to something like "images/media.gif", this ensures we do not move them
 	// check to make sure the src file is in the standard or protected media directories
-	$media_firewall_dir = get_media_firewall_path("");
-	if (preg_match("'^($media_firewall_dir)?$MEDIA_DIRECTORY'", $src)==0){
+	if (preg_match("'^($MEDIA_FIREWALL_ROOTDIR)?$MEDIA_DIRECTORY'", $src)==0){
 		return false;
 	}
 	// check to make sure the dest file is in the standard or protected media directories
-	if (preg_match("'^($media_firewall_dir)?$MEDIA_DIRECTORY'", $dest)==0){
+	if (preg_match("'^($MEDIA_FIREWALL_ROOTDIR)?$MEDIA_DIRECTORY'", $dest)==0){
 		return false;
 	}
 
@@ -100,6 +99,88 @@ function move_file($src, $dest) {
 	return true;
 }
 
+/**
+* Recursively moves files from standard media directory to the protected media directory
+* and vice-versa.  Operates directly on the filesystem, does not use the db.
+*/
+function move_files($path, $blnProtect) {
+	global $MEDIA_FIREWALL_THUMBS, $TIME_LIMIT, $starttime, $pgv_lang;
+	if ($dir=@opendir($path)) {
+        while (($element=readdir($dir))!== false) {
+			$timelimit = $TIME_LIMIT ? $TIME_LIMIT : 0;
+			$exectime = time() - $starttime;
+			if (($timelimit != 0) && ($timelimit - $exectime) < 3) {
+				// bail now to ensure nothing is lost
+				print "<div class=\"error\">".$pgv_lang["move_time_exceeded"]."</div>";
+				return;
+			}
+			// do not move certain files...
+	     	if ($element!= "." && $element!= ".." && $element!=".svn" && $element!="watermark" && $element!=".htaccess" && $element!="index.php" && $element!="MediaInfo.txt" && $element!="ThumbsInfo.txt") {
+				$fullpath = $path."/".$element;
+				if (is_dir($fullpath)) {
+					// call this function recursively on this directory
+					move_files($fullpath, $blnProtect);
+				} else {
+					// if moving to the standard directory, or if not a thumbnail, or if we want to protect thumbnails... move the file
+					if ( !$blnProtect || (strpos($fullpath, "/thumbs") === false) || $MEDIA_FIREWALL_THUMBS) {
+						$dest = ($blnProtect) ? get_media_firewall_path($fullpath) : get_media_standard_path($fullpath);
+						// note: the move_file function verifies that the source and destination dirs are valid
+						move_file($fullpath, $dest);
+					}
+				}
+			}
+        }
+        closedir($dir);
+    }
+    return;
+}
+
+/**
+* Recursively sets the permissions on files
+* Operates directly on the filesystem, does not use the db.
+*/
+function set_perms($path, $filemode, $dirmode) {
+	global $MEDIA_FIREWALL_ROOTDIR, $MEDIA_DIRECTORY, $TIME_LIMIT, $starttime, $pgv_lang;
+	if (preg_match("'^($MEDIA_FIREWALL_ROOTDIR)?$MEDIA_DIRECTORY'", $path."/")==0){
+		return false;
+	}
+    if ($dir=@opendir($path)) {
+        while (($element=readdir($dir))!== false) {
+			$timelimit = $TIME_LIMIT ? $TIME_LIMIT : 0;
+			$exectime = time() - $starttime;
+			if (($timelimit != 0) && ($timelimit - $exectime) < 3) {
+				// bail now to ensure nothing is lost
+				print "<div class=\"error\">".$pgv_lang["setperms_time_exceeded"]."</div>";
+				return;
+			}
+	     	// do not set perms on certain files...
+			if ($element!= "." && $element!= ".." && $element!=".svn") {
+				$fullpath = $path."/".$element;
+				if (is_dir($fullpath)) {
+					if (@chmod($fullpath, $dirmode)) {
+						print "<div>".$pgv_lang["setperms_success"]." [".$fullpath."]</div>";
+					} else {
+						print "<div>".$pgv_lang["setperms_failure"]." [".$fullpath."]</div>";
+					}
+					// call this function recursively on this directory
+					set_perms($fullpath, $filemode, $dirmode);
+				} else {
+					if (@chmod($fullpath, $filemode)) {
+						print "<div>".$pgv_lang["setperms_success"]." [".$fullpath."]</div>";
+					} else {
+						print "<div>".$pgv_lang["setperms_failure"]." [".$fullpath."]</div>";
+					}
+				}
+			}
+        }
+        closedir($dir);
+    }
+    return;
+}
+
+
+// global var used by recursive functions
+$starttime = time();
 
 // Get rid of extra slashes in input variables
 if (isset($filename)) $filename = stripslashes($filename);
@@ -230,7 +311,7 @@ print_header($pgv_lang["manage_media"]);
 	<td class="optionbox wrap"><?php print "<a href=\"#\" onclick=\"expand_layer('uploadmedia');\">".$pgv_lang["upload_media"]."</a>";?></td></tr>
 
 	<!-- // NOTE: Show thumbnails -->
-	<td class="descriptionbox wrap width25"><?php print_help_link("show_thumb_help","qm", "show_thumbnail");?><?php print $pgv_lang["show_thumbnail"];?></td>
+	<tr><td class="descriptionbox wrap width25"><?php print_help_link("show_thumb_help","qm", "show_thumbnail");?><?php print $pgv_lang["show_thumbnail"];?></td>
 	<td class="optionbox wrap"><input type="checkbox" name="showthumb" value="true" <?php if ($showthumb) print "checked=\"checked\""; ?> onclick="submit();" /></td>
 
 	<!-- // NOTE: Add media -->
@@ -258,7 +339,7 @@ if (check_media_structure()) {
 	 * @name $action->newdir
 	 */
 	if ($action == "newdir") {
-		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		// security checks, no names with . .. / \ in them
 		// add more if required
@@ -306,7 +387,7 @@ if (check_media_structure()) {
 	}
 
 	if ($action == "deletedir") {
-		print "<table class=\"list_table center width50\">";
+		print "<table class=\"list_table center width100\">";
 		print "<tr><td class=\"messagebox\">";
 		// Check if media directory and thumbs directory are empty
 		$clean = false;
@@ -446,7 +527,7 @@ if (check_media_structure()) {
 	 * @name $action->moveto
 	 */
 	if ($action=="moveto") {
-		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		// just in case someone fashions the right url
 
@@ -558,7 +639,7 @@ if (check_media_structure()) {
 	 * @name $action->thumbnail
 	 */
 	if ($action == "thumbnail") {
-		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		// TODO: add option to generate thumbnails for all images on page
 		// Cycle through $medialist and skip all exisiting thumbs
@@ -607,7 +688,7 @@ if (check_media_structure()) {
 
 	// Move single file to protected dir
 	if ($action == "moveprotected") {
-		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		if (strpos($filename,"../") !== false) {
 			// don't allow user to access directories outside of media dir
@@ -629,7 +710,7 @@ if (check_media_structure()) {
   
 	// Move single file to standard dir
 	if ($action == "movestandard") {
-		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		if (strpos($filename,"../") !== false) {
 			// don't allow user to access directories outside of media dir
@@ -649,61 +730,46 @@ if (check_media_structure()) {
 
 	// Move entire dir and all subdirs to protected dir
 	if ($action == "movedirprotected") {
-		if (empty($directory)) $directory = $MEDIA_DIRECTORY;
-		$timelimit = $TIME_LIMIT ? $TIME_LIMIT : 0;
-		$starttime = time();
-		$medialist = get_medialist(false, $directory);
-		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
-		foreach ($medialist as $indexval => $media) {
-			$exectime = time() - $starttime;
-			if (($timelimit != 0) && ($timelimit - $exectime) < 3) {
-				// bail now to ensure nothing is lost
-				print $pgv_lang["move_time_exceeded"]."<br />";
-				break;
-			}
-			if ($media["EXISTS"] == 2) {
-				move_file($media["FILE"], get_media_firewall_path($media["FILE"]));
-			}
-			if ($MEDIA_FIREWALL_THUMBS) {
-				if ($media["THUMBEXISTS"] == 2) {
-					move_file($media["THUMB"], get_media_firewall_path($media["THUMB"]));
-				}
-			}
-		}
+		print "<strong>".$pgv_lang["move_protected"]."<br />";
+		move_files(substr($directory,0,-1), true);
 		print "</td></tr></table>";
 		$action="filter";
 	}
 
 	// Move entire dir and all subdirs to stanard dir
 	if ($action == "movedirstandard") {
-		if (empty($directory)) $directory = $MEDIA_DIRECTORY;
-		$timelimit = $TIME_LIMIT ? $TIME_LIMIT : 0;
-		$starttime = time();
-		$medialist = get_medialist(false, $directory);
-		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
-		foreach ($medialist as $indexval => $media) {
-			$exectime = time() - $starttime;
-			if (($timelimit != 0) && ($timelimit - $exectime) < 3) {
-				// bail now to ensure nothing is lost
-				print $pgv_lang["move_time_exceeded"]."<br />";
-				break;
-			}
-			if ($media["EXISTS"] == 3) {
-				move_file(get_media_firewall_path($media["FILE"]), $media["FILE"]);
-			}
-			if ($media["THUMBEXISTS"] == 3) {
-				move_file(get_media_firewall_path($media["THUMB"]), $media["THUMB"]);
-			}
-		}
+		print "<strong>".$pgv_lang["move_standard"]."<br />";
+		move_files(substr(get_media_firewall_path($directory),0,-1), false);
 		print "</td></tr></table>";
 		$action="filter";
 	}
 
+	if ($action == "setpermswrite") {
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
+		print "<tr><td class=\"messagebox wrap\">";
+		print "<strong>".$pgv_lang["setperms_writable"]."<br />";
+		set_perms(substr($directory,0,-1), 0666, 0777);
+		set_perms(substr(get_media_firewall_path($directory),0,-1), 0666, 0777);
+		print "</td></tr></table>";
+		$action="filter";
+	}
+	if ($action == "setpermsread") {
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
+		print "<tr><td class=\"messagebox wrap\">";
+		print "<strong>".$pgv_lang["setperms_readonly"]."<br />";
+		set_perms(substr($directory,0,-1), 0664, 0775);
+		set_perms(substr(get_media_firewall_path($directory),0,-1), 0664, 0775);
+		print "</td></tr></table>";
+		$action="filter";
+	}
+  
 	// Upload media items
 	if ($action == "upload") {
-		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		$upload_errors = array($pgv_lang["file_success"], $pgv_lang["file_too_big"], $pgv_lang["file_too_big"],$pgv_lang["file_partial"], $pgv_lang["file_missing"]);
 		?>
@@ -948,7 +1014,7 @@ if (check_media_structure()) {
 
 	// Delete file
 	if ($action == "deletefile") {
-		print "<table class=\"list_table $TEXT_DIRECTION width50\">";
+		print "<table class=\"list_table $TEXT_DIRECTION width100\">";
 		print "<tr><td class=\"messagebox wrap\">";
 		$xrefs = array($xref);
 		$onegedcom = true;
@@ -956,56 +1022,76 @@ if (check_media_structure()) {
 			//-- get all of the XREFS associated with this record
 			//-- and check if the file is used in multiple gedcoms
 			$myFile = str_replace($MEDIA_DIRECTORY, "", $filename);
+			//-- figure out how many levels are in this file
+			$mlevels = preg_split("~[/\\\]~", $filename);
 			$sql = "SELECT * FROM ".$TBLPREFIX."media WHERE m_file LIKE '%".$DBCONN->escapeSimple($myFile)."'";
 			$res = dbquery($sql);
 
 			while($row=$res->fetchRow(DB_FETCHMODE_ASSOC)) {
-				if ($row["m_gedfile"]!=$GEDCOMS[$GEDCOM]["id"]) $onegedcom = false;
-				else $xrefs[] = $row["m_media"];
+				$rlevels = preg_split("~[/\\\]~", $row["m_file"]);
+				//-- make sure we only delete a file at the same level of directories
+				//-- see 1825257
+				$match = true;
+				$k=0;
+				$i=count($rlevels)-1;
+				$j=count($mlevels)-1;
+				while($i>=0 && $j>=0) {
+					if ($rlevels[$i] != $mlevels[$j]) {
+						$match = false;
+						break;
+					}
+					$j--;
+					$i--;
+					$k++;
+					if ($k>$MEDIA_DIRECTORY_LEVELS) break;
+				}
+				if ($match) {
+					if ($row["m_gedfile"]!=$GEDCOMS[$GEDCOM]["id"]) $onegedcom = false;
+					else $xrefs[] = $row["m_media"];
+				}
 			}
 			$res->free();
 			$xrefs = array_unique($xrefs);
 		}
 
 		$finalResult = true;
-		while ($allowDelete) {
+		if ($allowDelete) {
 			if (!$onegedcom) {
 				print "<span class=\"error\">".$pgv_lang["multiple_gedcoms"]."<br /><br /><b>".$pgv_lang["media_file_not_deleted"]."</b></span><br />";
 				$finalResult = false;
-				break;
 			}
 			if (isFileExternal($filename)) {
 				print "<span class=\"error\">".$pgv_lang["external_file"]."<br /><br /><b>".$pgv_lang["media_file_not_deleted"]."</b></span><br />";
 				$finalResult = false;
-				break;
 			}
-			// Check if file exists. If so, delete it
-			$server_filename = get_server_filename($filename);
-			if (file_exists($server_filename) && $allowDelete) {
-				if (@unlink($server_filename)) {
-					print $pgv_lang["media_file_deleted"]."<br />";
-					AddToChangeLog($server_filename." -- ".$pgv_lang["media_file_deleted"]);
-				} else {
-					$finalResult = false;
-					print "<span class=\"error\">".$pgv_lang["media_file_not_deleted"]."</span><br />";
-					AddToChangeLog($server_filename." -- ".$pgv_lang["media_file_not_deleted"]);
+			if ($finalResult) {
+				// Check if file exists. If so, delete it
+				$server_filename = get_server_filename($filename);
+				if (file_exists($server_filename) && $allowDelete) {
+					if (@unlink($server_filename)) {
+						print $pgv_lang["media_file_deleted"]."<br />";
+						AddToChangeLog($server_filename." -- ".$pgv_lang["media_file_deleted"]);
+					} else {
+						$finalResult = false;
+						print "<span class=\"error\">".$pgv_lang["media_file_not_deleted"]."</span><br />";
+						AddToChangeLog($server_filename." -- ".$pgv_lang["media_file_not_deleted"]);
+					}
+				}
+	
+				// Check if thumbnail exists. If so, delete it.
+				$thumbnail = str_replace("$MEDIA_DIRECTORY",$MEDIA_DIRECTORY."thumbs/",$filename);
+				$server_thumbnail = get_server_filename($thumbnail);
+				if (file_exists($server_thumbnail) && $allowDelete) {
+					if (@unlink($server_thumbnail)) {
+						print $pgv_lang["thumbnail_deleted"]."<br />";
+						AddToChangeLog($server_thumbnail." -- ".$pgv_lang["thumbnail_deleted"]);
+					} else {
+						$finalResult = false;
+						print "<span class=\"error\">".$pgv_lang["thumbnail_not_deleted"]."</span><br />";
+						AddToChangeLog($server_thumbnail." -- ".$pgv_lang["thumbnail_not_deleted"]);
+					}
 				}
 			}
-
-			// Check if thumbnail exists. If so, delete it.
-			$thumbnail = str_replace("$MEDIA_DIRECTORY",$MEDIA_DIRECTORY."thumbs/",$filename);
-			$server_thumbnail = get_server_filename($thumbnail);
-			if (file_exists($server_thumbnail) && $allowDelete) {
-				if (@unlink($server_thumbnail)) {
-					print $pgv_lang["thumbnail_deleted"]."<br />";
-					AddToChangeLog($server_thumbnail." -- ".$pgv_lang["thumbnail_deleted"]);
-				} else {
-					$finalResult = false;
-					print "<span class=\"error\">".$pgv_lang["thumbnail_not_deleted"]."</span><br />";
-					AddToChangeLog($server_thumbnail." -- ".$pgv_lang["thumbnail_not_deleted"]);
-				}
-			}
-			break;
 		}
 
 		//-- loop through all of the found xrefs and delete any references to them
@@ -1013,13 +1099,31 @@ if (check_media_structure()) {
 			// Remove references to media file from gedcom and database
 			// Check for XREF
 			if ($xref != "") {
+				$links = get_media_relations($xref);
+				foreach($links as $pid=>$type) {
+					if (isset($pgv_changes[$pid."_".$GEDCOM])) $gedrec = find_updated_record($pid);
+					else $gedrec = find_gedcom_record($pid, '', $type);
+					$gedrec = remove_subrecord($gedrec, "OBJE", $xref, -1);
+					if (replace_gedrec($pid, $gedrec, true, $xref)) {
+						print_text("record_updated");
+						AddToChangeLog(print_text("record_updated",0,1));
+					} else {
+						$finalResult = false;
+						print "<span class=\"error\">";
+						print_text("record_not_updated");
+						print "</span>";
+						AddToChangeLog(print_text("record_not_updated",0,1));
+					}
+					print "<br />";
+				}
+				/** why are we search through all of the tables instead of joining on the media mapping?
 				// Combine the searchquery of filename and xref
 				$mediaRef = "@".$xref."@";
 				$query[] = $mediaRef;
 
 				// Find the INDIS with the mediafile in it
 				$foundindis = search_indis($query);
-
+				
 				// Now update the record
 				foreach ($foundindis as $pid => $person) {
 					// Check if changes to the record exist
@@ -1197,9 +1301,10 @@ if (check_media_structure()) {
 					}
 					print "<br />";
 				}
+				*/
 
 				// Record changes to the Media object
-				if ($xref!="") {
+					//-- why do we accept changes just to delete the item?
 					include_once('includes/functions_import.php');
 					accept_changes($xref."_".$GEDCOM);
 					$objerec = find_gedcom_record($xref);
@@ -1233,7 +1338,6 @@ if (check_media_structure()) {
 						}
 						print "<br />";
 					}
-				}
 			}
 		}
 		if ($finalResult) print $pgv_lang["update_successful"];
@@ -1332,18 +1436,22 @@ if (check_media_structure()) {
 				print "<br />";
 				print PrintReady(substr($directory,0,-1));
 
-			if ($USE_MEDIA_FIREWALL) {
 				print "<br /><br />";
 				print "<form name=\"blah2\" action=\"media.php\" method=\"post\">";
 				print "<input type=\"hidden\" name=\"directory\" value=\"".$directory."\" />";
 				print "<input type=\"hidden\" name=\"level\" value=\"".($level)."\" />";
 				print "<input type=\"hidden\" name=\"dir\" value=\"".$directory."\" />";
 				print "<input type=\"hidden\" name=\"action\" value=\"\" />";
+			if ($USE_MEDIA_FIREWALL) {
 				print "<input type=\"submit\" value=\"".$pgv_lang["move_standard"]."\" onclick=\"this.form.action.value='movedirstandard';\">";
 				print_help_link("move_mediadirs_help","qm","move_mediadirs");
 				print "<input type=\"submit\" value=\"".$pgv_lang["move_protected"]."\" onclick=\"this.form.action.value='movedirprotected';\">";
-				print "</form>";
+				print "<br />";
 			}
+				print "<input type=\"submit\" value=\"".$pgv_lang["setperms_writable"]."\" onclick=\"this.form.action.value='setpermswrite';\">";
+				print_help_link("setperms_help","qm","setperms");
+				print "<input type=\"submit\" value=\"".$pgv_lang["setperms_readonly"]."\" onclick=\"this.form.action.value='setpermsread';\">";
+				print "</form>";
 
 			print "</td>";
 		print "</tr>";
@@ -1385,6 +1493,9 @@ if (check_media_structure()) {
 							print "<input type=\"submit\" value=\"".$pgv_lang["move_standard"]."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='movedirstandard';\">";
 							print "<input type=\"submit\" value=\"".$pgv_lang["move_protected"]."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='movedirprotected';\">";
 						}
+						// print "<input type=\"submit\" value=\"".$pgv_lang["setperms_writable"]."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='setpermswrite';\">";
+						// print "<input type=\"submit\" value=\"".$pgv_lang["setperms_readonly"]."\" onclick=\"this.form.level.value=(this.form.level.value*1)+1;this.form.action.value='setpermsread';\">";
+
 						print "</form>";
 					print "</td>";
 				print "</tr>";

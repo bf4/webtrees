@@ -46,9 +46,9 @@ $pgv_lang["lb_ss_speedLegend"]			= "Slide Show speed";
 $pgv_lang["lb_ss_speed_help"]			= "~#pgv_lang[lb_ss_speedLegend]#~<br />Esta opción determina cuánto tiempo se mostrará cada imagen en la presentación antes de pasar a la siguiente imagen.<br />";
 $pgv_lang["lb_music_fileLegend"]		= "Slideshow Sound Track";
 $pgv_lang["lb_music_file_help"]			= "~#pgv_lang[lb_music_fileLegend]#~<br />Esta opción le permite especificar una banda sonora a reproducir cada vez que se active la presentación.  Si deja este campo en blanco, no se reproducirá ningún sonido durante la presentación.<br /><br />Esta característica sólo admite archivos en formato mp3.<br />";
-// $pgv_lang["lb_transitionLegend"]		= "Image Transition speed";
-// $pgv_lang["lb_transition_help"]			= "~#pgv_lang[lb_transitionLegend]#~<br />This option lets you specify the transition speed when the image changes.  This selection is applied during the slideshow.  It is also applied when you move to the next or previous image when the slideshow is not running.<br /><br />The <b>#pgv_lang[lb_none]#</b> option eliminates image transitions so that the new image immediately replaces the old without visible adjustment of the new image's dimensions.<br />";
-// $pgv_lang["lb_url_dimensionsLegend"]	= "Lightbox URL Window dimensions"; 
-// $pgv_lang["lb_url_dimensions_help"]		= "~#pgv_lang[lb_url_dimensionsLegend]#~<br />When clicking on a URL image thumbnail, this option lets you specify the Lightbox URL Window dimensions in pixels.<br /><br />This should normally be less than your current browser window dimensions, and certainly less than your screen resolution.<br />";
+$pgv_lang["lb_transitionLegend"]		= "Velocidad de transición entre imágenes";
+$pgv_lang["lb_transition_help"]			= "~#pgv_lang[lb_transitionLegend]#~<br />Esta opción le permite especificar la velocidad de transición en los cambios de imagen.  Esta selección se aplica durante la presentación.  También se aplica si se desplaza a la imagen anterior o posterior si la presentación está detenida.<br /><br />La opción <b>#pgv_lang[lb_none]#</b> elimina las transiciones entre imágenes de modo que la nueva imagen sustituye de forma inmediata la anterior sin adaptación perceptible a las dimensiones de la nueva imagen.<br />";
+$pgv_lang["lb_url_dimensionsLegend"]	= "Dimensiones para las ventanas para URL de Lightbox"; 
+$pgv_lang["lb_url_dimensions_help"]		= "~#pgv_lang[lb_url_dimensionsLegend]#~<br />Si se hace clic en la miniatura de una imagen que corresponde a una URL, esta opción le permite especificar las dimensiones en píxeles de la ventana de Lightbox para la URL.<br /><br />Las dimensiones deberían ser menores que las de la ventana actual de navegador y, desde luego, menores que las de su pantalla.<br />";
 
 ?>

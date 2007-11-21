@@ -24,7 +24,12 @@
  * @version $Id$
  */
 
-require "config.php";
+if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
+	print "You cannot access an include file directly.";
+	exit;
+}
+
+// require "config.php";
 
 loadLangFile("pgv_confighelp, sm_lang, sm_help");
 

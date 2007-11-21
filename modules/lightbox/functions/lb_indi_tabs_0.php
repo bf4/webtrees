@@ -1,8 +1,8 @@
 <?php
 /**
- * Lightbox Album module for phpGedView
+ * Individual Page
  *
- * Display media Items using Lightbox
+ * Display all of the information about an individual
  *
  * phpGedView: Genealogy Viewer
  * Copyright (C) 2002 to 2007  PHPGedView Development Team
@@ -22,9 +22,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @package PhpGedView
- * @subpackage Module
+ * @subpackage Charts
  * @version $Id$
- * @author Brian Holland
  */
 ?>
 

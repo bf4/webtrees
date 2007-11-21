@@ -75,7 +75,7 @@ global $LB_URL_WIDTH, $LB_URL_HEIGHT;
 	
     // NOTE Start printing the media details
     $thumbnail = thumbnail_file($rowm["m_file"], true, false, $pid);
-    $isExternal = stristr($thumbnail,"://");
+    $isExternal = isFileExternal($thumbnail);
     $linenum = 0;
     
     if (showFactDetails("OBJE", $pid)) {

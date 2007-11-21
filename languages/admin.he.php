@@ -49,10 +49,10 @@ $pgv_lang["sanity_err6"]			= "תיקייה <i>#GLOBALS[INDEX_DIRECTORY]#</i> א�
 $pgv_lang["sanity_warn0"]			= "אזהרות:"; 
 $pgv_lang["sanity_warn1"]			= "תיקייה <i>#GLOBALS[MEDIA_DIRECTORY]#</i> אינה ברת כתיבה.  לא תוכל להעלות קיבצי מדיה או ליצור תמונות מזעריות ב-PhpGedView."; 
 $pgv_lang["sanity_warn2"]			= "תיקיית <i>#GLOBALS[MEDIA_DIRECTORY]#thumbs</i> לא ניתנת לכתיבה.  אינך יכול להעלות או ליצור קבצים מזעריים ב-PhpGedView."; 
-$pgv_lang["sanity_warn3"]			= "The GD imaging library does not exist. PhpGedView will still function, but some of the features, such as thumbnail generation and the circle diagram, will not work without the GD library.  Please see <a href='http://www.php.net/manual/en/ref.image.php'>http://www.php.net/manual/en/ref.image.php</a> for more information."; //@@
-$pgv_lang["sanity_warn4"]			= "The XML Parser library does not exist. PhpGedView will still function, but some of the features, such as report generation and web services, will not work without the XML Parser library. Please see <a href='http://www.php.net/manual/en/ref.xml.php'>http://www.php.net/manual/en/ref.xml.php</a> for more information."; //@@
-$pgv_lang["sanity_warn5"]			= "The DOM XML library does not exist. PhpGedView will still function, but some of the features, such as Gramps Export features in the clippings cart, download, and web services, will not work. Please see <a href='http://www.php.net/manual/en/ref.domxml.php'>http://www.php.net/manual/en/ref.domxml.php</a> for more information."; //@@
-$pgv_lang["sanity_warn6"]			= "The Calendar library does not exist. PhpGedView will still function, but some of the features, such as conversion to other calendars such as Hebrew or French, will not work.  It is not essential for running PhpGedView. Please see <a href='http://www.php.net/manual/en/ref.calendar.php'>http://www.php.net/manual/en/ref.calendar.php</a> for more information."; //@@
+$pgv_lang["sanity_warn3"]			= "The GD imaging library does not exist. PhpGedView will still function, but some of the features, such as thumbnail generation and the circle diagram, will not work without the GD library.  Please see <a href='http://www.php.net/manual/en/ref.image.php'>http://www.php.net/manual/en/ref.image.php</a> for more information."; //@#@
+$pgv_lang["sanity_warn4"]			= "The XML Parser library does not exist. PhpGedView will still function, but some of the features, such as report generation and web services, will not work without the XML Parser library. Please see <a href='http://www.php.net/manual/en/ref.xml.php'>http://www.php.net/manual/en/ref.xml.php</a> for more information."; //@#@
+$pgv_lang["sanity_warn5"]			= "The DOM XML library does not exist. PhpGedView will still function, but some of the features, such as Gramps Export features in the clippings cart, download, and web services, will not work. Please see <a href='http://www.php.net/manual/en/ref.domxml.php'>http://www.php.net/manual/en/ref.domxml.php</a> for more information."; //@#@
+$pgv_lang["sanity_warn6"]			= "The Calendar library does not exist. PhpGedView will still function, but some of the features, such as conversion to other calendars such as Hebrew or French, will not work.  It is not essential for running PhpGedView. Please see <a href='http://www.php.net/manual/en/ref.calendar.php'>http://www.php.net/manual/en/ref.calendar.php</a> for more information."; //@#@
 
 $pgv_lang["ip_address"]		= "כתובת IP";
 $pgv_lang["date_time"]		= "תאריך וזמן";
@@ -164,7 +164,7 @@ $pgv_lang["del_proceed"]		= "המשך";
 $pgv_lang["del_unvera"]		= "המשתמש לא אושר ע\"י המנהלן.";
 $pgv_lang["del_unveru"]		= "המשתמש לא אישר עצמו תוך 7 ימים.";
 $pgv_lang["do_not_change"]		= "אין לשנות";
-$pgv_lang["download_file"]		= "הורד קובץ";
+//$pgv_lang["download_file"]		= "הורד קובץ";
 $pgv_lang["download_gedcom"]	= "הורד GEDCOM";
 $pgv_lang["download_here"]		= "לחץ כאן כדי להוריד את הקובץ.";
 $pgv_lang["download_note"]		= "הערה: יתכן שזמן העיבוד להורדת קובצי GEDCOM גדולים לוקח זמן רב. אם משך הזמן להורדה אינו מספיק, יתכן וההורדה לא תהייה שלמה.<br /><br />תוכל לבדוק ב-GEDCOM שהורד יש שורת <b>0&nbsp;TRLR</b> בסוף הקובץ, כדי לוודא שהוא הורד בצורה נכונה. קובצי ה-GEDCOM הם קובצי טכסט; ניתן להשתמש בתוכנת עריכה מתאימה של טכסטים , אבל <u>אין</u> לשמור את קובץ ה-GEDCOM שהורד אחרי שבדקת אותו.<br /><br />בד\"כ ההורדה עורכת משך זמן דומה למשך ייבוא ה-GEDCOM שלך.";
@@ -243,7 +243,7 @@ $pgv_lang["mysqli"]			= "MySQL 4.1+ and PHP 5";
 $pgv_lang["never"]			= "אף פעם לא";
 $pgv_lang["no_logs"]		= "נטרל בנית יומנים";
 $pgv_lang["no_messaging"]		= "אין שיטת קשר";
-$pgv_lang["none"]			= "אין";
+//$pgv_lang["none"]			= "אין";
 $pgv_lang["oci8"]			= "Oracle 7+";
 $pgv_lang["page_views"]		= "&nbsp;&nbsp;תצפיות דף ב-;";
 $pgv_lang["performing_validation"]	= "ביצוע בדיקת GEDCOM, בחר באפשרויות הדרושות ולחץ על <b>ניקיון</b>.";

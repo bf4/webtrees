@@ -264,17 +264,29 @@ if ($action=="update") {
 	$error = "";
 	$oldgedrec = $gedrec;
 	//-- check for name update
-	if (!empty($GIVN) || !empty($SURN)) {
+	if (isset($GIVN) || isset($SURN)) {
 		$namerec = trim(get_sub_record(1, "1 NAME", $gedrec));
 		if (!empty($namerec)) {
-			if (!empty($GIVN)) {
-				$namerec = preg_replace("/1 NAME.+\/(.*)\//", "1 NAME $GIVN /$1/", $namerec);
-				if (preg_match("/2 GIVN/", $namerec)>0) $namerec = preg_replace("/2 GIVN.+/", "2 GIVN $GIVN\r\n", $namerec);
+			if (isset($GIVN)) {
+				//-- check if name line has a GIVN and a SURN
+				if (preg_match("~1 NAME.+/.*/~", $namerec)>0) {
+					$namerec = preg_replace("/1 NAME.+\/(.*)\//", "1 NAME $GIVN /$1/", $namerec);
+				}
+				else {
+					$namerec = preg_replace("/1 NAME.+/", "1 NAME $GIVN", $namerec);
+				}
+				if (preg_match("/2 GIVN/", $namerec)>0) $namerec = preg_replace("/2 GIVN.*/", "2 GIVN $GIVN\r\n", $namerec);
 				else $namerec.="\r\n2 GIVN $GIVN";
 			}
-			if (!empty($SURN)) {
-				$namerec = preg_replace("/1 NAME(.+)\/.*\//", "1 NAME$1/$SURN/", $namerec);
-				if (preg_match("/2 SURN/", $namerec)>0) $namerec = preg_replace("/2 SURN.+/", "2 SURN $SURN\r\n", $namerec);
+			if (isset($SURN)) {
+				//-- check if name line has a GIVN and a SURN
+				if (preg_match("~1 NAME.+/.*/~", $namerec)>0) {
+					$namerec = preg_replace("/1 NAME(.+)\/.*\//", "1 NAME$1/$SURN/", $namerec);
+				}
+				else {
+					$namerec = preg_replace("/1 NAME ([\w.\ -_]+)/", "1 NAME $1 /$SURN/\r\n", $namerec);
+				}
+				if (preg_match("/2 SURN/", $namerec)>0) $namerec = preg_replace("/2 SURN.*/", "2 SURN $SURN\r\n", $namerec);
 				else $namerec.="\r\n2 SURN $SURN";
 			}
 			$pos1 = strpos($gedrec, "1 NAME");

@@ -865,10 +865,12 @@ function print_main_sources($factrec, $level, $pid, $linenum, $noedit=false) {
 		$srec = substr($factrec, $spos1, $spos2-$spos1);
 		if (!showFact("SOUR", $pid) || FactViewRestricted($pid, $factrec)) return false;
 		if (displayDetailsById($sid, "SOUR")) {
-			if ($level==2) print "<tr class=\"row_sour2 rela\">";
+			if ($level==2) print "<tr class=row_sour2>";
 			else print "<tr>";
-			print "<td class=\"descriptionbox $styleadd center width20\">";
-			if ($level==1) echo "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" alt=\"\" /><br />";
+			print "<td class=\"descriptionbox";
+			if ($level==2) print " rela";
+			print " $styleadd center width20\">";
+			if ($level==1) echo "<img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["source"]["small"]."\" alt=\"\" /><br />";
 			$temp = preg_match("/^\d (\w*)/", $factrec, $factname);
 			echo $factarray[$factname[1]];
 			if (!$noedit && userCanEdit(getUserName())&&(!FactEditRestricted($pid, $factrec))&&($styleadd!="red")&&($view!="preview")) {
@@ -1124,11 +1126,12 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 				print_main_notes($factrec, $level, $pid, $linenum, $noedit);
 			}
 		}
-		if ($level==2) print "<tr class=\"row_note2 rela\">";
+		if ($level==2) print "<tr class=\"row_note2\">";
 		else print "<tr>";
-		print "<td valign=\"top\" class=\"descriptionbox $styleadd center width20\">";
-		//print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\" alt=\"\" /><br />";
-		if ($level<2) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\" alt=\"\" /><br />".$factarray["NOTE"];
+		print "<td valign=\"top\" class=\"descriptionbox";
+		if ($level==2) print " rela";
+		print " $styleadd center width20\">";
+		if ($level<2) print "<img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["notes"]["small"]."\" alt=\"\" /><br />".$factarray["NOTE"];
 		else {
 			$factlines = explode("\n", $factrec); // 1 BIRT Y\n2 NOTE ...
 			$factwords = explode(" ", $factlines[0]); // 1 BIRT Y
@@ -1137,7 +1140,8 @@ function print_main_notes($factrec, $level, $pid, $linenum, $noedit=false) {
 				$factwords = explode(" ", $factlines[1]); // 1 EVEN\n2 TYPE MDCL\n2 NOTE
 				$factname = $factwords[2]; // MDCL
 			}
-			print $factarray[$factname];
+			if (isset($factarray[$factname])) print $factarray[$factname];
+			else print $factname;
 		}
 		if (!$noedit && userCanEdit(getUserName())&&(!FactEditRestricted($pid, $factrec))&&($styleadd!="change_old")&&($view!="preview")) {
 			$menu = array();
@@ -1419,7 +1423,7 @@ function print_main_media_row($rtype, $rowm, $pid) {
 	$isExternal = isFileExternal($thumbnail);
 
 	$linenum = 0;
-	print "\n\t\t<tr><td class=\"descriptionbox $styleadd center width20\"><img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["small"]."\" alt=\"\" /><br />".$factarray["OBJE"];
+	print "\n\t\t<tr><td class=\"descriptionbox $styleadd center width20\"><img class=\"icon\" src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["media"]["small"]."\" alt=\"\" /><br />".$factarray["OBJE"];
 	if ($rowm['mm_gid']==$pid && userCanEdit(getUserName()) && (!FactEditRestricted($rowm['m_media'], $rowm['m_gedrec'])) && ($styleadd!="change_old") && ($view!="preview")) {
 		$encodedFileName = rawurlencode($rowm["m_file"]);
 		$menu = array();

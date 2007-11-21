@@ -1871,8 +1871,8 @@ function get_media_relations($mid){
 			$media[$row[0]] = id_type($row[0]);
 		}
 	}
-		$medialist[$keyMediaList]['LINKS'] = $media;
-		return $media;
+	$medialist[$keyMediaList]['LINKS'] = $media;
+	return $media;
 }
 //Basically calls the get_media_relations method but it uses a file name rather than a media id.
 function get_media_relations_with_file_name($filename){
@@ -2001,6 +2001,14 @@ function get_media_firewall_path($path) {
 	global $MEDIA_FIREWALL_ROOTDIR;
 	$path = str_replace("../", "", $path);
 	return ($MEDIA_FIREWALL_ROOTDIR . $path);
+}
+
+// pass in the protected media directory
+// returns standard media directory
+function get_media_standard_path($path) {
+	global $MEDIA_FIREWALL_ROOTDIR;
+	$path = str_replace($MEDIA_FIREWALL_ROOTDIR, "", $path);
+	return ($path);
 }
 
 // recursively make directories

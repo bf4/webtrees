@@ -152,7 +152,6 @@ include('modules/lightbox/functions/lb_call_js.php');
         }
 
 		//Turn Edit Mode On or Off
-		
 		if (!isset($edit)) $edit=1;
 		if ($edit==1) {
 			$lbEditMsg = $pgv_lang["turn_edit_OFF"];
@@ -165,7 +164,7 @@ include('modules/lightbox/functions/lb_call_js.php');
         if ( userCanEdit(getUserName()) && $mediacnt!=0) {
 			if ($LB_AL_HEAD_LINKS == "both") {
  				print "<td class=\"width20 center wrap\" valign=\"top\">";
-	            print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&edit={$lbEditMode} title=\"{$lbEditMsg}\">";
+	            print "<a href=" . $PHP_SELF . "?tab=7&pid=" . $pid . "&edit={$lbEditMode} title=\"{$lbEditMsg}\">";
  	          	print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$lbEditMsg}\" /><br />" ;
             	print $lbEditMsg;
 	            print "</a>";
@@ -173,14 +172,14 @@ include('modules/lightbox/functions/lb_call_js.php');
 	            print "<td width=\"5%\">&nbsp;</td>";
             }else if ($LB_AL_HEAD_LINKS == "text") {
   				print "<td class=\"width20 center wrap\" valign=\"top\">";
-	            print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&edit={$lbEditMode} title=\"{$lbEditMsg}\">";
+	            print "<a href=" . $PHP_SELF . "?tab=7&pid=" . $pid . "&edit={$lbEditMode} title=\"{$lbEditMsg}\">";
 	          	print $lbEditMsg;
 	            print "</a>";
 	            print "</td>";
 	            print "<td width=\"5%\">&nbsp;</td>";
            }else if ($LB_AL_HEAD_LINKS == "icon") {
 				print "&nbsp;&nbsp;";
-	            print "<a href=" . $PHP_SELF . "?tab=" . $tabno . "&pid=" . $pid . "&edit={$lbEditMode} title=\"{$lbEditMsg}\">";
+	            print "<a href=" . $PHP_SELF . "?tab=7&pid=" . $pid . "&edit={$lbEditMode} title=\"{$lbEditMsg}\">";
           		print "<img src=\"modules/lightbox/images/image_edit.gif\" class=\"icon\" title=\"{$lbEditMsg}\" /><br />" ;
 	            print "</a>";
 				print "</td>";

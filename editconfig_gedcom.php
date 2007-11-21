@@ -628,7 +628,7 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
 		if (isset($ged)) {
 //			if ($TEXT_DIRECTION=="rtl") print getRLM() . "(".$GEDCOMS[$ged]["id"].")&nbsp;" . getRLM();
 //			else print "&nbsp;" . getLRM() . "(".$GEDCOMS[$ged]["id"].")" . getLRM();
-			print $GEDCOMS[$ged]["title"];
+			if (isset($GEDCOMS[$ged])) print $GEDCOMS[$ged]["title"];
 		}
 		else if ($source == "add_form") print $pgv_lang["add_gedcom"];
 		else if ($source == "upload_form") print $pgv_lang["upload_gedcom"];
@@ -639,6 +639,7 @@ if (!empty($error)) print "<span class=\"error\">".$error."</span>";
 		print $pgv_lang["lang_back_manage_gedcoms"];
 		print "</b></a><br /><br />";
 	?>
+<?php if ($source!="replace_form") { ?>
 <script language="javascript" type="text/javascript">
 <!--
 var searchable_tds, searchable_text;
@@ -813,6 +814,10 @@ function display_results(amount_found){
 				</b>
 			</p>
     </td>
+  </tr>
+</table>
+<?php } // ($source!="replace_form") ?>
+   </td>
   </tr>
 </table>
 
@@ -1236,7 +1241,8 @@ print "&nbsp;<a href=\"javascript: ".$pgv_lang["media_firewall_conf"]."\" onclic
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap"><?php print_help_link("MEDIA_FIREWALL_ROOTDIR_help", "qm", "MEDIA_FIREWALL_ROOTDIR"); print $pgv_lang["MEDIA_FIREWALL_ROOTDIR"];?></td>
-		<td class="optionbox"><input type="text" name="NEW_MEDIA_FIREWALL_ROOTDIR" size="50" dir="ltr" value="<?php print ($MEDIA_FIREWALL_ROOTDIR == $INDEX_DIRECTORY) ? "" : $MEDIA_FIREWALL_ROOTDIR ?>" onfocus="getHelp('MEDIA_FIREWALL_ROOTDIR_help');" tabindex="<?php $i++; print $i?>" /></td>
+		<td class="optionbox"><input type="text" name="NEW_MEDIA_FIREWALL_ROOTDIR" size="50" dir="ltr" value="<?php print ($MEDIA_FIREWALL_ROOTDIR == $INDEX_DIRECTORY) ? "" : $MEDIA_FIREWALL_ROOTDIR ?>" onfocus="getHelp('MEDIA_FIREWALL_ROOTDIR_help');" tabindex="<?php $i++; print $i?>" /><br />
+		<?php print_text("MEDIA_FIREWALL_ROOTDIR_note"); ?></td>
 	</tr>
 	<tr>
 		<td class="descriptionbox wrap"><?php print_help_link("MEDIA_FIREWALL_THUMBS_help", "qm", "MEDIA_FIREWALL_THUMBS"); print $pgv_lang["MEDIA_FIREWALL_THUMBS"];?></td>

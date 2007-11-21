@@ -125,10 +125,12 @@ if ($view!='preview') {
 	print_help_link('annivers_date_select_help', 'qm', 'day');
 	print $pgv_lang['day'].'</td><td colspan="7" class="optionbox">';
 	for($d=1; $d<=$days_in_month; $d++) {
+		// Format the day number using the calendar
+		$tmp=new GedcomDate($cal_date->Format("@ {$d} O E")); $d_fmt=$tmp->date1->Format('j');
 		if ($d==$cal_date->d)
-			print "<span class=\"error\">{$d}</span>";
+			print "<span class=\"error\">{$d_fmt}</span>";
 		else
-			print "<a href=\"calendar.php?cal={$cal}&amp;day={$d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">{$d}</a>";
+			print "<a href=\"calendar.php?cal={$cal}&amp;day={$d}&amp;month={$cal_month}&amp;year={$cal_date->y}&amp;filterev={$filterev}&amp;filterof={$filterof}&amp;filtersx={$filtersx}&amp;action={$action}\">{$d_fmt}</a>";
 		print ' | ';
 	}
 	$tmp=new GedcomDate($today->Format('@ A O E')); // Need a gedcom date to get localisation
@@ -451,10 +453,12 @@ case 'calendar':
 			} else
 				print '&nbsp;';
 		else {
+			// Format the day number using the calendar
+			$tmp=new GedcomDate($cal_date->Format("@ {$d} O E")); $d_fmt=$tmp->date1->Format('j');
 			if ($d==$today->d && $cal_date->m==$today->m)
-				print "<span class=\"cal_day current_day\">{$d}</span>";
+				print "<span class=\"cal_day current_day\">{$d_fmt}</span>";
 			else
-				print "<span class=\"cal_day\">{$d}</span>";
+				print "<span class=\"cal_day\">{$d_fmt}</span>";
 			// Show a converted date
 			foreach (explode('_and_', $CALENDAR_FORMAT) as $convcal) {
 				$alt_date=$cal_date->convert_to_cal($convcal);

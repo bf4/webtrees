@@ -1730,10 +1730,11 @@ function accept_changes($cid) {
 					} else
 						$firstname = $fullname;
 				}
+				//-- SEE [ 1753047 ] Email/sync with account
 				$email = get_gedcom_value("EMAIL", 1, $indirec);
+				if (empty($email)) $email = get_gedcom_value("_EMAIL", 1, $indirec);
 				if (($lastname != $user["lastname"]) || ($firstname != $user["firstname"]) || ($email != $user["email"])) {
-					//deleteUser($user["username"]);
-					$user["email"] = $email;
+					if (!empty($email)) $user["email"] = $email;
 					$user["firstname"] = $firstname;
 					$user["lastname"] = $lastname;
 					updateUser($user["username"], $user);

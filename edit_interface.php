@@ -306,37 +306,12 @@ case 'delete':
 			if (delete_gedrec($pid)) print $pgv_lang["gedrec_deleted"];
 		}
 		else {
-			$gedlines = preg_split("/\n/", $gedrec);
-
+			$mediaid='';
+			if (isset($_REQUEST['mediaid'])) $mediaid = $_REQUEST['mediaid'];
 			//-- when deleting a media link
 			//-- $linenum comes is an OBJE and the $mediaid to delete should be set
-			if ($linenum=='OBJE') {
-				if (!empty($mediaid)) {
-					for($i=0; $i<count($gedlines); $i++) {
-						if (preg_match("/OBJE @".$mediaid."@/", $gedlines[$i])>0) {
-							$linenum = $i;
-							break;
-						}
-					}
-				}
-			}
-			$newged = "";
-			for($i=0; $i<$linenum; $i++) {
-				if (trim($gedlines[$i])!="") $newged .= $gedlines[$i]."\n";
-			}
-			if (isset($gedlines[$linenum])) {
-				$fields = preg_split("/\s/", $gedlines[$linenum]);
-				$glevel = $fields[0];
-				$i++;
-				if ($i<count($gedlines)) {
-					//-- don't put empty lines in the record
-					while((isset($gedlines[$i]))&&(strlen($gedlines[$i])<4 || $gedlines[$i]{0}>$glevel)) $i++;
-					while($i<count($gedlines)) {
-						if (trim($gedlines[$i])!="") $newged .= $gedlines[$i]."\n";
-						$i++;
-					}
-				}
-			}
+			if (!is_numeric($linenum)) $newged = remove_subrecord($gedrec, $linenum, $mediaid);
+			else $newged = remove_subline($gedrec, $linenum);
 			$success = (replace_gedrec($pid, $newged));
 			if ($success) print "<br /><br />".$pgv_lang["gedrec_deleted"];
 		}

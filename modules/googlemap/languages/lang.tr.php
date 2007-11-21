@@ -33,7 +33,7 @@ $pgv_lang["googlemap"]              = "Harita";
 $pgv_lang["no_gmtab"]               = "Bu kişi için harita verisi yok";
 $pgv_lang["gm_disabled"]            = "GoogleMap modülü devredışı";
 
-$pgv_lang['gm_redraw_map']          = "Haritayı varsayılana getir";
+$pgv_lang["gm_redraw_map"]          = "Haritayı varsayılana getir";
 $pgv_lang["gm_map"]                 = "Harita";
 $pgv_lang["gm_satellite"]           = "Uydu";
 $pgv_lang["gm_hybrid"]              = "Karma";
@@ -113,20 +113,20 @@ $pgv_lang["list_inactive"]        	= "Hareketsiz yerleri görmek için burayı t
 
 //Placecheck specific text
 $pgv_lang["placecheck"]				= "Lütfen Denetle";
-$pgv_lang['placecheck_text']		= "Bu seçilmiş GEDCOM dosyasından bütün yerleri listeleyecek. Varsayılan yoluyla bu GEDCOM dosyası ve GoogleMap tabloları arasında tamamen eşlenen yerler içermeyecek";
-$pgv_lang['placecheck_top']			= "Üst Yer Değeri";
-$pgv_lang['placecheck_one']			= "Bir Yer Değeri";
-$pgv_lang['placecheck_select1']		= "Üst Değer Seç...";
-$pgv_lang['placecheck_select2']		= "Sonraki Değer Seç...";
-$pgv_lang['placecheck_key']			= "Aşağıda kullanılan durum renkleri";
-$pgv_lang['placecheck_key1']		= "Bu yer ve koordinatları GoogleMap tablolarında yoklar";
-$pgv_lang['placecheck_key2']		= "Bu yer GoogleMap tablolarında mevcutlar, Ancak hiçbir koordinatlara sahip değiller";
-$pgv_lang['placecheck_key3']		= "bu yer değeri GEDCOM dosyanızda boş dur. Eklenmeli<br />GoogleMap ebeveyninden koordinatlar ile \"bilinmeyen (unknown)\" olarak yerleştir<br />Sizden önce düzey sonraki düzeye yeri ekle";
-$pgv_lang['placecheck_key4']		= "bu yer değeri GEDCOM dosyanızda boştur fakat 'bilinmeyen (unknown)' olarak vardır<br />GoogleMap koordinatlarla tabloya yerleştirir. Hareket gerekli değil<br />eksik değere kadar girebilirsin";
-$pgv_lang['placecheck_head']		= "GEDCOM dosya için yer listesi";
-$pgv_lang['placecheck_gedheader']	= "GEDCOM dosya yer verisi<br/>(2 PLAC tag)";
-$pgv_lang['placecheck_gm_header']	= "GoogleMap yerlerin tablo verisi";
-$pgv_lang['placecheck_unique']		= "Tek yerlerin toplamı";
+$pgv_lang["placecheck_text"]		= "Bu seçilmiş GEDCOM dosyasından bütün yerleri listeleyecek. Varsayılan yoluyla bu GEDCOM dosyası ve GoogleMap tabloları arasında tamamen eşlenen yerler içermeyecek";
+$pgv_lang["placecheck_top"]			= "Üst Yer Değeri";
+$pgv_lang["placecheck_one"]			= "Bir Yer Değeri";
+$pgv_lang["placecheck_select1"]		= "Üst Değer Seç...";
+$pgv_lang["placecheck_select2"]		= "Sonraki Değer Seç...";
+$pgv_lang["placecheck_key"]			= "Aşağıda kullanılan durum renkleri";
+$pgv_lang["placecheck_key1"]		= "Bu yer ve koordinatları GoogleMap tablolarında yoklar";
+$pgv_lang["placecheck_key2"]		= "Bu yer GoogleMap tablolarında mevcutlar, Ancak hiçbir koordinatlara sahip değiller";
+$pgv_lang["placecheck_key3"]		= "bu yer değeri GEDCOM dosyanızda boş dur. Eklenmeli<br />GoogleMap ebeveyninden koordinatlar ile \"bilinmeyen (unknown)\" olarak yerleştir<br />Sizden önce düzey sonraki düzeye yeri ekle";
+$pgv_lang["placecheck_key4"]		= "bu yer değeri GEDCOM dosyanızda boştur fakat \"bilinmeyen (unknown)\" olarak vardır<br />GoogleMap koordinatlarla tabloya yerleştirir. Hareket gerekli değil<br />eksik değere kadar girebilirsin";
+$pgv_lang["placecheck_head"]		= "GEDCOM dosya için yer listesi";
+$pgv_lang["placecheck_gedheader"]	= "GEDCOM dosya yer verisi<br/>(2 PLAC tag)";
+$pgv_lang["placecheck_gm_header"]	= "GoogleMap yerlerin tablo verisi";
+$pgv_lang["placecheck_unique"]		= "Tek yerlerin toplamı";
 $pgv_lang["placecheck_zoom"]        = "Zum=";
 $pgv_lang["placecheck_options"]     = "Yer liste seçnekleri denetle";
 $pgv_lang["placecheck_filter_text"] = "Filitrelenen Seçeneklerin Listesi";

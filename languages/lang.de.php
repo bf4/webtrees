@@ -172,6 +172,7 @@ $pgv_lang["stepsister"]					= "Stiefschwester";
 $pgv_lang["stepbrother"]				= "Stiefbruder";
 $pgv_lang["fams_charts"]				= "Optionen für Familie";
 $pgv_lang["indis_charts"]				= "Optionen für Person";
+$pgv_lang["none"]						= "Keine";
 $pgv_lang["locked"]						= "Nicht ändern!";
 $pgv_lang["privacy"]					= "Datenschutz";
 $pgv_lang["number_sign"]				= "#";
@@ -319,6 +320,9 @@ $pgv_lang["no_tab3"]					= "Zu dieser Person gibt es keine Quellenangaben.";
 $pgv_lang["no_tab4"]					= "Zu dieser Person gibt es keine Multimedia Objekte.";
 $pgv_lang["no_tab5"]					= "Zu dieser Person gibt es keine direkte Verwandschaft.";
 $pgv_lang["no_tab6"]					= "Zu dieser Person gibt es keine Forschung Protokolle.";
+$pgv_lang["show_fact_sources"]			= "Zeige alle Quellen";
+$pgv_lang["show_fact_notes"]			= "Zeige alle Bemerke";
+
 //-- FAMILY FILE MESSAGES
 $pgv_lang["family_info"]				= "Familien Informationen";
 $pgv_lang["family_group_info"]			= "Informationen zur Familiengruppe";
@@ -331,6 +335,7 @@ $pgv_lang["children"]					= "Kinder";
 $pgv_lang["no_children"]				= "Keine Kinder eingetragen";
 $pgv_lang["childless_family"]			= "Diese Familie blieb kinderlos";
 $pgv_lang["parents_timeline"]			= "Ehepaar in Lebensspannen-Ansicht zeigen";
+
 //-- CLIPPINGS FILE MESSAGES
 $pgv_lang["clip_cart"]					= "Sammelbehälter";
 $pgv_lang["which_links"]				= "Welche Verbindungen dieser Familie möchten Sie noch hinzufügen?";
@@ -632,8 +637,14 @@ $pgv_lang["thumb_dir_2"]				= "Dieses Miniaturbild befindet sich im gewöhnliche
 $pgv_lang["thumb_dir_3"]				= "Dieses Miniaturbild befindet sich im geschützten Medien-Verzeichnis";
 $pgv_lang["moveto_2"]					= "Ins geschütztes Verzeichnis verlegen";
 $pgv_lang["moveto_3"]					= "Ins gewöhnliches Verzeichnis verlegen";
-$pgv_lang["move_standard"]				= "Zum gew. Verz. verlegen";
-$pgv_lang["move_protected"]				= "Zum gesch. Verz. verlegen";
+$pgv_lang["move_standard"]				= "Nach gew. Verz. verlegen";
+$pgv_lang["move_protected"]				= "Nach gesch. Verz. verlegen";
+$pgv_lang["setperms"]					= "Medienverzeichnis-Rechte bestimmen";
+$pgv_lang["setperms_writable"]			= "Für alle schreibbar";
+$pgv_lang["setperms_readonly"]			= "Nur lesbar";
+$pgv_lang["setperms_success"]			= "Rechte wurden eingestellt";
+$pgv_lang["setperms_failure"]			= "Rechte konnten nicht eingestellt werden";
+$pgv_lang["setperms_time_exceeded"]		= "Die maximale Ausführungszeit wurde überschritten.  Bitte versuchen Sie den Befehl wieder, aber mit weniger Dateien im Verzeichnis.";
 $pgv_lang["move_mediadirs"]				= "Medien-Verzeichnisse verlegen";
 $pgv_lang["move_time_exceeded"]			= "Die maximale Ausführungszeit wurde überschritten.  Bitte versuchen Sie den Befehl wieder, um weitere Dateien zu verlegen.";
 $pgv_lang["media_firewall_rootdir_no_exist"]			= "Das Media-Firewall Verzeichnis besteht nicht.  Sie müssen es zuerst erstellen.";

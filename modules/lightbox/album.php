@@ -28,13 +28,19 @@
  */
 loadLangFile("lb_lang");
 
-// Get Javascript variables from lb_config.php --------------------------- 
-	include('modules/lightbox/lb_config.php'); 
-//	include('modules/lightbox/functions/browser_detection_php_ar.php');
-
 global $LANGUAGE, $mediatab, $mediacnt;
 global $edit, $controller, $tabno, $_REQUEST, $thumb_edit, $n, $LB_URL_WIDTH, $LB_URL_HEIGHT ;
 
+// Get Javascript variables from lb_config.php --------------------------- 
+include_once('modules/lightbox/lb_config.php'); 
+//	include_once('modules/lightbox/functions/browser_detection_php_ar.php');
+
+
+if (isset($edit)) {
+	$edit=$edit;
+}else{
+	$edit=1;
+	}
 //------------------------------------------------------------------------------
 // Start Main Table
 //------------------------------------------------------------------------------

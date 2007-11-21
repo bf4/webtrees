@@ -594,7 +594,8 @@ $pgv_lang["USE_MEDIA_VIEWER_help"]		= "~#pgv_lang[USE_MEDIA_VIEWER]#~<br /><br /
 $pgv_lang["USE_MEDIA_FIREWALL"]			= "Medien-Feuerwand benutzen";
 $pgv_lang["USE_MEDIA_FIREWALL_help"]	= "~#pgv_lang[USE_MEDIA_FIREWALL]#~<br /><br />Die Medien-Feuerwand ist im Wikipedia beschrieben. <a href=\"http://wiki.phpgedview.net/en/index.php/Media_Firewall\" target=\"_blank\">http://wiki.phpgedview.net/en/index.php/Media_Firewall</a><br /><br />";
 $pgv_lang["MEDIA_FIREWALL_ROOTDIR"]			= "Medien-Feuerwand Hauptverzeichnis";
-$pgv_lang["MEDIA_FIREWALL_ROOTDIR_help"]	= "~#pgv_lang[MEDIA_FIREWALL_ROOTDIR]#~<br /><br />Verzeichnis, worin das geschützte Medien-Verzeichnis erstellt werden kann.  Der leere Eintrag bedeutet, dass das <b>#GLOBALS[INDEX_DIRECTORY]#</b> Verzeichnis benutzt wird.<br /><br />";
+$pgv_lang["MEDIA_FIREWALL_ROOTDIR_help"]	= "~#pgv_lang[MEDIA_FIREWALL_ROOTDIR]#~<br /><br />Verzeichnis, worin das geschützte Medien-Verzeichnis erstellt werden kann.  #pgv_lang[MEDIA_FIREWALL_ROOTDIR_note]#<br /><br />";
+$pgv_lang["MEDIA_FIREWALL_ROOTDIR_note"]	= "Der leere Eintrag bedeutet, dass das <b>#GLOBALS[INDEX_DIRECTORY]#</b> Verzeichnis benutzt wird.";
 $pgv_lang["MEDIA_FIREWALL_THUMBS"]			= "Miniaturbilder schützen";
 $pgv_lang["MEDIA_FIREWALL_THUMBS_help"]	= "~#pgv_lang[MEDIA_FIREWALL_THUMBS]#~<br /><br />Wenn das große Bild sich im geschützen Medien-Verzeichnis befindet, soll das dazugehörende Miniaturbild auch geschützt werden?<br /><br />";
 $pgv_lang["SHOW_NO_WATERMARK"]			= "Wem Bilder ohne Wasserzeichen zeigen";

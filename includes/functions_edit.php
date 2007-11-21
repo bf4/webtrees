@@ -442,6 +442,70 @@ function check_gedcom($gedrec, $chan=true) {
 }
 
 /**
+ * remove a subrecord from a parent record by gedcom tag
+ *
+ * @param string $oldrecord	the parent record to remove the subrecord from
+ * @param string $tag	the GEDCOM subtag to start deleting at
+ * @param string $gid	[optional] gid can be used to limit to @gid@
+ * @param int $num		[optional] num specifies which multiple of the tag to remove, set to -1 to remove all 
+ * @return string		returns the oldrecord minus the subrecord(s)
+ */
+function remove_subrecord($oldrecord, $tag, $gid='', $num=0) {
+	$newrec = "";
+	$gedlines = preg_split("/\n/", $oldrecord);
+
+	$n = 0;
+	$matchstr = $tag;
+	if (!empty($gid)) $matchstr .= " @".$gid."@";
+	for($i=0; $i<count($gedlines); $i++) {
+		if (preg_match("/".$matchstr."/", $gedlines[$i])>0) {
+			if ($num==-1 || $n==$num) {
+				$glevel = $gedlines[$i]{0};
+				$i++;
+				while((isset($gedlines[$i]))&&(strlen($gedlines[$i])<4 || $gedlines[$i]{0}>$glevel)) $i++;
+			}
+			else $n++;
+		}
+		else $newrec .= $gedlines[$i]."\n";
+	}
+	
+	return trim($newrec);
+}
+
+/**
+ * delete a subrecord from a parent record using the linenumber
+ *
+ * @param string $oldrecord		parent record to delete from
+ * @param int $linenum		linenumber where the subrecord to delete starts
+ * @return string				the new record
+ */
+function remove_subline($oldrecord, $linenum) {
+	$newrec = "";
+	$gedlines = preg_split("/\n/", $oldrecord);
+
+	for($i=0; $i<$linenum; $i++) {
+		if (trim($gedlines[$i])!="") $newrec .= $gedlines[$i]."\n";
+	}
+	if (isset($gedlines[$linenum])) {
+		$fields = preg_split("/\s/", $gedlines[$linenum]);
+		$glevel = $fields[0];
+		$i++;
+		if ($i<count($gedlines)) {
+			//-- don't put empty lines in the record
+			while((isset($gedlines[$i]))&&(strlen($gedlines[$i])<4 || $gedlines[$i]{0}>$glevel)) $i++;
+			while($i<count($gedlines)) {
+				if (trim($gedlines[$i])!="") $newrec .= $gedlines[$i]."\n";
+				$i++;
+			}
+		}
+	}
+	else return $oldrecord;
+	
+	$newrec = trim($newrec);
+	return $newrec;
+}
+
+/**
  * Undo a change
  * this function will undo a change in the gedcom file
  * @param string $cid	the change id of the form gid_gedcom
@@ -609,6 +673,12 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 			break;
 		}
 	}
+
+	// Make sure there are two slashes in the name
+	if (preg_match('/\//', $name_fields['NAME'])==0)
+		$name_fields['NAME'].=' /';
+	if (preg_match('/\//', $name_fields['NAME'])==1)
+		$name_fields['NAME'].='/';
 
 	// Populate any missing 2 XXXX fields from the 1 NAME field
 	$npfx_accept=implode('|', $NPFX_accept);
@@ -794,6 +864,8 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	// Update the NAME and _MARNM fields from the name components
 	// and also display the value in read-only "gedcom" format.
 	function updatewholename() {
+		// don't update the name if the user manually changed it
+		if (manualChange) return;
 		// Update NAME field from components and display it
 		var frm =document.forms[0];
 		var npfx=frm.NPFX.value;
@@ -801,7 +873,7 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		var spfx=frm.SPFX.value;
 		var surn=frm.SURN.value;
 		var nsfx=frm.NSFX.value;
-		frm.NAME.value=trim(npfx+" "+givn+" /"+trim(spfx+" "+surn)+"/ "+nsfx);
+		document.getElementById('NAME').value=trim(npfx+" "+givn+" /"+trim(spfx+" "+surn)+"/ "+nsfx);
 		document.getElementById('NAME_display').innerHTML=frm.NAME.value;
 		// Married names inherit some NSFX values, but not these
 		nsfx=nsfx.replace(/^(I|II|III|IV|V|VI|Junior|Jr\.?|Senior|Sr\.?)$/i, '');
@@ -838,6 +910,85 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 		}
 	}
 
+	/**
+	 * convert a hidden field to a text box
+	 */
+	var oldName = "";
+	var manualChange = false;
+	function convertHidden(eid) {
+		var element = document.getElementById(eid);
+		if (element) {
+			if (element.type=="hidden") {
+				//-- IE doesn't allow changing the "type" of an input field so we'll cludge it ( silly :P)
+				if (IE) {
+					var newInput = document.createElement('input');
+					newInput.setAttribute("type", "text");
+					newInput.setAttribute("name", element.Name);
+					newInput.setAttribute("id", element.id);
+					newInput.setAttribute("value", element.value);
+					newInput.setAttribute("onchange", element.onchange);
+					var parent = element.parentNode;
+					parent.replaceChild(newInput, element);
+					element = newInput;
+				}
+				else {
+					element.type="text";
+				}
+				element.size="40";
+				oldName = element.value;
+				manualChange = true;
+				var delement = document.getElementById(eid+"_display");
+				if (delement) {
+					delement.style.display='none';
+					//-- force FF ui to update the display
+					if (delement.innerHTML != oldName) {
+						oldName = delement.innerHTML;
+						element.value = oldName;
+					}
+				}
+			}
+			else {
+				manualChange = false;
+				//-- IE doesn't allow changing the "type" of an input field so we'll cludge it ( silly :P)
+				if (IE) {
+					var newInput = document.createElement('input');
+					newInput.setAttribute("type", "hidden");
+					newInput.setAttribute("name", element.Name);
+					newInput.setAttribute("id", element.id);
+					newInput.setAttribute("value", element.value);
+					newInput.setAttribute("onchange", element.onchange);
+					var parent = element.parentNode;
+					parent.replaceChild(newInput, element);
+					element = newInput;
+				}
+				else {
+					element.type="hidden";
+				}
+				var delement = document.getElementById(eid+"_display");
+				if (delement) {
+					delement.style.display='inline';
+				}
+			}
+		}
+	}
+	
+	/**
+	 * if the user manually changed the NAME field, then update the textual 
+	 * HTML representation of it
+	 * If the value changed set manualChange to true so that changing
+	 * the other fields doesn't change the NAME line
+	 */
+	function updateTextName(eid) {
+		var element = document.getElementById(eid);
+		if (element) {
+			if (element.value!=oldName) manualChange = true;
+			var delement = document.getElementById(eid+"_display");
+			if (delement) {
+				delement.innerHTML = element.value;
+			}
+		}
+	}
+
 	function checkform() {
 		// Make sure we have entered at least something for the name
 		if (document.addchildform.NAME.value=="//") {
@@ -863,7 +1014,11 @@ function print_indi_form($nextaction, $famid, $linenum="", $namerec="", $famtag=
 	<?php
 	// Force the 1 NAME record to be rebuilt from the 2 XXXX parts
 	// This tidies up whitespace and removes "nicknames".
-	print "<script type='text/javascript'>updatewholename();</script>";
+	// See [ 1830176 ] - don't automatically update the 1 NAME line from 2 parts
+	// in case the user wants them to be different
+	// if the user actually makes a change in one of the parts then the updatewholename
+	// will be called and the 1 NAME updated
+	//print "<script type='text/javascript'>updatewholename();</script>";
 }
 
 /**
@@ -1266,8 +1421,12 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 	}
 	else if (($fact=="NAME" && $upperlevel!='REPO') || $fact=="_MARNM") {
 		// Populated in javascript from sub-tags
-		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\">";
-		print "<span id=\"".$element_id."_display\"></span>";
+		print "<input type=\"hidden\" id=\"".$element_id."\" name=\"".$element_name."\" onchange=\"updateTextName('".$element_id."');\" value=\"".PrintReady(htmlspecialchars($value))."\" >";
+		print "<span id=\"".$element_id."_display\">".PrintReady(htmlspecialchars($value))."</span>";
+		print " <a href=\"#edit_name\" alt=\"".$pgv_lang["edit_name"]."\" onclick=\"convertHidden('".$element_id."'); return false;\"> ";
+		if (isset($PGV_IMAGES["edit_indi"]["small"])) print "<img src=\"".$PGV_IMAGE_DIR."/".$PGV_IMAGES["edit_indi"]["small"]."\" border=\"0\" width=\"20\" alt=\"".$pgv_lang["edit_name"]."\" align=\"top\" />";
+		else print "<span class=\"age\">[".$pgv_lang["edit_name"]."]</span>";
+		print "</a>";
 	} else {
 		// textarea
 		if ($rows>1) print "<textarea tabindex=\"".$tabkey."\" id=\"".$element_id."\" name=\"".$element_name."\" rows=\"".$rows."\" cols=\"".$cols."\">".PrintReady(htmlspecialchars($value))."</textarea><br />\n";
@@ -1298,7 +1457,7 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			print "<input tabindex=\"".$tabkey."\" type=\"text\" id=\"".$element_id."\" name=\"".$element_name."\" value=\"".PrintReady(htmlspecialchars($value))."\" size=\"".$cols."\" dir=\"ltr\"";
 			if ($fact=="NPFX") print " onkeyup=\"wactjavascript_autoComplete(npfx_accept,this,event)\" autocomplete=\"off\" ";
 			// onKeyUp should suffice.  Why the others?
-			if (in_array($fact, $subnamefacts)) print " onBlur=\"updatewholename();\" onMouseOut=\"updatewholename();\" onKeyUp=\"updatewholename();\"";
+			if (in_array($fact, $subnamefacts)) print " onBlur=\"updatewholename();\" onKeyUp=\"updatewholename();\"";
 			if ($fact=="DATE") print " onblur=\"valid_date(this);\" onmouseout=\"valid_date(this);\"";
 			if ($fact=="LATI") print " onblur=\"valid_lati_long(this, 'N', 'S');\" onmouseout=\"valid_lati_long(this, 'N', 'S');\"";
 			if ($fact=="LONG") print " onblur=\"valid_lati_long(this, 'E', 'W');\" onmouseout=\"valid_lati_long(this, 'E', 'W');\"";
@@ -1306,6 +1465,17 @@ function add_simple_tag($tag, $upperlevel="", $label="", $readOnly="", $noClose=
 			print " ".$readOnly." />\n";
 				if (($cols>20 || $fact=="NPFX") && $readOnly=="") print_specialchar_link($element_id, false);
 		}
+		// split PLAC
+		if ($fact=="PLAC" && $readOnly=="") {
+			print "<div id=\"".$element_id."_pop\" style=\"display: inline;\">\n";
+			print_specialchar_link($element_id, false);
+			print_findplace_link($element_id);
+			print "</div>\n";
+			print "<a href=\"javascript:;\" onclick=\"toggle_lati_long();\"><img src=\"images/buttons/target.gif\" border=\"0\" align=\"middle\" alt=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" title=\"".$factarray["LATI"]." / ".$factarray["LONG"]."\" /></a>";
+			if ($SPLIT_PLACES) {
+				if (!function_exists("print_place_subfields")) require("includes/functions_places.php");
+				setup_place_subfields($element_id);
+				print_place_subfields($element_id);
 			}
 		}
 	// MARRiage TYPE : hide text field and show a selection list

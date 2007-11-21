@@ -29,7 +29,10 @@
 require_once("includes/controllers/individual_ctrl.php");
 require_once("includes/serviceclient_class.php");
 
-global $USE_THUMBS_MAIN, $mediacnt, $tabno, $mediatab;
+loadLangFile("lb_lang");	// Load Lightbox language file
+loadLangFile("gm_lang");	// Load GoogleMap language file
+
+global $USE_THUMBS_MAIN, $mediacnt, $tabno;
 global $linkToID;
 global $SEARCH_SPIDER;
 
@@ -232,13 +235,13 @@ function showchanges() {
 <?php
 if (file_exists("modules/lightbox/album.php")) {
 	include_once ("modules/lightbox/lb_config.php");
-	include_once ("modules/lightbox/functions/lb_indi_tabs_" . $mediatab . ".php");
 	if ($theme_name=="Minimal") {
 		// Force icon options to "text" when we're dealing with the Minimal theme
-		if ($LB_AL_HEAD_LINKS!="none") $LB_AL_HEAD_LINKS = "text";
-		if ($LB_AL_THUMB_LINKS!="none") $LB_AL_THUMB_LINKS = "text";
-		if ($LB_ML_THUMB_LINKS!="none") $LB_ML_THUMB_LINKS = "text";
+		if ($LB_AL_HEAD_LINKS!="none") { $LB_AL_HEAD_LINKS = "text"; }
+		if ($LB_AL_THUMB_LINKS!="none") { $LB_AL_THUMB_LINKS = "text"; }
+		if ($LB_ML_THUMB_LINKS!="none") { $LB_ML_THUMB_LINKS = "text"; }
 	}
+	include_once ("modules/lightbox/functions/lb_indi_tabs_" . $mediatab . ".php");
 }else{	
 ?>
 <!-- ================== End Additions for Lightbox Module ================== -->
@@ -584,6 +587,7 @@ if(empty($SEARCH_SPIDER)) {
 				        if ($TEXT_DIRECTION=="ltr") print "<td align=\"left\">";
 				        else print "<td align=\"right\">";
 				        print "<a href=\"javascript:ResizeMap()\">".$pgv_lang["gm_redraw_map"]."</a></td>\n";
+				        print "<td>&nbsp;</td>\n";
 				        if ($TEXT_DIRECTION=="ltr") print "<td align=\"right\">\n";
 				        else print "<td align=\"left\">\n";
 				        print "<a href=\"javascript:map.setMapType(G_NORMAL_MAP)\">".$pgv_lang["gm_map"]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n";
@@ -591,8 +595,14 @@ if(empty($SEARCH_SPIDER)) {
 				        print "<a href=\"javascript:map.setMapType(G_HYBRID_MAP)\">".$pgv_lang["gm_hybrid"]."</a>\n";
 				        print "</td></tr>\n";
 				        if (userIsAdmin(getUserName())) {
-				            print "<tr><td align=\"center\" colspan=\"2\">\n";
+				            print "<tr><td align=\"left\">\n";
 				            print "<a href=\"module.php?mod=googlemap&amp;pgvaction=editconfig\">".$pgv_lang["gm_manage"]."</a>";
+				            print "</td>\n";
+   				            print "<td align=\"center\">\n";
+				            print "<a href=\"module.php?mod=googlemap&pgvaction=places\">".$pgv_lang["edit_place_locations"]."</a>";
+				            print "</td>\n";
+   				            print "<td align=\"right\">\n";
+				            print "<a href=\"module.php?mod=googlemap&pgvaction=placecheck\">".$pgv_lang["placecheck"]."</a>";
 				            print "</td></tr>\n";
 				        }
 				        print "</table>\n";
@@ -638,7 +648,12 @@ if(empty($SEARCH_SPIDER) && file_exists("modules/lightbox/album.php")) {
 		
 		// ---------- Help link --------------------		
 		print "<a href=\"" . $lbHelpFile . "\" rel='clearbox(500,760,click)' title=\"" . $pgv_lang["page_help"] . "\" >";
+		if ($theme_name=="Minimal") {
+			// Force icon options to "text" when we're dealing with the Minimal theme
+			print $pgv_lang["page_help"];
+		}else{
         print "<img src=\"".$PGV_IMAGE_DIR."/small/help.gif\" class=\"icon\" title=\"" . $pgv_lang["page_help"] . "\" />" ;
+		}
         print "</a>" ;
 
 		// Header info ---------------------------------------------------		

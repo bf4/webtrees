@@ -29,13 +29,26 @@
 //These files are required for this page to work
 require_once("includes/controllers/media_ctrl.php");
 
-if (empty($controller->pid)) {
-	//If there isn't any media loaded then this will print the no media tag.
-	echo "<div align=\"center\">".$pgv_lang["no_media"]."</div>";
-}
-else{
+
+/* Note:
+ *  if $controller->getLocalFilename() is not set, then an invalid MID was passed in
+ *  if $controller->pid is not set, then a filename was passed in that is not in the gedcom
+ */
+
+$filename = $controller->getLocalFilename();
 
 	print_header($controller->getPageTitle());
+
+global $tmb;	
+	
+// LBox ============================================================================= 
+// Get Javascript variables from lb_config.php --------------------------- 
+ if (file_exists("modules/lightbox/album.php")) {
+	include('modules/lightbox/lb_config.php');
+	include('modules/lightbox/functions/lb_call_js.php');	
+}
+// LBox  ============================================================================		
+	
 	//The following lines of code are used to print the menu box on the top right hand corner
 	if ((!$controller->isPrintPreview())&&(empty($SEARCH_SPIDER))) {
 		if ($controller->userCanEdit() || $controller->canShowOtherMenu()) { ?>
@@ -62,6 +75,8 @@ else{
 			<?php
 		}
 	}
+	
+	
 		//The next set of code draws the table that displays information about the person
 		?>
 		<table width="70%">
@@ -85,12 +100,29 @@ else{
 							// this is an image
 							$imgwidth = $controller->mediaobject->getWidth()+40;
 							$imgheight = $controller->mediaobject->getHeight()+150;
+							if (file_exists("modules/lightbox/album.php")) {							
+								$dwidth = 150;
+							}else{
 							$dwidth = 300;
-							if ($imgwidth<300) $dwidth = $imgwidth;
-							//Makes it so the picture when clicked opens the Image View Page
+							}
+							if ($imgwidth<$dwidth) $dwidth = $imgwidth;
+							
+							// If Lightbox installed, open image with Lightbox
+							if ( file_exists("modules/lightbox/album.php") && ( eregi("\.jpg",$filename) || eregi("\.jpeg",$filename) || eregi("\.gif",$filename) || eregi("\.png",$filename) ) ) { 
+								//			print "<a href=\"" . $media["FILE"] . "\" rel=\"clearbox[general]\" title=\"" . stripslashes(PrintReady($name1)) . "\">" . "\n";
+								print "<a 
+									href=\"" . $filename . "\" 
+									onmouseover=\"window.status='javascript:;'; return true;\" 
+									onmouseout=\"window.status=''; return true;\"
+									rel=\"clearbox[general]\" title=\"" . PrintReady(htmlspecialchars($controller->mediaobject->getTitle())) . "\">" . "\n";	
+
+							}else{
+								//Else open image with the Image View Page
 							?>
 							<a href="javascript:;" onclick="return openImage('<?php print rawurlencode($filename); ?>', <?php print $imgwidth; ?>, <?php print $imgheight; ?>);">
-								<img src="<?php if (!$USE_THUMBS_MAIN) print $filename; else print $controller->mediaobject->getThumbnail(); ?>" border="0" <?php if (!$USE_THUMBS_MAIN) print "width=\"" . $dwidth . "\"";?> alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
+								<?php 
+							} ?>
+							<img src="<?php if (!$USE_THUMBS_MAIN) print $filename; else print $controller->mediaobject->getThumbnail(); ?>" border="0" <?php if (!$USE_THUMBS_MAIN) print "width=\"" . $dwidth . "\"";?> alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getTitle())); ?>" />
 							</a>
 							<?php
 						}
@@ -98,7 +130,7 @@ else{
 							// this is not an image
 							?>
 							<a href="<?php print $filename; ?>" target="_BLANK">
-							<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="150" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
+							<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="150" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getTitle())); ?>" />
 							</a>
 							<?php
 						}
@@ -107,7 +139,7 @@ else{
 					else{
 						// the file is not external and does not exist
 						?>
-						<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="100" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print $controller->mediaobject->getTitle(); ?>" />
+						<img src="<?php print $controller->mediaobject->getThumbnail(); ?>" border="0" width="100" alt="<?php print $controller->mediaobject->getTitle(); ?>" title="<?php print PrintReady(htmlspecialchars($controller->mediaobject->getTitle())); ?>" />
 						<br /><span class="error"><?php print $pgv_lang["file_not_found"];?></span>
 						<?php
 					}
@@ -147,10 +179,21 @@ else{
 			</tr>
 		</table>
 <?php
+
 // These JavaScript functions are needed for the code to work properly with the menu.
 ?>
 <script language="JavaScript" type="text/javascript">
 <!--
+
+// javascript function to open the lightbox view
+function lightboxView(){
+//	var string = "<?php print $tmb; ?>";
+//	alert(string);
+//    	document.write(string);
+//	<?php print $tmb; ?>
+	return false;
+}
+
 // javascript function to open the original imageviewer.php page
 function openImageView(){
 	window.open("imageview.php?filename=<?php print $filename ?>", "Image View");
@@ -173,6 +216,8 @@ function ilinkitem(mediaid, type) {
 }
 //-->
 </script>
+
+
 <br /><br /><br />
 	<?php
 }

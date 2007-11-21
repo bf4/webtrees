@@ -1234,8 +1234,12 @@ var soond = null;
 		CB_Nxt.style.display = "none";	
 		CB_SlideB.style.display = "none";
 		CB_ZoomP.style.display = "block";
-		CB_ZoomS.style.display = "none";			
-		CB_SlideS.style.display = "block";
+		CB_ZoomS.style.display = "none";
+        if (CB_Gallery.length < 3) {		
+			CB_SlideS.style.display = "none";
+		}else{
+			CB_SlideS.style.display = "block";		
+		}
 		CB_SlideP.style.display = "none";
 		CB_ShTh.style.display = "none";
 		CB_Zoom = "true";
@@ -1258,7 +1262,11 @@ var soond = null;
 			CB_SlideB.style.display = "none";
 			CB_ZoomP.style.display = "block";	
 			CB_ZoomS.style.display = "none";			
-			CB_SlideS.style.display = "block";
+			if (CB_Gallery.length < 3) {		
+				CB_SlideS.style.display = "none";
+			}else{
+				CB_SlideS.style.display = "block";		
+			}
 			CB_SlideP.style.display = "none";
 			CB_ShTh.style.display = "none";	
 			CB_Zoom = "true";
@@ -1281,12 +1289,21 @@ var soond = null;
 		CB_Win.style.marginLeft = CB_MarginL + "px";	
 		CB_MarginT = parseInt(DocScrY - (CB_ieRPBug + CB_ImgHeightOld + CB_TextH + 2 * (CB_RoundPix + CB_ImgBorder + CB_Padd)) / 2);
 		CB_Win.style.marginTop = CB_MarginT - FF_ScrollbarBug / 2 + "px";
-		CB_Prv.style.display = "block";
-		CB_Nxt.style.display = "block";	
+        if (CB_Gallery.length < 3) {		
+			CB_Prv.style.display = "none";
+			CB_Nxt.style.display = "none";	
+		}else{
+			CB_Prv.style.display = "block";
+			CB_Nxt.style.display = "block";	
+		}
 		CB_SlideB.style.display = "none";
 		CB_ZoomS.style.display = "block";
 		CB_ZoomP.style.display = "none";		
-		CB_SlideS.style.display = "block";
+        if (CB_Gallery.length < 3) {		
+			CB_SlideS.style.display = "none";
+		}else{
+			CB_SlideS.style.display = "block";		
+		}
 		CB_SlideP.style.display = "none";
 		CB_ShTh.style.display = "block";
 		CB_Zoom = "false";

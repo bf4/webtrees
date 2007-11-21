@@ -43,7 +43,6 @@ $pgv_lang["charts_block_descr"]		= "El bloque de Diagramas le permite colocar un
 $pgv_lang["chart_type"]				= "Tipo de diagrama";
 $pgv_lang["changedate1"]			= "Fin del intervalo de fechas de cambio";
 $pgv_lang["changedate2"]			= "Comienzo del intervalo de fechas de cambio";
-$pgv_lang["changes_report"]			= "Informe de cambios";
 $pgv_lang["search_place_word"]		= "Sólo palabras completas";
 $pgv_lang["invalid_search_input"] 	= "Por favor, introduzca un Nombre, Apellido o Lugar además del Año";
 $pgv_lang["duplicate_username"] 	= "Nombre de usuario duplicado.  Ya existe un usuario con ese nombre.  Por favor regrese y cree un usuario con otro nombre.";
@@ -128,8 +127,6 @@ $pgv_lang["no_search_site"]			= "Asegúrese de seleccionar al menos un sitio rem
 $pgv_lang["search_sites"] 			= "Sitios a buscar";
 $pgv_lang["site_list"]				= "Sitio: ";
 $pgv_lang["site_had"]				= " contenía lo siguiente";
-$pgv_lang["indi_is_remote"]			= "La información de esta persona se vinculó desde un sitio remoto.";
-$pgv_lang["link_remote"]            = "Vincular persona remota";
 $pgv_lang["label_search_engine_detected"]  = "Detectada araña de motor de búsqueda";
 
 $pgv_lang["ex-spouse"] = "Ex-cónyuge";
@@ -190,7 +187,6 @@ $pgv_lang["title_search_link"]      = "Agregar vínculo local";
 $pgv_lang["label_site_url2"]        = "URL del sitio";
 //new stuff
 
-$pgv_lang["cancel"]					= "Cancelar";
 $pgv_lang["delete_family_confirm"]	= "Borrar la familia preservará las personas, pero las dejará desconectadas unas de otras. ¿Está seguro de que desea borrar esta familia?";
 $pgv_lang["delete_family"]			= "Borrar familia";
 $pgv_lang["add_favorite"]			= "Agregar un nuevo favorito";
@@ -298,6 +294,7 @@ $pgv_lang["stepsister"]				= "Hermanastra";
 $pgv_lang["stepbrother"]			= "Hermanastro";
 $pgv_lang["fams_charts"]			= "Opciones para la Familia";
 $pgv_lang["indis_charts"]			= "Opciones para la persona";
+$pgv_lang["none"]					= "Ninguno";
 $pgv_lang["locked"]					= "no modificable";
 $pgv_lang["privacy"]				= "privacidad";
 $pgv_lang["number_sign"]			= "nº";
@@ -398,8 +395,8 @@ $pgv_lang["status"] 				= "Estatus";
 $pgv_lang["source"] 				= "Fuente";
 $pgv_lang["text"]					= "Texto de la fuente:";
 $pgv_lang["note"]					= "Nota";
-$pgv_lang["NN"] 					= "Apellido desconocido";
-$pgv_lang["PN"] 					= "Nombre desconocido";
+$pgv_lang["NN"] 					= "(apellido desconocido)";
+$pgv_lang["PN"] 					= "(nombre desconocido)";
 $pgv_lang["unrecognized_code"]		= "Código GEDCOM desconocido";
 $pgv_lang["unrecognized_code_msg"]	= "Este es un error y desearíamos corregirlo. Por favor reporte este error a";
 $pgv_lang["indi_info"]				= "Ficha Personal";
@@ -420,7 +417,7 @@ $pgv_lang["father"] 				= "Padre";
 $pgv_lang["mother"] 				= "Madre";
 $pgv_lang["parent"] 				= "Padre o madre";
 $pgv_lang["self"] 					= "Uno mismo";
-$pgv_lang["relatives"]				= "Familiares Cercanos";
+$pgv_lang["relatives"]				= "Familiares cercanos";
 $pgv_lang["relatives_events"]		= "Eventos de familiares cercanos";
 $pgv_lang["historical_facts"]		= "Hechos históricos";
 $pgv_lang["partner"] 				= "Compañero/a";
@@ -444,7 +441,7 @@ $pgv_lang["no_tab5"]				= "No hay parientes cercanos de esta persona.";
 $pgv_lang["no_tab6"]				= "No hay diario de investigación conectado a esta persona";
 
 //-- FAMILY FILE MESSAGES
-$pgv_lang["family_info"]			= "Información Familiar";
+$pgv_lang["family_info"]			= "Información de familia";
 $pgv_lang["family_group_info"]		= "Información del Grupo Familiar";
 $pgv_lang["husband"]				= "Esposo";
 $pgv_lang["wife"]					= "Esposa";
@@ -557,7 +554,6 @@ $pgv_lang["find_repository"]		= "Encontrar repositorio";
 $pgv_lang["total_repositories"]		= "Número total de repositorios";
 $pgv_lang["confirm_delete_repo"]	= "¿Seguro que quiere borrar este repositorio de la base de datos?";
 
-
 //-- SOURCE FILE MESSAGES
 $pgv_lang["source_info"]			= "Información de la Fuente";
 $pgv_lang["people"] 				= "Personas";
@@ -587,7 +583,7 @@ $pgv_lang["magnify"]				= "Agrandar";
 $pgv_lang["skip_surnames"]			= "Ocultar listas de apellidos";
 $pgv_lang["show_surnames"]			= "Mostrar listas de apellidos";
 $pgv_lang["all"]					= "Todas";
-$pgv_lang["hidden"]					= "Oculto";
+$pgv_lang["hidden"]					= "Ocultos";
 $pgv_lang["confidential"]			= "Confidencial";
 $pgv_lang["alpha_index"]				= "Índice alfabético";
 $pgv_lang["name_list"] 				= "Lista de nombres";
@@ -733,7 +729,6 @@ $pgv_lang["research_assistant"]		= "Asistente de investigación";
 $pgv_lang["utf8_to_ansi"]			= "¿Quiere convertir este GEDCOM desde UTF-8 a ANSI (ISO-8859-1)?";
 $pgv_lang["media_linked"]			= "Este objeto audiovisual está vinculado con los siguientes:";
 $pgv_lang["media_not_linked"]		= "Este objeto audiovisual no está vinculado a ningún registro GEDCOM.";
-$pgv_lang["deleted_files"]          = "Archivos borrados:";
 $pgv_lang["media_dir_1"]			= "Este objeto audiovisual está ubicado en un servidor externo";
 $pgv_lang["media_dir_2"]			= "Este objeto audiovisual está en el directorio estándar de objetos";
 $pgv_lang["media_dir_3"]			= "Este objeto audiovisual está en el directorio protegido de objetos";
@@ -745,10 +740,18 @@ $pgv_lang["moveto_3"]				= "Mover al directorio estándar";
 $pgv_lang["move_standard"]			= "Trasladar a estándar";
 $pgv_lang["move_protected"]			= "Trasladar a protegido";
 $pgv_lang["move_mediadirs"]			= "Trasladar directorios de objetos";
+$pgv_lang["setperms"]				= "Fijar permisos para los archivos de objetos";
+$pgv_lang["setperms_writable"]		= "Dar al mundo permiso de escritura";
+$pgv_lang["setperms_readonly"]		= "Dar al mundo sólo permiso de lectura";
+$pgv_lang["setperms_success"]		= "Permisos fijados";
+$pgv_lang["setperms_failure"]		= "Permisos no fijadso";
+$pgv_lang["setperms_time_exceeded"]	= "Se sobrepasó el límite de tiempo de ejecución.  Intente realizar el proceso en un directorio más pequeño.";
 $pgv_lang["move_time_exceeded"]	= "Se sobrepasó el límite de tiempo de ejecución.  Intente el proceso de nuevo para trasladar el resto de los archivos.";
 $pgv_lang["media_firewall_rootdir_no_exist"]			= "El directorio raíz que indicó para el cortafuegos de objetos audiovisuales no existe.  Debe crearlo antes.";
 $pgv_lang["media_firewall_protected_dir_no_exist"]		= "El directorio protegido de objetos no se pudo crear en el directorio raíz del cortafuegos de objetos.  Por favor, cree este directorio y dé permiso de escritura al mundo.";
 $pgv_lang["media_firewall_protected_dir_not_writable"]	= "El directorio protegido de objetos en el directorio raíz del cortafuegos de objetos no tiene permiso de escritura para el mundo.";
+$pgv_lang["media_firewall_invalid_dir"]	= "Error: Se lanzó el cortafuegos de objetos audiovisuales desde un directorio distinto del directorio de objetos.";
+
 //-- Relationship chart messages
 // $pgv_lang["relationship_great"]		= "Great";
 $pgv_lang["relationship_chart"] 	= "Parentesco";
@@ -874,8 +877,8 @@ $pgv_lang["sosa_uncle_7"] 				= "tío abuelo";      // mother's mother's brother
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
 //              %3\$d is replaced with the number of generations - 2
-$pgv_lang["n_x_paternal_uncle"]		= "%2\$dº tío";
-$pgv_lang["n_x_maternal_uncle"]	    = "%2\$dº tío";
+$pgv_lang["n_x_paternal_uncle"]		= "%2\$dº tío abuelo";
+$pgv_lang["n_x_maternal_uncle"]	    = "%2\$dº tío abuelo";
 
 // the sosa_aunt name is used for aunts - the names below can be extended to any number
 // of generations just by adding more translations.
@@ -893,8 +896,8 @@ $pgv_lang["sosa_aunt_7"] 				= "tía abuela";      // mother's mother's sister
 // in this text %1\$d is replaced with the number of generations
 //              %2\$d is replaced with the number of generations - 1
 //              %3\$d is replaced with the number of generations - 2
-$pgv_lang["n_x_paternal_aunt"]		= "%2\$dª tía";
-$pgv_lang["n_x_maternal_aunt"]	    = "%2\$dª tía";
+$pgv_lang["n_x_paternal_aunt"]		= "%2\$dª tía abuela";
+$pgv_lang["n_x_maternal_aunt"]	    = "%2\$dª tía abuela";
 
 // the sosa_uncle name is used for uncles(by marriage) - the names below can be extended to any number
 // of generations just by adding more translations.
@@ -933,7 +936,6 @@ $pgv_lang["sosa_aunt_bm_7"] 				= "tía abuela";      // mother's mother's siste
 //              %3\$d is replaced with the number of generations - 2
 $pgv_lang["n_x_paternal_aunt_bm"]		= "%2\$dª tía abuela";
 $pgv_lang["n_x_maternal_aunt_bm"]	    = "%2\$dª tía abuela";
-
 
 // if a specific cousin relationship cannot be represented in a language translate as "";
 $pgv_lang["male_cousin_1"]              = "primo hermano";
@@ -1021,7 +1023,6 @@ $pgv_lang["removed_descending_18"] = "";
 $pgv_lang["removed_descending_19"] = "";
 $pgv_lang["removed_descending_20"] = "";
 
-
 //-- GEDCOM edit utility
 $pgv_lang["check_delete"]			= "¿Está seguro que desea eliminar este hecho GEDCOM?";
 $pgv_lang["access_denied"]			= "<b>Acceso denegado</b><br />No tiene permiso para acceder a este recurso.";
@@ -1097,8 +1098,8 @@ $pgv_lang["mail02_subject"] 		= "Nuevo registro en #SERVER_NAME#";
 
 $pgv_lang["hashcode"]				= "Código de verificación:";
 $pgv_lang["thankyou"]				= "Hola #user_fullname# ...<br />Gracias por registrarse";
-$pgv_lang["pls_note06"] 			= "Ahora enviaremos un correo de confirmación a la dirección <b>#user_email#</b>. Debe verificar su solicitud de cuenta siguiendo las instrucciones que se dan en ese correo.  Si no confirma su solicitud de cuenta en siete días, su solicitud se rechazará automáticamente.  Tendrá que hacer una nueva solicitud.<br /><br />Después de haber seguido las instrucciones del correo de confirmación, el administrador aún habrá de aprovar la solicitud antes de que puede utilizarse su cuenta.<br /><br />Para entrar a este sitio, necesitará conocer su nombre de usuario y su contraseña.<br /><br />";
-$pgv_lang["pls_note06a"] 			= "Ahora recibirá un mensaje de correo electrónico para confirmar su dirección de correo:( #user_email# ). Siga las instrucciones en ese mensaje de correo para completar la verificación y activar su cuenta. Si no lo hace antes de siete días, se borrará su solicitud automáticamente.  En ese caso, tendrá que repetir el proceso con una nueva solicitud.<br><br />Cuando haya seguido los pasos indicados en ese mensaje de correo, podrá entrar. Para entrar, necesitará hacer uso de su usuario y su contraseña.<br /><br />";
+$pgv_lang["pls_note06"] 			= "Ahora enviaremos un correo de confirmación a la dirección <b>#user_email#</b>. Debe verificar su solicitud de cuenta siguiendo las instrucciones que se dan en ese correo.  Si no confirma su solicitud de cuenta en siete días, su solicitud se rechazará automáticamente.  Tendrá que hacer una nueva solicitud.<br /><br />Después de haber seguido las instrucciones del correo de confirmación, el administrador aún habrá de aprobar la solicitud antes de que puede utilizarse su cuenta.<br /><br />Para entrar a este sitio, necesitará conocer su nombre de usuario y su contraseña.<br /><br />";
+$pgv_lang["pls_note06a"] 			= "Ahora recibirá un mensaje de correo electrónico para confirmar su dirección de correo <b>#user_email#</b>. Siga las instrucciones en ese mensaje de correo para completar la verificación y activar su cuenta. Si no lo hace antes de siete días, se borrará su solicitud automáticamente.  En ese caso, tendrá que repetir el proceso con una nueva solicitud.<br><br />Cuando haya seguido los pasos indicados en ese mensaje de correo, podrá entrar. Para entrar, necesitará hacer uso de su usuario y su contraseña.<br /><br />";
 
 $pgv_lang["registernew"]			= "Nueva confirmación de Cuenta";
 $pgv_lang["user_verify"]			= "Verificación de usuario";
@@ -1140,7 +1141,7 @@ $pgv_lang["welcome_text_auth_mode_1"]	= "<center><b>Bienvenido a este sito de Ge
 $pgv_lang["welcome_text_auth_mode_2"]	= "<center><b>Bienvenido a este sitio de Genealogía</b></center><br />Se permite el acceso solamente a usuarios <u>autorizados</u>.<br /><br />Si ya tiene una cuenta de usuario, puede identificarse en esta página.  Si no tiene cuenta de usuario, puede solicitarla haciendo clic en el vínculo apropiado más abajo.<br /><br />Después de verificar su solicitud, el administrador del sitio aprobará o rechazará su solicitud.  Recibirá un correo electrónico cuando se apruebe su solicitud.";
 $pgv_lang["welcome_text_auth_mode_3"]	= "<center><b>Bienvenido a este sitio de Genealogía</b></center><br />Se permite el acceso <u>solamente a parientes</u>.<br /><br />Si ya tiene una cuenta de usuario, puede identificarse en esta página.  Si no tiene cuenta de usuario, puede solicitarla haciendo clic en el vínculo apropiado más abajo.<br /><br />Después de verificar la información proporcionada, el administrador del sitio aprobará o rechazará su solicitud.  Recibirá un correo electrónico cuando se apruebe su solicitud.";
 $pgv_lang["welcome_text_cust_head"] 	= "<b>BIENVENIDO A ESTE SITIO DE GENEALOGÍA</b></br></br>Se permite el acceso a usuarios que posean una cuenta de usuario y una contraseña asignadas.</br>";
-$pgv_lang["acceptable_use"]			= "<div class=\"largeError\">Notice:</div><div class=\"error\">Rellenando y enviando este formulario, Vd. acepta:<ul><li>preservar la privacidad de las personas vivas listadas en nuestro sitio;</li><li>y en el campo de texto inferior explicar con quién está emparentado o darnos información de las personas que deberían constar en nuestro sitio.</li></ul></div>";
+$pgv_lang["acceptable_use"]			= "<div class=\"largeError\">Aviso:</div><div class=\"error\">Rellenando y enviando este formulario, Vd. acepta:<ul><li>preservar la privacidad de las personas vivas listadas en nuestro sitio;</li><li>y en el campo de texto inferior explicar con quién está emparentado o darnos información de las personas que deberían constar en nuestro sitio.</li></ul></div>";
 
 
 //-- mygedview page
@@ -1308,6 +1309,7 @@ $pgv_lang["block_not_configure"]	=	"No se puede configurar este bloque.";
 
 //-- validate GEDCOM
 $pgv_lang["add_media_tool"] 		= "Herramienta para Agregar Objetos Audiovisuales";
+
 //-- hourglass chart
 $pgv_lang["hourglass_chart"]		= "Diagrama Reloj de Arena";
 
@@ -1339,6 +1341,11 @@ $pgv_lang["ahnentafel_buried_m"]	= "recibió sepultura";			// male
 $pgv_lang["ahnentafel_buried_f"]	= "recibió sepultura";			// female
 $pgv_lang["ahnentafel_place"]		= " en ";				// place name follows this
 $pgv_lang["ahnentafel_no_details"]	= " pero los detalles son desconocidos";
+
+//-- Changes report
+$pgv_lang["changes_report"]			= "Informe de cambios";
+$pgv_lang["changes_pending_tot"]	= "Cambios pedientes en total: ";
+$pgv_lang["changes_accepted_tot"]	= "Cambios aceptados en total: ";
 
 //-- Descendancy report
 $pgv_lang["descend_report"]		= "Informe de descendientes";

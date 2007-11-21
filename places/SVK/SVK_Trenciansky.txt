@@ -1,11 +1,11 @@
 <!-- THIS FILE MUST BE SAVED IN UTF-8 ENCODING (or some special characters will be lost) -->
 <!-- @version $Id$ -->
-Bánovce nad Bebravou (BN)
-Ilava (IL)
-Myjava (MY)
-Nové Mesto nad Váhom (NM)
-Partizánske (PE)
-Považská Bystrica (PB)
-Prievidza (PD)
-Púchov (PU)
-Trencín (TN)
+Bánovce nad Bebravou
+Ilava
+Myjava
+Nové Mesto nad Váhom
+Partizánske
+Považská Bystrica
+Prievidza
+Púchov
+Trenčín

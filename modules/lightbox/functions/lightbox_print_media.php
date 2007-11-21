@@ -176,7 +176,7 @@ if ( ($t==1 && $numm>0 || $t==2 && $numm>0 || $t==3 && $numm>0 || $t==4 && $numm
 			// NOTE: Determine the size of the mediafile
 			$imgwidth = 300+40;
 			$imgheight = 300+150;
-			if (preg_match("'://'", $rowm["m_file"])) {
+		if (isFileExternal($rowm["m_file"])) {
 				if (in_array($rowm["m_ext"], $MEDIATYPE)) {
 					$imgwidth = 400+40;
 					$imgheight = 500+150;

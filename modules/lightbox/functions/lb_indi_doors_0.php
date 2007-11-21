@@ -48,7 +48,6 @@
 		<dd id="door8"><a href="javascript:;" onclick="tabswitch(8); if (loadedTabs[8]) {ResizeMap(); ResizeMap();} return false;" ><?php print $pgv_lang["googlemap"]?></a></dd>
           <?php } ?>
 	<dd id="door0"><a href="javascript:;" onclick="tabswitch(0); if (loadedTabs[8]) {ResizeMap(); ResizeMap();} return false;" ><?php print $pgv_lang["all"]?></a></dd>
-	<!--<dd id="door0" style={background-color:transparent;} style={border:0px;} ></dd> -->
 
 <?php
 	// If not $MULTI_MEDIA hide the media and album tabs

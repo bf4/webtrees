@@ -337,7 +337,8 @@ if($WIN32) $seperator=";"; else $seperator = ":";
 //-- append our 'includes/' path to the include_path ini setting for ease of use.
 $ini_include_path = @ini_get('include_path');
 $includes_dir = dirname(@realpath(__FILE__));
-@ini_set('include_path', "{$includes_dir}{$seperator}{$ini_include_path}");
+$includes_dir .= $seperator.dirname($includes_dir);
+@ini_set('include_path', ".{$seperator}{$includes_dir}{$seperator}{$ini_include_path}");
 unset($ini_include_path, $includes_dir); // destroy some variables for security reasons.
 
 set_magic_quotes_runtime(0);
@@ -453,7 +454,12 @@ if (!$CONFIGURED) {
 ignore_user_abort(false);
 
 if (empty($CONFIG_VERSION)) $CONFIG_VERSION = "2.65";
-if (empty($SERVER_URL)) $SERVER_URL = stripslashes("http://".$_SERVER["SERVER_NAME"].dirname($SCRIPT_NAME)."/");
+if (empty($SERVER_URL)) {
+	$SERVER_URL = "http://".$_SERVER["SERVER_NAME"];
+	if (!empty($_SERVER["SERVER_PORT"]) && $_SERVER["SERVER_PORT"]!=80) $SERVER_URL .= ":".$_SERVER["SERVER_PORT"];
+	$SERVER_URL .= dirname($SCRIPT_NAME)."/";
+	$SERVER_URL = stripslashes($SERVER_URL);
+}
 if (substr($SERVER_URL,-1)!="/") $SERVER_URL .= "/";	// make SURE that trailing "/" is present
 if (!isset($ALLOW_REMEMBER_ME)) $ALLOW_REMEMBER_ME = true;
 if (!isset($PGV_SIMPLE_MAIL)) $PGV_SIMPLE_MAIL = false;

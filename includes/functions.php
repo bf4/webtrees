@@ -2344,12 +2344,13 @@ function get_report_list($force=false) {
  *
  * This function will take user submitted input string and remove any special characters
  * before they are submitted to the SQL query.
- * Examples of invalid characters are _ & ?
+ * Examples of invalid characters are _ & ? < > " '
  * @param string $pid	The string to cleanup
  * @return string	The cleaned up string
  */
 function clean_input($pid) {
-	$pid = preg_replace("/[%?_]/", "", trim($pid));
+	$pid = preg_replace("/[%?_\"'\(\);]/", "", trim($pid));
+	$pid = strip_tags($pid);
 	return $pid;
 }
 

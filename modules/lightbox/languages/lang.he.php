@@ -37,7 +37,7 @@ if (stristr($_SERVER["SCRIPT_NAME"], basename(__FILE__))!==false) {
 $pgv_lang["configure_lightbox"]		= "ערוך אלבום Lightbox";
 $pgv_lang["mediatab"]       			= "דף אישי - חציץ מדיה"; 
 $pgv_lang["lb_appearance"]		= "צורה";
-$pgv_lang["lb_linkAppearance"]		= "קשר לצורה";
+$pgv_lang["lb_linkAppearance"]		= "קישר";
 $pgv_lang["lb_MP3Only"]			= "(רק mp3)"; 
 $pgv_lang["lb_admin_error"]         		= "דף רק עבור מנהלנים"; 
 $pgv_lang["lb_toAlbumPage"]		= "חזור לדף האלבום";
@@ -70,9 +70,9 @@ $pgv_lang["lb_height"]			= "גובה";
 $pgv_lang["lb_help"] 	= "עזרת אלבום";
 $pgv_lang["lightbox"] 	= "אלבום";
 $pgv_lang["showmenu"] 	= "הראה תפריט:";
-$pgv_lang["active"] 	= "פעיל";
+//$pgv_lang["active"] 	= "פעיל";
 $pgv_lang["TYPE__other"] 	= "אחר";
-$pgv_lang["no_media"] 	= "אין"; 
+//$pgv_lang["no_media"] 	= "אין"; 
 $pgv_lang["TYPE__footnotes"] = "הערות שוליים"; 
 
 $pgv_lang["census_text"]  = "\"תמונות המפקד האלו התקבלו מ\"הארכיון הלאומי\", השומר על הרשומות המקוריות, "; 

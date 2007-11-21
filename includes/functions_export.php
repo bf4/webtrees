@@ -286,8 +286,7 @@ function um_export($proceed) {
 	$messages = array();
 	$mesid = 1;
 	$sql = "SELECT * FROM ".$TBLPREFIX."messages ORDER BY m_id DESC";
-	$tempsql = dbquery($sql);
-$res =& $tempsql;
+	$res = dbquery($sql);
 	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
 		$message = array();
@@ -325,8 +324,7 @@ $res =& $tempsql;
 	if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_creating"]." \"favorites.dat\"<br /><br />";
 	$favorites = array();
 	$sql = "SELECT * FROM ".$TBLPREFIX."favorites";
-	$tempsql = dbquery($sql);
-	$res =& $tempsql;
+	$res = dbquery($sql);
 	$favid = 1;
 	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
@@ -367,8 +365,7 @@ $res =& $tempsql;
 	if (($proceed == "export") || ($proceed == "exportovr")) print $pgv_lang["um_creating"]." \"news.dat\"<br /><br />";
 	$allnews = array();
 	$sql = "SELECT * FROM ".$TBLPREFIX."news ORDER BY n_date DESC";
-	$tempsql = dbquery($sql);
-$res =& $tempsql;
+	$res = dbquery($sql);
 	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
 		$news = array();
@@ -406,8 +403,7 @@ $res =& $tempsql;
 	$blocks["main"] = array();
 	$blocks["right"] = array();
 	$sql = "SELECT * FROM ".$TBLPREFIX."blocks ORDER BY b_location, b_order";
-	$tempsql = dbquery($sql);
-$res =& $tempsql;
+	$res = dbquery($sql);
 	while($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)){
 		$row = db_cleanup($row);
 		$blocks = array();
@@ -415,7 +411,8 @@ $res =& $tempsql;
 		$blocks["location"] = $row["b_location"];
 		$blocks["order"] = $row["b_order"];
 		$blocks["name"] = $row["b_name"];
-		$blocks["config"] = unserialize($row["b_config"]);
+		$blocks["config"] = @unserialize($row["b_config"]);
+		if ($blocks["config"]===false) print "<span class=\"error\">There was an error serializing the block configuration for ".$blocks["name"]." ".$blocks["username"].".</span>";
 		$allblocks[] = $blocks;
 	}
 	if (count($allblocks) > 0) {

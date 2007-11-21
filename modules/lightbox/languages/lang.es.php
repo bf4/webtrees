@@ -41,7 +41,7 @@ $pgv_lang["lb_appearance"]				= "Apariencia";
 $pgv_lang["lb_linkAppearance"]			= "Apariencia del vínculo";
 $pgv_lang["lb_MP3Only"]					= "(sólo mp3)";
 $pgv_lang["lb_admin_error"]				= "Página sólo para administradores";
-// $pgv_lang["lb_toAlbumPage"]				= "Return to Album page";
+$pgv_lang["lb_toAlbumPage"]				= "Volver a la página de Álbum";
 
 $pgv_lang["lb_icon"]					= "Icono";
 $pgv_lang["lb_text"]					= "Texto";
@@ -56,12 +56,12 @@ $pgv_lang["lb_musicFileAdvice"]			= "Ubicación del archivo con la banda sonora 
 $pgv_lang["lb_ss_speed"]				= "<b>Velocidad de la Presentación</b>";
 $pgv_lang["lb_ss_SpeedAdvice"]			= "Tiempo de permanencia de la imagen en segundos";
 
-// $pgv_lang["lb_transition"]				= "Image Transition speed";
-// $pgv_lang["lb_normal"]					= "Normal";
+$pgv_lang["lb_transition"]				= "Velocidad de transición entre imágenes";
+$pgv_lang["lb_normal"]					= "Normal";
 $pgv_lang["lb_double"]					= "Doble";
 // $pgv_lang["lb_warp"]					= "Warp";
-// $pgv_lang["lb_url_dimensions"]			= "URL Window dimensions";
-// $pgv_lang["lb_url_dimensionsAdvice"]	= "Width and height of URL window in pixels";
+$pgv_lang["lb_url_dimensions"]			= "Dimensiones de las ventanas de URL";
+$pgv_lang["lb_url_dimensionsAdvice"]	= "Anchura y altura en píxeles de las ventanas para URL";
 $pgv_lang["lb_width"]					= "Anchura";
 $pgv_lang["lb_height"]					= "Altura";
 									
@@ -72,9 +72,9 @@ $pgv_lang["lb_height"]					= "Altura";
 $pgv_lang["lb_help"] 		 = "Album Help";
 $pgv_lang["lightbox"]		 = "Álbum";
 $pgv_lang["showmenu"] 		 = "Show Menu:";
-$pgv_lang["active"] 		 = "Activar";
+
 $pgv_lang["TYPE__other"] 	 = "Otro";
-$pgv_lang["no_media"] 		 = "No se encontraron objetos audiovisuales";
+
 $pgv_lang["TYPE__footnotes"] = "Notas al pie";
 
 $pgv_lang["census_text"]  	 = "\"Estas imágenes del censo se han obtenido de \"Archivos Nacionales\", custodio de los registros originales, ";

@@ -93,6 +93,9 @@ class SourceControllerRoot extends BaseController {
 			case "accept":
 				$this->acceptChanges();
 				break;
+			case "undo":
+				$this->source->undoChange();
+				break;
 		}
 		
 		//-- check for the user
@@ -234,7 +237,7 @@ class SourceControllerRoot extends BaseController {
 			{
 				$submenu = new Menu($pgv_lang['hide_changes'], 'source.php?sid='.$this->sid.'&amp;show_changes=no');
 				if (!empty($PGV_IMAGES["edit_sour"]["small"]))
-					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
+					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 			}
@@ -242,9 +245,14 @@ class SourceControllerRoot extends BaseController {
 			if (userCanAccept($this->uname))
 			{
 				// edit_source / accept_all
+				$submenu = new Menu($pgv_lang["undo_all"], "source.php?sid=".$this->sid."&amp;action=undo");
+				$submenu->addClass("submenuitem$ff", "submenuitem_hover$ff");
+				if (!empty($PGV_IMAGES["edit_sour"]["small"]))
+					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
+				$menu->addSubmenu($submenu);
 				$submenu = new Menu($pgv_lang['accept_all'], 'source.php?sid='.$this->sid.'&amp;action=accept');
 				if (!empty($PGV_IMAGES["edit_sour"]["small"]))
-					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_fam']['small']}");
+					$submenu->addIcon("{$PGV_IMAGE_DIR}/{$PGV_IMAGES['edit_sour']['small']}");
 				$submenu->addClass("submenuitem{$ff}", "submenuitem_hover{$ff}");
 				$menu->addSubmenu($submenu);
 			}
