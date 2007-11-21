@@ -61,9 +61,8 @@ foreach($subfacts as $indexval => $event) {
 			$spouse = Person::getInstance($spouseid);
 			if (!is_null($spouse)) {
 				print " <a href=\"individual.php?pid=$spouseid&amp;ged=$GEDCOM\">";
-				if ($spouse->canDisplayName()) print PrintReady(get_person_name($spouse));
-					 else print $pgv_lang["private"];
-					 print "</a>";
+				print PrintReady($spouse->getName());
+				print "</a>";
 				print " - ";
 				}
 			}
