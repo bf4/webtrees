@@ -8,6 +8,10 @@
 	# $Id$
 =====================================================================
 
+
+Version 4.1.4
+ - Fixed [ 1834996 ] Sitemap module uses incorrect $SERVER_URL value (canajun2eh)
+
 Version 4.1.3
  - Fixed [ 1822946 ] Missing reference to port number in $SERVER_URL (yalnifj)
  - Fixed [ 1586584 ] Minimal theme - Icons on some Indi page tabs (canajun2eh)
